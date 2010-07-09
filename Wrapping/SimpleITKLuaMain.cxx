@@ -122,10 +122,6 @@ static int docall (lua_State *L, int narg, int clear) {
   return status;
 }
 
-<<<<<<< HEAD:Wrapping/SimpleITKLuaMain.cxx
-
-=======
->>>>>>> 2a59b263a22cdf1e5c0d06f99e594137874ddbb3:Wrapping/SimpleITKLuaMain.cxx
 static void print_version (void) {
   fprintf ( stdout, LUA_VERSION "  " LUA_COPYRIGHT "\n" );
   fprintf ( stdout, "Simple ITK\nInsight Toolkit %s\n", itk::Version::GetITKVersion() );
