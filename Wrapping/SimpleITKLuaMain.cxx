@@ -5,6 +5,10 @@
 */
 
 
+#include <itkVersion.h>
+#include <itksys/SystemTools.hxx>
+#include <itkMultiThreader.h>
+
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,10 +34,6 @@ static GetLine *gl = NULL;
 #define lua_readline(L,b,p)	(void)L, ((b)=gl_get_line(gl,p,NULL,-1)) != NULL
 #define lua_saveline(L,idx)	{ (void)L; (void)idx; }
 #define lua_freeline(L,b)	((void)L, (b))
-
-
-
-
 #endif
 
 static lua_State *globalL = NULL;
@@ -123,9 +123,6 @@ static int docall (lua_State *L, int narg, int clear) {
   return status;
 }
 
-#include <itkVersion.h>
-#include <itksys/SystemTools.hxx>
-#include <itkMultiThreader.h>
 
 static void print_version (void) {
   fprintf ( stdout, LUA_VERSION "  " LUA_COPYRIGHT "\n" );

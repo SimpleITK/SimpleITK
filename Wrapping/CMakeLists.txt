@@ -27,7 +27,11 @@ if ( WRAP_LUA )
 
   add_library ( SimpleITKLuaModule SimpleITKLUA_wrap.cxx )
   add_executable ( SimpleITKLua SimpleITKLuaMain.cxx )
-  target_link_libraries ( SimpleITKLua SimpleITK SimpleITKLuaModule ${LUA_LIBRARIES} ${ITK_LIBRARIES} )
+  target_link_libraries ( SimpleITKLua SimpleITKLuaModule ${SimpleITK_LIBRARIES} ${LUA_LIBRARIES} ${ITK_LIBRARIES} )
+
+  if ( UNIX )
+    target_link_libraries ( SimpleITKLua readline curses )
+  endif()
 
 endif()
 
