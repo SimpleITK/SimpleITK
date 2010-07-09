@@ -4,6 +4,10 @@
 ** See Copyright Notice in lua.h
 */
 
+#include <SimpleITK.h>
+#include <itkVersion.h>
+#include <itkMultiThreader.h>
+#include <itksys/SystemTools.hxx>
 
 #include <signal.h>
 #include <stdio.h>
@@ -122,10 +126,6 @@ static int docall (lua_State *L, int narg, int clear) {
   if (status != 0) lua_gc(L, LUA_GCCOLLECT, 0);
   return status;
 }
-
-#include <itkVersion.h>
-#include <itksys/SystemTools.hxx>
-#include <itkMultiThreader.h>
 
 static void print_version (void) {
   fprintf ( stdout, LUA_VERSION "  " LUA_COPYRIGHT "\n" );
