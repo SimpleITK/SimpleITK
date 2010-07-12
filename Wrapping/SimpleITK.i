@@ -22,3 +22,4 @@ using namespace itk::simple;
 %include "simpleImageFileReader.h"
 %include "simpleImageFileWriter.h"
 %include "simpleGaussian.h"
+%include "simpleImageHash.h"

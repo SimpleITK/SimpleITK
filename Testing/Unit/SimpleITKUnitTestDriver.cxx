@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
         "    * ./foo_test --gtest_filter=FooTest.* Runs everything in test case FooTest.\n"
         "    * ./foo_test --gtest_filter=*Null*:*Constructor* Runs any test whose full name contains either \"Null\" or \"Constructor\".\n"
         "    * ./foo_test --gtest_filter=-*DeathTest.* Runs all non-death tests.\n"
-        "    * ./foo_test --gtest_filter=FooTest.*-FooTest.Bar Runs everything in test case FooTest except FooTest.Bar. " << std::endl; \
+        "    * ./foo_test --gtest_filter=FooTest.*-FooTest.Bar Runs everything in test case FooTest except FooTest.Bar. " << std::endl; 
       return 0;
     }
   }
