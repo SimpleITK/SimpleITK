@@ -9,3 +9,16 @@ endif()
 set ( SimpleITK_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/Source)
 set ( SimpleITK_LIBRARIES SimpleITK ${ITK_LIBRARIES} )
 subdirs ( Source Wrapping Examples )
+
+
+# Options for testing
+option ( USE_TESTING "Build testing" ON )
+option ( RUN_LONG_TESTS "Run long tests.  Some tests have been identified as long running, should these be run?" OFF )
+
+if ( USE_TESTING )
+  enable_testing()
+  subdirs ( Testing )
+  include(CTest)
+  mark_as_advanced(RUN_LONG_TESTS)
+endif()
+

@@ -7,11 +7,12 @@
 #include <itkLightObject.h>
 #include <itkSmartPointer.h>
 
-// Define macros to aid in the typeless layer
-typedef itk::ImageBase<3> SimpleImageBase;
 
 namespace itk {
   namespace simple {
+
+    // Define macros to aid in the typeless layer
+    typedef itk::ImageBase<3> SimpleImageBase;
 
     // To add a new type you must:
     // 1. Add an entry to ImageDataType
