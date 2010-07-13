@@ -18,5 +18,20 @@ namespace itk {
       return out.str();
     }
 
+    unsigned long Image::getWidth() {
+      SimpleImageBase::RegionType region;
+      region = this->mImage->GetLargestPossibleRegion();
+      return region.GetSize()[0];
+    }
+    unsigned long Image::getHeight() {
+      SimpleImageBase::RegionType region;
+      region = this->mImage->GetLargestPossibleRegion();
+      return region.GetSize()[1];
+    }
+    unsigned long Image::getDepth() {
+      SimpleImageBase::RegionType region;
+      region = this->mImage->GetLargestPossibleRegion();
+      return region.GetSize()[2];
+    }
   }
 }

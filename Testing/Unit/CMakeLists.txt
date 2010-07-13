@@ -1,7 +1,4 @@
 
-# An option to build/run the long tests
-option ( RUN_LONG_TESTS "Run long tests.  Some tests have been identified as long running, should these be run?" OFF )
-
 # Build Google Test
 find_package(Threads)
 if (CMAKE_USE_PTHREADS_INIT)  # The pthreads library is available.
@@ -28,11 +25,14 @@ if (CMAKE_USE_PTHREADS_INIT)
 endif()
 
 
-set ( TestSource 
-  SimpleITKTesting.cxx )
+set ( TestSource
+  SimpleITKImageTests.cxx
+  )
 
-add_executable(itkUnitTestDriver 
-  itkUnitTestDriver.cxx ${TestSource} )
+add_executable(SimpleITKUnitTestDriver 
+  SimpleITKUnitTestDriver.cxx ${TestSource} )
+include_directories ( ${SimpleITK_INCLUDE_DIR} )
+target_link_libraries ( SimpleITKUnitTestDriver ${ITK_LIBRARIES} ${SimpleITK_LIBRARIES} )
 
 # Add all the tests by parsing the source code
 # This macro searches for GoogleTest macros and adds them as test automatically
@@ -67,7 +67,7 @@ macro(ADD_GOOGLE_TESTS executable)
     list ( SORT AllTestsHits )
     # Add all the remaining tests to CTest's test list
     foreach(hit ${AllTestsHits})
-      message ( ${executable} )
+      message ( STATUS "Adding test ${executable} ${hit}" )
       add_test(${hit} ${executable} --gtest_filter=${hit})
     endforeach(hit)
   endforeach()
@@ -76,4 +76,4 @@ endmacro()
 
 
 # Here we add all the tests
-add_google_tests ( itkUnitTestDriver ${TestSource})
+add_google_tests ( ${EXECUTABLE_OUTPUT_PATH}/SimpleITKUnitTestDriver ${TestSource})

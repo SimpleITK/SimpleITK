@@ -11,7 +11,7 @@
 %{
 #include "SimpleITK.h"
 
-// This is required because SWIG does not properly add namespaces to enums
+// This is required because SWIG does not properly add namespaces to typedefs
 using namespace itk::simple;
 %}
 
@@ -22,3 +22,4 @@ using namespace itk::simple;
 %include "simpleImageFileReader.h"
 %include "simpleImageFileWriter.h"
 %include "simpleGaussian.h"
+%include "simpleImageHash.h"
