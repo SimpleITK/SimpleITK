@@ -15,6 +15,10 @@ namespace itk {
       SimpleImageBase::Pointer getITKImage();
       ImageDataType getImageDataType();
 
+      unsigned long getHeight();
+      unsigned long getWidth();
+      unsigned long getDepth();
+
       std::string toString();
 
     private:
