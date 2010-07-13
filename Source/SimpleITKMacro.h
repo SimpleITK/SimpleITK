@@ -36,7 +36,16 @@ namespace itk {
     sitkImageDataTypeCase ( sitkInt32, int32_t, call ); \
     sitkImageDataTypeCase ( sitkFloat32, float, call );
 
+
+
+
   }
 }    
+
+// Tell the compiler that we are going to explicitly instantiate these templates.
+extern template class itk::Image<uint8_t,3>;
+extern template class itk::Image<uint16_t,3>;
+extern template class itk::Image<uint32_t,3>;
+extern template class itk::Image<float,3>;
 
 #endif
