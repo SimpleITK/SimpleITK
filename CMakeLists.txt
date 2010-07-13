@@ -6,6 +6,11 @@ if(ITK_FOUND)
   include(${ITK_USE_FILE})
 endif()
 
+
+# Put all files in a bin directory to keep things tidy.
+set(EXECUTABLE_OUTPUT_PATH ${SimpleITK_BINARY_DIR}/bin)
+
+
 set ( SimpleITK_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/Source)
 set ( SimpleITK_LIBRARIES SimpleITK ${ITK_LIBRARIES} )
 subdirs ( Source Wrapping Examples )

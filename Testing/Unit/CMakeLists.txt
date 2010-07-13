@@ -76,4 +76,4 @@ endmacro()
 
 
 # Here we add all the tests
-add_google_tests ( SimpleITKUnitTestDriver ${TestSource})
+add_google_tests ( ${EXECUTABLE_OUTPUT_PATH}/SimpleITKUnitTestDriver ${TestSource})
