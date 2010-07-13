@@ -1,7 +1,13 @@
 #ifndef __SimpleITKMacro_h
 #define __SimpleITKMacro_h
 
-#include <stdint.h>
+
+// Ideally, take the types from the C99 standard.  However,
+// VS 8 does not have stdint.h, but they are defined anyway.
+#ifndef _MSC_VER
+	#include <stdint.h>
+#endif
+
 #include <itkImageBase.h>
 #include <itkImage.h>
 #include <itkLightObject.h>
