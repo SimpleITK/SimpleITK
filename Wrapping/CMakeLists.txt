@@ -2,8 +2,9 @@
 
 option ( WRAP_LUA "Wrap Lua" ON )
 option ( WRAP_PYTHON "Wrap Python" OFF )
+option ( WRAP_JAVA "Wrap Java" OFF )
 
-if ( WRAP_LUA OR WRAP_PYTHON )
+if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA )
   find_package ( SWIG REQUIRED )
   include ( ${SWIG_USE_FILE} )
   set_source_files_properties ( SimpleITK.i PROPERTIES CPLUSPLUS ON )
@@ -50,4 +51,15 @@ if ( WRAP_PYTHON )
   # add_executable ( SimpleITKPython SimpleITKPythonMain.cxx )
   # target_link_libraries ( SimpleITKPython SimpleITK SimpleITKPythonModule ${PYTHON_LIBRARIES} ${ITK_LIBRARIES} )
   SWIG_link_libraries ( SimpleITK ${PYTHON_LIBRARIES} ${ITK_LIBRARIES} SimpleITK)
+endif()
+
+# Find Java
+if ( WRAP_JAVA )
+  find_package ( Java REQUIRED )
+  find_package ( JNI REQUIRED )
+  include_directories ( ${JAVA_INCLUDE_DIR} ${JNI_INCLUDE_DIRS} )
+
+  SWIG_add_module ( SimpleITKJava java SimpleITK.i SimpleITKJAVA_wrap.cxx )
+
+  SWIG_link_libraries ( SimpleITKJava ${JAVA_LIBRARIES} ${ITK_LIBRARIES} SimpleITK)
 endif()
