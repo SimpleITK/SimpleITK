@@ -1,0 +1,12 @@
+/**
+ * Class to load the SimpleITK library
+ *
+ * This class circumvents the problem of having to add the location of
+ * libSimpleITKJava.so to java.library.path.  To use it, simply call
+ * LoadSimpleITK.load() from within any java program.
+ */
+public class LoadSimpleITK {
+  public static void load() {
+    System.load("@SimpleITK_BINARY_DIR@/Wrapping/libSimpleITKJava.so");
+  }
+}
