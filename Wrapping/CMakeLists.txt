@@ -62,4 +62,7 @@ if ( WRAP_JAVA )
   SWIG_add_module ( SimpleITKJava java SimpleITK.i SimpleITKJAVA_wrap.cxx )
 
   SWIG_link_libraries ( SimpleITKJava ${JAVA_LIBRARIES} ${ITK_LIBRARIES} SimpleITK)
+  
+  CONFIGURE_FILE(${SimpleITK_SOURCE_DIR}/Wrapping/LoadSimpleITK.java.in
+    ${SimpleITK_BINARY_DIR}/Wrapping/LoadSimpleITK.java)
 endif()
