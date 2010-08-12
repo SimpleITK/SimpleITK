@@ -2,7 +2,7 @@
  * Simple test of SimpleITK's java wrapping
  */
 
-import simpleitk.*;
+import org.itk.simple.*;
 
 class SimpleGaussian {
   
