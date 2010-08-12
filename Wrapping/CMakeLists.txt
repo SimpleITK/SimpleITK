@@ -59,7 +59,7 @@ if ( WRAP_JAVA )
   find_package ( JNI REQUIRED )
   include_directories ( ${JAVA_INCLUDE_PATH} ${JNI_INCLUDE_DIRS} )
   
-  set(CMAKE_SWIG_FLAGS -package "simpleitk")
+  set(CMAKE_SWIG_FLAGS -package "org.itk.simple")
   SWIG_add_module ( SimpleITKJava java SimpleITK.i SimpleITKJAVA_wrap.cxx )
 
   SWIG_link_libraries ( SimpleITKJava ${JAVA_LIBRARIES} ${ITK_LIBRARIES} SimpleITK)
@@ -68,26 +68,41 @@ if ( WRAP_JAVA )
   CONFIGURE_FILE(${SimpleITK_SOURCE_DIR}/Wrapping/LoadSimpleITK.java.in
     ${SimpleITK_BINARY_DIR}/Wrapping/LoadSimpleITK.java)
   
-  # Make sure the simpleitk directory exists
-  if ( NOT IS_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/simpleitk )
-    file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/simpleitk)
+  # Make sure the nested directory structure exists
+  if ( NOT IS_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/org )
+    file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/org)
+    if ( NOT IS_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/org/itk )
+      file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/org/itk)
+      if ( NOT IS_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/org/itk/simple )
+        file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/org/itk/simple)
+      endif()
+    endif()
   endif()
   
   # Add custom command and target to compile the generated files and put them in a jar file
-  add_custom_target(simpleitk_jar ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK.java)
   add_custom_command(
-    TARGET simpleitk_jar
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK.class
+    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK.java
     COMMAND javac ${CMAKE_CURRENT_BINARY_DIR}/*.java
-    COMMAND mv ${CMAKE_CURRENT_BINARY_DIR}/*.class ${CMAKE_CURRENT_BINARY_DIR}/simpleitk
-    COMMAND jar cf ${CMAKE_CURRENT_BINARY_DIR}/simpleitk.jar -C ${CMAKE_CURRENT_BINARY_DIR} simpleitk
+    COMMENT "Compiling java files..."
+  )
+  
+  add_custom_command(
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/org.itk.simple.jar
+    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK.class
+    COMMENT "Creating jar file..."
+    COMMAND cp ${CMAKE_CURRENT_BINARY_DIR}/*.class ${CMAKE_CURRENT_BINARY_DIR}/org/itk/simple
+    COMMAND jar cf ${CMAKE_CURRENT_BINARY_DIR}/org.itk.simple.jar -C ${CMAKE_CURRENT_BINARY_DIR} org
     )
+  
+  add_custom_target(org_simple_itk_jar ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/org.itk.simple.jar)
   
   
   # Get the location of the extension directory
   string(REGEX REPLACE "include"  "jre/lib/ext" JAVA_EXTENSION_DIR ${JAVA_INCLUDE_PATH} )
   
   # Add the install target
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/simpleitk.jar DESTINATION ${JAVA_EXTENSION_DIR})
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/org.itk.simple.jar DESTINATION ${JAVA_EXTENSION_DIR})
   
   
 endif()
