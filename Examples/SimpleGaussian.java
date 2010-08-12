@@ -2,6 +2,8 @@
  * Simple test of SimpleITK's java wrapping
  */
 
+import simpleitk.*;
+
 class SimpleGaussian {
   
   public static void main(String argv[]) {
@@ -9,7 +11,7 @@ class SimpleGaussian {
     // do some simple operations
     System.out.println("SimpleITK says 'Hello World' from Java");
     
-    ImageFileReader reader = LoadSimpleITK.loadClass("ImageFileReader");
+    ImageFileReader reader = new ImageFileReader();
     reader.setFilename(argv[0]);
     SmartPointerImage img = reader.execute();
     
