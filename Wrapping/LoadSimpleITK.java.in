@@ -5,6 +5,9 @@
  * libSimpleITKJava.so to java.library.path.  To use it, simply call
  * LoadSimpleITK.load() from within any java program.
  */
+
+package simpleitk;
+
 public class LoadSimpleITK {
   public static void load() {
     System.load("@SimpleITK_BINARY_DIR@/Wrapping/libSimpleITKJava.so");
