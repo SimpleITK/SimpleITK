@@ -59,10 +59,6 @@ if ( WRAP_JAVA )
   find_package ( JNI REQUIRED )
   include_directories ( ${JAVA_INCLUDE_PATH} ${JNI_INCLUDE_DIRS} )
   
-  #DEBUG
-  MESSAGE("Java Include Directory: " ${JAVA_INCLUDE_PATH})
-  MESSAGE("JNI Include Directory: " ${JNI_INCLUDE_DIRS})
-  
   set(CMAKE_SWIG_FLAGS -package "simpleitk")
   SWIG_add_module ( SimpleITKJava java SimpleITK.i SimpleITKJAVA_wrap.cxx )
 
