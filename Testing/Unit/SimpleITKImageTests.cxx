@@ -16,10 +16,10 @@ public:
     i->SetRegions ( region );
     i->Allocate();
     itkShortImage = i;
-    image = new itk::simple::Image ( itkShortImage, itk::simple::sitkInt16 );
+    image = new itk::simple::Image< itk::Image<int16_t, 3> >( i );
   }
 
-  itk::simple::Image::Pointer image;
+  itk::simple::ImageBase::Pointer image;
   itk::simple::SimpleImageBase::Pointer itkShortImage;
   itk::simple::SimpleImageBase::IndexType index;
   itk::simple::SimpleImageBase::SizeType size;

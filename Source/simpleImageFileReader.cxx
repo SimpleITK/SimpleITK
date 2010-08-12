@@ -14,14 +14,15 @@ namespace itk {
       return this->mFilename;
     }
 
-    Image::Pointer ImageFileReader::execute () {
-      Image::Pointer image = NULL;
+    ImageBase::Pointer ImageFileReader::execute () {
+      ImageBase::Pointer image = NULL;
       // Figure out what type of image we have
       typedef itk::Image<signed short,3> ImageType;
       typedef itk::ImageFileReader<ImageType> Reader;
       Reader::Pointer reader = Reader::New();
       reader->SetFileName ( this->mFilename.c_str() );
       reader->UpdateOutputInformation();
+
       switch ( reader->GetImageIO()->GetComponentType() ) {
       case itk::ImageIOBase::FLOAT:
         image = executeInternal<float> ( sitkFloat32 );
@@ -41,14 +42,14 @@ namespace itk {
     }
 
   template <class T>
-  Image::Pointer ImageFileReader::executeInternal( ImageDataType dt ) {
-    Image::Pointer image = NULL;
+  ImageBase::Pointer ImageFileReader::executeInternal( ImageDataType dt ) {
+    ImageBase::Pointer image = NULL;
     typedef itk::Image<T,3> ImageType;
     typedef itk::ImageFileReader<ImageType> Reader;
     typename Reader::Pointer reader = Reader::New();
     reader->SetFileName ( this->mFilename.c_str() );
     reader->Update();
-    image = new Image ( reader->GetOutput(), dt );
+    image = new Image<ImageType> ( reader->GetOutput() );
     reader->GetOutput()->DisconnectPipeline();
     return image;
   }
