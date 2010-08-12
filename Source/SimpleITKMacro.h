@@ -12,13 +12,43 @@
 #include <itkImage.h>
 #include <itkLightObject.h>
 #include <itkSmartPointer.h>
+#include <simplePixelTypeLists.h>
 
 
 namespace itk {
   namespace simple {
 
+// this is the list of types which we will try to instantiate
+  typedef BasicPixelTypeList InstantiatedPixelTypeList;
+
     // Define macros to aid in the typeless layer
     typedef itk::ImageBase<3> SimpleImageBase;
+
+
+  // predicate used with typelist::ForEach to initialize arrays for
+  // run-time dispatching
+  template < typename TObject>
+  struct PFuncArrayInitializer
+  {
+    PFuncArrayInitializer( typename TObject::MemberFunctionType *a ) : createFunctions( a ) {}
+
+    template <class TPixelType>
+    void operator()( TPixelType t )
+    {
+      typedef TPixelType                 PixelType;
+      typedef itk::Image< PixelType, 3 > ImageType;
+
+      // this maps the pixel type to an array index
+      int index = typelist::IndexOf< InstantiatedPixelTypeList, PixelType >::Result;
+
+      if ( index > 0 &&  index < typelist::Length< InstantiatedPixelTypeList >::Result )
+        {
+        createFunctions[index] =   &TObject::template executeInternal<PixelType>;
+        }
+    }
+  private:
+    typename TObject::MemberFunctionType *createFunctions;
+  };
 
     // To add a new type you must:
     // 1. Add an entry to ImageDataType
@@ -49,9 +79,9 @@ namespace itk {
 }    
 
 // Tell the compiler that we are going to explicitly instantiate these templates.
-extern template class itk::Image<uint8_t,3>;
-extern template class itk::Image<uint16_t,3>;
-extern template class itk::Image<uint32_t,3>;
-extern template class itk::Image<float,3>;
+//extern template class itk::Image<uint8_t,3>;
+//extern template class itk::Image<uint16_t,3>;
+//extern template class itk::Image<uint32_t,3>;
+//extern template class itk::Image<float,3>;
 
 #endif
