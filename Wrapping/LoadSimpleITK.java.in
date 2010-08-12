@@ -6,7 +6,7 @@
  * LoadSimpleITK.load() from within any java program.
  */
 
-package simpleitk;
+package org.itk.simple;
 
 public class LoadSimpleITK {
   public static void load() {
