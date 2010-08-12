@@ -7,6 +7,13 @@
 namespace itk {
   namespace simple {
     ImageHash::ImageHash () {
+      // initialize array to all zeros
+      std::fill_n( m_PFunction, size_t(typelist::Length< InstantiatedPixelTypeList >::Result), MemberFunctionType(0) );
+
+      // initialize function array with pointer
+      typelist::ForEach<PixelTypeList> arrayInitializer;
+      arrayInitializer( PFuncArrayInitializer<Self>( this->m_PFunction ) );
+
       this->mHashFunction = SHA1;
     }
 
@@ -30,20 +37,29 @@ namespace itk {
     ImageHash::HashFunction ImageHash::getHashFunction() { return this->mHashFunction; }
     ImageHash& ImageHash::setHashFunction ( ImageHash::HashFunction hashFunction ) { this->mHashFunction = hashFunction; return *this; }
 
-    std::string ImageHash::execute ( Image::Pointer image ) {
-      // Would likely want to check to see if the image is null
-      switch ( image->getImageDataType() ) {
-        sitkImageDataTypeSwitch ( return this->executeInternal<DataType>(image) );
-      }
-      return "";
+    std::string ImageHash::execute ( ImageBase::Pointer image ) {
+
+      int fnIndex = image->getImageDataType();
+      assert( fnIndex > 0 && fnIndex < typelist::Length< InstantiatedPixelTypeList >::Result );
+      if ( m_PFunction[ fnIndex ] )
+        {
+        return ((*this).*(m_PFunction[ fnIndex ]))(image);
+        }
+      else
+        {
+        // error
+        std::cerr << "pixel type is not supported!" << std::endl;
+        exit(1);
+        }
+      return std::string();
     }
 
-    template <class T> 
-    std::string ImageHash::executeInternal ( Image::Pointer inImage ) {
+    template <class T>
+    std::string ImageHash::executeInternal ( ImageBase::Pointer inImage ) {
       typedef itk::ByteSwapper<T> Swapper;
       typedef itk::Image<T,3> InputImageType;
       typename InputImageType::Pointer image = dynamic_cast <InputImageType*> ( inImage->getITKImage().GetPointer() );
-      
+
       if ( image.IsNull() ) {
         // Take some action
         return NULL;
@@ -59,7 +75,7 @@ namespace itk {
       typedef itk::ImageRegionConstIterator<InputImageType> IteratorType;
       IteratorType iterator = IteratorType ( image, image->GetLargestPossibleRegion() );
       iterator.GoToBegin();
-      
+
       unsigned long VoxelsPerSlice = inImage->getWidth() * inImage->getHeight();
       T* buffer = new T[VoxelsPerSlice];
       // Compute the hash value one slice at a time
@@ -70,7 +86,7 @@ namespace itk {
         }
         // Possibly byte swap
         Swapper::SwapRangeFromSystemToLittleEndian ( buffer, VoxelsPerSlice );
-        
+
         // Update the hash
         switch ( this->mHashFunction )
           {

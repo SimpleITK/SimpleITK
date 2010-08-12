@@ -5,6 +5,13 @@ namespace itk {
   namespace simple {
 
     Gaussian::Gaussian () {
+      // initialize array to all zeros
+      std::fill_n( m_PFunction, size_t(typelist::Length< InstantiatedPixelTypeList >::Result), MemberFunctionType(0) );
+
+      // initialize function array with pointer
+      typelist::ForEach<PixelTypeList> arrayInitializer;
+      arrayInitializer( PFuncArrayInitializer<Self>( this->m_PFunction ) );
+
       this->mSigma = 1.0;
     }
 
@@ -24,33 +31,42 @@ namespace itk {
       return this->mSigma;
     }
 
-    Image::Pointer Gaussian::execute ( Image::Pointer image ) {
-      // Would likely want to check to see if the image is null
-      switch ( image->getImageDataType() ) {
-        sitkImageDataTypeSwitch ( return this->executeInternal<DataType>(image) );
-      }
+    ImageBase::Pointer Gaussian::execute ( ImageBase::Pointer image )  {
+
+      int fnIndex = image->getImageDataType();
+      assert( fnIndex > 0 && fnIndex < typelist::Length< InstantiatedPixelTypeList >::Result );
+      if ( m_PFunction[ fnIndex ] )
+        {
+        return ((*this).*(m_PFunction[ fnIndex ]))(image);
+        }
+      else
+        {
+        // error
+        std::cerr << "pixel type is not supported!" << std::endl;
+        exit(1);
+        }
       return NULL;
     }
 
-    template <class T> 
-    Image::Pointer Gaussian::executeInternal ( Image::Pointer inImage ) {
+    template <class T>
+    ImageBase::Pointer Gaussian::executeInternal ( ImageBase::Pointer inImage ) {
       typedef itk::Image<T,3> InputImageType;
       typedef itk::Image<float,3> OutputImageType;
       typename InputImageType::Pointer image = dynamic_cast <InputImageType*> ( inImage->getITKImage().GetPointer() );
-      
+
       if ( image.IsNull() ) {
         // Take some action
         return NULL;
       }
-      
+
       typedef itk::RecursiveGaussianImageFilter<InputImageType, OutputImageType> GaussianFilterType;
       typename GaussianFilterType::Pointer filter = GaussianFilterType::New();
-      
+
       filter->SetInput ( image );
       filter->SetSigma ( this->mSigma );
       filter->Update();
-      
-      Image::Pointer out = new Image ( filter->GetOutput(), sitkFloat32 );
+
+      ImageBase::Pointer out = new Image<OutputImageType> ( filter->GetOutput() );
       out->getITKImage()->DisconnectPipeline();
       return out;
     }

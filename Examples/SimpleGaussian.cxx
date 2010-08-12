@@ -10,7 +10,7 @@ int main ( int argc, char* argv[] ) {
     return 1;
   }
 
-  itk::simple::Image::Pointer image;
+  itk::simple::ImageBase::Pointer image;
 
   itk::simple::ImageFileReader reader;
   reader.setFilename ( std::string ( argv[1] ) );

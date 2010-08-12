@@ -10,11 +10,17 @@ namespace itk {
     class ImageFileReader {
     public:
       typedef ImageFileReader Self;
+
+      typedef ImageBase::Pointer (Self::*MemberFunctionType)( ImageBase::Pointer );
+
       Self& setFilename ( std::string fn );
       std::string getFilename();
-      Image::Pointer execute();
+      ImageBase::Pointer execute();
+
+      template <class T> ImageBase::Pointer executeInternal ( ImageDataType datatype );
+
     private:
-      template <class T> Image::Pointer executeInternal ( ImageDataType datatype );
+
       std::string mFilename;
     };
 
