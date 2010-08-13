@@ -28,7 +28,7 @@ namespace itk {
       typedef AllPixelTypeList PixelTypeList;
 
       // array of pointers to member functions
-      MemberFunctionType  m_CreateFunctions[ typelist::Length< InstantiatedPixelTypeList >::Result ];
+      MemberFunctionType  m_PFunction[ typelist::Length< InstantiatedPixelTypeList >::Result ];
     };
 
   }
