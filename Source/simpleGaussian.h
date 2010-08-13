@@ -26,14 +26,17 @@ namespace itk {
       ImageBase::Pointer execute ( ImageBase::Pointer );
 
       double mSigma;
-      template <class T> ImageBase::Pointer executeInternal ( ImageBase::Pointer image );
 
     private:
+
+      template <class T> ImageBase::Pointer executeInternal ( ImageBase::Pointer image );
 
       // list of pixel types supported only basic since rgb and
       // vectors are not supported by this filter
       typedef BasicPixelTypeList PixelTypeList;
 
+      // friend to get access to executeInternal member 
+      friend class PFuncArrayInitializer<Self>;
 
       // array of pointers to member functions
       MemberFunctionType  m_PFunction[ typelist::Length< InstantiatedPixelTypeList >::Result ];
