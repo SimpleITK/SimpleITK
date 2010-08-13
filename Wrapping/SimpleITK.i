@@ -23,3 +23,15 @@ using namespace itk::simple;
 %include "simpleImageFileWriter.h"
 %include "simpleGaussian.h"
 %include "simpleImageHash.h"
+
+%pragma(java) jniclasscode=%{
+  static {
+    try {
+        LoadSimpleITK.load();
+    } catch (UnsatisfiedLinkError e) {
+      System.err.println("Native code library failed to load. \n" + e);
+      System.exit(1);
+    }
+  }
+%}
+

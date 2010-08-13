@@ -8,9 +8,6 @@ class SimpleGaussian {
   
   public static void main(String argv[]) {
     
-    // Load the library from the build directory
-    LoadSimpleITK.load();
-    
     // do some simple operations
     System.out.println("SimpleITK says 'Hello World' from Java");
     
