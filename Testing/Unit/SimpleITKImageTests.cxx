@@ -37,10 +37,10 @@ class Image : public ::testing::Test {
 public:
   virtual void SetUp() {
     // Create test images
-    double size1[3] = {64,65,66};
+    double size1[3] = {12,11,10};
     sitkTestSetupImage(shortImage, itkShortImage, size1, int16_t, itk::simple::sitkInt16);
     sitkTestSetupImage(floatImage, itkFloatImage, size1, float, itk::simple::sitkFloat32);
-    double size2[3] = {100,100,100};
+    double size2[3] = {30,30,30};
     sitkTestSetupImage(differentSizedImage, itkDifferentSizedImage, size2, int16_t, itk::simple::sitkInt16);
   }
   
@@ -67,8 +67,8 @@ TEST_F(Image,Create) {
 
 TEST_F(Image,Hash) {
   itk::simple::ImageHash hasher;
-  EXPECT_EQ ( "a5104020df8b713235736a5990874c8877aa92ae", hasher.setHashFunction ( itk::simple::ImageHash::SHA1 ).execute ( shortImage ) ) << " SHA1 hash value";
-  EXPECT_EQ ( "ddeede13a1e83abc35798f347d59113a", hasher.setHashFunction ( itk::simple::ImageHash::MD5 ).execute ( shortImage ) ) << " MD5 hash value";
+  EXPECT_EQ ( "d160ca5e5687e4a6d7b2289c41dadc19287b209f", hasher.setHashFunction ( itk::simple::ImageHash::SHA1 ).execute ( shortImage ) ) << " SHA1 hash value";
+  EXPECT_EQ ( "52e81e6129f3fac5ec17200b48c0248e", hasher.setHashFunction ( itk::simple::ImageHash::MD5 ).execute ( shortImage ) ) << " MD5 hash value";
 }
 
 TEST_F(Image,AddImage) {
@@ -77,31 +77,24 @@ TEST_F(Image,AddImage) {
   itk::simple::AddImage imageAdder;
   itk::simple::Image::Pointer out = imageAdder.execute( shortImage, floatImage );
   
-  // Check results
-  /*
-  typedef itk::Image<float,3> ImageType;
-  typedef itk::ImageRegionIterator<ImageType> IteratorType;
-  ImageType::Pointer im = out->getITKImage();
-  IteratorType it(im, im->GetLargestPossibleRegion());
-  it.GoToBegin();
-  while (!it.IsAtEnd())
-    {
-    std::cout << "px = " << it.Get() << std::endl;
-    }
-  */
-  
-  
-  
-  /*
-  typedef itk::ImageRegionIterator<itk::simple::SimpleImageBase> OutputIterType;
-  OutputIterType it1(out->getITKImage(), out->getITKImage()->GetRequestedRegion());
+  // Make sure addition was done correctly
   int counter = 0;
-  while (!it1.IsAtEnd())
-    {
-    //EXPECT_EQ( (int)it1.Get(), 2*counter );
+  sitkForEachPixelR( out, px, 
+    ASSERT_TRUE( 2*counter == (int)px );
     ++counter;
-    }
-  */
+  );
+  
+  
+  // Try adding different sized images
+  sitkForEachPixelW(differentSizedImage, px, 
+    px = 1;
+  )
+  itk::simple::Image::Pointer out2 = imageAdder.execute( shortImage, differentSizedImage );
+  counter = 0;
+  sitkForEachPixelR( out2, px, 
+    ASSERT_TRUE( counter+1 == (int)px );
+    ++counter;
+  );
 }
 
 
