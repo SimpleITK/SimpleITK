@@ -44,14 +44,16 @@ public:
     sitkTestSetupImage(differentSizedImage, itkDifferentSizedImage, size2, int16_t, itk::simple::sitkInt16);
   }
   
+  typedef itk::Image<int16_t,3> ShortImageType;
   itk::simple::Image::Pointer shortImage;
-  itk::simple::SimpleImageBase::Pointer itkShortImage;
+  ShortImageType::Pointer itkShortImage;
   
+  typedef itk::Image<float,3> FloatImageType;
   itk::simple::Image::Pointer floatImage;
-  itk::simple::SimpleImageBase::Pointer itkFloatImage;
+  FloatImageType::Pointer itkFloatImage;
   
   itk::simple::Image::Pointer differentSizedImage;
-  itk::simple::SimpleImageBase::Pointer itkDifferentSizedImage;
+  ShortImageType::Pointer itkDifferentSizedImage;
 };
 
 

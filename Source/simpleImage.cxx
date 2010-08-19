@@ -6,14 +6,23 @@
 namespace itk {
   namespace simple {
     
-    Image::Image ( SimpleImageBase::Pointer image, ImageDataType datatype ) {
-      mImage = image;
-      mDataType = datatype;
-    }
+    //Image::Image ( SimpleImageBase::Pointer image, ImageDataType datatype ) {
+    //  mImage = image;
+    //  mDataType = datatype;
+    //}
     
     ////////////////////////////////
     // Type specific constructors //
     ////////////////////////////////
+
+#define simpleImageDefineConstructor(pixelType) \
+    Image::Image ( itk::Image<pixelType,3>::Pointer image, ImageDataType datatype ) { \
+      mDataType = datatype; \
+      switch (datatype) { \
+        sitkImageDataTypeSwitch(DataType, (simpleImageConstructorCast(image, pixelType, DataType)) ); \
+      } \
+    }
+    
 #define simpleImageConstructorCast(inImagePointer, InPxType, OutPxType) { \
     typedef itk::Image<InPxType,3> InType; \
     typedef itk::Image<OutPxType,3> OutType; \
@@ -24,18 +33,8 @@ namespace itk {
     mImage = filter->GetOutput(); \
     }
     
-    //
-    // int (DEBUG)
-    //
-    Image::Image ( itk::Image<int,3>::Pointer image, ImageDataType datatype ) {
-      
-      mDataType = sitkFloat32;
-      
-      // convert to the desired data type
-      switch (datatype) {
-        sitkImageDataTypeSwitch(DataType, (simpleImageConstructorCast(image, int, DataType)) );
-      }
-    }
+    // Create the constructors for each type
+    sitkRepeatForEachType(simpleImageDefineConstructor);
     
     
     //////////////////////
@@ -92,7 +91,7 @@ namespace itk {
     ///////////////////////////////////
     // Type Specific Pixel Accessors //
     ///////////////////////////////////
-    
+
 #define simpleImagePixelRetrieval(DataType, outType, x, y, z) {\
     typedef itk::Image<DataType,3> ITKImageType; \
     ITKImageType* itkImage = dynamic_cast<ITKImageType*>(mImage.GetPointer()); \
@@ -101,25 +100,15 @@ namespace itk {
     ITKImageType::PixelType px = itkImage->GetPixel(idx); \
     *out = (outType)px; \
     }
+
+#define simpleImageDefineGetPixel(pixelType) \
+    void Image::getPixel(int x, int y, int z, pixelType* out) { \
+      switch (mDataType) { \
+        sitkImageDataTypeSwitch(DataType, (simpleImagePixelRetrieval(DataType, pixelType, x, y, z))) \
+      } \
+    }
     
-    //
-    // float
-    //
-    /*
-    template <class TPixelType>
-    TPixelType Image::getPixel(int x, int y, int z) {
-      TPixelType out;
-      switch (mDataType) {
-        sitkImageDataTypeSwitch(DataType, (simpleImagePixelRetrieval(DataType, TPixelType, x, y, z)))
-      }
-      return out;
-    }
-    */
-    void Image::getPixel(int x, int y, int z, float* out) {
-      switch (mDataType) {
-        sitkImageDataTypeSwitch(DataType, (simpleImagePixelRetrieval(DataType, float, x, y, z)))
-      }
-    }
+    sitkRepeatForEachType(simpleImageDefineGetPixel);
     
   }
 }

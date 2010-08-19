@@ -12,12 +12,15 @@ namespace itk {
     class Image : public LightObject {
     
     public:
-      Image ( SimpleImageBase::Pointer image, ImageDataType datatype );
+      //Image ( SimpleImageBase::Pointer image, ImageDataType datatype );
+      
+#define simpleImageDeclareConstructor(pixelType) \
+      Image ( itk::Image<pixelType,3>::Pointer image, ImageDataType datatype );
       
       /**
-       * Constructors for each supported pixel type (NOT DONE YET... WILL USE MACRO)
+       * Constructors for each supported pixel type
        */
-      Image ( itk::Image<int,3>::Pointer image, ImageDataType datatype );
+      sitkRepeatForEachType( simpleImageDeclareConstructor );
       
       typedef Image Self;
       typedef SmartPointer<Self> Pointer;
@@ -52,13 +55,12 @@ namespace itk {
        */
       std::string toString();
       
+#define simpleImageDeclareGetPixel(pixelType) \
+      void getPixel(int x, int y, int z, pixelType* out);
       /**
        * Pixel accessors for each pixel type
        */
-      //template <class TPixelType>
-      //TPixelType getPixel(int x, int y, int z);
-      void getPixel(int x, int y, int z, float* out);
-      //uint32_t getPixel(int x, int y, int z);
+      sitkRepeatForEachType(simpleImageDeclareGetPixel);
       
       
     private:
