@@ -10,8 +10,11 @@ namespace itk {
       typedef Image Self;
       typedef SmartPointer<Self> Pointer;
 
-      Image ( SimpleImageBase::Pointer image, ImageDataType datatype );
-
+      //Image ( SimpleImageBase::Pointer image, ImageDataType datatype );
+      
+      template<class TDataType>
+      Image ( typename itk::Image<TDataType,3>::Pointer image, ImageDataType datatype );
+      
       SimpleImageBase::Pointer getITKImage();
       ImageDataType getImageDataType();
 

@@ -27,7 +27,7 @@ namespace itk {
     Image::Pointer Gaussian::execute ( Image::Pointer image ) {
       // Would likely want to check to see if the image is null
       switch ( image->getImageDataType() ) {
-        sitkImageDataTypeSwitch ( return this->executeInternal<DataType>(image) );
+        sitkImageDataTypeSwitch ( DataType, return this->executeInternal<DataType>(image) );
       }
       return NULL;
     }
