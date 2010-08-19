@@ -6,6 +6,7 @@
 #include <simpleImageFileReader.h>
 #include <simpleImageFileWriter.h>
 #include <simpleImageHash.h>
+#include <simpleAddImage.h>
 
 
 #endif

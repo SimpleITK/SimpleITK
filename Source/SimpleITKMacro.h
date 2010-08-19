@@ -19,6 +19,7 @@ namespace itk {
 
     // Define macros to aid in the typeless layer
     typedef itk::ImageBase<3> SimpleImageBase;
+    //typedef itk::Image<float,3> SimpleImageBase;
 
     // To add a new type you must:
     // 1. Add an entry to ImageDataType
@@ -32,17 +33,25 @@ namespace itk {
       sitkFloat32,  // 32 bit float
     };
 
+#define sitkImageDataTypeCase(typeN, type, name, call ) \
+    case typeN: { typedef type name; call; }; break
 
-#define sitkImageDataTypeCase(typeN, type, call ) \
-    case typeN: { typedef type DataType; call; }; break
+#define sitkImageDataTypeSwitch( name, call ) \
+    sitkImageDataTypeCase ( sitkUInt8, uint8_t, name, call ); \
+    sitkImageDataTypeCase ( sitkInt16, int16_t, name, call ); \
+    sitkImageDataTypeCase ( sitkInt32, int32_t, name, call ); \
+    sitkImageDataTypeCase ( sitkFloat32, float, name, call );
 
-#define sitkImageDataTypeSwitch( call ) \
-    sitkImageDataTypeCase ( sitkUInt8, uint8_t, call ); \
-    sitkImageDataTypeCase ( sitkInt16, int16_t, call ); \
-    sitkImageDataTypeCase ( sitkInt32, int32_t, call ); \
-    sitkImageDataTypeCase ( sitkFloat32, float, call );
-
-
+/*
+#define sitkForEachPixel(simpleImage, call) \
+    {
+    typedef itk::Image<float, 3> ImageType;
+    typedef itk::ImageRegionIterator<ImageType> IteratorType;
+    
+    
+    
+    }\
+*/
 
 
   }
