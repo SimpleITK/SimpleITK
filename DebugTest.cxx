@@ -15,7 +15,7 @@ int main() {
   //
   // create a test itk image
   //
-  typedef itk::Image<int,3> ITKImageType;
+  typedef itk::Image<float,3> ITKImageType;
   typedef ITKImageType::RegionType RegionType;
   typedef ITKImageType::SizeType SizeType;
   typedef ITKImageType::IndexType IndexType;
@@ -43,11 +43,11 @@ int main() {
   pxIdx[0] = 2;
   pxIdx[1] = 3;
   pxIdx[2] = 4;
-  itkIm->SetPixel(pxIdx, 5);
+  itkIm->SetPixel(pxIdx, 5.432);
   
   // print out pixel contents
-  int itkVal1 = itkIm->GetPixel(idx);
-  int itkVal2 = itkIm->GetPixel(pxIdx);
+  float itkVal1 = itkIm->GetPixel(idx);
+  float itkVal2 = itkIm->GetPixel(pxIdx);
   std::cout << "itkIm(0,0,0) = " << itkVal1 << " itkIm(2,3,4) = " << itkVal2 << std::endl;
   
   
@@ -55,11 +55,11 @@ int main() {
   // Try converting 
   //
   typedef itk::simple::Image SimpleImageType;
-  SimpleImageType::Pointer simpleIm = new SimpleImageType(itkIm, itk::simple::sitkFloat32);
+  SimpleImageType::Pointer simpleIm = new SimpleImageType(itkIm, itk::simple::sitkInt32);
   
   // print out pixel contents
-  float val1;
-  float val2;
+  int val1;
+  int val2;
   simpleIm->getPixel(0,0,0, &val1);
   simpleIm->getPixel(2,3,4, &val2);
   std::cout << "simpleIm(0,0,0) = " << val1 << " simpleIm(2,3,4) = " << val2 << std::endl;

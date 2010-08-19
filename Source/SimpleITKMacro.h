@@ -42,16 +42,15 @@ namespace itk {
     sitkImageDataTypeCase ( sitkInt32, int32_t, name, call ); \
     sitkImageDataTypeCase ( sitkFloat32, float, name, call );
 
-/*
-#define sitkForEachPixel(simpleImage, call) \
-    {
-    typedef itk::Image<float, 3> ImageType;
-    typedef itk::ImageRegionIterator<ImageType> IteratorType;
-    
-    
-    
-    }\
-*/
+/**
+ * Takes another macro as the argument which itself takes a type as its
+ * single argument and repeates the call for all defined types
+ */
+#define sitkRepeatForEachType( innerMacro ) \
+    innerMacro( uint8_t ); \
+    innerMacro( int16_t ); \
+    innerMacro( int32_t ); \
+    innerMacro( float );
 
 
   }
