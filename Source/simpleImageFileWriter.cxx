@@ -24,7 +24,7 @@ namespace itk {
       return this->mFilename;
     }
 
-    ImageFileWriter& ImageFileWriter::execute ( ImageBase::Pointer image ) {
+    ImageFileWriter& ImageFileWriter::execute ( Image::Pointer image ) {
       int fnIndex = image->getImageDataType();
       assert( fnIndex > 0 && fnIndex < typelist::Length< InstantiatedPixelTypeList >::Result );
       if ( m_PFunction[ fnIndex ] )
@@ -41,7 +41,7 @@ namespace itk {
     }
 
     template <class T>
-    ImageFileWriter& ImageFileWriter::executeInternal( ImageBase::Pointer inImage ) {
+    ImageFileWriter& ImageFileWriter::executeInternal( Image::Pointer inImage ) {
       typedef itk::Image<T,3> InputImageType;
       typename InputImageType::Pointer image = dynamic_cast <InputImageType*> ( inImage->getITKImage().GetPointer() );
 

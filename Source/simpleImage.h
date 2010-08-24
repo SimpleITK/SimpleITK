@@ -8,13 +8,11 @@
 namespace itk {
   namespace simple {
 
-    class ImageBase
+    class Image
       : public LightObject {
     public:
-      typedef ImageBase Self;
+      typedef Image              Self;
       typedef SmartPointer<Self> Pointer;
-
-      ImageBase( SimpleImageBase::Pointer image );
 
       // could return -1 if in valid
       virtual SimpleImageBase::Pointer getITKImage();
@@ -26,6 +24,8 @@ namespace itk {
       unsigned long getDepth();
 
       std::string toString();
+    protected:
+      Image( SimpleImageBase::Pointer image );
 
     private:
 
@@ -33,8 +33,8 @@ namespace itk {
     };
 
   template <class TImageType>
-  class Image
-    : public ImageBase
+  class ImageImplementation
+    : public Image
   {
   public:
     typedef Image Self;
@@ -42,7 +42,7 @@ namespace itk {
 
     typedef TImageType  ImageType;
 
-    Image ( typename ImageType::Pointer image)  : ImageBase(image.GetPointer()) {}
+    ImageImplementation ( typename ImageType::Pointer image)  : Image(image.GetPointer()) {}
 
 
     virtual int getImageDataType(void)

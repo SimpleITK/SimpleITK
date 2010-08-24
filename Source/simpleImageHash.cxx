@@ -37,7 +37,7 @@ namespace itk {
     ImageHash::HashFunction ImageHash::getHashFunction() { return this->mHashFunction; }
     ImageHash& ImageHash::setHashFunction ( ImageHash::HashFunction hashFunction ) { this->mHashFunction = hashFunction; return *this; }
 
-    std::string ImageHash::execute ( ImageBase::Pointer image ) {
+    std::string ImageHash::execute ( Image::Pointer image ) {
 
       int fnIndex = image->getImageDataType();
       assert( fnIndex > 0 && fnIndex < typelist::Length< InstantiatedPixelTypeList >::Result );
@@ -55,7 +55,7 @@ namespace itk {
     }
 
     template <class T>
-    std::string ImageHash::executeInternal ( ImageBase::Pointer inImage ) {
+    std::string ImageHash::executeInternal ( Image::Pointer inImage ) {
       typedef itk::ByteSwapper<T> Swapper;
       typedef itk::Image<T,3> InputImageType;
       typename InputImageType::Pointer image = dynamic_cast <InputImageType*> ( inImage->getITKImage().GetPointer() );

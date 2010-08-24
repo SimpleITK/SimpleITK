@@ -12,7 +12,7 @@ namespace itk {
       typedef Gaussian Self;
 
       // function pointer type
-      typedef ImageBase::Pointer (Self::*MemberFunctionType)( ImageBase::Pointer );
+      typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer );
 
       Gaussian();
 
@@ -23,13 +23,13 @@ namespace itk {
       // Print ourselves out
       std::string toString();
 
-      ImageBase::Pointer execute ( ImageBase::Pointer );
+      Image::Pointer execute ( Image::Pointer );
 
       double mSigma;
 
     private:
 
-      template <class T> ImageBase::Pointer executeInternal ( ImageBase::Pointer image );
+      template <class T> Image::Pointer executeInternal ( Image::Pointer image );
 
       // list of pixel types supported only basic since rgb and
       // vectors are not supported by this filter
