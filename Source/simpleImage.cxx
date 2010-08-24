@@ -3,28 +3,28 @@
 namespace itk {
   namespace simple {
 
-  ImageBase::ImageBase( SimpleImageBase::Pointer image ) :mImage(image) {}
+  Image::Image( SimpleImageBase::Pointer image ) :mImage(image) {}
   
-  SimpleImageBase::Pointer ImageBase::getITKImage() { return mImage; }
+  SimpleImageBase::Pointer Image::getITKImage() { return mImage; }
 
 
-    std::string ImageBase::toString() {
+    std::string Image::toString() {
       std::ostringstream out;
       this->mImage->Print ( out );
       return out.str();
     }
 
-    unsigned long ImageBase::getWidth() {
+    unsigned long Image::getWidth() {
       SimpleImageBase::RegionType region;
       region = this->mImage->GetLargestPossibleRegion();
       return region.GetSize()[0];
     }
-    unsigned long ImageBase::getHeight() {
+    unsigned long Image::getHeight() {
       SimpleImageBase::RegionType region;
       region = this->mImage->GetLargestPossibleRegion();
       return region.GetSize()[1];
     }
-    unsigned long ImageBase::getDepth() {
+    unsigned long Image::getDepth() {
       SimpleImageBase::RegionType region;
       region = this->mImage->GetLargestPossibleRegion();
       return region.GetSize()[2];

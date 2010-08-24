@@ -31,7 +31,7 @@ namespace itk {
       return this->mSigma;
     }
 
-    ImageBase::Pointer Gaussian::execute ( ImageBase::Pointer image )  {
+    Image::Pointer Gaussian::execute ( Image::Pointer image )  {
 
       int fnIndex = image->getImageDataType();
       assert( fnIndex > 0 && fnIndex < typelist::Length< InstantiatedPixelTypeList >::Result );
@@ -49,7 +49,7 @@ namespace itk {
     }
 
     template <class T>
-    ImageBase::Pointer Gaussian::executeInternal ( ImageBase::Pointer inImage ) {
+    Image::Pointer Gaussian::executeInternal ( Image::Pointer inImage ) {
       typedef itk::Image<T,3> InputImageType;
       typedef itk::Image<float,3> OutputImageType;
       typename InputImageType::Pointer image = dynamic_cast <InputImageType*> ( inImage->getITKImage().GetPointer() );
@@ -66,7 +66,7 @@ namespace itk {
       filter->SetSigma ( this->mSigma );
       filter->Update();
 
-      ImageBase::Pointer out = new Image<OutputImageType> ( filter->GetOutput() );
+      Image::Pointer out = new ImageImplementation<OutputImageType> ( filter->GetOutput() );
       out->getITKImage()->DisconnectPipeline();
       return out;
     }

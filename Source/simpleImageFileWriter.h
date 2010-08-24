@@ -12,17 +12,17 @@ namespace itk {
       typedef ImageFileWriter Self;
 
       // function pointer type
-      typedef Self& (Self::*MemberFunctionType)( ImageBase::Pointer );
+      typedef Self& (Self::*MemberFunctionType)( Image::Pointer );
 
       ImageFileWriter( void );
 
       Self& setFilename ( std::string fn );
       std::string getFilename();
-      Self& execute ( ImageBase::Pointer );
+      Self& execute ( Image::Pointer );
 
     private:
 
-      template <class T> Self& executeInternal ( ImageBase::Pointer );
+      template <class T> Self& executeInternal ( Image::Pointer );
 
       std::string mFilename;
 

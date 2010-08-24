@@ -12,7 +12,7 @@ namespace itk {
       typedef ImageHash Self;
    
       // function pointer type
-      typedef std::string (Self::*MemberFunctionType)( ImageBase::Pointer );
+      typedef std::string (Self::*MemberFunctionType)( Image::Pointer );
 
       ImageHash();
 
@@ -23,13 +23,13 @@ namespace itk {
       // Print ourselves out
       std::string toString();
 
-      std::string execute ( ImageBase::Pointer );
+      std::string execute ( Image::Pointer );
 
 
     private:
       HashFunction mHashFunction;
 
-      template <class T> std::string executeInternal ( ImageBase::Pointer image );
+      template <class T> std::string executeInternal ( Image::Pointer image );
 
       // list of pixel types supported (not  sure what this would
       // actually work with)
