@@ -42,7 +42,11 @@ namespace itk {
 
     typedef TImageType  ImageType;
 
-    ImageImplementation ( typename ImageType::Pointer image)  : Image(image.GetPointer()) {}
+    ImageImplementation ( typename ImageType::Pointer image)  : Image(image.GetPointer()) 
+      {
+        // THIS SHOULD BE A STATIC ASSERT
+        assert( typelist::IndexOf< InstantiatedPixelTypeList >::Result != -1 );
+      }
 
 
     virtual int getImageDataType(void)
