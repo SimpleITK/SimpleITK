@@ -14,6 +14,9 @@ namespace itk {
       // function pointer type
       typedef Self& (Self::*MemberFunctionType)( Image::Pointer );
 
+      // list of pixel types supported
+      typedef AllPixelTypeList PixelTypeList;
+
       ImageFileWriter( void );
 
       Self& setFilename ( std::string fn );
@@ -25,9 +28,6 @@ namespace itk {
       template <class T> Self& executeInternal ( Image::Pointer );
 
       std::string mFilename;
-
-      // list of pixel types supported
-      typedef AllPixelTypeList PixelTypeList;
 
       // friend to get access to executeInternal member 
       friend class PFuncArrayInitializer<Self>;

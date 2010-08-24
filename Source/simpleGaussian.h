@@ -14,6 +14,11 @@ namespace itk {
       // function pointer type
       typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer );
 
+      // list of pixel types supported only basic since rgb and
+      // vectors are not supported by this filter
+      typedef BasicPixelTypeList PixelTypeList;
+
+
       Gaussian();
 
       // Sigma is always measured in physical units
@@ -30,10 +35,6 @@ namespace itk {
     private:
 
       template <class T> Image::Pointer executeInternal ( Image::Pointer image );
-
-      // list of pixel types supported only basic since rgb and
-      // vectors are not supported by this filter
-      typedef BasicPixelTypeList PixelTypeList;
 
       // friend to get access to executeInternal member 
       friend class PFuncArrayInitializer<Self>;
