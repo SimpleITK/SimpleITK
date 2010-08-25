@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <SimpleITK.h>
 #include <SimpleITKMacro.h>
+#include "SimpleITKTestHarness.h"
 
 class Image : public ::testing::Test {
 public:

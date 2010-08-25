@@ -23,6 +23,10 @@ using namespace itk::simple;
 %include "simpleImageFileWriter.h"
 %include "simpleGaussian.h"
 %include "simpleImageHash.h"
+%include "simpleTransform.h"
+%include "simpleResample.h"
+%include "simpleCastImageFilter.h"
+%include "simpleAffineRegistration.h"
 
 %pragma(java) jniclasscode=%{
   static {
