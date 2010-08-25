@@ -7,13 +7,6 @@
 namespace itk {
   namespace simple {
     ImageHash::ImageHash () {
-      // initialize array to all zeros
-      std::fill_n( m_PFunction, size_t(typelist::Length< InstantiatedPixelTypeList >::Result), MemberFunctionType(0) );
-
-      // initialize function array with pointer
-      typelist::ForEach<PixelTypeList> arrayInitializer;
-      arrayInitializer( detail::PFuncArrayInitializer<Self>( this->m_PFunction ) );
-
       this->mHashFunction = SHA1;
     }
 
@@ -40,18 +33,9 @@ namespace itk {
     std::string ImageHash::execute ( Image::Pointer image ) {
 
       int fnIndex = image->getImageDataType();
-      assert( fnIndex > 0 && fnIndex < typelist::Length< InstantiatedPixelTypeList >::Result );
-      if ( m_PFunction[ fnIndex ] )
-        {
-        return ((*this).*(m_PFunction[ fnIndex ]))(image);
-        }
-      else
-        {
-        // error
-        std::cerr << "pixel type is not supported!" << std::endl;
-        exit(1);
-        }
-      return std::string();
+
+      // todo fix this ugly syntax
+      return ((*this).*(m_MemberFactory.GetMemberFunction( fnIndex )))(image);
     }
 
     template <class T>
