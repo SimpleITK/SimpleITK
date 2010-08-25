@@ -2,7 +2,9 @@
 #define __simpleGaussian_h
 
 #include <SimpleITKMacro.h>
+#include <simpleITKDetail.h>
 #include <simpleImage.h>
+
 
 namespace itk {
   namespace simple {
@@ -37,7 +39,7 @@ namespace itk {
       template <class T> Image::Pointer executeInternal ( Image::Pointer image );
 
       // friend to get access to executeInternal member 
-      friend class PFuncArrayInitializer<Self>;
+      friend class detail::PFuncArrayInitializer<Self>;
 
       // array of pointers to member functions
       MemberFunctionType  m_PFunction[ typelist::Length< InstantiatedPixelTypeList >::Result ];

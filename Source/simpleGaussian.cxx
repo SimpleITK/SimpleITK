@@ -10,7 +10,7 @@ namespace itk {
 
       // initialize function array with pointer
       typelist::ForEach<PixelTypeList> arrayInitializer;
-      arrayInitializer( PFuncArrayInitializer<Self>( this->m_PFunction ) );
+      arrayInitializer( detail::PFuncArrayInitializer<Self>( this->m_PFunction ) );
 
       this->mSigma = 1.0;
     }
