@@ -17,6 +17,8 @@ namespace itk {
       std::string getFilename();
       Image::Pointer execute();
 
+    protected:
+
       template <class T> Image::Pointer executeInternal ( void );
 
     private:

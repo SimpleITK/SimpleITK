@@ -4,6 +4,7 @@
 #include <SimpleITKMacro.h>
 #include <simpleITKDetail.h>
 #include <simpleImage.h>
+#include <functional>
 
 namespace itk {
   namespace simple {
@@ -33,8 +34,8 @@ namespace itk {
       // friend to get access to executeInternal member 
       friend class detail::PFuncArrayInitializer<Self>;
 
-      // array of pointers to member functions
-      MemberFunctionType  m_PFunction[ typelist::Length< InstantiatedPixelTypeList >::Result ];
+      detail::MemberFunctionFactory<Self> m_MemberFactory;
+
     };
 
   }

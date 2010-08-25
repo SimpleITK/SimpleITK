@@ -15,6 +15,12 @@ namespace itk {
       // function pointer type
       typedef std::string (Self::*MemberFunctionType)( Image::Pointer );
 
+      // list of pixel types supported (not  sure what this would
+      // actually work with)
+      typedef BasicPixelTypeList PixelTypeList;
+
+
+
       ImageHash();
 
       enum HashFunction { SHA1, MD5 };
@@ -32,15 +38,10 @@ namespace itk {
 
       template <class T> std::string executeInternal ( Image::Pointer image );
 
-      // list of pixel types supported (not  sure what this would
-      // actually work with)
-      typedef BasicPixelTypeList PixelTypeList;
-
       // friend to get access to executeInternal member
       friend class detail::PFuncArrayInitializer<Self>;
 
-      // array of pointers to member functions
-      MemberFunctionType  m_PFunction[ typelist::Length< InstantiatedPixelTypeList >::Result ];
+      detail::MemberFunctionFactory<Self> m_MemberFactory;
     };
 
 
