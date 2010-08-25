@@ -46,7 +46,7 @@ namespace itk {
       
       if ( image.IsNull() ) {
         // Take some action
-        return NULL;
+        return "ImageIsNull";
       }
 
       ::MD5 md5;

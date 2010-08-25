@@ -11,12 +11,17 @@ SET(GTEST_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/GoogleTest" PARENT_SCOPE)
 # The gtest library directories.
 SET(GTEST_LIBRARY_DIRS "${CMAKE_CURRENT_BINARY_DIR}" PARENT_SCOPE)
 
+# Test data directory
+FIND_PATH(ITK_DATA_ROOT ITKData.readme ${ITKTesting_SOURCE_DIR}/Data $ENV{ITK_DATA_ROOT})
+set(TEST_HARNESS_TEMP_DIRECTORY ${SimpleITK_BINARY_DIR}/Temporary)
+set(TEST_HARNESS_DATA_DIRECTORY ${ITK_DATA_ROOT})
+
 
 # Build Google Testing
 set ( GTestSource
   GoogleTest/gtest/gtest-all.cc
 )
-include_directories ( GoogleTest )
+include_directories ( GoogleTest ${CMAKE_SOURCE_DIR})
 
 add_library(gtest ${GTestSource})
 link_libraries(gtest)
@@ -27,6 +32,7 @@ endif()
 
 set ( TestSource
   SimpleITKImageTests.cxx
+  SimpleITKRegistrationTests.cxx
   )
 
 add_executable(SimpleITKUnitTestDriver 
@@ -67,8 +73,8 @@ macro(ADD_GOOGLE_TESTS executable)
     list ( SORT AllTestsHits )
     # Add all the remaining tests to CTest's test list
     foreach(hit ${AllTestsHits})
-      message ( STATUS "Adding test ${executable} ${hit}" )
-      add_test(${hit} ${executable} --gtest_filter=${hit})
+      message ( STATUS "Adding test ${executable} ${hit} ${TEST_HARNESS_DATA_DIRECTORY} ${TEST_HARNESS_TEMP_DIRECTORY}" )
+      add_test(${hit} ${executable} --gtest_filter=${hit} ${TEST_HARNESS_DATA_DIRECTORY} ${TEST_HARNESS_TEMP_DIRECTORY})
     endforeach(hit)
   endforeach()
 endmacro()

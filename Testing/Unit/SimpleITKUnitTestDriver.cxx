@@ -1,7 +1,10 @@
 #include <iostream>
 
 #include <gtest/gtest.h>
+#include <itksys/SystemTools.hxx>
+#include "SimpleITKTestHarness.h"
 
+DataFinder dataFinder;
 int main(int argc, char* argv[])
 {
   for ( int i = 0; i < argc; i++ ) {
@@ -26,5 +29,23 @@ int main(int argc, char* argv[])
     }
   }
   testing::InitGoogleTest ( &argc, argv );
+  if ( argc > 1 ) {
+    dataFinder.setDirectory ( argv[1] );
+  } else {
+    std::string dir;
+    if ( itksys::SystemTools::GetEnv ( "SIMPLEITKTESTDATADIR", dir ) ) {
+      dataFinder.setDirectory ( dir );
+    }
+  }
+  if ( argc > 2 ) {
+    dataFinder.setOutputDirectory ( argv[2] );
+  } else {
+    std::string dir;
+    if ( itksys::SystemTools::GetEnv ( "SIMPLEITKTESTOUTPUTDIR", dir ) ) {
+      dataFinder.setOutputDirectory ( dir );
+    } else {
+      dataFinder.setOutputDirectory ( "." );
+    }
+  }
   return RUN_ALL_TESTS();
 }
