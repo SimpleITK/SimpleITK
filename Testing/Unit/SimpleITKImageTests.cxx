@@ -16,7 +16,7 @@ public:
     i->SetRegions ( region );
     i->Allocate();
     itkShortImage = i;
-    image = new itk::simple::ImageImplementation< itk::Image<int16_t, 3> >( i );
+    image = new itk::simple::Image( i );
   }
 
   itk::simple::Image::Pointer image;

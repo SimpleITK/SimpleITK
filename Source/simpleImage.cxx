@@ -1,33 +1,46 @@
 #include "simpleImage.h"
 
-namespace itk {
-  namespace simple {
+namespace itk
+{
+namespace simple
+{
 
-  Image::Image( SimpleImageBase::Pointer image ) :mImage(image) {}
-  
-  SimpleImageBase::Pointer Image::getITKImage() { return mImage; }
+SimpleImageBase::Pointer Image::getITKImage( void )
+{
+  return m_Image;
+}
 
+ImageDataType Image::getImageDataType( void )
+{
+  return this->m_PimpleImage->getImageDataType();
+}
 
-    std::string Image::toString() {
-      std::ostringstream out;
-      this->mImage->Print ( out );
-      return out.str();
-    }
+std::string Image::toString( void )
+{
+  std::ostringstream out;
+  this->m_Image->Print ( out );
+  return out.str();
+}
 
-    unsigned long Image::getWidth() {
-      SimpleImageBase::RegionType region;
-      region = this->mImage->GetLargestPossibleRegion();
-      return region.GetSize()[0];
-    }
-    unsigned long Image::getHeight() {
-      SimpleImageBase::RegionType region;
-      region = this->mImage->GetLargestPossibleRegion();
-      return region.GetSize()[1];
-    }
-    unsigned long Image::getDepth() {
-      SimpleImageBase::RegionType region;
-      region = this->mImage->GetLargestPossibleRegion();
-      return region.GetSize()[2];
-    }
-  }
+uint64_t Image::getWidth( void )
+{
+  SimpleImageBase::RegionType region;
+  region = this->m_Image->GetLargestPossibleRegion();
+  return region.GetSize()[0];
+}
+
+uint64_t Image::getHeight( void )
+{
+  SimpleImageBase::RegionType region;
+  region = this->m_Image->GetLargestPossibleRegion();
+  return region.GetSize()[1];
+}
+
+uint64_t Image::getDepth( void )
+{
+  SimpleImageBase::RegionType region;
+  region = this->m_Image->GetLargestPossibleRegion();
+  return region.GetSize()[2];
+}
+}
 }
