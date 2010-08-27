@@ -50,7 +50,7 @@ namespace itk {
       filter->SetSigma ( this->mSigma );
       filter->Update();
 
-      Image::Pointer out = new ImageImplementation<OutputImageType> ( filter->GetOutput() );
+      Image::Pointer out = new Image( filter->GetOutput() );
       out->getITKImage()->DisconnectPipeline();
       return out;
     }

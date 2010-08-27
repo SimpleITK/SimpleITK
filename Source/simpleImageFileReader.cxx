@@ -47,9 +47,9 @@ namespace itk {
     typedef itk::Image<T,3> ImageType;
     typedef itk::ImageFileReader<ImageType> Reader;
     typename Reader::Pointer reader = Reader::New();
-    reader->SetFileName ( this->mFilename.c_str() );
+    reader->SetFileName( this->mFilename.c_str() );
     reader->Update();
-    image = new ImageImplementation<ImageType> ( reader->GetOutput() );
+    image = new Image( reader->GetOutput() );
     reader->GetOutput()->DisconnectPipeline();
     return image;
   }
