@@ -1,18 +1,36 @@
 #ifndef __SimpleITKMacro_h
 #define __SimpleITKMacro_h
 
+// Ignore Visual Studio checked iterator warnings.
+// See http://msdn.microsoft.com/en-us/library/aa985974.aspx
+#ifdef _MSC_VER
+  #define _SCL_SECURE_NO_WARNINGS
+#endif
 
-// Ideally, take the types from the C99 standard.  However,
-// VS 8 does not have stdint.h, but they are defined anyway.
+// Ideally, take the types from the C99 standard.
+// However, because Visual Studio does not properly implement C99,
+// handle this compiler specially.
 #ifndef _MSC_VER
-	#include <stdint.h>
+  #include <stdint.h>
+#else
+  #if (_MSC_VER <= 1500)
+  // Types defined in stdint.h are not defined for < Visual Studio 10.0
+  // See http://en.wikipedia.org/wiki/Stdint.h
+  // They are however defined in itkIntTypes.h (in ::itk namespace)
+  #include <itkIntTypes.h>
+  typedef itk::int8_t   int8_t;
+  typedef itk::uint8_t  uint8_t;
+  typedef itk::int16_t  int16_t;
+  typedef itk::uint16_t uint16_t;
+  typedef itk::int32_t  int32_t;
+  typedef itk::uint32_t uint32_t;
+  #endif
 #endif
 
 #include <itkImageBase.h>
 #include <itkImage.h>
 #include <itkLightObject.h>
 #include <itkSmartPointer.h>
-
 
 namespace itk {
   namespace simple {
@@ -32,7 +50,6 @@ namespace itk {
       sitkFloat32,  // 32 bit float
     };
 
-
 #define sitkImageDataTypeCase(typeN, type, call ) \
     case typeN: { typedef type DataType; call; }; break
 
@@ -42,16 +59,7 @@ namespace itk {
     sitkImageDataTypeCase ( sitkInt32, int32_t, call ); \
     sitkImageDataTypeCase ( sitkFloat32, float, call );
 
-
-
-
   }
-}    
-
-// Tell the compiler that we are going to explicitly instantiate these templates.
-extern template class itk::Image<uint8_t,3>;
-extern template class itk::Image<uint16_t,3>;
-extern template class itk::Image<uint32_t,3>;
-extern template class itk::Image<float,3>;
+}
 
 #endif
