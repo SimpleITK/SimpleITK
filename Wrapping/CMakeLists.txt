@@ -3,8 +3,9 @@
 option ( WRAP_LUA "Wrap Lua" ON )
 option ( WRAP_PYTHON "Wrap Python" OFF )
 option ( WRAP_JAVA "Wrap Java" OFF )
+option ( WRAP_CSHARP "Wrap C#" OFF )
 
-if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA )
+if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA OR WRAP_CSHARP )
   find_package ( SWIG REQUIRED )
   include ( ${SWIG_USE_FILE} )
   set_source_files_properties ( SimpleITK.i PROPERTIES CPLUSPLUS ON )
@@ -97,7 +98,6 @@ if ( WRAP_JAVA )
   
   add_custom_target(org_simple_itk_jar ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/org.itk.simple.jar)
   
-  
   # Get the location of the extension directory
   string(REGEX REPLACE "include"  "jre/lib/ext" JAVA_EXTENSION_DIR ${JAVA_INCLUDE_PATH} )
   
@@ -107,9 +107,35 @@ if ( WRAP_JAVA )
   
 endif()
 
+# Find C#
+if ( WRAP_CSHARP )
 
+  # Find C#
+  set( CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/Wrapping/CSharpModules )
+  find_package( CSharp REQUIRED )
+  include( ${CSHARP_USE_FILE} )
 
+  # Run swig
+  set( CMAKE_SWIG_FLAGS "-dllimport \"SimpleITKCSharpNative\" -namespace \"itk.simple\"" )
+  set( CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR}/SwigCSharp )
+  swig_add_module( SimpleITKCSharpNative csharp SimpleITK.i )
+  swig_link_libraries( SimpleITKCSharpNative ${ITK_LIBRARIES} SimpleITK )
+  set_target_properties( SimpleITKCSharpNative PROPERTIES PREFIX "../" )
 
+  # Create AssemblyInfo.cs
+  configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/AssemblyInfo.cs.in
+    ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
+    @ONLY
+  )
+  
+  # Add managed wrapper
+  csharp_add_library(
+    SimpleITKCSharpManaged
+    ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
+    ${CMAKE_CURRENT_BINARY_DIR}/SwigCSharp/*.cs
+  )
 
+endif()
 
 
