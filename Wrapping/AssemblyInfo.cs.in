@@ -1,0 +1,28 @@
+#region Copyright (c) Insight Software Consortium.
+//
+// Copyright (c) Insight Software Consortium. All rights reserved.
+// See ITKCopyright.txt or http://www.itk.org/HTML/Copyright.htm for details.
+//
+//   This software is distributed WITHOUT ANY WARRANTY; without even 
+//   the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+//   PURPOSE.  See the above copyright notices for more information.
+//
+#endregion
+
+using System.Reflection;
+using System.Runtime.CompilerServices;
+
+[assembly: AssemblyVersion("@ITK_VERSION_MAJOR@.@ITK_VERSION_MINOR@.@ITK_VERSION_PATCH@")]
+[assembly: AssemblyTitle("@PROJECT_NAME@ .NET Wrapper @ITK_VERSION_MAJOR@.@ITK_VERSION_MINOR@.@ITK_VERSION_PATCH@")]
+[assembly: AssemblyCopyright("Copyright (c) Insight Software Consortium")]
+[assembly: AssemblyDescription("@PROJECT_NAME@ .NET Wrapper @ITK_VERSION_MAJOR@.@ITK_VERSION_MINOR@.@ITK_VERSION_PATCH@ generated using @CMAKE_GENERATOR@")]
+[assembly: AssemblyCompany("Insight Software Consortium")]
+[assembly: AssemblyFileVersion("@ITK_VERSION_MAJOR@.@ITK_VERSION_MINOR@.@ITK_VERSION_PATCH@")]
+[assembly: AssemblyCulture("")]
+[assembly: AssemblyTrademark("@PROJECT_NAME@")]
+[assembly: AssemblyProduct("@PROJECT_NAME@")]
+[assembly: AssemblyInformationalVersion("@ITK_VERSION_MAJOR@.@ITK_VERSION_MINOR@.@ITK_VERSION_PATCH@")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyDelaySign(false)]
+[assembly: AssemblyKeyName("")]
+[assembly: AssemblyKeyFile("")]
