@@ -12,11 +12,11 @@ public:
     }
     region.SetSize ( size );
     region.SetIndex ( index );
-    itk::Image<int16_t,3>::Pointer i = itk::Image<int16_t,3>::New();
-    i->SetRegions ( region );
-    i->Allocate();
-    itkShortImage = i;
-    image = new itk::simple::Image( i );
+    itk::Image<int16_t,3>::Pointer im = itk::Image<int16_t,3>::New();
+    im->SetRegions ( region );
+    im->Allocate();
+    itkShortImage = im;
+    image = new itk::simple::Image( im.GetPointer() );
   }
 
   itk::simple::Image::Pointer image;
