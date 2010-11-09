@@ -1,6 +1,9 @@
 
 
-#include <SimpleITK.h>
+#include <simpleImage.h>
+#include <simpleGaussian.h>
+#include <simpleImageFileReader.h>
+#include <simpleImageFileWriter.h>
 
 
 int main ( int argc, char* argv[] ) {
