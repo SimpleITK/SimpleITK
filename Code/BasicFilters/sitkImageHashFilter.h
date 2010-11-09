@@ -1,5 +1,5 @@
-#ifndef __sitkImageHash_h
-#define __sitkImageHash_h
+#ifndef __sitkImageHashFilter_h
+#define __sitkImageHashFilter_h
 
 #include "sitkMacro.h"
 #include "sitkDetail.h"
@@ -8,9 +8,9 @@
 namespace itk {
   namespace simple {
 
-    class ImageHash {
+    class ImageHashFilter {
     public:
-      typedef ImageHash Self;
+      typedef ImageHashFilter Self;
    
       // function pointer type
       typedef std::string (Self::*MemberFunctionType)( Image::Pointer );
@@ -21,7 +21,7 @@ namespace itk {
 
 
 
-      ImageHash();
+      ImageHashFilter();
 
       enum HashFunction { SHA1, MD5 };
       Self& SetHashFunction ( HashFunction hashFunction );

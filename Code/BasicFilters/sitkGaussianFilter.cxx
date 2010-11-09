@@ -1,30 +1,30 @@
-#include "sitkGaussian.h"
+#include "sitkGaussianFilter.h"
 #include <itkRecursiveGaussianImageFilter.h>
 
 namespace itk {
   namespace simple {
 
-    Gaussian::Gaussian () {
+    GaussianFilter::GaussianFilter () {
       this->m_Sigma = 1.0;
     }
 
-    std::string Gaussian::ToString() {
+    std::string GaussianFilter::ToString() {
       std::ostringstream out;
-      out << "itk::simple::Gaussian\n"
+      out << "itk::simple::GaussianFilter\n"
           << "\tsigma: " << this->m_Sigma << "\n";
       return out.str();
     }
 
-    Gaussian& Gaussian::SetSigma ( double sigma ) {
+    GaussianFilter& GaussianFilter::SetSigma ( double sigma ) {
       this->m_Sigma = sigma;
       return *this;
     }
 
-    double Gaussian::GetSigma() {
+    double GaussianFilter::GetSigma() {
       return this->m_Sigma;
     }
 
-    Image::Pointer Gaussian::Execute ( Image::Pointer image )  {
+    Image::Pointer GaussianFilter::Execute ( Image::Pointer image )  {
 
       int fnIndex = image->GetImageDataType();
 
@@ -33,7 +33,7 @@ namespace itk {
     }
 
     template <class T>
-    Image::Pointer Gaussian::ExecuteInternal ( Image::Pointer inImage ) {
+    Image::Pointer GaussianFilter::ExecuteInternal ( Image::Pointer inImage ) {
       typedef itk::Image<T,3> InputImageType;
       typedef itk::Image<float,3> OutputImageType;
       typename InputImageType::Pointer image =
