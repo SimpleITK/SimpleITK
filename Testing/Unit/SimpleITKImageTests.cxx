@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <sitkMacro.h>
 #include <sitkImage.h>
-#include <sitkImageHash.h>
+#include <sitkImageHashFilter.h>
 
 class Image : public ::testing::Test {
 public:
@@ -40,11 +40,11 @@ TEST_F(Image,Create) {
 
 
 TEST_F(Image,Hash) {
-  itk::simple::ImageHash hasher;
+  itk::simple::ImageHashFilter hasher;
   EXPECT_EQ ( "08183e1b0c50fd2cf6f070b58e218443fb7d5317",
-    hasher.SetHashFunction ( itk::simple::ImageHash::SHA1 ).Execute ( image ) )
+    hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 ).Execute ( image ) )
     << " SHA1 hash value";
   EXPECT_EQ ( "031c48b3925696af125a807326015c3b",
-    hasher.SetHashFunction ( itk::simple::ImageHash::MD5 ).Execute ( image ) )
+    hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 ).Execute ( image ) )
     << " MD5 hash value";
 }

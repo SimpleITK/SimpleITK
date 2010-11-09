@@ -1,6 +1,6 @@
 #include "hl_md5.h"
 #include "hl_sha1.h"
-#include "sitkImageHash.h"
+#include "sitkImageHashFilter.h"
 
 #include <itkByteSwapper.h>
 #include <itkImageRegionConstIterator.h>
@@ -9,13 +9,13 @@
 
 namespace itk {
   namespace simple {
-    ImageHash::ImageHash () {
+    ImageHashFilter::ImageHashFilter () {
       this->m_HashFunction = SHA1;
     }
 
-    std::string ImageHash::ToString() {
+    std::string ImageHashFilter::ToString() {
       std::ostringstream out;
-      out << "itk::simple::ImageHash\n";
+      out << "itk::simple::ImageHashFilter\n";
       out << "HashFunction: ";
       switch ( this->m_HashFunction )
         {
@@ -30,14 +30,14 @@ namespace itk {
       return out.str();
     }
 
-    ImageHash::HashFunction ImageHash::GetHashFunction() { return this->m_HashFunction; }
-    ImageHash& ImageHash::SetHashFunction ( ImageHash::HashFunction hashFunction ) 
+    ImageHashFilter::HashFunction ImageHashFilter::GetHashFunction() { return this->m_HashFunction; }
+    ImageHashFilter& ImageHashFilter::SetHashFunction ( ImageHashFilter::HashFunction hashFunction ) 
       {
       this->m_HashFunction = hashFunction;
       return *this;
       }
 
-    std::string ImageHash::Execute ( Image::Pointer image ) {
+    std::string ImageHashFilter::Execute ( Image::Pointer image ) {
 
       int fnIndex = image->GetImageDataType();
 
@@ -46,7 +46,7 @@ namespace itk {
     }
 
     template <class T>
-    std::string ImageHash::ExecuteInternal ( Image::Pointer inImage ) {
+    std::string ImageHashFilter::ExecuteInternal ( Image::Pointer inImage ) {
       typedef itk::ByteSwapper<T> Swapper;
       typedef itk::Image<T,3> InputImageType;
       typename InputImageType::Pointer image =

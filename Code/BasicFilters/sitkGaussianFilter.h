@@ -1,5 +1,5 @@
-#ifndef __sitkGaussian_h
-#define __sitkGaussian_h
+#ifndef __sitkGaussianFilter_h
+#define __sitkGaussianFilter_h
 
 #include "sitkMacro.h"
 #include "sitkDetail.h"
@@ -9,9 +9,9 @@
 namespace itk {
   namespace simple {
 
-    class Gaussian {
+    class GaussianFilter {
     public:
-      typedef Gaussian Self;
+      typedef GaussianFilter Self;
 
       // function pointer type
       typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer );
@@ -20,8 +20,7 @@ namespace itk {
       // vectors are not supported by this filter
       typedef BasicPixelTypeList PixelTypeList;
 
-
-      Gaussian();
+      GaussianFilter();
 
       // Sigma is always measured in physical units
       Self& SetSigma ( double sigma );
@@ -32,9 +31,9 @@ namespace itk {
 
       Image::Pointer Execute ( Image::Pointer );
 
-      double m_Sigma;
-
     private:
+
+      double m_Sigma;
 
       template <class T> Image::Pointer ExecuteInternal ( Image::Pointer image );
 
