@@ -1,9 +1,9 @@
 #ifndef __simpleImageHash_h
 #define __simpleImageHash_h
 
-#include <SimpleITKMacro.h>
-#include <simpleITKDetail.h>
-#include <simpleImage.h>
+#include "SimpleITKMacro.h"
+#include "simpleITKDetail.h"
+#include "simpleImage.h"
 
 namespace itk {
   namespace simple {

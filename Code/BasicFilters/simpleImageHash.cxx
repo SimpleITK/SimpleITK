@@ -1,8 +1,11 @@
 #include "hl_md5.h"
 #include "hl_sha1.h"
 #include "simpleImageHash.h"
-#include "itkByteSwapper.h"
-#include "itkImageRegionConstIterator.h"
+
+#include <itkByteSwapper.h>
+#include <itkImageRegionConstIterator.h>
+
+#include <string>
 
 namespace itk {
   namespace simple {
