@@ -32,6 +32,7 @@ namespace itk {
         break;
       default:
       case itk::ImageIOBase::SHORT:
+        
         image = ExecuteInternal<int16_t> ( );
         break;
       case itk::ImageIOBase::INT:
