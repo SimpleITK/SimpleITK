@@ -1,9 +1,9 @@
 
 
-#include <simpleImage.h>
-#include <simpleGaussian.h>
-#include <simpleImageFileReader.h>
-#include <simpleImageFileWriter.h>
+#include <sitkImage.h>
+#include <sitkGaussian.h>
+#include <sitkImageFileReader.h>
+#include <sitkImageFileWriter.h>
 
 
 int main ( int argc, char* argv[] ) {
@@ -16,20 +16,20 @@ int main ( int argc, char* argv[] ) {
   itk::simple::Image::Pointer image;
 
   itk::simple::ImageFileReader reader;
-  reader.setFilename ( std::string ( argv[1] ) );
-  image = reader.execute();
+  reader.SetFilename ( std::string ( argv[1] ) );
+  image = reader.Execute();
   
-  std::cout << image->toString() << "\n";
+  std::cout << image->ToString() << "\n";
 
   itk::simple::Gaussian gaussian;
-  gaussian.setSigma ( atof ( argv[2] ) );
-  image = gaussian.execute ( image );
+  gaussian.SetSigma ( atof ( argv[2] ) );
+  image = gaussian.Execute ( image );
 
-  std::cout << image->toString() << "\n";
+  std::cout << image->ToString() << "\n";
 
   itk::simple::ImageFileWriter writer;
-  writer.setFilename ( std::string ( argv[3] ) );
-  writer.execute ( image );
+  writer.SetFilename ( std::string ( argv[3] ) );
+  writer.Execute ( image );
 
   return 0;
 }

@@ -1,9 +1,10 @@
-#ifndef _cltPixelTypeLists_h
-#define _cltPixelTypeLists_h
+#ifndef _sitkPixelTypeLists_h
+#define _sitkPixelTypeLists_h
 
 #include "Ancillary/TypeList.h"
-#include "itkRGBPixel.h"
-#include "itkRGBAPixel.h"
+
+#include <itkRGBPixel.h>
+#include <itkRGBAPixel.h>
 
 namespace itk
 {
@@ -178,4 +179,4 @@ typedef typelist::MakeTypeList< unsigned char,
 
 }
 }
-#endif // _cltPixelTypeLists_h
+#endif // _sitkPixelTypeLists_h

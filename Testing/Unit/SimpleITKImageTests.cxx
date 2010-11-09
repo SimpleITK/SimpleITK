@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
-#include <SimpleITK.h>
-#include <SimpleITKMacro.h>
+#include <sitkMacro.h>
+#include <sitkImage.h>
+#include <sitkImageHash.h>
 
 class Image : public ::testing::Test {
 public:
@@ -28,15 +29,22 @@ public:
 
 
 TEST_F(Image,Create) {
-  ASSERT_TRUE ( image->getITKImage().IsNotNull() );
-  EXPECT_EQ ( image->getWidth(), itkShortImage->GetLargestPossibleRegion().GetSize()[0] ) << " Checking image width";
-  EXPECT_EQ ( image->getHeight(), itkShortImage->GetLargestPossibleRegion().GetSize()[1] ) << " Checking image height";
-  EXPECT_EQ ( image->getDepth(), itkShortImage->GetLargestPossibleRegion().GetSize()[2] ) << " Checking image depth";
+  ASSERT_TRUE ( image->GetITKImage().IsNotNull() );
+  EXPECT_EQ ( image->GetWidth(),
+    itkShortImage->GetLargestPossibleRegion().GetSize()[0] ) << " Checking image width";
+  EXPECT_EQ ( image->GetHeight(),
+    itkShortImage->GetLargestPossibleRegion().GetSize()[1] ) << " Checking image height";
+  EXPECT_EQ ( image->GetDepth(),
+    itkShortImage->GetLargestPossibleRegion().GetSize()[2] ) << " Checking image depth";
 }
 
 
 TEST_F(Image,Hash) {
   itk::simple::ImageHash hasher;
-  EXPECT_EQ ( "08183e1b0c50fd2cf6f070b58e218443fb7d5317", hasher.setHashFunction ( itk::simple::ImageHash::SHA1 ).execute ( image ) ) << " SHA1 hash value";
-  EXPECT_EQ ( "031c48b3925696af125a807326015c3b", hasher.setHashFunction ( itk::simple::ImageHash::MD5 ).execute ( image ) ) << " MD5 hash value";
+  EXPECT_EQ ( "08183e1b0c50fd2cf6f070b58e218443fb7d5317",
+    hasher.SetHashFunction ( itk::simple::ImageHash::SHA1 ).Execute ( image ) )
+    << " SHA1 hash value";
+  EXPECT_EQ ( "031c48b3925696af125a807326015c3b",
+    hasher.SetHashFunction ( itk::simple::ImageHash::MD5 ).Execute ( image ) )
+    << " MD5 hash value";
 }

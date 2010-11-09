@@ -1,5 +1,5 @@
-#ifndef __simpleITKDetails_h
-#define __simpleITKDetails_h
+#ifndef __sitkDetails_h
+#define __sitkDetails_h
 
 
 namespace itk {
@@ -26,7 +26,7 @@ namespace detail {
 
       if ( index > 0 &&  index < typelist::Length< InstantiatedPixelTypeList >::Result )
         {
-        createFunctions[index] =   &TObject::template executeInternal<PixelType>;
+        createFunctions[index] =   &TObject::template ExecuteInternal<PixelType>;
         }
     }
   private:
@@ -52,7 +52,7 @@ namespace detail {
 
       if ( index > 0 &&  index < typelist::Length< InstantiatedPixelTypeList >::Result )
         {
-        createFunctions[index] =   &TObject::template executeInternal2<PixelType1, PixelType2>;
+        createFunctions[index] =   &TObject::template ExecuteInternal2<PixelType1, PixelType2>;
         }
     }
   private:

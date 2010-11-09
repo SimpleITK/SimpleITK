@@ -1,9 +1,9 @@
-#ifndef __simpleImageHash_h
-#define __simpleImageHash_h
+#ifndef __sitkImageHash_h
+#define __sitkImageHash_h
 
-#include "SimpleITKMacro.h"
-#include "simpleITKDetail.h"
-#include "simpleImage.h"
+#include "sitkMacro.h"
+#include "sitkDetail.h"
+#include "sitkImage.h"
 
 namespace itk {
   namespace simple {
@@ -24,19 +24,19 @@ namespace itk {
       ImageHash();
 
       enum HashFunction { SHA1, MD5 };
-      Self& setHashFunction ( HashFunction hashFunction );
-      HashFunction getHashFunction ();
+      Self& SetHashFunction ( HashFunction hashFunction );
+      HashFunction GetHashFunction ();
 
       // Print ourselves out
-      std::string toString();
+      std::string ToString();
 
-      std::string execute ( Image::Pointer );
+      std::string Execute ( Image::Pointer );
 
 
     private:
-      HashFunction mHashFunction;
+      HashFunction m_HashFunction;
 
-      template <class T> std::string executeInternal ( Image::Pointer image );
+      template <class T> std::string ExecuteInternal ( Image::Pointer image );
 
       // friend to get access to executeInternal member
       friend class detail::PFuncArrayInitializer<Self>;
