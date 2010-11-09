@@ -1,7 +1,7 @@
-#ifndef __simpleImage_h
-#define __simpleImage_h
+#ifndef __sitkImage_h
+#define __sitkImage_h
 
-#include <SimpleITKMacro.h>
+#include "sitkMacro.h"
 
 
 namespace itk
@@ -31,15 +31,15 @@ public:
     }
 
   // could return -1 if in valid
-  SimpleImageBase::Pointer getITKImage( void );
+  SimpleImageBase::Pointer GetITKImage( void );
 
-  ImageDataType getImageDataType( void );
+  ImageDataType GetImageDataType( void );
 
-  uint64_t getHeight( void );
-  uint64_t getWidth( void );
-  uint64_t getDepth( void );
+  uint64_t GetHeight( void );
+  uint64_t GetWidth( void );
+  uint64_t GetDepth( void );
 
-  std::string toString( void );
+  std::string ToString( void );
 
 private:
 
@@ -56,7 +56,7 @@ private:
   struct PimpleImageBase
   {
     virtual ~PimpleImageBase( void ) {};
-    virtual ImageDataType getImageDataType(void) = 0;
+    virtual ImageDataType GetImageDataType(void) = 0;
   };
 
   template <class TImageType>
@@ -79,7 +79,7 @@ private:
         assert(  id != -1 );
       }
 
-    ImageDataType getImageDataType(void) throw()
+    ImageDataType GetImageDataType(void) throw()
       {
         typedef typename TImageType::PixelType PixelType;
 

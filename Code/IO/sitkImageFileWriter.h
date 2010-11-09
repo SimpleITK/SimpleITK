@@ -1,10 +1,9 @@
-#ifndef __simpleImageFileWriter_h
-#define __simpleImageFileWriter_h
+#ifndef __sitkImageFileWriter_h
+#define __sitkImageFileWriter_h
 
-#include <SimpleITKMacro.h>
-#include <simpleITKDetail.h>
-#include <simpleImage.h>
-#include <functional>
+#include "sitkMacro.h"
+#include "sitkDetail.h"
+#include "sitkImage.h"
 
 namespace itk {
   namespace simple {
@@ -21,15 +20,15 @@ namespace itk {
 
       ImageFileWriter( void );
 
-      Self& setFilename ( std::string fn );
-      std::string getFilename();
-      Self& execute ( Image::Pointer );
+      Self& SetFilename ( std::string fn );
+      std::string GetFilename();
+      Self& Execute ( Image::Pointer );
 
     private:
 
-      template <class T> Self& executeInternal ( Image::Pointer );
+      template <class T> Self& ExecuteInternal ( Image::Pointer );
 
-      std::string mFilename;
+      std::string m_Filename;
 
       // friend to get access to executeInternal member 
       friend class detail::PFuncArrayInitializer<Self>;

@@ -1,6 +1,6 @@
 #include "hl_md5.h"
 #include "hl_sha1.h"
-#include "simpleImageHash.h"
+#include "sitkImageHash.h"
 
 #include <itkByteSwapper.h>
 #include <itkImageRegionConstIterator.h>
@@ -10,14 +10,14 @@
 namespace itk {
   namespace simple {
     ImageHash::ImageHash () {
-      this->mHashFunction = SHA1;
+      this->m_HashFunction = SHA1;
     }
 
-    std::string ImageHash::toString() {
+    std::string ImageHash::ToString() {
       std::ostringstream out;
       out << "itk::simple::ImageHash\n";
       out << "HashFunction: ";
-      switch ( this->mHashFunction )
+      switch ( this->m_HashFunction )
         {
         case SHA1:
           out << "SHA1";
@@ -30,22 +30,27 @@ namespace itk {
       return out.str();
     }
 
-    ImageHash::HashFunction ImageHash::getHashFunction() { return this->mHashFunction; }
-    ImageHash& ImageHash::setHashFunction ( ImageHash::HashFunction hashFunction ) { this->mHashFunction = hashFunction; return *this; }
+    ImageHash::HashFunction ImageHash::GetHashFunction() { return this->m_HashFunction; }
+    ImageHash& ImageHash::SetHashFunction ( ImageHash::HashFunction hashFunction ) 
+      {
+      this->m_HashFunction = hashFunction;
+      return *this;
+      }
 
-    std::string ImageHash::execute ( Image::Pointer image ) {
+    std::string ImageHash::Execute ( Image::Pointer image ) {
 
-      int fnIndex = image->getImageDataType();
+      int fnIndex = image->GetImageDataType();
 
       // todo fix this ugly syntax
       return ((*this).*(m_MemberFactory.GetMemberFunction( fnIndex )))(image);
     }
 
     template <class T>
-    std::string ImageHash::executeInternal ( Image::Pointer inImage ) {
+    std::string ImageHash::ExecuteInternal ( Image::Pointer inImage ) {
       typedef itk::ByteSwapper<T> Swapper;
       typedef itk::Image<T,3> InputImageType;
-      typename InputImageType::Pointer image = dynamic_cast <InputImageType*> ( inImage->getITKImage().GetPointer() );
+      typename InputImageType::Pointer image =
+        dynamic_cast <InputImageType*> ( inImage->GetITKImage().GetPointer() );
 
       if ( image.IsNull() ) {
         // Take some action
@@ -63,10 +68,10 @@ namespace itk {
       IteratorType iterator = IteratorType ( image, image->GetLargestPossibleRegion() );
       iterator.GoToBegin();
 
-      unsigned long VoxelsPerSlice = inImage->getWidth() * inImage->getHeight();
+      unsigned long VoxelsPerSlice = inImage->GetWidth() * inImage->GetHeight();
       T* buffer = new T[VoxelsPerSlice];
       // Compute the hash value one slice at a time
-      for ( unsigned long depth = 0; depth < inImage->getDepth(); depth++ ) {
+      for ( unsigned long depth = 0; depth < inImage->GetDepth(); depth++ ) {
         for ( unsigned long i = 0; i < VoxelsPerSlice; i++ ) {
           buffer[i] = iterator.Value();
           ++iterator;
@@ -75,7 +80,7 @@ namespace itk {
         Swapper::SwapRangeFromSystemToLittleEndian ( buffer, VoxelsPerSlice );
 
         // Update the hash
-        switch ( this->mHashFunction )
+        switch ( this->m_HashFunction )
           {
           case SHA1:
             sha1.SHA1Input ( &sha1Context, (unsigned char*)buffer, VoxelsPerSlice );
@@ -91,7 +96,7 @@ namespace itk {
       std::string hash;
       int HashSize;
       unsigned char Digest[1024];
-      switch ( this->mHashFunction )
+      switch ( this->m_HashFunction )
         {
         case SHA1:
           {

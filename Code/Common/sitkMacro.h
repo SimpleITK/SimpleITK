@@ -1,5 +1,5 @@
-#ifndef __SimpleITKMacro_h
-#define __SimpleITKMacro_h
+#ifndef __sitkMacro_h
+#define __sitkMacro_h
 
 
 // Ideally, take the types from the C99 standard.  However,
@@ -12,8 +12,8 @@
 #include <itkImage.h>
 #include <itkLightObject.h>
 #include <itkSmartPointer.h>
-#include <simplePixelTypeLists.h>
 
+#include "sitkPixelTypeLists.h"
 
 namespace itk {
 namespace simple {
@@ -28,11 +28,5 @@ typedef unsigned int ImageDataType;
 
 }
 }
-
-// Tell the compiler that we are going to explicitly instantiate these templates.
-//extern template class itk::Image<uint8_t,3>;
-//extern template class itk::Image<uint16_t,3>;
-//extern template class itk::Image<uint32_t,3>;
-//extern template class itk::Image<float,3>;
 
 #endif

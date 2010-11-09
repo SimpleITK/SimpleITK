@@ -1,9 +1,9 @@
-#ifndef __simpleGaussian_h
-#define __simpleGaussian_h
+#ifndef __sitkGaussian_h
+#define __sitkGaussian_h
 
-#include <SimpleITKMacro.h>
-#include <simpleITKDetail.h>
-#include <simpleImage.h>
+#include "sitkMacro.h"
+#include "sitkDetail.h"
+#include "sitkImage.h"
 
 
 namespace itk {
@@ -24,19 +24,19 @@ namespace itk {
       Gaussian();
 
       // Sigma is always measured in physical units
-      Self& setSigma ( double sigma );
-      double getSigma();
+      Self& SetSigma ( double sigma );
+      double GetSigma();
 
       // Print ourselves out
-      std::string toString();
+      std::string ToString();
 
-      Image::Pointer execute ( Image::Pointer );
+      Image::Pointer Execute ( Image::Pointer );
 
-      double mSigma;
+      double m_Sigma;
 
     private:
 
-      template <class T> Image::Pointer executeInternal ( Image::Pointer image );
+      template <class T> Image::Pointer ExecuteInternal ( Image::Pointer image );
 
       // friend to get access to executeInternal member 
       friend class detail::PFuncArrayInitializer<Self>;
