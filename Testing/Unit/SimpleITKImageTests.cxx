@@ -19,10 +19,15 @@ public:
     itkShortImage = im;
     image = new itk::simple::Image( im.GetPointer() );
   }
+
+  itk::simple::Image::Pointer image;
+  itk::simple::SimpleImageBase::Pointer itkShortImage;
+  itk::simple::SimpleImageBase::IndexType index;
+  itk::simple::SimpleImageBase::SizeType size;
+  itk::simple::SimpleImageBase::RegionType region;
   
   typedef itk::Image<int16_t,3> ShortImageType;
   itk::simple::Image::Pointer shortImage;
-  ShortImageType::Pointer itkShortImage;
   
   typedef itk::Image<float,3> FloatImageType;
   itk::simple::Image::Pointer floatImage;
