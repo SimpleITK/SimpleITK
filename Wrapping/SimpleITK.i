@@ -44,16 +44,11 @@ using namespace itk::simple;
 %include "itkSmartPointer.h"
 %template(SmartPointerImage) itk::SmartPointer<itk::simple::Image>;
 
-%include "simpleITKMacro.h"
-%include "simpleImage.h"
-%include "simpleImageFileReader.h"
-%include "simpleImageFileWriter.h"
-%include "simpleGaussian.h"
-%include "simpleImageHash.h"
-%include "simpleTransform.h"
-%include "simpleResample.h"
-%include "simpleCastImageFilter.h"
-%include "simpleAffineRegistration.h"
+%include "sitkImage.h"
+%include "sitkImageFileReader.h"
+%include "sitkImageFileWriter.h"
+%include "sitkGaussian.h"
+%include "sitkImageHash.h"
 
 // Java
 #if SWIGJAVA
