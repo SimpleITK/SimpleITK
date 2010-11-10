@@ -1,10 +1,26 @@
 // This file is based off of the work done in the Loki library but is
-// substantailly modified
+// substantailly modified. It's a good book buy it.
+
+////////////////////////////////////////////////////////////////////////////////
+// The Loki Library
+// Copyright (c) 2001 by Andrei Alexandrescu
+// This code accompanies the book:
+// Alexandrescu, Andrei. "Modern C++ Design: Generic Programming and Design
+//     Patterns Applied". Copyright (c) 2001. Addison-Wesley.
+// Permission to use, copy, modify, distribute and sell this software for any
+//     purpose is hereby granted without fee, provided that the above copyright
+//     notice appear in all copies and that both that copyright notice and this
+//     permission notice appear in supporting documentation.
+// The author or Addison-Welsey Longman make no representations about the
+//     suitability of this software for any purpose. It is provided "as is"
+//     without express or implied warranty.
+////////////////////////////////////////////////////////////////////////////////
+
 
 #ifndef __TypeList_H__
 #define __TypeList_H__
 
-namespace typelist 
+namespace typelist
 {
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -16,7 +32,7 @@ namespace typelist
 //     Tail (second element, can be another typelist)
 ////////////////////////////////////////////////////////////////////////////////
 template <typename H, typename T>
-struct TypeList 
+struct TypeList
 {
   typedef H Head;
   typedef T Tail;
@@ -33,21 +49,21 @@ struct NullType {};
 // MakeTypeList<T1, T2, ...>::Result
 // returns a typelist that is of T1, T2, ...
 ////////////////////////////////////////////////////////////////////////////////
-template 
+template
 <
   typename T1  = NullType, typename T2   = NullType, typename T3  = NullType,
   typename T4  = NullType, typename T5   = NullType, typename T6  = NullType,
-  typename T7  = NullType, typename T8   = NullType, typename T9  = NullType,  
-  typename T10 = NullType, typename T11  = NullType, typename T12 = NullType,  
-  typename T13 = NullType, typename T14  = NullType, typename T15 = NullType,  
-  typename T16 = NullType, typename T17  = NullType, typename T18 = NullType,  
-  typename T19 = NullType, typename T20  = NullType, typename T21 = NullType,  
-  typename T22 = NullType, typename T23  = NullType, typename T24 = NullType  
+  typename T7  = NullType, typename T8   = NullType, typename T9  = NullType,
+  typename T10 = NullType, typename T11  = NullType, typename T12 = NullType,
+  typename T13 = NullType, typename T14  = NullType, typename T15 = NullType,
+  typename T16 = NullType, typename T17  = NullType, typename T18 = NullType,
+  typename T19 = NullType, typename T20  = NullType, typename T21 = NullType,
+  typename T22 = NullType, typename T23  = NullType, typename T24 = NullType
 >
-struct MakeTypeList 
+struct MakeTypeList
 {
 private:
-  typedef typename MakeTypeList 
+  typedef typename MakeTypeList
   <
   T2,  T3,  T4,
   T5,  T6,  T7,
@@ -68,7 +84,7 @@ struct MakeTypeList<>
 };
 
 
-                       
+
 ////////////////////////////////////////////////////////////////////////////////
 // class template Length
 // Computes the length of a typelist
@@ -90,14 +106,14 @@ struct Length< TypeList<H, T> >
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-// class template TypeAt      
+// class template TypeAt
 // Finds the type at a given index in a typelist
-// Invocation (TList is a typelist and index is a compile-time integral 
-//     constant):                 
-// TypeAt<TList, index>::Result  
-// returns the type in position 'index' in TList 
-// If you pass an out-of-bounds index, the result is a compile-time error     
-////////////////////////////////////////////////////////////////////////////////   
+// Invocation (TList is a typelist and index is a compile-time integral
+//     constant):
+// TypeAt<TList, index>::Result
+// returns the type in position 'index' in TList
+// If you pass an out-of-bounds index, the result is a compile-time error
+////////////////////////////////////////////////////////////////////////////////
 template <class TList, unsigned int index> struct TypeAt;
 
 template <class Head, class Tail>
@@ -123,11 +139,11 @@ struct TypeAt<TypeList<Head, Tail>, i>
 // Append<TList, T>::Result
 // returns a typelist that is TList followed by T and NullType-terminated
 ////////////////////////////////////////////////////////////////////////////////
-template <class TTypeList1, class TTypeList2> struct Append;        
+template <class TTypeList1, class TTypeList2> struct Append;
 template <> struct Append<NullType, NullType>
 {
   typedef NullType Type;
-};        
+};
 template <class T> struct Append<NullType, T>
 {
   typedef TypeList<T,NullType> Type;
@@ -140,7 +156,7 @@ template <class Head, class Tail>
 struct Append<NullType, TypeList<Head, Tail> >
 {
   typedef TypeList<Head, Tail> Type;
-};      
+};
 template <class Head, class Tail>
 struct Append<TypeList<Head, Tail>, NullType>
 {
@@ -160,7 +176,7 @@ struct Append<TypeList<Head, Tail>, T>
 // IndexOf<TList, T>::value
 // returns the position of T in TList, or NullType if T is not found in TList
 ////////////////////////////////////////////////////////////////////////////////
-template <class TTypeList, class TType> struct IndexOf;        
+template <class TTypeList, class TType> struct IndexOf;
 template <class TType>
 struct IndexOf<NullType, TType>
 {
