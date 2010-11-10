@@ -7,9 +7,6 @@
 #include <simpleImageFileReader.h>
 #include <simpleImageFileWriter.h>
 #include <simpleImageHash.h>
-#include <simpleAffineRegistration.h>
-#include <simpleTransform.h>
-#include <simpleResample.h>
-#include <simpleCastImageFilter.h>
+#include <simpleAddImage.h>
 
 #endif

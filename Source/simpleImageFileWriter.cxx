@@ -16,7 +16,7 @@ namespace itk {
 
     ImageFileWriter& ImageFileWriter::execute ( Image::Pointer image ) {
       switch ( image->getImageDataType() ) {
-        sitkImageDataTypeSwitch ( return this->executeInternal<DataType>(image) );
+        sitkImageDataTypeSwitch ( DataType, return this->executeInternal<DataType>(image) );
       }
       return *this;
     }
