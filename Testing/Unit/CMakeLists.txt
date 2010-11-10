@@ -32,7 +32,6 @@ endif()
 
 set ( TestSource
   SimpleITKImageTests.cxx
-  SimpleITKRegistrationTests.cxx
   )
 
 include_directories ( ${SimpleITK_INCLUDE_DIR} )
