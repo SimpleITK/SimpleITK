@@ -11,9 +11,16 @@ endif()
 set(EXECUTABLE_OUTPUT_PATH ${SimpleITK_BINARY_DIR}/bin)
 
 
-set ( SimpleITK_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/Source)
-set ( SimpleITK_LIBRARIES SimpleITK ${ITK_LIBRARIES} )
-subdirs ( Source Wrapping Examples )
+set ( SimpleITK_INCLUDE_DIR 
+      ${CMAKE_SOURCE_DIR}/Code/Common
+      ${CMAKE_SOURCE_DIR}/Code/Common/Ancillary
+      ${CMAKE_SOURCE_DIR}/Code/BasicFilters
+      ${CMAKE_SOURCE_DIR}/Code/IO)
+
+include_directories( ${SimpleITK_INCLUDE_DIR} )
+
+set ( SimpleITK_LIBRARIES ${ITK_LIBRARIES} SimpleITKCommon SimpleITKIO SimpleITKBasicFilters)
+subdirs ( Code Wrapping Examples )
 
 
 # Options for testing

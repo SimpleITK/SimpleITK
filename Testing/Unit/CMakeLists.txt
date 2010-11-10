@@ -35,9 +35,9 @@ set ( TestSource
   SimpleITKRegistrationTests.cxx
   )
 
+include_directories ( ${SimpleITK_INCLUDE_DIR} )
 add_executable(SimpleITKUnitTestDriver 
   SimpleITKUnitTestDriver.cxx ${TestSource} )
-include_directories ( ${SimpleITK_INCLUDE_DIR} )
 target_link_libraries ( SimpleITKUnitTestDriver ${ITK_LIBRARIES} ${SimpleITK_LIBRARIES} )
 
 # Add all the tests by parsing the source code
