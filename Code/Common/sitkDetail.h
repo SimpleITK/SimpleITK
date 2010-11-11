@@ -1,6 +1,8 @@
 #ifndef __sitkDetails_h
 #define __sitkDetails_h
 
+#include "sitkMacro.h"
+#include "sitkPixelTypeLists.h"
 
 namespace itk {
 namespace simple {
