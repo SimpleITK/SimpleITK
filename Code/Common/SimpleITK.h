@@ -1,6 +1,7 @@
 #ifndef __SimpleITK_h
 #define __SimpleITK_h
 
+#include <stdint.h>
 
 #include "sitkDetail.h"
 #include "sitkMacro.h"
