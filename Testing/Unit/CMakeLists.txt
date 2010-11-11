@@ -1,6 +1,7 @@
 
 
-# To add a new file, just add it to this list
+# To add a new file, just add it to this list.  Any GoogleTests inside will be automatically
+# added to ctest.
 set ( TestSource
   ImageTests.cxx
   IOTests.cxx
