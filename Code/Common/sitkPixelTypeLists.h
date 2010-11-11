@@ -5,6 +5,7 @@
 
 #include <itkRGBPixel.h>
 #include <itkRGBAPixel.h>
+#include <itkVector.h>
 
 namespace itk
 {
