@@ -1,10 +1,5 @@
 
-
-#include <sitkImage.h>
-#include <sitkGaussianFilter.h>
-#include <sitkImageFileReader.h>
-#include <sitkImageFileWriter.h>
-
+#include <SimpleITK.h>
 
 int main ( int argc, char* argv[] ) {
 
@@ -21,7 +16,7 @@ int main ( int argc, char* argv[] ) {
   
   std::cout << image->ToString() << "\n";
 
-  itk::simple::GaussianFilter gaussian;
+  itk::simple::RecursiveGaussianImageFilter gaussian;
   gaussian.SetSigma ( atof ( argv[2] ) );
   image = gaussian.Execute ( image );
 

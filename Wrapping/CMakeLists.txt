@@ -9,8 +9,8 @@ if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA OR WRAP_CSHARP )
   find_package ( SWIG REQUIRED )
   include ( ${SWIG_USE_FILE} )
   set_source_files_properties ( SimpleITK.i PROPERTIES CPLUSPLUS ON )
-  file ( GLOB SWIG_HEADERS ${SimpleITK_SOURCE_DIR}/Source/*.h )
-  include_directories ( ${SimpleITK_SOURCE_DIR}/Source )
+  file ( GLOB SWIG_HEADERS ${SimpleITK_SOURCE_DIR}/Code/*/*.h )
+  include_directories ( ${SimpleITK_SOURCE_DIR}/Code/Common ${SimpleITK_SOURCE_DIR}/Code/BasicFilters ${SimpleITK_SOURCE_DIR}/Code/IO )
 
   set ( CMAKE_SWIG_FLAGS "" )
   set ( SWIG_MODULE_SimpleITK_EXTRA_DEPS ${SWIG_HEADERS} )
@@ -24,15 +24,14 @@ if ( WRAP_LUA )
   include_directories ( ${LUA_INCLUDE_DIR} )
 
   # Run swig
-  SWIG_module_initialize ( SimpleITK lua )
-  SWIG_add_source_to_module ( SimpleITK swig_generated_source SimpleITK.i ${SWIG_HEADERS} )
+  SWIG_module_initialize ( SimpleITKLua lua )
+  SWIG_add_source_to_module ( SimpleITKLua swig_generated_source SimpleITK.i ${SWIG_HEADERS} )
 
-  add_library ( SimpleITKLuaModule SimpleITKLUA_wrap.cxx )
-  add_executable ( SimpleITKLua SimpleITKLuaMain.cxx )
-  target_link_libraries ( SimpleITKLua SimpleITKLuaModule ${SimpleITK_LIBRARIES} ${LUA_LIBRARIES} ${ITK_LIBRARIES} )
+  add_executable ( SimpleITKLua SimpleITKLuaMain.cxx SimpleITKLUA_wrap.cxx )
+  target_link_libraries ( SimpleITKLua ${SimpleITK_LIBRARIES} ${LUA_LIBRARIES} ${ITK_LIBRARIES} )
 
   if ( UNIX )
-    target_link_libraries ( SimpleITKLua readline curses )
+    target_link_libraries ( SimpleITKLua curses )
   endif()
 
 endif()
@@ -43,7 +42,8 @@ if ( WRAP_PYTHON )
   include_directories ( ${PYTHON_INCLUDE_DIR} )
 
   # Run swig
-  SWIG_add_module ( SimpleITK python SimpleITK.i SimpleITKPYTHON_wrap.cxx )
+  SWIG_add_module ( SimpleITKPython python SimpleITK.i SimpleITKPYTHON_wrap.cxx )
+  SWIG_link_libraries ( SimpleITKPython ${SimpleITK_LIBRARIES} ${PYTHON_LIBRARIES} ${ITK_LIBRARIES})
 
   # SWIG_module_initialize ( SimpleITK python )
   # SWIG_add_source_to_module ( SimpleITK swig_generated_source SimpleITK.i ${SWIG_HEADERS} )
@@ -51,7 +51,7 @@ if ( WRAP_PYTHON )
   # add_library ( SimpleITKPythonModule SimpleITKPYTHON_wrap.cxx )
   # add_executable ( SimpleITKPython SimpleITKPythonMain.cxx )
   # target_link_libraries ( SimpleITKPython SimpleITK SimpleITKPythonModule ${PYTHON_LIBRARIES} ${ITK_LIBRARIES} )
-  SWIG_link_libraries ( SimpleITK ${PYTHON_LIBRARIES} ${ITK_LIBRARIES} SimpleITK)
+  # target_link_libraries ( _SimpleITK ${SimpleITK_LIBRARIES} ${PYTHON_LIBRARIES} ${ITK_LIBRARIES})
 endif()
 
 # Find Java
@@ -62,9 +62,8 @@ if ( WRAP_JAVA )
   
   set(CMAKE_SWIG_FLAGS -package "org.itk.simple")
   SWIG_add_module ( SimpleITKJava java SimpleITK.i SimpleITKJAVA_wrap.cxx )
+  SWIG_link_libraries(SimpleITKJava ${SimpleITK_LIBRARIES})
 
-  SWIG_link_libraries ( SimpleITKJava ${JAVA_LIBRARIES} ${ITK_LIBRARIES} SimpleITK)
-  
   # Configure the library loader file
   CONFIGURE_FILE(${SimpleITK_SOURCE_DIR}/Wrapping/LoadSimpleITK.java.in
     ${SimpleITK_BINARY_DIR}/Wrapping/LoadSimpleITK.java)
