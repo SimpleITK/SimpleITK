@@ -32,6 +32,7 @@ endif()
 
 set ( TestSource
   SimpleITKImageTests.cxx
+  SimpleITKTypeListTests.cxx
   )
 
 include_directories ( ${SimpleITK_INCLUDE_DIR} )
@@ -46,8 +47,8 @@ macro(ADD_GOOGLE_TESTS executable)
     file(READ "${source}" contents)
 
     # Find all test and long test lists
-    string(REGEX MATCHALL "TEST_?F?\\(([A-Za-z_0-9 ,]+)\\) /\\* Long \\*/" LongTests ${contents})
-    string(REGEX MATCHALL "TEST_?F?\\(([A-Za-z_0-9 ,]+)\\)" AllTests ${contents})
+    string(REGEX MATCHALL "TEST_?F?\\(([A-Za-z_0-9 ,_]+)\\) /\\* Long \\*/" LongTests ${contents})
+    string(REGEX MATCHALL "TEST_?F?\\(([A-Za-z_0-9 ,_]+)\\)" AllTests ${contents})
 
     # Convert the C++ code into a short test name
     set ( AllTestsHits "" )
