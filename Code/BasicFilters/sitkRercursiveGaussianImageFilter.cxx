@@ -106,7 +106,7 @@ Image::Pointer RecursiveGaussianImageFilter::ExecuteInternal ( Image::Pointer in
   typedef itk::Image<T,3> InputImageType;
   typedef itk::Image<float,3> OutputImageType;
   typename InputImageType::Pointer image =
-    dynamic_cast <InputImageType*> ( inImage->GetITKImage().GetPointer() );
+    dynamic_cast <InputImageType*> ( inImage->GetImageBase().GetPointer() );
 
   if ( image.IsNull() ) {
     // Take some action
@@ -128,7 +128,7 @@ Image::Pointer RecursiveGaussianImageFilter::ExecuteInternal ( Image::Pointer in
   filter->Update();
 
   Image::Pointer out = new Image( filter->GetOutput() );
-  out->GetITKImage()->DisconnectPipeline();
+  filter->GetOutput()->DisconnectPipeline();
   return out;
   }
 

@@ -25,21 +25,21 @@ public:
   itk::simple::SimpleImageBase::IndexType index;
   itk::simple::SimpleImageBase::SizeType size;
   itk::simple::SimpleImageBase::RegionType region;
-  
+
   typedef itk::Image<int16_t,3> ShortImageType;
   itk::simple::Image::Pointer shortImage;
-  
+
   typedef itk::Image<float,3> FloatImageType;
   itk::simple::Image::Pointer floatImage;
   FloatImageType::Pointer itkFloatImage;
-  
+
   itk::simple::Image::Pointer differentSizedImage;
   ShortImageType::Pointer itkDifferentSizedImage;
 };
 
 
 TEST_F(Image,Create) {
-  ASSERT_TRUE ( image->GetITKImage().IsNotNull() );
+  ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
   EXPECT_EQ ( image->GetWidth(),
     itkShortImage->GetLargestPossibleRegion().GetSize()[0] ) << " Checking image width";
   EXPECT_EQ ( image->GetHeight(),
@@ -58,9 +58,3 @@ TEST_F(Image,Hash) {
     hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 ).Execute ( image ) )
     << " MD5 hash value";
 }
-
-
-
-
-
-

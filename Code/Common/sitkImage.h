@@ -17,21 +17,21 @@ public:
 
   template <typename TImageType>
   Image( typename TImageType::Pointer image )
-    : m_Image( image )
     {
       // assign to auto pointer
       m_PimpleImage.reset( new PimpleImage<TImageType>( image ) );
     }
   template <typename TImageType>
   Image( TImageType* image )
-    : m_Image( image )
     {
       // assign to auto pointer
       m_PimpleImage.reset( new PimpleImage<TImageType>( image ) );
     }
 
   // could return -1 if in valid
-  SimpleImageBase::Pointer GetITKImage( void );
+//  SimpleImageBase::Pointer GetITKImage( void );
+  itk::DataObject::Pointer GetImageBase( void );
+  itk::DataObject::ConstPointer GetImageBase( void ) const;
 
   ImageDataType GetImageDataType( void );
 
@@ -56,20 +56,36 @@ private:
   struct PimpleImageBase
   {
     virtual ~PimpleImageBase( void ) {};
+
     virtual ImageDataType GetImageDataType(void) = 0;
+    virtual PimpleImageBase *Clone(void) const = 0;
+    virtual itk::DataObject::Pointer GetDataBase( void ) = 0;
+    virtual itk::DataObject::ConstPointer GetDataBase( void ) const = 0;
+
+    virtual uint64_t GetWidth( void ) { return this->GetSize( 0 ); }
+    virtual uint64_t GetHeight( void ) { return this->GetSize( 1 ); }
+    virtual uint64_t GetDepth( void ) { return this->GetSize( 2 ); }
+
+    virtual uint64_t GetSize( unsigned int dimension ) = 0;
+
+    virtual void Dispatch( void ) = 0;
   };
 
   template <class TImageType>
   struct PimpleImage
     : public PimpleImageBase
   {
-    PimpleImage ( TImageType* image )
+    typedef PimpleImage                 Self;
+    typedef TImageType                  ImageType;
+    typedef typename ImageType::Pointer ImagePointer;
+
+    PimpleImage ( ImageType* image )
+      : m_Image( image )
       {
         // verify that simpleITK supports this image type and dimension
 
         // this should be a STATIC ASSERT
         assert( TImageType::ImageDimension == 3 );
-
 
         // get the id of the pixel type
         typedef typename TImageType::PixelType PixelType;
@@ -78,6 +94,12 @@ private:
         // THIS SHOULD BE A STATIC ASSERT
         assert(  id != -1 );
       }
+
+    virtual PimpleImageBase *Clone( void ) const { return new Self(this->m_Image.GetPointer()); }
+    virtual itk::DataObject::Pointer GetDataBase( void ) { return this->m_Image.GetPointer(); }
+    virtual itk::DataObject::ConstPointer GetDataBase( void ) const { return this->m_Image.GetPointer(); }
+
+    virtual void Dispatch( void ) {}
 
     ImageDataType GetImageDataType(void) throw()
       {
@@ -88,12 +110,26 @@ private:
         return typelist::IndexOf< InstantiatedPixelTypeList, PixelType>::Result;
       }
 
+    virtual uint64_t GetSize( unsigned int dimension )
+      {
+        if ( dimension > ImageType::ImageDimension - 1 )
+          {
+          return 1;
+          }
+
+        typename ImageType::RegionType largestRegion = this->m_Image->GetLargestPossibleRegion();
+        return largestRegion.GetSize(dimension);
+      }
+
+
+  private:
+    ImagePointer m_Image;
   };
+
+
 
   // utilize std::auto_ptr to per form automatic deletion on deconstruction
   std::auto_ptr< PimpleImageBase > m_PimpleImage;
-
-  SimpleImageBase::Pointer m_Image;
 };
 
 }
