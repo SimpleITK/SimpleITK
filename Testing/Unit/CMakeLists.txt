@@ -1,4 +1,11 @@
 
+
+# To add a new file, just add it to this list
+set ( TestSource
+  ImageTests.cxx
+  IOTests.cxx
+  )
+
 # Build Google Test
 find_package(Threads)
 if (CMAKE_USE_PTHREADS_INIT)  # The pthreads library is available.
@@ -16,12 +23,15 @@ FIND_PATH(ITK_DATA_ROOT ITKData.readme ${ITKTesting_SOURCE_DIR}/Data $ENV{ITK_DA
 set(TEST_HARNESS_TEMP_DIRECTORY ${SimpleITK_BINARY_DIR}/Temporary)
 set(TEST_HARNESS_DATA_DIRECTORY ${ITK_DATA_ROOT})
 
+# Set some variables
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/SimpleITKTestHarnessPaths.h.in
+               ${CMAKE_CURRENT_BINARY_DIR}/SimpleITKTestHarnessPaths.h ESCAPE_QUOTES)
 
 # Build Google Testing
 set ( GTestSource
   GoogleTest/gtest/gtest-all.cc
 )
-include_directories ( GoogleTest ${CMAKE_SOURCE_DIR})
+include_directories ( GoogleTest ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
 add_library(gtest ${GTestSource})
 link_libraries(gtest)
@@ -29,10 +39,6 @@ if (CMAKE_USE_PTHREADS_INIT)
   target_link_libraries(gtest ${CMAKE_THREAD_LIBS_INIT})
 endif()
 
-
-set ( TestSource
-  SimpleITKImageTests.cxx
-  )
 
 include_directories ( ${SimpleITK_INCLUDE_DIR} )
 add_executable(SimpleITKUnitTestDriver 
