@@ -50,7 +50,7 @@ namespace itk {
       typedef itk::ByteSwapper<T> Swapper;
       typedef itk::Image<T,3> InputImageType;
       typename InputImageType::Pointer image =
-        dynamic_cast <InputImageType*> ( inImage->GetITKImage().GetPointer() );
+        dynamic_cast <InputImageType*> ( inImage->GetImageBase().GetPointer() );
 
       if ( image.IsNull() ) {
         // Take some action

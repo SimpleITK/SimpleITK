@@ -36,7 +36,7 @@ ImageFileWriter& ImageFileWriter::ExecuteInternal( Image::Pointer inImage )
   {
   typedef itk::Image<T,3> InputImageType;
   typename InputImageType::Pointer image = 
-    dynamic_cast <InputImageType*> ( inImage->GetITKImage().GetPointer() );
+    dynamic_cast <InputImageType*> ( inImage->GetImageBase().GetPointer() );
 
   // handle 2D images differently
   if (inImage->GetDepth() == 1)
