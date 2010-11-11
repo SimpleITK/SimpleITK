@@ -26,7 +26,7 @@ ImageFileWriter& ImageFileWriter::Execute ( Image::Pointer image )
   int fnIndex = image->GetImageDataType();
 
   // todo fix this ugly syntax
-  ((*this).*(m_MemberFactory.GetMemberFunction( fnIndex )))(image);
+  //((*this).*(m_MemberFactory.GetMemberFunction( fnIndex )))(image);
   return *this;
   }
 

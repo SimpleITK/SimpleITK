@@ -42,7 +42,7 @@ namespace itk {
       int fnIndex = image->GetImageDataType();
 
       // todo fix this ugly syntax
-      return ((*this).*(m_MemberFactory.GetMemberFunction( fnIndex )))(image);
+      return NULL; //((*this).*(m_MemberFactory.GetMemberFunction( fnIndex )))(image);
     }
 
     template <class T>

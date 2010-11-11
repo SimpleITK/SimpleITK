@@ -37,11 +37,11 @@ namespace itk {
 
       template <class T> Image::Pointer ExecuteInternal ( Image::Pointer image );
 
-      // friend to get access to executeInternal member 
-      friend class detail::PFuncArrayInitializer<Self>;
+      // friend to get access to executeInternal member
+      friend class detail::MemberFunctionAddressor<Self, MemberFunctionType>;
 
 
-      detail::MemberFunctionFactory<Self> m_MemberFactory;
+      std::auto_ptr<detail::MemberFunctionFactory<Self> > m_MemberFactory;
     };
 
 

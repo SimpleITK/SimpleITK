@@ -31,9 +31,9 @@ namespace itk {
       std::string m_Filename;
 
       // friend to get access to executeInternal member 
-      friend class detail::PFuncArrayInitializer<Self>;
+      friend class detail::MemberFunctionAddressor<Self, MemberFunctionType>;
 
-      detail::MemberFunctionFactory<Self> m_MemberFactory;
+      std::auto_ptr<detail::MemberFunctionFactory<Self> > m_MemberFactory;
 
     };
 
