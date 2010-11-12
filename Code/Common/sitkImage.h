@@ -28,14 +28,16 @@ public:
       m_PimpleImage.reset( new PimpleImage<TImageType>( image ) );
     }
 
+
   // could return -1 if in valid
 //  SimpleImageBase::Pointer GetITKImage( void );
   itk::DataObject::Pointer GetImageBase( void );
   itk::DataObject::ConstPointer GetImageBase( void ) const;
 
-  ImageDataType GetImageDataType( void );
+  ImageDataType GetDataType( void ) const;
+  unsigned int GetDimension( void ) const;
 
-  uint64_t GetHeight( void );
+  uint64_t GetHeight( void ) ;
   uint64_t GetWidth( void );
   uint64_t GetDepth( void );
 
@@ -57,18 +59,19 @@ private:
   {
     virtual ~PimpleImageBase( void ) {};
 
-    virtual ImageDataType GetImageDataType(void) = 0;
+    virtual ImageDataType GetDataType(void) = 0;
+    virtual unsigned int GetDimension( void ) = 0;
+
     virtual PimpleImageBase *Clone(void) const = 0;
     virtual itk::DataObject::Pointer GetDataBase( void ) = 0;
     virtual itk::DataObject::ConstPointer GetDataBase( void ) const = 0;
 
-    virtual uint64_t GetWidth( void ) { return this->GetSize( 0 ); }
-    virtual uint64_t GetHeight( void ) { return this->GetSize( 1 ); }
-    virtual uint64_t GetDepth( void ) { return this->GetSize( 2 ); }
+    virtual uint64_t GetWidth( void ) const { return this->GetSize( 0 ); }
+    virtual uint64_t GetHeight( void ) const { return this->GetSize( 1 ); }
+    virtual uint64_t GetDepth( void ) const { return this->GetSize( 2 ); }
 
-    virtual uint64_t GetSize( unsigned int dimension ) = 0;
+    virtual uint64_t GetSize( unsigned int dimension ) const = 0;
 
-    virtual void Dispatch( void ) = 0;
   };
 
   template <class TImageType>
@@ -99,9 +102,7 @@ private:
     virtual itk::DataObject::Pointer GetDataBase( void ) { return this->m_Image.GetPointer(); }
     virtual itk::DataObject::ConstPointer GetDataBase( void ) const { return this->m_Image.GetPointer(); }
 
-    virtual void Dispatch( void ) {}
-
-    ImageDataType GetImageDataType(void) throw()
+    ImageDataType GetDataType(void) throw()
       {
         typedef typename TImageType::PixelType PixelType;
 
@@ -110,7 +111,9 @@ private:
         return typelist::IndexOf< InstantiatedPixelTypeList, PixelType>::Result;
       }
 
-    virtual uint64_t GetSize( unsigned int dimension )
+    virtual unsigned int GetDimension( void ) { return ImageType::ImageDimension; }
+
+    virtual uint64_t GetSize( unsigned int dimension ) const
       {
         if ( dimension > ImageType::ImageDimension - 1 )
           {
