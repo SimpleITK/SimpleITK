@@ -1,9 +1,7 @@
 #ifndef __sitkDetails_h
 #define __sitkDetails_h
 
-#include <tr1/functional>
-
-#include "sitkPixelTypeLists.h"
+#include "sitkMemberFunctionFactoryBase.h"
 #include "itkImage.h"
 #include "sitkImage.h"
 
@@ -11,28 +9,6 @@ namespace itk {
 namespace simple {
 // this namespace is internal classes not part of the simple ITK interface
 namespace detail {
-
-template<typename FunctionType> struct FunctionTraits;
-
-template<typename R,
-         typename C>
-struct FunctionTraits<R (C::*)(void)> {
-  static const unsigned int arity = 0;
-  typedef C ClassType;
-  typedef R ResultType;
-};
-
-
-template<typename R,
-         typename C,
-         typename A0>
-struct FunctionTraits<R (C::*)(A0)> {
-  static const unsigned int arity = 1;
-  typedef C ClassType;
-  typedef R ResultType;
-  typedef A0 Argument0Type;
-};
-
 
 
 template < class TClass, class TMemberFunctionPointer >
@@ -75,73 +51,6 @@ private:
 
 
   TMemberFunctionFactory &m_Factory;
-};
-
-
-template< typename TMemberFunctionPointer>
-class MemberFunctionFactoryBase
-{
-protected:
-  typedef TMemberFunctionPointer                            MemberFunctionType;
-  typedef typename FunctionTraits<MemberFunctionType>::ResultType    MemberFunctionResultType;
-  typedef typename FunctionTraits<MemberFunctionType>::Argument0Type MemberFunctionArgumentType;
-
-
-  MemberFunctionFactoryBase( void ) { }
-
-public:
-
-  typedef std::tr1::function< MemberFunctionResultType ( MemberFunctionArgumentType ) > FunctionObjectType;
-
-  FunctionObjectType GetMemberFunction( ImageDataType imageDataType, unsigned int imageDimension  )
-  {
-    // assert that it's in the sane range
-    assert ( imageDataType < typelist::Length< InstantiatedPixelTypeList >::Result );
-
-    switch ( imageDimension )
-      {
-      case 3:
-        // check if tr1::function has been set
-        if ( m_PFunction3[ imageDataType ] )
-          {
-          return m_PFunction3[ imageDataType ];
-          }
-        else
-          {
-          std::cerr << "Pixel type is not supported for this commandlet" << std::endl;
-          // need to thow something better or have some other definded behavior
-          throw;
-          }
-        break;
-      case 2:
-        // check if tr1::function has been set
-        if ( m_PFunction2[ imageDataType ] )
-          {
-          return m_PFunction2[ imageDataType ];
-          }
-        else
-          {
-          std::cerr << "Pixel type is not supported for this commandlet" << std::endl;
-          // need to thow something better or have some other definded behavior
-          throw;
-          }
-        break;
-      default:
-        std::cerr << "Image dimension of " << imageDimension << "is not supported!";
-        throw;
-      }
-  }
-
-protected:
-
-  // array of pointers to member functions
-  FunctionObjectType  m_PFunction3[ typelist::Length< InstantiatedPixelTypeList >::Result ];
-  FunctionObjectType  m_PFunction2[ typelist::Length< InstantiatedPixelTypeList >::Result ];
-
-private:
-
-  MemberFunctionFactoryBase * operator=(  MemberFunctionFactoryBase & );  // Not Implemented
-  MemberFunctionFactoryBase( const  MemberFunctionFactoryBase& );  // Not Implemented
 };
 
 
