@@ -23,7 +23,7 @@ std::string ImageFileWriter::GetFilename()
 
 ImageFileWriter& ImageFileWriter::Execute ( Image::Pointer image )
   {
-  int fnIndex = image->GetImageDataType();
+  int fnIndex = image->GetDataType();
 
   // todo fix this ugly syntax
   //((*this).*(m_MemberFactory.GetMemberFunction( fnIndex )))(image);

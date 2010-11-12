@@ -94,10 +94,10 @@ RecursiveGaussianImageFilter::OrderEnumType RecursiveGaussianImageFilter::GetOrd
 Image::Pointer RecursiveGaussianImageFilter::Execute ( Image::Pointer image )
   {
 
-  int fnIndex = image->GetImageDataType();
+    ImageDataType type = image->GetDataType();
+    unsigned int dimension = image->GetDimension();
 
-  // todo fix this ugly syntax
-  return NULL;//((*this).*(m_MemberFactory.GetMemberFunction( fnIndex )))(image);
+    return this->m_MemberFactory->GetMemberFunction( type, dimension )( image );
   }
 
 //----------------------------------------------------------------------------

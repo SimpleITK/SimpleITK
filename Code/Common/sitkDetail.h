@@ -93,15 +93,12 @@ public:
 
   typedef std::tr1::function< MemberFunctionResultType ( MemberFunctionArgumentType ) > FunctionObjectType;
 
-  template< typename TImageType >
-  FunctionObjectType GetMemberFunction( void  )
+  FunctionObjectType GetMemberFunction( ImageDataType imageDataType, unsigned int imageDimension  )
   {
-    long imageDataType = typelist::IndexOf< InstantiatedPixelTypeList, typename TImageType::PixelType>::Result;
-
     // assert that it's in the sane range
-    assert ( imageDataType > 0 && imageDataType < typelist::Length< AllPixelTypeList >::Result );
+    assert ( imageDataType < typelist::Length< InstantiatedPixelTypeList >::Result );
 
-    switch ( TImageType::ImageDimension )
+    switch ( imageDimension )
       {
       case 3:
         // check if tr1::function has been set
@@ -130,7 +127,7 @@ public:
           }
         break;
       default:
-        std::cerr << "Image dimension of " << TImageType::ImageDimension << "is not supported!";
+        std::cerr << "Image dimension of " << imageDimension << "is not supported!";
         throw;
       }
   }
