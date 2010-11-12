@@ -3,17 +3,15 @@
 
 #include "sitkMacro.h"
 
-
 namespace itk
 {
-namespace simple
-{
+  namespace simple
+  {
 
-class Image
-  : public LightObject {
-public:
-  typedef Image              Self;
-  typedef SmartPointer<Self> Pointer;
+    class Image : public LightObject {
+    public:
+      typedef Image              Self;
+      typedef SmartPointer<Self> Pointer;
 
   template <typename TImageType>
   Image( typename TImageType::Pointer image )
@@ -28,26 +26,27 @@ public:
       m_PimpleImage.reset( new PimpleImage<TImageType>( image ) );
     }
 
+      itk::DataObject::Pointer GetImageBase( void );
+      itk::DataObject::ConstPointer GetImageBase( void ) const;
 
-  // could return -1 if in valid
-//  SimpleImageBase::Pointer GetITKImage( void );
-  itk::DataObject::Pointer GetImageBase( void );
-  itk::DataObject::ConstPointer GetImageBase( void ) const;
+      // could return -1 if in valid
+      ImageDataType GetDataType( void ) const;
 
-  ImageDataType GetDataType( void ) const;
-  unsigned int GetDimension( void ) const;
+      unsigned int GetDimension( void ) const;
 
-  uint64_t GetHeight( void ) ;
-  uint64_t GetWidth( void );
-  uint64_t GetDepth( void );
+      uint64_t GetHeight( void );
+      uint64_t GetWidth( void );
+      uint64_t GetDepth( void );
 
-  std::string ToString( void );
+      std::string ToString( void );
 
-private:
+    private:
 
-  // Copying is not supported
-  Image( const Image & ); // Not implemented
-  Image &operator=( const Image & ); // Not implemented
+      // Copying is not supported
+      Image( const Image & ); // Not implemented
+      Image &operator=( const Image & ); // Not implemented
+      // For some reason, SWIG gets a little confused here, so don't let it see this code.
+#ifndef SWIG
 
   /// We utilize the private implementation ( or PImple)
   /// programming idiom to modify the behavior of the simple image
@@ -85,18 +84,16 @@ private:
     PimpleImage ( ImageType* image )
       : m_Image( image )
       {
-        // verify that simpleITK supports this image type and dimension
-
-        // this should be a STATIC ASSERT
-        assert( TImageType::ImageDimension == 3 );
+          // this should be a STATIC ASSERT
+          assert( TImageType::ImageDimension == 3 );
 
         // get the id of the pixel type
         typedef typename TImageType::PixelType PixelType;
         static const int id = typelist::IndexOf< InstantiatedPixelTypeList, PixelType >::Result;
 
-        // THIS SHOULD BE A STATIC ASSERT
-        assert(  id != -1 );
-      }
+          // THIS SHOULD BE A STATIC ASSERT
+          assert(  id != -1 );
+        }
 
     virtual PimpleImageBase *Clone( void ) const { return new Self(this->m_Image.GetPointer()); }
     virtual itk::DataObject::Pointer GetDataBase( void ) { return this->m_Image.GetPointer(); }
@@ -106,10 +103,10 @@ private:
       {
         typedef typename TImageType::PixelType PixelType;
 
-        // The constructor ensures that we have a valid image
-        // this maps the Image's pixel type to the array index
-        return typelist::IndexOf< InstantiatedPixelTypeList, PixelType>::Result;
-      }
+          // The constructor ensures that we have a valid image
+          // this maps the Image's pixel type to the array index
+          return typelist::IndexOf< InstantiatedPixelTypeList, PixelType>::Result;
+        }
 
     virtual unsigned int GetDimension( void ) { return ImageType::ImageDimension; }
 
@@ -129,13 +126,13 @@ private:
     ImagePointer m_Image;
   };
 
+    // utilize std::auto_ptr to perform automatic deletion on deconstruction
+    std::auto_ptr< PimpleImageBase > m_PimpleImage;
 
-
-  // utilize std::auto_ptr to per form automatic deletion on deconstruction
-  std::auto_ptr< PimpleImageBase > m_PimpleImage;
-};
-
+#endif
+  };
+  }
 }
-}
+
 
 #endif

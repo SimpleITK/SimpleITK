@@ -14,12 +14,17 @@
 // Include some C# helper files
 %include "CSharpTypemapHelper.i"
 
+
+// This section is copied verbatim into the generated source code.
+// Any include files, definitions, etc. need to go here.
 %{
-#include "SimpleITK.h"
+#include <SimpleITK.h>
 
 // This is required because SWIG does not properly add namespaces to typedefs
 using namespace itk::simple;
 %}
+
+// Language Specific Sections
 
 // CSharp
 #if SWIGCSHARP
@@ -39,16 +44,7 @@ using namespace itk::simple;
         SWIG_exception( SWIG_UnknownError, "Unknown exception thrown in SimpleITK $symname" );
     }
 }
-#endif
-
-%include "itkSmartPointer.h"
-%template(SmartPointerImage) itk::SmartPointer<itk::simple::Image>;
-
-%include "sitkImage.h"
-%include "sitkImageFileReader.h"
-%include "sitkImageFileWriter.h"
-%include "sitkGaussian.h"
-%include "sitkImageHash.h"
+#endif  // End of C# specific sections
 
 // Java
 #if SWIGJAVA
@@ -62,4 +58,21 @@ using namespace itk::simple;
     }
   }
 %}
-#endif
+#endif // End of Java specific sections
+
+
+
+// These definitions help SWIG to properly wrap smart pointers.
+%include "itkSmartPointer.h"
+%template(SmartPointerImage) itk::SmartPointer<itk::simple::Image>;
+
+// This helps SWIG wrap long long, as returned by Width, Height, and Depth
+typedef unsigned long long uint64_t;
+
+// Any new classes need to have an "%include" statement to be wrapped.
+%include "sitkImage.h"
+%include "sitkImageFileWriter.h"
+%include "sitkImageFileReader.h"
+%include "sitkImageHashFilter.h"
+%include "sitkRecursiveGaussianImageFilter.h"
+
