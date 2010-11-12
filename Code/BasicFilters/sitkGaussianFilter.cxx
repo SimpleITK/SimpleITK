@@ -6,6 +6,11 @@ namespace itk {
 
     GaussianFilter::GaussianFilter () {
       this->m_Sigma = 1.0;
+
+      this->m_MemberFactory.reset( new detail::MemberFunctionFactory<Self>( this ) );
+
+      this->m_MemberFactory->RegisterMemberFunctions< PixelTypeList, 3 > ();
+      this->m_MemberFactory->RegisterMemberFunctions< PixelTypeList, 2 > ();
     }
 
     std::string GaussianFilter::ToString() {
@@ -32,10 +37,10 @@ namespace itk {
       return NULL; //((*this).*(m_MemberFactory.GetMemberFunction( fnIndex )))(image);
     }
 
-    template <class T>
+    template <class TImageType>
     Image::Pointer GaussianFilter::ExecuteInternal ( Image::Pointer inImage ) {
-      typedef itk::Image<T,3> InputImageType;
-      typedef itk::Image<float,3> OutputImageType;
+      typedef TImageType InputImageType;
+      typedef itk::Image<float,InputImageType::ImageDimension> OutputImageType;
       typename InputImageType::Pointer image =
         dynamic_cast <InputImageType*> ( inImage->GetImageBase().GetPointer() );
 
