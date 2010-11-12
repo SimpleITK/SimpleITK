@@ -86,18 +86,16 @@ public:
     typedef typename TImageType::PixelType PixelType;
     unsigned int imageDataType = typelist::IndexOf< InstantiatedPixelTypeList, PixelType >::Result;
 
-    // needed for _1 place holder
-    using namespace std::tr1::placeholders;
 
     if ( imageDataType > 0 && imageDataType < typelist::Length< InstantiatedPixelTypeList >::Result )
       {
       switch( TImageType::ImageDimension )
         {
         case 3:
-          Superclass::m_PFunction3[ imageDataType ] = std::tr1::bind( pfunc, m_ObjectPointer, _1 );
+          Superclass::m_PFunction3[ imageDataType ] = Superclass::BindObject( pfunc, m_ObjectPointer );
           break;
         case 2:
-          Superclass::m_PFunction2[ imageDataType ] = std::tr1::bind( pfunc, m_ObjectPointer, _1 );
+          Superclass::m_PFunction2[ imageDataType ] = Superclass::BindObject( pfunc, m_ObjectPointer );
           break;
         default:
           std::cerr << "Tried to register image with unsupported dimension of " << (unsigned)TImageType::ImageDimension << std::endl;
