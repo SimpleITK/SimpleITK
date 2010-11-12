@@ -12,8 +12,7 @@ namespace simple
 namespace detail {
 
 template <typename TMemberFunctionPointer,
-          typename TMemberFunctionAddressor =
-          detail::MemberFunctionAddressor< typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType, TMemberFunctionPointer > >
+          typename TMemberFunctionAddressor = detail::MemberFunctionAddressor< TMemberFunctionPointer > >
 class MemberFunctionFactory
   : public MemberFunctionFactoryBase<TMemberFunctionPointer>
 {

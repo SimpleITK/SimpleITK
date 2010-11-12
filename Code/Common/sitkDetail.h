@@ -12,13 +12,15 @@ namespace simple {
 namespace detail {
 
 
-template < class TClass, class TMemberFunctionPointer >
+template < class TMemberFunctionPointer >
 struct MemberFunctionAddressor
 {
+  typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
+
   template< typename TImageType >
   TMemberFunctionPointer operator() ( void ) const
     {
-      return &TClass::template ExecuteInternal< TImageType >;
+      return &ObjectType::template ExecuteInternal< TImageType >;
     }
 };
 

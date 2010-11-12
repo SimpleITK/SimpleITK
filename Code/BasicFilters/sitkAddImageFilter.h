@@ -48,7 +48,7 @@ namespace itk {
       Image::Pointer ExecuteInternal ( Image::Pointer image, Image::Pointer image2 );
 
       // friend to get access to executeInternal member
-      friend struct detail::MemberFunctionAddressor<Self, MemberFunctionType>;
+      friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
 
 
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
