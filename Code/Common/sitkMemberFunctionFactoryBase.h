@@ -15,7 +15,10 @@ namespace itk
 namespace simple
 {
 
-template< typename TMemberFunctionPointer, unsigned int TArity = detail::FunctionTraits<TMemberFunctionPointer>::arity>
+// this namespace is internal classes not part of the external simple ITK interface
+namespace detail {
+
+template< typename TMemberFunctionPointer, unsigned int TArity = ::detail::FunctionTraits<TMemberFunctionPointer>::arity>
 class MemberFunctionFactoryBase;
 
 
@@ -24,9 +27,9 @@ class MemberFunctionFactoryBase<TMemberFunctionPointer, 1>
 {
 protected:
   typedef TMemberFunctionPointer                            MemberFunctionType;
-  typedef typename detail::FunctionTraits<MemberFunctionType>::ResultType    MemberFunctionResultType;
-  typedef typename detail::FunctionTraits<MemberFunctionType>::Argument0Type MemberFunctionArgumentType;
-  typedef typename detail::FunctionTraits<MemberFunctionType>::ClassType     ObjectType;
+  typedef typename ::detail::FunctionTraits<MemberFunctionType>::ResultType    MemberFunctionResultType;
+  typedef typename ::detail::FunctionTraits<MemberFunctionType>::Argument0Type MemberFunctionArgumentType;
+  typedef typename ::detail::FunctionTraits<MemberFunctionType>::ClassType     ObjectType;
 
 
   MemberFunctionFactoryBase( void ) { }
@@ -104,10 +107,10 @@ class MemberFunctionFactoryBase<TMemberFunctionPointer, 2>
 {
 protected:
   typedef TMemberFunctionPointer                                     MemberFunctionType;
-  typedef typename detail::FunctionTraits<MemberFunctionType>::ResultType    MemberFunctionResultType;
-  typedef typename detail::FunctionTraits<MemberFunctionType>::Argument0Type MemberFunctionArgument0Type;
-  typedef typename detail::FunctionTraits<MemberFunctionType>::Argument1Type MemberFunctionArgument1Type;
-  typedef typename detail::FunctionTraits<MemberFunctionType>::ClassType     ObjectType;
+  typedef typename ::detail::FunctionTraits<MemberFunctionType>::ResultType    MemberFunctionResultType;
+  typedef typename ::detail::FunctionTraits<MemberFunctionType>::Argument0Type MemberFunctionArgument0Type;
+  typedef typename ::detail::FunctionTraits<MemberFunctionType>::Argument1Type MemberFunctionArgument1Type;
+  typedef typename ::detail::FunctionTraits<MemberFunctionType>::ClassType     ObjectType;
 
 
   MemberFunctionFactoryBase( void ) { }
@@ -180,6 +183,8 @@ private:
   MemberFunctionFactoryBase( const  MemberFunctionFactoryBase& );  // Not Implemented
 };
 
+
+} // end namespace detail
 } // end namespace simple
 } // end namespace itk
 
