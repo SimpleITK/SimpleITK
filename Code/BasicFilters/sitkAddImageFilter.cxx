@@ -12,7 +12,7 @@ namespace simple {
 AddImageFilter::AddImageFilter ()
   {
 
-  this->m_MemberFactory.reset( new detail::MemberFunctionFactory<Self>( this ) );
+  this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
   this->m_MemberFactory->RegisterMemberFunctions< PixelTypeList, 3 > ();
   this->m_MemberFactory->RegisterMemberFunctions< PixelTypeList, 2 > ();

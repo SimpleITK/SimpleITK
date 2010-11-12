@@ -11,18 +11,18 @@ namespace simple
 // this namespace is internal classes not part of the external simple ITK interface
 namespace detail {
 
-template <class TObjectType,
-          typename TMemberFunctionPointer = typename TObjectType::MemberFunctionType,
-          typename TMemberFunctionAddressor = detail::MemberFunctionAddressor< TObjectType, TMemberFunctionPointer > >
+template <typename TMemberFunctionPointer,
+          typename TMemberFunctionAddressor =
+          detail::MemberFunctionAddressor< typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType, TMemberFunctionPointer > >
 class MemberFunctionFactory
   : public MemberFunctionFactoryBase<TMemberFunctionPointer>
 {
 
 public:
-  typedef MemberFunctionFactoryBase<TMemberFunctionPointer> Superclass;
-  typedef TObjectType                                ObjectType;
-  typedef TMemberFunctionPointer                     MemberFunctionType;
-  typedef TMemberFunctionAddressor                   AddressorType;
+  typedef MemberFunctionFactoryBase<TMemberFunctionPointer>                Superclass;
+  typedef TMemberFunctionPointer                                           MemberFunctionType;
+  typedef typename ::detail::FunctionTraits<MemberFunctionType>::ClassType ObjectType;
+  typedef TMemberFunctionAddressor                                         AddressorType;
 
 
 public:

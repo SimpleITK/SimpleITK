@@ -14,7 +14,7 @@ RecursiveGaussianImageFilter::RecursiveGaussianImageFilter ()
   this->m_Order = ZeroOrder;
   this->m_NormalizeAcrossScale = false;
 
-  this->m_MemberFactory.reset( new detail::MemberFunctionFactory<Self>( this ) );
+  this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
   this->m_MemberFactory->RegisterMemberFunctions< PixelTypeList, 3 > ();
   this->m_MemberFactory->RegisterMemberFunctions< PixelTypeList, 2 > ();

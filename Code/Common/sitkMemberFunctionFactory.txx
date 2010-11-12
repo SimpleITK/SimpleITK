@@ -11,21 +11,19 @@ namespace simple
 // this namespace is internal classes not part of the external simple ITK interface
 namespace detail {
 
-template <class TObjectType,
-          typename TMemberFunctionPointer,
+template <typename TMemberFunctionPointer,
           typename TMemberFunctionAddressor>
-MemberFunctionFactory<TObjectType, TMemberFunctionPointer, TMemberFunctionAddressor>
+MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
 ::MemberFunctionFactory( MemberFunctionFactory::ObjectType *pObject )
   : m_ObjectPointer( pObject )
 {
   assert( pObject );
 }
 
-template <class TObjectType,
-          typename TMemberFunctionPointer,
+template <typename TMemberFunctionPointer,
           typename TMemberFunctionAddressor>
 template<typename TImageType >
-void MemberFunctionFactory<TObjectType, TMemberFunctionPointer, TMemberFunctionAddressor>
+void MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
 ::Register( MemberFunctionFactory::MemberFunctionType pfunc,  TImageType*  )
 {
   typedef typename TImageType::PixelType PixelType;
@@ -48,12 +46,11 @@ void MemberFunctionFactory<TObjectType, TMemberFunctionPointer, TMemberFunctionA
     }
 }
 
-template <class TObjectType,
-          typename TMemberFunctionPointer,
+template <typename TMemberFunctionPointer,
           typename TMemberFunctionAddressor>
 template <typename TPixelTypeList,
           unsigned int ImageDimension >
-void MemberFunctionFactory<TObjectType, TMemberFunctionPointer, TMemberFunctionAddressor>
+void MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
 ::RegisterMemberFunctions( void )
 {
   typedef detail::MemberFunctionInstantiater< MemberFunctionFactory, ImageDimension > InstantiaterType;
