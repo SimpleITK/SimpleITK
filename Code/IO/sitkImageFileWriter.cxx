@@ -23,11 +23,11 @@ std::string ImageFileWriter::GetFilename()
 
 ImageFileWriter& ImageFileWriter::Execute ( Image::Pointer image )
   {
-  int fnIndex = image->GetDataType();
+    ImageDataType type = image->GetDataType();
+    unsigned int dimension = image->GetDimension();
 
-  // todo fix this ugly syntax
-  //((*this).*(m_MemberFactory.GetMemberFunction( fnIndex )))(image);
-  return *this;
+    return this->m_MemberFactory->GetMemberFunction( type, dimension )( image );
+    return *this;
   }
 
 //-----------------------------------------------------------------------------
