@@ -25,38 +25,6 @@ struct MemberFunctionAddressor
 };
 
 
-template < typename TMemberFunctionFactory, unsigned int ImageDimension >
-struct MemberFunctionInstantiater
-{
-  MemberFunctionInstantiater( TMemberFunctionFactory &factory )
-    : m_Factory( factory )
-  {}
-
-  template <class TPixelType>
-  void operator()( TPixelType t )
-    {
-      typedef TPixelType                                        PixelType;
-      typedef typename TMemberFunctionFactory::ObjectType       ObjectType;
-      typedef typename TMemberFunctionFactory::AddressorType    AddressorType;
-
-      // this maps the pixel type to an array id
-      int id = typelist::IndexOf< InstantiatedPixelTypeList, PixelType >::Result;
-
-      AddressorType addressor;
-      if ( id > 0 &&  id < typelist::Length< InstantiatedPixelTypeList >::Result )
-        {
-        typedef itk::Image< PixelType, ImageDimension> ImageType;
-        m_Factory.Register(addressor.operator()<ImageType>(), (ImageType*)(NULL));
-        }
-    }
-
-private:
-
-
-  TMemberFunctionFactory &m_Factory;
-};
-
-
 }
 }
 }
