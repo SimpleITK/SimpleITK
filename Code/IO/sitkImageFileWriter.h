@@ -31,7 +31,7 @@ namespace itk {
       std::string m_Filename;
 
       // friend to get access to executeInternal member 
-      friend class detail::MemberFunctionAddressor<Self, MemberFunctionType>;
+      friend struct detail::MemberFunctionAddressor<Self, MemberFunctionType>;
 
       std::auto_ptr<detail::MemberFunctionFactory<Self> > m_MemberFactory;
 

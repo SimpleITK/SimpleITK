@@ -80,7 +80,7 @@ namespace itk {
       template <class TImageType> Image::Pointer ExecuteInternal ( Image::Pointer image );
 
       // friend to get access to executeInternal member
-      friend class detail::MemberFunctionAddressor<Self, MemberFunctionType>;
+      friend struct detail::MemberFunctionAddressor<Self, MemberFunctionType>;
 
 
       std::auto_ptr<detail::MemberFunctionFactory<Self> > m_MemberFactory;
