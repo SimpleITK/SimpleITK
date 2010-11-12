@@ -51,7 +51,7 @@ namespace itk {
       friend struct detail::MemberFunctionAddressor<Self, MemberFunctionType>;
 
 
-      std::auto_ptr<detail::MemberFunctionFactory<Self> > m_MemberFactory;
+      std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
     };
 
 
