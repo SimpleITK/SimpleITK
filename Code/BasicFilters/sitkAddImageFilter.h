@@ -2,7 +2,7 @@
 #define __sitkAddImageFilter_h
 
 #include "sitkMacro.h"
-#include "sitkDetail.h"
+#include "sitkMemberFunctionFactory.h"
 #include "sitkImage.h"
 
 
