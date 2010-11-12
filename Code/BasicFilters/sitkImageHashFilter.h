@@ -36,7 +36,7 @@ namespace itk {
     private:
       HashFunction m_HashFunction;
 
-      template <class T> std::string ExecuteInternal ( Image::Pointer image );
+      template <class TImageType> std::string ExecuteInternal ( Image::Pointer image );
 
       // friend to get access to executeInternal member
       friend class detail::MemberFunctionAddressor<Self,MemberFunctionType>;

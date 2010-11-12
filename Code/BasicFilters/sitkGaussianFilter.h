@@ -35,7 +35,7 @@ namespace itk {
 
       double m_Sigma;
 
-      template <class T> Image::Pointer ExecuteInternal ( Image::Pointer image );
+      template <class TImageType> Image::Pointer ExecuteInternal ( Image::Pointer image );
 
       // friend to get access to executeInternal member
       friend class detail::MemberFunctionAddressor<Self, MemberFunctionType>;
