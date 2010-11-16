@@ -23,9 +23,30 @@ TEST(IO,ImageFileReader) {
     EXPECT_EQ ( it->second, hasher.Execute ( image ) ) << " reading " << it->first;
   }
 
-
 }
 
+TEST(IO,ReadWrite) {
+  itk::simple::ImageHashFilter hasher;
+  itk::simple::ImageFileReader reader;
+  itk::simple::ImageFileWriter writer;
+  itk::simple::Image::Pointer image;
+
+  std::string md5 = "269fea1c6db001f76b8c482e2fd3a24ef9866f9a";
+
+  image = reader.SetFilename ( dataFinder.getFile ( "Input/HeadMRVolumeWithDirection.nhdr" ) ).Execute();
+  ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
+  EXPECT_EQ ( md5, hasher.Execute ( image ) );
+
+  // Write it out
+  std::string filename = dataFinder.getOutputFile ( "IO.ReadWrite.nrrd" );
+  writer.SetFilename ( filename ).Execute ( image );
+  ASSERT_TRUE ( dataFinder.fileExists ( filename ) );
+  image = reader.SetFilename ( filename ).Execute();
+  ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
+  EXPECT_EQ ( md5, hasher.Execute ( image ) );
+}
+  
+  
 
 
 

@@ -9,18 +9,19 @@ end
 
 reader = SimpleITK.ImageFileReader()
 -- Remember that Lua arrays are 1-based, and that arg does not contain the application name!
-reader:setFilename ( arg[1] )
-image = reader:execute();
+reader:SetFilename ( arg[1] )
+image = reader:Execute();
   
-print ( image:toString() )
+print ( image:ToString() )
 
-gaussian = SimpleITK.Gaussian()
-gaussian:setSigma ( arg[2] )
-image = gaussian:execute ( image );
+gaussian = SimpleITK.RecursiveGaussianImageFilter()
+gaussian:SetSigma ( arg[2] )
+image = gaussian:Execute ( image );
 
-print ( image:toString() )
+print ( 'Finished filtering' )
+print ( image:ToString() )
 
 writer = SimpleITK.ImageFileWriter()
-writer:setFilename ( arg[3] )
-writer:execute ( image );
+writer:SetFilename ( arg[3] )
+writer:Execute ( image );
 
