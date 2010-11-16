@@ -11,6 +11,11 @@ namespace itk {
   namespace simple {
     ImageHashFilter::ImageHashFilter () {
       this->m_HashFunction = SHA1;
+
+      this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
+
+      this->m_MemberFactory->RegisterMemberFunctions< PixelTypeList, 3 > ();
+      this->m_MemberFactory->RegisterMemberFunctions< PixelTypeList, 2 > ();
     }
 
     std::string ImageHashFilter::ToString() {
@@ -39,18 +44,20 @@ namespace itk {
 
     std::string ImageHashFilter::Execute ( Image::Pointer image ) {
 
-      int fnIndex = image->GetImageDataType();
+      ImageDataType type = image->GetDataType();
+      unsigned int dimension = image->GetDimension();
 
-      // todo fix this ugly syntax
-      return ((*this).*(m_MemberFactory.GetMemberFunction( fnIndex )))(image);
+      return this->m_MemberFactory->GetMemberFunction( type, dimension )( image );
     }
 
-    template <class T>
+    template <class TImageType>
     std::string ImageHashFilter::ExecuteInternal ( Image::Pointer inImage ) {
-      typedef itk::ByteSwapper<T> Swapper;
-      typedef itk::Image<T,3> InputImageType;
+      typedef TImageType InputImageType;
+      typedef typename InputImageType::PixelType PixelType;
+      typedef typename NumericTraits<PixelType>::ValueType ValueType;
+      typedef itk::ByteSwapper<ValueType> Swapper;
       typename InputImageType::Pointer image =
-        dynamic_cast <InputImageType*> ( inImage->GetITKImage().GetPointer() );
+        dynamic_cast <InputImageType*> ( inImage->GetImageBase().GetPointer() );
 
       if ( image.IsNull() ) {
         // Take some action
@@ -69,7 +76,7 @@ namespace itk {
       iterator.GoToBegin();
 
       unsigned long VoxelsPerSlice = inImage->GetWidth() * inImage->GetHeight();
-      T* buffer = new T[VoxelsPerSlice];
+      ValueType* buffer = new ValueType[VoxelsPerSlice];
       // Compute the hash value one slice at a time
       for ( unsigned long depth = 0; depth < inImage->GetDepth(); depth++ ) {
         for ( unsigned long i = 0; i < VoxelsPerSlice; i++ ) {
