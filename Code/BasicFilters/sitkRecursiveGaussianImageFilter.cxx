@@ -13,6 +13,11 @@ RecursiveGaussianImageFilter::RecursiveGaussianImageFilter ()
   this->m_Sigma = 1.0;
   this->m_Order = ZeroOrder;
   this->m_NormalizeAcrossScale = false;
+
+  this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
+
+  this->m_MemberFactory->RegisterMemberFunctions< PixelTypeList, 3 > ();
+  this->m_MemberFactory->RegisterMemberFunctions< PixelTypeList, 2 > ();
   }
 
 //
@@ -89,10 +94,10 @@ RecursiveGaussianImageFilter::OrderEnumType RecursiveGaussianImageFilter::GetOrd
 Image::Pointer RecursiveGaussianImageFilter::Execute ( Image::Pointer image )
   {
 
-  int fnIndex = image->GetImageDataType();
+    ImageDataType type = image->GetDataType();
+    unsigned int dimension = image->GetDimension();
 
-  // todo fix this ugly syntax
-  return ((*this).*(m_MemberFactory.GetMemberFunction( fnIndex )))(image);
+    return this->m_MemberFactory->GetMemberFunction( type, dimension )( image );
   }
 
 //----------------------------------------------------------------------------
@@ -100,13 +105,13 @@ Image::Pointer RecursiveGaussianImageFilter::Execute ( Image::Pointer image )
 //
 // ExecuteInternal
 //
-template <class T>
+template <class TImageType>
 Image::Pointer RecursiveGaussianImageFilter::ExecuteInternal ( Image::Pointer inImage )
   {
-  typedef itk::Image<T,3> InputImageType;
-  typedef itk::Image<float,3> OutputImageType;
+  typedef TImageType InputImageType;
+  typedef itk::Image<float,InputImageType::ImageDimension> OutputImageType;
   typename InputImageType::Pointer image =
-    dynamic_cast <InputImageType*> ( inImage->GetITKImage().GetPointer() );
+    dynamic_cast <InputImageType*> ( inImage->GetImageBase().GetPointer() );
 
   if ( image.IsNull() ) {
     // Take some action
@@ -128,7 +133,7 @@ Image::Pointer RecursiveGaussianImageFilter::ExecuteInternal ( Image::Pointer in
   filter->Update();
 
   Image::Pointer out = new Image( filter->GetOutput() );
-  out->GetITKImage()->DisconnectPipeline();
+  filter->GetOutput()->DisconnectPipeline();
   return out;
   }
 

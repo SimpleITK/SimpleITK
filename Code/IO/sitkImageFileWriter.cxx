@@ -23,11 +23,11 @@ std::string ImageFileWriter::GetFilename()
 
 ImageFileWriter& ImageFileWriter::Execute ( Image::Pointer image )
   {
-  int fnIndex = image->GetImageDataType();
+    ImageDataType type = image->GetDataType();
+    unsigned int dimension = image->GetDimension();
 
-  // todo fix this ugly syntax
-  ((*this).*(m_MemberFactory.GetMemberFunction( fnIndex )))(image);
-  return *this;
+    return this->m_MemberFactory->GetMemberFunction( type, dimension )( image );
+    return *this;
   }
 
 //-----------------------------------------------------------------------------
@@ -36,7 +36,7 @@ ImageFileWriter& ImageFileWriter::ExecuteInternal( Image::Pointer inImage )
   {
   typedef itk::Image<T,3> InputImageType;
   typename InputImageType::Pointer image = 
-    dynamic_cast <InputImageType*> ( inImage->GetITKImage().GetPointer() );
+    dynamic_cast <InputImageType*> ( inImage->GetImageBase().GetPointer() );
 
   // handle 2D images differently
   if (inImage->GetDepth() == 1)

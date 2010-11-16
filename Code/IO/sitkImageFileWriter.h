@@ -2,7 +2,7 @@
 #define __sitkImageFileWriter_h
 
 #include "sitkMacro.h"
-#include "sitkDetail.h"
+#include "sitkMemberFunctionFactory.h"
 #include "sitkImage.h"
 
 namespace itk {
@@ -30,10 +30,10 @@ namespace itk {
 
       std::string m_Filename;
 
-      // friend to get access to executeInternal member 
-      friend struct detail::PFuncArrayInitializer<Self>;
+      // friend to get access to executeInternal member
+      friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
 
-      detail::MemberFunctionFactory<Self> m_MemberFactory;
+      std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 
     };
 

@@ -5,42 +5,49 @@ namespace itk
 namespace simple
 {
 
-SimpleImageBase::Pointer Image::GetITKImage( void )
+itk::DataObject::Pointer Image::GetImageBase( void )
 {
-  return m_Image;
+  assert( m_PimpleImage.get() );
+  return m_PimpleImage->GetDataBase();
 }
 
-ImageDataType Image::GetImageDataType( void )
+itk::DataObject::ConstPointer Image::GetImageBase( void ) const
 {
-  return this->m_PimpleImage->GetImageDataType();
+  assert( m_PimpleImage.get() );
+  return m_PimpleImage->GetDataBase().GetPointer();
+}
+
+ImageDataType Image::GetDataType( void ) const
+{
+  return this->m_PimpleImage->GetDataType();
+}
+
+unsigned int Image::GetDimension( void ) const
+{
+  return this->m_PimpleImage->GetDimension();
 }
 
 std::string Image::ToString( void )
 {
   std::ostringstream out;
-  this->m_Image->Print ( out );
+  // todo bring me back
+  //this->m_Image->Print ( out );
   return out.str();
 }
 
 uint64_t Image::GetWidth( void )
 {
-  SimpleImageBase::RegionType region;
-  region = this->m_Image->GetLargestPossibleRegion();
-  return region.GetSize()[0];
+  return this->m_PimpleImage->GetWidth();
 }
 
 uint64_t Image::GetHeight( void )
 {
-  SimpleImageBase::RegionType region;
-  region = this->m_Image->GetLargestPossibleRegion();
-  return region.GetSize()[1];
+  return this->m_PimpleImage->GetHeight();
 }
 
 uint64_t Image::GetDepth( void )
 {
-  SimpleImageBase::RegionType region;
-  region = this->m_Image->GetLargestPossibleRegion();
-  return region.GetSize()[2];
+  return this->m_PimpleImage->GetDepth();
 }
 }
 }
