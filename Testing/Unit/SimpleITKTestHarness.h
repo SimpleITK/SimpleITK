@@ -27,7 +27,9 @@ class DataFinder {
   std::string getOutputDirectory () { return mOutputDirectory; };
   std::string getOutputFile ( std::string filename ) { return mOutputDirectory + "/" + filename; };
   std::string getExecutableDirectory() { return std::string ( EXECUTABLE_PATH ); }
+  std::string getLuaExecutable() { return std::string ( SIMPLEITK_LUA_EXECUTABLE_PATH ); }
   std::string getSourceDirectory() { return std::string ( SIMPLEITK_SOURCE_DIR ); }
+  bool fileExists ( std::string filename ) { return itksys::SystemTools::FileExists ( filename.c_str() ); }
   std::string getFile ( std::string filename ) {
     return mDirectory + "/" + filename;
   };
@@ -45,12 +47,18 @@ extern DataFinder dataFinder;
 // Class for running external programs
 class ExternalProgramRunner : public testing::Test {
 public:
+  /* Run the command line specified in the list of arguments.  Call FAIL if the executable fails
+   */
   void RunExecutable ( std::vector<std::string> CommandLine, bool showOutput = false ) {
 
     std::string fullCommand;
     for ( unsigned int idx = 0; idx < CommandLine.size(); idx++ ) {
       fullCommand += CommandLine[idx];
       fullCommand += " ";
+    }
+
+    if ( showOutput ) {
+      std::cout << "Running command: '" << fullCommand << "'" << std::endl;
     }
 
     // Allocate what we need
@@ -83,10 +91,10 @@ public:
     bool failed = false;
     itksysProcess_WaitForExit ( process, 0 );
     if ( itksysProcess_GetState ( process ) == itksysProcess_State_Error ) {
-      std::cerr << "Error executing " << CommandLine[0] << itksysProcess_GetErrorString ( process ) << std::endl;
+      std::cerr << "Error executing '" << fullCommand << "': " << itksysProcess_GetErrorString ( process ) << std::endl;
       failed = true;
     } else if ( itksysProcess_GetState ( process ) == itksysProcess_State_Exception ) {
-      std::cerr << "Error executing " << CommandLine[0] << itksysProcess_GetExceptionString ( process ) << std::endl;
+      std::cerr << "Error executing '" << fullCommand << "': " << itksysProcess_GetExceptionString ( process ) << std::endl;
       failed = true;
     }
     itksysProcess_Delete ( process );

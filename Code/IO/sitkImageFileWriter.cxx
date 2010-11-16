@@ -8,6 +8,8 @@ namespace simple {
 
 ImageFileWriter::ImageFileWriter()
   {
+  this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
+
   }
 
 ImageFileWriter& ImageFileWriter::SetFilename ( std::string fn )
@@ -31,10 +33,10 @@ ImageFileWriter& ImageFileWriter::Execute ( Image::Pointer image )
   }
 
 //-----------------------------------------------------------------------------
-template <class T>
+template <class InputImageType>
 ImageFileWriter& ImageFileWriter::ExecuteInternal( Image::Pointer inImage )
   {
-  typedef itk::Image<T,3> InputImageType;
+    // typedef itk::Image<T,3> InputImageType;
   typename InputImageType::Pointer image = 
     dynamic_cast <InputImageType*> ( inImage->GetImageBase().GetPointer() );
 
@@ -104,7 +106,8 @@ ImageFileWriter& ImageFileWriter::ExecuteInternal( Image::Pointer inImage )
     else
       {
       // set up the output 2D Region
-      typedef itk::Image<T,2> OutputImageType;
+      // typedef itk::Image<T,2> OutputImageType;
+        typedef InputImageType OutputImageType;
       typename OutputImageType::SizeType size;
       size[0] = inImage->GetWidth();
       size[1] = inImage->GetHeight();

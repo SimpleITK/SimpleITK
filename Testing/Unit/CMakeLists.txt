@@ -8,6 +8,10 @@ set ( TestSource
   TypeListsTests.cxx
   )
 
+if ( WRAP_LUA )
+  set ( TestSource ${TestSource} LuaTests.cxx )
+endif()
+
 # Build Google Test
 find_package(Threads)
 if (CMAKE_USE_PTHREADS_INIT)  # The pthreads library is available.

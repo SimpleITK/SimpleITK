@@ -1,4 +1,4 @@
-#include <gtest/gtest.h>
+#include "SimpleITKTestHarness.h"
 #include <sitkPixelTypeLists.h>
 
 class TypeListTest
