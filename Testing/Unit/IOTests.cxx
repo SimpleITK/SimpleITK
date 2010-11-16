@@ -19,7 +19,7 @@ TEST(IO,ImageFileReader) {
   for ( MapType::iterator it = mapping.begin(); it != mapping.end(); ++it ) {
     reader.SetFilename ( dataFinder.getFile ( it->first ) );
     image = reader.Execute();
-    ASSERT_TRUE ( image->GetITKImage().IsNotNull() );
+    ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
     EXPECT_EQ ( it->second, hasher.Execute ( image ) ) << " reading " << it->first;
   }
 
