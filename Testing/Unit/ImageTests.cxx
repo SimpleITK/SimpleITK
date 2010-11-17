@@ -17,12 +17,14 @@ public:
     itk::Image<int16_t,3>::Pointer im = itk::Image<int16_t,3>::New();
     im->SetRegions ( region );
     im->Allocate();
+    im->FillBuffer ( 0 );
     itkShortImage = im;
     shortImage = new itk::simple::Image( im.GetPointer() );
 
     itk::Image<float,3>::Pointer fim = itk::Image<float,3>::New();
     fim->SetRegions ( region );
     fim->Allocate();
+    im->FillBuffer ( 0.0 );
     itkFloatImage = fim;
     floatImage = new itk::simple::Image( fim.GetPointer() );
 

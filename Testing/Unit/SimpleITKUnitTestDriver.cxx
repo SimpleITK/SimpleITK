@@ -30,22 +30,7 @@ int main(int argc, char* argv[])
   }
   testing::InitGoogleTest ( &argc, argv );
   if ( argc > 1 ) {
-    dataFinder.setDirectory ( argv[1] );
-  } else {
-    std::string dir;
-    if ( itksys::SystemTools::GetEnv ( "SIMPLEITKTESTDATADIR", dir ) ) {
-      dataFinder.setDirectory ( dir );
-    }
-  }
-  if ( argc > 2 ) {
-    dataFinder.setOutputDirectory ( argv[2] );
-  } else {
-    std::string dir;
-    if ( itksys::SystemTools::GetEnv ( "SIMPLEITKTESTOUTPUTDIR", dir ) ) {
-      dataFinder.setOutputDirectory ( dir );
-    } else {
-      dataFinder.setOutputDirectory ( "." );
-    }
+    dataFinder.setExecutableDirectory ( argv[1] );
   }
   return RUN_ALL_TESTS();
 }

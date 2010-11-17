@@ -50,7 +50,7 @@ private:
 template <typename TMemberFunctionPointer,
           typename TMemberFunctionAddressor>
 MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
-::MemberFunctionFactory( MemberFunctionFactory::ObjectType *pObject )
+::MemberFunctionFactory( typename MemberFunctionFactory::ObjectType *pObject )
   : m_ObjectPointer( pObject )
 {
   assert( pObject );
@@ -60,7 +60,7 @@ template <typename TMemberFunctionPointer,
           typename TMemberFunctionAddressor>
 template<typename TImageType >
 void MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
-::Register( MemberFunctionFactory::MemberFunctionType pfunc,  TImageType*  )
+::Register( typename MemberFunctionFactory::MemberFunctionType pfunc,  TImageType*  )
 {
   typedef typename TImageType::PixelType PixelType;
   unsigned int imageDataType = typelist::IndexOf< InstantiatedPixelTypeList, PixelType >::Result;

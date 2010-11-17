@@ -13,6 +13,7 @@ class DataFinder {
   DataFinder () { 
     mDirectory = TEST_HARNESS_DATA_DIRECTORY;
     mOutputDirectory = TEST_HARNESS_TEMP_DIRECTORY;
+    mExecutableDirectory = EXECUTABLE_PATH;
   };
   void setDirectory ( const char* dir ) {
     mDirectory = dir;
@@ -20,13 +21,16 @@ class DataFinder {
   void setDirectory ( std::string dir ) {
     mDirectory = dir;
   };
+  void setExecutableDirectory ( std::string dir ) {
+    mExecutableDirectory = dir;
+  }
   void setOutputDirectory ( std::string dir ) {
     mOutputDirectory = dir;
   };
   std::string getDirectory () { return mDirectory; };
   std::string getOutputDirectory () { return mOutputDirectory; };
   std::string getOutputFile ( std::string filename ) { return mOutputDirectory + "/" + filename; };
-  std::string getExecutableDirectory() { return std::string ( EXECUTABLE_PATH ); }
+  std::string getExecutableDirectory() { return mExecutableDirectory; }
   std::string findExecutable ( std::string exe ) { return getExecutableDirectory() + "/" + exe + EXECUTABLE_SUFFIX; }
   std::string getLuaExecutable() { return std::string ( SIMPLEITK_LUA_EXECUTABLE_PATH ); }
   std::string getSourceDirectory() { return std::string ( SIMPLEITK_SOURCE_DIR ); }
@@ -38,6 +42,7 @@ class DataFinder {
   
  protected:
   std::string mDirectory;
+  std::string mExecutableDirectory;
   std::string mOutputDirectory;
 };
 
@@ -63,10 +68,9 @@ public:
     }
 
     // Allocate what we need
-    char* StringCommandLine[256];
+    const char* StringCommandLine[256];
     for ( unsigned int idx = 0; idx < CommandLine.size(); idx++ ) {
-      StringCommandLine[idx] = new char[CommandLine[idx].length() + 1];
-      sprintf ( StringCommandLine[idx], "%s", CommandLine[idx].c_str() );
+      StringCommandLine[idx] = CommandLine[idx].c_str();
     }
     StringCommandLine[CommandLine.size()] = NULL;
 
@@ -101,7 +105,7 @@ public:
     itksysProcess_Delete ( process );
     // Free stuff
     for ( unsigned int idx = 0; idx < CommandLine.size(); idx++ ) {
-      delete[] StringCommandLine[idx];
+      // delete[] StringCommandLine[idx];
     }
     if ( failed ) {
       FAIL();
