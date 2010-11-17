@@ -10,6 +10,8 @@ ImageFileWriter::ImageFileWriter()
   {
   this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
+  this->m_MemberFactory->RegisterMemberFunctions< PixelTypeList, 3 > ();
+  this->m_MemberFactory->RegisterMemberFunctions< PixelTypeList, 2 > ();
   }
 
 ImageFileWriter& ImageFileWriter::SetFilename ( std::string fn )
@@ -37,7 +39,7 @@ template <class InputImageType>
 ImageFileWriter& ImageFileWriter::ExecuteInternal( Image::Pointer inImage )
   {
     // typedef itk::Image<T,3> InputImageType;
-  typename InputImageType::Pointer image = 
+  typename InputImageType::Pointer image =
     dynamic_cast <InputImageType*> ( inImage->GetImageBase().GetPointer() );
 
   // handle 2D images differently
@@ -47,7 +49,7 @@ ImageFileWriter& ImageFileWriter::ExecuteInternal( Image::Pointer inImage )
     // see if we're dealing with a jpg or png
     size_t pos = m_Filename.rfind(".");
     std::string suffix = m_Filename.substr(pos+1,m_Filename.size()-pos+1);
-    
+
     if (std::strcmp(suffix.c_str(), "jpg") == 0 ||
         std::strcmp(suffix.c_str(), "JPG") == 0 ||
         std::strcmp(suffix.c_str(), "jpeg") == 0 ||
