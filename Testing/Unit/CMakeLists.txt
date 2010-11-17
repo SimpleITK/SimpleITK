@@ -6,6 +6,7 @@ set ( TestSource
   ImageTests.cxx
   IOTests.cxx
   TypeListsTests.cxx
+  CXXTests.cxx
   )
 
 if ( WRAP_LUA )
