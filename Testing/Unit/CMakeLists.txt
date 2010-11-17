@@ -29,7 +29,7 @@ SET(GTEST_LIBRARY_DIRS "${CMAKE_CURRENT_BINARY_DIR}" PARENT_SCOPE)
 FIND_PATH(ITK_DATA_ROOT ITKData.readme ${ITKTesting_SOURCE_DIR}/Data $ENV{ITK_DATA_ROOT})
 set(TEST_HARNESS_TEMP_DIRECTORY ${SimpleITK_BINARY_DIR}/Testing/Temporary)
 set(TEST_HARNESS_DATA_DIRECTORY ${ITK_DATA_ROOT})
-set(TEST_HARNESS_EXECUTABLE_DIRECTORY "${EXECUTABLE_OUTPUT_PATH}${CMAKE_EXECUTABLE_SUFFIX}/${CMAKE_CFG_INTDIR}/" )
+set(TEST_HARNESS_EXECUTABLE_DIRECTORY "${EXECUTABLE_OUTPUT_PATH}/${CMAKE_CFG_INTDIR}/" )
 
 # Set some variables
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/SimpleITKTestHarnessPaths.h.in
@@ -87,7 +87,7 @@ macro(ADD_GOOGLE_TESTS executable)
     # Add all the remaining tests to CTest's test list
     foreach(hit ${AllTestsHits})
       message ( STATUS "Adding test ${executable} ${hit} ${TEST_HARNESS_DATA_DIRECTORY} ${TEST_HARNESS_TEMP_DIRECTORY}" )
-      add_test(${hit} ${executable} --gtest_filter=${hit} ${TEST_HARNESS_DATA_DIRECTORY} ${TEST_HARNESS_TEMP_DIRECTORY})
+      add_test(${hit} ${executable} --gtest_filter=${hit} ${TEST_HARNESS_EXECUTABLE_DIRECTORY})
     endforeach(hit)
   endforeach()
 endmacro()
