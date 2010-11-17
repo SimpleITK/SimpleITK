@@ -27,6 +27,7 @@ class DataFinder {
   std::string getOutputDirectory () { return mOutputDirectory; };
   std::string getOutputFile ( std::string filename ) { return mOutputDirectory + "/" + filename; };
   std::string getExecutableDirectory() { return std::string ( EXECUTABLE_PATH ); }
+  std::string findExecutable ( std::string exe ) { return getExecutableDirectory() + "/" + exe + EXECUTABLE_SUFFIX; }
   std::string getLuaExecutable() { return std::string ( SIMPLEITK_LUA_EXECUTABLE_PATH ); }
   std::string getSourceDirectory() { return std::string ( SIMPLEITK_SOURCE_DIR ); }
   bool fileExists ( std::string filename ) { return itksys::SystemTools::FileExists ( filename.c_str() ); }
