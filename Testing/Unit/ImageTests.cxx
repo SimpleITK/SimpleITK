@@ -17,7 +17,7 @@ public:
     itk::Image<int16_t,3>::Pointer im = itk::Image<int16_t,3>::New();
     im->SetRegions ( region );
     im->Allocate();
-    im->FillBuffer ( 0 );
+    im->FillBuffer ( 100 );
     itkShortImage = im;
     shortImage = new itk::simple::Image( im.GetPointer() );
 
@@ -58,10 +58,9 @@ TEST_F(Image,Create) {
 
 TEST_F(Image,Hash) {
   itk::simple::ImageHashFilter hasher;
-  EXPECT_EQ ( "08183e1b0c50fd2cf6f070b58e218443fb7d5317",
-    hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 ).Execute ( shortImage ) )
-    << " SHA1 hash value";
-  EXPECT_EQ ( "031c48b3925696af125a807326015c3b",
-    hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 ).Execute ( floatImage ) )
-    << " MD5 hash value";
+  EXPECT_EQ ( "645b71695b94923c868e16b943d8acf8f6788617", hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 ).Execute ( shortImage ) ) << " SHA1 hash value";
+  EXPECT_EQ ( "d4ca27c766665f7422027ab1b977b2ef", hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 ).Execute ( shortImage ) ) << " MD5 hash value";
+
+  EXPECT_EQ ( "3b6bfcb1922bf8b29b171062ad722c82f8aa3f50", hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 ).Execute ( floatImage ) ) << " SHA1 hash value";
+  EXPECT_EQ ( "e5eba8af943d7911220c9f2fb9b5b9c8", hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 ).Execute ( floatImage ) ) << " MD5 hash value";
 }

@@ -15,11 +15,9 @@ namespace itk {
       // function pointer type
       typedef std::string (Self::*MemberFunctionType)( Image::Pointer );
 
-      // list of pixel types supported (not  sure what this would
+      // list of pixel types supported (not sure what this would
       // actually work with)
       typedef BasicPixelTypeList PixelTypeList;
-
-
 
       ImageHashFilter();
 
