@@ -4,8 +4,12 @@
 
 // If this is not found in Visual Studio 2008, please download the VC++ 2008 Feature Pack from
 // http://www.microsoft.com/downloads/en/details.aspx?FamilyId=D466226B-8DAB-445F-A7B4-448B326C48E7&displaylang=en
+#if _MS_VER == 1500
+// Microsoft Visual Studio C++ 2008, v9.0
 #include <tr1/functional>
-// #include <functional>
+#else
+#include <functional>
+#endif
 
 #include "sitkPixelTypeLists.h"
 #include "sitkMacro.h"
