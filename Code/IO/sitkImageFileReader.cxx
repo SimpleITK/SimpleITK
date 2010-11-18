@@ -1,6 +1,11 @@
+#ifdef _MFC_VER
+#pragma warning(disable:4996)
+#endif
+
 #include "sitkImageFileReader.h"
 #include <itkImageIOBase.h>
 #include <itkImageFileReader.h>
+
 
 namespace itk {
   namespace simple {
