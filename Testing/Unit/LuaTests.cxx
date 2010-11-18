@@ -26,6 +26,6 @@ TEST_F(Lua,SimpleGaussian) {
 
   image = reader.SetFilename ( output ).Execute();
   ASSERT_TRUE ( image->GetImageBase().IsNotNull() ) << "Loaded output image";
-  EXPECT_EQ ( "911bdaa4ad90f9c6eeb7a80455564a63d9c29a8a", hasher.Execute ( image ) );
+  EXPECT_EQ ( "71b3f3fd8bb79e1f355c3a3bfcbdf3fa82dd149e", hasher.Execute ( image ) );
 
 }

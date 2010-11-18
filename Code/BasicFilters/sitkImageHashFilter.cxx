@@ -75,25 +75,25 @@ namespace itk {
       IteratorType iterator = IteratorType ( image, image->GetLargestPossibleRegion() );
       iterator.GoToBegin();
 
-      unsigned long VoxelsPerSlice = inImage->GetWidth() * inImage->GetHeight();
-      ValueType* buffer = new ValueType[VoxelsPerSlice];
+      size_t VoxelsPerSlice = inImage->GetWidth() * inImage->GetHeight();
+      PixelType* buffer = new PixelType[VoxelsPerSlice];
       // Compute the hash value one slice at a time
-      for ( unsigned long depth = 0; depth < inImage->GetDepth(); depth++ ) {
-        for ( unsigned long i = 0; i < VoxelsPerSlice; i++ ) {
+      for ( size_t depth = 0; depth < inImage->GetDepth(); depth++ ) {
+        for ( size_t i = 0; i < VoxelsPerSlice; i++ ) {
           buffer[i] = iterator.Value();
           ++iterator;
         }
-        // Possibly byte swap
+        // Possibly byte swap so we always calculate on little endian data
         Swapper::SwapRangeFromSystemToLittleEndian ( buffer, VoxelsPerSlice );
 
         // Update the hash
         switch ( this->m_HashFunction )
           {
           case SHA1:
-            sha1.SHA1Input ( &sha1Context, (unsigned char*)buffer, VoxelsPerSlice );
+            sha1.SHA1Input ( &sha1Context, (unsigned char*)buffer, VoxelsPerSlice*sizeof(PixelType) );
             break;
           case MD5:
-            md5.MD5Update ( &md5Context, (unsigned char*)buffer, VoxelsPerSlice );
+            md5.MD5Update ( &md5Context, (unsigned char*)buffer, VoxelsPerSlice*sizeof(PixelType) );
             break;
           }
       }
