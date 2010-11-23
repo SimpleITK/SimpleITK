@@ -11,3 +11,9 @@ The goal of SimpleITK is to provide an abstraction layer to [ITK](http://www.itk
 Wrapping is accomplished through [SWIG](http://www.swig.org), in principle, any language wrapped by SWIG should be applicable to SimpleITK.
 
 SimpleITK is licensed under the [Apache License](http://www.opensource.org/licenses/apache2.0.php) in the [same way as ITK](http://www.itk.org/Wiki/ITK_Release_4/Licensing).
+
+ToDo:
+* Registration
+* CastImageFilter
+* Multiple input filters
+* Simple arithmetic filters
