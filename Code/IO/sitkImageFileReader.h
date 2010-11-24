@@ -5,6 +5,8 @@
 #include "sitkImage.h"
 #include "itkImageIOBase.h"
 
+#include "itkImageIOBase.h"
+
 namespace itk {
   namespace simple {
 
@@ -19,8 +21,10 @@ namespace itk {
 
     protected:
 
-      template<unsigned int dim> Image::Pointer ExecuteInteralDimension ( itk::ImageIOBase *io );
-      template <class T, unsigned int dimension> Image::Pointer ExecuteInternal ( void );
+      template < unsigned int ImageDimension >
+      Image::Pointer ExecuteInternalReadScalar( itk::ImageIOBase::IOComponentType componentType );
+
+      template <class TImageType> Image::Pointer ExecuteInternal ( void );
 
     private:
 
