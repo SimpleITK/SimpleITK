@@ -30,6 +30,19 @@ typedef typelist::MakeTypeList<unsigned char,
                                unsigned long>::Type LabelPixelTypeList;
 
 
+typedef typelist::MakeTypeList<char,
+                               unsigned char,
+                               short,
+                               unsigned short,
+                               int,
+                               unsigned int,
+                               long,
+                               unsigned long>::Type IntegerPixelTypeList;
+
+
+typedef typelist::MakeTypeList<float,
+                               double >::Type RealPixelTypeList;
+
 
 typedef typelist::MakeTypeList< itk::RGBPixel<signed char>,
                                 itk::RGBPixel<unsigned char>,

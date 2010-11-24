@@ -18,6 +18,8 @@ namespace itk {
        */
       @FILTERNAME@ImageFilter();
 
+      @SUPPORTED_PIXEL_TYPES@
+
       @MEMBER_VARIABLES_SET_GET@
 
       // Print ourselves out
