@@ -23,7 +23,7 @@ RecursiveGaussianImageFilter::RecursiveGaussianImageFilter ()
 //
 // ToString
 //
-std::string RecursiveGaussianImageFilter::ToString()
+std::string RecursiveGaussianImageFilter::ToString() const
   {
   std::ostringstream out;
   out << "itk::simple::RecursiveGaussianImageFilter\n"
@@ -45,7 +45,7 @@ RecursiveGaussianImageFilter& RecursiveGaussianImageFilter::SetSigma ( double si
 //
 // GetSigma
 //
-double RecursiveGaussianImageFilter::GetSigma()
+double RecursiveGaussianImageFilter::GetSigma() const
   {
   return this->m_Sigma;
   }
@@ -63,7 +63,7 @@ RecursiveGaussianImageFilter::SetNormalizeAcrossScale ( bool normalizeAcrossScal
 //
 // GetNormalizeAcrossScale
 //
-bool RecursiveGaussianImageFilter::GetNormalizeAcrossScale()
+bool RecursiveGaussianImageFilter::GetNormalizeAcrossScale() const
   {
   return this->m_NormalizeAcrossScale;
   }
@@ -81,7 +81,7 @@ RecursiveGaussianImageFilter::SetOrder( OrderEnumType order )
 //
 // GetSigma
 //
-RecursiveGaussianImageFilter::OrderEnumType RecursiveGaussianImageFilter::GetOrder()
+RecursiveGaussianImageFilter::OrderEnumType RecursiveGaussianImageFilter::GetOrder() const
   {
   return this->m_Order;
   }

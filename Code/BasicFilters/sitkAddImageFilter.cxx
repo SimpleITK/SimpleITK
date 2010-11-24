@@ -21,7 +21,7 @@ AddImageFilter::AddImageFilter ()
 //
 // ToString
 //
-std::string AddImageFilter::ToString()
+std::string AddImageFilter::ToString() const
   {
   std::ostringstream out;
   out << "itk::simple::AddImageFilter\n";

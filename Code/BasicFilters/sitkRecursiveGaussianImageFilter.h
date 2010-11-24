@@ -48,22 +48,22 @@ namespace itk {
        * Note: Sigma is always measured in physical units
        */
       Self& SetSigma ( double sigma );
-      double GetSigma();
+      double GetSigma() const;
 
       /**
        * Get/Set NormalizeAcrossScale
        */
       Self& SetNormalizeAcrossScale( bool normalizeAcrossScale );
-      bool GetNormalizeAcrossScale();
+      bool GetNormalizeAcrossScale() const;
 
       /**
        * Get/Set Order
        */
       Self& SetOrder( OrderEnumType order );
-      OrderEnumType GetOrder();
+      OrderEnumType GetOrder() const;
 
       // Print ourselves out
-      std::string ToString();
+      std::string ToString() const;
 
       Image::Pointer Execute ( Image::Pointer );
 
