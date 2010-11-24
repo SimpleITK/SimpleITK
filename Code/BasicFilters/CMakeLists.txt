@@ -111,6 +111,7 @@ macro( generate_single_filter FILTERNAME )
 endmacro()
 
 generate_single_filter( BinaryThreshold )
+generate_single_filter( IntensityWindowing )
 
 generate_dual_filter( Subtract )
 generate_dual_filter( Divide )
