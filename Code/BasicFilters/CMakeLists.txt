@@ -30,7 +30,7 @@ macro( process_all_member_variables  VARIABLES_RECORDS )
   foreach(  variable_line ${VARIABLES_RECORDS} )
 
     string( REGEX MATCH "[A-Za-z]* "   variable_name  "${variable_line}")
-    string( REGEX MATCH " [a-z]* "     variable_type  "${variable_line}")
+    string( REGEX MATCH " [a-z_0-9]* " variable_type  "${variable_line}")
     string( REGEX MATCH " [a-z.0-9]*$" variable_value "${variable_line}")
 
     if( variable_name )
@@ -132,6 +132,13 @@ generate_single_filter( Log BasicPixelTypeList )
 generate_single_filter( Log10 BasicPixelTypeList )
 generate_single_filter( Sqrt BasicPixelTypeList )
 generate_single_filter( Square BasicPixelTypeList )
+
+generate_single_filter( And IntegerPixelTypeList )
+generate_single_filter( Or  IntegerPixelTypeList )
+generate_single_filter( Not IntegerPixelTypeList )
+generate_single_filter( Xor IntegerPixelTypeList )
+
+generate_single_filter( CurvatureFlow RealPixelTypeList )
 
 generate_dual_filter( Subtract BasicPixelTypeList )
 generate_dual_filter( Divide BasicPixelTypeList )
