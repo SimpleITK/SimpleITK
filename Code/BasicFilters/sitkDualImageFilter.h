@@ -15,20 +15,23 @@ namespace itk {
 
     class DualImageFilter : public ImageFilter {
     public:
-      typedef DualImageFilter Self;
 
       /**
        * Default Constructor that takes no arguments and initializes
        * default parameters
        */
-      DualImageFilter();
+      DualImageFilter() {};
 
-      // Print ourselves out
-      std::string ToString() const;
-
-      Image::Pointer Execute ( Image::Pointer, Image::Pointer );
+      virtual Image::Pointer Execute ( Image::Pointer, Image::Pointer ) = 0;
 
     private:
+
+      // Make the Execute method of the base class to be final.
+      Image::Pointer Execute ( Image::Pointer )
+        {
+        Image::Pointer image;
+        return image;
+        }
 
     };
 
