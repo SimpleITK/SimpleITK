@@ -9,7 +9,7 @@ if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA OR WRAP_CSHARP )
   find_package ( SWIG REQUIRED )
   include ( ${SWIG_USE_FILE} )
   set_source_files_properties ( SimpleITK.i PROPERTIES CPLUSPLUS ON )
-  file ( GLOB SWIG_HEADERS ${SimpleITK_SOURCE_DIR}/Code/*/*.h )
+  file ( GLOB SWIG_HEADERS ${SimpleITK_SOURCE_DIR}/Code/*/*.h)
   include_directories ( ${SimpleITK_SOURCE_DIR}/Code/Common ${SimpleITK_SOURCE_DIR}/Code/BasicFilters ${SimpleITK_SOURCE_DIR}/Code/IO )
 
   set ( CMAKE_SWIG_FLAGS "" )

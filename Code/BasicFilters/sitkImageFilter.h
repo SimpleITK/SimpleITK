@@ -5,26 +5,6 @@
 #include "sitkMemberFunctionFactory.h"
 #include "sitkImage.h"
 
-#define sitkSingleImageMemberFunctionDispatcher \
-typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer ); \
-template <class TImageType> Image::Pointer ExecuteInternal ( Image::Pointer image ); \
-friend struct detail::MemberFunctionAddressor<MemberFunctionType>; \
-std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
-
-#define sitkSetGetMacro( type, name ) \
-  Self & Set##name( const type & value_ ) \
-    { \
-    this->m_##name = value_; \
-    return *this; \
-    } \
-  type Get##name() const \
-    { \
-    return this->m_##name; \
-    }
-
-#define sitkTransferMemberVariableToFilterMacro( name ) \
-  filter->Set##name ( this->m_##name );
-
 namespace itk {
   namespace simple {
 

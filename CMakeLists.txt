@@ -22,7 +22,7 @@ set ( SimpleITK_INCLUDE_DIR
 include_directories( ${SimpleITK_INCLUDE_DIR} )
 
 set ( SimpleITK_LIBRARIES ${ITK_LIBRARIES} SimpleITKCommon SimpleITKIO SimpleITKBasicFilters)
-subdirs ( Code Wrapping Examples )
+subdirs ( Utilities Code Wrapping Examples )
 
 
 # Options for testing

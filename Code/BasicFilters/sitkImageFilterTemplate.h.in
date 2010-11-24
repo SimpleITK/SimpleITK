@@ -1,5 +1,5 @@
-#ifndef __sitk@FILTERNAME@ImageFilter_h
-#define __sitk@FILTERNAME@ImageFilter_h
+#ifndef __sitk${name}ImageFilter_h
+#define __sitk${name}ImageFilter_h
 
 #include "sitkImageFilter.h"
 
@@ -8,30 +8,39 @@
 namespace itk {
   namespace simple {
 
-    class @FILTERNAME@ImageFilter : public ImageFilter {
+    class ${name}ImageFilter : public ImageFilter {
     public:
-      typedef @FILTERNAME@ImageFilter Self;
+      typedef ${name}ImageFilter Self;
 
       /**
        * Default Constructor that takes no arguments and initializes
        * default parameters
        */
-      @FILTERNAME@ImageFilter();
+      ${name}ImageFilter();
 
-      @SUPPORTED_PIXEL_TYPES@
+      typedef ${pixel_types}  PixelTypeList;
 
-      @MEMBER_VARIABLES_SET_GET@
+      $(foreach members 
+      /** ${doc} */
+      Self& Set${name} ( ${type} t ) { this->m_${name} = t; return *this; };
+      ${type} Get${name}() { return this->m_${name}; };
+      )
 
       // Print ourselves out
       std::string ToString() const;
 
       Image::Pointer Execute ( Image::Pointer );
+      $(if #members > 0 then
+      OUT='Image::Pointer Execute ( Image::Pointer $(foreach members ,${type} in${name} ) );'
+      end)
 
     private:
 
       sitkSingleImageMemberFunctionDispatcher;
 
-      @MEMBER_VARIABLES_DECLARATION@
+      $(foreach members 
+      ${type} m_${name};
+      )
     };
 
 

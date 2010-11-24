@@ -71,8 +71,10 @@ typedef unsigned long long uint64_t;
 
 // Any new classes need to have an "%include" statement to be wrapped.
 %include "sitkImage.h"
+%include "sitkImageFilter.h"
 %include "sitkImageFileWriter.h"
 %include "sitkImageFileReader.h"
 %include "sitkImageHashFilter.h"
 %include "sitkRecursiveGaussianImageFilter.h"
 
+%include "SimpleITKBasicFiltersGeneratedHeaders.i"
