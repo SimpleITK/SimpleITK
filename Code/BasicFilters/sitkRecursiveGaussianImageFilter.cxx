@@ -64,16 +64,16 @@ Image::Pointer RecursiveGaussianImageFilter::ExecuteInternal ( Image::Pointer in
     return NULL;
   }
 
-  typedef itk::RecursiveGaussianImageFilter<InputImageType, OutputImageType> GaussianFilterType;
-  typename GaussianFilterType::Pointer filter = GaussianFilterType::New();
+  typedef itk::RecursiveGaussianImageFilter<InputImageType, OutputImageType> FilterType;
+  typename FilterType::Pointer filter = FilterType::New();
 
   filter->SetInput ( image );
   filter->SetSigma ( this->m_Sigma );
   filter->SetNormalizeAcrossScale ( this->m_NormalizeAcrossScale );
 
   // cast the order parameter to the type from the itk filter
-  typename GaussianFilterType::OrderEnumType internalOrder =
-    static_cast<typename GaussianFilterType::OrderEnumType>(this->m_Order);
+  typename FilterType::OrderEnumType internalOrder =
+    static_cast<typename FilterType::OrderEnumType>(this->m_Order);
   filter->SetOrder ( internalOrder );
 
   filter->Update();
