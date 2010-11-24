@@ -12,6 +12,7 @@
 #include "sitkPixelTypeLists.h"
 #include "sitkImageFileReader.h"
 #include "sitkImageFileWriter.h"
+#include "sitkStatisticsImageFilter.h"
 
 /*
 #include "sitkBinaryThresholdImageFilter.h"

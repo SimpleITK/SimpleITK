@@ -33,6 +33,8 @@ endmacro()
 expand_single_template ( CurvatureFlow )
 expand_single_template ( BinaryThreshold )
 expand_dual_template ( Add )
+expand_dual_template ( SquaredDifference )
+expand_dual_template ( Subtract )
 
 
 # clear the include files

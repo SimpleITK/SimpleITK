@@ -6,6 +6,7 @@ set ( TestSource
   ImageTests.cxx
   IOTests.cxx
   TypeListsTests.cxx
+  BasicFiltersTests.cxx
   CXXTests.cxx
   )
 
@@ -50,7 +51,7 @@ endif()
 
 include_directories ( ${SimpleITK_INCLUDE_DIR} )
 add_executable(SimpleITKUnitTestDriver 
-  SimpleITKUnitTestDriver.cxx ${TestSource} )
+  SimpleITKUnitTestDriver.cxx ${TestSource} ImageCompare.cxx )
 target_link_libraries ( SimpleITKUnitTestDriver ${ITK_LIBRARIES} ${SimpleITK_LIBRARIES} )
 
 # Add all the tests by parsing the source code
