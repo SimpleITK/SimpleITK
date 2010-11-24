@@ -1,5 +1,5 @@
-#include "sitkAddImageFilter.h"
-#include "itkAddImageFilter.h"
+#include "sitk@FILTERNAME@ImageFilter.h"
+#include "itk@FILTERNAME@ImageFilter.h"
 
 namespace itk {
 namespace simple {
@@ -9,8 +9,10 @@ namespace simple {
 //
 // Default constructor that initializes parameters
 //
-AddImageFilter::AddImageFilter ()
+@FILTERNAME@ImageFilter::@FILTERNAME@ImageFilter ()
   {
+
+  @MEMBER_VARIABLES_INITIALIZATION@
 
   this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
@@ -21,30 +23,25 @@ AddImageFilter::AddImageFilter ()
 //
 // ToString
 //
-std::string AddImageFilter::ToString()
+std::string @FILTERNAME@ImageFilter::ToString() const
   {
   std::ostringstream out;
-  out << "itk::simple::AddImageFilter\n";
+  out << "itk::simple::@FILTERNAME@ImageFilter\n";
+
+  @MEMBER_VARIABLES_SERIALIZATION@
+
   return out.str();
   }
 //
 // Execute
 //
-Image::Pointer AddImageFilter::Execute ( Image::Pointer image1,  Image::Pointer image2)
+Image::Pointer @FILTERNAME@ImageFilter::Execute ( Image::Pointer image1 )
   {
 
     ImageDataType type = image1->GetDataType();
     unsigned int dimension = image1->GetDimension();
 
-    // todo need better error handling and potential type conversion
-    if ( type != image2->GetDataType() ||
-         dimension != image2->GetDimension() )
-      {
-      std::cerr << "Both image for add filter don't match type or dimension!" << std::endl;
-      throw;
-      }
-
-    return this->m_MemberFactory->GetMemberFunction( type, dimension )( image1, image2 );
+    return this->m_MemberFactory->GetMemberFunction( type, dimension )( image1 );
   }
 
 //----------------------------------------------------------------------------
@@ -53,7 +50,7 @@ Image::Pointer AddImageFilter::Execute ( Image::Pointer image1,  Image::Pointer 
 // ExecuteInternal
 //
 template <class TImageType>
-Image::Pointer AddImageFilter::ExecuteInternal ( Image::Pointer inImage1,  Image::Pointer inImage2 )
+Image::Pointer @FILTERNAME@ImageFilter::ExecuteInternal ( Image::Pointer inImage1 )
   {
   typedef TImageType     InputImageType;
   typedef InputImageType OutputImageType;
@@ -61,20 +58,18 @@ Image::Pointer AddImageFilter::ExecuteInternal ( Image::Pointer inImage1,  Image
   typename InputImageType::Pointer image1 =
     dynamic_cast <InputImageType*> ( inImage1->GetImageBase().GetPointer() );
 
-  typename InputImageType::Pointer image2 =
-  dynamic_cast <InputImageType*> ( inImage2->GetImageBase().GetPointer() );
-
-  if ( image1.IsNull() || image2.IsNull() ) {
+  if ( image1.IsNull() ) {
     // Take some action
     return NULL;
   }
 
-  typedef itk::AddImageFilter<InputImageType, InputImageType, OutputImageType> FilterType;
+  typedef itk::@FILTERNAME@ImageFilter<InputImageType, OutputImageType> FilterType;
 
   typename FilterType::Pointer filter = FilterType::New();
-  filter->SetInput1( image1 );
-  filter->SetInput2( image2 );
+  filter->SetInput( image1 );
   filter->InPlaceOn();
+
+  @MEMBER_VARIABLES_TRANSFER@
 
   Image::Pointer out = new Image( filter->GetOutput() );
 

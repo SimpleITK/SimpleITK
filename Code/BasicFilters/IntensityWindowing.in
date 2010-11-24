@@ -1,0 +1,4 @@
+WindowMinimum double   0.0;
+WindowMaximum double 255.0;
+OutputMinimum double   0.0;
+OutputMaximum double 255.0;
