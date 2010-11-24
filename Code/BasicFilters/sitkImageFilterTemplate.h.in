@@ -21,7 +21,7 @@ namespace itk {
       // Print ourselves out
       std::string ToString() const;
 
-      Image::Pointer Execute ( Image::Pointer, Image::Pointer );
+      Image::Pointer Execute ( Image::Pointer );
 
     private:
 

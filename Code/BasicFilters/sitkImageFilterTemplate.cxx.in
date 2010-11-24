@@ -35,13 +35,13 @@ std::string @FILTERNAME@ImageFilter::ToString() const
 //
 // Execute
 //
-Image::Pointer @FILTERNAME@ImageFilter::Execute ( Image::Pointer image1,  Image::Pointer image2)
+Image::Pointer @FILTERNAME@ImageFilter::Execute ( Image::Pointer image1 )
   {
 
     ImageDataType type = image1->GetDataType();
     unsigned int dimension = image1->GetDimension();
 
-    return this->m_MemberFactory->GetMemberFunction( type, dimension )( image1, image2 );
+    return this->m_MemberFactory->GetMemberFunction( type, dimension )( image1 );
   }
 
 //----------------------------------------------------------------------------
@@ -50,7 +50,7 @@ Image::Pointer @FILTERNAME@ImageFilter::Execute ( Image::Pointer image1,  Image:
 // ExecuteInternal
 //
 template <class TImageType>
-Image::Pointer @FILTERNAME@ImageFilter::ExecuteInternal ( Image::Pointer inImage1,  Image::Pointer inImage2 )
+Image::Pointer @FILTERNAME@ImageFilter::ExecuteInternal ( Image::Pointer inImage1 )
   {
   typedef TImageType     InputImageType;
   typedef InputImageType OutputImageType;
