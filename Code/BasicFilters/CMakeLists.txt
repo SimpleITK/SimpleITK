@@ -27,16 +27,12 @@ endmacro()
 
 macro( process_all_member_variables  VARIABLES_RECORDS )
 
-  message( "${VARIABLES_RECORDS}" )
-
   foreach(  variable_line ${VARIABLES_RECORDS} )
-    message( " --- START PARSING--- ${variable_line}" )
+
     string( REGEX MATCH "[A-Za-z]* "   variable_name  "${variable_line}")
     string( REGEX MATCH " [a-z]* "     variable_type  "${variable_line}")
     string( REGEX MATCH " [a-z.0-9]*$" variable_value "${variable_line}")
-    message( "variable_name = ${variable_name}" )
-    message( "variable_type = ${variable_type}" )
-    message( "variable_value = ${variable_value}" )
+
     if( variable_name )
       process_one_member_variable( ${variable_name} ${variable_type} ${variable_value} )
     endif()
@@ -47,17 +43,15 @@ endmacro()
 
 macro( process_filter_descriptor  FILTER_FILE_NAME )
 
-set( FILTER_PARAMETER_FILE_NAME "${CMAKE_CURRENT_SOURCE_DIR}/${FILTER_FILE_NAME}.in" )
+  set( FILTER_PARAMETER_FILE_NAME "${CMAKE_CURRENT_SOURCE_DIR}/${FILTER_FILE_NAME}.in" )
 
-message( "${FILTER_PARAMETER_FILE_NAME}" )
+  if( EXISTS "${FILTER_PARAMETER_FILE_NAME}" )
 
-if( EXISTS "${FILTER_PARAMETER_FILE_NAME}" )
+    file( STRINGS "${FILTER_PARAMETER_FILE_NAME}" variable_records NEWLINE_CONSUME)
 
-  file( STRINGS "${FILTER_PARAMETER_FILE_NAME}" variable_records NEWLINE_CONSUME)
+    process_all_member_variables( ${variable_records} )
 
-  process_all_member_variables( ${variable_records} )
-
-endif()
+  endif()
 
 endmacro()
 
