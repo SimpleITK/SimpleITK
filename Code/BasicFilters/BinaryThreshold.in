@@ -1,0 +1,2 @@
+double LowerThreshold 0.0
+double UpperThreshold 255.0
