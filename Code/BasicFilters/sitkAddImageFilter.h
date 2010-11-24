@@ -1,34 +1,16 @@
 #ifndef __sitkAddImageFilter_h
 #define __sitkAddImageFilter_h
 
-#include "sitkMacro.h"
-#include "sitkMemberFunctionFactory.h"
-#include "sitkImage.h"
+#include "sitkDualImageFilter.h"
 
 
 
 namespace itk {
   namespace simple {
 
-    class AddImageFilter {
+    class AddImageFilter : public DualImageFilter {
     public:
       typedef AddImageFilter Self;
-
-      //
-      // Type List Setup
-      //
-
-      // function pointer type
-      typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer, Image::Pointer );
-
-      // list of pixel types supported only basic since rgb and
-      // vectors are not supported by this filter
-      typedef BasicPixelTypeList PixelTypeList;
-
-
-      //
-      // Filter Setup
-      //
 
       /**
        * Default Constructor that takes no arguments and initializes
@@ -43,15 +25,8 @@ namespace itk {
 
     private:
 
+      sitkDualImageMemberFunctionDispatcher;
 
-      template <class TImageType>
-      Image::Pointer ExecuteInternal ( Image::Pointer image, Image::Pointer image2 );
-
-      // friend to get access to executeInternal member
-      friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
-
-
-      std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
     };
 
 

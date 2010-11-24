@@ -5,7 +5,7 @@
 #include "sitkMemberFunctionFactory.h"
 #include "sitkImage.h"
 
-#define sitkMemberFunctionDispatcher \
+#define sitkSingleImageMemberFunctionDispatcher \
 typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer ); \
 template <class TImageType> Image::Pointer ExecuteInternal ( Image::Pointer image ); \
 friend struct detail::MemberFunctionAddressor<MemberFunctionType>; \
