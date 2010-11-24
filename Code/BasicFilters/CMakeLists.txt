@@ -4,19 +4,19 @@ file ( GLOB SimpleITKBasicFiltersSource *.cxx *.h )
 macro( process_one_member_variable VARIABLE_NAME VARIABLE_TYPE VARIABLE_VALUE )
 
   set(MEMBER_VARIABLES_DECLARATION ${MEMBER_VARIABLES_DECLARATION}
-    "${VARIABLE_TYPE}  m_${VARIABLE_NAME};"
+    "${VARIABLE_TYPE}  m_${VARIABLE_NAME};\n"
     )
 
   set(MEMBER_VARIABLES_INITIALIZATION ${MEMBER_VARIABLES_INITIALIZATION}
-    "this->m_${VARIABLE_NAME} = ${VARIABLE_VALUE};"
+    "this->m_${VARIABLE_NAME} = ${VARIABLE_VALUE};\n"
     )
 
   set(MEMBER_VARIABLES_SERIALIZATION ${MEMBER_VARIABLES_SERIALIZATION}
-    "out << \"\t${VARIABLE_NAME}: \" << this->m_${VARIABLE_NAME} << \"\\n\"; "
+    "out << \"\t${VARIABLE_NAME}: \" << this->m_${VARIABLE_NAME} << \"\\n\";\n"
     )
 
   set(MEMBER_VARIABLES_TRANSFER ${MEMBER_VARIABLES_TRANSFER}
-    "filter->Set${VARIABLE_NAME}( this->m_${VARIABLE_NAME} );"
+    "filter->Set${VARIABLE_NAME}( this->m_${VARIABLE_NAME} );\n"
     )
 
 endmacro()
