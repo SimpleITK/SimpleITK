@@ -36,20 +36,18 @@ namespace itk {
        *
        * Note: Sigma is always measured in physical units
        */
-      Self& SetSigma ( double sigma );
-      double GetSigma() const;
+      sitkSetGetMacro( double, Sigma );
 
       /**
        * Get/Set NormalizeAcrossScale
        */
-      Self& SetNormalizeAcrossScale( bool normalizeAcrossScale );
-      bool GetNormalizeAcrossScale() const;
+      sitkSetGetMacro( bool, NormalizeAcrossScale );
 
       /**
        * Get/Set Order
        */
-      Self& SetOrder( OrderEnumType order );
-      OrderEnumType GetOrder() const;
+      sitkSetGetMacro( OrderEnumType, Order );
+
 
       // Print ourselves out
       std::string ToString() const;
@@ -66,16 +64,8 @@ namespace itk {
 
       OrderEnumType m_Order;
 
-      // function pointer type
-      typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer );
-
-      template <class TImageType> Image::Pointer ExecuteInternal ( Image::Pointer image );
-
-      // friend to get access to executeInternal member
-      friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
-
-
-      std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
+      // Macro that instantiate the member function dispatching
+      sitkMemberFunctionDispatcher;
     };
 
 

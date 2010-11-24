@@ -33,60 +33,6 @@ std::string RecursiveGaussianImageFilter::ToString() const
   return out.str();
   }
 
-//
-// SetSigma
-//
-RecursiveGaussianImageFilter& RecursiveGaussianImageFilter::SetSigma ( double sigma )
-  {
-  this->m_Sigma = sigma;
-  return *this;
-  }
-
-//
-// GetSigma
-//
-double RecursiveGaussianImageFilter::GetSigma() const
-  {
-  return this->m_Sigma;
-  }
-
-//
-// SetNormalizeAcrossScale
-//
-RecursiveGaussianImageFilter&
-RecursiveGaussianImageFilter::SetNormalizeAcrossScale ( bool normalizeAcrossScale )
-  {
-  this->m_NormalizeAcrossScale = normalizeAcrossScale;
-  return *this;
-  }
-
-//
-// GetNormalizeAcrossScale
-//
-bool RecursiveGaussianImageFilter::GetNormalizeAcrossScale() const
-  {
-  return this->m_NormalizeAcrossScale;
-  }
-
-//
-// SetOrder
-//
-RecursiveGaussianImageFilter&
-RecursiveGaussianImageFilter::SetOrder( OrderEnumType order )
-  {
-  this->m_Order = order;
-  return *this;
-  }
-
-//
-// GetSigma
-//
-RecursiveGaussianImageFilter::OrderEnumType RecursiveGaussianImageFilter::GetOrder() const
-  {
-  return this->m_Order;
-  }
-
-//----------------------------------------------------------------------------
 
 //
 // Execute
