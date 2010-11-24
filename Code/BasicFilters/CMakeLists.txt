@@ -25,11 +25,6 @@ macro( process_all_member_variables  VARIABLES_RECORDS )
 
   message( "${VARIABLES_RECORDS}" )
 
-  set(MEMBER_VARIABLES_DECLARATION "" PARENT_SCOPE)
-  set(MEMBER_VARIABLES_INITIALIZATION "" PARENT_SCOPE)
-  set(MEMBER_VARIABLES_SERIALIZATION "" PARENT_SCOPE)
-  set(MEMBER_VARIABLES_TRANSFER "" PARENT_SCOPE)
-
   foreach(  variable_line ${VARIABLES_RECORDS} )
     message( " --- START PARSING--- ${variable_line}" )
     string( REGEX MATCH "[A-Za-z]* "   variable_name  "${variable_line}")
@@ -56,11 +51,6 @@ if( EXISTS "${FILTER_PARAMETER_FILE_NAME}" )
 
   file( STRINGS "${FILTER_PARAMETER_FILE_NAME}" variable_records NEWLINE_CONSUME)
 
-  set(MEMBER_VARIABLES_DECLARATION "" PARENT_SCOPE)
-  set(MEMBER_VARIABLES_INITIALIZATION "" PARENT_SCOPE)
-  set(MEMBER_VARIABLES_SERIALIZATION "" PARENT_SCOPE)
-  set(MEMBER_VARIABLES_TRANSFER "" PARENT_SCOPE)
-
   process_all_member_variables( ${variable_records} )
 
 endif()
@@ -71,6 +61,11 @@ endmacro()
 macro( generate_dual_filter FILTERNAME )
 
   set(FILTERNAME  ${FILTERNAME})
+
+  set(MEMBER_VARIABLES_DECLARATION "")
+  set(MEMBER_VARIABLES_INITIALIZATION "")
+  set(MEMBER_VARIABLES_SERIALIZATION "")
+  set(MEMBER_VARIABLES_TRANSFER "")
 
   process_filter_descriptor( ${FILTERNAME} )
 
@@ -92,6 +87,11 @@ endmacro()
 macro( generate_single_filter FILTERNAME )
 
   set(FILTERNAME  ${FILTERNAME})
+
+  set(MEMBER_VARIABLES_DECLARATION "")
+  set(MEMBER_VARIABLES_INITIALIZATION "")
+  set(MEMBER_VARIABLES_SERIALIZATION "")
+  set(MEMBER_VARIABLES_TRANSFER "")
 
   process_filter_descriptor( ${FILTERNAME} )
 
