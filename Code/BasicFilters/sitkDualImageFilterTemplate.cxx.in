@@ -12,6 +12,8 @@ namespace simple {
 @FILTERNAME@ImageFilter::@FILTERNAME@ImageFilter ()
   {
 
+  @MEMBER_VARIABLES_INITIALIZATION@
+
   this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
   this->m_MemberFactory->RegisterMemberFunctions< PixelTypeList, 3 > ();
@@ -25,6 +27,9 @@ std::string @FILTERNAME@ImageFilter::ToString() const
   {
   std::ostringstream out;
   out << "itk::simple::@FILTERNAME@ImageFilter\n";
+
+  @MEMBER_VARIABLES_SERIALIZATION@
+
   return out.str();
   }
 //
@@ -75,6 +80,8 @@ Image::Pointer @FILTERNAME@ImageFilter::ExecuteInternal ( Image::Pointer inImage
   filter->SetInput1( image1 );
   filter->SetInput2( image2 );
   filter->InPlaceOn();
+
+  @MEMBER_VARIABLES_TRANSFER@
 
   Image::Pointer out = new Image( filter->GetOutput() );
 
