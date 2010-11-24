@@ -63,7 +63,7 @@ Image::Pointer @FILTERNAME@ImageFilter::ExecuteInternal ( Image::Pointer inImage
     return NULL;
   }
 
-  typedef itk::@FILTERNAME@ImageFilter<InputImageType, InputImageType, OutputImageType> FilterType;
+  typedef itk::@FILTERNAME@ImageFilter<InputImageType, OutputImageType> FilterType;
 
   typename FilterType::Pointer filter = FilterType::New();
   filter->SetInput( image1 );
