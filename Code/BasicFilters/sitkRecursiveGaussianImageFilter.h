@@ -65,7 +65,7 @@ namespace itk {
       OrderEnumType m_Order;
 
       // Macro that instantiate the member function dispatching
-      sitkMemberFunctionDispatcher;
+      sitkSingleImageMemberFunctionDispatcher;
     };
 
 
