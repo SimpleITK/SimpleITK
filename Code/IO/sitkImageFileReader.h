@@ -4,6 +4,8 @@
 #include "sitkMacro.h"
 #include "sitkImage.h"
 
+#include "itkImageIOBase.h"
+
 namespace itk {
   namespace simple {
 
@@ -18,7 +20,10 @@ namespace itk {
 
     protected:
 
-      template <class T> Image::Pointer ExecuteInternal ( void );
+      template < unsigned int ImageDimension >
+      Image::Pointer ExecuteInternalReadScalar( itk::ImageIOBase::IOComponentType componentType );
+
+      template <class TImageType> Image::Pointer ExecuteInternal ( void );
 
     private:
 
