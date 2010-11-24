@@ -1,5 +1,5 @@
-#ifndef __sitkAddImageFilter_h
-#define __sitkAddImageFilter_h
+#ifndef __sitk@FILTERNAME@ImageFilter_h
+#define __sitk@FILTERNAME@ImageFilter_h
 
 #include "sitkDualImageFilter.h"
 
@@ -8,15 +8,15 @@
 namespace itk {
   namespace simple {
 
-    class AddImageFilter : public DualImageFilter {
+    class @FILTERNAME@ImageFilter : public DualImageFilter {
     public:
-      typedef AddImageFilter Self;
+      typedef @FILTERNAME@ImageFilter Self;
 
       /**
        * Default Constructor that takes no arguments and initializes
        * default parameters
        */
-      AddImageFilter();
+      @FILTERNAME@ImageFilter();
 
       // Print ourselves out
       std::string ToString() const;
