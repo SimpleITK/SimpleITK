@@ -8,7 +8,7 @@
 namespace itk {
   namespace simple {
 
-    class RecursiveGaussianImageFilter : ImageFilter {
+    class RecursiveGaussianImageFilter : public ImageFilter {
     public:
       typedef RecursiveGaussianImageFilter Self;
 

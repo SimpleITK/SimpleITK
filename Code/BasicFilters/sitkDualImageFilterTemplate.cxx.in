@@ -101,6 +101,7 @@ Image::Pointer ${name}ImageFilter::ExecuteInternal ( Image::Pointer inImage1,  I
   $(foreach members 
   filter->Set${name} = this->m_${name};
   )
+  filter->Update();
   Image::Pointer out = new Image( filter->GetOutput() );
 
   return out;

@@ -13,7 +13,8 @@ Wrapping is accomplished through [SWIG](http://www.swig.org), in principle, any 
 SimpleITK is licensed under the [Apache License](http://www.opensource.org/licenses/apache2.0.php) in the [same way as ITK](http://www.itk.org/Wiki/ITK_Release_4/Licensing).
 
 ToDo:
-* Registration
-* CastImageFilter
-* Multiple input filters
-* Simple arithmetic filters
+
++ Registration
++ CastImageFilter
++ Multiple input filters
++ Simple arithmetic filters

@@ -75,6 +75,7 @@ typedef unsigned long long uint64_t;
 %include "sitkImageFileWriter.h"
 %include "sitkImageFileReader.h"
 %include "sitkImageHashFilter.h"
+%include "sitkStatisticsImageFilter.h"
 %include "sitkRecursiveGaussianImageFilter.h"
 
 %include "SimpleITKBasicFiltersGeneratedHeaders.i"
