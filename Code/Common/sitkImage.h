@@ -85,7 +85,7 @@ namespace itk
       : m_Image( image )
       {
           // this should be a STATIC ASSERT
-          assert( TImageType::ImageDimension == 3 );
+        assert( TImageType::ImageDimension == 3 || TImageType::ImageDimension == 2 );
 
         // get the id of the pixel type
         typedef typename TImageType::PixelType PixelType;

@@ -3,6 +3,7 @@
 
 #include "sitkMacro.h"
 #include "sitkImage.h"
+#include "itkImageIOBase.h"
 
 namespace itk {
   namespace simple {
@@ -18,7 +19,8 @@ namespace itk {
 
     protected:
 
-      template <class T> Image::Pointer ExecuteInternal ( void );
+      template<unsigned int dim> Image::Pointer ExecuteInteralDimension ( itk::ImageIOBase *io );
+      template <class T, unsigned int dimension> Image::Pointer ExecuteInternal ( void );
 
     private:
 

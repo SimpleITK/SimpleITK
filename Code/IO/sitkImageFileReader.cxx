@@ -20,7 +20,6 @@ namespace itk {
     }
 
     Image::Pointer ImageFileReader::Execute () {
-      Image::Pointer image = NULL;
       // Figure out what type of image we have
       typedef itk::Image<signed short,3> ImageType;
       typedef itk::ImageFileReader<ImageType> Reader;
@@ -28,37 +27,48 @@ namespace itk {
       reader->SetFileName ( this->m_Filename.c_str() );
       reader->UpdateOutputInformation();
 
-      switch ( reader->GetImageIO()->GetComponentType() ) {
-      case itk::ImageIOBase::FLOAT:
-        image = ExecuteInternal<float> ( );
-        break;
-      case itk::ImageIOBase::UCHAR:
-        image = ExecuteInternal<uint8_t> ( );
-        break;
-      default:
-      case itk::ImageIOBase::SHORT:
-        
-        image = ExecuteInternal<int16_t> ( );
-        break;
-      case itk::ImageIOBase::INT:
-        image = ExecuteInternal<int32_t> ( );
-        break;
+
+      unsigned int dim = reader->GetImageIO()->GetNumberOfDimensions();
+      std::cout << "Reading image " << m_Filename << " with " << dim << " dimensions" << std::endl;
+      if ( dim == 2 ) {
+        return ExecuteInteralDimension<2> ( reader->GetImageIO() );
+      } else if ( dim == 3 ) {
+        return ExecuteInteralDimension<3> ( reader->GetImageIO() );
+      } else {
+        std::cerr << "Can not read images of dimension " << dim << std::endl;
       }
-    return image;
+      return NULL;
     }
 
-  template <class T>
-  Image::Pointer ImageFileReader::ExecuteInternal( void ) {
-    Image::Pointer image = NULL;
-    typedef itk::Image<T,3> ImageType;
-    typedef itk::ImageFileReader<ImageType> Reader;
-    typename Reader::Pointer reader = Reader::New();
-    reader->SetFileName( this->m_Filename.c_str() );
-    reader->Update();
-    image = new Image( reader->GetOutput() );
-    reader->GetOutput()->DisconnectPipeline();
-    return image;
-  }
+    template<unsigned int dim>
+    Image::Pointer ImageFileReader::ExecuteInteralDimension ( itk::ImageIOBase *io ) {
+      Image::Pointer image = NULL;
+      switch ( io->GetComponentType() ) {
+      case itk::ImageIOBase::UCHAR:
+        return ExecuteInternal<uint8_t,dim> ( );
+      case itk::ImageIOBase::SHORT:
+        return ExecuteInternal<int16_t,dim> ( );
+      case itk::ImageIOBase::INT:
+        return ExecuteInternal<int32_t,dim> ( );
+      default:
+      case itk::ImageIOBase::FLOAT:
+        // If we don't know any better, return floats
+        return ExecuteInternal<float,dim> ( );
+      }
+    }
+
+    template <class T, unsigned int dimensions>
+    Image::Pointer ImageFileReader::ExecuteInternal( void ) {
+      Image::Pointer image = NULL;
+      typedef itk::Image<T,dimensions> ImageType;
+      typedef itk::ImageFileReader<ImageType> Reader;
+      typename Reader::Pointer reader = Reader::New();
+      reader->SetFileName( this->m_Filename.c_str() );
+      reader->Update();
+      image = new Image( reader->GetOutput() );
+      reader->GetOutput()->DisconnectPipeline();
+      return image;
+    }
       
 
       

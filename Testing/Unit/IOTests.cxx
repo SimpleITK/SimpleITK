@@ -59,7 +59,14 @@ TEST(IO,ReadWrite) {
 }
   
   
-
+TEST(IO,2DFormats) {
+  itk::simple::ImageHashFilter hasher;
+  itk::simple::ImageFileReader reader;
+  itk::simple::Image::Pointer image;
+  image = reader.SetFilename ( dataFinder.getFile ( "Input/circle.png" ) ).Execute();
+  ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
+  ASSERT_EQ ( 2u, image->GetDimension() );
+}
 
 
 
