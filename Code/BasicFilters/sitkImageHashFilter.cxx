@@ -18,7 +18,7 @@ namespace itk {
       this->m_MemberFactory->RegisterMemberFunctions< PixelTypeList, 2 > ();
     }
 
-    std::string ImageHashFilter::ToString() {
+    std::string ImageHashFilter::ToString() const {
       std::ostringstream out;
       out << "itk::simple::ImageHashFilter\n";
       out << "HashFunction: ";

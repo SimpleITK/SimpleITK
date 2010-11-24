@@ -37,7 +37,7 @@ namespace itk {
       AddImageFilter();
 
       // Print ourselves out
-      std::string ToString();
+      std::string ToString() const;
 
       Image::Pointer Execute ( Image::Pointer, Image::Pointer );
 
