@@ -68,8 +68,9 @@ Image::Pointer RecursiveGaussianImageFilter::ExecuteInternal ( Image::Pointer in
   typename FilterType::Pointer filter = FilterType::New();
 
   filter->SetInput ( image );
-  filter->SetSigma ( this->m_Sigma );
-  filter->SetNormalizeAcrossScale ( this->m_NormalizeAcrossScale );
+
+  sitkTransferMemberVariableToFilterMacro( Sigma );
+  sitkTransferMemberVariableToFilterMacro( NormalizeAcrossScale );
 
   // cast the order parameter to the type from the itk filter
   typename FilterType::OrderEnumType internalOrder =

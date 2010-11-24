@@ -68,8 +68,9 @@ Image::Pointer BinaryThresholdImageFilter::ExecuteInternal ( Image::Pointer inIm
   typename FilterType::Pointer filter = FilterType::New();
 
   filter->SetInput ( image );
-  filter->SetLowerThreshold ( this->m_LowerThreshold );
-  filter->SetUpperThreshold ( this->m_UpperThreshold );
+
+  sitkTransferMemberVariableToFilterMacro( LowerThreshold );
+  sitkTransferMemberVariableToFilterMacro( UpperThreshold );
 
   filter->Update();
 
