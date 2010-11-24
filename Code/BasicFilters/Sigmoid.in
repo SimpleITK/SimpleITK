@@ -1,4 +1,4 @@
-Alpha double   1.0;
-Beta  double   0.0;
+Alpha double 1.0;
+Beta double 0.0;
 OutputMinimum double   0.0;
 OutputMaximum double 255.0;
