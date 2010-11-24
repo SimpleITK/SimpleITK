@@ -1,31 +1,20 @@
 #ifndef __sitkRecursiveGaussianImageFilter_h
 #define __sitkRecursiveGaussianImageFilter_h
 
-#include "sitkMacro.h"
-#include "sitkMemberFunctionFactory.h"
-#include "sitkImage.h"
-
+#include "sitkImageFilter.h"
 
 #include <itkRecursiveGaussianImageFilter.h>
 
 namespace itk {
   namespace simple {
 
-    class RecursiveGaussianImageFilter {
+    class RecursiveGaussianImageFilter : ImageFilter {
     public:
       typedef RecursiveGaussianImageFilter Self;
 
       //
       // Type List Setup
       //
-      
-      // function pointer type
-      typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer );
-
-      // list of pixel types supported only basic since rgb and
-      // vectors are not supported by this filter
-      typedef BasicPixelTypeList PixelTypeList;
-
 
       //
       // Filter Setup
@@ -47,23 +36,21 @@ namespace itk {
        *
        * Note: Sigma is always measured in physical units
        */
-      Self& SetSigma ( double sigma );
-      double GetSigma();
+      sitkSetGetMacro( double, Sigma );
 
       /**
        * Get/Set NormalizeAcrossScale
        */
-      Self& SetNormalizeAcrossScale( bool normalizeAcrossScale );
-      bool GetNormalizeAcrossScale();
+      sitkSetGetMacro( bool, NormalizeAcrossScale );
 
       /**
        * Get/Set Order
        */
-      Self& SetOrder( OrderEnumType order );
-      OrderEnumType GetOrder();
+      sitkSetGetMacro( OrderEnumType, Order );
+
 
       // Print ourselves out
-      std::string ToString();
+      std::string ToString() const;
 
       Image::Pointer Execute ( Image::Pointer );
 
@@ -77,13 +64,8 @@ namespace itk {
 
       OrderEnumType m_Order;
 
-      template <class TImageType> Image::Pointer ExecuteInternal ( Image::Pointer image );
-
-      // friend to get access to executeInternal member
-      friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
-
-
-      std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
+      // Macro that instantiate the member function dispatching
+      sitkSingleImageMemberFunctionDispatcher;
     };
 
 

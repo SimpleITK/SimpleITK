@@ -15,7 +15,9 @@ set ( SimpleITK_INCLUDE_DIR
       ${CMAKE_SOURCE_DIR}/Code/Common
       ${CMAKE_SOURCE_DIR}/Code/Common/Ancillary
       ${CMAKE_SOURCE_DIR}/Code/BasicFilters
-      ${CMAKE_SOURCE_DIR}/Code/IO)
+      ${CMAKE_SOURCE_DIR}/Code/IO
+      ${CMAKE_BINARY_DIR}/Code/BasicFilters
+      )
 
 include_directories( ${SimpleITK_INCLUDE_DIR} )
 

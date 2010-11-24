@@ -26,7 +26,7 @@ namespace itk {
       HashFunction GetHashFunction ();
 
       // Print ourselves out
-      std::string ToString();
+      std::string ToString() const;
 
       std::string Execute ( Image::Pointer );
 

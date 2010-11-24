@@ -1,0 +1,2 @@
+LowerThreshold double 0.0;
+UpperThreshold double 255.0;

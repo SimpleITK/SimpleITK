@@ -1,0 +1,40 @@
+#ifndef __sitk@FILTERNAME@ImageFilter_h
+#define __sitk@FILTERNAME@ImageFilter_h
+
+#include "sitkDualImageFilter.h"
+
+
+
+namespace itk {
+  namespace simple {
+
+    class @FILTERNAME@ImageFilter : public DualImageFilter {
+    public:
+      typedef @FILTERNAME@ImageFilter Self;
+
+      /**
+       * Default Constructor that takes no arguments and initializes
+       * default parameters
+       */
+      @FILTERNAME@ImageFilter();
+
+      @SUPPORTED_PIXEL_TYPES@
+
+      @MEMBER_VARIABLES_SET_GET@
+
+      // Print ourselves out
+      std::string ToString() const;
+
+      Image::Pointer Execute ( Image::Pointer, Image::Pointer );
+
+    private:
+
+      sitkDualImageMemberFunctionDispatcher;
+
+      @MEMBER_VARIABLES_DECLARATION@
+    };
+
+
+  }
+}
+#endif

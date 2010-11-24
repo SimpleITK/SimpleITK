@@ -3,8 +3,8 @@
 
 int main ( int argc, char* argv[] ) {
 
-  if ( argc < 4 ) {
-    std::cerr << "Usage: " << argv[0] << " <input> <sigma> <output>\n";
+  if ( argc < 5 ) {
+    std::cerr << "Usage: " << argv[0] << " <input> <lowerthreshold> <upperthreshold> <output>\n";
     return 1;
   }
 
@@ -16,14 +16,15 @@ int main ( int argc, char* argv[] ) {
 
   std::cout << image->ToString() << "\n";
 
-  itk::simple::RecursiveGaussianImageFilter gaussian;
-  gaussian.SetSigma ( atof ( argv[2] ) );
-  image = gaussian.Execute ( image );
+  itk::simple::BinaryThresholdImageFilter thresholder;
+  thresholder.SetLowerThreshold ( atof ( argv[2] ) );
+  thresholder.SetUpperThreshold ( atof ( argv[3] ) );
+  image = thresholder.Execute ( image );
 
   std::cout << image->ToString() << "\n";
 
   itk::simple::ImageFileWriter writer;
-  writer.SetFilename ( std::string ( argv[3] ) );
+  writer.SetFilename ( std::string ( argv[4] ) );
   writer.Execute ( image );
 
   return 0;
