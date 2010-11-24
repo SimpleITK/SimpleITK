@@ -22,6 +22,8 @@ std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactor
     return this->m_##name; \
     }
 
+#define sitkTransferMemberVariableToFilterMacro( name ) \
+  filter->Set##name ( this->m_##name );
 
 namespace itk {
   namespace simple {
