@@ -18,6 +18,8 @@ namespace itk {
        */
       @FILTERNAME@ImageFilter();
 
+      @MEMBER_VARIABLES_SET_GET@
+
       // Print ourselves out
       std::string ToString() const;
 
