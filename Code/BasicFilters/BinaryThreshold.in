@@ -1,2 +1,2 @@
-double LowerThreshold 0.0
-double UpperThreshold 255.0
+LowerThreshold double 0.0;
+UpperThreshold double 255.0;

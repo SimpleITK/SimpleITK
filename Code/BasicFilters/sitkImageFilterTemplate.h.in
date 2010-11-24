@@ -27,6 +27,7 @@ namespace itk {
 
       sitkSingleImageMemberFunctionDispatcher;
 
+      @MEMBER_VARIABLES_DECLARATION@
     };
 
 
