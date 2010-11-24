@@ -89,10 +89,12 @@ namespace itk
 
         // get the id of the pixel type
         typedef typename TImageType::PixelType PixelType;
-        static const int id = typelist::IndexOf< InstantiatedPixelTypeList, PixelType >::Result;
+        // WARNING ABOUT UNUSED VARIABLE
+        // static const int id = typelist::IndexOf< InstantiatedPixelTypeList, PixelType >::Result;
 
-          // THIS SHOULD BE A STATIC ASSERT
-          assert(  id != -1 );
+        // THIS SHOULD BE A STATIC ASSERT
+        // WARNING ABOUT UNUSED VARIABLE
+        //  assert(  id != -1 );
         }
 
     virtual PimpleImageBase *Clone( void ) const { return new Self(this->m_Image.GetPointer()); }
