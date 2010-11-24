@@ -1,5 +1,5 @@
-#include "sitkAddImageFilter.h"
-#include "itkAddImageFilter.h"
+#include "sitk@FILTERNAME@ImageFilter.h"
+#include "itk@FILTERNAME@ImageFilter.h"
 
 namespace itk {
 namespace simple {
@@ -9,7 +9,7 @@ namespace simple {
 //
 // Default constructor that initializes parameters
 //
-AddImageFilter::AddImageFilter ()
+@FILTERNAME@ImageFilter::@FILTERNAME@ImageFilter ()
   {
 
   this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
@@ -21,16 +21,16 @@ AddImageFilter::AddImageFilter ()
 //
 // ToString
 //
-std::string AddImageFilter::ToString() const
+std::string @FILTERNAME@ImageFilter::ToString() const
   {
   std::ostringstream out;
-  out << "itk::simple::AddImageFilter\n";
+  out << "itk::simple::@FILTERNAME@ImageFilter\n";
   return out.str();
   }
 //
 // Execute
 //
-Image::Pointer AddImageFilter::Execute ( Image::Pointer image1,  Image::Pointer image2)
+Image::Pointer @FILTERNAME@ImageFilter::Execute ( Image::Pointer image1,  Image::Pointer image2)
   {
 
     ImageDataType type = image1->GetDataType();
@@ -53,7 +53,7 @@ Image::Pointer AddImageFilter::Execute ( Image::Pointer image1,  Image::Pointer 
 // ExecuteInternal
 //
 template <class TImageType>
-Image::Pointer AddImageFilter::ExecuteInternal ( Image::Pointer inImage1,  Image::Pointer inImage2 )
+Image::Pointer @FILTERNAME@ImageFilter::ExecuteInternal ( Image::Pointer inImage1,  Image::Pointer inImage2 )
   {
   typedef TImageType     InputImageType;
   typedef InputImageType OutputImageType;
@@ -69,7 +69,7 @@ Image::Pointer AddImageFilter::ExecuteInternal ( Image::Pointer inImage1,  Image
     return NULL;
   }
 
-  typedef itk::AddImageFilter<InputImageType, InputImageType, OutputImageType> FilterType;
+  typedef itk::@FILTERNAME@ImageFilter<InputImageType, InputImageType, OutputImageType> FilterType;
 
   typename FilterType::Pointer filter = FilterType::New();
   filter->SetInput1( image1 );
