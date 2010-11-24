@@ -2,7 +2,7 @@
 file ( GLOB SimpleITKBasicFiltersSource *.cxx *.h )
 
 
-macro( generate_filter FILTERNAME )
+macro( generate_dual_filter FILTERNAME )
 
   set(FILTERNAME  ${FILTERNAME})
 
@@ -21,19 +21,41 @@ macro( generate_filter FILTERNAME )
 
 endmacro()
 
+macro( generate_single_filter FILTERNAME )
 
-generate_filter( Subtract )
-generate_filter( Divide )
-generate_filter( Multiply )
-generate_filter( Add )
-generate_filter( Atan2 )
-generate_filter( Mask )
-generate_filter( MaskNegated )
-generate_filter( Minimum )
-generate_filter( Maximum )
-generate_filter( SquaredDifference )
-generate_filter( BinaryMagnitude )
+  set(FILTERNAME  ${FILTERNAME})
 
+  configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/sitkImageFilterTemplate.h.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/sitk${FILTERNAME}ImageFilter.h"
+    )
+
+  configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/sitkImageFilterTemplate.cxx.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/sitk${FILTERNAME}ImageFilter.cxx"
+    )
+
+  set(SimpleITKBasicFiltersSource ${SimpleITKBasicFiltersSource}
+    "${CMAKE_CURRENT_BINARY_DIR}/sitk${FILTERNAME}ImageFilter.cxx")
+
+endmacro()
+
+
+generate_dual_filter( Subtract )
+generate_dual_filter( Divide )
+generate_dual_filter( Multiply )
+generate_dual_filter( Add )
+generate_dual_filter( Atan2 )
+generate_dual_filter( Mask )
+generate_dual_filter( MaskNegated )
+generate_dual_filter( Minimum )
+generate_dual_filter( Maximum )
+generate_dual_filter( SquaredDifference )
+generate_dual_filter( BinaryMagnitude )
+
+generate_dual_filter( Cos )
+generate_dual_filter( Sin )
+generate_dual_filter( Tan )
 
 include_directories (
  ${CMAKE_CURRENT_SOURCE_DIR}
