@@ -119,6 +119,7 @@ endmacro()
 generate_single_filter( BinaryThreshold )
 generate_single_filter( IntensityWindowing )
 generate_single_filter( InvertIntensity )
+generate_single_filter( RescaleIntensity )
 
 generate_dual_filter( Subtract )
 generate_dual_filter( Divide )
