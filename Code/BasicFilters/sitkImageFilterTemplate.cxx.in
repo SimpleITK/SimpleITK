@@ -1,0 +1,80 @@
+#include "sitk@FILTERNAME@ImageFilter.h"
+#include "itk@FILTERNAME@ImageFilter.h"
+
+namespace itk {
+namespace simple {
+
+//----------------------------------------------------------------------------
+
+//
+// Default constructor that initializes parameters
+//
+@FILTERNAME@ImageFilter::@FILTERNAME@ImageFilter ()
+  {
+
+  @MEMBER_VARIABLES_INITIALIZATION@
+
+  this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
+
+  this->m_MemberFactory->RegisterMemberFunctions< PixelTypeList, 3 > ();
+  this->m_MemberFactory->RegisterMemberFunctions< PixelTypeList, 2 > ();
+  }
+
+//
+// ToString
+//
+std::string @FILTERNAME@ImageFilter::ToString() const
+  {
+  std::ostringstream out;
+  out << "itk::simple::@FILTERNAME@ImageFilter\n";
+
+  @MEMBER_VARIABLES_SERIALIZATION@
+
+  return out.str();
+  }
+//
+// Execute
+//
+Image::Pointer @FILTERNAME@ImageFilter::Execute ( Image::Pointer image1,  Image::Pointer image2)
+  {
+
+    ImageDataType type = image1->GetDataType();
+    unsigned int dimension = image1->GetDimension();
+
+    return this->m_MemberFactory->GetMemberFunction( type, dimension )( image1, image2 );
+  }
+
+//----------------------------------------------------------------------------
+
+//
+// ExecuteInternal
+//
+template <class TImageType>
+Image::Pointer @FILTERNAME@ImageFilter::ExecuteInternal ( Image::Pointer inImage1,  Image::Pointer inImage2 )
+  {
+  typedef TImageType     InputImageType;
+  typedef InputImageType OutputImageType;
+
+  typename InputImageType::Pointer image1 =
+    dynamic_cast <InputImageType*> ( inImage1->GetImageBase().GetPointer() );
+
+  if ( image1.IsNull() ) {
+    // Take some action
+    return NULL;
+  }
+
+  typedef itk::@FILTERNAME@ImageFilter<InputImageType, InputImageType, OutputImageType> FilterType;
+
+  typename FilterType::Pointer filter = FilterType::New();
+  filter->SetInput( image1 );
+  filter->InPlaceOn();
+
+  @MEMBER_VARIABLES_TRANSFER@
+
+  Image::Pointer out = new Image( filter->GetOutput() );
+
+  return out;
+  }
+
+} // end namespace simple
+} // end namespace itk

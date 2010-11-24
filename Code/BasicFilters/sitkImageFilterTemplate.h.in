@@ -1,0 +1,35 @@
+#ifndef __sitk@FILTERNAME@ImageFilter_h
+#define __sitk@FILTERNAME@ImageFilter_h
+
+#include "sitkImageFilter.h"
+
+
+
+namespace itk {
+  namespace simple {
+
+    class @FILTERNAME@ImageFilter : public ImageFilter {
+    public:
+      typedef @FILTERNAME@ImageFilter Self;
+
+      /**
+       * Default Constructor that takes no arguments and initializes
+       * default parameters
+       */
+      @FILTERNAME@ImageFilter();
+
+      // Print ourselves out
+      std::string ToString() const;
+
+      Image::Pointer Execute ( Image::Pointer, Image::Pointer );
+
+    private:
+
+      sitkSingleImageMemberFunctionDispatcher;
+
+    };
+
+
+  }
+}
+#endif
