@@ -121,6 +121,17 @@ generate_single_filter( IntensityWindowing )
 generate_single_filter( InvertIntensity )
 generate_single_filter( RescaleIntensity )
 
+generate_single_filter( Cos )
+generate_single_filter( Sin )
+generate_single_filter( Tan )
+generate_single_filter( Acos )
+generate_single_filter( Asin )
+generate_single_filter( Atan )
+generate_single_filter( Exp )
+generate_single_filter( ExpNegative )
+generate_single_filter( Log )
+generate_single_filter( Log10 )
+
 generate_dual_filter( Subtract )
 generate_dual_filter( Divide )
 generate_dual_filter( Multiply )
@@ -132,10 +143,6 @@ generate_dual_filter( Minimum )
 generate_dual_filter( Maximum )
 generate_dual_filter( SquaredDifference )
 generate_dual_filter( BinaryMagnitude )
-
-generate_single_filter( Cos )
-generate_single_filter( Sin )
-generate_single_filter( Tan )
 
 include_directories (
  ${CMAKE_CURRENT_SOURCE_DIR}
