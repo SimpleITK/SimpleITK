@@ -1,31 +1,20 @@
 #ifndef __sitkRecursiveGaussianImageFilter_h
 #define __sitkRecursiveGaussianImageFilter_h
 
-#include "sitkMacro.h"
-#include "sitkMemberFunctionFactory.h"
-#include "sitkImage.h"
-
+#include "sitkImageFilter.h"
 
 #include <itkRecursiveGaussianImageFilter.h>
 
 namespace itk {
   namespace simple {
 
-    class RecursiveGaussianImageFilter {
+    class RecursiveGaussianImageFilter : ImageFilter {
     public:
       typedef RecursiveGaussianImageFilter Self;
 
       //
       // Type List Setup
       //
-      
-      // function pointer type
-      typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer );
-
-      // list of pixel types supported only basic since rgb and
-      // vectors are not supported by this filter
-      typedef BasicPixelTypeList PixelTypeList;
-
 
       //
       // Filter Setup
@@ -76,6 +65,9 @@ namespace itk {
       bool m_NormalizeAcrossScale;
 
       OrderEnumType m_Order;
+
+      // function pointer type
+      typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer );
 
       template <class TImageType> Image::Pointer ExecuteInternal ( Image::Pointer image );
 
