@@ -1,5 +1,5 @@
-#include "sitk@FILTERNAME@ImageFilter.h"
-#include "itk@FILTERNAME@ImageFilter.h"
+#include "sitk${name}ImageFilter.h"
+#include "itk${name}ImageFilter.h"
 
 namespace itk {
 namespace simple {
@@ -9,10 +9,12 @@ namespace simple {
 //
 // Default constructor that initializes parameters
 //
-@FILTERNAME@ImageFilter::@FILTERNAME@ImageFilter ()
+${name}ImageFilter::${name}ImageFilter ()
   {
 
-  @MEMBER_VARIABLES_INITIALIZATION@
+  $(foreach members 
+  m_${name} = ${default};
+  )
 
   this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
@@ -23,21 +25,36 @@ namespace simple {
 //
 // ToString
 //
-std::string @FILTERNAME@ImageFilter::ToString() const
+std::string ${name}ImageFilter::ToString() const
   {
   std::ostringstream out;
-  out << "itk::simple::@FILTERNAME@ImageFilter\n";
+  out << "itk::simple::${name}ImageFilter\n";
 
-  @MEMBER_VARIABLES_SERIALIZATION@
+  $(foreach members 
+    out << "\t${name}: " << this->m_${name} << "\n";
+  )
 
   return out.str();
   }
 //
 // Execute
 //
-Image::Pointer @FILTERNAME@ImageFilter::Execute ( Image::Pointer image1 )
+
+$(if #members > 0 then
+OUT=[[
+Image::Pointer ${name}ImageFilter::Execute ( Image::Pointer image1 $(foreach members ,${type} in${name} ) )
   {
 
+    $(foreach members 
+      this->Set${name} ( in${name} );
+      )
+      return this->Execute ( image1 );
+  }
+]]
+  end)
+
+Image::Pointer ${name}ImageFilter::Execute ( Image::Pointer image1 )
+  {
     ImageDataType type = image1->GetDataType();
     unsigned int dimension = image1->GetDimension();
 
@@ -50,7 +67,7 @@ Image::Pointer @FILTERNAME@ImageFilter::Execute ( Image::Pointer image1 )
 // ExecuteInternal
 //
 template <class TImageType>
-Image::Pointer @FILTERNAME@ImageFilter::ExecuteInternal ( Image::Pointer inImage1 )
+Image::Pointer ${name}ImageFilter::ExecuteInternal ( Image::Pointer inImage1 )
   {
   typedef TImageType     InputImageType;
   typedef InputImageType OutputImageType;
@@ -63,13 +80,14 @@ Image::Pointer @FILTERNAME@ImageFilter::ExecuteInternal ( Image::Pointer inImage
     return NULL;
   }
 
-  typedef itk::@FILTERNAME@ImageFilter<InputImageType, OutputImageType> FilterType;
+  typedef itk::${name}ImageFilter<InputImageType, OutputImageType> FilterType;
 
   typename FilterType::Pointer filter = FilterType::New();
   filter->SetInput( image1 );
-  filter->InPlaceOn();
 
-  @MEMBER_VARIABLES_TRANSFER@
+  $(foreach members 
+    filter->Set${name} ( this->m_${name} );
+  )
 
   Image::Pointer out = new Image( filter->GetOutput() );
 
