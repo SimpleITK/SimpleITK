@@ -71,6 +71,8 @@ Image::Pointer @FILTERNAME@ImageFilter::ExecuteInternal ( Image::Pointer inImage
 
   @MEMBER_VARIABLES_TRANSFER@
 
+  filter->Update();
+
   Image::Pointer out = new Image( filter->GetOutput() );
 
   return out;

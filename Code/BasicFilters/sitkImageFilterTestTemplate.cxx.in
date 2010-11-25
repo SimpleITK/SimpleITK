@@ -12,18 +12,12 @@ TEST(BasicFilters,@FILTERNAME@) {
   std::string inputFilename = dataFinder.getFile ( "Input/HeadMRVolumeWithDirection.nhdr" );
   ASSERT_TRUE ( dataFinder.fileExists ( inputFilename ) );
 
-std::cout << "inputFilename = " << inputFilename << std::endl;
-
   inputImage = reader.SetFilename ( inputFilename ).Execute();
   ASSERT_TRUE ( inputImage->GetImageBase().IsNotNull() );
-
-inputImage->GetImageBase()->Print( std::cout );
 
   outputImage = filter.Execute( inputImage );
 
   ASSERT_TRUE ( outputImage->GetImageBase().IsNotNull() );
-
-outputImage->GetImageBase()->Print( std::cout );
 
   std::string filename = dataFinder.getOutputFile ( "BasicFilters.@FILTERNAME@.nrrd" );
   writer.SetFilename ( filename ).Execute ( outputImage );
