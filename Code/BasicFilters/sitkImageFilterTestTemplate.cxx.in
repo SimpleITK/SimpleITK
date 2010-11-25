@@ -1,0 +1,24 @@
+#include <SimpleITK.h>
+#include <SimpleITKTestHarness.h>
+#include <sitk@FILTERNAME@ImageFilter.h>
+
+TEST(BasicFilters,@FILTERNAME@) {
+  itk::simple::ImageFileReader reader;
+  itk::simple::ImageFileWriter writer;
+  itk::simple::@FILTERNAME@ImageFilter filter;
+  itk::simple::Image::Pointer inputImage;
+  itk::simple::Image::Pointer outputImage;
+
+  std::string inputFilename = dataFinder.getFile ( "Input/HeadMRVolumeWithDirection.nhdr" );
+  ASSERT_TRUE ( dataFinder.fileExists ( inputFilename ) );
+
+  inputImage = reader.SetFilename ( inputFilename ).Execute();
+  ASSERT_TRUE ( inputImage->GetImageBase().IsNotNull() );
+
+  outputImage = filter.Execute( inputImage );
+
+  ASSERT_TRUE ( outputImage->GetImageBase().IsNotNull() );
+
+  std::string filename = dataFinder.getOutputFile ( "BasicFilters.@FILTERNAME@.nrrd" );
+  writer.SetFilename ( filename ).Execute ( outputImage );
+}

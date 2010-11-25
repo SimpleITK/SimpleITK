@@ -107,6 +107,11 @@ macro( generate_single_filter FILTERNAME PIXEL_TYPE_LIST)
     "${CMAKE_CURRENT_BINARY_DIR}/sitk${FILTERNAME}ImageFilter.cxx"
     )
 
+  configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/sitkImageFilterTestTemplate.cxx.in"
+    "${PROJECT_BINARY_DIR}/Testing/Unit/sitk${FILTERNAME}ImageFilterTest.cxx"
+    )
+
   set(SimpleITKBasicFiltersSource ${SimpleITKBasicFiltersSource}
     "${CMAKE_CURRENT_BINARY_DIR}/sitk${FILTERNAME}ImageFilter.cxx")
 

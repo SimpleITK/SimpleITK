@@ -1,4 +1,9 @@
 
+# Find tests generated in the binary directory
+file ( GLOB SimpleITKBasicFiltersTestSource "${CMAKE_CURRENT_BINARY_DIR}/*.cxx")
+
+message("GENERATED TESTS DIR ${CMAKE_CURRENT_BINARY_DIR}")
+message("GENERATED TESTS ${SimpleITKBasicFiltersTestSource}")
 
 # To add a new file, just add it to this list.  Any GoogleTests inside will be automatically
 # added to ctest.
@@ -7,6 +12,7 @@ set ( TestSource
   IOTests.cxx
   TypeListsTests.cxx
   CXXTests.cxx
+  ${SimpleITKBasicFiltersTestSource}
   )
 
 if ( WRAP_LUA )
