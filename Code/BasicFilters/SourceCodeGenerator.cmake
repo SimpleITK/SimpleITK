@@ -78,6 +78,11 @@ macro( generate_dual_filter FILTERNAME PIXEL_TYPE_LIST)
     "${CMAKE_CURRENT_BINARY_DIR}/sitk${FILTERNAME}ImageFilter.cxx"
     )
 
+  configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/sitkDualImageFilterTestTemplate.cxx.in"
+    "${PROJECT_BINARY_DIR}/Testing/Unit/sitk${FILTERNAME}ImageFilterTest.cxx"
+    )
+
   set(SimpleITKBasicFiltersSource ${SimpleITKBasicFiltersSource}
     "${CMAKE_CURRENT_BINARY_DIR}/sitk${FILTERNAME}ImageFilter.cxx")
 
@@ -136,11 +141,6 @@ generate_single_filter( Log10 BasicPixelTypeList )
 generate_single_filter( Sqrt BasicPixelTypeList )
 generate_single_filter( Square BasicPixelTypeList )
 
-generate_single_filter( And IntegerPixelTypeList )
-generate_single_filter( Or  IntegerPixelTypeList )
-generate_single_filter( Not IntegerPixelTypeList )
-generate_single_filter( Xor IntegerPixelTypeList )
-
 generate_single_filter( CurvatureFlow RealPixelTypeList )
 
 generate_dual_filter( Subtract BasicPixelTypeList )
@@ -155,3 +155,8 @@ generate_dual_filter( Maximum BasicPixelTypeList )
 generate_dual_filter( SquaredDifference BasicPixelTypeList )
 generate_dual_filter( BinaryMagnitude BasicPixelTypeList )
 
+generate_single_filter( Not IntegerPixelTypeList )
+
+generate_dual_filter( And IntegerPixelTypeList )
+generate_dual_filter( Or  IntegerPixelTypeList )
+generate_dual_filter( Xor IntegerPixelTypeList )
