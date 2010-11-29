@@ -8,8 +8,14 @@ endif()
 
 
 # Put all files in a bin directory to keep things tidy.
-set(EXECUTABLE_OUTPUT_PATH ${SimpleITK_BINARY_DIR}/bin)
-
+# Output directories.
+if(NOT LIBRARY_OUTPUT_PATH)
+  set(LIBRARY_OUTPUT_PATH ${SimpleITK_BINARY_DIR}/bin CACHE INTERNAL "Single output directory for building all libraries.")
+endif()
+if(NOT EXECUTABLE_OUTPUT_PATH)
+  set(EXECUTABLE_OUTPUT_PATH ${SimpleITK_BINARY_DIR}/bin CACHE INTERNAL "Single output directory for building all executables.")
+endif()
+mark_as_advanced(LIBRARY_OUTPUT_PATH EXECUTABLE_OUTPUT_PATH)
 
 set ( SimpleITK_INCLUDE_DIR 
       ${CMAKE_SOURCE_DIR}/Code/Common
