@@ -114,6 +114,6 @@ public:
   }
 };
 
-
+#include "ImageCompare.h"
 
 #endif

@@ -6,6 +6,7 @@ ImageCompare::ImageCompare() {
 }
 
 bool ImageCompare::compare ( itk::simple::Image::Pointer image, std::string inName ) {
+  std::cout << "Starting image compare on " << inName << std::endl;
   if ( image.IsNull() ) {
     mMessage = "ImageCompare: image is null";
     return false;

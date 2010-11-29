@@ -1,0 +1,46 @@
+{
+  "name" : "CurvatureFlow",
+  "doc" : "Some global documentation",
+  "pixel_types" : "RealPixelTypeList",
+  "members" : [
+    { "name" : "TimeStep",
+      "type" : "double",
+      "default" : 0.0,
+      "doc" : "Time step for curvature flow"
+    },
+    {
+      "name" : "NumberOfIterations",
+      "type" : "uint32_t",
+      "default" : 5,
+      "doc" : "Number of iterations to run"
+    }
+  ]
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Simply run with default settings",
+      "inputA" : "Input/HeadMRVolumeWithDirection.nhdr",
+      "settings" : [],
+      "tolerance" : 0.0,
+      "md5hash" : null
+    }
+    {
+      "tag" : "longer",
+      "description" : "Change number of iterations and timestep",
+      "inputA" : "Input/HeadMRVolumeWithDirection.nhdr",
+      "settings" : [
+        {
+          "parameter" : "TimeStep",
+          "value" : 0.1
+        },
+        {
+          "parameter" : "NumberOfIterations",
+          "value" : 10
+        }
+      ],
+      "tolerance" : "0.0",
+      "md5hash" : null
+    }
+  ]
+}
+

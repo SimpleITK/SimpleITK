@@ -11,25 +11,6 @@ namespace itk
 {
 namespace simple
 {
-typedef typelist::MakeTypeList<signed char,
-                               unsigned char,
-                               short,
-                               unsigned short,
-                               int,
-                               unsigned int,
-                               long,
-                               unsigned long,
-                               float,
-                               double>::Type BasicPixelTypeList;
-
-typedef BasicPixelTypeList ScalarPixelTypeList;
-
-typedef typelist::MakeTypeList<unsigned char,
-                               unsigned short,
-                               unsigned int,
-                               unsigned long>::Type LabelPixelTypeList;
-
-
 typedef typelist::MakeTypeList<char,
                                unsigned char,
                                short,
@@ -39,10 +20,17 @@ typedef typelist::MakeTypeList<char,
                                long,
                                unsigned long>::Type IntegerPixelTypeList;
 
-
 typedef typelist::MakeTypeList<float,
                                double >::Type RealPixelTypeList;
 
+typedef typelist::Append<IntegerPixelTypeList, RealPixelTypeList>::Type BasicPixelTypeList;
+
+typedef BasicPixelTypeList ScalarPixelTypeList;
+
+typedef typelist::MakeTypeList<unsigned char,
+                               unsigned short,
+                               unsigned int,
+                               unsigned long>::Type LabelPixelTypeList;
 
 typedef typelist::MakeTypeList< itk::RGBPixel<signed char>,
                                 itk::RGBPixel<unsigned char>,
@@ -51,8 +39,6 @@ typedef typelist::MakeTypeList< itk::RGBPixel<signed char>,
                                 itk::RGBPixel<float>,
                                 itk::RGBPixel<double>
                                 >::Type RGBPixelTypeList;
-
-
 
 typedef typelist::MakeTypeList< itk::RGBPixel<signed char>,
                                 itk::RGBPixel<unsigned char>,
@@ -66,8 +52,6 @@ typedef typelist::MakeTypeList< itk::RGBPixel<signed char>,
                                 itk::RGBPixel<double>
                                 >::Type AllRGBPixelTypeList;
 
-
-
 typedef typelist::MakeTypeList< itk::RGBAPixel<signed char>,
                                 itk::RGBAPixel<unsigned char>,
                                 itk::RGBAPixel<short>,
@@ -75,7 +59,6 @@ typedef typelist::MakeTypeList< itk::RGBAPixel<signed char>,
                                 itk::RGBAPixel<float>,
                                 itk::RGBAPixel<double>
                                 >::Type RGBAPixelTypeList;
-
 
 typedef typelist::MakeTypeList< itk::RGBAPixel<signed char>,
                                 itk::RGBAPixel<unsigned char>,
@@ -94,13 +77,10 @@ typedef typelist::Append<
   RGBAPixelTypeList
   >::Type ColorPixelTypeList;
 
-
 typedef typelist::Append<
   AllRGBPixelTypeList,
   AllRGBAPixelTypeList
   >::Type AllColorPixelTypeList;
-
-
 
 typedef typelist::MakeTypeList< itk::Vector<signed char,2>,
                                 itk::Vector<unsigned char,2>,
@@ -109,7 +89,6 @@ typedef typelist::MakeTypeList< itk::Vector<signed char,2>,
                                 itk::Vector<float,2>,
                                 itk::Vector<double,2>
                                 >::Type Vector2PixelTypeList;
-
 
 typedef typelist::MakeTypeList< itk::Vector<signed char,2>,
                                 itk::Vector<unsigned char,2>,
@@ -163,7 +142,6 @@ typedef typelist::Append<
   typelist::Append< Vector2PixelTypeList, Vector3PixelTypeList>::Type,
   Vector4PixelTypeList
   >::Type VectorPixelTypeList;
-
 
 typedef typelist::Append<
   typelist::Append< AllVector2PixelTypeList, AllVector3PixelTypeList>::Type,

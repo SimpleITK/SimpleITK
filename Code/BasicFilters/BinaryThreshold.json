@@ -1,0 +1,38 @@
+{
+  "name" : "BinaryThreshold",
+  "doc" : "Docs",
+  "pixel_types" : "BasicPixelTypeList",
+  "members" : [
+    {
+      "name" : "LowerThreshold",
+      "type" : "double",
+      "default" : "0.0",
+      "doc" : ""
+    },
+    {
+      "name" : "UpperThreshold",
+      "type" : "double",
+      "default" : "255.0",
+      "doc" : ""
+    }
+  ]
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "Default parameter settings",
+      "inputA" : "Input/HeadMRVolumeWithDirection.nhdr",
+      "settings" : [],
+      "md5hash" : "83e92388a1175d93b8b7ce1fbd10170d"
+    },
+    {
+      "tag" : "NarrowThreshold",
+      "description" : "Default parameter settings",
+      "inputA" : "Input/HeadMRVolumeWithDirection.nhdr",
+      "settings" : [
+        { "parameter" : "LowerThreshold", "value" : 10 },
+        { "parameter" : "UpperThreshold", "value" : 100 }
+      ],
+      "md5hash" : "6ef4576d3c85e440aa0c361d44123ef2"
+    }
+  ]
+}
