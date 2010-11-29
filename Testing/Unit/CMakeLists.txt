@@ -24,6 +24,16 @@ if ( WRAP_PYTHON )
   set ( TestSource ${TestSource} PythonTests.cxx )
 endif()
 
+# Generate code
+foreach ( FILENAME ${GENERATED_FILTER_LIST} )
+  add_custom_command (
+    OUTPUT "${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILENAME}ImageFilterTest.cxx"
+    COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkImageFilterTestTemplate.cxx.in ${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILENAME}ImageFilterTest.cxx 
+    DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkImageFilterTestTemplate.cxx.in
+    )
+endforeach()
+
+
 # Build Google Test
 find_package(Threads)
 if (CMAKE_USE_PTHREADS_INIT)  # The pthreads library is available.
