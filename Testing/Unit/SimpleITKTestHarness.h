@@ -34,6 +34,7 @@ class DataFinder {
   std::string getExecutableDirectory() { return mExecutableDirectory; }
   std::string findExecutable ( std::string exe ) { return getExecutableDirectory() + "/" + exe + EXECUTABLE_SUFFIX; }
   std::string getLuaExecutable() { return std::string ( SIMPLEITK_LUA_EXECUTABLE_PATH ); }
+  std::string getPythonExecutable() { return std::string ( PYTHON_EXECUTABLE_PATH ); }
   std::string getSourceDirectory() { return std::string ( SIMPLEITK_SOURCE_DIR ); }
   bool fileExists ( std::string filename ) { return itksys::SystemTools::FileExists ( filename.c_str() ); }
   std::string getFile ( std::string filename ) {
@@ -54,6 +55,15 @@ extern DataFinder dataFinder;
 // Class for running external programs
 class ExternalProgramRunner : public testing::Test {
 public:
+  // Set an environment variable
+  void SetEnvironment ( std::string key, std::string value ) {
+#ifdef WIN32
+    std::string v = key + "=" + value;
+    _putenv ( v.c_str() );
+#else
+    setenv ( key.c_str(), value.c_str(), 1 );
+#endif
+  }
   /* Run the command line specified in the list of arguments.  Call FAIL if the executable fails
    */
   void RunExecutable ( std::vector<std::string> CommandLine, bool showOutput = false ) {
