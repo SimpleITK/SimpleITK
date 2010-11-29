@@ -1,8 +1,27 @@
 {
   "name" : "Subtract",
+  "number_of_inputs" : 2,
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelTypeList",
   "members" : [],
-  "tests" : []
+  "tests" : [
+    {
+      "tag" : "2DStapleImages",
+      "description" : "Default parameter settings",
+      "inputA" : "Input/STAPLE1.png",
+      "inputB" : "Input/STAPLE2.png",
+      "settings" : [],
+      "md5hash" : "bcf3c367a13ef259bbd9d42e80534180"
+    },
+    {
+      "tag" : "3DMRIHead",
+      "description" : "MRI head",
+      "inputA" : "Input/HeadMRVolumeWithDirection.nhdr",
+      "inputB" : "Input/HeadMRVolumeWithDirection.nhdr",
+      "settings" : [],
+      "md5hash" : "b8d4de2fe2525bccb091d2ca77cabbd5"
+    }
+    
+  ]
 }
 

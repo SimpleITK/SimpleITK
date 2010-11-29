@@ -19,6 +19,10 @@ if ( WRAP_LUA )
   set ( TestSource ${TestSource} LuaTests.cxx )
 endif()
 
+if ( WRAP_PYTHON )
+  set ( TestSource ${TestSource} PythonTests.cxx )
+endif()
+
 # Build Google Test
 find_package(Threads)
 if (CMAKE_USE_PTHREADS_INIT)  # The pthreads library is available.

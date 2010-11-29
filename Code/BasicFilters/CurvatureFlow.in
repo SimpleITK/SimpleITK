@@ -1,2 +1,0 @@
-TimeStep double 0.125;
-NumberOfIterations uint32_t 5;

@@ -1,16 +1,20 @@
 #ifndef __sitk${name}ImageFilter_h
 #define __sitk${name}ImageFilter_h
 
-#include "sitkImageFilter.h"
+#include "sitkDualImageFilter.h"
 
 
 
 namespace itk {
   namespace simple {
 
-    class ${name}ImageFilter : public ImageFilter {
+    class ${name}ImageFilter : public $(if number_of_inputs == 2 then OUT=[[DualImageFilter]] else OUT=[[ImageFilter]] end) {
     public:
       typedef ${name}ImageFilter Self;
+
+      /**
+         ${doc}
+      */
 
       /**
        * Default Constructor that takes no arguments and initializes
@@ -25,22 +29,21 @@ namespace itk {
       Self& Set${name} ( ${type} t ) { this->m_${name} = t; return *this; };
       ${type} Get${name}() { return this->m_${name}; };
       )
-
       // Print ourselves out
       std::string ToString() const;
 
-      Image::Pointer Execute ( Image::Pointer );
-      $(if #members > 0 then
-      OUT='Image::Pointer Execute ( Image::Pointer $(foreach members ,${type} in${name} ) );'
+      Image::Pointer Execute ( Image::Pointer $(if number_of_inputs == 2 then OUT=[[, Image::Pointer]] end) );
+      $(if members and #members > 0 then
+        OUT=[[Image::Pointer Execute ( Image::Pointer $(if number_of_inputs == 2 then OUT=', Image::Pointer' end) $(foreach members ,${type} in${name} ) );]]
       end)
-
+      
     private:
 
-      sitkSingleImageMemberFunctionDispatcher;
-
+      $(if number_of_inputs == 2 then OUT=[[sitkDualImageMemberFunctionDispatcher;]] else OUT=[[sitkSingleImageMemberFunctionDispatcher;]] end)
       $(foreach members 
       ${type} m_${name};
       )
+
     };
 
 
