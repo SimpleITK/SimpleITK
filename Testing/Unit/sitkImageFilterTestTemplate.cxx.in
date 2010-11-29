@@ -5,35 +5,48 @@ TEST(BasicFilters,${name}) {
   itk::simple::ImageFileReader reader;
   itk::simple::${name}ImageFilter filter;
   itk::simple::Image::Pointer inputA;
+  itk::simple::Image::Pointer inputB;
   itk::simple::Image::Pointer output;
   itk::simple::ImageHashFilter hasher;
+
+  $(if #tests == 0 then
+    OUT=[[ 
+  FAIL() << "Filter ${name} has no tests defined";
+        ]]
+    end)
 
   $(foreach tests 
     /* ${description} */
   inputA = reader.SetFilename ( dataFinder.getFile ( "${inputA}" ) ).Execute();
   ASSERT_TRUE ( inputA->GetImageBase().IsNotNull() ) << "Could not read ${inputA}";
+    $(if inputB then
+      OUT=[[
+  inputB = reader.SetFilename ( dataFinder.getFile ( "${inputB}" ) ).Execute();
+  ASSERT_TRUE ( inputB->GetImageBase().IsNotNull() ) << "Could not read ${inputB}";
+            ]]
+      end)
 
-    $(foreach settings 
+  $(foreach settings 
   filter.Set${parameter} ( ${value} );
   ASSERT_EQ ( ${value}, filter.Get${parameter}() ) << "Failed to set ${parameter} to ${value}";
-      )
-  ASSERT_NO_THROW ( output = filter.Execute ( inputA ) );
-    $(if md5hash then
-      OUT = [[ 
+  )
+    ASSERT_NO_THROW ( output = filter.Execute ( inputA $(if inputB then OUT=", inputB" end) ) );
+  $(if md5hash then
+  OUT = [[ 
   // Check the hash
   EXPECT_EQ ( "${md5hash}", hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 ).Execute ( output ) ) << "Output MD5 hash failed";
-              ]]
-      end)
-    $(if sha1hash then
-      OUT = [[ 
+  ]]
+  end)
+  $(if sha1hash then
+  OUT = [[ 
   // Check the hash
   EXPECT_EQ ( "${sha1hash}", hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 ).Execute ( output ) ) << "Output SHA1 hash failed";
-              ]]
-      end)
-    $(if tolerance then
-      OUT = [[ 
+  ]]
+  end)
+  $(if tolerance then
+  OUT = [[ 
   IMAGECOMPAREWITHTOLERANCE ( output, "${tag}", ${tolerance} );
-              ]]
-      end)
-    )
+  ]]
+  end)
+  )
 }

@@ -36,29 +36,40 @@ std::string ${name}ImageFilter::ToString() const
 
   return out.str();
   }
+
 //
 // Execute
 //
 
-$(if #members > 0 then
-OUT=[[
-Image::Pointer ${name}ImageFilter::Execute ( Image::Pointer image1 $(foreach members ,${type} in${name} ) )
+      $(if members and #members > 0 then
+OUT = [[
+        Image::Pointer ${name}ImageFilter::Execute ( Image::Pointer image1 $(if number_of_inputs==2 then OUT=', Image::Pointer image2' end) $(foreach members ,${type} in${name} ) )
   {
-
     $(foreach members 
-      this->Set${name} ( in${name} );
-      )
-      return this->Execute ( image1 );
+    this->Set${name} ( in${name} );
+    )
+    return this->Execute ( image1 $(if number_of_inputs==2 then OUT=', image2' end) );
   }
 ]]
-  end)
+end)
 
-Image::Pointer ${name}ImageFilter::Execute ( Image::Pointer image1 )
+Image::Pointer ${name}ImageFilter::Execute ( Image::Pointer image1 $(if number_of_inputs==2 then OUT=[[, Image::Pointer image2]] end) )
   {
+
     ImageDataType type = image1->GetDataType();
     unsigned int dimension = image1->GetDimension();
 
-    return this->m_MemberFactory->GetMemberFunction( type, dimension )( image1 );
+    $(if number_of_inputs and number_of_inputs == 2 then
+    OUT=[[// todo need better error handling and potential type conversion
+    if ( type != image2->GetDataType() ||
+         dimension != image2->GetDimension() )
+      {
+      std::cerr << "Both image for add filter don't match type or dimension!" << std::endl;
+      throw;
+      }]]
+      end)
+
+    return this->m_MemberFactory->GetMemberFunction( type, dimension )( image1 $(if number_of_inputs==2 then OUT=[[, image2]] end) );
   }
 
 //----------------------------------------------------------------------------
@@ -67,7 +78,7 @@ Image::Pointer ${name}ImageFilter::Execute ( Image::Pointer image1 )
 // ExecuteInternal
 //
 template <class TImageType>
-Image::Pointer ${name}ImageFilter::ExecuteInternal ( Image::Pointer inImage1 )
+Image::Pointer ${name}ImageFilter::ExecuteInternal ( Image::Pointer inImage1 $(if number_of_inputs==2 then OUT=[[, Image::Pointer inImage2]] end) )
   {
   typedef TImageType     InputImageType;
   typedef InputImageType OutputImageType;
@@ -75,15 +86,29 @@ Image::Pointer ${name}ImageFilter::ExecuteInternal ( Image::Pointer inImage1 )
   typename InputImageType::Pointer image1 =
     dynamic_cast <InputImageType*> ( inImage1->GetImageBase().GetPointer() );
 
-  if ( image1.IsNull() ) {
+  $(if number_of_inputs == 2 then
+    OUT=[[
+  typename InputImageType::Pointer image2 =
+  dynamic_cast <InputImageType*> ( inImage2->GetImageBase().GetPointer() );
+
+  if ( image1.IsNull() || image2.IsNull() ) {
     // Take some action
     return NULL;
   }
+          ]]
+    end)
 
-  typedef itk::${name}ImageFilter<InputImageType, OutputImageType> FilterType;
+  typedef itk::${name}ImageFilter<InputImageType $(if number_of_inputs == 2 then OUT=[[, InputImageType]] end), OutputImageType> FilterType;
 
   typename FilterType::Pointer filter = FilterType::New();
-  filter->SetInput( image1 );
+  
+  $(if number_of_inputs == 2 then
+    OUT=[[
+  filter->SetInput1( image1 );
+  filter->SetInput2( image2 );
+]] else
+  OUT=[[filter->SetInput( image1 );]]
+  end)
 
   $(foreach members 
     filter->Set${name} ( this->m_${name} );

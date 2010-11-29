@@ -1,5 +1,6 @@
 {
   "name" : "SquaredDifference",
+  "number_of_inputs" : 2,
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelTypeList",
   "members" : [],
@@ -11,7 +12,7 @@
       "inputB" : "Input/STAPLE2.png",
       "settings" : [],
       "md5hash" : "f5161e3505304fa15a232fcdbf08a776"
-    }
+    },
     {
       "tag" : "3DMRIHead",
       "description" : "MRI head",

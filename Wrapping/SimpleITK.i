@@ -69,6 +69,9 @@ using namespace itk::simple;
 // This helps SWIG wrap long long, as returned by Width, Height, and Depth
 typedef unsigned long long uint64_t;
 
+// Help swig wrap 32 bit integers
+typedef unsigned int uint32_t;
+
 // Any new classes need to have an "%include" statement to be wrapped.
 %include "sitkImage.h"
 %include "sitkImageFilter.h"

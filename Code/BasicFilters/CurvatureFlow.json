@@ -1,5 +1,6 @@
 {
   "name" : "CurvatureFlow",
+  "number_of_inputs" : 1,
   "doc" : "Some global documentation",
   "pixel_types" : "RealPixelTypeList",
   "members" : [

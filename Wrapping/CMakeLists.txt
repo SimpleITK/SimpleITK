@@ -44,8 +44,8 @@ if ( WRAP_PYTHON )
   include_directories ( ${PYTHON_INCLUDE_DIR} )
 
   # Run swig
-  SWIG_add_module ( SimpleITKPython python SimpleITK.i SimpleITKPYTHON_wrap.cxx )
-  SWIG_link_libraries ( SimpleITKPython ${SimpleITK_LIBRARIES} ${PYTHON_LIBRARIES} ${ITK_LIBRARIES})
+  SWIG_add_module ( SimpleITK python SimpleITK.i SimpleITKPYTHON_wrap.cxx )
+  SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${PYTHON_LIBRARIES} ${ITK_LIBRARIES})
 
   # SWIG_module_initialize ( SimpleITK python )
   # SWIG_add_source_to_module ( SimpleITK swig_generated_source SimpleITK.i ${SWIG_HEADERS} )

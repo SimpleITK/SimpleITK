@@ -8,18 +8,18 @@ if len ( sys.argv ) < 4:
     sys.exit ( 1 )
 
 reader = SimpleITK.ImageFileReader()
-reader.setFilename ( sys.argv[1] )
-image = reader.execute();
+reader.SetFilename ( sys.argv[1] )
+image = reader.Execute();
   
-print image.toString()
+print image.ToString()
 
-gaussian = SimpleITK.Gaussian()
-gaussian.setSigma ( float ( sys.argv[2] ) )
-image = gaussian.execute ( image );
+gaussian = SimpleITK.RecursiveGaussianImageFilter()
+gaussian.SetSigma ( float ( sys.argv[2] ) )
+image = gaussian.Execute ( image );
 
-print image.toString()
+print image.ToString()
 
 writer = SimpleITK.ImageFileWriter()
-writer.setFilename ( sys.argv[3] )
-writer.execute ( image );
+writer.SetFilename ( sys.argv[3] )
+writer.Execute ( image );
 
