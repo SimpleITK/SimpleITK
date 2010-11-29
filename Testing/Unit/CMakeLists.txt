@@ -20,6 +20,7 @@ if ( WRAP_LUA )
 endif()
 
 if ( WRAP_PYTHON )
+  find_package ( PythonInterp REQUIRED )
   set ( TestSource ${TestSource} PythonTests.cxx )
 endif()
 

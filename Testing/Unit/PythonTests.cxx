@@ -11,7 +11,7 @@ TEST_F(Python,SimpleGaussian) {
   std::string output = dataFinder.getOutputFile ( "Python.SimpleGaussian.nrrd" );
   std::vector<std::string> CommandLine;
   
-  CommandLine.push_back ( "python" + std::string ( EXECUTABLE_SUFFIX ) );
+  CommandLine.push_back ( dataFinder.getPythonExecutable() );
   CommandLine.push_back ( Script );
   CommandLine.push_back ( dataFinder.getFile ( "Input/HeadMRVolumeWithDirection.nhdr" ).c_str() );
   CommandLine.push_back ( "2.0" );
@@ -19,7 +19,8 @@ TEST_F(Python,SimpleGaussian) {
 
   // Set our python path
   std::string path = dataFinder.getExecutableDirectory() + "../Wrapping";
-  setenv ( "PYTHONPATH", path.c_str(), 1 );
+  SetEnvironment ( "PYTHONPATH", path );
+
   // Run it!
   RunExecutable ( CommandLine, true );
   ASSERT_TRUE ( dataFinder.fileExists ( output ) );
