@@ -14,19 +14,6 @@
 #include "sitkImageFileWriter.h"
 #include "sitkStatisticsImageFilter.h"
 
-/*
-#include "sitkBinaryThresholdImageFilter.h"
-#include "sitkSubtractImageFilter.h"
-#include "sitkDivideImageFilter.h"
-#include "sitkMultiplyImageFilter.h"
-#include "sitkAddImageFilter.h"
-#include "sitkAtan2ImageFilter.h"
-#include "sitkMaskImageFilter.h"
-#include "sitkMaskNegatedImageFilter.h"
-#include "sitkMinimumImageFilter.h"
-#include "sitkMaximumImageFilter.h"
-#include "sitkSquaredDifferenceImageFilter.h"
-#include "sitkBinaryMagnitudeImageFilter.h"
-*/
+// These headers are auto-generated
 #include "SimpleITKBasicFiltersGeneratedHeaders.h"
 #endif

@@ -1,4 +1,9 @@
 
+# Find tests generated in the binary directory
+file ( GLOB SimpleITKBasicFiltersTestSource "${CMAKE_CURRENT_BINARY_DIR}/*.cxx")
+
+message("GENERATED TESTS DIR ${CMAKE_CURRENT_BINARY_DIR}")
+message("GENERATED TESTS ${SimpleITKBasicFiltersTestSource}")
 
 # To add a new file, just add it to this list.  Any GoogleTests inside will be automatically
 # added to ctest.
@@ -51,7 +56,9 @@ endif()
 
 include_directories ( ${SimpleITK_INCLUDE_DIR} )
 add_executable(SimpleITKUnitTestDriver 
-  SimpleITKUnitTestDriver.cxx ${TestSource} ImageCompare.cxx )
+  SimpleITKUnitTestDriver.cxx ${TestSource} ImageCompare.cxx 
+  ${GENERATED_TEST_SOURCE_LIST}
+)
 target_link_libraries ( SimpleITKUnitTestDriver ${ITK_LIBRARIES} ${SimpleITK_LIBRARIES} )
 
 # Add all the tests by parsing the source code
@@ -84,10 +91,13 @@ macro(ADD_GOOGLE_TESTS executable)
       endforeach()
     endif ()
 
+    # Add the generated tests
+    list ( APPEND AllTestsHits ${GENERATED_TEST_LIST} )
+
     list ( SORT AllTestsHits )
     # Add all the remaining tests to CTest's test list
     foreach(hit ${AllTestsHits})
-      message ( STATUS "Adding test ${executable} ${hit} ${TEST_HARNESS_DATA_DIRECTORY} ${TEST_HARNESS_TEMP_DIRECTORY}" )
+      # message ( STATUS "Adding test ${executable} ${hit} ${TEST_HARNESS_DATA_DIRECTORY} ${TEST_HARNESS_TEMP_DIRECTORY}" )
       add_test(${hit} ${executable} --gtest_filter=${hit} ${TEST_HARNESS_EXECUTABLE_DIRECTORY})
     endforeach(hit)
   endforeach()

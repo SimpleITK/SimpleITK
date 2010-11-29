@@ -1,0 +1,39 @@
+#include <SimpleITK.h>
+#include <SimpleITKTestHarness.h>
+
+TEST(BasicFilters,${name}) {
+  itk::simple::ImageFileReader reader;
+  itk::simple::${name}ImageFilter filter;
+  itk::simple::Image::Pointer inputA;
+  itk::simple::Image::Pointer output;
+  itk::simple::ImageHashFilter hasher;
+
+  $(foreach tests 
+    /* ${description} */
+  inputA = reader.SetFilename ( dataFinder.getFile ( "${inputA}" ) ).Execute();
+  ASSERT_TRUE ( inputA->GetImageBase().IsNotNull() ) << "Could not read ${inputA}";
+
+    $(foreach settings 
+  filter.Set${parameter} ( ${value} );
+  ASSERT_EQ ( ${value}, filter.Get${parameter}() ) << "Failed to set ${parameter} to ${value}";
+      )
+  ASSERT_NO_THROW ( output = filter.Execute ( inputA ) );
+    $(if md5hash then
+      OUT = [[ 
+  // Check the hash
+  EXPECT_EQ ( "${md5hash}", hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 ).Execute ( output ) ) << "Output MD5 hash failed";
+              ]]
+      end)
+    $(if sha1hash then
+      OUT = [[ 
+  // Check the hash
+  EXPECT_EQ ( "${sha1hash}", hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 ).Execute ( output ) ) << "Output SHA1 hash failed";
+              ]]
+      end)
+    $(if tolerance then
+      OUT = [[ 
+  IMAGECOMPAREWITHTOLERANCE ( output, "${tag}", ${tolerance} );
+              ]]
+      end)
+    )
+}

@@ -22,8 +22,13 @@ set ( SimpleITK_INCLUDE_DIR
 include_directories( ${SimpleITK_INCLUDE_DIR} )
 
 set ( SimpleITK_LIBRARIES ${ITK_LIBRARIES} SimpleITKCommon SimpleITKIO SimpleITKBasicFilters)
-subdirs ( Utilities Code Wrapping Examples )
 
+# Be sure to clear these each time
+set ( GENERATED_TEST_LIST "" CACHE INTERNAL "" )
+set ( GENERATED_FILTER_LIST "" CACHE INTERNAL "" )
+set ( GENERATED_TEST_SOURCE_LIST "" CACHE INTERNAL "" )
+
+subdirs ( Utilities Code Wrapping Examples )
 
 # Options for testing
 option ( USE_TESTING "Build testing" ON )

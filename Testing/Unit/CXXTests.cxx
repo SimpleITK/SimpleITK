@@ -52,7 +52,7 @@ TEST_F(CXX,Add) {
 
   image = reader.SetFilename ( output ).Execute();
   ASSERT_TRUE ( image->GetImageBase().IsNotNull() ) << "Loaded output image";
-  EXPECT_EQ ( "", hasher.Execute ( image ) );
+  EXPECT_EQ ( "be139aab45c82c27163134688a92245670e75f74", hasher.Execute ( image ) );
 }
 
 TEST_F(CXX,BinaryThreshold) {
@@ -78,5 +78,5 @@ TEST_F(CXX,BinaryThreshold) {
 
   image = reader.SetFilename ( output ).Execute();
   ASSERT_TRUE ( image->GetImageBase().IsNotNull() ) << "Loaded output image";
-  EXPECT_EQ ( "", hasher.Execute ( image ) );
+  EXPECT_EQ ( "36eac6525231e0cdf8c20d3c7d405b199f30d779", hasher.Execute ( image ) );
 }

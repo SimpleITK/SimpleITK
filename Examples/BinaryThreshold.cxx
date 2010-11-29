@@ -1,5 +1,6 @@
 
 #include <SimpleITK.h>
+#include <sitkBinaryThresholdImageFilter.h>
 
 int main ( int argc, char* argv[] ) {
 

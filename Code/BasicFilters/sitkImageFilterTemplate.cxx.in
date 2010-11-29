@@ -89,6 +89,7 @@ Image::Pointer ${name}ImageFilter::ExecuteInternal ( Image::Pointer inImage1 )
     filter->Set${name} ( this->m_${name} );
   )
   filter->Update();
+
   Image::Pointer out = new Image( filter->GetOutput() );
 
   return out;
