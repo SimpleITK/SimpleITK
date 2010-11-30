@@ -30,7 +30,7 @@ TEST(BasicFilters,${name}) {
   filter.Set${parameter} ( ${value} );
   ASSERT_EQ ( ${value}, filter.Get${parameter}() ) << "Failed to set ${parameter} to ${value}";
   )
-    ASSERT_NO_THROW ( output = filter.Execute ( inputA $(if inputB then OUT=", inputB" end) ) );
+  ASSERT_NO_THROW ( output = filter.Execute ( inputA $(if inputB then OUT=", inputB" end) ) );
   $(if md5hash then
   OUT = [[ 
   // Check the hash

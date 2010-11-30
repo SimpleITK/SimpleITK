@@ -117,8 +117,7 @@ MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
       else
         {
         std::cerr << "Pixel type is not supported for this commandlet" << std::endl;
-        // need to thow something better or have some other definded behavior
-        throw;
+        itkGenericExceptionMacro ( << "Pixel type is not supported for this commandlet" );
         }
       break;
     case 2:

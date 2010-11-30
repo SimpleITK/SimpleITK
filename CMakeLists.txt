@@ -38,12 +38,12 @@ subdirs ( Utilities Code Wrapping Examples )
 
 # Options for testing
 option ( USE_TESTING "Build testing" ON )
-option ( RUN_LONG_TESTS "Run long tests.  Some tests have been identified as long running, should these be run?" OFF )
 
 if ( USE_TESTING )
   enable_testing()
   subdirs ( Testing )
   include(CTest)
+  option ( RUN_LONG_TESTS "Run long tests.  Some tests have been identified as long running, should these be run?" OFF )
   mark_as_advanced(RUN_LONG_TESTS)
   set(BUILDNAME "${BUILDNAME}" CACHE STRING "Name of build on the dashboard")
 endif()
