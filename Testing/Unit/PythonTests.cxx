@@ -1,9 +1,6 @@
 #include "SimpleITKTestHarness.h"
 #include "SimpleITK.h"
 
-class Python : public ExternalProgramRunner {
-};
-
 
 TEST_F(Python,SimpleGaussian) {
   // Run the simple gaussian command line program

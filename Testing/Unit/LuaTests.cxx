@@ -1,10 +1,6 @@
 #include "SimpleITKTestHarness.h"
 #include "SimpleITK.h"
 
-class Lua : public ExternalProgramRunner {
-};
-
-
 TEST_F(Lua,SimpleGaussian) {
   // Run the simple gaussian command line program
   std::string Script = dataFinder.GetSourceDirectory() + "/Examples/SimpleGaussian.lua";

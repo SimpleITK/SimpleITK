@@ -164,6 +164,12 @@ public:
   }
 };
 
+class Python : public ExternalProgramRunner {
+};
+
+class Lua : public ExternalProgramRunner {
+};
+
 #include "ImageCompare.h"
 
 #endif
