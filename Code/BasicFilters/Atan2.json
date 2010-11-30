@@ -1,0 +1,8 @@
+{
+  "name" : "Atan2",
+  "number_of_inputs" : 2,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelTypeList",
+  "members" : [],
+  "tests" : []
+}
