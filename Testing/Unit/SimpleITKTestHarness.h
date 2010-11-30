@@ -10,34 +10,63 @@
 
 // Class to help us find test data
 class DataFinder {
+  /*
+   * DataFinder maintains several directory paths.  It also
+   * helps us find executables.
+   * 
+   * Set/GetDirectory  -- Test Data directory
+   *                      should be ITK/Testing/Data
+   * Set/GetOutputDirectory -- Temporary directory
+   *                      SimpleITK-build/Testing/Temporary
+   * Set/GetExecutableDirectory -- Where built executables are found
+   *                      SimpleITK-build/bin/$(OutDir)/
+   * GetOutputFile --     File in the temp directory
+   * GetBuildDirectory -- SimpleITK-build
+   * FindExecutable --    Attempts to find an executable
+   *                      Returns GetExecutableDirectory + "/" + filename
+   */
+
  public:
   DataFinder () { 
     mDirectory = TEST_HARNESS_DATA_DIRECTORY;
     mOutputDirectory = TEST_HARNESS_TEMP_DIRECTORY;
     mExecutableDirectory = EXECUTABLE_PATH;
   };
-  void setDirectory ( const char* dir ) {
+  void SetDirectory ( const char* dir ) {
     mDirectory = dir;
   };
-  void setDirectory ( std::string dir ) {
+  void SetDirectory ( std::string dir ) {
     mDirectory = dir;
   };
-  void setExecutableDirectory ( std::string dir ) {
-    mExecutableDirectory = dir;
+  void SetExecutableDirectoryFromArgv0 ( std::string argv0 ) {
+    std::string errorMessage, path, dir, file;
+    bool result = itksys::SystemTools::FindProgramPath ( argv0.c_str(), path, errorMessage );
+    mExecutableDirectory = "";
+    if ( result == false ) {
+      std::cerr << "SetExecutableDirectoryFromArgv0: couldn't determine the location of " << argv0 << " error was: " << errorMessage << std::endl;
+    } else {
+      result = itksys::SystemTools::SplitProgramPath ( path.c_str(), dir, file );
+      if ( result == false ) {
+        std::cerr << "SetExecutableDirectoryFromArgv0: couldn't split directory from path " << path << std::endl;
+      } else {
+        mExecutableDirectory = dir;
+      }
+    }
   }
-  void setOutputDirectory ( std::string dir ) {
+  void SetOutputDirectory ( std::string dir ) {
     mOutputDirectory = dir;
   };
-  std::string getDirectory () { return mDirectory; };
-  std::string getOutputDirectory () { return mOutputDirectory; };
-  std::string getOutputFile ( std::string filename ) { return mOutputDirectory + "/" + filename; };
-  std::string getExecutableDirectory() { return mExecutableDirectory; }
-  std::string findExecutable ( std::string exe ) { return getExecutableDirectory() + "/" + exe + EXECUTABLE_SUFFIX; }
-  std::string getLuaExecutable() { return std::string ( SIMPLEITK_LUA_EXECUTABLE_PATH ); }
-  std::string getPythonExecutable() { return std::string ( PYTHON_EXECUTABLE_PATH ); }
-  std::string getSourceDirectory() { return std::string ( SIMPLEITK_SOURCE_DIR ); }
-  bool fileExists ( std::string filename ) { return itksys::SystemTools::FileExists ( filename.c_str() ); }
-  std::string getFile ( std::string filename ) {
+  std::string GetDirectory () { return mDirectory; };
+  std::string GetOutputDirectory () { return mOutputDirectory; };
+  std::string GetOutputFile ( std::string filename ) { return mOutputDirectory + "/" + filename; };
+  std::string GetExecutableDirectory() { return mExecutableDirectory; }
+  std::string GetBuildDirectory() { return std::string ( SIMPLEITK_BINARY_DIR ); }
+  std::string FindExecutable ( std::string exe ) { return GetExecutableDirectory() + "/" + exe + EXECUTABLE_SUFFIX; }
+  std::string GetLuaExecutable() { return std::string ( SIMPLEITK_LUA_EXECUTABLE_PATH ); }
+  std::string GetPythonExecutable() { return std::string ( PYTHON_EXECUTABLE_PATH ); }
+  std::string GetSourceDirectory() { return std::string ( SIMPLEITK_SOURCE_DIR ); }
+  bool FileExists ( std::string filename ) { return itksys::SystemTools::FileExists ( filename.c_str() ); }
+  std::string GetFile ( std::string filename ) {
     return mDirectory + "/" + filename;
   };
 
@@ -55,13 +84,24 @@ extern DataFinder dataFinder;
 // Class for running external programs
 class ExternalProgramRunner : public testing::Test {
 public:
+  // Return the separator
+  std::string GetPathSeparator() {
+#ifdef WIN32
+    return ";";
+#else
+    return ":";
+#endif
+  }
+
   // Set an environment variable
   void SetEnvironment ( std::string key, std::string value ) {
 #ifdef WIN32
     std::string v = key + "=" + value;
     _putenv ( v.c_str() );
+    std::cout << "SetEnvironment: " << v << std::endl;
 #else
     setenv ( key.c_str(), value.c_str(), 1 );
+    std::cout << "SetEnvironment: " << key << "=" << value << std::endl;
 #endif
   }
   /* Run the command line specified in the list of arguments.  Call FAIL if the executable fails

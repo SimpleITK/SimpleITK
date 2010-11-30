@@ -17,7 +17,7 @@ TEST(IO,ImageFileReader) {
 
   // Loop over the map, load each file, and compare the hash value
   for ( MapType::iterator it = mapping.begin(); it != mapping.end(); ++it ) {
-    reader.SetFilename ( dataFinder.getFile ( it->first ) );
+    reader.SetFilename ( dataFinder.GetFile ( it->first ) );
     image = reader.Execute();
     ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
     hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 );
@@ -37,7 +37,7 @@ TEST(IO,ReadWrite) {
   std::string sha1 = "269fea1c6db001f76b8c482e2fd3a24ef9866f9a";
 
 
-  image = reader.SetFilename ( dataFinder.getFile ( "Input/HeadMRVolumeWithDirection.nhdr" ) ).Execute();
+  image = reader.SetFilename ( dataFinder.GetFile ( "Input/HeadMRVolumeWithDirection.nhdr" ) ).Execute();
   ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
   hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 );
   EXPECT_EQ ( md5, hasher.Execute ( image ) );
@@ -45,9 +45,9 @@ TEST(IO,ReadWrite) {
   EXPECT_EQ ( sha1, hasher.Execute ( image ) );
 
   // Write it out
-  std::string filename = dataFinder.getOutputFile ( "IO.ReadWrite.nrrd" );
+  std::string filename = dataFinder.GetOutputFile ( "IO.ReadWrite.nrrd" );
   writer.SetFilename ( filename ).Execute ( image );
-  ASSERT_TRUE ( dataFinder.fileExists ( filename ) );
+  ASSERT_TRUE ( dataFinder.FileExists ( filename ) );
   image = reader.SetFilename ( filename ).Execute();
   ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
 
@@ -63,7 +63,7 @@ TEST(IO,2DFormats) {
   itk::simple::ImageHashFilter hasher;
   itk::simple::ImageFileReader reader;
   itk::simple::Image::Pointer image;
-  image = reader.SetFilename ( dataFinder.getFile ( "Input/circle.png" ) ).Execute();
+  image = reader.SetFilename ( dataFinder.GetFile ( "Input/circle.png" ) ).Execute();
   ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
   ASSERT_EQ ( 2u, image->GetDimension() );
 }
