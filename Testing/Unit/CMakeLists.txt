@@ -17,20 +17,35 @@ set ( TestSource
 
 if ( WRAP_LUA )
   set ( TestSource ${TestSource} LuaTests.cxx )
+  file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/LuaTests)
+  add_definitions ( -DWRAP_LUA )
 endif()
 
 if ( WRAP_PYTHON )
   find_package ( PythonInterp REQUIRED )
   set ( TestSource ${TestSource} PythonTests.cxx )
+  file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/PythonTests)
+  add_definitions ( -DWRAP_PYTHON )
 endif()
 
 # Generate code
 foreach ( FILENAME ${GENERATED_FILTER_LIST} )
   add_custom_command (
-    OUTPUT "${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILENAME}ImageFilterTest.cxx"
+    OUTPUT "${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILENAME}ImageFilterTest.cxx" "${SimpleITK_BINARY_DIR}/Testing/Unit/LuaTests/${FILENAME}ImageFilterTest.lua" "${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/${FILENAME}ImageFilterTest.py"
     COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkImageFilterTestTemplate.cxx.in ${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILENAME}ImageFilterTest.cxx 
-    DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkImageFilterTestTemplate.cxx.in
+    COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/LuaImageFilterTestTemplate.lua.in "${SimpleITK_BINARY_DIR}/Testing/Unit/LuaTests/${FILENAME}ImageFilterTest.lua"
+    COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/PythonImageFilterTestTemplate.py.in "${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/${FILENAME}ImageFilterTest.py"
+    DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkImageFilterTestTemplate.cxx.in ${SimpleITK_SOURCE_DIR}/Testing/Unit/LuaImageFilterTestTemplate.lua.in ${SimpleITK_SOURCE_DIR}/Testing/Unit/PythonImageFilterTestTemplate.py.in
     )
+  set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "BasicFilters.${FILENAME}")
+  if ( WRAP_LUA )
+    set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Lua.${FILENAME}")
+  endif()
+  if ( WRAP_PYTHON )
+    set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Python.${FILENAME}")
+  endif()
+  set ( GENERATED_TEST_SOURCE ${GENERATED_TEST_SOURCE} ${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILENAME}ImageFilterTest.cxx )
+
 endforeach()
 
 
@@ -72,13 +87,17 @@ endif()
 include_directories ( ${SimpleITK_INCLUDE_DIR} )
 add_executable(SimpleITKUnitTestDriver 
   SimpleITKUnitTestDriver.cxx ${TestSource} ImageCompare.cxx 
-  ${GENERATED_TEST_SOURCE_LIST}
+  ${GENERATED_TEST_SOURCE}
 )
 target_link_libraries ( SimpleITKUnitTestDriver ${ITK_LIBRARIES} ${SimpleITK_LIBRARIES} )
 
 # Add all the tests by parsing the source code
 # This macro searches for GoogleTest macros and adds them as test automatically
 macro(ADD_GOOGLE_TESTS executable)
+  # Add the generated tests
+  set ( AllTestsHits ${GENERATED_TEST_LIST} )
+  set ( LongTestsHits "" )
+
   foreach ( source ${ARGN} )
     file(READ "${source}" contents)
 
@@ -87,34 +106,29 @@ macro(ADD_GOOGLE_TESTS executable)
     string(REGEX MATCHALL "TEST_?F?\\(([A-Za-z_0-9 ,_]+)\\)" AllTests ${contents})
 
     # Convert the C++ code into a short test name
-    set ( AllTestsHits "" )
     foreach(hit ${AllTests})
       string(REGEX REPLACE ".*\\(([A-Za-z_0-9]+)[, ]*([A-Za-z_0-9]+)\\).*" "\\1.\\2" test_name ${hit})
       set ( AllTestsHits ${AllTestsHits} ${test_name} )
     endforeach()
-    set ( LongTestsHits "" )
     foreach(hit ${LongTests})
       string(REGEX REPLACE ".*\\(([A-Za-z_0-9]+)[, ]*([A-Za-z_0-9]+)\\).*" "\\1.\\2" test_name ${hit})
       set ( LongTestsHits ${LongTestsHits} ${test_name} )
     endforeach()
-    
+  endforeach()
 
-    # If we are not running the long tests, remove them from the AllTests list
-    if ( NOT RUN_LONG_TESTS )
-      foreach ( test ${LongTestsHits} )
-        list ( REMOVE_ITEM AllTestsHits ${test} )
-      endforeach()
-    endif ()
+  # If we are not running the long tests, remove them from the AllTests list
+  if ( NOT RUN_LONG_TESTS )
+    foreach ( test ${LongTestsHits} )
+      list ( REMOVE_ITEM AllTestsHits ${test} )
+    endforeach()
+  endif ()
 
-    # Add the generated tests
-    list ( APPEND AllTestsHits ${GENERATED_TEST_LIST} )
 
-    list ( SORT AllTestsHits )
-    # Add all the remaining tests to CTest's test list
-    foreach(hit ${AllTestsHits})
-      # message ( STATUS "Adding test ${executable} ${hit} ${TEST_HARNESS_DATA_DIRECTORY} ${TEST_HARNESS_TEMP_DIRECTORY}" )
-      add_test(${hit} ${executable} --gtest_filter=${hit})
-    endforeach(hit)
+  list ( SORT AllTestsHits )
+  # Add all the remaining tests to CTest's test list
+  foreach(hit ${AllTestsHits})
+    # message ( STATUS "Adding test ${executable} ${hit} ${TEST_HARNESS_DATA_DIRECTORY} ${TEST_HARNESS_TEMP_DIRECTORY}" )
+    add_test(${hit} ${executable} --gtest_filter=${hit})
   endforeach()
 endmacro()
 

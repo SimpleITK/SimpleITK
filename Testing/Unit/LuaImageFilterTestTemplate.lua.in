@@ -1,0 +1,45 @@
+
+
+-- This is Lua code to test ${name}
+
+inputs = 1
+$(if number_of_inputs then
+    OUT=[[inputs = ${number_of_inputs}]]
+  end)
+
+if #arg < inputs + 2 then
+  print ( "Usage: ${name} tag <input(s)> output" )
+  os.exit ( 1 )
+end
+
+tag = arg[1];
+
+reader = SimpleITK.ImageFileReader()
+writer = SimpleITK.ImageFileWriter()
+filter = SimpleITK.${name}ImageFilter()
+
+$(if #tests == 0 then
+    OUT=[[print ( "No tests defined!" ); os.exit ( 1 );]]
+  end)
+
+$(foreach tests
+  if tag == "${tag}" then
+    $(foreach settings 
+      filter:Set${parameter} ( ${value} );
+    )
+
+    inputA = reader:SetFilename ( arg[2] ):Execute();
+    $(if inputB then
+        OUT=[[
+            inputB = reader:SetFilename ( arg[3] ):Execute()
+            output = filter:Execute ( inputA, inputB )
+        ]]
+      else
+        OUT=[[
+            output = filter:Execute ( inputA )
+        ]]
+      end)
+    writer:SetFilename ( arg[#arg] ):Execute ( output )
+  end
+)
+    
