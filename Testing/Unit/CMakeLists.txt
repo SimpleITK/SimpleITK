@@ -1,9 +1,7 @@
 
 # Find tests generated in the binary directory
-file ( GLOB SimpleITKBasicFiltersTestSource "${CMAKE_CURRENT_BINARY_DIR}/*.cxx")
-
 message("GENERATED TESTS DIR ${CMAKE_CURRENT_BINARY_DIR}")
-message("GENERATED TESTS ${SimpleITKBasicFiltersTestSource}")
+message("GENERATED TESTS ${GENERATED_FILTER_LIST}")
 
 # To add a new file, just add it to this list.  Any GoogleTests inside will be automatically
 # added to ctest.
@@ -45,7 +43,6 @@ foreach ( FILENAME ${GENERATED_FILTER_LIST} )
     set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Python.${FILENAME}")
   endif()
   set ( GENERATED_TEST_SOURCE ${GENERATED_TEST_SOURCE} ${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILENAME}ImageFilterTest.cxx )
-
 endforeach()
 
 
