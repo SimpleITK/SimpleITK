@@ -113,7 +113,7 @@ macro(ADD_GOOGLE_TESTS executable)
     # Add all the remaining tests to CTest's test list
     foreach(hit ${AllTestsHits})
       # message ( STATUS "Adding test ${executable} ${hit} ${TEST_HARNESS_DATA_DIRECTORY} ${TEST_HARNESS_TEMP_DIRECTORY}" )
-      add_test(${hit} ${executable} --gtest_filter=${hit} ${TEST_HARNESS_EXECUTABLE_DIRECTORY})
+      add_test(${hit} ${executable} --gtest_filter=${hit})
     endforeach(hit)
   endforeach()
 endmacro()

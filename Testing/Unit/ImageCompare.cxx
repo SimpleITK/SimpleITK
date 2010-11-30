@@ -13,7 +13,7 @@ bool ImageCompare::compare ( itk::simple::Image::Pointer image, std::string inNa
   }
   // Does the baseline exist?
   std::string extension = ".nrrd";
-  std::string OutputDir = dataFinder.getOutputDirectory();
+  std::string OutputDir = dataFinder.GetOutputDirectory();
   
   std::string name = std::string ( ::testing::UnitTest::GetInstance()->current_test_info()->test_case_name() )
     .append( "_" )                                                        
@@ -21,7 +21,7 @@ bool ImageCompare::compare ( itk::simple::Image::Pointer image, std::string inNa
     .append("_")
     .append ( inName );
 
-  std::string baselineFilename = dataFinder.getSourceDirectory() + "/Testing/Data/Baseline/" + name + extension;
+  std::string baselineFilename = dataFinder.GetSourceDirectory() + "/Testing/Data/Baseline/" + name + extension;
   
   if ( !itksys::SystemTools::FileExists ( baselineFilename.c_str() ) ) {
     // Baseline does not exist, write out what we've been given

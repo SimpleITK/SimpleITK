@@ -8,7 +8,7 @@ TEST(BasicFilters,RecursiveGaussian) {
   itk::simple::RecursiveGaussianImageFilter filter;
   itk::simple::Image::Pointer image;
 
-  reader.SetFilename ( dataFinder.getFile ( "Input/HeadMRVolumeWithDirection.nhdr" ) );
+  reader.SetFilename ( dataFinder.GetFile ( "Input/HeadMRVolumeWithDirection.nhdr" ) );
   image = reader.Execute();
   ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
   image = filter.Execute ( image );
