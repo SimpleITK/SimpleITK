@@ -1,4 +1,31 @@
-Alpha double 1.0;
-Beta double 0.0;
-OutputMinimum double   0.0;
-OutputMaximum double 255.0;
+{
+  "name" : "Sigmoid",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelTypeList",
+  "members" : [
+    { 
+      "name" : "Alpha",
+      "type" : "double",
+      "default" : 1.0,
+      "doc" : "Alpha"
+    },
+    { 
+      "name" : "Beta",
+      "type" : "double",
+      "default" : 0.0,
+      "doc" : "Alpha"
+    },
+    { "name" : "OutputMaximum",
+      "type" : "double",
+      "default" : 255.0,
+      "doc" : "Output maximum"
+    },
+    { "name" : "OutputMinimum",
+      "type" : "double",
+      "default" : 0.0,
+      "doc" : "Output minimum"
+    }
+  ] 
+  "tests" : []
+}

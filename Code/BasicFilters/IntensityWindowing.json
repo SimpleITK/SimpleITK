@@ -1,4 +1,29 @@
-WindowMinimum double   0.0;
-WindowMaximum double 255.0;
-OutputMinimum double   0.0;
-OutputMaximum double 255.0;
+{
+  "name" : "IntensityWindowing",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelTypeList",
+  "members" : [
+    { "name" : "WindowMinimum",
+      "type" : "double",
+      "default" : 0.0,
+      "doc" : "Window minimum"
+    },
+    { "name" : "WindowMaximum",
+      "type" : "double",
+      "default" : 255.0,
+      "doc" : "Window maximum"
+    },
+    { "name" : "OutputMinimum",
+      "type" : "double",
+      "default" : 0.0,
+      "doc" : "Output minimum"
+    },
+    { "name" : "OutputMaximum",
+      "type" : "double",
+      "default" : 255.0,
+      "doc" : "Output maximum"
+    }
+    ],        
+  "tests" : []
+}

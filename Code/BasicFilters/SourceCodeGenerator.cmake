@@ -15,11 +15,11 @@ macro( expand_template FILENAME )
   set ( GENERATED_FILTER_LIST ${GENERATED_FILTER_LIST} ${FILENAME} CACHE INTERNAL "" )
 endmacro()
 
-expand_template ( CurvatureFlow )
-expand_template ( BinaryThreshold )
-expand_template ( Add )
-expand_template ( SquaredDifference )
-expand_template ( Subtract )
+file ( GLOB JSON_CONFIG_FILES *.json)
+foreach ( f ${JSON_CONFIG_FILES} ) 
+  get_filename_component ( class ${f} NAME_WE )
+  expand_template ( ${class} )
+endforeach()
 
 # clear the include files
 file ( WRITE ${CMAKE_CURRENT_BINARY_DIR}/SimpleITKBasicFiltersGeneratedHeaders.h "" )

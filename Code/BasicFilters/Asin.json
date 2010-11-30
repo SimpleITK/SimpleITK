@@ -1,0 +1,8 @@
+{
+  "name" : "Asin",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelTypeList",
+  "members" : [],
+  "tests" : []
+}

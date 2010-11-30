@@ -1,0 +1,8 @@
+{
+  "name" : "Xor",
+  "number_of_inputs" : 2,
+  "doc" : "Some global documentation",
+  "pixel_types" : "IntegerPixelTypeList",
+  "members" : [],
+  "tests" : []
+}

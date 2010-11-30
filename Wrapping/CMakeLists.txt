@@ -10,6 +10,9 @@ if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA OR WRAP_CSHARP )
   include ( ${SWIG_USE_FILE} )
   set_source_files_properties ( SimpleITK.i PROPERTIES CPLUSPLUS ON )
   file ( GLOB SWIG_HEADERS ${SimpleITK_SOURCE_DIR}/Code/*/*.h)
+  set ( SWIG_HEADERS ${SWIG_HEADERS} ${SimpleITK_BINARY_DIR}/Code/BasicFilters/SimpleITKBasicFiltersGeneratedHeaders.i 
+    ${SimpleITK_BINARY_DIR}/Code/BasicFilters/SimpleITKBasicFiltersGeneratedHeaders.h)
+
   include_directories ( ${SimpleITK_SOURCE_DIR}/Code/Common ${SimpleITK_SOURCE_DIR}/Code/BasicFilters ${SimpleITK_SOURCE_DIR}/Code/IO )
 
   set ( CMAKE_SWIG_FLAGS "" )
@@ -71,15 +74,7 @@ if ( WRAP_JAVA )
     ${SimpleITK_BINARY_DIR}/Wrapping/LoadSimpleITK.java)
   
   # Make sure the nested directory structure exists
-  if ( NOT IS_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/org )
-    file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/org)
-    if ( NOT IS_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/org/itk )
-      file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/org/itk)
-      if ( NOT IS_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/org/itk/simple )
-        file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/org/itk/simple)
-      endif()
-    endif()
-  endif()
+  file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/org/itk/simple)
   
   # Add custom command and target to compile the generated files and put them in a jar file
   add_custom_command(

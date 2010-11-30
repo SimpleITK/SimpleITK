@@ -1,1 +1,14 @@
-Maximum double 255.0;
+{
+  "name" : "InvertIntensity",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelTypeList",
+  "members" : [
+    { "name" : "Maximum",
+      "type" : "double",
+      "default" : 255.0,
+      "doc" : "Maximum output"
+    }
+    ],        
+  "tests" : []
+}
