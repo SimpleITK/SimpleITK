@@ -18,7 +18,7 @@ TEST_F(Python,SimpleGaussian) {
   CommandLine.push_back ( output );
 
   // Set our python path
-  std::string path = dataFinder.getExecutableDirectory() + "../Wrapping";
+  std::string path = dataFinder.getExecutableDirectory() + "../Wrapping:" + dataFinder.getExecutableDirectory();
   SetEnvironment ( "PYTHONPATH", path );
 
   // Run it!

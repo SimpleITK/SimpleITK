@@ -45,5 +45,6 @@ if ( USE_TESTING )
   subdirs ( Testing )
   include(CTest)
   mark_as_advanced(RUN_LONG_TESTS)
+  set(BUILDNAME "${BUILDNAME}" CACHE STRING "Name of build on the dashboard")
 endif()
 
