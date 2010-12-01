@@ -15,16 +15,17 @@ set ( TestSource
 
 if ( WRAP_LUA )
   set ( TestSource ${TestSource} LuaTests.cxx )
-  file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/LuaTests)
   add_definitions ( -DWRAP_LUA )
 endif()
 
 if ( WRAP_PYTHON )
   find_package ( PythonInterp REQUIRED )
   set ( TestSource ${TestSource} PythonTests.cxx )
-  file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/PythonTests)
   add_definitions ( -DWRAP_PYTHON )
 endif()
+
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/PythonTests)
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/LuaTests)
 
 # Generate code
 foreach ( FILENAME ${GENERATED_FILTER_LIST} )
