@@ -11,6 +11,13 @@ namespace itk
 {
 namespace simple
 {
+
+#if defined(SIMPLEITK_SHORT_COMPILE)
+// Only compile a few pixel types
+typedef typelist::MakeTypeList< unsigned char, short, int>::Type IntegerPixelTypeList; 
+typedef typelist::MakeTypeList<float>::Type RealPixelTypeList;
+#else
+
 typedef typelist::MakeTypeList<char,
                                unsigned char,
                                short,
@@ -22,6 +29,7 @@ typedef typelist::MakeTypeList<char,
 
 typedef typelist::MakeTypeList<float,
                                double >::Type RealPixelTypeList;
+#endif
 
 typedef typelist::Append<IntegerPixelTypeList, RealPixelTypeList>::Type BasicPixelTypeList;
 
