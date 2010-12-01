@@ -15,9 +15,6 @@ macro( expand_template FILENAME )
   set ( GENERATED_FILTER_LIST ${GENERATED_FILTER_LIST} ${FILENAME} CACHE INTERNAL "" )
 endmacro()
 
-option ( SHORT_COMPILE "Skip compiling most of the generated code." OFF )
-mark_as_advanced ( SHORT_COMPILE )
-
 if ( SHORT_COMPILE )
   set ( JSON_CONFIG_FILES CurvatureFlow.json Subtract.json Or.json BinaryThreshold.json Add.json )
 else()

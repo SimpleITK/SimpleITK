@@ -34,6 +34,17 @@ set ( GENERATED_TEST_LIST "" CACHE INTERNAL "" )
 set ( GENERATED_FILTER_LIST "" CACHE INTERNAL "" )
 set ( GENERATED_TEST_SOURCE_LIST "" CACHE INTERNAL "" )
 
+# Setting this option will shorten compile times by reducing the
+# amount of pixel types and generated code.
+# NB: this option should _NOT_ be used for releases!
+option ( SHORT_COMPILE "Skip compiling most of the generated code." OFF )
+if ( SHORT_COMPILE )
+  add_definitions ( -DSIMPLEITK_SHORT_COMPILE )
+endif()
+mark_as_advanced ( SHORT_COMPILE )
+
+
+
 subdirs ( Utilities Code Wrapping Examples )
 
 # Options for testing
