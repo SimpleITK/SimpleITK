@@ -2,6 +2,12 @@
 #define __sitkImage_h
 
 #include "sitkMacro.h"
+#include "sitkPixelTypeLists.h"
+
+#include "itkVectorImage.h"
+#include "itkImage.h"
+#include "itkLabelMap.h"
+#include "itkLabelObject.h"
 
 namespace itk
 {
@@ -14,7 +20,7 @@ namespace itk
       typedef SmartPointer<Self> Pointer;
 
   template <typename TImageType>
-  Image( typename TImageType::Pointer image )
+  Image( itk::SmartPointer<TImageType> image )
     {
       // assign to auto pointer
       m_PimpleImage.reset( new PimpleImage<TImageType>( image ) );
@@ -73,6 +79,8 @@ namespace itk
 
   };
 
+template <class TImageType> struct PimpleImage;
+
   template <class TImageType>
   struct PimpleImage
     : public PimpleImageBase
@@ -87,14 +95,7 @@ namespace itk
           // this should be a STATIC ASSERT
         assert( TImageType::ImageDimension == 3 || TImageType::ImageDimension == 2 );
 
-        // get the id of the pixel type
-        typedef typename TImageType::PixelType PixelType;
-        // WARNING ABOUT UNUSED VARIABLE
-        // static const int id = typelist::IndexOf< InstantiatedPixelTypeList, PixelType >::Result;
-
-        // THIS SHOULD BE A STATIC ASSERT
-        // WARNING ABOUT UNUSED VARIABLE
-        //  assert(  id != -1 );
+        // todo check the pixel type
         }
 
     virtual PimpleImageBase *Clone( void ) const { return new Self(this->m_Image.GetPointer()); }
@@ -103,11 +104,11 @@ namespace itk
 
     ImageDataType GetDataType(void) throw()
       {
-        typedef typename TImageType::PixelType PixelType;
+        typedef typename ImageTypeToPixelID<ImageType>::PixelIDType PixelIDType;
 
           // The constructor ensures that we have a valid image
           // this maps the Image's pixel type to the array index
-          return typelist::IndexOf< InstantiatedPixelTypeList, PixelType>::Result;
+          return typelist::IndexOf< InstantiatedPixelTypeList, PixelIDType>::Result;
         }
 
     virtual unsigned int GetDimension( void ) { return ImageType::ImageDimension; }
