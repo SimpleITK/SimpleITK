@@ -19,12 +19,12 @@ namespace itk {
 namespace simple {
 
 // this is the list of types which we will try to instantiate
-typedef BasicPixelTypeList InstantiatedPixelTypeList;
+typedef AllPixelTypeList InstantiatedPixelTypeList;
 
 // Define common base image type
 typedef itk::ImageBase<3> SimpleImageBase;
 
-typedef unsigned int ImageDataType;
+typedef int ImageDataType;
 
 }
 }
