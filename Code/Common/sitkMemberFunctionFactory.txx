@@ -11,12 +11,13 @@ namespace simple
 // this namespace is internal classes not part of the external simple ITK interface
 namespace detail {
 
+
 // a privately declared predicate for use with the typelist::ForEach
 // algorithm
 //
 // This predicate calls the member function factories AddressorType on
-// each valid valid ImageType defined as itk::Image<PixelType,
-// ImageDimension>.
+// each valid ImageType defined from the pixel type id, and the
+// provided dimension,
 template < typename TMemberFunctionFactory, unsigned int ImageDimension >
 struct MemberFunctionInstantiater
 {
@@ -37,7 +38,7 @@ struct MemberFunctionInstantiater
       AddressorType addressor;
       if ( id > 0 &&  id < typelist::Length< InstantiatedPixelTypeList >::Result )
         {
-        typedef itk::Image< PixelType, ImageDimension> ImageType;
+        typedef typename PixelIDtoImageType<TPixelType, ImageDimension>::ImageType ImageType;
         m_Factory.Register(addressor.operator()<ImageType>(), (ImageType*)(NULL));
         }
     }
@@ -63,7 +64,7 @@ void MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
 ::Register( typename MemberFunctionFactory::MemberFunctionType pfunc,  TImageType*  )
 {
   typedef typename TImageType::PixelType PixelType;
-  unsigned int imageDataType = typelist::IndexOf< InstantiatedPixelTypeList, PixelType >::Result;
+  int imageDataType = typelist::IndexOf< InstantiatedPixelTypeList, typename ImageTypeToPixelID<TImageType>::PixelIDType >::Result;
 
 
   if ( imageDataType > 0 && imageDataType < typelist::Length< InstantiatedPixelTypeList >::Result )
@@ -104,7 +105,7 @@ MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
 ::GetMemberFunction( ImageDataType imageDataType, unsigned int imageDimension  )
 {
   // assert that it's in the sane range
-  assert ( imageDataType < typelist::Length< InstantiatedPixelTypeList >::Result );
+  assert ( imageDataType < typelist::Length< InstantiatedPixelTypeList >::Result && imageDataType >= 0 );
 
   switch ( imageDimension )
     {
