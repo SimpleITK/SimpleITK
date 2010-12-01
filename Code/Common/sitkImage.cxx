@@ -32,7 +32,8 @@ std::string Image::ToString( void )
   std::ostringstream out;
   // todo bring me back
   // this->m_PimpleImage->Print ( out );
-  out << "ToString is not currently implemented because the itk::Image class obscured.\n...there be dragons here...";
+  out << "ToString is not currently implemented because the itk::Image class obscured.\n...there be dragons here..." << std::endl;
+  out << this->GetImageBase();
   return out.str();
 }
 
