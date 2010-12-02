@@ -16,11 +16,6 @@ namespace itk {
       // Type List Setup
       //
 
-      // list of pixel types supported only basic since rgb and
-      // vectors are not supported by this filter
-      typedef BasicPixelTypeList PixelTypeList;
-
-
       //
       // Filter Setup
       //

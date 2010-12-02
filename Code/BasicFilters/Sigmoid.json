@@ -2,7 +2,7 @@
   "name" : "Sigmoid",
   "number_of_inputs" : 1,
   "doc" : "Some global documentation",
-  "pixel_types" : "BasicPixelTypeList",
+  "pixel_types" : "BasicPixelIDTypeList",
   "members" : [
     { 
       "name" : "Alpha",

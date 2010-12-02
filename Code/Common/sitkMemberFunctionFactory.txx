@@ -11,12 +11,13 @@ namespace simple
 // this namespace is internal classes not part of the external simple ITK interface
 namespace detail {
 
+
 // a privately declared predicate for use with the typelist::ForEach
 // algorithm
 //
 // This predicate calls the member function factories AddressorType on
-// each valid valid ImageType defined as itk::Image<PixelType,
-// ImageDimension>.
+// each valid ImageType defined from the pixel type id, and the
+// provided dimension,
 template < typename TMemberFunctionFactory, unsigned int ImageDimension >
 struct MemberFunctionInstantiater
 {
@@ -24,20 +25,20 @@ struct MemberFunctionInstantiater
     : m_Factory( factory )
     {}
 
-  template <class TPixelType>
-  void operator()( TPixelType t )
+  template <class TPixelIDType>
+  void operator()( TPixelIDType t )
     {
-      typedef TPixelType                                        PixelType;
+      typedef TPixelIDType                                      PixelIDType;
       typedef typename TMemberFunctionFactory::ObjectType       ObjectType;
       typedef typename TMemberFunctionFactory::AddressorType    AddressorType;
 
       // this maps the pixel type to an array id
-      int id = typelist::IndexOf< InstantiatedPixelTypeList, PixelType >::Result;
+      int id = typelist::IndexOf< InstantiatedPixelIDTypeList, PixelIDType >::Result;
 
       AddressorType addressor;
-      if ( id > 0 &&  id < typelist::Length< InstantiatedPixelTypeList >::Result )
+      if ( id > 0 &&  id < typelist::Length< InstantiatedPixelIDTypeList >::Result )
         {
-        typedef itk::Image< PixelType, ImageDimension> ImageType;
+        typedef typename PixelIDToImageType<TPixelIDType, ImageDimension>::ImageType ImageType;
         m_Factory.Register(addressor.operator()<ImageType>(), (ImageType*)(NULL));
         }
     }
@@ -63,10 +64,10 @@ void MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
 ::Register( typename MemberFunctionFactory::MemberFunctionType pfunc,  TImageType*  )
 {
   typedef typename TImageType::PixelType PixelType;
-  unsigned int imageDataType = typelist::IndexOf< InstantiatedPixelTypeList, PixelType >::Result;
+  int imageDataType = typelist::IndexOf< InstantiatedPixelIDTypeList, typename ImageTypeToPixelID<TImageType>::PixelIDType >::Result;
 
 
-  if ( imageDataType > 0 && imageDataType < typelist::Length< InstantiatedPixelTypeList >::Result )
+  if ( imageDataType > 0 && imageDataType < typelist::Length< InstantiatedPixelIDTypeList >::Result )
     {
     switch( TImageType::ImageDimension )
       {
@@ -84,7 +85,7 @@ void MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
 
 template <typename TMemberFunctionPointer,
           typename TMemberFunctionAddressor>
-template <typename TPixelTypeList,
+template <typename TPixelIDTypeList,
           unsigned int ImageDimension >
 void MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
 ::RegisterMemberFunctions( void )
@@ -92,7 +93,7 @@ void MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
   typedef MemberFunctionInstantiater< MemberFunctionFactory, ImageDimension > InstantiaterType;
 
   // initialize function array with pointer
-  typelist::ForEach<TPixelTypeList> forEachTypeInList;
+  typelist::ForEach<TPixelIDTypeList> forEachTypeInList;
   forEachTypeInList( InstantiaterType( *this ) );
 }
 
@@ -104,7 +105,7 @@ MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
 ::GetMemberFunction( ImageDataType imageDataType, unsigned int imageDimension  )
 {
   // assert that it's in the sane range
-  assert ( imageDataType < typelist::Length< InstantiatedPixelTypeList >::Result );
+  assert ( imageDataType < typelist::Length< InstantiatedPixelIDTypeList >::Result && imageDataType >= 0 );
 
   switch ( imageDimension )
     {

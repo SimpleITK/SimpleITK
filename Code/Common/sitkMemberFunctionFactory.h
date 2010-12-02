@@ -59,17 +59,17 @@ public:
   template< typename TImageType >
   void Register( MemberFunctionType pfunc,  TImageType*  );
 
-  /// \brief Registers all member functions in TPixelTypeList and
-  /// simple::InstantiatedPixelTypeList over itk::Image<Pixel,
+  /// \brief Registers all member functions in TPixelIDTypeList and
+  /// simple::InstantiatedPixelIDTypeList over itk::Image<Pixel,
   /// ImageDimension>
   ///
   /// Example usage:
   /// \code
-  /// this->m_MemberFactory->RegisterMemberFunctions< PixelTypeList, 3 > ();
-  /// this->m_MemberFactory->RegisterMemberFunctions< PixelTypeList, 2 > ();
+  /// this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
+  /// this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
   /// \endcode
   ///
-  template < typename TPixelTypeList, unsigned int ImageDimension >
+  template < typename TPixelIDTypeList, unsigned int ImageDimension >
   void RegisterMemberFunctions( void );
 
 
@@ -77,7 +77,7 @@ public:
   /// dimension.
   ///
   /// imageDataType is the value of Image::GetDataType(), or
-  /// typelist::IndexOf< InstantiatedPixelTypeList, PixelType>::Result
+  /// typelist::IndexOf< InstantiatedPixelIDTypeList, PixelIDType>::Result
   ///
   /// imageDimension is the the value returned by Image::GetDimension()
   ///
