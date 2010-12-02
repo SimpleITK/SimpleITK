@@ -35,7 +35,7 @@ namespace itk
       itk::DataObject::ConstPointer GetImageBase( void ) const;
 
       // could return -1 if in valid
-      ImageDataType GetDataType( void ) const;
+      PixelIDValueType GetPixelIDValue( void ) const;
 
       unsigned int GetDimension( void ) const;
 
@@ -63,7 +63,7 @@ namespace itk
   {
     virtual ~PimpleImageBase( void ) {};
 
-    virtual ImageDataType GetDataType(void) = 0;
+    virtual PixelIDValueType GetPixelIDValue(void) = 0;
     virtual unsigned int GetDimension( void ) = 0;
 
     virtual PimpleImageBase *Clone(void) const = 0;
@@ -102,7 +102,7 @@ template <class TImageType> struct PimpleImage;
     virtual itk::DataObject::Pointer GetDataBase( void ) { return this->m_Image.GetPointer(); }
     virtual itk::DataObject::ConstPointer GetDataBase( void ) const { return this->m_Image.GetPointer(); }
 
-    ImageDataType GetDataType(void) throw()
+    PixelIDValueType GetPixelIDValue(void) throw()
       {
         // The constructor ensures that we have a valid image
         // this maps the Image's pixel type to the array index

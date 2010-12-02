@@ -63,19 +63,18 @@ template<typename TImageType >
 void MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
 ::Register( typename MemberFunctionFactory::MemberFunctionType pfunc,  TImageType*  )
 {
-  typedef typename TImageType::PixelType PixelType;
-  int imageDataType = ImageTypeToPixelIDValue<TImageType>::Result;
+  PixelIDValueType pixelID = ImageTypeToPixelIDValue<TImageType>::Result;
 
 
-  if ( imageDataType > 0 && imageDataType < typelist::Length< InstantiatedPixelIDTypeList >::Result )
+  if ( pixelID > 0 && pixelID < typelist::Length< InstantiatedPixelIDTypeList >::Result )
     {
     switch( TImageType::ImageDimension )
       {
       case 3:
-        Superclass::m_PFunction3[ imageDataType ] = Superclass::BindObject( pfunc, m_ObjectPointer );
+        Superclass::m_PFunction3[ pixelID ] = Superclass::BindObject( pfunc, m_ObjectPointer );
         break;
       case 2:
-        Superclass::m_PFunction2[ imageDataType ] = Superclass::BindObject( pfunc, m_ObjectPointer );
+        Superclass::m_PFunction2[ pixelID ] = Superclass::BindObject( pfunc, m_ObjectPointer );
         break;
       default:
         std::cerr << "Tried to register image with unsupported dimension of " << (unsigned)TImageType::ImageDimension << std::endl;
@@ -102,18 +101,18 @@ template <typename TMemberFunctionPointer,
           typename TMemberFunctionAddressor>
 typename MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>::FunctionObjectType
 MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
-::GetMemberFunction( ImageDataType imageDataType, unsigned int imageDimension  )
+::GetMemberFunction( PixelIDValueType pixelID, unsigned int imageDimension  )
 {
   // assert that it's in the sane range
-  assert ( imageDataType < typelist::Length< InstantiatedPixelIDTypeList >::Result && imageDataType >= 0 );
+  assert ( pixelID < typelist::Length< InstantiatedPixelIDTypeList >::Result && pixelID >= 0 );
 
   switch ( imageDimension )
     {
     case 3:
       // check if tr1::function has been set
-      if ( Superclass::m_PFunction3[ imageDataType ] )
+      if ( Superclass::m_PFunction3[ pixelID ] )
         {
-        return Superclass::m_PFunction3[ imageDataType ];
+        return Superclass::m_PFunction3[ pixelID ];
         }
       else
         {
@@ -123,9 +122,9 @@ MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
       break;
     case 2:
       // check if tr1::function has been set
-      if ( Superclass::m_PFunction2[ imageDataType ] )
+      if ( Superclass::m_PFunction2[ pixelID ] )
         {
-        return Superclass::m_PFunction2[ imageDataType ];
+        return Superclass::m_PFunction2[ pixelID ];
         }
       else
         {
