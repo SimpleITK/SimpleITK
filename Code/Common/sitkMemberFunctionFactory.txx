@@ -38,7 +38,7 @@ struct MemberFunctionInstantiater
       AddressorType addressor;
       if ( id > 0 &&  id < typelist::Length< InstantiatedPixelIDTypeList >::Result )
         {
-        typedef typename PixelIDtoImageType<TPixelIDType, ImageDimension>::ImageType ImageType;
+        typedef typename PixelIDToImageType<TPixelIDType, ImageDimension>::ImageType ImageType;
         m_Factory.Register(addressor.operator()<ImageType>(), (ImageType*)(NULL));
         }
     }
