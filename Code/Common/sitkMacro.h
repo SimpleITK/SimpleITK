@@ -9,17 +9,14 @@
 #endif
 
 #include <itkImageBase.h>
-#include <itkImage.h>
-#include <itkLightObject.h>
-#include <itkSmartPointer.h>
 
-#include "sitkPixelTypeLists.h"
+#include "sitkPixelIDTypeLists.h"
 
 namespace itk {
 namespace simple {
 
 // this is the list of types which we will try to instantiate
-typedef AllPixelTypeList InstantiatedPixelTypeList;
+typedef AllPixelIDTypeList InstantiatedPixelIDTypeList;
 
 // Define common base image type
 typedef itk::ImageBase<3> SimpleImageBase;

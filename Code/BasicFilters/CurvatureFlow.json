@@ -2,7 +2,7 @@
   "name" : "CurvatureFlow",
   "number_of_inputs" : 1,
   "doc" : "Some global documentation",
-  "pixel_types" : "RealPixelTypeList",
+  "pixel_types" : "RealPixelIDTypeList",
   "members" : [
     { "name" : "TimeStep",
       "type" : "double",

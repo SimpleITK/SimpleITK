@@ -74,26 +74,26 @@ TEST_F(Image,ImageDataType) {
   // this test checks that the DataType of the images are correct
   int result;
 
-  using  itk::simple::InstantiatedPixelTypeList;
+  using  itk::simple::InstantiatedPixelIDTypeList;
 
-  result = typelist::IndexOf< InstantiatedPixelTypeList, short>::Result;
+  result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<short> >::Result;
   EXPECT_EQ( shortImage->GetDataType(), result);
 
-  result = typelist::IndexOf< InstantiatedPixelTypeList, float>::Result;
+  result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<float> >::Result;
   EXPECT_EQ( floatImage->GetDataType(), result );
 
-  result = typelist::IndexOf< InstantiatedPixelTypeList, itk::simple::VectorPixel<float> >::Result;
+  result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::VectorPixelID<float> >::Result;
   EXPECT_EQ( floatVectorImage->GetDataType(), result );
 
-  result = typelist::IndexOf< InstantiatedPixelTypeList, itk::simple::VectorPixel<float> >::Result;
+  result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::VectorPixelID<float> >::Result;
   EXPECT_EQ( floatVector2DImage->GetDataType(), result );
 
 
 
-  result = typelist::IndexOf< InstantiatedPixelTypeList,  itk::simple::ImageTypeToPixelID<ShortImageType>::PixelIDType >::Result;
+  result = typelist::IndexOf< InstantiatedPixelIDTypeList,  itk::simple::ImageTypeToPixelID<ShortImageType>::PixelIDType >::Result;
   EXPECT_EQ( shortImage->GetDataType(), result );
 
-  result = typelist::IndexOf< InstantiatedPixelTypeList,  itk::simple::ImageTypeToPixelID<FloatVectorImageType>::PixelIDType >::Result;
+  result = typelist::IndexOf< InstantiatedPixelIDTypeList,  itk::simple::ImageTypeToPixelID<FloatVectorImageType>::PixelIDType >::Result;
   EXPECT_EQ( floatVectorImage->GetDataType(), result );
 
 }

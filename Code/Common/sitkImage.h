@@ -2,7 +2,6 @@
 #define __sitkImage_h
 
 #include "sitkMacro.h"
-#include "sitkPixelTypeLists.h"
 
 #include "itkVectorImage.h"
 #include "itkImage.h"
@@ -108,7 +107,7 @@ template <class TImageType> struct PimpleImage;
 
           // The constructor ensures that we have a valid image
           // this maps the Image's pixel type to the array index
-          return typelist::IndexOf< InstantiatedPixelTypeList, PixelIDType>::Result;
+          return typelist::IndexOf< InstantiatedPixelIDTypeList, PixelIDType>::Result;
         }
 
     virtual unsigned int GetDimension( void ) { return ImageType::ImageDimension; }

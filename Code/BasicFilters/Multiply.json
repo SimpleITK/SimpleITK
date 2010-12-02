@@ -2,7 +2,7 @@
   "name" : "Multiply",
   "number_of_inputs" : 2,
   "doc" : "Some global documentation",
-  "pixel_types" : "BasicPixelTypeList",
+  "pixel_types" : "BasicPixelIDTypeList",
   "members" : [],
   "tests" : []
 }

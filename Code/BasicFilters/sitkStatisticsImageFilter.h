@@ -18,7 +18,7 @@ namespace itk {
        */
       StatisticsImageFilter();
 
-      typedef BasicPixelTypeList PixelTypeList;
+      typedef BasicPixelIDTypeList PixelIDTypeList;
 
       // Print ourselves out
       std::string ToString() const;

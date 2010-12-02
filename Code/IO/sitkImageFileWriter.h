@@ -16,7 +16,7 @@ namespace itk {
       typedef Self& (Self::*MemberFunctionType)( Image::Pointer );
 
       // list of pixel types supported
-      typedef AllPixelTypeList PixelTypeList;
+      typedef AllPixelIDTypeList PixelIDTypeList;
 
       ImageFileWriter( void );
 

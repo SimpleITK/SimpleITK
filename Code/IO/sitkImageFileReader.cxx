@@ -185,13 +185,13 @@ namespace itk {
     typedef itk::ImageFileReader<ImageType> Reader;
 
     // do not create an image if it's not in the instatied pixel list
-    if ( !typelist::HasType< InstantiatedPixelTypeList, typename ImageTypeToPixelID<ImageType>::PixelIDType>::Result )
+    if ( !typelist::HasType< InstantiatedPixelIDTypeList, typename ImageTypeToPixelID<ImageType>::PixelIDType>::Result )
       {
       std::cerr << "PixelType is not supported!" << std::endl
                 << "Refusing to load! " << std::endl
                 << typeid( ImageType ).name()  << std::endl
                 << typeid( typename ImageTypeToPixelID<ImageType>::PixelIDType ).name() << std::endl
-                << typelist::IndexOf< InstantiatedPixelTypeList, typename ImageTypeToPixelID<ImageType>::PixelIDType>::Result << std::endl;
+                << typelist::IndexOf< InstantiatedPixelIDTypeList, typename ImageTypeToPixelID<ImageType>::PixelIDType>::Result << std::endl;
       return NULL;
       }
 
