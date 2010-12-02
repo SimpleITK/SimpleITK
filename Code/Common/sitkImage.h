@@ -104,11 +104,9 @@ template <class TImageType> struct PimpleImage;
 
     ImageDataType GetDataType(void) throw()
       {
-        typedef typename ImageTypeToPixelID<ImageType>::PixelIDType PixelIDType;
-
-          // The constructor ensures that we have a valid image
-          // this maps the Image's pixel type to the array index
-          return typelist::IndexOf< InstantiatedPixelIDTypeList, PixelIDType>::Result;
+        // The constructor ensures that we have a valid image
+        // this maps the Image's pixel type to the array index
+        return ImageTypeToPixelIDValue< ImageType>::Result;
         }
 
     virtual unsigned int GetDimension( void ) { return ImageType::ImageDimension; }

@@ -12,9 +12,16 @@ typedef int ImageDataType;
 typedef int PixelIDValueType;
 
 
-template< typename TPixelID > struct PixelIDToPixelIDValue
+template < typename TPixelID >
+struct PixelIDToPixelIDValue
 {
   enum { Result = typelist::IndexOf<InstantiatedPixelIDTypeList, TPixelID >::Result };
+};
+
+template <typename TImageType>
+struct ImageTypeToPixelIDValue
+{
+  enum { Result = PixelIDToPixelIDValue< typename ImageTypeToPixelID<TImageType>::PixelIDType>::Result };
 };
 
 enum PixelIDValueEnum {

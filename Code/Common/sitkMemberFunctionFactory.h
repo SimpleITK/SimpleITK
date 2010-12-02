@@ -77,7 +77,7 @@ public:
   /// dimension.
   ///
   /// imageDataType is the value of Image::GetDataType(), or
-  /// typelist::IndexOf< InstantiatedPixelIDTypeList, PixelIDType>::Result
+  /// PixelIDToPixelIDValue<PixelIDType>::Result
   ///
   /// imageDimension is the the value returned by Image::GetDimension()
   ///

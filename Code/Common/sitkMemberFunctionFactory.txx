@@ -33,7 +33,7 @@ struct MemberFunctionInstantiater
       typedef typename TMemberFunctionFactory::AddressorType    AddressorType;
 
       // this maps the pixel type to an array id
-      int id = typelist::IndexOf< InstantiatedPixelIDTypeList, PixelIDType >::Result;
+      int id = PixelIDToPixelIDValue< PixelIDType >::Result;
 
       AddressorType addressor;
       if ( id > 0 &&  id < typelist::Length< InstantiatedPixelIDTypeList >::Result )
@@ -64,7 +64,7 @@ void MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
 ::Register( typename MemberFunctionFactory::MemberFunctionType pfunc,  TImageType*  )
 {
   typedef typename TImageType::PixelType PixelType;
-  int imageDataType = typelist::IndexOf< InstantiatedPixelIDTypeList, typename ImageTypeToPixelID<TImageType>::PixelIDType >::Result;
+  int imageDataType = ImageTypeToPixelIDValue<TImageType>::Result;
 
 
   if ( imageDataType > 0 && imageDataType < typelist::Length< InstantiatedPixelIDTypeList >::Result )
