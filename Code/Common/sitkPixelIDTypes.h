@@ -27,24 +27,24 @@ struct LabelPixelID
 
 
 
-template <typename TPixelIDType, unsigned int VImageDimension> struct PixelIDtoImageType;
+template <typename TPixelIDType, unsigned int VImageDimension> struct PixelIDToImageType;
 
 template <typename TPixelType, unsigned int VImageDimension>
-struct PixelIDtoImageType< BasicPixelID<TPixelType> , VImageDimension >
+struct PixelIDToImageType< BasicPixelID<TPixelType> , VImageDimension >
 {
   typedef itk::Image< TPixelType, VImageDimension > ImageType;
 };
 
 
 template <typename TVectorPixelType, unsigned int VImageDimension>
-struct PixelIDtoImageType< VectorPixelID< TVectorPixelType >, VImageDimension >
+struct PixelIDToImageType< VectorPixelID< TVectorPixelType >, VImageDimension >
 {
   typedef itk::VectorImage< TVectorPixelType, VImageDimension > ImageType;
 };
 
 
 template <typename TLabelType, unsigned int VImageDimension>
-struct PixelIDtoImageType< LabelPixelID< TLabelType >, VImageDimension >
+struct PixelIDToImageType< LabelPixelID< TLabelType >, VImageDimension >
 {
   typedef itk::LabelMap< itk::LabelMap< itk::LabelObject< TLabelType, VImageDimension > > > ImageType;
 };
