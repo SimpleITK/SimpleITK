@@ -43,6 +43,8 @@ namespace itk
       uint64_t GetWidth( void );
       uint64_t GetDepth( void );
 
+
+      std::string GetPixelIDTypeAsString( void ) const;
       std::string ToString( void );
 
     private:
@@ -122,7 +124,7 @@ template <class TImageType> struct PimpleImage;
         return largestRegion.GetSize(dimension);
       }
 
-    std::string ToString() const {
+    std::string ToString( void ) const {
         std::ostringstream out;
         this->m_Image->Print ( out );
         return out.str();
