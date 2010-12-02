@@ -43,7 +43,8 @@ namespace itk {
       itk::ImageIOBase::IOPixelType pixelType = iobase->GetPixelType();
       unsigned int numberOfComponents = iobase->GetNumberOfComponents();
 
-      if (numberOfComponents == 1 && pixelType == itk::ImageIOBase::SCALAR)
+      if (numberOfComponents == 1 &&
+          ( pixelType == itk::ImageIOBase::SCALAR || pixelType == itk::ImageIOBase::COMPLEX ) )
         {
         switch (dimension)
           {
@@ -55,17 +56,24 @@ namespace itk {
             break;
           }
         }
-      else if  (pixelType == itk::ImageIOBase::RGB)
+      // we try to load anything else into a VectorImage
+      else if  (pixelType == itk::ImageIOBase::RGB ||
+                pixelType == itk::ImageIOBase::RGBA ||
+                pixelType == itk::ImageIOBase::VECTOR ||
+                pixelType == itk::ImageIOBase::COVARIANTVECTOR ||
+                pixelType == itk::ImageIOBase::FIXEDARRAY ||
+                pixelType == itk::ImageIOBase::POINT ||
+                pixelType == itk::ImageIOBase::OFFSET )
         {
-        std::cerr << "RGB pixels not supported" << std::endl;
-        }
-      else if  (pixelType == itk::ImageIOBase::RGBA)
-        {
-        std::cerr << "RGBA pixels not supported" << std::endl;
-        }
-      else if  (pixelType == itk::ImageIOBase::VECTOR)
-        {
-        std::cerr << "Vector pixel type with " << numberOfComponents << " number of components not supported" << std::endl;
+        switch (dimension)
+          {
+          case 2:
+            image = this->ExecuteInternalReadVector<2>( componentType );
+            break;
+          case 3:
+            image = this->ExecuteInternalReadVector<3>( componentType );
+            break;
+          }
         }
       else
         {
@@ -126,6 +134,50 @@ namespace itk {
   }
 
 
+  template < unsigned int ImageDimension >
+  Image::Pointer ImageFileReader::ExecuteInternalReadVector( itk::ImageIOBase::IOComponentType componentType )
+  {
+    switch(componentType)
+      {
+    case itk::ImageIOBase::CHAR:
+      return this->ExecuteInternal< itk::VectorImage<char, ImageDimension> >( );
+      break;
+    case itk::ImageIOBase::UCHAR:
+      return this->ExecuteInternal< itk::VectorImage<unsigned char, ImageDimension> >( );
+      break;
+    case itk::ImageIOBase::SHORT:
+      return this->ExecuteInternal< itk::VectorImage<int16_t, ImageDimension> >( );
+      break;
+    case itk::ImageIOBase::USHORT:
+      return this->ExecuteInternal< itk::VectorImage<uint16_t, ImageDimension> >( );
+      break;
+    case itk::ImageIOBase::INT:
+      return this->ExecuteInternal< itk::VectorImage<int32_t, ImageDimension> >( );
+      break;
+    case itk::ImageIOBase::UINT:
+      return this->ExecuteInternal< itk::VectorImage<uint32_t, ImageDimension> >( );
+      break;
+    case itk::ImageIOBase::LONG:
+      return this->ExecuteInternal< itk::VectorImage<long, ImageDimension> >( );
+      break;
+    case itk::ImageIOBase::ULONG:
+      return this->ExecuteInternal< itk::VectorImage<unsigned long, ImageDimension> >( );
+      break;
+    case itk::ImageIOBase::FLOAT:
+      return this->ExecuteInternal< itk::VectorImage<float, ImageDimension> >( );
+      break;
+    case itk::ImageIOBase::DOUBLE:
+      return this->ExecuteInternal< itk::VectorImage<double, ImageDimension> >( );
+      break;
+    case itk::ImageIOBase::UNKNOWNCOMPONENTTYPE:
+    default:
+      // todo error handling
+      std::cerr << "Unknow pixel component type" << std::endl;
+      return NULL;
+    }
+  }
+
+
   template <class TImageType>
   Image::Pointer ImageFileReader::ExecuteInternal( void ) {
 
@@ -133,9 +185,13 @@ namespace itk {
     typedef itk::ImageFileReader<ImageType> Reader;
 
     // do not create an image if it's not in the instatied pixel list
-    if ( !typelist::HasType< InstantiatedPixelTypeList, typename TImageType::PixelType>::Result )
+    if ( !typelist::HasType< InstantiatedPixelTypeList, typename ImageTypeToPixelID<ImageType>::PixelIDType>::Result )
       {
-      std::cerr << "PixelType is not supported!" << std::endl;
+      std::cerr << "PixelType is not supported!" << std::endl
+                << "Refusing to load! " << std::endl
+                << typeid( ImageType ).name()  << std::endl
+                << typeid( typename ImageTypeToPixelID<ImageType>::PixelIDType ).name() << std::endl
+                << typelist::IndexOf< InstantiatedPixelTypeList, typename ImageTypeToPixelID<ImageType>::PixelIDType>::Result << std::endl;
       return NULL;
       }
 
