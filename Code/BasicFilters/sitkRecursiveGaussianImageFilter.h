@@ -15,6 +15,7 @@ namespace itk {
       //
       // Type List Setup
       //
+      typedef BasicPixelIDTypeList PixelIDTypeList;
 
       //
       // Filter Setup

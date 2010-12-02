@@ -22,7 +22,7 @@ namespace itk {
        */
       ${name}ImageFilter();
 
-      typedef ${pixel_types}  PixelTypeList;
+      typedef ${pixel_types}  PixelIDTypeList;
 
       $(foreach members 
       /** ${doc} */

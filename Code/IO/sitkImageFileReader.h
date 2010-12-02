@@ -24,6 +24,9 @@ namespace itk {
       template < unsigned int ImageDimension >
       Image::Pointer ExecuteInternalReadScalar( itk::ImageIOBase::IOComponentType componentType );
 
+      template < unsigned int ImageDimension >
+      Image::Pointer ExecuteInternalReadVector( itk::ImageIOBase::IOComponentType componentType );
+
       template <class TImageType> Image::Pointer ExecuteInternal ( void );
 
     private:

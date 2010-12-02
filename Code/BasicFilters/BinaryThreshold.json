@@ -1,7 +1,7 @@
 {
   "name" : "BinaryThreshold",
   "doc" : "Docs",
-  "pixel_types" : "BasicPixelTypeList",
+  "pixel_types" : "BasicPixelIDTypeList",
   "members" : [
     {
       "name" : "LowerThreshold",
