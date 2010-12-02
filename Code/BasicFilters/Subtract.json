@@ -6,20 +6,20 @@
   "members" : [],
   "tests" : [
     {
-      "tag" : "2DStapleImages",
+      "tag" : "2D",
       "description" : "Default parameter settings",
-      "inputA" : "Input/STAPLE1.png",
-      "inputB" : "Input/STAPLE2.png",
+      "inputA" : "Input/RA-Slice-Float.nrrd",
+      "inputB" : "Input/RA-Slice-Float.nrrd",
       "settings" : [],
-      "md5hash" : "bcf3c367a13ef259bbd9d42e80534180"
+      "md5hash" : "ce338fe6899778aacfc28414f2d9498b"
     },
     {
-      "tag" : "3DMRIHead",
-      "description" : "MRI head",
-      "inputA" : "Input/HeadMRVolumeWithDirection.nhdr",
-      "inputB" : "Input/HeadMRVolumeWithDirection.nhdr",
+      "tag" : "3D",
+      "description" : "Subtract a volume from a volume",
+      "inputA" : "Input/RA-Short.nrrd",
+      "inputB" : "Input/RA-Short.nrrd",
       "settings" : [],
-      "md5hash" : "b8d4de2fe2525bccb091d2ca77cabbd5"
+      "md5hash" : "59071590099d21dd439896592338bf95"
     }
     
   ]

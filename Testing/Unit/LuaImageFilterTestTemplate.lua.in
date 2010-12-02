@@ -24,9 +24,12 @@ $(if #tests == 0 then
 
 $(foreach tests
   if tag == "${tag}" then
+    $(if settings then
+      OUT=[[ 
     $(foreach settings 
       filter:Set${parameter} ( ${value} );
     )
+    ]] end)
 
     inputA = reader:SetFilename ( arg[2] ):Execute();
     $(if inputB then

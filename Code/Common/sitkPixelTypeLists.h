@@ -14,8 +14,20 @@ namespace simple
 
 #if defined(SIMPLEITK_SHORT_COMPILE)
 // Only compile a few pixel types
-typedef typelist::MakeTypeList< unsigned char, short, int>::Type IntegerPixelTypeList; 
-typedef typelist::MakeTypeList<float>::Type RealPixelTypeList;
+  // typedef typelist::MakeTypeList<unsigned char, char, unsigned short, short, int>::Type IntegerPixelTypeList; 
+  // typedef typelist::MakeTypeList<float>::Type RealPixelTypeList;
+typedef typelist::MakeTypeList<char,
+                               unsigned char,
+                               short,
+                               unsigned short,
+                               int,
+                               unsigned int,
+                               long,
+                               unsigned long>::Type IntegerPixelTypeList;
+
+typedef typelist::MakeTypeList<float,
+                               double >::Type RealPixelTypeList;
+
 #else
 
 typedef typelist::MakeTypeList<char,
