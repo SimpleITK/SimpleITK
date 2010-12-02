@@ -10,7 +10,7 @@ TEST_F(Python,SimpleGaussian) {
   
   CommandLine.push_back ( dataFinder.GetPythonExecutable() );
   CommandLine.push_back ( Script );
-  CommandLine.push_back ( dataFinder.GetFile ( "Input/HeadMRVolumeWithDirection.nhdr" ).c_str() );
+  CommandLine.push_back ( dataFinder.GetFile ( "Input/RA-Short.nrrd" ).c_str() );
   CommandLine.push_back ( "2.0" );
   CommandLine.push_back ( output );
 
@@ -28,6 +28,6 @@ TEST_F(Python,SimpleGaussian) {
 
   image = reader.SetFilename ( output ).Execute();
   ASSERT_TRUE ( image->GetImageBase().IsNotNull() ) << "Loaded output image";
-  EXPECT_EQ ( "71b3f3fd8bb79e1f355c3a3bfcbdf3fa82dd149e", hasher.Execute ( image ) );
+  EXPECT_EQ ( "", hasher.Execute ( image ) );
 
 }

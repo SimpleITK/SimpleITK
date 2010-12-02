@@ -29,11 +29,7 @@ unsigned int Image::GetDimension( void ) const
 
 std::string Image::ToString( void )
 {
-  std::ostringstream out;
-  // todo bring me back
-  // this->m_PimpleImage->Print ( out );
-  out << "ToString is not currently implemented because the itk::Image class obscured.\n...there be dragons here...";
-  return out.str();
+  return this->m_PimpleImage->ToString();
 }
 
 uint64_t Image::GetWidth( void )

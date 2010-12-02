@@ -43,7 +43,7 @@ ImageFileWriter& ImageFileWriter::ExecuteInternal( Image::Pointer inImage )
     dynamic_cast <InputImageType*> ( inImage->GetImageBase().GetPointer() );
 
   // handle 2D images differently
-  if (inImage->GetDepth() == 1)
+  if (inImage->GetDimension() == 2)
     {
 
     // see if we're dealing with a jpg or png

@@ -70,6 +70,7 @@ namespace itk
     virtual uint64_t GetDepth( void ) const { return this->GetSize( 2 ); }
 
     virtual uint64_t GetSize( unsigned int dimension ) const = 0;
+    virtual std::string ToString() const = 0;
 
   };
 
@@ -116,12 +117,18 @@ namespace itk
       {
         if ( dimension > ImageType::ImageDimension - 1 )
           {
-          return 1;
+          return 0;
           }
 
         typename ImageType::RegionType largestRegion = this->m_Image->GetLargestPossibleRegion();
         return largestRegion.GetSize(dimension);
       }
+
+    std::string ToString() const {
+        std::ostringstream out;
+        this->m_Image->Print ( out );
+        return out.str();
+    }
 
 
   private:

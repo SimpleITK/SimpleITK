@@ -28,7 +28,10 @@ $(if #tests == 0 then
 
 $(foreach tests
 if tag == "${tag}":
+    $(if settings then
+      OUT=[[ 
     $(foreach settings filter.Set${parameter} ( ${value} ); )
+    ]] end)
     inputA = reader.SetFilename ( sys.argv[2] ).Execute();
     $(if inputB then
     OUT=[[inputB = reader.SetFilename ( sys.argv[3] ).Execute()

@@ -1,7 +1,7 @@
 #include <SimpleITK.h>
 #include <SimpleITKTestHarness.h>
 
-TEST(BasicFilters,${name}) {
+TEST(BasicFilters,${name}) $(if long then OUT="/* Long */" end) {
   itk::simple::ImageFileReader reader;
   itk::simple::${name}ImageFilter filter;
   itk::simple::Image::Pointer inputA;
@@ -17,19 +17,23 @@ TEST(BasicFilters,${name}) {
 
   $(foreach tests 
     /* ${description} */
-  inputA = reader.SetFilename ( dataFinder.GetFile ( "${inputA}" ) ).Execute();
+  ASSERT_NO_THROW ( inputA = reader.SetFilename ( dataFinder.GetFile ( "${inputA}" ) ).Execute() ) << "Failed to load ${inputA}";
   ASSERT_TRUE ( inputA->GetImageBase().IsNotNull() ) << "Could not read ${inputA}";
     $(if inputB then
       OUT=[[
-  inputB = reader.SetFilename ( dataFinder.GetFile ( "${inputB}" ) ).Execute();
+  ASSERT_NO_THROW ( inputB = reader.SetFilename ( dataFinder.GetFile ( "${inputB}" ) ).Execute() ) << "Failed to load ${inputB}";
   ASSERT_TRUE ( inputB->GetImageBase().IsNotNull() ) << "Could not read ${inputB}";
             ]]
       end)
 
+    $(if settings then
+      OUT=[[
   $(foreach settings 
   filter.Set${parameter} ( ${value} );
   ASSERT_EQ ( ${value}, filter.Get${parameter}() ) << "Failed to set ${parameter} to ${value}";
   )
+      ]]
+      end)
   ASSERT_NO_THROW ( output = filter.Execute ( inputA $(if inputB then OUT=", inputB" end) ) );
   $(if md5hash then
   OUT = [[ 

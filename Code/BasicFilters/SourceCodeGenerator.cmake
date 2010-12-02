@@ -16,7 +16,7 @@ macro( expand_template FILENAME )
 endmacro()
 
 if ( SHORT_COMPILE )
-  set ( JSON_CONFIG_FILES CurvatureFlow.json Subtract.json Or.json BinaryThreshold.json Add.json )
+  set ( JSON_CONFIG_FILES CurvatureFlow.json Cos.json Subtract.json )
 else()
   file ( GLOB JSON_CONFIG_FILES *.json)
 endif()

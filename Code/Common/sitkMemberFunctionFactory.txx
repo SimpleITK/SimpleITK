@@ -130,11 +130,12 @@ MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
         {
         std::cerr << "Pixel type is not supported for this commandlet" << std::endl;
         // need to thow something better or have some other definded behavior
-        throw;
+        itkGenericExceptionMacro ( << "Pixel type is not supported for this commandlet" );
         }
       break;
     default:
       std::cerr << "Image dimension of " << imageDimension << "is not supported!";
+      itkGenericExceptionMacro ( << "Image dimension " << imageDimension << " is not supported" );
       throw;
     }
 }

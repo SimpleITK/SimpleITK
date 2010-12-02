@@ -10,10 +10,10 @@ TEST(IO,ImageFileReader) {
   MapType mapping;
 
   // Configure the mapping between filename and MD5 hash
-  mapping["Input/HeadMRVolume.mha"] = "dd13d3cbfd470c6e3cd2ddb2302fd466";
-  mapping["Input/HeadMRVolumeWithDirection.nhdr"] = "dd13d3cbfd470c6e3cd2ddb2302fd466";
-  mapping["Input/LittleEndian.hdr"] = "61cefb1edcdef195131470f03a8238c6";
-  mapping["Input/BigEndian.hdr"] = "61cefb1edcdef195131470f03a8238c6";
+  mapping["Input/RA-Short.nrrd"] = "a963bd6a755b853103a2d195e01a50d3";
+  mapping["Input/RA-Float.nrrd"] = "3ccccde44efaa3d688a86e94335c1f16";
+  mapping["Input/RA-Slice-Short.nrrd"] = "22cdc0af7d51934a744b9c4fd4748cd1";
+  mapping["Input/RA-Slice-Float.nrrd"] = "999078d36a4491d691cc93d8c3ed29fc";
 
   // Loop over the map, load each file, and compare the hash value
   for ( MapType::iterator it = mapping.begin(); it != mapping.end(); ++it ) {
@@ -33,11 +33,11 @@ TEST(IO,ReadWrite) {
   itk::simple::Image::Pointer image;
 
   // From the command line utility
-  std::string md5 = "dd13d3cbfd470c6e3cd2ddb2302fd466";
-  std::string sha1 = "269fea1c6db001f76b8c482e2fd3a24ef9866f9a";
+  std::string md5 = "a963bd6a755b853103a2d195e01a50d3";
+  std::string sha1 = "126ea8c3ef5573ca1e4e0deece920c2c4a4f38b5";
 
 
-  image = reader.SetFilename ( dataFinder.GetFile ( "Input/HeadMRVolumeWithDirection.nhdr" ) ).Execute();
+  image = reader.SetFilename ( dataFinder.GetFile ( "Input/RA-short.nrrd" ) ).Execute();
   ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
   hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 );
   EXPECT_EQ ( md5, hasher.Execute ( image ) );
@@ -63,9 +63,15 @@ TEST(IO,2DFormats) {
   itk::simple::ImageHashFilter hasher;
   itk::simple::ImageFileReader reader;
   itk::simple::Image::Pointer image;
-  image = reader.SetFilename ( dataFinder.GetFile ( "Input/circle.png" ) ).Execute();
+  image = reader.SetFilename ( dataFinder.GetFile ( "Input/RA-Slice-Short.png" ) ).Execute();
   ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
+  hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 );
+  EXPECT_EQ ( "da39a3ee5e6b4b0d3255bfef95601890afd80709", hasher.Execute ( image ) );
   ASSERT_EQ ( 2u, image->GetDimension() );
+  EXPECT_EQ ( 64u, image->GetWidth() );
+  EXPECT_EQ ( 64u, image->GetHeight() );
+  EXPECT_EQ ( 0u, image->GetDepth() );
+
 }
 
 
