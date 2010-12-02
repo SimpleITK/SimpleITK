@@ -8,7 +8,6 @@ namespace itk
 namespace simple
 {
 
-typedef int ImageDataType;
 typedef int PixelIDValueType;
 
 
