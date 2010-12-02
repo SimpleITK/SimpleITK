@@ -28,6 +28,12 @@ public:
     itkFloatImage = fim;
     floatImage = new itk::simple::Image( fim.GetPointer() );
 
+    itkFloatVectorImage = FloatVectorImageType::New();
+    floatVectorImage = new itk::simple::Image( itkFloatVectorImage.GetPointer() );
+
+    itkFloatVector2DImage = FloatVector2DImageType::New();
+    floatVector2DImage = new itk::simple::Image( itkFloatVector2DImage );
+
   }
 
   itk::simple::Image::Pointer image;
@@ -43,6 +49,14 @@ public:
   itk::simple::Image::Pointer floatImage;
   FloatImageType::Pointer itkFloatImage;
 
+  typedef itk::VectorImage<float,3> FloatVectorImageType;
+  itk::simple::Image::Pointer floatVectorImage;
+  FloatVectorImageType::Pointer itkFloatVectorImage;
+
+  typedef itk::VectorImage<float,2> FloatVector2DImageType;
+  itk::simple::Image::Pointer floatVector2DImage;
+  FloatVector2DImageType::Pointer itkFloatVector2DImage;
+
   itk::simple::Image::Pointer differentSizedImage;
   ShortImageType::Pointer itkDifferentSizedImage;
 };
@@ -53,6 +67,35 @@ TEST_F(Image,Create) {
   EXPECT_EQ ( shortImage->GetWidth(), itkShortImage->GetLargestPossibleRegion().GetSize()[0] ) << " Checking image width";
   EXPECT_EQ ( shortImage->GetHeight(), itkShortImage->GetLargestPossibleRegion().GetSize()[1] ) << " Checking image height";
   EXPECT_EQ ( shortImage->GetDepth(), itkShortImage->GetLargestPossibleRegion().GetSize()[2] ) << " Checking image depth";
+}
+
+TEST_F(Image,ImageDataType) {
+
+  // this test checks that the DataType of the images are correct
+  int result;
+
+  using  itk::simple::InstantiatedPixelTypeList;
+
+  result = typelist::IndexOf< InstantiatedPixelTypeList, short>::Result;
+  EXPECT_EQ( shortImage->GetDataType(), result);
+
+  result = typelist::IndexOf< InstantiatedPixelTypeList, float>::Result;
+  EXPECT_EQ( floatImage->GetDataType(), result );
+
+  result = typelist::IndexOf< InstantiatedPixelTypeList, itk::simple::VectorPixel<float> >::Result;
+  EXPECT_EQ( floatVectorImage->GetDataType(), result );
+
+  result = typelist::IndexOf< InstantiatedPixelTypeList, itk::simple::VectorPixel<float> >::Result;
+  EXPECT_EQ( floatVector2DImage->GetDataType(), result );
+
+
+
+  result = typelist::IndexOf< InstantiatedPixelTypeList,  itk::simple::ImageTypeToPixelID<ShortImageType>::PixelIDType >::Result;
+  EXPECT_EQ( shortImage->GetDataType(), result );
+
+  result = typelist::IndexOf< InstantiatedPixelTypeList,  itk::simple::ImageTypeToPixelID<FloatVectorImageType>::PixelIDType >::Result;
+  EXPECT_EQ( floatVectorImage->GetDataType(), result );
+
 }
 
 
