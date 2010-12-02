@@ -11,7 +11,7 @@
 #include <tr1/functional>
 #endif
 
-#include "sitkPixelTypeLists.h"
+#include "sitkPixelIDTypes.h"
 #include "sitkMacro.h"
 
 #include "FunctionTraits.h"
@@ -69,8 +69,8 @@ protected:
     }
 
   // array of pointers to member functions
-  FunctionObjectType  m_PFunction3[ typelist::Length< InstantiatedPixelTypeList >::Result ];
-  FunctionObjectType  m_PFunction2[ typelist::Length< InstantiatedPixelTypeList >::Result ];
+  FunctionObjectType  m_PFunction3[ typelist::Length< InstantiatedPixelIDTypeList >::Result ];
+  FunctionObjectType  m_PFunction2[ typelist::Length< InstantiatedPixelIDTypeList >::Result ];
 
 private:
 
@@ -116,8 +116,8 @@ protected:
     }
 
   // array of pointers to member functions
-  FunctionObjectType  m_PFunction3[ typelist::Length< InstantiatedPixelTypeList >::Result ];
-  FunctionObjectType  m_PFunction2[ typelist::Length< InstantiatedPixelTypeList >::Result ];
+  FunctionObjectType  m_PFunction3[ typelist::Length< InstantiatedPixelIDTypeList >::Result ];
+  FunctionObjectType  m_PFunction2[ typelist::Length< InstantiatedPixelIDTypeList >::Result ];
 
 private:
 

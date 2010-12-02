@@ -17,7 +17,7 @@ namespace itk {
 
       // list of pixel types supported (not sure what this would
       // actually work with)
-      typedef BasicPixelTypeList PixelTypeList;
+      typedef BasicPixelIDTypeList PixelIDTypeList;
 
       ImageHashFilter();
 

@@ -25,20 +25,20 @@ struct MemberFunctionInstantiater
     : m_Factory( factory )
     {}
 
-  template <class TPixelType>
-  void operator()( TPixelType t )
+  template <class TPixelIDType>
+  void operator()( TPixelIDType t )
     {
-      typedef TPixelType                                        PixelType;
+      typedef TPixelIDType                                      PixelIDType;
       typedef typename TMemberFunctionFactory::ObjectType       ObjectType;
       typedef typename TMemberFunctionFactory::AddressorType    AddressorType;
 
       // this maps the pixel type to an array id
-      int id = typelist::IndexOf< InstantiatedPixelTypeList, PixelType >::Result;
+      int id = typelist::IndexOf< InstantiatedPixelIDTypeList, PixelIDType >::Result;
 
       AddressorType addressor;
-      if ( id > 0 &&  id < typelist::Length< InstantiatedPixelTypeList >::Result )
+      if ( id > 0 &&  id < typelist::Length< InstantiatedPixelIDTypeList >::Result )
         {
-        typedef typename PixelIDtoImageType<TPixelType, ImageDimension>::ImageType ImageType;
+        typedef typename PixelIDtoImageType<TPixelIDType, ImageDimension>::ImageType ImageType;
         m_Factory.Register(addressor.operator()<ImageType>(), (ImageType*)(NULL));
         }
     }
@@ -64,10 +64,10 @@ void MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
 ::Register( typename MemberFunctionFactory::MemberFunctionType pfunc,  TImageType*  )
 {
   typedef typename TImageType::PixelType PixelType;
-  int imageDataType = typelist::IndexOf< InstantiatedPixelTypeList, typename ImageTypeToPixelID<TImageType>::PixelIDType >::Result;
+  int imageDataType = typelist::IndexOf< InstantiatedPixelIDTypeList, typename ImageTypeToPixelID<TImageType>::PixelIDType >::Result;
 
 
-  if ( imageDataType > 0 && imageDataType < typelist::Length< InstantiatedPixelTypeList >::Result )
+  if ( imageDataType > 0 && imageDataType < typelist::Length< InstantiatedPixelIDTypeList >::Result )
     {
     switch( TImageType::ImageDimension )
       {
@@ -85,7 +85,7 @@ void MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
 
 template <typename TMemberFunctionPointer,
           typename TMemberFunctionAddressor>
-template <typename TPixelTypeList,
+template <typename TPixelIDTypeList,
           unsigned int ImageDimension >
 void MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
 ::RegisterMemberFunctions( void )
@@ -93,7 +93,7 @@ void MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
   typedef MemberFunctionInstantiater< MemberFunctionFactory, ImageDimension > InstantiaterType;
 
   // initialize function array with pointer
-  typelist::ForEach<TPixelTypeList> forEachTypeInList;
+  typelist::ForEach<TPixelIDTypeList> forEachTypeInList;
   forEachTypeInList( InstantiaterType( *this ) );
 }
 
@@ -105,7 +105,7 @@ MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
 ::GetMemberFunction( ImageDataType imageDataType, unsigned int imageDimension  )
 {
   // assert that it's in the sane range
-  assert ( imageDataType < typelist::Length< InstantiatedPixelTypeList >::Result && imageDataType >= 0 );
+  assert ( imageDataType < typelist::Length< InstantiatedPixelIDTypeList >::Result && imageDataType >= 0 );
 
   switch ( imageDimension )
     {

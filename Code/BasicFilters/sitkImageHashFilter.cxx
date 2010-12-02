@@ -14,8 +14,8 @@ namespace itk {
 
       this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
-      this->m_MemberFactory->RegisterMemberFunctions< PixelTypeList, 3 > ();
-      this->m_MemberFactory->RegisterMemberFunctions< PixelTypeList, 2 > ();
+      this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
+      this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
     }
 
     std::string ImageHashFilter::ToString() const {
