@@ -11,3 +11,8 @@ if( WRAP_CSHARP )
     ${CMAKE_CURRENT_SOURCE_DIR}/SimpleGaussian.cs
   )
 endif( WRAP_CSHARP )
+
+#
+# Go into testing subdirs
+#
+subdirs(Segmentation)

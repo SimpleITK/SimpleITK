@@ -2,6 +2,11 @@
 #define __sitk${name}ImageFilter_h
 
 #include "sitkDualImageFilter.h"
+$(if include_files and #include_files > 0 then
+OUT = [[// Additional include files
+$(for i=1,#include_files do OUT = OUT .. '#include "' .. include_files[i] .. '"' if i < #include_files then OUT = OUT .. '\n' end end)
+// Done with additional include files]]
+end)
 
 
 
@@ -26,7 +31,18 @@ namespace itk {
 
       $(foreach members 
       /** ${doc} */
-      Self& Set${name} ( ${type} t ) { this->m_${name} = t; return *this; };
+      Self& Set${name} ( ${type} t ) $(if type == "itk::simple::Index::Pointer" then
+        OUT = [[ {
+        for (unsigned int i = 0; i < this->m_${name}->GetDimension(); ++i)
+          {
+          this->m_${name}->SetComponent( i, t->GetComponent( i ) );
+          }
+        return *this;
+        };
+        ]]
+        else
+        OUT = [[{ this->m_${name} = t; return *this; };]]
+        end)
       ${type} Get${name}() { return this->m_${name}; };
       )
       // Print ourselves out
