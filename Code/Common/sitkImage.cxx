@@ -17,14 +17,19 @@ itk::DataObject::ConstPointer Image::GetImageBase( void ) const
   return m_PimpleImage->GetDataBase().GetPointer();
 }
 
-ImageDataType Image::GetDataType( void ) const
+PixelIDValueType Image::GetPixelIDValue( void ) const
 {
-  return this->m_PimpleImage->GetDataType();
+  return this->m_PimpleImage->GetPixelIDValue();
 }
 
 unsigned int Image::GetDimension( void ) const
 {
   return this->m_PimpleImage->GetDimension();
+}
+
+std::string Image::GetPixelIDTypeAsString( void ) const
+{
+  return std::string( GetPixelIDValueAsString( this->GetPixelIDValue() ) );
 }
 
 std::string Image::ToString( void )
