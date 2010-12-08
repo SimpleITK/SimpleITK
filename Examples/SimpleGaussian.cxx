@@ -1,5 +1,6 @@
 
 #include <SimpleITK.h>
+#include <sitkCastImageFilter.h>
 
 int main ( int argc, char* argv[] ) {
 
@@ -14,13 +15,14 @@ int main ( int argc, char* argv[] ) {
   reader.SetFilename ( std::string ( argv[1] ) );
   image = reader.Execute();
 
-  std::cout << image->ToString() << "\n";
+  itk::simple::PixelIDValueType pixelID = image->GetPixelIDValue();
 
   itk::simple::RecursiveGaussianImageFilter gaussian;
   gaussian.SetSigma ( atof ( argv[2] ) );
   image = gaussian.Execute ( image );
 
-  std::cout << image->ToString() << "\n";
+  itk::simple::CastImageFilter caster;
+  image = caster.SetOutputPixelType( pixelID ).Execute( image );
 
   itk::simple::ImageFileWriter writer;
   writer.SetFilename ( std::string ( argv[3] ) );

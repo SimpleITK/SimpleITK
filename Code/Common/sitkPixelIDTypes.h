@@ -25,8 +25,6 @@ template <typename TPixelType>
 struct LabelPixelID
 {};
 
-
-
 template <typename TPixelIDType, unsigned int VImageDimension> struct PixelIDToImageType;
 
 template <typename TPixelType, unsigned int VImageDimension>

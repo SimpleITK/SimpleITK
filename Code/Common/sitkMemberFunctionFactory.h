@@ -76,22 +76,22 @@ public:
   /// \brief Returns a function object for the PixelIndex, and image
   /// dimension.
   ///
-  /// imageDataType is the value of Image::GetDataType(), or
-  /// typelist::IndexOf< InstantiatedPixelIDTypeList, PixelIDType>::Result
+  /// pixelID is the value of Image::GetPixelIDValue(), or
+  /// PixelIDToPixelIDValue<PixelIDType>::Result
   ///
   /// imageDimension is the the value returned by Image::GetDimension()
   ///
   /// Example usage:
   /// \code
-  /// ImageDataType type = image->GetDataType();
+  /// PixelIDValueType pixelID = image->GetPixelIDValue();
   /// unsigned int dimension = image->GetDimension();
-  /// return this->m_MemberFactory->GetMemberFunction( type, dimension )( image );
+  /// return this->m_MemberFactory->GetMemberFunction( pixelID, dimension )( image );
   /// \endcode
   ///
   /// If the requested member function is not registered then an
   /// exception is generated. The returned function object is
   /// guaranteed to be valid.
-  FunctionObjectType GetMemberFunction( ImageDataType imageDataType, unsigned int imageDimension  );
+  FunctionObjectType GetMemberFunction( PixelIDValueType pixelID, unsigned int imageDimension  );
 
 protected:
 
