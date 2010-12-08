@@ -56,12 +56,12 @@ end)
 Image::Pointer ${name}ImageFilter::Execute ( Image::Pointer image1 $(if number_of_inputs==2 then OUT=[[, Image::Pointer image2]] end) )
   {
 
-    ImageDataType type = image1->GetDataType();
+    PixelIDValueType type = image1->GetPixelIDValue();
     unsigned int dimension = image1->GetDimension();
 
     $(if number_of_inputs and number_of_inputs == 2 then
     OUT=[[// todo need better error handling and potential type conversion
-    if ( type != image2->GetDataType() ||
+    if ( type != image2->GetPixelIDValue() ||
          dimension != image2->GetDimension() )
       {
       std::cerr << "Both image for add filter don't match type or dimension!" << std::endl;

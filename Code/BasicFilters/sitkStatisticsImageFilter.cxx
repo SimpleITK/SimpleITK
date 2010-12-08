@@ -41,7 +41,7 @@ std::string StatisticsImageFilter::ToString() const
 
 Image::Pointer StatisticsImageFilter::Execute ( Image::Pointer image1 )
   {
-    ImageDataType type = image1->GetDataType();
+    PixelIDValueType type = image1->GetPixelIDValue();
     unsigned int dimension = image1->GetDimension();
 
     return this->m_MemberFactory->GetMemberFunction( type, dimension )( image1 );

@@ -43,7 +43,6 @@ typedef typelist::MakeTypeList< BasicPixelID<std::complex< float > >,
                                 BasicPixelID<std::complex< double > > >::Type ComplexPixelIDTypeList;
 
 typedef typelist::MakeTypeList<VectorPixelID<signed char>,
-                               VectorPixelID<char>,
                                VectorPixelID<unsigned char>,
                                VectorPixelID<short>,
                                VectorPixelID<unsigned short>,
@@ -64,6 +63,11 @@ typedef typelist::Append<
   typelist::Append< BasicPixelIDTypeList, ComplexPixelIDTypeList >::Type,
   VectorPixelIDTypeList
   >::Type AllPixelIDTypeList;
+
+
+// this is the list of types which we will try to instantiate
+typedef AllPixelIDTypeList InstantiatedPixelIDTypeList;
+
 
 }
 }

@@ -27,7 +27,7 @@ std::string ImageFileWriter::GetFilename()
 
 ImageFileWriter& ImageFileWriter::Execute ( Image::Pointer image )
   {
-    ImageDataType type = image->GetDataType();
+    PixelIDValueType type = image->GetPixelIDValue();
     unsigned int dimension = image->GetDimension();
 
     return this->m_MemberFactory->GetMemberFunction( type, dimension )( image );
