@@ -4,9 +4,9 @@
 class Image : public ::testing::Test {
 public:
   virtual void SetUp() {
-    itk::simple::SimpleImageBase::IndexType index;
-    itk::simple::SimpleImageBase::SizeType size;
-    itk::simple::SimpleImageBase::RegionType region;
+    itk::ImageBase<3>::IndexType index;
+    itk::ImageBase<3>::SizeType size;
+    itk::ImageBase<3>::RegionType region;
     // Create an image
     for ( int i = 0; i < 3; i++ ) {
       index[i] = 0;
@@ -37,10 +37,10 @@ public:
   }
 
   itk::simple::Image::Pointer image;
-  itk::simple::SimpleImageBase::Pointer itkShortImage;
-  itk::simple::SimpleImageBase::IndexType index;
-  itk::simple::SimpleImageBase::SizeType size;
-  itk::simple::SimpleImageBase::RegionType region;
+  itk::ImageBase<3>::Pointer itkShortImage;
+  itk::ImageBase<3>::IndexType index;
+  itk::ImageBase<3>::SizeType size;
+  itk::ImageBase<3>::RegionType region;
 
   typedef itk::Image<int16_t,3> ShortImageType;
   itk::simple::Image::Pointer shortImage;
