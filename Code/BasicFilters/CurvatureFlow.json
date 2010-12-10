@@ -7,7 +7,7 @@
   "members" : [
     { "name" : "TimeStep",
       "type" : "double",
-      "default" : 0.0,
+      "default" : 0.1,
       "doc" : "Time step for curvature flow"
     },
     {
