@@ -8,17 +8,29 @@
 	#include <stdint.h>
 #endif
 
-#include <itkImageBase.h>
-
 #include "sitkPixelIDTypeLists.h"
 #include "sitkPixelIDValues.h"
+#include "sitkExceptionObject.h"
 
 namespace itk {
 namespace simple {
 
-// Define common base image type
-typedef itk::ImageBase<3> SimpleImageBase;
+#define sitkExceptionMacro(x)                                           \
+  {                                                                     \
+      std::ostringstream message;                                       \
+      message << "sitk::ERROR: " x;                                     \
+      ::itk::simple::GenericException e_(__FILE__, __LINE__, message.str().c_str(), ITK_LOCATION); \
+      throw e_; /* Explicit naming to work around Intel compiler bug.  */ \
+    }
 
+
+// todo actuall make this a static assert, need to add a try compile
+// for C++0x static_assert, and then have a fall back. This will work
+// in many cases for now.
+#define sitkStaticAssert( expr, str )            \
+  {                                              \
+    if ( !(expr) ) sitkExceptionMacro( str );    \
+  }
 
 }
 }

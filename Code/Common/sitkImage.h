@@ -3,6 +3,7 @@
 
 #include "sitkMacro.h"
 
+#include "itkImage.h"
 #include "itkVectorImage.h"
 #include "itkImage.h"
 #include "itkLabelMap.h"
