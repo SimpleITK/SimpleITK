@@ -4,6 +4,9 @@
 // sitk includes
 #include "sitkMacro.h"
 
+// itk includes
+#include "itkIndex.h"
+
 namespace itk
 {
 namespace simple
@@ -20,12 +23,20 @@ public:
   typedef uint64_t           IndexValueType;
 
   // Constructors
+
+  Index( IndexValueType x, IndexValueType y )
+    {
+    m_Index[0] = x;
+    m_Index[1] = y;
+    }
+
   Index( IndexValueType x, IndexValueType y, IndexValueType z )
     {
     m_Index[0] = x;
     m_Index[1] = y;
     m_Index[2] = z;
     };
+
 
   // Get Component Methods
   IndexValueType GetX() { return m_Index[0]; };
@@ -43,6 +54,25 @@ public:
 
   // Array of 3 values to hold the indices
   IndexValueType m_Index[3];
+
+  // Cast operator for itk::Index<2>
+  operator itk::Index<2>()
+    {
+    itk::Index<2> idx;
+    idx[0] = m_Index[0];
+    idx[1] = m_Index[1];
+    return idx;
+    };
+
+  // Cast operator for itk::Index<3>
+  operator itk::Index<3>()
+    {
+    itk::Index<3> idx;
+    idx[0] = m_Index[0];
+    idx[1] = m_Index[1];
+    idx[2] = m_Index[2];
+    return idx;
+    };
 
 };  // end class Index
 
