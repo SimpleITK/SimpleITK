@@ -21,8 +21,8 @@ filter = SimpleITK.${name}ImageFilter()
 
 $(if #tests == 0 then
     OUT=[[ 
-    print ( "No tests defined!" );
-    sys.exit ( 1 );
+print ( "No tests defined!" );
+sys.exit ( 1 );
     ]]
   end)
 
