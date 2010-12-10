@@ -10,5 +10,13 @@
       "doc" : "Output maximum"
     }
   ],  
-  "tests" : []
+  "tests" : [
+    {
+      "tag" : "3d",
+      "description" : "3D",
+      "inputA" : "Input/RA-Float.nrrd",
+      "settings" : [],
+      "md5hash" : "d161f24c08ac377cd2fd24a158a9233f"
+    }
+  ]
 }

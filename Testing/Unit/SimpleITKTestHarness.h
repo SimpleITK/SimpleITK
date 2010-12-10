@@ -1,7 +1,6 @@
 #ifndef __SimpleITKTestHarness_h
 #define __SimpleITKTestHarness_h
 
-#include <SimpleITK.h>
 #include <string>
 #include <gtest/gtest.h>
 #include <SimpleITKTestHarnessPaths.h>
