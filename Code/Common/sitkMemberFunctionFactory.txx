@@ -78,6 +78,8 @@ void MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
         break;
       default:
         std::cerr << "Tried to register image with unsupported dimension of " << (unsigned)TImageType::ImageDimension << std::endl;
+        assert(false); // this condition should not occour and a
+                       // static_assert is needed
       }
     }
 }
@@ -116,7 +118,6 @@ MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
         }
       else
         {
-        std::cerr << "Pixel type is not supported for this commandlet" << std::endl;
         itkGenericExceptionMacro ( << "Pixel type is not supported for this commandlet" );
         }
       break;
@@ -128,13 +129,11 @@ MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
         }
       else
         {
-        std::cerr << "Pixel type is not supported for this commandlet" << std::endl;
         // need to thow something better or have some other definded behavior
         itkGenericExceptionMacro ( << "Pixel type is not supported for this commandlet" );
         }
       break;
     default:
-      std::cerr << "Image dimension of " << imageDimension << "is not supported!";
       itkGenericExceptionMacro ( << "Image dimension " << imageDimension << " is not supported" );
       throw;
     }
