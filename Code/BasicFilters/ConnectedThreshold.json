@@ -40,6 +40,43 @@
 
     }
   ],
-  "custom_methods" : [],
+  "custom_methods" : [
+    { "name" : "ClearSeeds",
+      "doc" : "Clear the seed points, leaving an empty list",
+      "return_type" : "Self&",
+      "parameters" : [],
+      "body" : 
+        "this->m_SeedList.clear();\
+        return *this;"
+    },
+    { "name" : "SetSeed",
+      "doc" : "Use a single seed point",
+      "return_type" : "Self&",
+      "parameters" : [
+        { "type" : "Index",
+          "var_name" : "idx",
+          "last" : 1
+        }
+      ],
+      "body" :
+        "this->m_SeedList.clear();\
+        this->m_SeedList.push_back(idx);\
+        return *this;"
+    },
+    { "name" : "AddSeed",
+      "doc" : "Add a seed to the seed list",
+      "return_type" : "Self&",
+      "parameters" : [
+        { "type" : "Index",
+          "var_name" : "idx",
+          "last" : 1
+        }
+      ],
+      "body" :
+        "this->m_SeedList.push_back(idx);\
+        return *this;"
+    }
+  
+  ],
   "tests" : []
 }

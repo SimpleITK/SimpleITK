@@ -47,7 +47,24 @@ namespace itk {
       $(if members and #members > 0 then
         OUT=[[Image::Pointer Execute ( Image::Pointer $(if number_of_inputs == 2 then OUT=', Image::Pointer' end) $(foreach members ,${type} in${name} ) );]]
       end)
-      
+
+      $(if custom_methods then
+      OUT = [[
+
+      //
+      // Convenience Methods
+      //
+
+      $(foreach custom_methods
+/** ${doc} */
+      ${return_type} ${name}( $(foreach parameters ${type} ${var_name}$(if last == 0 then OUT=',' end) ))
+        {
+        ${body}
+        };
+      )
+      ]]
+      end)
+
     private:
 
       $(if number_of_inputs == 2 then OUT=[[sitkDualImageMemberFunctionDispatcher;]] else OUT=[[sitkSingleImageMemberFunctionDispatcher;]] end)
