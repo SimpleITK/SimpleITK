@@ -94,10 +94,17 @@ template <class TImageType> struct PimpleImage;
     PimpleImage ( ImageType* image )
       : m_Image( image )
       {
-          // this should be a STATIC ASSERT
-        assert( TImageType::ImageDimension == 3 || TImageType::ImageDimension == 2 );
+        // this should be a static_assert
+        if ( (TImageType::ImageDimension != 3 && TImageType::ImageDimension != 2) ||
+             ImageTypeToPixelIDValue<ImageType>::Result == (int)sitkUnknown )
+          {
+          itkGenericExceptionMacro( << "unsupported image constructed" );
+          }
 
-        // todo check the pixel type
+        if ( image == NULL )
+          {
+          itkGenericExceptionMacro( << "unable to initialize an image with NULL" );
+          }
         }
 
     virtual PimpleImageBase *Clone( void ) const { return new Self(this->m_Image.GetPointer()); }
