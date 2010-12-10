@@ -31,7 +31,12 @@
       "tag" : "defaults",
       "description" : "Simply run with default settings",
       "inputA" : "Input/RA-Float.nrrd",
-      "settings" : [],
+      "settings" : [
+        {
+        "parameter" : "TimeStep",
+        "value" : 0.01
+        }
+      ],
       "tolerance" : 0.0,
       "md5hash" : null
     }
@@ -42,14 +47,14 @@
       "settings" : [
         {
           "parameter" : "TimeStep",
-          "value" : 0.1
+          "value" : 0.01
         },
         {
           "parameter" : "NumberOfIterations",
           "value" : 10
         }
       ],
-      "tolerance" : "0.0",
+      "tolerance" : 0.0,
       "md5hash" : null
     }
   ]
