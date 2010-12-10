@@ -29,7 +29,7 @@ namespace simple {
 // in many cases for now.
 #define sitkStaticAssert( expr, str )            \
   {                                              \
-    if ( !(expr) ) sitkExceptionMacro( str );    \
+    if ( !(expr) ) sitkExceptionMacro( <<"StaticAssert failed: " << str ); \
   }
 
 }
