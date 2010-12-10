@@ -143,8 +143,18 @@ int main( int argc, char *argv[])
   segmentationFilter.SetLower( atof( argv[5] ) );
   segmentationFilter.SetUpper( atof( argv[6] ) );
   segmentationFilter.SetReplaceValue( 255 );
+  std::vector<itk::simple::Index> seedList;
+  itk::simple::Index seed1( atoi(argv[3]), atoi(argv[4]) );
+  seedList.push_back(seed1);
+  segmentationFilter.SetSeedList(seedList);
+
+  itk::simple::Image::Pointer outImage = segmentationFilter.Execute(image);
 
 
+  //
+  // Writ out the resulting file
+  //
+  writer.Execute(outImage);
 /*
 
   // Software Guide : BeginCodeSnippet

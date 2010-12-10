@@ -30,29 +30,13 @@
   "\
   // Convert Seed List from std::vector<itk::simple::Index>\
   // to std::vector<itk::Index>\
-  assert( InputImageType::ImageDimension == 3 || InputImageType::ImageDimension == 2 );\
   filter->ClearSeeds();\
-  if (InputImageType::ImageDimension == 2)\
-   {\
-   for (unsigned int i = 0; i < m_SeedList.size(); ++i)\
-     {\
-     typename InputImageType::IndexType idx;\
-     idx[0] = m_SeedList[i][0];\
-     idx[1] = m_SeedList[i][1];\
-     filter->AddSeed(idx);\
-     }\
-   }\
-  else if (InputImageType::ImageDimension == 3)\
-   {\
-   for (unsigned int i = 0; i < m_SeedList.size(); ++i)\
-     {\
-     typename InputImageType::IndexType idx;\
-     idx[0] = m_SeedList[i][0];\
-     idx[1] = m_SeedList[i][1];\
-     idx[2] = m_SeedList[i][2];\
-     filter->AddSeed(idx);\
-     }\
-   }"
+  for (unsigned int i = 0; i < m_SeedList.size(); ++i)\
+    {\
+    typename InputImageType::IndexType idx;\
+    idx = (typename InputImageType::IndexType)m_SeedList[i];\
+    filter->AddSeed(idx);\
+    }"
 
     }
   ],
