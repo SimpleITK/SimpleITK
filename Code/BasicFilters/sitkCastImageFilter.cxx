@@ -62,12 +62,12 @@ Image::Pointer CastImageFilter::ExecuteInternal ( Image::Pointer inImage )
 
   if ( image.IsNull() )
     {
-    itkGenericExceptionMacro( "Unexpected template dispatch error!" );
+    sitkExceptionMacro( "Unexpected template dispatch error!" );
     }
 
   if ( this->m_OutputPixelType == sitkUnknown )
     {
-    itkGenericExceptionMacro( "Unalbe to convert to unknown pixel type." );
+    sitkExceptionMacro( "Unalbe to convert to unknown pixel type." );
     return NULL;
     }
   else if ( this->m_OutputPixelType == sitkUInt8 )

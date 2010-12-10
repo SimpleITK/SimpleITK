@@ -99,12 +99,12 @@ template <class TImageType> struct PimpleImage;
         if ( (TImageType::ImageDimension != 3 && TImageType::ImageDimension != 2) ||
              ImageTypeToPixelIDValue<ImageType>::Result == (int)sitkUnknown )
           {
-          itkGenericExceptionMacro( << "unsupported image constructed" );
+          sitkExceptionMacro( << "unsupported image constructed" );
           }
 
         if ( image == NULL )
           {
-          itkGenericExceptionMacro( << "unable to initialize an image with NULL" );
+          sitkExceptionMacro( << "unable to initialize an image with NULL" );
           }
         }
 

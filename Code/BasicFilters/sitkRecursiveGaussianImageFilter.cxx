@@ -61,7 +61,7 @@ Image::Pointer RecursiveGaussianImageFilter::ExecuteInternal ( Image::Pointer in
 
   if ( image.IsNull() )
     {
-    itkGenericExceptionMacro( "Unexpected template dispatch error!" );
+    sitkExceptionMacro( "Unexpected template dispatch error!" );
     }
 
   typedef itk::RecursiveGaussianImageFilter<InputImageType, OutputImageType> FilterType;

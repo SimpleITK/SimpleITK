@@ -118,7 +118,7 @@ MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
         }
       else
         {
-        itkGenericExceptionMacro ( << "Pixel type is not supported for this commandlet" );
+        sitkExceptionMacro ( << "Pixel type is not supported for this commandlet" );
         }
       break;
     case 2:
@@ -130,11 +130,11 @@ MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
       else
         {
         // need to thow something better or have some other definded behavior
-        itkGenericExceptionMacro ( << "Pixel type is not supported for this commandlet" );
+        sitkExceptionMacro ( << "Pixel type is not supported for this commandlet" );
         }
       break;
     default:
-      itkGenericExceptionMacro ( << "Image dimension " << imageDimension << " is not supported" );
+      sitkExceptionMacro ( << "Image dimension " << imageDimension << " is not supported" );
       throw;
     }
 }

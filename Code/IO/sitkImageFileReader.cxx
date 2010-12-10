@@ -9,7 +9,7 @@
 
 namespace itk {
   namespace simple {
-    
+
     ImageFileReader& ImageFileReader::SetFilename ( std::string fn ) {
       this->m_Filename = fn;
       return *this;
@@ -30,7 +30,7 @@ namespace itk {
 
       if ( iobase.IsNull() )
         {
-        itkGenericExceptionMacro( "Unable to determine ImageIO reader for \"" << this->m_Filename << "\"" );
+        sitkExceptionMacro( "Unable to determine ImageIO reader for \"" << this->m_Filename << "\"" );
         }
 
       // Read the image information
@@ -77,13 +77,13 @@ namespace itk {
         }
       else
         {
-        itkGenericExceptionMacro(  "Unknown PixelType: "  << (int) componentType );
+        sitkExceptionMacro(  "Unknown PixelType: "  << (int) componentType );
         }
 
 
       if ( image.IsNull() )
         {
-        itkGenericExceptionMacro( "Unable to load image \"" << this->m_Filename << "\"" );
+        sitkExceptionMacro( "Unable to load image \"" << this->m_Filename << "\"" );
         }
 
       return image;
@@ -185,11 +185,11 @@ namespace itk {
     // do not create an image if it's not in the instatied pixel list
     if ( ImageTypeToPixelIDValue<ImageType>::Result == (int)sitkUnknown)
       {
-      itkGenericExceptionMacro( << "PixelType is not supported!" << std::endl
-                                 << "Refusing to load! " << std::endl
-                                 << typeid( ImageType ).name()  << std::endl
-                                 << typeid( typename ImageTypeToPixelID<ImageType>::PixelIDType ).name() << std::endl
-                                 << ImageTypeToPixelIDValue<ImageType>::Result );
+      sitkExceptionMacro( << "PixelType is not supported!" << std::endl
+                          << "Refusing to load! " << std::endl
+                          << typeid( ImageType ).name()  << std::endl
+                          << typeid( typename ImageTypeToPixelID<ImageType>::PixelIDType ).name() << std::endl
+                          << ImageTypeToPixelIDValue<ImageType>::Result );
       return NULL;
       }
 

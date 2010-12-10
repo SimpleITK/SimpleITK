@@ -61,7 +61,7 @@ namespace itk {
 
       if ( image.IsNull() )
         {
-        itkGenericExceptionMacro( "Unexpected template dispatch error!" );
+        sitkExceptionMacro( "Unexpected template dispatch error!" );
         }
 
       ::MD5 md5;
