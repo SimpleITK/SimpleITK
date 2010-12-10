@@ -107,7 +107,7 @@ namespace itk {
       delete[] buffer;
       // Calculate and return the hash value
       std::string hash;
-      int HashSize;
+      int HashSize = SHA1HashSize;
       unsigned char Digest[1024];
       switch ( this->m_HashFunction )
         {
