@@ -3,7 +3,7 @@
   "number_of_inputs" : 1,
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelIDTypeList",
-  "include_files" : ["sitkIndex.h", "test.h"],
+  "include_files" : ["sitkIndex.h"],
   "members" : [
     { "name" : "Upper",
       "type" : "double",
@@ -18,8 +18,44 @@
     { "name" : "ReplaceValue",
       "type" : "double",
       "default" : 1.0,
-      "doc" : "Pixels that lie within Lower and Upper (inclusive) will be replaced with this value. The default is 1."
+      "doc" : "Pixels that lie within Lower and Upper (inclusive)\
+       will be replaced with this value. The default is 1."
+    },
+    { "name" : "SeedList",
+      "type" : "std::vector<itk::simple::Index>",
+      "doc" : "List of interor seed points used to initialize the region growing segmentation",
+      "no_print" : 1,
+      "custom_itk_cast" :
+
+  "\
+  // Convert Seed List from std::vector<itk::simple::Index>\
+  // to std::vector<itk::Index>\
+  assert( InputImageType::ImageDimension == 3 || InputImageType::ImageDimension == 2 );\
+  filter->ClearSeeds();\
+  if (InputImageType::ImageDimension == 2)\
+   {\
+   for (unsigned int i = 0; i < m_SeedList.size(); ++i)\
+     {\
+     typename InputImageType::IndexType idx;\
+     idx[0] = m_SeedList[i][0];\
+     idx[1] = m_SeedList[i][1];\
+     filter->AddSeed(idx);\
+     }\
+   }\
+  else if (InputImageType::ImageDimension == 3)\
+   {\
+   for (unsigned int i = 0; i < m_SeedList.size(); ++i)\
+     {\
+     typename InputImageType::IndexType idx;\
+     idx[0] = m_SeedList[i][0];\
+     idx[1] = m_SeedList[i][1];\
+     idx[2] = m_SeedList[i][2];\
+     filter->AddSeed(idx);\
+     }\
+   }"
+
     }
   ],
+  "custom_methods" : [],
   "tests" : []
 }
