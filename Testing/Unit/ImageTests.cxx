@@ -1,5 +1,12 @@
-#include <SimpleITK.h>
 #include <SimpleITKTestHarness.h>
+
+#include <sitkImage.h>
+#include <sitkImageFileReader.h>
+#include <sitkImageFileWriter.h>
+#include <sitkImageHashFilter.h>
+
+
+using  itk::simple::InstantiatedPixelIDTypeList;
 
 class Image : public ::testing::Test {
 public:
@@ -74,7 +81,6 @@ TEST_F(Image,ImageDataType) {
   // this test checks that the DataType of the images are correct
   int result;
 
-  using  itk::simple::InstantiatedPixelIDTypeList;
 
   result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<short> >::Result;
   EXPECT_EQ( shortImage->GetPixelIDValue(), result);
@@ -118,6 +124,38 @@ TEST_F(Image,ImageDataType) {
 
 }
 
+TEST_F(Image,Constructors) {
+  itk::simple::Image::Pointer image;
+  itk::simple::ImageHashFilter hasher;
+  int result;
+
+  image = new itk::simple::Image ( 64, 65, 66, itk::simple::sitkUInt8 );
+  EXPECT_EQ ( "08183e1b0c50fd2cf6f070b58e218443fb7d5317", hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt8";
+  result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<unsigned char> >::Result;  
+  EXPECT_EQ ( image->GetPixelIDValue(), result );
+  EXPECT_EQ ( image->GetDimension(), 3u );
+  EXPECT_EQ ( 64u, image->GetWidth() );
+  EXPECT_EQ ( 65u, image->GetHeight() );
+  EXPECT_EQ ( 66u, image->GetDepth() );
+
+  image = new itk::simple::Image ( 64, 65, 66, itk::simple::sitkInt16 );
+  EXPECT_EQ ( "645b71695b94923c868e16b943d8acf8f6788617", hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt16";
+  result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<short> >::Result;  
+  EXPECT_EQ ( image->GetPixelIDValue(), result );
+  EXPECT_EQ ( image->GetDimension(), 3u );
+  EXPECT_EQ ( 64u, image->GetWidth() );
+  EXPECT_EQ ( 65u, image->GetHeight() );
+  EXPECT_EQ ( 66u, image->GetDepth() );
+
+  image = new itk::simple::Image ( 64, 65, itk::simple::sitkUInt16 );
+  EXPECT_EQ ( "e3c464cc1b73df3f48bacf238a80f88b5ab0d3e6", hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt16";
+  result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<unsigned short> >::Result;  
+  EXPECT_EQ ( image->GetPixelIDValue(), result );
+  EXPECT_EQ ( image->GetDimension(), 2u );
+  EXPECT_EQ ( 64u, image->GetWidth() );
+  EXPECT_EQ ( 65u, image->GetHeight() );
+  EXPECT_EQ ( 0u, image->GetDepth() );
+}  
 
 TEST_F(Image,Hash) {
   itk::simple::ImageHashFilter hasher;

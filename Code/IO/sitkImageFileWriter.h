@@ -2,8 +2,8 @@
 #define __sitkImageFileWriter_h
 
 #include "sitkMacro.h"
-#include "sitkMemberFunctionFactory.h"
 #include "sitkImage.h"
+#include "sitkMemberFunctionFactory.h"
 
 namespace itk {
   namespace simple {

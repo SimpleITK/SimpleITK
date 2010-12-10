@@ -75,6 +75,23 @@ Image::Pointer CastImageFilter::ExecuteInternal ( Image::Pointer inImage )
     typedef itk::Image< uint8_t, InputImageType::ImageDimension > OutputImageType;
     return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
     }
+  else if ( this->m_OutputPixelType == sitkInt16 )
+    {
+    typedef itk::Image< int16_t, InputImageType::ImageDimension > OutputImageType;
+    return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
+    }
+  else if ( this->m_OutputPixelType == sitkInt32 )
+    {
+    typedef itk::Image< int32_t, InputImageType::ImageDimension > OutputImageType;
+    return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
+    }
+  else if ( this->m_OutputPixelType == sitkFloat32 )
+    {
+    typedef itk::Image< float, InputImageType::ImageDimension > OutputImageType;
+    return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
+    }
+
+  /*
   else if ( this->m_OutputPixelType == sitkInt8 )
     {
     typedef itk::Image< int8_t, InputImageType::ImageDimension > OutputImageType;
@@ -85,19 +102,9 @@ Image::Pointer CastImageFilter::ExecuteInternal ( Image::Pointer inImage )
     typedef itk::Image< uint16_t, InputImageType::ImageDimension > OutputImageType;
     return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
     }
-  else if ( this->m_OutputPixelType == sitkInt16 )
-    {
-    typedef itk::Image< int16_t, InputImageType::ImageDimension > OutputImageType;
-    return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
-    }
   else if ( this->m_OutputPixelType == sitkUInt32 )
     {
     typedef itk::Image< uint32_t, InputImageType::ImageDimension > OutputImageType;
-    return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
-    }
-  else if ( this->m_OutputPixelType == sitkInt32 )
-    {
-    typedef itk::Image< int32_t, InputImageType::ImageDimension > OutputImageType;
     return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
     }
   else if ( this->m_OutputPixelType == sitkUInt64 )
@@ -108,11 +115,6 @@ Image::Pointer CastImageFilter::ExecuteInternal ( Image::Pointer inImage )
   else if ( this->m_OutputPixelType == sitkInt64 )
     {
     typedef itk::Image< int64_t, InputImageType::ImageDimension > OutputImageType;
-    return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
-    }
-  else if ( this->m_OutputPixelType == sitkFloat32 )
-    {
-    typedef itk::Image< float, InputImageType::ImageDimension > OutputImageType;
     return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
     }
   else if ( this->m_OutputPixelType == sitkFloat64 )
@@ -180,6 +182,7 @@ Image::Pointer CastImageFilter::ExecuteInternal ( Image::Pointer inImage )
     typedef itk::VectorImage< double, InputImageType::ImageDimension > OutputImageType;
     return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
     }
+  */
   return NULL;
   }
 

@@ -6,7 +6,7 @@ namespace simple
 {
 
 
-const char * GetPixelIDValueAsString( PixelIDValueType type )
+  const std::string GetPixelIDValueAsString( PixelIDValueType type )
 {
 
   if ( type == sitkUnknown )

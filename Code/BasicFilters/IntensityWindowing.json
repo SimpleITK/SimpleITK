@@ -25,5 +25,27 @@
       "doc" : "Output maximum"
     }
     ],        
-  "tests" : []
+  "tests" : [
+    {
+      "tag" : "2d",
+      "description" : "2D",
+      "inputA" : "Input/STAPLE1.png",
+      "settings" : [],
+      "md5hash" : "095f00a68a84df4396914fa758f34dcc"
+    },
+    {
+      "tag" : "3dFloat",
+      "description" : "3D",
+      "inputA" : "Input/RA-Float.nrrd",
+      "settings" : [],
+      "md5hash" : "199c966fabac791c758766e14df9974c"
+    },
+    {
+      "tag" : "3dShort",
+      "description" : "3D",
+      "inputA" : "Input/RA-Short.nrrd",
+      "settings" : [],
+      "md5hash" : "2790c2bdfeb8610821e9ec8751f95516"
+    }
+  ]
 }
