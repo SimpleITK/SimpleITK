@@ -1,0 +1,47 @@
+{
+  "name" : "BinaryMinMaxCurvatureFlow",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "RealPixelIDTypeList",
+  "members" : [
+    { "name" : "TimeStep",
+      "type" : "double",
+      "default" : 0.125,
+      "doc" : "Time step for PDE solver"
+    },
+    {
+      "name" : "NumberOfIterations",
+      "type" : "uint32_t",
+      "default" : "5u",
+      "doc" : "Number of iterations to run"
+    }
+  ]
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Simply run with default settings",
+      "inputA" : "Input/RA-Float.nrrd",
+      "settings" : [],
+      "tolerance" : 0.0,
+      "md5hash" : null
+    }
+    {
+      "tag" : "longer",
+      "description" : "Change number of iterations and timestep",
+      "inputA" : "Input/RA-Float.nrrd",
+      "settings" : [
+        {
+          "parameter" : "TimeStep",
+          "value" : 0.1
+        },
+        {
+          "parameter" : "NumberOfIterations",
+          "value" : 10
+        }
+      ],
+      "tolerance" : "0.0",
+      "md5hash" : null
+    }
+  ]
+}
+
