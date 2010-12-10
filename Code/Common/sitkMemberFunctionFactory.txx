@@ -65,6 +65,13 @@ void MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
 {
   PixelIDValueType pixelID = ImageTypeToPixelIDValue<TImageType>::Result;
 
+  // this shouldn't occour, just may be useful for debugging
+  assert( pixelID > 0 && pixelID < typelist::Length< InstantiatedPixelIDTypeList >::Result );
+
+  sitkStaticAssert( TImageType::ImageDimension == 2 || TImageType::ImageDimension == 3,
+                    "Image Dimension out of range" );
+  sitkStaticAssert( ImageTypeToPixelIDValue<TImageType>::Result != (int)sitkUnknown,
+                    "invalid pixel type");
 
   if ( pixelID > 0 && pixelID < typelist::Length< InstantiatedPixelIDTypeList >::Result )
     {
@@ -77,9 +84,7 @@ void MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
         Superclass::m_PFunction2[ pixelID ] = Superclass::BindObject( pfunc, m_ObjectPointer );
         break;
       default:
-        std::cerr << "Tried to register image with unsupported dimension of " << (unsigned)TImageType::ImageDimension << std::endl;
-        assert(false); // this condition should not occour and a
-                       // static_assert is needed
+        break;
       }
     }
 }
@@ -105,8 +110,10 @@ typename MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
 MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
 ::GetMemberFunction( PixelIDValueType pixelID, unsigned int imageDimension  )
 {
-  // assert that it's in the sane range
-  assert ( pixelID < typelist::Length< InstantiatedPixelIDTypeList >::Result && pixelID >= 0 );
+  if ( pixelID >= typelist::Length< InstantiatedPixelIDTypeList >::Result || pixelID < 0 )
+    {
+    sitkExceptionMacro ( << "unexpected error pixelID is out of range" );
+    }
 
   switch ( imageDimension )
     {
@@ -116,10 +123,9 @@ MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
         {
         return Superclass::m_PFunction3[ pixelID ];
         }
-      else
-        {
-        sitkExceptionMacro ( << "Pixel type is not supported for this commandlet" );
-        }
+
+      sitkExceptionMacro ( << "Pixel type is not supported for this commandlet" );
+
       break;
     case 2:
       // check if tr1::function has been set
@@ -127,11 +133,9 @@ MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
         {
         return Superclass::m_PFunction2[ pixelID ];
         }
-      else
-        {
-        // need to thow something better or have some other definded behavior
-        sitkExceptionMacro ( << "Pixel type is not supported for this commandlet" );
-        }
+
+      sitkExceptionMacro ( << "Pixel type is not supported for this commandlet" );
+
       break;
     default:
       sitkExceptionMacro ( << "Image dimension " << imageDimension << " is not supported" );

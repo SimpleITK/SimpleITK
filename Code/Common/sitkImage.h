@@ -95,12 +95,10 @@ template <class TImageType> struct PimpleImage;
     PimpleImage ( ImageType* image )
       : m_Image( image )
       {
-        // this should be a static_assert
-        if ( (TImageType::ImageDimension != 3 && TImageType::ImageDimension != 2) ||
-             ImageTypeToPixelIDValue<ImageType>::Result == (int)sitkUnknown )
-          {
-          sitkExceptionMacro( << "unsupported image constructed" );
-          }
+        sitkStaticAssert( TImageType::ImageDimension == 3 || TImageType::ImageDimension == 2,
+                          "Image Dimension out of range" );
+        sitkStaticAssert( ImageTypeToPixelIDValue<ImageType>::Result != (int)sitkUnknown,
+                          "invalid pixel type" );
 
         if ( image == NULL )
           {
