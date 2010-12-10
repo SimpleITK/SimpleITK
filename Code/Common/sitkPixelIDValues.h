@@ -11,7 +11,7 @@ namespace simple
 typedef int PixelIDValueType;
 
 
-const char * GetPixelIDValueAsString( PixelIDValueType type );
+  const std::string GetPixelIDValueAsString( PixelIDValueType type );
 
 
 template < typename TPixelID >

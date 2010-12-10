@@ -27,5 +27,13 @@
       "doc" : "Output minimum"
     }
   ] 
-  "tests" : []
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Simply run with default settings",
+      "inputA" : "Input/Ramp-Zero-One-Float.nrrd",
+      "settings" : [],
+      "md5hash" : "c9222b9c9150e0d7a07e9de184c10167"
+    }
+  ]
 }
