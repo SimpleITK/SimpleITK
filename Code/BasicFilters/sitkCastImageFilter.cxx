@@ -60,14 +60,14 @@ Image::Pointer CastImageFilter::ExecuteInternal ( Image::Pointer inImage )
   typename InputImageType::ConstPointer image =
     dynamic_cast <InputImageType*> ( inImage->GetImageBase().GetPointer() );
 
-  if ( image.IsNull() ) {
-    // Take some action
-    return NULL;
-  }
+  if ( image.IsNull() )
+    {
+    itkGenericExceptionMacro( "Unexpected template dispatch error!" );
+    }
 
   if ( this->m_OutputPixelType == sitkUnknown )
     {
-    std::cerr << "Unalbe to convert to unknown pixel type." << std::endl;
+    itkGenericExceptionMacro( "Unalbe to convert to unknown pixel type." );
     return NULL;
     }
   else if ( this->m_OutputPixelType == sitkUInt8 )

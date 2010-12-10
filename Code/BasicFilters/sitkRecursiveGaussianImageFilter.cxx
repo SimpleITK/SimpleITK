@@ -59,10 +59,10 @@ Image::Pointer RecursiveGaussianImageFilter::ExecuteInternal ( Image::Pointer in
   typename InputImageType::Pointer image =
     dynamic_cast <InputImageType*> ( inImage->GetImageBase().GetPointer() );
 
-  if ( image.IsNull() ) {
-    // Take some action
-    return NULL;
-  }
+  if ( image.IsNull() )
+    {
+    itkGenericExceptionMacro( "Unexpected template dispatch error!" );
+    }
 
   typedef itk::RecursiveGaussianImageFilter<InputImageType, OutputImageType> FilterType;
   typename FilterType::Pointer filter = FilterType::New();
