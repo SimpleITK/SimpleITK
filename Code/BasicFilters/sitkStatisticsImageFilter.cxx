@@ -63,7 +63,7 @@ Image::Pointer StatisticsImageFilter::ExecuteInternal ( Image::Pointer inImage1 
 
   if ( image1.IsNull() )
     {
-    itkGenericExceptionMacro( "Unexpected template dispatch error!" );
+    sitkExceptionMacro( "Unexpected template dispatch error!" );
     }
 
   typedef itk::StatisticsImageFilter<InputImageType> FilterType;

@@ -88,7 +88,7 @@ Image::Pointer ${name}ImageFilter::ExecuteInternal ( Image::Pointer inImage1 $(i
 
   if ( image1.IsNull() )
     {
-    itkGenericExceptionMacro( "Unexpected template dispatch error!" );
+    sitkExceptionMacro( "Unexpected template dispatch error!" );
     }
 
   $(if number_of_inputs == 2 then
@@ -98,7 +98,7 @@ Image::Pointer ${name}ImageFilter::ExecuteInternal ( Image::Pointer inImage1 $(i
 
   if ( image2.IsNull() )
     {
-    itkGenericExceptionMacro( "Unexpected template dispatch error!" );
+    sitkExceptionMacro( "Unexpected template dispatch error!" );
     }
           ]]
     end)
