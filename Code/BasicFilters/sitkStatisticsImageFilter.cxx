@@ -61,10 +61,10 @@ Image::Pointer StatisticsImageFilter::ExecuteInternal ( Image::Pointer inImage1 
   typename InputImageType::Pointer image1 =
     dynamic_cast <InputImageType*> ( inImage1->GetImageBase().GetPointer() );
 
-  if ( image1.IsNull() ) {
-    // Take some action
-    return NULL;
-  }
+  if ( image1.IsNull() )
+    {
+    itkGenericExceptionMacro( "Unexpected template dispatch error!" );
+    }
 
   typedef itk::StatisticsImageFilter<InputImageType> FilterType;
 
