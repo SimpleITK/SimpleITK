@@ -4,5 +4,22 @@
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelIDTypeList",
   "members" : [],
-  "tests" : []
+  "tests" : [
+    {
+      "tag" : "2d",
+      "description" : "2D",
+      "inputA" : "Input/STAPLE1.png",
+      "inputB" : "Input/STAPLE2.png",
+      "settings" : [],
+      "md5hash" : "ac40268d90c25dd631b54024ae84bffe"
+    },
+    {
+      "tag" : "3d",
+      "description" : "3D",
+      "inputA" : "Input/RA-Short.nrrd",
+      "inputB" : "Input/RA-Short.nrrd",
+      "settings" : [],
+      "md5hash" : "1cd2796868a78f53a53849137989c153"
+    }
+  ]
 }

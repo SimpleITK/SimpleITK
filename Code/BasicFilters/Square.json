@@ -4,5 +4,13 @@
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelIDTypeList",
   "members" : [],
-  "tests" : []
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Simply run with default settings",
+      "inputA" : "Input/Ramp-Zero-One-Float.nrrd",
+      "settings" : [],
+      "md5hash" : "314065b457b66e102b9cafd7c49be6b3"
+    }
+  ]
 }

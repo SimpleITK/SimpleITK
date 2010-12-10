@@ -116,8 +116,8 @@ MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
         }
       else
         {
-        std::cerr << "Pixel type is not supported for this commandlet" << std::endl;
-        itkGenericExceptionMacro ( << "Pixel type is not supported for this commandlet" );
+        std::cerr << "Pixel type: " << pixelID << " is not supported in 3D" << std::endl;
+        itkGenericExceptionMacro ( << "Pixel type: " << pixelID << " is not supported in 3D" );
         }
       break;
     case 2:
@@ -128,9 +128,9 @@ MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
         }
       else
         {
-        std::cerr << "Pixel type is not supported for this commandlet" << std::endl;
+        std::cerr << "Pixel type: " << pixelID << " is not supported in 2D" << std::endl;
         // need to thow something better or have some other definded behavior
-        itkGenericExceptionMacro ( << "Pixel type is not supported for this commandlet" );
+        itkGenericExceptionMacro ( << "Pixel type: " << pixelID << " is not supported in 2D" );
         }
       break;
     default:

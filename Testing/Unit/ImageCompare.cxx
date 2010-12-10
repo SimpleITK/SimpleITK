@@ -1,3 +1,9 @@
+#include <sitkImageFileReader.h>
+#include <sitkImageFileWriter.h>
+#include <sitkImageHashFilter.h>
+#include <sitkSubtractImageFilter.h>
+#include <sitkStatisticsImageFilter.h>
+
 #include "ImageCompare.h"
 #include "itkExceptionObject.h"
 ImageCompare::ImageCompare() {

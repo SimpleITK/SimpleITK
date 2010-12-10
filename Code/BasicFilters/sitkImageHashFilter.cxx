@@ -78,7 +78,13 @@ namespace itk {
       size_t VoxelsPerSlice = inImage->GetWidth() * inImage->GetHeight();
       PixelType* buffer = new PixelType[VoxelsPerSlice];
       // Compute the hash value one slice at a time
-      for ( size_t depth = 0; depth < inImage->GetDepth(); depth++ ) {
+      size_t NumberOfSlices;
+      if ( TImageType::ImageDimension == 2 ) {
+        NumberOfSlices = 1;
+      } else {
+        NumberOfSlices = inImage->GetDepth();
+      }
+      for ( size_t depth = 0; depth < NumberOfSlices; depth++ ) {
         for ( size_t i = 0; i < VoxelsPerSlice; i++ ) {
           buffer[i] = iterator.Value();
           ++iterator;
