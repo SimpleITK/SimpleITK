@@ -22,12 +22,15 @@ public:
   typedef SmartPointer<Self> Pointer;
   typedef uint64_t           IndexValueType;
 
+  //
   // Constructors
+  //
 
   Index( IndexValueType x, IndexValueType y )
     {
     m_Index[0] = x;
     m_Index[1] = y;
+    m_Dim = 2;
     }
 
   Index( IndexValueType x, IndexValueType y, IndexValueType z )
@@ -35,8 +38,13 @@ public:
     m_Index[0] = x;
     m_Index[1] = y;
     m_Index[2] = z;
+    m_Dim = 3;
     };
 
+
+  //
+  // Methods
+  //
 
   // Get Component Methods
   IndexValueType GetX() { return m_Index[0]; };
@@ -48,12 +56,17 @@ public:
   Self& SetY( IndexValueType y ) { m_Index[1] = y; return *this; };
   Self& SetZ( IndexValueType z ) { m_Index[2] = z; return *this; };
 
+  // Get dimensionality
+  unsigned int GetDim() { return m_Dim; };
+
+
+  //
+  // Operators
+  //
+
   // [] operator (no bounds checking)
   IndexValueType & operator[](unsigned int dim)
   { return m_Index[dim]; }
-
-  // Array of 3 values to hold the indices
-  IndexValueType m_Index[3];
 
   // Cast operator for itk::Index<2>
   operator itk::Index<2>()
@@ -74,7 +87,37 @@ public:
     return idx;
     };
 
+  // Array of 3 values to hold the indices
+  IndexValueType m_Index[3];
+
+private:
+
+  // Not Implemented
+  Index();
+
+  // The dimensionality of the index
+  unsigned int m_Dim;
+
 };  // end class Index
+
+/* ---- Not working... not sure why
+
+// << operator for printing
+std::ostream & operator<<(std::ostream & os, Index & idx)
+{
+  os << "[";
+  for ( unsigned int i = 0; i + 1 < idx.GetDim(); ++i )
+    {
+    os << idx[i] << ", ";
+    }
+  if ( idx.GetDim() >= 1 )
+    {
+    os << idx[idx.GetDim() - 1];
+    }
+  os << "]";
+  return os;
+}
+*/
 
 
 } // end namespace simple
