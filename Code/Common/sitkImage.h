@@ -3,6 +3,7 @@
 
 #include "sitkMacro.h"
 
+#include "itkImage.h"
 #include "itkVectorImage.h"
 #include "itkImage.h"
 #include "itkLabelMap.h"
@@ -108,10 +109,15 @@ template <class TImageType> struct PimpleImage;
     PimpleImage ( ImageType* image )
       : m_Image( image )
       {
-          // this should be a STATIC ASSERT
-        assert( TImageType::ImageDimension == 3 || TImageType::ImageDimension == 2 );
+        sitkStaticAssert( TImageType::ImageDimension == 3 || TImageType::ImageDimension == 2,
+                          "Image Dimension out of range" );
+        sitkStaticAssert( ImageTypeToPixelIDValue<ImageType>::Result != (int)sitkUnknown,
+                          "invalid pixel type" );
 
-        // todo check the pixel type
+        if ( image == NULL )
+          {
+          sitkExceptionMacro( << "unable to initialize an image with NULL" );
+          }
         }
 
     virtual PimpleImageBase *Clone( void ) const { return new Self(this->m_Image.GetPointer()); }
