@@ -10,6 +10,7 @@ set ( TestSource
   IOTests.cxx
   TypeListsTests.cxx
   BasicFiltersTests.cxx
+  sitkExceptionsTests.cxx
   CXXTests.cxx
   )
 

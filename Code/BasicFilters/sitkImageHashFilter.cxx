@@ -59,10 +59,10 @@ namespace itk {
       typename InputImageType::Pointer image =
         dynamic_cast <InputImageType*> ( inImage->GetImageBase().GetPointer() );
 
-      if ( image.IsNull() ) {
-        // Take some action
-        return "ImageIsNull";
-      }
+      if ( image.IsNull() )
+        {
+        sitkExceptionMacro( "Unexpected template dispatch error!" );
+        }
 
       ::MD5 md5;
       ::HL_MD5_CTX md5Context;

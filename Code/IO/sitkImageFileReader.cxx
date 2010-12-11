@@ -9,7 +9,7 @@
 
 namespace itk {
   namespace simple {
-    
+
     ImageFileReader& ImageFileReader::SetFilename ( std::string fn ) {
       this->m_Filename = fn;
       return *this;
@@ -30,9 +30,9 @@ namespace itk {
 
       if ( iobase.IsNull() )
         {
-        std::cerr << "unable to create ImageIO for \"" << this->m_Filename << "\"" << std::endl;
-        return image;
+        sitkExceptionMacro( "Unable to determine ImageIO reader for \"" << this->m_Filename << "\"" );
         }
+
       // Read the image information
       iobase->SetFileName( this->m_Filename );
       iobase->ReadImageInformation();
@@ -77,16 +77,16 @@ namespace itk {
         }
       else
         {
-        std::cerr << "Unknown PixelType: "  << (int) componentType << std::endl;
+        sitkExceptionMacro(  "Unknown PixelType: "  << (int) componentType );
         }
 
 
       if ( image.IsNull() )
         {
-        std::cerr << "Unable to load image!" << std::endl;
+        sitkExceptionMacro( "Unable to load image \"" << this->m_Filename << "\"" );
         }
 
-    return image;
+      return image;
     }
 
 
@@ -127,8 +127,7 @@ namespace itk {
       break;
     case itk::ImageIOBase::UNKNOWNCOMPONENTTYPE:
     default:
-      // todo error handling
-      std::cerr << "Unknow pixel component type" << std::endl;
+      assert( false ); // should never get here unless we forgot a type
       return NULL;
     }
   }
@@ -171,8 +170,7 @@ namespace itk {
       break;
     case itk::ImageIOBase::UNKNOWNCOMPONENTTYPE:
     default:
-      // todo error handling
-      std::cerr << "Unknow pixel component type" << std::endl;
+      assert( false ); // should never get here unless we forgot a type
       return NULL;
     }
   }
@@ -187,11 +185,11 @@ namespace itk {
     // do not create an image if it's not in the instatied pixel list
     if ( ImageTypeToPixelIDValue<ImageType>::Result == (int)sitkUnknown)
       {
-      std::cerr << "PixelType is not supported!" << std::endl
-                << "Refusing to load! " << std::endl
-                << typeid( ImageType ).name()  << std::endl
-                << typeid( typename ImageTypeToPixelID<ImageType>::PixelIDType ).name() << std::endl
-                << ImageTypeToPixelIDValue<ImageType>::Result << std::endl;
+      sitkExceptionMacro( << "PixelType is not supported!" << std::endl
+                          << "Refusing to load! " << std::endl
+                          << typeid( ImageType ).name()  << std::endl
+                          << typeid( typename ImageTypeToPixelID<ImageType>::PixelIDType ).name() << std::endl
+                          << ImageTypeToPixelIDValue<ImageType>::Result );
       return NULL;
       }
 

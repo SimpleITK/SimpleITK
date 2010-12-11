@@ -12,7 +12,7 @@ namespace simple {
 ${name}ImageFilter::${name}ImageFilter ()
   {
 
-  $(foreach members 
+  $(foreach members
   m_${name} = ${default};
   )
 
@@ -30,7 +30,7 @@ std::string ${name}ImageFilter::ToString() const
   std::ostringstream out;
   out << "itk::simple::${name}ImageFilter\n";
 
-  $(foreach members 
+  $(foreach members
     out << "\t${name}: " << this->m_${name} << "\n";
   )
 
@@ -45,7 +45,7 @@ std::string ${name}ImageFilter::ToString() const
 OUT = [[
         Image::Pointer ${name}ImageFilter::Execute ( Image::Pointer image1 $(if number_of_inputs==2 then OUT=', Image::Pointer image2' end) $(foreach members ,${type} in${name} ) )
   {
-    $(foreach members 
+    $(foreach members
     this->Set${name} ( in${name} );
     )
     return this->Execute ( image1 $(if number_of_inputs==2 then OUT=', image2' end) );
@@ -86,22 +86,27 @@ Image::Pointer ${name}ImageFilter::ExecuteInternal ( Image::Pointer inImage1 $(i
   typename InputImageType::Pointer image1 =
     dynamic_cast <InputImageType*> ( inImage1->GetImageBase().GetPointer() );
 
+  if ( image1.IsNull() )
+    {
+    sitkExceptionMacro( "Unexpected template dispatch error!" );
+    }
+
   $(if number_of_inputs == 2 then
     OUT=[[
   typename InputImageType::Pointer image2 =
   dynamic_cast <InputImageType*> ( inImage2->GetImageBase().GetPointer() );
 
-  if ( image1.IsNull() || image2.IsNull() ) {
-    // Take some action
-    return NULL;
-  }
+  if ( image2.IsNull() )
+    {
+    sitkExceptionMacro( "Unexpected template dispatch error!" );
+    }
           ]]
     end)
 
   typedef itk::${name}ImageFilter<InputImageType $(if number_of_inputs == 2 then OUT=[[, InputImageType]] end), OutputImageType> FilterType;
 
   typename FilterType::Pointer filter = FilterType::New();
-  
+
   $(if number_of_inputs == 2 then
     OUT=[[
   filter->SetInput1( image1 );
@@ -110,7 +115,7 @@ Image::Pointer ${name}ImageFilter::ExecuteInternal ( Image::Pointer inImage1 $(i
   OUT=[[filter->SetInput( image1 );]]
   end)
 
-  $(foreach members 
+  $(foreach members
     filter->Set${name} ( this->m_${name} );
   )
   filter->Update();
