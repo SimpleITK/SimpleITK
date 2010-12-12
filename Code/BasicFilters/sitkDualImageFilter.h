@@ -3,13 +3,6 @@
 
 #include "sitkImageFilter.h"
 
-#define sitkDualImageMemberFunctionDispatcher \
-typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer, Image::Pointer ); \
-template <class TImageType> Image::Pointer ExecuteInternal ( Image::Pointer image1, Image::Pointer image2 ); \
-friend struct detail::MemberFunctionAddressor<MemberFunctionType>; \
-std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
-
-
 namespace itk {
   namespace simple {
 

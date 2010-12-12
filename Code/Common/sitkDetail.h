@@ -1,9 +1,8 @@
-#ifndef __sitkDetails_h
-#define __sitkDetails_h
+#ifndef __sitkDetail_h
+#define __sitkDetail_h
 
 #include "sitkMemberFunctionFactoryBase.h"
-#include "itkImage.h"
-#include "sitkImage.h"
+#include "FunctionTraits.h"
 
 namespace itk {
 namespace simple {
@@ -21,6 +20,19 @@ struct MemberFunctionAddressor
   TMemberFunctionPointer operator() ( void ) const
     {
       return &ObjectType::template ExecuteInternal< TImageType >;
+    }
+};
+
+
+template < class TMemberFunctionPointer >
+struct AllocateMemberFunctionAddressor
+{
+  typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
+
+  template< typename TImageType >
+  TMemberFunctionPointer operator() ( void ) const
+    {
+      return &ObjectType::template AllocateInternal< TImageType >;
     }
 };
 

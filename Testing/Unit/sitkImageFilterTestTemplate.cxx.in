@@ -1,7 +1,11 @@
-#include <SimpleITK.h>
 #include <SimpleITKTestHarness.h>
 
-TEST(BasicFilters,${name}) $(if long then OUT="/* Long */" end) {
+#include <sitk${name}ImageFilter.h>
+#include <sitkImageFileReader.h>
+#include <sitkImageFileWriter.h>
+#include <sitkImageHashFilter.h>
+
+TEST(BasicFilters,${name}) {
   itk::simple::ImageFileReader reader;
   itk::simple::${name}ImageFilter filter;
   itk::simple::Image::Pointer inputA;

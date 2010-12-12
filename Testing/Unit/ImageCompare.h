@@ -1,7 +1,7 @@
 #ifndef __ImageCompare_h
 #define __ImageCompare_h
-#include "SimpleITKTestHarness.h"
-#include "SimpleITK.h"
+#include <SimpleITKTestHarness.h>
+#include <sitkImage.h>
 
 class ImageCompare {
 public:

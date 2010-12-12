@@ -1,8 +1,8 @@
 #ifndef __sitkMemberFunctionFactory_h
 #define __sitkMemberFunctionFactory_h
 
-#include "sitkMemberFunctionFactoryBase.h"
 #include "sitkDetail.h"
+#include "sitkMemberFunctionFactoryBase.h"
 
 namespace itk
 {

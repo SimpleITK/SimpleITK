@@ -10,5 +10,13 @@
       "doc" : "Maximum output"
     }
     ],        
-  "tests" : []
+  "tests" : [
+    {
+      "tag" : "3d",
+      "description" : "3D",
+      "inputA" : "Input/RA-Short.nrrd",
+      "settings" : [],
+      "md5hash" : "76765a57f26a7979f33efc8ed9801a55"
+    }
+]
 }

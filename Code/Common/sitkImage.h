@@ -3,10 +3,13 @@
 
 #include "sitkMacro.h"
 
+#include "itkImage.h"
 #include "itkVectorImage.h"
 #include "itkImage.h"
 #include "itkLabelMap.h"
 #include "itkLabelObject.h"
+#include "sitkPixelIDTypeLists.h"
+#include "sitkMemberFunctionFactory.h"
 
 namespace itk
 {
@@ -17,6 +20,9 @@ namespace itk
     public:
       typedef Image              Self;
       typedef SmartPointer<Self> Pointer;
+
+      Image( uint64_t Width, uint64_t Height, PixelIDValueType ValueType );
+      Image( uint64_t Width, uint64_t Height, uint64_t Depth, PixelIDValueEnum ValueEnum );
 
   template <typename TImageType>
   Image( itk::SmartPointer<TImageType> image )
@@ -47,10 +53,19 @@ namespace itk
       std::string GetPixelIDTypeAsString( void ) const;
       std::string ToString( void );
 
+      typedef BasicPixelIDTypeList PixelIDTypeList;
+      typedef void (Self::*MemberFunctionType)( uint64_t Width, uint64_t Height, uint64_t Depth );
+
+    protected:
+
+      void Allocate ( uint64_t Width, uint64_t Height, uint64_t Depth, PixelIDValueEnum ValueEnum );
+      template<class TImageType> void AllocateInternal ( uint64_t Width, uint64_t Height, uint64_t Depth );
+      friend struct detail::AllocateMemberFunctionAddressor<MemberFunctionType>;
+      std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType, detail::AllocateMemberFunctionAddressor<MemberFunctionType> > > m_AllocateMemberFactory;
+      
     private:
 
       // Copying is not supported
-      Image( const Image & ); // Not implemented
       Image &operator=( const Image & ); // Not implemented
       // For some reason, SWIG gets a little confused here, so don't let it see this code.
 #ifndef SWIG
@@ -94,10 +109,15 @@ template <class TImageType> struct PimpleImage;
     PimpleImage ( ImageType* image )
       : m_Image( image )
       {
-          // this should be a STATIC ASSERT
-        assert( TImageType::ImageDimension == 3 || TImageType::ImageDimension == 2 );
+        sitkStaticAssert( TImageType::ImageDimension == 3 || TImageType::ImageDimension == 2,
+                          "Image Dimension out of range" );
+        sitkStaticAssert( ImageTypeToPixelIDValue<ImageType>::Result != (int)sitkUnknown,
+                          "invalid pixel type" );
 
-        // todo check the pixel type
+        if ( image == NULL )
+          {
+          sitkExceptionMacro( << "unable to initialize an image with NULL" );
+          }
         }
 
     virtual PimpleImageBase *Clone( void ) const { return new Self(this->m_Image.GetPointer()); }
