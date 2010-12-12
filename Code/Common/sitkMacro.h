@@ -8,6 +8,8 @@
 	#include <stdint.h>
 #endif
 
+#include "sitkConfigure.h"
+
 #include "sitkPixelIDTypeLists.h"
 #include "sitkPixelIDValues.h"
 #include "sitkExceptionObject.h"
@@ -23,7 +25,9 @@ namespace simple {
       throw e_; /* Explicit naming to work around Intel compiler bug.  */ \
     }
 
-
+#ifdef SITK_SUPPORTS_STATIC_ASSERT
+#define sitkStaticAssert( expr, str) static_assert( expr, str )
+#else
 // todo actuall make this a static assert, need to add a try compile
 // for C++0x static_assert, and then have a fall back. This will work
 // in many cases for now.
@@ -31,6 +35,7 @@ namespace simple {
   {                                              \
     if ( !(expr) ) sitkExceptionMacro( <<"StaticAssert failed: " << str ); \
   }
+#endif
 
 }
 }
