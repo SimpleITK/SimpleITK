@@ -1,5 +1,5 @@
 #ifndef __FunctionTraits_h
-#define _FunctionTraits_h
+#define __FunctionTraits_h
 
 namespace detail {
 
@@ -50,6 +50,22 @@ struct FunctionTraits<R (C::*)(A0, A1, A2)> {
   typedef A0 Argument0Type;
   typedef A1 Argument1Type;
   typedef A2 Argument2Type;
+};
+
+template<typename R,
+         typename C,
+         typename A0,
+         typename A1,
+         typename A2,
+         typename A3>
+struct FunctionTraits<R (C::*)(A0, A1, A2, A3)> {
+  static const unsigned int arity = 3;
+  typedef C ClassType;
+  typedef R ResultType;
+  typedef A0 Argument0Type;
+  typedef A1 Argument1Type;
+  typedef A2 Argument2Type;
+  typedef A3 Argument3Type;
 };
 
 }

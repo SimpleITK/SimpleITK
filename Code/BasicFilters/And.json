@@ -4,5 +4,14 @@
   "doc" : "Some global documentation",
   "pixel_types" : "IntegerPixelIDTypeList",
   "members" : [],
-  "tests" : []
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Simply run with default settings",
+      "inputA" : "Input/Staple1.png",
+      "inputB" : "Input/Staple2.png",
+      "settings" : [],
+      "md5hash" : "a216e4eac5235a2c9e4fd473bd9b3947"
+    }
+  ]
 }

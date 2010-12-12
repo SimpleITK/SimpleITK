@@ -6,13 +6,20 @@
   "members" : [],
   "tests" : [
     {
-      "tag" : "default",
-      "description" : "Run with default",
-      "inputA" : "Input/HeadMRVolumeWithDirection.nhdr",
-      "inputB" : "Input/HeadMRVolumeWithDirection.nhdr",
+      "tag" : "2d",
+      "description" : "2D",
+      "inputA" : "Input/STAPLE1.png",
+      "inputB" : "Input/STAPLE2.png",
       "settings" : [],
-      "tolerance" : null,
-      "md5hash" : "c966e8a92afa5ba49e2955dd74137a5d"
+      "md5hash" : "bc458a17e18c79ae767e8be47451d1b4"
+    },
+    {
+      "tag" : "3d",
+      "description" : "3D",
+      "inputA" : "Input/RA-Short.nrrd",
+      "inputB" : "Input/RA-Short.nrrd",
+      "settings" : [],
+      "md5hash" : "dfc0af11e8c30a0bd6dedd560486f419"
     }
   ]
 }

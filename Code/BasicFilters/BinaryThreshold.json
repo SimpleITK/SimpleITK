@@ -20,19 +20,19 @@
     {
       "tag" : "default",
       "description" : "Default parameter settings",
-      "inputA" : "Input/HeadMRVolumeWithDirection.nhdr",
+      "inputA" : "Input/RA-Short.nrrd",
       "settings" : [],
-      "md5hash" : "83e92388a1175d93b8b7ce1fbd10170d"
+      "md5hash" : "99e11d11290bbf6e44b5c19222041d4e"
     },
     {
       "tag" : "NarrowThreshold",
       "description" : "Default parameter settings",
-      "inputA" : "Input/HeadMRVolumeWithDirection.nhdr",
+      "inputA" : "Input/RA-Short.nrrd",
       "settings" : [
         { "parameter" : "LowerThreshold", "value" : 10 },
         { "parameter" : "UpperThreshold", "value" : 100 }
       ],
-      "md5hash" : "6ef4576d3c85e440aa0c361d44123ef2"
+      "md5hash" : "7ba17d9bba81bf1929bb420c24c03282"
     }
   ]
 }

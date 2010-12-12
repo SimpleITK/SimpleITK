@@ -30,7 +30,11 @@ namespace itk {
       double GetVariance() { return this->m_Variance; }
     private:
 
-      sitkSingleImageMemberFunctionDispatcher;
+      typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer );
+      template <class TImageType> Image::Pointer ExecuteInternal ( Image::Pointer image );
+      friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
+      std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
+
       double m_Minimum;
       double m_Maximum;
       double m_Mean;

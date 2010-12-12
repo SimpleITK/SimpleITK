@@ -59,10 +59,10 @@ namespace itk {
       typename InputImageType::Pointer image =
         dynamic_cast <InputImageType*> ( inImage->GetImageBase().GetPointer() );
 
-      if ( image.IsNull() ) {
-        // Take some action
-        return "ImageIsNull";
-      }
+      if ( image.IsNull() )
+        {
+        sitkExceptionMacro( "Unexpected template dispatch error!" );
+        }
 
       ::MD5 md5;
       ::HL_MD5_CTX md5Context;
@@ -78,7 +78,13 @@ namespace itk {
       size_t VoxelsPerSlice = inImage->GetWidth() * inImage->GetHeight();
       PixelType* buffer = new PixelType[VoxelsPerSlice];
       // Compute the hash value one slice at a time
-      for ( size_t depth = 0; depth < inImage->GetDepth(); depth++ ) {
+      size_t NumberOfSlices;
+      if ( TImageType::ImageDimension == 2 ) {
+        NumberOfSlices = 1;
+      } else {
+        NumberOfSlices = inImage->GetDepth();
+      }
+      for ( size_t depth = 0; depth < NumberOfSlices; depth++ ) {
         for ( size_t i = 0; i < VoxelsPerSlice; i++ ) {
           buffer[i] = iterator.Value();
           ++iterator;
@@ -101,7 +107,7 @@ namespace itk {
       delete[] buffer;
       // Calculate and return the hash value
       std::string hash;
-      int HashSize;
+      int HashSize = SHA1HashSize;
       unsigned char Digest[1024];
       switch ( this->m_HashFunction )
         {

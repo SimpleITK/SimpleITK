@@ -1,15 +1,13 @@
 {
-  "name" : "CurvatureFlow",
+  "name" : "MinMaxCurvatureFlow",
   "number_of_inputs" : 1,
-  "real_type_output" : 1,
-  "long" : 1,
   "doc" : "Some global documentation",
-  "pixel_types" : "BasicPixelIDTypeList",
+  "pixel_types" : "RealPixelIDTypeList",
   "members" : [
     { "name" : "TimeStep",
       "type" : "double",
-      "default" : 0.1,
-      "doc" : "Time step for curvature flow"
+      "default" : 0.125,
+      "doc" : "Time step for PDE solver"
     },
     {
       "name" : "NumberOfIterations",

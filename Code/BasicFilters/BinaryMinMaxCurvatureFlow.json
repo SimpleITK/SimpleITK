@@ -1,15 +1,13 @@
 {
-  "name" : "CurvatureFlow",
+  "name" : "BinaryMinMaxCurvatureFlow",
   "number_of_inputs" : 1,
-  "real_type_output" : 1,
-  "long" : 1,
   "doc" : "Some global documentation",
-  "pixel_types" : "BasicPixelIDTypeList",
+  "pixel_types" : "RealPixelIDTypeList",
   "members" : [
     { "name" : "TimeStep",
       "type" : "double",
-      "default" : 0.1,
-      "doc" : "Time step for curvature flow"
+      "default" : 0.125,
+      "doc" : "Time step for PDE solver"
     },
     {
       "name" : "NumberOfIterations",
@@ -24,8 +22,7 @@
       "description" : "Simply run with default settings",
       "inputA" : "Input/RA-Float.nrrd",
       "settings" : [],
-      "tolerance" : 0.0,
-      "md5hash" : null
+      "tolerance" : 0.1
     }
     {
       "tag" : "longer",
@@ -41,8 +38,7 @@
           "value" : 10
         }
       ],
-      "tolerance" : "0.0",
-      "md5hash" : null
+      "tolerance" : 0.1
     }
   ]
 }
