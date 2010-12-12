@@ -19,45 +19,30 @@ public:
 
   // Typedefs
   typedef Index              Self;
-  typedef SmartPointer<Self> Pointer;
-  typedef uint64_t           IndexValueType;
+  typedef size_t             IndexValueType;
 
   //
   // Constructors
   //
-
-  Index( IndexValueType x, IndexValueType y )
-    {
-    m_Index[0] = x;
-    m_Index[1] = y;
-    m_Dim = 2;
-    }
-
-  Index( IndexValueType x, IndexValueType y, IndexValueType z )
-    {
-    m_Index[0] = x;
-    m_Index[1] = y;
-    m_Index[2] = z;
-    m_Dim = 3;
-    };
-
+  Index( IndexValueType x, IndexValueType y );
+  Index( IndexValueType x, IndexValueType y, IndexValueType z );
 
   //
   // Methods
   //
 
   // Get Component Methods
-  IndexValueType GetX() { return m_Index[0]; };
-  IndexValueType GetY() { return m_Index[1]; };
-  IndexValueType GetZ() { return m_Index[2]; };
+  IndexValueType GetX() const;
+  IndexValueType GetY() const;
+  IndexValueType GetZ() const;
 
   // Set Component Methods
-  Self& SetX( IndexValueType x ) { m_Index[0] = x; return *this; };
-  Self& SetY( IndexValueType y ) { m_Index[1] = y; return *this; };
-  Self& SetZ( IndexValueType z ) { m_Index[2] = z; return *this; };
+  Self& SetX( IndexValueType x );
+  Self& SetY( IndexValueType y );
+  Self& SetZ( IndexValueType z );
 
   // Get dimensionality
-  unsigned int GetDim() { return m_Dim; };
+  unsigned int GetDim() const;
 
 
   //
@@ -65,30 +50,13 @@ public:
   //
 
   // [] operator (no bounds checking)
-  IndexValueType & operator[](unsigned int dim)
-  { return m_Index[dim]; }
+  IndexValueType & operator[](unsigned int dim);
 
   // Cast operator for itk::Index<2>
-  operator itk::Index<2>()
-    {
-    itk::Index<2> idx;
-    idx[0] = m_Index[0];
-    idx[1] = m_Index[1];
-    return idx;
-    };
+  operator itk::Index<2>();
 
   // Cast operator for itk::Index<3>
-  operator itk::Index<3>()
-    {
-    itk::Index<3> idx;
-    idx[0] = m_Index[0];
-    idx[1] = m_Index[1];
-    idx[2] = m_Index[2];
-    return idx;
-    };
-
-  // Array of 3 values to hold the indices
-  IndexValueType m_Index[3];
+  operator itk::Index<3>();
 
 private:
 
@@ -98,26 +66,14 @@ private:
   // The dimensionality of the index
   unsigned int m_Dim;
 
+  // Array of 3 values to hold the indices
+  IndexValueType m_Index[3];
+
 };  // end class Index
 
-/* ---- Not working... not sure why
 
 // << operator for printing
-std::ostream & operator<<(std::ostream & os, Index & idx)
-{
-  os << "[";
-  for ( unsigned int i = 0; i + 1 < idx.GetDim(); ++i )
-    {
-    os << idx[i] << ", ";
-    }
-  if ( idx.GetDim() >= 1 )
-    {
-    os << idx[idx.GetDim() - 1];
-    }
-  os << "]";
-  return os;
-}
-*/
+std::ostream & operator<<(std::ostream & os, Index & idx);
 
 
 } // end namespace simple
