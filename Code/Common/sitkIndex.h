@@ -26,6 +26,8 @@ public:
   //
   Index( IndexValueType x, IndexValueType y );
   Index( IndexValueType x, IndexValueType y, IndexValueType z );
+  explicit Index( itk::Index<2> idx );
+  explicit Index( itk::Index<3> idx );
 
   //
   // Methods

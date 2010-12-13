@@ -21,6 +21,23 @@ Index::Index( IndexValueType x, IndexValueType y, IndexValueType z )
   m_Dim = 3;
 }
 
+
+Index::Index( itk::Index<2> idx )
+{
+ m_Index[0] = idx[0];
+ m_Index[1] = idx[1];
+ m_Index[2] = 0;
+ m_Dim = 2;
+}
+
+Index::Index( itk::Index<3> idx )
+{
+ m_Index[0] = idx[0];
+ m_Index[1] = idx[1];
+ m_Index[2] = idx[2];
+ m_Dim = 2;
+}
+
 Index::IndexValueType Index::GetX() const { return m_Index[0]; }
 Index::IndexValueType Index::GetY() const { return m_Index[1]; }
 Index::IndexValueType Index::GetZ() const { return m_Index[2]; }
