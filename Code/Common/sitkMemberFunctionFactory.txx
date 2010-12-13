@@ -26,7 +26,7 @@ struct MemberFunctionInstantiater
     {}
 
   template <class TPixelIDType>
-  void operator()( TPixelIDType t )
+  void operator()( TPixelIDType )
     {
       typedef TPixelIDType                                      PixelIDType;
       typedef typename TMemberFunctionFactory::ObjectType       ObjectType;

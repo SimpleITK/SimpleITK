@@ -300,7 +300,7 @@ template <class TTypeList> struct ForEach;
 template <> struct ForEach < NullType>
 {
   template < class Predicate >
-  void operator()( Predicate pred)
+  void operator()( Predicate )
     {}
 };
 template <class THead, class TTail>
