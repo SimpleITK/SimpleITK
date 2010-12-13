@@ -15,12 +15,7 @@ macro( expand_template FILENAME )
   set ( GENERATED_FILTER_LIST ${GENERATED_FILTER_LIST} ${FILENAME} CACHE INTERNAL "" )
 endmacro()
 
-if ( SHORT_COMPILE )
-  set ( JSON_CONFIG_FILES CurvatureFlow.json Cos.json Subtract.json )
-else()
-  file ( GLOB JSON_CONFIG_FILES *.json)
-endif()
-
+file ( GLOB JSON_CONFIG_FILES *.json)
 
 foreach ( f ${JSON_CONFIG_FILES} ) 
   get_filename_component ( class ${f} NAME_WE )

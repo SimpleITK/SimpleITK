@@ -5,7 +5,7 @@ namespace itk
 namespace simple
 {
 
-Index::Index(void)
+Index::Index()
 {
   m_Index[0] = 0;
   m_Index[1] = 0;

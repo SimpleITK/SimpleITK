@@ -24,7 +24,7 @@ public:
   //
   // Constructors
   //
-  Index( void );
+  Index();
   Index( IndexValueType x, IndexValueType y );
   Index( IndexValueType x, IndexValueType y, IndexValueType z );
 
