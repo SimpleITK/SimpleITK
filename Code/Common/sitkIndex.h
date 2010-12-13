@@ -24,6 +24,7 @@ public:
   //
   // Constructors
   //
+  Index();
   Index( IndexValueType x, IndexValueType y );
   Index( IndexValueType x, IndexValueType y, IndexValueType z );
 
@@ -59,9 +60,6 @@ public:
   operator itk::Index<3>();
 
 private:
-
-  // Not Implemented
-  Index();
 
   // The dimensionality of the index
   unsigned int m_Dim;

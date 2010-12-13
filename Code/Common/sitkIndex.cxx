@@ -5,6 +5,12 @@ namespace itk
 namespace simple
 {
 
+  Index::Index()
+  {
+  m_Index[0] = m_Index[1] = m_Index[2] = 0;
+  m_Dim = 3;
+  }
+
 Index::Index( IndexValueType x, IndexValueType y )
 {
   m_Index[0] = x;
