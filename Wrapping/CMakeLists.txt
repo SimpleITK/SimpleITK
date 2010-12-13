@@ -28,6 +28,7 @@ if ( WRAP_LUA )
   include_directories ( ${LUA_INCLUDE_DIR} )
 
   # Run swig
+  set(CMAKE_SWIG_FLAGS "")
   SWIG_module_initialize ( SimpleITKLua lua )
   SWIG_add_source_to_module ( SimpleITKLua swig_generated_source SimpleITK.i ${SWIG_HEADERS} )
 
@@ -48,6 +49,7 @@ if ( WRAP_PYTHON )
   include_directories ( ${PYTHON_INCLUDE_DIR} )
 
   # Run swig
+  set(CMAKE_SWIG_FLAGS "")
   SWIG_add_module ( SimpleITK python SimpleITK.i SimpleITKPYTHON_wrap.cxx )
   SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${PYTHON_LIBRARIES} ${ITK_LIBRARIES})
 
@@ -127,4 +129,15 @@ if ( WRAP_CSHARP )
 
 endif()
 
+# Find Tcl
+if ( WRAP_TCL )
+  find_package ( Tcl REQUIRED )
+  include_directories ( ${TCL_INCLUDE_DIR} )
+
+  # Run swig
+  set(CMAKE_SWIG_FLAGS "-nosafe")
+  SWIG_add_module ( SimpleITK tcl SimpleITK.i SimpleITKTCL_wrap.cxx )
+  SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${TCL_LIBRARY} ${ITK_LIBRARIES})
+
+endif()
 
