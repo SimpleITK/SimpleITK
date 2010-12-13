@@ -11,8 +11,16 @@ ImageCompare::ImageCompare() {
   mMessage = "";
 }
 
-bool ImageCompare::compare ( itk::simple::Image::Pointer image, std::string inName ) {
-  std::cout << "Starting image compare on " << inName << std::endl;
+bool ImageCompare::compare ( itk::simple::Image::Pointer image, std::string inTestCase, std::string inTag ) {
+  std::string testCase = inTestCase;
+  std::string tag = inTag;
+  std::string testName = ::testing::UnitTest::GetInstance()->current_test_info()->name();
+  
+  if ( testCase == "" ) {
+    testCase = ::testing::UnitTest::GetInstance()->current_test_info()->test_case_name();
+  }
+
+  std::cout << "Starting image compare on " << testCase << "_" << testName << "_" << tag << std::endl;
   if ( image.IsNull() ) {
     mMessage = "ImageCompare: image is null";
     return false;
@@ -21,11 +29,11 @@ bool ImageCompare::compare ( itk::simple::Image::Pointer image, std::string inNa
   std::string extension = ".nrrd";
   std::string OutputDir = dataFinder.GetOutputDirectory();
   
-  std::string name = std::string ( ::testing::UnitTest::GetInstance()->current_test_info()->test_case_name() )
+  std::string name = testCase
     .append( "_" )                                                        
-    .append(::testing::UnitTest::GetInstance()->current_test_info()->name())
+    .append(testName)
     .append("_")
-    .append ( inName );
+    .append ( tag );
 
   std::string baselineFilename = dataFinder.GetSourceDirectory() + "/Testing/Data/Baseline/" + name + extension;
   
@@ -41,6 +49,7 @@ bool ImageCompare::compare ( itk::simple::Image::Pointer image, std::string inNa
   }
 
   itk::simple::Image::Pointer baseline;
+  std::cout << "Loading baseline " << baselineFilename << std::endl;
 
   try {
     baseline = itk::simple::ImageFileReader().SetFilename ( baselineFilename ).Execute();

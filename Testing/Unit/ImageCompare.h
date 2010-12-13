@@ -10,7 +10,7 @@ public:
 
   // Compare the image to the named baseline image slice by slice, display the difference in the center slice
   // If the baseline does not exist, fail, and write a baseline image in the output directory
-  bool compare ( itk::simple::Image::Pointer image, std::string name );
+  bool compare ( itk::simple::Image::Pointer image, std::string testGroup, std::string tag );
 
   // Return the message from the previous image comparison.
   std::string getMessage() { return mMessage; }
@@ -21,16 +21,28 @@ protected:
   double mTolerance;
 };
 
-#define IMAGECOMPARE( x, str )                  \
+#define IMAGECOMPARE( x, tag )                  \
   { \
 ImageCompare imageCompare;  \
- EXPECT_TRUE( imageCompare.compare( x, str ) ) << imageCompare.getMessage(); \
+ EXPECT_TRUE( imageCompare.compare( x, "", tag ) ) << imageCompare.getMessage(); \
  }
-#define IMAGECOMPAREWITHTOLERANCE( x, str, tolerance )        \
+#define IMAGECOMPAREWITHTOLERANCE( x, tag, tolerance )        \
   { \
   ImageCompare imageCompare;  \
   imageCompare.setTolerance(tolerance); \
-  EXPECT_TRUE( imageCompare.compare( x, str ) ) << imageCompare.getMessage(); \
+  EXPECT_TRUE( imageCompare.compare( x, "", tag ) ) << imageCompare.getMessage(); \
+  }
+
+#define IMAGECOMPARE_WITH_TESTCASE( x, testCase, tag )  \
+  { \
+ImageCompare imageCompare;  \
+ EXPECT_TRUE( imageCompare.compare( x, testCase, tag ) ) << imageCompare.getMessage(); \
+ }
+#define IMAGECOMPAREWITHTOLERANCE_WITH_TESTCASE( x, testCase, tag, tolerance ) \
+  { \
+  ImageCompare imageCompare;  \
+  imageCompare.setTolerance(tolerance); \
+  EXPECT_TRUE( imageCompare.compare( x, testCase, tag ) ) << imageCompare.getMessage(); \
   }
 
 
