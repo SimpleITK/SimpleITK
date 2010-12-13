@@ -4,10 +4,6 @@
 #include "sitkMacro.h"
 
 #include "itkImage.h"
-#include "itkVectorImage.h"
-#include "itkImage.h"
-#include "itkLabelMap.h"
-#include "itkLabelObject.h"
 #include "sitkPixelIDTypeLists.h"
 #include "sitkMemberFunctionFactory.h"
 
@@ -21,7 +17,7 @@ namespace itk
       typedef Image              Self;
       typedef SmartPointer<Self> Pointer;
 
-      Image( uint64_t Width, uint64_t Height, PixelIDValueType ValueType );
+      Image( uint64_t Width, uint64_t Height, PixelIDValueEnum ValueEnum );
       Image( uint64_t Width, uint64_t Height, uint64_t Depth, PixelIDValueEnum ValueEnum );
 
   template <typename TImageType>
