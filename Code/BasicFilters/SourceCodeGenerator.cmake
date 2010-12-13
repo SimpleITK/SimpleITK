@@ -28,29 +28,10 @@ foreach ( f ${JSON_CONFIG_FILES} )
 endforeach()
 
 # clear the include files
-file ( WRITE ${CMAKE_CURRENT_BINARY_DIR}/SimpleITKBasicFiltersGeneratedHeaders.h.tmp "" )
-file ( WRITE ${CMAKE_CURRENT_BINARY_DIR}/SimpleITKBasicFiltersGeneratedHeaders.i.tmp "" )
-foreach ( filter ${GENERATED_FILTER_LIST} )
-  file ( APPEND ${CMAKE_CURRENT_BINARY_DIR}/SimpleITKBasicFiltersGeneratedHeaders.h.tmp "#include \"sitk${filter}ImageFilter.h\"\n" )
-  file ( APPEND ${CMAKE_CURRENT_BINARY_DIR}/SimpleITKBasicFiltersGeneratedHeaders.i.tmp "%include \"sitk${filter}ImageFilter.h\"\n" )
-endforeach()
-# Check if they have changed, and only in they have, copy them as new ones.
-file( DIFFERENT GENERATED_HEADERS_CHANGED FILES
-  ${CMAKE_CURRENT_BINARY_DIR}/SimpleITKBasicFiltersGeneratedHeaders.h
-  ${CMAKE_CURRENT_BINARY_DIR}/SimpleITKBasicFiltersGeneratedHeaders.h.tmp )
-file( DIFFERENT GENERATED_INTERFACES_CHANGED FILES
-  ${CMAKE_CURRENT_BINARY_DIR}/SimpleITKBasicFiltersGeneratedHeaders.i
-  ${CMAKE_CURRENT_BINARY_DIR}/SimpleITKBasicFiltersGeneratedHeaders.i.tmp )
-if( GENERATED_HEADERS_CHANGED )
-  configure_file(
-    ${CMAKE_CURRENT_BINARY_DIR}/SimpleITKBasicFiltersGeneratedHeaders.h.tmp
-    ${CMAKE_CURRENT_BINARY_DIR}/SimpleITKBasicFiltersGeneratedHeaders.h
-    COPYONLY )
-endif()
-if( GENERATED_INTERFACES_CHANGED )
-  configure_file(
-    ${CMAKE_CURRENT_BINARY_DIR}/SimpleITKBasicFiltersGeneratedHeaders.i.tmp
-    ${CMAKE_CURRENT_BINARY_DIR}/SimpleITKBasicFiltersGeneratedHeaders.i
-    COPYONLY )
-endif()
+file ( WRITE ${CMAKE_CURRENT_BINARY_DIR}/SimpleITKBasicFiltersGeneratedHeaders.h "" )
+file ( WRITE ${CMAKE_CURRENT_BINARY_DIR}/SimpleITKBasicFiltersGeneratedHeaders.i "" )
 
+foreach ( filter ${GENERATED_FILTER_LIST} )
+  file ( APPEND ${CMAKE_CURRENT_BINARY_DIR}/SimpleITKBasicFiltersGeneratedHeaders.h "#include \"sitk${filter}ImageFilter.h\"\n" )
+  file ( APPEND ${CMAKE_CURRENT_BINARY_DIR}/SimpleITKBasicFiltersGeneratedHeaders.i "%include \"sitk${filter}ImageFilter.h\"\n" )
+endforeach()
