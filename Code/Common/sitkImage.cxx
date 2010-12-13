@@ -13,7 +13,7 @@ namespace itk
       size.Fill(1);
       size[0] = Width;
       size[1] = Height;
-      if ( Depth != 0 ) {
+      if ( TImageType::ImageDimension > 2 && Depth != 0 ) {
         size[2] = Depth;
       }
       region.SetSize ( size );
@@ -39,8 +39,8 @@ namespace itk
       }
     }
 
-    Image::Image( uint64_t Width, uint64_t Height, PixelIDValueType ValueType ) {
-      Allocate ( Width, Height, 0, (PixelIDValueEnum) ValueType );
+    Image::Image( uint64_t Width, uint64_t Height, PixelIDValueEnum ValueEnum ) {
+      Allocate ( Width, Height, 0, ValueEnum );
     }
     Image::Image( uint64_t Width, uint64_t Height, uint64_t Depth, PixelIDValueEnum ValueEnum ) {
       Allocate ( Width, Height, Depth, ValueEnum );

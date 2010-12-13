@@ -1,5 +1,9 @@
 #include "SimpleITKTestHarness.h"
-#include "SimpleITK.h"
+
+#include <sitkImage.h>
+#include <sitkImageFileReader.h>
+#include <sitkImageFileWriter.h>
+#include <sitkImageHashFilter.h>
 
 
 TEST_F(Python,SimpleGaussian) {
