@@ -3,9 +3,10 @@
 option ( WRAP_LUA "Wrap Lua" ON )
 option ( WRAP_PYTHON "Wrap Python" OFF )
 option ( WRAP_JAVA "Wrap Java" OFF )
+option ( WRAP_TCL "Wrap Tcl" OFF )
 option ( WRAP_CSHARP "Wrap C#" OFF )
 
-if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA OR WRAP_CSHARP )
+if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA OR WRAP_CSHARP OR WRAP_TCL )
   find_package ( SWIG REQUIRED )
   include ( ${SWIG_USE_FILE} )
   set_source_files_properties ( SimpleITK.i PROPERTIES CPLUSPLUS ON )
@@ -50,13 +51,6 @@ if ( WRAP_PYTHON )
   SWIG_add_module ( SimpleITK python SimpleITK.i SimpleITKPYTHON_wrap.cxx )
   SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${PYTHON_LIBRARIES} ${ITK_LIBRARIES})
 
-  # SWIG_module_initialize ( SimpleITK python )
-  # SWIG_add_source_to_module ( SimpleITK swig_generated_source SimpleITK.i ${SWIG_HEADERS} )
-
-  # add_library ( SimpleITKPythonModule SimpleITKPYTHON_wrap.cxx )
-  # add_executable ( SimpleITKPython SimpleITKPythonMain.cxx )
-  # target_link_libraries ( SimpleITKPython SimpleITK SimpleITKPythonModule ${PYTHON_LIBRARIES} ${ITK_LIBRARIES} )
-  # target_link_libraries ( _SimpleITK ${SimpleITK_LIBRARIES} ${PYTHON_LIBRARIES} ${ITK_LIBRARIES})
 endif()
 
 # Find Java
@@ -99,7 +93,6 @@ if ( WRAP_JAVA )
   
   # Add the install target
   install(FILES ${CMAKE_CURRENT_BINARY_DIR}/org.itk.simple.jar DESTINATION ${JAVA_EXTENSION_DIR})
-  
   
 endif()
 
