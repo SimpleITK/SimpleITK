@@ -68,6 +68,22 @@ MathematicalMorphologyImageFilter< TInputImage, TOutputImage >
       filter->Update();
       this->GraftOutput( filter->GetOutput() );
       }
+    case GrayscaleClosening:
+      {
+      typename GrayscaleMorphologicalClosingFilterType::Pointer filter = GrayscaleMorphologicalClosingFilterType::New();
+      filter->SetInput( this->GetInput() );
+      filter->GraftOutput( this->GetOutput() );
+      filter->Update();
+      this->GraftOutput( filter->GetOutput() );
+      }
+    case GrayscaleOpening:
+      {
+      typename GrayscaleMorphologicalOpeningFilterType::Pointer filter = GrayscaleMorphologicalOpeningFilterType::New();
+      filter->SetInput( this->GetInput() );
+      filter->GraftOutput( this->GetOutput() );
+      filter->Update();
+      this->GraftOutput( filter->GetOutput() );
+      }
     default:
       itkExceptionMacro("Unknown Operation" << this->m_Operation );
     }

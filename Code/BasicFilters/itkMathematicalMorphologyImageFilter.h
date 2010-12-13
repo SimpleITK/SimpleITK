@@ -23,6 +23,8 @@
 #include "itkBinaryDilateImageFilter.h"
 #include "itkGrayscaleErodeImageFilter.h"
 #include "itkGrayscaleDilateImageFilter.h"
+#include "itkGrayscaleMorphologicalClosingImageFilter.h"
+#include "itkGrayscaleMorphologicalOpeningImageFilter.h"
 
 namespace itk
 {
@@ -53,7 +55,9 @@ public:
 
   /** Enum defining the operation to be applied to the input image. */
   typedef enum {
-   BinaryErode, BinaryDilate, GrayscaleErode, GrayscaleDilate } OperationType;
+   BinaryErode, BinaryDilate,
+   GrayscaleErode, GrayscaleDilate,
+   GrayscaleOpening, GrayscaleClosening } OperationType;
 
   /** Define the type of mathematical morphology operation to be applied to the
    * input image. See the type OperationType enum for a list of valid options. */
@@ -79,6 +83,8 @@ private:
   typedef BinaryDilateImageFilter< TInputImage, TOutputImage, KernelType >      BinaryDilateFilterType;
   typedef GrayscaleErodeImageFilter< TInputImage, TOutputImage, KernelType >    GrayscaleErodeFilterType;
   typedef GrayscaleDilateImageFilter< TInputImage, TOutputImage, KernelType >   GrayscaleDilateFilterType;
+  typedef GrayscaleMorphologicalClosingImageFilter< TInputImage, TOutputImage, KernelType >   GrayscaleMorphologicalClosingFilterType;
+  typedef GrayscaleMorphologicalOpeningImageFilter< TInputImage, TOutputImage, KernelType >   GrayscaleMorphologicalOpeningFilterType;
 
   OperationType  m_Operation;
 
