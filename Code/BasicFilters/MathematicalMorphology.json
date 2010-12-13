@@ -1,0 +1,19 @@
+{
+  "name" : "MathematicalMorphology",
+  "number_of_inputs" : 1,
+  "doc" : "This filter consolidates all the mathematical morphology operations and makes possible to choose among them by passing an string as argument.",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [
+    { "name" : "Operation",
+      "type" : "unsigned int",
+      "default" : "0",
+      "doc" : "Mathematical morphology operation to be performed. Valid options are 0=BinaryErode, 1=BinaryDilate, 2=GrayscaleErode, 3=GrayscaleDilate."
+      "custom_itk_cast" :
+        "typedef typename FilterType::OperationType OperationType; \
+         OperationType operationType = static_cast< OperationType >( this->m_Operation ) ; \
+         filter->SetOperation( operationType );"
+    }
+   ],
+  "custom_methods" : [],
+  "tests" : []
+}
