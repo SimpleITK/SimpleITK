@@ -43,6 +43,7 @@ ImageFileWriter& ImageFileWriter::ExecuteInternal( Image::Pointer inImage )
 
     typedef itk::ImageFileWriter<InputImageType> Writer;
     typename Writer::Pointer writer = Writer::New();
+    writer->UseCompressionOn();
     writer->SetFileName ( this->m_Filename.c_str() );
     writer->SetInput ( image );
     writer->Update();
