@@ -12,6 +12,7 @@ namespace itk
       index.Fill ( 0 );
       size[0] = Width;
       size[1] = Height;
+      size[2] = 1; // minimum size along Z must be initialized
       if ( Depth != 0 ) {
         size[2] = Depth;
       }
@@ -27,7 +28,7 @@ namespace itk
     void Image::Allocate ( uint64_t Width, uint64_t Height, uint64_t Depth, PixelIDValueEnum ValueEnum ) {
       // Allocate an image
       this->m_AllocateMemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType, detail::AllocateMemberFunctionAddressor<MemberFunctionType> > ( this ) );
-      
+
       this->m_AllocateMemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
       this->m_AllocateMemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
       PixelIDValueType type = ValueEnum;
@@ -44,7 +45,6 @@ namespace itk
     Image::Image( uint64_t Width, uint64_t Height, uint64_t Depth, PixelIDValueEnum ValueEnum ) {
       Allocate ( Width, Height, Depth, ValueEnum );
     }
-      
 
     itk::DataObject::Pointer Image::GetImageBase( void )
     {
