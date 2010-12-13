@@ -105,7 +105,7 @@ TEST_F(Lua,${name}) {
       end)
     $(if tolerance then
       OUT = [[ 
-              IMAGECOMPAREWITHTOLERANCE ( output, "${tag}", ${tolerance} );
+              IMAGECOMPAREWITHTOLERANCE_WITH_TESTCASE ( output, "BasicFilters", "${tag}", ${tolerance} );
                ]]
       end)
       }
@@ -164,7 +164,7 @@ TEST_F(Python,${name}) {
       end)
     $(if tolerance then
       OUT = [[ 
-              IMAGECOMPAREWITHTOLERANCE ( output, "${tag}", ${tolerance} );
+              IMAGECOMPAREWITHTOLERANCE_WITH_TESTCASE ( output, "BasicFilters", "${tag}", ${tolerance} );
                ]]
       end)
       }
