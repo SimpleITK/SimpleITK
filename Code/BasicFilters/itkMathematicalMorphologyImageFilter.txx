@@ -43,6 +43,7 @@ MathematicalMorphologyImageFilter< TInputImage, TOutputImage >
       filter->GraftOutput( this->GetOutput() );
       filter->Update();
       this->GraftOutput( filter->GetOutput() );
+      break;
       }
     case BinaryDilate:
       {
@@ -51,6 +52,7 @@ MathematicalMorphologyImageFilter< TInputImage, TOutputImage >
       filter->GraftOutput( this->GetOutput() );
       filter->Update();
       this->GraftOutput( filter->GetOutput() );
+      break;
       }
     case GrayscaleErode:
       {
@@ -59,6 +61,7 @@ MathematicalMorphologyImageFilter< TInputImage, TOutputImage >
       filter->GraftOutput( this->GetOutput() );
       filter->Update();
       this->GraftOutput( filter->GetOutput() );
+      break;
       }
     case GrayscaleDilate:
       {
@@ -67,6 +70,7 @@ MathematicalMorphologyImageFilter< TInputImage, TOutputImage >
       filter->GraftOutput( this->GetOutput() );
       filter->Update();
       this->GraftOutput( filter->GetOutput() );
+      break;
       }
     case GrayscaleClosening:
       {
@@ -75,6 +79,7 @@ MathematicalMorphologyImageFilter< TInputImage, TOutputImage >
       filter->GraftOutput( this->GetOutput() );
       filter->Update();
       this->GraftOutput( filter->GetOutput() );
+      break;
       }
     case GrayscaleOpening:
       {
@@ -83,6 +88,7 @@ MathematicalMorphologyImageFilter< TInputImage, TOutputImage >
       filter->GraftOutput( this->GetOutput() );
       filter->Update();
       this->GraftOutput( filter->GetOutput() );
+      break;
       }
     default:
       itkExceptionMacro("Unknown Operation" << this->m_Operation );
