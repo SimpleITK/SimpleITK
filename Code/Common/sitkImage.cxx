@@ -10,9 +10,9 @@ namespace itk
       typename TImageType::SizeType   size;
       typename TImageType::RegionType region;
       index.Fill ( 0 );
+      size.Fill(1);
       size[0] = Width;
       size[1] = Height;
-      size[2] = 1; // minimum size along Z must be initialized
       if ( Depth != 0 ) {
         size[2] = Depth;
       }
