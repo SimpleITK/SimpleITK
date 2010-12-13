@@ -13,6 +13,7 @@
 #include "sitkImageFileReader.h"
 #include "sitkImageFileWriter.h"
 #include "sitkStatisticsImageFilter.h"
+#include "sitkExtractImageFilter.h"
 
 // These headers are auto-generated
 #include "SimpleITKBasicFiltersGeneratedHeaders.h"
