@@ -7,7 +7,7 @@
     { "name" : "Operation",
       "type" : "unsigned int",
       "default" : "0",
-      "doc" : "Mathematical morphology operation to be performed. Valid options are 0=BinaryErode, 1=BinaryDilate, 2=GrayscaleErode, 3=GrayscaleDilate."
+      "doc" : "Mathematical morphology operation to be performed. Valid options are 0=BinaryErode, 1=BinaryDilate, 2=GrayscaleErode, 3=GrayscaleDilate, 4=GrayscaleOpening, 5=GrayscaleClosening."
       "custom_itk_cast" :
         "typedef typename FilterType::OperationType OperationType; \
          OperationType operationType = static_cast< OperationType >( this->m_Operation ) ; \
@@ -15,5 +15,48 @@
     }
    ],
   "custom_methods" : [],
-  "tests" : []
+  "tests" : [
+   {
+     "tag" : "BinaryErosion",
+     "description" : "Test binary erosion",
+     "inputA" : "Input/STAPLE1.png",
+     "settings" : [ { "parameter" : "Operation",  "value" : 0 } ],
+     "md5hash" : "9e37516c795d7f25847851666ef53ef9"
+   },
+   {
+     "tag" : "BinaryDilation",
+     "description" : "Test binary dilation",
+     "inputA" : "Input/STAPLE1.png",
+     "settings" : [ { "parameter" : "Operation",  "value" : 1 } ],
+     "md5hash" : "9eef659f21dab5eb49e0f715a5d9a21b"
+   },
+   {
+     "tag" : "GrayscaleErosion",
+     "description" : "Test grayscale erosion",
+     "inputA" : "Input/STAPLE1.png",
+     "settings" : [ { "parameter" : "Operation",  "value" : 2 } ],
+     "md5hash" : "cb0f49738a99f3467b575bc95a0ace44"
+   },
+   {
+     "tag" : "GrayscaleDilation",
+     "description" : "Test grayscale dilation",
+     "inputA" : "Input/STAPLE1.png",
+     "settings" : [ { "parameter" : "Operation",  "value" : 3 } ],
+     "md5hash" : "cb692559f1eb21e4c932f6bbb3850ad3"
+   }
+   {
+     "tag" : "GrayscaleOpening",
+     "description" : "Test grayscale opening",
+     "inputA" : "Input/STAPLE1.png",
+     "settings" : [ { "parameter" : "Operation",  "value" : 4 } ],
+     "md5hash" : "867de5ed8cf49c4657e1545bd57f2c23"
+   },
+   {
+     "tag" : "GrayscaleClosening",
+     "description" : "Test grayscale closening",
+     "inputA" : "Input/STAPLE1.png",
+     "settings" : [ { "parameter" : "Operation",  "value" : 5 } ],
+     "md5hash" : "103130cc4caf40d9fb252fbabc531e15"
+   }
+  ]
 }
