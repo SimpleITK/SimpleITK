@@ -27,6 +27,9 @@ namespace itk {
        */
       ${name}ImageFilter();
 
+      /** Custom public declarations */
+      $(if public_declarations then OUT=[[${public_declarations}]] end)
+
       typedef ${pixel_types}  PixelIDTypeList;
 
 
