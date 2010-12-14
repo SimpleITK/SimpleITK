@@ -55,6 +55,9 @@ public:
   // [] operator (no bounds checking)
   IndexValueType & operator[](unsigned int dim);
 
+  // == operator for comparison
+  bool operator==(Self & idx);
+
   // Cast operator for itk::Index<2>
   operator itk::Index<2>();
 
