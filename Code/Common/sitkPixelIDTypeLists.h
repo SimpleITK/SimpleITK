@@ -1,5 +1,5 @@
-#ifndef _sitkPixelIDTypeLists_h
-#define _sitkPixelIDTypeLists_h
+#ifndef __sitkPixelIDTypeLists_h
+#define __sitkPixelIDTypeLists_h
 
 #include "Ancillary/TypeList.h"
 

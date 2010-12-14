@@ -8,7 +8,7 @@ namespace itk {
 
     class CastImageFilter : ImageFilter {
     public:
-      typedef CastImageFilter Self;
+      typedef CastImageFilter      Self;
       typedef BasicPixelIDTypeList PixelIDTypeList;
 
       Self& SetOutputPixelType( PixelIDValueType pixelID ) { this->m_OutputPixelType = pixelID; return *this; }

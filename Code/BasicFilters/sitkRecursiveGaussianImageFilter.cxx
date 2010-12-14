@@ -54,8 +54,9 @@ Image::Pointer RecursiveGaussianImageFilter::Execute ( Image::Pointer image )
 template <class TImageType>
 Image::Pointer RecursiveGaussianImageFilter::ExecuteInternal ( Image::Pointer inImage )
   {
-  typedef TImageType InputImageType;
+  typedef TImageType                                       InputImageType;
   typedef itk::Image<float,InputImageType::ImageDimension> OutputImageType;
+
   typename InputImageType::Pointer image =
     dynamic_cast <InputImageType*> ( inImage->GetImageBase().GetPointer() );
 

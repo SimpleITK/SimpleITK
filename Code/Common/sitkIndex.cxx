@@ -33,11 +33,11 @@ Index::IndexValueType Index::GetX() const { return m_Index[0]; }
 Index::IndexValueType Index::GetY() const { return m_Index[1]; }
 Index::IndexValueType Index::GetZ() const { return m_Index[2]; }
 
-Index & Index::SetX( IndexValueType x ) { m_Index[0] = x; return *this; };
-Index & Index::SetY( IndexValueType y ) { m_Index[1] = y; return *this; };
-Index & Index::SetZ( IndexValueType z ) { m_Index[2] = z; return *this; };
+Index & Index::SetX( IndexValueType x ) { m_Index[0] = x; return *this; }
+Index & Index::SetY( IndexValueType y ) { m_Index[1] = y; return *this; }
+Index & Index::SetZ( IndexValueType z ) { m_Index[2] = z; return *this; }
 
-unsigned int Index::GetDim() const { return m_Dim; };
+unsigned int Index::GetDim() const { return m_Dim; }
 
 Index::IndexValueType &
 Index::operator[](unsigned int dim)

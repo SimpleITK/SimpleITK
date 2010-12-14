@@ -22,7 +22,7 @@ namespace itk {
       ExtractImageFilter();
 
       Self& SetSlice ( size_t s ) { this->m_Slice = s; return *this; }
-      size_t GetSlice() { return this->m_Slice; };
+      size_t GetSlice() { return this->m_Slice; }
 
       // Print ourselves out
       std::string ToString() const;
