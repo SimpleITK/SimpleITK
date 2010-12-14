@@ -37,20 +37,20 @@ namespace itk {
        *
        * Note: Sigma is always measured in physical units
        */
-      Self& SetSigma ( double t ) { this->m_Sigma = t; return *this; };
-      double GetSigma() { return this->m_Sigma; };
+      Self& SetSigma ( double t ) { this->m_Sigma = t; return *this; }
+      double GetSigma() { return this->m_Sigma; }
 
       /**
        * Get/Set NormalizeAcrossScale
        */
-      Self& SetNormalizeAcrossScale ( bool t ) { this->m_NormalizeAcrossScale = t; return *this; };
-      bool GetNormalizeAcrossScale() { return this->m_NormalizeAcrossScale; };
+      Self& SetNormalizeAcrossScale ( bool t ) { this->m_NormalizeAcrossScale = t; return *this; }
+      bool GetNormalizeAcrossScale() { return this->m_NormalizeAcrossScale; }
 
       /**
        * Get/Set Order
        */
-      Self& SetOrder ( OrderEnumType t ) { this->m_Order = t; return *this; };
-      OrderEnumType GetOrder() { return this->m_Order; };
+      Self& SetOrder ( OrderEnumType t ) { this->m_Order = t; return *this; }
+      OrderEnumType GetOrder() { return this->m_Order; }
 
 
       // Print ourselves out

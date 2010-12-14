@@ -69,7 +69,7 @@ public:
   /// this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
   /// \endcode
   ///
-  template < typename TPixelIDTypeList, unsigned int ImageDimension >
+  template < typename TPixelIDTypeList, unsigned int VImageDimension >
   void RegisterMemberFunctions( void );
 
 
