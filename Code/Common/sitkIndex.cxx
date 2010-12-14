@@ -62,6 +62,20 @@ Index::operator[](unsigned int dim)
   return m_Index[dim];
 }
 
+bool Index::operator==(Self & idx)
+{
+  if (m_Index[0] == idx[0] &&
+      m_Index[1] == idx[1] &&
+      m_Index[2] == idx[2])
+    {
+    return true;
+    }
+  else
+    {
+    return false;
+    }
+}
+
 Index::operator itk::Index<2>()
 {
   itk::Index<2> idx;
