@@ -444,7 +444,8 @@ function expand(str, ...)
       else error'search item must be a function, table or userdata' end
       if value ~= nil then return value end
     end
-    error('unknown variable: '.. index)
+    io.stderr:write('unknown variable: '.. index .. ' returning nil\n')
+    return nil
   end
 
   local function elist(var, v, str, sep)
