@@ -72,7 +72,7 @@ MathematicalMorphologyImageFilter< TInputImage, TOutputImage >
       this->GraftOutput( filter->GetOutput() );
       break;
       }
-    case GrayscaleClosening:
+    case GrayscaleClosing:
       {
       typename GrayscaleMorphologicalClosingFilterType::Pointer filter = GrayscaleMorphologicalClosingFilterType::New();
       filter->SetInput( this->GetInput() );
