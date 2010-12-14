@@ -1,5 +1,5 @@
-#ifndef _sitkPixelIDTypes_h
-#define _sitkPixelIDTypes_h
+#ifndef __sitkPixelIDTypes_h
+#define __sitkPixelIDTypes_h
 
 
 #include <itkImage.h>
@@ -69,8 +69,6 @@ struct ImageTypeToPixelID< itk::LabelMap< itk::LabelMap< itk::LabelObject< TLabe
 {
   typedef  LabelPixelID< TLabelType > PixelIDType;
 };
-
-
 
 
 }

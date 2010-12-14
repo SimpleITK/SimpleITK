@@ -90,40 +90,40 @@ namespace itk {
     }
 
 
-  template < unsigned int ImageDimension >
+  template < unsigned int VImageDimension >
   Image::Pointer ImageFileReader::ExecuteInternalReadScalar( itk::ImageIOBase::IOComponentType componentType )
   {
     switch(componentType)
       {
     case itk::ImageIOBase::CHAR:
-      return this->ExecuteInternal< itk::Image<int8_t, ImageDimension> >( );
+      return this->ExecuteInternal< itk::Image<int8_t, VImageDimension> >( );
       break;
     case itk::ImageIOBase::UCHAR:
-      return this->ExecuteInternal< itk::Image<uint8_t, ImageDimension> >( );
+      return this->ExecuteInternal< itk::Image<uint8_t, VImageDimension> >( );
       break;
     case itk::ImageIOBase::SHORT:
-      return this->ExecuteInternal< itk::Image<int16_t, ImageDimension> >( );
+      return this->ExecuteInternal< itk::Image<int16_t, VImageDimension> >( );
       break;
     case itk::ImageIOBase::USHORT:
-      return this->ExecuteInternal< itk::Image<uint16_t, ImageDimension> >( );
+      return this->ExecuteInternal< itk::Image<uint16_t, VImageDimension> >( );
       break;
     case itk::ImageIOBase::INT:
-      return this->ExecuteInternal< itk::Image<int32_t, ImageDimension> >( );
+      return this->ExecuteInternal< itk::Image<int32_t, VImageDimension> >( );
       break;
     case itk::ImageIOBase::UINT:
-      return this->ExecuteInternal< itk::Image<uint32_t, ImageDimension> >( );
+      return this->ExecuteInternal< itk::Image<uint32_t, VImageDimension> >( );
       break;
     case itk::ImageIOBase::LONG:
-      return this->ExecuteInternal< itk::Image<long, ImageDimension> >( );
+      return this->ExecuteInternal< itk::Image<long, VImageDimension> >( );
       break;
     case itk::ImageIOBase::ULONG:
-      return this->ExecuteInternal< itk::Image<unsigned long, ImageDimension> >( );
+      return this->ExecuteInternal< itk::Image<unsigned long, VImageDimension> >( );
       break;
     case itk::ImageIOBase::FLOAT:
-      return this->ExecuteInternal< itk::Image<float, ImageDimension> >( );
+      return this->ExecuteInternal< itk::Image<float, VImageDimension> >( );
       break;
     case itk::ImageIOBase::DOUBLE:
-      return this->ExecuteInternal< itk::Image<double, ImageDimension> >( );
+      return this->ExecuteInternal< itk::Image<double, VImageDimension> >( );
       break;
     case itk::ImageIOBase::UNKNOWNCOMPONENTTYPE:
     default:
@@ -133,40 +133,40 @@ namespace itk {
   }
 
 
-  template < unsigned int ImageDimension >
+  template < unsigned int VImageDimension >
   Image::Pointer ImageFileReader::ExecuteInternalReadVector( itk::ImageIOBase::IOComponentType componentType )
   {
     switch(componentType)
       {
     case itk::ImageIOBase::CHAR:
-      return this->ExecuteInternal< itk::VectorImage<char, ImageDimension> >( );
+      return this->ExecuteInternal< itk::VectorImage<char, VImageDimension> >( );
       break;
     case itk::ImageIOBase::UCHAR:
-      return this->ExecuteInternal< itk::VectorImage<unsigned char, ImageDimension> >( );
+      return this->ExecuteInternal< itk::VectorImage<unsigned char, VImageDimension> >( );
       break;
     case itk::ImageIOBase::SHORT:
-      return this->ExecuteInternal< itk::VectorImage<int16_t, ImageDimension> >( );
+      return this->ExecuteInternal< itk::VectorImage<int16_t, VImageDimension> >( );
       break;
     case itk::ImageIOBase::USHORT:
-      return this->ExecuteInternal< itk::VectorImage<uint16_t, ImageDimension> >( );
+      return this->ExecuteInternal< itk::VectorImage<uint16_t, VImageDimension> >( );
       break;
     case itk::ImageIOBase::INT:
-      return this->ExecuteInternal< itk::VectorImage<int32_t, ImageDimension> >( );
+      return this->ExecuteInternal< itk::VectorImage<int32_t, VImageDimension> >( );
       break;
     case itk::ImageIOBase::UINT:
-      return this->ExecuteInternal< itk::VectorImage<uint32_t, ImageDimension> >( );
+      return this->ExecuteInternal< itk::VectorImage<uint32_t, VImageDimension> >( );
       break;
     case itk::ImageIOBase::LONG:
-      return this->ExecuteInternal< itk::VectorImage<long, ImageDimension> >( );
+      return this->ExecuteInternal< itk::VectorImage<long, VImageDimension> >( );
       break;
     case itk::ImageIOBase::ULONG:
-      return this->ExecuteInternal< itk::VectorImage<unsigned long, ImageDimension> >( );
+      return this->ExecuteInternal< itk::VectorImage<unsigned long, VImageDimension> >( );
       break;
     case itk::ImageIOBase::FLOAT:
-      return this->ExecuteInternal< itk::VectorImage<float, ImageDimension> >( );
+      return this->ExecuteInternal< itk::VectorImage<float, VImageDimension> >( );
       break;
     case itk::ImageIOBase::DOUBLE:
-      return this->ExecuteInternal< itk::VectorImage<double, ImageDimension> >( );
+      return this->ExecuteInternal< itk::VectorImage<double, VImageDimension> >( );
       break;
     case itk::ImageIOBase::UNKNOWNCOMPONENTTYPE:
     default:

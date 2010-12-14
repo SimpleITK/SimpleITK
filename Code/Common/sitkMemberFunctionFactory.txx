@@ -1,5 +1,5 @@
 #ifndef __sitkMemberFunctionFactory_txx
-#define __sitkMemberFunctionFactory_h
+#define __sitkMemberFunctionFactory_txx
 
 #include "sitkMemberFunctionFactory.h"
 #include "sitkDetail.h"
@@ -18,7 +18,7 @@ namespace detail {
 // This predicate calls the member function factories AddressorType on
 // each valid ImageType defined from the pixel type id, and the
 // provided dimension,
-template < typename TMemberFunctionFactory, unsigned int ImageDimension >
+template < typename TMemberFunctionFactory, unsigned int VImageDimension >
 struct MemberFunctionInstantiater
 {
   MemberFunctionInstantiater( TMemberFunctionFactory &factory )
@@ -38,7 +38,7 @@ struct MemberFunctionInstantiater
       AddressorType addressor;
       if ( id > 0 &&  id < typelist::Length< InstantiatedPixelIDTypeList >::Result )
         {
-        typedef typename PixelIDToImageType<TPixelIDType, ImageDimension>::ImageType ImageType;
+        typedef typename PixelIDToImageType<TPixelIDType, VImageDimension>::ImageType ImageType;
         m_Factory.Register(addressor.operator()<ImageType>(), (ImageType*)(NULL));
         }
     }
@@ -92,11 +92,11 @@ void MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
 template <typename TMemberFunctionPointer,
           typename TMemberFunctionAddressor>
 template <typename TPixelIDTypeList,
-          unsigned int ImageDimension >
+          unsigned int VImageDimension >
 void MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
 ::RegisterMemberFunctions( void )
 {
-  typedef MemberFunctionInstantiater< MemberFunctionFactory, ImageDimension > InstantiaterType;
+  typedef MemberFunctionInstantiater< MemberFunctionFactory, VImageDimension > InstantiaterType;
 
   // initialize function array with pointer
   typelist::ForEach<TPixelIDTypeList> forEachTypeInList;
