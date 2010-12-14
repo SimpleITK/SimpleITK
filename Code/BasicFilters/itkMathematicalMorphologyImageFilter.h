@@ -57,7 +57,7 @@ public:
   typedef enum {
    BinaryErode, BinaryDilate,
    GrayscaleErode, GrayscaleDilate,
-   GrayscaleOpening, GrayscaleClosening } OperationType;
+   GrayscaleOpening, GrayscaleClosing } OperationType;
 
   /** Define the type of mathematical morphology operation to be applied to the
    * input image. See the type OperationType enum for a list of valid options. */

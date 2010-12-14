@@ -24,24 +24,17 @@ $(if #tests == 0 then
 
 $(foreach tests
   if tag == "${tag}" then
-    $(if settings then
-      OUT=[[ 
-    $(foreach settings 
-      filter:Set${parameter} ( ${value} );
+    $(when settings
+    $(foreach settings
+    filter:Set${parameter} ( $(if lua_value then OUT=[[${lua_value}]] else OUT=[[${value}]] end) ); 
+    )  
     )
-    ]] end)
 
     inputA = reader:SetFilename ( arg[2] ):Execute();
-    $(if inputB then
-        OUT=[[
-            inputB = reader:SetFilename ( arg[3] ):Execute()
-            output = filter:Execute ( inputA, inputB )
-        ]]
-      else
-        OUT=[[
-            output = filter:Execute ( inputA )
-        ]]
-      end)
+    $(when inputB
+    inputB = reader:SetFilename ( arg[3] ):Execute()
+    )
+    output = filter:Execute ( inputA $(when inputB , inputB) )
     writer:SetFilename ( arg[#arg] ):Execute ( output )
   end
 )
