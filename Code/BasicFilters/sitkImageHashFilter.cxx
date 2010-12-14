@@ -52,10 +52,11 @@ namespace itk {
 
     template <class TImageType>
     std::string ImageHashFilter::ExecuteInternal ( Image::Pointer inImage ) {
-      typedef TImageType InputImageType;
-      typedef typename InputImageType::PixelType PixelType;
+      typedef TImageType                                   InputImageType;
+      typedef typename InputImageType::PixelType           PixelType;
       typedef typename NumericTraits<PixelType>::ValueType ValueType;
-      typedef itk::ByteSwapper<ValueType> Swapper;
+      typedef itk::ByteSwapper<ValueType>                  Swapper;
+
       typename InputImageType::Pointer image =
         dynamic_cast <InputImageType*> ( inImage->GetImageBase().GetPointer() );
 

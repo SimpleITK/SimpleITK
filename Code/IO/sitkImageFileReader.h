@@ -21,10 +21,10 @@ namespace itk {
 
     protected:
 
-      template < unsigned int ImageDimension >
+      template < unsigned int VImageDimension >
       Image::Pointer ExecuteInternalReadScalar( itk::ImageIOBase::IOComponentType componentType );
 
-      template < unsigned int ImageDimension >
+      template < unsigned int VImageDimension >
       Image::Pointer ExecuteInternalReadVector( itk::ImageIOBase::IOComponentType componentType );
 
       template <class TImageType> Image::Pointer ExecuteInternal ( void );
@@ -36,7 +36,5 @@ namespace itk {
 
   }
 }
-
-
 
 #endif

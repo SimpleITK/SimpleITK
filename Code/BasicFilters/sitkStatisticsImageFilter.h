@@ -4,7 +4,6 @@
 #include "sitkImageFilter.h"
 
 
-
 namespace itk {
   namespace simple {
 

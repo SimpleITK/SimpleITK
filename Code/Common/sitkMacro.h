@@ -5,7 +5,7 @@
 // Ideally, take the types from the C99 standard.  However,
 // VS 8 does not have stdint.h, but they are defined anyway.
 #ifndef _MSC_VER
-	#include <stdint.h>
+#include <stdint.h>
 #endif
 
 #include "sitkPixelIDTypeLists.h"

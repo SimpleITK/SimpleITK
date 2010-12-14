@@ -10,7 +10,7 @@ namespace simple {
 //
 ExtractImageFilter::ExtractImageFilter ()
   {
-  this->m_Slice = 0;;
+  this->m_Slice = 0;
   this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
   }
