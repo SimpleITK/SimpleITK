@@ -66,7 +66,8 @@ bool Index::operator==(Self & idx)
 {
   if (m_Index[0] == idx[0] &&
       m_Index[1] == idx[1] &&
-      m_Index[2] == idx[2])
+      m_Index[2] == idx[2] &&
+      m_Dim == idx.GetDim())
     {
     return true;
     }
