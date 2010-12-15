@@ -33,7 +33,7 @@ struct MemberFunctionInstantiater
       typedef typename PixelIDToImageType<TPixelIDType, VImageDimension>::ImageType ImageType;
 
       // the type of object which conditionally calls the AddressorType
-      typedef ConditionalInstantiater< PixelIDToPixelIDValue< PixelIDType >::Result != sitkUnknown, ImageType > InstantiaterType;
+      typedef ConditionalInstantiater< PixelIDToPixelIDValue< PixelIDType >::Result != (int) sitkUnknown, ImageType > InstantiaterType;
 
       InstantiaterType::InstantiateAndRegister( m_Factory );
     }
@@ -50,7 +50,6 @@ protected:
   template< bool VInstantiate, typename ImageType >
   struct ConditionalInstantiater
   {
-    template < typename TMemberFunctionFactory >
     static void InstantiateAndRegister( TMemberFunctionFactory &factory )
       {
         typedef typename TMemberFunctionFactory::AddressorType    AddressorType;
@@ -63,7 +62,6 @@ protected:
   template<typename ImageType >
   struct ConditionalInstantiater<false, ImageType>
   {
-    template < typename TMemberFunctionFactory >
     static void InstantiateAndRegister( TMemberFunctionFactory &factory )
       {
       }

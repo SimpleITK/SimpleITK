@@ -36,7 +36,7 @@ namespace itk {
       template <typename TImageType, typename TOutputImageType>
       Image::Pointer ExecuteInternal ( typename TImageType::ConstPointer inImage )
         {
-          return this->ConditionalExecuteInternal<TImageType, TOutputImageType>( inImage, ImageTypeToToken<TOutputImageType>::Token() );
+          return this->ConditionalExecuteInternal<TImageType, TOutputImageType>( inImage, typename ImageTypeToToken<TOutputImageType>::Token() );
         }
 
       // methods which utilizes the pixel id token type to
