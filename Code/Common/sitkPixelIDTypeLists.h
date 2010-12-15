@@ -26,7 +26,7 @@ typedef typelist::MakeTypeList<BasicPixelID<signed char>,
 
 typedef BasicPixelIDTypeList ScalarPixelIDTypeList;
 
-typedef typelist::MakeTypeList<BasicPixelID<char>,
+typedef typelist::MakeTypeList<BasicPixelID<signed char>,
                                BasicPixelID<unsigned char>,
                                BasicPixelID<short>,
                                BasicPixelID<unsigned short>,
