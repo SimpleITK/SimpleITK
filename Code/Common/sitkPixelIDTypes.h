@@ -53,7 +53,7 @@ template <typename TImageType> struct ImageTypeToPixelID;
 template <typename TPixelType, unsigned int VImageDimension>
 struct ImageTypeToPixelID< itk::Image< TPixelType, VImageDimension> >
 {
-  typedef BasicPixelID<TPixelType >PixelIDType;
+  typedef BasicPixelID<TPixelType > PixelIDType;
 };
 
 
