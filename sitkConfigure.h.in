@@ -2,5 +2,6 @@
 #define __sitkConfigure_h
 
 #cmakedefine SITK_SUPPORTS_STATIC_ASSERT
+#cmakedefine SITK_EXPRESS_INSTANTIATEDPIXELS
 
 #endif // __sitkConfigure_h
