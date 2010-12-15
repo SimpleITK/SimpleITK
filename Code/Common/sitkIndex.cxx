@@ -22,7 +22,7 @@ Index::Index( IndexValueType x, IndexValueType y, IndexValueType z )
 }
 
 
-Index::Index( itk::Index<2> idx )
+Index::Index( const itk::Index<2> &idx )
 {
  m_Index[0] = idx[0];
  m_Index[1] = idx[1];
@@ -30,7 +30,7 @@ Index::Index( itk::Index<2> idx )
  m_Dim = 2;
 }
 
-Index::Index( itk::Index<3> idx )
+Index::Index( const itk::Index<3> &idx )
 {
  m_Index[0] = idx[0];
  m_Index[1] = idx[1];
