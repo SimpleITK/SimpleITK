@@ -1,9 +1,10 @@
 #ifndef __sitkPixelIDTypeLists_h
 #define __sitkPixelIDTypeLists_h
 
-#include "Ancillary/TypeList.h"
-
+#include "sitkConfigure.h"
 #include "sitkPixelIDTypes.h"
+
+#include "Ancillary/TypeList.h"
 
 #include <complex>
 
@@ -66,7 +67,17 @@ typedef typelist::Append<
 
 
 // this is the list of types which we will try to instantiate
+
+#ifdef SITK_EXPRESS_INSTANTIATEDPIXELS
+
+typedef typelist::MakeTypeList< BasicPixelID<short>, BasicPixelID<float>, BasicPixelID<double> >::Type InstantiatedPixelIDTypeList;
+
+#else
+
 typedef AllPixelIDTypeList InstantiatedPixelIDTypeList;
+
+#endif
+
 
 
 }
