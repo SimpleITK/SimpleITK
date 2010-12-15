@@ -30,9 +30,12 @@ namespace itk {
       Image::Pointer ExecuteInternalReadVector( itk::ImageIOBase::IOComponentType componentType );
 
       template <class TImageType> Image::Pointer ExecuteInternal ( )
-        { return this->RexecuteInternal<TImageType>( ImageTypeToToken<TImageType>::Token() ); }
-      template <class TImageType> Image::Pointer RexecuteInternal ( InstantiatedToken<true> );
-      template <class TImageType> Image::Pointer RexecuteInternal ( InstantiatedToken<false> );
+        { return this->ConditionalExecuteInternal<TImageType>( typename ImageTypeToToken<TImageType>::Token() ); }
+
+      // methods which utlize the pixel id token type to conditionally
+      // instatiate ad execute the implementation
+      template <class TImageType> Image::Pointer ConditionalExecuteInternal ( InstantiatedToken<true> );
+      template <class TImageType> Image::Pointer ConditionalExecuteInternal ( InstantiatedToken<false> );
 
     private:
 
