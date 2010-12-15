@@ -11,6 +11,7 @@ set ( TestSource
   TypeListsTests.cxx
   BasicFiltersTests.cxx
   sitkExceptionsTests.cxx
+  sitkIndexTests.cxx
   CXXTests.cxx
   )
 
