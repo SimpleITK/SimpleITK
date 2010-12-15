@@ -17,7 +17,7 @@ namespace detail {
 //
 // This predicate calls the member function factories AddressorType on
 // each valid ImageType defined from the pixel type id, and the
-// provided dimension,
+// provided dimension
 template < typename TMemberFunctionFactory, unsigned int VImageDimension >
 struct MemberFunctionInstantiater
 {
@@ -29,19 +29,45 @@ struct MemberFunctionInstantiater
   void operator()( TPixelIDType )
     {
       typedef TPixelIDType                                      PixelIDType;
-      typedef typename TMemberFunctionFactory::ObjectType       ObjectType;
-      typedef typename TMemberFunctionFactory::AddressorType    AddressorType;
 
-      // this maps the pixel type to an array id
-      int id = PixelIDToPixelIDValue< PixelIDType >::Result;
+      typedef typename PixelIDToImageType<TPixelIDType, VImageDimension>::ImageType ImageType;
 
-      AddressorType addressor;
-      if ( id > 0 &&  id < typelist::Length< InstantiatedPixelIDTypeList >::Result )
-        {
-        typedef typename PixelIDToImageType<TPixelIDType, VImageDimension>::ImageType ImageType;
-        m_Factory.Register(addressor.operator()<ImageType>(), (ImageType*)(NULL));
-        }
+      // the type of object which conditionally calls the AddressorType
+      typedef ConditionalInstantiater< PixelIDToPixelIDValue< PixelIDType >::Result != sitkUnknown, ImageType > InstantiaterType;
+
+      InstantiaterType::InstantiateAndRegister( m_Factory );
     }
+
+protected:
+
+  // Class to conditionally instantiate, and register the member
+  // function.
+  //
+  // This class is partially specialize on VInstatiate to
+  // conditionally do the instantiation, thus reducing compile time
+  // and binary size. The instantiation is done throught the member
+  // function factories addressor type.
+  template< bool VInstantiate, typename ImageType >
+  struct ConditionalInstantiater
+  {
+    template < typename TMemberFunctionFactory >
+    static void InstantiateAndRegister( TMemberFunctionFactory &factory )
+      {
+        typedef typename TMemberFunctionFactory::AddressorType    AddressorType;
+        AddressorType addressor;
+        factory.Register(addressor.operator()<ImageType>(), (ImageType*)(NULL));
+      }
+  };
+
+  // class which does nothing
+  template<typename ImageType >
+  struct ConditionalInstantiater<false, ImageType>
+  {
+    template < typename TMemberFunctionFactory >
+    static void InstantiateAndRegister( TMemberFunctionFactory &factory )
+      {
+      }
+  };
 
 private:
 
