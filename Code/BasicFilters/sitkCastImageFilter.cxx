@@ -90,8 +90,6 @@ Image::Pointer CastImageFilter::ExecuteInternal ( Image::Pointer inImage )
     typedef itk::Image< float, InputImageType::ImageDimension > OutputImageType;
     return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
     }
-
-  /*
   else if ( this->m_OutputPixelType == sitkInt8 )
     {
     typedef itk::Image< int8_t, InputImageType::ImageDimension > OutputImageType;
@@ -182,16 +180,19 @@ Image::Pointer CastImageFilter::ExecuteInternal ( Image::Pointer inImage )
     typedef itk::VectorImage< double, InputImageType::ImageDimension > OutputImageType;
     return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
     }
-  */
-  return NULL;
+  else
+    {
+    sitkExceptionMacro( "Logic Error missing case" )
+    }
+
   }
 
 
 //
-// ExecuteInternal
+// ConditionalExecuteInternal
 //
 template <typename TImageType, typename TOutputImageType>
-Image::Pointer CastImageFilter::ExecuteInternal(  typename TImageType::ConstPointer image )
+Image::Pointer CastImageFilter::ConditionalExecuteInternal(  typename TImageType::ConstPointer image, InstantiatedToken<true> )
 {
   typedef TImageType       InputImageType;
   typedef TOutputImageType OutputImageType;
@@ -206,6 +207,17 @@ Image::Pointer CastImageFilter::ExecuteInternal(  typename TImageType::ConstPoin
   filter->GetOutput()->DisconnectPipeline();
 
   return out;
+}
+
+
+//
+// ConditionalExecuteInternal
+//
+template <typename TImageType, typename TOutputImageType>
+Image::Pointer CastImageFilter::ConditionalExecuteInternal(  typename TImageType::ConstPointer image, InstantiatedToken<false> )
+{
+  assert( false );
+  sitkExceptionMacro( "Logic Error: should not have pixel id for uninstatiated pixels" );
 }
 
 } // end namespace simple

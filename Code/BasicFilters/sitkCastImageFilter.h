@@ -3,6 +3,8 @@
 
 #include "sitkImageFilter.h"
 
+#include "sitkPixelIDTokens.h"
+
 namespace itk {
   namespace simple {
 
@@ -29,14 +31,30 @@ namespace itk {
 
       PixelIDValueType m_OutputPixelType;
 
-      template<typename TImageType, typename TOutputImageType>
-      Image::Pointer ExecuteInternal(  typename TImageType::ConstPointer inImage );
+      // method to add instantiated token to function for conditional
+      // instantiation of section image type
+      template <typename TImageType, typename TOutputImageType>
+      Image::Pointer ExecuteInternal ( typename TImageType::ConstPointer inImage )
+        {
+          return this->ConditionalExecuteInternal<TImageType, TOutputImageType>( inImage, ImageTypeToToken<TOutputImageType>::Token() );
+        }
 
-      // Macro that instantiate the member function dispatching
+      // methods which utilizes the pixel id token type to
+      // conditionally instatiate and execute the implementation
+      template<typename TImageType, typename TOutputImageType>
+      Image::Pointer ConditionalExecuteInternal(  typename TImageType::ConstPointer inImage, InstantiatedToken<true> );
+      template<typename TImageType, typename TOutputImageType>
+      Image::Pointer ConditionalExecuteInternal(  typename TImageType::ConstPointer inImage, InstantiatedToken<false> );
+
+
       typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer );
-      template <class TImageType> Image::Pointer ExecuteInternal ( Image::Pointer image );
+
+      template <typename TImageType>
+      Image::Pointer ExecuteInternal (  Image::Pointer image );
+
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
+
     };
 
 
