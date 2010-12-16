@@ -47,7 +47,7 @@ public:
   // Get dimensionality
   unsigned int GetDim() const;
 
-
+  std::string ToString();
   //
   // Operators
   //

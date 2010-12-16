@@ -11,7 +11,7 @@
       "inputA" : "Input/Ramp-Zero-One-Float.nrrd",
       "inputB" : "Input/Ramp-One-Zero-Float.nrrd",
       "settings" : [],
-      "md5hash" : "8ca9092e4db50ad97c3a23fbe575e465"
+      "tolerance" : 0.01
     }
   ]
 }

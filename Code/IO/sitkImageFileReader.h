@@ -30,7 +30,7 @@ namespace itk {
       Image::Pointer ExecuteInternalReadVector( itk::ImageIOBase::IOComponentType componentType );
 
       template <class TImageType> Image::Pointer ExecuteInternal ( )
-        { return this->RexecuteInternal<TImageType>( ImageTypeToToken<TImageType>::Token() ); }
+        { return this->RexecuteInternal<TImageType>( typename ImageTypeToToken<TImageType>::Token() ); }
       template <class TImageType> Image::Pointer RexecuteInternal ( InstantiatedToken<true> );
       template <class TImageType> Image::Pointer RexecuteInternal ( InstantiatedToken<false> );
 

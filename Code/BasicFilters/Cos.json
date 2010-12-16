@@ -9,13 +9,13 @@
       "tag" : "float",
       "description" : "Cosine of an image",
       "inputA" : "Input/RA-Slice-Float.nrrd",
-      "md5hash" : "f879f63ddbb89043d0e0158a4af3a9e0"
+      "tolerance" : 0.01
     },
     {
       "tag" : "short",
       "description" : "Cosine of an image",
       "inputA" : "Input/RA-Slice-Short.nrrd",
-      "md5hash" : "0829f71740aab1ab98b33eae21dee122"
+      "tolerance" : 0.01
     }
   ]
 }
