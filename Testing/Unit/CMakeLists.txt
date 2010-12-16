@@ -7,6 +7,7 @@ message("GENERATED TESTS ${GENERATED_FILTER_LIST}")
 # added to ctest.
 set ( TestSource
   ImageTests.cxx
+  CommonTests.cxx
   IOTests.cxx
   TypeListsTests.cxx
   BasicFiltersTests.cxx

@@ -61,7 +61,7 @@ class DataFinder {
   std::string GetExecutableDirectory() { return mExecutableDirectory; }
   std::string GetBuildDirectory() { return std::string ( SIMPLEITK_BINARY_DIR ); }
   std::string FindExecutable ( std::string exe ) { return GetExecutableDirectory() + "/" + exe + EXECUTABLE_SUFFIX; }
-  std::string GetLuaExecutable() { return std::string ( SIMPLEITK_LUA_EXECUTABLE_PATH ); }
+  std::string GetLuaExecutable() { return this->FindExecutable ( "SimpleITKLua" ); }
   std::string GetPythonExecutable() { return std::string ( PYTHON_EXECUTABLE_PATH ); }
   std::string GetSourceDirectory() { return std::string ( SIMPLEITK_SOURCE_DIR ); }
   bool FileExists ( std::string filename ) { return itksys::SystemTools::FileExists ( filename.c_str() ); }

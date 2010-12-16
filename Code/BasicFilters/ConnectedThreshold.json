@@ -25,6 +25,7 @@
       "type" : "std::vector<itk::simple::Index>",
       "doc" : "List of interor seed points used to initialize the region growing segmentation",
       "no_print" : 1,
+      "default" : "std::vector<itk::simple::Index>()",
       "custom_itk_cast" :
 
   "\

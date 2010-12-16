@@ -10,7 +10,7 @@
       "description" : "Simply run with default settings",
       "inputA" : "Input/Ramp-Zero-One-Float.nrrd",
       "settings" : [],
-      "md5hash" : "f1aa8a75796e58579538a2b7fe22960c"
+      "tolerance" : 0.01
     }
   ]
 }
