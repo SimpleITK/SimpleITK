@@ -43,7 +43,7 @@ Index::Index( const itk::Index<3> &idx )
  m_Index[0] = idx[0];
  m_Index[1] = idx[1];
  m_Index[2] = idx[2];
- m_Dim = 2;
+ m_Dim = 3;
 }
 
 Index::IndexValueType Index::GetX() const { return m_Index[0]; }
@@ -79,6 +79,12 @@ Index::operator itk::Index<3>()
   return idx;
 }
 
+std::string Index::ToString()
+{
+  std::ostringstream out;
+  out << *this;
+  return out.str();
+}
 
 std::ostream & operator<<(std::ostream & os, Index & idx)
 {
