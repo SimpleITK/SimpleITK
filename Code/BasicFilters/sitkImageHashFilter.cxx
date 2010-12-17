@@ -87,7 +87,7 @@ namespace itk {
       }
       for ( size_t depth = 0; depth < NumberOfSlices; depth++ ) {
         for ( size_t i = 0; i < VoxelsPerSlice; i++ ) {
-          buffer[i] = iterator.Value();
+          buffer[i] = iterator.Get();
           ++iterator;
         }
         // Possibly byte swap so we always calculate on little endian data
