@@ -169,6 +169,9 @@ class Python : public ExternalProgramRunner {
 class Lua : public ExternalProgramRunner {
 };
 
+class Tcl : public ExternalProgramRunner {
+};
+
 #include "ImageCompare.h"
 
 #endif
