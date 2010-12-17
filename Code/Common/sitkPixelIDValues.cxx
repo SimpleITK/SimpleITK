@@ -57,7 +57,7 @@ namespace simple
     }
   else if ( type == sitkComplexFloat32 )
     {
-    return "conplex of 32-bit float";
+    return "complex of 32-bit float";
     }
   else if ( type == sitkComplexFloat64 )
     {
