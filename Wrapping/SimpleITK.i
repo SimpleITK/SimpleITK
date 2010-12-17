@@ -60,6 +60,10 @@ using namespace itk::simple;
 %}
 #endif // End of Java specific sections
 
+#if SWIGTCL
+// Code to rebuild tclsh
+%include "tclsh.i"
+#endif
 
 
 // These definitions help SWIG to properly wrap smart pointers.
@@ -73,6 +77,7 @@ typedef unsigned long long uint64_t;
 typedef unsigned int uint32_t;
 
 // Any new classes need to have an "%include" statement to be wrapped.
+%include "sitkPixelIDValues.h"
 %include "sitkImage.h"
 %include "sitkImageFilter.h"
 %include "sitkImageFileWriter.h"
