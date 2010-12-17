@@ -27,6 +27,7 @@ TEST(IO,ImageFileReader) {
   // Loop over the map, load each file, and compare the hash value
   for ( MapType::iterator it = mapping.begin(); it != mapping.end(); ++it ) {
     reader.SetFilename ( dataFinder.GetFile ( it->first ) );
+    EXPECT_EQ ( reader.GetFilename(), dataFinder.GetFile ( it->first ) );
     image = reader.Execute();
     ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
     hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 );
