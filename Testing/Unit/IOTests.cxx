@@ -47,7 +47,7 @@ TEST(IO,ReadWrite) {
   std::string sha1 = "126ea8c3ef5573ca1e4e0deece920c2c4a4f38b5";
 
 
-  image = reader.SetFilename ( dataFinder.GetFile ( "Input/RA-short.nrrd" ) ).Execute();
+  image = reader.SetFilename ( dataFinder.GetFile ( "Input/RA-Short.nrrd" ) ).Execute();
   ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
   hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 );
   EXPECT_EQ ( md5, hasher.Execute ( image ) );
