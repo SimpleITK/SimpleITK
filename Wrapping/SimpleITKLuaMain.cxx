@@ -24,22 +24,9 @@
 #include "lua.hpp"
 
 
-#ifdef USE_TECLA
-#include "libtecla.h"
-static GetLine *gl = NULL;
-#undef lua_readline
-#undef lua_saveline
-#undef lua_freeline
-#define lua_readline(L,b,p)	(void)L, ((b)=gl_get_line(gl,p,NULL,-1)) != NULL
-#define lua_saveline(L,idx)	{ (void)L; (void)idx; }
-#define lua_freeline(L,b)	((void)L, (b))
-#endif
-
 static lua_State *globalL = NULL;
 
 static const char *progname = LUA_PROGNAME;
-
-
 
 static void lstop (lua_State *L, lua_Debug *ar) {
   (void)ar;  /* unused arg. */
