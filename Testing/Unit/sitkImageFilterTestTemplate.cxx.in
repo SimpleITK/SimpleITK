@@ -26,6 +26,17 @@ TEST(BasicFilters,${name}) {
       )
     EXPECT_NE ( filter.ToString(), "" ) << "empty ToString method!";
 
+  // Test sets / gets
+    $(foreach members
+      $(if no_print == nil then
+        OUT=[[
+  filter.Set${name} ( ${default} );
+  EXPECT_EQ ( filter.Get${name}(), ${default} ) << "Testing set/get combo for ${name}";
+]]
+        end)
+      )
+
+
   $(foreach tests 
     /* ${description} */
   ASSERT_NO_THROW ( inputA = reader.SetFilename ( dataFinder.GetFile ( "${inputA}" ) ).Execute() ) << "Failed to load ${inputA}";
