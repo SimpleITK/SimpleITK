@@ -67,7 +67,7 @@ Image::Pointer CastImageFilter::ExecuteInternal ( Image::Pointer inImage )
 
   if ( this->m_OutputPixelType == sitkUnknown )
     {
-    sitkExceptionMacro( "Unalbe to convert to unknown pixel type." );
+    sitkExceptionMacro( "Unable to convert to unknown pixel type." );
     return NULL;
     }
   else if ( this->m_OutputPixelType == sitkUInt8 )
@@ -90,8 +90,6 @@ Image::Pointer CastImageFilter::ExecuteInternal ( Image::Pointer inImage )
     typedef itk::Image< float, InputImageType::ImageDimension > OutputImageType;
     return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
     }
-
-  /*
   else if ( this->m_OutputPixelType == sitkInt8 )
     {
     typedef itk::Image< int8_t, InputImageType::ImageDimension > OutputImageType;
@@ -182,7 +180,6 @@ Image::Pointer CastImageFilter::ExecuteInternal ( Image::Pointer inImage )
     typedef itk::VectorImage< double, InputImageType::ImageDimension > OutputImageType;
     return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
     }
-  */
   return NULL;
   }
 
