@@ -142,7 +142,7 @@ endif()
 
 # Find Tcl
 if ( WRAP_TCL )
-  find_package ( Tcl REQUIRED )
+  find_package ( TCL REQUIRED )
   include_directories ( ${TCL_INCLUDE_DIR} )
 
   # Run swig
