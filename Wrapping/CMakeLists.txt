@@ -150,8 +150,8 @@ if ( WRAP_TCL )
 
   # Run swig
   set(CMAKE_SWIG_FLAGS "-nosafe")
-  SWIG_add_module ( SimpleITK tcl SimpleITK.i SimpleITKTCL_wrap.cxx )
-  SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${TCL_LIBRARY} ${ITK_LIBRARIES})
+  SWIG_add_module ( SimpleITKTcl tcl SimpleITK.i SimpleITKTCL_wrap.cxx )
+  SWIG_link_libraries ( SimpleITKTcl ${SimpleITK_LIBRARIES} ${TCL_LIBRARY} ${ITK_LIBRARIES})
   add_executable ( SimpleITKTclsh SimpleITKTCL_wrap.cxx )
   target_link_libraries ( SimpleITKTclsh ${SimpleITK_LIBRARIES} ${TCL_LIBRARY} ${ITK_LIBRARIES})
 
@@ -164,8 +164,8 @@ if ( WRAP_R )
 
   # Run swig
   set(CMAKE_SWIG_FLAGS "")
-  SWIG_add_module ( SimpleITK r SimpleITK.i SimpleITKR_wrap.cxx )
-  SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${TCL_LIBRARY} ${ITK_LIBRARIES})
+  SWIG_add_module ( SimpleITKR r SimpleITK.i SimpleITKR_wrap.cxx )
+  SWIG_link_libraries ( SimpleITKR ${SimpleITK_LIBRARIES} ${TCL_LIBRARY} ${ITK_LIBRARIES})
 
 endif()
 
