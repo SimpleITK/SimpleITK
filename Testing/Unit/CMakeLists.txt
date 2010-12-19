@@ -7,6 +7,7 @@ message("GENERATED TESTS ${GENERATED_FILTER_LIST}")
 # added to ctest.
 set ( TestSource
   ImageTests.cxx
+  CommonTests.cxx
   IOTests.cxx
   TypeListsTests.cxx
   BasicFiltersTests.cxx
@@ -25,8 +26,14 @@ if ( WRAP_PYTHON )
   add_definitions ( -DWRAP_PYTHON )
 endif()
 
+if ( WRAP_TCL )
+  add_definitions ( -DWRAP_TCL )
+endif()
+
+
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/PythonTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/LuaTests)
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/TclTests)
 
 # Generate code
 foreach ( FILENAME ${GENERATED_FILTER_LIST} )
@@ -35,7 +42,8 @@ foreach ( FILENAME ${GENERATED_FILTER_LIST} )
     COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkImageFilterTestTemplate.cxx.in ${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILENAME}ImageFilterTest.cxx 
     COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/LuaImageFilterTestTemplate.lua.in "${SimpleITK_BINARY_DIR}/Testing/Unit/LuaTests/${FILENAME}ImageFilterTest.lua"
     COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/PythonImageFilterTestTemplate.py.in "${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/${FILENAME}ImageFilterTest.py"
-    DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkImageFilterTestTemplate.cxx.in ${SimpleITK_SOURCE_DIR}/Testing/Unit/LuaImageFilterTestTemplate.lua.in ${SimpleITK_SOURCE_DIR}/Testing/Unit/PythonImageFilterTestTemplate.py.in
+    COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/TclImageFilterTestTemplate.tcl.in "${SimpleITK_BINARY_DIR}/Testing/Unit/TclTests/${FILENAME}ImageFilterTest.tcl"
+    DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkImageFilterTestTemplate.cxx.in ${SimpleITK_SOURCE_DIR}/Testing/Unit/LuaImageFilterTestTemplate.lua.in ${SimpleITK_SOURCE_DIR}/Testing/Unit/PythonImageFilterTestTemplate.py.in ${SimpleITK_SOURCE_DIR}/Testing/Unit/TclImageFilterTestTemplate.tcl.in
     )
   set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "BasicFilters.${FILENAME}")
   if ( WRAP_LUA )
@@ -43,6 +51,9 @@ foreach ( FILENAME ${GENERATED_FILTER_LIST} )
   endif()
   if ( WRAP_PYTHON )
     set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Python.${FILENAME}")
+  endif()
+  if ( WRAP_TCL )
+    set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Tcl.${FILENAME}")
   endif()
   set ( GENERATED_TEST_SOURCE ${GENERATED_TEST_SOURCE} ${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILENAME}ImageFilterTest.cxx )
 endforeach()

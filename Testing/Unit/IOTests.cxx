@@ -27,6 +27,7 @@ TEST(IO,ImageFileReader) {
   // Loop over the map, load each file, and compare the hash value
   for ( MapType::iterator it = mapping.begin(); it != mapping.end(); ++it ) {
     reader.SetFilename ( dataFinder.GetFile ( it->first ) );
+    EXPECT_EQ ( reader.GetFilename(), dataFinder.GetFile ( it->first ) );
     image = reader.Execute();
     ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
     hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 );
@@ -46,7 +47,7 @@ TEST(IO,ReadWrite) {
   std::string sha1 = "126ea8c3ef5573ca1e4e0deece920c2c4a4f38b5";
 
 
-  image = reader.SetFilename ( dataFinder.GetFile ( "Input/RA-short.nrrd" ) ).Execute();
+  image = reader.SetFilename ( dataFinder.GetFile ( "Input/RA-Short.nrrd" ) ).Execute();
   ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
   hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 );
   EXPECT_EQ ( md5, hasher.Execute ( image ) );

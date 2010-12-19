@@ -14,8 +14,16 @@ if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA OR WRAP_CSHARP OR WRAP_TCL OR WRAP_R )
   include ( ${SWIG_USE_FILE} )
   set_source_files_properties ( SimpleITK.i PROPERTIES CPLUSPLUS ON )
   file ( GLOB SWIG_HEADERS ${SimpleITK_SOURCE_DIR}/Code/*/*.h)
+
+  set ( DEPENDANT_GENERATED_HEADERS "" )
+  foreach ( filter ${GENERATED_FILTER_LIST} )
+    set ( DEPENDANT_GENERATED_HEADERS ${DEPENDANT_GENERATED_HEADERS} ${SimpleITK_BINARY_DIR}/Code/BasicFilters/sitk${filter}ImageFilter.h )
+  endforeach()
+
+
   set ( SWIG_HEADERS ${SWIG_HEADERS} ${SimpleITK_BINARY_DIR}/Code/BasicFilters/SimpleITKBasicFiltersGeneratedHeaders.i 
-    ${SimpleITK_BINARY_DIR}/Code/BasicFilters/SimpleITKBasicFiltersGeneratedHeaders.h)
+    ${SimpleITK_BINARY_DIR}/Code/BasicFilters/SimpleITKBasicFiltersGeneratedHeaders.h
+    ${DEPENDANT_GENERATED_HEADERS} )
 
   include_directories ( ${SimpleITK_SOURCE_DIR}/Code/Common ${SimpleITK_SOURCE_DIR}/Code/BasicFilters ${SimpleITK_SOURCE_DIR}/Code/IO )
 
@@ -76,11 +84,13 @@ if ( WRAP_JAVA )
   file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/org/itk/simple)
   
   # Add custom command and target to compile the generated files and put them in a jar file
+  # Make sure the commands depend on the output library from SWIG
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK.class
     DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK.java
     COMMAND javac ${CMAKE_CURRENT_BINARY_DIR}/*.java
     COMMENT "Compiling java files..."
+    DEPENDS ${SWIG_MODULE_SimpleITK_REAL_NAME}
   )
   
   add_custom_command(
@@ -89,8 +99,9 @@ if ( WRAP_JAVA )
     COMMENT "Creating jar file..."
     COMMAND cp ${CMAKE_CURRENT_BINARY_DIR}/*.class ${CMAKE_CURRENT_BINARY_DIR}/org/itk/simple
     COMMAND jar cf ${CMAKE_CURRENT_BINARY_DIR}/org.itk.simple.jar -C ${CMAKE_CURRENT_BINARY_DIR} org
+    DEPENDS ${SWIG_MODULE_SimpleITK_REAL_NAME}
     )
-  
+
   add_custom_target(org_simple_itk_jar ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/org.itk.simple.jar)
   
   # Get the location of the extension directory
@@ -134,13 +145,15 @@ endif()
 
 # Find Tcl
 if ( WRAP_TCL )
-  find_package ( Tcl REQUIRED )
+  find_package ( TCL REQUIRED )
   include_directories ( ${TCL_INCLUDE_DIR} )
 
   # Run swig
   set(CMAKE_SWIG_FLAGS "-nosafe")
   SWIG_add_module ( SimpleITK tcl SimpleITK.i SimpleITKTCL_wrap.cxx )
   SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${TCL_LIBRARY} ${ITK_LIBRARIES})
+  add_executable ( SimpleITKTclsh SimpleITKTCL_wrap.cxx )
+  target_link_libraries ( SimpleITKTclsh ${SimpleITK_LIBRARIES} ${TCL_LIBRARY} ${ITK_LIBRARIES})
 
 endif()
 

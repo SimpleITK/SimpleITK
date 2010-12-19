@@ -8,8 +8,8 @@
     {
       "tag" : "defaults",
       "description" : "Simply run with default settings",
-      "inputA" : "Input/Staple1.png",
-      "inputB" : "Input/Staple2.png",
+      "inputA" : "Input/STAPLE1.png",
+      "inputB" : "Input/STAPLE2.png",
       "settings" : [],
       "md5hash" : "a216e4eac5235a2c9e4fd473bd9b3947"
     }

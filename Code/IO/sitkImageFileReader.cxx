@@ -139,7 +139,7 @@ namespace itk {
     switch(componentType)
       {
     case itk::ImageIOBase::CHAR:
-      return this->ExecuteInternal< itk::VectorImage<char, VImageDimension> >( );
+      return this->ExecuteInternal< itk::VectorImage<signed char, VImageDimension> >( );
       break;
     case itk::ImageIOBase::UCHAR:
       return this->ExecuteInternal< itk::VectorImage<unsigned char, VImageDimension> >( );
@@ -177,21 +177,14 @@ namespace itk {
 
 
   template <class TImageType>
-  Image::Pointer ImageFileReader::ExecuteInternal( void ) {
+  Image::Pointer ImageFileReader::ConditionalExecuteInternal( InstantiatedToken<true> ) {
 
     typedef TImageType                      ImageType;
     typedef itk::ImageFileReader<ImageType> Reader;
 
-    // do not create an image if it's not in the instatied pixel list
-    if ( ImageTypeToPixelIDValue<ImageType>::Result == (int)sitkUnknown)
-      {
-      sitkExceptionMacro( << "PixelType is not supported!" << std::endl
-                          << "Refusing to load! " << std::endl
-                          << typeid( ImageType ).name()  << std::endl
-                          << typeid( typename ImageTypeToPixelID<ImageType>::PixelIDType ).name() << std::endl
-                          << ImageTypeToPixelIDValue<ImageType>::Result );
-      return NULL;
-      }
+    // if the InstantiatedToken is correctly implemented this should
+    // not occour
+    assert( ImageTypeToPixelIDValue<ImageType>::Result != (int)sitkUnknown );
 
     typename Reader::Pointer reader = Reader::New();
     reader->SetFileName( this->m_Filename.c_str() );
@@ -199,5 +192,16 @@ namespace itk {
     typename Image::Pointer image = new Image( reader->GetOutput() );
     return image;
   }
+
+  template <class TImageType>
+  Image::Pointer ImageFileReader::ConditionalExecuteInternal( InstantiatedToken<false> ) {
+    typedef TImageType                      ImageType;
+    sitkExceptionMacro( << "PixelType is not supported!" << std::endl
+                        << "Pixel Type: "
+                        << GetPixelIDValueAsString( ImageTypeToPixelIDValue<ImageType>::Result ) << std::endl
+                        << "Refusing to load! " << std::endl );
+    return NULL;
+  }
+
   }
 }

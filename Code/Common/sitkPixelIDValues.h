@@ -11,7 +11,7 @@ namespace simple
 typedef int PixelIDValueType;
 
 
-  const std::string GetPixelIDValueAsString( PixelIDValueType type );
+const std::string GetPixelIDValueAsString( PixelIDValueType type );
 
 
 template < typename TPixelID >
@@ -55,6 +55,7 @@ enum PixelIDValueEnum {
   sitkLabelUInt32 = PixelIDToPixelIDValue< LabelPixelID<uint32_t> >::Result,
   sitkLabelUInt64 = PixelIDToPixelIDValue< LabelPixelID<uint64_t> >::Result,
 };
+
 
 }
 }
