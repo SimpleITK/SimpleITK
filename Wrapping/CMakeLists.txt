@@ -165,7 +165,7 @@ if ( WRAP_R )
   # Run swig
   set(CMAKE_SWIG_FLAGS "")
   SWIG_add_module ( SimpleITKR r SimpleITK.i SimpleITKR_wrap.cxx )
-  SWIG_link_libraries ( SimpleITKR ${SimpleITK_LIBRARIES} ${TCL_LIBRARY} ${ITK_LIBRARIES})
+  SWIG_link_libraries ( SimpleITKR ${SimpleITK_LIBRARIES} ${R_LIBRARIES} ${ITK_LIBRARIES})
 
 endif()
 

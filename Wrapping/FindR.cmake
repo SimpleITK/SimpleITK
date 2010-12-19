@@ -5,7 +5,7 @@
 # Defines the following:
 #
 # R_INCLUDE_DIR - Path to R include directory
-# R_LIBRARY     - Path to R library 
+# R_LIBRARIES   - Path to R library 
 # R_COMMAND     - Path to R command
 #
 
@@ -20,7 +20,5 @@ SET(CMAKE_FIND_APPBUNDLE ${TEMP_CMAKE_FIND_APPBUNDLE})
 
 FIND_PATH(R_INCLUDE_DIR R.h PATHS /usr/local/lib /usr/local/lib64 PATH_SUFFIXES R/include DOC "Path to file R.h")
 FIND_LIBRARY(R_LIBRARY_BASE R PATHS ${R_BASE_DIR} PATH_SUFFIXES /lib DOC "R library (example libR.a, libR.dylib, etc.).")
-FIND_LIBRARY(R_LIBRARY_BLAS Rblas PATHS ${R_BASE_DIR} PATH_SUFFIXES /lib DOC "Rblas library (example libRblas.a, libRblas.dylib, etc.).")
-FIND_LIBRARY(R_LIBRARY_LAPACK Rlapack PATHS ${R_BASE_DIR} PATH_SUFFIXES /lib  DOC "Rlapack library (example libRlapack.a, libRlapack.dylib, etc.).")
 
-SET(R_LIBRARIES ${R_LIBRARY_BASE} ${R_LIBRARY_BLAS} ${R_LIBRARY_LAPACK} ${R_LIBRARY_BASE})
+SET(R_LIBRARIES ${R_LIBRARY_BASE})

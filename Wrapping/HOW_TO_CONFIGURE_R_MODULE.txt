@@ -1,0 +1,52 @@
+1) Enable WRAP_R
+
+2) Build with CMake
+
+3) Go to the binary directory
+
+4) launch R
+
+5) inside R type:
+
+package.skeleton(name="SimpleITK", code_files="SimpleITK.R")
+
+this will create a directory named SimpleITK with
+the content:
+
+                DESCRIPTION
+                libs
+                R
+                Read-and-delete-me
+                src
+
+
+6) Quit R
+
+7) Copy the file
+
+      Wrapping/SimpleITK.R
+
+   to this new SimpleITK/R directory
+
+8) Add another file zzz.R with the content
+
+   .First.lib <- function(lib,pkg) {
+      library.dynam("libSimpleITKR.so",pkg,lib)
+     }
+
+9) type
+
+R CMD INSTALL -l ~/R/x86_64-pc-linux-gnu-library/2.10/ SimpleITK
+
+   This should create a "SimpleITK" directory in
+
+      /home/ibanez/R/x86_64-pc-linux-gnu-library/2.10
+
+10) copy the shared library in the new installation
+
+ cp bin/libSimpleITKR.so ~/R/x86_64-pc-linux-gnu-library/2.10/SimpleITK/libs
+
+11) Set the environment variable R_LIBS_USER  to
+
+      /home/ibanez/R/x86_64-pc-linux-gnu-library/2.10
+
