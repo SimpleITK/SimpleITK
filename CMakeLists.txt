@@ -23,6 +23,7 @@ set ( SimpleITK_INCLUDE_DIR
       ${CMAKE_SOURCE_DIR}/Code/BasicFilters
       ${CMAKE_SOURCE_DIR}/Code/IO
       ${CMAKE_BINARY_DIR}/Code/BasicFilters
+      ${CMAKE_BINARY_DIR}
       )
 
 include_directories( ${SimpleITK_INCLUDE_DIR} )
@@ -33,6 +34,15 @@ set ( SimpleITK_LIBRARIES ${ITK_LIBRARIES} SimpleITKCommon SimpleITKIO SimpleITK
 set ( GENERATED_TEST_LIST "" CACHE INTERNAL "" )
 set ( GENERATED_FILTER_LIST "" CACHE INTERNAL "" )
 set ( GENERATED_TEST_SOURCE_LIST "" CACHE INTERNAL "" )
+
+
+try_compile(SITK_SUPPORTS_STATIC_ASSERT
+  ${SimpleITK_BINARY_DIR}/CMakeTmp
+  ${SimpleITK_SOURCE_DIR}/CMake/static_assert.cxx
+  OUTPUT_VARIABLE SITK_HAS_STATIC_ASSERT )
+
+configure_file( ${SimpleITK_SOURCE_DIR}/sitkConfigure.h.in
+  ${SimpleITK_BINARY_DIR}/sitkConfigure.h )
 
 subdirs ( Utilities Code Wrapping Examples )
 

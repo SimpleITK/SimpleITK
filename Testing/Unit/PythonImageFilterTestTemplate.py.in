@@ -28,10 +28,7 @@ sys.exit ( 1 );
 
 $(foreach tests
 if tag == "${tag}":
-    $(if settings then
-      OUT=[[ 
-    $(foreach settings filter.Set${parameter} ( ${value} ); )
-    ]] end)
+    $(when settings $(foreach settings filter.Set${parameter} ( $(if python_value then OUT=[[${python_value}]] else OUT=[[${value}]] end) ); )   )
     inputA = reader.SetFilename ( sys.argv[2] ).Execute();
     $(if inputB then
     OUT=[[inputB = reader.SetFilename ( sys.argv[3] ).Execute()

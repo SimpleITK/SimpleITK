@@ -3,12 +3,14 @@
 
 #include "sitkMacro.h"
 #include "sitkImage.h"
-#include "itkImageIOBase.h"
+
+#include "sitkPixelIDTokens.h"
 
 #include "itkImageIOBase.h"
 
 namespace itk {
   namespace simple {
+
 
     class ImageFileReader {
     public:
@@ -27,7 +29,13 @@ namespace itk {
       template < unsigned int VImageDimension >
       Image::Pointer ExecuteInternalReadVector( itk::ImageIOBase::IOComponentType componentType );
 
-      template <class TImageType> Image::Pointer ExecuteInternal ( void );
+      template <class TImageType> Image::Pointer ExecuteInternal ( )
+        { return this->ConditionalExecuteInternal<TImageType>( typename ImageTypeToToken<TImageType>::Token() ); }
+
+      // methods which utlize the pixel id token type to conditionally
+      // instatiate ad execute the implementation
+      template <class TImageType> Image::Pointer ConditionalExecuteInternal ( InstantiatedToken<true> );
+      template <class TImageType> Image::Pointer ConditionalExecuteInternal ( InstantiatedToken<false> );
 
     private:
 

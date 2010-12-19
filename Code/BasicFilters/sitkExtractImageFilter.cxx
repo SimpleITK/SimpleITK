@@ -79,9 +79,15 @@ Image::Pointer ExtractImageFilter::ExecuteInternal ( Image::Pointer inImage )
   filter->SetExtractionRegion ( region );
 
   filter->Update();
+  typename TImageType::Pointer filterOutput = filter->GetOutput();
 
-  Image::Pointer out = new Image( filter->GetOutput() );
-  filter->GetOutput()->DisconnectPipeline();
+  // Make the index 0,0,0
+  index.Fill ( 0 );
+  region.SetIndex ( index );
+  filterOutput->SetRegions ( region );
+  Image::Pointer out = new Image( filterOutput );
+  
+  filterOutput->DisconnectPipeline();
   return out;
   }
 
