@@ -1,5 +1,5 @@
 
-dyn.load(paste("SimpleITKR", .Platform$dynlib.ext, sep=""))
-source("SimpleITK.R")
+dyn.load(paste("bin/libSimpleITKR", .Platform$dynlib.ext, sep=""))
+source("Wrapping/SimpleITK.R")
 cacheMetaData(1)
 
