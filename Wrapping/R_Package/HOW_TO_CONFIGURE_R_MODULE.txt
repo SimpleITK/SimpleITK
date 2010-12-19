@@ -50,3 +50,14 @@ R CMD INSTALL -l ~/R/x86_64-pc-linux-gnu-library/2.10/ SimpleITK
 
       /home/ibanez/R/x86_64-pc-linux-gnu-library/2.10
 
+12) Run the example
+
+     cp  SimpleITK/Testing/Data/Input/STAPLE1.png .
+     R -f SimpleITK/Examples/SimpleGaussian.R
+
+    you shouldn now find in the local directory
+    a file with name
+
+               smoothedSTAPLE1.mhd
+
+
