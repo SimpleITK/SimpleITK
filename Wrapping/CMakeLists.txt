@@ -150,7 +150,7 @@ if ( WRAP_R )
   include_directories ( ${R_INCLUDE_DIR} )
 
   # Run swig
-  set(CMAKE_SWIG_FLAGS "-nosafe")
+  set(CMAKE_SWIG_FLAGS "")
   SWIG_add_module ( SimpleITK r SimpleITK.i SimpleITKR_wrap.cxx )
   SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${TCL_LIBRARY} ${ITK_LIBRARIES})
 
