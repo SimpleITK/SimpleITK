@@ -62,7 +62,13 @@ Index::operator[](unsigned int dim)
   return m_Index[dim];
 }
 
-bool Index::operator==(Self & idx)
+Index::IndexValueType
+Index::operator[](unsigned int dim) const
+{
+  return m_Index[dim];
+}
+
+bool Index::operator==(const Self & idx) const
 {
   if (m_Index[0] == idx[0] &&
       m_Index[1] == idx[1] &&
@@ -95,7 +101,7 @@ Index::operator itk::Index<3>()
 }
 
 
-std::ostream & operator<<(std::ostream & os, Index & idx)
+std::ostream & operator<<(std::ostream & os, const Index & idx)
 {
   os << "[";
   for ( unsigned int i = 0; i + 1 < idx.GetDim(); ++i )
