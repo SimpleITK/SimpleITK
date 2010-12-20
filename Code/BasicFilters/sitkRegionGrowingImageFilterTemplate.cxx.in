@@ -38,6 +38,14 @@ $(foreach members
 OUT = 'out << "\t${name}: " << this->m_${name} << std::endl;'
 end)
 )
+
+  // Print out SeedList
+  out << "SeedList:" << std::endl;
+  for (unsigned int i = 0; i < this->m_SeedList.size(); ++i)
+    {
+    out << "  " << this->m_SeedList[i] << std::endl;
+    }
+
   return out.str();
   }
 
@@ -102,7 +110,7 @@ Image::Pointer ${name}ImageFilter::ExecuteInternal ( Image::Pointer inImage )
 
   // Set basic parameters
 $(foreach members
-  filter->Set${name} ( this->m_${name} );
+  filter->Set${name} ( $(if type == "itk::simple::Size" then OUT=[[(typename InputImageType::SizeType)]] end)this->m_${name} );
 )
   // Convert Seed List from std::vector<itk::simple::Index>
   // to std::vector<itk::Index>

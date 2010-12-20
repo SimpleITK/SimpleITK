@@ -42,8 +42,8 @@ $(foreach members
   Self& Set${name} ( ${type} t ) { this->m_${name} = t; return *this; };'
   end)
   $(if (not no_get_method) or (no_get_method == 0) then
-  OUT = '/** Get ${name} */\
-  ${type} Get${name}() { return this->m_${name}; };'
+  OUT = [[/** Get ${name} */\
+  ${type} Get${name}() { return this->m_${name}; };]]
   end)
 
 )
