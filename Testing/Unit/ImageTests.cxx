@@ -5,7 +5,7 @@
 #include <sitkImageFileWriter.h>
 #include <sitkImageHashFilter.h>
 
-
+#include <itkIntTypes.h>
 using  itk::simple::InstantiatedPixelIDTypeList;
 
 class Image : public ::testing::Test {
