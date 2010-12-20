@@ -54,9 +54,10 @@ public:
 
   // [] operator (no bounds checking)
   IndexValueType & operator[](unsigned int dim);
+  IndexValueType operator[](unsigned int dim) const;
 
   // == operator for comparison
-  bool operator==(Self & idx);
+  bool operator==(const Self & idx) const;
 
   // Cast operator for itk::Index<2>
   operator itk::Index<2>();
@@ -64,7 +65,7 @@ public:
   // Cast operator for itk::Index<3>
   operator itk::Index<3>();
 
-private:
+protected:
 
   // The dimensionality of the index
   unsigned int m_Dim;
@@ -76,7 +77,7 @@ private:
 
 
 // << operator for printing
-std::ostream & operator<<(std::ostream & os, Index & idx);
+std::ostream & operator<<(std::ostream & os, const Index & idx);
 
 
 } // end namespace simple
