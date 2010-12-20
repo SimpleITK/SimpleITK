@@ -21,5 +21,34 @@
        will be replaced with this value. The default is 1."
     }
   ],
-  "tests" : []
+  "tests" : [
+    { "tag" : "defaults",
+      "description" : "Simply run with default settings",
+      "inputA" : "Input/RA-Float.nrrd",
+      "settings" : [],
+      "tolerance" : 0.1
+    },
+    { "tag" : "2d",
+      "description" : "Run with 2d sample settings",
+      "inputA" : "Input/STAPLE1.png",
+      "settings" : [
+        { "parameter" : "SeedList",
+          "dim" : 2,
+          "value" : ["itk::simple::Index(100,100)",
+                     "itk::simple::Index(95,85)"]
+        },
+        { "parameter" : "Upper",
+          "value" : 255
+        },
+        { "parameter" : "Lower",
+          "value" : 150
+        },
+        { "parameter" : "ReplaceValue",
+          "value" : 255
+        }
+        
+      ],
+      "tolerance" : 0.1
+    }
+  ]
 }

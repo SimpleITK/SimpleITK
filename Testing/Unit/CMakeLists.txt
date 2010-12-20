@@ -57,11 +57,11 @@ macro( expand_test_template FILENAME TEMPLATE_TYPE )
     set ( input_json_file
       ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}_RegionGrowing.json )
     set ( template_file_cpp
-      ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkImageFilterTestTemplate.cxx.in )
+      ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkRegionGrowingImageFilterTestTemplate.cxx.in )
     set ( template_file_lua
-      ${SimpleITK_SOURCE_DIR}/Testing/Unit/LuaImageFilterTestTemplate.lua.in )
+      ${SimpleITK_SOURCE_DIR}/Testing/Unit/LuaRegionGrowingImageFilterTestTemplate.lua.in )
     set ( template_file_py
-      ${SimpleITK_SOURCE_DIR}/Testing/Unit/PythonImageFilterTestTemplate.py.in )
+      ${SimpleITK_SOURCE_DIR}/Testing/Unit/PythonRegionGrowingImageFilterTestTemplate.py.in )
   endif()
 
     add_custom_command (
@@ -69,7 +69,7 @@ macro( expand_test_template FILENAME TEMPLATE_TYPE )
     COMMAND lua ${expand_template_script} ${input_json_file} ${template_file_cpp} ${output_cpp}
     COMMAND lua ${expand_template_script} ${input_json_file} ${template_file_lua} ${output_lua}
     COMMAND lua ${expand_template_script} ${input_json_file} ${template_file_py} ${output_py}
-    DEPENDS ${input_json_file} ${template_file_cxx} ${template_file_lua} ${template_file_py}
+    DEPENDS ${input_json_file} ${template_file_cxx} ${template_file_lua} ${template_file_py} ${template_file_cpp} ${template_file_lua} ${template_file_py}
     )
   set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "BasicFilters.${FILENAME}")
   if ( WRAP_LUA )
