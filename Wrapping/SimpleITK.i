@@ -87,6 +87,7 @@ typedef unsigned int uint32_t;
 %include "sitkRecursiveGaussianImageFilter.h"
 %include "sitkExtractImageFilter.h"
 %include "sitkIndex.h"
+%include "sitkSize.h"
 
 // Auto-generated headers
 %include "SimpleITKBasicFiltersGeneratedHeaders.i"
