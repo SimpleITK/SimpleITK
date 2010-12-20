@@ -34,8 +34,8 @@
       "settings" : [
         { "parameter" : "SeedList",
           "dim" : 2,
-          "value" : ["itk::simple::Index(100,100)",
-                     "itk::simple::Index(95,85)"]
+          "value" : ["(100,100)",
+                     "(95,85)"]
         },
         { "parameter" : "Upper",
           "value" : 255
