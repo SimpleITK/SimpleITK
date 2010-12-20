@@ -1,3 +1,5 @@
+set ( IMAGE_FILTER_LIST "" CACHE INTERNAL "" )
+set ( REGION_GROWING_FILTER_LIST "" CACHE INTERNAL "" )
 set ( GENERATED_FILTER_LIST "" CACHE INTERNAL "" )
 
 set ( image_filter_template 0 )
