@@ -5,8 +5,11 @@ option ( WRAP_PYTHON "Wrap Python" OFF )
 option ( WRAP_JAVA "Wrap Java" OFF )
 option ( WRAP_TCL "Wrap Tcl" OFF )
 option ( WRAP_CSHARP "Wrap C#" OFF )
+option ( WRAP_R "Wrap R" OFF )
 
-if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA OR WRAP_CSHARP OR WRAP_TCL )
+set(CMAKE_MODULE_PATH ${SimpleITK_SOURCE_DIR}/Wrapping)
+
+if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA OR WRAP_CSHARP OR WRAP_TCL OR WRAP_R )
   find_package ( SWIG REQUIRED )
   include ( ${SWIG_USE_FILE} )
   set_source_files_properties ( SimpleITK.i PROPERTIES CPLUSPLUS ON )
@@ -147,10 +150,22 @@ if ( WRAP_TCL )
 
   # Run swig
   set(CMAKE_SWIG_FLAGS "-nosafe")
-  SWIG_add_module ( SimpleITK tcl SimpleITK.i SimpleITKTCL_wrap.cxx )
-  SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${TCL_LIBRARY} ${ITK_LIBRARIES})
+  SWIG_add_module ( SimpleITKTcl tcl SimpleITK.i SimpleITKTCL_wrap.cxx )
+  SWIG_link_libraries ( SimpleITKTcl ${SimpleITK_LIBRARIES} ${TCL_LIBRARY} ${ITK_LIBRARIES})
   add_executable ( SimpleITKTclsh SimpleITKTCL_wrap.cxx )
   target_link_libraries ( SimpleITKTclsh ${SimpleITK_LIBRARIES} ${TCL_LIBRARY} ${ITK_LIBRARIES})
+
+endif()
+
+# Find R
+if ( WRAP_R )
+  find_package ( R REQUIRED )
+  include_directories ( ${R_INCLUDE_DIR} )
+
+  # Run swig
+  set(CMAKE_SWIG_FLAGS "")
+  SWIG_add_module ( SimpleITK r SimpleITK.i SimpleITKR_wrap.cxx )
+  SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${R_LIBRARIES} ${ITK_LIBRARIES})
 
 endif()
 
