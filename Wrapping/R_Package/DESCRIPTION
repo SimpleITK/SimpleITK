@@ -1,0 +1,11 @@
+Package: SimpleITK
+Type: Package
+Title: Image processing classes from the Insight Toolkit (ITK)
+Version: 1.0
+Date: 2010-12-19
+Author: ITK Developers
+Maintainer: <luis.ibanez@kitware.com>
+Description: This package expose to R the functionalities of the Insight Toolkit (ITK), that include image processing, image segmentation and image registration.
+License: Apache 2.0
+LazyLoad: yes
+Depends: methods
