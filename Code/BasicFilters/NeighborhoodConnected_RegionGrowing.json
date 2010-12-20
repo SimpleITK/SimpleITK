@@ -1,0 +1,25 @@
+{
+  "name" : "NeighborhoodConnected",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [
+    { "name" : "Upper",
+      "type" : "double",
+      "default" : 1.0,
+      "doc" : "Upper threshold value"
+    },
+    { "name" : "Lower",
+      "type" : "double",
+      "default" : 0.0,
+      "doc" : "Lower threshold value"
+    },
+    { "name" : "ReplaceValue",
+      "type" : "double",
+      "default" : 1.0,
+      "doc" : "Pixels that lie within Lower and Upper (inclusive)\
+       will be replaced with this value. The default is 1."
+    }
+  ],
+  "tests" : []
+}
