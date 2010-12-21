@@ -27,5 +27,28 @@
       "doc" : "Radius of the neighborhood used to compute the median"
     }
   ],
-  "tests" : []
+  "tests" : [
+    { "tag" : "2d",
+      "description" : "Run with 2d sample settings",
+      "inputA" : "Input/STAPLE1.png",
+      "settings" : [
+        { "parameter" : "SeedList",
+          "dim" : 2,
+          "value" : ["(100,100)",
+                     "(95,85)"]
+        },
+        { "parameter" : "Upper",
+          "value" : 255
+        },
+        { "parameter" : "Lower",
+          "value" : 150
+        },
+        { "parameter" : "ReplaceValue",
+          "value" : 255
+        }
+        
+      ],
+      "tolerance" : 0.1
+    }
+  ]
 }
