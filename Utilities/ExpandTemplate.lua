@@ -537,23 +537,15 @@ function expand(str, ...)
 end
 
 -- Args should be parameters template output
-if #arg ~= 3 then
-  print ( 'usage: ExpandTemplate.lua config template output ' )
+if #arg ~= 4 then
+  print ( 'usage: ExpandTemplate.lua config template_directory template_extension output ' )
   os.exit ( 1 )
 end
 
 configFile = arg[1]
-templateFile = arg[2]
-outputFile = arg[3]
-
-fid = io.open ( templateFile )
-if fid == nil then
-  print ( 'failed to open ' .. templateFile )
-  os.exit ( 1 )
-end
-
-template = fid:read ( "*all" )
-fid:close()
+templateFileDirectoryAndPrefix = arg[2]
+templateFileExtension = arg[3]
+outputFile = arg[4]
 
 -- Load it
 -- dofile ( configFile )
@@ -564,9 +556,25 @@ if fid == nil then
 end
 json = fid:read ( "*all" )
 fid:close()
-Filter = decode ( json )
+filterDescription = decode ( json )
+print( "template_filename" .. filterDescription.template_filename )
 
-if Filter == nil then
+templateBaseFilename = filterDescription.template_filename .. templateFileExtension
+templateFilename = templateFileDirectoryAndPrefix .. templateBaseFilename
+
+print( "templateFilename " .. filterDescription.template_filename )
+
+fid = io.open ( templateFilename )
+if fid == nil then
+  print ( 'failed to open ' .. templateFilename )
+  os.exit ( 1 )
+end
+
+template = fid:read ( "*all" )
+fid:close()
+
+
+if filterDescription == nil then
   print ( 'failed to find filter config in ' .. configFile )
   os.exit ( 1 )
 end
@@ -576,5 +584,5 @@ if fid == nil then
   print ( 'failed to open ' .. outputFile .. ' for writing' )
   os.exit ( 1 )
 end
-fid:write ( expand ( template, Filter ) )
+fid:write ( expand ( template, filterDescription ) )
 fid:close()

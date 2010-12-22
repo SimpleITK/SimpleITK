@@ -35,24 +35,43 @@ file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/PythonTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/LuaTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/TclTests)
 
-# Generate code
+
+#
+# Generate code for the tests in different languages
+#
 foreach ( FILENAME ${GENERATED_FILTER_LIST} )
+  file ( GLOB CXX_TEMPLATE_FILES "*Template*.cxx.in" )
   add_custom_command (
-    OUTPUT "${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILENAME}ImageFilterTest.cxx" "${SimpleITK_BINARY_DIR}/Testing/Unit/LuaTests/${FILENAME}ImageFilterTest.lua" "${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/${FILENAME}ImageFilterTest.py"
-    COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkImageFilterTestTemplate.cxx.in ${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILENAME}ImageFilterTest.cxx 
-    COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/LuaImageFilterTestTemplate.lua.in "${SimpleITK_BINARY_DIR}/Testing/Unit/LuaTests/${FILENAME}ImageFilterTest.lua"
-    COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/PythonImageFilterTestTemplate.py.in "${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/${FILENAME}ImageFilterTest.py"
-    COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/TclImageFilterTestTemplate.tcl.in "${SimpleITK_BINARY_DIR}/Testing/Unit/TclTests/${FILENAME}ImageFilterTest.tcl"
-    DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkImageFilterTestTemplate.cxx.in ${SimpleITK_SOURCE_DIR}/Testing/Unit/LuaImageFilterTestTemplate.lua.in ${SimpleITK_SOURCE_DIR}/Testing/Unit/PythonImageFilterTestTemplate.py.in ${SimpleITK_SOURCE_DIR}/Testing/Unit/TclImageFilterTestTemplate.tcl.in
+    OUTPUT "${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILENAME}ImageFilterTest.cxx"
+    COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitk  TestTemplate.cxx.in "${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILENAME}ImageFilterTest.cxx" 
+    DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${CXX_TEMPLATE_FILES}
     )
   set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "BasicFilters.${FILENAME}")
   if ( WRAP_LUA )
+    file ( GLOB LUA_TEMPLATE_FILES "Template*.lua.in" )
+    add_custom_command (
+      OUTPUT "${SimpleITK_BINARY_DIR}/Testing/Unit/LuaTests/${FILENAME}ImageFilterTest.lua"
+      COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/Lua  TestTemplate.lua.in "${SimpleITK_BINARY_DIR}/Testing/Unit/LuaTests/${FILENAME}ImageFilterTest.lua"
+      DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${LUA_TEMPLATE_FILES}
+      )
     set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Lua.${FILENAME}")
   endif()
   if ( WRAP_PYTHON )
+    file ( GLOB PYTHON_TEMPLATE_FILES "*Template*py.in" )
+    add_custom_command (
+      OUTPUT  "${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/${FILENAME}ImageFilterTest.py"
+      COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/Python  TestTemplate.py.in "${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/${FILENAME}ImageFilterTest.py"
+      DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${PYTHON_TEMPLATE_FILES}
+      )
     set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Python.${FILENAME}")
   endif()
   if ( WRAP_TCL )
+    file ( GLOB TCL_TEMPLATE_FILES "*Template*.tcl.in" )
+    add_custom_command (
+      OUTPUT  "${SimpleITK_BINARY_DIR}/Testing/Unit/TclTests/${FILENAME}ImageFilterTest.tcl"
+      COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/Tcl  TestTemplate.tcl.in "${SimpleITK_BINARY_DIR}/Testing/Unit/TclTests/${FILENAME}ImageFilterTest.tcl"
+      DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${TCL_TEMPLATE_FILES}
+      )
     set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Tcl.${FILENAME}")
   endif()
   set ( GENERATED_TEST_SOURCE ${GENERATED_TEST_SOURCE} ${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILENAME}ImageFilterTest.cxx )

@@ -1,5 +1,6 @@
 {
   "name" : "RescaleIntensity",
+  "template_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "doc" : "Some global documentation",
   "pixel_types" : "RealPixelIDTypeList",
@@ -9,7 +10,7 @@
       "default" : 255.0,
       "doc" : "Output maximum"
     }
-  ],  
+  ],
   "tests" : [
     {
       "tag" : "3d",

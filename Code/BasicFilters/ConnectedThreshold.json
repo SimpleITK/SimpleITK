@@ -1,5 +1,6 @@
 {
   "name" : "ConnectedThreshold",
+  "template_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelIDTypeList",

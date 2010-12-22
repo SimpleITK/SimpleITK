@@ -1,5 +1,6 @@
 {
   "name" : "IntensityWindowing",
+  "template_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelIDTypeList",
@@ -24,7 +25,7 @@
       "default" : 255.0,
       "doc" : "Output maximum"
     }
-    ],        
+    ],
   "tests" : [
     {
       "tag" : "2d",
