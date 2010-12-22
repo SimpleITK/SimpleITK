@@ -1,5 +1,6 @@
 {
   "name" : "Subtract",
+  "template_filename" : "ImageFilter",
   "number_of_inputs" : 2,
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelIDTypeList",
@@ -21,7 +22,6 @@
       "settings" : [],
       "md5hash" : "59071590099d21dd439896592338bf95"
     }
-    
   ]
 }
 

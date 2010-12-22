@@ -1,5 +1,6 @@
 {
   "name" : "BinaryThreshold",
+  "template_filename" : "ImageFilter",
   "doc" : "Docs",
   "pixel_types" : "BasicPixelIDTypeList",
   "members" : [

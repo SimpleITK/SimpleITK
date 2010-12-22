@@ -1,5 +1,6 @@
 {
   "name" : "SquaredDifference",
+  "template_filename" : "ImageFilter",
   "number_of_inputs" : 2,
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelIDTypeList",

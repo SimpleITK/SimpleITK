@@ -1,12 +1,14 @@
 set ( GENERATED_FILTER_LIST "" CACHE INTERNAL "" )
 
+file ( GLOB TEMPLATE_FILES "sitk*Template*" )
+
 macro( expand_template FILENAME )
   # Do this in one massive custom command.  Will result in code re-generating from time to time, but that is OK (hopefully!)
   add_custom_command (
     OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/sitk${FILENAME}ImageFilter.h" "${CMAKE_CURRENT_BINARY_DIR}/sitk${FILENAME}ImageFilter.cxx"
-    COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua ${CMAKE_CURRENT_SOURCE_DIR}/${FILENAME}.json ${CMAKE_CURRENT_SOURCE_DIR}/sitkImageFilterTemplate.h.in ${CMAKE_CURRENT_BINARY_DIR}/sitk${FILENAME}ImageFilter.h 
-    COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua ${CMAKE_CURRENT_SOURCE_DIR}/${FILENAME}.json ${CMAKE_CURRENT_SOURCE_DIR}/sitkImageFilterTemplate.cxx.in ${CMAKE_CURRENT_BINARY_DIR}/sitk${FILENAME}ImageFilter.cxx 
-    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/${FILENAME}.json ${CMAKE_CURRENT_SOURCE_DIR}/sitkImageFilterTemplate.h.in ${CMAKE_CURRENT_SOURCE_DIR}/sitkImageFilterTemplate.cxx.in
+    COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua ${CMAKE_CURRENT_SOURCE_DIR}/${FILENAME}.json ${CMAKE_CURRENT_SOURCE_DIR}/sitk  Template.h.in    ${CMAKE_CURRENT_BINARY_DIR}/sitk${FILENAME}ImageFilter.h
+    COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua ${CMAKE_CURRENT_SOURCE_DIR}/${FILENAME}.json ${CMAKE_CURRENT_SOURCE_DIR}/sitk  Template.cxx.in  ${CMAKE_CURRENT_BINARY_DIR}/sitk${FILENAME}ImageFilter.cxx
+    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/${FILENAME}.json ${TEMPLATE_FILES}
     )
   set ( SimpleITKBasicFiltersSource ${SimpleITKBasicFiltersSource} "${CMAKE_CURRENT_BINARY_DIR}/sitk${FILENAME}ImageFilter.h" )
   set ( SimpleITKBasicFiltersSource ${SimpleITKBasicFiltersSource} "${CMAKE_CURRENT_BINARY_DIR}/sitk${FILENAME}ImageFilter.cxx" )
@@ -17,7 +19,7 @@ endmacro()
 
 file ( GLOB JSON_CONFIG_FILES *.json)
 
-foreach ( f ${JSON_CONFIG_FILES} ) 
+foreach ( f ${JSON_CONFIG_FILES} )
   get_filename_component ( class ${f} NAME_WE )
   expand_template ( ${class} )
 endforeach()

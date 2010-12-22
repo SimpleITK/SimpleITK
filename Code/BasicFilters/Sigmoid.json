@@ -1,16 +1,17 @@
 {
   "name" : "Sigmoid",
+  "template_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelIDTypeList",
   "members" : [
-    { 
+    {
       "name" : "Alpha",
       "type" : "double",
       "default" : 1.0,
       "doc" : "Alpha"
     },
-    { 
+    {
       "name" : "Beta",
       "type" : "double",
       "default" : 0.0,
@@ -26,7 +27,7 @@
       "default" : 0.0,
       "doc" : "Output minimum"
     }
-  ] 
+  ]
   "tests" : [
     {
       "tag" : "defaults",

@@ -1,5 +1,6 @@
 {
   "name" : "CurvatureFlow",
+  "template_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "real_type_output" : 1,
   "long" : 1,
