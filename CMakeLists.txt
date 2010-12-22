@@ -35,6 +35,12 @@ set ( GENERATED_TEST_LIST "" CACHE INTERNAL "" )
 set ( GENERATED_FILTER_LIST "" CACHE INTERNAL "" )
 set ( GENERATED_TEST_SOURCE_LIST "" CACHE INTERNAL "" )
 
+# Setting this option will shorten compile times by reducing the
+# amount of pixel types and generated code.
+# NB: this option should _NOT_ be used for releases!
+option ( SITK_EXPRESS_INSTANTIATEDPIXELS "Instantiate very few pixel types ( for use for development only )" OFF )
+mark_as_advanced ( SITK_EXPRESS_INSTANTIATEDPIXELS )
+
 
 try_compile(SITK_SUPPORTS_STATIC_ASSERT
   ${SimpleITK_BINARY_DIR}/CMakeTmp
