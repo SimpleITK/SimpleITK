@@ -79,7 +79,6 @@ typedef AllPixelIDTypeList InstantiatedPixelIDTypeList;
 #endif
 
 
-
 }
 }
 #endif // _sitkPixelIDTypeLists_h

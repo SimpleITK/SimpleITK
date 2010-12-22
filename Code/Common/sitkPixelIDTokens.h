@@ -1,5 +1,5 @@
-#ifndef _sitkPixelIDTokens_h
-#define _sitkPixelIDTokens_h
+#ifndef __sitkPixelIDTokens_h
+#define __sitkPixelIDTokens_h
 
 #include "sitkPixelIDValues.h"
 
