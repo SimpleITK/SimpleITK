@@ -35,8 +35,17 @@ endif()
 
 # Find lua
 if ( WRAP_LUA )
-  find_package ( Lua51 REQUIRED )
-  include_directories ( ${LUA_INCLUDE_DIR} )
+  option ( USE_SYSTEM_LUA "Use a system provided lua" OFF )
+
+  if ( USE_SYSTEM_LUA )
+    find_package ( Lua51 REQUIRED )
+    include_directories ( ${LUA_INCLUDE_DIR} )
+    set ( LUA_LIB ${LUA_LIBRARIES} )
+  else()
+    set ( LUA_LIB lua5 )
+    include_directories ( ${SimpleITK_SOURCE_DIR}/Utilities/lua-5.1.4/src )
+  endif()
+    
 
   # Run swig
   set(CMAKE_SWIG_FLAGS "")
@@ -44,7 +53,7 @@ if ( WRAP_LUA )
   SWIG_add_source_to_module ( SimpleITKLua swig_generated_source SimpleITK.i ${SWIG_HEADERS} )
 
   add_executable ( SimpleITKLua SimpleITKLuaMain.cxx SimpleITKLUA_wrap.cxx )
-  target_link_libraries ( SimpleITKLua ${SimpleITK_LIBRARIES} ${LUA_LIBRARIES} ${ITK_LIBRARIES} )
+  target_link_libraries ( SimpleITKLua ${SimpleITK_LIBRARIES} ${LUA_LIB} ${ITK_LIBRARIES} )
 
   find_program (SimpleITKLua NAMES SimpleITKLua SimpleITKLua.exe PATHS ${EXECUTABLE_OUTPUT_PATH} ${EXECUTABLE_OUTPUT_PATH}/Release ${EXECUTABLE_OUTPUT_PATH}/Debug NO_DEFAULT_PATH NO_SYSTEM_ENVIRONMENT_PATH)
 
