@@ -21,8 +21,11 @@
 #endif
 
 
-#include "lua.hpp"
-
+extern "C" {
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
+}
 
 static lua_State *globalL = NULL;
 
@@ -403,7 +406,6 @@ int main (int argc, char **argv) {
   gl = new_GetLine(16*1024,2048);
   gl_configure_getline ( gl, "", "", "~/.SimpleITKLua" );
   gl_load_history ( gl, "~/.SimpleITK.history", "--" );
-  /* gl_customize_completion ( gl, (void*) L, iMI3CCompletionFunction ); */
 #endif
 
 
