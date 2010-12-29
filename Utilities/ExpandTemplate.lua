@@ -18,7 +18,7 @@
 --   compat-5.1 if using Lua 5.0
 --
 -- CHANGELOG
---   0.9.20 Introduction of local Lua functions for private functions (removed _ function prefix). 
+--   0.9.20 Introduction of local Lua functions for private functions (removed _ function prefix).
 --          Fixed Lua 5.1 compatibility issues.
 --   		Introduced json.null to have null values in associative arrays.
 --          encode() performance improvement (more than 50%) through table.concat rather than ..
@@ -537,15 +537,24 @@ function expand(str, ...)
 end
 
 -- Args should be parameters template output
-if #arg ~= 4 then
-  print ( 'usage: ExpandTemplate.lua config template_directory template_extension output ' )
+if #arg ~= 6 then
+  print ( 'usage: ExpandTemplate.lua test_or_code_flag file_variables template_directory template_extension output ' )
   os.exit ( 1 )
 end
 
-configFile = arg[1]
-templateFileDirectoryAndPrefix = arg[2]
-templateFileExtension = arg[3]
-outputFile = arg[4]
+testOrCodeFlag = arg[1]
+configFile = arg[2]
+templateFileDirectoryAndPrefix = arg[3]
+templateFieldName = arg[4]
+templateFileExtension = arg[5]
+outputFile = arg[6]
+
+print ( 'configFile = ' .. configFile )
+print ( 'testOrCodeFlag = ' .. testOrCodeFlag )
+print ( 'templateFileDirectoryAndPrefix = ' .. templateFileDirectoryAndPrefix )
+print ( 'templateFieldName = ' .. templateFieldName )
+print ( 'templateFileExtension = ' .. templateFileExtension )
+print ( 'outputFile = ' .. outputFile )
 
 -- Load it
 -- dofile ( configFile )
@@ -557,12 +566,21 @@ end
 json = fid:read ( "*all" )
 fid:close()
 filterDescription = decode ( json )
-print( "template_filename" .. filterDescription.template_filename )
 
-templateBaseFilename = filterDescription.template_filename .. templateFileExtension
+templateBaseFilename = templateFileExtension
+
+if testOrCodeFlag == "code" then
+  templateBaseFilename = filterDescription.template_code_filename .. templateBaseFilename
+else
+  if testOrCodeFlag == "test" then
+    templateBaseFilename = filterDescription.template_test_filename .. templateBaseFilename
+  else
+    print('ExpandTemplate unknowin flag value' .. testOrCodeFlag )
+  end
+end
+
 templateFilename = templateFileDirectoryAndPrefix .. templateBaseFilename
 
-print( "templateFilename " .. filterDescription.template_filename )
 
 fid = io.open ( templateFilename )
 if fid == nil then
