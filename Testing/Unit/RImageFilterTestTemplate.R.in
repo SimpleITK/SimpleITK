@@ -1,0 +1,44 @@
+#
+# This is R code to test ${name}
+#
+
+library(SimpleITK)
+
+inputs <- 1
+$(if number_of_inputs then
+    OUT=[[inputs <- ${number_of_inputs}]]
+  end)
+
+args <- commandArgs( TRUE )
+
+tag = args[[1]]
+
+reader <- ImageFileReader()
+writer <- ImageFileWriter()
+filter <- ${name}ImageFilter()
+
+$(if #tests == 0 then
+    OUT=[[
+print ( 'No tests defined!' )
+quit( save="no", status=1 )
+    ]]
+  end)
+
+
+$(foreach tests
+if tag == "${tag}":
+    $(when settings $(foreach settings filter <- filter.Set${parameter} ( $(if R_value then OUT=[[${R_value}]] else OUT=[[${value}]] end) ); )   )
+    reader <- ImageFileReader_SetFilename ( reader, args[[2]] )
+    inputA <- ImageFileReader_Execute ( reader )
+    $(if inputB then
+OUT=[[inputB <- ImageFileReader_SetFilename ( reader, args[[3]] )
+    inputB <- ImageFileReader_Execute ( reader )
+output <- ${name}ImageFilter_Execute ( inputA, inputB )]]
+  else
+OUT=[[output <- ${name}ImageFilter_Execute ( inputA )]]
+  end)
+writer <- ImageFileWriter_SetFilename( writer, args[[-1]] )
+writer <- ImageFileWriter_Execute( writer, output )
+)
+
+quit( save="no", status=0 )
