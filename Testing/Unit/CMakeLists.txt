@@ -43,7 +43,7 @@ foreach ( FILENAME ${GENERATED_FILTER_LIST} )
   file ( GLOB CXX_TEMPLATE_FILES "*Template*.cxx.in" )
   add_custom_command (
     OUTPUT "${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILENAME}ImageFilterTest.cxx"
-    COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitk  TestTemplate.cxx.in "${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILENAME}ImageFilterTest.cxx" 
+    COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua test ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitk ${FILENAME}  TestTemplate.cxx.in "${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILENAME}ImageFilterTest.cxx" 
     DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${CXX_TEMPLATE_FILES}
     )
   set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "BasicFilters.${FILENAME}")
@@ -51,7 +51,7 @@ foreach ( FILENAME ${GENERATED_FILTER_LIST} )
     file ( GLOB LUA_TEMPLATE_FILES "Template*.lua.in" )
     add_custom_command (
       OUTPUT "${SimpleITK_BINARY_DIR}/Testing/Unit/LuaTests/${FILENAME}ImageFilterTest.lua"
-      COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/Lua  TestTemplate.lua.in "${SimpleITK_BINARY_DIR}/Testing/Unit/LuaTests/${FILENAME}ImageFilterTest.lua"
+      COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua test ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/Lua ${FILENAME}  TestTemplate.lua.in "${SimpleITK_BINARY_DIR}/Testing/Unit/LuaTests/${FILENAME}ImageFilterTest.lua"
       DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${LUA_TEMPLATE_FILES}
       )
     set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Lua.${FILENAME}")
@@ -60,7 +60,7 @@ foreach ( FILENAME ${GENERATED_FILTER_LIST} )
     file ( GLOB PYTHON_TEMPLATE_FILES "*Template*py.in" )
     add_custom_command (
       OUTPUT  "${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/${FILENAME}ImageFilterTest.py"
-      COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/Python  TestTemplate.py.in "${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/${FILENAME}ImageFilterTest.py"
+      COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua test ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/Python ${FILENAME}  TestTemplate.py.in "${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/${FILENAME}ImageFilterTest.py"
       DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${PYTHON_TEMPLATE_FILES}
       )
     set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Python.${FILENAME}")
@@ -69,7 +69,7 @@ foreach ( FILENAME ${GENERATED_FILTER_LIST} )
     file ( GLOB TCL_TEMPLATE_FILES "*Template*.tcl.in" )
     add_custom_command (
       OUTPUT  "${SimpleITK_BINARY_DIR}/Testing/Unit/TclTests/${FILENAME}ImageFilterTest.tcl"
-      COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/Tcl  TestTemplate.tcl.in "${SimpleITK_BINARY_DIR}/Testing/Unit/TclTests/${FILENAME}ImageFilterTest.tcl"
+      COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua test ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/Tcl ${FILENAME}  TestTemplate.tcl.in "${SimpleITK_BINARY_DIR}/Testing/Unit/TclTests/${FILENAME}ImageFilterTest.tcl"
       DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${TCL_TEMPLATE_FILES}
       )
     set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Tcl.${FILENAME}")
