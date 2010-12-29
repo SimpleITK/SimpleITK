@@ -61,3 +61,17 @@ R CMD INSTALL -l ~/R/x86_64-pc-linux-gnu-library/2.10/ SimpleITK
                smoothedSTAPLE1.mhd
 
 
+---------------------------------------------
+
+Installin R in Ubuntu
+
+install the following packages:
+
+  dpatch libbz2-dev patchutils r-base-core r-base-dev r-base-html r-base-latex r-cran-boot r-cran-cluster r-cran-codetools r-cran-foreign r-cran-kernsmooth r-cran-lattice r-cran-matrix r-cran-mgcv r-cran-nlme r-cran-rpart
+  r-cran-survival r-cran-vr r-recommended
+
+
+suggested:
+
+  ess r-doc-info r-doc-pdf r-doc-html r-mathlib cdbs debhelper
+
