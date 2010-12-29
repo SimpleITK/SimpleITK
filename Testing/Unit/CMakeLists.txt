@@ -15,22 +15,6 @@ set ( TestSource
   CXXTests.cxx
   )
 
-if ( WRAP_LUA )
-  set ( TestSource ${TestSource} LuaTests.cxx )
-  add_definitions ( -DWRAP_LUA )
-endif()
-
-if ( WRAP_PYTHON )
-  find_package ( PythonInterp REQUIRED )
-  set ( TestSource ${TestSource} PythonTests.cxx )
-  add_definitions ( -DWRAP_PYTHON )
-endif()
-
-if ( WRAP_TCL )
-  add_definitions ( -DWRAP_TCL )
-endif()
-
-
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/PythonTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/LuaTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/TclTests)
