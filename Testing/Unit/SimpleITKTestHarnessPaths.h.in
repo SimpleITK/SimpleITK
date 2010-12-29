@@ -1,3 +1,6 @@
+#ifndef __SimpleITKTestHarnessPaths_h
+#define __SimpleITKTestHarnessPaths_h
+
 #define EXECUTABLE_PATH "@TEST_HARNESS_EXECUTABLE_DIRECTORY@"
 #define EXECUTABLE_SUFFIX "@CMAKE_EXECUTABLE_SUFFIX@"
 #define SIMPLEITK_SOURCE_DIR "@SimpleITK_SOURCE_DIR@"
@@ -14,3 +17,5 @@
 #cmakedefine WRAP_CSHARP
 #cmakedefine WRAP_TCL
 #cmakedefine WRAP_R
+
+#endif
