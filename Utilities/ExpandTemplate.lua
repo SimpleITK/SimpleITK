@@ -537,7 +537,7 @@ function expand(str, ...)
 end
 
 -- Args should be parameters template output
-if #arg ~= 6 then
+if #arg ~= 5 then
   print ( 'usage: ExpandTemplate.lua test_or_code_flag file_variables template_directory template_extension output ' )
   os.exit ( 1 )
 end
@@ -545,14 +545,12 @@ end
 testOrCodeFlag = arg[1]
 configFile = arg[2]
 templateFileDirectoryAndPrefix = arg[3]
-templateFieldName = arg[4]
-templateFileExtension = arg[5]
-outputFile = arg[6]
+templateFileExtension = arg[4]
+outputFile = arg[5]
 
 print ( 'configFile = ' .. configFile )
 print ( 'testOrCodeFlag = ' .. testOrCodeFlag )
 print ( 'templateFileDirectoryAndPrefix = ' .. templateFileDirectoryAndPrefix )
-print ( 'templateFieldName = ' .. templateFieldName )
 print ( 'templateFileExtension = ' .. templateFileExtension )
 print ( 'outputFile = ' .. outputFile )
 
@@ -575,7 +573,7 @@ else
   if testOrCodeFlag == "test" then
     templateBaseFilename = filterDescription.template_test_filename .. templateBaseFilename
   else
-    print('ExpandTemplate unknowin flag value' .. testOrCodeFlag )
+    print('ExpandTemplate unknown flag value' .. testOrCodeFlag )
   end
 end
 
