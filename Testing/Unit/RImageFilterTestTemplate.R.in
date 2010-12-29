@@ -24,20 +24,23 @@ quit( save="no", status=1 )
     ]]
   end)
 
+argument2 <- args[[2]]
+argument3 <- args[[3]]
+lastargument <- args[[args.length]]
 
 $(foreach tests
 if tag == "${tag}":
     $(when settings $(foreach settings filter <- filter.Set${parameter} ( $(if R_value then OUT=[[${R_value}]] else OUT=[[${value}]] end) ); )   )
-    reader <- ImageFileReader_SetFilename ( reader, args[[2]] )
+    reader <- ImageFileReader_SetFilename ( reader, argument2 )
     inputA <- ImageFileReader_Execute ( reader )
     $(if inputB then
-OUT=[[inputB <- ImageFileReader_SetFilename ( reader, args[[3]] )
+OUT=[[inputB <- ImageFileReader_SetFilename ( reader, argument3 )
     inputB <- ImageFileReader_Execute ( reader )
 output <- ${name}ImageFilter_Execute ( inputA, inputB )]]
   else
 OUT=[[output <- ${name}ImageFilter_Execute ( inputA )]]
   end)
-writer <- ImageFileWriter_SetFilename( writer, args[[-1]] )
+writer <- ImageFileWriter_SetFilename( writer, lastargument )
 writer <- ImageFileWriter_Execute( writer, output )
 )
 
