@@ -86,6 +86,18 @@ foreach ( FILENAME ${GENERATED_FILTER_LIST} )
     set ( GENERATED_TEST_SOURCE ${GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
   endif()
 
+  if ( WRAP_R )
+    file ( GLOB R_TEMPLATE_FILES "*Template*.R.in" )
+    set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/TclTests/${FILENAME}ImageFilterTest.R")
+    add_custom_command (
+      OUTPUT  "${OUTPUT_TEST_FILENAME}"
+      COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua test ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/Tcl  TestTemplate.R.in "${OUTPUT_TEST_FILENAME}"
+      DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json ${R_TEMPLATE_FILES}
+      )
+    set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Tcl.${FILENAME}")
+    set ( GENERATED_TEST_SOURCE ${GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
+  endif()
+
 endforeach()
 
 
