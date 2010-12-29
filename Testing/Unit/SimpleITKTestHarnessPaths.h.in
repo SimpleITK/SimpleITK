@@ -7,3 +7,10 @@
 #define SIMPLEITK_LUA_EXECUTABLE_PATH "@SimpleITKLua@"
 #define PYTHON_EXECUTABLE_PATH "@PYTHON_EXECUTABLE@"
 #define RSCRIPT_EXECUTABLE_PATH "@RSCRIPT_EXECUTABLE@"
+
+#cmakedefine WRAP_LUA
+#cmakedefine WRAP_PYTHON
+#cmakedefine WRAP_JAVA
+#cmakedefine WRAP_CSHARP
+#cmakedefine WRAP_TCL
+#cmakedefine WRAP_R
