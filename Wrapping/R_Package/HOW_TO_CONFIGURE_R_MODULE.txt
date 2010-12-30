@@ -8,7 +8,7 @@
 
 5) inside R type:
 
-package.skeleton(name="SimpleITK", code_files="SimpleITK.R")
+package.skeleton(name="SimpleITK", code_files="Wrapping/SimpleITK.R")
 
 this will create a directory named SimpleITK with
 the content:
@@ -22,11 +22,11 @@ the content:
 
 6) Quit R
 
-7) Copy the file
+7) Verify that the file
 
       Wrapping/SimpleITK.R
 
-   to this new SimpleITK/R directory
+   was copied to the new SimpleITK/R directory
 
 8) Add another file zzz.R with the content
 
@@ -34,7 +34,11 @@ the content:
       library.dynam("libSimpleITKR.so",pkg,lib)
      }
 
-9) type
+9) Create a destination directory
+
+     mkdir -p /home/ibanez/R/x86_64-pc-linux-gnu-library/2.10/
+
+10) type
 
 R CMD INSTALL -l ~/R/x86_64-pc-linux-gnu-library/2.10/ SimpleITK
 
@@ -42,15 +46,18 @@ R CMD INSTALL -l ~/R/x86_64-pc-linux-gnu-library/2.10/ SimpleITK
 
       /home/ibanez/R/x86_64-pc-linux-gnu-library/2.10
 
-10) copy the shared library in the new installation
+
+11) copy the shared library in the new installation
 
  cp bin/libSimpleITKR.so ~/R/x86_64-pc-linux-gnu-library/2.10/SimpleITK/libs
 
-11) Set the environment variable R_LIBS_USER  to
+
+12) Set the environment variable R_LIBS_USER  to
 
       /home/ibanez/R/x86_64-pc-linux-gnu-library/2.10
 
-12) Run the example
+
+13) Run the example
 
      cp  SimpleITK/Testing/Data/Input/STAPLE1.png .
      R -f SimpleITK/Examples/SimpleGaussian.R
