@@ -16,80 +16,74 @@ set ( TestSource
   CXXTests.cxx
   )
 
-if ( WRAP_LUA )
-  set ( TestSource ${TestSource} LuaTests.cxx )
-  add_definitions ( -DWRAP_LUA )
-endif()
-
-if ( WRAP_PYTHON )
-  find_package ( PythonInterp REQUIRED )
-  set ( TestSource ${TestSource} PythonTests.cxx )
-  add_definitions ( -DWRAP_PYTHON )
-endif()
-
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/PythonTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/LuaTests)
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/TclTests)
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/RTests)
 
-# template type variables
-set ( image_filter_template 0 )
-set ( region_growing_image_filter_template 1 )
 
-macro( expand_test_template FILENAME TEMPLATE_TYPE )
-  
-  # Set common variables
-  set ( expand_template_script ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua )
-  set ( output_cpp "${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILENAME}ImageFilterTest.cxx" )
-  set ( output_lua "${SimpleITK_BINARY_DIR}/Testing/Unit/LuaTests/${FILENAME}ImageFilterTest.lua" )
-  set ( output_py "${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/${FILENAME}ImageFilterTest.py" )
-
-  # Use the ImageFilterTemplate if specified
-  if ( ${TEMPLATE_TYPE} EQUAL ${image_filter_template} )
-    set ( input_json_file ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}.json )
-    set ( template_file_cpp
-      ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkImageFilterTestTemplate.cxx.in )
-    set ( template_file_lua
-      ${SimpleITK_SOURCE_DIR}/Testing/Unit/LuaImageFilterTestTemplate.lua.in )
-    set ( template_file_py
-      ${SimpleITK_SOURCE_DIR}/Testing/Unit/PythonImageFilterTestTemplate.py.in )
-
-  # Use the RegionGrowingImageFilterTemplate if specified
-  elseif ( ${TEMPLATE_TYPE} EQUAL ${region_growing_image_filter_template} )
-    set ( input_json_file
-      ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILENAME}_RegionGrowing.json )
-    set ( template_file_cpp
-      ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkRegionGrowingImageFilterTestTemplate.cxx.in )
-    set ( template_file_lua
-      ${SimpleITK_SOURCE_DIR}/Testing/Unit/LuaRegionGrowingImageFilterTestTemplate.lua.in )
-    set ( template_file_py
-      ${SimpleITK_SOURCE_DIR}/Testing/Unit/PythonRegionGrowingImageFilterTestTemplate.py.in )
-  endif()
-
-    add_custom_command (
-    OUTPUT ${output_cpp} ${output_lua} ${output_py}
-    COMMAND lua ${expand_template_script} ${input_json_file} ${template_file_cpp} ${output_cpp}
-    COMMAND lua ${expand_template_script} ${input_json_file} ${template_file_lua} ${output_lua}
-    COMMAND lua ${expand_template_script} ${input_json_file} ${template_file_py} ${output_py}
-    DEPENDS ${input_json_file} ${template_file_cxx} ${template_file_lua} ${template_file_py} ${template_file_cpp} ${template_file_lua} ${template_file_py}
+#
+# Generate code for the tests in different languages
+#
+foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
+  file ( GLOB CXX_TEMPLATE_FILES "*Template*.cxx.in" )
+  set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILTERNAME}ImageFilterTest.cxx")
+  add_custom_command (
+    OUTPUT  ${OUTPUT_TEST_FILENAME}
+    COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua test ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitk  TestTemplate.cxx.in "${OUTPUT_TEST_FILENAME}"
+    DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${CXX_TEMPLATE_FILES}
     )
-  set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "BasicFilters.${FILENAME}")
+  set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "BasicFilters.${FILTERNAME}")
+  set ( GENERATED_TEST_SOURCE ${GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
+
   if ( WRAP_LUA )
-    set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Lua.${FILENAME}")
+    file ( GLOB LUA_TEMPLATE_FILES "Template*.lua.in" )
+    set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/LuaTests/${FILTERNAME}ImageFilterTest.lua")
+    add_custom_command (
+      OUTPUT "${OUTPUT_TEST_FILENAME}"
+      COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua test ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/Lua  TestTemplate.lua.in "${OUTPUT_TEST_FILENAME}"
+      DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${LUA_TEMPLATE_FILES}
+      )
+    set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Lua.${FILTERNAME}")
+    set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
   endif()
+
   if ( WRAP_PYTHON )
-    set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Python.${FILENAME}")
+    file ( GLOB PYTHON_TEMPLATE_FILES "*Template*py.in" )
+    set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/${FILTERNAME}ImageFilterTest.py")
+    add_custom_command (
+      OUTPUT  "${OUTPUT_TEST_FILENAME}"
+      COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua test ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/Python  TestTemplate.py.in "${OUTPUT_TEST_FILENAME}"
+      DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${PYTHON_TEMPLATE_FILES}
+      )
+    set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Python.${FILTERNAME}")
+    set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
   endif()
-  set ( GENERATED_TEST_SOURCE ${GENERATED_TEST_SOURCE} ${output_cpp} )
 
-endmacro()
+  if ( WRAP_TCL )
+    file ( GLOB TCL_TEMPLATE_FILES "*Template*.tcl.in" )
+    set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/TclTests/${FILTERNAME}ImageFilterTest.tcl")
+    add_custom_command (
+      OUTPUT  "${OUTPUT_TEST_FILENAME}"
+      COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua test ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/Tcl  TestTemplate.tcl.in "${OUTPUT_TEST_FILENAME}"
+      DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${TCL_TEMPLATE_FILES}
+      )
+    set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Tcl.${FILTERNAME}")
+    set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
+  endif()
 
-# Generate tests for ImageFilter templated filters
-foreach ( FILENAME ${IMAGE_FILTER_LIST} )
-  expand_test_template( ${FILENAME} ${image_filter_template} )
-endforeach()
+  if ( WRAP_R )
+    file ( GLOB R_TEMPLATE_FILES "*Template*.R.in" )
+    set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/RTests/${FILTERNAME}ImageFilterTest.R")
+    add_custom_command (
+      OUTPUT  "${OUTPUT_TEST_FILENAME}"
+      COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua test ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/R  TestTemplate.R.in "${OUTPUT_TEST_FILENAME}"
+      DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${R_TEMPLATE_FILES}
+      )
+    set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "R.${FILTERNAME}")
+    set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
+  endif()
 
-# Generate tests for RegionGrowingImageFilter templated filters
-foreach ( FILENAME ${REGION_GROWING_FILTER_LIST} )
-  expand_test_template( ${FILENAME} ${region_growing_image_filter_template} )
 endforeach()
 
 
@@ -126,10 +120,14 @@ if (CMAKE_USE_PTHREADS_INIT)
   target_link_libraries(gtest ${CMAKE_THREAD_LIBS_INIT})
 endif()
 
-
 include_directories ( ${SimpleITK_INCLUDE_DIR} )
-add_executable(SimpleITKUnitTestDriver 
-  SimpleITKUnitTestDriver.cxx ${TestSource} ImageCompare.cxx 
+
+add_custom_target(WrappedGeneratedTests ALL
+  DEPENDS ${WRAPPED_GENERATED_TEST_SOURCE}
+)
+
+add_executable(SimpleITKUnitTestDriver
+  SimpleITKUnitTestDriver.cxx ${TestSource} ImageCompare.cxx
   ${GENERATED_TEST_SOURCE}
 )
 target_link_libraries ( SimpleITKUnitTestDriver ${ITK_LIBRARIES} ${SimpleITK_LIBRARIES} )

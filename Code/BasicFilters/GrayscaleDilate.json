@@ -1,0 +1,19 @@
+{
+  "name" : "GrayscaleDilate",
+  "template_code_filename" : "MathematicalMorphologyImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Performs Dilation in a grayscale image.",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [],
+  "custom_methods" : [],
+  "tests" : [
+   {
+     "tag" : "GrayscaleDilate",
+     "description" : "Test grayscale dilation",
+     "inputA" : "Input/STAPLE1.png",
+     "settings" : [],
+     "md5hash" : "cb692559f1eb21e4c932f6bbb3850ad3"
+   }
+  ]
+}
