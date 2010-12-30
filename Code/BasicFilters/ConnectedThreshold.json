@@ -1,9 +1,10 @@
 {
-  "name" : "NeighborhoodConnected",
+  "name" : "ConnectedThreshold",
+  "template_code_filename" : "RegionGrowingImageFilter",
+  "template_test_filename" : "RegionGrowingImageFilter",
   "number_of_inputs" : 1,
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelIDTypeList",
-  "include_files" : ["sitkSize.h"],
   "members" : [
     { "name" : "Upper",
       "type" : "double",
@@ -20,14 +21,15 @@
       "default" : 1.0,
       "doc" : "Pixels that lie within Lower and Upper (inclusive)\
        will be replaced with this value. The default is 1."
-    },
-    { "name" : "Radius",
-      "type" : "itk::simple::Size",
-      "default" : "itk::simple::Size()",
-      "doc" : "Radius of the neighborhood used to compute the median"
     }
   ],
   "tests" : [
+    { "tag" : "defaults",
+      "description" : "Simply run with default settings",
+      "inputA" : "Input/RA-Float.nrrd",
+      "settings" : [],
+      "tolerance" : 0.1
+    },
     { "tag" : "2d",
       "description" : "Run with 2d sample settings",
       "inputA" : "Input/STAPLE1.png",
