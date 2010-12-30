@@ -11,7 +11,7 @@ $(if number_of_inputs then
 
 args <- commandArgs( TRUE )
 
-tag = args[[1]]
+tag <- args[[1]]
 
 reader <- ImageFileReader()
 writer <- ImageFileWriter()
@@ -24,22 +24,26 @@ quit( save="no", status=1 )
     ]]
   end)
 
+numberOfArguments <- length(args)
+
 argument2 <- args[[2]]
 argument3 <- args[[3]]
-lastargument <- args[[args.length]]
+
+lastargument <- args[[numberOfArguments]]
 
 $(foreach tests
-if tag == "${tag}":
+if(tag == "${tag}") {
     $(when settings $(foreach settings filter <- filter.Set${parameter} ( $(if R_value then OUT=[[${R_value}]] else OUT=[[${value}]] end) ); )   )
     reader <- ImageFileReader_SetFilename ( reader, argument2 )
     inputA <- ImageFileReader_Execute ( reader )
     $(if inputB then
 OUT=[[inputB <- ImageFileReader_SetFilename ( reader, argument3 )
     inputB <- ImageFileReader_Execute ( reader )
-output <- ${name}ImageFilter_Execute ( inputA, inputB )]]
+output <- ${name}ImageFilter_Execute ( filter, inputA, inputB )]]
   else
-OUT=[[output <- ${name}ImageFilter_Execute ( inputA )]]
+OUT=[[output <- ${name}ImageFilter_Execute ( filter, inputA )]]
   end)
+  }
 writer <- ImageFileWriter_SetFilename( writer, lastargument )
 writer <- ImageFileWriter_Execute( writer, output )
 )
