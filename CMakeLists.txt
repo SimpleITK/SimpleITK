@@ -65,7 +65,7 @@ check_include_file_cxx( functional SITK_HAS_STLTR1_FUNCTIONAL )
 
 if ( NOT SITK_HAS_STLTR1_TR1_FUNCTIONAL AND NOT SITK_HAS_STLTR1_FUNCTIONAL )
 message( FATAL_ERROR "SimpleITK requires usage of parts C++ Technical Report 1 (TR1)\n"
-    "It may be available as an options download for your comppiler. Please see the FAQ for details." )
+    "It may be available as an optional download for your compiler. Please see the FAQ for details." )
 endif ( NOT SITK_HAS_STLTR1_TR1_FUNCTIONAL AND NOT SITK_HAS_STLTR1_FUNCTIONAL )
 
 
