@@ -11,16 +11,21 @@ class SimpleGaussian {
     // do some simple operations
     System.out.println("SimpleITK says 'Hello World' from Java");
     
+    if ( argv.length < 3 ) {
+      System.out.println("Usage: java SimpleGaussian <input> <sigma> <output>");
+      return;
+    }
+
     ImageFileReader reader = new ImageFileReader();
-    reader.setFilename(argv[0]);
-    SmartPointerImage img = reader.execute();
+    reader.SetFilename(argv[0]);
+    SmartPointerImage img = reader.Execute();
     
-    Gaussian filt = new Gaussian();
-    SmartPointerImage blurredImg = filt.execute(img);
+    RecursiveGaussianImageFilter filt = new RecursiveGaussianImageFilter();
+    SmartPointerImage blurredImg = filt.Execute(img);
     
     ImageFileWriter writer = new ImageFileWriter();
-    writer.setFilename(argv[1]);
-    writer.execute(blurredImg);
+    writer.SetFilename(argv[1]);
+    writer.Execute(blurredImg);
     
   }
   
