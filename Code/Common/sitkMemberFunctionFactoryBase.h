@@ -1,15 +1,14 @@
 #ifndef __sitkMemberFunctionFactoryBase_h
 #define __sitkMemberFunctionFactoryBase_h
 
+#include "sitkConfigure.h"
 
-// If this is not found in Visual Studio 2008, please download the VC++ 2008 Feature Pack from
-// http://www.microsoft.com/downloads/en/details.aspx?FamilyId=D466226B-8DAB-445F-A7B4-448B326C48E7&displaylang=en
-#if defined(_MSC_VER) && (_MSC_VER >= 1500)
-// Microsoft Visual Studio C++ 2008, v9.0
-// Microsoft Visual Studio C++ 2010
+#if defined SITK_HAS_STLTR1_TR1_FUNCTIONAL
+#include <tr1/functional>
+#elif defined SITK_HAS_STLTR1_FUNCTIONAL
 #include <functional>
 #else
-#include <tr1/functional>
+#error "No system tr1 functional available"
 #endif
 
 #include "sitkPixelIDTypes.h"
