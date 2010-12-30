@@ -1,0 +1,19 @@
+{
+  "name" : "BinaryErode",
+  "template_code_filename" : "MathematicalMorphologyImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Performs Erosion in a binary image.",
+  "pixel_types" : "LabelPixelIDTypeList",
+  "members" : [],
+  "custom_methods" : [],
+  "tests" : [
+   {
+     "tag" : "BinaryErode",
+     "description" : "Test binary erosion",
+     "inputA" : "Input/STAPLE1.png",
+     "settings" : [],
+     "md5hash" : "9e37516c795d7f25847851666ef53ef9"
+   }
+  ]
+}

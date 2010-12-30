@@ -2,10 +2,9 @@ set ( IMAGE_FILTER_LIST "" CACHE INTERNAL "" )
 set ( REGION_GROWING_FILTER_LIST "" CACHE INTERNAL "" )
 set ( GENERATED_FILTER_LIST "" CACHE INTERNAL "" )
 
-set ( image_filter_template 0 )
-set ( region_growing_image_filter_template 1 )
+file ( GLOB TEMPLATE_FILES "sitk*Template*" )
 
-macro( expand_template FILENAME TEMPLATE_TYPE )
+macro( expand_template FILENAME )
   # Do this in one massive custom command.  Will result in code re-generating from time to time, but that is OK (hopefully!)
 
   # Set common variables
@@ -31,13 +30,11 @@ macro( expand_template FILENAME TEMPLATE_TYPE )
   endif()
 
   add_custom_command (
-    OUTPUT ${output_h} ${output_cxx}
-    COMMAND lua ${expand_template_script} ${input_json_file} ${template_file_h} ${output_h}
-    COMMAND lua ${expand_template_script} ${input_json_file} ${template_file_cxx} ${output_cxx}
-    DEPENDS ${input_json_file} ${template_file_h} ${template_file_cxx}
-  )
-
-  # Add the filter to the SimpleITKBasicFiltersSource list
+    OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/sitk${FILENAME}ImageFilter.h" "${CMAKE_CURRENT_BINARY_DIR}/sitk${FILENAME}ImageFilter.cxx"
+    COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua code ${CMAKE_CURRENT_SOURCE_DIR}/${FILENAME}.json ${CMAKE_CURRENT_SOURCE_DIR}/sitk  Template.h.in    ${CMAKE_CURRENT_BINARY_DIR}/sitk${FILENAME}ImageFilter.h
+    COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua code ${CMAKE_CURRENT_SOURCE_DIR}/${FILENAME}.json ${CMAKE_CURRENT_SOURCE_DIR}/sitk  Template.cxx.in  ${CMAKE_CURRENT_BINARY_DIR}/sitk${FILENAME}ImageFilter.cxx
+    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/${FILENAME}.json ${TEMPLATE_FILES}
+    )
   set ( SimpleITKBasicFiltersSource ${SimpleITKBasicFiltersSource} "${CMAKE_CURRENT_BINARY_DIR}/sitk${FILENAME}ImageFilter.h" )
   set ( SimpleITKBasicFiltersSource ${SimpleITKBasicFiltersSource} "${CMAKE_CURRENT_BINARY_DIR}/sitk${FILENAME}ImageFilter.cxx" )
 
@@ -47,7 +44,7 @@ endmacro()
 
 file ( GLOB JSON_CONFIG_FILES *.json)
 
-foreach ( f ${JSON_CONFIG_FILES} ) 
+foreach ( f ${JSON_CONFIG_FILES} )
   get_filename_component ( class ${f} NAME_WE )
 
   # Detect other template types

@@ -1,0 +1,19 @@
+{
+  "name" : "GrayscaleMorphologicalClosing",
+  "template_code_filename" : "MathematicalMorphologyImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Performs morphological closing in a grayscale image.",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [],
+  "custom_methods" : [],
+  "tests" : [
+   {
+     "tag" : "GrayscaleMorphologicalClosing",
+     "description" : "Test grayscale morphological closing",
+     "inputA" : "Input/STAPLE1.png",
+     "settings" : [],
+     "md5hash" : "103130cc4caf40d9fb252fbabc531e15"
+   }
+  ]
+}
