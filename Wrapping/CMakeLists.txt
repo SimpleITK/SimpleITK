@@ -111,7 +111,7 @@ if ( WRAP_JAVA )
     DEPENDS ${SWIG_MODULE_SimpleITK_REAL_NAME}
     )
 
-  add_custom_target(org_simple_itk_jar ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/org.itk.simple.jar)
+  add_custom_target(org_itk_simple_jar ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/org.itk.simple.jar)
   
   # Get the location of the extension directory
   string(REGEX REPLACE "include"  "jre/lib/ext" JAVA_EXTENSION_DIR ${JAVA_INCLUDE_PATH} )
