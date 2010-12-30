@@ -10,7 +10,7 @@ package org.itk.simple;
 
 public class LoadSimpleITK {
   public static void load() {
-    System.load("@SimpleITK_BINARY_DIR@/Wrapping/libSimpleITKJava.so");
+    System.load("@SimpleITK_BINARY_DIR@/bin/libSimpleITKJava.so");
     // Should be called SimpleITKJava.dll for Windows
   }
 }
