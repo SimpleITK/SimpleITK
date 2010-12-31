@@ -1,0 +1,12 @@
+
+
+// This is Java code to test ${name}
+import org.itk.simple.*;
+
+class ${name}ImageFilterTest {
+
+  public static void main( String argv[] ) {
+
+    System.out.println("STUB");
+  }
+}

@@ -20,7 +20,11 @@ file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/PythonTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/LuaTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/TclTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/RTests)
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/JavaTests)
 
+#if (WRAP_JAVA)
+#  find_package ( Java REQUIRED )
+#endif()
 
 #
 # Generate code for the tests in different languages
@@ -81,6 +85,20 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
       DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${R_TEMPLATE_FILES}
       )
     set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "R.${FILTERNAME}")
+    set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
+  endif()
+
+  # Java Tests
+  if ( WRAP_JAVA )    
+    file ( GLOB JAVA_TEMPLATE_FILES "*Template*.java.in" )
+    set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/${FILTERNAME}ImageFilterTest.java")
+    add_custom_command (
+      OUTPUT  "${OUTPUT_TEST_FILENAME}"
+      COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua test ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/Java  TestTemplate.java.in "${OUTPUT_TEST_FILENAME}"
+      COMMAND ${Java_JAVAC_EXECUTABLE} -classpath ${SimpleITK_BINARY_DIR}/Wrapping/org.itk.simple.jar ${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/*.java
+      DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${JAVA_TEMPLATE_FILES}
+      )
+    set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Java.${FILTERNAME}")
     set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
   endif()
 
