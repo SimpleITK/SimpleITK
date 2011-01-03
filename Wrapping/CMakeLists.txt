@@ -66,6 +66,7 @@ endif()
 # Find Python
 if ( WRAP_PYTHON )
   find_package ( PythonLibs REQUIRED )
+  find_package ( PythonInterp REQUIRED )
   include_directories ( ${PYTHON_INCLUDE_DIR} )
 
   # Run swig
