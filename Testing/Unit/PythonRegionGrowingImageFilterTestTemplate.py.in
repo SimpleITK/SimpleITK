@@ -35,7 +35,7 @@ $(if parameter == "SeedList" then
     filter$(for i=1,#value do OUT=OUT .. ".AddSeed( SimpleITK.Index" .. value[i] .. " )" end);]]
 else
 OUT=[[
-    filter.Set${parameter}( $(if lua_value then OUT='${lua_value}' else OUT='${value}' end) );]]
+    filter.Set${parameter}( $(if python_value then OUT='${python_value}' else OUT='${value}' end) );]]
 end) 
 )  
 )
