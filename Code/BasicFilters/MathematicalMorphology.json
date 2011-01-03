@@ -29,7 +29,8 @@
      "settings" : [ { "parameter" : "Operation",
                       "value" : "itk::simple::MathematicalMorphologyImageFilter::BinaryErode",
                       "lua_value" : "SimpleITK.MathematicalMorphologyImageFilter_BinaryErode",
-                      "python_value" : "SimpleITK.MathematicalMorphologyImageFilter.BinaryErode"
+                      "python_value" : "SimpleITK.MathematicalMorphologyImageFilter.BinaryErode",
+                      "java_value" : "MathematicalMorphologyImageFilter.OperationType.BinaryErode"
                     } ],
      "md5hash" : "9e37516c795d7f25847851666ef53ef9"
    },
@@ -40,7 +41,8 @@
      "settings" : [ { "parameter" : "Operation",
                       "value" : "itk::simple::MathematicalMorphologyImageFilter::BinaryDilate",
                       "lua_value" : "SimpleITK.MathematicalMorphologyImageFilter_BinaryDilate",
-                      "python_value" : "SimpleITK.MathematicalMorphologyImageFilter.BinaryDilate"
+                      "python_value" : "SimpleITK.MathematicalMorphologyImageFilter.BinaryDilate",
+                      "java_value" : "MathematicalMorphologyImageFilter.OperationType.BinaryDilate"
                     } ],
      "md5hash" : "9eef659f21dab5eb49e0f715a5d9a21b"
    },
@@ -51,7 +53,8 @@
      "settings" : [ { "parameter" : "Operation",
                       "value" : "itk::simple::MathematicalMorphologyImageFilter::GrayscaleErode",
                       "lua_value" : "SimpleITK.MathematicalMorphologyImageFilter_GrayscaleErode",
-                      "python_value" : "SimpleITK.MathematicalMorphologyImageFilter.GrayscaleErode"
+                      "python_value" : "SimpleITK.MathematicalMorphologyImageFilter.GrayscaleErode",
+                      "java_value" : "MathematicalMorphologyImageFilter.OperationType.GrayscaleErode"
                     } ],
      "md5hash" : "cb0f49738a99f3467b575bc95a0ace44"
    },
@@ -62,7 +65,8 @@
      "settings" : [ { "parameter" : "Operation",
                       "value" : "itk::simple::MathematicalMorphologyImageFilter::GrayscaleDilate",
                       "lua_value" : "SimpleITK.MathematicalMorphologyImageFilter_GrayscaleDilate",
-                      "python_value" : "SimpleITK.MathematicalMorphologyImageFilter.GrayscaleDilate"
+                      "python_value" : "SimpleITK.MathematicalMorphologyImageFilter.GrayscaleDilate",
+                      "java_value" : "MathematicalMorphologyImageFilter.OperationType.GrayscaleDilate"
                     } ],
      "md5hash" : "cb692559f1eb21e4c932f6bbb3850ad3"
    }
@@ -73,7 +77,8 @@
      "settings" : [ { "parameter" : "Operation",
                       "value" : "itk::simple::MathematicalMorphologyImageFilter::GrayscaleOpening",
                       "lua_value" : "SimpleITK.MathematicalMorphologyImageFilter_GrayscaleOpening",
-                      "python_value" : "SimpleITK.MathematicalMorphologyImageFilter.GrayscaleOpening"
+                      "python_value" : "SimpleITK.MathematicalMorphologyImageFilter.GrayscaleOpening",
+                      "java_value" : "MathematicalMorphologyImageFilter.OperationType.GrayscaleOpening"
                     } ],
      "md5hash" : "867de5ed8cf49c4657e1545bd57f2c23"
    },
@@ -84,7 +89,8 @@
      "settings" : [ { "parameter" : "Operation",
                       "value" : "itk::simple::MathematicalMorphologyImageFilter::GrayscaleClosing",
                       "lua_value" : "SimpleITK.MathematicalMorphologyImageFilter_GrayscaleClosing",
-                      "python_value" : "SimpleITK.MathematicalMorphologyImageFilter.GrayscaleClosing"
+                      "python_value" : "SimpleITK.MathematicalMorphologyImageFilter.GrayscaleClosing",
+                      "java_value" : "MathematicalMorphologyImageFilter.OperationType.GrayscaleClosing"
                     } ],
      "md5hash" : "103130cc4caf40d9fb252fbabc531e15"
    }
