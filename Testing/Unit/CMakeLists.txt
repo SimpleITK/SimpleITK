@@ -22,10 +22,6 @@ file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/TclTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/RTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/JavaTests)
 
-#if (WRAP_JAVA)
-#  find_package ( Java REQUIRED )
-#endif()
-
 #
 # Generate code for the tests in different languages
 #
