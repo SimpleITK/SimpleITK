@@ -1,0 +1,54 @@
+
+
+# This is Tcl code to test ${name}
+
+$(if number_of_inputs then
+    OUT=[[set inputs ${number_of_inputs}]]
+  else
+    OUT=[[set inputs 1]]
+  end)
+
+if { [llength [set argv]] < ( [set inputs] + 1 ) } {
+  puts "Usage: ${name} tag <input(s)> output"
+  exit 1
+}
+set tag [lindex [set argv] 0]
+set ValidTags ""
+ImageFileReader reader
+ImageFileWriter writer
+${name}ImageFilter filter
+
+$(if #tests == 0 then
+    OUT=[[puts "No tests defined!"; exit 1;]]
+  end)
+
+$(foreach tests
+lappend ValidTags "${tag}"
+if { [set tag] == "${tag}" } {
+
+$(when settings
+$(foreach settings
+$(if parameter == "SeedList" then
+OUT=[[  filter ClearSeeds
+$(for i=1,#tcl_value do OUT=OUT .. "  filter AddSeed [Index idx " .. tcl_value[i] .. "]\n" end)]]
+else
+OUT=[[
+  filter Set${parameter} $(if tcl_value then OUT='${tcl_value}' else OUT='${value}'end)]]
+end)
+))
+  set inputA [[reader SetFilename [lindex [set argv] 1]] Execute]
+  $(if inputB then
+  OUT="set inputB [[reader SetFilename [lindex [set argv] 2]] Execute]; \
+  set output [filter Execute [set inputA] [set inputB] ]"
+    else
+    OUT=[[
+set output [filter Execute [set inputA] ]
+]]
+end)
+  [writer SetFilename [lindex [set argv] end] ] Execute [set output]
+  exit
+}
+)
+
+puts stderr "Tag [set tag] was not found, must be one of [set ValidTags]"
+exit 1

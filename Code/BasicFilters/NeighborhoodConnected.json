@@ -37,7 +37,9 @@
         { "parameter" : "SeedList",
           "dim" : 2,
           "value" : ["(100,100)",
-                     "(95,85)"]
+                     "(95,85)"],
+          "tcl_value" : ["100 100",
+                         "95 85"]
         },
         { "parameter" : "Upper",
           "value" : 255
@@ -47,6 +49,13 @@
         },
         { "parameter" : "ReplaceValue",
           "value" : 255
+        },
+        { "parameter" : "Radius",
+          "value" : "itk::simple::Size(5,5)",
+          "java_value" : "new Size(5,5)",
+          "tcl_value" : "[Size sz 5 5]",
+          "python_value" : "SimpleITK.Size( 5, 5 )",
+          "lua_value" : "SimpleITK.Size( 5, 5 )"
         }
         
       ],
