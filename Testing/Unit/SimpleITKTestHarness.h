@@ -64,6 +64,7 @@ class DataFinder {
   std::string GetLuaExecutable() { return this->FindExecutable ( "SimpleITKLua" ); }
   std::string GetPythonExecutable() { return std::string ( PYTHON_EXECUTABLE_PATH ); }
   std::string GetRExecutable() { return std::string ( RSCRIPT_EXECUTABLE_PATH ); }
+  std::string GetJavaExecutable() { return std::string ( JAVA_EXECUTABLE_PATH ); }
   std::string GetSourceDirectory() { return std::string ( SIMPLEITK_SOURCE_DIR ); }
   bool FileExists ( std::string filename ) { return itksys::SystemTools::FileExists ( filename.c_str() ); }
   std::string GetFile ( std::string filename ) {
@@ -168,6 +169,9 @@ class Python : public ExternalProgramRunner {
 };
 
 class Lua : public ExternalProgramRunner {
+};
+
+class Java : public ExternalProgramRunner {
 };
 
 class Tcl : public ExternalProgramRunner {
