@@ -97,7 +97,7 @@ if ( WRAP_JAVA )
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK.class
     DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK.java
-    COMMAND javac ${CMAKE_CURRENT_BINARY_DIR}/*.java
+    COMMAND ${Java_JAVAC_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/*.java
     COMMENT "Compiling java files..."
     DEPENDS ${SWIG_MODULE_SimpleITK_REAL_NAME}
   )
