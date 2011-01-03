@@ -7,6 +7,64 @@ class ${name}ImageFilterTest {
 
   public static void main( String argv[] ) {
 
-    System.out.println("STUB");
+    // Get the right number of inputs
+    int inputs = 1;
+    $(if number_of_inputs then
+        OUT=[[inputs = ${number_of_inputs};]]
+      end)
+
+    // Check the command line arguments
+    if ( argv.length < inputs + 1 ) {
+      System.out.println("Usage: ${name} tag <input(s)> output");
+      return;
+    }
+
+    String tag = argv[0];
+
+    // Instantiate objects
+    ImageFileReader reader = new ImageFileReader();
+    ImageFileWriter writer = new ImageFileWriter();
+    ${name}ImageFilter filter = new ${name}ImageFilter();
+
+    $(if #tests == 0 then
+    OUT=[[
+    // No tests defined => exit with error code
+    System.out.println ( "No tests defined!" );
+    System.exit ( 1 );
+    ]]
+    end)
+
+    // Run each test
+$(foreach tests
+    if (tag.equals( "${tag}" )) {
+      $(when settings 
+      // Set parameters
+      $(foreach settings
+$(if parameter == "SeedList" then
+      OUT=[[filter.ClearSeeds();
+      filter$(for i=1,#value do OUT=OUT .. ".AddSeed( new Index" .. value[i] .. " )" end);]]
+else
+OUT=[[
+      filter.Set${parameter}( $(if java_value then OUT='${java_value}' else OUT='${value}' end) );]]
+end) 
+)
+)
+
+      // Read image(s) and run the filter
+      SmartPointerImage inputA = reader.SetFilename( argv[1] ).Execute();
+$(if inputB then
+      OUT=[[
+      SmartPointerImage inputB = reader.SetFilename ( argv[2] ).Execute();
+      SmartPointerImage output = filter.Execute ( inputA, inputB );]]
+else
+      OUT=[[
+      SmartPointerImage output = filter.Execute ( inputA );]]
+end)
+
+      // Write output
+      writer.SetFilename( argv[argv.length - 1] ).Execute( output );
+    }
+)
+
   }
 }
