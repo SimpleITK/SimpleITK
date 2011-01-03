@@ -21,30 +21,40 @@ class ${name}ImageFilterTest {
 
     String tag = argv[0];
 
-/*
-    reader = SimpleITK.ImageFileReader()
-    writer = SimpleITK.ImageFileWriter()
-    filter = SimpleITK.${name}ImageFilter()
+    // Instantiate objects
+    ImageFileReader reader = new ImageFileReader();
+    ImageFileWriter writer = new ImageFileWriter();
+    ${name}ImageFilter filter = new ${name}ImageFilter();
 
     $(if #tests == 0 then
-        OUT=[[ 
-    print ( "No tests defined!" );
-    sys.exit ( 1 );
-        ]]
-      end)
+    OUT=[[
+    // No tests defined => exit with error code
+    System.out.println ( "No tests defined!" );
+    System.exit ( 1 );
+    ]]
+    end)
 
-    $(foreach tests
-    if tag == "${tag}":
-        $(when settings $(foreach settings filter.Set${parameter} ( $(if python_value then OUT=[[${python_value}]] else OUT=[[${value}]] end) ); )   )
-        inputA = reader.SetFilename ( sys.argv[2] ).Execute();
-        $(if inputB then
-        OUT=[[inputB = reader.SetFilename ( sys.argv[3] ).Execute()
-        output = filter.Execute ( inputA, inputB )]]
-          else
-        OUT=[[output = filter.Execute ( inputA )]]
-          end)
-        writer.SetFilename ( sys.argv[-1] ).Execute ( output )
-    )
-*/
+    // Run each test
+$(foreach tests
+    if (tag.equals( "${tag}" )) {
+      $(when settings 
+      // Set parameters
+      $(foreach settings filter.Set${parameter} ( $(if java_value then OUT=[[${java_value}]] else OUT=[[${value}]] end) ); )   )
+
+      // Read image(s) and run the filter
+      SmartPointerImage inputA = reader.SetFilename( argv[1] ).Execute();
+$(if inputB then
+      OUT=[[
+      SmartPointerImage inputB = reader.SetFilename ( argv[2] ).Execute();
+      SmartPointerImage output = filter.Execute ( inputA, inputB );]]
+else
+      OUT=[[
+      SmartPointerImage output = filter.Execute ( inputA );]]
+end)
+
+      // Write output
+      writer.SetFilename( argv[argv.length - 1] ).Execute( output );
+    }
+)
   }
 }

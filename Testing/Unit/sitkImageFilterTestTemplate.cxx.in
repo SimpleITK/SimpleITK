@@ -309,13 +309,16 @@ TEST_F(Java,${name}) {
         ]]
     end)
 
-  std::string Script = dataFinder.GetBuildDirectory() + "/Testing/Unit/JavaTests/${name}ImageFilterTest";
+  std::string Classpath = dataFinder.GetBuildDirectory() + "/Testing/Unit/JavaTests";
+  std::string Script = "${name}ImageFilterTest";
   $(foreach tests 
     {
     /* ${description} */
     std::vector<std::string> CommandLine;
     std::string outputFilename = dataFinder.GetOutputFile ( "Java-${name}-${tag}.nrrd" );
     CommandLine.push_back ( dataFinder.GetJavaExecutable() );
+    CommandLine.push_back ( "-classpath" );
+    CommandLine.push_back ( Classpath );
     CommandLine.push_back ( Script );
     CommandLine.push_back ( "${tag}" );
     CommandLine.push_back ( dataFinder.GetFile ( "${inputA}" ) );
