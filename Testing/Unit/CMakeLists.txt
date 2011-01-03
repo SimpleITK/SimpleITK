@@ -41,7 +41,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
   set ( GENERATED_TEST_SOURCE ${GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
 
   if ( WRAP_LUA )
-    file ( GLOB LUA_TEMPLATE_FILES "Template*.lua.in" )
+    file ( GLOB LUA_TEMPLATE_FILES "*Template*.lua.in" )
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/LuaTests/${FILTERNAME}ImageFilterTest.lua")
     add_custom_command (
       OUTPUT "${OUTPUT_TEST_FILENAME}"
