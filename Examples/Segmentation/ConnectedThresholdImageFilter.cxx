@@ -38,7 +38,7 @@ int main( int argc, char *argv[])
     {
     std::cerr << "Missing Parameters " << std::endl;
     std::cerr << "Usage: " << argv[0];
-    std::cerr << " inputImage  outputImage lowerThreshold upperThreshold seedX seedY [seed2X seed2Y ... ]" << std::endl;
+    std::cerr << " inputImage outputImage lowerThreshold upperThreshold seedX seedY [seed2X seed2Y ... ]" << std::endl;
     return 1;
     }
 
@@ -81,8 +81,7 @@ int main( int argc, char *argv[])
     {
     itk::simple::Index seed( atoi(argv[i]), atoi(argv[i+1]) );
     segmentationFilter.AddSeed(seed);
-    //std::cout << "Adding a seed at " << seed << std::endl;
-    std::cout << "Adding a seed at [" << seed[0] << ", " << seed[1] << "]" << std::endl;
+    std::cout << "Adding a seed at " << seed << std::endl;
     }
 
   itk::simple::Image::Pointer outImage = segmentationFilter.Execute(image);

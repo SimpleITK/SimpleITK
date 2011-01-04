@@ -1,10 +1,12 @@
 project ( SimpleITK )
 cmake_minimum_required ( VERSION 2.8 )
 
+
 find_package(ITK REQUIRED)
 if(ITK_FOUND)
   include(${ITK_USE_FILE})
 endif()
+
 
 
 # Put all files in a bin directory to keep things tidy.
@@ -35,6 +37,9 @@ set ( GENERATED_TEST_LIST "" CACHE INTERNAL "" )
 set ( GENERATED_FILTER_LIST "" CACHE INTERNAL "" )
 set ( GENERATED_TEST_SOURCE_LIST "" CACHE INTERNAL "" )
 
+#----------------------------------------------------------
+# Place all options to go into sitkConfigure.h here
+
 # Setting this option will shorten compile times by reducing the
 # amount of pixel types and generated code.
 # NB: this option should _NOT_ be used for releases!
@@ -42,15 +47,37 @@ option ( SITK_EXPRESS_INSTANTIATEDPIXELS "Instantiate very few pixel types ( for
 mark_as_advanced ( SITK_EXPRESS_INSTANTIATEDPIXELS )
 
 
+#-----------------------------------------------------------
+# Place all checks and try compile variable for sitkConfigure.h here
+
+# check for C++0x static_assert
 try_compile(SITK_SUPPORTS_STATIC_ASSERT
   ${SimpleITK_BINARY_DIR}/CMakeTmp
   ${SimpleITK_SOURCE_DIR}/CMake/static_assert.cxx
   OUTPUT_VARIABLE SITK_HAS_STATIC_ASSERT )
 
+
+include(CheckIncludeFileCXX)
+
+# check for the tr1/functional header
+check_include_file_cxx( tr1/functional SITK_HAS_STLTR1_TR1_FUNCTIONAL )
+check_include_file_cxx( functional SITK_HAS_STLTR1_FUNCTIONAL )
+
+if ( NOT SITK_HAS_STLTR1_TR1_FUNCTIONAL AND NOT SITK_HAS_STLTR1_FUNCTIONAL )
+message( FATAL_ERROR "SimpleITK requires usage of parts C++ Technical Report 1 (TR1)\n"
+    "It may be available as an optional download for your compiler. Please see the FAQ for details." )
+endif ( NOT SITK_HAS_STLTR1_TR1_FUNCTIONAL AND NOT SITK_HAS_STLTR1_FUNCTIONAL )
+
+
+
 configure_file( ${SimpleITK_SOURCE_DIR}/sitkConfigure.h.in
   ${SimpleITK_BINARY_DIR}/sitkConfigure.h )
 
+
+
+
 subdirs ( Utilities Code Wrapping Examples )
+
 
 #-----------------------------------------------------------------------------
 # ITK uses KWStyle for checking the coding style

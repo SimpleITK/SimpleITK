@@ -1,0 +1,48 @@
+
+
+-- This is Lua code to test ${name}
+
+inputs = 1
+$(if number_of_inputs then
+    OUT=[[inputs = ${number_of_inputs}]]
+  end)
+
+if #arg < inputs + 2 then
+  print ( "Usage: ${name} tag <input(s)> output" )
+  os.exit ( 1 )
+end
+
+tag = arg[1];
+
+reader = SimpleITK.ImageFileReader()
+writer = SimpleITK.ImageFileWriter()
+filter = SimpleITK.${name}ImageFilter()
+
+$(if #tests == 0 then
+    OUT=[[print ( "No tests defined!" ); os.exit ( 1 );]]
+  end)
+
+$(foreach tests
+  if tag == "${tag}" then
+    $(when settings
+$(foreach settings
+$(if parameter == "SeedList" then
+    OUT=[[filter:ClearSeeds();
+    filter$(for i=1,#value do OUT=OUT .. ":AddSeed( SimpleITK.Index" .. value[i] .. " )" end);]]
+else
+OUT=[[
+    filter:Set${parameter}( $(if lua_value then OUT='${lua_value}' else OUT='${value}' end) );]]
+end) 
+)  
+)
+
+
+    inputA = reader:SetFilename ( arg[2] ):Execute();
+    $(when inputB
+    inputB = reader:SetFilename ( arg[3] ):Execute()
+    )
+    output = filter:Execute ( inputA $(when inputB , inputB) )
+    writer:SetFilename ( arg[#arg] ):Execute ( output )
+  end
+)
+    

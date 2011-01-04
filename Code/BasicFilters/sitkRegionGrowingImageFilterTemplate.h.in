@@ -1,0 +1,128 @@
+#ifndef __sitk${name}ImageFilter_h
+#define __sitk${name}ImageFilter_h
+
+#include "sitkDualImageFilter.h"
+#include "sitkIndex.h"
+$(if include_files and #include_files > 0 then
+OUT = [[// Additional include files
+$(for i=1,#include_files do OUT = OUT .. '#include "' .. include_files[i] .. '"' if i < #include_files then OUT = OUT .. '\n' end end)
+// Done with additional include files]]
+end)
+
+
+
+namespace itk {
+namespace simple {
+
+/**
+ * ${doc}
+ */
+class ${name}ImageFilter : public ImageFilter {
+public:
+  typedef ${name}ImageFilter Self;
+
+  /**
+   * Default Constructor that takes no arguments and initializes
+   * default parameters
+   */
+  ${name}ImageFilter();
+
+  /** Supported Type List */
+  typedef ${pixel_types} PixelIDTypeList;
+
+
+
+  //////
+  // Basic Member Get/Set Methods
+  //////
+
+$(foreach members
+  $(if (not no_set_method) or (no_set_method == 0) then
+  OUT = '/** Set ${name} */\
+  Self& Set${name} ( ${type} t ) { this->m_${name} = t; return *this; };'
+  end)
+  $(if (not no_get_method) or (no_get_method == 0) then
+  OUT = [[/** Get ${name} */\
+  ${type} Get${name}() { return this->m_${name}; };]]
+  end)
+
+)
+
+
+  //////
+  // SeedList Methods
+  //////
+
+  /** Set SeedList */
+  Self& SetSeedList ( std::vector<itk::simple::Index> t )
+    {
+    this->m_SeedList = t; return *this;
+    };
+
+  /** Get SeedList */
+  std::vector<itk::simple::Index> GetSeedList()
+    {
+    return this->m_SeedList;
+    };
+
+  /** ClearSeeds - Clear out all seeds in the list */
+  Self& ClearSeeds( )
+    {
+    this->m_SeedList.clear();
+    return *this;
+    };
+
+  /** SetSeed - Set list to a single seed */
+  Self& SetSeed( Index idx )
+    {
+    this->m_SeedList.clear();
+    this->m_SeedList.push_back(idx);
+    return *this;
+    };
+
+  /** AddSeed - Add a seed to the end of the list */
+  Self& AddSeed( Index idx )
+    {
+    this->m_SeedList.push_back(idx);
+    return *this;
+    };
+
+  /** Print ourselves out */
+  std::string ToString() const;
+
+  /** Execute using the current parameter set */
+  Image::Pointer Execute ( Image::Pointer  );
+
+  /** Execute using the specified parameter set */
+  Image::Pointer Execute ( Image::Pointer$(foreach members ,
+                           ${type} in${name}),
+                           std::vector<itk::simple::Index> inSeedList );
+
+private:
+
+  //////
+  // Template Meta Programming Setup
+  //////
+  typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer );
+  template <class TImageType> Image::Pointer ExecuteInternal ( Image::Pointer image );
+  friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
+  std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
+
+
+  //////
+  // Private Member Variables
+  //////
+
+$(foreach members
+  /** ${doc} */
+  ${type} m_${name};
+
+)  /** List of interor seed points used to initialize the region growing segmentation */
+  std::vector<itk::simple::Index> m_SeedList;
+
+};
+
+
+} // end namespace simple
+} // end namespace itk
+#endif

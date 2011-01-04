@@ -1,0 +1,65 @@
+{
+  "name" : "NeighborhoodConnected",
+  "template_code_filename" : "RegionGrowingImageFilter",
+  "template_test_filename" : "RegionGrowingImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "include_files" : ["sitkSize.h"],
+  "members" : [
+    { "name" : "Upper",
+      "type" : "double",
+      "default" : 1.0,
+      "doc" : "Upper threshold value"
+    },
+    { "name" : "Lower",
+      "type" : "double",
+      "default" : 0.0,
+      "doc" : "Lower threshold value"
+    },
+    { "name" : "ReplaceValue",
+      "type" : "double",
+      "default" : 1.0,
+      "doc" : "Pixels that lie within Lower and Upper (inclusive)\
+       will be replaced with this value. The default is 1."
+    },
+    { "name" : "Radius",
+      "type" : "itk::simple::Size",
+      "default" : "itk::simple::Size()",
+      "doc" : "Radius of the neighborhood used to compute the median"
+    }
+  ],
+  "tests" : [
+    { "tag" : "2d",
+      "description" : "Run with 2d sample settings",
+      "inputA" : "Input/STAPLE1.png",
+      "settings" : [
+        { "parameter" : "SeedList",
+          "dim" : 2,
+          "value" : ["(100,100)",
+                     "(95,85)"],
+          "tcl_value" : ["100 100",
+                         "95 85"]
+        },
+        { "parameter" : "Upper",
+          "value" : 255
+        },
+        { "parameter" : "Lower",
+          "value" : 150
+        },
+        { "parameter" : "ReplaceValue",
+          "value" : 255
+        },
+        { "parameter" : "Radius",
+          "value" : "itk::simple::Size(5,5)",
+          "java_value" : "new Size(5,5)",
+          "tcl_value" : "[Size sz 5 5]",
+          "python_value" : "SimpleITK.Size( 5, 5 )",
+          "lua_value" : "SimpleITK.Size( 5, 5 )"
+        }
+        
+      ],
+      "tolerance" : 0.1
+    }
+  ]
+}

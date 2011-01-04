@@ -90,7 +90,7 @@ void MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
   PixelIDValueType pixelID = ImageTypeToPixelIDValue<TImageType>::Result;
 
   // this shouldn't occour, just may be useful for debugging
-  assert( pixelID > 0 && pixelID < typelist::Length< InstantiatedPixelIDTypeList >::Result );
+  assert( pixelID >= 0 && pixelID < typelist::Length< InstantiatedPixelIDTypeList >::Result );
 
   sitkStaticAssert( TImageType::ImageDimension == 2 || TImageType::ImageDimension == 3,
                     "Image Dimension out of range" );

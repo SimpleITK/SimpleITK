@@ -1,9 +1,10 @@
 {
   "name" : "ConnectedThreshold",
+  "template_code_filename" : "RegionGrowingImageFilter",
+  "template_test_filename" : "RegionGrowingImageFilter",
   "number_of_inputs" : 1,
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelIDTypeList",
-  "include_files" : ["sitkIndex.h"],
   "members" : [
     { "name" : "Upper",
       "type" : "double",
@@ -20,64 +21,38 @@
       "default" : 1.0,
       "doc" : "Pixels that lie within Lower and Upper (inclusive)\
        will be replaced with this value. The default is 1."
-    },
-    { "name" : "SeedList",
-      "type" : "std::vector<itk::simple::Index>",
-      "doc" : "List of interor seed points used to initialize the region growing segmentation",
-      "no_print" : 1,
-      "default" : "std::vector<itk::simple::Index>()",
-      "custom_itk_cast" :
-
-  "\
-  // Convert Seed List from std::vector<itk::simple::Index>\
-  // to std::vector<itk::Index>\
-  filter->ClearSeeds();\
-  for (unsigned int i = 0; i < m_SeedList.size(); ++i)\
-    {\
-    typename InputImageType::IndexType idx;\
-    idx = (typename InputImageType::IndexType)m_SeedList[i];\
-    filter->AddSeed(idx);\
-    }"
-
     }
   ],
-  "custom_methods" : [
-    { "name" : "ClearSeeds",
-      "doc" : "Clear the seed points, leaving an empty list",
-      "return_type" : "Self&",
-      "parameters" : [],
-      "body" : 
-        "this->m_SeedList.clear();\
-        return *this;"
+  "tests" : [
+    { "tag" : "defaults",
+      "description" : "Simply run with default settings",
+      "inputA" : "Input/RA-Float.nrrd",
+      "settings" : [],
+      "tolerance" : 0.1
     },
-    { "name" : "SetSeed",
-      "doc" : "Use a single seed point",
-      "return_type" : "Self&",
-      "parameters" : [
-        { "type" : "Index",
-          "var_name" : "idx",
-          "last" : 1
+    { "tag" : "2d",
+      "description" : "Run with 2d sample settings",
+      "inputA" : "Input/STAPLE1.png",
+      "settings" : [
+        { "parameter" : "SeedList",
+          "dim" : 2,
+          "value" : ["(100,100)",
+                     "(95,85)"]
+          "tcl_value" : ["100 100",
+                         "95 85"]
+        },
+        { "parameter" : "Upper",
+          "value" : 255
+        },
+        { "parameter" : "Lower",
+          "value" : 150
+        },
+        { "parameter" : "ReplaceValue",
+          "value" : 255
         }
+        
       ],
-      "body" :
-        "this->m_SeedList.clear();\
-        this->m_SeedList.push_back(idx);\
-        return *this;"
-    },
-    { "name" : "AddSeed",
-      "doc" : "Add a seed to the seed list",
-      "return_type" : "Self&",
-      "parameters" : [
-        { "type" : "Index",
-          "var_name" : "idx",
-          "last" : 1
-        }
-      ],
-      "body" :
-        "this->m_SeedList.push_back(idx);\
-        return *this;"
+      "tolerance" : 0.1
     }
-  
-  ],
-  "tests" : []
+  ]
 }

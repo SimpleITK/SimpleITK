@@ -18,7 +18,7 @@
 --   compat-5.1 if using Lua 5.0
 --
 -- CHANGELOG
---   0.9.20 Introduction of local Lua functions for private functions (removed _ function prefix). 
+--   0.9.20 Introduction of local Lua functions for private functions (removed _ function prefix).
 --          Fixed Lua 5.1 compatibility issues.
 --   		Introduced json.null to have null values in associative arrays.
 --          encode() performance improvement (more than 50%) through table.concat rather than ..
@@ -537,23 +537,22 @@ function expand(str, ...)
 end
 
 -- Args should be parameters template output
-if #arg ~= 3 then
-  print ( 'usage: ExpandTemplate.lua config template output ' )
+if #arg ~= 5 then
+  print ( 'usage: ExpandTemplate.lua test_or_code_flag file_variables template_directory template_extension output ' )
   os.exit ( 1 )
 end
 
-configFile = arg[1]
-templateFile = arg[2]
-outputFile = arg[3]
+testOrCodeFlag = arg[1]
+configFile = arg[2]
+templateFileDirectoryAndPrefix = arg[3]
+templateFileExtension = arg[4]
+outputFile = arg[5]
 
-fid = io.open ( templateFile )
-if fid == nil then
-  print ( 'failed to open ' .. templateFile )
-  os.exit ( 1 )
-end
-
-template = fid:read ( "*all" )
-fid:close()
+print ( 'configFile = ' .. configFile )
+print ( 'testOrCodeFlag = ' .. testOrCodeFlag )
+print ( 'templateFileDirectoryAndPrefix = ' .. templateFileDirectoryAndPrefix )
+print ( 'templateFileExtension = ' .. templateFileExtension )
+print ( 'outputFile = ' .. outputFile )
 
 -- Load it
 -- dofile ( configFile )
@@ -564,9 +563,34 @@ if fid == nil then
 end
 json = fid:read ( "*all" )
 fid:close()
-Filter = decode ( json )
+filterDescription = decode ( json )
 
-if Filter == nil then
+templateBaseFilename = templateFileExtension
+
+if testOrCodeFlag == "code" then
+  templateBaseFilename = filterDescription.template_code_filename .. templateBaseFilename
+else
+  if testOrCodeFlag == "test" then
+    templateBaseFilename = filterDescription.template_test_filename .. templateBaseFilename
+  else
+    print('ExpandTemplate unknown flag value' .. testOrCodeFlag )
+  end
+end
+
+templateFilename = templateFileDirectoryAndPrefix .. templateBaseFilename
+
+
+fid = io.open ( templateFilename )
+if fid == nil then
+  print ( 'failed to open ' .. templateFilename )
+  os.exit ( 1 )
+end
+
+template = fid:read ( "*all" )
+fid:close()
+
+
+if filterDescription == nil then
   print ( 'failed to find filter config in ' .. configFile )
   os.exit ( 1 )
 end
@@ -576,5 +600,5 @@ if fid == nil then
   print ( 'failed to open ' .. outputFile .. ' for writing' )
   os.exit ( 1 )
 end
-fid:write ( expand ( template, Filter ) )
+fid:write ( expand ( template, filterDescription ) )
 fid:close()

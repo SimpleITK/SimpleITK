@@ -1,7 +1,16 @@
 #ifndef __sitkConfigure_h
 #define __sitkConfigure_h
 
+// defined if the system has C++0x "static_assert" keyword
 #cmakedefine SITK_SUPPORTS_STATIC_ASSERT
+
 #cmakedefine SITK_EXPRESS_INSTANTIATEDPIXELS
+
+
+// defined if the system has <tr1/functional> header
+#cmakedefine SITK_HAS_STLTR1_TR1_FUNCTIONAL
+
+// defined if the system has <functional> header
+#cmakedefine SITK_HAS_STLTR1_FUNCTIONAL
 
 #endif // __sitkConfigure_h
