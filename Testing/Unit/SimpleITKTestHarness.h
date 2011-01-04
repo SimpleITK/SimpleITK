@@ -60,6 +60,13 @@ class DataFinder {
   std::string GetOutputFile ( std::string filename ) { return mOutputDirectory + "/" + filename; };
   std::string GetExecutableDirectory() { return mExecutableDirectory; }
   std::string GetBuildDirectory() { return std::string ( SIMPLEITK_BINARY_DIR ); }
+  std::string GetPathSeparator() { 
+#ifdef WIN32
+    return ";";
+#else
+    return ":";
+#endif
+  }
   std::string FindExecutable ( std::string exe ) { return GetExecutableDirectory() + "/" + exe + EXECUTABLE_SUFFIX; }
   std::string GetLuaExecutable() { return this->FindExecutable ( "SimpleITKLua" ); }
   std::string GetPythonExecutable() { return std::string ( PYTHON_EXECUTABLE_PATH ); }
@@ -86,7 +93,7 @@ extern DataFinder dataFinder;
 class ExternalProgramRunner : public testing::Test {
 public:
   // Return the separator
-  std::string GetPathSeparator() {
+  static std::string GetPathSeparator() {
 #ifdef WIN32
     return ";";
 #else
