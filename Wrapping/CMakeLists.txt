@@ -86,10 +86,6 @@ if ( WRAP_JAVA )
   SWIG_add_module ( SimpleITKJava java SimpleITK.i SimpleITKJAVA_wrap.cxx )
   SWIG_link_libraries(SimpleITKJava ${SimpleITK_LIBRARIES})
 
-  # Configure the library loader file
-  CONFIGURE_FILE(${SimpleITK_SOURCE_DIR}/Wrapping/LoadSimpleITK.java.in
-    ${SimpleITK_BINARY_DIR}/Wrapping/LoadSimpleITK.java)
-  
   # Make sure the nested directory structure exists
   file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/org/itk/simple)
   
