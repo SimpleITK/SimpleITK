@@ -1,0 +1,134 @@
+#include "sitk${name}ImageFilter.h"
+#include "itk${name}ImageFilter.h"
+
+
+namespace itk {
+namespace simple {
+
+//----------------------------------------------------------------------------
+
+//
+// Default constructor that initializes parameters
+//
+${name}ImageFilter::${name}ImageFilter ()
+  {
+
+  // Set basic member defaults
+$(foreach members $(if default then OUT = '  m_${name} = ${default};\
+' end))
+  // Set up member function factory
+  this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
+
+  // Register pixel types for 2D and 3D
+  this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
+  this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
+  }
+
+//
+// ToString
+//
+std::string ${name}ImageFilter::ToString() const
+  {
+  std::ostringstream out;
+  out << "itk::simple::${name}ImageFilter\n";
+
+  // Print out basic members
+$(foreach members
+  $(if (not no_print) or (not no_print == 1) then
+OUT = 'out << "\t${name}: " << this->m_${name} << std::endl;'
+end)
+)
+
+  // Print out SeedList
+  out << "SeedList:" << std::endl;
+  for (unsigned int i = 0; i < this->m_SeedList.size(); ++i)
+    {
+    out << "  " << this->m_SeedList[i] << std::endl;
+    }
+
+  return out.str();
+  }
+
+//
+// Execute
+//
+Image::Pointer ${name}ImageFilter::Execute (Image::Pointer image$(foreach members ,
+  ${type} in${name}),
+  std::vector<itk::simple::Index> inSeedList )
+  {
+  // Set members
+$(foreach members $(if (not no_set_method) or (no_set_method == 0) then
+OUT = '  this->Set${name} ( in${name} );\
+'
+  end))
+  // Set SeedList
+  this->SetSeedList ( inSeedList );
+
+  // Run the filter
+  return this->Execute ( image  );
+  }
+
+
+Image::Pointer ${name}ImageFilter::Execute ( Image::Pointer image )
+  {
+  // Get information about imate type
+  PixelIDValueType type = image->GetPixelIDValue();
+  unsigned int dimension = image->GetDimension();
+
+  // Run the apropriate internal execution member function
+  return this->m_MemberFactory->GetMemberFunction( type, dimension )( image );
+  }
+
+//----------------------------------------------------------------------------
+
+//
+// ExecuteInternal
+//
+template <class TImageType>
+Image::Pointer ${name}ImageFilter::ExecuteInternal ( Image::Pointer inImage )
+  {
+  // Define image types
+  typedef TImageType     InputImageType;
+  typedef InputImageType OutputImageType;
+
+  // Get a pointer to the input itk image with the proper type
+  typename InputImageType::Pointer image =
+    dynamic_cast <InputImageType*> ( inImage->GetImageBase().GetPointer() );
+
+  // Check to make sure cast worked
+  if ( image.IsNull() )
+    {
+    sitkExceptionMacro( "Unexpected template dispatch error!" );
+    }
+
+  // Set up the itk version of the filter
+  typedef itk::${name}ImageFilter<InputImageType , OutputImageType> FilterType;
+  typename FilterType::Pointer filter = FilterType::New();
+
+  // Set image input
+  filter->SetInput( image );
+
+  // Set basic parameters
+$(foreach members
+  filter->Set${name} ( $(if type == "itk::simple::Size" then OUT=[[(typename InputImageType::SizeType)]] end)this->m_${name} );
+)
+  // Convert Seed List from std::vector<itk::simple::Index>
+  // to std::vector<itk::Index>
+  filter->ClearSeeds();
+  for (unsigned int i = 0; i < m_SeedList.size(); ++i)
+    {
+    typename InputImageType::IndexType idx;
+    idx = (typename InputImageType::IndexType)m_SeedList[i];
+    filter->AddSeed(idx);
+    }
+
+  // Run the itk filter
+  filter->Update();
+
+  // Return the sitk version of the result
+  Image::Pointer out = new Image( filter->GetOutput() );
+  return out;
+  }
+
+} // end namespace simple
+} // end namespace itk

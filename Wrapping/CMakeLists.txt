@@ -66,6 +66,7 @@ endif()
 # Find Python
 if ( WRAP_PYTHON )
   find_package ( PythonLibs REQUIRED )
+  find_package ( PythonInterp REQUIRED )
   include_directories ( ${PYTHON_INCLUDE_DIR} )
 
   # Run swig
@@ -97,7 +98,7 @@ if ( WRAP_JAVA )
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK.class
     DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK.java
-    COMMAND javac ${CMAKE_CURRENT_BINARY_DIR}/*.java
+    COMMAND ${Java_JAVAC_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/*.java
     COMMENT "Compiling java files..."
     DEPENDS ${SWIG_MODULE_SimpleITK_REAL_NAME}
   )
@@ -111,7 +112,7 @@ if ( WRAP_JAVA )
     DEPENDS ${SWIG_MODULE_SimpleITK_REAL_NAME}
     )
 
-  add_custom_target(org_simple_itk_jar ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/org.itk.simple.jar)
+  add_custom_target(org_itk_simple_jar ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/org.itk.simple.jar)
   
   # Get the location of the extension directory
   string(REGEX REPLACE "include"  "jre/lib/ext" JAVA_EXTENSION_DIR ${JAVA_INCLUDE_PATH} )

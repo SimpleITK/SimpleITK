@@ -243,3 +243,116 @@ TEST_F(Tcl,${name}) {
     )
 }
 #endif
+
+#if defined(WRAP_R)
+
+TEST_F(R,${name}) {
+  $(if #tests == 0 then
+    OUT=[[ 
+  FAIL() << "Filter ${name} has no tests defined";
+        ]]
+    end)
+
+  std::string Script = dataFinder.GetBuildDirectory() + "/Testing/Unit/RTests/${name}ImageFilterTest.R";
+  $(foreach tests 
+    {
+    /* ${description} */
+    std::vector<std::string> CommandLine;
+    std::string outputFilename = dataFinder.GetOutputFile ( "R-${name}-${tag}.nrrd" );
+    CommandLine.push_back ( dataFinder.GetRExecutable() );
+    CommandLine.push_back ( Script );
+    CommandLine.push_back ( "${tag}" );
+    CommandLine.push_back ( dataFinder.GetFile ( "${inputA}" ) );
+    $(if inputB then
+      OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
+      end)
+    CommandLine.push_back ( outputFilename );
+    RunExecutable ( CommandLine, true );
+    ASSERT_TRUE ( dataFinder.FileExists ( outputFilename ) );
+    itk::simple::ImageFileReader reader;
+    itk::simple::ImageHashFilter hasher;
+    itk::simple::Image::Pointer output;
+
+    output = reader.SetFilename ( outputFilename ).Execute();
+    ASSERT_TRUE ( output->GetImageBase().IsNotNull() ) << "Loaded output image";
+
+    $(if md5hash then
+      OUT = [[ 
+              // Check the hash
+              EXPECT_EQ ( "${md5hash}", hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 ).Execute ( output ) ) << "Output MD5 hash failed";
+               ]]
+      end)
+    $(if sha1hash then
+      OUT = [[ 
+              // Check the hash
+              EXPECT_EQ ( "${sha1hash}", hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 ).Execute ( output ) ) << "Output SHA1 hash failed";
+               ]]
+      end)
+    $(if tolerance then
+      OUT = [[ 
+              IMAGECOMPAREWITHTOLERANCE_WITH_TESTCASE ( output, "BasicFilters", "${tag}", ${tolerance} );
+               ]]
+      end)
+      }
+    )
+}
+#endif
+
+
+
+#if defined(WRAP_JAVA)
+
+TEST_F(Java,${name}) {
+  $(if #tests == 0 then
+    OUT=[[ 
+  FAIL() << "Filter ${name} has no tests defined";
+        ]]
+    end)
+
+  std::string Classpath = dataFinder.GetBuildDirectory() + "/Testing/Unit/JavaTests";
+  std::string Script = "${name}ImageFilterTest";
+  $(foreach tests 
+    {
+    /* ${description} */
+    std::vector<std::string> CommandLine;
+    std::string outputFilename = dataFinder.GetOutputFile ( "Java-${name}-${tag}.nrrd" );
+    CommandLine.push_back ( dataFinder.GetJavaExecutable() );
+    CommandLine.push_back ( "-classpath" );
+    CommandLine.push_back ( Classpath );
+    CommandLine.push_back ( Script );
+    CommandLine.push_back ( "${tag}" );
+    CommandLine.push_back ( dataFinder.GetFile ( "${inputA}" ) );
+    $(if inputB then
+      OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
+      end)
+    CommandLine.push_back ( outputFilename );
+    RunExecutable ( CommandLine, true );
+    ASSERT_TRUE ( dataFinder.FileExists ( outputFilename ) );
+    itk::simple::ImageFileReader reader;
+    itk::simple::ImageHashFilter hasher;
+    itk::simple::Image::Pointer output;
+
+    output = reader.SetFilename ( outputFilename ).Execute();
+    ASSERT_TRUE ( output->GetImageBase().IsNotNull() ) << "Loaded output image";
+
+    $(if md5hash then
+      OUT = [[ 
+              // Check the hash
+              EXPECT_EQ ( "${md5hash}", hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 ).Execute ( output ) ) << "Output MD5 hash failed";
+               ]]
+      end)
+    $(if sha1hash then
+      OUT = [[ 
+              // Check the hash
+              EXPECT_EQ ( "${sha1hash}", hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 ).Execute ( output ) ) << "Output SHA1 hash failed";
+               ]]
+      end)
+    $(if tolerance then
+      OUT = [[ 
+              IMAGECOMPAREWITHTOLERANCE_WITH_TESTCASE ( output, "BasicFilters", "${tag}", ${tolerance} );
+               ]]
+      end)
+      }
+    )
+}
+#endif
