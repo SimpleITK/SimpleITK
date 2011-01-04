@@ -421,7 +421,7 @@ function expand(str, ...)
           i = i+1
           pos = i
         elseif strfind(str, '^%$', i) then
-          push(R, strsub(str, pos, i))
+          push(R, strsub(str, pos+1, i))
           i = i+1
           pos = i
         end
