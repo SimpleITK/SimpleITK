@@ -36,6 +36,15 @@ TEST(BasicFilters,${name}) {
         end)
       )
 
+ $(if number_of_inputs == 2 then
+   OUT=[[ {
+  itk::simple::Image::Pointer smallImage      = new itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 );
+  itk::simple::Image::Pointer largeImage      = new itk::simple::Image ( 10,10,10,itk::simple::sitkUInt8 );
+  itk::simple::Image::Pointer smallShortImage = new itk::simple::Image ( 1,1,1,itk::simple::sitkUInt16 );
+  ASSERT_THROW ( filter.Execute ( smallImage, largeImage ), itk::simple::GenericException ) << " Image sizes are different";
+  ASSERT_THROW ( filter.Execute ( smallImage, smallShortImage ), itk::simple::GenericException ) << " Image types are different";
+  }]]
+   end)
 
   $(foreach tests 
     /* ${description} */
@@ -309,7 +318,9 @@ TEST_F(Java,${name}) {
         ]]
     end)
 
-  std::string Classpath = dataFinder.GetBuildDirectory() + "/Testing/Unit/JavaTests";
+  std::string Classpath = dataFinder.GetBuildDirectory() + "/Testing/Unit/JavaTests" 
+    + dataFinder.GetPathSeparator() + dataFinder.GetBuildDirectory() + "/Wrapping/org.itk.simple.jar";
+  std::string JavaPath = dataFinder.GetExecutableDirectory();
   std::string Script = "${name}ImageFilterTest";
   $(foreach tests 
     {
@@ -319,6 +330,7 @@ TEST_F(Java,${name}) {
     CommandLine.push_back ( dataFinder.GetJavaExecutable() );
     CommandLine.push_back ( "-classpath" );
     CommandLine.push_back ( Classpath );
+    CommandLine.push_back ( "-Djava.library.path=" + JavaPath );
     CommandLine.push_back ( Script );
     CommandLine.push_back ( "${tag}" );
     CommandLine.push_back ( dataFinder.GetFile ( "${inputA}" ) );
