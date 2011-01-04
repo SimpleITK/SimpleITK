@@ -8,6 +8,12 @@
 #include <sitkCastImageFilter.h>
 #include <sitkPixelIDValues.h>
 
+TEST(BasicFilters,Create) {
+  itk::simple::RecursiveGaussianImageFilter *filter;
+  filter = new itk::simple::RecursiveGaussianImageFilter();
+  delete filter;
+}
+  
 TEST(BasicFilters,RecursiveGaussian) {
   itk::simple::ImageHashFilter hasher;
   itk::simple::ImageFileReader reader;
