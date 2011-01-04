@@ -14,6 +14,9 @@ set ( TestSource
   sitkExceptionsTests.cxx
   sitkIndexTests.cxx
   CXXTests.cxx
+  PythonTests.cxx
+  RubyTests.cxx
+  LuaTests.cxx
   )
 
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/PythonTests)
