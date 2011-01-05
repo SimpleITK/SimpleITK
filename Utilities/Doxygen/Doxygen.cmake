@@ -17,7 +17,6 @@ if (BUILD_DOXYGEN)
   add_custom_target(Documentation ALL
     COMMAND ${DOXYGEN_EXECUTABLE} ${PROJECT_BINARY_DIR}/Utilities/Doxygen/doxygen.config
     MAIN_DEPENDENCY ${PROJECT_BINARY_DIR}/Utilities/Doxygen/doxygen.config
-    DEPENDS         ${PROJECT_BINARY_DIR}/Utilities/Doxygen/itkdoxygen.pl
     WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/Utilities/Doxygen
     )
 
