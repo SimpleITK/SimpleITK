@@ -62,7 +62,7 @@ Index::operator[](unsigned int dim)
   return m_Index[dim];
 }
 
-Index::IndexValueType
+const Index::IndexValueType &
 Index::operator[](unsigned int dim) const
 {
   return m_Index[dim];
