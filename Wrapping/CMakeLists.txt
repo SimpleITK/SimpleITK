@@ -103,7 +103,9 @@ if ( WRAP_JAVA )
   file(MAKE_DIRECTORY ${JAVA_SOURCE_DIRECTORY})
   file(MAKE_DIRECTORY ${JAVA_BINARY_DIRECTORY})
 
-  set(CMAKE_SWIG_FLAGS -package "org.itk.simple" -outdir ${JAVA_SOURCE_DIRECTORY})
+  # Nicely write the bridge code in org/itk/simple
+  set(CMAKE_SWIG_OUTDIR ${JAVA_SOURCE_DIRECTORY})
+  set(CMAKE_SWIG_FLAGS -package "org.itk.simple")
   SWIG_add_module ( SimpleITKJava java SimpleITK.i SimpleITKJAVA_wrap.cxx )
   SWIG_link_libraries(SimpleITKJava ${SimpleITK_LIBRARIES})
 
