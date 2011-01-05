@@ -71,12 +71,12 @@ TEST_F(sitkIndexTest, Test1)
 
   // Test cast to itk 2D
   index1 = itk::simple::Index(50, 40);
-  itk::Index<2> itkIndex2D = {50, 40};
+  itk::Index<2> itkIndex2D = {{50, 40}};
   ASSERT_TRUE(itkIndex2D == (itk::Index<2>)index1);
 
   // Test cast to itk 3D
   index1 = itk::simple::Index(50, 40, 1);
-  itk::Index<3> itkIndex3D = {50, 40, 1};
+  itk::Index<3> itkIndex3D = {{50, 40, 1}};
   ASSERT_TRUE(itkIndex3D == (itk::Index<3>)index1);
 
   // Everything passed
