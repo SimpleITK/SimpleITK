@@ -14,6 +14,7 @@ namespace simple
 {
 
 
+/** This list of pixel types is intended to be used with itk::Image classes. */
 typedef typelist::MakeTypeList<BasicPixelID<signed char>,
                                BasicPixelID<unsigned char>,
                                BasicPixelID<short>,
@@ -25,8 +26,10 @@ typedef typelist::MakeTypeList<BasicPixelID<signed char>,
                                BasicPixelID<float>,
                                BasicPixelID<double> >::Type BasicPixelIDTypeList;
 
+/** This list of pixel types is intended to be used with itk::Image classes. */
 typedef BasicPixelIDTypeList ScalarPixelIDTypeList;
 
+/** This list of pixel types is intended to be used with itk::Image classes. */
 typedef typelist::MakeTypeList<BasicPixelID<signed char>,
                                BasicPixelID<unsigned char>,
                                BasicPixelID<short>,
@@ -37,12 +40,15 @@ typedef typelist::MakeTypeList<BasicPixelID<signed char>,
                                BasicPixelID<unsigned long> >::Type IntegerPixelIDTypeList;
 
 
+/** This list of pixel types is intended to be used with itk::Image classes. */
 typedef typelist::MakeTypeList<BasicPixelID<float>,
                                BasicPixelID<double> >::Type RealPixelIDTypeList;
 
+/** This list of pixel types is intended to be used with ?? classes. */
 typedef typelist::MakeTypeList< BasicPixelID<std::complex< float > >,
                                 BasicPixelID<std::complex< double > > >::Type ComplexPixelIDTypeList;
 
+/** This list of pixel types is intended to be used with VectorImage classes. */
 typedef typelist::MakeTypeList<VectorPixelID<signed char>,
                                VectorPixelID<unsigned char>,
                                VectorPixelID<short>,
@@ -51,10 +57,12 @@ typedef typelist::MakeTypeList<VectorPixelID<signed char>,
                                VectorPixelID<double> >::Type VectorPixelIDTypeList;
 
 
+/** This list of pixel types is intended to be used with VectorImage classes. */
 typedef typelist::MakeTypeList<VectorPixelID<float>,
                                VectorPixelID<double> >::Type RealVectorPixelIDTypeList;
 
 
+/** This list of pixel types is intended to be used with LabelMaps */
 typedef typelist::MakeTypeList<LabelPixelID<unsigned char>,
                                LabelPixelID<unsigned short>,
                                LabelPixelID<unsigned int>,
