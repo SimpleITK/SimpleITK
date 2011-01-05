@@ -192,7 +192,8 @@ Image::Pointer CastImageFilter::ExecuteInternal ( Image::Pointer inImage )
 // ConditionalExecuteInternal
 //
 template <typename TImageType, typename TOutputImageType>
-Image::Pointer CastImageFilter::ConditionalExecuteInternal(  typename TImageType::ConstPointer image, InstantiatedToken<true> )
+Image::Pointer CastImageFilter::ConditionalExecuteInternal(  typename TImageType::ConstPointer image,
+                                                             typename EnableIf<IsInstantiated<typename ImageTypeToPixelID<TImageType>::PixelIDType>::Value >::Type* )
 {
   typedef TImageType       InputImageType;
   typedef TOutputImageType OutputImageType;
@@ -214,7 +215,8 @@ Image::Pointer CastImageFilter::ConditionalExecuteInternal(  typename TImageType
 // ConditionalExecuteInternal
 //
 template <typename TImageType, typename TOutputImageType>
-Image::Pointer CastImageFilter::ConditionalExecuteInternal(  typename TImageType::ConstPointer image, InstantiatedToken<false> )
+Image::Pointer CastImageFilter::ConditionalExecuteInternal(  typename TImageType::ConstPointer image,
+                                                             typename EnableIf<!IsInstantiated<typename ImageTypeToPixelID<TImageType>::PixelIDType>::Value >::Type* )
 {
   assert( false );
   sitkExceptionMacro( "Logic Error: should not have pixel id for uninstatiated pixels" );
