@@ -20,10 +20,10 @@ namespace simple
  * can be converted to a value. However, a run-time value can not be
  * converted to this compile time type.
  *
- * /sa PixelIDToImageType
- * /sa ImageTypeToPixelID
- * /sa ImageTypeToPixelIDValue
- * /sa PixelIDToPixelIDValue
+ * \sa PixelIDToImageType
+ * \sa ImageTypeToPixelID
+ * \sa ImageTypeToPixelIDValue
+ * \sa PixelIDToPixelIDValue
  */
 template <typename TPixelType>
 struct BasicPixelID
@@ -38,10 +38,10 @@ struct BasicPixelID
  * can be converted to a value. However, a run-time value can not be
  * converted to this compile time type.
  *
- * /sa PixelIDToImageType
- * /sa ImageTypeToPixelID
- * /sa ImageTypeToPixelIDValue
- * /sa PixelIDToPixelIDValue
+ * \sa PixelIDToImageType
+ * \sa ImageTypeToPixelID
+ * \sa ImageTypeToPixelIDValue
+ * \sa PixelIDToPixelIDValue
  */
 template <typename TPixelType>
 struct VectorPixelID
@@ -56,10 +56,10 @@ struct VectorPixelID
  * can be converted to a value. However, a run-time value can not be
  * converted to this compile time type.
  *
- * /sa PixelIDToImageType
- * /sa ImageTypeToPixelID
- * /sa ImageTypeToPixelIDValue
- * /sa PixelIDToPixelIDValue
+ * \sa PixelIDToImageType
+ * \sa ImageTypeToPixelID
+ * \sa ImageTypeToPixelIDValue
+ * \sa PixelIDToPixelIDValue
  */
 template <typename TPixelType>
 struct LabelPixelID
@@ -74,10 +74,10 @@ struct LabelPixelID
  *
  * \sa BasicPixelID
  * \sa VectorPixelID
- * \sa LablePixelID
+ * \sa LabelPixelID
  * \sa ImageTypeToPixelIDValue
-*/
-/** @{ */
+ *
+ * @{ */
 template <typename TPixelIDType, unsigned int VImageDimension> struct PixelIDToImageType;
 
 template <typename TPixelType, unsigned int VImageDimension>
@@ -97,7 +97,7 @@ struct PixelIDToImageType< LabelPixelID< TLabelType >, VImageDimension >
 {
   typedef itk::LabelMap< itk::LabelMap< itk::LabelObject< TLabelType, VImageDimension > > > ImageType;
 };
-/** }@ */
+/** @} */
 
 
 /** A meta-programming tool to query the PixelID property of an "itk
@@ -109,10 +109,10 @@ struct PixelIDToImageType< LabelPixelID< TLabelType >, VImageDimension >
  *
  * \sa BasicPixelID
  * \sa VectorPixelID
- * \sa LablePixelID
+ * \sa LabelPixelID
  * \sa ImageTypeToPixelIDValue
-*/
-/** @{ */
+ *
+ * @{ */
 template <typename TImageType> struct ImageTypeToPixelID;
 
 template <typename TPixelType, unsigned int VImageDimension>
@@ -132,7 +132,7 @@ struct ImageTypeToPixelID< itk::LabelMap< itk::LabelMap< itk::LabelObject< TLabe
 {
   typedef  LabelPixelID< TLabelType > PixelIDType;
 };
-/** }@ */
+/** @} */
 
 }
 }

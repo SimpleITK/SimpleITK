@@ -31,13 +31,13 @@ typedef typelist::MakeTypeList<BasicPixelID<signed char>,
 
 /** List of all single valued images of the itk::Image class.
  *
- * \sa BaiscPixelID
+ * \sa BasicPixelID
  */
 typedef BasicPixelIDTypeList ScalarPixelIDTypeList;
 
 /** List of pixel ids which are integer types for the itk::Image class.
  *
- * \sa BaiscPixelID
+ * \sa BasicPixelID
  */
 typedef typelist::MakeTypeList<BasicPixelID<signed char>,
                                BasicPixelID<unsigned char>,
@@ -51,14 +51,14 @@ typedef typelist::MakeTypeList<BasicPixelID<signed char>,
 
 /** List of pixel ids which are real types for the itk::Image class.
  *
- * \sa BaiscPixelID
+ * \sa BasicPixelID
  */
 typedef typelist::MakeTypeList<BasicPixelID<float>,
                                BasicPixelID<double> >::Type RealPixelIDTypeList;
 
 /** List of pixel ids which are std::complex types for the itk::Image class.
  *
- * \sa BaiscPixelID
+ * \sa BasicPixelID
  */
 typedef typelist::MakeTypeList< BasicPixelID<std::complex< float > >,
                                 BasicPixelID<std::complex< double > > >::Type ComplexPixelIDTypeList;
