@@ -83,6 +83,8 @@ subdirs ( Utilities Code Wrapping Examples )
 # ITK uses KWStyle for checking the coding style
 include(${SimpleITK_SOURCE_DIR}/Utilities/KWStyle/KWStyle.cmake)
 
+include(${SimpleITK_SOURCE_DIR}/Utilities/Doxygen/Doxygen.cmake)
+
 # Options for testing
 option ( USE_TESTING "Build testing" ON )
 
