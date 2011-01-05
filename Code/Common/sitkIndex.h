@@ -54,7 +54,7 @@ public:
 
   // [] operator (no bounds checking)
   IndexValueType & operator[](unsigned int dim);
-  IndexValueType operator[](unsigned int dim) const;
+  const IndexValueType & operator[](unsigned int dim) const;
 
   // == operator for comparison
   bool operator==(const Self & idx) const;
