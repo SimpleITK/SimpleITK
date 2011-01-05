@@ -70,6 +70,7 @@ class DataFinder {
   std::string FindExecutable ( std::string exe ) { return GetExecutableDirectory() + "/" + exe + EXECUTABLE_SUFFIX; }
   std::string GetLuaExecutable() { return this->FindExecutable ( "SimpleITKLua" ); }
   std::string GetPythonExecutable() { return std::string ( PYTHON_EXECUTABLE_PATH ); }
+  std::string GetRubyExecutable() { return std::string ( RUBY_EXECUTABLE_PATH ); }
   std::string GetRExecutable() { return std::string ( RSCRIPT_EXECUTABLE_PATH ); }
   std::string GetJavaExecutable() { return std::string ( JAVA_EXECUTABLE_PATH ); }
   std::string GetSourceDirectory() { return std::string ( SIMPLEITK_SOURCE_DIR ); }
@@ -185,6 +186,9 @@ class Tcl : public ExternalProgramRunner {
 };
 
 class R : public ExternalProgramRunner {
+};
+
+class Ruby : public ExternalProgramRunner {
 };
 
 #include "ImageCompare.h"

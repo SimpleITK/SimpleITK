@@ -6,12 +6,13 @@ option ( WRAP_JAVA "Wrap Java" OFF )
 option ( WRAP_TCL "Wrap Tcl" OFF )
 option ( WRAP_CSHARP "Wrap C#" OFF )
 option ( WRAP_R "Wrap R" OFF )
+option ( WRAP_RUBY "Wrap Ruby" OFF )
 
 set(CMAKE_MODULE_PATH ${SimpleITK_SOURCE_DIR}/Wrapping)
 
-if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA OR WRAP_CSHARP OR WRAP_TCL OR WRAP_R )
+if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA OR WRAP_CSHARP OR WRAP_TCL OR WRAP_R OR WRAP_RUBY )
   find_package ( SWIG REQUIRED )
-  include ( ${SWIG_USE_FILE} )
+  include ( "UseSWIGLocal.cmake" )
   set_source_files_properties ( SimpleITK.i PROPERTIES CPLUSPLUS ON )
   file ( GLOB SWIG_HEADERS ${SimpleITK_SOURCE_DIR}/Code/*/*.h)
 
@@ -76,6 +77,20 @@ if ( WRAP_PYTHON )
 
 endif()
 
+# Find Ruby
+if ( WRAP_RUBY )
+  find_package ( Ruby REQUIRED )
+  include_directories ( ${RUBY_INCLUDE_DIRS} )
+
+  # Run swig
+  set(CMAKE_SWIG_FLAGS -autorename -module simpleitk)
+  SWIG_MODULE_INITIALIZE ( SimpleITK ruby )
+
+  SWIG_add_module ( simpleitk ruby SimpleITK.i SimpleITKRUBY_wrap.cxx )
+  SWIG_link_libraries ( simpleitk ${SimpleITK_LIBRARIES} ${RUBY_LIBRARY} ${ITK_LIBRARIES})
+
+endif()
+
 # Find Java
 if ( WRAP_JAVA )
   find_package ( Java REQUIRED )
@@ -104,7 +119,7 @@ if ( WRAP_JAVA )
     DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK.class
     COMMENT "Creating jar file..."
     COMMAND cp ${CMAKE_CURRENT_BINARY_DIR}/*.class ${CMAKE_CURRENT_BINARY_DIR}/org/itk/simple
-    COMMAND jar cf ${CMAKE_CURRENT_BINARY_DIR}/org.itk.simple.jar -C ${CMAKE_CURRENT_BINARY_DIR} org
+    COMMAND ${Java_JAR_EXECUTABLE} cf ${CMAKE_CURRENT_BINARY_DIR}/org.itk.simple.jar -C ${CMAKE_CURRENT_BINARY_DIR} org
     DEPENDS ${SWIG_MODULE_SimpleITK_REAL_NAME}
     )
 
