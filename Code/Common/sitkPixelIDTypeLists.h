@@ -14,7 +14,10 @@ namespace simple
 {
 
 
-/** This list of pixel types is intended to be used with itk::Image classes. */
+/** List of all pixel ids for the itk::Image class.
+ *
+ * \sa BasicPixelID
+ */
 typedef typelist::MakeTypeList<BasicPixelID<signed char>,
                                BasicPixelID<unsigned char>,
                                BasicPixelID<short>,
@@ -26,10 +29,16 @@ typedef typelist::MakeTypeList<BasicPixelID<signed char>,
                                BasicPixelID<float>,
                                BasicPixelID<double> >::Type BasicPixelIDTypeList;
 
-/** This list of pixel types is intended to be used with itk::Image classes. */
+/** List of all single valued images of the itk::Image class.
+ *
+ * \sa BaiscPixelID
+ */
 typedef BasicPixelIDTypeList ScalarPixelIDTypeList;
 
-/** This list of pixel types is intended to be used with itk::Image classes. */
+/** List of pixel ids which are integer types for the itk::Image class.
+ *
+ * \sa BaiscPixelID
+ */
 typedef typelist::MakeTypeList<BasicPixelID<signed char>,
                                BasicPixelID<unsigned char>,
                                BasicPixelID<short>,
@@ -40,15 +49,24 @@ typedef typelist::MakeTypeList<BasicPixelID<signed char>,
                                BasicPixelID<unsigned long> >::Type IntegerPixelIDTypeList;
 
 
-/** This list of pixel types is intended to be used with itk::Image classes. */
+/** List of pixel ids which are real types for the itk::Image class.
+ *
+ * \sa BaiscPixelID
+ */
 typedef typelist::MakeTypeList<BasicPixelID<float>,
                                BasicPixelID<double> >::Type RealPixelIDTypeList;
 
-/** This list of pixel types is intended to be used with ?? classes. */
+/** List of pixel ids which are std::complex types for the itk::Image class.
+ *
+ * \sa BaiscPixelID
+ */
 typedef typelist::MakeTypeList< BasicPixelID<std::complex< float > >,
                                 BasicPixelID<std::complex< double > > >::Type ComplexPixelIDTypeList;
 
-/** This list of pixel types is intended to be used with VectorImage classes. */
+/** List of pixel ids which are vectors for itk::VectorImage class.
+ *
+ * \sa VectorPixelID
+ */
 typedef typelist::MakeTypeList<VectorPixelID<signed char>,
                                VectorPixelID<unsigned char>,
                                VectorPixelID<short>,
@@ -57,31 +75,54 @@ typedef typelist::MakeTypeList<VectorPixelID<signed char>,
                                VectorPixelID<double> >::Type VectorPixelIDTypeList;
 
 
-/** This list of pixel types is intended to be used with VectorImage classes. */
+/** List of pixel ids which are real vectors for itk::VectorImage class.
+ *
+ * \sa VectorPixelID
+ */
 typedef typelist::MakeTypeList<VectorPixelID<float>,
                                VectorPixelID<double> >::Type RealVectorPixelIDTypeList;
 
 
-/** This list of pixel types is intended to be used with LabelMaps */
+/** List of pixel ids which are for itk::LabelMap Image class.
+ *
+ * \sa LabelPixelID
+ */
 typedef typelist::MakeTypeList<LabelPixelID<unsigned char>,
                                LabelPixelID<unsigned short>,
                                LabelPixelID<unsigned int>,
                                LabelPixelID<unsigned long> >::Type LabelPixelIDTypeList;
 
+/** List of all pixel ids available, this include image of itk::Image,
+ * itk::VectorImage, and itk::LabelMap types.
+ *
+ * \todo This needs to be extended to include LabelMap pixel ids.
+ *
+ * \sa BasicPixelID
+ * \sa VectorPixelID
+ * \sa LablePixelID
+ */
 typedef typelist::Append<
   typelist::Append< BasicPixelIDTypeList, ComplexPixelIDTypeList >::Type,
   VectorPixelIDTypeList
   >::Type AllPixelIDTypeList;
 
 
-// this is the list of types which we will try to instantiate
-
 #ifdef SITK_EXPRESS_INSTANTIATEDPIXELS
 
+// this is a quick and dirty list to only be used for development purposes
 typedef typelist::MakeTypeList< BasicPixelID<short>, BasicPixelID<float>, BasicPixelID<double> >::Type InstantiatedPixelIDTypeList;
 
 #else
 
+/** List of pixel ids which are instantiated for use in SimpleITK
+ *
+ *  this include image of itk::Image,itk::VectorImage, and
+ *  itk::LabelMap types.
+ *
+ * \sa BasicPixelID
+ * \sa VectorPixelID
+ * \sa LablePixelID
+ */
 typedef AllPixelIDTypeList InstantiatedPixelIDTypeList;
 
 #endif
