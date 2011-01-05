@@ -12,7 +12,7 @@
 %include "exception.i"
 
 // Tell SWIG that any time Execute is called, this creates a new SWIG-owned object
-%newobject *::Execute;
+// %newobject *::Execute;
 
 // Include some C# helper files
 %include "CSharpTypemapHelper.i"
@@ -26,7 +26,6 @@
 // This is required because SWIG does not properly add namespaces to typedefs
 using namespace itk::simple;
 %}
-
 
 
 // Customize exception handling
@@ -58,6 +57,12 @@ using namespace itk::simple;
     System.loadLibrary ( "SimpleITKJava" );
   }
 %}
+
+// Make Java method names follow the naming conventions
+// See the swig.swg file, and ruby.swg for details on how this works
+// Documented in: http://www.swig.org/Doc2.0/SWIG.html#SWIG_advanced_renaming
+%rename("%(firstlowercase)s", %$isfunction ) "";
+
 #endif // End of Java specific sections
 
 #if SWIGTCL
