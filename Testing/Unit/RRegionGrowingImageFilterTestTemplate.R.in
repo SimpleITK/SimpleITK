@@ -39,7 +39,20 @@ $(foreach tests
 if(tag == "${tag}") {
   $(when settings
 $(foreach settings
- filter <- filter.Set${parameter} ( $(if R_value then OUT=[[${R_value}]] else OUT=[[${value}]] end) ); )   )
+$(if parameter == "SeedList" then
+    OUT=[[
+      filter <- filter.ClearSeeds()
+      $(for i=1,#value do
+        OUT=OUT .. "filter <- filter.AddSeed( SimpleITK.Index" .. value[i] .. " )\n"
+       end)
+    ]]
+else
+OUT=[[
+   filter <- filter.Set${parameter}( $(if R_value then OUT='${R_value}' else OUT='${value}' end) )
+  ]]
+end)
+)
+)
     reader <- ImageFileReader_SetFilename ( reader, argument2 )
     inputA <- ImageFileReader_Execute ( reader )
     $(if inputB then

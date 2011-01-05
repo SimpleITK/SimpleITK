@@ -4,7 +4,7 @@
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "doc" : "Performs Dilation in a binary image.",
-  "pixel_types" : "LabelPixelIDTypeList",
+  "pixel_types" : "IntegerPixelIDTypeList",
   "members" : [],
   "custom_methods" : [],
   "tests" : [
