@@ -36,15 +36,17 @@ namespace itk {
       template <typename TImageType, typename TOutputImageType>
       Image::Pointer ExecuteInternal ( typename TImageType::ConstPointer inImage )
         {
-          return this->ConditionalExecuteInternal<TImageType, TOutputImageType>( inImage, typename ImageTypeToToken<TOutputImageType>::Token() );
+          return this->ConditionalExecuteInternal<TImageType, TOutputImageType>( inImage );
         }
 
       // methods which utilizes the pixel id token type to
       // conditionally instatiate and execute the implementation
       template<typename TImageType, typename TOutputImageType>
-      Image::Pointer ConditionalExecuteInternal(  typename TImageType::ConstPointer inImage, InstantiatedToken<true> );
+      Image::Pointer ConditionalExecuteInternal( typename TImageType::ConstPointer inImage,
+                                                 typename EnableIf<IsInstantiated<typename ImageTypeToPixelID<TImageType>::PixelIDType>::Value >::Type*b = 0 );
       template<typename TImageType, typename TOutputImageType>
-      Image::Pointer ConditionalExecuteInternal(  typename TImageType::ConstPointer inImage, InstantiatedToken<false> );
+      Image::Pointer ConditionalExecuteInternal( typename TImageType::ConstPointer inImage,
+                                                 typename EnableIf<!IsInstantiated<typename ImageTypeToPixelID<TImageType>::PixelIDType>::Value >::Type*b = 0 );
 
 
       typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer );
