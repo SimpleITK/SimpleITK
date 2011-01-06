@@ -29,17 +29,14 @@ namespace itk {
       template < unsigned int VImageDimension >
       Image::Pointer ExecuteInternalReadVector( itk::ImageIOBase::IOComponentType componentType );
 
-      template <class TImageType> Image::Pointer ExecuteInternal ( )
-        { return this->ConditionalExecuteInternal<TImageType>( ); }
-
-      // methods which utlize the pixel id token type to conditionally
+      // methods which utlize the EnableIf idiom to conditionally
       // instatiate ad execute the implementation
       template <class TImageType>
-      Image::Pointer
-      ConditionalExecuteInternal ( typename EnableIf<IsInstantiated<typename ImageTypeToPixelID<TImageType>::PixelIDType>::Value >::Type*b = 0);
+      typename EnableIf<IsInstantiated<typename ImageTypeToPixelID<TImageType>::PixelIDType>::Value, Image::Pointer >::Type
+      ExecuteInternal ( );
       template <class TImageType>
-      Image::Pointer
-      ConditionalExecuteInternal ( typename EnableIf<!IsInstantiated<typename ImageTypeToPixelID<TImageType>::PixelIDType>::Value >::Type*b = 0 );
+      typename DisableIf<IsInstantiated<typename ImageTypeToPixelID<TImageType>::PixelIDType>::Value, Image::Pointer >::Type
+      ExecuteInternal ( );
 
     private:
 
