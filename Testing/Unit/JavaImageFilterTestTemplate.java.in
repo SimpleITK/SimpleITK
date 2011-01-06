@@ -1,5 +1,4 @@
-
-
+package org.itk.simple.testing;
 // This is Java code to test ${name}
 import org.itk.simple.*;
 
@@ -39,21 +38,21 @@ $(foreach tests
     if (tag.equals( "${tag}" )) {
       $(when settings 
       // Set parameters
-      $(foreach settings filter.Set${parameter} ( $(if java_value then OUT=[[${java_value}]] else OUT=[[${value}]] end) ); )   )
+      $(foreach settings filter.set${parameter} ( $(if java_value then OUT=[[${java_value}]] else OUT=[[${value}]] end) ); )   )
 
       // Read image(s) and run the filter
-      SmartPointerImage inputA = reader.SetFilename( argv[1] ).Execute();
+      SmartPointerImage inputA = reader.setFilename( argv[1] ).execute();
 $(if inputB then
       OUT=[[
-      SmartPointerImage inputB = reader.SetFilename ( argv[2] ).Execute();
-      SmartPointerImage output = filter.Execute ( inputA, inputB );]]
+      SmartPointerImage inputB = reader.setFilename ( argv[2] ).execute();
+      SmartPointerImage output = filter.execute ( inputA, inputB );]]
 else
       OUT=[[
-      SmartPointerImage output = filter.Execute ( inputA );]]
+      SmartPointerImage output = filter.execute ( inputA );]]
 end)
 
       // Write output
-      writer.SetFilename( argv[argv.length - 1] ).Execute( output );
+      writer.setFilename( argv[argv.length - 1] ).execute( output );
     }
 )
   }

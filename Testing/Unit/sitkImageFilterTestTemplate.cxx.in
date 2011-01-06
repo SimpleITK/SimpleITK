@@ -101,6 +101,10 @@ TEST_F(Lua,${name}) {
     /* ${description} */
     std::vector<std::string> CommandLine;
     std::string outputFilename = dataFinder.GetOutputFile ( "Lua-${name}-${tag}.nrrd" );
+    // Make sure the output is wiped
+    EXPECT_NO_THROW ( itk::simple::ImageFileWriter()
+                      .SetFilename ( outputFilename )
+                      .Execute ( new itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
     CommandLine.push_back ( dataFinder.GetLuaExecutable() );
     CommandLine.push_back ( Script );
     CommandLine.push_back ( "${tag}" );
@@ -160,6 +164,10 @@ TEST_F(Python,${name}) {
     /* ${description} */
     std::vector<std::string> CommandLine;
     std::string outputFilename = dataFinder.GetOutputFile ( "Python-${name}-${tag}.nrrd" );
+    // Make sure the output is wiped
+    EXPECT_NO_THROW ( itk::simple::ImageFileWriter()
+                      .SetFilename ( outputFilename )
+                      .Execute ( new itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
     CommandLine.push_back ( dataFinder.GetPythonExecutable() );
     CommandLine.push_back ( Script );
     CommandLine.push_back ( "${tag}" );
@@ -214,6 +222,10 @@ TEST_F(Tcl,${name}) {
     /* ${description} */
     std::vector<std::string> CommandLine;
     std::string outputFilename = dataFinder.GetOutputFile ( "Tcl-${name}-${tag}.nrrd" );
+    // Make sure the output is wiped
+    EXPECT_NO_THROW ( itk::simple::ImageFileWriter()
+                      .SetFilename ( outputFilename )
+                      .Execute ( new itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
     CommandLine.push_back ( dataFinder.FindExecutable ( "SimpleITKTclsh" ) );
     CommandLine.push_back ( Script );
     CommandLine.push_back ( "${tag}" );
@@ -268,6 +280,10 @@ TEST_F(R,${name}) {
     /* ${description} */
     std::vector<std::string> CommandLine;
     std::string outputFilename = dataFinder.GetOutputFile ( "R-${name}-${tag}.nrrd" );
+    // Make sure the output is wiped
+    EXPECT_NO_THROW ( itk::simple::ImageFileWriter()
+                      .SetFilename ( outputFilename )
+                      .Execute ( new itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
     CommandLine.push_back ( dataFinder.GetRExecutable() );
     CommandLine.push_back ( Script );
     CommandLine.push_back ( "${tag}" );
@@ -321,12 +337,16 @@ TEST_F(Java,${name}) {
   std::string Classpath = dataFinder.GetBuildDirectory() + "/Testing/Unit/JavaTests" 
     + dataFinder.GetPathSeparator() + dataFinder.GetBuildDirectory() + "/Wrapping/org.itk.simple.jar";
   std::string JavaPath = dataFinder.GetExecutableDirectory();
-  std::string Script = "${name}ImageFilterTest";
+  std::string Script = "org.itk.simple.testing.${name}ImageFilterTest";
   $(foreach tests 
     {
     /* ${description} */
     std::vector<std::string> CommandLine;
     std::string outputFilename = dataFinder.GetOutputFile ( "Java-${name}-${tag}.nrrd" );
+    // Make sure the output is wiped
+    EXPECT_NO_THROW ( itk::simple::ImageFileWriter()
+                      .SetFilename ( outputFilename )
+                      .Execute ( new itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
     CommandLine.push_back ( dataFinder.GetJavaExecutable() );
     CommandLine.push_back ( "-classpath" );
     CommandLine.push_back ( Classpath );
@@ -387,6 +407,10 @@ TEST_F(Ruby,${name}) {
     /* ${description} */
     std::vector<std::string> CommandLine;
     std::string outputFilename = dataFinder.GetOutputFile ( "Ruby-${name}-${tag}.nrrd" );
+    // Make sure the output is wiped
+    EXPECT_NO_THROW ( itk::simple::ImageFileWriter()
+                      .SetFilename ( outputFilename )
+                      .Execute ( new itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
     CommandLine.push_back ( dataFinder.GetRubyExecutable() );
     CommandLine.push_back ( Script );
     CommandLine.push_back ( "${tag}" );

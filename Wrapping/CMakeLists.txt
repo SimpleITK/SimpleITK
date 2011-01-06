@@ -97,19 +97,24 @@ if ( WRAP_JAVA )
   find_package ( JNI REQUIRED )
   include_directories ( ${JAVA_INCLUDE_PATH} ${JNI_INCLUDE_DIRS} )
   
+  # Make sure the nested directory structure exists
+  set(JAVA_SOURCE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/org/itk/simple)
+  set(JAVA_BINARY_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/build)
+  file(MAKE_DIRECTORY ${JAVA_SOURCE_DIRECTORY})
+  file(MAKE_DIRECTORY ${JAVA_BINARY_DIRECTORY})
+
+  # Nicely write the bridge code in org/itk/simple
+  set(CMAKE_SWIG_OUTDIR ${JAVA_SOURCE_DIRECTORY})
   set(CMAKE_SWIG_FLAGS -package "org.itk.simple")
   SWIG_add_module ( SimpleITKJava java SimpleITK.i SimpleITKJAVA_wrap.cxx )
   SWIG_link_libraries(SimpleITKJava ${SimpleITK_LIBRARIES})
 
-  # Make sure the nested directory structure exists
-  file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/org/itk/simple)
-  
   # Add custom command and target to compile the generated files and put them in a jar file
   # Make sure the commands depend on the output library from SWIG
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK.class
     DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK.java
-    COMMAND ${Java_JAVAC_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/*.java
+    COMMAND ${Java_JAVAC_EXECUTABLE} -d ${JAVA_BINARY_DIRECTORY} ${JAVA_SOURCE_DIRECTORY}/*.java
     COMMENT "Compiling java files..."
     DEPENDS ${SWIG_MODULE_SimpleITK_REAL_NAME}
   )
@@ -118,8 +123,7 @@ if ( WRAP_JAVA )
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/org.itk.simple.jar
     DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK.class
     COMMENT "Creating jar file..."
-    COMMAND cp ${CMAKE_CURRENT_BINARY_DIR}/*.class ${CMAKE_CURRENT_BINARY_DIR}/org/itk/simple
-    COMMAND ${Java_JAR_EXECUTABLE} cf ${CMAKE_CURRENT_BINARY_DIR}/org.itk.simple.jar -C ${CMAKE_CURRENT_BINARY_DIR} org
+    COMMAND ${Java_JAR_EXECUTABLE} cf ${CMAKE_CURRENT_BINARY_DIR}/org.itk.simple.jar -C ${JAVA_BINARY_DIRECTORY} org
     DEPENDS ${SWIG_MODULE_SimpleITK_REAL_NAME}
     )
 
