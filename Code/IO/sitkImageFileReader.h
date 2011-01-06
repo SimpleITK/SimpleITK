@@ -32,10 +32,10 @@ namespace itk {
       // methods which utlize the EnableIf idiom to conditionally
       // instatiate ad execute the implementation
       template <class TImageType>
-      typename EnableIf<IsInstantiated<typename ImageTypeToPixelID<TImageType>::PixelIDType>::Value, Image::Pointer >::Type
+      typename EnableIf<IsInstantiated<TImageType>::Value, Image::Pointer >::Type
       ExecuteInternal ( );
       template <class TImageType>
-      typename DisableIf<IsInstantiated<typename ImageTypeToPixelID<TImageType>::PixelIDType>::Value, Image::Pointer >::Type
+      typename DisableIf<IsInstantiated<TImageType>::Value, Image::Pointer >::Type
       ExecuteInternal ( );
 
     private:

@@ -22,51 +22,63 @@ typedef std::tr1::true_type TrueType;
 typedef std::tr1::false_type FalseType;
 
 template <typename TPixelIDType>
-struct IsBasicPixel
+struct IsBasic
 {
   static const bool                      Value = FalseType::value;
   typedef typename FalseType::value_type ValueType;
   typedef typename FalseType::type       Type;
 };
 template <typename TPixelType>
-struct IsBasicPixel< BasicPixelID<TPixelType> >
+struct IsBasic< BasicPixelID<TPixelType> >
 {
   static const bool                     Value = TrueType::value;
   typedef typename TrueType::value_type ValueType;
   typedef typename TrueType::type       Type;
 };
+template <typename TPixelType, unsigned int VImageDimension>
+struct IsBasic< itk::Image< TPixelType, VImageDimension> >
+  : public IsBasic< typename ImageTypeToPixelID< itk::Image<TPixelType, VImageDimension> >::PixelIDType >
+{};
 
 
 template <typename TPixelIDType>
-struct IsVectorPixel
+struct IsVector
 {
   static const bool                      Value = FalseType::value;
   typedef typename FalseType::value_type ValueType;
   typedef typename FalseType::type       Type;
 };
 template <typename TPixelType>
-struct IsVectorPixel< VectorPixelID<TPixelType> >
+struct IsVector< VectorPixelID<TPixelType> >
 {
   static const bool                     Value = TrueType::value;
   typedef typename TrueType::value_type ValueType;
   typedef typename TrueType::type       Type;
 };
+template <typename TPixelType, unsigned int VImageDimension>
+struct IsVector< itk::VectorImage< TPixelType, VImageDimension> >
+  : public IsVector< typename ImageTypeToPixelID< itk::VectorImage<TPixelType, VImageDimension> >::PixelIDType >
+{};
 
 
 template <typename TPixelIDType>
-struct IsLabelPixel
+struct IsLabel
 {
   static const bool                      Value = FalseType::value;
   typedef typename FalseType::value_type ValueType;
   typedef typename FalseType::type       Type;
 };
 template <typename TPixelType>
-struct IsLabelPixel< LabelPixelID<TPixelType> >
+struct IsLabel< LabelPixelID<TPixelType> >
 {
   static const bool                     Value = TrueType::value;
   typedef typename TrueType::value_type ValueType;
   typedef typename TrueType::type       Type;
 };
+template <typename TLabelType, unsigned int VImageDimension>
+struct IsLabel< itk::LabelMap<  itk::LabelObject< TLabelType, VImageDimension > > >
+  : public IsLabel< typename ImageTypeToPixelID< itk::LabelMap< itk::LabelObject< TLabelType, VImageDimension > > >::PixelIDType >
+{};
 
 
 template <typename TPixelIDType>
@@ -76,6 +88,18 @@ struct IsInstantiated
   typedef typename std::tr1::integral_constant<bool, Value>::value_type ValueType;
   typedef typename std::tr1::integral_constant<bool, Value>::type       Type;
 };
+template <typename TPixelType, unsigned int VImageDimension>
+struct IsInstantiated< itk::Image< TPixelType, VImageDimension> >
+  : public IsInstantiated< typename ImageTypeToPixelID< itk::Image<TPixelType, VImageDimension> >::PixelIDType >
+{};
+template <typename TPixelType, unsigned int VImageDimension>
+struct IsInstantiated< itk::VectorImage< TPixelType, VImageDimension> >
+  : public IsInstantiated< typename ImageTypeToPixelID< itk::VectorImage<TPixelType, VImageDimension> >::PixelIDType >
+{};
+template <typename TLabelType, unsigned int VImageDimension>
+struct IsInstantiated< itk::LabelMap<  itk::LabelObject< TLabelType, VImageDimension > > >
+  : public IsInstantiated< typename ImageTypeToPixelID< itk::LabelMap< itk::LabelObject< TLabelType, VImageDimension > > >::PixelIDType >
+{};
 
 }
 }
