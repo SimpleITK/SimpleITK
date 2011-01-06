@@ -39,7 +39,7 @@
       "tag" : "defaults",
       "description" : "Simply run with default settings",
       "inputA" : "Input/SmallWhiteCircle.png",
-      "inputA" : "Input/LargeWhiteCircle.nrrd",
+      "inputB" : "Input/LargeWhiteCircle.nrrd",
       "settings" : [],
       "tolerance" : 0.1
     }
