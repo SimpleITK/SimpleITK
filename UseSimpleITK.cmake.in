@@ -1,0 +1,24 @@
+#
+# This file sets up include directories, link directories, and
+# compiler settings for a project to use SimpleITK.  It should not be
+# included directly, but rather through the SimpleITK_USE_FILE setting
+# obtained from SimpleITKConfig.cmake.
+#
+
+if(SimpleITK_BUILD_SETTINGS_FILE AND NOT SKIP_SimpleITK_BUILD_SETTINGS_FILE)
+  include(${CMAKE_ROOT}/Modules/CMakeImportBuildSettings.cmake)
+  CMAKE_IMPORT_BUILD_SETTINGS(${SimpleITK_BUILD_SETTINGS_FILE})
+endif(SimpleITK_BUILD_SETTINGS_FILE AND NOT SKIP_SimpleITK_BUILD_SETTINGS_FILE)
+
+# Add compiler flags needed to use SimpleITK.
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${SimpleITK_REQUIRED_C_FLAGS}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SimpleITK_REQUIRED_CXX_FLAGS}")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${SimpleITK_REQUIRED_LINK_FLAGS}")
+set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${SimpleITK_REQUIRED_LINK_FLAGS}")
+set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${SimpleITK_REQUIRED_LINK_FLAGS}")
+
+# Add include directories needed to use SimpleITK.
+include_directories(BEFORE ${SimpleITK_INCLUDE_DIRS})
+
+# Add link directories needed to use SimpleITK.
+link_directories(${SimpleITK_LIBRARY_DIRS})
