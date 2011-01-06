@@ -1,0 +1,143 @@
+#include "sitk${name}ImageFilter.h"
+#include "itk${name}ImageFilter.h"
+$(if real_type_output==1 then
+OUT = [[#include "itkNumericTraits.h"]]
+end)
+
+namespace itk {
+namespace simple {
+
+//----------------------------------------------------------------------------
+
+//
+// Default constructor that initializes parameters
+//
+${name}ImageFilter::${name}ImageFilter ()
+  {
+
+  $(foreach members
+    $(if default then OUT = 'm_${name} = ${default};' end)
+  )
+
+  this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
+
+  this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
+  this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
+  }
+
+//
+// ToString
+//
+std::string ${name}ImageFilter::ToString() const
+  {
+  std::ostringstream out;
+  out << "itk::simple::${name}ImageFilter\n";
+
+  $(foreach members
+    $(if (not no_print) or (not no_print == 1) then
+      OUT = 'out << "\t${name}: " << this->m_${name} << std::endl;'
+      end)
+  )
+
+  return out.str();
+  }
+
+//
+// Execute
+//
+
+      $(if members and #members > 0 then
+OUT = [[
+        Image::Pointer ${name}ImageFilter::Execute ( Image::Pointer image1 $(if number_of_inputs==2 then OUT=', Image::Pointer image2' end) $(foreach members ,${type} in${name} ) )
+  {
+    $(foreach members 
+      $(if (not no_set_method) or (no_set_method == 0) then
+      OUT = 'this->Set${name} ( in${name} );'
+      end)
+    )
+    return this->Execute ( image1 $(if number_of_inputs==2 then OUT=', image2' end) );
+  }
+]]
+end)
+
+Image::Pointer ${name}ImageFilter::Execute ( Image::Pointer image1 $(if number_of_inputs==2 then OUT=[[, Image::Pointer image2]] end) )
+  {
+
+    PixelIDValueType type = image1->GetPixelIDValue();
+    unsigned int dimension = image1->GetDimension();
+
+    $(if number_of_inputs and number_of_inputs == 2 then
+    OUT=[[// todo need better error handling and potential type conversion
+    if ( type != image2->GetPixelIDValue() ||
+         dimension != image2->GetDimension() ||
+         image1->GetWidth() != image2->GetWidth() ||
+         image1->GetHeight() != image2->GetHeight() ||
+         image1->GetDepth() != image2->GetDepth()
+      )
+      {
+        sitkExceptionMacro ( "Both image for ${name}ImageFilter don't match type or dimension!" );
+      }]]
+      end)
+
+    return this->m_MemberFactory->GetMemberFunction( type, dimension )( image1 $(if number_of_inputs==2 then OUT=[[, image2]] end) );
+  }
+
+//----------------------------------------------------------------------------
+
+//
+// ExecuteInternal
+//
+template <class TImageType>
+Image::Pointer ${name}ImageFilter::ExecuteInternal ( Image::Pointer inImage1 $(if number_of_inputs==2 then OUT=[[, Image::Pointer inImage2]] end) )
+  {
+  typedef TImageType     InputImageType;
+
+  typename InputImageType::Pointer image1 =
+    dynamic_cast <InputImageType*> ( inImage1->GetImageBase().GetPointer() );
+
+  if ( image1.IsNull() )
+    {
+    sitkExceptionMacro( "Unexpected template dispatch error!" );
+    }
+
+  $(if number_of_inputs == 2 then
+    OUT=[[
+  typename InputImageType::Pointer image2 =
+  dynamic_cast <InputImageType*> ( inImage2->GetImageBase().GetPointer() );
+
+  if ( image2.IsNull() )
+    {
+    sitkExceptionMacro( "Unexpected template dispatch error!" );
+    }
+          ]]
+    end)
+
+  // The LevelSet filters have a third template parameter that is the pixel type for the output image.
+  typedef itk::${name}ImageFilter<InputImageType $(if number_of_inputs == 2 then OUT=[[, InputImageType]] end) > FilterType;
+
+  typename FilterType::Pointer filter = FilterType::New();
+
+  $(if number_of_inputs == 2 then
+  OUT=[[
+  filter->SetInput( image1 );
+  filter->SetFeatureImage( image2 );
+  ]]
+  else
+  OUT=[[filter->SetInput( image1 );]]
+  end)
+
+  $(foreach members
+    $(if custom_itk_cast then
+      OUT = '${custom_itk_cast}'
+    elseif(not no_set_method) or (no_set_method == 0) then
+      OUT = 'filter->Set${name} ( this->m_${name} );'
+      end)
+  )
+  filter->Update();
+  Image::Pointer out = new Image( filter->GetOutput() );
+  filter->GetOutput()->DisconnectPipeline();
+  return out;
+  }
+
+} // end namespace simple
+} // end namespace itk
