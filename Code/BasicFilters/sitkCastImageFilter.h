@@ -34,12 +34,12 @@ namespace itk {
       // method utlized for instantiated pixel types utilizing
       // EnableIf SFINAE idom
       template<typename TImageType, typename TOutputImageType>
-      typename EnableIf< IsInstantiated<typename ImageTypeToPixelID<TImageType>::PixelIDType>::Value, Image::Pointer>::Type
+      typename EnableIf< IsInstantiated<typename ImageTypeToPixelID<TOutputImageType>::PixelIDType>::Value, Image::Pointer>::Type
       ExecuteInternal( typename TImageType::ConstPointer inImage );
 
       // fall back methods which should never be called
       template<typename TImageType, typename TOutputImageType>
-      typename DisableIf< IsInstantiated<typename ImageTypeToPixelID<TImageType>::PixelIDType>::Value, Image::Pointer>::Type
+      typename DisableIf< IsInstantiated<typename ImageTypeToPixelID<TOutputImageType>::PixelIDType>::Value, Image::Pointer>::Type
       ExecuteInternal( typename TImageType::ConstPointer inImage );
 
       typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer );
