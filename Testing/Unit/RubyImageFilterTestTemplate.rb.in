@@ -29,7 +29,8 @@ exit( 1 );
 $(foreach tests
 if tag == "${tag}" then
 $(when settings $(foreach settings
-  filter.set_${parameter:gsub ( "([a-z])([A-Z])", "%1_%2" ):lower()}( $(if ruby_value then OUT='${ruby_value}' else OUT='${value}' end) ) ) )
+  filter.set_${parameter:gsub ( "([a-z])([A-Z])", "%1_%2" ):lower()}( $(if ruby_value then OUT='${ruby_value}' else OUT='${value}' end) )
+ ) )
   inputA = reader.set_filename( ARGV[1] ).execute
   $(if inputB then
   OUT=[[inputB = reader.set_filename( ARGV[2] ).execute
