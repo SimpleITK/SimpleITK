@@ -15,6 +15,9 @@ namespace simple
 template <bool, class T = void> struct EnableIf {};
 template <class T> struct EnableIf<true, T> { typedef T Type; };
 
+template <bool, class T = void> struct DisableIf {};
+template <class T> struct DisableIf<false, T> { typedef T Type; };
+
 typedef std::tr1::true_type TrueType;
 typedef std::tr1::false_type FalseType;
 
