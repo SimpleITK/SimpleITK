@@ -1,0 +1,43 @@
+{
+  "name" : "ShapeDetectionLevelSet",
+  "template_code_filename" : "LevelSetImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 2,
+  "doc" : "Level Set filter that uses propagation and curvature terms.",
+  "pixel_types" : "RealPixelIDTypeList",
+  "members" : [
+    { "name" : "MaximumRMSError",
+      "type" : "double",
+      "default" : 0.01,
+      "doc" : "Value of RMS change below which the filter should stop. This is a convergence criterion."
+    },
+    { "name" : "PropagationScaling",
+      "type" : "double",
+      "default" : 1.0,
+      "doc" : "Weight of direct propagation contribution to the speed term"
+    },
+    { "name" : "CurvatureScaling",
+      "type" : "double",
+      "default" : 1.0,
+      "doc" : "Weight of the curvature contribution to the speed term"
+    },
+    {
+      "name" : "NumberOfIterations",
+      "type" : "uint32_t",
+      "default" : "50u",
+      "doc" : "Number of iterations to run"
+    }
+
+  ]
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Simply run with default settings",
+      "inputA" : "Input/SmallWhiteCircle.nrrd",
+      "inputB" : "Input/LargeWhiteCircle.nrrd",
+      "settings" : [],
+      "tolerance" : 0.1
+    }
+  ]
+}
+
