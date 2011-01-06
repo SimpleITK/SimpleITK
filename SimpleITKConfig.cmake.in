@@ -1,0 +1,22 @@
+#-----------------------------------------------------------------------------
+#
+# SimpleITKConfig.cmake - SimpleITK CMake configuration file for external projects.
+#
+# This file is configured by SimpleITK and used by the UseSimpleITK.cmake module
+# to load SimpleITK's settings for an external project.
+
+# The SimpleITK include file directories.
+set(SimpleITK_INCLUDE_DIRS "@SimpleITK_INCLUDE_DIRS_CONFIG@")
+
+# The SimpleITK library directories.
+set(SimpleITK_LIBRARY_DIRS "@SimpleITK_LIBRARY_DIRS_CONFIG@")
+
+# The location of the UseITK.cmake file.
+set(SimpleITK_USE_FILE "@SimpleITK_USE_FILE@")
+
+# A list of all libraries for SimpleITK.  Those listed here should
+# automatically pull in their dependencies.
+set(SimpleITK_LIBRARIES SimpleITKBasicFilters
+                        SimpleITKCommon
+                        SimpleITKIO)
+
