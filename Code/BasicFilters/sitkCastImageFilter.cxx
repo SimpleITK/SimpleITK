@@ -188,39 +188,33 @@ Image::Pointer CastImageFilter::ExecuteInternal ( Image::Pointer inImage )
   }
 
 
-//
-// ConditionalExecuteInternal
-//
-template <typename TImageType, typename TOutputImageType>
-Image::Pointer CastImageFilter::ConditionalExecuteInternal(  typename TImageType::ConstPointer image,
-                                                             typename EnableIf<IsInstantiated<typename ImageTypeToPixelID<TImageType>::PixelIDType>::Value >::Type* )
-{
-  typedef TImageType       InputImageType;
-  typedef TOutputImageType OutputImageType;
+template<typename TImageType, typename TOutputImageType>
+ typename EnableIf< IsInstantiated<typename ImageTypeToPixelID<TImageType>::PixelIDType>::Value, Image::Pointer>::Type
+CastImageFilter::ExecuteInternal( typename TImageType::ConstPointer inImage )
+ {
+   typedef TImageType       InputImageType;
+   typedef TOutputImageType OutputImageType;
 
-  typedef itk::CastImageFilter<InputImageType, OutputImageType> FilterType;
-  typename FilterType::Pointer filter = FilterType::New();
+   typedef itk::CastImageFilter<InputImageType, OutputImageType> FilterType;
+   typename FilterType::Pointer filter = FilterType::New();
 
-  filter->SetInput ( image );
-  filter->Update();
+   filter->SetInput ( inImage );
+   filter->Update();
 
-  Image::Pointer out = new Image( filter->GetOutput() );
-  filter->GetOutput()->DisconnectPipeline();
+   Image::Pointer out = new Image( filter->GetOutput() );
+   filter->GetOutput()->DisconnectPipeline();
 
-  return out;
-}
+   return out;
+ }
 
-
-//
-// ConditionalExecuteInternal
-//
-template <typename TImageType, typename TOutputImageType>
-Image::Pointer CastImageFilter::ConditionalExecuteInternal(  typename TImageType::ConstPointer image,
-                                                             typename EnableIf<!IsInstantiated<typename ImageTypeToPixelID<TImageType>::PixelIDType>::Value >::Type* )
+template<typename TImageType, typename TOutputImageType>
+typename DisableIf< IsInstantiated<typename ImageTypeToPixelID<TImageType>::PixelIDType>::Value, Image::Pointer>::Type
+CastImageFilter::ExecuteInternal( typename TImageType::ConstPointer inImage )
 {
   assert( false );
   sitkExceptionMacro( "Logic Error: should not have pixel id for uninstatiated pixels" );
 }
+
 
 } // end namespace simple
 } // end namespace itk
