@@ -112,19 +112,12 @@ if ( WRAP_JAVA )
   # Add custom command and target to compile the generated files and put them in a jar file
   # Make sure the commands depend on the output library from SWIG
   add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK.class
-    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK.java
-    COMMAND ${Java_JAVAC_EXECUTABLE} -d ${JAVA_BINARY_DIRECTORY} ${JAVA_SOURCE_DIRECTORY}/*.java
-    COMMENT "Compiling java files..."
-    DEPENDS ${SWIG_MODULE_SimpleITK_REAL_NAME}
-  )
-  
-  add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/org.itk.simple.jar
-    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK.class
+    DEPENDS SimpleITKJava
     COMMENT "Creating jar file..."
+    COMMAND ${Java_JAVAC_EXECUTABLE} -d ${JAVA_BINARY_DIRECTORY} ${JAVA_SOURCE_DIRECTORY}/*.java
     COMMAND ${Java_JAR_EXECUTABLE} cf ${CMAKE_CURRENT_BINARY_DIR}/org.itk.simple.jar -C ${JAVA_BINARY_DIRECTORY} org
-    DEPENDS ${SWIG_MODULE_SimpleITK_REAL_NAME}
+    DEPENDS ${SWIG_MODULE_SimpleITK_REAL_NAME} SimpleITKJava
     )
 
   add_custom_target(org_itk_simple_jar ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/org.itk.simple.jar)

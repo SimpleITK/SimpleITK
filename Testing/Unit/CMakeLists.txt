@@ -108,7 +108,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
       OUTPUT  "${OUTPUT_TEST_FILENAME}"
       COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua test ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/Java  TestTemplate.java.in "${OUTPUT_TEST_FILENAME}"
       COMMAND ${Java_JAVAC_EXECUTABLE} -classpath ${SimpleITK_BINARY_DIR}/Wrapping/org.itk.simple.jar ${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/org/itk/simple/testing/${FILTERNAME}ImageFilterTest.java
-      DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${JAVA_TEMPLATE_FILES}
+      DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${JAVA_TEMPLATE_FILES} SimpleITKJava ${SimpleITK_BINARY_DIR}/Wrapping/org.itk.simple.jar
       )
     set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Java.${FILTERNAME}")
     set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
