@@ -35,7 +35,7 @@ $(if parameter == "SeedList" then
     filter$(for i=1,#value do OUT=OUT .. ".add_seed( SimpleITK.Index" .. value[i] .. " )" end);]]
 else
 OUT=[[
-    filter.set_${parameter:lower()}( $(if ruby_value then OUT='${ruby_value}' else OUT='${value}' end) );]]
+  filter.set_${parameter:gsub ( "([a-z])([A-Z])", "%1_%2" ):lower()}( $(if ruby_value then OUT='${ruby_value}' else OUT='${value}' end) ) ]]
 end) 
 )  
 )
