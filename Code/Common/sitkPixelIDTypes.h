@@ -128,7 +128,7 @@ struct ImageTypeToPixelID< itk::VectorImage< TPixelType, VImageDimension> >
 };
 
 template <typename TLabelType, unsigned int VImageDimension>
-struct ImageTypeToPixelID< itk::LabelMap< itk::LabelMap< itk::LabelObject< TLabelType, VImageDimension > > > >
+struct ImageTypeToPixelID< itk::LabelMap< itk::LabelObject< TLabelType, VImageDimension > > >
 {
   typedef  LabelPixelID< TLabelType > PixelIDType;
 };
