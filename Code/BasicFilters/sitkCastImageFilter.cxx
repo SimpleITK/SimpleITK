@@ -189,7 +189,7 @@ Image::Pointer CastImageFilter::ExecuteInternal ( Image::Pointer inImage )
 
 
 template<typename TImageType, typename TOutputImageType>
- typename EnableIf< IsInstantiated<typename ImageTypeToPixelID<TOutputImageType>::PixelIDType>::Value, Image::Pointer>::Type
+typename EnableIf< IsInstantiated<TOutputImageType>::Value, Image::Pointer>::Type
 CastImageFilter::ExecuteInternal( typename TImageType::ConstPointer inImage )
  {
    typedef TImageType       InputImageType;
@@ -208,7 +208,7 @@ CastImageFilter::ExecuteInternal( typename TImageType::ConstPointer inImage )
  }
 
 template<typename TImageType, typename TOutputImageType>
-typename DisableIf< IsInstantiated<typename ImageTypeToPixelID<TOutputImageType>::PixelIDType>::Value, Image::Pointer>::Type
+typename DisableIf< IsInstantiated<TOutputImageType>::Value, Image::Pointer>::Type
 CastImageFilter::ExecuteInternal( typename TImageType::ConstPointer inImage )
 {
   assert( false );

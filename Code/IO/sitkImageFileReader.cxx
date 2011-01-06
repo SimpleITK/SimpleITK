@@ -177,7 +177,7 @@ namespace itk {
 
 
   template <class TImageType>
-  typename EnableIf<IsInstantiated<typename ImageTypeToPixelID<TImageType>::PixelIDType>::Value, Image::Pointer >::Type
+  typename EnableIf<IsInstantiated<TImageType>::Value, Image::Pointer >::Type
   ImageFileReader::ExecuteInternal( void )
   {
 
@@ -196,7 +196,7 @@ namespace itk {
   }
 
   template <class TImageType>
-  typename DisableIf<IsInstantiated<typename ImageTypeToPixelID<TImageType>::PixelIDType>::Value, Image::Pointer >::Type
+  typename DisableIf<IsInstantiated<TImageType>::Value, Image::Pointer >::Type
   ImageFileReader::ExecuteInternal( void )
   {
     typedef TImageType                      ImageType;
