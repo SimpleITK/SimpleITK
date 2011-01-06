@@ -95,3 +95,17 @@ if ( USE_TESTING )
   set(BUILDNAME "${BUILDNAME}" CACHE STRING "Name of build on the dashboard")
 endif()
 
+
+#-----------------------------------------------------------------------------
+# Help other projects use SimpleITK
+
+# Copy the UseITK.cmake file to the binary tree for backward compatability.
+configure_file(${SimpleITK_SOURCE_DIR}/UseSimpleITK.cmake.in
+               ${SimpleITK_BINARY_DIR}/UseSimpleITK.cmake COPYONLY IMMEDIATE)
+
+# Create the SimpleITKConfig.cmake file containing the SimpleITK configuration.
+include(${SimpleITK_SOURCE_DIR}/sitkGenerateSimpleITKConfig.cmake)
+
+
+
+
