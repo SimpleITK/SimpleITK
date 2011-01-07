@@ -13,6 +13,7 @@ set ( TestSource
   BasicFiltersTests.cxx
   sitkExceptionsTests.cxx
   sitkIndexTests.cxx
+  itkHashImageFilterTest.cxx
   CXXTests.cxx
   PythonTests.cxx
   RubyTests.cxx
@@ -178,11 +179,11 @@ macro(ADD_GOOGLE_TESTS executable)
 
     # Convert the C++ code into a short test name
     foreach(hit ${AllTests})
-      string(REGEX REPLACE ".*\\(([A-Za-z_0-9]+)[, ]*([A-Za-z_0-9]+)\\).*" "\\1.\\2" test_name ${hit})
+      string(REGEX REPLACE ".*\\(( *[A-Za-z_0-9]+)[, ]*([A-Za-z_0-9]+) *\\).*" "\\1.\\2" test_name ${hit})
       set ( AllTestsHits ${AllTestsHits} ${test_name} )
     endforeach()
     foreach(hit ${LongTests})
-      string(REGEX REPLACE ".*\\(([A-Za-z_0-9]+)[, ]*([A-Za-z_0-9]+)\\).*" "\\1.\\2" test_name ${hit})
+      string(REGEX REPLACE ".*\\(( *[A-Za-z_0-9]+)[, ]*([A-Za-z_0-9]+) *\\).*" "\\1.\\2" test_name ${hit})
       set ( LongTestsHits ${LongTestsHits} ${test_name} )
     endforeach()
   endforeach()
