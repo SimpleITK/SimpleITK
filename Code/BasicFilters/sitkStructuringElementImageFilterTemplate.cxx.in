@@ -18,6 +18,10 @@ namespace simple {
 ${name}ImageFilter::${name}ImageFilter ()
   {
 
+
+  // Defaults
+  this->m_KernelRadius = 1;
+  this->m_KernelType = BinaryBallKernel;
   $(foreach members
     $(if default then OUT = 'm_${name} = ${default};' end)
   )
@@ -26,6 +30,7 @@ ${name}ImageFilter::${name}ImageFilter ()
 
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
+
   }
 
 //
@@ -108,6 +113,7 @@ Image::Pointer ${name}ImageFilter::ExecuteInternal ( Image::Pointer inImage1 )
                                                   ITKKernelType> FilterType;
     ITKKernelType kernel;
     kernel.SetRadius( this->GetKernelRadius() );
+    kernel.CreateStructuringElement();
 
     typename FilterType::Pointer filter = FilterType::New();
 
