@@ -21,7 +21,7 @@ public:
     }
     region.SetSize ( size );
     region.SetIndex ( index );
-    itk::Image<int16_t,3>::Pointer im = itk::Image<int16_t,3>::New();
+    itk::Image<short,3>::Pointer im = itk::Image<short,3>::New();
     im->SetRegions ( region );
     im->Allocate();
     im->FillBuffer ( 100 );
@@ -49,7 +49,7 @@ public:
   itk::ImageBase<3>::SizeType size;
   itk::ImageBase<3>::RegionType region;
 
-  typedef itk::Image<int16_t,3> ShortImageType;
+  typedef itk::Image<short,3> ShortImageType;
   itk::simple::Image::Pointer shortImage;
 
   typedef itk::Image<float,3> FloatImageType;
