@@ -3,8 +3,9 @@
 
 
 #include "itkSimpleDataObjectDecorator.h"
-#include "itkImageSliceConstIteratorWithIndex.h"
-#include "itkImageToImageFilter.h"
+#include "itkImageLinearConstIteratorWithIndex.h"
+#include "itkCastImageFilter.h"
+#include "itkByteSwapper.h"
 
 
 #include "hl_md5.h"
@@ -12,56 +13,58 @@
 
 namespace itk {
 
-template < class TInputImage >
+/** \class Generates a hash string from an image.
+*
+* \note This class utlizes low level buffer pointer access, to work
+* with itk::Image and itk::VectorImage. It is modeled after the access
+* an ImageFileWriter provides to an ImageIO.
+*
+* \todo complete documentation
+* \todo move implementation to txx file
+*/
+template < class TImageType >
 class ITK_EXPORT HashImageFilter:
-    public ImageToImageFilter< TInputImage, TInputImage >
+    public CastImageFilter< TImageType, TImageType >
 {
 public:
   /** Standard Self typedef */
-  typedef HashImageFilter                                Self;
-  typedef ImageToImageFilter< TInputImage, TInputImage > Superclass;
-  typedef SmartPointer< Self >                           Pointer;
-  typedef SmartPointer< const Self >                     ConstPointer;
+  typedef HashImageFilter                           Self;
+  typedef CastImageFilter< TImageType, TImageType > Superclass;
+  typedef SmartPointer< Self >                      Pointer;
+  typedef SmartPointer< const Self >                ConstPointer;
 
+  typedef typename TImageType::RegionType RegionType;
 
   /** Method for creation through the object factory. */
   itkNewMacro(Self);
 
   /** Runtime information support. */
-  itkTypeMacro(HashImageFilter, ImageToImageFilter);
+  itkTypeMacro(HashImageFilter, CastImageFilter);
 
   /** Smart Pointer type to a DataObject. */
   typedef typename DataObject::Pointer DataObjectPointer;
 
   /** Type of DataObjects used for scalar outputs */
-  typedef SimpleDataObjectDecorator< uint32_t >  HashObjectType;
+  typedef SimpleDataObjectDecorator< std::string >  HashObjectType;
 
-  /** Return the computed Hash. */
-  uint32_t GetHash() const
-  { return this->GetMinimumOutput()->Get(); }
+  /** Get the computed Hash values */
+  std::string GetHash() const
+  { return this->GetHashOutput()->Get(); }
   HashObjectType* GetHashOutput()
   { return static_cast< HashObjectType *>( this->ProcessObject::GetOutput(1) ); }
+  const HashObjectType* GetHashOutput() const
+  { return static_cast<const HashObjectType *>( this->ProcessObject::GetOutput(1) ); }
+
+  enum  HashFunction { SHA1, MD5 };
+
+  /** Set/Get hashing function as enumerated type */
+  itkSetMacro( HashFunction, HashFunction );
+  itkGetMacro( HashFunction, HashFunction );
+
 
   /** Make a DataObject of the correct type to be used as the specified
    * output. */
-  virtual DataObjectPointer MakeOutput(unsigned int idx);
-
-protected:
-
-  HashImageFilter()
-    {
-    this->ProcessObject::SetNthOutput( 1, this->MakeOutput(1).GetPointer() );
-    this->GetHashOutput()->Set( 0 );
-    }
-
-  ~HashImageFilter(){}
-
-  void PrintSelf(std::ostream & os, Indent indent) const
-  {
-    Superclass::PrintSelf(os, indent);
-  }
-
-  DataObjectPointer MakeOutput(unsigned int idx)
+  virtual DataObjectPointer MakeOutput(unsigned int idx)
   {
     if ( idx == 1 )
       {
@@ -70,29 +73,31 @@ protected:
     return Superclass::MakeOutput(idx);
   }
 
-  /** Pass the input through unmodified. Do this by Grafting in the
-   *  AllocateOutputs method.
-   */
-  void AllocateOutputs()
+protected:
+
+  HashImageFilter()
+    {
+    this->m_HashFunction = MD5;
+
+    // create data object
+    this->ProcessObject::SetNthOutput( 1, this->MakeOutput(1).GetPointer() );
+    }
+
+  ~HashImageFilter(){}
+
+  virtual void PrintSelf(std::ostream & os, Indent indent) const
   {
-    // hack because output #1 needs to be an image but ours is an hash
+    Superclass::PrintSelf(os, indent);
 
-    // Pass the input through as the output
-    InputImagePointer image =
-      const_cast< TInputImage * >( this->GetInput() );
-
-    this->GraftOutput(image);
-
-    // Nothing that needs to be allocated for the remaining outputs
+    os << indent << "HashFunction: " << m_HashFunction << std::endl;
   }
-
-  enum HashFunction { SHA1, MD5 };
-  HashFunction m_HashFunction;
 
   /** Do final mean and variance computation from data accumulated in threads.
    */
   void AfterThreadedGenerateData()
   {
+    Superclass::AfterThreadedGenerateData();
+
     typedef TImageType                                   ImageType;
     typedef typename ImageType::PixelType                PixelType;
     typedef typename NumericTraits<PixelType>::ValueType ValueType;
@@ -108,59 +113,37 @@ protected:
     typename ImageType::ConstPointer input = this->GetInput();
 
 
-    typedef itk::ImageSliceConstIteratorWithIndex<ImageType> IteratorType;
-    IteratorType iterator = IteratorType ( input, input->GetLargestPossibleRegion() );
-    iterator.SetFirstDirection(0);
-    iterator.SetSecondDirection(1);
-    iterator.GoToBegin();
+    // estimate 
+    size_t numberOfComponent =   sizeof(PixelType) / sizeof(ValueType );
 
-    typename ImageType::RegionType largestRegion = input->GetLargestPossibleRegion();
-
-    size_t VoxelsPerSlice = largestRegion.GetSize(0);
-    if ( ImageType::ImageDimension > 1 )
+    if ( strcmp(input->GetNameOfClass(), "VectorImage") == 0 )
       {
-      VoxelsPerSlice *= largestRegion.GetSize(1);
+      numberOfComponent = ImageType::AccessorFunctorType::GetVectorLength(input);
+      }
+    else if ( sizeof(PixelType) % sizeof(ValueType) != 0 )
+      {
+      itkExceptionMacro("Unsupported data type for hashing!");
       }
 
-    PixelType* buffer = new PixelType[VoxelsPerSlice];
+    ValueType *buffer = static_cast<ValueType*>( (void *)input->GetBufferPointer() );
 
-    // Compute the hash value one slice at a time
-    size_t NumberOfSlices = 1;
-    for ( unsigned int i = 2; i < TImageType::ImageDimension; ++i )
+    typename ImageType::RegionType largestRegion = input->GetBufferedRegion();
+    const size_t numberOfValues = largestRegion.GetNumberOfPixels()*numberOfComponent;
+
+
+    // Possibly byte swap so we always calculate on little endian data
+    Swapper::SwapRangeFromSystemToLittleEndian ( buffer, numberOfValues);
+
+    // Update the hash
+    switch ( this->m_HashFunction )
       {
-      NumberOfSlices = largestRegion.GetSize(i);
+      case SHA1:
+        sha1.SHA1Input ( &sha1Context, (unsigned char*)buffer, numberOfValues*sizeof(ValueType) );
+        break;
+      case MD5:
+        md5.MD5Update ( &md5Context, (unsigned char*)buffer, numberOfValues*sizeof(ValueType) );
+        break;
       }
-
-
-    while( !it.IsAtEnd() )
-      {
-      size_t i = 0;
-      while( !it.IsAtEndOfSlice() )
-        {
-        while( !it.IsAtEndOfLine() )
-          {
-          buffer[i++] = it.Get();
-          ++it;
-          }
-        it.NextLine();
-        }
-      it.NextSlice();
-
-      // Possibly byte swap so we always calculate on little endian data
-      Swapper::SwapRangeFromSystemToLittleEndian ( buffer, VoxelsPerSlice );
-
-      // Update the hash
-      switch ( this->m_HashFunction )
-        {
-        case SHA1:
-          sha1.SHA1Input ( &sha1Context, (unsigned char*)buffer, VoxelsPerSlice*sizeof(PixelType) );
-          break;
-        case MD5:
-          md5.MD5Update ( &md5Context, (unsigned char*)buffer, VoxelsPerSlice*sizeof(PixelType) );
-          break;
-        }
-      }
-    delete[] buffer;
 
     // Calculate and return the hash value
     std::string hash;
@@ -190,13 +173,10 @@ protected:
       os.fill('0');
       os << std::hex << static_cast<unsigned int>(Digest[i]);
       }
-    return os.str();
+
+    this->GetHashOutput()->Set( os.str() );
   }
 
-  /** Multi-thread version GenerateData. */
-  void  ThreadedGenerateData(const RegionType &
-                             outputRegionForThread,
-                             int threadId) {}
 
   // Override since the filter produces all of its output
   void EnlargeOutputRequestedRegion(DataObject *data)
@@ -209,7 +189,9 @@ private:
   HashImageFilter(const Self &); //purposely not implemented
   void operator=(const Self &);        //purposely not implemented
 
-  uint32_t m_Hash;
+
+  HashFunction m_HashFunction;
+
 };
 
 
