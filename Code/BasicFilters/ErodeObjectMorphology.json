@@ -1,0 +1,25 @@
+{
+  "name" : "ErodeObjectMorphology",
+  "template_code_filename" : "StructuringElementImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Performs Erosion of an object.",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [
+    { "name" : "BackgroundValue",
+      "type" : "double",
+      "default" : 0,
+      "doc" : "Value to assign to eroded pixels",
+      "custom_itk_cast" :
+        "filter->SetBackgroundValue(static_cast<typename FilterType::PixelType>(this->GetBackgroundValue()) );"
+    },
+    { "name" : "ObjectValue",
+      "type" : "double",
+      "default" : 1,
+      "doc" : "Value to assign to object pixels",
+      "custom_itk_cast" :
+        "filter->SetObjectValue(static_cast<typename FilterType::PixelType>(this->GetObjectValue()) );"
+    }
+  ],
+  "tests" : []
+}
