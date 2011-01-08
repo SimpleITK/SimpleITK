@@ -105,12 +105,12 @@ TEST_F(HashImageFilterTest, VectorImages ) {
   typedef itk::Image<itk::Vector<float, 1>, 3 > VectorImageType;
 
   typedef itk::ImageFileReader<VectorImageType > ReaderType;
-  typename ReaderType::Pointer reader = ReaderType::New();
+  ReaderType::Pointer reader = ReaderType::New();
   reader->SetFileName( dataFinder.GetFile ( "Input/RA-Float.nrrd" ) );
   reader->Update();
 
   typedef itk::HashImageFilter< VectorImageType > HasherType;
-  typename HasherType::Pointer  hasher = HasherType::New();
+  HasherType::Pointer  hasher = HasherType::New();
   hasher->SetHashFunction( HasherType::MD5 );
   hasher->SetInput( reader->GetOutput() );
   hasher->Update();
@@ -123,12 +123,12 @@ TEST_F(HashImageFilterTest, VectorImages ) {
   typedef itk::VectorImage<float, 3> VectorImageType;
 
   typedef itk::ImageFileReader<VectorImageType > ReaderType;
-  typename ReaderType::Pointer reader = ReaderType::New();
+  ReaderType::Pointer reader = ReaderType::New();
   reader->SetFileName( dataFinder.GetFile ( "Input/RA-Float.nrrd" ) );
   reader->Update();
 
   typedef itk::HashImageFilter< VectorImageType > HasherType;
-  typename HasherType::Pointer  hasher = HasherType::New();
+  HasherType::Pointer  hasher = HasherType::New();
   hasher->SetHashFunction( HasherType::MD5 );
   hasher->SetInput( reader->GetOutput() );
   hasher->Update();
