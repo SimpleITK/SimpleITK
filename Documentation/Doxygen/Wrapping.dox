@@ -1,0 +1,190 @@
+/**
+\page Wrapping Wrapping ReadMe
+
+This README provides brief instructions on how to use SimpleITK from each of
+the wrapped languages
+
+
+\section Java Java
+
+- SimpleITK java applications must have access to the org.itk.simple package
+- There are two methods for accessing the org.itk.simple package
+  - 1) After building SimpleITK, run "make install"
+    - This target will install the org.itk.simple.jar file into the extensions
+      directory of the local jvm
+    - This will often require admin permissions since the jvm typically lives
+      in a write protected directory
+    - Once installed as an extension, all java applications will have access 
+      to the package
+  - 2) Add org.itk.simple.jar to the java classpath when compiling
+    - Note that this is the same as adding the directory containing
+      org.itk.simple.java to the classpath
+    - The simplest way to do this is to copy org.itk.simple.jar from
+      $SIMPLE_ITK_BUILD_DIR/Wrapping to the directory containing the target
+      application
+
+\verbatim
+$ cp $SIMPLE_ITK_BUILD_DIR/Wrapping/org.itk.simple.jar .
+$ javac -classpath ./org.itk.simple.jar MySimpleITKJavaApplication.java
+\endverbatim
+
+
+- Once the org.itk.simple package has been properly set up, classes must be
+  imported in the java code
+- This can be done either by importing the entire package or by importing 
+  individual classes
+
+\code
+// Import the entire package at once
+import org.itk.simple.*
+\endcode
+
+\code
+// Import individual classes
+import org.itk.simple.ImageFileReader;
+import org.itk.simple.RecursiveGaussianImageFilter;
+import org.itk.simple.ImageFileWriter;
+import org.itk.simple.SmartPointerImage;
+\endcode
+
+
+
+\section R R
+
+- 1) Enable WRAP_R in the CMake configuration of SimpleITK.
+
+
+- 2) Configure and Build.
+
+
+- 3) Go to the binary directory {SIMPLEITK_BINARY_DIR}
+
+   All the following commands assume that you stay in this directory.
+
+- 4) launch R
+
+
+- 5) inside R type:
+
+\code
+package.skeleton(name="SimpleITK", code_files="Wrapping/SimpleITK.R")
+\endcode
+
+this will create a directory named SimpleITK with
+the content:
+
+\verbatim
+                DESCRIPTION
+                libs
+                R
+                Read-and-delete-me
+                src
+\endverbatim
+
+- 6) Copy the file
+
+\verbatim
+       SimpleITK/Wrapping/R_Package/DESCRIPTION
+\endverbatim
+   into the current
+
+\verbatim
+       SimpleITK/DESCRIPTION
+\endverbatim
+
+- 7) Quit R
+
+
+- 8) Verify that the file
+
+\verbatim
+      Wrapping/SimpleITK.R
+\endverbatim
+   was copied to the new SimpleITK/R directory
+
+
+- 9) Add to that same directory "SimpleITK/R" another file zzz.R with the content
+
+\code
+   .First.lib <- function(lib,pkg) {
+      library.dynam("SimpleITK.so",pkg,lib)
+     }
+\endcode
+
+
+- 10) Create a destination directory
+
+\verbatim
+     mkdir -p  ~/R/x86_64-pc-linux-gnu-library/2.10/
+\endverbatim
+
+
+- 11) type
+
+R CMD INSTALL -l ~/R/x86_64-pc-linux-gnu-library/2.10/ SimpleITK
+
+   This should create a "SimpleITK" directory in
+
+      ~/R/x86_64-pc-linux-gnu-library/2.10
+
+
+- 12) Create a subdirectory "libs" in that destination:
+
+\verbatim
+      mkdir ~/R/x86_64-pc-linux-gnu-library/2.10/libs
+\endverbatim
+
+
+- 13) copy the shared library in the new installation
+
+\verbatim
+ cp bin/libSimpleITK.so ~/R/x86_64-pc-linux-gnu-library/2.10/SimpleITK/libs/SimpleITK.so
+\endverbatim
+
+    Note the change of name from "libSimpleITKR.so" to "SimpleITK.so"
+
+
+- 14) Set the environment variable R_LIBS_USER  to
+
+         ~/R/x86_64-pc-linux-gnu-library/2.10
+
+
+- 15) Run the example
+
+\verbatim
+     cp  SimpleITK/Testing/Data/Input/STAPLE1.png .
+     R -f SimpleITK/Examples/SimpleGaussian.R
+\endverbatim
+
+    you shouldn now find in the local directory
+    a file with name
+
+               smoothedSTAPLE1.mhd
+
+
+- 16) Run the "R" tests
+
+\verbatim
+             ctest -R  "R\."   -V
+\endverbatim
+
+
+
+---------------------------------------------
+
+Installin R in Ubuntu
+
+install the following packages:
+\verbatim
+  dpatch libbz2-dev patchutils r-base-core r-base-dev r-base-html r-base-latex r-cran-boot r-cran-cluster r-cran-codetools r-cran-foreign r-cran-kernsmooth r-cran-lattice r-cran-matrix r-cran-mgcv r-cran-nlme r-cran-rpart
+  r-cran-survival r-cran-vr r-recommended
+\endverbatim
+
+
+suggested:
+
+  ess r-doc-info r-doc-pdf r-doc-html r-mathlib cdbs debhelper
+
+
+
+*/
