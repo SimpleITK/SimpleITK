@@ -11,13 +11,14 @@ namespace itk {
     class ImageHashFilter {
     public:
       typedef ImageHashFilter Self;
-   
+
       // function pointer type
       typedef std::string (Self::*MemberFunctionType)( Image::Pointer );
 
-      // list of pixel types supported (not sure what this would
-      // actually work with)
-      typedef BasicPixelIDTypeList PixelIDTypeList;
+      // this filter works with all itk::Image and itk::VectorImage types.
+      typedef typelist::Append<
+        typelist::Append< BasicPixelIDTypeList, ComplexPixelIDTypeList>::Type,
+        VectorPixelIDTypeList >::Type PixelIDTypeList;
 
       ImageHashFilter();
 
