@@ -6,7 +6,7 @@
 namespace itk {
   namespace simple {
 
-    class DualImageFilter : public ImageFilter {
+    class DualImageFilter {
     public:
 
       /**
@@ -15,17 +15,17 @@ namespace itk {
        */
       DualImageFilter() {};
 
+
+      // Print ourselves out
+      virtual std::string ToString() const = 0;
+
       virtual Image::Pointer Execute ( Image::Pointer, Image::Pointer ) = 0;
+
+      virtual ~DualImageFilter() {}
 
     private:
 
-      // Make the Execute method of the base class to be final.
-      Image::Pointer Execute ( Image::Pointer )
-        {
-        Image::Pointer image;
-        return image;
-        }
-
+      //
     };
 
   }
