@@ -16,6 +16,18 @@
       "type" : "double",
       "default" : "255.0",
       "doc" : ""
+    },
+    {
+      "name" : "InsideValue",
+      "type" : "double",
+      "default" : "1.0",
+      "doc" : ""
+    },
+    {
+      "name" : "OutsideValue",
+      "type" : "double",
+      "default" : "0.0",
+      "doc" : ""
     }
   ]
   "tests" : [
