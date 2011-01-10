@@ -13,14 +13,14 @@
 
 namespace itk {
 
-/** \class Generates a hash string from an image.
+/** \breif Generates a hash string from an image.
 *
 * \note This class utlizes low level buffer pointer access, to work
 * with itk::Image and itk::VectorImage. It is modeled after the access
 * an ImageFileWriter provides to an ImageIO.
 *
 * \todo complete documentation
-* \todo move implementation to txx file
+* \todo Update in-place on to default after fixing bug in InPlaceImageFilter
 */
 template < class TImageType >
 class ITK_EXPORT HashImageFilter:
@@ -64,137 +64,39 @@ public:
 
   /** Make a DataObject of the correct type to be used as the specified
    * output. */
-  virtual DataObjectPointer MakeOutput(unsigned int idx)
-  {
-    if ( idx == 1 )
-      {
-      return static_cast< DataObject * >( HashObjectType::New().GetPointer() );
-      }
-    return Superclass::MakeOutput(idx);
-  }
+  virtual DataObjectPointer MakeOutput(unsigned int idx);
 
 protected:
 
-  HashImageFilter()
-    {
-    this->m_HashFunction = MD5;
+  HashImageFilter();
 
-    // create data object
-    this->ProcessObject::SetNthOutput( 1, this->MakeOutput(1).GetPointer() );
-    }
+  // virtual ~HashImageFilter(); // implementation not needed
 
-  ~HashImageFilter(){}
+  virtual void PrintSelf(std::ostream & os, Indent indent) const;
 
-  virtual void PrintSelf(std::ostream & os, Indent indent) const
-  {
-    Superclass::PrintSelf(os, indent);
+  // See superclass for doxygen documentation
+  //
+  // This method is to do work after the superclass potential threaded
+  // copy.
+  void AfterThreadedGenerateData();
 
-    os << indent << "HashFunction: " << m_HashFunction << std::endl;
-  }
-
-  /** Do final mean and variance computation from data accumulated in threads.
-   */
-  void AfterThreadedGenerateData()
-  {
-    Superclass::AfterThreadedGenerateData();
-
-    typedef TImageType                                   ImageType;
-    typedef typename ImageType::PixelType                PixelType;
-    typedef typename NumericTraits<PixelType>::ValueType ValueType;
-    typedef itk::ByteSwapper<ValueType>                  Swapper;
-
-    ::MD5 md5;
-    ::HL_MD5_CTX md5Context;
-    md5.MD5Init ( &md5Context );
-    ::SHA1 sha1;
-    ::HL_SHA1_CTX sha1Context;
-    sha1.SHA1Reset ( &sha1Context );
-
-    typename ImageType::ConstPointer input = this->GetInput();
-
-
-    // estimate 
-    size_t numberOfComponent =   sizeof(PixelType) / sizeof(ValueType );
-
-    if ( strcmp(input->GetNameOfClass(), "VectorImage") == 0 )
-      {
-      numberOfComponent = ImageType::AccessorFunctorType::GetVectorLength(input);
-      }
-    else if ( sizeof(PixelType) % sizeof(ValueType) != 0 )
-      {
-      itkExceptionMacro("Unsupported data type for hashing!");
-      }
-
-    ValueType *buffer = static_cast<ValueType*>( (void *)input->GetBufferPointer() );
-
-    typename ImageType::RegionType largestRegion = input->GetBufferedRegion();
-    const size_t numberOfValues = largestRegion.GetNumberOfPixels()*numberOfComponent;
-
-
-    // Possibly byte swap so we always calculate on little endian data
-    Swapper::SwapRangeFromSystemToLittleEndian ( buffer, numberOfValues);
-
-    // Update the hash
-    switch ( this->m_HashFunction )
-      {
-      case SHA1:
-        sha1.SHA1Input ( &sha1Context, (unsigned char*)buffer, numberOfValues*sizeof(ValueType) );
-        break;
-      case MD5:
-        md5.MD5Update ( &md5Context, (unsigned char*)buffer, numberOfValues*sizeof(ValueType) );
-        break;
-      }
-
-    // Calculate and return the hash value
-    std::string hash;
-    int HashSize = SHA1HashSize;
-    unsigned char Digest[1024];
-    switch ( this->m_HashFunction )
-      {
-      case SHA1:
-      {
-      HashSize = SHA1HashSize;
-      sha1.SHA1Result ( &sha1Context, Digest );
-      break;
-      }
-      case MD5:
-      {
-      HashSize = 16;
-      md5.MD5Final ( Digest, &md5Context );
-      break;
-      }
-      }
-    // Print to a string
-    std::ostringstream os;
-    for(int i=0; i<HashSize; ++i)
-      {
-      // set the width to 2, fill with 0, and convert to hex
-      os.width(2);
-      os.fill('0');
-      os << std::hex << static_cast<unsigned int>(Digest[i]);
-      }
-
-    this->GetHashOutput()->Set( os.str() );
-  }
-
-
+  // See superclass for doxygen documentation
+  //
   // Override since the filter produces all of its output
-  void EnlargeOutputRequestedRegion(DataObject *data)
-  {
-  Superclass::EnlargeOutputRequestedRegion(data);
-  data->SetRequestedRegionToLargestPossibleRegion();
-  }
+  void EnlargeOutputRequestedRegion(DataObject *data);
 
 private:
   HashImageFilter(const Self &); //purposely not implemented
-  void operator=(const Self &);        //purposely not implemented
+  void operator=(const Self &);  //purposely not implemented
 
 
   HashFunction m_HashFunction;
-
 };
 
 
 } // end namespace itk
+
+
+#include "itkHashImageFilter.txx"
 
 #endif // __itkHashImageFilter_h
