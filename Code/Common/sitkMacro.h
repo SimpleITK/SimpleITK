@@ -25,16 +25,24 @@ namespace simple {
       throw e_; /* Explicit naming to work around Intel compiler bug.  */ \
     }
 
+
+
 #ifdef SITK_SUPPORTS_STATIC_ASSERT
+// utilize the c++x0 static_assert if available
 #define sitkStaticAssert( expr, str) static_assert( expr, str )
 #else
-// todo actuall make this a static assert, need to add a try compile
-// for C++0x static_assert, and then have a fall back. This will work
-// in many cases for now.
-#define sitkStaticAssert( expr, str )            \
-  {                                              \
-    if ( !(expr) ) sitkExceptionMacro( <<"StaticAssert failed: " << str ); \
-  }
+
+template<bool> struct StaticAssertFailure;
+template<> struct StaticAssertFailure<true>{ enum { Value = 1 }; };
+
+#define BOOST_JOIN( X, Y ) BOOST_DO_JOIN( X, Y )
+#define BOOST_DO_JOIN( X, Y ) BOOST_DO_JOIN2(X,Y)
+#define BOOST_DO_JOIN2( X, Y ) X##Y
+
+#define sitkStaticAssert( expr, str ) enum { BOOST_JOIN( static_assert_typedef, __LINE__) = sizeof( itk::simple::StaticAssertFailure<((expr)==0 ? false : true )> ) };
+
+
+
 #endif
 
 }

@@ -31,21 +31,16 @@ namespace itk {
 
       PixelIDValueType m_OutputPixelType;
 
-      // method to add instantiated token to function for conditional
-      // instantiation of section image type
-      template <typename TImageType, typename TOutputImageType>
-      Image::Pointer ExecuteInternal ( typename TImageType::ConstPointer inImage )
-        {
-          return this->ConditionalExecuteInternal<TImageType, TOutputImageType>( inImage, typename ImageTypeToToken<TOutputImageType>::Token() );
-        }
-
-      // methods which utilizes the pixel id token type to
-      // conditionally instatiate and execute the implementation
+      // method utlized for instantiated pixel types utilizing
+      // EnableIf SFINAE idom
       template<typename TImageType, typename TOutputImageType>
-      Image::Pointer ConditionalExecuteInternal(  typename TImageType::ConstPointer inImage, InstantiatedToken<true> );
-      template<typename TImageType, typename TOutputImageType>
-      Image::Pointer ConditionalExecuteInternal(  typename TImageType::ConstPointer inImage, InstantiatedToken<false> );
+      typename EnableIf< IsInstantiated<TOutputImageType>::Value, Image::Pointer>::Type
+      ExecuteInternal( typename TImageType::ConstPointer inImage );
 
+      // fall back methods which should never be called
+      template<typename TImageType, typename TOutputImageType>
+      typename DisableIf< IsInstantiated< TOutputImageType>::Value, Image::Pointer>::Type
+      ExecuteInternal( typename TImageType::ConstPointer inImage );
 
       typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer );
 
