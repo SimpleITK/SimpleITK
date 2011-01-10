@@ -177,7 +177,9 @@ namespace itk {
 
 
   template <class TImageType>
-  Image::Pointer ImageFileReader::ConditionalExecuteInternal( InstantiatedToken<true> ) {
+  typename EnableIf<IsInstantiated<TImageType>::Value, Image::Pointer >::Type
+  ImageFileReader::ExecuteInternal( void )
+  {
 
     typedef TImageType                      ImageType;
     typedef itk::ImageFileReader<ImageType> Reader;
@@ -194,7 +196,9 @@ namespace itk {
   }
 
   template <class TImageType>
-  Image::Pointer ImageFileReader::ConditionalExecuteInternal( InstantiatedToken<false> ) {
+  typename DisableIf<IsInstantiated<TImageType>::Value, Image::Pointer >::Type
+  ImageFileReader::ExecuteInternal( void )
+  {
     typedef TImageType                      ImageType;
     sitkExceptionMacro( << "PixelType is not supported!" << std::endl
                         << "Pixel Type: "
