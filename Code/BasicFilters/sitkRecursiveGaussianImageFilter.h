@@ -52,6 +52,12 @@ namespace itk {
       Self& SetOrder ( OrderEnumType t ) { this->m_Order = t; return *this; }
       OrderEnumType GetOrder() { return this->m_Order; }
 
+      /**
+       * Get/Set Direction
+       */
+      Self& SetDirection ( unsigned int t ) { this->m_Direction = t; return *this; }
+      unsigned int GetDirection() { return this->m_Direction; }
+
 
       // Print ourselves out
       std::string ToString() const;
@@ -65,6 +71,9 @@ namespace itk {
 
       /** Normalize the image across scale space */
       bool m_NormalizeAcrossScale;
+
+      /** Direction the filter should be applied in */
+      unsigned int m_Direction;
 
       OrderEnumType m_Order;
 
