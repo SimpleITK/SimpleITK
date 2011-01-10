@@ -62,6 +62,7 @@ namespace itk {
       typedef itk::HashImageFilter<InputImageType> HashFilterType;
       typename HashFilterType::Pointer hasher = HashFilterType::New();
       hasher->SetInput( image );
+      hasher->InPlaceOff(); // pointless copy of data needed
 
       switch ( this->GetHashFunction() )
         {
