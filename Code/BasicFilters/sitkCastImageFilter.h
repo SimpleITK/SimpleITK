@@ -35,12 +35,12 @@ namespace itk {
       // EnableIf SFINAE idom
       template<typename TImageType, typename TOutputImageType>
       typename EnableIf< IsInstantiated<TOutputImageType>::Value, Image::Pointer>::Type
-      ExecuteInternal( typename TImageType::ConstPointer inImage );
+      ExecuteInternal( const TImageType* inImage );
 
       // fall back methods which should never be called
       template<typename TImageType, typename TOutputImageType>
-      typename DisableIf< IsInstantiated< TOutputImageType>::Value, Image::Pointer>::Type
-      ExecuteInternal( typename TImageType::ConstPointer inImage );
+      Image::Pointer
+      ExecuteInternal( ... );
 
       typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer );
 
