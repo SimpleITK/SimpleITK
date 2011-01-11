@@ -112,7 +112,7 @@ MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
 {
   if ( pixelID >= typelist::Length< InstantiatedPixelIDTypeList >::Result || pixelID < 0 )
     {
-    sitkExceptionMacro ( << "unexpected error pixelID is out of range" );
+    sitkExceptionMacro ( << "unexpected error pixelID is out of range " << pixelID << " "  << typeid(ObjectType).name() );
     }
 
   switch ( imageDimension )
@@ -124,7 +124,10 @@ MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
         return Superclass::m_PFunction3[ pixelID ];
         }
 
-        sitkExceptionMacro ( << "Pixel type: " << pixelID << " is not supported in 3D" );
+      sitkExceptionMacro ( << "Pixel type: "
+                           << GetPixelIDValueAsString(pixelID)
+                           << " is not supported in 3D by"
+                           << typeid(ObjectType).name() );
 
       break;
     case 2:
@@ -134,7 +137,10 @@ MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
         return Superclass::m_PFunction2[ pixelID ];
         }
 
-        sitkExceptionMacro ( << "Pixel type: " << pixelID << " is not supported in 2D" );
+        sitkExceptionMacro ( << "Pixel type: "
+                             << GetPixelIDValueAsString(pixelID)
+                             << " is not supported in 2D by"
+                             << typeid(ObjectType).name() );
 
       break;
     default:
