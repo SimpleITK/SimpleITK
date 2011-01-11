@@ -36,7 +36,7 @@
       "description" : "Default parameter settings",
       "inputA" : "Input/RA-Short.nrrd",
       "settings" : [],
-      "md5hash" : "99e11d11290bbf6e44b5c19222041d4e"
+      "md5hash" : "1c8530a8bf94201c6a36d194953e82c7"
     },
     {
       "tag" : "NarrowThreshold",
@@ -46,7 +46,7 @@
         { "parameter" : "LowerThreshold", "value" : 10 },
         { "parameter" : "UpperThreshold", "value" : 100 }
       ],
-      "md5hash" : "7ba17d9bba81bf1929bb420c24c03282"
+      "md5hash" : "75dc50f4e860bf4e50f234e3adcb9057"
     }
   ]
 }
