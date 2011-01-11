@@ -52,6 +52,15 @@ using namespace itk::simple;
 
 // Java
 #if SWIGJAVA
+%include "carrays.i"
+%array_functions(int8_t, int8Array);
+%array_functions(uint8_t, uint8Array);
+%array_functions(int16_t, int16Array);
+%array_functions(uint16_t, uint16Array);
+%array_functions(int32_t, int32Array);
+%array_functions(uint32_t, uint32Array);
+%array_functions(float, floatArray);
+%array_functions(double, doubleArray);
 %pragma(java) jniclasscode=%{
   static {
     System.loadLibrary ( "SimpleITKJava" );
