@@ -1,0 +1,117 @@
+#ifndef __sitk${name}ImageFilter_h
+#define __sitk${name}ImageFilter_h
+
+#include "sitkDualImageFilter.h"
+$(if include_files and #include_files > 0 then
+OUT = [[// Additional include files
+$(for i=1,#include_files do OUT = OUT .. '#include "' .. include_files[i] .. '"' if i < #include_files then OUT = OUT .. '\n' end end)
+// Done with additional include files]]
+end)
+
+
+
+namespace itk {
+  namespace simple {
+
+    class ${name}ImageFilter : public $(if number_of_inputs == 2 then OUT=[[DualImageFilter]] else OUT=[[ImageFilter]] end) {
+    public:
+      typedef ${name}ImageFilter Self;
+
+      /**
+       * ${doc}
+       */
+
+      /**
+       * Default Constructor that takes no arguments and initializes
+       * default parameters
+       */
+      ${name}ImageFilter();
+
+      /** Kernel type enumeration */
+      typedef enum{BinaryBallKernel, FlatKernel} KernelType;
+
+      $(if public_declarations then
+      OUT=[[/** Custom public declarations */
+      ${public_declarations}]] end)
+
+      /** Pixel type list definition */
+      typedef ${pixel_types}  PixelIDTypeList;
+
+
+      $(foreach members 
+      $(if (not no_set_method) or (no_set_method == 0) then
+      OUT = '/** Set ${name} */\
+      Self& Set${name} ( ${type} t ) { this->m_${name} = t; return *this; };'
+      end)
+      $(if (not no_get_method) or (no_get_method == 0) then
+      OUT = '/** Get ${name} */\
+      ${type} Get${name}() { return this->m_${name}; };'
+      end)
+      )
+      /** Print ourselves out */
+      std::string ToString() const;
+
+      /** Execute */
+      Image::Pointer Execute ( Image::Pointer $(if number_of_inputs == 2 then OUT=[[, Image::Pointer]] end) );
+      $(if members and #members > 0 then
+        OUT=[[Image::Pointer Execute ( Image::Pointer $(if number_of_inputs == 2 then OUT=', Image::Pointer' end) $(foreach members ,${type} in${name} ) );]]
+      end)
+
+      /** Kernel property Get/Set methods */
+      Self& SetKernelRadius(unsigned long r)
+        {
+        this->m_KernelRadius = r;
+        return *this;
+        }
+      unsigned long GetKernelRadius()
+        {
+        return this->m_KernelRadius;
+        }
+
+      Self& SetKernelType(KernelType t)
+        {
+        this->m_KernelType = t;
+        return *this;
+        }
+      KernelType GetKernelType()
+        {
+        return this->m_KernelType;
+        }
+
+      $(if custom_methods then
+      OUT = [[//
+      // Convenience Methods
+      //
+
+      $(foreach custom_methods
+/** ${doc} */
+      ${return_type} ${name}( $(foreach parameters ${type} ${var_name}$(if last == 0 then OUT=',' end) ))
+        {
+        ${body}
+        };
+      )
+      ]]
+      end)
+
+    private:
+      typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer );
+      template <class TImageType> Image::Pointer ExecuteInternal ( Image::Pointer image );
+      friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
+      std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
+      $(foreach members 
+      /* ${doc} */
+      ${type} m_${name};
+      )
+
+      // Isotropic Kernel Radius
+      unsigned long m_KernelRadius;
+
+      // KernelType
+      KernelType m_KernelType;
+
+    };
+
+
+  }
+}
+#endif
