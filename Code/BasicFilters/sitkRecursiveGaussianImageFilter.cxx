@@ -13,6 +13,7 @@ RecursiveGaussianImageFilter::RecursiveGaussianImageFilter ()
   this->m_Sigma = 1.0;
   this->m_Order = ZeroOrder;
   this->m_NormalizeAcrossScale = false;
+  this->m_Direction = 0;
 
   this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
