@@ -109,7 +109,7 @@ typedef typelist::MakeTypeList<LabelPixelID<uint8_t>,
  *
  * \sa BasicPixelID
  * \sa VectorPixelID
- * \sa LablePixelID
+ * \sa LabelPixelID
  */
 typedef typelist::Append<
   typelist::Append< BasicPixelIDTypeList, ComplexPixelIDTypeList >::Type,
@@ -132,7 +132,7 @@ typedef typelist::MakeTypeList< BasicPixelID<int16_t>, BasicPixelID<float>, Basi
  *
  * \sa BasicPixelID
  * \sa VectorPixelID
- * \sa LablePixelID
+ * \sa LabelPixelID
  */
 typedef AllPixelIDTypeList InstantiatedPixelIDTypeList;
 
