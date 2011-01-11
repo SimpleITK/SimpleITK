@@ -3,6 +3,7 @@
 
 #include "sitkMemberFunctionFactory.h"
 #include "sitkDetail.h"
+#include "sitkPixelIDTokens.h"
 
 namespace itk
 {
@@ -26,46 +27,21 @@ struct MemberFunctionInstantiater
     {}
 
   template <class TPixelIDType>
-  void operator()( TPixelIDType )
+  typename EnableIf< IsInstantiated< typename PixelIDToImageType<TPixelIDType, VImageDimension>::ImageType >::Value >::Type
+  operator()( TPixelIDType )
     {
-      typedef TPixelIDType                                      PixelIDType;
-
       typedef typename PixelIDToImageType<TPixelIDType, VImageDimension>::ImageType ImageType;
+      typedef typename TMemberFunctionFactory::AddressorType                         AddressorType;
 
-      // the type of object which conditionally calls the AddressorType
-      typedef ConditionalInstantiater< PixelIDToPixelIDValue< PixelIDType >::Result != (int) sitkUnknown, ImageType > InstantiaterType;
+      AddressorType addressor;
+      m_Factory.Register(addressor.operator()<ImageType>(), (ImageType*)(NULL));
 
-      InstantiaterType::InstantiateAndRegister( m_Factory );
     }
 
-protected:
-
-  // Class to conditionally instantiate, and register the member
-  // function.
-  //
-  // This class is partially specialize on VInstatiate to
-  // conditionally do the instantiation, thus reducing compile time
-  // and binary size. The instantiation is done throught the member
-  // function factories addressor type.
-  template< bool VInstantiate, typename ImageType >
-  struct ConditionalInstantiater
-  {
-    static void InstantiateAndRegister( TMemberFunctionFactory &factory )
-      {
-        typedef typename TMemberFunctionFactory::AddressorType    AddressorType;
-        AddressorType addressor;
-        factory.Register(addressor.operator()<ImageType>(), (ImageType*)(NULL));
-      }
-  };
-
-  // class which does nothing
-  template<typename ImageType >
-  struct ConditionalInstantiater<false, ImageType>
-  {
-    static void InstantiateAndRegister( TMemberFunctionFactory &factory )
-      {
-      }
-  };
+  // this methods is conditionally enabled when the PixelID is not instantiated
+  template <class TPixelIDType>
+  typename DisableIf< IsInstantiated< typename PixelIDToImageType<TPixelIDType, VImageDimension>::ImageType >::Value >::Type
+  operator()( TPixelIDType ) {}
 
 private:
 
@@ -94,7 +70,7 @@ void MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
 
   sitkStaticAssert( TImageType::ImageDimension == 2 || TImageType::ImageDimension == 3,
                     "Image Dimension out of range" );
-  sitkStaticAssert( ImageTypeToPixelIDValue<TImageType>::Result != (int)sitkUnknown,
+  sitkStaticAssert( IsInstantiated<TImageType>::Value,
                     "invalid pixel type");
 
   if ( pixelID > 0 && pixelID < typelist::Length< InstantiatedPixelIDTypeList >::Result )
