@@ -3,6 +3,8 @@
 #endif
 
 #include "sitkImageFileReader.h"
+#include "sitkImage.txx"
+
 #include <itkImageIOBase.h>
 #include <itkImageFileReader.h>
 
