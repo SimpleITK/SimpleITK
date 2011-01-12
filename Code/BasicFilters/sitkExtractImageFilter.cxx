@@ -1,5 +1,7 @@
 #include "sitkExtractImageFilter.h"
+#include "sitkImage.txx"
 #include "sitkMacro.h"
+
 namespace itk {
 namespace simple {
 

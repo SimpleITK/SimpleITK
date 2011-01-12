@@ -1,5 +1,6 @@
 #include "sitkCastImageFilter.h"
 
+#include "sitkImage.txx"
 #include <itkCastImageFilter.h>
 
 namespace itk {
@@ -209,7 +210,7 @@ CastImageFilter::ExecuteInternal( typename TImageType::ConstPointer inImage )
 
 template<typename TImageType, typename TOutputImageType>
 typename DisableIf< IsInstantiated<TOutputImageType>::Value, Image::Pointer>::Type
-CastImageFilter::ExecuteInternal( typename TImageType::ConstPointer inImage )
+CastImageFilter::ExecuteInternal( typename TImageType::ConstPointer itkNotUsed( inImage ) )
 {
   assert( false );
   sitkExceptionMacro( "Logic Error: should not have pixel id for uninstatiated pixels" );
