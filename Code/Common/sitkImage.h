@@ -49,16 +49,42 @@ namespace itk
       std::string GetPixelIDTypeAsString( void ) const;
       std::string ToString( void );
 
-      typedef BasicPixelIDTypeList PixelIDTypeList;
+      typedef AllPixelIDTypeList PixelIDTypeList;
       typedef void (Self::*MemberFunctionType)( uint64_t Width, uint64_t Height, uint64_t Depth );
 
     protected:
 
+      /** \brief Methods called by the constructor to allocate and initialize
+       * an image.
+       *
+       * This method internally utlizes the member function factory to
+       * dispatch to methods instantiated on the image of the pixel ID
+       */
       void Allocate ( uint64_t Width, uint64_t Height, uint64_t Depth, PixelIDValueEnum ValueEnum );
-      template<class TImageType> void AllocateInternal ( uint64_t Width, uint64_t Height, uint64_t Depth );
+
+      /** \brief Dispatched methods for allocating images
+       *
+       * The enable if idiom is used here to enable different methods
+       * for different pixe/image types.
+       *
+       * @{
+       */
+      template<class TImageType>
+      typename EnableIf<IsBasic<TImageType>::Value>::Type
+      AllocateInternal ( uint64_t Width, uint64_t Height, uint64_t Depth );
+
+      template<class TImageType>
+      typename EnableIf<IsVector<TImageType>::Value>::Type
+      AllocateInternal ( uint64_t Width, uint64_t Height, uint64_t Depth );
+
+      template<class TImageType>
+      typename EnableIf<IsLabel<TImageType>::Value>::Type
+      AllocateInternal ( uint64_t Width, uint64_t Height, uint64_t Depth );
+      /**@}*/
+
+      typedef detail::AllocateMemberFunctionAddressor<MemberFunctionType> AllocateAddressor;
       friend struct detail::AllocateMemberFunctionAddressor<MemberFunctionType>;
-      std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType, detail::AllocateMemberFunctionAddressor<MemberFunctionType> > > m_AllocateMemberFactory;
-      
+
     private:
 
       // Copying is not supported
