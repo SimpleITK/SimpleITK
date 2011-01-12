@@ -73,7 +73,7 @@ void MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
   sitkStaticAssert( IsInstantiated<TImageType>::Value,
                     "invalid pixel type");
 
-  if ( pixelID > 0 && pixelID < typelist::Length< InstantiatedPixelIDTypeList >::Result )
+  if ( pixelID >= 0 && pixelID < typelist::Length< InstantiatedPixelIDTypeList >::Result )
     {
     switch( TImageType::ImageDimension )
       {
