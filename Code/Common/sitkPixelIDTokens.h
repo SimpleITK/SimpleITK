@@ -1,7 +1,13 @@
 #ifndef __sitkPixelIDTokens_h
 #define __sitkPixelIDTokens_h
 
+#ifdef SITK_HAS_STLTR1_TR1_TYPE_TRAITS
 #include <tr1/type_traits>
+#elif SITK_HAS_STLTR1_TYPE_TRAITS
+#include <type_traits>
+#else
+#error "No system tr1 type traits available"
+#endif
 
 #include "sitkPixelIDValues.h"
 
