@@ -37,58 +37,63 @@ namespace itk
       return out.str();
       }
 
+    uint64_t GetNumberOfPixels( void ) const
+    {
+      return static_cast< uint64_t >( this->m_PixelContainer->Size() );
+    }
+
     int8_t * GetBufferAsInt8()
     {
-      int8_t * buffer = static_cast< int8_t * >(
+      int8_t * buffer = reinterpret_cast< int8_t * >(
         this->m_PixelContainer->GetImportPointer() );
       return buffer;
     }
 
     uint8_t * GetBufferAsUnsignedInt8()
     {
-      uint8_t * buffer = static_cast< uint8_t * >(
+      uint8_t * buffer = reinterpret_cast< uint8_t * >(
         this->m_PixelContainer->GetImportPointer() );
       return buffer;
     }
 
     int16_t * GetBufferAsInt16()
     {
-      int16_t * buffer = static_cast< int16_t * >(
+      int16_t * buffer = reinterpret_cast< int16_t * >(
         this->m_PixelContainer->GetImportPointer() );
       return buffer;
     }
 
     uint16_t * GetBufferAsUnsignedInt16()
     {
-      uint16_t * buffer = static_cast< uint16_t * >(
+      uint16_t * buffer = reinterpret_cast< uint16_t * >(
         this->m_PixelContainer->GetImportPointer() );
       return buffer;
     }
 
     int32_t * GetBufferAsInt32()
     {
-      int32_t * buffer = static_cast< int32_t * >(
+      int32_t * buffer = reinterpret_cast< int32_t * >(
         this->m_PixelContainer->GetImportPointer() );
       return buffer;
     }
 
     uint32_t * GetBufferAsUnsignedInt32()
     {
-      uint32_t * buffer = static_cast< uint32_t * >(
+      uint32_t * buffer = reinterpret_cast< uint32_t * >(
         this->m_PixelContainer->GetImportPointer() );
       return buffer;
     }
 
     float * GetBufferAsFloat()
     {
-      float * buffer = static_cast< float * >(
+      float * buffer = reinterpret_cast< float * >(
         this->m_PixelContainer->GetImportPointer() );
       return buffer;
     }
 
     double * GetBufferAsDouble()
     {
-      double * buffer = static_cast< double * >(
+      double * buffer = reinterpret_cast< double * >(
         this->m_PixelContainer->GetImportPointer() );
       return buffer;
     }
@@ -105,7 +110,7 @@ namespace itk
   PixelContainer::PixelContainer( TImageType * image )
   {
     typedef PimplePixelContainer< TImageType >  PixelContainerType;
-    PixelContainerType container( image );
+    PixelContainerType * container = new PixelContainerType( image );
     this->m_Internal.reset( container );
   }
 

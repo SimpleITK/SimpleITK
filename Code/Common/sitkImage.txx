@@ -2,6 +2,7 @@
 #define __sitkImage_txx
 
 #include "sitkImage.h"
+#include "sitkPixelContainer.txx"
 
 namespace itk
 {
@@ -63,7 +64,7 @@ namespace itk
     PixelContainer::Pointer GetPixelContainer()
     {
       PixelContainer::Pointer container =
-        new PixelContainer( this->m_Image->GetPixelContainer() );
+        new PixelContainer( this->m_Image.GetPointer() );
       return container;
     }
 
