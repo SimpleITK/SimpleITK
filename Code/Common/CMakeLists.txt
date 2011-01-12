@@ -14,11 +14,8 @@ if( WRAP_JAVA )
     TARGET SimpleITKCommon
     POST_BUILD
     COMMENT "Cleaning java build..."
-    COMMAND echo stub > ${SimpleITK_BINARY_DIR}/Wrapping/org/itk/simple/___stub.java
-    COMMAND echo stub > ${SimpleITK_BINARY_DIR}/Wrapping/build/org/itk/simple/___stub.class
-    COMMAND echo stub > ${SimpleITK_BINARY_DIR}/Wrapping/SimpleITKJAVA_wrap.cxx
-    COMMAND rm ${SimpleITK_BINARY_DIR}/Wrapping/org/itk/simple/*.java
-    COMMAND rm ${SimpleITK_BINARY_DIR}/Wrapping/build/org/itk/simple/*.class
-    COMMAND rm ${SimpleITK_BINARY_DIR}/Wrapping/SimpleITKJAVA_wrap.cxx
+    COMMAND cmake -E remove -f ${SimpleITK_BINARY_DIR}/Wrapping/org/itk/simple/*.java
+    COMMAND cmake -E remove -f ${SimpleITK_BINARY_DIR}/Wrapping/build/org/itk/simple/*.class
+    COMMAND cmake -E remove -f ${SimpleITK_BINARY_DIR}/Wrapping/SimpleITKJAVA_wrap.cxx
   )
 endif()
