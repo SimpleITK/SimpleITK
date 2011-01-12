@@ -13,7 +13,7 @@ namespace itk {
       typedef ExtractImageFilter Self;
 
       // Type List Setup
-      typedef AllPixelIDTypeList PixelIDTypeList;
+      typedef NonLabelPixelIDTypeList PixelIDTypeList;
 
       /**
        * Default Constructor that takes no arguments and initializes
