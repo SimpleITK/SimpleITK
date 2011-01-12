@@ -91,12 +91,13 @@ namespace itk
       // For some reason, SWIG gets a little confused here, so don't let it see this code.
 #ifndef SWIG
 
-  /// We utilize the private implementation ( or PImple)
-  /// programming idiom to modify the behavior of the simple image
-  /// class based on the different image types.
-  ///
-  /// This class is desinged to be utilize to have trivial copy,
-  /// and assgnement operators
+  /** We utilize the private implementation ( or PImple)
+   * programming idiom to modify the behavior of the simple image
+   * class based on the different image types.
+   *
+   * This class is desinged to be utilize to have trivial copy,
+   * and assgnement operators
+   */
   struct PimpleImageBase
   {
     virtual ~PimpleImageBase( void ) {};
