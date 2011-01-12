@@ -24,15 +24,17 @@ namespace simple
 // this namespace is internal classes not part of the external simple ITK interface
 namespace detail {
 
-/// \brief A base class for the MemberFunctionFactory
-///
-/// This class is for specialization needed for different arity for
-/// the templated member function pointer
-///@{
+
 template< typename TMemberFunctionPointer, unsigned int TArity = ::detail::FunctionTraits<TMemberFunctionPointer>::arity>
 class MemberFunctionFactoryBase;
 
 
+/**
+ * \brief A base class for the MemberFunctionFactory
+ *
+ *  This class is for specialization needed for different arity for
+ *  the templated member function pointer
+ */
 template< typename TMemberFunctionPointer>
 class MemberFunctionFactoryBase<TMemberFunctionPointer, 1>
 {
@@ -48,15 +50,17 @@ protected:
 
 public:
 
-  /// the pointer MemberFunctionType redefined ad a tr1::function object
+  /**  the pointer MemberFunctionType redefined ad a tr1::function
+   * object */
   typedef std::tr1::function< MemberFunctionResultType ( MemberFunctionArgumentType ) > FunctionObjectType;
 
 
 protected:
 
-  /// A function which binds the objectPointer to the calling object
-  /// argument in the member function pointer, and returns a function
-  /// object.
+  /** A function which binds the objectPointer to the calling object
+   *  argument in the member function pointer, and returns a function
+   *  object.
+   */
   static FunctionObjectType  BindObject( MemberFunctionType pfunc, ObjectType *objectPointer)
     {
       // needed for _1 place holder
@@ -95,15 +99,18 @@ protected:
 
 public:
 
-  /// the pointer MemberFunctionType redefined ad a tr1::function object
+  /**  the pointer MemberFunctionType redefined ad a tr1::function
+   * object
+   */
   typedef std::tr1::function< MemberFunctionResultType ( MemberFunctionArgument1Type,  MemberFunctionArgument0Type) > FunctionObjectType;
 
 
 protected:
 
-  /// A function which binds the objectPointer to the calling object
-  /// argument in the member function pointer, and returns a function
-  /// object
+  /** A function which binds the objectPointer to the calling object
+   *  argument in the member function pointer, and returns a function
+   *  object
+   */
   static FunctionObjectType  BindObject( MemberFunctionType pfunc, ObjectType *objectPointer)
     {
       // needed for _1 place holder
@@ -143,15 +150,17 @@ protected:
 
 public:
 
-  /// the pointer MemberFunctionType redefined ad a tr1::function object
+  /**  the pointer MemberFunctionType redefined ad a tr1::function
+   * object */
   typedef std::tr1::function< MemberFunctionResultType ( MemberFunctionArgument2Type, MemberFunctionArgument1Type,  MemberFunctionArgument0Type) > FunctionObjectType;
 
 
 protected:
 
-  /// A function which binds the objectPointer to the calling object
-  /// argument in the member function pointer, and returns a function
-  /// object
+  /** A function which binds the objectPointer to the calling object
+   *  argument in the member function pointer, and returns a function
+   *  object
+   */
   static FunctionObjectType  BindObject( MemberFunctionType pfunc, ObjectType *objectPointer)
     {
       // needed for _1 place holder
@@ -172,7 +181,7 @@ private:
   MemberFunctionFactoryBase * operator=(  MemberFunctionFactoryBase & );  // Not Implemented
   MemberFunctionFactoryBase( const  MemberFunctionFactoryBase& );  // Not Implemented
 };
-///@}
+
 
 } // end namespace detail
 } // end namespace simple
