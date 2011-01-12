@@ -3,7 +3,6 @@
 
 #include "sitkMacro.h"
 
-#include "itkImage.h"
 #include "sitkPixelIDTypeLists.h"
 #include "sitkMemberFunctionFactory.h"
 
