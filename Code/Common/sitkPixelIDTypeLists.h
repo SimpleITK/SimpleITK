@@ -91,7 +91,7 @@ typedef typelist::MakeTypeList<VectorPixelID<float>,
 
 
 
-/** List of pixel ids which are for itk::LabelMap Image class.
+/** List of pixel ids which are for itk::LabelMapFacade Image class.
  *
  * \sa LabelPixelID
  */
@@ -101,19 +101,32 @@ typedef typelist::MakeTypeList<LabelPixelID<uint8_t>,
 //                               LabelPixelID<uint64_t>
                                >::Type LabelPixelIDTypeList;
 
-
-/** List of all pixel ids available, this include image of itk::Image,
- * itk::VectorImage, and itk::LabelMap types.
+/** List of all pixel ids available, but itk::LabelMapFacade this include image of itk::Image,
+ * itk::VectorImage
  *
- * \todo This needs to be extended to include LabelMap pixel ids.
  *
  * \sa BasicPixelID
  * \sa VectorPixelID
- * \sa LablePixelID
+ * \sa LabelPixelID
  */
 typedef typelist::Append<
   typelist::Append< BasicPixelIDTypeList, ComplexPixelIDTypeList >::Type,
   VectorPixelIDTypeList
+  >::Type NonLabelPixelIDTypeList;
+
+
+/** List of all pixel ids available, this include image of itk::Image,
+ * itk::VectorImage, and itk::LabelMapFacade types.
+ *
+ * \todo This needs to be extended to include LabelMapFacade pixel ids.
+ *
+ * \sa BasicPixelID
+ * \sa VectorPixelID
+ * \sa LabelPixelID
+ */
+typedef typelist::Append<
+  typelist::Append< BasicPixelIDTypeList, ComplexPixelIDTypeList >::Type,
+  typelist::Append< VectorPixelIDTypeList, LabelPixelIDTypeList >::Type
   >::Type AllPixelIDTypeList;
 
 
@@ -128,11 +141,11 @@ typedef typelist::MakeTypeList< BasicPixelID<int16_t>, BasicPixelID<float>, Basi
 /** List of pixel ids which are instantiated for use in SimpleITK
  *
  *  this include image of itk::Image,itk::VectorImage, and
- *  itk::LabelMap types.
+ *  itk::LabelMapFacade types.
  *
  * \sa BasicPixelID
  * \sa VectorPixelID
- * \sa LablePixelID
+ * \sa LabelPixelID
  */
 typedef AllPixelIDTypeList InstantiatedPixelIDTypeList;
 

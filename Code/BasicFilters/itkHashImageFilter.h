@@ -13,7 +13,7 @@
 
 namespace itk {
 
-/** \breif Generates a hash string from an image.
+/** \brief Generates a hash string from an image.
 *
 * \note This class utlizes low level buffer pointer access, to work
 * with itk::Image and itk::VectorImage. It is modeled after the access
