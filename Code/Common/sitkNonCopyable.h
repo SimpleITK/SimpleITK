@@ -24,8 +24,10 @@ namespace simple
 * there should only be one of them. To utilize this class just derive
 * from it:
 * \code
-* class Singleton : protected NonCopyable {...};
-* \endocode
+* class Singleton
+*  : protected NonCopyable {...};
+* \endcode
+*
 */
 class NonCopyable
 {
