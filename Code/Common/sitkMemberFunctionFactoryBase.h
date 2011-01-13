@@ -13,6 +13,7 @@
 
 #include "sitkPixelIDTypes.h"
 #include "sitkMacro.h"
+#include "sitkNonCopyable.h"
 
 #include "FunctionTraits.h"
 
@@ -36,7 +37,8 @@ class MemberFunctionFactoryBase;
  *  the templated member function pointer
  */
 template< typename TMemberFunctionPointer>
-class MemberFunctionFactoryBase<TMemberFunctionPointer, 1>
+class MemberFunctionFactoryBase<TMemberFunctionPointer, 1> :
+    protected NonCopyable
 {
 protected:
 
@@ -84,7 +86,8 @@ private:
 
 
 template< typename TMemberFunctionPointer>
-class MemberFunctionFactoryBase<TMemberFunctionPointer, 2>
+class MemberFunctionFactoryBase<TMemberFunctionPointer, 2> :
+    protected NonCopyable
 {
 protected:
 
@@ -134,7 +137,8 @@ private:
 
 
 template< typename TMemberFunctionPointer>
-class MemberFunctionFactoryBase<TMemberFunctionPointer, 3>
+class MemberFunctionFactoryBase<TMemberFunctionPointer, 3> :
+    protected NonCopyable
 {
 protected:
 

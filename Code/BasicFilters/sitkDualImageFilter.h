@@ -6,7 +6,9 @@
 namespace itk {
   namespace simple {
 
-    class DualImageFilter {
+  class DualImageFilter :
+      protected NonCopyable
+  {
     public:
 
       /**
