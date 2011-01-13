@@ -21,7 +21,8 @@ namespace itk
       size.Fill(1);
       size[0] = Width;
       size[1] = Height;
-      if ( TImageType::ImageDimension > 2 && Depth != 0 ) {
+      if ( TImageType::ImageDimension > 2 ) {
+      assert(Depth != 0 );
         size[2] = Depth;
       }
       region.SetSize ( size );
@@ -46,8 +47,9 @@ namespace itk
     size.Fill(1);
     size[0] = Width;
     size[1] = Height;
-    if ( TImageType::ImageDimension > 2 && Depth != 0 )
+    if ( TImageType::ImageDimension > 2 )
       {
+      assert(Depth != 0 );
       size[2] = Depth;
       }
     region.SetSize ( size );
@@ -79,7 +81,7 @@ namespace itk
     size[1] = Height;
     if ( TImageType::ImageDimension > 2 )
       {
-      assert(Depth == 0 );
+      assert(Depth != 0 );
       size[2] = Depth;
       }
     region.SetSize ( size );
