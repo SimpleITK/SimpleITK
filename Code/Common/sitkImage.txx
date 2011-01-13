@@ -5,6 +5,15 @@
 #include "sitkPixelContainer.txx"
 #include "sitkPixelIdTokens.h"
 
+#if defined(__INTEL_COMPILER)
+// disable warning for Intel Compiler:
+//  class "itk::simple::Image::PimpleImageBase" (declared at line 97
+//  of "Code/Common/sitkImage.h") is an inaccessible type (allowed for
+//  cfront compatibility)
+#pragma warning( disable 525 )
+#endif
+
+
 namespace itk
 {
   namespace simple
@@ -104,5 +113,6 @@ namespace itk
 
   }
 }
+
 
 #endif
