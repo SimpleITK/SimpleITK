@@ -3,7 +3,7 @@
 
 #include "sitkImage.h"
 #include "sitkPixelContainer.txx"
-#include "sitkPixelIdTokens.h"
+#include "sitkPixelIDTokens.h"
 
 #if defined(__INTEL_COMPILER)
 // disable warning for Intel Compiler:
