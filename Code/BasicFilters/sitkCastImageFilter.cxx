@@ -2,6 +2,8 @@
 
 #include "sitkImage.txx"
 #include <itkCastImageFilter.h>
+#include <itkImageToVectorImageFilter.h>
+#include <itkLabelImageToLabelMapFilter.h>
 
 namespace itk {
 namespace simple {
@@ -74,112 +76,132 @@ Image::Pointer CastImageFilter::ExecuteInternal ( Image::Pointer inImage )
   else if ( this->m_OutputPixelType == sitkUInt8 )
     {
     typedef itk::Image< uint8_t, InputImageType::ImageDimension > OutputImageType;
-    return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
+    return this->ExecuteInternalToBasic< InputImageType,  OutputImageType >( image.GetPointer() );
     }
   else if ( this->m_OutputPixelType == sitkInt16 )
     {
     typedef itk::Image< int16_t, InputImageType::ImageDimension > OutputImageType;
-    return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
+    return this->ExecuteInternalToBasic< InputImageType,  OutputImageType >( image.GetPointer() );
     }
   else if ( this->m_OutputPixelType == sitkInt32 )
     {
     typedef itk::Image< int32_t, InputImageType::ImageDimension > OutputImageType;
-    return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
+    return this->ExecuteInternalToBasic< InputImageType,  OutputImageType >( image.GetPointer() );
     }
   else if ( this->m_OutputPixelType == sitkFloat32 )
     {
     typedef itk::Image< float, InputImageType::ImageDimension > OutputImageType;
-    return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
+    return this->ExecuteInternalToBasic< InputImageType,  OutputImageType >( image.GetPointer() );
     }
   else if ( this->m_OutputPixelType == sitkInt8 )
     {
     typedef itk::Image< int8_t, InputImageType::ImageDimension > OutputImageType;
-    return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
+    return this->ExecuteInternalToBasic< InputImageType,  OutputImageType >( image.GetPointer() );
     }
   else if ( this->m_OutputPixelType == sitkUInt16 )
     {
     typedef itk::Image< uint16_t, InputImageType::ImageDimension > OutputImageType;
-    return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
+    return this->ExecuteInternalToBasic< InputImageType,  OutputImageType >( image.GetPointer() );
     }
   else if ( this->m_OutputPixelType == sitkUInt32 )
     {
     typedef itk::Image< uint32_t, InputImageType::ImageDimension > OutputImageType;
-    return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
+    return this->ExecuteInternalToBasic< InputImageType,  OutputImageType >( image.GetPointer() );
     }
   else if ( this->m_OutputPixelType == sitkUInt64 )
     {
     typedef itk::Image< uint64_t, InputImageType::ImageDimension > OutputImageType;
-    return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
+    return this->ExecuteInternalToBasic< InputImageType,  OutputImageType >( image.GetPointer() );
     }
   else if ( this->m_OutputPixelType == sitkInt64 )
     {
     typedef itk::Image< int64_t, InputImageType::ImageDimension > OutputImageType;
-    return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
+    return this->ExecuteInternalToBasic< InputImageType,  OutputImageType >( image.GetPointer() );
     }
   else if ( this->m_OutputPixelType == sitkFloat64 )
     {
     typedef itk::Image< double, InputImageType::ImageDimension > OutputImageType;
-    return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
+    return this->ExecuteInternalToBasic< InputImageType,  OutputImageType >( image.GetPointer() );
     }
   else if ( this->m_OutputPixelType == sitkComplexFloat32 )
     {
     typedef itk::Image< std::complex< float >, InputImageType::ImageDimension > OutputImageType;
-    return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
+    return this->ExecuteInternalToBasic< InputImageType,  OutputImageType >( image.GetPointer() );
     }
   else if ( this->m_OutputPixelType == sitkComplexFloat64 )
     {
     typedef itk::Image< std::complex< double >, InputImageType::ImageDimension > OutputImageType;
-    return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
+    return this->ExecuteInternalToBasic< InputImageType,  OutputImageType >( image.GetPointer() );
     }
   else if ( this->m_OutputPixelType == sitkVectorUInt8 )
     {
     typedef itk::VectorImage< uint8_t, InputImageType::ImageDimension > OutputImageType;
-    return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
+    return this->ExecuteInternalToVector< InputImageType,  OutputImageType >( image.GetPointer() );
     }
   else if ( this->m_OutputPixelType == sitkVectorInt8 )
     {
     typedef itk::VectorImage< int8_t, InputImageType::ImageDimension > OutputImageType;
-    return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
+    return this->ExecuteInternalToVector< InputImageType,  OutputImageType >( image.GetPointer() );
     }
   else if ( this->m_OutputPixelType == sitkVectorUInt16 )
     {
     typedef itk::VectorImage< uint16_t, InputImageType::ImageDimension > OutputImageType;
-    return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
+    return this->ExecuteInternalToVector< InputImageType,  OutputImageType >( image.GetPointer() );
     }
   else if ( this->m_OutputPixelType == sitkVectorInt16 )
     {
     typedef itk::VectorImage< int16_t, InputImageType::ImageDimension > OutputImageType;
-    return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
+    return this->ExecuteInternalToVector< InputImageType,  OutputImageType >( image.GetPointer() );
     }
   else if ( this->m_OutputPixelType == sitkVectorUInt32 )
     {
     typedef itk::VectorImage< uint32_t, InputImageType::ImageDimension > OutputImageType;
-    return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
+    return this->ExecuteInternalToVector< InputImageType,  OutputImageType >( image.GetPointer() );
     }
   else if ( this->m_OutputPixelType == sitkVectorInt32 )
     {
     typedef itk::VectorImage< int32_t, InputImageType::ImageDimension > OutputImageType;
-    return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
+    return this->ExecuteInternalToVector< InputImageType,  OutputImageType >( image.GetPointer() );
     }
   else if ( this->m_OutputPixelType == sitkVectorUInt64 )
     {
     typedef itk::VectorImage< uint64_t, InputImageType::ImageDimension > OutputImageType;
-    return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
+    return this->ExecuteInternalToVector< InputImageType,  OutputImageType >( image.GetPointer() );
     }
   else if ( this->m_OutputPixelType == sitkVectorInt64 )
     {
     typedef itk::VectorImage< int64_t, InputImageType::ImageDimension > OutputImageType;
-    return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
+    return this->ExecuteInternalToVector< InputImageType,  OutputImageType >( image.GetPointer() );
     }
   else if ( this->m_OutputPixelType == sitkVectorFloat32 )
     {
     typedef itk::VectorImage< float, InputImageType::ImageDimension > OutputImageType;
-    return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
+    return this->ExecuteInternalToVector< InputImageType,  OutputImageType >( image.GetPointer() );
     }
   else if ( this->m_OutputPixelType == sitkVectorFloat64 )
     {
     typedef itk::VectorImage< double, InputImageType::ImageDimension > OutputImageType;
-    return this->ExecuteInternal< InputImageType,  OutputImageType >( image );
+    return this->ExecuteInternalToVector< InputImageType,  OutputImageType >( image.GetPointer() );
+    }
+ else if ( this->m_OutputPixelType == sitkLabelUInt8 )
+    {
+    typedef itk::LabelMap< itk::LabelObject< uint8_t, InputImageType::ImageDimension > > OutputImageType;
+    return this->ExecuteInternalToLabel< InputImageType,  OutputImageType >( image.GetPointer() );
+    }
+ else if ( this->m_OutputPixelType == sitkLabelUInt16 )
+    {
+    typedef itk::LabelMap< itk::LabelObject< uint16_t, InputImageType::ImageDimension > > OutputImageType;
+    return this->ExecuteInternalToLabel< InputImageType,  OutputImageType >( image.GetPointer() );
+    }
+ else if ( this->m_OutputPixelType == sitkLabelUInt32 )
+    {
+    typedef itk::LabelMap< itk::LabelObject< uint32_t, InputImageType::ImageDimension > > OutputImageType;
+    return this->ExecuteInternalToLabel< InputImageType,  OutputImageType >( image.GetPointer() );
+    }
+ else if ( this->m_OutputPixelType == sitkLabelUInt64 )
+    {
+    typedef itk::LabelMap< itk::LabelObject< uint64_t, InputImageType::ImageDimension > > OutputImageType;
+    return this->ExecuteInternalToLabel< InputImageType,  OutputImageType >( image.GetPointer() );
     }
   else
     {
@@ -191,7 +213,7 @@ Image::Pointer CastImageFilter::ExecuteInternal ( Image::Pointer inImage )
 
 template<typename TImageType, typename TOutputImageType>
 typename EnableIf< IsInstantiated<TOutputImageType>::Value, Image::Pointer>::Type
-CastImageFilter::ExecuteInternal( typename TImageType::ConstPointer inImage )
+CastImageFilter::ExecuteInternalToBasic(const TImageType* inImage )
  {
    typedef TImageType       InputImageType;
    typedef TOutputImageType OutputImageType;
@@ -203,19 +225,62 @@ CastImageFilter::ExecuteInternal( typename TImageType::ConstPointer inImage )
    filter->Update();
 
    Image::Pointer out = new Image( filter->GetOutput() );
-   filter->GetOutput()->DisconnectPipeline();
 
    return out;
  }
 
+
+
 template<typename TImageType, typename TOutputImageType>
-typename DisableIf< IsInstantiated<TOutputImageType>::Value, Image::Pointer>::Type
-CastImageFilter::ExecuteInternal( typename TImageType::ConstPointer itkNotUsed( inImage ) )
+typename EnableIf< IsInstantiated<TOutputImageType>::Value, Image::Pointer>::Type
+CastImageFilter::ExecuteInternalToVector( const TImageType* inImage )
+{
+
+   typedef TImageType       InputImageType;
+   typedef TOutputImageType OutputImageType;
+
+   typedef itk::ImageToVectorImageFilter<InputImageType> FilterType;
+   typename FilterType::Pointer filter = FilterType::New();
+   filter->SetInput ( inImage );
+
+   typedef itk::CastImageFilter< typename FilterType::OutputImageType, OutputImageType > CastFilterType;
+   typename CastFilterType::Pointer caster = CastFilterType::New();
+   caster->SetInput( filter->GetOutput() );
+   caster->InPlaceOn();
+   caster->Update();
+
+   Image::Pointer out = new Image( caster->GetOutput() );
+
+   return out;
+}
+
+
+template<typename TImageType, typename TOutputImageType>
+typename EnableIf< IsInstantiated<TOutputImageType>::Value, Image::Pointer>::Type
+CastImageFilter::ExecuteInternalToLabel( const TImageType* inImage )
+{
+  typedef TImageType                                InputImageType;
+  typedef TOutputImageType                          OutputImageType;
+  typedef typename OutputImageType::LabelObjectType LabelObjectType;
+  typedef typename LabelObjectType::LabelType       LabelType;
+
+  typedef itk::Image<LabelType, InputImageType::ImageDimension> LabelImageType;
+
+  typedef itk::LabelImageToLabelMapFilter<InputImageType, OutputImageType> FilterType;
+  typename FilterType::Pointer filter = FilterType::New();
+  filter->SetInput ( inImage );
+  filter->Update();
+
+   Image::Pointer out = new Image( filter->GetOutput() );
+
+   return out;
+}
+
+void CastImageFilter::ExecuteDispatchLogicError( void ) throw( GenericException )
 {
   assert( false );
   sitkExceptionMacro( "Logic Error: should not have pixel id for uninstatiated pixels" );
 }
-
 
 } // end namespace simple
 } // end namespace itk

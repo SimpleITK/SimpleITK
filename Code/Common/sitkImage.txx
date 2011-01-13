@@ -76,14 +76,14 @@ namespace itk
   Image::Image( itk::SmartPointer<TImageType> image )
     {
       // assign to auto pointer
-      m_PimpleImage.reset( new PimpleImage<TImageType>( image ) );
+    this->m_PimpleImage.reset( new PimpleImage<TImageType>( image ) );
     }
 
   template <typename TImageType>
   Image::Image( TImageType* image )
     {
-      // assign to auto pointer
-      m_PimpleImage.reset( new PimpleImage<TImageType>( image ) );
+    // assign to auto pointer
+    this->m_PimpleImage.reset( new PimpleImage<TImageType>( image ) );
     }
 
 

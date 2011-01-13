@@ -131,7 +131,7 @@ TEST_F(Image,Constructors) {
 
   image = new itk::simple::Image ( 64, 65, 66, itk::simple::sitkUInt8 );
   EXPECT_EQ ( "08183e1b0c50fd2cf6f070b58e218443fb7d5317", hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt8";
-  result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<unsigned char> >::Result;  
+  result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<unsigned char> >::Result;
   EXPECT_EQ ( image->GetPixelIDValue(), result );
   EXPECT_EQ ( image->GetPixelIDTypeAsString(), "8-bit unsigned integer" );
   EXPECT_EQ ( image->GetDimension(), 3u );
@@ -141,7 +141,7 @@ TEST_F(Image,Constructors) {
 
   image = new itk::simple::Image ( 64, 65, 66, itk::simple::sitkInt16 );
   EXPECT_EQ ( "645b71695b94923c868e16b943d8acf8f6788617", hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt16";
-  result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<short> >::Result;  
+  result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<short> >::Result;
   EXPECT_EQ ( image->GetPixelIDValue(), result );
   EXPECT_EQ ( image->GetPixelIDTypeAsString(), "16-bit signed integer" );
   EXPECT_EQ ( image->GetDimension(), 3u );
@@ -151,14 +151,32 @@ TEST_F(Image,Constructors) {
 
   image = new itk::simple::Image ( 64, 65, itk::simple::sitkUInt16 );
   EXPECT_EQ ( "e3c464cc1b73df3f48bacf238a80f88b5ab0d3e6", hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt16";
-  result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<unsigned short> >::Result;  
+  result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<unsigned short> >::Result;
   EXPECT_EQ ( image->GetPixelIDValue(), result );
   EXPECT_EQ ( image->GetPixelIDTypeAsString(), "16-bit unsigned integer" );
   EXPECT_EQ ( image->GetDimension(), 2u );
   EXPECT_EQ ( 64u, image->GetWidth() );
   EXPECT_EQ ( 65u, image->GetHeight() );
   EXPECT_EQ ( 0u, image->GetDepth() );
-}  
+
+  // currently we don't have a good interface to check the values of
+  // these images, let just construct these types need todo better
+  // testing!
+
+  image = new itk::simple::Image ( 64, 65, 66, itk::simple::sitkLabelUInt8 );
+  EXPECT_EQ ( 64u, image->GetWidth() );
+  EXPECT_EQ ( 65u, image->GetHeight() );
+  EXPECT_EQ ( 66u, image->GetDepth() );
+  image = new itk::simple::Image ( 64, 65, 66, itk::simple::sitkLabelUInt16 );
+  image = new itk::simple::Image ( 64, 65, 66, itk::simple::sitkLabelUInt32 );
+
+  image = new itk::simple::Image ( 64, 65, 66, itk::simple::sitkVectorUInt8 );
+  EXPECT_EQ ( 64u, image->GetWidth() );
+  EXPECT_EQ ( 65u, image->GetHeight() );
+  EXPECT_EQ ( 66u, image->GetDepth() );
+  image = new itk::simple::Image ( 64, 65, 66, itk::simple::sitkVectorUInt16 );
+
+}
 
 TEST_F(Image,Hash) {
   itk::simple::ImageHashFilter hasher;

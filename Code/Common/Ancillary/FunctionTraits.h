@@ -59,7 +59,7 @@ template<typename R,
          typename A2,
          typename A3>
 struct FunctionTraits<R (C::*)(A0, A1, A2, A3)> {
-  static const unsigned int arity = 3;
+  static const unsigned int arity = 4;
   typedef C ClassType;
   typedef R ResultType;
   typedef A0 Argument0Type;

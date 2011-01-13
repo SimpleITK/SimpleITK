@@ -1,12 +1,19 @@
 #include "sitkImage.h"
 #include "sitkImage.txx"
 
+namespace {
+
+}
+
 namespace itk
 {
   namespace simple
   {
 
-    template<class TImageType> void Image::AllocateInternal ( uint64_t Width, uint64_t Height, uint64_t Depth ) {
+    template<class TImageType>
+    typename EnableIf<IsBasic<TImageType>::Value>::Type
+    Image::AllocateInternal ( uint64_t Width, uint64_t Height, uint64_t Depth )
+    {
       typename TImageType::IndexType  index;
       typename TImageType::SizeType   size;
       typename TImageType::RegionType region;
@@ -26,17 +33,83 @@ namespace itk
       m_PimpleImage.reset( new PimpleImage<TImageType>( image ) );
     }
 
+  template<class TImageType>
+  typename EnableIf<IsVector<TImageType>::Value>::Type
+  Image::AllocateInternal ( uint64_t Width, uint64_t Height, uint64_t Depth )
+  {
+    typename TImageType::IndexType  index;
+    typename TImageType::SizeType   size;
+    typename TImageType::RegionType region;
+    typename TImageType::PixelType  zero;
+
+    index.Fill ( 0 );
+    size.Fill(1);
+    size[0] = Width;
+    size[1] = Height;
+    if ( TImageType::ImageDimension > 2 && Depth != 0 )
+      {
+      size[2] = Depth;
+      }
+    region.SetSize ( size );
+    region.SetIndex ( index );
+
+    zero.SetSize( TImageType::ImageDimension );
+    zero.Fill( 0.0 );
+
+
+    typename TImageType::Pointer image = TImageType::New();
+    image->SetRegions ( region );
+    image->SetVectorLength( TImageType::ImageDimension );
+    image->Allocate();
+    image->FillBuffer ( zero );
+    m_PimpleImage.reset( new PimpleImage<TImageType>( image ) );
+  }
+
+  template<class TImageType>
+  typename EnableIf<IsLabel<TImageType>::Value>::Type
+  Image::AllocateInternal ( uint64_t Width, uint64_t Height, uint64_t Depth )
+  {
+    typename TImageType::IndexType  index;
+    typename TImageType::SizeType   size;
+    typename TImageType::RegionType region;
+
+    index.Fill ( 0 );
+    size.Fill(1);
+    size[0] = Width;
+    size[1] = Height;
+    if ( TImageType::ImageDimension > 2 )
+      {
+      assert(Depth == 0 );
+      size[2] = Depth;
+      }
+    region.SetSize ( size );
+    region.SetIndex ( index );
+
+    typename TImageType::Pointer image = TImageType::New();
+    image->SetRegions ( region );
+    image->Allocate();
+    image->SetBackgroundValue( 0 );
+    m_PimpleImage.reset( new PimpleImage<TImageType>( image ) );
+  }
+
+
     void Image::Allocate ( uint64_t Width, uint64_t Height, uint64_t Depth, PixelIDValueEnum ValueEnum ) {
       // Allocate an image
-      this->m_AllocateMemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType, detail::AllocateMemberFunctionAddressor<MemberFunctionType> > ( this ) );
 
-      this->m_AllocateMemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
-      this->m_AllocateMemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
+      detail::MemberFunctionFactory<MemberFunctionType, AllocateAddressor> allocateMemberFactory(this);
+      allocateMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 3 > ();
+      allocateMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 2 > ();
+
+      if ( ValueEnum == sitkUnknown )
+        {
+        sitkExceptionMacro( "Unable to construct image of unsupported pixel type" );
+        }
+
       PixelIDValueType type = ValueEnum;
       if ( Depth == 0 ) {
-        this->m_AllocateMemberFactory->GetMemberFunction( type, 2 )( Width, Height, Depth );
+        allocateMemberFactory.GetMemberFunction( type, 2 )( Width, Height, Depth );
       } else {
-        this->m_AllocateMemberFactory->GetMemberFunction( type, 3 )( Width, Height, Depth );
+        allocateMemberFactory.GetMemberFunction( type, 3 )( Width, Height, Depth );
       }
     }
 

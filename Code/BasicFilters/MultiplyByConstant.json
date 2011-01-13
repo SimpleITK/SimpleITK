@@ -1,0 +1,43 @@
+{
+  "name" : "MultiplyByConstant",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Multiply an image by a constant. The result is cast to the type of the input",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "additional_template_types" : [
+    {"type" : "double"}
+  ]
+  "members" : [
+    { "name" : "Constant",
+      "type" : "double",
+      "default" : 1.0,
+      "doc" : "The constant by which to multiply the input image"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "2d",
+      "description" : "2D",
+      "inputA" : "Input/STAPLE1.png",
+      "settings" : [
+        { "parameter" : "Constant",
+          "value" : 2.5
+        }
+      ],
+      "md5hash" : "d242fd1847eac0f3f8702ee6abf00624"
+    },
+    {
+      "tag" : "3d",
+      "description" : "3D",
+      "inputA" : "Input/RA-Short.nrrd",
+      "settings" : [
+        { "parameter" : "Constant",
+          "value" : 2.5
+        }
+      ],
+      "md5hash" : "41eba4bd56f47a3122d9ca7e1a350bd7"
+    }
+  ]
+}
+

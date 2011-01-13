@@ -120,7 +120,7 @@ Image::Pointer ${name}ImageFilter::ExecuteInternal ( Image::Pointer inImage1 $(i
           ]]
     end)
 
-  typedef itk::${name}ImageFilter<InputImageType $(if number_of_inputs == 2 then OUT=[[, InputImageType]] end), OutputImageType> FilterType;
+  typedef itk::${name}ImageFilter<InputImageType, $(if number_of_inputs == 2 then OUT=[[InputImageType,]] end)$(if additional_template_types then OUT=[[$(foreach additional_template_types ${type},)]]end) OutputImageType> FilterType;
 
   typename FilterType::Pointer filter = FilterType::New();
 

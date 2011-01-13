@@ -48,25 +48,25 @@ public:
 TEST_F(HashImageFilterTest, InstantiateTest) {
 
   typedef itk::HashImageFilter< itk::Image< unsigned char, 1> > UCHAR1HasherType;
-  EXPECT_TRUE( UCHAR1HasherType::New() );
+  EXPECT_TRUE( UCHAR1HasherType::New().IsNotNull() );
 
   typedef itk::HashImageFilter< itk::Image< unsigned char, 2> > UCHAR2HasherType;
-  EXPECT_TRUE( UCHAR2HasherType::New() );
+  EXPECT_TRUE( UCHAR2HasherType::New().IsNotNull() );
 
   typedef itk::HashImageFilter< itk::Image< unsigned char, 3> > UCHAR3HasherType;
-  EXPECT_TRUE( UCHAR3HasherType::New() );
+  EXPECT_TRUE( UCHAR3HasherType::New().IsNotNull() );
 
   typedef itk::HashImageFilter< itk::Image< unsigned int, 3> > UINT23HasherType;
-  EXPECT_TRUE( UINT23HasherType::New() );
+  EXPECT_TRUE( UINT23HasherType::New().IsNotNull() );
 
   typedef itk::HashImageFilter< itk::Image<int, 3> > INT23HasherType;
-  EXPECT_TRUE( INT23HasherType::New() );
+  EXPECT_TRUE( INT23HasherType::New().IsNotNull() );
 
   typedef itk::HashImageFilter< itk::Image<float, 3> > FLOATHasherType;
-  EXPECT_TRUE( INT23HasherType::New() );
+  EXPECT_TRUE( INT23HasherType::New().IsNotNull() );
 
   typedef itk::HashImageFilter< itk::Image<double, 3> > DOUBLEHasherType;
-  EXPECT_TRUE( INT23HasherType::New() );
+  EXPECT_TRUE( INT23HasherType::New().IsNotNull() );
 
 };
 
@@ -144,12 +144,15 @@ TEST_F(HashImageFilterTest, Coverage ) {
  UCHAR2HasherType::Pointer hasher = UCHAR2HasherType::New();
 
  // PrintSelf
- std::cout << hasher;
+ std::ostringstream out;
+ out << hasher;
+ EXPECT_NE ( out.str(), "" );  // So the test fails if we don’t have any print self output...
+
 
  // Set/Get Methods
  hasher->SetHashFunction( UCHAR2HasherType::MD5 );
- EXPECT_EQ(  hasher->GetHashFunction(), UCHAR2HasherType::MD5 );
+ EXPECT_EQ(  hasher->GetHashFunction(), UCHAR2HasherType::MD5 ) << "expected default hash type to be MD5";
 
  hasher->SetHashFunction( UCHAR2HasherType::SHA1 );
- EXPECT_EQ(  hasher->GetHashFunction(), UCHAR2HasherType::SHA1 );
+ EXPECT_EQ(  hasher->GetHashFunction(), UCHAR2HasherType::SHA1 ) << "expected default hash type to be SHA1";
 }
