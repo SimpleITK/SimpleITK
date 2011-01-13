@@ -8,7 +8,6 @@
 #include "sitkImage.h"
 
 #include "sitkIndex.h"
-#include "sitkSize.h"
 #include "sitkImageFilter.h"
 
 #include "sitkImageHashFilter.h"
