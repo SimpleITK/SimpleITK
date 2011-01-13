@@ -3,6 +3,7 @@
 
 #include "sitkImage.h"
 #include "sitkPixelContainer.txx"
+#include "sitkPixelIdTokens.h"
 
 namespace itk
 {
@@ -62,11 +63,25 @@ namespace itk
     }
 
     PixelContainer::Pointer GetPixelContainer()
-    {
-      PixelContainer::Pointer container =
-        new PixelContainer( this->m_Image.GetPointer() );
-      return container;
-    }
+      {
+        return this->GetPixelContainer<TImageType>();
+      }
+
+    template <typename UImageType>
+    typename DisableIf<IsLabel<UImageType>::Value, PixelContainer::Pointer>::Type
+    GetPixelContainer()
+      {
+        PixelContainer::Pointer container =
+          new PixelContainer( this->m_Image.GetPointer() );
+        return container;
+      }
+
+    template <typename UImageType>
+    typename EnableIf<IsLabel<UImageType>::Value, PixelContainer::Pointer>::Type
+    GetPixelContainer()
+      {
+        return NULL;
+      }
 
   private:
     ImagePointer m_Image;
