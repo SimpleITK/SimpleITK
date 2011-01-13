@@ -21,7 +21,6 @@
 
 
 #include "sitkImage.h"
-#include "sitkIndex.h"
 #include "sitkCurvatureFlowImageFilter.h"
 #include "sitkNeighborhoodConnectedImageFilter.h"
 #include "sitkImageFileReader.h"
@@ -84,9 +83,13 @@ int main( int argc, char *argv[])
 
   for (int i = 5; i+1 < argc; i+=2)
     {
-    itk::simple::Index seed( atoi(argv[i]), atoi(argv[i+1]) );
+    std::vector<size_t> seed;
+    seed.push_back(atoi(argv[i]));
+    seed.push_back(atoi(argv[i+1]));
     segmentationFilter.AddSeed(seed);
-    std::cout << "Adding a seed at " << seed << std::endl;
+    std::cout << "Adding a seed at ";
+    printStdVector(seed, std::cout);
+    std::cout << std::endl;
     }
 
   itk::simple::Image::Pointer outImage = segmentationFilter.Execute(image);
