@@ -8,7 +8,9 @@
 namespace itk {
   namespace simple {
 
-    class ImageFilter {
+  class ImageFilter:
+      protected NonCopyable
+  {
     public:
       typedef ImageFilter Self;
 

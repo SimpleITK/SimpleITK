@@ -3,13 +3,17 @@
 
 #include "sitkPixelIDTypeLists.h"
 #include "sitkPixelIDValues.h"
+#include "sitkNonCopyable.h"
 
 namespace itk
 {
   namespace simple
   {
 
-    class PixelContainer : public LightObject {
+    class PixelContainer :
+      public LightObject,
+      protected NonCopyable
+    {
     public:
       typedef PixelContainer     Self;
       typedef SmartPointer<Self> Pointer;
