@@ -1,4 +1,5 @@
 #include "sitkImage.h"
+#include "sitkImage.txx"
 
 namespace {
 
@@ -164,6 +165,11 @@ namespace itk
     uint64_t Image::GetDepth( void )
     {
       return this->m_PimpleImage->GetDepth();
+    }
+
+    PixelContainer::Pointer Image::GetPixelContainer()
+    {
+      return this->m_PimpleImage->GetPixelContainer();
     }
 
     /*

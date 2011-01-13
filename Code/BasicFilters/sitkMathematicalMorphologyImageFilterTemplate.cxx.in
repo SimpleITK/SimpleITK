@@ -1,3 +1,4 @@
+#include "sitkImage.txx"
 #include "sitk${name}ImageFilter.h"
 #include "itk${name}ImageFilter.h"
 #include "itkFlatStructuringElement.h"
