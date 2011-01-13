@@ -68,9 +68,12 @@ public:
   const PixelContainer * GetPixelContainer() const { return NULL; }
 
 protected:
-  LabelMapFacade();
+  LabelMapFacade() {};
   virtual ~LabelMapFacade() {}
-  void PrintSelf(std::ostream & os, Indent indent) const;
+  void PrintSelf(std::ostream & os, Indent indent) const
+    {
+    this->Superclass::PrintSelf( os, indent );
+    }
 
 private:
   LabelMapFacade(const Self &); //purposely not implemented
