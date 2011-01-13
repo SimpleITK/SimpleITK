@@ -13,13 +13,12 @@ end)
 namespace itk {
   namespace simple {
 
+    /**
+     * ${doc}
+     */
     class ${name}ImageFilter : public $(if number_of_inputs == 2 then OUT=[[DualImageFilter]] else OUT=[[ImageFilter]] end) {
     public:
       typedef ${name}ImageFilter Self;
-
-      /**
-         ${doc}
-      */
 
       /**
        * Default Constructor that takes no arguments and initializes

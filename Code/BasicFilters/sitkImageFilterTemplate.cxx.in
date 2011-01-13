@@ -35,7 +35,11 @@ std::string ${name}ImageFilter::ToString() const
   out << "itk::simple::${name}ImageFilter\n";
 
   $(foreach members
-    $(if (not no_print) or (not no_print == 1) then
+    $(if dim_vec and dim_vec == 1 then
+      OUT = [[out << "\t${name}: ";
+      printStdVector(this->m_${name}, out);
+      out << std::endl;]]
+    elseif (not no_print) or (not no_print == 1) then
       OUT = 'out << "\t${name}: " << this->m_${name} << std::endl;'
       end)
   )
@@ -136,8 +140,15 @@ Image::Pointer ${name}ImageFilter::ExecuteInternal ( Image::Pointer inImage1 $(i
   $(foreach members
     $(if custom_itk_cast then
       OUT = '${custom_itk_cast}'
+    elseif dim_vec and dim_vec == 1 then
+      OUT = [[${itk_type} itkVec${name};
+      for (unsigned int i = 0; i < inImage1->GetDimension(); ++i)
+        {
+        itkVec${name}[i] = this->Get${name}()[i];
+        }
+      filter->Set${name}( itkVec${name} );]]
     elseif(not no_set_method) or (no_set_method == 0) then
-      OUT = 'filter->Set${name} ( this->m_${name} );'
+      OUT = 'filter->Set${name} ( $(if type == "itk::simple::Size" then OUT=[[(typename InputImageType::SizeType)]]elseif type == "itk::simple::Index" then OUT=[[(typename InputImageType::IndexType)]] end)this->m_${name} );'
       end)
   )
   filter->Update();
