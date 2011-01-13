@@ -98,10 +98,6 @@ protected:
 
   ObjectType *m_ObjectPointer;
 
-private:
-  Self &operator=(const Self&); // Not Implemented
-  MemberFunctionFactory( const Self &); // Not Implemented
-
 };
 
 } // end namespace detail

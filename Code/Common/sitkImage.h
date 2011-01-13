@@ -6,13 +6,17 @@
 #include "sitkPixelIDTypeLists.h"
 #include "sitkMemberFunctionFactory.h"
 #include "sitkPixelContainer.h"
+#include "sitkNonCopyable.h"
 
 namespace itk
 {
   namespace simple
   {
 
-    class Image : public LightObject {
+    class Image
+      : public LightObject,
+        protected NonCopyable
+    {
     public:
       typedef Image              Self;
       typedef SmartPointer<Self> Pointer;
@@ -82,9 +86,6 @@ namespace itk
       friend struct detail::AllocateMemberFunctionAddressor<MemberFunctionType>;
 
     private:
-
-      // Copying is not supported
-      Image &operator=( const Image & ); // Not implemented
 
 
   /** We utilize the private implementation ( or PImple)
