@@ -1,3 +1,4 @@
+#include "sitkImage.txx"
 #include "sitkStatisticsImageFilter.h"
 #include "itkStatisticsImageFilter.h"
 

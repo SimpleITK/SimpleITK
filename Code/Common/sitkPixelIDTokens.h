@@ -82,8 +82,8 @@ struct IsLabel< LabelPixelID<TPixelType> >
   typedef typename TrueType::type       Type;
 };
 template <typename TLabelType, unsigned int VImageDimension>
-struct IsLabel< itk::LabelMap<  itk::LabelObject< TLabelType, VImageDimension > > >
-  : public IsLabel< typename ImageTypeToPixelID< itk::LabelMap< itk::LabelObject< TLabelType, VImageDimension > > >::PixelIDType >
+struct IsLabel< itk::LabelMapFacade<  itk::LabelObject< TLabelType, VImageDimension > > >
+  : public IsLabel< typename ImageTypeToPixelID< itk::LabelMapFacade< itk::LabelObject< TLabelType, VImageDimension > > >::PixelIDType >
 {};
 
 
@@ -103,8 +103,8 @@ struct IsInstantiated< itk::VectorImage< TPixelType, VImageDimension> >
   : public IsInstantiated< typename ImageTypeToPixelID< itk::VectorImage<TPixelType, VImageDimension> >::PixelIDType >
 {};
 template <typename TLabelType, unsigned int VImageDimension>
-struct IsInstantiated< itk::LabelMap<  itk::LabelObject< TLabelType, VImageDimension > > >
-  : public IsInstantiated< typename ImageTypeToPixelID< itk::LabelMap< itk::LabelObject< TLabelType, VImageDimension > > >::PixelIDType >
+struct IsInstantiated< itk::LabelMapFacade<  itk::LabelObject< TLabelType, VImageDimension > > >
+  : public IsInstantiated< typename ImageTypeToPixelID< itk::LabelMapFacade< itk::LabelObject< TLabelType, VImageDimension > > >::PixelIDType >
 {};
 
 }

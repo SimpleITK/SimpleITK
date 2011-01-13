@@ -1,5 +1,6 @@
 #include "sitkCastImageFilter.h"
 
+#include "sitkImage.txx"
 #include <itkCastImageFilter.h>
 #include <itkImageToVectorImageFilter.h>
 #include <itkLabelImageToLabelMapFilter.h>

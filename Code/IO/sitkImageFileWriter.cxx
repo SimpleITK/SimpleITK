@@ -1,4 +1,7 @@
+
 #include "sitkImageFileWriter.h"
+#include "sitkImage.txx"
+
 #include <itkImageIOBase.h>
 #include <itkImageFileWriter.h>
 #include <itkImageRegionIterator.h>

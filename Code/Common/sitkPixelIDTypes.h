@@ -4,7 +4,7 @@
 
 #include <itkImage.h>
 #include <itkVectorImage.h>
-#include <itkLabelMap.h>
+#include <itkLabelMapFacade.h>
 #include <itkLabelObject.h>
 
 namespace itk
@@ -48,7 +48,7 @@ struct VectorPixelID
 {};
 
 
-/** This type is used as an identity for pixel of itk::LabelMap type
+/** This type is used as an identity for pixel of itk::LabelMapFacade type
  *
  * This is an empty type which is used for compile-time
  * meta-programming. It does not contain any information, an image
@@ -95,7 +95,7 @@ struct PixelIDToImageType< VectorPixelID< TVectorPixelType >, VImageDimension >
 template <typename TLabelType, unsigned int VImageDimension>
 struct PixelIDToImageType< LabelPixelID< TLabelType >, VImageDimension >
 {
-  typedef itk::LabelMap< itk::LabelObject< TLabelType, VImageDimension > > ImageType;
+  typedef itk::LabelMapFacade< itk::LabelObject< TLabelType, VImageDimension > > ImageType;
 };
 /** @} */
 
@@ -128,7 +128,7 @@ struct ImageTypeToPixelID< itk::VectorImage< TPixelType, VImageDimension> >
 };
 
 template <typename TLabelType, unsigned int VImageDimension>
-struct ImageTypeToPixelID< itk::LabelMap< itk::LabelObject< TLabelType, VImageDimension > > >
+struct ImageTypeToPixelID< itk::LabelMapFacade< itk::LabelObject< TLabelType, VImageDimension > > >
 {
   typedef  LabelPixelID< TLabelType > PixelIDType;
 };
