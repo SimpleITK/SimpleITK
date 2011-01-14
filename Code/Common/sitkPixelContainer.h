@@ -10,6 +10,9 @@ namespace itk
   namespace simple
   {
 
+  // forward declaration needed for friendship
+  class Image;
+
     class PixelContainer :
       public LightObject,
       protected NonCopyable
