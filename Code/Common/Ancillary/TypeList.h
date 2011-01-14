@@ -48,8 +48,8 @@ struct NullType {};
 
 
 
-/* \class  MakeTypeList
- * \breif Generates a TypeList from it's template arguments
+/**\class  MakeTypeList
+ * \brief Generates a TypeList from it's template arguments
  *
  * The arguments are type names.
  * MakeTypeList<T1, T2, ...>::Type
@@ -60,7 +60,6 @@ struct NullType {};
  * typedef typelist::MakeTypeList< int, char, short>::Type MyTypeList;
  * \endcode
  *
- * @{
  */
 template
 <
@@ -95,11 +94,11 @@ struct MakeTypeList<>
 {
   typedef NullType Type;
 };
-/*@}*/
 
 
 
-/* \class Length
+template <typename TTypeList> struct Length;
+/**\class Length
  * \brief Computes the length of a typelist
  *
  * Example:
@@ -110,24 +109,24 @@ struct MakeTypeList<>
  * returns a compile-time constant containing the length of TTypeList,
  * not counting the end terminator (which by convention is NullType)
  *
- * @{
  */
-template <typename TTypeList> struct Length;
-template <> struct Length<NullType>
-{
-  enum { Result = 0 };
-};
-
 template <typename H, typename T>
 struct Length< TypeList<H, T> >
 {
   enum { Result = 1 + Length<T>::Result };
 };
-/*@}*/
+
+/** \cond TYPELIST_IMPLEMENTATION */
+template <> struct Length<NullType>
+{
+  enum { Result = 0 };
+};
+/** \endcond */
 
 
-/* \class TypeAt
- * \breif Finds the type at a given index in a typelist
+
+/**\class TypeAt
+ * \brief Finds the type at a given index in a typelist
  *
  * Example:
  * \code
@@ -139,7 +138,6 @@ struct Length< TypeList<H, T> >
  * If you pass an out-of-bounds index, the result is a compile-time
  * error
  *
- * @{
  */
 template <class TTypeList, unsigned int index> struct TypeAt;
 
@@ -154,10 +152,10 @@ struct TypeAt<TypeList<Head, Tail>, i>
 {
   typedef typename TypeAt<Tail, i - 1>::Result Result;
 };
-/*@}*/
 
 
-/* \class Append
+template <class TTypeList1, class TTypeList2> struct Append;
+/**\class Append
  * \brief Appends a type or a typelist to another
  *
  * Example 1:
@@ -177,10 +175,14 @@ struct TypeAt<TypeList<Head, Tail>, i>
  *  terminated by NullType. TTypeList2 may be another typelist or a
  *  single type.
  *
- * @{
  */
-template <class TTypeList1, class TTypeList2> struct Append;
+template <class Head, class Tail, class T>
+struct Append<TypeList<Head, Tail>, T>
+{
+  typedef TypeList<Head, typename Append<Tail, T>::Type> Type;
+};
 
+/** \cond TYPELIST_IMPLEMENTATION */
 template <> struct Append<NullType, NullType>
 {
   typedef NullType Type;
@@ -203,15 +205,9 @@ struct Append<TypeList<Head, Tail>, NullType>
 {
   typedef TypeList<Head, Tail> Type;
 };
-template <class Head, class Tail, class T>
-struct Append<TypeList<Head, Tail>, T>
-{
-  typedef TypeList<Head, typename Append<Tail, T>::Type>
-  Type;
-};
-/*@}*/
+/** \endcond */
 
-/* \class IndexOf
+/**\class IndexOf
  * \brief Finds the index of a type in a typelist
  *
  * Example:
@@ -222,7 +218,6 @@ struct Append<TypeList<Head, Tail>, T>
  *
  * IndexOf<TTypeList, T>::value
  * returns the position of T in TList, or NullType if T is not found in TList
- * @{
  */
 template <class TTypeList, class TType> struct IndexOf;
 template <class TType>
@@ -243,10 +238,9 @@ private:
 public:
   enum { Result = (temp == -1 ? -1 : 1 + temp) };
 };
-/*@}*/
 
 
-/* \class HasType
+/**\class HasType
  * \brief Queries the typelist for a type
  *
  * Example:
@@ -257,7 +251,6 @@ public:
  *
  * IndexOf<TList, T>::value
  * returns the position of T in TList, or NullType if T is not found in TList
- * @{
  */
 template <class TTypeList, class TType> struct HasType;
 template <class TType>
@@ -273,50 +266,199 @@ template <class Head, class TTail, class TType>
 struct HasType<TypeList<Head, TTail>, TType> {
   enum { Result = HasType<TTail, TType>::Result };
 };
-/*@}*/
 
 
-/* \class ForEach
+/**\class Visit
  * \brief Runs a templated predicate on each type in the list
  *
  * \code
  * struct Predicate
  * {
  *  template<class TType>
- *  void operator()( TType t )
- *     { std::cout << typeid(t).name() << std::endl; }
+ *  void operator()( void ) const
+ *     { std::cout << typeid(TType).name() << std::endl; }
  * }
  *
  * typedef typelist::MakeTypeList<int, char>::Type MyTypeList;
- * typelist::ForEach<MyTypeList>( Predicate() );
+ * typelist::Visit<MyTypeList>( Predicate() );
  *
  * \endcode
  *
- * Each type in the list must be default constructable.
  *
- * @{
  */
-template <class TTypeList> struct ForEach;
-template <> struct ForEach < NullType>
+template <class TTypeList>
+struct Visit
 {
   template < class Predicate >
-  void operator()( Predicate )
+  void operator()( Predicate &visitor )
+  {
+    typedef typename TTypeList::Head Head;
+    typedef typename TTypeList::Tail Tail;
+    visitor.operator()<Head>( );
+    Visit<Tail> next;
+    next.operator()<Predicate>( visitor );
+  }
+  template < class Predicate >
+  void operator()( const Predicate &visitor )
+  {
+    typedef typename TTypeList::Head Head;
+    typedef typename TTypeList::Tail Tail;
+    visitor.operator()<Head>( );
+    Visit<Tail> next;
+    next.operator()<Predicate>( visitor );
+  }
+};
+template <> struct Visit < NullType>
+{
+  template < class Predicate >
+  void operator()( const Predicate &)
     {}
 };
-template <class THead, class TTail>
-struct ForEach< TypeList<THead, TTail> >
+
+
+template < typename TLeftTypeList, typename TRightTypeList >
+struct DualVisitImpl;
+
+/**\class DualVisit
+ * \brief Runs a templated predicate on each combination of the types
+ * on the two lists
+ *
+ * \code
+ * struct Predicate
+ * {
+ *  template<class TType1, TType2>
+ *  void operator()( void ) const
+ *     { std::cout << typeid(TType1).name() << " " << typeid(TType2.name() <<
+ * std::endl; }
+ * }
+ *
+ * typedef typelist::MakeTypeList<int, char>::Type MyTypeList;
+ * typelist::DualVisit<MyTypeList, MyTypeList>( Predicate() );
+ *
+ * \endcode
+ *
+ */
+template < typename TLeftTypeList, typename TRightTypeList >
+struct DualVisit
 {
-  template < class Predicate >
-  void operator()( Predicate visitor )
-    {
-      typedef THead Head;
-      typedef TTail Tail;
-      visitor( THead() );
-      ForEach<TTail> next;
-      next.operator()<Predicate>( visitor );
-    }
+
+  template <typename Visitor>
+  void operator()( Visitor &visitor ) const
+  {
+    DualVisitImpl<TLeftTypeList, TRightTypeList > impl;
+    return impl.operator()<Visitor>( visitor );
+  }
+
+  template <typename Visitor>
+  void operator()( const Visitor &visitor ) const
+  {
+    DualVisitImpl<TLeftTypeList, TRightTypeList > impl;
+    return impl.operator()<Visitor>( visitor );
+  }
 };
-/*@}*/
+
+/** \cond TYPELIST_IMPLEMENTATION
+*
+* The procedual algorithm for this code is:
+* \code
+*  foreach leftType in TLeftTypList
+*    foreach rightType in TRightTypeList
+*      visit( leftType, rightTYpe )
+* \endcode
+*
+* Where inner loop has been unwound in to a tail recursive templated
+* meta-function visitRHS. The outer loop is recursively implemented in
+* the operator().
+*/
+template < typename TLeftTypeList, typename TRightTypeList >
+struct DualVisitImpl
+{
+  template <typename Visitor>
+  void operator()( Visitor &visitor ) const
+  {
+    typedef typename TLeftTypeList::Head  LeftHead;
+    typedef typename TRightTypeList::Head RightHead;
+    typedef typename TLeftTypeList::Tail  LeftTail;
+    typedef typename TRightTypeList::Tail RightTail;
+
+
+    DualVisitImpl< TLeftTypeList, TRightTypeList> goRight;
+    goRight.visitRHS<Visitor>( visitor );
+
+    DualVisitImpl<LeftTail, TRightTypeList> goLeft;
+    goLeft.operator()<Visitor>( visitor );
+  }
+
+  template <typename Visitor>
+  void operator()( const Visitor &visitor ) const
+  {
+    typedef typename TLeftTypeList::Head  LeftHead;
+    typedef typename TRightTypeList::Head RightHead;
+    typedef typename TLeftTypeList::Tail  LeftTail;
+    typedef typename TRightTypeList::Tail RightTail;
+
+
+    DualVisitImpl< TLeftTypeList, TRightTypeList> goRight;
+    goRight.visitRHS<Visitor>( visitor );
+
+    DualVisitImpl<LeftTail, TRightTypeList> goLeft;
+    goLeft.operator()<Visitor>( visitor );
+  }
+
+  template <typename Visitor>
+  void visitRHS( Visitor &visitor ) const
+  {
+    typedef typename TLeftTypeList::Head  LeftHead;
+    typedef typename TRightTypeList::Head RightHead;
+    typedef typename TLeftTypeList::Tail  LeftTail;
+    typedef typename TRightTypeList::Tail RightTail;
+
+    visitor.operator()<LeftHead, RightHead>( );
+
+    DualVisitImpl< TLeftTypeList, RightTail> goRight;
+    goRight.visitRHS<Visitor>( visitor );
+  }
+  template <typename Visitor>
+  void visitRHS( const Visitor &visitor ) const
+  {
+    typedef typename TLeftTypeList::Head  LeftHead;
+    typedef typename TRightTypeList::Head RightHead;
+    typedef typename TLeftTypeList::Tail  LeftTail;
+    typedef typename TRightTypeList::Tail RightTail;
+
+    visitor.operator()<LeftHead, RightHead>( );
+
+    DualVisitImpl< TLeftTypeList, RightTail> goRight;
+    goRight.visitRHS<Visitor>( visitor );
+  }
+};
+
+template < typename TRightTypeList >
+struct DualVisitImpl< typelist::NullType, TRightTypeList >
+{
+  template <typename Visitor>
+  void operator()( const Visitor &visitor ) const
+  { }
+};
+template < typename TLeftTypeList >
+struct DualVisitImpl< TLeftTypeList, typelist::NullType >
+{
+  template <typename Visitor>
+  void operator()( const Visitor &visitor ) const
+  { }
+
+  template <typename Visitor>
+  void visitRHS( const Visitor &visitor ) const {}
+};
+
+template < >
+struct DualVisitImpl< typelist::NullType, typelist::NullType >
+{
+  template <typename Visitor>
+  void operator()( const Visitor &visitor ) const
+  { }
+};
+/**\endcond*/
 
 }
 

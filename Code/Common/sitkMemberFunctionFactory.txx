@@ -16,10 +16,10 @@ namespace detail {
 // a privately declared predicate for use with the typelist::ForEach
 // algorithm
 //
-// This predicate calls the member function factories AddressorType on
+// This predicate calls the provided AddressorType on
 // each valid ImageType defined from the pixel type id, and the
 // provided dimension
-template < typename TMemberFunctionFactory, unsigned int VImageDimension >
+template < typename TMemberFunctionFactory, unsigned int VImageDimension, typename TAddressor >
 struct MemberFunctionInstantiater
 {
   MemberFunctionInstantiater( TMemberFunctionFactory &factory )
@@ -28,10 +28,10 @@ struct MemberFunctionInstantiater
 
   template <class TPixelIDType>
   typename EnableIf< IsInstantiated< typename PixelIDToImageType<TPixelIDType, VImageDimension>::ImageType >::Value >::Type
-  operator()( TPixelIDType )
+  operator()( TPixelIDType*id=NULL ) const
     {
       typedef typename PixelIDToImageType<TPixelIDType, VImageDimension>::ImageType ImageType;
-      typedef typename TMemberFunctionFactory::AddressorType                         AddressorType;
+      typedef TAddressor                                                            AddressorType;
 
       AddressorType addressor;
       m_Factory.Register(addressor.operator()<ImageType>(), (ImageType*)(NULL));
@@ -41,26 +41,25 @@ struct MemberFunctionInstantiater
   // this methods is conditionally enabled when the PixelID is not instantiated
   template <class TPixelIDType>
   typename DisableIf< IsInstantiated< typename PixelIDToImageType<TPixelIDType, VImageDimension>::ImageType >::Value >::Type
-  operator()( TPixelIDType ) {}
+  operator()( TPixelIDType*id=NULL ) const
+  {}
 
 private:
 
   TMemberFunctionFactory &m_Factory;
 };
 
-template <typename TMemberFunctionPointer,
-          typename TMemberFunctionAddressor>
-MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
+template <typename TMemberFunctionPointer>
+MemberFunctionFactory<TMemberFunctionPointer>
 ::MemberFunctionFactory( typename MemberFunctionFactory::ObjectType *pObject )
   : m_ObjectPointer( pObject )
 {
   assert( pObject );
 }
 
-template <typename TMemberFunctionPointer,
-          typename TMemberFunctionAddressor>
+template <typename TMemberFunctionPointer>
 template<typename TImageType >
-void MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
+void MemberFunctionFactory<TMemberFunctionPointer>
 ::Register( typename MemberFunctionFactory::MemberFunctionType pfunc,  TImageType*  )
 {
   PixelIDValueType pixelID = ImageTypeToPixelIDValue<TImageType>::Result;
@@ -89,25 +88,52 @@ void MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
     }
 }
 
-template <typename TMemberFunctionPointer,
-          typename TMemberFunctionAddressor>
+template <typename TMemberFunctionPointer>
 template <typename TPixelIDTypeList,
-          unsigned int VImageDimension >
-void MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
+          unsigned int VImageDimension,
+          typename TAddressor>
+void MemberFunctionFactory<TMemberFunctionPointer>
 ::RegisterMemberFunctions( void )
 {
-  typedef MemberFunctionInstantiater< MemberFunctionFactory, VImageDimension > InstantiaterType;
+  typedef MemberFunctionInstantiater< MemberFunctionFactory, VImageDimension,TAddressor > InstantiaterType;
 
-  // initialize function array with pointer
-  typelist::ForEach<TPixelIDTypeList> forEachTypeInList;
-  forEachTypeInList( InstantiaterType( *this ) );
+  // visit each type in the list, and register if instantiated
+  typelist::Visit<TPixelIDTypeList> visitEachType;
+  visitEachType( InstantiaterType( *this ) );
 }
 
 
-template <typename TMemberFunctionPointer,
-          typename TMemberFunctionAddressor>
-typename MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>::FunctionObjectType
-MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
+template <typename TMemberFunctionPointer>
+bool
+MemberFunctionFactory< TMemberFunctionPointer >
+::HasMemberFunction( PixelIDValueType pixelID, unsigned int imageDimension  ) const throw()
+{
+
+  try
+    {
+    switch ( imageDimension )
+      {
+      case 3:
+        // check if tr1::function has been set in map
+        return Superclass::m_PFunction3.find( pixelID ) != Superclass::m_PFunction3.end();
+      case 2:
+        // check if tr1::function has been set in map
+        return Superclass::m_PFunction2.find( pixelID ) != Superclass::m_PFunction2.end();
+      default:
+        return false;
+      }
+    }
+  // we do not throw exceptions
+  catch(...)
+    {
+    return false;
+    }
+}
+
+
+template <typename TMemberFunctionPointer>
+typename MemberFunctionFactory<TMemberFunctionPointer>::FunctionObjectType
+MemberFunctionFactory<TMemberFunctionPointer>
 ::GetMemberFunction( PixelIDValueType pixelID, unsigned int imageDimension  )
 {
   if ( pixelID >= typelist::Length< InstantiatedPixelIDTypeList >::Result || pixelID < 0 )
@@ -119,7 +145,7 @@ MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
     {
     case 3:
       // check if tr1::function has been set
-      if ( Superclass::m_PFunction3[ pixelID ] )
+      if ( Superclass::m_PFunction3.find( pixelID ) != Superclass::m_PFunction3.end() )
         {
         return Superclass::m_PFunction3[ pixelID ];
         }
@@ -132,7 +158,7 @@ MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
       break;
     case 2:
       // check if tr1::function has been set
-      if ( Superclass::m_PFunction2[ pixelID ] )
+      if (  Superclass::m_PFunction3.find( pixelID ) != Superclass::m_PFunction3.end() )
         {
         return Superclass::m_PFunction2[ pixelID ];
         }

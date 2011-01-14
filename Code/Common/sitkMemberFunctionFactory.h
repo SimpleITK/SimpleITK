@@ -25,7 +25,7 @@ namespace detail {
  *  \endcode
  *
  *  The MemberFunctionAddressor will instantiate the templeted member
- *  functions by taking their adress. These addresses need to be
+ *  functions by taking their address. These addresses need to be
  *  registered with the RegisterMethods. Later they can be retrieve
  *  with the GetMemberFunction methods, which return a function object
  *  with the same arguments as the templated member function pointer.
@@ -33,20 +33,18 @@ namespace detail {
  *  An instance of a MemberFunctionFactory is bound to a specific
  *  instance of an object, so that the returned function object does
  * not need to have the calling object specified. */
-template <typename TMemberFunctionPointer,
-          typename TMemberFunctionAddressor = detail::MemberFunctionAddressor< TMemberFunctionPointer > >
+template <typename TMemberFunctionPointer>
 class MemberFunctionFactory
-  : protected MemberFunctionFactoryBase<TMemberFunctionPointer>
+  : protected MemberFunctionFactoryBase<TMemberFunctionPointer, int>
 {
 
 public:
 
-  typedef MemberFunctionFactoryBase<TMemberFunctionPointer> Superclass;
-  typedef MemberFunctionFactory                             Self;
+  typedef MemberFunctionFactoryBase<TMemberFunctionPointer, int> Superclass;
+  typedef MemberFunctionFactory                                  Self;
 
   typedef TMemberFunctionPointer                                           MemberFunctionType;
   typedef typename ::detail::FunctionTraits<MemberFunctionType>::ClassType ObjectType;
-  typedef TMemberFunctionAddressor                                         AddressorType;
   typedef typename Superclass::FunctionObjectType                          FunctionObjectType;
 
   /** \brief Constructor which permanently binds the constructed
@@ -69,9 +67,19 @@ public:
    * this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
    * \endcode
    */
-  template < typename TPixelIDTypeList, unsigned int VImageDimension >
+  template < typename TPixelIDTypeList,
+             unsigned int VImageDimension,
+             typename TAddressor>
   void RegisterMemberFunctions( void );
+  template < typename TPixelIDTypeList, unsigned int VImageDimension >
+  void RegisterMemberFunctions( void )
+  {
+    typedef detail::MemberFunctionAddressor< TMemberFunctionPointer > AddressorType;
+    this->RegisterMemberFunctions< TPixelIDTypeList, VImageDimension, AddressorType >();
+  }
 
+  /** \todo document me! */
+  bool HasMemberFunction( PixelIDValueType pixelID1, unsigned int imageDimension  ) const throw();
 
   /** \brief Returns a function object for the PixelIndex, and image
    *  dimension.
