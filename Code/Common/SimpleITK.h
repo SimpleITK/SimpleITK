@@ -18,6 +18,7 @@
 #include "sitkImageFileWriter.h"
 #include "sitkStatisticsImageFilter.h"
 #include "sitkExtractImageFilter.h"
+#include "sitkCastImageFilter.h"
 
 // These headers are auto-generated
 #include "SimpleITKBasicFiltersGeneratedHeaders.h"
