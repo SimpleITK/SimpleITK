@@ -28,7 +28,7 @@ struct MemberFunctionInstantiater
 
   template <class TPixelIDType>
   typename EnableIf< IsInstantiated< typename PixelIDToImageType<TPixelIDType, VImageDimension>::ImageType >::Value >::Type
-  operator()( TPixelIDType )
+  operator()( TPixelIDType*id=NULL ) const
     {
       typedef typename PixelIDToImageType<TPixelIDType, VImageDimension>::ImageType ImageType;
       typedef typename TMemberFunctionFactory::AddressorType                         AddressorType;
@@ -41,7 +41,8 @@ struct MemberFunctionInstantiater
   // this methods is conditionally enabled when the PixelID is not instantiated
   template <class TPixelIDType>
   typename DisableIf< IsInstantiated< typename PixelIDToImageType<TPixelIDType, VImageDimension>::ImageType >::Value >::Type
-  operator()( TPixelIDType ) {}
+  operator()( TPixelIDType*id=NULL ) const
+  {}
 
 private:
 
@@ -99,8 +100,8 @@ void MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
   typedef MemberFunctionInstantiater< MemberFunctionFactory, VImageDimension > InstantiaterType;
 
   // initialize function array with pointer
-  typelist::ForEach<TPixelIDTypeList> forEachTypeInList;
-  forEachTypeInList( InstantiaterType( *this ) );
+  typelist::Visit<TPixelIDTypeList> visitEachType;
+  visitEachType( InstantiaterType( *this ) );
 }
 
 
