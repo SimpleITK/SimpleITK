@@ -25,7 +25,7 @@ TEST_F(sitkExceptionsTest, Test1) {
   catch ( ::itk::simple::GenericException &e )
     {
     // could do some nifty testing here too
-    EXPECT_EQ ( e.GetNameOfClass(), "GenericException" );
+    EXPECT_EQ ( e.GetNameOfClass(), std::string("GenericException") );
     EXPECT_NE ( std::string ( e.GetLocation() ),  "" );
     return;
     }
