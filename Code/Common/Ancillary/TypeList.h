@@ -49,7 +49,7 @@ struct NullType {};
 
 
 /**\class  MakeTypeList
- * \breif Generates a TypeList from it's template arguments
+ * \brief Generates a TypeList from it's template arguments
  *
  * The arguments are type names.
  * MakeTypeList<T1, T2, ...>::Type
@@ -126,7 +126,7 @@ template <> struct Length<NullType>
 
 
 /**\class TypeAt
- * \breif Finds the type at a given index in a typelist
+ * \brief Finds the type at a given index in a typelist
  *
  * Example:
  * \code
