@@ -98,9 +98,9 @@ namespace itk
     void Image::Allocate ( uint64_t Width, uint64_t Height, uint64_t Depth, PixelIDValueEnum ValueEnum ) {
       // Allocate an image
 
-      detail::MemberFunctionFactory<MemberFunctionType, AllocateAddressor> allocateMemberFactory(this);
-      allocateMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 3 > ();
-      allocateMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 2 > ();
+      detail::MemberFunctionFactory<MemberFunctionType> allocateMemberFactory(this);
+      allocateMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 3,  AllocateAddressor > ();
+      allocateMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 2,  AllocateAddressor > ();
 
       if ( ValueEnum == sitkUnknown )
         {
