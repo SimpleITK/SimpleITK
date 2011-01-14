@@ -5,110 +5,117 @@
 
 #include "sitkPixelIDTokens.h"
 
-namespace itk {
-  namespace simple {
+#include "sitkDualMemberFunctionFactory.h"
 
-  /** \brief A hybrid cast image filter to convert basic images to
-   * other types.
+namespace itk
+{
+namespace simple
+{
+
+/** \brief A hybrid cast image filter to convert images to other types
+   * of images.
    *
-   * This simple filter converts images of basic pixels into other
-   * basic pixels or vector pixels or label maps.
+   * Several different ITK classes are implemented under the hood, to
+   * convert between different image types.
    */
-    class CastImageFilter : ImageFilter {
-    public:
-      typedef CastImageFilter      Self;
+class CastImageFilter
+  : public ImageFilter
+{
+public:
+  typedef CastImageFilter      Self;
 
-      typedef BasicPixelIDTypeList PixelIDTypeList;
+  /** Set/Get the output pixel type */
+  Self& SetOutputPixelType( PixelIDValueEnum pixelID );
+  Self& SetOutputPixelType( PixelIDValueType pixelID );
+  PixelIDValueType GetOutputPixelType( void ) const;
 
+  /**
+   * Default Constructor that takes no arguments and initializes
+   * default parameters
+    */
+  CastImageFilter();
 
-      /** Set/Get the output pixel type */
-      Self& SetOutputPixelType( PixelIDValueEnum pixelID ) { this->m_OutputPixelType =  PixelIDValueType(pixelID); return *this; }
-      Self& SetOutputPixelType( PixelIDValueType pixelID ) { this->m_OutputPixelType = pixelID; return *this; }
-      PixelIDValueType GetOutputPixelType( void ) const { return this->m_OutputPixelType; }
+  // See super class for doxygen
+  std::string ToString() const;
 
-      /**
-       * Default Constructor that takes no arguments and initializes
-       * default parameters
-       */
-      CastImageFilter();
+  // See super class for doxygen
+  Image::Pointer Execute ( Image::Pointer );
 
-      // See super class for doxygen
-      std::string ToString() const;
+private:
 
-      // See super class for doxygen
-      Image::Pointer Execute ( Image::Pointer );
+  PixelIDValueType m_OutputPixelType;
 
-    private:
+  /** Methods to actually implement conversion from one image type
+   * to another.
+   *
+   * These methods implement CastImageFilter,
+   * ImageToVectorImageFilter, and LabelImageToLabelMapImageFilter
+   * respectively.
+   *
+   * @{
+   */
+  template<typename TImageType, typename TOutputImageType>
+  Image::Pointer ExecuteInternalCast( Image::Pointer inImage );
 
-      PixelIDValueType m_OutputPixelType;
+  template<typename TImageType, typename TOutputImageType>
+  Image::Pointer ExecuteInternalToVector( Image::Pointer inImage );
 
-      /** Methods to actually implement conversion from one image type
-       * to another.
-       *
-       * The enable if idiom is used only to instatiate these methods
-       * with the supported images. The compiler will fall back to the
-       * methods with ellipses if this methods is not enabled.
-       *
-       * These methods implement CastImageFilter,
-       * ImageToVectorImageFilter, and LabelImageToLabelMapImageFilter
-       * respectively.
-       *
-       * @{
-       */
-      template<typename TImageType, typename TOutputImageType>
-      typename EnableIf< IsInstantiated<TOutputImageType>::Value, Image::Pointer>::Type
-      ExecuteInternalToBasic( const TImageType* inImage );
+  template<typename TImageType, typename TOutputImageType>
+  Image::Pointer ExecuteInternalToLabel( Image::Pointer inImage );
+  /** @} */
 
-      template<typename TImageType, typename TOutputImageType>
-      typename EnableIf< IsInstantiated<TOutputImageType>::Value, Image::Pointer>::Type
-      ExecuteInternalToVector( const TImageType* inImage );
+  /** An addressor of ExecuteInternalCast to be utilized with
+   * registering member functions with the factory.
+   */
+  template < class TMemberFunctionPointer >
+  struct CastAddressor
+  {
+    typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
 
-      template<typename TImageType, typename TOutputImageType>
-      typename EnableIf< IsInstantiated<TOutputImageType>::Value, Image::Pointer>::Type
-      ExecuteInternalToLabel( const TImageType* inImage );
-      /** @} */
+    template< typename TImageType1, typename TImageType2 >
+    TMemberFunctionPointer operator() ( void ) const
+    {
+      return &ObjectType::template ExecuteInternalCast< TImageType1, TImageType2 >;
+    }
+  };
 
+  /** An addressor of ExecuteInternalToVector to be utilized with
+   * registering member functions with the factory.
+   */
+  template < class TMemberFunctionPointer >
+  struct ToVectorAddressor
+  {
+    typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
 
-      /**
-       * The following methods should never acutally be executed if
-       * the logic is correct in this filter.
-       *
-       * These methods should only be instantiated for output image
-       * types which are not instantiated.
-       * @{ */
-      template<typename TImageType, typename TOutputImageType>
-      Image::Pointer
-      ExecuteInternalToBasic( ... ) throw( GenericException )
-      { ExecuteDispatchLogicError(); return NULL; }
+    template< typename TImageType1, typename TImageType2 >
+    TMemberFunctionPointer operator() ( void ) const
+    {
+      return &ObjectType::template ExecuteInternalToVector< TImageType1, TImageType2 >;
+    }
+  };
 
-      template<typename TImageType, typename TOutputImageType>
-      Image::Pointer
-      ExecuteInternalToVector( ... ) throw( GenericException )
-      { ExecuteDispatchLogicError(); return NULL; }
+  /** An addressor of ExecuteInternalToLabel to be utilized with
+   * registering member functions with the factory.
+   */
+  template < class TMemberFunctionPointer >
+  struct ToLabelAddressor
+  {
+    typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
 
-      template<typename TImageType, typename TOutputImageType>
-      Image::Pointer
-      ExecuteInternalToLabel( ... ) throw( GenericException )
-      { ExecuteDispatchLogicError(); return NULL; }
-      /** @} */
-
-      /**
-       * This method has a failing assert and throws an exception when executed
-       */
-      static void ExecuteDispatchLogicError( void )  throw( GenericException ) ;
-
-      /** Dispatch methods for the member function factory */
-      template <typename TImageType>
-      Image::Pointer ExecuteInternal( Image::Pointer image );
-
-      typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer );
-
-      friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
-      std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
-
-    };
+    template< typename TImageType1, typename TImageType2 >
+    TMemberFunctionPointer operator() ( void ) const
+    {
+      return &ObjectType::template ExecuteInternalToLabel< TImageType1, TImageType2 >;
+    }
+  };
 
 
-  }
+  typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer );
+  std::auto_ptr<detail::DualMemberFunctionFactory<MemberFunctionType> > m_DualMemberFactory;
+
+};
+
+
+}
 }
 #endif
