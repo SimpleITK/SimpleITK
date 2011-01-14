@@ -120,7 +120,7 @@ MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
     {
     case 3:
       // check if tr1::function has been set
-      if ( Superclass::m_PFunction3[ pixelID ] )
+      if ( Superclass::m_PFunction3.find( pixelID ) != Superclass::m_PFunction3.end() )
         {
         return Superclass::m_PFunction3[ pixelID ];
         }
@@ -133,7 +133,7 @@ MemberFunctionFactory<TMemberFunctionPointer, TMemberFunctionAddressor>
       break;
     case 2:
       // check if tr1::function has been set
-      if ( Superclass::m_PFunction2[ pixelID ] )
+      if (  Superclass::m_PFunction3.find( pixelID ) != Superclass::m_PFunction3.end() )
         {
         return Superclass::m_PFunction2[ pixelID ];
         }

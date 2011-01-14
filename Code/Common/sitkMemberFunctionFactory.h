@@ -25,7 +25,7 @@ namespace detail {
  *  \endcode
  *
  *  The MemberFunctionAddressor will instantiate the templeted member
- *  functions by taking their adress. These addresses need to be
+ *  functions by taking their address. These addresses need to be
  *  registered with the RegisterMethods. Later they can be retrieve
  *  with the GetMemberFunction methods, which return a function object
  *  with the same arguments as the templated member function pointer.
@@ -36,13 +36,13 @@ namespace detail {
 template <typename TMemberFunctionPointer,
           typename TMemberFunctionAddressor = detail::MemberFunctionAddressor< TMemberFunctionPointer > >
 class MemberFunctionFactory
-  : protected MemberFunctionFactoryBase<TMemberFunctionPointer>
+  : protected MemberFunctionFactoryBase<TMemberFunctionPointer, int>
 {
 
 public:
 
-  typedef MemberFunctionFactoryBase<TMemberFunctionPointer> Superclass;
-  typedef MemberFunctionFactory                             Self;
+  typedef MemberFunctionFactoryBase<TMemberFunctionPointer, int> Superclass;
+  typedef MemberFunctionFactory                                  Self;
 
   typedef TMemberFunctionPointer                                           MemberFunctionType;
   typedef typename ::detail::FunctionTraits<MemberFunctionType>::ClassType ObjectType;
