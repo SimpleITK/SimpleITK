@@ -99,6 +99,7 @@ typedef unsigned int uint32_t;
 %include "sitkStatisticsImageFilter.h"
 %include "sitkRecursiveGaussianImageFilter.h"
 %include "sitkExtractImageFilter.h"
+%include "sitkCastImageFilter.h"
 %include "sitkIndex.h"
 %include "sitkSize.h"
 

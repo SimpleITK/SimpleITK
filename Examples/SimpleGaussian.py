@@ -1,5 +1,4 @@
 
-
 import SimpleITK
 import sys
 
@@ -9,17 +8,18 @@ if len ( sys.argv ) < 4:
 
 reader = SimpleITK.ImageFileReader()
 reader.SetFilename ( sys.argv[1] )
-image = reader.Execute();
-  
-print image.ToString()
+image = reader.Execute()
+
+pixelID = image.GetPixelIDValue()
 
 gaussian = SimpleITK.RecursiveGaussianImageFilter()
 gaussian.SetSigma ( float ( sys.argv[2] ) )
-image = gaussian.Execute ( image );
+image = gaussian.Execute ( image )
 
-print image.ToString()
+caster = SimpleITK.CastImageFilter()
+caster.SetOutputPixelType( pixelID )
+image = caster.Execute( image )
 
 writer = SimpleITK.ImageFileWriter()
 writer.SetFilename ( sys.argv[3] )
 writer.Execute ( image );
-

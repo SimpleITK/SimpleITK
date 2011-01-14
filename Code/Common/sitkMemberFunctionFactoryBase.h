@@ -17,6 +17,8 @@
 
 #include "FunctionTraits.h"
 
+#include <map>
+
 namespace itk
 {
 namespace simple
@@ -26,7 +28,9 @@ namespace simple
 namespace detail {
 
 
-template< typename TMemberFunctionPointer, unsigned int TArity = ::detail::FunctionTraits<TMemberFunctionPointer>::arity>
+template< typename TMemberFunctionPointer,
+          typename TKey,
+          unsigned int TArity = ::detail::FunctionTraits<TMemberFunctionPointer>::arity>
 class MemberFunctionFactoryBase;
 
 
@@ -36,8 +40,8 @@ class MemberFunctionFactoryBase;
  *  This class is for specialization needed for different arity for
  *  the templated member function pointer
  */
-template< typename TMemberFunctionPointer>
-class MemberFunctionFactoryBase<TMemberFunctionPointer, 1> :
+template< typename TMemberFunctionPointer, typename TKey>
+class MemberFunctionFactoryBase<TMemberFunctionPointer, TKey, 1> :
     protected NonCopyable
 {
 protected:
@@ -59,6 +63,8 @@ public:
 
 protected:
 
+  typedef TKey KeyType;
+
   /** A function which binds the objectPointer to the calling object
    *  argument in the member function pointer, and returns a function
    *  object.
@@ -74,19 +80,15 @@ protected:
       return std::tr1::bind( pfunc,objectPointer, _1 );
     }
 
-  // array of pointers to member functions
-  FunctionObjectType  m_PFunction3[ typelist::Length< InstantiatedPixelIDTypeList >::Result ];
-  FunctionObjectType  m_PFunction2[ typelist::Length< InstantiatedPixelIDTypeList >::Result ];
+  // maps of Keys to pointers to member functions
+  std::map<TKey, FunctionObjectType> m_PFunction3;
+  std::map<TKey, FunctionObjectType> m_PFunction2;
 
-private:
-
-  MemberFunctionFactoryBase * operator=(  MemberFunctionFactoryBase & );  // Not Implemented
-  MemberFunctionFactoryBase( const  MemberFunctionFactoryBase& );  // Not Implemented
 };
 
 
-template< typename TMemberFunctionPointer>
-class MemberFunctionFactoryBase<TMemberFunctionPointer, 2> :
+template< typename TMemberFunctionPointer, typename TKey>
+class MemberFunctionFactoryBase<TMemberFunctionPointer, TKey, 2> :
     protected NonCopyable
 {
 protected:
@@ -110,6 +112,8 @@ public:
 
 protected:
 
+  typedef TKey KeyType;
+
   /** A function which binds the objectPointer to the calling object
    *  argument in the member function pointer, and returns a function
    *  object
@@ -125,19 +129,15 @@ protected:
       return std::tr1::bind( pfunc, objectPointer, _1, _2 );
     }
 
-  // array of pointers to member functions
-  FunctionObjectType  m_PFunction3[ typelist::Length< InstantiatedPixelIDTypeList >::Result ];
-  FunctionObjectType  m_PFunction2[ typelist::Length< InstantiatedPixelIDTypeList >::Result ];
+  // maps of Keys to pointers to member functions
+  std::map<TKey, FunctionObjectType> m_PFunction3;
+  std::map<TKey, FunctionObjectType> m_PFunction2;
 
-private:
-
-  MemberFunctionFactoryBase * operator=(  MemberFunctionFactoryBase & );  // Not Implemented
-  MemberFunctionFactoryBase( const  MemberFunctionFactoryBase& );  // Not Implemented
 };
 
 
-template< typename TMemberFunctionPointer>
-class MemberFunctionFactoryBase<TMemberFunctionPointer, 3> :
+template< typename TMemberFunctionPointer, typename TKey>
+class MemberFunctionFactoryBase<TMemberFunctionPointer, TKey, 3> :
     protected NonCopyable
 {
 protected:
@@ -161,6 +161,8 @@ public:
 
 protected:
 
+  typedef TKey KeyType;
+
   /** A function which binds the objectPointer to the calling object
    *  argument in the member function pointer, and returns a function
    *  object
@@ -176,14 +178,10 @@ protected:
       return std::tr1::bind( pfunc, objectPointer, _1, _2, _3 );
     }
 
-  // array of pointers to member functions
-  FunctionObjectType  m_PFunction3[ typelist::Length< InstantiatedPixelIDTypeList >::Result ];
-  FunctionObjectType  m_PFunction2[ typelist::Length< InstantiatedPixelIDTypeList >::Result ];
+  // maps of Keys to pointers to member functions
+  std::map<TKey, FunctionObjectType> m_PFunction3;
+  std::map<TKey, FunctionObjectType> m_PFunction2;
 
-private:
-
-  MemberFunctionFactoryBase * operator=(  MemberFunctionFactoryBase & );  // Not Implemented
-  MemberFunctionFactoryBase( const  MemberFunctionFactoryBase& );  // Not Implemented
 };
 
 
