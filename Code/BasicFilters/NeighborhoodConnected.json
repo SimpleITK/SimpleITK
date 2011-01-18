@@ -23,8 +23,8 @@
        will be replaced with this value. The default is 1."
     },
     { "name" : "Radius",
-      "type" : "std::vector< unsigned int >",
-      "default" : "std::vector< unsigned int >(3, 1)",
+      "type" : "std::vector<size_t>",
+      "default" : "std::vector<size_t>(3, 1)",
       "doc" : "Radius of the neighborhood used to compute the median",
       "dim_vec" : 1,
       "itk_type" : "typename InputImageType::SizeType"
@@ -53,7 +53,7 @@
         },
         { "parameter" : "Radius",
           "dim_vec" : 1,
-          "value" : "std::vector< unsigned int >(2, 5)",
+          "value" : "std::vector<size_t>(2, 5)",
           "java_value" : "// TODO: FIX ME",
           "tcl_value" : "; # TODO: FIX ME",
           "python_value" : "# TODO: FIX ME",
