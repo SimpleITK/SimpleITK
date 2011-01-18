@@ -126,5 +126,5 @@ namespace itk
   }
 }
 
-
+#include "sitkImage.txx"
 #endif
