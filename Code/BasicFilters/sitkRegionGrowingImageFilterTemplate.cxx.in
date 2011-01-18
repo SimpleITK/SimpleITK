@@ -61,7 +61,7 @@ $(foreach members
 //
 Image::Pointer ${name}ImageFilter::Execute (Image::Pointer image$(foreach members ,
   ${type} in${name}),
-  std::vector< std::vector<size_t> > inSeedList )
+  std::vector< std::vector<unsigned int> > inSeedList )
   {
   // Set members
 $(foreach members $(if (not no_set_method) or (no_set_method == 0) then
@@ -130,7 +130,7 @@ $(foreach members
       OUT = 'filter->Set${name} ( this->m_${name} );'
       end)
   )
-  // Convert Seed List from std::vector< std::vector<size_t> >
+  // Convert Seed List from std::vector< std::vector<unsigned int> >
   // to std::vector<itk::Index>
   filter->ClearSeeds();
   for (unsigned int i = 0; i < m_SeedList.size(); ++i)

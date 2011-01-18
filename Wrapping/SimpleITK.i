@@ -87,8 +87,8 @@ using namespace itk::simple;
 %include "std_vector.i"
 namespace std
 {
-  %template(VectorInt) vector<size_t>;
-  %template(VectorIntList) vector< vector<size_t> >;
+  %template(VectorUInt) vector<unsigned int>;
+  %template(VectorUIntList) vector< vector<unsigned int> >;
 }
 
 // This helps SWIG wrap long long, as returned by Width, Height, and Depth

@@ -152,7 +152,7 @@ int main( int argc, char *argv[])
 
   for (int i = 5; i+1 < argc; i+=2)
     {
-    std::vector<size_t> seed;
+    std::vector<unsigned int> seed;
     seed.push_back(atoi(argv[i]));
     seed.push_back(atoi(argv[i+1]));
     segmentationFilter.AddSeed(seed);
