@@ -12,7 +12,7 @@ namespace simple
 namespace detail
 {
 
-/** \brief A class used to instantiate and generate function object to
+/** \brief A class used to instantiate and generate function objects of
  *  templated member functions with two template arguments.
  *
  *  \tparam TMemberFunctionPointer is the type of pointer to member
@@ -29,12 +29,12 @@ namespace detail
  *  The DualMemberFunctionAddressor will instantiate the templeted
  *  member functions by taking the address. These addresses are
  *  registered with RegisterMethods. Later they can be retrieve
- *  with the GetMemberFunction methods, which return a function object
+ *  with the GetMemberFunction method, which returns a function object
  *  with the same arguments as the templated member function pointer.
  *
  *  An instance of a MemberFunctionFactory is bound to a specific
  *  instance of an object, so that the returned function object does
- * not need to have the calling object specified.
+ *  not need to have the calling object specified.
  *
  * \warning Use this class with caution because it can instantiate a
  * combinatorial number of methods.
@@ -70,7 +70,8 @@ public:
    *
    * With out the third template argument, the DualExecuteInternalAddressor
    * will be used to instantiate "DualExecuteInternal" methods over
-   * the two image types referent to by the type lists.
+   * the two image types referenced by all combination of type in the
+   * first list with types in the second.
    *
    * The optional third template parameter provides a custom addressor.
    *
@@ -99,6 +100,7 @@ public:
    *                                                 3,
    *                                                 MyCustomAddressor > ();
    * \endcode
+   * @{
    */
   template < typename TPixelIDTypeList1,
              typename TPixelIDTypeList2,
@@ -118,6 +120,7 @@ public:
   bool HasMemberFunction( PixelIDValueType pixelID1,
                           PixelIDValueType pixelID2,
                           unsigned int imageDimension  ) const throw();
+  /** @} */
 
 
   /** \brief Returns a function object for the combination of
