@@ -59,7 +59,7 @@
           "java_value" : "{5,5}",
           "tcl_value" : "[list 5 5]",
           "python_value" : "[5,5]",
-          "lua_value" : "-- TODO: FIX ME"
+          "lua_value" : "{5,5}"
         }
         
       ],
