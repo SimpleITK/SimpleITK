@@ -76,14 +76,14 @@ int main( int argc, char *argv[])
   segmentationFilter.SetUpper( atof( argv[4] ) );
   segmentationFilter.SetReplaceValue( 255 );
 
-  std::vector<size_t> radius;
+  std::vector<unsigned int> radius;
   radius.push_back( 2 );
   radius.push_back( 2 );
   segmentationFilter.SetRadius( radius );
 
   for (int i = 5; i+1 < argc; i+=2)
     {
-    std::vector<size_t> seed;
+    std::vector<unsigned int> seed;
     seed.push_back(atoi(argv[i]));
     seed.push_back(atoi(argv[i+1]));
     segmentationFilter.AddSeed(seed);

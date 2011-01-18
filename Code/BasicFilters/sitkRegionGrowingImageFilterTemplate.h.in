@@ -53,13 +53,13 @@ $(foreach members
   //////
 
   /** Set SeedList */
-  Self& SetSeedList ( std::vector< std::vector<size_t> > t )
+  Self& SetSeedList ( std::vector< std::vector<unsigned int> > t )
     {
     this->m_SeedList = t; return *this;
     };
 
   /** Get SeedList */
-  std::vector< std::vector<size_t> > GetSeedList()
+  std::vector< std::vector<unsigned int> > GetSeedList()
     {
     return this->m_SeedList;
     };
@@ -72,7 +72,7 @@ $(foreach members
     };
 
   /** SetSeed - Set list to a single seed */
-  Self& SetSeed( std::vector<size_t> idx )
+  Self& SetSeed( std::vector<unsigned int> idx )
     {
     this->m_SeedList.clear();
     this->m_SeedList.push_back(idx);
@@ -80,7 +80,7 @@ $(foreach members
     };
 
   /** AddSeed - Add a seed to the end of the list */
-  Self& AddSeed( std::vector<size_t> idx )
+  Self& AddSeed( std::vector<unsigned int> idx )
     {
     this->m_SeedList.push_back(idx);
     return *this;
@@ -95,7 +95,7 @@ $(foreach members
   /** Execute using the specified parameter set */
   Image::Pointer Execute ( Image::Pointer$(foreach members ,
                            ${type} in${name}),
-                           std::vector< std::vector<size_t> > inSeedList );
+                           std::vector< std::vector<unsigned int> > inSeedList );
 
 private:
 
@@ -117,7 +117,7 @@ $(foreach members
   ${type} m_${name};
 
 )  /** List of interor seed points used to initialize the region growing segmentation */
-  std::vector< std::vector<size_t> > m_SeedList;
+  std::vector< std::vector<unsigned int> > m_SeedList;
 
 };
 
