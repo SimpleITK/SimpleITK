@@ -13,7 +13,7 @@ if len ( sys.argv ) < inputs + 2:
     print ( "Usage: ${name} tag <input(s)> output" )
     sys.exit ( 1 )
 
-tag = sys.argv[1];
+tag = sys.argv[1]
 
 reader = SimpleITK.ImageFileReader()
 writer = SimpleITK.ImageFileWriter()
@@ -21,8 +21,8 @@ filter = SimpleITK.${name}ImageFilter()
 
 $(if #tests == 0 then
     OUT=[[ 
-print ( "No tests defined!" );
-sys.exit ( 1 );
+print ( "No tests defined!" )
+sys.exit ( 1 )
     ]]
   end)
 
@@ -30,16 +30,19 @@ $(foreach tests
 if tag == "${tag}":
   $(when settings
 $(foreach settings
-$(if parameter == "SeedList" then
-    OUT=[[  filter.ClearSeeds();
-    filter$(for i=1,#value do OUT=OUT .. ".AddSeed( SimpleITK.Index" .. value[i] .. " )" end);]]
+$(if parameter == "SeedList" and python_value then
+    OUT=[[  filter.ClearSeeds()
+    filter$(for i=1,#python_value do OUT=OUT .. ".AddSeed( " .. python_value[i] .. " )" end)]]
+elseif parameter == "SeedList" then
+    OUT=[[  filter.ClearSeeds()
+    filter$(for i=1,#value do OUT=OUT .. ".AddSeed( " .. value[i] .. " )" end)]]
 else
 OUT=[[
-    filter.Set${parameter}( $(if python_value then OUT='${python_value}' else OUT='${value}' end) );]]
+    filter.Set${parameter}( $(if python_value then OUT='${python_value}' else OUT='${value}' end) )]]
 end) 
-)  
 )
-    inputA = reader.SetFilename ( sys.argv[2] ).Execute();
+)
+    inputA = reader.SetFilename ( sys.argv[2] ).Execute()
     $(if inputB then
     OUT=[[inputB = reader.SetFilename ( sys.argv[3] ).Execute()
     output = filter.Execute ( inputA, inputB )]]
