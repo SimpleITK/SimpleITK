@@ -13,7 +13,7 @@ if len ( sys.argv ) < inputs + 2:
     print ( "Usage: ${name} tag <input(s)> output" )
     sys.exit ( 1 )
 
-tag = sys.argv[1];
+tag = sys.argv[1]
 
 reader = SimpleITK.ImageFileReader()
 writer = SimpleITK.ImageFileWriter()
@@ -21,15 +21,15 @@ filter = SimpleITK.${name}ImageFilter()
 
 $(if #tests == 0 then
     OUT=[[ 
-print ( "No tests defined!" );
-sys.exit ( 1 );
+print ( "No tests defined!" )
+sys.exit ( 1 )
     ]]
   end)
 
 $(foreach tests
 if tag == "${tag}":
-    $(when settings $(foreach settings filter.Set${parameter} ( $(if python_value then OUT=[[${python_value}]] else OUT=[[${value}]] end) ); )   )
-    inputA = reader.SetFilename ( sys.argv[2] ).Execute();
+    $(when settings $(foreach settings filter.Set${parameter} ( $(if python_value then OUT=[[${python_value}]] else OUT=[[${value}]] end) ) )   )
+    inputA = reader.SetFilename ( sys.argv[2] ).Execute()
     $(if inputB then
     OUT=[[inputB = reader.SetFilename ( sys.argv[3] ).Execute()
     output = filter.Execute ( inputA, inputB )]]

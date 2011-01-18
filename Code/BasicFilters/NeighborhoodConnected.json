@@ -40,7 +40,9 @@
           "value" : ["{100,100}",
                      "{95,85}"],
           "tcl_value" : ["100 100",
-                         "95 85"]
+                         "95 85"],
+          "python_value" : ["[100,100]",
+                            "[95,85]"]
         },
         { "parameter" : "Upper",
           "value" : 255
@@ -56,7 +58,7 @@
           "value" : "std::vector<size_t>(2, 5)",
           "java_value" : "{5,5}",
           "tcl_value" : "; # TODO: FIX ME",
-          "python_value" : "# TODO: FIX ME",
+          "python_value" : "[5,5]",
           "lua_value" : "-- TODO: FIX ME"
         }
         

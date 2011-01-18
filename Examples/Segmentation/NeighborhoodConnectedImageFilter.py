@@ -58,13 +58,13 @@ if __name__ == '__main__':
   segmentationFilter.SetUpper( float(sys.argv[4]) )
   segmentationFilter.SetReplaceValue( 255 )
   
-  radius = SimpleITK.Size( 2, 2 )
+  radius = [2,2]
   segmentationFilter.SetRadius( radius )
   
   for i in range( 5, len(sys.argv)-1, 2 ):
-    seed = SimpleITK.Index( int(sys.argv[i]), int(sys.argv[i+1]) )
+    seed = [int(sys.argv[i]), int(sys.argv[i+1])]
     segmentationFilter.AddSeed( seed )
-    print "Adding seed at " + seed.ToString()
+    print "Adding seed at " + str(seed)
   
   # Run the segmentation filter
   image = segmentationFilter.Execute( image )
