@@ -76,7 +76,7 @@ int main( int argc, char *argv[])
   segmentationFilter.SetUpper( atof( argv[4] ) );
   segmentationFilter.SetReplaceValue( 255 );
 
-  std::vector< unsigned int > radius;
+  std::vector<size_t> radius;
   radius.push_back( 2 );
   radius.push_back( 2 );
   segmentationFilter.SetRadius( radius );
