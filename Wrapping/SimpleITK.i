@@ -83,6 +83,14 @@ using namespace itk::simple;
 %include "itkSmartPointer.h"
 %template(SmartPointerImage) itk::SmartPointer<itk::simple::Image>;
 
+// Help SWIG handle std vectors
+%include "std_vector.i"
+namespace std
+{
+  %template(VectorInt) vector<size_t>;
+  %template(VectorIntList) vector< vector<size_t> >;
+}
+
 // This helps SWIG wrap long long, as returned by Width, Height, and Depth
 typedef unsigned long long uint64_t;
 

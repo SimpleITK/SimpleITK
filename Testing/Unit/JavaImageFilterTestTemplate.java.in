@@ -38,7 +38,22 @@ $(foreach tests
     if (tag.equals( "${tag}" )) {
       $(when settings 
       // Set parameters
-      $(foreach settings filter.set${parameter} ( $(if java_value then OUT=[[${java_value}]] else OUT=[[${value}]] end) ); )   )
+      $(foreach settings
+$(if dim_vec == 1 then
+      OUT=[[
+      {
+        int v[] = $(if java_value then OUT='${java_value}' else OUT='${value}' end);
+        VectorInt idx = new VectorInt();
+        for (int i = 0; i < inputA.getDimension(); i++) {
+          idx.push_back(v[i]);
+        }
+        filter.set${parameter}(idx);
+      }]]
+else
+OUT=[[
+      filter.set${parameter}( $(if java_value then OUT='${java_value}' else OUT='${value}' end) );]]
+end) 
+)   )
 
       // Read image(s) and run the filter
       SmartPointerImage inputA = reader.setFilename( argv[1] ).execute();

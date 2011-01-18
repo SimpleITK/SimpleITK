@@ -276,16 +276,23 @@ TEST_F(Java,${name}) {
         ]]
     end)
 
-  std::string Classpath = dataFinder.GetBuildDirectory() + "/Testing/Unit/JavaTests";
-  std::string Script = "${name}ImageFilterTest";
+  std::string Classpath = dataFinder.GetBuildDirectory() + "/Testing/Unit/JavaTests" 
+    + dataFinder.GetPathSeparator() + dataFinder.GetBuildDirectory() + "/Wrapping/org.itk.simple.jar";
+  std::string JavaPath = dataFinder.GetExecutableDirectory();
+  std::string Script = "org.itk.simple.testing.${name}ImageFilterTest";
   $(foreach tests 
     {
     /* ${description} */
     std::vector<std::string> CommandLine;
     std::string outputFilename = dataFinder.GetOutputFile ( "Java-${name}-${tag}.nrrd" );
+    // Make sure the output is wiped
+    EXPECT_NO_THROW ( itk::simple::ImageFileWriter()
+                      .SetFilename ( outputFilename )
+                      .Execute ( new itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
     CommandLine.push_back ( dataFinder.GetJavaExecutable() );
     CommandLine.push_back ( "-classpath" );
     CommandLine.push_back ( Classpath );
+    CommandLine.push_back ( "-Djava.library.path=" + JavaPath );
     CommandLine.push_back ( Script );
     CommandLine.push_back ( "${tag}" );
     CommandLine.push_back ( dataFinder.GetFile ( "${inputA}" ) );
