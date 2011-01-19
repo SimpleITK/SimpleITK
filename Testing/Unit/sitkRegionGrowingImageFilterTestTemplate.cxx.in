@@ -330,3 +330,64 @@ TEST_F(Java,${name}) {
     )
 }
 #endif
+
+#if defined(WRAP_RUBY)
+
+TEST_F(Ruby,${name}) {
+  $(if #tests == 0 then
+    OUT=[[ 
+  FAIL() << "Filter ${name} has no tests defined";
+        ]]
+    end)
+
+  // Set our Ruby path
+  SetEnvironment ( "RUBYLIB", dataFinder.GetExecutableDirectory() );
+
+  std::string Script = dataFinder.GetBuildDirectory() + "/Testing/Unit/RubyTests/${name}ImageFilterTest.rb";
+  $(foreach tests 
+    {
+    /* ${description} */
+    std::vector<std::string> CommandLine;
+    std::string outputFilename = dataFinder.GetOutputFile ( "Ruby-${name}-${tag}.nrrd" );
+    // Make sure the output is wiped
+    EXPECT_NO_THROW ( itk::simple::ImageFileWriter()
+                      .SetFilename ( outputFilename )
+                      .Execute ( new itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
+    CommandLine.push_back ( dataFinder.GetRubyExecutable() );
+    CommandLine.push_back ( Script );
+    CommandLine.push_back ( "${tag}" );
+    CommandLine.push_back ( dataFinder.GetFile ( "${inputA}" ) );
+    $(if inputB then
+      OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
+      end)
+    CommandLine.push_back ( outputFilename );
+    RunExecutable ( CommandLine, true );
+    ASSERT_TRUE ( dataFinder.FileExists ( outputFilename ) );
+    itk::simple::ImageFileReader reader;
+    itk::simple::ImageHashFilter hasher;
+    itk::simple::Image::Pointer output;
+
+    output = reader.SetFilename ( outputFilename ).Execute();
+    ASSERT_TRUE ( output->GetImageBase().IsNotNull() ) << "Loaded output image";
+
+    $(if md5hash then
+      OUT = [[ 
+              // Check the hash
+              EXPECT_EQ ( "${md5hash}", hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 ).Execute ( output ) ) << "Output MD5 hash failed";
+               ]]
+      end)
+    $(if sha1hash then
+      OUT = [[ 
+              // Check the hash
+              EXPECT_EQ ( "${sha1hash}", hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 ).Execute ( output ) ) << "Output SHA1 hash failed";
+               ]]
+      end)
+    $(if tolerance then
+      OUT = [[ 
+              IMAGECOMPAREWITHTOLERANCE_WITH_TESTCASE ( output, "BasicFilters", "${tag}", ${tolerance} );
+               ]]
+      end)
+      }
+    )
+}
+#endif
