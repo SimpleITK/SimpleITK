@@ -13,16 +13,16 @@ if ARGV.length < inputs + 2 then
     exit( 1 )
 end
 
-tag = ARGV[0];
+tag = ARGV[0]
 
-reader = Simpleitk.ImageFileReader.new
-writer = Simpleitk.ImageFileWriter.new
-filter = Simpleitk.${name}ImageFilter.new
+reader = Simpleitk::ImageFileReader.new
+writer = Simpleitk::ImageFileWriter.new
+filter = Simpleitk::${name}ImageFilter.new
 
 $(if #tests == 0 then
-    OUT=[[ 
-puts( "No tests defined!" );
-exit( 1 );
+    OUT=[[
+puts( "No tests defined!" )
+exit( 1 )
     ]]
   end)
 
@@ -30,16 +30,29 @@ $(foreach tests
 if tag == "${tag}" then
   $(when settings
 $(foreach settings
-$(if parameter == "SeedList" then
-    OUT=[[  filter.clear_seeds();
-    filter$(for i=1,#value do OUT=OUT .. ".add_seed( SimpleITK.Index" .. value[i] .. " )" end);]]
+$(if parameter == "SeedList" and ruby_value then
+    OUT=[[  filter.clear_seeds()
+    $(for i=1,#ruby_value do OUT=OUT .. "\
+    v = Simpleitk::VectorUInt.new\
+    for i in ".. ruby_value[i] .." do v << i end\
+    filter.add_seed(v)" end)]]
+elseif parameter == "SeedList"then
+    OUT=[[  filter.clear_seeds()
+    $(for i=1,#value do OUT=OUT .. "\
+    v = Simpleitk::VectorUInt.new\
+    for i in ".. value[i] .." do v << i end\
+    filter.add_seed(v)" end)]]
+elseif dim_vec and dim_vec == 1 then OUT=[[
+    v = Simpleitk::VectorUInt.new
+    for i in $(if ruby_value then OUT='${ruby_value}' else OUT='${value}' end) do v << i end
+    filter.set_${parameter:gsub ( "([a-z])([A-Z])", "%1_%2" ):lower()}(v)]]
 else
 OUT=[[
-  filter.set_${parameter:gsub ( "([a-z])([A-Z])", "%1_%2" ):lower()}( $(if ruby_value then OUT='${ruby_value}' else OUT='${value}' end) ) ]]
-end) 
-)  
+    filter.set_${parameter:gsub ( "([a-z])([A-Z])", "%1_%2" ):lower()}( $(if ruby_value then OUT='${ruby_value}' else OUT='${value}' end) ) ]]
+end)
 )
-    inputA = reader.set_filename ( ARGV[1] ).execute
+)
+    inputA = reader.set_filename( ARGV[1] ).execute
     $(if inputB then
     OUT=[[inputB = reader.set_filename( ARGV[2] ).execute
     output = filter.execute( inputA, inputB )]]
@@ -47,5 +60,6 @@ end)
     OUT=[[output = filter.execute( inputA )]]
       end)
     writer.set_filename( ARGV[ARGV.length-1] ).execute( output )
+end
 )
     

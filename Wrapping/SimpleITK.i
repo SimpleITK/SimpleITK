@@ -83,6 +83,14 @@ using namespace itk::simple;
 %include "itkSmartPointer.h"
 %template(SmartPointerImage) itk::SmartPointer<itk::simple::Image>;
 
+// Help SWIG handle std vectors
+%include "std_vector.i"
+namespace std
+{
+  %template(VectorUInt) vector<unsigned int>;
+  %template(VectorUIntList) vector< vector<unsigned int> >;
+}
+
 // This helps SWIG wrap long long, as returned by Width, Height, and Depth
 typedef unsigned long long uint64_t;
 
@@ -100,8 +108,6 @@ typedef unsigned int uint32_t;
 %include "sitkRecursiveGaussianImageFilter.h"
 %include "sitkExtractImageFilter.h"
 %include "sitkCastImageFilter.h"
-%include "sitkIndex.h"
-%include "sitkSize.h"
 
 // Auto-generated headers
 %include "SimpleITKBasicFiltersGeneratedHeaders.i"

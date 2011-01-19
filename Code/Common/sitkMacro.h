@@ -17,6 +17,16 @@
 namespace itk {
 namespace simple {
 
+#define printStdVector(vec, os)\
+  {\
+  os << "[";\
+  for(unsigned int cntr = 0; cntr < vec.size()-1; ++cntr)\
+    {\
+    os << vec[cntr] << ",";\
+    }\
+  os << vec[vec.size()-1] << "]";\
+  }
+
 #define sitkExceptionMacro(x)                                           \
   {                                                                     \
       std::ostringstream message;                                       \

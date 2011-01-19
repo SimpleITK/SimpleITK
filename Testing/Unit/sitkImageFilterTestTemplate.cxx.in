@@ -19,22 +19,32 @@ TEST(BasicFilters,${name}) {
         ]]
     end)
 
-    $(foreach members
-      $(if no_print == nil then
-      OUT=[[EXPECT_EQ ( filter.Get${name}(), ${default} ) << "Testing get for ${name}";]]
-        end)
-      )
-    EXPECT_NE ( filter.ToString(), "" ) << "empty ToString method!";
+$(foreach members
+  $(if dim_vec and dim_vec == 1 then
+  OUT=[[for(unsigned int i = 0; i < filter.Get${name}().size(); ++i)
+    {
+    EXPECT_EQ ( filter.Get${name}()[i], ${default}[i] ) << "Testing get for ${name} at " << i;
+    }]]
+  elseif no_print == nil then
+  OUT=[[EXPECT_EQ ( filter.Get${name}(), ${default} ) << "Testing get for ${name}";]]
+end)
+)
+  EXPECT_NE ( filter.ToString(), "" ) << "empty ToString method!";
 
   // Test sets / gets
-    $(foreach members
-      $(if no_print == nil then
-        OUT=[[
-  filter.Set${name} ( ${default} );
-  EXPECT_EQ ( filter.Get${name}(), ${default} ) << "Testing set/get combo for ${name}";
-]]
-        end)
-      )
+$(foreach members
+  $(if dim_vec and dim_vec == 1 then
+  OUT=[[filter.Set${name} ( ${default} );
+  for(unsigned int i = 0; i < filter.Get${name}().size(); ++i)
+    {
+    EXPECT_EQ ( filter.Get${name}()[i], ${default}[i] ) << "Testing set/get for ${name} at " << i;
+    }]]
+  elseif no_print == nil then
+  OUT=[[filter.Set${name} ( ${default} );
+  EXPECT_EQ ( filter.Get${name}(), ${default} ) << "Testing set/get for ${name}";]]
+end)
+)
+
 
  $(if number_of_inputs == 2 then
    OUT=[[ {
@@ -57,14 +67,22 @@ TEST(BasicFilters,${name}) {
             ]]
       end)
 
-    $(if settings then
-      OUT=[[
-  $(foreach settings 
-  filter.Set${parameter} ( ${value} );
-  ASSERT_EQ ( ${value}, filter.Get${parameter}() ) << "Failed to set ${parameter} to ${value}";
-  )
-      ]]
-      end)
+$(if settings then
+OUT=[[
+$(foreach settings
+  $(if dim_vec and dim_vec == 1 then
+  OUT='filter.Set${parameter} ( ${value} );\
+  for(unsigned int i = 0; i < filter.Get${parameter}().size(); ++i)\
+    {\
+    ASSERT_EQ ( filter.Get${parameter}()[i], ${value}[i] ) << "Failed to set ${parameter} to ${value}";\
+    }'
+  elseif no_print == nil then
+  OUT='filter.Set${parameter} ( ${value} );\
+  ASSERT_EQ ( ${value}, filter.Get${parameter}() ) << "Failed to set ${parameter} to ${value}";'
+end)
+)]]
+end)
+
   ASSERT_NO_THROW ( output = filter.Execute ( inputA $(if inputB then OUT=", inputB" end) ) );
   $(if md5hash then
   OUT = [[ 

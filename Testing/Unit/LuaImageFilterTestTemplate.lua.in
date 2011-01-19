@@ -25,10 +25,17 @@ $(if #tests == 0 then
 $(foreach tests
   if tag == "${tag}" then
     $(when settings
-    $(foreach settings
-    filter:Set${parameter} ( $(if lua_value then OUT=[[${lua_value}]] else OUT=[[${value}]] end) ); 
-    )  
-    )
+$(foreach settings
+$(if dim_vec and dim_vec == 1 then
+    OUT=[[    idx = SimpleITK.VectorUInt();
+    for _,v in ipairs($(if lua_value then OUT='${lua_value}' else OUT='${value}' end)) do idx:push_back(v) end
+    filter:Set${parameter}( idx );]]
+else
+OUT=[[
+    filter:Set${parameter}( $(if lua_value then OUT='${lua_value}' else OUT='${value}' end) );]]
+end)
+)
+)
 
     inputA = reader:SetFilename ( arg[2] ):Execute();
     $(when inputB
