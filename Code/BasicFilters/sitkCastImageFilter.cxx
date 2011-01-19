@@ -59,11 +59,6 @@ std::string CastImageFilter::ToString() const
 //
 // Set/Get Methods for output pixel type
 //
-CastImageFilter::Self& CastImageFilter::SetOutputPixelType( PixelIDValueEnum pixelID )
-{
-  this->m_OutputPixelType =  PixelIDValueType(pixelID);
-  return *this;
-}
 
 CastImageFilter::Self& CastImageFilter::SetOutputPixelType( PixelIDValueType pixelID )
 {
