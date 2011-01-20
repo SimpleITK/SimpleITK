@@ -58,11 +58,11 @@ end)
 
   $(foreach tests 
     /* ${description} */
-  ASSERT_NO_THROW ( inputA = reader.SetFilename ( dataFinder.GetFile ( "${inputA}" ) ).Execute() ) << "Failed to load ${inputA}";
+  ASSERT_NO_THROW ( inputA = reader.SetFileName ( dataFinder.GetFile ( "${inputA}" ) ).Execute() ) << "Failed to load ${inputA}";
   ASSERT_TRUE ( inputA->GetImageBase().IsNotNull() ) << "Could not read ${inputA}";
     $(if inputB then
       OUT=[[
-  ASSERT_NO_THROW ( inputB = reader.SetFilename ( dataFinder.GetFile ( "${inputB}" ) ).Execute() ) << "Failed to load ${inputB}";
+  ASSERT_NO_THROW ( inputB = reader.SetFileName ( dataFinder.GetFile ( "${inputB}" ) ).Execute() ) << "Failed to load ${inputB}";
   ASSERT_TRUE ( inputB->GetImageBase().IsNotNull() ) << "Could not read ${inputB}";
             ]]
       end)
@@ -118,10 +118,10 @@ TEST_F(Lua,${name}) {
     {
     /* ${description} */
     std::vector<std::string> CommandLine;
-    std::string outputFilename = dataFinder.GetOutputFile ( "Lua-${name}-${tag}.nrrd" );
+    std::string outputFileName = dataFinder.GetOutputFile ( "Lua-${name}-${tag}.nrrd" );
     // Make sure the output is wiped
     EXPECT_NO_THROW ( itk::simple::ImageFileWriter()
-                      .SetFilename ( outputFilename )
+                      .SetFileName ( outputFileName )
                       .Execute ( new itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
     CommandLine.push_back ( dataFinder.GetLuaExecutable() );
     CommandLine.push_back ( Script );
@@ -130,14 +130,14 @@ TEST_F(Lua,${name}) {
     $(if inputB then
       OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
       end)
-    CommandLine.push_back ( outputFilename );
+    CommandLine.push_back ( outputFileName );
     RunExecutable ( CommandLine, true );
-    ASSERT_TRUE ( dataFinder.FileExists ( outputFilename ) );
+    ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::ImageHashFilter hasher;
     itk::simple::Image::Pointer output;
 
-    output = reader.SetFilename ( outputFilename ).Execute();
+    output = reader.SetFileName ( outputFileName ).Execute();
     ASSERT_TRUE ( output->GetImageBase().IsNotNull() ) << "Loaded output image";
 
     $(if md5hash then
@@ -181,10 +181,10 @@ TEST_F(Python,${name}) {
     {
     /* ${description} */
     std::vector<std::string> CommandLine;
-    std::string outputFilename = dataFinder.GetOutputFile ( "Python-${name}-${tag}.nrrd" );
+    std::string outputFileName = dataFinder.GetOutputFile ( "Python-${name}-${tag}.nrrd" );
     // Make sure the output is wiped
     EXPECT_NO_THROW ( itk::simple::ImageFileWriter()
-                      .SetFilename ( outputFilename )
+                      .SetFileName ( outputFileName )
                       .Execute ( new itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
     CommandLine.push_back ( dataFinder.GetPythonExecutable() );
     CommandLine.push_back ( Script );
@@ -193,14 +193,14 @@ TEST_F(Python,${name}) {
     $(if inputB then
       OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
       end)
-    CommandLine.push_back ( outputFilename );
+    CommandLine.push_back ( outputFileName );
     RunExecutable ( CommandLine, true );
-    ASSERT_TRUE ( dataFinder.FileExists ( outputFilename ) );
+    ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::ImageHashFilter hasher;
     itk::simple::Image::Pointer output;
 
-    output = reader.SetFilename ( outputFilename ).Execute();
+    output = reader.SetFileName ( outputFileName ).Execute();
     ASSERT_TRUE ( output->GetImageBase().IsNotNull() ) << "Loaded output image";
 
     $(if md5hash then
@@ -239,10 +239,10 @@ TEST_F(Tcl,${name}) {
     {
     /* ${description} */
     std::vector<std::string> CommandLine;
-    std::string outputFilename = dataFinder.GetOutputFile ( "Tcl-${name}-${tag}.nrrd" );
+    std::string outputFileName = dataFinder.GetOutputFile ( "Tcl-${name}-${tag}.nrrd" );
     // Make sure the output is wiped
     EXPECT_NO_THROW ( itk::simple::ImageFileWriter()
-                      .SetFilename ( outputFilename )
+                      .SetFileName ( outputFileName )
                       .Execute ( new itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
     CommandLine.push_back ( dataFinder.FindExecutable ( "SimpleITKTclsh" ) );
     CommandLine.push_back ( Script );
@@ -251,14 +251,14 @@ TEST_F(Tcl,${name}) {
     $(if inputB then
       OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
       end)
-    CommandLine.push_back ( outputFilename );
+    CommandLine.push_back ( outputFileName );
     RunExecutable ( CommandLine, true );
-    ASSERT_TRUE ( dataFinder.FileExists ( outputFilename ) );
+    ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::ImageHashFilter hasher;
     itk::simple::Image::Pointer output;
 
-    output = reader.SetFilename ( outputFilename ).Execute();
+    output = reader.SetFileName ( outputFileName ).Execute();
     ASSERT_TRUE ( output->GetImageBase().IsNotNull() ) << "Loaded output image";
 
     $(if md5hash then
@@ -297,10 +297,10 @@ TEST_F(R,${name}) {
     {
     /* ${description} */
     std::vector<std::string> CommandLine;
-    std::string outputFilename = dataFinder.GetOutputFile ( "R-${name}-${tag}.nrrd" );
+    std::string outputFileName = dataFinder.GetOutputFile ( "R-${name}-${tag}.nrrd" );
     // Make sure the output is wiped
     EXPECT_NO_THROW ( itk::simple::ImageFileWriter()
-                      .SetFilename ( outputFilename )
+                      .SetFileName ( outputFileName )
                       .Execute ( new itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
     CommandLine.push_back ( dataFinder.GetRExecutable() );
     CommandLine.push_back ( Script );
@@ -309,14 +309,14 @@ TEST_F(R,${name}) {
     $(if inputB then
       OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
       end)
-    CommandLine.push_back ( outputFilename );
+    CommandLine.push_back ( outputFileName );
     RunExecutable ( CommandLine, true );
-    ASSERT_TRUE ( dataFinder.FileExists ( outputFilename ) );
+    ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::ImageHashFilter hasher;
     itk::simple::Image::Pointer output;
 
-    output = reader.SetFilename ( outputFilename ).Execute();
+    output = reader.SetFileName ( outputFileName ).Execute();
     ASSERT_TRUE ( output->GetImageBase().IsNotNull() ) << "Loaded output image";
 
     $(if md5hash then
@@ -360,10 +360,10 @@ TEST_F(Java,${name}) {
     {
     /* ${description} */
     std::vector<std::string> CommandLine;
-    std::string outputFilename = dataFinder.GetOutputFile ( "Java-${name}-${tag}.nrrd" );
+    std::string outputFileName = dataFinder.GetOutputFile ( "Java-${name}-${tag}.nrrd" );
     // Make sure the output is wiped
     EXPECT_NO_THROW ( itk::simple::ImageFileWriter()
-                      .SetFilename ( outputFilename )
+                      .SetFileName ( outputFileName )
                       .Execute ( new itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
     CommandLine.push_back ( dataFinder.GetJavaExecutable() );
     CommandLine.push_back ( "-classpath" );
@@ -375,14 +375,14 @@ TEST_F(Java,${name}) {
     $(if inputB then
       OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
       end)
-    CommandLine.push_back ( outputFilename );
+    CommandLine.push_back ( outputFileName );
     RunExecutable ( CommandLine, true );
-    ASSERT_TRUE ( dataFinder.FileExists ( outputFilename ) );
+    ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::ImageHashFilter hasher;
     itk::simple::Image::Pointer output;
 
-    output = reader.SetFilename ( outputFilename ).Execute();
+    output = reader.SetFileName ( outputFileName ).Execute();
     ASSERT_TRUE ( output->GetImageBase().IsNotNull() ) << "Loaded output image";
 
     $(if md5hash then
@@ -424,10 +424,10 @@ TEST_F(Ruby,${name}) {
     {
     /* ${description} */
     std::vector<std::string> CommandLine;
-    std::string outputFilename = dataFinder.GetOutputFile ( "Ruby-${name}-${tag}.nrrd" );
+    std::string outputFileName = dataFinder.GetOutputFile ( "Ruby-${name}-${tag}.nrrd" );
     // Make sure the output is wiped
     EXPECT_NO_THROW ( itk::simple::ImageFileWriter()
-                      .SetFilename ( outputFilename )
+                      .SetFileName ( outputFileName )
                       .Execute ( new itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
     CommandLine.push_back ( dataFinder.GetRubyExecutable() );
     CommandLine.push_back ( Script );
@@ -436,14 +436,14 @@ TEST_F(Ruby,${name}) {
     $(if inputB then
       OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
       end)
-    CommandLine.push_back ( outputFilename );
+    CommandLine.push_back ( outputFileName );
     RunExecutable ( CommandLine, true );
-    ASSERT_TRUE ( dataFinder.FileExists ( outputFilename ) );
+    ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::ImageHashFilter hasher;
     itk::simple::Image::Pointer output;
 
-    output = reader.SetFilename ( outputFilename ).Execute();
+    output = reader.SetFileName ( outputFileName ).Execute();
     ASSERT_TRUE ( output->GetImageBase().IsNotNull() ) << "Loaded output image";
 
     $(if md5hash then

@@ -9,7 +9,7 @@ namespace itk.simple.examples {
                   return;
               }
               ImageFileReader reader = new ImageFileReader();
-              reader.setFilename(args[0]);
+              reader.setFileName(args[0]);
               SmartPointerImage image = reader.execute();
 
               Console.WriteLine(image.toString());
@@ -22,7 +22,7 @@ namespace itk.simple.examples {
               Console.WriteLine(image.toString());
 
               ImageFileWriter writer = new ImageFileWriter();
-              writer.setFilename(args[2]);
+              writer.setFileName(args[2]);
               writer.execute(image);
           } catch (Exception ex) {
               Console.WriteLine(ex);

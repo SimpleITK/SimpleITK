@@ -50,12 +50,12 @@ end)
 )
 
 
-    inputA = reader:SetFilename ( arg[2] ):Execute();
+    inputA = reader:SetFileName ( arg[2] ):Execute();
     $(when inputB
-    inputB = reader:SetFilename ( arg[3] ):Execute()
+    inputB = reader:SetFileName ( arg[3] ):Execute()
     )
     output = filter:Execute ( inputA $(when inputB , inputB) )
-    writer:SetFilename ( arg[#arg] ):Execute ( output )
+    writer:SetFileName ( arg[#arg] ):Execute ( output )
   end
 )
     

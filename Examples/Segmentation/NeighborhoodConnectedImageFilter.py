@@ -33,14 +33,14 @@ if __name__ == '__main__':
   # Read the image
   #
   reader = SimpleITK.ImageFileReader()
-  reader.SetFilename( sys.argv[1] )
+  reader.SetFileName( sys.argv[1] )
   image = reader.Execute();
   
   #
   # Set up the writer
   #
   writer = SimpleITK.ImageFileWriter()
-  writer.SetFilename( sys.argv[2] )
+  writer.SetFileName( sys.argv[2] )
   
   #
   # Blur using CurvatureFlowImageFilter
