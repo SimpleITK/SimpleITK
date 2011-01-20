@@ -26,8 +26,8 @@ TEST(IO,ImageFileReader) {
 
   // Loop over the map, load each file, and compare the hash value
   for ( MapType::iterator it = mapping.begin(); it != mapping.end(); ++it ) {
-    reader.SetFilename ( dataFinder.GetFile ( it->first ) );
-    EXPECT_EQ ( reader.GetFilename(), dataFinder.GetFile ( it->first ) );
+    reader.SetFileName ( dataFinder.GetFile ( it->first ) );
+    EXPECT_EQ ( reader.GetFileName(), dataFinder.GetFile ( it->first ) );
     image = reader.Execute();
     ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
     hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 );
@@ -47,7 +47,7 @@ TEST(IO,ReadWrite) {
   std::string sha1 = "126ea8c3ef5573ca1e4e0deece920c2c4a4f38b5";
 
 
-  image = reader.SetFilename ( dataFinder.GetFile ( "Input/RA-Short.nrrd" ) ).Execute();
+  image = reader.SetFileName ( dataFinder.GetFile ( "Input/RA-Short.nrrd" ) ).Execute();
   ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
   hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 );
   EXPECT_EQ ( md5, hasher.Execute ( image ) );
@@ -56,9 +56,9 @@ TEST(IO,ReadWrite) {
 
   // Write it out
   std::string filename = dataFinder.GetOutputFile ( "IO.ReadWrite.nrrd" );
-  writer.SetFilename ( filename ).Execute ( image );
+  writer.SetFileName ( filename ).Execute ( image );
   ASSERT_TRUE ( dataFinder.FileExists ( filename ) );
-  image = reader.SetFilename ( filename ).Execute();
+  image = reader.SetFileName ( filename ).Execute();
   ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
 
   // Make sure we wrote and read the file correctly
@@ -73,7 +73,7 @@ TEST(IO,2DFormats) {
   itk::simple::ImageHashFilter hasher;
   itk::simple::ImageFileReader reader;
   itk::simple::Image::Pointer image;
-  image = reader.SetFilename ( dataFinder.GetFile ( "Input/RA-Slice-Short.png" ) ).Execute();
+  image = reader.SetFileName ( dataFinder.GetFile ( "Input/RA-Slice-Short.png" ) ).Execute();
   ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
   hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 );
   EXPECT_EQ ( "bf0f7bae60b0322222e224941c31f37a981901aa", hasher.Execute ( image ) );

@@ -31,7 +31,7 @@ TEST_F(Python,SimpleGaussian) {
   itk::simple::ImageHashFilter hasher;
   itk::simple::Image::Pointer image;
 
-  image = reader.SetFilename ( output ).Execute();
+  image = reader.SetFileName ( output ).Execute();
   ASSERT_TRUE ( image->GetImageBase().IsNotNull() ) << "Loaded output image";
   EXPECT_EQ ( "9d3d4acf41aa62b453cfd6684ad7c361290462d1", hasher.Execute ( image ) );
 

@@ -17,7 +17,7 @@ class ImageConnection {
     }
 
     ImageFileReader reader = new ImageFileReader();
-    reader.setFilename(argv[0]);
+    reader.setFileName(argv[0]);
     SmartPointerImage img = reader.execute();
 
     SmartPointerPixelContainer pixels = img.getPixelContainer();

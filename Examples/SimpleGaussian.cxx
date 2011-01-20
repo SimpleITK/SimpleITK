@@ -12,7 +12,7 @@ int main ( int argc, char* argv[] ) {
   itk::simple::Image::Pointer image;
 
   itk::simple::ImageFileReader reader;
-  reader.SetFilename ( std::string ( argv[1] ) );
+  reader.SetFileName ( std::string ( argv[1] ) );
   image = reader.Execute();
 
   itk::simple::PixelIDValueType pixelID = image->GetPixelIDValue();
@@ -25,7 +25,7 @@ int main ( int argc, char* argv[] ) {
   image = caster.SetOutputPixelType( pixelID ).Execute( image );
 
   itk::simple::ImageFileWriter writer;
-  writer.SetFilename ( std::string ( argv[3] ) );
+  writer.SetFileName ( std::string ( argv[3] ) );
   writer.Execute ( image );
 
   return 0;

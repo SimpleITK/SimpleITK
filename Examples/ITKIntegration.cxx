@@ -62,7 +62,7 @@ int main( int argc, char *argv[])
   itk::simple::Image::Pointer image;
 
   itk::simple::ImageFileReader reader;
-  reader.SetFilename( std::string( argv[1] ) );
+  reader.SetFileName( std::string( argv[1] ) );
   image = reader.Execute();
 
 
@@ -70,7 +70,7 @@ int main( int argc, char *argv[])
   // Set up writer
   //
   itk::simple::ImageFileWriter writer;
-  writer.SetFilename( std::string( argv[2] ) );
+  writer.SetFileName( std::string( argv[2] ) );
 
 
   //////

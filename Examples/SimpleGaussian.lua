@@ -9,7 +9,7 @@ end
 
 reader = SimpleITK.ImageFileReader()
 -- Remember that Lua arrays are 1-based, and that arg does not contain the application name!
-reader:SetFilename ( arg[1] )
+reader:SetFileName ( arg[1] )
 image = reader:Execute();
   
 print ( image:ToString() )
@@ -22,6 +22,6 @@ print ( 'Finished filtering' )
 print ( image:ToString() )
 
 writer = SimpleITK.ImageFileWriter()
-writer:SetFilename ( arg[3] )
+writer:SetFileName ( arg[3] )
 writer:Execute ( image );
 

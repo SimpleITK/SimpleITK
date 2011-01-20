@@ -17,15 +17,15 @@ ImageFileWriter::ImageFileWriter()
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
   }
 
-ImageFileWriter& ImageFileWriter::SetFilename ( std::string fn )
+ImageFileWriter& ImageFileWriter::SetFileName ( std::string fn )
   {
-  this->m_Filename = fn;
+  this->m_FileName = fn;
   return *this;
   }
 
-std::string ImageFileWriter::GetFilename()
+std::string ImageFileWriter::GetFileName()
   {
-  return this->m_Filename;
+  return this->m_FileName;
   }
 
 ImageFileWriter& ImageFileWriter::Execute ( Image::Pointer image )
@@ -47,7 +47,7 @@ ImageFileWriter& ImageFileWriter::ExecuteInternal( Image::Pointer inImage )
     typedef itk::ImageFileWriter<InputImageType> Writer;
     typename Writer::Pointer writer = Writer::New();
     writer->UseCompressionOn();
-    writer->SetFileName ( this->m_Filename.c_str() );
+    writer->SetFileName ( this->m_FileName.c_str() );
     writer->SetInput ( image );
     writer->Update();
 
