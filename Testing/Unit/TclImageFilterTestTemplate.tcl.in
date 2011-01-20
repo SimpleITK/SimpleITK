@@ -29,16 +29,16 @@ if { [set tag] == "${tag}" } {
     OUT=[[ $(foreach settings 
     filter Set${parameter} $(if tcl_value then OUT='${tcl_value}' else OUT='${value}'end)
   ) ]] end)
-  set inputA [[reader SetFilename [lindex [set argv] 1]] Execute]
+  set inputA [[reader SetFileName [lindex [set argv] 1]] Execute]
   $(if inputB then
-  OUT="set inputB [[reader SetFilename [lindex [set argv] 2]] Execute]; \
+  OUT="set inputB [[reader SetFileName [lindex [set argv] 2]] Execute]; \
   set output [filter Execute [set inputA] [set inputB] ]"
     else
       OUT=[[
   set output [filter Execute [set inputA] ]
       ]]
     end)
-  [writer SetFilename [lindex [set argv] end] ] Execute [set output]
+  [writer SetFileName [lindex [set argv] end] ] Execute [set output]
   exit
 }
 )

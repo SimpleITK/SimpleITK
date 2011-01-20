@@ -16,8 +16,8 @@ namespace itk {
     public:
       typedef ImageFileReader Self;
 
-      Self& SetFilename ( std::string fn );
-      std::string GetFilename();
+      Self& SetFileName ( std::string fn );
+      std::string GetFileName();
       Image::Pointer Execute();
       typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer );
 
@@ -40,7 +40,7 @@ namespace itk {
 
     private:
 
-      std::string m_Filename;
+      std::string m_FileName;
     };
 
   }

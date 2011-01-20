@@ -17,14 +17,14 @@ class SimpleGaussian {
     }
 
     ImageFileReader reader = new ImageFileReader();
-    reader.SetFilename(argv[0]);
+    reader.SetFileName(argv[0]);
     SmartPointerImage img = reader.Execute();
     
     RecursiveGaussianImageFilter filt = new RecursiveGaussianImageFilter();
     SmartPointerImage blurredImg = filt.Execute(img);
     
     ImageFileWriter writer = new ImageFileWriter();
-    writer.SetFilename(argv[1]);
+    writer.SetFileName(argv[1]);
     writer.Execute(blurredImg);
     
   }

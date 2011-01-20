@@ -56,10 +56,10 @@ end)
 )   )
 
       // Read image(s) and run the filter
-      SmartPointerImage inputA = reader.setFilename( argv[1] ).execute();
+      SmartPointerImage inputA = reader.setFileName( argv[1] ).execute();
 $(if inputB then
       OUT=[[
-      SmartPointerImage inputB = reader.setFilename ( argv[2] ).execute();
+      SmartPointerImage inputB = reader.setFileName ( argv[2] ).execute();
       SmartPointerImage output = filter.execute ( inputA, inputB );]]
 else
       OUT=[[
@@ -67,7 +67,7 @@ else
 end)
 
       // Write output
-      writer.setFilename( argv[argv.length - 1] ).execute( output );
+      writer.setFileName( argv[argv.length - 1] ).execute( output );
     }
 )
   }

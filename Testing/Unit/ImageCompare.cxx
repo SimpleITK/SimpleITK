@@ -45,26 +45,26 @@ bool ImageCompare::compare ( itk::simple::Image::Pointer image, std::string inTe
     centerSlice = itk::simple::ExtractImageFilter().Execute ( image, centerIdx );
     }
 
-  std::string baselineFilename = dataFinder.GetSourceDirectory() + "/Testing/Data/Baseline/" + name + extension;
+  std::string baselineFileName = dataFinder.GetSourceDirectory() + "/Testing/Data/Baseline/" + name + extension;
   
-  if ( !itksys::SystemTools::FileExists ( baselineFilename.c_str() ) ) {
+  if ( !itksys::SystemTools::FileExists ( baselineFileName.c_str() ) ) {
     // Baseline does not exist, write out what we've been given
     std::string newBaselineDir = OutputDir + "/Newbaseline/";
     itksys::SystemTools::MakeDirectory ( newBaselineDir.c_str() );
     std::cout << "Making directory " << newBaselineDir << std::endl;
     std::string newBaseline = newBaselineDir + name + extension;
-    itk::simple::ImageFileWriter().SetFilename ( newBaseline ).Execute ( centerSlice );
-    mMessage = "Baseline does not exist, wrote " + newBaseline + "\ncp " + newBaseline + " " + baselineFilename;
+    itk::simple::ImageFileWriter().SetFileName ( newBaseline ).Execute ( centerSlice );
+    mMessage = "Baseline does not exist, wrote " + newBaseline + "\ncp " + newBaseline + " " + baselineFileName;
     return false;
   }
 
   itk::simple::Image::Pointer baseline;
-  std::cout << "Loading baseline " << baselineFilename << std::endl;
+  std::cout << "Loading baseline " << baselineFileName << std::endl;
 
   try {
-    baseline = itk::simple::ImageFileReader().SetFilename ( baselineFilename ).Execute();
+    baseline = itk::simple::ImageFileReader().SetFileName ( baselineFileName ).Execute();
   } catch ( itk::ExceptionObject& e ) { 
-    mMessage = "ImageCompare: Failed to load image " + baselineFilename + " because: " + e.what();
+    mMessage = "ImageCompare: Failed to load image " + baselineFileName + " because: " + e.what();
     return false;
   }
 
@@ -90,7 +90,7 @@ bool ImageCompare::compare ( itk::simple::Image::Pointer image, std::string inTe
     }
   catch ( itk::ExceptionObject& e ) 
     { 
-    mMessage = "ImageCompare: Failed to subtract image " + baselineFilename + " because: " + e.what();
+    mMessage = "ImageCompare: Failed to subtract image " + baselineFileName + " because: " + e.what();
     return false;
     }
   itk::simple::StatisticsImageFilter stats;
@@ -107,7 +107,7 @@ bool ImageCompare::compare ( itk::simple::Image::Pointer image, std::string inTe
     std::cout << "<DartMeasurement name=\"Tolerance\" type=\"numeric/float\">" << mTolerance << "</DartMeasurement>" << std::endl;
 
     std::string volumeName = OutputDir + "/" + name + ".nrrd";
-    itk::simple::ImageFileWriter().SetFilename ( volumeName ).Execute ( centerSlice );
+    itk::simple::ImageFileWriter().SetFileName ( volumeName ).Execute ( centerSlice );
 
     return false;
   }

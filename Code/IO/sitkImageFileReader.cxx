@@ -12,13 +12,13 @@
 namespace itk {
   namespace simple {
 
-    ImageFileReader& ImageFileReader::SetFilename ( std::string fn ) {
-      this->m_Filename = fn;
+    ImageFileReader& ImageFileReader::SetFileName ( std::string fn ) {
+      this->m_FileName = fn;
       return *this;
     }
 
-    std::string ImageFileReader::GetFilename() {
-      return this->m_Filename;
+    std::string ImageFileReader::GetFileName() {
+      return this->m_FileName;
     }
 
     Image::Pointer ImageFileReader::Execute () {
@@ -27,16 +27,16 @@ namespace itk {
       // todo check if filename does not exits for robust error handling
 
       itk::ImageIOBase::Pointer iobase =
-        itk::ImageIOFactory::CreateImageIO(this->m_Filename.c_str(),
+        itk::ImageIOFactory::CreateImageIO(this->m_FileName.c_str(),
                                            itk::ImageIOFactory::ReadMode);
 
       if ( iobase.IsNull() )
         {
-        sitkExceptionMacro( "Unable to determine ImageIO reader for \"" << this->m_Filename << "\"" );
+        sitkExceptionMacro( "Unable to determine ImageIO reader for \"" << this->m_FileName << "\"" );
         }
 
       // Read the image information
-      iobase->SetFileName( this->m_Filename );
+      iobase->SetFileName( this->m_FileName );
       iobase->ReadImageInformation();
 
       // get output information about input image
@@ -85,7 +85,7 @@ namespace itk {
 
       if ( image.IsNull() )
         {
-        sitkExceptionMacro( "Unable to load image \"" << this->m_Filename << "\"" );
+        sitkExceptionMacro( "Unable to load image \"" << this->m_FileName << "\"" );
         }
 
       return image;
@@ -191,7 +191,7 @@ namespace itk {
     assert( ImageTypeToPixelIDValue<ImageType>::Result != (int)sitkUnknown );
 
     typename Reader::Pointer reader = Reader::New();
-    reader->SetFileName( this->m_Filename.c_str() );
+    reader->SetFileName( this->m_FileName.c_str() );
     reader->Update();
     typename Image::Pointer image = new Image( reader->GetOutput() );
     return image;
