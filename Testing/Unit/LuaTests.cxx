@@ -5,6 +5,7 @@
 #include <sitkImageFileWriter.h>
 #include <sitkImageHashFilter.h>
 
+#if defined(WRAP_LUA)
 TEST_F(Lua,SimpleGaussian) {
   // Run the simple gaussian command line program
   std::string Script = dataFinder.GetSourceDirectory() + "/Examples/SimpleGaussian.lua";
@@ -29,3 +30,4 @@ TEST_F(Lua,SimpleGaussian) {
   EXPECT_EQ ( "9d3d4acf41aa62b453cfd6684ad7c361290462d1", hasher.Execute ( image ) );
 
 }
+#endif
