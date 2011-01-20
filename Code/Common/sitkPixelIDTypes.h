@@ -4,7 +4,7 @@
 
 #include <itkImage.h>
 #include <itkVectorImage.h>
-#include <itkLabelMapFacade.h>
+#include <itkLabelMap.h>
 #include <itkLabelObject.h>
 
 namespace itk
