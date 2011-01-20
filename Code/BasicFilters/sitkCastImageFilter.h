@@ -63,6 +63,9 @@ private:
   Image::Pointer ExecuteInternalToLabel( Image::Pointer inImage );
   /** @} */
 
+// SWIG does not appear to process private classes correctly
+#ifndef SWIG
+
   /** An addressor of ExecuteInternalCast to be utilized with
    * registering member functions with the factory.
    */
@@ -107,7 +110,7 @@ private:
       return &ObjectType::template ExecuteInternalToLabel< TImageType1, TImageType2 >;
     }
   };
-
+#endif
 
   typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer );
   std::auto_ptr<detail::DualMemberFunctionFactory<MemberFunctionType> > m_DualMemberFactory;
