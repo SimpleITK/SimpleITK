@@ -20,15 +20,15 @@ namespace itk {
 
       ImageFileWriter( void );
 
-      Self& SetFilename ( std::string fn );
-      std::string GetFilename();
+      Self& SetFileName ( std::string fn );
+      std::string GetFileName();
       Self& Execute ( Image::Pointer );
 
     private:
 
       template <class T> Self& ExecuteInternal ( Image::Pointer );
 
-      std::string m_Filename;
+      std::string m_FileName;
 
       // friend to get access to executeInternal member
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;

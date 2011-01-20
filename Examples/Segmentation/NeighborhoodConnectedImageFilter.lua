@@ -24,12 +24,12 @@ end
 
 --[[ Read the image ]]
 reader = SimpleITK.ImageFileReader()
-reader:SetFilename( arg[1] )
+reader:SetFileName( arg[1] )
 image = reader:Execute()
 
 --[[ Set up the writer ]]
 writer = SimpleITK.ImageFileWriter()
-writer:SetFilename( arg[2] )
+writer:SetFileName( arg[2] )
 
 --[[ Blur using CurvatureFlowImageFilter ]]
 blurFilter = SimpleITK.CurvatureFlowImageFilter()

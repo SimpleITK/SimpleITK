@@ -20,7 +20,7 @@ TEST(BasicFilters,RecursiveGaussian) {
   itk::simple::RecursiveGaussianImageFilter filter;
   itk::simple::Image::Pointer image;
 
-  reader.SetFilename ( dataFinder.GetFile ( "Input/RA-Float.nrrd" ) );
+  reader.SetFileName ( dataFinder.GetFile ( "Input/RA-Float.nrrd" ) );
   image = reader.Execute();
   ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
   image = filter.Execute ( image );
@@ -34,7 +34,7 @@ TEST(BasicFilters,Cast) {
   itk::simple::RecursiveGaussianImageFilter filter;
   itk::simple::Image::Pointer image;
 
-  reader.SetFilename ( dataFinder.GetFile ( "Input/RA-Float.nrrd" ) );
+  reader.SetFileName ( dataFinder.GetFile ( "Input/RA-Float.nrrd" ) );
   image = reader.Execute();
   ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
   hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 );

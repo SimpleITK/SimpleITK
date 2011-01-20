@@ -9,7 +9,7 @@ if len ( sys.argv ) < 4:
     sys.exit ( 1 )
 
 reader = SimpleITK.ImageFileReader()
-reader.SetFilename ( sys.argv[1] )
+reader.SetFileName ( sys.argv[1] )
 image = reader.Execute();
 
 print image.ToString()
@@ -21,6 +21,6 @@ image = morphoMath.Execute ( image );
 print image.ToString()
 
 writer = SimpleITK.ImageFileWriter()
-writer.SetFilename ( sys.argv[3] )
+writer.SetFileName ( sys.argv[3] )
 writer.Execute ( image );
 

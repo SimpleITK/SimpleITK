@@ -7,7 +7,7 @@ if len ( sys.argv ) < 4:
     sys.exit ( 1 )
 
 reader = SimpleITK.ImageFileReader()
-reader.SetFilename ( sys.argv[1] )
+reader.SetFileName ( sys.argv[1] )
 image = reader.Execute()
 
 pixelID = image.GetPixelIDValue()
@@ -21,5 +21,5 @@ caster.SetOutputPixelType( pixelID )
 image = caster.Execute( image )
 
 writer = SimpleITK.ImageFileWriter()
-writer.SetFilename ( sys.argv[3] )
+writer.SetFileName ( sys.argv[3] )
 writer.Execute ( image );
