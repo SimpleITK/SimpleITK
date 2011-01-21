@@ -65,7 +65,7 @@ namespace itk
       /** \brief Dispatched methods for allocating images
        *
        * The enable if idiom is used here to enable different methods
-       * for different pixe/image types.
+       * for different pixel/image types.
        *
        * @{
        */
