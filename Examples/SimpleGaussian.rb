@@ -6,7 +6,7 @@ if ARGV.length != 3 then
 end
 
 reader = Simpleitk::ImageFileReader.new
-reader.set_filename( ARGV[0] )
+reader.set_file_name( ARGV[0] )
 image = reader.execute
   
 puts image.to_string
@@ -18,6 +18,6 @@ image = gaussian.execute image;
 puts image.to_string
 
 writer = Simpleitk::ImageFileWriter.new
-writer.set_filename ARGV[2] 
+writer.set_file_name ARGV[2] 
 writer.execute image
 
