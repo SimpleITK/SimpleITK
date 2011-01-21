@@ -40,14 +40,14 @@ OUT=[[
 end)
 )
 )
-  inputA = reader.set_filename( ARGV[1] ).execute
+  inputA = reader.set_file_name( ARGV[1] ).execute
   $(if inputB then
-  OUT=[[inputB = reader.set_filename( ARGV[2] ).execute
+  OUT=[[inputB = reader.set_file_name( ARGV[2] ).execute
   output = filter.execute( inputA, inputB )]]
     else
   OUT=[[output = filter.execute( inputA )]]
   end)
-  writer.set_filename( ARGV[ARGV.length-1] ).execute( output )
+  writer.set_file_name( ARGV[ARGV.length-1] ).execute( output )
 end
 )
     
