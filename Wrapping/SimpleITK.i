@@ -11,20 +11,13 @@
 // Use exceptions
 %include "exception.i"
 
-// Tell SWIG that any time Execute is called, this creates a new SWIG-owned object
-// %newobject *::Execute;
-
 // Include some C# helper files
 %include "CSharpTypemapHelper.i"
-
 
 // This section is copied verbatim into the generated source code.
 // Any include files, definitions, etc. need to go here.
 %{
 #include <SimpleITK.h>
-
-// This is required because SWIG does not properly add namespaces to typedefs
-using namespace itk::simple;
 %}
 
 
@@ -97,6 +90,8 @@ typedef unsigned long long uint64_t;
 // Help swig wrap 32 bit integers
 typedef unsigned int uint32_t;
 
+%ignore itk::simple::Image::GetPixelContainer();
+
 // Any new classes need to have an "%include" statement to be wrapped.
 %include "sitkPixelIDValues.h"
 %include "sitkImage.h"
@@ -111,3 +106,22 @@ typedef unsigned int uint32_t;
 
 // Auto-generated headers
 %include "SimpleITKBasicFiltersGeneratedHeaders.i"
+
+// Constructors for Image must be overridden to return SmartPointers
+// Step 1: rename the Image constructor
+%rename(Image) InternalConstructImage;
+
+// Step 2: for each defined constructor, create a new version of InternalConstructImage
+// Step 3: make sure to UnRegister the smart pointer before returnning (o.t.w. it will have a ref count of 2)
+%inline %{
+itk::simple::Image::Pointer InternalConstructImage( uint64_t Width, uint64_t Height, itk::simple::PixelIDValueEnum ValueEnum ) { 
+  itk::simple::Image::Pointer p = new itk::simple::Image (Width,Height,ValueEnum);
+  p->UnRegister();                                    
+  return p; 
+};
+itk::simple::Image::Pointer InternalConstructImage( uint64_t Width, uint64_t Height, uint64_t Depth, itk::simple::PixelIDValueEnum ValueEnum ) {
+  itk::simple::Image::Pointer p = new itk::simple::Image( Width, Height, Depth, ValueEnum );
+  p->UnRegister();                                    
+  return p; 
+};
+%}
