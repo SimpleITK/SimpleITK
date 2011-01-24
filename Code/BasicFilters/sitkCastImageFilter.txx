@@ -2,7 +2,6 @@
 #define __sitkCastImageFilter_txx
 
 #include "sitkCastImageFilter.h"
-#include "sitkImage.txx"
 
 #include <itkCastImageFilter.h>
 #include <itkImageToVectorImageFilter.h>

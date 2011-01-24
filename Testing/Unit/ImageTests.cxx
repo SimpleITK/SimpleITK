@@ -1,6 +1,5 @@
 #include <SimpleITKTestHarness.h>
 
-#include <sitkImage.txx>
 #include <sitkImageFileReader.h>
 #include <sitkImageFileWriter.h>
 #include <sitkImageHashFilter.h>

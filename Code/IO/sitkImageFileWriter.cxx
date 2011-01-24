@@ -1,6 +1,5 @@
 
 #include "sitkImageFileWriter.h"
-#include "sitkImage.txx"
 
 #include <itkImageIOBase.h>
 #include <itkImageFileWriter.h>

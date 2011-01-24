@@ -1,4 +1,3 @@
-#include "sitkImage.txx"
 #include "sitk${name}ImageFilter.h"
 #include "itk${name}ImageFilter.h"
 $(if real_type_output==1 then

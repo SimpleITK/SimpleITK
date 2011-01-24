@@ -1,5 +1,4 @@
 #include "sitkRecursiveGaussianImageFilter.h"
-#include "sitkImage.txx"
 
 namespace itk {
 namespace simple {
