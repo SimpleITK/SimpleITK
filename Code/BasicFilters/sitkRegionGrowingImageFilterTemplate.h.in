@@ -121,6 +121,8 @@ $(foreach members
 
 };
 
+  // Create a function to run the Execute method of this filter
+  Image::Pointer ${name} ( Image::Pointer imageA$(if number_of_inputs == 2 then OUT=', Image::Pointer imageB' end) $(when members $(foreach members ,$(if full_type then OUT=[[${full_type}]] else OUT=[[${type}]] end) in${name} ) ), std::vector< std::vector<unsigned int> > inSeedList );
 
 } // end namespace simple
 } // end namespace itk

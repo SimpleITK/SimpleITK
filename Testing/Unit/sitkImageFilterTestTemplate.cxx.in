@@ -45,7 +45,6 @@ $(foreach members
 end)
 )
 
-
  $(if number_of_inputs == 2 then
    OUT=[[ {
   itk::simple::Image::Pointer smallImage      = new itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 );
@@ -56,6 +55,8 @@ end)
   }]]
    end)
 
+
+  bool firstPassSoTestFunctional = true;
   $(foreach tests 
     /* ${description} */
   ASSERT_NO_THROW ( inputA = reader.SetFileName ( dataFinder.GetFile ( "${inputA}" ) ).Execute() ) << "Failed to load ${inputA}";
@@ -66,6 +67,19 @@ end)
   ASSERT_TRUE ( inputB->GetImageBase().IsNotNull() ) << "Could not read ${inputB}";
             ]]
       end)
+
+    if ( firstPassSoTestFunctional ) {
+      firstPassSoTestFunctional = false;
+      // Do we get the same image back, if we use the functional interface?
+      itk::simple::Image::Pointer fromFunctional, fromProcedural;
+      ASSERT_NO_THROW ( fromProcedural = filter.Execute ( inputA $(if inputB then OUT=", inputB" end) ) ) << "Procedural interface to ${name}";
+      ASSERT_NO_THROW ( fromFunctional = itk::simple::${name} ( inputA $(if inputB then OUT=", inputB" end)
+                                                                         $(foreach members , ${default})
+                                                                ) ) << "Functional interface to ${name}";
+      hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 );
+      EXPECT_EQ ( hasher.Execute ( fromProcedural ), hasher.Execute ( fromFunctional ) ) << "procedural and functional are not the same!";
+    }
+
 
 $(if settings then
 OUT=[[
