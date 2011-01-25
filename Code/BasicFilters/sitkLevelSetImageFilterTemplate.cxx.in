@@ -140,5 +140,17 @@ Image::Pointer ${name}ImageFilter::ExecuteInternal ( Image::Pointer inImage1 $(i
   return out;
   }
 
+  // Create a function to run the Execute method of this filter
+  Image::Pointer ${name} ( Image::Pointer imageA$(if number_of_inputs == 2 then OUT=', Image::Pointer imageB' end) $(when members $(foreach members ,$(if full_type then OUT=[[${full_type}]] else OUT=[[${type}]] end) in${name} ) ) ) {
+    ${name}ImageFilter filter;
+    $(when members
+      $(foreach members
+        filter.Set${name} ( in${name} );
+        )
+      )
+    return filter.Execute ( imageA$(if number_of_inputs == 2 then OUT=', imageB' end)$(when members $(foreach members , in${name} ) ) );
+  }
+
+
 } // end namespace simple
 } // end namespace itk

@@ -8,6 +8,7 @@
   "members" : [
     { "name" : "Operation",
       "type" : "OperationType",
+      "full_type" : "MathematicalMorphologyImageFilter::OperationType",
       "default" : "::itk::simple::MathematicalMorphologyImageFilter::BinaryErode",
       "doc" : "Mathematical morphology operation to be performed. Valid options are 0=BinaryErode, 1=BinaryDilate, 2=GrayscaleErode, 3=GrayscaleDilate, 4=GrayscaleOpening, 5=GrayscaleClosing."
       "custom_itk_cast" :
