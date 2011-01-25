@@ -32,6 +32,8 @@ TEST(IO,ImageFileReader) {
     ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
     hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 );
     EXPECT_EQ ( it->second, hasher.Execute ( image ) ) << " reading " << it->first;
+    // Try the functional interface
+    EXPECT_EQ ( it->second, hasher.Execute ( itk::simple::ReadImage ( dataFinder.GetFile ( it->first ) ) ) ) << "Functional interface";
   }
 
 }
@@ -57,6 +59,19 @@ TEST(IO,ReadWrite) {
   // Write it out
   std::string filename = dataFinder.GetOutputFile ( "IO.ReadWrite.nrrd" );
   writer.SetFileName ( filename ).Execute ( image );
+  ASSERT_TRUE ( dataFinder.FileExists ( filename ) );
+  image = reader.SetFileName ( filename ).Execute();
+  ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
+
+  // Make sure we wrote and read the file correctly
+  hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 );
+  EXPECT_EQ ( md5, hasher.Execute ( image ) );
+  hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 );
+  EXPECT_EQ ( sha1, hasher.Execute ( image ) );
+
+  // Again, with the functional interface
+  filename = dataFinder.GetOutputFile ( "IO.ReadWrite-Functional.nrrd" );
+  itk::simple::WriteImage ( image, filename );
   ASSERT_TRUE ( dataFinder.FileExists ( filename ) );
   image = reader.SetFileName ( filename ).Execute();
   ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
