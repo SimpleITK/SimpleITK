@@ -47,6 +47,8 @@ end)
   // Test size of default SeedList
   EXPECT_EQ ( filter.GetSeedList().size(), (unsigned int)0 ) << "Testing empty seed list as default";
 
+   bool firstPassSoTestFunctional = true;
+
   $(foreach tests 
   /* ${description} */
   ASSERT_NO_THROW ( inputA = reader.SetFilename ( dataFinder.GetFile ( "${inputA}" ) ).Execute() ) << "Failed to load ${inputA}";
@@ -76,6 +78,25 @@ $(foreach settings
 end)
 )]]
 end)
+
+    if ( firstPassSoTestFunctional ) {
+      firstPassSoTestFunctional = false;
+      // Do we get the same image back, if we use the functional interface?
+      itk::simple::Image::Pointer fromFunctional, fromProcedural;
+      itk::simple::${name}ImageFilter localfilter;
+      $(foreach members
+        localfilter.Set${name} ( ${default} ); 
+        )
+        // Borrow the seedlist...
+        localfilter.SetSeedList ( filter.GetSeedList() );
+      ASSERT_NO_THROW ( fromProcedural = localfilter.Execute ( inputA $(if inputB then OUT=", inputB" end) ) ) << "Procedural interface to ${name}";
+      ASSERT_NO_THROW ( fromFunctional = itk::simple::${name} ( inputA $(if inputB then OUT=", inputB" end)
+                                                                $(foreach members , ${default}), filter.GetSeedList()
+                                                                ) ) << "Functional interface to ${name}";
+      hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 );
+      EXPECT_EQ ( hasher.Execute ( fromProcedural ), hasher.Execute ( fromFunctional ) ) << "procedural and functional are not the same!";
+    }
+
 
   ASSERT_NO_THROW ( output = filter.Execute ( inputA $(if inputB then OUT=", inputB" end) ) );
   $(if md5hash then
