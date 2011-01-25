@@ -43,6 +43,8 @@ namespace itk {
       std::string m_FileName;
     };
 
+    Image::Pointer ReadImage ( std::string filename );
+
   }
 }
 

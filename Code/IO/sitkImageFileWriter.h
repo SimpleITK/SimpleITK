@@ -36,7 +36,7 @@ namespace itk {
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 
     };
-
+    void WriteImage ( Image::Pointer image, std::string filename );
   }
 }
 
