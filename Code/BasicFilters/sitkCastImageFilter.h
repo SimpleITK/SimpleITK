@@ -117,6 +117,7 @@ private:
 
 };
 
+  Image::Pointer Cast ( Image::Pointer image, PixelIDValueType pixelID );
 
 }
 }

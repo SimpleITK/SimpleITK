@@ -42,8 +42,6 @@ namespace itk {
 
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
     };
-
-
   }
 }
 #endif

@@ -104,6 +104,12 @@ Image::Pointer CastImageFilter::ExecuteInternalToLabel( Image::Pointer inImage )
   return out;
 }
 
+Image::Pointer Cast ( Image::Pointer image, PixelIDValueType pixelID ) {
+  CastImageFilter filter;
+  return filter.SetOutputPixelType ( pixelID ).Execute ( image );
+}
+
+
 } // end namespace simple
 } // end namespace itk
 
