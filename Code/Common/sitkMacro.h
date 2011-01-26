@@ -36,6 +36,8 @@ namespace simple {
     }
 
 
+template <typename T>
+void Unused( const T &) {};
 
 #ifdef SITK_SUPPORTS_STATIC_ASSERT
 // utilize the c++x0 static_assert if available

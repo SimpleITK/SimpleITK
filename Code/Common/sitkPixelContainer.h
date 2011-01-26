@@ -4,6 +4,7 @@
 #include "sitkPixelIDTypeLists.h"
 #include "sitkPixelIDValues.h"
 #include "sitkNonCopyable.h"
+#include "itkLightObject.h"
 
 namespace itk
 {
