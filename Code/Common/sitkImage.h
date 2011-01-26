@@ -3,15 +3,22 @@
 
 #include "sitkMacro.h"
 
-#include "sitkPixelIDTypeLists.h"
-#include "sitkMemberFunctionFactory.h"
+#include "sitkDetail.h"
+#include "sitkPixelIDTokens.h"
 #include "sitkPixelContainer.h"
 #include "sitkNonCopyable.h"
+#include "itkDataObject.h"
 
 namespace itk
 {
-  namespace simple
-  {
+namespace simple
+{
+
+  // This is the foward declaration of a class used internally to the
+  // Image class, but the actually interface is not exposed to simple
+  // ITK. A pointer to the implementation is used as per the pimple
+  // idiom.
+  class PimpleImageBase;
 
     class Image
       : public LightObject,
@@ -24,12 +31,13 @@ namespace itk
       Image( uint64_t Width, uint64_t Height, PixelIDValueEnum ValueEnum );
       Image( uint64_t Width, uint64_t Height, uint64_t Depth, PixelIDValueEnum ValueEnum );
 
+      template <typename TImageType>
+      explicit Image( itk::SmartPointer<TImageType> image )
+        { this->InternalInitialization( image.GetPointer() ); }
 
       template <typename TImageType>
-      Image( itk::SmartPointer<TImageType> image );
-
-      template <typename TImageType>
-      Image( TImageType* image );
+      explicit Image( TImageType* image )
+        { this->InternalInitialization( image ); }
 
       itk::DataObject::Pointer GetImageBase( void );
       itk::DataObject::ConstPointer GetImageBase( void ) const;
@@ -51,6 +59,13 @@ namespace itk
       typedef void (Self::*MemberFunctionType)( uint64_t Width, uint64_t Height, uint64_t Depth );
 
       PixelContainer::Pointer GetPixelContainer();
+
+      /** Method called my certain constructors to convert ITK images
+      * into simpleITK ones.
+      */
+      template <typename TImageType>
+      void InternalInitialization( TImageType * );
+
 
     protected:
 
@@ -85,46 +100,21 @@ namespace itk
       typedef detail::AllocateMemberFunctionAddressor<MemberFunctionType> AllocateAddressor;
       friend struct detail::AllocateMemberFunctionAddressor<MemberFunctionType>;
 
+
+      /** \brief Do not call this method
+       *
+       * The purpose of this methods is to implicitly instantiate the
+       * templated constructors of this class.
+       */
+      void __ImplicitInstantiate( void );
+
     private:
 
-
-  /** We utilize the private implementation ( or PImple)
-   * programming idiom to modify the behavior of the simple image
-   * class based on the different image types.
-   *
-   * This class is desinged to be utilize to have trivial copy,
-   * and assgnement operators
-   */
-  class PimpleImageBase
-  {
-  public:
-    virtual ~PimpleImageBase( void ) {};
-
-    virtual PixelIDValueType GetPixelIDValue(void) = 0;
-    virtual unsigned int GetDimension( void ) = 0;
-
-    virtual PimpleImageBase *Clone(void) const = 0;
-    virtual itk::DataObject::Pointer GetDataBase( void ) = 0;
-    virtual itk::DataObject::ConstPointer GetDataBase( void ) const = 0;
-
-    virtual uint64_t GetWidth( void ) const { return this->GetSize( 0 ); }
-    virtual uint64_t GetHeight( void ) const { return this->GetSize( 1 ); }
-    virtual uint64_t GetDepth( void ) const { return this->GetSize( 2 ); }
-
-    virtual uint64_t GetSize( unsigned int dimension ) const = 0;
-    virtual std::string ToString() const = 0;
-
-    virtual PixelContainer::Pointer GetPixelContainer() = 0;
-
-  };
-
-  // utilize std::auto_ptr to perform automatic deletion on deconstruction
-  std::auto_ptr< PimpleImageBase > m_PimpleImage;
-
+      // utilize std::auto_ptr to perform automatic deletion on deconstruction
+      std::auto_ptr< PimpleImageBase > m_PimpleImage;
   };
 
   }
 }
 
-#include "sitkImage.txx"
 #endif

@@ -2,13 +2,14 @@
 #define __sitkPixelIDTypes_h
 
 
-#include <itkImage.h>
-#include <itkVectorImage.h>
-#include <itkLabelMap.h>
-#include <itkLabelObject.h>
-
 namespace itk
 {
+
+template <typename TPixelType, unsigned int VImageDimension> class Image;
+template <typename TPixelType, unsigned int VImageDimension > class VectorImage;
+template < typename TLabelObject > class LabelMap;
+template < typename TLabelObject, unsigned int VImageDimension > class LabelObject;
+
 namespace simple
 {
 
