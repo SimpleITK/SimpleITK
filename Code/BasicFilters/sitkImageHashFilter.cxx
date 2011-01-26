@@ -1,6 +1,7 @@
 
 #include "sitkImageHashFilter.h"
 #include "itkHashImageFilter.h"
+#include "itkVectorImage.h"
 
 #include <string>
 
