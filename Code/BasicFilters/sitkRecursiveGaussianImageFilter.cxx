@@ -4,6 +4,14 @@
 namespace itk {
 namespace simple {
 
+  Image::Pointer RecursiveGaussian ( Image::Pointer image, double Sigma, bool NormalizeAcrossScale, RecursiveGaussianImageFilter::OrderEnumType Order, unsigned int Direction ) {
+    RecursiveGaussianImageFilter filter;
+    filter.SetSigma ( Sigma ).SetNormalizeAcrossScale ( NormalizeAcrossScale ).SetOrder ( Order ).SetDirection ( Direction );
+    return filter.Execute ( image );
+  }
+    
+
+
 //----------------------------------------------------------------------------
 
 //
