@@ -1,5 +1,11 @@
 #include "sitkImage.h"
 #include "sitkPixelContainer.txx"
+#include "sitkMemberFunctionFactory.h"
+
+#include "itkImage.h"
+#include "itkVectorImage.h"
+#include "itkLabelMap.h"
+#include "itkLabelObject.h"
 
 namespace itk
 {

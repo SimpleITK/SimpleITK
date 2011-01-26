@@ -3,10 +3,11 @@
 
 #include "sitkMacro.h"
 
-#include "sitkPixelIDTypeLists.h"
-#include "sitkMemberFunctionFactory.h"
+#include "sitkDetail.h"
+#include "sitkPixelIDTokens.h"
 #include "sitkPixelContainer.h"
 #include "sitkNonCopyable.h"
+#include "itkDataObject.h"
 
 namespace itk
 {
@@ -59,6 +60,12 @@ namespace simple
 
       PixelContainer::Pointer GetPixelContainer();
 
+      /** Method called my certain constructors to convert ITK images
+      * into simpleITK ones.
+      */
+      template <typename TImageType>
+      void InternalInitialization( TImageType * );
+
 
     protected:
 
@@ -100,12 +107,6 @@ namespace simple
        * templated constructors of this class.
        */
       void __ImplicitInstantiate( void );
-
-      /** Method called my certain constructors to convert ITK images
-      * into simpleITK ones.
-      */
-      template <typename TImageType>
-      void InternalInitialization( TImageType * );
 
     private:
 

@@ -1,6 +1,7 @@
 #ifndef __sitkExceptionObject_h
 #define __sitkExceptionObject_h
 
+#include "itkMacro.h"
 #include "itkExceptionObject.h"
 
 namespace itk
