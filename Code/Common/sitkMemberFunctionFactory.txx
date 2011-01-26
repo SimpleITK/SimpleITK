@@ -1,6 +1,8 @@
 #ifndef __sitkMemberFunctionFactory_txx
 #define __sitkMemberFunctionFactory_txx
 
+#include <cassert>
+
 #include "sitkMemberFunctionFactory.h"
 #include "sitkDetail.h"
 #include "sitkPixelIDTokens.h"
