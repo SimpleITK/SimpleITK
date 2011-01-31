@@ -38,8 +38,8 @@
     {
       "tag" : "defaults",
       "description" : "Simply run with default settings",
-      "inputA" : "Input/SmallWhiteCircle.nrrd",
-      "inputB" : "Input/LargeWhiteCircle.nrrd",
+      "inputA" : "Input/SmallWhiteCircle_Float.nrrd",
+      "inputB" : "Input/LargeWhiteCircle_Float.nrrd",
       "settings" : [],
       "tolerance" : 0.1
     }
