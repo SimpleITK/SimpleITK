@@ -90,7 +90,6 @@ typedef typelist::MakeTypeList<VectorPixelID<float>,
                                VectorPixelID<double> >::Type RealVectorPixelIDTypeList;
 
 
-
 /** List of pixel ids which are for itk::LabelMap Image class.
  *
  * \sa LabelPixelID

@@ -12,7 +12,8 @@ namespace simple
 namespace detail
 {
 
-/** \brief A class used to instantiate and generate function objects of
+/** \class DualMemberFunctionFactory
+ * \brief A class used to instantiate and generate function objects of
  *  templated member functions with two template arguments.
  *
  *  \tparam TMemberFunctionPointer is the type of pointer to member

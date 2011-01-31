@@ -34,7 +34,7 @@ template< typename TMemberFunctionPointer,
 class MemberFunctionFactoryBase;
 
 
-/**
+/** \class MemberFunctionFactoryBase
  * \brief A base class for the MemberFunctionFactory
  *
  *  This class is for specialization needed for different arity for
