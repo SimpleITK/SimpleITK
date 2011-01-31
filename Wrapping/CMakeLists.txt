@@ -56,8 +56,6 @@ if ( WRAP_LUA )
   add_executable ( SimpleITKLua SimpleITKLuaMain.cxx SimpleITKLUA_wrap.cxx )
   target_link_libraries ( SimpleITKLua ${SimpleITK_LIBRARIES} ${LUA_LIB} ${ITK_LIBRARIES} )
 
-  find_program (SimpleITKLua NAMES SimpleITKLua SimpleITKLua.exe PATHS ${EXECUTABLE_OUTPUT_PATH} ${EXECUTABLE_OUTPUT_PATH}/Release ${EXECUTABLE_OUTPUT_PATH}/Debug NO_DEFAULT_PATH NO_SYSTEM_ENVIRONMENT_PATH)
-
   if ( UNIX )
     target_link_libraries ( SimpleITKLua curses )
   endif()
