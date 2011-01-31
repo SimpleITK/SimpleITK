@@ -17,6 +17,9 @@ namespace itk
   namespace simple
   {
 
+  /** \class PimplePixelContainer
+   * \brief Private implementation idom pixel container class
+   */
   template <class TImageType>
   class PimplePixelContainer : public PixelContainer::PimplePixelContainerBase
   {
@@ -108,11 +111,9 @@ namespace itk
     }
 
 
-
   private:
     PixelContainerPointer   m_PixelContainer;
   };
-
 
 
   template <typename TImageType>

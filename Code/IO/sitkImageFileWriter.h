@@ -10,6 +10,13 @@
 namespace itk {
   namespace simple {
 
+    /** \class ImageFileWriter
+     * \brief Write out a SimpleITK image to the specified file location
+     *
+     * This writer tries to write the image out using the image's type to the
+     * location specified in FileName. If writing fails, an ITK exception is
+     * thrown.
+     */
     class ImageFileWriter {
     public:
       typedef ImageFileWriter Self;

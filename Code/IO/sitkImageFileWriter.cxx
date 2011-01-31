@@ -7,7 +7,7 @@
 
 namespace itk {
 namespace simple {
-  void WriteImage ( Image::Pointer image, std::string filename ) { ImageFileWriter writer; writer.SetFileName ( filename ).Execute ( image ); };
+  void WriteImage ( Image::Pointer image, std::string filename ) { ImageFileWriter writer; writer.SetFileName ( filename ).Execute ( image ); }
 
 ImageFileWriter::ImageFileWriter()
   {

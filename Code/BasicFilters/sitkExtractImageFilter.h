@@ -10,6 +10,9 @@
 namespace itk {
   namespace simple {
 
+    /** \class ExtractImageFilter
+     * \brief Extract a slice from an image
+     */
     class ExtractImageFilter : public ImageFilter {
     public:
       typedef ExtractImageFilter Self;

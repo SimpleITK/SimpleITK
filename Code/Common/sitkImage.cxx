@@ -12,7 +12,10 @@ namespace itk
   namespace simple
   {
 
-/** We utilize the private implementation ( or PImple)
+  /** \class PimpleImageBase
+   * \brief Private implementation idiom image base class
+   *
+   * We utilize the private implementation ( or PImple)
    * programming idiom to modify the behavior of the simple image
    * class based on the different image types.
    *

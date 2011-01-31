@@ -11,7 +11,13 @@
 namespace itk {
   namespace simple {
 
-
+    /** \class ImageFileReader
+     * \brief Read a 2D or 3D image and return a smart pointer to a SimpleITK
+     * image
+     *
+     * This reader handles scalar and vector images and returns an image with
+     * the same type as the file on disk.
+     */
     class ImageFileReader {
     public:
       typedef ImageFileReader Self;

@@ -1,5 +1,5 @@
 #ifndef __sitkDualMemberFunctionFactory_txx
-#define __sitkDualMemberFunctionFactory_h
+#define __sitkDualMemberFunctionFactory_txx
 
 #include "sitkDualMemberFunctionFactory.h"
 

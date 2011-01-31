@@ -11,7 +11,8 @@ namespace simple
 // this namespace is internal classes not part of the external simple ITK interface
 namespace detail {
 
-/** \brief A class used to instantiate and generate function object to
+/** \class MemberFunctionFactory
+ * \brief A class used to instantiate and generate function object to
  *  templated member functions.
  *
  *  \tparam TMemberFunctionPointer is the type of pointer to member
