@@ -11,7 +11,7 @@
 namespace itk {
   namespace simple {
 
-    Image::Pointer ReadImage ( std::string filename ) { ImageFileReader reader; return reader.SetFileName ( filename ).Execute(); };
+    Image::Pointer ReadImage ( std::string filename ) { ImageFileReader reader; return reader.SetFileName ( filename ).Execute(); }
 
     ImageFileReader& ImageFileReader::SetFileName ( std::string fn ) {
       this->m_FileName = fn;
