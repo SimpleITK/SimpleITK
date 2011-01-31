@@ -12,12 +12,13 @@ namespace itk
 namespace simple
 {
 
-/** \brief A hybrid cast image filter to convert images to other types
-   * of images.
-   *
-   * Several different ITK classes are implemented under the hood, to
-   * convert between different image types.
-   */
+/** \class CastImageFilter
+ * \brief A hybrid cast image filter to convert images to other types
+ * of images.
+ *
+ * Several different ITK classes are implemented under the hood, to
+ * convert between different image types.
+ */
 class CastImageFilter
   : public ImageFilter
 {

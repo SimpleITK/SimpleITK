@@ -6,6 +6,12 @@
 namespace itk {
   namespace simple {
 
+  /** \class DualImageFilter
+   * \brief The base interface for SimpleITK filters that take two input images
+   *
+   * All SimpleITK filters which take two input images should inherit from this
+   * class
+   */
   class DualImageFilter :
       protected NonCopyable
   {

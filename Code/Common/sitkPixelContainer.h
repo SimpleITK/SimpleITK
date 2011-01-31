@@ -16,6 +16,9 @@ namespace itk
   // forward declaration needed for friendship
   class Image;
 
+    /** \class PixelContainer
+     * \brief Container used to get the pixel buffer of a SimpleITK image
+     */
     class PixelContainer :
       public LightObject,
       protected NonCopyable

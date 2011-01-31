@@ -43,7 +43,6 @@ CastImageFilter::ExecuteInternalCast( Image::Pointer inImage )
 }
 
 
-
 template<typename TImageType, typename TOutputImageType>
 Image::Pointer CastImageFilter::ExecuteInternalToVector( Image::Pointer inImage )
 {
