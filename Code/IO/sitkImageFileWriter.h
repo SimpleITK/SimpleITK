@@ -5,6 +5,8 @@
 #include "sitkImage.h"
 #include "sitkMemberFunctionFactory.h"
 
+#include <memory>
+
 namespace itk {
   namespace simple {
 

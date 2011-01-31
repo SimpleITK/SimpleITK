@@ -2,10 +2,10 @@
 #define __sitkCastImageFilter_h
 
 #include "sitkImageFilter.h"
-
 #include "sitkPixelIDTokens.h"
-
 #include "sitkDualMemberFunctionFactory.h"
+
+#include <memory>
 
 namespace itk
 {
