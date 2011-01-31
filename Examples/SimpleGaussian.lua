@@ -1,7 +1,5 @@
 
 
-print ( #arg )
-
 if #arg < 3 then
   print ( "Usage: SimpleGaussian <input> <sigma> <output>" )
   os.exit ( 1 )
@@ -12,14 +10,9 @@ reader = SimpleITK.ImageFileReader()
 reader:SetFileName ( arg[1] )
 image = reader:Execute();
   
-print ( image:ToString() )
-
 gaussian = SimpleITK.RecursiveGaussianImageFilter()
 gaussian:SetSigma ( arg[2] )
 image = gaussian:Execute ( image );
-
-print ( 'Finished filtering' )
-print ( image:ToString() )
 
 writer = SimpleITK.ImageFileWriter()
 writer:SetFileName ( arg[3] )
