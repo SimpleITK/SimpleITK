@@ -6,6 +6,8 @@
 #include "sitkNonCopyable.h"
 #include "itkLightObject.h"
 
+#include <memory>
+
 namespace itk
 {
   namespace simple
