@@ -5,6 +5,8 @@
 
 #include <itkExtractImageFilter.h>
 
+#include <memory>
+
 namespace itk {
   namespace simple {
 

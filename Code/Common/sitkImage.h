@@ -9,6 +9,8 @@
 #include "sitkNonCopyable.h"
 #include "itkDataObject.h"
 
+#include <memory>
+
 namespace itk
 {
 namespace simple
