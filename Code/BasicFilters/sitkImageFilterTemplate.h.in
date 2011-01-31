@@ -1,6 +1,8 @@
 #ifndef __sitk${name}ImageFilter_h
 #define __sitk${name}ImageFilter_h
 
+#include <memory>
+
 #include "sitkDualImageFilter.h"
 $(if include_files and #include_files > 0 then
 OUT = [[// Additional include files
