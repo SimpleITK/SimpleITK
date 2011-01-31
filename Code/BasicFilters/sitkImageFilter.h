@@ -8,6 +8,12 @@
 namespace itk {
   namespace simple {
 
+  /** \class ImageFilter
+   * \brief The base interface for SimpleITK filters that take one input image
+   *
+   * All SimpleITK filters which take one input image should inherit from this
+   * class
+   */
   class ImageFilter:
       protected NonCopyable
   {
