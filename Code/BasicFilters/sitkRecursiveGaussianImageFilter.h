@@ -8,6 +8,9 @@
 namespace itk {
   namespace simple {
 
+    /** \class RecursiveGaussianImageFilter
+     * \brief This filter recursively applies a gaussian kernel to the image
+     */
     class RecursiveGaussianImageFilter : public ImageFilter {
     public:
       typedef RecursiveGaussianImageFilter Self;
