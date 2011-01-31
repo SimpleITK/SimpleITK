@@ -51,8 +51,7 @@ template<> struct StaticAssertFailure<true>{ enum { Value = 1 }; };
 #define BOOST_DO_JOIN( X, Y ) BOOST_DO_JOIN2(X,Y)
 #define BOOST_DO_JOIN2( X, Y ) X##Y
 
-#define sitkStaticAssert( expr, str ) enum { BOOST_JOIN( static_assert_typedef, __LINE__) = sizeof( itk::simple::StaticAssertFailure<((expr)==0 ? false : true )> ) };
-
+#define sitkStaticAssert( expr, str ) enum { BOOST_JOIN( static_assert_typedef, __LINE__) = sizeof( itk::simple::StaticAssertFailure<((expr) == 0 ? false : true )> ) };
 
 
 #endif

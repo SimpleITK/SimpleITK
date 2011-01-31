@@ -9,6 +9,9 @@ namespace itk
 namespace simple
 {
 
+/** \class GenericException
+ * \brief The base SimpleITK exception class
+ */
 class GenericException :
     public ::itk::ExceptionObject
 {
