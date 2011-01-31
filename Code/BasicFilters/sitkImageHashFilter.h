@@ -8,6 +8,9 @@
 namespace itk {
   namespace simple {
 
+    /** \class ImageHashFilter
+     * \brief Compute the sha1 or md5 hash of an image
+     */
     class ImageHashFilter {
     public:
       typedef ImageHashFilter Self;

@@ -13,15 +13,16 @@
 
 namespace itk {
 
-/** \brief Generates a hash string from an image.
-*
-* \note This class utlizes low level buffer pointer access, to work
-* with itk::Image and itk::VectorImage. It is modeled after the access
-* an ImageFileWriter provides to an ImageIO.
-*
-* \todo complete documentation
-* \todo Update in-place on to default after fixing bug in InPlaceImageFilter
-*/
+/** \class CastImageFilter
+ * \brief Generates a hash string from an image.
+ *
+ * \note This class utlizes low level buffer pointer access, to work
+ * with itk::Image and itk::VectorImage. It is modeled after the access
+ * an ImageFileWriter provides to an ImageIO.
+ *
+ * \todo complete documentation
+ * \todo Update in-place on to default after fixing bug in InPlaceImageFilter
+ */
 template < class TImageType >
 class ITK_EXPORT HashImageFilter:
     public CastImageFilter< TImageType, TImageType >
