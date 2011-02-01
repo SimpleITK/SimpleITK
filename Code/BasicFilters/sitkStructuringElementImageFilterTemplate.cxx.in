@@ -10,76 +10,82 @@ end)
 namespace itk {
 namespace simple {
 
-//----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 
 //
 // Default constructor that initializes parameters
 //
 ${name}ImageFilter::${name}ImageFilter ()
-  {
-
-
-  // Defaults
+{
   this->m_KernelRadius = 1;
   this->m_KernelType = BinaryBallKernel;
-  $(foreach members
-    $(if default then OUT = 'm_${name} = ${default};' end)
-  )
-
+$(foreach members
+$(if default then
+OUT = [[
+  this->m_${name} = ${default};]] end)
+)
   this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
-
-  }
+}
 
 //
 // ToString
 //
 std::string ${name}ImageFilter::ToString() const
-  {
+{
   std::ostringstream out;
   out << "itk::simple::${name}ImageFilter\n";
-
-  $(foreach members
-    $(if dim_vec and dim_vec == 1 then
-      OUT = [[out << "\t${name}: ";
-      printStdVector(this->m_${name}, out);
-      out << std::endl;]]
-    elseif (not no_print) or (not no_print == 1) then
-      OUT = 'out << "\t${name}: " << this->m_${name} << std::endl;'
-      end)
-  )
-
+$(foreach members
+$(if dim_vec and dim_vec == 1 then
+OUT = '  out << "  ${name}: ";\
+  printStdVector(this->m_${name}, out);\
+  out << std::endl;'
+elseif (not no_print) or (not no_print == 1) then
+OUT = '  out << "  ${name}: " << this->m_${name} << std::endl;'
+end)
+)
   return out.str();
-  }
+}
 
 //
 // Execute
-//
-
-      $(if members and #members > 0 then
+//$(if members and #members > 0 then
 OUT = [[
-        Image::Pointer ${name}ImageFilter::Execute ( Image::Pointer image1 $(foreach members ,${type} in${name} ) )
-  {
-    $(foreach members 
-      $(if (not no_set_method) or (no_set_method == 0) then
-      OUT = 'this->Set${name} ( in${name} );'
-      end)
-    )
-    return this->Execute ( image1 );
-  }
+
+Image::Pointer ${name}ImageFilter::Execute ( Image::Pointer image1$(if number_of_inputs==2 then OUT=', Image::Pointer image2' end)$(foreach members ,
+  ${type} in${name}) )
+{
+$(foreach members
+$(if (not no_set_method) or (no_set_method == 0) then
+OUT = '  this->Set${name} ( in${name} );'
+end)
+)
+  return this->Execute ( image1 $(if number_of_inputs==2 then OUT=', image2' end) );
+}
 ]]
 end)
+Image::Pointer ${name}ImageFilter::Execute ( Image::Pointer image1$(if number_of_inputs==2 then OUT=[[, Image::Pointer image2]] end) )
+{
 
-Image::Pointer ${name}ImageFilter::Execute ( Image::Pointer image1 )
-  {
+  PixelIDValueType type = image1->GetPixelIDValue();
+  unsigned int dimension = image1->GetDimension();$(if number_of_inputs and number_of_inputs == 2 then
+OUT=[[
 
-    PixelIDValueType type = image1->GetPixelIDValue();
-    unsigned int dimension = image1->GetDimension();
 
-    return this->m_MemberFactory->GetMemberFunction( type, dimension )( image1 );
-  }
+  // todo need better error handling and potential type conversion
+  if ( type != image2->GetPixelIDValue() ||
+       dimension != image2->GetDimension() ||
+       image1->GetWidth() != image2->GetWidth() ||
+       image1->GetHeight() != image2->GetHeight() ||
+       image1->GetDepth() != image2->GetDepth() )
+    {
+      sitkExceptionMacro ( "Both images for ${name}ImageFilter don't match type or dimension!" );
+    }]] end)
+
+  return this->m_MemberFactory->GetMemberFunction( type, dimension )( image1 $(if number_of_inputs==2 then OUT=[[, image2]] end) );
+}
 
 //----------------------------------------------------------------------------
 
@@ -87,8 +93,9 @@ Image::Pointer ${name}ImageFilter::Execute ( Image::Pointer image1 )
 // ExecuteInternal
 //
 template <class TImageType>
-Image::Pointer ${name}ImageFilter::ExecuteInternal ( Image::Pointer inImage1 )
-  {
+Image::Pointer ${name}ImageFilter::ExecuteInternal ( Image::Pointer inImage1 $(if number_of_inputs==2 then OUT=[[, Image::Pointer inImage2]] end) )
+{
+  // Define the input and output image types
   typedef TImageType     InputImageType;
   $(if real_type_output==1 then
   OUT=[[// Real output type
@@ -98,55 +105,51 @@ Image::Pointer ${name}ImageFilter::ExecuteInternal ( Image::Pointer inImage1 )
   OUT=[[typedef InputImageType OutputImageType;]]
   end)
 
+  // Get the a pointer to the ITK image contained in image1
   typename InputImageType::Pointer image1 =
     dynamic_cast <InputImageType*> ( inImage1->GetImageBase().GetPointer() );
 
+  // Check that ITK image pointer was properly retrieved
   if ( image1.IsNull() )
     {
     sitkExceptionMacro( "Unexpected template dispatch error!" );
-    }
+    }$(if number_of_inputs == 2 then
+OUT=[[
 
+
+  // Get the a pointer to the ITK image contained in image2
+  typename InputImageType::Pointer image2 =
+  dynamic_cast <InputImageType*> ( inImage2->GetImageBase().GetPointer() );
+
+  // Check that ITK image pointer was properly retrieved
+  if ( image2.IsNull() )
+    {
+    sitkExceptionMacro( "Unexpected template dispatch error!" );
+    }]]
+end)
 
   // Use correct kernel types
   if( this->GetKernelType() == BinaryBallKernel)
     {
     typedef itk::BinaryBallStructuringElement< typename InputImageType::PixelType,
                                                InputImageType::ImageDimension > ITKKernelType;
-    typedef itk::${name}ImageFilter<InputImageType,
-                                                  OutputImageType,
-                                                  ITKKernelType> FilterType;
+    typedef itk::${name}ImageFilter<InputImageType,$(if number_of_inputs == 2 then OUT=[[ InputImageType,]] end)$(if additional_template_types then OUT=[[ $(foreach additional_template_types ${type},)]]end) OutputImageType, ITKKernelType> FilterType;
     ITKKernelType kernel;
     kernel.SetRadius( this->GetKernelRadius() );
     kernel.CreateStructuringElement();
 
     typename FilterType::Pointer filter = FilterType::New();
 
-$(foreach members
-    $(if custom_itk_cast then
-      OUT = '${custom_itk_cast}'
-    elseif(not no_set_method) or (no_set_method == 0) then
-      OUT = 'filter->Set${name} ( this->m_${name} );'
-    end)
-)
-    filter->SetKernel( kernel );
-    filter->SetInput( image1 );
-    filter->Update();
-    Image::Pointer out = new Image( filter->GetOutput() );
-    filter->GetOutput()->DisconnectPipeline();
-    return out;
-    }
-  else if( this->GetKernelType() == FlatKernel )
-    {
-    typedef itk::FlatStructuringElement< InputImageType::ImageDimension > ITKKernelType;
-    typedef itk::${name}ImageFilter<InputImageType,
-                                                  OutputImageType,
-                                                  ITKKernelType> FilterType;
-    ITKKernelType kernel;
-    kernel.SetRadius( this->GetKernelRadius() );
-
-    typename FilterType::Pointer filter = FilterType::New();
-
-  $(foreach members
+$(if number_of_inputs == 2 then
+OUT=[[
+  filter->SetInput1( image1 );
+  filter->SetInput2( image2 );
+]]
+else
+OUT=[[
+  filter->SetInput( image1 );
+]]
+end)$(foreach members
     $(if custom_itk_cast then
       OUT = '${custom_itk_cast}'
     elseif dim_vec and dim_vec == 1 then
@@ -159,9 +162,46 @@ $(foreach members
     elseif(not no_set_method) or (no_set_method == 0) then
       OUT = 'filter->Set${name} ( this->m_${name} );'
       end)
-  )
+)
     filter->SetKernel( kernel );
+    filter->Update();
+    Image::Pointer out = new Image( filter->GetOutput() );
+    filter->GetOutput()->DisconnectPipeline();
+    return out;
+    }
+  else if( this->GetKernelType() == FlatKernel )
+    {
+    typedef itk::FlatStructuringElement< InputImageType::ImageDimension > ITKKernelType;
+    typedef itk::${name}ImageFilter<InputImageType,$(if number_of_inputs == 2 then OUT=[[ InputImageType,]] end)$(if additional_template_types then OUT=[[ $(foreach additional_template_types ${type},)]]end) OutputImageType, ITKKernelType> FilterType;
+    ITKKernelType kernel;
+    kernel.SetRadius( this->GetKernelRadius() );
+
+    typename FilterType::Pointer filter = FilterType::New();
+
+$(if number_of_inputs == 2 then
+OUT=[[
+    filter->SetInput1( image1 );
+    filter->SetInput2( image2 );
+]]
+else
+OUT=[[
     filter->SetInput( image1 );
+]]
+end)$(foreach members
+    $(if custom_itk_cast then
+      OUT = '${custom_itk_cast}'
+    elseif dim_vec and dim_vec == 1 then
+      OUT = [[${itk_type} itkVec${name};
+      for (unsigned int i = 0; i < inImage1->GetDimension(); ++i)
+        {
+        itkVec${name}[i] = this->Get${name}()[i];
+        }
+      filter->Set${name}( itkVec${name} );]]
+    elseif(not no_set_method) or (no_set_method == 0) then
+      OUT = 'filter->Set${name} ( this->m_${name} );'
+      end)
+)
+    filter->SetKernel( kernel );
     filter->Update();
     Image::Pointer out = new Image( filter->GetOutput() );
     filter->GetOutput()->DisconnectPipeline();
@@ -171,17 +211,19 @@ $(foreach members
     {
     sitkExceptionMacro("Unknown Kernel Type");
     }
-  }
-  // Create a function to run the Execute method of this filter
-  Image::Pointer ${name} ( Image::Pointer imageA$(if number_of_inputs == 2 then OUT=', Image::Pointer imageB' end) $(when members $(foreach members ,$(if full_type then OUT=[[${full_type}]] else OUT=[[${type}]] end) in${name} ) ) ) {
-    ${name}ImageFilter filter;
-    $(when members
-      $(foreach members
-        filter.Set${name} ( in${name} );
-        )
-      )
-    return filter.Execute ( imageA$(if number_of_inputs == 2 then OUT=', imageB' end)$(when members $(foreach members , in${name} ) ) );
-  }
+}
+
+//-----------------------------------------------------------------------------
+
+//
+// Function to run the Execute method of this filter
+//
+Image::Pointer ${name} ( Image::Pointer imageA$(if number_of_inputs == 2 then OUT=', Image::Pointer imageB' end)$(when members $(foreach members ,
+  $(if full_type then OUT=[[${full_type}]] else OUT=[[${type}]] end) in${name})) )
+{
+  ${name}ImageFilter filter;
+  return filter.Execute ( imageA$(if number_of_inputs == 2 then OUT=', imageB' end)$(when members $(foreach members , in${name})) );
+}
 
 } // end namespace simple
 } // end namespace itk

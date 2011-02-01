@@ -90,9 +90,7 @@ end)
         // Borrow the seedlist...
         localfilter.SetSeedList ( filter.GetSeedList() );
       ASSERT_NO_THROW ( fromProcedural = localfilter.Execute ( inputA $(if inputB then OUT=", inputB" end) ) ) << "Procedural interface to ${name}";
-      ASSERT_NO_THROW ( fromFunctional = itk::simple::${name} ( inputA $(if inputB then OUT=", inputB" end), filter.GetSeedList()
-                                                                $(foreach members , ${default})
-                                                                ) ) << "Functional interface to ${name}";
+      ASSERT_NO_THROW ( fromFunctional = itk::simple::${name} ( inputA $(if inputB then OUT=", inputB" end), filter.GetSeedList()$(foreach members , ${default}) ) ) << "Functional interface to ${name}";
       hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 );
       EXPECT_EQ ( hasher.Execute ( fromProcedural ), hasher.Execute ( fromFunctional ) ) << "procedural and functional are not the same!";
     }
