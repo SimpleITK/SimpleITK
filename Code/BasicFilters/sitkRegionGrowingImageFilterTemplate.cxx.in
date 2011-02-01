@@ -1,6 +1,8 @@
 #include "sitk${name}ImageFilter.h"
 #include "itk${name}ImageFilter.h"
-
+$(if real_type_output==1 then
+OUT = [[#include "itkNumericTraits.h"]]
+end)
 
 namespace itk {
 namespace simple {
@@ -11,40 +13,35 @@ namespace simple {
 // Default constructor that initializes parameters
 //
 ${name}ImageFilter::${name}ImageFilter ()
-  {
-
-  // Set basic member defaults
-$(foreach members $(if default then OUT = '  m_${name} = ${default};\
-' end))
-  // Set up member function factory
+{
+  this->m_SeedList = std::vector< std::vector<unsigned int> >();
+$(foreach members
+$(if default then
+OUT = [[
+  this->m_${name} = ${default};]] end)
+)
   this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
-  // Register pixel types for 2D and 3D
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
-  }
+}
 
 //
 // ToString
 //
 std::string ${name}ImageFilter::ToString() const
-  {
+{
   std::ostringstream out;
   out << "itk::simple::${name}ImageFilter\n";
-
-  // Print out basic members
 $(foreach members
-  $(if dim_vec and dim_vec == 1 then
-    OUT = [[out << "\t${name}: ";
-    printStdVector(this->m_${name}, out);
-    out << std::endl;]]
-  elseif (not no_print) or (not no_print == 1) then
-    OUT = 'out << "\t${name}: " << this->m_${name} << std::endl;'
-    end)
-)
-
-  // Print out SeedList
-  out << "SeedList:" << std::endl;
+$(if dim_vec and dim_vec == 1 then
+OUT = '  out << "  ${name}: ";\
+  printStdVector(this->m_${name}, out);\
+  out << std::endl;'
+elseif (not no_print) or (not no_print == 1) then
+OUT = '  out << "  ${name}: " << this->m_${name} << std::endl;'
+end)
+)  out << " SeedList:" << std::endl;
   for (unsigned int i = 0; i < this->m_SeedList.size(); ++i)
     {
     out << "  ";
@@ -53,37 +50,47 @@ $(foreach members
     }
 
   return out.str();
-  }
+}
 
 //
 // Execute
-//
-Image::Pointer ${name}ImageFilter::Execute (Image::Pointer image$(foreach members ,
-  ${type} in${name}),
-  std::vector< std::vector<unsigned int> > inSeedList )
-  {
-  // Set members
-$(foreach members $(if (not no_set_method) or (no_set_method == 0) then
-OUT = '  this->Set${name} ( in${name} );\
-'
-  end))
-  // Set SeedList
-  this->SetSeedList ( inSeedList );
+//$(if members and #members > 0 then
+OUT = [[
 
-  // Run the filter
-  return this->Execute ( image  );
-  }
+Image::Pointer ${name}ImageFilter::Execute ( Image::Pointer image1$(if number_of_inputs==2 then OUT=', Image::Pointer image2' end),
+  std::vector< std::vector<unsigned int> > inSeedList$(foreach members ,
+  ${type} in${name}) )
+{
+$(foreach members
+$(if (not no_set_method) or (no_set_method == 0) then
+OUT = '  this->Set${name} ( in${name} );'
+end)
+)  this->SetSeedList ( inSeedList );
+
+  return this->Execute ( image1 $(if number_of_inputs==2 then OUT=', image2' end) );
+}
+]]
+end)
+Image::Pointer ${name}ImageFilter::Execute ( Image::Pointer image1$(if number_of_inputs==2 then OUT=[[, Image::Pointer image2]] end) )
+{
+
+  PixelIDValueType type = image1->GetPixelIDValue();
+  unsigned int dimension = image1->GetDimension();$(if number_of_inputs and number_of_inputs == 2 then
+OUT=[[
 
 
-Image::Pointer ${name}ImageFilter::Execute ( Image::Pointer image )
-  {
-  // Get information about imate type
-  PixelIDValueType type = image->GetPixelIDValue();
-  unsigned int dimension = image->GetDimension();
+  // todo need better error handling and potential type conversion
+  if ( type != image2->GetPixelIDValue() ||
+       dimension != image2->GetDimension() ||
+       image1->GetWidth() != image2->GetWidth() ||
+       image1->GetHeight() != image2->GetHeight() ||
+       image1->GetDepth() != image2->GetDepth() )
+    {
+      sitkExceptionMacro ( "Both images for ${name}ImageFilter don't match type or dimension!" );
+    }]] end)
 
-  // Run the apropriate internal execution member function
-  return this->m_MemberFactory->GetMemberFunction( type, dimension )( image );
-  }
+  return this->m_MemberFactory->GetMemberFunction( type, dimension )( image1 $(if number_of_inputs==2 then OUT=[[, image2]] end) );
+}
 
 //----------------------------------------------------------------------------
 
@@ -91,44 +98,68 @@ Image::Pointer ${name}ImageFilter::Execute ( Image::Pointer image )
 // ExecuteInternal
 //
 template <class TImageType>
-Image::Pointer ${name}ImageFilter::ExecuteInternal ( Image::Pointer inImage )
-  {
-  // Define image types
+Image::Pointer ${name}ImageFilter::ExecuteInternal ( Image::Pointer inImage1 $(if number_of_inputs==2 then OUT=[[, Image::Pointer inImage2]] end) )
+{
+  // Define the input and output image types
   typedef TImageType     InputImageType;
-  typedef InputImageType OutputImageType;
+  $(if real_type_output==1 then
+  OUT=[[// Real output type
+  typedef itk::Image< typename itk::NumericTraits< typename InputImageType::PixelType >::RealType,
+    InputImageType::ImageDimension > OutputImageType;]]
+  else
+  OUT=[[typedef InputImageType OutputImageType;]]
+  end)
 
-  // Get a pointer to the input itk image with the proper type
-  typename InputImageType::Pointer image =
-    dynamic_cast <InputImageType*> ( inImage->GetImageBase().GetPointer() );
+  // Get the a pointer to the ITK image contained in image1
+  typename InputImageType::Pointer image1 =
+    dynamic_cast <InputImageType*> ( inImage1->GetImageBase().GetPointer() );
 
-  // Check to make sure cast worked
-  if ( image.IsNull() )
+  // Check that ITK image pointer was properly retrieved
+  if ( image1.IsNull() )
     {
     sitkExceptionMacro( "Unexpected template dispatch error!" );
-    }
+    }$(if number_of_inputs == 2 then
+OUT=[[
 
-  // Set up the itk version of the filter
-  typedef itk::${name}ImageFilter<InputImageType , OutputImageType> FilterType;
+
+  // Get the a pointer to the ITK image contained in image2
+  typename InputImageType::Pointer image2 =
+  dynamic_cast <InputImageType*> ( inImage2->GetImageBase().GetPointer() );
+
+  // Check that ITK image pointer was properly retrieved
+  if ( image2.IsNull() )
+    {
+    sitkExceptionMacro( "Unexpected template dispatch error!" );
+    }]]
+end)
+
+  // Set up the ITK filter
+  typedef itk::${name}ImageFilter<InputImageType,$(if number_of_inputs == 2 then OUT=[[ InputImageType,]] end)$(if additional_template_types then OUT=[[ $(foreach additional_template_types ${type},)]]end) OutputImageType> FilterType;
   typename FilterType::Pointer filter = FilterType::New();
 
-  // Set image input
-  filter->SetInput( image );
-
-  // Set basic parameters
-$(foreach members
-    $(if custom_itk_cast then
-      OUT = '${custom_itk_cast}'
-    elseif dim_vec and dim_vec == 1 then
-      OUT = [[${itk_type} itkVec${name};
-      for (unsigned int i = 0; i < inImage->GetDimension(); ++i)
-        {
-        itkVec${name}[i] = this->Get${name}()[i];
-        }
-      filter->Set${name}( itkVec${name} );]]
-    elseif(not no_set_method) or (no_set_method == 0) then
-      OUT = 'filter->Set${name} ( this->m_${name} );'
-      end)
-  )
+$(if number_of_inputs == 2 then
+OUT=[[
+  filter->SetInput1( image1 );
+  filter->SetInput2( image2 );
+]]
+else
+OUT=[[
+  filter->SetInput( image1 );
+]]
+end)$(foreach members
+$(if custom_itk_cast then
+OUT = '  ${custom_itk_cast}'
+elseif dim_vec and dim_vec == 1 then
+OUT = [[  ${itk_type} itkVec${name};
+  for (unsigned int i = 0; i < inImage1->GetDimension(); ++i)
+    {
+    itkVec${name}[i] = this->Get${name}()[i];
+    }
+  filter->Set${name}( itkVec${name} );]]
+elseif(not no_set_method) or (no_set_method == 0) then
+OUT = '  filter->Set${name} ( this->m_${name} );'
+end)
+)
   // Convert Seed List from std::vector< std::vector<unsigned int> >
   // to std::vector<itk::Index>
   filter->ClearSeeds();
@@ -142,24 +173,25 @@ $(foreach members
     filter->AddSeed(idx);
     }
 
-  // Run the itk filter
+  // Run the ITK filter and return the output as a pointer to a SimpleITK image
   filter->Update();
-
-  // Return the sitk version of the result
   Image::Pointer out = new Image( filter->GetOutput() );
+  filter->GetOutput()->DisconnectPipeline();
   return out;
-  }
+}
 
-  // Create a function to run the Execute method of this filter
-  Image::Pointer ${name} ( Image::Pointer imageA$(if number_of_inputs == 2 then OUT=', Image::Pointer imageB' end), std::vector< std::vector<unsigned int> > inSeedList$(when members $(foreach members , $(if full_type then OUT=[[${full_type}]] else OUT=[[${type}]] end) in${name} ) ) ) {
-    ${name}ImageFilter filter;
-    $(when members
-      $(foreach members
-        filter.Set${name} ( in${name} );
-        )
-      )
-      return filter.Execute ( imageA$(if number_of_inputs == 2 then OUT=', imageB' end)$(when members $(foreach members , in${name} ) ), inSeedList );
-  }
+//-----------------------------------------------------------------------------
+
+//
+// Function to run the Execute method of this filter
+//
+Image::Pointer ${name} ( Image::Pointer imageA$(if number_of_inputs == 2 then OUT=', Image::Pointer imageB' end),
+  std::vector< std::vector<unsigned int> > inSeedList$(when members $(foreach members ,
+  $(if full_type then OUT=[[${full_type}]] else OUT=[[${type}]] end) in${name} ) ) )
+{
+  ${name}ImageFilter filter;
+  return filter.Execute ( imageA$(if number_of_inputs == 2 then OUT=', imageB' end), inSeedList$(when members $(foreach members , in${name} ) ) );
+}
 
 } // end namespace simple
 } // end namespace itk

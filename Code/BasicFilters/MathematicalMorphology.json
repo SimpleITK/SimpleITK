@@ -13,7 +13,7 @@
       "doc" : "Mathematical morphology operation to be performed. Valid options are 0=BinaryErode, 1=BinaryDilate, 2=GrayscaleErode, 3=GrayscaleDilate, 4=GrayscaleOpening, 5=GrayscaleClosing."
       "custom_itk_cast" :
         "typedef typename FilterType::OperationType OperationType; \
-         OperationType operationType = static_cast< OperationType >( this->m_Operation ) ; \
+         OperationType operationType = static_cast< OperationType >( this->m_Operation ); \
          filter->SetOperation( operationType );"
     }
    ],
