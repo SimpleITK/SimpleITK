@@ -49,7 +49,8 @@ end)
 //$(if members and #members > 0 then
 OUT = [[
 
-Image::Pointer ${name}ImageFilter::Execute ( Image::Pointer image1$(if number_of_inputs==2 then OUT=', Image::Pointer image2' end)$(foreach members , ${type} in${name}) )
+Image::Pointer ${name}ImageFilter::Execute ( Image::Pointer image1$(if number_of_inputs==2 then OUT=', Image::Pointer image2' end)$(foreach members ,
+  ${type} in${name}) )
 {
 $(foreach members
 $(if (not no_set_method) or (no_set_method == 0) then
