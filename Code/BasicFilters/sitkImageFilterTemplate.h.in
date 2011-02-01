@@ -53,7 +53,8 @@ OUT=[[
 
 
       /** Execute the filter on the input image$(if number_of_inputs == 2 then OUT='s'end) with the given parameters */
-      Image::Pointer Execute ( Image::Pointer$(if number_of_inputs == 2 then OUT=', Image::Pointer' end)$(foreach members , ${type} in${name}) );]]end)$(if custom_methods then
+      Image::Pointer Execute ( Image::Pointer$(if number_of_inputs == 2 then OUT=', Image::Pointer' end)$(foreach members ,
+        ${type} in${name}) );]]end)$(if custom_methods then
 OUT = [[
 
 
@@ -89,8 +90,15 @@ $(foreach members
 
 )    };
 
-    /** Function call to run the filter statically */
-    Image::Pointer ${name} ( Image::Pointer$(if number_of_inputs == 2 then OUT=', Image::Pointer' end)$(when members $(foreach members , $(if full_type then OUT=[[${full_type}]] else OUT=[[${type}]] end) in${name} = ${default})) );
+
+    /** 
+     * itk::simple::${name}ImageFilter Functional Interface
+     *
+     * This function directly calls the execute method of ${name}ImageFilter
+     * in order to support a fully functional API
+     */
+    Image::Pointer ${name} ( Image::Pointer$(if number_of_inputs == 2 then OUT=', Image::Pointer' end)$(when members $(foreach members ,
+      $(if full_type then OUT=[[${full_type}]] else OUT=[[${type}]] end) in${name} = ${default})) );
   }
 }
 #endif
