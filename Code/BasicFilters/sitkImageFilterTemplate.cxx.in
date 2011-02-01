@@ -17,7 +17,7 @@ ${name}ImageFilter::${name}ImageFilter ()
 $(foreach members
 $(if default then
 OUT = [[
-  m_${name} = ${default};]] end)
+  this->m_${name} = ${default};]] end)
 )
   this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
