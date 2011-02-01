@@ -91,7 +91,7 @@ $(foreach members
 )    };
 
 
-    /** 
+    /**
      * itk::simple::${name}ImageFilter Functional Interface
      *
      * This function directly calls the execute method of ${name}ImageFilter
