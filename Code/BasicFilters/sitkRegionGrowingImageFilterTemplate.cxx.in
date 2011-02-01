@@ -178,11 +178,6 @@ end)
   Image::Pointer out = new Image( filter->GetOutput() );
   filter->GetOutput()->DisconnectPipeline();
   return out;
-    $(when members
-      $(foreach members
-        filter.Set${name} ( in${name} );
-        )
-      )
 }
 
 //-----------------------------------------------------------------------------

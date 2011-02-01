@@ -165,10 +165,6 @@ Image::Pointer ${name} ( Image::Pointer imageA$(if number_of_inputs == 2 then OU
   $(if full_type then OUT=[[${full_type}]] else OUT=[[${type}]] end) in${name})) )
 {
   ${name}ImageFilter filter;
-$(when members
-$(foreach members
-  filter.Set${name} ( in${name} );
-))
   return filter.Execute ( imageA$(if number_of_inputs == 2 then OUT=', imageB' end)$(when members $(foreach members , in${name})) );
 }
 
