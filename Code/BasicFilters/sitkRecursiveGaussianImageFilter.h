@@ -88,7 +88,11 @@ namespace itk {
 
     };
 
-    Image::Pointer RecursiveGaussian ( Image::Pointer image, double Sigma = 1.0, bool NormalizeAcrossScale = false, RecursiveGaussianImageFilter::OrderEnumType order = RecursiveGaussianImageFilter::ZeroOrder, unsigned int Direction = 0 );
+    Image::Pointer RecursiveGaussian ( Image::Pointer image,
+      double Sigma = 1.0,
+      bool NormalizeAcrossScale = false,
+      RecursiveGaussianImageFilter::OrderEnumType order = RecursiveGaussianImageFilter::ZeroOrder,
+      unsigned int Direction = 0 );
   }
 }
 #endif
