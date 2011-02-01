@@ -54,7 +54,7 @@ OUT=[[
 
       /** Execute the filter on the input image$(if number_of_inputs == 2 then OUT='s'end) with the given parameters */
       Image::Pointer Execute ( Image::Pointer$(if number_of_inputs == 2 then OUT=', Image::Pointer' end)$(foreach members ,
-        ${type} in${name}) );]]end)$(if custom_methods then
+        ${type} in${name}) );]]end)$(if custom_methods and #custom_methods > 0 then
 OUT = [[
 
 
