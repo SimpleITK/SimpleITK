@@ -10,122 +10,135 @@ $(for i=1,#include_files do OUT = OUT .. '#include "' .. include_files[i] .. '"'
 // Done with additional include files]]
 end)
 
-
-
 namespace itk {
-namespace simple {
+  namespace simple {
 
-/**
- * ${doc}
- */
-class ${name}ImageFilter : public ImageFilter {
-public:
-  typedef ${name}ImageFilter Self;
+    /** \class ${name}ImageFilter
+     *
+     * ${doc}
+     */
+    class ${name}ImageFilter : public $(if number_of_inputs == 2 then OUT=[[DualImageFilter]] else OUT=[[ImageFilter]] end) {
+    public:
+      typedef ${name}ImageFilter Self;
 
-  /**
-   * Default Constructor that takes no arguments and initializes
-   * default parameters
-   */
-  ${name}ImageFilter();
+      /** Default Constructor that takes no arguments and initializes
+       * default parameters */
+      ${name}ImageFilter();
 
-  /** Supported Type List */
-  typedef ${pixel_types} PixelIDTypeList;
-
-
-
-  //////
-  // Basic Member Get/Set Methods
-  //////
-
+      /** Define the pixels types supported by this filter */
+      typedef ${pixel_types}  PixelIDTypeList;
+$(if public_declarations then
+      OUT=[[
+      /** Custom public declarations */
+      ${public_declarations}
+]]end)
 $(foreach members
-  $(if (not no_set_method) or (no_set_method == 0) then
-  OUT = '/** Set ${name} */\
-  Self& Set${name} ( ${type} t ) { this->m_${name} = t; return *this; };'
-  end)
-  $(if (not no_get_method) or (no_get_method == 0) then
-  OUT = [[/** Get ${name} */\
-  ${type} Get${name}() { return this->m_${name}; };]]
-  end)
-
+$(if (not no_set_method) or (no_set_method == 0) then
+      OUT = '\
+      /** Set ${name} */\
+      Self& Set${name} ( ${type} t ) { this->m_${name} = t; return *this; }'
+end)
+$(if (not no_get_method) or (no_get_method == 0) then
+      OUT = '\
+      /** Get ${name} */\
+      ${type} Get${name}() { return this->m_${name}; }'
+end)
 )
+      /** Set SeedList */
+      Self& SetSeedList ( std::vector< std::vector<unsigned int> > t )
+        {
+        this->m_SeedList = t; return *this;
+        }
+
+      /** Get SeedList */
+      std::vector< std::vector<unsigned int> > GetSeedList()
+        {
+        return this->m_SeedList;
+        }
+
+      /** ClearSeeds - Clear out all seeds in the list */
+      Self& ClearSeeds( )
+        {
+        this->m_SeedList.clear();
+        return *this;
+        }
+
+      /** SetSeed - Set list to a single seed */
+      Self& SetSeed( std::vector<unsigned int> idx )
+        {
+        this->m_SeedList.clear();
+        this->m_SeedList.push_back(idx);
+        return *this;
+        }
+
+      /** AddSeed - Add a seed to the end of the list */
+      Self& AddSeed( std::vector<unsigned int> idx )
+        {
+        this->m_SeedList.push_back(idx);
+        return *this;
+        }
+
+      /** Print ourselves out */
+      std::string ToString() const;
+
+      /** Execute the filter on the input image$(if number_of_inputs == 2 then OUT=[[s]]end) */
+      Image::Pointer Execute ( Image::Pointer $(if number_of_inputs == 2 then OUT=[[, Image::Pointer]] end) );$(if members and #members > 0 then
+OUT=[[
 
 
-  //////
-  // SeedList Methods
-  //////
-
-  /** Set SeedList */
-  Self& SetSeedList ( std::vector< std::vector<unsigned int> > t )
-    {
-    this->m_SeedList = t; return *this;
-    };
-
-  /** Get SeedList */
-  std::vector< std::vector<unsigned int> > GetSeedList()
-    {
-    return this->m_SeedList;
-    };
-
-  /** ClearSeeds - Clear out all seeds in the list */
-  Self& ClearSeeds( )
-    {
-    this->m_SeedList.clear();
-    return *this;
-    };
-
-  /** SetSeed - Set list to a single seed */
-  Self& SetSeed( std::vector<unsigned int> idx )
-    {
-    this->m_SeedList.clear();
-    this->m_SeedList.push_back(idx);
-    return *this;
-    };
-
-  /** AddSeed - Add a seed to the end of the list */
-  Self& AddSeed( std::vector<unsigned int> idx )
-    {
-    this->m_SeedList.push_back(idx);
-    return *this;
-    };
-
-  /** Print ourselves out */
-  std::string ToString() const;
-
-  /** Execute using the current parameter set */
-  Image::Pointer Execute ( Image::Pointer  );
-
-  /** Execute using the specified parameter set */
-  Image::Pointer Execute ( Image::Pointer$(foreach members ,
-                           ${type} in${name}),
-                           std::vector< std::vector<unsigned int> > inSeedList );
-
-private:
-
-  //////
-  // Template Meta Programming Setup
-  //////
-  typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer );
-  template <class TImageType> Image::Pointer ExecuteInternal ( Image::Pointer image );
-  friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
-  std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
+      /** Execute the filter on the input image$(if number_of_inputs == 2 then OUT='s'end) with the given parameters */
+      Image::Pointer Execute ( Image::Pointer$(if number_of_inputs == 2 then OUT=', Image::Pointer' end),
+        std::vector< std::vector<unsigned int> > inSeedList$(foreach members ,
+        ${type} in${name}) );]]end)$(if custom_methods then
+OUT = [[
 
 
-  //////
-  // Private Member Variables
-  //////
+$(foreach custom_methods
+      /** ${doc} */
+      ${return_type} ${name}( $(foreach parameters ${type} ${var_name}$(if last == 0 then OUT=', ' end)) )
+        {
+        ${body}
+        };
+)]]end)
 
+    private:
+
+$(if number_of_inputs == 2 then
+OUT=[[
+      /** Setup for member function dispatching */
+      typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer, Image::Pointer );
+      template <class TImageType> Image::Pointer ExecuteInternal ( Image::Pointer image1, Image::Pointer image2 );
+      friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
+      std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
+]]
+else
+OUT=[[
+      /** Setup for member function dispatching */
+      typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer );
+      template <class TImageType> Image::Pointer ExecuteInternal ( Image::Pointer image );
+      friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
+      std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
+]]end)
 $(foreach members
-  /** ${doc} */
-  ${type} m_${name};
+      /* ${doc} */
+      ${type} m_${name};
 
-)  /** List of interor seed points used to initialize the region growing segmentation */
-  std::vector< std::vector<unsigned int> > m_SeedList;
+)      /** List of interor seed points used to initialize the region growing segmentation */
+      std::vector< std::vector<unsigned int> > m_SeedList;
 
-};
+    };
 
-  // Create a function to run the Execute method of this filter
-  Image::Pointer ${name} ( Image::Pointer imageA$(if number_of_inputs == 2 then OUT=', Image::Pointer imageB' end)$(when members $(foreach members ,$(if full_type then OUT=[[${full_type}]] else OUT=[[${type}]] end) in${name} = ${default} )), std::vector< std::vector<unsigned int> > inSeedList = std::vector< std::vector<unsigned int> >() );
 
-} // end namespace simple
+    /** 
+     * itk::simple::${name}ImageFilter Functional Interface
+     *
+     * This function directly calls the execute method of ${name}ImageFilter
+     * in order to support a fully functional API
+     */
+    Image::Pointer ${name} ( Image::Pointer imageA$(if number_of_inputs == 2 then OUT=', Image::Pointer imageB' end),
+      std::vector< std::vector<unsigned int> > inSeedList$(when members $(foreach members ,
+      $(if full_type then OUT=[[${full_type}]] else OUT=[[${type}]] end) in${name} = ${default})) );
+
+  } // end namespace simple
 } // end namespace itk
 #endif
