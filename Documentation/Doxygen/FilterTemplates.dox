@@ -8,24 +8,296 @@ data files in conjunction with the template .h and .cxx files
 
 \section Overview Overview
 In order to create a uniform body of image filters, we use an automated code
-generation system to create c++ code from a set of filters. The development 
-process consists of writing a ".json" file which specifies the information
-needed to fill in the fields of the template file. During compilation, all of
-the .json files are parsed using a lua template engine which fills in the
-apropriate template file from the provided fields. This ReadMe provides a
-detailed description of the fields that can be used in the .json data files and
-what effect each field has on the resulting image filter.
+generation system to wrap existing ITK filters into SimpleITK filters. The
+development process consists of writing a JSON data file which specifies the
+information needed to fill in the fields of the template file. During
+compilation, all of the .json files are parsed using a lua template engine
+which fills in the apropriate template file from the provided fields. This
+ReadMe provides a detailed description of the fields that can be used in the
+json data files and what effect each field has on the resulting image filter.
 
 \section FileStructure JSON File Structure
 JSON (JavaScript Object Notation) is a simple text formatting system used to
 specify data values. A full description of the specification can be found at
-http://www.json.org/.
+http://www.json.org/. For the purposes of SimpleITK, a json file consists of
+a single data object (denoted by {}) which contains several string : value
+pairs (here value may be a list denoted by []) and sub-objects. Here is an
+example from DilateObjectMorphologyImageeFilter:
+
+\verbatim
+{
+  "name" : "DilateObjectMorphology",
+  "template_code_filename" : "StructuringElementImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Performs Erosion of an object.",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [
+    { "name" : "ObjectValue",
+      "type" : "double",
+      "default" : 1,
+      "doc" : "Value to assign to object pixels",
+      "custom_itk_cast" :
+        "filter->SetObjectValue(static_cast<typename FilterType::PixelType>(this->GetObjectValue()) );"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "float",
+      "description" : "Dilate a float image",
+      "inputA" : "Input/RA-Slice-Float.nrrd",
+      "tolerance" : 0.01
+    },
+    {
+      "tag" : "short",
+      "description" : "Dilate a short image",
+      "inputA" : "Input/RA-Slice-Short.nrrd",
+      "tolerance" : 0.01
+    }
+  ]
+}
+\endverbatim
+
+In this example, we see that all pairs must use a string as the key, but may
+have any valid type as the value (string - "Abs", number - 1, list - [],
+object - {}).
+
+\section GlobalFields Fields For All Templates
+
+This section describes the minimal set of fields required to wrap an ITK filter
+into SimpleITK.
+
+\subsection TopLevelFields Top Level Fields
+
+- \b name: (\e string) This must be the name of the ITK filter with the
+"ImageFilter" suffix removed
+
+- \b templage_code_filename: (\e string) Which of the template files should be
+used to generate the filter. Choices are: "ImageFilter",
+"RegionGrowingImageFilter", "StructuringElementImageFilter",
+"LevelSetImageFilter", "MathematicalMorphologyImageFilter"
+
+- \b template_test_filename: (\e string) Which of the template files should be
+used to generate the test for this filter. Choices are: "ImageFilter",
+"RegionGrowingImageFilter"
+
+- \b number_of_inputs: (\e integer) How many input images are used for this
+filter. Currently, the template system only supports filters with 1 or 2 input
+images
+
+- \b doc: (\e string) Global documentation for the filter
+
+- \b pixel_types: (\e string) Which of the pixel type lists should be supported
+for this filter. The type lists are defined in sitkPixelIDTypeLists.h
+
+- \b members: (\e list) This list specifies all member variables that should be
+accessible to the user with a Get/Set mechanism and should be part of the
+Execute signature for the filter. Each entry in the list must be an object
+
+- \b tests: (\e list) This list specifies all automatic tests that should be
+generated for the filter. Each entry in the list must be an object. If no tests
+are specified, a test will be generated that fails with the message that a test
+must be written for the filter
+
+- [OPTIONAL] \b include_files: (\e list) This list of strings specifies
+additional header files to include with this filter
+
+- [OPTIONAL] \b real_type_output: (0 or 1) If set to 1, this flag indicates
+that the filter should return an image where the pixel type is the RealType
+of the input image's pixel type
+
+- [OPTIONAL] \b public_declarations: (\e string) Any c++ code written in this
+field will be placed into the public section of the filter's header file
+
+- [OPTIONAL] \b additional_template_types: (\e list) The standard ITK image
+filter template signature is:
+
+\verbatim
+<InputImageType, (if 2 inputs)InputImageType, OutputImageType)>
+\endverbatim
+
+Some filters require additional template types between the list of input image
+types and the output image type such as the input type of a constant. This list
+allows these additional parameters to be added so that the template signature
+looks like:
+
+\verbatim
+<InputImageType, (if 2 inputs)InputImageType, (ADDITIONAL TYPES), OutputImageType)>
+\endverbatim
+
+Each type in the list is specified by an object with a only a \b type field
+which is a string specifying the type to be used.
+
+- [OPTIONAL] \b custom_methods: (\e list) This is a list of objects specifying
+custom methods that should be added to the filter. The fields required for a
+custom method are:
+  - \b doc: (\e string) Documentation for this custom method
+  - \b name: (\e string) The name of the method
+  - \b return_type: (\e string) the return type of the method
+  - [OPTIONAL] \b parameters: (\e list) A list of of parameters for the method.
+  Each method is specified by an object with the following fields:
+    - \b type: (\e string) The parameter's type
+    - \b var_name: (\e string) The name of the variable to be used in the \b body
+    field for the custom method
+    - \b last: (0 or 1) If set to 1, no comma will be added after this
+    parameter in the signature, otherwise a comma will be added
+  - \b body: (\e string) This string is the body of the method and will be
+  placed directly into the header file. The parameter names specified with
+  \b var_name in each of the parameter obects can be used in this body
+
+A sample custom method might look like:
+
+\verbatim
+{ "name" : "Foo",
+  "doc" : "This method checks if a string is equal to Foo"
+  "return_type" : "bool",
+  "parameters" : [
+    { "type" : "std::string",
+      "var_name" : "inString",
+      "last" : 1
+    }
+  ],
+  "body" : "if (!strcmp(inString.c_str(), "Foo")) { return true; } else { return false; }"
+}
+\endverbatim
+
+This will translate to a custom method that looks like:
+
+\verbatim
+  /**
+   * This method checks if a string is equal to Foo
+   */
+  bool Foo( std::string inString )
+    {
+    if (!strcmp(inString.c_str(), "Foo")) { return true; } else { return false; }
+    }
+\endverbatim
 
 
-\section GlobalOptions Options For All Templates
+
+\subsection MemberFileds Member Fields
+A basic member object looks like:
+
+\verbatim
+{
+  "name" : "Sigma",
+  "type" : "double",
+  "default" : 1.0,
+  "doc" : "The sandard deviation for the Gaussian function"
+}
+\endverbatim
+
+- \b name: (\e string) The name of the member variable. A variable named "Var"
+will be accessible with the methods "GetVar" and "SetVar"
+
+- \b type: (\e string) The c++ type for this member. If using a type contained
+in a certain namespace (itk::simple for example), this must be included in the
+type description
+
+- \b default: (\e string or \e number) The default value for this member. This
+can be a number for numerical types or a string specifying the constructor for
+non-basic types (std::vector< unsigned int >() for example)
+
+- \b doc: (\e string) Documentation for this individual parameter
+
+- [OPTIONAL] \b no_set_method: (0 or 1) If set to 1, the filter will not have a
+Set method for this member
+
+- [OPTIONAL] \b no_get_method: (0 or 1) If set to 1, the filter will not have a
+Get method for this member
+
+- [OPTIONAL] \b no_print: (0 or 1) If set to 1, this member will not be printed
+in the ToString method
+
+- [OPTIONAL] \b dim_vec: (0 or 1) If set to 1, this indicates that the member
+is a std::vector with size equal to the dimension of the input image. As such,
+it will be printed out correctly and cast to its corresponding ITK type
+correctly
+
+- [OPTIONAL] \b custom_itk_cast: (\e string) Some non-basic types will require
+a custom cast before the corresponding ITK filter's member can be set. This
+field allows the developer to specify exactly how the ITK filter sets the
+member's value from the SimpleITK member's value for example:
+
+\verbatim
+"custom_itk_cast" :
+  "filter->SetObjectValue(static_cast<typename FilterType::PixelType>(this->GetObjectValue()) );"
+\endverbatim
 
 
-\section Templates SpecializedTemplates
+\subsection TestFields Test Fields
+A basic test object looks like:
+
+\verbatim
+{
+  "tag" : "float",
+  "description" : "Dilate a float image",
+  "inputA" : "Input/RA-Slice-Float.nrrd",
+  "tolerance" : 0.01,
+  "settings" : []
+}
+\endverbatim
+
+There are three ways of checking the resulting image: against a baseline image,
+a sha1 hash, or an md5 hash. At least one of these options must be used for
+each test.
+
+- \b tag: (\e string) The tag to identify this specific test for the filter
+
+- \b descriptoin: (\e string) Documentation to describe this specific test
+
+- \b inputA: (\e string) The path from the SOURCE_DIR/Testing/Data directory
+for the (first) input image
+
+- [OPTIONAL] \b inputB: (\e string) If \b number_of_inputs is 2, this specifies
+the path from SOURCE_DIR/Testing/Data to the second input image
+
+- [OPTIONAL] \b tolerance: (\e float) An error tolerance fo be used when
+comparing the resulting image to the baseline. This is used to specify that the
+result should be checked against a baseline image
+
+- [OPTIONAL] \b md5hash: (\e string) An md5 hash value to compare the resulting
+image against.
+
+- [OPTIONAL] \b sha1hash: (\e string) A sha1 hash value to compare the resulting
+image against.
+
+- [OPTIONAL] \b settings: (\e list) A list of any specific parameters values
+for this test. Each entry is an object of the form:
+
+\verbatim
+{ "parameter" : "Sigma",
+  "value" : 1.0
+}
+\endverbatim
+
+- \b Settings \b Options:
+  - \b parameter: (\e string) The name of the parameter. This must match the
+  name used when creating the filter
+  - \b value: (\e string or \e number) The value to assign to the parameter.
+  This can be a number for numerical types or a string representing the
+  constructor for more complex types
+  - [OPTIONAL] \b python_value: (\e string) For types that require a different
+  syntax for setting the value in python, this will override the string in
+  \b value
+  - [OPTIONAL] \b lua_value: (\e string) For types that require a different
+  syntax for setting the value in lua, this will override the string in
+  \b value
+  - [OPTIONAL] \b ruby_value: (\e string) For types that require a different
+  syntax for setting the value in ruby, this will override the string in
+  \b value
+  - [OPTIONAL] \b java_value: (\e string) For types that require a different
+  syntax for setting the value in java, this will override the string in
+  \b value
+  - [OPTIONAL] \b tcl_value: (\e string) For types that require a different
+  syntax for setting the value in tcl, this will override the string in
+  \b value
+  - [OPTIONAL] \b R_value: (\e string) For types that require a different
+  syntax for setting the value in R, this will override the string in
+  \b value
+
+
+\section Templates Specialized Templates
 
 
 \subsection RegionGrowing Region Growing Image Filters
