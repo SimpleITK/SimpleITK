@@ -298,18 +298,34 @@ for this test. Each entry is an object of the form:
 
 
 \section Templates Specialized Templates
+The standard template is ImageFilter. This section describes the differences
+for each of the other template types.
+
+- <b>Region Growing Image Filters:</b> The region growing filters support an
+additional set of methods for manipulating the seed list. Each region growing
+filter has the SetSeed, AddSeed, and ClearSeeds methods. See
+sitkConnectedThresholdImageFilter.h for details.
 
 
-\subsection RegionGrowing Region Growing Image Filters
+- <b>Level Set Image Filters:</b> The level set filters have the same interface
+as the standard image filters, but require special treatment when calling the
+ITK versions. Rather than calling SetInput1 and SetInput2, these ITK filters
+call SetInput and SetFeatureImage when two inputs are used. Additionaly, the
+template signature for the ITK level set filters is below. See sitkGeodesicActiveContourLevelSetImageFilter.h for details.
+
+\verbatim
+<InputImageType, InputImageType, OutputImagePixelType>
+\endverbatim
 
 
-\subsection LevelSets Level Set Image Filters
+- <b>Mathematical Morphology Image Filters:</b> The mathematical morphology
+filters use a KernelType which is always set to FlatKernel. See
+sitkGrayscaleErodeImageFilter.h for details.
 
 
-\subsection MathematicalMorphology Mathematical Morphology Image Filters
-
-
-\subsection StructuringElement Structuring Element Image Filters
+- <b>Structuring Element Image Filters:</b> The structuring element filters use
+a KernelType and have an internal enum which allows the user to select which
+kernel to use. See sitkErodeObjectMorphologyImageFilter.h for details.
 
 
 
