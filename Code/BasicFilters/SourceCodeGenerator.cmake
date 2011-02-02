@@ -65,6 +65,7 @@ endforeach()
 
 # Make target for generated code
 add_custom_target(generate_filter_source_code ALL DEPENDS ${SimpleITKBasicFiltersSource})
+add_dependencies(Documentation generate_filter_source_code)
 
 # clear the include files
 file ( WRITE ${CMAKE_CURRENT_BINARY_DIR}/SimpleITKBasicFiltersGeneratedHeaders.h "" )
