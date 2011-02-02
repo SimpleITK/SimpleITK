@@ -156,7 +156,7 @@ end)
 // Function to run the Execute method of this filter
 //
 Image::Pointer ${name} ( Image::Pointer imageA$(if number_of_inputs == 2 then OUT=', Image::Pointer imageB' end)$(when members $(foreach members ,
-  $(if full_type then OUT=[[${full_type}]] else OUT=[[${type}]] end) in${name})) )
+  ${type} in${name})) )
 {
   ${name}ImageFilter filter;
   return filter.Execute ( imageA$(if number_of_inputs == 2 then OUT=', imageB' end)$(when members $(foreach members , in${name})) );
