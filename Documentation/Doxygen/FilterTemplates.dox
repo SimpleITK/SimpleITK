@@ -1,0 +1,44 @@
+/** 
+
+\page FilterTemplates Image Filter Templates ReadMe
+
+This ReadMe outlines the system used to generate SimpleITK files using json
+data files in conjunction with the template .h and .cxx files
+
+
+\section Overview Overview
+In order to create a uniform body of image filters, we use an automated code
+generation system to create c++ code from a set of filters. The development 
+process consists of writing a ".json" file which specifies the information
+needed to fill in the fields of the template file. During compilation, all of
+the .json files are parsed using a lua template engine which fills in the
+apropriate template file from the provided fields. This ReadMe provides a
+detailed description of the fields that can be used in the .json data files and
+what effect each field has on the resulting image filter.
+
+\section FileStructure JSON File Structure
+JSON (JavaScript Object Notation) is a simple text formatting system used to
+specify data values. A full description of the specification can be found at
+http://www.json.org/.
+
+
+\section GlobalOptions Options For All Templates
+
+
+\section Templates SpecializedTemplates
+
+
+\subsection RegionGrowing Region Growing Image Filters
+
+
+\subsection LevelSets Level Set Image Filters
+
+
+\subsection MathematicalMorphology Mathematical Morphology Image Filters
+
+
+\subsection StructuringElement Structuring Element Image Filters
+
+
+
+*/
