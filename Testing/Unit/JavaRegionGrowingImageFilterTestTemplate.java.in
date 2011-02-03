@@ -1,5 +1,4 @@
 package org.itk.simple.testing;
-
 // This is Java code to test ${name}
 import org.itk.simple.*;
 
@@ -72,7 +71,7 @@ elseif dim_vec == 1 then
 else
 OUT=[[
       filter.set${parameter}( $(if java_value then OUT='${java_value}' else OUT='${value}' end) );]]
-end) 
+end)
 )
 )
 

@@ -36,14 +36,33 @@ class ${name}ImageFilterTest {
     // Run each test
 $(foreach tests
     if (tag.equals( "${tag}" )) {
+
+      // Read image(s)
+      SmartPointerImage inputA = reader.setFileName( argv[1] ).execute();
+$(if inputB then
+      OUT=[[
+      SmartPointerImage inputB = reader.setFileName ( argv[2] ).execute();]]
+end)
+
       $(when settings 
       // Set parameters
       $(foreach settings
-$(if dim_vec == 1 then
+$(if parameter == "SeedList" then
+      OUT=[[filter.clearSeeds();
+      $(for i=1,#value do OUT=OUT .. "{\
+        int v[] = " .. value[i] .. ";\
+        VectorUInt idx = new VectorUInt();\
+        for (int i = 0; i < inputA.getDimension(); i++) {\
+          idx.push_back(v[i]);\
+        }\
+        filter.addSeed(idx);\
+      }\
+      " end)]]
+elseif dim_vec == 1 then
       OUT=[[
       {
         int v[] = $(if java_value then OUT='${java_value}' else OUT='${value}' end);
-        VectorInt idx = new VectorInt();
+        VectorUInt idx = new VectorUInt();
         for (int i = 0; i < inputA.getDimension(); i++) {
           idx.push_back(v[i]);
         }
@@ -52,14 +71,13 @@ $(if dim_vec == 1 then
 else
 OUT=[[
       filter.set${parameter}( $(if java_value then OUT='${java_value}' else OUT='${value}' end) );]]
-end) 
-)   )
+end)
+)
+)
 
-      // Read image(s) and run the filter
-      SmartPointerImage inputA = reader.setFileName( argv[1] ).execute();
+      // Run the filter
 $(if inputB then
       OUT=[[
-      SmartPointerImage inputB = reader.setFileName ( argv[2] ).execute();
       SmartPointerImage output = filter.execute ( inputA, inputB );]]
 else
       OUT=[[
