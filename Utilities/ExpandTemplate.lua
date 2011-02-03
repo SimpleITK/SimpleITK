@@ -568,10 +568,18 @@ filterDescription = decode ( json )
 templateBaseFilename = templateFileExtension
 
 if testOrCodeFlag == "code" then
-  templateBaseFilename = filterDescription.template_code_filename .. templateBaseFilename
+  if filterDescription.template_code_filename == nil then
+      templateBaseFilename = "ImageFilter" .. templateBaseFilename
+    else
+      templateBaseFilename = filterDescription.template_code_filename .. templateBaseFilename
+    end
 else
   if testOrCodeFlag == "test" then
-    templateBaseFilename = filterDescription.template_test_filename .. templateBaseFilename
+    if filterDescription.template_test_filename == nil then
+      templateBaseFilename = "ImageFilter" .. templateBaseFilename
+    else
+      templateBaseFilename = filterDescription.template_test_filename .. templateBaseFilename
+    end
   else
     print('ExpandTemplate unknown flag value' .. testOrCodeFlag )
   end
