@@ -162,7 +162,7 @@ endif()
 # Find Tcl
 if ( WRAP_TCL )
   find_package ( TCL REQUIRED )
-  include_directories ( ${TCL_INCLUDE_DIR} )
+  include_directories ( ${TCL_INCLUDE_PATH} )
 
   # Run swig
   set(CMAKE_SWIG_FLAGS "-nosafe")
