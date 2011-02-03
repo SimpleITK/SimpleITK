@@ -28,9 +28,20 @@ sys.exit ( 1 )
 
 $(foreach tests
 if tag == "${tag}":
-$(when settings $(foreach settings
-    filter.Set${parameter} ( $(if python_value then OUT=[[${python_value}]] else OUT=[[${value}]] end) )
-))
+$(when settings
+$(foreach settings
+$(if parameter == "SeedList" and python_value then
+    OUT=[[    filter.ClearSeeds()
+    filter$(for i=1,#python_value do OUT=OUT .. ".AddSeed( " .. python_value[i] .. " )" end)]]
+elseif parameter == "SeedList" then
+    OUT=[[  filter.ClearSeeds()
+    filter$(for i=1,#value do OUT=OUT .. ".AddSeed( " .. value[i] .. " )" end)]]
+else
+OUT=[[
+    filter.Set${parameter}( $(if python_value then OUT='${python_value}' else OUT='${value}' end) )]]
+end) 
+)
+)
     inputA = reader.SetFileName ( sys.argv[2] ).Execute()
     $(if inputB then
     OUT=[[inputB = reader.SetFileName ( sys.argv[3] ).Execute()
