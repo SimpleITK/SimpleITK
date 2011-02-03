@@ -1,7 +1,8 @@
 {
   "name" : "ConnectedThreshold",
   "template_code_filename" : "RegionGrowingImageFilter",
-  "template_test_filename" : "RegionGrowingImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "template_type" : "RegionGrowing",
   "number_of_inputs" : 1,
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelIDTypeList",
