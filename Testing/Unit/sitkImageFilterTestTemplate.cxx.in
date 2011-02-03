@@ -45,6 +45,11 @@ $(foreach members
 end)
 )
 
+$(if template_type and template_type == "RegionGrowing" then OUT=[[
+  // Test size of default SeedList
+  EXPECT_EQ ( filter.GetSeedList().size(), (unsigned int)0 ) << "Testing empty seed list as default";]]
+end)
+
  $(if number_of_inputs == 2 then
    OUT=[[ {
   itk::simple::Image::Pointer smallImage      = new itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 );
@@ -70,10 +75,12 @@ end)
 
     if ( firstPassSoTestFunctional ) {
       firstPassSoTestFunctional = false;
+
       // Do we get the same image back, if we use the functional interface?
       itk::simple::Image::Pointer fromFunctional, fromProcedural;
       ASSERT_NO_THROW ( fromProcedural = filter.Execute ( inputA $(if inputB then OUT=", inputB" end) ) ) << "Procedural interface to ${name}";
       ASSERT_NO_THROW ( fromFunctional = itk::simple::${name} ( inputA $(if inputB then OUT=", inputB" end)
+                                                                         $(if template_type and template_type == "RegionGrowing" then OUT=", std::vector< std::vector<unsigned int> >()" end)
                                                                          $(foreach members , ${default})
                                                                 ) ) << "Functional interface to ${name}";
       hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 );
@@ -84,7 +91,10 @@ end)
 $(if settings then
 OUT=[[
 $(foreach settings
-  $(if dim_vec and dim_vec == 1 then
+  $(if parameter == "SeedList" then
+  OUT='filter.ClearSeeds();\
+  $(for i=1,#value do OUT=OUT .. "{unsigned int __seed[] = " .. value[i] .. "; filter.AddSeed( std::vector<unsigned int>(__seed, __seed + inputA->GetDimension()) );}" end);'
+  elseif dim_vec and dim_vec == 1 then
   OUT='filter.Set${parameter} ( ${value} );\
   for(unsigned int i = 0; i < filter.Get${parameter}().size(); ++i)\
     {\
@@ -96,6 +106,7 @@ $(foreach settings
 end)
 )]]
 end)
+
 
   ASSERT_NO_THROW ( output = filter.Execute ( inputA $(if inputB then OUT=", inputB" end) ) );
   $(if md5hash then

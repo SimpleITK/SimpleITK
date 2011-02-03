@@ -25,10 +25,21 @@ $(if #tests == 0 then
 $(foreach tests
 lappend ValidTags "${tag}"
 if { [set tag] == "${tag}" } {
-  $(if settings then
-    OUT=[[ $(foreach settings 
-    filter Set${parameter} $(if tcl_value then OUT='${tcl_value}' else OUT='${value}'end)
-  ) ]] end)
+
+$(when settings
+$(foreach settings
+$(if parameter == "SeedList" and tcl_value then
+OUT=[[  filter ClearSeeds
+$(for i=1,#tcl_value do OUT=OUT .. "  filter AddSeed [list ".. tcl_value[i] .. "]\n" end)]]
+elseif parameter == "SeedList" then
+OUT=[[  filter ClearSeeds
+$(for i=1,#value do OUT=OUT .. "  filter AddSeed [list ".. value[i] .. "]\n" end)]]
+
+else
+OUT=[[
+  filter Set${parameter} $(if tcl_value then OUT='${tcl_value}' else OUT='${value}'end)]]
+end)
+))
   set inputA [[reader SetFileName [lindex [set argv] 1]] Execute]
   $(if inputB then
   OUT="set inputB [[reader SetFileName [lindex [set argv] 2]] Execute]; \

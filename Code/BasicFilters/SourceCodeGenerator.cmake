@@ -12,22 +12,12 @@ macro( expand_template FILENAME )
   set ( output_h "${CMAKE_CURRENT_BINARY_DIR}/sitk${FILENAME}ImageFilter.h" )
   set ( output_cxx "${CMAKE_CURRENT_BINARY_DIR}/sitk${FILENAME}ImageFilter.cxx" )
 
-  # Use the ImageFilterTemplate if specified
-  if ( ${TEMPLATE_TYPE} EQUAL ${image_filter_template} )
-    set ( input_json_file ${CMAKE_CURRENT_SOURCE_DIR}/${FILENAME}.json )
-    set ( template_file_h ${CMAKE_CURRENT_SOURCE_DIR}/sitkImageFilterTemplate.h.in )
-    set ( template_file_cxx ${CMAKE_CURRENT_SOURCE_DIR}/sitkImageFilterTemplate.cxx.in )
-    # Make a global list of ImageFilter template filters
-    set ( IMAGE_FILTER_LIST ${IMAGE_FILTER_LIST} ${FILENAME} CACHE INTERNAL "" )
+  set ( input_json_file ${CMAKE_CURRENT_SOURCE_DIR}/${FILENAME}.json )
+  set ( template_file_h ${CMAKE_CURRENT_SOURCE_DIR}/sitkImageFilterTemplate.h.in )
+  set ( template_file_cxx ${CMAKE_CURRENT_SOURCE_DIR}/sitkImageFilterTemplate.cxx.in )
 
-  # Use the RegionGrowingImageFilterTemplate if specified
-  elseif ( ${TEMPLATE_TYPE} EQUAL ${region_growing_image_filter_template} )
-    set ( input_json_file ${CMAKE_CURRENT_SOURCE_DIR}/${FILENAME}_RegionGrowing.json )
-    set ( template_file_h ${CMAKE_CURRENT_SOURCE_DIR}/sitkRegionGrowingImageFilterTemplate.h.in )
-    set ( template_file_cxx ${CMAKE_CURRENT_SOURCE_DIR}/sitkRegionGrowingImageFilterTemplate.cxx.in )
-    # Make a global list of RegionGrowingImageFilter template filters
-    set ( REGION_GROWING_FILTER_LIST ${REGION_GROWING_FILTER_LIST} ${FILENAME} CACHE INTERNAL "" )
-  endif()
+  # Make a global list of ImageFilter template filters
+  set ( IMAGE_FILTER_LIST ${IMAGE_FILTER_LIST} ${FILENAME} CACHE INTERNAL "" )
 
   add_custom_command (
     OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/sitk${FILENAME}ImageFilter.h" "${CMAKE_CURRENT_BINARY_DIR}/sitk${FILENAME}ImageFilter.cxx"

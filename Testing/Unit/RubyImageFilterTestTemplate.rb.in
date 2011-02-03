@@ -28,9 +28,21 @@ exit( 1 );
 
 $(foreach tests
 if tag == "${tag}" then
-$(when settings
+  $(when settings
 $(foreach settings
-$(if dim_vec and dim_vec == 1 then OUT=[[
+$(if parameter == "SeedList" and ruby_value then
+    OUT=[[  filter.clear_seeds()
+    $(for i=1,#ruby_value do OUT=OUT .. "\
+    v = Simpleitk::VectorUInt.new\
+    for i in ".. ruby_value[i] .." do v << i end\
+    filter.add_seed(v)" end)]]
+elseif parameter == "SeedList"then
+    OUT=[[  filter.clear_seeds()
+    $(for i=1,#value do OUT=OUT .. "\
+    v = Simpleitk::VectorUInt.new\
+    for i in ".. value[i] .." do v << i end\
+    filter.add_seed(v)" end)]]
+elseif dim_vec and dim_vec == 1 then OUT=[[
     v = Simpleitk::VectorUInt.new
     for i in $(if ruby_value then OUT='${ruby_value}' else OUT='${value}' end) do v << i end
     filter.set_${parameter:gsub ( "([a-z])([A-Z])", "%1_%2" ):lower()}(v)]]
