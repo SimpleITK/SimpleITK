@@ -55,7 +55,9 @@ endforeach()
 
 # Make target for generated code
 add_custom_target(FilterSourceCode ALL DEPENDS ${SimpleITKBasicFiltersSource})
-add_dependencies(Documentation FilterSourceCode)
+if (BUILD_DOXYGEN)
+  add_dependencies(Documentation FilterSourceCode)
+endif (BUILD_DOXYGEN)
 
 # clear the include files
 file ( WRITE ${CMAKE_CURRENT_BINARY_DIR}/SimpleITKBasicFiltersGeneratedHeaders.h "" )
