@@ -4,6 +4,7 @@
 #include "sitkPixelIDTypeLists.h"
 #include "sitkPixelIDValues.h"
 #include "sitkNonCopyable.h"
+
 #include "itkLightObject.h"
 
 #include <memory>
@@ -15,6 +16,12 @@ namespace itk
 
   // forward declaration needed for friendship
   class Image;
+
+  // This is the forward declaration of a class used internally to the
+  // PixelContainer class, but the actual interface is never exposed
+  // to simple ITK. A pointer to the implmentation is used inside the
+  // PixelContainter clss as per the pimple idom.
+  class PimplePixelContainerBase;
 
     /** \class PixelContainer
      * \brief Container used to get the pixel buffer of a SimpleITK image
@@ -34,7 +41,8 @@ namespace itk
       std::string ToString( void );
 
       template <typename TImageType>
-      PixelContainer( TImageType * image );
+      explicit PixelContainer( TImageType * image )
+        { this->InternalInitialization( image ); }
 
       /** Variety of methods for getting the buffer as a specific type. These
        * methods DO NOT perform error checking, they simply cast the basic pointer
@@ -50,39 +58,16 @@ namespace itk
       float     * GetBufferAsFloat();
       double    * GetBufferAsDouble();
 
-    protected:
-
-      // Copying is not supported
-      PixelContainer &operator=( const PixelContainer & ); // Not implemented
-
     private:
 
-      class PimplePixelContainerBase
-      {
-      public:
+      /** Method called my certain constructors to convert ITK images
+       * into simpleITK ones.
+       */
+      template <typename TImageType>
+      void InternalInitialization( TImageType *image );
 
-        PimplePixelContainerBase() {}
-        virtual ~PimplePixelContainerBase() {}
-
-        virtual uint64_t GetNumberOfPixels( void ) const = 0;
-
-        virtual PixelIDValueType GetPixelIDValue( void ) const = 0;
-        virtual std::string ToString( void ) const = 0;
-
-        virtual int8_t    * GetBufferAsInt8() = 0;
-        virtual uint8_t   * GetBufferAsUnsignedInt8() = 0;
-        virtual int16_t   * GetBufferAsInt16() = 0;
-        virtual uint16_t  * GetBufferAsUnsignedInt16() = 0;
-        virtual int32_t   * GetBufferAsInt32() = 0;
-        virtual uint32_t  * GetBufferAsUnsignedInt32() = 0;
-        virtual float     * GetBufferAsFloat() = 0;
-        virtual double    * GetBufferAsDouble() = 0;
-
-      };
 
       friend class Image;
-
-      void SetInternal( PimplePixelContainerBase * internal );
 
       // utilize std::auto_ptr to perform automatic deletion on deconstruction
       std::auto_ptr< PimplePixelContainerBase > m_Internal;
