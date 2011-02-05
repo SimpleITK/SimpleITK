@@ -2,26 +2,57 @@
 #define __sitkPixelContainer_txx
 
 #include "sitkPixelContainer.h"
-
-
-#if defined(__INTEL_COMPILER)
-// disable warning for Intel Compiler:
-//  class "itk::simple::Image::PimpleImageBase" (declared at line 97
-//  of "Code/Common/sitkImage.h") is an inaccessible type (allowed for
-//  cfront compatibility)
-#pragma warning( disable 525 )
-#endif
+#include "itkImage.h"
+#include "itkVectorImage.h"
+#include "itkLabelMap.h"
+#include "itkLabelObject.h"
 
 namespace itk
 {
   namespace simple
   {
 
+  /** \class PimplePixelContainerBase
+   * \brief Base class of private implementation idom pixel container
+   * class
+   */
+  class PimplePixelContainerBase
+  {
+  public:
+
+    PimplePixelContainerBase() {}
+    virtual ~PimplePixelContainerBase() {}
+
+    virtual uint64_t GetNumberOfPixels( void ) const = 0;
+
+    virtual PixelIDValueType GetPixelIDValue( void ) const = 0;
+    virtual std::string ToString( void ) const = 0;
+
+    virtual int8_t    * GetBufferAsInt8() = 0;
+    virtual uint8_t   * GetBufferAsUnsignedInt8() = 0;
+    virtual int16_t   * GetBufferAsInt16() = 0;
+    virtual uint16_t  * GetBufferAsUnsignedInt16() = 0;
+    virtual int32_t   * GetBufferAsInt32() = 0;
+    virtual uint32_t  * GetBufferAsUnsignedInt32() = 0;
+    virtual float     * GetBufferAsFloat() = 0;
+    virtual double    * GetBufferAsDouble() = 0;
+
+  };
+
+  ///
+  /// Private name space for a concrete implementation of pimple
+  /// PixelContainer for a specific image types with dimensions and
+  /// pixel types
+  ///
+  namespace
+  {
+
   /** \class PimplePixelContainer
    * \brief Private implementation idom pixel container class
    */
   template <class TImageType>
-  class PimplePixelContainer : public PixelContainer::PimplePixelContainerBase
+  class PimplePixelContainer
+    : public PimplePixelContainerBase
   {
   public:
     typedef typename TImageType::PixelContainer  PixelContainerType;
@@ -115,15 +146,18 @@ namespace itk
     PixelContainerPointer   m_PixelContainer;
   };
 
+  }
+  //
+  // End private namespace for pimple implementation
+  //
 
   template <typename TImageType>
-  PixelContainer::PixelContainer( TImageType * image )
+  void PixelContainer::InternalInitialization( TImageType * image )
   {
     typedef PimplePixelContainer< TImageType >  PixelContainerType;
     PixelContainerType * container = new PixelContainerType( image );
     this->m_Internal.reset( container );
   }
-
 
   }
 }

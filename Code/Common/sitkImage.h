@@ -66,8 +66,8 @@ namespace simple
     PixelContainer::Pointer GetPixelContainer();
 
     /** Method called my certain constructors to convert ITK images
-    * into simpleITK ones.
-    */
+     * into simpleITK ones.
+     */
     template <typename TImageType>
     void InternalInitialization( TImageType * );
 
