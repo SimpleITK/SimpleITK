@@ -30,6 +30,7 @@ struct MemberFunctionInstantiater
   typename EnableIf< IsInstantiated< typename PixelIDToImageType<TPixelIDType, VImageDimension>::ImageType >::Value >::Type
   operator()( TPixelIDType*id=NULL ) const
     {
+      (void)id;
       typedef typename PixelIDToImageType<TPixelIDType, VImageDimension>::ImageType ImageType;
       typedef TAddressor                                                            AddressorType;
 
