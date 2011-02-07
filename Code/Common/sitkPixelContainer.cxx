@@ -1,3 +1,4 @@
+#include "sitkPixelContainer.h"
 #include "sitkPixelContainer.txx"
 
 namespace itk
@@ -23,11 +24,6 @@ namespace itk
     uint64_t PixelContainer::GetNumberOfPixels( void ) const
     {
       return this->m_Internal->GetNumberOfPixels();
-    }
-
-    void PixelContainer::SetInternal( PimplePixelContainerBase * internal )
-    {
-      this->m_Internal.reset( internal );
     }
 
     int8_t * PixelContainer::GetBufferAsInt8()
@@ -69,7 +65,6 @@ namespace itk
     {
       return this->m_Internal->GetBufferAsDouble();
     }
-
 
   }
 }
