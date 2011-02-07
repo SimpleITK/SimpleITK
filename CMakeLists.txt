@@ -7,6 +7,9 @@ if(ITK_FOUND)
   include(${ITK_USE_FILE})
 endif()
 
+if( NOT ITK_USE_REVIEW )
+  message(FATAL_ERROR "Please reconfigure ITK by turning ITK_USE_REVIEW ON")
+endif()
 
 
 # Put all files in a bin directory to keep things tidy.
@@ -19,7 +22,7 @@ if(NOT EXECUTABLE_OUTPUT_PATH)
 endif()
 mark_as_advanced(LIBRARY_OUTPUT_PATH EXECUTABLE_OUTPUT_PATH)
 
-set ( SimpleITK_INCLUDE_DIR 
+set ( SimpleITK_INCLUDE_DIR
       ${CMAKE_SOURCE_DIR}/Code/Common
       ${CMAKE_SOURCE_DIR}/Code/Common/Ancillary
       ${CMAKE_SOURCE_DIR}/Code/BasicFilters
@@ -111,7 +114,4 @@ configure_file(${SimpleITK_SOURCE_DIR}/UseSimpleITK.cmake.in
 
 # Create the SimpleITKConfig.cmake file containing the SimpleITK configuration.
 include(${SimpleITK_SOURCE_DIR}/sitkGenerateSimpleITKConfig.cmake)
-
-
-
 
