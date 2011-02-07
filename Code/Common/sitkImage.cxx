@@ -1,11 +1,13 @@
 #include "sitkImage.h"
-#include "sitkPixelContainer.txx"
 #include "sitkMemberFunctionFactory.h"
 
 #include "itkImage.h"
 #include "itkVectorImage.h"
 #include "itkLabelMap.h"
 #include "itkLabelObject.h"
+
+// This is the only file which needs to include this implementation
+#include "sitkPixelContainer.txx"
 
 namespace itk
 {
@@ -115,6 +117,9 @@ namespace itk
     typename DisableIf<IsLabel<UImageType>::Value, PixelContainer::Pointer>::Type
     GetPixelContainer()
       {
+        // note: this is the only file which includes
+        // itkPixelContainer.txx, the following statement will
+        // instantiate all needed implementations of the object
         PixelContainer::Pointer container =
           new PixelContainer( this->m_Image.GetPointer() );
         return container;
