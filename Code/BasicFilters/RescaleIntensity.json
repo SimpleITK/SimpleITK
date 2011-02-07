@@ -11,6 +11,11 @@
       "default" : 255.0,
       "doc" : "Output maximum"
     }
+   { "name" : "OutputMinimum",
+      "type" : "double",
+      "default" : 0.0,
+      "doc" : "Output minimum"
+    }
   ],
   "tests" : [
     {
