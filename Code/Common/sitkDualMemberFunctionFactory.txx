@@ -32,6 +32,8 @@ struct DualMemberFunctionInstantiater
                      IsInstantiated<TPixelIDType2>::Value >::Type
   operator()( TPixelIDType1* t1=NULL, TPixelIDType2*t2=NULL ) const
     {
+      (void)t1;
+      (void)t2;
       typedef typename PixelIDToImageType<TPixelIDType1, VImageDimension>::ImageType ImageType1;
       typedef typename PixelIDToImageType<TPixelIDType2, VImageDimension>::ImageType ImageType2;
       typedef TAddressor                                                             AddressorType;
@@ -45,7 +47,11 @@ struct DualMemberFunctionInstantiater
   template <class TPixelIDType1, class TPixelIDType2>
   typename DisableIf< IsInstantiated<TPixelIDType1>::Value &&
                      IsInstantiated<TPixelIDType2>::Value >::Type
-  operator()( TPixelIDType1*t1=NULL, TPixelIDType2*t2=NULL ) const {}
+  operator()( TPixelIDType1*t1=NULL, TPixelIDType2*t2=NULL ) const
+    {
+      (void)t1;
+      (void)t2;
+    }
 
 private:
 

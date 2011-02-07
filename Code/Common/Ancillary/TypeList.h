@@ -437,25 +437,25 @@ template < typename TRightTypeList >
 struct DualVisitImpl< typelist::NullType, TRightTypeList >
 {
   template <typename Visitor>
-  void operator()( const Visitor &visitor ) const
+  void operator()( const Visitor & ) const
   { }
 };
 template < typename TLeftTypeList >
 struct DualVisitImpl< TLeftTypeList, typelist::NullType >
 {
   template <typename Visitor>
-  void operator()( const Visitor &visitor ) const
+  void operator()( const Visitor & ) const
   { }
 
   template <typename Visitor>
-  void visitRHS( const Visitor &visitor ) const {}
+  void visitRHS( const Visitor & ) const {}
 };
 
 template < >
 struct DualVisitImpl< typelist::NullType, typelist::NullType >
 {
   template <typename Visitor>
-  void operator()( const Visitor &visitor ) const
+  void operator()( const Visitor & ) const
   { }
 };
 /**\endcond*/
