@@ -50,6 +50,7 @@ if ( WRAP_LUA )
 
   # Run swig
   set(CMAKE_SWIG_FLAGS "")
+  set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
   SWIG_module_initialize ( SimpleITKLua lua )
   SWIG_add_source_to_module ( SimpleITKLua swig_generated_source SimpleITK.i ${SWIG_HEADERS} )
 
@@ -70,6 +71,7 @@ if ( WRAP_PYTHON )
 
   # Run swig
   set(CMAKE_SWIG_FLAGS "")
+  set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
   SWIG_add_module ( SimpleITK python SimpleITK.i SimpleITKPYTHON_wrap.cxx )
   SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${PYTHON_LIBRARIES} ${ITK_LIBRARIES})
 
@@ -82,6 +84,7 @@ if ( WRAP_RUBY )
 
   # Run swig
   set(CMAKE_SWIG_FLAGS -autorename -module simpleitk)
+  set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
   SWIG_MODULE_INITIALIZE ( SimpleITK ruby )
 
   SWIG_add_module ( simpleitk ruby SimpleITK.i SimpleITKRUBY_wrap.cxx )
@@ -166,6 +169,7 @@ if ( WRAP_TCL )
 
   # Run swig
   set(CMAKE_SWIG_FLAGS "-nosafe")
+  set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
   SWIG_add_module ( SimpleITKTcl tcl SimpleITK.i SimpleITKTCL_wrap.cxx )
   SWIG_link_libraries ( SimpleITKTcl ${SimpleITK_LIBRARIES} ${TCL_LIBRARY} ${ITK_LIBRARIES})
   add_executable ( SimpleITKTclsh SimpleITKTCL_wrap.cxx )
@@ -180,6 +184,7 @@ if ( WRAP_R )
 
   # Run swig
   set(CMAKE_SWIG_FLAGS "")
+  set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
   SWIG_add_module ( SimpleITK r SimpleITK.i SimpleITKR_wrap.cxx )
   SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${R_LIBRARIES} ${ITK_LIBRARIES})
 
