@@ -1,6 +1,6 @@
 #include <sitkImageFileReader.h>
 #include <sitkImageFileWriter.h>
-#include <sitkImageHashFilter.h>
+#include <sitkHashImageFilter.h>
 #include <sitkSubtractImageFilter.h>
 #include <sitkStatisticsImageFilter.h>
 #include <sitkExtractImageFilter.h>
@@ -69,7 +69,7 @@ bool ImageCompare::compare ( itk::simple::Image::Pointer image, std::string inTe
   }
 
   // Do the diff
-  itk::simple::ImageHashFilter hasher;
+  itk::simple::HashImageFilter hasher;
   if ( hasher.Execute ( baseline ) == hasher.Execute ( centerSlice ) ) {
     // Nothing else to do
     return true;

@@ -3,7 +3,7 @@
 #include <sitkImage.h>
 #include <sitkImageFileReader.h>
 #include <sitkImageFileWriter.h>
-#include <sitkImageHashFilter.h>
+#include <sitkHashImageFilter.h>
 
 class CXX : public ExternalProgramRunner {
 };
@@ -26,7 +26,7 @@ TEST_F(CXX,SimpleGaussian) {
   RunExecutable ( CommandLine, true );
   ASSERT_TRUE ( dataFinder.FileExists ( output ) );
   itk::simple::ImageFileReader reader;
-  itk::simple::ImageHashFilter hasher;
+  itk::simple::HashImageFilter hasher;
   itk::simple::Image::Pointer image;
 
   image = reader.SetFileName ( output ).Execute();
@@ -51,7 +51,7 @@ TEST_F(CXX,SimpleGaussianFunctional) {
   RunExecutable ( CommandLine, true );
   ASSERT_TRUE ( dataFinder.FileExists ( output ) );
   itk::simple::ImageFileReader reader;
-  itk::simple::ImageHashFilter hasher;
+  itk::simple::HashImageFilter hasher;
   itk::simple::Image::Pointer image;
 
   image = reader.SetFileName ( output ).Execute();
