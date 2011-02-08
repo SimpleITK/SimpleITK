@@ -44,6 +44,7 @@ namespace itk
 
       template <typename TImageType>
       explicit PixelContainer( TImageType * image )
+        : m_Internal( NULL )
         { this->InternalInitialization( image ); }
 
       /** Variety of methods for getting the buffer as a specific type. These
@@ -71,8 +72,7 @@ namespace itk
 
       friend class Image;
 
-      // utilize std::auto_ptr to perform automatic deletion on deconstruction
-      std::auto_ptr< PimplePixelContainerBase > m_Internal;
+       PimplePixelContainerBase *m_Internal;
   };
 
   }
