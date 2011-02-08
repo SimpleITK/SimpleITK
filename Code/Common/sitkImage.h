@@ -62,6 +62,12 @@ namespace simple
     /** Get the Spacing */
     std::vector< double > GetSpacing( void );
 
+    /** Transform index to physical point */
+    std::vector< double > TransformIndexToPhysicalPoint( std::vector< unsigned int > );
+
+    /** Transform physical point to index */
+    std::vector< unsigned int > TransformPhysicalPointToIndex( std::vector< double > );
+
     uint64_t GetHeight( void );
     uint64_t GetWidth( void );
     uint64_t GetDepth( void );
