@@ -56,9 +56,6 @@ namespace simple
 
     unsigned int GetDimension( void ) const;
 
-    /** Get the size as a vector */
-    std::vector< uint64_t > GetSize( void );
-
     /** Get the Origin */
     std::vector< double > GetOrigin( void );
 

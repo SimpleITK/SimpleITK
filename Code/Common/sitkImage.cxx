@@ -371,19 +371,6 @@ namespace itk
       return this->m_PimpleImage->GetPixelContainer();
     }
 
-    // Get Size
-    std::vector< uint64_t > Image::GetSize( void )
-    {
-      std::vector< uint64_t > out;
-      out.push_back( this->GetWidth() );
-      out.push_back( this->GetHeight() );
-      if (this->GetDimension() == 3 )
-        {
-        out.push_back( this->GetDepth() );
-        }
-      return out;
-    }
-
     // Get Origin
     std::vector< double > Image::GetOrigin( void )
     {
