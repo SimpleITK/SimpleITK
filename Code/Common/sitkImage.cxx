@@ -44,6 +44,11 @@ namespace itk
     virtual double GetOrigin( unsigned int dimension ) const = 0;
     virtual double GetSpacing( unsigned int dimension ) const = 0;
 
+    virtual std::vector<unsigned int> TransformPhysicalPointToIndex(
+      std::vector<double> pt) = 0;
+    virtual std::vector<double> TransformIndexToPhysicalPoint(
+      std::vector<unsigned int> idx) = 0;
+
     virtual std::string ToString() const = 0;
 
     virtual PixelContainer::Pointer GetPixelContainer() = 0;
@@ -114,6 +119,52 @@ namespace itk
         }
 
       return this->m_Image->GetSpacing()[dimension];
+      }
+
+    // Physical Point to Index
+    virtual std::vector<unsigned int> TransformPhysicalPointToIndex(
+      std::vector<double> pt ) 
+      {
+      typename ImageType::PointType point;
+      point[0] = pt[0];
+      point[1] = pt[1];
+      if (ImageType::ImageDimension == 3)
+        {
+        point[2] = pt[2];
+        }
+      typename ImageType::IndexType index;
+      this->m_Image->TransformPhysicalPointToIndex(point, index);
+      std::vector<unsigned int> idx;
+      idx.push_back(index[0]);
+      idx.push_back(index[1]);
+      if (ImageType::ImageDimension == 3)
+        {
+        idx.push_back(index[2]);
+        }
+      return idx;
+      }
+
+    // Index to Physical Point
+    virtual std::vector<double> TransformIndexToPhysicalPoint(
+      std::vector<unsigned int> idx ) 
+      {
+      typename ImageType::IndexType index;
+      index[0] = idx[0];
+      index[1] = idx[1];
+      if (ImageType::ImageDimension == 3)
+        {
+        index[2] = idx[2];
+        }
+      typename ImageType::PointType point;
+      this->m_Image->TransformIndexToPhysicalPoint(index, point);
+      std::vector<double> pt;
+      pt.push_back(point[0]);
+      pt.push_back(point[1]);
+      if (ImageType::ImageDimension == 3)
+        {
+        pt.push_back(point[2]);
+        }
+      return pt;
       }
 
     virtual uint64_t GetSize( unsigned int dimension ) const
@@ -395,6 +446,18 @@ namespace itk
         out.push_back( this->m_PimpleImage->GetSpacing(2) );
         }
       return out;
+    }
+
+    // Index to Physical Point
+    std::vector< double > Image::TransformIndexToPhysicalPoint( std::vector< unsigned int > idx )
+    {
+      return this->m_PimpleImage->TransformIndexToPhysicalPoint( idx );
+    }
+
+    // Physical Point to Index
+    std::vector< unsigned int > Image::TransformPhysicalPointToIndex( std::vector< double > pt )
+    {
+      return this->m_PimpleImage->TransformPhysicalPointToIndex( pt );
     }
 
 ///
