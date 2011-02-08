@@ -27,7 +27,7 @@ namespace itk
   class PimpleImageBase
   {
   public:
-    virtual ~PimpleImageBase( void ) {};
+    virtual ~PimpleImageBase( void ) { };
 
     virtual PixelIDValueType GetPixelIDValue(void) = 0;
     virtual unsigned int GetDimension( void ) = 0;
@@ -145,8 +145,12 @@ namespace itk
   template <typename TImageType>
   void Image::InternalInitialization( TImageType *image )
   {
+    // no need to check if null
+    delete this->m_PimpleImage;
+    this->m_PimpleImage = NULL;
+
     // assign to auto pointer
-    this->m_PimpleImage.reset( new PimpleImage<TImageType>( image ) );
+    this->m_PimpleImage = new PimpleImage<TImageType>( image );
   }
 
   template<class TImageType>
@@ -170,7 +174,10 @@ namespace itk
     image->SetRegions ( region );
     image->Allocate();
     image->FillBuffer ( 0.0 );
-    m_PimpleImage.reset( new PimpleImage<TImageType>( image ) );
+
+    delete this->m_PimpleImage;
+    this->m_PimpleImage = NULL;
+    m_PimpleImage =  new PimpleImage<TImageType>( image );
   }
 
   template<class TImageType>
@@ -203,7 +210,11 @@ namespace itk
     image->SetVectorLength( TImageType::ImageDimension );
     image->Allocate();
     image->FillBuffer ( zero );
-    m_PimpleImage.reset( new PimpleImage<TImageType>( image ) );
+
+    delete this->m_PimpleImage;
+    this->m_PimpleImage = NULL;
+
+    m_PimpleImage = new PimpleImage<TImageType>( image );
   }
 
   template<class TImageType>
@@ -230,7 +241,11 @@ namespace itk
     image->SetRegions ( region );
     image->Allocate();
     image->SetBackgroundValue( 0 );
-    m_PimpleImage.reset( new PimpleImage<TImageType>( image ) );
+
+    delete this->m_PimpleImage;
+    this->m_PimpleImage = NULL;
+
+    m_PimpleImage = new PimpleImage<TImageType>( image );
   }
 
 
@@ -257,34 +272,42 @@ namespace itk
 
   Image::~Image( )
   {
+    delete this->m_PimpleImage;
+    this->m_PimpleImage = NULL;
   }
 
-    Image::Image( uint64_t Width, uint64_t Height, PixelIDValueEnum ValueEnum ) {
+    Image::Image( uint64_t Width, uint64_t Height, PixelIDValueEnum ValueEnum )
+      : m_PimpleImage( NULL )
+    {
       Allocate ( Width, Height, 0, ValueEnum );
     }
-    Image::Image( uint64_t Width, uint64_t Height, uint64_t Depth, PixelIDValueEnum ValueEnum ) {
+
+    Image::Image( uint64_t Width, uint64_t Height, uint64_t Depth, PixelIDValueEnum ValueEnum )
+      : m_PimpleImage( NULL ){
       Allocate ( Width, Height, Depth, ValueEnum );
     }
 
     itk::DataObject::Pointer Image::GetImageBase( void )
     {
-      assert( m_PimpleImage.get() );
+      assert( m_PimpleImage );
       return m_PimpleImage->GetDataBase();
     }
 
     itk::DataObject::ConstPointer Image::GetImageBase( void ) const
     {
-      assert( m_PimpleImage.get() );
+      assert( m_PimpleImage );
       return m_PimpleImage->GetDataBase().GetPointer();
     }
 
     PixelIDValueType Image::GetPixelIDValue( void ) const
     {
+      assert( m_PimpleImage );
       return this->m_PimpleImage->GetPixelIDValue();
     }
 
     unsigned int Image::GetDimension( void ) const
     {
+      assert( m_PimpleImage );
       return this->m_PimpleImage->GetDimension();
     }
 
@@ -295,26 +318,31 @@ namespace itk
 
     std::string Image::ToString( void )
     {
+      assert( m_PimpleImage );
       return this->m_PimpleImage->ToString();
     }
 
     uint64_t Image::GetWidth( void )
     {
+      assert( m_PimpleImage );
       return this->m_PimpleImage->GetWidth();
     }
 
     uint64_t Image::GetHeight( void )
     {
+      assert( m_PimpleImage );
       return this->m_PimpleImage->GetHeight();
     }
 
     uint64_t Image::GetDepth( void )
     {
+      assert( m_PimpleImage );
       return this->m_PimpleImage->GetDepth();
     }
 
     PixelContainer::Pointer Image::GetPixelContainer()
     {
+      assert( m_PimpleImage );
       return this->m_PimpleImage->GetPixelContainer();
     }
 

@@ -40,10 +40,12 @@ namespace simple
 
     template <typename TImageType>
     explicit Image( itk::SmartPointer<TImageType> image )
+      : m_PimpleImage( NULL )
       { this->InternalInitialization( image.GetPointer() ); }
 
     template <typename TImageType>
     explicit Image( TImageType* image )
+      : m_PimpleImage( NULL )
       { this->InternalInitialization( image ); }
 
     itk::DataObject::Pointer GetImageBase( void );
@@ -117,8 +119,7 @@ namespace simple
 
   private:
 
-    // utilize std::auto_ptr to perform automatic deletion on deconstruction
-    std::auto_ptr< PimpleImageBase > m_PimpleImage;
+    PimpleImageBase *m_PimpleImage;
   };
 
 }
