@@ -122,6 +122,7 @@ if ( WRAP_JAVA )
     )
 
   add_custom_target(org_itk_simple_jar ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/org.itk.simple.jar)
+  add_dependencies(org_itk_simple_jar SimpleITKJava)
   
   # Get the location of the extension directory
   string(REGEX REPLACE "include"  "jre/lib/ext" JAVA_EXTENSION_DIR ${JAVA_INCLUDE_PATH} )
