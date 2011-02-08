@@ -17,15 +17,26 @@ public:
     itk::ImageBase<3>::IndexType index;
     itk::ImageBase<3>::SizeType size;
     itk::ImageBase<3>::RegionType region;
+    itk::ImageBase<3>::PointType origin;
+    itk::ImageBase<3>::SpacingType spacing;
     // Create an image
     for ( int i = 0; i < 3; i++ ) {
       index[i] = 0;
       size[i] = 64+i;
     }
+    origin[0] = 1.1;
+    origin[1] = 2.2;
+    origin[2] = 3.3;
+    spacing[0] = 0.5;
+    spacing[1] = 0.5;
+    spacing[2] = 1.5;
+
     region.SetSize ( size );
     region.SetIndex ( index );
     itk::Image<short,3>::Pointer im = itk::Image<short,3>::New();
     im->SetRegions ( region );
+    im->SetOrigin( origin );
+    im->SetSpacing( spacing );
     im->Allocate();
     im->FillBuffer ( 100 );
     itkShortImage = im;
@@ -34,6 +45,8 @@ public:
 
     itk::Image<float,3>::Pointer fim = itk::Image<float,3>::New();
     fim->SetRegions ( region );
+    im->SetOrigin( origin );
+    im->SetSpacing( spacing );
     fim->Allocate();
     im->FillBuffer ( 0.0 );
     itkFloatImage = fim;
@@ -55,6 +68,8 @@ public:
   itk::ImageBase<3>::IndexType index;
   itk::ImageBase<3>::SizeType size;
   itk::ImageBase<3>::RegionType region;
+  itk::ImageBase<3>::PointType origin;
+  itk::ImageBase<3>::SpacingType spacing;
 
   typedef itk::Image<short,3> ShortImageType;
   itk::simple::Image::Pointer shortImage;
@@ -200,4 +215,41 @@ TEST_F(Image,Hash) {
 
   EXPECT_EQ ( "3b6bfcb1922bf8b29b171062ad722c82f8aa3f50", hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 ).Execute ( floatImage ) ) << " SHA1 hash value";
   EXPECT_EQ ( "e5eba8af943d7911220c9f2fb9b5b9c8", hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 ).Execute ( floatImage ) ) << " MD5 hash value";
+}
+
+TEST_F(Image,Transforms) {
+
+  // Origin is [1.1, 2.2, 3.3]
+  // Spacing is [0.5, 0.5, 1.5]
+
+  // Index to Physical Point
+  std::vector<unsigned int> idx;
+  idx.push_back(1);
+  idx.push_back(1);
+  idx.push_back(1);
+  std::vector<double> pt = shortImage->TransformIndexToPhysicalPoint(idx);
+  EXPECT_EQ(pt[0], 1.6) << " Pt to Idx [0]";
+  EXPECT_EQ(pt[1], 2.7) << " Pt to Idx [1]";
+  EXPECT_EQ(pt[2], 4.8) << " Pt to Idx [2]";
+
+  // Physical Point to Index
+  idx = shortImage->TransformPhysicalPointToIndex(pt);
+  EXPECT_EQ(idx[0], 1u) << " Idx to Pt [0]";
+  EXPECT_EQ(idx[1], 1u) << " Idx to Pt [1]";
+  EXPECT_EQ(idx[2], 1u) << " Idx to Pt [2]";
+}
+
+TEST_F(Image,Properties) {
+
+  // Origin
+  std::vector<double> origin = shortImage->GetOrigin();
+  EXPECT_EQ(origin[0], 1.1) << " Origin[0]";
+  EXPECT_EQ(origin[1], 2.2) << " Origin[1]";
+  EXPECT_EQ(origin[2], 3.3) << " Origin[2]";
+
+  // Spacing
+  std::vector<double> spacing = shortImage->GetSpacing();
+  EXPECT_EQ(spacing[0], 0.5) << " Spacing[0]";
+  EXPECT_EQ(spacing[1], 0.5) << " Spacing[1]";
+  EXPECT_EQ(spacing[2], 1.5) << " Spacing[2]";
 }
