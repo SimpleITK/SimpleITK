@@ -255,6 +255,10 @@ namespace itk
       }
     }
 
+  Image::~Image( )
+  {
+  }
+
     Image::Image( uint64_t Width, uint64_t Height, PixelIDValueEnum ValueEnum ) {
       Allocate ( Width, Height, 0, ValueEnum );
     }

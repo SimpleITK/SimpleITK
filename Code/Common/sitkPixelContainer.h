@@ -34,6 +34,8 @@ namespace itk
       typedef PixelContainer     Self;
       typedef SmartPointer<Self> Pointer;
 
+      virtual ~PixelContainer( );
+
       uint64_t GetNumberOfPixels( void ) const;
 
       PixelIDValueType GetPixelIDValue( void ) const;
