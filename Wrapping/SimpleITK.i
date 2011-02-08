@@ -72,6 +72,15 @@
 %include "tclsh.i"
 #endif
 
+#if SWIGPYTHON
+// Make __str__ transparent by renaming ToString to __str__
+%rename(__str__) ToString;
+#endif
+
+#if SWIGLUA
+#endif
+
+
 // These definitions help SWIG to properly wrap smart pointers.
 %include "itkSmartPointer.h"
 %template(SmartPointerImage) itk::SmartPointer<itk::simple::Image>;
@@ -98,7 +107,7 @@ typedef unsigned int uint32_t;
 %include "sitkImageFilter.h"
 %include "sitkImageFileWriter.h"
 %include "sitkImageFileReader.h"
-%include "sitkImageHashFilter.h"
+%include "sitkHashImageFilter.h"
 %include "sitkStatisticsImageFilter.h"
 %include "sitkRecursiveGaussianImageFilter.h"
 %include "sitkExtractImageFilter.h"
@@ -125,3 +134,26 @@ itk::simple::Image::Pointer InternalConstructImage( uint64_t Width, uint64_t Hei
   return p; 
 };
 %}
+
+
+%inline %{
+struct ShortImageAdapter {
+       short* data;
+       bool isValid;
+       };
+%};
+// Extend the image class
+%extend ShortImageAdapter {
+        short getItem ( size_t idx ) { if ( self->isValid ) { return self->data[idx]; } else { return 0; } }
+        ShortImageAdapter ( itk::simple::Image::Pointer image ) {
+          ShortImageAdapter *a = new ShortImageAdapter();
+          a->isValid = false; a->data = NULL;
+          if ( image->GetPixelIDValue() == itk::simple::sitkInt16 ) {
+            a->isValid = true;
+            a->data = (short*)image->GetPixelContainer()->GetBufferAsInt16();
+          }
+          return a;
+       }
+};
+          
+
