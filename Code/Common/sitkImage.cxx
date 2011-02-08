@@ -41,6 +41,9 @@ namespace itk
     virtual uint64_t GetDepth( void ) const { return this->GetSize( 2 ); }
 
     virtual uint64_t GetSize( unsigned int dimension ) const = 0;
+    virtual double GetOrigin( unsigned int dimension ) const = 0;
+    virtual double GetSpacing( unsigned int dimension ) const = 0;
+
     virtual std::string ToString() const = 0;
 
     virtual PixelContainer::Pointer GetPixelContainer() = 0;
@@ -90,6 +93,28 @@ namespace itk
       }
 
     virtual unsigned int GetDimension( void ) { return ImageType::ImageDimension; }
+
+
+    // Get Origin
+    virtual double GetOrigin( unsigned int dimension ) const 
+      {
+      if ( dimension > ImageType::ImageDimension - 1 )
+        {
+        return 0;
+        }
+
+      return this->m_Image->GetOrigin()[dimension];
+      }
+    // Get Spacing
+    virtual double GetSpacing( unsigned int dimension ) const 
+      {
+      if ( dimension > ImageType::ImageDimension - 1 )
+        {
+        return 0;
+        }
+
+      return this->m_Image->GetSpacing()[dimension];
+      }
 
     virtual uint64_t GetSize( unsigned int dimension ) const
       {
@@ -344,6 +369,45 @@ namespace itk
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetPixelContainer();
+    }
+
+    // Get Size
+    std::vector< uint64_t > Image::GetSize( void )
+    {
+      std::vector< uint64_t > out;
+      out.push_back( this->GetWidth() );
+      out.push_back( this->GetHeight() );
+      if (this->GetDimension() == 3 )
+        {
+        out.push_back( this->GetDepth() );
+        }
+      return out;
+    }
+
+    // Get Origin
+    std::vector< double > Image::GetOrigin( void )
+    {
+      std::vector< double > out;
+      out.push_back( this->m_PimpleImage->GetOrigin(0) );
+      out.push_back( this->m_PimpleImage->GetOrigin(1) );
+      if (this->GetDimension() == 3 )
+        {
+        out.push_back( this->m_PimpleImage->GetOrigin(2) );
+        }
+      return out;
+    }
+
+    // Get Spacing
+    std::vector< double > Image::GetSpacing( void )
+    {
+      std::vector< double > out;
+      out.push_back( this->m_PimpleImage->GetSpacing(0) );
+      out.push_back( this->m_PimpleImage->GetSpacing(1) );
+      if (this->GetDimension() == 3 )
+        {
+        out.push_back( this->m_PimpleImage->GetSpacing(2) );
+        }
+      return out;
     }
 
 ///
