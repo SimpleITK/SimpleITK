@@ -33,6 +33,8 @@ namespace simple
     typedef Image              Self;
     typedef SmartPointer<Self> Pointer;
 
+    virtual ~Image( );
+
     Image( uint64_t Width, uint64_t Height, PixelIDValueEnum ValueEnum );
     Image( uint64_t Width, uint64_t Height, uint64_t Depth, PixelIDValueEnum ValueEnum );
 

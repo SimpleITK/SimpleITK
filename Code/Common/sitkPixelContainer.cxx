@@ -6,6 +6,10 @@ namespace itk
   namespace simple
   {
 
+    PixelContainer::~PixelContainer()
+    {
+    }
+
     PixelIDValueType PixelContainer::GetPixelIDValue( void ) const
     {
       return this->m_Internal->GetPixelIDValue();
