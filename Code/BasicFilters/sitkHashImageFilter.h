@@ -1,5 +1,5 @@
-#ifndef __sitkImageHashFilter_h
-#define __sitkImageHashFilter_h
+#ifndef __sitkHashImageFilter_h
+#define __sitkHashImageFilter_h
 
 #include "sitkMacro.h"
 #include "sitkMemberFunctionFactory.h"
@@ -8,12 +8,12 @@
 namespace itk {
   namespace simple {
 
-    /** \class ImageHashFilter
+    /** \class HashImageFilter
      * \brief Compute the sha1 or md5 hash of an image
      */
-    class ImageHashFilter {
+    class HashImageFilter {
     public:
-      typedef ImageHashFilter Self;
+      typedef HashImageFilter Self;
 
       // function pointer type
       typedef std::string (Self::*MemberFunctionType)( Image::Pointer );
@@ -23,7 +23,7 @@ namespace itk {
         typelist::Append< BasicPixelIDTypeList, ComplexPixelIDTypeList>::Type,
         VectorPixelIDTypeList >::Type PixelIDTypeList;
 
-      ImageHashFilter();
+      HashImageFilter();
 
       enum HashFunction { SHA1, MD5 };
       Self& SetHashFunction ( HashFunction hashFunction );
@@ -45,6 +45,8 @@ namespace itk {
 
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
     };
+
+    std::string Hash ( Image::Pointer image, HashImageFilter::HashFunction function = HashImageFilter::SHA1 );
   }
 }
 #endif

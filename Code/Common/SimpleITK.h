@@ -9,7 +9,7 @@
 
 #include "sitkImageFilter.h"
 
-#include "sitkImageHashFilter.h"
+#include "sitkHashImageFilter.h"
 #include "sitkRecursiveGaussianImageFilter.h"
 #include "sitkPixelIDTypeLists.h"
 #include "sitkImageFileReader.h"
