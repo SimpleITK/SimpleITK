@@ -3,6 +3,6 @@
 #include <sitkImage.h>
 #include <sitkImageFileReader.h>
 #include <sitkImageFileWriter.h>
-#include <sitkImageHashFilter.h>
+#include <sitkHashImageFilter.h>
 #include <sitkRecursiveGaussianImageFilter.h>
 

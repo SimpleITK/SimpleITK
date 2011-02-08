@@ -1,5 +1,5 @@
 
-#include "sitkImageHashFilter.h"
+#include "sitkHashImageFilter.h"
 #include "itkHashImageFilter.h"
 #include "itkVectorImage.h"
 
@@ -7,7 +7,7 @@
 
 namespace itk {
   namespace simple {
-    ImageHashFilter::ImageHashFilter () {
+    HashImageFilter::HashImageFilter () {
       this->m_HashFunction = SHA1;
 
       this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
@@ -16,9 +16,9 @@ namespace itk {
       this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
     }
 
-    std::string ImageHashFilter::ToString() const {
+    std::string HashImageFilter::ToString() const {
       std::ostringstream out;
-      out << "itk::simple::ImageHashFilter\n";
+      out << "itk::simple::HashImageFilter\n";
       out << "HashFunction: ";
       switch ( this->m_HashFunction )
         {
@@ -33,18 +33,18 @@ namespace itk {
       return out.str();
     }
 
-    ImageHashFilter::HashFunction ImageHashFilter::GetHashFunction()
+    HashImageFilter::HashFunction HashImageFilter::GetHashFunction()
     {
       return this->m_HashFunction;
     }
 
-    ImageHashFilter& ImageHashFilter::SetHashFunction ( ImageHashFilter::HashFunction hashFunction )
+    HashImageFilter& HashImageFilter::SetHashFunction ( HashImageFilter::HashFunction hashFunction )
       {
       this->m_HashFunction = hashFunction;
       return *this;
       }
 
-    std::string ImageHashFilter::Execute ( Image::Pointer image ) {
+    std::string HashImageFilter::Execute ( Image::Pointer image ) {
 
       PixelIDValueType type = image->GetPixelIDValue();
       unsigned int dimension = image->GetDimension();
@@ -53,7 +53,7 @@ namespace itk {
     }
 
     template <class TImageType>
-    std::string ImageHashFilter::ExecuteInternal ( Image::Pointer inImage )
+    std::string HashImageFilter::ExecuteInternal ( Image::Pointer inImage )
     {
       typedef TImageType                                   InputImageType;
 
@@ -80,6 +80,9 @@ namespace itk {
       std::string output = hasher->GetHash();
 
       return output;
+    }
+    std::string Hash ( Image::Pointer image, HashImageFilter::HashFunction function ) {
+      return HashImageFilter().SetHashFunction ( function ).Execute ( image );
     }
   }
 }

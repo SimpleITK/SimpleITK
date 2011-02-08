@@ -3,7 +3,7 @@
 #include <sitk${name}ImageFilter.h>
 #include <sitkImageFileReader.h>
 #include <sitkImageFileWriter.h>
-#include <sitkImageHashFilter.h>
+#include <sitkHashImageFilter.h>
 
 TEST(BasicFilters,${name}) {
   itk::simple::ImageFileReader reader;
@@ -11,7 +11,7 @@ TEST(BasicFilters,${name}) {
   itk::simple::Image::Pointer inputA;
   itk::simple::Image::Pointer inputB;
   itk::simple::Image::Pointer output;
-  itk::simple::ImageHashFilter hasher;
+  itk::simple::HashImageFilter hasher;
 
   $(if #tests == 0 then
     OUT=[[ 
@@ -83,7 +83,7 @@ end)
                                                                          $(if template_type and template_type == "RegionGrowing" then OUT=", std::vector< std::vector<unsigned int> >()" end)
                                                                          $(foreach members , ${default})
                                                                 ) ) << "Functional interface to ${name}";
-      hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 );
+      hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
       EXPECT_EQ ( hasher.Execute ( fromProcedural ), hasher.Execute ( fromFunctional ) ) << "procedural and functional are not the same!";
     }
 
@@ -112,13 +112,13 @@ end)
   $(if md5hash then
   OUT = [[ 
   // Check the hash
-  EXPECT_EQ ( "${md5hash}", hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 ).Execute ( output ) ) << "Output MD5 hash failed";
+  EXPECT_EQ ( "${md5hash}", hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).Execute ( output ) ) << "Output MD5 hash failed";
   ]]
   end)
   $(if sha1hash then
   OUT = [[ 
   // Check the hash
-  EXPECT_EQ ( "${sha1hash}", hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 ).Execute ( output ) ) << "Output SHA1 hash failed";
+  EXPECT_EQ ( "${sha1hash}", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( output ) ) << "Output SHA1 hash failed";
   ]]
   end)
   $(if tolerance then
@@ -159,7 +159,7 @@ TEST_F(Lua,${name}) {
     RunExecutable ( CommandLine, true );
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
-    itk::simple::ImageHashFilter hasher;
+    itk::simple::HashImageFilter hasher;
     itk::simple::Image::Pointer output;
 
     output = reader.SetFileName ( outputFileName ).Execute();
@@ -168,13 +168,13 @@ TEST_F(Lua,${name}) {
     $(if md5hash then
       OUT = [[ 
               // Check the hash
-              EXPECT_EQ ( "${md5hash}", hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 ).Execute ( output ) ) << "Output MD5 hash failed";
+              EXPECT_EQ ( "${md5hash}", hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).Execute ( output ) ) << "Output MD5 hash failed";
                ]]
       end)
     $(if sha1hash then
       OUT = [[ 
               // Check the hash
-              EXPECT_EQ ( "${sha1hash}", hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 ).Execute ( output ) ) << "Output SHA1 hash failed";
+              EXPECT_EQ ( "${sha1hash}", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( output ) ) << "Output SHA1 hash failed";
                ]]
       end)
     $(if tolerance then
@@ -222,7 +222,7 @@ TEST_F(Python,${name}) {
     RunExecutable ( CommandLine, true );
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
-    itk::simple::ImageHashFilter hasher;
+    itk::simple::HashImageFilter hasher;
     itk::simple::Image::Pointer output;
 
     output = reader.SetFileName ( outputFileName ).Execute();
@@ -231,13 +231,13 @@ TEST_F(Python,${name}) {
     $(if md5hash then
       OUT = [[ 
               // Check the hash
-              EXPECT_EQ ( "${md5hash}", hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 ).Execute ( output ) ) << "Output MD5 hash failed";
+              EXPECT_EQ ( "${md5hash}", hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).Execute ( output ) ) << "Output MD5 hash failed";
                ]]
       end)
     $(if sha1hash then
       OUT = [[ 
               // Check the hash
-              EXPECT_EQ ( "${sha1hash}", hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 ).Execute ( output ) ) << "Output SHA1 hash failed";
+              EXPECT_EQ ( "${sha1hash}", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( output ) ) << "Output SHA1 hash failed";
                ]]
       end)
     $(if tolerance then
@@ -280,7 +280,7 @@ TEST_F(Tcl,${name}) {
     RunExecutable ( CommandLine, true );
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
-    itk::simple::ImageHashFilter hasher;
+    itk::simple::HashImageFilter hasher;
     itk::simple::Image::Pointer output;
 
     output = reader.SetFileName ( outputFileName ).Execute();
@@ -289,13 +289,13 @@ TEST_F(Tcl,${name}) {
     $(if md5hash then
       OUT = [[ 
               // Check the hash
-              EXPECT_EQ ( "${md5hash}", hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 ).Execute ( output ) ) << "Output MD5 hash failed";
+              EXPECT_EQ ( "${md5hash}", hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).Execute ( output ) ) << "Output MD5 hash failed";
                ]]
       end)
     $(if sha1hash then
       OUT = [[ 
               // Check the hash
-              EXPECT_EQ ( "${sha1hash}", hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 ).Execute ( output ) ) << "Output SHA1 hash failed";
+              EXPECT_EQ ( "${sha1hash}", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( output ) ) << "Output SHA1 hash failed";
                ]]
       end)
     $(if tolerance then
@@ -338,7 +338,7 @@ TEST_F(R,${name}) {
     RunExecutable ( CommandLine, true );
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
-    itk::simple::ImageHashFilter hasher;
+    itk::simple::HashImageFilter hasher;
     itk::simple::Image::Pointer output;
 
     output = reader.SetFileName ( outputFileName ).Execute();
@@ -347,13 +347,13 @@ TEST_F(R,${name}) {
     $(if md5hash then
       OUT = [[ 
               // Check the hash
-              EXPECT_EQ ( "${md5hash}", hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 ).Execute ( output ) ) << "Output MD5 hash failed";
+              EXPECT_EQ ( "${md5hash}", hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).Execute ( output ) ) << "Output MD5 hash failed";
                ]]
       end)
     $(if sha1hash then
       OUT = [[ 
               // Check the hash
-              EXPECT_EQ ( "${sha1hash}", hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 ).Execute ( output ) ) << "Output SHA1 hash failed";
+              EXPECT_EQ ( "${sha1hash}", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( output ) ) << "Output SHA1 hash failed";
                ]]
       end)
     $(if tolerance then
@@ -404,7 +404,7 @@ TEST_F(Java,${name}) {
     RunExecutable ( CommandLine, true );
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
-    itk::simple::ImageHashFilter hasher;
+    itk::simple::HashImageFilter hasher;
     itk::simple::Image::Pointer output;
 
     output = reader.SetFileName ( outputFileName ).Execute();
@@ -413,13 +413,13 @@ TEST_F(Java,${name}) {
     $(if md5hash then
       OUT = [[ 
               // Check the hash
-              EXPECT_EQ ( "${md5hash}", hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 ).Execute ( output ) ) << "Output MD5 hash failed";
+              EXPECT_EQ ( "${md5hash}", hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).Execute ( output ) ) << "Output MD5 hash failed";
                ]]
       end)
     $(if sha1hash then
       OUT = [[ 
               // Check the hash
-              EXPECT_EQ ( "${sha1hash}", hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 ).Execute ( output ) ) << "Output SHA1 hash failed";
+              EXPECT_EQ ( "${sha1hash}", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( output ) ) << "Output SHA1 hash failed";
                ]]
       end)
     $(if tolerance then
@@ -465,7 +465,7 @@ TEST_F(Ruby,${name}) {
     RunExecutable ( CommandLine, true );
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
-    itk::simple::ImageHashFilter hasher;
+    itk::simple::HashImageFilter hasher;
     itk::simple::Image::Pointer output;
 
     output = reader.SetFileName ( outputFileName ).Execute();
@@ -474,13 +474,13 @@ TEST_F(Ruby,${name}) {
     $(if md5hash then
       OUT = [[ 
               // Check the hash
-              EXPECT_EQ ( "${md5hash}", hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 ).Execute ( output ) ) << "Output MD5 hash failed";
+              EXPECT_EQ ( "${md5hash}", hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).Execute ( output ) ) << "Output MD5 hash failed";
                ]]
       end)
     $(if sha1hash then
       OUT = [[ 
               // Check the hash
-              EXPECT_EQ ( "${sha1hash}", hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 ).Execute ( output ) ) << "Output SHA1 hash failed";
+              EXPECT_EQ ( "${sha1hash}", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( output ) ) << "Output SHA1 hash failed";
                ]]
       end)
     $(if tolerance then

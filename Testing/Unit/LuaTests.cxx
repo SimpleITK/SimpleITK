@@ -3,7 +3,7 @@
 #include <sitkImage.h>
 #include <sitkImageFileReader.h>
 #include <sitkImageFileWriter.h>
-#include <sitkImageHashFilter.h>
+#include <sitkHashImageFilter.h>
 
 #if defined(WRAP_LUA)
 TEST_F(Lua,SimpleGaussian) {
@@ -22,7 +22,7 @@ TEST_F(Lua,SimpleGaussian) {
   RunExecutable ( CommandLine, true );
   ASSERT_TRUE ( dataFinder.FileExists ( output ) );
   itk::simple::ImageFileReader reader;
-  itk::simple::ImageHashFilter hasher;
+  itk::simple::HashImageFilter hasher;
   itk::simple::Image::Pointer image;
 
   image = reader.SetFileName ( output ).Execute();
