@@ -56,11 +56,13 @@ namespace simple
 
     unsigned int GetDimension( void ) const;
 
-    /** Get the Origin */
+    /** Get/Set the Origin */
     std::vector< double > GetOrigin( void );
+    void SetOrigin( std::vector< double > );
 
     /** Get the Spacing */
     std::vector< double > GetSpacing( void );
+    void SetSpacing( std::vector< double > );
 
     /** Transform index to physical point */
     std::vector< double > TransformIndexToPhysicalPoint( std::vector< unsigned int > );

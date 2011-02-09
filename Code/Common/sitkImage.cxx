@@ -41,8 +41,11 @@ namespace itk
     virtual uint64_t GetDepth( void ) const { return this->GetSize( 2 ); }
 
     virtual uint64_t GetSize( unsigned int dimension ) const = 0;
+
     virtual std::vector<double> GetOrigin( void ) = 0;
+    virtual void SetOrigin( std::vector<double> orgn ) = 0;
     virtual std::vector<double> GetSpacing( void ) = 0;
+    virtual void SetSpacing( std::vector<double> spc ) = 0;
 
     virtual std::vector<unsigned int> TransformPhysicalPointToIndex(
       std::vector<double> pt) = 0;
@@ -113,6 +116,24 @@ namespace itk
         }
       return orgn;
       }
+
+    // Set Origin
+    virtual void SetOrigin( std::vector<double> orgn )
+      {
+      if (orgn.size() != ImageType::ImageDimension)
+        {
+        sitkExceptionMacro("Image::SetOrigin -> vector dimension mismatch");
+        }
+      typename ImageType::PointType origin;
+      origin[0] = orgn[0];
+      origin[1] = orgn[1];
+      if (ImageType::ImageDimension == 3)
+        {
+        origin[2] = orgn[2];
+        }
+      this->m_Image->SetOrigin( origin );
+      }
+
     // Get Spacing
     virtual std::vector<double> GetSpacing( void )
       {
@@ -125,6 +146,23 @@ namespace itk
         spc.push_back(spacing[2]);
         }
       return spc;
+      }
+
+    // Set Spacing
+    virtual void SetSpacing( std::vector<double> spc )
+      {
+      if (spc.size() != ImageType::ImageDimension)
+        {
+        sitkExceptionMacro("Image::SetSpacing -> vector dimension mismatch");
+        }
+      typename ImageType::SpacingType spacing;
+      spacing[0] = spc[0];
+      spacing[1] = spc[1];
+      if (ImageType::ImageDimension == 3)
+        {
+        spacing[2] = spc[2];
+        }
+      this->m_Image->SetSpacing( spacing );
       }
 
     // Physical Point to Index
@@ -434,10 +472,22 @@ namespace itk
       return this->m_PimpleImage->GetOrigin();
     }
 
+    // Set Origin
+    void Image::SetOrigin( std::vector<double> orgn )
+    {
+      this->m_PimpleImage->SetOrigin(orgn);
+    }
+
     // Get Spacing
     std::vector< double > Image::GetSpacing( void )
     {
       return this->m_PimpleImage->GetSpacing();
+    }
+
+    // Set Spacing
+    void Image::SetSpacing( std::vector<double> spc )
+    {
+      this->m_PimpleImage->SetSpacing(spc);
     }
 
     // Index to Physical Point
