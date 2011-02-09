@@ -241,15 +241,37 @@ TEST_F(Image,Transforms) {
 
 TEST_F(Image,Properties) {
 
-  // Origin
+  // GetOrigin
   std::vector<double> origin = shortImage->GetOrigin();
-  EXPECT_EQ(origin[0], 1.1) << " Origin[0]";
-  EXPECT_EQ(origin[1], 2.2) << " Origin[1]";
-  EXPECT_EQ(origin[2], 3.3) << " Origin[2]";
+  EXPECT_EQ(origin[0], 1.1) << " GetOrigin[0]";
+  EXPECT_EQ(origin[1], 2.2) << " GetOrigin[1]";
+  EXPECT_EQ(origin[2], 3.3) << " GetOrigin[2]";
 
-  // Spacing
+  // SetOrigin
+  std::vector<double> newOrigin;
+  newOrigin.push_back(0.1);
+  newOrigin.push_back(0.2);
+  newOrigin.push_back(0.3);
+  shortImage->SetOrigin( newOrigin );
+  EXPECT_EQ(shortImage->GetOrigin()[0], 0.1) << " SetOrigin[0]";
+  EXPECT_EQ(shortImage->GetOrigin()[1], 0.2) << " SetOrigin[1]";
+  EXPECT_EQ(shortImage->GetOrigin()[2], 0.3) << " SetOrigin[2]";
+  shortImage->SetOrigin( origin );
+
+  // GetSpacing
   std::vector<double> spacing = shortImage->GetSpacing();
-  EXPECT_EQ(spacing[0], 0.5) << " Spacing[0]";
-  EXPECT_EQ(spacing[1], 0.5) << " Spacing[1]";
-  EXPECT_EQ(spacing[2], 1.5) << " Spacing[2]";
+  EXPECT_EQ(spacing[0], 0.5) << " GetSpacing[0]";
+  EXPECT_EQ(spacing[1], 0.5) << " GetSpacing[1]";
+  EXPECT_EQ(spacing[2], 1.5) << " GetSpacing[2]";
+
+  // SetSpacing
+  std::vector<double> newSpacing;
+  newSpacing.push_back(1.9);
+  newSpacing.push_back(2.8);
+  newSpacing.push_back(3.7);
+  shortImage->SetSpacing( newSpacing );
+  EXPECT_EQ(shortImage->GetSpacing()[0], 1.9) << " SetSpacing[0]";
+  EXPECT_EQ(shortImage->GetSpacing()[1], 2.8) << " SetSpacing[1]";
+  EXPECT_EQ(shortImage->GetSpacing()[2], 3.7) << " SetSpacing[2]";
+  shortImage->SetOrigin( spacing );
 }
