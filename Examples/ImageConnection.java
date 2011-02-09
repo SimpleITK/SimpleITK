@@ -20,21 +20,13 @@ class ImageConnection {
     reader.setFileName(argv[0]);
     SmartPointerImage img = reader.execute();
 
-    SmartPointerPixelContainer pixels = img.getPixelContainer();
+    SmartPointerPixelContainer pixelsContainer = img.getPixelContainer();
 
+    int8Array pixelsArray = int8Array.frompointer( pixelsContainer.getBufferAsInt8() );
 
-   int imageSize = 1024 * 1024;
+    java.math.BigInteger numberOfPixels = pixelsContainer.getNumberOfPixels();
 
-   int value = 19;
-
-   int8Array array = new int8Array(imageSize);
-   for (int i=0; i<imageSize; i++) {
-      array.setitem(i,value);
-   }
-
-   pixels.setBuffer( array.cast() );
-
-   array.frompointer( pixels.getBuffer() );
+    int8Array anotherPixelsArray = new int8Array( numberOfPixels.longValue(), true );
 
   }
 
