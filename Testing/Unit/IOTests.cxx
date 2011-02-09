@@ -1,10 +1,10 @@
 #include <SimpleITKTestHarness.h>
 #include <sitkImageFileReader.h>
 #include <sitkImageFileWriter.h>
-#include <sitkImageHashFilter.h>
+#include <sitkHashImageFilter.h>
 
 TEST(IO,ImageFileReader) {
-  itk::simple::ImageHashFilter hasher;
+  itk::simple::HashImageFilter hasher;
   itk::simple::ImageFileReader reader;
   itk::simple::Image::Pointer image;
 
@@ -30,7 +30,7 @@ TEST(IO,ImageFileReader) {
     EXPECT_EQ ( reader.GetFileName(), dataFinder.GetFile ( it->first ) );
     image = reader.Execute();
     ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
-    hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 );
+    hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
     EXPECT_EQ ( it->second, hasher.Execute ( image ) ) << " reading " << it->first;
     // Try the functional interface
     EXPECT_EQ ( it->second, hasher.Execute ( itk::simple::ReadImage ( dataFinder.GetFile ( it->first ) ) ) ) << "Functional interface";
@@ -39,7 +39,7 @@ TEST(IO,ImageFileReader) {
 }
 
 TEST(IO,ReadWrite) {
-  itk::simple::ImageHashFilter hasher;
+  itk::simple::HashImageFilter hasher;
   itk::simple::ImageFileReader reader;
   itk::simple::ImageFileWriter writer;
   itk::simple::Image::Pointer image;
@@ -51,9 +51,9 @@ TEST(IO,ReadWrite) {
 
   image = reader.SetFileName ( dataFinder.GetFile ( "Input/RA-Short.nrrd" ) ).Execute();
   ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
-  hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 );
+  hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
   EXPECT_EQ ( md5, hasher.Execute ( image ) );
-  hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 );
+  hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 );
   EXPECT_EQ ( sha1, hasher.Execute ( image ) );
 
   // Write it out
@@ -64,9 +64,9 @@ TEST(IO,ReadWrite) {
   ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
 
   // Make sure we wrote and read the file correctly
-  hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 );
+  hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
   EXPECT_EQ ( md5, hasher.Execute ( image ) );
-  hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 );
+  hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 );
   EXPECT_EQ ( sha1, hasher.Execute ( image ) );
 
   // Again, with the functional interface
@@ -77,20 +77,20 @@ TEST(IO,ReadWrite) {
   ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
 
   // Make sure we wrote and read the file correctly
-  hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 );
+  hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
   EXPECT_EQ ( md5, hasher.Execute ( image ) );
-  hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 );
+  hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 );
   EXPECT_EQ ( sha1, hasher.Execute ( image ) );
 }
   
   
 TEST(IO,2DFormats) {
-  itk::simple::ImageHashFilter hasher;
+  itk::simple::HashImageFilter hasher;
   itk::simple::ImageFileReader reader;
   itk::simple::Image::Pointer image;
   image = reader.SetFileName ( dataFinder.GetFile ( "Input/RA-Slice-Short.png" ) ).Execute();
   ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
-  hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 );
+  hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 );
   EXPECT_EQ ( "bf0f7bae60b0322222e224941c31f37a981901aa", hasher.Execute ( image ) );
   ASSERT_EQ ( 2u, image->GetDimension() );
   EXPECT_EQ ( 64u, image->GetWidth() );

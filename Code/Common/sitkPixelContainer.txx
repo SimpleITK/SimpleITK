@@ -155,8 +155,9 @@ namespace itk
   void PixelContainer::InternalInitialization( TImageType * image )
   {
     typedef PimplePixelContainer< TImageType >  PixelContainerType;
-    PixelContainerType * container = new PixelContainerType( image );
-    this->m_Internal.reset( container );
+
+    delete this->m_Internal;
+    this->m_Internal = new PixelContainerType( image );
   }
 
   }

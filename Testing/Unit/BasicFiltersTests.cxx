@@ -3,7 +3,7 @@
 #include <sitkImage.h>
 #include <sitkImageFileReader.h>
 #include <sitkImageFileWriter.h>
-#include <sitkImageHashFilter.h>
+#include <sitkHashImageFilter.h>
 #include <sitkRecursiveGaussianImageFilter.h>
 #include <sitkCastImageFilter.h>
 #include <sitkPixelIDValues.h>
@@ -15,7 +15,7 @@ TEST(BasicFilters,Create) {
 }
 
 TEST(BasicFilters,RecursiveGaussian) {
-  itk::simple::ImageHashFilter hasher;
+  itk::simple::HashImageFilter hasher;
   itk::simple::ImageFileReader reader;
   itk::simple::RecursiveGaussianImageFilter filter;
   itk::simple::Image::Pointer image;
@@ -29,7 +29,7 @@ TEST(BasicFilters,RecursiveGaussian) {
 
 
 TEST(BasicFilters,Cast) {
-  itk::simple::ImageHashFilter hasher;
+  itk::simple::HashImageFilter hasher;
   itk::simple::ImageFileReader reader;
   itk::simple::RecursiveGaussianImageFilter filter;
   itk::simple::Image::Pointer image;
@@ -37,7 +37,7 @@ TEST(BasicFilters,Cast) {
   reader.SetFileName ( dataFinder.GetFile ( "Input/RA-Float.nrrd" ) );
   image = reader.Execute();
   ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
-  hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 );
+  hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
   EXPECT_EQ ( "3ccccde44efaa3d688a86e94335c1f16", hasher.Execute ( image ) );
 
   EXPECT_EQ ( image->GetPixelIDValue(), itk::simple::sitkFloat32 );
@@ -106,7 +106,7 @@ TEST(BasicFilters,Cast) {
       {
       try
         {
-        hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 );
+        hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
         EXPECT_EQ ( hash, hasher.Execute ( test ) ) << "Cast to " << itk::simple::GetPixelIDValueAsString ( pixelID );
         }
       catch ( ::itk::simple::GenericException &e )
@@ -130,9 +130,9 @@ TEST(BasicFilters,Cast) {
 
 }
 
-TEST(BasicFilters,ImageHashFilter) {
-  itk::simple::ImageHashFilter hasher;
+TEST(BasicFilters,HashImageFilter) {
+  itk::simple::HashImageFilter hasher;
   EXPECT_NE ( "", hasher.ToString() );
-  EXPECT_EQ ( itk::simple::ImageHashFilter::SHA1, hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 ).GetHashFunction() );
-  EXPECT_EQ ( itk::simple::ImageHashFilter::MD5, hasher.SetHashFunction ( itk::simple::ImageHashFilter::MD5 ).GetHashFunction() );
+  EXPECT_EQ ( itk::simple::HashImageFilter::SHA1, hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).GetHashFunction() );
+  EXPECT_EQ ( itk::simple::HashImageFilter::MD5, hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).GetHashFunction() );
 }
