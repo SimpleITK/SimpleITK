@@ -2,7 +2,7 @@
 
 #include <sitkImageFileReader.h>
 #include <sitkImageFileWriter.h>
-#include <sitkImageHashFilter.h>
+#include <sitkHashImageFilter.h>
 #include <sitkPixelContainer.h>
 
 #include <itkIntTypes.h>
@@ -127,7 +127,7 @@ TEST_F(PixelContainer,ImageDataType) {
 TEST_F(PixelContainer,Constructors) {
   itk::simple::PixelContainer::Pointer pixelContainer;
   itk::simple::Image::Pointer image;
-  itk::simple::ImageHashFilter hasher;
+  itk::simple::HashImageFilter hasher;
   int result;
 
   image = new itk::simple::Image ( 64, 65, 66, itk::simple::sitkUInt8 );
@@ -136,7 +136,7 @@ TEST_F(PixelContainer,Constructors) {
 
   EXPECT_EQ ( pixelContainer->GetNumberOfPixels(), image->GetWidth() * image->GetHeight() * image->GetDepth() );
 
-  EXPECT_EQ ( "08183e1b0c50fd2cf6f070b58e218443fb7d5317", hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt8";
+  EXPECT_EQ ( "08183e1b0c50fd2cf6f070b58e218443fb7d5317", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt8";
   result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<unsigned char> >::Result;
   EXPECT_EQ ( image->GetPixelIDValue(), result );
   EXPECT_EQ ( image->GetPixelIDTypeAsString(), "8-bit unsigned integer" );
@@ -146,7 +146,7 @@ TEST_F(PixelContainer,Constructors) {
   EXPECT_EQ ( 66u, image->GetDepth() );
 
   image = new itk::simple::Image ( 64, 65, 66, itk::simple::sitkInt16 );
-  EXPECT_EQ ( "645b71695b94923c868e16b943d8acf8f6788617", hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt16";
+  EXPECT_EQ ( "645b71695b94923c868e16b943d8acf8f6788617", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt16";
   result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<short> >::Result;
   EXPECT_EQ ( image->GetPixelIDValue(), result );
   EXPECT_EQ ( image->GetPixelIDTypeAsString(), "16-bit signed integer" );
@@ -156,7 +156,7 @@ TEST_F(PixelContainer,Constructors) {
   EXPECT_EQ ( 66u, image->GetDepth() );
 
   image = new itk::simple::Image ( 64, 65, itk::simple::sitkUInt16 );
-  EXPECT_EQ ( "e3c464cc1b73df3f48bacf238a80f88b5ab0d3e6", hasher.SetHashFunction ( itk::simple::ImageHashFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt16";
+  EXPECT_EQ ( "e3c464cc1b73df3f48bacf238a80f88b5ab0d3e6", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt16";
   result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<unsigned short> >::Result;
   EXPECT_EQ ( image->GetPixelIDValue(), result );
   EXPECT_EQ ( image->GetPixelIDTypeAsString(), "16-bit unsigned integer" );
