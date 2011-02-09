@@ -1,8 +1,5 @@
 #include "sitk${name}ImageFilter.h"
 #include "itk${name}ImageFilter.h"
-$(if real_type_output==1 then
-OUT = [[#include "itkNumericTraits.h"]]
-end)
 
 namespace itk {
 namespace simple {
@@ -117,7 +114,12 @@ OUT=[[
 end)
 
   // Set up the ITK filter
-  typedef itk::${name}ImageFilter<InputImageType, InputImageType> FilterType;
+  $(if output_pixel_type then
+  OUT=[[// Define output image type
+  typedef itk::${name}ImageFilter<InputImageType, InputImageType, ${output_pixel_type}> FilterType;]]
+  else
+  OUT=[[typedef itk::${name}ImageFilter<InputImageType, InputImageType> FilterType;]]
+  end)
   typename FilterType::Pointer filter = FilterType::New();
 
 $(if number_of_inputs == 2 then
