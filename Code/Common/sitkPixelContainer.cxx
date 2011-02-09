@@ -6,6 +6,11 @@ namespace itk
   namespace simple
   {
 
+    PixelContainer::PixelContainer()
+    {
+      this->m_Internal = NULL;
+    }
+
     PixelContainer::~PixelContainer()
     {
       // no need to check if null
