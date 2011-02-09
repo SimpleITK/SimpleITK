@@ -25,15 +25,15 @@ namespace itk {
       // Print ourselves out
       std::string ToString() const;
 
-      Image::Pointer Execute ( Image::Pointer );
+      Image* Execute ( Image* );
       double GetMinimum() { return this->m_Minimum; }
       double GetMaximum() { return this->m_Maximum; }
       double GetMean() { return this->m_Mean; }
       double GetVariance() { return this->m_Variance; }
     private:
 
-      typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer );
-      template <class TImageType> Image::Pointer ExecuteInternal ( Image::Pointer image );
+      typedef Image* (Self::*MemberFunctionType)( Image* );
+      template <class TImageType> Image* ExecuteInternal ( Image* image );
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 

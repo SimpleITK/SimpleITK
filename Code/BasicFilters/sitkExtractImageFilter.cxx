@@ -30,7 +30,7 @@ std::string ExtractImageFilter::ToString() const
   }
 
 
-  Image::Pointer ExtractImageFilter::Execute ( Image::Pointer image, size_t s )
+  Image* ExtractImageFilter::Execute ( Image* image, size_t s )
   {
   this->m_Slice = s;
   return Execute ( image );
@@ -39,7 +39,7 @@ std::string ExtractImageFilter::ToString() const
 //
 // Execute
 //
-Image::Pointer ExtractImageFilter::Execute ( Image::Pointer image )
+Image* ExtractImageFilter::Execute ( Image* image )
   {
 
     PixelIDValueType type = image->GetPixelIDValue();
@@ -56,7 +56,7 @@ Image::Pointer ExtractImageFilter::Execute ( Image::Pointer image )
 // ExecuteInternal
 //
 template <class TImageType>
-Image::Pointer ExtractImageFilter::ExecuteInternal ( Image::Pointer inImage )
+Image* ExtractImageFilter::ExecuteInternal ( Image* inImage )
   {
   typename TImageType::Pointer image =
     dynamic_cast <TImageType*> ( inImage->GetImageBase().GetPointer() );
@@ -88,7 +88,7 @@ Image::Pointer ExtractImageFilter::ExecuteInternal ( Image::Pointer inImage )
   index.Fill ( 0 );
   region.SetIndex ( index );
   filterOutput->SetRegions ( region );
-  Image::Pointer out = new Image( filterOutput );
+  Image* out = new Image( filterOutput );
   
   filterOutput->DisconnectPipeline();
   return out;

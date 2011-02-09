@@ -30,7 +30,6 @@ public:
     im->FillBuffer ( 100 );
     itkShortImage = im;
     shortImage = new itk::simple::Image( im.GetPointer() );
-    shortImage->UnRegister();
 
     itk::Image<float,3>::Pointer fim = itk::Image<float,3>::New();
     fim->SetRegions ( region );
@@ -38,40 +37,36 @@ public:
     im->FillBuffer ( 0.0 );
     itkFloatImage = fim;
     floatImage = new itk::simple::Image( fim.GetPointer() );
-    floatImage->UnRegister();
 
     itkFloatVectorImage = FloatVectorImageType::New();
     floatVectorImage = new itk::simple::Image( itkFloatVectorImage.GetPointer() );
-    floatVectorImage->UnRegister();
 
     itkFloatVector2DImage = FloatVector2DImageType::New();
     floatVector2DImage = new itk::simple::Image( itkFloatVector2DImage );
-    floatVector2DImage->UnRegister();
-
   }
 
-  itk::simple::Image::Pointer image;
+  itk::simple::Image* image;
   itk::ImageBase<3>::Pointer itkShortImage;
   itk::ImageBase<3>::IndexType index;
   itk::ImageBase<3>::SizeType size;
   itk::ImageBase<3>::RegionType region;
 
   typedef itk::Image<short,3> ShortImageType;
-  itk::simple::Image::Pointer shortImage;
+  itk::simple::Image* shortImage;
 
   typedef itk::Image<float,3> FloatImageType;
-  itk::simple::Image::Pointer floatImage;
+  itk::simple::Image* floatImage;
   FloatImageType::Pointer itkFloatImage;
 
   typedef itk::VectorImage<float,3> FloatVectorImageType;
-  itk::simple::Image::Pointer floatVectorImage;
+  itk::simple::Image* floatVectorImage;
   FloatVectorImageType::Pointer itkFloatVectorImage;
 
   typedef itk::VectorImage<float,2> FloatVector2DImageType;
-  itk::simple::Image::Pointer floatVector2DImage;
+  itk::simple::Image* floatVector2DImage;
   FloatVector2DImageType::Pointer itkFloatVector2DImage;
 
-  itk::simple::Image::Pointer differentSizedImage;
+  itk::simple::Image* differentSizedImage;
   ShortImageType::Pointer itkDifferentSizedImage;
 };
 
@@ -132,12 +127,12 @@ TEST_F(Image,ImageDataType) {
 }
 
 TEST_F(Image,Constructors) {
-  itk::simple::Image::Pointer image;
+  itk::simple::Image* image;
   itk::simple::HashImageFilter hasher;
   int result;
 
   image = new itk::simple::Image ( 64, 65, 66, itk::simple::sitkUInt8 );
-  image->UnRegister();
+  ASSERT_TRUE ( image != NULL );
   EXPECT_EQ ( "08183e1b0c50fd2cf6f070b58e218443fb7d5317", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt8";
   result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<unsigned char> >::Result;
   EXPECT_EQ ( image->GetPixelIDValue(), result );
@@ -146,9 +141,10 @@ TEST_F(Image,Constructors) {
   EXPECT_EQ ( 64u, image->GetWidth() );
   EXPECT_EQ ( 65u, image->GetHeight() );
   EXPECT_EQ ( 66u, image->GetDepth() );
+  delete image;
 
   image = new itk::simple::Image ( 64, 65, 66, itk::simple::sitkInt16 );
-  image->UnRegister();
+  ASSERT_TRUE ( image != NULL );
   EXPECT_EQ ( "645b71695b94923c868e16b943d8acf8f6788617", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt16";
   result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<short> >::Result;
   EXPECT_EQ ( image->GetPixelIDValue(), result );
@@ -158,8 +154,9 @@ TEST_F(Image,Constructors) {
   EXPECT_EQ ( 65u, image->GetHeight() );
   EXPECT_EQ ( 66u, image->GetDepth() );
 
+  delete image;
   image = new itk::simple::Image ( 64, 65, itk::simple::sitkUInt16 );
-  image->UnRegister();
+  ASSERT_TRUE ( image != NULL );
   EXPECT_EQ ( "e3c464cc1b73df3f48bacf238a80f88b5ab0d3e6", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt16";
   result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<unsigned short> >::Result;
   EXPECT_EQ ( image->GetPixelIDValue(), result );
@@ -173,24 +170,29 @@ TEST_F(Image,Constructors) {
   // these images, let just construct these types need todo better
   // testing!
 
+  delete image;
   image = new itk::simple::Image ( 64, 65, 66, itk::simple::sitkLabelUInt8 );
-  image->UnRegister();
+  ASSERT_TRUE ( image != NULL );
   EXPECT_EQ ( 64u, image->GetWidth() );
   EXPECT_EQ ( 65u, image->GetHeight() );
   EXPECT_EQ ( 66u, image->GetDepth() );
+  delete image;
   image = new itk::simple::Image ( 64, 65, 66, itk::simple::sitkLabelUInt16 );
-  image->UnRegister();
+  ASSERT_TRUE ( image != NULL );
+  delete image;
   image = new itk::simple::Image ( 64, 65, 66, itk::simple::sitkLabelUInt32 );
-  image->UnRegister();
+  ASSERT_TRUE ( image != NULL );
 
+  delete image;
   image = new itk::simple::Image ( 64, 65, 66, itk::simple::sitkVectorUInt8 );
-  image->UnRegister();
+  ASSERT_TRUE ( image != NULL );
   EXPECT_EQ ( 64u, image->GetWidth() );
   EXPECT_EQ ( 65u, image->GetHeight() );
   EXPECT_EQ ( 66u, image->GetDepth() );
+  delete image;
   image = new itk::simple::Image ( 64, 65, 66, itk::simple::sitkVectorUInt16 );
-  image->UnRegister();
-
+  ASSERT_TRUE ( image != NULL );
+  delete image;
 }
 
 TEST_F(Image,Hash) {

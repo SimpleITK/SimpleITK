@@ -22,7 +22,7 @@ namespace detail {
  *
  *  Example member function pointer:
  *  \code
- *  typedef Self& (Self::*MemberFunctionType)( Image::Pointer );
+ *  typedef Self& (Self::*MemberFunctionType)( Image* );
  *  \endcode
  *
  *  The MemberFunctionAddressor will instantiate the templeted member

@@ -38,10 +38,10 @@ $(foreach tests
     if (tag.equals( "${tag}" )) {
 
       // Read image(s)
-      SmartPointerImage inputA = reader.setFileName( argv[1] ).execute();
+      Image inputA = reader.setFileName( argv[1] ).execute();
 $(if inputB then
       OUT=[[
-      SmartPointerImage inputB = reader.setFileName ( argv[2] ).execute();]]
+      Image inputB = reader.setFileName ( argv[2] ).execute();]]
 end)
 
       $(when settings 
@@ -78,10 +78,10 @@ end)
       // Run the filter
 $(if inputB then
       OUT=[[
-      SmartPointerImage output = filter.execute ( inputA, inputB );]]
+      Image output = filter.execute ( inputA, inputB );]]
 else
       OUT=[[
-      SmartPointerImage output = filter.execute ( inputA );]]
+      Image output = filter.execute ( inputA );]]
 end)
 
       // Write output

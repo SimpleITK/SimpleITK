@@ -26,12 +26,10 @@ namespace simple
    * \brief The main Image class for SimpleITK
    */
   class Image
-    : public LightObject,
-      protected NonCopyable
+    : protected NonCopyable
   {
   public:
     typedef Image              Self;
-    typedef SmartPointer<Self> Pointer;
 
     virtual ~Image( );
 

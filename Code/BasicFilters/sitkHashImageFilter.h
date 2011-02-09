@@ -16,7 +16,7 @@ namespace itk {
       typedef HashImageFilter Self;
 
       // function pointer type
-      typedef std::string (Self::*MemberFunctionType)( Image::Pointer );
+      typedef std::string (Self::*MemberFunctionType)( Image* );
 
       // this filter works with all itk::Image and itk::VectorImage types.
       typedef typelist::Append<
@@ -32,13 +32,13 @@ namespace itk {
       // Print ourselves out
       std::string ToString() const;
 
-      std::string Execute ( Image::Pointer );
+      std::string Execute ( Image* );
 
 
     private:
       HashFunction m_HashFunction;
 
-      template <class TImageType> std::string ExecuteInternal ( Image::Pointer image );
+      template <class TImageType> std::string ExecuteInternal ( Image* image );
 
       // friend to get access to executeInternal member
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
@@ -46,7 +46,7 @@ namespace itk {
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
     };
 
-    std::string Hash ( Image::Pointer image, HashImageFilter::HashFunction function = HashImageFilter::SHA1 );
+    std::string Hash ( Image* image, HashImageFilter::HashFunction function = HashImageFilter::SHA1 );
   }
 }
 #endif
