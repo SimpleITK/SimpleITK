@@ -34,6 +34,7 @@ namespace itk
       typedef PixelContainer     Self;
       typedef SmartPointer<Self> Pointer;
 
+      PixelContainer( );
       virtual ~PixelContainer( );
 
       uint64_t GetNumberOfPixels( void ) const;
@@ -72,7 +73,7 @@ namespace itk
 
       friend class Image;
 
-       PimplePixelContainerBase *m_Internal;
+      PimplePixelContainerBase *m_Internal;
   };
 
   }
