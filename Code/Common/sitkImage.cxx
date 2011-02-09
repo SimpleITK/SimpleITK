@@ -41,8 +41,8 @@ namespace itk
     virtual uint64_t GetDepth( void ) const { return this->GetSize( 2 ); }
 
     virtual uint64_t GetSize( unsigned int dimension ) const = 0;
-    virtual double GetOrigin( unsigned int dimension ) const = 0;
-    virtual double GetSpacing( unsigned int dimension ) const = 0;
+    virtual std::vector<double> GetOrigin( void ) = 0;
+    virtual std::vector<double> GetSpacing( void ) = 0;
 
     virtual std::vector<unsigned int> TransformPhysicalPointToIndex(
       std::vector<double> pt) = 0;
@@ -101,24 +101,30 @@ namespace itk
 
 
     // Get Origin
-    virtual double GetOrigin( unsigned int dimension ) const 
+    virtual std::vector<double> GetOrigin( void )
       {
-      if ( dimension > ImageType::ImageDimension - 1 )
+      typename ImageType::PointType origin = this->m_Image->GetOrigin();
+      std::vector<double> orgn;
+      orgn.push_back(origin[0]);
+      orgn.push_back(origin[1]);
+      if (ImageType::ImageDimension == 3)
         {
-        return 0;
+        orgn.push_back(origin[2]);
         }
-
-      return this->m_Image->GetOrigin()[dimension];
+      return orgn;
       }
     // Get Spacing
-    virtual double GetSpacing( unsigned int dimension ) const 
+    virtual std::vector<double> GetSpacing( void )
       {
-      if ( dimension > ImageType::ImageDimension - 1 )
+      typename ImageType::SpacingType spacing = this->m_Image->GetSpacing();
+      std::vector<double> spc;
+      spc.push_back(spacing[0]);
+      spc.push_back(spacing[1]);
+      if (ImageType::ImageDimension == 3)
         {
-        return 0;
+        spc.push_back(spacing[2]);
         }
-
-      return this->m_Image->GetSpacing()[dimension];
+      return spc;
       }
 
     // Physical Point to Index
@@ -425,27 +431,13 @@ namespace itk
     // Get Origin
     std::vector< double > Image::GetOrigin( void )
     {
-      std::vector< double > out;
-      out.push_back( this->m_PimpleImage->GetOrigin(0) );
-      out.push_back( this->m_PimpleImage->GetOrigin(1) );
-      if (this->GetDimension() == 3 )
-        {
-        out.push_back( this->m_PimpleImage->GetOrigin(2) );
-        }
-      return out;
+      return this->m_PimpleImage->GetOrigin();
     }
 
     // Get Spacing
     std::vector< double > Image::GetSpacing( void )
     {
-      std::vector< double > out;
-      out.push_back( this->m_PimpleImage->GetSpacing(0) );
-      out.push_back( this->m_PimpleImage->GetSpacing(1) );
-      if (this->GetDimension() == 3 )
-        {
-        out.push_back( this->m_PimpleImage->GetSpacing(2) );
-        }
-      return out;
+      return this->m_PimpleImage->GetSpacing();
     }
 
     // Index to Physical Point
