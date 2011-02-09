@@ -84,6 +84,7 @@
 // These definitions help SWIG to properly wrap smart pointers.
 %include "itkSmartPointer.h"
 %template(SmartPointerImage) itk::SmartPointer<itk::simple::Image>;
+%template(SmartPointerPixelContainer) itk::SmartPointer<itk::simple::PixelContainer>;
 
 // Help SWIG handle std vectors
 %include "std_vector.i"
@@ -98,8 +99,6 @@ typedef unsigned long long uint64_t;
 
 // Help swig wrap 32 bit integers
 typedef unsigned int uint32_t;
-
-%ignore itk::simple::Image::GetPixelContainer();
 
 // Any new classes need to have an "%include" statement to be wrapped.
 %include "sitkPixelIDValues.h"

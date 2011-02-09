@@ -67,7 +67,7 @@ namespace simple
     typedef AllPixelIDTypeList PixelIDTypeList;
     typedef void (Self::*MemberFunctionType)( uint64_t Width, uint64_t Height, uint64_t Depth );
 
-    PixelContainer::Pointer GetPixelContainer();
+    ::itk::simple::PixelContainer::Pointer GetPixelContainer();
 
     /** Method called my certain constructors to convert ITK images
      * into simpleITK ones.
