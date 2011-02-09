@@ -32,8 +32,8 @@ namespace itk {
       // Print ourselves out
       std::string ToString() const;
 
-      Image::Pointer Execute ( Image::Pointer );
-      Image::Pointer Execute ( Image::Pointer, size_t s );
+      Image* Execute ( Image* );
+      Image* Execute ( Image*, size_t s );
 
     private:
 
@@ -41,8 +41,8 @@ namespace itk {
       size_t m_Slice;
 
       // Macro that instantiate the member function dispatching
-      typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer );
-      template <class TImageType> Image::Pointer ExecuteInternal ( Image::Pointer image );
+      typedef Image* (Self::*MemberFunctionType)( Image* );
+      template <class TImageType> Image* ExecuteInternal ( Image* image );
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
     };

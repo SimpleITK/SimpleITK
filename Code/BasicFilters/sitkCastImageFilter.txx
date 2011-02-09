@@ -17,8 +17,8 @@ namespace simple
 //----------------------------------------------------------------------------
 
 template<typename TImageType, typename TOutputImageType>
-Image::Pointer
-CastImageFilter::ExecuteInternalCast( Image::Pointer inImage )
+Image*
+CastImageFilter::ExecuteInternalCast( Image* inImage )
 {
   typedef TImageType       InputImageType;
   typedef TOutputImageType OutputImageType;
@@ -37,14 +37,14 @@ CastImageFilter::ExecuteInternalCast( Image::Pointer inImage )
   filter->SetInput ( image );
   filter->Update();
 
-  Image::Pointer out = new Image( filter->GetOutput() );
+  Image* out = new Image( filter->GetOutput() );
 
   return out;
 }
 
 
 template<typename TImageType, typename TOutputImageType>
-Image::Pointer CastImageFilter::ExecuteInternalToVector( Image::Pointer inImage )
+Image* CastImageFilter::ExecuteInternalToVector( Image* inImage )
 {
 
   typedef TImageType       InputImageType;
@@ -68,14 +68,14 @@ Image::Pointer CastImageFilter::ExecuteInternalToVector( Image::Pointer inImage 
   caster->InPlaceOn();
   caster->Update();
 
-  Image::Pointer out = new Image( caster->GetOutput() );
+  Image* out = new Image( caster->GetOutput() );
 
   return out;
 }
 
 
 template<typename TImageType, typename TOutputImageType>
-Image::Pointer CastImageFilter::ExecuteInternalToLabel( Image::Pointer inImage )
+Image* CastImageFilter::ExecuteInternalToLabel( Image* inImage )
 {
   typedef TImageType                                InputImageType;
   typedef TOutputImageType                          OutputImageType;
@@ -97,12 +97,12 @@ Image::Pointer CastImageFilter::ExecuteInternalToLabel( Image::Pointer inImage )
   filter->SetInput ( image );
   filter->Update();
 
-  Image::Pointer out = new Image( filter->GetOutput() );
+  Image* out = new Image( filter->GetOutput() );
 
   return out;
 }
 
-Image::Pointer Cast ( Image::Pointer image, PixelIDValueType pixelID ) {
+Image* Cast ( Image* image, PixelIDValueType pixelID ) {
   CastImageFilter filter;
   return filter.SetOutputPixelType ( pixelID ).Execute ( image );
 }

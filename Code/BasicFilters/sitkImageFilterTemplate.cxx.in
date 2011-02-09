@@ -49,7 +49,7 @@ end)
 //$(if members and #members > 0 then
 OUT = [[
 
-Image::Pointer ${name}ImageFilter::Execute ( Image::Pointer image1$(if number_of_inputs==2 then OUT=', Image::Pointer image2' end)$(foreach members ,
+Image* ${name}ImageFilter::Execute ( Image* image1$(if number_of_inputs==2 then OUT=', Image* image2' end)$(foreach members ,
   ${type} in${name}) )
 {
 $(foreach members
@@ -61,7 +61,7 @@ end)
 }
 ]]
 end)
-Image::Pointer ${name}ImageFilter::Execute ( Image::Pointer image1$(if number_of_inputs==2 then OUT=[[, Image::Pointer image2]] end) )
+Image* ${name}ImageFilter::Execute ( Image* image1$(if number_of_inputs==2 then OUT=[[, Image* image2]] end) )
 {
 
   PixelIDValueType type = image1->GetPixelIDValue();
@@ -88,7 +88,7 @@ OUT=[[
 // ExecuteInternal
 //
 template <class TImageType>
-Image::Pointer ${name}ImageFilter::ExecuteInternal ( Image::Pointer inImage1 $(if number_of_inputs==2 then OUT=[[, Image::Pointer inImage2]] end) )
+Image* ${name}ImageFilter::ExecuteInternal ( Image* inImage1 $(if number_of_inputs==2 then OUT=[[, Image* inImage2]] end) )
 {
   // Define the input and output image types
   typedef TImageType     InputImageType;
@@ -152,7 +152,7 @@ end)
 )
   // Run the ITK filter and return the output as a pointer to a SimpleITK image
   filter->Update();
-  Image::Pointer out = new Image( filter->GetOutput() );
+  Image* out = new Image( filter->GetOutput() );
   filter->GetOutput()->DisconnectPipeline();
   return out;
 }
@@ -162,7 +162,7 @@ end)
 //
 // Function to run the Execute method of this filter
 //
-Image::Pointer ${name} ( Image::Pointer imageA$(if number_of_inputs == 2 then OUT=', Image::Pointer imageB' end)$(when members $(foreach members ,
+Image* ${name} ( Image* imageA$(if number_of_inputs == 2 then OUT=', Image* imageB' end)$(when members $(foreach members ,
   ${type} in${name})) )
 {
   ${name}ImageFilter filter;

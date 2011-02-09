@@ -22,7 +22,7 @@ namespace itk {
       typedef ImageFileWriter Self;
 
       // function pointer type
-      typedef Self& (Self::*MemberFunctionType)( Image::Pointer );
+      typedef Self& (Self::*MemberFunctionType)( Image* );
 
       // list of pixel types supported
       typedef NonLabelPixelIDTypeList PixelIDTypeList;
@@ -31,11 +31,11 @@ namespace itk {
 
       Self& SetFileName ( std::string fn );
       std::string GetFileName();
-      Self& Execute ( Image::Pointer );
+      Self& Execute ( Image* );
 
     private:
 
-      template <class T> Self& ExecuteInternal ( Image::Pointer );
+      template <class T> Self& ExecuteInternal ( Image* );
 
       std::string m_FileName;
 
@@ -45,7 +45,7 @@ namespace itk {
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 
     };
-    void WriteImage ( Image::Pointer image, std::string filename );
+    void WriteImage ( Image* image, std::string filename );
   }
 }
 

@@ -24,31 +24,31 @@ namespace itk {
 
       Self& SetFileName ( std::string fn );
       std::string GetFileName();
-      Image::Pointer Execute();
-      typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer );
+      Image* Execute();
+      typedef Image* (Self::*MemberFunctionType)( Image* );
 
     protected:
 
       template < unsigned int VImageDimension >
-      Image::Pointer ExecuteInternalReadScalar( itk::ImageIOBase::IOComponentType componentType );
+      Image* ExecuteInternalReadScalar( itk::ImageIOBase::IOComponentType componentType );
 
       template < unsigned int VImageDimension >
-      Image::Pointer ExecuteInternalReadVector( itk::ImageIOBase::IOComponentType componentType );
+      Image* ExecuteInternalReadVector( itk::ImageIOBase::IOComponentType componentType );
 
       // methods which utlize the EnableIf idiom to conditionally
       // instatiate ad execute the implementation
       template <class TImageType>
-      typename EnableIf<IsInstantiated<TImageType>::Value, Image::Pointer >::Type
+      typename EnableIf<IsInstantiated<TImageType>::Value, Image* >::Type
       ExecuteInternal ( );
       template <class TImageType>
-      typename DisableIf<IsInstantiated<TImageType>::Value, Image::Pointer >::Type
+      typename DisableIf<IsInstantiated<TImageType>::Value, Image* >::Type
       ExecuteInternal ( );
 
     private:
 
       std::string m_FileName;
     };
-    Image::Pointer ReadImage ( std::string filename );
+    Image* ReadImage ( std::string filename );
   }
 }
 

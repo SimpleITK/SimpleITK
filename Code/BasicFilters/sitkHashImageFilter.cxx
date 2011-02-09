@@ -44,7 +44,7 @@ namespace itk {
       return *this;
       }
 
-    std::string HashImageFilter::Execute ( Image::Pointer image ) {
+    std::string HashImageFilter::Execute ( Image* image ) {
 
       PixelIDValueType type = image->GetPixelIDValue();
       unsigned int dimension = image->GetDimension();
@@ -53,7 +53,7 @@ namespace itk {
     }
 
     template <class TImageType>
-    std::string HashImageFilter::ExecuteInternal ( Image::Pointer inImage )
+    std::string HashImageFilter::ExecuteInternal ( Image* inImage )
     {
       typedef TImageType                                   InputImageType;
 
@@ -81,7 +81,7 @@ namespace itk {
 
       return output;
     }
-    std::string Hash ( Image::Pointer image, HashImageFilter::HashFunction function ) {
+    std::string Hash ( Image* image, HashImageFilter::HashFunction function ) {
       return HashImageFilter().SetHashFunction ( function ).Execute ( image );
     }
   }

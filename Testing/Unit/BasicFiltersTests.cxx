@@ -18,13 +18,18 @@ TEST(BasicFilters,RecursiveGaussian) {
   itk::simple::HashImageFilter hasher;
   itk::simple::ImageFileReader reader;
   itk::simple::RecursiveGaussianImageFilter filter;
-  itk::simple::Image::Pointer image;
+  itk::simple::Image* image;
+  itk::simple::Image* out;
 
   reader.SetFileName ( dataFinder.GetFile ( "Input/RA-Float.nrrd" ) );
   image = reader.Execute();
+  ASSERT_TRUE ( image != NULL );
   ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
-  image = filter.Execute ( image );
-  IMAGECOMPAREWITHTOLERANCE ( image, "default", 0.1 );
+  out = filter.Execute ( image );
+  ASSERT_TRUE ( out != NULL );
+  IMAGECOMPAREWITHTOLERANCE ( out, "default", 0.1 );
+  delete image;
+  delete out;
 }
 
 
@@ -32,10 +37,11 @@ TEST(BasicFilters,Cast) {
   itk::simple::HashImageFilter hasher;
   itk::simple::ImageFileReader reader;
   itk::simple::RecursiveGaussianImageFilter filter;
-  itk::simple::Image::Pointer image;
+  itk::simple::Image* image;
 
   reader.SetFileName ( dataFinder.GetFile ( "Input/RA-Float.nrrd" ) );
   image = reader.Execute();
+  ASSERT_TRUE ( image != NULL );
   ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
   hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
   EXPECT_EQ ( "3ccccde44efaa3d688a86e94335c1f16", hasher.Execute ( image ) );
@@ -79,7 +85,7 @@ TEST(BasicFilters,Cast) {
     {
     itk::simple::PixelIDValueType pixelID = it->second;
     std::string hash = it->first;
-    itk::simple::Image::Pointer test;
+    itk::simple::Image* test;
     std::cerr << std::flush;
     std::cerr << std::flush;
     if ( pixelID == itk::simple::sitkUnknown )
@@ -102,7 +108,7 @@ TEST(BasicFilters,Cast) {
       continue;
       }
 
-    if ( test.IsNotNull() )
+    if ( test != NULL )
       {
       try
         {
@@ -122,9 +128,9 @@ TEST(BasicFilters,Cast) {
           std::cerr << "Failed to hash: " << e.what() << std::endl;
           }
         }
-
+      delete test;
+      test = NULL;
       }
-
   }
   EXPECT_FALSE ( failed ) << "Cast failed, or could not take the hash of the imoge";
 

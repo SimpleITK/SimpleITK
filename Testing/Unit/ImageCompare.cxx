@@ -1,9 +1,11 @@
 #include <sitkImageFileReader.h>
 #include <sitkImageFileWriter.h>
 #include <sitkHashImageFilter.h>
+#include <sitkCastImageFilter.h>
 #include <sitkSubtractImageFilter.h>
 #include <sitkStatisticsImageFilter.h>
 #include <sitkExtractImageFilter.h>
+#include <memory>
 
 #include "ImageCompare.h"
 #include "itkExceptionObject.h"
@@ -12,8 +14,8 @@ ImageCompare::ImageCompare() {
   mMessage = "";
 }
 
-bool ImageCompare::compare ( itk::simple::Image::Pointer image, std::string inTestCase, std::string inTag ) {
-  itk::simple::Image::Pointer centerSlice;
+bool ImageCompare::compare ( itk::simple::Image* image, std::string inTestCase, std::string inTag ) {
+  std::auto_ptr<itk::simple::Image> centerSlice;
   std::string testCase = inTestCase;
   std::string tag = inTag;
   std::string testName = ::testing::UnitTest::GetInstance()->current_test_info()->name();
@@ -23,7 +25,7 @@ bool ImageCompare::compare ( itk::simple::Image::Pointer image, std::string inTe
   }
 
   std::cout << "Starting image compare on " << testCase << "_" << testName << "_" << tag << std::endl;
-  if ( image.IsNull() ) {
+  if ( image == NULL ) {
     mMessage = "ImageCompare: image is null";
     return false;
   }
@@ -38,12 +40,13 @@ bool ImageCompare::compare ( itk::simple::Image::Pointer image, std::string inTe
     .append ( tag );
 
   // Extract the center slice of our image
-  centerSlice = image;
   if ( image->GetDimension() == 3 )
     {
     size_t centerIdx = (int)( image->GetDepth() / 2.0 );
-    centerSlice = itk::simple::ExtractImageFilter().Execute ( image, centerIdx );
-    }
+    centerSlice.reset ( itk::simple::ExtractImageFilter().Execute ( image, centerIdx ) );
+    } else {
+    centerSlice.reset ( itk::simple::Cast ( image, image->GetPixelIDValue() ) );
+  }
 
   std::string baselineFileName = dataFinder.GetSourceDirectory() + "/Testing/Data/Baseline/" + name + extension;
   
@@ -53,16 +56,16 @@ bool ImageCompare::compare ( itk::simple::Image::Pointer image, std::string inTe
     itksys::SystemTools::MakeDirectory ( newBaselineDir.c_str() );
     std::cout << "Making directory " << newBaselineDir << std::endl;
     std::string newBaseline = newBaselineDir + name + extension;
-    itk::simple::ImageFileWriter().SetFileName ( newBaseline ).Execute ( centerSlice );
+    itk::simple::ImageFileWriter().SetFileName ( newBaseline ).Execute ( centerSlice.get() );
     mMessage = "Baseline does not exist, wrote " + newBaseline + "\ncp " + newBaseline + " " + baselineFileName;
     return false;
   }
 
-  itk::simple::Image::Pointer baseline;
+  std::auto_ptr<itk::simple::Image> baseline;
   std::cout << "Loading baseline " << baselineFileName << std::endl;
 
   try {
-    baseline = itk::simple::ImageFileReader().SetFileName ( baselineFileName ).Execute();
+    baseline.reset ( itk::simple::ImageFileReader().SetFileName ( baselineFileName ).Execute() );
   } catch ( itk::ExceptionObject& e ) { 
     mMessage = "ImageCompare: Failed to load image " + baselineFileName + " because: " + e.what();
     return false;
@@ -70,7 +73,7 @@ bool ImageCompare::compare ( itk::simple::Image::Pointer image, std::string inTe
 
   // Do the diff
   itk::simple::HashImageFilter hasher;
-  if ( hasher.Execute ( baseline ) == hasher.Execute ( centerSlice ) ) {
+  if ( hasher.Execute ( baseline.get() ) == hasher.Execute ( centerSlice.get() ) ) {
     // Nothing else to do
     return true;
   }
@@ -83,10 +86,10 @@ bool ImageCompare::compare ( itk::simple::Image::Pointer image, std::string inTe
   }
 
   // Get the center slices
-  itk::simple::Image::Pointer diff;
+  std::auto_ptr<itk::simple::Image> diff;
   try
     {
-    diff = itk::simple::SubtractImageFilter().Execute ( centerSlice, baseline );
+      diff.reset ( itk::simple::SubtractImageFilter().Execute ( centerSlice.get(), baseline.get() ) );
     }
   catch ( itk::ExceptionObject& e ) 
     { 
@@ -94,7 +97,7 @@ bool ImageCompare::compare ( itk::simple::Image::Pointer image, std::string inTe
     return false;
     }
   itk::simple::StatisticsImageFilter stats;
-  stats.Execute ( diff );
+  stats.Execute ( diff.get() );
   double dValue = sqrt ( stats.GetMean() );
 
   if ( fabs ( dValue ) > fabs ( mTolerance ) ) {
@@ -107,7 +110,7 @@ bool ImageCompare::compare ( itk::simple::Image::Pointer image, std::string inTe
     std::cout << "<DartMeasurement name=\"Tolerance\" type=\"numeric/float\">" << mTolerance << "</DartMeasurement>" << std::endl;
 
     std::string volumeName = OutputDir + "/" + name + ".nrrd";
-    itk::simple::ImageFileWriter().SetFileName ( volumeName ).Execute ( centerSlice );
+    itk::simple::ImageFileWriter().SetFileName ( volumeName ).Execute ( centerSlice.get() );
 
     return false;
   }
