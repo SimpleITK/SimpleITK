@@ -91,6 +91,13 @@
 namespace std
 {
   %template(VectorUInt) vector<unsigned int>;
+  %template(VectorInt) vector<int>;
+  %template(VectorUShort) vector<unsigned short>;
+  %template(VectorShort) vector<short>;
+  %template(VectorULong) vector<unsigned long>;
+  %template(VectorLong) vector<long>;
+  %template(VectorFloat) vector<float>;
+  %template(VectorDouble) vector<double>;
   %template(VectorUIntList) vector< vector<unsigned int> >;
 }
 
