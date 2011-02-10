@@ -101,7 +101,7 @@ TEST_F(Image,Create) {
   EXPECT_EQ ( shortImage->GetSize()[1], shortImage->GetHeight() );
   EXPECT_EQ ( shortImage->GetSize()[2], shortImage->GetDepth() );
 
-  std::vector< uint64_t > size = shortImage->GetSize();
+  std::vector< unsigned int > size = shortImage->GetSize();
 
   EXPECT_EQ ( size[0], shortImage->GetWidth() );
   EXPECT_EQ ( size[1], shortImage->GetHeight() );
