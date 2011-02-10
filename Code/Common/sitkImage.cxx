@@ -40,6 +40,7 @@ namespace itk
     virtual uint64_t GetHeight( void ) const { return this->GetSize( 1 ); }
     virtual uint64_t GetDepth( void ) const { return this->GetSize( 2 ); }
 
+    virtual std::vector< uint64_t > GetSize( void ) const = 0;
     virtual uint64_t GetSize( unsigned int dimension ) const = 0;
 
     virtual std::vector<double> GetOrigin( void ) const = 0;
@@ -209,6 +210,18 @@ namespace itk
 
         typename ImageType::RegionType largestRegion = this->m_Image->GetLargestPossibleRegion();
         return largestRegion.GetSize(dimension);
+      }
+
+    virtual std::vector<uint64_t> GetSize( void ) const
+      {
+        typename ImageType::RegionType largestRegion = this->m_Image->GetLargestPossibleRegion();
+        std::vector<uint64_t> size( ImageType::ImageDimension );
+
+        for ( unsigned int i = 0; i < ImageType::ImageDimension; ++i )
+          {
+          size[i] = largestRegion.GetSize(i);
+          }
+        return size;
       }
 
     std::string ToString( void ) const
@@ -430,6 +443,12 @@ namespace itk
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->ToString();
+    }
+
+    std::vector< uint64_t > Image::GetSize( void ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetSize();
     }
 
     uint64_t Image::GetWidth( void ) const

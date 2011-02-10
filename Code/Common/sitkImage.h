@@ -70,6 +70,8 @@ namespace simple
     /** Transform physical point to index */
     std::vector< int64_t > TransformPhysicalPointToIndex( const std::vector< double >& point ) const;
 
+    std::vector< uint64_t > GetSize( void ) const;
+
     uint64_t GetHeight( void ) const;
     uint64_t GetWidth( void ) const;
     uint64_t GetDepth( void ) const;
