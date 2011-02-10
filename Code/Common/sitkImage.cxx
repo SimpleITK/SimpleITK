@@ -43,12 +43,12 @@ namespace itk
     virtual uint64_t GetSize( unsigned int dimension ) const = 0;
 
     virtual std::vector<double> GetOrigin( void ) const = 0;
-    virtual void SetOrigin( std::vector<double> orgn ) = 0;
+    virtual void SetOrigin( const std::vector<double> &orgn ) = 0;
     virtual std::vector<double> GetSpacing( void ) const = 0;
-    virtual void SetSpacing( std::vector<double> spc ) = 0;
+    virtual void SetSpacing( const std::vector<double> &spc ) = 0;
 
-    virtual std::vector<unsigned int> TransformPhysicalPointToIndex( std::vector<double> pt) const = 0;
-    virtual std::vector<double> TransformIndexToPhysicalPoint( std::vector<unsigned int> idx) const = 0;
+    virtual std::vector<int64_t> TransformPhysicalPointToIndex( const std::vector<double> &pt) const = 0;
+    virtual std::vector<double> TransformIndexToPhysicalPoint( const std::vector<int64_t> &idx) const = 0;
 
     virtual std::string ToString() const = 0;
 
@@ -116,7 +116,7 @@ namespace itk
       }
 
     // Set Origin
-    virtual void SetOrigin( std::vector<double> orgn )
+    virtual void SetOrigin( const std::vector<double> & orgn )
       {
       if (orgn.size() != ImageType::ImageDimension)
         {
@@ -147,7 +147,7 @@ namespace itk
       }
 
     // Set Spacing
-    virtual void SetSpacing( std::vector<double> spc )
+    virtual void SetSpacing( const std::vector<double> &spc )
       {
       if (spc.size() != ImageType::ImageDimension)
         {
@@ -164,7 +164,7 @@ namespace itk
       }
 
     // Physical Point to Index
-    virtual std::vector<unsigned int> TransformPhysicalPointToIndex( std::vector<double> pt ) const
+    virtual std::vector<int64_t> TransformPhysicalPointToIndex( const std::vector<double> &pt ) const
       {
       typename ImageType::PointType point;
       point[0] = pt[0];
@@ -186,7 +186,7 @@ namespace itk
       }
 
     // Index to Physical Point
-    virtual std::vector<double> TransformIndexToPhysicalPoint( std::vector<unsigned int> idx ) const
+    virtual std::vector<double> TransformIndexToPhysicalPoint( const std::vector<int64_t> &idx ) const
       {
       typename ImageType::IndexType index;
       index[0] = idx[0];
@@ -470,7 +470,7 @@ namespace itk
     }
 
     // Set Origin
-    void Image::SetOrigin( std::vector<double> orgn )
+    void Image::SetOrigin( const std::vector<double> &orgn )
     {
       this->m_PimpleImage->SetOrigin(orgn);
     }
@@ -482,19 +482,19 @@ namespace itk
     }
 
     // Set Spacing
-    void Image::SetSpacing( std::vector<double> spc )
+    void Image::SetSpacing( const std::vector<double> &spc )
     {
       this->m_PimpleImage->SetSpacing(spc);
     }
 
     // Index to Physical Point
-    std::vector< double > Image::TransformIndexToPhysicalPoint( std::vector< unsigned int > idx ) const
+    std::vector< double > Image::TransformIndexToPhysicalPoint( const std::vector< int64_t > &idx ) const
     {
       return this->m_PimpleImage->TransformIndexToPhysicalPoint( idx );
     }
 
     // Physical Point to Index
-    std::vector< unsigned int > Image::TransformPhysicalPointToIndex( std::vector< double > pt ) const
+    std::vector< int64_t > Image::TransformPhysicalPointToIndex( const std::vector< double > &pt ) const
     {
       return this->m_PimpleImage->TransformPhysicalPointToIndex( pt );
     }
