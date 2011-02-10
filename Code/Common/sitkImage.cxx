@@ -76,7 +76,7 @@ namespace itk
     PimpleImage ( ImageType* image )
       : m_Image( image )
       {
-        sitkStaticAssert( TImageType::ImageDimension == 3 || TImageType::ImageDimension == 2,
+        sitkStaticAssert( ImageType::ImageDimension == 3 || ImageType::ImageDimension == 2,
                           "Image Dimension out of range" );
         sitkStaticAssert( ImageTypeToPixelIDValue<ImageType>::Result != (int)sitkUnknown,
                           "invalid pixel type" );
@@ -98,20 +98,20 @@ namespace itk
         return ImageTypeToPixelIDValue< ImageType>::Result;
       }
 
-    virtual unsigned int GetDimension( void ) { return ImageType::ImageDimension; }
+    virtual unsigned int GetDimension( void )
+      {
+        return ImageType::ImageDimension;
+      }
 
 
     // Get Origin
     virtual std::vector<double> GetOrigin( void ) const
       {
       typename ImageType::PointType origin = this->m_Image->GetOrigin();
-      std::vector<double> orgn;
-      orgn.push_back(origin[0]);
-      orgn.push_back(origin[1]);
-      if (ImageType::ImageDimension == 3)
-        {
-        orgn.push_back(origin[2]);
-        }
+      std::vector<double> orgn( ImageType::ImageDimension );
+
+      std::copy( origin.Begin(), origin.End(), orgn.begin() );
+
       return orgn;
       }
 
@@ -123,12 +123,9 @@ namespace itk
         sitkExceptionMacro("Image::SetOrigin -> vector dimension mismatch");
         }
       typename ImageType::PointType origin;
-      origin[0] = orgn[0];
-      origin[1] = orgn[1];
-      if (ImageType::ImageDimension == 3)
-        {
-        origin[2] = orgn[2];
-        }
+
+      std::copy( orgn.begin(), orgn.end(), origin.Begin() );
+
       this->m_Image->SetOrigin( origin );
       }
 
@@ -136,13 +133,10 @@ namespace itk
     virtual std::vector<double> GetSpacing( void ) const
       {
       typename ImageType::SpacingType spacing = this->m_Image->GetSpacing();
-      std::vector<double> spc;
-      spc.push_back(spacing[0]);
-      spc.push_back(spacing[1]);
-      if (ImageType::ImageDimension == 3)
-        {
-        spc.push_back(spacing[2]);
-        }
+      std::vector<double> spc( ImageType::ImageDimension );
+
+      std::copy( spacing.Begin(), spacing.End(), spc.begin() );
+
       return spc;
       }
 
@@ -154,56 +148,55 @@ namespace itk
         sitkExceptionMacro("Image::SetSpacing -> vector dimension mismatch");
         }
       typename ImageType::SpacingType spacing;
-      spacing[0] = spc[0];
-      spacing[1] = spc[1];
-      if (ImageType::ImageDimension == 3)
-        {
-        spacing[2] = spc[2];
-        }
+
+      std::copy( spc.begin(), spc.end(), spacing.Begin() );
+
       this->m_Image->SetSpacing( spacing );
       }
 
     // Physical Point to Index
     virtual std::vector<int64_t> TransformPhysicalPointToIndex( const std::vector<double> &pt ) const
       {
-      typename ImageType::PointType point;
-      point[0] = pt[0];
-      point[1] = pt[1];
-      if (ImageType::ImageDimension == 3)
+        if (pt.size() != ImageType::ImageDimension)
         {
-        point[2] = pt[2];
+        sitkExceptionMacro("vector dimension mismatch");
         }
+
+      typename ImageType::PointType point;
+      std::copy( pt.begin(), pt.end(), point.Begin() );
+
       typename ImageType::IndexType index;
       this->m_Image->TransformPhysicalPointToIndex(point, index);
-      std::vector<unsigned int> idx;
-      idx.push_back(index[0]);
-      idx.push_back(index[1]);
-      if (ImageType::ImageDimension == 3)
+      std::vector<int64_t> idx( ImageType::ImageDimension );
+
+      for( unsigned int i = 0; i < ImageType::ImageDimension; ++i )
         {
-        idx.push_back(index[2]);
+        idx[i] = index[i];
         }
+
       return idx;
       }
 
     // Index to Physical Point
     virtual std::vector<double> TransformIndexToPhysicalPoint( const std::vector<int64_t> &idx ) const
       {
-      typename ImageType::IndexType index;
-      index[0] = idx[0];
-      index[1] = idx[1];
-      if (ImageType::ImageDimension == 3)
+        if (idx.size() != ImageType::ImageDimension)
         {
-        index[2] = idx[2];
+        sitkExceptionMacro("vector dimension mismatch");
         }
+      typename ImageType::IndexType index;
+
+      for( unsigned int i = 0; i < ImageType::ImageDimension; ++i )
+        {
+        index[i] = idx[i];
+        }
+
       typename ImageType::PointType point;
       this->m_Image->TransformIndexToPhysicalPoint(index, point);
-      std::vector<double> pt;
-      pt.push_back(point[0]);
-      pt.push_back(point[1]);
-      if (ImageType::ImageDimension == 3)
-        {
-        pt.push_back(point[2]);
-        }
+      std::vector<double> pt( ImageType::ImageDimension );
+
+      std::copy( point.Begin(), point.End(), pt.begin() );
+
       return pt;
       }
 
