@@ -95,7 +95,8 @@ $(foreach settings
   OUT='filter.ClearSeeds();\
   $(for i=1,#value do OUT=OUT .. "{unsigned int __seed[] = " .. value[i] .. "; filter.AddSeed( std::vector<unsigned int>(__seed, __seed + inputA->GetDimension()) );}" end);'
   elseif dim_vec and dim_vec == 1 then
-  OUT='filter.Set${parameter} ( ${value} );\
+  OUT='${declaration}\
+  filter.Set${parameter} ( ${value} );\
   for(unsigned int i = 0; i < filter.Get${parameter}().size(); ++i)\
     {\
     ASSERT_EQ ( filter.Get${parameter}()[i], ${value}[i] ) << "Failed to set ${parameter} to ${value}";\
