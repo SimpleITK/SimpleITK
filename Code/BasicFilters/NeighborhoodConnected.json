@@ -57,7 +57,10 @@
         },
         { "parameter" : "Radius",
           "dim_vec" : 1,
-          "value" : "std::vector<unsigned int>(2, 5)",
+          "declaration" : "std::vector<unsigned int> radiusVal;\
+          radiusVal.push_back(5);\
+          radiusVal.push_back(5);",
+          "value" : "radiusVal",
           "java_value" : "{5,5}",
           "tcl_value" : "[list 5 5]",
           "python_value" : "[5,5]",
