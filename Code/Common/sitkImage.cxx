@@ -296,7 +296,7 @@ namespace itk
     typename TImageType::Pointer image = TImageType::New();
     image->SetRegions ( region );
     image->Allocate();
-    image->FillBuffer ( 0.0 );
+    image->FillBuffer ( itk::NumericTraits<typename TImageType::PixelType>::Zero );
 
     delete this->m_PimpleImage;
     this->m_PimpleImage = NULL;
