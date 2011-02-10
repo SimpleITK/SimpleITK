@@ -58,17 +58,17 @@ namespace simple
 
     /** Get/Set the Origin */
     std::vector< double > GetOrigin( void ) const;
-    void SetOrigin( std::vector< double > );
+    void SetOrigin( const std::vector< double > &origin );
 
     /** Get the Spacing */
     std::vector< double > GetSpacing( void ) const;
-    void SetSpacing( std::vector< double > );
+    void SetSpacing( const std::vector< double > &spacing );
 
     /** Transform index to physical point */
-    std::vector< double > TransformIndexToPhysicalPoint( std::vector< unsigned int > ) const;
+    std::vector< double > TransformIndexToPhysicalPoint( const std::vector< int64_t > &index ) const;
 
     /** Transform physical point to index */
-    std::vector< unsigned int > TransformPhysicalPointToIndex( std::vector< double > ) const;
+    std::vector< int64_t > TransformPhysicalPointToIndex( const std::vector< double >& point ) const;
 
     uint64_t GetHeight( void ) const;
     uint64_t GetWidth( void ) const;
