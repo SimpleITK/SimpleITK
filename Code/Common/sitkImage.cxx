@@ -40,17 +40,16 @@ namespace itk
     virtual uint64_t GetHeight( void ) const { return this->GetSize( 1 ); }
     virtual uint64_t GetDepth( void ) const { return this->GetSize( 2 ); }
 
+    virtual std::vector< uint64_t > GetSize( void ) const = 0;
     virtual uint64_t GetSize( unsigned int dimension ) const = 0;
 
-    virtual std::vector<double> GetOrigin( void ) = 0;
-    virtual void SetOrigin( std::vector<double> orgn ) = 0;
-    virtual std::vector<double> GetSpacing( void ) = 0;
-    virtual void SetSpacing( std::vector<double> spc ) = 0;
+    virtual std::vector<double> GetOrigin( void ) const = 0;
+    virtual void SetOrigin( const std::vector<double> &orgn ) = 0;
+    virtual std::vector<double> GetSpacing( void ) const = 0;
+    virtual void SetSpacing( const std::vector<double> &spc ) = 0;
 
-    virtual std::vector<unsigned int> TransformPhysicalPointToIndex(
-      std::vector<double> pt) = 0;
-    virtual std::vector<double> TransformIndexToPhysicalPoint(
-      std::vector<unsigned int> idx) = 0;
+    virtual std::vector<int64_t> TransformPhysicalPointToIndex( const std::vector<double> &pt) const = 0;
+    virtual std::vector<double> TransformIndexToPhysicalPoint( const std::vector<int64_t> &idx) const = 0;
 
     virtual std::string ToString() const = 0;
 
@@ -78,7 +77,7 @@ namespace itk
     PimpleImage ( ImageType* image )
       : m_Image( image )
       {
-        sitkStaticAssert( TImageType::ImageDimension == 3 || TImageType::ImageDimension == 2,
+        sitkStaticAssert( ImageType::ImageDimension == 3 || ImageType::ImageDimension == 2,
                           "Image Dimension out of range" );
         sitkStaticAssert( ImageTypeToPixelIDValue<ImageType>::Result != (int)sitkUnknown,
                           "invalid pixel type" );
@@ -100,114 +99,105 @@ namespace itk
         return ImageTypeToPixelIDValue< ImageType>::Result;
       }
 
-    virtual unsigned int GetDimension( void ) { return ImageType::ImageDimension; }
+    virtual unsigned int GetDimension( void )
+      {
+        return ImageType::ImageDimension;
+      }
 
 
     // Get Origin
-    virtual std::vector<double> GetOrigin( void )
+    virtual std::vector<double> GetOrigin( void ) const
       {
       typename ImageType::PointType origin = this->m_Image->GetOrigin();
-      std::vector<double> orgn;
-      orgn.push_back(origin[0]);
-      orgn.push_back(origin[1]);
-      if (ImageType::ImageDimension == 3)
-        {
-        orgn.push_back(origin[2]);
-        }
+      std::vector<double> orgn( ImageType::ImageDimension );
+
+      std::copy( origin.Begin(), origin.End(), orgn.begin() );
+
       return orgn;
       }
 
     // Set Origin
-    virtual void SetOrigin( std::vector<double> orgn )
+    virtual void SetOrigin( const std::vector<double> & orgn )
       {
       if (orgn.size() != ImageType::ImageDimension)
         {
         sitkExceptionMacro("Image::SetOrigin -> vector dimension mismatch");
         }
       typename ImageType::PointType origin;
-      origin[0] = orgn[0];
-      origin[1] = orgn[1];
-      if (ImageType::ImageDimension == 3)
-        {
-        origin[2] = orgn[2];
-        }
+
+      std::copy( orgn.begin(), orgn.end(), origin.Begin() );
+
       this->m_Image->SetOrigin( origin );
       }
 
     // Get Spacing
-    virtual std::vector<double> GetSpacing( void )
+    virtual std::vector<double> GetSpacing( void ) const
       {
       typename ImageType::SpacingType spacing = this->m_Image->GetSpacing();
-      std::vector<double> spc;
-      spc.push_back(spacing[0]);
-      spc.push_back(spacing[1]);
-      if (ImageType::ImageDimension == 3)
-        {
-        spc.push_back(spacing[2]);
-        }
+      std::vector<double> spc( ImageType::ImageDimension );
+
+      std::copy( spacing.Begin(), spacing.End(), spc.begin() );
+
       return spc;
       }
 
     // Set Spacing
-    virtual void SetSpacing( std::vector<double> spc )
+    virtual void SetSpacing( const std::vector<double> &spc )
       {
       if (spc.size() != ImageType::ImageDimension)
         {
         sitkExceptionMacro("Image::SetSpacing -> vector dimension mismatch");
         }
       typename ImageType::SpacingType spacing;
-      spacing[0] = spc[0];
-      spacing[1] = spc[1];
-      if (ImageType::ImageDimension == 3)
-        {
-        spacing[2] = spc[2];
-        }
+
+      std::copy( spc.begin(), spc.end(), spacing.Begin() );
+
       this->m_Image->SetSpacing( spacing );
       }
 
     // Physical Point to Index
-    virtual std::vector<unsigned int> TransformPhysicalPointToIndex(
-      std::vector<double> pt ) 
+    virtual std::vector<int64_t> TransformPhysicalPointToIndex( const std::vector<double> &pt ) const
       {
-      typename ImageType::PointType point;
-      point[0] = pt[0];
-      point[1] = pt[1];
-      if (ImageType::ImageDimension == 3)
+        if (pt.size() != ImageType::ImageDimension)
         {
-        point[2] = pt[2];
+        sitkExceptionMacro("vector dimension mismatch");
         }
+
+      typename ImageType::PointType point;
+      std::copy( pt.begin(), pt.end(), point.Begin() );
+
       typename ImageType::IndexType index;
       this->m_Image->TransformPhysicalPointToIndex(point, index);
-      std::vector<unsigned int> idx;
-      idx.push_back(index[0]);
-      idx.push_back(index[1]);
-      if (ImageType::ImageDimension == 3)
+      std::vector<int64_t> idx( ImageType::ImageDimension );
+
+      for( unsigned int i = 0; i < ImageType::ImageDimension; ++i )
         {
-        idx.push_back(index[2]);
+        idx[i] = index[i];
         }
+
       return idx;
       }
 
     // Index to Physical Point
-    virtual std::vector<double> TransformIndexToPhysicalPoint(
-      std::vector<unsigned int> idx ) 
+    virtual std::vector<double> TransformIndexToPhysicalPoint( const std::vector<int64_t> &idx ) const
       {
-      typename ImageType::IndexType index;
-      index[0] = idx[0];
-      index[1] = idx[1];
-      if (ImageType::ImageDimension == 3)
+        if (idx.size() != ImageType::ImageDimension)
         {
-        index[2] = idx[2];
+        sitkExceptionMacro("vector dimension mismatch");
         }
+      typename ImageType::IndexType index;
+
+      for( unsigned int i = 0; i < ImageType::ImageDimension; ++i )
+        {
+        index[i] = idx[i];
+        }
+
       typename ImageType::PointType point;
       this->m_Image->TransformIndexToPhysicalPoint(index, point);
-      std::vector<double> pt;
-      pt.push_back(point[0]);
-      pt.push_back(point[1]);
-      if (ImageType::ImageDimension == 3)
-        {
-        pt.push_back(point[2]);
-        }
+      std::vector<double> pt( ImageType::ImageDimension );
+
+      std::copy( point.Begin(), point.End(), pt.begin() );
+
       return pt;
       }
 
@@ -222,11 +212,24 @@ namespace itk
         return largestRegion.GetSize(dimension);
       }
 
-    std::string ToString( void ) const {
-      std::ostringstream out;
-      this->m_Image->Print ( out );
-      return out.str();
-    }
+    virtual std::vector<uint64_t> GetSize( void ) const
+      {
+        typename ImageType::RegionType largestRegion = this->m_Image->GetLargestPossibleRegion();
+        std::vector<uint64_t> size( ImageType::ImageDimension );
+
+        for ( unsigned int i = 0; i < ImageType::ImageDimension; ++i )
+          {
+          size[i] = largestRegion.GetSize(i);
+          }
+        return size;
+      }
+
+    std::string ToString( void ) const
+      {
+        std::ostringstream out;
+        this->m_Image->Print ( out );
+        return out.str();
+      }
 
     PixelContainer::Pointer GetPixelContainer()
       {
@@ -436,25 +439,31 @@ namespace itk
       return std::string( GetPixelIDValueAsString( this->GetPixelIDValue() ) );
     }
 
-    std::string Image::ToString( void )
+    std::string Image::ToString( void ) const
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->ToString();
     }
 
-    uint64_t Image::GetWidth( void )
+    std::vector< uint64_t > Image::GetSize( void ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetSize();
+    }
+
+    uint64_t Image::GetWidth( void ) const
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetWidth();
     }
 
-    uint64_t Image::GetHeight( void )
+    uint64_t Image::GetHeight( void ) const
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetHeight();
     }
 
-    uint64_t Image::GetDepth( void )
+    uint64_t Image::GetDepth( void ) const
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetDepth();
@@ -467,37 +476,37 @@ namespace itk
     }
 
     // Get Origin
-    std::vector< double > Image::GetOrigin( void )
+    std::vector< double > Image::GetOrigin( void ) const
     {
       return this->m_PimpleImage->GetOrigin();
     }
 
     // Set Origin
-    void Image::SetOrigin( std::vector<double> orgn )
+    void Image::SetOrigin( const std::vector<double> &orgn )
     {
       this->m_PimpleImage->SetOrigin(orgn);
     }
 
     // Get Spacing
-    std::vector< double > Image::GetSpacing( void )
+    std::vector< double > Image::GetSpacing( void ) const
     {
       return this->m_PimpleImage->GetSpacing();
     }
 
     // Set Spacing
-    void Image::SetSpacing( std::vector<double> spc )
+    void Image::SetSpacing( const std::vector<double> &spc )
     {
       this->m_PimpleImage->SetSpacing(spc);
     }
 
     // Index to Physical Point
-    std::vector< double > Image::TransformIndexToPhysicalPoint( std::vector< unsigned int > idx )
+    std::vector< double > Image::TransformIndexToPhysicalPoint( const std::vector< int64_t > &idx ) const
     {
       return this->m_PimpleImage->TransformIndexToPhysicalPoint( idx );
     }
 
     // Physical Point to Index
-    std::vector< unsigned int > Image::TransformPhysicalPointToIndex( std::vector< double > pt )
+    std::vector< int64_t > Image::TransformPhysicalPointToIndex( const std::vector< double > &pt ) const
     {
       return this->m_PimpleImage->TransformPhysicalPointToIndex( pt );
     }

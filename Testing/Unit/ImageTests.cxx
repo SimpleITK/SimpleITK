@@ -96,6 +96,17 @@ TEST_F(Image,Create) {
   EXPECT_EQ ( shortImage->GetWidth(), itkShortImage->GetLargestPossibleRegion().GetSize()[0] ) << " Checking image width";
   EXPECT_EQ ( shortImage->GetHeight(), itkShortImage->GetLargestPossibleRegion().GetSize()[1] ) << " Checking image height";
   EXPECT_EQ ( shortImage->GetDepth(), itkShortImage->GetLargestPossibleRegion().GetSize()[2] ) << " Checking image depth";
+
+  EXPECT_EQ ( shortImage->GetSize()[0], shortImage->GetWidth() );
+  EXPECT_EQ ( shortImage->GetSize()[1], shortImage->GetHeight() );
+  EXPECT_EQ ( shortImage->GetSize()[2], shortImage->GetDepth() );
+
+  std::vector< uint64_t > size = shortImage->GetSize();
+
+  EXPECT_EQ ( size[0], shortImage->GetWidth() );
+  EXPECT_EQ ( size[1], shortImage->GetHeight() );
+  EXPECT_EQ ( size[2], shortImage->GetDepth() );
+
 }
 
 TEST_F(Image,ImageDataType) {
@@ -223,7 +234,7 @@ TEST_F(Image,Transforms) {
   // Spacing is [0.5, 0.5, 1.5]
 
   // Index to Physical Point
-  std::vector<unsigned int> idx;
+  std::vector<int64_t> idx;
   idx.push_back(1);
   idx.push_back(1);
   idx.push_back(1);
