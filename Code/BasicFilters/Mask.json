@@ -5,7 +5,13 @@
   "number_of_inputs" : 2,
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelIDTypeList",
-  "members" : [],
+  "members" : [
+    { "name" : "OutsideValue",
+      "type" : "double",
+      "default" : 0,
+      "doc" : "Value assigned to pixels outside of the mask"
+    }
+  ],
   "tests" : [
     {
       "tag" : "2d",
