@@ -43,7 +43,12 @@ endif()
 
 # Clean TCL wrapping
 if( WRAP_TCL )
-  # Doesn't seem to be anything to do, but put it here if there is
+  add_custom_command(
+    TARGET SimpleITKIO
+    POST_BUILD
+    COMMENT "Cleaning tcl wrapping..."
+    COMMAND cmake -E remove -f ${SimpleITK_BINARY_DIR}/Wrapping/SimpleITKTCL_wrap.cxx
+  )
 endif()
 
 # Clean CSharp wrapping
