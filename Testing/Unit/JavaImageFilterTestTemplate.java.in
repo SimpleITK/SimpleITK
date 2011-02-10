@@ -62,13 +62,31 @@ elseif dim_vec == 1 then
       OUT=[[
       {
         $(if type == "unsigned int" then
-        OUT="int"
+          OUT="int"
         elseif type == "unsigned long" then
-        OUT="long"
+          OUT="long"
         elseif type == "unsigned short" then
-        OUT="short"
-        else OUT="${type}" end) v[] = $(if java_value then OUT='${java_value}' else OUT='${value}' end);
-        VectorUInt idx = new VectorUInt();
+          OUT="short"
+        else
+          OUT="${type}"
+        end) v[] = $(if java_value then OUT='${java_value}' else OUT='${value}' end);
+        $(if type == "unsigned int" then
+          OUT="VectorUInt idx = new VectorUInt();"
+        elseif type == "int" then
+          OUT="VectorInt idx = new VectorInt();"
+        elseif type == "unsigned long" then
+         OUT="VectorULong idx = new VectorULong();"
+        elseif type == "long" then
+         OUT="VectorLong idx = new VectorLong();"
+        elseif type == "unsigned short" then
+          OUT="VectorUShort idx = new VectorUShort();"
+        elseif type == "short" then
+          OUT="VectorShort idx = new VectorShort();"
+        elseif type == "float" then
+          OUT="VectorFloat idx = new VectorFloat();"
+        elseif type == "double" then
+          OUT="VectorDouble idx = new VectorDouble();"
+        end)
         for (int i = 0; i < inputA.getDimension(); i++) {
           idx.push_back(v[i]);
         }
