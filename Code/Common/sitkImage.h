@@ -57,26 +57,28 @@ namespace simple
     unsigned int GetDimension( void ) const;
 
     /** Get/Set the Origin */
-    std::vector< double > GetOrigin( void );
-    void SetOrigin( std::vector< double > );
+    std::vector< double > GetOrigin( void ) const;
+    void SetOrigin( const std::vector< double > &origin );
 
     /** Get the Spacing */
-    std::vector< double > GetSpacing( void );
-    void SetSpacing( std::vector< double > );
+    std::vector< double > GetSpacing( void ) const;
+    void SetSpacing( const std::vector< double > &spacing );
 
     /** Transform index to physical point */
-    std::vector< double > TransformIndexToPhysicalPoint( std::vector< unsigned int > );
+    std::vector< double > TransformIndexToPhysicalPoint( const std::vector< int64_t > &index ) const;
 
     /** Transform physical point to index */
-    std::vector< unsigned int > TransformPhysicalPointToIndex( std::vector< double > );
+    std::vector< int64_t > TransformPhysicalPointToIndex( const std::vector< double >& point ) const;
 
-    uint64_t GetHeight( void );
-    uint64_t GetWidth( void );
-    uint64_t GetDepth( void );
+    std::vector< uint64_t > GetSize( void ) const;
+
+    uint64_t GetHeight( void ) const;
+    uint64_t GetWidth( void ) const;
+    uint64_t GetDepth( void ) const;
 
 
     std::string GetPixelIDTypeAsString( void ) const;
-    std::string ToString( void );
+    std::string ToString( void ) const;
 
     typedef AllPixelIDTypeList PixelIDTypeList;
     typedef void (Self::*MemberFunctionType)( uint64_t Width, uint64_t Height, uint64_t Depth );
