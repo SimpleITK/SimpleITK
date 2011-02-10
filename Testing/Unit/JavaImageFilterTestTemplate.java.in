@@ -61,7 +61,13 @@ $(if parameter == "SeedList" then
 elseif dim_vec == 1 then
       OUT=[[
       {
-        int v[] = $(if java_value then OUT='${java_value}' else OUT='${value}' end);
+        $(if type == "unsigned int" then
+        OUT="int"
+        elseif type == "unsigned long" then
+        OUT="long"
+        elseif type == "unsigned short" then
+        OUT="short"
+        else OUT="${type}" end) v[] = $(if java_value then OUT='${java_value}' else OUT='${value}' end);
         VectorUInt idx = new VectorUInt();
         for (int i = 0; i < inputA.getDimension(); i++) {
           idx.push_back(v[i]);

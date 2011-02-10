@@ -300,17 +300,17 @@ for this test. Each entry is an object of the form:
   syntax for setting the value in R, this will override the string in
   \b value
   - [OPTIONAL] \b dim_vec: (0 or 1): Use this flag if this parameter is a
-  std::vector. If set to 1, the \b declaration option must also be set.
-  - [OPTIONAL] \b declaration: (\e string): C++ string that declares the value
-  for a dim_vec parameter. This should look like:
+  std::vector. If set to 1, the \b type option must also be set
+  - [OPTIONAL] \b type: (\e string): What type the vector should be. Due to
+  constraints with java, this should only be a primitive type. For unsigned
+  types, the java test will convert to the signed equivalent. An example for a
+  dim_vec parameter is:
 
 \verbatim
 { "parameter" : "Size",
   "dim_vec" : 1,
-  "declaration" : "std::vector<unsigned int> vec;\
-                   vec.push_back(1);\
-                   vec.push_back(2);",
-  "value" : "vec",
+  "type" : "unsigned int"
+  "value" : "{1,2}",
   "java_value" : "{1,2}",
   "tcl_value" : "[list 1 2]",
   "python_value" : "[1,2]",
