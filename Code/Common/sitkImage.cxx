@@ -36,12 +36,12 @@ namespace itk
     virtual itk::DataObject::Pointer GetDataBase( void ) = 0;
     virtual itk::DataObject::ConstPointer GetDataBase( void ) const = 0;
 
-    virtual uint64_t GetWidth( void ) const { return this->GetSize( 0 ); }
-    virtual uint64_t GetHeight( void ) const { return this->GetSize( 1 ); }
-    virtual uint64_t GetDepth( void ) const { return this->GetSize( 2 ); }
+    virtual unsigned int GetWidth( void ) const { return this->GetSize( 0 ); }
+    virtual unsigned int GetHeight( void ) const { return this->GetSize( 1 ); }
+    virtual unsigned int GetDepth( void ) const { return this->GetSize( 2 ); }
 
-    virtual std::vector< uint64_t > GetSize( void ) const = 0;
-    virtual uint64_t GetSize( unsigned int dimension ) const = 0;
+    virtual std::vector< unsigned int > GetSize( void ) const = 0;
+    virtual unsigned int GetSize( unsigned int dimension ) const = 0;
 
     virtual std::vector<double> GetOrigin( void ) const = 0;
     virtual void SetOrigin( const std::vector<double> &orgn ) = 0;
@@ -201,7 +201,7 @@ namespace itk
       return pt;
       }
 
-    virtual uint64_t GetSize( unsigned int dimension ) const
+    virtual unsigned int GetSize( unsigned int dimension ) const
       {
         if ( dimension > ImageType::ImageDimension - 1 )
           {
@@ -212,10 +212,10 @@ namespace itk
         return largestRegion.GetSize(dimension);
       }
 
-    virtual std::vector<uint64_t> GetSize( void ) const
+    virtual std::vector<unsigned int> GetSize( void ) const
       {
         typename ImageType::RegionType largestRegion = this->m_Image->GetLargestPossibleRegion();
-        std::vector<uint64_t> size( ImageType::ImageDimension );
+        std::vector<unsigned int> size( ImageType::ImageDimension );
 
         for ( unsigned int i = 0; i < ImageType::ImageDimension; ++i )
           {
@@ -278,7 +278,7 @@ namespace itk
 
   template<class TImageType>
   typename EnableIf<IsBasic<TImageType>::Value>::Type
-  Image::AllocateInternal ( uint64_t Width, uint64_t Height, uint64_t Depth )
+  Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth )
   {
     typename TImageType::IndexType  index;
     typename TImageType::SizeType   size;
@@ -305,7 +305,7 @@ namespace itk
 
   template<class TImageType>
   typename EnableIf<IsVector<TImageType>::Value>::Type
-  Image::AllocateInternal ( uint64_t Width, uint64_t Height, uint64_t Depth )
+  Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth )
   {
     typename TImageType::IndexType  index;
     typename TImageType::SizeType   size;
@@ -342,7 +342,7 @@ namespace itk
 
   template<class TImageType>
   typename EnableIf<IsLabel<TImageType>::Value>::Type
-  Image::AllocateInternal ( uint64_t Width, uint64_t Height, uint64_t Depth )
+  Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth )
   {
     typename TImageType::IndexType  index;
     typename TImageType::SizeType   size;
@@ -372,7 +372,7 @@ namespace itk
   }
 
 
-  void Image::Allocate ( uint64_t Width, uint64_t Height, uint64_t Depth, PixelIDValueEnum ValueEnum )
+  void Image::Allocate ( unsigned int Width, unsigned int Height, unsigned int Depth, PixelIDValueEnum ValueEnum )
   {
       // Allocate an image
 
@@ -399,13 +399,13 @@ namespace itk
     this->m_PimpleImage = NULL;
   }
 
-    Image::Image( uint64_t Width, uint64_t Height, PixelIDValueEnum ValueEnum )
+    Image::Image( unsigned int Width, unsigned int Height, PixelIDValueEnum ValueEnum )
       : m_PimpleImage( NULL )
     {
       Allocate ( Width, Height, 0, ValueEnum );
     }
 
-    Image::Image( uint64_t Width, uint64_t Height, uint64_t Depth, PixelIDValueEnum ValueEnum )
+    Image::Image( unsigned int Width, unsigned int Height, unsigned int Depth, PixelIDValueEnum ValueEnum )
       : m_PimpleImage( NULL ){
       Allocate ( Width, Height, Depth, ValueEnum );
     }
@@ -445,25 +445,25 @@ namespace itk
       return this->m_PimpleImage->ToString();
     }
 
-    std::vector< uint64_t > Image::GetSize( void ) const
+    std::vector< unsigned int > Image::GetSize( void ) const
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetSize();
     }
 
-    uint64_t Image::GetWidth( void ) const
+    unsigned int Image::GetWidth( void ) const
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetWidth();
     }
 
-    uint64_t Image::GetHeight( void ) const
+    unsigned int Image::GetHeight( void ) const
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetHeight();
     }
 
-    uint64_t Image::GetDepth( void ) const
+    unsigned int Image::GetDepth( void ) const
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetDepth();

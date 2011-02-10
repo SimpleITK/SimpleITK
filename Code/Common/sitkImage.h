@@ -35,8 +35,8 @@ namespace simple
 
     virtual ~Image( );
 
-    Image( uint64_t Width, uint64_t Height, PixelIDValueEnum ValueEnum );
-    Image( uint64_t Width, uint64_t Height, uint64_t Depth, PixelIDValueEnum ValueEnum );
+    Image( unsigned int Width, unsigned int Height, PixelIDValueEnum ValueEnum );
+    Image( unsigned int Width, unsigned int Height, unsigned int Depth, PixelIDValueEnum ValueEnum );
 
     template <typename TImageType>
     explicit Image( itk::SmartPointer<TImageType> image )
@@ -70,18 +70,18 @@ namespace simple
     /** Transform physical point to index */
     std::vector< int64_t > TransformPhysicalPointToIndex( const std::vector< double >& point ) const;
 
-    std::vector< uint64_t > GetSize( void ) const;
+    std::vector< unsigned int > GetSize( void ) const;
 
-    uint64_t GetHeight( void ) const;
-    uint64_t GetWidth( void ) const;
-    uint64_t GetDepth( void ) const;
+    unsigned int GetHeight( void ) const;
+    unsigned int GetWidth( void ) const;
+    unsigned int GetDepth( void ) const;
 
 
     std::string GetPixelIDTypeAsString( void ) const;
     std::string ToString( void ) const;
 
     typedef AllPixelIDTypeList PixelIDTypeList;
-    typedef void (Self::*MemberFunctionType)( uint64_t Width, uint64_t Height, uint64_t Depth );
+    typedef void (Self::*MemberFunctionType)( unsigned int Width, unsigned int Height, unsigned int Depth );
 
     ::itk::simple::PixelContainer::Pointer GetPixelContainer();
 
@@ -100,7 +100,7 @@ namespace simple
      * This method internally utlizes the member function factory to
      * dispatch to methods instantiated on the image of the pixel ID
      */
-    void Allocate ( uint64_t Width, uint64_t Height, uint64_t Depth, PixelIDValueEnum ValueEnum );
+    void Allocate ( unsigned int Width, unsigned int Height, unsigned int Depth, PixelIDValueEnum ValueEnum );
 
     /** \brief Dispatched methods for allocating images
      *
@@ -111,15 +111,15 @@ namespace simple
      */
     template<class TImageType>
     typename EnableIf<IsBasic<TImageType>::Value>::Type
-    AllocateInternal ( uint64_t Width, uint64_t Height, uint64_t Depth );
+    AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth );
 
     template<class TImageType>
     typename EnableIf<IsVector<TImageType>::Value>::Type
-    AllocateInternal ( uint64_t Width, uint64_t Height, uint64_t Depth );
+    AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth );
 
     template<class TImageType>
     typename EnableIf<IsLabel<TImageType>::Value>::Type
-    AllocateInternal ( uint64_t Width, uint64_t Height, uint64_t Depth );
+    AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth );
     /**@}*/
 
     typedef detail::AllocateMemberFunctionAddressor<MemberFunctionType> AllocateAddressor;
