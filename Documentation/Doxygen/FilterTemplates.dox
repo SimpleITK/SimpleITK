@@ -299,6 +299,25 @@ for this test. Each entry is an object of the form:
   - [OPTIONAL] \b R_value: (\e string) For types that require a different
   syntax for setting the value in R, this will override the string in
   \b value
+  - [OPTIONAL] \b dim_vec: (0 or 1): Use this flag if this parameter is a
+  std::vector. If set to 1, the \b declaration option must also be set.
+  - [OPTIONAL] \b declaration: (\e string): C++ string that declares the value
+  for a dim_vec parameter. This should look like:
+
+\verbatim
+{ "parameter" : "Size",
+  "dim_vec" : 1,
+  "declaration" : "std::vector<unsigned int> vec;\
+                   vec.push_back(1);\
+                   vec.push_back(2);",
+  "value" : "vec",
+  "java_value" : "{1,2}",
+  "tcl_value" : "[list 1 2]",
+  "python_value" : "[1,2]",
+  "lua_value" : "{1,2}",
+  "ruby_value" : "[1,2]"
+}
+\endverbatim
 
 
 \section Templates Specialized Templates
