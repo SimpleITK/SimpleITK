@@ -42,15 +42,13 @@ namespace itk
 
     virtual uint64_t GetSize( unsigned int dimension ) const = 0;
 
-    virtual std::vector<double> GetOrigin( void ) = 0;
+    virtual std::vector<double> GetOrigin( void ) const = 0;
     virtual void SetOrigin( std::vector<double> orgn ) = 0;
-    virtual std::vector<double> GetSpacing( void ) = 0;
+    virtual std::vector<double> GetSpacing( void ) const = 0;
     virtual void SetSpacing( std::vector<double> spc ) = 0;
 
-    virtual std::vector<unsigned int> TransformPhysicalPointToIndex(
-      std::vector<double> pt) = 0;
-    virtual std::vector<double> TransformIndexToPhysicalPoint(
-      std::vector<unsigned int> idx) = 0;
+    virtual std::vector<unsigned int> TransformPhysicalPointToIndex( std::vector<double> pt) const = 0;
+    virtual std::vector<double> TransformIndexToPhysicalPoint( std::vector<unsigned int> idx) const = 0;
 
     virtual std::string ToString() const = 0;
 
@@ -104,7 +102,7 @@ namespace itk
 
 
     // Get Origin
-    virtual std::vector<double> GetOrigin( void )
+    virtual std::vector<double> GetOrigin( void ) const
       {
       typename ImageType::PointType origin = this->m_Image->GetOrigin();
       std::vector<double> orgn;
@@ -135,7 +133,7 @@ namespace itk
       }
 
     // Get Spacing
-    virtual std::vector<double> GetSpacing( void )
+    virtual std::vector<double> GetSpacing( void ) const
       {
       typename ImageType::SpacingType spacing = this->m_Image->GetSpacing();
       std::vector<double> spc;
@@ -166,8 +164,7 @@ namespace itk
       }
 
     // Physical Point to Index
-    virtual std::vector<unsigned int> TransformPhysicalPointToIndex(
-      std::vector<double> pt ) 
+    virtual std::vector<unsigned int> TransformPhysicalPointToIndex( std::vector<double> pt ) const
       {
       typename ImageType::PointType point;
       point[0] = pt[0];
@@ -189,8 +186,7 @@ namespace itk
       }
 
     // Index to Physical Point
-    virtual std::vector<double> TransformIndexToPhysicalPoint(
-      std::vector<unsigned int> idx ) 
+    virtual std::vector<double> TransformIndexToPhysicalPoint( std::vector<unsigned int> idx ) const
       {
       typename ImageType::IndexType index;
       index[0] = idx[0];
@@ -222,11 +218,12 @@ namespace itk
         return largestRegion.GetSize(dimension);
       }
 
-    std::string ToString( void ) const {
-      std::ostringstream out;
-      this->m_Image->Print ( out );
-      return out.str();
-    }
+    std::string ToString( void ) const
+      {
+        std::ostringstream out;
+        this->m_Image->Print ( out );
+        return out.str();
+      }
 
     PixelContainer::Pointer GetPixelContainer()
       {
@@ -436,25 +433,25 @@ namespace itk
       return std::string( GetPixelIDValueAsString( this->GetPixelIDValue() ) );
     }
 
-    std::string Image::ToString( void )
+    std::string Image::ToString( void ) const
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->ToString();
     }
 
-    uint64_t Image::GetWidth( void )
+    uint64_t Image::GetWidth( void ) const
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetWidth();
     }
 
-    uint64_t Image::GetHeight( void )
+    uint64_t Image::GetHeight( void ) const
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetHeight();
     }
 
-    uint64_t Image::GetDepth( void )
+    uint64_t Image::GetDepth( void ) const
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetDepth();
@@ -467,7 +464,7 @@ namespace itk
     }
 
     // Get Origin
-    std::vector< double > Image::GetOrigin( void )
+    std::vector< double > Image::GetOrigin( void ) const
     {
       return this->m_PimpleImage->GetOrigin();
     }
@@ -479,7 +476,7 @@ namespace itk
     }
 
     // Get Spacing
-    std::vector< double > Image::GetSpacing( void )
+    std::vector< double > Image::GetSpacing( void ) const
     {
       return this->m_PimpleImage->GetSpacing();
     }
@@ -491,13 +488,13 @@ namespace itk
     }
 
     // Index to Physical Point
-    std::vector< double > Image::TransformIndexToPhysicalPoint( std::vector< unsigned int > idx )
+    std::vector< double > Image::TransformIndexToPhysicalPoint( std::vector< unsigned int > idx ) const
     {
       return this->m_PimpleImage->TransformIndexToPhysicalPoint( idx );
     }
 
     // Physical Point to Index
-    std::vector< unsigned int > Image::TransformPhysicalPointToIndex( std::vector< double > pt )
+    std::vector< unsigned int > Image::TransformPhysicalPointToIndex( std::vector< double > pt ) const
     {
       return this->m_PimpleImage->TransformPhysicalPointToIndex( pt );
     }
