@@ -19,9 +19,9 @@ if( WRAP_JAVA )
     TARGET SimpleITKBasicFilters
     POST_BUILD
     COMMENT "Cleaning java build..."
-    COMMAND cmake -E remove -f ${SimpleITK_BINARY_DIR}/Wrapping/org/itk/simple/*.java
-    COMMAND cmake -E remove -f ${SimpleITK_BINARY_DIR}/Wrapping/build/org/itk/simple/*.class
-    COMMAND cmake -E remove -f ${SimpleITK_BINARY_DIR}/Wrapping/SimpleITKJAVA_wrap.cxx
+    COMMAND ${CMAKE_COMMAND} -E remove -f ${SimpleITK_BINARY_DIR}/Wrapping/org/itk/simple/*.java
+    COMMAND ${CMAKE_COMMAND} -E remove -f ${SimpleITK_BINARY_DIR}/Wrapping/build/org/itk/simple/*.class
+    COMMAND ${CMAKE_COMMAND} -E remove -f ${SimpleITK_BINARY_DIR}/Wrapping/SimpleITKJAVA_wrap.cxx
   )
 endif()
 
@@ -31,7 +31,7 @@ if( WRAP_LUA )
     TARGET SimpleITKBasicFilters
     POST_BUILD
     COMMENT "Cleaning lua wrapping..."
-    COMMAND cmake -E remove -f ${SimpleITK_BINARY_DIR}/Wrapping/SimpleITKLUA_wrap.cxx
+    COMMAND ${CMAKE_COMMAND} -E remove -f ${SimpleITK_BINARY_DIR}/Wrapping/SimpleITKLUA_wrap.cxx
   )
 endif()
 
@@ -41,9 +41,9 @@ if( WRAP_PYTHON )
     TARGET SimpleITKBasicFilters
     POST_BUILD
     COMMENT "Cleaning python wrapping..."
-    COMMAND cmake -E remove -f ${SimpleITK_BINARY_DIR}/Wrapping/SimpleITK.py
-    COMMAND cmake -E remove -f ${SimpleITK_BINARY_DIR}/Wrapping/SimpleITK.pyc
-    COMMAND cmake -E remove -f ${SimpleITK_BINARY_DIR}/Wrapping/SimpleITKPYTHON_wrap.cxx
+    COMMAND ${CMAKE_COMMAND} -E remove -f ${SimpleITK_BINARY_DIR}/Wrapping/SimpleITK.py
+    COMMAND ${CMAKE_COMMAND} -E remove -f ${SimpleITK_BINARY_DIR}/Wrapping/SimpleITK.pyc
+    COMMAND ${CMAKE_COMMAND} -E remove -f ${SimpleITK_BINARY_DIR}/Wrapping/SimpleITKPYTHON_wrap.cxx
   )
 endif()
 
@@ -63,8 +63,8 @@ if( WRAP_R )
     TARGET SimpleITKBasicFilters
     POST_BUILD
     COMMENT "Cleaning R wrapping..."
-    COMMAND cmake -E remove -f ${SimpleITK_BINARY_DIR}/Wrapping/SimpleITK.R
-    COMMAND cmake -E remove -f ${SimpleITK_BINARY_DIR}/Wrapping/SimpleITK
+    COMMAND ${CMAKE_COMMAND} -E remove -f ${SimpleITK_BINARY_DIR}/Wrapping/SimpleITK.R
+    COMMAND ${CMAKE_COMMAND} -E remove -f ${SimpleITK_BINARY_DIR}/Wrapping/SimpleITK
   )
 endif()
 
@@ -74,7 +74,7 @@ if( WRAP_RUBY )
     TARGET SimpleITKBasicFilters
     POST_BUILD
     COMMENT "Cleaning ruby wrapping..."
-    COMMAND cmake -E remove -f ${SimpleITK_BINARY_DIR}/Wrapping/SimpleITKRUBY_wrap.cxx
+    COMMAND ${CMAKE_COMMAND} -E remove -f ${SimpleITK_BINARY_DIR}/Wrapping/SimpleITKRUBY_wrap.cxx
   )
 endif()
 
