@@ -47,7 +47,7 @@ if( WRAP_TCL )
     TARGET SimpleITKIO
     POST_BUILD
     COMMENT "Cleaning tcl wrapping..."
-    COMMAND cmake -E remove -f ${SimpleITK_BINARY_DIR}/Wrapping/SimpleITKTCL_wrap.cxx
+    COMMAND ${CMAKE_COMMAND} -E remove -f ${SimpleITK_BINARY_DIR}/Wrapping/SimpleITKTCL_wrap.cxx
   )
 endif()
 
