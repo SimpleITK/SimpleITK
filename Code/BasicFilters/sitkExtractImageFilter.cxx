@@ -78,7 +78,8 @@ Image* ExtractImageFilter::ExecuteInternal ( Image* inImage )
   size = image->GetLargestPossibleRegion().GetSize();
   size[2] = 1;
   typename TImageType::RegionType region ( index, size );
-
+  
+  filter->SetDirectionCollapseToSubmatrix();
   filter->SetExtractionRegion ( region );
 
   filter->Update();
