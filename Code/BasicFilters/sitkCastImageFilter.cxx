@@ -75,7 +75,7 @@ PixelIDValueType CastImageFilter::GetOutputPixelType( void ) const
 //
 // Execute
 //
-Image::Pointer CastImageFilter::Execute ( Image::Pointer image )
+Image* CastImageFilter::Execute ( Image* image )
 {
 
   const PixelIDValueType inputType = image->GetPixelIDValue();

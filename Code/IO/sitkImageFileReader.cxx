@@ -11,7 +11,7 @@
 namespace itk {
   namespace simple {
 
-    Image::Pointer ReadImage ( std::string filename ) { ImageFileReader reader; return reader.SetFileName ( filename ).Execute(); }
+    Image* ReadImage ( std::string filename ) { ImageFileReader reader; return reader.SetFileName ( filename ).Execute(); }
 
     ImageFileReader& ImageFileReader::SetFileName ( std::string fn ) {
       this->m_FileName = fn;
@@ -22,8 +22,8 @@ namespace itk {
       return this->m_FileName;
     }
 
-    Image::Pointer ImageFileReader::Execute () {
-      Image::Pointer image = NULL;
+    Image* ImageFileReader::Execute () {
+      Image* image = NULL;
 
       // todo check if filename does not exits for robust error handling
 
@@ -84,7 +84,7 @@ namespace itk {
         }
 
 
-      if ( image.IsNull() )
+      if ( image == NULL )
         {
         sitkExceptionMacro( "Unable to load image \"" << this->m_FileName << "\"" );
         }
@@ -94,7 +94,7 @@ namespace itk {
 
 
   template < unsigned int VImageDimension >
-  Image::Pointer ImageFileReader::ExecuteInternalReadScalar( itk::ImageIOBase::IOComponentType componentType )
+  Image* ImageFileReader::ExecuteInternalReadScalar( itk::ImageIOBase::IOComponentType componentType )
   {
     switch(componentType)
       {
@@ -137,7 +137,7 @@ namespace itk {
 
 
   template < unsigned int VImageDimension >
-  Image::Pointer ImageFileReader::ExecuteInternalReadVector( itk::ImageIOBase::IOComponentType componentType )
+  Image* ImageFileReader::ExecuteInternalReadVector( itk::ImageIOBase::IOComponentType componentType )
   {
     switch(componentType)
       {
@@ -180,7 +180,7 @@ namespace itk {
 
 
   template <class TImageType>
-  typename EnableIf<IsInstantiated<TImageType>::Value, Image::Pointer >::Type
+  typename EnableIf<IsInstantiated<TImageType>::Value, Image* >::Type
   ImageFileReader::ExecuteInternal( void )
   {
 
@@ -194,12 +194,12 @@ namespace itk {
     typename Reader::Pointer reader = Reader::New();
     reader->SetFileName( this->m_FileName.c_str() );
     reader->Update();
-    typename Image::Pointer image = new Image( reader->GetOutput() );
+    Image* image = new Image( reader->GetOutput() );
     return image;
   }
 
   template <class TImageType>
-  typename DisableIf<IsInstantiated<TImageType>::Value, Image::Pointer >::Type
+  typename DisableIf<IsInstantiated<TImageType>::Value, Image* >::Type
   ImageFileReader::ExecuteInternal( void )
   {
     typedef TImageType                      ImageType;

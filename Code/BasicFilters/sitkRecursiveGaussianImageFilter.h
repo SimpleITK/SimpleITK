@@ -65,7 +65,7 @@ namespace itk {
       // Print ourselves out
       std::string ToString() const;
 
-      Image::Pointer Execute ( Image::Pointer );
+      Image* Execute ( Image* );
 
     private:
 
@@ -81,14 +81,14 @@ namespace itk {
       OrderEnumType m_Order;
 
       // Macro that instantiate the member function dispatching
-      typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer );
-      template <class TImageType> Image::Pointer ExecuteInternal ( Image::Pointer image );
+      typedef Image* (Self::*MemberFunctionType)( Image* );
+      template <class TImageType> Image* ExecuteInternal ( Image* image );
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 
     };
 
-    Image::Pointer RecursiveGaussian ( Image::Pointer image,
+    Image* RecursiveGaussian ( Image* image,
       double Sigma = 1.0,
       bool NormalizeAcrossScale = false,
       RecursiveGaussianImageFilter::OrderEnumType order = RecursiveGaussianImageFilter::ZeroOrder,

@@ -45,7 +45,7 @@ int main( int argc, char *argv[])
   //
   // Read the image
   //
-  itk::simple::Image::Pointer image;
+  itk::simple::Image* image;
 
   itk::simple::ImageFileReader reader;
   reader.SetFileName( std::string( argv[1] ) );
@@ -92,13 +92,14 @@ int main( int argc, char *argv[])
     std::cout << std::endl;
     }
 
-  itk::simple::Image::Pointer outImage = segmentationFilter.Execute(image);
+  itk::simple::Image* outImage = segmentationFilter.Execute(image);
 
 
   //
   // Write out the resulting file
   //
   writer.Execute(outImage);
-
+  delete image;
+  delete outImage;
   return 0;
 }

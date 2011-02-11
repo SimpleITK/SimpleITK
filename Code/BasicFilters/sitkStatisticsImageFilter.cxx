@@ -39,7 +39,7 @@ std::string StatisticsImageFilter::ToString() const
 // Execute
 //
 
-Image::Pointer StatisticsImageFilter::Execute ( Image::Pointer image1 )
+Image* StatisticsImageFilter::Execute ( Image* image1 )
   {
     PixelIDValueType type = image1->GetPixelIDValue();
     unsigned int dimension = image1->GetDimension();
@@ -53,7 +53,7 @@ Image::Pointer StatisticsImageFilter::Execute ( Image::Pointer image1 )
 // ExecuteInternal
 //
 template <class TImageType>
-Image::Pointer StatisticsImageFilter::ExecuteInternal ( Image::Pointer inImage1 )
+Image* StatisticsImageFilter::ExecuteInternal ( Image* inImage1 )
   {
   typedef TImageType     InputImageType;
   typedef InputImageType OutputImageType;
@@ -71,7 +71,7 @@ Image::Pointer StatisticsImageFilter::ExecuteInternal ( Image::Pointer inImage1 
   typename FilterType::Pointer filter = FilterType::New();
   filter->SetInput( image1 );
   filter->Update();
-  Image::Pointer out = new Image( filter->GetOutput() );
+  Image* out = new Image( filter->GetOutput() );
 
   return out;
   }

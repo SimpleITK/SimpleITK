@@ -23,11 +23,12 @@ TEST_F(Lua,SimpleGaussian) {
   ASSERT_TRUE ( dataFinder.FileExists ( output ) );
   itk::simple::ImageFileReader reader;
   itk::simple::HashImageFilter hasher;
-  itk::simple::Image::Pointer image;
+  itk::simple::Image* image;
 
   image = reader.SetFileName ( output ).Execute();
+  ASSERT_TRUE ( image != NULL );
   ASSERT_TRUE ( image->GetImageBase().IsNotNull() ) << "Loaded output image";
   EXPECT_EQ ( "de64d7d8ebfa529581f57b8c603f3d656564284f", hasher.Execute ( image ) );
-
+  delete image;
 }
 #endif

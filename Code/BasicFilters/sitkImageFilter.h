@@ -42,7 +42,7 @@ namespace itk {
       // Print ourselves out
       virtual std::string ToString() const = 0;
 
-      virtual Image::Pointer Execute ( Image::Pointer ) = 0;
+      virtual Image* Execute ( Image* ) = 0;
 
     private:
 

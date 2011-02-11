@@ -3,7 +3,7 @@
 namespace itk {
 namespace simple {
 
-  Image::Pointer RecursiveGaussian ( Image::Pointer image, double Sigma, bool NormalizeAcrossScale, RecursiveGaussianImageFilter::OrderEnumType Order, unsigned int Direction ) {
+  Image* RecursiveGaussian ( Image* image, double Sigma, bool NormalizeAcrossScale, RecursiveGaussianImageFilter::OrderEnumType Order, unsigned int Direction ) {
     RecursiveGaussianImageFilter filter;
     filter.SetSigma ( Sigma ).SetNormalizeAcrossScale ( NormalizeAcrossScale ).SetOrder ( Order ).SetDirection ( Direction );
     return filter.Execute ( image );
@@ -46,7 +46,7 @@ std::string RecursiveGaussianImageFilter::ToString() const
 //
 // Execute
 //
-Image::Pointer RecursiveGaussianImageFilter::Execute ( Image::Pointer image )
+Image* RecursiveGaussianImageFilter::Execute ( Image* image )
   {
 
     PixelIDValueType type = image->GetPixelIDValue();
@@ -61,7 +61,7 @@ Image::Pointer RecursiveGaussianImageFilter::Execute ( Image::Pointer image )
 // ExecuteInternal
 //
 template <class TImageType>
-Image::Pointer RecursiveGaussianImageFilter::ExecuteInternal ( Image::Pointer inImage )
+Image* RecursiveGaussianImageFilter::ExecuteInternal ( Image* inImage )
   {
   typedef TImageType                                       InputImageType;
   typedef itk::Image<float,InputImageType::ImageDimension> OutputImageType;
@@ -90,8 +90,7 @@ Image::Pointer RecursiveGaussianImageFilter::ExecuteInternal ( Image::Pointer in
 
   filter->Update();
 
-  Image::Pointer out = new Image( filter->GetOutput() );
-  filter->GetOutput()->DisconnectPipeline();
+  Image* out = new Image( filter->GetOutput() );
   return out;
   }
 

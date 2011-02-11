@@ -59,7 +59,7 @@ int main( int argc, char *argv[])
   //
   // Read the image
   //
-  itk::simple::Image::Pointer image;
+  itk::simple::Image* image;
 
   itk::simple::ImageFileReader reader;
   reader.SetFileName( std::string( argv[1] ) );
@@ -134,7 +134,7 @@ int main( int argc, char *argv[])
   // Return to the simpleITK setting by making a SimpleITK image using the
   // output of the blur filter.
   //
-  image = new itk::simple::Image( blurFilter->GetOutput() );
+  itk::simple::Image* blurredImage = new itk::simple::Image( blurFilter->GetOutput() );
 
 
   //////
@@ -161,13 +161,17 @@ int main( int argc, char *argv[])
     std::cout << std::endl;
     }
 
-  itk::simple::Image::Pointer outImage = segmentationFilter.Execute(image);
+  itk::simple::Image* outImage = segmentationFilter.Execute(blurredImage);
 
 
   //
   // Write out the resulting file
   //
   writer.Execute(outImage);
+
+  delete image;
+  delete blurredImage;
+  delete outImage;
 
   return 0;
 }
