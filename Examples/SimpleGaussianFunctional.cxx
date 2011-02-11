@@ -8,15 +8,19 @@ int main ( int argc, char* argv[] ) {
     return 1;
   }
 
-  itk::simple::Image::Pointer image;
+  itk::simple::Image* image;
+  itk::simple::Image* blurredImage;
 
   image = itk::simple::ReadImage ( std::string ( argv[1] ) );
-  image = itk::simple::RecursiveGaussian ( image, 
-                                         atof ( argv[2] ),
-                                         false,
-                                         itk::simple::RecursiveGaussianImageFilter::ZeroOrder,
-                                         0 );
-  itk::simple::WriteImage ( image, std::string ( argv[3] ) );
+  blurredImage = itk::simple::RecursiveGaussian ( image, 
+                                                  atof ( argv[2] ),
+                                                  false,
+                                                  itk::simple::RecursiveGaussianImageFilter::ZeroOrder,
+                                                  0 );
+  itk::simple::WriteImage ( blurredImage, std::string ( argv[3] ) );
+
+  delete image;
+  delete blurredImage;
 
   return 0;
 }

@@ -27,7 +27,7 @@ namespace itk {
       // Print ourselves out
       virtual std::string ToString() const = 0;
 
-      virtual Image::Pointer Execute ( Image::Pointer, Image::Pointer ) = 0;
+      virtual Image* Execute ( Image*, Image* ) = 0;
 
       virtual ~DualImageFilter() {}
 

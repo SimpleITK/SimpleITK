@@ -81,11 +81,6 @@
 #endif
 
 
-// These definitions help SWIG to properly wrap smart pointers.
-%include "itkSmartPointer.h"
-%template(SmartPointerImage) itk::SmartPointer<itk::simple::Image>;
-%template(SmartPointerPixelContainer) itk::SmartPointer<itk::simple::PixelContainer>;
-
 // Help SWIG handle std vectors
 %include "std_vector.i"
 namespace std
@@ -122,45 +117,5 @@ typedef unsigned int uint32_t;
 
 // Auto-generated headers
 %include "SimpleITKBasicFiltersGeneratedHeaders.i"
-
-// Constructors for Image must be overridden to return SmartPointers
-// Step 1: rename the Image constructor
-%rename(Image) InternalConstructImage;
-
-// Step 2: for each defined constructor, create a new version of InternalConstructImage
-// Step 3: make sure to UnRegister the smart pointer before returnning (o.t.w. it will have a ref count of 2)
-%inline %{
-itk::simple::Image::Pointer InternalConstructImage( uint64_t Width, uint64_t Height, itk::simple::PixelIDValueEnum ValueEnum ) {
-  itk::simple::Image::Pointer p = new itk::simple::Image (Width,Height,ValueEnum);
-  p->UnRegister();
-  return p;
-};
-itk::simple::Image::Pointer InternalConstructImage( uint64_t Width, uint64_t Height, uint64_t Depth, itk::simple::PixelIDValueEnum ValueEnum ) {
-  itk::simple::Image::Pointer p = new itk::simple::Image( Width, Height, Depth, ValueEnum );
-  p->UnRegister();
-  return p;
-};
-%}
-
-
-%inline %{
-struct ShortImageAdapter {
-       short* data;
-       bool isValid;
-       };
-%};
-// Extend the image class
-%extend ShortImageAdapter {
-        short getItem ( size_t idx ) { if ( self->isValid ) { return self->data[idx]; } else { return 0; } }
-        ShortImageAdapter ( itk::simple::Image::Pointer image ) {
-          ShortImageAdapter *a = new ShortImageAdapter();
-          a->isValid = false; a->data = NULL;
-          if ( image->GetPixelIDValue() == itk::simple::sitkInt16 ) {
-            a->isValid = true;
-            a->data = (short*)image->GetPixelContainer()->GetBufferAsInt16();
-          }
-          return a;
-       }
-};
 
 

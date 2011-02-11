@@ -48,12 +48,12 @@ end)
       std::string ToString() const;
 
       /** Execute the filter on the input image$(if number_of_inputs == 2 then OUT=[[s]]end) */
-      Image::Pointer Execute ( Image::Pointer $(if number_of_inputs == 2 then OUT=[[, Image::Pointer]] end) );$(if members and #members > 0 then
+      Image* Execute ( Image* $(if number_of_inputs == 2 then OUT=[[, Image*]] end) );$(if members and #members > 0 then
 OUT=[[
 
 
       /** Execute the filter on the input image$(if number_of_inputs == 2 then OUT='s'end) with the given parameters */
-      Image::Pointer Execute ( Image::Pointer$(if number_of_inputs == 2 then OUT=', Image::Pointer' end)$(foreach members ,
+      Image* Execute ( Image*$(if number_of_inputs == 2 then OUT=', Image*' end)$(foreach members ,
         ${type} in${name}) );]]end)$(if custom_methods and #custom_methods > 0 then
 OUT = [[
 
@@ -71,16 +71,16 @@ $(foreach custom_methods
 $(if number_of_inputs == 2 then
 OUT=[[
       /** Setup for member function dispatching */
-      typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer, Image::Pointer );
-      template <class TImageType> Image::Pointer ExecuteInternal ( Image::Pointer image1, Image::Pointer image2 );
+      typedef Image* (Self::*MemberFunctionType)( Image*, Image* );
+      template <class TImageType> Image* ExecuteInternal ( Image* image1, Image* image2 );
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 ]]
 else
 OUT=[[
       /** Setup for member function dispatching */
-      typedef Image::Pointer (Self::*MemberFunctionType)( Image::Pointer );
-      template <class TImageType> Image::Pointer ExecuteInternal ( Image::Pointer image );
+      typedef Image* (Self::*MemberFunctionType)( Image* );
+      template <class TImageType> Image* ExecuteInternal ( Image* image );
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 ]]end)
@@ -97,7 +97,7 @@ $(foreach members
      * This function directly calls the execute method of ${name}ImageFilter
      * in order to support a fully functional API
      */
-    Image::Pointer ${name} ( Image::Pointer$(if number_of_inputs == 2 then OUT=', Image::Pointer' end)$(when members $(foreach members ,
+    Image* ${name} ( Image*$(if number_of_inputs == 2 then OUT=', Image*' end)$(when members $(foreach members ,
       ${type} in${name} = ${default})) );
   }
 }
