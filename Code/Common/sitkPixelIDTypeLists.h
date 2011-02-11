@@ -133,7 +133,7 @@ typedef typelist::Append<
 
 
 // this is a quick and dirty list to only be used for development purposes
-typedef typelist::MakeTypeList< BasicPixelID<int16_t>, BasicPixelID<float>, BasicPixelID<double> >::Type InstantiatedPixelIDTypeList;
+typedef typelist::MakeTypeList< BasicPixelID<int16_t>, BasicPixelID<float>, BasicPixelID<double>, VectorPixelID<float> >::Type InstantiatedPixelIDTypeList;
 
 #else
 
