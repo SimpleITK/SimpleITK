@@ -53,7 +53,7 @@ namespace itk
 
     virtual std::string ToString() const = 0;
 
-    virtual PixelContainer::Pointer GetPixelContainer() = 0;
+    virtual PixelContainer* GetPixelContainer() = 0;
 
   };
 
@@ -231,25 +231,25 @@ namespace itk
         return out.str();
       }
 
-    PixelContainer::Pointer GetPixelContainer()
+    PixelContainer* GetPixelContainer()
       {
         return this->GetPixelContainer<TImageType>();
       }
 
     template <typename UImageType>
-    typename DisableIf<IsLabel<UImageType>::Value, PixelContainer::Pointer>::Type
+    typename DisableIf<IsLabel<UImageType>::Value, PixelContainer*>::Type
     GetPixelContainer()
       {
         // note: this is the only file which includes
         // itkPixelContainer.txx, the following statement will
         // instantiate all needed implementations of the object
-        PixelContainer::Pointer container =
+        PixelContainer* container =
           new PixelContainer( this->m_Image.GetPointer() );
         return container;
       }
 
     template <typename UImageType>
-    typename EnableIf<IsLabel<UImageType>::Value, PixelContainer::Pointer>::Type
+    typename EnableIf<IsLabel<UImageType>::Value, PixelContainer*>::Type
     GetPixelContainer()
       {
         return NULL;
@@ -469,7 +469,7 @@ namespace itk
       return this->m_PimpleImage->GetDepth();
     }
 
-    PixelContainer::Pointer Image::GetPixelContainer()
+    PixelContainer* Image::GetPixelContainer()
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetPixelContainer();
