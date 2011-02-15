@@ -32,7 +32,6 @@ namespace itk
     {
     public:
       typedef PixelContainer     Self;
-      typedef SmartPointer<Self> Pointer;
 
       PixelContainer( );
       virtual ~PixelContainer( );
