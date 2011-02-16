@@ -5,6 +5,17 @@
 #include <sitkImageFileWriter.h>
 #include <sitkHashImageFilter.h>
 
+#define VERIFYHASH(hash,hashType,image,message)    \
+  {                                             \
+  std::string actualHashValue = hasher.SetHashFunction ( itk::simple::HashImageFilter::hashType ).Execute ( image.get() ); \
+  EXPECT_EQ ( hash, actualHashValue  ) << message;                      \
+  if ( hash != actualHashValue ) {                                      \
+    itk::simple::WriteImage ( image.get(), dataFinder.GetOutputFile ( actualHashValue + ".nrrd" ) ); \
+    std::cout << "Saved image as " << dataFinder.GetOutputFile ( actualHashValue + ".nrrd" ) << std::endl; \
+  }                                                                     \
+  }
+
+
 TEST(BasicFilters,${name}) {
   itk::simple::ImageFileReader reader;
   itk::simple::${name}ImageFilter filter;
@@ -116,13 +127,13 @@ end)
   $(if md5hash then
   OUT = [[ 
   // Check the hash
-  EXPECT_EQ ( "${md5hash}", hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).Execute ( output.get() ) ) << "Output MD5 hash failed";
+  VERIFYHASH("${md5hash}",MD5,output,"Output MD5 hash failed");
   ]]
   end)
   $(if sha1hash then
   OUT = [[ 
   // Check the hash
-  EXPECT_EQ ( "${sha1hash}", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( output.get() ) ) << "Output SHA1 hash failed";
+  VERIFYHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed");
   ]]
   end)
   $(if tolerance then
@@ -172,14 +183,14 @@ TEST_F(Lua,${name}) {
 
     $(if md5hash then
       OUT = [[ 
-              // Check the hash
-              EXPECT_EQ ( "${md5hash}", hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).Execute ( output.get() ) ) << "Output MD5 hash failed";
+  // Check the hash
+  VERIFYHASH("${md5hash}",MD5,output,"Output MD5 hash failed");
                ]]
       end)
     $(if sha1hash then
       OUT = [[ 
-              // Check the hash
-              EXPECT_EQ ( "${sha1hash}", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( output.get() ) ) << "Output SHA1 hash failed";
+  // Check the hash
+  VERIFYHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed");
                ]]
       end)
     $(if tolerance then
@@ -236,14 +247,14 @@ TEST_F(Python,${name}) {
 
     $(if md5hash then
       OUT = [[ 
-              // Check the hash
-              EXPECT_EQ ( "${md5hash}", hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).Execute ( output.get() ) ) << "Output MD5 hash failed";
+  // Check the hash
+  VERIFYHASH("${md5hash}",MD5,output,"Output MD5 hash failed");
                ]]
       end)
     $(if sha1hash then
       OUT = [[ 
-              // Check the hash
-              EXPECT_EQ ( "${sha1hash}", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( output.get() ) ) << "Output SHA1 hash failed";
+  // Check the hash
+  VERIFYHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed");
                ]]
       end)
     $(if tolerance then
@@ -295,14 +306,14 @@ TEST_F(Tcl,${name}) {
 
     $(if md5hash then
       OUT = [[ 
-              // Check the hash
-              EXPECT_EQ ( "${md5hash}", hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).Execute ( output.get() ) ) << "Output MD5 hash failed";
+  // Check the hash
+  VERIFYHASH("${md5hash}",MD5,output,"Output MD5 hash failed");
                ]]
       end)
     $(if sha1hash then
       OUT = [[ 
-              // Check the hash
-              EXPECT_EQ ( "${sha1hash}", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( output.get() ) ) << "Output SHA1 hash failed";
+  // Check the hash
+  VERIFYHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed");
                ]]
       end)
     $(if tolerance then
@@ -354,14 +365,14 @@ TEST_F(R,${name}) {
 
     $(if md5hash then
       OUT = [[ 
-              // Check the hash
-              EXPECT_EQ ( "${md5hash}", hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).Execute ( output.get() ) ) << "Output MD5 hash failed";
+  // Check the hash
+  VERIFYHASH("${md5hash}",MD5,output,"Output MD5 hash failed");
                ]]
       end)
     $(if sha1hash then
       OUT = [[ 
-              // Check the hash
-              EXPECT_EQ ( "${sha1hash}", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( output.get() ) ) << "Output SHA1 hash failed";
+  // Check the hash
+  VERIFYHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed");
                ]]
       end)
     $(if tolerance then
@@ -421,14 +432,14 @@ TEST_F(Java,${name}) {
 
     $(if md5hash then
       OUT = [[ 
-              // Check the hash
-              EXPECT_EQ ( "${md5hash}", hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).Execute ( output.get() ) ) << "Output MD5 hash failed";
+  // Check the hash
+  VERIFYHASH("${md5hash}",MD5,output,"Output MD5 hash failed");
                ]]
       end)
     $(if sha1hash then
       OUT = [[ 
-              // Check the hash
-              EXPECT_EQ ( "${sha1hash}", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( output.get() ) ) << "Output SHA1 hash failed";
+  // Check the hash
+  VERIFYHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed");
                ]]
       end)
     $(if tolerance then
@@ -483,14 +494,14 @@ TEST_F(Ruby,${name}) {
 
     $(if md5hash then
       OUT = [[ 
-              // Check the hash
-              EXPECT_EQ ( "${md5hash}", hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).Execute ( output.get() ) ) << "Output MD5 hash failed";
+  // Check the hash
+  VERIFYHASH("${md5hash}",MD5,output,"Output MD5 hash failed");
                ]]
       end)
     $(if sha1hash then
       OUT = [[ 
-              // Check the hash
-              EXPECT_EQ ( "${sha1hash}", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( output.get() ) ) << "Output SHA1 hash failed";
+  // Check the hash
+  VERIFYHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed");
                ]]
       end)
     $(if tolerance then
