@@ -118,19 +118,18 @@ if ( WRAP_JAVA )
   SWIG_link_libraries(SimpleITKJava ${SimpleITK_LIBRARIES})
   set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKJAVA_wrap.cxx COMPILE_FLAGS "-w")
 
+  # Add target for org.itk.simple.jar
+  add_custom_target(org_itk_simple_jar ALL DEPENDS org.itk.simple.jar)
+
   # Add custom command and target to compile the generated files and put them in a jar file
   # Make sure the commands depend on the output library from SWIG
   add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/org.itk.simple.jar
-    DEPENDS SimpleITKJava
+    OUTPUT org.itk.simple.jar
     COMMENT "Creating jar file..."
     COMMAND ${Java_JAVAC_EXECUTABLE} -d ${JAVA_BINARY_DIRECTORY} ${JAVA_SOURCE_DIRECTORY}/*.java
     COMMAND ${Java_JAR_EXECUTABLE} cf ${CMAKE_CURRENT_BINARY_DIR}/org.itk.simple.jar -C ${JAVA_BINARY_DIRECTORY} org
-    DEPENDS ${SWIG_MODULE_SimpleITK_REAL_NAME} SimpleITKJava
+    DEPENDS ${SWIG_MODULE_SimpleITK_REAL_NAME} SimpleITKJava SimpleITKCommon SimpleITKBasicFilters SimpleITKIO
     )
-
-  add_custom_target(org_itk_simple_jar ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/org.itk.simple.jar)
-  add_dependencies(org_itk_simple_jar SimpleITKJava)
   
   # Get the location of the extension directory
   string(REGEX REPLACE "include"  "jre/lib/ext" JAVA_EXTENSION_DIR ${JAVA_INCLUDE_PATH} )
