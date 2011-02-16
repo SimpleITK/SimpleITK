@@ -5,8 +5,6 @@
 #include "sitkPixelIDValues.h"
 #include "sitkNonCopyable.h"
 
-#include "itkLightObject.h"
-
 #include <memory>
 
 namespace itk
@@ -27,7 +25,6 @@ namespace itk
      * \brief Container used to get the pixel buffer of a SimpleITK image
      */
     class PixelContainer :
-      public LightObject,
       protected NonCopyable
     {
     public:
