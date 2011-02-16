@@ -184,7 +184,7 @@ MACRO(SWIG_ADD_SOURCE_TO_MODULE name outfiles infile)
     "${swig_source_file_fullname}"
     MAIN_DEPENDENCY "${swig_source_file_fullname}"
     DEPENDS ${SWIG_MODULE_${name}_EXTRA_DEPS}
-    COMMENT "Swig source") 
+    COMMENT "Swig source to generate ${SWIG_MODULE_${name}_LANGUAGE} wrapping") 
   SET_SOURCE_FILES_PROPERTIES("${swig_generated_file_fullname}" ${swig_extra_generated_files}
     PROPERTIES GENERATED 1)
   SET(${outfiles} "${swig_generated_file_fullname}" ${swig_extra_generated_files})
