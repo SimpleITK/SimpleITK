@@ -5,6 +5,7 @@ class TypeListTest
   : public ::testing::Test
 {
 public:
+  TypeListTest() {};
   struct CountPredicate
   {
     CountPredicate( void ) : count(0) {}
