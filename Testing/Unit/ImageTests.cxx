@@ -9,6 +9,7 @@
 #include "itkImage.h"
 #include "itkVectorImage.h"
 
+#include <stdint.h>
 using  itk::simple::InstantiatedPixelIDTypeList;
 
 class Image : public ::testing::Test {

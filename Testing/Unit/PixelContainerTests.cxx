@@ -5,10 +5,9 @@
 #include <sitkHashImageFilter.h>
 #include <sitkPixelContainer.h>
 
-#include <itkIntTypes.h>
-
 #include "itkImage.h"
 #include "itkVectorImage.h"
+#include <stdint.h>
 
 using  itk::simple::InstantiatedPixelIDTypeList;
 
