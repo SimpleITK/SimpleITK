@@ -5,40 +5,33 @@ namespace itk
 namespace simple
 {
   MattesMutualInformationMetric::MattesMutualInformationMetric() {
-    m_DualMemberFactory.reset( new  detail::DualMemberFunctionFactory<MemberFunctionType>( this ) );
+    m_MemberFactory.reset( new  detail::MemberFunctionFactory<MemberFunctionType>( this ) );
     // cast between basic images
-    this->Register2DFunctions();
-    this->Register3DFunctions();
+    m_MemberFactory->RegisterMemberFunctions<BasicPixelIDTypeList, 3, GetMetricMemberFunctionAddressor<MemberFunctionType> > ();
+    m_MemberFactory->RegisterMemberFunctions<BasicPixelIDTypeList, 2, GetMetricMemberFunctionAddressor<MemberFunctionType> > ();
   }
 
 
 
-  template<class TFixedImage, class TMovingImage>
-  ::itk::SingleValuedCostFunction::Pointer MattesMutualInformationMetric::GetMetricInternal ( Image* imageA, Image* imageB )
+  template<class TImage>
+  ::itk::SingleValuedCostFunction::Pointer MattesMutualInformationMetric::GetMetricInternal ( Image* image )
   {
-    ::itk::SingleValuedCostFunction::Pointer ptr = (::itk::SingleValuedCostFunction*) ::itk::MattesMutualInformationImageToImageMetric<TFixedImage,TMovingImage>::New();
-    return ptr;
+    typename ::itk::MattesMutualInformationImageToImageMetric<TImage,TImage>::Pointer metric = ::itk::MattesMutualInformationImageToImageMetric<TImage,TImage>::New();
+    metric->SetNumberOfHistogramBins ( 30 );
+    metric->SetNumberOfSpatialSamples( 10000 );
+    return metric.GetPointer();
   }
 
-  ::itk::SingleValuedCostFunction::Pointer MattesMutualInformationMetric::GetMetric ( Image* imageA, Image* imageB )
+  ::itk::SingleValuedCostFunction::Pointer MattesMutualInformationMetric::GetMetric ( Image* image )
   {
-  const PixelIDValueType fixedType = imageA->GetPixelIDValue();
-  const PixelIDValueType movingType = imageB->GetPixelIDValue();
-  const unsigned int fixedDim = imageA->GetDimension();
-  const unsigned int movingDim = imageB->GetDimension();
-  if ( fixedDim != movingDim )
+  const PixelIDValueType fixedType = image->GetPixelIDValue();
+  const unsigned int fixedDim = image->GetDimension();
+  if (this->m_MemberFactory->HasMemberFunction( fixedType, fixedDim ) )
     {
-      sitkExceptionMacro(<<"This metric does not support images with dimensions " << fixedDim << " and " << movingDim);
+      return this->m_MemberFactory->GetMemberFunction( fixedType, fixedDim )( image );
     }
 
-  if (this->m_DualMemberFactory->HasMemberFunction( fixedType, movingType, fixedDim ) )
-    {
-      return this->m_DualMemberFactory->GetMemberFunction( fixedType, movingType, fixedDim )( imageA, imageB );
-    }
-
-  sitkExceptionMacro( << "Filter does not support fixed image type: " << itk::simple::GetPixelIDValueAsString (fixedType)
-                      << " and moving image type: "
-                      << itk::simple::GetPixelIDValueAsString (movingType) );
+  sitkExceptionMacro( << "Filter does not support fixed image type: " << itk::simple::GetPixelIDValueAsString (fixedType) );
   }
 }
 }
