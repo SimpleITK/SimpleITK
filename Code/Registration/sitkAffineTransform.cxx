@@ -14,7 +14,7 @@ namespace simple
     for ( unsigned int idx = 0; idx < NumberOfParameters; idx++ )
     {
       scales.push_back ( 1.0 );
-      if ( idx >= dimension*dimension )
+      if ( idx >= (unsigned int)(dimension*dimension) )
       {
         scales[idx] = 1.0 / 10;
       }
