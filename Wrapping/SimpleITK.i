@@ -115,6 +115,14 @@ typedef unsigned int uint32_t;
 %include "sitkCastImageFilter.h"
 %include "sitkPixelContainer.h"
 
+// Registration classes
+%include "sitkAffineTransform.h"
+%include "sitkLinearInterpolate.h"
+%include "sitkMattesMutualInformationMetric.h"
+%include "sitkRegistration.h"
+%include "sitkRegularStepGradientDescentOptimizer.h"
+
+
 // Auto-generated headers
 %include "SimpleITKBasicFiltersGeneratedHeaders.i"
 
