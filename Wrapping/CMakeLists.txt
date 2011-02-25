@@ -1,5 +1,4 @@
 
-
 option ( WRAP_LUA "Wrap Lua" ON )
 option ( WRAP_PYTHON "Wrap Python" OFF )
 option ( WRAP_JAVA "Wrap Java" OFF )
@@ -22,11 +21,9 @@ if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA OR WRAP_CSHARP OR WRAP_TCL OR WRAP_R O
   endforeach()
 
 
-  set ( SWIG_HEADERS ${SWIG_HEADERS} ${SimpleITK_BINARY_DIR}/Code/BasicFilters/SimpleITKBasicFiltersGeneratedHeaders.i 
+  set ( SWIG_HEADERS ${SWIG_HEADERS} ${SimpleITK_BINARY_DIR}/Code/BasicFilters/SimpleITKBasicFiltersGeneratedHeaders.i
     ${SimpleITK_BINARY_DIR}/Code/BasicFilters/SimpleITKBasicFiltersGeneratedHeaders.h
     ${DEPENDANT_GENERATED_HEADERS} )
-
-  include_directories ( ${SimpleITK_SOURCE_DIR}/Code/Common ${SimpleITK_SOURCE_DIR}/Code/BasicFilters ${SimpleITK_SOURCE_DIR}/Code/IO )
 
   set ( CMAKE_SWIG_FLAGS "" )
   set ( SWIG_MODULE_SimpleITK_EXTRA_DEPS ${SWIG_HEADERS} )
@@ -46,7 +43,7 @@ if ( WRAP_LUA )
     set ( LUA_LIB lua5 )
     include_directories ( ${SimpleITK_SOURCE_DIR}/Utilities/lua-5.1.4/src )
   endif()
-    
+
 
   # Run swig
   set(CMAKE_SWIG_FLAGS "")
@@ -103,7 +100,7 @@ if ( WRAP_JAVA )
   find_package ( Java REQUIRED )
   find_package ( JNI REQUIRED )
   include_directories ( ${JAVA_INCLUDE_PATH} ${JNI_INCLUDE_DIRS} )
-  
+
   # Make sure the nested directory structure exists
   set(JAVA_SOURCE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/org/itk/simple)
   set(JAVA_BINARY_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/build)
@@ -130,13 +127,13 @@ if ( WRAP_JAVA )
     COMMAND ${Java_JAR_EXECUTABLE} cf ${CMAKE_CURRENT_BINARY_DIR}/org.itk.simple.jar -C ${JAVA_BINARY_DIRECTORY} org
     DEPENDS ${SWIG_MODULE_SimpleITK_REAL_NAME} SimpleITKJava SimpleITKCommon SimpleITKBasicFilters SimpleITKIO
     )
-  
+
   # Get the location of the extension directory
   string(REGEX REPLACE "include"  "jre/lib/ext" JAVA_EXTENSION_DIR ${JAVA_INCLUDE_PATH} )
-  
+
   # Add the install target
   install(FILES ${CMAKE_CURRENT_BINARY_DIR}/org.itk.simple.jar DESTINATION ${JAVA_EXTENSION_DIR})
-  
+
 endif()
 
 # Find C#
@@ -161,7 +158,7 @@ if ( WRAP_CSHARP )
     ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
     @ONLY
   )
-  
+
   # Add managed wrapper
   csharp_add_library(
     SimpleITKCSharpManaged
