@@ -1,5 +1,5 @@
-#ifndef __sitkMattesMutualInformationMetric_h
-#define __sitkMattesMutualInformationMetric_h
+#ifndef __sitkRegistration_h
+#define __sitkRegistration_h
 
 #include "sitkMacro.h"
 
@@ -17,30 +17,30 @@ namespace itk
 namespace simple
 {
 
-  class MattesMutualInformationMetric
+  class Registration
   {
   public:
-    MattesMutualInformationMetric();
-    ::itk::SingleValuedCostFunction::Pointer GetMetric ( Image* image );
+    Registration();
+    std::vector<double> Execute ( Image* fixed, Image* moving );
 
   protected:
     template<class TImage>
-    ::itk::SingleValuedCostFunction::Pointer GetMetricInternal ( Image* image );
+    std::vector<double> ExecuteInternal ( Image* fixed, Image* moving );
 
     template < class TMemberFunctionPointer >
-    struct GetMetricMemberFunctionAddressor
+    struct RegistrationAddressor
     {
       typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
 
       template< typename TImage >
       TMemberFunctionPointer operator() ( void ) const
       {
-        return &ObjectType::template GetMetricInternal < TImage >;
+        return &ObjectType::template ExecuteInternal < TImage >;
       }
     };
 
-    typedef ::itk::SingleValuedCostFunction::Pointer (MattesMutualInformationMetric::*MemberFunctionType)( Image* image );
-    friend struct GetMetricMemberFunctionAddressor<MemberFunctionType>;
+    typedef std::vector<double> (Registration::*MemberFunctionType)( Image* fixed, Image* moving );
+    friend struct RegistrationAddressor<MemberFunctionType>;
     std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
   };
 }
