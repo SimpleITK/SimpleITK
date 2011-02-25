@@ -9,7 +9,7 @@ add_executable ( SimpleGaussianFunctional SimpleGaussianFunctional.cxx )
 target_link_libraries ( SimpleGaussianFunctional ${SimpleITK_LIBRARIES} )
 
 add_executable ( ITKIntegration ITKIntegration.cxx )
-target_link_libraries ( ITKIntegration ${ITK_LIBRARIES} ${SimpleITK_LIBRARIES} )
+target_link_libraries ( ITKIntegration ${SimpleITK_LIBRARIES} )
 
 # Add individual c# executables
 if( WRAP_CSHARP )
