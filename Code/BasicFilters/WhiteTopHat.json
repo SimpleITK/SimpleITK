@@ -15,11 +15,11 @@
   "custom_methods" : [],
   "tests" : [
    {
-     "tag" : "WhiteTopHapErode",
+     "tag" : "WhiteTopHatErode",
      "description" : "Test white top hat",
      "inputA" : "Input/STAPLE1.png",
      "settings" : [],
-     "md5hash" : ""
+     "md5hash" : "e784daff43d09a18e20556729afc0c9d"
    }
   ]
 }
