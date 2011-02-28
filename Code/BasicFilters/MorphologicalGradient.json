@@ -1,0 +1,19 @@
+{
+  "name" : "MorphologicalGradient",
+  "template_code_filename" : "KernelImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [],
+  "custom_methods" : [],
+  "tests" : [
+   {
+     "tag" : "MorphologicalGradient",
+     "description" : "Test morhological gradient",
+     "inputA" : "Input/STAPLE1.png",
+     "settings" : [],
+     "md5hash" : ""
+   }
+  ]
+}

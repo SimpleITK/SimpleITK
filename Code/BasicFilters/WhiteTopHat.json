@@ -1,0 +1,25 @@
+{
+  "name" : "WhiteTopHat",
+  "template_code_filename" : "KernelImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [
+    { "name" : "SafeBorder",
+      "type" : "bool",
+      "default" : true,
+      "doc" : ""
+    }
+  ],
+  "custom_methods" : [],
+  "tests" : [
+   {
+     "tag" : "WhiteTopHapErode",
+     "description" : "Test white top hat",
+     "inputA" : "Input/STAPLE1.png",
+     "settings" : [],
+     "md5hash" : ""
+   }
+  ]
+}
