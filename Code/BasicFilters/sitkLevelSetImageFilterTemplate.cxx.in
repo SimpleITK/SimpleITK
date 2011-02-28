@@ -1,3 +1,10 @@
+#include "itkImage.h"
+#include "itkVectorImage.h"
+#include "itkLabelMap.h"
+#include "itkLabelObject.h"
+#include "itkNumericTraits.h"
+#include "itkNumericTraitsVariableLengthVectorPixel.h"
+
 #include "sitk${name}ImageFilter.h"
 #include "itk${name}ImageFilter.h"
 
