@@ -26,7 +26,7 @@ namespace itk {
       ${name}ImageFilter();
 
       /** Kernel type enumeration */
-      typedef enum{BinaryBallKernel, FlatKernel} KernelType;
+    typedef enum{Annulus, Ball, Box, Cross} KernelType;
 
       /** Define the pixels types supported by this filter */
       typedef ${pixel_types}  PixelIDTypeList;
@@ -55,12 +55,12 @@ $(if (not no_get_method) or (no_get_method == 0) then
 end)
 )
       /** Kernel property Get/Set methods */
-      Self& SetKernelRadius(unsigned long r)
+      Self& SetKernelRadius(uint32_t r)
         {
         this->m_KernelRadius = r;
         return *this;
         }
-      unsigned long GetKernelRadius()
+      uint32_t GetKernelRadius()
         {
         return this->m_KernelRadius;
         }
@@ -121,7 +121,7 @@ $(foreach members
 
 )
       /** Isotropic Kernel Radius */
-      unsigned long m_KernelRadius;
+      uint32_t m_KernelRadius;
 
       /** KernelType */
       KernelType m_KernelType;
@@ -134,8 +134,9 @@ $(foreach members
      * This function directly calls the execute method of ${name}ImageFilter
      * in order to support a fully functional API
      */
-    Image* ${name} ( Image*$(if number_of_inputs == 2 then OUT=', Image*' end)$(when members $(foreach members ,
-      ${type} in${name} = ${default})) );
+  Image* ${name} ( Image*$(if number_of_inputs == 2 then OUT=', Image*' end),
+                   uint32_t inRadiss = 1, ${name}ImageFilter::KernelType inKernel =${name}ImageFilter::Ball
+                   $(when members $(foreach members , ${type} in${name} = ${default})) );
   }
 }
 #endif

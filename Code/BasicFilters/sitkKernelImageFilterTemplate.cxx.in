@@ -5,11 +5,9 @@
 #include "itkNumericTraits.h"
 #include "itkNumericTraitsVariableLengthVectorPixel.h"
 
-
 #include "sitk${name}ImageFilter.h"
 #include "itk${name}ImageFilter.h"
 
-#include "itkBinaryBallStructuringElement.h"
 #include "itkFlatStructuringElement.h"
 
 namespace itk {
@@ -23,7 +21,7 @@ namespace simple {
 ${name}ImageFilter::${name}ImageFilter ()
 {
   this->m_KernelRadius = 1;
-  this->m_KernelType = BinaryBallKernel;
+  this->m_KernelType = Ball;
 $(foreach members
 $(if default then
 OUT = [[
@@ -137,16 +135,31 @@ OUT=[[
 end)
 
   // Use correct kernel types
-  if( this->GetKernelType() == BinaryBallKernel)
-    {
-    typedef itk::BinaryBallStructuringElement< typename InputImageType::PixelType,
-                                               InputImageType::ImageDimension > ITKKernelType;
-    typedef itk::${name}ImageFilter<InputImageType,$(if number_of_inputs == 2 then OUT=[[ InputImageType,]] end)$(if additional_template_types then OUT=[[ $(foreach additional_template_types ${type},)]]end) OutputImageType, ITKKernelType> FilterType;
-    ITKKernelType kernel;
-    kernel.SetRadius( this->GetKernelRadius() );
-    kernel.CreateStructuringElement();
+  typedef itk::FlatStructuringElement< InputImageType::ImageDimension > ITKKernelType;
+  typedef itk::${name}ImageFilter<InputImageType,$(if number_of_inputs == 2 then OUT=[[ InputImageType,]] end)$(if additional_template_types then OUT=[[ $(foreach additional_template_types ${type},)]]end)$(if not no_output_type then OUT=[[ OutputImageType,]] end) ITKKernelType> FilterType;
 
-    typename FilterType::Pointer filter = FilterType::New();
+  ITKKernelType kernel;
+  typename ITKKernelType::SizeType radius;
+  radius.Fill( this->m_KernelRadius );
+  switch (m_KernelType)
+    {
+    case Annulus:
+      kernel = ITKKernelType::Annulus( radius, 1, false );
+      break;
+    case Ball:
+      kernel = ITKKernelType::Ball( radius );
+      break;
+    case Box:
+      kernel = ITKKernelType::Box( radius );
+      break;
+    case Cross:
+      kernel = ITKKernelType::Cross( radius );
+      break;
+    default:
+      sitkExceptionMacro("Logic Error: Unknown Kernel Type");
+    }
+
+  typename FilterType::Pointer filter = FilterType::New();
 
 $(if number_of_inputs == 2 then
 OUT=[[
@@ -158,65 +171,24 @@ OUT=[[
   filter->SetInput( image1 );
 ]]
 end)$(foreach members
-    $(if custom_itk_cast then
-      OUT = '${custom_itk_cast}'
-    elseif dim_vec and dim_vec == 1 then
-      OUT = [[${itk_type} itkVec${name};
-      for (unsigned int i = 0; i < inImage1->GetDimension(); ++i)
-        {
-        itkVec${name}[i] = this->Get${name}()[i];
-        }
-      filter->Set${name}( itkVec${name} );]]
+  $(if custom_itk_cast then
+    OUT = '${custom_itk_cast}'
+  elseif dim_vec and dim_vec == 1 then
+    OUT = [[${itk_type} itkVec${name};
+    for (unsigned int i = 0; i < inImage1->GetDimension(); ++i)
+      {
+      itkVec${name}[i] = this->Get${name}()[i];
+      }
+    filter->Set${name}( itkVec${name} );]]
     elseif(not no_set_method) or (no_set_method == 0) then
-      OUT = 'filter->Set${name} ( this->m_${name} );'
-      end)
+    OUT = 'filter->Set${name} ( this->m_${name} );'
+    end)
 )
-    filter->SetKernel( kernel );
-    filter->Update();
-    Image* out = new Image( filter->GetOutput() );
-    return out;
-    }
-  else if( this->GetKernelType() == FlatKernel )
-    {
-    typedef itk::FlatStructuringElement< InputImageType::ImageDimension > ITKKernelType;
-    typedef itk::${name}ImageFilter<InputImageType,$(if number_of_inputs == 2 then OUT=[[ InputImageType,]] end)$(if additional_template_types then OUT=[[ $(foreach additional_template_types ${type},)]]end) OutputImageType, ITKKernelType> FilterType;
-    ITKKernelType kernel;
-    kernel.SetRadius( this->GetKernelRadius() );
+  filter->SetKernel( kernel );
+  filter->Update();
+  Image* out = new Image( filter->GetOutput() );
+  return out;
 
-    typename FilterType::Pointer filter = FilterType::New();
-
-$(if number_of_inputs == 2 then
-OUT=[[
-    filter->SetInput1( image1 );
-    filter->SetInput2( image2 );
-]]
-else
-OUT=[[
-    filter->SetInput( image1 );
-]]
-end)$(foreach members
-    $(if custom_itk_cast then
-      OUT = '${custom_itk_cast}'
-    elseif dim_vec and dim_vec == 1 then
-      OUT = [[${itk_type} itkVec${name};
-      for (unsigned int i = 0; i < inImage1->GetDimension(); ++i)
-        {
-        itkVec${name}[i] = this->Get${name}()[i];
-        }
-      filter->Set${name}( itkVec${name} );]]
-    elseif(not no_set_method) or (no_set_method == 0) then
-      OUT = 'filter->Set${name} ( this->m_${name} );'
-      end)
-)
-    filter->SetKernel( kernel );
-    filter->Update();
-    Image* out = new Image( filter->GetOutput() );
-    return out;
-    }
-  else
-    {
-    sitkExceptionMacro("Unknown Kernel Type");
-    }
 }
 
 //-----------------------------------------------------------------------------
@@ -224,11 +196,12 @@ end)$(foreach members
 //
 // Function to run the Execute method of this filter
 //
-Image* ${name} ( Image* imageA$(if number_of_inputs == 2 then OUT=', Image* imageB' end)$(when members $(foreach members ,
-  ${type} in${name})) )
+Image* ${name} ( Image* imageA$(if number_of_inputs == 2 then OUT=', Image* imageB' end),
+                 uint32_t inRadius,  ${name}ImageFilter::KernelType inKernel
+                 $(when members $(foreach members , ${type} in${name})) )
 {
   ${name}ImageFilter filter;
-  return filter.Execute ( imageA$(if number_of_inputs == 2 then OUT=', imageB' end)$(when members $(foreach members , in${name})) );
+  return filter.SetKernelRadius( inRadius ).SetKernelType( inKernel ).Execute ( imageA$(if number_of_inputs == 2 then OUT=', imageB' end)$(when members $(foreach members , in${name})) );
 }
 
 } // end namespace simple
