@@ -1,0 +1,19 @@
+{
+  "name" : "BinaryMorphologicalClosing",
+  "template_code_filename" : "KernelImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "members" : [],
+  "custom_methods" : [],
+  "tests" : [
+   {
+     "tag" : "BinaryMorphologicalClosing",
+     "description" : "Test binary morphological closing",
+     "inputA" : "Input/STAPLE1.png",
+     "settings" : [],
+     "md5hash" : ""
+   }
+  ]
+}
