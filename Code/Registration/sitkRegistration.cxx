@@ -35,9 +35,13 @@ namespace simple
 
   // Check for valid types
   std::ostringstream out;
+  out << "\n\nTransform:\n";
   transformBase->Print ( out );
+  out << "\n\nInterpolator:\n";
   interpolatorBase->Print ( out );
+  out << "\n\nMetric:\n";
   metricBase->Print ( out );
+  out << "\n\nOptimizer:\n";
   optimizerBase->Print ( out );
   std::cout << out.str() << std::endl;
   if ( NULL == dynamic_cast<typename RegistrationType::TransformType*> ( transformBase.GetPointer() ) )
@@ -63,7 +67,15 @@ namespace simple
   registration->SetOptimizer ( dynamic_cast<typename RegistrationType::OptimizerType*> ( optimizerBase.GetPointer() ) );
 
   // Why this isn't the default, I'll never know...
-  registration->SetInitialTransformParameters ( registration->GetTransform()->GetParameters() );
+  typename RegistrationType::TransformType::ParametersType params = registration->GetTransform()->GetParameters();
+  params[10] = 1;
+  registration->GetTransform()->SetParameters( params );
+  out.str("");
+  out << "\n\nModified Transform:\n";
+  registration->GetTransform()->Print ( out );
+  std::cout << out.str() << std::endl;
+
+  registration->SetInitialTransformParameters ( params );
 
   std::vector<double> tempScales = transform.GetOptimizerScales ( fixed->GetDimension() );
   typename RegistrationType::OptimizerType::ScalesType scales ( tempScales.size() );
@@ -73,6 +85,7 @@ namespace simple
     scales[idx] = tempScales[idx];
     }
   registration->GetOptimizer()->SetScales ( scales );
+  std::cout << "\n\nScales: " << scales << std::endl;
 
   registration->SetFixedImage( dynamic_cast<typename RegistrationType::FixedImageType*> (fixed->GetImageBase().GetPointer()));
   registration->SetMovingImage( dynamic_cast<typename RegistrationType::MovingImageType*> (moving->GetImageBase().GetPointer()));
