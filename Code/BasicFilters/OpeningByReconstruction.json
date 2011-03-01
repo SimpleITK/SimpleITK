@@ -1,0 +1,19 @@
+{
+  "name" : "OpeningByReconstruction",
+  "template_code_filename" : "KernelImageFilter",
+  "template_test_filename" : "KernelImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [],
+  "custom_methods" : [],
+  "tests" : [
+   {
+     "tag" : "OpeningByReconstruction",
+     "description" : "Test grayscale opening by reconstruction",
+     "inputA" : "Input/STAPLE1.png",
+     "settings" : [],
+     "md5hash" : ""
+   }
+  ]
+}
