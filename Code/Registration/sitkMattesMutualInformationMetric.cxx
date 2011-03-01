@@ -18,7 +18,7 @@ namespace simple
   {
     typename ::itk::MattesMutualInformationImageToImageMetric<TImage,TImage>::Pointer metric = ::itk::MattesMutualInformationImageToImageMetric<TImage,TImage>::New();
     metric->SetNumberOfHistogramBins ( 30 );
-    metric->SetNumberOfSpatialSamples( 10000 );
+    metric->SetNumberOfSpatialSamples( 20000 );
     return metric.GetPointer();
   }
 
