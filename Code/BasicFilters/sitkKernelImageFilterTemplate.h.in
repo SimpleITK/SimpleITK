@@ -28,8 +28,6 @@ namespace itk {
       /** Kernel type enumeration */
     typedef enum{Annulus, Ball, Box, Cross} KernelType;
 
-      /** Define the pixels types supported by this filter */
-      typedef ${pixel_types}  PixelIDTypeList;
 $(if public_declarations then
       OUT=[[
       /** Custom public declarations */
@@ -112,6 +110,7 @@ OUT=[[
       /** Setup for member function dispatching */
       typedef Image* (Self::*MemberFunctionType)( Image* );
       template <class TImageType> Image* ExecuteInternal ( Image* image );
+      template <class TImageType> Image* ExecuteInternalVectorImage ( Image* image );
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 ]]end)
@@ -120,6 +119,27 @@ $(foreach members
       ${type} m_${name};
 
 )
+
+// SWIG does not appear to process private classes correctly
+#ifndef SWIG
+
+  /** An addressor of ExecuteInternalCast to be utilized with
+   * registering member functions with the factory.
+   */
+  template < class TMemberFunctionPointer >
+  struct VectorAddressor
+  {
+    typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
+
+    template< typename TImageType >
+    TMemberFunctionPointer operator() ( void ) const
+    {
+      return &ObjectType::template ExecuteInternalVectorImage< TImageType >;
+    }
+  };
+#endif
+
+
       /** Isotropic Kernel Radius */
       uint32_t m_KernelRadius;
 

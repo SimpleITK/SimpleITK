@@ -8,6 +8,11 @@
 #include "sitk${name}ImageFilter.h"
 #include "itk${name}ImageFilter.h"
 
+#include "itkNthElementImageAdaptor.h"
+#include "itkCastImageFilter.h"
+#include "itkImageToVectorImageFilter.h"
+#include "itkVectorImageToImageAdaptor.h"
+
 #include "itkFlatStructuringElement.h"
 
 namespace itk {
@@ -29,8 +34,15 @@ OUT = [[
 )
   this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
+  // Define the pixels types supported by this filter
+  typedef ${pixel_types}  PixelIDTypeList;
+
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
+
+//  typedef typename typelist::MakeTypeList< VectorPixelID<uint8_t> >::Type VTL;
+//  this->m_MemberFactory->RegisterMemberFunctions< VTL, 2, VectorAddressor<MemberFunctionType> > ();
+
 }
 
 //
@@ -190,6 +202,71 @@ end)$(foreach members
   return out;
 
 }
+
+
+//
+// ExecuteInternalVectorImage
+//
+template <class TImageType>
+Image* ${name}ImageFilter::ExecuteInternalVectorImage ( Image* inImage1 $(if number_of_inputs==2 then OUT=[[, Image* inImage2]] end) )
+{
+  // Define the input and output image types
+  typedef TImageType     InputImageType;
+
+  typedef itk::Image< typename InputImageType::InternalPixelType, InputImageType::ImageDimension > ComponentImageType;
+
+
+  // Get the a pointer to the ITK image contained in image1
+  typename InputImageType::Pointer image1 =
+    dynamic_cast <InputImageType*> ( inImage1->GetImageBase().GetPointer() );
+
+  // Check that ITK image pointer was properly retrieved
+  if ( image1.IsNull() )
+    {
+    sitkExceptionMacro( "Unexpected template dispatch error!" );
+    }$(if number_of_inputs == 2 then
+OUT=[[
+
+
+  // Get the a pointer to the ITK image contained in image2
+  typename InputImageType::Pointer image2 =
+  dynamic_cast <InputImageType*> ( inImage2->GetImageBase().GetPointer() );
+
+  // Check that ITK image pointer was properly retrieved
+  if ( image2.IsNull() )
+    {
+    sitkExceptionMacro( "Unexpected template dispatch error!" );
+    }]]
+end)
+
+  //
+  // THE FOLLOWING LINES NEEDS WORK
+  //
+  typedef itk::VectorImageToImageAdaptor< typename InputImageType::InternalPixelType,  InputImageType::ImageDimension> ComponentAdaptorType;
+  typename ComponentAdaptorType::Pointer nthAdaptor = ComponentAdaptorType::New();
+  nthAdaptor->SetImage( image1 );
+  nthAdaptor->SetExtractComponentIndex( 0 );
+
+  typedef itk::CastImageFilter< ComponentAdaptorType, ComponentImageType > CastFilterType;
+  typename CastFilterType::Pointer caster = CastFilterType::New();
+//  caster->SetInput( nthAdaptor );
+  caster->Update();
+
+  std::auto_ptr<Image> componentImage(new Image( caster->GetOutput() ) );
+
+  componentImage.reset( this->ExecuteInternal<ComponentImageType>( componentImage.get() ) );
+
+
+  typedef itk::ImageToVectorImageFilter<ComponentImageType> ToVectorImageType;
+  typename ToVectorImageType::Pointer toVector = ToVectorImageType::New();
+  toVector->SetNthInput(0, dynamic_cast <ComponentImageType*>(componentImage->GetImageBase().GetPointer()) );
+
+  toVector->Update();
+  Image* out = new Image( toVector->GetOutput() );
+  return out;
+
+}
+
 
 //-----------------------------------------------------------------------------
 
