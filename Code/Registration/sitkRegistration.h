@@ -64,6 +64,8 @@ namespace simple
     friend struct RegistrationAddressor<MemberFunctionType>;
     std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
   };
+
+std::vector<double> Register ( Image* fixed, Image* moving, Transform *transform, Interpolate *interpolate, Metric *metric, Optimizer *optimizer );
 }
 }
 

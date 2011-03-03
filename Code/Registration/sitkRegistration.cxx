@@ -11,6 +11,18 @@ namespace itk
 {
 namespace simple
 {
+
+std::vector<double> Register ( Image* fixed, Image* moving, Transform *transform, Interpolate *interpolate, Metric *metric, Optimizer *optimizer )
+  {
+  Registration registration;
+  registration.SetTransform ( transform );
+  registration.SetInterpolate ( interpolate );
+  registration.SetMetric ( metric );
+  registration.SetOptimizer ( optimizer );
+  return registration.Execute ( fixed, moving );
+  }
+
+
   Registration::Registration()
   {
   m_MemberFactory.reset( new  detail::MemberFunctionFactory<MemberFunctionType>( this ) );
