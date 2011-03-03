@@ -116,11 +116,15 @@ typedef unsigned int uint32_t;
 %include "sitkPixelContainer.h"
 
 // Registration classes
+%include "sitkTransform.h"
 %include "sitkAffineTransform.h"
+%include "sitkInterpolate.h"
 %include "sitkLinearInterpolate.h"
+%include "sitkMetric.h"
 %include "sitkMattesMutualInformationMetric.h"
-%include "sitkRegistration.h"
+%include "sitkOptimizer.h"
 %include "sitkRegularStepGradientDescentOptimizer.h"
+%include "sitkRegistration.h"
 
 
 // Auto-generated headers

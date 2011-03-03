@@ -7,6 +7,7 @@
 #include "sitkImage.h"
 #include "sitkPixelIDTokens.h"
 #include "sitkPixelContainer.h"
+#include "sitkMetric.h"
 #include "itkMattesMutualInformationImageToImageMetric.h"
 #include "sitkMemberFunctionFactory.h"
 
@@ -17,11 +18,11 @@ namespace itk
 namespace simple
 {
 
-  class MattesMutualInformationMetric
+class MattesMutualInformationMetric : public Metric
   {
   public:
     MattesMutualInformationMetric();
-    ::itk::SingleValuedCostFunction::Pointer GetMetric ( Image* image );
+    virtual ::itk::SingleValuedCostFunction::Pointer GetMetric ( Image* image );
 
   protected:
     template<class TImage>
@@ -42,6 +43,7 @@ namespace simple
     typedef ::itk::SingleValuedCostFunction::Pointer (MattesMutualInformationMetric::*MemberFunctionType)( Image* image );
     friend struct GetMetricMemberFunctionAddressor<MemberFunctionType>;
     std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
+    virtual Metric* Clone() { return new MattesMutualInformationMetric ( *this ); }
   };
 }
 }

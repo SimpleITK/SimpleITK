@@ -3,20 +3,21 @@
 
 #include "sitkMacro.h"
 #include "sitkDetail.h"
+#include "sitkTransform.h"
 #include "itkAffineTransform.h"
 
 namespace itk
 {
 namespace simple
 {
-
-  class AffineTransform
+class AffineTransform : public Transform
   {
   public:
     AffineTransform();
-    ::itk::TransformBase::Pointer GetTransform ( int dimension );
-    std::vector<double> GetOptimizerScales ( int dimension );
+    virtual ::itk::TransformBase::Pointer GetTransform ( int dimension );
+    virtual std::vector<double> GetOptimizerScales ( int dimension );
   protected:
+    virtual Transform* Clone() { std::cout << "Cloned an AffineTransform" << std::endl; return new AffineTransform ( *this ); }
   };
 }
 }

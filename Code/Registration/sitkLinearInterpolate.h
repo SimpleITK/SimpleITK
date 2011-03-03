@@ -6,13 +6,13 @@
 #include "sitkImage.h"
 #include "itkLinearInterpolateImageFunction.h"
 #include "sitkMemberFunctionFactory.h"
+#include "sitkInterpolate.h"
 
 namespace itk
 {
 namespace simple
 {
-
-  class LinearInterpolate
+class LinearInterpolate : public Interpolate
   {
   public:
     LinearInterpolate();
@@ -35,6 +35,7 @@ namespace simple
     typedef ::itk::Object::Pointer (LinearInterpolate::*MemberFunctionType)( Image* image );
     friend struct GetInterpolatorMemberFunctionAddressor<MemberFunctionType>;
     std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
+    virtual Interpolate* Clone() { return new LinearInterpolate ( *this ); };
   };
 }
 }
