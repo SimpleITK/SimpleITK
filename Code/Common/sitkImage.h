@@ -77,10 +77,6 @@ namespace simple
 
     std::string GetPixelIDTypeAsString( void ) const;
     std::string ToString( void ) const;
-
-    typedef AllPixelIDTypeList PixelIDTypeList;
-    typedef void (Self::*MemberFunctionType)( unsigned int Width, unsigned int Height, unsigned int Depth );
-
     ::itk::simple::PixelContainer* GetPixelContainer();
 
     /** Method called my certain constructors to convert ITK images
@@ -120,9 +116,6 @@ namespace simple
     AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth );
     /**@}*/
 
-    typedef detail::AllocateMemberFunctionAddressor<MemberFunctionType> AllocateAddressor;
-    friend struct detail::AllocateMemberFunctionAddressor<MemberFunctionType>;
-
 
     /** \brief Do not call this method
      *
@@ -133,6 +126,26 @@ namespace simple
 
   private:
 
+
+// SWIG does not appear to process private classes correctly
+#ifndef SWIG
+
+    /** An addressor of AllocateInternal to be utilized with
+     * registering member functions with the factory.
+     */
+    template < class TMemberFunctionPointer >
+    struct AllocateMemberFunctionAddressor
+    {
+      typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
+
+      template< typename TImageType >
+      TMemberFunctionPointer operator() ( void ) const
+      {
+        return &ObjectType::template AllocateInternal< TImageType >;
+      }
+    };
+
+#endif
     PimpleImageBase *m_PimpleImage;
   };
 

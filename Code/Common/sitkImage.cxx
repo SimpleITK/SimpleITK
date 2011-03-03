@@ -374,7 +374,14 @@ namespace itk
 
   void Image::Allocate ( unsigned int Width, unsigned int Height, unsigned int Depth, PixelIDValueEnum ValueEnum )
   {
-      // Allocate an image
+      // initialize member function factory for allocating images
+
+      // The pixel IDs supported
+      typedef AllPixelIDTypeList              PixelIDTypeList;
+
+      typedef void (Self::*MemberFunctionType)( unsigned int Width, unsigned int Height, unsigned int Depth );
+
+      typedef AllocateMemberFunctionAddressor<MemberFunctionType> AllocateAddressor;
 
       detail::MemberFunctionFactory<MemberFunctionType> allocateMemberFactory(this);
       allocateMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 3,  AllocateAddressor > ();
