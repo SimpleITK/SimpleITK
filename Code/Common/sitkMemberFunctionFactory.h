@@ -17,23 +17,22 @@ namespace detail {
  *
  *  \tparam TMemberFunctionPointer is the type of pointer to member
  *  function
- *  \tparam TMemberFunctionAddressor is the type of a class who as a
- *  templated operator() which returns TMemberFunctionPointer
  *
  *  Example member function pointer:
  *  \code
  *  typedef Self& (Self::*MemberFunctionType)( Image* );
  *  \endcode
  *
- *  The MemberFunctionAddressor will instantiate the templeted member
- *  functions by taking their address. These addresses need to be
- *  registered with the RegisterMethods. Later they can be retrieve
+ *  The RegisterMemberFunctions instantiate the templeted member
+ *  functions and registers the member function pointer, so that it
+ *  be used for dispatch later. Later they can be retrieve
  *  with the GetMemberFunction methods, which return a function object
  *  with the same arguments as the templated member function pointer.
  *
  *  An instance of a MemberFunctionFactory is bound to a specific
  *  instance of an object, so that the returned function object does
- * not need to have the calling object specified. */
+ *  not need to have the calling object specified.
+ */
 template <typename TMemberFunctionPointer>
 class MemberFunctionFactory
   : protected MemberFunctionFactoryBase<TMemberFunctionPointer, int>
@@ -54,7 +53,9 @@ public:
 
   /** \brief Registers a specific member function.
    *
-   * Registers a member function templated over TImageType */
+   * Registers a member function which will be dispatched to the
+   * TImageType  type
+   */
   template< typename TImageType >
   void Register( MemberFunctionType pfunc,  TImageType*  );
 
@@ -62,15 +63,40 @@ public:
    * simple::InstantiatedPixelIDTypeList over itk::Image<Pixel,
    * ImageDimension>
    *
+   *  \tparam TAddressor is the type of a class who as a
+   *  templated operator() which returns TMemberFunctionPointer, this
+   *  will default to detail::MemberFunctionAddressor if not specified
+   *
+   * Example usage:
+   * \code
+   * template < class TMemberFunctionPointer >
+   * struct AllocateAddressor
+   * {
+   *   typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
+   *
+   *   template< typename TImageType >
+   *   TMemberFunctionPointer operator() ( void ) const
+   *     {
+   *       return &ObjectType::template AllocateInternal< TImageType >;
+   *     }
+   * };
+   *
+   * this->m_MemberFunctionFactory->RegisterMemberFunctions<PixelIDTypeList,
+   *                                                        3,
+   *                                                        AllocateAddressor<TMFP> > ();
+   * \endcode
+   *
+   *
    * Example usage:
    * \code
    * this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
    * this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
    * \endcode
+   * @{
    */
   template < typename TPixelIDTypeList,
              unsigned int VImageDimension,
-             typename TAddressor>
+             typename TAddressor >
   void RegisterMemberFunctions( void );
   template < typename TPixelIDTypeList, unsigned int VImageDimension >
   void RegisterMemberFunctions( void )
@@ -78,9 +104,12 @@ public:
     typedef detail::MemberFunctionAddressor< TMemberFunctionPointer > AddressorType;
     this->RegisterMemberFunctions< TPixelIDTypeList, VImageDimension, AddressorType >();
   }
+  /** @} */
 
-  /** \todo document me! */
-  bool HasMemberFunction( PixelIDValueType pixelID1, unsigned int imageDimension  ) const throw();
+  /** \bried Query to determine if an member function has been
+    * registered for pixelID and imageDimension
+    */
+  bool HasMemberFunction( PixelIDValueType pixelID, unsigned int imageDimension  ) const throw();
 
   /** \brief Returns a function object for the PixelIndex, and image
    *  dimension.
