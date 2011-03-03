@@ -27,11 +27,11 @@ namespace detail
  *  Image::Pointer ExecuteInternal( Image::Pointer );
  *  \endcode
  *
- *  The DualMemberFunctionAddressor will instantiate the templeted
- *  member functions by taking the address. These addresses are
- *  registered with RegisterMethods. Later they can be retrieve
- *  with the GetMemberFunction method, which returns a function object
- *  with the same arguments as the templated member function pointer.
+ *  The  provided Addressor will instantiate the templeted
+ *  member functions by taking the address in the
+ *  RegisterMethods. Later they can be retrieve with the
+ *  GetMemberFunction method, which returns a function object with the
+ *  same arguments as the templated member function pointer. 
  *
  *  An instance of a MemberFunctionFactory is bound to a specific
  *  instance of an object, so that the returned function object does
@@ -99,7 +99,7 @@ public:
    * this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList1,
    *                                                 PixelIDTypeList2,
    *                                                 3,
-   *                                                 MyCustomAddressor > ();
+   *                                                 MyCustomAddressor<TMFP> > ();
    * \endcode
    * @{
    */
@@ -116,12 +116,14 @@ public:
     typedef detail::DualExecuteInternalAddressor<MemberFunctionType> AddressorType;
     this->RegisterMemberFunctions< TPixelIDTypeList1, TPixelIDTypeList2, VImageDimension, AddressorType>();
   }
+  /** @} */
 
-
+  /** \bried Query to determine if an member function has been
+    * registered for pixelID1, pixelID2 and imageDimension
+    */
   bool HasMemberFunction( PixelIDValueType pixelID1,
                           PixelIDValueType pixelID2,
                           unsigned int imageDimension  ) const throw();
-  /** @} */
 
 
   /** \brief Returns a function object for the combination of
