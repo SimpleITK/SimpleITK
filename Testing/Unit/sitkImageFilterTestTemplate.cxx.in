@@ -23,9 +23,10 @@ TEST(BasicFilters,${name}) {
   std::auto_ptr<itk::simple::Image> inputB;
   std::auto_ptr<itk::simple::Image> output;
   itk::simple::HashImageFilter hasher;
+  std::string inputSHA1hash;
 
   $(if #tests == 0 then
-    OUT=[[ 
+    OUT=[[
   FAIL() << "Filter ${name} has no tests defined";
         ]]
     end)
@@ -73,7 +74,7 @@ end)
 
 
   bool firstPassSoTestFunctional = true;
-  $(foreach tests 
+  $(foreach tests
     /* ${description} */
   ASSERT_NO_THROW ( inputA.reset ( reader.SetFileName ( dataFinder.GetFile ( "${inputA}" ) ).Execute() ) ) << "Failed to load ${inputA}";
   ASSERT_TRUE ( inputA->GetImageBase().IsNotNull() ) << "Could not read ${inputA}";
@@ -122,39 +123,44 @@ end)
 )]]
 end)
 
-
+  inputSHA1hash =  itk::simple::Hash( inputA.get() );
   ASSERT_NO_THROW ( output.reset ( filter.Execute ( inputA.get() $(if inputB then OUT=", inputB.get()" end) ) ) );
+
+  // Check that the input is not modified
+  // This will fail if the filter is being run in-place
+  EXPECT_EQ ( inputSHA1hash,  itk::simple::Hash( inputA.get() ) ) << "Input was modified by filter.";
+
   $(if md5hash then
-  OUT = [[ 
+  OUT = [[
   // Check the hash
   VERIFYHASH("${md5hash}",MD5,output,"Output MD5 hash failed");
   ]]
   end)
   $(if sha1hash then
-  OUT = [[ 
+  OUT = [[
   // Check the hash
   VERIFYHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed");
   ]]
   end)
   $(if tolerance then
-  OUT = [[ 
+  OUT = [[
  IMAGECOMPAREWITHTOLERANCE ( output.get(), "${tag}", ${tolerance} );
   ]]
   end)
   )
 }
- 
+
 #if defined(WRAP_LUA)
 
 TEST_F(Lua,${name}) {
   $(if #tests == 0 then
-    OUT=[[ 
+    OUT=[[
   FAIL() << "Filter ${name} has no tests defined";
         ]]
     end)
 
   std::string Script = dataFinder.GetBuildDirectory() + "/Testing/Unit/LuaTests/${name}ImageFilterTest.lua";
-  $(foreach tests 
+  $(foreach tests
     {
     /* ${description} */
     std::vector<std::string> CommandLine;
@@ -182,19 +188,19 @@ TEST_F(Lua,${name}) {
     ASSERT_TRUE ( output->GetImageBase().IsNotNull() ) << "Loaded output image";
 
     $(if md5hash then
-      OUT = [[ 
+      OUT = [[
   // Check the hash
   VERIFYHASH("${md5hash}",MD5,output,"Output MD5 hash failed");
                ]]
       end)
     $(if sha1hash then
-      OUT = [[ 
+      OUT = [[
   // Check the hash
   VERIFYHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed");
                ]]
       end)
     $(if tolerance then
-      OUT = [[ 
+      OUT = [[
               IMAGECOMPAREWITHTOLERANCE_WITH_TESTCASE ( output.get(), "BasicFilters", "${tag}", ${tolerance} );
                ]]
       end)
@@ -207,18 +213,18 @@ TEST_F(Lua,${name}) {
 
 TEST_F(Python,${name}) {
   $(if #tests == 0 then
-    OUT=[[ 
+    OUT=[[
   FAIL() << "Filter ${name} has no tests defined";
         ]]
     end)
 
   // Set our python path
-  std::string path = dataFinder.GetBuildDirectory() + "/Wrapping" 
+  std::string path = dataFinder.GetBuildDirectory() + "/Wrapping"
     + GetPathSeparator() + dataFinder.GetExecutableDirectory();
   SetEnvironment ( "PYTHONPATH", path );
 
   std::string Script = dataFinder.GetBuildDirectory() + "/Testing/Unit/PythonTests/${name}ImageFilterTest.py";
-  $(foreach tests 
+  $(foreach tests
     {
     /* ${description} */
     std::vector<std::string> CommandLine;
@@ -246,19 +252,19 @@ TEST_F(Python,${name}) {
     ASSERT_TRUE ( output->GetImageBase().IsNotNull() ) << "Loaded output image";
 
     $(if md5hash then
-      OUT = [[ 
+      OUT = [[
   // Check the hash
   VERIFYHASH("${md5hash}",MD5,output,"Output MD5 hash failed");
                ]]
       end)
     $(if sha1hash then
-      OUT = [[ 
+      OUT = [[
   // Check the hash
   VERIFYHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed");
                ]]
       end)
     $(if tolerance then
-      OUT = [[ 
+      OUT = [[
               IMAGECOMPAREWITHTOLERANCE_WITH_TESTCASE ( output.get(), "BasicFilters", "${tag}", ${tolerance} );
                ]]
       end)
@@ -271,13 +277,13 @@ TEST_F(Python,${name}) {
 
 TEST_F(Tcl,${name}) {
   $(if #tests == 0 then
-    OUT=[[ 
+    OUT=[[
   FAIL() << "Filter ${name} has no tests defined";
         ]]
     end)
 
   std::string Script = dataFinder.GetBuildDirectory() + "/Testing/Unit/TclTests/${name}ImageFilterTest.tcl";
-  $(foreach tests 
+  $(foreach tests
     {
     /* ${description} */
     std::vector<std::string> CommandLine;
@@ -305,19 +311,19 @@ TEST_F(Tcl,${name}) {
     ASSERT_TRUE ( output->GetImageBase().IsNotNull() ) << "Loaded output image";
 
     $(if md5hash then
-      OUT = [[ 
+      OUT = [[
   // Check the hash
   VERIFYHASH("${md5hash}",MD5,output,"Output MD5 hash failed");
                ]]
       end)
     $(if sha1hash then
-      OUT = [[ 
+      OUT = [[
   // Check the hash
   VERIFYHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed");
                ]]
       end)
     $(if tolerance then
-      OUT = [[ 
+      OUT = [[
               IMAGECOMPAREWITHTOLERANCE_WITH_TESTCASE ( output.get(), "BasicFilters", "${tag}", ${tolerance} );
                ]]
       end)
@@ -330,13 +336,13 @@ TEST_F(Tcl,${name}) {
 
 TEST_F(R,${name}) {
   $(if #tests == 0 then
-    OUT=[[ 
+    OUT=[[
   FAIL() << "Filter ${name} has no tests defined";
         ]]
     end)
 
   std::string Script = dataFinder.GetBuildDirectory() + "/Testing/Unit/RTests/${name}ImageFilterTest.R";
-  $(foreach tests 
+  $(foreach tests
     {
     /* ${description} */
     std::vector<std::string> CommandLine;
@@ -364,19 +370,19 @@ TEST_F(R,${name}) {
     ASSERT_TRUE ( output->GetImageBase().IsNotNull() ) << "Loaded output image";
 
     $(if md5hash then
-      OUT = [[ 
+      OUT = [[
   // Check the hash
   VERIFYHASH("${md5hash}",MD5,output,"Output MD5 hash failed");
                ]]
       end)
     $(if sha1hash then
-      OUT = [[ 
+      OUT = [[
   // Check the hash
   VERIFYHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed");
                ]]
       end)
     $(if tolerance then
-      OUT = [[ 
+      OUT = [[
               IMAGECOMPAREWITHTOLERANCE_WITH_TESTCASE ( output.get(), "BasicFilters", "${tag}", ${tolerance} );
                ]]
       end)
@@ -391,16 +397,16 @@ TEST_F(R,${name}) {
 
 TEST_F(Java,${name}) {
   $(if #tests == 0 then
-    OUT=[[ 
+    OUT=[[
   FAIL() << "Filter ${name} has no tests defined";
         ]]
     end)
 
-  std::string Classpath = dataFinder.GetBuildDirectory() + "/Testing/Unit/JavaTests" 
+  std::string Classpath = dataFinder.GetBuildDirectory() + "/Testing/Unit/JavaTests"
     + dataFinder.GetPathSeparator() + dataFinder.GetBuildDirectory() + "/Wrapping/org.itk.simple.jar";
   std::string JavaPath = dataFinder.GetExecutableDirectory();
   std::string Script = "org.itk.simple.testing.${name}ImageFilterTest";
-  $(foreach tests 
+  $(foreach tests
     {
     /* ${description} */
     std::vector<std::string> CommandLine;
@@ -431,19 +437,19 @@ TEST_F(Java,${name}) {
     ASSERT_TRUE ( output->GetImageBase().IsNotNull() ) << "Loaded output image";
 
     $(if md5hash then
-      OUT = [[ 
+      OUT = [[
   // Check the hash
   VERIFYHASH("${md5hash}",MD5,output,"Output MD5 hash failed");
                ]]
       end)
     $(if sha1hash then
-      OUT = [[ 
+      OUT = [[
   // Check the hash
   VERIFYHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed");
                ]]
       end)
     $(if tolerance then
-      OUT = [[ 
+      OUT = [[
               IMAGECOMPAREWITHTOLERANCE_WITH_TESTCASE ( output.get(), "BasicFilters", "${tag}", ${tolerance} );
                ]]
       end)
@@ -456,7 +462,7 @@ TEST_F(Java,${name}) {
 
 TEST_F(Ruby,${name}) {
   $(if #tests == 0 then
-    OUT=[[ 
+    OUT=[[
   FAIL() << "Filter ${name} has no tests defined";
         ]]
     end)
@@ -465,7 +471,7 @@ TEST_F(Ruby,${name}) {
   SetEnvironment ( "RUBYLIB", dataFinder.GetExecutableDirectory() );
 
   std::string Script = dataFinder.GetBuildDirectory() + "/Testing/Unit/RubyTests/${name}ImageFilterTest.rb";
-  $(foreach tests 
+  $(foreach tests
     {
     /* ${description} */
     std::vector<std::string> CommandLine;
@@ -493,19 +499,19 @@ TEST_F(Ruby,${name}) {
     ASSERT_TRUE ( output->GetImageBase().IsNotNull() ) << "Loaded output image";
 
     $(if md5hash then
-      OUT = [[ 
+      OUT = [[
   // Check the hash
   VERIFYHASH("${md5hash}",MD5,output,"Output MD5 hash failed");
                ]]
       end)
     $(if sha1hash then
-      OUT = [[ 
+      OUT = [[
   // Check the hash
   VERIFYHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed");
                ]]
       end)
     $(if tolerance then
-      OUT = [[ 
+      OUT = [[
               IMAGECOMPAREWITHTOLERANCE_WITH_TESTCASE ( output.get(), "BasicFilters", "${tag}", ${tolerance} );
                ]]
       end)
