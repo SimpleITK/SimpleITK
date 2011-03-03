@@ -1,12 +1,5 @@
 #include <SimpleITKTestHarness.h>
-
-#include <sitkImageFileReader.h>
-#include <sitkImageFileWriter.h>
-#include <sitkHashImageFilter.h>
-#include <sitkMattesMutualInformationMetric.h>
-#include <sitkRegistration.h>
-#include <sitkExceptionObject.h>
-
+#include <SimpleITK.h>
 #include "itkImage.h"
 #include "itkVectorImage.h"
 
@@ -29,10 +22,19 @@ TEST(Registration,Simple) {
   itk::simple::ImageFileReader reader;
   itk::simple::Image* fixed;
   itk::simple::Image* moving;
-  fixed = reader.SetFileName ( dataFinder.GetFile ( "Input/RA-Short.nrrd" ) ).Execute();
-  moving = reader.SetFileName ( dataFinder.GetFile ( "Input/RA-Short.nrrd" ) ).Execute();
+  fixed = reader.SetFileName ( dataFinder.GetFile ( "Input/Fixed.nrrd" ) ).Execute();
+  moving = reader.SetFileName ( dataFinder.GetFile ( "Input/Moving.nrrd" ) ).Execute();
+
+  itk::simple::AffineTransform transform;
+  itk::simple::MattesMutualInformationMetric metric;
+  itk::simple::LinearInterpolate interpolate;
+  itk::simple::RegularStepGradientDescentOptimizer optimizer;
 
   itk::simple::Registration registration;
+  registration.SetTransform ( &transform );
+  registration.SetMetric ( &metric );
+  registration.SetInterpolate ( &interpolate );
+  registration.SetOptimizer ( &optimizer );
   std::vector<double> params;
   try {
     params = registration.Execute ( fixed, moving );

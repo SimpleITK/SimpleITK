@@ -17,8 +17,8 @@ namespace simple
   ::itk::SingleValuedCostFunction::Pointer MattesMutualInformationMetric::GetMetricInternal ( Image* image )
   {
     typename ::itk::MattesMutualInformationImageToImageMetric<TImage,TImage>::Pointer metric = ::itk::MattesMutualInformationImageToImageMetric<TImage,TImage>::New();
-    metric->SetNumberOfHistogramBins ( 30 );
-    metric->SetNumberOfSpatialSamples( 20000 );
+    metric->SetNumberOfHistogramBins ( 128 );
+    metric->SetNumberOfSpatialSamples( 1000000 );
     return metric.GetPointer();
   }
 

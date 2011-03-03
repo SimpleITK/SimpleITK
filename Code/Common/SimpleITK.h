@@ -20,6 +20,7 @@
 #include "sitkPixelContainer.h"
 
 // Registration support
+#include "sitkTransform.h"
 #include "sitkAffineTransform.h"
 #include "sitkLinearInterpolate.h"
 #include "sitkMattesMutualInformationMetric.h"
