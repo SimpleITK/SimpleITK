@@ -36,19 +36,6 @@ struct DualExecuteInternalAddressor
 };
 
 
-template < class TMemberFunctionPointer >
-struct AllocateMemberFunctionAddressor
-{
-  typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
-
-  template< typename TImageType >
-  TMemberFunctionPointer operator() ( void ) const
-    {
-      return &ObjectType::template AllocateInternal< TImageType >;
-    }
-};
-
-
 }
 }
 }
