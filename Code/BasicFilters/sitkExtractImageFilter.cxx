@@ -14,6 +14,7 @@ namespace simple {
 ExtractImageFilter::ExtractImageFilter ()
   {
   this->m_Slice = 0;
+  this->m_Dimension = 2;
   this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
   }
@@ -30,9 +31,10 @@ std::string ExtractImageFilter::ToString() const
   }
 
 
-  Image* ExtractImageFilter::Execute ( Image* image, size_t s )
+  Image* ExtractImageFilter::Execute ( Image* image, size_t s, size_t d )
   {
   this->m_Slice = s;
+  this->m_Dimension = d;
   return Execute ( image );
   }
 
@@ -44,9 +46,14 @@ Image* ExtractImageFilter::Execute ( Image* image )
 
     PixelIDValueType type = image->GetPixelIDValue();
     unsigned int dimension = image->GetDimension();
-    if ( dimension != 3 ) {
+    if ( dimension != 3 )
+      {
       sitkExceptionMacro ( << "ExtractImageFilter operates on 3 dimensional images only" );
-    }
+      }
+    if (this->m_Dimension > 2)
+      {
+      sitkExceptionMacro ( << "ExtractImageFilter Dimension must be set to 0, 1, or 2" );
+      }
     return this->m_MemberFactory->GetMemberFunction( type, dimension )( image );
   }
 
@@ -74,9 +81,9 @@ Image* ExtractImageFilter::ExecuteInternal ( Image* inImage )
   typename TImageType::IndexType index;
   typename TImageType::SizeType size;
   index.Fill ( 0 );
-  index[2] = this->m_Slice;
+  index[this->m_Dimension] = this->m_Slice;
   size = image->GetLargestPossibleRegion().GetSize();
-  size[2] = 1;
+  size[this->m_Dimension] = 1;
   typename TImageType::RegionType region ( index, size );
   
   filter->SetDirectionCollapseToSubmatrix();

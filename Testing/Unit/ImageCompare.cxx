@@ -43,7 +43,7 @@ bool ImageCompare::compare ( itk::simple::Image* image, std::string inTestCase, 
   if ( image->GetDimension() == 3 )
     {
     size_t centerIdx = (int)( image->GetDepth() / 2.0 );
-    centerSlice.reset ( itk::simple::ExtractImageFilter().Execute ( image, centerIdx ) );
+    centerSlice.reset ( itk::simple::ExtractImageFilter().Execute ( image, centerIdx, 2 ) );
     } else {
     centerSlice.reset ( itk::simple::Cast ( image, image->GetPixelIDValue() ) );
   }
