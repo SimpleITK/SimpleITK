@@ -17,7 +17,7 @@ if (BUILD_DOXYGEN)
   add_custom_target(Documentation ALL
     COMMAND ${DOXYGEN_EXECUTABLE} ${PROJECT_BINARY_DIR}/Utilities/Doxygen/doxygen.config
     MAIN_DEPENDENCY ${PROJECT_BINARY_DIR}/Utilities/Doxygen/doxygen.config
-    DEPENDS SimpleITKCommon SimpleITKBasicFilters SimpleITKIO
+    DEPENDS FilterSourceCode
     WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/Utilities/Doxygen
     )
 

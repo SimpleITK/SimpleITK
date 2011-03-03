@@ -85,12 +85,9 @@ configure_file( ${SimpleITK_SOURCE_DIR}/sitkConfigure.h.in
 
 subdirs ( Utilities Code Wrapping Examples )
 
-
 #-----------------------------------------------------------------------------
 # ITK uses KWStyle for checking the coding style
 include(${SimpleITK_SOURCE_DIR}/Utilities/KWStyle/KWStyle.cmake)
-
-include(${SimpleITK_SOURCE_DIR}/Utilities/Doxygen/Doxygen.cmake)
 
 # Options for testing
 option ( USE_TESTING "Build testing" ON )
@@ -115,3 +112,7 @@ configure_file(${SimpleITK_SOURCE_DIR}/UseSimpleITK.cmake.in
 # Create the SimpleITKConfig.cmake file containing the SimpleITK configuration.
 include(${SimpleITK_SOURCE_DIR}/sitkGenerateSimpleITKConfig.cmake)
 
+
+#-----------------------------------------------------------------------------
+# The documentation depends on the generated code, so this must be included afterwards
+include(${SimpleITK_SOURCE_DIR}/Utilities/Doxygen/Doxygen.cmake)
