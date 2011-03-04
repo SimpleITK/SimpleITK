@@ -1,6 +1,8 @@
 #ifndef __sitkPixelIDTokens_h
 #define __sitkPixelIDTokens_h
 
+#include "sitkConfigure.h"
+
 #ifdef SITK_HAS_STLTR1_TR1_TYPE_TRAITS
 #include <tr1/type_traits>
 #elif defined SITK_HAS_STLTR1_TYPE_TRAITS
