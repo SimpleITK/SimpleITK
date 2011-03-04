@@ -1,9 +1,9 @@
 {
-  "name" : "MultiplyByConstant",
+  "name" : "DivideByConstant",
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
-  "doc" : "Multiply an image by a constant. The result is cast to the type of the input",
+  "doc" : "Divide an image by a constant. The result is cast to the type of the input",
   "pixel_types" : "NonLabelPixelIDTypeList",
   "additional_template_types" : [
     {
@@ -14,7 +14,7 @@
     { "name" : "Constant",
       "type" : "double",
       "default" : 1.0,
-      "doc" : "The constant by which to multiply the input image"
+      "doc" : "The constant by which to divide the input image"
     }
   ],
   "tests" : [
@@ -24,10 +24,10 @@
       "inputA" : "Input/STAPLE1.png",
       "settings" : [
         { "parameter" : "Constant",
-          "value" : 2.5
+          "value" : 1.0
         }
       ],
-      "md5hash" : "d242fd1847eac0f3f8702ee6abf00624"
+      "md5hash" : "095f00a68a84df4396914fa758f34dcc"
     },
     {
       "tag" : "3d",
@@ -35,21 +35,21 @@
       "inputA" : "Input/RA-Short.nrrd",
       "settings" : [
         { "parameter" : "Constant",
-          "value" : 2.5
+          "value" : 1.1
         }
       ],
-      "md5hash" : "41eba4bd56f47a3122d9ca7e1a350bd7"
+      "md5hash" : "cf4013912737472a277e080cc1654c22"
     },
     {
       "tag" : "2d-rgb",
-      "description" : "2D-RGB",
+      "description" : "3D-RGB",
       "inputA" : "Input/VM1111Shrink-RGBFloat.nrrd",
       "settings" : [
         { "parameter" : "Constant",
-          "value" : 2.1
+          "value" : 255
         }
       ],
-      "md5hash" : "b6c08dc54ae9082d0823a9df7130bb9f"
+      "md5hash" : "c0a4d7ab0b2fd17cce2de4ecd6f2bffe"
     }
   ]
 }
