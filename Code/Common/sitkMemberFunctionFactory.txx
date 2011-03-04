@@ -6,6 +6,7 @@
 #include "sitkMemberFunctionFactory.h"
 #include "sitkDetail.h"
 #include "sitkPixelIDTokens.h"
+#include "sitkEnableIf.h"
 
 namespace itk
 {
