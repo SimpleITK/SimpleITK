@@ -80,17 +80,24 @@ OUT=[[
       /** Setup for member function dispatching */
       typedef Image* (Self::*MemberFunctionType)( Image*, Image* );
       template <class TImageType> Image* ExecuteInternal ( Image* image1, Image* image2 );
-      friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
-      std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 ]]
 else
 OUT=[[
       /** Setup for member function dispatching */
       typedef Image* (Self::*MemberFunctionType)( Image* );
       template <class TImageType> Image* ExecuteInternal ( Image* image );
+]]end)$(if vector_pixel_types_by_component then
+OUT=[[
+      /** Dispatched methods which calls ExecuteInteral on each component */
+      template <class TImageType> Image* ExecuteInternalVectorImage ( Image* image );]]
+end)
+
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
+$(if vector_pixel_types_by_component then
+OUT=[[      friend struct detail::ExecuteInternalVectorImageAddressor<MemberFunctionType>;]]
+end)
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
-]]end)
+
 $(foreach members
       /* ${doc} */
       ${type} m_${name};

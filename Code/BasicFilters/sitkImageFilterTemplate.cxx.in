@@ -39,6 +39,14 @@ OUT = [[
 
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
+
+  $(if vector_pixel_types_by_component then
+    OUT=[[  typedef ${vector_pixel_types_by_component} VectorByComponentsPixelIDTypeList;
+  typedef detail::ExecuteInternalVectorImageAddressor<MemberFunctionType> VectorAddressorType;
+  this->m_MemberFactory->RegisterMemberFunctions< VectorByComponentsPixelIDTypeList, 3, VectorAddressorType> ();
+  this->m_MemberFactory->RegisterMemberFunctions< VectorByComponentsPixelIDTypeList, 2, VectorAddressorType> ();]]
+  end)
+
 }
 
 //
@@ -186,6 +194,38 @@ end)
   filter->GetOutput()->DisconnectPipeline();
   return out;
 }
+
+
+//-----------------------------------------------------------------------------
+
+//
+// Dispatched methods to call ExecuteInternal on each component of the VectorImage
+//
+$(if vector_pixel_types_by_component then
+OUT=[[template <class TImageType> Image*
+${name}ImageFilter::ExecuteInternalVectorImage ( Image* inImage1 )
+{
+  // Define the input and output image types
+  typedef TImageType     InputImageType;
+  typedef InputImageType OutputImageType;
+
+  // Get the a pointer to the ITK image contained in image1
+  typename InputImageType::Pointer image1 =
+    dynamic_cast <InputImageType*> ( inImage1->GetImageBase().GetPointer() );
+
+  // Check that ITK image pointer was properly retrieved
+  if ( image1.IsNull() )
+    {
+    sitkExceptionMacro( "Unexpected template dispatch error!" );
+    }
+
+
+  sitkExceptionMacro( "ExecuteInternalVectorImage is currently not implemented" );
+
+  return NULL;
+}
+]]
+end)
 
 //-----------------------------------------------------------------------------
 
