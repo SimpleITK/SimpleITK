@@ -4,6 +4,7 @@
   "number_of_inputs" : 1,
   "doc" : "Compute the voxel-wise absolute value of an image",
   "pixel_types" : "BasicPixelIDTypeList",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
   "members" : [],
   "tests" : [
     {
