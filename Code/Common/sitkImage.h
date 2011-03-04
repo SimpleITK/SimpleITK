@@ -7,6 +7,7 @@
 #include "sitkPixelIDTokens.h"
 #include "sitkPixelContainer.h"
 #include "sitkNonCopyable.h"
+#include "sitkEnableIf.h"
 #include "itkDataObject.h"
 
 #include <memory>
