@@ -207,6 +207,7 @@ return *this;
 Registration& Registration::SetUseCenteredInitialization ( bool init )
   {
   this->m_UseCenteredInitialization = init;
+  return *this;
   }
 bool Registration::GetUseCenteredInitialization()
   {

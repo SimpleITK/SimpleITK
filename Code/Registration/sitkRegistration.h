@@ -48,6 +48,8 @@ namespace simple
     template<class TImage>
     std::vector<double> ExecuteInternal ( Image* fixed, Image* moving );
 
+// SWIG does not appear to process private classes correctly
+#ifndef SWIG
     template < class TMemberFunctionPointer >
     struct RegistrationAddressor
     {
@@ -59,6 +61,8 @@ namespace simple
         return &ObjectType::template ExecuteInternal < TImage >;
       }
     };
+#endif
+
 
     typedef std::vector<double> (Registration::*MemberFunctionType)( Image* fixed, Image* moving );
     friend struct RegistrationAddressor<MemberFunctionType>;
