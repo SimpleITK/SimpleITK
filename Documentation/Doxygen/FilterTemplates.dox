@@ -100,7 +100,7 @@ are specified, a test will be generated that fails with the message that a test
 must be written for the filter
 
 - [OPTIONAL] \b include_files: (\e list) This list of strings specifies
-additional header files to include with this filter
+additional header files to include in the cxx file for this filter.
 
 - [OPTIONAL] \b output_pixel_type: (\e string) String representing the specific
 pixel type to use for the output image of the filter. This supercedes

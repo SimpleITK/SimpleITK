@@ -4,11 +4,14 @@
 #include "itkLabelObject.h"
 #include "itkNumericTraits.h"
 #include "itkNumericTraitsVariableLengthVectorPixel.h"
-#include "sitkConditional.h"
-#include "sitkPixelIDTokens.h"
 
 #include "sitk${name}ImageFilter.h"
 #include "itk${name}ImageFilter.h"
+$(if include_files and #include_files > 0 then
+OUT = [[// Additional include files
+$(for i=1,#include_files do OUT = OUT .. '#include "' .. include_files[i] .. '"' if i < #include_files then OUT = OUT .. '\n' end end)
+// Done with additional include files]]
+end)
 
 namespace itk {
 namespace simple {
