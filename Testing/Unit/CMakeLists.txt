@@ -4,7 +4,7 @@
 # added to ctest.
 set ( TestSource
   ImageTests.cxx
-  #CommonTests.cxx
+  CommonTests.cxx
   IOTests.cxx
   TypeListsTests.cxx
   BasicFiltersTests.cxx

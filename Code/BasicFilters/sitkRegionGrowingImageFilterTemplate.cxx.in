@@ -4,6 +4,8 @@
 #include "itkLabelObject.h"
 #include "itkNumericTraits.h"
 #include "itkNumericTraitsVariableLengthVectorPixel.h"
+#include "sitkConditional.h"
+#include "sitkPixelIDTokens.h"
 
 #include "sitk${name}ImageFilter.h"
 #include "itk${name}ImageFilter.h"

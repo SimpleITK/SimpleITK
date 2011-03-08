@@ -4,7 +4,7 @@
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 2,
   "doc" : "Some global documentation",
-  "pixel_types" : "BasicPixelIDTypeList",
+  "pixel_types" : "NonLabelPixelIDTypeList",
   "members" : [],
   "tests" : [
     {
@@ -22,6 +22,14 @@
       "inputB" : "Input/RA-Short.nrrd",
       "settings" : [],
       "md5hash" : "dfc0af11e8c30a0bd6dedd560486f419"
+    },
+    {
+      "tag" : "2d-rgb",
+      "description" : "2D-RGB",
+      "inputA" : "Input/VM1111Shrink-RGBFloat.nrrd",
+      "inputB" : "Input/VM1111Shrink-RGBFloat.nrrd",
+      "settings" : [],
+      "md5hash" : "5f00ee8a03437b4e421eb761dc340bc8"
     }
   ]
 }
