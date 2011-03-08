@@ -12,8 +12,20 @@
      "tag" : "MorphologicalGradient",
      "description" : "Test morhological gradient",
      "inputA" : "Input/STAPLE1.png",
-     "settings" : [],
-     "md5hash" : "57167a1d86b60fbf9e040d9441676876"
+     "md5hash" : "57167a1d86b60fbf9e040d9441676876",
+     "settings" : [
+       { "parameter" : "KernelRadius",
+         "value" : 1
+       },
+       { "parameter" : "KernelType",
+         "value" : "itk::simple::${name}ImageFilter::Ball",
+         "lua_value" : "SimpleITK.${name}ImageFilter_Ball", 
+         "python_value" : "SimpleITK.${name}ImageFilter.Ball",
+         "ruby_value" : "Simpleitk::${name}ImageFilter::Ball",
+         "java_value" : "${name}ImageFilter.OperationType.Ball",
+         "tcl_value" : "$$${name}ImageFilter_Ball"
+       }
+     ]
    }
   ]
 }

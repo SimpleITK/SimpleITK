@@ -1,7 +1,6 @@
 {
   "name" : "BinaryMorphologicalOpening",
   "template_code_filename" : "KernelImageFilter",
-  "template_test_filename" : "KernelImageFilter",
   "number_of_inputs" : 1,
   "doc" : "",
   "pixel_types" : "IntegerPixelIDTypeList",
@@ -12,8 +11,20 @@
      "tag" : "BinaryMorphologicalOpening",
      "description" : "Test binary morphological opening",
      "inputA" : "Input/STAPLE1.png",
-     "settings" : [],
      "md5hash" : "bc97d7cbf9d3779070373f7a28b932a2"
+     "settings" : [
+       { "parameter" : "KernelRadius",
+         "value" : 1
+       },
+       { "parameter" : "KernelType",
+         "value" : "itk::simple::${name}ImageFilter::Ball",
+         "lua_value" : "SimpleITK.${name}ImageFilter_Ball", 
+         "python_value" : "SimpleITK.${name}ImageFilter.Ball",
+         "ruby_value" : "Simpleitk::${name}ImageFilter::Ball",
+         "java_value" : "${name}ImageFilter.OperationType.Ball",
+         "tcl_value" : "$$${name}ImageFilter_Ball"
+       }
+     ]
    }
   ]
 }

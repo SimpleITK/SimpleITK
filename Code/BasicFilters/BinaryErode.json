@@ -1,7 +1,6 @@
 {
   "name" : "BinaryErode",
   "template_code_filename" : "KernelImageFilter",
-  "template_test_filename" : "KernelImageFilter",
   "number_of_inputs" : 1,
   "doc" : "Performs Erosion in a binary image.",
   "pixel_types" : "IntegerPixelIDTypeList",
@@ -12,8 +11,20 @@
      "tag" : "BinaryErode",
      "description" : "Test binary erosion",
      "inputA" : "Input/STAPLE1.png",
-     "settings" : [],
-     "md5hash" : "9e37516c795d7f25847851666ef53ef9"
+     "md5hash" : "9e37516c795d7f25847851666ef53ef9",
+     "settings" : [
+       { "parameter" : "KernelRadius",
+         "value" : 1
+       },
+       { "parameter" : "KernelType",
+         "value" : "itk::simple::${name}ImageFilter::Ball",
+         "lua_value" : "SimpleITK.${name}ImageFilter_Ball", 
+         "python_value" : "SimpleITK.${name}ImageFilter.Ball",
+         "ruby_value" : "Simpleitk::${name}ImageFilter::Ball",
+         "java_value" : "${name}ImageFilter.OperationType.Ball",
+         "tcl_value" : "$$${name}ImageFilter_Ball"
+       }
+     ]
    }
   ]
 }
