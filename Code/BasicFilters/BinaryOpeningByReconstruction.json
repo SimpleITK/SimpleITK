@@ -1,13 +1,11 @@
 {
   "name" : "BinaryOpeningByReconstruction",
   "template_code_filename" : "KernelImageFilter",
-  "template_test_filename" : "KernelImageFilter",
   "number_of_inputs" : 1,
   "doc" : "",
   "pixel_types" : "IntegerPixelIDTypeList",
   "no_output_type" : 1,
   "members" : [
-
     { "name" : "FullyConnected",
       "type" : "bool",
       "default" : false,
@@ -16,5 +14,11 @@
   ],
   "custom_methods" : [],
   "tests" : [
+   {
+     "tag" : "BinaryOpeningByReconstruction",
+     "description" : "Test binary closing by reconstruction",
+     "inputA" : "Input/STAPLE1.png",
+     "md5hash" : "e784daff43d09a18e20556729afc0c9d"
+     }
   ]
 }
