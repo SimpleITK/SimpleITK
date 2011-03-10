@@ -136,14 +136,25 @@ OUT=[[
     }]]
 end)
 
+  $(if filter_type then
+    OUT=[[typedef ${filter_type} FilterType;]]
+  else
+    OUT=[[typedef itk::${name}ImageFilter<InputImageType,]]
+         if number_of_inputs == 2 then
+           OUT=OUT .. ' InputImageType,'
+           end
+         if additional_template_types then
+         OUT=OUT .. [[ $(foreach additional_template_types ${type},) ]]
+         end
+     OUT=OUT .. [[  OutputImageType> FilterType;]]
+  end)
   // Set up the ITK filter
-  typedef itk::${name}ImageFilter<InputImageType,$(if number_of_inputs == 2 then OUT=[[ InputImageType,]] end)$(if additional_template_types then OUT=[[ $(foreach additional_template_types ${type},)]]end) OutputImageType> FilterType;
   typename FilterType::Pointer filter = FilterType::New();
 
 $(if number_of_inputs == 2 then
 OUT=[[
-  filter->SetInput1( image1 );
-  filter->SetInput2( image2 );
+  filter->SetInput( 0, image1 );
+  filter->SetInput( 1, image2 );
 ]]
 else
 OUT=[[
