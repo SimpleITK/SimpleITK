@@ -110,6 +110,11 @@ pixel type to use for the output image of the filter. This supercedes
 that the filter should return an image where the pixel type is the RealType
 of the input image's pixel type
 
+- [OPTIONAL] \b filter_type: (\e string) Explicitly sets the
+  FilterType used. This method overides
+  additional_template_types. Useful typedefs are InputImageType, and
+  OutputImageType.
+
 - [OPTIONAL] \b public_declarations: (\e string) Any c++ code written in this
 field will be placed into the public section of the filter's header file
 
