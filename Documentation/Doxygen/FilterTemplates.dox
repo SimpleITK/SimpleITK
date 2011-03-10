@@ -196,7 +196,8 @@ will be accessible with the methods "GetVar" and "SetVar"
 
 - \b type: (\e string) The c++ type for this member. If using a type contained
 in a certain namespace (itk::simple for example), this must be included in the
-type description
+type description. If the member variable is of type bool, the
+additional ${name}On, and ${name}Off member functions are added.
 
 - \b default: (\e string or \e number) The default value for this member. This
 can be a number for numerical types or a string specifying the constructor for
