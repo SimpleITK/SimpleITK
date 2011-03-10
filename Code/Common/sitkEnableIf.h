@@ -33,7 +33,6 @@ template <class T> struct EnableIf<true, T> { typedef T Type; };
 /**\endcond*/
 
 
-
 /* \brief An implementation of the negation of the enable if idiom.
  *
  * \sa EnableIf
