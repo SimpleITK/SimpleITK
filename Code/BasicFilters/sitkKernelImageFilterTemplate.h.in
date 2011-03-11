@@ -52,25 +52,13 @@ $(if (not no_get_method) or (no_get_method == 0) then
 end)
 )
       /** Kernel property Get/Set methods */
-      Self& SetKernelRadius(uint32_t r)
-        {
-        this->m_KernelRadius = r;
-        return *this;
-        }
-      uint32_t GetKernelRadius()
-        {
-        return this->m_KernelRadius;
-        }
+      Self& SetKernelRadius(uint32_t r);
+      uint32_t GetKernelRadius() const;
 
-      Self& SetKernelType(KernelType t)
-        {
-        this->m_KernelType = t;
-        return *this;
-        }
-      KernelType GetKernelType()
-        {
-        return this->m_KernelType;
-        }
+      /** Set/Get the kernel or structuring elemenent used for the
+       * morphology */
+      Self& SetKernelType(KernelType t);
+      KernelType GetKernelType() const;
 
       /** Print ourselves out */
       std::string ToString() const;
