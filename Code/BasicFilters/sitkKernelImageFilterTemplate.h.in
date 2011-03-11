@@ -27,7 +27,6 @@ namespace itk {
 
       /** Kernel type enumeration */
     typedef enum{Annulus, Ball, Box, Cross} KernelType;
-
 $(if public_declarations then
       OUT=[[
       /** Custom public declarations */
@@ -117,9 +116,7 @@ OUT=[[
 $(foreach members
       /* ${doc} */
       ${type} m_${name};
-
 )
-
 // SWIG does not appear to process private classes correctly
 #ifndef SWIG
 
