@@ -86,7 +86,28 @@ end)
 }
 
 //
-// Execute
+// Set/Get Member Properties
+//
+
+${name}ImageFilter::Self& ${name}ImageFilter::SetKernelRadius(uint32_t r)
+{
+  this->m_KernelRadius = r;
+  return *this;
+}
+uint32_t ${name}ImageFilter::GetKernelRadius() const
+{
+  return this->m_KernelRadius;
+}
+${name}ImageFilter::Self& ${name}ImageFilter::SetKernelType(KernelType t)
+{
+  this->m_KernelType = t;
+  return *this;
+}
+${name}ImageFilter::KernelType ${name}ImageFilter::GetKernelType() const
+{
+  return this->m_KernelType;
+}
+
 //$(if members and #members > 0 then
 OUT = [[
 
@@ -122,6 +143,7 @@ OUT=[[
 
   return this->m_MemberFactory->GetMemberFunction( type, dimension )( image1 $(if number_of_inputs==2 then OUT=[[, image2]] end) );
 }
+
 
 //----------------------------------------------------------------------------
 
