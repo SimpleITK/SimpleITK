@@ -1,0 +1,37 @@
+{
+  "name" : "GrayscaleGeodesicErode",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 2,
+  "doc" : "Input1 is input, Input2 is marker image",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "filter_type" : "itk::GrayscaleGeodesicErodeImageFilter<InputImageType, OutputImageType>",
+  "members" : [
+    { 
+      "name" : "RunOneIteration",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : ""
+    },
+    { 
+      "name" : "FullyConnected",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : ""
+    }
+  ],
+  "custom_methods" : [],
+  "tests" : [
+   {
+     "tag" : "GrayscaleGeodesicDilate",
+     "description" : "Test grayscale geodesic erode",
+     "inputA" : "Input/STAPLE2.png",
+     "inputB" : "Input/STAPLE1.png",
+     "md5hash" : "095f00a68a84df4396914fa758f34dcc"
+     "settings" : [
+       { "parameter" : "RunOneIteration", "value" : "0" },
+       { "parameter" : "FullyConnected", "value" : "1" }     
+     ]
+   }
+  ]
+}

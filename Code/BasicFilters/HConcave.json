@@ -1,0 +1,36 @@
+{
+  "name" : "HConcave",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "Height",
+      "type" : "double",
+      "default" : "2.0",
+      "doc" : ""
+    },    
+    { "name" : "FullyConnected",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : ""
+    }
+  ],
+  "custom_methods" : [],
+  "tests" : [
+   {
+     "tag" : "HConcave",
+     "description" : "Test HConcave",
+     "inputA" : "Input/RA-Short.nrrd",
+     "md5hash" : "f5eabe457bc96f0b284c324c7d6387a6",
+     "settings" : [
+       {
+         "parameter" : "Height",
+         "value" : 10000
+       }
+     ]
+   }
+  ]
+}

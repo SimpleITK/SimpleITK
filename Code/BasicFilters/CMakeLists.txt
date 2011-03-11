@@ -9,7 +9,7 @@ include_directories (
  )
 
 add_library ( SimpleITKBasicFilters ${SimpleITKBasicFiltersSource} )
-target_link_libraries ( SimpleITKBasicFilters SimpleITKCommon ITKBasicFilters )
+target_link_libraries ( SimpleITKBasicFilters SimpleITKCommon ITKBasicFilters ITKReview )
 
 
 # Add custom command that will delete java files which need to be rebuilt when changes

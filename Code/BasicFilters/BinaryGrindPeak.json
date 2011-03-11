@@ -1,0 +1,50 @@
+{
+  "name" : "BinaryGrindPeak",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "filter_type" : "itk::BinaryGrindPeakImageFilter<InputImageType>",
+  "members" : [    
+    {
+      "name" : "FullyConnected",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : ""
+    },
+    {
+      "name" : "ForegroundValue",
+      "type" : "double",
+      "default" : "255",
+      "doc" : ""
+    },
+    {
+      "name" : "BackgroundValue",
+      "type" : "double",
+      "default" : "0",
+      "doc" : ""
+    }
+  ],
+  "custom_methods" : [],
+  "tests" : [
+   {
+     "tag" : "BinaryGrindPeak1",
+     "description" : "Test binary grind peak with default not fully connected",
+     "inputA" : "Input/WhiteDots.png",
+     "md5hash" : ""
+     "settings" : [ ]
+   },
+   {
+     "tag" : "BinaryGrindPeak2",
+     "description" : "Test binary grind peak fully connected",
+     "inputA" : "Input/WhiteDots.png",
+     "md5hash" : ""
+     "settings" : [
+       { "parameter" : "FullyConnected",
+         "value" : 1
+       }
+     ]
+   }
+  ]
+}
