@@ -52,6 +52,27 @@ std::string ${name}ImageFilter::ToString() const
 {
   std::ostringstream out;
   out << "itk::simple::${name}ImageFilter\n";
+  out << "  KernelRadius: " << this->m_KernelRadius << std::endl;
+  out << "  KernelType: ";
+  switch ( this->m_KernelType )
+    {
+    case Self::Annulus:
+      std::cout << "Annulus";
+      break;
+    case Self::Ball:
+      std::cout << "Ball";
+      break;
+    case Self::Box:
+      std::cout << "Box";
+      break;
+    case Self::Cross:
+      std::cout << "Cross";
+      break;
+    default:
+      sitkExceptionMacro( "LogicError: invalid Kernel type" );
+    }
+  std::cout << std::endl;
+
 $(foreach members
 $(if dim_vec and dim_vec == 1 then
 OUT = '  out << "  ${name}: ";\
@@ -168,7 +189,7 @@ end)
       kernel = ITKKernelType::Cross( radius );
       break;
     default:
-      sitkExceptionMacro("Logic Error: Unknown Kernel Type");
+      sitkExceptionMacro( "Logic Error: Unknown Kernel Type" );
     }
 
   typename FilterType::Pointer filter = FilterType::New();
