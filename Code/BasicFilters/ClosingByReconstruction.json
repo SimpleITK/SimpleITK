@@ -4,7 +4,19 @@
   "number_of_inputs" : 1,
   "doc" : "",
   "pixel_types" : "BasicPixelIDTypeList",
-  "members" : [],
+  "members" : [
+    { "name" : "FullyConnected",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : ""
+    },
+    {
+      "name" : "PreserveIntensities",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : ""
+    }
+  ],
   "custom_methods" : [],
   "tests" : [
    {

@@ -93,6 +93,7 @@ end)
       ASSERT_NO_THROW ( fromProcedural.reset ( filter.Execute ( inputA.get() $(if inputB then OUT=", inputB.get()" end) ) ) ) << "Procedural interface to ${name}";
       ASSERT_NO_THROW ( fromFunctional.reset ( itk::simple::${name} ( inputA.get() $(if inputB then OUT=", inputB.get()" end)
                                                                          $(if template_type and template_type == "RegionGrowing" then OUT=", std::vector< std::vector<unsigned int> >()" end)
+                                                                      $(if template_code_filename and template_code_filename == "KernelImageFilter" then OUT=[[, 1, itk::simple::${name}ImageFilter::Ball]] end)
                                                                          $(foreach members , ${default})
                                                                       ) ) ) << "Functional interface to ${name}";
       hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
