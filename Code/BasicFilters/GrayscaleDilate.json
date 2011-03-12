@@ -4,7 +4,9 @@
   "number_of_inputs" : 1,
   "doc" : "Performs Dilation in a grayscale image.",
   "pixel_types" : "BasicPixelIDTypeList",
-  "members" : [],
+  /* TODO Boundary Member */       
+  "members" : [
+  ],
   "custom_methods" : [],
   "tests" : [
    {
