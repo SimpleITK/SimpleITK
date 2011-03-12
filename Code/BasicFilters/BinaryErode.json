@@ -4,7 +4,26 @@
   "number_of_inputs" : 1,
   "doc" : "Performs Erosion in a binary image.",
   "pixel_types" : "IntegerPixelIDTypeList",
-  "members" : [],
+  "members" : [
+    {
+      "name" : "BackgroundValue",
+      "type" : "double",
+      "default" : "0",
+      "doc" : ""
+    },
+    {
+      "name" : "ForegroundValue",
+      "type" : "double",
+      "default" : "255",
+      "doc" : ""
+    },
+    { 
+      "name" : "BoundaryToForeground",
+      "type" : "bool",
+      "default" : "true",
+      "doc" : ""
+    }
+  ],
   "custom_methods" : [],
   "tests" : [
    {

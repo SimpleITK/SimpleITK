@@ -4,7 +4,14 @@
   "number_of_inputs" : 1,
   "doc" : "",
   "pixel_types" : "IntegerPixelIDTypeList",
-  "members" : [],
+  "members" : [
+    {
+      "name" : "ForegroundValue",
+      "type" : "double",
+      "default" : "255",
+      "doc" : ""
+    }
+  ],
   "custom_methods" : [],
   "tests" : [
    {
