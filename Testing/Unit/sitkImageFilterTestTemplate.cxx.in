@@ -117,9 +117,12 @@ $(foreach settings
     ASSERT_EQ ( filter.Get${parameter}()[i], vec[i] ) << "Failed to set ${parameter} to ${value}";\
     }\
   }'
-  elseif no_print == nil then
-  OUT='filter.Set${parameter} ( ${value} );\
+  else
+    OUT='filter.Set${parameter} ( ${value} );'
+      if (not no_get_method) then
+    OUT = OUT .. '\
   ASSERT_EQ ( ${value}, filter.Get${parameter}() ) << "Failed to set ${parameter} to ${value}";'
+    end
 end)
 )]]
 end)

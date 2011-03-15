@@ -307,6 +307,8 @@ for this test. Each entry is an object of the form:
   \b value
   - [OPTIONAL] \b dim_vec: (0 or 1): Use this flag if this parameter is a
   std::vector. If set to 1, the \b type option must also be set
+  - [OPTIONAL] \b no_get_method: (0 or 1). Set to 1 when the filter
+  does not have a get method, so that this method will not be tested.
   - [OPTIONAL] \b type: (\e string): What type the vector should be. Due to
   constraints with java, this should only be a primitive type. For unsigned
   types, the java test will convert to the signed equivalent. An example for a

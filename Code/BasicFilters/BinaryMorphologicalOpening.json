@@ -27,6 +27,7 @@
      "md5hash" : "bc97d7cbf9d3779070373f7a28b932a2"
      "settings" : [
        { "parameter" : "KernelRadius",
+         "no_get_method" : 1,
          "value" : 1
        },
        { "parameter" : "KernelType",

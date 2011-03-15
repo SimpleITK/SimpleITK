@@ -102,13 +102,13 @@ ${name}ImageFilter::Self& ${name}ImageFilter::SetKernelRadius(const std::vector<
   this->m_VectorKernelRadius = r;
   return *this;
 }
-const std::vector<uint32_t>& ${name}ImageFilter::GetKernelRadius() const
+std::vector<uint32_t> ${name}ImageFilter::GetKernelRadius() const
 {
 
   if ( !this->m_BVectorRadius )
     {
-    // copy parameter to vector member variable
-    thisstd::vector<uint32_t>( 1, this->m_KernelRadius);
+    // copy scalar radius to std vector
+    return std::vector<uint32_t>( 1, this->m_KernelRadius);
     }
   return this->m_VectorKernelRadius;
 }
