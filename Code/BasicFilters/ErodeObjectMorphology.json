@@ -27,6 +27,7 @@
       "tolerance" : 0.01,
        "settings" : [
          { "parameter" : "KernelRadius",
+         "no_get_method" : 1,
            "value" : 1
          },
          { "parameter" : "KernelType",
@@ -46,6 +47,7 @@
       "tolerance" : 0.01,
        "settings" : [
          { "parameter" : "KernelRadius",
+         "no_get_method" : 1,
            "value" : 1
          },
          { "parameter" : "KernelType",
