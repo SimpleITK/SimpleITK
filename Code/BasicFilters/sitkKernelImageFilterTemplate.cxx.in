@@ -25,6 +25,7 @@ namespace simple {
 //
 ${name}ImageFilter::${name}ImageFilter ()
 {
+  this->m_BVectorRadius = false;
   this->m_KernelRadius = 1;
   this->m_KernelType = Ball;
 $(foreach members
@@ -91,12 +92,25 @@ end)
 
 ${name}ImageFilter::Self& ${name}ImageFilter::SetKernelRadius(uint32_t r)
 {
+  this->m_BVectorRadius = false;
   this->m_KernelRadius = r;
   return *this;
 }
-uint32_t ${name}ImageFilter::GetKernelRadius() const
+${name}ImageFilter::Self& ${name}ImageFilter::SetKernelRadius(const std::vector<uint32_t>  &r )
 {
-  return this->m_KernelRadius;
+  this->m_BVectorRadius = true;
+  this->m_VectorKernelRadius = r;
+  return *this;
+}
+const std::vector<uint32_t>& ${name}ImageFilter::GetKernelRadius() const
+{
+
+  if ( !this->m_BVectorRadius )
+    {
+    // copy parameter to vector member variable
+    thisstd::vector<uint32_t>( 1, this->m_KernelRadius);
+    }
+  return this->m_VectorKernelRadius;
 }
 ${name}ImageFilter::Self& ${name}ImageFilter::SetKernelType(KernelType t)
 {
@@ -195,7 +209,26 @@ end)
 
   ITKKernelType kernel;
   typename ITKKernelType::SizeType radius;
-  radius.Fill( this->m_KernelRadius );
+
+  // set the radius via vector or scalar
+  if ( this->m_BVectorRadius )
+    {
+    for ( unsigned int i = 0; i < InputImageType::ImageDimension; ++i )
+      {
+      if ( i < this->m_VectorKernelRadius.size() )
+        {
+        radius[i] = this->m_VectorKernelRadius[i];
+        }
+      else
+        {
+        radius[i] = 1;
+        }
+      }
+    }
+  else
+    {
+    radius.Fill( this->m_KernelRadius );
+    }
   switch (m_KernelType)
     {
     case Annulus:
@@ -322,6 +355,18 @@ Image* ${name} ( Image* imageA$(if number_of_inputs == 2 then OUT=', Image* imag
 {
   ${name}ImageFilter filter;
   return filter.SetKernelRadius( inRadius ).SetKernelType( inKernel ).Execute ( imageA$(if number_of_inputs == 2 then OUT=', imageB' end)$(when members $(foreach members , in${name})) );
+}
+
+
+//
+// Function to run the Execute method of this filter
+//
+Image* ${name} ( Image* imageA$(if number_of_inputs == 2 then OUT=', Image* imageB' end),
+                 std::vector<uint32_t> inVectorRadius,  ${name}ImageFilter::KernelType inKernel
+                 $(when members $(foreach members , ${type} in${name})) )
+{
+  ${name}ImageFilter filter;
+  return filter.SetKernelRadius( inVectorRadius ).SetKernelType( inKernel ).Execute ( imageA$(if number_of_inputs == 2 then OUT=', imageB' end)$(when members $(foreach members , in${name})) );
 }
 
 } // end namespace simple
