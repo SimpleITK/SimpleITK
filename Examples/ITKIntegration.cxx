@@ -105,7 +105,7 @@ int main( int argc, char *argv[])
   // Extract the itk image from the SimpleITK image
   //
   InputImageType::Pointer itkImage =
-    dynamic_cast <InputImageType*>( image->GetImageBase().GetPointer() );
+    dynamic_cast <InputImageType*>( image->GetImageBase() );
 
 
   //

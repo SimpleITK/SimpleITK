@@ -87,7 +87,7 @@ public:
 
 
 TEST_F(PixelContainer,Create) {
-  ASSERT_TRUE ( shortImage->GetImageBase().IsNotNull() );
+  ASSERT_TRUE ( shortImage->GetImageBase() != NULL );
   EXPECT_EQ ( shortImage->GetWidth(), itkShortImageBase->GetLargestPossibleRegion().GetSize()[0] ) << " Checking image width";
   EXPECT_EQ ( shortImage->GetHeight(), itkShortImageBase->GetLargestPossibleRegion().GetSize()[1] ) << " Checking image height";
   EXPECT_EQ ( shortImage->GetDepth(), itkShortImageBase->GetLargestPossibleRegion().GetSize()[2] ) << " Checking image depth";

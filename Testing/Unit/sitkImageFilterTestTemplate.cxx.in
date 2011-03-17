@@ -83,11 +83,11 @@ end)
   $(foreach tests
     /* ${description} */
   ASSERT_NO_THROW ( inputA.reset ( reader.SetFileName ( dataFinder.GetFile ( "${inputA}" ) ).Execute() ) ) << "Failed to load ${inputA}";
-  ASSERT_TRUE ( inputA->GetImageBase().IsNotNull() ) << "Could not read ${inputA}";
+  ASSERT_TRUE ( inputA->GetImageBase() != NULL ) << "Could not read ${inputA}";
     $(if inputB then
       OUT=[[
   ASSERT_NO_THROW ( inputB.reset ( reader.SetFileName ( dataFinder.GetFile ( "${inputB}" ) ).Execute() ) ) << "Failed to load ${inputB}";
-  ASSERT_TRUE ( inputB->GetImageBase().IsNotNull() ) << "Could not read ${inputB}";
+  ASSERT_TRUE ( inputB->GetImageBase() != NULL ) << "Could not read ${inputB}";
             ]]
       end)
 
@@ -191,7 +191,7 @@ TEST_F(Lua,${name}) {
 
     output.reset(reader.SetFileName ( outputFileName ).Execute());
     ASSERT_TRUE ( output.get() != NULL );
-    ASSERT_TRUE ( output->GetImageBase().IsNotNull() ) << "Loaded output image";
+    ASSERT_TRUE ( output->GetImageBase() != NULL ) << "Loaded output image";
 
     $(if md5hash then
       OUT = [[
@@ -255,7 +255,7 @@ TEST_F(Python,${name}) {
 
     output.reset ( reader.SetFileName ( outputFileName ).Execute() );
     ASSERT_TRUE ( output.get() != NULL );
-    ASSERT_TRUE ( output->GetImageBase().IsNotNull() ) << "Loaded output image";
+    ASSERT_TRUE ( output->GetImageBase() != NULL ) << "Loaded output image";
 
     $(if md5hash then
       OUT = [[
@@ -314,7 +314,7 @@ TEST_F(Tcl,${name}) {
 
     output.reset ( reader.SetFileName ( outputFileName ).Execute() );
     ASSERT_TRUE ( output.get() != NULL );
-    ASSERT_TRUE ( output->GetImageBase().IsNotNull() ) << "Loaded output image";
+    ASSERT_TRUE ( output->GetImageBase() != NULL ) << "Loaded output image";
 
     $(if md5hash then
       OUT = [[
@@ -373,7 +373,7 @@ TEST_F(R,${name}) {
 
     output.reset ( reader.SetFileName ( outputFileName ).Execute() );
     ASSERT_TRUE ( output.get() != NULL );
-    ASSERT_TRUE ( output->GetImageBase().IsNotNull() ) << "Loaded output image";
+    ASSERT_TRUE ( output->GetImageBase() != NULL ) << "Loaded output image";
 
     $(if md5hash then
       OUT = [[
@@ -440,7 +440,7 @@ TEST_F(Java,${name}) {
 
     output.reset ( reader.SetFileName ( outputFileName ).Execute() );
     ASSERT_TRUE ( output.get() != NULL );
-    ASSERT_TRUE ( output->GetImageBase().IsNotNull() ) << "Loaded output image";
+    ASSERT_TRUE ( output->GetImageBase() != NULL ) << "Loaded output image";
 
     $(if md5hash then
       OUT = [[
@@ -502,7 +502,7 @@ TEST_F(Ruby,${name}) {
 
     output.reset ( reader.SetFileName ( outputFileName ).Execute() );
     ASSERT_TRUE ( output.get() != NULL );
-    ASSERT_TRUE ( output->GetImageBase().IsNotNull() ) << "Loaded output image";
+    ASSERT_TRUE ( output->GetImageBase() != NULL ) << "Loaded output image";
 
     $(if md5hash then
       OUT = [[
