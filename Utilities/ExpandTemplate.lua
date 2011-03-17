@@ -503,7 +503,11 @@ function expand(str, ...)
     -- Add "include" option for SimpleITK
     elseif cmd == 'include' then -- $(include xxx)
       
-      filename = estring(strsub(var,e))
+      lastSlashPos = strfind(string.reverse(templateFileDirectoryAndPrefix),"/")
+      templateFileDirectory = strsub(templateFileDirectoryAndPrefix,
+        1, string.len(templateFileDirectoryAndPrefix)-lastSlashPos)
+      
+      filename = templateFileDirectory .. "/" .. estring(strsub(var,e))
       local includefid = io.open ( filename )
       if includefid == nil then
         print ( 'failed to include ' .. filename )
