@@ -500,6 +500,23 @@ function expand(str, ...)
         end
       end
       error('syntax error in: '.. var, 2)
+    -- Add "include" option for SimpleITK
+    elseif cmd == 'include' then -- $(include xxx)
+      
+      filename = estring(strsub(var,e))
+      local includefid = io.open ( filename )
+      if includefid == nil then
+        print ( 'failed to include ' .. filename )
+        os.exit ( 1 )
+      end
+
+      includedText = includefid:read ( "*all" )
+      includefid:close()
+
+      
+      --DEBUG
+      return estring(includedText)
+      
     elseif cmd == 'when' then -- $(when vn xxx)
       local vn
       b,e,vn = strfind(var, '^([_%a][_%w]*)%s.', e)
