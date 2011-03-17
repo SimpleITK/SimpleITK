@@ -5,6 +5,7 @@
 set ( TestSource
   ImageTests.cxx
   CommonTests.cxx
+  RegistrationTests.cxx
   IOTests.cxx
   TypeListsTests.cxx
   BasicFiltersTests.cxx
@@ -99,7 +100,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
   endif()
 
   # Java Tests
-  if ( WRAP_JAVA )    
+  if ( WRAP_JAVA )
     file ( GLOB JAVA_TEMPLATE_FILES "*Template*.java.in" )
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/org/itk/simple/testing/${FILTERNAME}ImageFilterTest.java")
     add_custom_command (
