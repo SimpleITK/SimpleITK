@@ -1,0 +1,25 @@
+SET (CTEST_CUSTOM_MAXIMUM_NUMBER_OF_ERRORS   100)
+SET (CTEST_CUSTOM_MAXIMUM_NUMBER_OF_WARNINGS 100)
+
+SET(CTEST_CUSTOM_COVERAGE_EXCLUDE
+ ${CTEST_CUSTOM_COVERAGE_EXCLUDE}
+
+ # Exclude try_compile sources from coverage results:
+ "/CMakeFiles/CMakeTmp/"
+
+ # Exclude files from the Testing directories
+ ".*/Testing/.*"
+
+ # Exclude files from the Utilities directories
+ ".*/Utilities/.*"
+ )
+
+SET(CTEST_CUSTOM_WARNING_EXCEPTION
+  ${CTEST_CUSTOM_WARNING_EXCEPTION}
+
+  # Ignore warning from the SWIG wrapped file ( not much we can do about those )
+  "Wrapping/.*_wrap.cxx"
+
+  # Ignore warning from gtest
+  "gtest.h"
+)
