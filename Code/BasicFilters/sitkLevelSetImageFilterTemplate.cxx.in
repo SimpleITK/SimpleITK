@@ -111,7 +111,7 @@ Image* ${name}ImageFilter::ExecuteInternal ( Image* inImage1 $(if number_of_inpu
 
   // Get the a pointer to the ITK image contained in image1
   typename InputImageType::Pointer image1 =
-    dynamic_cast <InputImageType*> ( inImage1->GetImageBase().GetPointer() );
+    dynamic_cast <InputImageType*> ( inImage1->GetImageBase() );
 
   // Check that ITK image pointer was properly retrieved
   if ( image1.IsNull() )
@@ -123,7 +123,7 @@ OUT=[[
 
   // Get the a pointer to the ITK image contained in image2
   typename InputImageType::Pointer image2 =
-  dynamic_cast <InputImageType*> ( inImage2->GetImageBase().GetPointer() );
+  dynamic_cast <InputImageType*> ( inImage2->GetImageBase() );
 
   // Check that ITK image pointer was properly retrieved
   if ( image2.IsNull() )

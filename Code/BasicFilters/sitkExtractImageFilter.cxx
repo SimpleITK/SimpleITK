@@ -66,7 +66,7 @@ template <class TImageType>
 Image* ExtractImageFilter::ExecuteInternal ( Image* inImage )
   {
   typename TImageType::Pointer image =
-    dynamic_cast <TImageType*> ( inImage->GetImageBase().GetPointer() );
+    dynamic_cast <TImageType*> ( inImage->GetImageBase() );
 
   if ( image.IsNull() )
     {

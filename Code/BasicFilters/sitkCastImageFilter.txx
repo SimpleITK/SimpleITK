@@ -24,7 +24,7 @@ CastImageFilter::ExecuteInternalCast( Image* inImage )
   typedef TOutputImageType OutputImageType;
 
   typename InputImageType::ConstPointer image =
-    dynamic_cast <InputImageType*> ( inImage->GetImageBase().GetPointer() );
+    dynamic_cast <InputImageType*> ( inImage->GetImageBase() );
 
   if ( image.IsNull() )
     {
@@ -51,7 +51,7 @@ Image* CastImageFilter::ExecuteInternalToVector( Image* inImage )
   typedef TOutputImageType OutputImageType;
 
   typename InputImageType::ConstPointer image =
-    dynamic_cast <InputImageType*> ( inImage->GetImageBase().GetPointer() );
+    dynamic_cast <InputImageType*> ( inImage->GetImageBase() );
 
   if ( image.IsNull() )
     {
@@ -85,7 +85,7 @@ Image* CastImageFilter::ExecuteInternalToLabel( Image* inImage )
   typedef itk::Image<LabelType, InputImageType::ImageDimension> LabelImageType;
 
   typename InputImageType::ConstPointer image =
-    dynamic_cast <InputImageType*> ( inImage->GetImageBase().GetPointer() );
+    dynamic_cast <InputImageType*> ( inImage->GetImageBase() );
 
   if ( image.IsNull() )
     {

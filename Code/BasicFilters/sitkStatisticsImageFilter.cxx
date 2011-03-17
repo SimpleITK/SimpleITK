@@ -59,7 +59,7 @@ Image* StatisticsImageFilter::ExecuteInternal ( Image* inImage1 )
   typedef InputImageType OutputImageType;
 
   typename InputImageType::Pointer image1 =
-    dynamic_cast <InputImageType*> ( inImage1->GetImageBase().GetPointer() );
+    dynamic_cast <InputImageType*> ( inImage1->GetImageBase() );
 
   if ( image1.IsNull() )
     {

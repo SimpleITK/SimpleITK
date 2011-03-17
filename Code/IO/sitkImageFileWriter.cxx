@@ -42,7 +42,7 @@ template <class InputImageType>
 ImageFileWriter& ImageFileWriter::ExecuteInternal( Image* inImage )
   {
     typename InputImageType::Pointer image =
-      dynamic_cast <InputImageType*> ( inImage->GetImageBase().GetPointer() );
+      dynamic_cast <InputImageType*> ( inImage->GetImageBase() );
 
     typedef itk::ImageFileWriter<InputImageType> Writer;
     typename Writer::Pointer writer = Writer::New();
