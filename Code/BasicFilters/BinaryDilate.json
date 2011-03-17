@@ -17,7 +17,7 @@
       "default" : "255",
       "doc" : ""
     },
-    { 
+    {
       "name" : "BoundaryToForeground",
       "type" : "bool",
       "default" : "false",
@@ -39,11 +39,37 @@
        },
        { "parameter" : "KernelType",
          "value" : "itk::simple::${name}ImageFilter::Ball",
-         "lua_value" : "SimpleITK.${name}ImageFilter_Ball", 
+         "lua_value" : "SimpleITK.${name}ImageFilter_Ball",
          "python_value" : "SimpleITK.${name}ImageFilter.Ball",
          "ruby_value" : "Simpleitk::${name}ImageFilter::Ball",
          "java_value" : "${name}ImageFilter.KernelType.Ball",
          "tcl_value" : "$$${name}ImageFilter_Ball"
+       }
+     ]
+   },
+   {
+     "tag" : "BinaryDilateVectorRadius",
+     "description" : "Test binary dilation with vector radius",
+     "inputA" : "Input/STAPLE1.png",
+     "settings" : [],
+     "md5hash" : "99108c735fe9727bca09ca28a42827d3",
+     "settings" : [
+       { "parameter" : "KernelRadius",
+         "type" : "uint32_t",
+         "dim_vec" : 1,
+         "value" : "{20,1}",
+         "tcl_value" : "20 1",
+         "python_value" : "[20, 1]",
+         "ruby_value" : "[20, 1]"
+
+       },
+       { "parameter" : "KernelType",
+         "value" : "itk::simple::${name}ImageFilter::Box",
+         "lua_value" : "SimpleITK.${name}ImageFilter_Box",
+         "python_value" : "SimpleITK.${name}ImageFilter.Box",
+         "ruby_value" : "Simpleitk::${name}ImageFilter::Box",
+         "java_value" : "${name}ImageFilter.OperationType.Box",
+         "tcl_value" : "$$${name}ImageFilter_Box"
        }
      ]
    }
