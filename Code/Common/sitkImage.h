@@ -34,6 +34,10 @@ namespace simple
 
     virtual ~Image( );
 
+    // copy constructor
+    Image( const Image &img );
+    Image& operator=( const Image &img );
+
     Image( unsigned int Width, unsigned int Height, PixelIDValueEnum ValueEnum );
     Image( unsigned int Width, unsigned int Height, unsigned int Depth, PixelIDValueEnum ValueEnum );
 
@@ -132,6 +136,8 @@ namespace simple
      * templated constructors of this class.
      */
     void __ImplicitInstantiate( void );
+
+    void MakeUniqueForWrite( void );
 
   private:
 

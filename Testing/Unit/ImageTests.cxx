@@ -4,6 +4,11 @@
 #include <sitkImageFileWriter.h>
 #include <sitkHashImageFilter.h>
 
+#include "sitkAddImageFilter.h"
+#include "sitkSubtractImageFilter.h"
+#include "sitkMultiplyImageFilter.h"
+
+
 #include <itkIntTypes.h>
 
 #include "itkImage.h"
@@ -288,4 +293,46 @@ TEST_F(Image,Properties) {
   EXPECT_EQ(shortImage->GetSpacing()[1], 2.8) << " SetSpacing[1]";
   EXPECT_EQ(shortImage->GetSpacing()[2], 3.7) << " SetSpacing[2]";
   shortImage->SetOrigin( spacing );
+}
+
+namespace sitk = itk::simple;
+
+TEST_F(Image, CopyOnWrite)
+{
+  // test that a just constructed image only have 1 referecne
+  sitk::Image img( 10, 10, sitk::sitkInt16 );
+  EXPECT_EQ(static_cast<const sitk::Image *>(&img)->GetImageBase()->GetReferenceCount(), 1 )
+    << " Reference Count for just constructed Image";
+
+  // use the image from the fixture to test some copy constructor
+  EXPECT_EQ(static_cast<const sitk::Image *>(shortImage)->GetImageBase()->GetReferenceCount(), 2 )
+    << " Reference Count for shared shortImage initial";
+  sitk::Image img0 = *shortImage;
+  EXPECT_EQ(static_cast<const sitk::Image *>(shortImage)->GetImageBase()->GetReferenceCount(), 3 )
+    << " Reference Count for shared shortImage copy";
+  sitk::Image imgCopy = img0;
+  EXPECT_EQ(static_cast<const sitk::Image *>(shortImage)->GetImageBase()->GetReferenceCount(), 4 )
+    << " Reference Count for shared shortImage second copy";
+
+  // check set origin for copy on write
+  imgCopy.SetOrigin( std::vector<double>( 3, 2.123 ) );
+  EXPECT_EQ(static_cast<const sitk::Image *>(&imgCopy)->GetImageBase()->GetReferenceCount(), 1 )
+    << " Reference Count for copy after set origin";
+  EXPECT_EQ(static_cast<const sitk::Image *>(&img0)->GetImageBase()->GetReferenceCount(), 3 )
+    << " Reference Count for shared after set origin";
+
+  // check shallow copy on assignment
+  imgCopy = img0;
+  EXPECT_EQ(static_cast<const sitk::Image *>(&imgCopy)->GetImageBase()->GetReferenceCount(), 4 )
+    << " Reference Count for copy after assigment";
+  EXPECT_EQ(static_cast<const sitk::Image *>(&img0)->GetImageBase()->GetReferenceCount(), 4 )
+    << " Reference Count for shared after assignment";
+
+  // check copy on write with set spacing
+  imgCopy.SetSpacing( std::vector<double>( 3, 3.45 ) );
+  EXPECT_EQ(static_cast<const sitk::Image *>(&imgCopy)->GetImageBase()->GetReferenceCount(), 1 )
+    << " Reference Count for copy after set spacing";
+  EXPECT_EQ(static_cast<const sitk::Image *>(&img0)->GetImageBase()->GetReferenceCount(), 3 )
+    << " Reference Count for shared after set spacing";
+  EXPECT_EQ( sitk::Hash( &imgCopy ), sitk::Hash( &img0 ) ) << "Hash for shared and copy after set spacing";
 }
