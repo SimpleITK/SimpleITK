@@ -29,8 +29,8 @@
      "inputB" : "Input/STAPLE1.png",
      "md5hash" : "095f00a68a84df4396914fa758f34dcc"
      "settings" : [
-       { "parameter" : "RunOneIteration", "value" : "0" },
-       { "parameter" : "FullyConnected", "value" : "1" }     
+       { "parameter" : "RunOneIteration", "value" : false },
+       { "parameter" : "FullyConnected", "value" : true }     
      ]
    }
   ]

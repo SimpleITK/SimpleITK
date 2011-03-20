@@ -27,8 +27,8 @@
      "inputB" : "Input/STAPLE2.png",
      "md5hash" : "301858f5eee39b092d28d9837f008fb8"
      "settings" : [
-       { "parameter" : "RunOneIteration", "value" : "0" },
-       { "parameter" : "FullyConnected", "value" : "1" }
+       { "parameter" : "RunOneIteration", "value" : false },
+       { "parameter" : "FullyConnected", "value" : true }
      ]
    }
    {
@@ -38,8 +38,8 @@
      "inputB" : "Input/STAPLE2.png",
      "md5hash" : "07efe67dbc6b70e8efd19ef51d981b92"
      "settings" : [
-       { "parameter" : "RunOneIteration", "value" : "1" },
-       { "parameter" : "FullyConnected", "value" : "0" }
+       { "parameter" : "RunOneIteration", "value" : true },
+       { "parameter" : "FullyConnected", "value" : true }
      ]
    }
   ]

@@ -42,7 +42,7 @@
      "md5hash" : ""
      "settings" : [
        { "parameter" : "FullyConnected",
-         "value" : 1
+         "value" : true
        }
      ]
    }
