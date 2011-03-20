@@ -8,7 +8,8 @@ if(ITK_FOUND)
 endif()
 
 if( NOT ITK_USE_REVIEW )
-  message(FATAL_ERROR "Please reconfigure ITK by turning ITK_USE_REVIEW ON")
+# TODO need to check ITK configuration to verify that it has the needed modules
+#  message(FATAL_ERROR "Please reconfigure ITK by turning ITK_USE_REVIEW ON")
 endif()
 
 
