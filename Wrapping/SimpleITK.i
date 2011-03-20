@@ -110,7 +110,6 @@ typedef unsigned int uint32_t;
 %include "sitkImageFileReader.h"
 %include "sitkHashImageFilter.h"
 %include "sitkStatisticsImageFilter.h"
-%include "sitkRecursiveGaussianImageFilter.h"
 %include "sitkExtractImageFilter.h"
 %include "sitkCastImageFilter.h"
 %include "sitkPixelContainer.h"
