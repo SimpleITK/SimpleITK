@@ -6,7 +6,7 @@
   "doc" : "",
   "pixel_types" : "IntegerPixelIDTypeList",
   "filter_type" : "itk::BinaryGrindPeakImageFilter<InputImageType>",
-  "members" : [    
+  "members" : [
     {
       "name" : "FullyConnected",
       "type" : "bool",
@@ -32,14 +32,14 @@
      "tag" : "BinaryGrindPeak1",
      "description" : "Test binary grind peak with default not fully connected",
      "inputA" : "Input/WhiteDots.png",
-     "md5hash" : ""
+     "md5hash" : "5e9804e71397b0edc52bd5bc4f75f64a"
      "settings" : [ ]
    },
    {
      "tag" : "BinaryGrindPeak2",
      "description" : "Test binary grind peak fully connected",
      "inputA" : "Input/WhiteDots.png",
-     "md5hash" : ""
+     "md5hash" : "57c1ca7489d2ce0be262087e035f4c9e"
      "settings" : [
        { "parameter" : "FullyConnected",
          "value" : "true",
