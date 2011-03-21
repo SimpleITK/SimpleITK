@@ -27,8 +27,8 @@
      "inputB" : "Input/STAPLE2.png",
      "md5hash" : "301858f5eee39b092d28d9837f008fb8"
      "settings" : [
-       { "parameter" : "RunOneIteration", "value" : false },
-       { "parameter" : "FullyConnected", "value" : true }
+       { "parameter" : "RunOneIteration", "value" : "false", "python_value" : "False" },
+       { "parameter" : "FullyConnected", "value" : "true", "python_value" : "True" }
      ]
    }
    {
@@ -36,10 +36,10 @@
      "description" : "Test grayscale geodesic dilate, one iteration",
      "inputA" : "Input/STAPLE1.png",
      "inputB" : "Input/STAPLE2.png",
-     "md5hash" : "07efe67dbc6b70e8efd19ef51d981b92"
+     "md5hash" : "512b043be99c423638db7cb7bc6fb2df"
      "settings" : [
-       { "parameter" : "RunOneIteration", "value" : true },
-       { "parameter" : "FullyConnected", "value" : true }
+       { "parameter" : "RunOneIteration", "value" : "true", "python_value" : "True" },
+       { "parameter" : "FullyConnected", "value" : "true", "python_value" : "True" }
      ]
    }
   ]
