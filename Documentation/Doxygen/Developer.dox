@@ -1,0 +1,58 @@
+/**
+\page Developer SimpleITK Developer Notes
+
+\section Procedures Procedures
+
+\section TandT Tips and Tricks
+
+\subsection JSONTips Working with JSON file.
+
+SimpleITK uses a large number of JSON files as input for generated code. Adding support for your text editor to understand the syntax is advantageous. 
+
+-Emacs
+
+The following can be added to your ".emacs" file.
+
+\verbatim
+; Add JSON files to automode list, use javascript mode
+(add-to-list 'auto-mode-alist '("\\.json\\'" . js-mode) )
+(add-hook 'js-mode-hook (function (lambda ()
+  (setq tab-width 2
+        c-basic-offset 2
+        show-trailing-whitespace 1) ) ) )
+\endverbatim
+
+\subsection CCacheTips Using ccache to accelerate re-compilation.
+
+SimpleITK has a complicated set of dependency that is handled the best
+it can be with CMake and the code generation tools
+implemented. However, when switching between branches and making
+changes to certain files, such as the "Expand" templates a large
+number of files will have to be re-compiled. Even though the generated
+code may not have changed, it's impossible for CMake or your make-file
+tool to determine this.
+
+Fortunately, there is a tool which can cache results of compilation and
+reduce recompilation. Using \link http://ccache.samba.org/ ccache
+\endlink can greatly accelerate the development time when rebuilding
+SimpleITK frequently. Usage is quite simple, download and
+install. However, getting CMake to work with the compiler requires a
+couple little scripts, which I called "ccache-cc" and "ccache-c++":
+
+\verbatim
+# !/usr/bin/env bash
+/usr/local/bin/ccache /usr/bin/cc "$@"
+\endverbatim
+
+\verbatim
+# !/usr/bin/env bash
+/usr/local/bin/ccache /usr/bin/c++ "$@"
+\endverbatim
+
+Then to configure SimpleITK, set your environment variable CC, and CXX,
+to the previous scripts respectfully. This should be done before CMake
+is run, so that it will correctly detect the compiler and configure
+SimpleITK. Now enjoy the faster re-compilation times. 
+
+
+*/
