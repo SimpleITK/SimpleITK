@@ -5,7 +5,7 @@
   "number_of_inputs" : 1,
   "doc" : "\\todo this filter may not work in 3D\n \\note the output of this filter is still the same as the input type eventhought the output is 0 or 1.",
   "pixel_types" : "IntegerPixelIDTypeList",
-  "members" : [  
+  "members" : [
     { "name" : "Iteration",
       "type" : "uint32_t",
       "default" : "3",
@@ -13,7 +13,25 @@
     }
   ],
   "custom_methods" : [],
-   /* this filter should really have an input of a thinned image, not sure how to do that without a new test image */
+   /* I don't think this filter actually works even in 2D */
   "tests" : [
+    {
+     "tag" : "BinaryPruning",
+     "description" : "Test binnary pruning with defaults",
+     "inputA" : "Input/Thin.png",
+     "md5hash" : ""
+     "settings" : []
+    },
+    {
+     "tag" : "BinaryPruning50",
+     "description" : "Test binnary pruning with more iterations",
+     "inputA" : "Input/Thin.png",
+     "md5hash" : ""
+     "settings" : [
+       { "parameter" : "Iteration",
+         "value" : "50"
+       }
+     ]
+    }
   ]
 }
