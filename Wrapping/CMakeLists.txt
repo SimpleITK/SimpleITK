@@ -10,7 +10,7 @@ option ( WRAP_RUBY "Wrap Ruby" OFF )
 set(CMAKE_MODULE_PATH ${SimpleITK_SOURCE_DIR}/Wrapping)
 
 if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA OR WRAP_CSHARP OR WRAP_TCL OR WRAP_R OR WRAP_RUBY )
-  find_package ( SWIG REQUIRED )
+  find_package ( SWIG 2 REQUIRED )
   include ( "UseSWIGLocal.cmake" )
   set_source_files_properties ( SimpleITK.i PROPERTIES CPLUSPLUS ON )
   file ( GLOB SWIG_HEADERS ${SimpleITK_SOURCE_DIR}/Code/*/*.h)
