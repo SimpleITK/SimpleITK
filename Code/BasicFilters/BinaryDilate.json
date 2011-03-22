@@ -58,7 +58,7 @@
          "type" : "uint32_t",
          "dim_vec" : 1,
          "value" : "{20,1}",
-         "tcl_value" : "20 1",
+         "tcl_value" : "[list 20 1]",
          "python_value" : "[20, 1]",
          "ruby_value" : "[20, 1]"
 
