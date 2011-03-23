@@ -25,6 +25,7 @@ mark_as_advanced(LIBRARY_OUTPUT_PATH EXECUTABLE_OUTPUT_PATH)
 
 set ( SimpleITK_INCLUDE_DIR
       ${CMAKE_SOURCE_DIR}/Code/Common
+      ${CMAKE_SOURCE_DIR}/Code/Registration
       ${CMAKE_SOURCE_DIR}/Code/Common/Ancillary
       ${CMAKE_SOURCE_DIR}/Code/BasicFilters
       ${CMAKE_SOURCE_DIR}/Code/IO
@@ -34,7 +35,7 @@ set ( SimpleITK_INCLUDE_DIR
 
 include_directories( ${SimpleITK_INCLUDE_DIR} )
 
-set ( SimpleITK_LIBRARIES ${ITK_LIBRARIES} SimpleITKCommon SimpleITKIO SimpleITKBasicFilters)
+set ( SimpleITK_LIBRARIES SimpleITKCommon SimpleITKIO SimpleITKBasicFilters  ${ITK_LIBRARIES} )
 
 # Be sure to clear these each time
 set ( GENERATED_TEST_LIST "" CACHE INTERNAL "" )
@@ -72,9 +73,20 @@ check_include_file_cxx( tr1/type_traits SITK_HAS_STLTR1_TR1_TYPE_TRAITS )
 check_include_file_cxx( type_traits SITK_HAS_STLTR1_TYPE_TRAITS )
 
 if ( NOT SITK_HAS_STLTR1_TR1_FUNCTIONAL AND NOT SITK_HAS_STLTR1_FUNCTIONAL )
-message( FATAL_ERROR "SimpleITK requires usage of parts C++ Technical Report 1 (TR1)\n"
-    "It may be available as an optional download for your compiler. Please see the FAQ for details." )
+message( FATAL_ERROR "SimpleITK requires usage of parts C++ Technical Report 1 (TR1).\n"
+    "It may be available as an optional download for your compiler. Please see the FAQ for details.\n" )
 endif ( NOT SITK_HAS_STLTR1_TR1_FUNCTIONAL AND NOT SITK_HAS_STLTR1_FUNCTIONAL )
+
+# check for stdint
+# This generates a configuration error if the compiler is not supported
+check_include_file_cxx( stdint.h SITK_HAS_STDINT )
+
+if ( NOT SITK_HAS_STDINT )
+message( FATAL_ERROR "SimpleITK requires usage of C99 stdint.\n"
+    "It may be available as an optional download for your compiler.\n"
+    "Please see the FAQ for details and to see if your compiler is supported.\n" )
+endif ( NOT SITK_HAS_STDINT )
+
 
 
 

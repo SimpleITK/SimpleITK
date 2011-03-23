@@ -1,4 +1,4 @@
-file ( GLOB SimpleITKCommonSource *.cxx *.h )
+file ( GLOB SimpleITKCommonSource *.cxx *.h ../Registration/*.h ../Registration/*.cxx)
 file ( GLOB SimpleITKAncillarySource Ancillary/*.h Ancillary/*.cxx )
 
 include_directories ( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/Ancillary )

@@ -35,51 +35,11 @@
 }
 
 // Language Specific Sections
-
-// CSharp
-#if SWIGCSHARP
-//%CSharpTypemapHelper( SimpleImageBase::Pointer, IntPtr )
-%CSharpPointerTypemapHelper( itk::simple::SimpleImageBase::Pointer, IntPtr )
-//%rename(ToString) toString; // TODO: Fix compilation error
-#endif  // End of C# specific sections
-
-// Java
-#if SWIGJAVA
-%include "carrays.i"
-%array_class(int8_t, int8Array);
-%array_class(uint8_t, uint8Array);
-%array_class(int16_t, int16Array);
-%array_class(uint16_t, uint16Array);
-%array_class(int32_t, int32Array);
-%array_class(uint32_t, uint32Array);
-%array_class(float, floatArray);
-%array_class(double, doubleArray);
-%pragma(java) jniclasscode=%{
-  static {
-    System.loadLibrary ( "SimpleITKJava" );
-  }
-%}
-
-// Make Java method names follow the naming conventions
-// See the swig.swg file, and ruby.swg for details on how this works
-// Documented in: http://www.swig.org/Doc2.0/SWIG.html#SWIG_advanced_renaming
-%rename("%(firstlowercase)s", %$isfunction ) "";
-
-#endif // End of Java specific sections
-
-#if SWIGTCL
-// Code to rebuild tclsh
-%include "tclsh.i"
-#endif
-
-#if SWIGPYTHON
-// Make __str__ transparent by renaming ToString to __str__
-%rename(__str__) ToString;
-#endif
-
-#if SWIGLUA
-#endif
-
+%include CSharp.i
+%include Java.i
+%include Tcl.i
+%include Python.i
+%include Lua.i
 
 // Help SWIG handle std vectors
 %include "std_vector.i"
@@ -110,10 +70,21 @@ typedef unsigned int uint32_t;
 %include "sitkImageFileReader.h"
 %include "sitkHashImageFilter.h"
 %include "sitkStatisticsImageFilter.h"
-%include "sitkRecursiveGaussianImageFilter.h"
 %include "sitkExtractImageFilter.h"
 %include "sitkCastImageFilter.h"
 %include "sitkPixelContainer.h"
+
+// Registration classes
+%include "sitkTransform.h"
+%include "sitkAffineTransform.h"
+%include "sitkInterpolate.h"
+%include "sitkLinearInterpolate.h"
+%include "sitkMetric.h"
+%include "sitkMattesMutualInformationMetric.h"
+%include "sitkOptimizer.h"
+%include "sitkRegularStepGradientDescentOptimizer.h"
+%include "sitkRegistration.h"
+
 
 // Auto-generated headers
 %include "SimpleITKBasicFiltersGeneratedHeaders.i"
