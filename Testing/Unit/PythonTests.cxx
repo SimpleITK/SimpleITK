@@ -33,7 +33,7 @@ TEST_F(Python,SimpleGaussian) {
 
   image = reader.SetFileName ( output ).Execute();
   ASSERT_TRUE ( image != NULL );
-  ASSERT_TRUE ( image->GetImageBase().IsNotNull() ) << "Loaded output image";
+  ASSERT_TRUE ( image->GetImageBase() != NULL ) << "Loaded output image";
   EXPECT_EQ ( "9d3d4acf41aa62b453cfd6684ad7c361290462d1", hasher.Execute ( image ) );
   delete image;
 }
