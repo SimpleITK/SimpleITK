@@ -31,7 +31,7 @@ std::string ExtractImageFilter::ToString() const
   }
 
 
-  Image* ExtractImageFilter::Execute ( Image* image, size_t s, size_t d )
+  Image ExtractImageFilter::Execute ( const Image& image, size_t s, size_t d )
   {
   this->m_Slice = s;
   this->m_Dimension = d;
@@ -41,11 +41,11 @@ std::string ExtractImageFilter::ToString() const
 //
 // Execute
 //
-Image* ExtractImageFilter::Execute ( Image* image )
+Image ExtractImageFilter::Execute ( const Image &image )
   {
 
-    PixelIDValueType type = image->GetPixelIDValue();
-    unsigned int dimension = image->GetDimension();
+    PixelIDValueType type = image.GetPixelIDValue();
+    unsigned int dimension = image.GetDimension();
     if ( dimension != 3 )
       {
       sitkExceptionMacro ( << "ExtractImageFilter operates on 3 dimensional images only" );
@@ -63,10 +63,10 @@ Image* ExtractImageFilter::Execute ( Image* image )
 // ExecuteInternal
 //
 template <class TImageType>
-Image* ExtractImageFilter::ExecuteInternal ( Image* inImage )
+Image ExtractImageFilter::ExecuteInternal ( const Image& inImage )
   {
-  typename TImageType::Pointer image =
-    dynamic_cast <TImageType*> ( inImage->GetImageBase() );
+  typename TImageType::ConstPointer image =
+    dynamic_cast <const TImageType*> ( inImage.GetImageBase() );
 
   if ( image.IsNull() )
     {
@@ -85,7 +85,7 @@ Image* ExtractImageFilter::ExecuteInternal ( Image* inImage )
   size = image->GetLargestPossibleRegion().GetSize();
   size[this->m_Dimension] = 1;
   typename TImageType::RegionType region ( index, size );
-  
+
   filter->SetDirectionCollapseToSubmatrix();
   filter->SetExtractionRegion ( region );
 
@@ -93,13 +93,13 @@ Image* ExtractImageFilter::ExecuteInternal ( Image* inImage )
   typename TImageType::Pointer filterOutput = filter->GetOutput();
 
   // Make the index 0,0,0
+  //
+  // FIX ME this changes the origin of the image, it is bad and a bug
   index.Fill ( 0 );
   region.SetIndex ( index );
   filterOutput->SetRegions ( region );
-  Image* out = new Image( filterOutput );
-  
-  filterOutput->DisconnectPipeline();
-  return out;
+
+  return Image( filterOutput );
   }
 
 } // end namespace simple

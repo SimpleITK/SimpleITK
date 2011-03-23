@@ -39,10 +39,10 @@ std::string StatisticsImageFilter::ToString() const
 // Execute
 //
 
-Image* StatisticsImageFilter::Execute ( Image* image1 )
+Image StatisticsImageFilter::Execute ( const Image& image1 )
   {
-    PixelIDValueType type = image1->GetPixelIDValue();
-    unsigned int dimension = image1->GetDimension();
+    PixelIDValueType type = image1.GetPixelIDValue();
+    unsigned int dimension = image1.GetDimension();
 
     return this->m_MemberFactory->GetMemberFunction( type, dimension )( image1 );
   }
@@ -53,13 +53,13 @@ Image* StatisticsImageFilter::Execute ( Image* image1 )
 // ExecuteInternal
 //
 template <class TImageType>
-Image* StatisticsImageFilter::ExecuteInternal ( Image* inImage1 )
+Image StatisticsImageFilter::ExecuteInternal ( const Image& inImage1 )
   {
   typedef TImageType     InputImageType;
   typedef InputImageType OutputImageType;
 
-  typename InputImageType::Pointer image1 =
-    dynamic_cast <InputImageType*> ( inImage1->GetImageBase() );
+  typename InputImageType::ConstPointer image1 =
+    dynamic_cast <const InputImageType* > ( inImage1.GetImageBase() );
 
   if ( image1.IsNull() )
     {
@@ -71,9 +71,8 @@ Image* StatisticsImageFilter::ExecuteInternal ( Image* inImage1 )
   typename FilterType::Pointer filter = FilterType::New();
   filter->SetInput( image1 );
   filter->Update();
-  Image* out = new Image( filter->GetOutput() );
 
-  return out;
+  return Image( filter->GetOutput() );
   }
 
 } // end namespace simple

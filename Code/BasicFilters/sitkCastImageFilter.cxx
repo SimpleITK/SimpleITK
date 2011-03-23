@@ -75,12 +75,12 @@ PixelIDValueType CastImageFilter::GetOutputPixelType( void ) const
 //
 // Execute
 //
-Image* CastImageFilter::Execute ( Image* image )
+Image CastImageFilter::Execute ( const Image& image )
 {
 
-  const PixelIDValueType inputType = image->GetPixelIDValue();
+  const PixelIDValueType inputType = image.GetPixelIDValue();
   const PixelIDValueType outputType = this->m_OutputPixelType;
-  const unsigned int dimension = image->GetDimension();
+  const unsigned int dimension = image.GetDimension();
 
   if (this->m_DualMemberFactory->HasMemberFunction( inputType, outputType,  dimension ) )
     {

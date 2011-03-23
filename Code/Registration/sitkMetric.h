@@ -20,10 +20,10 @@ namespace simple
   public:
     Metric() {};
     virtual ~Metric() {};
-    virtual ::itk::SingleValuedCostFunction::Pointer GetMetric ( Image* image ) { return NULL; };
+    virtual ::itk::SingleValuedCostFunction::Pointer GetMetric ( const Image & image ) = 0;
   protected:
     friend class Registration;
-    virtual Metric* Clone() { return new Metric ( *this ); }
+    virtual Metric* Clone() = 0;
   };
 }
 }

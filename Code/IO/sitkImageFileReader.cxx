@@ -11,7 +11,7 @@
 namespace itk {
   namespace simple {
 
-    Image* ReadImage ( std::string filename ) { ImageFileReader reader; return reader.SetFileName ( filename ).Execute(); }
+    Image ReadImage ( std::string filename ) { ImageFileReader reader; return reader.SetFileName ( filename ).Execute(); }
 
     ImageFileReader& ImageFileReader::SetFileName ( std::string fn ) {
       this->m_FileName = fn;
@@ -22,8 +22,7 @@ namespace itk {
       return this->m_FileName;
     }
 
-    Image* ImageFileReader::Execute () {
-      Image* image = NULL;
+    Image ImageFileReader::Execute () {
 
       // todo check if filename does not exits for robust error handling
 
@@ -52,10 +51,10 @@ namespace itk {
         switch (dimension)
           {
           case 2:
-            image = this->ExecuteInternalReadScalar<2>( componentType );
+            return this->ExecuteInternalReadScalar<2>( componentType );
             break;
           case 3:
-            image = this->ExecuteInternalReadScalar<3>( componentType );
+            return this->ExecuteInternalReadScalar<3>( componentType );
             break;
           }
         }
@@ -71,10 +70,10 @@ namespace itk {
         switch (dimension)
           {
           case 2:
-            image = this->ExecuteInternalReadVector<2>( componentType );
+            return this->ExecuteInternalReadVector<2>( componentType );
             break;
           case 3:
-            image = this->ExecuteInternalReadVector<3>( componentType );
+            return this->ExecuteInternalReadVector<3>( componentType );
             break;
           }
         }
@@ -83,18 +82,11 @@ namespace itk {
         sitkExceptionMacro(  "Unknown PixelType: "  << (int) componentType );
         }
 
-
-      if ( image == NULL )
-        {
-        sitkExceptionMacro( "Unable to load image \"" << this->m_FileName << "\"" );
-        }
-
-      return image;
     }
 
 
   template < unsigned int VImageDimension >
-  Image* ImageFileReader::ExecuteInternalReadScalar( itk::ImageIOBase::IOComponentType componentType )
+  Image ImageFileReader::ExecuteInternalReadScalar( itk::ImageIOBase::IOComponentType componentType )
   {
     switch(componentType)
       {
@@ -131,13 +123,13 @@ namespace itk {
     case itk::ImageIOBase::UNKNOWNCOMPONENTTYPE:
     default:
       assert( false ); // should never get here unless we forgot a type
-      return NULL;
+      sitkExceptionMacro( "Logic error!" );
     }
   }
 
 
   template < unsigned int VImageDimension >
-  Image* ImageFileReader::ExecuteInternalReadVector( itk::ImageIOBase::IOComponentType componentType )
+  Image ImageFileReader::ExecuteInternalReadVector( itk::ImageIOBase::IOComponentType componentType )
   {
     switch(componentType)
       {
@@ -174,13 +166,13 @@ namespace itk {
     case itk::ImageIOBase::UNKNOWNCOMPONENTTYPE:
     default:
       assert( false ); // should never get here unless we forgot a type
-      return NULL;
+      sitkExceptionMacro( "Logic error!" );
     }
   }
 
 
   template <class TImageType>
-  typename EnableIf<IsInstantiated<TImageType>::Value, Image* >::Type
+  typename EnableIf<IsInstantiated<TImageType>::Value, Image >::Type
   ImageFileReader::ExecuteInternal( void )
   {
 
@@ -194,12 +186,12 @@ namespace itk {
     typename Reader::Pointer reader = Reader::New();
     reader->SetFileName( this->m_FileName.c_str() );
     reader->Update();
-    Image* image = new Image( reader->GetOutput() );
-    return image;
+
+    return Image( reader->GetOutput() );
   }
 
   template <class TImageType>
-  typename DisableIf<IsInstantiated<TImageType>::Value, Image* >::Type
+  typename DisableIf<IsInstantiated<TImageType>::Value, Image >::Type
   ImageFileReader::ExecuteInternal( void )
   {
     typedef TImageType                      ImageType;
@@ -207,7 +199,6 @@ namespace itk {
                         << "Pixel Type: "
                         << GetPixelIDValueAsString( ImageTypeToPixelIDValue<ImageType>::Result ) << std::endl
                         << "Refusing to load! " << std::endl );
-    return NULL;
   }
 
   }

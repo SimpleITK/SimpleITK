@@ -14,7 +14,7 @@ namespace simple
 
 
   template<class TImage>
-  ::itk::SingleValuedCostFunction::Pointer MattesMutualInformationMetric::GetMetricInternal ( Image* image )
+  ::itk::SingleValuedCostFunction::Pointer MattesMutualInformationMetric::GetMetricInternal ( const Image &image )
   {
     typename ::itk::MattesMutualInformationImageToImageMetric<TImage,TImage>::Pointer metric = ::itk::MattesMutualInformationImageToImageMetric<TImage,TImage>::New();
     metric->SetNumberOfHistogramBins ( 128 );
@@ -22,10 +22,10 @@ namespace simple
     return metric.GetPointer();
   }
 
-  ::itk::SingleValuedCostFunction::Pointer MattesMutualInformationMetric::GetMetric ( Image* image )
+  ::itk::SingleValuedCostFunction::Pointer MattesMutualInformationMetric::GetMetric ( const Image &image )
   {
-  const PixelIDValueType fixedType = image->GetPixelIDValue();
-  const unsigned int fixedDim = image->GetDimension();
+  const PixelIDValueType fixedType = image.GetPixelIDValue();
+  const unsigned int fixedDim = image.GetDimension();
   if (this->m_MemberFactory->HasMemberFunction( fixedType, fixedDim ) )
     {
       return this->m_MemberFactory->GetMemberFunction( fixedType, fixedDim )( image );

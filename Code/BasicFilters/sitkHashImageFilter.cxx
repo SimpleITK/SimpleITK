@@ -44,21 +44,21 @@ namespace itk {
       return *this;
       }
 
-    std::string HashImageFilter::Execute ( Image* image ) {
+    std::string HashImageFilter::Execute ( const Image& image ) {
 
-      PixelIDValueType type = image->GetPixelIDValue();
-      unsigned int dimension = image->GetDimension();
+      PixelIDValueType type = image.GetPixelIDValue();
+      unsigned int dimension = image.GetDimension();
 
       return this->m_MemberFactory->GetMemberFunction( type, dimension )( image );
     }
 
     template <class TImageType>
-    std::string HashImageFilter::ExecuteInternal ( Image* inImage )
+    std::string HashImageFilter::ExecuteInternal ( const Image& inImage )
     {
       typedef TImageType                                   InputImageType;
 
       typename InputImageType::ConstPointer image =
-        dynamic_cast <InputImageType*> ( inImage->GetImageBase() );
+        dynamic_cast <const InputImageType*> ( inImage.GetImageBase() );
 
       typedef itk::HashImageFilter<InputImageType> HashFilterType;
       typename HashFilterType::Pointer hasher = HashFilterType::New();
@@ -77,11 +77,9 @@ namespace itk {
 
       hasher->Update();
 
-      std::string output = hasher->GetHash();
-
-      return output;
+      return hasher->GetHash();
     }
-    std::string Hash ( Image* image, HashImageFilter::HashFunction function ) {
+    std::string Hash ( const Image& image, HashImageFilter::HashFunction function ) {
       return HashImageFilter().SetHashFunction ( function ).Execute ( image );
     }
   }

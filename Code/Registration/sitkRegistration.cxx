@@ -12,7 +12,7 @@ namespace itk
 namespace simple
 {
 
-std::vector<double> Register ( Image* fixed, Image* moving, Transform *transform, Interpolate *interpolate, Metric *metric, Optimizer *optimizer )
+std::vector<double> Register ( const Image &fixed, const Image & moving, Transform *transform, Interpolate *interpolate, Metric *metric, Optimizer *optimizer )
   {
   Registration registration;
   registration.SetTransform ( transform );
@@ -39,12 +39,12 @@ std::vector<double> Register ( Image* fixed, Image* moving, Transform *transform
 }
 
 template<class TImage>
-std::vector<double> Registration::ExecuteInternal ( Image* fixed, Image* moving )
+std::vector<double> Registration::ExecuteInternal (const Image &fixed, const Image& moving )
 {
   typedef itk::ImageRegistrationMethod<TImage,TImage>  RegistrationType;
   typename RegistrationType::Pointer registration = RegistrationType::New();
 
-  ::itk::TransformBase::Pointer transformBase = m_Transform->GetTransform ( fixed->GetDimension() ).GetPointer();
+  ::itk::TransformBase::Pointer transformBase = m_Transform->GetTransform ( fixed.GetDimension() ).GetPointer();
   ::itk::Object::Pointer interpolatorBase = m_Interpolate->GetInterpolator ( fixed ).GetPointer();
   ::itk::SingleValuedCostFunction::Pointer metricBase = m_Metric->GetMetric ( fixed ).GetPointer();
   ::itk::Optimizer::Pointer optimizerBase = m_Optimizer->GetOptimizer().GetPointer();
@@ -70,8 +70,8 @@ std::vector<double> Registration::ExecuteInternal ( Image* fixed, Image* moving 
   registration->SetInterpolator ( dynamic_cast<typename RegistrationType::InterpolatorType*> ( interpolatorBase.GetPointer() ) );
   registration->SetMetric ( dynamic_cast<typename RegistrationType::MetricType*> ( metricBase.GetPointer() ) );
   registration->SetOptimizer ( dynamic_cast<typename RegistrationType::OptimizerType*> ( optimizerBase.GetPointer() ) );
-  registration->SetFixedImage( dynamic_cast<typename RegistrationType::FixedImageType*> (fixed->GetImageBase().GetPointer()));
-  registration->SetMovingImage( dynamic_cast<typename RegistrationType::MovingImageType*> (moving->GetImageBase().GetPointer()));
+  registration->SetFixedImage( dynamic_cast<const typename RegistrationType::FixedImageType*> (fixed.GetImageBase()));
+  registration->SetMovingImage( dynamic_cast<const typename RegistrationType::MovingImageType*> (moving.GetImageBase()));
 
   // Why this isn't the default, I'll never know...
   typedef ::itk::MatrixOffsetTransformBase<double, TImage::ImageDimension, TImage::ImageDimension> OffsetTransformType;
@@ -90,7 +90,7 @@ std::vector<double> Registration::ExecuteInternal ( Image* fixed, Image* moving 
   typename RegistrationType::TransformType::ParametersType params = registration->GetTransform()->GetParameters();
   registration->SetInitialTransformParameters ( params );
 
-  std::vector<double> tempScales = m_Transform->GetOptimizerScales ( fixed->GetDimension() );
+  std::vector<double> tempScales = m_Transform->GetOptimizerScales ( fixed.GetDimension() );
   typename RegistrationType::OptimizerType::ScalesType scales ( tempScales.size() );
   scales.Fill ( 1.0 );
   for ( unsigned int idx = 0; idx < tempScales.size(); idx++ )
@@ -141,20 +141,20 @@ std::vector<double> Registration::ExecuteInternal ( Image* fixed, Image* moving 
   return parameters;
   }
 
-  std::vector<double> Registration::Execute ( Image* fixed, Image* moving )
+  std::vector<double> Registration::Execute ( const Image &fixed, const Image & moving )
   {
-  const PixelIDValueType fixedType = fixed->GetPixelIDValue();
-  const unsigned int fixedDim = fixed->GetDimension();
-  if ( fixed->GetPixelIDValue() != moving->GetPixelIDValue() )
+  const PixelIDValueType fixedType = fixed.GetPixelIDValue();
+  const unsigned int fixedDim = fixed.GetDimension();
+  if ( fixed.GetPixelIDValue() != moving.GetPixelIDValue() )
     {
     sitkExceptionMacro ( << "Fixed and moving images must be the same datatype! Got "
-                         << fixed->GetPixelIDValue() << " and " << moving->GetPixelIDValue() );
+                         << fixed.GetPixelIDValue() << " and " << moving.GetPixelIDValue() );
     }
 
-  if ( fixed->GetDimension() != moving->GetDimension() )
+  if ( fixed.GetDimension() != moving.GetDimension() )
     {
     sitkExceptionMacro ( << "Fixed and moving images must be the same dimensionality! Got "
-                         << fixed->GetDimension() << " and " << moving->GetDimension() );
+                         << fixed.GetDimension() << " and " << moving.GetDimension() );
     }
 
   if (this->m_MemberFactory->HasMemberFunction( fixedType, fixedDim ) )

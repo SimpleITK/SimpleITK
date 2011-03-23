@@ -22,11 +22,11 @@ class MattesMutualInformationMetric : public Metric
   {
   public:
     MattesMutualInformationMetric();
-    virtual ::itk::SingleValuedCostFunction::Pointer GetMetric ( Image* image );
+    virtual ::itk::SingleValuedCostFunction::Pointer GetMetric ( const Image &image );
 
   protected:
     template<class TImage>
-    ::itk::SingleValuedCostFunction::Pointer GetMetricInternal ( Image* image );
+    ::itk::SingleValuedCostFunction::Pointer GetMetricInternal ( const Image &image );
 
     template < class TMemberFunctionPointer >
     struct GetMetricMemberFunctionAddressor
@@ -40,7 +40,7 @@ class MattesMutualInformationMetric : public Metric
       }
     };
 
-    typedef ::itk::SingleValuedCostFunction::Pointer (MattesMutualInformationMetric::*MemberFunctionType)( Image* image );
+    typedef ::itk::SingleValuedCostFunction::Pointer (MattesMutualInformationMetric::*MemberFunctionType)( const Image &image );
     friend struct GetMetricMemberFunctionAddressor<MemberFunctionType>;
     std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
     virtual Metric* Clone() { return new MattesMutualInformationMetric ( *this ); }
