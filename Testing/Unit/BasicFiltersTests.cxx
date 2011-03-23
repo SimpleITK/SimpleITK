@@ -34,7 +34,7 @@ TEST(BasicFilters,Cast) {
   reader.SetFileName ( dataFinder.GetFile ( "Input/RA-Float.nrrd" ) );
   image = reader.Execute();
   ASSERT_TRUE ( image != NULL );
-  ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
+  ASSERT_TRUE ( image->GetImageBase() != NULL );
   hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
   EXPECT_EQ ( "3ccccde44efaa3d688a86e94335c1f16", hasher.Execute ( image ) );
 

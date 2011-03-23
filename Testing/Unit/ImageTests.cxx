@@ -93,7 +93,7 @@ public:
 
 
 TEST_F(Image,Create) {
-  ASSERT_TRUE ( shortImage->GetImageBase().IsNotNull() );
+  ASSERT_TRUE ( shortImage->GetImageBase() != NULL );
   EXPECT_EQ ( shortImage->GetWidth(), itkShortImage->GetLargestPossibleRegion().GetSize()[0] ) << " Checking image width";
   EXPECT_EQ ( shortImage->GetHeight(), itkShortImage->GetLargestPossibleRegion().GetSize()[1] ) << " Checking image height";
   EXPECT_EQ ( shortImage->GetDepth(), itkShortImage->GetLargestPossibleRegion().GetSize()[2] ) << " Checking image depth";

@@ -31,7 +31,7 @@ TEST_F(CXX,SimpleGaussian) {
 
   image = reader.SetFileName ( output ).Execute();
   ASSERT_TRUE ( image != NULL );
-  ASSERT_TRUE ( image->GetImageBase().IsNotNull() ) << "Loaded output image";
+  ASSERT_TRUE ( image->GetImageBase() != NULL ) << "Loaded output image";
   EXPECT_EQ ( "de64d7d8ebfa529581f57b8c603f3d656564284f", hasher.Execute ( image ) );
   delete image;
 }
@@ -58,7 +58,7 @@ TEST_F(CXX,SimpleGaussianFunctional) {
 
   image = reader.SetFileName ( output ).Execute();
   ASSERT_TRUE ( image != NULL );
-  ASSERT_TRUE ( image->GetImageBase().IsNotNull() ) << "Loaded output image";
+  ASSERT_TRUE ( image->GetImageBase() != NULL ) << "Loaded output image";
   EXPECT_EQ ( "de64d7d8ebfa529581f57b8c603f3d656564284f", hasher.Execute ( image ) );
   delete image;
 }

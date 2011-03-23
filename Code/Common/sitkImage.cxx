@@ -36,8 +36,8 @@ namespace itk
 
     virtual PimpleImageBase *ShallowCopy(void) const = 0;
     virtual PimpleImageBase *DeepCopy(void) const = 0;
-    virtual itk::DataObject::Pointer GetDataBase( void ) = 0;
-    virtual itk::DataObject::ConstPointer GetDataBase( void ) const = 0;
+    virtual itk::DataObject* GetDataBase( void ) = 0;
+    virtual const itk::DataObject* GetDataBase( void ) const = 0;
 
     virtual unsigned int GetWidth( void ) const { return this->GetSize( 0 ); }
     virtual unsigned int GetHeight( void ) const { return this->GetSize( 1 ); }
@@ -94,7 +94,6 @@ namespace itk
       }
 
     virtual PimpleImageBase *ShallowCopy( void ) const { return new Self(this->m_Image.GetPointer()); }
-
     virtual PimpleImageBase *DeepCopy( void ) const { return this->DeepCopy<TImageType>(); }
 
     template <typename UImageType>
@@ -117,8 +116,10 @@ namespace itk
         sitkExceptionMacro( "This method is not implemented yet" );
         return new Self( this->m_Image.GetPointer() );
       }
-    virtual itk::DataObject::Pointer GetDataBase( void ) { return this->m_Image.GetPointer(); }
-    virtual itk::DataObject::ConstPointer GetDataBase( void ) const { return this->m_Image.GetPointer(); }
+
+    virtual itk::DataObject* GetDataBase( void ) { return this->m_Image.GetPointer(); }
+    virtual const itk::DataObject* GetDataBase( void ) const { return this->m_Image.GetPointer(); }
+
 
     PixelIDValueType GetPixelIDValue(void) throw()
       {
@@ -466,17 +467,17 @@ namespace itk
       Allocate ( Width, Height, Depth, ValueEnum );
     }
 
-    itk::DataObject::Pointer Image::GetImageBase( void )
+    itk::DataObject* Image::GetImageBase( void )
     {
       assert( m_PimpleImage );
       this->MakeUniqueForWrite();
       return m_PimpleImage->GetDataBase();
     }
 
-    itk::DataObject::ConstPointer Image::GetImageBase( void ) const
+    const itk::DataObject* Image::GetImageBase( void ) const
     {
       assert( m_PimpleImage );
-      return m_PimpleImage->GetDataBase().GetPointer();
+      return m_PimpleImage->GetDataBase();
     }
 
     PixelIDValueType Image::GetPixelIDValue( void ) const
