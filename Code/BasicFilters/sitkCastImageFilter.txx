@@ -17,14 +17,14 @@ namespace simple
 //----------------------------------------------------------------------------
 
 template<typename TImageType, typename TOutputImageType>
-Image*
-CastImageFilter::ExecuteInternalCast( Image* inImage )
+Image
+CastImageFilter::ExecuteInternalCast( const Image& inImage )
 {
   typedef TImageType       InputImageType;
   typedef TOutputImageType OutputImageType;
 
   typename InputImageType::ConstPointer image =
-    dynamic_cast <InputImageType*> ( inImage->GetImageBase() );
+    dynamic_cast <const InputImageType*> ( inImage.GetImageBase() );
 
   if ( image.IsNull() )
     {
@@ -37,21 +37,19 @@ CastImageFilter::ExecuteInternalCast( Image* inImage )
   filter->SetInput ( image );
   filter->Update();
 
-  Image* out = new Image( filter->GetOutput() );
-
-  return out;
+  return Image( filter->GetOutput() );
 }
 
 
 template<typename TImageType, typename TOutputImageType>
-Image* CastImageFilter::ExecuteInternalToVector( Image* inImage )
+Image CastImageFilter::ExecuteInternalToVector( const Image& inImage )
 {
 
   typedef TImageType       InputImageType;
   typedef TOutputImageType OutputImageType;
 
   typename InputImageType::ConstPointer image =
-    dynamic_cast <InputImageType*> ( inImage->GetImageBase() );
+    dynamic_cast <const InputImageType*> ( inImage.GetImageBase() );
 
   if ( image.IsNull() )
     {
@@ -68,14 +66,12 @@ Image* CastImageFilter::ExecuteInternalToVector( Image* inImage )
   caster->InPlaceOn();
   caster->Update();
 
-  Image* out = new Image( caster->GetOutput() );
-
-  return out;
+  return Image( caster->GetOutput() );
 }
 
 
 template<typename TImageType, typename TOutputImageType>
-Image* CastImageFilter::ExecuteInternalToLabel( Image* inImage )
+Image CastImageFilter::ExecuteInternalToLabel( const Image& inImage )
 {
   typedef TImageType                                InputImageType;
   typedef TOutputImageType                          OutputImageType;
@@ -85,7 +81,7 @@ Image* CastImageFilter::ExecuteInternalToLabel( Image* inImage )
   typedef itk::Image<LabelType, InputImageType::ImageDimension> LabelImageType;
 
   typename InputImageType::ConstPointer image =
-    dynamic_cast <InputImageType*> ( inImage->GetImageBase() );
+    dynamic_cast <const InputImageType*> ( inImage.GetImageBase() );
 
   if ( image.IsNull() )
     {
@@ -97,12 +93,10 @@ Image* CastImageFilter::ExecuteInternalToLabel( Image* inImage )
   filter->SetInput ( image );
   filter->Update();
 
-  Image* out = new Image( filter->GetOutput() );
-
-  return out;
+  return Image( filter->GetOutput() );
 }
 
-Image* Cast ( Image* image, PixelIDValueType pixelID ) {
+Image Cast ( const Image& image, PixelIDValueType pixelID ) {
   CastImageFilter filter;
   return filter.SetOutputPixelType ( pixelID ).Execute ( image );
 }

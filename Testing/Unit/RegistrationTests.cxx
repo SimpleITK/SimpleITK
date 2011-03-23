@@ -7,23 +7,22 @@
 #include <memory>
 
 TEST(Registration,CreateMattes) {
-  std::auto_ptr<itk::simple::Image> image2d ( new itk::simple::Image ( 32, 32, itk::simple::sitkUInt8 ) );
-  std::auto_ptr<itk::simple::Image> image3d ( new itk::simple::Image ( 32, 32, 32, itk::simple::sitkUInt8 ) );
+  itk::simple::Image image2d( 32, 32, itk::simple::sitkUInt8 );
+  itk::simple::Image image3d( 32, 32, 32, itk::simple::sitkUInt8 );
 
   itk::simple::MattesMutualInformationMetric metric;
 
-  ASSERT_TRUE ( metric.GetMetric ( image2d.get() ).IsNotNull() );
-  ASSERT_TRUE ( metric.GetMetric ( image3d.get() ).IsNotNull() );
+  ASSERT_TRUE ( metric.GetMetric ( image2d ).IsNotNull() );
+  ASSERT_TRUE ( metric.GetMetric ( image3d ).IsNotNull() );
   // Can't make a 2d to 3d registration yet...
   // ASSERT_THROW ( metric.GetMetric ( image2d.get(), image3d.get() ) );
 }
 
 TEST(Registration,Simple) {
   itk::simple::ImageFileReader reader;
-  itk::simple::Image* fixed;
-  itk::simple::Image* moving;
-  fixed = reader.SetFileName ( dataFinder.GetFile ( "Input/Fixed.nrrd" ) ).Execute();
-  moving = reader.SetFileName ( dataFinder.GetFile ( "Input/Moving.nrrd" ) ).Execute();
+
+  itk::simple::Image fixed = reader.SetFileName ( dataFinder.GetFile ( "Input/Fixed.nrrd" ) ).Execute();
+  itk::simple::Image moving = reader.SetFileName ( dataFinder.GetFile ( "Input/Moving.nrrd" ) ).Execute();
 
   itk::simple::AffineTransform transform;
   itk::simple::MattesMutualInformationMetric metric;

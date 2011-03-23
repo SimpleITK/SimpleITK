@@ -39,7 +39,7 @@ public:
   std::string ToString() const;
 
   // See super class for doxygen
-  Image* Execute ( Image* );
+  Image Execute ( const Image & );
 
 private:
 
@@ -55,13 +55,13 @@ private:
    * @{
    */
   template<typename TImageType, typename TOutputImageType>
-  Image* ExecuteInternalCast( Image* inImage );
+  Image ExecuteInternalCast( const Image& inImage );
 
   template<typename TImageType, typename TOutputImageType>
-  Image* ExecuteInternalToVector( Image* inImage );
+  Image ExecuteInternalToVector( const Image& inImage );
 
   template<typename TImageType, typename TOutputImageType>
-  Image* ExecuteInternalToLabel( Image* inImage );
+  Image ExecuteInternalToLabel( const Image& inImage );
   /** @} */
 
 // SWIG does not appear to process private classes correctly
@@ -113,12 +113,12 @@ private:
   };
 #endif
 
-  typedef Image* (Self::*MemberFunctionType)( Image* );
+  typedef Image (Self::*MemberFunctionType)( const Image& );
   std::auto_ptr<detail::DualMemberFunctionFactory<MemberFunctionType> > m_DualMemberFactory;
 
 };
 
-  Image* Cast ( Image* image, PixelIDValueType pixelID );
+  Image Cast ( const Image& image, PixelIDValueType pixelID );
 
 }
 }

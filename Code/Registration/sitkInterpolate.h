@@ -17,10 +17,10 @@ namespace simple
   public:
     Interpolate(){};
     virtual ~Interpolate(){};
-    virtual ::itk::Object::Pointer GetInterpolator ( Image* image ) { return NULL; };
+    virtual ::itk::Object::Pointer GetInterpolator ( const Image &image ) = 0;
   protected:
     friend class Registration;
-    virtual Interpolate* Clone() { return new Interpolate ( *this ); }
+    virtual Interpolate* Clone() = 0;
   };
 }
 }

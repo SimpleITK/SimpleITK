@@ -16,10 +16,11 @@ class LinearInterpolate : public Interpolate
   {
   public:
     LinearInterpolate();
-    ::itk::Object::Pointer GetInterpolator ( Image* image );
+    ::itk::Object::Pointer GetInterpolator ( const Image &image );
   protected:
     template<class TImage>
-    ::itk::Object::Pointer GetInterpolatorInternal ( Image* image );
+    ::itk::Object::Pointer GetInterpolatorInternal ( const Image & image );
+
     template < class TMemberFunctionPointer >
     struct GetInterpolatorMemberFunctionAddressor
     {
@@ -32,7 +33,7 @@ class LinearInterpolate : public Interpolate
       }
     };
 
-    typedef ::itk::Object::Pointer (LinearInterpolate::*MemberFunctionType)( Image* image );
+    typedef ::itk::Object::Pointer (LinearInterpolate::*MemberFunctionType)( const Image &image );
     friend struct GetInterpolatorMemberFunctionAddressor<MemberFunctionType>;
     std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
     virtual Interpolate* Clone() { return new LinearInterpolate ( *this ); };

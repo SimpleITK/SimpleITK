@@ -65,7 +65,7 @@ end)
 //$(if members and #members > 0 then
 OUT = [[
 
-Image* ${name}ImageFilter::Execute ( Image* image1$(if number_of_inputs==2 then OUT=', Image* image2' end)$(foreach members ,
+Image ${name}ImageFilter::Execute ( const Image & image1$(if number_of_inputs==2 then OUT=', const Image& image2' end)$(foreach members ,
   ${type} in${name}) )
 {
 $(foreach members
@@ -77,20 +77,20 @@ end)
 }
 ]]
 end)
-Image* ${name}ImageFilter::Execute ( Image* image1$(if number_of_inputs==2 then OUT=[[, Image* image2]] end) )
+Image ${name}ImageFilter::Execute ( const Image & image1$(if number_of_inputs==2 then OUT=[[, const Image& image2]] end) )
 {
 
-  PixelIDValueType type = image1->GetPixelIDValue();
-  unsigned int dimension = image1->GetDimension();$(if number_of_inputs and number_of_inputs == 2 then
+  PixelIDValueType type = image1.GetPixelIDValue();
+  unsigned int dimension = image1.GetDimension();$(if number_of_inputs and number_of_inputs == 2 then
 OUT=[[
 
 
   // todo need better error handling and potential type conversion
-  if ( type != image2->GetPixelIDValue() ||
-       dimension != image2->GetDimension() ||
-       image1->GetWidth() != image2->GetWidth() ||
-       image1->GetHeight() != image2->GetHeight() ||
-       image1->GetDepth() != image2->GetDepth() )
+  if ( type != image2.GetPixelIDValue() ||
+       dimension != image2.GetDimension() ||
+       image1.GetWidth() != image2.GetWidth() ||
+       image1.GetHeight() != image2.GetHeight() ||
+       image1.GetDepth() != image2.GetDepth() )
     {
       sitkExceptionMacro ( "Both images for ${name}ImageFilter don't match type or dimension!" );
     }]] end)
@@ -104,7 +104,7 @@ OUT=[[
 // ExecuteInternal
 //
 template <class TImageType>
-Image* ${name}ImageFilter::ExecuteInternal ( Image* inImage1 $(if number_of_inputs==2 then OUT=[[, Image* inImage2]] end) )
+Image ${name}ImageFilter::ExecuteInternal ( const Image& inImage1 $(if number_of_inputs==2 then OUT=[[, const Image& inImage2]] end) )
 {
   // Define the input and output image types
   typedef TImageType     InputImageType;
@@ -120,8 +120,8 @@ Image* ${name}ImageFilter::ExecuteInternal ( Image* inImage1 $(if number_of_inpu
   end)
 
   // Get the a pointer to the ITK image contained in image1
-  typename InputImageType::Pointer image1 =
-    dynamic_cast <InputImageType*> ( inImage1->GetImageBase() );
+  typename InputImageType::ConstPointer image1 =
+    dynamic_cast <const InputImageType*> ( inImage1.GetImageBase() );
 
   // Check that ITK image pointer was properly retrieved
   if ( image1.IsNull() )
@@ -132,8 +132,8 @@ OUT=[[
 
 
   // Get the a pointer to the ITK image contained in image2
-  typename InputImageType::Pointer image2 =
-  dynamic_cast <InputImageType*> ( inImage2->GetImageBase() );
+  typename InputImageType::ConstPointer image2 =
+  dynamic_cast <const InputImageType*> ( inImage2.GetImageBase() );
 
   // Check that ITK image pointer was properly retrieved
   if ( image2.IsNull() )
@@ -169,11 +169,10 @@ elseif(not no_set_method) or (no_set_method == 0) then
 OUT = '  filter->Set${name} ( this->m_${name} );'
 end)
 )
-  // Run the ITK filter and return the output as a pointer to a SimpleITK image
+  // Run the ITK filter and return the output as a SimpleITK image
   filter->Update();
-  Image* out = new Image( filter->GetOutput() );
-  filter->GetOutput()->DisconnectPipeline();
-  return out;
+
+  return Image( filter->GetOutput() );
 }
 
 //-----------------------------------------------------------------------------
@@ -181,7 +180,7 @@ end)
 //
 // Function to run the Execute method of this filter
 //
-Image* ${name} ( Image* imageA$(if number_of_inputs == 2 then OUT=', Image* imageB' end)$(when members $(foreach members ,
+Image ${name} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end)$(when members $(foreach members ,
   ${type} in${name})) )
 {
   ${name}ImageFilter filter;
