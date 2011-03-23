@@ -68,7 +68,7 @@
          "lua_value" : "SimpleITK.${name}ImageFilter_Box",
          "python_value" : "SimpleITK.${name}ImageFilter.Box",
          "ruby_value" : "Simpleitk::${name}ImageFilter::Box",
-         "java_value" : "${name}ImageFilter.OperationType.Box",
+         "java_value" : "${name}ImageFilter.KernelType.Box",
          "tcl_value" : "$$${name}ImageFilter_Box"
        }
      ]
