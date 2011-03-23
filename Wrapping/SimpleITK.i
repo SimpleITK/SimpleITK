@@ -54,6 +54,7 @@ namespace std
   %template(VectorFloat) vector<float>;
   %template(VectorDouble) vector<double>;
   %template(VectorUIntList) vector< vector<unsigned int> >;
+  %template(VectorString) vector< std::string >;
 }
 
 // This helps SWIG wrap long long, as returned by Width, Height, and Depth
@@ -67,6 +68,7 @@ typedef unsigned int uint32_t;
 %include "sitkImage.h"
 %include "sitkImageFilter.h"
 %include "sitkImageFileWriter.h"
+%include "sitkImageSeriesReader.h"
 %include "sitkImageFileReader.h"
 %include "sitkHashImageFilter.h"
 %include "sitkStatisticsImageFilter.h"
