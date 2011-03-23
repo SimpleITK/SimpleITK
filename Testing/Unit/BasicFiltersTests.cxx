@@ -8,28 +8,20 @@
 #include <sitkCastImageFilter.h>
 #include <sitkPixelIDValues.h>
 
+#include "itkRecursiveGaussianImageFilter.h"
+
 TEST(BasicFilters,Create) {
   itk::simple::RecursiveGaussianImageFilter *filter;
   filter = new itk::simple::RecursiveGaussianImageFilter();
   delete filter;
 }
 
-TEST(BasicFilters,RecursiveGaussian) {
-  itk::simple::HashImageFilter hasher;
-  itk::simple::ImageFileReader reader;
-  itk::simple::RecursiveGaussianImageFilter filter;
-  itk::simple::Image* image;
-  itk::simple::Image* out;
+TEST(BasicFilters,RecursiveGaussian_ENUMCHECK) {
 
-  reader.SetFileName ( dataFinder.GetFile ( "Input/RA-Float.nrrd" ) );
-  image = reader.Execute();
-  ASSERT_TRUE ( image != NULL );
-  ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
-  out = filter.Execute ( image );
-  ASSERT_TRUE ( out != NULL );
-  IMAGECOMPAREWITHTOLERANCE ( out, "default", 0.1 );
-  delete image;
-  delete out;
+  typedef itk::RecursiveGaussianImageFilter< itk::Image<float,3> > ITKRecursiveGausianType;
+  EXPECT_EQ( ITKRecursiveGausianType::ZeroOrder, itk::simple::RecursiveGaussianImageFilter::ZeroOrder );
+  EXPECT_EQ( ITKRecursiveGausianType::FirstOrder, itk::simple::RecursiveGaussianImageFilter::FirstOrder );
+  EXPECT_EQ( ITKRecursiveGausianType::SecondOrder, itk::simple::RecursiveGaussianImageFilter::SecondOrder );
 }
 
 

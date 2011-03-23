@@ -10,7 +10,6 @@
 #include "sitkImageFilter.h"
 
 #include "sitkHashImageFilter.h"
-#include "sitkRecursiveGaussianImageFilter.h"
 #include "sitkPixelIDTypeLists.h"
 #include "sitkImageFileReader.h"
 #include "sitkImageFileWriter.h"
@@ -18,6 +17,15 @@
 #include "sitkExtractImageFilter.h"
 #include "sitkCastImageFilter.h"
 #include "sitkPixelContainer.h"
+
+// Registration support
+#include "sitkTransform.h"
+#include "sitkAffineTransform.h"
+#include "sitkLinearInterpolate.h"
+#include "sitkMattesMutualInformationMetric.h"
+#include "sitkRegistration.h"
+#include "sitkRegularStepGradientDescentOptimizer.h"
+
 
 // These headers are auto-generated
 #include "SimpleITKBasicFiltersGeneratedHeaders.h"
