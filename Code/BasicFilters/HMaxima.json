@@ -1,0 +1,31 @@
+{
+  "name" : "HMaxima",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "Height",
+      "type" : "double",
+      "default" : "2.0",
+      "doc" : ""
+    }
+  ],
+  "custom_methods" : [],
+  "tests" : [
+   {
+     "tag" : "HMaxima",
+     "description" : "Test HMaxima",
+     "inputA" : "Input/RA-Short.nrrd",
+     "md5hash" : "b30d403fb1c5948abfb17fa9c346cecd",
+     "settings" : [
+       {
+         "parameter" : "Height",
+         "value" : 2000
+       }
+     ]
+   }
+  ]
+}

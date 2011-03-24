@@ -110,6 +110,11 @@ pixel type to use for the output image of the filter. This supercedes
 that the filter should return an image where the pixel type is the RealType
 of the input image's pixel type
 
+- [OPTIONAL] \b filter_type: (\e string) Explicitly sets the
+  FilterType used. This method overides
+  additional_template_types. Useful typedefs are InputImageType, and
+  OutputImageType.
+
 - [OPTIONAL] \b public_declarations: (\e string) Any c++ code written in this
 field will be placed into the public section of the filter's header file
 
@@ -302,6 +307,8 @@ for this test. Each entry is an object of the form:
   \b value
   - [OPTIONAL] \b dim_vec: (0 or 1): Use this flag if this parameter is a
   std::vector. If set to 1, the \b type option must also be set
+  - [OPTIONAL] \b no_get_method: (0 or 1). Set to 1 when the filter
+  does not have a get method, so that this method will not be tested.
   - [OPTIONAL] \b type: (\e string): What type the vector should be. Due to
   constraints with java, this should only be a primitive type. For unsigned
   types, the java test will convert to the signed equivalent. An example for a

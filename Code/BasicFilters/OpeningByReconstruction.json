@@ -1,36 +1,29 @@
 {
-  "name" : "BinaryErode",
+  "name" : "OpeningByReconstruction",
   "template_code_filename" : "KernelImageFilter",
   "number_of_inputs" : 1,
-  "doc" : "Performs Erosion in a binary image.",
-  "pixel_types" : "IntegerPixelIDTypeList",
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
   "members" : [
-    {
-      "name" : "BackgroundValue",
-      "type" : "double",
-      "default" : "0",
-      "doc" : ""
-    },
-    {
-      "name" : "ForegroundValue",
-      "type" : "double",
-      "default" : "255",
+    { "name" : "FullyConnected",
+      "type" : "bool",
+      "default" : "false",
       "doc" : ""
     },
     { 
-      "name" : "BoundaryToForeground",
+      "name" : "PreserveIntensities",
       "type" : "bool",
-      "default" : "true",
+      "default" : "false",
       "doc" : ""
     }
   ],
   "custom_methods" : [],
   "tests" : [
    {
-     "tag" : "BinaryErode",
-     "description" : "Test binary erosion",
+     "tag" : "OpeningByReconstruction",
+     "description" : "Test grayscale opening by reconstruction",
      "inputA" : "Input/STAPLE1.png",
-     "md5hash" : "9e37516c795d7f25847851666ef53ef9",
+     "md5hash" : "095f00a68a84df4396914fa758f34dcc",
      "settings" : [
        { "parameter" : "KernelRadius",
          "no_get_method" : 1,

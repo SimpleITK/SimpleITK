@@ -1,9 +1,8 @@
 {
   "name" : "DilateObjectMorphology",
-  "template_code_filename" : "StructuringElementImageFilter",
-  "template_test_filename" : "ImageFilter",
+  "template_code_filename" : "KernelImageFilter",
   "number_of_inputs" : 1,
-  "doc" : "Performs Erosion of an object.",
+  "doc" : "Performs Erosion of an object.\n\\todo This filter is redundent with binary erode and fg/bg options",
   "pixel_types" : "BasicPixelIDTypeList",
   "members" : [
     { "name" : "ObjectValue",
@@ -19,13 +18,41 @@
       "tag" : "float",
       "description" : "Dilate a float image",
       "inputA" : "Input/RA-Slice-Float.nrrd",
-      "tolerance" : 0.01
+      "tolerance" : 0.01,
+      "settings" : [ 
+        { "parameter" : "KernelRadius",
+         "no_get_method" : 1,
+          "value" : 1
+        },
+        { "parameter" : "KernelType",
+          "value" : "itk::simple::${name}ImageFilter::Ball",
+         "lua_value" : "SimpleITK.${name}ImageFilter_Ball", 
+         "python_value" : "SimpleITK.${name}ImageFilter.Ball",
+         "ruby_value" : "Simpleitk::${name}ImageFilter::Ball",
+         "java_value" : "${name}ImageFilter.KernelType.Ball",
+         "tcl_value" : "$$${name}ImageFilter_Ball"
+        }
+      ]
     },
     {
       "tag" : "short",
       "description" : "Dilate a short image",
       "inputA" : "Input/RA-Slice-Short.nrrd",
-      "tolerance" : 0.01
+      "tolerance" : 0.01,
+      "settings" : [ 
+        { "parameter" : "KernelRadius",
+         "no_get_method" : 1,
+          "value" : 1
+        },
+        { "parameter" : "KernelType",
+          "value" : "itk::simple::${name}ImageFilter::Ball",
+         "lua_value" : "SimpleITK.${name}ImageFilter_Ball", 
+         "python_value" : "SimpleITK.${name}ImageFilter.Ball",
+         "ruby_value" : "Simpleitk::${name}ImageFilter::Ball",
+         "java_value" : "${name}ImageFilter.KernelType.Ball",
+         "tcl_value" : "$$${name}ImageFilter_Ball"
+        }
+      ]
     }
   ]
 }
