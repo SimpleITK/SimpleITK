@@ -19,7 +19,7 @@ bool ImageCompare::compare ( itk::simple::Image* image, std::string inTestCase, 
   std::string testCase = inTestCase;
   std::string tag = inTag;
   std::string testName = ::testing::UnitTest::GetInstance()->current_test_info()->name();
-  
+
   if ( testCase == "" ) {
     testCase = ::testing::UnitTest::GetInstance()->current_test_info()->test_case_name();
   }
@@ -32,9 +32,9 @@ bool ImageCompare::compare ( itk::simple::Image* image, std::string inTestCase, 
   // Does the baseline exist?
   std::string extension = ".nrrd";
   std::string OutputDir = dataFinder.GetOutputDirectory();
-  
+
   std::string name = testCase
-    .append( "_" )                                                        
+    .append( "_" )
     .append(testName)
     .append("_")
     .append ( tag );
@@ -49,7 +49,7 @@ bool ImageCompare::compare ( itk::simple::Image* image, std::string inTestCase, 
   }
 
   std::string baselineFileName = dataFinder.GetSourceDirectory() + "/Testing/Data/Baseline/" + name + extension;
-  
+
   if ( !itksys::SystemTools::FileExists ( baselineFileName.c_str() ) ) {
     // Baseline does not exist, write out what we've been given
     std::string newBaselineDir = OutputDir + "/Newbaseline/";
@@ -66,7 +66,7 @@ bool ImageCompare::compare ( itk::simple::Image* image, std::string inTestCase, 
 
   try {
     baseline.reset ( itk::simple::ImageFileReader().SetFileName ( baselineFileName ).Execute() );
-  } catch ( itk::ExceptionObject& e ) { 
+  } catch ( itk::ExceptionObject& e ) {
     mMessage = "ImageCompare: Failed to load image " + baselineFileName + " because: " + e.what();
     return false;
   }
@@ -77,9 +77,9 @@ bool ImageCompare::compare ( itk::simple::Image* image, std::string inTestCase, 
     // Nothing else to do
     return true;
   }
-    
-  if ( baseline->GetHeight() != centerSlice->GetHeight() 
-       || baseline->GetWidth() != centerSlice->GetWidth() 
+
+  if ( baseline->GetHeight() != centerSlice->GetHeight()
+       || baseline->GetWidth() != centerSlice->GetWidth()
        || baseline->GetDepth() != centerSlice->GetDepth() ) {
     mMessage = "ImageCompare: Image dimensions are different";
     return false;
@@ -91,8 +91,8 @@ bool ImageCompare::compare ( itk::simple::Image* image, std::string inTestCase, 
     {
       diff.reset ( itk::simple::SubtractImageFilter().Execute ( centerSlice.get(), baseline.get() ) );
     }
-  catch ( itk::ExceptionObject& e ) 
-    { 
+  catch ( itk::ExceptionObject& e )
+    {
     mMessage = "ImageCompare: Failed to subtract image " + baselineFileName + " because: " + e.what();
     return false;
     }
