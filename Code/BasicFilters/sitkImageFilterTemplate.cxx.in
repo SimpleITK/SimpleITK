@@ -10,6 +10,8 @@
 #include "itkLabelObject.h"
 #include "itkNumericTraits.h"
 #include "itkNumericTraitsVariableLengthVectorPixel.h"
+#include "itkVectorIndexSelectionCastImageFilter.h"
+#include "itkImageToVectorImageFilter.h"
 
 
 #include "sitk${name}ImageFilter.h"
@@ -207,6 +209,10 @@ ${name}ImageFilter::ExecuteInternalVectorImage ( Image* inImage1 )
 {
   // Define the input and output image types
   typedef TImageType     InputImageType;
+  typedef typename InputImageType::InternalPixelType ComponentType;
+  typedef typename itk::Image<ComponentType, InputImageType::ImageDimension> ComponentImageType;
+
+  // fix me
   typedef InputImageType OutputImageType;
 
   // Get the a pointer to the ITK image contained in image1
@@ -219,10 +225,30 @@ ${name}ImageFilter::ExecuteInternalVectorImage ( Image* inImage1 )
     sitkExceptionMacro( "Unexpected template dispatch error!" );
     }
 
+  typedef itk::VectorIndexSelectionCastImageFilter< InputImageType, OutputImageType > ComponentExtratorType;
+  typename ComponentExtratorType::Pointer extractor = ComponentExtratorType::New();
+  extractor->SetInput( image1 );
 
-  sitkExceptionMacro( "ExecuteInternalVectorImage is currently not implemented" );
+  typedef itk::ImageToVectorImageFilter<ComponentImageType> ToVectorFilterType;
+  typename ToVectorFilterType::Pointer toVector = ToVectorFilterType::New();
 
-  return NULL;
+  unsigned int numComps = image1->GetNumberOfComponentsPerPixel();
+  for ( unsigned int i = 0; i < numComps; ++i )
+    {
+    extractor->SetIndex( i );
+    extractor->Update();
+
+    Image* tmp = this->ExecuteInternal<ComponentImageType>( new Image( extractor->GetOutput() ) );
+
+    typename ComponentImageType::Pointer tempITKImage =
+      dynamic_cast <ComponentImageType*> ( tmp->GetImageBase().GetPointer() );
+
+    toVector->SetNthInput( i, tempITKImage );
+    }
+
+  toVector->Update();
+
+  return new Image( toVector->GetOutput() );
 }
 ]]
 end)
