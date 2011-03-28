@@ -1,0 +1,46 @@
+{
+  "name" : "GrayscaleGeodesicDilate",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 2,
+  "doc" : "Input1 is input, Input2 is marker image",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "filter_type" : "itk::GrayscaleGeodesicDilateImageFilter<InputImageType, OutputImageType>",
+  "members" : [
+    { "name" : "RunOneIteration",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : ""
+    },
+    { "name" : "FullyConnected",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : ""
+    }
+  ],
+  "custom_methods" : [],
+  "tests" : [
+   {
+     "tag" : "GrayscaleGeodesicDilate1",
+     "description" : "Test grayscale geodesic dilate",
+     "inputA" : "Input/STAPLE1.png",
+     "inputB" : "Input/STAPLE2.png",
+     "md5hash" : "301858f5eee39b092d28d9837f008fb8"
+     "settings" : [
+       { "parameter" : "RunOneIteration", "value" : "false", "python_value" : "False" },
+       { "parameter" : "FullyConnected", "value" : "true", "python_value" : "True" }
+     ]
+   }
+   {
+     "tag" : "GrayscaleGeodesicDilate2",
+     "description" : "Test grayscale geodesic dilate, one iteration",
+     "inputA" : "Input/STAPLE1.png",
+     "inputB" : "Input/STAPLE2.png",
+     "md5hash" : "512b043be99c423638db7cb7bc6fb2df"
+     "settings" : [
+       { "parameter" : "RunOneIteration", "value" : "true", "python_value" : "True" },
+       { "parameter" : "FullyConnected", "value" : "true", "python_value" : "True" }
+     ]
+   }
+  ]
+}

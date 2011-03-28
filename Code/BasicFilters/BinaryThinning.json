@@ -1,0 +1,19 @@
+{
+  "name" : "BinaryThinning",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "\\todo this filter may not work in 3D\n \\note the output of this filter is still the same as the input type eventhought the output is 0 or 1.",
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "members" : [],
+  "custom_methods" : [],
+  "tests" : [
+   {
+     "tag" : "BinaryThinning",
+     "description" : "Test binnary thinning",
+     "inputA" : "Input/BlackDots.png",
+     "md5hash" : "153ad0b2f3658dee3b14ad93d0cfe550"
+     "settings" : []
+   }
+  ]
+}

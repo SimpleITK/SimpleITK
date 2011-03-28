@@ -1,0 +1,71 @@
+{
+  "name" : "DoubleThreshold",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "doc" : "Docs",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "Threshold1",
+      "type" : "double",
+      "default" : "0.0",
+      "doc" : ""
+    },
+    {
+      "name" : "Threshold2",
+      "type" : "double",
+      "default" : "1.0",
+      "doc" : ""
+    }, 
+    {
+      "name" : "Threshold3",
+      "type" : "double",
+      "default" : "254.0",
+      "doc" : ""
+    },
+    {
+      "name" : "Threshold4",
+      "type" : "double",
+      "default" : "255.0",
+      "doc" : ""
+    },
+    {
+      "name" : "InsideValue",
+      "type" : "double",
+      "default" : "255.0",
+      "doc" : ""
+    },
+    {
+      "name" : "OutsideValue",
+      "type" : "double",
+      "default" : "0.0",
+      "doc" : ""
+    },
+    { "name" : "FullyConnected",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : ""
+    }
+  ]
+  "tests" : [
+    {
+      "tag" : "DoubleThreshold1",
+      "description" : "Default parameter settings",
+      "inputA" : "Input/RA-Short.nrrd",
+      "md5hash" : "ce04cd663c95eb707cc9ce7f8fdb7eb9",
+      "settings" : []
+    },
+    {
+      "tag" : "DoubleThreshold2",
+      "description" : "double threshold 2D",
+      "inputA" : "Input/RA-Slice-Short.png",
+      "md5hash" : "13397d7768f07192458441ad6ea6fc6d",
+      "settings" : [
+        { "parameter" : "Threshold1", "value" : "0" },
+        { "parameter" : "Threshold2", "value" : "0" },
+        { "parameter" : "Threshold3", "value" : "3000" },
+        { "parameter" : "Threshold4", "value" : "2700" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "name" : "GrayscaleGrindPeak",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "filter_type" : "itk::GrayscaleGrindPeakImageFilter<InputImageType, OutputImageType>",
+  "members" : [
+    { "name" : "FullyConnected",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : ""
+    }
+  ],
+  "custom_methods" : [],
+  "tests" : [
+   {
+     "tag" : "GrayscaleGrindPeak1",
+     "description" : "Test grayscale grind peak",
+     "inputA" : "Input/RA-Short.nrrd",
+     "md5hash" : "084cdd1d64664ebfab26c2e0ed382e14",
+     "settings" : [
+     ]
+   },
+   {
+     "tag" : "GrayscaleGrindPeak2",
+     "description" : "Test grayscale grind peak 2D",
+     "inputA" : "Input/RA-Slice-Short.png",
+     "md5hash" : "b18d75cccb9361c65b40bb5c0d3c6e0d"
+     "settings" : [
+     ]
+   }
+  ]
+}

@@ -32,10 +32,7 @@ namespace itk {
       ${name}ImageFilter();
 
       /** Kernel type enumeration */
-      typedef enum{BinaryBallKernel, FlatKernel} KernelType;
-
-      /** Define the pixels types supported by this filter */
-      typedef ${pixel_types}  PixelIDTypeList;
+    typedef enum{Annulus, Ball, Box, Cross} KernelType;
 $(if public_declarations then
       OUT=[[
       /** Custom public declarations */
@@ -60,26 +57,23 @@ $(if (not no_get_method) or (no_get_method == 0) then
       ${type} Get${name}() { return this->m_${name}; }'
 end)
 )
-      /** Kernel property Get/Set methods */
-      Self& SetKernelRadius(unsigned long r)
-        {
-        this->m_KernelRadius = r;
-        return *this;
-        }
-      unsigned long GetKernelRadius()
-        {
-        return this->m_KernelRadius;
-        }
+      /** Kernel radius as a scale for isotropic structures */
+      Self& SetKernelRadius(uint32_t r);
 
-      Self& SetKernelType(KernelType t)
-        {
-        this->m_KernelType = t;
-        return *this;
-        }
-      KernelType GetKernelType()
-        {
-        return this->m_KernelType;
-        }
+      /** Set/Get the radius of the kernel structuring element as a
+       * vector.
+       *
+       * If the dimension of the image is greater then the length of
+       * r, then the radius will be padded. If it is less the r will
+       * be truncated.
+       */
+      Self& SetKernelRadius(const std::vector<uint32_t>  &r );
+      std::vector<uint32_t> GetKernelRadius() const;
+
+      /** Set/Get the kernel or structuring elemenent used for the
+       * morphology */
+      Self& SetKernelType(KernelType t);
+      KernelType GetKernelType() const;
 
       /** Print ourselves out */
       std::string ToString() const;
@@ -124,10 +118,16 @@ OUT=[[
 $(foreach members
       /* ${doc} */
       ${type} m_${name};
-
 )
+      /** boolean value to indicate if the vector or scalar should be
+       *  used for the radius of the kernel */
+      bool m_BVectorRadius;
+
+      /* Kernel Radius as a vector */
+      std::vector<uint32_t> m_VectorKernelRadius;
+
       /** Isotropic Kernel Radius */
-      unsigned long m_KernelRadius;
+      uint32_t m_KernelRadius;
 
       /** KernelType */
       KernelType m_KernelType;
@@ -140,8 +140,20 @@ $(foreach members
      * This function directly calls the execute method of ${name}ImageFilter
      * in order to support a fully functional API
      */
-    Image ${name} ( const Image&$(if number_of_inputs == 2 then OUT=', const Image&' end)$(when members $(foreach members ,
-      ${type} in${name} = ${default})) );
+
+  Image ${name} ( const Image&$(if number_of_inputs == 2 then OUT=', const Image&' end),
+                   uint32_t inRadius = 1, ${name}ImageFilter::KernelType inKernel =${name}ImageFilter::Ball
+                   $(when members $(foreach members , ${type} in${name} = ${default})) );
+
+   /**
+     * itk::simple::${name}ImageFilter Functional Interface
+     *
+     * This function directly calls the execute method of ${name}ImageFilter
+     * in order to support a fully functional API
+     */
+  Image ${name} ( const Image&$(if number_of_inputs == 2 then OUT=', const Image&' end),
+                   const std::vector<uint32_t> inVectorRadius, ${name}ImageFilter::KernelType inKernel =${name}ImageFilter::Ball
+                   $(when members $(foreach members , ${type} in${name} = ${default})) );
   }
 }
 #endif
