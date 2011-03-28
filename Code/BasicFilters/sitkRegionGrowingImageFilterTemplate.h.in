@@ -86,6 +86,9 @@ end)
         return *this;
         }
 
+      /** Name of this class */
+      std::string GetName() const { return std::string ( "${name}"); }
+
       /** Print ourselves out */
       std::string ToString() const;
 
