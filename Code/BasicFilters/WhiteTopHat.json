@@ -1,36 +1,24 @@
 {
-  "name" : "BinaryErode",
+  "name" : "WhiteTopHat",
   "template_code_filename" : "KernelImageFilter",
+  "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
-  "doc" : "Performs Erosion in a binary image.",
-  "pixel_types" : "IntegerPixelIDTypeList",
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
   "members" : [
-    {
-      "name" : "BackgroundValue",
-      "type" : "double",
-      "default" : "0",
-      "doc" : ""
-    },
-    {
-      "name" : "ForegroundValue",
-      "type" : "double",
-      "default" : "255",
-      "doc" : ""
-    },
-    { 
-      "name" : "BoundaryToForeground",
+    { "name" : "SafeBorder",
       "type" : "bool",
-      "default" : "true",
+      "default" : true,
       "doc" : ""
     }
   ],
   "custom_methods" : [],
   "tests" : [
    {
-     "tag" : "BinaryErode",
-     "description" : "Test binary erosion",
+     "tag" : "WhiteTopHatErode",
+     "description" : "Test white top hat",
      "inputA" : "Input/STAPLE1.png",
-     "md5hash" : "9e37516c795d7f25847851666ef53ef9",
+     "md5hash" : "e784daff43d09a18e20556729afc0c9d",
      "settings" : [
        { "parameter" : "KernelRadius",
          "no_get_method" : 1,
@@ -45,6 +33,6 @@
          "tcl_value" : "$$${name}ImageFilter_Ball"
        }
      ]
-   }
+    }
   ]
 }
