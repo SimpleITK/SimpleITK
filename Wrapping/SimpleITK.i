@@ -49,12 +49,14 @@
 namespace std
 {
   %template(VectorBool) vector<bool>;
-  %template(VectorUInt) vector<unsigned int>;
-  %template(VectorInt) vector<int>;
-  %template(VectorUShort) vector<unsigned short>;
-  %template(VectorShort) vector<short>;
-  %template(VectorULong) vector<unsigned long>;
-  %template(VectorLong) vector<long>;
+  %template(VectorUInt8) vector<uint8_t>;
+  %template(VectorInt8) vector<int8_t>;
+  %template(VectorUInt16) vector<uint16_t>;
+  %template(VectorInt16) vector<int16_t>;
+  %template(VectorUInt32) vector<uint32_t>;
+  %template(VectorInt32) vector<int32_t>;
+  %template(VectorUInt64) vector<uint64_t>;
+  %template(VectorInt64) vector<int64_t>;
   %template(VectorFloat) vector<float>;
   %template(VectorDouble) vector<double>;
   %template(VectorUIntList) vector< vector<unsigned int> >;
