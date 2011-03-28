@@ -51,6 +51,9 @@ $(if (not no_get_method) or (no_get_method == 0) then
       ${type} Get${name}() { return this->m_${name}; }'
 end)
 )
+      /** Name of this class */
+      std::string GetName() const { return std::string ( "${name}"); }
+
       /** Print ourselves out */
       std::string ToString() const;
 

@@ -8,6 +8,12 @@ namespace simple {
 
 //----------------------------------------------------------------------------
 
+  Image Extract ( const Image& image, size_t s, size_t d ) {
+    ExtractImageFilter filter;
+    return filter.Execute ( image, s, d );
+  }
+
+
 //
 // Default constructor that initializes parameters
 //
