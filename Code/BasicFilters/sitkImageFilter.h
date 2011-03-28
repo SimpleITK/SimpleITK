@@ -44,6 +44,9 @@ namespace itk {
 
       virtual Image Execute ( const Image & ) = 0;
 
+      /** return user readable name fo the filter */
+      virtual std::string GetName() const = 0;
+
     private:
 
     };
