@@ -57,7 +57,7 @@ $(if parameter == "SeedList" then
       OUT=[[filter.clearSeeds();
       $(for i=1,#value do OUT=OUT .. "{\
         int v[] = " .. value[i] .. ";\
-        VectorUInt idx = new VectorUInt();\
+        VectorUInt32 idx = new VectorUInt32();\
         for (int i = 0; i < inputA.getDimension(); i++) {\
           idx.push_back(v[i]);\
         }\
@@ -89,7 +89,7 @@ elseif dim_vec == 1 then
         $(if type == "bool" then
           OUT="VectorBool idx = new VectorBool( inputA.getDimension() );"
         elseif type == "unsigned int" then
-          OUT="VectorUInt idx = new VectorUInt( inputA.getDimension() );"
+          OUT="VectorUInt32 idx = new VectorUInt32();"
         elseif type == "int" then
           OUT="VectorInt idx = new VectorInt( inputA.getDimension() );"
         elseif type == "unsigned long" then
