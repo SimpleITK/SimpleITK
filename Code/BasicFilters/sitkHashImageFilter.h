@@ -29,6 +29,9 @@ namespace itk {
       Self& SetHashFunction ( HashFunction hashFunction );
       HashFunction GetHashFunction ();
 
+      /** Name of this class */
+      std::string GetName() const { return std::string ( "Hash"); }
+
       // Print ourselves out
       std::string ToString() const;
 

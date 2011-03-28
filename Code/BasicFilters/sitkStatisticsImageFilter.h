@@ -22,6 +22,9 @@ namespace itk {
 
       typedef BasicPixelIDTypeList PixelIDTypeList;
 
+      /** Name of this class */
+      std::string GetName() const { return std::string ( "Statistics"); }
+
       // Print ourselves out
       std::string ToString() const;
 
@@ -41,7 +44,7 @@ namespace itk {
       double m_Maximum;
       double m_Mean;
       double m_Variance;
-      
+
     };
 
 

@@ -8,6 +8,12 @@ namespace simple {
 
 //----------------------------------------------------------------------------
 
+  Image* Extract ( Image* image, size_t s, size_t d ) {
+    ExtractImageFilter filter;
+    return filter.Execute ( image, s, d );
+  }
+
+
 //
 // Default constructor that initializes parameters
 //
@@ -85,7 +91,7 @@ Image* ExtractImageFilter::ExecuteInternal ( Image* inImage )
   size = image->GetLargestPossibleRegion().GetSize();
   size[this->m_Dimension] = 1;
   typename TImageType::RegionType region ( index, size );
-  
+
   filter->SetDirectionCollapseToSubmatrix();
   filter->SetExtractionRegion ( region );
 
@@ -97,7 +103,7 @@ Image* ExtractImageFilter::ExecuteInternal ( Image* inImage )
   region.SetIndex ( index );
   filterOutput->SetRegions ( region );
   Image* out = new Image( filterOutput );
-  
+
   filterOutput->DisconnectPipeline();
   return out;
   }
