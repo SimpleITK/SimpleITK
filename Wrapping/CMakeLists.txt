@@ -41,24 +41,23 @@ else ( ${RUBY_FOUND} )
 endif ( ${RUBY_FOUND} )
 option ( WRAP_RUBY "Wrap Ruby" ${WRAP_RUBY_DEFAULT} )
 
+#
+# Below here are the 2nd tier languages they are not enable automatically if detected
+#
+
 # TODO FindCSharp does not conform to the expected behavior:
 # http://www.cmake.org/cmake/help/cmake-2-8-docs.html#command:find_package
 # specifically CSHARP_FOUND is not defined, and the script fails on non-windows systems
 if( WIN32 )
-  find_package( CSharp )
   option ( WRAP_CSHARP "Wrap C#" OFF )
+  mark_as_advanced( WRAP_CSHARP )
 endif( WIN32 )
 
 # TODO FindR does not conform to the expected behavior:
 # http://www.cmake.org/cmake/help/cmake-2-8-docs.html#command:find_package
 # specifically R_FOUND is not defined. Additionally, the defined variables are not marked as advanced.
-find_package ( R )
-if ( ${R_FOUND} )
-  set ( WRAP_R_DEFAULT OFF )
-else ( ${R_FOUND} )
-  set ( WRAP_R_DEFAULT OFF )
-endif ( ${R_FOUND} )
-option ( WRAP_R "Wrap R" ${WRAP_R_DEFAULT} )
+option ( WRAP_R "Wrap R" OFF )
+mark_as_advanced( WRAP_R )
 
 
 
