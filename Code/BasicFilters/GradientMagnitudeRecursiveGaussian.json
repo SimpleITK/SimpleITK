@@ -25,7 +25,7 @@
       "description" : "Simply run with default settings",
       "inputA" : "Input/RA-Float.nrrd",
       "settings" : [],
-      "tolerance" : 0.0
+      "tolerance" : 0.0001
     }
   ]
 }
