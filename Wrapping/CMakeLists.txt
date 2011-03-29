@@ -1,14 +1,71 @@
 
+# FindR is stored in the current source path, it needs to be included.
+set(CMAKE_MODULE_PATH "${SimpleITK_SOURCE_DIR}/Wrapping;${PROJECT_SOURCE_DIR}/Wrapping/CSharpModules" )
+
+#
+# Setup the option for each laguage
+# 
 option ( WRAP_LUA "Wrap Lua" ON )
-option ( WRAP_PYTHON "Wrap Python" OFF )
-option ( WRAP_JAVA "Wrap Java" OFF )
-option ( WRAP_TCL "Wrap Tcl" OFF )
-option ( WRAP_CSHARP "Wrap C#" OFF )
+
+find_package ( PythonLibs )
+find_package ( PythonInterp )
+if ( ${PYTHONLIBS_FOUND} AND ${PYTHONINTERP_FOUND} )
+  set( WRAP_PYTHON_DEFAULT ON )
+else ( ${PYTHONLIBS_FOUND} AND ${PYTHONINTERP_FOUND} )
+  set( WRAP_PYTHON_DEFAULT OFF )
+endif ( ${PYTHONLIBS_FOUND} AND ${PYTHONINTERP_FOUND} )
+option( WRAP_PYTHON "Wrap Python" ${WRAP_PYTHON_DEFAULT} )
+
+find_package ( Java COMPONENTS Development Runtime)
+find_package ( JNI  )
+if ( ${JAVA_FOUND} AND ${JNI_FOUND} )
+  set( WRAP_JAVA_DEFAULT ON )
+else ( ${JAVA_FOUND} AND ${JNI_FOUND} )
+  set( WRAP_JAVA_DEFAULT OFF )
+endif ( ${JAVA_FOUND} AND ${JNI_FOUND} )
+option ( WRAP_JAVA "Wrap Java" ${WRAP_JAVA_DEFAULT} )
+
+find_package ( TCL )
+if ( ${TCL_FOUND} )
+  set ( WRAP_TCL_DEFAULT ON )
+else ( ${TCL_FOUND} )
+  set ( WRAP_TCL_DEFAULT OFF )
+endif ( ${TCL_FOUND} )
+option ( WRAP_TCL "Wrap Tcl" ${WRAP_TCL_DEFAULT} )
+
+find_package ( Ruby )
+if ( ${RUBY_FOUND} )
+  set ( WRAP_RUBY_DEFAULT ON )
+else ( ${RUBY_FOUND} )
+  set ( WRAP_RUBY_DEFAULT OFF )
+endif ( ${RUBY_FOUND} )
+option ( WRAP_RUBY "Wrap Ruby" ${WRAP_RUBY_DEFAULT} )
+
+#
+# Below here are the 2nd tier languages they are not enable automatically if detected
+#
+
+# TODO FindCSharp does not conform to the expected behavior:
+# http://www.cmake.org/cmake/help/cmake-2-8-docs.html#command:find_package
+# specifically CSHARP_FOUND is not defined, and the script fails on non-windows systems
+if( WIN32 )
+  option ( WRAP_CSHARP "Wrap C#" OFF )
+  mark_as_advanced( WRAP_CSHARP )
+endif( WIN32 )
+
+# TODO FindR does not conform to the expected behavior:
+# http://www.cmake.org/cmake/help/cmake-2-8-docs.html#command:find_package
+# specifically R_FOUND is not defined. Additionally, the defined variables are not marked as advanced.
 option ( WRAP_R "Wrap R" OFF )
-option ( WRAP_RUBY "Wrap Ruby" OFF )
+mark_as_advanced( WRAP_R )
 
-set(CMAKE_MODULE_PATH ${SimpleITK_SOURCE_DIR}/Wrapping)
 
+
+
+
+#
+# General SWIG configuration
+# 
 if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA OR WRAP_CSHARP OR WRAP_TCL OR WRAP_R OR WRAP_RUBY )
   find_package ( SWIG 2 REQUIRED )
   include ( "UseSWIGLocal.cmake" )
@@ -30,8 +87,9 @@ if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA OR WRAP_CSHARP OR WRAP_TCL OR WRAP_R O
 
 endif()
 
-
-# Find lua
+#
+# lua SWIG configuration
+#
 if ( WRAP_LUA )
   option ( USE_SYSTEM_LUA "Use a system provided lua" OFF )
 
@@ -62,7 +120,9 @@ if ( WRAP_LUA )
 
 endif()
 
-# Find Python
+#
+# python SWIG configuration
+#
 if ( WRAP_PYTHON )
   find_package ( PythonLibs REQUIRED )
   find_package ( PythonInterp REQUIRED )
@@ -78,7 +138,9 @@ if ( WRAP_PYTHON )
 
 endif()
 
-# Find Ruby
+#
+# ruby SWIG configuration
+#
 if ( WRAP_RUBY )
   find_package ( Ruby REQUIRED )
   include_directories ( ${RUBY_INCLUDE_DIRS} )
@@ -95,7 +157,10 @@ if ( WRAP_RUBY )
 
 endif()
 
-# Find Java
+
+#
+# JAVA SWIG configuration
+#
 if ( WRAP_JAVA )
   find_package ( Java REQUIRED )
   find_package ( JNI REQUIRED )
@@ -136,11 +201,13 @@ if ( WRAP_JAVA )
 
 endif()
 
-# Find C#
+
+#
+# C# SWIG configuration
+#
 if ( WRAP_CSHARP )
 
   # Find C#
-  set( CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/Wrapping/CSharpModules )
   find_package( CSharp REQUIRED )
   include( ${CSHARP_USE_FILE} )
 
