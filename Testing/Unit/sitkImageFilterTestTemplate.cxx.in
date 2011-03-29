@@ -143,13 +143,13 @@ end)
   $(if md5hash then
   OUT = [[
   // Check the hash
-  VERIFYHASH("${md5hash}",MD5,output,"Output MD5 hash failed");
+  VERIFYHASH("${md5hash}",MD5,output,"Output MD5 hash failed in ${tag} with input ${inputA} and ${inputB}");
   ]]
   end)
   $(if sha1hash then
   OUT = [[
   // Check the hash
-  VERIFYHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed");
+  VERIFYHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed in ${tag} with input ${inputA} and ${inputB}");
   ]]
   end)
   $(if tolerance then
