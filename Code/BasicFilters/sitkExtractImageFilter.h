@@ -32,26 +32,31 @@ namespace itk {
       Self& SetDimension ( size_t s ) { this->m_Dimension = s; return *this; }
       size_t GetDimension() { return this->m_Dimension; }
 
+      /** Name of this class */
+      std::string GetName() const { return std::string ( "Extract"); }
+
       // Print ourselves out
       std::string ToString() const;
 
-      Image* Execute ( Image* );
-      Image* Execute ( Image*, size_t s, size_t d );
+      Image Execute ( const Image &);
+      Image Execute ( const Image &, size_t s, size_t d );
 
     private:
 
       /** Slice to extract */
       size_t m_Slice;
-      
+
       /** Dimesion along which to extract the slice */
       size_t m_Dimension;
 
       // Macro that instantiate the member function dispatching
-      typedef Image* (Self::*MemberFunctionType)( Image* );
-      template <class TImageType> Image* ExecuteInternal ( Image* image );
+      typedef Image (Self::*MemberFunctionType)( const Image & );
+      template <class TImageType> Image ExecuteInternal ( const Image& image );
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
     };
+
+    Image Extract ( const Image&, size_t s, size_t d );
   }
 }
 #endif

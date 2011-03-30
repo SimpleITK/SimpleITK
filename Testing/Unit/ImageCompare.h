@@ -10,7 +10,7 @@ public:
 
   // Compare the image to the named baseline image slice by slice, display the difference in the center slice
   // If the baseline does not exist, fail, and write a baseline image in the output directory
-  bool compare ( itk::simple::Image* image, std::string testGroup, std::string tag );
+  bool compare ( const itk::simple::Image& image, std::string testGroup, std::string tag );
 
   // Return the message from the previous image comparison.
   std::string getMessage() { return mMessage; }

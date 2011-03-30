@@ -13,17 +13,17 @@ namespace simple
     }
 
   template<class TImage>
-  ::itk::Object::Pointer LinearInterpolate::GetInterpolatorInternal ( Image* image )
+  ::itk::Object::Pointer LinearInterpolate::GetInterpolatorInternal (const Image& image )
   {
     ::itk::Object::Pointer ptr;
     ptr = (::itk::Object*) (::itk::LinearInterpolateImageFunction<TImage,double>::New());
     return ptr;
   }
 
-  ::itk::Object::Pointer LinearInterpolate::GetInterpolator ( Image* image )
+  ::itk::Object::Pointer LinearInterpolate::GetInterpolator ( const Image &image )
   {
-    const PixelIDValueType fixedType = image->GetPixelIDValue();
-    const unsigned int fixedDim = image->GetDimension();
+    const PixelIDValueType fixedType = image.GetPixelIDValue();
+    const unsigned int fixedDim = image.GetDimension();
     if (this->m_MemberFactory->HasMemberFunction( fixedType, fixedDim ) )
       {
       return this->m_MemberFactory->GetMemberFunction( fixedType, fixedDim )( image );

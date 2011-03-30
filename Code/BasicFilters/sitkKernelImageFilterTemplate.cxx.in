@@ -122,7 +122,7 @@ ${name}ImageFilter::KernelType ${name}ImageFilter::GetKernelType() const
 //$(if members and #members > 0 then
 OUT = [[
 
-Image* ${name}ImageFilter::Execute ( Image* image1$(if number_of_inputs==2 then OUT=', Image* image2' end)$(foreach members ,
+Image ${name}ImageFilter::Execute ( const Image& image1$(if number_of_inputs==2 then OUT=', const Image& image2' end)$(foreach members ,
   ${type} in${name}) )
 {
 $(foreach members
@@ -134,20 +134,20 @@ end)
 }
 ]]
 end)
-Image* ${name}ImageFilter::Execute ( Image* image1$(if number_of_inputs==2 then OUT=[[, Image* image2]] end) )
+Image ${name}ImageFilter::Execute ( const Image& image1$(if number_of_inputs==2 then OUT=[[, const Image& image2]] end) )
 {
 
-  PixelIDValueType type = image1->GetPixelIDValue();
-  unsigned int dimension = image1->GetDimension();$(if number_of_inputs and number_of_inputs == 2 then
+  PixelIDValueType type = image1.GetPixelIDValue();
+  unsigned int dimension = image1.GetDimension();$(if number_of_inputs and number_of_inputs == 2 then
 OUT=[[
 
 
   // todo need better error handling and potential type conversion
-  if ( type != image2->GetPixelIDValue() ||
-       dimension != image2->GetDimension() ||
-       image1->GetWidth() != image2->GetWidth() ||
-       image1->GetHeight() != image2->GetHeight() ||
-       image1->GetDepth() != image2->GetDepth() )
+  if ( type != image2.GetPixelIDValue() ||
+       dimension != image2.GetDimension() ||
+       image1.GetWidth() != image2.GetWidth() ||
+       image1.GetHeight() != image2.GetHeight() ||
+       image1.GetDepth() != image2.GetDepth() )
     {
       sitkExceptionMacro ( "Both images for ${name}ImageFilter don't match type or dimension!" );
     }]] end)
@@ -162,7 +162,7 @@ OUT=[[
 // ExecuteInternal
 //
 template <class TImageType>
-Image* ${name}ImageFilter::ExecuteInternal ( Image* inImage1 $(if number_of_inputs==2 then OUT=[[, Image* inImage2]] end) )
+Image ${name}ImageFilter::ExecuteInternal ( const Image& inImage1 $(if number_of_inputs==2 then OUT=[[, const Image& inImage2]] end) )
 {
   // Define the input and output image types
   typedef TImageType     InputImageType;
@@ -178,8 +178,8 @@ Image* ${name}ImageFilter::ExecuteInternal ( Image* inImage1 $(if number_of_inpu
   end)
 
   // Get the a pointer to the ITK image contained in image1
-  typename InputImageType::Pointer image1 =
-    dynamic_cast <InputImageType*> ( inImage1->GetImageBase().GetPointer() );
+  typename InputImageType::ConstPointer image1 =
+    dynamic_cast <const InputImageType*> ( inImage1.GetImageBase() );
 
   // Check that ITK image pointer was properly retrieved
   if ( image1.IsNull() )
@@ -190,8 +190,8 @@ OUT=[[
 
 
   // Get the a pointer to the ITK image contained in image2
-  typename InputImageType::Pointer image2 =
-  dynamic_cast <InputImageType*> ( inImage2->GetImageBase().GetPointer() );
+  typename InputImageType::ConstPointer image2 =
+  dynamic_cast <const InputImageType*> ( inImage2.GetImageBase() );
 
   // Check that ITK image pointer was properly retrieved
   if ( image2.IsNull() )
@@ -260,7 +260,7 @@ end)$(foreach members
     OUT = '${custom_itk_cast}'
   elseif dim_vec and dim_vec == 1 then
     OUT = [[${itk_type} itkVec${name};
-    for (unsigned int i = 0; i < inImage1->GetDimension(); ++i)
+    for (unsigned int i = 0; i < inImage1.GetDimension(); ++i)
       {
       itkVec${name}[i] = this->Get${name}()[i];
       }
@@ -271,8 +271,8 @@ end)$(foreach members
 )
   filter->SetKernel( kernel );
   filter->Update();
-  Image* out = new Image( filter->GetOutput() );
-  return out;
+
+  return Image( filter->GetOutput() );
 
 }
 
@@ -282,7 +282,7 @@ end)$(foreach members
 //
 // Function to run the Execute method of this filter
 //
-Image* ${name} ( Image* imageA$(if number_of_inputs == 2 then OUT=', Image* imageB' end),
+Image ${name} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end),
                  uint32_t inRadius,  ${name}ImageFilter::KernelType inKernel
                  $(when members $(foreach members , ${type} in${name})) )
 {
@@ -294,7 +294,7 @@ Image* ${name} ( Image* imageA$(if number_of_inputs == 2 then OUT=', Image* imag
 //
 // Function to run the Execute method of this filter
 //
-Image* ${name} ( Image* imageA$(if number_of_inputs == 2 then OUT=', Image* imageB' end),
+Image ${name} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end),
                  std::vector<uint32_t> inVectorRadius,  ${name}ImageFilter::KernelType inKernel
                  $(when members $(foreach members , ${type} in${name})) )
 {

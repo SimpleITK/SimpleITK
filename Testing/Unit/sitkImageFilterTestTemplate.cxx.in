@@ -13,10 +13,10 @@
 
 #define VERIFYHASH(hash,hashType,image,message)    \
   {                                             \
-  std::string actualHashValue = hasher.SetHashFunction ( itk::simple::HashImageFilter::hashType ).Execute ( image.get() ); \
+  std::string actualHashValue = hasher.SetHashFunction ( itk::simple::HashImageFilter::hashType ).Execute ( image ); \
   EXPECT_EQ ( hash, actualHashValue  ) << message;                      \
   if ( hash != actualHashValue ) {                                      \
-    itk::simple::WriteImage ( image.get(), dataFinder.GetOutputFile ( actualHashValue + ".nrrd" ) ); \
+    itk::simple::WriteImage ( image, dataFinder.GetOutputFile ( actualHashValue + ".nrrd" ) ); \
     std::cout << "Saved image as " << dataFinder.GetOutputFile ( actualHashValue + ".nrrd" ) << std::endl; \
   }                                                                     \
   }
@@ -25,9 +25,9 @@
 TEST(BasicFilters,${name}) {
   itk::simple::ImageFileReader reader;
   itk::simple::${name}ImageFilter filter;
-  std::auto_ptr<itk::simple::Image> inputA;
-  std::auto_ptr<itk::simple::Image> inputB;
-  std::auto_ptr<itk::simple::Image> output;
+  itk::simple::Image inputA( 0, 0, itk::simple::sitkUInt8 );
+  itk::simple::Image inputB( 0, 0, itk::simple::sitkUInt8 );
+  itk::simple::Image output( 0, 0, itk::simple::sitkUInt8 );
   itk::simple::HashImageFilter hasher;
   std::string inputSHA1hash;
 
@@ -70,11 +70,11 @@ end)
 
  $(if number_of_inputs == 2 then
    OUT=[[ {
-  std::auto_ptr<itk::simple::Image> smallImage      ( new itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) );
-  std::auto_ptr<itk::simple::Image> largeImage      ( new itk::simple::Image ( 10,10,10,itk::simple::sitkUInt8 ) );
-  std::auto_ptr<itk::simple::Image> smallShortImage ( new itk::simple::Image ( 1,1,1,itk::simple::sitkUInt16 ) );
-  ASSERT_THROW ( filter.Execute ( smallImage.get(), largeImage.get() ), itk::simple::GenericException ) << " Image sizes are different";
-  ASSERT_THROW ( filter.Execute ( smallImage.get(), smallShortImage.get() ), itk::simple::GenericException ) << " Image types are different";
+  itk::simple::Image smallImage( 1,1,1,itk::simple::sitkUInt8 );
+  itk::simple::Image largeImage( 10,10,10,itk::simple::sitkUInt8 );
+  itk::simple::Image smallShortImage( 1,1,1,itk::simple::sitkUInt16 );
+  ASSERT_THROW ( filter.Execute ( smallImage, largeImage ), itk::simple::GenericException ) << " Image sizes are different";
+  ASSERT_THROW ( filter.Execute ( smallImage, smallShortImage ), itk::simple::GenericException ) << " Image types are different";
   }]]
    end)
 
@@ -82,12 +82,12 @@ end)
   bool firstPassSoTestFunctional = true;
   $(foreach tests
     /* ${description} */
-  ASSERT_NO_THROW ( inputA.reset ( reader.SetFileName ( dataFinder.GetFile ( "${inputA}" ) ).Execute() ) ) << "Failed to load ${inputA}";
-  ASSERT_TRUE ( inputA->GetImageBase().IsNotNull() ) << "Could not read ${inputA}";
+  ASSERT_NO_THROW ( inputA = reader.SetFileName ( dataFinder.GetFile ( "${inputA}" ) ).Execute() ) << "Failed to load ${inputA}";
+  ASSERT_TRUE ( inputA.GetImageBase() != NULL ) << "Could not read ${inputA}";
     $(if inputB then
       OUT=[[
-  ASSERT_NO_THROW ( inputB.reset ( reader.SetFileName ( dataFinder.GetFile ( "${inputB}" ) ).Execute() ) ) << "Failed to load ${inputB}";
-  ASSERT_TRUE ( inputB->GetImageBase().IsNotNull() ) << "Could not read ${inputB}";
+  ASSERT_NO_THROW ( inputB = reader.SetFileName ( dataFinder.GetFile ( "${inputB}" ) ).Execute() ) << "Failed to load ${inputB}";
+  ASSERT_TRUE ( inputB.GetImageBase() != NULL ) << "Could not read ${inputB}";
             ]]
       end)
 
@@ -95,15 +95,16 @@ end)
       firstPassSoTestFunctional = false;
 
       // Do we get the same image back, if we use the functional interface?
-      std::auto_ptr<itk::simple::Image> fromFunctional, fromProcedural;
-      ASSERT_NO_THROW ( fromProcedural.reset ( filter.Execute ( inputA.get() $(if inputB then OUT=", inputB.get()" end) ) ) ) << "Procedural interface to ${name}";
-      ASSERT_NO_THROW ( fromFunctional.reset ( itk::simple::${name} ( inputA.get() $(if inputB then OUT=", inputB.get()" end)
+      itk::simple::Image fromFunctional( 0, 0, itk::simple::sitkUInt8 );
+      itk::simple::Image fromProcedural( 0, 0, itk::simple::sitkUInt8 );
+      ASSERT_NO_THROW ( fromProcedural = filter.Execute ( inputA $(if inputB then OUT=", inputB" end) ) ) << "Procedural interface to ${name}";
+      ASSERT_NO_THROW ( fromFunctional = itk::simple::${name} ( inputA $(if inputB then OUT=", inputB" end)
                                                                          $(if template_type and template_type == "RegionGrowing" then OUT=", std::vector< std::vector<unsigned int> >()" end)
                                                                       $(if template_code_filename and template_code_filename == "KernelImageFilter" then OUT=[[, 1, itk::simple::${name}ImageFilter::Ball]] end)
                                                                          $(foreach members , ${default})
-                                                                      ) ) ) << "Functional interface to ${name}";
+                                                                      ) ) << "Functional interface to ${name}";
       hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
-      EXPECT_EQ ( hasher.Execute ( fromProcedural.get() ), hasher.Execute ( fromFunctional.get() ) ) << "procedural and functional are not the same!";
+      EXPECT_EQ ( hasher.Execute ( fromProcedural ), hasher.Execute ( fromFunctional ) ) << "procedural and functional are not the same!";
     }
 
 
@@ -112,7 +113,7 @@ OUT=[[
 $(foreach settings
   $(if parameter == "SeedList" then
   OUT='filter.ClearSeeds();\
-  $(for i=1,#value do OUT=OUT .. "{unsigned int __seed[] = " .. value[i] .. "; filter.AddSeed( std::vector<unsigned int>(__seed, __seed + inputA->GetDimension()) );}" end);'
+  $(for i=1,#value do OUT=OUT .. "{unsigned int __seed[] = " .. value[i] .. "; filter.AddSeed( std::vector<unsigned int>(__seed, __seed + inputA.GetDimension()) );}" end);'
   elseif dim_vec and dim_vec == 1 then
   OUT='{\
   ${type} arr[] = ${value};\
@@ -133,12 +134,12 @@ end)
 )]]
 end)
 
-  inputSHA1hash =  itk::simple::Hash( inputA.get() );
-  ASSERT_NO_THROW ( output.reset ( filter.Execute ( inputA.get() $(if inputB then OUT=", inputB.get()" end) ) ) );
+  inputSHA1hash =  itk::simple::Hash( inputA );
+  ASSERT_NO_THROW ( output =  filter.Execute ( inputA $(if inputB then OUT=", inputB" end) ) );
 
   // Check that the input is not modified
   // This will fail if the filter is being run in-place
-  EXPECT_EQ ( inputSHA1hash,  itk::simple::Hash( inputA.get() ) ) << "Input was modified by filter.";
+  EXPECT_EQ ( inputSHA1hash,  itk::simple::Hash( inputA ) ) << "Input was modified by filter.";
 
   $(if md5hash then
   OUT = [[
@@ -154,7 +155,7 @@ end)
   end)
   $(if tolerance then
   OUT = [[
- IMAGECOMPAREWITHTOLERANCE ( output.get(), "${tag}", ${tolerance} );
+ IMAGECOMPAREWITHTOLERANCE ( output, "${tag}", ${tolerance} );
   ]]
   end)
   )
@@ -178,7 +179,7 @@ TEST_F(Lua,${name}) {
     // Make sure the output is wiped
     EXPECT_NO_THROW ( itk::simple::ImageFileWriter()
                       .SetFileName ( outputFileName )
-                      .Execute ( new itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
+                      .Execute ( itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
     CommandLine.push_back ( dataFinder.GetLuaExecutable() );
     CommandLine.push_back ( Script );
     CommandLine.push_back ( "${tag}" );
@@ -191,11 +192,10 @@ TEST_F(Lua,${name}) {
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::HashImageFilter hasher;
-    std::auto_ptr<itk::simple::Image> output;
+    itk::simple::Image output( 0, 0, itk::simple::sitkUInt8 );
 
-    output.reset(reader.SetFileName ( outputFileName ).Execute());
-    ASSERT_TRUE ( output.get() != NULL );
-    ASSERT_TRUE ( output->GetImageBase().IsNotNull() ) << "Loaded output image";
+    output = reader.SetFileName ( outputFileName ).Execute();
+    ASSERT_TRUE ( output.GetImageBase() != NULL ) << "Loaded output image";
 
     $(if md5hash then
       OUT = [[
@@ -211,7 +211,7 @@ TEST_F(Lua,${name}) {
       end)
     $(if tolerance then
       OUT = [[
-              IMAGECOMPAREWITHTOLERANCE_WITH_TESTCASE ( output.get(), "BasicFilters", "${tag}", ${tolerance} );
+              IMAGECOMPAREWITHTOLERANCE_WITH_TESTCASE ( output, "BasicFilters", "${tag}", ${tolerance} );
                ]]
       end)
       }
@@ -242,7 +242,7 @@ TEST_F(Python,${name}) {
     // Make sure the output is wiped
     EXPECT_NO_THROW ( itk::simple::ImageFileWriter()
                       .SetFileName ( outputFileName )
-                      .Execute ( new itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
+                      .Execute ( itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
     CommandLine.push_back ( dataFinder.GetPythonExecutable() );
     CommandLine.push_back ( Script );
     CommandLine.push_back ( "${tag}" );
@@ -255,11 +255,10 @@ TEST_F(Python,${name}) {
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::HashImageFilter hasher;
-    std::auto_ptr<itk::simple::Image> output;
+    itk::simple::Image output( 0, 0, itk::simple::sitkUInt8 );
 
-    output.reset ( reader.SetFileName ( outputFileName ).Execute() );
-    ASSERT_TRUE ( output.get() != NULL );
-    ASSERT_TRUE ( output->GetImageBase().IsNotNull() ) << "Loaded output image";
+    output = reader.SetFileName ( outputFileName ).Execute();
+    ASSERT_TRUE ( output.GetImageBase() != NULL ) << "Loaded output image";
 
     $(if md5hash then
       OUT = [[
@@ -275,7 +274,7 @@ TEST_F(Python,${name}) {
       end)
     $(if tolerance then
       OUT = [[
-              IMAGECOMPAREWITHTOLERANCE_WITH_TESTCASE ( output.get(), "BasicFilters", "${tag}", ${tolerance} );
+              IMAGECOMPAREWITHTOLERANCE_WITH_TESTCASE ( output, "BasicFilters", "${tag}", ${tolerance} );
                ]]
       end)
       }
@@ -301,7 +300,7 @@ TEST_F(Tcl,${name}) {
     // Make sure the output is wiped
     EXPECT_NO_THROW ( itk::simple::ImageFileWriter()
                       .SetFileName ( outputFileName )
-                      .Execute ( new itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
+                      .Execute ( itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
     CommandLine.push_back ( dataFinder.FindExecutable ( "SimpleITKTclsh" ) );
     CommandLine.push_back ( Script );
     CommandLine.push_back ( "${tag}" );
@@ -314,11 +313,10 @@ TEST_F(Tcl,${name}) {
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::HashImageFilter hasher;
-    std::auto_ptr<itk::simple::Image> output;
+    itk::simple::Image output( 0, 0, itk::simple::sitkUInt8 );
 
-    output.reset ( reader.SetFileName ( outputFileName ).Execute() );
-    ASSERT_TRUE ( output.get() != NULL );
-    ASSERT_TRUE ( output->GetImageBase().IsNotNull() ) << "Loaded output image";
+    output = reader.SetFileName ( outputFileName ).Execute();
+    ASSERT_TRUE ( output.GetImageBase() != NULL ) << "Loaded output image";
 
     $(if md5hash then
       OUT = [[
@@ -334,7 +332,7 @@ TEST_F(Tcl,${name}) {
       end)
     $(if tolerance then
       OUT = [[
-              IMAGECOMPAREWITHTOLERANCE_WITH_TESTCASE ( output.get(), "BasicFilters", "${tag}", ${tolerance} );
+              IMAGECOMPAREWITHTOLERANCE_WITH_TESTCASE ( output, "BasicFilters", "${tag}", ${tolerance} );
                ]]
       end)
       }
@@ -360,7 +358,7 @@ TEST_F(R,${name}) {
     // Make sure the output is wiped
     EXPECT_NO_THROW ( itk::simple::ImageFileWriter()
                       .SetFileName ( outputFileName )
-                      .Execute ( new itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
+                      .Execute ( itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
     CommandLine.push_back ( dataFinder.GetRExecutable() );
     CommandLine.push_back ( Script );
     CommandLine.push_back ( "${tag}" );
@@ -373,11 +371,10 @@ TEST_F(R,${name}) {
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::HashImageFilter hasher;
-    std::auto_ptr<itk::simple::Image> output;
+    itk::simple::Image output( 0, 0, itk::simple::sitkUInt8 );
 
-    output.reset ( reader.SetFileName ( outputFileName ).Execute() );
-    ASSERT_TRUE ( output.get() != NULL );
-    ASSERT_TRUE ( output->GetImageBase().IsNotNull() ) << "Loaded output image";
+    output = reader.SetFileName ( outputFileName ).Execute();
+    ASSERT_TRUE ( output.GetImageBase() != NULL ) << "Loaded output image";
 
     $(if md5hash then
       OUT = [[
@@ -393,7 +390,7 @@ TEST_F(R,${name}) {
       end)
     $(if tolerance then
       OUT = [[
-              IMAGECOMPAREWITHTOLERANCE_WITH_TESTCASE ( output.get(), "BasicFilters", "${tag}", ${tolerance} );
+              IMAGECOMPAREWITHTOLERANCE_WITH_TESTCASE ( output, "BasicFilters", "${tag}", ${tolerance} );
                ]]
       end)
       }
@@ -424,7 +421,7 @@ TEST_F(Java,${name}) {
     // Make sure the output is wiped
     EXPECT_NO_THROW ( itk::simple::ImageFileWriter()
                       .SetFileName ( outputFileName )
-                      .Execute ( new itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
+                      .Execute ( itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
     CommandLine.push_back ( dataFinder.GetJavaExecutable() );
     CommandLine.push_back ( "-classpath" );
     CommandLine.push_back ( Classpath );
@@ -440,11 +437,10 @@ TEST_F(Java,${name}) {
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::HashImageFilter hasher;
-    std::auto_ptr<itk::simple::Image> output;
+    itk::simple::Image output( 0, 0, itk::simple::sitkUInt8 );
 
-    output.reset ( reader.SetFileName ( outputFileName ).Execute() );
-    ASSERT_TRUE ( output.get() != NULL );
-    ASSERT_TRUE ( output->GetImageBase().IsNotNull() ) << "Loaded output image";
+    output = reader.SetFileName ( outputFileName ).Execute();
+    ASSERT_TRUE ( output.GetImageBase() != NULL ) << "Loaded output image";
 
     $(if md5hash then
       OUT = [[
@@ -460,7 +456,7 @@ TEST_F(Java,${name}) {
       end)
     $(if tolerance then
       OUT = [[
-              IMAGECOMPAREWITHTOLERANCE_WITH_TESTCASE ( output.get(), "BasicFilters", "${tag}", ${tolerance} );
+              IMAGECOMPAREWITHTOLERANCE_WITH_TESTCASE ( output, "BasicFilters", "${tag}", ${tolerance} );
                ]]
       end)
       }
@@ -489,7 +485,7 @@ TEST_F(Ruby,${name}) {
     // Make sure the output is wiped
     EXPECT_NO_THROW ( itk::simple::ImageFileWriter()
                       .SetFileName ( outputFileName )
-                      .Execute ( new itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
+                      .Execute ( itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
     CommandLine.push_back ( dataFinder.GetRubyExecutable() );
     CommandLine.push_back ( Script );
     CommandLine.push_back ( "${tag}" );
@@ -502,11 +498,10 @@ TEST_F(Ruby,${name}) {
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::HashImageFilter hasher;
-    std::auto_ptr<itk::simple::Image> output;
+    itk::simple::Image output( 0, 0, itk::simple::sitkUInt8 );
 
-    output.reset ( reader.SetFileName ( outputFileName ).Execute() );
-    ASSERT_TRUE ( output.get() != NULL );
-    ASSERT_TRUE ( output->GetImageBase().IsNotNull() ) << "Loaded output image";
+    output = reader.SetFileName ( outputFileName ).Execute();
+    ASSERT_TRUE ( output.GetImageBase() != NULL ) << "Loaded output image";
 
     $(if md5hash then
       OUT = [[
@@ -522,7 +517,7 @@ TEST_F(Ruby,${name}) {
       end)
     $(if tolerance then
       OUT = [[
-              IMAGECOMPAREWITHTOLERANCE_WITH_TESTCASE ( output.get(), "BasicFilters", "${tag}", ${tolerance} );
+              IMAGECOMPAREWITHTOLERANCE_WITH_TESTCASE ( output, "BasicFilters", "${tag}", ${tolerance} );
                ]]
       end)
       }

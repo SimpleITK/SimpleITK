@@ -36,7 +36,7 @@ namespace simple
     // virtual Metric& GetMetric();
     virtual Registration& SetOptimizer ( Optimizer *optimizer );
     // virtual Optimizer& GetOptimizer();
-    virtual std::vector<double> Execute ( Image* fixed, Image* moving );
+    virtual std::vector<double> Execute ( const Image &fixed, const Image &moving );
 
   protected:
     bool m_UseCenteredInitialization;
@@ -46,7 +46,7 @@ namespace simple
     std::auto_ptr<Optimizer> m_Optimizer;
 
     template<class TImage>
-    std::vector<double> ExecuteInternal ( Image* fixed, Image* moving );
+    std::vector<double> ExecuteInternal ( const Image &fixed, const Image &moving );
 
 // SWIG does not appear to process private classes correctly
 #ifndef SWIG
@@ -64,12 +64,12 @@ namespace simple
 #endif
 
 
-    typedef std::vector<double> (Registration::*MemberFunctionType)( Image* fixed, Image* moving );
+    typedef std::vector<double> (Registration::*MemberFunctionType)( const Image &fixed, const Image &moving );
     friend struct RegistrationAddressor<MemberFunctionType>;
     std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
   };
 
-std::vector<double> Register ( Image* fixed, Image* moving, Transform *transform, Interpolate *interpolate, Metric *metric, Optimizer *optimizer );
+std::vector<double> Register ( const Image &fixed, const Image &moving, Transform *transform, Interpolate *interpolate, Metric *metric, Optimizer *optimizer );
 }
 }
 

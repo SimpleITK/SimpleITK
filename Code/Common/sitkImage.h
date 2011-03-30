@@ -8,12 +8,16 @@
 #include "sitkPixelContainer.h"
 #include "sitkNonCopyable.h"
 #include "sitkEnableIf.h"
-#include "itkDataObject.h"
 
+#include <vector>
 #include <memory>
 
 namespace itk
 {
+
+// Forward decalaration for pointer
+class DataObject;
+
 namespace simple
 {
 
@@ -33,6 +37,10 @@ namespace simple
     typedef Image              Self;
 
     virtual ~Image( );
+
+    // copy constructor
+    Image( const Image &img );
+    Image& operator=( const Image &img );
 
     Image( unsigned int Width, unsigned int Height, PixelIDValueEnum ValueEnum );
     Image( unsigned int Width, unsigned int Height, unsigned int Depth, PixelIDValueEnum ValueEnum );
@@ -55,8 +63,21 @@ namespace simple
         this->InternalInitialization( image );
       }
 
-    itk::DataObject::Pointer GetImageBase( void );
-    itk::DataObject::ConstPointer GetImageBase( void ) const;
+    /** Get access to internal ITK data object.
+     *
+     * The return value should imediately be assigned to as
+     * itk::SmartPointer.
+     *
+     * In many cases the value may need to be dynamically casted to
+     * the the actual image type. The GetPixelIDValue() method should
+     * return an PixelID which identifies the image type which the
+     * DataObject points to.
+     *
+     * @{
+     */
+    itk::DataObject* GetImageBase( void );
+    const itk::DataObject* GetImageBase( void ) const;
+    /**@}*/
 
     // could return -1 if in valid
     PixelIDValueType GetPixelIDValue( void ) const;
@@ -132,6 +153,8 @@ namespace simple
      * templated constructors of this class.
      */
     void __ImplicitInstantiate( void );
+
+    void MakeUniqueForWrite( void );
 
   private:
 

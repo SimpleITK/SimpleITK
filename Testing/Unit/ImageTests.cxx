@@ -4,6 +4,11 @@
 #include <sitkImageFileWriter.h>
 #include <sitkHashImageFilter.h>
 
+#include "sitkAddImageFilter.h"
+#include "sitkSubtractImageFilter.h"
+#include "sitkMultiplyImageFilter.h"
+
+
 #include <itkIntTypes.h>
 
 #include "itkImage.h"
@@ -88,7 +93,7 @@ public:
 
 
 TEST_F(Image,Create) {
-  ASSERT_TRUE ( shortImage->GetImageBase().IsNotNull() );
+  ASSERT_TRUE ( shortImage->GetImageBase() != NULL );
   EXPECT_EQ ( shortImage->GetWidth(), itkShortImage->GetLargestPossibleRegion().GetSize()[0] ) << " Checking image width";
   EXPECT_EQ ( shortImage->GetHeight(), itkShortImage->GetLargestPossibleRegion().GetSize()[1] ) << " Checking image height";
   EXPECT_EQ ( shortImage->GetDepth(), itkShortImage->GetLargestPossibleRegion().GetSize()[2] ) << " Checking image depth";
@@ -154,81 +159,68 @@ TEST_F(Image,ImageDataType) {
 }
 
 TEST_F(Image,Constructors) {
-  itk::simple::Image* image;
   itk::simple::HashImageFilter hasher;
   int result;
 
-  image = new itk::simple::Image ( 64, 65, 66, itk::simple::sitkUInt8 );
-  ASSERT_TRUE ( image != NULL );
+  itk::simple::Image image ( 64, 65, 66, itk::simple::sitkUInt8 );
   EXPECT_EQ ( "08183e1b0c50fd2cf6f070b58e218443fb7d5317", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt8";
   result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<unsigned char> >::Result;
-  EXPECT_EQ ( image->GetPixelIDValue(), result );
-  EXPECT_EQ ( image->GetPixelIDTypeAsString(), "8-bit unsigned integer" );
-  EXPECT_EQ ( image->GetDimension(), 3u );
-  EXPECT_EQ ( 64u, image->GetWidth() );
-  EXPECT_EQ ( 65u, image->GetHeight() );
-  EXPECT_EQ ( 66u, image->GetDepth() );
-  delete image;
+  EXPECT_EQ ( image.GetPixelIDValue(), result );
+  EXPECT_EQ ( image.GetPixelIDTypeAsString(), "8-bit unsigned integer" );
+  EXPECT_EQ ( image.GetDimension(), 3u );
+  EXPECT_EQ ( 64u, image.GetWidth() );
+  EXPECT_EQ ( 65u, image.GetHeight() );
+  EXPECT_EQ ( 66u, image.GetDepth() );
 
-  image = new itk::simple::Image ( 64, 65, 66, itk::simple::sitkInt16 );
-  ASSERT_TRUE ( image != NULL );
+  image = itk::simple::Image ( 64, 65, 66, itk::simple::sitkInt16 );
   EXPECT_EQ ( "645b71695b94923c868e16b943d8acf8f6788617", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt16";
   result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<short> >::Result;
-  EXPECT_EQ ( image->GetPixelIDValue(), result );
-  EXPECT_EQ ( image->GetPixelIDTypeAsString(), "16-bit signed integer" );
-  EXPECT_EQ ( image->GetDimension(), 3u );
-  EXPECT_EQ ( 64u, image->GetWidth() );
-  EXPECT_EQ ( 65u, image->GetHeight() );
-  EXPECT_EQ ( 66u, image->GetDepth() );
+  EXPECT_EQ ( image.GetPixelIDValue(), result );
+  EXPECT_EQ ( image.GetPixelIDTypeAsString(), "16-bit signed integer" );
+  EXPECT_EQ ( image.GetDimension(), 3u );
+  EXPECT_EQ ( 64u, image.GetWidth() );
+  EXPECT_EQ ( 65u, image.GetHeight() );
+  EXPECT_EQ ( 66u, image.GetDepth() );
 
-  delete image;
-  image = new itk::simple::Image ( 64, 65, itk::simple::sitkUInt16 );
-  ASSERT_TRUE ( image != NULL );
+  image = itk::simple::Image ( 64, 65, itk::simple::sitkUInt16 );
   EXPECT_EQ ( "e3c464cc1b73df3f48bacf238a80f88b5ab0d3e6", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt16";
   result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<unsigned short> >::Result;
-  EXPECT_EQ ( image->GetPixelIDValue(), result );
-  EXPECT_EQ ( image->GetPixelIDTypeAsString(), "16-bit unsigned integer" );
-  EXPECT_EQ ( image->GetDimension(), 2u );
-  EXPECT_EQ ( 64u, image->GetWidth() );
-  EXPECT_EQ ( 65u, image->GetHeight() );
-  EXPECT_EQ ( 0u, image->GetDepth() );
+  EXPECT_EQ ( image.GetPixelIDValue(), result );
+  EXPECT_EQ ( image.GetPixelIDTypeAsString(), "16-bit unsigned integer" );
+  EXPECT_EQ ( image.GetDimension(), 2u );
+  EXPECT_EQ ( 64u, image.GetWidth() );
+  EXPECT_EQ ( 65u, image.GetHeight() );
+  EXPECT_EQ ( 0u, image.GetDepth() );
 
   // currently we don't have a good interface to check the values of
   // these images, let just construct these types need todo better
   // testing!
 
-  delete image;
-  image = new itk::simple::Image ( 64, 65, 66, itk::simple::sitkLabelUInt8 );
-  ASSERT_TRUE ( image != NULL );
-  EXPECT_EQ ( 64u, image->GetWidth() );
-  EXPECT_EQ ( 65u, image->GetHeight() );
-  EXPECT_EQ ( 66u, image->GetDepth() );
-  delete image;
-  image = new itk::simple::Image ( 64, 65, 66, itk::simple::sitkLabelUInt16 );
-  ASSERT_TRUE ( image != NULL );
-  delete image;
-  image = new itk::simple::Image ( 64, 65, 66, itk::simple::sitkLabelUInt32 );
-  ASSERT_TRUE ( image != NULL );
+  image = itk::simple::Image ( 64, 65, 66, itk::simple::sitkLabelUInt8 );
+  EXPECT_EQ ( 64u, image.GetWidth() );
+  EXPECT_EQ ( 65u, image.GetHeight() );
+  EXPECT_EQ ( 66u, image.GetDepth() );
 
-  delete image;
-  image = new itk::simple::Image ( 64, 65, 66, itk::simple::sitkVectorUInt8 );
-  ASSERT_TRUE ( image != NULL );
-  EXPECT_EQ ( 64u, image->GetWidth() );
-  EXPECT_EQ ( 65u, image->GetHeight() );
-  EXPECT_EQ ( 66u, image->GetDepth() );
-  delete image;
-  image = new itk::simple::Image ( 64, 65, 66, itk::simple::sitkVectorUInt16 );
-  ASSERT_TRUE ( image != NULL );
-  delete image;
+  image = itk::simple::Image ( 64, 65, 66, itk::simple::sitkLabelUInt16 );
+
+  image = itk::simple::Image ( 64, 65, 66, itk::simple::sitkLabelUInt32 );
+
+  image = itk::simple::Image ( 64, 65, 66, itk::simple::sitkVectorUInt8 );
+
+  EXPECT_EQ ( 64u, image.GetWidth() );
+  EXPECT_EQ ( 65u, image.GetHeight() );
+  EXPECT_EQ ( 66u, image.GetDepth() );
+
+  image = itk::simple::Image ( 64, 65, 66, itk::simple::sitkVectorUInt16 );
 }
 
 TEST_F(Image,Hash) {
   itk::simple::HashImageFilter hasher;
-  EXPECT_EQ ( "645b71695b94923c868e16b943d8acf8f6788617", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( shortImage ) ) << " SHA1 hash value";
-  EXPECT_EQ ( "d4ca27c766665f7422027ab1b977b2ef", hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).Execute ( shortImage ) ) << " MD5 hash value";
+  EXPECT_EQ ( "645b71695b94923c868e16b943d8acf8f6788617", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( *shortImage ) ) << " SHA1 hash value";
+  EXPECT_EQ ( "d4ca27c766665f7422027ab1b977b2ef", hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).Execute ( *shortImage ) ) << " MD5 hash value";
 
-  EXPECT_EQ ( "3b6bfcb1922bf8b29b171062ad722c82f8aa3f50", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( floatImage ) ) << " SHA1 hash value";
-  EXPECT_EQ ( "e5eba8af943d7911220c9f2fb9b5b9c8", hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).Execute ( floatImage ) ) << " MD5 hash value";
+  EXPECT_EQ ( "3b6bfcb1922bf8b29b171062ad722c82f8aa3f50", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( *floatImage ) ) << " SHA1 hash value";
+  EXPECT_EQ ( "e5eba8af943d7911220c9f2fb9b5b9c8", hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).Execute ( *floatImage ) ) << " MD5 hash value";
 }
 
 TEST_F(Image,Transforms) {
@@ -288,4 +280,46 @@ TEST_F(Image,Properties) {
   EXPECT_EQ(shortImage->GetSpacing()[1], 2.8) << " SetSpacing[1]";
   EXPECT_EQ(shortImage->GetSpacing()[2], 3.7) << " SetSpacing[2]";
   shortImage->SetOrigin( spacing );
+}
+
+namespace sitk = itk::simple;
+
+TEST_F(Image, CopyOnWrite)
+{
+  // test that a just constructed image only have 1 referecne
+  sitk::Image img( 10, 10, sitk::sitkInt16 );
+  EXPECT_EQ(static_cast<const sitk::Image *>(&img)->GetImageBase()->GetReferenceCount(), 1 )
+    << " Reference Count for just constructed Image";
+
+  // use the image from the fixture to test some copy constructor
+  EXPECT_EQ(static_cast<const sitk::Image *>(shortImage)->GetImageBase()->GetReferenceCount(), 2 )
+    << " Reference Count for shared shortImage initial";
+  sitk::Image img0 = *shortImage;
+  EXPECT_EQ(static_cast<const sitk::Image *>(shortImage)->GetImageBase()->GetReferenceCount(), 3 )
+    << " Reference Count for shared shortImage copy";
+  sitk::Image imgCopy = img0;
+  EXPECT_EQ(static_cast<const sitk::Image *>(shortImage)->GetImageBase()->GetReferenceCount(), 4 )
+    << " Reference Count for shared shortImage second copy";
+
+  // check set origin for copy on write
+  imgCopy.SetOrigin( std::vector<double>( 3, 2.123 ) );
+  EXPECT_EQ(static_cast<const sitk::Image *>(&imgCopy)->GetImageBase()->GetReferenceCount(), 1 )
+    << " Reference Count for copy after set origin";
+  EXPECT_EQ(static_cast<const sitk::Image *>(&img0)->GetImageBase()->GetReferenceCount(), 3 )
+    << " Reference Count for shared after set origin";
+
+  // check shallow copy on assignment
+  imgCopy = img0;
+  EXPECT_EQ(static_cast<const sitk::Image *>(&imgCopy)->GetImageBase()->GetReferenceCount(), 4 )
+    << " Reference Count for copy after assigment";
+  EXPECT_EQ(static_cast<const sitk::Image *>(&img0)->GetImageBase()->GetReferenceCount(), 4 )
+    << " Reference Count for shared after assignment";
+
+  // check copy on write with set spacing
+  imgCopy.SetSpacing( std::vector<double>( 3, 3.45 ) );
+  EXPECT_EQ(static_cast<const sitk::Image *>(&imgCopy)->GetImageBase()->GetReferenceCount(), 1 )
+    << " Reference Count for copy after set spacing";
+  EXPECT_EQ(static_cast<const sitk::Image *>(&img0)->GetImageBase()->GetReferenceCount(), 3 )
+    << " Reference Count for shared after set spacing";
+  EXPECT_EQ( sitk::Hash( imgCopy ), sitk::Hash( img0 ) ) << "Hash for shared and copy after set spacing";
 }
