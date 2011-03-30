@@ -585,6 +585,7 @@ WARN_LOGFILE           =
 
 INPUT                  = "@PROJECT_SOURCE_DIR@/Code" \
                          "@PROJECT_SOURCE_DIR@/Documentation/Doxygen" \
+                         "@PROJECT_BINARY_DIR@/Documentation/DoxygenPages" \
                          "@PROJECT_BINARY_DIR@/Code" \
 
 # This tag can be used to specify the character encoding of the source files
