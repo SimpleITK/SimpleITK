@@ -3,11 +3,21 @@
 
 \section Procedures Procedures
 
+\section VS2008 Building with Visual Studio 2008
+
+Visual Studio 2008 is the oldest supported Microsoft development environment that SimpleITK supports.  To build, you will need to download and install the TR1 implementation contained in the \link http://www.microsoft.com/downloads/en/details.aspx?FamilyId=D466226B-8DAB-445F-A7B4-448B326C48E7&displaylang=en Visual C++ 2008 Feature Pack Release \endlink.
+
+Visual Studio also requires an implementation of stdint.h, which can be downloaded \link http://msinttypes.googlecode.com/svn/trunk/stdint.h here \endlink and should be installed in:
+
+\verbatim
+C:\Program Files\Microsoft Visual Studio 9.0\VC\include
+\endverbatim
+
 \section TandT Tips and Tricks
 
 \subsection JSONTips Working with JSON file.
 
-SimpleITK uses a large number of JSON files as input for generated code. Adding support for your text editor to understand the syntax is advantageous. 
+SimpleITK uses a large number of JSON files as input for generated code. Adding support for your text editor to understand the syntax is advantageous.
 
 -Emacs
 
@@ -52,7 +62,7 @@ couple little scripts, which I called "ccache-cc" and "ccache-c++":
 Then to configure SimpleITK, set your environment variable CC, and CXX,
 to the previous scripts respectfully. This should be done before CMake
 is run, so that it will correctly detect the compiler and configure
-SimpleITK. Now enjoy the faster re-compilation times. 
+SimpleITK. Now enjoy the faster re-compilation times.
 
 
 */
