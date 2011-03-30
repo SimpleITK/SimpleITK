@@ -24,11 +24,14 @@
 #include "sitkConnectedThresholdImageFilter.h"
 #include "sitkImageFileReader.h"
 #include "sitkImageFileWriter.h"
+#include "sitkCastImageFilter.h"
 
 // ITK includes
 #include "itkImage.h"
 #include "itkCurvatureFlowImageFilter.h"
-#include "itkCastImageFilter.h"
+
+// create convenient namespace alias
+namespace sitk = itk::simple;
 
 /**
  * This example shows how ITK and SimpleITK can be used together to work
@@ -59,17 +62,16 @@ int main( int argc, char *argv[])
   //
   // Read the image
   //
-  itk::simple::ImageFileReader reader;
+  sitk::ImageFileReader reader;
   reader.SetFileName( std::string( argv[1] ) );
-  itk::simple::Image image = reader.Execute();
+  sitk::Image image = reader.Execute();
 
 
   //
   // Set up writer
   //
-  itk::simple::ImageFileWriter writer;
+  sitk::ImageFileWriter writer;
   writer.SetFileName( std::string( argv[2] ) );
-
 
   //////
   // Blur using CurvatureFlowImageFilter
@@ -82,48 +84,57 @@ int main( int argc, char *argv[])
   // First, define the typedefs that correspond to the types of the input
   // image. This requires foreknowlege of the data type of the input image.
   //
-  typedef unsigned char                           InputPixelType;
-  const unsigned int                              Dimension = 2;
-  typedef itk::Image< InputPixelType, Dimension > InputImageType;
-
-
-  //
-  // Define the typedefs for the ITK blur filter and the cast filters used to
-  // cast between the different pixel types.
-  //
+  const unsigned int                                 Dimension = 2;
   typedef float                                      InternalPixelType;
   typedef itk::Image< InternalPixelType, Dimension > InternalImageType;
-  typedef itk::CastImageFilter< InputImageType, InternalImageType>
-                                                     CastFilterType;
-  typedef itk::CurvatureFlowImageFilter< InternalImageType, InternalImageType >
-                                                     BlurFilterType;
 
+  //
+  // We must check the the image dimension and the pixel type of the
+  // SimpleITK image match the ITK image we will cast to.s
+  //
+  if ( image.GetDimension() != Dimension )
+    {
+    std::cerr << "Input image is not a " << Dimension << " dimensional image as expected!" << std::endl;
+    return 1;
+    }
+
+  //
+  // The read sitk::Image could be any pixel type. Cast the image, to
+  // float so we know what type we have.
+  //
+  sitk::CastImageFilter caster;
+  caster.SetOutputPixelType( sitk::sitkFloat32 );
+  image = caster.Execute( image );
 
   //
   // Extract the itk image from the SimpleITK image
   //
-  InputImageType::Pointer itkImage =
-    dynamic_cast <InputImageType*>( image.GetImageBase() );
-
+  InternalImageType::Pointer itkImage =
+    dynamic_cast <InternalImageType*>( image.GetImageBase() );
 
   //
-  // Set up the cast filter.
+  // Always check the results of dynamic_casts
   //
-  CastFilterType::Pointer castFilter = CastFilterType::New();
-  castFilter->SetInput( itkImage );
-
+  if ( itkImage.IsNull() )
+    {
+    std::cerr << "Unexpected error converting SimpleITK image to ITK image!" << std::endl;
+    return 1;
+    }
 
   //
   // Set up the blur filter and attach it to the pipeline.
   //
+  typedef itk::CurvatureFlowImageFilter< InternalImageType, InternalImageType >
+                                                     BlurFilterType;
   BlurFilterType::Pointer blurFilter = BlurFilterType::New();
-  blurFilter->SetInput( castFilter->GetOutput() );
+  blurFilter->SetInput( itkImage );
   blurFilter->SetNumberOfIterations( 5 );
   blurFilter->SetTimeStep( 0.125 );
 
 
+
   //
-  // Execute the Cast -> Blur pipeline by calling Update() on the blur filter.
+  // Execute the  Blur pipeline by calling Update() on the blur filter.
   //
   blurFilter->Update();
 
@@ -132,7 +143,7 @@ int main( int argc, char *argv[])
   // Return to the simpleITK setting by making a SimpleITK image using the
   // output of the blur filter.
   //
-  itk::simple::Image blurredImage = itk::simple::Image( blurFilter->GetOutput() );
+  sitk::Image blurredImage = sitk::Image( blurFilter->GetOutput() );
 
 
   //////
@@ -143,7 +154,7 @@ int main( int argc, char *argv[])
   //
   // Set up ConnectedThresholdImageFilter for segmentation
   //
-  itk::simple::ConnectedThresholdImageFilter segmentationFilter;
+  sitk::ConnectedThresholdImageFilter segmentationFilter;
   segmentationFilter.SetLower( atof( argv[3] ) );
   segmentationFilter.SetUpper( atof( argv[4] ) );
   segmentationFilter.SetReplaceValue( 255 );
@@ -159,7 +170,7 @@ int main( int argc, char *argv[])
     std::cout << std::endl;
     }
 
-  itk::simple::Image outImage = segmentationFilter.Execute(blurredImage);
+  sitk::Image outImage = segmentationFilter.Execute(blurredImage);
 
 
   //
