@@ -12,7 +12,6 @@ int main ( int argc, char* argv[] ) {
   reader.SetFileName ( std::string ( argv[1] ) );
   itk::simple::Image image = reader.Execute();
 
-#if 0
   itk::simple::RecursiveGaussianImageFilter gaussian;
   gaussian.SetSigma ( atof ( argv[2] ) );
   itk::simple::Image blurredImage = gaussian.Execute ( image );
@@ -20,6 +19,6 @@ int main ( int argc, char* argv[] ) {
   itk::simple::ImageFileWriter writer;
   writer.SetFileName ( std::string ( argv[3] ) );
   writer.Execute ( blurredImage );
-#endif
+
   return 0;
 }

@@ -10,13 +10,13 @@ int main ( int argc, char* argv[] ) {
 
 
   itk::simple::Image image = itk::simple::ReadImage ( std::string ( argv[1] ) );
-#if 0
+
   itk::simple::Image blurredImage = itk::simple::RecursiveGaussian ( image,
                                                   atof ( argv[2] ),
                                                   false,
                                                   itk::simple::RecursiveGaussianImageFilter::ZeroOrder,
                                                   0 );
   itk::simple::WriteImage ( blurredImage, std::string ( argv[3] ) );
-#endif
+
   return 0;
 }
