@@ -8,13 +8,9 @@
 #include <sitkCastImageFilter.h>
 #include <sitkPixelIDValues.h>
 
+
 #include "itkRecursiveGaussianImageFilter.h"
 
-TEST(BasicFilters,Create) {
-  itk::simple::RecursiveGaussianImageFilter *filter;
-  filter = new itk::simple::RecursiveGaussianImageFilter();
-  delete filter;
-}
 
 TEST(BasicFilters,RecursiveGaussian_ENUMCHECK) {
 
@@ -24,22 +20,18 @@ TEST(BasicFilters,RecursiveGaussian_ENUMCHECK) {
   EXPECT_EQ( ITKRecursiveGausianType::SecondOrder, itk::simple::RecursiveGaussianImageFilter::SecondOrder );
 }
 
-
 TEST(BasicFilters,Cast) {
   itk::simple::HashImageFilter hasher;
   itk::simple::ImageFileReader reader;
-  itk::simple::RecursiveGaussianImageFilter filter;
-  itk::simple::Image* image;
 
   reader.SetFileName ( dataFinder.GetFile ( "Input/RA-Float.nrrd" ) );
-  image = reader.Execute();
-  ASSERT_TRUE ( image != NULL );
-  ASSERT_TRUE ( image->GetImageBase().IsNotNull() );
+  itk::simple::Image image = reader.Execute();
+  ASSERT_TRUE ( image.GetImageBase() != NULL );
   hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
   EXPECT_EQ ( "3ccccde44efaa3d688a86e94335c1f16", hasher.Execute ( image ) );
 
-  EXPECT_EQ ( image->GetPixelIDValue(), itk::simple::sitkFloat32 );
-  EXPECT_EQ ( image->GetPixelIDTypeAsString(), "32-bit float" );
+  EXPECT_EQ ( image.GetPixelIDValue(), itk::simple::sitkFloat32 );
+  EXPECT_EQ ( image.GetPixelIDTypeAsString(), "32-bit float" );
 
   typedef std::map<std::string,itk::simple::PixelIDValueType> MapType;
   MapType mapping;
@@ -77,7 +69,7 @@ TEST(BasicFilters,Cast) {
     {
     itk::simple::PixelIDValueType pixelID = it->second;
     std::string hash = it->first;
-    itk::simple::Image* test;
+
     std::cerr << std::flush;
     std::cerr << std::flush;
     if ( pixelID == itk::simple::sitkUnknown )
@@ -91,38 +83,29 @@ TEST(BasicFilters,Cast) {
     try
       {
       itk::simple::CastImageFilter caster;
-      test = caster.SetOutputPixelType ( pixelID ).Execute ( image );
+      itk::simple::Image test = caster.SetOutputPixelType ( pixelID ).Execute ( image );
+
+      hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
+      EXPECT_EQ ( hash, hasher.Execute ( test ) ) << "Cast to " << itk::simple::GetPixelIDValueAsString ( pixelID );
+
       }
     catch ( ::itk::simple::GenericException &e )
       {
-      std::cerr << "exception: " << e.what() << std::endl;
-      failed = true;
+
+      // hashing currently doesn't work for label images
+      if ( hash.find( "sitkLabel" ) == 0 )
+        {
+        std::cerr << "Hashing currently is not implemented for Label Images" << std::endl;
+        }
+      else
+        {
+        failed = true;
+        std::cerr << "Failed to hash: " << e.what() << std::endl;
+        }
+
       continue;
       }
 
-    if ( test != NULL )
-      {
-      try
-        {
-        hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
-        EXPECT_EQ ( hash, hasher.Execute ( test ) ) << "Cast to " << itk::simple::GetPixelIDValueAsString ( pixelID );
-        }
-      catch ( ::itk::simple::GenericException &e )
-        {
-        // hashing currently doesn't work for label images
-        if ( hash.find( "sitkLabel" ) == 0 )
-          {
-          std::cerr << "Hashing currently is not implemented for Label Images" << std::endl;
-          }
-        else
-          {
-          failed = true;
-          std::cerr << "Failed to hash: " << e.what() << std::endl;
-          }
-        }
-      delete test;
-      test = NULL;
-      }
   }
   EXPECT_FALSE ( failed ) << "Cast failed, or could not take the hash of the imoge";
 

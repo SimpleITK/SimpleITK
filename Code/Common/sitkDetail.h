@@ -35,6 +35,21 @@ struct DualExecuteInternalAddressor
     }
 };
 
+/** An addressor of ExecuteInternalCast to be utilized with
+ * registering member functions with the factory.
+ */
+template < class TMemberFunctionPointer >
+struct ExecuteInternalVectorImageAddressor
+{
+  typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
+
+  template< typename TImageType >
+  TMemberFunctionPointer operator() ( void ) const
+  {
+    return &ObjectType::template ExecuteInternalVectorImage< TImageType >;
+  }
+};
+
 
 }
 }

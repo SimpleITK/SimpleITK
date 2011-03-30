@@ -7,7 +7,7 @@
 
 namespace itk {
 namespace simple {
-  void WriteImage ( Image* image, std::string filename ) { ImageFileWriter writer; writer.SetFileName ( filename ).Execute ( image ); }
+  void WriteImage ( const Image& image, std::string filename ) { ImageFileWriter writer; writer.SetFileName ( filename ).Execute ( image ); }
 
 ImageFileWriter::ImageFileWriter()
   {
@@ -28,21 +28,20 @@ std::string ImageFileWriter::GetFileName()
   return this->m_FileName;
   }
 
-ImageFileWriter& ImageFileWriter::Execute ( Image* image )
+ImageFileWriter& ImageFileWriter::Execute ( const Image& image )
   {
-    PixelIDValueType type = image->GetPixelIDValue();
-    unsigned int dimension = image->GetDimension();
+    PixelIDValueType type = image.GetPixelIDValue();
+    unsigned int dimension = image.GetDimension();
 
     return this->m_MemberFactory->GetMemberFunction( type, dimension )( image );
-    return *this;
   }
 
 //-----------------------------------------------------------------------------
 template <class InputImageType>
-ImageFileWriter& ImageFileWriter::ExecuteInternal( Image* inImage )
+ImageFileWriter& ImageFileWriter::ExecuteInternal( const Image& inImage )
   {
-    typename InputImageType::Pointer image =
-      dynamic_cast <InputImageType*> ( inImage->GetImageBase().GetPointer() );
+    typename InputImageType::ConstPointer image =
+      dynamic_cast <const InputImageType*> ( inImage.GetImageBase() );
 
     typedef itk::ImageFileWriter<InputImageType> Writer;
     typename Writer::Pointer writer = Writer::New();

@@ -75,16 +75,19 @@ end)
       Self& SetKernelType(KernelType t);
       KernelType GetKernelType() const;
 
+      /** Name of this class */
+      std::string GetName() const { return std::string ( "${name}"); }
+
       /** Print ourselves out */
       std::string ToString() const;
 
       /** Execute the filter on the input image$(if number_of_inputs == 2 then OUT=[[s]]end) */
-      Image* Execute ( Image* $(if number_of_inputs == 2 then OUT=[[, Image*]] end) );$(if members and #members > 0 then
+      Image Execute ( const Image& $(if number_of_inputs == 2 then OUT=[[, const Image&]] end) );$(if members and #members > 0 then
 OUT=[[
 
 
       /** Execute the filter on the input image$(if number_of_inputs == 2 then OUT='s'end) with the given parameters */
-      Image* Execute ( Image*$(if number_of_inputs == 2 then OUT=', Image*' end)$(foreach members ,
+      Image Execute ( const Image& $(if number_of_inputs == 2 then OUT=', const Image&' end)$(foreach members ,
         ${type} in${name}) );]]end)$(if custom_methods and #custom_methods > 0 then
 OUT = [[
 
@@ -102,16 +105,16 @@ $(foreach custom_methods
 $(if number_of_inputs == 2 then
 OUT=[[
       /** Setup for member function dispatching */
-      typedef Image* (Self::*MemberFunctionType)( Image*, Image* );
-      template <class TImageType> Image* ExecuteInternal ( Image* image1, Image* image2 );
+      typedef Image (Self::*MemberFunctionType)( const Image&, const Image& );
+      template <class TImageType> Image ExecuteInternal ( const Image& image1, const Image& image2 );
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 ]]
 else
 OUT=[[
       /** Setup for member function dispatching */
-      typedef Image* (Self::*MemberFunctionType)( Image* );
-      template <class TImageType> Image* ExecuteInternal ( Image* image );
+      typedef Image (Self::*MemberFunctionType)( const Image& );
+      template <class TImageType> Image ExecuteInternal ( const Image& image );
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 ]]end)
@@ -140,17 +143,18 @@ $(foreach members
      * This function directly calls the execute method of ${name}ImageFilter
      * in order to support a fully functional API
      */
-  Image* ${name} ( Image*$(if number_of_inputs == 2 then OUT=', Image*' end),
+
+  Image ${name} ( const Image&$(if number_of_inputs == 2 then OUT=', const Image&' end),
                    uint32_t inRadius = 1, ${name}ImageFilter::KernelType inKernel =${name}ImageFilter::Ball
                    $(when members $(foreach members , ${type} in${name} = ${default})) );
 
- /**
+   /**
      * itk::simple::${name}ImageFilter Functional Interface
      *
      * This function directly calls the execute method of ${name}ImageFilter
      * in order to support a fully functional API
      */
-  Image* ${name} ( Image*$(if number_of_inputs == 2 then OUT=', Image*' end),
+  Image ${name} ( const Image&$(if number_of_inputs == 2 then OUT=', const Image&' end),
                    const std::vector<uint32_t> inVectorRadius, ${name}ImageFilter::KernelType inKernel =${name}ImageFilter::Ball
                    $(when members $(foreach members , ${type} in${name} = ${default})) );
   }

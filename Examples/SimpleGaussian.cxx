@@ -8,22 +8,18 @@ int main ( int argc, char* argv[] ) {
     return 1;
   }
 
-  itk::simple::Image* image;
-
   itk::simple::ImageFileReader reader;
   reader.SetFileName ( std::string ( argv[1] ) );
-  image = reader.Execute();
+  itk::simple::Image image = reader.Execute();
 
+#if 0
   itk::simple::RecursiveGaussianImageFilter gaussian;
   gaussian.SetSigma ( atof ( argv[2] ) );
-  itk::simple::Image* blurredImage = gaussian.Execute ( image );
+  itk::simple::Image blurredImage = gaussian.Execute ( image );
 
   itk::simple::ImageFileWriter writer;
   writer.SetFileName ( std::string ( argv[3] ) );
   writer.Execute ( blurredImage );
-
-  delete image;
-  delete blurredImage;
-
+#endif
   return 0;
 }

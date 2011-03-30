@@ -6,6 +6,8 @@
 #include "itkLabelMap.h"
 #include "itkLabelObject.h"
 
+#include "itkImageDuplicator.h"
+
 // This is the only file which needs to include this implementation
 #include "sitkPixelContainer.txx"
 
@@ -21,7 +23,7 @@ namespace itk
    * programming idiom to modify the behavior of the simple image
    * class based on the different image types.
    *
-   * This class is desinged to be utilize to have trivial copy,
+   * This class is desinged to utilize the trivial copy,
    * and assgnement operators
    */
   class PimpleImageBase
@@ -32,9 +34,10 @@ namespace itk
     virtual PixelIDValueType GetPixelIDValue(void) = 0;
     virtual unsigned int GetDimension( void ) = 0;
 
-    virtual PimpleImageBase *Clone(void) const = 0;
-    virtual itk::DataObject::Pointer GetDataBase( void ) = 0;
-    virtual itk::DataObject::ConstPointer GetDataBase( void ) const = 0;
+    virtual PimpleImageBase *ShallowCopy(void) const = 0;
+    virtual PimpleImageBase *DeepCopy(void) const = 0;
+    virtual itk::DataObject* GetDataBase( void ) = 0;
+    virtual const itk::DataObject* GetDataBase( void ) const = 0;
 
     virtual unsigned int GetWidth( void ) const { return this->GetSize( 0 ); }
     virtual unsigned int GetHeight( void ) const { return this->GetSize( 1 ); }
@@ -54,6 +57,8 @@ namespace itk
     virtual std::string ToString() const = 0;
 
     virtual PixelContainer* GetPixelContainer() = 0;
+
+    virtual int GetReferenceCountOfImage() const = 0;
 
   };
 
@@ -88,9 +93,33 @@ namespace itk
           }
       }
 
-    virtual PimpleImageBase *Clone( void ) const { return new Self(this->m_Image.GetPointer()); }
-    virtual itk::DataObject::Pointer GetDataBase( void ) { return this->m_Image.GetPointer(); }
-    virtual itk::DataObject::ConstPointer GetDataBase( void ) const { return this->m_Image.GetPointer(); }
+    virtual PimpleImageBase *ShallowCopy( void ) const { return new Self(this->m_Image.GetPointer()); }
+    virtual PimpleImageBase *DeepCopy( void ) const { return this->DeepCopy<TImageType>(); }
+
+    template <typename UImageType>
+    typename DisableIf<IsLabel<UImageType>::Value, PimpleImageBase*>::Type
+    DeepCopy( void ) const
+      {
+        typedef itk::ImageDuplicator< ImageType > ImageDuplicatorType;
+        typename ImageDuplicatorType::Pointer dup = ImageDuplicatorType::New();
+
+        dup->SetInputImage( this->m_Image );
+        dup->Update();
+        ImagePointer output = dup->GetOutput();
+
+        return new Self( output.GetPointer() );
+      }
+    template <typename UImageType>
+    typename EnableIf<IsLabel<UImageType>::Value, PimpleImageBase*>::Type
+    DeepCopy( void ) const
+      {
+        sitkExceptionMacro( "This method is not implemented yet" );
+        return new Self( this->m_Image.GetPointer() );
+      }
+
+    virtual itk::DataObject* GetDataBase( void ) { return this->m_Image.GetPointer(); }
+    virtual const itk::DataObject* GetDataBase( void ) const { return this->m_Image.GetPointer(); }
+
 
     PixelIDValueType GetPixelIDValue(void) throw()
       {
@@ -255,6 +284,11 @@ namespace itk
         return NULL;
       }
 
+    virtual int GetReferenceCountOfImage() const
+      {
+        return this->m_Image->GetReferenceCount();
+      }
+
   private:
     ImagePointer m_Image;
   };
@@ -272,7 +306,7 @@ namespace itk
     delete this->m_PimpleImage;
     this->m_PimpleImage = NULL;
 
-    // assign to auto pointer
+    // assign to basic pointer
     this->m_PimpleImage = new PimpleImage<TImageType>( image );
   }
 
@@ -406,6 +440,21 @@ namespace itk
     this->m_PimpleImage = NULL;
   }
 
+  Image::Image( const Image &img )
+  {
+    this->m_PimpleImage = img.m_PimpleImage->ShallowCopy();
+  }
+
+  Image& Image::operator=( const Image &img )
+  {
+    // note: If img and this are this same, the following statement
+    // will still be safe. It is also exception safe.
+    std::auto_ptr<PimpleImageBase> temp( img.m_PimpleImage->ShallowCopy() );
+    delete this->m_PimpleImage;
+    this->m_PimpleImage = temp.release();
+    return *this;
+  }
+
     Image::Image( unsigned int Width, unsigned int Height, PixelIDValueEnum ValueEnum )
       : m_PimpleImage( NULL )
     {
@@ -413,20 +462,22 @@ namespace itk
     }
 
     Image::Image( unsigned int Width, unsigned int Height, unsigned int Depth, PixelIDValueEnum ValueEnum )
-      : m_PimpleImage( NULL ){
+      : m_PimpleImage( NULL )
+    {
       Allocate ( Width, Height, Depth, ValueEnum );
     }
 
-    itk::DataObject::Pointer Image::GetImageBase( void )
+    itk::DataObject* Image::GetImageBase( void )
     {
       assert( m_PimpleImage );
+      this->MakeUniqueForWrite();
       return m_PimpleImage->GetDataBase();
     }
 
-    itk::DataObject::ConstPointer Image::GetImageBase( void ) const
+    const itk::DataObject* Image::GetImageBase( void ) const
     {
       assert( m_PimpleImage );
-      return m_PimpleImage->GetDataBase().GetPointer();
+      return m_PimpleImage->GetDataBase();
     }
 
     PixelIDValueType Image::GetPixelIDValue( void ) const
@@ -479,6 +530,7 @@ namespace itk
     PixelContainer* Image::GetPixelContainer()
     {
       assert( m_PimpleImage );
+      this->MakeUniqueForWrite();
       return this->m_PimpleImage->GetPixelContainer();
     }
 
@@ -491,6 +543,7 @@ namespace itk
     // Set Origin
     void Image::SetOrigin( const std::vector<double> &orgn )
     {
+      this->MakeUniqueForWrite();
       this->m_PimpleImage->SetOrigin(orgn);
     }
 
@@ -503,6 +556,7 @@ namespace itk
     // Set Spacing
     void Image::SetSpacing( const std::vector<double> &spc )
     {
+      this->MakeUniqueForWrite();
       this->m_PimpleImage->SetSpacing(spc);
     }
 
@@ -516,6 +570,18 @@ namespace itk
     std::vector< int64_t > Image::TransformPhysicalPointToIndex( const std::vector< double > &pt ) const
     {
       return this->m_PimpleImage->TransformPhysicalPointToIndex( pt );
+    }
+
+    void Image::MakeUniqueForWrite( void )
+    {
+      if ( this->m_PimpleImage->GetReferenceCountOfImage() > 1 )
+        {
+        // note: care is take here to be exception safe with memory allocation
+        std::auto_ptr<PimpleImageBase> temp( this->m_PimpleImage->DeepCopy() );
+        delete this->m_PimpleImage;
+        this->m_PimpleImage = temp.release();
+        }
+
     }
 
 ///
@@ -553,6 +619,7 @@ namespace itk
     typelist::Visit<InstantiatedPixelIDTypeList> visitToImplicitlyInstantiate;
     visitToImplicitlyInstantiate( ConstructorInstantiator() );
   }
+
 
     /*
     void Image::Show(const std::string name) const

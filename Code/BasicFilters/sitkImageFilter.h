@@ -42,7 +42,10 @@ namespace itk {
       // Print ourselves out
       virtual std::string ToString() const = 0;
 
-      virtual Image* Execute ( Image* ) = 0;
+      virtual Image Execute ( const Image & ) = 0;
+
+      /** return user readable name fo the filter */
+      virtual std::string GetName() const = 0;
 
     private:
 
