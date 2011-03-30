@@ -19,7 +19,7 @@ if (BUILD_DOXYGEN)
     -D "OUTPUT_FILE:PATH=${PROJECT_BINARY_DIR}/Documentation/Doxygen/Examples.dox"
     -P "${PROJECT_SOURCE_DIR}/Utilities/Doxygen/GenerateExamplesDox.cmake"
     WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}/Examples"
-    DEPENDS "${PROJECT_SOURCE_DIR}/Examples"
+    DEPENDS "${PROJECT_SOURCE_DIR}/Examples" "${PROJECT_SOURCE_DIR}/Utilities/Doxygen/GenerateExamplesDox.cmake"
     )
 
   add_custom_target(Documentation ALL

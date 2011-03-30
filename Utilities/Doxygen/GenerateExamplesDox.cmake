@@ -24,7 +24,7 @@ set( EXAMPLES_LIST "${EXAMPLES_CXX};${EXAMPLES_PYTHON};${EXAMPLES_JAVA};${EXAMPL
 file( REMOVE ${OUTPUT_FILE} )
 
 # begin comment
-file( APPEND ${OUTPUT_FILE} "/*\n")
+file( APPEND ${OUTPUT_FILE} "/**\n")
 
 FOREACH( f IN LISTS EXAMPLES_LIST )
   file( APPEND ${OUTPUT_FILE}  "\\example ${f}\n" )
