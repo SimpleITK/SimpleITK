@@ -4,6 +4,7 @@ set( SimpleITKIOSource
   sitkImageFileWriter.cxx
   sitkImageReaderBase.cxx
   sitkImageSeriesReader.cxx
+  sitkImportImageFilter.cxx
   sitkShow.cxx
   )
 
