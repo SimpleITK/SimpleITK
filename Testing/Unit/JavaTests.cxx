@@ -52,6 +52,48 @@ TEST_F(Java,SimpleGaussian) {
   RunExecutable ( CommandLine, true );
 
   this->CheckImageHash( output, "02ce020f462cf05f3c354bc33a7834603d65b906" );
+
+}
+
+
+TEST_F(Java,ImageConnection) {
+
+  const std::string Script = dataFinder.GetSourceDirectory() + "/Examples/ImageConnection.java";
+
+  std::string Classpath = dataFinder.GetBuildDirectory() + "/Wrapping/org.itk.simple.jar";
+  const std::string JavaPath = dataFinder.GetExecutableDirectory();
+
+  const std::string Class = "SimpleGaussian";
+
+  // compile java program
+  {
+  std::vector<std::string> CommandLine;
+  CommandLine.push_back ( JAVAC_EXECUTABLE_PATH );
+  CommandLine.push_back ( "-classpath" );
+  CommandLine.push_back ( Classpath );
+  CommandLine.push_back ( "-d" );
+  CommandLine.push_back ( dataFinder.GetBuildDirectory() + "/Examples" );
+  CommandLine.push_back ( Script );
+
+  RunExecutable ( CommandLine, true );
+  }
+
+  // add the new class path too
+  Classpath += dataFinder.GetPathSeparator() + dataFinder.GetBuildDirectory() + "/Examples";
+
+  // Run the simple gaussian command line program
+  std::vector<std::string> CommandLine;
+  CommandLine.push_back ( dataFinder.GetJavaExecutable() );
+  CommandLine.push_back ( "-classpath" );
+  CommandLine.push_back ( Classpath );
+  CommandLine.push_back ( "-Djava.library.path=" + JavaPath );
+  CommandLine.push_back ( Class );
+  
+
+  // Run it!
+  RunExecutable ( CommandLine, true );
+
+
 }
 
 #endif
