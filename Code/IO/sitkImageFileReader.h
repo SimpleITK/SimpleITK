@@ -3,10 +3,7 @@
 
 #include "sitkMacro.h"
 #include "sitkImage.h"
-
-#include "sitkPixelIDTokens.h"
-
-#include "itkImageIOBase.h"
+#include "sitkImageReaderBase.h"
 
 namespace itk {
   namespace simple {
@@ -18,7 +15,9 @@ namespace itk {
      * This reader handles scalar and vector images and returns an image with
      * the same type as the file on disk.
      */
-    class ImageFileReader {
+    class ImageFileReader
+      : public ImageReaderBase< ImageFileReader >
+    {
     public:
       typedef ImageFileReader Self;
 
@@ -27,12 +26,7 @@ namespace itk {
       Image Execute();
 
     protected:
-
-      template < unsigned int VImageDimension >
-      Image ExecuteInternalReadScalar( itk::ImageIOBase::IOComponentType componentType );
-
-      template < unsigned int VImageDimension >
-      Image ExecuteInternalReadVector( itk::ImageIOBase::IOComponentType componentType );
+      friend class ImageReaderBase< ImageFileReader >;
 
       // methods which utlize the EnableIf idiom to conditionally
       // instatiate ad execute the implementation
@@ -47,6 +41,7 @@ namespace itk {
 
       std::string m_FileName;
     };
+
     Image ReadImage ( std::string filename );
   }
 }
