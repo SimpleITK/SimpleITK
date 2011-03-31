@@ -3,9 +3,8 @@
 
 #include "sitkMacro.h"
 #include "sitkImage.h"
-#include "sitkPixelIDTokens.h"
+#include "sitkImageReaderBase.h"
 
-#include "itkImageIOBase.h"
 
 namespace itk {
   namespace simple {
@@ -14,21 +13,20 @@ namespace itk {
      * \brief Read series of image into a SimpleITK image
      *
      */
-    class ImageSeriesReader {
+    class ImageSeriesReader
+      : public ImageReaderBase< ImageSeriesReader >
+    {
     public:
       typedef ImageSeriesReader Self;
 
+
       Self& SetFileNames ( const std::vector<std::string> &fns );
       const std::vector<std::string> &GetFileNames() const;
+
       Image Execute();
 
     protected:
-
-      template < unsigned int VImageDimension >
-      Image ExecuteInternalReadScalar( itk::ImageIOBase::IOComponentType componentType );
-
-      template < unsigned int VImageDimension >
-      Image ExecuteInternalReadVector( itk::ImageIOBase::IOComponentType componentType );
+      friend class ImageReaderBase< ImageSeriesReader >;
 
       // methods which utlize the EnableIf idiom to conditionally
       // instatiate and execute the implementation
