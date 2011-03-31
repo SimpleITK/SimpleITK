@@ -50,10 +50,8 @@ TEST_F(Java,SimpleGaussian) {
 
   // Run it!
   RunExecutable ( CommandLine, true );
-  ASSERT_TRUE ( dataFinder.FileExists ( output ) );
 
-  itk::simple::Image image = itk::simple::ReadImage( output );
-  ASSERT_TRUE ( image.GetImageBase() != NULL ) << "Loaded output image";
-  EXPECT_EQ ( "02ce020f462cf05f3c354bc33a7834603d65b906", itk::simple::Hash( image ) );
+  this->CheckImageHash( output, "02ce020f462cf05f3c354bc33a7834603d65b906" );
 }
+
 #endif
