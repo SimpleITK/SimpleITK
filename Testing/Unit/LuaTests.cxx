@@ -20,12 +20,8 @@ TEST_F(Lua,SimpleGaussian) {
 
   // Run it!
   RunExecutable ( CommandLine, true );
-  ASSERT_TRUE ( dataFinder.FileExists ( output ) );
-  itk::simple::ImageFileReader reader;
-  itk::simple::HashImageFilter hasher;
 
-  itk::simple::Image image = reader.SetFileName ( output ).Execute();
-  ASSERT_TRUE ( image.GetImageBase() != NULL ) << "Loaded output image";
-  EXPECT_EQ ( "02ce020f462cf05f3c354bc33a7834603d65b906", hasher.Execute ( image ) );
+  this->CheckImageHash( output, "02ce020f462cf05f3c354bc33a7834603d65b906" );
+
 }
 #endif
