@@ -301,7 +301,7 @@ TEST_F(Tcl,${name}) {
     EXPECT_NO_THROW ( itk::simple::ImageFileWriter()
                       .SetFileName ( outputFileName )
                       .Execute ( itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
-    CommandLine.push_back ( dataFinder.FindExecutable ( "SimpleITKTclsh" ) );
+    CommandLine.push_back ( dataFinder.GetTclExecutable ( ) );
     CommandLine.push_back ( Script );
     CommandLine.push_back ( "${tag}" );
     CommandLine.push_back ( dataFinder.GetFile ( "${inputA}" ) );

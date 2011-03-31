@@ -69,6 +69,7 @@ class DataFinder {
   }
   std::string FindExecutable ( std::string exe ) { return GetExecutableDirectory() + "/" + exe + EXECUTABLE_SUFFIX; }
   std::string GetLuaExecutable() { return this->FindExecutable ( "SimpleITKLua" ); }
+  std::string GetTclExecutable() { return this->FindExecutable ( "SimpleITKTclsh" ); }
   std::string GetPythonExecutable() { return std::string ( PYTHON_EXECUTABLE_PATH ); }
   std::string GetRubyExecutable() { return std::string ( RUBY_EXECUTABLE_PATH ); }
   std::string GetRExecutable() { return std::string ( RSCRIPT_EXECUTABLE_PATH ); }
