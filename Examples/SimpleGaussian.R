@@ -11,11 +11,17 @@ myreader <- ImageFileReader()
 myreader <- ImageFileReader_SetFileName( myreader, args[[1]] )
 myimage <- ImageFileReader_Execute( myreader )
 
-myfilter <- RecursiveGaussianImageFilter()
-myfilter <- RecursiveGaussianImageFilter_SetSigma( myfilter, as.real(args[2]) )
-smoothedimage <- RecursiveGaussianImageFilter_Execute( myfilter, myimage )
+pixeltype <- Image_GetPixelIDValue( myimage )
+
+myfilter <- SmoothingRecursiveGaussianImageFilter()
+myfilter <- SmoothingRecursiveGaussianImageFilter_SetSigma( myfilter, as.real(args[2]) )
+smoothedimage <- SmoothingRecursiveGaussianImageFilter_Execute( myfilter, myimage )
+
+mycaster <- CastImageFilter()
+mycaster <- CastImageFilter_SetOutputPixelType( mycaster, pixeltype )
+castedimage <- CastImageFilter_Execute( mycaster, soothedimage )
 
 mywriter <- ImageFileWriter()
 mywriter <- ImageFileWriter_SetFileName( mywriter, args[[3]] )
-mywriter <- ImageFileWriter_Execute( mywriter, smoothedimage )
+mywriter <- ImageFileWriter_Execute( mywriter, castedimage )
 

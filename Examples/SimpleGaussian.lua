@@ -10,9 +10,15 @@ reader = SimpleITK.ImageFileReader()
 reader:SetFileName ( arg[1] )
 image = reader:Execute();
   
-gaussian = SimpleITK.RecursiveGaussianImageFilter()
+inputPixelType = image:GetPixelIDValue()
+
+gaussian = SimpleITK.SmoothingRecursiveGaussianImageFilter()
 gaussian:SetSigma ( arg[2] )
 image = gaussian:Execute ( image );
+
+caster = SimpleITK.CastImageFilter();
+caster:SetOutputPixelType( inputPixelType );
+image = caster:Execute( image )
 
 writer = SimpleITK.ImageFileWriter()
 writer:SetFileName ( arg[3] )
