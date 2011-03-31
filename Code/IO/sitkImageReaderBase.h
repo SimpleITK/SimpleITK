@@ -26,7 +26,6 @@ namespace itk {
       Image ImageIODispatch( const std::string &fileName );
 
     private:
-
       template < unsigned int VImageDimension >
       Image ExecuteInternalReadScalar( itk::ImageIOBase::IOComponentType componentType );
 
