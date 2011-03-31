@@ -29,7 +29,7 @@ TEST_F(Ruby,SimpleGaussian) {
 
   itk::simple::Image image = reader.SetFileName ( output ).Execute();
   ASSERT_TRUE ( image.GetImageBase() != NULL ) << "Loaded output image";
-  EXPECT_EQ ( "de64d7d8ebfa529581f57b8c603f3d656564284f", hasher.Execute ( image ) );
+  EXPECT_EQ ( "02ce020f462cf05f3c354bc33a7834603d65b906", hasher.Execute ( image ) );
 }
 
 #endif
