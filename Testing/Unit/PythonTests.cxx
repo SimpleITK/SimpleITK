@@ -32,7 +32,7 @@ TEST_F(Python,SimpleGaussian) {
 
   itk::simple::Image image = reader.SetFileName ( output ).Execute();
   ASSERT_TRUE ( image.GetImageBase() != NULL ) << "Loaded output image";
-  EXPECT_EQ ( "9d3d4acf41aa62b453cfd6684ad7c361290462d1", hasher.Execute ( image ) );
+  EXPECT_EQ ( "02ce020f462cf05f3c354bc33a7834603d65b906", hasher.Execute ( image ) );
 
 }
 
