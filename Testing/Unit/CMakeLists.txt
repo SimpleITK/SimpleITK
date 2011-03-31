@@ -17,6 +17,7 @@ set ( TestSource
   RubyTests.cxx
   LuaTests.cxx
   TclTests.cxx
+  JavaTests.cxx
   )
 
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/PythonTests)
