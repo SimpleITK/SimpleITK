@@ -8,14 +8,16 @@ end
 reader = Simpleitk::ImageFileReader.new
 reader.set_file_name( ARGV[0] )
 image = reader.execute
-  
-puts image.to_string
 
-gaussian = Simpleitk::RecursiveGaussianImageFilter.new
+inputPixelType = image.get_pixel_idvalue
+  
+gaussian = Simpleitk::SmoothingRecursiveGaussianImageFilter.new
 gaussian.set_sigma ARGV[1].to_f
 image = gaussian.execute image;
 
-puts image.to_string
+caster = Simpleitk::CastImageFilter.new
+caster.set_output_pixel_type inputPixelType
+image = caster.execute image
 
 writer = Simpleitk::ImageFileWriter.new
 writer.set_file_name ARGV[2] 
