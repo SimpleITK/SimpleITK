@@ -16,6 +16,17 @@ namespace itk {
       return reader.SetFileNames ( filenames ).Execute();
     }
 
+    ImageSeriesReader::ImageSeriesReader() {
+
+      // list of pixel types supported
+      typedef NonLabelPixelIDTypeList PixelIDTypeList;
+
+      this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
+
+      this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
+      this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
+    }
+
     ImageSeriesReader& ImageSeriesReader::SetFileNames ( const std::vector<std::string> &filenames ) {
       this->m_FileNames = filenames;
       return *this;
@@ -29,11 +40,20 @@ namespace itk {
       // todo check if filename does not exits for robust error handling
       assert( !this->m_FileNames.empty() );
 
-      return this->ImageIODispatch( this->m_FileNames.front() );
+      PixelIDValueType type = sitkUnknown;
+      unsigned int dimension = 0;
+
+      this->GetPixelIDFromImageIO( this->m_FileNames.front(), type, dimension );
+
+      return this->m_MemberFactory->GetMemberFunction( type, dimension )();
+      sitkExceptionMacro( << "PixelType is not supported!" << std::endl
+                          << "Pixel Type: "
+                          << GetPixelIDValueAsString( type ) << std::endl
+                          << "Refusing to load! " << std::endl );
     }
 
   template <class TImageType>
-  typename EnableIf<IsInstantiated<TImageType>::Value, Image >::Type
+  Image
   ImageSeriesReader::ExecuteInternal( void )
   {
 
@@ -47,17 +67,6 @@ namespace itk {
     reader->SetFileNames( this->m_FileNames );
     reader->Update();
     return Image( reader->GetOutput() );
-  }
-
-  template <class TImageType>
-  typename DisableIf<IsInstantiated<TImageType>::Value, Image >::Type
-  ImageSeriesReader::ExecuteInternal( void )
-  {
-    typedef TImageType                      ImageType;
-    sitkExceptionMacro( << "PixelType is not supported!" << std::endl
-                        << "Pixel Type: "
-                        << GetPixelIDValueAsString( ImageTypeToPixelIDValue<ImageType>::Result ) << std::endl
-                        << "Refusing to load! " << std::endl );
   }
 
   }

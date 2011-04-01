@@ -4,7 +4,7 @@
 #include "sitkMacro.h"
 #include "sitkImage.h"
 #include "sitkImageReaderBase.h"
-
+#include "sitkMemberFunctionFactory.h"
 
 namespace itk {
   namespace simple {
@@ -14,11 +14,12 @@ namespace itk {
      *
      */
     class ImageSeriesReader
-      : public ImageReaderBase< ImageSeriesReader >
+      : public ImageReaderBase
     {
     public:
       typedef ImageSeriesReader Self;
 
+      ImageSeriesReader();
 
       Self& SetFileNames ( const std::vector<std::string> &fns );
       const std::vector<std::string> &GetFileNames() const;
@@ -26,18 +27,17 @@ namespace itk {
       Image Execute();
 
     protected:
-      friend class ImageReaderBase< ImageSeriesReader >;
 
-      // methods which utlize the EnableIf idiom to conditionally
-      // instatiate and execute the implementation
-      template <class TImageType>
-      typename EnableIf<IsInstantiated<TImageType>::Value, Image >::Type
-      ExecuteInternal ( );
-      template <class TImageType>
-      typename DisableIf<IsInstantiated<TImageType>::Value, Image >::Type
-      ExecuteInternal ( );
+      template <class TImageType> Image ExecuteInternal ( void );
 
     private:
+
+      // function pointer type
+      typedef Image (Self::*MemberFunctionType)( void );
+
+      // friend to get access to executeInternal member
+      friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
+      std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 
       std::vector<std::string> m_FileNames;
     };

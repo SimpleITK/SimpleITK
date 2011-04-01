@@ -3,8 +3,7 @@
 
 
 #include "sitkNonCopyable.h"
-
-#include <itkImageIOBase.h>
+#include "sitkPixelIDValues.h"
 
 namespace itk {
   namespace simple {
@@ -13,7 +12,6 @@ namespace itk {
      * \brief An abract base class for image readers
      *
      */
-    template <typename TDerived>
     class ImageReaderBase :
       protected NonCopyable
     {
@@ -23,26 +21,20 @@ namespace itk {
 
     protected:
 
-      Image ImageIODispatch( const std::string &fileName );
+
+      void GetPixelIDFromImageIO( const std::string &fileName,
+                                  PixelIDValueType &outPixelType,
+                                  unsigned int & outDimensions);
 
     private:
-      template < unsigned int VImageDimension >
-      Image ExecuteInternalReadScalar( itk::ImageIOBase::IOComponentType componentType );
 
-      template < unsigned int VImageDimension >
-      Image ExecuteInternalReadVector( itk::ImageIOBase::IOComponentType componentType );
+      PixelIDValueType ExecuteInternalReadScalar( int componentType );
 
-      template <typename TImageType >
-      Image ExecuteInternal( void )
-      {
-        return static_cast<TDerived*>(this)->ExecuteInternal<TImageType>();
-      }
+      PixelIDValueType ExecuteInternalReadVector( int componentType );
 
     };
   }
 }
-
-#include "sitkImageReaderBase.txx"
 
 
 #endif // __sitkImageReaderBase_h
