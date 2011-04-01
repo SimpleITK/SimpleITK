@@ -517,8 +517,9 @@ function expand(str, ...)
       includedText = includefid:read ( "*all" )
       includefid:close()
 
+      --Remove the last character
+      includedText=includedText:sub(1,#includedText-1)
       
-      --DEBUG
       return estring(includedText)
       
     elseif cmd == 'when' then -- $(when vn xxx)
