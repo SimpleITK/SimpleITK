@@ -18,6 +18,7 @@
 // Any include files, definitions, etc. need to go here.
 %{
 #include <SimpleITK.h>
+#include <sitkImageOperators.h>
 %}
 
 
@@ -88,5 +89,3 @@ typedef unsigned int uint32_t;
 
 // Auto-generated headers
 %include "SimpleITKBasicFiltersGeneratedHeaders.i"
-
-
