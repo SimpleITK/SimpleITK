@@ -4,14 +4,19 @@ file ( GLOB SimpleITKBasicFiltersSource *.cxx *.h )
 set ( SimpleITKBasicFiltersSource ${SimpleITKBasicFiltersSource} CACHE INTERNAL "" )
 
 # Go to the CodeGeneration version of this directory
-subdirs(${SimpleITK_SOURCE_DIR}/Code/CodeGeneration/BasicFilters)
+add_subdirectory(
+  ${SimpleITK_SOURCE_DIR}/Code/CodeGeneration/BasicFilters
+  ${SimpleITK_BINARY_DIR}/Code/CodeGeneration/BasicFilters
+)
 
+# Include the hand-written and auto-generated code
 include_directories (
  ${CMAKE_CURRENT_SOURCE_DIR}
  ${CMAKE_CURRENT_BINARY_DIR}
  )
 
-add_library ( SimpleITKBasicFilters ${SimpleITKBasicFiltersSource} ${SimpleITKBasicFiltersGeneratedSource} )
+
+add_library ( SimpleITKBasicFilters ${SimpleITKBasicFiltersSource} ${SimpleITKBasicFiltersGeneratedSource})
 target_link_libraries ( SimpleITKBasicFilters SimpleITKCommon ${ITK_LIBRARIES} )
 
 
