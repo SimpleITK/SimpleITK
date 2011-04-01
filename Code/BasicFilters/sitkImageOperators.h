@@ -17,7 +17,15 @@
 namespace itk {
 namespace simple {
 
-
+/**
+* \brief Performs the operator on a per pixel basis.
+*
+* All operloaded simpleITK operators are performed on a per-pixel
+* basis, and implemented with the coresponding image filters. These
+* operators gernerally don't work with label images, and the logical
+* operators don't work with images of real componented or vector images.
+* @{
+*/
 inline Image operator+( const Image &img1, const Image &img2 ) { return Add(img1, img2 ); }
 inline Image operator-( const Image &img1, const Image &img2 ) { return Subtract(img1, img2 ); }
 inline Image operator*( const Image &img1, const Image &img2 ) { return Multiply(img1, img2 ); }
@@ -55,7 +63,7 @@ inline Image &operator/=( Image &img1, double s ) { return img1 = DivideByConsta
 inline Image &operator&=( Image &img1, const Image &img2 ) { return img1 = And(img1, img2 ); }
 inline Image &operator|=( Image &img1, const Image &img2 ) { return img1 = Or(img1, img2 ); }
 inline Image &operator^=( Image &img1, const Image &img2 ) { return img1 = Xor(img1, img2 ); }
-
+/**@} */
 }
 }
 
