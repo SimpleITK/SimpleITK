@@ -1,10 +1,11 @@
-#ifndef __sitkImageReaderBase_txx
-#define __sitkImageReaderBase_txx
 
-
-#include "sitkNonCopyable.h"
+#include "sitkImageReaderBase.h"
+#include "sitkMacro.h"
 
 #include <stdint.h>
+
+#include <string>
+
 #include <itkImage.h>
 #include <itkImageIOBase.h>
 #include <itkImageIOFactory.h>
@@ -13,10 +14,11 @@ namespace itk {
 namespace simple {
 
 
-template <typename TDerived>
-Image
-ImageReaderBase<TDerived>
-::ImageIODispatch( const std::string &fileName )
+void
+ImageReaderBase
+::GetPixelIDFromImageIO( const std::string &fileName,
+                         PixelIDValueType &outPixelType,
+                         unsigned int & outDimensions )
 {
 
   itk::ImageIOBase::Pointer iobase =
@@ -37,18 +39,18 @@ ImageReaderBase<TDerived>
   itk::ImageIOBase::IOPixelType pixelType = iobase->GetPixelType();
   unsigned int numberOfComponents = iobase->GetNumberOfComponents();
 
+  if ( dimension != 2 && dimension != 3 )
+    {
+    sitkExceptionMacro( "The file has unsupported " << dimension << " dimensions." );
+    }
+  outDimensions = dimension;
+
+
   if (numberOfComponents == 1 &&
       ( pixelType == itk::ImageIOBase::SCALAR || pixelType == itk::ImageIOBase::COMPLEX ) )
     {
-    switch (dimension)
-      {
-      case 2:
-        return this->ExecuteInternalReadScalar<2>( componentType );
-        break;
-      case 3:
-        return this->ExecuteInternalReadScalar<3>( componentType );
-        break;
-      }
+    outPixelType = this->ExecuteInternalReadScalar( componentType );
+    return;
     }
   // we try to load anything else into a VectorImage
   else if  (pixelType == itk::ImageIOBase::RGB ||
@@ -59,15 +61,8 @@ ImageReaderBase<TDerived>
             pixelType == itk::ImageIOBase::POINT ||
             pixelType == itk::ImageIOBase::OFFSET )
     {
-    switch (dimension)
-      {
-      case 2:
-        return this->ExecuteInternalReadVector<2>( componentType );
-        break;
-      case 3:
-        return this->ExecuteInternalReadVector<3>( componentType );
-        break;
-      }
+    outPixelType = this->ExecuteInternalReadVector( componentType );
+    return;
     }
   else
     {
@@ -75,46 +70,45 @@ ImageReaderBase<TDerived>
     }
 
   sitkExceptionMacro( "Unable to load image \"" << fileName << "\"" );
-
 }
 
-template <typename TDerived>
-template < unsigned int VImageDimension >
-Image
-ImageReaderBase<TDerived>
-::ExecuteInternalReadScalar( itk::ImageIOBase::IOComponentType componentType )
+PixelIDValueType
+ImageReaderBase
+::ExecuteInternalReadScalar( int componentType )
 {
+  const unsigned int UnusedDimension = 2;
+
   switch(componentType)
     {
     case itk::ImageIOBase::CHAR:
-      return this->ExecuteInternal< itk::Image<int8_t, VImageDimension> >( );
+      return ImageTypeToPixelIDValue< itk::Image<int8_t, UnusedDimension> >::Result;
       break;
     case itk::ImageIOBase::UCHAR:
-      return this->ExecuteInternal< itk::Image<uint8_t, VImageDimension> >( );
+      return ImageTypeToPixelIDValue< itk::Image<uint8_t, UnusedDimension> >::Result;
       break;
     case itk::ImageIOBase::SHORT:
-      return this->ExecuteInternal< itk::Image<int16_t, VImageDimension> >( );
+      return ImageTypeToPixelIDValue< itk::Image<int16_t, UnusedDimension> >::Result;
       break;
     case itk::ImageIOBase::USHORT:
-      return this->ExecuteInternal< itk::Image<uint16_t, VImageDimension> >( );
+      return ImageTypeToPixelIDValue< itk::Image<uint16_t, UnusedDimension> >::Result;
       break;
     case itk::ImageIOBase::INT:
-      return this->ExecuteInternal< itk::Image<int32_t, VImageDimension> >( );
+      return ImageTypeToPixelIDValue< itk::Image<int32_t, UnusedDimension> >::Result;
       break;
     case itk::ImageIOBase::UINT:
-      return this->ExecuteInternal< itk::Image<uint32_t, VImageDimension> >( );
+      return ImageTypeToPixelIDValue< itk::Image<uint32_t, UnusedDimension> >::Result;
       break;
     case itk::ImageIOBase::LONG:
-      return this->ExecuteInternal< itk::Image<long, VImageDimension> >( );
+      return ImageTypeToPixelIDValue< itk::Image<long, UnusedDimension> >::Result;
       break;
     case itk::ImageIOBase::ULONG:
-      return this->ExecuteInternal< itk::Image<unsigned long, VImageDimension> >( );
+      return ImageTypeToPixelIDValue< itk::Image<unsigned long, UnusedDimension> >::Result;
       break;
     case itk::ImageIOBase::FLOAT:
-      return this->ExecuteInternal< itk::Image<float, VImageDimension> >( );
+      return ImageTypeToPixelIDValue< itk::Image<float, UnusedDimension> >::Result;
       break;
     case itk::ImageIOBase::DOUBLE:
-      return this->ExecuteInternal< itk::Image<double, VImageDimension> >( );
+      return ImageTypeToPixelIDValue< itk::Image<double, UnusedDimension> >::Result;
       break;
     case itk::ImageIOBase::UNKNOWNCOMPONENTTYPE:
     default:
@@ -123,43 +117,43 @@ ImageReaderBase<TDerived>
     }
 }
 
-template <typename TDerived>
-template < unsigned int VImageDimension >
-Image
-ImageReaderBase<TDerived>
-::ExecuteInternalReadVector( itk::ImageIOBase::IOComponentType componentType )
+PixelIDValueType
+ImageReaderBase
+::ExecuteInternalReadVector( int componentType )
 {
+  const unsigned int UnusedDimension = 2;
+
   switch(componentType)
     {
     case itk::ImageIOBase::CHAR:
-      return this->ExecuteInternal< itk::VectorImage<signed char, VImageDimension> >( );
+      return ImageTypeToPixelIDValue< itk::VectorImage<signed char, UnusedDimension> >::Result;
       break;
     case itk::ImageIOBase::UCHAR:
-      return this->ExecuteInternal< itk::VectorImage<unsigned char, VImageDimension> >( );
+      return ImageTypeToPixelIDValue< itk::VectorImage<unsigned char, UnusedDimension> >::Result;
       break;
     case itk::ImageIOBase::SHORT:
-      return this->ExecuteInternal< itk::VectorImage<int16_t, VImageDimension> >( );
+      return ImageTypeToPixelIDValue< itk::VectorImage<int16_t, UnusedDimension> >::Result;
       break;
     case itk::ImageIOBase::USHORT:
-      return this->ExecuteInternal< itk::VectorImage<uint16_t, VImageDimension> >( );
+      return ImageTypeToPixelIDValue< itk::VectorImage<uint16_t, UnusedDimension> >::Result;
       break;
     case itk::ImageIOBase::INT:
-      return this->ExecuteInternal< itk::VectorImage<int32_t, VImageDimension> >( );
+      return ImageTypeToPixelIDValue< itk::VectorImage<int32_t, UnusedDimension> >::Result;
       break;
     case itk::ImageIOBase::UINT:
-      return this->ExecuteInternal< itk::VectorImage<uint32_t, VImageDimension> >( );
+      return ImageTypeToPixelIDValue< itk::VectorImage<uint32_t, UnusedDimension> >::Result;
       break;
     case itk::ImageIOBase::LONG:
-      return this->ExecuteInternal< itk::VectorImage<long, VImageDimension> >( );
+      return ImageTypeToPixelIDValue< itk::VectorImage<long, UnusedDimension> >::Result;
       break;
     case itk::ImageIOBase::ULONG:
-      return this->ExecuteInternal< itk::VectorImage<unsigned long, VImageDimension> >( );
+      return ImageTypeToPixelIDValue< itk::VectorImage<unsigned long, UnusedDimension> >::Result;
       break;
     case itk::ImageIOBase::FLOAT:
-      return this->ExecuteInternal< itk::VectorImage<float, VImageDimension> >( );
+      return ImageTypeToPixelIDValue< itk::VectorImage<float, UnusedDimension> >::Result;
       break;
     case itk::ImageIOBase::DOUBLE:
-      return this->ExecuteInternal< itk::VectorImage<double, VImageDimension> >( );
+      return ImageTypeToPixelIDValue< itk::VectorImage<double, UnusedDimension> >::Result;
       break;
     case itk::ImageIOBase::UNKNOWNCOMPONENTTYPE:
     default:
@@ -171,6 +165,3 @@ ImageReaderBase<TDerived>
 
 }
 }
-
-
-#endif // __sitkImageReaderBase_txx
