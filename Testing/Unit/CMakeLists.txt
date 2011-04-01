@@ -31,7 +31,7 @@ file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/JavaTests/org/itk/simple/testing
 foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
 
   # Set up some convenience variables
-  set (filter_json_file ${SimpleITK_SOURCE_DIR}/Code/CodeGeneration/BasicFilters/${FILTERNAME}.json)
+  set (filter_json_file ${SimpleITK_SOURCE_DIR}/Code/CodeGeneration/BasicFilters/json/${FILTERNAME}.json)
   set (template_expansion_script ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua)
 
   file ( GLOB CXX_TEMPLATE_FILES "*Template*.cxx.in" )
