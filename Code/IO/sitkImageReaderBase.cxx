@@ -39,10 +39,7 @@ ImageReaderBase
   itk::ImageIOBase::IOPixelType pixelType = iobase->GetPixelType();
   unsigned int numberOfComponents = iobase->GetNumberOfComponents();
 
-  if ( dimension != 2 && dimension != 3 )
-    {
-    sitkExceptionMacro( "The file has unsupported " << dimension << " dimensions." );
-    }
+  
   outDimensions = dimension;
 
 

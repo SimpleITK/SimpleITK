@@ -45,11 +45,23 @@ namespace itk {
 
       this->GetPixelIDFromImageIO( this->m_FileNames.front(), type, dimension );
 
+      // increment for series
+      ++dimension;
+
+      if ( dimension != 2 && dimension != 3 )
+        {
+        sitkExceptionMacro( "The file in the series have unsupported " << dimension - 1 << " dimensions." );
+        }
+
+      if ( !this->m_MemberFactory->HasMemberFunction( type, dimension ) )
+        {
+        sitkExceptionMacro( << "PixelType is not supported!" << std::endl
+                            << "Pixel Type: "
+                            << GetPixelIDValueAsString( type ) << std::endl
+                            << "Refusing to load! " << std::endl );
+        }
+
       return this->m_MemberFactory->GetMemberFunction( type, dimension )();
-      sitkExceptionMacro( << "PixelType is not supported!" << std::endl
-                          << "Pixel Type: "
-                          << GetPixelIDValueAsString( type ) << std::endl
-                          << "Refusing to load! " << std::endl );
     }
 
   template <class TImageType>
