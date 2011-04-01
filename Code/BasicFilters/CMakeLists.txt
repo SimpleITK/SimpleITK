@@ -1,14 +1,17 @@
 
+# Glob non-generated BasicFilters and add to cache
 file ( GLOB SimpleITKBasicFiltersSource *.cxx *.h )
+set ( SimpleITKBasicFiltersSource ${SimpleITKBasicFiltersSource} CACHE INTERNAL "" )
 
-include(SourceCodeGenerator.cmake)
+# Go to the CodeGeneration version of this directory
+subdirs(${SimpleITK_SOURCE_DIR}/Code/CodeGeneration/BasicFilters)
 
 include_directories (
  ${CMAKE_CURRENT_SOURCE_DIR}
  ${CMAKE_CURRENT_BINARY_DIR}
  )
 
-add_library ( SimpleITKBasicFilters ${SimpleITKBasicFiltersSource} )
+add_library ( SimpleITKBasicFilters ${SimpleITKBasicFiltersSource} ${SimpleITKBasicFiltersGeneratedSource} )
 target_link_libraries ( SimpleITKBasicFilters SimpleITKCommon ${ITK_LIBRARIES} )
 
 
