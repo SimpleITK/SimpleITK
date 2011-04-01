@@ -16,6 +16,9 @@ namespace itk {
      * ${doc}
      */
 $(include components/ClassDeclaration.h.in)
+
+    /** Kernel type enumeration */
+    typedef enum{Annulus, Ball, Box, Cross} KernelType;
 $(include components/PublicDeclarations.h.in)
 $(include components/MemberGetSetDeclarations.h.in)
       /** Kernel radius as a scale for isotropic structures */

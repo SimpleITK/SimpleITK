@@ -6,6 +6,8 @@ $(include components/DoNotEditWarning.h.in)
 #include <memory>
 
 #include "sitkDualImageFilter.h"
+$(include components/AddExtraIncludes.h.in)
+
 namespace itk {
   namespace simple {
 
