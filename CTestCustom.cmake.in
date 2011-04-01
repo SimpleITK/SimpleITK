@@ -18,7 +18,7 @@ SET(CTEST_CUSTOM_WARNING_EXCEPTION
   ${CTEST_CUSTOM_WARNING_EXCEPTION}
 
   # Ignore warning from the SWIG wrapped file ( not much we can do about those )
-  "Wrapping/.*_wrap.cxx"
+  ".*_wrap.cxx"
 
   # Ignore warning from gtest
   "gtest.h"
