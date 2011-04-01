@@ -57,6 +57,9 @@ namespace std
   %template(VectorUIntList) vector< vector<unsigned int> >;
 }
 
+// ignore the ITK Integrate interface when wrapping
+%ignore itk::simple::Image::GetImageBase;
+
 // This helps SWIG wrap long long, as returned by Width, Height, and Depth
 typedef unsigned long long uint64_t;
 
