@@ -11,6 +11,7 @@
 #include "itkDataObject.h"
 
 #include <memory>
+#include <stdint.h>
 
 namespace itk
 {
