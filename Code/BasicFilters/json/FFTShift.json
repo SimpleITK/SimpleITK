@@ -1,0 +1,19 @@
+{
+  "name" : "FFTShift",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "typelist::Append<ComplexPixelIDTypeList, RealPixelIDTypeList>::Type",
+  "members" : [
+    {
+      "name" : "Inverse",
+      "type" : "bool",
+      "default" : false,
+      "doc" : ""
+    }
+  ],
+  "tests" : [
+  ]
+}
+
