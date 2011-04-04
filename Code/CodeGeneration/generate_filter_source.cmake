@@ -43,17 +43,18 @@ macro(generate_filter_source)
   # Perform template expansion
   ######
 
-  # Set output directory corresponding to this input directory
+  # Set input and output directories corresponding to this Code directory
+  set(generated_code_input_path ${SimpleITK_SOURCE_DIR}/Code/CodeGeneration/${directory_name})
   set(generated_code_output_path ${SimpleITK_BINARY_DIR}/Code/${directory_name})
 
   # Glob all json files in the current directory
-  file ( GLOB json_config_files ${CMAKE_CURRENT_SOURCE_DIR}/json/*.json)
+  file ( GLOB json_config_files ${generated_code_input_path}/json/*.json)
 
   # Loop through json files and expand each one
   foreach ( f ${json_config_files} )
     get_filename_component ( class ${f} NAME_WE )
     expand_template ( ${class}
-                      ${CMAKE_CURRENT_SOURCE_DIR}
+                      ${generated_code_input_path}
                       ${generated_code_output_path}
                       SimpleITK${directory_name} )
 
