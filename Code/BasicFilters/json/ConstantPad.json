@@ -30,6 +30,40 @@
     }
   ],
   "tests" : [
-  ]
+    {
+     "tag" : "defaults",
+     "description" : "Test ConstantPad with default parameters",
+     "inputA" : "Input/RA-Slice-Short.png",
+     "md5hash" : "a9a0207c759cb8d9e0507414992905d6",
+     "settings" : [
+     ]
+   },
+   {
+     "tag" : "more",
+     "description" : "Test ConstantPad reasonable padding",
+     "inputA" : "Input/Ramp-Down-Short.nrrd",
+     "md5hash" : "be236e84f51bd6342588548e92b99aaa",
+     "settings" : [
+       { 
+         "parameter" : "PadLowerBound",
+         "type" : "unsigned int",
+         "dim_vec" : 1,
+         "value" : "{5,10,15}",
+         "tcl_value" : "[list 5 10 15]",
+         "python_value" : "[5, 10, 15]",
+         "ruby_value" : "[5, 10, 15]"
+       },
+       { 
+         "parameter" : "PadUpperBound",
+         "type" : "unsigned int",
+         "dim_vec" : 1,
+         "value" : "{3,6,9}",
+         "tcl_value" : "[list 3 6 9]",
+         "python_value" : "[3, 6, 9]",
+         "ruby_value" : "[3, 6, 9]"
+       }
+     ]
+   }
+ ]
 }
 
