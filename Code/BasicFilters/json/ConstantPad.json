@@ -1,0 +1,35 @@
+{
+  "name" : "ConstantPad",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "\todo add SetBound member function to set both properties",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "PadLowerBound",
+      "type" : "std::vector<unsigned int>",
+      "default" : "std::vector<unsigned int>(3, 0)",
+      "doc" : "\todo what does this itk_type attribute do?",
+      "dim_vec" : 1,
+      "itk_type" : "typename InputImageType::SizeType"
+    },
+    {
+      "name" : "PadUpperBound",
+      "type" : "std::vector<unsigned int>",
+      "default" : "std::vector<unsigned int>(3, 0)",
+      "doc" : "\todo what does this itk_type attribute do?",
+      "dim_vec" : 1,
+      "itk_type" : "typename InputImageType::SizeType"
+    },
+    {
+      "name" : "Constant",
+      "type" : "double",
+      "default" : "0",
+      "doc" : ""
+    }
+  ],
+  "tests" : [
+  ]
+}
+
