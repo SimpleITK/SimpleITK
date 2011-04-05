@@ -44,7 +44,7 @@
      "inputA" : "Input/Ramp-Down-Short.nrrd",
      "md5hash" : "be236e84f51bd6342588548e92b99aaa",
      "settings" : [
-       { 
+       {
          "parameter" : "PadLowerBound",
          "type" : "unsigned int",
          "dim_vec" : 1,
@@ -53,7 +53,7 @@
          "python_value" : "[5, 10, 15]",
          "ruby_value" : "[5, 10, 15]"
        },
-       { 
+       {
          "parameter" : "PadUpperBound",
          "type" : "unsigned int",
          "dim_vec" : 1,

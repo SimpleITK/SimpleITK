@@ -5,6 +5,7 @@
   "number_of_inputs" : 1,
   "doc" : "\todo need single method to set all dims",
   "pixel_types" : "NonLabelPixelIDTypeList",
+  "public_declarations" : "Self &SetShrinkFactor( unsigned int s ) { this->m_ShrinkFactors = std::vector<unsigned int>(3, s ); return *this; }",
   "members" : [
     {
       "name" : "ShrinkFactors",
@@ -16,6 +17,45 @@
     }
   ],
   "tests" : [
+    {
+     "tag" : "defaults",
+     "description" : "Test Shirnk with default parameters",
+     "inputA" : "Input/VM1111Shrink-RGBFloat.nrrd",
+     "md5hash" : "45a85203a8972250b0e0226b64312eef",
+     "settings" : [
+     ]
+   },
+   {
+     "tag" : "by23",
+     "description" : "Test Shink by 23",
+     "inputA" : "Input/VM1111Shrink-RGB.png",
+     "md5hash" : "9d32115482a8d143520fff8ab423f73a",
+     "settings" : [
+       {
+         "parameter" : "ShrinkFactors",
+         "type" : "unsigned int",
+         "dim_vec" : 1,
+         "value" : "{2,3}",
+         "tcl_value" : "[list 2 3]",
+         "python_value" : "[2, 3]",
+         "ruby_value" : "[2, 3]"
+       }
+     ]
+   },
+   {
+     "tag" : "by4",
+     "description" : "Test Shink by 4",
+     "inputA" : "Input/RA-Float.nrrd",
+     "md5hash" : "06ef0d7d001245107721dee64feedf0e",
+     "settings" : [
+       {
+         "parameter" : "ShrinkFactor",
+         "type" : "unsigned int",
+         "no_get_method" : 1,
+         "value" : "4"
+       }
+     ]
+   }
   ]
 }
 

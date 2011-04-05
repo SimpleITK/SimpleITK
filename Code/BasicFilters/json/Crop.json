@@ -5,7 +5,7 @@
   "number_of_inputs" : 1,
   "doc" : "",
   "pixel_types" : "NonLabelPixelIDTypeList",
-  "members" : [ 
+  "members" : [
     {
       "name" : "LowerBoundaryCropSize",
       "type" : "std::vector<unsigned int>",
