@@ -10,13 +10,47 @@
     {
       "name" : "Order",
       "type" : "std::vector<unsigned int>",
-      "default" : "std::vector<unsigned int>(3, 0)",
+      "default" : "std::vector<unsigned int>(0, 3)",
       "doc" : "\todo the default is not reasonable",
       "dim_vec" : 1,
       "itk_type" : "typename FilterType::PermuteOrderArrayType"
     }
   ],
   "tests" : [
+    {
+     "tag" : "identity",
+     "description" : "Test PermiteAxes with identity",
+     "inputA" : "Input/RA-Slice-Short.png",
+     "md5hash" : "a9a0207c759cb8d9e0507414992905d6",
+     "settings" : [
+       {
+         "parameter" : "Order",
+         "type" : "unsigned int",
+         "dim_vec" : 1,
+         "value" : "{0,1}",
+         "tcl_value" : "[list 0 1]",
+         "python_value" : "[0, 1]",
+         "ruby_value" : "[0, 1]"
+       }
+     ]
+   },
+   {
+     "tag" : "identity",
+     "description" : "Test PermiteAxes with identity",
+     "inputA" : "Data/Input/VM1111Shrink-RGBFloat.nrrd",
+     "md5hash" : "93b885adfe0da089cdf634904fd59f71",
+     "settings" : [
+       {
+         "parameter" : "Order",
+         "type" : "unsigned int",
+         "dim_vec" : 1,
+         "value" : "{1,3,0}",
+         "tcl_value" : "[list 1 3 0]",
+         "python_value" : "[1, 3, 0]",
+         "ruby_value" : "[1, 3, 0]"
+       }
+     ]
+   }
   ]
 }
 
