@@ -15,19 +15,10 @@ namespace simple
 class RegularStepGradientDescentOptimizer : public Optimizer
   {
   public:
-    RegularStepGradientDescentOptimizer() {};
-    // Could potentially set some parameters here
-    virtual ::itk::Optimizer::Pointer GetOptimizer()
-    {
-      ::itk::RegularStepGradientDescentOptimizer::Pointer optimizer = ::itk::RegularStepGradientDescentOptimizer::New();
-      optimizer->SetNumberOfIterations ( 2000 );
-      optimizer->SetMinimumStepLength ( .0005 );
-      optimizer->SetMaximumStepLength ( 4.0 );
-      optimizer->SetMinimize(true);
-      return optimizer.GetPointer();
-    }
+    RegularStepGradientDescentOptimizer();
+    virtual ::itk::Optimizer::Pointer GetOptimizer();
   protected:
-    virtual Optimizer* Clone() { return new RegularStepGradientDescentOptimizer ( *this ); }
+    virtual Optimizer* Clone();
   };
 }
 }
