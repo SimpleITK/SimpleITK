@@ -8,6 +8,7 @@
 #include "sitkSubtractImageFilter.h"
 #include "sitkMultiplyImageFilter.h"
 
+#include "sitkImageOperators.h"
 
 #include <itkIntTypes.h>
 
@@ -322,4 +323,131 @@ TEST_F(Image, CopyOnWrite)
   EXPECT_EQ(static_cast<const sitk::Image *>(&img0)->GetImageBase()->GetReferenceCount(), 3 )
     << " Reference Count for shared after set spacing";
   EXPECT_EQ( sitk::Hash( imgCopy ), sitk::Hash( img0 ) ) << "Hash for shared and copy after set spacing";
+}
+
+TEST_F(Image,Operators)
+{
+
+  // the float image should begin as all zeros
+  sitk::Image imgA = *floatImage;
+  sitk::Image imgB = *floatImage;
+  sitk::Image imgC = *floatImage;
+
+  std::cout << "Testing Arithmetic operators" << std::endl;
+  imgA += 1; // all 1s
+  imgB = imgA;
+
+  // 2 = 1 + 1
+  imgC = imgA + imgB;
+
+  // 1 = 2 - 1
+  imgA = imgC - imgA;
+
+  float v =  dynamic_cast<itk::Image<float,3>*>( imgA.GetImageBase() )->GetPixel( itk::Index<3>());
+  EXPECT_EQ( v, 1 ) << "value check 1";
+
+  // 4 = 2 * 2
+  imgB = imgC * imgC;
+
+  // 2 = 4 / 2
+  imgA = imgB / imgC;
+
+  // .4 = 4 * .1
+  imgC = imgB * .1;
+
+  // 20 = .4 * 50;
+  imgA = imgC * 50;
+
+  v =  dynamic_cast<itk::Image<float,3>*>( imgA.GetImageBase() )->GetPixel( itk::Index<3>());
+  EXPECT_EQ( v, 20 ) << "value check 2";
+
+  // original value should have never changed
+  v =  dynamic_cast<itk::Image<float,3>*>( floatImage->GetImageBase() )->GetPixel( itk::Index<3>());
+  EXPECT_EQ( v, 0 ) << "value check 3";
+
+  // 0 = 20 + -20
+  imgC = imgA + -20;
+
+  // 10 = 6 + 4
+  imgB = 6 + imgB;
+
+  // 2 = 10 - 8
+  imgA = imgB - 8;
+
+  // .5 = 2 / 4
+  imgC = imgA / 4;
+
+  std::cout << "Testing Logical Operators" << std::endl;
+  imgA = ~~*shortImage;
+  imgB = ~imgA;
+
+  v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetImageBase() )->GetPixel( itk::Index<3>());
+  EXPECT_EQ( v, 0 );
+
+  // 0 = 0 & 1
+  imgC = imgA & imgB;
+
+  // 1 = 1 | 0
+  imgA = imgB | imgC;
+
+  // 1 = 1 ^ 0
+  imgB = imgA ^ imgC;
+
+  // 0 = 1 ^ 1
+  imgA = imgB ^ imgA;
+
+  v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetImageBase() )->GetPixel( itk::Index<3>());
+  EXPECT_EQ( v, 0 ) << "value check 4";
+  v =  dynamic_cast<itk::Image<short,3>*>( imgB.GetImageBase() )->GetPixel( itk::Index<3>());
+  EXPECT_EQ( v, 1 ) << "value check 5";
+
+  std::cout << "Testing Compoung assignment operators" << std::endl;
+  imgA = *floatImage;
+
+  // 1.5 = 0 + 1.5
+  imgA += 1.5;
+
+  // 3.0 = 1.5 + 1.5
+  imgA += imgA;
+
+  // 0 = 1.5 - 1.5
+  imgA -= imgA;
+
+  // -8 = 0 - 8
+  imgA -= 8;
+
+  // 4 = 8 * .5
+  imgA *= .5;
+
+  // 16 = 4 * 4
+  imgA *= imgA;
+
+  // 8 = 16 / 2
+  imgA /= 2;
+
+  v =  dynamic_cast<itk::Image<float,3>*>( imgA.GetImageBase() )->GetPixel( itk::Index<3>());
+  EXPECT_EQ( v, 8 ) << "value check 6";
+
+  // 1 = 8 / 8
+  imgA /= imgA;
+
+  imgA = ~*shortImage;
+
+  // 1 = 1  & 1
+  imgA &= imgA;
+
+  v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetImageBase() )->GetPixel( itk::Index<3>());
+  EXPECT_EQ( v, 1 ) << "value check 7";
+
+  // 1 = 1 | 0
+  imgA |= *shortImage;
+
+  // 1 = 1 ^ 0
+  imgA ^= *shortImage;
+
+
+  v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetImageBase() )->GetPixel( itk::Index<3>());
+  EXPECT_EQ( v, 1 ) << "value check 8";
+
+
 }

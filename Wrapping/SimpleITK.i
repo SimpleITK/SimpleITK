@@ -18,6 +18,7 @@
 // Any include files, definitions, etc. need to go here.
 %{
 #include <SimpleITK.h>
+#include <sitkImageOperators.h>
 %}
 
 
@@ -56,6 +57,9 @@ namespace std
   %template(VectorUIntList) vector< vector<unsigned int> >;
 }
 
+// ignore the ITK Integrate interface when wrapping
+%ignore itk::simple::Image::GetImageBase;
+
 // This helps SWIG wrap long long, as returned by Width, Height, and Depth
 typedef unsigned long long uint64_t;
 
@@ -88,5 +92,3 @@ typedef unsigned int uint32_t;
 
 // Auto-generated headers
 %include "SimpleITKBasicFiltersGeneratedHeaders.i"
-
-
