@@ -6,6 +6,7 @@ macro( expand_template FILENAME input_dir output_dir library_name )
 
   # Set common variables
   set ( expand_template_script ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua )
+  set ( template_include_dir ${SimpleITK_SOURCE_DIR}/CMake/TemplateComponents )
   set ( output_h "${output_dir}/sitk${FILENAME}ImageFilter.h" )
   set ( output_cxx "${output_dir}/sitk${FILENAME}ImageFilter.cxx" )
 
@@ -18,8 +19,8 @@ macro( expand_template FILENAME input_dir output_dir library_name )
 
   add_custom_command (
     OUTPUT "${output_h}" "${output_cxx}"
-    COMMAND lua ${expand_template_script} code ${input_json_file} ${input_dir}/templates/sitk Template.h.in ${output_h}
-    COMMAND lua ${expand_template_script} code ${input_json_file} ${input_dir}/templates/sitk Template.cxx.in ${output_cxx}
+    COMMAND lua ${expand_template_script} code ${input_json_file} ${input_dir}/templates/sitk ${template_include_dir} Template.h.in ${output_h}
+    COMMAND lua ${expand_template_script} code ${input_json_file} ${input_dir}/templates/sitk ${template_include_dir} Template.cxx.in ${output_cxx}
     DEPENDS ${input_json_file} ${template_file_h} ${template_file_cxx}
     )
   set ( ${library_name}GeneratedSource ${${library_name}GeneratedSource} "${output_h}" CACHE INTERNAL "" )

@@ -1,0 +1,5 @@
+$(foreach members
+      /* ${doc} */
+      ${type} m_${name};
+
+)

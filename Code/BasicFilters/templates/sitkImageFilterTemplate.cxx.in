@@ -1,6 +1,6 @@
-$(include components/DoNotEditWarning.cxx.in)
+$(include DoNotEditWarning.cxx.in)
 
-$(include components/StandardIncludes.cxx.in)
+$(include StandardIncludes.cxx.in)
 
 namespace itk {
 namespace simple {
@@ -10,49 +10,49 @@ namespace simple {
 //
 // Default constructor that initializes parameters
 //
-$(include components/ConstructorSignature.cxx.in)
+$(include ConstructorSignature.cxx.in)
 {
-$(include components/ConstructorInitializeMembers.cxx.in)
-$(include components/ConstructorMemberFunctionSetup.cxx.in)
+$(include ConstructorInitializeMembers.cxx.in)
+$(include ConstructorMemberFunctionSetup.cxx.in)
 
-$(include components/ConstructorVectorPixels.cxx.in)
+$(include ConstructorVectorPixels.cxx.in)
 }
 
 //
 // ToString
 //
-$(include components/ToStringSignature.cxx.in)
+$(include ToStringSignature.cxx.in)
 {
-$(include components/ToStringBody.cxx.in)
-$(include components/ToStringReturn.cxx.in)
+$(include ToStringBody.cxx.in)
+$(include ToStringReturn.cxx.in)
 }
 
 //
 // Execute
-//$(include components/ExecuteWithParameters.cxx.in)
-$(include components/ExecuteNoParameters.cxx.in)
+//$(include ExecuteWithParameters.cxx.in)
+$(include ExecuteNoParameters.cxx.in)
 
 //-----------------------------------------------------------------------------
 
 //
 // ExecuteInternal
 //
-$(include components/ExecuteInternalSignature.cxx.in)
+$(include ExecuteInternalSignature.cxx.in)
 {
-$(include components/ExecuteInternalTypedefs.cxx.in)
+$(include ExecuteInternalTypedefs.cxx.in)
 
-$(include components/ExecuteInternalGetImagePointers.cxx.in)
+$(include ExecuteInternalGetImagePointers.cxx.in)
 
-$(include components/ExecuteInternalITKFilter.cxx.in)
+$(include ExecuteInternalITKFilter.cxx.in)
 
-$(include components/ExecuteInternalSetITKFilterInputs.cxx.in)
-$(include components/ExecuteInternalUpdateAndReturn.cxx.in)
+$(include ExecuteInternalSetITKFilterInputs.cxx.in)
+$(include ExecuteInternalUpdateAndReturn.cxx.in)
 }
 
 //-----------------------------------------------------------------------------
 
-$(include components/ExecuteInternalVectorImages.cxx.in)
-$(include components/FunctionalAPI.cxx.in)
+$(include ExecuteInternalVectorImages.cxx.in)
+$(include FunctionalAPI.cxx.in)
 
 } // end namespace simple
 } // end namespace itk

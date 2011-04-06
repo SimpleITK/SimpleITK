@@ -1,6 +1,6 @@
-$(include components/DoNotEditWarning.cxx.in)
+$(include DoNotEditWarning.cxx.in)
 
-$(include components/StandardIncludes.cxx.in)
+$(include StandardIncludes.cxx.in)
 
 namespace itk {
 namespace simple {
@@ -10,21 +10,21 @@ namespace simple {
 //
 // Default constructor that initializes parameters
 //
-$(include components/ConstructorSignature.cxx.in)
+$(include ConstructorSignature.cxx.in)
 {
   this->m_SeedList = std::vector< std::vector<unsigned int> >();
-$(include components/ConstructorInitializeMembers.cxx.in)
-$(include components/ConstructorMemberFunctionSetup.cxx.in)
+$(include ConstructorInitializeMembers.cxx.in)
+$(include ConstructorMemberFunctionSetup.cxx.in)
 
-$(include components/ConstructorVectorPixels.cxx.in)
+$(include ConstructorVectorPixels.cxx.in)
 }
 
 //
 // ToString
 //
-$(include components/ToStringSignature.cxx.in)
+$(include ToStringSignature.cxx.in)
 {
-$(include components/ToStringBody.cxx.in)  out << " SeedList:" << std::endl;
+$(include ToStringBody.cxx.in)  out << " SeedList:" << std::endl;
   for (unsigned int i = 0; i < this->m_SeedList.size(); ++i)
     {
     out << "  ";
@@ -32,7 +32,7 @@ $(include components/ToStringBody.cxx.in)  out << " SeedList:" << std::endl;
     out << std::endl;
     }
 
-$(include components/ToStringReturn.cxx.in)
+$(include ToStringReturn.cxx.in)
 }
 
 //
@@ -54,23 +54,23 @@ end)
 }
 ]]
 end)
-$(include components/ExecuteNoParameters.cxx.in)
+$(include ExecuteNoParameters.cxx.in)
 
 //----------------------------------------------------------------------------
 
-$(include components/ExecuteInternalVectorImages.cxx.in)
+$(include ExecuteInternalVectorImages.cxx.in)
 //
 // ExecuteInternal
 //
-$(include components/ExecuteInternalSignature.cxx.in)
+$(include ExecuteInternalSignature.cxx.in)
 {
-$(include components/ExecuteInternalTypedefs.cxx.in)
+$(include ExecuteInternalTypedefs.cxx.in)
 
-$(include components/ExecuteInternalGetImagePointers.cxx.in)
+$(include ExecuteInternalGetImagePointers.cxx.in)
 
-$(include components/ExecuteInternalITKFilter.cxx.in)
+$(include ExecuteInternalITKFilter.cxx.in)
 
-$(include components/ExecuteInternalSetITKFilterInputs.cxx.in)
+$(include ExecuteInternalSetITKFilterInputs.cxx.in)
   // Convert Seed List from std::vector< std::vector<unsigned int> >
   // to std::vector<itk::Index>
   filter->ClearSeeds();
@@ -84,7 +84,7 @@ $(include components/ExecuteInternalSetITKFilterInputs.cxx.in)
     filter->AddSeed(idx);
     }
 
-$(include components/ExecuteInternalUpdateAndReturn.cxx.in)
+$(include ExecuteInternalUpdateAndReturn.cxx.in)
 }
 
 //-----------------------------------------------------------------------------
