@@ -44,8 +44,8 @@ macro(generate_filter_source)
   ######
 
   # Set input and output directories corresponding to this Code directory
-  set(generated_code_input_path ${SimpleITK_SOURCE_DIR}/Code/CodeGeneration/${directory_name})
-  set(generated_code_output_path ${SimpleITK_BINARY_DIR}/Code/${directory_name})
+  set(generated_code_input_path ${CMAKE_CURRENT_SOURCE_DIR})
+  set(generated_code_output_path ${SimpleITK_BINARY_DIR}/Code/${directory_name}/include)
 
   # Glob all json files in the current directory
   file ( GLOB json_config_files ${generated_code_input_path}/json/*.json)
