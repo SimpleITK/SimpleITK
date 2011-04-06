@@ -7,6 +7,10 @@
 #include <itksys/SystemTools.hxx>
 #include <itksys/Process.h>
 
+#include "sitkImage.h"
+#include "sitkImageFileReader.h"
+#include "sitkHashImageFilter.h"
+
 // Class to help us find test data
 class DataFinder {
   /*
@@ -69,6 +73,7 @@ class DataFinder {
   }
   std::string FindExecutable ( std::string exe ) { return GetExecutableDirectory() + "/" + exe + EXECUTABLE_SUFFIX; }
   std::string GetLuaExecutable() { return this->FindExecutable ( "SimpleITKLua" ); }
+  std::string GetTclExecutable() { return this->FindExecutable ( "SimpleITKTclsh" ); }
   std::string GetPythonExecutable() { return std::string ( PYTHON_EXECUTABLE_PATH ); }
   std::string GetRubyExecutable() { return std::string ( RUBY_EXECUTABLE_PATH ); }
   std::string GetRExecutable() { return std::string ( RSCRIPT_EXECUTABLE_PATH ); }
@@ -93,6 +98,16 @@ extern DataFinder dataFinder;
 // Class for running external programs
 class ExternalProgramRunner : public testing::Test {
 public:
+
+  // check an image file that it matches the expected hash
+  void CheckImageHash( const std::string &fileName, const std::string &hash )
+  {
+    ASSERT_TRUE ( dataFinder.FileExists ( fileName ) ) << "check if " << fileName << " exists.";
+
+    itk::simple::Image image = itk::simple::ReadImage( fileName );
+    EXPECT_EQ ( "02ce020f462cf05f3c354bc33a7834603d65b906", itk::simple::Hash( image ) );
+  }
+
   // Return the separator
   static std::string GetPathSeparator() {
 #ifdef WIN32

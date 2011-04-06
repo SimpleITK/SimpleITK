@@ -10,7 +10,7 @@ set image [ reader Execute ]
 
 set pixelID [ $image GetPixelIDValue ]
 
-RecursiveGaussianImageFilter gaussian
+SmoothingRecursiveGaussianImageFilter gaussian
 gaussian SetSigma [ lindex $argv 1 ]
 set image [ gaussian Execute $image ]
 
