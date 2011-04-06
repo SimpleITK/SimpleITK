@@ -31,12 +31,17 @@ file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/JavaTests/org/itk/simple/testing
 # Generate code for the tests in different languages
 #
 foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
+
+  # Set up some convenience variables
+  set (filter_json_file ${SimpleITK_SOURCE_DIR}/Code/CodeGeneration/BasicFilters/json/${FILTERNAME}.json)
+  set (template_expansion_script ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua)
+
   file ( GLOB CXX_TEMPLATE_FILES "*Template*.cxx.in" )
   set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILTERNAME}ImageFilterTest.cxx")
   add_custom_command (
     OUTPUT  ${OUTPUT_TEST_FILENAME}
-    COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua test ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitk  TestTemplate.cxx.in "${OUTPUT_TEST_FILENAME}"
-    DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${CXX_TEMPLATE_FILES}
+    COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitk  TestTemplate.cxx.in "${OUTPUT_TEST_FILENAME}"
+    DEPENDS ${filter_json_file} ${CXX_TEMPLATE_FILES}
     )
   set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "BasicFilters.${FILTERNAME}")
   set ( GENERATED_TEST_SOURCE ${GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
@@ -46,8 +51,8 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/LuaTests/${FILTERNAME}ImageFilterTest.lua")
     add_custom_command (
       OUTPUT "${OUTPUT_TEST_FILENAME}"
-      COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua test ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/Lua  TestTemplate.lua.in "${OUTPUT_TEST_FILENAME}"
-      DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${LUA_TEMPLATE_FILES}
+      COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Lua  TestTemplate.lua.in "${OUTPUT_TEST_FILENAME}"
+      DEPENDS ${filter_json_file} ${LUA_TEMPLATE_FILES}
       )
     set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Lua.${FILTERNAME}")
     set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
@@ -58,8 +63,8 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/${FILTERNAME}ImageFilterTest.py")
     add_custom_command (
       OUTPUT  "${OUTPUT_TEST_FILENAME}"
-      COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua test ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/Python  TestTemplate.py.in "${OUTPUT_TEST_FILENAME}"
-      DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${PYTHON_TEMPLATE_FILES}
+      COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Python  TestTemplate.py.in "${OUTPUT_TEST_FILENAME}"
+      DEPENDS ${filter_json_file} ${PYTHON_TEMPLATE_FILES}
       )
     set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Python.${FILTERNAME}")
     set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
@@ -70,8 +75,8 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/TclTests/${FILTERNAME}ImageFilterTest.tcl")
     add_custom_command (
       OUTPUT  "${OUTPUT_TEST_FILENAME}"
-      COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua test ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/Tcl  TestTemplate.tcl.in "${OUTPUT_TEST_FILENAME}"
-      DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${TCL_TEMPLATE_FILES}
+      COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Tcl  TestTemplate.tcl.in "${OUTPUT_TEST_FILENAME}"
+      DEPENDS ${filter_json_file} ${TCL_TEMPLATE_FILES}
       )
     set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Tcl.${FILTERNAME}")
     set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
@@ -82,8 +87,8 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/RTests/${FILTERNAME}ImageFilterTest.R")
     add_custom_command (
       OUTPUT  "${OUTPUT_TEST_FILENAME}"
-      COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua test ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/R  TestTemplate.R.in "${OUTPUT_TEST_FILENAME}"
-      DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${R_TEMPLATE_FILES}
+      COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/R  TestTemplate.R.in "${OUTPUT_TEST_FILENAME}"
+      DEPENDS ${filter_json_file} ${R_TEMPLATE_FILES}
       )
     set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "R.${FILTERNAME}")
     set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
@@ -94,8 +99,8 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/RubyTests/${FILTERNAME}ImageFilterTest.rb")
     add_custom_command (
       OUTPUT  "${OUTPUT_TEST_FILENAME}"
-      COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua test ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/Ruby  TestTemplate.rb.in "${OUTPUT_TEST_FILENAME}"
-      DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${RUBY_TEMPLATE_FILES}
+      COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Ruby  TestTemplate.rb.in "${OUTPUT_TEST_FILENAME}"
+      DEPENDS ${filter_json_file} ${RUBY_TEMPLATE_FILES}
       )
     set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Ruby.${FILTERNAME}")
     set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
@@ -107,9 +112,9 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/org/itk/simple/testing/${FILTERNAME}ImageFilterTest.java")
     add_custom_command (
       OUTPUT  "${OUTPUT_TEST_FILENAME}"
-      COMMAND lua ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua test ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${SimpleITK_SOURCE_DIR}/Testing/Unit/Java  TestTemplate.java.in "${OUTPUT_TEST_FILENAME}"
+      COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Java  TestTemplate.java.in "${OUTPUT_TEST_FILENAME}"
       COMMAND ${Java_JAVAC_EXECUTABLE} -classpath ${SimpleITK_BINARY_DIR}/Wrapping/org.itk.simple.jar ${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/org/itk/simple/testing/${FILTERNAME}ImageFilterTest.java
-      DEPENDS ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/${FILTERNAME}.json ${JAVA_TEMPLATE_FILES} SimpleITKJava
+      DEPENDS ${filter_json_file} ${JAVA_TEMPLATE_FILES} SimpleITKJava
       )
     set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Java.${FILTERNAME}")
     set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
