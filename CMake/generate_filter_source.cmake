@@ -6,7 +6,7 @@ macro( expand_template FILENAME input_dir output_dir library_name )
 
   # Set common variables
   set ( expand_template_script ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua )
-  set ( template_include_dir ${SimpleITK_SOURCE_DIR}/CMake/TemplateComponents )
+  set ( template_include_dir ${SimpleITK_SOURCE_DIR}/TemplateComponents )
   set ( output_h "${output_dir}/sitk${FILENAME}ImageFilter.h" )
   set ( output_cxx "${output_dir}/sitk${FILENAME}ImageFilter.cxx" )
 

@@ -33,7 +33,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
   # Set up some convenience variables
   set (filter_json_file ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/json/${FILTERNAME}.json)
   set (template_expansion_script ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua)
-  set (template_include_dir ${SimpleITK_SOURCE_DIR}/CMake/TemplateComponents)
+  set (template_include_dir ${SimpleITK_SOURCE_DIR}/TemplateComponents)
 
   file ( GLOB CXX_TEMPLATE_FILES "*Template*.cxx.in" )
   set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILTERNAME}ImageFilterTest.cxx")
