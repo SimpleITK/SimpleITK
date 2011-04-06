@@ -503,11 +503,7 @@ function expand(str, ...)
     -- Add "include" option for SimpleITK
     elseif cmd == 'include' then -- $(include xxx)
       
-      lastSlashPos = strfind(string.reverse(templateFileDirectoryAndPrefix),"/")
-      templateFileDirectory = strsub(templateFileDirectoryAndPrefix,
-        1, string.len(templateFileDirectoryAndPrefix)-lastSlashPos)
-      
-      filename = templateFileDirectory .. "/" .. estring(strsub(var,e))
+      filename = templateComponentDirectory .. "/" .. estring(strsub(var,e))
       local includefid = io.open ( filename )
       if includefid == nil then
         print ( 'failed to include ' .. filename )
@@ -559,20 +555,22 @@ function expand(str, ...)
 end
 
 -- Args should be parameters template output
-if #arg ~= 5 then
-  print ( 'usage: ExpandTemplate.lua test_or_code_flag file_variables template_directory template_extension output ' )
+if #arg ~= 6 then
+  print ( 'usage: ExpandTemplate.lua test_or_code_flag file_variables template_directory template_component_directory template_extension output ' )
   os.exit ( 1 )
 end
 
 testOrCodeFlag = arg[1]
 configFile = arg[2]
 templateFileDirectoryAndPrefix = arg[3]
-templateFileExtension = arg[4]
-outputFile = arg[5]
+templateComponentDirectory = arg[4]
+templateFileExtension = arg[5]
+outputFile = arg[6]
 
 print ( 'configFile = ' .. configFile )
 print ( 'testOrCodeFlag = ' .. testOrCodeFlag )
 print ( 'templateFileDirectoryAndPrefix = ' .. templateFileDirectoryAndPrefix )
+print ( 'templateComponentDirectory = ' .. templateComponentDirectory )
 print ( 'templateFileExtension = ' .. templateFileExtension )
 print ( 'outputFile = ' .. outputFile )
 

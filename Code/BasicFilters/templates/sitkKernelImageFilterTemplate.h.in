@@ -1,12 +1,12 @@
 #ifndef __sitk${name}ImageFilter_h
 #define __sitk${name}ImageFilter_h
 
-$(include components/DoNotEditWarning.h.in)
+$(include DoNotEditWarning.h.in)
 
 #include <memory>
 
 #include "sitkDualImageFilter.h"
-$(include components/AddExtraIncludes.h.in)
+$(include AddExtraIncludes.h.in)
 
 namespace itk {
   namespace simple {
@@ -15,12 +15,12 @@ namespace itk {
      *
      * ${doc}
      */
-$(include components/ClassDeclaration.h.in)
+$(include ClassDeclaration.h.in)
 
     /** Kernel type enumeration */
     typedef enum{Annulus, Ball, Box, Cross} KernelType;
-$(include components/PublicDeclarations.h.in)
-$(include components/MemberGetSetDeclarations.h.in)
+$(include PublicDeclarations.h.in)
+$(include MemberGetSetDeclarations.h.in)
       /** Kernel radius as a scale for isotropic structures */
       Self& SetKernelRadius(uint32_t r);
 
@@ -39,15 +39,15 @@ $(include components/MemberGetSetDeclarations.h.in)
       Self& SetKernelType(KernelType t);
       KernelType GetKernelType() const;
 
-$(include components/ClassNameAndPrint.h.in)
+$(include ClassNameAndPrint.h.in)
 
-$(include components/ExecuteMethodNoParameters.h.in)$(include components/ExecuteMethodWithParameters.h.in)$(include components/CustomMethods.h.in)
+$(include ExecuteMethodNoParameters.h.in)$(include ExecuteMethodWithParameters.h.in)$(include CustomMethods.h.in)
 
-$(include components/ExecuteInternalMethod.h.in)
+$(include ExecuteInternalMethod.h.in)
 
-$(include components/MemberFunctionDispatch.h.in)
+$(include MemberFunctionDispatch.h.in)
 
-$(include components/PrivateMemberDeclarations.h.in)
+$(include PrivateMemberDeclarations.h.in)
       /** boolean value to indicate if the vector or scalar should be
        *  used for the radius of the kernel */
       bool m_BVectorRadius;
@@ -60,7 +60,7 @@ $(include components/PrivateMemberDeclarations.h.in)
 
       /** KernelType */
       KernelType m_KernelType;
-$(include components/ClassEnd.h.in)
+$(include ClassEnd.h.in)
 
 
     /**
