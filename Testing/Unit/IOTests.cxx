@@ -129,8 +129,8 @@ TEST(IO, SeriesReader) {
   fileNames.push_back( dataFinder.GetFile ( "Input/VM1111Shrink-RGB.png" ) );
   reader.SetFileNames ( fileNames );
   image = reader.Execute();
-  EXPECT_EQ ( 1u, image.GetDepth() );
-  EXPECT_EQ ( "todo", sitk::Hash( image ) );
+  EXPECT_EQ ( 3u, image.GetDepth() );
+  EXPECT_EQ ( "5bd8cb076d9582875be0b65ce5ecb596b3a982b6", sitk::Hash( image ) );
 
 }
 
