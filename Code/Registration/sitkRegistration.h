@@ -23,12 +23,12 @@ namespace simple
   {
   public:
     Registration();
-    virtual ~Registration() {};
+    virtual ~Registration();
     Registration& SetUseCenteredInitialization ( bool init );
     bool GetUseCenteredInitialization();
     Registration& SetUseCenteredInitializationOn();
     Registration& SetUseCenteredInitializationOff();
-    Registration& SetTransform ( Transform *transform );
+    virtual Registration& SetTransform ( Transform *transform );
     // virtual Transform& GetTransform();
     virtual Registration& SetInterpolate ( Interpolate *interpolate );
     // virtual Interpolate& GetInterpolate();
@@ -37,6 +37,7 @@ namespace simple
     virtual Registration& SetOptimizer ( Optimizer *optimizer );
     // virtual Optimizer& GetOptimizer();
     virtual std::vector<double> Execute ( const Image &fixed, const Image &moving );
+    std::string ToString () const;
 
   protected:
     bool m_UseCenteredInitialization;

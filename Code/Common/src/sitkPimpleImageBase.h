@@ -45,6 +45,9 @@ namespace itk
     virtual std::vector<double> GetSpacing( void ) const = 0;
     virtual void SetSpacing( const std::vector<double> &spc ) = 0;
 
+    virtual std::vector< std::vector< double > > GetDirection( void ) const = 0;
+    virtual void SetDirection( const std::vector< std::vector< double > > &direction ) = 0;
+
     virtual std::vector<int64_t> TransformPhysicalPointToIndex( const std::vector<double> &pt) const = 0;
     virtual std::vector<double> TransformIndexToPhysicalPoint( const std::vector<int64_t> &idx) const = 0;
 

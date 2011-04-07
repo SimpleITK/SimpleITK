@@ -15,9 +15,9 @@ namespace simple
     {
       scales.push_back ( 1.0 );
       if ( idx >= (unsigned int)(dimension*dimension) )
-      {
-      scales[idx] = 1.0 / 10.0;
-      }
+        {
+        scales[idx] = 0.0001;
+        }
     }
     return scales;
   }

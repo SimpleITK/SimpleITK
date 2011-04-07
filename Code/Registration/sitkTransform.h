@@ -10,6 +10,7 @@ namespace itk
 namespace simple
 {
   class Registration;
+  class ResampleImageFilter;
   class Transform
   {
   public:
@@ -19,6 +20,7 @@ namespace simple
     virtual std::vector<double> GetOptimizerScales ( int dimension ) { Unused( dimension ); return std::vector<double>(); };
   protected:
     friend class Registration;
+    friend class ResampleImageFilter;
     virtual Transform* Clone() { std::cout << "Cloned generic Transform" << std::endl; return new Transform ( *this ); }
   };
 }

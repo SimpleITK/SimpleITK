@@ -89,8 +89,8 @@ namespace simple
     /**@}*/
 
     // could return -1 if in valid
-    PixelIDValueType GetPixelIDValue( void ) const;
 
+    PixelIDValueType GetPixelIDValue( void ) const;
     unsigned int GetDimension( void ) const;
 
     /** \brief Get the number of components for each pixel
@@ -107,6 +107,14 @@ namespace simple
     /** Get the Spacing */
     std::vector< double > GetSpacing( void ) const;
     void SetSpacing( const std::vector< double > &spacing );
+
+    /** \brief Set/Get the Direction
+     *
+     * When setting the dimensions of the 2-D vector must exactly
+     * match the dimensions of the image
+     */
+    std::vector< std::vector<double> > GetDirection() const;
+    void SetDirection ( const std::vector<std::vector< double > > &direction );
 
     /** Transform index to physical point */
     std::vector< double > TransformIndexToPhysicalPoint( const std::vector< int64_t > &index ) const;
