@@ -4,7 +4,11 @@ namespace itk
 {
 namespace simple
 {
-  AffineTransform::AffineTransform() {
+  AffineTransform::AffineTransform() {}
+
+  Transform* AffineTransform::Clone()
+  {
+    return new AffineTransform ( *this );
   }
 
   std::vector<double> AffineTransform::GetOptimizerScales ( int dimension )

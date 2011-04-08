@@ -12,7 +12,7 @@ namespace itk
 namespace simple
 {
 
-std::vector<double> Register ( const Image &fixed, const Image & moving, Transform *transform, Interpolate *interpolate, Metric *metric, Optimizer *optimizer )
+  Transform* Register ( const Image &fixed, const Image & moving, Transform *transform, Interpolate *interpolate, Metric *metric, SOptimizer *optimizer )
   {
   Registration registration;
   registration.SetTransform ( transform );
@@ -64,7 +64,7 @@ std::vector<double> Register ( const Image &fixed, const Image & moving, Transfo
   }
 
 template<class TImage>
-std::vector<double> Registration::ExecuteInternal (const Image &fixed, const Image& moving )
+Transform* Registration::ExecuteInternal (const Image &fixed, const Image& moving )
 {
   typedef itk::ImageRegistrationMethod<TImage,TImage>  RegistrationType;
   typename RegistrationType::Pointer registration = RegistrationType::New();
@@ -98,7 +98,6 @@ std::vector<double> Registration::ExecuteInternal (const Image &fixed, const Ima
   registration->SetFixedImage( dynamic_cast<const typename RegistrationType::FixedImageType*> (fixed.GetITKBase()));
   registration->SetMovingImage( dynamic_cast<const typename RegistrationType::MovingImageType*> (moving.GetITKBase()));
 
-  // Why this isn't the default, I'll never know...
   typedef ::itk::MatrixOffsetTransformBase<double, TImage::ImageDimension, TImage::ImageDimension> OffsetTransformType;
   if ( m_UseCenteredInitialization && dynamic_cast<OffsetTransformType*> ( transformBase.GetPointer() ) )
     {
@@ -125,33 +124,25 @@ std::vector<double> Registration::ExecuteInternal (const Image &fixed, const Ima
   registration->GetOptimizer()->SetScales ( scales );
 
 
-  try
-    {
-    registration->Update();
-    }
-  catch( itk::ExceptionObject & err )
-    {
-    std::cout << "ExceptionObject caught !" << err.what() << std::endl;
-    throw err;
-    }
+  registration->Update();
 
   typedef typename RegistrationType::ParametersType ParametersType;
   ParametersType finalParameters = registration->GetLastTransformParameters();
   std::vector<double> parameters;
-  std::cout << "Final parameters:\n";
   for ( unsigned int idx = 0; idx < finalParameters.GetSize(); idx++ )
     {
     parameters.push_back ( finalParameters.GetElement ( idx ) );
-    std::cout << "\tParameters[" << idx << "] = " << parameters[idx] << "\n";
     }
-
-  return parameters;
+  Transform *out = m_Transform.get()->Clone();
+  out->SetParameters ( parameters );
+  return out;
   }
 
-  std::vector<double> Registration::Execute ( const Image &fixed, const Image & moving )
+  Transform* Registration::Execute ( const Image &fixed, const Image & moving )
   {
   const PixelIDValueType fixedType = fixed.GetPixelIDValue();
   const unsigned int fixedDim = fixed.GetDimension();
+
   if ( fixed.GetPixelIDValue() != moving.GetPixelIDValue() )
     {
     sitkExceptionMacro ( << "Fixed and moving images must be the same datatype! Got "
@@ -174,42 +165,24 @@ std::vector<double> Registration::ExecuteInternal (const Image &fixed, const Ima
 
 Registration& Registration::SetTransform ( Transform *transform )
 {
-m_Transform.reset ( transform->Clone() );
-return *this;
+  m_Transform.reset ( transform->Clone() );
+  return *this;
 }
 Registration& Registration::SetInterpolate ( Interpolate *interpolate )
 {
-m_Interpolate.reset ( interpolate->Clone() );
-return *this;
+  m_Interpolate.reset ( interpolate->Clone() );
+  return *this;
 }
 Registration& Registration::SetMetric ( Metric *metric )
 {
-m_Metric.reset ( metric->Clone() );
-return *this;
+  m_Metric.reset ( metric->Clone() );
+  return *this;
 }
-Registration& Registration::SetOptimizer ( Optimizer *optimizer )
+Registration& Registration::SetOptimizer ( SOptimizer *optimizer )
 {
-m_Optimizer.reset ( optimizer->Clone() );
-return *this;
+  m_Optimizer.reset ( optimizer->Clone() );
+  return *this;
 }
-/*
-  Transform& Registration::GetTransform()
-  {
-  // return m_Transform;
-  }
-  Interpolate& Registration::GetInterpolate()
-  {
-  // return m_Interpolate;
-  }
-  Metric& Registration::GetMetric()
-  {
-  // return m_Metric;
-  }
-  Optimizer& Registration::GetOptimizer()
-  {
-  // return m_Optimizer;
-  }
-*/
 
 Registration& Registration::SetUseCenteredInitialization ( bool init )
   {

@@ -5,11 +5,14 @@ namespace itk
 namespace simple
 {
 
-  Optimizer* RegularStepGradientDescentOptimizer::Clone()
+  SOptimizer* RegularStepGradientDescentOptimizer::Clone()
   {
     return new RegularStepGradientDescentOptimizer();
   }
   RegularStepGradientDescentOptimizer::RegularStepGradientDescentOptimizer()
+  {
+  }
+  RegularStepGradientDescentOptimizer::~RegularStepGradientDescentOptimizer()
   {
   }
   ::itk::Optimizer::Pointer RegularStepGradientDescentOptimizer::GetOptimizer()
