@@ -6,19 +6,39 @@ namespace simple
 {
   MattesMutualInformationMetric::MattesMutualInformationMetric() {
     m_MemberFactory.reset( new  detail::MemberFunctionFactory<MemberFunctionType>( this ) );
+    this->m_HistogramBins = 128;
+    this->m_SpatialSamples = 20000;
     // cast between basic images
     m_MemberFactory->RegisterMemberFunctions<BasicPixelIDTypeList, 3, GetMetricMemberFunctionAddressor<MemberFunctionType> > ();
     m_MemberFactory->RegisterMemberFunctions<BasicPixelIDTypeList, 2, GetMetricMemberFunctionAddressor<MemberFunctionType> > ();
   }
 
 
+  MattesMutualInformationMetric& MattesMutualInformationMetric::SetNumberOfHistogramBins ( uint32_t bins )
+  {
+    this->m_HistogramBins = bins;
+    return *this;
+  }
+  uint32_t MattesMutualInformationMetric::GetNumberOfHistogramBins()
+  {
+    return this->m_HistogramBins;
+  }
+  MattesMutualInformationMetric& MattesMutualInformationMetric::SetNumberOfSpatialSamples ( uint32_t samples )
+  {
+    this->m_SpatialSamples = samples;
+    return *this;
+  }
+  uint32_t MattesMutualInformationMetric::GetNumberOfSpatialSamples()
+  {
+    return this->m_SpatialSamples;
+  }
 
   template<class TImage>
   ::itk::SingleValuedCostFunction::Pointer MattesMutualInformationMetric::GetMetricInternal ( const Image &image )
   {
     typename ::itk::MattesMutualInformationImageToImageMetric<TImage,TImage>::Pointer metric = ::itk::MattesMutualInformationImageToImageMetric<TImage,TImage>::New();
-    metric->SetNumberOfHistogramBins ( 128 );
-    metric->SetNumberOfSpatialSamples( 1000000 );
+    metric->SetNumberOfHistogramBins ( m_HistogramBins );
+    metric->SetNumberOfSpatialSamples( m_SpatialSamples );
     return metric.GetPointer();
   }
 

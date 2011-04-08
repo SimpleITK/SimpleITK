@@ -19,6 +19,8 @@
 #include "sitkCastImageFilter.h"
 #include "sitkPixelContainer.h"
 
+#include "sitkConditional.h"
+
 // Registration support
 #include "sitkTransform.h"
 #include "sitkAffineTransform.h"
@@ -26,6 +28,7 @@
 #include "sitkMattesMutualInformationMetric.h"
 #include "sitkRegistration.h"
 #include "sitkRegularStepGradientDescentOptimizer.h"
+#include "sitkResampleImageFilter.h"
 
 
 // These headers are auto-generated
