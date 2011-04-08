@@ -35,7 +35,7 @@ namespace itk {
       /** Execute the filter on the input image with the given parameters */
       // Image Execute ( const Image &, Transform );
 
-      virtual Self& SetTransform ( Transform &transform );
+      virtual Self& SetTransform ( Transform *transform );
       virtual Self& SetInterpolate ( Interpolate &interpolate );
 
       /** Resample parameters */
