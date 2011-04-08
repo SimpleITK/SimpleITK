@@ -25,7 +25,16 @@ ResampleImageFilter::ResampleImageFilter()
 }
 
 std::string ResampleImageFilter::ToString() const {
-  return "";
+  itk::simple::Image image(1,1,itk::simple::sitkUInt8);
+  ::itk::TransformBase::Pointer transformBase = m_Transform->GetTransform ( image.GetDimension() ).GetPointer();
+  ::itk::Object::Pointer interpolatorBase = m_Interpolate->GetInterpolator ( image ).GetPointer();
+
+  std::ostringstream out;
+  out << "\n\nTransform:\n";
+  transformBase->Print ( out );
+  out << "\n\nInterpolator:\n";
+  interpolatorBase->Print ( out );
+  return out.str();
 }
 
 ResampleImageFilter& ResampleImageFilter::SetTransform ( Transform &transform )
@@ -120,7 +129,6 @@ Image ResampleImageFilter::ExecuteInternal ( const Image& inImage  )
   filter->SetSize ( size );
   filter->SetOutputDirection ( direction );
 
-  filter->Print(std::cout);
   filter->SetInput( image );
   filter->Update();
   return Image ( filter->GetOutput() );

@@ -17,7 +17,7 @@ class AffineTransform : public Transform
     virtual ::itk::TransformBase::Pointer GetTransform ( int dimension );
     virtual std::vector<double> GetOptimizerScales ( int dimension );
   protected:
-    virtual Transform* Clone() { std::cout << "Cloned an AffineTransform" << std::endl; return new AffineTransform ( *this ); }
+    virtual Transform* Clone();
   };
 }
 }

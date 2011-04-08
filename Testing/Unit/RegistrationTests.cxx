@@ -9,9 +9,12 @@ TEST(Registration,CreateMattes) {
 
   ASSERT_TRUE ( metric.GetMetric ( image2d ).IsNotNull() );
   ASSERT_TRUE ( metric.GetMetric ( image3d ).IsNotNull() );
-  // Can't make a 2d to 3d registration yet...
-  // ASSERT_THROW ( metric.GetMetric ( image2d.get(), image3d.get() ) );
 }
+
+static float ExpectedParameters[] = {1.0007, -0.00291716, -0.00417716,
+                                     0.00237245, 0.998502, -0.00246285,
+                                     -0.000911028, 0.000150096, 0.996861,
+                                     -0.0263989, -0.113908, -0.0758585 };
 
 TEST(Registration,Components) {
   itk::simple::ImageFileReader reader;
@@ -19,28 +22,22 @@ TEST(Registration,Components) {
   itk::simple::Image fixed = reader.SetFileName ( dataFinder.GetFile ( "Input/OAS1_0001_MR1_mpr-1_anon.nrrd" ) ).Execute();
   itk::simple::Image moving = reader.SetFileName ( dataFinder.GetFile ( "Input/OAS1_0002_MR1_mpr-1_anon.nrrd" ) ).Execute();
 
-  itk::simple::AffineTransform transform;
-  itk::simple::MattesMutualInformationMetric metric;
-  itk::simple::LinearInterpolate interpolate;
-  itk::simple::RegularStepGradientDescentOptimizer optimizer;
-
-  metric.SetNumberOfHistogramBins ( 32 );
-
   itk::simple::Registration registration;
-  registration.SetTransform ( &transform );
-  registration.SetMetric ( &metric );
-  registration.SetInterpolate ( &interpolate );
-  registration.SetOptimizer ( &optimizer );
+  registration.SetOptimizer ( new itk::simple::RegularStepGradientDescentOptimizer() );
+  registration.SetTransform ( new itk::simple::AffineTransform() );
+  registration.SetMetric ( new itk::simple::MattesMutualInformationMetric() );
+  registration.SetInterpolate ( new itk::simple::LinearInterpolate() );
   registration.SetUseCenteredInitializationOff();
   std::vector<double> params;
-  try {
-    params = registration.Execute ( fixed, moving );
-  } catch ( itk::ExceptionObject e ) {
-    std::cout << "Registration failed: " << e.what() << std::endl;
+  itk::simple::Transform *transform;
+  ASSERT_NO_THROW ( transform = registration.Execute ( fixed, moving ) );
+  params = transform->GetParameters();
+  ASSERT_EQ ( params.size(), 12u );
+  for ( size_t idx = 0; idx < params.size(); idx++ ) {
+    ASSERT_NEAR ( params[idx], ExpectedParameters[idx], 0.01 );
   }
-  ASSERT_NO_THROW ( params = registration.Execute ( fixed, moving ) );
-  ASSERT_NE ( params.size(), 0 );
 }
+
 
 TEST(Registration,Defaults) {
   itk::simple::ImageFileReader reader;
@@ -51,8 +48,14 @@ TEST(Registration,Defaults) {
   itk::simple::Registration registration;
   registration.SetUseCenteredInitializationOff();
   std::vector<double> params;
-  ASSERT_NO_THROW ( params = registration.Execute ( fixed, moving ) );
-  ASSERT_NE ( params.size(), 0 );
+  itk::simple::Transform *transform;
+  ASSERT_NO_THROW ( transform = registration.Execute ( fixed, moving ) );
+  params = transform->GetParameters();
+  ASSERT_EQ ( params.size(), 12u );
+  for ( size_t idx = 0; idx < params.size(); idx++ ) {
+    ASSERT_NEAR ( params[idx], ExpectedParameters[idx], 0.01 );
+  }
+
 }
 
 TEST(Registration,Resample) {
