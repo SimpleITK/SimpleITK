@@ -37,9 +37,9 @@ std::string ResampleImageFilter::ToString() const {
   return out.str();
 }
 
-ResampleImageFilter& ResampleImageFilter::SetTransform ( Transform &transform )
+ResampleImageFilter& ResampleImageFilter::SetTransform ( Transform *transform )
 {
-  m_Transform.reset ( transform.Clone() );
+  m_Transform.reset ( transform->Clone() );
   return *this;
 }
 ResampleImageFilter& ResampleImageFilter::SetInterpolate ( Interpolate &interpolate )
