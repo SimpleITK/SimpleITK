@@ -72,6 +72,11 @@ Image StatisticsImageFilter::ExecuteInternal ( const Image& inImage1 )
   filter->SetInput( image1 );
   filter->Update();
 
+  this->m_Minimum = filter->GetMinimum();
+  this->m_Maximum = filter->GetMaximum();
+  this->m_Mean = filter->GetMean();
+  this->m_Variance = filter->GetVariance();
+
   return Image( filter->GetOutput() );
   }
 
