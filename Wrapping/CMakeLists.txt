@@ -74,12 +74,12 @@ if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA OR WRAP_CSHARP OR WRAP_TCL OR WRAP_R O
 
   set ( DEPENDANT_GENERATED_HEADERS "" )
   foreach ( filter ${GENERATED_FILTER_LIST} )
-    set ( DEPENDANT_GENERATED_HEADERS ${DEPENDANT_GENERATED_HEADERS} ${SimpleITK_BINARY_DIR}/Code/BasicFilters/sitk${filter}ImageFilter.h )
+    set ( DEPENDANT_GENERATED_HEADERS ${DEPENDANT_GENERATED_HEADERS} ${SimpleITK_BINARY_DIR}/Code/BasicFilters/include/sitk${filter}ImageFilter.h )
   endforeach()
 
 
-  set ( SWIG_HEADERS ${SWIG_HEADERS} ${SimpleITK_BINARY_DIR}/Code/BasicFilters/SimpleITKBasicFiltersGeneratedHeaders.i
-    ${SimpleITK_BINARY_DIR}/Code/BasicFilters/SimpleITKBasicFiltersGeneratedHeaders.h
+  set ( SWIG_HEADERS ${SWIG_HEADERS} ${SimpleITK_BINARY_DIR}/Code/BasicFilters/include/SimpleITKBasicFiltersGeneratedHeaders.i
+    ${SimpleITK_BINARY_DIR}/Code/BasicFilters/include/SimpleITKBasicFiltersGeneratedHeaders.h
     ${CMAKE_CURRENT_SOURCE_DIR}/CSharp.i
     ${CMAKE_CURRENT_SOURCE_DIR}/CSharpTypemapHelper.i
     ${CMAKE_CURRENT_SOURCE_DIR}/Java.i

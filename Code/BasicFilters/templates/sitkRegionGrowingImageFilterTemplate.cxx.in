@@ -1,0 +1,104 @@
+$(include DoNotEditWarning.cxx.in)
+
+$(include StandardIncludes.cxx.in)
+
+namespace itk {
+namespace simple {
+
+//----------------------------------------------------------------------------
+
+//
+// Default constructor that initializes parameters
+//
+$(include ConstructorSignature.cxx.in)
+{
+  this->m_SeedList = std::vector< std::vector<unsigned int> >();
+$(include ConstructorInitializeMembers.cxx.in)
+$(include ConstructorMemberFunctionSetup.cxx.in)
+
+$(include ConstructorVectorPixels.cxx.in)
+}
+
+//
+// ToString
+//
+$(include ToStringSignature.cxx.in)
+{
+$(include ToStringBody.cxx.in)  out << " SeedList:" << std::endl;
+  for (unsigned int i = 0; i < this->m_SeedList.size(); ++i)
+    {
+    out << "  ";
+    printStdVector(this->m_SeedList[i], out);
+    out << std::endl;
+    }
+
+$(include ToStringReturn.cxx.in)
+}
+
+//
+// Execute
+//$(if members and #members > 0 then
+OUT = [[
+
+Image ${name}ImageFilter::Execute ( const Image& image1$(if number_of_inputs==2 then OUT=', const Image& image2' end),
+  std::vector< std::vector<unsigned int> > inSeedList$(foreach members ,
+  ${type} in${name}) )
+{
+$(foreach members
+$(if (not no_set_method) or (no_set_method == 0) then
+OUT = '  this->Set${name} ( in${name} );'
+end)
+)  this->SetSeedList ( inSeedList );
+
+  return this->Execute ( image1 $(if number_of_inputs==2 then OUT=', image2' end) );
+}
+]]
+end)
+$(include ExecuteNoParameters.cxx.in)
+
+//----------------------------------------------------------------------------
+
+$(include ExecuteInternalVectorImages.cxx.in)
+//
+// ExecuteInternal
+//
+$(include ExecuteInternalSignature.cxx.in)
+{
+$(include ExecuteInternalTypedefs.cxx.in)
+
+$(include ExecuteInternalGetImagePointers.cxx.in)
+
+$(include ExecuteInternalITKFilter.cxx.in)
+
+$(include ExecuteInternalSetITKFilterInputs.cxx.in)
+  // Convert Seed List from std::vector< std::vector<unsigned int> >
+  // to std::vector<itk::Index>
+  filter->ClearSeeds();
+  for (unsigned int i = 0; i < m_SeedList.size(); ++i)
+    {
+    typename InputImageType::IndexType idx;
+    for (unsigned int j = 0; j < m_SeedList[i].size(); ++j)
+      {
+      idx[j] = (typename InputImageType::IndexType::IndexValueType)m_SeedList[i][j];
+      }
+    filter->AddSeed(idx);
+    }
+
+$(include ExecuteInternalUpdateAndReturn.cxx.in)
+}
+
+//-----------------------------------------------------------------------------
+
+//
+// Function to run the Execute method of this filter
+//
+Image ${name} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end),
+  std::vector< std::vector<unsigned int> > inSeedList$(when members $(foreach members ,
+  ${type} in${name} ) ) )
+{
+  ${name}ImageFilter filter;
+  return filter.Execute ( imageA$(if number_of_inputs == 2 then OUT=', imageB' end), inSeedList$(when members $(foreach members , in${name} ) ) );
+}
+
+} // end namespace simple
+} // end namespace itk

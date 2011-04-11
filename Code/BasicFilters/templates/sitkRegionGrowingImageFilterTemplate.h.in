@@ -1,0 +1,89 @@
+#ifndef __sitk${name}ImageFilter_h
+#define __sitk${name}ImageFilter_h
+
+$(include DoNotEditWarning.h.in)
+
+#include <memory>
+
+#include "sitkDualImageFilter.h"
+$(include AddExtraIncludes.h.in)
+
+namespace itk {
+  namespace simple {
+
+    /** \class ${name}ImageFilter
+     *
+     * ${doc}
+     */
+$(include ClassDeclaration.h.in)
+$(include PublicDeclarations.h.in)
+$(include MemberGetSetDeclarations.h.in)
+      /** Set SeedList */
+      Self& SetSeedList ( std::vector< std::vector<unsigned int> > t )
+        {
+        this->m_SeedList = t; return *this;
+        }
+
+      /** Get SeedList */
+      std::vector< std::vector<unsigned int> > GetSeedList()
+        {
+        return this->m_SeedList;
+        }
+
+      /** ClearSeeds - Clear out all seeds in the list */
+      Self& ClearSeeds( )
+        {
+        this->m_SeedList.clear();
+        return *this;
+        }
+
+      /** SetSeed - Set list to a single seed */
+      Self& SetSeed( std::vector<unsigned int> idx )
+        {
+        this->m_SeedList.clear();
+        this->m_SeedList.push_back(idx);
+        return *this;
+        }
+
+      /** AddSeed - Add a seed to the end of the list */
+      Self& AddSeed( std::vector<unsigned int> idx )
+        {
+        this->m_SeedList.push_back(idx);
+        return *this;
+        }
+
+$(include ClassNameAndPrint.h.in)
+
+$(include ExecuteMethodNoParameters.h.in)$(if members and #members > 0 then
+OUT=[[
+
+
+      /** Execute the filter on the input image$(if number_of_inputs == 2 then OUT='s'end) with the given parameters */
+      Image Execute ( const Image& $(if number_of_inputs == 2 then OUT=', const Image&' end),
+        std::vector< std::vector<unsigned int> > inSeedList$(foreach members ,
+        ${type} in${name}) );]]end)$(include CustomMethods.h.in)
+
+$(include ExecuteInternalMethod.h.in)
+
+$(include MemberFunctionDispatch.h.in)
+
+$(include PrivateMemberDeclarations.h.in)
+      /** List of interor seed points used to initialize the region growing segmentation */
+      std::vector< std::vector<unsigned int> > m_SeedList;
+
+$(include ClassEnd.h.in)
+
+
+    /**
+     * itk::simple::${name}ImageFilter Functional Interface
+     *
+     * This function directly calls the execute method of ${name}ImageFilter
+     * in order to support a fully functional API
+     */
+    Image ${name} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end),
+      std::vector< std::vector<unsigned int> > inSeedList$(when members $(foreach members ,
+      ${type} in${name} = ${default})) );
+
+  } // end namespace simple
+} // end namespace itk
+#endif

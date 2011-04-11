@@ -27,9 +27,9 @@ set ( SimpleITK_INCLUDE_DIR
       ${CMAKE_SOURCE_DIR}/Code/Common
       ${CMAKE_SOURCE_DIR}/Code/Registration
       ${CMAKE_SOURCE_DIR}/Code/Common/Ancillary
-      ${CMAKE_SOURCE_DIR}/Code/BasicFilters
+      ${CMAKE_SOURCE_DIR}/Code/BasicFilters/include
       ${CMAKE_SOURCE_DIR}/Code/IO
-      ${CMAKE_BINARY_DIR}/Code/BasicFilters
+      ${CMAKE_BINARY_DIR}/Code/BasicFilters/include
       ${CMAKE_BINARY_DIR}
       )
 

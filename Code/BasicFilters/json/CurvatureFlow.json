@@ -1,0 +1,51 @@
+{
+  "name" : "CurvatureFlow",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "output_pixel_type" : "typename itk::NumericTraits<typename InputImageType::PixelType>::RealType",
+  "long" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [
+    { "name" : "TimeStep",
+      "type" : "double",
+      "default" : 0.1,
+      "doc" : "Time step for curvature flow"
+    },
+    {
+      "name" : "NumberOfIterations",
+      "type" : "uint32_t",
+      "default" : "5u",
+      "doc" : "Number of iterations to run"
+    }
+  ]
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Simply run with default settings",
+      "inputA" : "Input/RA-Float.nrrd",
+      "settings" : [],
+      "tolerance" : 0.0,
+      "md5hash" : null
+    }
+    {
+      "tag" : "longer",
+      "description" : "Change number of iterations and timestep",
+      "inputA" : "Input/RA-Float.nrrd",
+      "settings" : [
+        {
+          "parameter" : "TimeStep",
+          "value" : 0.1
+        },
+        {
+          "parameter" : "NumberOfIterations",
+          "value" : 10
+        }
+      ],
+      "tolerance" : "0.0",
+      "md5hash" : null
+    }
+  ]
+}
+

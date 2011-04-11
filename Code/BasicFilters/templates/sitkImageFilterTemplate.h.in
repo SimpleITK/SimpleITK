@@ -1,0 +1,35 @@
+#ifndef __sitk${name}ImageFilter_h
+#define __sitk${name}ImageFilter_h
+
+$(include DoNotEditWarning.h.in)
+
+#include <memory>
+
+#include "sitkDualImageFilter.h"
+$(include AddExtraIncludes.h.in)
+
+namespace itk {
+  namespace simple {
+
+    /** \class ${name}ImageFilter
+     *
+     * ${doc}
+     */
+$(include ClassDeclaration.h.in)
+$(include PublicDeclarations.h.in)
+$(include MemberGetSetDeclarations.h.in)
+$(include ClassNameAndPrint.h.in)
+
+$(include ExecuteMethodNoParameters.h.in)$(include ExecuteMethodWithParameters.h.in)$(include CustomMethods.h.in)
+
+$(include ExecuteInternalMethod.h.in)
+
+$(include MemberFunctionDispatch.h.in)
+
+$(include PrivateMemberDeclarations.h.in)$(include ClassEnd.h.in)
+
+
+$(include FunctionalAPI.h.in)
+  }
+}
+#endif
