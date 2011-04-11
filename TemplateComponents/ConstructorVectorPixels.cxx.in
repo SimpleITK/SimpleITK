@@ -1,0 +1,6 @@
+  $(if vector_pixel_types_by_component then
+    OUT=[[  typedef ${vector_pixel_types_by_component} VectorByComponentsPixelIDTypeList;
+  typedef detail::ExecuteInternalVectorImageAddressor<MemberFunctionType> VectorAddressorType;
+  this->m_MemberFactory->RegisterMemberFunctions< VectorByComponentsPixelIDTypeList, 3, VectorAddressorType> ();
+  this->m_MemberFactory->RegisterMemberFunctions< VectorByComponentsPixelIDTypeList, 2, VectorAddressorType> ();]]
+  end)

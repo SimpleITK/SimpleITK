@@ -1,0 +1,192 @@
+$(include DoNotEditWarning.cxx.in)
+
+$(include StandardIncludes.cxx.in)
+
+#include "itkNthElementImageAdaptor.h"
+#include "itkCastImageFilter.h"
+#include "itkImageToVectorImageFilter.h"
+#include "itkVectorImageToImageAdaptor.h"
+
+#include "itkFlatStructuringElement.h"
+
+namespace itk {
+namespace simple {
+
+//-----------------------------------------------------------------------------
+
+//
+// Default constructor that initializes parameters
+//
+$(include ConstructorSignature.cxx.in)
+{
+  this->m_BVectorRadius = false;
+  this->m_KernelRadius = 1;
+  this->m_KernelType = Ball;
+$(include ConstructorInitializeMembers.cxx.in)
+$(include ConstructorMemberFunctionSetup.cxx.in)
+
+$(include ConstructorVectorPixels.cxx.in)
+}
+
+//
+// ToString
+//
+$(include ToStringSignature.cxx.in)
+{
+$(include ToStringBody.cxx.in)
+  out << "  KernelRadius: " << this->m_KernelRadius << std::endl;
+  out << "  KernelType: ";
+  switch ( this->m_KernelType )
+    {
+    case Self::Annulus:
+      std::cout << "Annulus";
+      break;
+    case Self::Ball:
+      std::cout << "Ball";
+      break;
+    case Self::Box:
+      std::cout << "Box";
+      break;
+    case Self::Cross:
+      std::cout << "Cross";
+      break;
+    default:
+      sitkExceptionMacro( "LogicError: invalid Kernel type" );
+    }
+  std::cout << std::endl;
+$(include ToStringReturn.cxx.in)
+}
+
+//
+// Set/Get Member Properties
+//
+
+${name}ImageFilter::Self& ${name}ImageFilter::SetKernelRadius(uint32_t r)
+{
+  this->m_BVectorRadius = false;
+  this->m_KernelRadius = r;
+  return *this;
+}
+${name}ImageFilter::Self& ${name}ImageFilter::SetKernelRadius(const std::vector<uint32_t>  &r )
+{
+  this->m_BVectorRadius = true;
+  this->m_VectorKernelRadius = r;
+  return *this;
+}
+std::vector<uint32_t> ${name}ImageFilter::GetKernelRadius() const
+{
+
+  if ( !this->m_BVectorRadius )
+    {
+    // copy scalar radius to std vector
+    return std::vector<uint32_t>( 1, this->m_KernelRadius);
+    }
+  return this->m_VectorKernelRadius;
+}
+${name}ImageFilter::Self& ${name}ImageFilter::SetKernelType(KernelType t)
+{
+  this->m_KernelType = t;
+  return *this;
+}
+${name}ImageFilter::KernelType ${name}ImageFilter::GetKernelType() const
+{
+  return this->m_KernelType;
+}
+
+//
+// Execute
+//$(include ExecuteWithParameters.cxx.in)
+$(include ExecuteNoParameters.cxx.in)
+
+
+//----------------------------------------------------------------------------
+
+//
+// ExecuteInternal
+//
+$(include ExecuteInternalSignature.cxx.in)
+{
+$(include ExecuteInternalTypedefs.cxx.in)
+
+$(include ExecuteInternalGetImagePointers.cxx.in)
+
+  // Use correct kernel types
+  typedef itk::FlatStructuringElement< InputImageType::ImageDimension > ITKKernelType;
+  typedef itk::${name}ImageFilter<InputImageType,$(if number_of_inputs == 2 then OUT=[[ InputImageType,]] end)$(if additional_template_types then OUT=[[ $(foreach additional_template_types ${type},)]]end)$(if not no_output_type then OUT=[[ OutputImageType,]] end) ITKKernelType> FilterType;
+
+  ITKKernelType kernel;
+  typename ITKKernelType::SizeType radius;
+
+  // set the radius via vector or scalar
+  if ( this->m_BVectorRadius )
+    {
+    for ( unsigned int i = 0; i < InputImageType::ImageDimension; ++i )
+      {
+      if ( i < this->m_VectorKernelRadius.size() )
+        {
+        radius[i] = this->m_VectorKernelRadius[i];
+        }
+      else
+        {
+        radius[i] = 1;
+        }
+      }
+    }
+  else
+    {
+    radius.Fill( this->m_KernelRadius );
+    }
+  switch (m_KernelType)
+    {
+    case Annulus:
+      kernel = ITKKernelType::Annulus( radius, 1, false );
+      break;
+    case Ball:
+      kernel = ITKKernelType::Ball( radius );
+      break;
+    case Box:
+      kernel = ITKKernelType::Box( radius );
+      break;
+    case Cross:
+      kernel = ITKKernelType::Cross( radius );
+      break;
+    default:
+      sitkExceptionMacro( "Logic Error: Unknown Kernel Type" );
+    }
+
+  typename FilterType::Pointer filter = FilterType::New();
+
+$(include ExecuteInternalSetITKFilterInputs.cxx.in)
+  filter->SetKernel( kernel );
+$(include ExecuteInternalUpdateAndReturn.cxx.in)
+
+}
+
+
+//-----------------------------------------------------------------------------
+
+//
+// Function to run the Execute method of this filter
+//
+Image ${name} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end),
+                 uint32_t inRadius,  ${name}ImageFilter::KernelType inKernel
+                 $(when members $(foreach members , ${type} in${name})) )
+{
+  ${name}ImageFilter filter;
+  return filter.SetKernelRadius( inRadius ).SetKernelType( inKernel ).Execute ( imageA$(if number_of_inputs == 2 then OUT=', imageB' end)$(when members $(foreach members , in${name})) );
+}
+
+
+//
+// Function to run the Execute method of this filter
+//
+Image ${name} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end),
+                 std::vector<uint32_t> inVectorRadius,  ${name}ImageFilter::KernelType inKernel
+                 $(when members $(foreach members , ${type} in${name})) )
+{
+  ${name}ImageFilter filter;
+  return filter.SetKernelRadius( inVectorRadius ).SetKernelType( inKernel ).Execute ( imageA$(if number_of_inputs == 2 then OUT=', imageB' end)$(when members $(foreach members , in${name})) );
+}
+
+} // end namespace simple
+} // end namespace itk

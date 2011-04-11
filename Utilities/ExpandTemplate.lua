@@ -500,6 +500,24 @@ function expand(str, ...)
         end
       end
       error('syntax error in: '.. var, 2)
+    -- Add "include" option for SimpleITK
+    elseif cmd == 'include' then -- $(include xxx)
+      
+      filename = templateComponentDirectory .. "/" .. estring(strsub(var,e))
+      local includefid = io.open ( filename )
+      if includefid == nil then
+        print ( 'failed to include ' .. filename )
+        os.exit ( 1 )
+      end
+
+      includedText = includefid:read ( "*all" )
+      includefid:close()
+
+      --Remove the last character
+      includedText=includedText:sub(1,#includedText-1)
+      
+      return estring(includedText)
+      
     elseif cmd == 'when' then -- $(when vn xxx)
       local vn
       b,e,vn = strfind(var, '^([_%a][_%w]*)%s.', e)
@@ -537,20 +555,22 @@ function expand(str, ...)
 end
 
 -- Args should be parameters template output
-if #arg ~= 5 then
-  print ( 'usage: ExpandTemplate.lua test_or_code_flag file_variables template_directory template_extension output ' )
+if #arg ~= 6 then
+  print ( 'usage: ExpandTemplate.lua test_or_code_flag file_variables template_directory template_component_directory template_extension output ' )
   os.exit ( 1 )
 end
 
 testOrCodeFlag = arg[1]
 configFile = arg[2]
 templateFileDirectoryAndPrefix = arg[3]
-templateFileExtension = arg[4]
-outputFile = arg[5]
+templateComponentDirectory = arg[4]
+templateFileExtension = arg[5]
+outputFile = arg[6]
 
 print ( 'configFile = ' .. configFile )
 print ( 'testOrCodeFlag = ' .. testOrCodeFlag )
 print ( 'templateFileDirectoryAndPrefix = ' .. templateFileDirectoryAndPrefix )
+print ( 'templateComponentDirectory = ' .. templateComponentDirectory )
 print ( 'templateFileExtension = ' .. templateFileExtension )
 print ( 'outputFile = ' .. outputFile )
 

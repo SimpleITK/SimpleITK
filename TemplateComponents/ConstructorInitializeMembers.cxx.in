@@ -1,0 +1,5 @@
+$(foreach members
+$(if default then
+OUT = [[
+  this->m_${name} = ${default};]] end)
+)
