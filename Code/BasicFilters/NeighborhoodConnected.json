@@ -34,6 +34,7 @@
     { "tag" : "2d",
       "description" : "Run with 2d sample settings",
       "inputA" : "Input/STAPLE1.png",
+      "md5hash" : "52670ac422db7416c4020c8fbd58c254",
       "settings" : [
         { "parameter" : "SeedList",
           "dim" : 2,
@@ -65,9 +66,7 @@
           "lua_value" : "{5,5}",
           "ruby_value" : "[5,5]"
         }
-        
-      ],
-      "tolerance" : 0.1
+      ]
     }
   ]
 }
