@@ -341,5 +341,7 @@ sitkConnectedThresholdImageFilter.h for details.
 a KernelType and have an external enum which allows the user to select which
 kernel to use. See sitkErodeObjectMorphologyImageFilter.h for details.
 
-
+- <b> Dual Image Filter:</b> The dual image filter template's usage
+should be avoided because it instantiates the combination of two pixel
+type lists.
 */

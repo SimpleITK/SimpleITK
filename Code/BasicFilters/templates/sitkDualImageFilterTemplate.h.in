@@ -1,0 +1,41 @@
+#ifndef __sitk${name}ImageFilter_h
+#define __sitk${name}ImageFilter_h
+
+$(include DoNotEditWarning.h.in)
+
+#include <memory>
+
+#include "sitkDualImageFilter.h"
+#include "sitkDualMemberFunctionFactory.h"
+$(include AddExtraIncludes.h.in)
+
+namespace itk {
+  namespace simple {
+
+    /** \class ${name}ImageFilter
+     *
+     * ${doc}
+     */
+$(include ClassDeclaration.h.in)
+$(include PublicDeclarations.h.in)
+$(include MemberGetSetDeclarations.h.in)
+$(include ClassNameAndPrint.h.in)
+
+$(include ExecuteMethodNoParameters.h.in)$(include ExecuteMethodWithParameters.h.in)$(include CustomMethods.h.in)
+
+    private:
+      /** Setup for member function dispatching */
+      typedef Image (Self::*MemberFunctionType)( const Image &, const Image & );
+      template <class TImageType1, class TImageType2> Image DualExecuteInternal ( const Image& image1, const Image& image2 );
+
+      friend struct detail::DualExecuteInternalAddressor<MemberFunctionType>;
+      std::auto_ptr<detail::DualMemberFunctionFactory<MemberFunctionType> > m_DualMemberFactory;
+
+
+$(include PrivateMemberDeclarations.h.in)$(include ClassEnd.h.in)
+
+
+$(include FunctionalAPI.h.in)
+  }
+}
+#endif
