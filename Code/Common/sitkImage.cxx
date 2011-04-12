@@ -621,8 +621,6 @@ namespace itk
       return *this;
     }
 
-
-
     // Index to Physical Point
     std::vector< double > Image::TransformIndexToPhysicalPoint( const std::vector< int64_t > &idx ) const
     {
@@ -644,7 +642,6 @@ namespace itk
         delete this->m_PimpleImage;
         this->m_PimpleImage = temp.release();
         }
-
     }
 
 ///
