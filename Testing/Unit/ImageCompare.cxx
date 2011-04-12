@@ -1,14 +1,20 @@
-#include <sitkImageFileReader.h>
-#include <sitkImageFileWriter.h>
-#include <sitkHashImageFilter.h>
-#include <sitkCastImageFilter.h>
-#include <sitkSubtractImageFilter.h>
-#include <sitkStatisticsImageFilter.h>
-#include <sitkExtractImageFilter.h>
+#include <SimpleITK.h>
 #include <memory>
 
 #include "ImageCompare.h"
 #include "itkExceptionObject.h"
+
+static void NormalizeAndSave ( itk::simple::Image image, std::string filename ) {
+  itk::simple::StatisticsImageFilter stats;
+  stats.Execute ( image );
+  itk::simple::Image out = itk::simple::IntensityWindowing ( image, stats.GetMinimum(), stats.GetMaximum(), 0, 255 );
+  out = itk::simple::Cast ( out, itk::simple::sitkUInt8 );
+  itk::simple::WriteImage ( out, filename );
+}
+
+
+
+
 ImageCompare::ImageCompare() {
   mTolerance = 0.0;
   mMessage = "";
@@ -109,6 +115,23 @@ bool ImageCompare::compare ( const itk::simple::Image& image, std::string inTest
 
     std::string volumeName = OutputDir + "/" + name + ".nrrd";
     itk::simple::ImageFileWriter().SetFileName ( volumeName ).Execute ( centerSlice );
+
+    // Save pngs
+    std::string ExpectedImageFilename = OutputDir + "/" + name + "_Expected.png";
+    std::string ActualImageFilename = OutputDir + "/" + name + "_Actual.png";
+    std::string DifferenceImageFilename = OutputDir + "/" + name + "_Difference.png";
+
+    NormalizeAndSave ( baseline, ExpectedImageFilename );
+    NormalizeAndSave ( centerSlice, ActualImageFilename );
+    NormalizeAndSave ( diff, DifferenceImageFilename );
+
+    // Let ctest know about it
+    std::cout << "<DartMeasurementFile name=\"ExpectedImage\" type=\"image/png\">";
+    std::cout << ExpectedImageFilename << "</DartMeasurementFile>" << std::endl;
+    std::cout << "<DartMeasurementFile name=\"ActualImage\" type=\"image/png\">";
+    std::cout << ActualImageFilename << "</DartMeasurementFile>" << std::endl;
+    std::cout << "<DartMeasurementFile name=\"DifferenceImage\" type=\"image/png\">";
+    std::cout << DifferenceImageFilename << "</DartMeasurementFile>" << std::endl;
 
     return false;
   }
