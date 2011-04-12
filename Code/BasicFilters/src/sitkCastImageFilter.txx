@@ -6,6 +6,7 @@
 #include <itkCastImageFilter.h>
 #include <itkImageToVectorImageFilter.h>
 #include <itkLabelImageToLabelMapFilter.h>
+#include <itkLabelMapToLabelImageFilter.h>
 
 namespace itk
 {
@@ -96,6 +97,29 @@ Image CastImageFilter::ExecuteInternalToLabel( const Image& inImage )
   return Image( filter->GetOutput() );
 }
 
+
+
+template<typename TImageType, typename TOutputImageType>
+Image CastImageFilter::ExecuteInternalLabelToImage( const Image& inImage )
+{
+  typedef TImageType                                InputImageType;
+  typedef TOutputImageType                          OutputImageType;
+
+  typename InputImageType::ConstPointer image =
+    dynamic_cast <const InputImageType*> ( inImage.GetImageBase() );
+
+  if ( image.IsNull() )
+    {
+    sitkExceptionMacro( << "Could not cast input image to proper type" );
+    }
+
+  typedef itk::LabelMapToLabelImageFilter<InputImageType, OutputImageType> FilterType;
+  typename FilterType::Pointer filter = FilterType::New();
+  filter->SetInput ( image );
+  filter->Update();
+
+  return Image( filter->GetOutput() );
+}
 
 } // end namespace simple
 } // end namespace itk
