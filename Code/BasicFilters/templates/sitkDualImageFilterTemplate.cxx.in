@@ -1,0 +1,107 @@
+$(include DoNotEditWarning.cxx.in)
+
+$(include StandardIncludes.cxx.in)
+
+namespace itk {
+namespace simple {
+
+//-----------------------------------------------------------------------------
+
+//
+// Default constructor that initializes parameters
+//
+$(include ConstructorSignature.cxx.in)
+{
+$(include ConstructorInitializeMembers.cxx.in)
+
+  typedef ${pixel_types2}  PixelIDTypeList2;
+
+
+  this->m_DualMemberFactory.reset( new detail::DualMemberFunctionFactory<MemberFunctionType>( this ) );
+
+  this->m_DualMemberFactory->RegisterMemberFunctions< PixelIDTypeList, PixelIDTypeList2, 3 > ();
+  this->m_DualMemberFactory->RegisterMemberFunctions< PixelIDTypeList, PixelIDTypeList2, 2 > ();
+
+}
+
+//
+// ToString
+//
+$(include ToStringSignature.cxx.in)
+{
+$(include ToStringBody.cxx.in)
+$(include ToStringReturn.cxx.in)
+}
+
+//
+// Execute
+//$(include ExecuteWithParameters.cxx.in)
+Image ${name}ImageFilter::Execute ( const Image & image1, const Image& image2 )
+{
+
+  PixelIDValueType type1 = image1.GetPixelIDValue();
+  PixelIDValueType type2 = image2.GetPixelIDValue();
+  unsigned int dimension = image1.GetDimension();
+
+  // todo need better error handling and potential type conversion
+  if ( dimension != image2.GetDimension() ||
+       image1.GetWidth() != image2.GetWidth() ||
+       image1.GetHeight() != image2.GetHeight() ||
+       image1.GetDepth() != image2.GetDepth() )
+    {
+      sitkExceptionMacro ( "Both images for ${name}ImageFilter don't match type or dimension!" );
+    }
+
+  return this->m_DualMemberFactory->GetMemberFunction( type1, type2, dimension )( image1, image2 );
+}
+
+
+//-----------------------------------------------------------------------------
+
+//
+// ExecuteInternal
+//
+template <class TImageType, class TImageType2>
+Image ${name}ImageFilter::DualExecuteInternal ( const Image& inImage1, const Image& inImage2 )
+{
+  // Define the input and output image types
+  typedef TImageType     InputImageType;
+  typedef TImageType2     InputImageType2;
+
+  $(if output_pixel_type then
+  OUT=[[// Define output image type
+  typedef itk::Image< ${output_pixel_type}, InputImageType::ImageDimension > OutputImageType;]]
+  else
+  OUT=[[typedef InputImageType OutputImageType;]]
+  end)
+
+$(include ExecuteInternalGetImagePointers.cxx.in)
+
+$(include ExecuteInternalITKFilter.cxx.in)
+
+  filter->SetInput1( image1 );
+  filter->SetInput2( image2 );
+$(foreach members
+$(if custom_itk_cast then
+OUT = '  ${custom_itk_cast}'
+elseif dim_vec and dim_vec == 1 then
+OUT = [[  ${itk_type} itkVec${name};
+  for (unsigned int i = 0; i < inImage1.GetDimension(); ++i)
+    {
+    itkVec${name}[i] = this->Get${name}()[i];
+    }
+  filter->Set${name}( itkVec${name} );]]
+elseif(not no_set_method) or (no_set_method == 0) then
+OUT = '  filter->Set${name} ( this->m_${name} );'
+end)
+)
+
+$(include ExecuteInternalUpdateAndReturn.cxx.in)
+}
+
+//-----------------------------------------------------------------------------
+
+$(include FunctionalAPI.cxx.in)
+
+} // end namespace simple
+} // end namespace itk

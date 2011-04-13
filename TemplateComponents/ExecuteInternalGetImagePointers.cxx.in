@@ -11,8 +11,8 @@ OUT=[[
 
 
   // Get the a pointer to the ITK image contained in image2
-  typename InputImageType::ConstPointer image2 =
-  dynamic_cast <const InputImageType*> ( inImage2.GetImageBase() );
+  typename InputImageType2::ConstPointer image2 =
+  dynamic_cast <const InputImageType2*> ( inImage2.GetImageBase() );
 
   // Check that ITK image pointer was properly retrieved
   if ( image2.IsNull() )

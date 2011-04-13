@@ -6,6 +6,7 @@ $(include DoNotEditWarning.h.in)
 #include <memory>
 
 #include "sitkDualImageFilter.h"
+#include "sitkDualMemberFunctionFactory.h"
 $(include AddExtraIncludes.h.in)
 
 namespace itk {
@@ -22,9 +23,14 @@ $(include ClassNameAndPrint.h.in)
 
 $(include ExecuteMethodNoParameters.h.in)$(include ExecuteMethodWithParameters.h.in)$(include CustomMethods.h.in)
 
-$(include ExecuteInternalMethod.h.in)
+    private:
+      /** Setup for member function dispatching */
+      typedef Image (Self::*MemberFunctionType)( const Image &, const Image & );
+      template <class TImageType1, class TImageType2> Image DualExecuteInternal ( const Image& image1, const Image& image2 );
 
-$(include MemberFunctionDispatch.h.in)
+      friend struct detail::DualExecuteInternalAddressor<MemberFunctionType>;
+      std::auto_ptr<detail::DualMemberFunctionFactory<MemberFunctionType> > m_DualMemberFactory;
+
 
 $(include PrivateMemberDeclarations.h.in)$(include ClassEnd.h.in)
 
