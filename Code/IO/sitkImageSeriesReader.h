@@ -1,5 +1,5 @@
-#ifndef __sitkImageFileReader_h
-#define __sitkImageFileReader_h
+#ifndef __sitkImageSeriesReader_h
+#define __sitkImageSeriesReader_h
 
 #include "sitkMacro.h"
 #include "sitkImage.h"
@@ -9,24 +9,22 @@
 namespace itk {
   namespace simple {
 
-    /** \class ImageFileReader
-     * \brief Read a 2D or 3D image and return a smart pointer to a SimpleITK
-     * image
+    /** \class ImageSeriesReader
+     * \brief Read series of image into a SimpleITK image
      *
-     * This reader handles scalar and vector images and returns an image with
-     * the same type as the file on disk.
      */
-    class ImageFileReader
+    class ImageSeriesReader
       : public ImageReaderBase
     {
     public:
-      typedef ImageFileReader Self;
+      typedef ImageSeriesReader Self;
 
-      Self& SetFileName ( std::string fn );
-      std::string GetFileName();
+      ImageSeriesReader();
+
+      Self& SetFileNames ( const std::vector<std::string> &fns );
+      const std::vector<std::string> &GetFileNames() const;
+
       Image Execute();
-
-      ImageFileReader();
 
     protected:
 
@@ -41,10 +39,9 @@ namespace itk {
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 
-      std::string m_FileName;
+      std::vector<std::string> m_FileNames;
     };
-
-    Image ReadImage ( std::string filename );
+  Image ReadImage ( const std::vector<std::string> &filenames );
   }
 }
 

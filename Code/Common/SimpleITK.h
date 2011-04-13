@@ -12,6 +12,7 @@
 #include "sitkHashImageFilter.h"
 #include "sitkPixelIDTypeLists.h"
 #include "sitkImageFileReader.h"
+#include "sitkImageSeriesReader.h"
 #include "sitkImageFileWriter.h"
 #include "sitkStatisticsImageFilter.h"
 #include "sitkExtractImageFilter.h"

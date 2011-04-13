@@ -1,5 +1,6 @@
 #include <SimpleITKTestHarness.h>
 #include <sitkImageFileReader.h>
+#include <sitkImageSeriesReader.h>
 #include <sitkImageFileWriter.h>
 #include <sitkHashImageFilter.h>
 
@@ -97,6 +98,39 @@ TEST(IO,2DFormats) {
   EXPECT_EQ ( 64u, image.GetWidth() );
   EXPECT_EQ ( 64u, image.GetHeight() );
   EXPECT_EQ ( 0u, image.GetDepth() );
+
+}
+
+namespace sitk = itk::simple;
+
+TEST(IO, SeriesReader) {
+
+  std::vector< std::string > fileNames;
+  fileNames.push_back( dataFinder.GetFile ( "Input/BlackDots.png" ) );
+  fileNames.push_back( dataFinder.GetFile ( "Input/BlackDots.png" ) );
+  fileNames.push_back( dataFinder.GetFile ( "Input/BlackDots.png" ) );
+
+  sitk::ImageSeriesReader reader;
+  sitk::Image image = reader.SetFileNames ( fileNames ).Execute();
+  EXPECT_EQ ( "b13c0a17109e3a5058e8f225c9ef2dbcf79ac240", sitk::Hash( image ) );
+  EXPECT_EQ ( 3u, image.GetDimension() );
+  EXPECT_EQ ( 256u, image.GetWidth() );
+  EXPECT_EQ ( 256u, image.GetHeight() );
+  EXPECT_EQ ( 3u, image.GetDepth() );
+
+  fileNames.push_back( dataFinder.GetFile ( "Input/WhiteDots.png" ));
+  image = sitk::ReadImage( fileNames );
+  EXPECT_EQ ( "62fff5903956f108fbafd506e31c1e733e527820", sitk::Hash( image ) );
+  EXPECT_EQ ( 4u, image.GetDepth() );
+
+  fileNames.resize(0);
+  fileNames.push_back( dataFinder.GetFile ( "Input/VM1111Shrink-RGB.png" ) );
+  fileNames.push_back( dataFinder.GetFile ( "Input/VM1111Shrink-RGB.png" ) );
+  fileNames.push_back( dataFinder.GetFile ( "Input/VM1111Shrink-RGB.png" ) );
+  reader.SetFileNames ( fileNames );
+  image = reader.Execute();
+  EXPECT_EQ ( 3u, image.GetDepth() );
+  EXPECT_EQ ( "5bd8cb076d9582875be0b65ce5ecb596b3a982b6", sitk::Hash( image ) );
 
 }
 
