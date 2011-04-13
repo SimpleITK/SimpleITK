@@ -55,6 +55,7 @@ namespace std
   %template(VectorFloat) vector<float>;
   %template(VectorDouble) vector<double>;
   %template(VectorUIntList) vector< vector<unsigned int> >;
+  %template(VectorString) vector< std::string >;
 }
 
 // ignore the ITK Integrate interface when wrapping
@@ -71,6 +72,7 @@ typedef unsigned int uint32_t;
 %include "sitkImage.h"
 %include "sitkImageFilter.h"
 %include "sitkImageFileWriter.h"
+%include "sitkImageSeriesReader.h"
 %include "sitkImageFileReader.h"
 %include "sitkHashImageFilter.h"
 %include "sitkStatisticsImageFilter.h"

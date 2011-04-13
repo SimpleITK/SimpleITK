@@ -41,6 +41,56 @@ class MemberFunctionFactoryBase;
  *  the templated member function pointer
  */
 template< typename TMemberFunctionPointer, typename TKey>
+class MemberFunctionFactoryBase<TMemberFunctionPointer, TKey, 0> :
+    protected NonCopyable
+{
+protected:
+
+  typedef TMemberFunctionPointer                                               MemberFunctionType;
+  typedef typename ::detail::FunctionTraits<MemberFunctionType>::ClassType     ObjectType;
+  typedef typename ::detail::FunctionTraits<MemberFunctionType>::ResultType    MemberFunctionResultType;
+
+
+  MemberFunctionFactoryBase( void ) { }
+
+public:
+
+  /**  the pointer MemberFunctionType redefined ad a tr1::function
+   * object */
+  typedef std::tr1::function< MemberFunctionResultType ( ) > FunctionObjectType;
+
+
+protected:
+
+  typedef TKey KeyType;
+
+  /** A function which binds the objectPointer to the calling object
+   *  argument in the member function pointer, and returns a function
+   *  object.
+   */
+  static FunctionObjectType  BindObject( MemberFunctionType pfunc, ObjectType *objectPointer)
+    {
+
+      // this is really only needed because std::bind1st does not work
+      // with tr1::function... that is with tr1::bind, we need to
+      // specify the other arguments, and can't just bind the first
+      return std::tr1::bind( pfunc,objectPointer );
+    }
+
+  // maps of Keys to pointers to member functions
+  std::map<TKey, FunctionObjectType> m_PFunction3;
+  std::map<TKey, FunctionObjectType> m_PFunction2;
+
+};
+
+
+/** \class MemberFunctionFactoryBase
+ * \brief A base class for the MemberFunctionFactory
+ *
+ *  This class is for specialization needed for different arity for
+ *  the templated member function pointer
+ */
+template< typename TMemberFunctionPointer, typename TKey>
 class MemberFunctionFactoryBase<TMemberFunctionPointer, TKey, 1> :
     protected NonCopyable
 {

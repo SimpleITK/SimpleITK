@@ -2,19 +2,21 @@
 #pragma warning(disable:4996)
 #endif
 
-#include "sitkImageFileReader.h"
+#include "sitkImageSeriesReader.h"
 
-#include <itkImageFileReader.h>
+#include <itkImageIOBase.h>
+#include <itkImageSeriesReader.h>
 
 
 namespace itk {
   namespace simple {
 
-    Image ReadImage ( std::string filename ) {
-      ImageFileReader reader; return reader.SetFileName ( filename ).Execute();
+    Image ReadImage ( const std::vector<std::string> &filenames ) {
+      ImageSeriesReader reader;
+      return reader.SetFileNames ( filenames ).Execute();
     }
 
-    ImageFileReader::ImageFileReader() {
+    ImageSeriesReader::ImageSeriesReader() {
 
       // list of pixel types supported
       typedef NonLabelPixelIDTypeList PixelIDTypeList;
@@ -25,21 +27,26 @@ namespace itk {
       this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
     }
 
-    ImageFileReader& ImageFileReader::SetFileName ( std::string fn ) {
-      this->m_FileName = fn;
+    ImageSeriesReader& ImageSeriesReader::SetFileNames ( const std::vector<std::string> &filenames ) {
+      this->m_FileNames = filenames;
       return *this;
     }
 
-    std::string ImageFileReader::GetFileName() {
-      return this->m_FileName;
+    const std::vector<std::string> &ImageSeriesReader::GetFileNames() const {
+      return this->m_FileNames;
     }
 
-    Image ImageFileReader::Execute () {
+    Image ImageSeriesReader::Execute () {
+      // todo check if filename does not exits for robust error handling
+      assert( !this->m_FileNames.empty() );
 
       PixelIDValueType type = sitkUnknown;
       unsigned int dimension = 0;
 
-      this->GetPixelIDFromImageIO( this->m_FileName, type, dimension );
+      this->GetPixelIDFromImageIO( this->m_FileNames.front(), type, dimension );
+
+      // increment for series
+      ++dimension;
 
       if ( dimension != 2 && dimension != 3 )
         {
@@ -59,20 +66,18 @@ namespace itk {
 
   template <class TImageType>
   Image
-  ImageFileReader::ExecuteInternal( void )
+  ImageSeriesReader::ExecuteInternal( void )
   {
 
-    typedef TImageType                      ImageType;
-    typedef itk::ImageFileReader<ImageType> Reader;
+    typedef TImageType                        ImageType;
+    typedef itk::ImageSeriesReader<ImageType> Reader;
 
-    // if the InstantiatedToken is correctly implemented this should
+    // if the IsInstantiated is correctly implemented this should
     // not occour
     assert( ImageTypeToPixelIDValue<ImageType>::Result != (int)sitkUnknown );
-
     typename Reader::Pointer reader = Reader::New();
-    reader->SetFileName( this->m_FileName.c_str() );
+    reader->SetFileNames( this->m_FileNames );
     reader->Update();
-
     return Image( reader->GetOutput() );
   }
 
