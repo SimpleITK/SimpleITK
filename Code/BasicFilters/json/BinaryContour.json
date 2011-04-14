@@ -27,25 +27,26 @@
   "custom_methods" : [],
   "tests" : [
     {
-      "tags" : "default",
+      "tag" : "default",
       "description" : "Simply run with default settings",
       "inputA" : "Input/WhiteDots.png",
       "md5hash" : "3921141f21fcb41e6d4af197e48ffbb5",
       "settings" : [ ]
     },
     {
-      "tags" : "advanced settings",
+      "tag" : "custom",
       "description" : "Run binary mask on a single label",
       "inputA" : "Input/2th_cthead1.png",
       "md5hash" : "09212e4d204a0ed90a445dc832047b22",
       "settings" : [
        {
          "parameter" : "ForegroundValue",
-         "value" : 100
+         "value" : "100"
        },
        {
          "parameter" : "FullyConnected",
-         "value" : "true"
+         "value" : "true",
+         "python_value" : "True"
        }
       ]
     }
