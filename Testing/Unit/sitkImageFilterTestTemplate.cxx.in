@@ -73,8 +73,17 @@ end)
   itk::simple::Image smallImage( 1,1,1,itk::simple::sitkUInt8 );
   itk::simple::Image largeImage( 10,10,10,itk::simple::sitkUInt8 );
   itk::simple::Image smallShortImage( 1,1,1,itk::simple::sitkUInt16 );
-  ASSERT_THROW ( filter.Execute ( smallImage, largeImage ), itk::simple::GenericException ) << " Image sizes are different";
-  ASSERT_THROW ( filter.Execute ( smallImage, smallShortImage ), itk::simple::GenericException ) << " Image types are different";
+  ASSERT_THROW ( filter.Execute ( smallImage, largeImage ), itk::simple::GenericException ) << " Image sizes are different";]]
+  if template_code_filename and template_code_filename == "DualImageFilter" then
+    OUT = OUT .. [=[
+
+  ASSERT_NO_THROW ( filter.Execute ( smallImage, smallShortImage ) ) << " Image types are different";]=]
+  else
+    OUT = OUT .. [=[
+
+  ASSERT_THROW ( filter.Execute ( smallImage, smallShortImage ), itk::simple::GenericException ) << " Image types are different"; ]=]
+  end
+  OUT = OUT .. [[
   }]]
    end)
 
