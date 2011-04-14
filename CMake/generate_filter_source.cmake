@@ -40,6 +40,9 @@ macro(generate_filter_source)
   # Get the name of the current directory
   get_filename_component(directory_name ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
+  # Clear out the GeneratedSource list in the cache
+  set (SimpleITK${directory_name}GeneratedSource "" CACHE INTERNAL "")
+
   ######
   # Perform template expansion
   ######
