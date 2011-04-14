@@ -1,0 +1,31 @@
+{
+  "name" : "OtsuThreshold",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "doc" : "Docs",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "output_image_type" : "itk::Image<uint8_t, InputImageType::ImageDimension>",
+  "members" : [
+    {
+      "name" : "InsideValue",
+      "type" : "double",
+      "default" : "255.0",
+      "doc" : ""
+    },
+    {
+      "name" : "OutsideValue",
+      "type" : "double",
+      "default" : "0.0",
+      "doc" : ""
+    }
+  ]
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "Default parameter settings",
+      "inputA" : "Input/RA-Short.nrrd",
+      "settings" : [],
+      "md5hash" : "5d24d83ec3369de9006694809786427f"
+    }
+  ]
+}
