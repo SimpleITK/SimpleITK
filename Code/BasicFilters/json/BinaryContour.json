@@ -1,0 +1,55 @@
+{
+  "name" : "BinaryContour",
+  "template_code_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "FullyConnected",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : ""
+    },
+    {
+      "name" : "BackgroundValue",
+      "type" : "double",
+      "default" : "0",
+      "doc" : ""
+    },
+    {
+      "name" : "ForegroundValue",
+      "type" : "double",
+      "default" : "255",
+      "doc" : ""
+    }
+  ],
+  "custom_methods" : [],
+  "tests" : [
+    {
+      "tags" : "default",
+      "description" : "Simply run with default settings",
+      "inputA" : "Input/WhiteDots.png",
+      "md5hash" : "3921141f21fcb41e6d4af197e48ffbb5",
+      "settings" : [ ]
+    },
+    {
+      "tags" : "advanced settings",
+      "description" : "Run binary mask on a single label",
+      "inputA" : "Input/2th_cthead1.png",
+      "md5hash" : "09212e4d204a0ed90a445dc832047b22",
+      "settings" : [
+       {
+         "parameter" : "ForegroundValue",
+         "value" : 100
+       },
+       {
+         "parameter" : "FullyConnected",
+         "value" : "true"
+       }
+      ]
+    }
+     ]
+   }
+  ]
+}
