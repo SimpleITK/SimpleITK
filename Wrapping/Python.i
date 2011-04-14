@@ -15,21 +15,21 @@
         %pythoncode %{
 
         def __add__( self, other ):
-            if isinstante( other, self ):
+            if isinstance( other, Image ):
                return Add( self, other )
             return AddConstantTo( self, other )
         def __sub__( self, other ):
-            if isinstante( other, self ):
+            if isinstance( other, Image ):
                return Subtract( self, other )
             return SubtractConstantFrom( self, other )
         def __mul__( self, other ):
-            if isinstante( other, self ):
+            if isinstance( other, Image ):
                return Multiply( self, other )
             return MultiplyByConstant( self, other )
         def __div__( self, other ):
-            if isinstante( other, self ):
+            if isinstance( other, Image ):
                return Divide( self, other )
-            return DivideByConstant( self, s )
+            return DivideByConstant( self, other )
 
         def __iadd__ ( self, other ):
             self = Add( self, other )
