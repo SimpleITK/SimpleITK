@@ -6,17 +6,26 @@
   "doc" : "",
   "pixel_types" : "NonLabelPixelIDTypeList",
   "filter_type" : "itk::PermuteAxesImageFilter< InputImageType >",
+  "public_declarations" : "static const unsigned int DefaultOrder[3];"
   "members" : [
     {
       "name" : "Order",
       "type" : "std::vector<unsigned int>",
-      "default" : "std::vector<unsigned int>(0, 3)",
-      "doc" : "\todo the default is not reasonable",
+      "default" : "std::vector<unsigned int>(&itk::simple::PermuteAxesImageFilter::DefaultOrder[0], &itk::simple::PermuteAxesImageFilter::DefaultOrder[3])",
+      "doc" : "",
       "dim_vec" : 1,
       "itk_type" : "typename FilterType::PermuteOrderArrayType"
     }
   ],
   "tests" : [
+    {
+     "tag" : "default",
+     "description" : "Test PermiteAxes with default",
+     "inputA" : "Input/RA-Short.nrrd",
+     "md5hash" : "a963bd6a755b853103a2d195e01a50d3",
+     "settings" : [
+      ]
+   },
     {
      "tag" : "identity",
      "description" : "Test PermiteAxes with identity",
@@ -35,19 +44,19 @@
      ]
    },
    {
-     "tag" : "identity",
-     "description" : "Test PermiteAxes with identity",
-     "inputA" : "Data/Input/VM1111Shrink-RGBFloat.nrrd",
-     "md5hash" : "93b885adfe0da089cdf634904fd59f71",
+     "tag" : "more",
+     "description" : "Another test",
+     "inputA" : "Input/RA-Float.nrrd",
+     "md5hash" : "f6c4c8a6165e9f1d761114344eb05068",
      "settings" : [
        {
          "parameter" : "Order",
          "type" : "unsigned int",
          "dim_vec" : 1,
-         "value" : "{1,3,0}",
-         "tcl_value" : "[list 1 3 0]",
-         "python_value" : "[1, 3, 0]",
-         "ruby_value" : "[1, 3, 0]"
+         "value" : "{1,2,0}",
+         "tcl_value" : "[list 1 2 0]",
+         "python_value" : "[1, 2, 0]",
+         "ruby_value" : "[1, 2, 0]"
        }
      ]
    }
