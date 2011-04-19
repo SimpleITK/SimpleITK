@@ -3,7 +3,7 @@
   else
     OUT=[[typedef itk::${name}ImageFilter<InputImageType,]]
          if number_of_inputs == 2 then
-           OUT=OUT .. ' InputImageType,'
+           OUT=OUT .. ' InputImageType2,'
            end
          if additional_template_types then
          OUT=OUT .. [[ $(foreach additional_template_types ${type},) ]]
