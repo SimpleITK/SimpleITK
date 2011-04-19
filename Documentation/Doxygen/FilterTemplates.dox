@@ -337,27 +337,11 @@ additional set of methods for manipulating the seed list. Each region growing
 filter has the SetSeed, AddSeed, and ClearSeeds methods. See
 sitkConnectedThresholdImageFilter.h for details.
 
-
-- <b>Level Set Image Filters:</b> The level set filters have the same interface
-as the standard image filters, but require special treatment when calling the
-ITK versions. Rather than calling SetInput1 and SetInput2, these ITK filters
-call SetInput and SetFeatureImage when two inputs are used. Additionaly, the
-template signature for the ITK level set filters is below. See sitkGeodesicActiveContourLevelSetImageFilter.h for details.
-
-\verbatim
-<InputImageType, InputImageType, OutputImagePixelType>
-\endverbatim
-
-
-- <b>Mathematical Morphology Image Filters:</b> The mathematical morphology
-filters use a KernelType which is always set to FlatKernel. See
-sitkGrayscaleErodeImageFilter.h for details.
-
-
-- <b>Structuring Element Image Filters:</b> The structuring element filters use
-a KernelType and have an internal enum which allows the user to select which
+- <b>Kernel Image Filters:</b> The kernel image filters use
+a KernelType and have an external enum which allows the user to select which
 kernel to use. See sitkErodeObjectMorphologyImageFilter.h for details.
 
-
-
+- <b> Dual Image Filter:</b> The dual image filter template's usage
+should be avoided because it instantiates the combination of two pixel
+type lists.
 */
