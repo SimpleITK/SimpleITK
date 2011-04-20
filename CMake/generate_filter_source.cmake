@@ -21,7 +21,7 @@ macro( expand_template FILENAME input_dir output_dir library_name )
     OUTPUT "${output_h}" "${output_cxx}"
     COMMAND lua ${expand_template_script} code ${input_json_file} ${input_dir}/templates/sitk ${template_include_dir} Template.h.in ${output_h}
     COMMAND lua ${expand_template_script} code ${input_json_file} ${input_dir}/templates/sitk ${template_include_dir} Template.cxx.in ${output_cxx}
-    DEPENDS ${input_json_file} ${template_file_h} ${template_file_cxx}
+    DEPENDS ${input_json_file} ${template_components} ${template_file_h} ${template_file_cxx}
     )
   set ( ${library_name}GeneratedSource ${${library_name}GeneratedSource} "${output_h}" CACHE INTERNAL "" )
   set ( ${library_name}GeneratedSource ${${library_name}GeneratedSource} "${output_cxx}" CACHE INTERNAL "" )
@@ -63,7 +63,6 @@ macro(generate_filter_source)
                       SimpleITK${directory_name} )
 
   endforeach()
-
 
   ######
   # Make target for generated code
