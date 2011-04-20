@@ -5,7 +5,6 @@
   "number_of_inputs" : 1,
   "doc" : "Some global documentation",
   "pixel_types" : "ComplexPixelIDTypeList",
-  "filter_type" : "itk::FFTComplexToComplexImageFilter< typename InputImageType::PixelType::value_type, InputImageType::ImageDimension>",
   "members" : [
     {
       "name" : "Direct",

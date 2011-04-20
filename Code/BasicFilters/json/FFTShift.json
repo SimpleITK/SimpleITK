@@ -4,7 +4,7 @@
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "doc" : "Some global documentation",
-  "pixel_types" : "typelist::Append<ComplexPixelIDTypeList, RealPixelIDTypeList>::Type",
+  "pixel_types" : "NonLabelPixelIDTypeList",
   "members" : [
     {
       "name" : "Inverse",
