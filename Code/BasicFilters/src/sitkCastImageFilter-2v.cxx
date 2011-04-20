@@ -8,7 +8,7 @@ namespace simple
 {
 
 
-void CastImageFilter::RegisterMemberFactory2()
+void CastImageFilter::RegisterMemberFactory2v()
 {
 
   // cast between vector images
