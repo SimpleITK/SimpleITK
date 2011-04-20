@@ -5,7 +5,6 @@
 
 #include "sitkDetail.h"
 #include "sitkPixelIDTokens.h"
-#include "sitkPixelContainer.h"
 #include "sitkNonCopyable.h"
 #include "sitkEnableIf.h"
 
@@ -112,7 +111,6 @@ namespace simple
 
     std::string GetPixelIDTypeAsString( void ) const;
     std::string ToString( void ) const;
-    ::itk::simple::PixelContainer* GetPixelContainer();
 
     /** Method called my certain constructors to convert ITK images
      * into simpleITK ones.

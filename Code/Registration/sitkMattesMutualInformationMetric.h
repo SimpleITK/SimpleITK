@@ -6,7 +6,6 @@
 #include "sitkDetail.h"
 #include "sitkImage.h"
 #include "sitkPixelIDTokens.h"
-#include "sitkPixelContainer.h"
 #include "sitkMetric.h"
 #include "itkMattesMutualInformationImageToImageMetric.h"
 #include "sitkMemberFunctionFactory.h"

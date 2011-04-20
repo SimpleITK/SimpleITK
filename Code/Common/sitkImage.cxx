@@ -8,8 +8,6 @@
 
 #include "itkImageDuplicator.h"
 
-// This is the only file which needs to include this implementation
-#include "sitkPixelContainer.txx"
 
 namespace itk
 {
@@ -58,7 +56,6 @@ namespace itk
 
     virtual std::string ToString() const = 0;
 
-    virtual PixelContainer* GetPixelContainer() = 0;
 
     virtual int GetReferenceCountOfImage() const = 0;
 
@@ -301,30 +298,6 @@ namespace itk
         std::ostringstream out;
         this->m_Image->Print ( out );
         return out.str();
-      }
-
-    PixelContainer* GetPixelContainer()
-      {
-        return this->GetPixelContainer<TImageType>();
-      }
-
-    template <typename UImageType>
-    typename DisableIf<IsLabel<UImageType>::Value, PixelContainer*>::Type
-    GetPixelContainer()
-      {
-        // note: this is the only file which includes
-        // itkPixelContainer.txx, the following statement will
-        // instantiate all needed implementations of the object
-        PixelContainer* container =
-          new PixelContainer( this->m_Image.GetPointer() );
-        return container;
-      }
-
-    template <typename UImageType>
-    typename EnableIf<IsLabel<UImageType>::Value, PixelContainer*>::Type
-    GetPixelContainer()
-      {
-        return NULL;
       }
 
     virtual int GetReferenceCountOfImage() const
@@ -574,13 +547,6 @@ namespace itk
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetDepth();
-    }
-
-    PixelContainer* Image::GetPixelContainer()
-    {
-      assert( m_PimpleImage );
-      this->MakeUniqueForWrite();
-      return this->m_PimpleImage->GetPixelContainer();
     }
 
     // Get Origin

@@ -17,7 +17,6 @@
 #include "sitkStatisticsImageFilter.h"
 #include "sitkExtractImageFilter.h"
 #include "sitkCastImageFilter.h"
-#include "sitkPixelContainer.h"
 
 #include "sitkConditional.h"
 

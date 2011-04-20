@@ -78,7 +78,6 @@ typedef unsigned int uint32_t;
 %include "sitkStatisticsImageFilter.h"
 %include "sitkExtractImageFilter.h"
 %include "sitkCastImageFilter.h"
-%include "sitkPixelContainer.h"
 
 // Registration classes
 %include "sitkTransform.h"
