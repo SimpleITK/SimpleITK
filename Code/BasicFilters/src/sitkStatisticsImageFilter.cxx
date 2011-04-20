@@ -74,6 +74,10 @@ double StatisticsImageFilter::GetVariance( ) const
   {
   return this->QueryValue( "Variance" );
   }
+double StatisticsImageFilter::GetSum( ) const
+  {
+  return this->QueryValue( "Sum" );
+  }
 
 itk::simple::MeasurementMap StatisticsImageFilter::GetMeasurementMap( ) const
   {
@@ -121,6 +125,7 @@ Image StatisticsImageFilter::ExecuteInternal ( const Image& inImage1 )
   m_MeasurementMap["Maximum"] =filter->GetMaximum();
   m_MeasurementMap["Mean"]    =filter->GetMean();
   m_MeasurementMap["Variance"]=filter->GetVariance();
+  m_MeasurementMap["Sum"]=filter->GetSum();
 
   return Image( filter->GetOutput() );
   }
