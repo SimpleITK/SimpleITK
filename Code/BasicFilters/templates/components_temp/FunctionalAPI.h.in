@@ -1,8 +1,0 @@
-    /**
-     * itk::simple::${name}ImageFilter Functional Interface
-     *
-     * This function directly calls the execute method of ${name}ImageFilter
-     * in order to support a fully functional API
-     */
-    Image ${name} ( const Image& $(if number_of_inputs == 2 then OUT=', const Image&' end)$(when members $(foreach members ,
-      ${type} in${name} = ${default})) );
