@@ -116,6 +116,13 @@ private:
   };
 #endif
 
+  void RegisterMemberFactory2();
+  void RegisterMemberFactory2v();
+  void RegisterMemberFactory2l();
+  void RegisterMemberFactory3();
+  void RegisterMemberFactory3v();
+  void RegisterMemberFactory3l();
+
   typedef Image (Self::*MemberFunctionType)( const Image& );
   std::auto_ptr<detail::DualMemberFunctionFactory<MemberFunctionType> > m_DualMemberFactory;
 
