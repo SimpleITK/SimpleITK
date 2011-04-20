@@ -1,4 +1,0 @@
-  // Run the ITK filter and return the output as a SimpleITK image
-  filter->Update();
-
-  return Image( filter->GetOutput() );
