@@ -1,3 +1,48 @@
+###############################################################################
+# This macro returns the list of template components used by a specific
+# template file
+#
+macro( get_dependent_template_components out_var_name json_file input_dir )
+
+  set(${out_var_name})
+
+  ######
+  # Figure out which template file gets used
+  ######
+
+  # Get the line from the json file that indicates the correct template
+  file(STRINGS ${json_file} template_line REGEX ".*template_code_filename.*")
+  string(REGEX MATCH ":.*\".*ImageFilter" first_strip ${template_line})
+  string(REGEX MATCH "[^\"]*ImageFilter" template_name ${first_strip})
+
+  set(template_file_h ${input_dir}/templates/sitk${template_name}Template.h.in)
+  set(template_file_cxx ${input_dir}/templates/sitk${template_name}Template.cxx.in)
+
+  ######
+  # Get dependencies template files
+  ######
+
+  # Get the contents of the file
+  file(READ ${template_file_h} h_contents)
+  file(READ ${template_file_cxx} cxx_contents)
+
+  # For each component, see if it appears in the body of the template file
+  foreach(component ${template_components})
+
+    # Get the filename without the path
+    get_filename_component( filename ${component} NAME )
+
+    if("${h_contents}" MATCHES ".*${filename}.*")
+      set(${out_var_name} ${${out_var_name}} ${component})
+    endif()
+    if("${cxx_contents}" MATCHES ".*${filename}.*")
+      set(${out_var_name} ${${out_var_name}} ${component})
+    endif()
+
+  endforeach(component)
+
+endmacro()
+
 
 ###############################################################################
 # This macro expands the .h and .cxx files for a given input template
@@ -14,6 +59,9 @@ macro( expand_template FILENAME input_dir output_dir library_name )
   set ( template_file_h ${input_dir}/templates/sitkImageFilterTemplate.h.in )
   set ( template_file_cxx ${input_dir}/templates/sitkImageFilterTemplate.cxx.in )
 
+  # Get the list of template component files for this template
+  get_dependent_template_components(template_deps ${input_json_file} ${input_dir})
+
   # Make a global list of ImageFilter template filters
   set ( IMAGE_FILTER_LIST ${IMAGE_FILTER_LIST} ${FILENAME} CACHE INTERNAL "" )
 
@@ -21,7 +69,7 @@ macro( expand_template FILENAME input_dir output_dir library_name )
     OUTPUT "${output_h}" "${output_cxx}"
     COMMAND lua ${expand_template_script} code ${input_json_file} ${input_dir}/templates/sitk ${template_include_dir} Template.h.in ${output_h}
     COMMAND lua ${expand_template_script} code ${input_json_file} ${input_dir}/templates/sitk ${template_include_dir} Template.cxx.in ${output_cxx}
-    DEPENDS ${input_json_file} ${template_components} ${template_file_h} ${template_file_cxx}
+    DEPENDS ${input_json_file} ${template_deps} ${template_file_h} ${template_file_cxx}
     )
   set ( ${library_name}GeneratedSource ${${library_name}GeneratedSource} "${output_h}" CACHE INTERNAL "" )
   set ( ${library_name}GeneratedSource ${${library_name}GeneratedSource} "${output_cxx}" CACHE INTERNAL "" )
