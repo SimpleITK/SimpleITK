@@ -1,9 +1,0 @@
-//
-// Function to run the Execute method of this filter
-//
-Image ${name} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end)$(when members $(foreach members ,
-  ${type} in${name})) )
-{
-  ${name}ImageFilter filter;
-  return filter.Execute ( imageA$(if number_of_inputs == 2 then OUT=', imageB' end)$(when members $(foreach members , in${name})) );
-}

@@ -1,2 +1,0 @@
-      /** Execute the filter on the input image$(if number_of_inputs == 2 then OUT=[[s]]end) */
-      Image Execute ( const Image &$(if number_of_inputs == 2 then OUT=[[, const Image &]] end) );
