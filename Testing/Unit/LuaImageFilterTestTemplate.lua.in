@@ -44,7 +44,14 @@ elseif parameter == "SeedList" then
     for _,v in ipairs(".. value[i] ..") do idx:push_back(v) end\
     filter:AddSeed( idx );"end)]]
 elseif dim_vec and dim_vec == 1 then
-    OUT=[[    idx = SimpleITK.VectorUInt();
+   if type == "bool" then
+     OUT="idx = SimpleITK.VectorBool();"
+   else
+     OUT="idx = SimpleITK.VectorUInt(); "
+   end
+   
+   OUT=OUT.. [[
+
     for _,v in ipairs($(if lua_value then OUT='${lua_value}' else OUT='${value}' end)) do idx:push_back(v) end
     filter:Set${parameter}( idx );]]
 else
