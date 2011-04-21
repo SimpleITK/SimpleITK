@@ -13,33 +13,42 @@ macro( get_dependent_template_components out_var_name json_file input_dir )
   # Get the line from the json file that indicates the correct template
   file(STRINGS ${json_file} template_line REGEX ".*template_code_filename.*")
   string(REGEX MATCH ":.*\".*ImageFilter" first_strip ${template_line})
-  string(REGEX MATCH "[^\"]*ImageFilter" template_name ${first_strip})
 
-  set(template_file_h ${input_dir}/templates/sitk${template_name}Template.h.in)
-  set(template_file_cxx ${input_dir}/templates/sitk${template_name}Template.cxx.in)
+  # Only continue if we found something for first_strip
+  if(first_strip)
 
-  ######
-  # Get dependencies template files
-  ######
+    # Strip down to just the name and then fill out full path
+    string(REGEX MATCH "[^\"]*ImageFilter" template_name ${first_strip})
+    set(template_file_h ${input_dir}/templates/sitk${template_name}Template.h.in)
+    set(template_file_cxx ${input_dir}/templates/sitk${template_name}Template.cxx.in)
 
-  # Get the contents of the file
-  file(READ ${template_file_h} h_contents)
-  file(READ ${template_file_cxx} cxx_contents)
+    ######
+    # Get dependencies template files
+    ######
 
-  # For each component, see if it appears in the body of the template file
-  foreach(component ${template_components})
+    # Get the contents of the file
+    file(READ ${template_file_h} h_contents)
+    file(READ ${template_file_cxx} cxx_contents)
 
-    # Get the filename without the path
-    get_filename_component( filename ${component} NAME )
+    # For each component, see if it appears in the body of the template file
+    foreach(component ${template_components})
 
-    if("${h_contents}" MATCHES ".*${filename}.*")
-      set(${out_var_name} ${${out_var_name}} ${component})
-    endif()
-    if("${cxx_contents}" MATCHES ".*${filename}.*")
-      set(${out_var_name} ${${out_var_name}} ${component})
-    endif()
+      # Get the filename without the path
+      get_filename_component( filename ${component} NAME )
 
-  endforeach(component)
+      if("${h_contents}" MATCHES ".*${filename}.*")
+        set(${out_var_name} ${${out_var_name}} ${component})
+      endif()
+      if("${cxx_contents}" MATCHES ".*${filename}.*")
+        set(${out_var_name} ${${out_var_name}} ${component})
+      endif()
+
+    endforeach(component)
+
+  else()
+    message(WARNING "No template name found for ${json_file}")
+
+  endif()
 
 endmacro()
 
