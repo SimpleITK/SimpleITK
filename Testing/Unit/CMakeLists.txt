@@ -9,7 +9,6 @@ set ( TestSource
   IOTests.cxx
   TypeListsTests.cxx
   BasicFiltersTests.cxx
-  PixelContainerTests.cxx
   sitkExceptionsTests.cxx
   itkHashImageFilterTest.cxx
   CXXTests.cxx
