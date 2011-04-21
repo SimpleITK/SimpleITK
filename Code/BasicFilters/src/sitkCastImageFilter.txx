@@ -96,11 +96,6 @@ Image CastImageFilter::ExecuteInternalToLabel( const Image& inImage )
   return Image( filter->GetOutput() );
 }
 
-Image Cast ( const Image& image, PixelIDValueType pixelID ) {
-  CastImageFilter filter;
-  return filter.SetOutputPixelType ( pixelID ).Execute ( image );
-}
-
 
 } // end namespace simple
 } // end namespace itk
