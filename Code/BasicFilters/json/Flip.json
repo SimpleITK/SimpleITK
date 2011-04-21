@@ -1,0 +1,53 @@
+{
+  "name" : "Flip",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "NonLabelPixelIDTypeList",
+  "filter_type" : "itk::FlipImageFilter< InputImageType >",
+  "members" : [
+    {
+      "dim_vec" : 1,
+      "name" : "FlipAxes",
+      "type" : "std::vector<bool>",
+      "default" : "std::vector<bool>(3, false)",
+      "doc" : "",
+      "itk_type" : "typename FilterType::FlipAxesArrayType"
+    },
+    {
+      "name" : "FlipAboutOrigin",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : ""
+    }
+  ],
+  "tests" : [
+   {
+     "tag" : "default",
+     "description" : "Test Flip with default, should be the same as input image",
+     "inputA" : "Input/RA-Short.nrrd",
+     "md5hash" : "a963bd6a755b853103a2d195e01a50d3",
+     "settings" : [
+      ]
+   },
+   {
+     "tag" : "more",
+     "description" : "Another test",
+     "inputA" : "Input/RA-Float.nrrd",
+     "md5hash" : "4cb0ddf2b3ac01d997f38e581635cb65",
+     "settings" : [
+       {
+         "parameter" : "FlipAxes",
+         "type" : "bool",
+         "dim_vec" : 1,
+         "value" : "{ true, false, true }",
+         "tcl_value" : "[list 1 0 1]",
+         "python_value" : "[1, 0, 1]",
+         "ruby_value" : "[ 1, 0, 1 ]"
+       }
+     ]
+   }
+  ]
+}
+
