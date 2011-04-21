@@ -116,6 +116,20 @@ private:
   };
 #endif
 
+  /**
+  * The methods are used to instantiate and register member functions
+  * with the factory. Each function is split into a separate file to
+  * make the compilation units smaller, and take less time to compile.
+  * @{
+  */
+  void RegisterMemberFactory2();
+  void RegisterMemberFactory2v();
+  void RegisterMemberFactory2l();
+  void RegisterMemberFactory3();
+  void RegisterMemberFactory3v();
+  void RegisterMemberFactory3l();
+  /** @} */
+
   typedef Image (Self::*MemberFunctionType)( const Image& );
   std::auto_ptr<detail::DualMemberFunctionFactory<MemberFunctionType> > m_DualMemberFactory;
 
