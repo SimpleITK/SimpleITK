@@ -94,7 +94,12 @@ configure_file( ${SimpleITK_SOURCE_DIR}/sitkConfigure.h.in
   ${SimpleITK_BINARY_DIR}/sitkConfigure.h )
 
 
-
+# Create cached list of all template components
+file( GLOB template_components
+      ${SimpleITK_SOURCE_DIR}/TemplateComponents/*.h.in
+      ${SimpleITK_SOURCE_DIR}/TemplateComponents/*.cxx.in
+    )
+set ( template_components ${template_components} CACHE INTERNAL "" )
 
 subdirs ( Utilities Code Wrapping Examples )
 

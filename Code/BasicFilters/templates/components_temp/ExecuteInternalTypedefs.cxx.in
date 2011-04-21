@@ -1,8 +1,0 @@
-  // Define the input and output image types
-  typedef TImageType     InputImageType;
-  $(if output_pixel_type then
-  OUT=[[// Define output image type
-  typedef itk::Image< ${output_pixel_type}, InputImageType::ImageDimension > OutputImageType;]]
-  else
-  OUT=[[typedef InputImageType OutputImageType;]]
-  end)
