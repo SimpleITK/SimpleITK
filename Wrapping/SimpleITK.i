@@ -38,6 +38,10 @@
   }
 }
 
+// Global Tweaks to sitk::Image
+%ignore itk::simple::GetImageBase( void );
+%ignore itk::simple::GetImageBase( void ) const;
+
 // Language Specific Sections
 %include CSharp.i
 %include Java.i
