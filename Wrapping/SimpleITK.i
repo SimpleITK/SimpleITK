@@ -46,6 +46,7 @@
 %include "std_vector.i"
 namespace std
 {
+  %template(VectorBool) vector<bool>;
   %template(VectorUInt) vector<unsigned int>;
   %template(VectorInt) vector<int>;
   %template(VectorUShort) vector<unsigned short>;
