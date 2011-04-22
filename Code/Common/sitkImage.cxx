@@ -278,13 +278,35 @@ namespace itk
         return this->m_Image->GetReferenceCount();
       }
 
-    virtual uint8_t  GetPixelAsUInt8( const std::vector<uint32_t> &idx) const { return 0; }
-    virtual int16_t  GetPixelAsInt16( const std::vector<uint32_t> &idx ) const  { return 0; }
-    virtual uint16_t GetPixelAsUInt16( const std::vector<uint32_t> &idx ) const  { return 0; }
-    virtual int32_t  GetPixelAsInt32( const std::vector<uint32_t> &idx ) const  { return 0; }
-    virtual uint32_t GetPixelAsUInt32( const std::vector<uint32_t> &idx ) const { return 0; }
-    virtual float    GetPixelAsFloat( const std::vector<uint32_t> &idx ) const  { return 0; }
-    virtual double   GetPixelAsDouble(  const std::vector<uint32_t> &idx ) const { return 0; }
+
+    virtual uint8_t  GetPixelAsUInt8( const std::vector<uint32_t> &idx) const
+      {
+        return this->InternalGetPixel< BasicPixelID<uint8_t> >( idx );
+      }
+    virtual int16_t  GetPixelAsInt16( const std::vector<uint32_t> &idx ) const
+      {
+        return this->InternalGetPixel< BasicPixelID<int16_t> >( idx );
+      }
+    virtual uint16_t GetPixelAsUInt16( const std::vector<uint32_t> &idx ) const
+      {
+        return this->InternalGetPixel< BasicPixelID<uint16_t> >( idx );
+      }
+    virtual int32_t  GetPixelAsInt32( const std::vector<uint32_t> &idx ) const
+      {
+        return this->InternalGetPixel< BasicPixelID<int32_t> >( idx );
+      }
+    virtual uint32_t GetPixelAsUInt32( const std::vector<uint32_t> &idx ) const
+      {
+        return this->InternalGetPixel< BasicPixelID<uint32_t> >( idx );
+      }
+    virtual float    GetPixelAsFloat( const std::vector<uint32_t> &idx ) const
+      {
+        return this->InternalGetPixel< BasicPixelID<float> >( idx );
+      }
+    virtual double   GetPixelAsDouble(  const std::vector<uint32_t> &idx ) const
+      {
+        return this->InternalGetPixel< BasicPixelID<double> >( idx );
+      }
 
     virtual void SetPixelAsUInt8( const std::vector<uint32_t> &idx, uint8_t v ) {};
     virtual void SetPixelAsInt16( const std::vector<uint32_t> &idx, int16_t v ) {};
@@ -293,6 +315,60 @@ namespace itk
     virtual void SetPixelAsUInt32( const std::vector<uint32_t> &idx, uint32_t v ) {};
     virtual void SetPixelAsFloat( const std::vector<uint32_t> &idx, float v ) {};
     virtual void SetPixelAsDouble( const std::vector<uint32_t> &idx, double v ) {};
+
+
+  protected:
+
+    template < typename TPixelIDType >
+    typename EnableIf<std::tr1::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value
+                      && !IsLabel<TPixelIDType>::Value
+                      && !IsVector<TPixelIDType>::Value,
+                      typename ImageType::PixelType >::Type
+    InternalGetPixel( const std::vector<uint32_t> &idx ) const
+      {
+        return this->m_Image->GetPixel( this->ConvertSTLToIndex( idx ) );
+      }
+
+    template < typename TPixelIDType >
+    typename EnableIf<std::tr1::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value
+                      && IsLabel<TPixelIDType>::Value
+                      && !IsVector<TPixelIDType>::Value,
+                      TPixelIDType >::Type
+    InternalGetPixel( const std::vector<uint32_t> &idx ) const
+      {
+        return this->m_Image->GetPixel( this->ConvertSTLToIndex( idx ) );
+      }
+
+    template < typename TPixelIDType >
+    typename EnableIf<std::tr1::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value
+                      && !IsLabel<TPixelIDType>::Value
+                      && IsVector<TPixelIDType>::Value,
+                      int >::Type
+    InternalGetPixel( const std::vector<uint32_t> &idx ) const
+      {
+        sitkExceptionMacro( "This method is not supported for this vector images currently." )
+      }
+
+    template < typename TPixelIDType >
+    typename DisableIf<std::tr1::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value,
+                       bool >::Type
+    InternalGetPixel( const std::vector<uint32_t> &idx ) const
+      {
+        sitkExceptionMacro( "This method is not supported for this image type." )
+      }
+
+    static IndexType ConvertSTLToIndex( const std::vector<uint32_t> &idx )
+      {
+        // convert idx to itk::Index
+        if ( idx.size() != ImageType::ImageDimension )
+          {
+          sitkExceptionMacro( "Image index size mismatch" );
+          }
+        IndexType itkIDX;
+        for ( unsigned int i = 0; i < ImageType::ImageDimension; ++i )
+            itkIDX[i] = idx[i];
+        return itkIDX;
+      }
 
   private:
     ImagePointer m_Image;
