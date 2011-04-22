@@ -60,9 +60,6 @@ option ( WRAP_R "Wrap R" OFF )
 mark_as_advanced( WRAP_R )
 
 
-
-
-
 #
 # General SWIG configuration
 #
@@ -88,12 +85,18 @@ if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA OR WRAP_CSHARP OR WRAP_TCL OR WRAP_R O
     ${CMAKE_CURRENT_SOURCE_DIR}/Tcl.i
     ${DEPENDANT_GENERATED_HEADERS} )
 
-  # Are we building 64 bits?  If so, we need to tell SWIG...
-  if(${CMAKE_C_SIZEOF_DATA_PTR} GREATER 4)
+
+
+  # check if uint64_t is the same as unsigned long
+  try_compile(SITK_ULONG_SAME_AS_UINT64
+    ${SimpleITK_BINARY_DIR}/CMakeTmp
+    ${SimpleITK_SOURCE_DIR}/CMake/same_uint64_ulong.cxx )
+
+  # when "-DSWIGWORDSIZE64" is defined SWIG used unsigned long for uint64_t types
+  if(${SITK_ULONG_SAME_AS_UINT64} )
     set ( CMAKE_SWIG_GLOBAL_FLAGS "-DSWIGWORDSIZE64" )
-  else()
-    set ( CMAKE_SWIG_GLOBAL_FLAGS "" )
   endif()
+
   set ( SWIG_MODULE_SimpleITK_EXTRA_DEPS ${SWIG_HEADERS} )
 
 endif()
