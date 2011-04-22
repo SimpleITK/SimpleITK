@@ -115,6 +115,22 @@ namespace simple
     void InternalInitialization( TImageType * );
 
 
+    uint8_t  GetPixelAsUInt8( const std::vector<uint32_t> &idx) const;
+    int16_t  GetPixelAsInt16( const std::vector<uint32_t> &idx ) const;
+    uint16_t GetPixelAsUInt16( const std::vector<uint32_t> &idx ) const;
+    int32_t  GetPixelAsInt32( const std::vector<uint32_t> &idx ) const;
+    uint32_t GetPixelAsUInt32( const std::vector<uint32_t> &idx ) const;
+    float    GetPixelAsFloat( const std::vector<uint32_t> &idx ) const;
+    double   GetPixelAsDouble(  const std::vector<uint32_t> &idx ) const;
+
+    void SetPixelAsUInt8( const std::vector<uint32_t> &idx, uint8_t v );
+    void SetPixelAsInt16( const std::vector<uint32_t> &idx, int16_t v );
+    void SetPixelAsUInt16( const std::vector<uint32_t> &idx, uint16_t v );
+    void SetPixelAsInt32( const std::vector<uint32_t> &idx, int32_t v );
+    void SetPixelAsUInt32( const std::vector<uint32_t> &idx, uint32_t v );
+    void SetPixelAsFloat( const std::vector<uint32_t> &idx, float v );
+    void SetPixelAsDouble( const std::vector<uint32_t> &idx, double v );
+
   protected:
 
     /** \brief Methods called by the constructor to allocate and initialize
