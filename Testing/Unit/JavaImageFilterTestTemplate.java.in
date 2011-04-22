@@ -67,7 +67,9 @@ $(if parameter == "SeedList" then
 elseif dim_vec == 1 then
       OUT=[[
       {
-        $(if type == "unsigned int" then
+        $(if type == "bool" then
+          OUT="Boolean"
+        elseif type == "unsigned int" then
           OUT="int"
         elseif type == "unsigned long" then
           OUT="long"
@@ -84,41 +86,44 @@ elseif dim_vec == 1 then
         else
           OUT="${type}"
         end) v[] = $(if java_value then OUT='${java_value}' else OUT='${value}' end);
-        $(if type == "unsigned int" then
-          OUT="VectorUInt idx = new VectorUInt();"
+        $(if type == "bool" then
+          OUT="VectorBool idx = new VectorBool( inputA.getDimension() );"
+        elseif type == "unsigned int" then
+          OUT="VectorUInt idx = new VectorUInt( inputA.getDimension() );"
         elseif type == "int" then
-          OUT="VectorInt idx = new VectorInt();"
+          OUT="VectorInt idx = new VectorInt( inputA.getDimension() );"
         elseif type == "unsigned long" then
-         OUT="VectorULong idx = new VectorULong();"
+         OUT="VectorULong idx = new VectorULong( inputA.getDimension() );"
         elseif type == "long" then
-         OUT="VectorLong idx = new VectorLong();"
+         OUT="VectorLong idx = new VectorLong( inputA.getDimension() );"
         elseif type == "unsigned short" then
-          OUT="VectorUShort idx = new VectorUShort();"
+          OUT="VectorUShort idx = new VectorUShort( inputA.getDimension() );"
         elseif type == "short" then
-          OUT="VectorShort idx = new VectorShort();"
+          OUT="VectorShort idx = new VectorShort( inputA.getDimension() );"
         elseif type == "float" then
-          OUT="VectorFloat idx = new VectorFloat();"
+          OUT="VectorFloat idx = new VectorFloat( inputA.getDimension() );"
         elseif type == "double" then
-          OUT="VectorDouble idx = new VectorDouble();"
+          OUT="VectorDouble idx = new VectorDouble( inputA.getDimension() );"
         elseif type == "uint8_t" then
-          OUT="VectorUShort idx = new VectorUShort();"
+          OUT="VectorUShort idx = new VectorUShort( inputA.getDimension() );"
         elseif type == "uint16_t" then
-          OUT="VectorUShort idx = new VectorUShort();"
+          OUT="VectorUShort idx = new VectorUShort( inputA.getDimension() );"
         elseif type == "uint32_t" then
-          OUT="VectorUInt idx = new VectorUInt();"
+          OUT="VectorUInt idx = new VectorUInt( inputA.getDimension() );"
         elseif type == "uint64_t" then
-          OUT="VectorULong idx = new VectorULong();"
+          OUT="VectorULong idx = new VectorULong( inputA.getDimension() );"
         elseif type == "int8_t" then
-          OUT="VectorShort idx = new VectorShort();"
+          OUT="VectorShort idx = new VectorShort( inputA.getDimension() );"
         elseif type == "int16_t" then
-          OUT="VectorShort idx = new VectorShort();"
+          OUT="VectorShort idx = new VectorShort( inputA.getDimension() );"
         elseif type == "int32_t" then
-          OUT="VectorInt idx = new VectorInt();"
+          OUT="VectorInt idx = new VectorInt( inputA.getDimension() );"
         elseif type == "int64_t" then
-          OUT="VectorLong idx = new VectorLong();"
+          OUT="VectorLong idx = new VectorLong( inputA.getDimension() );"
         end)
-        for (int i = 0; i < inputA.getDimension(); i++) {
-          idx.push_back(v[i]);
+       
+        for (int i = 0; i < inputA.getDimension( ); i++) {
+          idx.set( i, v[i] );
         }
         filter.set${parameter}(idx);
       }]]
