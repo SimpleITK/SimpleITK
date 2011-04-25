@@ -91,6 +91,7 @@ namespace itk
     typedef TImageType                    ImageType;
     typedef typename ImageType::Pointer   ImagePointer;
     typedef typename ImageType::IndexType IndexType;
+    typedef typename ImageType::PixelType PixelType;
 
     PimpleImage ( ImageType* image )
       : m_Image( image )
@@ -308,13 +309,34 @@ namespace itk
         return this->InternalGetPixel< BasicPixelID<double> >( idx );
       }
 
-    virtual void SetPixelAsUInt8( const std::vector<uint32_t> &idx, uint8_t v ) {};
-    virtual void SetPixelAsInt16( const std::vector<uint32_t> &idx, int16_t v ) {};
-    virtual void SetPixelAsUInt16( const std::vector<uint32_t> &idx, uint16_t v ) {};
-    virtual void SetPixelAsInt32( const std::vector<uint32_t> &idx, int32_t v ) {};
-    virtual void SetPixelAsUInt32( const std::vector<uint32_t> &idx, uint32_t v ) {};
-    virtual void SetPixelAsFloat( const std::vector<uint32_t> &idx, float v ) {};
-    virtual void SetPixelAsDouble( const std::vector<uint32_t> &idx, double v ) {};
+    virtual void SetPixelAsUInt8( const std::vector<uint32_t> &idx, uint8_t v )
+      {
+        this->InternalSetPixel( idx, v );
+      }
+    virtual void SetPixelAsInt16( const std::vector<uint32_t> &idx, int16_t v )
+      {
+        this->InternalSetPixel( idx, v );
+      }
+    virtual void SetPixelAsUInt16( const std::vector<uint32_t> &idx, uint16_t v )
+      {
+        this->InternalSetPixel( idx, v );
+      }
+    virtual void SetPixelAsInt32( const std::vector<uint32_t> &idx, int32_t v )
+      {
+        this->InternalSetPixel( idx, v );
+      }
+    virtual void SetPixelAsUInt32( const std::vector<uint32_t> &idx, uint32_t v )
+      {
+        this->InternalSetPixel( idx, v );
+      }
+    virtual void SetPixelAsFloat( const std::vector<uint32_t> &idx, float v )
+      {
+        this->InternalSetPixel( idx, v );
+      }
+    virtual void SetPixelAsDouble( const std::vector<uint32_t> &idx, double v )
+      {
+        this->InternalSetPixel( idx, v );
+      }
 
 
   protected:
@@ -333,7 +355,7 @@ namespace itk
     typename EnableIf<std::tr1::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value
                       && IsLabel<TPixelIDType>::Value
                       && !IsVector<TPixelIDType>::Value,
-                      TPixelIDType >::Type
+                      typename ImageType::PixelType >::Type
     InternalGetPixel( const std::vector<uint32_t> &idx ) const
       {
         return this->m_Image->GetPixel( this->ConvertSTLToIndex( idx ) );
@@ -351,8 +373,25 @@ namespace itk
 
     template < typename TPixelIDType >
     typename DisableIf<std::tr1::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value,
-                       bool >::Type
+                      int >::Type
     InternalGetPixel( const std::vector<uint32_t> &idx ) const
+      {
+        sitkExceptionMacro( "This method is not supported for this image type." )
+      }
+
+
+    template < typename TPixelType >
+    typename EnableIf<std::tr1::is_same<BasicPixelID<TPixelType>,
+                                        typename ImageTypeToPixelID<ImageType>::PixelIDType >::value >::Type
+    InternalSetPixel( const std::vector<uint32_t> &idx, TPixelType v  ) const
+      {
+        return this->m_Image->SetPixel( this->ConvertSTLToIndex( idx ), v );
+      }
+
+    template < typename TPixelType >
+    typename DisableIf<std::tr1::is_same<BasicPixelID<TPixelType>,
+                                         typename ImageTypeToPixelID<ImageType>::PixelIDType>::value >::Type
+    InternalSetPixel( const std::vector<uint32_t> &idx, TPixelType v ) const
       {
         sitkExceptionMacro( "This method is not supported for this image type." )
       }
