@@ -60,9 +60,6 @@ option ( WRAP_R "Wrap R" OFF )
 mark_as_advanced( WRAP_R )
 
 
-
-
-
 #
 # General SWIG configuration
 #
@@ -88,7 +85,18 @@ if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA OR WRAP_CSHARP OR WRAP_TCL OR WRAP_R O
     ${CMAKE_CURRENT_SOURCE_DIR}/Tcl.i
     ${DEPENDANT_GENERATED_HEADERS} )
 
-  set ( CMAKE_SWIG_FLAGS "" )
+
+
+  # check if uint64_t is the same as unsigned long
+  try_compile(SITK_ULONG_SAME_AS_UINT64
+    ${SimpleITK_BINARY_DIR}/CMakeTmp
+    ${SimpleITK_SOURCE_DIR}/CMake/same_uint64_ulong.cxx )
+
+  # when "-DSWIGWORDSIZE64" is defined SWIG used unsigned long for uint64_t types
+  if(${SITK_ULONG_SAME_AS_UINT64} )
+    set ( CMAKE_SWIG_GLOBAL_FLAGS "-DSWIGWORDSIZE64" )
+  endif()
+
   set ( SWIG_MODULE_SimpleITK_EXTRA_DEPS ${SWIG_HEADERS} )
 
 endif()
@@ -110,7 +118,7 @@ if ( WRAP_LUA )
 
 
   # Run swig
-  set(CMAKE_SWIG_FLAGS "")
+  set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS})
   set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
   set(SWIG_MODULE_SimpleITKLua_EXTRA_DEPS SimpleITKCommon SimpleITKBasicFilters SimpleITKIO ${SWIG_HEADERS})
   SWIG_module_initialize ( SimpleITKLua lua )
@@ -135,7 +143,7 @@ if ( WRAP_PYTHON )
   include_directories ( ${PYTHON_INCLUDE_DIR} )
 
   # Run swig
-  set(CMAKE_SWIG_FLAGS "")
+  set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS})
   set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
   set(SWIG_MODULE_SimpleITK_EXTRA_DEPS SimpleITKCommon SimpleITKBasicFilters SimpleITKIO ${SWIG_HEADERS})
   SWIG_add_module ( SimpleITK python SimpleITK.i SimpleITKPYTHON_wrap.cxx )
@@ -152,7 +160,7 @@ if ( WRAP_RUBY )
   include_directories ( ${RUBY_INCLUDE_DIRS} )
 
   # Run swig
-  set(CMAKE_SWIG_FLAGS -autorename -module simpleitk)
+  set(CMAKE_SWIG_FLAGS -autorename -module simpleitk ${CMAKE_SWIG_GLOBAL_FLAGS})
   set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
   set(SWIG_MODULE_simpleitk_EXTRA_DEPS SimpleITKCommon SimpleITKBasicFilters SimpleITKIO ${SWIG_HEADERS})
   SWIG_MODULE_INITIALIZE ( SimpleITK ruby )
@@ -180,8 +188,8 @@ if ( WRAP_JAVA )
 
   # Nicely write the bridge code in org/itk/simple
   set(CMAKE_SWIG_OUTDIR ${JAVA_SOURCE_DIRECTORY})
-  set(CMAKE_SWIG_FLAGS -package "org.itk.simple")
-  set(SWIG_MODULE_SimpleITKJava_EXTRA_DEPS SimpleITKCommon SimpleITKBasicFilters SimpleITKIO ${SWIG_HEADERS})
+  set(CMAKE_SWIG_FLAGS -package "org.itk.simple" ${CMAKE_SWIG_GLOBAL_FLAGS})
+  set(SWIG_MODULE_SimpleITKJava_EXTRA_DEPS SimpleITKCommon SimpleITKBasicFilters SimpleITKIO)
   SWIG_add_module ( SimpleITKJava java SimpleITK.i SimpleITKJAVA_wrap.cxx)
   SWIG_link_libraries(SimpleITKJava ${SimpleITK_LIBRARIES})
   set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKJAVA_wrap.cxx COMPILE_FLAGS "-w")
@@ -218,7 +226,7 @@ if ( WRAP_CSHARP )
   include( ${CSHARP_USE_FILE} )
 
   # Run swig
-  set( CMAKE_SWIG_FLAGS "-dllimport \"SimpleITKCSharpNative\" -namespace \"itk.simple\"" )
+  set( CMAKE_SWIG_FLAGS "-dllimport \"SimpleITKCSharpNative\" -namespace \"itk.simple\"" ${CMAKE_SWIG_GLOBAL_FLAGS})
   set( CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR}/SwigCSharp )
   set(SWIG_MODULE_SimpleITKCSharpNative_EXTRA_DEPS SimpleITKCommon SimpleITKBasicFilters SimpleITKIO ${SWIG_HEADERS})
   swig_add_module( SimpleITKCSharpNative csharp SimpleITK.i )
@@ -247,7 +255,7 @@ if ( WRAP_TCL )
   include_directories ( ${TCL_INCLUDE_PATH} )
 
   # Run swig
-  set(CMAKE_SWIG_FLAGS "-nosafe")
+  set(CMAKE_SWIG_FLAGS "-nosafe" ${CMAKE_SWIG_GLOBAL_FLAGS})
   set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
   set(SWIG_MODULE_SimpleITKTcl_EXTRA_DEPS SimpleITKCommon SimpleITKBasicFilters SimpleITKIO ${SWIG_HEADERS})
   SWIG_add_module ( SimpleITKTcl tcl SimpleITK.i SimpleITKTCL_wrap.cxx )

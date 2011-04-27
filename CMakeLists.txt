@@ -58,8 +58,7 @@ mark_as_advanced ( SITK_EXPRESS_INSTANTIATEDPIXELS )
 # check for C++0x static_assert
 try_compile(SITK_SUPPORTS_STATIC_ASSERT
   ${SimpleITK_BINARY_DIR}/CMakeTmp
-  ${SimpleITK_SOURCE_DIR}/CMake/static_assert.cxx
-  OUTPUT_VARIABLE SITK_HAS_STATIC_ASSERT )
+  ${SimpleITK_SOURCE_DIR}/CMake/static_assert.cxx )
 
 
 include(CheckIncludeFileCXX)
