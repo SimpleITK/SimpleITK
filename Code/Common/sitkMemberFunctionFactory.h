@@ -106,7 +106,7 @@ public:
   }
   /** @} */
 
-  /** \bried Query to determine if an member function has been
+  /** \brief Query to determine if an member function has been
     * registered for pixelID and imageDimension
     */
   bool HasMemberFunction( PixelIDValueType pixelID, unsigned int imageDimension  ) const throw();
