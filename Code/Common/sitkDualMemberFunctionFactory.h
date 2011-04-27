@@ -118,7 +118,7 @@ public:
   }
   /** @} */
 
-  /** \bried Query to determine if an member function has been
+  /** \brief Query to determine if an member function has been
     * registered for pixelID1, pixelID2 and imageDimension
     */
   bool HasMemberFunction( PixelIDValueType pixelID1,

@@ -5,9 +5,9 @@
 
 \section VS2008 Building with Visual Studio 2008
 
-Visual Studio 2008 is the oldest supported Microsoft development environment that SimpleITK supports.  To build, you will need to download and install the TR1 implementation contained in the \link http://www.microsoft.com/downloads/en/details.aspx?FamilyId=D466226B-8DAB-445F-A7B4-448B326C48E7&displaylang=en Visual C++ 2008 Feature Pack Release \endlink.
+Visual Studio 2008 is the oldest supported Microsoft development environment that SimpleITK supports.  To build, you will need to download and install the TR1 implementation contained in the <a href="http://www.microsoft.com/downloads/en/details.aspx?FamilyId=D466226B-8DAB-445F-A7B4-448B326C48E7&displaylang=en">Visual C++ 2008 Feature Pack Release</a>.
 
-Visual Studio also requires an implementation of stdint.h, which can be downloaded \link http://msinttypes.googlecode.com/svn/trunk/stdint.h here \endlink and should be installed in:
+Visual Studio also requires an implementation of stdint.h, which can be downloaded <a href="http://msinttypes.googlecode.com/svn/trunk/stdint.h">here</a> and should be installed in:
 
 \verbatim
 C:\Program Files\Microsoft Visual Studio 9.0\VC\include
@@ -43,8 +43,8 @@ code may not have changed, it's impossible for CMake or your make-file
 tool to determine this.
 
 Fortunately, there is a tool which can cache results of compilation and
-reduce recompilation. Using \link http://ccache.samba.org/ ccache
-\endlink can greatly accelerate the development time when rebuilding
+reduce recompilation. Using <a href="http://ccache.samba.org/">ccache</a>
+can greatly accelerate the development time when rebuilding
 SimpleITK frequently. Usage is quite simple, download and
 install. However, getting CMake to work with the compiler requires a
 couple little scripts, which I called "ccache-cc" and "ccache-c++":
