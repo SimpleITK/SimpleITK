@@ -34,20 +34,20 @@ $(foreach settings
 $(if parameter == "SeedList" and lua_value then
     OUT=[[filter:ClearSeeds();
     $(for i=1,#lua_value do OUT=OUT .. "\
-    idx = SimpleITK.VectorUInt();\
+    idx = SimpleITK.VectorUInt32();\
     for _,v in ipairs(".. lua_value[i] ..") do idx:push_back(v) end\
     filter:AddSeed( idx );"end)]]
 elseif parameter == "SeedList" then
     OUT=[[filter:ClearSeeds();
     $(for i=1,#value do OUT=OUT .. "\
-    idx = SimpleITK.VectorUInt();\
+    idx = SimpleITK.VectorUInt32();\
     for _,v in ipairs(".. value[i] ..") do idx:push_back(v) end\
     filter:AddSeed( idx );"end)]]
 elseif dim_vec and dim_vec == 1 then
    if type == "bool" then
      OUT="idx = SimpleITK.VectorBool();"
    else
-     OUT="idx = SimpleITK.VectorUInt(); "
+     OUT="idx = SimpleITK.VectorUInt32();"
    end
    
    OUT=OUT.. [[
