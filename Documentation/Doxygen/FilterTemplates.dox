@@ -15,6 +15,12 @@ compilation, all of the .json files are parsed using a lua template engine
 which fills in the apropriate template file from the provided fields. This
 ReadMe provides a detailed description of the fields that can be used in the
 json data files and what effect each field has on the resulting image filter.
+When writing your own json file, it should be saved in:
+
+$SimpleITK_SOURCE_DIR/Code/$FILTER_DIR/json
+
+Here $FILTER_DIR is the directory in which the code for the generated filter
+should live.  For simple filters this is the "BasicFilters" directory.
 
 \section FileStructure JSON File Structure
 JSON (JavaScript Object Notation) is a simple text formatting system used to
@@ -22,7 +28,7 @@ specify data values. A full description of the specification can be found at
 http://www.json.org/. For the purposes of SimpleITK, a json file consists of
 a single data object (denoted by {}) which contains several string : value
 pairs (here value may be a list denoted by []) and sub-objects. Here is an
-example from DilateObjectMorphologyImageeFilter:
+example from DilateObjectMorphologyImageFilter:
 
 \verbatim
 {
@@ -103,12 +109,7 @@ must be written for the filter
 additional header files to include in the cxx file for this filter.
 
 - [OPTIONAL] \b output_pixel_type: (\e string) String representing the specific
-pixel type to use for the output image of the filter. This supercedes
-\b real_type_output
-
-- [OPTIONAL] \b real_type_output: (0 or 1) If set to 1, this flag indicates
-that the filter should return an image where the pixel type is the RealType
-of the input image's pixel type
+pixel type to use for the output image of the filter.
 
 - [OPTIONAL] \b filter_type: (\e string) Explicitly sets the
   FilterType used. This method overides
@@ -326,6 +327,31 @@ for this test. Each entry is an object of the form:
   "ruby_value" : "[1,2]"
 }
 \endverbatim
+
+\section Structure Directory Structure
+The code generation system is designed to be agnostic of what subdirectory is
+being parsed. An example of this is BasicFilters.  Here will just refer to
+$FILTER_DIR
+
+There are four important subdirectores in
+$SimpleITK_SOURCE_DIR/Code/$FILTER_DIR:
+
+  - \b include: Manually written header files
+  - \b src: Manually written c++ files
+  - \b json: The input json files used to generate new filters at build time
+  - \b templates: The code templates that can be used to generate filters for
+  this directory
+
+When a filter is generated, it produces a .h and a .cxx file that are placed
+in $SimpleITK_BUILD_DIR/Code/$FILTER_DIR/include and
+$SimpleITK_BUILD_DIR/Code/$FILTER_DIR/src respectively.
+
+It is also worth noting that the template files in the \b templates directory
+are comprised of a combination of c++ code, lua template expansion directives,
+and $(include xxx) statements.  These include statements each pull in a section
+of template code from a file in $SimpleITK_SOURCE_DIR/TemplateComponents. These
+component files represent pieces of templates that are shared by multiple
+unique filter template types.
 
 
 \section Templates Specialized Templates
