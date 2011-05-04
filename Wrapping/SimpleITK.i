@@ -17,12 +17,6 @@
 // Include some C# helper files
 %include "CSharpTypemapHelper.i"
 
-// This section is copied verbatim into the generated source code.
-// Any include files, definitions, etc. need to go here.
-%{
-#include <SimpleITK.h>
-#include <sitkImageOperators.h>
-%}
 
 
 // Customize exception handling
@@ -39,8 +33,8 @@
 }
 
 // Global Tweaks to sitk::Image
-%ignore itk::simple::GetImageBase( void );
-%ignore itk::simple::GetImageBase( void ) const;
+%ignore itk::simple::Image::GetImageBase( void );
+%ignore itk::simple::Image::GetImageBase( void ) const;
 
 // Language Specific Sections
 %include CSharp.i
@@ -66,6 +60,14 @@ namespace std
   %template(VectorUIntList) vector< vector<unsigned int> >;
   %template(VectorString) vector< std::string >;
 }
+
+
+// This section is copied verbatim into the generated source code.
+// Any include files, definitions, etc. need to go here.
+%{
+#include <SimpleITK.h>
+#include <sitkImageOperators.h>
+%}
 
 // Any new classes need to have an "%include" statement to be wrapped.
 %include "sitkPixelIDValues.h"
