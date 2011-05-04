@@ -399,7 +399,7 @@ namespace itk
     static IndexType ConvertSTLToIndex( const std::vector<uint32_t> &idx )
       {
         // convert idx to itk::Index
-        if ( idx.size() != ImageType::ImageDimension )
+        if ( idx.size() < ImageType::ImageDimension )
           {
           sitkExceptionMacro( "Image index size mismatch" );
           }
@@ -736,42 +736,49 @@ namespace itk
     void Image::SetPixelAsUInt8( const std::vector<uint32_t> &idx, uint8_t v )
     {
       assert( m_PimpleImage );
+      this->MakeUniqueForWrite();
       this->m_PimpleImage->SetPixelAsUInt8( idx, v );
     }
 
     void Image::SetPixelAsInt16( const std::vector<uint32_t> &idx, int16_t v )
     {
       assert( m_PimpleImage );
+      this->MakeUniqueForWrite();
       this->m_PimpleImage->SetPixelAsInt16( idx, v );
     }
 
     void Image::SetPixelAsUInt16( const std::vector<uint32_t> &idx, uint16_t v )
     {
       assert( m_PimpleImage );
+      this->MakeUniqueForWrite();
       this->m_PimpleImage->SetPixelAsUInt16( idx, v );
     }
 
     void Image::SetPixelAsInt32( const std::vector<uint32_t> &idx, int32_t v )
     {
       assert( m_PimpleImage );
+      this->MakeUniqueForWrite();
       this->m_PimpleImage->SetPixelAsInt32( idx, v );
     }
 
     void Image::SetPixelAsUInt32( const std::vector<uint32_t> &idx, uint32_t v )
     {
       assert( m_PimpleImage );
+      this->MakeUniqueForWrite();
       this->m_PimpleImage->SetPixelAsUInt32( idx, v );
     }
 
     void Image::SetPixelAsFloat( const std::vector<uint32_t> &idx, float v )
     {
       assert( m_PimpleImage );
+      this->MakeUniqueForWrite();
       this->m_PimpleImage->SetPixelAsFloat( idx, v );
     }
 
     void Image::SetPixelAsDouble( const std::vector<uint32_t> &idx, double v )
     {
       assert( m_PimpleImage );
+      this->MakeUniqueForWrite();
       this->m_PimpleImage->SetPixelAsDouble( idx, v );
     }
 
