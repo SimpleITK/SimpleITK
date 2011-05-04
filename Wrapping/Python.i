@@ -11,6 +11,18 @@
 %rename( __GetPixelAsDouble__ ) itk::simple::Image::GetPixelAsDouble;
 
 
+%rename( __SetPixelAsUInt8__ ) itk::simple::Image::SetPixelAsUInt8;
+%rename( __SetPixelAsInt16__ ) itk::simple::Image::SetPixelAsInt16;
+%rename( __SetPixelAsUInt16__ ) itk::simple::Image::SetPixelAsUInt16;
+%rename( __SetPixelAsInt32__ ) itk::simple::Image::SetPixelAsInt32;
+%rename( __SetPixelAsUInt32__ ) itk::simple::Image::SetPixelAsUInt32;
+%rename( __SetPixelAsFloat__ ) itk::simple::Image::SetPixelAsFloat;
+%rename( __SetPixelAsDouble__ ) itk::simple::Image::SetPixelAsDouble;
+
+%pythoncode %{
+   import operator
+%}
+
 %extend itk::simple::Image {
 
 
@@ -75,6 +87,8 @@
                    break
             return self[ old_index ]
 
+        def __len__( self ):
+            return reduce( operator.mul, self.GetSize(), 1 )
 
         # set/get pixel methods
 
@@ -148,7 +162,7 @@
 
 
 
-};
+}
 
 
 #endif
