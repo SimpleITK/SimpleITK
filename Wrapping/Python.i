@@ -22,7 +22,7 @@
 
         %pythoncode %{
 
-# mathematical operators
+        # mathematical operators
 
         def __add__( self, other ):
             if isinstance( other, Image ):
@@ -45,14 +45,38 @@
             self = Add( self, other )
             return self;
 
-# logic operators
+        # logic operators
 
         def __and__( self, other ): return And( self, other )
         def __or__( self, other ): return Or( self, other )
         def __xor__( self, other ): return Xor( self, other )
         def __invert__( self ): return Not( self )
 
-# set/get pixel methods
+        # iterator and container methods
+
+        def __iter__( self ):
+            self.iter_index = [0] * self.GetDimension()
+            return self
+
+        def next( self ):
+            old_index = self.iter_index
+
+            dim = self.GetDimension()
+
+            if self.iter_index[dim-1] >= self.GetSize()[dim-1]:
+               raise StopIteration
+
+            # increment the idx
+            for d in range( 0, dim ):
+                self.iter_index[d] += 1
+                if self.iter_index[d] >= self.GetSize()[d] and d != dim  - 1:
+                   self.iter_index[d] = 0
+                else:
+                   break
+            return self[ old_index ]
+
+
+        # set/get pixel methods
 
         def __getitem__( self, idx ):
             """Returns the value of pixel at index idx.
