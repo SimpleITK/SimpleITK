@@ -1,0 +1,66 @@
+{
+  "name" : "N4MRIBiasFieldCorrection",
+  "template_code_filename" : "DualImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 2,
+  "doc" : "Some global documentation",
+  "pixel_types" : "RealPixelIDTypeList",
+  "pixel_types2" : "IntegerPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "NumberOfHistogramBins",
+      "type" : "uint32_t",
+      "default" : "200",
+      "doc" : ""
+    },
+    {
+      "name" : "WienerFilterNoise",
+      "type" : "double",
+      "default" : "0.01",
+      "doc" : ""
+    },
+    {
+      "name" : "BiasFieldFullWidthAtHalfMaximum",
+      "type" : "double",
+      "default" : "0.15",
+      "doc" : ""
+    },
+    { 
+      "name" : "MaximumNumberOfIterations",
+      "type" : "uint32_t",
+      "default" : "50",
+      "custom_itk_cast" : "typename FilterType::VariableSizeArrayType maximumNumberOfIterations(this->m_NumberOfFittingLevels);\
+maximumNumberOfIterations.Fill( this->m_MaximumNumberOfIterations );\
+filter->SetMaximumNumberOfIterations( maximumNumberOfIterations );"
+      "doc" : ""
+    },
+    {
+      "name" : "ConvergenceThreshold",
+      "type" : "double",
+      "default" : "0.001",
+      "doc" : ""
+    },
+    {
+      "name" : "SplineOrder",
+      "type" : "uint32_t",
+      "default" : "3",
+      "doc" : ""
+    },
+    {
+      "name" : "NumberOfFittingLevels",
+      "type" : "uint32_t",
+      "default" : "4",
+      "doc" : ""
+    },
+    {
+      "name" : "NumberOfControlPoints",
+      "type" : "std::vector<uint32_t>",
+      "default" : "std::vector<uint32_t>(3, 4)",
+      "doc" : "",
+      "dim_vec" : 1,
+      "itk_type" : "typename FilterType::ArrayType"
+    }
+  ],
+  "tests" : [
+  ]
+}
