@@ -133,3 +133,11 @@ configure_file(${SimpleITK_SOURCE_DIR}/UseSimpleITK.cmake.in
 # Create the SimpleITKConfig.cmake file containing the SimpleITK configuration.
 include(${SimpleITK_SOURCE_DIR}/sitkGenerateSimpleITKConfig.cmake)
 
+
+#-----------------------------------------------------------------------------
+# Options for testing
+option ( BUILD_DOCUMENTS "Build testing" OFF )
+
+if ( BUILD_DOCUMENTS )
+  subdirs ( Documentation )
+endif()
