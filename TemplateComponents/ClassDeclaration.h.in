@@ -1,3 +1,7 @@
+    /** \class ${name}ImageFilter
+     * \brief ${briefdescription}
+     ${detaileddescription}
+     */
     class ${name}ImageFilter : public $(if number_of_inputs == 2 then OUT=[[DualImageFilter]] else OUT=[[ImageFilter]] end) {
     public:
       typedef ${name}ImageFilter Self;
