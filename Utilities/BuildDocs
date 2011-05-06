@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# Sanity
+if [ ! -e Code/BasicFilters/json/ ]; then
+    echo "$0 must be run for the root of SimpleITK's checkout"
+    exit 1
+fi
+
+if [ ! -e $1/Utilities/Doxygen/xml/itkImage_8h.xml ]; then
+    echo "$1 must be the root of an ITK build with XML documentation generated"
+    exit 1
+fi
+
+# Find all the JSON, re-write it
+for f in Code/BasicFilters/json/*.json; do
+    Utilities/GenerateDocumentation.groovy $f $1
+done
