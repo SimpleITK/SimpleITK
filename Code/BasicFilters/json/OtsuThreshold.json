@@ -17,6 +17,12 @@
       "type" : "double",
       "default" : "0.0",
       "doc" : ""
+    },
+    {
+      "name" : "NumberOfHistogramBins",
+      "type" : "uint32_t",
+      "default" : "128",
+      "doc" : ""
     }
   ]
   "tests" : [
