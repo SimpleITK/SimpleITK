@@ -22,7 +22,7 @@
       "default": "0",
       "doc": "",
       "briefdescriptionSet": "",
-      "detaileddescriptionSet": "This method does not effect the output of this filter.\n\\see  RecursiveGaussianImageFilter::SetNormalizeAcrossScale\n\n",
+      "detaileddescriptionSet": "This method does not effect the output of this filter.\n\\see RecursiveGaussianImageFilter::SetNormalizeAcrossScale\n\n",
       "briefdescriptionGet": "",
       "detaileddescriptionGet": ""
     }

@@ -53,5 +53,5 @@
     }
   ],
   "briefdescription": "Multiply input pixels by a constant.\n",
-  "detaileddescription": "This filter is templated over the input image type and the output image type.\n\\author Tom Vercauteren, INRIA & Mauna Kea Technologies\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/510\n\\see  UnaryFunctorImageFilter\n\\li {ImageProcessing/MultiplyByConstantImageFilter,Multiply every pixel in an image by a constant}\n\n\n"
+  "detaileddescription": "This filter is templated over the input image type and the output image type.\n\\author Tom Vercauteren, INRIA & Mauna Kea Technologies\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/510\n\\see UnaryFunctorImageFilter\n\\li {ImageProcessing/MultiplyByConstantImageFilter,Multiply every pixel in an image by a constant}\n\n\n"
 }
