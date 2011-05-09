@@ -22,7 +22,7 @@
       "default": "0",
       "doc": "",
       "briefdescriptionSet": "",
-      "detaileddescriptionSet": "Define which normalization factor will be used for the Gaussian\\see  RecursiveGaussianImageFilter::SetNormalizeAcrossScale\n\n",
+      "detaileddescriptionSet": "Define which normalization factor will be used for the Gaussian\\see RecursiveGaussianImageFilter::SetNormalizeAcrossScale\n\n",
       "briefdescriptionGet": "",
       "detaileddescriptionGet": ""
     }
