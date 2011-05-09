@@ -2,14 +2,17 @@
 
 // "Grab" the json-lib module from Sourceforge
 @Grab(group='net.sf.json-lib', module='json-lib', version='2.4', classifier='jdk15')
+// "Grab" log4j
+@Grab('log4j:log4j:1.2.16')
 import net.sf.json.groovy.*
 GJson.enhanceClasses()
+
+import org.apache.log4j.*
 
 if ( this.args.size() != 2 ) {
   println ( "usage: GenerateDocumentation <SimpleITKClass.json> <Path/To/ITK-build/With/Doxygen>" )
   System.exit ( 1 )
 }
-
 // Read the JSON definition
 def JSONFile = this.args[0]
 def definition
@@ -50,28 +53,38 @@ def formatDescription ( parent ) {
     // Go depth first
     // println ( "Found: " + it.getClass() )
     switch ( it.getClass() ) {
-      case groovy.util.Node:
-        result.append ( prefix.get(it.name(), '') )
+    case groovy.util.Node:
+      result.append ( prefix.get(it.name(), '') )
       // println ( "\trecurse: " + it.name() )
-      if ( it.name() == "simplesect" ) { result.append ( "\\" + it.@kind + " " ) }
+      if ( it.name() == "simplesect" ) {
+        switch ( it.@kind ) {
+        case "see":
+          // The "see" simplesect should have each element formated with a \see, and then returned
+          it.each { child ->
+            result.append ( "\\see" + formatDescription ( child ) + "\n" )
+          }
+          return result.toString()
+          break
+        default:
+          result.append ( "\\" + it.@kind + " " )
+        }
+      }
       if ( it.name() == "ref" ) { result.append ( " " ) }
       sub = formatDescription ( it.value() )
       if ( it.name() == "formula" ) {
-        if ( sub.startsWith ( "\\\\\\[" ) ) {
-          sub = sub.replaceFirst ( "\\\\\\[", " \\\\f[" ).replaceAll ( "\\]", "\\f] " )
-        } else {
-          sub = " \\f" + sub + "\\f "
-        }
+        // println ( "Found formula: " + sub )
+        sub = sub.replaceFirst ( "\\\\\\[", " \\\\f[" ).replaceAll ( "\\]", "\\f] " )
+        sub = sub.replaceAll ( "\\\$", "\\\\\\f\\\$" ) + " "
+        // println ( "\tSubstituted: " + sub )
       }
       result.append ( sub )
       result.append ( postfix.get(it.name(), '') )
       break
-      default:
-        result.append ( it )
-        // println ( "\treturn: " + it )
-        break
+    default:
+      result.append ( it )
+      // println ( "\treturn: " + it )
+      break
     }
-
   }
   return result.toString()
 }
@@ -83,13 +96,10 @@ def doc = new XmlParser().parse ( XMLFile )
 Map['Class'] = [ name : doc.compounddef.compoundname.text(), briefdescription : doc.compounddef.briefdescription, detaileddescription : doc.compounddef.detaileddescription ]
 
 println ( "Class: " + doc.compounddef.compoundname.text() )
-// println ( "Briefdescription: " + formatDescription ( doc.compounddef.briefdescription ) )
-// println ( "Detailed: " + formatDescription ( doc.compounddef.detaileddescription ) )
 
 doc.compounddef.sectiondef.memberdef.each { it ->
   if ( it.@kind == "function" ) {
     Map[it.name.text()] = [ name : it.name.text(), briefdescription : it.briefdescription, detaileddescription : it.detaileddescription, definition : it ]
-    // println ( it.name.text() + ":\n" + formatDescription ( it.briefdescription ) + "\n" + formatDescription ( it.detaileddescription ) )
   }
 }
 
