@@ -46,16 +46,13 @@ if ( !XMLFile ) {
 
 def formatDescription ( parent ) {
   StringBuilder result = new StringBuilder()
-  def prefix = [ "listitem" : "\\li ", "itemizedlist" : "\n"]
+  def prefix = [ "listitem" : "\\li ", "itemizedlist" : "\n", "ref" : " "]
   def postfix = [ "para" : "\n", "title" : "\n" ]
 
+  // Go depth first
   parent.each {
-    // Go depth first
-    // println ( "Found: " + it.getClass() )
     switch ( it.getClass() ) {
     case groovy.util.Node:
-      result.append ( prefix.get(it.name(), '') )
-      // println ( "\trecurse: " + it.name() )
       if ( it.name() == "simplesect" ) {
         switch ( it.@kind ) {
         case "see":
@@ -69,20 +66,21 @@ def formatDescription ( parent ) {
           result.append ( "\\" + it.@kind + " " )
         }
       }
-      if ( it.name() == "ref" ) { result.append ( " " ) }
       sub = formatDescription ( it.value() )
+      // Need to properly format formula tags...
       if ( it.name() == "formula" ) {
-        // println ( "Found formula: " + sub )
         sub = sub.replaceFirst ( "\\\\\\[", " \\\\f[" ).replaceAll ( "\\]", "\\f] " )
         sub = sub.replaceAll ( "\\\$", "\\\\\\f\\\$" ) + " "
-        // println ( "\tSubstituted: " + sub )
       }
-      result.append ( sub )
-      result.append ( postfix.get(it.name(), '') )
+      // Don't write anything out, if there is no content
+      if ( sub.length() > 0 ) {
+        result.append ( prefix.get(it.name(), '') )
+        result.append ( sub )
+        result.append ( postfix.get(it.name(), '') )
+      }
       break
     default:
       result.append ( it )
-      // println ( "\treturn: " + it )
       break
     }
   }

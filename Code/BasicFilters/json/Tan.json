@@ -15,5 +15,5 @@
     "tolerance": 0.01
   }],
   "briefdescription": "Computes the vcl_tan(x) pixel-wise.\n",
-  "detaileddescription": "\n\\li \n\n"
+  "detaileddescription": ""
 }

@@ -15,5 +15,5 @@
     "tolerance": 0.01
   }],
   "briefdescription": "Computes the function vcl_exp(-K.x) pixel-wise.\n",
-  "detaileddescription": "Every output pixel is equal to vcl_exp(-K.x ). where x is the intensity of the homologous input pixel, and K is a user-provided constant.\n\n\\li \n\n"
+  "detaileddescription": "Every output pixel is equal to vcl_exp(-K.x ). where x is the intensity of the homologous input pixel, and K is a user-provided constant.\n"
 }
