@@ -49,5 +49,5 @@
     }
   ],
   "briefdescription": "Remove holes not connected to the boundary of the image.\n",
-  "detaileddescription": " BinaryFillholeImageFilterfills holes in a binary image.\nGeodesic morphology and the Fillhole algorithm is described in Chapter 6 of Pierre Soille's book \"Morphological ImageAnalysis: Principles and Applications\", Second Edition, Springer, 2003.\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\\see GrayscaleFillholeImageFilter\n\n\\li \n\n"
+  "detaileddescription": " BinaryFillholeImageFilterfills holes in a binary image.\nGeodesic morphology and the Fillhole algorithm is described in Chapter 6 of Pierre Soille's book \"Morphological ImageAnalysis: Principles and Applications\", Second Edition, Springer, 2003.\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\\see GrayscaleFillholeImageFilter\n\n"
 }
