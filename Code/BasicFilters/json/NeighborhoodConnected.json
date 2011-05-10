@@ -119,5 +119,5 @@
     ]
   }],
   "briefdescription": "Label pixels that are connected to a seed and lie within a neighborhood.\n",
-  "detaileddescription": " NeighborhoodConnectedImageFilterlabels pixels with ReplaceValue that are connected to an initial Seed AND whose neighbors all lie within a Lower and Upper threshold range.\n\n\\li \n\n"
+  "detaileddescription": " NeighborhoodConnectedImageFilterlabels pixels with ReplaceValue that are connected to an initial Seed AND whose neighbors all lie within a Lower and Upper threshold range.\n"
 }
