@@ -451,3 +451,107 @@ TEST_F(Image,Operators)
 
 
 }
+
+
+
+TEST_F(Image,SetPixel)
+{
+
+  // this test is designed to run all SetPixel methods
+
+}
+
+
+TEST_F(Image,GetPixel)
+{
+
+  // this test is designe to run all GetPixel methods
+
+  sitk::Image img = sitk::Image( 10, 10, sitk::sitkUInt8 );
+  EXPECT_EQ( img.GetPixelAsUInt8( std::vector<uint32_t>( 2, 0 ) ), 0 ) << " Get 2D with 2D ";
+  EXPECT_EQ( img.GetPixelAsUInt8( std::vector<uint32_t>( 3, 0 ) ), 0 ) << " Get 2D with 3D ";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt8( std::vector<uint32_t>( 1, 0 ) ) ) << " Get with idx too small";
+  ASSERT_ANY_THROW( img.GetPixelAsInt16( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt16( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsInt32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsFloat( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsDouble( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+
+  img = sitk::Image( 10, 10, 10, sitk::sitkUInt8 );
+  EXPECT_EQ( img.GetPixelAsUInt8( std::vector<uint32_t>( 3, 0 ) ), 0 ) << " Get 3D with 3D ";
+  EXPECT_EQ( img.GetPixelAsUInt8( std::vector<uint32_t>( 4, 0 ) ), 0 ) << " Get 3D with 4D ";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt8( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with idx too small";
+  ASSERT_ANY_THROW( img.GetPixelAsInt16( std::vector<uint32_t>( 3, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt16( std::vector<uint32_t>( 3, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsInt32( std::vector<uint32_t>( 3, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt32( std::vector<uint32_t>( 3, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsFloat( std::vector<uint32_t>( 3, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsDouble( std::vector<uint32_t>( 3, 0 ) ) ) << " Get with wrong type";
+
+
+  img = sitk::Image( 10, 10, sitk::sitkInt16 );
+  EXPECT_EQ( img.GetPixelAsInt16( std::vector<uint32_t>( 2, 0 ) ), 0 ) << " Get 2D with 2D ";
+  EXPECT_EQ( img.GetPixelAsInt16( std::vector<uint32_t>( 3, 0 ) ), 0 ) << " Get 2D with 3D ";
+  ASSERT_ANY_THROW( img.GetPixelAsInt16( std::vector<uint32_t>( 1, 0 ) ) ) << " Get with idx too small";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt8( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt16( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsInt32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsFloat( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsDouble( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+
+  img = sitk::Image( 10, 10, sitk::sitkUInt16 );
+  EXPECT_EQ( img.GetPixelAsUInt16( std::vector<uint32_t>( 2, 0 ) ), 0 ) << " Get 2D with 2D ";
+  EXPECT_EQ( img.GetPixelAsUInt16( std::vector<uint32_t>( 3, 0 ) ), 0 ) << " Get 2D with 3D ";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt16( std::vector<uint32_t>( 1, 0 ) ) ) << " Get with idx too small";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt8( std::vector<uint32_t>( 1, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsInt16( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsInt32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsFloat( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsDouble( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+
+  img = sitk::Image( 10, 10, sitk::sitkInt32 );
+  EXPECT_EQ( img.GetPixelAsInt32( std::vector<uint32_t>( 2, 0 ) ), 0 ) << " Get 2D with 2D ";
+  EXPECT_EQ( img.GetPixelAsInt32( std::vector<uint32_t>( 3, 0 ) ), 0 ) << " Get 2D with 3D ";
+  ASSERT_ANY_THROW( img.GetPixelAsInt32( std::vector<uint32_t>( 1, 0 ) ) ) << " Get with idx too small";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt8( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsInt16( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt16( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsFloat( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsDouble( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+
+  img = sitk::Image( 10, 10, sitk::sitkUInt32 );
+  EXPECT_EQ( img.GetPixelAsUInt32( std::vector<uint32_t>( 2, 0 ) ), 0 ) << " Get 2D with 2D ";
+  EXPECT_EQ( img.GetPixelAsUInt32( std::vector<uint32_t>( 3, 0 ) ), 0 ) << " Get 2D with 3D ";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt32( std::vector<uint32_t>( 1, 0 ) ) ) << " Get with idx too small";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt8( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsInt16( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt16( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsInt32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsFloat( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsDouble( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+
+  img = sitk::Image( 10, 10, sitk::sitkFloat32 );
+  EXPECT_EQ( img.GetPixelAsFloat( std::vector<uint32_t>( 2, 0 ) ), 0 ) << " Get 2D with 2D ";
+  EXPECT_EQ( img.GetPixelAsFloat( std::vector<uint32_t>( 3, 0 ) ), 0 ) << " Get 2D with 3D ";
+  ASSERT_ANY_THROW( img.GetPixelAsFloat( std::vector<uint32_t>( 1, 0 ) ) ) << " Get with idx too small";
+  ASSERT_ANY_THROW( img.GetPixelAsInt16( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt16( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsInt32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsDouble( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+
+  img = sitk::Image( 10, 10, sitk::sitkFloat64 );
+  EXPECT_EQ( img.GetPixelAsDouble( std::vector<uint32_t>( 2, 0 ) ), 0 ) << " Get 2D with 2D ";
+  EXPECT_EQ( img.GetPixelAsDouble( std::vector<uint32_t>( 3, 0 ) ), 0 ) << " Get 2D with 3D ";
+  ASSERT_ANY_THROW( img.GetPixelAsDouble( std::vector<uint32_t>( 1, 0 ) ) ) << " Get with idx too small";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt8( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsInt16( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt16( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsInt32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsFloat( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+
+}
