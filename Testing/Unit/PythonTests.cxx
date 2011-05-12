@@ -28,4 +28,22 @@ TEST_F(Python,SimpleGaussian) {
 
 }
 
+TEST_F(Python,ImageTest) {
+  // Run the simple gaussian command line program
+  std::string Script = dataFinder.GetSourceDirectory() + "/Testing/Unit/ImageTest.py";
+  std::vector<std::string> CommandLine;
+
+  CommandLine.push_back ( dataFinder.GetPythonExecutable() );
+  CommandLine.push_back ( Script );
+
+  // Set our python path
+  std::string path = dataFinder.GetBuildDirectory() + "/Wrapping"
+    + GetPathSeparator() + dataFinder.GetExecutableDirectory();
+  SetEnvironment ( "PYTHONPATH", path );
+
+  // Run it!
+  EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "Failing return value.";
+
+}
+
 #endif
