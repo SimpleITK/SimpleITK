@@ -1,19 +1,10 @@
 #include <SimpleITKTestHarness.h>
 
-#include <sitkImageFileReader.h>
-#include <sitkImageFileWriter.h>
-#include <sitkHashImageFilter.h>
-
-#include "sitkAddImageFilter.h"
-#include "sitkSubtractImageFilter.h"
-#include "sitkMultiplyImageFilter.h"
-
-#include "sitkImageOperators.h"
+#include <SimpleITK.h>
 
 #include <itkIntTypes.h>
-
-#include "itkImage.h"
-#include "itkVectorImage.h"
+#include <itkImage.h>
+#include <itkVectorImage.h>
 
 #include <stdint.h>
 using  itk::simple::InstantiatedPixelIDTypeList;

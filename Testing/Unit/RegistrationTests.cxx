@@ -1,10 +1,6 @@
 #include <SimpleITKTestHarness.h>
-#include <SimpleITK.h>
-#include "itkImage.h"
-#include "itkVectorImage.h"
 
-#include <stdint.h>
-#include <memory>
+#include <SimpleITK.h>
 
 TEST(Registration,CreateMattes) {
   itk::simple::Image image2d( 32, 32, itk::simple::sitkUInt8 );

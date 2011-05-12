@@ -1,9 +1,6 @@
 #include "SimpleITKTestHarness.h"
 
-#include <sitkImage.h>
-#include <sitkImageFileReader.h>
-#include <sitkImageFileWriter.h>
-#include <sitkHashImageFilter.h>
+#include <SimpleITK.h>
 
 class CXX : public ExternalProgramRunner {
 };
@@ -13,7 +10,7 @@ TEST_F(CXX,SimpleGaussian) {
   // Run the simple gaussian command line program
   std::string output = dataFinder.GetOutputFile ( "CXX.SimpleGaussian.nrrd" );
   std::vector<std::string> CommandLine;
-  
+
   std::string exe = dataFinder.FindExecutable ( "SimpleGaussian" );
   ASSERT_TRUE ( dataFinder.FileExists ( exe ) ) << "Couldn't find " << exe;
 

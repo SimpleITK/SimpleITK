@@ -1,9 +1,6 @@
 #include "SimpleITKTestHarness.h"
 
-#include <sitkImage.h>
-#include <sitkImageFileReader.h>
-#include <sitkImageFileWriter.h>
-#include <sitkHashImageFilter.h>
+#include <SimpleITK.h>
 
 #if defined(WRAP_PYTHON)
 
@@ -12,7 +9,7 @@ TEST_F(Python,SimpleGaussian) {
   std::string Script = dataFinder.GetSourceDirectory() + "/Examples/SimpleGaussian.py";
   std::string output = dataFinder.GetOutputFile ( "Python.SimpleGaussian.nrrd" );
   std::vector<std::string> CommandLine;
-  
+
   CommandLine.push_back ( dataFinder.GetPythonExecutable() );
   CommandLine.push_back ( Script );
   CommandLine.push_back ( dataFinder.GetFile ( "Input/RA-Short.nrrd" ).c_str() );
@@ -20,7 +17,7 @@ TEST_F(Python,SimpleGaussian) {
   CommandLine.push_back ( output );
 
   // Set our python path
-  std::string path = dataFinder.GetBuildDirectory() + "/Wrapping" 
+  std::string path = dataFinder.GetBuildDirectory() + "/Wrapping"
     + GetPathSeparator() + dataFinder.GetExecutableDirectory();
   SetEnvironment ( "PYTHONPATH", path );
 
