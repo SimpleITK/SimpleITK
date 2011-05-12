@@ -53,6 +53,19 @@
                return Divide( self, other )
             return DivideByConstant( self, other )
 
+        def __radd__( self, other ):
+            return self.__add__( other )
+        def __rsub__( self, other ):
+            return self.__sub__( other )
+        def __rmul__( self, other ):
+            return self.__mul__( other )
+        def __rdiv__( self, other ):
+            return self.__div__( other )
+
+         # NOTE: the __i*__ methods are not implemented because there
+         # currently in no way to make the underlying filters run
+         # inplace". But python will implement a default version based
+         # on the standard method
         def __iadd__ ( self, other ):
             self = Add( self, other )
             return self;
