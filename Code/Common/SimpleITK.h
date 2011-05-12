@@ -6,6 +6,7 @@
 #include "sitkDetail.h"
 #include "sitkMacro.h"
 #include "sitkImage.h"
+#include "sitkShow.h"
 
 #include "sitkImageFilter.h"
 

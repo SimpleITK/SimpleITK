@@ -100,6 +100,17 @@ file( GLOB template_components
     )
 set ( template_components ${template_components} CACHE INTERNAL "" )
 
+if (WIN32)
+  # /bigobj is required for windows builds because of the size of
+  # some object files (CastImage for instance)
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj" )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /bigobj" )
+  # Avoid some warnings
+  add_definitions ( -D_SCL_SECURE_NO_WARNINGS )
+endif()
+
+
+
 subdirs ( Utilities Code Wrapping Examples )
 
 

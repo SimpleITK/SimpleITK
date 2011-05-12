@@ -112,7 +112,7 @@ namespace simple
     std::string GetPixelIDTypeAsString( void ) const;
     std::string ToString( void ) const;
 
-    /** Method called my certain constructors to convert ITK images
+    /** Method called by certain constructors to convert ITK images
      * into simpleITK ones.
      */
     template <typename TImageType>
