@@ -84,7 +84,7 @@
             return self
 
         def next( self ):
-            old_index = self.iter_index
+            old_index = tuple( self.iter_index )
 
             dim = self.GetDimension()
 
@@ -98,6 +98,7 @@
                    self.iter_index[d] = 0
                 else:
                    break
+
             return self[ old_index ]
 
         def __len__( self ):
