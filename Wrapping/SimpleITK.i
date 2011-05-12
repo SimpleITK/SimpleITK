@@ -66,6 +66,7 @@ namespace std
 // Any new classes need to have an "%include" statement to be wrapped.
 %include "sitkPixelIDValues.h"
 %include "sitkImage.h"
+%include "sitkShow.h"
 %include "sitkImageFilter.h"
 %include "sitkImageFileWriter.h"
 %include "sitkImageSeriesReader.h"
