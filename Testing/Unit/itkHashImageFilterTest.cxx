@@ -1,4 +1,5 @@
 #include <SimpleITKTestHarness.h>
+
 #include <itkHashImageFilter.h>
 #include <itkImageFileReader.h>
 

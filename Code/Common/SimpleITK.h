@@ -21,6 +21,9 @@
 
 #include "sitkConditional.h"
 
+// Operators
+#include "sitkImageOperators.h"
+
 // Registration support
 #include "sitkTransform.h"
 #include "sitkAffineTransform.h"

@@ -1,4 +1,5 @@
 #include <SimpleITKTestHarness.h>
+
 #include <SimpleITK.h>
 
 TEST(Registration,CreateMattes) {

@@ -1,5 +1,6 @@
 #include "SimpleITKTestHarness.h"
-#include <sitkPixelIDTypeLists.h>
+
+#include <SimpleITK.h>
 
 class TypeListTest
   : public ::testing::Test

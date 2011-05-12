@@ -1,9 +1,6 @@
 #include "SimpleITKTestHarness.h"
 
-#include <sitkImage.h>
-#include <sitkImageFileReader.h>
-#include <sitkImageFileWriter.h>
-#include <sitkHashImageFilter.h>
+#include <SimpleITK.h>
 
 #if defined(WRAP_LUA)
 TEST_F(Lua,SimpleGaussian) {
@@ -11,7 +8,7 @@ TEST_F(Lua,SimpleGaussian) {
   std::string Script = dataFinder.GetSourceDirectory() + "/Examples/SimpleGaussian.lua";
   std::string output = dataFinder.GetOutputFile ( "Lua.SimpleGaussian.nrrd" );
   std::vector<std::string> CommandLine;
-  
+
   CommandLine.push_back ( dataFinder.GetLuaExecutable() );
   CommandLine.push_back ( Script );
   CommandLine.push_back ( dataFinder.GetFile ( "Input/RA-Short.nrrd" ).c_str() );
