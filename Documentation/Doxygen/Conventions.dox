@@ -1,9 +1,10 @@
 /** \page Conventions Common Conventions for SimpleITK
 
 This document contains common conventions that SimpleITK filters, and
-objects follow. If a method or class does not specify different
-behavior or default values then those described here, it should be
-assumed that it follows the following conventions.
+objects follow. It is intended to describe the interfaces that users
+should use and developers should implement. If a method or class does
+not specify different behavior or default values then those described
+here, it should be assumed that it follows the following conventions.
 
 \section DimensionVectors Dimensional Vectors
 
@@ -11,7 +12,7 @@ Dimensional Vectors must contain at least the number of elements as
 the dimensions of the image, elements beyond the image's dimension will
 be truncated.
 
-The SimpleITK image class can contain a 2 or 3 dimensional images. In
+The SimpleITK image class can contain 2 or 3 dimensional images. In
 ITK proper, certain types such as indexes, points, and sizes are
 templeted over the image dimensions. In SimpleITK we utilize the
 variable length std::vector for these types, so that non-templeted
@@ -31,8 +32,8 @@ thresholding, and certain other segmentation filters. Additionally, these
 are the defaults for the binary morphology filters, so that they can
 easily be applied after segmentation. This choice makes many mask
 manipulations easier. For example, "masking" an image ( scalar or
-vector ), is simply a matter of multiplying by a mask
-image. Additionally, the set of { 0, 1 } pixels is closed under the
+vector ) is simply a matter of multiplying by a mask an
+image. Additionally, the set of { 0, 1 } pixels is closed under the 
 logical Boolean operators.
 
 \section ProcedualParameters Order of Procedural Parameters
