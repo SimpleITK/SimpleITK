@@ -60,6 +60,10 @@ namespace std
   %template(VectorDouble) vector<double>;
   %template(VectorUIntList) vector< vector<unsigned int> >;
   %template(VectorString) vector< std::string >;
+
+  // Support for LabelStatisticsImageFilter
+  %template(DoubleMap) map<size_t, double>;
+  %template(BoolMap) map<size_t, bool>;
 }
 
 

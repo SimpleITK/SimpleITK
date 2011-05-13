@@ -40,6 +40,15 @@ namespace itk {
       double GetMean    ( const size_t labelCode ) { return this->m_Mean[labelCode]; }
       double GetVariance( const size_t labelCode ) { return this->m_Variance[labelCode]; }
       bool   HasLabel   ( const size_t labelCode ) { return ( this->m_HasLabel.find(labelCode) != this->m_HasLabel.end() ) ; }
+
+      typedef std::map<size_t, double> DoubleMap;
+      typedef std::map<size_t, bool>   BoolMap;
+      DoubleMap GetMinimumMap() { return this->m_Minimum; }
+      DoubleMap GetMaximumMap() { return this->m_Maximum; }
+      DoubleMap GetMeanMap() { return this->m_Mean; }
+      DoubleMap GetVarianceMap() { return this->m_Variance; }
+      BoolMap   GetHasLabelMap() { return this->m_HasLabel; }
+
     private:
 
       typedef Image (Self::*MemberFunctionType)( const Image&, const Image& );
@@ -48,12 +57,22 @@ namespace itk {
       friend struct detail::DualExecuteInternalAddressor<MemberFunctionType>;
       std::auto_ptr<detail::DualMemberFunctionFactory<MemberFunctionType> > m_DualMemberFactory;
 
-      std::map<size_t, double> m_Minimum;
-      std::map<size_t, double> m_Maximum;
-      std::map<size_t, double> m_Mean;
-      std::map<size_t, double> m_Variance;
-      std::map<size_t, bool>   m_HasLabel;
+      DoubleMap m_Minimum;
+      DoubleMap m_Maximum;
+      DoubleMap m_Mean;
+      DoubleMap m_Variance;
+      BoolMap   m_HasLabel;
     };
+
+    struct LabelStatisticsResults {
+      LabelStatisticsImageFilter::DoubleMap m_Minimum;
+      LabelStatisticsImageFilter::DoubleMap m_Maximum;
+      LabelStatisticsImageFilter::DoubleMap m_Mean;
+      LabelStatisticsImageFilter::DoubleMap m_Variance;
+      LabelStatisticsImageFilter::BoolMap   m_HasLabel;
+    };
+    LabelStatisticsResults LabelStatistics ( const Image&, const Image& );
+
   }
 }
 #endif
