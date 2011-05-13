@@ -9,6 +9,20 @@ namespace simple {
 
 //----------------------------------------------------------------------------
 
+// Functional interface
+  LabelStatisticsResults LabelStatistics ( const Image& image, const Image& labels )
+  {
+    LabelStatisticsResults result;
+    LabelStatisticsImageFilter filter;
+    filter.Execute ( image, labels );
+    result.m_Minimum = filter.GetMinimumMap();
+    result.m_Maximum = filter.GetMaximumMap();
+    result.m_Mean = filter.GetMeanMap();
+    result.m_Variance = filter.GetVarianceMap();
+    result.m_HasLabel = filter.GetHasLabelMap();
+    return result;
+  }
+
 //
 // Default constructor that initializes parameters
 //
@@ -113,10 +127,11 @@ Image LabelStatisticsImageFilter::DualExecuteInternal ( const Image& inImage1, c
         this->m_Maximum[rangeIt]  = filter->GetMaximum(rangeIt);
         this->m_Mean[rangeIt]     = filter->GetMean(rangeIt);
         this->m_Variance[rangeIt] = filter->GetVariance(rangeIt);
+        this->m_HasLabel[rangeIt] = true;
         }
       }
     }
-  //NOTE:  Input is passed through to output.
+  //NOTE:  Input is passed through to output and is likely to get ignored!
   return Image( filter->GetOutput() );
   }
 
