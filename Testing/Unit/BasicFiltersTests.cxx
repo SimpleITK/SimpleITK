@@ -2,9 +2,6 @@
 
 #include <SimpleITK.h>
 
-#include "itkRecursiveGaussianImageFilter.h"
-
-
 TEST(BasicFilters,RecursiveGaussian_ENUMCHECK) {
 
   typedef itk::RecursiveGaussianImageFilter< itk::Image<float,3> > ITKRecursiveGausianType;
@@ -109,4 +106,31 @@ TEST(BasicFilters,HashImageFilter) {
   EXPECT_NE ( "", hasher.ToString() );
   EXPECT_EQ ( itk::simple::HashImageFilter::SHA1, hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).GetHashFunction() );
   EXPECT_EQ ( itk::simple::HashImageFilter::MD5, hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).GetHashFunction() );
+}
+
+TEST(BasicFilters,LabelStatistics) {
+  itk::simple::Image image = itk::simple::ReadImage ( dataFinder.GetFile ( "Input/cthead1.png" ) );
+  itk::simple::Image labels = itk::simple::ReadImage ( dataFinder.GetFile ( "Input/2th_cthead1.png" ) );
+
+  itk::simple::LabelStatisticsImageFilter stats;
+  stats.Execute ( image, labels );
+
+  EXPECT_NEAR ( stats.GetMinimum ( 0 ), 0, 0.01 );
+  EXPECT_NEAR ( stats.GetMaximum ( 0 ), 104, 0.01 );
+  EXPECT_NEAR ( stats.GetMean ( 0 ), 14.13, 0.01 );
+  EXPECT_NEAR ( stats.GetVariance ( 0 ), 285.351, 0.01 );
+  EXPECT_TRUE ( stats.HasLabel ( 0 ) );
+
+  // Check the function interface
+  itk::simple::LabelStatisticsResults results;
+  results = itk::simple::LabelStatistics ( image, labels );
+  for ( itk::simple::LabelStatisticsImageFilter::BoolMap::iterator it = results.m_HasLabel.begin(); it != results.m_HasLabel.end(); ++it )
+    {
+    EXPECT_NEAR ( stats.GetMinimum ( it->first ), results.m_Minimum[it->first], 0.01 );
+    EXPECT_NEAR ( stats.GetMaximum ( it->first ), results.m_Maximum[it->first], 0.01 );
+    EXPECT_NEAR ( stats.GetMean ( it->first ), results.m_Mean[it->first], 0.01 );
+    EXPECT_NEAR ( stats.GetVariance ( it->first ), results.m_Variance[it->first], 0.01 );
+    EXPECT_TRUE ( stats.HasLabel ( it->first ) );
+    }
+
 }
