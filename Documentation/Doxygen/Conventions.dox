@@ -1,0 +1,53 @@
+/** \page Conventions Common Conventions for SimpleITK
+
+This document contains common conventions that SimpleITK filters, and
+objects follow. It is intended to describe the interfaces that users
+should use and developers should implement. If a method or class does
+not specify different behavior or default values then those described
+here, it should be assumed that it follows the following conventions.
+
+\section DimensionVectors Dimensional Vectors
+
+Dimensional Vectors must contain at least the number of elements as
+the dimensions of the image, elements beyond the image's dimension will
+be truncated.
+
+The SimpleITK image class can contain 2 or 3 dimensional images. In
+ITK proper, certain types such as indexes, points, and sizes are
+templeted over the image dimensions. In SimpleITK we utilize the
+variable length std::vector for these types, so that non-templeted
+calls can wrap ITK's templeted image class. These types are called 
+Dimensional Vectors. If a dimensional vector's length is less that the
+dimension of the image, an exception will be generated when converted
+to the ITK type. If there are extra elements in the dimensional vector
+these values will be ignored.
+
+\section MaskDefaults Mask Image Types and Default Values
+
+The default mask image type is a scalar image of sitkUInt8 or uint8_t
+pixels. The default values are 0 and 1, with 1s representing the mask.
+
+These defaults are for filter which create masks such as
+thresholding, and certain other segmentation filters. Additionally, these
+are the defaults for the binary morphology filters, so that they can
+easily be applied after segmentation. This choice makes many mask
+manipulations easier. For example, "masking" an image ( scalar or
+vector ) is simply a matter of multiplying by a mask an
+image. Additionally, the set of { 0, 1 } pixels is closed under the 
+logical Boolean operators.
+
+\section ProcedualParameters Order of Procedural Parameters
+
+The order of the procedural parameters should be with the most
+frequently modified parameters at the beginning of the parameter
+list. While the last parameter, may be ones that the user does not
+need to set or are infrequently used.
+
+
+\section FollowITK Follow ITK Conventions
+
+If not explicitly stated otherwise, then filter parameters are the
+same default values as those in ITK proper.
+
+
+*/
