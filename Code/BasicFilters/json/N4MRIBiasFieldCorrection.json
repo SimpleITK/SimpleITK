@@ -8,9 +8,29 @@
   "pixel_types2" : "IntegerPixelIDTypeList",
   "members" : [
     {
-      "name" : "NumberOfHistogramBins",
-      "type" : "uint32_t",
-      "default" : "200",
+      "name" : "ConvergenceThreshold",
+       "type" : "double",
+      "default" : "0.001",
+      "doc" : ""
+    },
+    {
+      "name" : "MaximumNumberOfIterations",
+      "type" : "std::vector<uint32_t>",
+      "default" : "std::vector<uint32_t>(4,50)",
+      "no_print" : 1, /* we have no << operator for std::vector*/
+
+       /* additionally set the number of fitting levels equal to the number of iterations */
+      "custom_itk_cast" : "typename FilterType::VariableSizeArrayType maximumNumberOfIterations( this->m_MaximumNumberOfIterations.size() );\
+  for( unsigned int i = 0; i < this->m_MaximumNumberOfIterations.size(); ++i)\
+    maximumNumberOfIterations[i] = this->m_MaximumNumberOfIterations[i];\
+  filter->SetMaximumNumberOfIterations( maximumNumberOfIterations );\
+  filter->SetNumberOfFittingLevels( this->m_MaximumNumberOfIterations.size() );"
+      "doc" : "\todo this variable needs to be printed"
+    },
+    {
+      "name" : "BiasFieldFullWidthAtHalfMaximum",
+      "type" : "double",
+      "default" : "0.15",
       "doc" : ""
     },
     {
@@ -20,36 +40,9 @@
       "doc" : ""
     },
     {
-      "name" : "BiasFieldFullWidthAtHalfMaximum",
-      "type" : "double",
-      "default" : "0.15",
-      "doc" : ""
-    },
-    { 
-      "name" : "MaximumNumberOfIterations",
+      "name" : "NumberOfHistogramBins",
       "type" : "uint32_t",
-      "default" : "50",
-      "custom_itk_cast" : "typename FilterType::VariableSizeArrayType maximumNumberOfIterations(this->m_NumberOfFittingLevels);\
-maximumNumberOfIterations.Fill( this->m_MaximumNumberOfIterations );\
-filter->SetMaximumNumberOfIterations( maximumNumberOfIterations );"
-      "doc" : ""
-    },
-    {
-      "name" : "ConvergenceThreshold",
-      "type" : "double",
-      "default" : "0.001",
-      "doc" : ""
-    },
-    {
-      "name" : "SplineOrder",
-      "type" : "uint32_t",
-      "default" : "3",
-      "doc" : ""
-    },
-    {
-      "name" : "NumberOfFittingLevels",
-      "type" : "uint32_t",
-      "default" : "4",
+      "default" : "200",
       "doc" : ""
     },
     {
@@ -59,8 +52,22 @@ filter->SetMaximumNumberOfIterations( maximumNumberOfIterations );"
       "doc" : "",
       "dim_vec" : 1,
       "itk_type" : "typename FilterType::ArrayType"
+    },
+    {
+      "name" : "SplineOrder",
+      "type" : "uint32_t",
+      "default" : "3",
+      "doc" : ""
     }
   ],
   "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "using default parameters in 2D",
+      "inputA" : "Input/cthead1.png",
+      "inputB" : "Input/2th_cthead1.png",
+      "setttings" : [],
+      "md5hash" : ""
+    }
   ]
 }

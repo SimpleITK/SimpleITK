@@ -6,7 +6,7 @@ import sys
 if len ( sys.argv ) < 2:
     print "Usage: N4BiasFieldCorrection inputImage " + \
         "outputImage [shrinkFactor] [maskImage] [numberOfIterations] " +\
-        "[numberOfFittingLevels] [outputBiasField]"
+        "[numberOfFittingLevels]"
     sys.exit ( 1 )
 
 
@@ -28,11 +28,14 @@ inputImage = sitk.Cast( inputImage, sitk.sitkFloat32 )
 
 corrector = sitk.N4MRIBiasFieldCorrectionImageFilter();
 
-if len ( sys.argv ) > 5:
-    corrector.SetMaximumNumberOfIterations( int( sys.argv[5] ) )
+numberFilltingLevels = 4
 
 if len ( sys.argv ) > 6:
-    corrector.SetNumberOfFittingLevels( int( sys.argv[6]  ) )
+    numberFilltingLevels = int( sys.argv[6] )
+
+if len ( sys.argv ) > 5:
+    corrector.SetMaximumNumberOfIterations( [ int( sys.argv[5] ) ] * numberOfFittingLevels )
+
 
 
 output = corrector.Execute( inputImage, maskImage )    
