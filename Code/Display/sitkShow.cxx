@@ -33,7 +33,7 @@ namespace itk
     {
       // Try to find ImageJ, write out a file and open
       std::vector<std::string> paths;
-      std::string ExecutableName = "ImageJ";
+      std::string ExecutableName = itksys::SystemTools::FindFile( "ImageJ" );
       std::string TempDirectory = "";
       std::string TempFile = "";
       std::ostringstream CommandLine;
@@ -69,7 +69,16 @@ namespace itk
       TempDirectory = "/tmp/";
       TempFile = FormatFileName ( TempDirectory, name );
 #if defined(__APPLE__)
-      CommandLine << "open -a ImageJ " << TempFile;
+      paths.push_back("/opt/ImageJ");   //A common place to look
+      paths.push_back("/Applications"); //A common place to look
+      paths.push_back("/Developer"); //A common place to look
+      ExecutableName = itksys::SystemTools::FindDirectory( "ImageJ.app" );
+      if( ExecutableName == "" )
+        {
+        // Just assume it is registered properly in a place where the open command will find it.
+        ExecutableName="ImageJ"
+        }
+      CommandLine << "open -a " << ExecutableName  << " " << TempFile;
 #else
       // Must be Linux
       ExecutableName = itksys::SystemTools::FindFile ( "ImageJ" );
@@ -78,6 +87,7 @@ namespace itk
 #endif
 
       WriteImage ( image, TempFile );
+      //std::cout << "Attempting: " << CommandLine.str().c_str() << std::endl;
       system ( CommandLine.str().c_str() );
     }
 
