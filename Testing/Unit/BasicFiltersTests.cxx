@@ -103,7 +103,7 @@ TEST(BasicFilters,Cast) {
 
 TEST(BasicFilters,HashImageFilter) {
   itk::simple::HashImageFilter hasher;
-  EXPECT_NE ( "", hasher.ToString() );
+  EXPECT_EQ ( "", hasher.ToString() );
   EXPECT_EQ ( itk::simple::HashImageFilter::SHA1, hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).GetHashFunction() );
   EXPECT_EQ ( itk::simple::HashImageFilter::MD5, hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).GetHashFunction() );
 }
@@ -121,16 +121,18 @@ TEST(BasicFilters,LabelStatistics) {
   EXPECT_NEAR ( stats.GetVariance ( 0 ), 285.351, 0.01 );
   EXPECT_TRUE ( stats.HasLabel ( 0 ) );
 
-  // Check the function interface
-  itk::simple::LabelStatisticsResults results;
-  results = itk::simple::LabelStatistics ( image, labels );
-  for ( itk::simple::LabelStatisticsImageFilter::BoolMap::iterator it = results.m_HasLabel.begin(); it != results.m_HasLabel.end(); ++it )
-    {
-    EXPECT_NEAR ( stats.GetMinimum ( it->first ), results.m_Minimum[it->first], 0.01 );
-    EXPECT_NEAR ( stats.GetMaximum ( it->first ), results.m_Maximum[it->first], 0.01 );
-    EXPECT_NEAR ( stats.GetMean ( it->first ), results.m_Mean[it->first], 0.01 );
-    EXPECT_NEAR ( stats.GetVariance ( it->first ), results.m_Variance[it->first], 0.01 );
-    EXPECT_TRUE ( stats.HasLabel ( it->first ) );
-    }
+  const itk::simple::LabelStatisticsImageFilter::LabelListingType myLabels = stats.GetValidLabels();
+  EXPECT_EQ ( myLabels.size() , 3);
+
+  const itk::simple::LabelStatisticsImageFilter::LabelStatisticsMap myMap = stats.GetLabelStatisticsMap();
+  EXPECT_EQ( myLabels.size() , myMap.size() );
+
+  const itk::simple::MeasurementMap myMeasurementMap = stats.GetMeasurementMap(0);
+  EXPECT_EQ( myMeasurementMap.size(), 4 ); //4 measurements produced
+
+  const itk::simple::BasicMeasurementMap myBasicMeasurementMap = myMeasurementMap.GetBasicMeasurementMap();
+  EXPECT_EQ( myBasicMeasurementMap.size(), 4 ); //4 measurements produced
+
+  myMeasurementMap.PrintToCSVString(); //This implicitly tests GetVectorOfMeasurementNames, and GetVectorOfMeasurementValues
 
 }

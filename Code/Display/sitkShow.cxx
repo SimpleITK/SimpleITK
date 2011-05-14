@@ -76,7 +76,7 @@ namespace itk
       if( ExecutableName == "" )
         {
         // Just assume it is registered properly in a place where the open command will find it.
-        ExecutableName="ImageJ"
+        ExecutableName="ImageJ";
         }
       CommandLine << "open -a " << ExecutableName  << " " << TempFile;
 #else
