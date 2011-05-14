@@ -76,7 +76,6 @@ namespace std
 // Any new classes need to have an "%include" statement to be wrapped.
 %include "sitkPixelIDValues.h"
 %include "sitkImage.h"
-%include "sitkShow.h"
 %include "sitkImageFilter.h"
 %include "sitkImageFileWriter.h"
 %include "sitkImageSeriesReader.h"
@@ -98,6 +97,8 @@ namespace std
 %include "sitkRegularStepGradientDescentOptimizer.h"
 %include "sitkRegistration.h"
 
+// Display classes
+%include "sitkShow.h"
 
 // Auto-generated headers
 %include "SimpleITKBasicFiltersGeneratedHeaders.i"

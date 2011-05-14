@@ -1,11 +1,15 @@
-file ( GLOB SimpleITKCommonSource *.cxx *.h ../Registration/*.h ../Registration/*.cxx)
+set ( LIBNAME SimpleITKCommon )
+file ( GLOB ${LIBNAME}Headers *.h )
+set ( MASTERHEADER ${SimpleITK_BINARY_DIR}/include/${LIBNAME}.h )
+CreateLibMasterHeader( "${LIBNAME}" "${MASTERHEADER}"  "${${LIBNAME}Headers}")
+
+file ( GLOB SimpleITKCommonSource *.cxx *.h )
 file ( GLOB SimpleITKAncillarySource Ancillary/*.h Ancillary/*.cxx )
+
 
 include_directories ( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/Ancillary )
 add_library ( SimpleITKCommon ${SimpleITKCommonSource} ${SimpleITKAncillarySource} )
 target_link_libraries ( SimpleITKCommon ${ITK_LIBRARIES} )
-
-
 
 # Add custom command that will delete java files which need to be rebuilt when changes
 # are made to Common
