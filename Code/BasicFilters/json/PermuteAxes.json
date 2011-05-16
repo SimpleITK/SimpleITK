@@ -59,16 +59,8 @@
         "dim_vec": 1,
         "value": "{1,2,0}",
         "tcl_value": "[list 1 2 0]",
-        "python_value":         [
-          1,
-          2,
-          0
-        ],
-        "ruby_value":         [
-          1,
-          2,
-          0
-        ]
+        "python_value": "[ 1, 2, 0 ]",
+        "ruby_value": "[ 1, 2, 0 ]"
       }]
     }
   ],

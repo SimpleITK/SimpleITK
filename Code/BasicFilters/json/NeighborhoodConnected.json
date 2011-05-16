@@ -32,7 +32,7 @@
       "default": 1,
       "doc": "Pixels that lie within Lower and Upper (inclusive)\n       will be replaced with this value. The default is 1.",
       "briefdescriptionSet": "",
-      "detaileddescriptionSet": "Set/Get value to replace thresholded pixels. Pixels that lie * within Lower and Upper (inclusive) will be replaced with this value. The default is 1.\n",
+      "detaileddescriptionSet": "Set/Get value to replace thresholded pixels. Pixels that lie within Lower and Upper (inclusive) will be replaced with this value. The default is 1.\n",
       "briefdescriptionGet": "",
       "detaileddescriptionGet": ""
     },
@@ -58,34 +58,14 @@
             {
         "parameter": "SeedList",
         "dim": 2,
-        "value":         [
-          "{100,100}",
-          "{95,85}"
-        ],
-        "tcl_value":         [
-          "100 100",
-          "95 85"
-        ],
-        "python_value":         [
-                    [
-            100,
-            100
-          ],
-                    [
-            95,
-            85
-          ]
-        ],
-        "ruby_value":         [
-                    [
-            100,
-            100
-          ],
-                    [
-            95,
-            85
-          ]
-        ]
+        "value" : ["{100,100}",
+                     "{95,85}"],
+          "tcl_value" : ["100 100",
+                         "95 85"],
+          "python_value" : ["[100,100]",
+                            "[95,85]"],
+          "ruby_value" : ["[100,100]",
+                            "[95,85]"]
       },
             {
         "parameter": "Upper",
@@ -103,18 +83,12 @@
         "parameter": "Radius",
         "dim_vec": 1,
         "type": "unsigned int",
-        "value": "{5,5}",
-        "java_value": "{5,5}",
-        "tcl_value": "[list 5 5]",
-        "python_value":         [
-          5,
-          5
-        ],
-        "lua_value": "{5,5}",
-        "ruby_value":         [
-          5,
-          5
-        ]
+          "value" : "{5,5}",
+          "java_value" : "{5,5}",
+          "tcl_value" : "[list 5 5]",
+          "python_value" : "[5,5]",
+          "lua_value" : "{5,5}",
+          "ruby_value" : "[5,5]"
       }
     ]
   }],

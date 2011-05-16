@@ -49,16 +49,8 @@
         "dim_vec": 1,
         "value": "{ true, false, true }",
         "tcl_value": "[list 1 0 1]",
-        "python_value":         [
-          1,
-          0,
-          1
-        ],
-        "ruby_value":         [
-          1,
-          0,
-          1
-        ]
+        "python_value": "[ 1, 0, 1 ]",
+        "ruby_value": "[ 1, 0, 1 ]"
       }]
     }
   ],
