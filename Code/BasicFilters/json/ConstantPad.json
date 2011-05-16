@@ -53,16 +53,8 @@
           "dim_vec": 1,
           "value": "{5,10,15}",
           "tcl_value": "[list 5 10 15]",
-          "python_value":           [
-            5,
-            10,
-            15
-          ],
-          "ruby_value":           [
-            5,
-            10,
-            15
-          ]
+          "python_value": "[ 5, 10, 15 ]",
+          "ruby_value": "[ 5, 10, 15 ]"
         },
                 {
           "parameter": "PadUpperBound",
@@ -70,16 +62,8 @@
           "dim_vec": 1,
           "value": "{3,6,9}",
           "tcl_value": "[list 3 6 9]",
-          "python_value":           [
-            3,
-            6,
-            9
-          ],
-          "ruby_value":           [
-            3,
-            6,
-            9
-          ]
+          "python_value": "[ 3, 6, 9 ]",
+          "ruby_value": "[ 3, 6, 9 ]"
         }
       ]
     }
