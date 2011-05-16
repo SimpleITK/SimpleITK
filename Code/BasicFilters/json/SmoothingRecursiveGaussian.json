@@ -1,39 +1,36 @@
 {
-  "name": "SmoothingRecursiveGaussian",
-  "template_code_filename": "ImageFilter",
-  "template_test_filename": "ImageFilter",
-  "doc": "",
-  "pixel_types": "BasicPixelIDTypeList",
-  "output_pixel_type": "float",
-  "members":   [
-        {
-      "name": "Sigma",
-      "type": "double",
-      "default": "1.0",
-      "doc": "",
-      "briefdescriptionSet": "",
-      "detaileddescriptionSet": "",
-      "briefdescriptionGet": "",
-      "detaileddescriptionGet": ""
-    },
-        {
-      "name": "NormalizeAcrossScale",
-      "type": "bool",
-      "default": "0",
-      "doc": "",
-      "briefdescriptionSet": "",
-      "detaileddescriptionSet": "This method does not effect the output of this filter.\n\\see RecursiveGaussianImageFilter::SetNormalizeAcrossScale\n\n",
-      "briefdescriptionGet": "",
-      "detaileddescriptionGet": ""
-    }
-  ],
-  "tests": [  {
-    "tag": "default",
-    "description": "Simply run with default settings",
-    "inputA": "Input/RA-Float.nrrd",
-    "settings": [],
-    "tolerance": 1.0E-4
-  }],
-  "briefdescription": "Computes the smoothing of an image by convolution with the Gaussian kernels implemented as IIR filters.\n",
-  "detaileddescription": "This filter is implemented using the recursive gaussian filters. For multi-component images, the filter works on each component independently.\nFor this filter to be able to run in-place the input and output image types need to be the same and/or the same type as the RealImageType.\n\n\\li {Smoothing/SmoothingRecursiveGaussianImageFilter,Gaussian smoothing that works with image adaptors}\n\n"
+  "name" : "SmoothingRecursiveGaussian",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "output_pixel_type" : "float",
+  "members" : [ {
+    "name" : "Sigma",
+    "type" : "double",
+    "default" : "1.0",
+    "doc" : "",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
+  }, {
+    "name" : "NormalizeAcrossScale",
+    "type" : "bool",
+    "default" : "0",
+    "doc" : "",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "This method does not effect the output of this filter.\n\\see RecursiveGaussianImageFilter::SetNormalizeAcrossScale\n\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
+  } ],
+  "tests" : [ {
+    "tag" : "default",
+    "description" : "Simply run with default settings",
+    "inputA" : "Input/RA-Float.nrrd",
+    "settings" : [ ],
+    "tolerance" : 1.0E-4
+  } ],
+  "briefdescription" : "Computes the smoothing of an image by convolution with the Gaussian kernels implemented as IIR filters.\n",
+  "detaileddescription" : "This filter is implemented using the recursive gaussian filters. For multi-component images, the filter works on each component independently.\nFor this filter to be able to run in-place the input and output image types need to be the same and/or the same type as the RealImageType.\n\n\\li {Smoothing/SmoothingRecursiveGaussianImageFilter,Gaussian smoothing that works with image adaptors}\n\n"
 }

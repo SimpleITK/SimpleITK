@@ -1,29 +1,29 @@
 {
-  "name": "Mask",
-  "template_code_filename": "DualImageFilter",
-  "template_test_filename": "ImageFilter",
-  "number_of_inputs": 2,
-  "doc": "Some global documentation\n\\todo MaskImageFilter will support VectorImages shortly",
-  "pixel_types": "typelist::Append<BasicPixelIDTypeList, ComplexPixelIDTypeList>::Type",
-  "pixel_types2": "IntegerPixelIDTypeList",
-  "members": [  {
-    "name": "OutsideValue",
-    "type": "double",
-    "default": 0,
-    "doc": "Value assigned to pixels outside of the mask",
-    "briefdescriptionSet": "",
-    "detaileddescriptionSet": "Method to explicitly set the outside value of the mask. Defaults to 0\n",
-    "briefdescriptionGet": "",
-    "detaileddescriptionGet": ""
-  }],
-  "tests": [  {
-    "tag": "2d",
-    "description": "2d",
-    "inputA": "Input/STAPLE1.png",
-    "inputB": "Input/STAPLE2.png",
-    "settings": [],
-    "md5hash": "c57d7fda3e42374881c3c3181d15bf90"
-  }],
-  "briefdescription": "Implements an operator for pixel-wise masking of the input image with the mask.\n",
-  "detaileddescription": "This class is parametrized over the types of the input image type, the mask image type and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\nThe pixel type of the input 2 image must have a valid defintion of the operator != with zero. This condition is required because internally this filter will perform the operation\nif pixel_from_mask_image != 0 pixel_output_image = pixel_input_image else pixel_output_image = outside_value\nThe pixel from the input 1 is cast to the pixel type of the output image.\nNote that the input and the mask images must be of the same size.\n\\warning Any pixel value other than 0 will not be masked out.\n\\see MaskNegatedImageFilter\n\n\\li {ImageProcessing/MaskImageFilter,Apply a mask to an image}\n\n"
+  "name" : "Mask",
+  "template_code_filename" : "DualImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 2,
+  "doc" : "Some global documentation\n\\todo MaskImageFilter will support VectorImages shortly",
+  "pixel_types" : "typelist::Append<BasicPixelIDTypeList, ComplexPixelIDTypeList>::Type",
+  "pixel_types2" : "IntegerPixelIDTypeList",
+  "members" : [ {
+    "name" : "OutsideValue",
+    "type" : "double",
+    "default" : 0,
+    "doc" : "Value assigned to pixels outside of the mask",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Method to explicitly set the outside value of the mask. Defaults to 0\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
+  } ],
+  "tests" : [ {
+    "tag" : "2d",
+    "description" : "2d",
+    "inputA" : "Input/STAPLE1.png",
+    "inputB" : "Input/STAPLE2.png",
+    "settings" : [ ],
+    "md5hash" : "c57d7fda3e42374881c3c3181d15bf90"
+  } ],
+  "briefdescription" : "Implements an operator for pixel-wise masking of the input image with the mask.\n",
+  "detaileddescription" : "This class is parametrized over the types of the input image type, the mask image type and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\nThe pixel type of the input 2 image must have a valid defintion of the operator != with zero. This condition is required because internally this filter will perform the operation\nif pixel_from_mask_image != 0 pixel_output_image = pixel_input_image else pixel_output_image = outside_value\nThe pixel from the input 1 is cast to the pixel type of the output image.\nNote that the input and the mask images must be of the same size.\n\\warning Any pixel value other than 0 will not be masked out.\n\\see MaskNegatedImageFilter\n\n\\li {ImageProcessing/MaskImageFilter,Apply a mask to an image}\n\n"
 }

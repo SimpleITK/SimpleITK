@@ -1,54 +1,48 @@
 {
-  "name": "BinaryMorphologicalOpening",
-  "template_code_filename": "KernelImageFilter",
-  "number_of_inputs": 1,
-  "doc": "",
-  "pixel_types": "IntegerPixelIDTypeList",
-  "members":   [
-        {
-      "name": "BackgroundValue",
-      "type": "double",
-      "default": "0",
-      "doc": "",
-      "briefdescriptionSet": "",
-      "detaileddescriptionSet": "Set the value in eroded part of the image. Defaults to zero\n",
-      "briefdescriptionGet": "",
-      "detaileddescriptionGet": "Set the value in eroded part of the image. Defaults to zero\n"
-    },
-        {
-      "name": "ForegroundValue",
-      "type": "double",
-      "default": "255",
-      "doc": "",
-      "briefdescriptionSet": "",
-      "detaileddescriptionSet": "Set the value in the image to consider as \"foreground\". Defaults to maximum value of PixelType.\n",
-      "briefdescriptionGet": "",
-      "detaileddescriptionGet": "Get the value in the image considered as \"foreground\". Defaults to maximum value of PixelType.\n"
-    }
-  ],
-  "custom_methods": [],
-  "tests": [  {
-    "tag": "BinaryMorphologicalOpening",
-    "description": "Test binary morphological opening",
-    "inputA": "Input/STAPLE1.png",
-    "md5hash": "bc97d7cbf9d3779070373f7a28b932a2",
-    "settings":     [
-            {
-        "parameter": "KernelRadius",
-        "no_get_method": 1,
-        "value": 1
-      },
-            {
-        "parameter": "KernelType",
-        "value": "itk::simple::${name}ImageFilter::Ball",
-        "lua_value": "SimpleITK.${name}ImageFilter_Ball",
-        "python_value": "SimpleITK.${name}ImageFilter.Ball",
-        "ruby_value": "Simpleitk::${name}ImageFilter::Ball",
-        "java_value": "${name}ImageFilter.KernelType.Ball",
-        "tcl_value": "$$${name}ImageFilter_Ball"
-      }
-    ]
-  }],
-  "briefdescription": "binary morphological closing of an image.\n",
-  "detaileddescription": "This filter removes small ( i.e., smaller than the structuring element) structures in the interior or at the boundaries of the image. The morphological opening of an image \"f\" is defined as: Opening(f) = Dilatation(Erosion(f)).\nThe structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element having values > 0 are candidates for affecting the center pixel.\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\\see MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleErodeImageFilter\n\n"
+  "name" : "BinaryMorphologicalOpening",
+  "template_code_filename" : "KernelImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "members" : [ {
+    "name" : "BackgroundValue",
+    "type" : "double",
+    "default" : "0",
+    "doc" : "",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set the value in eroded part of the image. Defaults to zero\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : "Set the value in eroded part of the image. Defaults to zero\n"
+  }, {
+    "name" : "ForegroundValue",
+    "type" : "double",
+    "default" : "255",
+    "doc" : "",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set the value in the image to consider as \"foreground\". Defaults to maximum value of PixelType.\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : "Get the value in the image considered as \"foreground\". Defaults to maximum value of PixelType.\n"
+  } ],
+  "custom_methods" : [ ],
+  "tests" : [ {
+    "tag" : "BinaryMorphologicalOpening",
+    "description" : "Test binary morphological opening",
+    "inputA" : "Input/STAPLE1.png",
+    "md5hash" : "bc97d7cbf9d3779070373f7a28b932a2",
+    "settings" : [ {
+      "parameter" : "KernelRadius",
+      "no_get_method" : 1,
+      "value" : 1
+    }, {
+      "parameter" : "KernelType",
+      "value" : "itk::simple::${name}ImageFilter::Ball",
+      "lua_value" : "SimpleITK.${name}ImageFilter_Ball",
+      "python_value" : "SimpleITK.${name}ImageFilter.Ball",
+      "ruby_value" : "Simpleitk::${name}ImageFilter::Ball",
+      "java_value" : "${name}ImageFilter.KernelType.Ball",
+      "tcl_value" : "$$${name}ImageFilter_Ball"
+    } ]
+  } ],
+  "briefdescription" : "binary morphological closing of an image.\n",
+  "detaileddescription" : "This filter removes small ( i.e., smaller than the structuring element) structures in the interior or at the boundaries of the image. The morphological opening of an image \"f\" is defined as: Opening(f) = Dilatation(Erosion(f)).\nThe structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element having values > 0 are candidates for affecting the center pixel.\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\\see MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleErodeImageFilter\n\n"
 }

@@ -1,37 +1,34 @@
 {
-  "name": "LaplacianRecursiveGaussian",
-  "template_code_filename": "ImageFilter",
-  "template_test_filename": "ImageFilter",
-  "doc": "",
-  "pixel_types": "BasicPixelIDTypeList",
-  "output_pixel_type": "float",
-  "members":   [
-        {
-      "name": "Sigma",
-      "type": "double",
-      "default": "1.0",
-      "doc": "",
-      "briefdescriptionSet": "",
-      "detaileddescriptionSet": "Set Sigma value. Sigma is measured in the units of image spacing.\n"
-    },
-        {
-      "name": "NormalizeAcrossScale",
-      "type": "bool",
-      "default": "0",
-      "doc": "",
-      "briefdescriptionSet": "",
-      "detaileddescriptionSet": "Define which normalization factor will be used for the Gaussian\\see RecursiveGaussianImageFilter::SetNormalizeAcrossScale\n\n",
-      "briefdescriptionGet": "",
-      "detaileddescriptionGet": ""
-    }
-  ],
-  "tests": [  {
-    "tag": "default",
-    "description": "Simply run with default settings",
-    "inputA": "Input/RA-Float.nrrd",
-    "settings": [],
-    "tolerance": 1.0E-4
-  }],
-  "briefdescription": "Computes the Laplacian of an image by convolution with the second derivative of a Gaussian.\n",
-  "detaileddescription": "This filter is implemented using the recursive gaussian filters\n\n\\li {EdgesAndGradients/LaplacianRecursiveGaussianImageFilter,Compute the Laplacian of an image}\n\n"
+  "name" : "LaplacianRecursiveGaussian",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "output_pixel_type" : "float",
+  "members" : [ {
+    "name" : "Sigma",
+    "type" : "double",
+    "default" : "1.0",
+    "doc" : "",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set Sigma value. Sigma is measured in the units of image spacing.\n"
+  }, {
+    "name" : "NormalizeAcrossScale",
+    "type" : "bool",
+    "default" : "0",
+    "doc" : "",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Define which normalization factor will be used for the Gaussian\\see RecursiveGaussianImageFilter::SetNormalizeAcrossScale\n\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
+  } ],
+  "tests" : [ {
+    "tag" : "default",
+    "description" : "Simply run with default settings",
+    "inputA" : "Input/RA-Float.nrrd",
+    "settings" : [ ],
+    "tolerance" : 1.0E-4
+  } ],
+  "briefdescription" : "Computes the Laplacian of an image by convolution with the second derivative of a Gaussian.\n",
+  "detaileddescription" : "This filter is implemented using the recursive gaussian filters\n\n\\li {EdgesAndGradients/LaplacianRecursiveGaussianImageFilter,Compute the Laplacian of an image}\n\n"
 }

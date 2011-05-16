@@ -1,29 +1,26 @@
 {
-  "name": "BinaryMagnitude",
-  "template_code_filename": "ImageFilter",
-  "template_test_filename": "ImageFilter",
-  "number_of_inputs": 2,
-  "doc": "Some global documentation",
-  "pixel_types": "BasicPixelIDTypeList",
-  "members": [],
-  "tests":   [
-        {
-      "tag": "2d",
-      "description": "2D",
-      "inputA": "Input/STAPLE1.png",
-      "inputB": "Input/STAPLE2.png",
-      "settings": [],
-      "md5hash": "ac40268d90c25dd631b54024ae84bffe"
-    },
-        {
-      "tag": "3d",
-      "description": "3D",
-      "inputA": "Input/RA-Short.nrrd",
-      "inputB": "Input/RA-Short.nrrd",
-      "settings": [],
-      "md5hash": "1cd2796868a78f53a53849137989c153"
-    }
-  ],
-  "briefdescription": "Implements pixel-wise the computation of square root of the sum of squares.\n",
-  "detaileddescription": "This filter is parametrized over the types of the two input images and the type of the output image.\nNumeric conversions (castings) are done by the C++ defaults.\nThe filter will walk over all the pixels in the two input images, and for each one of them it will do the following:\n\n\\li cast the input 1 pixel value todouble\n\\li cast the input 2 pixel value todouble\n\\li compute the sum of squares of the two pixel values\n\\li compute the square root of the sum\n\\li cast thedoublevalue resulting fromvcl_sqrt()to the pixel type of the output image\n\\li store the casted value into the output image.\n\nThe filter expect all images to have the same dimension (e.g. all 2D, or all 3D, or all ND)\n"
+  "name" : "BinaryMagnitude",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 2,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [ ],
+  "tests" : [ {
+    "tag" : "2d",
+    "description" : "2D",
+    "inputA" : "Input/STAPLE1.png",
+    "inputB" : "Input/STAPLE2.png",
+    "settings" : [ ],
+    "md5hash" : "ac40268d90c25dd631b54024ae84bffe"
+  }, {
+    "tag" : "3d",
+    "description" : "3D",
+    "inputA" : "Input/RA-Short.nrrd",
+    "inputB" : "Input/RA-Short.nrrd",
+    "settings" : [ ],
+    "md5hash" : "1cd2796868a78f53a53849137989c153"
+  } ],
+  "briefdescription" : "Implements pixel-wise the computation of square root of the sum of squares.\n",
+  "detaileddescription" : "This filter is parametrized over the types of the two input images and the type of the output image.\nNumeric conversions (castings) are done by the C++ defaults.\nThe filter will walk over all the pixels in the two input images, and for each one of them it will do the following:\n\n\\li cast the input 1 pixel value todouble\n\\li cast the input 2 pixel value todouble\n\\li compute the sum of squares of the two pixel values\n\\li compute the square root of the sum\n\\li cast thedoublevalue resulting fromvcl_sqrt()to the pixel type of the output image\n\\li store the casted value into the output image.\n\nThe filter expect all images to have the same dimension (e.g. all 2D, or all 3D, or all ND)\n"
 }

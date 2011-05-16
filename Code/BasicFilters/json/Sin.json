@@ -1,19 +1,19 @@
 {
-  "name": "Sin",
-  "template_code_filename": "ImageFilter",
-  "template_test_filename": "ImageFilter",
-  "number_of_inputs": 1,
-  "doc": "Some global documentation",
-  "pixel_types": "BasicPixelIDTypeList",
-  "vector_pixel_types_by_component": "VectorPixelIDTypeList",
-  "members": [],
-  "tests": [  {
-    "tag": "defaults",
-    "description": "Simply run with default settings",
-    "inputA": "Input/Ramp-Zero-One-Float.nrrd",
-    "settings": [],
-    "tolerance": 0.01
-  }],
-  "briefdescription": "Computes the vcl_sin(x) pixel-wise.\n",
-  "detaileddescription": ""
+  "name" : "Sin",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "members" : [ ],
+  "tests" : [ {
+    "tag" : "defaults",
+    "description" : "Simply run with default settings",
+    "inputA" : "Input/Ramp-Zero-One-Float.nrrd",
+    "settings" : [ ],
+    "tolerance" : 0.01
+  } ],
+  "briefdescription" : "Computes the vcl_sin(x) pixel-wise.\n",
+  "detaileddescription" : ""
 }

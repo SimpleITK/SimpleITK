@@ -1,19 +1,19 @@
 {
-  "name": "Xor",
-  "template_code_filename": "ImageFilter",
-  "template_test_filename": "ImageFilter",
-  "number_of_inputs": 2,
-  "doc": "Some global documentation",
-  "pixel_types": "IntegerPixelIDTypeList",
-  "members": [],
-  "tests": [  {
-    "tag": "defaults",
-    "description": "Simply run with default settings",
-    "inputA": "Input/STAPLE1.png",
-    "inputB": "Input/STAPLE2.png",
-    "settings": [],
-    "md5hash": "f6b04487e9d8d12d737802e1a8e78c0b"
-  }],
-  "briefdescription": "Implements the XOR logical operator pixel-wise between two images.\n",
-  "detaileddescription": "This class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\nSince the logical XOR operation is only defined in C++ for integer types, the images passed to this filter must comply with the requirement of using integer pixel type.\nThe total operation over one pixel will be\noutput_pixel = static_cast<OutputPixelType>( input1_pixel ^ input2_pixel )\nWhere \"^\" is the boolean XOR operator in C++.\n\n\\li {ImageProcessing/XorImageFilter,Binary XOR (exclusive OR) two images}\n\n"
+  "name" : "Xor",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 2,
+  "doc" : "Some global documentation",
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "members" : [ ],
+  "tests" : [ {
+    "tag" : "defaults",
+    "description" : "Simply run with default settings",
+    "inputA" : "Input/STAPLE1.png",
+    "inputB" : "Input/STAPLE2.png",
+    "settings" : [ ],
+    "md5hash" : "f6b04487e9d8d12d737802e1a8e78c0b"
+  } ],
+  "briefdescription" : "Implements the XOR logical operator pixel-wise between two images.\n",
+  "detaileddescription" : "This class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\nSince the logical XOR operation is only defined in C++ for integer types, the images passed to this filter must comply with the requirement of using integer pixel type.\nThe total operation over one pixel will be\noutput_pixel = static_cast<OutputPixelType>( input1_pixel ^ input2_pixel )\nWhere \"^\" is the boolean XOR operator in C++.\n\n\\li {ImageProcessing/XorImageFilter,Binary XOR (exclusive OR) two images}\n\n"
 }

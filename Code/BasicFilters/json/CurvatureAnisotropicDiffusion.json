@@ -1,64 +1,53 @@
 {
-  "name": "CurvatureAnisotropicDiffusion",
-  "template_code_filename": "ImageFilter",
-  "template_test_filename": "ImageFilter",
-  "number_of_inputs": 1,
-  "doc": "Some global documentation",
-  "pixel_types": "RealPixelIDTypeList",
-  "members":   [
-        {
-      "name": "TimeStep",
-      "type": "double",
-      "default": 0.125,
-      "doc": "Time step for PDE solver"
-    },
-        {
-      "name": "ConductanceParameter",
-      "type": "double",
-      "default": 3,
-      "doc": "Conductance parameter governing sensitivity of the conductance equation."
-    },
-        {
-      "name": "ConductanceScalingUpdateInterval",
-      "type": "unsigned int",
-      "default": 1,
-      "doc": "Interval at which a new scaling for the conductance term is calculated."
-    },
-        {
-      "name": "NumberOfIterations",
-      "type": "uint32_t",
-      "default": "5u",
-      "doc": "Number of iterations to run"
-    }
-  ],
-  "tests":   [
-        {
-      "tag": "defaults",
-      "description": "Simply run with default settings",
-      "inputA": "Input/RA-Float.nrrd",
-      "settings": [      {
-        "parameter": "TimeStep",
-        "value": 0.01
-      }],
-      "tolerance": 0.1
-    },
-        {
-      "tag": "longer",
-      "description": "Change number of iterations and timestep",
-      "inputA": "Input/RA-Float.nrrd",
-      "settings":       [
-                {
-          "parameter": "TimeStep",
-          "value": 0.01
-        },
-                {
-          "parameter": "NumberOfIterations",
-          "value": 10
-        }
-      ],
-      "tolerance": 0.1
-    }
-  ],
-  "briefdescription": "",
-  "detaileddescription": "This filter performs anisotropic diffusion on a scalar itk::Imageusing the modified curvature diffusion equation (MCDE) implemented in itkCurvatureNDAnisotropicDiffusionFunction. For detailed information on anisotropic diffusion and the MCDE see itkAnisotropicDiffusionFunction and itkCurvatureNDAnisotropicDiffusionFunction.\n\\par Inputs and Outputs\nThe input and output to this filter must be a scalar itk::Imagewith numerical pixel types (float or double). A user defined type which correctly defines arithmetic operations with floating point accuracy should also give correct results.\n\\par Parameters\nPlease first read all the documentation found in AnisotropicDiffusionImageFilterand AnisotropicDiffusionFunction. Also see CurvatureNDAnisotropicDiffusionFunction.\nThe default time step for this filter is set to the maximum theoretically stable value: 0.5 / 2^N, where N is the dimensionality of the image. For a 2D image, this means valid time steps are below 0.1250. For a 3D image, valid time steps are below 0.0625.\n\\see AnisotropicDiffusionImageFilter\n\\see AnisotropicDiffusionFunction\n\\see CurvatureNDAnisotropicDiffusionFunction\n\n"
+  "name" : "CurvatureAnisotropicDiffusion",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "RealPixelIDTypeList",
+  "members" : [ {
+    "name" : "TimeStep",
+    "type" : "double",
+    "default" : 0.125,
+    "doc" : "Time step for PDE solver"
+  }, {
+    "name" : "ConductanceParameter",
+    "type" : "double",
+    "default" : 3,
+    "doc" : "Conductance parameter governing sensitivity of the conductance equation."
+  }, {
+    "name" : "ConductanceScalingUpdateInterval",
+    "type" : "unsigned int",
+    "default" : 1,
+    "doc" : "Interval at which a new scaling for the conductance term is calculated."
+  }, {
+    "name" : "NumberOfIterations",
+    "type" : "uint32_t",
+    "default" : "5u",
+    "doc" : "Number of iterations to run"
+  } ],
+  "tests" : [ {
+    "tag" : "defaults",
+    "description" : "Simply run with default settings",
+    "inputA" : "Input/RA-Float.nrrd",
+    "settings" : [ {
+      "parameter" : "TimeStep",
+      "value" : 0.01
+    } ],
+    "tolerance" : 0.1
+  }, {
+    "tag" : "longer",
+    "description" : "Change number of iterations and timestep",
+    "inputA" : "Input/RA-Float.nrrd",
+    "settings" : [ {
+      "parameter" : "TimeStep",
+      "value" : 0.01
+    }, {
+      "parameter" : "NumberOfIterations",
+      "value" : 10
+    } ],
+    "tolerance" : 0.1
+  } ],
+  "briefdescription" : "",
+  "detaileddescription" : "This filter performs anisotropic diffusion on a scalar itk::Imageusing the modified curvature diffusion equation (MCDE) implemented in itkCurvatureNDAnisotropicDiffusionFunction. For detailed information on anisotropic diffusion and the MCDE see itkAnisotropicDiffusionFunction and itkCurvatureNDAnisotropicDiffusionFunction.\n\\par Inputs and Outputs\nThe input and output to this filter must be a scalar itk::Imagewith numerical pixel types (float or double). A user defined type which correctly defines arithmetic operations with floating point accuracy should also give correct results.\n\\par Parameters\nPlease first read all the documentation found in AnisotropicDiffusionImageFilterand AnisotropicDiffusionFunction. Also see CurvatureNDAnisotropicDiffusionFunction.\nThe default time step for this filter is set to the maximum theoretically stable value: 0.5 / 2^N, where N is the dimensionality of the image. For a 2D image, this means valid time steps are below 0.1250. For a 3D image, valid time steps are below 0.0625.\n\\see AnisotropicDiffusionImageFilter\n\\see AnisotropicDiffusionFunction\n\\see CurvatureNDAnisotropicDiffusionFunction\n\n"
 }

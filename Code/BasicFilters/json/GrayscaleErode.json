@@ -1,33 +1,30 @@
 {
-  "name": "GrayscaleErode",
-  "template_code_filename": "KernelImageFilter",
-  "number_of_inputs": 1,
-  "doc": "Performs Erode in a grayscale image.",
-  "pixel_types": "BasicPixelIDTypeList",
-  "members": [],
-  "custom_methods": [],
-  "tests": [  {
-    "tag": "GrayscaleErode",
-    "description": "Test grayscale erode",
-    "inputA": "Input/STAPLE1.png",
-    "md5hash": "cb0f49738a99f3467b575bc95a0ace44",
-    "settings":     [
-            {
-        "parameter": "KernelRadius",
-        "no_get_method": 1,
-        "value": 1
-      },
-            {
-        "parameter": "KernelType",
-        "value": "itk::simple::${name}ImageFilter::Ball",
-        "lua_value": "SimpleITK.${name}ImageFilter_Ball",
-        "python_value": "SimpleITK.${name}ImageFilter.Ball",
-        "ruby_value": "Simpleitk::${name}ImageFilter::Ball",
-        "java_value": "${name}ImageFilter.KernelType.Ball",
-        "tcl_value": "$$${name}ImageFilter_Ball"
-      }
-    ]
-  }],
-  "briefdescription": "gray scale dilation of an image\n",
-  "detaileddescription": "Erode an image using grayscale morphology. Dilation takes the maximum of all the pixels identified by the structuring element.\nThe structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element having values > 0 are candidates for affecting the center pixel.\n\\see MorphologyImageFilter, GrayscaleFunctionErodeImageFilter, BinaryErodeImageFilter\n\n\\li {Morphology/GrayscaleErodeImageFilter,Erode a grayscale image}\n\n"
+  "name" : "GrayscaleErode",
+  "template_code_filename" : "KernelImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Performs Erode in a grayscale image.",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [ ],
+  "custom_methods" : [ ],
+  "tests" : [ {
+    "tag" : "GrayscaleErode",
+    "description" : "Test grayscale erode",
+    "inputA" : "Input/STAPLE1.png",
+    "md5hash" : "cb0f49738a99f3467b575bc95a0ace44",
+    "settings" : [ {
+      "parameter" : "KernelRadius",
+      "no_get_method" : 1,
+      "value" : 1
+    }, {
+      "parameter" : "KernelType",
+      "value" : "itk::simple::${name}ImageFilter::Ball",
+      "lua_value" : "SimpleITK.${name}ImageFilter_Ball",
+      "python_value" : "SimpleITK.${name}ImageFilter.Ball",
+      "ruby_value" : "Simpleitk::${name}ImageFilter::Ball",
+      "java_value" : "${name}ImageFilter.KernelType.Ball",
+      "tcl_value" : "$$${name}ImageFilter_Ball"
+    } ]
+  } ],
+  "briefdescription" : "gray scale dilation of an image\n",
+  "detaileddescription" : "Erode an image using grayscale morphology. Dilation takes the maximum of all the pixels identified by the structuring element.\nThe structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element having values > 0 are candidates for affecting the center pixel.\n\\see MorphologyImageFilter, GrayscaleFunctionErodeImageFilter, BinaryErodeImageFilter\n\n\\li {Morphology/GrayscaleErodeImageFilter,Erode a grayscale image}\n\n"
 }

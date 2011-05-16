@@ -1,19 +1,19 @@
 {
-  "name": "Atan2",
-  "template_code_filename": "ImageFilter",
-  "template_test_filename": "ImageFilter",
-  "number_of_inputs": 2,
-  "doc": "Some global documentation",
-  "pixel_types": "BasicPixelIDTypeList",
-  "members": [],
-  "tests": [  {
-    "tag": "defaults",
-    "description": "Simply run with default settings",
-    "inputA": "Input/Ramp-Zero-One-Float.nrrd",
-    "inputB": "Input/Ramp-One-Zero-Float.nrrd",
-    "settings": [],
-    "tolerance": 0.01
-  }],
-  "briefdescription": "Computes arctangent pixel-wise from two images.\n",
-  "detaileddescription": "This class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\nBoth pixel input types are casted todoublein order to be used as parameters ofvcl_atan2(). The resultingdoublevalue is casted to the output pixel type.\n"
+  "name" : "Atan2",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 2,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [ ],
+  "tests" : [ {
+    "tag" : "defaults",
+    "description" : "Simply run with default settings",
+    "inputA" : "Input/Ramp-Zero-One-Float.nrrd",
+    "inputB" : "Input/Ramp-One-Zero-Float.nrrd",
+    "settings" : [ ],
+    "tolerance" : 0.01
+  } ],
+  "briefdescription" : "Computes arctangent pixel-wise from two images.\n",
+  "detaileddescription" : "This class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\nBoth pixel input types are casted todoublein order to be used as parameters ofvcl_atan2(). The resultingdoublevalue is casted to the output pixel type.\n"
 }

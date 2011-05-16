@@ -1,11 +1,12 @@
 #!/usr/bin/env groovy
 
-// "Grab" the json-lib module from Sourceforge
-@Grab(group='net.sf.json-lib', module='json-lib', version='2.4', classifier='jdk15')
+// Jackson is a JSON parser
+@Grab(group='org.codehaus.jackson', module='jackson-mapper-asl', version='1.8.0')
+
 // "Grab" log4j
 @Grab('log4j:log4j:1.2.16')
-import net.sf.json.groovy.*
-GJson.enhanceClasses()
+import org.codehaus.jackson.map.*
+import org.codehaus.jackson.map.ObjectMapper
 
 import org.apache.log4j.*
 
@@ -15,13 +16,16 @@ if ( this.args.size() != 2 ) {
 }
 // Read the JSON definition
 def JSONFile = this.args[0]
+def mapper = new ObjectMapper()
 def definition
 try {
-  definition = new JsonSlurper().parse ( new File ( JSONFile ) )
-} catch ( all ) {
-  println ( "Failed to parse " + JSONFile + " usually means there was a parse error" )
+  // Try using jackson
+  definition = mapper.readValue( new File ( JSONFile ), Map.class)
+} catch ( IOException e ) {
+  println ( "Failed to parse " + JSONFile + " usually means there was a parse error: " + e )
   System.exit ( 1 )
 }
+
 
 
 // Find the matching XML file
@@ -122,10 +126,8 @@ definition.members.each { member ->
 
 
 // Print our new JSON
-// println ( definition.toString ( 2 ) )
-def fw = new FileWriter ( JSONFile )
-fw.write ( definition.toString ( 2 ) )
-fw.close()
+mapper.configure(SerializationConfig.Feature.INDENT_OUTPUT, true);
+mapper.writeValue(new File(JSONFile), definition);
 
 
 

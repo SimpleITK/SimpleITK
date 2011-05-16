@@ -1,57 +1,52 @@
 {
-  "name": "MultiplyByConstant",
-  "template_code_filename": "ImageFilter",
-  "template_test_filename": "ImageFilter",
-  "number_of_inputs": 1,
-  "doc": "Multiply an image by a constant. The result is cast to the type of the input",
-  "pixel_types": "NonLabelPixelIDTypeList",
-  "include_files":   [
-    "sitkConditional.h",
-    "sitkPixelIDTokens.h"
-  ],
-  "additional_template_types": [{"type": "typename itk::simple::Conditional< std::tr1::is_same<\n    typename InputImageType::PixelType, std::complex<float> >::value, float, double>::Type"}],
-  "members": [  {
-    "name": "Constant",
-    "type": "double",
-    "default": 1,
-    "doc": "The constant by which to multiply the input image",
-    "briefdescriptionSet": "",
-    "detaileddescriptionSet": "Set the constant that will be used to multiply all the image pixels\n",
-    "briefdescriptionGet": "",
-    "detaileddescriptionGet": ""
-  }],
-  "tests":   [
-        {
-      "tag": "2d",
-      "description": "2D",
-      "inputA": "Input/STAPLE1.png",
-      "settings": [      {
-        "parameter": "Constant",
-        "value": 2.5
-      }],
-      "md5hash": "d242fd1847eac0f3f8702ee6abf00624"
-    },
-        {
-      "tag": "3d",
-      "description": "3D",
-      "inputA": "Input/RA-Short.nrrd",
-      "settings": [      {
-        "parameter": "Constant",
-        "value": 2.5
-      }],
-      "md5hash": "41eba4bd56f47a3122d9ca7e1a350bd7"
-    },
-        {
-      "tag": "2d-rgb",
-      "description": "2D-RGB",
-      "inputA": "Input/VM1111Shrink-RGBFloat.nrrd",
-      "settings": [      {
-        "parameter": "Constant",
-        "value": 2.1
-      }],
-      "md5hash": "b6c08dc54ae9082d0823a9df7130bb9f"
-    }
-  ],
-  "briefdescription": "Multiply input pixels by a constant.\n",
-  "detaileddescription": "This filter is templated over the input image type and the output image type.\n\\author Tom Vercauteren, INRIA & Mauna Kea Technologies\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/510\n\\see UnaryFunctorImageFilter\n\\li {ImageProcessing/MultiplyByConstantImageFilter,Multiply every pixel in an image by a constant}\n\n\n"
+  "name" : "MultiplyByConstant",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Multiply an image by a constant. The result is cast to the type of the input",
+  "pixel_types" : "NonLabelPixelIDTypeList",
+  "include_files" : [ "sitkConditional.h", "sitkPixelIDTokens.h" ],
+  "additional_template_types" : [ {
+    "type" : "typename itk::simple::Conditional< std::tr1::is_same<\n    typename InputImageType::PixelType, std::complex<float> >::value, float, double>::Type"
+  } ],
+  "members" : [ {
+    "name" : "Constant",
+    "type" : "double",
+    "default" : 1,
+    "doc" : "The constant by which to multiply the input image",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set the constant that will be used to multiply all the image pixels\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
+  } ],
+  "tests" : [ {
+    "tag" : "2d",
+    "description" : "2D",
+    "inputA" : "Input/STAPLE1.png",
+    "settings" : [ {
+      "parameter" : "Constant",
+      "value" : 2.5
+    } ],
+    "md5hash" : "d242fd1847eac0f3f8702ee6abf00624"
+  }, {
+    "tag" : "3d",
+    "description" : "3D",
+    "inputA" : "Input/RA-Short.nrrd",
+    "settings" : [ {
+      "parameter" : "Constant",
+      "value" : 2.5
+    } ],
+    "md5hash" : "41eba4bd56f47a3122d9ca7e1a350bd7"
+  }, {
+    "tag" : "2d-rgb",
+    "description" : "2D-RGB",
+    "inputA" : "Input/VM1111Shrink-RGBFloat.nrrd",
+    "settings" : [ {
+      "parameter" : "Constant",
+      "value" : 2.1
+    } ],
+    "md5hash" : "b6c08dc54ae9082d0823a9df7130bb9f"
+  } ],
+  "briefdescription" : "Multiply input pixels by a constant.\n",
+  "detaileddescription" : "This filter is templated over the input image type and the output image type.\n\\author Tom Vercauteren, INRIA & Mauna Kea Technologies\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/510\n\\see UnaryFunctorImageFilter\n\\li {ImageProcessing/MultiplyByConstantImageFilter,Multiply every pixel in an image by a constant}\n\n\n"
 }

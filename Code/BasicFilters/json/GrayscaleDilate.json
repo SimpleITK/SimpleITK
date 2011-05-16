@@ -1,33 +1,30 @@
 {
-  "name": "GrayscaleDilate",
-  "template_code_filename": "KernelImageFilter",
-  "number_of_inputs": 1,
-  "doc": "Performs Dilation in a grayscale image.",
-  "pixel_types": "BasicPixelIDTypeList",
-  "members": [],
-  "custom_methods": [],
-  "tests": [  {
-    "tag": "GrayscaleDilate",
-    "description": "Test grayscale dilation",
-    "inputA": "Input/STAPLE1.png",
-    "settings":     [
-            {
-        "parameter": "KernelRadius",
-        "no_get_method": 1,
-        "value": 1
-      },
-            {
-        "parameter": "KernelType",
-        "value": "itk::simple::${name}ImageFilter::Ball",
-        "lua_value": "SimpleITK.${name}ImageFilter_Ball",
-        "python_value": "SimpleITK.${name}ImageFilter.Ball",
-        "ruby_value": "Simpleitk::${name}ImageFilter::Ball",
-        "java_value": "${name}ImageFilter.KernelType.Ball",
-        "tcl_value": "$$${name}ImageFilter_Ball"
-      }
-    ],
-    "md5hash": "cb692559f1eb21e4c932f6bbb3850ad3"
-  }],
-  "briefdescription": "gray scale dilation of an image\n",
-  "detaileddescription": "Dilate an image using grayscale morphology. Dilation takes the maximum of all the pixels identified by the structuring element.\nThe structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element having values > 0 are candidates for affecting the center pixel.\n\\see MorphologyImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter\n\n\\li {Morphology/GrayscaleDilateImageFilter,Dilate a grayscale image}\n\n"
+  "name" : "GrayscaleDilate",
+  "template_code_filename" : "KernelImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Performs Dilation in a grayscale image.",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [ ],
+  "custom_methods" : [ ],
+  "tests" : [ {
+    "tag" : "GrayscaleDilate",
+    "description" : "Test grayscale dilation",
+    "inputA" : "Input/STAPLE1.png",
+    "settings" : [ {
+      "parameter" : "KernelRadius",
+      "no_get_method" : 1,
+      "value" : 1
+    }, {
+      "parameter" : "KernelType",
+      "value" : "itk::simple::${name}ImageFilter::Ball",
+      "lua_value" : "SimpleITK.${name}ImageFilter_Ball",
+      "python_value" : "SimpleITK.${name}ImageFilter.Ball",
+      "ruby_value" : "Simpleitk::${name}ImageFilter::Ball",
+      "java_value" : "${name}ImageFilter.KernelType.Ball",
+      "tcl_value" : "$$${name}ImageFilter_Ball"
+    } ],
+    "md5hash" : "cb692559f1eb21e4c932f6bbb3850ad3"
+  } ],
+  "briefdescription" : "gray scale dilation of an image\n",
+  "detaileddescription" : "Dilate an image using grayscale morphology. Dilation takes the maximum of all the pixels identified by the structuring element.\nThe structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element having values > 0 are candidates for affecting the center pixel.\n\\see MorphologyImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter\n\n\\li {Morphology/GrayscaleDilateImageFilter,Dilate a grayscale image}\n\n"
 }
