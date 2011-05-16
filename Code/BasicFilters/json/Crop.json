@@ -50,14 +50,8 @@
           "dim_vec": 1,
           "value": "{100, 100}",
           "tcl_value": "[list 100 100]",
-          "python_value":           [
-            100,
-            100
-          ],
-          "ruby_value":           [
-            100,
-            100
-          ]
+          "python_value": "[ 100, 100 ]",
+          "ruby_value": "[ 100, 100 ]"
         },
                 {
           "parameter": "UpperBoundaryCropSize",
@@ -65,14 +59,8 @@
           "dim_vec": 1,
           "value": "{167, 151}",
           "tcl_value": "[list 167 151]",
-          "python_value":           [
-            167,
-            151
-          ],
-          "ruby_value":           [
-            167,
-            151
-          ]
+          "python_value": "[ 167, 151 ]",
+          "ruby_value": "[ 167, 151 ]"
         }
       ]
     }
