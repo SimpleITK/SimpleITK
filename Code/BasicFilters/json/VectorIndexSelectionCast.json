@@ -1,0 +1,30 @@
+{
+  "name" : "VectorIndexSelectionCast",
+  "template_code_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "VectorPixelIDTypeList",
+  "output_pixel_type" : "typename InputImageType::InternalPixelType",
+  "members" : [
+      {
+          "name" : "Index",
+          "type" : "unsigned int",
+          "default" : 0,
+          "doc" : ""
+      }
+  ],
+  "tests" : [
+    {
+      "tag" : "blue",
+      "description" : "Extract blue from VH slice",
+      "inputA" : "Input/VM1111Shrink-RGBFloat.nrrd",
+      "settings" : [
+      {
+          "parameter" : "Index",
+          "value" : 2
+      }
+      ],
+      "md5hash" : "da3f74fce21be8b788da331377f7f361"
+    }
+  ]
+}
