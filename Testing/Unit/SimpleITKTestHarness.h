@@ -16,7 +16,7 @@ class DataFinder {
   /*
    * DataFinder maintains several directory paths.  It also
    * helps us find executables.
-   * 
+   *
    * Set/GetDirectory  -- Test Data directory
    *                      should be ITK/Testing/Data
    * Set/GetOutputDirectory -- Temporary directory
@@ -30,7 +30,7 @@ class DataFinder {
    */
 
  public:
-  DataFinder () { 
+  DataFinder () {
     mDirectory = TEST_HARNESS_DATA_DIRECTORY;
     mOutputDirectory = TEST_HARNESS_TEMP_DIRECTORY;
     mExecutableDirectory = EXECUTABLE_PATH;
@@ -64,7 +64,7 @@ class DataFinder {
   std::string GetOutputFile ( std::string filename ) { return mOutputDirectory + "/" + filename; };
   std::string GetExecutableDirectory() { return mExecutableDirectory; }
   std::string GetBuildDirectory() { return std::string ( SIMPLEITK_BINARY_DIR ); }
-  std::string GetPathSeparator() { 
+  std::string GetPathSeparator() {
 #ifdef WIN32
     return ";";
 #else
@@ -84,7 +84,7 @@ class DataFinder {
     return mDirectory + "/" + filename;
   };
 
-  
+
  protected:
   std::string mDirectory;
   std::string mExecutableDirectory;
@@ -128,9 +128,11 @@ public:
     std::cout << "SetEnvironment: " << key << "=" << value << std::endl;
 #endif
   }
-  /* Run the command line specified in the list of arguments.  Call FAIL if the executable fails
+  /* Run the command line specified in the list of arguments.  Call
+   * FAIL if the executable fails returning -1, return the value returned by the
+   * process otherwise.
    */
-  void RunExecutable ( std::vector<std::string> CommandLine, bool showOutput = false ) {
+  int RunExecutable ( std::vector<std::string> CommandLine, bool showOutput = false ) {
 
     std::string fullCommand;
     for ( unsigned int idx = 0; idx < CommandLine.size(); idx++ ) {
@@ -169,22 +171,57 @@ public:
     }
 
     bool failed = false;
+    int ret = -1;
+
     itksysProcess_WaitForExit ( process, 0 );
-    if ( itksysProcess_GetState ( process ) == itksysProcess_State_Error ) {
-      std::cerr << "Error executing '" << fullCommand << "': " << itksysProcess_GetErrorString ( process ) << std::endl;
-      failed = true;
-    } else if ( itksysProcess_GetState ( process ) == itksysProcess_State_Exception ) {
-      std::cerr << "Error executing '" << fullCommand << "': " << itksysProcess_GetExceptionString ( process ) << std::endl;
-      failed = true;
-    }
+
+    switch (itksysProcess_GetState( process ))
+      {
+      case itksysProcess_State_Starting:
+        std::cerr << "No process has been executed." << std::endl;
+        failed = true;
+        break;
+      case itksysProcess_State_Executing:
+        std::cerr << "The process is still executing." << std::endl;;
+        failed = true;
+        break;
+      case itksysProcess_State_Expired:
+        std::cerr << "Child was killed when timeout expired." << std::endl;
+        failed = true;
+        break;
+      case itksysProcess_State_Exited:
+        ret = itksysProcess_GetExitValue(process);
+        break;
+      case itksysProcess_State_Killed:
+        std::cerr << "Child was killed by parent." << std::endl;
+        failed = true;
+        break;
+      case itksysProcess_State_Exception:
+        std::cerr << "Child terminated abnormally: " << itksysProcess_GetExceptionString( process ) << std::endl;;
+        failed = true;
+        break;
+      case itksysProcess_State_Disowned:
+        std::cerr << "Child was disowned." << std::endl;
+        failed = true;
+        break;
+      case itksysProcess_State_Error:
+        std::cerr << "Error in administrating child process: [" << itksysProcess_GetErrorString( process ) << "]" << std::endl;
+        failed = true;
+        break;
+      default:
+        std::cerr << "Unknown Process State" << std::endl;
+        failed = true;
+      };
+
     itksysProcess_Delete ( process );
-    // Free stuff
-    for ( unsigned int idx = 0; idx < CommandLine.size(); idx++ ) {
-      // delete[] StringCommandLine[idx];
-    }
-    if ( failed ) {
-      FAIL();
-    }
+
+    if ( failed )
+      {
+      // HACK: GTest currently expects functions of void type, by
+      // using the comma operator we can get around this.
+      FAIL(), -1;
+      }
+    return ret;
   }
 };
 
