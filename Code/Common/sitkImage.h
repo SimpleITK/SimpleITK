@@ -114,6 +114,52 @@ namespace simple
     template <typename TImageType>
     void InternalInitialization( TImageType * );
 
+    /** \brief Get the value of a pixel
+     *
+     * Returns the value of a pixel for the given index. The index
+     * follows standard SimpleITK conventions for it's length. The
+     * correct method must be called for the underlying Image type,
+     * otherwise an exception will be thrown.
+     *
+     * \param idx the zero based index into the image. It's length
+     * must be at least the value of GetDimension(), additional
+     * elements will be ignored
+     *
+     * \sa Image::GetPixelIDValue
+     * @{
+     */
+    uint8_t  GetPixelAsUInt8( const std::vector<uint32_t> &idx) const;
+    int16_t  GetPixelAsInt16( const std::vector<uint32_t> &idx ) const;
+    uint16_t GetPixelAsUInt16( const std::vector<uint32_t> &idx ) const;
+    int32_t  GetPixelAsInt32( const std::vector<uint32_t> &idx ) const;
+    uint32_t GetPixelAsUInt32( const std::vector<uint32_t> &idx ) const;
+    float    GetPixelAsFloat( const std::vector<uint32_t> &idx ) const;
+    double   GetPixelAsDouble(  const std::vector<uint32_t> &idx ) const;
+    /* @} */
+
+    /** \brief Set the value of a pixel
+     *
+     * Set the value of a pixel at the provided index. The index
+     * follows standard SimpleITK conventions for it's length. The
+     * correct method must be called which should match the underlying
+     * image type, otherwise an exception will be thrown.
+     *
+     * \param idx the zero based index into the image. It's length
+     * must be at least the value of GetDimension(), additional
+     * elements will be ignored.
+     * \param v value to set the pixel to
+     *
+     * \sa Image::GetPixelIDValue
+     * @{
+     */
+    void SetPixelAsUInt8( const std::vector<uint32_t> &idx, uint8_t v );
+    void SetPixelAsInt16( const std::vector<uint32_t> &idx, int16_t v );
+    void SetPixelAsUInt16( const std::vector<uint32_t> &idx, uint16_t v );
+    void SetPixelAsInt32( const std::vector<uint32_t> &idx, int32_t v );
+    void SetPixelAsUInt32( const std::vector<uint32_t> &idx, uint32_t v );
+    void SetPixelAsFloat( const std::vector<uint32_t> &idx, float v );
+    void SetPixelAsDouble( const std::vector<uint32_t> &idx, double v );
+    /** @} */
 
   protected:
 

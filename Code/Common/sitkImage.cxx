@@ -57,6 +57,21 @@ namespace itk
 
     virtual int GetReferenceCountOfImage() const = 0;
 
+    virtual uint8_t  GetPixelAsUInt8( const std::vector<uint32_t> &idx) const = 0;
+    virtual int16_t  GetPixelAsInt16( const std::vector<uint32_t> &idx ) const = 0;
+    virtual uint16_t GetPixelAsUInt16( const std::vector<uint32_t> &idx ) const = 0;
+    virtual int32_t  GetPixelAsInt32( const std::vector<uint32_t> &idx ) const = 0;
+    virtual uint32_t GetPixelAsUInt32( const std::vector<uint32_t> &idx ) const = 0;
+    virtual float    GetPixelAsFloat( const std::vector<uint32_t> &idx ) const = 0;
+    virtual double   GetPixelAsDouble(  const std::vector<uint32_t> &idx ) const = 0;
+
+    virtual void SetPixelAsUInt8( const std::vector<uint32_t> &idx, uint8_t v ) = 0;
+    virtual void SetPixelAsInt16( const std::vector<uint32_t> &idx, int16_t v ) = 0;
+    virtual void SetPixelAsUInt16( const std::vector<uint32_t> &idx, uint16_t v ) = 0;
+    virtual void SetPixelAsInt32( const std::vector<uint32_t> &idx, int32_t v ) = 0;
+    virtual void SetPixelAsUInt32( const std::vector<uint32_t> &idx, uint32_t v ) = 0;
+    virtual void SetPixelAsFloat( const std::vector<uint32_t> &idx, float v ) = 0;
+    virtual void SetPixelAsDouble( const std::vector<uint32_t> &idx, double v ) = 0;
   };
 
 
@@ -72,9 +87,11 @@ namespace itk
     : public PimpleImageBase
   {
   public:
-    typedef PimpleImage                 Self;
-    typedef TImageType                  ImageType;
-    typedef typename ImageType::Pointer ImagePointer;
+    typedef PimpleImage                   Self;
+    typedef TImageType                    ImageType;
+    typedef typename ImageType::Pointer   ImagePointer;
+    typedef typename ImageType::IndexType IndexType;
+    typedef typename ImageType::PixelType PixelType;
 
     PimpleImage ( ImageType* image )
       : m_Image( image )
@@ -260,6 +277,136 @@ namespace itk
     virtual int GetReferenceCountOfImage() const
       {
         return this->m_Image->GetReferenceCount();
+      }
+
+
+    virtual uint8_t  GetPixelAsUInt8( const std::vector<uint32_t> &idx) const
+      {
+        return this->InternalGetPixel< BasicPixelID<uint8_t> >( idx );
+      }
+    virtual int16_t  GetPixelAsInt16( const std::vector<uint32_t> &idx ) const
+      {
+        return this->InternalGetPixel< BasicPixelID<int16_t> >( idx );
+      }
+    virtual uint16_t GetPixelAsUInt16( const std::vector<uint32_t> &idx ) const
+      {
+        return this->InternalGetPixel< BasicPixelID<uint16_t> >( idx );
+      }
+    virtual int32_t  GetPixelAsInt32( const std::vector<uint32_t> &idx ) const
+      {
+        return this->InternalGetPixel< BasicPixelID<int32_t> >( idx );
+      }
+    virtual uint32_t GetPixelAsUInt32( const std::vector<uint32_t> &idx ) const
+      {
+        return this->InternalGetPixel< BasicPixelID<uint32_t> >( idx );
+      }
+    virtual float    GetPixelAsFloat( const std::vector<uint32_t> &idx ) const
+      {
+        return this->InternalGetPixel< BasicPixelID<float> >( idx );
+      }
+    virtual double   GetPixelAsDouble(  const std::vector<uint32_t> &idx ) const
+      {
+        return this->InternalGetPixel< BasicPixelID<double> >( idx );
+      }
+
+    virtual void SetPixelAsUInt8( const std::vector<uint32_t> &idx, uint8_t v )
+      {
+        this->InternalSetPixel( idx, v );
+      }
+    virtual void SetPixelAsInt16( const std::vector<uint32_t> &idx, int16_t v )
+      {
+        this->InternalSetPixel( idx, v );
+      }
+    virtual void SetPixelAsUInt16( const std::vector<uint32_t> &idx, uint16_t v )
+      {
+        this->InternalSetPixel( idx, v );
+      }
+    virtual void SetPixelAsInt32( const std::vector<uint32_t> &idx, int32_t v )
+      {
+        this->InternalSetPixel( idx, v );
+      }
+    virtual void SetPixelAsUInt32( const std::vector<uint32_t> &idx, uint32_t v )
+      {
+        this->InternalSetPixel( idx, v );
+      }
+    virtual void SetPixelAsFloat( const std::vector<uint32_t> &idx, float v )
+      {
+        this->InternalSetPixel( idx, v );
+      }
+    virtual void SetPixelAsDouble( const std::vector<uint32_t> &idx, double v )
+      {
+        this->InternalSetPixel( idx, v );
+      }
+
+
+  protected:
+
+    template < typename TPixelIDType >
+    typename EnableIf<std::tr1::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value
+                      && !IsLabel<TPixelIDType>::Value
+                      && !IsVector<TPixelIDType>::Value,
+                      typename ImageType::PixelType >::Type
+    InternalGetPixel( const std::vector<uint32_t> &idx ) const
+      {
+        return this->m_Image->GetPixel( this->ConvertSTLToIndex( idx ) );
+      }
+
+    template < typename TPixelIDType >
+    typename EnableIf<std::tr1::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value
+                      && IsLabel<TPixelIDType>::Value
+                      && !IsVector<TPixelIDType>::Value,
+                      typename ImageType::PixelType >::Type
+    InternalGetPixel( const std::vector<uint32_t> &idx ) const
+      {
+        return this->m_Image->GetPixel( this->ConvertSTLToIndex( idx ) );
+      }
+
+    template < typename TPixelIDType >
+    typename EnableIf<std::tr1::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value
+                      && !IsLabel<TPixelIDType>::Value
+                      && IsVector<TPixelIDType>::Value,
+                      int >::Type
+    InternalGetPixel( const std::vector<uint32_t> &idx ) const
+      {
+        sitkExceptionMacro( "This method is not supported for this vector images currently." )
+      }
+
+    template < typename TPixelIDType >
+    typename DisableIf<std::tr1::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value,
+                      int >::Type
+    InternalGetPixel( const std::vector<uint32_t> &idx ) const
+      {
+        sitkExceptionMacro( "This method is not supported for this image type." )
+      }
+
+
+    template < typename TPixelType >
+    typename EnableIf<std::tr1::is_same<BasicPixelID<TPixelType>,
+                                        typename ImageTypeToPixelID<ImageType>::PixelIDType >::value >::Type
+    InternalSetPixel( const std::vector<uint32_t> &idx, TPixelType v  ) const
+      {
+        return this->m_Image->SetPixel( this->ConvertSTLToIndex( idx ), v );
+      }
+
+    template < typename TPixelType >
+    typename DisableIf<std::tr1::is_same<BasicPixelID<TPixelType>,
+                                         typename ImageTypeToPixelID<ImageType>::PixelIDType>::value >::Type
+    InternalSetPixel( const std::vector<uint32_t> &idx, TPixelType v ) const
+      {
+        sitkExceptionMacro( "This method is not supported for this image type." )
+      }
+
+    static IndexType ConvertSTLToIndex( const std::vector<uint32_t> &idx )
+      {
+        // convert idx to itk::Index
+        if ( idx.size() < ImageType::ImageDimension )
+          {
+          sitkExceptionMacro( "Image index size mismatch" );
+          }
+        IndexType itkIDX;
+        for ( unsigned int i = 0; i < ImageType::ImageDimension; ++i )
+            itkIDX[i] = idx[i];
+        return itkIDX;
       }
 
   private:
@@ -503,12 +650,14 @@ namespace itk
     // Get Origin
     std::vector< double > Image::GetOrigin( void ) const
     {
+       assert( m_PimpleImage );
       return this->m_PimpleImage->GetOrigin();
     }
 
     // Set Origin
     void Image::SetOrigin( const std::vector<double> &orgn )
     {
+       assert( m_PimpleImage );
       this->MakeUniqueForWrite();
       this->m_PimpleImage->SetOrigin(orgn);
     }
@@ -516,12 +665,14 @@ namespace itk
     // Get Spacing
     std::vector< double > Image::GetSpacing( void ) const
     {
+       assert( m_PimpleImage );
       return this->m_PimpleImage->GetSpacing();
     }
 
     // Set Spacing
     void Image::SetSpacing( const std::vector<double> &spc )
     {
+      assert( m_PimpleImage );
       this->MakeUniqueForWrite();
       this->m_PimpleImage->SetSpacing(spc);
     }
@@ -529,14 +680,108 @@ namespace itk
     // Index to Physical Point
     std::vector< double > Image::TransformIndexToPhysicalPoint( const std::vector< int64_t > &idx ) const
     {
+      assert( m_PimpleImage );
       return this->m_PimpleImage->TransformIndexToPhysicalPoint( idx );
     }
 
     // Physical Point to Index
     std::vector< int64_t > Image::TransformPhysicalPointToIndex( const std::vector< double > &pt ) const
     {
+      assert( m_PimpleImage );
       return this->m_PimpleImage->TransformPhysicalPointToIndex( pt );
     }
+
+    uint8_t Image::GetPixelAsUInt8( const std::vector<uint32_t> &idx) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetPixelAsUInt8( idx );
+    }
+
+    int16_t Image::GetPixelAsInt16( const std::vector<uint32_t> &idx ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetPixelAsInt16( idx );
+    }
+
+    uint16_t Image::GetPixelAsUInt16( const std::vector<uint32_t> &idx ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetPixelAsUInt16( idx );
+    }
+
+    int32_t Image::GetPixelAsInt32( const std::vector<uint32_t> &idx ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetPixelAsInt32( idx );
+    }
+
+    uint32_t Image::GetPixelAsUInt32( const std::vector<uint32_t> &idx ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetPixelAsUInt32( idx );
+    }
+
+    float Image::GetPixelAsFloat( const std::vector<uint32_t> &idx ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetPixelAsFloat( idx );
+    }
+
+    double Image::GetPixelAsDouble(  const std::vector<uint32_t> &idx ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetPixelAsDouble( idx );
+    }
+
+    void Image::SetPixelAsUInt8( const std::vector<uint32_t> &idx, uint8_t v )
+    {
+      assert( m_PimpleImage );
+      this->MakeUniqueForWrite();
+      this->m_PimpleImage->SetPixelAsUInt8( idx, v );
+    }
+
+    void Image::SetPixelAsInt16( const std::vector<uint32_t> &idx, int16_t v )
+    {
+      assert( m_PimpleImage );
+      this->MakeUniqueForWrite();
+      this->m_PimpleImage->SetPixelAsInt16( idx, v );
+    }
+
+    void Image::SetPixelAsUInt16( const std::vector<uint32_t> &idx, uint16_t v )
+    {
+      assert( m_PimpleImage );
+      this->MakeUniqueForWrite();
+      this->m_PimpleImage->SetPixelAsUInt16( idx, v );
+    }
+
+    void Image::SetPixelAsInt32( const std::vector<uint32_t> &idx, int32_t v )
+    {
+      assert( m_PimpleImage );
+      this->MakeUniqueForWrite();
+      this->m_PimpleImage->SetPixelAsInt32( idx, v );
+    }
+
+    void Image::SetPixelAsUInt32( const std::vector<uint32_t> &idx, uint32_t v )
+    {
+      assert( m_PimpleImage );
+      this->MakeUniqueForWrite();
+      this->m_PimpleImage->SetPixelAsUInt32( idx, v );
+    }
+
+    void Image::SetPixelAsFloat( const std::vector<uint32_t> &idx, float v )
+    {
+      assert( m_PimpleImage );
+      this->MakeUniqueForWrite();
+      this->m_PimpleImage->SetPixelAsFloat( idx, v );
+    }
+
+    void Image::SetPixelAsDouble( const std::vector<uint32_t> &idx, double v )
+    {
+      assert( m_PimpleImage );
+      this->MakeUniqueForWrite();
+      this->m_PimpleImage->SetPixelAsDouble( idx, v );
+    }
+
 
     void Image::MakeUniqueForWrite( void )
     {
