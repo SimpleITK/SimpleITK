@@ -1,66 +1,55 @@
 {
-  "name": "GradientAnisotropicDiffusion",
-  "template_code_filename": "ImageFilter",
-  "template_test_filename": "ImageFilter",
-  "number_of_inputs": 1,
-  "doc": "Some global documentation",
-  "pixel_types": "RealPixelIDTypeList",
-  "members":   [
-        {
-      "name": "TimeStep",
-      "type": "double",
-      "default": 0.125,
-      "doc": "Time step for PDE solver"
-    },
-        {
-      "name": "ConductanceParameter",
-      "type": "double",
-      "default": 3,
-      "doc": "Conductance parameter governing sensitivity of the conductance equation."
-    },
-        {
-      "name": "ConductanceScalingUpdateInterval",
-      "type": "unsigned int",
-      "default": 1,
-      "doc": "Interval at which a new scaling for the conductance term is calculated."
-    },
-        {
-      "name": "NumberOfIterations",
-      "type": "uint32_t",
-      "default": "5u",
-      "doc": "Number of iterations to run"
-    }
-  ],
-  "tests":   [
-        {
-      "tag": "defaults",
-      "description": "Simply run with default settings",
-      "inputA": "Input/RA-Float.nrrd",
-      "settings": [      {
-        "parameter": "TimeStep",
-        "value": 0.01
-      }],
-      "tolerance": 0,
-      "md5hash": null
-    },
-        {
-      "tag": "longer",
-      "description": "Change number of iterations and timestep",
-      "inputA": "Input/RA-Float.nrrd",
-      "settings":       [
-                {
-          "parameter": "TimeStep",
-          "value": 0.01
-        },
-                {
-          "parameter": "NumberOfIterations",
-          "value": 10
-        }
-      ],
-      "tolerance": 0,
-      "md5hash": null
-    }
-  ],
-  "briefdescription": "",
-  "detaileddescription": "This filter performs anisotropic diffusion on a scalar itk::Imageusing the classic Perona-Malik, gradient magnitude based equation implemented in itkGradientNDAnisotropicDiffusionFunction. For detailed information on anisotropic diffusion, see itkAnisotropicDiffusionFunction and itkGradientNDAnisotropicDiffusionFunction.\n\\par Inputs and Outputs\nThe input to this filter should be a scalar itk::Imageof any dimensionality. The output image will be a diffused copy of the input.\n\\par Parameters\nPlease see the description of parameters given in itkAnisotropicDiffusionImageFilter.\n\\see AnisotropicDiffusionImageFilter\n\\see AnisotropicDiffusionFunction\n\\seeGradientAnisotropicDiffusionFunction\n\n"
+  "name" : "GradientAnisotropicDiffusion",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "RealPixelIDTypeList",
+  "members" : [ {
+    "name" : "TimeStep",
+    "type" : "double",
+    "default" : 0.125,
+    "doc" : "Time step for PDE solver"
+  }, {
+    "name" : "ConductanceParameter",
+    "type" : "double",
+    "default" : 3,
+    "doc" : "Conductance parameter governing sensitivity of the conductance equation."
+  }, {
+    "name" : "ConductanceScalingUpdateInterval",
+    "type" : "unsigned int",
+    "default" : 1,
+    "doc" : "Interval at which a new scaling for the conductance term is calculated."
+  }, {
+    "name" : "NumberOfIterations",
+    "type" : "uint32_t",
+    "default" : "5u",
+    "doc" : "Number of iterations to run"
+  } ],
+  "tests" : [ {
+    "tag" : "defaults",
+    "description" : "Simply run with default settings",
+    "inputA" : "Input/RA-Float.nrrd",
+    "settings" : [ {
+      "parameter" : "TimeStep",
+      "value" : 0.01
+    } ],
+    "tolerance" : 0,
+    "md5hash" : null
+  }, {
+    "tag" : "longer",
+    "description" : "Change number of iterations and timestep",
+    "inputA" : "Input/RA-Float.nrrd",
+    "settings" : [ {
+      "parameter" : "TimeStep",
+      "value" : 0.01
+    }, {
+      "parameter" : "NumberOfIterations",
+      "value" : 10
+    } ],
+    "tolerance" : 0,
+    "md5hash" : null
+  } ],
+  "briefdescription" : "",
+  "detaileddescription" : "This filter performs anisotropic diffusion on a scalar itk::Imageusing the classic Perona-Malik, gradient magnitude based equation implemented in itkGradientNDAnisotropicDiffusionFunction. For detailed information on anisotropic diffusion, see itkAnisotropicDiffusionFunction and itkGradientNDAnisotropicDiffusionFunction.\n\\par Inputs and Outputs\nThe input to this filter should be a scalar itk::Imageof any dimensionality. The output image will be a diffused copy of the input.\n\\par Parameters\nPlease see the description of parameters given in itkAnisotropicDiffusionImageFilter.\n\\see AnisotropicDiffusionImageFilter\n\\see AnisotropicDiffusionFunction\n\\seeGradientAnisotropicDiffusionFunction\n\n"
 }

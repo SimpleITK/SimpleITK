@@ -1,83 +1,67 @@
 {
-  "name": "ConnectedThreshold",
-  "template_code_filename": "RegionGrowingImageFilter",
-  "template_type": "RegionGrowing",
-  "number_of_inputs": 1,
-  "doc": "Some global documentation",
-  "pixel_types": "BasicPixelIDTypeList",
-  "members":   [
-        {
-      "name": "Upper",
-      "type": "double",
-      "default": 1,
-      "doc": "Upper threshold value",
-      "briefdescriptionSet": "",
-      "detaileddescriptionSet": "Set Upper and Lower Threshold inputs as values\n",
-      "briefdescriptionGet": "",
-      "detaileddescriptionGet": "Get Upper and Lower Threshold inputs as values\n"
-    },
-        {
-      "name": "Lower",
-      "type": "double",
-      "default": 0,
-      "doc": "Lower threshold value",
-      "briefdescriptionSet": "",
-      "detaileddescriptionSet": "",
-      "briefdescriptionGet": "",
-      "detaileddescriptionGet": ""
-    },
-        {
-      "name": "ReplaceValue",
-      "type": "double",
-      "default": 1,
-      "doc": "Pixels that lie within Lower and Upper (inclusive)\nwill be replaced with this value. The default is 1.",
-      "briefdescriptionSet": "",
-      "detaileddescriptionSet": "Set/Get value to replace thresholded pixels. Pixels that lie * within Lower and Upper (inclusive) will be replaced with this value. The default is 1.\n",
-      "briefdescriptionGet": "",
-      "detaileddescriptionGet": ""
-    }
-  ],
-  "tests":   [
-        {
-      "tag": "defaults",
-      "description": "Simply run with default settings",
-      "inputA": "Input/RA-Float.nrrd",
-      "settings": [],
-      "tolerance": 0.1
-    },
-        {
-      "tag": "2d",
-      "description": "Run with 2d sample settings",
-      "inputA": "Input/STAPLE1.png",
-      "settings":       [
-                {
-          "parameter": "SeedList",
-          "dim": 2,
-          "value" : ["{100,100}",
-                     "{95,85}"]
-          "tcl_value" : ["100 100",
-                         "95 85"],
-          "python_value" : ["[100,100]",
-                            "[95,85]"],
-          "ruby_value" : ["[100,100]",
-                            "[95,85]"]
-        },
-                {
-          "parameter": "Upper",
-          "value": 255
-        },
-                {
-          "parameter": "Lower",
-          "value": 150
-        },
-                {
-          "parameter": "ReplaceValue",
-          "value": 255
-        }
-      ],
-      "tolerance": 0.1
-    }
-  ],
-  "briefdescription": "Label pixels that are connected to a seed and lie within a range of values.\n",
-  "detaileddescription": " ConnectedThresholdImageFilterlabels pixels with ReplaceValue that are connected to an initial Seed AND lie within a Lower and Upper threshold range.\n"
+  "name" : "ConnectedThreshold",
+  "template_code_filename" : "RegionGrowingImageFilter",
+  "template_type" : "RegionGrowing",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [ {
+    "name" : "Upper",
+    "type" : "double",
+    "default" : 1,
+    "doc" : "Upper threshold value",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set Upper and Lower Threshold inputs as values\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : "Get Upper and Lower Threshold inputs as values\n"
+  }, {
+    "name" : "Lower",
+    "type" : "double",
+    "default" : 0,
+    "doc" : "Lower threshold value",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
+  }, {
+    "name" : "ReplaceValue",
+    "type" : "double",
+    "default" : 1,
+    "doc" : "Pixels that lie within Lower and Upper (inclusive)\nwill be replaced with this value. The default is 1.",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set/Get value to replace thresholded pixels. Pixels that lie * within Lower and Upper (inclusive) will be replaced with this value. The default is 1.\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
+  } ],
+  "tests" : [ {
+    "tag" : "defaults",
+    "description" : "Simply run with default settings",
+    "inputA" : "Input/RA-Float.nrrd",
+    "settings" : [ ],
+    "tolerance" : 0.1
+  }, {
+    "tag" : "2d",
+    "description" : "Run with 2d sample settings",
+    "inputA" : "Input/STAPLE1.png",
+    "settings" : [ {
+      "parameter" : "SeedList",
+      "dim" : 2,
+      "value" : [ "{100,100}", "{95,85}" ],
+      "tcl_value" : [ "100 100", "95 85" ],
+      "python_value" : [ "[100,100]", "[95,85]" ],
+      "ruby_value" : [ "[100,100]", "[95,85]" ]
+    }, {
+      "parameter" : "Upper",
+      "value" : 255
+    }, {
+      "parameter" : "Lower",
+      "value" : 150
+    }, {
+      "parameter" : "ReplaceValue",
+      "value" : 255
+    } ],
+    "tolerance" : 0.1
+  } ],
+  "briefdescription" : "Label pixels that are connected to a seed and lie within a range of values.\n",
+  "detaileddescription" : " ConnectedThresholdImageFilterlabels pixels with ReplaceValue that are connected to an initial Seed AND lie within a Lower and Upper threshold range.\n"
 }

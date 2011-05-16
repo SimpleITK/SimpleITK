@@ -1,42 +1,39 @@
 {
-  "name": "BinaryMorphologicalClosing",
-  "template_code_filename": "KernelImageFilter",
-  "number_of_inputs": 1,
-  "doc": "",
-  "pixel_types": "IntegerPixelIDTypeList",
-  "members": [  {
-    "name": "ForegroundValue",
-    "type": "double",
-    "default": "255",
-    "doc": "",
-    "briefdescriptionSet": "",
-    "detaileddescriptionSet": "Set the value in the image to consider as \"foreground\". Defaults to maximum value of InputPixelType.\n",
-    "briefdescriptionGet": "",
-    "detaileddescriptionGet": "Get the value in the image considered as \"foreground\". Defaults to maximum value of InputPixelType.\n"
-  }],
-  "custom_methods": [],
-  "tests": [  {
-    "tag": "BinaryMorphologicalClosing",
-    "description": "Test binary morphological closing",
-    "inputA": "Input/STAPLE1.png",
-    "md5hash": "095f00a68a84df4396914fa758f34dcc",
-    "settings":     [
-            {
-        "parameter": "KernelRadius",
-        "no_get_method": 1,
-        "value": 1
-      },
-            {
-        "parameter": "KernelType",
-        "value": "itk::simple::${name}ImageFilter::Ball",
-        "lua_value": "SimpleITK.${name}ImageFilter_Ball",
-        "python_value": "SimpleITK.${name}ImageFilter.Ball",
-        "ruby_value": "Simpleitk::${name}ImageFilter::Ball",
-        "java_value": "${name}ImageFilter.KernelType.Ball",
-        "tcl_value": "$$${name}ImageFilter_Ball"
-      }
-    ]
-  }],
-  "briefdescription": "binary morphological closing of an image.\n",
-  "detaileddescription": "This filter removes small ( i.e., smaller than the structuring element) holes and tube like structures in the interior or at the boundaries of the image. The morphological closing of an image \"f\" is defined as: Closing(f) = Erosion(Dilation(f)).\nThe structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element having values > 0 are candidates for affecting the center pixel.\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\\see MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleErodeImageFilter\n\n"
+  "name" : "BinaryMorphologicalClosing",
+  "template_code_filename" : "KernelImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "members" : [ {
+    "name" : "ForegroundValue",
+    "type" : "double",
+    "default" : "255",
+    "doc" : "",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set the value in the image to consider as \"foreground\". Defaults to maximum value of InputPixelType.\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : "Get the value in the image considered as \"foreground\". Defaults to maximum value of InputPixelType.\n"
+  } ],
+  "custom_methods" : [ ],
+  "tests" : [ {
+    "tag" : "BinaryMorphologicalClosing",
+    "description" : "Test binary morphological closing",
+    "inputA" : "Input/STAPLE1.png",
+    "md5hash" : "095f00a68a84df4396914fa758f34dcc",
+    "settings" : [ {
+      "parameter" : "KernelRadius",
+      "no_get_method" : 1,
+      "value" : 1
+    }, {
+      "parameter" : "KernelType",
+      "value" : "itk::simple::${name}ImageFilter::Ball",
+      "lua_value" : "SimpleITK.${name}ImageFilter_Ball",
+      "python_value" : "SimpleITK.${name}ImageFilter.Ball",
+      "ruby_value" : "Simpleitk::${name}ImageFilter::Ball",
+      "java_value" : "${name}ImageFilter.KernelType.Ball",
+      "tcl_value" : "$$${name}ImageFilter_Ball"
+    } ]
+  } ],
+  "briefdescription" : "binary morphological closing of an image.\n",
+  "detaileddescription" : "This filter removes small ( i.e., smaller than the structuring element) holes and tube like structures in the interior or at the boundaries of the image. The morphological closing of an image \"f\" is defined as: Closing(f) = Erosion(Dilation(f)).\nThe structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element having values > 0 are candidates for affecting the center pixel.\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\\see MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleErodeImageFilter\n\n"
 }

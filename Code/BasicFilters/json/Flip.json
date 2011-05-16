@@ -1,59 +1,53 @@
 {
-  "name": "Flip",
-  "template_code_filename": "ImageFilter",
-  "template_test_filename": "ImageFilter",
-  "number_of_inputs": 1,
-  "doc": "",
-  "pixel_types": "NonLabelPixelIDTypeList",
-  "filter_type": "itk::FlipImageFilter< InputImageType >",
-  "members":   [
-        {
-      "dim_vec": 1,
-      "name": "FlipAxes",
-      "type": "std::vector<bool>",
-      "default": "std::vector<bool>(3, false)",
-      "doc": "",
-      "itk_type": "typename FilterType::FlipAxesArrayType",
-      "briefdescriptionSet": "",
-      "detaileddescriptionSet": "Set/Get the axis to be flipped. The image is flipped along axes for which array[i] is true.\n",
-      "briefdescriptionGet": "",
-      "detaileddescriptionGet": ""
-    },
-        {
-      "name": "FlipAboutOrigin",
-      "type": "bool",
-      "default": "false",
-      "doc": "",
-      "briefdescriptionSet": "",
-      "detaileddescriptionSet": "",
-      "briefdescriptionGet": "",
-      "detaileddescriptionGet": ""
-    }
-  ],
-  "tests":   [
-        {
-      "tag": "default",
-      "description": "Test Flip with default, should be the same as input image",
-      "inputA": "Input/RA-Short.nrrd",
-      "md5hash": "a963bd6a755b853103a2d195e01a50d3",
-      "settings": []
-    },
-        {
-      "tag": "more",
-      "description": "Another test",
-      "inputA": "Input/RA-Float.nrrd",
-      "md5hash": "4cb0ddf2b3ac01d997f38e581635cb65",
-      "settings": [      {
-        "parameter": "FlipAxes",
-        "type": "bool",
-        "dim_vec": 1,
-        "value": "{ true, false, true }",
-        "tcl_value": "[list 1 0 1]",
-        "python_value": "[ 1, 0, 1 ]",
-        "ruby_value": "[ 1, 0, 1 ]"
-      }]
-    }
-  ],
-  "briefdescription": "Flips an image across user specified axes.\n",
-  "detaileddescription": " FlipImageFilterflips an image across user specified axes. The flip axes are set via method SetFlipAxes( array ) where the input is a FixedArray<bool,ImageDimension>. The image is flipped across axes for which array[i] is true.\nIn terms of grid coordinates the image is flipped within the LargestPossibleRegion of the input image. As such, the LargestPossibleRegion of the ouput image is the same as the input.\nIn terms of geometric coordinates, the output origin is such that the image is flipped with respect to the coordinate axes.\n\n\\li {Images/FlipImageFilter,Flip an image over specified axes}\n\n"
+  "name" : "Flip",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "NonLabelPixelIDTypeList",
+  "filter_type" : "itk::FlipImageFilter< InputImageType >",
+  "members" : [ {
+    "dim_vec" : 1,
+    "name" : "FlipAxes",
+    "type" : "std::vector<bool>",
+    "default" : "std::vector<bool>(3, false)",
+    "doc" : "",
+    "itk_type" : "typename FilterType::FlipAxesArrayType",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set/Get the axis to be flipped. The image is flipped along axes for which array[i] is true.\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
+  }, {
+    "name" : "FlipAboutOrigin",
+    "type" : "bool",
+    "default" : "false",
+    "doc" : "",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
+  } ],
+  "tests" : [ {
+    "tag" : "default",
+    "description" : "Test Flip with default, should be the same as input image",
+    "inputA" : "Input/RA-Short.nrrd",
+    "md5hash" : "a963bd6a755b853103a2d195e01a50d3",
+    "settings" : [ ]
+  }, {
+    "tag" : "more",
+    "description" : "Another test",
+    "inputA" : "Input/RA-Float.nrrd",
+    "md5hash" : "4cb0ddf2b3ac01d997f38e581635cb65",
+    "settings" : [ {
+      "parameter" : "FlipAxes",
+      "type" : "bool",
+      "dim_vec" : 1,
+      "value" : "{ true, false, true }",
+      "tcl_value" : "[list 1 0 1]",
+      "python_value" : "[ 1, 0, 1 ]",
+      "ruby_value" : "[ 1, 0, 1 ]"
+    } ]
+  } ],
+  "briefdescription" : "Flips an image across user specified axes.\n",
+  "detaileddescription" : " FlipImageFilterflips an image across user specified axes. The flip axes are set via method SetFlipAxes( array ) where the input is a FixedArray<bool,ImageDimension>. The image is flipped across axes for which array[i] is true.\nIn terms of grid coordinates the image is flipped within the LargestPossibleRegion of the input image. As such, the LargestPossibleRegion of the ouput image is the same as the input.\nIn terms of geometric coordinates, the output origin is such that the image is flipped with respect to the coordinate axes.\n\n\\li {Images/FlipImageFilter,Flip an image over specified axes}\n\n"
 }

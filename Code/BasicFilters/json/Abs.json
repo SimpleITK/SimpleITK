@@ -1,25 +1,22 @@
 {
-  "name": "Abs",
-  "template_code_filename": "ImageFilter",
-  "number_of_inputs": 1,
-  "doc": "Compute the voxel-wise absolute value of an image",
-  "pixel_types": "BasicPixelIDTypeList",
-  "vector_pixel_types_by_component": "VectorPixelIDTypeList",
-  "members": [],
-  "tests":   [
-        {
-      "tag": "float",
-      "description": "Abs of a float image",
-      "inputA": "Input/RA-Slice-Float.nrrd",
-      "tolerance": 0.01
-    },
-        {
-      "tag": "short",
-      "description": "Abs of a short image",
-      "inputA": "Input/RA-Slice-Short.nrrd",
-      "tolerance": 0.01
-    }
-  ],
-  "briefdescription": "Computes the ABS(x) pixel-wise.\n",
-  "detaileddescription": "\n\\li {ImageProcessing/AbsImageFilter,Compute the absolute value of an image}\n\n"
+  "name" : "Abs",
+  "template_code_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Compute the voxel-wise absolute value of an image",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "members" : [ ],
+  "tests" : [ {
+    "tag" : "float",
+    "description" : "Abs of a float image",
+    "inputA" : "Input/RA-Slice-Float.nrrd",
+    "tolerance" : 0.01
+  }, {
+    "tag" : "short",
+    "description" : "Abs of a short image",
+    "inputA" : "Input/RA-Slice-Short.nrrd",
+    "tolerance" : 0.01
+  } ],
+  "briefdescription" : "Computes the ABS(x) pixel-wise.\n",
+  "detaileddescription" : "\n\\li {ImageProcessing/AbsImageFilter,Compute the absolute value of an image}\n\n"
 }

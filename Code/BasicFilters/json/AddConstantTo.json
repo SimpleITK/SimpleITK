@@ -1,57 +1,52 @@
 {
-  "name": "AddConstantTo",
-  "template_code_filename": "ImageFilter",
-  "template_test_filename": "ImageFilter",
-  "number_of_inputs": 1,
-  "doc": "Add a constont to an image. The result is cast to the type of the input",
-  "pixel_types": "NonLabelPixelIDTypeList",
-  "include_files":   [
-    "sitkConditional.h",
-    "sitkPixelIDTokens.h"
-  ],
-  "additional_template_types": [{"type": "typename itk::simple::Conditional< std::tr1::is_same<\n    typename InputImageType::PixelType, std::complex<float> >::value, float, double>::Type"}],
-  "members": [  {
-    "name": "Constant",
-    "type": "double",
-    "default": 1,
-    "doc": "The constant to add to the input image",
-    "briefdescriptionSet": "",
-    "detaileddescriptionSet": "Set the constant that will be used to multiply all the image pixels\n",
-    "briefdescriptionGet": "",
-    "detaileddescriptionGet": ""
-  }],
-  "tests":   [
-        {
-      "tag": "2d",
-      "description": "2D",
-      "inputA": "Input/STAPLE1.png",
-      "settings": [      {
-        "parameter": "Constant",
-        "value": 2.5
-      }],
-      "md5hash": "b4c712db593e362886b93ebab60a3c4b"
-    },
-        {
-      "tag": "3d",
-      "description": "3D",
-      "inputA": "Input/RA-Short.nrrd",
-      "settings": [      {
-        "parameter": "Constant",
-        "value": 2.5
-      }],
-      "md5hash": "bf48d507dca5e384f049112b145fd7df"
-    },
-        {
-      "tag": "2d-rgb",
-      "description": "2D-RGB",
-      "inputA": "Input/VM1111Shrink-RGBFloat.nrrd",
-      "settings": [      {
-        "parameter": "Constant",
-        "value": 2.1
-      }],
-      "md5hash": "0e9c1619ece767729fb8a92b3d5f2689"
-    }
-  ],
-  "briefdescription": "Add a constant to all input pixels.\n",
-  "detaileddescription": "This filter is templated over the input image type and the output image type.\n\\author Tom Vercauteren, INRIA & Mauna Kea Technologies\nBased on filters from the Insight Journal paper:http://hdl.handle.net/1926/510\n\\see UnaryFunctorImageFilter\n\\li {ImageProcessing/AddConstantToImageFilter,Add a constant to every pixel in an image}\n\n\n"
+  "name" : "AddConstantTo",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Add a constont to an image. The result is cast to the type of the input",
+  "pixel_types" : "NonLabelPixelIDTypeList",
+  "include_files" : [ "sitkConditional.h", "sitkPixelIDTokens.h" ],
+  "additional_template_types" : [ {
+    "type" : "typename itk::simple::Conditional< std::tr1::is_same<\n    typename InputImageType::PixelType, std::complex<float> >::value, float, double>::Type"
+  } ],
+  "members" : [ {
+    "name" : "Constant",
+    "type" : "double",
+    "default" : 1,
+    "doc" : "The constant to add to the input image",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set the constant that will be used to multiply all the image pixels\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
+  } ],
+  "tests" : [ {
+    "tag" : "2d",
+    "description" : "2D",
+    "inputA" : "Input/STAPLE1.png",
+    "settings" : [ {
+      "parameter" : "Constant",
+      "value" : 2.5
+    } ],
+    "md5hash" : "b4c712db593e362886b93ebab60a3c4b"
+  }, {
+    "tag" : "3d",
+    "description" : "3D",
+    "inputA" : "Input/RA-Short.nrrd",
+    "settings" : [ {
+      "parameter" : "Constant",
+      "value" : 2.5
+    } ],
+    "md5hash" : "bf48d507dca5e384f049112b145fd7df"
+  }, {
+    "tag" : "2d-rgb",
+    "description" : "2D-RGB",
+    "inputA" : "Input/VM1111Shrink-RGBFloat.nrrd",
+    "settings" : [ {
+      "parameter" : "Constant",
+      "value" : 2.1
+    } ],
+    "md5hash" : "0e9c1619ece767729fb8a92b3d5f2689"
+  } ],
+  "briefdescription" : "Add a constant to all input pixels.\n",
+  "detaileddescription" : "This filter is templated over the input image type and the output image type.\n\\author Tom Vercauteren, INRIA & Mauna Kea Technologies\nBased on filters from the Insight Journal paper:http://hdl.handle.net/1926/510\n\\see UnaryFunctorImageFilter\n\\li {ImageProcessing/AddConstantToImageFilter,Add a constant to every pixel in an image}\n\n\n"
 }

@@ -1,26 +1,23 @@
 {
-  "name": "Cos",
-  "template_code_filename": "ImageFilter",
-  "template_test_filename": "ImageFilter",
-  "number_of_inputs": 1,
-  "doc": "Some global documentation",
-  "pixel_types": "BasicPixelIDTypeList",
-  "vector_pixel_types_by_component": "VectorPixelIDTypeList",
-  "members": [],
-  "tests":   [
-        {
-      "tag": "float",
-      "description": "Cosine of an image",
-      "inputA": "Input/RA-Slice-Float.nrrd",
-      "tolerance": 0.01
-    },
-        {
-      "tag": "short",
-      "description": "Cosine of an image",
-      "inputA": "Input/RA-Slice-Short.nrrd",
-      "tolerance": 0.01
-    }
-  ],
-  "briefdescription": "Computes the vcl_cos(x) pixel-wise.\n",
-  "detaileddescription": "This filter is templated over the pixel type of the input image and the pixel type of the output image.\nThe filter will walk over all the pixels in the input image, and for each one of them it will do the following:\n\n\\li cast the pixel value todouble,\n\\li apply thevcl_cos()function to thedoublevalue\n\\li cast thedoublevalue resulting fromvcl_cos()to the pixel type of the output image\n\\li store the casted value into the output image.\n\nThe filter expect both images to have the same dimension (e.g. both 2D, or both 3D, or both ND)\n"
+  "name" : "Cos",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "members" : [ ],
+  "tests" : [ {
+    "tag" : "float",
+    "description" : "Cosine of an image",
+    "inputA" : "Input/RA-Slice-Float.nrrd",
+    "tolerance" : 0.01
+  }, {
+    "tag" : "short",
+    "description" : "Cosine of an image",
+    "inputA" : "Input/RA-Slice-Short.nrrd",
+    "tolerance" : 0.01
+  } ],
+  "briefdescription" : "Computes the vcl_cos(x) pixel-wise.\n",
+  "detaileddescription" : "This filter is templated over the pixel type of the input image and the pixel type of the output image.\nThe filter will walk over all the pixels in the input image, and for each one of them it will do the following:\n\n\\li cast the pixel value todouble,\n\\li apply thevcl_cos()function to thedoublevalue\n\\li cast thedoublevalue resulting fromvcl_cos()to the pixel type of the output image\n\\li store the casted value into the output image.\n\nThe filter expect both images to have the same dimension (e.g. both 2D, or both 3D, or both ND)\n"
 }

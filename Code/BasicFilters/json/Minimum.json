@@ -1,19 +1,19 @@
 {
-  "name": "Minimum",
-  "template_code_filename": "ImageFilter",
-  "template_test_filename": "ImageFilter",
-  "number_of_inputs": 2,
-  "doc": "Some global documentation",
-  "pixel_types": "BasicPixelIDTypeList",
-  "members": [],
-  "tests": [  {
-    "tag": "defaults",
-    "description": "Simply run with default settings",
-    "inputA": "Input/Ramp-Zero-One-Float.nrrd",
-    "inputB": "Input/Ramp-One-Zero-Float.nrrd",
-    "settings": [],
-    "md5hash": "35088a16227bda50ff5c93baa2199a17"
-  }],
-  "briefdescription": "Implements a pixel-wise operator Min(a,b) between two images.\n",
-  "detaileddescription": "The pixel values of the output image are the minimum between the corresponding pixels of the two input images.\nThis class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults. + *\n\n\\li {ImageProcessing/MinimumImageFilter,Pixel wise compare two input images and set the output pixel to their min}\n\n"
+  "name" : "Minimum",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 2,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [ ],
+  "tests" : [ {
+    "tag" : "defaults",
+    "description" : "Simply run with default settings",
+    "inputA" : "Input/Ramp-Zero-One-Float.nrrd",
+    "inputB" : "Input/Ramp-One-Zero-Float.nrrd",
+    "settings" : [ ],
+    "md5hash" : "35088a16227bda50ff5c93baa2199a17"
+  } ],
+  "briefdescription" : "Implements a pixel-wise operator Min(a,b) between two images.\n",
+  "detaileddescription" : "The pixel values of the output image are the minimum between the corresponding pixels of the two input images.\nThis class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults. + *\n\n\\li {ImageProcessing/MinimumImageFilter,Pixel wise compare two input images and set the output pixel to their min}\n\n"
 }

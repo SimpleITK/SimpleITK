@@ -1,76 +1,65 @@
 {
-  "name": "BinaryThreshold",
-  "template_code_filename": "ImageFilter",
-  "template_test_filename": "ImageFilter",
-  "doc": "Docs",
-  "pixel_types": "BasicPixelIDTypeList",
-  "members":   [
-        {
-      "name": "LowerThreshold",
-      "type": "double",
-      "default": "0.0",
-      "doc": "",
-      "briefdescriptionSet": "",
-      "detaileddescriptionSet": "",
-      "briefdescriptionGet": "",
-      "detaileddescriptionGet": ""
-    },
-        {
-      "name": "UpperThreshold",
-      "type": "double",
-      "default": "255.0",
-      "doc": "",
-      "briefdescriptionSet": "",
-      "detaileddescriptionSet": "Set the thresholds. The default lower threshold is NumericTraits<InputPixelType>::NonpositiveMin(). The default upper threshold is NumericTraits<InputPixelType>::max. An execption is thrown if the lower threshold is greater than the upper threshold.\n",
-      "briefdescriptionGet": "",
-      "detaileddescriptionGet": "Get the threshold values.\n"
-    },
-        {
-      "name": "InsideValue",
-      "type": "double",
-      "default": "1.0",
-      "doc": "",
-      "briefdescriptionSet": "",
-      "detaileddescriptionSet": "Set the \"inside\" pixel value. The default value NumericTraits<OutputPixelType>::max()\n",
-      "briefdescriptionGet": "",
-      "detaileddescriptionGet": "Get the \"inside\" pixel value.\n"
-    },
-        {
-      "name": "OutsideValue",
-      "type": "double",
-      "default": "0.0",
-      "doc": "",
-      "briefdescriptionSet": "",
-      "detaileddescriptionSet": "Set the \"outside\" pixel value. The default value NumericTraits<OutputPixelType>::Zero.\n",
-      "briefdescriptionGet": "",
-      "detaileddescriptionGet": "Get the \"outside\" pixel value.\n"
-    }
-  ],
-  "tests":   [
-        {
-      "tag": "default",
-      "description": "Default parameter settings",
-      "inputA": "Input/RA-Short.nrrd",
-      "settings": [],
-      "md5hash": "1c8530a8bf94201c6a36d194953e82c7"
-    },
-        {
-      "tag": "NarrowThreshold",
-      "description": "Default parameter settings",
-      "inputA": "Input/RA-Short.nrrd",
-      "settings":       [
-                {
-          "parameter": "LowerThreshold",
-          "value": 10
-        },
-                {
-          "parameter": "UpperThreshold",
-          "value": 100
-        }
-      ],
-      "md5hash": "75dc50f4e860bf4e50f234e3adcb9057"
-    }
-  ],
-  "briefdescription": "Binarize an input image by thresholding.\n",
-  "detaileddescription": "This filter produces an output image whose pixels are either one of two values ( OutsideValue or InsideValue ), depending on whether the corresponding input image pixels lie between the two thresholds ( LowerThreshold and UpperThreshold ). Values equal to either threshold is considered to be between the thresholds.\nMore precisely \\f[ Output(x_i) = \\begin{cases} InsideValue & \\text{if \\f$LowerThreshold \\leq x_i \\leq UpperThreshold\\f$} \\\\ OutsideValue & \\text{otherwise} \\end{cases} \\f]  \nThis filter is templated over the input image type and the output image type.\nThe filter expect both images to have the same number of dimensions.\nThe default values for LowerThreshold and UpperThreshold are: LowerThreshold = NumericTraits<TInput>::NonpositiveMin(); UpperThreshold = NumericTraits<TInput>::max(); Therefore, generally only one of these needs to be set, depending on whether the user wants to threshold above or below the desired threshold.\n\n\\li {ImageProcessing/BinaryThresholdImageFilter,Threshold an image}\n\n"
+  "name" : "BinaryThreshold",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "doc" : "Docs",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [ {
+    "name" : "LowerThreshold",
+    "type" : "double",
+    "default" : "0.0",
+    "doc" : "",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
+  }, {
+    "name" : "UpperThreshold",
+    "type" : "double",
+    "default" : "255.0",
+    "doc" : "",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set the thresholds. The default lower threshold is NumericTraits<InputPixelType>::NonpositiveMin(). The default upper threshold is NumericTraits<InputPixelType>::max. An execption is thrown if the lower threshold is greater than the upper threshold.\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : "Get the threshold values.\n"
+  }, {
+    "name" : "InsideValue",
+    "type" : "double",
+    "default" : "1.0",
+    "doc" : "",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set the \"inside\" pixel value. The default value NumericTraits<OutputPixelType>::max()\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : "Get the \"inside\" pixel value.\n"
+  }, {
+    "name" : "OutsideValue",
+    "type" : "double",
+    "default" : "0.0",
+    "doc" : "",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set the \"outside\" pixel value. The default value NumericTraits<OutputPixelType>::Zero.\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : "Get the \"outside\" pixel value.\n"
+  } ],
+  "tests" : [ {
+    "tag" : "default",
+    "description" : "Default parameter settings",
+    "inputA" : "Input/RA-Short.nrrd",
+    "settings" : [ ],
+    "md5hash" : "1c8530a8bf94201c6a36d194953e82c7"
+  }, {
+    "tag" : "NarrowThreshold",
+    "description" : "Default parameter settings",
+    "inputA" : "Input/RA-Short.nrrd",
+    "settings" : [ {
+      "parameter" : "LowerThreshold",
+      "value" : 10
+    }, {
+      "parameter" : "UpperThreshold",
+      "value" : 100
+    } ],
+    "md5hash" : "75dc50f4e860bf4e50f234e3adcb9057"
+  } ],
+  "briefdescription" : "Binarize an input image by thresholding.\n",
+  "detaileddescription" : "This filter produces an output image whose pixels are either one of two values ( OutsideValue or InsideValue ), depending on whether the corresponding input image pixels lie between the two thresholds ( LowerThreshold and UpperThreshold ). Values equal to either threshold is considered to be between the thresholds.\nMore precisely \\f[ Output(x_i) = \\begin{cases} InsideValue & \\text{if \\f$LowerThreshold \\leq x_i \\leq UpperThreshold\\f$} \\\\ OutsideValue & \\text{otherwise} \\end{cases} \\f]  \nThis filter is templated over the input image type and the output image type.\nThe filter expect both images to have the same number of dimensions.\nThe default values for LowerThreshold and UpperThreshold are: LowerThreshold = NumericTraits<TInput>::NonpositiveMin(); UpperThreshold = NumericTraits<TInput>::max(); Therefore, generally only one of these needs to be set, depending on whether the user wants to threshold above or below the desired threshold.\n\n\\li {ImageProcessing/BinaryThresholdImageFilter,Threshold an image}\n\n"
 }

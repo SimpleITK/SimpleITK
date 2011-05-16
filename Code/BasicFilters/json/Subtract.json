@@ -1,37 +1,33 @@
 {
-  "name": "Subtract",
-  "template_code_filename": "ImageFilter",
-  "template_test_filename": "ImageFilter",
-  "number_of_inputs": 2,
-  "doc": "Some global documentation",
-  "pixel_types": "NonLabelPixelIDTypeList",
-  "members": [],
-  "tests":   [
-        {
-      "tag": "2D",
-      "description": "Default parameter settings",
-      "inputA": "Input/RA-Slice-Float.nrrd",
-      "inputB": "Input/RA-Slice-Float.nrrd",
-      "settings": [],
-      "md5hash": "ce338fe6899778aacfc28414f2d9498b"
-    },
-        {
-      "tag": "3D",
-      "description": "Subtract a volume from a volume",
-      "inputA": "Input/RA-Short.nrrd",
-      "inputB": "Input/RA-Short.nrrd",
-      "settings": [],
-      "md5hash": "59071590099d21dd439896592338bf95"
-    },
-        {
-      "tag": "2d-rgb",
-      "description": "2D-RGB",
-      "inputA": "Input/VM1111Shrink-RGBFloat.nrrd",
-      "inputB": "Input/VM1111Shrink-RGBFloat.nrrd",
-      "settings": [],
-      "md5hash": "30d54bcc6106abcac387cf9da95fe514"
-    }
-  ],
-  "briefdescription": "Implements an operator for pixel-wise subtraction of two images.\n",
-  "detaileddescription": "Output = Input1 - Input2.\nThis class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\n\n\\li {ImageProcessing/SubtractImageFilter,Subtract two images}\n\n"
+  "name" : "Subtract",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 2,
+  "doc" : "Some global documentation",
+  "pixel_types" : "NonLabelPixelIDTypeList",
+  "members" : [ ],
+  "tests" : [ {
+    "tag" : "2D",
+    "description" : "Default parameter settings",
+    "inputA" : "Input/RA-Slice-Float.nrrd",
+    "inputB" : "Input/RA-Slice-Float.nrrd",
+    "settings" : [ ],
+    "md5hash" : "ce338fe6899778aacfc28414f2d9498b"
+  }, {
+    "tag" : "3D",
+    "description" : "Subtract a volume from a volume",
+    "inputA" : "Input/RA-Short.nrrd",
+    "inputB" : "Input/RA-Short.nrrd",
+    "settings" : [ ],
+    "md5hash" : "59071590099d21dd439896592338bf95"
+  }, {
+    "tag" : "2d-rgb",
+    "description" : "2D-RGB",
+    "inputA" : "Input/VM1111Shrink-RGBFloat.nrrd",
+    "inputB" : "Input/VM1111Shrink-RGBFloat.nrrd",
+    "settings" : [ ],
+    "md5hash" : "30d54bcc6106abcac387cf9da95fe514"
+  } ],
+  "briefdescription" : "Implements an operator for pixel-wise subtraction of two images.\n",
+  "detaileddescription" : "Output = Input1 - Input2.\nThis class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\n\n\\li {ImageProcessing/SubtractImageFilter,Subtract two images}\n\n"
 }

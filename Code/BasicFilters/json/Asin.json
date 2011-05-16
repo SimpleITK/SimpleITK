@@ -1,18 +1,18 @@
 {
-  "name": "Asin",
-  "template_code_filename": "ImageFilter",
-  "template_test_filename": "ImageFilter",
-  "number_of_inputs": 1,
-  "doc": "Some global documentation",
-  "pixel_types": "BasicPixelIDTypeList",
-  "members": [],
-  "tests": [  {
-    "tag": "defaults",
-    "description": "Simply run with default settings",
-    "inputA": "Input/Ramp-Zero-One-Float.nrrd",
-    "settings": [],
-    "tolerance": 0.01
-  }],
-  "briefdescription": "Computes the vcl_asin(x) pixel-wise.\n",
-  "detaileddescription": "This filter is templated over the pixel type of the input image and the pixel type of the output image.\nThe filter will walk over all the pixels in the input image, and for each one of them it will do the following:\n\n\\li cast the pixel value todouble,\n\\li apply thevcl_asin()function to thedoublevalue\n\\li cast thedoublevalue resulting fromvcl_asin()to the pixel type of the output image\n\\li store the casted value into the output image.\n\nThe filter expect both images to have the same dimension (e.g. both 2D, or both 3D, or both ND)\n"
+  "name" : "Asin",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [ ],
+  "tests" : [ {
+    "tag" : "defaults",
+    "description" : "Simply run with default settings",
+    "inputA" : "Input/Ramp-Zero-One-Float.nrrd",
+    "settings" : [ ],
+    "tolerance" : 0.01
+  } ],
+  "briefdescription" : "Computes the vcl_asin(x) pixel-wise.\n",
+  "detaileddescription" : "This filter is templated over the pixel type of the input image and the pixel type of the output image.\nThe filter will walk over all the pixels in the input image, and for each one of them it will do the following:\n\n\\li cast the pixel value todouble,\n\\li apply thevcl_asin()function to thedoublevalue\n\\li cast thedoublevalue resulting fromvcl_asin()to the pixel type of the output image\n\\li store the casted value into the output image.\n\nThe filter expect both images to have the same dimension (e.g. both 2D, or both 3D, or both ND)\n"
 }

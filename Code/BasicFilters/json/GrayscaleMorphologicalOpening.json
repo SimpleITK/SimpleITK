@@ -1,87 +1,74 @@
 {
-  "name": "GrayscaleMorphologicalOpening",
-  "template_code_filename": "KernelImageFilter",
-  "number_of_inputs": 1,
-  "doc": "Performs morphological opening in a grayscale image.",
-  "pixel_types": "BasicPixelIDTypeList",
-  "members": [],
-  "custom_methods": [],
-  "tests":   [
-        {
-      "tag": "GrayscaleMorphologicalOpening",
-      "description": "Test grayscale morphological opening",
-      "inputA": "Input/STAPLE1.png",
-      "md5hash": "867de5ed8cf49c4657e1545bd57f2c23",
-      "settings":       [
-                {
-          "parameter": "KernelRadius",
-          "no_get_method": 1,
-          "value": 1
-        },
-                {
-          "parameter": "KernelType",
-          "value": "itk::simple::${name}ImageFilter::Ball",
-          "lua_value": "SimpleITK.${name}ImageFilter_Ball",
-          "python_value": "SimpleITK.${name}ImageFilter.Ball",
-          "ruby_value": "Simpleitk::${name}ImageFilter::Ball",
-          "java_value": "${name}ImageFilter.KernelType.Ball",
-          "tcl_value": "$$${name}ImageFilter_Ball"
-        }
-      ]
-    },
-        {
-      "tag": "GrayscaleMorphologicalOpeningVectorRadius1",
-      "description": "Test grayscale morphological opening with vector 3D radius",
-      "inputA": "Input/STAPLE1.png",
-      "md5hash": "5651a92320cfd9f01be4463131a4e573",
-      "settings":       [
-                {
-          "parameter": "KernelRadius",
-          "type": "uint32_t",
-          "dim_vec": 1,
-          "value": "{20,5,2}",
-          "tcl_value": "[list 20 5 2]",
-          "python_value": "[ 20, 5, 2 ]",
-          "ruby_value": "[ 20, 5, 2 ]"
-        },
-                {
-          "parameter": "KernelType",
-          "value": "itk::simple::${name}ImageFilter::Cross",
-          "lua_value": "SimpleITK.${name}ImageFilter_Cross",
-          "python_value": "SimpleITK.${name}ImageFilter.Cross",
-          "ruby_value": "Simpleitk::${name}ImageFilter::Cross",
-          "java_value": "${name}ImageFilter.KernelType.Cross",
-          "tcl_value": "$$${name}ImageFilter_Cross"
-        }
-      ]
-    },
-        {
-      "tag": "GrayscaleMorphologicalOpeningVectorRadius2",
-      "description": "Test grayscale morphological opening with vector 2D radius expecting padding of 1",
-      "inputA": "Input/STAPLE1.png",
-      "md5hash": "0a5ac0dbca31e1b92eb6d48e990582a7",
-      "settings":       [
-                {
-          "parameter": "KernelRadius",
-          "type": "uint32_t",
-          "dim_vec": 1,
-          "value": "{20,5}",
-          "tcl_value": "[list 20 5]",
-          "python_value": "[ 20, 5 ]",
-          "ruby_value": "[ 20, 5 ]"
-        },
-                {
-          "parameter": "KernelType",
-          "value": "itk::simple::${name}ImageFilter::Box",
-          "lua_value": "SimpleITK.${name}ImageFilter_Box",
-          "python_value": "SimpleITK.${name}ImageFilter.Box",
-          "ruby_value": "Simpleitk::${name}ImageFilter::Box",
-          "java_value": "${name}ImageFilter.KernelType.Box",
-          "tcl_value": "$$${name}ImageFilter_Box"
-        }
-      ]
-    }
-  ],
-  "briefdescription": "gray scale dilation of an image\n",
-  "detaileddescription": "Dilate an image using grayscale morphology. Dilation takes the maximum of all the pixels identified by the structuring element.\nThe structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element having values > 0 are candidates for affecting the center pixel.\n\\see MorphologyImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter\n\n"
+  "name" : "GrayscaleMorphologicalOpening",
+  "template_code_filename" : "KernelImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Performs morphological opening in a grayscale image.",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [ ],
+  "custom_methods" : [ ],
+  "tests" : [ {
+    "tag" : "GrayscaleMorphologicalOpening",
+    "description" : "Test grayscale morphological opening",
+    "inputA" : "Input/STAPLE1.png",
+    "md5hash" : "867de5ed8cf49c4657e1545bd57f2c23",
+    "settings" : [ {
+      "parameter" : "KernelRadius",
+      "no_get_method" : 1,
+      "value" : 1
+    }, {
+      "parameter" : "KernelType",
+      "value" : "itk::simple::${name}ImageFilter::Ball",
+      "lua_value" : "SimpleITK.${name}ImageFilter_Ball",
+      "python_value" : "SimpleITK.${name}ImageFilter.Ball",
+      "ruby_value" : "Simpleitk::${name}ImageFilter::Ball",
+      "java_value" : "${name}ImageFilter.KernelType.Ball",
+      "tcl_value" : "$$${name}ImageFilter_Ball"
+    } ]
+  }, {
+    "tag" : "GrayscaleMorphologicalOpeningVectorRadius1",
+    "description" : "Test grayscale morphological opening with vector 3D radius",
+    "inputA" : "Input/STAPLE1.png",
+    "md5hash" : "5651a92320cfd9f01be4463131a4e573",
+    "settings" : [ {
+      "parameter" : "KernelRadius",
+      "type" : "uint32_t",
+      "dim_vec" : 1,
+      "value" : "{20,5,2}",
+      "tcl_value" : "[list 20 5 2]",
+      "python_value" : "[ 20, 5, 2 ]",
+      "ruby_value" : "[ 20, 5, 2 ]"
+    }, {
+      "parameter" : "KernelType",
+      "value" : "itk::simple::${name}ImageFilter::Cross",
+      "lua_value" : "SimpleITK.${name}ImageFilter_Cross",
+      "python_value" : "SimpleITK.${name}ImageFilter.Cross",
+      "ruby_value" : "Simpleitk::${name}ImageFilter::Cross",
+      "java_value" : "${name}ImageFilter.KernelType.Cross",
+      "tcl_value" : "$$${name}ImageFilter_Cross"
+    } ]
+  }, {
+    "tag" : "GrayscaleMorphologicalOpeningVectorRadius2",
+    "description" : "Test grayscale morphological opening with vector 2D radius expecting padding of 1",
+    "inputA" : "Input/STAPLE1.png",
+    "md5hash" : "0a5ac0dbca31e1b92eb6d48e990582a7",
+    "settings" : [ {
+      "parameter" : "KernelRadius",
+      "type" : "uint32_t",
+      "dim_vec" : 1,
+      "value" : "{20,5}",
+      "tcl_value" : "[list 20 5]",
+      "python_value" : "[ 20, 5 ]",
+      "ruby_value" : "[ 20, 5 ]"
+    }, {
+      "parameter" : "KernelType",
+      "value" : "itk::simple::${name}ImageFilter::Box",
+      "lua_value" : "SimpleITK.${name}ImageFilter_Box",
+      "python_value" : "SimpleITK.${name}ImageFilter.Box",
+      "ruby_value" : "Simpleitk::${name}ImageFilter::Box",
+      "java_value" : "${name}ImageFilter.KernelType.Box",
+      "tcl_value" : "$$${name}ImageFilter_Box"
+    } ]
+  } ],
+  "briefdescription" : "gray scale dilation of an image\n",
+  "detaileddescription" : "Dilate an image using grayscale morphology. Dilation takes the maximum of all the pixels identified by the structuring element.\nThe structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element having values > 0 are candidates for affecting the center pixel.\n\\see MorphologyImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter\n\n"
 }
