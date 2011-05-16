@@ -2,7 +2,7 @@
 #define __sitkStatisticsImageFilter_h
 
 #include "sitkImageFilter.h"
-
+#include "sitkMeasurementMap.h"
 
 namespace itk {
   namespace simple {
@@ -20,7 +20,7 @@ namespace itk {
        */
       StatisticsImageFilter();
 
-      typedef BasicPixelIDTypeList PixelIDTypeList;
+      typedef BasicPixelIDTypeList   PixelIDTypeList;
 
       /** Name of this class */
       std::string GetName() const { return std::string ( "Statistics"); }
@@ -29,25 +29,29 @@ namespace itk {
       std::string ToString() const;
 
       Image Execute ( const Image & );
-      double GetMinimum() { return this->m_Minimum; }
-      double GetMaximum() { return this->m_Maximum; }
-      double GetMean() { return this->m_Mean; }
-      double GetVariance() { return this->m_Variance; }
+
+      double GetMinimum ( ) const;
+      double GetMaximum ( ) const;
+      double GetMean    ( ) const;
+      double GetVariance( ) const;
+
+      //Return the MeasuremetMap for the given labelCode
+      itk::simple::MeasurementMap GetMeasurementMap ( ) const;
     private:
 
       typedef Image (Self::*MemberFunctionType)( const Image& );
       template <class TImageType> Image ExecuteInternal ( const Image& image );
+
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 
-      double m_Minimum;
-      double m_Maximum;
-      double m_Mean;
-      double m_Variance;
+      MeasurementMap  m_MeasurementMap;
 
+      //A helper to get values out of the m_LabelStatisticsMap;
+      double QueryValue( const std::string) const;
     };
 
-
+    itk::simple::MeasurementMap Statistics ( const Image& );
   }
 }
 #endif
