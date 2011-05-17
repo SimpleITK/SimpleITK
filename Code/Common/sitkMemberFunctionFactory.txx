@@ -162,7 +162,7 @@ MemberFunctionFactory<TMemberFunctionPointer>
       break;
     case 2:
       // check if tr1::function has been set
-      if (  Superclass::m_PFunction3.find( pixelID ) != Superclass::m_PFunction3.end() )
+      if (  Superclass::m_PFunction2.find( pixelID ) != Superclass::m_PFunction3.end() )
         {
         return Superclass::m_PFunction2[ pixelID ];
         }
