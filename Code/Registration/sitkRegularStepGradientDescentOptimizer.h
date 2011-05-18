@@ -4,6 +4,7 @@
 #include "sitkMacro.h"
 #include "sitkDetail.h"
 #include "sitkImage.h"
+#include "sitkOptimizer.h"
 #include "itkRegularStepGradientDescentOptimizer.h"
 #include "sitkMemberFunctionFactory.h"
 
@@ -12,22 +13,14 @@ namespace itk
 namespace simple
 {
 
-class RegularStepGradientDescentOptimizer : public Optimizer
+  class RegularStepGradientDescentOptimizer : public SOptimizer
   {
   public:
-    RegularStepGradientDescentOptimizer() {};
-    // Could potentially set some parameters here
-    virtual ::itk::Optimizer::Pointer GetOptimizer()
-    {
-      ::itk::RegularStepGradientDescentOptimizer::Pointer optimizer = ::itk::RegularStepGradientDescentOptimizer::New();
-      optimizer->SetNumberOfIterations ( 2000 );
-      optimizer->SetMinimumStepLength ( .0005 );
-      optimizer->SetMaximumStepLength ( 4.0 );
-      optimizer->SetMinimize(true);
-      return optimizer.GetPointer();
-    }
+    RegularStepGradientDescentOptimizer();
+    virtual ~RegularStepGradientDescentOptimizer();
+    virtual ::itk::Optimizer::Pointer GetOptimizer();
   protected:
-    virtual Optimizer* Clone() { return new RegularStepGradientDescentOptimizer ( *this ); }
+    SOptimizer* Clone();
   };
 }
 }

@@ -1,6 +1,6 @@
 #include <SimpleITKTestHarness.h>
 
-#include <sitkConditional.h>
+#include <SimpleITK.h>
 
 
 TEST( ConditionalTest, ConditionalTest1 ) {
