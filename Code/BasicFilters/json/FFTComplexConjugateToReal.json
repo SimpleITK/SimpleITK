@@ -8,6 +8,14 @@
   "filter_type" : "itk::FFTComplexConjugateToRealImageFilter<InputImageType>",
   "members" : [],
   "tests" : [
+  {
+     "tag" : "defaults",
+     "description" : "Test FFTComplexConjugateToReal",
+     "inputA" : "Input/RA-FFT-Complex.nrrd",
+     "tolerance" : "0.01"
+     "settings" : [
+     ]
+   }
   ]
 }
 

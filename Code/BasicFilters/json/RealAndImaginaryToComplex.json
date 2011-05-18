@@ -8,6 +8,15 @@
   "output_pixel_type" : "std::complex<typename InputImageType::PixelType>",
   "members" : [],
   "tests" : [
+  {
+     "tag" : "defaults",
+     "description" : "Test defaults",
+     "inputA" : "Input/RA-Slice-Float.nrrd",
+     "inputB" : "Input/RA-Slice-Float.nrrd",
+      "md5hash" : "1129328e636444d9df8000a1bdebddce",
+     "settings" : [
+     ]
+   }
   ]
 }
 

@@ -14,6 +14,22 @@
     }
   ],
   "tests" : [
+  {
+     "tag" : "defaults-complex",
+     "description" : "Test FFTShift complex",
+     "inputA" : "Input/RA-FFT-Complex.nrrd",
+     "md5hash" : "9b4b0f11dd58a03d94d0e246e14cf63d",
+     "settings" : [
+     ]
+   },
+  {
+     "tag" : "defaults-float",
+     "description" : "Test FFTShift float",
+     "inputA" : "Input/RA-Slice-Float.nrrd",
+     "md5hash" : "94409cf6d85e17a3dba2f2aba214d4ac",
+     "settings" : [
+     ]
+   }
   ]
 }
 
