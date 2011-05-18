@@ -15,7 +15,7 @@ include_directories (
  )
 
 
-add_library ( SimpleITKBasicFilters ${SimpleITKBasicFiltersSource} ${SimpleITKBasicFiltersGeneratedSource})
+add_library ( SimpleITKBasicFilters STATIC ${SimpleITKBasicFiltersSource} ${SimpleITKBasicFiltersGeneratedSource})
 target_link_libraries ( SimpleITKBasicFilters SimpleITKCommon ${ITK_LIBRARIES} )
 
 
