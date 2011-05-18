@@ -1,16 +1,6 @@
 #include <SimpleITKTestHarness.h>
 
-#include <sitkImage.h>
-#include <sitkImageFileReader.h>
-#include <sitkImageFileWriter.h>
-#include <sitkHashImageFilter.h>
-#include <sitkRecursiveGaussianImageFilter.h>
-#include <sitkCastImageFilter.h>
-#include <sitkPixelIDValues.h>
-
-
-#include "itkRecursiveGaussianImageFilter.h"
-
+#include <SimpleITK.h>
 
 TEST(BasicFilters,RecursiveGaussian_ENUMCHECK) {
 
@@ -113,7 +103,36 @@ TEST(BasicFilters,Cast) {
 
 TEST(BasicFilters,HashImageFilter) {
   itk::simple::HashImageFilter hasher;
-  EXPECT_NE ( "", hasher.ToString() );
+  EXPECT_EQ ( "", hasher.ToString() );
   EXPECT_EQ ( itk::simple::HashImageFilter::SHA1, hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).GetHashFunction() );
   EXPECT_EQ ( itk::simple::HashImageFilter::MD5, hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).GetHashFunction() );
+}
+
+TEST(BasicFilters,LabelStatistics) {
+  itk::simple::Image image = itk::simple::ReadImage ( dataFinder.GetFile ( "Input/cthead1.png" ) );
+  itk::simple::Image labels = itk::simple::ReadImage ( dataFinder.GetFile ( "Input/2th_cthead1.png" ) );
+
+  itk::simple::LabelStatisticsImageFilter stats;
+  stats.Execute ( image, labels );
+
+  EXPECT_NEAR ( stats.GetMinimum ( 0 ), 0, 0.01 );
+  EXPECT_NEAR ( stats.GetMaximum ( 0 ), 104, 0.01 );
+  EXPECT_NEAR ( stats.GetMean ( 0 ), 14.13, 0.01 );
+  EXPECT_NEAR ( stats.GetVariance ( 0 ), 285.351, 0.01 );
+  EXPECT_TRUE ( stats.HasLabel ( 0 ) );
+
+  const itk::simple::LabelStatisticsImageFilter::LabelListingType myLabels = stats.GetValidLabels();
+  EXPECT_EQ ( myLabels.size() , 3);
+
+  const itk::simple::LabelStatisticsImageFilter::LabelStatisticsMap myMap = stats.GetLabelStatisticsMap();
+  EXPECT_EQ( myLabels.size() , myMap.size() );
+
+  const itk::simple::MeasurementMap myMeasurementMap = stats.GetMeasurementMap(0);
+  EXPECT_EQ( myMeasurementMap.size(), 4 ); //4 measurements produced
+
+  const itk::simple::BasicMeasurementMap myBasicMeasurementMap = myMeasurementMap.GetBasicMeasurementMap();
+  EXPECT_EQ( myBasicMeasurementMap.size(), 4 ); //4 measurements produced
+
+  myMeasurementMap.PrintToCSVString(); //This implicitly tests GetVectorOfMeasurementNames, and GetVectorOfMeasurementValues
+
 }

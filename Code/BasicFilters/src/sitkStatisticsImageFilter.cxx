@@ -1,4 +1,5 @@
 #include "sitkStatisticsImageFilter.h"
+
 #include "itkStatisticsImageFilter.h"
 
 namespace itk {
@@ -6,22 +7,35 @@ namespace simple {
 
 //----------------------------------------------------------------------------
 
+// Functional interface
+  itk::simple::MeasurementMap Statistics ( const Image& image )
+  {
+    StatisticsImageFilter filter;
+    filter.Execute ( image );
+    return filter.GetMeasurementMap( );
+  }
+
 //
 // Default constructor that initializes parameters
 //
 StatisticsImageFilter::StatisticsImageFilter ()
   {
-    m_Minimum = -1.0;
-    m_Maximum = -1.0;
-    m_Mean = -1.0;
-    m_Variance = -1.0;
-
+  this->m_MeasurementMap.clear();
   this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
   }
 
+double StatisticsImageFilter::QueryValue( const std::string currMeasurement) const
+  {
+    const MeasurementMap::const_iterator measurmentContainerIt(  this->m_MeasurementMap.find(currMeasurement) );
+    if( measurmentContainerIt != this->m_MeasurementMap.end() )
+      {
+      return measurmentContainerIt->second;
+      }
+    return itk::NumericTraits< double >::quiet_NaN();
+  }
 //
 // ToString
 //
@@ -29,12 +43,43 @@ std::string StatisticsImageFilter::ToString() const
   {
   std::ostringstream out;
   out << "itk::simple::StatisticsImageFilter\n";
-  out << "\tMinimum: " << this->m_Minimum << "\n";
-  out << "\tMaximum: " << this->m_Maximum << "\n";
-  out << "\tMean: " << this->m_Mean << "\n";
-  out << "\tVariance: " << this->m_Variance << "\n";
+  for ( MeasurementMap::const_iterator measurmentContainerIt = this->m_MeasurementMap.begin();
+    measurmentContainerIt != this->m_MeasurementMap.end();
+    ++measurmentContainerIt)
+    {
+    out <<
+      "\t[" <<
+      measurmentContainerIt->first <<
+      "] = "  <<
+      measurmentContainerIt->second <<
+      "\n";
+    }
   return out.str();
   }
+
+
+double StatisticsImageFilter::GetMinimum ( ) const
+  {
+  return this->QueryValue( "Minimum" );
+  }
+double StatisticsImageFilter::GetMaximum ( ) const
+  {
+  return this->QueryValue( "Maximum" );
+  }
+double StatisticsImageFilter::GetMean    ( ) const
+  {
+  return this->QueryValue( "Mean" );
+  }
+double StatisticsImageFilter::GetVariance( ) const
+  {
+  return this->QueryValue( "Variance" );
+  }
+
+itk::simple::MeasurementMap StatisticsImageFilter::GetMeasurementMap( ) const
+  {
+  return this->m_MeasurementMap;
+  }
+
 //
 // Execute
 //
@@ -72,10 +117,10 @@ Image StatisticsImageFilter::ExecuteInternal ( const Image& inImage1 )
   filter->SetInput( image1 );
   filter->Update();
 
-  this->m_Minimum = filter->GetMinimum();
-  this->m_Maximum = filter->GetMaximum();
-  this->m_Mean = filter->GetMean();
-  this->m_Variance = filter->GetVariance();
+  m_MeasurementMap["Minimum"] =filter->GetMinimum();
+  m_MeasurementMap["Maximum"] =filter->GetMaximum();
+  m_MeasurementMap["Mean"]    =filter->GetMean();
+  m_MeasurementMap["Variance"]=filter->GetVariance();
 
   return Image( filter->GetOutput() );
   }

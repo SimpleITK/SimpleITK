@@ -23,4 +23,4 @@ endif( WRAP_CSHARP )
 #
 # Go into testing subdirs
 #
-subdirs(Segmentation)
+add_subdirectory(Segmentation)
