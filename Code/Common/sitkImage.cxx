@@ -48,6 +48,8 @@ namespace itk
     virtual void SetOrigin( const std::vector<double> &orgn ) = 0;
     virtual std::vector<double> GetSpacing( void ) const = 0;
     virtual void SetSpacing( const std::vector<double> &spc ) = 0;
+    virtual std::vector< std::vector<double> > GetDirection() const = 0;
+    virtual void SetDirection ( const std::vector<std::vector< double > > &direction ) = 0;
 
     virtual std::vector<int64_t> TransformPhysicalPointToIndex( const std::vector<double> &pt) const = 0;
     virtual std::vector<double> TransformIndexToPhysicalPoint( const std::vector<int64_t> &idx) const = 0;
@@ -142,7 +144,7 @@ namespace itk
         return ImageTypeToPixelIDValue< ImageType>::Result;
       }
 
-    virtual unsigned int GetDimension( void )
+    virtual uint32_t GetDimension( void )
       {
         return ImageType::ImageDimension;
       }
@@ -197,6 +199,47 @@ namespace itk
 
       this->m_Image->SetSpacing( spacing );
       }
+
+    // Get Direction
+    virtual std::vector<std::vector<double> > GetDirection( void ) const
+      {
+      typename ImageType::DirectionType direction = this->m_Image->GetDirection();
+      std::vector<std::vector<double> > out;
+      out.resize ( ImageType::ImageDimension );
+      for ( uint32_t i = 0; i < ImageType::ImageDimension; i++ )
+        {
+          out[i] = std::vector<double>();
+          out[i].resize ( ImageType::ImageDimension );
+          for ( uint32_t j = 0; j < ImageType::ImageDimension; j++ )
+            {
+              out[i][j] = direction[i][j];
+            }
+        }
+      return out;
+      }
+
+    // Set Direction
+    virtual void SetDirection( const std::vector<std::vector<double> > &in )
+      {
+        typename ImageType::DirectionType direction;
+        if ( in.size() != ImageType::ImageDimension )
+          {
+            sitkExceptionMacro("Image::SetDirection -> vector dimension mismatch");
+          }
+        for ( uint32_t i = 0; i < ImageType::ImageDimension; i++ )
+          {
+            if ( in[i].size() != ImageType::ImageDimension)
+              {
+              sitkExceptionMacro("Image::SetDirection -> vector dimension mismatch");
+              }
+            for ( uint32_t j = 0; j < ImageType::ImageDimension; j++ )
+              {
+                direction[i][j] = in[i][j];
+              }
+          }
+        this->m_Image->SetDirection( direction );
+      }
+
 
     // Physical Point to Index
     virtual std::vector<int64_t> TransformPhysicalPointToIndex( const std::vector<double> &pt ) const
@@ -575,6 +618,12 @@ namespace itk
     return *this;
   }
 
+    Image::Image(  )
+      : m_PimpleImage( NULL )
+    {
+      Allocate ( 0, 0, 0, sitkUInt8 );
+    }
+
     Image::Image( unsigned int Width, unsigned int Height, PixelIDValueEnum ValueEnum )
       : m_PimpleImage( NULL )
     {
@@ -675,6 +724,18 @@ namespace itk
       assert( m_PimpleImage );
       this->MakeUniqueForWrite();
       this->m_PimpleImage->SetSpacing(spc);
+    }
+
+    // Directions
+    std::vector< std::vector<double> > Image::GetDirection() const
+    {
+      return this->m_PimpleImage->GetDirection();
+    }
+    Image& Image::SetDirection ( const std::vector<std::vector< double > > &direction )
+    {
+      this->MakeUniqueForWrite();
+      this->m_PimpleImage->SetDirection ( direction );
+      return *this;
     }
 
     // Index to Physical Point
@@ -792,7 +853,6 @@ namespace itk
         delete this->m_PimpleImage;
         this->m_PimpleImage = temp.release();
         }
-
     }
 
 ///

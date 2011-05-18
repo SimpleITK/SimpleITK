@@ -20,10 +20,19 @@ namespace simple
 class MattesMutualInformationMetric : public Metric
   {
   public:
+    typedef MattesMutualInformationMetric Self;
     MattesMutualInformationMetric();
     virtual ::itk::SingleValuedCostFunction::Pointer GetMetric ( const Image &image );
 
+    Self& SetNumberOfHistogramBins ( uint32_t bins );
+    uint32_t GetNumberOfHistogramBins();
+    Self& SetNumberOfSpatialSamples ( uint32_t samples );
+    uint32_t GetNumberOfSpatialSamples();
+
   protected:
+    uint32_t m_HistogramBins;
+    uint32_t m_SpatialSamples;
+
     template<class TImage>
     ::itk::SingleValuedCostFunction::Pointer GetMetricInternal ( const Image &image );
 

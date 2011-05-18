@@ -11,10 +11,6 @@ $(include AddExtraIncludes.h.in)
 namespace itk {
   namespace simple {
 
-    /** \class ${name}ImageFilter
-     *
-     * ${doc}
-     */
 $(include ClassDeclaration.h.in)
 $(include PublicDeclarations.h.in)
 $(include MemberGetSetDeclarations.h.in)

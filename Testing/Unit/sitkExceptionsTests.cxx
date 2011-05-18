@@ -1,6 +1,6 @@
-#include "sitkMacro.h"
-
 #include "SimpleITKTestHarness.h"
+
+#include <SimpleITK.h>
 
 static const char * DESCRIPTION = "We expect this exception";
 

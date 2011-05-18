@@ -12,6 +12,7 @@ namespace itk
 namespace simple
 {
   class Registration;
+  class ResampleImageFilter;
   class Interpolate
   {
   public:
@@ -20,6 +21,7 @@ namespace simple
     virtual ::itk::Object::Pointer GetInterpolator ( const Image &image ) = 0;
   protected:
     friend class Registration;
+    friend class ResampleImageFilter;
     virtual Interpolate* Clone() = 0;
   };
 }

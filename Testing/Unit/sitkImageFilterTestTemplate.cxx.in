@@ -6,10 +6,7 @@
 
 #include <SimpleITKTestHarness.h>
 
-#include <sitk${name}ImageFilter.h>
-#include <sitkImageFileReader.h>
-#include <sitkImageFileWriter.h>
-#include <sitkHashImageFilter.h>
+#include <SimpleITK.h>
 
 #define VERIFYHASH(hash,hashType,image,message)    \
   {                                             \
