@@ -9,6 +9,12 @@
   "members" : [],
   "tests" : [
     {
+     "tag" : "defaults",
+     "description" : "Test Complex to real",
+     "inputA" : "Input/RA-FFT-Complex.nrrd",
+     "md5hash" : "3278e36babb23c17fecc09d2e1b3f575",
+     "settings" : [
+     ]
     }
   ]
 }

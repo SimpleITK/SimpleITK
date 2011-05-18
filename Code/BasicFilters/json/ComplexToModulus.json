@@ -9,6 +9,12 @@
   "members" : [],
   "tests" : [
     {
-    }
+     "tag" : "defaults",
+     "description" : "Test Complex to modulus",
+     "inputA" : "Input/RA-FFT-Complex.nrrd",
+     "md5hash" : "e2896d9ab6b7da7b062aaeafa0783e6c",
+     "settings" : [
+     ]
+   }
   ]
 }
