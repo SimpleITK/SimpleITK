@@ -3,13 +3,11 @@
 # SimpleITK.
 
 
-
-
 #-----------------------------------------------------------------------------
 # Settings specific to the build tree.
 
 # Library directory.
-set(SimpleITK_LIBRARY_DIRS_CONFIG ${LIBRARY_OUTPUT_PATH})
+set(SimpleITK_LIBRARY_DIRS_CONFIG ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
 # Determine the include directories needed.
 set(SimpleITK_INCLUDE_DIRS_CONFIG
