@@ -22,7 +22,7 @@ namespace itk {
       LabelStatisticsImageFilter();
 
       ///Label type used is int because it is wrapped naturally by swig.
-      typedef size_t                                         LabelIdentifierType;
+      typedef unsigned int                                         LabelIdentifierType;
 
       ///List of labels is an std::vector because it seems to be most widely supported for wrapping.
       typedef std::vector<LabelIdentifierType> LabelListingType;
