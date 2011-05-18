@@ -12,6 +12,7 @@
 
 #include "sitkComplexToRealImageFilter.h"
 #include "sitkComplexToImaginaryImageFilter.h"
+#include "sitkRealAndImaginaryToComplexImageFilter.h"
 
 #include <itkIntTypes.h>
 
@@ -556,29 +557,32 @@ TEST_F(Image,GetPixel)
 
 TEST_F(Image,Mandelbrot)
 {
-  unsigned int xs = 35*500;
-  unsigned int ys = 20*500;
+  unsigned int xs = 35*100;
+  unsigned int ys = 20*100;
 
-  sitk::Image C = sitk::Image( xs, ys, sitk::sitkComplexFloat32 );
+  sitk::Image real = sitk::Image( xs, ys, sitk::sitkFloat32 );
+  sitk::Image imagine = sitk::Image( xs, ys, sitk::sitkFloat32 );
 
   for (unsigned int i = 0; i < xs; ++i )
     {
     for ( unsigned int j = 0; j < ys; ++j )
       {
-      itk::Index<2> idx;
+      std::vector<unsigned int> idx(2);
       idx[0] = i;
       idx[1] = j;
 
-      std::complex<float> v (-2.5 + ( double(i)/xs ) * 3.5, -1 + ( double(j)/ys ) * 2 );
-      dynamic_cast<itk::Image<std::complex<float>, 2> *>(C.GetImageBase())->SetPixel( idx, v );
+      real.SetPixelAsFloat( idx, -2.5 + ( double(i)/xs ) * 3.5 );
+      imagine.SetPixelAsFloat( idx, -1 + ( double(j)/ys ) * 2 );
       }
     }
 
+  sitk::Image C = sitk::RealAndImaginaryToComplex( real, imagine );
   std::cout << "Generated C" << std::endl;
 
+  // initial image filled with 0s
   sitk::Image img( xs, ys, sitk::sitkComplexFloat32 );
 
-  for ( unsigned int i = 0; i < 50; ++i )
+  for ( unsigned int i = 0; i < 25; ++i )
     {
     img *= img;
     img += C;
