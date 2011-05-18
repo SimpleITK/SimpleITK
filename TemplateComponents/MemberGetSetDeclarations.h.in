@@ -1,7 +1,9 @@
 $(foreach members
 $(if (not no_set_method) or (no_set_method == 0) then
       OUT = '\
-      /** Set ${name} */\
+      /** ${briefdescriptionSet}\
+          ${detaileddescriptionSet}\
+        */                                                                     \
       Self& Set${name} ( ${type} t ) { this->m_${name} = t; return *this; }'
   if type == "bool" then
       OUT = OUT .. '\
@@ -13,7 +15,9 @@ $(if (not no_set_method) or (no_set_method == 0) then
 end)
 $(if (not no_get_method) or (no_get_method == 0) then
       OUT = '\
-      /** Get ${name} */\
+      /** ${briefdescriptionGet}\
+          ${detaileddescriptionGet}\
+        */                                                                     \
       ${type} Get${name}() { return this->m_${name}; }'
 end)
 )

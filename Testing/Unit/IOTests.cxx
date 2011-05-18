@@ -1,8 +1,5 @@
 #include <SimpleITKTestHarness.h>
-#include <sitkImageFileReader.h>
-#include <sitkImageSeriesReader.h>
-#include <sitkImageFileWriter.h>
-#include <sitkHashImageFilter.h>
+#include <SimpleITK.h>
 
 TEST(IO,ImageFileReader) {
   itk::simple::HashImageFilter hasher;

@@ -1,9 +1,6 @@
 #include "SimpleITKTestHarness.h"
 
-#include <sitkImage.h>
-#include <sitkImageFileReader.h>
-#include <sitkImageFileWriter.h>
-#include <sitkHashImageFilter.h>
+#include <SimpleITK.h>
 
 #if defined(WRAP_JAVA)
 TEST_F(Java,SimpleGaussian) {
@@ -88,7 +85,7 @@ TEST_F(Java,ImageConnection) {
   CommandLine.push_back ( Classpath );
   CommandLine.push_back ( "-Djava.library.path=" + JavaPath );
   CommandLine.push_back ( Class );
-  
+
 
   // Run it!
   RunExecutable ( CommandLine, true );

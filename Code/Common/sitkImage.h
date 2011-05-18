@@ -42,6 +42,7 @@ namespace simple
     Image( const Image &img );
     Image& operator=( const Image &img );
 
+    Image();
     Image( unsigned int Width, unsigned int Height, PixelIDValueEnum ValueEnum );
     Image( unsigned int Width, unsigned int Height, unsigned int Depth, PixelIDValueEnum ValueEnum );
 
@@ -80,8 +81,8 @@ namespace simple
     /**@}*/
 
     // could return -1 if in valid
-    PixelIDValueType GetPixelIDValue( void ) const;
 
+    PixelIDValueType GetPixelIDValue( void ) const;
     unsigned int GetDimension( void ) const;
 
     /** Get/Set the Origin */
@@ -91,6 +92,9 @@ namespace simple
     /** Get the Spacing */
     std::vector< double > GetSpacing( void ) const;
     void SetSpacing( const std::vector< double > &spacing );
+    /** Get the Direction */
+    std::vector< std::vector<double> > GetDirection() const;
+    Self& SetDirection ( const std::vector<std::vector< double > > &direction );
 
     /** Transform index to physical point */
     std::vector< double > TransformIndexToPhysicalPoint( const std::vector< int64_t > &index ) const;
@@ -108,7 +112,7 @@ namespace simple
     std::string GetPixelIDTypeAsString( void ) const;
     std::string ToString( void ) const;
 
-    /** Method called my certain constructors to convert ITK images
+    /** Method called by certain constructors to convert ITK images
      * into simpleITK ones.
      */
     template <typename TImageType>

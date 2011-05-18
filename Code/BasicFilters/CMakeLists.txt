@@ -1,6 +1,11 @@
 
+set ( LIBNAME SimpleITKBasicFilters )
+file ( GLOB ${LIBNAME}Headers ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h ${CMAKE_CURRENT_BINARY_DIR}/include/*.h )
+set ( MASTERHEADER ${SimpleITK_BINARY_DIR}/include/${LIBNAME}.h )
+CreateLibMasterHeader( "${LIBNAME}" "${MASTERHEADER}"  "${${LIBNAME}Headers}")
+
 # Glob non-generated BasicFilters and add to cache
-file ( GLOB SimpleITKBasicFiltersSource include/*.txx src/*.cxx )
+file ( GLOB SimpleITKBasicFiltersSource include/*.txx src/*.cxx ${${LIBNAME}Headers} )
 set ( SimpleITKBasicFiltersSource ${SimpleITKBasicFiltersSource} CACHE INTERNAL "" )
 
 # Set up code generation

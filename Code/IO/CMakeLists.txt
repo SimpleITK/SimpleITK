@@ -1,3 +1,8 @@
+set ( LIBNAME SimpleITKIO )
+file ( GLOB ${LIBNAME}Headers *.h )
+set ( MASTERHEADER ${SimpleITK_BINARY_DIR}/include/${LIBNAME}.h )
+CreateLibMasterHeader( "${LIBNAME}" "${MASTERHEADER}"  "${${LIBNAME}Headers}")
+
 file ( GLOB SimpleITKIOSource *.cxx *.h )
 
 include_directories ( ${CMAKE_CURRENT_SOURCE_DIR} )

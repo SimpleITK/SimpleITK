@@ -25,17 +25,19 @@ mark_as_advanced(LIBRARY_OUTPUT_PATH EXECUTABLE_OUTPUT_PATH)
 
 set ( SimpleITK_INCLUDE_DIR
       ${CMAKE_SOURCE_DIR}/Code/Common
-      ${CMAKE_SOURCE_DIR}/Code/Registration
       ${CMAKE_SOURCE_DIR}/Code/Common/Ancillary
       ${CMAKE_SOURCE_DIR}/Code/BasicFilters/include
-      ${CMAKE_SOURCE_DIR}/Code/IO
       ${CMAKE_BINARY_DIR}/Code/BasicFilters/include
+      ${CMAKE_SOURCE_DIR}/Code/Registration
+      ${CMAKE_SOURCE_DIR}/Code/IO
+      ${CMAKE_SOURCE_DIR}/Code/Display
       ${CMAKE_BINARY_DIR}
+      ${CMAKE_BINARY_DIR}/include
       )
 
 include_directories( ${SimpleITK_INCLUDE_DIR} )
 
-set ( SimpleITK_LIBRARIES SimpleITKCommon SimpleITKIO SimpleITKBasicFilters  ${ITK_LIBRARIES} )
+set ( SimpleITK_LIBRARIES SimpleITKCommon SimpleITKIO SimpleITKBasicFilters SimpleITKRegistration SimpleITKDisplay ${ITK_LIBRARIES} )
 
 # Be sure to clear these each time
 set ( GENERATED_TEST_LIST "" CACHE INTERNAL "" )
@@ -99,6 +101,19 @@ file( GLOB template_components
       ${SimpleITK_SOURCE_DIR}/TemplateComponents/*.cxx.in
     )
 set ( template_components ${template_components} CACHE INTERNAL "" )
+
+if (WIN32)
+  # /bigobj is required for windows builds because of the size of
+  # some object files (CastImage for instance)
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj" )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /bigobj" )
+  # Avoid some warnings
+  add_definitions ( -D_SCL_SECURE_NO_WARNINGS )
+endif()
+
+
+
+include(CMake/GenerateRollupHeaders.cmake)
 
 subdirs ( Utilities Code Wrapping Examples )
 
