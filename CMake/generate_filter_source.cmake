@@ -75,11 +75,17 @@ macro( expand_template FILENAME input_dir output_dir library_name )
   set ( IMAGE_FILTER_LIST ${IMAGE_FILTER_LIST} ${FILENAME} CACHE INTERNAL "" )
 
   add_custom_command (
-    OUTPUT "${output_h}" "${output_cxx}"
+    OUTPUT "${output_h}"
     COMMAND lua ${expand_template_script} code ${input_json_file} ${input_dir}/templates/sitk ${template_include_dir} Template.h.in ${output_h}
+    DEPENDS ${input_json_file} ${template_deps} ${template_file_h} ${template_file_cxx}
+    )
+
+  add_custom_command (
+    OUTPUT "${output_cxx}"
     COMMAND lua ${expand_template_script} code ${input_json_file} ${input_dir}/templates/sitk ${template_include_dir} Template.cxx.in ${output_cxx}
     DEPENDS ${input_json_file} ${template_deps} ${template_file_h} ${template_file_cxx}
     )
+
   set ( ${library_name}GeneratedSource ${${library_name}GeneratedSource} "${output_h}" CACHE INTERNAL "" )
   set ( ${library_name}GeneratedSource ${${library_name}GeneratedSource} "${output_cxx}" CACHE INTERNAL "" )
 
@@ -132,9 +138,8 @@ macro(generate_filter_source)
   ######
   # Make target for generated code
   ######
-  add_custom_target(${directory_name}SourceCode ALL DEPENDS ${SimpleITK${directory_name}GeneratedSource})
   if (BUILD_DOXYGEN)
-    add_dependencies(Documentation ${directory_name}SourceCode)
+    add_dependencies(Documentation ${SimpleITK${directory_name}GeneratedSource} )
   endif (BUILD_DOXYGEN)
 
 
