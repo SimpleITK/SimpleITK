@@ -21,6 +21,6 @@ if( WRAP_CSHARP )
 endif( WRAP_CSHARP )
 
 #
-# Go into testing subdirs
+# Go into testing subdirectory
 #
-subdirs(Segmentation)
+add_subdirectory(Segmentation)
