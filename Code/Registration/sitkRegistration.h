@@ -23,6 +23,7 @@ namespace simple
   {
   public:
     Registration();
+    virtual ~Registration() {};
     Registration& SetUseCenteredInitialization ( bool init );
     bool GetUseCenteredInitialization();
     Registration& SetUseCenteredInitializationOn();
