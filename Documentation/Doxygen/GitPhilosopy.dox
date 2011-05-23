@@ -1,0 +1,85 @@
+/**
+\page Git Git philosophy
+This document records the standard operating procedure and philosopy
+of SimpleITK's use of Git.
+
+\section TopicBranch The life of a topic branch
+
+In order to properly manage this workflow, we need to be very careful
+about always basing our branches off of master and tracking the
+dependencies of each branch.  The steps needed to do this are:
+
+-# base new topics of of the most up to date master
+-# merge to next
+-# if there is a conflict when merging to next, abort the merge, find the branch that causes the conflict, and merge it into your branch, resolving conflicts here
+-# merge to next only when there are no (serious) conflicts left
+
+ Here are the details:
+\code
+ $ git checkout master
+ $ git pull (just to make sure master is up to date)
+ $ git checkout -b BRANCHNAME (we should also standardize our branch names)
+ ... do work and make commits on BRANCHNAME ...
+ $ git checkout next
+ $ git pull
+ $ git merge BRANCH_NAME
+\endcode
+Here's where the tricky part is.  If you get conflicts here, that
+means that there's some branch that's been merged to next which
+conflicts with your changes and isn't in master.  Instead of just
+resolving this conflict while merging BRANCH_NAME, you should
+introduce a dependency with the conflicting branch.  To do this you
+need to find the branch that conflicts and merge it with your own
+(resolving the conflict here instead).  The steps are:
+
+\code
+ $ git reset --hard next (abort the merge)
+ $ git log CONFLICTING_FILE.xxx (figure out what commit most recently changed each conflicting file)
+ $ gitk
+\endcode
+
+I use gitk, but there are probably other ways to do this.  With gitk,
+copy the commit hash you found with git log into the box marked "SHA1
+ID:" (right below the commit graph) and hit enter.  This will
+highlight the commit where CONFLICTING_FILE.xxx was most recently
+changed.  Use the "Child" link to walk through each commit in the
+branch until you reach a commit message that says "Merge branch
+'CONFLICTING_BRANCH' into next."  The commit just before this merge
+commit is the head of the conflicting branch, so copy its hash (we'll
+use xxxxxhashxxxx).  You're finally done with gitk.
+
+\code
+ $ git checkout BRANCH_NAME
+ $ git merge --no-ff --log xxxxxhashxxxx
+\endcode
+Here's where you actually resolve the conflicts.  Once done, your
+ branch now depends on CONFLICTING_BRANCH.  Now you should be able to
+ cleanly merge to next
+\code
+ $ git checkout next
+ $ git merge --no-ff --log BRANCH_NAME
+\endcode
+
+\section Discussion A philosophical discussion
+
+ Ok, that was a lot of git jargon and was probably more than you
+ wanted to know.  The question now is whether it's all worth it.  This
+ workflow is really nice because it keeps topics in nice, logically
+ isolated, branches where dependencies between topics only exist when
+ necessary.  That being said, who cares?
+
+ The main advantage here is a clean history and a nicely stable branch
+ that stays up to date with all finished work (rather than needing to
+ prep releases at regular intervals).  Since SimpleITK is under heavy
+ development, we aren't trying to provide any guarantees to anyone
+ about a stable master branch and since most of us are only working
+ part time on this project, using this workflow might just be too much
+ overhead (especially if we're going to switch to using Gerrit soon
+ anyway).
+
+ The alternative would be to just go back to a single "wild west"
+ style integration branch.  This would offer the advantage of lowering
+ the git bar significantly, but it would also mean that we would lose
+ our designated QA space (the role that next currently plays).
+ Thoughts?  Competing theories?
+*/
