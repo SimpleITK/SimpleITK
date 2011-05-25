@@ -85,17 +85,6 @@ macro( expand_template FILENAME input_dir output_dir library_name )
     OUTPUT "${output_cxx}"
     COMMAND lua ${expand_template_script} code ${input_json_file} ${input_dir}/templates/sitk ${template_include_dir} Template.cxx.in ${output_cxx}
     DEPENDS ${input_json_file} ${template_deps} ${template_file_cxx}
-    )  # header
-  add_custom_command (
-    OUTPUT "${output_h}"
-    COMMAND lua ${expand_template_script} code ${input_json_file} ${input_dir}/templates/sitk ${template_include_dir} Template.h.in ${output_h}
-    DEPENDS ${input_json_file} ${template_deps} ${template_file_h}
-    )
-  # impl
-  add_custom_command (
-    OUTPUT "${output_cxx}"
-    COMMAND lua ${expand_template_script} code ${input_json_file} ${input_dir}/templates/sitk ${template_include_dir} Template.cxx.in ${output_cxx}
-    DEPENDS ${input_json_file} ${template_deps} ${template_file_cxx}
     )
 
   set ( ${library_name}GeneratedSource ${${library_name}GeneratedSource} "${output_h}" CACHE INTERNAL "" )
