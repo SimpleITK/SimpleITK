@@ -24,7 +24,7 @@
     "inputA" : "Input/STAPLE1.png",
     "settings" : [ {
       "parameter" : "Constant",
-      "value" : 2.5
+      "value" : "2.5"
     } ],
     "md5hash" : "c0ba759e85778b02dce170d887ffacc7"
   }, {
@@ -33,7 +33,7 @@
     "inputA" : "Input/RA-Short.nrrd",
     "settings" : [ {
       "parameter" : "Constant",
-      "value" : 2.5
+      "value" : "2.5"
     } ],
     "md5hash" : "8d51cc68efed4d9156c99625ceebe915"
   }, {
@@ -42,7 +42,7 @@
     "inputA" : "Input/VM1111Shrink-RGBFloat.nrrd",
     "settings" : [ {
       "parameter" : "Constant",
-      "value" : 2.1
+      "value" : "2.1"
     } ],
     "md5hash" : "d635db8d63bcf3a1f257cb42e635ec47"
   } ],

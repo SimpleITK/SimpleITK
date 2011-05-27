@@ -25,7 +25,7 @@
   }, {
     "name" : "ForegroundValue",
     "type" : "double",
-    "default" : "255",
+    "default" : "1.0",
     "pixeltype" : "Input",
     "briefdescriptionSet" : "",
     "detaileddescriptionSet" : "Set/Get the foreground value used to identify the objects in the input and output images.\n",
@@ -38,7 +38,10 @@
     "description" : "Simply run with default settings",
     "inputA" : "Input/WhiteDots.png",
     "md5hash" : "3921141f21fcb41e6d4af197e48ffbb5",
-    "settings" : [ ]
+    "settings" : [{
+      "parameter" : "ForegroundValue",
+      "value" : "255.0"
+    } ]
   }, {
     "tag" : "custom",
     "description" : "Run binary mask on a single label",

@@ -18,8 +18,8 @@
   }, {
     "name" : "ForegroundValue",
     "type" : "double",
-    "default" : "255",
-    "doc" : "",
+    "default" : "1",
+    "pixeltype" : "Input",
     "briefdescriptionSet" : "",
     "detaileddescriptionSet" : "Set the value in the image to consider as \"foreground\". Defaults to maximum value of InputPixelType.\n",
     "briefdescriptionGet" : "",
@@ -31,6 +31,10 @@
     "description" : "Test binary fillhole with default not fully connected",
     "inputA" : "Input/BlackDots.png",
     "md5hash" : "fc79dc09164291c76b95aaa066633f67"
+    "settings" : [ {
+      "parameter" : "ForegroundValue",
+      "value" : "255"
+    } ]
   }, {
     "tag" : "BinaryFillhole2",
     "description" : "Test binary fillhole fully connected",
@@ -40,6 +44,10 @@
       "parameter" : "FullyConnected",
       "value" : "true",
       "python_value" : "True"
+    },
+    {
+      "parameter" : "ForegroundValue",
+      "value" : "255"
     } ]
   } ],
   "briefdescription" : "Remove holes not connected to the boundary of the image.\n",
