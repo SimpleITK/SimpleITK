@@ -10,12 +10,13 @@ import org.codehaus.jackson.map.ObjectMapper
 
 import org.apache.log4j.*
 
-if ( this.args.size() != 2 ) {
-  println ( "usage: GenerateDocumentation <SimpleITKClass.json> <Path/To/ITK-build/With/Doxygen>" )
+if ( this.args.size() != 3 ) {
+  println ( "usage: GenerateDocumentation <SimpleITKClass.json> <Path/To/ITK-build/With/Doxygen> <Path/To/PythonDocstrings.i" )
   System.exit ( 1 )
 }
 // Read the JSON definition
 def JSONFile = this.args[0]
+def DocstringsFile = this.args[2]
 def mapper = new ObjectMapper()
 def definition
 try {
@@ -25,8 +26,6 @@ try {
   println ( "Failed to parse " + JSONFile + " usually means there was a parse error: " + e )
   System.exit ( 1 )
 }
-
-
 
 // Find the matching XML file
 def XMLFile = null
@@ -48,10 +47,13 @@ if ( !XMLFile ) {
   System.exit ( 1 )
 }
 
+// Find the output file
+def Docstrings = new FileWriter ( new File ( DocstringsFile ), true ); // Make it append
+
 def formatDescription ( parent ) {
   StringBuilder result = new StringBuilder()
-  def prefix = [ "listitem" : "\\li ", "itemizedlist" : "\n", "ref" : " "]
-  def postfix = [ "para" : "\n", "title" : "\n" ]
+  def prefix = [ "listitem" : "\\li ", "itemizedlist" : "\n", "ref" : " ", "computeroutput" : " "]
+  def postfix = [ "para" : "\n", "title" : "\n", "computeroutput" : " "]
 
   // Go depth first
   parent.each {
@@ -98,6 +100,7 @@ def doc = new XmlParser().parse ( XMLFile )
 Map['Class'] = [ name : doc.compounddef.compoundname.text(), briefdescription : doc.compounddef.briefdescription, detaileddescription : doc.compounddef.detaileddescription ]
 
 println ( "Class: " + doc.compounddef.compoundname.text() )
+def ClassName = doc.compounddef.compoundname.text()
 
 doc.compounddef.sectiondef.memberdef.each { it ->
   if ( it.@kind == "function" ) {
@@ -110,6 +113,11 @@ doc.compounddef.sectiondef.memberdef.each { it ->
 definition.briefdescription = formatDescription ( Map.Class.briefdescription )
 definition.detaileddescription = formatDescription ( Map.Class.detaileddescription )
 
+Docstrings.println '// Generated for ClassName from ' + XMLFile
+Docstrings.println '%feature("docstring") ' + ClassName + ' "' + formatDescription ( Map.Class.briefdescription )
+Docstrings.println formatDescription ( Map.Class.detaileddescription ) + '"'
+Docstrings.println '%feature("docstring") ' + ClassName + '::Execute "' + formatDescription ( Map.Class.briefdescription ) + '"'
+
 definition.members.each { member ->
   // Lookup the name...
   // println ( "Processing definition for " + member + " of class " + member.getClass() )
@@ -120,11 +128,16 @@ definition.members.each { member ->
       // println ( "\tFound info: " + tmp )
       member["briefdescription"+prefix]    = formatDescription ( tmp.briefdescription )
       member["detaileddescription"+prefix] = formatDescription ( tmp.detaileddescription )
+      Docstrings.println '%feature("docstring") ' + ClassName + "::" + prefix+member.name + ' "' + tmp.definition.definition.text().replaceAll ( "<.*>", "" ) + tmp.definition.argsstring.text()
+      Docstrings.println formatDescription ( tmp.briefdescription )
+      Docstrings.println formatDescription ( tmp.detaileddescription ) + '"'
+      Docstrings.println ''
     }
   }
 }
 
-
+Docstrings.flush()
+Docstrings.close()
 // Print our new JSON
 mapper.configure(SerializationConfig.Feature.INDENT_OUTPUT, true);
 mapper.writeValue(new File(JSONFile), definition);
