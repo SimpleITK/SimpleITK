@@ -74,12 +74,19 @@ macro( expand_template FILENAME input_dir output_dir library_name )
   # Make a global list of ImageFilter template filters
   set ( IMAGE_FILTER_LIST ${IMAGE_FILTER_LIST} ${FILENAME} CACHE INTERNAL "" )
 
+  # header
   add_custom_command (
-    OUTPUT "${output_h}" "${output_cxx}"
+    OUTPUT "${output_h}"
     COMMAND lua ${expand_template_script} code ${input_json_file} ${input_dir}/templates/sitk ${template_include_dir} Template.h.in ${output_h}
-    COMMAND lua ${expand_template_script} code ${input_json_file} ${input_dir}/templates/sitk ${template_include_dir} Template.cxx.in ${output_cxx}
-    DEPENDS ${input_json_file} ${template_deps} ${template_file_h} ${template_file_cxx}
+    DEPENDS ${input_json_file} ${template_deps} ${template_file_h}
     )
+  # impl
+  add_custom_command (
+    OUTPUT "${output_cxx}"
+    COMMAND lua ${expand_template_script} code ${input_json_file} ${input_dir}/templates/sitk ${template_include_dir} Template.cxx.in ${output_cxx}
+    DEPENDS ${input_json_file} ${template_deps} ${template_file_cxx}
+    )
+
   set ( ${library_name}GeneratedSource ${${library_name}GeneratedSource} "${output_h}" CACHE INTERNAL "" )
   set ( ${library_name}GeneratedSource ${${library_name}GeneratedSource} "${output_cxx}" CACHE INTERNAL "" )
 
@@ -106,7 +113,7 @@ macro(generate_filter_source)
 
   # Set input and output directories corresponding to this Code directory
   set(generated_code_input_path ${CMAKE_CURRENT_SOURCE_DIR})
-  set(generated_code_output_path ${SimpleITK_BINARY_DIR}/Code/${directory_name}/)
+  set(generated_code_output_path ${SimpleITK_BINARY_DIR}/Code/${directory_name})
 
   # Make sure include and src directories exist
   if (NOT EXISTS ${generated_code_output_path}/include)

@@ -2,6 +2,16 @@
 # FindR is stored in the current source path, it needs to be included.
 set(CMAKE_MODULE_PATH "${SimpleITK_SOURCE_DIR}/Wrapping;${PROJECT_SOURCE_DIR}/Wrapping/CSharpModules" )
 
+
+macro(check_PIC_flag Language)
+  if ( UNIX )
+    if ( NOT ${CMAKE_CXX_FLAGS} MATCHES "-fPIC")
+      message ( WARNING "${Language} wrapping requires CMAKE_CXX_FLAGS (or equivalent) to include -fPIC and ITK built with this flag" )
+    endif()
+  endif()
+endmacro()
+
+
 #
 # Setup the option for each laguage
 #
@@ -14,6 +24,7 @@ if ( ${PYTHONLIBS_FOUND} AND ${PYTHONINTERP_FOUND} )
 else ( ${PYTHONLIBS_FOUND} AND ${PYTHONINTERP_FOUND} )
   set( WRAP_PYTHON_DEFAULT OFF )
 endif ( ${PYTHONLIBS_FOUND} AND ${PYTHONINTERP_FOUND} )
+check_PIC_flag ( Python )
 option( WRAP_PYTHON "Wrap Python" ${WRAP_PYTHON_DEFAULT} )
 
 find_package ( Java COMPONENTS Development Runtime)
@@ -23,6 +34,7 @@ if ( ${JAVA_FOUND} AND ${JNI_FOUND} )
 else ( ${JAVA_FOUND} AND ${JNI_FOUND} )
   set( WRAP_JAVA_DEFAULT OFF )
 endif ( ${JAVA_FOUND} AND ${JNI_FOUND} )
+check_PIC_flag ( Java )
 option ( WRAP_JAVA "Wrap Java" ${WRAP_JAVA_DEFAULT} )
 
 find_package ( TCL )
@@ -39,6 +51,7 @@ if ( ${RUBY_FOUND} )
 else ( ${RUBY_FOUND} )
   set ( WRAP_RUBY_DEFAULT OFF )
 endif ( ${RUBY_FOUND} )
+check_PIC_flag ( Ruby )
 option ( WRAP_RUBY "Wrap Ruby" ${WRAP_RUBY_DEFAULT} )
 
 #
