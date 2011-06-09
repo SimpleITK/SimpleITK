@@ -285,7 +285,7 @@ if ( WRAP_R )
   include_directories ( ${R_INCLUDE_DIR} )
 
   # Run swig
-  set(CMAKE_SWIG_FLAGS "")
+  set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS})
   set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
   set(SWIG_MODULE_SimpleITK_EXTRA_DEPS SimpleITKCommon SimpleITKBasicFilters SimpleITKIO ${SWIG_HEADERS})
   SWIG_add_module ( SimpleITK r SimpleITK.i SimpleITKR_wrap.cxx )
