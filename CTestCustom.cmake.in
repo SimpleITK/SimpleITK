@@ -26,4 +26,7 @@ SET(CTEST_CUSTOM_WARNING_EXCEPTION
 
   # Ignore warning from gtest
   "gtest.h"
+
+  # ignore duplicate dylib on OSX
+  "duplicate dylib"
 )
