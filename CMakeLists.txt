@@ -12,16 +12,16 @@ if( NOT ITK_USE_REVIEW )
 #  message(FATAL_ERROR "Please reconfigure ITK by turning ITK_USE_REVIEW ON")
 endif()
 
-
-# Put all files in a bin directory to keep things tidy.
-# Output directories.
-if(NOT LIBRARY_OUTPUT_PATH)
-  set(LIBRARY_OUTPUT_PATH ${SimpleITK_BINARY_DIR}/bin CACHE INTERNAL "Single output directory for building all libraries.")
+# Setup build locations.
+if(NOT CMAKE_RUNTIME_OUTPUT_DIRECTORY)
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
 endif()
-if(NOT EXECUTABLE_OUTPUT_PATH)
-  set(EXECUTABLE_OUTPUT_PATH ${SimpleITK_BINARY_DIR}/bin CACHE INTERNAL "Single output directory for building all executables.")
+if(NOT CMAKE_LIBRARY_OUTPUT_DIRECTORY)
+  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)
 endif()
-mark_as_advanced(LIBRARY_OUTPUT_PATH EXECUTABLE_OUTPUT_PATH)
+if(NOT CMAKE_ARCHIVE_OUTPUT_DIRECTORY)
+  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)
+endif()
 
 set ( SimpleITK_INCLUDE_DIR
       ${CMAKE_SOURCE_DIR}/Code/Common
@@ -100,26 +100,13 @@ file( GLOB template_components
     )
 set ( template_components ${template_components} CACHE INTERNAL "" )
 
-subdirs ( Utilities Code Wrapping Examples )
-
-
-#-----------------------------------------------------------------------------
-# ITK uses KWStyle for checking the coding style
-include(${SimpleITK_SOURCE_DIR}/Utilities/KWStyle/KWStyle.cmake)
-
-include(${SimpleITK_SOURCE_DIR}/Utilities/Doxygen/Doxygen.cmake)
-
-# Options for testing
-option ( USE_TESTING "Build testing" ON )
-
-if ( USE_TESTING )
-  enable_testing()
-  subdirs ( Testing )
-  include(CTest)
-  option ( RUN_LONG_TESTS "Run long tests.  Some tests have been identified as long running, should these be run?" OFF )
-  mark_as_advanced(RUN_LONG_TESTS)
-  set(BUILDNAME "${BUILDNAME}" CACHE STRING "Name of build on the dashboard")
-  configure_file(CTestCustom.cmake.in CTestCustom.cmake)
+if (WIN32)
+  # /bigobj is required for windows builds because of the size of
+  # some object files (CastImage for instance)
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj" )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /bigobj" )
+  # Avoid some warnings
+  add_definitions ( -D_SCL_SECURE_NO_WARNINGS )
 endif()
 
 
@@ -135,9 +122,35 @@ include(${SimpleITK_SOURCE_DIR}/sitkGenerateSimpleITKConfig.cmake)
 
 
 #-----------------------------------------------------------------------------
+# Go to subdirectories
+add_subdirectory ( Utilities )
+add_subdirectory ( Code )
+add_subdirectory ( Wrapping )
+add_subdirectory ( Examples )
+
+#-----------------------------------------------------------------------------
+# ITK uses KWStyle for checking the coding style
+include(${SimpleITK_SOURCE_DIR}/Utilities/KWStyle/KWStyle.cmake)
+
+include(${SimpleITK_SOURCE_DIR}/Utilities/Doxygen/Doxygen.cmake)
+
 # Options for testing
+option ( USE_TESTING "Build testing" ON )
+
+if ( USE_TESTING )
+  enable_testing()
+  add_subdirectory ( Testing )
+  include(CTest)
+  option ( RUN_LONG_TESTS "Run long tests.  Some tests have been identified as long running, should these be run?" OFF )
+  mark_as_advanced(RUN_LONG_TESTS)
+  set(BUILDNAME "${BUILDNAME}" CACHE STRING "Name of build on the dashboard")
+  configure_file(CTestCustom.cmake.in CTestCustom.cmake)
+endif()
+
+#-----------------------------------------------------------------------------
+# Options for documentation
 option ( BUILD_DOCUMENTS "Build testing" OFF )
 
 if ( BUILD_DOCUMENTS )
-  subdirs ( Documentation )
+  add_subdirectory ( Documentation )
 endif()

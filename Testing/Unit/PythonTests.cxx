@@ -21,7 +21,11 @@ TEST_F(Python,SimpleGaussian) {
 
   // Set our python path
   std::string path = dataFinder.GetBuildDirectory() + "/Wrapping"
-    + GetPathSeparator() + dataFinder.GetExecutableDirectory();
+    + GetPathSeparator() + dataFinder.GetExecutableDirectory() + GetPathSeparator() + dataFinder.GetBuildDirectory() + "/lib";
+
+  //DEBUG
+  std::cout << "PYTHONPATH = " << path << std::endl;
+
   SetEnvironment ( "PYTHONPATH", path );
 
   // Run it!
@@ -41,7 +45,7 @@ TEST_F(Python,ImageTest) {
 
   // Set our python path
   std::string path = dataFinder.GetBuildDirectory() + "/Wrapping"
-    + GetPathSeparator() + dataFinder.GetExecutableDirectory();
+    + GetPathSeparator() + dataFinder.GetExecutableDirectory() + GetPathSeparator() + dataFinder.GetBuildDirectory() + "/lib";
   SetEnvironment ( "PYTHONPATH", path );
 
   // Run it!
