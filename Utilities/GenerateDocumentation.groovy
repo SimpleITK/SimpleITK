@@ -50,6 +50,10 @@ if ( !XMLFile ) {
 // Find the output file
 def Docstrings = new FileWriter ( new File ( DocstringsFile ), true ); // Make it append
 
+def PythonString ( s ) {
+  return s.replaceAll ( "\\\\", "" ).replaceAll ( '"', '' );
+}
+
 def formatDescription ( parent ) {
   StringBuilder result = new StringBuilder()
   def prefix = [ "listitem" : "\\li ", "itemizedlist" : "\n", "ref" : " ", "computeroutput" : " "]
@@ -100,7 +104,7 @@ def doc = new XmlParser().parse ( XMLFile )
 Map['Class'] = [ name : doc.compounddef.compoundname.text(), briefdescription : doc.compounddef.briefdescription, detaileddescription : doc.compounddef.detaileddescription ]
 
 println ( "Class: " + doc.compounddef.compoundname.text() )
-def ClassName = doc.compounddef.compoundname.text()
+def ClassName = doc.compounddef.compoundname.text().replaceAll ( "itk::", "itk::simple::" )
 
 doc.compounddef.sectiondef.memberdef.each { it ->
   if ( it.@kind == "function" ) {
@@ -114,9 +118,13 @@ definition.briefdescription = formatDescription ( Map.Class.briefdescription )
 definition.detaileddescription = formatDescription ( Map.Class.detaileddescription )
 
 Docstrings.println '// Generated for ClassName from ' + XMLFile
-Docstrings.println '%feature("docstring") ' + ClassName + ' "' + formatDescription ( Map.Class.briefdescription )
-Docstrings.println formatDescription ( Map.Class.detaileddescription ) + '"'
-Docstrings.println '%feature("docstring") ' + ClassName + '::Execute "' + formatDescription ( Map.Class.briefdescription ) + '"'
+Docstrings.println '%feature("docstring") ' + ClassName + ' "' + PythonString ( formatDescription ( Map.Class.briefdescription ) )
+Docstrings.println PythonString ( formatDescription ( Map.Class.detaileddescription ) ) + '"'
+Docstrings.println '%feature("docstring") ' + ClassName + '::Execute "' + PythonString ( formatDescription ( Map.Class.briefdescription ) ) + '"'
+
+// Handle the Functional interface
+Docstrings.println '%feature("docstring") ' + ClassName.replaceAll ( "ImageFilter", "") + ' "' + PythonString ( formatDescription ( Map.Class.briefdescription ) )
+Docstrings.println PythonString ( formatDescription ( Map.Class.detaileddescription ) ) + '"'
 
 definition.members.each { member ->
   // Lookup the name...
@@ -129,8 +137,8 @@ definition.members.each { member ->
       member["briefdescription"+prefix]    = formatDescription ( tmp.briefdescription )
       member["detaileddescription"+prefix] = formatDescription ( tmp.detaileddescription )
       Docstrings.println '%feature("docstring") ' + ClassName + "::" + prefix+member.name + ' "' + tmp.definition.definition.text().replaceAll ( "<.*>", "" ) + tmp.definition.argsstring.text()
-      Docstrings.println formatDescription ( tmp.briefdescription )
-      Docstrings.println formatDescription ( tmp.detaileddescription ) + '"'
+      Docstrings.println PythonString ( formatDescription ( tmp.briefdescription ) )
+      Docstrings.println PythonString ( formatDescription ( tmp.detaileddescription ) ) + '"'
       Docstrings.println ''
     }
   }

@@ -15,5 +15,5 @@
     "tolerance" : 0.01
   } ],
   "briefdescription" : "Computes arctangent pixel-wise from two images.\n",
-  "detaileddescription" : "This class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\nBoth pixel input types are casted todoublein order to be used as parameters ofvcl_atan2(). The resultingdoublevalue is casted to the output pixel type.\n"
+  "detaileddescription" : "This class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\nBoth pixel input types are casted to double in order to be used as parameters of vcl_atan2() . The resulting double value is casted to the output pixel type.\n"
 }
