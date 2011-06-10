@@ -1,2 +1,3 @@
 .git*            export-ignore
 
+BuildDocs        crlf=input
