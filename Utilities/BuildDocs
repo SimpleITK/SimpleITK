@@ -12,8 +12,9 @@ if [ ! -e $1/Utilities/Doxygen/xml/itkImage_8h.xml ]; then
 fi
 
 rm -f Wrapping/PythonDocstrings.i
+rm -f Wrapping/JavaDoc.i
 
 # Find all the JSON, re-write it
 for f in Code/BasicFilters/json/*.json; do
-    Utilities/GenerateDocumentation.groovy $f $1 Wrapping/PythonDocstrings.i
+    Utilities/GenerateDocumentation.groovy $f $1 Wrapping/PythonDocstrings.i Wrapping/JavaDoc.i
 done
