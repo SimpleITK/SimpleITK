@@ -4,6 +4,7 @@ set( SimpleITKIOSource
   sitkImageFileWriter.cxx
   sitkImageReaderBase.cxx
   sitkImageSeriesReader.cxx
+  sitkShow.cxx
   )
 
 add_library ( SimpleITKIO STATIC ${SimpleITKIOSource} )
