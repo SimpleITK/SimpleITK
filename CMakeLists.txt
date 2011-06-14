@@ -24,13 +24,12 @@ if(NOT CMAKE_ARCHIVE_OUTPUT_DIRECTORY)
 endif()
 
 set ( SimpleITK_INCLUDE_DIR
-      ${CMAKE_SOURCE_DIR}/Code/Common
+      ${CMAKE_SOURCE_DIR}/Code/Common/include
       ${CMAKE_SOURCE_DIR}/Code/Registration
-      ${CMAKE_SOURCE_DIR}/Code/Common/Ancillary
       ${CMAKE_SOURCE_DIR}/Code/BasicFilters/include
-      ${CMAKE_SOURCE_DIR}/Code/IO
+      ${CMAKE_SOURCE_DIR}/Code/IO/include
       ${CMAKE_BINARY_DIR}/Code/BasicFilters/include
-      ${CMAKE_BINARY_DIR}
+      ${CMAKE_BINARY_DIR} #this is only needed for sitkConfigure.h
       )
 
 include_directories( ${SimpleITK_INCLUDE_DIR} )

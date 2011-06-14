@@ -15,7 +15,7 @@
 #include "sitkMacro.h"
 #include "sitkNonCopyable.h"
 
-#include "FunctionTraits.h"
+#include "Ancillary/FunctionTraits.h"
 
 #include <map>
 

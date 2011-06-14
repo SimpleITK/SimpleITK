@@ -2,7 +2,7 @@
 #define __sitkDetail_h
 
 #include "sitkMemberFunctionFactoryBase.h"
-#include "FunctionTraits.h"
+#include "Ancillary/FunctionTraits.h"
 
 namespace itk {
 namespace simple {
