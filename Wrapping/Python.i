@@ -1,4 +1,5 @@
 #if SWIGPYTHON
+%include "PythonDocstrings.i"
 // Make __str__ transparent by renaming ToString to __str__
 %rename(__str__) ToString;
 
@@ -108,7 +109,7 @@
 
         def __getitem__( self, idx ):
             """Returns the value of pixel at index idx.
-            
+
             The dimension of idx should match that of the image."""
             pixelID = self.GetPixelIDValue()
             if pixelID == sitkUnknown:
@@ -158,7 +159,7 @@
 
 	     This method takes 2 parameters in 2D: the x and y index,
              and 3 parameters in 3D: the x, y and z index."""
-             return self[idx]            
+             return self[idx]
 
         def SetPixel(self, *args):
              """Sets the value of a pixel.

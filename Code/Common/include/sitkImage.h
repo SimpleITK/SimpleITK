@@ -5,7 +5,6 @@
 
 #include "sitkDetail.h"
 #include "sitkPixelIDTokens.h"
-#include "sitkNonCopyable.h"
 #include "sitkEnableIf.h"
 
 #include <vector>
@@ -31,7 +30,6 @@ namespace simple
    * \brief The main Image class for SimpleITK
    */
   class Image
-    : protected NonCopyable
   {
   public:
     typedef Image              Self;
