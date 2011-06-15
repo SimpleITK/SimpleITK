@@ -45,7 +45,7 @@ namespace itk
     << "Compiled: " << BuildDate() << "\n"
     << "Git Tag: " << GitTag() << "\n"
     << "Git Refspec: " << GitRefspec() << "\n"
-    << " SHA1: " << GitSHA1() << "\n";
+    << "SHA1: " << GitSHA1() << "\n";
   return v.str();
   }
 }

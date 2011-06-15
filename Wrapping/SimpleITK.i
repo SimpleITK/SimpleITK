@@ -80,6 +80,7 @@ namespace std
 %include "sitkStatisticsImageFilter.h"
 %include "sitkExtractImageFilter.h"
 %include "sitkCastImageFilter.h"
+%include "sitkVersion.h"
 
 // Registration classes
 %include "sitkTransform.h"

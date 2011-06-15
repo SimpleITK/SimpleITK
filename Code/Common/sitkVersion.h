@@ -26,6 +26,7 @@ namespace simple
     static std::string GitTag();
 
     static std::string ExtendedVersionString();
+    std::string ToString() { return Version::ExtendedVersionString(); }
   };
 
 }

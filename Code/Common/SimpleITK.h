@@ -3,10 +3,12 @@
 
 #include <stdint.h>
 
+// Utility classes
 #include "sitkDetail.h"
 #include "sitkMacro.h"
-#include "sitkImage.h"
+#include "sitkVersion.h"
 
+#include "sitkImage.h"
 #include "sitkImageFilter.h"
 
 #include "sitkHashImageFilter.h"

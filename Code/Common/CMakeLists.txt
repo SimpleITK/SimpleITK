@@ -2,7 +2,7 @@ file ( GLOB SimpleITKCommonSource *.cxx *.h ../Registration/*.h ../Registration/
 file ( GLOB SimpleITKAncillarySource Ancillary/*.h Ancillary/*.cxx )
 
 include_directories ( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/Ancillary )
-add_library ( SimpleITKCommon STATIC ${SimpleITKCommonSource} ${SimpleITKAncillarySource} )
+add_library ( SimpleITKCommon STATIC ${SimpleITKCommonSource} ${SimpleITKAncillarySource} "${CMAKE_CURRENT_BINARY_DIR}/sitkVersion.cxx")
 target_link_libraries ( SimpleITKCommon ${ITK_LIBRARIES} )
 
 
@@ -18,3 +18,4 @@ if( WRAP_JAVA )
     COMMAND ${CMAKE_COMMAND} -E remove -f ${SimpleITK_BINARY_DIR}/Wrapping/build/org/itk/simple/*.class
   )
 endif()
+

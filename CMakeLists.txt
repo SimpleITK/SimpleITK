@@ -1,6 +1,8 @@
 project ( SimpleITK )
 cmake_minimum_required ( VERSION 2.8 )
 
+# Include extra CMake files
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake")
 
 find_package(ITK REQUIRED)
 if(ITK_FOUND)
@@ -86,12 +88,11 @@ message( FATAL_ERROR "SimpleITK requires usage of C99 stdint.\n"
     "Please see the FAQ for details and to see if your compiler is supported.\n" )
 endif ( NOT SITK_HAS_STDINT )
 
-
-
-
 configure_file( ${SimpleITK_SOURCE_DIR}/sitkConfigure.h.in
   ${SimpleITK_BINARY_DIR}/sitkConfigure.h )
 
+# Version information
+include(Version.cmake)
 
 # Create cached list of all template components
 file( GLOB template_components
@@ -119,7 +120,6 @@ configure_file(${SimpleITK_SOURCE_DIR}/UseSimpleITK.cmake.in
 
 # Create the SimpleITKConfig.cmake file containing the SimpleITK configuration.
 include(${SimpleITK_SOURCE_DIR}/sitkGenerateSimpleITKConfig.cmake)
-
 
 #-----------------------------------------------------------------------------
 # Go to subdirectories
