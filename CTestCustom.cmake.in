@@ -27,3 +27,11 @@ SET(CTEST_CUSTOM_WARNING_EXCEPTION
   # Ignore warning from gtest
   "gtest.h"
 )
+
+IF(APPLE)
+SET(CTEST_CUSTOM_WARNING_EXCEPTION
+  ${CTEST_CUSTOM_WARNING_EXCEPTION}
+  "ld.*warning.*duplicate dylib.*"
+  )
+ENDIF(APPLE)
+
