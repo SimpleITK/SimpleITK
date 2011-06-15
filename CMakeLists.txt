@@ -109,7 +109,7 @@ if (WIN32)
 endif()
 
 
-#-----------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 # Help other projects use SimpleITK
 
 # Copy the UseITK.cmake file to the binary tree for backward compatability.
@@ -119,19 +119,20 @@ configure_file(${SimpleITK_SOURCE_DIR}/UseSimpleITK.cmake.in
 # Create the SimpleITKConfig.cmake file containing the SimpleITK configuration.
 include(${SimpleITK_SOURCE_DIR}/sitkGenerateSimpleITKConfig.cmake)
 
+#------------------------------------------------------------------------------
+# Set up Documentation
+include(${SimpleITK_SOURCE_DIR}/Utilities/Doxygen/Doxygen.cmake)
 
-#-----------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 # Go to subdirectories
 add_subdirectory ( Utilities )
 add_subdirectory ( Code )
 add_subdirectory ( Wrapping )
 add_subdirectory ( Examples )
 
-#-----------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 # ITK uses KWStyle for checking the coding style
 include(${SimpleITK_SOURCE_DIR}/Utilities/KWStyle/KWStyle.cmake)
-
-include(${SimpleITK_SOURCE_DIR}/Utilities/Doxygen/Doxygen.cmake)
 
 # Options for testing
 option ( USE_TESTING "Build testing" ON )
@@ -146,7 +147,7 @@ if ( USE_TESTING )
   configure_file(CTestCustom.cmake.in CTestCustom.cmake)
 endif()
 
-#-----------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 # Options for documentation
 option ( BUILD_DOCUMENTS "Build testing" OFF )
 
