@@ -44,7 +44,7 @@
       "value" : 0.01
     }, {
       "parameter" : "NumberOfIterations",
-      "value" : "10u"
+      "value" : 10
     } ],
     "tolerance" : 0.1
   } ],

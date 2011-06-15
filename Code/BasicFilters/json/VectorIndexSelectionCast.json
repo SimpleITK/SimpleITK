@@ -8,7 +8,7 @@
   "members" : [ {
     "name" : "Index",
     "type" : "unsigned int",
-    "default" : 0,
+    "default" : "0u",
     "doc" : "",
     "briefdescriptionSet" : "",
     "detaileddescriptionSet" : "Get/Set methods for the index\n",
@@ -21,7 +21,7 @@
     "inputA" : "Input/VM1111Shrink-RGBFloat.nrrd",
     "settings" : [ {
       "parameter" : "Index",
-      "value" : 2
+      "value" : "2u"
     } ],
     "md5hash" : "da3f74fce21be8b788da331377f7f361"
   } ],

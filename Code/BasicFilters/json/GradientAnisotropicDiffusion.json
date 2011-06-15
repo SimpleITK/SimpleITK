@@ -45,7 +45,7 @@
       "value" : 0.01
     }, {
       "parameter" : "NumberOfIterations",
-      "value" : 10
+      "value" : "10u"
     } ],
     "tolerance" : 0,
     "md5hash" : null
