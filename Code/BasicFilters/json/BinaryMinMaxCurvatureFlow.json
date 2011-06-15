@@ -31,7 +31,13 @@
       "value" : 0.1
     }, {
       "parameter" : "NumberOfIterations",
-      "value" : 10
+      "value" : "10u",
+      "lua_value" : "10",
+      "python_value" : "10",
+      "ruby_value" : "10",
+      "java_value" : "10",
+      "tcl_value" : "10",
+      "R_value" : "10"
     } ],
     "tolerance" : 0.1
   } ],

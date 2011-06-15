@@ -17,8 +17,7 @@
   }, {
     "name" : "NumberOfHistogramBins",
     "type" : "uint32_t",
-    "default" : "128",
-    "doc" : "",
+    "default" : "128u",
     "briefdescriptionSet" : "",
     "detaileddescriptionSet" : "Set/Get the number of histogram bins. Defaults is 128.\n",
     "briefdescriptionGet" : "",
