@@ -7,7 +7,9 @@
 #include <sitkRecursiveGaussianImageFilter.h>
 #include <sitkCastImageFilter.h>
 #include <sitkPixelIDValues.h>
+#include <sitkLabelStatisticsImageFilter.h>
 
+#include "itkRecursiveGaussianImageFilter.h"
 
 
 TEST(BasicFilters,RecursiveGaussian_ENUMCHECK) {
