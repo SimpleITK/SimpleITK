@@ -7,8 +7,9 @@
 #include "sitkDetail.h"
 #include "sitkMacro.h"
 #include "sitkVersion.h"
-
 #include "sitkImage.h"
+#include "sitkShow.h"
+
 #include "sitkImageFilter.h"
 
 #include "sitkHashImageFilter.h"

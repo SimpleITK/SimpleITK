@@ -8,8 +8,8 @@
 #include "itkByteSwapper.h"
 
 
-#include "hl_md5.h"
-#include "hl_sha1.h"
+#include "Ancillary/hl_md5.h"
+#include "Ancillary/hl_sha1.h"
 
 namespace itk {
 
