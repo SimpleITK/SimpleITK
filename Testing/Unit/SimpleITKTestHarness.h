@@ -21,8 +21,10 @@ class DataFinder {
    *                      should be ITK/Testing/Data
    * Set/GetOutputDirectory -- Temporary directory
    *                      SimpleITK-build/Testing/Temporary
-   * Set/GetExecutableDirectory -- Where built executables are found
-   *                      SimpleITK-build/bin/$(OutDir)/
+   * Set/GetRuntimeDirectory -- Where built executables are found
+   *                           SimpleITK-build/bin/$(OutDir)/
+   * Set/GetLibraryDirectory -- Where built libraries are found
+   *                           SimpleITK-build/lib
    * GetOutputFile --     File in the temp directory
    * GetBuildDirectory -- SimpleITK-build
    * FindExecutable --    Attempts to find an executable
@@ -33,7 +35,8 @@ class DataFinder {
   DataFinder () {
     mDirectory = TEST_HARNESS_DATA_DIRECTORY;
     mOutputDirectory = TEST_HARNESS_TEMP_DIRECTORY;
-    mExecutableDirectory = EXECUTABLE_PATH;
+    mRuntimeDirectory = RUNTIME_OUTPUT_PATH;
+    mLibraryDirectory = LIBRARY_OUTPUT_PATH;
   };
   void SetDirectory ( const char* dir ) {
     mDirectory = dir;
@@ -41,29 +44,30 @@ class DataFinder {
   void SetDirectory ( std::string dir ) {
     mDirectory = dir;
   };
-  void SetExecutableDirectoryFromArgv0 ( std::string argv0 ) {
+  void SetRuntimeDirectoryFromArgv0 ( std::string argv0 ) {
     std::string errorMessage, path, dir, file;
     bool result = itksys::SystemTools::FindProgramPath ( argv0.c_str(), path, errorMessage );
-    mExecutableDirectory = "";
+    mRuntimeDirectory = "";
     if ( result == false ) {
-      std::cerr << "SetExecutableDirectoryFromArgv0: couldn't determine the location of " << argv0 << " error was: " << errorMessage << std::endl;
+      std::cerr << "SetRuntimeDirectoryFromArgv0: couldn't determine the location of " << argv0 << " error was: " << errorMessage << std::endl;
     } else {
       result = itksys::SystemTools::SplitProgramPath ( path.c_str(), dir, file );
       if ( result == false ) {
-        std::cerr << "SetExecutableDirectoryFromArgv0: couldn't split directory from path " << path << std::endl;
+        std::cerr << "SetRuntimeDirectoryFromArgv0: couldn't split directory from path " << path << std::endl;
       } else {
-        mExecutableDirectory = dir;
+        mRuntimeDirectory = dir;
       }
     }
   }
   void SetOutputDirectory ( std::string dir ) {
     mOutputDirectory = dir;
   };
-  std::string GetDirectory () { return mDirectory; };
-  std::string GetOutputDirectory () { return mOutputDirectory; };
-  std::string GetOutputFile ( std::string filename ) { return mOutputDirectory + "/" + filename; };
-  std::string GetExecutableDirectory() { return mExecutableDirectory; }
-  std::string GetBuildDirectory() { return std::string ( SIMPLEITK_BINARY_DIR ); }
+  std::string GetDirectory () const { return mDirectory; };
+  std::string GetOutputDirectory () const { return mOutputDirectory; };
+  std::string GetOutputFile ( std::string filename ) const { return mOutputDirectory + "/" + filename; };
+  std::string GetRuntimeDirectory( ) const { return mRuntimeDirectory; }
+  std::string GetLibraryDirectory( ) const { return mLibraryDirectory; }
+  std::string GetBuildDirectory() const { return std::string ( SIMPLEITK_BINARY_DIR ); }
   std::string GetPathSeparator() {
 #ifdef WIN32
     return ";";
@@ -71,7 +75,7 @@ class DataFinder {
     return ":";
 #endif
   }
-  std::string FindExecutable ( std::string exe ) { return GetExecutableDirectory() + "/" + exe + EXECUTABLE_SUFFIX; }
+  std::string FindExecutable ( std::string exe ) { return GetRuntimeDirectory() + "/" + exe + EXECUTABLE_SUFFIX; }
   std::string GetLuaExecutable() { return this->FindExecutable ( "SimpleITKLua" ); }
   std::string GetTclExecutable() { return this->FindExecutable ( "SimpleITKTclsh" ); }
   std::string GetPythonExecutable() { return std::string ( PYTHON_EXECUTABLE_PATH ); }
@@ -87,8 +91,9 @@ class DataFinder {
 
  protected:
   std::string mDirectory;
-  std::string mExecutableDirectory;
   std::string mOutputDirectory;
+  std::string mRuntimeDirectory;
+  std::string mLibraryDirectory;
 };
 
 extern DataFinder dataFinder;
