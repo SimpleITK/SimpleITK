@@ -41,5 +41,5 @@ TEST(Registration,Simple) {
     std::cout << "Registration failed: " << e.what() << std::endl;
   }
   ASSERT_NO_THROW ( params = registration.Execute ( fixed, moving ) );
-  ASSERT_NE ( params.size(), 0 );
+  ASSERT_NE ( params.size(), 0u );
 }

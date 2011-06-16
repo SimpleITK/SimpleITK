@@ -23,14 +23,14 @@
     "name" : "OutputMaximum",
     "type" : "double",
     "default" : 255,
-    "doc" : "Output maximum",
+    "pixeltype" : "Output",
     "briefdescriptionSet" : "",
     "detaileddescriptionSet" : ""
   }, {
     "name" : "OutputMinimum",
     "type" : "double",
     "default" : 0,
-    "doc" : "Output minimum",
+    "pixeltype" : "Input",
     "briefdescriptionSet" : "",
     "detaileddescriptionSet" : ""
   } ],

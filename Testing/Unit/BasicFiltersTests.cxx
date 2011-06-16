@@ -15,9 +15,9 @@
 TEST(BasicFilters,RecursiveGaussian_ENUMCHECK) {
 
   typedef itk::RecursiveGaussianImageFilter< itk::Image<float,3> > ITKRecursiveGausianType;
-  EXPECT_EQ( ITKRecursiveGausianType::ZeroOrder, itk::simple::RecursiveGaussianImageFilter::ZeroOrder );
-  EXPECT_EQ( ITKRecursiveGausianType::FirstOrder, itk::simple::RecursiveGaussianImageFilter::FirstOrder );
-  EXPECT_EQ( ITKRecursiveGausianType::SecondOrder, itk::simple::RecursiveGaussianImageFilter::SecondOrder );
+  EXPECT_EQ( (int)ITKRecursiveGausianType::ZeroOrder, (int)itk::simple::RecursiveGaussianImageFilter::ZeroOrder );
+  EXPECT_EQ( (int)ITKRecursiveGausianType::FirstOrder, (int)itk::simple::RecursiveGaussianImageFilter::FirstOrder );
+  EXPECT_EQ( (int)ITKRecursiveGausianType::SecondOrder, (int)itk::simple::RecursiveGaussianImageFilter::SecondOrder );
 }
 
 TEST(BasicFilters,Cast) {

@@ -7,12 +7,14 @@
   "members" : [ {
     "name" : "BackgroundValue",
     "type" : "double",
-    "default" : "0",
+    "default" : "0.0",
+    "pixeltype" : "Input",
     "doc" : ""
   }, {
     "name" : "ForegroundValue",
     "type" : "double",
     "default" : "255",
+    "pixeltype" : "Input",
     "doc" : ""
   }, {
     "name" : "BoundaryToForeground",
