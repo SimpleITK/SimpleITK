@@ -5,6 +5,7 @@
 */
 
 #include <itkVersion.h>
+#include <sitkVersion.h>
 #include <itksys/SystemTools.hxx>
 #include <itkMultiThreader.h>
 
@@ -114,7 +115,7 @@ static int docall (lua_State *L, int narg, int clear) {
 
 static void print_version (void) {
   fprintf ( stdout, LUA_VERSION "  " LUA_COPYRIGHT "\n" );
-  fprintf ( stdout, "Simple ITK\nInsight Toolkit %s\n", itk::Version::GetITKVersion() );
+  fprintf ( stdout, "Simple ITK:\n%s\nInsight Toolkit %s\n", itk::simple::Version::ExtendedVersionString().c_str(), itk::Version::GetITKVersion() );
 }
 
 
@@ -247,14 +248,14 @@ static int handle_script (lua_State *L, char **argv, int n) {
   int narg = getargs(L, argv, n);  /* collect arguments */
   lua_setglobal(L, "arg");
   fname = argv[n];
-  if (strcmp(fname, "-") == 0 && strcmp(argv[n-1], "--") != 0) 
+  if (strcmp(fname, "-") == 0 && strcmp(argv[n-1], "--") != 0)
     fname = NULL;  /* stdin */
   status = luaL_loadfile(L, fname);
   lua_insert(L, -(narg+1));
   if (status == 0)
     status = docall(L, narg, 0);
   else
-    lua_pop(L, narg);      
+    lua_pop(L, narg);
   return report(L, status);
 }
 

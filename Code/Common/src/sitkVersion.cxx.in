@@ -1,0 +1,52 @@
+#include "sitkVersion.h"
+namespace itk
+{
+  namespace simple
+  {
+
+  unsigned int Version::MajorVersion()
+  {
+  return @SimpleITK_Major@;
+  }
+  unsigned int Version::MinorVersion()
+  {
+  return @SimpleITK_Minor@;
+  }
+  unsigned int Version::PatchVersion()
+  {
+  return @SimpleITK_Patch@;
+  }
+  std::string Version::VersionString()
+  {
+  std::ostringstream v;
+  v << MajorVersion() << "." << MinorVersion() << "." << PatchVersion();
+  return v.str();
+  }
+  std::string Version::BuildDate()
+  {
+  return std::string ( __DATE__ " " __TIME__ );
+  }
+  std::string Version::GitRefspec()
+  {
+  return std::string ( "@GIT_REFSPEC@" );
+  }
+  std::string Version::GitSHA1()
+  {
+  return std::string ( "@GIT_SHA1@" );
+  }
+  std::string Version::GitTag()
+  {
+  return std::string ( "@GIT_TAG@" );
+  }
+  std::string Version::ExtendedVersionString()
+  {
+  std::ostringstream v;
+  v << "SimpleITK Version: " << VersionString() << "\n"
+    << "Compiled: " << BuildDate() << "\n"
+    << "Git Tag: " << GitTag() << "\n"
+    << "Git Refspec: " << GitRefspec() << "\n"
+    << "SHA1: " << GitSHA1() << "\n";
+  return v.str();
+  }
+}
+}
