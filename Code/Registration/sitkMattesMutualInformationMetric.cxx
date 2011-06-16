@@ -16,6 +16,7 @@ namespace simple
   template<class TImage>
   ::itk::SingleValuedCostFunction::Pointer MattesMutualInformationMetric::GetMetricInternal ( const Image &image )
   {
+    Unused( image );
     typename ::itk::MattesMutualInformationImageToImageMetric<TImage,TImage>::Pointer metric = ::itk::MattesMutualInformationImageToImageMetric<TImage,TImage>::New();
     metric->SetNumberOfHistogramBins ( 128 );
     metric->SetNumberOfSpatialSamples( 1000000 );

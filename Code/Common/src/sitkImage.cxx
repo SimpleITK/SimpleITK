@@ -396,6 +396,7 @@ namespace itk
     InternalSetPixel( const std::vector<uint32_t> &idx, TPixelType v ) const
       {
         Unused( idx );
+        Unused( v );
         sitkExceptionMacro( "This method is not supported for this image type." )
       }
 

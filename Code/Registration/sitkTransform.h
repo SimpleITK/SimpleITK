@@ -15,8 +15,8 @@ namespace simple
   public:
     Transform() {};
     virtual ~Transform() {};
-    virtual ::itk::TransformBase::Pointer GetTransform ( int dimension ) { return NULL; };
-    virtual std::vector<double> GetOptimizerScales ( int dimension ) { return std::vector<double>(); };
+    virtual ::itk::TransformBase::Pointer GetTransform ( int dimension ) { Unused( dimension ); return NULL; };
+    virtual std::vector<double> GetOptimizerScales ( int dimension ) { Unused( dimension ); return std::vector<double>(); };
   protected:
     friend class Registration;
     virtual Transform* Clone() { std::cout << "Cloned generic Transform" << std::endl; return new Transform ( *this ); }
