@@ -22,7 +22,8 @@
   }, {
     "name" : "Constant",
     "type" : "double",
-    "default" : "0",
+    "default" : "0.0",
+    "pixeltype" : "Output",
     "doc" : "",
     "briefdescriptionSet" : "",
     "detaileddescriptionSet" : "Set/Get the pad value. Default is Zero.\n",
