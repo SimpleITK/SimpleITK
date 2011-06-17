@@ -156,7 +156,7 @@ if (CMAKE_USE_PTHREADS_INIT)
   target_link_libraries(gtest ${CMAKE_THREAD_LIBS_INIT})
 endif()
 
-include_directories ( ${SimpleITK_INCLUDE_DIR} )
+include_directories ( ${SimpleITK_INCLUDE_DIRS} )
 
 add_custom_target(WrappedGeneratedTests ALL
   DEPENDS ${WRAPPED_GENERATED_TEST_SOURCE}
