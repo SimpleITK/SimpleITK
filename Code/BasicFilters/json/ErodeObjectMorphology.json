@@ -14,7 +14,7 @@
     "name" : "BackgroundValue",
     "type" : "double",
     "default" : "0",
-    "doc" : "",
+    "pixeltype" : "Output",
     "briefdescriptionSet" : "",
     "detaileddescriptionSet" : "Set the value to be assigned to eroded pixels\n",
     "briefdescriptionGet" : "",

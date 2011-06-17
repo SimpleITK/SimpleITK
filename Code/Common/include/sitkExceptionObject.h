@@ -36,6 +36,15 @@ public:
   virtual ~GenericException()
   throw( ) {}
 
+  /** Return a description of the error */
+  std::string ToString()
+  {
+  std::ostringstream out;
+  Print ( out );
+  return out.str();
+  }
+
+
   virtual const char * GetNameOfClass() const
   { return "GenericException"; }
 };

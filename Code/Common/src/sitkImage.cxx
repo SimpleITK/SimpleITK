@@ -368,6 +368,7 @@ namespace itk
                       int >::Type
     InternalGetPixel( const std::vector<uint32_t> &idx ) const
       {
+        Unused( idx );
         sitkExceptionMacro( "This method is not supported for this vector images currently." )
       }
 
@@ -376,6 +377,7 @@ namespace itk
                       int >::Type
     InternalGetPixel( const std::vector<uint32_t> &idx ) const
       {
+        Unused( idx );
         sitkExceptionMacro( "This method is not supported for this image type." )
       }
 
@@ -393,6 +395,8 @@ namespace itk
                                          typename ImageTypeToPixelID<ImageType>::PixelIDType>::value >::Type
     InternalSetPixel( const std::vector<uint32_t> &idx, TPixelType v ) const
       {
+        Unused( idx );
+        Unused( v );
         sitkExceptionMacro( "This method is not supported for this image type." )
       }
 
@@ -479,7 +483,7 @@ namespace itk
     region.SetIndex ( index );
 
     zero.SetSize( TImageType::ImageDimension );
-    zero.Fill( 0.0 );
+    zero.Fill ( itk::NumericTraits<typename TImageType::PixelType::ValueType>::Zero );
 
 
     typename TImageType::Pointer image = TImageType::New();

@@ -17,7 +17,7 @@
     "name" : "BackgroundValue",
     "type" : "double",
     "default" : "0",
-    "doc" : "",
+    "pixeltype" : "Input",
     "briefdescriptionSet" : "",
     "detaileddescriptionSet" : "Set/Get the background value used to identify the objects and mark the pixels not on the border of the objects.\n",
     "briefdescriptionGet" : "",

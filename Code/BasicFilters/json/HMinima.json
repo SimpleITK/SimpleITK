@@ -9,7 +9,7 @@
     "name" : "Height",
     "type" : "double",
     "default" : "2.0",
-    "doc" : "",
+    "pixeltype" : "Input",
     "briefdescriptionSet" : "",
     "detaileddescriptionSet" : "Set/Get the height that a local maximum must be above the local background (local contrast) in order to survive the processing. Local maxima below this value are replaced with an estimate of the local background.\n",
     "briefdescriptionGet" : "",

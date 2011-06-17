@@ -24,7 +24,7 @@ ${name}ImageFilter::ExecuteInternalVectorImage ( const Image& inImage1 )
     sitkExceptionMacro( "Unexpected template dispatch error!" );
     }
 
-  typedef itk::VectorIndexSelectionCastImageFilter< InputImageType, OutputImageType > ComponentExtratorType;
+  typedef itk::VectorIndexSelectionCastImageFilter< InputImageType, ComponentImageType > ComponentExtratorType;
   typename ComponentExtratorType::Pointer extractor = ComponentExtratorType::New();
   extractor->SetInput( image1 );
 

@@ -12,8 +12,7 @@
   "members" : [ {
     "name" : "Constant",
     "type" : "double",
-    "default" : 1,
-    "doc" : "The constant to add to the input image",
+    "default" : "1.0",
     "briefdescriptionSet" : "",
     "detaileddescriptionSet" : "Set the constant that will be used to multiply all the image pixels\n",
     "briefdescriptionGet" : "",

@@ -10,7 +10,7 @@
     "name" : "OutsideValue",
     "type" : "double",
     "default" : 0,
-    "doc" : "Value assigned to pixels outside of the mask",
+    "pixeltype" :  "Output",
     "briefdescriptionSet" : "",
     "detaileddescriptionSet" : "Method to explicitly set the outside value of the mask. Defaults to 0\n",
     "briefdescriptionGet" : "",
