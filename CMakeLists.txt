@@ -85,9 +85,6 @@ if ( NOT SITK_HAS_STDINT_H )
     "Please see the FAQ for details and to see if your compiler is supported.\n" )
 endif ( NOT SITK_HAS_STDINT_H )
 
-
-
-
 configure_file( ${SimpleITK_SOURCE_DIR}/sitkConfigure.h.in
   ${SimpleITK_BINARY_DIR}/sitkConfigure.h )
 

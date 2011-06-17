@@ -11,7 +11,7 @@ TEST_F(Java,SimpleGaussian) {
   const std::string Script = dataFinder.GetSourceDirectory() + "/Examples/SimpleGaussian.java";
 
   std::string Classpath = dataFinder.GetBuildDirectory() + "/Wrapping/org.itk.simple.jar";
-  const std::string JavaPath = dataFinder.GetBuildDirectory() + "/lib";
+  const std::string JavaPath = dataFinder.GetLibraryDirectory();
 
   const std::string Class = "SimpleGaussian";
 
@@ -61,7 +61,7 @@ TEST_F(Java,ImageConnection) {
   const std::string Script = dataFinder.GetSourceDirectory() + "/Examples/ImageConnection.java";
 
   std::string Classpath = dataFinder.GetBuildDirectory() + "/Wrapping/org.itk.simple.jar";
-  const std::string JavaPath = dataFinder.GetExecutableDirectory();
+  const std::string JavaPath = dataFinder.GetRuntimeDirectory();
 
   const std::string Class = "SimpleGaussian";
 

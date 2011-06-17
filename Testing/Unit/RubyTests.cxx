@@ -19,7 +19,7 @@ TEST_F(Ruby,SimpleGaussian) {
   CommandLine.push_back ( output );
 
   // Set our Ruby path
-  SetEnvironment ( "RUBYLIB", dataFinder.GetBuildDirectory() + "/lib" );
+  SetEnvironment ( "RUBYLIB", dataFinder.GetLibraryDirectory() );
 
   // Run it!
   RunExecutable ( CommandLine, true );
