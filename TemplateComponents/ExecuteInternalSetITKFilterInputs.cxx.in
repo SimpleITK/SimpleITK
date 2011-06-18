@@ -18,6 +18,10 @@ OUT = [[  ${itk_type} itkVec${name};
     }
   filter->Set${name}( itkVec${name} );]]
 elseif(not no_set_method) or (no_set_method == 0) then
-OUT = '  filter->Set${name} ( this->m_${name} );'
+  if pixeltype then
+    OUT = '  filter->Set${name} ( static_cast<typename ${pixeltype}ImageType::PixelType> ( this->m_${name} ) );'
+  else
+    OUT = '  filter->Set${name} ( this->m_${name} );'
+  end
 end)
 )

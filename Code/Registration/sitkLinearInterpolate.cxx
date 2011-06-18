@@ -15,6 +15,7 @@ namespace simple
   template<class TImage>
   ::itk::Object::Pointer LinearInterpolate::GetInterpolatorInternal (const Image& image )
   {
+    Unused( image );
     ::itk::Object::Pointer ptr;
     ptr = (::itk::Object*) (::itk::LinearInterpolateImageFunction<TImage,double>::New());
     return ptr;

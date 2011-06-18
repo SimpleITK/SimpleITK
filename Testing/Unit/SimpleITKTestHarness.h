@@ -105,7 +105,7 @@ public:
     ASSERT_TRUE ( dataFinder.FileExists ( fileName ) ) << "check if " << fileName << " exists.";
 
     itk::simple::Image image = itk::simple::ReadImage( fileName );
-    EXPECT_EQ ( "02ce020f462cf05f3c354bc33a7834603d65b906", itk::simple::Hash( image ) );
+    EXPECT_EQ ( hash, itk::simple::Hash( image ) );
   }
 
   // Return the separator
