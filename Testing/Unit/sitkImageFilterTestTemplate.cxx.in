@@ -239,7 +239,7 @@ TEST_F(Python,${name}) {
 
   // Set our python path
   std::string path = dataFinder.GetBuildDirectory() + "/Wrapping"
-    + GetPathSeparator() + dataFinder.GetExecutableDirectory() + GetPathSeparator() + dataFinder.GetBuildDirectory() + "/lib";
+    + GetPathSeparator() + dataFinder.GetRuntimeDirectory() + GetPathSeparator() + dataFinder.GetLibraryDirectory();
   SetEnvironment ( "PYTHONPATH", path );
 
   std::string Script = dataFinder.GetBuildDirectory() + "/Testing/Unit/PythonTests/${name}ImageFilterTest.py";
@@ -420,7 +420,7 @@ TEST_F(Java,${name}) {
 
   std::string Classpath = dataFinder.GetBuildDirectory() + "/Testing/Unit/JavaTests"
     + dataFinder.GetPathSeparator() + dataFinder.GetBuildDirectory() + "/Wrapping/org.itk.simple.jar";
-  std::string JavaPath = dataFinder.GetBuildDirectory() + "/lib";
+  std::string JavaPath = dataFinder.GetLibraryDirectory();
   std::string Script = "org.itk.simple.testing.${name}ImageFilterTest";
   $(foreach tests
     {
@@ -483,7 +483,7 @@ TEST_F(Ruby,${name}) {
     end)
 
   // Set our Ruby path
-  SetEnvironment ( "RUBYLIB", dataFinder.GetBuildDirectory() + "/lib" );
+  SetEnvironment ( "RUBYLIB", dataFinder.GetLibraryDirectory() );
 
   std::string Script = dataFinder.GetBuildDirectory() + "/Testing/Unit/RubyTests/${name}ImageFilterTest.rb";
   $(foreach tests

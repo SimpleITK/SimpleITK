@@ -29,6 +29,6 @@ int main(int argc, char* argv[])
     }
   }
   testing::InitGoogleTest ( &argc, argv );
-  dataFinder.SetExecutableDirectoryFromArgv0 ( argv[0] );
+  dataFinder.SetRuntimeDirectoryFromArgv0 ( argv[0] );
   return RUN_ALL_TESTS();
 }
