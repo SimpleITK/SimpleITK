@@ -1,6 +1,6 @@
 if( MSVC )
   # suppress warning in Visual Studio about the securtiy of methods
-  add_definition (-D_CRT_SECURE_NO_WARNINGS)
+  add_definitions (-D_CRT_SECURE_NO_WARNINGS)
 endif()
 
 file ( GLOB LUA_LIB_SOURCE src/*.c )
