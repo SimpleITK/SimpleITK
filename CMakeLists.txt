@@ -1,5 +1,5 @@
+cmake_minimum_required ( VERSION 2.8 FATAL_ERROR )
 project ( SimpleITK )
-cmake_minimum_required ( VERSION 2.8 )
 
 # Include extra CMake files
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake")
@@ -25,7 +25,7 @@ if(NOT CMAKE_ARCHIVE_OUTPUT_DIRECTORY)
   set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)
 endif()
 
-set ( SimpleITK_INCLUDE_DIR
+set ( SimpleITK_INCLUDE_DIRS
       ${CMAKE_SOURCE_DIR}/Code/Common/include
       ${CMAKE_SOURCE_DIR}/Code/Registration
       ${CMAKE_SOURCE_DIR}/Code/BasicFilters/include
@@ -34,7 +34,7 @@ set ( SimpleITK_INCLUDE_DIR
       ${CMAKE_BINARY_DIR} #this is only needed for sitkConfigure.h
       )
 
-include_directories( ${SimpleITK_INCLUDE_DIR} )
+include_directories( ${SimpleITK_INCLUDE_DIRS} )
 
 set ( SimpleITK_LIBRARIES SimpleITKCommon SimpleITKIO SimpleITKBasicFilters  ${ITK_LIBRARIES} )
 
@@ -79,13 +79,13 @@ endif ( NOT SITK_HAS_STLTR1_TR1_FUNCTIONAL AND NOT SITK_HAS_STLTR1_FUNCTIONAL )
 
 # check for stdint
 # This generates a configuration error if the compiler is not supported
-check_include_file_cxx( stdint.h SITK_HAS_STDINT )
+check_include_file_cxx( stdint.h SITK_HAS_STDINT_H )
 
-if ( NOT SITK_HAS_STDINT )
+if ( NOT SITK_HAS_STDINT_H )
   message( FATAL_ERROR "SimpleITK requires usage of C99 stdint.\n"
     "It may be available as an optional download for your compiler.\n"
     "Please see the FAQ for details and to see if your compiler is supported.\n" )
-endif ( NOT SITK_HAS_STDINT )
+endif ( NOT SITK_HAS_STDINT_H )
 
 configure_file( ${SimpleITK_SOURCE_DIR}/sitkConfigure.h.in
   ${SimpleITK_BINARY_DIR}/sitkConfigure.h )
@@ -100,7 +100,7 @@ file( GLOB template_components
     )
 set ( template_components ${template_components} CACHE INTERNAL "" )
 
-if (WIN32)
+if(MSVC)
   # /bigobj is required for windows builds because of the size of
   # some object files (CastImage for instance)
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj" )
@@ -149,7 +149,7 @@ endif()
 
 #------------------------------------------------------------------------------
 # Options for documentation
-option ( BUILD_DOCUMENTS "Build testing" OFF )
+option ( BUILD_DOCUMENTS "Build the Documentation subdirectory" OFF )
 
 if ( BUILD_DOCUMENTS )
   add_subdirectory ( Documentation )

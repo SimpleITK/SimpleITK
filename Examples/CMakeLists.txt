@@ -1,5 +1,5 @@
 
-include_directories ( ${SimpleITK_INCLUDE_DIR} )
+include_directories ( ${SimpleITK_INCLUDE_DIRS} )
 
 # Add individual cxx executables
 add_executable ( SimpleGaussian SimpleGaussian.cxx )
@@ -20,7 +20,5 @@ if( WRAP_CSHARP )
   )
 endif( WRAP_CSHARP )
 
-#
-# Go into testing subdirectory
-#
+# Add subdirectories
 add_subdirectory(Segmentation)

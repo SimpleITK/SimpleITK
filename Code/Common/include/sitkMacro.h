@@ -40,7 +40,7 @@ template <typename T>
 void Unused( const T &) {};
 
 #ifdef SITK_SUPPORTS_STATIC_ASSERT
-// utilize the c++x0 static_assert if available
+// utilize the c++0x static_assert if available
 #define sitkStaticAssert( expr, str) static_assert( expr, str )
 #else
 
