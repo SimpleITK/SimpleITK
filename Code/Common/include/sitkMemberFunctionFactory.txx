@@ -78,7 +78,7 @@ void MemberFunctionFactory<TMemberFunctionPointer>
 
   if ( pixelID >= 0 && pixelID < typelist::Length< InstantiatedPixelIDTypeList >::Result )
     {
-    switch( TImageType::ImageDimension )
+    switch( int(TImageType::ImageDimension) )
       {
       case 3:
         Superclass::m_PFunction3[ pixelID ] = Superclass::BindObject( pfunc, m_ObjectPointer );
