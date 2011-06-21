@@ -185,10 +185,10 @@ TEST_F(Lua,${name}) {
     /* ${description} */
     std::vector<std::string> CommandLine;
     std::string outputFileName = dataFinder.GetOutputFile ( "Lua-${name}-${tag}.nrrd" );
-    // Make sure the output is wiped
-    EXPECT_NO_THROW ( itk::simple::ImageFileWriter()
-                      .SetFileName ( outputFileName )
-                      .Execute ( itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
+    // Make sure the output is deleted
+    if ( itksys::SystemTools::FileExists ( outputFileName.c_str() ) ) {
+      ASSERT_TRUE ( itksys::SystemTools::RemoveFile ( outputFileName.c_str() ) ) << "Deleting file " << outputFileName;
+    }
     CommandLine.push_back ( dataFinder.GetLuaExecutable() );
     CommandLine.push_back ( Script );
     CommandLine.push_back ( "${tag}" );
@@ -248,10 +248,10 @@ TEST_F(Python,${name}) {
     /* ${description} */
     std::vector<std::string> CommandLine;
     std::string outputFileName = dataFinder.GetOutputFile ( "Python-${name}-${tag}.nrrd" );
-    // Make sure the output is wiped
-    EXPECT_NO_THROW ( itk::simple::ImageFileWriter()
-                      .SetFileName ( outputFileName )
-                      .Execute ( itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
+    // Make sure the output is deleted
+    if ( itksys::SystemTools::FileExists ( outputFileName.c_str() ) ) {
+      ASSERT_TRUE ( itksys::SystemTools::RemoveFile ( outputFileName.c_str() ) ) << "Deleting file " << outputFileName;
+    }
     CommandLine.push_back ( dataFinder.GetPythonExecutable() );
     CommandLine.push_back ( Script );
     CommandLine.push_back ( "${tag}" );
@@ -306,10 +306,10 @@ TEST_F(Tcl,${name}) {
     /* ${description} */
     std::vector<std::string> CommandLine;
     std::string outputFileName = dataFinder.GetOutputFile ( "Tcl-${name}-${tag}.nrrd" );
-    // Make sure the output is wiped
-    EXPECT_NO_THROW ( itk::simple::ImageFileWriter()
-                      .SetFileName ( outputFileName )
-                      .Execute ( itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
+    // Make sure the output is deleted
+    if ( itksys::SystemTools::FileExists ( outputFileName.c_str() ) ) {
+      ASSERT_TRUE ( itksys::SystemTools::RemoveFile ( outputFileName.c_str() ) ) << "Deleting file " << outputFileName;
+    }
     CommandLine.push_back ( dataFinder.GetTclExecutable ( ) );
     CommandLine.push_back ( Script );
     CommandLine.push_back ( "${tag}" );
@@ -364,10 +364,10 @@ TEST_F(R,${name}) {
     /* ${description} */
     std::vector<std::string> CommandLine;
     std::string outputFileName = dataFinder.GetOutputFile ( "R-${name}-${tag}.nrrd" );
-    // Make sure the output is wiped
-    EXPECT_NO_THROW ( itk::simple::ImageFileWriter()
-                      .SetFileName ( outputFileName )
-                      .Execute ( itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
+    // Make sure the output is deleted
+    if ( itksys::SystemTools::FileExists ( outputFileName.c_str() ) ) {
+      ASSERT_TRUE ( itksys::SystemTools::RemoveFile ( outputFileName.c_str() ) ) << "Deleting file " << outputFileName;
+    }
     CommandLine.push_back ( dataFinder.GetRExecutable() );
     CommandLine.push_back ( Script );
     CommandLine.push_back ( "${tag}" );
@@ -427,10 +427,10 @@ TEST_F(Java,${name}) {
     /* ${description} */
     std::vector<std::string> CommandLine;
     std::string outputFileName = dataFinder.GetOutputFile ( "Java-${name}-${tag}.nrrd" );
-    // Make sure the output is wiped
-    EXPECT_NO_THROW ( itk::simple::ImageFileWriter()
-                      .SetFileName ( outputFileName )
-                      .Execute ( itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
+    // Make sure the output is deleted
+    if ( itksys::SystemTools::FileExists ( outputFileName.c_str() ) ) {
+      ASSERT_TRUE ( itksys::SystemTools::RemoveFile ( outputFileName.c_str() ) ) << "Deleting file " << outputFileName;
+    }
     CommandLine.push_back ( dataFinder.GetJavaExecutable() );
     CommandLine.push_back ( "-classpath" );
     CommandLine.push_back ( Classpath );
@@ -491,10 +491,10 @@ TEST_F(Ruby,${name}) {
     /* ${description} */
     std::vector<std::string> CommandLine;
     std::string outputFileName = dataFinder.GetOutputFile ( "Ruby-${name}-${tag}.nrrd" );
-    // Make sure the output is wiped
-    EXPECT_NO_THROW ( itk::simple::ImageFileWriter()
-                      .SetFileName ( outputFileName )
-                      .Execute ( itk::simple::Image ( 1,1,1,itk::simple::sitkUInt8 ) ) ) << "Failed to overwrite";
+    // Make sure the output is deleted
+    if ( itksys::SystemTools::FileExists ( outputFileName.c_str() ) ) {
+      ASSERT_TRUE ( itksys::SystemTools::RemoveFile ( outputFileName.c_str() ) ) << "Deleting file " << outputFileName;
+    }
     CommandLine.push_back ( dataFinder.GetRubyExecutable() );
     CommandLine.push_back ( Script );
     CommandLine.push_back ( "${tag}" );
