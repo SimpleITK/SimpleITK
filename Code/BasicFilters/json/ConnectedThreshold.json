@@ -5,6 +5,7 @@
   "number_of_inputs" : 1,
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelIDTypeList",
+  "output_pixel_type" : "uint8_t",
   "members" : [ {
     "name" : "Upper",
     "type" : "double",
@@ -25,8 +26,8 @@
     "detaileddescriptionGet" : ""
   }, {
     "name" : "ReplaceValue",
-    "type" : "double",
-    "default" : 1,
+    "type" : "uint8_t",
+    "default" : "1u",
     "pixeltype" : "Output",
     "doc" : "Pixels that lie within Lower and Upper (inclusive)\nwill be replaced with this value. The default is 1.",
     "briefdescriptionSet" : "",
@@ -59,7 +60,9 @@
       "value" : 150
     }, {
       "parameter" : "ReplaceValue",
-      "value" : 255
+      "value" : "255",
+       /* JAVA does not implicitly cast ints to short */
+      "java_value" : "(short) 255"
     } ],
     "tolerance" : 0.1
   } ],

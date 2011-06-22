@@ -3,6 +3,7 @@
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
   "pixel_types" : "BasicPixelIDTypeList",
+  "output_pixel_type" : "uint8_t",
   "members" : [ {
     "name" : "Threshold1",
     "type" : "double",
@@ -41,8 +42,8 @@
     "detaileddescriptionGet" : "Get the threshold values.\n"
   }, {
     "name" : "InsideValue",
-    "type" : "double",
-    "default" : "255.0",
+    "type" : "uint8_t",
+    "default" : "1u",
     "pixeltype" : "Output",
     "briefdescriptionSet" : "",
     "detaileddescriptionSet" : "Set the \"inside\" pixel value. The default value NumericTraits<OutputPixelType>::max()\n",
@@ -50,8 +51,8 @@
     "detaileddescriptionGet" : "Get the \"inside\" pixel value.\n"
   }, {
     "name" : "OutsideValue",
-    "type" : "double",
-    "default" : "0.0",
+    "type" : "uint8_t",
+    "default" : "0u",
     "pixeltype" : "Output",
     "briefdescriptionSet" : "",
     "detaileddescriptionSet" : "Set the \"outside\" pixel value. The default value NumericTraits<OutputPixelType>::Zero.\n",

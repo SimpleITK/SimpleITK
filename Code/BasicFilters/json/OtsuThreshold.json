@@ -4,11 +4,11 @@
   "template_test_filename" : "ImageFilter",
   "doc" : "Docs",
   "pixel_types" : "BasicPixelIDTypeList",
-  "output_image_type" : "itk::Image<uint8_t, InputImageType::ImageDimension>",
+  "output_pixel_type" : "uint8_t",
   "members" : [ {
     "name" : "InsideValue",
-    "type" : "double",
-    "default" : "1.0",
+    "type" : "uint8_t",
+    "default" : "1u",
     "pixeltype" : "Output",
     "briefdescriptionSet" : "",
     "detaileddescriptionSet" : "Set the \"inside\" pixel value. The default value NumericTraits<OutputPixelType>::max()\n",
@@ -16,8 +16,8 @@
     "detaileddescriptionGet" : "Get the \"inside\" pixel value.\n"
   }, {
     "name" : "OutsideValue",
-    "type" : "double",
-    "default" : "0.0",
+    "type" : "uint8_t",
+    "default" : "0u",
     "pixeltype" : "Output",
     "briefdescriptionSet" : "",
     "detaileddescriptionSet" : "Set the \"outside\" pixel value. The default value NumericTraits<OutputPixelType>::Zero.\n",
