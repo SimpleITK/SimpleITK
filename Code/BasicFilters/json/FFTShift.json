@@ -9,7 +9,7 @@
     {
       "name" : "Inverse",
       "type" : "bool",
-      "default" : false,
+      "default" : "false",
       "doc" : ""
     }
   ],
