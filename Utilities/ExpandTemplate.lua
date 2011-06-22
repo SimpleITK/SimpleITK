@@ -585,6 +585,10 @@ json = fid:read ( "*all" )
 fid:close()
 filterDescription = decode ( json )
 
+if filterDescription.itk_name == nil then
+   filterDescription.itk_name = filterDescription.name .. "ImageFilter"
+end
+
 templateBaseFilename = templateFileExtension
 
 if testOrCodeFlag == "code" then

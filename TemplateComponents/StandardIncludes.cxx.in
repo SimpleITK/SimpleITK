@@ -7,6 +7,12 @@
 #include "itkVectorIndexSelectionCastImageFilter.h"
 #include "itkImageToVectorImageFilter.h"
 
-
 #include "sitk${name}ImageFilter.h"
-#include "itk${name}ImageFilter.h"
+$(if itk_name then
+  OUT=[[
+#include "itk${itk_name}.h"]]
+else
+  OUT=[[
+#include "itk${name}ImageFilter.h"]]
+end)
+

@@ -39,7 +39,6 @@ ImageReaderBase
   itk::ImageIOBase::IOPixelType pixelType = iobase->GetPixelType();
   unsigned int numberOfComponents = iobase->GetNumberOfComponents();
 
-  
   outDimensions = dimension;
 
 
@@ -59,6 +58,11 @@ ImageReaderBase
             pixelType == itk::ImageIOBase::OFFSET )
     {
     outPixelType = this->ExecuteInternalReadVector( componentType );
+    return;
+    }
+  else if ( pixelType == itk::ImageIOBase::COMPLEX )
+    {
+    outPixelType = this->ExecuteInternalReadComplex( componentType );
     return;
     }
   else
@@ -111,6 +115,27 @@ ImageReaderBase
     default:
       assert( false ); // should never get here unless we forgot a type
       sitkExceptionMacro( "Logic error!" );
+    }
+}
+
+
+PixelIDValueType
+ImageReaderBase
+::ExecuteInternalReadComplex( int componentType )
+{
+  const unsigned int UnusedDimension = 2;
+
+  switch(componentType)
+    {
+    case itk::ImageIOBase::FLOAT:
+      return ImageTypeToPixelIDValue< itk::Image<std::complex<float>, UnusedDimension> >::Result;
+      break;
+    case itk::ImageIOBase::DOUBLE:
+      return ImageTypeToPixelIDValue< itk::Image<std::complex<double>, UnusedDimension> >::Result;
+      break;
+    case itk::ImageIOBase::UNKNOWNCOMPONENTTYPE:
+    default:
+      sitkExceptionMacro( "Only Complex image with float and double are supported!" );
     }
 }
 

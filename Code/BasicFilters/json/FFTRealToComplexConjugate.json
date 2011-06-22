@@ -1,0 +1,21 @@
+{
+  "name" : "FFTRealToComplexConjugate",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "RealPixelIDTypeList",
+  "filter_type" : "itk::FFTRealToComplexConjugateImageFilter<InputImageType>",
+  "members" : [],
+  "tests" : [
+  {
+     "tag" : "defaults",
+     "description" : "Test FFTRealToComplexConjugate",
+     "inputA" : "Input/RA-Slice-Float.nrrd",
+     "tolerance" : "0.01"
+     "settings" : [
+     ]
+   }
+  ]
+}
+

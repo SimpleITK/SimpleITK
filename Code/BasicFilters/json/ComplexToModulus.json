@@ -1,0 +1,20 @@
+{
+  "name" : "ComplexToModulus",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "ComplexPixelIDTypeList",
+  "output_pixel_type" : "typename InputImageType::PixelType::value_type"
+  "members" : [],
+  "tests" : [
+    {
+     "tag" : "defaults",
+     "description" : "Test Complex to modulus",
+     "inputA" : "Input/RA-FFT-Complex.nrrd",
+     "md5hash" : "e2896d9ab6b7da7b062aaeafa0783e6c",
+     "settings" : [
+     ]
+   }
+  ]
+}
