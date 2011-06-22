@@ -71,13 +71,13 @@
     "tag" : "DoubleThreshold1",
     "description" : "Default parameter settings",
     "inputA" : "Input/RA-Short.nrrd",
-    "md5hash" : "ce04cd663c95eb707cc9ce7f8fdb7eb9",
+    "md5hash" : "dbd0ea7d6f16bb93e9c688cb0f1bfd85",
     "settings" : [ ]
   }, {
     "tag" : "DoubleThreshold2",
     "description" : "double threshold 2D",
     "inputA" : "Input/RA-Slice-Short.png",
-    "md5hash" : "13397d7768f07192458441ad6ea6fc6d",
+    "md5hash" : "2c8fc2345ccfa980ef42aef5910efaa3",
     "settings" : [ {
       "parameter" : "Threshold1",
       "value" : "0"
