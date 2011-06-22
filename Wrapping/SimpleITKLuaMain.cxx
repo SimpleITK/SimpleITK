@@ -5,8 +5,8 @@
 */
 
 #ifdef _MSC_VER
-// diable warning about using the getenv
-#define _CRT_NONSTDC_NO_WARNINGS
+// disable warning about using getenv
+#define _CRT_SECURE_NO_WARNINGS
 #endif
 
 #include <itkVersion.h>
