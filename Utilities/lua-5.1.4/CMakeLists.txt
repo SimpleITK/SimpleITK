@@ -4,13 +4,12 @@ if( MSVC )
 endif()
 
 file ( GLOB LUA_LIB_SOURCE src/*.c )
-list ( REMOVE_ITEM LUA_LIB_SOURCE src/lua.c src/luac.c )
+list ( REMOVE_ITEM LUA_LIB_SOURCE src/lua.c )
 add_library ( lua5 ${LUA_LIB_SOURCE} )
 
-file ( GLOB LUA_SOURCE src/lua.c )
+set ( LUA_SOURCE src/lua.c )
 add_executable ( lua ${LUA_SOURCE} )
 target_link_libraries ( lua lua5 )
-
 
 if ( UNIX )
   target_link_libraries ( lua curses m )

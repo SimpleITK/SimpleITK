@@ -1,5 +1,5 @@
 
-include_directories ( ${SimpleITK_INCLUDE_DIR} )
+include_directories ( ${SimpleITK_INCLUDE_DIRS} )
 
 # Add executable example targets
 add_executable ( ConnectedThresholdImageFilter ConnectedThresholdImageFilter.cxx )

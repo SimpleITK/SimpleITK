@@ -36,10 +36,8 @@ macro( get_dependent_template_components out_var_name json_file input_dir )
       # Get the filename without the path
       get_filename_component( filename ${component} NAME )
 
-      if("${h_contents}" MATCHES ".*${filename}.*")
-        set(${out_var_name} ${${out_var_name}} ${component})
-      endif()
-      if("${cxx_contents}" MATCHES ".*${filename}.*")
+      if("${h_contents}" MATCHES ".*${filename}.*" OR
+         "${cxx_contents}" MATCHES ".*${filename}.*")
         set(${out_var_name} ${${out_var_name}} ${component})
       endif()
 
@@ -87,8 +85,8 @@ macro( expand_template FILENAME input_dir output_dir library_name )
     DEPENDS ${input_json_file} ${template_deps} ${template_file_cxx}
     )
 
-  set ( ${library_name}GeneratedSource ${${library_name}GeneratedSource} "${output_h}" CACHE INTERNAL "" )
-  set ( ${library_name}GeneratedSource ${${library_name}GeneratedSource} "${output_cxx}" CACHE INTERNAL "" )
+  set ( ${library_name}GeneratedSource ${${library_name}GeneratedSource}
+    "${output_h}" "${output_cxx}" CACHE INTERNAL "" )
 
   # Make the list visible at the global scope
   set ( GENERATED_FILTER_LIST ${GENERATED_FILTER_LIST} ${FILENAME} CACHE INTERNAL "" )

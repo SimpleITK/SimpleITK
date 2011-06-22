@@ -11,7 +11,7 @@ set(SimpleITK_LIBRARY_DIRS_CONFIG ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
 # Determine the include directories needed.
 set(SimpleITK_INCLUDE_DIRS_CONFIG
-  ${SimpleITK_INCLUDE_DIR}
+  ${SimpleITK_INCLUDE_DIRS}
 )
 
 # The "use" file.

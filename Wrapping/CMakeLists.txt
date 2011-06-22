@@ -1,6 +1,10 @@
 
 # FindR is stored in the current source path, it needs to be included.
-set(CMAKE_MODULE_PATH "${SimpleITK_SOURCE_DIR}/Wrapping;${PROJECT_SOURCE_DIR}/Wrapping/CSharpModules" )
+set(CMAKE_MODULE_PATH
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/CSharpModules
+  ${CMAKE_MODULE_PATH}
+  )
 
 
 macro(check_PIC_flag Language)
@@ -13,7 +17,7 @@ endmacro()
 
 
 #
-# Setup the option for each laguage
+# Setup the option for each language
 #
 option ( WRAP_LUA "Wrap Lua" ON )
 
@@ -139,7 +143,7 @@ if ( WRAP_LUA )
   set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKLUA_wrap.cxx COMPILE_FLAGS "-w")
 
   add_executable ( SimpleITKLua SimpleITKLuaMain.cxx SimpleITKLUA_wrap.cxx )
-  target_link_libraries ( SimpleITKLua ${SimpleITK_LIBRARIES} ${LUA_LIB} ${ITK_LIBRARIES} )
+  target_link_libraries ( SimpleITKLua ${SimpleITK_LIBRARIES} ${LUA_LIB} )
 
   if ( UNIX )
     target_link_libraries ( SimpleITKLua curses )
