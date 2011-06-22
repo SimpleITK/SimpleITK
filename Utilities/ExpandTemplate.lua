@@ -444,7 +444,7 @@ function expand(str, ...)
       else error'search item must be a function, table or userdata' end
       if value ~= nil then return value end
     end
-    io.stderr:write('unknown variable: '.. index .. ' returning nil\n')
+    io.stderr:write('Warning: unknown variable: '.. index .. ' returning nil\n')
     return nil
   end
 
@@ -506,7 +506,7 @@ function expand(str, ...)
       filename = templateComponentDirectory .. "/" .. estring(strsub(var,e))
       local includefid = io.open ( filename )
       if includefid == nil then
-        print ( 'failed to include ' .. filename )
+        print ( 'Error: failed to include ' .. filename )
         os.exit ( 1 )
       end
 
@@ -567,18 +567,21 @@ templateComponentDirectory = arg[4]
 templateFileExtension = arg[5]
 outputFile = arg[6]
 
-print ( 'configFile = ' .. configFile )
-print ( 'testOrCodeFlag = ' .. testOrCodeFlag )
-print ( 'templateFileDirectoryAndPrefix = ' .. templateFileDirectoryAndPrefix )
-print ( 'templateComponentDirectory = ' .. templateComponentDirectory )
-print ( 'templateFileExtension = ' .. templateFileExtension )
-print ( 'outputFile = ' .. outputFile )
+-- The following output may be useful for debuging perposes
+-- Alternatively a command line option could be added to increase verbosity
+-------------------------------
+-- print ( 'configFile = ' .. configFile )
+-- print ( 'testOrCodeFlag = ' .. testOrCodeFlag )
+-- print ( 'templateFileDirectoryAndPrefix = ' .. templateFileDirectoryAndPrefix )
+-- print ( 'templateComponentDirectory = ' .. templateComponentDirectory )
+-- print ( 'templateFileExtension = ' .. templateFileExtension )
+-- print ( 'outputFile = ' .. outputFile )
 
 -- Load it
 -- dofile ( configFile )
 fid = io.open ( configFile )
 if fid == nil then
-  print ( 'failed to open ' .. configFile )
+  print ( 'Error: failed to open ' .. configFile )
   os.exit ( 1 )
 end
 json = fid:read ( "*all" )
@@ -601,7 +604,7 @@ else
       templateBaseFilename = filterDescription.template_test_filename .. templateBaseFilename
     end
   else
-    print('ExpandTemplate unknown flag value' .. testOrCodeFlag )
+    print('Warning: ExpandTemplate unknown flag value' .. testOrCodeFlag )
   end
 end
 
@@ -610,7 +613,7 @@ templateFilename = templateFileDirectoryAndPrefix .. templateBaseFilename
 
 fid = io.open ( templateFilename )
 if fid == nil then
-  print ( 'failed to open ' .. templateFilename )
+  print ( 'Error: failed to open ' .. templateFilename )
   os.exit ( 1 )
 end
 
@@ -619,13 +622,13 @@ fid:close()
 
 
 if filterDescription == nil then
-  print ( 'failed to find filter config in ' .. configFile )
+  print ( 'Error: failed to find filter config in ' .. configFile )
   os.exit ( 1 )
 end
 
 fid = io.open ( outputFile, 'w' )
 if fid == nil then
-  print ( 'failed to open ' .. outputFile .. ' for writing' )
+  print ( 'Error: failed to open ' .. outputFile .. ' for writing' )
   os.exit ( 1 )
 end
 fid:write ( expand ( template, filterDescription ) )
