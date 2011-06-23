@@ -1,0 +1,62 @@
+{
+  "name" : "RegionOfInterest",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "NonLabelPixelIDTypeList",
+  "members" : [ {
+    "name" : "Size",
+    "type" : "std::vector<unsigned int>",
+    "default" : "std::vector<unsigned int>(3, 1)",
+    "dim_vec" : 1,
+    "itk_type" : "typename InputImageType::SizeType",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : "",
+    /* custom cast of Index, sets this */
+    "custom_itk_cast" : ""
+  }, {
+    "name" : "Index",
+    "type" : "std::vector<int>",
+    "default" : "std::vector<int>(3, 0)",
+    "dim_vec" : 1,
+    "itk_type" : "typename InputImageType::IndexType",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "\todo the internal setting of the method need work!!!",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : "",
+    "custom_itk_cast" : " typename InputImageType::RegionType itkRegion;\n  for( unsigned int i = 0; i < inImage1.GetDimension(); ++i )\n    {\n    itkRegion.SetIndex( i, m_Index[i] );\n    itkRegion.SetSize( i, m_Size[i] );\n    }\n  filter->SetRegionOfInterest( itkRegion );\nstd::cout << itkRegion;"
+  } ],
+  "tests" : [ {
+    "tag" : "defaults",
+    "description" : "use the defaults which sets a 0 size image",
+    "inputA" : "Input/RA-Float.nrrd",
+    "md5hash" : "f1d3ff8443297732862df21dc4e57262"
+  }, {
+    "tag" : "more",
+    "description" : "croping",
+    "inputA" : "Input/VM1111Shrink-RGB.png",
+    "md5hash" : "1b6e2f0bfb379619334f3c25e0e408a1",
+    "settings" : [ {
+      "parameter" : "Size",
+      "type" : "unsigned int",
+      "dim_vec" : 1,
+      "value" : "{10, 10}",
+      "tcl_value" : "[list 10 10]",
+      "python_value" : "[ 10, 10 ]",
+      "ruby_value" : "[ 10, 10 ]"
+    }, {
+      "parameter" : "Index",
+      "type" : "int",
+      "dim_vec" : 1,
+      "value" : "{167, 151}",
+      "tcl_value" : "[list 167 151]",
+      "python_value" : "[ 167, 151 ]",
+      "ruby_value" : "[ 167, 151 ]"
+    } ]
+  } ],
+  "briefdescription" : "",
+  "detaileddescription" : ""
+}
