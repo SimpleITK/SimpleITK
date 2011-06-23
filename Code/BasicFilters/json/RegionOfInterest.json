@@ -3,7 +3,7 @@
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
-  "doc" : "",
+  "doc" : "The RegionOfInterest filter extract an N-D image from an N-D image. If a 2-D image is desired then the Extract image filter should be used.",
   "pixel_types" : "NonLabelPixelIDTypeList",
   "members" : [ {
     "name" : "Size",
@@ -27,7 +27,7 @@
     "detaileddescriptionSet" : "\todo the internal setting of the method need work!!!",
     "briefdescriptionGet" : "",
     "detaileddescriptionGet" : "",
-    "custom_itk_cast" : " typename InputImageType::RegionType itkRegion;\n  for( unsigned int i = 0; i < inImage1.GetDimension(); ++i )\n    {\n    itkRegion.SetIndex( i, m_Index[i] );\n    itkRegion.SetSize( i, m_Size[i] );\n    }\n  filter->SetRegionOfInterest( itkRegion );\nstd::cout << itkRegion;"
+    "custom_itk_cast" : " typename InputImageType::RegionType itkRegion;\n  for( unsigned int i = 0; i < inImage1.GetDimension(); ++i )\n    {\n    itkRegion.SetIndex( i, m_Index[i] );\n    itkRegion.SetSize( i, m_Size[i] );\n    }\n  filter->SetRegionOfInterest( itkRegion );"
   } ],
   "tests" : [ {
     "tag" : "defaults",
