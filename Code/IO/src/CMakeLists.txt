@@ -8,6 +8,8 @@ set( SimpleITKIOSource
   sitkShow.cxx
   )
 
+include_directories( ${CMAKE_CURRENT_SOURCE_DIR} )
+
 add_library ( SimpleITKIO STATIC ${SimpleITKIOSource} )
 target_link_libraries ( SimpleITKIO SimpleITKCommon )
 
