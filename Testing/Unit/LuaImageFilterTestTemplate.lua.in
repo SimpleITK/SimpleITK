@@ -46,6 +46,8 @@ elseif parameter == "SeedList" then
 elseif dim_vec and dim_vec == 1 then
    if type == "bool" then
      OUT="idx = SimpleITK.VectorBool();"
+   elseif type == "int" then
+      OUT="idx = SimpleITK.VectorInt32();"
    else
      OUT="idx = SimpleITK.VectorUInt32();"
    end

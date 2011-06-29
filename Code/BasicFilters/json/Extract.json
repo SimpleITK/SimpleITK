@@ -1,0 +1,91 @@
+{
+  "name" : "Extract",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Extract image filter extracts a 2D image from a 2D or 3D image. If the same dimension output is required then the RegionOfInterestFilter should be used. \n \todo This filter should work with Vector images too.",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "public_declarations" : "    typedef enum { DIRECTIONCOLLAPSETOUNKOWN = 0, DIRECTIONCOLLAPSETOIDENTITY = 1, DIRECTIONCOLLAPSETOSUBMATRIX = 2, DIRECTIONCOLLAPSETOGUESS = 3} DirectionCollapseStrategy;"
+  "filter_type" : "itk::ExtractImageFilter<InputImageType, itk::Image<typename InputImageType::PixelType, 2> >"
+  "members" : [ {
+    "name" : "Size",
+    "type" : "std::vector<unsigned int>",
+    "default" : "std::vector<unsigned int>(3, 1)",
+    "dim_vec" : 1,
+    "itk_type" : "typename InputImageType::SizeType",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : "",
+    /* custom cast of Index, sets this */
+    "custom_itk_cast" : ""
+  }, {
+    "name" : "Index",
+    "type" : "std::vector<int>",
+    "default" : "std::vector<int>(3, 0)",
+    "dim_vec" : 1,
+    "itk_type" : "typename InputImageType::IndexType",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "\todo the internal setting of the method needs work!!!",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : "",
+    "custom_itk_cast" : " typename InputImageType::RegionType itkRegion;\n  for( unsigned int i = 0; i < inImage1.GetDimension(); ++i )\n    {\n    itkRegion.SetIndex( i, m_Index[i] );\n    itkRegion.SetSize( i, m_Size[i] );\n    }\n  filter->SetExtractionRegion( itkRegion );"
+  }, {
+    "name" : "DirectionCollapseToStrategy",
+    "type" : "ExtractImageFilter::DirectionCollapseStrategy",
+    "default" : "itk::simple::ExtractImageFilter::DIRECTIONCOLLAPSETOGUESS"
+    "custom_itk_cast" : "filter->SetDirectionCollapseToStrategy( typename FilterType::DirectionCollaspeStrategyEnum( int( this->m_DirectionCollapseToStrategy ) ) );"
+  }
+ ],
+  "tests" : [ {
+    "tag" : "defaults",
+    "description" : "use the defaults on a 2D image",
+    "inputA" : "Input/cthead1.png",
+    "md5hash" : "93b885adfe0da089cdf634904fd59f71",
+    "settings" : [
+      {
+        "parameter" : "DirectionCollapseToStrategy",
+        "value" : "itk::simple::${name}ImageFilter::DIRECTIONCOLLAPSETOIDENTITY",
+        "lua_value" : "SimpleITK.${name}ImageFilter_DIRECTIONCOLLAPSETOIDENTITY",
+        "python_value" : "SimpleITK.${name}ImageFilter.DIRECTIONCOLLAPSETOIDENTITY",
+        "ruby_value" : "Simpleitk::${name}ImageFilter::DIRECTIONCOLLAPSETOIDENTITY",
+        "java_value" : "${name}ImageFilter.DirectionCollapseStrategy.DIRECTIONCOLLAPSETOIDENTITY",
+        "tcl_value" : "$$${name}ImageFilter_DIRECTIONCOLLAPSETOIDENTITY"
+      }
+    ]
+  }, {
+    "tag" : "more",
+    "description" : "croping",
+    "inputA" : "Input/RA-Float.nrrd",
+    "md5hash" : "01bae0803fe74512dbd9d00fc8da4879",
+    "settings" : [
+      {
+        "parameter" : "Size",
+        "type" : "unsigned int",
+        "dim_vec" : 1,
+        "value" : "{10, 0, 10}",
+        "tcl_value" : "[list 10 0 10]",
+        "python_value" : "[ 10, 0, 10 ]",
+        "ruby_value" : "[ 10, 0, 10 ]"
+      }, {
+        "parameter" : "Index",
+        "type" : "int",
+        "dim_vec" : 1,
+        "value" : "{16, 20, 51}",
+        "tcl_value" : "[list 16 20 51]",
+        "python_value" : "[ 16, 20, 51 ]",
+        "ruby_value" : "[ 16, 20, 51 ]"
+      }, {
+        "parameter" : "DirectionCollapseToStrategy",
+        "value" : "itk::simple::${name}ImageFilter::DIRECTIONCOLLAPSETOIDENTITY",
+        "lua_value" : "SimpleITK.${name}ImageFilter_DIRECTIONCOLLAPSETOIDENTITY",
+        "python_value" : "SimpleITK.${name}ImageFilter.DIRECTIONCOLLAPSETOIDENTITY",
+        "ruby_value" : "Simpleitk::${name}ImageFilter::DIRECTIONCOLLAPSETOIDENTITY",
+        "java_value" : "${name}ImageFilter.DirectionCollapseStrategy.DIRECTIONCOLLAPSETOIDENTITY",
+        "tcl_value" : "$$${name}ImageFilter_DIRECTIONCOLLAPSETOIDENTITY"
+    }
+  ]
+  } ],
+  "briefdescription" : "",
+  "detaileddescription" : ""
+}

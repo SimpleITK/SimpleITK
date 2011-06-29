@@ -8,8 +8,10 @@
 #include <sitkCastImageFilter.h>
 #include <sitkPixelIDValues.h>
 #include <sitkLabelStatisticsImageFilter.h>
+#include <sitkExtractImageFilter.h>
 
 #include "itkRecursiveGaussianImageFilter.h"
+#include "itkExtractImageFilter.h"
 
 
 TEST(BasicFilters,RecursiveGaussian_ENUMCHECK) {
@@ -18,6 +20,17 @@ TEST(BasicFilters,RecursiveGaussian_ENUMCHECK) {
   EXPECT_EQ( (int)ITKRecursiveGausianType::ZeroOrder, (int)itk::simple::RecursiveGaussianImageFilter::ZeroOrder );
   EXPECT_EQ( (int)ITKRecursiveGausianType::FirstOrder, (int)itk::simple::RecursiveGaussianImageFilter::FirstOrder );
   EXPECT_EQ( (int)ITKRecursiveGausianType::SecondOrder, (int)itk::simple::RecursiveGaussianImageFilter::SecondOrder );
+}
+
+
+TEST(BasicFilters,Extract_ENUMCHECK) {
+
+  typedef itk::ExtractImageFilter< itk::Image<float,3>, itk::Image<float,3> > ITKExtractType;
+  EXPECT_EQ( (int)ITKExtractType::DIRECTIONCOLLAPSETOUNKOWN, (int)itk::simple::ExtractImageFilter::DIRECTIONCOLLAPSETOUNKOWN );
+  EXPECT_EQ( (int)ITKExtractType::DIRECTIONCOLLAPSETOIDENTITY, (int)itk::simple::ExtractImageFilter::DIRECTIONCOLLAPSETOIDENTITY );
+  EXPECT_EQ( (int)ITKExtractType::DIRECTIONCOLLAPSETOSUBMATRIX, (int)itk::simple::ExtractImageFilter::DIRECTIONCOLLAPSETOSUBMATRIX );
+  EXPECT_EQ( (int)ITKExtractType::DIRECTIONCOLLAPSETOGUESS, (int)itk::simple::ExtractImageFilter::DIRECTIONCOLLAPSETOGUESS );
+
 }
 
 TEST(BasicFilters,Cast) {
