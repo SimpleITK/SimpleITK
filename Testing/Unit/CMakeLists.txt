@@ -197,7 +197,7 @@ target_link_libraries ( SimpleITKUnitTestDriver gtest ${SimpleITK_LIBRARIES} )
 
 # Add all the tests by parsing the source code
 # This macro searches for GoogleTest macros and adds them as test automatically
-macro(ADD_GOOGLE_TESTS executable)
+macro(ADD_GOOGLE_TESTS target)
   # Add the generated tests
   set ( AllTestsHits ${GENERATED_TEST_LIST} )
   set ( LongTestsHits "" )
@@ -227,16 +227,15 @@ macro(ADD_GOOGLE_TESTS executable)
     endforeach()
   endif ()
 
-
   list ( SORT AllTestsHits )
+  list ( REMOVE_DUPLICATES AllTestsHits )
   # Add all the remaining tests to CTest's test list
   foreach(hit ${AllTestsHits})
-    # message ( STATUS "Adding test ${executable} ${hit} ${TEST_HARNESS_DATA_DIRECTORY} ${TEST_HARNESS_TEMP_DIRECTORY}" )
-    add_test(${hit} ${executable} --gtest_filter=${hit})
+    # message ( STATUS "Adding test ${target} --gtest_filter=${hit}" )
+    add_test(NAME ${hit} COMMAND ${target} --gtest_filter=${hit})
   endforeach()
 endmacro()
 
 
-
 # Here we add all the tests
-add_google_tests ( ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/SimpleITKUnitTestDriver ${TestSource})
+add_google_tests(SimpleITKUnitTestDriver ${TestSource})
