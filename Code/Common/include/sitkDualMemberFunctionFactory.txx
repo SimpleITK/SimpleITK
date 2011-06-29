@@ -93,7 +93,7 @@ DualMemberFunctionFactory< TMemberFunctionPointer >
     {
     typename Superclass::KeyType key(pixelID1, pixelID2);
 
-    switch( TImageType1::ImageDimension )
+    switch( int(TImageType1::ImageDimension) )
       {
       case 3:
         Superclass::m_PFunction3[ key ] = Superclass::BindObject( pfunc, m_ObjectPointer );
