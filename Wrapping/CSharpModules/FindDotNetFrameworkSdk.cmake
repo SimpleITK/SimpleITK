@@ -44,11 +44,11 @@ foreach ( csharp_dotnet_executable ${csharp_dotnet_executables} )
     # TODO: Consider using REGEX
     string( REPLACE "${csharp_dotnet_framework_dir}/" "" csharp_dotnet_version_temp ${csharp_dotnet_executable} )
     string( REPLACE "/csc.exe" "" csharp_dotnet_version_temp ${csharp_dotnet_version_temp} )
-    set( CSHARP_DOTNET_VERSION ${csharp_dotnet_version_temp} CACHE STRING ".NET C# compiler version" )
+    set( CSHARP_DOTNET_VERSION ${csharp_dotnet_version_temp} CACHE STRING "C# .NET compiler version" )
     mark_as_advanced( CSHARP_DOTNET_VERSION )
 
     # Add variable holding executable
-    set( CSHARP_DOTNET_COMPILER_${csharp_dotnet_version_temp} ${csharp_dotnet_executable} CACHE STRING ".NET C# compiler ${csharp_dotnet_version}" FORCE )
+    set( CSHARP_DOTNET_COMPILER_${csharp_dotnet_version_temp} ${csharp_dotnet_executable} CACHE STRING "C# .NET compiler ${csharp_dotnet_version}" FORCE )
     mark_as_advanced( CSHARP_DOTNET_COMPILER_${csharp_dotnet_version_temp} )
   endif( csharp_dotnet_valid )
   
@@ -66,7 +66,7 @@ endforeach( csharp_dotnet_executable )
 
 if( CSHARP_DOTNET_FOUND )
   # Report the found versions
-  message( STATUS "Found the following C# .NET compiler versions: ${CSHARP_DOTNET_VERSIONS}" )
+  message( STATUS "Found the following C# .NET versions: ${CSHARP_DOTNET_VERSIONS}" )
 endif( CSHARP_DOTNET_FOUND )
 
 # Set USE_FILE

@@ -2,7 +2,7 @@
 # A CMake Module for using Mono.
 #
 # The following variables are set:
-#   TODO
+#   (none)
 #
 # Additional references can be found here:
 #   http://www.mono-project.com/Main_Page
@@ -13,4 +13,4 @@
 # Copyright (c) 2006-2010 Mathieu Malaterre <mathieu.malaterre@gmail.com>
 #
 
-# TODO
+message( STATUS "Using Mono compiler version ${CSHARP_MONO_VERSION}" )
