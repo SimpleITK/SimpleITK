@@ -28,6 +28,36 @@ file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/RubyTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/JavaTests/org/itk/simple/testing)
 
 #
+# Glob for necessary template files up front, before the foreach loop over
+# the filters:
+#
+file ( GLOB CXX_TEMPLATE_FILES "*Template*.cxx.in" )
+
+if ( WRAP_LUA )
+  file ( GLOB LUA_TEMPLATE_FILES "*Template*.lua.in" )
+endif()
+
+if ( WRAP_PYTHON )
+  file ( GLOB PYTHON_TEMPLATE_FILES "*Template*py.in" )
+endif()
+
+if ( WRAP_TCL )
+  file ( GLOB TCL_TEMPLATE_FILES "*Template*.tcl.in" )
+endif()
+
+if ( WRAP_R )
+  file ( GLOB R_TEMPLATE_FILES "*Template*.R.in" )
+endif()
+
+if ( WRAP_RUBY )
+  file ( GLOB RUBY_TEMPLATE_FILES "*Template*rb.in" )
+endif()
+
+if ( WRAP_JAVA )
+  file ( GLOB JAVA_TEMPLATE_FILES "*Template*.java.in" )
+endif()
+
+#
 # Generate code for the tests in different languages
 #
 foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
@@ -37,7 +67,6 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
   set (template_expansion_script ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua)
   set (template_include_dir ${SimpleITK_SOURCE_DIR}/TemplateComponents)
 
-  file ( GLOB CXX_TEMPLATE_FILES "*Template*.cxx.in" )
   set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILTERNAME}ImageFilterTest.cxx")
   add_custom_command (
     OUTPUT  ${OUTPUT_TEST_FILENAME}
@@ -48,7 +77,6 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
   set ( GENERATED_TEST_SOURCE ${GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
 
   if ( WRAP_LUA )
-    file ( GLOB LUA_TEMPLATE_FILES "*Template*.lua.in" )
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/LuaTests/${FILTERNAME}ImageFilterTest.lua")
     add_custom_command (
       OUTPUT "${OUTPUT_TEST_FILENAME}"
@@ -60,7 +88,6 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
   endif()
 
   if ( WRAP_PYTHON )
-    file ( GLOB PYTHON_TEMPLATE_FILES "*Template*py.in" )
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/${FILTERNAME}ImageFilterTest.py")
     add_custom_command (
       OUTPUT  "${OUTPUT_TEST_FILENAME}"
@@ -72,7 +99,6 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
   endif()
 
   if ( WRAP_TCL )
-    file ( GLOB TCL_TEMPLATE_FILES "*Template*.tcl.in" )
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/TclTests/${FILTERNAME}ImageFilterTest.tcl")
     add_custom_command (
       OUTPUT  "${OUTPUT_TEST_FILENAME}"
@@ -84,7 +110,6 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
   endif()
 
   if ( WRAP_R )
-    file ( GLOB R_TEMPLATE_FILES "*Template*.R.in" )
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/RTests/${FILTERNAME}ImageFilterTest.R")
     add_custom_command (
       OUTPUT  "${OUTPUT_TEST_FILENAME}"
@@ -96,7 +121,6 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
   endif()
 
   if ( WRAP_RUBY )
-    file ( GLOB RUBY_TEMPLATE_FILES "*Template*rb.in" )
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/RubyTests/${FILTERNAME}ImageFilterTest.rb")
     add_custom_command (
       OUTPUT  "${OUTPUT_TEST_FILENAME}"
@@ -109,7 +133,6 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
 
   # Java Tests
   if ( WRAP_JAVA )
-    file ( GLOB JAVA_TEMPLATE_FILES "*Template*.java.in" )
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/org/itk/simple/testing/${FILTERNAME}ImageFilterTest.java")
     add_custom_command (
       OUTPUT  "${OUTPUT_TEST_FILENAME}"
@@ -151,12 +174,11 @@ set ( GTestSource
 include_directories ( GoogleTest ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
 add_library(gtest ${GTestSource})
-link_libraries(gtest)
 if (CMAKE_USE_PTHREADS_INIT)
   target_link_libraries(gtest ${CMAKE_THREAD_LIBS_INIT})
 endif()
 
-include_directories ( ${SimpleITK_INCLUDE_DIR} )
+include_directories ( ${SimpleITK_INCLUDE_DIRS} )
 
 add_custom_target(WrappedGeneratedTests ALL
   DEPENDS ${WRAPPED_GENERATED_TEST_SOURCE}
@@ -171,11 +193,11 @@ add_executable(SimpleITKUnitTestDriver
   SimpleITKUnitTestDriver.cxx ${TestSource} ImageCompare.cxx
   ${GENERATED_TEST_SOURCE}
 )
-target_link_libraries ( SimpleITKUnitTestDriver ${ITK_LIBRARIES} ${SimpleITK_LIBRARIES} )
+target_link_libraries ( SimpleITKUnitTestDriver gtest ${SimpleITK_LIBRARIES} )
 
 # Add all the tests by parsing the source code
 # This macro searches for GoogleTest macros and adds them as test automatically
-macro(ADD_GOOGLE_TESTS executable)
+macro(ADD_GOOGLE_TESTS target)
   # Add the generated tests
   set ( AllTestsHits ${GENERATED_TEST_LIST} )
   set ( LongTestsHits "" )
@@ -205,16 +227,15 @@ macro(ADD_GOOGLE_TESTS executable)
     endforeach()
   endif ()
 
-
   list ( SORT AllTestsHits )
+  list ( REMOVE_DUPLICATES AllTestsHits )
   # Add all the remaining tests to CTest's test list
   foreach(hit ${AllTestsHits})
-    # message ( STATUS "Adding test ${executable} ${hit} ${TEST_HARNESS_DATA_DIRECTORY} ${TEST_HARNESS_TEMP_DIRECTORY}" )
-    add_test(${hit} ${executable} --gtest_filter=${hit})
+    # message ( STATUS "Adding test ${target} --gtest_filter=${hit}" )
+    add_test(NAME ${hit} COMMAND ${target} --gtest_filter=${hit})
   endforeach()
 endmacro()
 
 
-
 # Here we add all the tests
-add_google_tests ( ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/SimpleITKUnitTestDriver ${TestSource})
+add_google_tests(SimpleITKUnitTestDriver ${TestSource})

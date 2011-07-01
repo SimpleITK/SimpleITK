@@ -8,7 +8,7 @@ set( SimpleITKIOSource
   )
 
 add_library ( SimpleITKIO STATIC ${SimpleITKIOSource} )
-target_link_libraries ( SimpleITKIO SimpleITKCommon ${ITK_LIBRARIES} )
+target_link_libraries ( SimpleITKIO SimpleITKCommon )
 
 # Add custom command that will delete java files which need to be rebuilt when changes
 # are made to IO

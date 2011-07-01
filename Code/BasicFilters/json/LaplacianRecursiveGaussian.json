@@ -15,7 +15,7 @@
   }, {
     "name" : "NormalizeAcrossScale",
     "type" : "bool",
-    "default" : "0",
+    "default" : "false",
     "doc" : "",
     "briefdescriptionSet" : "",
     "detaileddescriptionSet" : "Define which normalization factor will be used for the Gaussian\\see RecursiveGaussianImageFilter::SetNormalizeAcrossScale\n\n",

@@ -4,6 +4,11 @@
 ** See Copyright Notice in lua.h
 */
 
+#ifdef _MSC_VER
+// disable warning about using getenv
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+
 #include <itkVersion.h>
 #include <sitkVersion.h>
 #include <itksys/SystemTools.hxx>
@@ -20,6 +25,8 @@
 #if !defined(_WIN32)
 #define LUA_USE_POSIX
 #endif
+
+
 
 
 extern "C" {

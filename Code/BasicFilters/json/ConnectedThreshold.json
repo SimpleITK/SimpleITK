@@ -5,6 +5,7 @@
   "number_of_inputs" : 1,
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelIDTypeList",
+  "output_pixel_type" : "uint8_t",
   "members" : [ {
     "name" : "Upper",
     "type" : "double",
@@ -25,8 +26,8 @@
     "detaileddescriptionGet" : ""
   }, {
     "name" : "ReplaceValue",
-    "type" : "double",
-    "default" : 1,
+    "type" : "uint8_t",
+    "default" : "1u",
     "pixeltype" : "Output",
     "doc" : "Pixels that lie within Lower and Upper (inclusive)\nwill be replaced with this value. The default is 1.",
     "briefdescriptionSet" : "",
@@ -39,7 +40,7 @@
     "description" : "Simply run with default settings",
     "inputA" : "Input/RA-Float.nrrd",
     "settings" : [ ],
-    "tolerance" : 0.1
+     "md5hash" : "ec87a838931d4d5d2e94a04644788a55"
   }, {
     "tag" : "2d",
     "description" : "Run with 2d sample settings",
@@ -59,9 +60,11 @@
       "value" : 150
     }, {
       "parameter" : "ReplaceValue",
-      "value" : 255
+      "value" : "255",
+       /* JAVA does not implicitly cast ints to short */
+      "java_value" : "(short) 255"
     } ],
-    "tolerance" : 0.1
+   "md5hash" : "5119a1fef13206c4a28fcfa0c55b5c13"
   } ],
   "briefdescription" : "Label pixels that are connected to a seed and lie within a range of values.\n",
   "detaileddescription" : " ConnectedThresholdImageFilterlabels pixels with ReplaceValue that are connected to an initial Seed AND lie within a Lower and Upper threshold range.\n"
