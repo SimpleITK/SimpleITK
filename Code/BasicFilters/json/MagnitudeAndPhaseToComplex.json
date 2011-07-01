@@ -13,7 +13,7 @@
      "description" : "Test defaults",
      "inputA" : "Input/RA-Slice-Float.nrrd",
      "inputB" : "Input/RA-Slice-Float.nrrd",
-      "md5hash" : "fa0f5bee7944b8c52d21f6143ed79024",
+     "tolerance" : "0.0001",
      "settings" : [
      ]
    }

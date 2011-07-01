@@ -12,7 +12,7 @@
      "tag" : "defaults",
      "description" : "Test Complex to Phase",
      "inputA" : "Input/RA-FFT-Complex.nrrd",
-     "md5hash" : "c5017796a47606be365064a458eb91ff",
+     "tolerance" : "0.0001",
      "settings" : [
      ]
     }
