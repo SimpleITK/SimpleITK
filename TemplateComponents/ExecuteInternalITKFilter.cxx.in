@@ -1,7 +1,7 @@
   $(if filter_type then
     OUT=[[typedef ${filter_type} FilterType;]]
   else
-    OUT=[[typedef itk::${name}ImageFilter<InputImageType,]]
+    OUT=[[typedef itk::${itk_name}<InputImageType,]]
          if number_of_inputs == 2 then
            OUT=OUT .. ' InputImageType2,'
            end

@@ -32,6 +32,8 @@ namespace itk {
 
       PixelIDValueType ExecuteInternalReadVector( int componentType );
 
+      PixelIDValueType ExecuteInternalReadComplex( int componentType );
+
     };
   }
 }

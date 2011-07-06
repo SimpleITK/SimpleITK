@@ -34,6 +34,7 @@ namespace itk {
       double GetMaximum ( ) const;
       double GetMean    ( ) const;
       double GetVariance( ) const;
+      double GetSum     ( ) const;
 
       //Return the MeasuremetMap for the given labelCode
       itk::simple::MeasurementMap GetMeasurementMap ( ) const;
