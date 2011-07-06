@@ -47,7 +47,7 @@ include(PreventInBuildInstalls)
 # directory, so that all libs/include etc ends up
 # in one common tree
 set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_BINARY_DIR} CACHE PATH "Where all the prerequisite libraries go" FORCE)
-set(${CMAKE_PROJECT_NAME}_BUILD_TESTING ON CACHE BOOL "Turn on Testing for BRAINS")
+set(${CMAKE_PROJECT_NAME}_BUILD_TESTING ON CACHE BOOL "Turn on Testing for SimpleITK")
 
 # Compute -G arg for configuring external projects with the same CMake generator:
 if(CMAKE_EXTRA_GENERATOR)
@@ -57,7 +57,7 @@ else()
 endif()
 
 #-----------------------------------------------------------------------------
-# Always build Shared library
+# Default to build shared libraries off
 #------------------------------------------------------------------------------
 set(BUILD_SHARED_LIBS OFF)
 
