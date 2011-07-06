@@ -34,7 +34,7 @@ if len ( sys.argv ) > 6:
     numberFilltingLevels = int( sys.argv[6] )
 
 if len ( sys.argv ) > 5:
-    corrector.SetMaximumNumberOfIterations( [ int( sys.argv[5] ) ] * numberOfFittingLevels )
+    corrector.SetMaximumNumberOfIterations( [ int( sys.argv[5] ) ] *numberFilltingLevels  )
 
 
 
