@@ -1,0 +1,26 @@
+{
+  "name" : "ApproximateSignedDistanceMap",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "doc" : "Docs",
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "output_pixel_type" : "float",
+  "members" : [ {
+    "name" : "InsideValue",
+    "type" : "double",
+    "default" : "1u",
+    "pixeltype" : "Input"
+  }, {
+    "name" : "OutsideValue",
+    "type" : "double",
+    "default" : "0u",
+    "pixeltype" : "Input"
+  } ],
+  "tests" : [ {
+    "tag" : "default",
+    "description" : "Default parameter settings",
+    "inputA" : "Input/2th_cthead1.png",
+     "tolerance" : "0.01"
+    "settings" : [ ]
+  }]
+}
