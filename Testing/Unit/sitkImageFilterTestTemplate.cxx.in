@@ -76,8 +76,9 @@ end)
   ASSERT_THROW ( filter.Execute ( smallImage, largeImage ), itk::simple::GenericException ) << " Image sizes are different";]]
   if template_code_filename and template_code_filename == "DualImageFilter" then
     OUT = OUT .. [=[
-
-  ASSERT_NO_THROW ( filter.Execute ( smallImage, smallShortImage ) ) << " Image types are different";]=]
+        // todo add intelligence to determin some image types to test
+        //ASSERT_NO_THROW ( filter.Execute ( smallImage, smallShortImage ) ) << " Image types are different";
+]=]
   else
     OUT = OUT .. [=[
 
