@@ -3,6 +3,29 @@
 
 \section Procedures Procedures
 
+\subsection Contributions User Contributions
+
+Users can contribute patches through the gerrit code review system:
+<a href="http://review.source.kitware.com/#q,SimpleITK,n,z">http://review.source.kitware.com/#q,SimpleITK,n,z</a>
+
+General information about Gerrit can be found here:
+<a href="http://gerrit.googlecode.com/svn/documentation/2.1.7/user-upload.html">http://gerrit.googlecode.com/svn/documentation/2.1.7/user-upload.html</a>
+
+A quick overview of the process:
+
+\code
+$ git remote add gerrit $username$@review.source.kitware.com:SimpleITK
+$ git checkout master
+$ git pull
+$ git checkout -b $MyTopic$
+hack and edit
+compile and test
+$ git add $MyHackedFiles$
+$ git commit
+$ git push gerrit HEAD:refs/for/master/$MyTopic$
+\endcode
+
+
 \section VS2008 Building with Visual Studio 2008
 
 Visual Studio 2008 is the oldest supported Microsoft development environment that SimpleITK supports.  To build, you will need to download and install the TR1 implementation contained in the <a href="http://www.microsoft.com/downloads/en/details.aspx?FamilyId=D466226B-8DAB-445F-A7B4-448B326C48E7&displaylang=en">Visual C++ 2008 Feature Pack Release</a>.
