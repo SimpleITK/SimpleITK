@@ -123,6 +123,7 @@ include(${SimpleITK_SOURCE_DIR}/sitkGenerateSimpleITKConfig.cmake)
 #------------------------------------------------------------------------------
 # Set up Documentation
 include(${SimpleITK_SOURCE_DIR}/Utilities/Doxygen/Doxygen.cmake)
+
 #------------------------------------------------------------------------------
 # Go to subdirectories
 add_subdirectory ( Utilities )
@@ -134,13 +135,14 @@ add_subdirectory ( Examples )
 # ITK uses KWStyle for checking the coding style
 include(${SimpleITK_SOURCE_DIR}/Utilities/KWStyle/KWStyle.cmake)
 
-# Options for testing
-option ( USE_TESTING "Build testing" ON )
 
-if ( USE_TESTING )
+#------------------------------------------------------------------------------
+# set things up for testing
+include(CTest)
+
+if ( BUILD_TESTING )
   enable_testing()
   add_subdirectory ( Testing )
-  include(CTest)
   option ( RUN_LONG_TESTS "Run long tests.  Some tests have been identified as long running, should these be run?" OFF )
   mark_as_advanced(RUN_LONG_TESTS)
   set(BUILDNAME "${BUILDNAME}" CACHE STRING "Name of build on the dashboard")
