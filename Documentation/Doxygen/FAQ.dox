@@ -1,0 +1,41 @@
+/**
+\page FAQ Frequently Asked Questsions
+
+\section CXXSupport Is my compiler supported?
+
+SimpleITK uses advanced C++ meta-programming to instantiate ITK's Images and Filters. Addtionally, we some headers which are included in the C99 and C++ TR1 extension. This places additional requirements on the compiler beyond what is require for ITK. In principle we require C++x03 with C99's "stdint.h" and TR1's "functional". If your compiler has those features it is likely able to be supported.
+
+The addtional requirement for a supported compiler is that it's on the nightly dashboard. With this regaurd th e list of supported compilers is on the <a href="http://www.cdash.org/CDash/index.php?project=Insight#ITKv4_SimpleITK">SimpleITK dashboard</a>. User contributions are welcomed to expand the supported compilers by contributing to the nightly dashboard.
+
+\subsection CommitedToSupport Committed to Support
+\li GCC 4.0
+\li GCC 4.2
+\li Visual Studio 9
+\li Visual Studio 10 ( including Express )
+
+\section TR1 Do I need to download an option package for TR1 support
+
+Visual Studio 2008 requires an additional download for TR1 support.
+
+\sa VS2008
+
+
+\section C99 Do I need to download an optional package for C99?
+
+
+Visual Studio 2008 requires an additional download for C99 support.
+
+\sa VS2008
+
+
+\section VS2008 Building with Visual Studio 2008
+
+Visual Studio 2008 is the oldest supported Microsoft development environment that SimpleITK supports.  To build, you will need to download and install the TR1 implementation contained in the <a href="http://www.microsoft.com/downloads/en/details.aspx?FamilyId=D466226B-8DAB-445F-A7B4-448B326C48E7&displaylang=en">Visual C++ 2008 Feature Pack Release</a>.
+
+Visual Studio also requires an implementation of stdint.h, which can be downloaded <a href="http://msinttypes.googlecode.com/svn/trunk/stdint.h">here</a> and should be installed in:
+
+\verbatim
+C:\Program Files\Microsoft Visual Studio 9.0\VC\include
+\endverbatim
+
+*/
