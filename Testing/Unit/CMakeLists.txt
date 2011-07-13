@@ -12,6 +12,7 @@ set ( TestSource
   LabelStatisticsTest.cxx
   sitkExceptionsTests.cxx
   itkHashImageFilterTest.cxx
+  ImportImageTest.cxx
   CXXTests.cxx
   PythonTests.cxx
   RubyTests.cxx
