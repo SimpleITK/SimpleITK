@@ -48,17 +48,15 @@ namespace itk {
       // Internal method called the the template dispatch system
       template <class TImageType> Image ExecuteInternal ( void );
 
-      // methods which utlize the EnableIf idiom to conditionally
-      // instatiate ad execute the implementation
-      template <class TImageType>
-      typename EnableIf<IsBasic<TImageType>::Value, Image >::Type
-      SetImportPointer ( void );
-
-      template <class TImageType>
-      typename EnableIf<IsVector<TImageType>::Value, Image >::Type
-      SetImportPointer ( void );
-
-
+      // If the output image type is a VectorImage then the number of
+      // components per pixel needs to be set, otherwise the method
+      // does not exist. This is done with the EnableIf Idiom.
+      template <class TFilterType>
+      typename DisableIf<IsVector<TFilterType>::Value>::Type
+      SetNumberOfComponentsOnImporter ( TFilterType* ) {}
+      template <class TFilterType>
+      typename EnableIf<IsVector<TFilterType>::Value>::Type
+      SetNumberOfComponentsOnImporter ( TFilterType* );
 
     private:
 
@@ -70,9 +68,7 @@ namespace itk {
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 
       unsigned int     m_NumberOfComponentsPerPixel;
-
       PixelIDValueType m_PixelIDValue;
-
       unsigned int     m_ImageDimension;
 
       std::vector< double >         m_Origin;
