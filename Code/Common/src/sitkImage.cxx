@@ -29,8 +29,8 @@ namespace itk
   public:
     virtual ~PimpleImageBase( void ) { };
 
-    virtual PixelIDValueType GetPixelIDValue(void) = 0;
-    virtual unsigned int GetDimension( void ) = 0;
+    virtual PixelIDValueType GetPixelIDValue(void) const = 0;
+    virtual unsigned int GetDimension( void ) const  = 0;
 
     virtual PimpleImageBase *ShallowCopy(void) const = 0;
     virtual PimpleImageBase *DeepCopy(void) const = 0;
@@ -135,14 +135,14 @@ namespace itk
     virtual const itk::DataObject* GetDataBase( void ) const { return this->m_Image.GetPointer(); }
 
 
-    PixelIDValueType GetPixelIDValue(void) throw()
+    PixelIDValueType GetPixelIDValue(void) const throw()
       {
         // The constructor ensures that we have a valid image
         // this maps the Image's pixel type to the array index
         return ImageTypeToPixelIDValue< ImageType>::Result;
       }
 
-    virtual unsigned int GetDimension( void )
+    virtual unsigned int GetDimension( void ) const
       {
         return ImageType::ImageDimension;
       }
@@ -378,7 +378,10 @@ namespace itk
     InternalGetPixel( const std::vector<uint32_t> &idx ) const
       {
         Unused( idx );
-        sitkExceptionMacro( "This method is not supported for this image type." )
+        sitkExceptionMacro( << "The image is of type: " << GetPixelIDValueAsString( this->GetPixelIDValue() )
+                            << " but the GetPixel access method requires type: "
+                            << GetPixelIDValueAsString(  PixelIDToPixelIDValue<TPixelIDType>::Result )
+                            << "!" );
       }
 
 
