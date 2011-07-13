@@ -22,78 +22,68 @@ namespace itk {
     public:
       typedef ImportImageFilter Self;
 
-      Image Execute();
+      ImportImageFilter();
 
       void SetSpacing( const std::vector< double > &spacing );
       void SetOrigin( const std::vector< double > &origin );
       void SetSize( const std::vector< unsigned int > &size );
 
-      void SetBufferAsInt8( int8_t * );
-      void SetBufferAsUInt8( uint8_t * );
-      void SetBufferAsInt16( int16_t * );
-      void SetBufferAsUInt16( uint16_t * );
-      void SetBufferAsInt32( int32_t * );
-      void SetBufferAsUInt32( uint32_t * );
+      void SetBufferAsInt8( int8_t * buffer, unsigned int numberOfComponents = 1 );
+      void SetBufferAsUInt8( uint8_t *, unsigned int numberOfComponents = 1 );
+      void SetBufferAsInt16( int16_t *, unsigned int numberOfComponents = 1 );
+      void SetBufferAsUInt16( uint16_t *, unsigned int numberOfComponents = 1 );
+      void SetBufferAsInt32( int32_t *, unsigned int numberOfComponents = 1 );
+      void SetBufferAsUInt32( uint32_t *, unsigned int numberOfComponents = 1 );
 
-      void SetBufferAsFloat( float * );
-      void SetBufferAsDouble( double * );
+      void SetBufferAsFloat( float *, unsigned int numberOfComponents = 1 );
+      void SetBufferAsDouble( double *, unsigned int numberOfComponents = 1 );
 
-      ImportImageFilter();
+
+      std::string ToString() const;
+
+      Image Execute();
 
     protected:
 
-
+      // Internal method called the the template dispatch system
       template <class TImageType> Image ExecuteInternal ( void );
-
-      typedef itk::ImageIOBase::IOComponentType      IOComponentType;
-
-      template < unsigned int VImageDimension >
-      Image* ExecuteInternalImportScalar( IOComponentType componentType );
-
-      template < unsigned int VImageDimension >
-      Image* ExecuteInternalImportVector( IOComponentType componentType );
 
       // methods which utlize the EnableIf idiom to conditionally
       // instatiate ad execute the implementation
       template <class TImageType>
-      typename EnableIf<IsInstantiated<TImageType>::Value, Image* >::Type
-      ExecuteInternalScalar ( typename TImageType::PixelType * buffer );
-      template <class TImageType>
-      typename DisableIf<IsInstantiated<TImageType>::Value, Image* >::Type
-      ExecuteInternalScalar ( typename TImageType::PixelType * buffer );
+      typename EnableIf<IsBasic<TImageType>::Value, Image >::Type
+      SetImportPointer ( void );
 
       template <class TImageType>
-      typename EnableIf<IsInstantiated<TImageType>::Value, Image* >::Type
-      ExecuteInternalVector ( );
-      template <class TImageType>
-      typename DisableIf<IsInstantiated<TImageType>::Value, Image* >::Type
-      ExecuteInternalVector ( );
+      typename EnableIf<IsVector<TImageType>::Value, Image >::Type
+      SetImportPointer ( void );
+
 
 
     private:
 
+      // function pointer type
+      typedef Image (Self::*MemberFunctionType)( void );
+
+      // friend to get access to executeInternal member
+      friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
+      std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
+
       unsigned int     m_NumberOfComponentsPerPixel;
 
-      IOComponentType  m_PixelComponentType;
+      PixelIDValueType m_PixelIDValue;
 
       unsigned int     m_ImageDimension;
 
-      std::vector< double >         m_Origin; 
+      std::vector< double >         m_Origin;
       std::vector< double >         m_Spacing;
       std::vector< unsigned int >   m_Size;
 
-      int8_t          * m_BufferInt8;
-      uint8_t         * m_BufferUInt8;
-      int16_t         * m_BufferInt16;
-      uint16_t        * m_BufferUInt16;
-      int32_t         * m_BufferInt32;
-      uint32_t        * m_BufferUInt32;
-      long            * m_BufferLong;
-      unsigned long   * m_BufferULong;
-      float           * m_BufferFloat;
-      double          * m_BufferDouble;
+      void        * m_Buffer;
+
     };
   }
 }
 
 #endif
+
