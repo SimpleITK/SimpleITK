@@ -41,7 +41,6 @@ ImportImageFilter::ImportImageFilter()
 {
   m_NumberOfComponentsPerPixel = 0;
   m_PixelIDValue = sitkUnknown;
-  m_ImageDimension = 3;
   m_Origin = std::vector<double>( 3, 0.0 );
   m_Spacing = std::vector<double>( 3, 1.0 );
   this->m_Buffer = NULL;
@@ -176,7 +175,7 @@ void ImportImageFilter::SetBufferAsDouble( double * buffer, unsigned int numberO
 }
 
 
-#define PRINT_IVAR_MACRO( VAR ) "\t" << #VAR << ": " << VAR
+#define PRINT_IVAR_MACRO( VAR ) "\t" << #VAR << ": " << VAR << std::endl
 
 std::string ImportImageFilter::ToString() const
 {
@@ -185,7 +184,6 @@ std::string ImportImageFilter::ToString() const
   out << "itk::simple::ImportImageFilter\n"
       << PRINT_IVAR_MACRO( m_NumberOfComponentsPerPixel )
       << PRINT_IVAR_MACRO( m_PixelIDValue )
-      << PRINT_IVAR_MACRO( m_ImageDimension )
     //         << PRINT_IVAR_MACRO( m_Origin )
 //          << PRINT_IVAR_MACRO( m_Spacing )
 //          << PRINT_IVAR_MACRO( m_Size )
@@ -195,13 +193,22 @@ std::string ImportImageFilter::ToString() const
 
 Image ImportImageFilter::Execute ()
 {
+  unsigned int imageDimension = this->m_Size.size();
+
   // perform sanity check on some parameters
   if (  this->m_NumberOfComponentsPerPixel == 0 || this->m_PixelIDValue == sitkUnknown )
     {
     sitkExceptionMacro( << "PixelType or NumberOfComponentsPerPixel are invalid!" );
     }
 
-  if ( !this->m_MemberFactory->HasMemberFunction( this->m_PixelIDValue, this->m_ImageDimension ) )
+
+  if ( imageDimension != 3 && imageDimension != 2 )
+    {
+    sitkExceptionMacro(<< "The length of size is invalid! "
+                       << "Only image of dimension 2 or 3 are supported." );
+    }
+
+  if ( !this->m_MemberFactory->HasMemberFunction( this->m_PixelIDValue, imageDimension ) )
     {
     sitkExceptionMacro( << "PixelType is not supported!" << std::endl
                         << "Pixel Type: "
@@ -209,7 +216,7 @@ Image ImportImageFilter::Execute ()
                         << "Refusing to load! " << std::endl );
     }
 
-  return this->m_MemberFactory->GetMemberFunction( this->m_PixelIDValue, this->m_ImageDimension )();
+  return this->m_MemberFactory->GetMemberFunction( this->m_PixelIDValue, imageDimension )();
 }
 
 

@@ -69,7 +69,6 @@ namespace itk {
 
       unsigned int     m_NumberOfComponentsPerPixel;
       PixelIDValueType m_PixelIDValue;
-      unsigned int     m_ImageDimension;
 
       std::vector< double >         m_Origin;
       std::vector< double >         m_Spacing;
