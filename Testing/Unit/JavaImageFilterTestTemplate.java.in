@@ -91,7 +91,7 @@ elseif dim_vec == 1 then
         elseif type == "unsigned int" then
           OUT="VectorUInt32 idx = new VectorUInt32( inputA.getDimension() );"
         elseif type == "int" then
-          OUT="VectorInt idx = new VectorInt( inputA.getDimension() );"
+          OUT="VectorInt32 idx = new VectorInt32( inputA.getDimension() );"
         elseif type == "unsigned long" then
          OUT="VectorULong idx = new VectorULong( inputA.getDimension() );"
         elseif type == "long" then
