@@ -1,6 +1,10 @@
 #
 # A CMake Module for finding and using C# (.NET and Mono).
 #
+# The following global variables are assumed to exist:
+#   CSHARP_SOURCE_DIRECTORY - path to C# sources
+#   CSHARP_BINARY_DIRECTORY - path to place resultant C# binary files
+#
 # The following variables are set:
 #   CSHARP_TYPE - the type of the C# compiler (eg. ".NET" or "Mono")
 #   CSHARP_COMPILER - the path to the C# compiler executable (eg. "C:/Windows/Microsoft.NET/Framework/v4.0.30319/csc.exe")
@@ -30,7 +34,18 @@ endif( NOT CSHARP_COMPILER )
 # Include type-based USE_FILE
 if( CSHARP_TYPE MATCHES ".NET" )
   include( ${DotNetFrameworkSdk_USE_FILE} )
+elseif ( CSHARP_TYPE MATCHES "Mono" )
+  include( ${Mono_USE_FILE} )
 endif ( CSHARP_TYPE MATCHES ".NET" )
+
+# Determine platform
+if( MSVC )
+  set( CSHARP_PLATFORM "$(PlatformShortName)" CACHE INTERNAL "" )
+elseif( CMAKE_SIZEOF_VOID_P EQUAL 8 )
+  set( CSHARP_PLATFORM "x64" CACHE INTERNAL "" )
+else()
+  set( CSHARP_PLATFORM "x86" CACHE INTERNAL "" )
+endif()
 
 macro( CSHARP_ADD_LIBRARY name )
   CSHARP_ADD_PROJECT( "library" ${name} ${ARGN} )
@@ -42,7 +57,7 @@ endmacro( CSHARP_ADD_EXECUTABLE )
 
 # Private macro
 macro( CSHARP_ADD_PROJECT type name )
-  set( refs "System.dll" )
+  set( refs /reference:System.dll )
   set( sources )
   set( sources_dep )
   if( ${type} MATCHES "library" )
@@ -50,35 +65,41 @@ macro( CSHARP_ADD_PROJECT type name )
   elseif( ${type} MATCHES "exe" )
     set( output "exe" )
   endif( ${type} MATCHES "library" )
-  
   foreach( it ${ARGN} )
     if( ${it} MATCHES "(.*)(dll)" )
-       set( refs "${refs};${it}" )
+       set( refs ${refs} /reference:${it} )
     else( ${it} MATCHES "(.*)(dll)" )
       if( EXISTS ${it} )
-        set( sources "${it} ${sources}" )
+        set( sources ${it} ${sources} )
         set( sources_dep ${it} ${sources_dep} )
       else( EXISTS ${it} )
-        if( EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${it} )
-          set( sources "${CMAKE_CURRENT_SOURCE_DIR}/${it} ${sources}" )
-          set( sources_dep ${CMAKE_CURRENT_SOURCE_DIR}/${it} ${sources_dep} )
-        else( EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${it} )
-          set( sources "${it} ${sources}" )
-        endif( EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${it} )
+        if( EXISTS ${CSHARP_SOURCE_DIRECTORY}/${it} )
+          set( sources ${CSHARP_SOURCE_DIRECTORY}/${it} ${sources} )
+          set( sources_dep ${CSHARP_SOURCE_DIRECTORY}/${it} ${sources_dep} )
+        else( EXISTS ${CSHARP_SOURCE_DIRECTORY}/${it} )
+          set( sources ${it} ${sources} )
+        endif( EXISTS ${CSHARP_SOURCE_DIRECTORY}/${it} )
       endif( EXISTS ${it} )
     endif ( ${it} MATCHES "(.*)(dll)" )
   endforeach( it )
-  
-  string( REPLACE "/" "\\" sources ${sources} )
-  separate_arguments( sources )
+
+  set( csharp_compiler_safe ${CSHARP_COMPILER} )
+  if (WIN32)
+    string( REPLACE "/" "\\" sources ${sources} )
+    if ( csharp_compiler_safe MATCHES "bat" )
+      set( csharp_compiler_safe call ${CSHARP_COMPILER} )
+    endif ( csharp_compiler_safe MATCHES "bat" )
+  else (UNIX)
+    string( REPLACE "\\" "/" sources ${sources} )
+  endif (WIN32)
 
   add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${name}.${output}
-    COMMAND ${CSHARP_COMPILER}
-    ARGS "/t:${type}" "/out:${name}.${output}" "/reference:${refs}" ${sources}
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-    DEPENDS "${sources_dep}"
     COMMENT "Compiling C# ${type} ${name}"
+    OUTPUT ${name}.${output}
+    COMMAND ${csharp_compiler_safe}
+    ARGS /t:${type} /out:${name}.${output} /platform:${CSHARP_PLATFORM} ${refs} ${sources}
+    WORKING_DIRECTORY ${CSHARP_BINARY_DIRECTORY}
+    DEPENDS "${sources_dep}"
   )
   add_custom_target( ${name} ALL
     DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${name}.${output}

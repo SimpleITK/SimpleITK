@@ -6,7 +6,6 @@ set(CMAKE_MODULE_PATH
   ${CMAKE_MODULE_PATH}
   )
 
-
 macro(check_PIC_flag Language)
   if ( UNIX AND NOT APPLE )
     if ( NOT ${CMAKE_CXX_FLAGS} MATCHES "-fPIC")
@@ -14,7 +13,6 @@ macro(check_PIC_flag Language)
     endif()
   endif()
 endmacro()
-
 
 #
 # Setup the option for each language
@@ -58,24 +56,23 @@ endif ( ${RUBY_FOUND} )
 check_PIC_flag ( Ruby )
 option ( WRAP_RUBY "Wrap Ruby" ${WRAP_RUBY_DEFAULT} )
 
-#
-# Below here are the 2nd tier languages they are not enable automatically if detected
-#
+find_package ( CSharp )
+if ( ${CSHARP_FOUND} )
+  set ( WRAP_CSHARP_DEFAULT ON )
+else ( ${CSHARP_FOUND} )
+  set ( WRAP_CSHARP_DEFAULT OFF )
+endif ( ${CSHARP_FOUND} )
+option ( WRAP_CSHARP "Wrap C#" ${WRAP_CSHARP_DEFAULT} )
 
-# TODO FindCSharp does not conform to the expected behavior:
-# http://www.cmake.org/cmake/help/cmake-2-8-docs.html#command:find_package
-# specifically CSHARP_FOUND is not defined, and the script fails on non-windows systems
-if( WIN32 )
-  option ( WRAP_CSHARP "Wrap C#" OFF )
-  mark_as_advanced( WRAP_CSHARP )
-endif( WIN32 )
+#
+# Below here are the 2nd tier languages they are not enabled automatically if detected
+#
 
 # TODO FindR does not conform to the expected behavior:
 # http://www.cmake.org/cmake/help/cmake-2-8-docs.html#command:find_package
 # specifically R_FOUND is not defined. Additionally, the defined variables are not marked as advanced.
 option ( WRAP_R "Wrap R" OFF )
 mark_as_advanced( WRAP_R )
-
 
 #
 # General SWIG configuration
@@ -91,7 +88,6 @@ if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA OR WRAP_CSHARP OR WRAP_TCL OR WRAP_R O
     set ( DEPENDANT_GENERATED_HEADERS ${DEPENDANT_GENERATED_HEADERS} ${SimpleITK_BINARY_DIR}/Code/BasicFilters/include/sitk${filter}ImageFilter.h )
   endforeach()
 
-
   set ( SWIG_HEADERS ${SWIG_HEADERS} ${SimpleITK_BINARY_DIR}/Code/BasicFilters/include/SimpleITKBasicFiltersGeneratedHeaders.i
     ${SimpleITK_BINARY_DIR}/Code/BasicFilters/include/SimpleITKBasicFiltersGeneratedHeaders.h
     ${CMAKE_CURRENT_SOURCE_DIR}/CSharp.i
@@ -101,8 +97,6 @@ if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA OR WRAP_CSHARP OR WRAP_TCL OR WRAP_R O
     ${CMAKE_CURRENT_SOURCE_DIR}/Python.i
     ${CMAKE_CURRENT_SOURCE_DIR}/Tcl.i
     ${DEPENDANT_GENERATED_HEADERS} )
-
-
 
   # check if uint64_t is the same as unsigned long
   try_compile(SITK_ULONG_SAME_AS_UINT64
@@ -132,7 +126,6 @@ if ( WRAP_LUA )
     set ( LUA_LIB lua5 )
     include_directories ( ${SimpleITK_SOURCE_DIR}/Utilities/lua-5.1.4/src )
   endif()
-
 
   # Run swig
   set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS})
@@ -188,7 +181,6 @@ if ( WRAP_RUBY )
 
 endif()
 
-
 #
 # JAVA SWIG configuration
 #
@@ -232,41 +224,65 @@ if ( WRAP_JAVA )
 
 endif()
 
-
 #
 # C# SWIG configuration
 #
 if ( WRAP_CSHARP )
-
+  
   # Find C#
   find_package( CSharp REQUIRED )
   include( ${CSHARP_USE_FILE} )
 
-  # Run swig
-  set( CMAKE_SWIG_FLAGS "-dllimport \"SimpleITKCSharpNative\" -namespace \"itk.simple\"" ${CMAKE_SWIG_GLOBAL_FLAGS})
-  set( CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR}/SwigCSharp )
-  set(SWIG_MODULE_SimpleITKCSharpNative_EXTRA_DEPS SimpleITKCommon SimpleITKBasicFilters SimpleITKIO ${SWIG_HEADERS})
-  swig_add_module( SimpleITKCSharpNative csharp SimpleITK.i )
-  swig_link_libraries( SimpleITKCSharpNative ${ITK_LIBRARIES} SimpleITK )
-  set_target_properties( SimpleITKCSharpNative PROPERTIES PREFIX "../" )
+  # Make sure the nested directory structure exists
+  set(CSHARP_SOURCE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/CSharpSources CACHE INTERNAL "")
+  set(CSHARP_BINARY_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/CSharpBinaries CACHE INTERNAL "")
+  file(MAKE_DIRECTORY ${CSHARP_SOURCE_DIRECTORY})
+  file(MAKE_DIRECTORY ${CSHARP_BINARY_DIRECTORY})
 
-  # Create AssemblyInfo.cs
+  # Create swig target
+  set(CMAKE_SWIG_OUTDIR ${CSHARP_SOURCE_DIRECTORY})
+  if ( UNIX )
+    set(CMAKE_SWIG_FLAGS -dllimport \"libSimpleITKCSharpNative\")
+  else (WIN32 )
+    set(CMAKE_SWIG_FLAGS -dllimport \"SimpleITKCSharpNative\")
+  endif ( UNIX )
+  set(CMAKE_SWIG_FLAGS -namespace \"itk.simple\" ${CMAKE_SWIG_GLOBAL_FLAGS} ${CMAKE_SWIG_FLAGS})
+  set(SWIG_MODULE_SimpleITKCSharpNative_EXTRA_DEPS SimpleITKCommon SimpleITKBasicFilters SimpleITKIO ${SWIG_HEADERS})
+  swig_add_module(SimpleITKCSharpNative csharp SimpleITK.i)
+  swig_link_libraries(SimpleITKCSharpNative ${SimpleITK_LIBRARIES})
+  set_target_properties(SimpleITKCSharpNative PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CSHARP_BINARY_DIRECTORY})
+  if ( UNIX )
+    set_target_properties(SimpleITKCSharpNative PROPERTIES PREFIX "lib")
+    set_target_properties(SimpleITKCSharpNative PROPERTIES SUFFIX ".so")
+  else ( WIN32 )
+    set_target_properties(SimpleITKCSharpNative PROPERTIES PREFIX "")
+    set_target_properties(SimpleITKCSharpNative PROPERTIES SUFFIX ".dll")
+    foreach ( CMAKE_CONFIGURATION_TYPE ${CMAKE_CONFIGURATION_TYPES} )
+      string(TOUPPER ${CMAKE_CONFIGURATION_TYPE} CMAKE_CONFIGURATION_TYPE)
+      set_target_properties(SimpleITKCSharpNative PROPERTIES LIBRARY_OUTPUT_DIRECTORY_${CMAKE_CONFIGURATION_TYPE} "${CSHARP_BINARY_DIRECTORY}")
+      set_target_properties(SimpleITKCSharpNative PROPERTIES RUNTIME_OUTPUT_DIRECTORY_${CMAKE_CONFIGURATION_TYPE} "${CSHARP_BINARY_DIRECTORY}")
+    endforeach( )
+  endif( UNIX )
+
+  # Configure AssemblyInfo.cs
   configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/AssemblyInfo.cs.in
-    ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
+    ${CSHARP_SOURCE_DIRECTORY}/AssemblyInfo.cs
     @ONLY
   )
 
   # Add managed wrapper
   csharp_add_library(
     SimpleITKCSharpManaged
-    ${CMAKE_CURRENT_BINARY_DIR}/AssemblyInfo.cs
-    ${CMAKE_CURRENT_BINARY_DIR}/SwigCSharp/*.cs
+    ${CSHARP_SOURCE_DIRECTORY}/*.cs
   )
+  add_dependencies(SimpleITKCSharpManaged SimpleITKCSharpNative)
 
 endif()
 
-# Find Tcl
+#
+# TCL SWIG configuration
+#
 if ( WRAP_TCL )
   find_package ( TCL REQUIRED )
   include_directories ( ${TCL_INCLUDE_PATH} )
@@ -283,7 +299,9 @@ if ( WRAP_TCL )
 
 endif()
 
-# Find R
+#
+# R SWIG configuration
+#
 if ( WRAP_R )
   find_package ( R REQUIRED )
   include_directories ( ${R_INCLUDE_DIR} )

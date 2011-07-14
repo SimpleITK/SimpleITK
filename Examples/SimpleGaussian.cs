@@ -1,32 +1,32 @@
-using System;
+﻿using System;
+using itk.simple;
 
 namespace itk.simple.examples {
-    class SimpleGaussianExample {
+    class SimpleGaussian {
         static void Main(string[] args) {
-          try {
-              if (args.Length < 3) {
-                  Console.WriteLine("Usage: SimpleGaussian <input> <sigma> <output>");
-                  return;
-              }
-              ImageFileReader reader = new ImageFileReader();
-              reader.setFileName(args[0]);
-              SmartPointerImage image = reader.execute();
+            try {
+                if (args.Length < 3) {
+                    Console.WriteLine("Usage: SimpleGaussian <input> <sigma> <output>");
+                    return;
+                }
+                // Read input image
+                ImageFileReader reader = new ImageFileReader();
+                reader.SetFileName(args[0]);
+                Image image = reader.Execute();
 
-              Console.WriteLine(image.toString());
+                // Execute Gaussian smoothing filter
+                SmoothingRecursiveGaussianImageFilter gaussian = new SmoothingRecursiveGaussianImageFilter();
+                gaussian.SetSigma(Double.Parse(args[1]));
+                image = gaussian.Execute(image);
 
-              Gaussian gaussian = new Gaussian();
+                // Write output image
+                ImageFileWriter writer = new ImageFileWriter();
+                writer.SetFileName(args[2]);
+                writer.Execute(image);
 
-              gaussian.setSigma(Double.Parse(args[1]));
-              image = gaussian.execute(image);
-
-              Console.WriteLine(image.toString());
-
-              ImageFileWriter writer = new ImageFileWriter();
-              writer.setFileName(args[2]);
-              writer.execute(image);
-          } catch (Exception ex) {
-              Console.WriteLine(ex);
-          }
+            } catch (Exception ex) {
+                Console.WriteLine(ex);
+            }
         }
     }
 }
