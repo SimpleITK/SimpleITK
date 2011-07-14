@@ -51,12 +51,12 @@ namespace itk {
       // If the output image type is a VectorImage then the number of
       // components per pixel needs to be set, otherwise the method
       // does not exist. This is done with the EnableIf Idiom.
-      template <class TFilterType>
-      typename DisableIf<IsVector<TFilterType>::Value>::Type
-      SetNumberOfComponentsOnImporter ( TFilterType* ) {}
-      template <class TFilterType>
-      typename EnableIf<IsVector<TFilterType>::Value>::Type
-      SetNumberOfComponentsOnImporter ( TFilterType* );
+      template <class TImageType>
+      typename DisableIf<IsVector<TImageType>::Value>::Type
+      SetNumberOfComponentsOnImage( TImageType* ) {}
+      template <class TImageType>
+      typename EnableIf<IsVector<TImageType>::Value>::Type
+      SetNumberOfComponentsOnImage( TImageType* );
 
     private:
 
