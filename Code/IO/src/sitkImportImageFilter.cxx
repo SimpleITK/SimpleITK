@@ -240,15 +240,15 @@ Image ImportImageFilter::ExecuteInternal( )
   //  Origin
   //
   typename ImageType::PointType origin;
-  std::copy( this->m_Origin.begin(), this->m_Origin.end(), origin.Begin() );
-  importer->SetOrigin( origin );
+  std::copy( this->m_Origin.begin(), this->m_Origin.begin()+Dimension, origin.Begin() );
+  image->SetOrigin( origin );
 
   //
   //  Spacing
   //
   typename ImageType::SpacingType spacing;
-  std::copy( this->m_Spacing.begin(), this->m_Spacing.end(), spacing.Begin() );
-  importer->SetSpacing( spacing );
+  std::copy( this->m_Spacing.begin(), this->m_Spacing.begin()+Dimension, spacing.Begin() );
+  image->SetSpacing( spacing );
 
   //
   //  Size and Region
