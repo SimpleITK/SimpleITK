@@ -4,9 +4,6 @@
 
 #include "sitkImportImageFilter.h"
 
-#include <itkImportImageFilter.h>
-#include "itkImportVectorImageFilter.h"
-
 #include <itkImage.h>
 #include <itkVectorImage.h>
 
@@ -14,24 +11,6 @@
 namespace
 {
 const unsigned int UnusedDimension = 2;
-
-// This meta-programmed classes has one member type: FilterType, which
-// is the correct ImportFilter to use with the TImageType.
-template< typename TImageType > class MetaImportVectorImageFilter;
-
-template< typename TPixelType, unsigned int VImageDimension >
-struct MetaImportVectorImageFilter< itk::Image< TPixelType, VImageDimension > >
-{
-  typedef itk::ImportImageFilter<TPixelType, VImageDimension> FilterType;
-};
-
-
-template< typename TPixelType, unsigned int VImageDimension >
-struct MetaImportVectorImageFilter< itk::VectorImage< TPixelType, VImageDimension > >
-{
-  typedef itk::ImportVectorImageFilter<TPixelType, VImageDimension> FilterType;
-};
-
 }
 
 namespace itk {
@@ -228,13 +207,11 @@ Image ImportImageFilter::ExecuteInternal( )
   typedef typename ImageType::InternalPixelType PixelType;
   const unsigned int Dimension = ImageType::ImageDimension;
 
-  typedef typename MetaImportVectorImageFilter< ImageType >::FilterType Importer;
-
   // if the InstantiatedToken is correctly implemented this should
   // not occur
   assert( ImageTypeToPixelIDValue<ImageType>::Result != (int)sitkUnknown );
 
-  typename Importer::Pointer importer = Importer::New();
+  typename ImageType::Pointer image = ImageType::New();
 
   //
   //  Origin
@@ -255,40 +232,38 @@ Image ImportImageFilter::ExecuteInternal( )
   //
   typename ImageType::RegionType region;
   typename ImageType::SizeType size;
+  size_t numberOfElements = m_NumberOfComponentsPerPixel;
   for(unsigned int si = 0; si < Dimension; si++ )
     {
     size[si] = this->m_Size[si];
+    numberOfElements *= size[si];
     }
   region.SetSize(size);
-  importer->SetRegion( region );
+  image->SetRegions( region );
 
-  bool TheImportFilterWillTakeCareOfDeletingTheMemoryBuffer = false;
+  // todo set direction
+
+  const bool TheContainerWillTakeCareOfDeletingTheMemoryBuffer = false;
+
+  // Set the image's pixel container to import the pointer provided.
+  image->GetPixelContainer()->SetImportPointer(static_cast<typename ImageType::InternalPixelType*>(m_Buffer), numberOfElements,
+                                               TheContainerWillTakeCareOfDeletingTheMemoryBuffer);
+
 
   //
   // Meta-programmed method to set the number of components if a
   // vector image
   //
-  this->SetNumberOfComponentsOnImporter( importer.GetPointer() );
+  this->SetNumberOfComponentsOnImage( image.GetPointer() );
 
-  //
-  // Connect the Buffer
-  //
-  importer->SetImportPointer(
-    static_cast<PixelType*>(m_Buffer),
-    region.GetNumberOfPixels(),
-    TheImportFilterWillTakeCareOfDeletingTheMemoryBuffer);
-
-
-  importer->Update();
-
-  return Image( importer->GetOutput() );
+  return Image(image);
 }
 
 template <class TFilterType>
 typename EnableIf<IsVector<TFilterType>::Value>::Type
-ImportImageFilter::SetNumberOfComponentsOnImporter ( TFilterType*importer )
+ImportImageFilter::SetNumberOfComponentsOnImage ( TFilterType*image )
 {
-  importer->SetNumberOfComponentsPerPixel( m_NumberOfComponentsPerPixel );
+  image->SetNumberOfComponentsPerPixel( m_NumberOfComponentsPerPixel );
 }
 
 }
