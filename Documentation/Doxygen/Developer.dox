@@ -3,6 +3,28 @@
 
 \section Procedures Procedures
 
+\subsection Contributions User Contributions
+
+Users can contribute patches through the gerrit code review system:
+<a href="http://review.source.kitware.com/#q,SimpleITK,n,z">http://review.source.kitware.com/#q,SimpleITK,n,z</a>
+
+General information about Gerrit can be found here:
+<a href="http://gerrit.googlecode.com/svn/documentation/2.1.7/user-upload.html">http://gerrit.googlecode.com/svn/documentation/2.1.7/user-upload.html</a>
+
+A quick overview of the process:
+
+\code
+$ git remote add gerrit $username$@review.source.kitware.com:SimpleITK
+$ git checkout master
+$ git pull
+$ git checkout -b $MyTopic$
+hack and edit
+compile and test
+$ git add $MyHackedFiles$
+$ git commit
+$ git push gerrit HEAD:refs/for/master/$MyTopic$
+\endcode
+
 \section TandT Tips and Tricks
 
 \subsection JSONTips Working with JSON file.
