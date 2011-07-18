@@ -56,7 +56,6 @@ bool ImageCompare::compare ( const sitk::Image& image, std::string inTestCase, s
     // set to just the center slice
     idx[2] = (int)( image.GetDepth() / 2.0 );
     sz[2] = 1;
-
     centerSlice = sitk::RegionOfInterest( image, sz, idx );
     }
   else
@@ -91,15 +90,6 @@ bool ImageCompare::compare ( const sitk::Image& image, std::string inTestCase, s
     return false;
     }
 
-  // check that the images aren't identical
-  sitk::HashImageFilter hasher;
-  if ( hasher.Execute ( baseline ) == hasher.Execute ( centerSlice ) )
-    {
-    // Nothing else to do
-    return true;
-    }
-
-
   // verify they have the same size
   if ( baseline.GetHeight() != centerSlice.GetHeight()
        || baseline.GetWidth() != centerSlice.GetWidth()
@@ -110,28 +100,45 @@ bool ImageCompare::compare ( const sitk::Image& image, std::string inTestCase, s
     }
 
   // Get the center slices
-  sitk::Image diff( 0, 0, itk::simple::sitkUInt8 );
+  sitk::Image diffSquared( 0, 0, itk::simple::sitkUInt8 );
   try
     {
-      diff = sitk::SubtractImageFilter().Execute ( centerSlice, baseline );
+    sitk::Image diff =  sitk::Subtract( centerSlice, baseline );
+
+    if ( diff.GetPixelIDValue() == sitk::sitkComplexFloat32 ||
+         diff.GetPixelIDValue() == sitk::sitkComplexFloat64 )
+      {
+      // for complex number we multiply the image by it's complex
+      // conjugate, this will produce only a real value result
+      sitk::Image conj = sitk::RealAndImaginaryToComplex( sitk::ComplexToReal( diff ),
+                                                          sitk::MultiplyByConstant( sitk::ComplexToImaginary( diff ), -1 ) );
+      diffSquared = sitk::ComplexToReal( sitk::Multiply( diff, conj ) );
+      }
+    else
+      {
+      diffSquared = sitk::Multiply( diff, diff );
+      }
+
     }
   catch ( itk::ExceptionObject& e )
     {
     mMessage = "ImageCompare: Failed to subtract image " + baselineFileName + " because: " + e.what();
     return false;
     }
-  sitk::StatisticsImageFilter stats;
-  stats.Execute ( diff );
-  double dValue = sqrt ( stats.GetMean() );
 
-  if ( fabs ( dValue ) > fabs ( mTolerance ) )
+
+  sitk::StatisticsImageFilter stats;
+  stats.Execute ( diffSquared );
+  double rms = std::sqrt ( stats.GetMean() );
+
+  if ( rms > fabs ( mTolerance ) )
     {
     std::ostringstream msg;
-    msg << "ImageCompare: image Root Mean Square (RMS) difference was " << dValue << " which exceeds the tolerance of " << mTolerance;
+    msg << "ImageCompare: image Root Mean Square (RMS) difference was " << rms << " which exceeds the tolerance of " << mTolerance;
     msg << "\n";
     mMessage = msg.str();
 
-    std::cout << "<DartMeasurement name=\"RMSeDifference\" type=\"numeric/float\">" << dValue << "</DartMeasurement>" << std::endl;
+    std::cout << "<DartMeasurement name=\"RMSeDifference\" type=\"numeric/float\">" << rms << "</DartMeasurement>" << std::endl;
     std::cout << "<DartMeasurement name=\"Tolerance\" type=\"numeric/float\">" << mTolerance << "</DartMeasurement>" << std::endl;
 
     std::string volumeName = OutputDir + "/" + name + ".nrrd";
@@ -144,7 +151,7 @@ bool ImageCompare::compare ( const sitk::Image& image, std::string inTestCase, s
 
     NormalizeAndSave ( baseline, ExpectedImageFilename );
     NormalizeAndSave ( centerSlice, ActualImageFilename );
-    NormalizeAndSave ( diff, DifferenceImageFilename );
+    NormalizeAndSave ( sitk::Sqrt(diffSquared), DifferenceImageFilename );
 
     // Let ctest know about it
     std::cout << "<DartMeasurementFile name=\"ExpectedImage\" type=\"image/png\">";
