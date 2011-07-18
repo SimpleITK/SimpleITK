@@ -13,13 +13,9 @@
     "type" : "double",
     "default" : "50.0"
   }, {
-    "name" : "Radius",
+    "name" : "NumberOfRangeGaussianSamples",
     "type" : "unsigned int",
-    "default" : "1u"
-  }, {
-    "name" : "RangeSigma",
-    "type" : "double",
-    "default" : "50.0"
+    "default" : "100u"
   } ],
   "tests" : [ {
     "tag" : "default",
