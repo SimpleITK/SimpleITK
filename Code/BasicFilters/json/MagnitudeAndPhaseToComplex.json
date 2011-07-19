@@ -13,7 +13,7 @@
      "description" : "Test defaults",
      "inputA" : "Input/RA-Slice-Float.nrrd",
      "inputB" : "Input/RA-Slice-Float.nrrd",
-     "tolerance" : "0.0001",
+     "tolerance" : "0.001",
      "settings" : [
      ]
    }
