@@ -40,7 +40,11 @@ endif ( CSHARP_TYPE MATCHES ".NET" )
 
 # Determine platform
 if( MSVC )
-  set( CSHARP_PLATFORM "$(PlatformShortName)" CACHE INTERNAL "" )
+  if( ${CMAKE_GENERATOR} MATCHES "^(.*)(Win64)$" )
+    set( CSHARP_PLATFORM "x64" CACHE INTERNAL "" )
+  else()
+    set( CSHARP_PLATFORM "x86" CACHE INTERNAL "" )
+  endif()
 elseif( CMAKE_SIZEOF_VOID_P EQUAL 8 )
   set( CSHARP_PLATFORM "x64" CACHE INTERNAL "" )
 else()
