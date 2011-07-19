@@ -20,7 +20,10 @@
     "tag" : "default",
     "description" : "Default parameter settings",
     "inputA" : "Input/2th_cthead1.png",
-     "tolerance" : "0.01"
-    "settings" : [ ]
+     "tolerance" : "0.0001"
+    "settings" : [  {
+      "parameter" : "LevelSetValue",
+      "value" : "50.0"
+    } ]
   }]
 }

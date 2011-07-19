@@ -22,5 +22,19 @@
     "inputA" : "Input/2th_cthead1.png",
      "tolerance" : "0.01"
     "settings" : [ ]
-  }]
+  },
+  {
+    "tag" : "modified_parms",
+    "description" : "Setting InsideValue and OutsideValuew",
+    "inputA" : "Input/2th_cthead1.png",
+     "tolerance" : "0.01"
+    "settings" : [ {
+      "parameter" : "InsideValue",
+      "value" : "100"
+    }, {
+      "parameter" : "OutsideValue",
+      "value" : "0"
+    } ]
+  }
+]
 }

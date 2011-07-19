@@ -10,14 +10,14 @@
     "type" : "bool",
     "default" : "false"
   }, {
-    "name" : "UseImageSpacing",
-    "type" : "bool",
-    "default" : "false"
-  },  {
     "name" : "SquaredDistance",
     "type" : "bool",
     "default" : "true"
-  } ],
+  }, {
+    "name" : "UseImageSpacing",
+    "type" : "bool",
+    "default" : "false"
+  }  ],
   "tests" : [ {
     "tag" : "default",
     "description" : "Default parameter settings",
