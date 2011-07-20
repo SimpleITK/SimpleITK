@@ -121,6 +121,10 @@ must be written for the filter
 - [OPTIONAL] \b include_files: (\e list) This list of strings specifies
 additional header files to include in the cxx file for this filter.
 
+- [OPTIONAL] \b custom_set_intput: (\e string)  Code which is used to
+  set input or multiple inputs to the filter. This overides the
+  standard setting of the inputs.
+
 - [OPTIONAL] \b output_pixel_type: (\e string) String representing the specific
 pixel type to use for the output image of the filter.
 
