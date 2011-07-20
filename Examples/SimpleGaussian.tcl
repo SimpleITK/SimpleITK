@@ -21,3 +21,10 @@ set image [ caster Execute $image ]
 ImageFileWriter writer
 writer SetFileName [ lindex $argv 2]
 writer Execute $image
+
+# Cleanup
+reader -delete
+gaussion -delete
+caster -delete
+image -delete
+writer -delete
