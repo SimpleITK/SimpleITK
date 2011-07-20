@@ -89,7 +89,7 @@ elseif dim_vec == 1 then
                 elseif type == "unsigned int" then
                     OUT="VectorUInt32 idx = new VectorUInt32( v );"
                 elseif type == "int" then
-                    OUT="VectorInt idx = new VectorInt( v );"
+                    OUT="VectorInt32 idx = new VectorInt32( v );"
                 elseif type == "unsigned long" then
                     OUT="VectorULong idx = new VectorULong( v );"
                 elseif type == "long" then
