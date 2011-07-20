@@ -8,23 +8,34 @@ class ImageConnection {
 
   public static void main(String argv[]) {
 
+    // do some simple operations
+    System.out.println("SimpleITK says 'Hello World' from Java");
+
     if ( argv.length < 2 ) {
       System.out.println("Usage: java ImageConnection <input> <output>");
       return;
     }
 
     ImageFileReader reader = new ImageFileReader();
+
     reader.setFileName(argv[0]);
+
     Image img = reader.execute();
 
     PixelContainer pixelsContainer = img.getPixelContainer();
 
-    int8Array pixelsArray = int8Array.frompointer( pixelsContainer.getBufferAsInt8() );
+   java.math.BigInteger t = pixelsContainer.getNumberOfPixels();
 
-    java.math.BigInteger numberOfPixels = pixelsContainer.getNumberOfPixels();
+    int numberOfPixels = t.intValue();
 
-    int8Array anotherPixelsArray = new int8Array( numberOfPixels.longValue(), true );
+    int [] buffer = new int[ numberOfPixels ];
 
+
+    buffer[0] = 13;
+    buffer[1] =  2;
+    buffer[2] = 19;
+
+    pixelsContainer.setBufferAsUnsignedInt8( buffer, numberOfPixels );
   }
 
 }

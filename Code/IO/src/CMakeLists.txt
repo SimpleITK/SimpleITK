@@ -4,8 +4,11 @@ set( SimpleITKIOSource
   sitkImageFileWriter.cxx
   sitkImageReaderBase.cxx
   sitkImageSeriesReader.cxx
+  sitkImportImageFilter.cxx
   sitkShow.cxx
   )
+
+include_directories( ${CMAKE_CURRENT_SOURCE_DIR} )
 
 add_library ( SimpleITKIO STATIC ${SimpleITKIOSource} )
 target_link_libraries ( SimpleITKIO SimpleITKCommon )

@@ -12,11 +12,15 @@
 
 #include "sitkImageFilter.h"
 
-#include "sitkHashImageFilter.h"
-#include "sitkPixelIDTypeLists.h"
+// IO classes
 #include "sitkImageFileReader.h"
 #include "sitkImageSeriesReader.h"
 #include "sitkImageFileWriter.h"
+#include "sitkImportImageFilter.h"
+
+
+#include "sitkHashImageFilter.h"
+#include "sitkPixelIDTypeLists.h"
 #include "sitkStatisticsImageFilter.h"
 #include "sitkLabelStatisticsImageFilter.h"
 
