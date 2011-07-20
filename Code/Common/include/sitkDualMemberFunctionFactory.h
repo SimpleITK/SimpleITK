@@ -4,6 +4,25 @@
 #include "sitkDetail.h"
 #include "sitkMemberFunctionFactoryBase.h"
 
+#if defined SITK_HAS_STLTR1_TR1_UNORDERED_MAP ||  defined SITK_HAS_STLTR1_UNORDERED_MAP
+namespace std {
+namespace tr1 {
+
+/** \brief A specialization of the hash function.
+ */
+template <>
+struct hash< std::pair<int, int> >
+  : public std::unary_function<std::pair<int,int>, std::size_t> {
+  std::size_t operator()( const std::pair<int, int > &p ) const
+    { return std::tr1::hash<size_t>()( size_t(p.first) * prime + p.second ); }
+private:
+  static const std::size_t prime = 16777619u;
+};
+}
+}
+#endif
+
+
 namespace itk
 {
 namespace simple
@@ -11,6 +30,7 @@ namespace simple
 // this namespace is internal classes not part of the external simple ITK interface
 namespace detail
 {
+
 
 /** \class DualMemberFunctionFactory
  * \brief A class used to instantiate and generate function objects of
@@ -31,7 +51,7 @@ namespace detail
  *  member functions by taking the address in the
  *  RegisterMethods. Later they can be retrieve with the
  *  GetMemberFunction method, which returns a function object with the
- *  same arguments as the templated member function pointer. 
+ *  same arguments as the templated member function pointer.
  *
  *  An instance of a MemberFunctionFactory is bound to a specific
  *  instance of an object, so that the returned function object does
