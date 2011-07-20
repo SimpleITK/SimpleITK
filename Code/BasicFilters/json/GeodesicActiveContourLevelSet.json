@@ -6,7 +6,7 @@
   "doc" : "Level Set filter that uses propagation, curvature and advection terms.",
   "pixel_types" : "RealPixelIDTypeList",
   "filter_type" : "itk::GeodesicActiveContourLevelSetImageFilter<InputImageType, InputImageType>",
-  "custom_itk_cast" : "filter->SetFeatureImage( image2 );",
+  "custom_set_input" : "filter->SetInput( image1 ); filter->SetFeatureImage( image2 );",
   "members" : [ {
     "name" : "MaximumRMSError",
     "type" : "double",
@@ -15,22 +15,22 @@
   }, {
     "name" : "PropagationScaling",
     "type" : "double",
-    "default" : 1,
+    "default" : "1.0",
     "doc" : "Weight of direct propagation contribution to the speed term"
   }, {
     "name" : "CurvatureScaling",
     "type" : "double",
-    "default" : 1,
+    "default" : "1.0",
     "doc" : "Weight of the curvature contribution to the speed term"
   }, {
     "name" : "AdvectionScaling",
     "type" : "double",
-    "default" : 0.2,
+    "default" : "1.0",
     "doc" : "Weight of the advection contribution to the speed term"
   }, {
     "name" : "NumberOfIterations",
     "type" : "uint32_t",
-    "default" : "50u",
+    "default" : "1000u",
     "doc" : "Number of iterations to run"
   } ],
   "tests" : [ {

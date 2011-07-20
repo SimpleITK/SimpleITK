@@ -1,4 +1,6 @@
-$(if number_of_inputs == 2 then
+$(if custom_set_input then
+OUT='  ${custom_set_input}'
+elseif number_of_inputs == 2 then
 OUT=[[
   filter->SetInput( 0, image1 );
   filter->SetInput( 1, image2 );
