@@ -44,8 +44,14 @@ bool ImageCompare::compare ( const itk::simple::Image& image, std::string inTest
   // Extract the center slice of our image
   if ( image.GetDimension() == 3 )
     {
-    size_t centerIdx = (int)( image.GetDepth() / 2.0 );
-    centerSlice = itk::simple::ExtractImageFilter().Execute ( image, centerIdx, 2 );
+    std::vector<int> idx( 3, 0 );
+    std::vector<unsigned int> sz = image.GetSize();
+
+    // set to just the center slice
+    idx[2] = (int)( image.GetDepth() / 2.0 );
+    sz[2] = 1;
+
+    centerSlice = itk::simple::RegionOfInterest( image, sz, idx );
     } else {
     centerSlice = itk::simple::Cast ( image, image.GetPixelIDValue() );
   }

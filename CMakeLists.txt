@@ -73,9 +73,11 @@ check_include_file_cxx( tr1/type_traits SITK_HAS_STLTR1_TR1_TYPE_TRAITS )
 check_include_file_cxx( type_traits SITK_HAS_STLTR1_TYPE_TRAITS )
 
 if ( NOT SITK_HAS_STLTR1_TR1_FUNCTIONAL AND NOT SITK_HAS_STLTR1_FUNCTIONAL )
-  message( FATAL_ERROR "SimpleITK requires usage of parts C++ Technical Report 1 (TR1).\n"
-    "It may be available as an optional download for your compiler. Please see the FAQ for details.\n" )
-endif ( NOT SITK_HAS_STLTR1_TR1_FUNCTIONAL AND NOT SITK_HAS_STLTR1_FUNCTIONAL )
+  message( FATAL_ERROR 
+    "SimpleITK requires usage of parts C++ Technical Report 1 (TR1).\n"
+    "It may be available as an optional download for your compiler. Please see the FAQ for details.\n"
+    "http://erie.nlm.nih.gov/~blowek1/SimpleITK/FAQ.html#TR1" )
+endif ( )
 
 # check for stdint
 # This generates a configuration error if the compiler is not supported
@@ -84,7 +86,8 @@ check_include_file_cxx( stdint.h SITK_HAS_STDINT_H )
 if ( NOT SITK_HAS_STDINT_H )
   message( FATAL_ERROR "SimpleITK requires usage of C99 stdint.\n"
     "It may be available as an optional download for your compiler.\n"
-    "Please see the FAQ for details and to see if your compiler is supported.\n" )
+    "Please see the FAQ for details and to see if your compiler is supported.\n"
+    "http://erie.nlm.nih.gov/~blowek1/SimpleITK/FAQ.html#C99" )
 endif ( NOT SITK_HAS_STDINT_H )
 
 configure_file( ${SimpleITK_SOURCE_DIR}/sitkConfigure.h.in
@@ -123,6 +126,7 @@ include(${SimpleITK_SOURCE_DIR}/sitkGenerateSimpleITKConfig.cmake)
 #------------------------------------------------------------------------------
 # Set up Documentation
 include(${SimpleITK_SOURCE_DIR}/Utilities/Doxygen/Doxygen.cmake)
+
 #------------------------------------------------------------------------------
 # Go to subdirectories
 add_subdirectory ( Utilities )
@@ -134,13 +138,14 @@ add_subdirectory ( Examples )
 # ITK uses KWStyle for checking the coding style
 include(${SimpleITK_SOURCE_DIR}/Utilities/KWStyle/KWStyle.cmake)
 
-# Options for testing
-option ( USE_TESTING "Build testing" ON )
 
-if ( USE_TESTING )
+#------------------------------------------------------------------------------
+# set things up for testing
+include(CTest)
+
+if ( BUILD_TESTING )
   enable_testing()
   add_subdirectory ( Testing )
-  include(CTest)
   option ( RUN_LONG_TESTS "Run long tests.  Some tests have been identified as long running, should these be run?" OFF )
   mark_as_advanced(RUN_LONG_TESTS)
   set(BUILDNAME "${BUILDNAME}" CACHE STRING "Name of build on the dashboard")
