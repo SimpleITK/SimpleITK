@@ -20,4 +20,10 @@
 // defined if the system has <type_traits> header
 #cmakedefine SITK_HAS_STLTR1_TYPE_TRAITS
 
+// defined if the system has <tr1/unordered_map> header
+#cmakedefine SITK_HAS_STLTR1_TR1_UNORDERED_MAP
+
+// defined if the system has <unordered_map> header
+#cmakedefine SITK_HAS_STLTR1_UNORDERED_MAP
+
 #endif // __sitkConfigure_h
