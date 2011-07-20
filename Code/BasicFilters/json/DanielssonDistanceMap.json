@@ -1,0 +1,28 @@
+{
+  "name" : "DanielssonDistanceMap",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "doc" : "Docs",
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "output_pixel_type" : "float",
+  "members" : [ {
+    "name" : "InputIsBinary",
+    "type" : "bool",
+    "default" : "false"
+  }, {
+    "name" : "SquaredDistance",
+    "type" : "bool",
+    "default" : "false"
+  }, {
+    "name" : "UseImageSpacing",
+    "type" : "bool",
+    "default" : "false"
+  }],
+  "tests" : [ {
+    "tag" : "default",
+    "description" : "Default parameter settings",
+    "inputA" : "Input/2th_cthead1.png",
+     "tolerance" : "0.01"
+    "settings" : [ ]
+  }]
+}
