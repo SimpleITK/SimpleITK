@@ -50,7 +50,8 @@
         "python_value" : "SimpleITK.${name}ImageFilter.DIRECTIONCOLLAPSETOIDENTITY",
         "ruby_value" : "Simpleitk::${name}ImageFilter::DIRECTIONCOLLAPSETOIDENTITY",
         "java_value" : "${name}ImageFilter.DirectionCollapseStrategy.DIRECTIONCOLLAPSETOIDENTITY",
-        "tcl_value" : "$$${name}ImageFilter_DIRECTIONCOLLAPSETOIDENTITY"
+        "tcl_value" : "$$${name}ImageFilter_DIRECTIONCOLLAPSETOIDENTITY",
+        "csharp_value" : "itk.simple.${name}ImageFilter.DirectionCollapseStrategy.DIRECTIONCOLLAPSETOIDENTITY"
       }
     ]
   }, {
@@ -82,7 +83,8 @@
         "python_value" : "SimpleITK.${name}ImageFilter.DIRECTIONCOLLAPSETOIDENTITY",
         "ruby_value" : "Simpleitk::${name}ImageFilter::DIRECTIONCOLLAPSETOIDENTITY",
         "java_value" : "${name}ImageFilter.DirectionCollapseStrategy.DIRECTIONCOLLAPSETOIDENTITY",
-        "tcl_value" : "$$${name}ImageFilter_DIRECTIONCOLLAPSETOIDENTITY"
+        "tcl_value" : "$$${name}ImageFilter_DIRECTIONCOLLAPSETOIDENTITY",
+        "csharp_value" : "itk.simple.${name}ImageFilter.DirectionCollapseStrategy.DIRECTIONCOLLAPSETOIDENTITY"
     }
   ]
   } ],
