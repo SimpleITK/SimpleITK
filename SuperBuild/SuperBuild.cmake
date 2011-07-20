@@ -33,6 +33,7 @@ set(CMAKE_MODULE_PATH
   ${CMAKE_BINARY_DIR}/CMake
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/../CMake #  CMake directory
+  ${CMAKE_CURRENT_SOURCE_DIR}/../Wrapping
   ${CMAKE_MODULE_PATH}
   )
 
@@ -166,7 +167,7 @@ option ( USE_SYSTEM_SWIG "Use a pre-compiled version of SWIG 2.0 previously conf
 mark_as_advanced(USE_SYSTEM_SWIG)
 if(USE_SYSTEM_SWIG)
   find_package ( SWIG 2 REQUIRED )
-  include ( "UseSWIGLocal.cmake" )
+  include ( UseSWIGLocal )
 else()
   include(External_Swig)
   list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES Swig)
