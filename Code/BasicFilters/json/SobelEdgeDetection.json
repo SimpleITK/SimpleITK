@@ -9,7 +9,7 @@
   "tests" : [ {
     "tag" : "defaults",
     "description" : "Simply run with default settings",
-    "inputA" : "Input/Ramp-Zero-One-Float.nrrd",
+    "inputA" : "Input/RA-Float.nrrd",
     "settings" : [ ],
     "tolerance" : 0.01
   } ]
