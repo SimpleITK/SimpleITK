@@ -36,7 +36,7 @@ namespace detail {
 
 #if defined SITK_HAS_STLTR1_TR1_UNORDERED_MAP ||  defined SITK_HAS_STLTR1_UNORDERED_MAP
 
-template <typename T> struct hash : std::hash<T>{};
+template <typename T> struct hash : public std::tr1::hash<T>{};
 
 /** \brief A specialization of the hash function.
  */
