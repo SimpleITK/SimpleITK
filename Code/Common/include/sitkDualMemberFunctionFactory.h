@@ -4,23 +4,6 @@
 #include "sitkDetail.h"
 #include "sitkMemberFunctionFactoryBase.h"
 
-#if defined SITK_HAS_STLTR1_TR1_UNORDERED_MAP ||  defined SITK_HAS_STLTR1_UNORDERED_MAP
-namespace std {
-namespace tr1 {
-
-/** \brief A specialization of the hash function.
- */
-template <>
-struct hash< std::pair<int, int> >
-  : public std::unary_function<std::pair<int,int>, std::size_t> {
-  std::size_t operator()( const std::pair<int, int > &p ) const
-    { return std::tr1::hash<size_t>()( size_t(p.first) * prime + p.second ); }
-private:
-  static const std::size_t prime = 16777619u;
-};
-}
-}
-#endif
 
 
 namespace itk
@@ -30,6 +13,7 @@ namespace simple
 // this namespace is internal classes not part of the external simple ITK interface
 namespace detail
 {
+
 
 
 /** \class DualMemberFunctionFactory

@@ -34,6 +34,22 @@ namespace simple
 namespace detail {
 
 
+#if defined SITK_HAS_STLTR1_TR1_UNORDERED_MAP ||  defined SITK_HAS_STLTR1_UNORDERED_MAP
+
+template <typename T> struct hash : std::hash<T>{};
+
+/** \brief A specialization of the hash function.
+ */
+template <>
+struct hash< std::pair<int, int> >
+  : public std::unary_function<std::pair<int,int>, std::size_t> {
+  std::size_t operator()( const std::pair<int, int > &p ) const
+    { return std::tr1::hash<size_t>()( size_t(p.first) * prime + p.second ); }
+private:
+  static const std::size_t prime = 16777619u;
+};
+#endif
+
 template< typename TMemberFunctionPointer,
           typename TKey,
           unsigned int TArity = ::detail::FunctionTraits<TMemberFunctionPointer>::arity>
@@ -90,8 +106,8 @@ protected:
 
   // maps of Keys to pointers to member functions
 #if defined SITK_HAS_STLTR1_TR1_UNORDERED_MAP ||  defined SITK_HAS_STLTR1_UNORDERED_MAP
-  std::tr1::unordered_map< TKey, FunctionObjectType> m_PFunction3;
-  std::tr1::unordered_map< TKey, FunctionObjectType> m_PFunction2;
+  std::tr1::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
+  std::tr1::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
 #else
   std::map<TKey, FunctionObjectType> m_PFunction3;
   std::map<TKey, FunctionObjectType> m_PFunction2;
@@ -154,8 +170,8 @@ protected:
 
   // maps of Keys to pointers to member functions
 #if defined SITK_HAS_STLTR1_TR1_UNORDERED_MAP ||  defined SITK_HAS_STLTR1_UNORDERED_MAP
-  std::tr1::unordered_map< TKey, FunctionObjectType> m_PFunction3;
-  std::tr1::unordered_map< TKey, FunctionObjectType> m_PFunction2;
+  std::tr1::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
+  std::tr1::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
 #else
   std::map<TKey, FunctionObjectType> m_PFunction3;
   std::map<TKey, FunctionObjectType> m_PFunction2;
@@ -214,8 +230,8 @@ protected:
 
   // maps of Keys to pointers to member functions
 #if defined SITK_HAS_STLTR1_TR1_UNORDERED_MAP ||  defined SITK_HAS_STLTR1_UNORDERED_MAP
-  std::tr1::unordered_map< TKey, FunctionObjectType> m_PFunction3;
-  std::tr1::unordered_map< TKey, FunctionObjectType> m_PFunction2;
+  std::tr1::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
+  std::tr1::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
 #else
   std::map<TKey, FunctionObjectType> m_PFunction3;
   std::map<TKey, FunctionObjectType> m_PFunction2;
@@ -274,8 +290,8 @@ protected:
 
   // maps of Keys to pointers to member functions
 #if defined SITK_HAS_STLTR1_TR1_UNORDERED_MAP ||  defined SITK_HAS_STLTR1_UNORDERED_MAP
-  std::tr1::unordered_map< TKey, FunctionObjectType> m_PFunction3;
-  std::tr1::unordered_map< TKey, FunctionObjectType> m_PFunction2;
+  std::tr1::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
+  std::tr1::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
 #else
   std::map<TKey, FunctionObjectType> m_PFunction3;
   std::map<TKey, FunctionObjectType> m_PFunction2;
