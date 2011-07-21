@@ -7,7 +7,7 @@
   "members" : [ {
     "name" : "UseImageSpacing",
     "type" : "bool",
-    "default" : "false"
+    "default" : "true"
   } ],
   "tests" : [ {
     "tag" : "default",
