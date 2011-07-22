@@ -8,11 +8,11 @@
   "vector_pixel_types_by_component" : "RealVectorPixelIDTypeList",
   "members" : [ {
     "name" : "Direction",
-    "type" : "unsigned short",
+    "type" : "unsigned int",
     "default" : "0u"
   },{
     "name" : "Order",
-    "type" : "unsigned short",
+    "type" : "unsigned int",
     "default" : "1u"
   }, {
     "name" : "UseImageSpacing",
@@ -32,7 +32,7 @@
     "tolerance": 0.0001,
     "settings" : [ {
       "parameter" : "Direction",
-      "value" : "2u"
+      "value" : "2"
     }, { 
        "parameter" : "Order",
        "value" : "2"

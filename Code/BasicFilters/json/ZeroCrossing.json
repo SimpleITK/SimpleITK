@@ -29,12 +29,10 @@
     "inputA" : "Input/2th_cthead1_distance.nrrd",
     "settings" : [ {
       "parameter" : "ForegroundValue",
-      "type" : "uint8_t",
-      "value" : "0u"
+      "value" : "0"
     }, {
       "parameter" : "BackgroundValue",
-      "type" : "uint8_t",
-      "value" : "2u"
+       "value" : "2"
     } ],
     "md5hash" : "17cf4374c03d958e13506db9799c4789"
   }  ]
