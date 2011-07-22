@@ -3,7 +3,8 @@
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
   "doc" : "",
-  "pixel_types" : "RealPixelIDTypeList",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
   "members" : [ {
     "name" : "DomainSigma",
     "type" : "double",
@@ -19,9 +20,22 @@
   } ],
   "tests" : [ {
     "tag" : "default",
-    "description" : "Simply run with default settings",
-    "inputA" : "Input/RA-Float.nrrd",
+    "description" : "Simply run with default settings on rgb",
+    "inputA" : "Input/fruit.png",
     "settings" : [ ],
-    "tolerance" : 1.0E-4
+    "md5hash" : "40d02c04323fc303a8a28261c6d4eb23"
+   }, {
+    "tag" : "3d",
+    "description" : "small kernel in 3d",
+    "inputA" : "Input/RA-Short.nrrd",
+    "settings" : [ {
+      "parameter" : "DomainSigma",
+      "type" : "double",
+      "value" : "2.0" }, {
+      "parameter" : "RangeSigma",
+      "type" : "double",
+      "value" : "500"
+    } ],
+    "md5hash" : "5ff7381ac99c0c2285aebf9fbc1f2609"
   } ]
 }
