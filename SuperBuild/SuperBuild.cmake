@@ -48,7 +48,6 @@ include(PreventInBuildInstalls)
 # directory, so that all libs/include etc ends up
 # in one common tree
 set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_BINARY_DIR} CACHE PATH "Where all the prerequisite libraries go" FORCE)
-set(${CMAKE_PROJECT_NAME}_BUILD_TESTING ON CACHE BOOL "Turn on Testing for SimpleITK")
 
 # Compute -G arg for configuring external projects with the same CMake generator:
 if(CMAKE_EXTRA_GENERATOR)
@@ -56,6 +55,13 @@ if(CMAKE_EXTRA_GENERATOR)
 else()
   set(gen "${CMAKE_GENERATOR}")
 endif()
+
+
+#-----------------------------------------------------------------------------
+# SimpleITK options
+#------------------------------------------------------------------------------
+option( ${CMAKE_PROJECT_NAME}_BUILD_TESTING "Turn on Testing for SimpleITK" ON )
+
 
 #-----------------------------------------------------------------------------
 # Default to build shared libraries off
@@ -140,7 +146,6 @@ set(ep_common_args
   -DCMAKE_C_FLAGS_DEBUG:STRING=${CMAKE_C_FLAGS_DEBUG}
   -DCMAKE_C_FLAGS:STRING=${CMAKE_C_FLAGS}
   -DBUILD_EXAMPLES:BOOL=OFF
-  -DBUILD_TESTING:BOOL=${BUILD_TESTING}
   -DCMAKE_GENERATOR:STRING=${CMAKE_GENERATOR}
   -DCMAKE_EXTRA_GENERATOR:STRING=${CMAKE_EXTRA_GENERATOR}
   -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
@@ -220,6 +225,8 @@ ExternalProject_Add(${proj}
     # Swig
     -DSWIG_DIR:PATH=${SWIG_DIR}
     -DSWIG_EXECUTABLE:PATH=${SWIG_EXECUTABLE}
+    # top-level configurations
+    -DBUILD_TESTING:BOOL=${CMAKE_PROJECT_NAME}_BUILD_TESTING
   INSTALL_COMMAND ""
   DEPENDS ${${CMAKE_PROJECT_NAME}_DEPENDENCIES}
 )
