@@ -148,7 +148,6 @@ set(ep_common_args
   -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY:PATH=${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}
   -DCMAKE_RUNTIME_OUTPUT_DIRECTORY:PATH=${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
   -DCMAKE_BUNDLE_OUTPUT_DIRECTORY:PATH=${CMAKE_BUNDLE_OUTPUT_DIRECTORY}
-  -DCTEST_NEW_FORMAT:BOOL=ON
   -DMEMORYCHECK_COMMAND_OPTIONS:STRING=${MEMORYCHECK_COMMAND_OPTIONS}
   -DMEMORYCHECK_COMMAND:PATH=${MEMORYCHECK_COMMAND}
   -DCMAKE_SHARED_LINKER_FLAGS:STRING=${CMAKE_SHARED_LINKER_FLAGS}
@@ -176,24 +175,17 @@ endif()
 #------------------------------------------------------------------------------
 # ITK
 #------------------------------------------------------------------------------
-option ( USE_SYSTEM_ITKv4 "Use a pre-compiled version of ITKv4 previously configured for your system" OFF )
-mark_as_advanced(USE_SYSTEM_ITKv4)
-if(USE_SYSTEM_ITKv4)
-   find_package(ITK REQUIRED)
-   if(ITK_FOUND)
-     include(${ITK_USE_FILE})
-   endif()
-else()
-  set(ITK_WRAPPING OFF CACHE BOOL "Turn OFF wrapping ITK with WrapITK")
-  if(ITK_WRAPPING)
-    list(APPEND Insight_DEPENDENCIES Swig)
-  endif()
-  if(ITK_USE_FFTW)
-    list(APPEND Insight_DEPENDENCIES fftw)
-  endif()
-  include(External_ITKv4)
-  list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES ITK)
+
+set(ITK_WRAPPING OFF CACHE BOOL "Turn OFF wrapping ITK with WrapITK")
+if(ITK_WRAPPING)
+  list(APPEND ITK_DEPENDENCIES Swig)
 endif()
+if(ITK_USE_FFTW)
+  list(APPEND ITK_DEPENDENCIES fftw)
+endif()
+include(External_ITKv4)
+list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES ITK)
+
 
 #------------------------------------------------------------------------------
 # List of external projects
@@ -214,6 +206,7 @@ file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/ExternalProjectDependencies.txt "${ep_dep
 # to actually build Simple ITK
 #-----------------------------------------------------------------------------
 message(STATUS "${CMAKE_PROJECT_NAME}_DEPENDENCIES ${${CMAKE_PROJECT_NAME}_DEPENDENCIES}")
+
 set(proj SimpleITK)
 ExternalProject_Add(${proj}
   DOWNLOAD_COMMAND ""
