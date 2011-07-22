@@ -16,7 +16,7 @@
     "type" : "uint8_t",
     "default" : "0u",
     "pixeltype" : "Output"
-  } ], 
+  } ],
   "tests" : [ {
     "tag" : "defaults",
     "description" : "Simply run with default settings",
@@ -30,9 +30,11 @@
     "settings" : [ {
       "parameter" : "ForegroundValue",
       "value" : "0"
+      "java_value" : "(short) 0"
     }, {
       "parameter" : "BackgroundValue",
-       "value" : "2"
+       "value" : "2",
+       "java_value" : "(short) 2 "
     } ],
     "md5hash" : "17cf4374c03d958e13506db9799c4789"
   }  ]
