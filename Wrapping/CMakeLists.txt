@@ -1,6 +1,4 @@
 
-# FindR is stored in the current source path, it needs to be included.
-list( INSERT CMAKE_MODULE_PATH 0 ${CMAKE_CURRENT_SOURCE_DIR}/CSharpModules )
 
 macro(check_PIC_flag Language)
   if ( UNIX AND NOT APPLE )
