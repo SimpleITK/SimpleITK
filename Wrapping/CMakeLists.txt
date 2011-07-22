@@ -1,72 +1,9 @@
 
-
-macro(check_PIC_flag Language)
-  if ( UNIX AND NOT APPLE )
-    if ( NOT ${CMAKE_CXX_FLAGS} MATCHES "-fPIC")
-      message ( FATAL_ERROR "${Language} wrapping requires CMAKE_CXX_FLAGS (or equivalent) to include -fPIC and ITK built with this flag" )
-    endif()
-  endif()
-endmacro()
-
 #
-# Setup the option for each language
+# Use CMake file which present options for wrapped languages, and finds languages as needed
 #
-option ( WRAP_LUA "Wrap Lua" ON )
+include(SITKLanguageOptions)
 
-find_package ( PythonLibs )
-find_package ( PythonInterp )
-if ( ${PYTHONLIBS_FOUND} AND ${PYTHONINTERP_FOUND} )
-  set( WRAP_PYTHON_DEFAULT ON )
-else ( ${PYTHONLIBS_FOUND} AND ${PYTHONINTERP_FOUND} )
-  set( WRAP_PYTHON_DEFAULT OFF )
-endif ( ${PYTHONLIBS_FOUND} AND ${PYTHONINTERP_FOUND} )
-check_PIC_flag ( Python )
-option( WRAP_PYTHON "Wrap Python" ${WRAP_PYTHON_DEFAULT} )
-
-find_package ( Java COMPONENTS Development Runtime)
-find_package ( JNI  )
-if ( ${JAVA_FOUND} AND ${JNI_FOUND} )
-  set( WRAP_JAVA_DEFAULT ON )
-else ( ${JAVA_FOUND} AND ${JNI_FOUND} )
-  set( WRAP_JAVA_DEFAULT OFF )
-endif ( ${JAVA_FOUND} AND ${JNI_FOUND} )
-check_PIC_flag ( Java )
-option ( WRAP_JAVA "Wrap Java" ${WRAP_JAVA_DEFAULT} )
-
-find_package ( TCL )
-if ( ${TCL_FOUND} )
-  set ( WRAP_TCL_DEFAULT ON )
-else ( ${TCL_FOUND} )
-  set ( WRAP_TCL_DEFAULT OFF )
-endif ( ${TCL_FOUND} )
-option ( WRAP_TCL "Wrap Tcl" ${WRAP_TCL_DEFAULT} )
-
-find_package ( Ruby )
-if ( ${RUBY_FOUND} )
-  set ( WRAP_RUBY_DEFAULT ON )
-else ( ${RUBY_FOUND} )
-  set ( WRAP_RUBY_DEFAULT OFF )
-endif ( ${RUBY_FOUND} )
-check_PIC_flag ( Ruby )
-option ( WRAP_RUBY "Wrap Ruby" ${WRAP_RUBY_DEFAULT} )
-
-find_package ( CSharp )
-if ( ${CSHARP_FOUND} )
-  set ( WRAP_CSHARP_DEFAULT ON )
-else ( ${CSHARP_FOUND} )
-  set ( WRAP_CSHARP_DEFAULT OFF )
-endif ( ${CSHARP_FOUND} )
-option ( WRAP_CSHARP "Wrap C#" ${WRAP_CSHARP_DEFAULT} )
-
-#
-# Below here are the 2nd tier languages they are not enabled automatically if detected
-#
-
-# TODO FindR does not conform to the expected behavior:
-# http://www.cmake.org/cmake/help/cmake-2-8-docs.html#command:find_package
-# specifically R_FOUND is not defined. Additionally, the defined variables are not marked as advanced.
-option ( WRAP_R "Wrap R" OFF )
-mark_as_advanced( WRAP_R )
 
 #
 # General SWIG configuration

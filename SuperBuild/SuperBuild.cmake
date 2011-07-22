@@ -212,6 +212,22 @@ file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/ExternalProjectDependencies.txt "${ep_dep
 #-----------------------------------------------------------------------------
 message(STATUS "${CMAKE_PROJECT_NAME}_DEPENDENCIES ${${CMAKE_PROJECT_NAME}_DEPENDENCIES}")
 
+#
+# Use CMake file which present options for wrapped languages, and finds languages as needed
+#
+include(SITKLanguageOptions)
+
+foreach( var IN LISTS SITK_LANGUAGES_VARS )
+  
+  if( ${var} ) # if variable has been set
+    get_property( type CACHE ${var} PROPERTY TYPE )
+    list( APPEND ep_languages_args "-D${var}:${type}=${${var}}" )
+  endif()
+endforeach()
+
+message( STATUS "EP: ${ep_languages_args}" )
+
+
 set(proj SimpleITK)
 ExternalProject_Add(${proj}
   DOWNLOAD_COMMAND ""
@@ -220,13 +236,20 @@ ExternalProject_Add(${proj}
   CMAKE_GENERATOR ${gen}
   CMAKE_ARGS
     ${ep_common_args}
+    ${ep_languages_args}
     # ITK
     -DITK_DIR:PATH=${ITK_DIR}
     # Swig
     -DSWIG_DIR:PATH=${SWIG_DIR}
     -DSWIG_EXECUTABLE:PATH=${SWIG_EXECUTABLE}
-    # top-level configurations
     -DBUILD_TESTING:BOOL=${CMAKE_PROJECT_NAME}_BUILD_TESTING
+    -DWRAP_LUA:BOOL=${WRAP_LUA}
+    -DWRAP_PYTHON:BOOL=${WRAP_PYTHON}
+    -DWRAP_RUBY:BOOL=${WRAP_RUBY}
+    -DWRAP_JAVA:BOOL=${WRAP_JAVA}
+    -DWRAP_TCL:BOOL=${WRAP_TCL}
+    -DWRAP_CSHARP:BOOL=${WRAP_CSHARP}
+    -DWRAP_R:BOOL=${WRAP_R}
   INSTALL_COMMAND ""
   DEPENDS ${${CMAKE_PROJECT_NAME}_DEPENDENCIES}
 )
