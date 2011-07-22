@@ -1,0 +1,39 @@
+{
+  "name" : "ZeroCrossing",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "typelist::MakeTypeList< BasicPixelID<int8_t>, BasicPixelID<int16_t>, BasicPixelID<int32_t>, BasicPixelID<float>, BasicPixelID<double> >::Type",
+  "output_pixel_type" : "uint8_t",
+  "members" : [ {
+    "name" : "ForegroundValue",
+    "type" : "uint8_t",
+    "default" : "1u",
+    "pixeltype" : "Output"
+  }, {
+    "name" : "BackgroundValue",
+    "type" : "uint8_t",
+    "default" : "0u",
+    "pixeltype" : "Output"
+  } ], 
+  "tests" : [ {
+    "tag" : "defaults",
+    "description" : "Simply run with default settings",
+    "inputA" : "Input/2th_cthead1_distance.nrrd",
+    "settings" : [ ],
+    "md5hash" : "1b5cea61ceb46ebf606eb9e63de1e75f"
+  },{
+    "tag" : "inverted",
+    "description" : "Run image with backwards foreground and background",
+    "inputA" : "Input/2th_cthead1_distance.nrrd",
+    "settings" : [ {
+      "parameter" : "ForegroundValue",
+      "value" : "0"
+    }, {
+      "parameter" : "BackgroundValue",
+       "value" : "2"
+    } ],
+    "md5hash" : "17cf4374c03d958e13506db9799c4789"
+  }  ]
+}
