@@ -1,10 +1,6 @@
 
 # FindR is stored in the current source path, it needs to be included.
-set(CMAKE_MODULE_PATH
-  ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}/CSharpModules
-  ${CMAKE_MODULE_PATH}
-  )
+list( INSERT CMAKE_MODULE_PATH 0 ${CMAKE_CURRENT_SOURCE_DIR}/CSharpModules )
 
 macro(check_PIC_flag Language)
   if ( UNIX AND NOT APPLE )
@@ -79,7 +75,9 @@ mark_as_advanced( WRAP_R )
 #
 if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA OR WRAP_CSHARP OR WRAP_TCL OR WRAP_R OR WRAP_RUBY )
   find_package ( SWIG 2 REQUIRED )
-  include ( "UseSWIGLocal.cmake" )
+
+  message( STATUS "CMAKE_MODULE_PATH: ${CMAKE_MODULE_PATH}")
+  include (UseSWIGLocal)
   set_source_files_properties ( SimpleITK.i PROPERTIES CPLUSPLUS ON )
   file ( GLOB SWIG_HEADERS ${SimpleITK_SOURCE_DIR}/Code/*/*.h)
 
