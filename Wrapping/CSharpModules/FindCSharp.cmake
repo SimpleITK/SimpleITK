@@ -15,6 +15,9 @@
 
 # TODO: ADD ABILITY TO SELECT WHICH C# COMPILER eg. .NET or Mono (if both exist). For the moment, .NET is selected above Mono.
 
+# Make sure find package macros are included
+include( FindPackageHandleStandardArgs )
+
 unset( CSHARP_COMPILER CACHE )
 unset( CSHARP_INTERPRETER CACHE )
 unset( CSHARP_TYPE CACHE )

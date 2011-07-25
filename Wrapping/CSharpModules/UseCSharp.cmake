@@ -64,29 +64,43 @@ macro( CSHARP_ADD_PROJECT type name )
   set( refs /reference:System.dll )
   set( sources )
   set( sources_dep )
+
   if( ${type} MATCHES "library" )
     set( output "dll" )
   elseif( ${type} MATCHES "exe" )
     set( output "exe" )
   endif( ${type} MATCHES "library" )
+
+  # Step through each argument
   foreach( it ${ARGN} )
     if( ${it} MATCHES "(.*)(dll)" )
+       # Argument is a dll, add reference
        set( refs ${refs} /reference:${it} )
-    else( ${it} MATCHES "(.*)(dll)" )
+    else( )
+      # Argument is a source file
       if( EXISTS ${it} )
         set( sources ${it} ${sources} )
         set( sources_dep ${it} ${sources_dep} )
-      else( EXISTS ${it} )
-        if( EXISTS ${CSHARP_SOURCE_DIRECTORY}/${it} )
-          set( sources ${CSHARP_SOURCE_DIRECTORY}/${it} ${sources} )
-          set( sources_dep ${CSHARP_SOURCE_DIRECTORY}/${it} ${sources_dep} )
-        else( EXISTS ${CSHARP_SOURCE_DIRECTORY}/${it} )
-          set( sources ${it} ${sources} )
-        endif( EXISTS ${CSHARP_SOURCE_DIRECTORY}/${it} )
-      endif( EXISTS ${it} )
-    endif ( ${it} MATCHES "(.*)(dll)" )
-  endforeach( it )
+      elseif( EXISTS ${CSHARP_SOURCE_DIRECTORY}/${it} )
+        set( sources ${CSHARP_SOURCE_DIRECTORY}/${it} ${sources} )
+        set( sources_dep ${CSHARP_SOURCE_DIRECTORY}/${it} ${sources_dep} )
+      elseif( ${it} MATCHES "[*]" )
+        # For dependencies, we need to expand wildcards
+        FILE( GLOB it_glob ${it} )
+        set( sources ${it} ${sources} )
+        set( sources_dep ${it_glob} ${sources_dep} )
+      endif( )
+    endif ( )
+  endforeach( )
 
+  # Check we have at least one source
+  list( LENGTH sources_dep sources_length )
+  if ( ${sources_length} LESS 1 )
+    MESSAGE( SEND_ERROR "No C# sources were specified for ${type} ${name}" )
+  endif ()
+  list( SORT sources_dep ${sources_dep} )
+
+  # Perform platform specific actions
   set( csharp_compiler_safe ${CSHARP_COMPILER} )
   if (WIN32)
     string( REPLACE "/" "\\" sources ${sources} )
@@ -97,15 +111,18 @@ macro( CSHARP_ADD_PROJECT type name )
     string( REPLACE "\\" "/" sources ${sources} )
   endif (WIN32)
 
+  # Add custom target and command
   add_custom_command(
     COMMENT "Compiling C# ${type} ${name}"
     OUTPUT ${name}.${output}
     COMMAND ${csharp_compiler_safe}
     ARGS /t:${type} /out:${name}.${output} /platform:${CSHARP_PLATFORM} ${refs} ${sources}
     WORKING_DIRECTORY ${CSHARP_BINARY_DIRECTORY}
-    DEPENDS "${sources_dep}"
+    DEPENDS ${sources_dep}
   )
-  add_custom_target( ${name} ALL
-    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${name}.${output}
+  add_custom_target(
+    ${name} ALL
+    DEPENDS ${name}.${output}
+    SOURCES ${sources_dep}
   )
 endmacro( CSHARP_ADD_PROJECT )
