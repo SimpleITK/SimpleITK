@@ -83,6 +83,16 @@ endif ( )
 # check for the optional tr1/unordered_map header
 check_include_file_cxx( tr1/unordered_map SITK_HAS_STLTR1_TR1_UNORDERED_MAP )
 check_include_file_cxx( unordered_map SITK_HAS_STLTR1_UNORDERED_MAP )
+if ( ${SITK_HAS_STLTR1_UNORDERED_MAP} )
+  set( SITK_UNORDERED_MAP_FUNCTIONAL_DEFINITIONS "-DSITK_HAS_STLTR1_UNORDERED_MAP")
+elseif ( ${SITK_HAS_STLTR1_TR1_UNORDERED_MAP} )
+  set( SITK_UNORDERED_MAP_FUNCTIONAL_DEFINITIONS "-DSITK_HAS_STLTR1_TR1_UNORDERED_MAP" )
+endif()
+try_compile(SITK_UNORDERED_MAP_FUNCTIONAL
+  ${SimpleITK_BINARY_DIR}/CMakeTmp
+  ${SimpleITK_SOURCE_DIR}/CMake/tr1_unordered_map.cxx
+  COMPILE_DEFINITIONS "${SITK_UNORDERED_MAP_FUNCTIONAL_DEFINITIONS}"
+  OUTPUT_VARIABLE out )
 
 # check for stdint
 # This generates a configuration error if the compiler is not supported

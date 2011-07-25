@@ -17,9 +17,9 @@
 
 #include "Ancillary/FunctionTraits.h"
 
-#if defined SITK_HAS_STLTR1_TR1_UNORDERED_MAP
+#if defined SITK_HAS_STLTR1_TR1_UNORDERED_MAP && defined SITK_UNORDERED_MAP_FUNCTIONAL
 #include <tr1/unordered_map>
-#elif defined SITK_HAS_STLTR1_UNORDERED_MAP
+#elif defined SITK_HAS_STLTR1_UNORDERED_MAP && defined SITK_UNORDERED_MAP_FUNCTIONAL
 #include <unordered_map>
 #else
 #include <map>
@@ -34,7 +34,7 @@ namespace simple
 namespace detail {
 
 
-#if defined SITK_HAS_STLTR1_TR1_UNORDERED_MAP ||  defined SITK_HAS_STLTR1_UNORDERED_MAP
+#if defined SITK_HAS_UNORDERED_MAP
 
 template <typename T> struct hash : public std::tr1::hash<T>{};
 
@@ -74,7 +74,7 @@ protected:
 
 
   MemberFunctionFactoryBase( void )
-#if defined SITK_HAS_STLTR1_TR1_UNORDERED_MAP ||  defined SITK_HAS_STLTR1_UNORDERED_MAP
+#if defined SITK_HAS_UNORDERED_MAP
     :  m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction2( typelist::Length<InstantiatedPixelIDTypeList>::Result )
 #endif
@@ -105,7 +105,7 @@ protected:
     }
 
   // maps of Keys to pointers to member functions
-#if defined SITK_HAS_STLTR1_TR1_UNORDERED_MAP ||  defined SITK_HAS_STLTR1_UNORDERED_MAP
+#if defined SITK_HAS_UNORDERED_MAP
   std::tr1::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
   std::tr1::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
 #else
@@ -135,7 +135,7 @@ protected:
 
 
   MemberFunctionFactoryBase( void )
-#if defined SITK_HAS_STLTR1_TR1_UNORDERED_MAP ||  defined SITK_HAS_STLTR1_UNORDERED_MAP
+#if defined SITK_HAS_UNORDERED_MAP
     :  m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction2( typelist::Length<InstantiatedPixelIDTypeList>::Result )
 #endif
@@ -169,7 +169,7 @@ protected:
 
 
   // maps of Keys to pointers to member functions
-#if defined SITK_HAS_STLTR1_TR1_UNORDERED_MAP ||  defined SITK_HAS_STLTR1_UNORDERED_MAP
+#if defined SITK_HAS_UNORDERED_MAP
   std::tr1::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
   std::tr1::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
 #else
@@ -194,7 +194,7 @@ protected:
 
 
   MemberFunctionFactoryBase( void )
-#if defined SITK_HAS_STLTR1_TR1_UNORDERED_MAP ||  defined SITK_HAS_STLTR1_UNORDERED_MAP
+#if defined SITK_HAS_UNORDERED_MAP
     :  m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction2( typelist::Length<InstantiatedPixelIDTypeList>::Result )
 #endif
@@ -229,7 +229,7 @@ protected:
 
 
   // maps of Keys to pointers to member functions
-#if defined SITK_HAS_STLTR1_TR1_UNORDERED_MAP ||  defined SITK_HAS_STLTR1_UNORDERED_MAP
+#if defined SITK_HAS_UNORDERED_MAP
   std::tr1::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
   std::tr1::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
 #else
@@ -255,7 +255,7 @@ protected:
 
 
   MemberFunctionFactoryBase( void )
-#if defined SITK_HAS_STLTR1_TR1_UNORDERED_MAP ||  defined SITK_HAS_STLTR1_UNORDERED_MAP
+#if defined SITK_HAS_UNORDERED_MAP
     :  m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction2( typelist::Length<InstantiatedPixelIDTypeList>::Result )
 #endif
@@ -289,7 +289,7 @@ protected:
 
 
   // maps of Keys to pointers to member functions
-#if defined SITK_HAS_STLTR1_TR1_UNORDERED_MAP ||  defined SITK_HAS_STLTR1_UNORDERED_MAP
+#if defined SITK_HAS_UNORDERED_MAP
   std::tr1::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
   std::tr1::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
 #else
