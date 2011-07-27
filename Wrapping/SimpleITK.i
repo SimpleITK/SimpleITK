@@ -14,11 +14,6 @@
 // Use exceptions
 %include "exception.i"
 
-// Include some C# helper files
-%include "CSharpTypemapHelper.i"
-
-
-
 // Customize exception handling
 %exception {
   try {

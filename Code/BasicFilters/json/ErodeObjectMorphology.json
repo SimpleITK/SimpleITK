@@ -36,7 +36,8 @@
       "python_value" : "SimpleITK.${name}ImageFilter.Ball",
       "ruby_value" : "Simpleitk::${name}ImageFilter::Ball",
       "java_value" : "${name}ImageFilter.KernelType.Ball",
-      "tcl_value" : "$$${name}ImageFilter_Ball"
+      "tcl_value" : "$$${name}ImageFilter_Ball",
+      "csharp_value" : "${name}ImageFilter.KernelType.Ball"
     } ]
   }, {
     "tag" : "short",
@@ -54,7 +55,8 @@
       "python_value" : "SimpleITK.${name}ImageFilter.Ball",
       "ruby_value" : "Simpleitk::${name}ImageFilter::Ball",
       "java_value" : "${name}ImageFilter.KernelType.Ball",
-      "tcl_value" : "$$${name}ImageFilter_Ball"
+      "tcl_value" : "$$${name}ImageFilter_Ball",
+      "csharp_value" : "${name}ImageFilter.KernelType.Ball"
     } ]
   } ],
   "briefdescription" : "Erosion of an object in an image.\n",

@@ -82,12 +82,14 @@ class DataFinder {
   std::string GetRubyExecutable() { return std::string ( RUBY_EXECUTABLE_PATH ); }
   std::string GetRExecutable() { return std::string ( RSCRIPT_EXECUTABLE_PATH ); }
   std::string GetJavaExecutable() { return std::string ( JAVA_EXECUTABLE_PATH ); }
+  std::string GetCSharpCompiler() { return std::string( CSHARP_COMPILER ); }
+  std::string GetCSharpInterpreter() { return std::string( CSHARP_INTERPRETER ); }
+  std::string GetCSharpBinaryDirectory() { return std::string( CSHARP_BINARY_DIRECTORY ); }
   std::string GetSourceDirectory() { return std::string ( SIMPLEITK_SOURCE_DIR ); }
   bool FileExists ( std::string filename ) { return itksys::SystemTools::FileExists ( filename.c_str() ); }
   std::string GetFile ( std::string filename ) {
     return mDirectory + "/" + filename;
   };
-
 
  protected:
   std::string mDirectory;
@@ -246,6 +248,9 @@ class R : public ExternalProgramRunner {
 };
 
 class Ruby : public ExternalProgramRunner {
+};
+
+class CSharp : public ExternalProgramRunner {
 };
 
 #include "ImageCompare.h"

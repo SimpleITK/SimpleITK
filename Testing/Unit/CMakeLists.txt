@@ -19,6 +19,7 @@ set ( TestSource
   LuaTests.cxx
   TclTests.cxx
   JavaTests.cxx
+  CSharpTests.cxx
   )
 
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/PythonTests)
@@ -27,6 +28,7 @@ file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/TclTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/RTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/RubyTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/JavaTests/org/itk/simple/testing)
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/CSharpTests)
 
 #
 # Glob for necessary template files up front, before the foreach loop over
@@ -57,6 +59,11 @@ endif()
 if ( WRAP_JAVA )
   file ( GLOB JAVA_TEMPLATE_FILES "*Template*.java.in" )
 endif()
+
+if ( WRAP_CSHARP )
+  file( GLOB CSHARP_TEMPLATE_FILES "*Template*.cs.in" )
+endif()
+
 
 #
 # Generate code for the tests in different languages
@@ -145,8 +152,32 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
     set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
   endif()
 
-endforeach()
+  # C# Tests
+  if ( WRAP_CSHARP )
+    set( OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/CSharpTests/Test${FILTERNAME}ImageFilter.cs" )
+    set( csharp_compiler_safe ${CSHARP_COMPILER} )
+    if ( WIN32 )
+      string( REPLACE "/" "\\" OUTPUT_TEST_FILENAME_SAFE ${OUTPUT_TEST_FILENAME} )
+      if ( csharp_compiler_safe MATCHES "bat" )
+        set( csharp_compiler_safe call ${CSHARP_COMPILER} )
+      endif ( csharp_compiler_safe MATCHES "bat" )
+    else ( UNIX )
+      string( REPLACE "\\" "/" OUTPUT_TEST_FILENAME_SAFE ${OUTPUT_TEST_FILENAME} )
+    endif ( WIN32 )
+    add_custom_command (
+      OUTPUT "${OUTPUT_TEST_FILENAME}"
+      COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/CSharp ${template_include_dir} TestTemplate.cs.in "${OUTPUT_TEST_FILENAME}"
+      COMMAND ${csharp_compiler_safe}
+        /t:exe /platform:${CSHARP_PLATFORM}
+        /lib:${CSHARP_BINARY_DIRECTORY} /reference:System.dll /reference:SimpleITKCSharpManaged.dll
+        /out:${CSHARP_BINARY_DIRECTORY}/Test${FILTERNAME}ImageFilter.exe ${OUTPUT_TEST_FILENAME_SAFE}
+      DEPENDS ${filter_json_file} ${CSHARP_TEMPLATE_FILES}
+      )
+    set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "CSharp.${FILTERNAME}")
+    set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
+  endif()
 
+endforeach()
 
 # Build Google Test
 find_package(Threads)
@@ -188,6 +219,11 @@ add_custom_target(WrappedGeneratedTests ALL
 # Add org.itk.simple.jar dependency if necessary
 if( WRAP_JAVA )
   add_dependencies(WrappedGeneratedTests org_itk_simple_jar)
+endif()
+
+# Add C# dependency if necessary
+if( WRAP_CSHARP )
+  add_dependencies(WrappedGeneratedTests SimpleITKCSharpManaged)
 endif()
 
 add_executable(SimpleITKUnitTestDriver
@@ -236,7 +272,6 @@ macro(ADD_GOOGLE_TESTS target)
     add_test(NAME ${hit} COMMAND ${target} --gtest_filter=${hit})
   endforeach()
 endmacro()
-
 
 # Here we add all the tests
 add_google_tests(SimpleITKUnitTestDriver ${TestSource})
