@@ -119,7 +119,7 @@ elseif dim_vec == 1 then
         elseif type == "int32_t" then
           OUT="VectorInt32 idx = new VectorInt32( inputA.getDimension() );"
         elseif type == "int64_t" then
-          OUT="VectorInt64 idx = new VectorInt63( inputA.getDimension() );"
+          OUT="VectorInt64 idx = new VectorInt64( inputA.getDimension() );"
         end)
        
         for (int i = 0; i < inputA.getDimension( ); i++) {
