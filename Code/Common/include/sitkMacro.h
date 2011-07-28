@@ -8,6 +8,8 @@
 #include <stdint.h>
 #endif
 
+#include <assert.h>
+
 #include "sitkConfigure.h"
 
 #include "sitkPixelIDTypeLists.h"
