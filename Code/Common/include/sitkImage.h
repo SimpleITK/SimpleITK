@@ -106,12 +106,6 @@ namespace simple
     std::string GetPixelIDTypeAsString( void ) const;
     std::string ToString( void ) const;
 
-    /** Method called by certain constructors to convert ITK images
-     * into simpleITK ones.
-     */
-    template <typename TImageType>
-    void InternalInitialization( TImageType * );
-
     /** \brief Get the value of a pixel
      *
      * Returns the value of a pixel for the given index. The index
@@ -190,6 +184,12 @@ namespace simple
     /**@}*/
 
     void MakeUniqueForWrite( void );
+
+    /** Method called by certain constructors to convert ITK images
+     * into simpleITK ones.
+     */
+    template <typename TImageType>
+    void InternalInitialization( TImageType * );
 
   private:
 
