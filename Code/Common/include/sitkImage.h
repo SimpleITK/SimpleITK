@@ -189,14 +189,6 @@ namespace simple
     AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth );
     /**@}*/
 
-
-    /** \brief Do not call this method
-     *
-     * The purpose of this methods is to implicitly instantiate the
-     * templated constructors of this class.
-     */
-    void __ImplicitInstantiate( void );
-
     void MakeUniqueForWrite( void );
 
   private:

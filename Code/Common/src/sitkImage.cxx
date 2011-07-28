@@ -391,62 +391,45 @@ namespace itk
         }
 
     }
+  } // end namespace simple
+} // end namespace itk
 
-///
-/// Private name space for class for __ImplicitInstantiate
-///
-  namespace
-  {
-  // this class is designed to work with typelist::Vist
-  //
-  // The purpose of this class it to implicitly instantiate the
-  // templated constructors of this class.
-  struct ConstructorInstantiator
-  {
 
-    template< typename TPixelIDType >
-    void operator() ( void ) const
-      {
-        typedef typename PixelIDToImageType<TPixelIDType, 2>::ImageType Image2Type;
-        typedef typename PixelIDToImageType<TPixelIDType, 3>::ImageType Image3Type;
-
-        void (Image::*pFunc1)(Image2Type*) = &Image::InternalInitialization<Image2Type>;
-        Unused( pFunc1 );
-
-        void (Image::*pFunc2)(Image3Type*) = &Image::InternalInitialization<Image3Type>;
-        Unused( pFunc2 );
-
-      }
-  };
-  }
 //
-// End private namespace
+// There is only one templated function in the external interface
+// which need to be instantiated, so that the itk::Image and the
+// sitk::PimpleImage are completely encapsulated. That is the
+// InternalInitialization method. The following uses a macro to
+// explicitly instantiate for the expected image types.
 //
-  void Image::__ImplicitInstantiate( void )
-  {
-    typelist::Visit<InstantiatedPixelIDTypeList> visitToImplicitlyInstantiate;
-    visitToImplicitlyInstantiate( ConstructorInstantiator() );
-  }
+
+#define SITK_TEMPLATE_InternalInitialization_D( _I, _D )                \
+  namespace itk { namespace simple {                                    \
+  template void Image::InternalInitialization<PixelIDToImageType< typelist::TypeAt<InstantiatedPixelIDTypeList, _I>::Result, _D>::ImageType>( PixelIDToImageType< typelist::TypeAt<InstantiatedPixelIDTypeList, _I>::Result, _D>::ImageType * ); \
+  } }
 
 
-    /*
-    void Image::Show(const std::string name) const
-    {
-      // Try to find ImageJ, write out a file and open
-#if defined(__WIN32__)
-      // Windows
-#elseif defined(__APPLE__)
-      // Mac
-      char *filename = malloc ( sizeof(char) * (100 + name.size()) );
-      sprintf ( filename, "/tmp/%s-XXXXX.nrrd", name.c_str() );
-      mktemp ( filename );
-      ImageFileWriter().SetFilename ( filename ).Execute ( this );
-      std::cout << "Show Filename: " << filename << std::endl;
-#else
-      // Linux
-#endif
-    }
-    */
+#define SITK_TEMPLATE_InternalInitialization( _I ) SITK_TEMPLATE_InternalInitialization_D( _I, 2 ) SITK_TEMPLATE_InternalInitialization_D( _I, 3 )
 
-  }
-}
+// Instantiate for all dimensions
+SITK_TEMPLATE_InternalInitialization( 0 );
+SITK_TEMPLATE_InternalInitialization( 1 );
+SITK_TEMPLATE_InternalInitialization( 2 );
+SITK_TEMPLATE_InternalInitialization( 3 );
+SITK_TEMPLATE_InternalInitialization( 4 );
+SITK_TEMPLATE_InternalInitialization( 5 );
+SITK_TEMPLATE_InternalInitialization( 6 );
+SITK_TEMPLATE_InternalInitialization( 7 );
+SITK_TEMPLATE_InternalInitialization( 8 );
+SITK_TEMPLATE_InternalInitialization( 9 );
+SITK_TEMPLATE_InternalInitialization( 10 );
+SITK_TEMPLATE_InternalInitialization( 11 );
+SITK_TEMPLATE_InternalInitialization( 12 );
+SITK_TEMPLATE_InternalInitialization( 13 );
+SITK_TEMPLATE_InternalInitialization( 14 );
+SITK_TEMPLATE_InternalInitialization( 15 );
+SITK_TEMPLATE_InternalInitialization( 16 );
+SITK_TEMPLATE_InternalInitialization( 17 );
+SITK_TEMPLATE_InternalInitialization( 18 );
+
+sitkStaticAssert( typelist::Length<itk::simple::InstantiatedPixelIDTypeList>::Result == 19, "Number of explicitly instantiated pixel types is not correct" );
