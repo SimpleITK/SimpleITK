@@ -153,6 +153,12 @@ struct TypeAt<TypeList<Head, Tail>, i>
   typedef typename TypeAt<Tail, i - 1>::Result Result;
 };
 
+template < unsigned int i>
+struct TypeAt<NullType, i>
+{
+  typedef NullType Result;
+};
+
 
 template <class TTypeList1, class TTypeList2> struct Append;
 /**\class Append
