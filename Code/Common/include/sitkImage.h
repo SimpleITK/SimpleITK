@@ -219,11 +219,11 @@ namespace simple
      * @{
      */
     template<int VPixelIDValue, typename TImageType>
-    typename EnableIf<!std::tr1::is_same<TImageType, void>::value>::Type
+    typename DisableIf<std::tr1::is_same<TImageType, void>::value>::Type
     ConditionalInternalInitialization( TImageType *i);
 
     template<int VPixelIDValue, typename TImageType>
-    typename DisableIf<!std::tr1::is_same<TImageType, void>::value>::Type
+    typename EnableIf<std::tr1::is_same<TImageType, void>::value>::Type
     ConditionalInternalInitialization( TImageType *) { assert( false ); }
      /**@}*/
 

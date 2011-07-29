@@ -41,7 +41,7 @@ namespace itk
   }
 
   template<int VPixelIDValue, typename TImageType>
-  typename EnableIf<!std::tr1::is_same<TImageType, void>::value>::Type
+  typename DisableIf<std::tr1::is_same<TImageType, void>::value>::Type
   Image::ConditionalInternalInitialization( TImageType *image )
   {
     // no need to check if null
