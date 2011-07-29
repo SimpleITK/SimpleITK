@@ -16,16 +16,41 @@ namespace itk
   namespace simple
   {
 
-  template <typename TImageType>
-  void Image::InternalInitialization( TImageType *image )
+  // this is a little specialization just to get the
+  // InternalInitialization method's PixelIDTpImageType lookup to get
+  // a valid void type, so it'll dispatch to the a specialized
+  // method. All this is just to instantiate something that will never
+  // be actually used.
+  template <unsigned int VImageDimension>
+  struct PixelIDToImageType< typelist::NullType , VImageDimension >
+  {
+    typedef void ImageType;
+  };
+
+  // This method is explicitly instantiated, and in-turn implicitly
+  // instantates the PipleImage for all used image types. This method
+  // just dispatces to nother method, to aid in instantiating only the
+  // images requested.
+  template <int VPixelIDValue, unsigned int VImageDimension>
+
+  void Image::InternalInitialization( typename PixelIDToImageType<typename typelist::TypeAt<InstantiatedPixelIDTypeList,
+                                                                                            VPixelIDValue>::Result,
+                                                                  VImageDimension>::ImageType *i )
+  {
+    this->ConditionalInternalInitialization<VPixelIDValue>( i );
+  }
+
+  template<int VPixelIDValue, typename TImageType>
+  typename EnableIf<!std::tr1::is_same<TImageType, void>::value>::Type
+  Image::ConditionalInternalInitialization( TImageType *image )
   {
     // no need to check if null
     delete this->m_PimpleImage;
     this->m_PimpleImage = NULL;
 
-    // assign to basic pointer
     this->m_PimpleImage = new PimpleImage<TImageType>( image );
   }
+
 
   template<class TImageType>
   typename EnableIf<IsBasic<TImageType>::Value>::Type
@@ -405,13 +430,17 @@ namespace itk
 
 #define SITK_TEMPLATE_InternalInitialization_D( _I, _D )                \
   namespace itk { namespace simple {                                    \
-  template void Image::InternalInitialization<PixelIDToImageType< typelist::TypeAt<InstantiatedPixelIDTypeList, _I>::Result, _D>::ImageType>( PixelIDToImageType< typelist::TypeAt<InstantiatedPixelIDTypeList, _I>::Result, _D>::ImageType * ); \
+  template void Image::InternalInitialization<_I,_D>(  PixelIDToImageType< typelist::TypeAt<InstantiatedPixelIDTypeList, \
+                                                                                            _I>::Result, \
+                                                                           _D>::ImageType *i ); \
   } }
 
 
 #define SITK_TEMPLATE_InternalInitialization( _I ) SITK_TEMPLATE_InternalInitialization_D( _I, 2 ) SITK_TEMPLATE_InternalInitialization_D( _I, 3 )
 
-// Instantiate for all dimensions
+
+
+// Instantiate for all types in the lists
 SITK_TEMPLATE_InternalInitialization( 0 );
 SITK_TEMPLATE_InternalInitialization( 1 );
 SITK_TEMPLATE_InternalInitialization( 2 );
@@ -431,5 +460,17 @@ SITK_TEMPLATE_InternalInitialization( 15 );
 SITK_TEMPLATE_InternalInitialization( 16 );
 SITK_TEMPLATE_InternalInitialization( 17 );
 SITK_TEMPLATE_InternalInitialization( 18 );
+SITK_TEMPLATE_InternalInitialization( 19 );
+SITK_TEMPLATE_InternalInitialization( 20 );
+SITK_TEMPLATE_InternalInitialization( 21 );
+SITK_TEMPLATE_InternalInitialization( 22 );
+SITK_TEMPLATE_InternalInitialization( 23 );
+SITK_TEMPLATE_InternalInitialization( 24 );
+SITK_TEMPLATE_InternalInitialization( 25 );
+SITK_TEMPLATE_InternalInitialization( 26 );
+SITK_TEMPLATE_InternalInitialization( 27 );
+SITK_TEMPLATE_InternalInitialization( 28 );
+SITK_TEMPLATE_InternalInitialization( 29 );
 
-sitkStaticAssert( typelist::Length<itk::simple::InstantiatedPixelIDTypeList>::Result == 19, "Number of explicitly instantiated pixel types is not correct" );
+
+sitkStaticAssert( typelist::Length<itk::simple::InstantiatedPixelIDTypeList>::Result < 30, "Number of explicitly instantiated pixel types is more then expected!" );

@@ -2,10 +2,21 @@
 #define __sitkImage_h
 
 #include "sitkMacro.h"
-
+#include "sitkConfigure.h"
 #include "sitkDetail.h"
 #include "sitkPixelIDTokens.h"
 #include "sitkEnableIf.h"
+
+
+#ifndef SWIG
+#ifdef SITK_HAS_STLTR1_TR1_TYPE_TRAITS
+#include <tr1/type_traits>
+#elif defined SITK_HAS_STLTR1_TYPE_TRAITS
+#include <type_traits>
+#else
+#error "No system tr1 type traits available"
+#endif
+#endif
 
 #include <vector>
 #include <memory>
@@ -49,7 +60,7 @@ namespace simple
       {
         sitkStaticAssert( ImageTypeToPixelIDValue<TImageType>::Result != (int)sitkUnknown,
                           "invalid pixel type" );
-        this->InternalInitialization( image.GetPointer() );
+        this->InternalInitialization<ImageTypeToPixelIDValue<TImageType>::Result, TImageType::ImageDimension>( image.GetPointer() );
       }
 
     template <typename TImageType>
@@ -58,7 +69,7 @@ namespace simple
       {
         sitkStaticAssert( ImageTypeToPixelIDValue<TImageType>::Result != (int)sitkUnknown,
                           "invalid pixel type" );
-        this->InternalInitialization( image );
+        this->InternalInitialization<ImageTypeToPixelIDValue<TImageType>::Result, TImageType::ImageDimension>( image );
       }
 
     /** Get access to internal ITK data object.
@@ -187,12 +198,34 @@ namespace simple
 
     /** Method called by certain constructors to convert ITK images
      * into simpleITK ones.
+     *
+     * This is the single method which needs to be explicitly
+     * instantiated to separate the internal ITK and Pimple image from
+     * the external SimpleITK interface. Template parameters have been
+     * choosen carefully to flexibly enable this.
      */
-    template <typename TImageType>
-    void InternalInitialization( TImageType * );
+    template <int VPixelIDValue, unsigned int VImageDimension>
+    void InternalInitialization( typename PixelIDToImageType<typename typelist::TypeAt<InstantiatedPixelIDTypeList,
+                                                                                       VPixelIDValue>::Result,
+                                                             VImageDimension>::ImageType *i );
 
   private:
 
+    /** Dispatched from the InternalInitialization method. The enable
+     * if idom is used here for method overloading. The second method
+     * is for non-instantiated image, which turn into a void pointer
+     * for the paramter. However, this second method should never be
+     * executed.
+     * @{
+     */
+    template<int VPixelIDValue, typename TImageType>
+    typename EnableIf<!std::tr1::is_same<TImageType, void>::value>::Type
+    ConditionalInternalInitialization( TImageType *i);
+
+    template<int VPixelIDValue, typename TImageType>
+    typename DisableIf<!std::tr1::is_same<TImageType, void>::value>::Type
+    ConditionalInternalInitialization( TImageType *) { assert( false ); }
+     /**@}*/
 
 // SWIG does not appear to process private classes correctly
 #ifndef SWIG
