@@ -1,4 +1,4 @@
-# ITK Common Dashboard Script
+# SimpleITK Common Dashboard Script
 #
 # This script contains basic dashboard driver code common to all
 # clients.
@@ -12,7 +12,7 @@
 #   set(CTEST_BUILD_NAME "Platform-Compiler")
 #   set(CTEST_BUILD_CONFIGURATION Debug)
 #   set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
-#   include(${CTEST_SCRIPT_DIRECTORY}/itk_common.cmake)
+#   include(${CTEST_SCRIPT_DIRECTORY}/simpleitk_common.cmake)
 #
 # Then run a scheduled task (cron job) with a command line such as
 #
@@ -27,8 +27,8 @@
 #   dashboard_model           = Nightly | Experimental | Continuous
 #   dashboard_loop            = Repeat until N seconds have elapsed
 #   dashboard_root_name       = Change name of "My Tests" directory
-#   dashboard_source_name     = Name of source directory (ITK)
-#   dashboard_binary_name     = Name of binary directory (ITK-build)
+#   dashboard_source_name     = Name of source directory (SimpleITK)
+#   dashboard_binary_name     = Name of binary directory (SimpleITK-build)
 #   dashboard_cache           = Initial CMakeCache.txt file content
 #   dashboard_do_coverage     = True to enable coverage (ex: gcov)
 #   dashboard_do_memcheck     = True to enable memcheck (ex: valgrind)
@@ -67,7 +67,7 @@
 #   set(ENV{FC}  /path/to/fc)   # Fortran compiler (optional)
 #   set(ENV{LD_LIBRARY_PATH} /path/to/vendor/lib) # (if necessary)
 
-cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
+cmake_minimum_required(VERSION 2.8.2 FATAL_ERROR)
 
 set(dashboard_user_home "$ENV{HOME}")
 
@@ -89,13 +89,13 @@ if(NOT "${dashboard_model}" MATCHES "^(Nightly|Experimental|Continuous)$")
   message(FATAL_ERROR "dashboard_model must be Nightly, Experimental, or Continuous")
 endif()
 
-# Default to a Debug build.
+# Default to a Release build.
 if(NOT DEFINED CTEST_CONFIGURATION_TYPE AND DEFINED CTEST_BUILD_CONFIGURATION)
   set(CTEST_CONFIGURATION_TYPE ${CTEST_BUILD_CONFIGURATION})
 endif()
 
 if(NOT DEFINED CTEST_CONFIGURATION_TYPE)
-  set(CTEST_CONFIGURATION_TYPE Debug)
+  set(CTEST_CONFIGURATION_TYPE Release)
 endif()
 
 # Choose CTest reporting mode.
@@ -120,14 +120,15 @@ endif()
 
 # Select Git source to use.
 if(NOT DEFINED dashboard_git_url)
-set(dashboard_git_url "git://itk.org/ITK.git")
+set(dashboard_git_url "git://itk.org/SimpleITK.git")
 endif()
 if(NOT DEFINED dashboard_git_branch)
-  if("${dashboard_model}" STREQUAL "Nightly")
-    set(dashboard_git_branch nightly-master)
-  else()
+# SimpleITK currently doesn't have a nightly-master
+#  if("${dashboard_model}" STREQUAL "Nightly")
+#    set(dashboard_git_branch nightly-master)
+#  else()
     set(dashboard_git_branch master)
-  endif()
+#  endif()
 endif()
 if(NOT DEFINED dashboard_git_crlf)
   if(UNIX)
@@ -151,7 +152,7 @@ if(NOT DEFINED CTEST_SOURCE_DIRECTORY)
   if(DEFINED dashboard_source_name)
     set(CTEST_SOURCE_DIRECTORY ${CTEST_DASHBOARD_ROOT}/${dashboard_source_name})
   else()
-    set(CTEST_SOURCE_DIRECTORY ${CTEST_DASHBOARD_ROOT}/ITK)
+    set(CTEST_SOURCE_DIRECTORY ${CTEST_DASHBOARD_ROOT}/SimpleITK)
   endif()
 endif()
 
@@ -169,11 +170,13 @@ if(EXISTS ${CTEST_SOURCE_DIRECTORY})
   if(NOT EXISTS "${CTEST_SOURCE_DIRECTORY}/.git")
     set(vcs_refresh "because it is not managed by git.")
   endif()
-  if(vcs_refresh AND "${CTEST_SOURCE_DIRECTORY}" MATCHES "/(ITK|Insight)[^/]*")
+  if(vcs_refresh AND "${CTEST_SOURCE_DIRECTORY}" MATCHES "/(SimpleITK)[^/]*")
     message("Deleting source tree\n  ${CTEST_SOURCE_DIRECTORY}\n${vcs_refresh}")
     file(REMOVE_RECURSE "${CTEST_SOURCE_DIRECTORY}")
   endif()
 endif()
+
+message( "dashboard_git_branch: ${dashboard_git_branch}")
 
 # Support initial checkout if necessary.
 if(NOT EXISTS "${CTEST_SOURCE_DIRECTORY}"
@@ -263,23 +266,6 @@ foreach(v
 endforeach(v)
 message("Dashboard script configuration:\n${vars}\n")
 
-# Git does not update submodules by default so they appear as local
-# modifications in the work tree.  CTest 2.8.2 does this automatically.
-# To support CTest 2.8.0 and 2.8.1 we wrap Git in a script.
-if(${CMAKE_VERSION} VERSION_LESS 2.8.2)
-  if(UNIX)
-    configure_file(${dashboard_self_dir}/gitmod.sh.in
-                   ${CTEST_DASHBOARD_ROOT}/gitmod.sh
-                   @ONLY)
-    set(CTEST_GIT_COMMAND ${CTEST_DASHBOARD_ROOT}/gitmod.sh)
-  else()
-    configure_file(${dashboard_self_dir}/gitmod.bat.in
-                   ${CTEST_DASHBOARD_ROOT}/gitmod.bat
-                   @ONLY)
-    set(CTEST_GIT_COMMAND ${CTEST_DASHBOARD_ROOT}/gitmod.bat)
-  endif()
-endif()
-
 # Avoid non-ascii characters in tool output.
 set(ENV{LC_ALL} C)
 
@@ -312,6 +298,7 @@ if(NOT "${CTEST_SOURCE_DIRECTORY}" STREQUAL "${CTEST_BINARY_DIRECTORY}"
   ctest_empty_binary_directory(${CTEST_BINARY_DIRECTORY})
 endif()
 
+# set loop time to 0 if not Continuous
 set(dashboard_continuous 0)
 if("${dashboard_model}" STREQUAL "Continuous")
   set(dashboard_continuous 1)
@@ -323,13 +310,6 @@ if(NOT DEFINED dashboard_loop)
     set(dashboard_loop 0)
   endif()
 endif()
-
-# CTest 2.6 crashes with message() after ctest_test.
-macro(safe_message)
-  if(NOT "${CMAKE_VERSION}" VERSION_LESS 2.8 OR NOT safe_message_skip)
-    message(${ARGN})
-  endif()
-endmacro()
 
 if(COMMAND dashboard_hook_init)
   dashboard_hook_init()
@@ -352,17 +332,17 @@ while(NOT dashboard_done)
   set(dashboard_fresh 0)
   if(NOT EXISTS "${CTEST_BINARY_DIRECTORY}/CMakeCache.txt")
     set(dashboard_fresh 1)
-    safe_message("Starting fresh build...")
+    message("Starting fresh build...")
     write_cache()
   endif()
 
   # Look for updates.
   ctest_update(RETURN_VALUE count)
   set(CTEST_CHECKOUT_COMMAND) # checkout on first iteration only
-  safe_message("Found ${count} changed files")
+  message("Found ${count} changed files")
 
   if(dashboard_fresh OR NOT dashboard_continuous OR count GREATER 0)
-    ctest_configure()
+    ctest_configure( SOURCE "${CTEST_SOURCE_DIRECTORY}/SuperBuild" )
     ctest_read_custom_files(${CTEST_BINARY_DIRECTORY})
 
     if(COMMAND dashboard_hook_build)
@@ -373,20 +353,19 @@ while(NOT dashboard_done)
     if(COMMAND dashboard_hook_test)
       dashboard_hook_test()
     endif()
-    ctest_test(${CTEST_TEST_ARGS})
-    set(safe_message_skip 1) # Block furhter messages
+    ctest_test( BUILD "${CTEST_BINARY_DIRECTORY}/SimpleITK-build" ${CTEST_TEST_ARGS})
 
     if(dashboard_do_coverage)
       if(COMMAND dashboard_hook_coverage)
         dashboard_hook_coverage()
       endif()
-      ctest_coverage()
+      ctest_coverage( BUILD "${CTEST_BINARY_DIRECTORY}/SimpleITK-build" )
     endif()
     if(dashboard_do_memcheck)
       if(COMMAND dashboard_hook_memcheck)
         dashboard_hook_memcheck()
       endif()
-      ctest_memcheck()
+      ctest_memcheck( BUILD "${CTEST_BINARY_DIRECTORY}/SimpleITK-build" )
     endif()
     if(COMMAND dashboard_hook_submit)
       dashboard_hook_submit()
