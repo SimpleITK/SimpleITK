@@ -5,7 +5,7 @@
 
 SimpleITK uses advanced C++ meta-programming to instantiate ITK's Images and Filters. Addtionally, we some headers which are included in the C99 and C++ TR1 extension. This places additional requirements on the compiler beyond what is require for ITK. In principle we require C++x03 with C99's "stdint.h" and TR1's "functional". If your compiler has those features it is likely able to be supported.
 
-The addtional requirement for a supported compiler is that it's on the nightly dashboard. With this regaurd th e list of supported compilers is on the <a href="http://www.cdash.org/CDash/index.php?project=Insight#ITKv4_SimpleITK">SimpleITK dashboard</a>. User contributions are welcomed to expand the supported compilers by contributing to the nightly dashboard.
+The additional requirement for a supported compiler is that it's on the nightly dashboard. With this regaurd the list of supported compilers is on the <a href="http://www.cdash.org/CDash/index.php?project=Insight#ITKv4_SimpleITK">SimpleITK dashboard</a>. User contributions are welcomed to expand the supported compilers by contributing to the nightly dashboard. 
 
 \subsection CommitedToSupport Committed to Support
 \li GCC 4.0
@@ -21,7 +21,6 @@ Visual Studio 2008 requires an additional download for TR1 support.
 
 
 \section C99 Do I need to download an optional package for C99?
-
 
 Visual Studio 2008 requires an additional download for C99 support.
 
