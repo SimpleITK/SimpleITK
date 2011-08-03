@@ -48,7 +48,6 @@ include(PreventInBuildInstalls)
 # directory, so that all libs/include etc ends up
 # in one common tree
 set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_BINARY_DIR} CACHE PATH "Where all the prerequisite libraries go" FORCE)
-set(${CMAKE_PROJECT_NAME}_BUILD_TESTING ON CACHE BOOL "Turn on Testing for SimpleITK")
 
 # Compute -G arg for configuring external projects with the same CMake generator:
 if(CMAKE_EXTRA_GENERATOR)
@@ -56,6 +55,13 @@ if(CMAKE_EXTRA_GENERATOR)
 else()
   set(gen "${CMAKE_GENERATOR}")
 endif()
+
+
+#-----------------------------------------------------------------------------
+# SimpleITK options
+#------------------------------------------------------------------------------
+option( ${CMAKE_PROJECT_NAME}_BUILD_TESTING "Turn on Testing for SimpleITK" ON )
+
 
 #-----------------------------------------------------------------------------
 # Default to build shared libraries off
@@ -140,7 +146,6 @@ set(ep_common_args
   -DCMAKE_C_FLAGS_DEBUG:STRING=${CMAKE_C_FLAGS_DEBUG}
   -DCMAKE_C_FLAGS:STRING=${CMAKE_C_FLAGS}
   -DBUILD_EXAMPLES:BOOL=OFF
-  -DBUILD_TESTING:BOOL=${BUILD_TESTING}
   -DCMAKE_GENERATOR:STRING=${CMAKE_GENERATOR}
   -DCMAKE_EXTRA_GENERATOR:STRING=${CMAKE_EXTRA_GENERATOR}
   -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
@@ -148,7 +153,6 @@ set(ep_common_args
   -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY:PATH=${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}
   -DCMAKE_RUNTIME_OUTPUT_DIRECTORY:PATH=${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
   -DCMAKE_BUNDLE_OUTPUT_DIRECTORY:PATH=${CMAKE_BUNDLE_OUTPUT_DIRECTORY}
-  -DCTEST_NEW_FORMAT:BOOL=ON
   -DMEMORYCHECK_COMMAND_OPTIONS:STRING=${MEMORYCHECK_COMMAND_OPTIONS}
   -DMEMORYCHECK_COMMAND:PATH=${MEMORYCHECK_COMMAND}
   -DCMAKE_SHARED_LINKER_FLAGS:STRING=${CMAKE_SHARED_LINKER_FLAGS}
@@ -176,24 +180,17 @@ endif()
 #------------------------------------------------------------------------------
 # ITK
 #------------------------------------------------------------------------------
-option ( USE_SYSTEM_ITKv4 "Use a pre-compiled version of ITKv4 previously configured for your system" OFF )
-mark_as_advanced(USE_SYSTEM_ITKv4)
-if(USE_SYSTEM_ITKv4)
-   find_package(ITK REQUIRED)
-   if(ITK_FOUND)
-     include(${ITK_USE_FILE})
-   endif()
-else()
-  set(ITK_WRAPPING OFF CACHE BOOL "Turn OFF wrapping ITK with WrapITK")
-  if(ITK_WRAPPING)
-    list(APPEND Insight_DEPENDENCIES Swig)
-  endif()
-  if(ITK_USE_FFTW)
-    list(APPEND Insight_DEPENDENCIES fftw)
-  endif()
-  include(External_ITKv4)
-  list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES ITK)
+
+set(ITK_WRAPPING OFF CACHE BOOL "Turn OFF wrapping ITK with WrapITK")
+if(ITK_WRAPPING)
+  list(APPEND ITK_DEPENDENCIES Swig)
 endif()
+if(ITK_USE_FFTW)
+  list(APPEND ITK_DEPENDENCIES fftw)
+endif()
+include(External_ITKv4)
+list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES ITK)
+
 
 #------------------------------------------------------------------------------
 # List of external projects
@@ -214,6 +211,23 @@ file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/ExternalProjectDependencies.txt "${ep_dep
 # to actually build Simple ITK
 #-----------------------------------------------------------------------------
 message(STATUS "${CMAKE_PROJECT_NAME}_DEPENDENCIES ${${CMAKE_PROJECT_NAME}_DEPENDENCIES}")
+
+#
+# Use CMake file which present options for wrapped languages, and finds languages as needed
+#
+include(SITKLanguageOptions)
+
+foreach( var IN LISTS SITK_LANGUAGES_VARS )
+  
+  if( ${var} ) # if variable has been set
+    get_property( type CACHE ${var} PROPERTY TYPE )
+    list( APPEND ep_languages_args "-D${var}:${type}=${${var}}" )
+  endif()
+endforeach()
+
+message( STATUS "EP: ${ep_languages_args}" )
+
+
 set(proj SimpleITK)
 ExternalProject_Add(${proj}
   DOWNLOAD_COMMAND ""
@@ -222,11 +236,20 @@ ExternalProject_Add(${proj}
   CMAKE_GENERATOR ${gen}
   CMAKE_ARGS
     ${ep_common_args}
+    ${ep_languages_args}
     # ITK
     -DITK_DIR:PATH=${ITK_DIR}
     # Swig
     -DSWIG_DIR:PATH=${SWIG_DIR}
     -DSWIG_EXECUTABLE:PATH=${SWIG_EXECUTABLE}
+    -DBUILD_TESTING:BOOL=${CMAKE_PROJECT_NAME}_BUILD_TESTING
+    -DWRAP_LUA:BOOL=${WRAP_LUA}
+    -DWRAP_PYTHON:BOOL=${WRAP_PYTHON}
+    -DWRAP_RUBY:BOOL=${WRAP_RUBY}
+    -DWRAP_JAVA:BOOL=${WRAP_JAVA}
+    -DWRAP_TCL:BOOL=${WRAP_TCL}
+    -DWRAP_CSHARP:BOOL=${WRAP_CSHARP}
+    -DWRAP_R:BOOL=${WRAP_R}
   INSTALL_COMMAND ""
   DEPENDS ${${CMAKE_PROJECT_NAME}_DEPENDENCIES}
 )
