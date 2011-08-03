@@ -25,6 +25,93 @@ $ git commit
 $ git push gerrit HEAD:refs/for/master/$MyTopic$
 \endcode
 
+\subsection Dashboards Setup a Dashboard
+
+The SimpleITK Dashboard is a central location where systems report on
+continuous or nightly compilation and testing results. It is a
+invaluable tool in the extreme programing or agile development
+process. The <a
+href="http://www.cdash.org/CDash/index.php?project=Insight#ITKv4_SimpleITK">SimpleITK
+dashboard</a> is locate along side ITK's dashboard.
+
+The following is a brief overview on how to contribute a nightly
+build to SimpleITK. Additional relevant information can be found on
+the <a
+href="http://www.cmake.org/cmake/help/ctest-2-8-docs.html">CTest</a>
+documentation page along with simular information on how to setup a
+dashboard for <a
+href="http://www.vtk.org/Wiki/ITK_Policy_and_Procedure_for_Adding_Dashboards"
+>ITK</a>.
+
+SimpleITK uses CTest to run the nightly dashboards. There are 3 things
+which are needed to setup a nightly dashboard. The first is the common
+CTest scripts. Second, is a custom script to configure SimpleITK for
+your system, and third is the configuration of a system tool to run
+the CTest script each night.
+
+- The common script(s) are contained in the dashboards
+  branch. Essentially, this branch contains the
+  "simpleitk_common.cmake" file which will be included in the next
+  step. It can be retrieved as follows:
+\code
+$ mkdir -p ~/Dashboards/SimpleITKScripts
+$ cd ~/Dashboards/SimpleITKScripts
+$ git init
+$ git remote add -t dashboard origin git://itk.org/SimpleITK.git
+$ git pull origin
+\endcode
+
+- Next, we need to create a custom CTest script for our system. More
+  information on the varaible are describe in the header of
+  "simpleitk_common.cmake". Here is a sample which can be place in
+  "~/Dashboards/SimpleITKScripts/simpleitk_nightly.cmake":
+\code
+#
+# Maintainer: blowekamp@mail.nih.gov
+#
+
+# Set names
+set( CTEST_SITE "mini5.nlm" )
+set( CTEST_BUILD_NAME "MacOSX-SimpleITK-super-next" )
+
+#  Set how and where to build
+set( CTEST_BUILD_CONFIGURATION "Release" )
+set( CTEST_CMAKE_GENERATOR "Unix Makefiles" )
+set ( CTEST_DASHBOARD_ROOT "$ENV{PLAYPEN}/${CTEST_BUILD_NAME}" )
+
+set( dashboard_model Nightly )
+
+set ( dashboard_git_branch "next" )
+
+# Enable usage of multi-processors
+set ( CTEST_BUILD_FLAGS -j2 )
+set ( CTEST_TEST_ARGS PARALLEL_LEVEL 2 )
+
+
+# Set initial values for the CMakeCache
+set ( dashboard_cache "
+CMAKE_CXX_COMPILER:STRING=$ENV{HOME}/local/bin/ccache-c++
+CMAKE_CXX_FLAGS:STRING=-Wall
+CMAKE_C_COMPILER:STRING=$ENV{HOME}/local/bin/ccache-cc
+CMAKE_C_FLAGS:STRING=-Wall
+")
+
+# Include common ctest script
+include(${CTEST_SCRIPT_DIRECTORY}/simpleitk_common.cmake)
+\endcode
+
+- Lastly, the following needs to be executed each night:
+\code
+$ ctest -S ~/Dashboards/SimpleITKScripts/simpleitk_nightly.cmake
+\endcode
+
+Depending on your system the tool needed is different. For Unix and
+Mac OSX operating system it's the cron daemon, while on windows it is
+Schedualer. More information can be found on the general <a
+href="http://www.vtk.org/Wiki/CMake_Scripting_Of_CTest#Setting_Up_Cron.2FScheduler">CMake
+Scripting Of CTest</a> wiki page.
+
+
 \section TandT Tips and Tricks
 
 \subsection JSONTips Working with JSON file.
