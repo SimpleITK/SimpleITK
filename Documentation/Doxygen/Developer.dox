@@ -65,7 +65,6 @@ $ git pull origin
   information on the varaible are describe in the header of
   "simpleitk_common.cmake". Here is a sample which can be place in
   "~/Dashboards/SimpleITKScripts/simpleitk_nightly.cmake":
-
 \code
 #
 # Maintainer: blowekamp@mail.nih.gov
@@ -102,7 +101,6 @@ include(${CTEST_SCRIPT_DIRECTORY}/simpleitk_common.cmake)
 \endcode
 
 - Lastly, the following needs to be executed each night:
-
 \code
 $ ctest -S ~/Dashboards/SimpleITKScripts/simpleitk_nightly.cmake
 \endcode
@@ -111,7 +109,7 @@ Depending on your system the tool needed is different. For Unix and
 Mac OSX operating system it's the cron daemon, while on windows it is
 Schedualer. More information can be found on the general <a
 href="http://www.vtk.org/Wiki/CMake_Scripting_Of_CTest#Setting_Up_Cron.2FScheduler">CMake
-Scripting Of CTest<\a> wiki page.
+Scripting Of CTest</a> wiki page.
 
 
 \section TandT Tips and Tricks
