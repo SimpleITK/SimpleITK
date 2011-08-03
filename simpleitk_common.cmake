@@ -176,8 +176,6 @@ if(EXISTS ${CTEST_SOURCE_DIRECTORY})
   endif()
 endif()
 
-message( "dashboard_git_branch: ${dashboard_git_branch}")
-
 # Support initial checkout if necessary.
 if(NOT EXISTS "${CTEST_SOURCE_DIRECTORY}"
     AND NOT DEFINED CTEST_CHECKOUT_COMMAND)
