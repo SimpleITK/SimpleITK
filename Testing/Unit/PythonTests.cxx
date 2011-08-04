@@ -53,6 +53,25 @@ TEST_F(Python,ImageTest) {
 
 }
 
+TEST_F(Python,IOTest) {
+  // Run the simple gaussian command line program
+  std::string Script = dataFinder.GetSourceDirectory() + "/Testing/Unit/IOTest.py";
+  std::vector<std::string> CommandLine;
+
+  CommandLine.push_back ( dataFinder.GetPythonExecutable() );
+  CommandLine.push_back ( Script );
+  CommandLine.push_back ( dataFinder.GetOutputDirectory() );
+
+  // Set our python path
+  std::string path = dataFinder.GetBuildDirectory() + "/Wrapping"
+    + GetPathSeparator() + dataFinder.GetRuntimeDirectory() + GetPathSeparator() + dataFinder.GetLibraryDirectory();
+  SetEnvironment ( "PYTHONPATH", path );
+
+  // Run it!
+  EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "Failing return value.";
+
+}
+
 
 TEST_F(Python,N4BiasFieldCorrection) {
 
