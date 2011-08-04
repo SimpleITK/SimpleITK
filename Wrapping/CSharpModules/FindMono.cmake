@@ -100,6 +100,7 @@ else( UNIX )
     "/usr/bin/"
     "/usr/local/bin/"
     "/usr/lib/mono/2.0"
+    "/opt/novell/mono/bin"
   )
   find_program(
     csharp_mono_compiler # variable is added to the cache, we removed it below
@@ -123,7 +124,7 @@ else( UNIX )
       set( CSHARP_MONO_INTERPRETER_${CSHARP_MONO_VERSION} ${csharp_mono_interpreter} CACHE STRING "C# Mono interpreter ${csharp_mono_version_temp}" FORCE )
       mark_as_advanced( CSHARP_MONO_INTERPRETER_${CSHARP_MONO_VERSION} )
     endif ( EXISTS ${csharp_mono_interpreter} )
-    unset( csharp_mono_interpreter CACHE ) 
+    unset( csharp_mono_interpreter CACHE )
 
     # We found Mono compiler
     set( CSHARP_MONO_VERSION ${csharp_mono_version_temp} CACHE STRING "C# Mono compiler version" )
