@@ -19,8 +19,8 @@
   try {
     $action
   } catch( itk::ExceptionObject &ex ) {
-    char error_msg[256];
-    sprintf( error_msg, "Exception thrown in SimpleITK $symname: %s", ex.what() );
+    char error_msg[1024];
+    snprintf( error_msg, 1024, "Exception thrown in SimpleITK $symname: %s", ex.what() );
     SWIG_exception( SWIG_RuntimeError, error_msg );
   } catch( ... ) {
     SWIG_exception( SWIG_UnknownError, "Unknown exception thrown in SimpleITK $symname" );
