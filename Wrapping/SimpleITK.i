@@ -20,7 +20,13 @@
     $action
   } catch( itk::ExceptionObject &ex ) {
     char error_msg[1024];
+// TODO this should be replaces with some try compile stuff
+#ifdef _MSC_VER
+    _snprintf_s( error_msg, 1024, 1024, "Exception thrown in SimpleITK $symname: %s", ex.what() );
+#else
     snprintf( error_msg, 1024, "Exception thrown in SimpleITK $symname: %s", ex.what() );
+#endif
+
     SWIG_exception( SWIG_RuntimeError, error_msg );
   } catch( ... ) {
     SWIG_exception( SWIG_UnknownError, "Unknown exception thrown in SimpleITK $symname" );
