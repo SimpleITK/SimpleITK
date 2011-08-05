@@ -198,7 +198,7 @@ TEST_F(Lua,${name}) {
       OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
       end)
     CommandLine.push_back ( outputFileName );
-    RunExecutable ( CommandLine, true );
+    EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::HashImageFilter hasher;
@@ -261,7 +261,7 @@ TEST_F(Python,${name}) {
       OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
       end)
     CommandLine.push_back ( outputFileName );
-    RunExecutable ( CommandLine, true );
+    EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::HashImageFilter hasher;
@@ -319,7 +319,7 @@ TEST_F(Tcl,${name}) {
       OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
       end)
     CommandLine.push_back ( outputFileName );
-    RunExecutable ( CommandLine, true );
+    EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::HashImageFilter hasher;
@@ -377,7 +377,7 @@ TEST_F(R,${name}) {
       OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
       end)
     CommandLine.push_back ( outputFileName );
-    RunExecutable ( CommandLine, true );
+    EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::HashImageFilter hasher;
@@ -443,7 +443,7 @@ TEST_F(Java,${name}) {
       OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
       end)
     CommandLine.push_back ( outputFileName );
-    RunExecutable ( CommandLine, true );
+    EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::HashImageFilter hasher;
@@ -504,7 +504,7 @@ TEST_F(Ruby,${name}) {
       OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
       end)
     CommandLine.push_back ( outputFileName );
-    RunExecutable ( CommandLine, true );
+    EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::HashImageFilter hasher;
@@ -558,10 +558,12 @@ TEST_F(CSharp,${name}) {
     /* ${description} */
     std::vector<std::string> CommandLine;
     std::string outputFileName = dataFinder.GetOutputFile ( "CSharp-${name}-${tag}.nrrd" );
+
     // Make sure the output is deleted
     if ( itksys::SystemTools::FileExists ( outputFileName.c_str() ) ) {
       ASSERT_TRUE ( itksys::SystemTools::RemoveFile ( outputFileName.c_str() ) ) << "Deleting file " << outputFileName;
     }
+
     if ( dataFinder.GetCSharpInterpreter().length() > 0 ) {
       CommandLine.push_back ( dataFinder.GetCSharpInterpreter() );
     }
@@ -573,7 +575,7 @@ TEST_F(CSharp,${name}) {
       OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
       end)
     CommandLine.push_back ( outputFileName );
-    RunExecutable ( CommandLine, true );
+    EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::HashImageFilter hasher;

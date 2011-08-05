@@ -55,10 +55,10 @@ set(common_flags_to_test
 -Wstrict-null-sentinel
 )
 
-set(cc_flags_to_test ${common_flags_to_test})
-
-test_cc_flags(C_RELEASE_DESIRED_FLAGS cc_flags_to_test)
-test_cc_flags(C_DEBUG_DESIRED_FLAGS cc_flags_to_test)
+# Detection does not appear to work correctly for C
+#set(cc_flags_to_test ${common_flags_to_test})
+#test_cc_flags(C_RELEASE_DESIRED_FLAGS cc_flags_to_test)
+#test_cc_flags(C_DEBUG_DESIRED_FLAGS cc_flags_to_test)
 
 set(cxx_flags_to_test ${common_flags_to_test} -Wno-invalid-offsetof )
 test_cxx_flags(CXX_RELEASE_DESIRED_FLAGS cxx_flags_to_test)
