@@ -275,3 +275,36 @@ endmacro()
 
 # Here we add all the tests
 add_google_tests(SimpleITKUnitTestDriver ${TestSource})
+
+
+set( ITK_TEST_DRIVER  "itkTestDriver" )
+
+if ( WRAP_PYTHON )
+  macro(add_python_test name)
+    set(command "${PYTHON_EXECUTABLE}")
+
+    # add extra command which may be needed on some systems
+    if(CMAKE_OSX_ARCHITECTURES)
+      list(GET CMAKE_OSX_ARCHITECTURES 0 test_arch)
+      set(command arch -${test_arch} ${command})
+    endif()
+
+    add_test(NAME ${name}
+      COMMAND "${ITK_TEST_DRIVER}"
+      --add-before-env PYTHONPATH "${SIMPLEITK_BINARY_DIR}/$<CONFIGURATION>/Wrapping"
+      --add-before-env PYTHONPATH "${SIMPLEITK_BINARY_DIR}/Wrapping"
+      --add-before-env PYTHONPATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/$<CONFIGURATION>"
+      --add-before-env PYTHONPATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}"
+      ${command}
+      ${ARGN}
+      )
+  endmacro()
+
+  add_python_test( Python.SimpleGaussian
+    "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussian.py"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
+    "2.0"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Python.SimpleGaussian2.nrrd" )
+
+end( WRAP_PYTHON )
+
