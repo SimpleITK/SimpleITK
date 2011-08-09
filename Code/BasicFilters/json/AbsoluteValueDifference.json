@@ -1,0 +1,26 @@
+{
+  "name" : "AbsoluteValueDifference",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 2,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [ ],
+  "tests" : [
+  {  
+    "tag" :  "default",
+    "description" : "checker board with default parameters",
+    "inputA" : "Input/BlackDots.png",
+    "inputB" : "Input/WhiteDots.png",
+    "settings" : [ ],
+    "md5hash" : "ecb99e6ffea7be1e5419350f725da86b"
+  }, { 
+/* These two hashes should be the same */
+    "tag" :  "default",
+    "description" : "checker board with default parameters",
+    "inputA" : "Input/WhiteDots.png",
+    "inputB" : "Input/BlackDots.png",
+    "settings" : [ ],
+    "md5hash" : "ecb99e6ffea7be1e5419350f725da86b"
+  } ]
+}
