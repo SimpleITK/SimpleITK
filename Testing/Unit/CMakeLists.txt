@@ -289,7 +289,7 @@ if ( WRAP_PYTHON )
       set(command arch -${test_arch} ${command})
     endif()
 
-    add_test(NAME ${name}
+    add_test(NAME Python.${name}
       COMMAND "${ITK_TEST_DRIVER}"
       --add-before-env PYTHONPATH "${SIMPLEITK_BINARY_DIR}/$<CONFIGURATION>/Wrapping"
       --add-before-env PYTHONPATH "${SIMPLEITK_BINARY_DIR}/Wrapping"
@@ -300,11 +300,37 @@ if ( WRAP_PYTHON )
       )
   endmacro()
 
-  add_python_test( Python.SimpleGaussian
+  add_python_test( Example.SimpleGaussian
     "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussian.py"
     "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
     "2.0"
-    "${TEST_HARNESS_TEMP_DIRECTORY}/Python.SimpleGaussian2.nrrd" )
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Python.SimpleGaussian.nrrd" )
 
-end( WRAP_PYTHON )
+  add_python_test( Example.SimpleGaussianProcedural
+    "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussianProcedural.py"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
+    "2.0"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Python.SimpleGaussian.nrrd" )
+
+    add_python_test( Example.ImageCreateAndSet
+    "${SimpleITK_SOURCE_DIR}/Examples/ImageCreateAndSet.py" )
+
+  add_python_test( Example.CannyEdge
+    "${SimpleITK_SOURCE_DIR}/Examples/CannyEdge.py"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/OAS1_0001_MR1_mpr-1_anon.nrrd" )
+
+  add_python_test( Example.ExtractSlice
+    "${SimpleITK_SOURCE_DIR}/Examples/ExtractSlice.py"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/OAS1_0001_MR1_mpr-1_anon.nrrd"
+    "30"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Python.ExtractSlice.nrrd")
+
+  add_python_test( Example.BoarderSegmentation
+    "${SimpleITK_SOURCE_DIR}/Examples/BoarderSegmentation.py"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/OAS1_0001_MR1_mpr-1_anon.nrrd"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Python.BoarderSegmentation.nrrd"
+    "5000"
+    "150" )
+
+endif( WRAP_PYTHON )
 
