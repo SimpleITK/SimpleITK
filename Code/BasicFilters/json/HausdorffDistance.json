@@ -1,0 +1,43 @@
+{
+  "name" : "HausdorffDistance",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 2,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "pixel_types2" : "BasicPixelIDTypeList",
+  "filter_type" : "itk::HausdorffDistanceImageFilter<InputImageType, InputImageType2 >"
+  "members" : [],
+  "measurements" : [ {
+    "name" : "HausdorffDistance",
+    "type" : "double",
+    "default" : 0.0,
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
+  }, {
+    "name" : "AverageHausdorffDistance",
+    "type" : "double",
+    "default" : 0.0,
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
+  } ],
+  "tests" : [ {
+    "tag" : "2d",
+    "description" : "2d",
+    "inputA" : "Input/SmallWhiteCircle.nrrd",
+    "inputB" : "Input/LargeWhiteCircle.nrrd",
+    "settings" : [ ],
+    "measurements" : [
+      {
+        "name" : "AverageHausdorffDistance",
+        "value" : 10.25,
+        "tolerance" : 0.1 },
+      {
+        "name" : "HausdorffDistance",
+        "value" : 49.04,
+        "tolerance" : 0.1
+      } ]
+  } ],
+  "briefdescription" : "",
+  "detaileddescription" : ""
+}

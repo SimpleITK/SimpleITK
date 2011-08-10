@@ -3,3 +3,7 @@ $(foreach members
       ${type} m_${name};
 
 )
+$(foreach measurements
+      /* ${doc} */
+      ${type} m_${name};
+)

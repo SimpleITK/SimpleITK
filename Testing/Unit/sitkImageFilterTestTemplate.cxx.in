@@ -168,6 +168,9 @@ end)
  IMAGECOMPAREWITHTOLERANCE ( output, "${tag}", ${tolerance} );
   ]]
   end)
+  $(foreach measurements
+    EXPECT_NEAR(${value}, filter.Get${name}(), ${tolerance} );
+    )
   )
 }
 
