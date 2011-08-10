@@ -342,6 +342,7 @@ while(NOT dashboard_done)
   if(dashboard_fresh OR NOT dashboard_continuous OR count GREATER 0)
     ctest_configure( SOURCE "${CTEST_SOURCE_DIRECTORY}/SuperBuild" )
     ctest_read_custom_files(${CTEST_BINARY_DIRECTORY})
+    set(CTEST_PROJECT_NAME "SuperBuildSimpleITK")
 
     if(COMMAND dashboard_hook_build)
       dashboard_hook_build()
