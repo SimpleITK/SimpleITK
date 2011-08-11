@@ -8,434 +8,49 @@
 
 #include "itkImageDuplicator.h"
 
+#include "sitkPimpleImageBase.hxx"
+
 
 namespace itk
 {
   namespace simple
   {
 
-  /** \class PimpleImageBase
-   * \brief Private implementation idiom image base class
-   *
-   * We utilize the private implementation ( or PImple)
-   * programming idiom to modify the behavior of the simple image
-   * class based on the different image types.
-   *
-   * This class is desinged to utilize the trivial copy,
-   * and assgnement operators
-   */
-  class PimpleImageBase
+  // this is a little specialization just to get the
+  // InternalInitialization method's PixelIDTpImageType lookup to get
+  // a valid void type, so it'll dispatch to the a specialized
+  // method. All this is just to instantiate something that will never
+  // be actually used.
+  template <unsigned int VImageDimension>
+  struct PixelIDToImageType< typelist::NullType , VImageDimension >
   {
-  public:
-    virtual ~PimpleImageBase( void ) { };
-
-    virtual PixelIDValueType GetPixelIDValue(void) const = 0;
-    virtual unsigned int GetDimension( void ) const  = 0;
-
-    virtual PimpleImageBase *ShallowCopy(void) const = 0;
-    virtual PimpleImageBase *DeepCopy(void) const = 0;
-    virtual itk::DataObject* GetDataBase( void ) = 0;
-    virtual const itk::DataObject* GetDataBase( void ) const = 0;
-
-    virtual unsigned int GetWidth( void ) const { return this->GetSize( 0 ); }
-    virtual unsigned int GetHeight( void ) const { return this->GetSize( 1 ); }
-    virtual unsigned int GetDepth( void ) const { return this->GetSize( 2 ); }
-
-    virtual std::vector< unsigned int > GetSize( void ) const = 0;
-    virtual unsigned int GetSize( unsigned int dimension ) const = 0;
-
-    virtual std::vector<double> GetOrigin( void ) const = 0;
-    virtual void SetOrigin( const std::vector<double> &orgn ) = 0;
-    virtual std::vector<double> GetSpacing( void ) const = 0;
-    virtual void SetSpacing( const std::vector<double> &spc ) = 0;
-
-    virtual std::vector<int64_t> TransformPhysicalPointToIndex( const std::vector<double> &pt) const = 0;
-    virtual std::vector<double> TransformIndexToPhysicalPoint( const std::vector<int64_t> &idx) const = 0;
-
-    virtual std::string ToString() const = 0;
-
-
-    virtual int GetReferenceCountOfImage() const = 0;
-
-    virtual uint8_t  GetPixelAsUInt8( const std::vector<uint32_t> &idx) const = 0;
-    virtual int16_t  GetPixelAsInt16( const std::vector<uint32_t> &idx ) const = 0;
-    virtual uint16_t GetPixelAsUInt16( const std::vector<uint32_t> &idx ) const = 0;
-    virtual int32_t  GetPixelAsInt32( const std::vector<uint32_t> &idx ) const = 0;
-    virtual uint32_t GetPixelAsUInt32( const std::vector<uint32_t> &idx ) const = 0;
-    virtual float    GetPixelAsFloat( const std::vector<uint32_t> &idx ) const = 0;
-    virtual double   GetPixelAsDouble(  const std::vector<uint32_t> &idx ) const = 0;
-
-    virtual void SetPixelAsUInt8( const std::vector<uint32_t> &idx, uint8_t v ) = 0;
-    virtual void SetPixelAsInt16( const std::vector<uint32_t> &idx, int16_t v ) = 0;
-    virtual void SetPixelAsUInt16( const std::vector<uint32_t> &idx, uint16_t v ) = 0;
-    virtual void SetPixelAsInt32( const std::vector<uint32_t> &idx, int32_t v ) = 0;
-    virtual void SetPixelAsUInt32( const std::vector<uint32_t> &idx, uint32_t v ) = 0;
-    virtual void SetPixelAsFloat( const std::vector<uint32_t> &idx, float v ) = 0;
-    virtual void SetPixelAsDouble( const std::vector<uint32_t> &idx, double v ) = 0;
+    typedef void ImageType;
   };
 
+  // This method is explicitly instantiated, and in-turn implicitly
+  // instantates the PipleImage for all used image types. This method
+  // just dispatces to nother method, to aid in instantiating only the
+  // images requested.
+  template <int VPixelIDValue, unsigned int VImageDimension>
 
-///
-/// Private name space for a concrete implementation of pimple image
-/// for a specific image types with dimensions and pixel types
-///
-  namespace
+  void Image::InternalInitialization( typename PixelIDToImageType<typename typelist::TypeAt<InstantiatedPixelIDTypeList,
+                                                                                            VPixelIDValue>::Result,
+                                                                  VImageDimension>::ImageType *i )
   {
-
-  template <class TImageType>
-  class PimpleImage
-    : public PimpleImageBase
-  {
-  public:
-    typedef PimpleImage                   Self;
-    typedef TImageType                    ImageType;
-    typedef typename ImageType::Pointer   ImagePointer;
-    typedef typename ImageType::IndexType IndexType;
-    typedef typename ImageType::PixelType PixelType;
-
-    PimpleImage ( ImageType* image )
-      : m_Image( image )
-      {
-        sitkStaticAssert( ImageType::ImageDimension == 3 || ImageType::ImageDimension == 2,
-                          "Image Dimension out of range" );
-        sitkStaticAssert( ImageTypeToPixelIDValue<ImageType>::Result != (int)sitkUnknown,
-                          "invalid pixel type" );
-
-        if ( image == NULL )
-          {
-          sitkExceptionMacro( << "unable to initialize an image with NULL" );
-          }
-      }
-
-    virtual PimpleImageBase *ShallowCopy( void ) const { return new Self(this->m_Image.GetPointer()); }
-    virtual PimpleImageBase *DeepCopy( void ) const { return this->DeepCopy<TImageType>(); }
-
-    template <typename UImageType>
-    typename DisableIf<IsLabel<UImageType>::Value, PimpleImageBase*>::Type
-    DeepCopy( void ) const
-      {
-        typedef itk::ImageDuplicator< ImageType > ImageDuplicatorType;
-        typename ImageDuplicatorType::Pointer dup = ImageDuplicatorType::New();
-
-        dup->SetInputImage( this->m_Image );
-        dup->Update();
-        ImagePointer output = dup->GetOutput();
-
-        return new Self( output.GetPointer() );
-      }
-    template <typename UImageType>
-    typename EnableIf<IsLabel<UImageType>::Value, PimpleImageBase*>::Type
-    DeepCopy( void ) const
-      {
-        sitkExceptionMacro( "This method is not implemented yet" );
-        return new Self( this->m_Image.GetPointer() );
-      }
-
-    virtual itk::DataObject* GetDataBase( void ) { return this->m_Image.GetPointer(); }
-    virtual const itk::DataObject* GetDataBase( void ) const { return this->m_Image.GetPointer(); }
-
-
-    PixelIDValueType GetPixelIDValue(void) const throw()
-      {
-        // The constructor ensures that we have a valid image
-        // this maps the Image's pixel type to the array index
-        return ImageTypeToPixelIDValue< ImageType>::Result;
-      }
-
-    virtual unsigned int GetDimension( void ) const
-      {
-        return ImageType::ImageDimension;
-      }
-
-
-    // Get Origin
-    virtual std::vector<double> GetOrigin( void ) const
-      {
-      typename ImageType::PointType origin = this->m_Image->GetOrigin();
-      std::vector<double> orgn( ImageType::ImageDimension );
-
-      std::copy( origin.Begin(), origin.End(), orgn.begin() );
-
-      return orgn;
-      }
-
-    // Set Origin
-    virtual void SetOrigin( const std::vector<double> & orgn )
-      {
-      if (orgn.size() != ImageType::ImageDimension)
-        {
-        sitkExceptionMacro("Image::SetOrigin -> vector dimension mismatch");
-        }
-      typename ImageType::PointType origin;
-
-      std::copy( orgn.begin(), orgn.end(), origin.Begin() );
-
-      this->m_Image->SetOrigin( origin );
-      }
-
-    // Get Spacing
-    virtual std::vector<double> GetSpacing( void ) const
-      {
-      typename ImageType::SpacingType spacing = this->m_Image->GetSpacing();
-      std::vector<double> spc( ImageType::ImageDimension );
-
-      std::copy( spacing.Begin(), spacing.End(), spc.begin() );
-
-      return spc;
-      }
-
-    // Set Spacing
-    virtual void SetSpacing( const std::vector<double> &spc )
-      {
-      if (spc.size() != ImageType::ImageDimension)
-        {
-        sitkExceptionMacro("Image::SetSpacing -> vector dimension mismatch");
-        }
-      typename ImageType::SpacingType spacing;
-
-      std::copy( spc.begin(), spc.end(), spacing.Begin() );
-
-      this->m_Image->SetSpacing( spacing );
-      }
-
-    // Physical Point to Index
-    virtual std::vector<int64_t> TransformPhysicalPointToIndex( const std::vector<double> &pt ) const
-      {
-        if (pt.size() != ImageType::ImageDimension)
-        {
-        sitkExceptionMacro("vector dimension mismatch");
-        }
-
-      typename ImageType::PointType point;
-      std::copy( pt.begin(), pt.end(), point.Begin() );
-
-      typename ImageType::IndexType index;
-      this->m_Image->TransformPhysicalPointToIndex(point, index);
-      std::vector<int64_t> idx( ImageType::ImageDimension );
-
-      for( unsigned int i = 0; i < ImageType::ImageDimension; ++i )
-        {
-        idx[i] = index[i];
-        }
-
-      return idx;
-      }
-
-    // Index to Physical Point
-    virtual std::vector<double> TransformIndexToPhysicalPoint( const std::vector<int64_t> &idx ) const
-      {
-        if (idx.size() != ImageType::ImageDimension)
-        {
-        sitkExceptionMacro("vector dimension mismatch");
-        }
-      typename ImageType::IndexType index;
-
-      for( unsigned int i = 0; i < ImageType::ImageDimension; ++i )
-        {
-        index[i] = idx[i];
-        }
-
-      typename ImageType::PointType point;
-      this->m_Image->TransformIndexToPhysicalPoint(index, point);
-      std::vector<double> pt( ImageType::ImageDimension );
-
-      std::copy( point.Begin(), point.End(), pt.begin() );
-
-      return pt;
-      }
-
-    virtual unsigned int GetSize( unsigned int dimension ) const
-      {
-        if ( dimension > ImageType::ImageDimension - 1 )
-          {
-          return 0;
-          }
-
-        typename ImageType::RegionType largestRegion = this->m_Image->GetLargestPossibleRegion();
-        return largestRegion.GetSize(dimension);
-      }
-
-    virtual std::vector<unsigned int> GetSize( void ) const
-      {
-        typename ImageType::RegionType largestRegion = this->m_Image->GetLargestPossibleRegion();
-        std::vector<unsigned int> size( ImageType::ImageDimension );
-
-        for ( unsigned int i = 0; i < ImageType::ImageDimension; ++i )
-          {
-          size[i] = largestRegion.GetSize(i);
-          }
-        return size;
-      }
-
-    std::string ToString( void ) const
-      {
-        std::ostringstream out;
-        this->m_Image->Print ( out );
-        return out.str();
-      }
-
-    virtual int GetReferenceCountOfImage() const
-      {
-        return this->m_Image->GetReferenceCount();
-      }
-
-
-    virtual uint8_t  GetPixelAsUInt8( const std::vector<uint32_t> &idx) const
-      {
-        return this->InternalGetPixel< BasicPixelID<uint8_t> >( idx );
-      }
-    virtual int16_t  GetPixelAsInt16( const std::vector<uint32_t> &idx ) const
-      {
-        return this->InternalGetPixel< BasicPixelID<int16_t> >( idx );
-      }
-    virtual uint16_t GetPixelAsUInt16( const std::vector<uint32_t> &idx ) const
-      {
-        return this->InternalGetPixel< BasicPixelID<uint16_t> >( idx );
-      }
-    virtual int32_t  GetPixelAsInt32( const std::vector<uint32_t> &idx ) const
-      {
-        return this->InternalGetPixel< BasicPixelID<int32_t> >( idx );
-      }
-    virtual uint32_t GetPixelAsUInt32( const std::vector<uint32_t> &idx ) const
-      {
-        return this->InternalGetPixel< BasicPixelID<uint32_t> >( idx );
-      }
-    virtual float    GetPixelAsFloat( const std::vector<uint32_t> &idx ) const
-      {
-        return this->InternalGetPixel< BasicPixelID<float> >( idx );
-      }
-    virtual double   GetPixelAsDouble(  const std::vector<uint32_t> &idx ) const
-      {
-        return this->InternalGetPixel< BasicPixelID<double> >( idx );
-      }
-
-    virtual void SetPixelAsUInt8( const std::vector<uint32_t> &idx, uint8_t v )
-      {
-        this->InternalSetPixel( idx, v );
-      }
-    virtual void SetPixelAsInt16( const std::vector<uint32_t> &idx, int16_t v )
-      {
-        this->InternalSetPixel( idx, v );
-      }
-    virtual void SetPixelAsUInt16( const std::vector<uint32_t> &idx, uint16_t v )
-      {
-        this->InternalSetPixel( idx, v );
-      }
-    virtual void SetPixelAsInt32( const std::vector<uint32_t> &idx, int32_t v )
-      {
-        this->InternalSetPixel( idx, v );
-      }
-    virtual void SetPixelAsUInt32( const std::vector<uint32_t> &idx, uint32_t v )
-      {
-        this->InternalSetPixel( idx, v );
-      }
-    virtual void SetPixelAsFloat( const std::vector<uint32_t> &idx, float v )
-      {
-        this->InternalSetPixel( idx, v );
-      }
-    virtual void SetPixelAsDouble( const std::vector<uint32_t> &idx, double v )
-      {
-        this->InternalSetPixel( idx, v );
-      }
-
-
-  protected:
-
-    template < typename TPixelIDType >
-    typename EnableIf<std::tr1::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value
-                      && !IsLabel<TPixelIDType>::Value
-                      && !IsVector<TPixelIDType>::Value,
-                      typename ImageType::PixelType >::Type
-    InternalGetPixel( const std::vector<uint32_t> &idx ) const
-      {
-        return this->m_Image->GetPixel( this->ConvertSTLToIndex( idx ) );
-      }
-
-    template < typename TPixelIDType >
-    typename EnableIf<std::tr1::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value
-                      && IsLabel<TPixelIDType>::Value
-                      && !IsVector<TPixelIDType>::Value,
-                      typename ImageType::PixelType >::Type
-    InternalGetPixel( const std::vector<uint32_t> &idx ) const
-      {
-        return this->m_Image->GetPixel( this->ConvertSTLToIndex( idx ) );
-      }
-
-    template < typename TPixelIDType >
-    typename EnableIf<std::tr1::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value
-                      && !IsLabel<TPixelIDType>::Value
-                      && IsVector<TPixelIDType>::Value,
-                      int >::Type
-    InternalGetPixel( const std::vector<uint32_t> &idx ) const
-      {
-        Unused( idx );
-        sitkExceptionMacro( "This method is not supported for this vector images currently." )
-      }
-
-    template < typename TPixelIDType >
-    typename DisableIf<std::tr1::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value,
-                      int >::Type
-    InternalGetPixel( const std::vector<uint32_t> &idx ) const
-      {
-        Unused( idx );
-        sitkExceptionMacro( << "The image is of type: " << GetPixelIDValueAsString( this->GetPixelIDValue() )
-                            << " but the GetPixel access method requires type: "
-                            << GetPixelIDValueAsString(  PixelIDToPixelIDValue<TPixelIDType>::Result )
-                            << "!" );
-      }
-
-
-    template < typename TPixelType >
-    typename EnableIf<std::tr1::is_same<BasicPixelID<TPixelType>,
-                                        typename ImageTypeToPixelID<ImageType>::PixelIDType >::value >::Type
-    InternalSetPixel( const std::vector<uint32_t> &idx, TPixelType v  ) const
-      {
-        return this->m_Image->SetPixel( this->ConvertSTLToIndex( idx ), v );
-      }
-
-    template < typename TPixelType >
-    typename DisableIf<std::tr1::is_same<BasicPixelID<TPixelType>,
-                                         typename ImageTypeToPixelID<ImageType>::PixelIDType>::value >::Type
-    InternalSetPixel( const std::vector<uint32_t> &idx, TPixelType v ) const
-      {
-        Unused( idx );
-        Unused( v );
-        sitkExceptionMacro( "This method is not supported for this image type." )
-      }
-
-    static IndexType ConvertSTLToIndex( const std::vector<uint32_t> &idx )
-      {
-        // convert idx to itk::Index
-        if ( idx.size() < ImageType::ImageDimension )
-          {
-          sitkExceptionMacro( "Image index size mismatch" );
-          }
-        IndexType itkIDX;
-        for ( unsigned int i = 0; i < ImageType::ImageDimension; ++i )
-            itkIDX[i] = idx[i];
-        return itkIDX;
-      }
-
-  private:
-    ImagePointer m_Image;
-  };
-
+    this->ConditionalInternalInitialization<VPixelIDValue>( i );
   }
-//
-// End private namespace for pimple implementation
-//
 
-
-  template <typename TImageType>
-  void Image::InternalInitialization( TImageType *image )
+  template<int VPixelIDValue, typename TImageType>
+  typename DisableIf<std::tr1::is_same<TImageType, void>::value>::Type
+  Image::ConditionalInternalInitialization( TImageType *image )
   {
     // no need to check if null
     delete this->m_PimpleImage;
     this->m_PimpleImage = NULL;
 
-    // assign to basic pointer
     this->m_PimpleImage = new PimpleImage<TImageType>( image );
   }
+
 
   template<class TImageType>
   typename EnableIf<IsBasic<TImageType>::Value>::Type
@@ -801,62 +416,61 @@ namespace itk
         }
 
     }
+  } // end namespace simple
+} // end namespace itk
 
-///
-/// Private name space for class for __ImplicitInstantiate
-///
-  namespace
-  {
-  // this class is designed to work with typelist::Vist
-  //
-  // The purpose of this class it to implicitly instantiate the
-  // templated constructors of this class.
-  struct ConstructorInstantiator
-  {
 
-    template< typename TPixelIDType >
-    void operator() ( void ) const
-      {
-        typedef typename PixelIDToImageType<TPixelIDType, 2>::ImageType Image2Type;
-        typedef typename PixelIDToImageType<TPixelIDType, 3>::ImageType Image3Type;
-
-        void (Image::*pFunc1)(Image2Type*) = &Image::InternalInitialization<Image2Type>;
-        Unused( pFunc1 );
-
-        void (Image::*pFunc2)(Image3Type*) = &Image::InternalInitialization<Image3Type>;
-        Unused( pFunc2 );
-
-      }
-  };
-  }
 //
-// End private namespace
+// There is only one templated function in the external interface
+// which need to be instantiated, so that the itk::Image and the
+// sitk::PimpleImage are completely encapsulated. That is the
+// InternalInitialization method. The following uses a macro to
+// explicitly instantiate for the expected image types.
 //
-  void Image::__ImplicitInstantiate( void )
-  {
-    typelist::Visit<InstantiatedPixelIDTypeList> visitToImplicitlyInstantiate;
-    visitToImplicitlyInstantiate( ConstructorInstantiator() );
-  }
+
+#define SITK_TEMPLATE_InternalInitialization_D( _I, _D )                \
+  namespace itk { namespace simple {                                    \
+  template void Image::InternalInitialization<_I,_D>(  PixelIDToImageType< typelist::TypeAt<InstantiatedPixelIDTypeList, \
+                                                                                            _I>::Result, \
+                                                                           _D>::ImageType *i ); \
+  } }
 
 
-    /*
-    void Image::Show(const std::string name) const
-    {
-      // Try to find ImageJ, write out a file and open
-#if defined(__WIN32__)
-      // Windows
-#elseif defined(__APPLE__)
-      // Mac
-      char *filename = malloc ( sizeof(char) * (100 + name.size()) );
-      sprintf ( filename, "/tmp/%s-XXXXX.nrrd", name.c_str() );
-      mktemp ( filename );
-      ImageFileWriter().SetFilename ( filename ).Execute ( this );
-      std::cout << "Show Filename: " << filename << std::endl;
-#else
-      // Linux
-#endif
-    }
-    */
+#define SITK_TEMPLATE_InternalInitialization( _I ) SITK_TEMPLATE_InternalInitialization_D( _I, 2 ) SITK_TEMPLATE_InternalInitialization_D( _I, 3 )
 
-  }
-}
+
+
+// Instantiate for all types in the lists
+SITK_TEMPLATE_InternalInitialization( 0 );
+SITK_TEMPLATE_InternalInitialization( 1 );
+SITK_TEMPLATE_InternalInitialization( 2 );
+SITK_TEMPLATE_InternalInitialization( 3 );
+SITK_TEMPLATE_InternalInitialization( 4 );
+SITK_TEMPLATE_InternalInitialization( 5 );
+SITK_TEMPLATE_InternalInitialization( 6 );
+SITK_TEMPLATE_InternalInitialization( 7 );
+SITK_TEMPLATE_InternalInitialization( 8 );
+SITK_TEMPLATE_InternalInitialization( 9 );
+SITK_TEMPLATE_InternalInitialization( 10 );
+SITK_TEMPLATE_InternalInitialization( 11 );
+SITK_TEMPLATE_InternalInitialization( 12 );
+SITK_TEMPLATE_InternalInitialization( 13 );
+SITK_TEMPLATE_InternalInitialization( 14 );
+SITK_TEMPLATE_InternalInitialization( 15 );
+SITK_TEMPLATE_InternalInitialization( 16 );
+SITK_TEMPLATE_InternalInitialization( 17 );
+SITK_TEMPLATE_InternalInitialization( 18 );
+SITK_TEMPLATE_InternalInitialization( 19 );
+SITK_TEMPLATE_InternalInitialization( 20 );
+SITK_TEMPLATE_InternalInitialization( 21 );
+SITK_TEMPLATE_InternalInitialization( 22 );
+SITK_TEMPLATE_InternalInitialization( 23 );
+SITK_TEMPLATE_InternalInitialization( 24 );
+SITK_TEMPLATE_InternalInitialization( 25 );
+SITK_TEMPLATE_InternalInitialization( 26 );
+SITK_TEMPLATE_InternalInitialization( 27 );
+SITK_TEMPLATE_InternalInitialization( 28 );
+SITK_TEMPLATE_InternalInitialization( 29 );
+
+
+sitkStaticAssert( typelist::Length<itk::simple::InstantiatedPixelIDTypeList>::Result < 30, "Number of explicitly instantiated pixel types is more then expected!" );

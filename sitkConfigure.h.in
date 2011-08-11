@@ -9,15 +9,29 @@
 
 // defined if the system has <tr1/functional> header
 #cmakedefine SITK_HAS_STLTR1_TR1_FUNCTIONAL
-
 // defined if the system has <functional> header
 #cmakedefine SITK_HAS_STLTR1_FUNCTIONAL
 
 
 // defined if the system has <tr1/type_traits> header
 #cmakedefine SITK_HAS_STLTR1_TR1_TYPE_TRAITS
-
 // defined if the system has <type_traits> header
 #cmakedefine SITK_HAS_STLTR1_TYPE_TRAITS
+
+
+
+// defined if the system has <tr1/unordered_map> header
+#cmakedefine SITK_HAS_STLTR1_TR1_UNORDERED_MAP
+
+// defined if the system has <unordered_map> header
+#cmakedefine SITK_HAS_STLTR1_UNORDERED_MAP
+
+// defined with the unordered_map is functional and usable
+#cmakedefine SITK_UNORDERED_MAP_FUNCTIONAL
+
+//  SITK_HAS_UNORDERED_MAP is defined when the unordered map should be usedes
+#if ( defined SITK_HAS_STLTR1_TR1_UNORDERED_MAP || defined SITK_HAS_STLTR1_UNORDERED_MAP ) && defined SITK_UNORDERED_MAP_FUNCTIONAL
+#define SITK_HAS_UNORDERED_MAP
+#endif
 
 #endif // __sitkConfigure_h

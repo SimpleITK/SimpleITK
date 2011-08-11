@@ -4,6 +4,8 @@
 #include "sitkDetail.h"
 #include "sitkMemberFunctionFactoryBase.h"
 
+
+
 namespace itk
 {
 namespace simple
@@ -11,6 +13,8 @@ namespace simple
 // this namespace is internal classes not part of the external simple ITK interface
 namespace detail
 {
+
+
 
 /** \class DualMemberFunctionFactory
  * \brief A class used to instantiate and generate function objects of
@@ -31,7 +35,7 @@ namespace detail
  *  member functions by taking the address in the
  *  RegisterMethods. Later they can be retrieve with the
  *  GetMemberFunction method, which returns a function object with the
- *  same arguments as the templated member function pointer. 
+ *  same arguments as the templated member function pointer.
  *
  *  An instance of a MemberFunctionFactory is bound to a specific
  *  instance of an object, so that the returned function object does
