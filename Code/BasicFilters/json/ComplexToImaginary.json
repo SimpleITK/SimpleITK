@@ -5,16 +5,15 @@
   "number_of_inputs" : 1,
   "doc" : "Some global documentation",
   "pixel_types" : "ComplexPixelIDTypeList",
-  "output_pixel_type" : "typename InputImageType::PixelType::value_type"
-  "members" : [],
-  "tests" : [
-    {
-     "tag" : "defaults",
-     "description" : "Test Complex to imaginary",
-     "inputA" : "Input/RA-FFT-Complex.nrrd",
-     "md5hash" : "3be155009ce0f99e56293002c4ba1b2a",
-     "settings" : [
-     ]
-    }
-  ]
+  "output_pixel_type" : "typename InputImageType::PixelType::value_type",
+  "members" : [ ],
+  "tests" : [ {
+    "tag" : "defaults",
+    "description" : "Test Complex to imaginary",
+    "inputA" : "Input/RA-FFT-Complex.nrrd",
+    "md5hash" : "3be155009ce0f99e56293002c4ba1b2a",
+    "settings" : [ ]
+  } ],
+  "briefdescription" : "Computes pixel-wise the imaginary part of a complex image.\n",
+  "detaileddescription" : ""
 }

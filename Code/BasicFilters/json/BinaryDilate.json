@@ -40,8 +40,7 @@
       "java_value" : "${name}ImageFilter.KernelType.Ball",
       "tcl_value" : "$$${name}ImageFilter_Ball",
       "csharp_value" : "${name}ImageFilter.KernelType.Ball"
-    },
-    {
+    }, {
       "parameter" : "ForegroundValue",
       "value" : "255.0"
     } ],
@@ -65,10 +64,9 @@
       "python_value" : "SimpleITK.${name}ImageFilter.Box",
       "ruby_value" : "Simpleitk::${name}ImageFilter::Box",
       "java_value" : "${name}ImageFilter.KernelType.Box",
-      "tcl_value" : "$$${name}ImageFilter_Box"
+      "tcl_value" : "$$${name}ImageFilter_Box",
       "csharp_value" : "${name}ImageFilter.KernelType.Box"
-    },
-    {
+    }, {
       "parameter" : "ForegroundValue",
       "value" : "255"
     } ],

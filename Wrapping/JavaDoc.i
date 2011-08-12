@@ -147,6 +147,60 @@ Where & is the boolean AND operator in C++.
 li {ImageProcessing/AndImageFilter,Binary AND two images}
 
 */"
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1ApproximateSignedDistanceMapImageFilter.xml
+%typemap(javaimports) itk::simple::ApproximateSignedDistanceMapImageFilter "/** Create a map of the approximate signed distance from the boundaries of a binary image.
+
+The ApproximateSignedDistanceMapImageFiltertakes as input a binary image and produces a signed distance map. Each pixel value in the output contains the approximate distance from that pixel to the nearest object in the binary image. This filter differs from the DanielssonDistanceMapImageFilterin that it calculates the distance to the object edge for pixels within the object.
+Negative values in the output indicate that the pixel at that position is within an object in the input image. The absolute value of a negative pixel represents the approximate distance to the nearest object boundary pixel.
+WARNING: This filter requires that the output type be floating-point. Otherwise internal calculations will not be performed to the appropriate precision, resulting in completely incorrect (read: zero-valued) output.
+The distances computed by this filter are Chamfer distances, which are only an approximation to Euclidian distances, and are not as exact approximations as those calculated by the DanielssonDistanceMapImageFilter. On the other hand, this filter is faster.
+This filter requires that an inside value and outside value be set as parameters. The inside value is the intensity value of the binary image which corresponds to objects, and the outside value is the intensity of the background. (A typical binary image often repesents objects as black (0) and background as white (usually 255), or vice-versa.) Note that this filter is slightly faster if the inside value is less than the outside value. Otherwise an extra iteration through the image is required.
+This filter uses the FastChamferDistanceImageFilterand the IsoContourDistanceImageFilterinernally to perform the distance calculations.
+see DanielssonDistanceMapImageFilter, SignedDanielssonDistanceMapImageFilter
+see FastChamferDistanceImageFilter, IsoContourDistanceImageFilter
+author Zach Pincus
+
+*/"
+%javamethodmodifiers itk::simple::ApproximateSignedDistanceMapImageFilter::execute() "
+/**Create a map of the approximate signed distance from the boundaries of a binary image.
+
+*/"
+%javamethodmodifiers itk::simple::ApproximateSignedDistanceMap "/**
+Create a map of the approximate signed distance from the boundaries of a binary image.
+
+The ApproximateSignedDistanceMapImageFiltertakes as input a binary image and produces a signed distance map. Each pixel value in the output contains the approximate distance from that pixel to the nearest object in the binary image. This filter differs from the DanielssonDistanceMapImageFilterin that it calculates the distance to the object edge for pixels within the object.
+Negative values in the output indicate that the pixel at that position is within an object in the input image. The absolute value of a negative pixel represents the approximate distance to the nearest object boundary pixel.
+WARNING: This filter requires that the output type be floating-point. Otherwise internal calculations will not be performed to the appropriate precision, resulting in completely incorrect (read: zero-valued) output.
+The distances computed by this filter are Chamfer distances, which are only an approximation to Euclidian distances, and are not as exact approximations as those calculated by the DanielssonDistanceMapImageFilter. On the other hand, this filter is faster.
+This filter requires that an inside value and outside value be set as parameters. The inside value is the intensity value of the binary image which corresponds to objects, and the outside value is the intensity of the background. (A typical binary image often repesents objects as black (0) and background as white (usually 255), or vice-versa.) Note that this filter is slightly faster if the inside value is less than the outside value. Otherwise an extra iteration through the image is required.
+This filter uses the FastChamferDistanceImageFilterand the IsoContourDistanceImageFilterinernally to perform the distance calculations.
+see DanielssonDistanceMapImageFilter, SignedDanielssonDistanceMapImageFilter
+see FastChamferDistanceImageFilter, IsoContourDistanceImageFilter
+author Zach Pincus
+
+*/"
+%javamethodmodifiers itk::simple::ApproximateSignedDistanceMapImageFilter::setInsideValue "/**
+virtual void itk::ApproximateSignedDistanceMapImageFilter::SetInsideValue(InputPixelType _arg)
+
+Set/Get intensity value representing the interior of objects in the mask
+*/"
+
+%javamethodmodifiers itk::simple::ApproximateSignedDistanceMapImageFilter::getInsideValue "/**
+virtual InputPixelType itk::ApproximateSignedDistanceMapImageFilter::GetInsideValue() const
+
+*/"
+
+%javamethodmodifiers itk::simple::ApproximateSignedDistanceMapImageFilter::setOutsideValue "/**
+virtual void itk::ApproximateSignedDistanceMapImageFilter::SetOutsideValue(InputPixelType _arg)
+
+Set/Get intensity value representing non-objects in the mask
+*/"
+
+%javamethodmodifiers itk::simple::ApproximateSignedDistanceMapImageFilter::getOutsideValue "/**
+virtual InputPixelType itk::ApproximateSignedDistanceMapImageFilter::GetOutsideValue() const
+
+*/"
+
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1AsinImageFilter.xml
 %typemap(javaimports) itk::simple::AsinImageFilter "/** Computes the vcl_asin(x) pixel-wise.
 
@@ -853,6 +907,54 @@ virtual const bool& itk::ClosingByReconstructionImageFilter::GetPreserveIntensit
 
 */"
 
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1ComplexToImaginaryImageFilter.xml
+%typemap(javaimports) itk::simple::ComplexToImaginaryImageFilter "/** Computes pixel-wise the imaginary part of a complex image.
+
+*/"
+%javamethodmodifiers itk::simple::ComplexToImaginaryImageFilter::execute() "
+/**Computes pixel-wise the imaginary part of a complex image.
+
+*/"
+%javamethodmodifiers itk::simple::ComplexToImaginary "/**
+Computes pixel-wise the imaginary part of a complex image.
+
+*/"
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1ComplexToModulusImageFilter.xml
+%typemap(javaimports) itk::simple::ComplexToModulusImageFilter "/** Computes pixel-wise the Modulus of a complex image.
+
+*/"
+%javamethodmodifiers itk::simple::ComplexToModulusImageFilter::execute() "
+/**Computes pixel-wise the Modulus of a complex image.
+
+*/"
+%javamethodmodifiers itk::simple::ComplexToModulus "/**
+Computes pixel-wise the Modulus of a complex image.
+
+*/"
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1ComplexToPhaseImageFilter.xml
+%typemap(javaimports) itk::simple::ComplexToPhaseImageFilter "/** Computes pixel-wise the modulus of a complex image.
+
+*/"
+%javamethodmodifiers itk::simple::ComplexToPhaseImageFilter::execute() "
+/**Computes pixel-wise the modulus of a complex image.
+
+*/"
+%javamethodmodifiers itk::simple::ComplexToPhase "/**
+Computes pixel-wise the modulus of a complex image.
+
+*/"
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1ComplexToRealImageFilter.xml
+%typemap(javaimports) itk::simple::ComplexToRealImageFilter "/** Computes pixel-wise the real(x) part of a complex image.
+
+*/"
+%javamethodmodifiers itk::simple::ComplexToRealImageFilter::execute() "
+/**Computes pixel-wise the real(x) part of a complex image.
+
+*/"
+%javamethodmodifiers itk::simple::ComplexToReal "/**
+Computes pixel-wise the real(x) part of a complex image.
+
+*/"
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1ConnectedThresholdImageFilter.xml
 %typemap(javaimports) itk::simple::ConnectedThresholdImageFilter "/** Label pixels that are connected to a seed and lie within a range of values.
 
@@ -1091,6 +1193,70 @@ virtual TimeStepType itk::CurvatureFlowImageFilter::GetTimeStep() const
 Get the timestep parameter.
 */"
 
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1DanielssonDistanceMapImageFilter.xml
+%typemap(javaimports) itk::simple::DanielssonDistanceMapImageFilter "/** This filter computes the distance map of the input image as an approximation with pixel accuracy to the Euclidean distance.
+
+TInputImage Input ImageType  TOutputImage Output ImageType
+The input is assumed to contain numeric codes defining objects. The filter will produce as output the following images:
+
+li A Voronoi partition using the same numeric codes as the input.
+li A distance map with the approximation to the euclidean distance. from a particular pixel to the nearest object to this pixel in the input image.
+li A vector map containing the component of the vector relating the current pixel with the closest point of the closest object to this pixel. Given that the components of the distance are computed in pixels, the vector is represented by an itk::Offset. That is, physical coordinates are not used.
+This filter is N-dimensional and known to be efficient in computational time. The algorithm is the N-dimensional version of the 4SED algorithm given for two dimensions in:
+Danielsson, Per-Erik. Euclidean Distance Mapping. Computer Graphics and ImageProcessing 14, 227-248 (1980).
+*/"
+%javamethodmodifiers itk::simple::DanielssonDistanceMapImageFilter::execute() "
+/**This filter computes the distance map of the input image as an approximation with pixel accuracy to the Euclidean distance.
+
+*/"
+%javamethodmodifiers itk::simple::DanielssonDistanceMap "/**
+This filter computes the distance map of the input image as an approximation with pixel accuracy to the Euclidean distance.
+
+TInputImage Input ImageType  TOutputImage Output ImageType
+The input is assumed to contain numeric codes defining objects. The filter will produce as output the following images:
+
+li A Voronoi partition using the same numeric codes as the input.
+li A distance map with the approximation to the euclidean distance. from a particular pixel to the nearest object to this pixel in the input image.
+li A vector map containing the component of the vector relating the current pixel with the closest point of the closest object to this pixel. Given that the components of the distance are computed in pixels, the vector is represented by an itk::Offset. That is, physical coordinates are not used.
+This filter is N-dimensional and known to be efficient in computational time. The algorithm is the N-dimensional version of the 4SED algorithm given for two dimensions in:
+Danielsson, Per-Erik. Euclidean Distance Mapping. Computer Graphics and ImageProcessing 14, 227-248 (1980).
+*/"
+%javamethodmodifiers itk::simple::DanielssonDistanceMapImageFilter::setInputIsBinary "/**
+virtual void itk::DanielssonDistanceMapImageFilter::SetInputIsBinary(bool _arg)
+
+Set if the input is binary. If this variable is set, each nonzero pixel in the input image will be given a unique numeric code to be used by the Voronoi partition. If the image is binary but you are not interested in the Voronoi regions of the different nonzero pixels, then you need not set this.
+*/"
+
+%javamethodmodifiers itk::simple::DanielssonDistanceMapImageFilter::getInputIsBinary "/**
+virtual const bool& itk::DanielssonDistanceMapImageFilter::GetInputIsBinary()
+
+Get if the input is binary. See SetInputIsBinary().
+*/"
+
+%javamethodmodifiers itk::simple::DanielssonDistanceMapImageFilter::setSquaredDistance "/**
+virtual void itk::DanielssonDistanceMapImageFilter::SetSquaredDistance(bool _arg)
+
+Set if the distance should be squared.
+*/"
+
+%javamethodmodifiers itk::simple::DanielssonDistanceMapImageFilter::getSquaredDistance "/**
+virtual const bool& itk::DanielssonDistanceMapImageFilter::GetSquaredDistance()
+
+Get the distance squared.
+*/"
+
+%javamethodmodifiers itk::simple::DanielssonDistanceMapImageFilter::setUseImageSpacing "/**
+virtual void itk::DanielssonDistanceMapImageFilter::SetUseImageSpacing(bool _arg)
+
+Set if image spacing should be used in computing distances.
+*/"
+
+%javamethodmodifiers itk::simple::DanielssonDistanceMapImageFilter::getUseImageSpacing "/**
+virtual const bool& itk::DanielssonDistanceMapImageFilter::GetUseImageSpacing()
+
+Get whether spacing is used.
+*/"
+
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1DilateObjectMorphologyImageFilter.xml
 %typemap(javaimports) itk::simple::DilateObjectMorphologyImageFilter "/** dilation of an object in an image
 
@@ -1325,6 +1491,122 @@ Computes the function vcl_exp(-K.x) pixel-wise.
 
 Every output pixel is equal to vcl_exp(-K.x ). where x is the intensity of the homologous input pixel, and K is a user-provided constant.
 */"
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1ExtractImageFilter.xml
+%typemap(javaimports) itk::simple::ExtractImageFilter "/** Decrease the image size by cropping the image to the selected region bounds.
+
+ ExtractImageFilterchanges the image boundary of an image by removing pixels outside the target region. The target region must be specified.
+ ExtractImageFilteralso collapses dimensions so that the input image may have more dimensions than the output image ( i.e. 4-D input image to a 3-D output image). To specify what dimensions to collapse, the ExtractionRegion must be specified. For any dimension dim where ExtractionRegion.Size[dim] = 0, that dimension is collapsed. The index to collapse on is specified by ExtractionRegion.Index[dim]. For example, we have a image 4D = a 4x4x4x4 image, and we want to get a 3D image, 3D = a 4x4x4 image, specified as [x,y,z,2] from 4D ( i.e. the 3rd time slice from 4D). The ExtractionRegion.Size = [4,4,4,0] and ExtractionRegion.Index = [0,0,0,2].
+The number of dimension in ExtractionRegion.Size and Indexmust = InputImageDimension. The number of non-zero dimensions in ExtractionRegion.Size must = OutputImageDimension.
+The output image produced by this filter will have the same origin as the input image, while the ImageRegionof the output image will start at the starting index value provided in the ExtractRegion parameter. If you are looking for a filter that will re-compute the origin of the output image, and provide an output image region whose index is set to zeros, then you may want to use the RegionOfInterestImageFilter. The output spacing is is simply the collapsed version of the input spacing.
+Determining the direction of the collapsed output image from an larger dimensional input space is an ill defined problem in general. It is required that the application developer select the desired transformation strategy for collapsing direction cosigns. It is REQUIRED that a strategy be explicitly requested ( i.e. there is no working default). Direction Collapsing Strategies: 1) DirectionCollapseToUnknown(); This is the default and the filter can not run when this is set. The reason is to explicitly force the application developer to define their desired behavior. 1) DirectionCollapseToIdentity(); Output has identity direction no matter what 2) DirectionCollaspeToSubmatrix(); Output direction is the sub-matrix if it is positive definite, else throw an exception.
+This filter is implemented as a multithreaded filter. It provides a ThreadedGenerateData()method for its implementation.
+see CropImageFilter
+
+*/"
+%javamethodmodifiers itk::simple::ExtractImageFilter::execute() "
+/**Decrease the image size by cropping the image to the selected region bounds.
+
+*/"
+%javamethodmodifiers itk::simple::Extract "/**
+Decrease the image size by cropping the image to the selected region bounds.
+
+ ExtractImageFilterchanges the image boundary of an image by removing pixels outside the target region. The target region must be specified.
+ ExtractImageFilteralso collapses dimensions so that the input image may have more dimensions than the output image ( i.e. 4-D input image to a 3-D output image). To specify what dimensions to collapse, the ExtractionRegion must be specified. For any dimension dim where ExtractionRegion.Size[dim] = 0, that dimension is collapsed. The index to collapse on is specified by ExtractionRegion.Index[dim]. For example, we have a image 4D = a 4x4x4x4 image, and we want to get a 3D image, 3D = a 4x4x4 image, specified as [x,y,z,2] from 4D ( i.e. the 3rd time slice from 4D). The ExtractionRegion.Size = [4,4,4,0] and ExtractionRegion.Index = [0,0,0,2].
+The number of dimension in ExtractionRegion.Size and Indexmust = InputImageDimension. The number of non-zero dimensions in ExtractionRegion.Size must = OutputImageDimension.
+The output image produced by this filter will have the same origin as the input image, while the ImageRegionof the output image will start at the starting index value provided in the ExtractRegion parameter. If you are looking for a filter that will re-compute the origin of the output image, and provide an output image region whose index is set to zeros, then you may want to use the RegionOfInterestImageFilter. The output spacing is is simply the collapsed version of the input spacing.
+Determining the direction of the collapsed output image from an larger dimensional input space is an ill defined problem in general. It is required that the application developer select the desired transformation strategy for collapsing direction cosigns. It is REQUIRED that a strategy be explicitly requested ( i.e. there is no working default). Direction Collapsing Strategies: 1) DirectionCollapseToUnknown(); This is the default and the filter can not run when this is set. The reason is to explicitly force the application developer to define their desired behavior. 1) DirectionCollapseToIdentity(); Output has identity direction no matter what 2) DirectionCollaspeToSubmatrix(); Output direction is the sub-matrix if it is positive definite, else throw an exception.
+This filter is implemented as a multithreaded filter. It provides a ThreadedGenerateData()method for its implementation.
+see CropImageFilter
+
+*/"
+%javamethodmodifiers itk::simple::ExtractImageFilter::setDirectionCollapseToStrategy "/**
+void itk::ExtractImageFilter::SetDirectionCollapseToStrategy(const DIRECTIONCOLLASPESTRATEGY choosenStrategy)
+
+Set the strategy to be used to collapse pysical space dimensions.
+itk::itkExtractImageFilter::DIRECTIONCOLLASPETOIDENTITY Set the strategy so that all collapsed images have an identity direction. Use this strategy when you know that retention of the physical space orientation of the collapsed image is not important.
+itk::itkExtractImageFilter::DIRECTIONCOLLASPETOGUESS Set the strategy so that all collapsed images where output direction is the sub-matrix it it is positive definite, else return identity. This is backwards compatible with ITKv3, but is highly discouraged because the results are difficult to anticipate under differing data scenerios.
+itk::itkExtractImageFilter::DIRECTIONCOLLASPETOSUBMATRIX Set the strategy so that all collapsed images where output direction is the sub-matrix it it is positive definite, else throw an exception. Use this strategy when it is known that properly identified physical space sub-volumes can be reliably extracted from a higher dimensional space. For example when the applicaiton programmer knows that a 4D image is 3D+time, and that the 3D sub-space is properly defined.
+*/"
+
+%javamethodmodifiers itk::simple::ExtractImageFilter::getDirectionCollapseToStrategy "/**
+DIRECTIONCOLLASPESTRATEGY itk::ExtractImageFilter::GetDirectionCollapseToStrategy() const
+
+Get the currently set strategy for collapsing directions of physical space.
+*/"
+
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1FFTComplexConjugateToRealImageFilter.xml
+%typemap(javaimports) itk::simple::FFTComplexConjugateToRealImageFilter "/** Base class for Inverse Fast Fourier Transform.
+
+This is a base class for the inverse or reverse discrete Fourier Transform. This is an abstract base class: the actual implementation is provided by the best child available on the the system when the object is created via the object factory system.
+This class transforms a complex conjugate symmetric image into its real spatial domain representation. If the input in not complex conjugate symmetric, the imaginary component is discarded. The transform of a real input image has complex conjugate symmetry. That is, values in the second half of the transform are the complex conjugates of values in the first half. Some implementations, e.g. FFTW, may take advantage of this property and reduce the size of the output in one direction during the forward transform to N/2+1, where N is the size of the input. If this occurs, FullMatrix()returns 'false'. If this was the case, the size of the inverse output image will be larger than the input.
+see FFTRealToComplexConjugateImageFilter, FFTComplexConjugateToRealImageFilter
+
+*/"
+%javamethodmodifiers itk::simple::FFTComplexConjugateToRealImageFilter::execute() "
+/**Base class for Inverse Fast Fourier Transform.
+
+*/"
+%javamethodmodifiers itk::simple::FFTComplexConjugateToReal "/**
+Base class for Inverse Fast Fourier Transform.
+
+This is a base class for the inverse or reverse discrete Fourier Transform. This is an abstract base class: the actual implementation is provided by the best child available on the the system when the object is created via the object factory system.
+This class transforms a complex conjugate symmetric image into its real spatial domain representation. If the input in not complex conjugate symmetric, the imaginary component is discarded. The transform of a real input image has complex conjugate symmetry. That is, values in the second half of the transform are the complex conjugates of values in the first half. Some implementations, e.g. FFTW, may take advantage of this property and reduce the size of the output in one direction during the forward transform to N/2+1, where N is the size of the input. If this occurs, FullMatrix()returns 'false'. If this was the case, the size of the inverse output image will be larger than the input.
+see FFTRealToComplexConjugateImageFilter, FFTComplexConjugateToRealImageFilter
+
+*/"
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1FFTRealToComplexConjugateImageFilter.xml
+%typemap(javaimports) itk::simple::FFTRealToComplexConjugateImageFilter "/** Base class for Forward Fast Fourier Transform.
+
+This is a base class for the forward or direct discrete Fourier Transform. This is an abstract base class: the actual implementation is provided by the best child available on the the system when the object is created via the object factory system.
+This class transforms a real input image into its complex Fourier Transform. The transform of a real input image has complex conjugate symmetry. That is, values in the second half of the transform are the complex conjugates of values in the first half. Some implementations, e.g. FFTW, may take advantage of this property and reduce the size of the output in one direction to N/2+1, where N is the size of the input. If this occurs, FullMatrix()returns 'false'.
+see FFTComplexConjugateToRealImageFilter, FFTComplexToComplexImageFilter
+
+*/"
+%javamethodmodifiers itk::simple::FFTRealToComplexConjugateImageFilter::execute() "
+/**Base class for Forward Fast Fourier Transform.
+
+*/"
+%javamethodmodifiers itk::simple::FFTRealToComplexConjugate "/**
+Base class for Forward Fast Fourier Transform.
+
+This is a base class for the forward or direct discrete Fourier Transform. This is an abstract base class: the actual implementation is provided by the best child available on the the system when the object is created via the object factory system.
+This class transforms a real input image into its complex Fourier Transform. The transform of a real input image has complex conjugate symmetry. That is, values in the second half of the transform are the complex conjugates of values in the first half. Some implementations, e.g. FFTW, may take advantage of this property and reduce the size of the output in one direction to N/2+1, where N is the size of the input. If this occurs, FullMatrix()returns 'false'.
+see FFTComplexConjugateToRealImageFilter, FFTComplexToComplexImageFilter
+
+*/"
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1FFTShiftImageFilter.xml
+%typemap(javaimports) itk::simple::FFTShiftImageFilter "/** Shift the zero-frequency components to center of the image.
+
+The fourier transform produce an image where the zero frequency components are in the corner of the image, making it difficult to understand. This filter shift the component to the center of the image. Note that with images with odd size, applying this filter twice will not produce the same image than the original one without using SetInverse(true) on one (and only one) of the two filters.
+http://hdl.handle.net/1926/321
+author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+see FFTRealToComplexConjugateImageFilter, FFTComplexConjugateToRealImageFilter, Log10ImageFilter, RescaleIntensityImageFilter
+
+*/"
+%javamethodmodifiers itk::simple::FFTShiftImageFilter::execute() "
+/**Shift the zero-frequency components to center of the image.
+
+*/"
+%javamethodmodifiers itk::simple::FFTShift "/**
+Shift the zero-frequency components to center of the image.
+
+The fourier transform produce an image where the zero frequency components are in the corner of the image, making it difficult to understand. This filter shift the component to the center of the image. Note that with images with odd size, applying this filter twice will not produce the same image than the original one without using SetInverse(true) on one (and only one) of the two filters.
+http://hdl.handle.net/1926/321
+author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+see FFTRealToComplexConjugateImageFilter, FFTComplexConjugateToRealImageFilter, Log10ImageFilter, RescaleIntensityImageFilter
+
+*/"
+%javamethodmodifiers itk::simple::FFTShiftImageFilter::setInverse "/**
+virtual void itk::FFTShiftImageFilter::SetInverse(bool _arg)
+
+Set/Get whether the filter must perform an inverse transform or not. This option has no effect if none of the size of the input image is odd, but is required to be able to restore the original image if at least one of the size is odd.
+*/"
+
+%javamethodmodifiers itk::simple::FFTShiftImageFilter::getInverse "/**
+virtual const bool& itk::FFTShiftImageFilter::GetInverse()
+
+*/"
+
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1FlipImageFilter.xml
 %typemap(javaimports) itk::simple::FlipImageFilter "/** Flips an image across user specified axes.
 
@@ -2033,6 +2315,44 @@ virtual const InputPixelType& itk::InvertIntensityImageFilter::GetMaximum()
 
 */"
 
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1IsoContourDistanceImageFilter.xml
+%typemap(javaimports) itk::simple::IsoContourDistanceImageFilter "/** Compute an approximate distance from an interpolated isocontour to the close grid points.
+
+For standard level set algorithms, it is useful to periodically reinitialize the evolving image to prevent numerical accuracy problems in computing derivatives. This reinitialization is done by computing a signed distance map to the current level set. This class provides the first step in this reinitialization by computing an estimate of the distance from the interpolated isocontour to the pixels (or voxels) that are close to it, i.e. for which the isocontour crosses a segment between them and one of their direct neighbors. This class supports narrowbanding. If the input narrowband is provided, the algorithm will only locate the level set within the input narrowband.
+Implementation of this class is based on Fast and Accurate Redistancing for Level Set Methods `Krissian K. and Westin C.F.', EUROCAST NeuroImaging Workshop Las Palmas Spain, Ninth International Conference on Computer Aided Systems Theory , pages 48-51, Feb 2003.
+*/"
+%javamethodmodifiers itk::simple::IsoContourDistanceImageFilter::execute() "
+/**Compute an approximate distance from an interpolated isocontour to the close grid points.
+
+*/"
+%javamethodmodifiers itk::simple::IsoContourDistance "/**
+Compute an approximate distance from an interpolated isocontour to the close grid points.
+
+For standard level set algorithms, it is useful to periodically reinitialize the evolving image to prevent numerical accuracy problems in computing derivatives. This reinitialization is done by computing a signed distance map to the current level set. This class provides the first step in this reinitialization by computing an estimate of the distance from the interpolated isocontour to the pixels (or voxels) that are close to it, i.e. for which the isocontour crosses a segment between them and one of their direct neighbors. This class supports narrowbanding. If the input narrowband is provided, the algorithm will only locate the level set within the input narrowband.
+Implementation of this class is based on Fast and Accurate Redistancing for Level Set Methods `Krissian K. and Westin C.F.', EUROCAST NeuroImaging Workshop Las Palmas Spain, Ninth International Conference on Computer Aided Systems Theory , pages 48-51, Feb 2003.
+*/"
+%javamethodmodifiers itk::simple::IsoContourDistanceImageFilter::setLevelSetValue "/**
+virtual void itk::IsoContourDistanceImageFilter::SetLevelSetValue(InputPixelType _arg)
+
+Set/Get the value of the level set to be located. The default value is 0.
+*/"
+
+%javamethodmodifiers itk::simple::IsoContourDistanceImageFilter::getLevelSetValue "/**
+virtual InputPixelType itk::IsoContourDistanceImageFilter::GetLevelSetValue() const
+
+*/"
+
+%javamethodmodifiers itk::simple::IsoContourDistanceImageFilter::setFarValue "/**
+virtual void itk::IsoContourDistanceImageFilter::SetFarValue(PixelType _arg)
+
+Set/Get the value of the level set to be located. The default value is 0.
+*/"
+
+%javamethodmodifiers itk::simple::IsoContourDistanceImageFilter::getFarValue "/**
+virtual PixelType itk::IsoContourDistanceImageFilter::GetFarValue() const
+
+*/"
+
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1LabelContourImageFilter.xml
 %typemap(javaimports) itk::simple::LabelContourImageFilter "/** Labels the pixels on the border of the objects in a labeled image.
 
@@ -2144,6 +2464,22 @@ Computes the vcl_log10(x) pixel-wise
 %javamethodmodifiers itk::simple::Log "/**
 Computes the vcl_log(x) pixel-wise.
 
+*/"
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1MagnitudeAndPhaseToComplexImageFilter.xml
+%typemap(javaimports) itk::simple::MagnitudeAndPhaseToComplexImageFilter "/** Implements pixel-wise conversion of magnitude and phase data into complex voxels.
+
+This filter is parametrized over the types of the two input images and the type of the output image.
+The filter expect all images to have the same dimension (e.g. all 2D, or all 3D, or all ND)
+*/"
+%javamethodmodifiers itk::simple::MagnitudeAndPhaseToComplexImageFilter::execute() "
+/**Implements pixel-wise conversion of magnitude and phase data into complex voxels.
+
+*/"
+%javamethodmodifiers itk::simple::MagnitudeAndPhaseToComplex "/**
+Implements pixel-wise conversion of magnitude and phase data into complex voxels.
+
+This filter is parametrized over the types of the two input images and the type of the output image.
+The filter expect all images to have the same dimension (e.g. all 2D, or all 3D, or all ND)
 */"
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1MaskImageFilter.xml
 %typemap(javaimports) itk::simple::MaskImageFilter "/** Implements an operator for pixel-wise masking of the input image with the mask.
@@ -2393,6 +2729,120 @@ This class is parametrized over the types of the two input images and the type o
 li {ImageProcessing/MultiplyImageFilter,Multiply two images together}
 
 */"
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1N4MRIBiasFieldCorrectionImageFilter.xml
+%typemap(javaimports) itk::simple::N4MRIBiasFieldCorrectionImageFilter "/** Implementation of the N4 MRI bias field correction algorithm.
+
+The nonparametric nonuniform intensity normalization (N3) algorithm, as introduced by Sled et al. in 1998 is a method for correcting nonuniformity associated with MR images. The algorithm assumes a simple parametric model (Gaussian) for the bias field and does not require tissue class segmentation. In addition, there are only a couple of parameters to tune with the default values performing quite well. N3 has been publicly available as a set of perl scripts (http://www.bic.mni.mcgill.ca/ServicesSoftwareAdvancedImageProcessingTools/HomePage)
+The N4 algorithm, encapsulated with this class, is a variation of the original N3 algorithm with the additional benefits of an improved B-spline fitting routine which allows for multiple resolutions to be used during the correction process. We also modify the iterative update component of algorithm such that the residual bias field is continually updated
+Notes for the user: 1. Since much of the image manipulation is done in the log space of the intensities, input images with negative and small values (< 1) can produce poor results. 2. The original authors recommend performing the bias field correction on a downsampled version of the original image. 3. A binary mask or a weighted image can be supplied. If a binary mask is specified, those voxels in the input image which correspond to the voxels in the mask image with a value equal to m_MaskLabel, are used to estimate the bias field. If a confidence image is specified, the input voxels are weighted in the b-spline fitting routine according to the confidence voxel values. 4. The filter returns the corrected image. If the bias field is wanted, one can reconstruct it using the class itkBSplineControlPointImageFilter. See the IJ article and the test file for an example. 5. The 'Z' parameter in Sled's 1998 paper is the square root of the class variable 'm_WienerFilterNoise'.
+The basic algorithm iterates between sharpening the intensity histogram of the corrected input image and spatially smoothing those results with a B-spline scalar field estimate of the bias field.
+author Nicholas J. Tustison
+Contributed by Nicholas J. Tustison, James C. Gee in the Insight Journal paper:http://hdl.handle.net/10380/3053
+par REFERENCE
+J.G. Sled, A.P. Zijdenbos and A.C. Evans. A Nonparametric Method for Automatic Correction of Intensity Nonuniformity in MRI Data IEEE Transactions on Medical Imaging, Vol 17, No 1. Feb 1998.
+N.J. Tustison, B.B. Avants, P.A. Cook, Y. Zheng, A. Egan, P.A. Yushkevich, and J.C. Gee. N4ITK: Improved N3 Bias Correction IEEE Transactions on Medical Imaging, 29(6):1310-1320, June 2010.
+*/"
+%javamethodmodifiers itk::simple::N4MRIBiasFieldCorrectionImageFilter::execute() "
+/**Implementation of the N4 MRI bias field correction algorithm.
+
+*/"
+%javamethodmodifiers itk::simple::N4MRIBiasFieldCorrection "/**
+Implementation of the N4 MRI bias field correction algorithm.
+
+The nonparametric nonuniform intensity normalization (N3) algorithm, as introduced by Sled et al. in 1998 is a method for correcting nonuniformity associated with MR images. The algorithm assumes a simple parametric model (Gaussian) for the bias field and does not require tissue class segmentation. In addition, there are only a couple of parameters to tune with the default values performing quite well. N3 has been publicly available as a set of perl scripts (http://www.bic.mni.mcgill.ca/ServicesSoftwareAdvancedImageProcessingTools/HomePage)
+The N4 algorithm, encapsulated with this class, is a variation of the original N3 algorithm with the additional benefits of an improved B-spline fitting routine which allows for multiple resolutions to be used during the correction process. We also modify the iterative update component of algorithm such that the residual bias field is continually updated
+Notes for the user: 1. Since much of the image manipulation is done in the log space of the intensities, input images with negative and small values (< 1) can produce poor results. 2. The original authors recommend performing the bias field correction on a downsampled version of the original image. 3. A binary mask or a weighted image can be supplied. If a binary mask is specified, those voxels in the input image which correspond to the voxels in the mask image with a value equal to m_MaskLabel, are used to estimate the bias field. If a confidence image is specified, the input voxels are weighted in the b-spline fitting routine according to the confidence voxel values. 4. The filter returns the corrected image. If the bias field is wanted, one can reconstruct it using the class itkBSplineControlPointImageFilter. See the IJ article and the test file for an example. 5. The 'Z' parameter in Sled's 1998 paper is the square root of the class variable 'm_WienerFilterNoise'.
+The basic algorithm iterates between sharpening the intensity histogram of the corrected input image and spatially smoothing those results with a B-spline scalar field estimate of the bias field.
+author Nicholas J. Tustison
+Contributed by Nicholas J. Tustison, James C. Gee in the Insight Journal paper:http://hdl.handle.net/10380/3053
+par REFERENCE
+J.G. Sled, A.P. Zijdenbos and A.C. Evans. A Nonparametric Method for Automatic Correction of Intensity Nonuniformity in MRI Data IEEE Transactions on Medical Imaging, Vol 17, No 1. Feb 1998.
+N.J. Tustison, B.B. Avants, P.A. Cook, Y. Zheng, A. Egan, P.A. Yushkevich, and J.C. Gee. N4ITK: Improved N3 Bias Correction IEEE Transactions on Medical Imaging, 29(6):1310-1320, June 2010.
+*/"
+%javamethodmodifiers itk::simple::N4MRIBiasFieldCorrectionImageFilter::setConvergenceThreshold "/**
+virtual void itk::N4MRIBiasFieldCorrectionImageFilter::SetConvergenceThreshold(RealType _arg)
+
+Set the convergence threshold. Convergence is determined by the coefficient of variation of the difference image between the current bias field estimate and the previous estimate. If this value is less than the specified threshold, the algorithm proceeds to the next fitting level or terminates if it is at the last level.
+*/"
+
+%javamethodmodifiers itk::simple::N4MRIBiasFieldCorrectionImageFilter::getConvergenceThreshold "/**
+virtual RealType itk::N4MRIBiasFieldCorrectionImageFilter::GetConvergenceThreshold() const
+
+Get the convergence threshold. Convergence is determined by the coefficient of variation of the difference image between the current bias field estimate and the previous estimate. If this value is less than the specified threshold, the algorithm proceeds to the next fitting level or terminates if it is at the last level.
+*/"
+
+%javamethodmodifiers itk::simple::N4MRIBiasFieldCorrectionImageFilter::setMaximumNumberOfIterations "/**
+virtual void itk::N4MRIBiasFieldCorrectionImageFilter::SetMaximumNumberOfIterations(VariableSizeArrayType _arg)
+
+Set the maximum number of iterations specified at each fitting level. Default = 50.
+*/"
+
+%javamethodmodifiers itk::simple::N4MRIBiasFieldCorrectionImageFilter::getMaximumNumberOfIterations "/**
+virtual VariableSizeArrayType itk::N4MRIBiasFieldCorrectionImageFilter::GetMaximumNumberOfIterations() const
+
+Get the maximum number of iterations specified at each fitting level. Default = 50.
+*/"
+
+%javamethodmodifiers itk::simple::N4MRIBiasFieldCorrectionImageFilter::setBiasFieldFullWidthAtHalfMaximum "/**
+virtual void itk::N4MRIBiasFieldCorrectionImageFilter::SetBiasFieldFullWidthAtHalfMaximum(RealType _arg)
+
+Set the full width at half maximum parameter characterizing the width of the Gaussian deconvolution. Default = 0.15.
+*/"
+
+%javamethodmodifiers itk::simple::N4MRIBiasFieldCorrectionImageFilter::getBiasFieldFullWidthAtHalfMaximum "/**
+virtual RealType itk::N4MRIBiasFieldCorrectionImageFilter::GetBiasFieldFullWidthAtHalfMaximum() const
+
+Get the full width at half maximum parameter characterizing the width of the Gaussian deconvolution. Default = 0.15.
+*/"
+
+%javamethodmodifiers itk::simple::N4MRIBiasFieldCorrectionImageFilter::setWienerFilterNoise "/**
+virtual void itk::N4MRIBiasFieldCorrectionImageFilter::SetWienerFilterNoise(RealType _arg)
+
+Set the noise estimate defining the Wiener filter. Default = 0.01.
+*/"
+
+%javamethodmodifiers itk::simple::N4MRIBiasFieldCorrectionImageFilter::getWienerFilterNoise "/**
+virtual RealType itk::N4MRIBiasFieldCorrectionImageFilter::GetWienerFilterNoise() const
+
+Get the noise estimate defining the Wiener filter. Default = 0.01.
+*/"
+
+%javamethodmodifiers itk::simple::N4MRIBiasFieldCorrectionImageFilter::setNumberOfHistogramBins "/**
+virtual void itk::N4MRIBiasFieldCorrectionImageFilter::SetNumberOfHistogramBins(unsigned int _arg)
+
+Set number of bins defining the log input intensity histogram. Default = 200.
+*/"
+
+%javamethodmodifiers itk::simple::N4MRIBiasFieldCorrectionImageFilter::getNumberOfHistogramBins "/**
+virtual unsigned int itk::N4MRIBiasFieldCorrectionImageFilter::GetNumberOfHistogramBins() const
+
+Get number of bins defining the log input intensity histogram. Default = 200.
+*/"
+
+%javamethodmodifiers itk::simple::N4MRIBiasFieldCorrectionImageFilter::setNumberOfControlPoints "/**
+virtual void itk::N4MRIBiasFieldCorrectionImageFilter::SetNumberOfControlPoints(ArrayType _arg)
+
+Set the control point grid size definining the B-spline estimate of the scalar bias field. In each dimension, the B-spline mesh size is equal to the number of control points in that dimension minus the spline order. Default = 4 control points in each dimension for a mesh size of 1 in each dimension.
+*/"
+
+%javamethodmodifiers itk::simple::N4MRIBiasFieldCorrectionImageFilter::getNumberOfControlPoints "/**
+virtual ArrayType itk::N4MRIBiasFieldCorrectionImageFilter::GetNumberOfControlPoints() const
+
+Get the control point grid size definining the B-spline estimate of the scalar bias field. In each dimension, the B-spline mesh size is equal to the number of control points in that dimension minus the spline order. Default = 4 control points in each dimension for a mesh size of 1 in each dimension.
+*/"
+
+%javamethodmodifiers itk::simple::N4MRIBiasFieldCorrectionImageFilter::setSplineOrder "/**
+virtual void itk::N4MRIBiasFieldCorrectionImageFilter::SetSplineOrder(unsigned int _arg)
+
+Set the spline order defining the bias field estimate. Default = 3.
+*/"
+
+%javamethodmodifiers itk::simple::N4MRIBiasFieldCorrectionImageFilter::getSplineOrder "/**
+virtual unsigned int itk::N4MRIBiasFieldCorrectionImageFilter::GetSplineOrder() const
+
+Get the spline order defining the bias field estimate. Default = 3.
+*/"
+
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1NeighborhoodConnectedImageFilter.xml
 %typemap(javaimports) itk::simple::NeighborhoodConnectedImageFilter "/** Label pixels that are connected to a seed and lie within a neighborhood.
 
@@ -2586,17 +3036,6 @@ virtual OutputPixelType itk::OtsuThresholdImageFilter::GetInsideValue() const
 Get the inside pixel value.
 */"
 
-%javamethodmodifiers itk::simple::OtsuThresholdImageFilter::setNumberOfHistogramBins "/**
-virtual void itk::OtsuThresholdImageFilter::SetNumberOfHistogramBins(SizeValueType _arg)
-
-Set/Get the number of histogram bins. Defaults is 128.
-*/"
-
-%javamethodmodifiers itk::simple::OtsuThresholdImageFilter::getNumberOfHistogramBins "/**
-virtual SizeValueType itk::OtsuThresholdImageFilter::GetNumberOfHistogramBins() const
-
-*/"
-
 %javamethodmodifiers itk::simple::OtsuThresholdImageFilter::setOutsideValue "/**
 virtual void itk::OtsuThresholdImageFilter::SetOutsideValue(OutputPixelType _arg)
 
@@ -2607,6 +3046,17 @@ Set the outside pixel value. The default value NumericTraits<OutputPixelType>::Z
 virtual OutputPixelType itk::OtsuThresholdImageFilter::GetOutsideValue() const
 
 Get the outside pixel value.
+*/"
+
+%javamethodmodifiers itk::simple::OtsuThresholdImageFilter::setNumberOfHistogramBins "/**
+virtual void itk::OtsuThresholdImageFilter::SetNumberOfHistogramBins(SizeValueType _arg)
+
+Set/Get the number of histogram bins. Defaults is 128.
+*/"
+
+%javamethodmodifiers itk::simple::OtsuThresholdImageFilter::getNumberOfHistogramBins "/**
+virtual SizeValueType itk::OtsuThresholdImageFilter::GetNumberOfHistogramBins() const
+
 */"
 
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1PermuteAxesImageFilter.xml
@@ -2645,6 +3095,22 @@ virtual const PermuteOrderArrayType& itk::PermuteAxesImageFilter::GetOrder()
 Get the permutation order.
 */"
 
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1RealAndImaginaryToComplexImageFilter.xml
+%typemap(javaimports) itk::simple::RealAndImaginaryToComplexImageFilter "/** Implements pixel-wise conversion of real and imaginary data into complex voxels.
+
+This filter is parametrized over the types of the two input images and the type of the output image.
+The filter expect all images to have the same dimension (e.g. all 2D, or all 3D, or all ND)
+*/"
+%javamethodmodifiers itk::simple::RealAndImaginaryToComplexImageFilter::execute() "
+/**Implements pixel-wise conversion of real and imaginary data into complex voxels.
+
+*/"
+%javamethodmodifiers itk::simple::RealAndImaginaryToComplex "/**
+Implements pixel-wise conversion of real and imaginary data into complex voxels.
+
+This filter is parametrized over the types of the two input images and the type of the output image.
+The filter expect all images to have the same dimension (e.g. all 2D, or all 3D, or all ND)
+*/"
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1RecursiveGaussianImageFilter.xml
 %typemap(javaimports) itk::simple::RecursiveGaussianImageFilter "/** Base class for computing IIR convolution with an approximation of a Gaussian kernel.
 
@@ -2722,6 +3188,32 @@ virtual OrderEnumType itk::RecursiveGaussianImageFilter::GetOrder() const
 
 */"
 
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1RegionOfInterestImageFilter.xml
+%typemap(javaimports) itk::simple::RegionOfInterestImageFilter "/** Extract a region of interest from the input image.
+
+This filter produces an output image of the same dimension as the input image. The user specifies the region of the input image that will be contained in the output image. The origin coordinates of the output images will be computed in such a way that if mapped to physical space, the output image will overlay the input image with perfect registration. In other words, a registration process between the output image and the input image will return an identity transform.
+If you are interested in changing the dimension of the image, you may want to consider the ExtractImageFilter. For example for extracting a 2D image from a slice of a 3D image.
+The region to extract is set using the method SetRegionOfInterest.
+see ExtractImageFilter
+
+li {ImageProcessing/RegionOfInterestImageFilter,Extract a portion of an image (region of interest)}
+
+*/"
+%javamethodmodifiers itk::simple::RegionOfInterestImageFilter::execute() "
+/**Extract a region of interest from the input image.
+
+*/"
+%javamethodmodifiers itk::simple::RegionOfInterest "/**
+Extract a region of interest from the input image.
+
+This filter produces an output image of the same dimension as the input image. The user specifies the region of the input image that will be contained in the output image. The origin coordinates of the output images will be computed in such a way that if mapped to physical space, the output image will overlay the input image with perfect registration. In other words, a registration process between the output image and the input image will return an identity transform.
+If you are interested in changing the dimension of the image, you may want to consider the ExtractImageFilter. For example for extracting a 2D image from a slice of a 3D image.
+The region to extract is set using the method SetRegionOfInterest.
+see ExtractImageFilter
+
+li {ImageProcessing/RegionOfInterestImageFilter,Extract a portion of an image (region of interest)}
+
+*/"
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1RescaleIntensityImageFilter.xml
 %typemap(javaimports) itk::simple::RescaleIntensityImageFilter "/** Applies a linear transformation to the intensity levels of the input Image.
 
@@ -2910,6 +3402,137 @@ void itk::SigmoidImageFilter::SetOutputMaximum(OutputPixelType max)
 %javamethodmodifiers itk::simple::SigmoidImageFilter::setOutputMinimum "/**
 void itk::SigmoidImageFilter::SetOutputMinimum(OutputPixelType min)
 
+*/"
+
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1SignedDanielssonDistanceMapImageFilter.xml
+%typemap(javaimports) itk::simple::SignedDanielssonDistanceMapImageFilter "/** 
+This class is parametrized over the type of the input image and the type of the output image.
+This filter computes the distance map of the input image as an approximation with pixel accuracy to the Euclidean distance.
+For purposes of evaluating the signed distance map, the input is assumed to be binary composed of pixels with value 0 and non-zero.
+The inside is considered as having negative distances. Outside is treated as having positive distances. To change the convention, use the InsideIsPositive(bool) function.
+As a convention, the distance is evaluated from the boundary of the ON pixels.
+The filter returns
+li A signed distance map with the approximation to the euclidean distance.
+li A voronoi partition. (See itkDanielssonDistanceMapImageFilter)
+li A vector map containing the component of the vector relating the current pixel with the closest point of the closest object to this pixel. Given that the components of the distance are computed in pixels, the vector is represented by an itk::Offset. That is, physical coordinates are not used. (See itkDanielssonDistanceMapImageFilter)
+
+This filter internally uses the DanielssonDistanceMap filter. This filter is N-dimensional.
+seeitkDanielssonDistanceMapImageFilter
+
+*/"
+%javamethodmodifiers itk::simple::SignedDanielssonDistanceMapImageFilter::execute() "
+/**
+*/"
+%javamethodmodifiers itk::simple::SignedDanielssonDistanceMap "/**
+
+This class is parametrized over the type of the input image and the type of the output image.
+This filter computes the distance map of the input image as an approximation with pixel accuracy to the Euclidean distance.
+For purposes of evaluating the signed distance map, the input is assumed to be binary composed of pixels with value 0 and non-zero.
+The inside is considered as having negative distances. Outside is treated as having positive distances. To change the convention, use the InsideIsPositive(bool) function.
+As a convention, the distance is evaluated from the boundary of the ON pixels.
+The filter returns
+li A signed distance map with the approximation to the euclidean distance.
+li A voronoi partition. (See itkDanielssonDistanceMapImageFilter)
+li A vector map containing the component of the vector relating the current pixel with the closest point of the closest object to this pixel. Given that the components of the distance are computed in pixels, the vector is represented by an itk::Offset. That is, physical coordinates are not used. (See itkDanielssonDistanceMapImageFilter)
+
+This filter internally uses the DanielssonDistanceMap filter. This filter is N-dimensional.
+seeitkDanielssonDistanceMapImageFilter
+
+*/"
+%javamethodmodifiers itk::simple::SignedDanielssonDistanceMapImageFilter::setInsideIsPositive "/**
+virtual void itk::SignedDanielssonDistanceMapImageFilter::SetInsideIsPositive(bool _arg)
+
+Set if the inside represents positive values in the signed distance map. By convention ON pixels are treated as inside pixels.
+*/"
+
+%javamethodmodifiers itk::simple::SignedDanielssonDistanceMapImageFilter::getInsideIsPositive "/**
+virtual const bool& itk::SignedDanielssonDistanceMapImageFilter::GetInsideIsPositive()
+
+Get if the inside represents positive values in the signed distance map. See GetInsideIsPositive()
+*/"
+
+%javamethodmodifiers itk::simple::SignedDanielssonDistanceMapImageFilter::setSquaredDistance "/**
+virtual void itk::SignedDanielssonDistanceMapImageFilter::SetSquaredDistance(bool _arg)
+
+Set if the distance should be squared.
+*/"
+
+%javamethodmodifiers itk::simple::SignedDanielssonDistanceMapImageFilter::getSquaredDistance "/**
+virtual const bool& itk::SignedDanielssonDistanceMapImageFilter::GetSquaredDistance()
+
+Get the distance squared.
+*/"
+
+%javamethodmodifiers itk::simple::SignedDanielssonDistanceMapImageFilter::setUseImageSpacing "/**
+virtual void itk::SignedDanielssonDistanceMapImageFilter::SetUseImageSpacing(bool _arg)
+
+Set if image spacing should be used in computing distances.
+*/"
+
+%javamethodmodifiers itk::simple::SignedDanielssonDistanceMapImageFilter::getUseImageSpacing "/**
+virtual const bool& itk::SignedDanielssonDistanceMapImageFilter::GetUseImageSpacing()
+
+Get whether spacing is used.
+*/"
+
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1SignedMaurerDistanceMapImageFilter.xml
+%typemap(javaimports) itk::simple::SignedMaurerDistanceMapImageFilter "/** This filter calculates the squared Euclidean distance transform of a binary image in linear time for arbitrary dimensions.
+
+par Inputs and Outputs
+This is an image-to-image filter. The dimensionality is arbitrary. The only dimensionality constraint is that the input and output images be of the same dimensions and size. To maintain integer arithmetic within the filter, the default output is the signed squared distance. This implies that the input image should be of type unsigned int or int whereas the output image is of type int. Obviously, if the user wishes to utilize the image spacing or to have a filter with the Euclidean distance (as opposed to the squared distance), output image types of float or double should be used.
+The inside is considered as having negative distances. Outside is treated as having positive distances. To change the convention, use the InsideIsPositive(bool) function.
+par Parameters
+Set/GetBackgroundValue specifies the background of the value of the input binary image. Normally this is zero and, as such, zero is the default value. Other than that, the usage is completely analagous to the itkDanielssonDistanceImageFilterClass except is does not return the Voronoi map.
+Ref: C. R. Maurer, Jr., R. Qi, and V. Raghavan, A Linear Time Algorithm for Computing Exact Euclidean Distance Transforms of Binary Images in Arbitrary Dimensions, IEEE - Transactions on Pattern Analysis and Machine Intelligence, 25(2): 265-270, 2003.
+*/"
+%javamethodmodifiers itk::simple::SignedMaurerDistanceMapImageFilter::execute() "
+/**This filter calculates the squared Euclidean distance transform of a binary image in linear time for arbitrary dimensions.
+
+*/"
+%javamethodmodifiers itk::simple::SignedMaurerDistanceMap "/**
+This filter calculates the squared Euclidean distance transform of a binary image in linear time for arbitrary dimensions.
+
+par Inputs and Outputs
+This is an image-to-image filter. The dimensionality is arbitrary. The only dimensionality constraint is that the input and output images be of the same dimensions and size. To maintain integer arithmetic within the filter, the default output is the signed squared distance. This implies that the input image should be of type unsigned int or int whereas the output image is of type int. Obviously, if the user wishes to utilize the image spacing or to have a filter with the Euclidean distance (as opposed to the squared distance), output image types of float or double should be used.
+The inside is considered as having negative distances. Outside is treated as having positive distances. To change the convention, use the InsideIsPositive(bool) function.
+par Parameters
+Set/GetBackgroundValue specifies the background of the value of the input binary image. Normally this is zero and, as such, zero is the default value. Other than that, the usage is completely analagous to the itkDanielssonDistanceImageFilterClass except is does not return the Voronoi map.
+Ref: C. R. Maurer, Jr., R. Qi, and V. Raghavan, A Linear Time Algorithm for Computing Exact Euclidean Distance Transforms of Binary Images in Arbitrary Dimensions, IEEE - Transactions on Pattern Analysis and Machine Intelligence, 25(2): 265-270, 2003.
+*/"
+%javamethodmodifiers itk::simple::SignedMaurerDistanceMapImageFilter::setInsideIsPositive "/**
+virtual void itk::SignedMaurerDistanceMapImageFilter::SetInsideIsPositive(bool _arg)
+
+Set if the inside represents positive values in the signed distance map. By convention ON pixels are treated as inside pixels.
+*/"
+
+%javamethodmodifiers itk::simple::SignedMaurerDistanceMapImageFilter::getInsideIsPositive "/**
+virtual const bool& itk::SignedMaurerDistanceMapImageFilter::GetInsideIsPositive()
+
+Get if the inside represents positive values in the signed distance map. See GetInsideIsPositive()
+*/"
+
+%javamethodmodifiers itk::simple::SignedMaurerDistanceMapImageFilter::setSquaredDistance "/**
+virtual void itk::SignedMaurerDistanceMapImageFilter::SetSquaredDistance(bool _arg)
+
+Set if the distance should be squared.
+*/"
+
+%javamethodmodifiers itk::simple::SignedMaurerDistanceMapImageFilter::getSquaredDistance "/**
+virtual const bool& itk::SignedMaurerDistanceMapImageFilter::GetSquaredDistance()
+
+Get the distance squared.
+*/"
+
+%javamethodmodifiers itk::simple::SignedMaurerDistanceMapImageFilter::setUseImageSpacing "/**
+virtual void itk::SignedMaurerDistanceMapImageFilter::SetUseImageSpacing(bool _arg)
+
+Set if image spacing should be used in computing distances.
+*/"
+
+%javamethodmodifiers itk::simple::SignedMaurerDistanceMapImageFilter::getUseImageSpacing "/**
+virtual const bool& itk::SignedMaurerDistanceMapImageFilter::GetUseImageSpacing()
+
+Get whether spacing is used.
 */"
 
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1SinImageFilter.xml
