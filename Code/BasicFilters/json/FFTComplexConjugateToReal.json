@@ -6,16 +6,14 @@
   "doc" : "Some global documentation",
   "pixel_types" : "ComplexPixelIDTypeList",
   "filter_type" : "itk::FFTComplexConjugateToRealImageFilter<InputImageType>",
-  "members" : [],
-  "tests" : [
-  {
-     "tag" : "defaults",
-     "description" : "Test FFTComplexConjugateToReal",
-     "inputA" : "Input/RA-FFT-Complex.nrrd",
-     "tolerance" : "0.01"
-     "settings" : [
-     ]
-   }
-  ]
+  "members" : [ ],
+  "tests" : [ {
+    "tag" : "defaults",
+    "description" : "Test FFTComplexConjugateToReal",
+    "inputA" : "Input/RA-FFT-Complex.nrrd",
+    "tolerance" : "0.01",
+    "settings" : [ ]
+  } ],
+  "briefdescription" : "Base class for \"Inverse\" Fast Fourier Transform.\n",
+  "detaileddescription" : "This is a base class for the \"inverse\" or \"reverse\" discrete Fourier Transform. This is an abstract base class: the actual implementation is provided by the best child available on the the system when the object is created via the object factory system.\nThis class transforms a complex conjugate symmetric image into its real spatial domain representation. If the input in not complex conjugate symmetric, the imaginary component is discarded. The transform of a real input image has complex conjugate symmetry. That is, values in the second half of the transform are the complex conjugates of values in the first half. Some implementations, e.g. FFTW, may take advantage of this property and reduce the size of the output in one direction during the forward transform to N/2+1, where N is the size of the input. If this occurs, FullMatrix()returns 'false'. If this was the case, the size of the inverse output image will be larger than the input.\n\\see FFTRealToComplexConjugateImageFilter, FFTComplexConjugateToRealImageFilter\n\n"
 }
-

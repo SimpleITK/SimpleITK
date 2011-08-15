@@ -6,16 +6,14 @@
   "doc" : "Some global documentation",
   "pixel_types" : "RealPixelIDTypeList",
   "filter_type" : "itk::FFTRealToComplexConjugateImageFilter<InputImageType>",
-  "members" : [],
-  "tests" : [
-  {
-     "tag" : "defaults",
-     "description" : "Test FFTRealToComplexConjugate",
-     "inputA" : "Input/RA-Slice-Float.nrrd",
-     "tolerance" : "0.04"
-     "settings" : [
-     ]
-   }
-  ]
+  "members" : [ ],
+  "tests" : [ {
+    "tag" : "defaults",
+    "description" : "Test FFTRealToComplexConjugate",
+    "inputA" : "Input/RA-Slice-Float.nrrd",
+    "tolerance" : "0.04",
+    "settings" : [ ]
+  } ],
+  "briefdescription" : "Base class for \"Forward\" Fast Fourier Transform.\n",
+  "detaileddescription" : "This is a base class for the \"forward\" or \"direct\" discrete Fourier Transform. This is an abstract base class: the actual implementation is provided by the best child available on the the system when the object is created via the object factory system.\nThis class transforms a real input image into its complex Fourier Transform. The transform of a real input image has complex conjugate symmetry. That is, values in the second half of the transform are the complex conjugates of values in the first half. Some implementations, e.g. FFTW, may take advantage of this property and reduce the size of the output in one direction to N/2+1, where N is the size of the input. If this occurs, FullMatrix()returns 'false'.\n\\see FFTComplexConjugateToRealImageFilter, FFTComplexToComplexImageFilter\n\n"
 }
-

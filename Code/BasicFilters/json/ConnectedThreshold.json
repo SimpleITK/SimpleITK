@@ -40,7 +40,7 @@
     "description" : "Simply run with default settings",
     "inputA" : "Input/RA-Float.nrrd",
     "settings" : [ ],
-     "md5hash" : "ec87a838931d4d5d2e94a04644788a55"
+    "md5hash" : "ec87a838931d4d5d2e94a04644788a55"
   }, {
     "tag" : "2d",
     "description" : "Run with 2d sample settings",
@@ -61,10 +61,10 @@
     }, {
       "parameter" : "ReplaceValue",
       "value" : "255",
-       /* JAVA does not implicitly cast ints to short */
-      "java_value" : "(short) 255"
+      "java_value" : "(short) 255",
+      "comment" : "/* JAVA does not implicitly cast ints to short */"
     } ],
-   "md5hash" : "5119a1fef13206c4a28fcfa0c55b5c13"
+    "md5hash" : "5119a1fef13206c4a28fcfa0c55b5c13"
   } ],
   "briefdescription" : "Label pixels that are connected to a seed and lie within a range of values.\n",
   "detaileddescription" : " ConnectedThresholdImageFilterlabels pixels with ReplaceValue that are connected to an initial Seed AND lie within a Lower and Upper threshold range.\n"
