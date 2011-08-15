@@ -49,7 +49,7 @@ elseif dim_vec and dim_vec == 1 then
    elseif type == "int" then
       OUT="idx = SimpleITK.VectorInt32();"
 elseif type == "double" then
-      OUT="idx = SimpleITK.VectorDoube();"
+      OUT="idx = SimpleITK.VectorDouble();"
    else
      OUT="idx = SimpleITK.VectorUInt32();"
    end
