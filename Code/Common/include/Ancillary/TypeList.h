@@ -52,8 +52,10 @@ struct NullType {};
  * \brief Generates a TypeList from it's template arguments
  *
  * The arguments are type names.
- * MakeTypeList<T1, T2, ...>::Type
- * returns a typelist that is of T1, T2, ...
+ * \code
+ * MakeTypeList<T1, T2, T3>::Type
+ * \endcode
+ * returns a typelist that contans the types T1, T2, T3
  *
  * Example:
  * \code
