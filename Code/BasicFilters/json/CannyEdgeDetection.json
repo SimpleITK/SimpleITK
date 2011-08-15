@@ -36,6 +36,28 @@
     "description" : "Simply run with default settings",
     "inputA" : "Input/RA-Float.nrrd",
     "settings" : [ ],
-    "tolerance" : 0
-  } ]
+    "md5hash" : "bbeb419fbdf05cbd93c7905b235b52ae"
+  },{
+    "tag" : "forresults",
+    "description" : "make a good output image by setting paramters",
+    "inputA" : "Input/RA-Float.nrrd",
+    "settings" : [ {
+        "parameter" :  "LowerThreshold",
+        "type" : "double",
+        "value" : 500
+    }, {
+        "parameter" :  "UpperThreshold",
+        "type" : "double",
+        "value" : 3000
+    }, {
+        "parameter" : "Variance",
+        "type" : "double",
+        "dim_vec" : 1,
+        "value" : "{1.0,1.0,1.0}",
+        "tcl_value" : "[list 1.0 1.0 1.0]",
+        "python_value" : "[ 1.0, 1.0, 1.0]",
+        "ruby_value" : "[ 1.0, 1.0, 1.0 ]"
+    } ],
+    "md5hash" : "a9f58b23223cdbcd5baead53dd8f75d8"
+  }  ]
 }
