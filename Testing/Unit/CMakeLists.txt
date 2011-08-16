@@ -291,8 +291,8 @@ if ( WRAP_PYTHON )
 
     add_test(NAME Python.${name}
       COMMAND "${ITK_TEST_DRIVER}"
-      --add-before-env PYTHONPATH "${SIMPLEITK_BINARY_DIR}/$<CONFIGURATION>/Wrapping"
-      --add-before-env PYTHONPATH "${SIMPLEITK_BINARY_DIR}/Wrapping"
+      --add-before-env PYTHONPATH "${SimpleITK_BINARY_DIR}/$<CONFIGURATION>/Wrapping"
+      --add-before-env PYTHONPATH "${SimpleITK_BINARY_DIR}/Wrapping"
       --add-before-env PYTHONPATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/$<CONFIGURATION>"
       --add-before-env PYTHONPATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}"
       ${command}
