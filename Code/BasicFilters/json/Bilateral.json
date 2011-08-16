@@ -1,0 +1,39 @@
+{
+  "name" : "Bilateral",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "members" : [ {
+    "name" : "DomainSigma",
+    "type" : "double",
+    "default" : "4.0"
+  }, {
+    "name" : "RangeSigma",
+    "type" : "double",
+    "default" : "50.0"
+  }, {
+    "name" : "NumberOfRangeGaussianSamples",
+    "type" : "unsigned int",
+    "default" : "100u"
+  } ],
+  "tests" : [ {
+    "tag" : "default",
+    "description" : "Simply run with default settings on rgb",
+    "inputA" : "Input/fruit.png",
+    "settings" : [ ],
+    "md5hash" : "40d02c04323fc303a8a28261c6d4eb23"
+   }, {
+    "tag" : "3d",
+    "description" : "small kernel in 3d",
+    "inputA" : "Input/RA-Short.nrrd",
+    "settings" : [ {
+      "parameter" : "DomainSigma",
+      "value" : "2.0" }, {
+      "parameter" : "RangeSigma",
+      "value" : "500"
+    } ],
+    "md5hash" : "5ff7381ac99c0c2285aebf9fbc1f2609"
+  } ]
+}

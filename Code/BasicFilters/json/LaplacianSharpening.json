@@ -1,0 +1,32 @@
+{
+  "name" : "LaplacianSharpening",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "members" : [ {
+    "name" : "UseImageSpacing",
+    "type" : "bool",
+    "default" : "true"
+  } ],
+  "tests" : [ {
+    "tag" : "default",
+    "description" : "Simply run with default settings with a floating point image",
+    "inputA" : "Input/RA-Float.nrrd",
+    "settings" : [ ],
+    "tolerance" : 1.0E-4
+  }, {
+    "tag" : "shortdefault",
+    "description" : "Simply run with default settings on a short image",
+    "inputA" : "Input/RA-Short.nrrd",
+    "settings" : [ ],
+    "md5hash" : "93a629b9dfad6814c5acbabd42f10c4c"
+  }, {
+    "tag" : "vectordefault",
+    "description" : "Run with defaults setting on an RGB image",
+    "inputA" : "Input/fruit.png",
+    "settings" : [ ],
+    "md5hash" : "f3ad8145d54e583b3e2354b24769df58"
+  } ]
+}
