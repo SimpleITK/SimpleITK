@@ -15,7 +15,6 @@ set ( TestSource
   ImportImageTest.cxx
   CXXTests.cxx
   PythonTests.cxx
-  RubyTests.cxx
   LuaTests.cxx
   TclTests.cxx
   JavaTests.cxx
@@ -276,6 +275,11 @@ endmacro()
 # Here we add all the tests
 add_google_tests(SimpleITKUnitTestDriver ${TestSource})
 
+#######################################################
+#
+# Tests which use the itkTestDriver
+#
+#######################################################
 
 set( ITK_TEST_DRIVER  "itkTestDriver" )
 
@@ -285,6 +289,7 @@ if ( WRAP_PYTHON )
   # This is a macro which set up the enviroment for executing python examples and tests
   #
   macro(add_python_test name)
+
     set(command "${PYTHON_EXECUTABLE}")
 
     # add extra command which may be needed on some systems
@@ -358,3 +363,38 @@ if ( WRAP_PYTHON )
 endif( WRAP_PYTHON )
 
 
+if ( WRAP_RUBY )
+
+  #
+  # This is a macro which set up the enviroment for executing ruby examples and tests
+  #
+  macro(add_ruby_test name)
+
+    set(command "${RUBY_EXECUTABLE}")
+
+    # add extra command which may be needed on some systems
+    if(CMAKE_OSX_ARCHITECTURES)
+      list(GET CMAKE_OSX_ARCHITECTURES 0 test_arch)
+      set(command arch -${test_arch} ${command})
+    endif()
+
+    add_test(NAME Ruby.${name}
+      COMMAND "${ITK_TEST_DRIVER}"
+      --add-before-env RUBYLIB "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/$<CONFIGURATION>"
+      --add-before-env RUBYLIB "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}"
+      ${command}
+      ${ARGN}
+      )
+  endmacro()
+
+
+  #
+  # Ruby Examples
+  #
+  add_ruby_test( Example.SimpleGaussian
+    "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussian.rb"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
+    "2.0"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Python.SimpleGaussian.nrrd" )
+
+endif ( WRAP_RUBY )
