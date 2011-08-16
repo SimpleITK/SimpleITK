@@ -280,6 +280,10 @@ add_google_tests(SimpleITKUnitTestDriver ${TestSource})
 set( ITK_TEST_DRIVER  "itkTestDriver" )
 
 if ( WRAP_PYTHON )
+
+  #
+  # This is a macro which set up the enviroment for executing python examples and tests
+  #
   macro(add_python_test name)
     set(command "${PYTHON_EXECUTABLE}")
 
@@ -300,6 +304,9 @@ if ( WRAP_PYTHON )
       )
   endmacro()
 
+  #
+  # Python Examples
+  #
   add_python_test( Example.SimpleGaussian
     "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussian.py"
     "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
@@ -332,5 +339,22 @@ if ( WRAP_PYTHON )
     "5000"
     "150" )
 
+ add_python_test( Example.N4BiasFieldCorrection
+    "${SimpleITK_SOURCE_DIR}/Examples/N4BiasFieldCorrection.py"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/cthead1.png"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Python.Example.N4BiasFieldCorrection.nrrd"
+    "1"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/2th_cthead1.png"
+    "20"
+    "2" )
+
+
+  #
+  # Python Tests
+  #
+  add_python_test( Test.ImageTest
+    "${SimpleITK_SOURCE_DIR}/Testing/Unit/ImageTest.py" )
+
 endif( WRAP_PYTHON )
+
 
