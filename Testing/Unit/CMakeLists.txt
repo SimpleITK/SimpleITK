@@ -15,7 +15,6 @@ set ( TestSource
   ImportImageTest.cxx
   CXXTests.cxx
   PythonTests.cxx
-  LuaTests.cxx
   TclTests.cxx
   JavaTests.cxx
   CSharpTests.cxx
@@ -362,6 +361,40 @@ if ( WRAP_PYTHON )
 
 endif( WRAP_PYTHON )
 
+
+if ( WRAP_LUA )
+
+  #
+  # This is a macro which set up the enviroment for executing lua examples and tests
+  #
+  macro(add_lua_test name)
+
+    set(command "$<TARGET_FILE:SimpleITKLua>")
+
+    # add extra command which may be needed on some systems
+    if(CMAKE_OSX_ARCHITECTURES)
+      list(GET CMAKE_OSX_ARCHITECTURES 0 test_arch)
+      set(command arch -${test_arch} ${command})
+    endif()
+
+    add_test(NAME Lua.${name}
+      COMMAND "${ITK_TEST_DRIVER}"
+      ${command}
+      ${ARGN}
+      )
+  endmacro()
+
+
+  #
+  # Lua Examples
+  #
+  add_lua_test( Example.SimpleGaussian
+    "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussian.lua"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
+    "2.0"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Python.SimpleGaussian.nrrd" )
+  
+endif ( WRAP_LUA )
 
 if ( WRAP_RUBY )
 
