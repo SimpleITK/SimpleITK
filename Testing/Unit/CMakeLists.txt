@@ -15,7 +15,6 @@ set ( TestSource
   ImportImageTest.cxx
   CXXTests.cxx
   PythonTests.cxx
-  TclTests.cxx
   JavaTests.cxx
   CSharpTests.cxx
   )
@@ -392,7 +391,7 @@ if ( WRAP_LUA )
     "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussian.lua"
     "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
     "2.0"
-    "${TEST_HARNESS_TEMP_DIRECTORY}/Python.SimpleGaussian.nrrd" )
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Lua.SimpleGaussian.nrrd" )
   
 endif ( WRAP_LUA )
 
@@ -428,6 +427,42 @@ if ( WRAP_RUBY )
     "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussian.rb"
     "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
     "2.0"
-    "${TEST_HARNESS_TEMP_DIRECTORY}/Python.SimpleGaussian.nrrd" )
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Ruby.SimpleGaussian.nrrd" )
 
 endif ( WRAP_RUBY )
+
+
+if ( WRAP_TCL )
+
+  #
+  # This is a macro which set up the enviroment for executing TCL examples and tests
+  #
+  macro(add_tcl_test name)
+
+
+    set(command "$<TARGET_FILE:SimpleITKTclsh>")
+
+    # add extra command which may be needed on some systems
+    if(CMAKE_OSX_ARCHITECTURES)
+      list(GET CMAKE_OSX_ARCHITECTURES 0 test_arch)
+      set(command arch -${test_arch} ${command})
+    endif()
+
+    add_test(NAME Tcl.${name}
+      COMMAND "${ITK_TEST_DRIVER}"
+      ${command}
+      ${ARGN}
+      )
+  endmacro()
+
+
+  #
+  # TCL Examples
+  #
+  add_tcl_test( Example.SimpleGaussian
+    "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussian.tcl"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
+    "2.0"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Tcl.SimpleGaussian.nrrd" )
+
+endif ( WRAP_TCL )
