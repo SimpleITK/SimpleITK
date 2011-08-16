@@ -64,6 +64,17 @@ $(if parameter == "SeedList" then
         filter.addSeed(idx);\
       }\
       " end)]]
+elseif parameter == "TrialPoints" then
+      OUT=[[filter.clearTrialPoints();
+      $(for i=1,#value do OUT=OUT .. "{\
+        int v[] = " .. value[i] .. ";\
+        VectorUInt32 idx = new VectorUInt32();\
+        for (int i = 0; i < inputA.getDimension(); i++) {\
+          idx.push_back(v[i]);\
+        }\
+        filter.addTrialPoint(idx);\
+      }\
+      " end)]]
 elseif dim_vec == 1 then
       OUT=[[
       {

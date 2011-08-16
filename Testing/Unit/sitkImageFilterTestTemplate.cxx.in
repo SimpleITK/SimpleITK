@@ -68,6 +68,11 @@ $(if template_type and template_type == "RegionGrowing" then OUT=[[
   EXPECT_EQ ( filter.GetSeedList().size(), (unsigned int)0 ) << "Testing empty seed list as default";]]
 end)
 
+$(if template_code_filename and template_code_filename == "FastMarchingImageFilter" then OUT=[[
+  // Test size of default TrialPoints
+  EXPECT_EQ ( filter.GetTrialPoints().size(), (unsigned int)0 ) << "Testing empty trial points as default";]]
+end)
+
  $(if number_of_inputs == 2 then
    OUT=[[ {
   itk::simple::Image smallImage( 1,1,1,itk::simple::sitkUInt8 );
@@ -109,9 +114,10 @@ end)
       itk::simple::Image fromProcedural( 0, 0, itk::simple::sitkUInt8 );
       ASSERT_NO_THROW ( fromProcedural = filter.Execute ( inputA $(if inputB then OUT=", inputB" end) ) ) << "Procedural interface to ${name}";
       ASSERT_NO_THROW ( fromFunctional = itk::simple::${name} ( inputA $(if inputB then OUT=", inputB" end)
-                                                                         $(if template_type and template_type == "RegionGrowing" then OUT=", std::vector< std::vector<unsigned int> >()" end)
-                                                                      $(if template_code_filename and template_code_filename == "KernelImageFilter" then OUT=[[, 1, itk::simple::${name}ImageFilter::Ball]] end)
-                                                                         $(foreach members , ${default})
+                                                                       $(if template_type and template_type == "RegionGrowing" then OUT=", std::vector< std::vector<unsigned int> >()" end)
+                                                                       $(if template_code_filename and template_code_filename == "FastMarchingImageFilter" then OUT=", std::vector< std::vector<unsigned int> >()" end)
+                                                                       $(if template_code_filename and template_code_filename == "KernelImageFilter" then OUT=[[, 1, itk::simple::${name}ImageFilter::Ball]] end)
+                                                                       $(foreach members , ${default})
                                                                       ) ) << "Functional interface to ${name}";
       hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
       EXPECT_EQ ( hasher.Execute ( fromProcedural ), hasher.Execute ( fromFunctional ) ) << "procedural and functional are not the same!";
@@ -124,6 +130,9 @@ $(foreach settings
   $(if parameter == "SeedList" then
   OUT='filter.ClearSeeds();\
   $(for i=1,#value do OUT=OUT .. "{unsigned int __seed[] = " .. value[i] .. "; filter.AddSeed( std::vector<unsigned int>(__seed, __seed + inputA.GetDimension()) );}" end);'
+  elseif parameter == "TrialPoints" then
+  OUT='filter.ClearTrialPoints();\
+  $(for i=1,#value do OUT=OUT .. "{unsigned int __point[] = " .. value[i] .. "; filter.AddTrialPoint( std::vector<unsigned int>(__point, __point + inputA.GetDimension()) );}" end);'
   elseif dim_vec and dim_vec == 1 then
   OUT='{\
   ${type} arr[] = ${value};\

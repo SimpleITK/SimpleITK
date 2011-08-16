@@ -61,6 +61,15 @@ $(for i=1,#value do OUT=OUT .. "\
                 filter.AddSeed( idx );\
                 }\
 " end)]]
+elseif parameter == "TrialPoints" then
+                OUT=[[
+                filter.ClearTrialPoints();
+$(for i=1,#value do OUT=OUT .. "\
+                {\
+                VectorUInt32 idx = new VectorUInt32( new uint[] " .. value[i] .. " );\
+                filter.AddTrialPoint( idx );\
+                }\
+" end)]]
 elseif dim_vec == 1 then
                 OUT=[[
                 {
