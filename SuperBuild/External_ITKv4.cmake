@@ -5,7 +5,6 @@
 set(ITK_LANGUAGES_VARS
       PYTHON_EXECUTABLE
       PYTHON_INCLUDE_DIR
-      PYTHON_LIBRARY
       )
 
 VariableListToCache( ITK_LANGUAGES_VARS  ep_languages_cache )
@@ -15,7 +14,7 @@ VariableListToArgs( ITK_LANGUAGES_VARS  ep_languages_args )
 set(proj ITK)  ## Use ITK convention of calling it ITK
 set(ITK_REPOSITORY git://itk.org/ITK.git)
 set(ITK_DIR ${CMAKE_INSTALL_PREFIX}/lib/cmake/ITK-4.0)
-set(ITK_TAG_COMMAND GIT_TAG  d49dc15f93c68469866a )
+set(ITK_TAG_COMMAND GIT_TAG  b57ab3d7969915f0fe0431c7c13e5e6520559468 )
 set(WrapITK_DIR ${CMAKE_INSTALL_PREFIX}/lib/cmake/ITK-4.0/WrapITK)
 message(STATUS "ITK_WRAPPING=${ITK_WRAPPING}")
 

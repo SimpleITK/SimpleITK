@@ -5,7 +5,7 @@
 
 #
 # Currently this will search for Python, Java, TCL, Ruby, C#, R 
-# Additionally is with give the option to wrap LUA.
+# Additionally it give the option to wrap LUA.
 #
 
 
@@ -34,7 +34,8 @@ endif ( ${PYTHONLIBS_FOUND} AND ${PYTHONINTERP_FOUND} )
 list( APPEND SITK_LANGUAGES_VARS 
   PYTHON_EXECUTABLE
   PYTHON_LIBRARIES
-  PYTHON_INCLUDE_PATH
+  PYTHON_LIBRARY
+#  PYTHON_INCLUDE_PATH ( depricated )
   PYTHON_INCLUDE_DIRS
   PYTHON_DEBUG_LIBRARIES )
 check_PIC_flag ( Python )
