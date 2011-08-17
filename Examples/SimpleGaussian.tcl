@@ -22,9 +22,9 @@ ImageFileWriter writer
 writer SetFileName [ lindex $argv 2]
 writer Execute $image
 
-# Cleanup
+# Tcl requires explicit cleanup Cleanup
 reader -delete
-gaussion -delete
+gaussian -delete
 caster -delete
-image -delete
+$image -delete
 writer -delete
