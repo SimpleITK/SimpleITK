@@ -15,7 +15,6 @@ set ( TestSource
   ImportImageTest.cxx
   CXXTests.cxx
   PythonTests.cxx
-  JavaTests.cxx
   CSharpTests.cxx
   )
 
@@ -281,6 +280,68 @@ add_google_tests(SimpleITKUnitTestDriver ${TestSource})
 
 set( ITK_TEST_DRIVER  "itkTestDriver" )
 
+
+if ( WRAP_JAVA )
+
+  #
+  # This is a macro which set up the enviroment for executing JAVA examples and tests
+  #
+  macro(add_java_test name java_file)
+
+    # the root is with out extension or path, it is also assumed to the the name of the main class
+    get_filename_component( _java_class ${java_file} NAME_WE )
+    set( _java_file_class "${_java_class}.class" )
+
+    if(WIN32)
+      set( _JAVA_LIBRARY_PATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/$<CONFIGURATION>$" )
+      set( _JAVA_CLASSPATH "${SimpleITK_BINARY_DIR}/Wrapping/org.itk.simple.jar;${CMAKE_CURRENT_BINARY_DIR}/$<CONFIGURATION>$" )
+    else(WIN32)
+      set( _JAVA_LIBRARY_PATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}" )
+      set( _JAVA_CLASSPATH "${SimpleITK_BINARY_DIR}/Wrapping/org.itk.simple.jar:${CMAKE_CURRENT_BINARY_DIR}" )
+    endif(WIN32)
+
+    add_custom_command(
+      OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/${_java_file_class}"
+      COMMAND "${Java_JAVAC_EXECUTABLE}"
+      ARGS -classpath "${_JAVA_CLASSPATH}"
+      -d "${CMAKE_CURRENT_BINARY_DIR}"
+      "${java_file}"
+      DEPENDS ${java_file} SimpleITKJava
+      )
+
+    list( APPEND compiled_java_tests "${CMAKE_CURRENT_BINARY_DIR}/${_java_file_class}")
+
+    add_test(NAME Java.${name}
+      COMMAND "${ITK_TEST_DRIVER}"
+      "${Java_JAVA_EXECUTABLE}"
+      "-Djava.library.path=${_JAVA_LIBRARY_PATH}"
+      "-classpath" "${_JAVA_CLASSPATH}"
+      "${_java_class}"
+      ${ARGN}
+      )
+  endmacro()
+
+
+  #
+  # JAVA Examples
+  #
+  add_java_test( Example.SimpleGaussian
+    "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussian.java"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
+    "2.0"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Java.SimpleGaussian.nrrd" )
+
+# This test currently does not compile or work
+#
+#  add_java_test( Example.ImageConnection
+#    "${SimpleITK_SOURCE_DIR}/Examples/ImageConnection.java" )
+
+
+  # after all add_java_tests are call 
+  add_custom_target( CompileJavaTests ALL DEPENDS ${compiled_java_tests} )
+
+endif ( WRAP_JAVA )
+
 if ( WRAP_PYTHON )
 
   #
@@ -322,7 +383,7 @@ if ( WRAP_PYTHON )
     "2.0"
     "${TEST_HARNESS_TEMP_DIRECTORY}/Python.SimpleGaussian.nrrd" )
 
-    add_python_test( Example.ImageCreateAndSet
+  add_python_test( Example.ImageCreateAndSet
     "${SimpleITK_SOURCE_DIR}/Examples/ImageCreateAndSet.py" )
 
   add_python_test( Example.CannyEdge
