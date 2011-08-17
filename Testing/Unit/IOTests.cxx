@@ -135,5 +135,10 @@ TEST(IO, SeriesReader) {
 }
 
 
+TEST(IO,Write) {
 
+  sitk::Image image = sitk::ReadImage( dataFinder.GetFile ( "Input/BlackDots.png" ) );
+  EXPECT_EQ ( "0188164c9932359b3f33f176d0d73661c4dc04a8", sitk::Hash( image ) );
 
+  ASSERT_THROW(sitk::WriteImage( image, dataFinder.GetOutputFile ( "this.isafilenamewithnoimageio" ) ),  std::exception ) << "Chcking for assert on bad output image name.";
+}

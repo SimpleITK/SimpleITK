@@ -14,7 +14,6 @@ set ( TestSource
   itkHashImageFilterTest.cxx
   ImportImageTest.cxx
   CXXTests.cxx
-  PythonTests.cxx
   CSharpTests.cxx
   )
 
@@ -337,7 +336,8 @@ if ( WRAP_JAVA )
 #    "${SimpleITK_SOURCE_DIR}/Examples/ImageConnection.java" )
 
 
-  # after all add_java_tests are call 
+  # after all add_java_tests are called, form a target so all the code
+  # is built
   add_custom_target( CompileJavaTests ALL DEPENDS ${compiled_java_tests} )
 
 endif ( WRAP_JAVA )
@@ -418,6 +418,9 @@ if ( WRAP_PYTHON )
   #
   add_python_test( Test.ImageTest
     "${SimpleITK_SOURCE_DIR}/Testing/Unit/ImageTest.py" )
+
+  add_python_test( Test.IOTest
+    "${SimpleITK_SOURCE_DIR}/Testing/Unit/IOTest.py" )
 
 endif( WRAP_PYTHON )
 
