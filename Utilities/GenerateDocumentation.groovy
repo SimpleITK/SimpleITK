@@ -6,7 +6,7 @@
 // "Grab" log4j
 @Grab('log4j:log4j:1.2.16')
 import org.codehaus.jackson.map.*
-import org.codehaus.jackson.map.ObjectMapper
+import org.codehaus.jackson.*
 
 import org.apache.log4j.*
 
@@ -19,6 +19,8 @@ def JSONFile = this.args[0]
 def DocstringsFile = this.args[2]
 def JavaDocFile = this.args[3]
 def mapper = new ObjectMapper()
+// Allow comments (C and C++ style).  NB: these get blown away when we rewrite the file, caveat emptor
+mapper.configure(JsonParser.Feature.ALLOW_COMMENTS, true);
 def definition
 try {
   // Try using jackson

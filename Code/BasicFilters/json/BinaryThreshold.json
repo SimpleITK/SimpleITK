@@ -58,7 +58,7 @@
     }, {
       "parameter" : "UpperThreshold",
       "value" : 100
-   }, {
+    }, {
       "parameter" : "InsideValue",
       "value" : 255,
       "java_value" : "(short) 255"
