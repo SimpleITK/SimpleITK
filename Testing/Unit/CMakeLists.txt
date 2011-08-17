@@ -305,7 +305,7 @@ if ( WRAP_JAVA )
       ARGS -classpath "${_JAVA_CLASSPATH}"
       -d "${CMAKE_CURRENT_BINARY_DIR}"
       "${java_file}"
-      DEPENDS ${java_file} SimpleITKJava
+      DEPENDS ${java_file} SimpleITKJava org_itk_simple_jar
       )
 
     list( APPEND compiled_java_tests "${CMAKE_CURRENT_BINARY_DIR}/${_java_file_class}")
