@@ -5,7 +5,6 @@
 set(ITK_LANGUAGES_VARS
       PYTHON_EXECUTABLE
       PYTHON_INCLUDE_DIR
-      PYTHON_LIBRARY
       )
 
 VariableListToCache( ITK_LANGUAGES_VARS  ep_languages_cache )
