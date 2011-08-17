@@ -1,0 +1,38 @@
+{
+  "name" : "FastMarching",
+  "template_code_filename" : "FastMarchingImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "filter_type" : "itk::FastMarchingImageFilter<OutputImageType, InputImageType>",
+  "doc" : "Docs",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "output_pixel_type" : "float",
+  "members" : [ {
+    "name" : "NormalizationFactor",
+    "type" : "double",
+    "default" : "1.0"
+    }, {
+    "name" : "StoppingValue",
+    "type" : "double",
+    "default" : "100.0"
+  } ],
+  "tests" : [ {
+    "tag" : "default",
+    "description" : "Default parameter settings",
+    "inputA" : "Input/cthead1-Float.mha",
+    "md5hash" : "f5afa1f76c9b5dcd33e1fd562a98c528",
+    "settings" : [ {
+      "parameter" : "TrialPoints",
+      "dim" : 2,
+      "value" : [ "{70,70}", "{200,180}" ],
+      "tcl_value" : [ "70 70", "200 180" ],
+      "python_value" : [ "[70,70]", "[200,180]" ],
+      "ruby_value" : [ "[70,70]", "[200,180]" ]
+      }, {
+      "parameter" : "NormalizationFactor",
+      "value" : 255.0
+      }, {
+      "parameter" : "StoppingValue",
+      "value" : 50.0
+    } ]
+  } ]
+}

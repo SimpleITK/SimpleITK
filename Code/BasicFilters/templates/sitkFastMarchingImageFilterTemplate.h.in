@@ -1,0 +1,78 @@
+#ifndef __sitk${name}ImageFilter_h
+#define __sitk${name}ImageFilter_h
+
+$(include DoNotEditWarning.h.in)
+
+#include <memory>
+
+#include "sitkDualImageFilter.h"
+$(include AddExtraIncludes.h.in)
+
+namespace itk {
+  namespace simple {
+
+    /** \class ${name}ImageFilter
+     *
+     * ${doc}
+     */
+$(include ClassDeclaration.h.in)
+$(include PublicDeclarations.h.in)
+$(include MemberGetSetDeclarations.h.in)
+      /** Set trial points. The default trial value (i.e. 0.0) is used for each index. */
+      Self& SetTrialPoints ( std::vector< std::vector<unsigned int> > t )
+        {
+        this->m_TrialPoints = t; return *this;
+        }
+
+      /** Add trial point */
+      Self& AddTrialPoint( std::vector<unsigned int> t )
+        {
+        this->m_TrialPoints.push_back( t ); return *this;
+        }
+
+      /** Clear trial points */
+      Self& ClearTrialPoints( )
+        {
+        this->m_TrialPoints.clear(); return *this;
+        }
+
+      /** Get trial points */
+      std::vector< std::vector<unsigned int> > GetTrialPoints()
+        {
+        return this->m_TrialPoints;
+        }
+
+$(include ClassNameAndPrint.h.in)
+
+$(include ExecuteMethodNoParameters.h.in)$(if members and #members > 0 then
+OUT=[[
+      /** Execute the filter on the input image with the given parameters */
+      Image Execute ( const Image&,
+        std::vector< std::vector<unsigned int> > trialPoints$(foreach members ,
+        ${type} in${name}) );]]end)
+
+$(include CustomMethods.h.in)
+
+$(include ExecuteInternalMethod.h.in)
+
+$(include MemberFunctionDispatch.h.in)
+
+$(include PrivateMemberDeclarations.h.in)
+      /** List of interior trail points used to initialize the fast marching */
+      std::vector< std::vector<unsigned int> > m_TrialPoints;
+
+$(include ClassEnd.h.in)
+
+    /**
+     * itk::simple::${name}ImageFilter Functional Interface
+     *
+     * This function directly calls the execute method of ${name}ImageFilter
+     * in order to support a fully functional API
+     */
+    Image ${name} ( const Image& imageA,
+      std::vector< std::vector<unsigned int> > inTrialPoints$(when members $(foreach members ,
+      ${type} in${name} = ${default})) );
+
+  } // end namespace simple
+} // end namespace itk
+#endif
