@@ -548,6 +548,11 @@ TEST_F(CSharp,${name}) {
   std::string ExeName = "Test${name}ImageFilter.exe";
   std::string ExePathAndName = ExePath + "/" + ExeName;
 
+  // On Linux, we need to specify where the shared library is found
+  std::string path = dataFinder.GetBuildDirectory() + "/Wrapping/CSharpBinaries";
+  SetEnvironment ( "LD_LIBRARY_PATH", path );
+
+
   $(foreach tests
     {
     /* ${description} */
