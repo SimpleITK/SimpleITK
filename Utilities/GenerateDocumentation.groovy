@@ -72,7 +72,7 @@ def formatDescription ( parent ) {
         case "see":
           // The "see" simplesect should have each element formated with a \see, and then returned
           it.each { child ->
-            result.append ( "\\see" + formatDescription ( child ) + "\n" )
+            result.append ( "\\see " + formatDescription ( child ) + "\n" )
           }
           return result.toString()
           break
