@@ -292,8 +292,8 @@ if ( WRAP_JAVA )
     set( _java_file_class "${_java_class}.class" )
 
     if(WIN32)
-      set( _JAVA_LIBRARY_PATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/$<CONFIGURATION>$" )
-      set( _JAVA_CLASSPATH "${SimpleITK_BINARY_DIR}/Wrapping/org.itk.simple.jar;${CMAKE_CURRENT_BINARY_DIR}/$<CONFIGURATION>$" )
+      set( _JAVA_LIBRARY_PATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/$<CONFIGURATION>" )
+      set( _JAVA_CLASSPATH "${SimpleITK_BINARY_DIR}/Wrapping/org.itk.simple.jar;${CMAKE_CURRENT_BINARY_DIR}/$<CONFIGURATION>" )
     else(WIN32)
       set( _JAVA_LIBRARY_PATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}" )
       set( _JAVA_CLASSPATH "${SimpleITK_BINARY_DIR}/Wrapping/org.itk.simple.jar:${CMAKE_CURRENT_BINARY_DIR}" )
@@ -305,7 +305,7 @@ if ( WRAP_JAVA )
       ARGS -classpath "${_JAVA_CLASSPATH}"
       -d "${CMAKE_CURRENT_BINARY_DIR}"
       "${java_file}"
-      DEPENDS ${java_file} SimpleITKJava
+      DEPENDS ${java_file} SimpleITKJava org_itk_simple_jar
       )
 
     list( APPEND compiled_java_tests "${CMAKE_CURRENT_BINARY_DIR}/${_java_file_class}")
