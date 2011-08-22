@@ -78,7 +78,7 @@
     "tag" : "defaults",
     "description" : "using default parameters in 2D",
     "inputA" : "Input/cthead1-Float.mha",
-    "inputB" : "Input/2th_cthead1.png",
+    "inputB" : "Input/2th_cthead1.mha",
     "setttings" : [ ],
     "tolerance" : "0.01"
   } ],

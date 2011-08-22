@@ -408,7 +408,7 @@ if ( WRAP_PYTHON )
     "${TEST_HARNESS_DATA_DIRECTORY}/Input/cthead1.png"
     "${TEST_HARNESS_TEMP_DIRECTORY}/Python.Example.N4BiasFieldCorrection.nrrd"
     "1"
-    "${TEST_HARNESS_DATA_DIRECTORY}/Input/2th_cthead1.png"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/2th_cthead1.mha"
     "20"
     "2" )
 
