@@ -116,6 +116,7 @@ void ImportImageFilter::SetBufferAsInt32( int32_t * buffer, unsigned int numberO
 void ImportImageFilter::SetBufferAsUInt32( uint32_t * buffer, unsigned int numberOfComponents )
 {
   this->m_Buffer = buffer;
+  this->m_NumberOfComponentsPerPixel = numberOfComponents;
   if ( this->m_NumberOfComponentsPerPixel == 1 )
     {
     this->m_PixelIDValue = ImageTypeToPixelIDValue< itk::Image<uint32_t, UnusedDimension> >::Result;
