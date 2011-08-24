@@ -89,12 +89,7 @@ namespace itk
     // Get Origin
     virtual std::vector<double> GetOrigin( void ) const
       {
-      typename ImageType::PointType origin = this->m_Image->GetOrigin();
-      std::vector<double> orgn( ImageType::ImageDimension );
-
-      std::copy( origin.Begin(), origin.End(), orgn.begin() );
-
-      return orgn;
+        return sitkITKVectorToSTL<double>( this->m_Image->GetOrigin() );
       }
 
     // Set Origin
@@ -104,22 +99,14 @@ namespace itk
         {
         sitkExceptionMacro("Image::SetOrigin -> vector dimension mismatch");
         }
-      typename ImageType::PointType origin;
 
-      std::copy( orgn.begin(), orgn.end(), origin.Begin() );
-
-      this->m_Image->SetOrigin( origin );
+      this->m_Image->SetOrigin( sitkSTLVectorToITK< typename ImageType::PointType> ( orgn ) );
       }
 
     // Get Spacing
     virtual std::vector<double> GetSpacing( void ) const
       {
-      typename ImageType::SpacingType spacing = this->m_Image->GetSpacing();
-      std::vector<double> spc( ImageType::ImageDimension );
-
-      std::copy( spacing.Begin(), spacing.End(), spc.begin() );
-
-      return spc;
+        return sitkITKVectorToSTL<double>( this->m_Image->GetSpacing() );
       }
 
     // Set Spacing
@@ -129,11 +116,8 @@ namespace itk
         {
         sitkExceptionMacro("Image::SetSpacing -> vector dimension mismatch");
         }
-      typename ImageType::SpacingType spacing;
 
-      std::copy( spc.begin(), spc.end(), spacing.Begin() );
-
-      this->m_Image->SetSpacing( spacing );
+      this->m_Image->SetSpacing( sitkSTLVectorToITK< typename ImageType::SpacingType> ( spc ) );
       }
 
     // Physical Point to Index
@@ -144,19 +128,10 @@ namespace itk
         sitkExceptionMacro("vector dimension mismatch");
         }
 
-      typename ImageType::PointType point;
-      std::copy( pt.begin(), pt.end(), point.Begin() );
-
       typename ImageType::IndexType index;
-      this->m_Image->TransformPhysicalPointToIndex(point, index);
-      std::vector<int64_t> idx( ImageType::ImageDimension );
+      this->m_Image->TransformPhysicalPointToIndex( sitkSTLVectorToITK< typename ImageType::PointType> ( pt ), index);
 
-      for( unsigned int i = 0; i < ImageType::ImageDimension; ++i )
-        {
-        idx[i] = index[i];
-        }
-
-      return idx;
+      return sitkITKVectorToSTL<int64_t>( index );
       }
 
     // Index to Physical Point
@@ -166,20 +141,18 @@ namespace itk
         {
         sitkExceptionMacro("vector dimension mismatch");
         }
-      typename ImageType::IndexType index;
 
-      for( unsigned int i = 0; i < ImageType::ImageDimension; ++i )
-        {
-        index[i] = idx[i];
-        }
+
+        typename ImageType::IndexType index;
+        for ( unsigned int i = 0; i < ImageType::ImageDimension; ++i )
+          {
+          index[i] = idx[i];
+          }
 
       typename ImageType::PointType point;
-      this->m_Image->TransformIndexToPhysicalPoint(index, point);
-      std::vector<double> pt( ImageType::ImageDimension );
+      this->m_Image->TransformIndexToPhysicalPoint( index, point);
 
-      std::copy( point.Begin(), point.End(), pt.begin() );
-
-      return pt;
+      return sitkITKVectorToSTL<double>( point );
       }
 
     virtual unsigned int GetSize( unsigned int dimension ) const
@@ -198,11 +171,7 @@ namespace itk
         typename ImageType::RegionType largestRegion = this->m_Image->GetLargestPossibleRegion();
         std::vector<unsigned int> size( ImageType::ImageDimension );
 
-        for ( unsigned int i = 0; i < ImageType::ImageDimension; ++i )
-          {
-          size[i] = largestRegion.GetSize(i);
-          }
-        return size;
+        return sitkITKVectorToSTL<unsigned int>( largestRegion.GetSize() );
       }
 
     std::string ToString( void ) const

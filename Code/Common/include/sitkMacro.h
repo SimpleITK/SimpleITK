@@ -16,18 +16,14 @@
 #include "sitkPixelIDValues.h"
 #include "sitkExceptionObject.h"
 
+#include <vector>
+
 namespace itk {
+
+template< unsigned int D > class Index;
+template< unsigned int D > class Size;
 namespace simple {
 
-#define printStdVector(vec, os)\
-  {\
-  os << "[";\
-  for(unsigned int cntr = 0; cntr < vec.size()-1; ++cntr)\
-    {\
-    os << vec[cntr] << ",";\
-    }\
-  os << vec[vec.size()-1] << "]";\
-  }
 
 #define sitkExceptionMacro(x)                                           \
   {                                                                     \
@@ -57,6 +53,91 @@ template<> struct StaticAssertFailure<true>{ enum { Value = 1 }; };
 
 
 #endif
+
+
+/** \brief Print the elements of std::vector to the provided output stream
+ *
+ * The elements of the std::vector are required to have operator<<
+ */
+template< typename T >
+void printStdVector( const std::vector< T > & vec, std::ostream & os )
+{
+  os << "[";
+  for(unsigned int cntr = 0; cntr < vec.size()-1; ++cntr)
+    {
+    os << vec[cntr] << ",";
+    }
+  os << vec[vec.size()-1] << "]";
+}
+
+/** \brief Copy the elements of an std::vector into a ITK fixed width vector
+ *
+ * If there are more elements in paramters in then the templated ITK
+ * vector type, they are truncated. If less then an exception is
+ * generated.
+ */
+template<  typename TITKVector, typename TType>
+TITKVector sitkSTLVectorToITK( const std::vector< TType > & in )
+{
+  typedef TITKVector itkVectorType;
+  if ( in.size() < itkVectorType::Dimension )
+    {
+    sitkExceptionMacro(<<"Unable to convert vector to ITK type\n"
+                      << "Expected vector of length " <<  itkVectorType::Dimension
+                       << " but only got " << in.size() << " elements." );
+    }
+  itkVectorType out;
+  for( unsigned int i = 0; i < itkVectorType::Dimension; ++i )
+    {
+    out[i] = in[i];
+    }
+  return out;
+}
+template< unsigned int VDimension, typename TType>
+itk::Index<VDimension> sitkSTLVectorToITK( const std::vector< TType > & in )
+{
+  typedef itk::Index<VDimension> itkVectorType;
+  if ( in.size() < VDimension )
+    {
+    sitkExceptionMacro(<<"Unable to convert vector to ITK type\n"
+                      << "Expected vector of length " <<  itkVectorType::Dimension
+                       << " but only got " << in.size() << " elements." );
+    }
+  itkVectorType out;
+  for( unsigned int i = 0; i <VDimension; ++i )
+    {
+    out[i] = in[i];
+    }
+  return out;
+}
+
+template<typename TType,  typename TITKVector>
+std::vector<TType> sitkITKVectorToSTL( const TITKVector & in )
+{
+  std::vector<TType> out( TITKVector::Dimension );
+  std::copy( in.Begin(), in.End(), out.begin() );
+  return out;
+}
+template<typename TType,  unsigned int VDimension>
+std::vector<TType> sitkITKVectorToSTL( const itk::Size<VDimension> & in )
+{
+  std::vector<TType> out( VDimension );
+  for ( unsigned int i = 0; i < VDimension; ++i )
+    {
+    out[i] = in[i];
+    }
+  return out;
+}
+template<typename TType,  unsigned int VDimension>
+std::vector<TType> sitkITKVectorToSTL( const itk::Index<VDimension> & in )
+{
+  std::vector<TType> out( VDimension );
+  for ( unsigned int i = 0; i < VDimension; ++i )
+    {
+    out[i] = in[i];
+    }
+  return out;
+}
 
 }
 }

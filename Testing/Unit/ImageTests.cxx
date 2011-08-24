@@ -69,13 +69,7 @@ public:
     floatVector2DImage = new itk::simple::Image( itkFloatVector2DImage );
   }
 
-  itk::simple::Image* image;
   itk::ImageBase<3>::Pointer itkShortImage;
-  itk::ImageBase<3>::IndexType index;
-  itk::ImageBase<3>::SizeType size;
-  itk::ImageBase<3>::RegionType region;
-  itk::ImageBase<3>::PointType origin;
-  itk::ImageBase<3>::SpacingType spacing;
 
   typedef itk::Image<short,3> ShortImageType;
   itk::simple::Image* shortImage;
@@ -285,6 +279,16 @@ TEST_F(Image,Properties) {
   EXPECT_EQ(shortImage->GetSpacing()[1], 2.8) << " SetSpacing[1]";
   EXPECT_EQ(shortImage->GetSpacing()[2], 3.7) << " SetSpacing[2]";
   shortImage->SetOrigin( spacing );
+
+  // Check Error conditions for setting Spacing and Origin
+  newSpacing.clear();
+  newSpacing.push_back( 99 );
+  newSpacing.push_back( 99 );
+  ASSERT_ANY_THROW( shortImage->SetSpacing( newSpacing ) ) << " setting with too short spacing";
+
+  newOrigin.clear();
+  newOrigin.push_back( -99.99 );
+  ASSERT_ANY_THROW( shortImage->SetOrigin( newOrigin ) ) << "setting with too short origin";
 }
 
 namespace sitk = itk::simple;
