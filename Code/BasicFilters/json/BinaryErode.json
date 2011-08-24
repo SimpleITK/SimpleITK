@@ -13,7 +13,7 @@
   }, {
     "name" : "ForegroundValue",
     "type" : "double",
-    "default" : "255",
+    "default" : "1.0",
     "pixeltype" : "Input",
     "doc" : ""
   }, {
