@@ -24,15 +24,6 @@ template< unsigned int D > class Index;
 template< unsigned int D > class Size;
 namespace simple {
 
-#define printStdVector(vec, os)\
-  {\
-  os << "[";\
-  for(unsigned int cntr = 0; cntr < vec.size()-1; ++cntr)\
-    {\
-    os << vec[cntr] << ",";\
-    }\
-  os << vec[vec.size()-1] << "]";\
-  }
 
 #define sitkExceptionMacro(x)                                           \
   {                                                                     \
@@ -63,6 +54,21 @@ template<> struct StaticAssertFailure<true>{ enum { Value = 1 }; };
 
 #endif
 
+
+/** \brief Print the elements of std::vector to the provided output stream
+ *
+ * The elements of the std::vector are required to have operator<<
+ */
+template< typename T >
+void printStdVector( const std::vector< T > & vec, std::ostream & os )
+{
+  os << "[";
+  for(unsigned int cntr = 0; cntr < vec.size()-1; ++cntr)
+    {
+    os << vec[cntr] << ",";
+    }
+  os << vec[vec.size()-1] << "]";
+}
 
 /** \brief Copy the elements of an std::vector into a ITK fixed width vector
  *
