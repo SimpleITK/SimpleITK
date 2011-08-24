@@ -93,6 +93,12 @@ if ( WRAP_PYTHON )
   SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${PYTHON_LIBRARIES} ${ITK_LIBRARIES})
   set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKPYTHON_wrap.cxx COMPILE_FLAGS "-w")
 
+  # Installation
+  set( SIMPLEITK_PYTHON_MODULE_DIR ${SimpleITK_BINARY_DIR}/Wrapping )
+  get_target_property( SIMPLEITK_BINARY_MODULE
+    ${SWIG_MODULE_SimpleITK_REAL_NAME} LOCATION )
+  configure_file( ${SimpleITK_SOURCE_DIR}/Wrapping/PythonPackage/setup.py.in
+    ${SimpleITK_BINARY_DIR}/Wrapping/PythonPackage/setup.py )
 endif()
 
 #
