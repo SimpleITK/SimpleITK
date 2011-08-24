@@ -279,6 +279,16 @@ TEST_F(Image,Properties) {
   EXPECT_EQ(shortImage->GetSpacing()[1], 2.8) << " SetSpacing[1]";
   EXPECT_EQ(shortImage->GetSpacing()[2], 3.7) << " SetSpacing[2]";
   shortImage->SetOrigin( spacing );
+
+  // Check Error conditions for setting Spacing and Origin
+  newSpacing.clear();
+  newSpacing.push_back( 99 );
+  newSpacing.push_back( 99 );
+  ASSERT_ANY_THROW( shortImage->SetSpacing( newSpacing ) ) << " setting with too short spacing";
+
+  newOrigin.clear();
+  newOrigin.push_back( -99.99 );
+  ASSERT_ANY_THROW( shortImage->SetOrigin( newOrigin ) ) << "setting with too short origin";
 }
 
 namespace sitk = itk::simple;
