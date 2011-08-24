@@ -133,7 +133,7 @@ TEST(BasicFilters,HashImageFilter) {
 
 TEST(BasicFilters,LabelStatistics) {
   itk::simple::Image image = itk::simple::ReadImage ( dataFinder.GetFile ( "Input/cthead1.png" ) );
-  itk::simple::Image labels = itk::simple::ReadImage ( dataFinder.GetFile ( "Input/2th_cthead1.png" ) );
+  itk::simple::Image labels = itk::simple::ReadImage ( dataFinder.GetFile ( "Input/2th_cthead1.mha" ) );
 
   itk::simple::LabelStatisticsImageFilter stats;
   stats.Execute ( image, labels );

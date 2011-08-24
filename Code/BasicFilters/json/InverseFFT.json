@@ -1,0 +1,18 @@
+{
+  "name" : "InverseFFT",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "ComplexPixelIDTypeList",
+  "filter_type" : "itk::InverseFFTImageFilter<InputImageType>",
+  "members" : [ ],
+  "tests" : [ {
+    "tag" : "defaults",
+    "description" : "Test ReserseFFT",
+    "inputA" : "Input/RA-FFT-Complex.nrrd",
+    "tolerance" : "0.01",
+    "settings" : [ ]
+  } ],
+  "briefdescription" : "Base class for \"Inverse\" Fast Fourier Transform.\n"
+}
