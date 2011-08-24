@@ -1,0 +1,41 @@
+{
+  "name" : "Derivative",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "RealPixelIDTypeList",
+  "vector_pixel_types_by_component" : "RealVectorPixelIDTypeList",
+  "members" : [ {
+    "name" : "Direction",
+    "type" : "unsigned int",
+    "default" : "0u"
+  },{
+    "name" : "Order",
+    "type" : "unsigned int",
+    "default" : "1u"
+  }, {
+    "name" : "UseImageSpacing",
+    "type" : "bool",
+    "default" : "true"
+  } ], 
+  "tests" : [ {
+    "tag" : "defaults",
+    "description" : "Simply run with default settings",
+    "inputA" : "Input/Ramp-Zero-One-Float.nrrd",
+    "settings" : [ ],
+    "tolerance" : 0.0001
+  }, {
+    "tag" : "zsecondorder",
+    "description" : "Run with direction and order set",
+    "inputA" : "Input/Ramp-Zero-One-Float.nrrd",
+    "tolerance": 0.0001,
+    "settings" : [ {
+      "parameter" : "Direction",
+      "value" : "2"
+    }, { 
+       "parameter" : "Order",
+       "value" : "2"
+    } ]
+  } ]
+}

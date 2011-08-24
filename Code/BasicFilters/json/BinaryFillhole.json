@@ -30,7 +30,7 @@
     "tag" : "BinaryFillhole1",
     "description" : "Test binary fillhole with default not fully connected",
     "inputA" : "Input/BlackDots.png",
-    "md5hash" : "fc79dc09164291c76b95aaa066633f67"
+    "md5hash" : "fc79dc09164291c76b95aaa066633f67",
     "settings" : [ {
       "parameter" : "ForegroundValue",
       "value" : "255"
@@ -44,8 +44,7 @@
       "parameter" : "FullyConnected",
       "value" : "true",
       "python_value" : "True"
-    },
-    {
+    }, {
       "parameter" : "ForegroundValue",
       "value" : "255"
     } ]

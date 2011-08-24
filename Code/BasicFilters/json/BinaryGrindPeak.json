@@ -43,7 +43,7 @@
     "settings" : [ {
       "parameter" : "ForegroundValue",
       "value" : "255"
-    }]
+    } ]
   }, {
     "tag" : "BinaryGrindPeak2",
     "description" : "Test binary grind peak fully connected",

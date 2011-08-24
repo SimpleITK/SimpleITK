@@ -2,19 +2,24 @@
 #-----------------------------------------------------------------------------
 # Get and build itk
 
-set(ITK_PYTHON_ARGS
-      -DPYTHON_EXECUTABLE:PATH=${${CMAKE_PROJECT_NAME}_PYTHON_EXECUTABLE}
-      -DPYTHON_INCLUDE_DIR:PATH=${${CMAKE_PROJECT_NAME}_PYTHON_INCLUDE}
-      -DPYTHON_LIBRARY:FILEPATH=${${CMAKE_PROJECT_NAME}_PYTHON_LIBRARY}
+set(ITK_LANGUAGES_VARS
+      PYTHON_EXECUTABLE
+      PYTHON_INCLUDE_DIR
       )
+
+VariableListToCache( ITK_LANGUAGES_VARS  ep_languages_cache )
+VariableListToArgs( ITK_LANGUAGES_VARS  ep_languages_args )
 
 
 set(proj ITK)  ## Use ITK convention of calling it ITK
 set(ITK_REPOSITORY git://itk.org/ITK.git)
 set(ITK_DIR ${CMAKE_INSTALL_PREFIX}/lib/cmake/ITK-4.0)
-set(ITK_TAG_COMMAND GIT_TAG  d49dc15f93c68469866a )
+set(ITK_TAG_COMMAND GIT_TAG  bc41fcd540782294dd41)
 set(WrapITK_DIR ${CMAKE_INSTALL_PREFIX}/lib/cmake/ITK-4.0/WrapITK)
 message(STATUS "ITK_WRAPPING=${ITK_WRAPPING}")
+
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt" "${ep_languages_cache}\n${ep_common_cache}" )
+
 ExternalProject_Add(${proj}
   GIT_REPOSITORY ${ITK_REPOSITORY}
   ${ITK_TAG_COMMAND}
@@ -23,9 +28,12 @@ ExternalProject_Add(${proj}
   BINARY_DIR ${proj}-build
   CMAKE_GENERATOR ${gen}
   CMAKE_ARGS
+  -C "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt"
   ${ep_common_args}
+  ${ep_languages_args}
   -DBUILD_EXAMPLES:BOOL=OFF
   -DBUILD_TESTING:BOOL=OFF
+  -DBUILD_SHARED_LIBS:BOOL=${ITK_WRAPPING}
   -DITK_LEGACY_REMOVE:BOOL=ON
   -DITK_BUILD_ALL_MODULES:BOOL=ON
   -DITK_USE_REVIEW:BOOL=ON
@@ -33,7 +41,7 @@ ExternalProject_Add(${proj}
   -DINSTALL_WRAP_ITK_COMPATIBILITY:BOOL=OFF
   -DWRAP_float:BOOL=ON
   -DWRAP_unsigned_char:BOOL=ON
-  -DWRAP_signed_short:BOOL=ON
+  -DWRAP_signed_short:BOOL=ON≈ƒ
   -DWRAP_unsigned_short:BOOL=ON
   -DWRAP_complex_float:BOOL=ON
   -DWRAP_vector_float:BOOL=ON
