@@ -39,7 +39,12 @@ $(for i=1,#tcl_value do OUT=OUT .. "  filter AddSeed [list ".. tcl_value[i] .. "
 elseif parameter == "SeedList" then
 OUT=[[  filter ClearSeeds
 $(for i=1,#value do OUT=OUT .. "  filter AddSeed [list ".. value[i] .. "]\n" end)]]
-
+elseif parameter == "TrialPoints" and tcl_value then
+OUT=[[  filter ClearTrialPoints
+$(for i=1,#tcl_value do OUT=OUT .. "  filter AddTrialPoint [list ".. tcl_value[i] .. "]\n" end)]]
+elseif parameter == "TrialPoints" then
+OUT=[[  filter ClearTrialPoints
+$(for i=1,#value do OUT=OUT .. "  filter AddTrialPoint [list ".. value[i] .. "]\n" end)]]
 else
 OUT=[[
   filter Set${parameter} $(if tcl_value then OUT='${tcl_value}' else OUT='${value}'end)]]

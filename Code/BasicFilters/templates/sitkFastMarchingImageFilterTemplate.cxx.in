@@ -1,0 +1,109 @@
+$(include DoNotEditWarning.cxx.in)
+
+$(include StandardIncludes.cxx.in)
+
+namespace itk {
+namespace simple {
+
+//----------------------------------------------------------------------------
+
+//
+// Default constructor that initializes parameters
+//
+$(include ConstructorSignature.cxx.in)
+{
+  this->m_TrialPoints = std::vector< std::vector<unsigned int> >();
+$(include ConstructorInitializeMembers.cxx.in)
+$(include ConstructorMemberFunctionSetup.cxx.in)
+
+$(include ConstructorVectorPixels.cxx.in)
+}
+
+//
+// ToString
+//
+$(include ToStringSignature.cxx.in)
+{
+$(include ToStringBody.cxx.in)  out << " TrialPoints:" << std::endl;
+  for (unsigned int i = 0; i < this->m_TrialPoints.size(); ++i)
+    {
+    out << "  ";
+    printStdVector(this->m_TrialPoints[i], out);
+    out << std::endl;
+    }
+
+$(include ToStringReturn.cxx.in)
+}
+
+//
+// Execute
+//$(if members and #members > 0 then
+OUT = [[
+
+Image ${name}ImageFilter::Execute ( const Image& image1,
+  std::vector< std::vector<unsigned int> > inTrialPoints$(foreach members ,
+  ${type} in${name}) )
+{
+$(foreach members
+$(if (not no_set_method) or (no_set_method == 0) then
+OUT = '  this->Set${name} ( in${name} );'
+end)
+)  this->SetTrialPoints ( inTrialPoints );
+
+  return this->Execute ( image1 );
+}
+
+]]
+end)
+$(include ExecuteNoParameters.cxx.in)
+
+//----------------------------------------------------------------------------
+
+$(include ExecuteInternalVectorImages.cxx.in)
+//
+// ExecuteInternal
+//
+$(include ExecuteInternalSignature.cxx.in)
+{
+$(include ExecuteInternalTypedefs.cxx.in)
+
+$(include ExecuteInternalGetImagePointers.cxx.in)
+
+$(include ExecuteInternalITKFilter.cxx.in)
+
+$(include ExecuteInternalSetITKFilterInputs.cxx.in)
+  // Convert Trial Points from std::vector< std::vector<unsigned int> > to NodeContainer
+  typedef typename FilterType::NodeType NodeType;
+  typedef typename FilterType::NodeIndexType NodeIndexType;
+  typedef typename FilterType::NodeContainer NodeContainer;
+  typename NodeContainer::Pointer nodes = NodeContainer::New();
+
+  for (unsigned int i = 0; i < m_TrialPoints.size(); ++i)
+    {
+    NodeType node;
+    for (unsigned int j = 0; j < m_TrialPoints[i].size(); ++j)
+      {
+      node.GetIndex()[j] = (typename NodeIndexType::IndexValueType)m_TrialPoints[i][j];
+      }
+    nodes->InsertElement( i, node );
+    }
+  filter->SetTrialPoints( nodes );
+
+$(include ExecuteInternalUpdateAndReturn.cxx.in)
+}
+
+//-----------------------------------------------------------------------------
+
+//
+// Function to run the Execute method of this filter
+//
+Image ${name} ( const Image& imageA,
+  std::vector< std::vector<unsigned int> > inTrialPoints$(when members $(foreach members ,
+  ${type} in${name} ) ) )
+{
+  ${name}ImageFilter filter;
+  return filter.Execute ( imageA, inTrialPoints$(when members $(foreach members , in${name} ) ) );
+}
+
+} // end namespace simple
+} // end namespace itk

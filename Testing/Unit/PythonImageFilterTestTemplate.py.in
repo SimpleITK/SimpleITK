@@ -41,6 +41,12 @@ $(if parameter == "SeedList" and python_value then
 elseif parameter == "SeedList" then
     OUT=[[  filter.ClearSeeds()
     filter$(for i=1,#value do OUT=OUT .. ".AddSeed( " .. value[i] .. " )" end)]]
+elseif parameter == "TrialPoints" and python_value then
+    OUT=[[    filter.ClearTrialPoints()
+    filter$(for i=1,#python_value do OUT=OUT .. ".AddTrialPoint( " .. python_value[i] .. " )" end)]]
+elseif parameter == "TrialPoints" then
+    OUT=[[  filter.ClearTrialPoints()
+    filter$(for i=1,#value do OUT=OUT .. ".AddTrialPoint( " .. value[i] .. " )" end)]]
 else
 OUT=[[
     filter.Set${parameter}( $(if python_value then OUT='${python_value}' else OUT='${value}' end) )]]
