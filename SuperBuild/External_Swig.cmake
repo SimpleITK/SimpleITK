@@ -1,17 +1,18 @@
+set( TARGET_SWIG_VERSION 2.0.4 )
 if(NOT SWIG_DIR)
   if(WIN32)
     # swig.exe available as pre-built binary on Windows:
     ExternalProject_Add(Swig
-      URL http://prdownloads.sourceforge.net/swig/swigwin-2.0.1.zip
-      URL_MD5 750bf2c129c6670ed2753a0fa6a80d12
-      SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/swigwin-2.0.1
+      URL http://prdownloads.sourceforge.net/swig/swigwin-${TARGET_SWIG_VERSION}.zip
+      URL_MD5 4ab8064b1a8894c8577ef9d0fb2523c8
+      SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/swigwin-${TARGET_SWIG_VERSION}
       CONFIGURE_COMMAND ""
       BUILD_COMMAND ""
       INSTALL_COMMAND ""
       )
 
-    set(SWIG_DIR ${CMAKE_CURRENT_BINARY_DIR}/swigwin-2.0.1) # ??
-    set(SWIG_EXECUTABLE ${CMAKE_CURRENT_BINARY_DIR}/swigwin-2.0.1/swig.exe)
+    set(SWIG_DIR ${CMAKE_CURRENT_BINARY_DIR}/swigwin-${TARGET_SWIG_VERSION}) # ??
+    set(SWIG_EXECUTABLE ${CMAKE_CURRENT_BINARY_DIR}/swigwin-${TARGET_SWIG_VERSION}/swig.exe)
     set(Swig_DEPEND Swig)
   else()
     # Perl Compatible Regular Expressions
@@ -23,14 +24,14 @@ if(NOT SWIG_DIR)
       )
 
     ExternalProject_add(Swig
-      URL http://prdownloads.sourceforge.net/swig/swig-2.0.1.tar.gz
-      URL_MD5 df4465a62ccc5f0120fee0890ea1a31f
+      URL http://prdownloads.sourceforge.net/swig/swig-${TARGET_SWIG_VERSION}.tar.gz
+      URL_MD5  4319c503ee3a13d2a53be9d828c3adc0
       CONFIGURE_COMMAND ../Swig/configure --prefix=${CMAKE_INSTALL_PREFIX}
       --with-pcre-prefix=${CMAKE_INSTALL_PREFIX}
       DEPENDS PCRE
       )
 
-    set(SWIG_DIR ${CMAKE_INSTALL_PREFIX}/share/swig/2.0.1)
+    set(SWIG_DIR ${CMAKE_INSTALL_PREFIX}/share/swig/${TARGET_SWIG_VERSION})
     set(SWIG_EXECUTABLE ${CMAKE_INSTALL_PREFIX}/bin/swig)
     set(Swig_DEPEND Swig)
   endif()
