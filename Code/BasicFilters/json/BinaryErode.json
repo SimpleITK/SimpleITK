@@ -13,7 +13,7 @@
   }, {
     "name" : "ForegroundValue",
     "type" : "double",
-    "default" : "255",
+    "default" : "1.0",
     "pixeltype" : "Input",
     "doc" : ""
   }, {
@@ -41,6 +41,9 @@
       "java_value" : "${name}ImageFilter.KernelType.Ball",
       "tcl_value" : "$$${name}ImageFilter_Ball",
       "csharp_value" : "${name}ImageFilter.KernelType.Ball"
+    }, {
+      "parameter" : "ForegroundValue",
+      "value" : "255"
     } ]
   } ],
   "briefdescription" : "Fast binary erosion.\n",
