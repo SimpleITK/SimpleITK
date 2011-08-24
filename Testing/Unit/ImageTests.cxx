@@ -69,13 +69,7 @@ public:
     floatVector2DImage = new itk::simple::Image( itkFloatVector2DImage );
   }
 
-  itk::simple::Image* image;
   itk::ImageBase<3>::Pointer itkShortImage;
-  itk::ImageBase<3>::IndexType index;
-  itk::ImageBase<3>::SizeType size;
-  itk::ImageBase<3>::RegionType region;
-  itk::ImageBase<3>::PointType origin;
-  itk::ImageBase<3>::SpacingType spacing;
 
   typedef itk::Image<short,3> ShortImageType;
   itk::simple::Image* shortImage;
