@@ -1,0 +1,17 @@
+{
+  "name" : "VectorMagnitude",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "VectorPixelIDTypeList",
+  "filter_type" : "itk::VectorMagnitudeImageFilter< InputImageType, itk::Image<typename itk::NumericTraits< typename InputImageType::PixelType >::ValueType, InputImageType::ImageDimension> >",
+  "members" : [ ],
+  "tests" : [ {
+    "tag" : "3d",
+    "description" : "3D",
+    "inputA" : "Input/RA-Gradient.nrrd",
+    "settings" : [ ],
+    "tolerance" : "0.0001"
+  } ]
+}
