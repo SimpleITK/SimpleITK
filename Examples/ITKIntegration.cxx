@@ -20,11 +20,7 @@
 #endif
 
 // SimpleITK includes
-#include "sitkImage.h"
-#include "sitkConnectedThresholdImageFilter.h"
-#include "sitkImageFileReader.h"
-#include "sitkImageFileWriter.h"
-#include "sitkCastImageFilter.h"
+#include "SimpleITK.h"
 
 // ITK includes
 #include "itkImage.h"
