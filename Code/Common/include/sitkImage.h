@@ -164,6 +164,35 @@ namespace simple
     void SetPixelAsDouble( const std::vector<uint32_t> &idx, double v );
     /** @} */
 
+   /** \brief Get a pointer to the image buffer
+     * \warning this is dangerous
+     *
+     * The size of the buffer is the number of components*Xsize*Ysize
+     * and then Zsize of a 3D image. The buffer should be accessed as
+     * a 1-D array. For example a 3D image buffer should be accessed:
+     * \code
+     * uint8_t *buffer = img->GetBufferAsUInt8();
+     * buffer[c + numComponents*(x+ xSize* (y*+ySize*z))]
+     * \endcode
+     *
+     * The pointer to the buffer is not referenced
+     * counted. Additionally, while this image is made unique before
+     * returnign the pointer, additional copying and usage may
+     * introduce unexpected aliasing.
+     *
+     * \sa Image::GetPixelIDValue
+     * @{
+     */
+    uint8_t  *GetBufferAsUInt8( );
+    int16_t  *GetBufferAsInt16( );
+    uint16_t *GetBufferAsUInt16( );
+    int32_t  *GetBufferAsInt32( );
+    uint32_t *GetBufferAsUInt32( );
+    float    *GetBufferAsFloat( );
+    double   *GetBufferAsDouble( );
+    /* @} */
+
+
   protected:
 
     /** \brief Methods called by the constructor to allocate and initialize
