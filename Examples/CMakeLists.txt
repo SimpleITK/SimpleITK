@@ -11,6 +11,9 @@ target_link_libraries ( SimpleGaussianFunctional ${SimpleITK_LIBRARIES} )
 add_executable ( ITKIntegration ITKIntegration.cxx )
 target_link_libraries ( ITKIntegration ${SimpleITK_LIBRARIES} )
 
+add_executable ( BufferImportExport BufferImportExport.cxx )
+target_link_libraries ( BufferImportExport ${SimpleITK_LIBRARIES} )
+
 # Add individual C# executables
 if( WRAP_CSHARP )
   csharp_add_executable(
