@@ -6,11 +6,87 @@
   "doc" : "",
   "pixel_types" : "NonLabelPixelIDTypeList",
   "members" : [ {
+    "name" : "SourceSize",
+    "type" : "std::vector<unsigned int>",
+    "default" : "std::vector<unsigned int>(3, 1)",
+    "dim_vec" : 1,
+    "itk_type" : "typename InputImageType::SizeType",
+    "custom_itk_cast" : ""
+  }, {
+    "name" : "SourceIndex",
+    "type" : "std::vector<int>",
+    "default" : "std::vector<int>(3, 0)",
+    "dim_vec" : 1,
+    "itk_type" : "typename InputImageType::IndexType",
+    "custom_itk_cast" : " typename InputImageType::RegionType itkRegion;\n  for( unsigned int i = 0; i < inImage1.GetDimension(); ++i )\n    {\n    itkRegion.SetIndex( i, m_SourceIndex[i] );\n    itkRegion.SetSize( i, m_SourceSize[i] );\n    }\n  filter->SetSourceRegion( itkRegion );"
+  }, {
     "name" : "DestinationIndex",
     "type" : "std::vector<int>",
     "default" : "std::vector<int>(3, 0)",
     "dim_vec" : 1,
     "itk_type" : "typename InputImageType::IndexType"
   } ],
-  "tests" : [  ]
+  "tests" : [ {
+    "tag" : "defaults",
+    "description" : "use the defaults on a 2D rgb image",
+    "inputA" : "Input/BlackDots.png",
+    "inputB" : "Input/SmallWhiteCircle.nrrd",
+    "md5hash" : "096471143edf7ce5903613fb58ed77c8",
+      "settings" : [ {
+      "parameter" : "SourceSize",
+      "type" : "unsigned int",
+      "dim_vec" : 1,
+      "value" : "{200, 150}",
+      "tcl_value" : "[list 200 150]",
+      "python_value" : "[ 200, 150 ]",
+      "ruby_value" : "[ 200, 150 ]"
+      }]
+  }, {
+    "tag" : "defaults-rgb",
+    "description" : "use the defaults on a 2D rgb image",
+    "inputA" : "Input/VM1111Shrink-RGB.png",
+    "inputB" : "Input/fruit.png",
+    "md5hash" : "0a2187d07bbb19c84836a78a6e0ba16c",
+      "settings" : [ {
+      "parameter" : "SourceSize",
+      "type" : "unsigned int",
+      "dim_vec" : 1,
+      "value" : "{179, 240}",
+      "tcl_value" : "[list 179 240]",
+      "python_value" : "[ 179, 240 ]",
+      "ruby_value" : "[ 179, 240 ]"
+      }]
+    }, {
+    "tag" : "set_parameters",
+    "description" : "Set a ROI paste region",
+    "inputA" : "Input/BlackDots.png",
+    "inputB" : "Input/SmallWhiteCircle.nrrd",
+    "md5hash" : "b8858dd3926df1e23dc06157b4decd82",
+      "settings" : [ {
+      "parameter" : "SourceSize",
+      "type" : "unsigned int",
+      "dim_vec" : 1,
+      "value" : "{20, 15}",
+      "tcl_value" : "[list 20 15]",
+      "python_value" : "[ 20, 15 ]",
+      "ruby_value" : "[ 20, 15 ]"
+      },{
+      "parameter" : "SourceIndex",
+      "type" : "int",
+      "dim_vec" : 1,
+      "value" : "{100, 100}",
+      "tcl_value" : "[list 100 100]",
+      "python_value" : "[ 100, 100 ]",
+      "ruby_value" : "[ 100, 100 ]"
+      },{
+      "parameter" : "DestinationIndex",
+      "type" : "int",
+      "dim_vec" : 1,
+      "value" : "{100, 100}",
+      "tcl_value" : "[list 100 100]",
+      "python_value" : "[ 100, 100 ]",
+      "ruby_value" : "[ 100, 100 ]"
+      } ]
+  }
+  ]
 }
