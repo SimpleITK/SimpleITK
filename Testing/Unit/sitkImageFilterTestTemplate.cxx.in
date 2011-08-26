@@ -78,7 +78,16 @@ end)
   itk::simple::Image smallImage( 1,1,1,itk::simple::sitkUInt8 );
   itk::simple::Image largeImage( 10,10,10,itk::simple::sitkUInt8 );
   itk::simple::Image smallShortImage( 1,1,1,itk::simple::sitkUInt16 );
-  ASSERT_ANY_THROW ( filter.Execute ( largeImage, smallImage ) ) << " Image sizes are different";]]
+  try
+    {
+    // Try executing with different size images.
+    // This will either work or throw an exception, either is OK. So
+    // this is here just to make sure that the behavior does not cause
+    // undefined behavior such as segfault, or other errouneos behavior.
+    filter.Execute ( largeImage, smallImage );
+    } catch (... )
+    { }
+]]
   if template_code_filename and template_code_filename == "DualImageFilter" then
     OUT = OUT .. [=[
         // todo add intelligence to determin some image types to test
