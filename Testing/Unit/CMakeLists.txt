@@ -265,10 +265,6 @@ macro(ADD_GOOGLE_TESTS target)
   foreach(hit ${AllTestsHits})
     # message ( STATUS "Adding test ${target} --gtest_filter=${hit}" )
     add_test(NAME ${hit} COMMAND ${target} --gtest_filter=${hit})
-    # Run the Python google test with the installed python environment.
-    if( USE_VIRTUALENV AND ${hit} MATCHES "^Python[.]" )
-      set_tests_properties( ${hit} PROPERTIES DEPENDS Python.Install )
-    endif()
   endforeach()
 endmacro()
 
@@ -362,23 +358,11 @@ if ( WRAP_PYTHON )
       set(command arch -${test_arch} ${command})
     endif()
 
-    if( USE_VIRTUALENV )
-      add_test(NAME Python.${name}
-        COMMAND "${ITK_TEST_DRIVER}"
-        ${command}
-        ${ARGN}
-        )
-    else()
-      add_test(NAME Python.${name}
-        COMMAND "${ITK_TEST_DRIVER}"
-        --add-before-env PYTHONPATH "${SimpleITK_BINARY_DIR}/$<CONFIGURATION>/Wrapping"
-        --add-before-env PYTHONPATH "${SimpleITK_BINARY_DIR}/Wrapping"
-        --add-before-env PYTHONPATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/$<CONFIGURATION>"
-        --add-before-env PYTHONPATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}"
-        ${command}
-        ${ARGN}
-        )
-    endif()
+    add_test(NAME Python.${name}
+      COMMAND "${ITK_TEST_DRIVER}"
+      ${command}
+      ${ARGN}
+      )
   endmacro()
 
   #
