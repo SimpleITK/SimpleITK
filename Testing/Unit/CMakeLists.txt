@@ -408,7 +408,7 @@ if ( WRAP_PYTHON )
     "${TEST_HARNESS_DATA_DIRECTORY}/Input/cthead1.png"
     "${TEST_HARNESS_TEMP_DIRECTORY}/Python.Example.N4BiasFieldCorrection.nrrd"
     "1"
-    "${TEST_HARNESS_DATA_DIRECTORY}/Input/2th_cthead1.png"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/2th_cthead1.mha"
     "20"
     "2" )
 
@@ -420,7 +420,8 @@ if ( WRAP_PYTHON )
     "${SimpleITK_SOURCE_DIR}/Testing/Unit/ImageTest.py" )
 
   add_python_test( Test.IOTest
-    "${SimpleITK_SOURCE_DIR}/Testing/Unit/IOTest.py" )
+    "${SimpleITK_SOURCE_DIR}/Testing/Unit/ImageTest.py"
+    "${TEST_HARNESS_TEMP_DIRECTORY}")
 
 endif( WRAP_PYTHON )
 

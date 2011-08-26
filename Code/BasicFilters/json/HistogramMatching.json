@@ -1,0 +1,50 @@
+{
+  "name" : "HistogramMatching",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "filter_type" : "itk::HistogramMatchingImageFilter<InputImageType, OutputImageType>",
+  "number_of_inputs" : 2,
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [ {
+    "name" : "NumberOfHistogramLevels",
+    "type" : "uint32_t",
+    "default" : "256"
+    } {
+    "name" : "NumberOfMatchPoints",
+    "type" : "uint32_t",
+    "default" : "1"
+    }, {
+    "name" : "ThresholdAtMeanIntensity",
+    "type" : "bool",
+    "default" : "true"
+    } ],
+  "tests" : [ {
+    "tag" : "defaults",
+    "description" : "Simply run with default settings",
+    "inputA" : "Input/Ramp-One-Zero-Float.nrrd"
+    "inputB" : "Input/RA-Slice-Float.nrrd"
+    "settings" : [],
+    "tolerance" : "0.0001"
+  }, {
+    "tag" : "near identity",
+    "description" : "same image in input and match should be same output",
+    "inputA" : "Input/RA-Short.nrrd",
+    "inputB" : "Input/RA-Short.nrrd",
+    "settings" : [ {
+      "parameter" : "NumberOfHistogramLevels",
+      "value" : "65536u",
+      "lua_value" : "65536",
+      "python_value" : "65536",
+      "ruby_value" : "65536",
+      "java_value" : "65536",
+      "tcl_value" : "65536",
+      "R_value" : "65536"
+    }, {
+      "parameter" : "ThresholdAtMeanIntensity",
+      "value" : "false"
+      "python_value" : "False"
+    } ],
+    "md5hash" : "a963bd6a755b853103a2d195e01a50d3"
+  } ]
+}
