@@ -20,8 +20,10 @@
 
 namespace itk {
 
+// forward declaration so that we don't need to include itk headers
 template< unsigned int D > class Index;
 template< unsigned int D > class Size;
+
 namespace simple {
 
 
@@ -93,52 +95,17 @@ TITKVector sitkSTLVectorToITK( const std::vector< TType > & in )
     }
   return out;
 }
-template< unsigned int VDimension, typename TType>
-itk::Index<VDimension> sitkSTLVectorToITK( const std::vector< TType > & in )
-{
-  typedef itk::Index<VDimension> itkVectorType;
-  if ( in.size() < VDimension )
-    {
-    sitkExceptionMacro(<<"Unable to convert vector to ITK type\n"
-                      << "Expected vector of length " <<  itkVectorType::Dimension
-                       << " but only got " << in.size() << " elements." );
-    }
-  itkVectorType out;
-  for( unsigned int i = 0; i <VDimension; ++i )
-    {
-    out[i] = in[i];
-    }
-  return out;
-}
 
 template<typename TType,  typename TITKVector>
 std::vector<TType> sitkITKVectorToSTL( const TITKVector & in )
 {
   std::vector<TType> out( TITKVector::Dimension );
-  std::copy( in.Begin(), in.End(), out.begin() );
-  return out;
-}
-template<typename TType,  unsigned int VDimension>
-std::vector<TType> sitkITKVectorToSTL( const itk::Size<VDimension> & in )
-{
-  std::vector<TType> out( VDimension );
-  for ( unsigned int i = 0; i < VDimension; ++i )
+  for( unsigned int i = 0; i < TITKVector::Dimension; ++i )
     {
     out[i] = in[i];
     }
   return out;
 }
-template<typename TType,  unsigned int VDimension>
-std::vector<TType> sitkITKVectorToSTL( const itk::Index<VDimension> & in )
-{
-  std::vector<TType> out( VDimension );
-  for ( unsigned int i = 0; i < VDimension; ++i )
-    {
-    out[i] = in[i];
-    }
-  return out;
-}
-
 }
 }
 

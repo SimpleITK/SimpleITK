@@ -288,7 +288,7 @@ namespace itk
                       typename ImageType::PixelType >::Type
     InternalGetPixel( const std::vector<uint32_t> &idx ) const
       {
-        return this->m_Image->GetPixel( this->ConvertSTLToIndex( idx ) );
+        return this->m_Image->GetPixel( sitkSTLVectorToITK<IndexType>( idx ) );
       }
 
     template < typename TPixelIDType >
@@ -298,7 +298,7 @@ namespace itk
                       typename ImageType::PixelType >::Type
     InternalGetPixel( const std::vector<uint32_t> &idx ) const
       {
-        return this->m_Image->GetPixel( this->ConvertSTLToIndex( idx ) );
+        return this->m_Image->GetPixel( sitkSTLVectorToITK<IndexType>( idx ) );
       }
 
     template < typename TPixelIDType >
@@ -372,7 +372,7 @@ namespace itk
                                         typename ImageTypeToPixelID<ImageType>::PixelIDType >::value >::Type
     InternalSetPixel( const std::vector<uint32_t> &idx, TPixelType v  ) const
       {
-        return this->m_Image->SetPixel( this->ConvertSTLToIndex( idx ), v );
+        return this->m_Image->SetPixel( sitkSTLVectorToITK<IndexType>( idx ), v );
       }
 
     template < typename TPixelType >
@@ -383,19 +383,6 @@ namespace itk
         Unused( idx );
         Unused( v );
         sitkExceptionMacro( "This method is not supported for this image type." )
-      }
-
-    static IndexType ConvertSTLToIndex( const std::vector<uint32_t> &idx )
-      {
-        // convert idx to itk::Index
-        if ( idx.size() < ImageType::ImageDimension )
-          {
-          sitkExceptionMacro( "Image index size mismatch" );
-          }
-        IndexType itkIDX;
-        for ( unsigned int i = 0; i < ImageType::ImageDimension; ++i )
-            itkIDX[i] = idx[i];
-        return itkIDX;
       }
 
   private:
