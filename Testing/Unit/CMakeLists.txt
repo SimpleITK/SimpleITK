@@ -345,6 +345,9 @@ endif ( WRAP_JAVA )
 
 if ( WRAP_PYTHON )
 
+  set( PythonVirtualenvHome ${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVirtualenv )
+  set( PYTHON_EXECUTABLE ${PythonVirtualenvHome}/bin/python )
+
   #
   # This is a macro which set up the enviroment for executing python examples and tests
   #

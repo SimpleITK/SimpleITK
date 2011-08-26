@@ -149,18 +149,6 @@ include(${SimpleITK_SOURCE_DIR}/Utilities/Doxygen/Doxygen.cmake)
 #
 include(SITKLanguageOptions)
 
-if( WRAP_PYTHON )
-  set( PythonVirtualenvHome ${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVirtualenv )
-  add_custom_command(OUTPUT ${PythonVirtualenvHome}/bin/python
-    COMMAND ${PYTHON_EXECUTABLE}
-    ${SimpleITK_SOURCE_DIR}/Testing/PythonPackage/virtualenv.py
-    --python=${PYTHON_EXECUTABLE}
-    --distribute
-    ${PythonVirtualenvHome}
-    COMMENT "Creating Python virtualenv" )
-  set( PYTHON_EXECUTABLE ${PythonVirtualenvHome}/bin/python )
-endif()
-
 #------------------------------------------------------------------------------
 # Go to subdirectories
 add_subdirectory ( Utilities )
@@ -171,7 +159,6 @@ add_subdirectory ( Examples )
 #------------------------------------------------------------------------------
 # ITK uses KWStyle for checking the coding style
 include(${SimpleITK_SOURCE_DIR}/Utilities/KWStyle/KWStyle.cmake)
-
 
 #------------------------------------------------------------------------------
 # set things up for testing

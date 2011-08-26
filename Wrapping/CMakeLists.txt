@@ -95,6 +95,17 @@ if ( WRAP_PYTHON )
   configure_file( ${SimpleITK_SOURCE_DIR}/Wrapping/PythonPackage/setup.py.in
     ${SimpleITK_BINARY_DIR}/Wrapping/PythonPackage/setup.py )
 
+  set( PythonVirtualenvHome ${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVirtualenv )
+  add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_REAL_NAME}
+    PRE_BUILD
+    COMMAND ${PYTHON_EXECUTABLE}
+    ${SimpleITK_SOURCE_DIR}/Testing/PythonPackage/virtualenv.py
+    --python=${PYTHON_EXECUTABLE}
+    --distribute
+    ${PythonVirtualenvHome}
+    COMMENT "Creating Python virtualenv" )
+  set( PYTHON_EXECUTABLE ${PythonVirtualenvHome}/bin/python )
+
   add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_REAL_NAME}
     POST_BUILD
     COMMAND ${PYTHON_EXECUTABLE} ${SimpleITK_BINARY_DIR}/Wrapping/PythonPackage/setup.py
