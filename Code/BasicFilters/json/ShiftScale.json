@@ -25,7 +25,7 @@
     "tag" : "params",
     "description" : " default parameters",
     "inputA" : "Input/RA-Short.nrrd",
-    "settings" : [ 
+    "settings" : [
     {
       "parameter" : "Shift",
       "type" : "double",
@@ -34,7 +34,7 @@
     {
       "parameter" : "Scale",
       "type" : "double",
-      "value" : ".5"
+      "value" : "0.5"
     } ],
     "md5hash" : "e3bee902dc9339d28359ebfb96a70186"
   } ]
