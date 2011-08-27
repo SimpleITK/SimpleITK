@@ -67,6 +67,14 @@ namespace itk
     virtual void SetPixelAsUInt32( const std::vector<uint32_t> &idx, uint32_t v ) = 0;
     virtual void SetPixelAsFloat( const std::vector<uint32_t> &idx, float v ) = 0;
     virtual void SetPixelAsDouble( const std::vector<uint32_t> &idx, double v ) = 0;
+
+    virtual uint8_t  *GetBufferAsUInt8() = 0;
+    virtual int16_t  *GetBufferAsInt16( )= 0;
+    virtual uint16_t *GetBufferAsUInt16( ) = 0;
+    virtual int32_t  *GetBufferAsInt32( ) = 0;
+    virtual uint32_t *GetBufferAsUInt32( ) = 0;
+    virtual float    *GetBufferAsFloat( ) = 0;
+    virtual double   *GetBufferAsDouble( ) = 0;
   };
 
   } // end namespace simple

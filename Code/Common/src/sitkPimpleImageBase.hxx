@@ -20,6 +20,10 @@ namespace itk
   namespace
   {
 
+  template <typename T, typename U>
+  struct MakeDependentOn
+    : public U {};
+
   template <class TImageType>
   class PimpleImage
     : public PimpleImageBase
@@ -247,6 +251,35 @@ namespace itk
         return this->InternalGetPixel< BasicPixelID<double> >( idx );
       }
 
+    virtual uint8_t  *GetBufferAsUInt8()
+      {
+        return static_cast<uint8_t*>(this->InternalGetBuffer< BasicPixelID<uint8_t> >( ));
+      }
+    virtual int16_t  *GetBufferAsInt16( )
+      {
+        return  static_cast<int16_t*>(this->InternalGetBuffer< BasicPixelID<int16_t> >( ));
+      }
+    virtual uint16_t *GetBufferAsUInt16( )
+      {
+        return  static_cast<uint16_t*>(this->InternalGetBuffer< BasicPixelID<uint16_t> >( ));
+      }
+    virtual  int32_t  *GetBufferAsInt32( )
+      {
+        return  static_cast<int32_t*>(this->InternalGetBuffer< BasicPixelID<int32_t> >( ));
+      }
+    virtual uint32_t *GetBufferAsUInt32( )
+      {
+        return  static_cast<uint32_t*>(this->InternalGetBuffer< BasicPixelID<uint32_t> >( ));
+      }
+    virtual float    *GetBufferAsFloat( )
+      {
+        return  static_cast<float*>(this->InternalGetBuffer< BasicPixelID<float> >( ));
+      }
+    virtual double   *GetBufferAsDouble(  )
+      {
+        return  static_cast<double*>(this->InternalGetBuffer< BasicPixelID<double> >( ));
+      }
+
     virtual void SetPixelAsUInt8( const std::vector<uint32_t> &idx, uint8_t v )
       {
         this->InternalSetPixel( idx, v );
@@ -316,6 +349,48 @@ namespace itk
     InternalGetPixel( const std::vector<uint32_t> &idx ) const
       {
         Unused( idx );
+        sitkExceptionMacro( << "The image is of type: " << GetPixelIDValueAsString( this->GetPixelIDValue() )
+                            << " but the GetPixel access method requires type: "
+                            << GetPixelIDValueAsString(  PixelIDToPixelIDValue<TPixelIDType>::Result )
+                            << "!" );
+      }
+
+
+    template < typename TPixelIDType >
+    typename EnableIf<std::tr1::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value
+                      && !IsLabel<TPixelIDType>::Value
+                      && !IsVector<TPixelIDType>::Value,
+                      typename ImageType::PixelType *>::Type
+    InternalGetBuffer( void )
+      {
+        return this->m_Image->GetPixelContainer()->GetBufferPointer();
+      }
+
+    template < typename TPixelIDType >
+    typename EnableIf<std::tr1::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value
+                      && IsLabel<TPixelIDType>::Value
+                      && !IsVector<TPixelIDType>::Value,
+                      typename ImageType::PixelType *>::Type
+    InternalGetBuffer( void )
+      {
+        sitkExceptionMacro( "This method is not supported for LabelMaps." )
+      }
+
+    template < typename TPixelIDType >
+    typename EnableIf<std::tr1::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value
+                      && !IsLabel<TPixelIDType>::Value
+                      && IsVector<TPixelIDType>::Value,
+                      typename MakeDependentOn<TPixelIDType, ImageType>::InternalPixelType >::Type
+    InternalGetBuffer( void )
+      {
+        return this->m_Image->GetPixelContainer()->GetBufferPointer();
+      }
+
+    template < typename TPixelIDType >
+    typename DisableIf<std::tr1::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value,
+                      void *>::Type
+    InternalGetBuffer( void )
+      {
         sitkExceptionMacro( << "The image is of type: " << GetPixelIDValueAsString( this->GetPixelIDValue() )
                             << " but the GetPixel access method requires type: "
                             << GetPixelIDValueAsString(  PixelIDToPixelIDValue<TPixelIDType>::Result )

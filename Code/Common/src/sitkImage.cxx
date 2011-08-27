@@ -355,6 +355,55 @@ namespace itk
       return this->m_PimpleImage->GetPixelAsDouble( idx );
     }
 
+    uint8_t *Image::GetBufferAsUInt8( )
+    {
+      assert( m_PimpleImage );
+      this->MakeUniqueForWrite();
+      return this->m_PimpleImage->GetBufferAsUInt8( );
+    }
+
+    int16_t *Image::GetBufferAsInt16( )
+    {
+      assert( m_PimpleImage );
+      this->MakeUniqueForWrite();
+      return this->m_PimpleImage->GetBufferAsInt16( );
+    }
+
+    uint16_t *Image::GetBufferAsUInt16( )
+    {
+      assert( m_PimpleImage );
+      this->MakeUniqueForWrite();
+      return this->m_PimpleImage->GetBufferAsUInt16( );
+    }
+
+    int32_t *Image::GetBufferAsInt32( )
+    {
+      assert( m_PimpleImage );
+      this->MakeUniqueForWrite();
+      return this->m_PimpleImage->GetBufferAsInt32( );
+    }
+
+    uint32_t *Image::GetBufferAsUInt32( )
+    {
+      assert( m_PimpleImage );
+      this->MakeUniqueForWrite();
+      return this->m_PimpleImage->GetBufferAsUInt32( );
+    }
+
+    float *Image::GetBufferAsFloat( )
+    {
+      assert( m_PimpleImage );
+      this->MakeUniqueForWrite();
+      return this->m_PimpleImage->GetBufferAsFloat( );
+    }
+
+    double *Image::GetBufferAsDouble( )
+    {
+      assert( m_PimpleImage );
+      this->MakeUniqueForWrite();
+      return this->m_PimpleImage->GetBufferAsDouble( );
+    }
+
     void Image::SetPixelAsUInt8( const std::vector<uint32_t> &idx, uint8_t v )
     {
       assert( m_PimpleImage );
