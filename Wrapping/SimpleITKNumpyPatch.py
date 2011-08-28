@@ -2,12 +2,12 @@
 
 # SimplyITK <-> Numpy Array conversion support.
 
-def GetArrayFromImage( img ):
+def GetArrayFromImage( image ):
     """Get a numpy array from a SimpleITK Image."""
 
-    return _SimpleITK.GetArrayFromImage()
+    return _SimpleITK.GetArrayFromImage( image )
 
 def GetImageFromArray( arr ):
     """Get a SimpleITK Image from a numpy array."""
 
-    return _SimpleITK.GetImageFromArray()
+    return _SimpleITK.GetImageFromArray( arr )
