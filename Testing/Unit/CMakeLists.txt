@@ -422,6 +422,9 @@ if ( WRAP_PYTHON )
   add_python_test( Test.IOTest
     "${SimpleITK_SOURCE_DIR}/Testing/Unit/IOTest.py" )
 
+  add_python_test( Test.Numpy
+    "${SimpleITK_SOURCE_DIR}/Testing/Unit/NumpyArrayConversionTest.py" )
+
 endif( WRAP_PYTHON )
 
 

@@ -83,7 +83,7 @@ endif()
 if ( WRAP_PYTHON )
   find_package ( PythonLibs REQUIRED )
   find_package ( PythonInterp REQUIRED )
-  include_directories ( ${PYTHON_INCLUDE_DIR} )
+  include_directories ( ${PYTHON_INCLUDE_DIR} ${SimpleITK_SOURCE_DIR}/Wrapping )
 
   # Run swig
   set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS})
@@ -92,6 +92,14 @@ if ( WRAP_PYTHON )
   SWIG_add_module ( SimpleITK python SimpleITK.i SimpleITKPYTHON_wrap.cxx )
   SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${PYTHON_LIBRARIES} ${ITK_LIBRARIES})
   set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKPYTHON_wrap.cxx COMPILE_FLAGS "-w")
+
+  # For numpy support.
+  configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/SimpleITKNumpyPatch.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/SimpleITKNumpyPatch.cmake @ONLY )
+  add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_REAL_NAME}
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/SimpleITKNumpyPatch.cmake
+    COMMENT "Appending numpy support to SimpleITK.py" )
 
 endif()
 
