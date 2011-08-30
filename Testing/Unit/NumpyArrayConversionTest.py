@@ -11,6 +11,7 @@ def die(message):
 
 sizeX = 4
 sizeY = 5
+sizeZ = 3
 
 #------------------------------------
 # Test numpy array to SimpleITK Image
@@ -32,9 +33,19 @@ except TypeError:
 if not detectedWrongType:
     die("Did not correctly detect the TypeError in argument passing to GetArrayFromImage.")
 
+# 2D image
 image = sitk.Image(sizeX, sizeY, sitk.sitkInt32)
-for i in range(sizeX):
+for j in range(sizeY):
+    for i in range(sizeX):
+        image[i, j] = j*sizeX + i
+
+print(sitk.GetArrayFromImage(image))
+
+# 3D image
+image = sitk.Image(sizeX, sizeY, sizeZ, sitk.sitkFloat32)
+for k in range(sizeY):
     for j in range(sizeY):
-        image[i, j] = i*sizeY + j
+        for i in range(sizeX):
+            image[i, j, k] = (sizeY*k +j)*sizeX + i
 
 print(sitk.GetArrayFromImage(image))
