@@ -27,7 +27,7 @@ endif()
 
 set ( SimpleITK_INCLUDE_DIRS
       ${CMAKE_SOURCE_DIR}/Code/Common/include
-      ${CMAKE_SOURCE_DIR}/Code/Registration
+      ${CMAKE_SOURCE_DIR}/Code/Registration/include
       ${CMAKE_SOURCE_DIR}/Code/BasicFilters/include
       ${CMAKE_SOURCE_DIR}/Code/IO/include
       ${CMAKE_BINARY_DIR}/Code/BasicFilters/include
@@ -36,7 +36,7 @@ set ( SimpleITK_INCLUDE_DIRS
 
 include_directories( ${SimpleITK_INCLUDE_DIRS} )
 
-set ( SimpleITK_LIBRARIES SimpleITKCommon SimpleITKIO SimpleITKBasicFilters  ${ITK_LIBRARIES} )
+set ( SimpleITK_LIBRARIES SimpleITKCommon SimpleITKIO SimpleITKBasicFilters SimpleITKRegistration ${ITK_LIBRARIES} )
 
 # Be sure to clear these each time
 set ( GENERATED_TEST_LIST "" CACHE INTERNAL "" )
