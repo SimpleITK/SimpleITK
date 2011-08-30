@@ -5,7 +5,6 @@ set( SimpleITKRegistrationSource
   sitkRegistration.cxx
   sitkRegularStepGradientDescentOptimizer.cxx
   sitkTransform.cxx
-  sitkResampleImageFilter.cxx
   )
 
 
