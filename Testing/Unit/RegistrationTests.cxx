@@ -61,8 +61,6 @@ TEST(Registration,Components) {
   for ( size_t idx = 0; idx < 9; idx++ ) {
     ASSERT_NEAR ( params[idx], ExpectedParameters[idx], 0.01 ) << "idx = " << idx;
   }
-  ASSERT_NO_THROW ( params = registration.Execute ( fixed, moving ) );
-  ASSERT_NE ( params.size(), 0u );
 }
 
 
