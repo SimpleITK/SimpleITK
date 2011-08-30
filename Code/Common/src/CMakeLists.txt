@@ -9,7 +9,9 @@ set ( SimpleITKCommonSource
   ../../Registration/sitkMattesMutualInformationMetric.cxx
   ../../Registration/sitkLinearInterpolate.cxx
   ../../Registration/sitkRegistration.cxx
-
+  ../../Registration/sitkRegularStepGradientDescentOptimizer.cxx
+  ../../Registration/sitkTransform.cxx
+  ../../Registration/sitkResampleImageFilter.cxx
   )
 
 add_library ( SimpleITKCommon STATIC ${SimpleITKCommonSource} ${SimpleITKAncillarySource} )
