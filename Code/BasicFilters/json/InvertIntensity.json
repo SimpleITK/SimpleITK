@@ -5,6 +5,7 @@
   "number_of_inputs" : 1,
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelIDTypeList",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
   "members" : [ {
     "name" : "Maximum",
     "type" : "double",
