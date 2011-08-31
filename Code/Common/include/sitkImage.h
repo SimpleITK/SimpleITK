@@ -138,6 +138,7 @@ namespace simple
      * \sa Image::GetPixelIDValue
      * @{
      */
+    int8_t   GetPixelAsInt8( const std::vector<uint32_t> &idx) const;
     uint8_t  GetPixelAsUInt8( const std::vector<uint32_t> &idx) const;
     int16_t  GetPixelAsInt16( const std::vector<uint32_t> &idx ) const;
     uint16_t GetPixelAsUInt16( const std::vector<uint32_t> &idx ) const;
@@ -162,6 +163,7 @@ namespace simple
      * \sa Image::GetPixelIDValue
      * @{
      */
+    void SetPixelAsInt8( const std::vector<uint32_t> &idx, int8_t v );
     void SetPixelAsUInt8( const std::vector<uint32_t> &idx, uint8_t v );
     void SetPixelAsInt16( const std::vector<uint32_t> &idx, int16_t v );
     void SetPixelAsUInt16( const std::vector<uint32_t> &idx, uint16_t v );
@@ -190,6 +192,7 @@ namespace simple
      * \sa Image::GetPixelIDValue
      * @{
      */
+    int8_t   *GetBufferAsInt8( );
     uint8_t  *GetBufferAsUInt8( );
     int16_t  *GetBufferAsInt16( );
     uint16_t *GetBufferAsUInt16( );

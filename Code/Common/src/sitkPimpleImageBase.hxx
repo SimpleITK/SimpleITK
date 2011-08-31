@@ -239,7 +239,10 @@ namespace itk
         return this->m_Image->GetReferenceCount();
       }
 
-
+    virtual int8_t  GetPixelAsInt8( const std::vector<uint32_t> &idx) const
+      {
+        return this->InternalGetPixel< BasicPixelID<int8_t> >( idx );
+      }
     virtual uint8_t  GetPixelAsUInt8( const std::vector<uint32_t> &idx) const
       {
         return this->InternalGetPixel< BasicPixelID<uint8_t> >( idx );
@@ -269,6 +272,10 @@ namespace itk
         return this->InternalGetPixel< BasicPixelID<double> >( idx );
       }
 
+    virtual int8_t  *GetBufferAsInt8()
+      {
+        return static_cast<int8_t*>(this->InternalGetBuffer< BasicPixelID<int8_t> >( ));
+      }
     virtual uint8_t  *GetBufferAsUInt8()
       {
         return static_cast<uint8_t*>(this->InternalGetBuffer< BasicPixelID<uint8_t> >( ));
@@ -298,6 +305,10 @@ namespace itk
         return  static_cast<double*>(this->InternalGetBuffer< BasicPixelID<double> >( ));
       }
 
+    virtual void SetPixelAsInt8( const std::vector<uint32_t> &idx, int8_t v )
+      {
+        this->InternalSetPixel( idx, v );
+      }
     virtual void SetPixelAsUInt8( const std::vector<uint32_t> &idx, uint8_t v )
       {
         this->InternalSetPixel( idx, v );
