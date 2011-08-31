@@ -263,6 +263,14 @@ namespace itk
       {
         return this->InternalGetPixel< BasicPixelID<uint32_t> >( idx );
       }
+    virtual int64_t  GetPixelAsInt64( const std::vector<uint32_t> &idx ) const
+      {
+        return this->InternalGetPixel< BasicPixelID<int64_t> >( idx );
+      }
+    virtual uint64_t GetPixelAsUInt64( const std::vector<uint32_t> &idx ) const
+      {
+        return this->InternalGetPixel< BasicPixelID<uint64_t> >( idx );
+      }
     virtual float    GetPixelAsFloat( const std::vector<uint32_t> &idx ) const
       {
         return this->InternalGetPixel< BasicPixelID<float> >( idx );
@@ -296,6 +304,14 @@ namespace itk
       {
         return  static_cast<uint32_t*>(this->InternalGetBuffer< BasicPixelID<uint32_t> >( ));
       }
+    virtual  int64_t  *GetBufferAsInt64( )
+      {
+        return  static_cast<int64_t*>(this->InternalGetBuffer< BasicPixelID<int64_t> >( ));
+      }
+    virtual uint64_t *GetBufferAsUInt64( )
+      {
+        return  static_cast<uint64_t*>(this->InternalGetBuffer< BasicPixelID<uint64_t> >( ));
+      }
     virtual float    *GetBufferAsFloat( )
       {
         return  static_cast<float*>(this->InternalGetBuffer< BasicPixelID<float> >( ));
@@ -326,6 +342,14 @@ namespace itk
         this->InternalSetPixel( idx, v );
       }
     virtual void SetPixelAsUInt32( const std::vector<uint32_t> &idx, uint32_t v )
+      {
+        this->InternalSetPixel( idx, v );
+      }
+    virtual void SetPixelAsInt64( const std::vector<uint32_t> &idx, int64_t v )
+      {
+        this->InternalSetPixel( idx, v );
+      }
+    virtual void SetPixelAsUInt64( const std::vector<uint32_t> &idx, uint64_t v )
       {
         this->InternalSetPixel( idx, v );
       }

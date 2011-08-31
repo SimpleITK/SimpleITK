@@ -473,7 +473,19 @@ TEST_F(Image,GetPixel)
 
   // this test is designed to run all GetPixel methods
 
-  sitk::Image img = sitk::Image( 10, 10, sitk::sitkUInt8 );
+  sitk::Image img = sitk::Image( 10, 10, sitk::sitkInt8 );
+  EXPECT_EQ( img.GetPixelAsInt8( std::vector<uint32_t>( 2, 0 ) ), 0 ) << " Get 2D with 2D ";
+  EXPECT_EQ( img.GetPixelAsInt8( std::vector<uint32_t>( 3, 0 ) ), 0 ) << " Get 2D with 3D ";
+  ASSERT_ANY_THROW( img.GetPixelAsInt8( std::vector<uint32_t>( 1, 0 ) ) ) << " Get with idx too small";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt8( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsInt16( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt16( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsInt32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsFloat( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsDouble( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+
+  img = sitk::Image( 10, 10, sitk::sitkUInt8 );
   EXPECT_EQ( img.GetPixelAsUInt8( std::vector<uint32_t>( 2, 0 ) ), 0 ) << " Get 2D with 2D ";
   EXPECT_EQ( img.GetPixelAsUInt8( std::vector<uint32_t>( 3, 0 ) ), 0 ) << " Get 2D with 3D ";
   ASSERT_ANY_THROW( img.GetPixelAsUInt8( std::vector<uint32_t>( 1, 0 ) ) ) << " Get with idx too small";
@@ -540,6 +552,30 @@ TEST_F(Image,GetPixel)
   ASSERT_ANY_THROW( img.GetPixelAsFloat( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsDouble( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
 
+  img = sitk::Image( 10, 10, sitk::sitkInt64 );
+  EXPECT_EQ( img.GetPixelAsInt64( std::vector<uint32_t>( 2, 0 ) ), 0 ) << " Get 2D with 2D ";
+  EXPECT_EQ( img.GetPixelAsInt64( std::vector<uint32_t>( 3, 0 ) ), 0 ) << " Get 2D with 3D ";
+  ASSERT_ANY_THROW( img.GetPixelAsInt64( std::vector<uint32_t>( 1, 0 ) ) ) << " Get with idx too small";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt8( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsInt16( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt16( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt64( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsFloat( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsDouble( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+
+  img = sitk::Image( 10, 10, sitk::sitkUInt64 );
+  EXPECT_EQ( img.GetPixelAsUInt64( std::vector<uint32_t>( 2, 0 ) ), 0u ) << " Get 2D with 2D ";
+  EXPECT_EQ( img.GetPixelAsUInt64( std::vector<uint32_t>( 3, 0 ) ), 0u ) << " Get 2D with 3D ";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt64( std::vector<uint32_t>( 1, 0 ) ) ) << " Get with idx too small";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt8( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsInt16( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt16( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsInt32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsInt64( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsFloat( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsDouble( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+
   img = sitk::Image( 10, 10, sitk::sitkFloat32 );
   EXPECT_EQ( img.GetPixelAsFloat( std::vector<uint32_t>( 2, 0 ) ), 0u ) << " Get 2D with 2D ";
   EXPECT_EQ( img.GetPixelAsFloat( std::vector<uint32_t>( 3, 0 ) ), 0u ) << " Get 2D with 3D ";
@@ -571,6 +607,20 @@ TEST_F(Image, GetBuffer)
   ASSERT_ANY_THROW( img.GetBufferAsUInt16() ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetBufferAsInt32() ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetBufferAsUInt32() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsInt64() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt64() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsFloat() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsDouble() ) << " Get with wrong type";
+
+  img = sitk::Image( 10, 10, sitk::sitkInt8 );
+  EXPECT_EQ( img.GetBufferAsInt8()[99], 0 ) << " Get last element in buffer ";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt8() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsInt16() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt16() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsInt32() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt32() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsInt64() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt64() ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetBufferAsFloat() ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetBufferAsDouble() ) << " Get with wrong type";
 
@@ -619,6 +669,12 @@ TEST_F(Image, GetBuffer)
   ASSERT_ANY_THROW( img.GetBufferAsInt32() ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetBufferAsFloat() ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetBufferAsDouble() ) << " Get with wrong type";
+
+  img = sitk::Image( 10, 10, sitk::sitkUInt64 );
+  EXPECT_EQ( img.GetBufferAsUInt64()[99], 0u ) << " Get last element in buffer ";
+
+  img = sitk::Image( 10, 10, sitk::sitkInt64 );
+  EXPECT_EQ( img.GetBufferAsUInt64()[99], 0u ) << " Get last element in buffer ";
 
   img = sitk::Image( 10, 10, sitk::sitkFloat32 );
   EXPECT_EQ( img.GetBufferAsFloat()[99], 0u ) << " Get last element in buffer ";

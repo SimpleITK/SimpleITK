@@ -144,6 +144,8 @@ namespace simple
     uint16_t GetPixelAsUInt16( const std::vector<uint32_t> &idx ) const;
     int32_t  GetPixelAsInt32( const std::vector<uint32_t> &idx ) const;
     uint32_t GetPixelAsUInt32( const std::vector<uint32_t> &idx ) const;
+    int32_t  GetPixelAsInt64( const std::vector<uint32_t> &idx ) const;
+    uint32_t GetPixelAsUInt64( const std::vector<uint32_t> &idx ) const;
     float    GetPixelAsFloat( const std::vector<uint32_t> &idx ) const;
     double   GetPixelAsDouble(  const std::vector<uint32_t> &idx ) const;
     /* @} */
@@ -169,6 +171,8 @@ namespace simple
     void SetPixelAsUInt16( const std::vector<uint32_t> &idx, uint16_t v );
     void SetPixelAsInt32( const std::vector<uint32_t> &idx, int32_t v );
     void SetPixelAsUInt32( const std::vector<uint32_t> &idx, uint32_t v );
+    void SetPixelAsInt64( const std::vector<uint32_t> &idx, int64_t v );
+    void SetPixelAsUInt64( const std::vector<uint32_t> &idx, uint64_t v );
     void SetPixelAsFloat( const std::vector<uint32_t> &idx, float v );
     void SetPixelAsDouble( const std::vector<uint32_t> &idx, double v );
     /** @} */
@@ -198,6 +202,8 @@ namespace simple
     uint16_t *GetBufferAsUInt16( );
     int32_t  *GetBufferAsInt32( );
     uint32_t *GetBufferAsUInt32( );
+    int64_t  *GetBufferAsInt64( );
+    uint64_t *GetBufferAsUInt64( );
     float    *GetBufferAsFloat( );
     double   *GetBufferAsDouble( );
     /* @} */
