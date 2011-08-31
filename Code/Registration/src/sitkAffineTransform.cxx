@@ -1,4 +1,5 @@
 #include "sitkAffineTransform.h"
+#include "itkAffineTransform.h"
 
 namespace itk
 {
@@ -28,7 +29,7 @@ namespace simple
     return scales;
   }
 
-  ::itk::TransformBase::Pointer AffineTransform::GetTransform ( int dimension )
+  itk::TransformBase::Pointer AffineTransform::GetITKBase ( int dimension )
   {
     ::itk::TransformBase::Pointer xform;
     switch ( dimension )

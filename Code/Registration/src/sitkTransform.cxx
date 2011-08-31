@@ -1,31 +1,36 @@
 #include "sitkTransform.h"
+#include "itkTransformBase.h"
 
 namespace itk
 {
 namespace simple
 {
 
-  Transform::Transform() {};
-  Transform::~Transform() {};
-  ::itk::TransformBase::Pointer Transform::GetTransform ( int dimension ) { return NULL; };
-  Transform& Transform::SetParameters ( const std::vector<double>& parameters )
+  Transform::Transform()
   {
-    m_Parameters.resize ( parameters.size() );
-    m_Parameters = parameters;
-    return *this;
   }
-  std::vector<double> Transform::GetParameters()
+
+  Transform::~Transform()
   {
-    return m_Parameters;
   }
-  std::vector<double> Transform::GetOptimizerScales ( int dimension )
+
+  itk::TransformBase* Transform::GetITKBase ( void )
+  {
+    return NULL;
+  }
+
+  void Transform::SetParameters ( const std::vector<double>& parameters )
+  {
+  }
+  std::vector<double> Transform::GetParameters( void ) const
   {
     return std::vector<double>();
   }
 
-  Transform* Transform::Clone()
+
+  std::string Transform::ToString( void ) const
   {
-    return new Transform ( *this );
+    return std::string();
   }
 }
 }

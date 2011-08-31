@@ -1,10 +1,13 @@
 #include "sitkRegistration.h"
 #include "itkImageRegistrationMethod.h"
-#include "sitkAffineTransform.h"
-#include "sitkLinearInterpolate.h"
 #include "sitkMattesMutualInformationMetric.h"
 #include "sitkRegularStepGradientDescentOptimizer.h"
 #include "itkCenteredTransformInitializer.h"
+
+#include "itkLinearInterpolateImageFunction.h"
+#include "itkNearestNeighborInterpolateImageFunction.h"
+#include "itkWindowedSincInterpolateImageFunction.h"
+
 #include <memory>
 
 namespace itk
@@ -12,11 +15,11 @@ namespace itk
 namespace simple
 {
 
-  Transform* Register ( const Image &fixed, const Image & moving, Transform *transform, Interpolate *interpolate, Metric *metric, SOptimizer *optimizer )
+  Transform* Register ( const Image &fixed, const Image & moving, Transform *transform, InterpolateFunctionEnum interpolator, Metric *metric, SOptimizer *optimizer )
   {
   Registration registration;
   registration.SetTransform ( transform );
-  registration.SetInterpolate ( interpolate );
+  registration.SetInterpolator ( interpolator );
   registration.SetMetric ( metric );
   registration.SetOptimizer ( optimizer );
   return registration.Execute ( fixed, moving );
@@ -35,8 +38,8 @@ namespace simple
 
   // Reasonable defaults?
   m_UseCenteredInitialization = true;
-  m_Transform.reset ( new AffineTransform() );
-  m_Interpolate.reset ( new LinearInterpolate() );
+  m_Transform.reset ( new Transform() );
+  m_Interpolator = sitkLinearInterpolate;
   m_Metric.reset ( new MattesMutualInformationMetric() );
   m_Optimizer.reset ( new RegularStepGradientDescentOptimizer() );
   }
@@ -45,8 +48,8 @@ namespace simple
   {
     // Print with 2d defaults
     itk::simple::Image image(1,1,itk::simple::sitkUInt8);
-    ::itk::TransformBase::Pointer transformBase = m_Transform->GetTransform ( image.GetDimension() ).GetPointer();
-    ::itk::Object::Pointer interpolatorBase = m_Interpolate->GetInterpolator ( image ).GetPointer();
+    ::itk::TransformBase::Pointer transformBase = m_Transform->GetITKBase (  );
+    //::itk::Object::Pointer interpolatorBase = m_Interpolate->GetInterpolator ( image ).GetPointer();
     ::itk::SingleValuedCostFunction::Pointer metricBase = m_Metric->GetMetric ( image ).GetPointer();
     ::itk::Optimizer::Pointer optimizerBase = m_Optimizer->GetOptimizer().GetPointer();
 
@@ -55,7 +58,8 @@ namespace simple
     out << "\n\nTransform:\n";
     transformBase->Print ( out );
     out << "\n\nInterpolator:\n";
-    interpolatorBase->Print ( out );
+    out << m_Interpolator << std::endl;
+    //interpolatorBase->Print ( out );
     out << "\n\nMetric:\n";
     metricBase->Print ( out );
     out << "\n\nOptimizer:\n";
@@ -66,13 +70,38 @@ namespace simple
 template<class TImage>
 Transform* Registration::ExecuteInternal (const Image &fixed, const Image& moving )
 {
+  typedef TImage TInputImage;
   typedef itk::ImageRegistrationMethod<TImage,TImage>  RegistrationType;
   typename RegistrationType::Pointer registration = RegistrationType::New();
 
-  ::itk::TransformBase::Pointer transformBase = m_Transform->GetTransform ( fixed.GetDimension() ).GetPointer();
-  ::itk::Object::Pointer interpolatorBase = m_Interpolate->GetInterpolator ( fixed ).GetPointer();
+  ::itk::TransformBase::Pointer transformBase = m_Transform->GetITKBase ( );
   ::itk::SingleValuedCostFunction::Pointer metricBase = m_Metric->GetMetric ( fixed ).GetPointer();
   ::itk::Optimizer::Pointer optimizerBase = m_Optimizer->GetOptimizer().GetPointer();
+
+  // Create Interpolator
+  Object::Pointer interpolatorBase;
+  switch( m_Interpolator )
+  {
+  case sitkNearestNeighbor:
+    interpolatorBase = NearestNeighborInterpolateImageFunction< TImage, double >::New();
+    break;
+  case sitkLinearInterpolate:
+    interpolatorBase = LinearInterpolateImageFunction< TImage, double >::New();
+    break;
+  case sitkWindowedSinc:
+
+    typedef itk::ConstantBoundaryCondition< TImage >  BoundaryConditionType;
+    //const unsigned int WindowRadius = 5;
+    typedef itk::Function::HammingWindowFunction<5>  WindowFunctionType;
+    interpolatorBase = WindowedSincInterpolateImageFunction< TImage,
+                                                             5,
+                                                             WindowFunctionType,
+                                                             BoundaryConditionType,
+                                                             double >::New();
+    break;
+  default:
+    sitkExceptionMacro( "unknow interpolator" );
+  }
 
   if ( NULL == dynamic_cast<typename RegistrationType::TransformType*> ( transformBase.GetPointer() ) )
     {
@@ -114,14 +143,16 @@ Transform* Registration::ExecuteInternal (const Image &fixed, const Image& movin
   typename RegistrationType::TransformType::ParametersType params = registration->GetTransform()->GetParameters();
   registration->SetInitialTransformParameters ( params );
 
-  std::vector<double> tempScales = m_Transform->GetOptimizerScales ( fixed.GetDimension() );
-  typename RegistrationType::OptimizerType::ScalesType scales ( tempScales.size() );
-  scales.Fill ( 1.0 );
-  for ( unsigned int idx = 0; idx < tempScales.size(); idx++ )
-    {
-    scales[idx] = tempScales[idx];
-    }
-  registration->GetOptimizer()->SetScales ( scales );
+  // HACK FIXME TODO
+  // The scales need to be brough back
+  // std::vector<double> tempScales = m_Transform->GetOptimizerScales ( fixed.GetDimension() );
+  // typename RegistrationType::OptimizerType::ScalesType scales ( tempScales.size() );
+  // scales.Fill ( 1.0 );
+  // for ( unsigned int idx = 0; idx < tempScales.size(); idx++ )
+  //   {
+  //   scales[idx] = tempScales[idx];
+  //   }
+  // registration->GetOptimizer()->SetScales ( scales );
 
 
   registration->Update();
@@ -133,7 +164,8 @@ Transform* Registration::ExecuteInternal (const Image &fixed, const Image& movin
     {
     parameters.push_back ( finalParameters.GetElement ( idx ) );
     }
-  Transform *out = m_Transform.get()->Clone();
+  // HACK FIXME
+  Transform *out;// = m_Transform.get()->Clone();
   out->SetParameters ( parameters );
   return out;
   }
@@ -168,9 +200,9 @@ Registration& Registration::SetTransform ( Transform *transform )
   m_Transform.reset ( transform->Clone() );
   return *this;
 }
-Registration& Registration::SetInterpolate ( Interpolate *interpolate )
+Registration& Registration::SetInterpolator ( InterpolateFunctionEnum interp )
 {
-  m_Interpolate.reset ( interpolate->Clone() );
+  m_Interpolator = interp;
   return *this;
 }
 Registration& Registration::SetMetric ( Metric *metric )

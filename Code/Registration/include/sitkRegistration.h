@@ -30,7 +30,7 @@ namespace simple
     Registration& SetUseCenteredInitializationOff();
     virtual Registration& SetTransform ( Transform *transform );
     // virtual Transform& GetTransform();
-    virtual Registration& SetInterpolate ( Interpolate *interpolate );
+    virtual Registration& SetInterpolator ( InterpolateFunctionEnum interp );
     // virtual Interpolate& GetInterpolate();
     virtual Registration& SetMetric ( Metric *metric );
     // virtual Metric& GetMetric();
@@ -42,7 +42,7 @@ namespace simple
   protected:
     bool m_UseCenteredInitialization;
     std::auto_ptr<Transform> m_Transform;
-    std::auto_ptr<Interpolate> m_Interpolate;
+    InterpolateFunctionEnum m_Interpolator;
     std::auto_ptr<Metric> m_Metric;
     std::auto_ptr<SOptimizer> m_Optimizer;
 
@@ -70,7 +70,7 @@ namespace simple
     std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
   };
 
-Transform* Register ( const Image &fixed, const Image &moving, Transform *transform, Interpolate *interpolate, Metric *metric, SOptimizer *optimizer );
+Transform* Register ( const Image &fixed, const Image &moving, Transform *transform, InterpolateFunctionEnum interpolator, Metric *metric, SOptimizer *optimizer );
 }
 }
 

@@ -25,7 +25,7 @@ TEST(Registration,Components) {
   itk::simple::Registration registration;
   registration.SetOptimizer ( new itk::simple::RegularStepGradientDescentOptimizer() );
   itk::simple::Transform *transform = NULL;
-  transform = new itk::simple::AffineTransform();
+  transform = new itk::simple::Transform();
   std::vector<double> params;
 
   // Create a transform
@@ -48,7 +48,7 @@ TEST(Registration,Components) {
 
   registration.SetTransform ( transform );
   registration.SetMetric ( new itk::simple::MattesMutualInformationMetric() );
-  registration.SetInterpolate ( new itk::simple::LinearInterpolate() );
+  registration.SetInterpolator ( itk::simple::sitkLinearInterpolate );
   registration.SetUseCenteredInitializationOff();
   try {
     transform = registration.Execute ( fixed, moving );
