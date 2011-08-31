@@ -198,6 +198,7 @@ TEST_F(Image,Constructors) {
   EXPECT_EQ ( 64u, image.GetWidth() );
   EXPECT_EQ ( 65u, image.GetHeight() );
   EXPECT_EQ ( 0u, image.GetDepth() );
+  EXPECT_EQ ( 1u, image.GetNumberOfComponentsPerPixel() );
 
   // currently we don't have a good interface to check the values of
   // these images, let just construct these types need todo better
@@ -207,6 +208,7 @@ TEST_F(Image,Constructors) {
   EXPECT_EQ ( 64u, image.GetWidth() );
   EXPECT_EQ ( 65u, image.GetHeight() );
   EXPECT_EQ ( 66u, image.GetDepth() );
+  EXPECT_EQ ( 1u, image.GetNumberOfComponentsPerPixel() );
 
   image = itk::simple::Image ( 64, 65, 66, itk::simple::sitkLabelUInt16 );
 
@@ -217,8 +219,10 @@ TEST_F(Image,Constructors) {
   EXPECT_EQ ( 64u, image.GetWidth() );
   EXPECT_EQ ( 65u, image.GetHeight() );
   EXPECT_EQ ( 66u, image.GetDepth() );
+  EXPECT_EQ ( 3u, image.GetNumberOfComponentsPerPixel() );
 
   image = itk::simple::Image ( 64, 65, 66, itk::simple::sitkVectorUInt16 );
+  EXPECT_EQ ( 3u, image.GetNumberOfComponentsPerPixel() );
 }
 
 TEST_F(Image,Hash) {

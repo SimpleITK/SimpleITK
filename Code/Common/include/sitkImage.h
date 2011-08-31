@@ -93,6 +93,13 @@ namespace simple
 
     unsigned int GetDimension( void ) const;
 
+    /** \brief Get the number of components for each pixel
+     *
+     * For scalar images this methods returns 1. For vector images the
+     * number of components for each pixel is returned.
+     */
+    unsigned int GetNumberOfComponentsPerPixel( void ) const;
+
     /** Get/Set the Origin */
     std::vector< double > GetOrigin( void ) const;
     void SetOrigin( const std::vector< double > &origin );

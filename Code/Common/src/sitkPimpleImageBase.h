@@ -26,6 +26,7 @@ namespace itk
 
     virtual PixelIDValueType GetPixelIDValue(void) const = 0;
     virtual unsigned int GetDimension( void ) const  = 0;
+    virtual unsigned int GetNumberOfComponentsPerPixel( void ) const = 0;
 
     virtual PimpleImageBase *ShallowCopy(void) const = 0;
     virtual PimpleImageBase *DeepCopy(void) const = 0;

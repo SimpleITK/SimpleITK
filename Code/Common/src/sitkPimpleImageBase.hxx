@@ -90,6 +90,24 @@ namespace itk
       }
 
 
+    virtual unsigned int GetNumberOfComponentsPerPixel( void ) const { return this->GetNumberOfComponentsPerPixel<TImageType>(); }
+
+    template <typename UImageType>
+    typename DisableIf<IsVector<UImageType>::Value, unsigned int>::Type
+    GetNumberOfComponentsPerPixel( void ) const
+      {
+        return 1;
+      }
+    template <typename UImageType>
+    typename EnableIf<IsVector<UImageType>::Value, unsigned int>::Type
+    GetNumberOfComponentsPerPixel( void ) const
+    {
+        // This returns 1 for itk::Image, and the number of elements
+        // is the vectors of a VectorImage
+        return this->m_Image->GetNumberOfComponentsPerPixel();
+      }
+
+
     // Get Origin
     virtual std::vector<double> GetOrigin( void ) const
       {
