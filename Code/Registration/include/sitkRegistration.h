@@ -28,7 +28,7 @@ namespace simple
     bool GetUseCenteredInitialization();
     Registration& SetUseCenteredInitializationOn();
     Registration& SetUseCenteredInitializationOff();
-    virtual Registration& SetTransform ( Transform *transform );
+    virtual Registration& SetTransform ( const Transform &transform);
     // virtual Transform& GetTransform();
     virtual Registration& SetInterpolator ( InterpolateFunctionEnum interp );
     // virtual Interpolate& GetInterpolate();
@@ -36,18 +36,18 @@ namespace simple
     // virtual Metric& GetMetric();
     virtual Registration& SetOptimizer ( SOptimizer *optimizer );
     // virtual Optimizer& GetOptimizer();
-    virtual Transform* Execute ( const Image &fixed, const Image &moving );
+    virtual Transform Execute ( const Image &fixed, const Image &moving );
     std::string ToString () const;
 
   protected:
     bool m_UseCenteredInitialization;
-    std::auto_ptr<Transform> m_Transform;
+    Transform m_Transform;
     InterpolateFunctionEnum m_Interpolator;
     std::auto_ptr<Metric> m_Metric;
     std::auto_ptr<SOptimizer> m_Optimizer;
 
     template<class TImage>
-    Transform* ExecuteInternal ( const Image &fixed, const Image &moving );
+    Transform ExecuteInternal ( const Image &fixed, const Image &moving );
 
 // SWIG does not appear to process private classes correctly
 #ifndef SWIG
@@ -65,12 +65,12 @@ namespace simple
 #endif
 
 
-    typedef Transform* (Registration::*MemberFunctionType)( const Image &fixed, const Image &moving );
+    typedef Transform (Registration::*MemberFunctionType)( const Image &fixed, const Image &moving );
     friend struct RegistrationAddressor<MemberFunctionType>;
     std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
   };
 
-Transform* Register ( const Image &fixed, const Image &moving, Transform *transform, InterpolateFunctionEnum interpolator, Metric *metric, SOptimizer *optimizer );
+Transform Register ( const Image &fixed, const Image &moving, const Transform &transform, InterpolateFunctionEnum interpolator, Metric *metric, SOptimizer *optimizer );
 }
 }
 

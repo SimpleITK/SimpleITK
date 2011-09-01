@@ -10,10 +10,13 @@ namespace itk
 // Forward decalaration for pointer
 class TransformBase;
 
+
+
 namespace simple
 {
-  class Registration;
-  class ResampleImageFilter;
+
+class PimpleTransformBase;
+
   class Transform
   {
   public:
@@ -25,8 +28,12 @@ namespace simple
 
     // TODO determine best copy syntax
     virtual Transform * Clone( void ) { return NULL; }
+    const Transform &operator=( const Transform & ) { return *this; };
+    Transform( const Transform & ) {};
 
-     itk::TransformBase* GetITKBase ( void );
+
+    itk::TransformBase* GetITKBase( void );
+    const itk::TransformBase* GetITKBase( void ) const;
 
     /** Set/Get Parameter
      */
@@ -34,6 +41,12 @@ namespace simple
     virtual std::vector<double> GetParameters( void ) const ;
 
     std::string ToString( void ) const;
+
+
+  protected:
+
+    PimpleTransformBase *m_PimpleTransform;
+
 
   };
 }

@@ -17,7 +17,7 @@ namespace simple
   public:
     SOptimizer() {};
     virtual ~SOptimizer() {};
-    virtual ::itk::Optimizer::Pointer GetOptimizer() { return NULL; }
+    virtual itk::Optimizer::Pointer GetOptimizer() { return NULL; }
   protected:
     friend class Registration;
     virtual SOptimizer* Clone() { return new SOptimizer ( *this ); }
