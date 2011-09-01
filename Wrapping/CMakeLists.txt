@@ -99,7 +99,7 @@ if ( WRAP_PYTHON )
   add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_REAL_NAME}
     PRE_BUILD
     COMMAND ${PYTHON_EXECUTABLE}
-    ${SimpleITK_SOURCE_DIR}/Testing/PythonPackage/virtualenv.py
+    ${SimpleITK_SOURCE_DIR}/Utilities/virtualenv/virtualenv.py
     --python=${PYTHON_EXECUTABLE}
     --distribute
     ${PythonVirtualenvHome}
