@@ -82,6 +82,14 @@ end)
 )
 )
   inputA = reader.set_file_name( ARGV[1] ).execute
+$(if inputA_cast then
+
+-- the first char of the string needs to be converted to upper case
+OUT=[[
+  caster = Simpleitk::CastImageFilter.new
+  caster.set_output_pixel_type( Simpleitk::${inputA_cast:gsub("^%l", inputA_cast.upper ) })
+  inputA = caster.execute( inputA ) ]]
+end)
   $(if inputB then
   OUT=[[inputB = reader.set_file_name( ARGV[2] ).execute
   output = filter.execute( inputA, inputB )]]

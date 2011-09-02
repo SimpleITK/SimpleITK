@@ -65,6 +65,9 @@ private:
 
   template<typename TImageType, typename TOutputImageType>
   Image ExecuteInternalToLabel( const Image& inImage );
+
+  template<typename TImageType, typename TOutputImageType>
+  Image ExecuteInternalLabelToImage( const Image& inImage );
   /** @} */
 
 // SWIG does not appear to process private classes correctly
@@ -112,6 +115,21 @@ private:
     TMemberFunctionPointer operator() ( void ) const
     {
       return &ObjectType::template ExecuteInternalToLabel< TImageType1, TImageType2 >;
+    }
+  };
+
+ /** An addressor of ExecuteInternalToLabel to be utilized with
+   * registering member functions with the factory.
+   */
+  template < class TMemberFunctionPointer >
+  struct LabelToAddressor
+  {
+    typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
+
+    template< typename TImageType1, typename TImageType2 >
+    TMemberFunctionPointer operator() ( void ) const
+    {
+      return &ObjectType::template ExecuteInternalLabelToImage< TImageType1, TImageType2 >;
     }
   };
 #endif

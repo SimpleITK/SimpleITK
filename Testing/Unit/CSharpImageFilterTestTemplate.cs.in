@@ -44,9 +44,15 @@ $(foreach tests
             if (tag.Equals( "${tag}" )) {
                 // Read image(s)
                 Image inputA = reader.SetFileName( args[2] ).Execute();
+
+                $(if inputA_cast then
+                inputA = Cast( inputA, ${inputA_cast} );
+                end)
+
 $(if inputB then
                 OUT=[[
                 Image inputB = reader.SetFileName ( args[3] ).Execute();
+
 ]]
 end)
 $(when settings
