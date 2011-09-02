@@ -90,6 +90,24 @@ namespace itk
       }
 
 
+    virtual unsigned int GetNumberOfComponentsPerPixel( void ) const { return this->GetNumberOfComponentsPerPixel<TImageType>(); }
+
+    template <typename UImageType>
+    typename DisableIf<IsVector<UImageType>::Value, unsigned int>::Type
+    GetNumberOfComponentsPerPixel( void ) const
+      {
+        return 1;
+      }
+    template <typename UImageType>
+    typename EnableIf<IsVector<UImageType>::Value, unsigned int>::Type
+    GetNumberOfComponentsPerPixel( void ) const
+    {
+        // This returns 1 for itk::Image, and the number of elements
+        // is the vectors of a VectorImage
+        return this->m_Image->GetNumberOfComponentsPerPixel();
+      }
+
+
     // Get Origin
     virtual std::vector<double> GetOrigin( void ) const
       {
@@ -221,7 +239,10 @@ namespace itk
         return this->m_Image->GetReferenceCount();
       }
 
-
+    virtual int8_t  GetPixelAsInt8( const std::vector<uint32_t> &idx) const
+      {
+        return this->InternalGetPixel< BasicPixelID<int8_t> >( idx );
+      }
     virtual uint8_t  GetPixelAsUInt8( const std::vector<uint32_t> &idx) const
       {
         return this->InternalGetPixel< BasicPixelID<uint8_t> >( idx );
@@ -242,6 +263,14 @@ namespace itk
       {
         return this->InternalGetPixel< BasicPixelID<uint32_t> >( idx );
       }
+    virtual int64_t  GetPixelAsInt64( const std::vector<uint32_t> &idx ) const
+      {
+        return this->InternalGetPixel< BasicPixelID<int64_t> >( idx );
+      }
+    virtual uint64_t GetPixelAsUInt64( const std::vector<uint32_t> &idx ) const
+      {
+        return this->InternalGetPixel< BasicPixelID<uint64_t> >( idx );
+      }
     virtual float    GetPixelAsFloat( const std::vector<uint32_t> &idx ) const
       {
         return this->InternalGetPixel< BasicPixelID<float> >( idx );
@@ -251,6 +280,10 @@ namespace itk
         return this->InternalGetPixel< BasicPixelID<double> >( idx );
       }
 
+    virtual int8_t  *GetBufferAsInt8()
+      {
+        return static_cast<int8_t*>(this->InternalGetBuffer< BasicPixelID<int8_t> >( ));
+      }
     virtual uint8_t  *GetBufferAsUInt8()
       {
         return static_cast<uint8_t*>(this->InternalGetBuffer< BasicPixelID<uint8_t> >( ));
@@ -271,6 +304,14 @@ namespace itk
       {
         return  static_cast<uint32_t*>(this->InternalGetBuffer< BasicPixelID<uint32_t> >( ));
       }
+    virtual  int64_t  *GetBufferAsInt64( )
+      {
+        return  static_cast<int64_t*>(this->InternalGetBuffer< BasicPixelID<int64_t> >( ));
+      }
+    virtual uint64_t *GetBufferAsUInt64( )
+      {
+        return  static_cast<uint64_t*>(this->InternalGetBuffer< BasicPixelID<uint64_t> >( ));
+      }
     virtual float    *GetBufferAsFloat( )
       {
         return  static_cast<float*>(this->InternalGetBuffer< BasicPixelID<float> >( ));
@@ -280,6 +321,10 @@ namespace itk
         return  static_cast<double*>(this->InternalGetBuffer< BasicPixelID<double> >( ));
       }
 
+    virtual void SetPixelAsInt8( const std::vector<uint32_t> &idx, int8_t v )
+      {
+        this->InternalSetPixel( idx, v );
+      }
     virtual void SetPixelAsUInt8( const std::vector<uint32_t> &idx, uint8_t v )
       {
         this->InternalSetPixel( idx, v );
@@ -297,6 +342,14 @@ namespace itk
         this->InternalSetPixel( idx, v );
       }
     virtual void SetPixelAsUInt32( const std::vector<uint32_t> &idx, uint32_t v )
+      {
+        this->InternalSetPixel( idx, v );
+      }
+    virtual void SetPixelAsInt64( const std::vector<uint32_t> &idx, int64_t v )
+      {
+        this->InternalSetPixel( idx, v );
+      }
+    virtual void SetPixelAsUInt64( const std::vector<uint32_t> &idx, uint64_t v )
       {
         this->InternalSetPixel( idx, v );
       }
