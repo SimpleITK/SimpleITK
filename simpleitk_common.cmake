@@ -98,16 +98,8 @@ if(NOT DEFINED CTEST_CONFIGURATION_TYPE)
   set(CTEST_CONFIGURATION_TYPE Release)
 endif()
 
-# Choose CTest reporting mode.
-if(NOT DEFINED CTEST_USE_LAUNCHERS)
-  if(NOT "${CTEST_CMAKE_GENERATOR}" MATCHES "Make")
-    # Launchers work only with Makefile generators.
-    set(CTEST_USE_LAUNCHERS 0)
-  elseif(NOT DEFINED CTEST_USE_LAUNCHERS)
-    # The setting is ignored by CTest < 2.8 so we need no version test.
-    set(CTEST_USE_LAUNCHERS 1)
-  endif()
-endif()
+# For SuperBuilds without subprojects, Dave Cole recommented not using launcher
+set(CTEST_USE_LAUNCHERS 0)
 
 # Configure testing.
 if(NOT DEFINED CTEST_TEST_CTEST)
