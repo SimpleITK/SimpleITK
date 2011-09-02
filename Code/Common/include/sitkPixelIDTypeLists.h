@@ -78,6 +78,8 @@ typedef typelist::MakeTypeList<VectorPixelID<int8_t>,
                                VectorPixelID<uint8_t>,
                                VectorPixelID<int16_t>,
                                VectorPixelID<uint16_t>,
+                               VectorPixelID<int32_t>,
+                               VectorPixelID<uint32_t>,
                                VectorPixelID<float>,
                                VectorPixelID<double> >::Type VectorPixelIDTypeList;
 
