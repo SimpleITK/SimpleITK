@@ -25,6 +25,10 @@ file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/RubyTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/JavaTests/org/itk/simple/testing)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/CSharpTests)
 
+# Adjust Python to run in the virtualenv
+set( PythonVirtualenvHome ${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVirtualenv )
+set( PYTHON_EXECUTABLE ${PythonVirtualenvHome}/bin/python )
+
 #
 # Glob for necessary template files up front, before the foreach loop over
 # the filters:
@@ -344,9 +348,6 @@ if ( WRAP_JAVA )
 endif ( WRAP_JAVA )
 
 if ( WRAP_PYTHON )
-
-  set( PythonVirtualenvHome ${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVirtualenv )
-  set( PYTHON_EXECUTABLE ${PythonVirtualenvHome}/bin/python )
 
   #
   # This is a macro which set up the enviroment for executing python examples and tests
