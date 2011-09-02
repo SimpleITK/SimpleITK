@@ -266,3 +266,5 @@ if ( WRAP_R )
 
 endif()
 
+# Packaging for distribution
+add_subdirectory(dist)
