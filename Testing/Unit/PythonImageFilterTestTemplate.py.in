@@ -54,6 +54,11 @@ end)
 )
 )
     inputA = reader.SetFileName ( sys.argv[2] ).Execute()
+$(if inputA_cast then
+OUT=[[
+    inputA = SimpleITK.Cast( inputA, SimpleITK.${inputA_cast} );
+     ]]
+end)
     $(if inputB then
     OUT=[[inputB = reader.SetFileName ( sys.argv[3] ).Execute()
     output = filter.Execute ( inputA, inputB )]]

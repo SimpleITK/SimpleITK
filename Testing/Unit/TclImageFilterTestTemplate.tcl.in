@@ -29,7 +29,7 @@ $(if #tests == 0 then
 
 $(foreach tests
 lappend ValidTags "${tag}"
-if { [set tag] == "${tag}" } {
+if { [set tag] == "${tag}" } { 
 
 $(when settings
 $(foreach settings
@@ -51,6 +51,11 @@ OUT=[[
 end)
 ))
   set inputA [[reader SetFileName [lindex [set argv] 1]] Execute]
+$(if inputA_cast then
+OUT=[[
+      set inputA [ Cast [set inputA] [set ${inputA_cast} ] ]
+     ]]
+end)
   $(if inputB then
   OUT="set inputB [[reader SetFileName [lindex [set argv] 2]] Execute]; \
   set output [filter Execute [set inputA] [set inputB] ]"
