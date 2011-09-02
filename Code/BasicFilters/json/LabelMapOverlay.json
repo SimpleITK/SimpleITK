@@ -15,6 +15,13 @@
       "doc" : "Value assigned to pixels outside of the mask"
     }
   ],
-  "tests" : [
-  ]
+  "tests" : [ {
+    "tag" : "default",
+    "description" : "Simply run with default settings",
+    "inputA" : "Input/2th_cthead1.mha",
+    "inputA_cast" : "sitkLabelUInt8",
+    "inputB" : "Input/cthead1.png",
+    "md5hash" : "299b2f5dbf018c868d65d9d5511fe470",
+    "settings" : []    
+  } ]
 }
