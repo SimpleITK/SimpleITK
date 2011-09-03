@@ -169,7 +169,7 @@ template <class TImageType, class TLabelImageType>
 Image LabelStatisticsImageFilter::DualExecuteInternal ( const Image& inImage1, const Image& inLabels )
   {
   typename TImageType::ConstPointer image1 =
-    dynamic_cast <const TImageType* > ( inImage1.GetImageBase() );
+    dynamic_cast <const TImageType* > ( inImage1.GetITKBase() );
 
   if ( image1.IsNull() )
     {
@@ -177,7 +177,7 @@ Image LabelStatisticsImageFilter::DualExecuteInternal ( const Image& inImage1, c
     }
 
   typename TLabelImageType::ConstPointer labelImage =
-    dynamic_cast <const TLabelImageType* > ( inLabels.GetImageBase() );
+    dynamic_cast <const TLabelImageType* > ( inLabels.GetITKBase() );
   if ( labelImage.IsNull() )
     {
     sitkExceptionMacro( "Unexpected template dispatch error!" );

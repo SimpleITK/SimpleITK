@@ -35,8 +35,8 @@
 }
 
 // Global Tweaks to sitk::Image
-%ignore itk::simple::Image::GetImageBase( void );
-%ignore itk::simple::Image::GetImageBase( void ) const;
+%ignore itk::simple::Image::GetITKBase( void );
+%ignore itk::simple::Image::GetITKBase( void ) const;
 
 // Language Specific Sections
 %include CSharp.i

@@ -209,14 +209,14 @@ namespace itk
       Allocate ( Width, Height, Depth, ValueEnum );
     }
 
-    itk::DataObject* Image::GetImageBase( void )
+    itk::DataObject* Image::GetITKBase( void )
     {
       assert( m_PimpleImage );
       this->MakeUniqueForWrite();
       return m_PimpleImage->GetDataBase();
     }
 
-    const itk::DataObject* Image::GetImageBase( void ) const
+    const itk::DataObject* Image::GetITKBase( void ) const
     {
       assert( m_PimpleImage );
       return m_PimpleImage->GetDataBase();

@@ -70,8 +70,8 @@ std::vector<double> Registration::ExecuteInternal (const Image &fixed, const Ima
   registration->SetInterpolator ( dynamic_cast<typename RegistrationType::InterpolatorType*> ( interpolatorBase.GetPointer() ) );
   registration->SetMetric ( dynamic_cast<typename RegistrationType::MetricType*> ( metricBase.GetPointer() ) );
   registration->SetOptimizer ( dynamic_cast<typename RegistrationType::OptimizerType*> ( optimizerBase.GetPointer() ) );
-  registration->SetFixedImage( dynamic_cast<const typename RegistrationType::FixedImageType*> (fixed.GetImageBase()));
-  registration->SetMovingImage( dynamic_cast<const typename RegistrationType::MovingImageType*> (moving.GetImageBase()));
+  registration->SetFixedImage( dynamic_cast<const typename RegistrationType::FixedImageType*> (fixed.GetITKBase()));
+  registration->SetMovingImage( dynamic_cast<const typename RegistrationType::MovingImageType*> (moving.GetITKBase()));
 
   // Why this isn't the default, I'll never know...
   typedef ::itk::MatrixOffsetTransformBase<double, TImage::ImageDimension, TImage::ImageDimension> OffsetTransformType;
