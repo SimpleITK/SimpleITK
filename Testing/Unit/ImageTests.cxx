@@ -94,7 +94,7 @@ public:
 
 
 TEST_F(Image,Create) {
-  ASSERT_TRUE ( shortImage->GetImageBase() != NULL );
+  ASSERT_TRUE ( shortImage->GetITKBase() != NULL );
   EXPECT_EQ ( shortImage->GetWidth(), itkShortImage->GetLargestPossibleRegion().GetSize()[0] ) << " Checking image width";
   EXPECT_EQ ( shortImage->GetHeight(), itkShortImage->GetLargestPossibleRegion().GetSize()[1] ) << " Checking image height";
   EXPECT_EQ ( shortImage->GetDepth(), itkShortImage->GetLargestPossibleRegion().GetSize()[2] ) << " Checking image depth";
@@ -303,38 +303,38 @@ TEST_F(Image, CopyOnWrite)
 {
   // test that a just constructed image only have 1 referecne
   sitk::Image img( 10, 10, sitk::sitkInt16 );
-  EXPECT_EQ(static_cast<const sitk::Image *>(&img)->GetImageBase()->GetReferenceCount(), 1 )
+  EXPECT_EQ(static_cast<const sitk::Image *>(&img)->GetITKBase()->GetReferenceCount(), 1 )
     << " Reference Count for just constructed Image";
 
   // use the image from the fixture to test some copy constructor
-  EXPECT_EQ(static_cast<const sitk::Image *>(shortImage)->GetImageBase()->GetReferenceCount(), 2 )
+  EXPECT_EQ(static_cast<const sitk::Image *>(shortImage)->GetITKBase()->GetReferenceCount(), 2 )
     << " Reference Count for shared shortImage initial";
   sitk::Image img0 = *shortImage;
-  EXPECT_EQ(static_cast<const sitk::Image *>(shortImage)->GetImageBase()->GetReferenceCount(), 3 )
+  EXPECT_EQ(static_cast<const sitk::Image *>(shortImage)->GetITKBase()->GetReferenceCount(), 3 )
     << " Reference Count for shared shortImage copy";
   sitk::Image imgCopy = img0;
-  EXPECT_EQ(static_cast<const sitk::Image *>(shortImage)->GetImageBase()->GetReferenceCount(), 4 )
+  EXPECT_EQ(static_cast<const sitk::Image *>(shortImage)->GetITKBase()->GetReferenceCount(), 4 )
     << " Reference Count for shared shortImage second copy";
 
   // check set origin for copy on write
   imgCopy.SetOrigin( std::vector<double>( 3, 2.123 ) );
-  EXPECT_EQ(static_cast<const sitk::Image *>(&imgCopy)->GetImageBase()->GetReferenceCount(), 1 )
+  EXPECT_EQ(static_cast<const sitk::Image *>(&imgCopy)->GetITKBase()->GetReferenceCount(), 1 )
     << " Reference Count for copy after set origin";
-  EXPECT_EQ(static_cast<const sitk::Image *>(&img0)->GetImageBase()->GetReferenceCount(), 3 )
+  EXPECT_EQ(static_cast<const sitk::Image *>(&img0)->GetITKBase()->GetReferenceCount(), 3 )
     << " Reference Count for shared after set origin";
 
   // check shallow copy on assignment
   imgCopy = img0;
-  EXPECT_EQ(static_cast<const sitk::Image *>(&imgCopy)->GetImageBase()->GetReferenceCount(), 4 )
+  EXPECT_EQ(static_cast<const sitk::Image *>(&imgCopy)->GetITKBase()->GetReferenceCount(), 4 )
     << " Reference Count for copy after assigment";
-  EXPECT_EQ(static_cast<const sitk::Image *>(&img0)->GetImageBase()->GetReferenceCount(), 4 )
+  EXPECT_EQ(static_cast<const sitk::Image *>(&img0)->GetITKBase()->GetReferenceCount(), 4 )
     << " Reference Count for shared after assignment";
 
   // check copy on write with set spacing
   imgCopy.SetSpacing( std::vector<double>( 3, 3.45 ) );
-  EXPECT_EQ(static_cast<const sitk::Image *>(&imgCopy)->GetImageBase()->GetReferenceCount(), 1 )
+  EXPECT_EQ(static_cast<const sitk::Image *>(&imgCopy)->GetITKBase()->GetReferenceCount(), 1 )
     << " Reference Count for copy after set spacing";
-  EXPECT_EQ(static_cast<const sitk::Image *>(&img0)->GetImageBase()->GetReferenceCount(), 3 )
+  EXPECT_EQ(static_cast<const sitk::Image *>(&img0)->GetITKBase()->GetReferenceCount(), 3 )
     << " Reference Count for shared after set spacing";
   EXPECT_EQ( sitk::Hash( imgCopy ), sitk::Hash( img0 ) ) << "Hash for shared and copy after set spacing";
 }
@@ -357,7 +357,7 @@ TEST_F(Image,Operators)
   // 1 = 2 - 1
   imgA = imgC - imgA;
 
-  float v =  dynamic_cast<itk::Image<float,3>*>( imgA.GetImageBase() )->GetPixel( itk::Index<3>());
+  float v =  dynamic_cast<itk::Image<float,3>*>( imgA.GetITKBase() )->GetPixel( itk::Index<3>());
   EXPECT_EQ( v, 1 ) << "value check 1";
 
   // 4 = 2 * 2
@@ -372,11 +372,11 @@ TEST_F(Image,Operators)
   // 20 = .4 * 50;
   imgA = imgC * 50;
 
-  v =  dynamic_cast<itk::Image<float,3>*>( imgA.GetImageBase() )->GetPixel( itk::Index<3>());
+  v =  dynamic_cast<itk::Image<float,3>*>( imgA.GetITKBase() )->GetPixel( itk::Index<3>());
   EXPECT_EQ( v, 20 ) << "value check 2";
 
   // original value should have never changed
-  v =  dynamic_cast<itk::Image<float,3>*>( floatImage->GetImageBase() )->GetPixel( itk::Index<3>());
+  v =  dynamic_cast<itk::Image<float,3>*>( floatImage->GetITKBase() )->GetPixel( itk::Index<3>());
   EXPECT_EQ( v, 0 ) << "value check 3";
 
   // 0 = 20 + -20
@@ -395,7 +395,7 @@ TEST_F(Image,Operators)
   imgA = ~~*shortImage;
   imgB = ~imgA;
 
-  v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetImageBase() )->GetPixel( itk::Index<3>());
+  v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetITKBase() )->GetPixel( itk::Index<3>());
   EXPECT_EQ( v, 0 );
 
   // 0 = 0 & 1
@@ -410,9 +410,9 @@ TEST_F(Image,Operators)
   // 0 = 1 ^ 1
   imgA = imgB ^ imgA;
 
-  v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetImageBase() )->GetPixel( itk::Index<3>());
+  v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetITKBase() )->GetPixel( itk::Index<3>());
   EXPECT_EQ( v, 0 ) << "value check 4";
-  v =  dynamic_cast<itk::Image<short,3>*>( imgB.GetImageBase() )->GetPixel( itk::Index<3>());
+  v =  dynamic_cast<itk::Image<short,3>*>( imgB.GetITKBase() )->GetPixel( itk::Index<3>());
   EXPECT_EQ( v, 1 ) << "value check 5";
 
   std::cout << "Testing Compoung assignment operators" << std::endl;
@@ -439,7 +439,7 @@ TEST_F(Image,Operators)
   // 8 = 16 / 2
   imgA /= 2;
 
-  v =  dynamic_cast<itk::Image<float,3>*>( imgA.GetImageBase() )->GetPixel( itk::Index<3>());
+  v =  dynamic_cast<itk::Image<float,3>*>( imgA.GetITKBase() )->GetPixel( itk::Index<3>());
   EXPECT_EQ( v, 8 ) << "value check 6";
 
   // 1 = 8 / 8
@@ -450,7 +450,7 @@ TEST_F(Image,Operators)
   // 1 = 1  & 1
   imgA &= imgA;
 
-  v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetImageBase() )->GetPixel( itk::Index<3>());
+  v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetITKBase() )->GetPixel( itk::Index<3>());
   EXPECT_EQ( v, 1 ) << "value check 7";
 
   // 1 = 1 | 0
@@ -460,7 +460,7 @@ TEST_F(Image,Operators)
   imgA ^= *shortImage;
 
 
-  v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetImageBase() )->GetPixel( itk::Index<3>());
+  v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetITKBase() )->GetPixel( itk::Index<3>());
   EXPECT_EQ( v, 1 ) << "value check 8";
 }
 

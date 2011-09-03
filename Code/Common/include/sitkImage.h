@@ -84,8 +84,8 @@ namespace simple
      *
      * @{
      */
-    itk::DataObject* GetImageBase( void );
-    const itk::DataObject* GetImageBase( void ) const;
+    itk::DataObject* GetITKBase( void );
+    const itk::DataObject* GetITKBase( void ) const;
     /**@}*/
 
     // could return -1 if in valid
