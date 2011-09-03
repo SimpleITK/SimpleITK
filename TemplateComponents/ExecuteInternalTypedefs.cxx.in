@@ -4,7 +4,10 @@ $(if number_of_inputs == 2 then
 OUT=[[
   typedef TImageType     InputImageType2;]]
   end)
-  $(if output_pixel_type then
+  $(if output_image_type then
+  OUT=[[//Define output image type
+  typedef ${output_image_type} OutputImageType;]]
+  elseif output_pixel_type then
   OUT=[[// Define output image type
   typedef itk::Image< ${output_pixel_type}, InputImageType::ImageDimension > OutputImageType;]]
   else

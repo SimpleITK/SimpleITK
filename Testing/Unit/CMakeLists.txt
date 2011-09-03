@@ -73,6 +73,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
   set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILTERNAME}ImageFilterTest.cxx")
   add_custom_command (
     OUTPUT  ${OUTPUT_TEST_FILENAME}
+    COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
     COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitk ${template_include_dir} TestTemplate.cxx.in "${OUTPUT_TEST_FILENAME}"
     DEPENDS ${filter_json_file} ${CXX_TEMPLATE_FILES}
     )
@@ -83,6 +84,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/LuaTests/${FILTERNAME}ImageFilterTest.lua")
     add_custom_command (
       OUTPUT "${OUTPUT_TEST_FILENAME}"
+      COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
       COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Lua ${template_include_dir} TestTemplate.lua.in "${OUTPUT_TEST_FILENAME}"
       DEPENDS ${filter_json_file} ${LUA_TEMPLATE_FILES}
       )
@@ -94,6 +96,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/${FILTERNAME}ImageFilterTest.py")
     add_custom_command (
       OUTPUT  "${OUTPUT_TEST_FILENAME}"
+      COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
       COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Python ${template_include_dir} TestTemplate.py.in "${OUTPUT_TEST_FILENAME}"
       DEPENDS ${filter_json_file} ${PYTHON_TEMPLATE_FILES}
       )
@@ -105,6 +108,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/TclTests/${FILTERNAME}ImageFilterTest.tcl")
     add_custom_command (
       OUTPUT  "${OUTPUT_TEST_FILENAME}"
+      COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
       COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Tcl ${template_include_dir} TestTemplate.tcl.in "${OUTPUT_TEST_FILENAME}"
       DEPENDS ${filter_json_file} ${TCL_TEMPLATE_FILES}
       )
@@ -116,6 +120,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/RTests/${FILTERNAME}ImageFilterTest.R")
     add_custom_command (
       OUTPUT  "${OUTPUT_TEST_FILENAME}"
+      COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
       COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/R ${template_include_dir} TestTemplate.R.in "${OUTPUT_TEST_FILENAME}"
       DEPENDS ${filter_json_file} ${R_TEMPLATE_FILES}
       )
@@ -127,6 +132,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/RubyTests/${FILTERNAME}ImageFilterTest.rb")
     add_custom_command (
       OUTPUT  "${OUTPUT_TEST_FILENAME}"
+      COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
       COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Ruby ${template_include_dir} TestTemplate.rb.in "${OUTPUT_TEST_FILENAME}"
       DEPENDS ${filter_json_file} ${RUBY_TEMPLATE_FILES}
       )
@@ -139,6 +145,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/org/itk/simple/testing/${FILTERNAME}ImageFilterTest.java")
     add_custom_command (
       OUTPUT  "${OUTPUT_TEST_FILENAME}"
+      COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
       COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Java ${template_include_dir} TestTemplate.java.in "${OUTPUT_TEST_FILENAME}"
       COMMAND ${Java_JAVAC_EXECUTABLE} -classpath ${SimpleITK_BINARY_DIR}/Wrapping/org.itk.simple.jar ${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/org/itk/simple/testing/${FILTERNAME}ImageFilterTest.java
       DEPENDS ${filter_json_file} ${JAVA_TEMPLATE_FILES} SimpleITKJava
@@ -161,6 +168,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
     endif ( WIN32 )
     add_custom_command (
       OUTPUT "${OUTPUT_TEST_FILENAME}"
+      COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
       COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/CSharp ${template_include_dir} TestTemplate.cs.in "${OUTPUT_TEST_FILENAME}"
       COMMAND ${csharp_compiler_safe}
         /t:exe /platform:${CSHARP_PLATFORM}

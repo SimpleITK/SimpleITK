@@ -64,8 +64,8 @@ TEST(BasicFilters,Cast) {
   mapping["2f27e9260baeba84fb83dd35de23fa2d"] = (itk::simple::PixelIDValueType)itk::simple::sitkVectorInt8;
   mapping["a963bd6a755b853103a2d195e01a50d3"] = (itk::simple::PixelIDValueType)itk::simple::sitkVectorUInt16;
   mapping["a963bd6a755b853103a2d195e01a50d3"] = (itk::simple::PixelIDValueType)itk::simple::sitkVectorInt16;
-  mapping["sitkVectorUInt32"] = (itk::simple::PixelIDValueType)itk::simple::sitkVectorUInt32;
-  mapping["sitkVectorInt32"] = (itk::simple::PixelIDValueType)itk::simple::sitkVectorInt32;
+  mapping["6ceea0011178a955b5be2d545d107199"] = (itk::simple::PixelIDValueType)itk::simple::sitkVectorUInt32;
+  mapping["6ceea0011178a955b5be2d545d107199"] = (itk::simple::PixelIDValueType)itk::simple::sitkVectorInt32;
   mapping["sitkVectorUInt64"] = (itk::simple::PixelIDValueType)itk::simple::sitkVectorUInt64;
   mapping["sitkVectorInt64"] = (itk::simple::PixelIDValueType)itk::simple::sitkVectorInt64;
   mapping["3ccccde44efaa3d688a86e94335c1f16"] = (itk::simple::PixelIDValueType)itk::simple::sitkVectorFloat32;
@@ -139,9 +139,9 @@ TEST(BasicFilters,LabelStatistics) {
   stats.Execute ( image, labels );
 
   EXPECT_NEAR ( stats.GetMinimum ( 0 ), 0, 0.01 );
-  EXPECT_NEAR ( stats.GetMaximum ( 0 ), 104, 0.01 );
-  EXPECT_NEAR ( stats.GetMean ( 0 ), 14.13, 0.01 );
-  EXPECT_NEAR ( stats.GetVariance ( 0 ), 285.351, 0.01 );
+  EXPECT_NEAR ( stats.GetMaximum ( 0 ), 99, 0.01 );
+  EXPECT_NEAR ( stats.GetMean ( 0 ), 13.0911, 0.001 );
+  EXPECT_NEAR ( stats.GetVariance ( 0 ),  269.173, 0.01 );
   EXPECT_TRUE ( stats.HasLabel ( 0 ) );
 
   const itk::simple::LabelStatisticsImageFilter::LabelListingType myLabels = stats.GetValidLabels();
@@ -156,5 +156,5 @@ TEST(BasicFilters,LabelStatistics) {
   const itk::simple::BasicMeasurementMap myBasicMeasurementMap = myMeasurementMap.GetBasicMeasurementMap();
   EXPECT_EQ( myBasicMeasurementMap.size(), 4u ); //4 measurements produced
 
-  EXPECT_EQ ( myMeasurementMap.ToString(), "Maximum, Mean, Minimum, Variance, \n104, 14.1305, 0, 285.351, \n" );
+  EXPECT_EQ ( myMeasurementMap.ToString(), "Maximum, Mean, Minimum, Variance, \n99, 13.0911, 0, 269.173, \n" );
 }

@@ -1,0 +1,18 @@
+{
+  "name" : "LabelMapToRGB",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "output_image_type" : "itk::VectorImage< unsigned char, InputImageType::ImageDimension>"
+  "doc" : "Docs",
+  "pixel_types" : "LabelPixelIDTypeList",
+  "members" : [
+  ]
+  "tests" : [ {
+    "tag" : "default",
+    "description" : "Simply run with default settings",
+    "inputA" : "Input/2th_cthead1.mha",
+    "inputA_cast" : "sitkLabelUInt8",
+    "md5hash" : "850e04c66180956c8a19471309fa2391",
+    "settings" : []    
+  } ]
+}
