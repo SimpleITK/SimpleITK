@@ -22,6 +22,7 @@ SET(CTEST_CUSTOM_WARNING_EXCEPTION
   ${CTEST_CUSTOM_WARNING_EXCEPTION}
 
   # Ignore warning for files with no symbols
+  "warning LNK4221.*not define any previously undefined public symbols"
   "warning LNK4221.*no public symbols found"
   "ranlib:.*file:.*has no symbols"
   "ranlib: file: .+ has no symbols"
