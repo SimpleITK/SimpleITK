@@ -21,6 +21,12 @@ SET(CTEST_CUSTOM_COVERAGE_EXCLUDE
 SET(CTEST_CUSTOM_WARNING_EXCEPTION
   ${CTEST_CUSTOM_WARNING_EXCEPTION}
 
+  # Ignore warning for files with no symbols
+  "warning LNK4221.*no public symbols found"
+  "ranlib:.*file:.*has no symbols"
+  "ranlib: file: .+ has no symbols"
+  "libtool:.*file:.*has no symbols"
+
   # Ignore warning from the SWIG wrapped file ( not much we can do about those )
   ".*_wrap.cxx"
 

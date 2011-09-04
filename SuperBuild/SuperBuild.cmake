@@ -1,8 +1,14 @@
 find_package(Git REQUIRED)
-#-----------------------------------------------------------------------------
 
+#-----------------------------------------------------------------------------
+# CTest Related Settings
+#-----------------------------------------------------------------------------
 set(BUILDNAME "NoBuldNameGiven")
 set(SITE      "NoSiteGiven")
+option( ${CMAKE_PROJECT_NAME}_BUILD_TESTING "Turn on Testing for SimpleITK" ON )
+
+configure_file(../CMake/CTestCustom.cmake.in CTestCustom.cmake)
+
 
 enable_language(C)
 enable_language(CXX)
@@ -62,7 +68,6 @@ endif()
 #-----------------------------------------------------------------------------
 # SimpleITK options
 #------------------------------------------------------------------------------
-option( ${CMAKE_PROJECT_NAME}_BUILD_TESTING "Turn on Testing for SimpleITK" ON )
 
 
 #-----------------------------------------------------------------------------
