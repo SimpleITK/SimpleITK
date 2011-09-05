@@ -18,7 +18,7 @@ static PyObject *
 sitk_GetArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
 {
   // Holds the return tuple
-  PyObject * resultTuple;
+  PyObject * resultTuple = NULL;
   // Holds the bulk data
   PyObject * byteArray = NULL;
   // Numpy array shape
