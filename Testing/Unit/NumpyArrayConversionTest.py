@@ -43,7 +43,7 @@ print(sitk.GetArrayFromImage(image))
 
 # 3D image
 image = sitk.Image(sizeX, sizeY, sizeZ, sitk.sitkFloat32)
-for k in range(sizeY):
+for k in range(sizeZ):
     for j in range(sizeY):
         for i in range(sizeX):
             image[i, j, k] = (sizeY*k +j)*sizeX + i
