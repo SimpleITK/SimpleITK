@@ -26,6 +26,7 @@ namespace itk
 
     virtual PixelIDValueType GetPixelIDValue(void) const = 0;
     virtual unsigned int GetDimension( void ) const  = 0;
+    virtual unsigned int GetNumberOfComponentsPerPixel( void ) const = 0;
 
     virtual PimpleImageBase *ShallowCopy(void) const = 0;
     virtual PimpleImageBase *DeepCopy(void) const = 0;
@@ -52,27 +53,36 @@ namespace itk
 
     virtual int GetReferenceCountOfImage() const = 0;
 
+    virtual int8_t   GetPixelAsInt8( const std::vector<uint32_t> &idx) const = 0;
     virtual uint8_t  GetPixelAsUInt8( const std::vector<uint32_t> &idx) const = 0;
     virtual int16_t  GetPixelAsInt16( const std::vector<uint32_t> &idx ) const = 0;
     virtual uint16_t GetPixelAsUInt16( const std::vector<uint32_t> &idx ) const = 0;
     virtual int32_t  GetPixelAsInt32( const std::vector<uint32_t> &idx ) const = 0;
     virtual uint32_t GetPixelAsUInt32( const std::vector<uint32_t> &idx ) const = 0;
+    virtual int64_t  GetPixelAsInt64( const std::vector<uint32_t> &idx ) const = 0;
+    virtual uint64_t GetPixelAsUInt64( const std::vector<uint32_t> &idx ) const = 0;
     virtual float    GetPixelAsFloat( const std::vector<uint32_t> &idx ) const = 0;
     virtual double   GetPixelAsDouble(  const std::vector<uint32_t> &idx ) const = 0;
 
+    virtual void SetPixelAsInt8( const std::vector<uint32_t> &idx, int8_t v ) = 0;
     virtual void SetPixelAsUInt8( const std::vector<uint32_t> &idx, uint8_t v ) = 0;
     virtual void SetPixelAsInt16( const std::vector<uint32_t> &idx, int16_t v ) = 0;
     virtual void SetPixelAsUInt16( const std::vector<uint32_t> &idx, uint16_t v ) = 0;
     virtual void SetPixelAsInt32( const std::vector<uint32_t> &idx, int32_t v ) = 0;
     virtual void SetPixelAsUInt32( const std::vector<uint32_t> &idx, uint32_t v ) = 0;
+    virtual void SetPixelAsInt64( const std::vector<uint32_t> &idx, int64_t v ) = 0;
+    virtual void SetPixelAsUInt64( const std::vector<uint32_t> &idx, uint64_t v ) = 0;
     virtual void SetPixelAsFloat( const std::vector<uint32_t> &idx, float v ) = 0;
     virtual void SetPixelAsDouble( const std::vector<uint32_t> &idx, double v ) = 0;
 
-    virtual uint8_t  *GetBufferAsUInt8() = 0;
+    virtual int8_t   *GetBufferAsInt8( ) = 0;
+    virtual uint8_t  *GetBufferAsUInt8( ) = 0;
     virtual int16_t  *GetBufferAsInt16( )= 0;
     virtual uint16_t *GetBufferAsUInt16( ) = 0;
     virtual int32_t  *GetBufferAsInt32( ) = 0;
     virtual uint32_t *GetBufferAsUInt32( ) = 0;
+    virtual int64_t  *GetBufferAsInt64( ) = 0;
+    virtual uint64_t *GetBufferAsUInt64( ) = 0;
     virtual float    *GetBufferAsFloat( ) = 0;
     virtual double   *GetBufferAsDouble( ) = 0;
   };
