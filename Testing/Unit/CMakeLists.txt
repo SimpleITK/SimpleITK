@@ -25,6 +25,10 @@ file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/RubyTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/JavaTests/org/itk/simple/testing)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/CSharpTests)
 
+# Adjust Python to run in the virtualenv
+set( PythonVirtualenvHome ${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVirtualenv )
+set( PYTHON_EXECUTABLE ${PythonVirtualenvHome}/bin/python )
+
 #
 # Glob for necessary template files up front, before the foreach loop over
 # the filters:
@@ -271,6 +275,7 @@ endmacro()
 # Here we add all the tests
 add_google_tests(SimpleITKUnitTestDriver ${TestSource})
 
+
 #######################################################
 #
 # Tests which use the itkTestDriver
@@ -359,10 +364,6 @@ if ( WRAP_PYTHON )
 
     add_test(NAME Python.${name}
       COMMAND "${ITK_TEST_DRIVER}"
-      --add-before-env PYTHONPATH "${SimpleITK_BINARY_DIR}/$<CONFIGURATION>/Wrapping"
-      --add-before-env PYTHONPATH "${SimpleITK_BINARY_DIR}/Wrapping"
-      --add-before-env PYTHONPATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/$<CONFIGURATION>"
-      --add-before-env PYTHONPATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}"
       ${command}
       ${ARGN}
       )
