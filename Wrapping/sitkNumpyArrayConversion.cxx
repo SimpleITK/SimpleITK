@@ -63,12 +63,11 @@ sitk_GetArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
     sitkBufferPtr = (const void *)sitkImage->GetBufferAsUInt8();
     pixelSize  = sizeof( uint8_t );
     break;
-// \todo re-enable when Image class gets more GetBuffer support
-  //case itk::simple::sitkInt8:
-    //pixelDtype = 1;
-    //sitkBufferPtr = (const void *)sitkImage->GetBufferAsInt8();
-    //pixelSize  = sizeof( int8_t );
-    //break;
+  case itk::simple::sitkInt8:
+    pixelDtype = 1;
+    sitkBufferPtr = (const void *)sitkImage->GetBufferAsInt8();
+    pixelSize  = sizeof( int8_t );
+    break;
   case itk::simple::sitkUInt16:
     pixelDtype = 2;
     sitkBufferPtr = (const void *)sitkImage->GetBufferAsUInt16();
