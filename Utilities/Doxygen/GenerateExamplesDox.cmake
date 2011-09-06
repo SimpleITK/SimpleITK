@@ -18,6 +18,7 @@ file( GLOB_RECURSE EXAMPLES_LIST
   "*.tcl"
   "*.rb"
   "*.R"
+  "*.cs"
 )
 
 # remove the file before we begin appending
