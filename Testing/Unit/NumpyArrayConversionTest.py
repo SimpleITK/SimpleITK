@@ -14,14 +14,6 @@ sizeY = 5
 sizeZ = 3
 
 #------------------------------------
-# Test numpy array to SimpleITK Image
-
-arr = np.arange(20)
-arr.shape = (sizeX, sizeY)
-print(sitk.GetImageFromArray(arr))
-
-
-#------------------------------------
 # Test SimpleITK Image to numpy array.
 
 # Test passing in the wrong type
@@ -49,3 +41,17 @@ for k in range(sizeZ):
             image[i, j, k] = (sizeY*k +j)*sizeX + i
 
 print(sitk.GetArrayFromImage(image))
+
+
+#------------------------------------
+# Test numpy array to SimpleITK Image
+
+arr = np.arange(20)
+arr.shape = (sizeX, sizeY)
+image = sitk.GetImageFromArray(arr)
+print(image)
+print('image[0,0]: ' + str(image[0,0]))
+print('image[1,1]: ' + str(image[1,1]))
+print('image[2,2]: ' + str(image[2,2]))
+
+
