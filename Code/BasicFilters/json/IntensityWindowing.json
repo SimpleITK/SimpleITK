@@ -4,6 +4,7 @@
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "pixel_types" : "BasicPixelIDTypeList",
+  "doc" : "",
   "members" : [ {
     "name" : "WindowMinimum",
     "type" : "double",
