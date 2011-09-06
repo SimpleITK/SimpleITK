@@ -4,6 +4,7 @@
   "template_test_filename" : "ImageFilter",
   "filter_type" : "itk::ThresholdImageFilter<InputImageType>",
   "pixel_types" : "BasicPixelIDTypeList",
+  "doc" : "",
   "members" : [ {
     "name" : "Lower",
     "type" : "double",
