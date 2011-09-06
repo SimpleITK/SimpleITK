@@ -32,7 +32,8 @@
     "tag" : "defaults",
     "description" : "use the defaults which sets a 0 size image",
     "inputA" : "Input/RA-Float.nrrd",
-    "md5hash" : "3ccccde44efaa3d688a86e94335c1f16"
+    "md5hash" : "3ccccde44efaa3d688a86e94335c1f16",
+    "settings" : [ ]
   }, {
     "tag" : "more",
     "description" : "croping",
