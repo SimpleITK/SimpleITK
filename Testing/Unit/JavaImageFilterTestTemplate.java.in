@@ -5,6 +5,7 @@
  */
 
 package org.itk.simple.testing;
+import java.math.BigInteger;
 // This is Java code to test ${name}
 import org.itk.simple.*;
 
@@ -45,6 +46,13 @@ $(foreach tests
 
       // Read image(s)
       Image inputA = reader.setFileName( argv[1] ).execute();
+
+$(if inputA_cast then
+        OUT=[[
+       CastImageFilter caster = new CastImageFilter();
+       caster.setOutputPixelType( PixelIDValueEnum.${inputA_cast}.swigValue() );
+       inputA  = caster.execute( inputA );]]
+end)
 $(if inputB then
       OUT=[[
       Image inputB = reader.setFileName ( argv[2] ).execute();]]

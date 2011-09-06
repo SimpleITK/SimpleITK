@@ -68,7 +68,10 @@ Image ${name}ImageFilter::DualExecuteInternal ( const Image& inImage1, const Ima
   typedef TImageType     InputImageType;
   typedef TImageType2     InputImageType2;
 
-  $(if output_pixel_type then
+  $(if output_image_type then
+  OUT=[[//Define output image type
+  typedef ${output_image_type} OutputImageType;]]
+  elseif output_pixel_type then
   OUT=[[// Define output image type
   typedef itk::Image< ${output_pixel_type}, InputImageType::ImageDimension > OutputImageType;]]
   else

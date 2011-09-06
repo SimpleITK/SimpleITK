@@ -44,9 +44,18 @@ $(foreach tests
             if (tag.Equals( "${tag}" )) {
                 // Read image(s)
                 Image inputA = reader.SetFileName( args[2] ).Execute();
+
+$(if inputA_cast then
+                 OUT=[[
+                 CastImageFilter caster = new CastImageFilter();
+                 caster.SetOutputPixelType( PixelIDValueEnum.${inputA_cast}.swigValue );
+                 inputA = caster.Execute( inputA );]]                
+end)
+
 $(if inputB then
                 OUT=[[
                 Image inputB = reader.SetFileName ( args[3] ).Execute();
+
 ]]
 end)
 $(when settings
