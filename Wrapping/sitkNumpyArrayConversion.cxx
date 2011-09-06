@@ -2,6 +2,8 @@
 
 #include "sitkImage.h"
 
+#include <iostream>
+
 // Python is written in C
 #ifdef __cplusplus
 extern "C"
@@ -18,7 +20,7 @@ static PyObject *
 sitk_GetArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
 {
   // Holds the return tuple
-  PyObject * resultTuple;
+  PyObject * resultTuple = NULL;
   // Holds the bulk data
   PyObject * byteArray = NULL;
   // Numpy array shape
@@ -63,12 +65,11 @@ sitk_GetArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
     sitkBufferPtr = (const void *)sitkImage->GetBufferAsUInt8();
     pixelSize  = sizeof( uint8_t );
     break;
-// \todo re-enable when Image class gets more GetBuffer support
-  //case itk::simple::sitkInt8:
-    //pixelDtype = 1;
-    //sitkBufferPtr = (const void *)sitkImage->GetBufferAsInt8();
-    //pixelSize  = sizeof( int8_t );
-    //break;
+  case itk::simple::sitkInt8:
+    pixelDtype = 1;
+    sitkBufferPtr = (const void *)sitkImage->GetBufferAsInt8();
+    pixelSize  = sizeof( int8_t );
+    break;
   case itk::simple::sitkUInt16:
     pixelDtype = 2;
     sitkBufferPtr = (const void *)sitkImage->GetBufferAsUInt16();
@@ -212,8 +213,102 @@ fail:
 static PyObject *
 sitk_GetImageFromArray( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
 {
-  const PyObject * arr;
-  return Py_BuildValue("i", 42);
+  PyObject * arr = NULL;
+  PyObject * dtype = NULL;
+  PyObject * dtype_num = NULL;
+  long dtype_num_long = -1;
+
+  Py_buffer arrayView;
+  arrayView.buf = NULL;
+  itk::simple::Image * image = NULL;
+  PyObject * pyImage = NULL;
+  void * sitkBufferPtr;
+
+  Py_ssize_t *shape = NULL;
+  if( !PyArg_ParseTuple( args, "O", &arr ) )
+    {
+    SWIG_fail; // SWIG_fail is a macro that says goto: fail (return NULL)
+    }
+
+  if( PyObject_GetBuffer( arr, &arrayView, PyBUF_CONTIG_RO | PyBUF_C_CONTIGUOUS ) < 0 )
+    {
+    SWIG_fail;
+    }
+
+  dtype = PyObject_GetAttrString( arr, "dtype" );
+  if( dtype == NULL )
+    {
+    SWIG_fail;
+    }
+
+  dtype_num = PyObject_GetAttrString( dtype, "num" );
+  if( dtype_num == NULL )
+    {
+    SWIG_fail;
+    }
+  dtype_num_long = PyInt_AsLong( dtype_num );
+  Py_DECREF( dtype_num );
+
+  shape = arrayView.shape;
+  if( arrayView.ndim == 2 )
+    {
+    switch( dtype_num_long )
+      {
+    case 7:
+      try
+        {
+        image = new itk::simple::Image( shape[0], shape[1], itk::simple::sitkFloat64 );
+        sitkBufferPtr = (void *)image->GetBufferAsDouble();
+        }
+      catch( const itk::ExceptionObject &e )
+        {
+        std::string msg = "Exception thrown in SimpleITK new Image: ";
+        msg += e.what();
+        PyErr_SetString( PyExc_RuntimeError, msg.c_str() );
+        SWIG_fail;
+        }
+      pyImage = SWIG_NewPointerObj( image, SWIGTYPE_p_itk__simple__Image, 1 );
+      break;
+    default:
+      PyErr_SetString( PyExc_TypeError, "Unsupported array dtype." );
+      SWIG_fail;
+      }
+    }
+  else if( arrayView.ndim == 3 )
+    {
+    switch( dtype_num_long )
+      {
+    default:
+      PyErr_SetString( PyExc_TypeError, "Unsupported array dtype." );
+      SWIG_fail;
+      }
+    }
+  else
+    {
+    PyErr_SetString( PyExc_ValueError, "Unsupported array dimension." );
+    SWIG_fail;
+    }
+
+  std::cout << "sitkBufferPtr: "  << sitkBufferPtr << std::endl;
+  std::cout << "arrayView.buf: " << arrayView.buf << std::endl;
+  std::cout << "arrayView.len: " << arrayView.len << std::endl;
+  memcpy( (void *)sitkBufferPtr, arrayView.buf, arrayView.len );
+  std::cout << "image[0]: " << ((double *)sitkBufferPtr)[0] << " arr[0]: " << ((double *)arrayView.buf)[0] << std::endl;
+  std::cout << "image[1]: " << ((double *)sitkBufferPtr)[1] << " arr[1]: " << ((double *)arrayView.buf)[1] << std::endl;
+  std::cout << "image[2]: " << ((double *)sitkBufferPtr)[2] << " arr[2]: " << ((double *)arrayView.buf)[2] << std::endl;
+
+  PyBuffer_Release( &arrayView );
+
+  return pyImage;
+
+fail:
+  Py_XDECREF( dtype );
+  Py_XDECREF( image );
+  if( arrayView.buf != NULL )
+    {
+    PyBuffer_Release( &arrayView );
+    }
+  return NULL;
 }
 
 #ifdef __cplusplus
