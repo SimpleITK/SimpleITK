@@ -78,10 +78,12 @@ end)
 )
 
     inputA = reader:SetFileName ( arg[2] ):Execute();
-    $(when inputB
-    inputB = reader:SetFileName ( arg[3] ):Execute()
-    )
-    output = filter:Execute ( inputA $(when inputB , inputB) )
+    $(if inputB then
+    OUT=[[
+    inputB = reader:SetFileName ( arg[3] ):Execute();
+    ]]
+    end)
+    output = filter:Execute ( inputA $(if inputB then OUT=[[inputB]] end) )
     writer:SetFileName ( arg[#arg] ):Execute ( output )
   end
 )
