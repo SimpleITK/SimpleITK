@@ -89,7 +89,7 @@ end)
     ]]
     end)
     
-    output = filter:Execute ( inputA $(if inputB then OUT=[[inputB]] end) )
+    output = filter:Execute ( inputA $(if inputB then OUT=[[, inputB]] end) )
 
     writer:SetFileName ( arg[#arg] ):Execute ( output )
   end
