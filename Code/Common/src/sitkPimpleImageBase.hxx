@@ -255,7 +255,12 @@ namespace itk
                       typename ImageType::PixelType >::Type
     InternalGetPixel( const std::vector<uint32_t> &idx ) const
       {
-        return this->m_Image->GetPixel( sitkSTLVectorToITK<IndexType>( idx ) );
+        const IndexType itkIdx = sitkSTLVectorToITK<IndexType>( idx );
+        if ( ! this->m_Image->GetLargestPossibleRegion().IsInside( itkIdx ) )
+          {
+          sitkExceptionMacro( "index out of bounds" );
+          }
+        return this->m_Image->GetPixel( itkIdx  );
       }
 
     template < typename TPixelIDType >
@@ -265,7 +270,12 @@ namespace itk
                       typename ImageType::PixelType >::Type
     InternalGetPixel( const std::vector<uint32_t> &idx ) const
       {
-        return this->m_Image->GetPixel( sitkSTLVectorToITK<IndexType>( idx ) );
+        const IndexType itkIdx = sitkSTLVectorToITK<IndexType>( idx );
+        if ( ! this->m_Image->GetLargestPossibleRegion().IsInside( itkIdx ) )
+          {
+          sitkExceptionMacro( "index out of bounds" );
+          }
+        return this->m_Image->GetPixel( itkIdx );
       }
 
     template < typename TPixelIDType >
@@ -297,7 +307,12 @@ namespace itk
                                         typename ImageTypeToPixelID<ImageType>::PixelIDType >::value >::Type
     InternalSetPixel( const std::vector<uint32_t> &idx, TPixelType v  ) const
       {
-        return this->m_Image->SetPixel( sitkSTLVectorToITK<IndexType>( idx ), v );
+        const IndexType itkIdx = sitkSTLVectorToITK<IndexType>( idx );
+        if ( ! this->m_Image->GetLargestPossibleRegion().IsInside( itkIdx ) )
+          {
+          sitkExceptionMacro( "index out of bounds" );
+          }
+        return this->m_Image->SetPixel( itkIdx, v );
       }
 
     template < typename TPixelType >
