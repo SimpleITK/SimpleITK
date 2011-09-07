@@ -423,8 +423,13 @@ if ( WRAP_PYTHON )
   add_python_test( Test.IOTest
     "${SimpleITK_SOURCE_DIR}/Testing/Unit/IOTest.py" )
 
-  add_python_test( Test.Numpy
-    "${SimpleITK_SOURCE_DIR}/Testing/Unit/NumpyArrayConversionTest.py" )
+  # Numpy test.
+  execute_process( COMMAND ${PYTHON_EXECUTABLE} -c "import numpy"
+    RESULT_VARIABLE _can_import_numpy )
+  if( ${_can_import_numpy} EQUAL "0" )
+    add_python_test( Test.Numpy
+      "${SimpleITK_SOURCE_DIR}/Testing/Unit/NumpyArrayConversionTest.py" )
+  endif()
 
 endif( WRAP_PYTHON )
 
