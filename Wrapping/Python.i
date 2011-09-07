@@ -179,5 +179,13 @@
 
 }
 
+// This is included inline because SwigMethods (SimpleITKPYTHON_wrap.cxx)
+// is declared static.
+%{
+#include "sitkNumpyArrayConversion.cxx"
+%}
+// Numpy array conversion support
+%native(GetArrayFromImage) PyObject *sitk_GetArrayFromImage( PyObject *self, PyObject *args );
+%native(GetImageFromArray) PyObject *sitk_GetImageFromArray( PyObject *self, PyObject *args );
 
 #endif
