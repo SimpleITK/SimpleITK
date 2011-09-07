@@ -157,6 +157,7 @@ TEST_F(Image,ImageDataType) {
   result = itk::simple::ImageTypeToPixelIDValue<FloatVectorImageType>::Result;
   EXPECT_EQ( floatVectorImage->GetPixelIDValue(), result );
 
+
 }
 
 TEST_F(Image,Constructors) {
@@ -469,6 +470,16 @@ TEST_F(Image,SetPixel)
 
   // this test is designed to run all SetPixel methods
 
+  sitk::Image img = sitk::Image( 10, 10, sitk::sitkFloat64 );
+
+   // Check that out of bounds throw
+  uint32_t xOOB[] = {10,0,0};
+  uint32_t yOOB[] = {0,10,0};
+  uint32_t zOOB[] = {0,0,10};
+  ASSERT_THROW( img.SetPixelAsDouble(  std::vector<uint32_t>( xOOB, xOOB+3 ), 0.0 ), itk::simple::GenericException ) << "x out of bounds";
+  ASSERT_THROW( img.SetPixelAsDouble(  std::vector<uint32_t>( yOOB, yOOB+3 ), 0.0 ), itk::simple::GenericException ) << "y out of bounds";
+  ASSERT_NO_THROW( img.SetPixelAsDouble(  std::vector<uint32_t>( zOOB, zOOB+3 ), 0.0 ) ) << "z out of bounds, expect truncation of z-dim";
+
 }
 
 
@@ -608,6 +619,17 @@ TEST_F(Image,GetPixel)
   ASSERT_ANY_THROW( img.GetPixelAsInt32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsUInt32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsFloat( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+
+
+  // Check that out of bounds throw
+  uint32_t xOOB[] = {10,0,0};
+  uint32_t yOOB[] = {0,10,0};
+  uint32_t zOOB[] = {0,0,10};
+  ASSERT_THROW( img.GetPixelAsDouble(  std::vector<uint32_t>( xOOB, xOOB+3 ) ), itk::simple::GenericException ) << "x out of bounds";
+  ASSERT_THROW( img.GetPixelAsDouble(  std::vector<uint32_t>( yOOB, yOOB+3 ) ), itk::simple::GenericException ) << "y out of bounds";
+  ASSERT_NO_THROW( img.GetPixelAsDouble(  std::vector<uint32_t>( zOOB, zOOB+3 ) ) ) << "z out of bounds, expect truncation of z-dim";
+
+
 }
 
 TEST_F(Image, GetBuffer)

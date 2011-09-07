@@ -133,7 +133,8 @@ namespace simple
      *
      * \param idx the zero based index into the image. It's length
      * must be at least the value of GetDimension(), additional
-     * elements will be ignored
+     * elements will be ignored. Boundary checking is performed on
+     * idx, if it is out of bounds an exception will be thrown.
      *
      * \sa Image::GetPixelIDValue
      * @{
@@ -159,7 +160,8 @@ namespace simple
      *
      * \param idx the zero based index into the image. It's length
      * must be at least the value of GetDimension(), additional
-     * elements will be ignored.
+     * elements will be ignored. Boundary checking is performed on
+     * idx, if it is out of bounds an exception will be thrown.
      * \param v value to set the pixel to
      *
      * \sa Image::GetPixelIDValue
