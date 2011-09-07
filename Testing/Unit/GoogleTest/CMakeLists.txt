@@ -211,9 +211,6 @@ option(build_all_gtest_tests "Build all of gtest's own tests." OFF)
 # 'make test' or ctest.
 enable_testing()
 
-# Sets PYTHONINTERP_FOUND and PYTHON_EXECUTABLE.
-find_package(PythonInterp)
-
 ############################################################
 # C++ tests built with standard compiler flags.
 

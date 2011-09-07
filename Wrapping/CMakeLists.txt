@@ -1,9 +1,4 @@
 
-#
-# Use CMake file which present options for wrapped languages, and finds languages as needed
-#
-include(SITKLanguageOptions)
-
 
 #
 # General SWIG configuration
@@ -93,6 +88,29 @@ if ( WRAP_PYTHON )
   SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${PYTHON_LIBRARIES} ${ITK_LIBRARIES})
   set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKPYTHON_wrap.cxx COMPILE_FLAGS "-w")
 
+  # Installation
+  set( SIMPLEITK_PYTHON_MODULE_DIR ${SimpleITK_BINARY_DIR}/Wrapping )
+  get_target_property( SIMPLEITK_BINARY_MODULE
+    ${SWIG_MODULE_SimpleITK_REAL_NAME} LOCATION )
+  configure_file( ${SimpleITK_SOURCE_DIR}/Wrapping/PythonPackage/setup.py.in
+    ${SimpleITK_BINARY_DIR}/Wrapping/PythonPackage/setup.py )
+
+  set( PythonVirtualenvHome ${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVirtualenv )
+  add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_REAL_NAME}
+    PRE_BUILD
+    COMMAND ${PYTHON_EXECUTABLE}
+    ${SimpleITK_SOURCE_DIR}/Utilities/virtualenv/virtualenv.py
+    --python=${PYTHON_EXECUTABLE}
+    --distribute
+    ${PythonVirtualenvHome}
+    COMMENT "Creating Python virtualenv" )
+  set( PYTHON_EXECUTABLE ${PythonVirtualenvHome}/bin/python )
+
+  add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_REAL_NAME}
+    POST_BUILD
+    COMMAND ${PYTHON_EXECUTABLE} ${SimpleITK_BINARY_DIR}/Wrapping/PythonPackage/setup.py
+    install
+    COMMENT "Installing python module to the virtualenv" )
 endif()
 
 #
@@ -248,3 +266,5 @@ if ( WRAP_R )
 
 endif()
 
+# Packaging for distribution
+add_subdirectory(dist)
