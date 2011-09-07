@@ -2,8 +2,6 @@
 
 #include "sitkImage.h"
 
-#include <iostream>
-
 // Python is written in C
 #ifdef __cplusplus
 extern "C"
@@ -151,6 +149,9 @@ sitk_GetArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
     SWIG_fail;
     }
 
+  // For more information on the Py_buffer protocol, see PEP 3118
+  // http://www.python.org/dev/peps/pep-3118/
+  // This restricts us to Python 2.6 or better
   Py_buffer byteArrayView;
   if( PyObject_GetBuffer( byteArray, &byteArrayView, PyBUF_WRITABLE ) < 0 )
     {
@@ -167,11 +168,11 @@ sitk_GetArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
 
   if( dimension == 2 )
     {
-    shape = Py_BuildValue( "(ii)", size[0], size[1] );
+    shape = Py_BuildValue( "(ii)", size[1], size[0] );
     }
   else if( dimension == 3 )
     {
-    shape = Py_BuildValue( "(iii)", size[0], size[1], size[2] );
+    shape = Py_BuildValue( "(iii)", size[2], size[1], size[0] );
     }
   else
     {
@@ -218,6 +219,9 @@ sitk_GetImageFromArray( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
   PyObject * dtype_num = NULL;
   long dtype_num_long = -1;
 
+  // For more information on the Py_buffer protocol, see PEP 3118
+  // http://www.python.org/dev/peps/pep-3118/
+  // This restricts us to Python 2.6 or better
   Py_buffer arrayView;
   arrayView.buf = NULL;
   itk::simple::Image * image = NULL;
@@ -248,54 +252,145 @@ sitk_GetImageFromArray( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
     }
   dtype_num_long = PyInt_AsLong( dtype_num );
   Py_DECREF( dtype_num );
+  Py_DECREF( dtype );
 
-  shape = arrayView.shape;
-  if( arrayView.ndim == 2 )
+  try
     {
-    switch( dtype_num_long )
+    shape = arrayView.shape;
+    if( arrayView.ndim == 2 )
       {
-    case 7:
-      try
+      switch( dtype_num_long )
         {
-        image = new itk::simple::Image( shape[0], shape[1], itk::simple::sitkFloat64 );
+      case 1:
+        image = new itk::simple::Image( shape[1], shape[0], itk::simple::sitkInt8 );
+        sitkBufferPtr = (void *)image->GetBufferAsInt8();
+        break;
+      case 2:
+        image = new itk::simple::Image( shape[1], shape[0], itk::simple::sitkUInt8 );
+        sitkBufferPtr = (void *)image->GetBufferAsUInt8();
+        break;
+      case 3:
+        image = new itk::simple::Image( shape[1], shape[0], itk::simple::sitkInt16 );
+        sitkBufferPtr = (void *)image->GetBufferAsInt16();
+        break;
+      case 4:
+        image = new itk::simple::Image( shape[1], shape[0], itk::simple::sitkUInt16 );
+        sitkBufferPtr = (void *)image->GetBufferAsUInt16();
+        break;
+      case 5:
+        image = new itk::simple::Image( shape[1], shape[0], itk::simple::sitkInt32 );
+        sitkBufferPtr = (void *)image->GetBufferAsInt32();
+        break;
+      case 6:
+        image = new itk::simple::Image( shape[1], shape[0], itk::simple::sitkUInt32 );
+        sitkBufferPtr = (void *)image->GetBufferAsUInt32();
+        break;
+        //! \todo when sitk gets these implemented
+      //case 7:
+        //image = new itk::simple::Image( shape[1], shape[0], itk::simple::sitkInt64 );
+        //sitkBufferPtr = (void *)image->GetBufferAsInt64();
+        //break;
+      //case 8:
+        //image = new itk::simple::Image( shape[1], shape[0], itk::simple::sitkUInt64 );
+        //sitkBufferPtr = (void *)image->GetBufferAsUInt64();
+        //break;
+      case 11:
+        image = new itk::simple::Image( shape[1], shape[0], itk::simple::sitkFloat32 );
+        sitkBufferPtr = (void *)image->GetBufferAsFloat();
+        break;
+      case 12:
+        image = new itk::simple::Image( shape[1], shape[0], itk::simple::sitkFloat64 );
         sitkBufferPtr = (void *)image->GetBufferAsDouble();
-        }
-      catch( const itk::ExceptionObject &e )
-        {
-        std::string msg = "Exception thrown in SimpleITK new Image: ";
-        msg += e.what();
-        PyErr_SetString( PyExc_RuntimeError, msg.c_str() );
+        break;
+//! \todo re-enable when Image class gets more GetBuffer support
+      //case 14:
+        //image = new itk::simple::Image( shape[1], shape[0], itk::simple::sitkComplexFloat32 );
+        //sitkBufferPtr = (void *)image->GetBufferAsComplexFloat();
+        //break;
+      //case 15:
+        //image = new itk::simple::Image( shape[1], shape[0], itk::simple::sitkComplexFloat64 );
+        //sitkBufferPtr = (void *)image->GetBufferAsComplexDouble();
+        //break;
+      default:
+        PyErr_SetString( PyExc_TypeError, "Unsupported array dtype." );
         SWIG_fail;
-        }
-      pyImage = SWIG_NewPointerObj( image, SWIGTYPE_p_itk__simple__Image, 1 );
-      break;
-    default:
-      PyErr_SetString( PyExc_TypeError, "Unsupported array dtype." );
-      SWIG_fail;
-      }
-    }
-  else if( arrayView.ndim == 3 )
-    {
-    switch( dtype_num_long )
+        } // end switch dtype_num
+      } // end if ndim == 2
+    else if( arrayView.ndim == 3 )
       {
-    default:
-      PyErr_SetString( PyExc_TypeError, "Unsupported array dtype." );
+      switch( dtype_num_long )
+        {
+      case 1:
+        image = new itk::simple::Image( shape[2], shape[1], shape[0], itk::simple::sitkInt8 );
+        sitkBufferPtr = (void *)image->GetBufferAsInt8();
+        break;
+      case 2:
+        image = new itk::simple::Image( shape[2], shape[1], shape[0], itk::simple::sitkUInt8 );
+        sitkBufferPtr = (void *)image->GetBufferAsUInt8();
+        break;
+      case 3:
+        image = new itk::simple::Image( shape[2], shape[1], shape[0], itk::simple::sitkInt16 );
+        sitkBufferPtr = (void *)image->GetBufferAsInt16();
+        break;
+      case 4:
+        image = new itk::simple::Image( shape[2], shape[1], shape[0], itk::simple::sitkUInt16 );
+        sitkBufferPtr = (void *)image->GetBufferAsUInt16();
+        break;
+      case 5:
+        image = new itk::simple::Image( shape[2], shape[1], shape[0], itk::simple::sitkInt32 );
+        sitkBufferPtr = (void *)image->GetBufferAsInt32();
+        break;
+      case 6:
+        image = new itk::simple::Image( shape[2], shape[1], shape[0], itk::simple::sitkUInt32 );
+        sitkBufferPtr = (void *)image->GetBufferAsUInt32();
+        break;
+        //! \todo when sitk gets these implemented
+      //case 7:
+        //image = new itk::simple::Image( shape[2], shape[1], shape[0], itk::simple::sitkInt64 );
+        //sitkBufferPtr = (void *)image->GetBufferAsInt64();
+        //break;
+      //case 8:
+        //image = new itk::simple::Image( shape[2], shape[1], shape[0], itk::simple::sitkUInt64 );
+        //sitkBufferPtr = (void *)image->GetBufferAsUInt64();
+        //break;
+      case 11:
+        image = new itk::simple::Image( shape[2], shape[1], shape[0], itk::simple::sitkFloat32 );
+        sitkBufferPtr = (void *)image->GetBufferAsFloat();
+        break;
+      case 12:
+        image = new itk::simple::Image( shape[2], shape[1], shape[0], itk::simple::sitkFloat64 );
+        sitkBufferPtr = (void *)image->GetBufferAsDouble();
+        break;
+//! \todo re-enable when Image class gets more GetBuffer support
+      //case 14:
+        //image = new itk::simple::Image( shape[2], shape[1], shape[0], itk::simple::sitkComplexFloat32 );
+        //sitkBufferPtr = (void *)image->GetBufferAsComplexFloat();
+        //break;
+      //case 15:
+        //image = new itk::simple::Image( shape[2], shape[1], shape[0], itk::simple::sitkComplexFloat64 );
+        //sitkBufferPtr = (void *)image->GetBufferAsComplexDouble();
+        //break;
+      default:
+        PyErr_SetString( PyExc_TypeError, "Unsupported array dtype." );
+        SWIG_fail;
+        } // end switch dtype_num
+      } // end if ndim == 3
+    else
+      {
+      PyErr_SetString( PyExc_ValueError, "Unsupported array dimension." );
       SWIG_fail;
       }
     }
-  else
+  catch( const itk::ExceptionObject &e )
     {
-    PyErr_SetString( PyExc_ValueError, "Unsupported array dimension." );
+    std::string msg = "Exception thrown in SimpleITK new Image: ";
+    msg += e.what();
+    PyErr_SetString( PyExc_RuntimeError, msg.c_str() );
     SWIG_fail;
     }
 
-  std::cout << "sitkBufferPtr: "  << sitkBufferPtr << std::endl;
-  std::cout << "arrayView.buf: " << arrayView.buf << std::endl;
-  std::cout << "arrayView.len: " << arrayView.len << std::endl;
+  pyImage = SWIG_NewPointerObj( image, SWIGTYPE_p_itk__simple__Image, 1 );
   memcpy( (void *)sitkBufferPtr, arrayView.buf, arrayView.len );
-  std::cout << "image[0]: " << ((double *)sitkBufferPtr)[0] << " arr[0]: " << ((double *)arrayView.buf)[0] << std::endl;
-  std::cout << "image[1]: " << ((double *)sitkBufferPtr)[1] << " arr[1]: " << ((double *)arrayView.buf)[1] << std::endl;
-  std::cout << "image[2]: " << ((double *)sitkBufferPtr)[2] << " arr[2]: " << ((double *)arrayView.buf)[2] << std::endl;
 
   PyBuffer_Release( &arrayView );
 
