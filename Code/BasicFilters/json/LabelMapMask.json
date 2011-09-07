@@ -1,0 +1,38 @@
+{
+  "name" : "LabelMapMask",
+  "template_code_filename" : "DualImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 2,
+  "doc" : "",
+  "pixel_types" : "LabelPixelIDTypeList",
+  "pixel_types2" : "typelist::Append<BasicPixelIDTypeList, ComplexPixelIDTypeList>::Type",
+  "filter_type" : "itk::LabelMapMaskImageFilter<InputImageType, InputImageType2>",
+  "members" : [ {
+      "name" : "Label",
+      "type" : "uint64_t",
+      "default" : "1",
+      "doc" : "",
+      "pixeltype" : "Input"
+    }, {
+      "name" : "BackgroundValue",
+      "type" : "double",
+      "default" : "0",
+      "doc" : "",
+      "pixeltype" : "Output"
+    }, {
+      "name" : "Negated",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : ""
+    }
+  ],
+  "tests" : [ {
+    "tag" : "default",
+    "description" : "Running with just setting correct label",
+    "inputA" : "Input/2th_cthead1.mha",
+    "inputA_cast" : "sitkLabelUInt8",
+    "inputB" : "Input/cthead1.png",
+    "md5hash" : "35705eb42bda4024218a0b789564d72e",
+    "settings" : [ ] 
+  } ]
+}

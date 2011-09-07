@@ -78,6 +78,11 @@ end)
 )
 
     inputA = reader:SetFileName ( arg[2] ):Execute();
+$(if inputA_cast then
+OUT=[[
+     inputA = SimpleITK.Cast( inputA, SimpleITK.${inputA_cast} );
+     ]]
+end)
     $(when inputB
     inputB = reader:SetFileName ( arg[3] ):Execute()
     )

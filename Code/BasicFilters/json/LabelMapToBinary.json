@@ -1,0 +1,32 @@
+{
+  "name" : "LabelMapToBinary",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "output_image_type" : "itk::Image<uint8_t, InputImageType::ImageDimension>"
+  "doc" : "Docs",
+  "pixel_types" : "LabelPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "BackgroundValue",
+      "type" : "double",
+      "default" : "0",
+      "doc" : "",
+      "pixeltype" : "Output"
+    },
+    {
+      "name" : "ForegroundValue",
+      "type" : "double",
+      "default" : "1.0",
+      "doc" : "",
+      "pixeltype" : "Output"
+    }
+  ]
+  "tests" : [ {
+    "tag" : "default",
+    "description" : "Simply run with default settings",
+    "inputA" : "Input/2th_cthead1.mha",
+    "inputA_cast" : "sitkLabelUInt8",
+    "md5hash" : "5c1d8fbca877e6b9aba8ad58b03a6cd5",
+    "settings" : []    
+  } ]
+}
