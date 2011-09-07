@@ -35,10 +35,9 @@ enum TransformEnum { Identity,
     Transform( unsigned int dimensions, TransformEnum type);
     virtual ~Transform( void );
 
-    // TODO determine best copy syntax
-    Transform * Clone( void ) { return NULL; }
-    const Transform &operator=( const Transform & ) { return *this; };
-    Transform( const Transform & ) {};
+    //
+    Transform &operator=( const Transform & );
+    Transform( const Transform & );
 
 
     itk::TransformBase* GetITKBase( void );

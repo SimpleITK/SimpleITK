@@ -57,6 +57,8 @@ public:
     }
 
 
+  virtual PimpleTransformBase *DeepCopy( void ) const = 0;
+
 protected:
 
 };
@@ -66,6 +68,7 @@ class PimpleTransform
   : public PimpleTransformBase
 {
 public:
+  typedef PimpleTransform                  Self;
   typedef TTransformType                   TransformType;
   typedef typename TransformType::Pointer  TransformPointer;
 
@@ -84,6 +87,13 @@ public:
   virtual unsigned int GetOutputDimension( void ) const { return OutputDimension; }
 
 
+  virtual PimpleTransformBase *DeepCopy( void ) const
+    {
+      std::auto_ptr<Self> copy( new Self() );
+      copy->m_Transform->SetFixedParameters( this->m_Transform->GetFixedParameters() );
+      copy->m_Transform->SetParameters( this->m_Transform->GetParameters() );
+      return copy.release();
+    }
 
 private:
 
@@ -117,6 +127,22 @@ Transform::Transform( )
   {
     delete m_PimpleTransform;
     this->m_PimpleTransform = NULL;
+  }
+
+  Transform::Transform( const Transform &txf )
+    : m_PimpleTransform( NULL )
+  {
+    m_PimpleTransform = txf.m_PimpleTransform->DeepCopy();
+  }
+
+  Transform& Transform::operator=( const Transform & txf )
+  {
+    // note: if txf and this are the same,the following statements
+    // will be safe. It's also exception safe.
+    std::auto_ptr<PimpleTransformBase> temp( txf.m_PimpleTransform->DeepCopy() );
+    delete this->m_PimpleTransform;
+    this->m_PimpleTransform = temp.release();
+    return *this;
   }
 
 
