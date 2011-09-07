@@ -18,7 +18,7 @@
     "name" : "UseImageSpacing",
     "type" : "bool",
     "default" : "true"
-  } ], 
+  } ],
   "tests" : [ {
     "tag" : "defaults",
     "description" : "Simply run with default settings",
@@ -32,10 +32,22 @@
     "tolerance": 0.0001,
     "settings" : [ {
       "parameter" : "Direction",
-      "value" : "2"
-    }, { 
+      "value" : "2u",
+      "lua_value" : "2",
+      "python_value" : "2",
+      "ruby_value" : "2",
+      "java_value" : "2",
+      "tcl_value" : "2",
+      "R_value" : "2"
+    }, {
        "parameter" : "Order",
-       "value" : "2"
+       "value" : "2u"
+        "lua_value" : "2",
+        "python_value" : "2",
+        "ruby_value" : "2",
+        "java_value" : "2",
+        "tcl_value" : "2",
+        "R_value" : "2"
     } ]
   } ]
 }

@@ -9,7 +9,7 @@ namespace sitk = itk::simple;
 * buffer again. This technique is useful for integrating into external
 * applications.
 */
-int main( int argc, char * argv[] )
+int main( int , char *[] )
 {
 
   // construct and initialize an image buffer, this buffer could have
