@@ -60,9 +60,17 @@
   } ],
   "tests" : [ {
     "tag" : "defaults",
-    "description" : "",
-    "inputA" : "Input",
-    "md5hash" : "",
-    "settings" : [ ]
+    "description" : "run with some defaults",
+    "inputA" : "Input/RA-Float.nrrd",
+    "settings" : [ {
+      "parameter" : "Size",
+      "type"      : "uint32_t",
+      "dim_vec"   : 1,
+      "value"     :  "{64,64,64}",
+      "tcl_value" : "[list 64 64 64]",
+      "python_value" : "[ 64, 64, 64]",
+      "ruby_value" : "[ 64, 64, 64]"
+    } ],
+    "tolerance" : "0.001"
   } ]
 }
