@@ -35,6 +35,8 @@ class PimpleTransformBase;
     itk::TransformBase* GetITKBase( void );
     const itk::TransformBase* GetITKBase( void ) const;
 
+    unsigned int GetDimension( void ) const;
+
     /** Set/Get Parameter
      */
     void SetParameters ( const std::vector<double>& parameters );

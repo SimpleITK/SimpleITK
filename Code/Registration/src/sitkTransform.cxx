@@ -109,6 +109,12 @@ private:
     return this->m_PimpleTransform->GetTransformBase();
   }
 
+  unsigned int  Transform::GetDimension( void ) const
+  {
+    assert( m_PimpleTransform );
+    return this->m_PimpleTransform->GetInputDimension();
+  }
+
   void Transform::SetParameters ( const std::vector<double>& parameters )
   {
     assert( m_PimpleTransform );
