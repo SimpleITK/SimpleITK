@@ -59,6 +59,14 @@ public:
 
   virtual PimpleTransformBase *DeepCopy( void ) const = 0;
 
+  std::string ToString( void ) const
+    {
+      std::ostringstream out;
+      this->GetTransformBase()->Print ( out );
+      return out.str();
+    }
+
+
 protected:
 
 };
@@ -213,7 +221,8 @@ Transform::Transform( )
 
   std::string Transform::ToString( void ) const
   {
-    return std::string();
+    assert( m_PimpleTransform );
+    return this->m_PimpleTransform->ToString();
   }
 }
 }
