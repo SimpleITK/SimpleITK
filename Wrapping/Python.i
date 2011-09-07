@@ -28,9 +28,7 @@
 
 
 //      def __floordiv__( other )
-//      def __pow__( double s )
 //      def __neg__( )
-//      def __abs__( )
 
 
         %pythoncode %{
@@ -80,10 +78,13 @@
 
 
         # "function" operators
+
         def __pow__( self, other ):
             if isinstance( other, Image ):
                return Pow( self, other )
             return PowToConstant( self, other )
+        def __mod__( self, other ): return Modulus( self, other )
+        def __abs__( self ): Abs( self )
         
         # iterator and container methods
 
