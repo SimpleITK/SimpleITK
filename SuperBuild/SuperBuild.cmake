@@ -254,6 +254,7 @@ ExternalProject_Add(${proj}
   BINARY_DIR SimpleITK-build
   CMAKE_GENERATOR ${gen}
   CMAKE_ARGS
+    --no-warn-unused-cli
     -C "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK-build/CMakeCacheInit.txt"
     ${ep_common_args}
     ${ep_languages_args}
