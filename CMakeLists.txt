@@ -164,7 +164,7 @@ if ( BUILD_TESTING )
   option ( RUN_LONG_TESTS "Run long tests.  Some tests have been identified as long running, should these be run?" OFF )
   mark_as_advanced(RUN_LONG_TESTS)
   set(BUILDNAME "${BUILDNAME}" CACHE STRING "Name of build on the dashboard")
-  configure_file(CTestCustom.cmake.in CTestCustom.cmake)
+  configure_file(CMake/CTestCustom.cmake.in CTestCustom.cmake)
 endif()
 
 #------------------------------------------------------------------------------
