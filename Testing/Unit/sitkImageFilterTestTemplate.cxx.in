@@ -113,7 +113,7 @@ end)
       ASSERT_NO_THROW( inputA = itk::simple::Cast( inputA, itk::simple::${inputA_cast } ) ) << "Failed to cast ${inputA} to ${inputA_cast}";
             ]]
       end)
-  ASSERT_TRUE ( inputA.GetImageBase() != NULL ) << "Could not read ${inputA}";
+  ASSERT_TRUE ( inputA.GetITKBase() != NULL ) << "Could not read ${inputA}";
     $(if inputB then
       OUT=[[
   ASSERT_NO_THROW ( inputB = reader.SetFileName ( dataFinder.GetFile ( "${inputB}" ) ).Execute() ) << "Failed to load ${inputB}";
@@ -124,7 +124,7 @@ end)
             ]]
       end
       OUT=OUT..[[
-  ASSERT_TRUE ( inputB.GetImageBase() != NULL ) << "Could not read ${inputB}";
+  ASSERT_TRUE ( inputB.GetITKBase() != NULL ) << "Could not read ${inputB}";
             ]]
       end)
 
@@ -248,7 +248,7 @@ TEST_F(Lua,${name}) {
     itk::simple::Image output( 0, 0, itk::simple::sitkUInt8 );
 
     output = reader.SetFileName ( outputFileName ).Execute();
-    ASSERT_TRUE ( output.GetImageBase() != NULL ) << "Loaded output image";
+    ASSERT_TRUE ( output.GetITKBase() != NULL ) << "Loaded output image";
 
     $(if md5hash then
       OUT = [[
@@ -311,7 +311,7 @@ TEST_F(Python,${name}) {
     itk::simple::Image output( 0, 0, itk::simple::sitkUInt8 );
 
     output = reader.SetFileName ( outputFileName ).Execute();
-    ASSERT_TRUE ( output.GetImageBase() != NULL ) << "Loaded output image";
+    ASSERT_TRUE ( output.GetITKBase() != NULL ) << "Loaded output image";
 
     $(if md5hash then
       OUT = [[
@@ -369,7 +369,7 @@ TEST_F(Tcl,${name}) {
     itk::simple::Image output( 0, 0, itk::simple::sitkUInt8 );
 
     output = reader.SetFileName ( outputFileName ).Execute();
-    ASSERT_TRUE ( output.GetImageBase() != NULL ) << "Loaded output image";
+    ASSERT_TRUE ( output.GetITKBase() != NULL ) << "Loaded output image";
 
     $(if md5hash then
       OUT = [[
@@ -427,7 +427,7 @@ TEST_F(R,${name}) {
     itk::simple::Image output( 0, 0, itk::simple::sitkUInt8 );
 
     output = reader.SetFileName ( outputFileName ).Execute();
-    ASSERT_TRUE ( output.GetImageBase() != NULL ) << "Loaded output image";
+    ASSERT_TRUE ( output.GetITKBase() != NULL ) << "Loaded output image";
 
     $(if md5hash then
       OUT = [[
@@ -493,7 +493,7 @@ TEST_F(Java,${name}) {
     itk::simple::Image output( 0, 0, itk::simple::sitkUInt8 );
 
     output = reader.SetFileName ( outputFileName ).Execute();
-    ASSERT_TRUE ( output.GetImageBase() != NULL ) << "Loaded output image";
+    ASSERT_TRUE ( output.GetITKBase() != NULL ) << "Loaded output image";
 
     $(if md5hash then
       OUT = [[
@@ -554,7 +554,7 @@ TEST_F(Ruby,${name}) {
     itk::simple::Image output( 0, 0, itk::simple::sitkUInt8 );
 
     output = reader.SetFileName ( outputFileName ).Execute();
-    ASSERT_TRUE ( output.GetImageBase() != NULL ) << "Loaded output image";
+    ASSERT_TRUE ( output.GetITKBase() != NULL ) << "Loaded output image";
 
     $(if md5hash then
       OUT = [[
@@ -625,7 +625,7 @@ TEST_F(CSharp,${name}) {
     itk::simple::Image output( 0, 0, itk::simple::sitkUInt8 );
 
     output = reader.SetFileName ( outputFileName ).Execute();
-    ASSERT_TRUE ( output.GetImageBase() != NULL ) << "Loaded output image";
+    ASSERT_TRUE ( output.GetITKBase() != NULL ) << "Loaded output image";
 
     $(if md5hash then
       OUT = [[

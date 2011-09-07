@@ -16,7 +16,7 @@ ${name}ImageFilter::ExecuteInternalVectorImage ( const Image& inImage1 )
 
   // Get the pointer to the ITK image contained in image1
   typename InputImageType::ConstPointer image1 =
-    dynamic_cast <const InputImageType*> ( inImage1.GetImageBase() );
+    dynamic_cast <const InputImageType*> ( inImage1.GetITKBase() );
 
   // Check that ITK image pointer was properly retrieved
   if ( image1.IsNull() )
@@ -40,7 +40,7 @@ ${name}ImageFilter::ExecuteInternalVectorImage ( const Image& inImage1 )
     Image tmp = this->ExecuteInternal<ComponentImageType>( Image( extractor->GetOutput() ) );
 
     typename ComponentImageType::ConstPointer tempITKImage =
-      dynamic_cast <const ComponentImageType*> ( tmp.GetImageBase() );
+      dynamic_cast <const ComponentImageType*> ( tmp.GetITKBase() );
 
     toVector->SetNthInput( i, tempITKImage );
     }
