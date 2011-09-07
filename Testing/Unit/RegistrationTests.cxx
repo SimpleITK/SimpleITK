@@ -1,6 +1,8 @@
 #include <SimpleITKTestHarness.h>
 #include <SimpleITK.h>
 
+#include "sitkTransform.h"
+
 TEST(Registration,CreateMattes) {
   itk::simple::Image image2d( 32, 32, itk::simple::sitkUInt8 );
   itk::simple::Image image3d( 32, 32, 32, itk::simple::sitkUInt8 );
@@ -24,8 +26,7 @@ TEST(Registration,Components) {
 
   itk::simple::Registration registration;
   registration.SetOptimizer ( new itk::simple::RegularStepGradientDescentOptimizer() );
-  itk::simple::Transform *transform = NULL;
-  transform = new itk::simple::Transform();
+  itk::simple::Transform transform = itk::simple::Transform(3, itk::simple::Affine);
   std::vector<double> params;
 
   // Create a transform
@@ -44,7 +45,7 @@ TEST(Registration,Components) {
   params.push_back ( 0 );
   params.push_back ( 0 );
   params.push_back ( 0 );
-  transform->SetParameters ( params );
+  transform.SetParameters ( params );
 
   registration.SetTransform ( transform );
   registration.SetMetric ( new itk::simple::MattesMutualInformationMetric() );
@@ -56,7 +57,7 @@ TEST(Registration,Components) {
     std::cout << "Caught exception: " << e.what() << std::endl;
   }
   ASSERT_NO_THROW ( transform = registration.Execute ( fixed, moving ) );
-  params = transform->GetParameters();
+  params = transform.GetParameters();
   ASSERT_EQ ( params.size(), 12u );
   for ( size_t idx = 0; idx < 9; idx++ ) {
     ASSERT_NEAR ( params[idx], ExpectedParameters[idx], 0.01 ) << "idx = " << idx;
@@ -73,9 +74,9 @@ TEST(Registration,Defaults) {
   itk::simple::Registration registration;
   registration.SetUseCenteredInitializationOff();
   std::vector<double> params;
-  itk::simple::Transform *transform = NULL;
+  itk::simple::Transform transform;
   ASSERT_NO_THROW ( transform = registration.Execute ( fixed, moving ) );
-  params = transform->GetParameters();
+  params = transform.GetParameters();
   ASSERT_EQ ( params.size(), 12u );
   for ( size_t idx = 0; idx < params.size(); idx++ ) {
     ASSERT_NEAR ( params[idx], ExpectedParameters[idx], 0.01 );
@@ -91,7 +92,7 @@ TEST(Registration,Resample) {
 
   itk::simple::Registration registration;
   registration.SetUseCenteredInitializationOff();
-  itk::simple::Transform *transform = NULL;
+  itk::simple::Transform transform;
   ASSERT_NO_THROW ( transform = registration.Execute ( fixed, moving ) );
 
   itk::simple::ResampleImageFilter resample;
