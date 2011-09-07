@@ -78,6 +78,13 @@
         def __xor__( self, other ): return Xor( self, other )
         def __invert__( self ): return Not( self )
 
+
+        # "function" operators
+        def __pow__( self, other ):
+            if isinstance( other, Image ):
+               return Pow( self, other )
+            return PowToConstant( self, other )
+        
         # iterator and container methods
 
         def __iter__( self ):
