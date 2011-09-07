@@ -4,6 +4,7 @@
   "template_test_filename" : "ImageFilter",
   "pixel_types" : "BasicPixelIDTypeList",
   "output_pixel_type" : "uint8_t",
+  "doc" : "",
   "members" : [ {
     "name" : "Threshold1",
     "type" : "double",

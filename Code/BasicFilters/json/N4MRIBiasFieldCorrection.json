@@ -79,7 +79,7 @@
     "description" : "using default parameters in 2D",
     "inputA" : "Input/cthead1-Float.mha",
     "inputB" : "Input/2th_cthead1.mha",
-    "setttings" : [ ],
+    "settings" : [ ],
     "tolerance" : "0.01"
   } ],
   "briefdescription" : "Implementation of the N4 MRI bias field correction algorithm.\n",
