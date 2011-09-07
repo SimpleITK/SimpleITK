@@ -93,6 +93,13 @@ namespace simple
 
     unsigned int GetDimension( void ) const;
 
+    /** \brief Get the number of components for each pixel
+     *
+     * For scalar images this methods returns 1. For vector images the
+     * number of components for each pixel is returned.
+     */
+    unsigned int GetNumberOfComponentsPerPixel( void ) const;
+
     /** Get/Set the Origin */
     std::vector< double > GetOrigin( void ) const;
     void SetOrigin( const std::vector< double > &origin );
@@ -131,11 +138,14 @@ namespace simple
      * \sa Image::GetPixelIDValue
      * @{
      */
+    int8_t   GetPixelAsInt8( const std::vector<uint32_t> &idx) const;
     uint8_t  GetPixelAsUInt8( const std::vector<uint32_t> &idx) const;
     int16_t  GetPixelAsInt16( const std::vector<uint32_t> &idx ) const;
     uint16_t GetPixelAsUInt16( const std::vector<uint32_t> &idx ) const;
     int32_t  GetPixelAsInt32( const std::vector<uint32_t> &idx ) const;
     uint32_t GetPixelAsUInt32( const std::vector<uint32_t> &idx ) const;
+    int32_t  GetPixelAsInt64( const std::vector<uint32_t> &idx ) const;
+    uint32_t GetPixelAsUInt64( const std::vector<uint32_t> &idx ) const;
     float    GetPixelAsFloat( const std::vector<uint32_t> &idx ) const;
     double   GetPixelAsDouble(  const std::vector<uint32_t> &idx ) const;
     /* @} */
@@ -155,14 +165,49 @@ namespace simple
      * \sa Image::GetPixelIDValue
      * @{
      */
+    void SetPixelAsInt8( const std::vector<uint32_t> &idx, int8_t v );
     void SetPixelAsUInt8( const std::vector<uint32_t> &idx, uint8_t v );
     void SetPixelAsInt16( const std::vector<uint32_t> &idx, int16_t v );
     void SetPixelAsUInt16( const std::vector<uint32_t> &idx, uint16_t v );
     void SetPixelAsInt32( const std::vector<uint32_t> &idx, int32_t v );
     void SetPixelAsUInt32( const std::vector<uint32_t> &idx, uint32_t v );
+    void SetPixelAsInt64( const std::vector<uint32_t> &idx, int64_t v );
+    void SetPixelAsUInt64( const std::vector<uint32_t> &idx, uint64_t v );
     void SetPixelAsFloat( const std::vector<uint32_t> &idx, float v );
     void SetPixelAsDouble( const std::vector<uint32_t> &idx, double v );
     /** @} */
+
+   /** \brief Get a pointer to the image buffer
+     * \warning this is dangerous
+     *
+     * The size of the buffer is the number of components*Xsize*Ysize
+     * and then Zsize of a 3D image. The buffer should be accessed as
+     * a 1-D array. For example a 3D image buffer should be accessed:
+     * \code
+     * uint8_t *buffer = img->GetBufferAsUInt8();
+     * buffer[c + numComponents*(x+ xSize* (y*+ySize*z))]
+     * \endcode
+     *
+     * The pointer to the buffer is not referenced
+     * counted. Additionally, while this image is made unique before
+     * returnign the pointer, additional copying and usage may
+     * introduce unexpected aliasing.
+     *
+     * \sa Image::GetPixelIDValue
+     * @{
+     */
+    int8_t   *GetBufferAsInt8( );
+    uint8_t  *GetBufferAsUInt8( );
+    int16_t  *GetBufferAsInt16( );
+    uint16_t *GetBufferAsUInt16( );
+    int32_t  *GetBufferAsInt32( );
+    uint32_t *GetBufferAsUInt32( );
+    int64_t  *GetBufferAsInt64( );
+    uint64_t *GetBufferAsUInt64( );
+    float    *GetBufferAsFloat( );
+    double   *GetBufferAsDouble( );
+    /* @} */
+
 
   protected:
 
