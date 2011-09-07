@@ -398,10 +398,14 @@ sitk_GetImageFromArray( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
 
 fail:
   Py_XDECREF( dtype );
-  Py_XDECREF( image );
+  Py_XDECREF( pyImage );
   if( arrayView.buf != NULL )
     {
     PyBuffer_Release( &arrayView );
+    }
+  if( image != NULL )
+    {
+    delete image;
     }
   return NULL;
 }
