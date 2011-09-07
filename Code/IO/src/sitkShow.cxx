@@ -83,6 +83,10 @@ namespace itk
 #else
       // Must be Linux
       ExecutableName = itksys::SystemTools::FindFile ( "ImageJ" );
+      if ( ExecutableName == "" )
+        {
+        ExecutableName = itksys::SystemTools::FindFile ( "imagej" );
+        }
       CommandLine << "\"" + ExecutableName + "\" -o \"" << TempFile << "\" &";
 #endif
 #endif
