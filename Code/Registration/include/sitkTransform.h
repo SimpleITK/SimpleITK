@@ -17,17 +17,26 @@ namespace simple
 
 class PimpleTransformBase;
 
+enum TransformEnum { Identity,
+                     Translation,
+                     Scale,
+                     ScaleLogarithmic,
+                     QuaternionRigid,
+                     Versor,
+                     Affine };
+
   class Transform
   {
   public:
 
     /** Questionable default constructable
      */
-    Transform();
+    Transform( void );
+    Transform( unsigned int dimensions, TransformEnum type);
     virtual ~Transform( void );
 
     // TODO determine best copy syntax
-    virtual Transform * Clone( void ) { return NULL; }
+    Transform * Clone( void ) { return NULL; }
     const Transform &operator=( const Transform & ) { return *this; };
     Transform( const Transform & ) {};
 
@@ -40,12 +49,17 @@ class PimpleTransformBase;
     /** Set/Get Parameter
      */
     void SetParameters ( const std::vector<double>& parameters );
-    virtual std::vector<double> GetParameters( void ) const ;
+    std::vector<double> GetParameters( void ) const ;
 
     std::string ToString( void ) const;
 
 
   protected:
+
+  private:
+
+    template< unsigned int VDimension>
+    void InternalIntitialization(  TransformEnum type );
 
     PimpleTransformBase *m_PimpleTransform;
 

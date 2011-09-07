@@ -2,6 +2,12 @@
 #include "itkTransformBase.h"
 
 #include "itkIdentityTransform.h"
+#include "itkTranslationTransform.h"
+#include "itkScaleTransform.h"
+#include "itkScaleLogarithmicTransform.h"
+#include "itkQuaternionRigidTransform.h"
+#include "itkVersorTransform.h"
+#include "itkAffineTransform.h"
 
 namespace itk
 {
@@ -84,11 +90,27 @@ private:
   TransformPointer m_Transform;
 };
 
-
-  Transform::Transform()
-    : m_PimpleTransform( NULL )
+Transform::Transform( )
+  : m_PimpleTransform( NULL )
   {
     m_PimpleTransform = new PimpleTransform<itk::IdentityTransform< double, 3 > >();
+  }
+
+  Transform::Transform( unsigned int dimensions, TransformEnum type)
+    : m_PimpleTransform( NULL )
+  {
+    if ( dimensions == 2 )
+      {
+      this->InternalIntitialization<2 >(type);
+      }
+    else if ( dimensions == 3 )
+      {
+      this->InternalIntitialization<3>(type);
+      }
+    else
+      {
+      sitkExceptionMacro("Invalid dimension for transform");
+      }
   }
 
   Transform::~Transform()
@@ -96,6 +118,42 @@ private:
     delete m_PimpleTransform;
     this->m_PimpleTransform = NULL;
   }
+
+
+  template< unsigned int VDimension>
+  void  Transform::InternalIntitialization(  TransformEnum type )
+  {
+    switch( type )
+      {
+
+      case Translation:
+        m_PimpleTransform = new PimpleTransform<itk::TranslationTransform< double, VDimension > >();
+        break;
+      case Scale:
+        m_PimpleTransform = new PimpleTransform<itk::ScaleTransform< double, VDimension > >();
+        break;
+      case ScaleLogarithmic:
+        m_PimpleTransform = new PimpleTransform<itk::ScaleLogarithmicTransform< double, VDimension > >();
+        break;
+      case QuaternionRigid:
+        // todo what todo about transform which require a specific dimension
+        assert( VDimension == 3 );
+        m_PimpleTransform = new PimpleTransform<itk::QuaternionRigidTransform< double > >();
+        break;
+      case Versor:
+        // todo what todo about transform which require a specific dimension
+        assert( VDimension == 3 );
+        m_PimpleTransform = new PimpleTransform<itk::VersorTransform< double > >();
+        break;
+      case Affine:
+        m_PimpleTransform = new PimpleTransform<itk::AffineTransform< double, VDimension > >();
+        break;
+      case Identity:
+      default:
+        m_PimpleTransform = new PimpleTransform<itk::IdentityTransform< double, VDimension > >();
+      }
+  }
+
 
   itk::TransformBase* Transform::GetITKBase ( void )
   {
