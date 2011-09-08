@@ -29,7 +29,7 @@ $(if #tests == 0 then
 
 $(foreach tests
 lappend ValidTags "${tag}"
-if { [set tag] == "${tag}" } {
+if { [set tag] == "${tag}" } { 
 
 $(when settings
 $(foreach settings
@@ -39,13 +39,23 @@ $(for i=1,#tcl_value do OUT=OUT .. "  filter AddSeed [list ".. tcl_value[i] .. "
 elseif parameter == "SeedList" then
 OUT=[[  filter ClearSeeds
 $(for i=1,#value do OUT=OUT .. "  filter AddSeed [list ".. value[i] .. "]\n" end)]]
-
+elseif parameter == "TrialPoints" and tcl_value then
+OUT=[[  filter ClearTrialPoints
+$(for i=1,#tcl_value do OUT=OUT .. "  filter AddTrialPoint [list ".. tcl_value[i] .. "]\n" end)]]
+elseif parameter == "TrialPoints" then
+OUT=[[  filter ClearTrialPoints
+$(for i=1,#value do OUT=OUT .. "  filter AddTrialPoint [list ".. value[i] .. "]\n" end)]]
 else
 OUT=[[
   filter Set${parameter} $(if tcl_value then OUT='${tcl_value}' else OUT='${value}'end)]]
 end)
 ))
   set inputA [[reader SetFileName [lindex [set argv] 1]] Execute]
+$(if inputA_cast then
+OUT=[[
+      set inputA [ Cast [set inputA] [set ${inputA_cast} ] ]
+     ]]
+end)
   $(if inputB then
   OUT="set inputB [[reader SetFileName [lindex [set argv] 2]] Execute]; \
   set output [filter Execute [set inputA] [set inputB] ]"

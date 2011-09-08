@@ -108,7 +108,7 @@ Image StatisticsImageFilter::ExecuteInternal ( const Image& inImage1 )
   typedef InputImageType OutputImageType;
 
   typename InputImageType::ConstPointer image1 =
-    dynamic_cast <const InputImageType* > ( inImage1.GetImageBase() );
+    dynamic_cast <const InputImageType* > ( inImage1.GetITKBase() );
 
   if ( image1.IsNull() )
     {

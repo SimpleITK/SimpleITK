@@ -14,11 +14,6 @@ set ( TestSource
   itkHashImageFilterTest.cxx
   ImportImageTest.cxx
   CXXTests.cxx
-  PythonTests.cxx
-  RubyTests.cxx
-  LuaTests.cxx
-  TclTests.cxx
-  JavaTests.cxx
   CSharpTests.cxx
   )
 
@@ -78,6 +73,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
   set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILTERNAME}ImageFilterTest.cxx")
   add_custom_command (
     OUTPUT  ${OUTPUT_TEST_FILENAME}
+    COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
     COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitk ${template_include_dir} TestTemplate.cxx.in "${OUTPUT_TEST_FILENAME}"
     DEPENDS ${filter_json_file} ${CXX_TEMPLATE_FILES}
     )
@@ -88,6 +84,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/LuaTests/${FILTERNAME}ImageFilterTest.lua")
     add_custom_command (
       OUTPUT "${OUTPUT_TEST_FILENAME}"
+      COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
       COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Lua ${template_include_dir} TestTemplate.lua.in "${OUTPUT_TEST_FILENAME}"
       DEPENDS ${filter_json_file} ${LUA_TEMPLATE_FILES}
       )
@@ -99,6 +96,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/${FILTERNAME}ImageFilterTest.py")
     add_custom_command (
       OUTPUT  "${OUTPUT_TEST_FILENAME}"
+      COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
       COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Python ${template_include_dir} TestTemplate.py.in "${OUTPUT_TEST_FILENAME}"
       DEPENDS ${filter_json_file} ${PYTHON_TEMPLATE_FILES}
       )
@@ -110,6 +108,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/TclTests/${FILTERNAME}ImageFilterTest.tcl")
     add_custom_command (
       OUTPUT  "${OUTPUT_TEST_FILENAME}"
+      COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
       COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Tcl ${template_include_dir} TestTemplate.tcl.in "${OUTPUT_TEST_FILENAME}"
       DEPENDS ${filter_json_file} ${TCL_TEMPLATE_FILES}
       )
@@ -121,6 +120,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/RTests/${FILTERNAME}ImageFilterTest.R")
     add_custom_command (
       OUTPUT  "${OUTPUT_TEST_FILENAME}"
+      COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
       COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/R ${template_include_dir} TestTemplate.R.in "${OUTPUT_TEST_FILENAME}"
       DEPENDS ${filter_json_file} ${R_TEMPLATE_FILES}
       )
@@ -132,6 +132,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/RubyTests/${FILTERNAME}ImageFilterTest.rb")
     add_custom_command (
       OUTPUT  "${OUTPUT_TEST_FILENAME}"
+      COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
       COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Ruby ${template_include_dir} TestTemplate.rb.in "${OUTPUT_TEST_FILENAME}"
       DEPENDS ${filter_json_file} ${RUBY_TEMPLATE_FILES}
       )
@@ -144,6 +145,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/org/itk/simple/testing/${FILTERNAME}ImageFilterTest.java")
     add_custom_command (
       OUTPUT  "${OUTPUT_TEST_FILENAME}"
+      COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
       COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Java ${template_include_dir} TestTemplate.java.in "${OUTPUT_TEST_FILENAME}"
       COMMAND ${Java_JAVAC_EXECUTABLE} -classpath ${SimpleITK_BINARY_DIR}/Wrapping/org.itk.simple.jar ${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/org/itk/simple/testing/${FILTERNAME}ImageFilterTest.java
       DEPENDS ${filter_json_file} ${JAVA_TEMPLATE_FILES} SimpleITKJava
@@ -166,6 +168,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
     endif ( WIN32 )
     add_custom_command (
       OUTPUT "${OUTPUT_TEST_FILENAME}"
+      COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
       COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/CSharp ${template_include_dir} TestTemplate.cs.in "${OUTPUT_TEST_FILENAME}"
       COMMAND ${csharp_compiler_safe}
         /t:exe /platform:${CSHARP_PLATFORM}
@@ -275,3 +278,264 @@ endmacro()
 
 # Here we add all the tests
 add_google_tests(SimpleITKUnitTestDriver ${TestSource})
+
+#######################################################
+#
+# Tests which use the itkTestDriver
+#
+#######################################################
+
+set( ITK_TEST_DRIVER  "itkTestDriver" )
+
+
+if ( WRAP_JAVA )
+
+  #
+  # This is a macro which set up the enviroment for executing JAVA examples and tests
+  #
+  macro(add_java_test name java_file)
+
+    # the root is with out extension or path, it is also assumed to the the name of the main class
+    get_filename_component( _java_class ${java_file} NAME_WE )
+    set( _java_file_class "${_java_class}.class" )
+
+    if(WIN32)
+      set( _JAVA_LIBRARY_PATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/$<CONFIGURATION>" )
+      set( _JAVA_CLASSPATH "${SimpleITK_BINARY_DIR}/Wrapping/org.itk.simple.jar;${CMAKE_CURRENT_BINARY_DIR}/$<CONFIGURATION>" )
+    else(WIN32)
+      set( _JAVA_LIBRARY_PATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}" )
+      set( _JAVA_CLASSPATH "${SimpleITK_BINARY_DIR}/Wrapping/org.itk.simple.jar:${CMAKE_CURRENT_BINARY_DIR}" )
+    endif(WIN32)
+
+    add_custom_command(
+      OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/${_java_file_class}"
+      COMMAND "${Java_JAVAC_EXECUTABLE}"
+      ARGS -classpath "${_JAVA_CLASSPATH}"
+      -d "${CMAKE_CURRENT_BINARY_DIR}"
+      "${java_file}"
+      DEPENDS ${java_file} SimpleITKJava org_itk_simple_jar
+      )
+
+    list( APPEND compiled_java_tests "${CMAKE_CURRENT_BINARY_DIR}/${_java_file_class}")
+
+    add_test(NAME Java.${name}
+      COMMAND "${ITK_TEST_DRIVER}"
+      "${Java_JAVA_EXECUTABLE}"
+      "-Djava.library.path=${_JAVA_LIBRARY_PATH}"
+      "-classpath" "${_JAVA_CLASSPATH}"
+      "${_java_class}"
+      ${ARGN}
+      )
+  endmacro()
+
+
+  #
+  # JAVA Examples
+  #
+  add_java_test( Example.SimpleGaussian
+    "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussian.java"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
+    "2.0"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Java.SimpleGaussian.nrrd" )
+
+# This test currently does not compile or work
+#
+#  add_java_test( Example.ImageConnection
+#    "${SimpleITK_SOURCE_DIR}/Examples/ImageConnection.java" )
+
+
+  # after all add_java_tests are called, form a target so all the code
+  # is built
+  add_custom_target( CompileJavaTests ALL DEPENDS ${compiled_java_tests} )
+
+endif ( WRAP_JAVA )
+
+if ( WRAP_PYTHON )
+
+  #
+  # This is a macro which set up the enviroment for executing python examples and tests
+  #
+  macro(add_python_test name)
+
+    set(command "${PYTHON_EXECUTABLE}")
+
+    # add extra command which may be needed on some systems
+    if(CMAKE_OSX_ARCHITECTURES)
+      list(GET CMAKE_OSX_ARCHITECTURES 0 test_arch)
+      set(command arch -${test_arch} ${command})
+    endif()
+
+    add_test(NAME Python.${name}
+      COMMAND "${ITK_TEST_DRIVER}"
+      --add-before-env PYTHONPATH "${SimpleITK_BINARY_DIR}/$<CONFIGURATION>/Wrapping"
+      --add-before-env PYTHONPATH "${SimpleITK_BINARY_DIR}/Wrapping"
+      --add-before-env PYTHONPATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/$<CONFIGURATION>"
+      --add-before-env PYTHONPATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}"
+      ${command}
+      ${ARGN}
+      )
+  endmacro()
+
+  #
+  # Python Examples
+  #
+  add_python_test( Example.SimpleGaussian
+    "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussian.py"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
+    "2.0"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Python.SimpleGaussian.nrrd" )
+
+  add_python_test( Example.SimpleGaussianProcedural
+    "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussianProcedural.py"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
+    "2.0"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Python.SimpleGaussian.nrrd" )
+
+  add_python_test( Example.ImageCreateAndSet
+    "${SimpleITK_SOURCE_DIR}/Examples/ImageCreateAndSet.py" )
+
+  add_python_test( Example.CannyEdge
+    "${SimpleITK_SOURCE_DIR}/Examples/CannyEdge.py"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/OAS1_0001_MR1_mpr-1_anon.nrrd" )
+
+  add_python_test( Example.ExtractSlice
+    "${SimpleITK_SOURCE_DIR}/Examples/ExtractSlice.py"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/OAS1_0001_MR1_mpr-1_anon.nrrd"
+    "30"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Python.ExtractSlice.nrrd")
+
+  add_python_test( Example.BoarderSegmentation
+    "${SimpleITK_SOURCE_DIR}/Examples/BoarderSegmentation.py"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/OAS1_0001_MR1_mpr-1_anon.nrrd"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Python.BoarderSegmentation.nrrd"
+    "5000"
+    "150" )
+
+ add_python_test( Example.N4BiasFieldCorrection
+    "${SimpleITK_SOURCE_DIR}/Examples/N4BiasFieldCorrection.py"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/cthead1.png"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Python.Example.N4BiasFieldCorrection.nrrd"
+    "1"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/2th_cthead1.mha"
+    "20"
+    "2" )
+
+
+  #
+  # Python Tests
+  #
+  add_python_test( Test.ImageTest
+    "${SimpleITK_SOURCE_DIR}/Testing/Unit/ImageTest.py" )
+
+  add_python_test( Test.IOTest
+    "${SimpleITK_SOURCE_DIR}/Testing/Unit/ImageTest.py"
+    "${TEST_HARNESS_TEMP_DIRECTORY}")
+
+endif( WRAP_PYTHON )
+
+
+if ( WRAP_LUA )
+
+  #
+  # This is a macro which set up the enviroment for executing lua examples and tests
+  #
+  macro(add_lua_test name)
+
+    set(command "$<TARGET_FILE:SimpleITKLua>")
+
+    # add extra command which may be needed on some systems
+    if(CMAKE_OSX_ARCHITECTURES)
+      list(GET CMAKE_OSX_ARCHITECTURES 0 test_arch)
+      set(command arch -${test_arch} ${command})
+    endif()
+
+    add_test(NAME Lua.${name}
+      COMMAND "${ITK_TEST_DRIVER}"
+      ${command}
+      ${ARGN}
+      )
+  endmacro()
+
+
+  #
+  # Lua Examples
+  #
+  add_lua_test( Example.SimpleGaussian
+    "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussian.lua"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
+    "2.0"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Lua.SimpleGaussian.nrrd" )
+  
+endif ( WRAP_LUA )
+
+if ( WRAP_RUBY )
+
+  #
+  # This is a macro which set up the enviroment for executing ruby examples and tests
+  #
+  macro(add_ruby_test name)
+
+    set(command "${RUBY_EXECUTABLE}")
+
+    # add extra command which may be needed on some systems
+    if(CMAKE_OSX_ARCHITECTURES)
+      list(GET CMAKE_OSX_ARCHITECTURES 0 test_arch)
+      set(command arch -${test_arch} ${command})
+    endif()
+
+    add_test(NAME Ruby.${name}
+      COMMAND "${ITK_TEST_DRIVER}"
+      --add-before-env RUBYLIB "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/$<CONFIGURATION>"
+      --add-before-env RUBYLIB "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}"
+      ${command}
+      ${ARGN}
+      )
+  endmacro()
+
+
+  #
+  # Ruby Examples
+  #
+  add_ruby_test( Example.SimpleGaussian
+    "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussian.rb"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
+    "2.0"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Ruby.SimpleGaussian.nrrd" )
+
+endif ( WRAP_RUBY )
+
+
+if ( WRAP_TCL )
+
+  #
+  # This is a macro which set up the enviroment for executing TCL examples and tests
+  #
+  macro(add_tcl_test name)
+
+
+    set(command "$<TARGET_FILE:SimpleITKTclsh>")
+
+    # add extra command which may be needed on some systems
+    if(CMAKE_OSX_ARCHITECTURES)
+      list(GET CMAKE_OSX_ARCHITECTURES 0 test_arch)
+      set(command arch -${test_arch} ${command})
+    endif()
+
+    add_test(NAME Tcl.${name}
+      COMMAND "${ITK_TEST_DRIVER}"
+      ${command}
+      ${ARGN}
+      )
+  endmacro()
+
+
+  #
+  # TCL Examples
+  #
+  add_tcl_test( Example.SimpleGaussian
+    "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussian.tcl"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
+    "2.0"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Tcl.SimpleGaussian.nrrd" )
+
+endif ( WRAP_TCL )

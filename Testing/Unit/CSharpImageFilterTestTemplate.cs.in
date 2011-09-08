@@ -44,9 +44,18 @@ $(foreach tests
             if (tag.Equals( "${tag}" )) {
                 // Read image(s)
                 Image inputA = reader.SetFileName( args[2] ).Execute();
+
+$(if inputA_cast then
+                 OUT=[[
+                 CastImageFilter caster = new CastImageFilter();
+                 caster.SetOutputPixelType( PixelIDValueEnum.${inputA_cast}.swigValue );
+                 inputA = caster.Execute( inputA );]]                
+end)
+
 $(if inputB then
                 OUT=[[
                 Image inputB = reader.SetFileName ( args[3] ).Execute();
+
 ]]
 end)
 $(when settings
@@ -59,6 +68,15 @@ $(for i=1,#value do OUT=OUT .. "\
                 {\
                 VectorUInt32 idx = new VectorUInt32( new uint[] " .. value[i] .. " );\
                 filter.AddSeed( idx );\
+                }\
+" end)]]
+elseif parameter == "TrialPoints" then
+                OUT=[[
+                filter.ClearTrialPoints();
+$(for i=1,#value do OUT=OUT .. "\
+                {\
+                VectorUInt32 idx = new VectorUInt32( new uint[] " .. value[i] .. " );\
+                filter.AddTrialPoint( idx );\
                 }\
 " end)]]
 elseif dim_vec == 1 then

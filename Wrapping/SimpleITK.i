@@ -19,8 +19,15 @@
   try {
     $action
   } catch( itk::ExceptionObject &ex ) {
-    char error_msg[256];
-    sprintf( error_msg, "Exception thrown in SimpleITK $symname: %s", ex.what() );
+    char error_msg[1024];
+// TODO this should be replaces with some try compile stuff
+
+%#ifdef _MSC_VER
+    _snprintf_s( error_msg, 1024, 1024, "Exception thrown in SimpleITK $symname: %s", ex.what() );
+%#else
+    snprintf( error_msg, 1024, "Exception thrown in SimpleITK $symname: %s", ex.what() );
+%#endif
+
     SWIG_exception( SWIG_RuntimeError, error_msg );
   } catch( ... ) {
     SWIG_exception( SWIG_UnknownError, "Unknown exception thrown in SimpleITK $symname" );
@@ -28,8 +35,8 @@
 }
 
 // Global Tweaks to sitk::Image
-%ignore itk::simple::Image::GetImageBase( void );
-%ignore itk::simple::Image::GetImageBase( void ) const;
+%ignore itk::simple::Image::GetITKBase( void );
+%ignore itk::simple::Image::GetITKBase( void ) const;
 
 // Language Specific Sections
 %include CSharp.i

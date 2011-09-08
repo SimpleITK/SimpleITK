@@ -82,7 +82,11 @@ int main( int argc, char *argv[])
     seed.push_back(atoi(argv[i+1]));
     segmentationFilter.AddSeed(seed);
     std::cout << "Adding a seed at ";
-    printStdVector(seed, std::cout);
+    for( unsigned int i = 0; i < seed.size(); ++i )
+      {
+      std::cout << seed[i] << " ";
+      }
+
     std::cout << std::endl;
     }
 

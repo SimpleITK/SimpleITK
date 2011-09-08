@@ -1,0 +1,72 @@
+{
+  "name" : "Threshold",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "filter_type" : "itk::ThresholdImageFilter<InputImageType>",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "doc" : "",
+  "members" : [ {
+    "name" : "Lower",
+    "type" : "double",
+    "default" : "0.0",
+    "pixeltype" : "Input",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "The lower threshold.\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : "Get the lower threshold value.\n"
+  }, {
+    "name" : "Upper",
+    "type" : "double",
+    "default" : "1.0",
+    "pixeltype" : "Input",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "The upper threshold.\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : "Get the upper threshold value.\n"
+  }, {
+    "name" : "OutsideValue",
+    "type" : "double",
+    "default" : "0.0",
+    "pixeltype" : "Output",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set the outside pixel value. The default value NumericTraits<OutputPixelType>::Zero.\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : "Get the outside pixel value.\n"
+  } ],
+  "tests" : [ {
+    "tag" : "Default",
+    "description" : "Default",
+    "inputA" : "Input/RA-Short.nrrd",
+    "md5hash" : "59071590099d21dd439896592338bf95",
+    "settings" : [ ]
+  }, {
+    "tag" : "Threshold1",
+    "description" : "Threshold settings 1",
+    "inputA" : "Input/RA-Slice-Short.png",
+    "md5hash" : "f70a31938657e0163b82521af4f8e3b0",
+    "settings" : [ {
+      "parameter" : "Lower",
+      "value" : "25000"
+    }, {
+      "parameter" : "Upper",
+      "value" : "65535"
+    } ]
+  }, {
+    "tag" : "Threshold2",
+    "description" : "Threshold settings 2",
+    "inputA" : "Input/RA-Slice-Short.png",
+    "md5hash" : "898743e4ec2e75c0169d025fb29b7ead",
+    "settings" : [ {
+      "parameter" : "Lower",
+      "value" : "0"
+      }, {
+      "parameter" : "Upper",
+      "value" : "25000"
+      }, {
+      "parameter" : "OutsideValue",
+      "value" : "25000"
+    }  ]
+  } ],
+  "briefdescription" : "Set values to a user-specified value if below, above, or between given threshold values.\n",
+  "detaileddescription" : "Set image values to a user-specified value if they are below, above, or between given threshold values.\n"
+}

@@ -292,6 +292,8 @@ each test.
 - \b inputA: (\e string) The path from the SOURCE_DIR/Testing/Data directory
 for the (first) input image
 
+- \b inputA_cast: (\e string) an sitkPixelIDEnum, after inputA is read the CastImageFilter is run, to covert the image type.
+
 - [OPTIONAL] \b inputB: (\e string) If \b number_of_inputs is 2, this specifies
 the path from SOURCE_DIR/Testing/Data to the second input image
 

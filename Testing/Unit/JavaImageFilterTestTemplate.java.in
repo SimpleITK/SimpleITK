@@ -5,6 +5,7 @@
  */
 
 package org.itk.simple.testing;
+import java.math.BigInteger;
 // This is Java code to test ${name}
 import org.itk.simple.*;
 
@@ -45,6 +46,13 @@ $(foreach tests
 
       // Read image(s)
       Image inputA = reader.setFileName( argv[1] ).execute();
+
+$(if inputA_cast then
+        OUT=[[
+       CastImageFilter caster = new CastImageFilter();
+       caster.setOutputPixelType( PixelIDValueEnum.${inputA_cast}.swigValue() );
+       inputA  = caster.execute( inputA );]]
+end)
 $(if inputB then
       OUT=[[
       Image inputB = reader.setFileName ( argv[2] ).execute();]]
@@ -62,6 +70,17 @@ $(if parameter == "SeedList" then
           idx.push_back(v[i]);\
         }\
         filter.addSeed(idx);\
+      }\
+      " end)]]
+elseif parameter == "TrialPoints" then
+      OUT=[[filter.clearTrialPoints();
+      $(for i=1,#value do OUT=OUT .. "{\
+        int v[] = " .. value[i] .. ";\
+        VectorUInt32 idx = new VectorUInt32();\
+        for (int i = 0; i < inputA.getDimension(); i++) {\
+          idx.push_back(v[i]);\
+        }\
+        filter.addTrialPoint(idx);\
       }\
       " end)]]
 elseif dim_vec == 1 then

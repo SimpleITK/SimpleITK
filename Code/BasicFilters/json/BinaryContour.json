@@ -38,7 +38,7 @@
     "description" : "Simply run with default settings",
     "inputA" : "Input/WhiteDots.png",
     "md5hash" : "3921141f21fcb41e6d4af197e48ffbb5",
-    "settings" : [{
+    "settings" : [ {
       "parameter" : "ForegroundValue",
       "value" : "255.0"
     } ]

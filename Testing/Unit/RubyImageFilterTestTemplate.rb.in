@@ -47,12 +47,26 @@ elseif parameter == "SeedList"then
     v = Simpleitk::VectorUInt32.new\
     for i in ".. value[i] .." do v << i end\
     filter.add_seed(v)" end)]]
+elseif parameter == "TrialPoints" and ruby_value then
+    OUT=[[  filter.clear_trial_points()
+    $(for i=1,#ruby_value do OUT=OUT .. "\
+    v = Simpleitk::VectorUInt32.new\
+    for i in ".. ruby_value[i] .." do v << i end\
+    filter.add_trial_point(v)" end)]]
+elseif parameter == "TrialPoints"then
+    OUT=[[  filter.clear_trial_points()
+    $(for i=1,#value do OUT=OUT .. "\
+    v = Simpleitk::VectorUInt32.new\
+    for i in ".. value[i] .." do v << i end\
+    filter.add_trial_point(v)" end)]]
 elseif dim_vec and dim_vec == 1 then 
 
    if type == "bool" then
      OUT="v = Simpleitk::VectorBool.new"
    elseif type == "int" then
      OUT="v = Simpleitk::VectorInt32.new"
+ elseif type == "double" then
+     OUT="v = Simpleitk::VectorDouble.new"
    else
      OUT="v = Simpleitk::VectorUInt32.new"
    end
@@ -68,6 +82,14 @@ end)
 )
 )
   inputA = reader.set_file_name( ARGV[1] ).execute
+$(if inputA_cast then
+
+-- the first char of the string needs to be converted to upper case
+OUT=[[
+  caster = Simpleitk::CastImageFilter.new
+  caster.set_output_pixel_type( Simpleitk::${inputA_cast:gsub("^%l", inputA_cast.upper ) })
+  inputA = caster.execute( inputA ) ]]
+end)
   $(if inputB then
   OUT=[[inputB = reader.set_file_name( ARGV[2] ).execute
   output = filter.execute( inputA, inputB )]]

@@ -1,8 +1,14 @@
 find_package(Git REQUIRED)
-#-----------------------------------------------------------------------------
 
+#-----------------------------------------------------------------------------
+# CTest Related Settings
+#-----------------------------------------------------------------------------
 set(BUILDNAME "NoBuldNameGiven")
 set(SITE      "NoSiteGiven")
+option( ${CMAKE_PROJECT_NAME}_BUILD_TESTING "Turn on Testing for SimpleITK" ON )
+
+configure_file(../CMake/CTestCustom.cmake.in CTestCustom.cmake)
+
 
 enable_language(C)
 enable_language(CXX)
@@ -39,6 +45,8 @@ set(CMAKE_MODULE_PATH
 
 include(PreventInSourceBuilds)
 include(PreventInBuildInstalls)
+include(VariableList)
+
 
 #-----------------------------------------------------------------------------
 # Prerequisites
@@ -60,7 +68,18 @@ endif()
 #-----------------------------------------------------------------------------
 # SimpleITK options
 #------------------------------------------------------------------------------
-option( ${CMAKE_PROJECT_NAME}_BUILD_TESTING "Turn on Testing for SimpleITK" ON )
+
+
+#-----------------------------------------------------------------------------
+# Set a default build type if none was specified
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  message(STATUS "Setting build type to 'Release' as none was specified.")
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
+  # Set the possible values of build type for cmake-gui
+  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+endif()
+
+
 
 
 #-----------------------------------------------------------------------------
@@ -134,32 +153,42 @@ SETIFEMPTY(CMAKE_BUNDLE_OUTPUT_DIRECTORY  ${CMAKE_CURRENT_BINARY_DIR}/bin)
 #------------------------------------------------------------------------------
 # Common Build Options to pass to all subsequent tools
 #------------------------------------------------------------------------------
-set(ep_common_args
-  --no-warn-unused-cli
-  -DMAKECOMMAND:STRING=${MAKECOMMAND}
+list( APPEND ep_common_list 
+  MAKECOMMAND
+  CMAKE_BUILD_TYPE
+  CMAKE_C_COMPILER
+  CMAKE_C_COMPILER_ARG1
+  CMAKE_CXX_COMPILER
+  CMAKE_CXX_COMPILER_ARG1
+  CMAKE_CXX_FLAGS_RELEASE
+  CMAKE_CXX_FLAGS_DEBUG
+  CMAKE_CXX_FLAGS
+  CMAKE_C_FLAGS_RELEASE
+  CMAKE_C_FLAGS_DEBUG
+  CMAKE_C_FLAGS
+  CMAKE_EXE_LINKER_FLAGS
+  CMAKE_EXE_LINKER_FLAGS_DEBUG
+  CMAKE_GENERATOR
+  CMAKE_EXTRA_GENERATOR
+  CMAKE_INSTALL_PREFIX
+  CMAKE_LIBRARY_OUTPUT_DIRECTORY
+  CMAKE_ARCHIVE_OUTPUT_DIRECTORY
+  CMAKE_RUNTIME_OUTPUT_DIRECTORY
+  CMAKE_BUNDLE_OUTPUT_DIRECTORY
+  MEMORYCHECK_COMMAND_OPTIONS
+  MEMORYCHECK_COMMAND
+  CMAKE_SHARED_LINKER_FLAGS
+  CMAKE_EXE_LINKER_FLAGS
+  CMAKE_MODULE_LINKER_FLAGS
+  SITE
+  BUILDNAME )
+
+VariableListToCache( ep_common_list ep_common_cache )
+VariableListToArgs( ep_common_list ep_common_args )
+
+list( APPEND ep_common_args
   -DCMAKE_SKIP_RPATH:BOOL=ON
-  -DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
-  -DCMAKE_CXX_FLAGS_RELEASE:STRING=${CMAKE_CXX_FLAGS_RELEASE}
-  -DCMAKE_CXX_FLAGS_DEBUG:STRING=${CMAKE_CXX_FLAGS_DEBUG}
-  -DCMAKE_CXX_FLAGS:STRING=${CMAKE_CXX_FLAGS}
-  -DCMAKE_C_FLAGS_RELEASE:STRING=${CMAKE_C_FLAGS_RELEASE}
-  -DCMAKE_C_FLAGS_DEBUG:STRING=${CMAKE_C_FLAGS_DEBUG}
-  -DCMAKE_C_FLAGS:STRING=${CMAKE_C_FLAGS}
   -DBUILD_EXAMPLES:BOOL=OFF
-  -DCMAKE_GENERATOR:STRING=${CMAKE_GENERATOR}
-  -DCMAKE_EXTRA_GENERATOR:STRING=${CMAKE_EXTRA_GENERATOR}
-  -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}
-  -DCMAKE_LIBRARY_OUTPUT_DIRECTORY:PATH=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}
-  -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY:PATH=${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}
-  -DCMAKE_RUNTIME_OUTPUT_DIRECTORY:PATH=${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
-  -DCMAKE_BUNDLE_OUTPUT_DIRECTORY:PATH=${CMAKE_BUNDLE_OUTPUT_DIRECTORY}
-  -DMEMORYCHECK_COMMAND_OPTIONS:STRING=${MEMORYCHECK_COMMAND_OPTIONS}
-  -DMEMORYCHECK_COMMAND:PATH=${MEMORYCHECK_COMMAND}
-  -DCMAKE_SHARED_LINKER_FLAGS:STRING=${CMAKE_SHARED_LINKER_FLAGS}
-  -DCMAKE_EXE_LINKER_FLAGS:STRING=${CMAKE_EXE_LINKER_FLAGS}
-  -DCMAKE_MODULE_LINKER_FLAGS:STRING=${CMAKE_MODULE_LINKER_FLAGS}
-  -DSITE:STRING=${SITE}
-  -DBUILDNAME:STRING=${BUILDNAME}
 )
 
 #$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
@@ -182,7 +211,7 @@ endif()
 #------------------------------------------------------------------------------
 
 set(ITK_WRAPPING OFF CACHE BOOL "Turn OFF wrapping ITK with WrapITK")
-if(ITK_WRAPPING)
+if(ITK_WRAPNG)
   list(APPEND ITK_DEPENDENCIES Swig)
 endif()
 if(ITK_USE_FFTW)
@@ -217,16 +246,11 @@ message(STATUS "${CMAKE_PROJECT_NAME}_DEPENDENCIES ${${CMAKE_PROJECT_NAME}_DEPEN
 #
 include(SITKLanguageOptions)
 
-foreach( var IN LISTS SITK_LANGUAGES_VARS )
-  
-  if( ${var} ) # if variable has been set
-    get_property( type CACHE ${var} PROPERTY TYPE )
-    list( APPEND ep_languages_args "-D${var}:${type}=${${var}}" )
-  endif()
-endforeach()
 
-message( STATUS "EP: ${ep_languages_args}" )
+VariableListToCache( SITK_LANGUAGES_VARS  ep_languages_cache )
+VariableListToArgs( SITK_LANGUAGES_VARS  ep_languages_args )
 
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK-build/CMakeCacheInit.txt" "${ep_common_cache}\n${ep_languages_cache}" )
 
 set(proj SimpleITK)
 ExternalProject_Add(${proj}
@@ -235,6 +259,8 @@ ExternalProject_Add(${proj}
   BINARY_DIR SimpleITK-build
   CMAKE_GENERATOR ${gen}
   CMAKE_ARGS
+    --no-warn-unused-cli
+    -C "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK-build/CMakeCacheInit.txt"
     ${ep_common_args}
     ${ep_languages_args}
     # ITK
@@ -252,5 +278,13 @@ ExternalProject_Add(${proj}
     -DWRAP_R:BOOL=${WRAP_R}
   INSTALL_COMMAND ""
   DEPENDS ${${CMAKE_PROJECT_NAME}_DEPENDENCIES}
+)
+
+ExternalProject_Add_Step(${proj} forcebuild
+  COMMAND ${CMAKE_COMMAND} -E remove
+    ${CMAKE_CURRENT_BUILD_DIR}/${proj}-prefix/src/${proj}-stamp/${prog}-build
+  DEPENDEES configure
+  DEPENDERS build
+  ALWAYS 1
 )
 

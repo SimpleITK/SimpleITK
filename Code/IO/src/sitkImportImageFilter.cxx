@@ -116,6 +116,7 @@ void ImportImageFilter::SetBufferAsInt32( int32_t * buffer, unsigned int numberO
 void ImportImageFilter::SetBufferAsUInt32( uint32_t * buffer, unsigned int numberOfComponents )
 {
   this->m_Buffer = buffer;
+  this->m_NumberOfComponentsPerPixel = numberOfComponents;
   if ( this->m_NumberOfComponentsPerPixel == 1 )
     {
     this->m_PixelIDValue = ImageTypeToPixelIDValue< itk::Image<uint32_t, UnusedDimension> >::Result;
@@ -216,30 +217,29 @@ Image ImportImageFilter::ExecuteInternal( )
   //
   //  Origin
   //
-  typename ImageType::PointType origin;
-  std::copy( this->m_Origin.begin(), this->m_Origin.begin()+Dimension, origin.Begin() );
+  typename ImageType::PointType origin = sitkSTLVectorToITK< typename ImageType::PointType >( this->m_Origin );
   image->SetOrigin( origin );
 
   //
   //  Spacing
   //
-  typename ImageType::SpacingType spacing;
-  std::copy( this->m_Spacing.begin(), this->m_Spacing.begin()+Dimension, spacing.Begin() );
+  typename ImageType::SpacingType spacing = sitkSTLVectorToITK< typename ImageType::SpacingType >( this->m_Spacing );
   image->SetSpacing( spacing );
 
   //
   //  Size and Region
   //
   typename ImageType::RegionType region;
-  typename ImageType::SizeType size;
+  typename ImageType::SizeType size = sitkSTLVectorToITK< typename ImageType::SizeType >( this->m_Size );
+  region.SetSize(size);
+  image->SetRegions( region );
+
+
   size_t numberOfElements = m_NumberOfComponentsPerPixel;
   for(unsigned int si = 0; si < Dimension; si++ )
     {
-    size[si] = this->m_Size[si];
     numberOfElements *= size[si];
     }
-  region.SetSize(size);
-  image->SetRegions( region );
 
   // todo set direction
 

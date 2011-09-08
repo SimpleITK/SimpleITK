@@ -20,6 +20,10 @@ namespace itk
   namespace
   {
 
+  template <typename T, typename U>
+  struct MakeDependentOn
+    : public U {};
+
   template <class TImageType>
   class PimpleImage
     : public PimpleImageBase
@@ -86,15 +90,28 @@ namespace itk
       }
 
 
+    virtual unsigned int GetNumberOfComponentsPerPixel( void ) const { return this->GetNumberOfComponentsPerPixel<TImageType>(); }
+
+    template <typename UImageType>
+    typename DisableIf<IsVector<UImageType>::Value, unsigned int>::Type
+    GetNumberOfComponentsPerPixel( void ) const
+      {
+        return 1;
+      }
+    template <typename UImageType>
+    typename EnableIf<IsVector<UImageType>::Value, unsigned int>::Type
+    GetNumberOfComponentsPerPixel( void ) const
+    {
+        // This returns 1 for itk::Image, and the number of elements
+        // is the vectors of a VectorImage
+        return this->m_Image->GetNumberOfComponentsPerPixel();
+      }
+
+
     // Get Origin
     virtual std::vector<double> GetOrigin( void ) const
       {
-      typename ImageType::PointType origin = this->m_Image->GetOrigin();
-      std::vector<double> orgn( ImageType::ImageDimension );
-
-      std::copy( origin.Begin(), origin.End(), orgn.begin() );
-
-      return orgn;
+        return sitkITKVectorToSTL<double>( this->m_Image->GetOrigin() );
       }
 
     // Set Origin
@@ -104,22 +121,14 @@ namespace itk
         {
         sitkExceptionMacro("Image::SetOrigin -> vector dimension mismatch");
         }
-      typename ImageType::PointType origin;
 
-      std::copy( orgn.begin(), orgn.end(), origin.Begin() );
-
-      this->m_Image->SetOrigin( origin );
+      this->m_Image->SetOrigin( sitkSTLVectorToITK< typename ImageType::PointType> ( orgn ) );
       }
 
     // Get Spacing
     virtual std::vector<double> GetSpacing( void ) const
       {
-      typename ImageType::SpacingType spacing = this->m_Image->GetSpacing();
-      std::vector<double> spc( ImageType::ImageDimension );
-
-      std::copy( spacing.Begin(), spacing.End(), spc.begin() );
-
-      return spc;
+        return sitkITKVectorToSTL<double>( this->m_Image->GetSpacing() );
       }
 
     // Set Spacing
@@ -129,11 +138,8 @@ namespace itk
         {
         sitkExceptionMacro("Image::SetSpacing -> vector dimension mismatch");
         }
-      typename ImageType::SpacingType spacing;
 
-      std::copy( spc.begin(), spc.end(), spacing.Begin() );
-
-      this->m_Image->SetSpacing( spacing );
+      this->m_Image->SetSpacing( sitkSTLVectorToITK< typename ImageType::SpacingType> ( spc ) );
       }
 
     // Physical Point to Index
@@ -144,19 +150,10 @@ namespace itk
         sitkExceptionMacro("vector dimension mismatch");
         }
 
-      typename ImageType::PointType point;
-      std::copy( pt.begin(), pt.end(), point.Begin() );
-
       typename ImageType::IndexType index;
-      this->m_Image->TransformPhysicalPointToIndex(point, index);
-      std::vector<int64_t> idx( ImageType::ImageDimension );
+      this->m_Image->TransformPhysicalPointToIndex( sitkSTLVectorToITK< typename ImageType::PointType> ( pt ), index);
 
-      for( unsigned int i = 0; i < ImageType::ImageDimension; ++i )
-        {
-        idx[i] = index[i];
-        }
-
-      return idx;
+      return sitkITKVectorToSTL<int64_t>( index );
       }
 
     // Index to Physical Point
@@ -166,20 +163,18 @@ namespace itk
         {
         sitkExceptionMacro("vector dimension mismatch");
         }
-      typename ImageType::IndexType index;
 
-      for( unsigned int i = 0; i < ImageType::ImageDimension; ++i )
-        {
-        index[i] = idx[i];
-        }
+
+        typename ImageType::IndexType index;
+        for ( unsigned int i = 0; i < ImageType::ImageDimension; ++i )
+          {
+          index[i] = idx[i];
+          }
 
       typename ImageType::PointType point;
-      this->m_Image->TransformIndexToPhysicalPoint(index, point);
-      std::vector<double> pt( ImageType::ImageDimension );
+      this->m_Image->TransformIndexToPhysicalPoint( index, point);
 
-      std::copy( point.Begin(), point.End(), pt.begin() );
-
-      return pt;
+      return sitkITKVectorToSTL<double>( point );
       }
 
     virtual unsigned int GetSize( unsigned int dimension ) const
@@ -198,11 +193,7 @@ namespace itk
         typename ImageType::RegionType largestRegion = this->m_Image->GetLargestPossibleRegion();
         std::vector<unsigned int> size( ImageType::ImageDimension );
 
-        for ( unsigned int i = 0; i < ImageType::ImageDimension; ++i )
-          {
-          size[i] = largestRegion.GetSize(i);
-          }
-        return size;
+        return sitkITKVectorToSTL<unsigned int>( largestRegion.GetSize() );
       }
 
     std::string ToString( void ) const
@@ -217,7 +208,10 @@ namespace itk
         return this->m_Image->GetReferenceCount();
       }
 
-
+    virtual int8_t  GetPixelAsInt8( const std::vector<uint32_t> &idx) const
+      {
+        return this->InternalGetPixel< BasicPixelID<int8_t> >( idx );
+      }
     virtual uint8_t  GetPixelAsUInt8( const std::vector<uint32_t> &idx) const
       {
         return this->InternalGetPixel< BasicPixelID<uint8_t> >( idx );
@@ -238,6 +232,14 @@ namespace itk
       {
         return this->InternalGetPixel< BasicPixelID<uint32_t> >( idx );
       }
+    virtual int64_t  GetPixelAsInt64( const std::vector<uint32_t> &idx ) const
+      {
+        return this->InternalGetPixel< BasicPixelID<int64_t> >( idx );
+      }
+    virtual uint64_t GetPixelAsUInt64( const std::vector<uint32_t> &idx ) const
+      {
+        return this->InternalGetPixel< BasicPixelID<uint64_t> >( idx );
+      }
     virtual float    GetPixelAsFloat( const std::vector<uint32_t> &idx ) const
       {
         return this->InternalGetPixel< BasicPixelID<float> >( idx );
@@ -247,6 +249,51 @@ namespace itk
         return this->InternalGetPixel< BasicPixelID<double> >( idx );
       }
 
+    virtual int8_t  *GetBufferAsInt8()
+      {
+        return static_cast<int8_t*>(this->InternalGetBuffer< BasicPixelID<int8_t> >( ));
+      }
+    virtual uint8_t  *GetBufferAsUInt8()
+      {
+        return static_cast<uint8_t*>(this->InternalGetBuffer< BasicPixelID<uint8_t> >( ));
+      }
+    virtual int16_t  *GetBufferAsInt16( )
+      {
+        return  static_cast<int16_t*>(this->InternalGetBuffer< BasicPixelID<int16_t> >( ));
+      }
+    virtual uint16_t *GetBufferAsUInt16( )
+      {
+        return  static_cast<uint16_t*>(this->InternalGetBuffer< BasicPixelID<uint16_t> >( ));
+      }
+    virtual  int32_t  *GetBufferAsInt32( )
+      {
+        return  static_cast<int32_t*>(this->InternalGetBuffer< BasicPixelID<int32_t> >( ));
+      }
+    virtual uint32_t *GetBufferAsUInt32( )
+      {
+        return  static_cast<uint32_t*>(this->InternalGetBuffer< BasicPixelID<uint32_t> >( ));
+      }
+    virtual  int64_t  *GetBufferAsInt64( )
+      {
+        return  static_cast<int64_t*>(this->InternalGetBuffer< BasicPixelID<int64_t> >( ));
+      }
+    virtual uint64_t *GetBufferAsUInt64( )
+      {
+        return  static_cast<uint64_t*>(this->InternalGetBuffer< BasicPixelID<uint64_t> >( ));
+      }
+    virtual float    *GetBufferAsFloat( )
+      {
+        return  static_cast<float*>(this->InternalGetBuffer< BasicPixelID<float> >( ));
+      }
+    virtual double   *GetBufferAsDouble(  )
+      {
+        return  static_cast<double*>(this->InternalGetBuffer< BasicPixelID<double> >( ));
+      }
+
+    virtual void SetPixelAsInt8( const std::vector<uint32_t> &idx, int8_t v )
+      {
+        this->InternalSetPixel( idx, v );
+      }
     virtual void SetPixelAsUInt8( const std::vector<uint32_t> &idx, uint8_t v )
       {
         this->InternalSetPixel( idx, v );
@@ -264,6 +311,14 @@ namespace itk
         this->InternalSetPixel( idx, v );
       }
     virtual void SetPixelAsUInt32( const std::vector<uint32_t> &idx, uint32_t v )
+      {
+        this->InternalSetPixel( idx, v );
+      }
+    virtual void SetPixelAsInt64( const std::vector<uint32_t> &idx, int64_t v )
+      {
+        this->InternalSetPixel( idx, v );
+      }
+    virtual void SetPixelAsUInt64( const std::vector<uint32_t> &idx, uint64_t v )
       {
         this->InternalSetPixel( idx, v );
       }
@@ -286,7 +341,12 @@ namespace itk
                       typename ImageType::PixelType >::Type
     InternalGetPixel( const std::vector<uint32_t> &idx ) const
       {
-        return this->m_Image->GetPixel( this->ConvertSTLToIndex( idx ) );
+        const IndexType itkIdx = sitkSTLVectorToITK<IndexType>( idx );
+        if ( ! this->m_Image->GetLargestPossibleRegion().IsInside( itkIdx ) )
+          {
+          sitkExceptionMacro( "index out of bounds" );
+          }
+        return this->m_Image->GetPixel( itkIdx  );
       }
 
     template < typename TPixelIDType >
@@ -296,7 +356,12 @@ namespace itk
                       typename ImageType::PixelType >::Type
     InternalGetPixel( const std::vector<uint32_t> &idx ) const
       {
-        return this->m_Image->GetPixel( this->ConvertSTLToIndex( idx ) );
+        const IndexType itkIdx = sitkSTLVectorToITK<IndexType>( idx );
+        if ( ! this->m_Image->GetLargestPossibleRegion().IsInside( itkIdx ) )
+          {
+          sitkExceptionMacro( "index out of bounds" );
+          }
+        return this->m_Image->GetPixel( itkIdx );
       }
 
     template < typename TPixelIDType >
@@ -323,12 +388,59 @@ namespace itk
       }
 
 
+    template < typename TPixelIDType >
+    typename EnableIf<std::tr1::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value
+                      && !IsLabel<TPixelIDType>::Value
+                      && !IsVector<TPixelIDType>::Value,
+                      typename ImageType::PixelType *>::Type
+    InternalGetBuffer( void )
+      {
+        return this->m_Image->GetPixelContainer()->GetBufferPointer();
+      }
+
+    template < typename TPixelIDType >
+    typename EnableIf<std::tr1::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value
+                      && IsLabel<TPixelIDType>::Value
+                      && !IsVector<TPixelIDType>::Value,
+                      typename ImageType::PixelType *>::Type
+    InternalGetBuffer( void )
+      {
+        sitkExceptionMacro( "This method is not supported for LabelMaps." )
+      }
+
+    template < typename TPixelIDType >
+    typename EnableIf<std::tr1::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value
+                      && !IsLabel<TPixelIDType>::Value
+                      && IsVector<TPixelIDType>::Value,
+                      typename MakeDependentOn<TPixelIDType, ImageType>::InternalPixelType >::Type
+    InternalGetBuffer( void )
+      {
+        return this->m_Image->GetPixelContainer()->GetBufferPointer();
+      }
+
+    template < typename TPixelIDType >
+    typename DisableIf<std::tr1::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value,
+                      void *>::Type
+    InternalGetBuffer( void )
+      {
+        sitkExceptionMacro( << "The image is of type: " << GetPixelIDValueAsString( this->GetPixelIDValue() )
+                            << " but the GetPixel access method requires type: "
+                            << GetPixelIDValueAsString(  PixelIDToPixelIDValue<TPixelIDType>::Result )
+                            << "!" );
+      }
+
+
     template < typename TPixelType >
     typename EnableIf<std::tr1::is_same<BasicPixelID<TPixelType>,
                                         typename ImageTypeToPixelID<ImageType>::PixelIDType >::value >::Type
     InternalSetPixel( const std::vector<uint32_t> &idx, TPixelType v  ) const
       {
-        return this->m_Image->SetPixel( this->ConvertSTLToIndex( idx ), v );
+        const IndexType itkIdx = sitkSTLVectorToITK<IndexType>( idx );
+        if ( ! this->m_Image->GetLargestPossibleRegion().IsInside( itkIdx ) )
+          {
+          sitkExceptionMacro( "index out of bounds" );
+          }
+        return this->m_Image->SetPixel( itkIdx, v );
       }
 
     template < typename TPixelType >
@@ -339,19 +451,6 @@ namespace itk
         Unused( idx );
         Unused( v );
         sitkExceptionMacro( "This method is not supported for this image type." )
-      }
-
-    static IndexType ConvertSTLToIndex( const std::vector<uint32_t> &idx )
-      {
-        // convert idx to itk::Index
-        if ( idx.size() < ImageType::ImageDimension )
-          {
-          sitkExceptionMacro( "Image index size mismatch" );
-          }
-        IndexType itkIDX;
-        for ( unsigned int i = 0; i < ImageType::ImageDimension; ++i )
-            itkIDX[i] = idx[i];
-        return itkIDX;
       }
 
   private:

@@ -1,6 +1,6 @@
-    /** \class ${name}ImageFilter
-     * \brief ${briefdescription}
-     ${detaileddescription}
+    /**\class ${name}ImageFilter
+     * $(if briefdescription then OUT=[[\brief ${briefdescription}]] end)
+     * $(if detaileddescription then OUT=[[${detaileddescription}]] end)
      */
     class ${name}ImageFilter : public $(if number_of_inputs == 2 then OUT=[[DualImageFilter]] else OUT=[[ImageFilter]] end) {
     public:

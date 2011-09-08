@@ -58,7 +58,7 @@ namespace itk {
       typedef TImageType                                   InputImageType;
 
       typename InputImageType::ConstPointer image =
-        dynamic_cast <const InputImageType*> ( inImage.GetImageBase() );
+        dynamic_cast <const InputImageType*> ( inImage.GetITKBase() );
 
       typedef itk::HashImageFilter<InputImageType> HashFilterType;
       typename HashFilterType::Pointer hasher = HashFilterType::New();

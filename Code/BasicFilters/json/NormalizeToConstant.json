@@ -1,0 +1,22 @@
+{
+  "name" : "NormalizeToConstant",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "output_pixel_type" : "typename itk::NumericTraits<typename InputImageType::PixelType>::RealType",
+  "members" : [ {
+      "name" : "Constant",
+      "type" : "double",
+      "default" :  "1.0"
+  } ],
+  "tests" : [ {
+    "tag" : "defaults",
+    "description" : "Simply run with default settings",
+    "inputA" : "Input/Ramp-Up-Short.nrrd",
+    "settings" : [ ],
+    "tolerance" : "0.0001"
+  } ]
+}

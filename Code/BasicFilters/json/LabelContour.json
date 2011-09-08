@@ -24,7 +24,7 @@
     "detaileddescriptionGet" : ""
   } ],
   "tests" : [ {
-    "tags" : "default",
+    "tag" : "default",
     "description" : "Simply run with default settings",
     "inputA" : "Input/2th_cthead1.png",
     "md5hash" : "d742c05a8d8aa9b41f58b8d2aad6b5d0",
