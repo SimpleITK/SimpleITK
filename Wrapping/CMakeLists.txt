@@ -78,6 +78,13 @@ endif()
 if ( WRAP_PYTHON )
   find_package ( PythonLibs REQUIRED )
   find_package ( PythonInterp REQUIRED )
+  execute_process( COMMAND ${PYTHON_EXECUTABLE} --version
+    ERROR_VARIABLE _python_version_string )
+  string( REGEX MATCH "[0-9]+[.][0-9]+" _python_version "${_python_version_string}" )
+  if( ${_python_version} VERSION_LESS 2.6 )
+    # This is necessary for the new buffer protocol used for numpy support.
+    message( FATAL_ERROR "Python version must be 2.6 or greater." )
+  endif()
   include_directories ( ${PYTHON_INCLUDE_DIR} ${SimpleITK_SOURCE_DIR}/Wrapping )
 
   # Run swig
@@ -87,14 +94,6 @@ if ( WRAP_PYTHON )
   SWIG_add_module ( SimpleITK python SimpleITK.i SimpleITKPYTHON_wrap.cxx )
   SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${PYTHON_LIBRARIES} ${ITK_LIBRARIES})
   set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKPYTHON_wrap.cxx COMPILE_FLAGS "-w")
-
-  # For numpy support.
-  configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/SimpleITKNumpyPatch.cmake.in
-    ${CMAKE_CURRENT_BINARY_DIR}/SimpleITKNumpyPatch.cmake @ONLY )
-  add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_REAL_NAME}
-    POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/SimpleITKNumpyPatch.cmake
-    COMMENT "Appending numpy support to SimpleITK.py" )
 
   # Installation
   set( SIMPLEITK_PYTHON_MODULE_DIR ${SimpleITK_BINARY_DIR}/Wrapping )
