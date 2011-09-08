@@ -444,7 +444,6 @@ function expand(str, ...)
       else error'search item must be a function, table or userdata' end
       if value ~= nil then return value end
     end
-    io.stderr:write('Warning: unknown variable: '.. index .. ' returning nil\n')
     return nil
   end
 
