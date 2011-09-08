@@ -34,17 +34,17 @@ inline Image operator*( const Image &img1, const Image &img2 ) { return Multiply
 inline Image operator/( const Image &img1, const Image &img2 ) { return Divide(img1, img2 ); }
 
 inline Image operator*( const Image &img, double s  ) { return MultiplyByConstant(img, s ); }
-inline Image operator*( double s,  Image &img ) { return MultiplyByConstant(img, s ); }
+inline Image operator*( double s,  const Image &img ) { return MultiplyByConstant(img, s ); }
 
 
-inline Image operator+( Image &img, double s ) { return  AddConstantTo(img, s ); }
-inline Image operator+( double s,  Image &img ) { return  AddConstantTo(img, s ); }
+inline Image operator+( const Image &img, double s ) { return  AddConstantTo(img, s ); }
+inline Image operator+( double s,  const Image &img ) { return  AddConstantTo(img, s ); }
 
-inline Image operator-( Image &img, double s ) { return  SubtractConstantFrom(img, s ); }
-inline Image operator-(double s, Image &img ) { return  SubtractConstantBy(img, s ); }
+inline Image operator-( const Image &img, double s ) { return  SubtractConstantFrom(img, s ); }
+inline Image operator-(double s, const Image &img ) { return  SubtractConstantBy(img, s ); }
 
-inline Image operator/( Image &img, double s  ) { return DivideByConstant(img, s ); }
-inline Image operator/( double s,  Image &img  ) { return DivideConstantBy(img, s ); }
+inline Image operator/( const Image &img, double s  ) { return DivideByConstant(img, s ); }
+inline Image operator/( double s,  const Image &img  ) { return DivideConstantBy(img, s ); }
 
 // Modoulo does not appear to be defined?
 // Image operator%( Image &img1, Image &img2 )
