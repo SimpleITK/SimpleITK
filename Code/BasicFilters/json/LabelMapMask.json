@@ -10,7 +10,7 @@
   "members" : [ {
       "name" : "Label",
       "type" : "uint64_t",
-      "default" : "1",
+      "default" : "1u",
       "doc" : "",
       "pixeltype" : "Input"
     }, {
