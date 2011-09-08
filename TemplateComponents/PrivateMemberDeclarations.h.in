@@ -3,7 +3,7 @@ $(foreach members
       ${type} m_${name};
 
 )
-$(foreach measurements
+$(when measurements $(foreach measurements
       /* ${doc} */
       ${type} m_${name};
-)
+))
