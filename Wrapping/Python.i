@@ -54,14 +54,17 @@
                return Divide( self, other )
             return DivideByConstant( self, other )
 
+        # NOTE: for the reverse methods other cannot be an image, so
+        # therefore other should be able to be considered a constant.
+
         def __radd__( self, other ):
-            return self.__add__( other )
+            return AddConstantTo( self, other )
         def __rsub__( self, other ):
-            return self.__sub__( other )
+            return SubtractConstantBy( self, other )
         def __rmul__( self, other ):
-            return self.__mul__( other )
+            return MultiplyByConstant( self, other )
         def __rdiv__( self, other ):
-            return self.__div__( other )
+            return DivideConstantBy( self, other )
 
          # NOTE: the __i*__ methods are not implemented because there
          # currently in no way to make the underlying filters run
