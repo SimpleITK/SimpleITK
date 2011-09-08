@@ -8,7 +8,9 @@
 #include "sitkMultiplyByConstantImageFilter.h"
 #include "sitkAddConstantToImageFilter.h"
 #include "sitkSubtractConstantFromImageFilter.h"
+#include "sitkSubtractConstantByImageFilter.h"
 #include "sitkDivideByConstantImageFilter.h"
+#include "sitkDivideConstantByImageFilter.h"
 #include "sitkNotImageFilter.h"
 #include "sitkAndImageFilter.h"
 #include "sitkOrImageFilter.h"
@@ -39,8 +41,10 @@ inline Image operator+( Image &img, double s ) { return  AddConstantTo(img, s );
 inline Image operator+( double s,  Image &img ) { return  AddConstantTo(img, s ); }
 
 inline Image operator-( Image &img, double s ) { return  SubtractConstantFrom(img, s ); }
+inline Image operator-(double s, Image &img ) { return  SubtractConstantBy(img, s ); }
 
 inline Image operator/( Image &img, double s  ) { return DivideByConstant(img, s ); }
+inline Image operator/( double s,  Image &img  ) { return DivideConstantBy(img, s ); }
 
 // Modoulo does not appear to be defined?
 // Image operator%( Image &img1, Image &img2 )
