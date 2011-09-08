@@ -7,6 +7,7 @@
   "pixel_types" : "LabelPixelIDTypeList",
   "pixel_types2" : "typelist::Append<BasicPixelIDTypeList, ComplexPixelIDTypeList>::Type",
   "filter_type" : "itk::LabelMapMaskImageFilter<InputImageType, InputImageType2>",
+  "custom_set_input" : "filter->SetInput1( image1 ); filter->SetInput2( image2 );",
   "members" : [ {
       "name" : "Label",
       "type" : "uint64_t",
