@@ -14,29 +14,29 @@ def GetArrayFromImage(image):
         raise ImportError('Numpy not available.')
 
     imageByteArray, shape, pixelID = _SimpleITK.GetArrayFromImage(image)
-    if pixelID == 0:
+    if pixelID == sitkUInt8:
         arr = numpy.frombuffer(imageByteArray, dtype=numpy.uint8)
-    elif pixelID == 1:
+    elif pixelID == sitkInt8:
         arr = numpy.frombuffer(imageByteArray, dtype=numpy.int8)
-    elif pixelID == 2:
+    elif pixelID == sitkUInt16:
         arr = numpy.frombuffer(imageByteArray, dtype=numpy.uint16)
-    elif pixelID == 3:
+    elif pixelID == sitkInt16:
         arr = numpy.frombuffer(imageByteArray, dtype=numpy.int16)
-    elif pixelID == 4:
+    elif pixelID == sitkUInt32:
         arr = numpy.frombuffer(imageByteArray, dtype=numpy.uint32)
-    elif pixelID == 5:
+    elif pixelID == sitkInt32:
         arr = numpy.frombuffer(imageByteArray, dtype=numpy.int32)
-    elif pixelID == 6:
+    elif pixelID == sitkUInt64:
         arr = numpy.frombuffer(imageByteArray, dtype=numpy.uint64)
-    elif pixelID == 7:
+    elif pixelID == sitkInt64:
         arr = numpy.frombuffer(imageByteArray, dtype=numpy.int64)
-    elif pixelID == 8:
+    elif pixelID == sitkFloat32:
         arr = numpy.frombuffer(imageByteArray, dtype=numpy.float32)
-    elif pixelID == 9:
+    elif pixelID == sitkFloat64:
         arr = numpy.frombuffer(imageByteArray, dtype=numpy.float64)
-    elif pixelID == 10:
+    elif pixelID == sitkComplexFloat32:
         arr = numpy.frombuffer(imageByteArray, dtype=numpy.complex64)
-    elif pixelID == 11:
+    elif pixelID == sitkComplexFloat64:
         arr = numpy.frombuffer(imageByteArray, dtype=numpy.complex128)
 
     arr.shape = shape

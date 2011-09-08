@@ -31,7 +31,6 @@ sitk_GetArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
   Py_ssize_t len;
   typedef std::vector< unsigned int > SizeType;
   SizeType size;
-  int pixelDtype;
   size_t pixelSize;
   itk::simple::PixelIDValueType pixelIDValue;
 
@@ -55,36 +54,29 @@ sitk_GetArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
 
   pixelIDValue = sitkImage->GetPixelIDValue();
   pixelSize = 1;
-  pixelDtype = 0;
   switch( pixelIDValue )
     {
   case itk::simple::sitkUInt8:
-    pixelDtype = 0;
     sitkBufferPtr = (const void *)sitkImage->GetBufferAsUInt8();
     pixelSize  = sizeof( uint8_t );
     break;
   case itk::simple::sitkInt8:
-    pixelDtype = 1;
     sitkBufferPtr = (const void *)sitkImage->GetBufferAsInt8();
     pixelSize  = sizeof( int8_t );
     break;
   case itk::simple::sitkUInt16:
-    pixelDtype = 2;
     sitkBufferPtr = (const void *)sitkImage->GetBufferAsUInt16();
     pixelSize  = sizeof( uint16_t );
     break;
   case itk::simple::sitkInt16:
-    pixelDtype = 3;
     sitkBufferPtr = (const void *)sitkImage->GetBufferAsInt16();
     pixelSize  = sizeof( int16_t );
     break;
   case itk::simple::sitkUInt32:
-    pixelDtype = 4;
     sitkBufferPtr = (const void *)sitkImage->GetBufferAsUInt32();
     pixelSize  = sizeof( uint32_t );
     break;
   case itk::simple::sitkInt32:
-    pixelDtype = 5;
     sitkBufferPtr = (const void *)sitkImage->GetBufferAsInt32();
     pixelSize  = sizeof( int32_t );
     break;
@@ -100,12 +92,10 @@ sitk_GetArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
     //pixelSize  = sizeof( int64_t );
     //break;
   case itk::simple::sitkFloat32:
-    pixelDtype = 8;
     sitkBufferPtr = (const void *)sitkImage->GetBufferAsFloat();
     pixelSize  = sizeof( float );
     break;
   case itk::simple::sitkFloat64:
-    pixelDtype = 9;
     sitkBufferPtr = (const void *)sitkImage->GetBufferAsDouble(); // \todo rename to Float64 for consistency
     pixelSize  = sizeof( double );
     break;
@@ -160,7 +150,7 @@ sitk_GetArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
   memcpy( byteArrayView.buf, sitkBufferPtr, len );
   PyBuffer_Release( &byteArrayView );
 
-  pixelID = Py_BuildValue( "i", pixelDtype );
+  pixelID = Py_BuildValue( "i", pixelIDValue );
   if( !pixelID )
     {
     SWIG_fail;
