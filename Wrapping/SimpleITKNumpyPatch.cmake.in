@@ -1,2 +1,0 @@
-file( READ   @CMAKE_CURRENT_SOURCE_DIR@/SimpleITKNumpyPatch.py sitk_numpy_patch )
-file( APPEND @CMAKE_CURRENT_BINARY_DIR@/SimpleITK.py "${sitk_numpy_patch}" )
