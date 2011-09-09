@@ -43,7 +43,7 @@ img = sitk.MirrorPad( img, [128] *2, [128]*2 )
 size = img.GetSize();
 
 # perform the FFT
-fftimg = sitk.FFTRealToComplexConjugate( sitk.Cast( img, sitk.sitkFloat32 ) )
+fftimg = sitk.ForwardFFT( sitk.Cast( img, sitk.sitkFloat32 ) )
 
 
 ### Kernel Image ###
@@ -67,11 +67,14 @@ padding[1] = (size[1] - kernel.GetSize()[1])/2
 kernel = sitk.ConstantPad( kernel, padding, padding, 0.0 )
 
 # perform FFT on kernel
-fftkernel = sitk.FFTRealToComplexConjugate( sitk.FFTShift( kernel ) )
+fftkernel = sitk.ForwardFFT( sitk.FFTShift( kernel ) )
+
+fftkernel.SetSpacing( fftimg.GetSpacing() )
+fftkernel.SetOrigin( fftimg.GetOrigin() )
 
 ### Convolution ###
 # Finally perform the convolution in Fourier space by multiplication
-img =  sitk.FFTComplexConjugateToReal( fftimg*fftkernel )
+img =  sitk.InverseFFT( fftimg*fftkernel )
 
 # remove the padding
 img = sitk.Crop( img, [128]*2, [128]*2 )

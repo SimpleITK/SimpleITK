@@ -528,6 +528,12 @@ if ( WRAP_PYTHON )
     .3 10 .9 50 55
     )
 
+  add_python_test( Example.FFTConvolution
+    "${SimpleITK_SOURCE_DIR}/Examples/FFTConvolution.py"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/cthead1-Float.mha"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/cthead1-Float.mha"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Python.Examples/FFTConvolution.nrrd" )
+
   #
   # Python Tests
   #
