@@ -44,7 +44,11 @@ namespace itk {
       double GetMinimum ( const LabelIdentifierType labelCode ) const;
       double GetMaximum ( const LabelIdentifierType labelCode ) const;
       double GetMean    ( const LabelIdentifierType labelCode ) const;
+      double GetMedian  ( const LabelIdentifierType labelCode ) const;
+      double GetSigma   ( const LabelIdentifierType labelCode ) const;
       double GetVariance( const LabelIdentifierType labelCode ) const;
+      double GetSum     ( const LabelIdentifierType labelCode ) const;
+      double GetCount   ( const LabelIdentifierType labelCode ) const;
 
       //Return the MeasuremetMap for the given labelCode
       MeasurementMap GetMeasurementMap ( const LabelIdentifierType labelCode ) const;
