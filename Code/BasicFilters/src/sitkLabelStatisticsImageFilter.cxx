@@ -2,10 +2,9 @@
 
 #include "itkLabelStatisticsImageFilter.h"
 
-//HACK until itkLabelStaticsImageFilter can return list of valid
-//labels found
+// Needed to to calculate histogram properties
 #include "sitkStatisticsImageFilter.h"
-#include "itkMinimumMaximumImageFilter.h"
+
 
 namespace itk {
 namespace simple {
@@ -243,31 +242,25 @@ Image LabelStatisticsImageFilter::DualExecuteInternal ( const Image& inImage1, c
   filter->Update();
 
 
-    {
-    //HACK until itk::LabelStatisticsImageFilter is instumented to provide a list of valid labels found
-    //     we must search by brute force through all the possiblities looking for valid values.
-    typedef itk::MinimumMaximumImageFilter<TLabelImageType> MinMaxType;
-    typename MinMaxType::Pointer rangeFinderFilter=MinMaxType::New();
-    rangeFinderFilter->SetInput(labelImage);
-    rangeFinderFilter->Update();
+  typedef typename FilterType::ValidLabelValuesContainerType ValidLabelValuesType;
 
-    for( typename TLabelImageType::PixelType rangeIt=rangeFinderFilter->GetMinimum();
-      rangeIt <= rangeFinderFilter->GetMaximum();
-      ++rangeIt)
-      {
-      if( filter->HasLabel( rangeIt ) )
-        {
-        this->m_LabelMeasurementMap[rangeIt]["Minimum"]  = filter->GetMinimum(rangeIt);
-        this->m_LabelMeasurementMap[rangeIt]["Maximum"]  = filter->GetMaximum(rangeIt);
-        this->m_LabelMeasurementMap[rangeIt]["Mean"]     = filter->GetMean(rangeIt);
-        this->m_LabelMeasurementMap[rangeIt]["approxMedian"]   = filter->GetMedian(rangeIt);
-        this->m_LabelMeasurementMap[rangeIt]["Sigma"]    = filter->GetSigma(rangeIt);
-        this->m_LabelMeasurementMap[rangeIt]["Variance"] = filter->GetVariance(rangeIt);
-        this->m_LabelMeasurementMap[rangeIt]["Sum"]      = filter->GetSum(rangeIt);
-        this->m_LabelMeasurementMap[rangeIt]["Count"]    = filter->GetCount(rangeIt);
-        }
-      }
+  for(typename ValidLabelValuesType::const_iterator vIt= filter->GetValidLabelValues().begin();
+      vIt != filter->GetValidLabelValues().end();
+      ++vIt)
+    {
+
+    assert ( filter->HasLabel(*vIt) );
+
+    this->m_LabelMeasurementMap[*vIt]["Minimum"]  = filter->GetMinimum(*vIt);
+    this->m_LabelMeasurementMap[*vIt]["Maximum"]  = filter->GetMaximum(*vIt);
+    this->m_LabelMeasurementMap[*vIt]["Mean"]     = filter->GetMean(*vIt);
+    this->m_LabelMeasurementMap[*vIt]["approxMedian"]   = filter->GetMedian(*vIt);
+    this->m_LabelMeasurementMap[*vIt]["Sigma"]    = filter->GetSigma(*vIt);
+    this->m_LabelMeasurementMap[*vIt]["Variance"] = filter->GetVariance(*vIt);
+    this->m_LabelMeasurementMap[*vIt]["Sum"]      = filter->GetSum(*vIt);
+    this->m_LabelMeasurementMap[*vIt]["Count"]    = filter->GetCount(*vIt);
     }
+
   //NOTE:  Input is passed through to output and is likely to get ignored!
   return Image( filter->GetOutput() );
   }

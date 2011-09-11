@@ -146,7 +146,7 @@ TEST(BasicFilters,LabelStatistics) {
   EXPECT_NEAR ( stats.GetVariance ( 0 ),  269.173, 0.01 );
   EXPECT_NEAR ( stats.GetCount ( 0 ),  36172, 0.01 );
   EXPECT_NEAR ( stats.GetSum ( 0 ),  473533, 0.01 );
-  EXPECT_NEAR ( stats.GetMedian ( 0 ), 12.5, 0.001 );
+  EXPECT_NEAR ( stats.GetMedian ( 0 ), 12.0, 0.001 );
 
   const itk::simple::LabelStatisticsImageFilter::LabelListingType myLabels = stats.GetValidLabels();
   EXPECT_EQ ( myLabels.size() , 3u);
@@ -161,5 +161,5 @@ TEST(BasicFilters,LabelStatistics) {
     myMeasurementMap.GetBasicMeasurementMap();
   EXPECT_EQ( myBasicMeasurementMap.size(), 8u ); //4 measurements produced
 
-  EXPECT_EQ ( myMeasurementMap.ToString(), "Count, Maximum, Mean, Minimum, Sigma, Sum, Variance, approxMedian, \n36172, 99, 13.0911, 0, 16.4065, 473533, 269.173, 12.5, \n" );
+  EXPECT_EQ ( myMeasurementMap.ToString(), "Count, Maximum, Mean, Minimum, Sigma, Sum, Variance, approxMedian, \n36172, 99, 13.0911, 0, 16.4065, 473533, 269.173, 12, \n" );
 }
