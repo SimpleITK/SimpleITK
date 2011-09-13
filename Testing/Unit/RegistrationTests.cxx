@@ -31,7 +31,7 @@ TEST(Registration,Components) {
   sitk::Registration registration;
 
   // Create a transform
-  sitk::Transform transform = sitk::Transform(3, sitk::Affine);
+  sitk::Transform transform = sitk::Transform(3, sitk::sitkAffine);
   registration.SetTransform ( transform );
 
   registration.SetInterpolator ( sitk::sitkLinearInterpolate );

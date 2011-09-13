@@ -160,29 +160,29 @@ Transform::Transform( )
     switch( type )
       {
 
-      case Translation:
+      case sitkTranslation:
         m_PimpleTransform = new PimpleTransform<itk::TranslationTransform< double, VDimension > >();
         break;
-      case Scale:
+      case sitkScale:
         m_PimpleTransform = new PimpleTransform<itk::ScaleTransform< double, VDimension > >();
         break;
-      case ScaleLogarithmic:
+      case sitkScaleLogarithmic:
         m_PimpleTransform = new PimpleTransform<itk::ScaleLogarithmicTransform< double, VDimension > >();
         break;
-      case QuaternionRigid:
+      case sitkQuaternionRigid:
         // todo what todo about transform which require a specific dimension
         assert( VDimension == 3 );
         m_PimpleTransform = new PimpleTransform<itk::QuaternionRigidTransform< double > >();
         break;
-      case Versor:
+      case sitkVersor:
         // todo what todo about transform which require a specific dimension
         assert( VDimension == 3 );
         m_PimpleTransform = new PimpleTransform<itk::VersorTransform< double > >();
         break;
-      case Affine:
+      case sitkAffine:
         m_PimpleTransform = new PimpleTransform<itk::AffineTransform< double, VDimension > >();
         break;
-      case Identity:
+      case sitkIdentity:
       default:
         m_PimpleTransform = new PimpleTransform<itk::IdentityTransform< double, VDimension > >();
       }

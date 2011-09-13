@@ -17,13 +17,13 @@ namespace simple
 
 class PimpleTransformBase;
 
-enum TransformEnum { Identity,
-                     Translation,
-                     Scale,
-                     ScaleLogarithmic,
-                     QuaternionRigid,
-                     Versor,
-                     Affine };
+enum TransformEnum { sitkIdentity,
+                     sitkTranslation,
+                     sitkScale,
+                     sitkScaleLogarithmic,
+                     sitkQuaternionRigid,
+                     sitkVersor,
+                     sitkAffine };
 
   class Transform
   {
