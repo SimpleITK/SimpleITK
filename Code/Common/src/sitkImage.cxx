@@ -307,14 +307,14 @@ namespace itk
     }
 
     // Get Direction
-    std::vector< std::vector< double > > Image::GetDirection( void ) const
+    std::vector< double > Image::GetDirection( void ) const
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetDirection();
     }
 
     // Set Direction
-    void Image::SetDirection( const std::vector< std::vector< double > > &direction )
+    void Image::SetDirection( const std::vector< double > &direction )
     {
       assert( m_PimpleImage );
       this->MakeUniqueForWrite();

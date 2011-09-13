@@ -144,37 +144,24 @@ namespace itk
 
 
     // Get Direction
-    virtual std::vector< std::vector<double> > GetDirection( void ) const
+    virtual std::vector< double > GetDirection( void ) const
       {
       const typename ImageType::DirectionType &d = this->m_Image->GetDirection();
-      std::vector< std::vector<double> > out( ImageType::ImageDimension );
-
-      for( unsigned int r = 0; r < ImageType::ImageDimension; ++r )
-        {
-        out[r].resize( ImageType::ImageDimension );
-        std::copy( d[r], d[r] + ImageType::ImageDimension, out[r].begin() );
-        }
-
-      return out;
+      return std::vector< double >( d.GetVnlMatrix().begin(), d.GetVnlMatrix().end() );
       }
 
     // Set Direction
-    virtual void SetDirection( const std::vector< std::vector<double> > & in )
+    virtual void SetDirection( const std::vector<  double > & in )
       {
-      if (in.size() != ImageType::ImageDimension)
+      if (in.size() != ImageType::ImageDimension*ImageType::ImageDimension)
         {
-        sitkExceptionMacro("row dimension mismatch");
+        sitkExceptionMacro("direction size mismatch");
         }
+
       typename ImageType::DirectionType d;
 
-      for( unsigned int r = 0; r < ImageType::ImageDimension; ++r )
-        {
-        if (in[r].size() != ImageType::ImageDimension)
-          {
-          sitkExceptionMacro("column dimension mismatch");
-          }
-        std::copy( in[r].begin(), in[r].end(), d[r] );
-        }
+      std::copy( in.begin(), in.end(), d.GetVnlMatrix().begin() );
+
       this->m_Image->SetDirection( d );
       }
 

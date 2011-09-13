@@ -110,11 +110,12 @@ namespace simple
 
     /** \brief Set/Get the Direction
      *
-     * When setting the dimensions of the 2-D vector must exactly
-     * match the dimensions of the image
+     * Internally, the Direction is represented by a matrix 2x2 for a
+     * 2D and and 3x3 for a 3D image. The matrix is passed as a 1D
+     * array in row-major form.
      */
-    std::vector< std::vector<double> > GetDirection() const;
-    void SetDirection ( const std::vector<std::vector< double > > &direction );
+    std::vector< double > GetDirection() const;
+    void SetDirection ( const std::vector< double > &direction );
 
     /** Transform index to physical point */
     std::vector< double > TransformIndexToPhysicalPoint( const std::vector< int64_t > &index ) const;
