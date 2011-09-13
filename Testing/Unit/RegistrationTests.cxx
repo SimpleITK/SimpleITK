@@ -75,17 +75,21 @@ TEST(Registration,Resample) {
   sitk::Image moving = reader.SetFileName ( dataFinder.GetFile ( "Input/OAS1_0002_MR1_mpr-1_anon.nrrd" ) ).Execute();
 
   sitk::Registration registration;
-  //registration.SetUseCenteredInitializationOff();
-  sitk::Transform transform;
+
+  registration.SetInterpolator ( sitk::sitkLinearInterpolate );
+
+  // Create a transform
+  sitk::Transform transform = sitk::Transform(3, sitk::sitkAffine);
+  registration.SetTransform ( transform );
+
   ASSERT_NO_THROW ( transform = registration.Execute ( fixed, moving ) );
 
   sitk::ResampleImageFilter resample;
   resample.SetReferenceImage ( fixed );
-// FIXME HACK TODO
-// transforms need to be added back to the resample image filter
-//  resample.SetTransform ( transform );
+  resample.SetTransform ( transform );
+
+
   sitk::Image resampled = resample.Execute ( moving );
-  sitk::ImageFileWriter writer;
 
   //sitk::Show( sitk::CheckerBoard( fixed, resampled ) );
   //IMAGECOMPAREWITHTOLERANCE ( resampled, "Resample", 0.1 );
