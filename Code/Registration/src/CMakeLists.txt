@@ -1,4 +1,5 @@
 set( SimpleITKRegistrationSource
+  sitkMetric.cxx
   sitkRegistration.cxx
   sitkRegularStepGradientDescentOptimizer.cxx
   sitkTransform.cxx

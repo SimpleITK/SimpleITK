@@ -30,6 +30,7 @@
 
 // Registration support
 #include "sitkTransform.h"
+#include "sitkMetric.h"
 #include "sitkInterpolate.h"
 #include "sitkRegistration.h"
 #include "sitkRegularStepGradientDescentOptimizer.h"

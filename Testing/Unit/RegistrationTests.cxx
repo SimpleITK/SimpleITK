@@ -5,14 +5,14 @@
 
 namespace sitk = itk::simple;
 
-TEST(Registration,CreateMattes) {
+TEST(Registration,CreateDefaultMetric) {
   sitk::Image image2d( 32, 32, sitk::sitkUInt8 );
   sitk::Image image3d( 32, 32, 32, sitk::sitkUInt8 );
 
-  sitk::MattesMutualInformationMetric metric;
+  sitk::Metric metric;
 
-  ASSERT_TRUE ( metric.GetMetric ( image2d ).IsNotNull() );
-  ASSERT_TRUE ( metric.GetMetric ( image3d ).IsNotNull() );
+  ASSERT_TRUE ( metric.GetITKBase( image2d ) != NULL );
+  ASSERT_TRUE ( metric.GetITKBase( image3d ) != NULL );
 }
 
 static float ExpectedParameters[] = {1.0007, -0.00291716, -0.00417716,

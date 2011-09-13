@@ -6,23 +6,44 @@
 #include "sitkDetail.h"
 #include "sitkImage.h"
 #include "sitkPixelIDTokens.h"
-#include "itkImageToImageMetric.h"
 #include "sitkMemberFunctionFactory.h"
 
 namespace itk
 {
+
+// Forward declaration for pointer
+class SingleValuedCostFunction;
+
 namespace simple
 {
-  class Registration;
-  class Metric
+
+class Registration;
+class PimpleMetricBase;
+enum MetricEnum {
+  sitkMeansSquares,
+  sitkNormalizedCorrelation,
+  sitkGradientDifference };
+
+
+class Metric
   {
   public:
-    Metric() {};
-    virtual ~Metric() {};
-    virtual ::itk::SingleValuedCostFunction::Pointer GetMetric ( const Image & image ) = 0;
+    Metric();
+    Metric( MetricEnum type );
+    virtual ~Metric();
+
+    //
+    Metric &operator=( const Metric &);
+    Metric( const Metric & );
+
+    itk::SingleValuedCostFunction* GetITKBase( const Image & image ) const;
+
+    std::string ToString( void ) const;
   protected:
-    friend class Registration;
-    virtual Metric* Clone() = 0;
+
+    void InternalInitialization( MetricEnum type );
+
+    PimpleMetricBase *m_PimpleMetric;
   };
 }
 }

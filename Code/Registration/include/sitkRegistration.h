@@ -32,8 +32,8 @@ namespace simple
     Registration& SetInterpolator ( InterpolateFunctionEnum interp );
     InterpolateFunctionEnum GetInterpolator( void ) const;
 
-    //virtual Registration& SetMetric ( Metric *metric );
-    // virtual Metric& GetMetric();
+    virtual Registration& SetMetric ( const Metric &metric );
+    virtual const Metric& GetMetric() const;
 
     //virtual Registration& SetOptimizer ( SOptimizer *optimizer );
     // virtual Optimizer& GetOptimizer();
@@ -43,9 +43,9 @@ namespace simple
     std::string ToString () const;
 
   protected:
-    Transform m_Transform;
+    Transform               m_Transform;
     InterpolateFunctionEnum m_Interpolator;
-    //std::auto_ptr<Metric> m_Metric;
+    Metric                  m_Metric;
     //std::auto_ptr<SOptimizer> m_Optimizer;
 
     template<class TImage>
@@ -72,7 +72,7 @@ namespace simple
     std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
   };
 
-Transform Register ( const Image &fixed, const Image &moving, const Transform &transform, InterpolateFunctionEnum interpolator, Metric *metric, SOptimizer *optimizer );
+Transform Register ( const Image &fixed, const Image &moving, const Transform &transform, InterpolateFunctionEnum interpolator, const Metric &metric, SOptimizer *optimizer );
 }
 }
 

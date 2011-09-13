@@ -1,7 +1,5 @@
 #include "sitkRegistration.h"
 #include "itkImageRegistrationMethod.h"
-
-#include "itkMattesMutualInformationImageToImageMetric.h"
 #include "itkRegularStepGradientDescentOptimizer.h"
 
 #include <memory>
@@ -61,12 +59,12 @@ public:
 
 
 
-  Transform Register ( const Image &fixed, const Image & moving, const Transform &transform, InterpolateFunctionEnum interpolator, Metric *metric, SOptimizer *optimizer )
+  Transform Register ( const Image &fixed, const Image & moving, const Transform &transform, InterpolateFunctionEnum interpolator, const Metric &metric, SOptimizer *optimizer )
   {
   Registration registration;
   registration.SetTransform ( transform );
   registration.SetInterpolator ( interpolator );
-  //registration.SetMetric ( metric );
+  registration.SetMetric ( metric );
   //registration.SetOptimizer ( optimizer );
   return registration.Execute ( fixed, moving );
   }
@@ -86,7 +84,7 @@ public:
   //m_UseCenteredInitialization = true;
   //m_Transform = Transform(); default contructed to identity transfrom
   m_Interpolator = sitkLinearInterpolate;
-  //m_Metric.reset ( new MattesMutualInformationMetric() );.
+  // m_Metric = default contructed ok
   //m_Optimizer.reset ( new RegularStepGradientDescentOptimizer() );
   }
 
@@ -96,7 +94,6 @@ public:
     itk::simple::Image image(1,1,itk::simple::sitkUInt8);
     ::itk::TransformBase::ConstPointer transformBase = m_Transform.GetITKBase (  );
     //::itk::Object::Pointer interpolatorBase = m_Interpolate->GetInterpolator ( image ).GetPointer();
-    //::itk::SingleValuedCostFunction::Pointer metricBase = m_Metric->GetMetric ( image ).GetPointer();
     //::itk::Optimizer::Pointer optimizerBase = m_Optimizer->GetOptimizer().GetPointer();
 
     // Check for valid types
@@ -105,9 +102,7 @@ public:
     transformBase->Print ( out );
     out << "\n\nInterpolator:\n";
     out << m_Interpolator << std::endl;
-    //interpolatorBase->Print ( out );
-    out << "\n\nMetric:\n";
-    //metricBase->Print ( out );
+    out << "\n\nMetric:\n" << m_Metric.ToString();
     out << "\n\nOptimizer:\n";
     //optimizerBase->Print ( out );
     return out.str();
@@ -145,11 +140,12 @@ Transform Registration::ExecuteInternal (const Image &fixed, const Image& moving
 
 
   // Create Metric
-   typename ::itk::MattesMutualInformationImageToImageMetric<TImage, TImage>::Pointer metric = ::itk::MattesMutualInformationImageToImageMetric<TImage, TImage>::New();
-   metric->SetNumberOfHistogramBins( 128 );
-   metric->SetNumberOfSpatialSamples( 20000 );
-  typename RegistrationType::MetricType::Pointer itkMetric
-    = metric.GetPointer();
+   typename RegistrationType::MetricType::Pointer itkMetric =
+     dynamic_cast<typename RegistrationType::MetricType*> ( m_Metric.GetITKBase ( fixed ) );
+   if ( !itkTransform )
+     {
+     sitkExceptionMacro(<<"Unexpected error with metric");
+     }
 
   // Set 'em up
   registration->SetTransform ( itkTransform );
@@ -221,6 +217,18 @@ const Transform & Registration::GetTransform( void ) const
 {
   return m_Transform;
 }
+
+
+Registration& Registration::SetMetric ( const Metric &metric )
+{
+  this->m_Metric = metric;
+  return *this;
+}
+const Metric & Registration::GetMetric( void ) const
+{
+  return m_Metric;
+}
+
 
 Registration& Registration::SetInterpolator ( InterpolateFunctionEnum interp )
 {
