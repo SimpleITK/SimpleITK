@@ -14,7 +14,7 @@ VariableListToArgs( ITK_LANGUAGES_VARS  ep_languages_args )
 set(proj ITK)  ## Use ITK convention of calling it ITK
 set(ITK_REPOSITORY git://itk.org/ITK.git)
 set(ITK_DIR ${CMAKE_INSTALL_PREFIX}/lib/cmake/ITK-4.0)
-set(ITK_TAG_COMMAND GIT_TAG  3cb6183bbb1c670f12519fe5eb537b57876e9a89 )
+set(ITK_TAG_COMMAND GIT_TAG  7fbcd5dfbf4aa3e130a2a4e39ede307e283245e0 )
 set(WrapITK_DIR ${CMAKE_INSTALL_PREFIX}/lib/cmake/ITK-4.0/WrapITK)
 message(STATUS "ITK_WRAPPING=${ITK_WRAPPING}")
 
