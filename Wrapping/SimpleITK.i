@@ -95,9 +95,7 @@ namespace std
 %include "sitkTransform.h"
 %include "sitkInterpolate.h"
 %include "sitkMetric.h"
-%include "sitkMattesMutualInformationMetric.h"
 %include "sitkOptimizer.h"
-%include "sitkRegularStepGradientDescentOptimizer.h"
 %include "sitkRegistration.h"
 
 

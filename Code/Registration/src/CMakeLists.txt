@@ -1,6 +1,4 @@
 set( SimpleITKRegistrationSource
-#  sitkAffineTransform.cxx
-  sitkMattesMutualInformationMetric.cxx
   sitkRegistration.cxx
   sitkRegularStepGradientDescentOptimizer.cxx
   sitkTransform.cxx
