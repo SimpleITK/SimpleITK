@@ -1,8 +1,8 @@
 #include "sitkRegistration.h"
 #include "itkImageRegistrationMethod.h"
-#include "sitkMattesMutualInformationMetric.h"
-#include "sitkRegularStepGradientDescentOptimizer.h"
-#include "itkCenteredTransformInitializer.h"
+
+#include "itkMattesMutualInformationImageToImageMetric.h"
+#include "itkRegularStepGradientDescentOptimizer.h"
 
 #include <memory>
 
@@ -11,13 +11,63 @@ namespace itk
 namespace simple
 {
 
+namespace {
+
+template< typename TOptimizer >
+class CommandIterationUpdate
+  : public itk::Command
+{
+public:
+  typedef  CommandIterationUpdate   Self;
+  typedef  itk::Command             Superclass;
+  typedef itk::SmartPointer<Self>   Pointer;
+
+  itkNewMacro( Self );
+protected:
+  CommandIterationUpdate() {};
+
+
+public:
+
+  typedef TOptimizer   OptimizerType;
+  typedef const OptimizerType *                          OptimizerPointer;
+
+  void Execute(itk::Object *caller, const itk::EventObject & event)
+  {
+    Execute( (const itk::Object *)caller, event);
+  }
+
+  void Execute(const itk::Object * object, const itk::EventObject & event)
+  {
+
+    OptimizerPointer optimizer =
+      dynamic_cast< OptimizerPointer >( object );
+
+    if( ! itk::IterationEvent().CheckEvent( &event ) )
+      {
+      return;
+      }
+
+    std::cout << optimizer->GetCurrentIteration() << " = ";
+    std::cout << '\t' << "    CurrentStep: " << optimizer->GetCurrentStepLength() << std::endl;
+    std::cout << '\t' << "          Value: " << optimizer->GetValue() << std::endl;
+    std::cout << '\t' << "       Gradient: " << optimizer->GetGradient() << std::endl;
+    std::cout << '\t' << "CurrentPosition: " << optimizer->GetCurrentPosition() << std::endl;
+  }
+};
+
+} // end local namespace
+
+
+
+
   Transform Register ( const Image &fixed, const Image & moving, const Transform &transform, InterpolateFunctionEnum interpolator, Metric *metric, SOptimizer *optimizer )
   {
   Registration registration;
   registration.SetTransform ( transform );
   registration.SetInterpolator ( interpolator );
-  registration.SetMetric ( metric );
-  registration.SetOptimizer ( optimizer );
+  //registration.SetMetric ( metric );
+  //registration.SetOptimizer ( optimizer );
   return registration.Execute ( fixed, moving );
   }
 
@@ -33,11 +83,11 @@ namespace simple
   m_MemberFactory->RegisterMemberFunctions<BasicPixelIDTypeList, 2, RegistrationAddressor<MemberFunctionType> > ();
 
   // Reasonable defaults?
-  m_UseCenteredInitialization = true;
-  // m_Transform = Transform(); default contructed
+  //m_UseCenteredInitialization = true;
+  //m_Transform = Transform(); default contructed to identity transfrom
   m_Interpolator = sitkLinearInterpolate;
-  m_Metric.reset ( new MattesMutualInformationMetric() );
-  m_Optimizer.reset ( new RegularStepGradientDescentOptimizer() );
+  //m_Metric.reset ( new MattesMutualInformationMetric() );.
+  //m_Optimizer.reset ( new RegularStepGradientDescentOptimizer() );
   }
 
   std::string Registration::ToString () const
@@ -46,8 +96,8 @@ namespace simple
     itk::simple::Image image(1,1,itk::simple::sitkUInt8);
     ::itk::TransformBase::ConstPointer transformBase = m_Transform.GetITKBase (  );
     //::itk::Object::Pointer interpolatorBase = m_Interpolate->GetInterpolator ( image ).GetPointer();
-    ::itk::SingleValuedCostFunction::Pointer metricBase = m_Metric->GetMetric ( image ).GetPointer();
-    ::itk::Optimizer::Pointer optimizerBase = m_Optimizer->GetOptimizer().GetPointer();
+    //::itk::SingleValuedCostFunction::Pointer metricBase = m_Metric->GetMetric ( image ).GetPointer();
+    //::itk::Optimizer::Pointer optimizerBase = m_Optimizer->GetOptimizer().GetPointer();
 
     // Check for valid types
     std::ostringstream out;
@@ -57,9 +107,9 @@ namespace simple
     out << m_Interpolator << std::endl;
     //interpolatorBase->Print ( out );
     out << "\n\nMetric:\n";
-    metricBase->Print ( out );
+    //metricBase->Print ( out );
     out << "\n\nOptimizer:\n";
-    optimizerBase->Print ( out );
+    //optimizerBase->Print ( out );
     return out.str();
   }
 
@@ -70,71 +120,66 @@ Transform Registration::ExecuteInternal (const Image &fixed, const Image& moving
   typedef itk::ImageRegistrationMethod<TImage,TImage>  RegistrationType;
   typename RegistrationType::Pointer registration = RegistrationType::New();
 
-  ::itk::TransformBase::Pointer transformBase = m_Transform.GetITKBase ( );
-  ::itk::SingleValuedCostFunction::Pointer metricBase = m_Metric->GetMetric ( fixed ).GetPointer();
-  ::itk::Optimizer::Pointer optimizerBase = m_Optimizer->GetOptimizer().GetPointer();
-
-  // Create Interpolator
-  typename itk::InterpolateImageFunction<TImage, double>::Pointer interpolator = detail::CreateInterpolator<TImage>( m_Interpolator );
-
-
-  if (!dynamic_cast<typename RegistrationType::TransformType*> ( transformBase.GetPointer() ) )
+  // convert transform to itk Transform type
+  typename RegistrationType::TransformType* itkTransform =
+    dynamic_cast<typename RegistrationType::TransformType*> ( m_Transform.GetITKBase ( ) );
+  if ( !itkTransform )
     {
     sitkExceptionMacro(<<"Transform is not a valid type");
     }
-  if ( NULL == dynamic_cast<typename RegistrationType::MetricType*> ( metricBase.GetPointer() ) )
-    {
-    sitkExceptionMacro(<<"Metric is not a valid type");
-    }
-  if ( NULL == dynamic_cast<typename RegistrationType::OptimizerType*> ( optimizerBase.GetPointer() ) )
-    {
-    sitkExceptionMacro(<<"Optimizer is not a valid type");
-    }
+
+  // Create Interpolator
+  typename itk::InterpolateImageFunction<TImage, double>::Pointer itkInterpolator = detail::CreateInterpolator<TImage>( m_Interpolator );
+
+  // Create Optimizer
+  ::itk::RegularStepGradientDescentOptimizer::Pointer opt = ::itk::RegularStepGradientDescentOptimizer::New();
+  opt->SetNumberOfIterations( 2000 );
+  opt->SetMinimumStepLength( .00005 );
+  opt->SetMaximumStepLength( 0.1 );
+  opt->MaximizeOff();
+
+   typename RegistrationType::OptimizerType::Pointer itkOptimizer = opt.GetPointer();
+   typedef CommandIterationUpdate< ::itk::RegularStepGradientDescentOptimizer > IterationUpdateType;
+   typename IterationUpdateType::Pointer observer = IterationUpdateType::New();
+   itkOptimizer->AddObserver( itk::IterationEvent(), observer );
+
+
+  // Create Metric
+   typename ::itk::MattesMutualInformationImageToImageMetric<TImage, TImage>::Pointer metric = ::itk::MattesMutualInformationImageToImageMetric<TImage, TImage>::New();
+   metric->SetNumberOfHistogramBins( 128 );
+   metric->SetNumberOfSpatialSamples( 20000 );
+  typename RegistrationType::MetricType::Pointer itkMetric
+    = metric.GetPointer();
+
   // Set 'em up
-  registration->SetTransform ( dynamic_cast<typename RegistrationType::TransformType*> ( transformBase.GetPointer() ) );
-  registration->SetInterpolator ( interpolator );
-  registration->SetMetric ( dynamic_cast<typename RegistrationType::MetricType*> ( metricBase.GetPointer() ) );
-  registration->SetOptimizer ( dynamic_cast<typename RegistrationType::OptimizerType*> ( optimizerBase.GetPointer() ) );
+  registration->SetTransform ( itkTransform );
+  registration->SetInterpolator ( itkInterpolator );
+  registration->SetOptimizer ( itkOptimizer );
+  registration->SetMetric ( itkMetric );
+
   registration->SetFixedImage( dynamic_cast<const typename RegistrationType::FixedImageType*> (fixed.GetITKBase()));
+  registration->SetFixedImageRegion( registration->GetFixedImage()->GetLargestPossibleRegion() );
   registration->SetMovingImage( dynamic_cast<const typename RegistrationType::MovingImageType*> (moving.GetITKBase()));
 
-  typedef ::itk::MatrixOffsetTransformBase<double, TImage::ImageDimension, TImage::ImageDimension> OffsetTransformType;
-  if ( m_UseCenteredInitialization && dynamic_cast<OffsetTransformType*> ( transformBase.GetPointer() ) )
-    {
-    typedef typename ::itk::CenteredTransformInitializer<OffsetTransformType,
-      typename RegistrationType::FixedImageType,
-      typename RegistrationType::MovingImageType> InitializerType;
-    typename InitializerType::Pointer initializer = InitializerType::New();
-    initializer->SetFixedImage ( registration->GetFixedImage() );
-    initializer->SetMovingImage ( registration->GetMovingImage() );
-    initializer->SetTransform ( dynamic_cast<OffsetTransformType*> ( transformBase.GetPointer() ) );
-    initializer->InitializeTransform();
-    }
 
   typename RegistrationType::TransformType::ParametersType params = registration->GetTransform()->GetParameters();
   registration->SetInitialTransformParameters ( params );
 
   // HACK FIXME TODO
   // The scales need to be brough back
-  // std::vector<double> tempScales = m_Transform->GetOptimizerScales ( fixed.GetDimension() );
-  // typename RegistrationType::OptimizerType::ScalesType scales ( tempScales.size() );
-  // scales.Fill ( 1.0 );
-  // for ( unsigned int idx = 0; idx < tempScales.size(); idx++ )
-  //   {
-  //   scales[idx] = tempScales[idx];
-  //   }
-  // registration->GetOptimizer()->SetScales ( scales );
-
+  typename RegistrationType::OptimizerType::ScalesType scales ( params.size() );
+  scales.Fill ( 1.0 );
+  for ( unsigned int idx = 0; idx < scales.Size(); idx++ )
+    {
+    scales[idx] = .0001;
+    }
+  registration->GetOptimizer()->SetScales ( scales );
 
   registration->Update();
 
   typedef typename RegistrationType::ParametersType ParametersType;
-  ParametersType finalParameters = registration->GetLastTransformParameters();
-  std::vector<double> parameters;
-  for ( unsigned int idx = 0; idx < finalParameters.GetSize(); idx++ )
-    {
-    parameters.push_back ( finalParameters.GetElement ( idx ) );
-    }
+  const ParametersType &finalParameters = registration->GetLastTransformParameters();
+  std::vector<double> parameters( finalParameters.begin(), finalParameters.end() );
 
   // copy then set the parameters
   Transform out = m_Transform;
@@ -169,43 +214,35 @@ Transform Registration::ExecuteInternal (const Image &fixed, const Image& moving
 
 Registration& Registration::SetTransform ( const Transform &transform )
 {
-  m_Transform = transform;
+  this->m_Transform = transform;
   return *this;
 }
+const Transform & Registration::GetTransform( void ) const
+{
+  return m_Transform;
+}
+
 Registration& Registration::SetInterpolator ( InterpolateFunctionEnum interp )
 {
-  m_Interpolator = interp;
+  this->m_Interpolator = interp;
   return *this;
 }
-Registration& Registration::SetMetric ( Metric *metric )
+InterpolateFunctionEnum Registration::GetInterpolator( void ) const
 {
-  m_Metric.reset ( metric->Clone() );
-  return *this;
-}
-Registration& Registration::SetOptimizer ( SOptimizer *optimizer )
-{
-  m_Optimizer.reset ( optimizer->Clone() );
-  return *this;
+  return this->m_Interpolator;
 }
 
-Registration& Registration::SetUseCenteredInitialization ( bool init )
-  {
-  this->m_UseCenteredInitialization = init;
-  return *this;
-  }
-bool Registration::GetUseCenteredInitialization()
-  {
-  return this->m_UseCenteredInitialization;
-  }
-Registration& Registration::SetUseCenteredInitializationOn()
-  {
-  return this->SetUseCenteredInitialization ( true );
-  }
-Registration& Registration::SetUseCenteredInitializationOff()
-  {
-  return this->SetUseCenteredInitialization ( false );
-  }
 
+// Registration& Registration::SetMetric ( Metric *metric )
+// {
+//   m_Metric.reset ( metric->Clone() );
+//   return *this;
+// }
+// Registration& Registration::SetOptimizer ( SOptimizer *optimizer )
+// {
+//   m_Optimizer.reset ( optimizer->Clone() );
+//   return *this;
+// }
 
 }
 }

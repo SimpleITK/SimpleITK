@@ -24,27 +24,29 @@ namespace simple
   public:
     Registration();
     virtual ~Registration();
-    Registration& SetUseCenteredInitialization ( bool init );
-    bool GetUseCenteredInitialization();
-    Registration& SetUseCenteredInitializationOn();
-    Registration& SetUseCenteredInitializationOff();
-    virtual Registration& SetTransform ( const Transform &transform);
-    // virtual Transform& GetTransform();
-    virtual Registration& SetInterpolator ( InterpolateFunctionEnum interp );
-    // virtual Interpolate& GetInterpolate();
-    virtual Registration& SetMetric ( Metric *metric );
+
+    Registration& SetTransform ( const Transform &transform);
+    const Transform &GetTransform( void ) const;
+
+
+    Registration& SetInterpolator ( InterpolateFunctionEnum interp );
+    InterpolateFunctionEnum GetInterpolator( void ) const;
+
+    //virtual Registration& SetMetric ( Metric *metric );
     // virtual Metric& GetMetric();
-    virtual Registration& SetOptimizer ( SOptimizer *optimizer );
+
+    //virtual Registration& SetOptimizer ( SOptimizer *optimizer );
     // virtual Optimizer& GetOptimizer();
+
     virtual Transform Execute ( const Image &fixed, const Image &moving );
+
     std::string ToString () const;
 
   protected:
-    bool m_UseCenteredInitialization;
     Transform m_Transform;
     InterpolateFunctionEnum m_Interpolator;
-    std::auto_ptr<Metric> m_Metric;
-    std::auto_ptr<SOptimizer> m_Optimizer;
+    //std::auto_ptr<Metric> m_Metric;
+    //std::auto_ptr<SOptimizer> m_Optimizer;
 
     template<class TImage>
     Transform ExecuteInternal ( const Image &fixed, const Image &moving );

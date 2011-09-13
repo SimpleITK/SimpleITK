@@ -3,11 +3,13 @@
 
 #include "sitkTransform.h"
 
-TEST(Registration,CreateMattes) {
-  itk::simple::Image image2d( 32, 32, itk::simple::sitkUInt8 );
-  itk::simple::Image image3d( 32, 32, 32, itk::simple::sitkUInt8 );
+namespace sitk = itk::simple;
 
-  itk::simple::MattesMutualInformationMetric metric;
+TEST(Registration,CreateMattes) {
+  sitk::Image image2d( 32, 32, sitk::sitkUInt8 );
+  sitk::Image image3d( 32, 32, 32, sitk::sitkUInt8 );
+
+  sitk::MattesMutualInformationMetric metric;
 
   ASSERT_TRUE ( metric.GetMetric ( image2d ).IsNotNull() );
   ASSERT_TRUE ( metric.GetMetric ( image3d ).IsNotNull() );
@@ -19,89 +21,70 @@ static float ExpectedParameters[] = {1.0007, -0.00291716, -0.00417716,
                                      -0.0263989, -0.113908, -0.0758585 };
 
 TEST(Registration,Components) {
-  itk::simple::ImageFileReader reader;
 
-  itk::simple::Image fixed = reader.SetFileName ( dataFinder.GetFile ( "Input/OAS1_0001_MR1_mpr-1_anon.nrrd" ) ).Execute();
-  itk::simple::Image moving = reader.SetFileName ( dataFinder.GetFile ( "Input/OAS1_0002_MR1_mpr-1_anon.nrrd" ) ).Execute();
+  sitk::ImageFileReader reader;
 
-  itk::simple::Registration registration;
-  registration.SetOptimizer ( new itk::simple::RegularStepGradientDescentOptimizer() );
-  itk::simple::Transform transform = itk::simple::Transform(3, itk::simple::Affine);
-  std::vector<double> params;
+
+  sitk::Image fixed = reader.SetFileName ( dataFinder.GetFile ( "Input/OAS1_0001_MR1_mpr-1_anon.nrrd" ) ).Execute();
+  sitk::Image moving = reader.SetFileName ( dataFinder.GetFile ( "Input/OAS1_0002_MR1_mpr-1_anon.nrrd" ) ).Execute();
+
+  sitk::Registration registration;
 
   // Create a transform
-  params.push_back ( 1 );
-  params.push_back ( 0 );
-  params.push_back ( 0 );
-
-  params.push_back ( 0 );
-  params.push_back ( 1 );
-  params.push_back ( 0 );
-
-  params.push_back ( 0 );
-  params.push_back ( 0 );
-  params.push_back ( 1 );
-
-  params.push_back ( 0 );
-  params.push_back ( 0 );
-  params.push_back ( 0 );
-  transform.SetParameters ( params );
-
+  sitk::Transform transform = sitk::Transform(3, sitk::Affine);
   registration.SetTransform ( transform );
-  registration.SetMetric ( new itk::simple::MattesMutualInformationMetric() );
-  registration.SetInterpolator ( itk::simple::sitkLinearInterpolate );
-  registration.SetUseCenteredInitializationOff();
-  try {
-    transform = registration.Execute ( fixed, moving );
-  } catch ( itk::simple::GenericException e ) {
-    std::cout << "Caught exception: " << e.what() << std::endl;
-  }
+
+  registration.SetInterpolator ( sitk::sitkLinearInterpolate );
+
   ASSERT_NO_THROW ( transform = registration.Execute ( fixed, moving ) );
-  params = transform.GetParameters();
+  std::cout << transform.ToString() << std::endl;
+  std::vector<double> params = transform.GetParameters();
   ASSERT_EQ ( params.size(), 12u );
-  for ( size_t idx = 0; idx < 9; idx++ ) {
-    ASSERT_NEAR ( params[idx], ExpectedParameters[idx], 0.01 ) << "idx = " << idx;
-  }
+  for ( size_t idx = 0; idx < 9; idx++ )
+    {
+    ASSERT_NEAR ( params[idx], ExpectedParameters[idx], 0.02 ) << "idx = " << idx;
+    }
+
+
 }
 
 
 TEST(Registration,Defaults) {
-  itk::simple::ImageFileReader reader;
 
-  itk::simple::Image fixed = reader.SetFileName ( dataFinder.GetFile ( "Input/OAS1_0001_MR1_mpr-1_anon.nrrd" ) ).Execute();
-  itk::simple::Image moving = reader.SetFileName ( dataFinder.GetFile ( "Input/OAS1_0002_MR1_mpr-1_anon.nrrd" ) ).Execute();
+  // This test runs the registration framework with defaults
 
-  itk::simple::Registration registration;
-  registration.SetUseCenteredInitializationOff();
-  std::vector<double> params;
-  itk::simple::Transform transform;
-  ASSERT_NO_THROW ( transform = registration.Execute ( fixed, moving ) );
-  params = transform.GetParameters();
-  ASSERT_EQ ( params.size(), 12u );
-  for ( size_t idx = 0; idx < params.size(); idx++ ) {
-    ASSERT_NEAR ( params[idx], ExpectedParameters[idx], 0.01 );
-  }
+  sitk::Image fixed =  sitk::ReadImage ( dataFinder.GetFile ( "Input/OAS1_0001_MR1_mpr-1_anon.nrrd" ) );
+  sitk::Image moving = fixed;
+
+  sitk::Registration registration;
+
+  sitk::Transform results;
+
+  ASSERT_NO_THROW ( results = registration.Execute ( fixed, moving ) );
+
+  // The default transformation is the identity, very boring results
+  ASSERT_EQ ( results.GetParameters().size(), 0u );
 
 }
 
 TEST(Registration,Resample) {
-  itk::simple::ImageFileReader reader;
+  sitk::ImageFileReader reader;
 
-  itk::simple::Image fixed = reader.SetFileName ( dataFinder.GetFile ( "Input/OAS1_0001_MR1_mpr-1_anon.nrrd" ) ).Execute();
-  itk::simple::Image moving = reader.SetFileName ( dataFinder.GetFile ( "Input/OAS1_0002_MR1_mpr-1_anon.nrrd" ) ).Execute();
+  sitk::Image fixed = reader.SetFileName ( dataFinder.GetFile ( "Input/OAS1_0001_MR1_mpr-1_anon.nrrd" ) ).Execute();
+  sitk::Image moving = reader.SetFileName ( dataFinder.GetFile ( "Input/OAS1_0002_MR1_mpr-1_anon.nrrd" ) ).Execute();
 
-  itk::simple::Registration registration;
-  registration.SetUseCenteredInitializationOff();
-  itk::simple::Transform transform;
+  sitk::Registration registration;
+  //registration.SetUseCenteredInitializationOff();
+  sitk::Transform transform;
   ASSERT_NO_THROW ( transform = registration.Execute ( fixed, moving ) );
 
-  itk::simple::ResampleImageFilter resample;
+  sitk::ResampleImageFilter resample;
   resample.SetReferenceImage ( fixed );
 // FIXME HACK TODO
 // transforms need to be added back to the resample image filter
 //  resample.SetTransform ( transform );
-  itk::simple::Image resampled = resample.Execute ( moving );
-  itk::simple::ImageFileWriter writer;
+  sitk::Image resampled = resample.Execute ( moving );
+  sitk::ImageFileWriter writer;
 
   IMAGECOMPAREWITHTOLERANCE ( resampled, "Resample", 0.1 );
 }
