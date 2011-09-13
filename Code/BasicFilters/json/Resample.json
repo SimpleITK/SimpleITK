@@ -5,15 +5,15 @@
   "include_files" : [ "sitkTransform.h", "sitkInterpolate.h" ],
   "number_of_inputs" : 1,
   "doc" : "",
-  "pixel_types" : "RealPixelIDTypeList",
-   "filter_type" : "itk::ResampleImageFilter<InputImageType, OutputImageType, double>",
-    "members" : [ { 
+  "pixel_types" : "BasicPixelIDTypeList",
+  "filter_type" : "itk::ResampleImageFilter<InputImageType, OutputImageType, double>",
+  "members" : [ {
     "name" : "Transform",
     "type" : "Transform",
     "default" : "itk::simple::Transform()",
     "custom_itk_cast" : "const typename FilterType::TransformType *itkTx;\
     if ( !(itkTx = dynamic_cast<const typename FilterType::TransformType *>(this->m_Transform.GetITKBase() )) ) sitkExceptionMacro( \"Unexpected error converting transform!\" );\
-    filter->SetTransform(  itkTx );",
+    filter->SetTransform( itkTx );",
     "no_print" : "1"
    }, {
     "name" : "Size",
@@ -39,10 +39,18 @@
   }, {
     "name" : "OutputDirection",
     "type" : "std::vector<double>",
-    "default" : "std::vector<double>(9, 0.0)",
-    "doc" : "",
+    "default" : "std::vector<double>()",
+    "doc" : "Passing a zero sized array, defaults to identiy matrix. The size of the array must exactly match the direction matrix for the dimension of the image.",
     "no_print" : 1,
-    "custom_itk_cast" : "typename InputImageType::DirectionType itkDirection; std::copy( m_OutputDirection.begin(), m_OutputDirection.end(), itkDirection.GetVnlMatrix().begin() ); filter->SetOutputDirection( itkDirection );"
+    "custom_itk_cast" : "typename InputImageType::DirectionType itkDirection;\
+    if ( m_OutputDirection.size() == 0 )\
+    { itkDirection.SetIdentity(); }\
+    else if( m_OutputDirection.size() == InputImageType::ImageDimension*InputImageType::ImageDimension )\
+    {\
+      std::copy( m_OutputDirection.begin(), m_OutputDirection.end(), itkDirection.GetVnlMatrix().begin() );\
+    } else {\
+    }\
+    filter->SetOutputDirection( itkDirection );"
   }, {
     "name" : "Interpolator",
     "type" : "InterpolateFunctionEnum",
