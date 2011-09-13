@@ -46,7 +46,7 @@ public:
       return;
       }
 
-    std::cout << optimizer->GetCurrentIteration() << " = ";
+    std::cout << optimizer->GetCurrentIteration() << " =\n";
     std::cout << '\t' << "    CurrentStep: " << optimizer->GetCurrentStepLength() << std::endl;
     std::cout << '\t' << "          Value: " << optimizer->GetValue() << std::endl;
     std::cout << '\t' << "       Gradient: " << optimizer->GetGradient() << std::endl;
