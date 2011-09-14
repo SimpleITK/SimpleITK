@@ -65,7 +65,7 @@ int main( int argc, char *argv[])
   blurFilter.SetNumberOfIterations( 5 );
   blurFilter.SetTimeStep( 0.125 );
   image = blurFilter.Execute( image );
-  
+
 
   //
   // Set up ConnectedThresholdImageFilter for segmentation
@@ -82,9 +82,9 @@ int main( int argc, char *argv[])
     seed.push_back(atoi(argv[i+1]));
     segmentationFilter.AddSeed(seed);
     std::cout << "Adding a seed at ";
-    for( unsigned int i = 0; i < seed.size(); ++i )
+    for( unsigned int j = 0; i < seed.size(); ++j )
       {
-      std::cout << seed[i] << " ";
+      std::cout << seed[j] << " ";
       }
 
     std::cout << std::endl;
