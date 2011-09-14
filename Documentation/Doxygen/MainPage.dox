@@ -1,0 +1,44 @@
+/**
+
+\mainpage  SimpleITK
+
+\image html simpleitk_logo.png
+
+\section intro Introduction
+SimpleITK: a simplified layer build on top of the Insight Toolkit
+(ITK), intended to facilitate its use in rapid prototyping,
+education and interpreted languages. 
+
+Welcome to the National Library of Medicine Insight Segmentation
+and Registration Toolkit (ITK). ITK is an open-source,
+cross-platform system that provides developers with an extensive
+suite of software tools for image analysis. Among them, SimpleITK
+is a simplified layer built on top of ITK, intended to facilitate
+its use in rapid prototyping, education, interpreted
+languages. SimpleITK has the following main characteristics: 
+- C++ library
+- Object-oriented
+- Provides a simplified, easy-to-use, procedural interface without templates
+- Is distributed under an open source Apache 2.0 License
+- Binary distributions for Python and Java
+
+\section homepage Home Page
+
+The Home Page of the SimpleITK can be found at :
+
+http://www.simpleitk.org
+
+The Home Page of the Insight toolkit can be found at :
+
+http://www.itk.org
+
+\section howto How to use this documentation
+
+This documentation describes the C++ API of the SimpleITK interface
+to the Insight Toolkit. The wrapped languages have a very simular
+interface, that should should only be trivially different.  The
+Related Pages link presents interface conventions, user and
+developer information. Additionally the Example tab provides a
+variety of example of SimpleITK with different language bindings.
+ */
+
