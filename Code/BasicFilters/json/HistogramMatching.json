@@ -9,11 +9,11 @@
   "members" : [ {
     "name" : "NumberOfHistogramLevels",
     "type" : "uint32_t",
-    "default" : "256"
+    "default" : "256u"
     } {
     "name" : "NumberOfMatchPoints",
     "type" : "uint32_t",
-    "default" : "1"
+    "default" : "1u"
     }, {
     "name" : "ThresholdAtMeanIntensity",
     "type" : "bool",
