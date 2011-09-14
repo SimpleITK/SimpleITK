@@ -28,8 +28,12 @@ TEST(LabelStatistics,Simple) {
         ASSERT_EQ(lsFilter.GetMinimum (testLabelValue) , testLabelValue);
         ASSERT_EQ(lsFilter.GetMaximum (testLabelValue) , testLabelValue);
         ASSERT_EQ(lsFilter.GetMean    (testLabelValue) , testLabelValue);
+        ASSERT_EQ(lsFilter.GetMedian  (testLabelValue) , testLabelValue);
         //By using the same image, the label variance values should equal to Zero.
+        ASSERT_EQ(lsFilter.GetSigma   (testLabelValue) , 0.0      );
         ASSERT_EQ(lsFilter.GetVariance(testLabelValue) , 0.0      );
         }
-    }
+  }
+  ASSERT_EQ(lsFilter.GetSum  (0) , 0     );
+  ASSERT_EQ(lsFilter.GetCount(0) , 33390 );
 }
