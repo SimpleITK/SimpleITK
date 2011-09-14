@@ -247,6 +247,8 @@ macro(ADD_GOOGLE_TESTS target)
   set ( LongTestsHits "" )
 
   foreach ( source ${ARGN} )
+    message( STATUS "Scanning ${source} for tests..." )
+
     file(READ "${source}" contents)
 
     # Find all test and long test lists
