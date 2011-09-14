@@ -63,7 +63,7 @@ namespace itk
         }
       TempDirectory = TempDirectory + "\\";
       TempFile = FormatFileName ( TempDirectory, name );
-      CommandLine << "\"" + ExecutableName + "\" -o " + TempFile;
+      CommandLine << "\"" + ExecutableName + "\" -o \"" + TempFile + "\"";
 #else
       // Handle Linux and Mac
       TempDirectory = "/tmp/";
@@ -79,11 +79,15 @@ namespace itk
         // Just assume it is registered properly in a place where the open command will find it.
         ExecutableName="ImageJ";
         }
-      CommandLine << "open -a " << ExecutableName  << " " << TempFile;
+      CommandLine << "open -a " << ExecutableName  << " \"" << TempFile << "\"";
 #else
       // Must be Linux
       ExecutableName = itksys::SystemTools::FindFile ( "ImageJ" );
-      CommandLine << "\"" + ExecutableName + "\" -o " << TempFile << " &";
+      if ( ExecutableName == "" )
+        {
+        ExecutableName = itksys::SystemTools::FindFile ( "imagej" );
+        }
+      CommandLine << "\"" + ExecutableName + "\" -o \"" << TempFile << "\" &";
 #endif
 #endif
 
