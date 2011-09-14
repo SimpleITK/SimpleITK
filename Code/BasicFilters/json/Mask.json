@@ -6,6 +6,7 @@
   "doc" : "Some global documentation\n\\todo MaskImageFilter will support VectorImages shortly",
   "pixel_types" : "typelist::Append<BasicPixelIDTypeList, ComplexPixelIDTypeList>::Type",
   "pixel_types2" : "IntegerPixelIDTypeList",
+  "custom_set_input" : "filter->SetInput1( image1 ); filter->SetInput2( image2 );",
   "members" : [ {
     "name" : "OutsideValue",
     "type" : "double",

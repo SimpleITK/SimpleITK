@@ -8,6 +8,7 @@
   "pixel_types2" : "BasicPixelIDTypeList",
   "output_image_type" : "itk::VectorImage< typename InputImageType2::PixelType, InputImageType::ImageDimension >",
   "filter_type" : "itk::LabelMapOverlayImageFilter<InputImageType, InputImageType2, OutputImageType>",
+  "custom_set_input" : "filter->SetInput1( image1 ); filter->SetInput2( image2 );",
   "members" : [
     { "name" : "Opacity",
       "type" : "double",
