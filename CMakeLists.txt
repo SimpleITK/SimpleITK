@@ -143,6 +143,13 @@ include(${SimpleITK_SOURCE_DIR}/sitkGenerateSimpleITKConfig.cmake)
 include(${SimpleITK_SOURCE_DIR}/Utilities/Doxygen/Doxygen.cmake)
 
 #------------------------------------------------------------------------------
+# Set up wrapping.
+#
+# Use CMake file which present options for wrapped languages, and finds languages as needed
+#
+include(SITKLanguageOptions)
+
+#------------------------------------------------------------------------------
 # Go to subdirectories
 add_subdirectory ( Utilities )
 add_subdirectory ( Code )
@@ -152,7 +159,6 @@ add_subdirectory ( Examples )
 #------------------------------------------------------------------------------
 # ITK uses KWStyle for checking the coding style
 include(${SimpleITK_SOURCE_DIR}/Utilities/KWStyle/KWStyle.cmake)
-
 
 #------------------------------------------------------------------------------
 # set things up for testing
