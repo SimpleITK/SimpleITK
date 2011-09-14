@@ -195,22 +195,26 @@ end)
       }
 
   $(if md5hash then
+    if inputB then
   OUT = [[
   // Check the hash
-  VERIFYHASH("${md5hash}",MD5,output,"Output MD5 hash failed in ${tag} with input ${inputA} and ${inputB}");
-  ]]
+  VERIFYHASH("${md5hash}",MD5,output,"Output MD5 hash failed in ${tag} with input ${inputA} and ${inputB}");]]
+  end
   end)
   $(if sha1hash then
+    if inputB then
   OUT = [[
   // Check the hash
-  VERIFYHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed in ${tag} with input ${inputA} and ${inputB}");
-  ]]
+  VERIFYHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed in ${tag} with input ${inputA} and ${inputB}"); ]]
+  end
   end)
   $(if tolerance then
   OUT = [[
  IMAGECOMPAREWITHTOLERANCE ( output, "${tag}", ${tolerance} );
   ]]
   end)
+  $(when measurements $(foreach measurements
+    EXPECT_NEAR(${value}, filter.Get${name}(), ${tolerance} );))
   )
 }
 

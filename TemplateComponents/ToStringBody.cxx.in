@@ -9,3 +9,6 @@ elseif (not no_print) or (not no_print == 1) then
 OUT = '  out << "  ${name}: " << this->m_${name} << std::endl;'
 end)
 )
+$(when measurements $(foreach measurements
+  out << "  ${name}: " << this->m_${name} << std::endl;
+))

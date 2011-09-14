@@ -444,12 +444,14 @@ function expand(str, ...)
       else error'search item must be a function, table or userdata' end
       if value ~= nil then return value end
     end
-    io.stderr:write('Warning: unknown variable: '.. index .. ' returning nil\n')
     return nil
   end
 
   local function elist(var, v, str, sep)
     local tab = search(v)
+    if tab == nil then
+        io.stderr:write('Warning: unknown variable: '.. v .. ' used with foreach\n')
+    end
     if tab then
       assert(type(tab)=='table', 'expecting table from: '.. var)
       local R = {}
@@ -484,7 +486,11 @@ function expand(str, ...)
 
   function evar(var)
     if strfind(var, '^[_%a][_%w]*$') then -- ${vn}
-      return estring(tostring(search(var)))
+      local v = search(var)
+      if v == nil then
+        io.stderr:write('Warning: unknown variable: '.. var .. '  using nil\n')
+      end
+      return estring(tostring(v))
     end
     local b,e,cmd = strfind(var, '^(%a+)%s.')
     if cmd == 'foreach' then -- ${foreach vn xxx} or ${foreach vn/sep/xxx}

@@ -1,4 +1,6 @@
   // Run the ITK filter and return the output as a SimpleITK image
   filter->Update();
 
+$(when measurements $(foreach measurements
+  this->m_${name} = filter->Get${name}();))
   return Image( filter->GetOutput() );
