@@ -33,7 +33,7 @@ public:
       baseMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 3,  GetMetricBaseAddressor > ();
       baseMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 2,  GetMetricBaseAddressor > ();
 
-      assert( image.GetPixelIDValue() != sitk.Unknow );
+      assert( image.GetPixelIDValue() != sitkUnknown );
 
       return baseMemberFactory.GetMemberFunction( image.GetPixelIDValue(), image.GetDimension() )();
     }
