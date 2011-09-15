@@ -14,11 +14,11 @@ setup(
     and users to access the powerful features of the InsightToolkit in a more \
     simplified manner.',
     classifiers=[
-        "License :: OSI Approved :: Apache Public License",
+        "License :: OSI Approved :: Apache Software License",
         "Programming Language :: Python",
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
-        "Topic :: Image Processing",
+        "Topic :: Scientific/Engineering"
         ],
     license='Apache',
     keywords = 'ITK InsightToolkit segmentation registration image',
