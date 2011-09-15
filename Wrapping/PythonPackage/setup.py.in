@@ -1,5 +1,6 @@
 from setuptools import setup
 from distutils.sysconfig import get_python_lib
+from distutils.core import Extension
 from distutils.util import get_platform
 
 setup(
@@ -10,6 +11,7 @@ setup(
     package_dir  = {'': '@SIMPLEITK_PYTHON_MODULE_DIR@'},
     py_modules = ['SimpleITK',],
     data_files = [(get_python_lib(), ['@SIMPLEITK_BINARY_MODULE@'])],
+    ext_modules= [ Extension( 'SimpleITK', [])],
     download_url = 'http://www.itk.org/SimpleITKDoxygen/html/PyDownload.html',
     platforms = [],
     description = 'Simplified interface to the Insight Toolkit for image registration and segmentation',
