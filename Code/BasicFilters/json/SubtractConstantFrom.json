@@ -14,7 +14,7 @@
     "default" : "1.0",
     "custom_itk_cast" : "filter->SetConstant2( m_Constant );",
     "briefdescriptionSet" : "",
-    "detaileddescriptionSet" : "Set the constant that will be subtracted from all the image pixels\n",
+    "detaileddescriptionSet" : "Set the constant that will be used to multiply all the image pixels\n",
     "briefdescriptionGet" : "",
     "detaileddescriptionGet" : ""
   } ],
@@ -47,5 +47,5 @@
     "md5hash" : "d635db8d63bcf3a1f257cb42e635ec47"
   } ],
   "briefdescription" : "Subract a constant from all input pixels.\n",
-  "detaileddescription" : "This filter is templated over the input image type and the output image type.\n\\author Tom Vercauteren, INRIA & Mauna Kea Technologies\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/510\n\\see UnaryFunctorImageFilter\n\n"
+  "detaileddescription" : "This filter is templated over the input image type and the output image type.\n\\author Tom Vercauteren, INRIA & Mauna Kea Technologies\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/510\n\\see  UnaryFunctorImageFilter\n\n"
 }

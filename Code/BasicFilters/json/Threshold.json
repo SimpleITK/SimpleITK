@@ -11,27 +11,27 @@
     "default" : "0.0",
     "pixeltype" : "Input",
     "briefdescriptionSet" : "",
-    "detaileddescriptionSet" : "The lower threshold.\n",
+    "detaileddescriptionSet" : "Set/Get methods to set the lower threshold\n",
     "briefdescriptionGet" : "",
-    "detaileddescriptionGet" : "Get the lower threshold value.\n"
+    "detaileddescriptionGet" : ""
   }, {
     "name" : "Upper",
     "type" : "double",
     "default" : "1.0",
     "pixeltype" : "Input",
     "briefdescriptionSet" : "",
-    "detaileddescriptionSet" : "The upper threshold.\n",
+    "detaileddescriptionSet" : "Set/Get methods to set the upper threshold\n",
     "briefdescriptionGet" : "",
-    "detaileddescriptionGet" : "Get the upper threshold value.\n"
+    "detaileddescriptionGet" : ""
   }, {
     "name" : "OutsideValue",
     "type" : "double",
     "default" : "0.0",
     "pixeltype" : "Output",
     "briefdescriptionSet" : "",
-    "detaileddescriptionSet" : "Set the outside pixel value. The default value NumericTraits<OutputPixelType>::Zero.\n",
+    "detaileddescriptionSet" : "Set the \"outside\" pixel value. The default value NumericTraits<PixelType>::Zero.\n",
     "briefdescriptionGet" : "",
-    "detaileddescriptionGet" : "Get the outside pixel value.\n"
+    "detaileddescriptionGet" : "Get the \"outside\" pixel value.\n"
   } ],
   "tests" : [ {
     "tag" : "Default",
@@ -59,14 +59,14 @@
     "settings" : [ {
       "parameter" : "Lower",
       "value" : "0"
-      }, {
+    }, {
       "parameter" : "Upper",
       "value" : "25000"
-      }, {
+    }, {
       "parameter" : "OutsideValue",
       "value" : "25000"
-    }  ]
+    } ]
   } ],
-  "briefdescription" : "Set values to a user-specified value if below, above, or between given threshold values.\n",
-  "detaileddescription" : "Set image values to a user-specified value if they are below, above, or between given threshold values.\n"
+  "briefdescription" : "Set image values to a user-specified value if they are below, above, or between simple threshold values.\n",
+  "detaileddescription" : " ThresholdImageFiltersets image values to a user-specified \"outside\" value (by default, \"black\") if the image values are below, above, or between simple threshold values.\nThe pixels must support the operators >= and <=.\n\n\\li {ImageProcessing/ThresholdImageFilter,Threshold an image}\n\n"
 }

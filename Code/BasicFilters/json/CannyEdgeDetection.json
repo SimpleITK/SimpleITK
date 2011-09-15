@@ -5,31 +5,46 @@
   "number_of_inputs" : 1,
   "doc" : "",
   "pixel_types" : "RealPixelIDTypeList",
-  /* This output is just 1 and 0, this really should be able to be uint8_t */
   "members" : [ {
     "name" : "LowerThreshold",
     "type" : "double",
     "default" : "0.0",
-    "pixeltype" : "Input"
+    "pixeltype" : "Input",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
   }, {
     "name" : "UpperThreshold",
     "type" : "double",
     "default" : "0.0",
-    "pixeltype" : "Input"
+    "pixeltype" : "Input",
+    "briefdescriptionSet" : "Set the Threshold value for detected edges.",
+    "detaileddescriptionSet" : "",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
   }, {
     "name" : "Variance",
     "type" : "std::vector<double>",
     "default" : "std::vector<double>(3, 0.0)",
     "doc" : "",
     "dim_vec" : 1,
-    "itk_type" : "typename FilterType::ArrayType"
+    "itk_type" : "typename FilterType::ArrayType",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set/Get the Variance parameter used by the Gaussian smoothing filter in this algorithm\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
   }, {
     "name" : "MaximumError",
     "type" : "std::vector<double>",
     "default" : "std::vector<double>(3, 0.01)",
     "doc" : "",
     "dim_vec" : 1,
-    "itk_type" : "typename FilterType::ArrayType"
+    "itk_type" : "typename FilterType::ArrayType",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set/Get the MaximumError paramter used by the Gaussian smoothing filter in this algorithm\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
   } ],
   "tests" : [ {
     "tag" : "defaults",
@@ -37,27 +52,29 @@
     "inputA" : "Input/RA-Float.nrrd",
     "settings" : [ ],
     "md5hash" : "bbeb419fbdf05cbd93c7905b235b52ae"
-  },{
+  }, {
     "tag" : "forresults",
     "description" : "make a good output image by setting paramters",
     "inputA" : "Input/RA-Float.nrrd",
     "settings" : [ {
-        "parameter" :  "LowerThreshold",
-        "type" : "double",
-        "value" : 500
+      "parameter" : "LowerThreshold",
+      "type" : "double",
+      "value" : 500
     }, {
-        "parameter" :  "UpperThreshold",
-        "type" : "double",
-        "value" : 3000
+      "parameter" : "UpperThreshold",
+      "type" : "double",
+      "value" : 3000
     }, {
-        "parameter" : "Variance",
-        "type" : "double",
-        "dim_vec" : 1,
-        "value" : "{1.0,1.0,1.0}",
-        "tcl_value" : "[list 1.0 1.0 1.0]",
-        "python_value" : "[ 1.0, 1.0, 1.0]",
-        "ruby_value" : "[ 1.0, 1.0, 1.0 ]"
+      "parameter" : "Variance",
+      "type" : "double",
+      "dim_vec" : 1,
+      "value" : "{1.0,1.0,1.0}",
+      "tcl_value" : "[list 1.0 1.0 1.0]",
+      "python_value" : "[ 1.0, 1.0, 1.0]",
+      "ruby_value" : "[ 1.0, 1.0, 1.0 ]"
     } ],
     "md5hash" : "a9f58b23223cdbcd5baead53dd8f75d8"
-  }  ]
+  } ],
+  "briefdescription" : "",
+  "detaileddescription" : "This filter is an implementation of a Canny edge detector for scalar-valued images. Based on John Canny's paper \"A Computational Approach to Edge Detection\"(IEEE Transactions on Pattern Analysis and Machine Intelligence, Vol. PAMI-8, No.6, November 1986), there are four major steps used in the edge-detection scheme: (1) Smooth the input image with Gaussian filter. (2) Calculate the second directional derivatives of the smoothed image. (3) Non-Maximum Suppression: the zero-crossings of 2nd derivative are found, and the sign of third derivative is used to find the correct extrema. (4) The hysteresis thresholding is applied to the gradient magnitude (multiplied with zero-crossings) of the smoothed image to find and link edges.\n\\par Inputs and Outputs\nThe input to this filter should be a scalar, real-valued Itk image of arbitrary dimension. The output should also be a scalar, real-value Itk image of the same dimensionality.\n\\par Parameters\nThere are four parameters for this filter that control the sub-filters used by the algorithm.\n\\par Variance and Maximum error are used in the Gaussian smoothing of the input image. See itkDiscreteGaussianImageFilter for information on these parameters.\n\\par Threshold is the lowest allowed value in the output image. Its data type is the same as the data type of the output image. Any values below the Threshold level will be replaced with the OutsideValue parameter value, whose default is zero.\nTodoEdge-linking will be added when an itk connected component labeling algorithm is available.\n\\see  DiscreteGaussianImageFilter\n\\see  ZeroCrossingImageFilter\n\\see  ThresholdImageFilter\n\n"
 }

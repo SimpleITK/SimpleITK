@@ -15,7 +15,7 @@
     "custom_itk_cast" : "filter->SetConstant2( m_Constant );",
     "doc" : "The constant by which to divide the input image",
     "briefdescriptionSet" : "",
-    "detaileddescriptionSet" : "Set the constant value that will be used for the divisor of all the image pixels\n",
+    "detaileddescriptionSet" : "Set the constant value that will be used for dividing all the image pixels\n",
     "briefdescriptionGet" : "",
     "detaileddescriptionGet" : ""
   } ],
@@ -48,5 +48,5 @@
     "md5hash" : "c0a4d7ab0b2fd17cce2de4ecd6f2bffe"
   } ],
   "briefdescription" : "Divide input pixels by a constant.\n",
-  "detaileddescription" : "This filter is templated over the input image type and the output image type.\n\\author Tom Vercauteren, INRIA & Mauna Kea Technologies\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/510\n\\see UnaryFunctorImageFilter\n\n"
+  "detaileddescription" : "This filter is templated over the input image type and the output image type.\n\\author Tom Vercauteren, INRIA & Mauna Kea Technologies\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/510\n\\see  UnaryFunctorImageFilter\n\n"
 }
