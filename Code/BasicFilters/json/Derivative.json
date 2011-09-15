@@ -9,27 +9,39 @@
   "members" : [ {
     "name" : "Direction",
     "type" : "unsigned int",
-    "default" : "0u"
-  },{
+    "default" : "0u",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
+  }, {
     "name" : "Order",
     "type" : "unsigned int",
-    "default" : "1u"
+    "default" : "1u",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "End concept checking Standard get/set macros for filter parameters.\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
   }, {
     "name" : "UseImageSpacing",
     "type" : "bool",
-    "default" : "true"
+    "default" : "true",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
   } ],
   "tests" : [ {
     "tag" : "defaults",
     "description" : "Simply run with default settings",
     "inputA" : "Input/Ramp-Zero-One-Float.nrrd",
     "settings" : [ ],
-    "tolerance" : 0.0001
+    "tolerance" : 1.0E-4
   }, {
     "tag" : "zsecondorder",
     "description" : "Run with direction and order set",
     "inputA" : "Input/Ramp-Zero-One-Float.nrrd",
-    "tolerance": 0.0001,
+    "tolerance" : 1.0E-4,
     "settings" : [ {
       "parameter" : "Direction",
       "value" : "2u",
@@ -40,14 +52,16 @@
       "tcl_value" : "2",
       "R_value" : "2"
     }, {
-       "parameter" : "Order",
-       "value" : "2u"
-        "lua_value" : "2",
-        "python_value" : "2",
-        "ruby_value" : "2",
-        "java_value" : "2",
-        "tcl_value" : "2",
-        "R_value" : "2"
+      "parameter" : "Order",
+      "value" : "2u",
+      "lua_value" : "2",
+      "python_value" : "2",
+      "ruby_value" : "2",
+      "java_value" : "2",
+      "tcl_value" : "2",
+      "R_value" : "2"
     } ]
-  } ]
+  } ],
+  "briefdescription" : "Computes the directional derivative of an image. The directional derivative at each pixel location is computed by convolution with a derivative operator of user-specified order.\n",
+  "detaileddescription" : "SetOrder specifies the order of the derivative.\nSetDirection specifies the direction of the derivative with respect to the coordinate axes of the image.\n\\see  Image\n\\see  Neighborhood\n\\see  NeighborhoodOperator\n\\see  NeighborhoodIterator\n\n\\li {EdgesAndGradients/DerivativeImageFilter,Compute the derivative of an image in a particular direction}\n\n"
 }

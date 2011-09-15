@@ -9,25 +9,30 @@
     "name" : "Dividend",
     "type" : "double",
     "pixeltype" : "Input",
-    "default" : "5.0"
+    "default" : "5.0",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set/Get the dividend\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
   } ],
-  "tests" : [  {
+  "tests" : [ {
     "tag" : "defaults",
     "description" : "Simply run with default settings",
     "inputA" : "Input/Ramp-Up-Short.nrrd",
     "settings" : [ ],
     "md5hash" : "c0a145bff04ec09798f9dbecd5ca70fe"
-   } ,{
+  }, {
     "tag" : "mod2",
     "description" : "Simply dividend set to 2",
     "inputA" : "Input/Ramp-Up-Short.nrrd",
-    "settings" : [ 
-    {
+    "settings" : [ {
       "parameter" : "Dividend",
       "type" : "double",
-       "pixeltype" : "Input",
+      "pixeltype" : "Input",
       "value" : "100"
     } ],
     "md5hash" : "99254fbcb89506643acccc45cc0ca72e"
-  } ]
+  } ],
+  "briefdescription" : "Computes the modulus (x % dividend) pixel-wise.\n",
+  "detaileddescription" : "The input pixel type must support the c++ modulus operator (%).\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\n"
 }

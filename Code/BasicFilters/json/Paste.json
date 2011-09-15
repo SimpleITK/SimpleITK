@@ -24,7 +24,11 @@
     "type" : "std::vector<int>",
     "default" : "std::vector<int>(3, 0)",
     "dim_vec" : 1,
-    "itk_type" : "typename InputImageType::IndexType"
+    "itk_type" : "typename InputImageType::IndexType",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set/Get the destination index (where in the first input the second input will be pasted.\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
   } ],
   "tests" : [ {
     "tag" : "defaults",
@@ -32,7 +36,7 @@
     "inputA" : "Input/BlackDots.png",
     "inputB" : "Input/SmallWhiteCircle.nrrd",
     "md5hash" : "096471143edf7ce5903613fb58ed77c8",
-      "settings" : [ {
+    "settings" : [ {
       "parameter" : "SourceSize",
       "type" : "unsigned int",
       "dim_vec" : 1,
@@ -40,14 +44,14 @@
       "tcl_value" : "[list 200 150]",
       "python_value" : "[ 200, 150 ]",
       "ruby_value" : "[ 200, 150 ]"
-      }]
+    } ]
   }, {
     "tag" : "defaults-rgb",
     "description" : "use the defaults on a 2D rgb image",
     "inputA" : "Input/VM1111Shrink-RGB.png",
     "inputB" : "Input/fruit.png",
     "md5hash" : "0a2187d07bbb19c84836a78a6e0ba16c",
-      "settings" : [ {
+    "settings" : [ {
       "parameter" : "SourceSize",
       "type" : "unsigned int",
       "dim_vec" : 1,
@@ -55,14 +59,14 @@
       "tcl_value" : "[list 179 240]",
       "python_value" : "[ 179, 240 ]",
       "ruby_value" : "[ 179, 240 ]"
-      }]
-    }, {
+    } ]
+  }, {
     "tag" : "set_parameters",
     "description" : "Set a ROI paste region",
     "inputA" : "Input/BlackDots.png",
     "inputB" : "Input/SmallWhiteCircle.nrrd",
     "md5hash" : "b8858dd3926df1e23dc06157b4decd82",
-      "settings" : [ {
+    "settings" : [ {
       "parameter" : "SourceSize",
       "type" : "unsigned int",
       "dim_vec" : 1,
@@ -70,7 +74,7 @@
       "tcl_value" : "[list 20 15]",
       "python_value" : "[ 20, 15 ]",
       "ruby_value" : "[ 20, 15 ]"
-      },{
+    }, {
       "parameter" : "SourceIndex",
       "type" : "int",
       "dim_vec" : 1,
@@ -78,7 +82,7 @@
       "tcl_value" : "[list 100 100]",
       "python_value" : "[ 100, 100 ]",
       "ruby_value" : "[ 100, 100 ]"
-      },{
+    }, {
       "parameter" : "DestinationIndex",
       "type" : "int",
       "dim_vec" : 1,
@@ -86,7 +90,8 @@
       "tcl_value" : "[list 100 100]",
       "python_value" : "[ 100, 100 ]",
       "ruby_value" : "[ 100, 100 ]"
-      } ]
-  }
-  ]
+    } ]
+  } ],
+  "briefdescription" : "Paste an image into another image.\n",
+  "detaileddescription" : " PasteImageFilterallows you to take a section of one image and paste into another image. The SetDestinationIndex()method prescribes where in the first input to start pasting data from the second input. The SetSourceRegion method prescribes the section of the second image to paste into the first. If the output requested region does not have include the SourceRegion after it has been repositioned to DestinationIndex, then the output will just be a copy of the input.\nThe two inputs and output image will have the same pixel type.\n\n\\li {ImageProcessing/PasteImageFilter,Paste a part of one image into another image}\n\n"
 }

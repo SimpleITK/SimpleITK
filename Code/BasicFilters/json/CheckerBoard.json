@@ -11,16 +11,20 @@
     "type" : "std::vector<uint32_t>",
     "default" : "std::vector<uint32_t>(3, 4)",
     "dim_vec" : 1,
-    "itk_type" : "typename FilterType::PatternArrayType"
+    "itk_type" : "typename FilterType::PatternArrayType",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set array with number of checks to make per image dimension\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
   } ],
-  "tests" : [ { 
-    "tag" :  "default",
+  "tests" : [ {
+    "tag" : "default",
     "description" : "checker board with default parameters",
     "inputA" : "Input/BlackDots.png",
     "inputB" : "Input/WhiteDots.png",
     "settings" : [ ],
     "md5hash" : "f84fcf68e702d715a4de52821cfa0f5e"
-  }, { 
+  }, {
     "tag" : "2d with pattern",
     "description" : "checker board with pattern",
     "inputA" : "Input/BlackDots.png",
@@ -35,5 +39,7 @@
       "ruby_value" : "[ 20, 4 ]"
     } ],
     "md5hash" : "379bd66a18b7ae029c101ebdcb20a8b3"
-  } ]
-} 
+  } ],
+  "briefdescription" : "Combines two images in a checkerboard pattern.\n",
+  "detaileddescription" : " CheckerBoardImageFiltertakes two input images that must have the same dimension, size, origin and spacing and produces an output image of the same size by combinining the pixels from the two input images in a checkerboard pattern. This filter is commonly used for visually comparing two images, in particular for evaluating the results of an image registration process.\nThis filter is implemented as a multithreaded filter. It provides a ThreadedGenerateData()method for its implementation.\n\n\\li {Inspection/CheckerBoardImageFilter,Combine two images by alternating blocks of a checkerboard pattern}\n\n"
+}
