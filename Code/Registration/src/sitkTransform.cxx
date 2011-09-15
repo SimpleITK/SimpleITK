@@ -9,6 +9,8 @@
 #include "itkVersorTransform.h"
 #include "itkAffineTransform.h"
 
+#include <memory>
+
 namespace itk
 {
 namespace simple
