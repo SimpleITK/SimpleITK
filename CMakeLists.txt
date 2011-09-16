@@ -180,3 +180,14 @@ option ( BUILD_DOCUMENTS "Build the Documentation subdirectory" OFF )
 if ( BUILD_DOCUMENTS )
   add_subdirectory ( Documentation )
 endif()
+
+#------------------------------------------------------------------------------
+# CPack
+
+set(CPACK_SOURCE_IGNORE_FILES  "${ITK_MODULES_DISABLED_CPACK};/\\\\.git")
+set(CPACK_PACKAGE_VERSION_MAJOR "${SimpleITK_Major}")
+set(CPACK_PACKAGE_VERSION_MINOR "${SimpleITK_Minor}")
+set(CPACK_PACKAGE_VERSION_PATCH "${SimpleITK_Patch}")
+
+
+include( CPack )
