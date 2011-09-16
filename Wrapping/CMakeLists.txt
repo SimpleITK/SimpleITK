@@ -105,6 +105,7 @@ if ( WRAP_PYTHON )
   set( PythonVirtualenvHome ${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVirtualenv )
   add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_REAL_NAME}
     PRE_BUILD
+    COMMAND ${CMAKE_COMMAND} -E remove_directory ${PythonVirtualenvHome}
     COMMAND ${PYTHON_EXECUTABLE}
     ${SimpleITK_SOURCE_DIR}/Utilities/virtualenv/virtualenv.py
     --python=${PYTHON_EXECUTABLE}
@@ -115,6 +116,7 @@ if ( WRAP_PYTHON )
 
   add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_REAL_NAME}
     POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy ${SimpleITK_SOURCE_DIR}/Wrapping/PythonPackage/ez_setup.py ${SimpleITK_BINARY_DIR}/Wrapping/PythonPackage/
     COMMAND ${PYTHON_EXECUTABLE} ${SimpleITK_BINARY_DIR}/Wrapping/PythonPackage/setup.py
     install
     COMMENT "Installing python module to the virtualenv" )
