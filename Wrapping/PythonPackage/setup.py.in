@@ -1,5 +1,5 @@
 import ez_setup
-ez_setup.use_setuptools(version=0.6c11)
+ez_setup.use_setuptools(version="0.6c11")
 
 from setuptools import setup
 from distutils.sysconfig import get_python_lib
