@@ -76,7 +76,7 @@ if ( NOT SITK_HAS_STLTR1_TR1_FUNCTIONAL AND NOT SITK_HAS_STLTR1_FUNCTIONAL )
   message( FATAL_ERROR 
     "SimpleITK requires usage of parts C++ Technical Report 1 (TR1).\n"
     "It may be available as an optional download for your compiler. Please see the FAQ for details.\n"
-    "http://erie.nlm.nih.gov/~blowek1/SimpleITK/FAQ.html#TR1" )
+    "http://www.itk.org/Wiki/ITK_Release_4/SimpleITK/FAQ#Do_I_need_to_download_an_option_package_for_TR1_support.3F")
 endif ( )
 
 
@@ -102,7 +102,7 @@ if ( NOT SITK_HAS_STDINT_H )
   message( FATAL_ERROR "SimpleITK requires usage of C99 stdint.\n"
     "It may be available as an optional download for your compiler.\n"
     "Please see the FAQ for details and to see if your compiler is supported.\n"
-    "http://erie.nlm.nih.gov/~blowek1/SimpleITK/FAQ.html#C99" )
+    "http://www.itk.org/Wiki/ITK_Release_4/SimpleITK/FAQ#Do_I_need_to_download_an_optional_package_for_C99.3F")
 endif ( NOT SITK_HAS_STDINT_H )
 
 configure_file( ${SimpleITK_SOURCE_DIR}/sitkConfigure.h.in
