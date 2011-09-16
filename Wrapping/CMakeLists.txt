@@ -112,7 +112,16 @@ if ( WRAP_PYTHON )
     --distribute
     ${PythonVirtualenvHome}
     COMMENT "Creating Python virtualenv" )
-  set( PYTHON_EXECUTABLE ${PythonVirtualenvHome}/bin/python )
+
+  # virtualenv places the python executable in different
+  # locations. Also note than on windows installations where python is
+  # installed only for a single user the may be a missing dll issue.
+  if( WIN32 )
+    set( PYTHON_EXECUTABLE ${PythonVirtualenvHome}/Scripts/python )
+  else( )
+    set( PYTHON_EXECUTABLE ${PythonVirtualenvHome}/bin/python )
+  endif()
+
 
   add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_REAL_NAME}
     POST_BUILD
