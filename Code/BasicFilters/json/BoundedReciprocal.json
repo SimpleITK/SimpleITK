@@ -14,5 +14,7 @@
     "inputA" : "Input/Ramp-Zero-One-Float.nrrd",
     "settings" : [ ],
     "tolerance" : 0.01
-  } ]
+  } ],
+  "briefdescription" : "Computes 1/(1+x) for each pixel in the image.\n",
+  "detaileddescription" : "The filter expect both the input and output images to have the same number of dimensions, and both of a scalar image type.\n"
 }

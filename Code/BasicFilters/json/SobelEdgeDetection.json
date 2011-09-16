@@ -5,12 +5,14 @@
   "number_of_inputs" : 1,
   "doc" : "Some global documentation",
   "pixel_types" : "RealPixelIDTypeList",
-   "members" : [ ], 
+  "members" : [ ],
   "tests" : [ {
     "tag" : "defaults",
     "description" : "Simply run with default settings",
     "inputA" : "Input/RA-Float.nrrd",
     "settings" : [ ],
     "tolerance" : 0.01
-  } ]
+  } ],
+  "briefdescription" : "A 2D or 3D edge detection using the Sobel operator.\n",
+  "detaileddescription" : "This filter uses the Sobel operator to calculate the image gradient and then finds the magnitude of this gradient vector. The Sobel gradient magnitude (square-root sum of squares) is an indication of edge strength.\n\\see  ImageToImageFilter\n\\see  SobelOperator\n\\see  Neighborhood\n\\see  NeighborhoodOperator\n\\see  NeighborhoodIterator\n\n"
 }
