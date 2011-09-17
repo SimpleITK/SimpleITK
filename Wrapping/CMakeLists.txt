@@ -96,7 +96,7 @@ if ( WRAP_PYTHON )
   set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKPYTHON_wrap.cxx COMPILE_FLAGS "-w")
 
   # Installation
-  set( SIMPLEITK_PYTHON_MODULE_DIR ${SimpleITK_BINARY_DIR}/Wrapping )
+  file( RELATIVE_PATH SIMPLEITK_PYTHON_MODULE_DIR ${CMAKE_CURRENT_BINARY_DIR} ${SimpleITK_BINARY_DIR}/Wrapping )
   get_target_property( SIMPLEITK_BINARY_MODULE
     ${SWIG_MODULE_SimpleITK_REAL_NAME} LOCATION )
   configure_file( ${SimpleITK_SOURCE_DIR}/Wrapping/PythonPackage/setup.py.in
@@ -126,6 +126,7 @@ if ( WRAP_PYTHON )
   add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_REAL_NAME}
     POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy ${SimpleITK_SOURCE_DIR}/Wrapping/PythonPackage/ez_setup.py ${SimpleITK_BINARY_DIR}/Wrapping/PythonPackage/
+    COMMAND ${CMAKE_COMMAND} -E touch "${SimpleITK_BINARY_DIR}/Wrapping/__init__.py"
     COMMAND ${PYTHON_EXECUTABLE} ${SimpleITK_BINARY_DIR}/Wrapping/PythonPackage/setup.py
     install
     COMMENT "Installing python module to the virtualenv" )
