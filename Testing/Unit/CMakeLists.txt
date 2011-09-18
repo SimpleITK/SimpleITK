@@ -27,7 +27,19 @@ file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/CSharpTests)
 
 # Adjust Python to run in the virtualenv
 set( PythonVirtualenvHome ${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVirtualenv )
-set( PYTHON_EXECUTABLE ${PythonVirtualenvHome}/bin/python )
+
+# HACK This needs to be set commonly between here and Wrapping.
+
+# virtualenv places the python executable in different
+# locations. Also note than on windows installations where python is
+# installed only for a single user the may be a missing dll issue.
+if( WIN32 )
+  set( PYTHON_EXECUTABLE ${PythonVirtualenvHome}/Scripts/python )
+else( )
+  set( PYTHON_EXECUTABLE ${PythonVirtualenvHome}/bin/python )
+endif()
+
+
 
 #
 # Glob for necessary template files up front, before the foreach loop over
