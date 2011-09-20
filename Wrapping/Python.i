@@ -196,8 +196,8 @@
 #include "sitkNumpyArrayConversion.cxx"
 %}
 // Numpy array conversion support
-%native(GetArrayFromImage) PyObject *sitk_GetArrayFromImage( PyObject *self, PyObject *args );
-%native(GetImageFromArray) PyObject *sitk_GetImageFromArray( PyObject *self, PyObject *args );
+%native(_GetArrayFromImage) PyObject *sitk_GetArrayFromImage( PyObject *self, PyObject *args );
+%native(_GetImageFromArray) PyObject *sitk_GetImageFromArray( PyObject *self, PyObject *args );
 
 %pythoncode %{
 
@@ -215,7 +215,7 @@ def GetArrayFromImage(image):
     if not HAVE_NUMPY:
         raise ImportError('Numpy not available.')
 
-    imageByteArray, shape, pixelID = _SimpleITK.GetArrayFromImage(image)
+    imageByteArray, shape, pixelID = _SimpleITK._GetArrayFromImage(image)
     if   pixelID == sitkUInt8:
         arr = numpy.frombuffer(imageByteArray, dtype=numpy.uint8)
     elif pixelID == sitkInt8:
@@ -248,7 +248,7 @@ def GetArrayFromImage(image):
 def GetImageFromArray( arr ):
     """Get a SimpleITK Image from a numpy array."""
 
-    return _SimpleITK.GetImageFromArray( arr )
+    return _SimpleITK._GetImageFromArray( arr )
 %}
 
 #endif

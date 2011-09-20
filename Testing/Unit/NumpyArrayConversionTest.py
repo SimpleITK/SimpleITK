@@ -32,6 +32,8 @@ for j in range(sizeY):
         image[i, j] = j*sizeX + i
 print('array from sitk.Image(' + str(sizeX) +', ' + str(sizeY) + ', sitk.sitkInt32):')
 print(sitk.GetArrayFromImage(image))
+if not type (sitk.GetArrayFromImage(image)) == np.ndarray:
+    die( "GetArrayFromImage did not return numpy array" )
 print('')
 
 # 3D image
@@ -44,6 +46,8 @@ for k in range(sizeZ):
 print('array from sitk.Image(' + str(sizeX) +', ' + str(sizeY) + ', ' + \
         str(sizeZ) + ', sitk.sitkFloat32):')
 print(sitk.GetArrayFromImage(image))
+if not type (sitk.GetArrayFromImage(image) )== np.ndarray:
+    die( "GetArrayFromImage did not return numpy array" )
 print('')
 
 
