@@ -28,25 +28,21 @@ foreach( line ${results})
   
 endforeach()
 
-message("vars=${vars}")
 
 VariableListToArgs( vars configure_vars )
-message("configure_vars=${configure_vars}")
-
-#message("vars=${configure_vars}")
 
 file( WRITE "${CMAKE_BINARY_DIR}/CMake/configure_file_buildtime.cmake"
-  "configure_file( ${filename} ${out_filename} )" )
+  "configure_file( \"${filename}\" \"${out_filename} )\"" )
 
 set( cmd ${CMAKE_COMMAND} "${configure_vars}" -P "${CMAKE_BINARY_DIR}/CMake/configure_file_buildtime.cmake")
 
 add_custom_command(
-  OUTPUT ${out_filename}
+  OUTPUT "${out_filename}"
   WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
   COMMENT "BuildTime Configure of ${filename} to ${out_filename}\n COMMAND ${cmd}"
   COMMAND  ${cmd}
 )
 
-add_custom_target(ConfigureFileBuildtime ALL DEPENDS ${out_filename} )
+add_custom_target(ConfigureFileBuildtime ALL DEPENDS "${out_filename}" )
 
 endfunction()

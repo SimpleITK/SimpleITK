@@ -100,7 +100,7 @@ if ( WRAP_PYTHON )
   get_target_property( SIMPLEITK_BINARY_MODULE
     ${SWIG_MODULE_SimpleITK_REAL_NAME} LOCATION )
 
-  include( sitkConfigurefileBuildtime )
+  include( sitkConfigureFileBuildtime )
   configure_file_buildtime( "${SimpleITK_SOURCE_DIR}/Wrapping/PythonPackage/setup.py.in"
     "${SimpleITK_BINARY_DIR}/Wrapping/PythonPackage/setup.py" )
 
