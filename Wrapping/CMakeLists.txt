@@ -99,8 +99,12 @@ if ( WRAP_PYTHON )
   file( RELATIVE_PATH SIMPLEITK_PYTHON_MODULE_DIR ${CMAKE_CURRENT_BINARY_DIR} ${SimpleITK_BINARY_DIR}/Wrapping )
   get_target_property( SIMPLEITK_BINARY_MODULE
     ${SWIG_MODULE_SimpleITK_REAL_NAME} LOCATION )
-  configure_file( ${SimpleITK_SOURCE_DIR}/Wrapping/PythonPackage/setup.py.in
-    ${SimpleITK_BINARY_DIR}/Wrapping/PythonPackage/setup.py )
+
+  include( sitkConfigurefileBuildtime )
+  configure_file_buildtime( "${SimpleITK_SOURCE_DIR}/Wrapping/PythonPackage/setup.py.in"
+    "${SimpleITK_BINARY_DIR}/Wrapping/PythonPackage/setup.py" )
+
+  add_dependencies( ${SWIG_MODULE_SimpleITK_REAL_NAME} "${SimpleITK_BINARY_DIR}/Wrapping/PythonPackage/setup.py" )
 
   set( PythonVirtualenvHome ${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVirtualenv )
   add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_REAL_NAME}

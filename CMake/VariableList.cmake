@@ -7,7 +7,7 @@
 #
 function( VariableListToCache var_list cache )
   foreach( var IN LISTS ${var_list} )
-    if( ${var} ) # if variable has been set
+    if( NOT ${var} STREQUAL "" ) # if variable has been set
       get_property( type CACHE ${var} PROPERTY TYPE )
       get_property( advanced CACHE ${var} PROPERTY ADVANCED )
       get_property( helpstring CACHE ${var} PROPERTY HELPSTRING )
@@ -31,7 +31,7 @@ endfunction( )
 #
 function( VariableListToArgs var_list args )
   foreach( var IN LISTS ${var_list} )
-    if( ${var} ) # if variable has been set
+    if( NOT ${var} STREQUAL "" ) # if variable has been set
       get_property( type CACHE ${var} PROPERTY TYPE )
       list( APPEND _args "-D${var}:${type}=${${var}}" )
     endif()
