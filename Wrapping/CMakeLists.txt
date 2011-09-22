@@ -104,6 +104,8 @@ if ( WRAP_PYTHON )
   configure_file_buildtime( "${SimpleITK_SOURCE_DIR}/Wrapping/PythonPackage/setup.py.in"
     "${SimpleITK_BINARY_DIR}/Wrapping/PythonPackage/setup.py" )
 
+  add_dependencies( ${SWIG_MODULE_SimpleITK_REAL_NAME} "${SimpleITK_BINARY_DIR}/Wrapping/PythonPackage/setup.py" )
+
   set( PythonVirtualenvHome ${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVirtualenv )
   add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_REAL_NAME}
     PRE_BUILD
