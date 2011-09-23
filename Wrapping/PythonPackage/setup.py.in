@@ -12,7 +12,7 @@ setup(
     author = 'Insight Software Consortium',
     author_email = 'insight-users@itk.org',
     py_modules = ['SimpleITK',],
-    data_files = [(get_python_lib(), ['@SIMPLEITK_BINARY_MODULE@'])],
+    data_files = [(get_python_lib(), ['@SIMPLEITK_NATIVE_BINARY_MODULE@'])],
     download_url = 'http://www.itk.org/SimpleITKDoxygen/html/PyDownload.html',
     platforms = [],
     zip_safe = False,
