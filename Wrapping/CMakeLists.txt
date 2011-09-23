@@ -102,15 +102,15 @@ if ( WRAP_PYTHON )
   file(TO_NATIVE_PATH "${SIMPLEITK_BINARY_MODULE}" SIMPLEITK_NATIVE_BINARY_MODULE )
 
   include( sitkConfigureFileBuildtime )
-  configure_file_buildtime( "${SimpleITK_SOURCE_DIR}/Wrapping/PythonPackage/setup.py.in"
-    "${SimpleITK_BINARY_DIR}/Wrapping/PythonPackage/setup.py" )
+  configure_file_buildtime( "${CMAKE_CURRENT_SOURCE_DIR}/PythonPackage/setup.py.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/setup.py" )
 
-  add_dependencies( ${SWIG_MODULE_SimpleITK_REAL_NAME} "${SimpleITK_BINARY_DIR}/Wrapping/PythonPackage/setup.py" )
+  add_dependencies( ${SWIG_MODULE_SimpleITK_REAL_NAME} "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/setup.py" )
 
   set( PythonVirtualenvHome ${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVirtualenv )
   add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_REAL_NAME}
     PRE_BUILD
-    COMMAND ${CMAKE_COMMAND} -E remove_directory ${PythonVirtualenvHome}
+    COMMAND ${CMAKE_COMMAND} -E remove_directory "${PythonVirtualenvHome}"
     COMMAND ${PYTHON_EXECUTABLE}
     ${SimpleITK_SOURCE_DIR}/Utilities/virtualenv/virtualenv.py
     --python=${PYTHON_EXECUTABLE}
@@ -122,17 +122,17 @@ if ( WRAP_PYTHON )
   # locations. Also note than on windows installations where python is
   # installed only for a single user the may be a missing dll issue.
   if( WIN32 )
-    set( PYTHON_EXECUTABLE ${PythonVirtualenvHome}/Scripts/python )
+    set( PYTHON_EXECUTABLE "${PythonVirtualenvHome}/Scripts/python" )
   else( )
-    set( PYTHON_EXECUTABLE ${PythonVirtualenvHome}/bin/python )
+    set( PYTHON_EXECUTABLE "${PythonVirtualenvHome}/bin/python" )
   endif()
 
 
   add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_REAL_NAME}
     POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy ${SimpleITK_SOURCE_DIR}/Wrapping/PythonPackage/ez_setup.py ${SimpleITK_BINARY_DIR}/Wrapping/PythonPackage/
-    COMMAND ${CMAKE_COMMAND} -E touch "${SimpleITK_BINARY_DIR}/Wrapping/__init__.py"
-    COMMAND ${PYTHON_EXECUTABLE} ${SimpleITK_BINARY_DIR}/Wrapping/PythonPackage/setup.py
+    COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/PythonPackage/ez_setup.py" "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/"
+    COMMAND ${CMAKE_COMMAND} -E touch "${CMAKE_CURRENT_BINARY_DIR}/__init__.py"
+    COMMAND ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/setup.py"
     install
     COMMENT "Installing python module to the virtualenv" )
 endif()
