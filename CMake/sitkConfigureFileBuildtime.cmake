@@ -32,7 +32,7 @@ endforeach()
 VariableListToArgs( vars configure_vars )
 
 file( WRITE "${CMAKE_BINARY_DIR}/CMake/configure_file_buildtime.cmake"
-  "configure_file( \"${filename}\" \"${out_filename} )\"" )
+  "configure_file( \"${filename}\" \"${out_filename}\" )" )
 
 set( cmd ${CMAKE_COMMAND} "${configure_vars}" -P "${CMAKE_BINARY_DIR}/CMake/configure_file_buildtime.cmake")
 
