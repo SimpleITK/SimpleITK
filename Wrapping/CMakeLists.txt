@@ -96,9 +96,10 @@ if ( WRAP_PYTHON )
   set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKPYTHON_wrap.cxx COMPILE_FLAGS "-w")
 
   # Installation
-  set( SIMPLEITK_PYTHON_MODULE_DIR ${SimpleITK_BINARY_DIR}/Wrapping )
-  get_target_property( SIMPLEITK_BINARY_MODULE
-    ${SWIG_MODULE_SimpleITK_REAL_NAME} LOCATION )
+  set( SIMPLEITK_PYTHON_MODULE_DIR "${SimpleITK_BINARY_DIR}/Wrapping" )
+  file(TO_NATIVE_PATH "${SIMPLEITK_PYTHON_MODULE_DIR}" SIMPLEITK_NATIVE_PYTHON_MODULE_DIR )
+  get_target_property( SIMPLEITK_BINARY_MODULE ${SWIG_MODULE_SimpleITK_REAL_NAME} LOCATION )
+  file(TO_NATIVE_PATH "${SIMPLEITK_BINARY_MODULE}" SIMPLEITK_NATIVE_BINARY_MODULE )
 
   include( sitkConfigureFileBuildtime )
   configure_file_buildtime( "${SimpleITK_SOURCE_DIR}/Wrapping/PythonPackage/setup.py.in"
