@@ -16,6 +16,142 @@ const unsigned int UnusedDimension = 2;
 namespace itk {
 namespace simple {
 
+Image ImportImageAsInt8(
+    int8_t * buffer,
+    const std::vector< unsigned int > &size,
+    const std::vector< double > &spacing,
+    const std::vector< double > &origin,
+    const std::vector< double > &direction,
+    unsigned int numberOfComponents
+) {
+    ImportImageFilter import;
+    import.SetSize( size );
+    import.SetSpacing( spacing );
+    import.SetOrigin( origin );
+    import.SetDirection( direction );
+    import.SetBufferAsInt8( buffer, numberOfComponents );
+    return import.Execute();
+}
+
+Image ImportAsUInt8(
+    uint8_t * buffer,
+    const std::vector< unsigned int > &size,
+    const std::vector< double > &spacing,
+    const std::vector< double > &origin,
+    const std::vector< double > &direction,
+    unsigned int numberOfComponents
+) {
+    ImportImageFilter import;
+    import.SetSize( size );
+    import.SetSpacing( spacing );
+    import.SetOrigin( origin );
+    import.SetDirection( direction );
+    import.SetBufferAsUInt8( buffer, numberOfComponents );
+    return import.Execute();
+}
+
+Image ImportAsInt16(
+    int16_t * buffer,
+    const std::vector< unsigned int > &size,
+    const std::vector< double > &spacing,
+    const std::vector< double > &origin,
+    const std::vector< double > &direction,
+    unsigned int numberOfComponents
+) {
+    ImportImageFilter import;
+    import.SetSize( size );
+    import.SetSpacing( spacing );
+    import.SetOrigin( origin );
+    import.SetDirection( direction );
+    import.SetBufferAsInt16( buffer, numberOfComponents );
+    return import.Execute();
+}
+
+Image ImportAsUInt16(
+    uint16_t * buffer,
+    const std::vector< unsigned int > &size,
+    const std::vector< double > &spacing,
+    const std::vector< double > &origin,
+    const std::vector< double > &direction,
+    unsigned int numberOfComponents
+) {
+    ImportImageFilter import;
+    import.SetSize( size );
+    import.SetSpacing( spacing );
+    import.SetOrigin( origin );
+    import.SetDirection( direction );
+    import.SetBufferAsUInt16( buffer, numberOfComponents );
+    return import.Execute();
+}
+
+Image ImportAsInt32(
+    int32_t * buffer,
+    const std::vector< unsigned int > &size,
+    const std::vector< double > &spacing,
+    const std::vector< double > &origin,
+    const std::vector< double > &direction,
+    unsigned int numberOfComponents
+) {
+    ImportImageFilter import;
+    import.SetSize( size );
+    import.SetSpacing( spacing );
+    import.SetOrigin( origin );
+    import.SetDirection( direction );
+    import.SetBufferAsInt32( buffer, numberOfComponents );
+    return import.Execute();
+}
+
+Image ImportAsUInt32(
+    uint32_t * buffer,
+    const std::vector< unsigned int > &size,
+    const std::vector< double > &spacing,
+    const std::vector< double > &origin,
+    const std::vector< double > &direction,
+    unsigned int numberOfComponents
+) {
+    ImportImageFilter import;
+    import.SetSize( size );
+    import.SetSpacing( spacing );
+    import.SetOrigin( origin );
+    import.SetDirection( direction );
+    import.SetBufferAsUInt32( buffer, numberOfComponents );
+    return import.Execute();
+}
+
+Image ImportAsFloat(
+    float * buffer,
+    const std::vector< unsigned int > &size,
+    const std::vector< double > &spacing,
+    const std::vector< double > &origin,
+    const std::vector< double > &direction,
+    unsigned int numberOfComponents
+) {
+    ImportImageFilter import;
+    import.SetSize( size );
+    import.SetSpacing( spacing );
+    import.SetOrigin( origin );
+    import.SetDirection( direction );
+    import.SetBufferAsFloat( buffer, numberOfComponents );
+    return import.Execute();
+}
+
+Image ImportAsDouble(
+    double * buffer,
+    const std::vector< unsigned int > &size,
+    const std::vector< double > &spacing,
+    const std::vector< double > &origin,
+    const std::vector< double > &direction,
+    unsigned int numberOfComponents
+) {
+    ImportImageFilter import;
+    import.SetSize( size );
+    import.SetSpacing( spacing );
+    import.SetOrigin( origin );
+    import.SetDirection( direction );
+    import.SetBufferAsDouble( buffer, numberOfComponents );
+    return import.Execute();
+}
+
 ImportImageFilter::ImportImageFilter()
 {
   m_NumberOfComponentsPerPixel = 0;
