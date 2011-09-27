@@ -105,7 +105,7 @@ if ( WRAP_PYTHON )
   configure_file_buildtime( "${CMAKE_CURRENT_SOURCE_DIR}/PythonPackage/setup.py.in"
     "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/setup.py" )
 
-  add_dependencies( ${SWIG_MODULE_SimpleITK_REAL_NAME} "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/setup.py" )
+  add_dependencies( ${SWIG_MODULE_SimpleITK_REAL_NAME} ConfigureFileBuildtime )
 
   set( PythonVirtualenvHome ${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVirtualenv )
   add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_REAL_NAME}
