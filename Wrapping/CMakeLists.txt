@@ -66,9 +66,6 @@ if ( WRAP_LUA )
   add_executable ( SimpleITKLua SimpleITKLuaMain.cxx SimpleITKLUA_wrap.cxx )
   target_link_libraries ( SimpleITKLua ${SimpleITK_LIBRARIES} ${LUA_LIB} )
 
-  if ( UNIX )
-    target_link_libraries ( SimpleITKLua curses )
-  endif()
 
 endif()
 
