@@ -1,12 +1,15 @@
 {
   "name" : "FastMarching",
+  "itk_name" : "FastMarchingImageFilterBase",
+  "include_files" : [ "itkFastMarchingThresholdStoppingCriterion.h"],
   "template_code_filename" : "FastMarchingImageFilter",
   "template_test_filename" : "ImageFilter",
-  "filter_type" : "itk::FastMarchingImageFilter<OutputImageType, InputImageType>",
+  "output_pixel_type" : "typename itk::NumericTraits<typename itk::NumericTraits<typename InputImageType::PixelType>::ValueType>::RealType",
   "doc" : "Docs",
   "pixel_types" : "BasicPixelIDTypeList",
   "output_pixel_type" : "float",
-  "members" : [ {
+  "members" : [
+/* {
     "name" : "NormalizationFactor",
     "type" : "double",
     "default" : "1.0",
@@ -14,10 +17,11 @@
     "detaileddescriptionSet" : "Set/Get the Normalization Factor for the Speed Image. The values in the Speed Imageis divided by this factor. This allows the use of images with integer pixel types to represent the speed.\n",
     "briefdescriptionGet" : "",
     "detaileddescriptionGet" : ""
-  }, {
+  }, */ {
     "name" : "StoppingValue",
     "type" : "double",
     "default" : "100.0",
+    "custom_itk_cast" : "typedef itk::FastMarchingThresholdStoppingCriterion< InputImageType, OutputImageType > CriterionType;\ntypename CriterionType::Pointer criterion = CriterionType::New();\ncriterion->SetThreshold( m_StoppingValue );\nfilter->SetStoppingCriterion( criterion );",
     "briefdescriptionSet" : "",
     "detaileddescriptionSet" : "Set the Fast Marching algorithm Stopping Value. The Fast Marching algorithm is terminated when the value of the smallest trial point is greater than the stopping value.\n",
     "briefdescriptionGet" : "",
@@ -35,10 +39,10 @@
       "tcl_value" : [ "70 70", "200 180" ],
       "python_value" : [ "[70,70]", "[200,180]" ],
       "ruby_value" : [ "[70,70]", "[200,180]" ]
-    }, {
+    }, /*{
       "parameter" : "NormalizationFactor",
       "value" : 255.0
-    }, {
+    },*/ {
       "parameter" : "StoppingValue",
       "value" : 50.0
     } ]
