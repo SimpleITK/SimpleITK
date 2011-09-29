@@ -1,7 +1,7 @@
 #ifndef __sitkPixelIDTypeLists_h
 #define __sitkPixelIDTypeLists_h
 
-#include "itkIntTypes.h"
+#include <stdint.h>
 
 #include "sitkConfigure.h"
 #include "sitkPixelIDTypes.h"

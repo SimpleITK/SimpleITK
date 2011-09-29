@@ -1,8 +1,8 @@
 #ifndef __sitkExceptionObject_h
 #define __sitkExceptionObject_h
 
-#include "itkMacro.h"
-#include "itkExceptionObject.h"
+#include <string>
+#include <stdexcept>
 
 namespace itk
 {
@@ -13,36 +13,38 @@ namespace simple
  * \brief The base SimpleITK exception class
  */
 class GenericException :
-    public ::itk::ExceptionObject
+    public std::exception
 {
 public:
   /** Default constructor.  Needed to ensure the exception object can be
    * copied. */
-  GenericException():ExceptionObject() {}
+  GenericException(){}
+  GenericException( const GenericException &e ):  std::exception( e ) {}
 
   /** Constructor. Needed to ensure the exception object can be copied. */
-  GenericException(const char *file, unsigned int lineNumber):ExceptionObject(file, lineNumber) {}
+  GenericException(const char *file, unsigned int lineNumber) {}
 
   /** Constructor. Needed to ensure the exception object can be copied. */
-  GenericException(const std::string & file, unsigned int lineNumber):ExceptionObject(file, lineNumber) {}
+  GenericException(const std::string & file, unsigned int lineNumber) {}
 
   /** Constructor. Needed to ensure the exception object can be copied. */
   GenericException(const std::string & file,
                         unsigned int lineNumber,
-                        const std::string & desc,
-                        const std::string & loc):ExceptionObject(file, lineNumber, desc, loc) {}
+                        const std::string & desc) {}
 
   /** Virtual destructor needed for subclasses. Has to have empty throw(). */
-  virtual ~GenericException()
-  throw( ) {}
+  virtual ~GenericException() throw( ) {}
 
   /** Return a description of the error */
   std::string ToString()
   {
-  std::ostringstream out;
-  Print ( out );
-  return out.str();
+    return std::string();
   }
+
+  const char * what() throw()
+    {
+      return "";
+    }
 
 
   virtual const char * GetNameOfClass() const
