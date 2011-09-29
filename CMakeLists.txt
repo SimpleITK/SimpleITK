@@ -4,9 +4,17 @@ project ( SimpleITK )
 # Include extra CMake files
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake")
 
-find_package(ITK REQUIRED)
+
+find_package(ITK REQUIRED ) # the modules needed can be listed here as required components
 if(ITK_FOUND)
-  include(${ITK_USE_FILE})
+
+  # Add compiler flags needed to use ITK.
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${ITK_REQUIRED_C_FLAGS}")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ITK_REQUIRED_CXX_FLAGS}")
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${ITK_REQUIRED_LINK_FLAGS}")
+  set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${ITK_REQUIRED_LINK_FLAGS}")
+  set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${ITK_REQUIRED_LINK_FLAGS}")
+
 endif()
 
 if( NOT ITK_USE_REVIEW )
@@ -135,7 +143,6 @@ endif()
 #------------------------------------------------------------------------------
 # Help other projects use SimpleITK
 
-# Copy the UseITK.cmake file to the binary tree for backward compatability.
 configure_file(${SimpleITK_SOURCE_DIR}/UseSimpleITK.cmake.in
                ${SimpleITK_BINARY_DIR}/UseSimpleITK.cmake COPYONLY IMMEDIATE)
 
