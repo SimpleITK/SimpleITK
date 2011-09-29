@@ -1,4 +1,6 @@
 
+# remove me
+include(${ITK_USE_FILE})
 
 #
 # General SWIG configuration
