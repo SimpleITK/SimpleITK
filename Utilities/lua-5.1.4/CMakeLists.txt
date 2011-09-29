@@ -12,6 +12,6 @@ add_executable ( lua ${LUA_SOURCE} )
 target_link_libraries ( lua lua5 )
 
 if ( UNIX )
-  target_link_libraries ( lua curses m )
+  target_link_libraries ( lua m )
 endif()
  
