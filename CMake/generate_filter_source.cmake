@@ -90,6 +90,8 @@ macro( expand_template FILENAME input_dir output_dir library_name )
   set ( ${library_name}GeneratedSource ${${library_name}GeneratedSource}
     "${output_h}" "${output_cxx}" CACHE INTERNAL "" )
 
+  set_source_files_properties ( ${${library_name}GeneratedSource} PROPERTIES GENERATED 1 )
+
   # Make the list visible at the global scope
   set ( GENERATED_FILTER_LIST ${GENERATED_FILTER_LIST} ${FILENAME} CACHE INTERNAL "" )
 endmacro()
