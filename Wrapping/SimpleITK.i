@@ -93,13 +93,9 @@ namespace std
 
 // Registration classes
 %include "sitkTransform.h"
-%include "sitkAffineTransform.h"
 %include "sitkInterpolate.h"
-%include "sitkLinearInterpolate.h"
 %include "sitkMetric.h"
-%include "sitkMattesMutualInformationMetric.h"
 %include "sitkOptimizer.h"
-%include "sitkRegularStepGradientDescentOptimizer.h"
 %include "sitkRegistration.h"
 
 
