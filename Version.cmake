@@ -1,6 +1,6 @@
 # Version info
 set(SimpleITK_Major 0)
-set(SimpleITK_Minor 2)
+set(SimpleITK_Minor 3)
 set(SimpleITK_Patch 0)
 
 include(GetGitRevisionDescription)
