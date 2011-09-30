@@ -9,9 +9,13 @@ It is also referenced from Python package index Pypi to facilitate automatic dow
 $ easy_install SimpleITK
 \endcode
 
-\section vb01 SimpleITK Beta 1
+\section v0.3.0b SimpleITK 0.3.0 Beta
 
-\section test SimpleITK Test 
-         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/Test/Python/SimpleITK-0.2.0.macosx-10.7-intel-py2.7.egg#md5=85cf92cf384e2a73edd8440de3f59bea">SimpleITK-0.2.0.macosx-10.7-intel-py2.7</a>
+         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.3.0/Python/SimpleITK-0.3.0-py2.7-macosx-10.7-intel.egg/download#md5=fc2c3a4f6212b4c9ba7afc6e8a5b4b19">SimpleITK-0.3.0.macosx-10.7-intel-py2.7</a>
+         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.3.0/Python/SimpleITK-0.3.0-py2.6-macosx-10.7-intel.egg/download#md5=ea12509a742e66b5881ca85240d942c2">SimpleITK-0.3.0.macosx-10.7-intel-py2.6</a>
+         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.3.0/Python/SimpleITK-0.3.0-py2.6-macosx-10.6-universal.egg/download#md5=ce0a4408860c7e16be60b01e6386ca43">SimpleITK-0.3.0.macosx-10.6-intel-py2.6</a>
+         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.3.0/Python/SimpleITK-0.3.0-py2.7-linux-i686.egg/download#md5=60d60a41d38ce44c457ef39a89db0c1d">/SimpleITK-0.3.0-py2.7-linux-i686.egg</a>
+         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.3.0/Python/SimpleITK-0.3.0-py2.7-win32.egg/download#md5=4fabdd437a5d0b4a04407ea0562f06f1">SimpleITK-0.3.0-py2.7-win32.egg</a>
+         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.3.0/Python/SimpleITK-0.3.0-py2.6-win32.egg/download#md5=2b33bfdc8d22813aa53b846f106589e1">SimpleITK-0.3.0-py2.6-win32.egg</a>
 
 */
