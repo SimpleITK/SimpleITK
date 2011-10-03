@@ -24,8 +24,8 @@ endmacro()
 #
 option ( WRAP_LUA "Wrap Lua" ON )
 
-find_package ( PythonInterp )
-find_package ( PythonLibs )
+find_package ( PythonInterp QUIET)
+find_package ( PythonLibs QUIET )
 if ( ${PYTHONLIBS_FOUND} AND ${PYTHONINTERP_FOUND} )
   set( WRAP_PYTHON_DEFAULT ON )
 else ( ${PYTHONLIBS_FOUND} AND ${PYTHONINTERP_FOUND} )
@@ -41,8 +41,8 @@ list( APPEND SITK_LANGUAGES_VARS
 check_PIC_flag ( Python )
 option( WRAP_PYTHON "Wrap Python" ${WRAP_PYTHON_DEFAULT} )
 
-find_package ( Java COMPONENTS Development Runtime)
-find_package ( JNI  )
+find_package ( Java COMPONENTS Development Runtime QUIET )
+find_package ( JNI QUIET )
 if ( ${JAVA_FOUND} AND ${JNI_FOUND} )
   set( WRAP_JAVA_DEFAULT ON )
 else ( ${JAVA_FOUND} AND ${JNI_FOUND} )
@@ -72,7 +72,7 @@ list( APPEND SITK_LANGUAGES_VARS
   )
 option ( WRAP_JAVA "Wrap Java" ${WRAP_JAVA_DEFAULT} )
 
-find_package ( TCL )
+find_package ( TCL QUIET )
 if ( ${TCL_FOUND} )
   set ( WRAP_TCL_DEFAULT ON )
 else ( ${TCL_FOUND} )
@@ -87,7 +87,7 @@ list( APPEND SITK_LANGUAGES_VARS
   TK_WISH )
 option ( WRAP_TCL "Wrap Tcl" ${WRAP_TCL_DEFAULT} )
 
-find_package ( Ruby )
+find_package ( Ruby QUIET )
 if ( ${RUBY_FOUND} )
   set ( WRAP_RUBY_DEFAULT ON )
 else ( ${RUBY_FOUND} )
@@ -103,7 +103,7 @@ list( APPEND SITK_LANGUAGES_VARS
   RUBY_INCLUDE_PATH )
 option ( WRAP_RUBY "Wrap Ruby" ${WRAP_RUBY_DEFAULT} )
 
-find_package( CSharp )
+find_package( CSharp QUIET )
 if ( ${CSHARP_FOUND} )
   set ( WRAP_CSHARP_DEFAULT ON )
 else ( ${CSHARP_FOUND} )
@@ -120,8 +120,13 @@ option ( WRAP_CSHARP "Wrap C#" ${WRAP_CSHARP_DEFAULT} )
 # specifically R_FOUND is not defined. Additionally, the defined variables are not marked as advanced.
 option ( WRAP_R "Wrap R" OFF )
 mark_as_advanced( WRAP_R )
+if ( ${WRAP_R} )
+  find_package( R )
+endif()
+
 list( APPEND SITK_LANGUAGES_VARS 
  R_INCLUDE_DIR
  R_LIBRARIES
+ R_LIBRARY_BASE
  R_COMMAND
  RSCRIPT_EXECUTABLE )
