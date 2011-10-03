@@ -120,8 +120,13 @@ option ( WRAP_CSHARP "Wrap C#" ${WRAP_CSHARP_DEFAULT} )
 # specifically R_FOUND is not defined. Additionally, the defined variables are not marked as advanced.
 option ( WRAP_R "Wrap R" OFF )
 mark_as_advanced( WRAP_R )
+if ( ${WRAP_R} )
+  find_package( R )
+endif()
+
 list( APPEND SITK_LANGUAGES_VARS 
  R_INCLUDE_DIR
  R_LIBRARIES
+ R_LIBRARY_BASE
  R_COMMAND
  RSCRIPT_EXECUTABLE )
