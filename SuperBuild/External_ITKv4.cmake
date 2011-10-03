@@ -16,7 +16,6 @@ set(ITK_REPOSITORY git://itk.org/ITK.git)
 set(ITK_DIR ${CMAKE_INSTALL_PREFIX}/lib/cmake/ITK-4.0)
 set(ITK_TAG_COMMAND GIT_TAG v4.0b01 ) # use ITKv4 Beta
 set(WrapITK_DIR ${CMAKE_INSTALL_PREFIX}/lib/cmake/ITK-4.0/WrapITK)
-message(STATUS "ITK_WRAPPING=${ITK_WRAPPING}")
 
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt" "${ep_languages_cache}\n${ep_common_cache}" )
 
