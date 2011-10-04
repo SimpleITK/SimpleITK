@@ -9,7 +9,7 @@
   "members" : [ {
     "name" : "OutputMinimum",
     "type" : "double",
-     "pixeltype" : "Output",
+    "pixeltype" : "Output",
     "default" : 0,
     "doc" : "Output minimum",
     "briefdescriptionSet" : "",
@@ -19,7 +19,7 @@
   }, {
     "name" : "OutputMaximum",
     "type" : "double",
-     "pixeltype" : "Output",
+    "pixeltype" : "Output",
     "default" : 255,
     "doc" : "Output maximum",
     "briefdescriptionSet" : "",
