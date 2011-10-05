@@ -10,6 +10,7 @@
     "name" : "Maximum",
     "type" : "double",
     "default" : 255,
+    "pixeltype" : "Input",
     "doc" : "Maximum output",
     "briefdescriptionSet" : "",
     "detaileddescriptionSet" : "",
