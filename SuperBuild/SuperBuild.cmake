@@ -237,12 +237,6 @@ foreach(ep ${external_project_list})
 endforeach()
 file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/ExternalProjectDependencies.txt "${ep_dependency_graph}\n")
 
-#-----------------------------------------------------------------------------
-# Now delegate back to the main SimpleITK with ${CMAKE_PROJECT_NAME}_SuperBuild=OFF
-# to actually build Simple ITK
-#-----------------------------------------------------------------------------
-message(STATUS "${CMAKE_PROJECT_NAME}_DEPENDENCIES ${${CMAKE_PROJECT_NAME}_DEPENDENCIES}")
-
 #
 # Use CMake file which present options for wrapped languages, and finds languages as needed
 #
