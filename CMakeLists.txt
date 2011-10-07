@@ -193,6 +193,18 @@ if ( BUILD_DOCUMENTS )
 endif()
 
 #------------------------------------------------------------------------------
+# INSTALLATION
+
+file( GLOB __files ${CMAKE_SOURCE_DIR}/Code/Common/include/*.h
+  ${CMAKE_SOURCE_DIR}/Code/Registration/include/*.h
+  ${CMAKE_SOURCE_DIR}/Code/BasicFilters/include/*.h
+  ${CMAKE_BINARY_DIR}/sitkConfigure.h
+  ${BasicFiltersGeneratedHeader} )
+install(FILES ${__files}
+  DESTINATION include
+  COMPONENT Development)
+
+#------------------------------------------------------------------------------
 # CPack
 
 set(CPACK_SOURCE_IGNORE_FILES  "${ITK_MODULES_DISABLED_CPACK};/\\\\.git")
