@@ -1,6 +1,7 @@
 set ( SimpleITKCommonSource
   sitkImage.cxx
   sitkPixelIDValues.cxx
+  sitkExceptionObject.cxx
   ${CMAKE_CURRENT_BINARY_DIR}/sitkVersion.cxx
   ../include/Ancillary/hl_md5.cxx
   ../include/Ancillary/hl_sha1.cxx
