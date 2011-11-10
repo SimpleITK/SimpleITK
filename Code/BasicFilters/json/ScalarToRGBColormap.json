@@ -1,0 +1,38 @@
+{
+  "name" : "ScalarToRGBColormap",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+ "public_declarations" : "    typedef enum { Red, Green, Blue, Grey, Hot, Cool, Spring, Summer, Autumn, Winter, Copper, Jet, HSV, OverUnder } ColormapType;"
+  "output_image_type" : "itk::VectorImage< unsigned char, InputImageType::ImageDimension>",
+  "members" : [ {
+    "name" : "Colormap",
+    "type" : "ScalarToRGBColormapImageFilter::ColormapType",
+    "default" : "itk::simple::ScalarToRGBColormapImageFilter::Grey",
+    "custom_itk_cast" : "filter->SetColormap( typename FilterType::ColormapEnumType( int( this->m_Colormap) ) );"
+  } ],
+    "tests" : [ {
+        "tag" : "default",
+        "description" : "Simply run with default settings",
+        "inputA" : "Input/2th_cthead1.mha",
+        "settings" : [ ],
+        "md5hash" : "e8c3b4bd5c14125f23899d57c6d38381"
+        }, {
+         "tag" : "Hot",
+         "description" : "use hot color map",
+          "inputA" : "Input/Ramp-Up-Short.nrrd",
+          "settings" : [ {
+              "parameter" : "Colormap",
+              "value" : "itk::simple::${name}ImageFilter::Hot",
+              "lua_value" : "SimpleITK.${name}ImageFilter_Hot",
+              "python_value" : "SimpleITK.${name}ImageFilter.Hot",
+              "ruby_value" : "Simpleitk::${name}ImageFilter::Hot",
+              "java_value" : "${name}ImageFilter.DirectionCollapseStrategy.Hot",
+              "tcl_value" : "$$${name}ImageFilter_Hot",
+              "csharp_value" : "itk.simple.${name}ImageFilter.DirectionCollapseStrategy.Hot"
+          } ]
+        "md5hash" : "f9cc87e42c0d4f6f4222b6dab1dd5d7c"
+        } ]
+}
