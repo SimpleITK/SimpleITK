@@ -66,7 +66,7 @@ public:
   /** Make a DataObject of the correct type to be used as the specified
    * output. */
   virtual DataObjectPointer MakeOutput(unsigned int idx);
-
+  using ProcessObject::MakeOutput;
 protected:
 
   HashImageFilter();
