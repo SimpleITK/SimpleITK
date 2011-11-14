@@ -11,7 +11,7 @@
     "default" : "1u",
     "pixeltype" : "Output",
     "briefdescriptionSet" : "",
-    "detaileddescriptionSet" : "Set the \"inside\" pixel value. The default value NumericTraits<OutputPixelType>::max()\n",
+    "detaileddescriptionSet" : "Set the \"inside\" pixel value.\n",
     "briefdescriptionGet" : "",
     "detaileddescriptionGet" : "Get the \"inside\" pixel value.\n"
   }, {
