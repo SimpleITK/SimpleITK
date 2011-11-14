@@ -1,0 +1,42 @@
+{
+  "name" : "HuangThreshold",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "doc" : "Docs",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "output_pixel_type" : "uint8_t",
+  "members" : [ {
+    "name" : "InsideValue",
+    "type" : "uint8_t",
+    "default" : "1u",
+    "pixeltype" : "Output",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set the \"inside\" pixel value. The default value NumericTraits<OutputPixelType>::max()\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : "Get the \"inside\" pixel value.\n"
+  }, {
+    "name" : "OutsideValue",
+    "type" : "uint8_t",
+    "default" : "0u",
+    "pixeltype" : "Output",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set the \"outside\" pixel value. The default value NumericTraits<OutputPixelType>::Zero.\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : "Get the \"outside\" pixel value.\n"
+  }, {
+    "name" : "NumberOfHistogramBins",
+    "type" : "uint32_t",
+    "default" : "128u",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set/Get the number of histogram bins. Defaults is 128.\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
+  } ],
+  "tests" : [ {
+    "tag" : "default",
+    "description" : "Default parameter settings",
+    "inputA" : "Input/RA-Short.nrrd",
+    "settings" : [ ],
+    "md5hash" : ""
+  } ]
+}
