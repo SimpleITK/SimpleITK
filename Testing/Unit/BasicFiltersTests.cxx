@@ -10,11 +10,30 @@
 #include <sitkLabelStatisticsImageFilter.h>
 #include <sitkExtractImageFilter.h>
 #include <sitkFastMarchingImageFilter.h>
+#include <sitkScalarToRGBColormapImageFilter.h>
 
 #include "itkRecursiveGaussianImageFilter.h"
 #include "itkExtractImageFilter.h"
 #include "itkFastMarchingImageFilterBase.h"
+#include "itkScalarToRGBColormapImageFilter.h"
 
+TEST(BasicFilters,ScalarToRGBColormap_ENUMCHECK) {
+  typedef itk::ScalarToRGBColormapImageFilter< itk::Image<float,3>, itk::Image< itk::RGBPixel<float>,3> > ITKType;
+  EXPECT_EQ( (int)ITKType::Red, (int)itk::simple::ScalarToRGBColormapImageFilter::Red);
+  EXPECT_EQ( (int)ITKType::Green, (int)itk::simple::ScalarToRGBColormapImageFilter::Green);
+  EXPECT_EQ( (int)ITKType::Blue, (int)itk::simple::ScalarToRGBColormapImageFilter::Blue);
+  EXPECT_EQ( (int)ITKType::Grey, (int)itk::simple::ScalarToRGBColormapImageFilter::Grey);
+  EXPECT_EQ( (int)ITKType::Hot, (int)itk::simple::ScalarToRGBColormapImageFilter::Hot);
+  EXPECT_EQ( (int)ITKType::Cool, (int)itk::simple::ScalarToRGBColormapImageFilter::Cool);
+  EXPECT_EQ( (int)ITKType::Spring, (int)itk::simple::ScalarToRGBColormapImageFilter::Spring);
+  EXPECT_EQ( (int)ITKType::Summer, (int)itk::simple::ScalarToRGBColormapImageFilter::Summer);
+  EXPECT_EQ( (int)ITKType::Autumn, (int)itk::simple::ScalarToRGBColormapImageFilter::Autumn);
+  EXPECT_EQ( (int)ITKType::Winter, (int)itk::simple::ScalarToRGBColormapImageFilter::Winter);
+  EXPECT_EQ( (int)ITKType::Copper, (int)itk::simple::ScalarToRGBColormapImageFilter::Copper);
+  EXPECT_EQ( (int)ITKType::Jet, (int)itk::simple::ScalarToRGBColormapImageFilter::Jet);
+  EXPECT_EQ( (int)ITKType::HSV, (int)itk::simple::ScalarToRGBColormapImageFilter::HSV);
+  EXPECT_EQ( (int)ITKType::OverUnder, (int)itk::simple::ScalarToRGBColormapImageFilter::OverUnder);
+}
 
 TEST(BasicFilters,RecursiveGaussian_ENUMCHECK) {
 
