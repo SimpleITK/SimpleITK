@@ -1,0 +1,23 @@
+{
+  "name" : "BinomialBlur",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "members" : [ {
+    "name" : "Repetitions",
+    "type" : "unsigned int",
+    "default" : "1u",
+    "doc" : ""
+  } ],
+  "tests" : [ {
+    "tag" : "defaults",
+    "description" : "Test BinomialBlurImageFilter with default parametrs",
+    "inputA" : "Input/VM1111Shrink-RGBFloat.nrrd",
+    "md5hash" : "ccd2e6e83817056f586e37f59e43bfff",
+    "settings" : [ ]
+  }]
+  } ]
+}
