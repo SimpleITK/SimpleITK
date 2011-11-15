@@ -183,8 +183,10 @@ list( APPEND ep_common_list
   SITE
   BUILDNAME )
 
-VariableListToCache( ep_common_list ep_common_cache )
 VariableListToArgs( ep_common_list ep_common_args )
+
+list( APPEND ep_common_list CMAKE_OSX_ARCHITECTURES )
+VariableListToCache( ep_common_list ep_common_cache )
 
 list( APPEND ep_common_args
   -DCMAKE_SKIP_RPATH:BOOL=ON
@@ -234,12 +236,6 @@ foreach(ep ${external_project_list})
   set(ep_dependency_graph "${ep_dependency_graph}\n${ep}:${${ep}_DEPENDENCIES}")
 endforeach()
 file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/ExternalProjectDependencies.txt "${ep_dependency_graph}\n")
-
-#-----------------------------------------------------------------------------
-# Now delegate back to the main SimpleITK with ${CMAKE_PROJECT_NAME}_SuperBuild=OFF
-# to actually build Simple ITK
-#-----------------------------------------------------------------------------
-message(STATUS "${CMAKE_PROJECT_NAME}_DEPENDENCIES ${${CMAKE_PROJECT_NAME}_DEPENDENCIES}")
 
 #
 # Use CMake file which present options for wrapped languages, and finds languages as needed
