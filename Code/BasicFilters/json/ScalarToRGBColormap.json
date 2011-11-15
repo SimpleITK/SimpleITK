@@ -29,9 +29,9 @@
               "lua_value" : "SimpleITK.${name}ImageFilter_Hot",
               "python_value" : "SimpleITK.${name}ImageFilter.Hot",
               "ruby_value" : "Simpleitk::${name}ImageFilter::Hot",
-              "java_value" : "${name}ImageFilter.DirectionCollapseStrategy.Hot",
+              "java_value" : "${name}ImageFilter.ColormapType.Hot",
               "tcl_value" : "$$${name}ImageFilter_Hot",
-              "csharp_value" : "itk.simple.${name}ImageFilter.DirectionCollapseStrategy.Hot"
+              "csharp_value" : "itk.simple.${name}ImageFilter.ColormapType.Hot"
           } ]
         "md5hash" : "f9cc87e42c0d4f6f4222b6dab1dd5d7c"
         } ]
