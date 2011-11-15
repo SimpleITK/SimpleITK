@@ -95,9 +95,6 @@ $(include ExecuteInternalSetITKFilterInputs.cxx.in)
     }
   filter->SetTrialPoints( trialNodes );
 
-  // todo add parameters to simple ITK
-  filter->SetTopologyCheck( FilterType::None );
-
 $(include ExecuteInternalUpdateAndReturn.cxx.in)
 }
 
