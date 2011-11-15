@@ -5,6 +5,7 @@
   "number_of_inputs" : 1,
   "doc" : "",
   "pixel_types" : "BasicPixelIDTypeList",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
   "public_declarations" : "Self &SetRadius( unsigned int r ) { this->m_Radius = std::vector<unsigned int>(3, r ); return *this; }",
   "members" : [ {
     "name" : "Radius",
@@ -18,13 +19,13 @@
     "tag" : "defaults",
     "description" : "Test MeanImageFilter with default parametrs",
     "inputA" : "Input/VM1111Shrink-RGBFloat.nrrd",
-    "md5hash" : "45a85203a8972250b0e0226b64312eef",
+    "md5hash" : "4abff9cea3d1bfdd10bceb8893a35d3a",
     "settings" : [ ]
   }, {
     "tag" : "by23",
-    "description" : "Test Shink by 23",
+    "description" : "Test by 23",
     "inputA" : "Input/VM1111Shrink-RGB.png",
-    "md5hash" : "9d32115482a8d143520fff8ab423f73a",
+    "md5hash" : "4feffebe7656f267b2bc27b966f00a63",
     "settings" : [ {
       "parameter" : "Radius",
       "type" : "unsigned int",
