@@ -14,13 +14,10 @@ namespace itk {
 namespace simple {
 
 
-void
+itk::ImageIOBase::Pointer
 ImageReaderBase
-::GetPixelIDFromImageIO( const std::string &fileName,
-                         PixelIDValueType &outPixelType,
-                         unsigned int & outDimensions )
+::GetImageIOBase(const std::string &fileName)
 {
-
   itk::ImageIOBase::Pointer iobase =
     itk::ImageIOFactory::CreateImageIO( fileName.c_str(), itk::ImageIOFactory::ReadMode);
 
@@ -32,6 +29,19 @@ ImageReaderBase
   // Read the image information
   iobase->SetFileName( fileName );
   iobase->ReadImageInformation();
+
+  return iobase;
+}
+
+void
+ImageReaderBase
+::GetPixelIDFromImageIO( const std::string &fileName,
+                         PixelIDValueType &outPixelType,
+                         unsigned int & outDimensions )
+{
+
+  itk::ImageIOBase::Pointer iobase = this->GetImageIOBase(fileName);
+
 
   // get output information about input image
   unsigned int dimension = iobase->GetNumberOfDimensions();
@@ -72,6 +82,16 @@ ImageReaderBase
 
   sitkExceptionMacro( "Unable to load image \"" << fileName << "\"" );
 }
+
+unsigned int
+ImageReaderBase
+::GetDimensionFromImageIO( const std::string &fileName, unsigned int i)
+{
+  itk::ImageIOBase::Pointer iobase = this->GetImageIOBase(fileName);
+
+  return iobase->GetDimensions(i);
+}
+
 
 PixelIDValueType
 ImageReaderBase
