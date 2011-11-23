@@ -9,10 +9,12 @@
 #include <sitkPixelIDValues.h>
 #include <sitkLabelStatisticsImageFilter.h>
 #include <sitkExtractImageFilter.h>
+#include <sitkFastMarchingImageFilter.h>
 #include <sitkScalarToRGBColormapImageFilter.h>
 
 #include "itkRecursiveGaussianImageFilter.h"
 #include "itkExtractImageFilter.h"
+#include "itkFastMarchingImageFilterBase.h"
 #include "itkScalarToRGBColormapImageFilter.h"
 
 TEST(BasicFilters,ScalarToRGBColormap_ENUMCHECK) {
@@ -50,6 +52,16 @@ TEST(BasicFilters,Extract_ENUMCHECK) {
   EXPECT_EQ( (int)ITKExtractType::DIRECTIONCOLLAPSETOSUBMATRIX, (int)itk::simple::ExtractImageFilter::DIRECTIONCOLLAPSETOSUBMATRIX );
   EXPECT_EQ( (int)ITKExtractType::DIRECTIONCOLLAPSETOGUESS, (int)itk::simple::ExtractImageFilter::DIRECTIONCOLLAPSETOGUESS );
 
+}
+
+
+TEST(BasicFilters,FastMarching_ENUMCHECK) {
+
+  typedef itk::FastMarchingImageFilterBase< itk::Image<float,3>, itk::Image<float,3> > ITKType;
+
+  EXPECT_EQ( (int) ITKType::None, (int) itk::simple::FastMarchingImageFilter::None );
+  EXPECT_EQ( (int) ITKType::NoHandles, (int) itk::simple::FastMarchingImageFilter::NoHandles );
+  EXPECT_EQ( (int) ITKType::Strict, (int) itk::simple::FastMarchingImageFilter::Strict );
 }
 
 TEST(BasicFilters,Cast) {
