@@ -5,6 +5,7 @@
 if( WRAP_PYTHON )
   add_custom_target( dist.Python
     ${PYTHON_EXECUTABLE} ${SimpleITK_BINARY_DIR}/Wrapping/PythonPackage/setup.py bdist_egg
+    WORKING_DIRECTORY ${SimpleITK_BINARY_DIR}/Wrapping
     COMMENT "Creating Python egg for distribution" )
 endif()
 
