@@ -38,5 +38,11 @@
     "inputA" : "Input/RA-Short.nrrd",
     "settings" : [ ],
     "md5hash" : "b3a9d15b0065800592149925da59ea65"
+  }, {
+    "tag" : "default-on-float",
+    "description" : "Default parameter settings",
+    "inputA" : "Input/Ramp-Zero-One-Float.nrrd",
+    "settings" : [ ],
+    "md5hash" : "d749a8ef5a2049837518618938945cce"
   } ]
 }
