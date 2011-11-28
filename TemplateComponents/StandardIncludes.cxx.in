@@ -5,7 +5,7 @@
 #include "itkNumericTraits.h"
 #include "itkNumericTraitsVariableLengthVectorPixel.h"
 #include "itkVectorIndexSelectionCastImageFilter.h"
-#include "itkImageToVectorImageFilter.h"
+#include "itkComposeImageFilter.h"
 
 #include "sitk${name}ImageFilter.h"
 $(if itk_name then
