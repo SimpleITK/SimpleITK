@@ -62,11 +62,12 @@ public:
   itkSetMacro( HashFunction, HashFunction );
   itkGetMacro( HashFunction, HashFunction );
 
-
-  /** Make a DataObject of the correct type to be used as the specified
+/** Make a DataObject of the correct type to be used as the specified
    * output. */
-  virtual DataObjectPointer MakeOutput(unsigned int idx);
-  using ProcessObject::MakeOutput;
+  typedef ProcessObject::DataObjectPointerArraySizeType DataObjectPointerArraySizeType;
+  using Superclass::MakeOutput;
+  virtual DataObjectPointer MakeOutput(DataObjectPointerArraySizeType idx);
+
 protected:
 
   HashImageFilter();
