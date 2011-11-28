@@ -28,7 +28,7 @@ ${name}ImageFilter::ExecuteInternalVectorImage ( const Image& inImage1 )
   typename ComponentExtratorType::Pointer extractor = ComponentExtratorType::New();
   extractor->SetInput( image1 );
 
-  typedef itk::ImageToVectorImageFilter<ComponentImageType> ToVectorFilterType;
+  typedef itk::ComposeImageFilter<ComponentImageType> ToVectorFilterType;
   typename ToVectorFilterType::Pointer toVector = ToVectorFilterType::New();
 
   unsigned int numComps = image1->GetNumberOfComponentsPerPixel();
@@ -42,7 +42,7 @@ ${name}ImageFilter::ExecuteInternalVectorImage ( const Image& inImage1 )
     typename ComponentImageType::ConstPointer tempITKImage =
       dynamic_cast <const ComponentImageType*> ( tmp.GetITKBase() );
 
-    toVector->SetNthInput( i, tempITKImage );
+    toVector->SetInput( i, tempITKImage );
     }
 
   toVector->Update();
