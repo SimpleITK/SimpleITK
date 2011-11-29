@@ -4,7 +4,7 @@
 #include "sitkCastImageFilter.h"
 
 #include <itkCastImageFilter.h>
-#include <itkImageToVectorImageFilter.h>
+#include <itkComposeImageFilter.h>
 #include <itkLabelImageToLabelMapFilter.h>
 #include <itkLabelMapToLabelImageFilter.h>
 
@@ -57,7 +57,7 @@ Image CastImageFilter::ExecuteInternalToVector( const Image& inImage )
     sitkExceptionMacro( << "Could not cast input image to proper type" );
     }
 
-  typedef itk::ImageToVectorImageFilter<InputImageType> FilterType;
+  typedef itk::ComposeImageFilter<InputImageType> FilterType;
   typename FilterType::Pointer filter = FilterType::New();
   filter->SetInput ( image );
 

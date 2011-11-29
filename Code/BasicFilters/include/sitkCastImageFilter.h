@@ -52,7 +52,7 @@ private:
    * to another.
    *
    * These methods implement CastImageFilter,
-   * ImageToVectorImageFilter, and LabelImageToLabelMapImageFilter
+   * ComposeImageFilter, and LabelImageToLabelMapImageFilter
    * respectively.
    *
    * @{
