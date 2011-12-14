@@ -6,6 +6,9 @@ set ( SimpleITKCommonSource
   ../include/Ancillary/hl_sha1.cxx
   )
 
+
+include(${ITK_USE_FILE})
+
 add_library ( SimpleITKCommon STATIC ${SimpleITKCommonSource} ${SimpleITKAncillarySource} )
 target_link_libraries ( SimpleITKCommon ${ITK_LIBRARIES} )
 

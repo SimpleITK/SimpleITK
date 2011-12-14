@@ -1,4 +1,7 @@
 
+# remove me
+include(${ITK_USE_FILE})
+
 # Find tests generated in the binary directory
 # To add a new file, just add it to this list.  Any GoogleTests inside will be automatically
 # added to ctest.
