@@ -26,12 +26,11 @@
 
 #include "sitkCastImageFilter.h"
 
-#include "sitkConditional.h"
-
 // Registration support
 #include "sitkTransform.h"
-#include "sitkMetric.h"
-#include "sitkInterpolate.h"
+#include "sitkAffineTransform.h"
+#include "sitkLinearInterpolate.h"
+#include "sitkMattesMutualInformationMetric.h"
 #include "sitkRegistration.h"
 #include "sitkRegularStepGradientDescentOptimizer.h"
 

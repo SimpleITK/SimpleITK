@@ -29,10 +29,11 @@ namespace simple {
 
 #define sitkExceptionMacro(x)                                           \
   {                                                                     \
-    std::ostringstream message;                                         \
-    message << "sitk::ERROR: " x;                                       \
-    throw ::itk::simple::GenericException(__FILE__, __LINE__, message.str().c_str()); \
-  }
+      std::ostringstream message;                                       \
+      message << "sitk::ERROR: " x;                                     \
+      ::itk::simple::GenericException e_(__FILE__, __LINE__, message.str().c_str(), ITK_LOCATION); \
+      throw e_; /* Explicit naming to work around Intel compiler bug.  */ \
+    }
 
 
 template <typename T>

@@ -1,7 +1,4 @@
 
-# remove me
-include(${ITK_USE_FILE})
-
 # Find tests generated in the binary directory
 # To add a new file, just add it to this list.  Any GoogleTests inside will be automatically
 # added to ctest.
@@ -262,8 +259,6 @@ macro(ADD_GOOGLE_TESTS target)
   set ( LongTestsHits "" )
 
   foreach ( source ${ARGN} )
-    message( STATUS "Scanning ${source} for tests..." )
-
     file(READ "${source}" contents)
 
     # Find all test and long test lists

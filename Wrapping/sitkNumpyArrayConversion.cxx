@@ -371,7 +371,7 @@ sitk_GetImageFromArray( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
       SWIG_fail;
       }
     }
-  catch( const std::exception &e )
+  catch( const itk::ExceptionObject &e )
     {
     std::string msg = "Exception thrown in SimpleITK new Image: ";
     msg += e.what();

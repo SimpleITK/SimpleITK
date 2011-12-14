@@ -87,14 +87,8 @@ macro( expand_template FILENAME input_dir output_dir library_name )
     DEPENDS ${input_json_file} ${template_deps} ${template_file_cxx}
     )
 
- set ( ${library_name}GeneratedHeader ${${library_name}GeneratedHeader}
-    "${output_h}" CACHE INTERNAL "" )
-
   set ( ${library_name}GeneratedSource ${${library_name}GeneratedSource}
-    "${output_cxx}" CACHE INTERNAL "" )
-
-  set_source_files_properties ( ${${library_name}GeneratedSource} PROPERTIES GENERATED 1 )
-  set_source_files_properties ( ${${library_name}GeneratedHeader} PROPERTIES GENERATED 1 )
+    "${output_h}" "${output_cxx}" CACHE INTERNAL "" )
 
   # Make the list visible at the global scope
   set ( GENERATED_FILTER_LIST ${GENERATED_FILTER_LIST} ${FILENAME} CACHE INTERNAL "" )
@@ -112,7 +106,6 @@ macro(generate_filter_source)
 
   # Clear out the GeneratedSource list in the cache
   set (SimpleITK${directory_name}GeneratedSource "" CACHE INTERNAL "")
-  set (SimpleITK${directory_name}GeneratedHeader "" CACHE INTERNAL "")
 
   ######
   # Perform template expansion
@@ -144,11 +137,9 @@ macro(generate_filter_source)
   endforeach()
 
   ######
-  # Make target for generated source and headers
+  # Make target for generated code
   ######
-  add_custom_target(${directory_name}SourceCode ALL DEPENDS
-    ${SimpleITK${directory_name}GeneratedHeader}
-    ${SimpleITK${directory_name}GeneratedSource} )
+  add_custom_target(${directory_name}SourceCode ALL DEPENDS ${SimpleITK${directory_name}GeneratedSource})
   if (BUILD_DOXYGEN)
     add_dependencies(Documentation ${directory_name}SourceCode)
   endif (BUILD_DOXYGEN)
