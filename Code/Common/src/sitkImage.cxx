@@ -306,21 +306,6 @@ namespace itk
       this->m_PimpleImage->SetSpacing(spc);
     }
 
-    // Get Direction
-    std::vector< double > Image::GetDirection( void ) const
-    {
-      assert( m_PimpleImage );
-      return this->m_PimpleImage->GetDirection();
-    }
-
-    // Set Direction
-    void Image::SetDirection( const std::vector< double > &direction )
-    {
-      assert( m_PimpleImage );
-      this->MakeUniqueForWrite();
-      this->m_PimpleImage->SetDirection( direction );
-    }
-
     // Index to Physical Point
     std::vector< double > Image::TransformIndexToPhysicalPoint( const std::vector< int64_t > &idx ) const
     {

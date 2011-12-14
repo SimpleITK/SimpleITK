@@ -1,15 +1,11 @@
 #ifndef __sitkExceptionObject_h
 #define __sitkExceptionObject_h
 
-#include <string>
-#include <stdexcept>
+#include "itkMacro.h"
+#include "itkExceptionObject.h"
 
 namespace itk
 {
-
-// forward declaration for encapsulation
-class ExceptionObject;
-
 namespace simple
 {
 
@@ -17,54 +13,40 @@ namespace simple
  * \brief The base SimpleITK exception class
  */
 class GenericException :
-    public std::exception
+    public ::itk::ExceptionObject
 {
 public:
   /** Default constructor.  Needed to ensure the exception object can be
    * copied. */
-  GenericException()  throw();
-  GenericException( const GenericException &e )  throw();
+  GenericException():ExceptionObject() {}
 
   /** Constructor. Needed to ensure the exception object can be copied. */
-  GenericException(const char *file, unsigned int lineNumber) throw();
+  GenericException(const char *file, unsigned int lineNumber):ExceptionObject(file, lineNumber) {}
 
   /** Constructor. Needed to ensure the exception object can be copied. */
-  GenericException(const std::string & file, unsigned int lineNumber) throw();
+  GenericException(const std::string & file, unsigned int lineNumber):ExceptionObject(file, lineNumber) {}
 
   /** Constructor. Needed to ensure the exception object can be copied. */
   GenericException(const std::string & file,
-                   unsigned int lineNumber,
-                   const std::string & desc) throw();
+                        unsigned int lineNumber,
+                        const std::string & desc,
+                        const std::string & loc):ExceptionObject(file, lineNumber, desc, loc) {}
 
   /** Virtual destructor needed for subclasses. Has to have empty throw(). */
-  virtual ~GenericException() throw( );
-
-  /** Assignment operator. */
-  GenericException & operator=(const GenericException & orig);
-
-  /** Equivalence operator. */
-  virtual bool operator==(const GenericException & orig);
-
+  virtual ~GenericException()
+  throw( ) {}
 
   /** Return a description of the error */
-  std::string ToString();
+  std::string ToString()
+  {
+  std::ostringstream out;
+  Print ( out );
+  return out.str();
+  }
 
-  const char * what() const throw();
 
-  virtual const char * GetNameOfClass() const;
-
-  virtual const char * GetLocation()    const;
-
-  virtual const char * GetDescription() const;
-
-  /** What file did the exception occur in? */
-  virtual const char * GetFile()    const;
-
-  /** What line did the exception occur in? */
-  virtual unsigned int GetLine() const;
-
-private:
-  const ExceptionObject *m_PimpleException;
+  virtual const char * GetNameOfClass() const
+  { return "GenericException"; }
 };
 
 }

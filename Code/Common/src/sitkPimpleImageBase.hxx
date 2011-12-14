@@ -142,30 +142,6 @@ namespace itk
       this->m_Image->SetSpacing( sitkSTLVectorToITK< typename ImageType::SpacingType> ( spc ) );
       }
 
-
-    // Get Direction
-    virtual std::vector< double > GetDirection( void ) const
-      {
-      const typename ImageType::DirectionType &d = this->m_Image->GetDirection();
-      return std::vector< double >( d.GetVnlMatrix().begin(), d.GetVnlMatrix().end() );
-      }
-
-    // Set Direction
-    virtual void SetDirection( const std::vector<  double > & in )
-      {
-      if (in.size() != ImageType::ImageDimension*ImageType::ImageDimension)
-        {
-        sitkExceptionMacro("direction size mismatch");
-        }
-
-      typename ImageType::DirectionType d;
-
-      std::copy( in.begin(), in.end(), d.GetVnlMatrix().begin() );
-
-      this->m_Image->SetDirection( d );
-      }
-
-
     // Physical Point to Index
     virtual std::vector<int64_t> TransformPhysicalPointToIndex( const std::vector<double> &pt ) const
       {

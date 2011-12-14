@@ -4,17 +4,9 @@ project ( SimpleITK )
 # Include extra CMake files
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake")
 
-
-find_package(ITK REQUIRED ) # the modules needed can be listed here as required components
+find_package(ITK REQUIRED)
 if(ITK_FOUND)
-
-  # Add compiler flags needed to use ITK.
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${ITK_REQUIRED_C_FLAGS}")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ITK_REQUIRED_CXX_FLAGS}")
-  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${ITK_REQUIRED_LINK_FLAGS}")
-  set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${ITK_REQUIRED_LINK_FLAGS}")
-  set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${ITK_REQUIRED_LINK_FLAGS}")
-
+  include(${ITK_USE_FILE})
 endif()
 
 if( NOT ITK_USE_REVIEW )
@@ -35,7 +27,7 @@ endif()
 
 set ( SimpleITK_INCLUDE_DIRS
       ${CMAKE_SOURCE_DIR}/Code/Common/include
-      ${CMAKE_SOURCE_DIR}/Code/Registration/include
+      ${CMAKE_SOURCE_DIR}/Code/Registration
       ${CMAKE_SOURCE_DIR}/Code/BasicFilters/include
       ${CMAKE_SOURCE_DIR}/Code/IO/include
       ${CMAKE_BINARY_DIR}/Code/BasicFilters/include
@@ -44,7 +36,7 @@ set ( SimpleITK_INCLUDE_DIRS
 
 include_directories( ${SimpleITK_INCLUDE_DIRS} )
 
-set ( SimpleITK_LIBRARIES SimpleITKCommon SimpleITKIO SimpleITKBasicFilters SimpleITKRegistration ${ITK_LIBRARIES} )
+set ( SimpleITK_LIBRARIES SimpleITKCommon SimpleITKIO SimpleITKBasicFilters  ${ITK_LIBRARIES} )
 
 # Be sure to clear these each time
 set ( GENERATED_TEST_LIST "" CACHE INTERNAL "" )
@@ -139,6 +131,7 @@ endif()
 #------------------------------------------------------------------------------
 # Help other projects use SimpleITK
 
+# Copy the UseITK.cmake file to the binary tree for backward compatability.
 configure_file(${SimpleITK_SOURCE_DIR}/UseSimpleITK.cmake.in
                ${SimpleITK_BINARY_DIR}/UseSimpleITK.cmake COPYONLY IMMEDIATE)
 
@@ -187,18 +180,6 @@ option ( BUILD_DOCUMENTS "Build the Documentation subdirectory" OFF )
 if ( BUILD_DOCUMENTS )
   add_subdirectory ( Documentation )
 endif()
-
-#------------------------------------------------------------------------------
-# INSTALLATION
-
-file( GLOB __files ${CMAKE_SOURCE_DIR}/Code/Common/include/*.h
-  ${CMAKE_SOURCE_DIR}/Code/Registration/include/*.h
-  ${CMAKE_SOURCE_DIR}/Code/BasicFilters/include/*.h
-  ${CMAKE_BINARY_DIR}/sitkConfigure.h
-  ${BasicFiltersGeneratedHeader} )
-install(FILES ${__files}
-  DESTINATION include
-  COMPONENT Development)
 
 #------------------------------------------------------------------------------
 # CPack

@@ -1,7 +1,4 @@
 
-# remove me
-include(${ITK_USE_FILE})
-
 include_directories ( ${SimpleITK_INCLUDE_DIRS} )
 
 # Add individual cxx executables

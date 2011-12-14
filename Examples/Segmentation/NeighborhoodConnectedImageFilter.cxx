@@ -26,7 +26,6 @@
 #include "sitkImageFileReader.h"
 #include "sitkImageFileWriter.h"
 
-#include <iostream>
 
 int main( int argc, char *argv[])
 {

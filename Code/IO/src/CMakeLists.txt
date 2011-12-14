@@ -10,8 +10,6 @@ set( SimpleITKIOSource
 
 include_directories( ${CMAKE_CURRENT_SOURCE_DIR} )
 
-include(${ITK_USE_FILE})
-
 add_library ( SimpleITKIO STATIC ${SimpleITKIOSource} )
 target_link_libraries ( SimpleITKIO SimpleITKCommon )
 

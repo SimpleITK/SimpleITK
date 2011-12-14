@@ -12,15 +12,15 @@ namespace itk
 namespace simple
 {
   class Registration;
-  class SOptimizer
+  class Optimizer
   {
   public:
-    SOptimizer() {};
-    virtual ~SOptimizer() {};
-    virtual itk::Optimizer::Pointer GetOptimizer() { return NULL; }
+    Optimizer() {};
+    virtual ~Optimizer() {};
+    virtual ::itk::Optimizer::Pointer GetOptimizer() { return NULL; }
   protected:
     friend class Registration;
-    virtual SOptimizer* Clone() { return new SOptimizer ( *this ); }
+    virtual Optimizer* Clone() { return new Optimizer ( *this ); }
   };
 }
 }
