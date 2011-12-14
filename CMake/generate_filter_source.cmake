@@ -131,7 +131,7 @@ macro(generate_filter_source)
   endif()
 
   # Glob all json files in the current directory
-  file ( GLOB json_config_files ${generated_code_input_path}/json/*.json)
+  file ( GLOB json_config_files ${generated_code_input_path}/json/[a-zA-Z]*.json)
 
   # Loop through json files and expand each one
   foreach ( f ${json_config_files} )
