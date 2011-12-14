@@ -1,0 +1,39 @@
+{
+  "name" : "Median",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "public_declarations" : "Self &SetRadius( unsigned int r ) { this->m_Radius = std::vector<unsigned int>(3, r ); return *this; }",
+  "members" : [ {
+    "name" : "Radius",
+    "type" : "std::vector<unsigned int>",
+    "default" : "std::vector<unsigned int>(3, 1)",
+    "dim_vec" : 1,
+    "doc" : "",
+    "itk_type" : "typename FilterType::RadiusType"
+  } ],
+  "tests" : [ {
+    "tag" : "defaults",
+    "description" : "Test MeanImageFilter with default parametrs",
+    "inputA" : "Input/VM1111Shrink-RGBFloat.nrrd",
+    "md5hash" : "3d91602f6080b45a5431b80d1f78c0a0",
+    "settings" : [ ]
+  }, {
+    "tag" : "by23",
+    "description" : "Test by 23",
+    "inputA" : "Input/VM1111Shrink-RGB.png",
+    "md5hash" : "03610a1cb421d145fe985478d4eb9c0a",
+    "settings" : [ {
+      "parameter" : "Radius",
+      "type" : "unsigned int",
+      "dim_vec" : 1,
+      "value" : "{2,3}",
+      "tcl_value" : "[list 2 3]",
+      "python_value" : "[ 2, 3 ]",
+      "ruby_value" : "[ 2, 3 ]"
+    } ]
+  } ]
+}

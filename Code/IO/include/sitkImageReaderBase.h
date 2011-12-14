@@ -1,6 +1,7 @@
 #ifndef __sitkImageReaderBase_h
 #define __sitkImageReaderBase_h
 
+#include "itkImageIOBase.h"
 
 #include "sitkNonCopyable.h"
 #include "sitkPixelIDValues.h"
@@ -26,6 +27,8 @@ namespace itk {
                                   PixelIDValueType &outPixelType,
                                   unsigned int & outDimensions);
 
+      unsigned int GetDimensionFromImageIO( const std::string &fileName, unsigned int i);
+
     private:
 
       PixelIDValueType ExecuteInternalReadScalar( int componentType );
@@ -33,6 +36,8 @@ namespace itk {
       PixelIDValueType ExecuteInternalReadVector( int componentType );
 
       PixelIDValueType ExecuteInternalReadComplex( int componentType );
+
+      itk::ImageIOBase::Pointer GetImageIOBase(const std::string &fileName);
 
     };
   }

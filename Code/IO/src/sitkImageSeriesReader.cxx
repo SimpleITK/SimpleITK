@@ -48,6 +48,13 @@ namespace itk {
       // increment for series
       ++dimension;
 
+      if (dimension == 4) {
+
+	  unsigned int size = this->GetDimensionFromImageIO( this->m_FileNames.front(), 2);
+	  if (size == 1)
+	      --dimension;
+      }
+
       if ( dimension != 2 && dimension != 3 )
         {
         sitkExceptionMacro( "The file in the series have unsupported " << dimension - 1 << " dimensions." );

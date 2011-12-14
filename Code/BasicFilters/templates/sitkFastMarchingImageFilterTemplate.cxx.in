@@ -72,22 +72,28 @@ $(include ExecuteInternalGetImagePointers.cxx.in)
 $(include ExecuteInternalITKFilter.cxx.in)
 
 $(include ExecuteInternalSetITKFilterInputs.cxx.in)
-  // Convert Trial Points from std::vector< std::vector<unsigned int> > to NodeContainer
-  typedef typename FilterType::NodeType NodeType;
-  typedef typename FilterType::NodeIndexType NodeIndexType;
-  typedef typename FilterType::NodeContainer NodeContainer;
-  typename NodeContainer::Pointer nodes = NodeContainer::New();
+
+  // Convert Trial Points from std::vector< std::vector<unsigned int> > to NodePairContainer
+
+  typedef typename FilterType::NodePairType           NodePairType;
+  typedef typename FilterType::NodeType               NodeType;
+  typedef typename FilterType::NodePairContainerType  NodePairContainerType;
+
+  typename NodePairContainerType::Pointer trialNodes = NodePairContainerType::New();
+  trialNodes->reserve( m_TrialPoints.size() );
 
   for (unsigned int i = 0; i < m_TrialPoints.size(); ++i)
     {
-    NodeType node;
-    for (unsigned int j = 0; j < m_TrialPoints[i].size(); ++j)
-      {
-      node.GetIndex()[j] = (typename NodeIndexType::IndexValueType)m_TrialPoints[i][j];
-      }
-    nodes->InsertElement( i, node );
+    NodePairType node;
+
+    //note: Node type is really an itk Index type
+    NodeType index = sitkSTLVectorToITK<NodeType>( m_TrialPoints[i] );
+    node.SetNode( index );
+    node.SetValue( 0.0 );
+
+    trialNodes->push_back( node );
     }
-  filter->SetTrialPoints( nodes );
+  filter->SetTrialPoints( trialNodes );
 
 $(include ExecuteInternalUpdateAndReturn.cxx.in)
 }
