@@ -1,0 +1,31 @@
+{
+  "name" : "ScalarConnectedComponent",
+  "template_code_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "output_pixel_type" : "uint32_t",
+  "members" : [ {
+    "name" : "DistanceThreshold",
+    "type" : "double",
+    "default" : "1.0",
+    "pixeltype" : "Input"
+  } ],
+  "custom_methods" : [ ],
+  "tests" : [ {
+    "tag" : "default",
+    "description" : "2D",
+    "inputA" : "Input/cthead1.png",
+    "settings" : [ ],
+    "md5hash" : "d5735d524532288df07bc362086b3190"
+  }, {
+    "tag" : "default",
+    "description" : "3D",
+    "inputA" : "Input/RA-Short.nrrd",
+    "settings" : [  {
+      "parameter" : "DistanceThreshold",
+      "value" : "500.0"
+    } ],
+    "md5hash" : "d119778b306a4f744899f917c8f10814"
+  } ]
+}
