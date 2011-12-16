@@ -4,6 +4,7 @@
   "number_of_inputs" : 1,
   "doc" : "",
   "pixel_types" : "IntegerPixelIDTypeList",
+  "output_pixel_type" : "uint32_t",
   "members" : [ {
     "name" : "FullyConnected",
     "type" : "bool",
@@ -16,7 +17,7 @@
     "description" : "2D",
     "inputA" : "Input/WhiteDots.png",
     "settings" : [ ],
-    "md5hash" : "9b2eeeb0a75a08e61a53a67dfdfd23e5"
+    "md5hash" : "548f5184428db10d93e3bf377dee5253"
   }, { 
     "tag" : "fullyconnected",
     "description" : "2D",
@@ -26,6 +27,6 @@
       "value" : "true",
       "python_value" : "True"
     } ],
-    "md5hash" : "0cc277634c810131f42e9e988d76bcf8"
+    "md5hash" : "e40b7cdfc1b34ae2e6b13660d626cc29"
   }]
 }
