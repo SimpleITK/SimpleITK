@@ -1,0 +1,31 @@
+{
+  "name" : "VectorConnectedComponent",
+  "template_code_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "\todo Add suport for mask image input",
+  "pixel_types" : "RealVectorPixelIDTypeList",
+  "filter_type": "itk::VectorConnectedComponentImageFilter<InputImageType, OutputImageType, itk::Image<uint8_t, InputImageType::ImageDimension> >",
+  "output_pixel_type" : "uint32_t",
+  "members" : [ {
+    "name" : "DistanceThreshold",
+    "type" : "double",
+    "default" : "1.0",
+    "custom_cast" : "filter->SetDistanceThreshold( static_cast<typename InputImageType::InputValueType>( this->m_DistanceThreshold ) );"
+  }, {
+    "name" : "FullyConnected",
+    "type" : "bool",
+    "default" : "false",
+    "doc" : ""
+  } ],
+  "custom_methods" : [ ],
+  "tests" : [ {
+    "tag" : "wDistance",
+    "description" : "2D RGB",
+    "inputA" : "Input/VM1111Shrink-RGBFloat.nrrd",
+    "settings" : [ {
+      "parameter" : "DistanceThreshold",
+      "value" : "15.0"
+    } ],
+    "md5hash" : "d5735d524532288df07bc362086b3190"
+  } ]
+}
