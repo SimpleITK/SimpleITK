@@ -41,8 +41,8 @@
   }, {
     "tag" : "default-on-float",
     "description" : "Default parameter settings",
-    "inputA" : "Input/Ramp-Zero-One-Float.nrrd",
+    "inputA" : "Input/RA-Float.nrrd",
     "settings" : [ ],
-    "md5hash" : ""
+    "md5hash" : "b6ffed53246b990f01edf80b1f2e27ff"
   }  ]
 }
