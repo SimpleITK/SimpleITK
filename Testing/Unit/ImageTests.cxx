@@ -24,6 +24,12 @@
 
 using  itk::simple::InstantiatedPixelIDTypeList;
 
+const double id2d[] = {1.0, 0.0,
+                       0.0, 1.0};
+const double id3d[] = {1.0, 0.0, 0.0,
+                       0.0, 1.0, 0.0,
+                       0.0, 0.0, 1.0};
+
 class Image : public ::testing::Test {
 public:
   virtual void SetUp() {
@@ -296,6 +302,28 @@ TEST_F(Image,Properties) {
   newOrigin.clear();
   newOrigin.push_back( -99.99 );
   ASSERT_ANY_THROW( shortImage->SetOrigin( newOrigin ) ) << "setting with too short origin";
+
+  // GetDirection
+  for( unsigned int i = 0 ; i < 9; ++i )
+    {
+    EXPECT_EQ ( shortImage->GetDirection()[i], id3d[i] ) << " Checking Get Direction matrix at index " << i;
+    }
+
+
+  // SetDirection
+  const double adir[] = {0.0, 0.0, 1.0,
+                         -1.0, 0.0, 0.0,
+                         0.0, -1.0, 0.0};
+  std::vector<double> vdir( adir, adir+9);
+  shortImage->SetDirection( vdir );
+  for( unsigned int i = 0 ; i < 9; ++i )
+    {
+    EXPECT_EQ ( shortImage->GetDirection()[i], vdir[i] ) << " Checking Direction matrix at index " << i;
+    }
+
+  // Check Error Conditions for setting Directions
+  ASSERT_ANY_THROW( shortImage->SetDirection( std::vector<double>( adir, adir + 4 ) ) );
+  ASSERT_ANY_THROW( shortImage->SetDirection( std::vector<double>( adir, adir + 8 ) ) );
 }
 
 namespace sitk = itk::simple;
