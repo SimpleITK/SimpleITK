@@ -1,0 +1,32 @@
+{
+  "name" : "ConnectedComponent",
+  "template_code_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "output_pixel_type" : "uint32_t",
+  "members" : [ {
+    "name" : "FullyConnected",
+    "type" : "bool",
+    "default" : "false",
+    "doc" : ""
+  } ],
+  "custom_methods" : [ ],
+  "tests" : [ {
+    "tag" : "default",
+    "description" : "2D",
+    "inputA" : "Input/WhiteDots.png",
+    "settings" : [ ],
+    "md5hash" : "548f5184428db10d93e3bf377dee5253"
+  }, { 
+    "tag" : "fullyconnected",
+    "description" : "2D",
+    "inputA" : "Input/WhiteDots.png",
+    "settings" : [ {
+      "parameter" : "FullyConnected",
+      "value" : "true",
+      "python_value" : "True"
+    } ],
+    "md5hash" : "e40b7cdfc1b34ae2e6b13660d626cc29"
+  }]
+}

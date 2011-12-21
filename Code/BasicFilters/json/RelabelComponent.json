@@ -1,0 +1,20 @@
+{
+  "name" : "RelabelComponent",
+  "template_code_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "members" : [ {
+      "name" : "MinimumObjectSize",
+      "type" : "uint64_t",
+      "default" : "0u"
+    } ],
+  "custom_methods" : [ ],
+  "tests" : [ {
+    "tag" : "default",
+    "description" : "2D",
+    "inputA" : "Input/2th_cthead1.png",
+    "settings" : [ ],
+    "md5hash" : "58af064e929f08f9d5bacc8be44ed92e"
+  } ]
+}

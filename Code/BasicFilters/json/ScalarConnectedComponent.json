@@ -1,0 +1,37 @@
+{
+  "name" : "ScalarConnectedComponent",
+  "template_code_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "\todo Add support for mask image input",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "filter_type": "itk::ScalarConnectedComponentImageFilter<InputImageType, OutputImageType, itk::Image<uint8_t, InputImageType::ImageDimension> >",
+  "output_pixel_type" : "uint32_t",
+  "members" : [ {
+    "name" : "DistanceThreshold",
+    "type" : "double",
+    "default" : "0.0",
+    "pixeltype" : "Input"
+  }, {
+    "name" : "FullyConnected",
+    "type" : "bool",
+    "default" : "false",
+    "doc" : ""
+  } ],
+  "custom_methods" : [ ],
+  "tests" : [ {
+    "tag" : "default",
+    "description" : "2D",
+    "inputA" : "Input/cthead1.png",
+    "settings" : [ ],
+    "md5hash" : "3a73df13adc18671b6981494fd337750"
+  }, {
+    "tag" : "wDistance",
+    "description" : "3D",
+    "inputA" : "Input/RA-Short.nrrd",
+    "settings" : [  {
+      "parameter" : "DistanceThreshold",
+      "value" : "500.0"
+    } ],
+    "md5hash" : "d119778b306a4f744899f917c8f10814"
+  } ]
+}
