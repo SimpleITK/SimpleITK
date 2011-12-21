@@ -18,7 +18,7 @@
 #ifndef __sitkLabelStatisticsImageFilter_h
 #define __sitkLabelStatisticsImageFilter_h
 
-#include "sitkDualImageFilter.h"
+#include "sitkImageFilter.h"
 #include "sitkDualMemberFunctionFactory.h"
 #include "sitkMeasurementMap.h"
 
@@ -28,7 +28,8 @@ namespace itk {
     /** \class LabelStatisticsImageFilter
      * \brief Compute min, max, variance, and mean of an image
      */
-    class SITKBasicFilters0_EXPORT LabelStatisticsImageFilter : public DualImageFilter {
+    class SITKBasicFilters0_EXPORT  LabelStatisticsImageFilter
+      : public ImageFilter<2> {
     public:
       typedef LabelStatisticsImageFilter       Self;
 
