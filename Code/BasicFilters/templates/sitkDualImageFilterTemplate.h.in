@@ -7,7 +7,6 @@ $(include DoNotEditWarning.h.in)
 
 #include "sitkDualImageFilter.h"
 #include "sitkDualMemberFunctionFactory.h"
-$(include AddExtraIncludes.h.in)
 
 namespace itk {
   namespace simple {
