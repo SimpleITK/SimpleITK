@@ -2,7 +2,7 @@
      * $(if briefdescription then OUT=[[\brief ${briefdescription}]] end)
      * $(if detaileddescription then OUT=[[${detaileddescription}]] end)
      */
-    class ${name}ImageFilter : public $(if number_of_inputs == 2 then OUT=[[DualImageFilter]] else OUT=[[ImageFilter]] end) {
+    class ${name}ImageFilter : public $(if number_of_inputs then OUT=[[ImageFilter<${number_of_inputs}>]] else OUT=[[ImageFilter<1>]] end) {
     public:
       typedef ${name}ImageFilter Self;
 

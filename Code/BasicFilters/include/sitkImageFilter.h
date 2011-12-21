@@ -4,6 +4,7 @@
 #include "sitkMacro.h"
 #include "sitkImage.h"
 #include "sitkMemberFunctionFactory.h"
+#include "sitkImagefilterExecuteBase.h"
 
 namespace itk {
   namespace simple {
@@ -14,7 +15,9 @@ namespace itk {
    * All SimpleITK filters which take one input image should inherit from this
    * class
    */
+  template < unsigned int N>
   class ImageFilter:
+      public ImageFilterExecuteBase<N>,
       protected NonCopyable
   {
     public:
@@ -41,8 +44,6 @@ namespace itk {
 
       // Print ourselves out
       virtual std::string ToString() const = 0;
-
-      virtual Image Execute ( const Image & ) = 0;
 
       /** return user readable name fo the filter */
       virtual std::string GetName() const = 0;
