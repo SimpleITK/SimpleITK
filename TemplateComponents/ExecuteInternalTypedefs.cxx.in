@@ -3,13 +3,18 @@
 $(if number_of_inputs == 2 then
 OUT=[[
   typedef TImageType     InputImageType2;]]
-  end)
-  $(if output_image_type then
+end)
+$(if mask_input then
+OUT=[[
+  typedef itk::Image<uint8_t, InputImageType::ImageDimension> MaskImageType;]]
+end)
+$(if output_image_type then
   OUT=[[//Define output image type
   typedef ${output_image_type} OutputImageType;]]
-  elseif output_pixel_type then
+elseif output_pixel_type then
   OUT=[[// Define output image type
   typedef itk::Image< ${output_pixel_type}, InputImageType::ImageDimension > OutputImageType;]]
-  else
-  OUT=[[typedef InputImageType OutputImageType;]]
-  end)
+else
+  OUT=[[
+  typedef InputImageType OutputImageType;]]
+end)

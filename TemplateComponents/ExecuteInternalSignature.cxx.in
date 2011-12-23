@@ -1,2 +1,2 @@
 template <class TImageType>
-Image ${name}ImageFilter::ExecuteInternal ( const Image& inImage1 $(if number_of_inputs==2 then OUT=[[, const Image& inImage2]] end) )
+Image ${name}ImageFilter::ExecuteInternal ( const Image& inImage1 $(if number_of_inputs==2 then OUT=[[, const Image& inImage2]] end)$(if mask_input then OUT=[[, const Image &inMaskImage]] end) )
