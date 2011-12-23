@@ -4,7 +4,7 @@
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "doc" : "",
-  "pixel_types" : "RealPixelIDTypeList",
+  "pixel_types" : "BasicPixelIDTypeList",
    "filter_type" : "itk::ResampleImageFilter<InputImageType, OutputImageType, double>",
     "members" : [ { 
      "name" : "Size",
@@ -30,10 +30,18 @@
   }, {
     "name" : "OutputDirection",
     "type" : "std::vector<double>",
-    "default" : "std::vector<double>(9, 0.0)",
-    "doc" : "",
+    "default" : "std::vector<double>()",
+    "doc" : "Passing a zero sized array, defaults to identiy matrix. The size of the array must exactly match the direction matrix for the dimension of the image.",
     "no_print" : 1,
-    "custom_itk_cast" : "typename InputImageType::DirectionType itkDirection; std::copy( m_OutputDirection.begin(), m_OutputDirection.end(), itkDirection.GetVnlMatrix().begin() ); filter->SetOutputDirection( itkDirection );"
+    "custom_itk_cast" : "typename InputImageType::DirectionType itkDirection;\
+    if ( m_OutputDirection.size() == 0 )\
+    { itkDirection.SetIdentity(); }\
+    else if( m_OutputDirection.size() == InputImageType::ImageDimension*InputImageType::ImageDimension )\
+    {\
+      std::copy( m_OutputDirection.begin(), m_OutputDirection.end(), itkDirection.GetVnlMatrix().begin() );\
+    } else {\
+    }\
+    filter->SetOutputDirection( itkDirection );"
   }, {
     "name" : "DefaultPixelValue",
     "type" : "double",
