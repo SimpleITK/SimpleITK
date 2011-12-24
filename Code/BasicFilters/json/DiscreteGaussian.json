@@ -1,0 +1,53 @@
+{
+  "name" : "DiscreteGaussian",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [ {
+    "name" : "Variance",
+    "type" : "double",
+    "default" : "1.0"
+  }, {
+    "name" : "MaximumKernelWidth",
+    "type" : "unsigned int",
+    "default" : "32u"
+  }, {
+    "name" : "MaximumError",
+    "type" : "double",
+    "default" : "0.01"
+  }, {
+    "name" : "UseImageSpacing",
+    "type" : "bool",
+    "default" : "true",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
+  } ],
+  "tests" : [ {
+    "tag" : "float",
+    "description" : "Simply run with default settings",
+    "inputA" : "Input/RA-Float.nrrd",
+    "settings" : [ ],
+    "tolerance" : 1.0E-4
+  }, {
+    "tag" : "short",
+    "description" : "Simply run with a short image with default settings",
+    "inputA" : "Input/RA-Slice-Short.nrrd",
+    "settings" : [ ],
+    "md5hash" : "6e662082d8660601078d780529ae8046"
+  }, {
+    "tag" : "bigG",
+    "description" : "use a big gaussian",
+    "inputA" : "Input/WhiteDots.png",
+    "settings" : [ {
+      "parameter" : "Variance",
+      "value" : "100.0"
+    }, {
+      "parameter" : "MaximumKernelWidth",
+      "value" : "64"
+    } ],
+    "md5hash" : "f2f002ec76313284a4cff24c3e5eb577"
+  }  ]
+}
