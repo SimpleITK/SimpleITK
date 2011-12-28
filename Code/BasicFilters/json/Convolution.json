@@ -20,10 +20,10 @@
   } ],
   "tests" : [ {
     "tag" : "defaults",
-    "description" : "Simply run with default settings",
-    "inputA" : "Input/Ramp-Zero-One-Float.nrrd",
-    "inputB" : "Input/Ramp-One-Zero-Float.nrrd",
+    "description" : "Basic convolution with gaussian",
+    "inputA" : "Input/cthead1-Float.mha",
+    "inputB" : "Input/Gaussian_1.5.nrrd",
     "settings" : [ ],
-    "md5hash" : ""
+    "tolerance" : "0.0001"
   } ]
 }
