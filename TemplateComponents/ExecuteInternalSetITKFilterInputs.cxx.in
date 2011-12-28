@@ -9,10 +9,7 @@ else
 OUT=[[
   filter->SetInput( image1 );
 ]]
-end)$(if mask_input then
-OUT=[[
-  filter->SetMaskImage( mask_image );
-]] end)$(foreach members
+end)$(foreach members
 $(if custom_itk_cast then
 OUT = '  ${custom_itk_cast}'
 elseif dim_vec and dim_vec == 1 then

@@ -3,8 +3,8 @@
   "template_code_filename" : "DualImageFilter",
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 2,
-  "doc" : "Some global documentation\n",
-  "pixel_types" : "NonLabelPixelIDTypeList",
+  "doc" : "Some global documentation\n\\todo MaskImageFilter will support VectorImages shortly",
+  "pixel_types" : "typelist::Append<BasicPixelIDTypeList, ComplexPixelIDTypeList>::Type",
   "pixel_types2" : "IntegerPixelIDTypeList",
   "custom_set_input" : "filter->SetInput1( image1 ); filter->SetInput2( image2 );",
   "members" : [ {

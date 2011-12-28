@@ -10,7 +10,7 @@ namespace itk {
     /** \class StatisticsImageFilter
      * \brief Compute min, max, variance, and mean of an image
      */
-    class StatisticsImageFilter : public ImageFilter<1> {
+    class StatisticsImageFilter : public ImageFilter {
     public:
       typedef StatisticsImageFilter Self;
 

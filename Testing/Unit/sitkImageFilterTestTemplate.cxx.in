@@ -28,8 +28,6 @@ TEST(BasicFilters,${name}) {
   itk::simple::${name}ImageFilter filter;
   itk::simple::Image inputA( 0, 0, itk::simple::sitkUInt8 );
   itk::simple::Image inputB( 0, 0, itk::simple::sitkUInt8 );
-  itk::simple::Image inputC( 0, 0, itk::simple::sitkUInt8 );
-  itk::simple::Image input( 0, 0, itk::simple::sitkUInt8 );
   itk::simple::Image output( 0, 0, itk::simple::sitkUInt8 );
   itk::simple::HashImageFilter hasher;
   std::string inputSHA1hash;
@@ -76,13 +74,11 @@ $(if template_code_filename and template_code_filename == "FastMarchingImageFilt
   EXPECT_EQ ( filter.GetTrialPoints().size(), (unsigned int)0 ) << "Testing empty trial points as default";]]
 end)
 
-// todo add testing with the mask input
- $(if number_of_inputs == 2 and not mask_input then
+ $(if number_of_inputs == 2 then
    OUT=[[ {
   itk::simple::Image smallImage( 1,1,1,itk::simple::sitkUInt8 );
   itk::simple::Image largeImage( 10,10,10,itk::simple::sitkUInt8 );
   itk::simple::Image smallShortImage( 1,1,1,itk::simple::sitkUInt16 );
-
   try
     {
     // Try executing with different size images.
@@ -131,19 +127,6 @@ end)
   ASSERT_TRUE ( inputB.GetITKBase() != NULL ) << "Could not read ${inputB}";
             ]]
       end)
-    $(if inputC then
-      OUT=[[
-  ASSERT_NO_THROW ( inputC = reader.SetFileName ( dataFinder.GetFile ( "${inputC}" ) ).Execute() ) << "Failed to load ${inputC}";
-  ]]
-      if inputC_cast then
-      OUT=[[
-  ASSERT_NO_THROW( inputC = itk::simple::Cast( inputC, itk::simple::${inputC_cast } ) ) << "Failed to cast ${inputC} to ${inputC_cast}";
-            ]]
-      end
-      OUT=OUT..[[
-  ASSERT_TRUE ( inputC.GetITKBase() != NULL ) << "Could not read ${inputC}";
-            ]]
-      end)
 
     if ( firstPassSoTestFunctional ) {
       firstPassSoTestFunctional = false;
@@ -151,8 +134,8 @@ end)
       // Do we get the same image back, if we use the functional interface?
       itk::simple::Image fromFunctional( 0, 0, itk::simple::sitkUInt8 );
       itk::simple::Image fromProcedural( 0, 0, itk::simple::sitkUInt8 );
-      ASSERT_NO_THROW ( fromProcedural = filter.Execute ( inputA $(if inputB then OUT=", inputB" end)$(if inputC then OUT=", inputC" end)  ) ) << "Procedural interface to ${name}";
-      ASSERT_NO_THROW ( fromFunctional = itk::simple::${name} ( inputA $(if inputB then OUT=", inputB" end)$(if inputC then OUT=", inputC" end)
+      ASSERT_NO_THROW ( fromProcedural = filter.Execute ( inputA $(if inputB then OUT=", inputB" end) ) ) << "Procedural interface to ${name}";
+      ASSERT_NO_THROW ( fromFunctional = itk::simple::${name} ( inputA $(if inputB then OUT=", inputB" end)
                                                                        $(if template_type and template_type == "RegionGrowing" then OUT=", std::vector< std::vector<unsigned int> >()" end)
                                                                        $(if template_code_filename and template_code_filename == "FastMarchingImageFilter" then OUT=", std::vector< std::vector<unsigned int> >()" end)
                                                                        $(if template_code_filename and template_code_filename == "KernelImageFilter" then OUT=[[, 1, itk::simple::${name}ImageFilter::Ball]] end)
@@ -199,7 +182,7 @@ end)
       {
       inputSHA1hash =  itk::simple::Hash( inputA );
       }
-  ASSERT_NO_THROW ( output =  filter.Execute ( inputA $(if inputB then OUT=", inputB" end)$(if inputC then OUT=", inputC" end) ) );
+  ASSERT_NO_THROW ( output =  filter.Execute ( inputA $(if inputB then OUT=", inputB" end) ) );
 
     if ( inputA.GetPixelIDValue() != itk::simple::sitkLabelUInt8 &&
          inputA.GetPixelIDValue() != itk::simple::sitkLabelUInt16 &&
@@ -261,9 +244,6 @@ TEST_F(Lua,${name}) {
     $(if inputB then
       OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
       end)
-    $(if inputC then
-      OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputC}" ) );]]
-      end)
     CommandLine.push_back ( outputFileName );
     EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
@@ -321,9 +301,6 @@ TEST_F(Python,${name}) {
     CommandLine.push_back ( dataFinder.GetFile ( "${inputA}" ) );
     $(if inputB then
       OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
-      end)
-   $(if inputC then
-      OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputC}" ) );]]
       end)
     CommandLine.push_back ( outputFileName );
     EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
@@ -383,9 +360,6 @@ TEST_F(Tcl,${name}) {
     $(if inputB then
       OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
       end)
-    $(if inputC then
-      OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputC}" ) );]]
-      end)
     CommandLine.push_back ( outputFileName );
     EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
@@ -443,9 +417,6 @@ TEST_F(R,${name}) {
     CommandLine.push_back ( dataFinder.GetFile ( "${inputA}" ) );
     $(if inputB then
       OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
-      end)
-    $(if inputC then
-      OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputC}" ) );]]
       end)
     CommandLine.push_back ( outputFileName );
     EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
@@ -513,9 +484,6 @@ TEST_F(Java,${name}) {
     $(if inputB then
       OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
       end)
-    $(if inputC then
-      OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputC}" ) );]]
-      end)
     CommandLine.push_back ( outputFileName );
     EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
@@ -576,9 +544,6 @@ TEST_F(Ruby,${name}) {
     CommandLine.push_back ( dataFinder.GetFile ( "${inputA}" ) );
     $(if inputB then
       OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
-      end)
-    $(if inputC then
-      OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputC}" ) );]]
       end)
     CommandLine.push_back ( outputFileName );
     EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
@@ -650,9 +615,6 @@ TEST_F(CSharp,${name}) {
     CommandLine.push_back ( dataFinder.GetFile ( "${inputA}" ) );
     $(if inputB then
       OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
-      end)
-    $(if inputC then
-      OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputC}" ) );]]
       end)
     CommandLine.push_back ( outputFileName );
     EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";

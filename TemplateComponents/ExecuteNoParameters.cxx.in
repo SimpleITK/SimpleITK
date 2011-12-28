@@ -1,4 +1,4 @@
-Image ${name}ImageFilter::Execute ( const Image & image1$(if number_of_inputs==2 then OUT=[[, const Image& image2]] end)$(if mask_input then OUT=[[, const Image &masked_image]] end) )
+Image ${name}ImageFilter::Execute ( const Image & image1$(if number_of_inputs==2 then OUT=[[, const Image& image2]] end) )
 {
 
   PixelIDValueType type = image1.GetPixelIDValue();
@@ -11,17 +11,7 @@ OUT=[[
        dimension != image2.GetDimension() )
     {
       sitkExceptionMacro ( "Both images for ${name}ImageFilter don't match type or dimension!" );
-    }]] end)$(if mask_input then
-OUT=[[
+    }]] end)
 
-  if ( dimension != masked_image.GetDimension() )
-    {
-      sitkExceptionMacro ( "Masked image does not match dimension of other input images!" );
-    }
-  if ( masked_image.GetPixelIDValue() != sitkUInt8 )
-    {
-      sitkExceptionMacro ( "Expected masked image to be of sitkUInt8 pixel type!" );
-    }
-]] end)
- return this->m_MemberFactory->GetMemberFunction( type, dimension )( image1 $(if number_of_inputs==2 then OUT=[[, image2]] end)$(if mask_input then OUT=[[, masked_image]] end) );
+  return this->m_MemberFactory->GetMemberFunction( type, dimension )( image1 $(if number_of_inputs==2 then OUT=[[, image2]] end) );
 }
