@@ -1,0 +1,29 @@
+{
+  "name" : "FFTConvolution",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 2,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "public_declarations" : "    typedef enum { SAME = 0, VALID = 1} OutputRegionMode;",
+  "custom_set_input" : "filter->SetInput( image1 ); filter->SetKernelImage( image2 );",
+  "members" : [ {
+    "name" : "Normalize",
+    "type" : "bool",
+    "default" : "false",
+    "doc" : ""
+   }, {
+    "name" : "OutputRegionMode",
+    "type" : "FFTConvolutionImageFilter::OutputRegionMode",
+    "default" : "itk::simple::FFTConvolutionImageFilter::SAME",
+    "custom_itk_cast" : "filter->SetOutputRegionMode( typename FilterType::OutputRegionModeType( int( this->m_OutputRegionMode ) ) );"
+  } ],
+  "tests" : [ {
+    "tag" : "defaults",
+    "description" : "Basic convolution with gaussian",
+    "inputA" : "Input/cthead1-Float.mha",
+    "inputB" : "Input/Gaussian_1.5.nrrd",
+    "settings" : [ ],
+    "tolerance" : "0.0001"
+  } ]
+}

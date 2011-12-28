@@ -1,0 +1,19 @@
+{
+  "name" : "FFTNormalizedCorrelation",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 2,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "output_pixel_type" : "typename itk::NumericTraits<typename InputImageType::PixelType>::RealType",
+  "filter_type" : "itk::FFTNormalizedCorrelationImageFilter<InputImageType, OutputImageType>",
+  "members" : [ ],
+  "tests" : [ {
+    "tag" : "defaults",
+    "description" : "Simply run with default settings",
+    "inputA" : "Input/Ramp-Zero-One-Float.nrrd",
+    "inputB" : "Input/Ramp-One-Zero-Float.nrrd",
+    "settings" : [ ],
+    "md5hash" : ""
+  } ]
+}

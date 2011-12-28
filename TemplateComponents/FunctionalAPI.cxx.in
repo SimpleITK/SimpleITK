@@ -1,9 +1,9 @@
 //
 // Function to run the Execute method of this filter
 //
-Image ${name} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end)$(when members $(foreach members ,
+Image ${name} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end)$(if mask_input then OUT=[[, const Image &masked_image]] end)$(when members $(foreach members ,
   ${type} in${name})) )
 {
   ${name}ImageFilter filter;
-  return filter.Execute ( imageA$(if number_of_inputs == 2 then OUT=', imageB' end)$(when members $(foreach members , in${name})) );
+  return filter.Execute ( imageA$(if number_of_inputs == 2 then OUT=', imageB' end)$(if mask_input then OUT=[[, masked_image]] end)$(when members $(foreach members , in${name})) );
 }

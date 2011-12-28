@@ -1,6 +1,7 @@
 $(include DoNotEditWarning.cxx.in)
 
 $(include StandardIncludes.cxx.in)
+$(include AddExtraIncludes.cxx.in)
 
 namespace itk {
 namespace simple {
