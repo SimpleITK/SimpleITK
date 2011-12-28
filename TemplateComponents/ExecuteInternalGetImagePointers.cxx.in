@@ -12,20 +12,10 @@ OUT=[[
 
   // Get the a pointer to the ITK image contained in image2
   typename InputImageType2::ConstPointer image2 =
-    dynamic_cast <const InputImageType2*> ( inImage2.GetITKBase() );
+  dynamic_cast <const InputImageType2*> ( inImage2.GetITKBase() );
 
   // Check that ITK image pointer was properly retrieved
   if ( image2.IsNull() )
-    {
-    sitkExceptionMacro( "Unexpected template dispatch error!" );
-    }]]
-end)$(if mask_input then
-OUT=[[
-  typename MaskImageType::ConstPointer mask_image =
-    dynamic_cast<const MaskImageType*>( inMaskImage.GetITKBase() );
-
-  // Check that ITK image pointer was properly retrieved
-  if ( mask_image.IsNull() )
     {
     sitkExceptionMacro( "Unexpected template dispatch error!" );
     }]]

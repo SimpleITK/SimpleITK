@@ -20,7 +20,7 @@ namespace simple
  * convert between different image types.
  */
 class CastImageFilter
-  : public ImageFilter<1>
+  : public ImageFilter
 {
 public:
   typedef CastImageFilter      Self;
