@@ -1,7 +1,7 @@
 %module SimpleITK
 
 // Remove some warnings
-#pragma SWIG nowarn=362,503,401,389,516
+#pragma SWIG nowarn=362,503,401,389,516,511
 
 // Use STL support
 %include <std_vector.i>

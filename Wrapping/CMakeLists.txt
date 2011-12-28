@@ -85,7 +85,7 @@ if ( WRAP_PYTHON )
   include_directories ( ${PYTHON_INCLUDE_DIR} ${SimpleITK_SOURCE_DIR}/Wrapping )
 
   # Run swig
-  set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS})
+  set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS} -features autodoc=1 -keyword)
   set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
   set(SWIG_MODULE_SimpleITK_EXTRA_DEPS SimpleITKCommon SimpleITKBasicFilters SimpleITKIO ${SWIG_HEADERS})
   SWIG_add_module ( SimpleITK python SimpleITK.i SimpleITKPYTHON_wrap.cxx )
@@ -200,7 +200,7 @@ endif()
 # C# SWIG configuration
 #
 if ( WRAP_CSHARP )
-  
+
   # Find C#
   find_package( CSharp REQUIRED )
   include( ${CSHARP_USE_FILE} )
