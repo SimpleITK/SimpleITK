@@ -13,8 +13,6 @@ target_link_libraries ( SimpleGaussian ${SimpleITK_LIBRARIES} )
 add_executable ( SimpleGaussianFunctional SimpleGaussianFunctional.cxx )
 target_link_libraries ( SimpleGaussianFunctional ${SimpleITK_LIBRARIES} )
 
-add_executable ( ITKIntegration ITKIntegration.cxx )
-target_link_libraries ( ITKIntegration ${SimpleITK_LIBRARIES} )
 
 add_executable ( BufferImportExport BufferImportExport.cxx )
 target_link_libraries ( BufferImportExport ${SimpleITK_LIBRARIES} )
