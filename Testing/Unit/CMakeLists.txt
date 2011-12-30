@@ -163,7 +163,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
       OUTPUT  "${OUTPUT_TEST_FILENAME}"
       COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
       COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Java ${template_include_dir} TestTemplate.java.in "${OUTPUT_TEST_FILENAME}"
-      COMMAND ${Java_JAVAC_EXECUTABLE} -classpath ${SimpleITK_BINARY_DIR}/Wrapping/org.itk.simple.jar ${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/org/itk/simple/testing/${FILTERNAME}ImageFilterTest.java
+      COMMAND ${Java_JAVAC_EXECUTABLE} -classpath ${SimpleITK_BINARY_DIR}/Wrapping/${JAR_FILE} ${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/org/itk/simple/testing/${FILTERNAME}ImageFilterTest.java
       DEPENDS ${filter_json_file} ${JAVA_TEMPLATE_FILES} SimpleITKJava
       )
     set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Java.${FILTERNAME}")
@@ -318,10 +318,10 @@ if ( WRAP_JAVA )
 
     if(WIN32)
       set( _JAVA_LIBRARY_PATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/$<CONFIGURATION>" )
-      set( _JAVA_CLASSPATH "${SimpleITK_BINARY_DIR}/Wrapping/org.itk.simple.jar;${CMAKE_CURRENT_BINARY_DIR}/$<CONFIGURATION>" )
+      set( _JAVA_CLASSPATH "${SimpleITK_BINARY_DIR}/Wrapping/${JAR_FILE};${CMAKE_CURRENT_BINARY_DIR}/$<CONFIGURATION>" )
     else(WIN32)
       set( _JAVA_LIBRARY_PATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}" )
-      set( _JAVA_CLASSPATH "${SimpleITK_BINARY_DIR}/Wrapping/org.itk.simple.jar:${CMAKE_CURRENT_BINARY_DIR}" )
+      set( _JAVA_CLASSPATH "${SimpleITK_BINARY_DIR}/Wrapping/${JAR_FILE}:${CMAKE_CURRENT_BINARY_DIR}" )
     endif(WIN32)
 
     add_custom_command(
@@ -486,7 +486,7 @@ if ( WRAP_LUA )
     "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
     "2.0"
     "${TEST_HARNESS_TEMP_DIRECTORY}/Lua.SimpleGaussian.nrrd" )
-  
+
 endif ( WRAP_LUA )
 
 if ( WRAP_RUBY )
