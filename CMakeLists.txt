@@ -111,6 +111,8 @@ configure_file( ${SimpleITK_SOURCE_DIR}/sitkConfigure.h.in
 # Version information
 include(Version.cmake)
 set(JAR_FILE simpleitk-${SimpleITK_Major}.${SimpleITK_Minor}.${SimpleITK_Patch}.jar)
+set(JAVADOC_FILE simpleitk-javadoc-${SimpleITK_Major}.${SimpleITK_Minor}.${SimpleITK_Patch}.jar)
+set(JAVA_SOURCE_FILE simpleitk-source-${SimpleITK_Major}.${SimpleITK_Minor}.${SimpleITK_Patch}.jar)
 
 
 # Create cached list of all template components
