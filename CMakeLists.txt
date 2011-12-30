@@ -73,7 +73,7 @@ check_include_file_cxx( tr1/type_traits SITK_HAS_STLTR1_TR1_TYPE_TRAITS )
 check_include_file_cxx( type_traits SITK_HAS_STLTR1_TYPE_TRAITS )
 
 if ( NOT SITK_HAS_STLTR1_TR1_FUNCTIONAL AND NOT SITK_HAS_STLTR1_FUNCTIONAL )
-  message( FATAL_ERROR 
+  message( FATAL_ERROR
     "SimpleITK requires usage of parts C++ Technical Report 1 (TR1).\n"
     "It may be available as an optional download for your compiler. Please see the FAQ for details.\n"
     "http://www.itk.org/Wiki/ITK_Release_4/SimpleITK/FAQ#Do_I_need_to_download_an_option_package_for_TR1_support.3F")
@@ -110,6 +110,10 @@ configure_file( ${SimpleITK_SOURCE_DIR}/sitkConfigure.h.in
 
 # Version information
 include(Version.cmake)
+set(JAR_FILE simpleitk-${SimpleITK_Major}.${SimpleITK_Minor}.${SimpleITK_Patch}.jar)
+set(JAVADOC_FILE simpleitk-javadoc-${SimpleITK_Major}.${SimpleITK_Minor}.${SimpleITK_Patch}.jar)
+set(JAVA_SOURCE_FILE simpleitk-source-${SimpleITK_Major}.${SimpleITK_Minor}.${SimpleITK_Patch}.jar)
+
 
 # Create cached list of all template components
 file( GLOB template_components

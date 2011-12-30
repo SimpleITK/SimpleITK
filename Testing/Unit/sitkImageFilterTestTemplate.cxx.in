@@ -11,6 +11,7 @@
 #include <sitkImageFileWriter.h>
 #include <sitkHashImageFilter.h>
 #include <sitkCastImageFilter.h>
+#include <sitkVersion.h>
 
 #define VERIFYHASH(hash,hashType,image,message)    \
   {                                             \
@@ -462,7 +463,7 @@ TEST_F(Java,${name}) {
     end)
 
   std::string Classpath = dataFinder.GetBuildDirectory() + "/Testing/Unit/JavaTests"
-    + dataFinder.GetPathSeparator() + dataFinder.GetBuildDirectory() + "/Wrapping/org.itk.simple.jar";
+    + dataFinder.GetPathSeparator() + dataFinder.GetBuildDirectory() + "/Wrapping/simpleitk-" + itk::simple::Version::VersionString() + ".jar";
   std::string JavaPath = dataFinder.GetLibraryDirectory();
   std::string Script = "org.itk.simple.testing.${name}ImageFilterTest";
   $(foreach tests
