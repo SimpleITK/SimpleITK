@@ -6,6 +6,15 @@
   "pixel_types" : "IntegerPixelIDTypeList",
   "no_output_type" : 1,
   "members" : [ {
+    "name" : "ForegroundValue",
+    "type" : "double",
+    "default" : "1.0",
+    "pixeltype" : "Input",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set the value in the image to consider as \"foreground\". Defaults to maximum value of PixelType.\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : "Get the value in the image considered as \"foreground\". Defaults to maximum value of PixelType.\n"
+  }, {
     "name" : "FullyConnected",
     "type" : "bool",
     "default" : "false",
@@ -19,12 +28,12 @@
   "tests" : [ {
     "tag" : "BinaryClosingByReconstruction",
     "description" : "Test binary closing by reconstruction",
-    "inputA" : "Input/STAPLE1.png",
-    "md5hash" : "095f00a68a84df4396914fa758f34dcc",
+    "inputA" : "Input/2th_cthead1.png",
+    "md5hash" : "02dc78be92850eff775783073dbdd47d",
     "settings" : [ {
       "parameter" : "KernelRadius",
       "no_get_method" : 1,
-      "value" : 1
+      "value" : 10
     }, {
       "parameter" : "KernelType",
       "value" : "itk::simple::${name}ImageFilter::Ball",
@@ -34,7 +43,10 @@
       "java_value" : "${name}ImageFilter.KernelType.Ball",
       "tcl_value" : "$$${name}ImageFilter_Ball",
       "csharp_value" : "${name}ImageFilter.KernelType.Ball"
-    } ]
+    }, {
+      "parameter" : "ForegroundValue",
+      "value" : "200"
+    }  ]
   } ],
   "briefdescription" : "binary closing by reconstruction of an image.\n",
   "detaileddescription" : "This filter removes small ( i.e., smaller than the structuring element) holes in the image. It is defined as: Closing(f) = ReconstructionByErosion(Dilation(f)).\nThe structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element having values > 0 are candidates for affecting the center pixel.\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\\see  MorphologyImageFilter, ClosingByReconstructionImageFilter, BinaryOpeningByReconstructionImageFilter\n\n"
