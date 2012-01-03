@@ -177,7 +177,7 @@ if ( WRAP_JAVA )
 
   # Add target for org.itk.simple.jar
   add_custom_target(org_itk_simple_jar ALL DEPENDS ${JAR_FILE})
-  file(GLOB_RECURSE JAVA_SOURCE_CODE ${JAVA_SOURCE_DIRECTORY}/*.java)
+  set(JAVA_SOURCE_CODE ${JAVA_SOURCE_DIRECTORY}/org/itk/simple/*.java)
 
   # Add custom command and target to compile the generated files and put them in a jar file
   # Make sure the commands depend on the output library from SWIG
