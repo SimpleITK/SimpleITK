@@ -160,6 +160,12 @@ if ( WRAP_JAVA )
   find_package ( JNI REQUIRED )
   include_directories ( ${JAVA_INCLUDE_PATH} ${JNI_INCLUDE_DIRS} )
 
+  FIND_PROGRAM(Java_JAVADOC_EXECUTABLE
+    NAMES javadoc
+    HINTS ${_JAVA_HINTS}
+    PATHS ${_JAVA_PATHS}
+    )
+
   # Make sure the nested directory structure exists
   set(JAVA_SOURCE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/)
   set(JAVA_BINARY_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/build)
