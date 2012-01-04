@@ -78,6 +78,7 @@ MACRO(SWIG_GET_EXTRA_OUTPUT_FILES language outfiles generatedpath infile)
   IF(SWIG_GET_EXTRA_OUTPUT_FILES_module_basename STREQUAL "NOTFOUND")
     GET_FILENAME_COMPONENT(SWIG_GET_EXTRA_OUTPUT_FILES_module_basename "${infile}" NAME_WE)
   ENDIF(SWIG_GET_EXTRA_OUTPUT_FILES_module_basename STREQUAL "NOTFOUND")
+ SET(${outfiles})
   FOREACH(it ${SWIG_${language}_EXTRA_FILE_EXTENSION})
     SET(${outfiles} ${${outfiles}}
       "${generatedpath}/${SWIG_GET_EXTRA_OUTPUT_FILES_module_basename}.${it}")
