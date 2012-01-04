@@ -1,0 +1,83 @@
+{
+  "name" : "IsolatedWatershed",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Docs",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "output_pixel_type" : "uint8_t",
+  "members" : [ {
+    "name" : "Seed1",
+    "type" : "std::vector<uint32_t>",
+    "default" : "std::vector<uint32_t>(3, 0)",
+    "dim_vec" : 1,
+    "doc" : "",
+    "itk_type" : "typename FilterType::IndexType"
+  }, {
+    "name" : "Seed2",
+    "type" : "std::vector<uint32_t>",
+    "default" : "std::vector<uint32_t>(3, 0)",
+    "dim_vec" : 1,
+    "doc" : "",
+    "itk_type" : "typename FilterType::IndexType"
+  }, {
+    "name" : "Threshold",
+    "type" : "double",
+    "default" : "0.0"
+  }, {
+    "name" : "UpperValueLimit",
+    "type" : "double",
+    "default" : "1.0"
+  }, {
+    "name" : "IsolatedValueTolerance",
+    "type" : "double",
+    "default" : "0.001"
+  }, {
+    "name" : "ReplaceValue1",
+    "type" : "uint8_t",
+    "default" : "1u",
+    "pixeltype" : "Output"
+  }, {
+    "name" : "ReplaceValue2",
+    "type" : "uint8_t",
+    "default" : "2u",
+    "pixeltype" : "Output"
+  } ],
+  "tests" : [  {
+    "tag" : "cthead",
+    "description" : "from_itk",
+    "inputA" : "Input/cthead1.png",
+    "md5hash" : "109b745628d27453620aa19874e752ae",
+    "settings" : [ {
+      "parameter" : "Seed1",
+      "type" : "uint32_t",
+      "dim_vec" : 1,
+      "value" : "{113,84}",
+      "tcl_value" : "[list 113 84]",
+      "python_value" : "[ 113, 84 ]",
+      "ruby_value" : "[ 113, 84 ]"
+    }, {
+      "parameter" : "Seed2",
+      "type" : "uint32_t",
+      "dim_vec" : 1,
+      "value" : "{120,99}",
+      "tcl_value" : "[list 120 99]",
+      "python_value" : "[ 120, 99 ]",
+      "ruby_value" : "[ 120, 99 ]"
+    }, {
+      "parameter" : "Threshold",
+      "value" : "0.001"
+    }, {
+      "parameter" : "ReplaceValue1",
+      "value" : "255",
+      "java_value" : "(short) 255"
+    }, {
+      "parameter" : "ReplaceValue2",
+      "value" : "127",
+      "java_value" : "(short) 127"
+    }, {
+      "parameter" : "UpperValueLimit",
+      "value" : "1.0"
+    } ]
+    } ]
+}
