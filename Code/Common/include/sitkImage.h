@@ -158,7 +158,7 @@ namespace simple
     uint32_t GetPixelAsUInt64( const std::vector<uint32_t> &idx ) const;
     float    GetPixelAsFloat( const std::vector<uint32_t> &idx ) const;
     double   GetPixelAsDouble(  const std::vector<uint32_t> &idx ) const;
-    /* @} */
+    /** @} */
 
     /** \brief Set the value of a pixel
      *
@@ -217,7 +217,7 @@ namespace simple
     uint64_t *GetBufferAsUInt64( );
     float    *GetBufferAsFloat( );
     double   *GetBufferAsDouble( );
-    /* @} */
+    /** @} */
 
 
   protected:
