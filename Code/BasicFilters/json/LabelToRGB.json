@@ -1,0 +1,22 @@
+{
+  "name" : "LabelToRGB",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "output_image_type" : "itk::VectorImage< uint8_t, InputImageType::ImageDimension>",
+  "doc" : "Docs",
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "members" : [  {
+    "name" : "BackgroundValue",
+    "type" : "double",
+    "default" : "0.0",
+    "pixeltype" : "Input",
+    "doc" : ""
+  } ],
+  "tests" : [ {
+    "tag" : "default",
+    "description" : "Simply run with default settings",
+    "inputA" : "Input/2th_cthead1.mha",
+    "md5hash" : "",
+    "settings" : [ ]
+  } ]
+}
