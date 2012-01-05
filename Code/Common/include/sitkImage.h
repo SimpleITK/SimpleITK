@@ -217,6 +217,17 @@ namespace simple
     uint64_t *GetBufferAsUInt64( );
     float    *GetBufferAsFloat( );
     double   *GetBufferAsDouble( );
+
+    const int8_t   *GetBufferAsInt8( ) const;
+    const uint8_t  *GetBufferAsUInt8( ) const;
+    const int16_t  *GetBufferAsInt16( ) const;
+    const uint16_t *GetBufferAsUInt16( ) const;
+    const int32_t  *GetBufferAsInt32( ) const;
+    const uint32_t *GetBufferAsUInt32( ) const;
+    const int64_t  *GetBufferAsInt64( ) const;
+    const uint64_t *GetBufferAsUInt64( ) const;
+    const float    *GetBufferAsFloat( ) const;
+    const double   *GetBufferAsDouble( ) const;
     /** @} */
 
 
