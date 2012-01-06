@@ -1,0 +1,38 @@
+{
+  "name" : "LabelOverlay",
+  "template_code_filename" : "DualImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 2,
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "pixel_types2" : "IntegerPixelIDTypeList",
+  "output_image_type" : "itk::VectorImage< typename InputImageType2::PixelType, InputImageType::ImageDimension >",
+  "filter_type" : "itk::LabelOverlayImageFilter<InputImageType, InputImageType2, OutputImageType>",
+  "custom_set_input" : "filter->SetInput1( image1 ); filter->SetInput2( image2 );",
+  "members" : [ {
+    "name" : "Opacity",
+    "type" : "double",
+    "default" : 0.5,
+    "doc" : "Value assigned to pixels outside of the mask",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set/Get the opacity of the colored label image. The value must be between 0 and 1\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
+  }, {
+    "name" : "BackgroundValue",
+    "type" : "double",
+    "default" : "0.0",
+    "pixeltype" : "Input",
+    "briefdescriptionSet" : "",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
+  } ],
+  "tests" : [ {
+    "tag" : "default",
+    "description" : "Simply run with default settings",
+    "inputA" : "Input/cthead1.png",
+    "inputB" : "Input/2th_cthead1.mha",
+    "md5hash" : "299b2f5dbf018c868d65d9d5511fe470",
+    "settings" : [ ]
+  } ]
+}
