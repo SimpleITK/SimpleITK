@@ -1,0 +1,50 @@
+{
+  "name" : "VotingBinaryIterativeHoleFilling",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "filter_type" : "itk::VotingBinaryIterativeHoleFillingImageFilter<InputImageType>",
+  "public_declarations" : "Self &SetRadius( unsigned int r ) { this->m_Radius = std::vector<unsigned int>(3, r ); return *this; }",
+  "members" : [ {
+    "name" : "Radius",
+    "type" : "std::vector<unsigned int>",
+    "default" : "std::vector<unsigned int>(3, 1)",
+    "dim_vec" : 1,
+    "doc" : "",
+    "itk_type" : "typename FilterType::InputSizeType"
+  }, {
+    "name" : "MaximumNumberOfIterations",
+    "type" : "unsigned int",
+    "default" : "10u"
+  }, {
+    "name" : "MajorityThreshold",
+    "type" : "unsigned int",
+    "default" : "1u"
+  }, {
+    "name" : "ForegroundValue",
+    "type" : "double",
+    "default" : "1.0",
+    "pixeltype" : "Input"
+  }, {
+    "name" : "BackgroundValue",
+    "type" : "double",
+    "default" : "0.0",
+    "pixeltype" : "Input"
+  } ],
+  "tests" : [ {
+    "tag" : "VotingBinaryIterativeHoleFiling",
+    "description" : "Basic voting interative hole filling",
+      "inputA" : "Input/BlackDots.png",
+    "settings" : [ {
+      "parameter" : "Radius",
+      "no_get_method" : 1,
+      "value" : 5
+    }, {
+      "parameter" : "ForegroundValue",
+      "value" : "255.0"
+    } ],
+    "md5hash" : "eb63dfddd313064b7b816a8c0b8aaa73"
+  } ]
+}

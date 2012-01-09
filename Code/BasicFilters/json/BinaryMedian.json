@@ -1,0 +1,28 @@
+{
+  "name" : "BinaryMedian",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "public_declarations" : "Self &SetRadius( unsigned int r ) { this->m_Radius = std::vector<unsigned int>(3, r ); return *this; }",
+  "members" : [ {
+    "name" : "Radius",
+    "type" : "std::vector<unsigned int>",
+    "default" : "std::vector<unsigned int>(3, 1)",
+    "dim_vec" : 1,
+    "doc" : "",
+    "itk_type" : "typename FilterType::InputSizeType"
+  },  {
+    "name" : "ForegroundValue",
+    "type" : "double",
+    "default" : "1.0",
+    "pixeltype" : "Input"
+  }, {
+    "name" : "BackgroundValue",
+    "type" : "double",
+    "default" : "0.0",
+    "pixeltype" : "Input"
+  } ],
+  "tests" : [ ]
+}
