@@ -1,0 +1,24 @@
+{
+  "name" : "SumProjection",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "\todo this filter should work with VectorImages too. \todo output type should be AccumulateType",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "output_pixel_type" : "typename itk::NumericTraits<typename InputImageType::PixelType>::RealType",
+  "members" : [ {
+    "name" : "ProjectionDimension",
+    "type" : "unsigned int",
+    "default" : "0u"
+  } ],
+  "tests" : [ {
+    "tag" : "z-projection",
+    "description" : "project in the 2nd dimension",
+    "inputA" : "Input/RA-Float.nrrd",
+    "settings" : [ {
+      "parameter" : "ProjectionDimension",
+      "value" : "2"
+    } ]
+     "tolerance" : "0.0001"
+  } ]
+}
