@@ -268,7 +268,7 @@ namespace simple
   private:
 
     /** Dispatched from the InternalInitialization method. The enable
-     * if idom is used here for method overloading. The second method
+     * if idiom is used here for method overloading. The second method
      * is for non-instantiated image, which turn into a void pointer
      * for the paramter. However, this second method should never be
      * executed.
