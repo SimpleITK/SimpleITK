@@ -4,7 +4,7 @@
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "doc" : "",
-  "pixel_types" : "BasicPixelIDTypeList"
+  "pixel_types" : "BasicPixelIDTypeList",
    "output_pixel_type" : "uint8_t",
   "public_declarations" : "Self &SetRadius( unsigned int r ) { this->m_Radius = std::vector<unsigned int>(3, r ); return *this; }",
   "members" : [ {
