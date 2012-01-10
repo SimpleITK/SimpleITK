@@ -3,6 +3,7 @@
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
   "output_image_type" : "itk::VectorImage< unsigned char, InputImageType::ImageDimension>",
+  "number_of_inputs" : 1,
   "doc" : "Docs",
   "pixel_types" : "LabelPixelIDTypeList",
   "members" : [ ],
