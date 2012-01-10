@@ -10,7 +10,11 @@
     "name" : "Repetitions",
     "type" : "unsigned int",
     "default" : "1u",
-    "doc" : ""
+    "doc" : "",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Get and set the number of times to repeat the filter.\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
   } ],
   "tests" : [ {
     "tag" : "defaults",
@@ -18,6 +22,7 @@
     "inputA" : "Input/VM1111Shrink-RGBFloat.nrrd",
     "md5hash" : "ccd2e6e83817056f586e37f59e43bfff",
     "settings" : [ ]
-  }]
-  } ]
+  } ],
+  "briefdescription" : "Performs a separable blur on each dimension of an image.\n",
+  "detaileddescription" : "The binomial blur consists of a nearest neighbor average along each image dimension. The net result after n-iterations approaches convultion with a gaussian.\n\\par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}\n{Smoothing/BinomialBlurImageFilter,Blur an image}\n\n"
 }

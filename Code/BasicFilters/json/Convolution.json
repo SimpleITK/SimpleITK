@@ -11,8 +11,12 @@
     "name" : "Normalize",
     "type" : "bool",
     "default" : "false",
-    "doc" : ""
-   }, {
+    "doc" : "",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Normalize the output image by the sum of the kernel components\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
+  }, {
     "name" : "OutputRegionMode",
     "type" : "ConvolutionImageFilter::OutputRegionMode",
     "default" : "itk::simple::ConvolutionImageFilter::SAME",
@@ -25,5 +29,7 @@
     "inputB" : "Input/Gaussian_1.5.nrrd",
     "settings" : [ ],
     "tolerance" : "0.0001"
-  } ]
+  } ],
+  "briefdescription" : "Convolve a given image with an arbitrary image kernel.\n",
+  "detaileddescription" : "http://hdl.handle.net/1926/1323\n\\author Nicholas J. Tustison\nJames C. Gee\n\\li {ImageProcessing/ConvolutionImageFilter,Convolve an image with a kernel}\n\n\n"
 }
