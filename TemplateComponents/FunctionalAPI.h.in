@@ -6,5 +6,10 @@
      *
      * \sa itk::simple::${name}ImageFilter for the object oriented interface
      */
-    SITKBasicFilters_EXPORT Image ${name} ( const Image& image$(if number_of_inputs == 2 then OUT=', const Image& image2' end)$(when members $(foreach members ,
+    SITKBasicFilters_EXPORT Image ${name} ( $(for inum=1,number_of_inputs do
+ if inum>1 then
+       OUT=OUT.. ', '
+  end
+  OUT= OUT .. 'const Image& image' .. inum
+  end )$(when members $(foreach members ,
       ${type} in${name} = ${default})) );
