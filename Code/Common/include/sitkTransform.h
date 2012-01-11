@@ -4,6 +4,7 @@
 #include "sitkCommon.h"
 #include <vector>
 
+
 namespace itk
 {
 
@@ -72,6 +73,8 @@ public:
 
 protected:
 
+  void MakeUniqueForWrite( void );
+
 private:
 
   template< unsigned int VDimension>
@@ -84,4 +87,4 @@ private:
 }
 }
 
-#endif
+#endif // __sitkTransform_h

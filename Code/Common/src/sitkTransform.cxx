@@ -62,7 +62,10 @@ public:
     }
 
 
+  virtual PimpleTransformBase *ShallowCopy( void ) const = 0;
   virtual PimpleTransformBase *DeepCopy( void ) const = 0;
+
+  virtual int GetReferenceCount( ) const = 0;
 
   std::string ToString( void ) const
     {
@@ -105,12 +108,22 @@ public:
   virtual unsigned int GetOutputDimension( void ) const { return OutputDimension; }
 
 
+  virtual PimpleTransformBase *ShallowCopy( void ) const
+    {
+      return new Self( this->m_Transform.GetPointer() );
+    }
+
   virtual PimpleTransformBase *DeepCopy( void ) const
     {
       std::auto_ptr<Self> copy( new Self() );
       copy->m_Transform->SetFixedParameters( this->m_Transform->GetFixedParameters() );
       copy->m_Transform->SetParameters( this->m_Transform->GetParameters() );
       return copy.release();
+    }
+
+  virtual int GetReferenceCount( ) const
+    {
+      return this->m_Transform->GetReferenceCount();
     }
 
 private:
@@ -150,19 +163,28 @@ Transform::Transform( )
   Transform::Transform( const Transform &txf )
     : m_PimpleTransform( NULL )
   {
-    m_PimpleTransform = txf.m_PimpleTransform->DeepCopy();
+    m_PimpleTransform = txf.m_PimpleTransform->ShallowCopy();
   }
 
   Transform& Transform::operator=( const Transform & txf )
   {
     // note: if txf and this are the same,the following statements
     // will be safe. It's also exception safe.
-    std::auto_ptr<PimpleTransformBase> temp( txf.m_PimpleTransform->DeepCopy() );
+    std::auto_ptr<PimpleTransformBase> temp( txf.m_PimpleTransform->ShallowCopy() );
     delete this->m_PimpleTransform;
     this->m_PimpleTransform = temp.release();
     return *this;
   }
 
+void Transform::MakeUniqueForWrite( void )
+{
+  if ( this->m_PimpleTransform->GetReferenceCount() > 1 )
+    {
+    std::auto_ptr<PimpleTransformBase> temp( this->m_PimpleTransform->DeepCopy() );
+    delete this->m_PimpleTransform;
+    this->m_PimpleTransform = temp.release();
+    }
+}
 
   template< unsigned int VDimension>
   void  Transform::InternalIntitialization(  TransformEnum type, itk::TransformBase *base )
@@ -237,6 +259,7 @@ Transform::Transform( )
   void Transform::SetParameters ( const std::vector<double>& parameters )
   {
     assert( m_PimpleTransform );
+    this->MakeUniqueForWrite();
     this->m_PimpleTransform->SetParameters( parameters );
   }
   std::vector<double> Transform::GetParameters( void ) const
