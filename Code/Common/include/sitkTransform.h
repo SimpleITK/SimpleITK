@@ -31,6 +31,7 @@ enum TransformEnum { sitkIdentity,
 class SITKCommon_EXPORT Transform
 {
 public:
+  typedef Transform Self;
 
   /** Questionable default constructable
    */
@@ -62,6 +63,8 @@ public:
    */
   void SetParameters ( const std::vector<double>& parameters );
   std::vector<double> GetParameters( void ) const ;
+
+  Transform &AddTransform( Transform &t );
 
   // read
   // write
