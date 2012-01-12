@@ -152,7 +152,7 @@ public:
       typename CompositeTransformType::TransformType* base =
         dynamic_cast< typename CompositeTransformType::TransformType*>( t.GetITKBase() );
 
-      return this->AddTransform( base, typename std::tr1::is_same<TTransformType,CompositeTransformType>::type() );
+      return this->AddTransform( base, typename std::tr1::is_same<TTransformType, CompositeTransformType>::type() );
     }
 
   PimpleTransformBase* AddTransform( typename CompositeTransformType::TransformType* &t, std::tr1::true_type isCompositeTransform )
@@ -264,16 +264,29 @@ void Transform::MakeUniqueForWrite( void )
         break;
       case sitkComposite:
       {
+      typename itk::CompositeTransform<double, VDimension>::Pointer compositeTransform;
+
       if ( !base )
         {
-        m_PimpleTransform = new PimpleTransform<itk::CompositeTransform<double, VDimension> > ();
-        break;
+        compositeTransform = itk::CompositeTransform<double, VDimension>::New();
         }
-      itk::CompositeTransform<double, VDimension>* compositeTransform =
-        dynamic_cast<itk::CompositeTransform<double, VDimension>*>( base );
-      if ( !compositeTransform )
+      else
         {
-        sitkExceptionMacro("Unexpectedly unable to convert to CompositeTransform" );
+        compositeTransform = dynamic_cast<itk::CompositeTransform<double, VDimension>*>( base );
+        if ( !compositeTransform )
+          {
+          sitkExceptionMacro("Unexpectedly unable to convert to CompositeTransform" );
+          }
+        }
+
+      if ( compositeTransform->IsTransformQueueEmpty() )
+        {
+
+        // Load an identity transform in case no transforms are loaded.
+        typedef itk::IdentityTransform<double, VDimension> IdentityTransformType;
+        typename IdentityTransformType::Pointer identityTransform = IdentityTransformType::New();
+
+        compositeTransform->AddTransform( identityTransform );
         }
       m_PimpleTransform = new PimpleTransform<itk::CompositeTransform<double, VDimension> >( compositeTransform );
       }
