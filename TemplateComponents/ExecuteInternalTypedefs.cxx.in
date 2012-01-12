@@ -1,8 +1,7 @@
   // Define the input and output image types
   typedef TImageType     InputImageType;
-$(if number_of_inputs == 2 then
-OUT=[[
-  typedef TImageType     InputImageType2;]]
+$(for nimg=2,number_of_inputs do
+OUT=OUT .. '  typedef TImageType     InputImageType' .. nimg .. ';\n'
   end)
   $(if output_image_type then
   OUT=[[//Define output image type
