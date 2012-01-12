@@ -73,15 +73,8 @@ endif()
 # python SWIG configuration
 #
 if ( WRAP_PYTHON )
-  find_package ( PythonLibs REQUIRED )
-  find_package ( PythonInterp REQUIRED )
-  execute_process( COMMAND ${PYTHON_EXECUTABLE} --version
-    ERROR_VARIABLE _python_version_string )
-  string( REGEX MATCH "[0-9]+[.][0-9]+" _python_version "${_python_version_string}" )
-  if( ${_python_version} VERSION_LESS 2.6 )
-    # This is necessary for the new buffer protocol used for numpy support.
-    message( FATAL_ERROR "Python version must be 2.6 or greater." )
-  endif()
+  find_package ( PythonLibs 2.6 REQUIRED )
+  find_package ( PythonInterp 2.6 REQUIRED )
   include_directories ( ${PYTHON_INCLUDE_DIR} ${SimpleITK_SOURCE_DIR}/Wrapping )
 
   # Run swig
