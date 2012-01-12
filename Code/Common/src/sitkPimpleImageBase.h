@@ -16,7 +16,7 @@ namespace itk
    * programming idiom to modify the behavior of the simple image
    * class based on the different image types.
    *
-   * This class is desinged to utilize the trivial copy,
+   * This class is designed to utilize the trivial copy,
    * and assgnement operators
    */
   class PimpleImageBase
