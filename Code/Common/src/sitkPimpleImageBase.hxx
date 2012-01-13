@@ -314,6 +314,47 @@ namespace itk
         return  static_cast<double*>(this->InternalGetBuffer< BasicPixelID<double> >( ));
       }
 
+    virtual const int8_t  *GetBufferAsInt8() const
+      {
+        return static_cast<int8_t*>(const_cast<Self*>(this)->InternalGetBuffer< BasicPixelID<int8_t> >( ));
+      }
+    virtual const uint8_t  *GetBufferAsUInt8() const
+      {
+        return static_cast<uint8_t*>(const_cast<Self*>(this)->InternalGetBuffer< BasicPixelID<uint8_t> >( ));
+      }
+    virtual const int16_t  *GetBufferAsInt16( ) const
+      {
+        return  static_cast<int16_t*>(const_cast<Self*>(this)->InternalGetBuffer< BasicPixelID<int16_t> >( ));
+      }
+    virtual const uint16_t *GetBufferAsUInt16( ) const
+      {
+        return  static_cast<uint16_t*>(const_cast<Self*>(this)->InternalGetBuffer< BasicPixelID<uint16_t> >( ));
+      }
+    virtual const int32_t  *GetBufferAsInt32( ) const
+      {
+        return  static_cast<int32_t*>(const_cast<Self*>(this)->InternalGetBuffer< BasicPixelID<int32_t> >( ));
+      }
+    virtual const uint32_t *GetBufferAsUInt32( ) const
+      {
+        return  static_cast<uint32_t*>(const_cast<Self*>(this)->InternalGetBuffer< BasicPixelID<uint32_t> >( ));
+      }
+    virtual const int64_t  *GetBufferAsInt64( ) const
+      {
+        return  static_cast<int64_t*>(const_cast<Self*>(this)->InternalGetBuffer< BasicPixelID<int64_t> >( ));
+      }
+    virtual const uint64_t *GetBufferAsUInt64( ) const
+      {
+        return  static_cast<uint64_t*>(const_cast<Self*>(this)->InternalGetBuffer< BasicPixelID<uint64_t> >( ));
+      }
+    virtual const float    *GetBufferAsFloat( ) const
+      {
+        return  static_cast<float*>(const_cast<Self*>(this)->InternalGetBuffer< BasicPixelID<float> >( ));
+      }
+    virtual const double   *GetBufferAsDouble(  ) const
+      {
+        return  static_cast<double*>(const_cast<Self*>(this)->InternalGetBuffer< BasicPixelID<double> >( ));
+      }
+
     virtual void SetPixelAsInt8( const std::vector<uint32_t> &idx, int8_t v )
       {
         this->InternalSetPixel( idx, v );
@@ -411,7 +452,6 @@ namespace itk
                             << "!" );
       }
 
-
     template < typename TPixelIDType >
     typename EnableIf<std::tr1::is_same<TPixelIDType, typename ImageTypeToPixelID<ImageType>::PixelIDType>::value
                       && !IsLabel<TPixelIDType>::Value
@@ -448,7 +488,7 @@ namespace itk
     InternalGetBuffer( void )
       {
         sitkExceptionMacro( << "The image is of type: " << GetPixelIDValueAsString( this->GetPixelIDValue() )
-                            << " but the GetPixel access method requires type: "
+                            << " but the GetBuffer access method requires type: "
                             << GetPixelIDValueAsString(  PixelIDToPixelIDValue<TPixelIDType>::Result )
                             << "!" );
       }

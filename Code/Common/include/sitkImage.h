@@ -158,7 +158,7 @@ namespace simple
     uint32_t GetPixelAsUInt64( const std::vector<uint32_t> &idx ) const;
     float    GetPixelAsFloat( const std::vector<uint32_t> &idx ) const;
     double   GetPixelAsDouble(  const std::vector<uint32_t> &idx ) const;
-    /* @} */
+    /** @} */
 
     /** \brief Set the value of a pixel
      *
@@ -217,7 +217,18 @@ namespace simple
     uint64_t *GetBufferAsUInt64( );
     float    *GetBufferAsFloat( );
     double   *GetBufferAsDouble( );
-    /* @} */
+
+    const int8_t   *GetBufferAsInt8( ) const;
+    const uint8_t  *GetBufferAsUInt8( ) const;
+    const int16_t  *GetBufferAsInt16( ) const;
+    const uint16_t *GetBufferAsUInt16( ) const;
+    const int32_t  *GetBufferAsInt32( ) const;
+    const uint32_t *GetBufferAsUInt32( ) const;
+    const int64_t  *GetBufferAsInt64( ) const;
+    const uint64_t *GetBufferAsUInt64( ) const;
+    const float    *GetBufferAsFloat( ) const;
+    const double   *GetBufferAsDouble( ) const;
+    /** @} */
 
 
   protected:
@@ -268,7 +279,7 @@ namespace simple
   private:
 
     /** Dispatched from the InternalInitialization method. The enable
-     * if idom is used here for method overloading. The second method
+     * if idiom is used here for method overloading. The second method
      * is for non-instantiated image, which turn into a void pointer
      * for the paramter. However, this second method should never be
      * executed.

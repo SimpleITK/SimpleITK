@@ -5,7 +5,7 @@
   "number_of_inputs" : 1,
   "doc" : "Extract image filter extracts a 2D image from a 2D or 3D image. If the same dimension output is required then the RegionOfInterestFilter should be used. \n \todo This filter should work with Vector images too.",
   "pixel_types" : "BasicPixelIDTypeList",
-  "public_declarations" : "    typedef enum { DIRECTIONCOLLAPSETOUNKOWN = 0, DIRECTIONCOLLAPSETOIDENTITY = 1, DIRECTIONCOLLAPSETOSUBMATRIX = 2, DIRECTIONCOLLAPSETOGUESS = 3} DirectionCollapseStrategy;",
+  "public_declarations" : "    typedef enum { DIRECTIONCOLLAPSETOUNKOWN = 0, DIRECTIONCOLLAPSETOIDENTITY = 1, DIRECTIONCOLLAPSETOSUBMATRIX = 2, DIRECTIONCOLLAPSETOGUESS = 3} DirectionCollapseStrategyType;",
   "filter_type" : "itk::ExtractImageFilter<InputImageType, itk::Image<typename InputImageType::PixelType, 2> >",
   "members" : [ {
     "name" : "Size",
@@ -31,7 +31,7 @@
     "custom_itk_cast" : " typename InputImageType::RegionType itkRegion;\n  for( unsigned int i = 0; i < inImage1.GetDimension(); ++i )\n    {\n    itkRegion.SetIndex( i, m_Index[i] );\n    itkRegion.SetSize( i, m_Size[i] );\n    }\n  filter->SetExtractionRegion( itkRegion );"
   }, {
     "name" : "DirectionCollapseToStrategy",
-    "type" : "ExtractImageFilter::DirectionCollapseStrategy",
+    "type" : "ExtractImageFilter::DirectionCollapseStrategyType",
     "default" : "itk::simple::ExtractImageFilter::DIRECTIONCOLLAPSETOGUESS",
     "custom_itk_cast" : "filter->SetDirectionCollapseToStrategy( typename FilterType::DirectionCollapseStrategyEnum( int( this->m_DirectionCollapseToStrategy ) ) );",
     "briefdescriptionSet" : "",
@@ -50,9 +50,9 @@
       "lua_value" : "SimpleITK.${name}ImageFilter_DIRECTIONCOLLAPSETOIDENTITY",
       "python_value" : "SimpleITK.${name}ImageFilter.DIRECTIONCOLLAPSETOIDENTITY",
       "ruby_value" : "Simpleitk::${name}ImageFilter::DIRECTIONCOLLAPSETOIDENTITY",
-      "java_value" : "${name}ImageFilter.DirectionCollapseStrategy.DIRECTIONCOLLAPSETOIDENTITY",
+      "java_value" : "${name}ImageFilter.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
       "tcl_value" : "$$${name}ImageFilter_DIRECTIONCOLLAPSETOIDENTITY",
-      "csharp_value" : "itk.simple.${name}ImageFilter.DirectionCollapseStrategy.DIRECTIONCOLLAPSETOIDENTITY"
+      "csharp_value" : "itk.simple.${name}ImageFilter.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY"
     } ]
   }, {
     "tag" : "more",
@@ -81,9 +81,9 @@
       "lua_value" : "SimpleITK.${name}ImageFilter_DIRECTIONCOLLAPSETOIDENTITY",
       "python_value" : "SimpleITK.${name}ImageFilter.DIRECTIONCOLLAPSETOIDENTITY",
       "ruby_value" : "Simpleitk::${name}ImageFilter::DIRECTIONCOLLAPSETOIDENTITY",
-      "java_value" : "${name}ImageFilter.DirectionCollapseStrategy.DIRECTIONCOLLAPSETOIDENTITY",
+      "java_value" : "${name}ImageFilter.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
       "tcl_value" : "$$${name}ImageFilter_DIRECTIONCOLLAPSETOIDENTITY",
-      "csharp_value" : "itk.simple.${name}ImageFilter.DirectionCollapseStrategy.DIRECTIONCOLLAPSETOIDENTITY"
+      "csharp_value" : "itk.simple.${name}ImageFilter.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY"
     } ]
   } ],
   "briefdescription" : "Decrease the image size by cropping the image to the selected region bounds.\n",
