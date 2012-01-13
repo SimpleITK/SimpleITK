@@ -12,7 +12,7 @@
   }, {
     "name" : "UpperBoundary",
     "type" : "double",
-    "default" : "itk::NumericTraits<double>::max()",
+    "default" : "std::numeric_limits<double>::max()",
     "pixeltype" : "Input",
     "custom_itk_cast" : "filter->SetUpperBoundary( static_cast<typename InputImageType::PixelType> ( std::min<double>( this->m_UpperBoundary, itk::NumericTraits<typename InputImageType::PixelType>::max() ) ) );"
   }, {
