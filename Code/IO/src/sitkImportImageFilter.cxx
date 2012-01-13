@@ -48,6 +48,11 @@ void ImportImageFilter::SetSize( const std::vector< unsigned int > &size )
   this->m_Size = size;
 }
 
+void ImportImageFilter::SetDirection( const std::vector< double > &direction )
+{
+  this->m_Direction = direction;
+}
+
 void ImportImageFilter::SetBufferAsInt8( int8_t * buffer, unsigned int numberOfComponents )
 {
   this->m_Buffer = buffer;
@@ -214,17 +219,6 @@ Image ImportImageFilter::ExecuteInternal( )
 
   typename ImageType::Pointer image = ImageType::New();
 
-  //
-  //  Origin
-  //
-  typename ImageType::PointType origin = sitkSTLVectorToITK< typename ImageType::PointType >( this->m_Origin );
-  image->SetOrigin( origin );
-
-  //
-  //  Spacing
-  //
-  typename ImageType::SpacingType spacing = sitkSTLVectorToITK< typename ImageType::SpacingType >( this->m_Spacing );
-  image->SetSpacing( spacing );
 
   //
   //  Size and Region
@@ -232,6 +226,7 @@ Image ImportImageFilter::ExecuteInternal( )
   typename ImageType::RegionType region;
   typename ImageType::SizeType size = sitkSTLVectorToITK< typename ImageType::SizeType >( this->m_Size );
   region.SetSize(size);
+  // set the size and region to the ITK image.
   image->SetRegions( region );
 
 
@@ -240,8 +235,6 @@ Image ImportImageFilter::ExecuteInternal( )
     {
     numberOfElements *= size[si];
     }
-
-  // todo set direction
 
   const bool TheContainerWillTakeCareOfDeletingTheMemoryBuffer = false;
 
@@ -256,7 +249,35 @@ Image ImportImageFilter::ExecuteInternal( )
   //
   this->SetNumberOfComponentsOnImage( image.GetPointer() );
 
-  return Image(image);
+  Image sitkimage( image );
+
+  this->m_Origin.resize( Dimension );
+  this->m_Spacing.resize( Dimension );
+
+  sitkimage.SetOrigin( this->m_Origin );
+  sitkimage.SetSpacing( this->m_Spacing );
+
+  if (this->m_Direction.size() != 0 )
+      sitkimage.SetDirection( this->m_Direction );
+  else if (Dimension == 2)
+    {
+    // make a 2x2 identity matrix
+    std::vector<double> dir(4, 0.);
+    dir[0] = 1.;
+    dir[3] = 1.;
+    sitkimage.SetDirection( dir );
+    }
+  else if (Dimension == 3)
+    {
+    // make a 3x3 identity matrix
+    std::vector<double> dir(9, 0.);
+    dir[0] = 1.;
+    dir[4] = 1.;
+    dir[8] = 1.;
+    sitkimage.SetDirection( dir );
+    }
+
+  return sitkimage;
 }
 
 template <class TFilterType>

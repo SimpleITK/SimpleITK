@@ -14,6 +14,12 @@ public:
     origin1 = std::vector<double>( 3, 1.0 );
     origin2.push_back( 2.71828183 );
     origin2.push_back( 3.14159265 );
+    direction2D = std::vector<double>(4, 0.0 );
+    direction3D = std::vector<double>(9, 0.0 );
+
+    direction2D[0] = direction2D[3] = 1.0;
+
+    direction3D[0] = direction3D[4] = direction3D[8] = 1.0;
   }
 
   std::vector<double> spacing1;
@@ -30,6 +36,9 @@ public:
   std::vector< int32_t > int32_buffer;
   std::vector< float > float_buffer;
   std::vector< double > double_buffer;
+
+  std::vector<double> direction2D;
+  std::vector<double> direction3D;
 };
 
 namespace sitk = itk::simple;
@@ -58,6 +67,7 @@ TEST_F(Import,BasicUsage) {
   importer.SetSize( std::vector< unsigned int >( 3, 128u ) );
   importer.SetSpacing( spacing1 );
   importer.SetOrigin( origin0 );
+  importer.SetDirection( direction3D );
   importer.SetBufferAsUInt8( &uint8_buffer[0] );
 
   sitk::Image image = importer.Execute();
@@ -99,6 +109,7 @@ TEST_F(Import,BasicUsage) {
   importer.SetSize( std::vector< unsigned int >( 2, 73u ) );
   importer.SetSpacing( spacing2 );
   importer.SetOrigin( origin2 );
+  importer.SetDirection( direction2D );
   importer.SetBufferAsInt32( &int32_buffer[0] );
 
   image = importer.Execute();
@@ -124,6 +135,44 @@ TEST_F(Import,BasicUsage) {
 
 
   EXPECT_EQ ( "6f6eefc4c1833e3e29b0968023ead2141fdbee3f", sitk::Hash( image ) ) << " hash value for basic uin32_t";
+}
+
+TEST_F(Import,Direction) {
+
+  // This test is to run the direction parameter though it's passes
+
+  sitk::Image img(0,0,sitk::sitkUInt8);
+
+  uint8_buffer = std::vector< uint8_t >( 128*128*128, 17 );
+
+
+  {
+  sitk::ImportImageFilter importer;
+  importer.SetSize( std::vector< unsigned int >( 3, 128u ) );
+  importer.SetBufferAsUInt8( &uint8_buffer[0] );
+
+  // check defaults to identity
+  ASSERT_NO_THROW( img = importer.Execute() );
+  EXPECT_TRUE( img.GetDirection() == direction3D );
+
+
+  importer.SetDirection( direction2D );
+  ASSERT_ANY_THROW( importer.Execute() ) << "Checking 2D direction to 3D import ";
+  }
+
+  {
+  sitk::ImportImageFilter importer;
+  importer.SetSize( std::vector< unsigned int >( 2, 128u ) );
+  importer.SetBufferAsUInt8( &uint8_buffer[0] );
+
+  // check defaults to identity
+  ASSERT_NO_THROW( img = importer.Execute() );
+  EXPECT_TRUE( img.GetDirection() == direction2D );
+
+  importer.SetDirection( direction3D  );
+  ASSERT_ANY_THROW( importer.Execute() ) << "Checking 3D direction to 2D import";
+  }
+
 }
 
 
