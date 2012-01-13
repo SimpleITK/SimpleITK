@@ -18,7 +18,7 @@
 %exception {
   try {
     $action
-  } catch( itk::ExceptionObject &ex ) {
+  } catch( std::exception &ex ) {
     char error_msg[1024];
 // TODO this should be replaces with some try compile stuff
 
