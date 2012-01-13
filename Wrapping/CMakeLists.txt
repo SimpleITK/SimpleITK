@@ -8,23 +8,14 @@ if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA OR WRAP_CSHARP OR WRAP_TCL OR WRAP_R O
 
   message( STATUS "CMAKE_MODULE_PATH: ${CMAKE_MODULE_PATH}")
   include (UseSWIGLocal)
+
   set_source_files_properties ( SimpleITK.i PROPERTIES CPLUSPLUS ON )
-  file ( GLOB SWIG_HEADERS ${SimpleITK_SOURCE_DIR}/Code/*/*.h)
 
-  set ( DEPENDANT_GENERATED_HEADERS "" )
-  foreach ( filter ${GENERATED_FILTER_LIST} )
-    set ( DEPENDANT_GENERATED_HEADERS ${DEPENDANT_GENERATED_HEADERS} ${SimpleITK_BINARY_DIR}/Code/BasicFilters/include/sitk${filter}ImageFilter.h )
-  endforeach()
-
-  set ( SWIG_HEADERS ${SWIG_HEADERS} ${SimpleITK_BINARY_DIR}/Code/BasicFilters/include/SimpleITKBasicFiltersGeneratedHeaders.i
-    ${SimpleITK_BINARY_DIR}/Code/BasicFilters/include/SimpleITKBasicFiltersGeneratedHeaders.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/CSharp.i
-    ${CMAKE_CURRENT_SOURCE_DIR}/CSharpTypemapHelper.i
-    ${CMAKE_CURRENT_SOURCE_DIR}/Java.i
-    ${CMAKE_CURRENT_SOURCE_DIR}/Lua.i
-    ${CMAKE_CURRENT_SOURCE_DIR}/Python.i
-    ${CMAKE_CURRENT_SOURCE_DIR}/Tcl.i
-    ${DEPENDANT_GENERATED_HEADERS} )
+  # make a manual list of dependencies for the Swig.i files
+  list( APPEND SWIG_EXTRA_DEPS "${SimpleITK_BINARY_DIR}/Code/BasicFilters/include/SimpleITKBasicFiltersGeneratedHeaders.i"
+    "${SimpleITK_BINARY_DIR}/Code/BasicFilters/include/SimpleITKBasicFiltersGeneratedHeaders.h"
+    BasicFiltersSourceCode
+     )
 
   # check if uint64_t is the same as unsigned long
   try_compile(SITK_ULONG_SAME_AS_UINT64
@@ -35,8 +26,6 @@ if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA OR WRAP_CSHARP OR WRAP_TCL OR WRAP_R O
   if(${SITK_ULONG_SAME_AS_UINT64} )
     set ( CMAKE_SWIG_GLOBAL_FLAGS "-DSWIGWORDSIZE64" )
   endif()
-
-  set ( SWIG_MODULE_SimpleITK_EXTRA_DEPS ${SWIG_HEADERS} )
 
 endif()
 
@@ -58,10 +47,11 @@ if ( WRAP_LUA )
   # Run swig
   set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS})
   set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
-  set(SWIG_MODULE_SimpleITKLua_EXTRA_DEPS ${SWIG_HEADERS})
+  set(SWIG_MODULE_SimpleITKLua_EXTRA_DEPS ${SWIG_EXTRA_DEPS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/Lua.i )
   SWIG_module_initialize ( SimpleITKLua lua )
-  SWIG_add_source_to_module ( SimpleITKLua swig_generated_source SimpleITK.i ${SWIG_HEADERS} )
-  set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKLUA_wrap.cxx COMPILE_FLAGS "-w")
+  SWIG_add_source_to_module ( SimpleITKLua swig_generated_source SimpleITK.i ${SWIG_EXTRA_DEPS} )
+  set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKLUA_wrap.cxx PROPERTIES COMPILE_FLAGS "-w" )
 
   add_executable ( SimpleITKLua SimpleITKLuaMain.cxx SimpleITKLUA_wrap.cxx )
   target_link_libraries ( SimpleITKLua ${SimpleITK_LIBRARIES} ${LUA_LIB} )
@@ -80,10 +70,11 @@ if ( WRAP_PYTHON )
   # Run swig
   set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS} -features autodoc=1 -keyword)
   set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
-  set(SWIG_MODULE_SimpleITK_EXTRA_DEPS ${SWIG_HEADERS})
+  set(SWIG_MODULE_SimpleITK_EXTRA_DEPS ${SWIG_EXTRA_DEPS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/Python.i )
   SWIG_add_module ( SimpleITK python SimpleITK.i SimpleITKPYTHON_wrap.cxx )
-  SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${PYTHON_LIBRARIES} ${ITK_LIBRARIES})
-  set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKPYTHON_wrap.cxx COMPILE_FLAGS "-w")
+  SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${PYTHON_LIBRARIES})
+  set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKPYTHON_wrap.cxx PROPERTIES COMPILE_FLAGS "-w")
 
   # Installation
   set( SIMPLEITK_PYTHON_MODULE_DIR "${SimpleITK_BINARY_DIR}/Wrapping" )
@@ -137,11 +128,12 @@ if ( WRAP_RUBY )
   # Run swig
   set(CMAKE_SWIG_FLAGS -autorename -module simpleitk ${CMAKE_SWIG_GLOBAL_FLAGS})
   set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
-  set(SWIG_MODULE_simpleitk_EXTRA_DEPS ${SWIG_HEADERS})
+  set(SWIG_MODULE_simpleitk_EXTRA_DEPS ${SWIG_EXTRA_DEPS}
+     ${CMAKE_CURRENT_SOURCE_DIR}/Ruby.i)
 
   SWIG_add_module ( simpleitk ruby SimpleITK.i SimpleITKRUBY_wrap.cxx )
-  SWIG_link_libraries ( simpleitk ${SimpleITK_LIBRARIES} ${RUBY_LIBRARY} ${ITK_LIBRARIES})
-  set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKRUBY_wrap.cxx COMPILE_FLAGS "-w")
+  SWIG_link_libraries ( simpleitk ${SimpleITK_LIBRARIES} ${RUBY_LIBRARY})
+  set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKRUBY_wrap.cxx  PROPERTIES COMPILE_FLAGS "-w")
 
 endif()
 
@@ -168,10 +160,11 @@ if ( WRAP_JAVA )
   # Nicely write the bridge code in org/itk/simple
   set(CMAKE_SWIG_OUTDIR ${JAVA_SOURCE_DIRECTORY}/org/itk/simple/)
   set(CMAKE_SWIG_FLAGS -package "org.itk.simple" ${CMAKE_SWIG_GLOBAL_FLAGS})
-  set(SWIG_MODULE_SimpleITKJava_EXTRA_DEPS ${SWIG_HEADERS})
+  set(SWIG_MODULE_SimpleITKJava_EXTRA_DEPS ${SWIG_EXTRA_DEPS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/Java.i )
   SWIG_add_module ( SimpleITKJava java SimpleITK.i SimpleITKJAVA_wrap.cxx)
   SWIG_link_libraries(SimpleITKJava ${SimpleITK_LIBRARIES})
-  set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKJAVA_wrap.cxx COMPILE_FLAGS "-w")
+  set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKJAVA_wrap.cxx  PROPERTIES COMPILE_FLAGS "-w")
 
   # Add target for org.itk.simple.jar
   add_custom_target(org_itk_simple_jar ALL DEPENDS ${JAR_FILE})
@@ -221,7 +214,9 @@ if ( WRAP_CSHARP )
     set(CMAKE_SWIG_FLAGS -dllimport \"SimpleITKCSharpNative\")
   endif ( UNIX )
   set(CMAKE_SWIG_FLAGS -namespace \"itk.simple\" ${CMAKE_SWIG_GLOBAL_FLAGS} ${CMAKE_SWIG_FLAGS})
-  set(SWIG_MODULE_SimpleITKCSharpNative_EXTRA_DEPS ${SWIG_HEADERS})
+  set(SWIG_MODULE_SimpleITKCSharpNative_EXTRA_DEPS ${SWIG_EXTRA_DEPS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/CSharp.i
+    ${CMAKE_CURRENT_SOURCE_DIR}/CSharpTypemapHelper.i )
   swig_add_module(SimpleITKCSharpNative csharp SimpleITK.i)
   swig_link_libraries(SimpleITKCSharpNative ${SimpleITK_LIBRARIES})
   set_target_properties(SimpleITKCSharpNative PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CSHARP_BINARY_DIRECTORY})
@@ -264,12 +259,20 @@ if ( WRAP_TCL )
   # Run swig
   set(CMAKE_SWIG_FLAGS "-nosafe" ${CMAKE_SWIG_GLOBAL_FLAGS})
   set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
-  set(SWIG_MODULE_SimpleITKTcl_EXTRA_DEPS ${SWIG_HEADERS})
-  SWIG_add_module ( SimpleITKTcl tcl SimpleITK.i SimpleITKTCL_wrap.cxx )
-  SWIG_link_libraries ( SimpleITKTcl ${SimpleITK_LIBRARIES} ${TCL_LIBRARY} ${ITK_LIBRARIES})
-  set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKTCL_wrap.cxx COMPILE_FLAGS "-w")
+  set(SWIG_MODULE_SimpleITKTcl_EXTRA_DEPS ${SWIG_EXTRA_DEPS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/Tcl.i )
+#  SWIG_add_module ( SimpleITKTcl tcl SimpleITK.i SimpleITKTCL_wrap.cxx )
+#  SWIG_link_libraries ( SimpleITKTcl ${SimpleITK_LIBRARIES} ${TCL_LIBRARY})
+#  set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKTCL_wrap.cxx  PROPERTIES COMPILE_FLAGS "-w")
+#  add_executable ( SimpleITKTclsh SimpleITKTCL_wrap.cxx )
+#  target_link_libraries ( SimpleITKTclsh ${SimpleITK_LIBRARIES} ${TCL_LIBRARY})
+
+  SWIG_module_initialize ( SimpleITKTCL tcl )
+  SWIG_add_source_to_module ( SimpleITKTCL swig_generated_source SimpleITK.i ${SWIG_EXTRA_DEPS} )
+  set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKTCL_wrap.cxx PROPERTIES COMPILE_FLAGS "-w" )
   add_executable ( SimpleITKTclsh SimpleITKTCL_wrap.cxx )
-  target_link_libraries ( SimpleITKTclsh ${SimpleITK_LIBRARIES} ${TCL_LIBRARY} ${ITK_LIBRARIES})
+  target_link_libraries ( SimpleITKTclsh ${SimpleITK_LIBRARIES} ${TCL_LIBRARY} )
+
 
 endif()
 
@@ -283,9 +286,11 @@ if ( WRAP_R )
   # Run swig
   set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS})
   set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
-  set(SWIG_MODULE_SimpleITK_EXTRA_DEPS ${SWIG_HEADERS})
+  set(SWIG_MODULE_SimpleITK_EXTRA_DEPS ${SWIG_EXTRA_DEPS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/R.i)
   SWIG_add_module ( SimpleITK r SimpleITK.i SimpleITKR_wrap.cxx )
-  SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${R_LIBRARIES} ${ITK_LIBRARIES})
+  SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${R_LIBRARIES})
+  set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITK_wrap.cxx PROPERTIES COMPILE_FLAGS "-w")
 
 endif()
 
