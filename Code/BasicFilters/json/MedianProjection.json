@@ -1,0 +1,43 @@
+{
+  "name" : "MedianProjection",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "members" : [ {
+    "name" : "ProjectionDimension",
+    "type" : "unsigned int",
+    "default" : "0u"
+  } ],
+  "tests" : [ {
+    "tag" : "defaults",
+    "description" : "run with some defaults",
+    "inputA" : "Input/RA-Float.nrrd",
+     "md5hash" : "86de48c070480cb9809e28715f6e70e1"
+  }, {
+    "tag" : "another-dimension",
+    "description" : "project in the 3rd dimension",
+    "inputA" : "Input/RA-Float.nrrd",
+    "settings" : [ {
+      "parameter" : "ProjectionDimension",
+      "value" : "2"
+    } ]
+     "md5hash" : "0990f0f6c63ea9d63b701ed7c2467de7"
+  }, {
+    "tag" : "short-image",
+    "description" : "project with a short image",
+    "inputA" : "Input/Ramp-Up-Short.nrrd",
+    "settings" : [ {
+      "parameter" : "ProjectionDimension",
+      "value" : "1"
+    } ]
+     "md5hash" : "9fcc7164f3294811cbf2d875b0e494d1"
+  } , {
+    "tag" : "rgb-image",
+    "description" : "project with a rgb image in 2D",
+    "inputA" : "Input/VM1111Shrink-RGB.png",
+     "md5hash" : "b66bc7e92a21a33c46d9a334d2292845"
+  } ]
+}
