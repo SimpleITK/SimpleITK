@@ -1,12 +1,17 @@
 #ifndef __sitkImageReaderBase_h
 #define __sitkImageReaderBase_h
 
-#include "itkImageIOBase.h"
-
 #include "sitkNonCopyable.h"
 #include "sitkPixelIDValues.h"
 
 namespace itk {
+
+// Forward decalaration for pointer
+class ImageIOBase;
+
+template<class T>
+class SmartPointer;
+
   namespace simple {
 
     /** \class ImageReaderBase
@@ -37,7 +42,7 @@ namespace itk {
 
       PixelIDValueType ExecuteInternalReadComplex( int componentType );
 
-      itk::ImageIOBase::Pointer GetImageIOBase(const std::string &fileName);
+      itk::SmartPointer<ImageIOBase> GetImageIOBase(const std::string &fileName);
 
     };
   }

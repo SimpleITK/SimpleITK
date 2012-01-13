@@ -28,6 +28,9 @@ namespace itk
 // Forward decalaration for pointer
 class DataObject;
 
+template<class T>
+class SmartPointer;
+
 namespace simple
 {
 

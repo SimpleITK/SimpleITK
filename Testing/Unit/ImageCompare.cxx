@@ -2,7 +2,6 @@
 #include <memory>
 
 #include "ImageCompare.h"
-#include "itkExceptionObject.h"
 
 namespace sitk = itk::simple;
 
@@ -84,7 +83,7 @@ bool ImageCompare::compare ( const sitk::Image& image, std::string inTestCase, s
     {
     baseline = sitk::ImageFileReader().SetFileName ( baselineFileName ).Execute();
     }
-  catch ( itk::ExceptionObject& e )
+  catch ( std::exception& e )
     {
     mMessage = "ImageCompare: Failed to load image " + baselineFileName + " because: " + e.what();
     return false;
@@ -120,7 +119,7 @@ bool ImageCompare::compare ( const sitk::Image& image, std::string inTestCase, s
       }
 
     }
-  catch ( itk::ExceptionObject& e )
+  catch ( std::exception& e )
     {
     mMessage = "ImageCompare: Failed to subtract image " + baselineFileName + " because: " + e.what();
     return false;
