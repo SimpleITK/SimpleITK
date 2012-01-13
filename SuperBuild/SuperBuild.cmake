@@ -85,7 +85,7 @@ endif()
 #-----------------------------------------------------------------------------
 # Default to build shared libraries off
 #------------------------------------------------------------------------------
-set(BUILD_SHARED_LIBS OFF)
+option(BUILD_SHARED_LIBS "Build shared libaries" OFF)
 
 #-----------------------------------------------------------------------------
 # Setup build type
@@ -258,6 +258,7 @@ ExternalProject_Add(${proj}
     --no-warn-unused-cli
     -C "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK-build/CMakeCacheInit.txt"
     ${ep_common_args}
+    -DBUILD_SHARED_LIBS:BOOL=${BUILD_SHARED_LIBS}
     ${ep_languages_args}
     # ITK
     -DITK_DIR:PATH=${ITK_DIR}

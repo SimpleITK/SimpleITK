@@ -10,7 +10,7 @@ set ( SimpleITKCommonSource
 
 include(${ITK_USE_FILE})
 
-add_library ( SimpleITKCommon STATIC ${SimpleITKCommonSource} ${SimpleITKAncillarySource} )
+add_library ( SimpleITKCommon ${SimpleITKCommonSource} ${SimpleITKAncillarySource} )
 target_link_libraries ( SimpleITKCommon ${ITK_LIBRARIES} )
 
 # Add custom command that will delete java files which need to be rebuilt when changes
