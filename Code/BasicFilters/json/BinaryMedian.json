@@ -24,5 +24,18 @@
     "default" : "0.0",
     "pixeltype" : "Input"
   } ],
-  "tests" : [ ]
+  "tests" : [  {
+    "tag" : "defaults",
+    "description" : "Basic voting",
+      "inputA" : "Input/BlackDots.png",
+    "settings" : [ {
+      "parameter" : "Radius",
+      "no_get_method" : 1,
+      "value" : 3
+    }, {
+      "parameter" : "ForegroundValue",
+      "value" : "255.0"
+    } ],
+    "md5hash" : "55dd7a167222849c7afb0c5c4f6e096b"
+  } ]
 }
