@@ -2,7 +2,7 @@
 #define __sitkImage_h
 
 #include "sitkMacro.h"
-#include "sitkConfigure.h"
+#include "sitkCommon.h"
 #include "sitkDetail.h"
 #include "sitkPixelIDTokens.h"
 #include "sitkEnableIf.h"
@@ -43,7 +43,7 @@ namespace simple
   /** \class Image
    * \brief The main Image class for SimpleITK
    */
-  class Image
+  class SITKCommon_EXPORT Image
   {
   public:
     typedef Image              Self;

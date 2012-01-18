@@ -1,6 +1,7 @@
 
 #include "sitkImageReaderBase.h"
 #include "sitkMacro.h"
+#include "sitkExceptionObject.h"
 
 #include <stdint.h>
 

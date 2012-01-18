@@ -13,7 +13,7 @@ namespace itk {
      * \brief Read series of image into a SimpleITK image
      *
      */
-    class ImageSeriesReader
+    class SITKIO_EXPORT ImageSeriesReader
       : public ImageReaderBase
     {
     public:
@@ -41,7 +41,7 @@ namespace itk {
 
       std::vector<std::string> m_FileNames;
     };
-  Image ReadImage ( const std::vector<std::string> &filenames );
+  SITKIO_EXPORT Image ReadImage ( const std::vector<std::string> &filenames );
   }
 }
 

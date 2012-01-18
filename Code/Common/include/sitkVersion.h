@@ -1,7 +1,7 @@
 #ifndef __sitkVersion_h
 #define __sitkVersion_h
 
-#include "sitkMacro.h"
+#include "sitkCommon.h"
 
 namespace itk
 {
@@ -12,7 +12,7 @@ namespace simple
   /** \class Version
    * \brief Version info for SimpleITK
    */
-  class Version
+  class SITKCommon_EXPORT Version
   {
   public:
     static unsigned int MajorVersion();
