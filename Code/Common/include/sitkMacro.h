@@ -17,6 +17,29 @@
 #include "sitkExceptionObject.h"
 
 #include <vector>
+// Setup symbol exports
+//
+#if defined _WIN32 || defined __CYGWIN__
+   #ifdef __GNUC__
+    #define SITK_ABI_EXPORT __attribute__ ((dllexport))
+    #define SITK_ABI_IMPORT __attribute__ ((dllimport))
+    #define SITK_ABI_HIDDEN
+  #else
+    #define SITK_ABI_EXPORT __declspec(dllexport) // Note: actually gcc seems to also supports this syntax.
+    #define SITK_ABI_IMPORT __declspec(dllimport) // Note: actually gcc seems to also supports this syntax.
+    #define SITK_ABI_HIDDEN
+  #endif
+#else
+  #if __GNUC__ >= 4
+    #define SITK_ABI_EXPORT __attribute__ ((visibility ("default")))
+    #define SITK_ABI_IMPORT __attribute__ ((visibility ("default")))
+    #define SITK_ABI_HIDDEN  __attribute__ ((visibility ("hidden")))
+  #else
+    #define SITK_ABI_EXPORT
+    #define SITK_ABI_IMPORT
+    #define SITK_ABI_HIDDEN
+  #endif
+#endif
 
 namespace itk {
 
