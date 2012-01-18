@@ -33,6 +33,12 @@
     "pixeltype" : "Input"
   } ],
   "tests" : [ {
+    "tag" : "default",
+    "description" : "No parameters changed",
+      "inputA" : "Input/BlackDots.png",
+    "settings" : [],
+    "md5hash" : "fcd6bcb56c1689fcef28b57c22475bad"
+  } ,{
     "tag" : "VotingBinary",
     "description" : "Basic voting",
       "inputA" : "Input/BlackDots.png",
