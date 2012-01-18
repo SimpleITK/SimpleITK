@@ -117,12 +117,7 @@ namespace itk
     // Set Origin
     virtual void SetOrigin( const std::vector<double> & orgn )
       {
-      if (orgn.size() != ImageType::ImageDimension)
-        {
-        sitkExceptionMacro("Image::SetOrigin -> vector dimension mismatch");
-        }
-
-      this->m_Image->SetOrigin( sitkSTLVectorToITK< typename ImageType::PointType> ( orgn ) );
+        this->m_Image->SetOrigin( sitkSTLVectorToITK< typename ImageType::PointType> ( orgn ) );
       }
 
     // Get Spacing
@@ -134,12 +129,7 @@ namespace itk
     // Set Spacing
     virtual void SetSpacing( const std::vector<double> &spc )
       {
-      if (spc.size() != ImageType::ImageDimension)
-        {
-        sitkExceptionMacro("Image::SetSpacing -> vector dimension mismatch");
-        }
-
-      this->m_Image->SetSpacing( sitkSTLVectorToITK< typename ImageType::SpacingType> ( spc ) );
+        this->m_Image->SetSpacing( sitkSTLVectorToITK< typename ImageType::SpacingType> ( spc ) );
       }
 
 
