@@ -4,6 +4,7 @@
 #include "sitkDualMemberFunctionFactory.h"
 
 #include "sitkPixelIDTokens.h"
+#include "sitkExceptionObject.h"
 
 namespace itk
 {
