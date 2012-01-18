@@ -22,7 +22,13 @@
     "inputA" : "Input/RA-Float.nrrd",
     "settings" : [ {
       "parameter" : "ProjectionDimension",
-      "value" : "2"
+      "value" : "2u",
+      "lua_value" : "2",
+      "python_value" : "2",
+      "ruby_value" : "2",
+      "java_value" : "2",
+      "tcl_value" : "2",
+      "R_value" : "2"
     } ]
      "md5hash" : "f3f0d97c83c6b0d92df10c28e2481520"
   }, {

@@ -37,7 +37,13 @@
     "inputA" : "Input/Ramp-Up-Short.nrrd",
     "settings" : [ {
       "parameter" : "ProjectionDimension",
-      "value" : "1u"
+      "value" : "1u",
+      "lua_value" : "1",
+      "python_value" : "1",
+      "ruby_value" : "1",
+      "java_value" : "1",
+      "tcl_value" : "1",
+      "R_value" : "1"
     } ]
      "md5hash" : "c4d83f61ffd5cc3a163155bb5d6a0698"
   } , {
