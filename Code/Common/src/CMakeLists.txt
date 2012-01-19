@@ -8,6 +8,7 @@ set ( SimpleITKCommonSource
   )
 
 
+set ( ITK_NO_IO_FACTORY_REGISTER_MANAGER )
 include(${ITK_USE_FILE})
 
 add_library ( SimpleITKCommon ${SimpleITKCommonSource} ${SimpleITKAncillarySource} )

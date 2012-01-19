@@ -4,6 +4,7 @@ include_directories (
  ${CMAKE_CURRENT_BINARY_DIR}/../include
  )
 
+set ( ITK_NO_IO_FACTORY_REGISTER_MANAGER )
 include(${ITK_USE_FILE})
 
 set_source_files_properties ( ${SimpleITKBasicFiltersGeneratedSource} PROPERTIES GENERATED 1 )
