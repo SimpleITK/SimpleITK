@@ -8,7 +8,6 @@ include(${ITK_USE_FILE})
 if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA OR WRAP_CSHARP OR WRAP_TCL OR WRAP_R OR WRAP_RUBY )
   find_package ( SWIG 2 REQUIRED )
 
-  message( STATUS "CMAKE_MODULE_PATH: ${CMAKE_MODULE_PATH}")
   include (UseSWIGLocal)
 
   set_source_files_properties ( SimpleITK.i PROPERTIES CPLUSPLUS ON )
