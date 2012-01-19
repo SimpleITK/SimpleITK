@@ -2,6 +2,7 @@
 
 #include "sitkImage.h"
 #include "sitkConditional.h"
+#include "sitkExceptionObject.h"
 
 namespace sitk = itk::simple;
 

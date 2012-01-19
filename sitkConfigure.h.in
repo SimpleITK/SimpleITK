@@ -1,5 +1,15 @@
+
 #ifndef __sitkConfigure_h
 #define __sitkConfigure_h
+
+
+#cmakedefine SITK_BUILD_SHARED_LIBS
+#ifdef SITK_BUILD_SHARED_LIBS
+#define SITKDLL
+#else
+#define SITKSTATIC
+#endif
+
 
 // defined if the system has C++0x "static_assert" keyword
 #cmakedefine SITK_SUPPORTS_STATIC_ASSERT

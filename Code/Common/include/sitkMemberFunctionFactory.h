@@ -3,6 +3,7 @@
 
 #include "sitkDetail.h"
 #include "sitkMemberFunctionFactoryBase.h"
+#include "sitkPixelIDValues.h"
 
 namespace itk
 {

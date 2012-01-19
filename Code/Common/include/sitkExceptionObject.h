@@ -1,8 +1,16 @@
 #ifndef __sitkExceptionObject_h
 #define __sitkExceptionObject_h
 
-#include <string>
-#include <stdexcept>
+#include "sitkMacro.h"
+#include "sitkCommon.h"
+
+#ifndef __sitkMacro_h
+#error "sitkMacro.h must be included before sitkExceptionObject.h"
+#endif //__sitkMacro_h
+#ifndef __sitkCommon_h
+#error "sitkCommon.h must be included before sitkExceptionObject.h"
+#endif //__sitkCommon_h
+
 
 namespace itk
 {
@@ -16,7 +24,7 @@ namespace simple
 /** \class GenericException
  * \brief The base SimpleITK exception class
  */
-class GenericException :
+class SITKCommon_EXPORT GenericException :
     public std::exception
 {
 public:

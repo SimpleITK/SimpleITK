@@ -3,6 +3,7 @@
 
 #include "sitkNonCopyable.h"
 #include "sitkPixelIDValues.h"
+#include "sitkIO.h"
 
 namespace itk {
 
@@ -18,7 +19,7 @@ class SmartPointer;
      * \brief An abract base class for image readers
      *
      */
-    class ImageReaderBase :
+    class SITKIO_EXPORT ImageReaderBase :
       protected NonCopyable
     {
     public:

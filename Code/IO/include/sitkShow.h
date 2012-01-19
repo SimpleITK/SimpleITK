@@ -1,8 +1,8 @@
 #ifndef __sitkShow_h
 #define __sitkShow_h
 
-
 #include "sitkImage.h"
+#include "sitkIO.h"
 
 namespace itk
 {
@@ -17,7 +17,7 @@ namespace simple
    *  a plugin for reading Nifti formatted files (\see
    *  http://www.loci.wisc.edu/bio-formats/imagej)
    **/
-  void Show ( const Image &image, const std::string title = "" );
+   void SITKIO_EXPORT Show ( const Image &image, const std::string title = "" );
 }
 }
 

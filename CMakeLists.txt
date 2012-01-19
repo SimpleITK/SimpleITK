@@ -61,6 +61,12 @@ option ( SITK_EXPRESS_INSTANTIATEDPIXELS "Instantiate very few pixel types ( for
 mark_as_advanced ( SITK_EXPRESS_INSTANTIATEDPIXELS )
 
 
+#-----------------------------------------------------------------------------
+# SimpleITK build configuration options.
+option(BUILD_SHARED_LIBS "Build SimpleITK ITK with shared libraries. This does not effect wrapped languages." OFF)
+set(SITK_BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS})
+
+
 #-----------------------------------------------------------
 # Place all checks and try compile variable for sitkConfigure.h here
 
@@ -116,6 +122,9 @@ endif ( NOT SITK_HAS_STDINT_H )
 configure_file( ${SimpleITK_SOURCE_DIR}/sitkConfigure.h.in
   ${SimpleITK_BINARY_DIR}/sitkConfigure.h )
 
+
+
+#-----------------------------------------------------------------------------
 # Version information
 include(Version.cmake)
 set(JAR_FILE simpleitk-${SimpleITK_Major}.${SimpleITK_Minor}.${SimpleITK_Patch}.jar)

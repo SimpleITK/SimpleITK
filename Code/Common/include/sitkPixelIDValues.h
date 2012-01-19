@@ -1,6 +1,7 @@
 #ifndef __sitkPixelIDValues_h
 #define __sitkPixelIDValues_h
 
+#include "sitkCommon.h"
 #include "sitkPixelIDTypeLists.h"
 
 namespace itk
@@ -11,7 +12,7 @@ namespace simple
 typedef int PixelIDValueType;
 
 
-const std::string GetPixelIDValueAsString( PixelIDValueType type );
+const std::string SITKCommon_EXPORT GetPixelIDValueAsString( PixelIDValueType type );
 
 
 template < typename TPixelID >

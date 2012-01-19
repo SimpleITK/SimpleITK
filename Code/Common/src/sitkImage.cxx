@@ -1,5 +1,4 @@
 #include "sitkImage.h"
-#include "sitkMemberFunctionFactory.h"
 
 #include "itkImage.h"
 #include "itkVectorImage.h"
@@ -8,7 +7,10 @@
 
 #include "itkImageDuplicator.h"
 
+#include "sitkExceptionObject.h"
 #include "sitkPimpleImageBase.hxx"
+#include "sitkPixelIDTypeLists.h"
+#include "sitkMemberFunctionFactory.h"
 
 
 namespace itk
