@@ -7,6 +7,7 @@ include_directories (
 include(${ITK_USE_FILE})
 
 set_source_files_properties ( ${SimpleITKBasicFiltersGeneratedSource} PROPERTIES GENERATED 1 )
-add_library ( SimpleITKBasicFilters ${SimpleITKBasicFiltersSource} ${SimpleITKBasicFiltersGeneratedSource})
+add_library ( SimpleITKBasicFilters ${SimpleITKBasicFiltersSource} ${SimpleITKBasicFiltersGeneratedSource} )
+target_link_libraries ( SimpleITKBasicFilters SimpleITKCommon ${ITK_LIBRARIES} )
 add_dependencies ( SimpleITKBasicFilters BasicFiltersSourceCode)
 
