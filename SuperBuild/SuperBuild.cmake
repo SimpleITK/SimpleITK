@@ -85,7 +85,7 @@ endif()
 #-----------------------------------------------------------------------------
 # Default to build shared libraries off
 #------------------------------------------------------------------------------
-option(BUILD_SHARED_LIBS "Build shared libaries" OFF)
+option(BUILD_SHARED_LIBS "Build SimpleITK ITK with shared libraries. This does not effect wrapped languages." OFF)
 
 #-----------------------------------------------------------------------------
 # Setup build type
@@ -111,6 +111,15 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 else() # Release, or anything else
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${C_RELEASE_DESIRED_FLAGS}" )
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX_RELEASE_DESIRED_FLAGS}" )
+endif()
+
+
+# the hidden visibility for inline methods should be consistent between ITK and SimpleITK
+if(NOT WIN32 AND CMAKE_COMPILER_IS_GNUCXX AND BUILD_SHARED_LIBS)
+  check_cxx_compiler_flag("-fvisibility-inlines-hidden" CXX_HAS-fvisibility-inlines-hidden)
+  if( CXX_HAS-fvisibility-inlines-hidden )
+    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility-inlines-hidden" )
+  endif()
 endif()
 
 #------------------------------------------------------------------------------
