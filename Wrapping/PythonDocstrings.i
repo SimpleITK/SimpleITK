@@ -2951,8 +2951,8 @@ This class is parametrized over the types of the two input images and the type o
 li {ImageProcessing/MultiplyImageFilter,Multiply two images together}
 
 "
-// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1N4MRIBiasFieldCorrectionImageFilter.xml
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter "Implementation of the N4 MRI bias field correction algorithm.
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1N4BiasFieldCorrectionImageFilter.xml
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter "Implementation of the N4 MRI bias field correction algorithm.
 
 The nonparametric nonuniform intensity normalization (N3) algorithm, as introduced by Sled et al. in 1998 is a method for correcting nonuniformity associated with MR images. The algorithm assumes a simple parametric model (Gaussian) for the bias field and does not require tissue class segmentation. In addition, there are only a couple of parameters to tune with the default values performing quite well. N3 has been publicly available as a set of perl scripts (http://www.bic.mni.mcgill.ca/ServicesSoftwareAdvancedImageProcessingTools/HomePage)
 The N4 algorithm, encapsulated with this class, is a variation of the original N3 algorithm with the additional benefits of an improved B-spline fitting routine which allows for multiple resolutions to be used during the correction process. We also modify the iterative update component of algorithm such that the residual bias field is continually updated
@@ -2964,9 +2964,9 @@ par REFERENCE
 J.G. Sled, A.P. Zijdenbos and A.C. Evans. A Nonparametric Method for Automatic Correction of Intensity Nonuniformity in MRI Data IEEE Transactions on Medical Imaging, Vol 17, No 1. Feb 1998.
 N.J. Tustison, B.B. Avants, P.A. Cook, Y. Zheng, A. Egan, P.A. Yushkevich, and J.C. Gee. N4ITK: Improved N3 Bias Correction IEEE Transactions on Medical Imaging, 29(6):1310-1320, June 2010.
 "
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::Execute "Implementation of the N4 MRI bias field correction algorithm.
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::Execute "Implementation of the N4 MRI bias field correction algorithm.
 "
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrection "Implementation of the N4 MRI bias field correction algorithm.
+%feature("docstring") itk::simple::N4BiasFieldCorrection "Implementation of the N4 MRI bias field correction algorithm.
 
 The nonparametric nonuniform intensity normalization (N3) algorithm, as introduced by Sled et al. in 1998 is a method for correcting nonuniformity associated with MR images. The algorithm assumes a simple parametric model (Gaussian) for the bias field and does not require tissue class segmentation. In addition, there are only a couple of parameters to tune with the default values performing quite well. N3 has been publicly available as a set of perl scripts (http://www.bic.mni.mcgill.ca/ServicesSoftwareAdvancedImageProcessingTools/HomePage)
 The N4 algorithm, encapsulated with this class, is a variation of the original N3 algorithm with the additional benefits of an improved B-spline fitting routine which allows for multiple resolutions to be used during the correction process. We also modify the iterative update component of algorithm such that the residual bias field is continually updated
@@ -2978,72 +2978,72 @@ par REFERENCE
 J.G. Sled, A.P. Zijdenbos and A.C. Evans. A Nonparametric Method for Automatic Correction of Intensity Nonuniformity in MRI Data IEEE Transactions on Medical Imaging, Vol 17, No 1. Feb 1998.
 N.J. Tustison, B.B. Avants, P.A. Cook, Y. Zheng, A. Egan, P.A. Yushkevich, and J.C. Gee. N4ITK: Improved N3 Bias Correction IEEE Transactions on Medical Imaging, 29(6):1310-1320, June 2010.
 "
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::SetConvergenceThreshold "virtual void itk::N4MRIBiasFieldCorrectionImageFilter::SetConvergenceThreshold(RealType _arg)
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::SetConvergenceThreshold "virtual void itk::N4BiasFieldCorrectionImageFilter::SetConvergenceThreshold(RealType _arg)
 
 Set the convergence threshold. Convergence is determined by the coefficient of variation of the difference image between the current bias field estimate and the previous estimate. If this value is less than the specified threshold, the algorithm proceeds to the next fitting level or terminates if it is at the last level.
 "
 
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::GetConvergenceThreshold "virtual RealType itk::N4MRIBiasFieldCorrectionImageFilter::GetConvergenceThreshold() const
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::GetConvergenceThreshold "virtual RealType itk::N4BiasFieldCorrectionImageFilter::GetConvergenceThreshold() const
 
 Get the convergence threshold. Convergence is determined by the coefficient of variation of the difference image between the current bias field estimate and the previous estimate. If this value is less than the specified threshold, the algorithm proceeds to the next fitting level or terminates if it is at the last level.
 "
 
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::SetMaximumNumberOfIterations "virtual void itk::N4MRIBiasFieldCorrectionImageFilter::SetMaximumNumberOfIterations(VariableSizeArrayType _arg)
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::SetMaximumNumberOfIterations "virtual void itk::N4BiasFieldCorrectionImageFilter::SetMaximumNumberOfIterations(VariableSizeArrayType _arg)
 
 Set the maximum number of iterations specified at each fitting level. Default = 50.
 "
 
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::GetMaximumNumberOfIterations "virtual VariableSizeArrayType itk::N4MRIBiasFieldCorrectionImageFilter::GetMaximumNumberOfIterations() const
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::GetMaximumNumberOfIterations "virtual VariableSizeArrayType itk::N4BiasFieldCorrectionImageFilter::GetMaximumNumberOfIterations() const
 
 Get the maximum number of iterations specified at each fitting level. Default = 50.
 "
 
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::SetBiasFieldFullWidthAtHalfMaximum "virtual void itk::N4MRIBiasFieldCorrectionImageFilter::SetBiasFieldFullWidthAtHalfMaximum(RealType _arg)
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::SetBiasFieldFullWidthAtHalfMaximum "virtual void itk::N4BiasFieldCorrectionImageFilter::SetBiasFieldFullWidthAtHalfMaximum(RealType _arg)
 
 Set the full width at half maximum parameter characterizing the width of the Gaussian deconvolution. Default = 0.15.
 "
 
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::GetBiasFieldFullWidthAtHalfMaximum "virtual RealType itk::N4MRIBiasFieldCorrectionImageFilter::GetBiasFieldFullWidthAtHalfMaximum() const
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::GetBiasFieldFullWidthAtHalfMaximum "virtual RealType itk::N4BiasFieldCorrectionImageFilter::GetBiasFieldFullWidthAtHalfMaximum() const
 
 Get the full width at half maximum parameter characterizing the width of the Gaussian deconvolution. Default = 0.15.
 "
 
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::SetWienerFilterNoise "virtual void itk::N4MRIBiasFieldCorrectionImageFilter::SetWienerFilterNoise(RealType _arg)
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::SetWienerFilterNoise "virtual void itk::N4BiasFieldCorrectionImageFilter::SetWienerFilterNoise(RealType _arg)
 
 Set the noise estimate defining the Wiener filter. Default = 0.01.
 "
 
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::GetWienerFilterNoise "virtual RealType itk::N4MRIBiasFieldCorrectionImageFilter::GetWienerFilterNoise() const
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::GetWienerFilterNoise "virtual RealType itk::N4BiasFieldCorrectionImageFilter::GetWienerFilterNoise() const
 
 Get the noise estimate defining the Wiener filter. Default = 0.01.
 "
 
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::SetNumberOfHistogramBins "virtual void itk::N4MRIBiasFieldCorrectionImageFilter::SetNumberOfHistogramBins(unsigned int _arg)
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::SetNumberOfHistogramBins "virtual void itk::N4BiasFieldCorrectionImageFilter::SetNumberOfHistogramBins(unsigned int _arg)
 
 Set number of bins defining the log input intensity histogram. Default = 200.
 "
 
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::GetNumberOfHistogramBins "virtual unsigned int itk::N4MRIBiasFieldCorrectionImageFilter::GetNumberOfHistogramBins() const
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::GetNumberOfHistogramBins "virtual unsigned int itk::N4BiasFieldCorrectionImageFilter::GetNumberOfHistogramBins() const
 
 Get number of bins defining the log input intensity histogram. Default = 200.
 "
 
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::SetNumberOfControlPoints "virtual void itk::N4MRIBiasFieldCorrectionImageFilter::SetNumberOfControlPoints(ArrayType _arg)
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::SetNumberOfControlPoints "virtual void itk::N4BiasFieldCorrectionImageFilter::SetNumberOfControlPoints(ArrayType _arg)
 
 Set the control point grid size definining the B-spline estimate of the scalar bias field. In each dimension, the B-spline mesh size is equal to the number of control points in that dimension minus the spline order. Default = 4 control points in each dimension for a mesh size of 1 in each dimension.
 "
 
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::GetNumberOfControlPoints "virtual ArrayType itk::N4MRIBiasFieldCorrectionImageFilter::GetNumberOfControlPoints() const
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::GetNumberOfControlPoints "virtual ArrayType itk::N4BiasFieldCorrectionImageFilter::GetNumberOfControlPoints() const
 
 Get the control point grid size definining the B-spline estimate of the scalar bias field. In each dimension, the B-spline mesh size is equal to the number of control points in that dimension minus the spline order. Default = 4 control points in each dimension for a mesh size of 1 in each dimension.
 "
 
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::SetSplineOrder "virtual void itk::N4MRIBiasFieldCorrectionImageFilter::SetSplineOrder(unsigned int _arg)
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::SetSplineOrder "virtual void itk::N4BiasFieldCorrectionImageFilter::SetSplineOrder(unsigned int _arg)
 
 Set the spline order defining the bias field estimate. Default = 3.
 "
 
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::GetSplineOrder "virtual unsigned int itk::N4MRIBiasFieldCorrectionImageFilter::GetSplineOrder() const
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::GetSplineOrder "virtual unsigned int itk::N4BiasFieldCorrectionImageFilter::GetSplineOrder() const
 
 Get the spline order defining the bias field estimate. Default = 3.
 "

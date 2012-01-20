@@ -26,7 +26,7 @@ if len ( sys.argv ) > 3:
 
 inputImage = sitk.Cast( inputImage, sitk.sitkFloat32 )
 
-corrector = sitk.N4MRIBiasFieldCorrectionImageFilter();
+corrector = sitk.N4BiasFieldCorrectionImageFilter();
 
 numberFilltingLevels = 4
 
