@@ -94,18 +94,7 @@ if ( WRAP_PYTHON )
 
     set( PythonVirtualenvHome ${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVirtualenv )
 
-    add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_REAL_NAME}
-      POST_BUILD
-      COMMAND ${PYTHON_EXECUTABLE}
-        ${SimpleITK_SOURCE_DIR}/Utilities/virtualenv/virtualenv.py
-        --python=${PYTHON_EXECUTABLE}
-        --distribute
-        --clear
-      ${PythonVirtualenvHome}
-      COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/PythonPackage/ez_setup.py" "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/"
-      COMMAND ${CMAKE_COMMAND} -E touch "${CMAKE_CURRENT_BINARY_DIR}/__init__.py"
-      COMMAND ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/setup.py" install
-      COMMENT "Installing python module to the virtualenv" )
+    set( ORIGINAL_PYTHON_EXECUTABLE ${PYTHON_EXECUTABLE} )
 
     # virtualenv places the python executable in different
     # locations. Also note than on windows installations where python is
@@ -114,7 +103,28 @@ if ( WRAP_PYTHON )
       set( PYTHON_EXECUTABLE "${PythonVirtualenvHome}/Scripts/python" )
     else( )
       set( PYTHON_EXECUTABLE "${PythonVirtualenvHome}/bin/python" )
+    endif()  # virtualenv places the python executable in different
+    # locations. Also note than on windows installations where python is
+    # installed only for a single user the may be a missing dll issue.
+    if( WIN32 )
+      set( PYTHON_EXECUTABLE "${PythonVirtualenvHome}/Scripts/python" )
+    else( )
+      set( PYTHON_EXECUTABLE "${PythonVirtualenvHome}/bin/python" )
     endif()
+
+    add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_REAL_NAME}
+      POST_BUILD
+      COMMAND ${ORIGINAL_PYTHON_EXECUTABLE}
+        ${SimpleITK_SOURCE_DIR}/Utilities/virtualenv/virtualenv.py
+        --python=${ORIGINAL_PYTHON_EXECUTABLE}
+        --distribute
+        --clear
+      ${PythonVirtualenvHome}
+      COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/PythonPackage/ez_setup.py" "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/"
+      COMMAND ${CMAKE_COMMAND} -E touch "${CMAKE_CURRENT_BINARY_DIR}/__init__.py"
+      COMMAND ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/setup.py" install
+      COMMENT "Installing python module to the virtualenv" )
+
   endif()
 
 
