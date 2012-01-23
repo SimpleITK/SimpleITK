@@ -24,20 +24,19 @@ namespace itk {
 
       ImportImageFilter();
 
-      void SetSize( const std::vector< unsigned int > &size );
-      void SetSpacing( const std::vector< double > &spacing );
-      void SetOrigin( const std::vector< double > &origin );
-      void SetSize( const std::vector< unsigned int > &size );
-      void SetDirection( const std::vector< double > &direction );
+      Self& SetSize( const std::vector< unsigned int > &size );
+      Self& SetSpacing( const std::vector< double > &spacing );
+      Self& SetOrigin( const std::vector< double > &origin );
+      Self& SetDirection( const std::vector< double > &direction );
 
-      void SetBufferAsInt8( int8_t * buffer, unsigned int numberOfComponents = 1 );
-      void SetBufferAsUInt8( uint8_t * buffer, unsigned int numberOfComponents = 1 );
-      void SetBufferAsInt16( int16_t * buffer, unsigned int numberOfComponents = 1 );
-      void SetBufferAsUInt16( uint16_t * buffer, unsigned int numberOfComponents = 1 );
-      void SetBufferAsInt32( int32_t * buffer, unsigned int numberOfComponents = 1 );
-      void SetBufferAsUInt32( uint32_t * buffer, unsigned int numberOfComponents = 1 );
-      void SetBufferAsFloat( float * buffer, unsigned int numberOfComponents = 1 );
-      void SetBufferAsDouble( double * buffer, unsigned int numberOfComponents = 1 );
+      Self& SetBufferAsInt8( int8_t * buffer, unsigned int numberOfComponents = 1 );
+      Self& SetBufferAsUInt8( uint8_t * buffer, unsigned int numberOfComponents = 1 );
+      Self& SetBufferAsInt16( int16_t * buffer, unsigned int numberOfComponents = 1 );
+      Self& SetBufferAsUInt16( uint16_t * buffer, unsigned int numberOfComponents = 1 );
+      Self& SetBufferAsInt32( int32_t * buffer, unsigned int numberOfComponents = 1 );
+      Self& SetBufferAsUInt32( uint32_t * buffer, unsigned int numberOfComponents = 1 );
+      Self& SetBufferAsFloat( float * buffer, unsigned int numberOfComponents = 1 );
+      Self& SetBufferAsDouble( double * buffer, unsigned int numberOfComponents = 1 );
 
       std::string ToString() const;
 
