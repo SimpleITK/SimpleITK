@@ -16,6 +16,17 @@ const unsigned int UnusedDimension = 2;
 namespace itk {
 namespace simple {
 
+namespace
+{
+template < class T >
+std::ostream& operator<< (std::ostream& os, const std::vector<T>& v)
+{
+  os << "[";
+  std::copy( v.begin(), v.end(), std::ostream_iterator<T>(os, ", " ) );
+  return os << "]";
+}
+}
+
 Image ImportImageAsInt8(
     int8_t * buffer,
     const std::vector< unsigned int > &size,
@@ -317,9 +328,10 @@ std::string ImportImageFilter::ToString() const
   out << "itk::simple::ImportImageFilter\n"
       << PRINT_IVAR_MACRO( m_NumberOfComponentsPerPixel )
       << PRINT_IVAR_MACRO( m_PixelIDValue )
-    //         << PRINT_IVAR_MACRO( m_Origin )
-//          << PRINT_IVAR_MACRO( m_Spacing )
-//          << PRINT_IVAR_MACRO( m_Size )
+      << PRINT_IVAR_MACRO( m_Origin )
+      << PRINT_IVAR_MACRO( m_Spacing )
+      << PRINT_IVAR_MACRO( m_Size )
+      << PRINT_IVAR_MACRO( m_Direction )
       << PRINT_IVAR_MACRO( m_Buffer );
   return out.str();
 }
