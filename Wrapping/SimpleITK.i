@@ -46,6 +46,13 @@
 %include Lua.i
 %include R.i
 
+// This section is copied verbatim into the generated source code.
+// Any include files, definitions, etc. need to go here.
+%{
+#include <SimpleITK.h>
+#include <sitkImageOperators.h>
+%}
+
 // Help SWIG handle std vectors
 namespace std
 {
@@ -68,12 +75,6 @@ namespace std
 }
 
 
-// This section is copied verbatim into the generated source code.
-// Any include files, definitions, etc. need to go here.
-%{
-#include <SimpleITK.h>
-#include <sitkImageOperators.h>
-%}
 
 // Any new classes need to have an "%include" statement to be wrapped.
 %include "sitkPixelIDValues.h"
@@ -92,7 +93,6 @@ namespace std
 %include "sitkVersion.h"
 
 // Registration classes
-
 
 // Auto-generated headers
 %include "SimpleITKBasicFiltersGeneratedHeaders.i"
