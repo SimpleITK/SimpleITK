@@ -39,7 +39,14 @@
     "inputA" : "Input/cthead1.png",
     "settings" : [ {
       "parameter" : "MinimumObjectSizeInPixels",
-      "value" : "40"
+      "value" : "40u",
+      "lua_value" : "40",
+      "python_value" : "40",
+      "ruby_value" : "40",
+      "java_value" : "40",
+      "tcl_value" : "40",
+      "R_value" : "40"
+
     }, {
       "parameter" : "UpperBoundary",
       "value" : "150"
