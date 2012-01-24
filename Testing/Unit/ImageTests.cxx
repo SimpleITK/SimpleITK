@@ -170,6 +170,13 @@ TEST_F(Image,Constructors) {
   itk::simple::HashImageFilter hasher;
   int result;
 
+  {
+  itk::simple::Image image();
+  EXPECT_EQ ( 0u, image.GetWidth() );
+  EXPECT_EQ ( 0u, image.GetHeight() );
+  EXPECT_EQ ( 0u, image.GetDepth() );
+  }
+
   itk::simple::Image image ( 64, 65, 66, itk::simple::sitkUInt8 );
   EXPECT_EQ ( "08183e1b0c50fd2cf6f070b58e218443fb7d5317", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt8";
   result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<unsigned char> >::Result;

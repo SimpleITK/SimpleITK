@@ -182,6 +182,12 @@ namespace itk
     this->m_PimpleImage = NULL;
   }
 
+  Image::Image( )
+    : m_PimpleImage( NULL )
+  {
+    Allocate ( 0, 0, 0, sitkUInt8 );
+  }
+
   Image::Image( const Image &img )
   {
     this->m_PimpleImage = img.m_PimpleImage->ShallowCopy();
