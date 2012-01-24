@@ -236,33 +236,34 @@ def GetArrayFromImage(image):
     if not HAVE_NUMPY:
         raise ImportError('Numpy not available.')
 
-    imageByteArray, shape, pixelID = _SimpleITK._GetArrayFromImage(image)
+    imageByteArray, shape = _SimpleITK._GetArrayFromImage(image)
+    pixelID = image.GetPixelIDValue()
     if pixelID == sitkUnknown:
          raise Exception("Logic Error: invalid pixel type")
-    elif   pixelID == sitkUInt8:
-        arr = numpy.frombuffer(imageByteArray, dtype=numpy.uint8)
-    elif pixelID == sitkInt8:
-        arr = numpy.frombuffer(imageByteArray, dtype=numpy.int8)
-    elif pixelID == sitkUInt16:
-        arr = numpy.frombuffer(imageByteArray, dtype=numpy.uint16)
-    elif pixelID == sitkInt16:
-        arr = numpy.frombuffer(imageByteArray, dtype=numpy.int16)
-    elif pixelID == sitkUInt32:
-        arr = numpy.frombuffer(imageByteArray, dtype=numpy.uint32)
-    elif pixelID == sitkInt32:
-        arr = numpy.frombuffer(imageByteArray, dtype=numpy.int32)
-    elif pixelID == sitkUInt64:
-        arr = numpy.frombuffer(imageByteArray, dtype=numpy.uint64)
-    elif pixelID == sitkInt64:
-        arr = numpy.frombuffer(imageByteArray, dtype=numpy.int64)
-    elif pixelID == sitkFloat32:
-        arr = numpy.frombuffer(imageByteArray, dtype=numpy.float32)
-    elif pixelID == sitkFloat64:
-        arr = numpy.frombuffer(imageByteArray, dtype=numpy.float64)
+    elif pixelID == sitkUInt8 or pixelID == sitkVectorUInt8:
+        arr = numpy.frombuffer(imageByteArray, dtype=numpy.uint8 )
+    elif pixelID == sitkInt8 or pixelID == sitkVectorInt8:
+        arr = numpy.frombuffer(imageByteArray, dtype=numpy.int8 )
+    elif pixelID == sitkUInt16 or pixelID == sitkVectorUInt16:
+        arr = numpy.frombuffer(imageByteArray, dtype=numpy.uint16 )
+    elif pixelID == sitkInt16 or pixelID == sitkVectorInt16:
+        arr = numpy.frombuffer(imageByteArray, dtype=numpy.int16 )
+    elif pixelID == sitkUInt32 or pixelID == sitkVectorUInt32:
+        arr = numpy.frombuffer(imageByteArray, dtype=numpy.uint32 )
+    elif pixelID == sitkInt32 or pixelID == sitkVectorInt32:
+        arr = numpy.frombuffer(imageByteArray, dtype=numpy.int32 )
+    elif pixelID == sitkUInt64 or pixelID == sitkVectorUInt64:
+        arr = numpy.frombuffer(imageByteArray, dtype=numpy.uint64 )
+    elif pixelID == sitkInt64 or pixelID == sitkVectorInt64:
+        arr = numpy.frombuffer(imageByteArray, dtype=numpy.int64 )
+    elif pixelID == sitkFloat32 or pixelID == sitkVectorFloat32:
+        arr = numpy.frombuffer(imageByteArray, dtype=numpy.float32 )
+    elif pixelID == sitkFloat64 or pixelID == sitkVectorFloat64:
+        arr = numpy.frombuffer(imageByteArray, dtype=numpy.float64 )
     elif pixelID == sitkComplexFloat32:
-        arr = numpy.frombuffer(imageByteArray, dtype=numpy.complex64)
+        arr = numpy.frombuffer(imageByteArray, dtype=numpy.complex64 )
     elif pixelID == sitkComplexFloat64:
-        arr = numpy.frombuffer(imageByteArray, dtype=numpy.complex128)
+        arr = numpy.frombuffer(imageByteArray, dtype=numpy.complex128 )
 
     arr.shape = shape
 

@@ -17,6 +17,9 @@
 *=========================================================================*/
 #include <string.h>
 
+#include <numeric>
+#include <functional>
+
 #include "sitkImage.h"
 #include "sitkConditional.h"
 #include "sitkExceptionObject.h"
@@ -44,16 +47,11 @@ sitk_GetArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
   PyObject * byteArray = NULL;
   // Numpy array shape
   PyObject * shape = NULL;
-  // An integer used by the interpreted caller to identify the pixel type
-  // (dtype)
-  PyObject * pixelID = NULL;
 
   const void * sitkBufferPtr;
   Py_ssize_t len;
-  typedef std::vector< unsigned int > SizeType;
-  SizeType size;
-  size_t pixelSize;
-  sitk::PixelIDValueType pixelIDValue;
+  std::vector< unsigned int > size;
+  size_t pixelSize = 1;
 
   unsigned int dimension;
 
@@ -73,50 +71,58 @@ sitk_GetArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
     }
   sitkImage = reinterpret_cast< sitk::Image * >( voidImage );
 
-  pixelIDValue = sitkImage->GetPixelIDValue();
-  pixelSize = 1;
-  switch( pixelIDValue )
+  switch( sitkImage->GetPixelIDValue() )
     {
   case sitk::sitkUnknown:
     PyErr_SetString( PyExc_RuntimeError, "Unknown pixel type." );
     SWIG_fail;
     break;
+  case sitk::ConditionalValue< sitk::sitkVectorUInt8 != sitk::sitkUnknown, sitk::sitkVectorUInt8, -14 >::Value:
   case sitk::ConditionalValue< sitk::sitkUInt8 != sitk::sitkUnknown, sitk::sitkUInt8, -2 >::Value:
     sitkBufferPtr = (const void *)sitkImage->GetBufferAsUInt8();
     pixelSize  = sizeof( uint8_t );
     break;
+  case sitk::ConditionalValue< sitk::sitkVectorInt8 != sitk::sitkUnknown, sitk::sitkVectorInt8, -15 >::Value:
   case sitk::ConditionalValue< sitk::sitkInt8 != sitk::sitkUnknown, sitk::sitkInt8, -3 >::Value:
     sitkBufferPtr = (const void *)sitkImage->GetBufferAsInt8();
     pixelSize  = sizeof( int8_t );
     break;
+  case sitk::ConditionalValue< sitk::sitkVectorUInt16 != sitk::sitkUnknown, sitk::sitkVectorUInt16, -16 >::Value:
   case sitk::ConditionalValue< sitk::sitkUInt16 != sitk::sitkUnknown, sitk::sitkUInt16, -4 >::Value:
     sitkBufferPtr = (const void *)sitkImage->GetBufferAsUInt16();
     pixelSize  = sizeof( uint16_t );
     break;
+  case sitk::ConditionalValue< sitk::sitkVectorInt16 != sitk::sitkUnknown, sitk::sitkVectorInt16, -17 >::Value:
   case sitk::ConditionalValue< sitk::sitkInt16 != sitk::sitkUnknown, sitk::sitkInt16, -5 >::Value:
     sitkBufferPtr = (const void *)sitkImage->GetBufferAsInt16();
     pixelSize  = sizeof( int16_t );
     break;
+  case sitk::ConditionalValue< sitk::sitkVectorUInt32 != sitk::sitkUnknown, sitk::sitkVectorUInt32, -18 >::Value:
   case sitk::ConditionalValue< sitk::sitkUInt32 != sitk::sitkUnknown, sitk::sitkUInt32, -6 >::Value:
     sitkBufferPtr = (const void *)sitkImage->GetBufferAsUInt32();
     pixelSize  = sizeof( uint32_t );
     break;
+  case sitk::ConditionalValue< sitk::sitkVectorInt32 != sitk::sitkUnknown, sitk::sitkVectorInt32, -19 >::Value:
   case sitk::ConditionalValue< sitk::sitkInt32 != sitk::sitkUnknown, sitk::sitkInt32, -7 >::Value:
     sitkBufferPtr = (const void *)sitkImage->GetBufferAsInt32();
     pixelSize  = sizeof( int32_t );
     break;
+  case sitk::ConditionalValue< sitk::sitkVectorUInt64 != sitk::sitkUnknown, sitk::sitkVectorUInt64, -20 >::Value:
   case sitk::ConditionalValue< sitk::sitkUInt64 != sitk::sitkUnknown, sitk::sitkUInt64, -8 >::Value:
     sitkBufferPtr = (const void *)sitkImage->GetBufferAsUInt64();
     pixelSize  = sizeof( uint64_t );
     break;
+  case sitk::ConditionalValue< sitk::sitkVectorInt64 != sitk::sitkUnknown, sitk::sitkVectorInt64, -21 >::Value:
   case sitk::ConditionalValue< sitk::sitkInt64 != sitk::sitkUnknown, sitk::sitkInt64, -9 >::Value:
      sitkBufferPtr = (const void *)sitkImage->GetBufferAsInt64();
      pixelSize  = sizeof( int64_t );
      break;
+  case sitk::ConditionalValue< sitk::sitkVectorFloat32 != sitk::sitkUnknown, sitk::sitkVectorFloat32, -22 >::Value:
   case sitk::ConditionalValue< sitk::sitkFloat32 != sitk::sitkUnknown, sitk::sitkFloat32, -10 >::Value:
     sitkBufferPtr = (const void *)sitkImage->GetBufferAsFloat();
     pixelSize  = sizeof( float );
     break;
+  case sitk::ConditionalValue< sitk::sitkVectorFloat64 != sitk::sitkUnknown, sitk::sitkVectorFloat64, -23 >::Value:
   case sitk::ConditionalValue< sitk::sitkFloat64 != sitk::sitkUnknown, sitk::sitkFloat64, -11 >::Value:
     sitkBufferPtr = (const void *)sitkImage->GetBufferAsDouble(); // \todo rename to Float64 for consistency
     pixelSize  = sizeof( double );
@@ -137,19 +143,6 @@ sitk_GetArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
     //sitkBufferPtr = (const void *)sitkImage->GetBufferAsComplexFloat64();
     //pixelSize  = sizeof( std::complex<double> );
     //break;
-  case sitk::ConditionalValue< sitk::sitkVectorUInt8 != sitk::sitkUnknown, sitk::sitkVectorUInt8, -14 >::Value:
-  case sitk::ConditionalValue< sitk::sitkVectorInt8 != sitk::sitkUnknown, sitk::sitkVectorInt8, -15 >::Value:
-  case sitk::ConditionalValue< sitk::sitkVectorUInt16 != sitk::sitkUnknown, sitk::sitkVectorUInt16, -16 >::Value:
-  case sitk::ConditionalValue< sitk::sitkVectorInt16 != sitk::sitkUnknown, sitk::sitkVectorInt16, -17 >::Value:
-  case sitk::ConditionalValue< sitk::sitkVectorUInt32 != sitk::sitkUnknown, sitk::sitkVectorUInt32, -18 >::Value:
-  case sitk::ConditionalValue< sitk::sitkVectorInt32 != sitk::sitkUnknown, sitk::sitkVectorInt32, -19 >::Value:
-  case sitk::ConditionalValue< sitk::sitkVectorUInt64 != sitk::sitkUnknown, sitk::sitkVectorUInt64, -20 >::Value:
-  case sitk::ConditionalValue< sitk::sitkVectorInt64 != sitk::sitkUnknown, sitk::sitkVectorInt64, -21 >::Value:
-  case sitk::ConditionalValue< sitk::sitkVectorFloat32 != sitk::sitkUnknown, sitk::sitkVectorFloat32, -22 >::Value:
-  case sitk::ConditionalValue< sitk::sitkVectorFloat64 != sitk::sitkUnknown, sitk::sitkVectorFloat64, -23 >::Value:
-    PyErr_SetString( PyExc_RuntimeError, "Images of Vector Pixel types currently are not supported." );
-    SWIG_fail;
-    break;
   default:
     PyErr_SetString( PyExc_RuntimeError, "Unknown pixel type." );
     SWIG_fail;
@@ -157,19 +150,16 @@ sitk_GetArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
 
   dimension = sitkImage->GetDimension();
   size = sitkImage->GetSize();
-  if( dimension == 2 )
+
+  // if the image is a vector just treat is as another dimension
+  if ( sitkImage->GetNumberOfComponentsPerPixel() > 1 )
     {
-    len = size[0] * size[1] * pixelSize;
+    size.push_back( sitkImage->GetNumberOfComponentsPerPixel() );
     }
-  else if( dimension == 3 )
-    {
-    len = size[0] * size[1] * size[2] * pixelSize;
-    }
-  else
-    {
-    PyErr_SetString( PyExc_ValueError, "Unexpected Image dimension." );
-    SWIG_fail;
-    }
+
+  len = std::accumulate( size.begin(), size.end(), 1u, std::multiplies<size_t>() );
+  len *= pixelSize;
+
   // When the string is null, the bytearray is uninitialized but allocated
   byteArray = PyByteArray_FromStringAndSize( NULL, len );
   if( !byteArray )
@@ -188,19 +178,17 @@ sitk_GetArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
   memcpy( byteArrayView.buf, sitkBufferPtr, len );
   PyBuffer_Release( &byteArrayView );
 
-  pixelID = Py_BuildValue( "i", pixelIDValue );
-  if( !pixelID )
-    {
-    SWIG_fail;
-    }
-
-  if( dimension == 2 )
+  if( size.size() == 2 )
     {
     shape = Py_BuildValue( "(ii)", size[1], size[0] );
     }
-  else if( dimension == 3 )
+  else if( size.size() == 3 )
     {
     shape = Py_BuildValue( "(iii)", size[2], size[1], size[0] );
+    }
+  else if( size.size() == 4 )
+    {
+    shape = Py_BuildValue( "(iiii)", size[3], size[2], size[1], size[0] );
     }
   else
     {
@@ -212,7 +200,7 @@ sitk_GetArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
     SWIG_fail;
     }
 
-  resultTuple = PyTuple_New( 3 );
+  resultTuple = PyTuple_New( 2 );
   if( !resultTuple )
     {
     SWIG_fail;
@@ -225,16 +213,11 @@ sitk_GetArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
     {
     SWIG_fail;
     }
-  if( PyTuple_SetItem( resultTuple, 2, pixelID ) != 0 )
-    {
-    SWIG_fail;
-    }
   return resultTuple;
 
 fail:
   Py_XDECREF( resultTuple ); // this should come first
   Py_XDECREF( shape );
-  Py_XDECREF( pixelID );
   Py_XDECREF( byteArray );
   return NULL;
 }
