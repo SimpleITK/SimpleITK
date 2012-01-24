@@ -171,7 +171,7 @@ TEST_F(Image,Constructors) {
   int result;
 
   {
-  itk::simple::Image image();
+  itk::simple::Image image;
   EXPECT_EQ ( 0u, image.GetWidth() );
   EXPECT_EQ ( 0u, image.GetHeight() );
   EXPECT_EQ ( 0u, image.GetDepth() );
