@@ -22,6 +22,7 @@
 
 
 #include "sitkHashImageFilter.h"
+#include "sitkJoinSeriesImageFilter.h"
 #include "sitkPixelIDTypeLists.h"
 #include "sitkStatisticsImageFilter.h"
 #include "sitkLabelStatisticsImageFilter.h"

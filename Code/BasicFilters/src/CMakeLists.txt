@@ -12,3 +12,4 @@ add_library ( SimpleITKBasicFilters ${SimpleITKBasicFiltersSource} ${SimpleITKBa
 target_link_libraries ( SimpleITKBasicFilters SimpleITKCommon ${ITK_LIBRARIES} )
 add_dependencies ( SimpleITKBasicFilters BasicFiltersSourceCode)
 
+
