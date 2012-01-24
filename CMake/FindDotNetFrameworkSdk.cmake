@@ -29,10 +29,11 @@ if( DEFINED CSHARP_DOTNET_FOUND )
     set( CSHARP_DOTNET_FOUND 0 )
     set( CSHARP_DOTNET_VERSION "CSHARP_DOTNET_VERSION-NOTVALID" CACHE STRING "C# .NET compiler version, choices: ${CSHARP_DOTNET_VERSIONS}" FORCE )
     message( FATAL_ERROR "The C# .NET version '${csharp_dotnet_version_user}' is not valid. Please enter one of the following: ${CSHARP_DOTNET_VERSIONS}" )
-  endif( NOT DEFINED CSHARP_DOTNET_COMPILER_${CSHARP_DOTNET_VERSION} )
-endif( DEFINED CSHARP_DOTNET_FOUND )
+  endif( )
+endif( )
 
 unset( CSHARP_DOTNET_VERSIONS CACHE ) # Clear versions
+
 set( csharp_dotnet_framework_dir "$ENV{windir}/Microsoft.NET/Framework" )
 string( REPLACE "\\" "/" csharp_dotnet_framework_dir ${csharp_dotnet_framework_dir} )
 file( GLOB_RECURSE csharp_dotnet_executables "${csharp_dotnet_framework_dir}/csc.exe" )
@@ -50,14 +51,14 @@ foreach ( csharp_dotnet_executable ${csharp_dotnet_executables} )
     # Add variable holding executable
     set( CSHARP_DOTNET_COMPILER_${csharp_dotnet_version_temp} ${csharp_dotnet_executable} CACHE STRING "C# .NET compiler ${csharp_dotnet_version}" FORCE )
     mark_as_advanced( CSHARP_DOTNET_COMPILER_${csharp_dotnet_version_temp} )
-  endif( csharp_dotnet_valid )
+  endif( )
   
   # Create a list of supported compiler versions
   if( NOT DEFINED CSHARP_DOTNET_VERSIONS )
     set( CSHARP_DOTNET_VERSIONS "${csharp_dotnet_version_temp}" CACHE STRING "Available C# .NET compiler versions" FORCE )
-  else( NOT DEFINED CSHARP_DOTNET_VERSIONS )
+  else( )
     set( CSHARP_DOTNET_VERSIONS "${CSHARP_DOTNET_VERSIONS}, ${csharp_dotnet_version_temp}"  CACHE STRING "Available C# .NET compiler versions" FORCE )
-  endif( NOT DEFINED CSHARP_DOTNET_VERSIONS )
+  endif( )
   mark_as_advanced( CSHARP_DOTNET_VERSIONS )
 
   # We found at least one .NET compiler version
