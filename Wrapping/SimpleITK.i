@@ -106,5 +106,10 @@ namespace std
 
 // Registration classes
 
+// Only C# can handle import filter
+#if SWIGCSHARP
+%include "sitkImportImageFilter.h"
+#endif
+
 // Auto-generated headers
 %include "SimpleITKBasicFiltersGeneratedHeaders.i"
