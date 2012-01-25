@@ -74,8 +74,9 @@ namespace simple
     Image( const Image &img );
     Image& operator=( const Image &img );
 
-    Image( unsigned int Width, unsigned int Height, PixelIDValueEnum ValueEnum );
-    Image( unsigned int Width, unsigned int Height, unsigned int Depth, PixelIDValueEnum ValueEnum );
+    Image( unsigned int width, unsigned int height, PixelIDValueEnum valueEnum  );
+    Image( unsigned int width, unsigned int height, unsigned int depth, PixelIDValueEnum valueEnum );
+    Image( const std::vector< unsigned int > &size, PixelIDValueEnum valueEnum,  unsigned int numberOfComponents = 1 );
 
     template <typename TImageType>
     explicit Image( itk::SmartPointer<TImageType> image )
@@ -262,7 +263,7 @@ namespace simple
      * This method internally utlizes the member function factory to
      * dispatch to methods instantiated on the image of the pixel ID
      */
-    void Allocate ( unsigned int Width, unsigned int Height, unsigned int Depth, PixelIDValueEnum ValueEnum );
+    void Allocate ( unsigned int Width, unsigned int Height, unsigned int Depth, PixelIDValueEnum ValueEnum, unsigned int numberOfComponents );
 
     /** \brief Dispatched methods for allocating images
      *
@@ -273,15 +274,15 @@ namespace simple
      */
     template<class TImageType>
     typename EnableIf<IsBasic<TImageType>::Value>::Type
-    AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth );
+    AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int numberOfComponents );
 
     template<class TImageType>
     typename EnableIf<IsVector<TImageType>::Value>::Type
-    AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth );
+    AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int numberOfComponents );
 
     template<class TImageType>
     typename EnableIf<IsLabel<TImageType>::Value>::Type
-    AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth );
+    AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int numberOfComponents );
     /**@}*/
 
     void MakeUniqueForWrite( void );

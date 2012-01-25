@@ -73,8 +73,14 @@ namespace itk
 
   template<class TImageType>
   typename EnableIf<IsBasic<TImageType>::Value>::Type
-  Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth )
+  Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int numberOfComponents )
   {
+    if ( numberOfComponents != 1 )
+      {
+      sitkExceptionMacro( "Specified number of components as " << numberOfComponents
+                          << " but did not specify pixelID as a vector type!" );
+      }
+
     typename TImageType::IndexType  index;
     typename TImageType::SizeType   size;
     typename TImageType::RegionType region;
@@ -100,8 +106,13 @@ namespace itk
 
   template<class TImageType>
   typename EnableIf<IsVector<TImageType>::Value>::Type
-  Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth )
+  Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int numberOfComponents )
   {
+    if ( numberOfComponents == 0 )
+      {
+      sitkExceptionMacro( "Specified number of components as zero!" );
+      }
+
     typename TImageType::IndexType  index;
     typename TImageType::SizeType   size;
     typename TImageType::RegionType region;
@@ -119,13 +130,13 @@ namespace itk
     region.SetSize ( size );
     region.SetIndex ( index );
 
-    zero.SetSize( TImageType::ImageDimension );
+    zero.SetSize( numberOfComponents );
     zero.Fill ( itk::NumericTraits<typename TImageType::PixelType::ValueType>::Zero );
 
 
     typename TImageType::Pointer image = TImageType::New();
     image->SetRegions ( region );
-    image->SetVectorLength( TImageType::ImageDimension );
+    image->SetVectorLength( numberOfComponents );
     image->Allocate();
     image->FillBuffer ( zero );
 
@@ -137,8 +148,14 @@ namespace itk
 
   template<class TImageType>
   typename EnableIf<IsLabel<TImageType>::Value>::Type
-  Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth )
+  Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int numberOfComponents )
   {
+    if ( numberOfComponents != 1 )
+      {
+      sitkExceptionMacro( "Specified number of components as " << numberOfComponents
+                          << " but did not specify pixelID as a vector type!" );
+      }
+
     typename TImageType::IndexType  index;
     typename TImageType::SizeType   size;
     typename TImageType::RegionType region;
@@ -167,14 +184,14 @@ namespace itk
   }
 
 
-  void Image::Allocate ( unsigned int Width, unsigned int Height, unsigned int Depth, PixelIDValueEnum ValueEnum )
+  void Image::Allocate ( unsigned int Width, unsigned int Height, unsigned int Depth, PixelIDValueEnum ValueEnum, unsigned int numberOfComponents )
   {
       // initialize member function factory for allocating images
 
       // The pixel IDs supported
       typedef AllPixelIDTypeList              PixelIDTypeList;
 
-      typedef void (Self::*MemberFunctionType)( unsigned int Width, unsigned int Height, unsigned int Depth );
+      typedef void (Self::*MemberFunctionType)( unsigned int , unsigned int, unsigned int, unsigned int );
 
       typedef AllocateMemberFunctionAddressor<MemberFunctionType> AllocateAddressor;
 
@@ -189,9 +206,9 @@ namespace itk
 
       PixelIDValueType type = ValueEnum;
       if ( Depth == 0 ) {
-        allocateMemberFactory.GetMemberFunction( type, 2 )( Width, Height, Depth );
+      allocateMemberFactory.GetMemberFunction( type, 2 )( Width, Height, Depth, numberOfComponents );
       } else {
-        allocateMemberFactory.GetMemberFunction( type, 3 )( Width, Height, Depth );
+      allocateMemberFactory.GetMemberFunction( type, 3 )( Width, Height, Depth, numberOfComponents );
       }
     }
 
@@ -225,13 +242,29 @@ namespace itk
     Image::Image( unsigned int Width, unsigned int Height, PixelIDValueEnum ValueEnum )
       : m_PimpleImage( NULL )
     {
-      Allocate ( Width, Height, 0, ValueEnum );
+      Allocate ( Width, Height, 0, ValueEnum, 1 );
     }
 
     Image::Image( unsigned int Width, unsigned int Height, unsigned int Depth, PixelIDValueEnum ValueEnum )
       : m_PimpleImage( NULL )
     {
-      Allocate ( Width, Height, Depth, ValueEnum );
+      Allocate ( Width, Height, Depth, ValueEnum, 1 );
+    }
+
+    Image::Image( const std::vector< unsigned int > &size, PixelIDValueEnum ValueEnum, unsigned int numberOfComponents )
+    {
+      if ( size.size() == 2 )
+        {
+        Allocate ( size[0], size[1], 0, ValueEnum, numberOfComponents );
+        }
+      else if ( size.size() == 3 )
+        {
+        Allocate ( size[0], size[1], size[2], ValueEnum, numberOfComponents );
+        }
+      else
+        {
+        sitkExceptionMacro("Unsuported number of dimesions specified!");
+        }
     }
 
     itk::DataObject* Image::GetITKBase( void )
