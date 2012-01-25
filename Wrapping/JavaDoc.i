@@ -1425,11 +1425,15 @@ OutputImagePixelType itk::ConstantPadImageFilter::GetConstant() const
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1ConvolutionImageFilter.xml
 %typemap(javaimports) itk::simple::ConvolutionImageFilter "/** Convolve a given image with an arbitrary image kernel.
 
-http://hdl.handle.net/1926/1323
+This filter operates by centering the flipped kernel at each pixel in the image and computing the inner product between pixel values in the image and pixel values in the kernel. The center of the kernel is defined asf$ lfloor (2*i+s-1)/2 rfloor f$ wheref$if$ is the index andf$sf$ is the size of the largest possible region of the kernel image. For kernels with odd sizes in all dimensions, this corresponds to the center pixel. If a dimension of the kernel image has an even size, then the center index of the kernel in that dimension will be the largest integral index that is less than the continuous index of the image center.
+The kernel can optionally be normalized to sum to 1 using NormalizeOn(). Normalization is off by default.
+warning This filter ignores the spacing, origin, and orientation of the kernel image and treats them as identical to those in the input image.
+This code was contributed in the Insight Journal paper:
+Image Kernel Convolution by Tustison N., Gee J.http://hdl.handle.net/1926/1323http://www.insight-journal.org/browse/publication/208
 author Nicholas J. Tustison
 James C. Gee
-li {ImageProcessing/ConvolutionImageFilter,Convolve an image with a kernel}
-
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/ConvolutionImageFilter,Convolve an image with a kernel}
 
 */"
 %javamethodmodifiers itk::simple::ConvolutionImageFilter::execute() "
@@ -1439,24 +1443,17 @@ li {ImageProcessing/ConvolutionImageFilter,Convolve an image with a kernel}
 %javamethodmodifiers itk::simple::Convolution "/**
 Convolve a given image with an arbitrary image kernel.
 
-http://hdl.handle.net/1926/1323
+This filter operates by centering the flipped kernel at each pixel in the image and computing the inner product between pixel values in the image and pixel values in the kernel. The center of the kernel is defined asf$ lfloor (2*i+s-1)/2 rfloor f$ wheref$if$ is the index andf$sf$ is the size of the largest possible region of the kernel image. For kernels with odd sizes in all dimensions, this corresponds to the center pixel. If a dimension of the kernel image has an even size, then the center index of the kernel in that dimension will be the largest integral index that is less than the continuous index of the image center.
+The kernel can optionally be normalized to sum to 1 using NormalizeOn(). Normalization is off by default.
+warning This filter ignores the spacing, origin, and orientation of the kernel image and treats them as identical to those in the input image.
+This code was contributed in the Insight Journal paper:
+Image Kernel Convolution by Tustison N., Gee J.http://hdl.handle.net/1926/1323http://www.insight-journal.org/browse/publication/208
 author Nicholas J. Tustison
 James C. Gee
-li {ImageProcessing/ConvolutionImageFilter,Convolve an image with a kernel}
-
-
-*/"
-%javamethodmodifiers itk::simple::ConvolutionImageFilter::setNormalize "/**
-virtual void itk::ConvolutionImageFilter::SetNormalize(bool _arg)
-
-Normalize the output image by the sum of the kernel components
-*/"
-
-%javamethodmodifiers itk::simple::ConvolutionImageFilter::getNormalize "/**
-virtual bool itk::ConvolutionImageFilter::GetNormalize() const
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/ConvolutionImageFilter,Convolve an image with a kernel}
 
 */"
-
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1CosImageFilter.xml
 %typemap(javaimports) itk::simple::CosImageFilter "/** Computes the cosine of each pixel.
 
@@ -2183,6 +2180,30 @@ virtual const double& itk::FastMarchingImageFilter::GetStoppingValue()
 Get the Fast Marching algorithm Stopping Value.
 */"
 
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1FFTConvolutionImageFilter.xml
+%typemap(javaimports) itk::simple::FFTConvolutionImageFilter "/** Convolve a given image with an arbitrary image kernel using multiplication in the Fourier domain.
+
+This filter produces output equivalent to the output of the ConvolutionImageFilter. However, it takes advantage of the convolution theorem to accelerate the convolution computation when the kernel is large.
+warning This filter ignores the spacing, origin, and orientation of the kernel image and treats them as identical to those in the input image.
+This code was adapted from the Insight Journal contribution:
+FFT Based Convolution by Gaetan Lehmannhttp://hdl.handle.net/10380/3154
+see  ConvolutionImageFilter
+
+*/"
+%javamethodmodifiers itk::simple::FFTConvolutionImageFilter::execute() "
+/**Convolve a given image with an arbitrary image kernel using multiplication in the Fourier domain.
+
+*/"
+%javamethodmodifiers itk::simple::FFTConvolution "/**
+Convolve a given image with an arbitrary image kernel using multiplication in the Fourier domain.
+
+This filter produces output equivalent to the output of the ConvolutionImageFilter. However, it takes advantage of the convolution theorem to accelerate the convolution computation when the kernel is large.
+warning This filter ignores the spacing, origin, and orientation of the kernel image and treats them as identical to those in the input image.
+This code was adapted from the Insight Journal contribution:
+FFT Based Convolution by Gaetan Lehmannhttp://hdl.handle.net/10380/3154
+see  ConvolutionImageFilter
+
+*/"
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1FFTShiftImageFilter.xml
 %typemap(javaimports) itk::simple::FFTShiftImageFilter "/** Shift the zero-frequency components of a Fourier transfrom to the center of the image.
 
@@ -4724,6 +4745,95 @@ author Richard Beare. Department of Medicine, Monash University, Melbourne, Aust
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
 This implementation was taken from the Insight Journal paper:http://hdl.handle.net/10380/3279orhttp://www.insight-journal.org/browse/publication/811
 */"
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1ResampleImageFilter.xml
+%typemap(javaimports) itk::simple::ResampleImageFilter "/** Resample an image via a coordinate transform.
+
+ ResampleImageFilterresamples an existing image through some coordinate transform, interpolating via some image function. The class is templated over the types of the input and output images.
+Note that the choice of interpolator function can be important. This function is set via SetInterpolator(). The default is LinearInterpolateImageFunction<InputImageType, TInterpolatorPrecisionType>, which is reasonable for ordinary medical images. However, some synthetic images have pixels drawn from a finite prescribed set. An example would be a mask indicating the segmentation of a brain into a small number of tissue types. For such an image, one does not want to interpolate between different pixel values, and so NearestNeighborInterpolateImageFunction< InputImageType, TCoordRep > would be a better choice.
+If an sample is taken from outside the image domain, the default behavior is to use a default pixel value. If different behavior is desired, an extrapolator function can be set with SetExtrapolator().
+Output information (spacing, size and direction) for the output image should be set. This information has the normal defaults of unit spacing, zero origin and identity direction. Optionally, the output information can be obtained from a reference image. If the reference image is provided and UseReferenceImage is On, then the spacing, origin and direction of the reference image will be used.
+Since this filter produces an image which is a different size than its input, it needs to override several of the methods defined in ProcessObjectin order to properly manage the pipeline execution model. In particular, this filter overrides ProcessObject::GenerateInputRequestedRegion()and ProcessObject::GenerateOutputInformation().
+This filter is implemented as a multithreaded filter. It provides a ThreadedGenerateData()method for its implementation.warning For multithreading, the TransformPoint method of the user-designated coordinate transform must be threadsafe.
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{SimpleOperations/TranslationTransform,Translate an image} {ImageProcessing/Upsampling,Upsampling an image} {ImageProcessing/ResampleImageFilter,Resample (stretch or compress) an image}
+
+*/"
+%javamethodmodifiers itk::simple::ResampleImageFilter::execute() "
+/**Resample an image via a coordinate transform.
+
+*/"
+%javamethodmodifiers itk::simple::Resample "/**
+Resample an image via a coordinate transform.
+
+ ResampleImageFilterresamples an existing image through some coordinate transform, interpolating via some image function. The class is templated over the types of the input and output images.
+Note that the choice of interpolator function can be important. This function is set via SetInterpolator(). The default is LinearInterpolateImageFunction<InputImageType, TInterpolatorPrecisionType>, which is reasonable for ordinary medical images. However, some synthetic images have pixels drawn from a finite prescribed set. An example would be a mask indicating the segmentation of a brain into a small number of tissue types. For such an image, one does not want to interpolate between different pixel values, and so NearestNeighborInterpolateImageFunction< InputImageType, TCoordRep > would be a better choice.
+If an sample is taken from outside the image domain, the default behavior is to use a default pixel value. If different behavior is desired, an extrapolator function can be set with SetExtrapolator().
+Output information (spacing, size and direction) for the output image should be set. This information has the normal defaults of unit spacing, zero origin and identity direction. Optionally, the output information can be obtained from a reference image. If the reference image is provided and UseReferenceImage is On, then the spacing, origin and direction of the reference image will be used.
+Since this filter produces an image which is a different size than its input, it needs to override several of the methods defined in ProcessObjectin order to properly manage the pipeline execution model. In particular, this filter overrides ProcessObject::GenerateInputRequestedRegion()and ProcessObject::GenerateOutputInformation().
+This filter is implemented as a multithreaded filter. It provides a ThreadedGenerateData()method for its implementation.warning For multithreading, the TransformPoint method of the user-designated coordinate transform must be threadsafe.
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{SimpleOperations/TranslationTransform,Translate an image} {ImageProcessing/Upsampling,Upsampling an image} {ImageProcessing/ResampleImageFilter,Resample (stretch or compress) an image}
+
+*/"
+%javamethodmodifiers itk::simple::ResampleImageFilter::setSize "/**
+virtual void itk::ResampleImageFilter::SetSize(SizeType _arg)
+
+Set the size of the output image.
+*/"
+
+%javamethodmodifiers itk::simple::ResampleImageFilter::getSize "/**
+virtual const SizeType& itk::ResampleImageFilter::GetSize()
+
+Get the size of the output image.
+*/"
+
+%javamethodmodifiers itk::simple::ResampleImageFilter::setOutputOrigin "/**
+virtual void itk::ResampleImageFilter::SetOutputOrigin(OriginPointType _arg)
+
+Set the output image origin.
+*/"
+
+%javamethodmodifiers itk::simple::ResampleImageFilter::getOutputOrigin "/**
+virtual const OriginPointType& itk::ResampleImageFilter::GetOutputOrigin()
+
+Get the output image origin.
+*/"
+
+%javamethodmodifiers itk::simple::ResampleImageFilter::setOutputSpacing "/**
+virtual void itk::ResampleImageFilter::SetOutputSpacing(SpacingType _arg)
+
+Set the output image spacing.
+*/"
+
+%javamethodmodifiers itk::simple::ResampleImageFilter::getOutputSpacing "/**
+virtual const SpacingType& itk::ResampleImageFilter::GetOutputSpacing()
+
+Get the output image spacing.
+*/"
+
+%javamethodmodifiers itk::simple::ResampleImageFilter::setOutputDirection "/**
+virtual void itk::ResampleImageFilter::SetOutputDirection(DirectionType _arg)
+
+Set the output direciton cosine matrix.
+*/"
+
+%javamethodmodifiers itk::simple::ResampleImageFilter::getOutputDirection "/**
+virtual const DirectionType& itk::ResampleImageFilter::GetOutputDirection()
+
+*/"
+
+%javamethodmodifiers itk::simple::ResampleImageFilter::setDefaultPixelValue "/**
+virtual void itk::ResampleImageFilter::SetDefaultPixelValue(PixelType _arg)
+
+Set the pixel value when a transformed pixel is outside of the image. The default default pixel value is 0.
+*/"
+
+%javamethodmodifiers itk::simple::ResampleImageFilter::getDefaultPixelValue "/**
+virtual const PixelType& itk::ResampleImageFilter::GetDefaultPixelValue()
+
+Get the pixel value when a transformed pixel is outside of the image
+*/"
+
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1RescaleIntensityImageFilter.xml
 %typemap(javaimports) itk::simple::RescaleIntensityImageFilter "/** Applies a linear transformation to the intensity levels of the input Image.
 
@@ -4800,6 +4910,41 @@ virtual void itk::ScalarConnectedComponentImageFilter::SetDistanceThreshold(cons
 %javamethodmodifiers itk::simple::ScalarConnectedComponentImageFilter::getDistanceThreshold "/**
 virtual InputPixelType itk::ScalarConnectedComponentImageFilter::GetDistanceThreshold()
 
+*/"
+
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1ScalarToRGBColormapImageFilter.xml
+%typemap(javaimports) itk::simple::ScalarToRGBColormapImageFilter "/** Implements pixel-wise intensity->rgb mapping operation on one image.
+
+This class is parameterized over the type of the input image and the type of the output image.
+ ScalarToRGBColormapImageFilter
+see BinaryFunctionImageFilter TernaryFunctionImageFilter
+
+li {SimpleOperations/ScalarToRGBColormapImageFilter,Apply a color map to an image}
+
+*/"
+%javamethodmodifiers itk::simple::ScalarToRGBColormapImageFilter::execute() "
+/**Implements pixel-wise intensity->rgb mapping operation on one image.
+
+*/"
+%javamethodmodifiers itk::simple::ScalarToRGBColormap "/**
+Implements pixel-wise intensity->rgb mapping operation on one image.
+
+This class is parameterized over the type of the input image and the type of the output image.
+ ScalarToRGBColormapImageFilter
+see BinaryFunctionImageFilter TernaryFunctionImageFilter
+
+li {SimpleOperations/ScalarToRGBColormapImageFilter,Apply a color map to an image}
+
+*/"
+%javamethodmodifiers itk::simple::ScalarToRGBColormapImageFilter::setColormap "/**
+void itk::ScalarToRGBColormapImageFilter::SetColormap(ColormapType *colormap)
+
+*/"
+
+%javamethodmodifiers itk::simple::ScalarToRGBColormapImageFilter::getColormap "/**
+ColormapType::Pointer itk::ScalarToRGBColormapImageFilter::GetColormap()
+
+Set/Get the colormap object.
 */"
 
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1ShanbhagThresholdImageFilter.xml
@@ -5128,6 +5273,80 @@ Set if image spacing should be used in computing distances.
 virtual const bool& itk::SignedMaurerDistanceMapImageFilter::GetUseImageSpacing()
 
 Get whether spacing is used.
+*/"
+
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1SimpleContourExtractorImageFilter.xml
+%typemap(javaimports) itk::simple::SimpleContourExtractorImageFilter "/** Computes an image of contours which will be the contour of the first image.
+
+A pixel of the source image is considered to belong to the contour if its pixel value is equal to the input foreground value and it has in its neighborhood at least one pixel which its pixel value is equal to the input background value. The output image will have pixels which will be set to the output foreground value if they belong to the contour, otherwise they will be set to the ouput background value.
+The neighborhood radius is set thanks to the radius params.
+see  Image
+see  Neighborhood
+see  NeighborhoodOperator
+see  NeighborhoodIterator
+
+*/"
+%javamethodmodifiers itk::simple::SimpleContourExtractorImageFilter::execute() "
+/**Computes an image of contours which will be the contour of the first image.
+
+*/"
+%javamethodmodifiers itk::simple::SimpleContourExtractor "/**
+Computes an image of contours which will be the contour of the first image.
+
+A pixel of the source image is considered to belong to the contour if its pixel value is equal to the input foreground value and it has in its neighborhood at least one pixel which its pixel value is equal to the input background value. The output image will have pixels which will be set to the output foreground value if they belong to the contour, otherwise they will be set to the ouput background value.
+The neighborhood radius is set thanks to the radius params.
+see  Image
+see  Neighborhood
+see  NeighborhoodOperator
+see  NeighborhoodIterator
+
+*/"
+%javamethodmodifiers itk::simple::SimpleContourExtractorImageFilter::setInputForegroundValue "/**
+virtual void itk::SimpleContourExtractorImageFilter::SetInputForegroundValue(InputPixelType _arg)
+
+Set the foreground value used in order to identify a foreground pixel in the input image.
+*/"
+
+%javamethodmodifiers itk::simple::SimpleContourExtractorImageFilter::getInputForegroundValue "/**
+virtual const InputPixelType& itk::SimpleContourExtractorImageFilter::GetInputForegroundValue()
+
+Get the foreground value used in order to identify a foreground pixel in the input image.
+*/"
+
+%javamethodmodifiers itk::simple::SimpleContourExtractorImageFilter::setInputBackgroundValue "/**
+virtual void itk::SimpleContourExtractorImageFilter::SetInputBackgroundValue(InputPixelType _arg)
+
+Set the background value used in order to identify a background pixel in the input image.
+*/"
+
+%javamethodmodifiers itk::simple::SimpleContourExtractorImageFilter::getInputBackgroundValue "/**
+virtual const InputPixelType& itk::SimpleContourExtractorImageFilter::GetInputBackgroundValue()
+
+Get the background value used in order to identify a background pixel in the input image.
+*/"
+
+%javamethodmodifiers itk::simple::SimpleContourExtractorImageFilter::setOutputForegroundValue "/**
+virtual void itk::SimpleContourExtractorImageFilter::SetOutputForegroundValue(OutputPixelType _arg)
+
+Set the foreground value used in order to identify a foreground pixel in the output image.
+*/"
+
+%javamethodmodifiers itk::simple::SimpleContourExtractorImageFilter::getOutputForegroundValue "/**
+virtual const OutputPixelType& itk::SimpleContourExtractorImageFilter::GetOutputForegroundValue()
+
+Get the foreground value used in order to identify a foreground pixel in the output image.
+*/"
+
+%javamethodmodifiers itk::simple::SimpleContourExtractorImageFilter::setOutputBackgroundValue "/**
+virtual void itk::SimpleContourExtractorImageFilter::SetOutputBackgroundValue(OutputPixelType _arg)
+
+Set the background value used in order to identify a background pixel in the output image.
+*/"
+
+%javamethodmodifiers itk::simple::SimpleContourExtractorImageFilter::getOutputBackgroundValue "/**
+virtual const OutputPixelType& itk::SimpleContourExtractorImageFilter::GetOutputBackgroundValue()
+
+Get the background value used in order to identify a background pixel in the output image.
 */"
 
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1SinImageFilter.xml

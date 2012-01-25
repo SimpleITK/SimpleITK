@@ -12,7 +12,7 @@
     "type" : "bool",
     "default" : "false",
     "doc" : ""
-   }, {
+  }, {
     "name" : "OutputRegionMode",
     "type" : "FFTConvolutionImageFilter::OutputRegionMode",
     "default" : "itk::simple::FFTConvolutionImageFilter::SAME",
@@ -25,5 +25,7 @@
     "inputB" : "Input/Gaussian_1.5.nrrd",
     "settings" : [ ],
     "tolerance" : "0.0001"
-  } ]
+  } ],
+  "briefdescription" : "Convolve a given image with an arbitrary image kernel using multiplication in the Fourier domain.\n",
+  "detaileddescription" : "This filter produces output equivalent to the output of the ConvolutionImageFilter. However, it takes advantage of the convolution theorem to accelerate the convolution computation when the kernel is large.\n\\warning This filter ignores the spacing, origin, and orientation of the kernel image and treats them as identical to those in the input image.\nThis code was adapted from the Insight Journal contribution:\n\"FFT Based Convolution\" by Gaetan Lehmannhttp://hdl.handle.net/10380/3154\n\\see  ConvolutionImageFilter\n\n"
 }
