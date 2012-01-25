@@ -629,7 +629,7 @@ namespace itk
 
 #define SITK_TEMPLATE_InternalInitialization_D( _I, _D )                \
   namespace itk { namespace simple {                                    \
-  template void Image::InternalInitialization<_I,_D>(  PixelIDToImageType< typelist::TypeAt<InstantiatedPixelIDTypeList, \
+  template SITKCommon_EXPORT void Image::InternalInitialization<_I,_D>(  PixelIDToImageType< typelist::TypeAt<InstantiatedPixelIDTypeList, \
                                                                                             _I>::Result, \
                                                                            _D>::ImageType *i ); \
   } }
