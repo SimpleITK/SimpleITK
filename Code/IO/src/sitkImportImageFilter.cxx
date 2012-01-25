@@ -186,10 +186,20 @@ ImportImageFilter::Self& ImportImageFilter::SetSpacing( const std::vector< doubl
   return *this;
 }
 
+const std::vector< double > &ImportImageFilter::GetSpacing( ) const
+{
+  return this->m_Spacing;
+}
+
 ImportImageFilter::Self& ImportImageFilter::SetOrigin( const std::vector< double > &origin )
 {
   this->m_Origin = origin;
   return *this;
+}
+
+const std::vector< double > &ImportImageFilter::GetOrigin( ) const
+{
+  return this->m_Origin;
 }
 
 ImportImageFilter::Self& ImportImageFilter::SetSize( const std::vector< unsigned int > &size )
@@ -198,10 +208,20 @@ ImportImageFilter::Self& ImportImageFilter::SetSize( const std::vector< unsigned
   return *this;
 }
 
+const std::vector< unsigned int > &ImportImageFilter::GetSize( ) const
+{
+  return this->m_Size;
+}
+
 ImportImageFilter::Self& ImportImageFilter::SetDirection( const std::vector< double > &direction )
 {
   this->m_Direction = direction;
   return *this;
+}
+
+const std::vector< double > &ImportImageFilter::GetDirection( ) const
+{
+  return this->m_Direction;
 }
 
 ImportImageFilter::Self& ImportImageFilter::SetBufferAsInt8( int8_t * buffer, unsigned int numberOfComponents )

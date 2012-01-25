@@ -25,9 +25,16 @@ namespace itk {
       ImportImageFilter();
 
       Self& SetSize( const std::vector< unsigned int > &size );
+      const std::vector< unsigned int > &GetSize( ) const;
+
       Self& SetSpacing( const std::vector< double > &spacing );
+      const std::vector< double > &GetSpacing( ) const;
+
       Self& SetOrigin( const std::vector< double > &origin );
+      const std::vector< double > &GetOrigin( ) const;
+
       Self& SetDirection( const std::vector< double > &direction );
+      const std::vector< double > &GetDirection( ) const;
 
       Self& SetBufferAsInt8( int8_t * buffer, unsigned int numberOfComponents = 1 );
       Self& SetBufferAsUInt8( uint8_t * buffer, unsigned int numberOfComponents = 1 );
