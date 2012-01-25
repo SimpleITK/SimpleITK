@@ -33,8 +33,9 @@
       "value" : "{2,3}",
       "tcl_value" : "[list 2 3]",
       "python_value" : "[ 2, 3 ]",
-      "ruby_value" : "[ 2, 3 ]" }]
-    } , {
+      "ruby_value" : "[ 2, 3 ]"
+    } ]
+  }, {
     "tag" : "by333",
     "description" : "Test by 333",
     "inputA" : "Input/RA-Short.nrrd",
@@ -47,6 +48,8 @@
       "tcl_value" : "[list 3 3 3]",
       "python_value" : "[ 3, 3, 3 ]",
       "ruby_value" : "[ 3, 3, 3 ]"
-    }  ]
-  } ]
+    } ]
+  } ],
+  "briefdescription" : "Implements a fast rectangular mean filter using the accumulator approach.\n",
+  "detaileddescription" : "This code was contributed in the Insight Journal paper: \"Efficient implementation of kernel filtering\" by Beare R., Lehmann Ghttp://hdl.handle.net/1926/555http://www.insight-journal.org/browse/publication/160\n\\author Richard Beare\n\n"
 }

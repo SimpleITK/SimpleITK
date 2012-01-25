@@ -15,5 +15,5 @@
     "settings" : [ ]
   } ],
   "briefdescription" : "Converts a LabelMapto a labeled image.\n",
-  "detaileddescription" : " LabelMapToBinaryImageFilterto a label image.\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\\see  LabelMapToBinaryImageFilter, LabelMapMaskImageFilter\n\n"
+  "detaileddescription" : " LabelMapToBinaryImageFilterto a label image.\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\\see  LabelMapToBinaryImageFilter, LabelMapMaskImageFilter\n\\par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}\n{ImageProcessing/LabelMapToLabelImageFilter,Convert a LabelMapto a normal image with different values representing each region}\n\n"
 }

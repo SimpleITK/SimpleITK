@@ -1,16 +1,18 @@
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1AbsImageFilter.xml
-%feature("docstring") itk::simple::AbsImageFilter "Computes the ABS(x) pixel-wise.
+%feature("docstring") itk::simple::AbsImageFilter "Computes the absolute value of each pixel.
 
-
-li {ImageProcessing/AbsImageFilter,Compute the absolute value of an image}
+vnl_math_abs() is used to perform the computation.
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/AbsImageFilter,Compute the absolute value of an image}
 
 "
-%feature("docstring") itk::simple::AbsImageFilter::Execute "Computes the ABS(x) pixel-wise.
+%feature("docstring") itk::simple::AbsImageFilter::Execute "Computes the absolute value of each pixel.
 "
-%feature("docstring") itk::simple::Abs "Computes the ABS(x) pixel-wise.
+%feature("docstring") itk::simple::Abs "Computes the absolute value of each pixel.
 
-
-li {ImageProcessing/AbsImageFilter,Compute the absolute value of an image}
+vnl_math_abs() is used to perform the computation.
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/AbsImageFilter,Compute the absolute value of an image}
 
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1AbsoluteValueDifferenceImageFilter.xml
@@ -20,14 +22,16 @@ This filter is parametrized over the types of the two input images and the type 
 Numeric conversions (castings) are done by the C++ defaults.
 The filter will walk over all the pixels in the two input images, and for each one of them it will do the following:
 
-li cast the input 1 pixel value to double 
-li cast the input 2 pixel value to double 
-li compute the difference of the two pixel values
-li compute the absolute value of the difference
-li cast the double value resulting from the absolute value to the pixel type of the output image
-li store the casted value into the output image.
+li Cast the input 1 pixel value to double .
+li Cast the input 2 pixel value to double .
+li Compute the difference of the two pixel values.
+li Compute the absolute value of the difference.
+li Cast the double value resulting from the absolute value to the pixel type of the output image.
+li Store the casted value into the output image.
+The filter expects all images to have the same dimension (e.g. all 2D, or all 3D, or all ND).
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/AbsoluteValueDifferenceImageFilter,Compute the absolute value of the difference of corresponding pixels in two images}
 
-The filter expect all images to have the same dimension (e.g. all 2D, or all 3D, or all ND)
 "
 %feature("docstring") itk::simple::AbsoluteValueDifferenceImageFilter::Execute "Implements pixel-wise the computation of absolute value difference.
 "
@@ -37,41 +41,41 @@ This filter is parametrized over the types of the two input images and the type 
 Numeric conversions (castings) are done by the C++ defaults.
 The filter will walk over all the pixels in the two input images, and for each one of them it will do the following:
 
-li cast the input 1 pixel value to double 
-li cast the input 2 pixel value to double 
-li compute the difference of the two pixel values
-li compute the absolute value of the difference
-li cast the double value resulting from the absolute value to the pixel type of the output image
-li store the casted value into the output image.
+li Cast the input 1 pixel value to double .
+li Cast the input 2 pixel value to double .
+li Compute the difference of the two pixel values.
+li Compute the absolute value of the difference.
+li Cast the double value resulting from the absolute value to the pixel type of the output image.
+li Store the casted value into the output image.
+The filter expects all images to have the same dimension (e.g. all 2D, or all 3D, or all ND).
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/AbsoluteValueDifferenceImageFilter,Compute the absolute value of the difference of corresponding pixels in two images}
 
-The filter expect all images to have the same dimension (e.g. all 2D, or all 3D, or all ND)
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1AcosImageFilter.xml
-%feature("docstring") itk::simple::AcosImageFilter "Computes the vcl_acos(x) pixel-wise.
+%feature("docstring") itk::simple::AcosImageFilter "Computes the inverse cosine of each pixel.
 
 This filter is templated over the pixel type of the input image and the pixel type of the output image.
-The filter will walk over all the pixels in the input image, and for each one of them it will do the following:
+The filter walks over all the pixels in the input image, and for each pixel does do the following:
 
 li cast the pixel value to double ,
 li apply the vcl_acos() function to the double value
 li cast the double value resulting from vcl_acos() to the pixel type of the output image
 li store the casted value into the output image.
-
-The filter expect both images to have the same dimension (e.g. both 2D, or both 3D, or both ND).
+The filter expects both images to have the same dimension (e.g. both 2D, or both 3D, or both ND).
 "
-%feature("docstring") itk::simple::AcosImageFilter::Execute "Computes the vcl_acos(x) pixel-wise.
+%feature("docstring") itk::simple::AcosImageFilter::Execute "Computes the inverse cosine of each pixel.
 "
-%feature("docstring") itk::simple::Acos "Computes the vcl_acos(x) pixel-wise.
+%feature("docstring") itk::simple::Acos "Computes the inverse cosine of each pixel.
 
 This filter is templated over the pixel type of the input image and the pixel type of the output image.
-The filter will walk over all the pixels in the input image, and for each one of them it will do the following:
+The filter walks over all the pixels in the input image, and for each pixel does do the following:
 
 li cast the pixel value to double ,
 li apply the vcl_acos() function to the double value
 li cast the double value resulting from vcl_acos() to the pixel type of the output image
 li store the casted value into the output image.
-
-The filter expect both images to have the same dimension (e.g. both 2D, or both 3D, or both ND).
+The filter expects both images to have the same dimension (e.g. both 2D, or both 3D, or both ND).
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1AddConstantToImageFilter.xml
 %feature("docstring") itk::simple::AddConstantToImageFilter "Add a constant to all input pixels.
@@ -106,61 +110,57 @@ Set the constant that will be used to multiply all the image pixels
 "
 
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1AddImageFilter.xml
-%feature("docstring") itk::simple::AddImageFilter "Implements an operator for pixel-wise addition of two images.
+%feature("docstring") itk::simple::AddImageFilter "Pixel-wise addition of two images.
 
-This class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
+This class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
 The pixel type of the input 1 image must have a valid defintion of the operator+ with a pixel type of the image 2. This condition is required because internally this filter will perform the operation
-pixel_from_image_1 + pixel_from_image_2
+pixel_from_image_1+pixel_from_image_2
 Additionally the type resulting from the sum, will be cast to the pixel type of the output image.
-The total operation over one pixel will be
-output_pixel = static_cast<OutputPixelType>( input1_pixel + input2_pixel )
+The total operation over one pixel will beoutput_pixel=static_cast<OutputPixelType>(input1_pixel+input2_pixel)
 For example, this filter could be used directly for adding images whose pixels are vectors of the same dimension, and to store the resulting vector in an output image of vector pixels.
-The images to be added are set using the methods: SetInput1( image1 ); SetInput2( image2 );
+The images to be added are set using the methods: SetInput1(image1); SetInput2(image2);
+Additionally, this filter can be used to add a constant to every pixel of an image by using SetInput1(image1); SetConstant2(constant);
 warning No numeric overflow checking is performed in this filter.
-
-li {ImageProcessing/AddImageFilter,Add two images together}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/AddImageFilter,Add two images together} {ImageProcessing/AddConstantToImageFilter,Add a constant to every pixel in an image}
 
 "
-%feature("docstring") itk::simple::AddImageFilter::Execute "Implements an operator for pixel-wise addition of two images.
+%feature("docstring") itk::simple::AddImageFilter::Execute "Pixel-wise addition of two images.
 "
-%feature("docstring") itk::simple::Add "Implements an operator for pixel-wise addition of two images.
+%feature("docstring") itk::simple::Add "Pixel-wise addition of two images.
 
-This class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
+This class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
 The pixel type of the input 1 image must have a valid defintion of the operator+ with a pixel type of the image 2. This condition is required because internally this filter will perform the operation
-pixel_from_image_1 + pixel_from_image_2
+pixel_from_image_1+pixel_from_image_2
 Additionally the type resulting from the sum, will be cast to the pixel type of the output image.
-The total operation over one pixel will be
-output_pixel = static_cast<OutputPixelType>( input1_pixel + input2_pixel )
+The total operation over one pixel will beoutput_pixel=static_cast<OutputPixelType>(input1_pixel+input2_pixel)
 For example, this filter could be used directly for adding images whose pixels are vectors of the same dimension, and to store the resulting vector in an output image of vector pixels.
-The images to be added are set using the methods: SetInput1( image1 ); SetInput2( image2 );
+The images to be added are set using the methods: SetInput1(image1); SetInput2(image2);
+Additionally, this filter can be used to add a constant to every pixel of an image by using SetInput1(image1); SetConstant2(constant);
 warning No numeric overflow checking is performed in this filter.
-
-li {ImageProcessing/AddImageFilter,Add two images together}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/AddImageFilter,Add two images together} {ImageProcessing/AddConstantToImageFilter,Add a constant to every pixel in an image}
 
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1AndImageFilter.xml
 %feature("docstring") itk::simple::AndImageFilter "Implements the AND logical operator pixel-wise between two images.
 
-This class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
+This class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
 Since the logical AND operation is only defined in C++ for integer types, the images passed to this filter must comply with the requirement of using integer pixel type.
-The total operation over one pixel will be
-output_pixel = static_cast<OutputPixelType>( input1_pixel & input2_pixel )
-Where & is the boolean AND operator in C++.
-
-li {ImageProcessing/AndImageFilter,Binary AND two images}
+The total operation over one pixel will beoutput_pixel=static_cast<OutputPixelType>(input1_pixel&input2_pixel)Where & is the boolean AND operator in C++.
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/AndImageFilter,Binary AND two images}
 
 "
 %feature("docstring") itk::simple::AndImageFilter::Execute "Implements the AND logical operator pixel-wise between two images.
 "
 %feature("docstring") itk::simple::And "Implements the AND logical operator pixel-wise between two images.
 
-This class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
+This class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
 Since the logical AND operation is only defined in C++ for integer types, the images passed to this filter must comply with the requirement of using integer pixel type.
-The total operation over one pixel will be
-output_pixel = static_cast<OutputPixelType>( input1_pixel & input2_pixel )
-Where & is the boolean AND operator in C++.
-
-li {ImageProcessing/AndImageFilter,Binary AND two images}
+The total operation over one pixel will beoutput_pixel=static_cast<OutputPixelType>(input1_pixel&input2_pixel)Where & is the boolean AND operator in C++.
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/AndImageFilter,Binary AND two images}
 
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1ApproximateSignedDistanceMapImageFilter.xml
@@ -175,6 +175,8 @@ This filter uses the FastChamferDistanceImageFilterand the IsoContourDistanceIma
 see  DanielssonDistanceMapImageFilter, SignedDanielssonDistanceMapImageFilter
 see  FastChamferDistanceImageFilter, IsoContourDistanceImageFilter
 author Zach Pincus
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/ApproximateSignedDistanceMapImageFilter,Compute a distance map from objects in a binary image}
 
 "
 %feature("docstring") itk::simple::ApproximateSignedDistanceMapImageFilter::Execute "Create a map of the approximate signed distance from the boundaries of a binary image.
@@ -190,6 +192,8 @@ This filter uses the FastChamferDistanceImageFilterand the IsoContourDistanceIma
 see  DanielssonDistanceMapImageFilter, SignedDanielssonDistanceMapImageFilter
 see  FastChamferDistanceImageFilter, IsoContourDistanceImageFilter
 author Zach Pincus
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/ApproximateSignedDistanceMapImageFilter,Compute a distance map from objects in a binary image}
 
 "
 %feature("docstring") itk::simple::ApproximateSignedDistanceMapImageFilter::SetInsideValue "virtual void itk::ApproximateSignedDistanceMapImageFilter::SetInsideValue(InputPixelType _arg)
@@ -211,71 +215,75 @@ Set/Get intensity value representing non-objects in the mask
 "
 
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1AsinImageFilter.xml
-%feature("docstring") itk::simple::AsinImageFilter "Computes the vcl_asin(x) pixel-wise.
+%feature("docstring") itk::simple::AsinImageFilter "Computes the sine of each pixel.
 
 This filter is templated over the pixel type of the input image and the pixel type of the output image.
-The filter will walk over all the pixels in the input image, and for each one of them it will do the following:
+The filter walks over all the pixels in the input image, and for each pixel does the following:
 
 li cast the pixel value to double ,
-li apply the vcl_asin() function to the double value
-li cast the double value resulting from vcl_asin() to the pixel type of the output image
+li apply the vcl_asin() function to the double value,
+li cast the double value resulting from vcl_asin() to the pixel type of the output image,
 li store the casted value into the output image.
-
-The filter expect both images to have the same dimension (e.g. both 2D, or both 3D, or both ND)
+The filter expects both images to have the same dimension (e.g. both 2D, or both 3D, or both ND)
 "
-%feature("docstring") itk::simple::AsinImageFilter::Execute "Computes the vcl_asin(x) pixel-wise.
+%feature("docstring") itk::simple::AsinImageFilter::Execute "Computes the sine of each pixel.
 "
-%feature("docstring") itk::simple::Asin "Computes the vcl_asin(x) pixel-wise.
+%feature("docstring") itk::simple::Asin "Computes the sine of each pixel.
 
 This filter is templated over the pixel type of the input image and the pixel type of the output image.
-The filter will walk over all the pixels in the input image, and for each one of them it will do the following:
+The filter walks over all the pixels in the input image, and for each pixel does the following:
 
 li cast the pixel value to double ,
-li apply the vcl_asin() function to the double value
-li cast the double value resulting from vcl_asin() to the pixel type of the output image
+li apply the vcl_asin() function to the double value,
+li cast the double value resulting from vcl_asin() to the pixel type of the output image,
 li store the casted value into the output image.
-
-The filter expect both images to have the same dimension (e.g. both 2D, or both 3D, or both ND)
+The filter expects both images to have the same dimension (e.g. both 2D, or both 3D, or both ND)
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1Atan2ImageFilter.xml
-%feature("docstring") itk::simple::Atan2ImageFilter "Computes arctangent pixel-wise from two images.
+%feature("docstring") itk::simple::Atan2ImageFilter "Computes two argument inverse tangent.
 
-This class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
-Both pixel input types are casted to double in order to be used as parameters of vcl_atan2() . The resulting double value is casted to the output pixel type.
-"
-%feature("docstring") itk::simple::Atan2ImageFilter::Execute "Computes arctangent pixel-wise from two images.
-"
-%feature("docstring") itk::simple::Atan2 "Computes arctangent pixel-wise from two images.
+The first argument to the atan function is provided by a pixel in the first input image ( SetInput1()) and the corresponding pixel in the second input image ( SetInput2()) is used as the second argument.
+This class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
+Both pixel input types are cast to double in order to be used as parameters of vcl_atan2() . The resulting double value is cast to the output pixel type.
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Math/Trig/Atan2ImageFilter,Compute the arctangent of each pixel.}
 
-This class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
-Both pixel input types are casted to double in order to be used as parameters of vcl_atan2() . The resulting double value is casted to the output pixel type.
+"
+%feature("docstring") itk::simple::Atan2ImageFilter::Execute "Computes two argument inverse tangent.
+"
+%feature("docstring") itk::simple::Atan2 "Computes two argument inverse tangent.
+
+The first argument to the atan function is provided by a pixel in the first input image ( SetInput1()) and the corresponding pixel in the second input image ( SetInput2()) is used as the second argument.
+This class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
+Both pixel input types are cast to double in order to be used as parameters of vcl_atan2() . The resulting double value is cast to the output pixel type.
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Math/Trig/Atan2ImageFilter,Compute the arctangent of each pixel.}
+
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1AtanImageFilter.xml
-%feature("docstring") itk::simple::AtanImageFilter "Computes the vcl_atan(x) pixel-wise.
+%feature("docstring") itk::simple::AtanImageFilter "Computes the one-argument inverse tangent of each pixel.
 
 This filter is templated over the pixel type of the input image and the pixel type of the output image.
-The filter will walk over all the pixels in the input image, and for each one of them it will do the following:
+The filter walks over all the pixels in the input image, and for each pixel does the following:
 
 li cast the pixel value to double ,
-li apply the vcl_atan() function to the double value
-li cast the double value resulting from vcl_atan() to the pixel type of the output image
-li store the casted value into the output image.
+li apply the vcl_atan() function to the double value,
+li cast the double value resulting from vcl_atan() to the pixel type of the output image,
+li store the cast value into the output image.
 
-The filter expect both images to have the same dimension (e.g. both 2D, or both 3D, or both ND)
 "
-%feature("docstring") itk::simple::AtanImageFilter::Execute "Computes the vcl_atan(x) pixel-wise.
+%feature("docstring") itk::simple::AtanImageFilter::Execute "Computes the one-argument inverse tangent of each pixel.
 "
-%feature("docstring") itk::simple::Atan "Computes the vcl_atan(x) pixel-wise.
+%feature("docstring") itk::simple::Atan "Computes the one-argument inverse tangent of each pixel.
 
 This filter is templated over the pixel type of the input image and the pixel type of the output image.
-The filter will walk over all the pixels in the input image, and for each one of them it will do the following:
+The filter walks over all the pixels in the input image, and for each pixel does the following:
 
 li cast the pixel value to double ,
-li apply the vcl_atan() function to the double value
-li cast the double value resulting from vcl_atan() to the pixel type of the output image
-li store the casted value into the output image.
+li apply the vcl_atan() function to the double value,
+li cast the double value resulting from vcl_atan() to the pixel type of the output image,
+li store the cast value into the output image.
 
-The filter expect both images to have the same dimension (e.g. both 2D, or both 3D, or both ND)
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1BilateralImageFilter.xml
 %feature("docstring") itk::simple::BilateralImageFilter "Blurs an image while preserving edges.
@@ -292,8 +300,8 @@ see  Neighborhood
 see  NeighborhoodOperator
 TodoSupport color images
 Support vector images
-li {Smoothing/BilateralImageFilter,Bilateral filter an image}
-
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Smoothing/BilateralImageFilter,Bilateral filter an image}
 
 "
 %feature("docstring") itk::simple::BilateralImageFilter::Execute "Blurs an image while preserving edges.
@@ -312,8 +320,8 @@ see  Neighborhood
 see  NeighborhoodOperator
 TodoSupport color images
 Support vector images
-li {Smoothing/BilateralImageFilter,Bilateral filter an image}
-
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Smoothing/BilateralImageFilter,Bilateral filter an image}
 
 "
 %feature("docstring") itk::simple::BilateralImageFilter::SetDomainSigma "void itk::BilateralImageFilter::SetDomainSigma(const double v)
@@ -363,6 +371,16 @@ This implementation was taken from the Insight Journal paper:http://hdl.handle.n
 see  MorphologyImageFilter, ClosingByReconstructionImageFilter, BinaryOpeningByReconstructionImageFilter
 
 "
+%feature("docstring") itk::simple::BinaryClosingByReconstructionImageFilter::SetForegroundValue "virtual void itk::BinaryClosingByReconstructionImageFilter::SetForegroundValue(InputPixelType _arg)
+
+Set the value in the image to consider as foreground. Defaults to maximum value of InputPixelType.
+"
+
+%feature("docstring") itk::simple::BinaryClosingByReconstructionImageFilter::GetForegroundValue "virtual InputPixelType itk::BinaryClosingByReconstructionImageFilter::GetForegroundValue()
+
+Get the value in the image considered as foreground. Defaults to maximum value of InputPixelType.
+"
+
 %feature("docstring") itk::simple::BinaryClosingByReconstructionImageFilter::SetFullyConnected "virtual void itk::BinaryClosingByReconstructionImageFilter::SetFullyConnected(bool _arg)
 
 Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.
@@ -380,8 +398,8 @@ The connectivity can be changed to minimum or maximum connectivity with SetFully
 http://hdl.handle.net/1926/1352
 author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
 see  LabelContourImageFilter BinaryErodeImageFilter SimpleContourExtractorImageFilter
-li {EdgesAndGradients/BinaryContourImageFilter,Extract the boundaries of connected regions in a binary image} {EdgesAndGradients/BinaryBoundaries,Extract the inner and outer boundaries of blobs in a binary image}
-
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{EdgesAndGradients/BinaryContourImageFilter,Extract the boundaries of connected regions in a binary image} {EdgesAndGradients/BinaryBoundaries,Extract the inner and outer boundaries of blobs in a binary image}
 
 "
 %feature("docstring") itk::simple::BinaryContourImageFilter::Execute "Labels the pixels on the border of the objects in a binary image.
@@ -393,8 +411,8 @@ The connectivity can be changed to minimum or maximum connectivity with SetFully
 http://hdl.handle.net/1926/1352
 author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
 see  LabelContourImageFilter BinaryErodeImageFilter SimpleContourExtractorImageFilter
-li {EdgesAndGradients/BinaryContourImageFilter,Extract the boundaries of connected regions in a binary image} {EdgesAndGradients/BinaryBoundaries,Extract the inner and outer boundaries of blobs in a binary image}
-
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{EdgesAndGradients/BinaryContourImageFilter,Extract the boundaries of connected regions in a binary image} {EdgesAndGradients/BinaryBoundaries,Extract the inner and outer boundaries of blobs in a binary image}
 
 "
 %feature("docstring") itk::simple::BinaryContourImageFilter::SetFullyConnected "virtual void itk::BinaryContourImageFilter::SetFullyConnected(bool _arg)
@@ -433,8 +451,8 @@ N.Nikopoulos et al. An efficient algorithm for 3d binary morphological transform
 Gray scale images can be processed as binary images by selecting a DilateValue. Pixel values matching the dilate value are considered the foreground and all other pixels are background. This is useful in processing segmented images where all pixels in segment #1 have value 1 and pixels in segment #2 have value 2, etc. A particular segment number can be processed. DilateValue defaults to the maximum possible value of the PixelType.
 The structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element having values > 0 are candidates for affecting the center pixel. A reasonable choice of structuring element is itk::BinaryBallStructuringElement.
 see  ImageToImageFilter BinaryErodeImageFilter BinaryMorphologyImageFilter
-li {Morphology/BinaryDilateImageFilter,Dilate a binary image}
-
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Morphology/BinaryDilateImageFilter,Dilate a binary image}
 
 "
 %feature("docstring") itk::simple::BinaryDilateImageFilter::Execute "Fast binary dilation.
@@ -447,8 +465,8 @@ N.Nikopoulos et al. An efficient algorithm for 3d binary morphological transform
 Gray scale images can be processed as binary images by selecting a DilateValue. Pixel values matching the dilate value are considered the foreground and all other pixels are background. This is useful in processing segmented images where all pixels in segment #1 have value 1 and pixels in segment #2 have value 2, etc. A particular segment number can be processed. DilateValue defaults to the maximum possible value of the PixelType.
 The structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element having values > 0 are candidates for affecting the center pixel. A reasonable choice of structuring element is itk::BinaryBallStructuringElement.
 see  ImageToImageFilter BinaryErodeImageFilter BinaryMorphologyImageFilter
-li {Morphology/BinaryDilateImageFilter,Dilate a binary image}
-
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Morphology/BinaryDilateImageFilter,Dilate a binary image}
 
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1BinaryErodeImageFilter.xml
@@ -460,8 +478,8 @@ N.Nikopoulos et al. An efficient algorithm for 3d binary morphological transform
 Gray scale images can be processed as binary images by selecting a ErodeValue. Pixel values matching the dilate value are considered the foreground and all other pixels are background. This is useful in processing segmented images where all pixels in segment #1 have value 1 and pixels in segment #2 have value 2, etc. A particular segment number can be processed. ErodeValue defaults to the maximum possible value of the PixelType. The eroded pixels will receive the BackgroundValue (defaults to 0).
 The structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element having values > 0 are candidates for affecting the center pixel. A reasonable choice of structuring element is itk::BinaryBallStructuringElement.
 see  ImageToImageFilter BinaryDilateImageFilter BinaryMorphologyImageFilter
-li {Morphology/BinaryErodeImageFilter,Erode a binary image}
-
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Morphology/BinaryErodeImageFilter,Erode a binary image}
 
 "
 %feature("docstring") itk::simple::BinaryErodeImageFilter::Execute "Fast binary erosion.
@@ -474,8 +492,8 @@ N.Nikopoulos et al. An efficient algorithm for 3d binary morphological transform
 Gray scale images can be processed as binary images by selecting a ErodeValue. Pixel values matching the dilate value are considered the foreground and all other pixels are background. This is useful in processing segmented images where all pixels in segment #1 have value 1 and pixels in segment #2 have value 2, etc. A particular segment number can be processed. ErodeValue defaults to the maximum possible value of the PixelType. The eroded pixels will receive the BackgroundValue (defaults to 0).
 The structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element having values > 0 are candidates for affecting the center pixel. A reasonable choice of structuring element is itk::BinaryBallStructuringElement.
 see  ImageToImageFilter BinaryDilateImageFilter BinaryMorphologyImageFilter
-li {Morphology/BinaryErodeImageFilter,Erode a binary image}
-
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Morphology/BinaryErodeImageFilter,Erode a binary image}
 
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1BinaryFillholeImageFilter.xml
@@ -569,37 +587,35 @@ Set the value in eroded part of the image. Defaults to zero
 "
 
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1BinaryMagnitudeImageFilter.xml
-%feature("docstring") itk::simple::BinaryMagnitudeImageFilter "Implements pixel-wise the computation of square root of the sum of squares.
+%feature("docstring") itk::simple::BinaryMagnitudeImageFilter "Computes the square root of the sum of squares of corresponding input pixels.
 
-This filter is parametrized over the types of the two input images and the type of the output image.
+This filter is templated over the types of the two input images and the type of the output image.
 Numeric conversions (castings) are done by the C++ defaults.
-The filter will walk over all the pixels in the two input images, and for each one of them it will do the following:
+The filter walks over all of the pixels in the two input images, and for each pixel does the following:
 
 li cast the input 1 pixel value to double 
 li cast the input 2 pixel value to double 
 li compute the sum of squares of the two pixel values
 li compute the square root of the sum
 li cast the double value resulting from vcl_sqrt() to the pixel type of the output image
-li store the casted value into the output image.
-
-The filter expect all images to have the same dimension (e.g. all 2D, or all 3D, or all ND)
+li store the cast value into the output image.
+The filter expects all images to have the same dimension (e.g. all 2D, or all 3D, or all ND)
 "
-%feature("docstring") itk::simple::BinaryMagnitudeImageFilter::Execute "Implements pixel-wise the computation of square root of the sum of squares.
+%feature("docstring") itk::simple::BinaryMagnitudeImageFilter::Execute "Computes the square root of the sum of squares of corresponding input pixels.
 "
-%feature("docstring") itk::simple::BinaryMagnitude "Implements pixel-wise the computation of square root of the sum of squares.
+%feature("docstring") itk::simple::BinaryMagnitude "Computes the square root of the sum of squares of corresponding input pixels.
 
-This filter is parametrized over the types of the two input images and the type of the output image.
+This filter is templated over the types of the two input images and the type of the output image.
 Numeric conversions (castings) are done by the C++ defaults.
-The filter will walk over all the pixels in the two input images, and for each one of them it will do the following:
+The filter walks over all of the pixels in the two input images, and for each pixel does the following:
 
 li cast the input 1 pixel value to double 
 li cast the input 2 pixel value to double 
 li compute the sum of squares of the two pixel values
 li compute the square root of the sum
 li cast the double value resulting from vcl_sqrt() to the pixel type of the output image
-li store the casted value into the output image.
-
-The filter expect all images to have the same dimension (e.g. all 2D, or all 3D, or all ND)
+li store the cast value into the output image.
+The filter expects all images to have the same dimension (e.g. all 2D, or all 3D, or all ND)
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1BinaryMinMaxCurvatureFlowImageFilter.xml
 %feature("docstring") itk::simple::BinaryMinMaxCurvatureFlowImageFilter "Denoise a binary image using min/max curvature flow.
@@ -639,6 +655,7 @@ see  MinMaxCurvatureFlowImageFilter
 
 This filter removes small ( i.e., smaller than the structuring element) holes and tube like structures in the interior or at the boundaries of the image. The morphological closing of an image f is defined as: Closing(f) = Erosion(Dilation(f)).
 The structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element having values > 0 are candidates for affecting the center pixel.
+This code was contributed in the Insight Journal paper: Binary morphological closing and opening image filters by Lehmann G.http://hdl.handle.net/1926/141http://www.insight-journal.org/browse/publication/58
 author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
 see  MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleErodeImageFilter
 
@@ -649,6 +666,7 @@ see  MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleErodeImageFilte
 
 This filter removes small ( i.e., smaller than the structuring element) holes and tube like structures in the interior or at the boundaries of the image. The morphological closing of an image f is defined as: Closing(f) = Erosion(Dilation(f)).
 The structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element having values > 0 are candidates for affecting the center pixel.
+This code was contributed in the Insight Journal paper: Binary morphological closing and opening image filters by Lehmann G.http://hdl.handle.net/1926/141http://www.insight-journal.org/browse/publication/58
 author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
 see  MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleErodeImageFilter
 
@@ -668,6 +686,7 @@ Get the value in the image considered as foreground. Defaults to maximum value o
 
 This filter removes small ( i.e., smaller than the structuring element) structures in the interior or at the boundaries of the image. The morphological opening of an image f is defined as: Opening(f) = Dilatation(Erosion(f)).
 The structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element having values > 0 are candidates for affecting the center pixel.
+This code was contributed in the Insight Journal paper: Binary morphological closing and opening image filters by Lehmann G.http://hdl.handle.net/1926/141http://www.insight-journal.org/browse/publication/58
 author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
 see  MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleErodeImageFilter
 
@@ -678,6 +697,7 @@ see  MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleErodeImageFilte
 
 This filter removes small ( i.e., smaller than the structuring element) structures in the interior or at the boundaries of the image. The morphological opening of an image f is defined as: Opening(f) = Dilatation(Erosion(f)).
 The structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element having values > 0 are candidates for affecting the center pixel.
+This code was contributed in the Insight Journal paper: Binary morphological closing and opening image filters by Lehmann G.http://hdl.handle.net/1926/141http://www.insight-journal.org/browse/publication/58
 author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
 see  MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleErodeImageFilter
 
@@ -723,6 +743,26 @@ This implementation was taken from the Insight Journal paper:http://hdl.handle.n
 see  MorphologyImageFilter, OpeningByReconstructionImageFilter, BinaryClosingByReconstructionImageFilter
 
 "
+%feature("docstring") itk::simple::BinaryOpeningByReconstructionImageFilter::SetForegroundValue "virtual void itk::BinaryOpeningByReconstructionImageFilter::SetForegroundValue(PixelType _arg)
+
+Set the value in the image to consider as foreground. Defaults to maximum value of PixelType.
+"
+
+%feature("docstring") itk::simple::BinaryOpeningByReconstructionImageFilter::GetForegroundValue "virtual PixelType itk::BinaryOpeningByReconstructionImageFilter::GetForegroundValue()
+
+Get the value in the image considered as foreground. Defaults to maximum value of PixelType.
+"
+
+%feature("docstring") itk::simple::BinaryOpeningByReconstructionImageFilter::SetBackgroundValue "virtual void itk::BinaryOpeningByReconstructionImageFilter::SetBackgroundValue(PixelType _arg)
+
+Set the value in eroded part of the image. Defaults to zero
+"
+
+%feature("docstring") itk::simple::BinaryOpeningByReconstructionImageFilter::GetBackgroundValue "virtual PixelType itk::BinaryOpeningByReconstructionImageFilter::GetBackgroundValue()
+
+Set the value in eroded part of the image. Defaults to zero
+"
+
 %feature("docstring") itk::simple::BinaryOpeningByReconstructionImageFilter::SetFullyConnected "virtual void itk::BinaryOpeningByReconstructionImageFilter::SetFullyConnected(bool _arg)
 
 Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.
@@ -742,6 +782,8 @@ This filter is a sequential thinning algorithm and known to be computational tim
 Rafael C. Gonzales and Richard E. Woods. Digital ImageProcessing. Addison Wesley, 491-494, (1993).
 To do: Make this filter ND.
 see  MorphologyImageFilter
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/BinaryThinningImageFilter,Skeletonize/thin an image}
 
 "
 %feature("docstring") itk::simple::BinaryThinningImageFilter::Execute "This filter computes one-pixel-wide edges of the input image.
@@ -755,6 +797,8 @@ This filter is a sequential thinning algorithm and known to be computational tim
 Rafael C. Gonzales and Richard E. Woods. Digital ImageProcessing. Addison Wesley, 491-494, (1993).
 To do: Make this filter ND.
 see  MorphologyImageFilter
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/BinaryThinningImageFilter,Skeletonize/thin an image}
 
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1BinaryThresholdImageFilter.xml
@@ -765,8 +809,8 @@ More precisely f[ Output(x_i) = begin{cases} InsideValue & text{if f$LowerThresh
 This filter is templated over the input image type and the output image type.
 The filter expect both images to have the same number of dimensions.
 The default values for LowerThreshold and UpperThreshold are: LowerThreshold = NumericTraits<TInput>::NonpositiveMin(); UpperThreshold = NumericTraits<TInput>::max(); Therefore, generally only one of these needs to be set, depending on whether the user wants to threshold above or below the desired threshold.
-
-li {ImageProcessing/BinaryThresholdImageFilter,Threshold an image}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/BinaryThresholdImageFilter,Threshold an image}
 
 "
 %feature("docstring") itk::simple::BinaryThresholdImageFilter::Execute "Binarize an input image by thresholding.
@@ -778,8 +822,8 @@ More precisely f[ Output(x_i) = begin{cases} InsideValue & text{if f$LowerThresh
 This filter is templated over the input image type and the output image type.
 The filter expect both images to have the same number of dimensions.
 The default values for LowerThreshold and UpperThreshold are: LowerThreshold = NumericTraits<TInput>::NonpositiveMin(); UpperThreshold = NumericTraits<TInput>::max(); Therefore, generally only one of these needs to be set, depending on whether the user wants to threshold above or below the desired threshold.
-
-li {ImageProcessing/BinaryThresholdImageFilter,Threshold an image}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/BinaryThresholdImageFilter,Threshold an image}
 
 "
 %feature("docstring") itk::simple::BinaryThresholdImageFilter::SetLowerThreshold "virtual void itk::BinaryThresholdImageFilter::SetLowerThreshold(const InputPixelType threshold)
@@ -820,6 +864,32 @@ Set the outside pixel value. The default value NumericTraits<OutputPixelType>::Z
 Get the outside pixel value.
 "
 
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1BinomialBlurImageFilter.xml
+%feature("docstring") itk::simple::BinomialBlurImageFilter "Performs a separable blur on each dimension of an image.
+
+The binomial blur consists of a nearest neighbor average along each image dimension. The net result after n-iterations approaches convultion with a gaussian.
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Smoothing/BinomialBlurImageFilter,Blur an image}
+
+"
+%feature("docstring") itk::simple::BinomialBlurImageFilter::Execute "Performs a separable blur on each dimension of an image.
+"
+%feature("docstring") itk::simple::BinomialBlur "Performs a separable blur on each dimension of an image.
+
+The binomial blur consists of a nearest neighbor average along each image dimension. The net result after n-iterations approaches convultion with a gaussian.
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Smoothing/BinomialBlurImageFilter,Blur an image}
+
+"
+%feature("docstring") itk::simple::BinomialBlurImageFilter::SetRepetitions "virtual void itk::BinomialBlurImageFilter::SetRepetitions(unsigned int _arg)
+
+Get and set the number of times to repeat the filter.
+"
+
+%feature("docstring") itk::simple::BinomialBlurImageFilter::GetRepetitions "virtual unsigned int itk::BinomialBlurImageFilter::GetRepetitions() const
+
+"
+
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1BlackTopHatImageFilter.xml
 %feature("docstring") itk::simple::BlackTopHatImageFilter "Black top hat extract local minima that are smaller than the structuring element.
 
@@ -857,9 +927,39 @@ The filter expect both the input and output images to have the same number of di
 
 The filter expect both the input and output images to have the same number of dimensions, and both of a scalar image type.
 "
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1BoxMeanImageFilter.xml
+%feature("docstring") itk::simple::BoxMeanImageFilter "Implements a fast rectangular mean filter using the accumulator approach.
+
+This code was contributed in the Insight Journal paper: Efficient implementation of kernel filtering by Beare R., Lehmann Ghttp://hdl.handle.net/1926/555http://www.insight-journal.org/browse/publication/160
+author Richard Beare
+
+"
+%feature("docstring") itk::simple::BoxMeanImageFilter::Execute "Implements a fast rectangular mean filter using the accumulator approach.
+"
+%feature("docstring") itk::simple::BoxMean "Implements a fast rectangular mean filter using the accumulator approach.
+
+This code was contributed in the Insight Journal paper: Efficient implementation of kernel filtering by Beare R., Lehmann Ghttp://hdl.handle.net/1926/555http://www.insight-journal.org/browse/publication/160
+author Richard Beare
+
+"
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1BoxSigmaImageFilter.xml
+%feature("docstring") itk::simple::BoxSigmaImageFilter "Implements a fast rectangular sigma filter using the accumulator approach.
+
+This code was contributed in the Insight Journal paper: Efficient implementation of kernel filtering by Beare R., Lehmann Ghttp://hdl.handle.net/1926/555http://www.insight-journal.org/browse/publication/160
+author Gaetan Lehmann
+
+"
+%feature("docstring") itk::simple::BoxSigmaImageFilter::Execute "Implements a fast rectangular sigma filter using the accumulator approach.
+"
+%feature("docstring") itk::simple::BoxSigma "Implements a fast rectangular sigma filter using the accumulator approach.
+
+This code was contributed in the Insight Journal paper: Efficient implementation of kernel filtering by Beare R., Lehmann Ghttp://hdl.handle.net/1926/555http://www.insight-journal.org/browse/publication/160
+author Gaetan Lehmann
+
+"
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1CannyEdgeDetectionImageFilter.xml
-%feature("docstring") itk::simple::CannyEdgeDetectionImageFilter "
-This filter is an implementation of a Canny edge detector for scalar-valued images. Based on John Canny's paper A Computational Approach to Edge Detection(IEEE Transactions on Pattern Analysis and Machine Intelligence, Vol. PAMI-8, No.6, November 1986), there are four major steps used in the edge-detection scheme: (1) Smooth the input image with Gaussian filter. (2) Calculate the second directional derivatives of the smoothed image. (3) Non-Maximum Suppression: the zero-crossings of 2nd derivative are found, and the sign of third derivative is used to find the correct extrema. (4) The hysteresis thresholding is applied to the gradient magnitude (multiplied with zero-crossings) of the smoothed image to find and link edges.
+%feature("docstring") itk::simple::CannyEdgeDetectionImageFilter "This filter is an implementation of a Canny edge detector for scalar-valued images. Based on John Canny's paper A Computational Approach to Edge Detection(IEEE Transactions on Pattern Analysis and Machine Intelligence, Vol. PAMI-8, No.6, November 1986), there are four major steps used in the edge-detection scheme: (1) Smooth the input image with Gaussian filter. (2) Calculate the second directional derivatives of the smoothed image. (3) Non-Maximum Suppression: the zero-crossings of 2nd derivative are found, and the sign of third derivative is used to find the correct extrema. (4) The hysteresis thresholding is applied to the gradient magnitude (multiplied with zero-crossings) of the smoothed image to find and link edges.
+
 par Inputs and Outputs
 The input to this filter should be a scalar, real-valued Itk image of arbitrary dimension. The output should also be a scalar, real-value Itk image of the same dimensionality.
 par Parameters
@@ -872,9 +972,10 @@ see  ZeroCrossingImageFilter
 see  ThresholdImageFilter
 
 "
-%feature("docstring") itk::simple::CannyEdgeDetectionImageFilter::Execute ""
-%feature("docstring") itk::simple::CannyEdgeDetection "
-This filter is an implementation of a Canny edge detector for scalar-valued images. Based on John Canny's paper A Computational Approach to Edge Detection(IEEE Transactions on Pattern Analysis and Machine Intelligence, Vol. PAMI-8, No.6, November 1986), there are four major steps used in the edge-detection scheme: (1) Smooth the input image with Gaussian filter. (2) Calculate the second directional derivatives of the smoothed image. (3) Non-Maximum Suppression: the zero-crossings of 2nd derivative are found, and the sign of third derivative is used to find the correct extrema. (4) The hysteresis thresholding is applied to the gradient magnitude (multiplied with zero-crossings) of the smoothed image to find and link edges.
+%feature("docstring") itk::simple::CannyEdgeDetectionImageFilter::Execute "This filter is an implementation of a Canny edge detector for scalar-valued images. Based on John Canny's paper A Computational Approach to Edge Detection(IEEE Transactions on Pattern Analysis and Machine Intelligence, Vol. PAMI-8, No.6, November 1986), there are four major steps used in the edge-detection scheme: (1) Smooth the input image with Gaussian filter. (2) Calculate the second directional derivatives of the smoothed image. (3) Non-Maximum Suppression: the zero-crossings of 2nd derivative are found, and the sign of third derivative is used to find the correct extrema. (4) The hysteresis thresholding is applied to the gradient magnitude (multiplied with zero-crossings) of the smoothed image to find and link edges.
+"
+%feature("docstring") itk::simple::CannyEdgeDetection "This filter is an implementation of a Canny edge detector for scalar-valued images. Based on John Canny's paper A Computational Approach to Edge Detection(IEEE Transactions on Pattern Analysis and Machine Intelligence, Vol. PAMI-8, No.6, November 1986), there are four major steps used in the edge-detection scheme: (1) Smooth the input image with Gaussian filter. (2) Calculate the second directional derivatives of the smoothed image. (3) Non-Maximum Suppression: the zero-crossings of 2nd derivative are found, and the sign of third derivative is used to find the correct extrema. (4) The hysteresis thresholding is applied to the gradient magnitude (multiplied with zero-crossings) of the smoothed image to find and link edges.
+
 par Inputs and Outputs
 The input to this filter should be a scalar, real-valued Itk image of arbitrary dimension. The output should also be a scalar, real-value Itk image of the same dimensionality.
 par Parameters
@@ -898,6 +999,7 @@ see  ThresholdImageFilter
 %feature("docstring") itk::simple::CannyEdgeDetectionImageFilter::SetUpperThreshold "virtual void itk::CannyEdgeDetectionImageFilter::SetUpperThreshold(OutputImagePixelType _arg)
 * Set the Threshold value for detected edges. */
 
+TODO: Document in the ITKv4 migration guide that the SetThreshold member function was removed from the CannyEdgeDetectionImageFilter, and that both UpperThreshold and LowerThreshold need to be set. To get the same results as with the SetThreshold method change myfilter->SetThrehsold to myfilter->SetUpperThreshold, and add myfilter->SetLowerThreshold(GetUpperThreshold()/2.0)
 "
 
 %feature("docstring") itk::simple::CannyEdgeDetectionImageFilter::GetUpperThreshold "virtual OutputImagePixelType itk::CannyEdgeDetectionImageFilter::GetUpperThreshold() const
@@ -915,7 +1017,7 @@ Set/Get the Variance parameter used by the Gaussian smoothing filter in this alg
 
 %feature("docstring") itk::simple::CannyEdgeDetectionImageFilter::SetMaximumError "void itk::CannyEdgeDetectionImageFilter::SetMaximumError(const typename ArrayType::ValueType v)
 
-Set/Get the MaximumError paramter used by the Gaussian smoothing filter in this algorithm
+Set/Get the MaximumError parameter used by the Gaussian smoothing filter in this algorithm
 "
 
 %feature("docstring") itk::simple::CannyEdgeDetectionImageFilter::GetMaximumError "virtual const ArrayType itk::CannyEdgeDetectionImageFilter::GetMaximumError() const
@@ -927,8 +1029,8 @@ Set/Get the MaximumError paramter used by the Gaussian smoothing filter in this 
 
  CheckerBoardImageFiltertakes two input images that must have the same dimension, size, origin and spacing and produces an output image of the same size by combinining the pixels from the two input images in a checkerboard pattern. This filter is commonly used for visually comparing two images, in particular for evaluating the results of an image registration process.
 This filter is implemented as a multithreaded filter. It provides a ThreadedGenerateData()method for its implementation.
-
-li {Inspection/CheckerBoardImageFilter,Combine two images by alternating blocks of a checkerboard pattern}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Inspection/CheckerBoardImageFilter,Combine two images by alternating blocks of a checkerboard pattern}
 
 "
 %feature("docstring") itk::simple::CheckerBoardImageFilter::Execute "Combines two images in a checkerboard pattern.
@@ -937,8 +1039,8 @@ li {Inspection/CheckerBoardImageFilter,Combine two images by alternating blocks 
 
  CheckerBoardImageFiltertakes two input images that must have the same dimension, size, origin and spacing and produces an output image of the same size by combinining the pixels from the two input images in a checkerboard pattern. This filter is commonly used for visually comparing two images, in particular for evaluating the results of an image registration process.
 This filter is implemented as a multithreaded filter. It provides a ThreadedGenerateData()method for its implementation.
-
-li {Inspection/CheckerBoardImageFilter,Combine two images by alternating blocks of a checkerboard pattern}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Inspection/CheckerBoardImageFilter,Combine two images by alternating blocks of a checkerboard pattern}
 
 "
 %feature("docstring") itk::simple::CheckerBoardImageFilter::SetCheckerPattern "virtual void itk::CheckerBoardImageFilter::SetCheckerPattern(PatternArrayType _arg)
@@ -1027,6 +1129,34 @@ Set/Get whether the original intensities of the image retained for those pixels 
 %feature("docstring") itk::simple::ComplexToReal "Computes pixel-wise the real(x) part of a complex image.
 
 "
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1ConnectedComponentImageFilter.xml
+%feature("docstring") itk::simple::ConnectedComponentImageFilter "Label the objects in a binary image.
+
+ ConnectedComponentImageFilterlabels the objects in a binary image. Each distinct object is assigned a unique label. The filter experiments with some improvements to the existing implementation, and is based on run length encoding along raster lines. The final object labels start with 1 and are consecutive. Objects that are reached earlier by a raster order scan have a lower label. This is different to the behaviour of the original connected component image filter which did not produce consecutive labels or impose any particular ordering.
+see  ImageToImageFilter
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/ConnectedComponentImageFilter,Label connected components in a binary image}
+
+"
+%feature("docstring") itk::simple::ConnectedComponentImageFilter::Execute "Label the objects in a binary image.
+"
+%feature("docstring") itk::simple::ConnectedComponent "Label the objects in a binary image.
+
+ ConnectedComponentImageFilterlabels the objects in a binary image. Each distinct object is assigned a unique label. The filter experiments with some improvements to the existing implementation, and is based on run length encoding along raster lines. The final object labels start with 1 and are consecutive. Objects that are reached earlier by a raster order scan have a lower label. This is different to the behaviour of the original connected component image filter which did not produce consecutive labels or impose any particular ordering.
+see  ImageToImageFilter
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/ConnectedComponentImageFilter,Label connected components in a binary image}
+
+"
+%feature("docstring") itk::simple::ConnectedComponentImageFilter::SetFullyConnected "virtual void itk::ConnectedComponentImageFilter::SetFullyConnected(bool _arg)
+
+Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.
+"
+
+%feature("docstring") itk::simple::ConnectedComponentImageFilter::GetFullyConnected "virtual const bool& itk::ConnectedComponentImageFilter::GetFullyConnected()
+
+"
+
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1ConnectedThresholdImageFilter.xml
 %feature("docstring") itk::simple::ConnectedThresholdImageFilter "Label pixels that are connected to a seed and lie within a range of values.
 
@@ -1071,8 +1201,8 @@ Set/Get value to replace thresholded pixels. Pixels that lie * within Lower and 
  ConstantPadImageFilterchanges the output image region. If the output image region is larger than the input image region, the extra pixels are filled in by a constant value. The output image region must be specified.
 Visual explanation of padding regions.This filter is implemented as a multithreaded filter. It provides a ThreadedGenerateData()method for its implementation.
 see  WrapPadImageFilter, MirrorPadImageFilter
-li {Images/ConstantPadImageFilter,Pad an image with a constant value}
-
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Images/ConstantPadImageFilter,Pad an image with a constant value}
 
 "
 %feature("docstring") itk::simple::ConstantPadImageFilter::Execute "Increase the image size by padding with a constant value.
@@ -1082,53 +1212,80 @@ li {Images/ConstantPadImageFilter,Pad an image with a constant value}
  ConstantPadImageFilterchanges the output image region. If the output image region is larger than the input image region, the extra pixels are filled in by a constant value. The output image region must be specified.
 Visual explanation of padding regions.This filter is implemented as a multithreaded filter. It provides a ThreadedGenerateData()method for its implementation.
 see  WrapPadImageFilter, MirrorPadImageFilter
-li {Images/ConstantPadImageFilter,Pad an image with a constant value}
-
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Images/ConstantPadImageFilter,Pad an image with a constant value}
 
 "
-%feature("docstring") itk::simple::ConstantPadImageFilter::SetConstant "virtual void itk::ConstantPadImageFilter::SetConstant(OutputImagePixelType _arg)
+%feature("docstring") itk::simple::ConstantPadImageFilter::SetConstant "void itk::ConstantPadImageFilter::SetConstant(OutputImagePixelType constant)
 
 Set/Get the pad value. Default is Zero.
 "
 
-%feature("docstring") itk::simple::ConstantPadImageFilter::GetConstant "virtual OutputImagePixelType itk::ConstantPadImageFilter::GetConstant() const
+%feature("docstring") itk::simple::ConstantPadImageFilter::GetConstant "OutputImagePixelType itk::ConstantPadImageFilter::GetConstant() const
 
 "
 
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1ConvolutionImageFilter.xml
+%feature("docstring") itk::simple::ConvolutionImageFilter "Convolve a given image with an arbitrary image kernel.
+
+This filter operates by centering the flipped kernel at each pixel in the image and computing the inner product between pixel values in the image and pixel values in the kernel. The center of the kernel is defined asf$ lfloor (2*i+s-1)/2 rfloor f$ wheref$if$ is the index andf$sf$ is the size of the largest possible region of the kernel image. For kernels with odd sizes in all dimensions, this corresponds to the center pixel. If a dimension of the kernel image has an even size, then the center index of the kernel in that dimension will be the largest integral index that is less than the continuous index of the image center.
+The kernel can optionally be normalized to sum to 1 using NormalizeOn(). Normalization is off by default.
+warning This filter ignores the spacing, origin, and orientation of the kernel image and treats them as identical to those in the input image.
+This code was contributed in the Insight Journal paper:
+Image Kernel Convolution by Tustison N., Gee J.http://hdl.handle.net/1926/1323http://www.insight-journal.org/browse/publication/208
+author Nicholas J. Tustison
+James C. Gee
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/ConvolutionImageFilter,Convolve an image with a kernel}
+
+"
+%feature("docstring") itk::simple::ConvolutionImageFilter::Execute "Convolve a given image with an arbitrary image kernel.
+"
+%feature("docstring") itk::simple::Convolution "Convolve a given image with an arbitrary image kernel.
+
+This filter operates by centering the flipped kernel at each pixel in the image and computing the inner product between pixel values in the image and pixel values in the kernel. The center of the kernel is defined asf$ lfloor (2*i+s-1)/2 rfloor f$ wheref$if$ is the index andf$sf$ is the size of the largest possible region of the kernel image. For kernels with odd sizes in all dimensions, this corresponds to the center pixel. If a dimension of the kernel image has an even size, then the center index of the kernel in that dimension will be the largest integral index that is less than the continuous index of the image center.
+The kernel can optionally be normalized to sum to 1 using NormalizeOn(). Normalization is off by default.
+warning This filter ignores the spacing, origin, and orientation of the kernel image and treats them as identical to those in the input image.
+This code was contributed in the Insight Journal paper:
+Image Kernel Convolution by Tustison N., Gee J.http://hdl.handle.net/1926/1323http://www.insight-journal.org/browse/publication/208
+author Nicholas J. Tustison
+James C. Gee
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/ConvolutionImageFilter,Convolve an image with a kernel}
+
+"
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1CosImageFilter.xml
-%feature("docstring") itk::simple::CosImageFilter "Computes the vcl_cos(x) pixel-wise.
+%feature("docstring") itk::simple::CosImageFilter "Computes the cosine of each pixel.
 
 This filter is templated over the pixel type of the input image and the pixel type of the output image.
-The filter will walk over all the pixels in the input image, and for each one of them it will do the following:
+The filter walks over all of the pixels in the input image, and for each pixel does the following:
 
 li cast the pixel value to double ,
-li apply the vcl_cos() function to the double value
-li cast the double value resulting from vcl_cos() to the pixel type of the output image
-li store the casted value into the output image.
-
-The filter expect both images to have the same dimension (e.g. both 2D, or both 3D, or both ND)
+li apply the vcl_cos() function to the double value,
+li cast the double value resulting from vcl_cos() to the pixel type of the output image,
+li store the cast value into the output image.
+The filter expects both images to have the same dimension (e.g. both 2D, or both 3D, or both ND)
 "
-%feature("docstring") itk::simple::CosImageFilter::Execute "Computes the vcl_cos(x) pixel-wise.
+%feature("docstring") itk::simple::CosImageFilter::Execute "Computes the cosine of each pixel.
 "
-%feature("docstring") itk::simple::Cos "Computes the vcl_cos(x) pixel-wise.
+%feature("docstring") itk::simple::Cos "Computes the cosine of each pixel.
 
 This filter is templated over the pixel type of the input image and the pixel type of the output image.
-The filter will walk over all the pixels in the input image, and for each one of them it will do the following:
+The filter walks over all of the pixels in the input image, and for each pixel does the following:
 
 li cast the pixel value to double ,
-li apply the vcl_cos() function to the double value
-li cast the double value resulting from vcl_cos() to the pixel type of the output image
-li store the casted value into the output image.
-
-The filter expect both images to have the same dimension (e.g. both 2D, or both 3D, or both ND)
+li apply the vcl_cos() function to the double value,
+li cast the double value resulting from vcl_cos() to the pixel type of the output image,
+li store the cast value into the output image.
+The filter expects both images to have the same dimension (e.g. both 2D, or both 3D, or both ND)
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1CropImageFilter.xml
 %feature("docstring") itk::simple::CropImageFilter "Decrease the image size by cropping the image by an itk::Sizeat both the upper and lower bounds of the largest possible region.
 
  CropImageFilterchanges the image boundary of an image by removing pixels outside the target region. The target region is not specified in advance, but calculated in BeforeThreadedGenerateData().
 This filter uses ExtractImageFilterto perform the cropping.
-
-li {ImageProcessing/CropImageFilter,Crop an image}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/CropImageFilter,Crop an image by specifying the region to throw away}
 
 "
 %feature("docstring") itk::simple::CropImageFilter::Execute "Decrease the image size by cropping the image by an itk::Sizeat both the upper and lower bounds of the largest possible region.
@@ -1137,8 +1294,8 @@ li {ImageProcessing/CropImageFilter,Crop an image}
 
  CropImageFilterchanges the image boundary of an image by removing pixels outside the target region. The target region is not specified in advance, but calculated in BeforeThreadedGenerateData().
 This filter uses ExtractImageFilterto perform the cropping.
-
-li {ImageProcessing/CropImageFilter,Crop an image}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/CropImageFilter,Crop an image by specifying the region to throw away}
 
 "
 %feature("docstring") itk::simple::CropImageFilter::SetLowerBoundaryCropSize "virtual void itk::CropImageFilter::SetLowerBoundaryCropSize(SizeType _arg)
@@ -1236,12 +1393,12 @@ Get the timestep parameter.
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1DanielssonDistanceMapImageFilter.xml
 %feature("docstring") itk::simple::DanielssonDistanceMapImageFilter "This filter computes the distance map of the input image as an approximation with pixel accuracy to the Euclidean distance.
 
-TInputImage Input ImageType  TOutputImage Output ImageType
+TInputImage Input ImageType  TOutputImage Output ImageType  TVoronoiImage Voronoi ImageType. Note the default value is TInputImage.
 The input is assumed to contain numeric codes defining objects. The filter will produce as output the following images:
 
-li A Voronoi partition using the same numeric codes as the input.
-li A distance map with the approximation to the euclidean distance. from a particular pixel to the nearest object to this pixel in the input image.
-li A vector map containing the component of the vector relating the current pixel with the closest point of the closest object to this pixel. Given that the components of the distance are computed in pixels, the vector is represented by an itk::Offset. That is, physical coordinates are not used.
+li AVoronoi partitionusing the same numeric codes as the input.
+li Adistance mapwith the approximation to the euclidean distance. from a particular pixel to the nearest object to this pixel in the input image.
+li Avector mapcontaining the component of the vector relating the current pixel with the closest point of the closest object to this pixel. Given that the components of the distance are computed in pixels, the vector is represented by an itk::Offset. That is, physical coordinates are not used.
 This filter is N-dimensional and known to be efficient in computational time. The algorithm is the N-dimensional version of the 4SED algorithm given for two dimensions in:
 Danielsson, Per-Erik. Euclidean Distance Mapping. Computer Graphics and ImageProcessing 14, 227-248 (1980).
 "
@@ -1249,12 +1406,12 @@ Danielsson, Per-Erik. Euclidean Distance Mapping. Computer Graphics and ImagePro
 "
 %feature("docstring") itk::simple::DanielssonDistanceMap "This filter computes the distance map of the input image as an approximation with pixel accuracy to the Euclidean distance.
 
-TInputImage Input ImageType  TOutputImage Output ImageType
+TInputImage Input ImageType  TOutputImage Output ImageType  TVoronoiImage Voronoi ImageType. Note the default value is TInputImage.
 The input is assumed to contain numeric codes defining objects. The filter will produce as output the following images:
 
-li A Voronoi partition using the same numeric codes as the input.
-li A distance map with the approximation to the euclidean distance. from a particular pixel to the nearest object to this pixel in the input image.
-li A vector map containing the component of the vector relating the current pixel with the closest point of the closest object to this pixel. Given that the components of the distance are computed in pixels, the vector is represented by an itk::Offset. That is, physical coordinates are not used.
+li AVoronoi partitionusing the same numeric codes as the input.
+li Adistance mapwith the approximation to the euclidean distance. from a particular pixel to the nearest object to this pixel in the input image.
+li Avector mapcontaining the component of the vector relating the current pixel with the closest point of the closest object to this pixel. Given that the components of the distance are computed in pixels, the vector is represented by an itk::Offset. That is, physical coordinates are not used.
 This filter is N-dimensional and known to be efficient in computational time. The algorithm is the N-dimensional version of the 4SED algorithm given for two dimensions in:
 Danielsson, Per-Erik. Euclidean Distance Mapping. Computer Graphics and ImageProcessing 14, 227-248 (1980).
 "
@@ -1297,8 +1454,8 @@ see  Image
 see  Neighborhood
 see  NeighborhoodOperator
 see  NeighborhoodIterator
-
-li {EdgesAndGradients/DerivativeImageFilter,Compute the derivative of an image in a particular direction}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{EdgesAndGradients/DerivativeImageFilter,Compute the derivative of an image in a particular direction}
 
 "
 %feature("docstring") itk::simple::DerivativeImageFilter::Execute "Computes the directional derivative of an image. The directional derivative at each pixel location is computed by convolution with a derivative operator of user-specified order.
@@ -1311,8 +1468,8 @@ see  Image
 see  Neighborhood
 see  NeighborhoodOperator
 see  NeighborhoodIterator
-
-li {EdgesAndGradients/DerivativeImageFilter,Compute the derivative of an image in a particular direction}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{EdgesAndGradients/DerivativeImageFilter,Compute the derivative of an image in a particular direction}
 
 "
 %feature("docstring") itk::simple::DerivativeImageFilter::SetDirection "virtual void itk::DerivativeImageFilter::SetDirection(unsigned int _arg)
@@ -1360,6 +1517,73 @@ see  ObjectMorphologyImageFilter, ErodeObjectMorphologyImageFilter
 see  BinaryDilateImageFilter
 
 "
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1DiscreteGaussianImageFilter.xml
+%feature("docstring") itk::simple::DiscreteGaussianImageFilter "Blurs an image by separable convolution with discrete gaussian kernels. This filter performs Gaussian blurring by separable convolution of an image and a discrete Gaussian operator (kernel).
+
+The Gaussian operator used here was described by Tony Lindeberg (Discrete Scale-Space Theory and the Scale-Space Primal Sketch. Dissertation. Royal Institute of Technology, Stockholm, Sweden. May 1991.) The Gaussian kernel used here was designed so that smoothing and derivative operations commute after discretization.
+The variance or standard deviation (sigma) will be evaluated as pixel units if SetUseImageSpacing is off (false) or as physical units if SetUseImageSpacing is on (true, default). The variance can be set independently in each dimension.
+When the Gaussian kernel is small, this filter tends to run faster than itk::RecursiveGaussianImageFilter.
+see  GaussianOperator
+see  Image
+see  Neighborhood
+see  NeighborhoodOperator
+see  RecursiveGaussianImageFilter
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Smoothing/DiscreteGaussianImageFilter,Smooth an image with a discrete Gaussian filter}
+
+"
+%feature("docstring") itk::simple::DiscreteGaussianImageFilter::Execute "Blurs an image by separable convolution with discrete gaussian kernels. This filter performs Gaussian blurring by separable convolution of an image and a discrete Gaussian operator (kernel).
+"
+%feature("docstring") itk::simple::DiscreteGaussian "Blurs an image by separable convolution with discrete gaussian kernels. This filter performs Gaussian blurring by separable convolution of an image and a discrete Gaussian operator (kernel).
+
+The Gaussian operator used here was described by Tony Lindeberg (Discrete Scale-Space Theory and the Scale-Space Primal Sketch. Dissertation. Royal Institute of Technology, Stockholm, Sweden. May 1991.) The Gaussian kernel used here was designed so that smoothing and derivative operations commute after discretization.
+The variance or standard deviation (sigma) will be evaluated as pixel units if SetUseImageSpacing is off (false) or as physical units if SetUseImageSpacing is on (true, default). The variance can be set independently in each dimension.
+When the Gaussian kernel is small, this filter tends to run faster than itk::RecursiveGaussianImageFilter.
+see  GaussianOperator
+see  Image
+see  Neighborhood
+see  NeighborhoodOperator
+see  RecursiveGaussianImageFilter
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Smoothing/DiscreteGaussianImageFilter,Smooth an image with a discrete Gaussian filter}
+
+"
+%feature("docstring") itk::simple::DiscreteGaussianImageFilter::SetVariance "void itk::DiscreteGaussianImageFilter::SetVariance(const typename ArrayType::ValueType v)
+
+Convenience Set methods for setting all dimensional parameters to the same values.
+"
+
+%feature("docstring") itk::simple::DiscreteGaussianImageFilter::GetVariance "virtual const ArrayType itk::DiscreteGaussianImageFilter::GetVariance() const
+
+"
+
+%feature("docstring") itk::simple::DiscreteGaussianImageFilter::SetMaximumKernelWidth "virtual void itk::DiscreteGaussianImageFilter::SetMaximumKernelWidth(int _arg)
+
+Set the kernel to be no wider than MaximumKernelWidth pixels, even if MaximumError demands it. The default is 32 pixels.
+"
+
+%feature("docstring") itk::simple::DiscreteGaussianImageFilter::GetMaximumKernelWidth "virtual int itk::DiscreteGaussianImageFilter::GetMaximumKernelWidth() const
+
+Set the kernel to be no wider than MaximumKernelWidth pixels, even if MaximumError demands it. The default is 32 pixels.
+"
+
+%feature("docstring") itk::simple::DiscreteGaussianImageFilter::SetMaximumError "void itk::DiscreteGaussianImageFilter::SetMaximumError(const typename ArrayType::ValueType v)
+
+"
+
+%feature("docstring") itk::simple::DiscreteGaussianImageFilter::GetMaximumError "virtual const ArrayType itk::DiscreteGaussianImageFilter::GetMaximumError() const
+
+"
+
+%feature("docstring") itk::simple::DiscreteGaussianImageFilter::SetUseImageSpacing "virtual void itk::DiscreteGaussianImageFilter::SetUseImageSpacing(bool _arg)
+
+Set/Get whether or not the filter will use the spacing of the input image in its calculations
+"
+
+%feature("docstring") itk::simple::DiscreteGaussianImageFilter::GetUseImageSpacing "virtual bool itk::DiscreteGaussianImageFilter::GetUseImageSpacing() const
+
+"
+
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1DivideByConstantImageFilter.xml
 %feature("docstring") itk::simple::DivideByConstantImageFilter "Divide input pixels by a constant.
 
@@ -1389,15 +1613,21 @@ Set the constant value that will be used for dividing all the image pixels
 "
 
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1DivideImageFilter.xml
-%feature("docstring") itk::simple::DivideImageFilter "Implements an operator for pixel-wise division of two images.
+%feature("docstring") itk::simple::DivideImageFilter "Pixel-wise division of two images.
 
-This class is parametrized over the types of the two input images and the type of the output image. When the divisor is zero, the division result is set to the maximum number that can be represneted by default to avoid exception. Numeric conversions (castings) are done by the C++ defaults.
-"
-%feature("docstring") itk::simple::DivideImageFilter::Execute "Implements an operator for pixel-wise division of two images.
-"
-%feature("docstring") itk::simple::Divide "Implements an operator for pixel-wise division of two images.
+This class is templated over the types of the two input images and the type of the output image. When the divisor is zero, the division result is set to the maximum number that can be represented by default to avoid exception. Numeric conversions (castings) are done by the C++ defaults.
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/DivideImageFilter,Pixel-wise division of two images}
 
-This class is parametrized over the types of the two input images and the type of the output image. When the divisor is zero, the division result is set to the maximum number that can be represneted by default to avoid exception. Numeric conversions (castings) are done by the C++ defaults.
+"
+%feature("docstring") itk::simple::DivideImageFilter::Execute "Pixel-wise division of two images.
+"
+%feature("docstring") itk::simple::Divide "Pixel-wise division of two images.
+
+This class is templated over the types of the two input images and the type of the output image. When the divisor is zero, the division result is set to the maximum number that can be represented by default to avoid exception. Numeric conversions (castings) are done by the C++ defaults.
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/DivideImageFilter,Pixel-wise division of two images}
+
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1DoubleThresholdImageFilter.xml
 %feature("docstring") itk::simple::DoubleThresholdImageFilter "Binarize an input image using double thresholding.
@@ -1530,22 +1760,24 @@ Get the value to be assigned to eroded pixels
 "
 
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1ExpImageFilter.xml
-%feature("docstring") itk::simple::ExpImageFilter "Computes the vcl_exp(x) pixel-wise.
+%feature("docstring") itk::simple::ExpImageFilter "Computes the exponential function of each pixel.
 
+The computation is performed using vcl_exp(x).
 "
-%feature("docstring") itk::simple::ExpImageFilter::Execute "Computes the vcl_exp(x) pixel-wise.
+%feature("docstring") itk::simple::ExpImageFilter::Execute "Computes the exponential function of each pixel.
 "
-%feature("docstring") itk::simple::Exp "Computes the vcl_exp(x) pixel-wise.
+%feature("docstring") itk::simple::Exp "Computes the exponential function of each pixel.
 
+The computation is performed using vcl_exp(x).
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1ExpNegativeImageFilter.xml
-%feature("docstring") itk::simple::ExpNegativeImageFilter "Computes the function vcl_exp(-K.x) pixel-wise.
+%feature("docstring") itk::simple::ExpNegativeImageFilter "Computes the function exp(-K.x) for each input pixel.
 
 Every output pixel is equal to vcl_exp(-K.x ). where x is the intensity of the homologous input pixel, and K is a user-provided constant.
 "
-%feature("docstring") itk::simple::ExpNegativeImageFilter::Execute "Computes the function vcl_exp(-K.x) pixel-wise.
+%feature("docstring") itk::simple::ExpNegativeImageFilter::Execute "Computes the function exp(-K.x) for each input pixel.
 "
-%feature("docstring") itk::simple::ExpNegative "Computes the function vcl_exp(-K.x) pixel-wise.
+%feature("docstring") itk::simple::ExpNegative "Computes the function exp(-K.x) for each input pixel.
 
 Every output pixel is equal to vcl_exp(-K.x ). where x is the intensity of the homologous input pixel, and K is a user-provided constant.
 "
@@ -1556,9 +1788,12 @@ Every output pixel is equal to vcl_exp(-K.x ). where x is the intensity of the h
  ExtractImageFilteralso collapses dimensions so that the input image may have more dimensions than the output image ( i.e. 4-D input image to a 3-D output image). To specify what dimensions to collapse, the ExtractionRegion must be specified. For any dimension dim where ExtractionRegion.Size[dim] = 0, that dimension is collapsed. The index to collapse on is specified by ExtractionRegion.Index[dim]. For example, we have a image 4D = a 4x4x4x4 image, and we want to get a 3D image, 3D = a 4x4x4 image, specified as [x,y,z,2] from 4D ( i.e. the 3rd time slice from 4D). The ExtractionRegion.Size = [4,4,4,0] and ExtractionRegion.Index = [0,0,0,2].
 The number of dimension in ExtractionRegion.Size and Indexmust = InputImageDimension. The number of non-zero dimensions in ExtractionRegion.Size must = OutputImageDimension.
 The output image produced by this filter will have the same origin as the input image, while the ImageRegionof the output image will start at the starting index value provided in the ExtractRegion parameter. If you are looking for a filter that will re-compute the origin of the output image, and provide an output image region whose index is set to zeros, then you may want to use the RegionOfInterestImageFilter. The output spacing is is simply the collapsed version of the input spacing.
-Determining the direction of the collapsed output image from an larger dimensional input space is an ill defined problem in general. It is required that the application developer select the desired transformation strategy for collapsing direction cosigns. It is REQUIRED that a strategy be explicitly requested ( i.e. there is no working default). Direction Collapsing Strategies: 1) DirectionCollapseToUnknown(); This is the default and the filter can not run when this is set. The reason is to explicitly force the application developer to define their desired behavior. 1) DirectionCollapseToIdentity(); Output has identity direction no matter what 2) DirectionCollaspeToSubmatrix(); Output direction is the sub-matrix if it is positive definite, else throw an exception.
+Determining the direction of the collapsed output image from an larger dimensional input space is an ill defined problem in general. It is required that the application developer select the desired transformation strategy for collapsing direction cosigns. It is REQUIRED that a strategy be explicitly requested ( i.e. there is no working default). Direction Collapsing Strategies: 1) DirectionCollapseToUnknown(); This is the default and the filter can not run when this is set. The reason is to explicitly force the application developer to define their desired behavior. 1) DirectionCollapseToIdentity(); Output has identity direction no matter what 2) DirectionCollapseToSubmatrix(); Output direction is the sub-matrix if it is positive definite, else throw an exception.
 This filter is implemented as a multithreaded filter. It provides a ThreadedGenerateData()method for its implementation.
+note This filter is derived from InPlaceImageFilter. When the input to this filter matched the output requirested region, like with streaming filter for input, then setting this filter to run in-place will result in no copying of the bulk pixel data.
 see  CropImageFilter
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/ExtractImageFilter,Crop an image by specifying the region to keep}
 
 "
 %feature("docstring") itk::simple::ExtractImageFilter::Execute "Decrease the image size by cropping the image to the selected region bounds.
@@ -1569,20 +1804,23 @@ see  CropImageFilter
  ExtractImageFilteralso collapses dimensions so that the input image may have more dimensions than the output image ( i.e. 4-D input image to a 3-D output image). To specify what dimensions to collapse, the ExtractionRegion must be specified. For any dimension dim where ExtractionRegion.Size[dim] = 0, that dimension is collapsed. The index to collapse on is specified by ExtractionRegion.Index[dim]. For example, we have a image 4D = a 4x4x4x4 image, and we want to get a 3D image, 3D = a 4x4x4 image, specified as [x,y,z,2] from 4D ( i.e. the 3rd time slice from 4D). The ExtractionRegion.Size = [4,4,4,0] and ExtractionRegion.Index = [0,0,0,2].
 The number of dimension in ExtractionRegion.Size and Indexmust = InputImageDimension. The number of non-zero dimensions in ExtractionRegion.Size must = OutputImageDimension.
 The output image produced by this filter will have the same origin as the input image, while the ImageRegionof the output image will start at the starting index value provided in the ExtractRegion parameter. If you are looking for a filter that will re-compute the origin of the output image, and provide an output image region whose index is set to zeros, then you may want to use the RegionOfInterestImageFilter. The output spacing is is simply the collapsed version of the input spacing.
-Determining the direction of the collapsed output image from an larger dimensional input space is an ill defined problem in general. It is required that the application developer select the desired transformation strategy for collapsing direction cosigns. It is REQUIRED that a strategy be explicitly requested ( i.e. there is no working default). Direction Collapsing Strategies: 1) DirectionCollapseToUnknown(); This is the default and the filter can not run when this is set. The reason is to explicitly force the application developer to define their desired behavior. 1) DirectionCollapseToIdentity(); Output has identity direction no matter what 2) DirectionCollaspeToSubmatrix(); Output direction is the sub-matrix if it is positive definite, else throw an exception.
+Determining the direction of the collapsed output image from an larger dimensional input space is an ill defined problem in general. It is required that the application developer select the desired transformation strategy for collapsing direction cosigns. It is REQUIRED that a strategy be explicitly requested ( i.e. there is no working default). Direction Collapsing Strategies: 1) DirectionCollapseToUnknown(); This is the default and the filter can not run when this is set. The reason is to explicitly force the application developer to define their desired behavior. 1) DirectionCollapseToIdentity(); Output has identity direction no matter what 2) DirectionCollapseToSubmatrix(); Output direction is the sub-matrix if it is positive definite, else throw an exception.
 This filter is implemented as a multithreaded filter. It provides a ThreadedGenerateData()method for its implementation.
+note This filter is derived from InPlaceImageFilter. When the input to this filter matched the output requirested region, like with streaming filter for input, then setting this filter to run in-place will result in no copying of the bulk pixel data.
 see  CropImageFilter
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/ExtractImageFilter,Crop an image by specifying the region to keep}
 
 "
-%feature("docstring") itk::simple::ExtractImageFilter::SetDirectionCollapseToStrategy "void itk::ExtractImageFilter::SetDirectionCollapseToStrategy(const DIRECTIONCOLLASPESTRATEGY choosenStrategy)
+%feature("docstring") itk::simple::ExtractImageFilter::SetDirectionCollapseToStrategy "void itk::ExtractImageFilter::SetDirectionCollapseToStrategy(const DIRECTIONCOLLAPSESTRATEGY choosenStrategy)
 
 Set the strategy to be used to collapse pysical space dimensions.
-itk::itkExtractImageFilter::DIRECTIONCOLLASPETOIDENTITY Set the strategy so that all collapsed images have an identity direction. Use this strategy when you know that retention of the physical space orientation of the collapsed image is not important.
-itk::itkExtractImageFilter::DIRECTIONCOLLASPETOGUESS Set the strategy so that all collapsed images where output direction is the sub-matrix it it is positive definite, else return identity. This is backwards compatible with ITKv3, but is highly discouraged because the results are difficult to anticipate under differing data scenerios.
-itk::itkExtractImageFilter::DIRECTIONCOLLASPETOSUBMATRIX Set the strategy so that all collapsed images where output direction is the sub-matrix it it is positive definite, else throw an exception. Use this strategy when it is known that properly identified physical space sub-volumes can be reliably extracted from a higher dimensional space. For example when the applicaiton programmer knows that a 4D image is 3D+time, and that the 3D sub-space is properly defined.
+itk::itkExtractImageFilter::DIRECTIONCOLLAPSETOIDENTITY Set the strategy so that all collapsed images have an identity direction. Use this strategy when you know that retention of the physical space orientation of the collapsed image is not important.
+itk::itkExtractImageFilter::DIRECTIONCOLLAPSETOGUESS Set the strategy so that all collapsed images where output direction is the sub-matrix it it is positive definite, else return identity. This is backwards compatible with ITKv3, but is highly discouraged because the results are difficult to anticipate under differing data scenerios.
+itk::itkExtractImageFilter::DIRECTIONCOLLAPSETOSUBMATRIX Set the strategy so that all collapsed images where output direction is the sub-matrix it it is positive definite, else throw an exception. Use this strategy when it is known that properly identified physical space sub-volumes can be reliably extracted from a higher dimensional space. For example when the applicaiton programmer knows that a 4D image is 3D+time, and that the 3D sub-space is properly defined.
 "
 
-%feature("docstring") itk::simple::ExtractImageFilter::GetDirectionCollapseToStrategy "DIRECTIONCOLLASPESTRATEGY itk::ExtractImageFilter::GetDirectionCollapseToStrategy() const
+%feature("docstring") itk::simple::ExtractImageFilter::GetDirectionCollapseToStrategy "DIRECTIONCOLLAPSESTRATEGY itk::ExtractImageFilter::GetDirectionCollapseToStrategy() const
 
 Get the currently set strategy for collapsing directions of physical space.
 "
@@ -1641,28 +1879,51 @@ Set the Fast Marching algorithm Stopping Value. The Fast Marching algorithm is t
 Get the Fast Marching algorithm Stopping Value.
 "
 
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1FFTConvolutionImageFilter.xml
+%feature("docstring") itk::simple::FFTConvolutionImageFilter "Convolve a given image with an arbitrary image kernel using multiplication in the Fourier domain.
+
+This filter produces output equivalent to the output of the ConvolutionImageFilter. However, it takes advantage of the convolution theorem to accelerate the convolution computation when the kernel is large.
+warning This filter ignores the spacing, origin, and orientation of the kernel image and treats them as identical to those in the input image.
+This code was adapted from the Insight Journal contribution:
+FFT Based Convolution by Gaetan Lehmannhttp://hdl.handle.net/10380/3154
+see  ConvolutionImageFilter
+
+"
+%feature("docstring") itk::simple::FFTConvolutionImageFilter::Execute "Convolve a given image with an arbitrary image kernel using multiplication in the Fourier domain.
+"
+%feature("docstring") itk::simple::FFTConvolution "Convolve a given image with an arbitrary image kernel using multiplication in the Fourier domain.
+
+This filter produces output equivalent to the output of the ConvolutionImageFilter. However, it takes advantage of the convolution theorem to accelerate the convolution computation when the kernel is large.
+warning This filter ignores the spacing, origin, and orientation of the kernel image and treats them as identical to those in the input image.
+This code was adapted from the Insight Journal contribution:
+FFT Based Convolution by Gaetan Lehmannhttp://hdl.handle.net/10380/3154
+see  ConvolutionImageFilter
+
+"
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1FFTShiftImageFilter.xml
-%feature("docstring") itk::simple::FFTShiftImageFilter "Shift the zero-frequency components to center of the image.
+%feature("docstring") itk::simple::FFTShiftImageFilter "Shift the zero-frequency components of a Fourier transfrom to the center of the image.
 
-The fourier transform produce an image where the zero frequency components are in the corner of the image, making it difficult to understand. This filter shift the component to the center of the image. Note that with images with odd size, applying this filter twice will not produce the same image than the original one without using SetInverse(true) on one (and only one) of the two filters.
+The Fourier transform produces an image where the zero frequency components are in the corner of the image, making it difficult to understand. This filter shifts the component to the center of the image.
+note For images with an odd-sized dimension, applying this filter twice will not produce the same image as the original one without using SetInverse(true) on one (and only one) of the two filters.
 http://hdl.handle.net/1926/321
 author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
-see  FFTRealToComplexConjugateImageFilter, FFTComplexConjugateToRealImageFilter, Log10ImageFilter, RescaleIntensityImageFilter
+see  ForwardFFTImageFilter, InverseFFTImageFilter
 
 "
-%feature("docstring") itk::simple::FFTShiftImageFilter::Execute "Shift the zero-frequency components to center of the image.
+%feature("docstring") itk::simple::FFTShiftImageFilter::Execute "Shift the zero-frequency components of a Fourier transfrom to the center of the image.
 "
-%feature("docstring") itk::simple::FFTShift "Shift the zero-frequency components to center of the image.
+%feature("docstring") itk::simple::FFTShift "Shift the zero-frequency components of a Fourier transfrom to the center of the image.
 
-The fourier transform produce an image where the zero frequency components are in the corner of the image, making it difficult to understand. This filter shift the component to the center of the image. Note that with images with odd size, applying this filter twice will not produce the same image than the original one without using SetInverse(true) on one (and only one) of the two filters.
+The Fourier transform produces an image where the zero frequency components are in the corner of the image, making it difficult to understand. This filter shifts the component to the center of the image.
+note For images with an odd-sized dimension, applying this filter twice will not produce the same image as the original one without using SetInverse(true) on one (and only one) of the two filters.
 http://hdl.handle.net/1926/321
 author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
-see  FFTRealToComplexConjugateImageFilter, FFTComplexConjugateToRealImageFilter, Log10ImageFilter, RescaleIntensityImageFilter
+see  ForwardFFTImageFilter, InverseFFTImageFilter
 
 "
 %feature("docstring") itk::simple::FFTShiftImageFilter::SetInverse "virtual void itk::FFTShiftImageFilter::SetInverse(bool _arg)
 
-Set/Get whether the filter must perform an inverse transform or not. This option has no effect if none of the size of the input image is odd, but is required to be able to restore the original image if at least one of the size is odd.
+Set/Get whether the filter must invert the transform or not. This option has no effect if none of the size of the input image is even, but is required to restore the original image if at least one of the dimensions has an odd size.
 "
 
 %feature("docstring") itk::simple::FFTShiftImageFilter::GetInverse "virtual const bool& itk::FFTShiftImageFilter::GetInverse()
@@ -1675,8 +1936,8 @@ Set/Get whether the filter must perform an inverse transform or not. This option
  FlipImageFilterflips an image across user specified axes. The flip axes are set via method SetFlipAxes( array ) where the input is a FixedArray<bool,ImageDimension>. The image is flipped across axes for which array[i] is true.
 In terms of grid coordinates the image is flipped within the LargestPossibleRegion of the input image. As such, the LargestPossibleRegion of the ouput image is the same as the input.
 In terms of geometric coordinates, the output origin is such that the image is flipped with respect to the coordinate axes.
-
-li {Images/FlipImageFilter,Flip an image over specified axes}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Images/FlipImageFilter,Flip an image over specified axes}
 
 "
 %feature("docstring") itk::simple::FlipImageFilter::Execute "Flips an image across user specified axes.
@@ -1686,8 +1947,8 @@ li {Images/FlipImageFilter,Flip an image over specified axes}
  FlipImageFilterflips an image across user specified axes. The flip axes are set via method SetFlipAxes( array ) where the input is a FixedArray<bool,ImageDimension>. The image is flipped across axes for which array[i] is true.
 In terms of grid coordinates the image is flipped within the LargestPossibleRegion of the input image. As such, the LargestPossibleRegion of the ouput image is the same as the input.
 In terms of geometric coordinates, the output origin is such that the image is flipped with respect to the coordinate axes.
-
-li {Images/FlipImageFilter,Flip an image over specified axes}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Images/FlipImageFilter,Flip an image over specified axes}
 
 "
 %feature("docstring") itk::simple::FlipImageFilter::SetFlipAxes "virtual void itk::FlipImageFilter::SetFlipAxes(FlipAxesArrayType _arg)
@@ -1707,6 +1968,25 @@ Set/Get the axis to be flipped. The image is flipped along axes for which array[
 
 "
 
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1ForwardFFTImageFilter.xml
+%feature("docstring") itk::simple::ForwardFFTImageFilter "Base class for forward Fast Fourier Transform.
+
+This is a base class for the forward or direct discrete Fourier Transform. This is an abstract base class: the actual implementation is provided by the best child class available on the system when the object is created via the object factory system.
+This class transforms a real input image into its full complex Fourier transform. The Fourier transform of a real input image has Hermitian symmetry:f$ f(mathbf{x}) = f^*(-mathbf{x}) f$ . That is, when the result of the transform is split in half along the x-dimension, the values in the second half of the transform are the complex conjugates of values in the first half reflected about the center of the image in each dimension.
+This filter works only for real single-component input image types.
+see  InverseFFTImageFilter, FFTComplexToComplexImageFilter
+
+"
+%feature("docstring") itk::simple::ForwardFFTImageFilter::Execute "Base class for forward Fast Fourier Transform.
+"
+%feature("docstring") itk::simple::ForwardFFT "Base class for forward Fast Fourier Transform.
+
+This is a base class for the forward or direct discrete Fourier Transform. This is an abstract base class: the actual implementation is provided by the best child class available on the system when the object is created via the object factory system.
+This class transforms a real input image into its full complex Fourier transform. The Fourier transform of a real input image has Hermitian symmetry:f$ f(mathbf{x}) = f^*(-mathbf{x}) f$ . That is, when the result of the transform is split in half along the x-dimension, the values in the second half of the transform are the complex conjugates of values in the first half reflected about the center of the image in each dimension.
+This filter works only for real single-component input image types.
+see  InverseFFTImageFilter, FFTComplexToComplexImageFilter
+
+"
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1GeodesicActiveContourLevelSetImageFilter.xml
 %feature("docstring") itk::simple::GeodesicActiveContourLevelSetImageFilter "Segments structures in images based on a user supplied edge potential map.
 
@@ -1788,8 +2068,8 @@ see GradientAnisotropicDiffusionFunction
 %feature("docstring") itk::simple::GradientMagnitudeRecursiveGaussianImageFilter "Computes the Magnitude of the Gradient of an image by convolution with the first derivative of a Gaussian.
 
 This filter is implemented using the recursive gaussian filters
-
-li {EdgesAndGradients/GradientMagnitudeRecursiveGaussianImageFilter,Find the gradient magnitude of the image first smoothed with a Gaussian kernel}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{EdgesAndGradients/GradientMagnitudeRecursiveGaussianImageFilter,Find the gradient magnitude of the image first smoothed with a Gaussian kernel}
 
 "
 %feature("docstring") itk::simple::GradientMagnitudeRecursiveGaussianImageFilter::Execute "Computes the Magnitude of the Gradient of an image by convolution with the first derivative of a Gaussian.
@@ -1797,8 +2077,8 @@ li {EdgesAndGradients/GradientMagnitudeRecursiveGaussianImageFilter,Find the gra
 %feature("docstring") itk::simple::GradientMagnitudeRecursiveGaussian "Computes the Magnitude of the Gradient of an image by convolution with the first derivative of a Gaussian.
 
 This filter is implemented using the recursive gaussian filters
-
-li {EdgesAndGradients/GradientMagnitudeRecursiveGaussianImageFilter,Find the gradient magnitude of the image first smoothed with a Gaussian kernel}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{EdgesAndGradients/GradientMagnitudeRecursiveGaussianImageFilter,Find the gradient magnitude of the image first smoothed with a Gaussian kernel}
 
 "
 %feature("docstring") itk::simple::GradientMagnitudeRecursiveGaussianImageFilter::SetSigma "void itk::GradientMagnitudeRecursiveGaussianImageFilter::SetSigma(RealType sigma)
@@ -1826,8 +2106,8 @@ Define which normalization factor will be used for the Gaussiansee  RecursiveGau
 Dilate an image using grayscale morphology. Dilation takes the maximum of all the pixels identified by the structuring element.
 The structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element having values > 0 are candidates for affecting the center pixel.
 see  MorphologyImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter
-
-li {Morphology/GrayscaleDilateImageFilter,Dilate a grayscale image}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Morphology/GrayscaleDilateImageFilter,Dilate a grayscale image}
 
 "
 %feature("docstring") itk::simple::GrayscaleDilateImageFilter::Execute "gray scale dilation of an image
@@ -1837,8 +2117,8 @@ li {Morphology/GrayscaleDilateImageFilter,Dilate a grayscale image}
 Dilate an image using grayscale morphology. Dilation takes the maximum of all the pixels identified by the structuring element.
 The structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element having values > 0 are candidates for affecting the center pixel.
 see  MorphologyImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter
-
-li {Morphology/GrayscaleDilateImageFilter,Dilate a grayscale image}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Morphology/GrayscaleDilateImageFilter,Dilate a grayscale image}
 
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1GrayscaleErodeImageFilter.xml
@@ -1847,8 +2127,8 @@ li {Morphology/GrayscaleDilateImageFilter,Dilate a grayscale image}
 Erode an image using grayscale morphology. Dilation takes the maximum of all the pixels identified by the structuring element.
 The structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element having values > 0 are candidates for affecting the center pixel.
 see  MorphologyImageFilter, GrayscaleFunctionErodeImageFilter, BinaryErodeImageFilter
-
-li {Morphology/GrayscaleErodeImageFilter,Erode a grayscale image}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Morphology/GrayscaleErodeImageFilter,Erode a grayscale image}
 
 "
 %feature("docstring") itk::simple::GrayscaleErodeImageFilter::Execute "gray scale dilation of an image
@@ -1858,8 +2138,8 @@ li {Morphology/GrayscaleErodeImageFilter,Erode a grayscale image}
 Erode an image using grayscale morphology. Dilation takes the maximum of all the pixels identified by the structuring element.
 The structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element having values > 0 are candidates for affecting the center pixel.
 see  MorphologyImageFilter, GrayscaleFunctionErodeImageFilter, BinaryErodeImageFilter
-
-li {Morphology/GrayscaleErodeImageFilter,Erode a grayscale image}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Morphology/GrayscaleErodeImageFilter,Erode a grayscale image}
 
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1GrayscaleFillholeImageFilter.xml
@@ -2049,9 +2329,9 @@ see  MorphologyImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImag
 
  HausdorffDistanceImageFiltercomputes the distance between the set non-zero pixels of two images using the following formula: f[ H(A,B) = max(h(A,B),h(B,A)) f]  where f[ h(A,B) = max_{a in A} min_{b in B} | a - b| f]  is the directed Hausdorff distance andf$Af$ andf$Bf$ are respectively the set of non-zero pixels in the first and second input images.
 In particular, this filter uses the DirectedHausdorffImageFilter inside to compute the two directed distances and then select the largest of the two.
-The Hausdorff distance measures the degree of mismatch between two sets and behaves like a metric over the set of all closedm bounded sets - with properties of identity, symmetry and triangle inequality.
-This filter requires the largest possible region of the first image and the same corresponding region in the second image. It behaves as filter with two input and one output. Thus it can be inserted in a pipeline with other filters. The filter passes the first input through unmodified.
-This filter is templated over the two input image type. It assume both image have the same number of dimensions.
+The Hausdorff distance measures the degree of mismatch between two sets and behaves like a metric over the set of all closed bounded sets - with properties of identity, symmetry and triangle inequality.
+This filter requires the largest possible region of the first image and the same corresponding region in the second image. It behaves as filter with two inputs and one output. Thus it can be inserted in a pipeline with other filters. The filter passes the first input through unmodified.
+This filter is templated over the two input image types. It assume both images have the same number of dimensions.
 see  DirectedHausdorffDistanceImageFilter
 
 "
@@ -2061,9 +2341,9 @@ see  DirectedHausdorffDistanceImageFilter
 
  HausdorffDistanceImageFiltercomputes the distance between the set non-zero pixels of two images using the following formula: f[ H(A,B) = max(h(A,B),h(B,A)) f]  where f[ h(A,B) = max_{a in A} min_{b in B} | a - b| f]  is the directed Hausdorff distance andf$Af$ andf$Bf$ are respectively the set of non-zero pixels in the first and second input images.
 In particular, this filter uses the DirectedHausdorffImageFilter inside to compute the two directed distances and then select the largest of the two.
-The Hausdorff distance measures the degree of mismatch between two sets and behaves like a metric over the set of all closedm bounded sets - with properties of identity, symmetry and triangle inequality.
-This filter requires the largest possible region of the first image and the same corresponding region in the second image. It behaves as filter with two input and one output. Thus it can be inserted in a pipeline with other filters. The filter passes the first input through unmodified.
-This filter is templated over the two input image type. It assume both image have the same number of dimensions.
+The Hausdorff distance measures the degree of mismatch between two sets and behaves like a metric over the set of all closed bounded sets - with properties of identity, symmetry and triangle inequality.
+This filter requires the largest possible region of the first image and the same corresponding region in the second image. It behaves as filter with two inputs and one output. Thus it can be inserted in a pipeline with other filters. The filter passes the first input through unmodified.
+This filter is templated over the two input image types. It assume both images have the same number of dimensions.
 see  DirectedHausdorffDistanceImageFilter
 
 "
@@ -2146,7 +2426,7 @@ Set/Get whether the connected components are defined strictly by face connectivi
 "
 
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1HistogramMatchingImageFilter.xml
-%feature("docstring") itk::simple::HistogramMatchingImageFilter "Normalize the grayscale values between two image by histogram matching.
+%feature("docstring") itk::simple::HistogramMatchingImageFilter "Normalize the grayscale values between two images by histogram matching.
 
  HistogramMatchingImageFilternormalizes the grayscale values of a source image based on the grayscale values of a reference image. This filter uses a histogram matching technique where the histograms of the two images are matched only at a specified number of quantile values.
 This filter was orginally designed to normalize MR images of the same MR protocol and same body part. The algorithm works best if background pixels are excluded from both the source and reference histograms. A simple background exclusion method is to exclude all pixels whose grayscale values are smaller than the mean grayscale value. ThresholdAtMeanIntensityOn()switches on this simple background exclusion method.
@@ -2154,9 +2434,9 @@ The source image can be set via either SetInput()or SetSourceImage(). The refere
  SetNumberOfHistogramLevels()sets the number of bins used when creating histograms of the source and reference images. SetNumberOfMatchPoints()governs the number of quantile values to be matched.
 This filter assumes that both the source and reference are of the same type and that the input and output image type have the same number of dimension and have scalar pixel types.
 "
-%feature("docstring") itk::simple::HistogramMatchingImageFilter::Execute "Normalize the grayscale values between two image by histogram matching.
+%feature("docstring") itk::simple::HistogramMatchingImageFilter::Execute "Normalize the grayscale values between two images by histogram matching.
 "
-%feature("docstring") itk::simple::HistogramMatching "Normalize the grayscale values between two image by histogram matching.
+%feature("docstring") itk::simple::HistogramMatching "Normalize the grayscale values between two images by histogram matching.
 
  HistogramMatchingImageFilternormalizes the grayscale values of a source image based on the grayscale values of a reference image. This filter uses a histogram matching technique where the histograms of the two images are matched only at a specified number of quantile values.
 This filter was orginally designed to normalize MR images of the same MR protocol and same body part. The algorithm works best if background pixels are excluded from both the source and reference histograms. A simple background exclusion method is to exclude all pixels whose grayscale values are smaller than the mean grayscale value. ThresholdAtMeanIntensityOn()switches on this simple background exclusion method.
@@ -2266,13 +2546,30 @@ Set/Get whether the connected components are defined strictly by face connectivi
 
 "
 
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1HuangThresholdImageFilter.xml
+%feature("docstring") itk::simple::HuangThresholdImageFilter "Threshold an image using the Huang Threshold.
+
+This filter creates a binary thresholded image that separates an image into foreground and background components. The filter computes the threshold using the HuangThresholdCalculatorand applies that theshold to the input image using the BinaryThresholdImageFilter.
+author Richard Beare
+Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+This implementation was taken from the Insight Journal paper:http://hdl.handle.net/10380/3279orhttp://www.insight-journal.org/browse/publication/811
+"
+%feature("docstring") itk::simple::HuangThresholdImageFilter::Execute "Threshold an image using the Huang Threshold.
+"
+%feature("docstring") itk::simple::HuangThreshold "Threshold an image using the Huang Threshold.
+
+This filter creates a binary thresholded image that separates an image into foreground and background components. The filter computes the threshold using the HuangThresholdCalculatorand applies that theshold to the input image using the BinaryThresholdImageFilter.
+author Richard Beare
+Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+This implementation was taken from the Insight Journal paper:http://hdl.handle.net/10380/3279orhttp://www.insight-journal.org/browse/publication/811
+"
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1IntensityWindowingImageFilter.xml
 %feature("docstring") itk::simple::IntensityWindowingImageFilter "Applies a linear transformation to the intensity levels of the input Imagethat are inside a user-defined interval. Values below this interval are mapped to a constant. Values over the interval are mapped to another constant.
 
  IntensityWindowingImageFilterapplies pixel-wise a linear transformation to the intensity values of input image pixels. The linear transformation is defined by the user in terms of the minimum and maximum values that the output image should have and the lower and upper limits of the intensity window of the input image. This operation is very common in visualization, and can also be applied as a convenient preprocessing operation for image segmentation.
 All computations are performed in the precison of the input pixel's RealType. Before assigning the computed value to the output pixel.
-
-li {ImageProcessing/IntensityWindowingImageFilter, IntensityWindowingImageFilter}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/IntensityWindowingImageFilter, IntensityWindowingImageFilter}
 
 "
 %feature("docstring") itk::simple::IntensityWindowingImageFilter::Execute "Applies a linear transformation to the intensity levels of the input Imagethat are inside a user-defined interval. Values below this interval are mapped to a constant. Values over the interval are mapped to another constant.
@@ -2281,8 +2578,8 @@ li {ImageProcessing/IntensityWindowingImageFilter, IntensityWindowingImageFilter
 
  IntensityWindowingImageFilterapplies pixel-wise a linear transformation to the intensity values of input image pixels. The linear transformation is defined by the user in terms of the minimum and maximum values that the output image should have and the lower and upper limits of the intensity window of the input image. This operation is very common in visualization, and can also be applied as a convenient preprocessing operation for image segmentation.
 All computations are performed in the precison of the input pixel's RealType. Before assigning the computed value to the output pixel.
-
-li {ImageProcessing/IntensityWindowingImageFilter, IntensityWindowingImageFilter}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/IntensityWindowingImageFilter, IntensityWindowingImageFilter}
 
 "
 %feature("docstring") itk::simple::IntensityWindowingImageFilter::SetWindowMinimum "virtual void itk::IntensityWindowingImageFilter::SetWindowMinimum(InputPixelType _arg)
@@ -2319,25 +2616,59 @@ Set/Get the values of the maximum and minimum intensities of the outputimage
 
 "
 
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1IntermodesThresholdImageFilter.xml
+%feature("docstring") itk::simple::IntermodesThresholdImageFilter "Threshold an image using the Intermodes Threshold.
+
+This filter creates a binary thresholded image that separates an image into foreground and background components. The filter computes the threshold using the IntermodesThresholdCalculatorand applies that theshold to the input image using the BinaryThresholdImageFilter.
+author Richard Beare. Department of Medicine, Monash University, Melbourne, Australia.
+Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+This implementation was taken from the Insight Journal paper:http://hdl.handle.net/10380/3279orhttp://www.insight-journal.org/browse/publication/811
+"
+%feature("docstring") itk::simple::IntermodesThresholdImageFilter::Execute "Threshold an image using the Intermodes Threshold.
+"
+%feature("docstring") itk::simple::IntermodesThreshold "Threshold an image using the Intermodes Threshold.
+
+This filter creates a binary thresholded image that separates an image into foreground and background components. The filter computes the threshold using the IntermodesThresholdCalculatorand applies that theshold to the input image using the BinaryThresholdImageFilter.
+author Richard Beare. Department of Medicine, Monash University, Melbourne, Australia.
+Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+This implementation was taken from the Insight Journal paper:http://hdl.handle.net/10380/3279orhttp://www.insight-journal.org/browse/publication/811
+"
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1InverseFFTImageFilter.xml
+%feature("docstring") itk::simple::InverseFFTImageFilter "Base class for inverse Fast Fourier Transform.
+
+This is a base class for the inverse or reverse Discrete Fourier Transform. This is an abstract base class: the actual implementation is provided by the best child available on the system when the object is created via the object factory system.
+This class transforms a full complex image with Hermitian symmetry into its real spatial domain representation. If the input does not have Hermitian symmetry, the imaginary component is discarded.
+see  ForwardFFTImageFilter, InverseFFTImageFilter
+
+"
+%feature("docstring") itk::simple::InverseFFTImageFilter::Execute "Base class for inverse Fast Fourier Transform.
+"
+%feature("docstring") itk::simple::InverseFFT "Base class for inverse Fast Fourier Transform.
+
+This is a base class for the inverse or reverse Discrete Fourier Transform. This is an abstract base class: the actual implementation is provided by the best child available on the system when the object is created via the object factory system.
+This class transforms a full complex image with Hermitian symmetry into its real spatial domain representation. If the input does not have Hermitian symmetry, the imaginary component is discarded.
+see  ForwardFFTImageFilter, InverseFFTImageFilter
+
+"
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1InvertIntensityImageFilter.xml
-%feature("docstring") itk::simple::InvertIntensityImageFilter "Invert intensity of an image.
+%feature("docstring") itk::simple::InvertIntensityImageFilter "Invert the intensity of an image.
 
- InvertIntensityImageFilterinvert intensity of pixels by subtracting pixel value to a maximum value. The maximum value can be set with SetMaximum and defaults the maximum of input pixel type. This filter can be used to invert, for example, a binary image, a distance map, etc.
+ InvertIntensityImageFilterinverts intensity of pixels by subtracting pixel value to a maximum value. The maximum value can be set with SetMaximum and defaults the maximum of input pixel type. This filter can be used to invert, for example, a binary image, a distance map, etc.
 author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
 see  IntensityWindowingImageFilter ShiftScaleImageFilter
-
-li {ImageProcessing/InvertIntensityImageFilter,Invert an image}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/InvertIntensityImageFilter,Invert an image}
 
 "
-%feature("docstring") itk::simple::InvertIntensityImageFilter::Execute "Invert intensity of an image.
+%feature("docstring") itk::simple::InvertIntensityImageFilter::Execute "Invert the intensity of an image.
 "
-%feature("docstring") itk::simple::InvertIntensity "Invert intensity of an image.
+%feature("docstring") itk::simple::InvertIntensity "Invert the intensity of an image.
 
- InvertIntensityImageFilterinvert intensity of pixels by subtracting pixel value to a maximum value. The maximum value can be set with SetMaximum and defaults the maximum of input pixel type. This filter can be used to invert, for example, a binary image, a distance map, etc.
+ InvertIntensityImageFilterinverts intensity of pixels by subtracting pixel value to a maximum value. The maximum value can be set with SetMaximum and defaults the maximum of input pixel type. This filter can be used to invert, for example, a binary image, a distance map, etc.
 author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
 see  IntensityWindowingImageFilter ShiftScaleImageFilter
-
-li {ImageProcessing/InvertIntensityImageFilter,Invert an image}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/InvertIntensityImageFilter,Invert an image}
 
 "
 %feature("docstring") itk::simple::InvertIntensityImageFilter::SetMaximum "virtual void itk::InvertIntensityImageFilter::SetMaximum(InputPixelType _arg)
@@ -2379,6 +2710,105 @@ Set/Get the value of the level set to be located. The default value is 0.
 
 "
 
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1IsoDataThresholdImageFilter.xml
+%feature("docstring") itk::simple::IsoDataThresholdImageFilter "Threshold an image using the IsoData Threshold.
+
+This filter creates a binary thresholded image that separates an image into foreground and background components. The filter computes the threshold using the IsoDataThresholdCalculatorand applies that theshold to the input image using the BinaryThresholdImageFilter.
+author Richard Beare. Department of Medicine, Monash University, Melbourne, Australia.
+Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+This implementation was taken from the Insight Journal paper:http://hdl.handle.net/10380/3279orhttp://www.insight-journal.org/browse/publication/811
+"
+%feature("docstring") itk::simple::IsoDataThresholdImageFilter::Execute "Threshold an image using the IsoData Threshold.
+"
+%feature("docstring") itk::simple::IsoDataThreshold "Threshold an image using the IsoData Threshold.
+
+This filter creates a binary thresholded image that separates an image into foreground and background components. The filter computes the threshold using the IsoDataThresholdCalculatorand applies that theshold to the input image using the BinaryThresholdImageFilter.
+author Richard Beare. Department of Medicine, Monash University, Melbourne, Australia.
+Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+This implementation was taken from the Insight Journal paper:http://hdl.handle.net/10380/3279orhttp://www.insight-journal.org/browse/publication/811
+"
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1IsolatedWatershedImageFilter.xml
+%feature("docstring") itk::simple::IsolatedWatershedImageFilter "Isolate watershed basins using two seeds.
+
+ IsolatedWatershedImageFilterlabels pixels with ReplaceValue1 that are in the same watershed basin as Seed1 AND NOT the same as Seed2. The filter adjusts the waterlevel until the two seeds are not in different basins. The user supplies a Watershed threshold. The algorithm uses a binary search to adjust the upper waterlevel, starting at UpperValueLimit. UpperValueLimit defaults to the 1.0.
+"
+%feature("docstring") itk::simple::IsolatedWatershedImageFilter::Execute "Isolate watershed basins using two seeds.
+"
+%feature("docstring") itk::simple::IsolatedWatershed "Isolate watershed basins using two seeds.
+
+ IsolatedWatershedImageFilterlabels pixels with ReplaceValue1 that are in the same watershed basin as Seed1 AND NOT the same as Seed2. The filter adjusts the waterlevel until the two seeds are not in different basins. The user supplies a Watershed threshold. The algorithm uses a binary search to adjust the upper waterlevel, starting at UpperValueLimit. UpperValueLimit defaults to the 1.0.
+"
+%feature("docstring") itk::simple::IsolatedWatershedImageFilter::SetSeed1 "virtual void itk::IsolatedWatershedImageFilter::SetSeed1(IndexType _arg)
+
+Set seed point 1. This seed will be isolated from Seed2 (if possible). All pixels connected to this seed will be replaced with ReplaceValue1.
+"
+
+%feature("docstring") itk::simple::IsolatedWatershedImageFilter::SetSeed2 "virtual void itk::IsolatedWatershedImageFilter::SetSeed2(IndexType _arg)
+
+Set seed point 2. This seed will be isolated from Seed1 (if possible). All pixels connected to this seed will be replaced with ReplaceValue2.
+"
+
+%feature("docstring") itk::simple::IsolatedWatershedImageFilter::SetThreshold "virtual void itk::IsolatedWatershedImageFilter::SetThreshold(double _arg)
+
+Set/Get the Watershed threshold. The default is 0.
+"
+
+%feature("docstring") itk::simple::IsolatedWatershedImageFilter::GetThreshold "virtual double itk::IsolatedWatershedImageFilter::GetThreshold() const
+
+"
+
+%feature("docstring") itk::simple::IsolatedWatershedImageFilter::SetUpperValueLimit "virtual void itk::IsolatedWatershedImageFilter::SetUpperValueLimit(double _arg)
+
+Set/Get the limit on the upper waterlevel value. The default is 1.0.
+"
+
+%feature("docstring") itk::simple::IsolatedWatershedImageFilter::GetUpperValueLimit "virtual double itk::IsolatedWatershedImageFilter::GetUpperValueLimit() const
+
+"
+
+%feature("docstring") itk::simple::IsolatedWatershedImageFilter::SetIsolatedValueTolerance "virtual void itk::IsolatedWatershedImageFilter::SetIsolatedValueTolerance(double _arg)
+
+Set/Get the precision required for the intensity threshold value. The default is .001.
+"
+
+%feature("docstring") itk::simple::IsolatedWatershedImageFilter::GetIsolatedValueTolerance "virtual double itk::IsolatedWatershedImageFilter::GetIsolatedValueTolerance() const
+
+"
+
+%feature("docstring") itk::simple::IsolatedWatershedImageFilter::SetReplaceValue1 "virtual void itk::IsolatedWatershedImageFilter::SetReplaceValue1(OutputImagePixelType _arg)
+
+Set/Get value to replace Seed1(Seed2) pixels, pixels that are within the basin that contains Seed1(Seed2) this value. The default is 1(0).
+"
+
+%feature("docstring") itk::simple::IsolatedWatershedImageFilter::GetReplaceValue1 "virtual OutputImagePixelType itk::IsolatedWatershedImageFilter::GetReplaceValue1() const
+
+"
+
+%feature("docstring") itk::simple::IsolatedWatershedImageFilter::SetReplaceValue2 "virtual void itk::IsolatedWatershedImageFilter::SetReplaceValue2(OutputImagePixelType _arg)
+
+"
+
+%feature("docstring") itk::simple::IsolatedWatershedImageFilter::GetReplaceValue2 "virtual OutputImagePixelType itk::IsolatedWatershedImageFilter::GetReplaceValue2() const
+
+"
+
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1KittlerIllingworthThresholdImageFilter.xml
+%feature("docstring") itk::simple::KittlerIllingworthThresholdImageFilter "Threshold an image using the KittlerIllingworth Threshold.
+
+This filter creates a binary thresholded image that separates an image into foreground and background components. The filter computes the threshold using the KittlerIllingworthThresholdCalculatorand applies that theshold to the input image using the BinaryThresholdImageFilter.
+author Richard Beare. Department of Medicine, Monash University, Melbourne, Australia.
+Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+This implementation was taken from the Insight Journal paper:http://hdl.handle.net/10380/3279orhttp://www.insight-journal.org/browse/publication/811
+"
+%feature("docstring") itk::simple::KittlerIllingworthThresholdImageFilter::Execute "Threshold an image using the KittlerIllingworth Threshold.
+"
+%feature("docstring") itk::simple::KittlerIllingworthThreshold "Threshold an image using the KittlerIllingworth Threshold.
+
+This filter creates a binary thresholded image that separates an image into foreground and background components. The filter computes the threshold using the KittlerIllingworthThresholdCalculatorand applies that theshold to the input image using the BinaryThresholdImageFilter.
+author Richard Beare. Department of Medicine, Monash University, Melbourne, Australia.
+Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+This implementation was taken from the Insight Journal paper:http://hdl.handle.net/10380/3279orhttp://www.insight-journal.org/browse/publication/811
+"
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1LabelContourImageFilter.xml
 %feature("docstring") itk::simple::LabelContourImageFilter "Labels the pixels on the border of the objects in a labeled image.
 
@@ -2387,6 +2817,8 @@ The connectivity can be changed to minimum or maximum connectivity with SetFully
 http://hdl.handle.net/1926/1352
 author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
 see  BinaryContourImageFilter
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageSegmentation/LabelContourImageFilter,Label the contours of connected components}
 
 "
 %feature("docstring") itk::simple::LabelContourImageFilter::Execute "Labels the pixels on the border of the objects in a labeled image.
@@ -2398,6 +2830,8 @@ The connectivity can be changed to minimum or maximum connectivity with SetFully
 http://hdl.handle.net/1926/1352
 author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
 see  BinaryContourImageFilter
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageSegmentation/LabelContourImageFilter,Label the contours of connected components}
 
 "
 %feature("docstring") itk::simple::LabelContourImageFilter::SetFullyConnected "virtual void itk::LabelContourImageFilter::SetFullyConnected(bool _arg)
@@ -2466,19 +2900,21 @@ Set/Get whether the Label should be masked or not.
 "
 
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1LabelMapOverlayImageFilter.xml
-%feature("docstring") itk::simple::LabelMapOverlayImageFilter "Apply a colormap to a label map and put it on top of the input image.
+%feature("docstring") itk::simple::LabelMapOverlayImageFilter "Apply a colormap to a label map and superimpose it on an image.
 
-Apply a colormap to a label map and put it on top of the input image. The set of colors is a good selection of distinct colors. The opacity of the label map can be defined by the user. A background label produce a gray pixel with the same intensity than the input one.
+Apply a colormap to a label map and put it on top of the feature image. The feature image is typically the image from which the labeling was produced. Use the SetInput function to set the LabelMap, and the SetFeatureImage function to set the feature image.
+The set of colors is a good selection of distinct colors. The opacity of the label map can be defined by the user. A background label produce a gray pixel with the same intensity than the input one.
 author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
 This implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176
 see  LabelMapToBinaryImageFilter, LabelMapToLabelImageFilter
 
 "
-%feature("docstring") itk::simple::LabelMapOverlayImageFilter::Execute "Apply a colormap to a label map and put it on top of the input image.
+%feature("docstring") itk::simple::LabelMapOverlayImageFilter::Execute "Apply a colormap to a label map and superimpose it on an image.
 "
-%feature("docstring") itk::simple::LabelMapOverlay "Apply a colormap to a label map and put it on top of the input image.
+%feature("docstring") itk::simple::LabelMapOverlay "Apply a colormap to a label map and superimpose it on an image.
 
-Apply a colormap to a label map and put it on top of the input image. The set of colors is a good selection of distinct colors. The opacity of the label map can be defined by the user. A background label produce a gray pixel with the same intensity than the input one.
+Apply a colormap to a label map and put it on top of the feature image. The feature image is typically the image from which the labeling was produced. Use the SetInput function to set the LabelMap, and the SetFeatureImage function to set the feature image.
+The set of colors is a good selection of distinct colors. The opacity of the label map can be defined by the user. A background label produce a gray pixel with the same intensity than the input one.
 author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
 This implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176
 see  LabelMapToBinaryImageFilter, LabelMapToLabelImageFilter
@@ -2537,6 +2973,8 @@ Set/Get the value used as foreground in the output image. Defaults to NumericTra
 author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
 This implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176
 see  LabelMapToBinaryImageFilter, LabelMapMaskImageFilter
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/LabelMapToLabelImageFilter,Convert a LabelMapto a normal image with different values representing each region}
 
 "
 %feature("docstring") itk::simple::LabelMapToLabelImageFilter::Execute "Converts a LabelMapto a labeled image.
@@ -2547,6 +2985,8 @@ see  LabelMapToBinaryImageFilter, LabelMapMaskImageFilter
 author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
 This implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176
 see  LabelMapToBinaryImageFilter, LabelMapMaskImageFilter
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/LabelMapToLabelImageFilter,Convert a LabelMapto a normal image with different values representing each region}
 
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1LabelMapToRGBImageFilter.xml
@@ -2578,8 +3018,8 @@ see  Neighborhood
 see  NeighborhoodOperator
 see  NeighborhoodIterator
 see  LaplacianOperator
-
-li {ImageProcessing/LaplacianImageFilter,Compute the Laplacian of an image}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/LaplacianImageFilter,Compute the Laplacian of an image}
 
 "
 %feature("docstring") itk::simple::LaplacianImageFilter::Execute ""
@@ -2594,8 +3034,8 @@ see  Neighborhood
 see  NeighborhoodOperator
 see  NeighborhoodIterator
 see  LaplacianOperator
-
-li {ImageProcessing/LaplacianImageFilter,Compute the Laplacian of an image}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/LaplacianImageFilter,Compute the Laplacian of an image}
 
 "
 %feature("docstring") itk::simple::LaplacianImageFilter::SetUseImageSpacing "virtual void itk::LaplacianImageFilter::SetUseImageSpacing(bool _arg)
@@ -2608,20 +3048,20 @@ Set/Get whether or not the filter will use the spacing of the input image in its
 "
 
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1LaplacianRecursiveGaussianImageFilter.xml
-%feature("docstring") itk::simple::LaplacianRecursiveGaussianImageFilter "Computes the Laplacian of an image by convolution with the second derivative of a Gaussian.
+%feature("docstring") itk::simple::LaplacianRecursiveGaussianImageFilter "Computes the Laplacian of Gaussian (LoG) of an image.
 
-This filter is implemented using the recursive gaussian filters
-
-li {EdgesAndGradients/LaplacianRecursiveGaussianImageFilter,Compute the Laplacian of an image}
+Computes the Laplacian of Gaussian (LoG) of an image by convolution with the second derivative of a Gaussian. This filter is implemented using the recursive gaussian filters.
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{EdgesAndGradients/LaplacianRecursiveGaussianImageFilter,Compute the Laplacian of Gaussian (LoG) of an image}
 
 "
-%feature("docstring") itk::simple::LaplacianRecursiveGaussianImageFilter::Execute "Computes the Laplacian of an image by convolution with the second derivative of a Gaussian.
+%feature("docstring") itk::simple::LaplacianRecursiveGaussianImageFilter::Execute "Computes the Laplacian of Gaussian (LoG) of an image.
 "
-%feature("docstring") itk::simple::LaplacianRecursiveGaussian "Computes the Laplacian of an image by convolution with the second derivative of a Gaussian.
+%feature("docstring") itk::simple::LaplacianRecursiveGaussian "Computes the Laplacian of Gaussian (LoG) of an image.
 
-This filter is implemented using the recursive gaussian filters
-
-li {EdgesAndGradients/LaplacianRecursiveGaussianImageFilter,Compute the Laplacian of an image}
+Computes the Laplacian of Gaussian (LoG) of an image by convolution with the second derivative of a Gaussian. This filter is implemented using the recursive gaussian filters.
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{EdgesAndGradients/LaplacianRecursiveGaussianImageFilter,Compute the Laplacian of Gaussian (LoG) of an image}
 
 "
 %feature("docstring") itk::simple::LaplacianRecursiveGaussianImageFilter::SetSigma "void itk::LaplacianRecursiveGaussianImageFilter::SetSigma(RealType sigma)
@@ -2640,8 +3080,8 @@ Define which normalization factor will be used for the Gaussiansee  RecursiveGau
 "
 
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1LaplacianSharpeningImageFilter.xml
-%feature("docstring") itk::simple::LaplacianSharpeningImageFilter "
-This filter sharpens an image using a Laplacian. LaplacianSharpening highlights regions of rapid intensity change and therefore highlights or enhances the edges. The result is an image that appears more in focus.
+%feature("docstring") itk::simple::LaplacianSharpeningImageFilter "This filter sharpens an image using a Laplacian. LaplacianSharpening highlights regions of rapid intensity change and therefore highlights or enhances the edges. The result is an image that appears more in focus.
+
 par The LaplacianSharpening at each pixel location is computed by
 convolution with the itk::LaplacianOperator.
 par Inputs and Outputs
@@ -2651,11 +3091,14 @@ see  Neighborhood
 see  NeighborhoodOperator
 see  NeighborhoodIterator
 see  LaplacianOperator
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/LaplacianSharpeningImageFilter,Sharpen an image}
 
 "
-%feature("docstring") itk::simple::LaplacianSharpeningImageFilter::Execute ""
-%feature("docstring") itk::simple::LaplacianSharpening "
-This filter sharpens an image using a Laplacian. LaplacianSharpening highlights regions of rapid intensity change and therefore highlights or enhances the edges. The result is an image that appears more in focus.
+%feature("docstring") itk::simple::LaplacianSharpeningImageFilter::Execute "This filter sharpens an image using a Laplacian. LaplacianSharpening highlights regions of rapid intensity change and therefore highlights or enhances the edges. The result is an image that appears more in focus.
+"
+%feature("docstring") itk::simple::LaplacianSharpening "This filter sharpens an image using a Laplacian. LaplacianSharpening highlights regions of rapid intensity change and therefore highlights or enhances the edges. The result is an image that appears more in focus.
+
 par The LaplacianSharpening at each pixel location is computed by
 convolution with the itk::LaplacianOperator.
 par Inputs and Outputs
@@ -2665,6 +3108,8 @@ see  Neighborhood
 see  NeighborhoodOperator
 see  NeighborhoodIterator
 see  LaplacianOperator
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/LaplacianSharpeningImageFilter,Sharpen an image}
 
 "
 %feature("docstring") itk::simple::LaplacianSharpeningImageFilter::SetUseImageSpacing "virtual void itk::LaplacianSharpeningImageFilter::SetUseImageSpacing(bool _arg)
@@ -2676,25 +3121,41 @@ Set/Get whether or not the filter will use the spacing of the input image in its
 
 "
 
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1LiThresholdImageFilter.xml
+%feature("docstring") itk::simple::LiThresholdImageFilter "Threshold an image using the Li Threshold.
+
+This filter creates a binary thresholded image that separates an image into foreground and background components. The filter computes the threshold using the LiThresholdCalculatorand applies that theshold to the input image using the BinaryThresholdImageFilter.
+author Richard Beare. Department of Medicine, Monash University, Melbourne, Australia.
+Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+This implementation was taken from the Insight Journal paper:http://hdl.handle.net/10380/3279orhttp://www.insight-journal.org/browse/publication/811
+"
+%feature("docstring") itk::simple::LiThresholdImageFilter::Execute "Threshold an image using the Li Threshold.
+"
+%feature("docstring") itk::simple::LiThreshold "Threshold an image using the Li Threshold.
+
+This filter creates a binary thresholded image that separates an image into foreground and background components. The filter computes the threshold using the LiThresholdCalculatorand applies that theshold to the input image using the BinaryThresholdImageFilter.
+author Richard Beare. Department of Medicine, Monash University, Melbourne, Australia.
+Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+This implementation was taken from the Insight Journal paper:http://hdl.handle.net/10380/3279orhttp://www.insight-journal.org/browse/publication/811
+"
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1Log10ImageFilter.xml
-%feature("docstring") itk::simple::Log10ImageFilter "Computes the vcl_log10(x) pixel-wise
--.
+%feature("docstring") itk::simple::Log10ImageFilter "Computes the log10 of each pixel.
 
+The computation is performed using vcl_log10(x).
 "
-%feature("docstring") itk::simple::Log10ImageFilter::Execute "Computes the vcl_log10(x) pixel-wise
--.
+%feature("docstring") itk::simple::Log10ImageFilter::Execute "Computes the log10 of each pixel.
 "
-%feature("docstring") itk::simple::Log10 "Computes the vcl_log10(x) pixel-wise
--.
+%feature("docstring") itk::simple::Log10 "Computes the log10 of each pixel.
 
+The computation is performed using vcl_log10(x).
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1LogImageFilter.xml
-%feature("docstring") itk::simple::LogImageFilter "Computes the vcl_log(x) pixel-wise.
+%feature("docstring") itk::simple::LogImageFilter "Computes the log() of each pixel.
 
 "
-%feature("docstring") itk::simple::LogImageFilter::Execute "Computes the vcl_log(x) pixel-wise.
+%feature("docstring") itk::simple::LogImageFilter::Execute "Computes the log() of each pixel.
 "
-%feature("docstring") itk::simple::Log "Computes the vcl_log(x) pixel-wise.
+%feature("docstring") itk::simple::Log "Computes the log() of each pixel.
 
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1MagnitudeAndPhaseToComplexImageFilter.xml
@@ -2711,32 +3172,32 @@ This filter is parametrized over the types of the two input images and the type 
 The filter expect all images to have the same dimension (e.g. all 2D, or all 3D, or all ND)
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1MaskImageFilter.xml
-%feature("docstring") itk::simple::MaskImageFilter "Implements an operator for pixel-wise masking of the input image with the mask.
+%feature("docstring") itk::simple::MaskImageFilter "Mask an image with a mask. image with the mask.
 
-This class is parametrized over the types of the input image type, the mask image type and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
+This class is templated over the types of the input image type, the mask image type and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
 The pixel type of the input 2 image must have a valid defintion of the operator != with zero. This condition is required because internally this filter will perform the operation
-if pixel_from_mask_image != 0 pixel_output_image = pixel_input_image else pixel_output_image = outside_value
+ifpixel_from_mask_image!=0pixel_output_image=pixel_input_imageelsepixel_output_image=outside_value
 The pixel from the input 1 is cast to the pixel type of the output image.
 Note that the input and the mask images must be of the same size.
 warning Any pixel value other than 0 will not be masked out.
 see  MaskNegatedImageFilter
-
-li {ImageProcessing/MaskImageFilter,Apply a mask to an image}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/MaskImageFilter,Apply a mask to an image}
 
 "
-%feature("docstring") itk::simple::MaskImageFilter::Execute "Implements an operator for pixel-wise masking of the input image with the mask.
+%feature("docstring") itk::simple::MaskImageFilter::Execute "Mask an image with a mask. image with the mask.
 "
-%feature("docstring") itk::simple::Mask "Implements an operator for pixel-wise masking of the input image with the mask.
+%feature("docstring") itk::simple::Mask "Mask an image with a mask. image with the mask.
 
-This class is parametrized over the types of the input image type, the mask image type and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
+This class is templated over the types of the input image type, the mask image type and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
 The pixel type of the input 2 image must have a valid defintion of the operator != with zero. This condition is required because internally this filter will perform the operation
-if pixel_from_mask_image != 0 pixel_output_image = pixel_input_image else pixel_output_image = outside_value
+ifpixel_from_mask_image!=0pixel_output_image=pixel_input_imageelsepixel_output_image=outside_value
 The pixel from the input 1 is cast to the pixel type of the output image.
 Note that the input and the mask images must be of the same size.
 warning Any pixel value other than 0 will not be masked out.
 see  MaskNegatedImageFilter
-
-li {ImageProcessing/MaskImageFilter,Apply a mask to an image}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/MaskImageFilter,Apply a mask to an image}
 
 "
 %feature("docstring") itk::simple::MaskImageFilter::SetOutsideValue "void itk::MaskImageFilter::SetOutsideValue(const typename TOutputImage::PixelType &outsideValue)
@@ -2749,37 +3210,58 @@ Method to explicitly set the outside value of the mask. Defaults to 0
 "
 
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1MaskNegatedImageFilter.xml
-%feature("docstring") itk::simple::MaskNegatedImageFilter "Implements an operator for pixel-wise masking of the input image with the negative of a mask.
+%feature("docstring") itk::simple::MaskNegatedImageFilter "Mask an image with the negative of a mask.
 
-This class is parametrized over the types of the input image type, the mask image type and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
+This class is templated over the types of the input image type, the mask image type and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
 The pixel type of the input 2 image must have a valid defintion of the operator != with zero. This condition is required because internally this filter will perform the operation
-if pixel_from_mask_image != 0 pixel_output_image = output_value else pixel_output_image = pixel_input_image
+ifpixel_from_mask_image!=0pixel_output_image=output_valueelsepixel_output_image=pixel_input_image
 The pixel from the input 1 is cast to the pixel type of the output image.
 Note that the input and the mask images must be of the same size.
 warning Any pixel value other than 0 will not be masked out.
 see  MaskImageFilter
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/MaskNegatedImageFilter,Apply the inverse of a mask to an image}
 
 "
-%feature("docstring") itk::simple::MaskNegatedImageFilter::Execute "Implements an operator for pixel-wise masking of the input image with the negative of a mask.
+%feature("docstring") itk::simple::MaskNegatedImageFilter::Execute "Mask an image with the negative of a mask.
 "
-%feature("docstring") itk::simple::MaskNegated "Implements an operator for pixel-wise masking of the input image with the negative of a mask.
+%feature("docstring") itk::simple::MaskNegated "Mask an image with the negative of a mask.
 
-This class is parametrized over the types of the input image type, the mask image type and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
+This class is templated over the types of the input image type, the mask image type and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
 The pixel type of the input 2 image must have a valid defintion of the operator != with zero. This condition is required because internally this filter will perform the operation
-if pixel_from_mask_image != 0 pixel_output_image = output_value else pixel_output_image = pixel_input_image
+ifpixel_from_mask_image!=0pixel_output_image=output_valueelsepixel_output_image=pixel_input_image
 The pixel from the input 1 is cast to the pixel type of the output image.
 Note that the input and the mask images must be of the same size.
 warning Any pixel value other than 0 will not be masked out.
 see  MaskImageFilter
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/MaskNegatedImageFilter,Apply the inverse of a mask to an image}
 
+"
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1MaximumEntropyThresholdImageFilter.xml
+%feature("docstring") itk::simple::MaximumEntropyThresholdImageFilter "Threshold an image using the MaximumEntropy Threshold.
+
+This filter creates a binary thresholded image that separates an image into foreground and background components. The filter computes the threshold using the MaximumEntropyThresholdCalculatorand applies that theshold to the input image using the BinaryThresholdImageFilter.
+author Richard Beare. Department of Medicine, Monash University, Melbourne, Australia.
+Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+This implementation was taken from the Insight Journal paper:http://hdl.handle.net/10380/3279orhttp://www.insight-journal.org/browse/publication/811
+"
+%feature("docstring") itk::simple::MaximumEntropyThresholdImageFilter::Execute "Threshold an image using the MaximumEntropy Threshold.
+"
+%feature("docstring") itk::simple::MaximumEntropyThreshold "Threshold an image using the MaximumEntropy Threshold.
+
+This filter creates a binary thresholded image that separates an image into foreground and background components. The filter computes the threshold using the MaximumEntropyThresholdCalculatorand applies that theshold to the input image using the BinaryThresholdImageFilter.
+author Richard Beare. Department of Medicine, Monash University, Melbourne, Australia.
+Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+This implementation was taken from the Insight Journal paper:http://hdl.handle.net/10380/3279orhttp://www.insight-journal.org/browse/publication/811
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1MaximumImageFilter.xml
 %feature("docstring") itk::simple::MaximumImageFilter "Implements a pixel-wise operator Max(a,b) between two images.
 
 The pixel values of the output image are the maximum between the corresponding pixels of the two input images.
-This class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
-
-li {ImageProcessing/MaximumImageFilter,Pixel wise compare two input images and set the output pixel to their max}
+This class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/MaximumImageFilter,Pixel wise compare two input images and set the output pixel to their max}
 
 "
 %feature("docstring") itk::simple::MaximumImageFilter::Execute "Implements a pixel-wise operator Max(a,b) between two images.
@@ -2787,18 +3269,74 @@ li {ImageProcessing/MaximumImageFilter,Pixel wise compare two input images and s
 %feature("docstring") itk::simple::Maximum "Implements a pixel-wise operator Max(a,b) between two images.
 
 The pixel values of the output image are the maximum between the corresponding pixels of the two input images.
-This class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
+This class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/MaximumImageFilter,Pixel wise compare two input images and set the output pixel to their max}
 
-li {ImageProcessing/MaximumImageFilter,Pixel wise compare two input images and set the output pixel to their max}
+"
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1MeanImageFilter.xml
+%feature("docstring") itk::simple::MeanImageFilter "Applies an averaging filter to an image.
+
+Computes an image where a given pixel is the mean value of the the pixels in a neighborhood about the corresponding input pixel.
+A mean filter is one of the family of linear filters.
+see  Image
+see  Neighborhood
+see  NeighborhoodOperator
+see  NeighborhoodIterator
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Smoothing/MeanImageFilter,Mean filter an image}
+
+"
+%feature("docstring") itk::simple::MeanImageFilter::Execute "Applies an averaging filter to an image.
+"
+%feature("docstring") itk::simple::Mean "Applies an averaging filter to an image.
+
+Computes an image where a given pixel is the mean value of the the pixels in a neighborhood about the corresponding input pixel.
+A mean filter is one of the family of linear filters.
+see  Image
+see  Neighborhood
+see  NeighborhoodOperator
+see  NeighborhoodIterator
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Smoothing/MeanImageFilter,Mean filter an image}
+
+"
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1MedianImageFilter.xml
+%feature("docstring") itk::simple::MedianImageFilter "Applies a median filter to an image.
+
+Computes an image where a given pixel is the median value of the the pixels in a neighborhood about the corresponding input pixel.
+A median filter is one of the family of nonlinear filters. It is used to smooth an image without being biased by outliers or shot noise.
+This filter requires that the input pixel type provides an operator<() (LessThan Comparable).
+see  Image
+see  Neighborhood
+see  NeighborhoodOperator
+see  NeighborhoodIterator
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Smoothing/MedianImageFilter,Median filter an image} {Smoothing/RGBMedianImageFilter,Median filter an RGB image}
+
+"
+%feature("docstring") itk::simple::MedianImageFilter::Execute "Applies a median filter to an image.
+"
+%feature("docstring") itk::simple::Median "Applies a median filter to an image.
+
+Computes an image where a given pixel is the median value of the the pixels in a neighborhood about the corresponding input pixel.
+A median filter is one of the family of nonlinear filters. It is used to smooth an image without being biased by outliers or shot noise.
+This filter requires that the input pixel type provides an operator<() (LessThan Comparable).
+see  Image
+see  Neighborhood
+see  NeighborhoodOperator
+see  NeighborhoodIterator
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Smoothing/MedianImageFilter,Median filter an image} {Smoothing/RGBMedianImageFilter,Median filter an RGB image}
 
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1MinimumImageFilter.xml
 %feature("docstring") itk::simple::MinimumImageFilter "Implements a pixel-wise operator Min(a,b) between two images.
 
 The pixel values of the output image are the minimum between the corresponding pixels of the two input images.
-This class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults. + *
-
-li {ImageProcessing/MinimumImageFilter,Pixel wise compare two input images and set the output pixel to their min}
+This class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/MinimumImageFilter,Pixel wise compare two input images and set the output pixel to their min}
 
 "
 %feature("docstring") itk::simple::MinimumImageFilter::Execute "Implements a pixel-wise operator Min(a,b) between two images.
@@ -2806,9 +3344,9 @@ li {ImageProcessing/MinimumImageFilter,Pixel wise compare two input images and s
 %feature("docstring") itk::simple::Minimum "Implements a pixel-wise operator Min(a,b) between two images.
 
 The pixel values of the output image are the minimum between the corresponding pixels of the two input images.
-This class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults. + *
-
-li {ImageProcessing/MinimumImageFilter,Pixel wise compare two input images and set the output pixel to their min}
+This class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/MinimumImageFilter,Pixel wise compare two input images and set the output pixel to their min}
 
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1MinMaxCurvatureFlowImageFilter.xml
@@ -2850,6 +3388,8 @@ see  BinaryMinMaxCurvatureFlowImageFilter
  MirrorPadImageFilterchanges the image bounds of an image. Any added pixels are filled in with a mirrored replica of the input image. For instance, if the output image needs a pixel that istwo pixels to the left of the LargestPossibleRegionof the input image, the value assigned will be from the pixeltwo pixels inside the left boundary of the LargestPossibleRegion. The image bounds of the output must be specified.
 Visual explanation of padding regions.This filter is implemented as a multithreaded filter. It provides a ThreadedGenerateData()method for its implementation.
 see  WrapPadImageFilter, ConstantPadImageFilter
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Images/MirrorPadImageFilter,Pad an image using mirroring over the boundaries}
 
 "
 %feature("docstring") itk::simple::MirrorPadImageFilter::Execute "Increase the image size by padding with replicants of the input image value.
@@ -2859,6 +3399,8 @@ see  WrapPadImageFilter, ConstantPadImageFilter
  MirrorPadImageFilterchanges the image bounds of an image. Any added pixels are filled in with a mirrored replica of the input image. For instance, if the output image needs a pixel that istwo pixels to the left of the LargestPossibleRegionof the input image, the value assigned will be from the pixeltwo pixels inside the left boundary of the LargestPossibleRegion. The image bounds of the output must be specified.
 Visual explanation of padding regions.This filter is implemented as a multithreaded filter. It provides a ThreadedGenerateData()method for its implementation.
 see  WrapPadImageFilter, ConstantPadImageFilter
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Images/MirrorPadImageFilter,Pad an image using mirroring over the boundaries}
 
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1ModulusImageFilter.xml
@@ -2885,6 +3427,23 @@ Set/Get the dividend
 
 "
 
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1MomentsThresholdImageFilter.xml
+%feature("docstring") itk::simple::MomentsThresholdImageFilter "Threshold an image using the Moments Threshold.
+
+This filter creates a binary thresholded image that separates an image into foreground and background components. The filter computes the threshold using the MomentsThresholdCalculatorand applies that theshold to the input image using the BinaryThresholdImageFilter.
+author Richard Beare. Department of Medicine, Monash University, Melbourne, Australia.
+Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+This implementation was taken from the Insight Journal paper:http://hdl.handle.net/10380/3279orhttp://www.insight-journal.org/browse/publication/811
+"
+%feature("docstring") itk::simple::MomentsThresholdImageFilter::Execute "Threshold an image using the Moments Threshold.
+"
+%feature("docstring") itk::simple::MomentsThreshold "Threshold an image using the Moments Threshold.
+
+This filter creates a binary thresholded image that separates an image into foreground and background components. The filter computes the threshold using the MomentsThresholdCalculatorand applies that theshold to the input image using the BinaryThresholdImageFilter.
+author Richard Beare. Department of Medicine, Monash University, Melbourne, Australia.
+Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+This implementation was taken from the Insight Journal paper:http://hdl.handle.net/10380/3279orhttp://www.insight-journal.org/browse/publication/811
+"
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1MorphologicalGradientImageFilter.xml
 %feature("docstring") itk::simple::MorphologicalGradientImageFilter "gray scale dilation of an image
 
@@ -2935,24 +3494,24 @@ Set the constant that will be used to multiply all the image pixels
 "
 
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1MultiplyImageFilter.xml
-%feature("docstring") itk::simple::MultiplyImageFilter "Implements an operator for pixel-wise multiplication of two images.
+%feature("docstring") itk::simple::MultiplyImageFilter "Pixel-wise multiplication of two images.
 
-This class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
-
-li {ImageProcessing/MultiplyImageFilter,Multiply two images together}
-
-"
-%feature("docstring") itk::simple::MultiplyImageFilter::Execute "Implements an operator for pixel-wise multiplication of two images.
-"
-%feature("docstring") itk::simple::Multiply "Implements an operator for pixel-wise multiplication of two images.
-
-This class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
-
-li {ImageProcessing/MultiplyImageFilter,Multiply two images together}
+This class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/MultiplyImageFilter,Multiply two images together} {ImageProcessing/MultiplyByConstantImageFilter,Multiply every pixel in an image by a constant}
 
 "
-// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1N4MRIBiasFieldCorrectionImageFilter.xml
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter "Implementation of the N4 MRI bias field correction algorithm.
+%feature("docstring") itk::simple::MultiplyImageFilter::Execute "Pixel-wise multiplication of two images.
+"
+%feature("docstring") itk::simple::Multiply "Pixel-wise multiplication of two images.
+
+This class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/MultiplyImageFilter,Multiply two images together} {ImageProcessing/MultiplyByConstantImageFilter,Multiply every pixel in an image by a constant}
+
+"
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1N4BiasFieldCorrectionImageFilter.xml
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter "Implementation of the N4 bias field correction algorithm.
 
 The nonparametric nonuniform intensity normalization (N3) algorithm, as introduced by Sled et al. in 1998 is a method for correcting nonuniformity associated with MR images. The algorithm assumes a simple parametric model (Gaussian) for the bias field and does not require tissue class segmentation. In addition, there are only a couple of parameters to tune with the default values performing quite well. N3 has been publicly available as a set of perl scripts (http://www.bic.mni.mcgill.ca/ServicesSoftwareAdvancedImageProcessingTools/HomePage)
 The N4 algorithm, encapsulated with this class, is a variation of the original N3 algorithm with the additional benefits of an improved B-spline fitting routine which allows for multiple resolutions to be used during the correction process. We also modify the iterative update component of algorithm such that the residual bias field is continually updated
@@ -2961,12 +3520,12 @@ The basic algorithm iterates between sharpening the intensity histogram of the c
 author Nicholas J. Tustison
 Contributed by Nicholas J. Tustison, James C. Gee in the Insight Journal paper:http://hdl.handle.net/10380/3053
 par REFERENCE
-J.G. Sled, A.P. Zijdenbos and A.C. Evans. A Nonparametric Method for Automatic Correction of Intensity Nonuniformity in MRI Data IEEE Transactions on Medical Imaging, Vol 17, No 1. Feb 1998.
-N.J. Tustison, B.B. Avants, P.A. Cook, Y. Zheng, A. Egan, P.A. Yushkevich, and J.C. Gee. N4ITK: Improved N3 Bias Correction IEEE Transactions on Medical Imaging, 29(6):1310-1320, June 2010.
+J.G. Sled, A.P. Zijdenbos and A.C. Evans. A Nonparametric Method for Automatic Correction of Intensity Nonuniformity in Data IEEE Transactions on Medical Imaging, Vol 17, No 1. Feb 1998.
+N.J. Tustison, B.B. Avants, P.A. Cook, Y. Zheng, A. Egan, P.A. Yushkevich, and J.C. Gee. N4ITK:  Improved N3 Bias Correction IEEE Transactions on Medical Imaging, 29(6):1310-1320, June 2010.
 "
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::Execute "Implementation of the N4 MRI bias field correction algorithm.
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::Execute "Implementation of the N4 bias field correction algorithm.
 "
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrection "Implementation of the N4 MRI bias field correction algorithm.
+%feature("docstring") itk::simple::N4BiasFieldCorrection "Implementation of the N4 bias field correction algorithm.
 
 The nonparametric nonuniform intensity normalization (N3) algorithm, as introduced by Sled et al. in 1998 is a method for correcting nonuniformity associated with MR images. The algorithm assumes a simple parametric model (Gaussian) for the bias field and does not require tissue class segmentation. In addition, there are only a couple of parameters to tune with the default values performing quite well. N3 has been publicly available as a set of perl scripts (http://www.bic.mni.mcgill.ca/ServicesSoftwareAdvancedImageProcessingTools/HomePage)
 The N4 algorithm, encapsulated with this class, is a variation of the original N3 algorithm with the additional benefits of an improved B-spline fitting routine which allows for multiple resolutions to be used during the correction process. We also modify the iterative update component of algorithm such that the residual bias field is continually updated
@@ -2975,75 +3534,75 @@ The basic algorithm iterates between sharpening the intensity histogram of the c
 author Nicholas J. Tustison
 Contributed by Nicholas J. Tustison, James C. Gee in the Insight Journal paper:http://hdl.handle.net/10380/3053
 par REFERENCE
-J.G. Sled, A.P. Zijdenbos and A.C. Evans. A Nonparametric Method for Automatic Correction of Intensity Nonuniformity in MRI Data IEEE Transactions on Medical Imaging, Vol 17, No 1. Feb 1998.
-N.J. Tustison, B.B. Avants, P.A. Cook, Y. Zheng, A. Egan, P.A. Yushkevich, and J.C. Gee. N4ITK: Improved N3 Bias Correction IEEE Transactions on Medical Imaging, 29(6):1310-1320, June 2010.
+J.G. Sled, A.P. Zijdenbos and A.C. Evans. A Nonparametric Method for Automatic Correction of Intensity Nonuniformity in Data IEEE Transactions on Medical Imaging, Vol 17, No 1. Feb 1998.
+N.J. Tustison, B.B. Avants, P.A. Cook, Y. Zheng, A. Egan, P.A. Yushkevich, and J.C. Gee. N4ITK:  Improved N3 Bias Correction IEEE Transactions on Medical Imaging, 29(6):1310-1320, June 2010.
 "
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::SetConvergenceThreshold "virtual void itk::N4MRIBiasFieldCorrectionImageFilter::SetConvergenceThreshold(RealType _arg)
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::SetConvergenceThreshold "virtual void itk::N4BiasFieldCorrectionImageFilter::SetConvergenceThreshold(RealType _arg)
 
 Set the convergence threshold. Convergence is determined by the coefficient of variation of the difference image between the current bias field estimate and the previous estimate. If this value is less than the specified threshold, the algorithm proceeds to the next fitting level or terminates if it is at the last level.
 "
 
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::GetConvergenceThreshold "virtual RealType itk::N4MRIBiasFieldCorrectionImageFilter::GetConvergenceThreshold() const
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::GetConvergenceThreshold "virtual RealType itk::N4BiasFieldCorrectionImageFilter::GetConvergenceThreshold() const
 
 Get the convergence threshold. Convergence is determined by the coefficient of variation of the difference image between the current bias field estimate and the previous estimate. If this value is less than the specified threshold, the algorithm proceeds to the next fitting level or terminates if it is at the last level.
 "
 
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::SetMaximumNumberOfIterations "virtual void itk::N4MRIBiasFieldCorrectionImageFilter::SetMaximumNumberOfIterations(VariableSizeArrayType _arg)
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::SetMaximumNumberOfIterations "virtual void itk::N4BiasFieldCorrectionImageFilter::SetMaximumNumberOfIterations(VariableSizeArrayType _arg)
 
 Set the maximum number of iterations specified at each fitting level. Default = 50.
 "
 
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::GetMaximumNumberOfIterations "virtual VariableSizeArrayType itk::N4MRIBiasFieldCorrectionImageFilter::GetMaximumNumberOfIterations() const
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::GetMaximumNumberOfIterations "virtual VariableSizeArrayType itk::N4BiasFieldCorrectionImageFilter::GetMaximumNumberOfIterations() const
 
 Get the maximum number of iterations specified at each fitting level. Default = 50.
 "
 
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::SetBiasFieldFullWidthAtHalfMaximum "virtual void itk::N4MRIBiasFieldCorrectionImageFilter::SetBiasFieldFullWidthAtHalfMaximum(RealType _arg)
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::SetBiasFieldFullWidthAtHalfMaximum "virtual void itk::N4BiasFieldCorrectionImageFilter::SetBiasFieldFullWidthAtHalfMaximum(RealType _arg)
 
 Set the full width at half maximum parameter characterizing the width of the Gaussian deconvolution. Default = 0.15.
 "
 
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::GetBiasFieldFullWidthAtHalfMaximum "virtual RealType itk::N4MRIBiasFieldCorrectionImageFilter::GetBiasFieldFullWidthAtHalfMaximum() const
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::GetBiasFieldFullWidthAtHalfMaximum "virtual RealType itk::N4BiasFieldCorrectionImageFilter::GetBiasFieldFullWidthAtHalfMaximum() const
 
 Get the full width at half maximum parameter characterizing the width of the Gaussian deconvolution. Default = 0.15.
 "
 
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::SetWienerFilterNoise "virtual void itk::N4MRIBiasFieldCorrectionImageFilter::SetWienerFilterNoise(RealType _arg)
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::SetWienerFilterNoise "virtual void itk::N4BiasFieldCorrectionImageFilter::SetWienerFilterNoise(RealType _arg)
 
 Set the noise estimate defining the Wiener filter. Default = 0.01.
 "
 
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::GetWienerFilterNoise "virtual RealType itk::N4MRIBiasFieldCorrectionImageFilter::GetWienerFilterNoise() const
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::GetWienerFilterNoise "virtual RealType itk::N4BiasFieldCorrectionImageFilter::GetWienerFilterNoise() const
 
 Get the noise estimate defining the Wiener filter. Default = 0.01.
 "
 
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::SetNumberOfHistogramBins "virtual void itk::N4MRIBiasFieldCorrectionImageFilter::SetNumberOfHistogramBins(unsigned int _arg)
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::SetNumberOfHistogramBins "virtual void itk::N4BiasFieldCorrectionImageFilter::SetNumberOfHistogramBins(unsigned int _arg)
 
 Set number of bins defining the log input intensity histogram. Default = 200.
 "
 
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::GetNumberOfHistogramBins "virtual unsigned int itk::N4MRIBiasFieldCorrectionImageFilter::GetNumberOfHistogramBins() const
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::GetNumberOfHistogramBins "virtual unsigned int itk::N4BiasFieldCorrectionImageFilter::GetNumberOfHistogramBins() const
 
 Get number of bins defining the log input intensity histogram. Default = 200.
 "
 
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::SetNumberOfControlPoints "virtual void itk::N4MRIBiasFieldCorrectionImageFilter::SetNumberOfControlPoints(ArrayType _arg)
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::SetNumberOfControlPoints "virtual void itk::N4BiasFieldCorrectionImageFilter::SetNumberOfControlPoints(ArrayType _arg)
 
 Set the control point grid size definining the B-spline estimate of the scalar bias field. In each dimension, the B-spline mesh size is equal to the number of control points in that dimension minus the spline order. Default = 4 control points in each dimension for a mesh size of 1 in each dimension.
 "
 
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::GetNumberOfControlPoints "virtual ArrayType itk::N4MRIBiasFieldCorrectionImageFilter::GetNumberOfControlPoints() const
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::GetNumberOfControlPoints "virtual ArrayType itk::N4BiasFieldCorrectionImageFilter::GetNumberOfControlPoints() const
 
 Get the control point grid size definining the B-spline estimate of the scalar bias field. In each dimension, the B-spline mesh size is equal to the number of control points in that dimension minus the spline order. Default = 4 control points in each dimension for a mesh size of 1 in each dimension.
 "
 
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::SetSplineOrder "virtual void itk::N4MRIBiasFieldCorrectionImageFilter::SetSplineOrder(unsigned int _arg)
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::SetSplineOrder "virtual void itk::N4BiasFieldCorrectionImageFilter::SetSplineOrder(unsigned int _arg)
 
 Set the spline order defining the bias field estimate. Default = 3.
 "
 
-%feature("docstring") itk::simple::N4MRIBiasFieldCorrectionImageFilter::GetSplineOrder "virtual unsigned int itk::N4MRIBiasFieldCorrectionImageFilter::GetSplineOrder() const
+%feature("docstring") itk::simple::N4BiasFieldCorrectionImageFilter::GetSplineOrder "virtual unsigned int itk::N4BiasFieldCorrectionImageFilter::GetSplineOrder() const
 
 Get the spline order defining the bias field estimate. Default = 3.
 "
@@ -3096,13 +3655,39 @@ Set the radius of the neighborhood used for a mask.
 Get the radius of the neighborhood used to compute the median
 "
 
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1NoiseImageFilter.xml
+%feature("docstring") itk::simple::NoiseImageFilter "Calculate the local noise in an image.
+
+Computes an image where a given pixel is the standard deviation of the pixels in a neighborhood about the corresponding input pixel. This serves as an estimate of the local noise (or texture) in an image. Currently, this noise estimate assume a piecewise constant image. This filter should be extended to fitting a (hyper) plane to the neighborhood and calculating the standard deviation of the residuals to this (hyper) plane.
+see  Image
+see  Neighborhood
+see  NeighborhoodOperator
+see  NeighborhoodIterator
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Statistics/NoiseImageFilter,Compute the local noise in an image}
+
+"
+%feature("docstring") itk::simple::NoiseImageFilter::Execute "Calculate the local noise in an image.
+"
+%feature("docstring") itk::simple::Noise "Calculate the local noise in an image.
+
+Computes an image where a given pixel is the standard deviation of the pixels in a neighborhood about the corresponding input pixel. This serves as an estimate of the local noise (or texture) in an image. Currently, this noise estimate assume a piecewise constant image. This filter should be extended to fitting a (hyper) plane to the neighborhood and calculating the standard deviation of the residuals to this (hyper) plane.
+see  Image
+see  Neighborhood
+see  NeighborhoodOperator
+see  NeighborhoodIterator
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Statistics/NoiseImageFilter,Compute the local noise in an image}
+
+"
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1NormalizeImageFilter.xml
 %feature("docstring") itk::simple::NormalizeImageFilter "Normalize an image by setting its mean to zero and variance to one.
 
  NormalizeImageFiltershifts and scales an image so that the pixels in the image have a zero mean and unit variance. This filter uses StatisticsImageFilterto compute the mean and variance of the input and then applies ShiftScaleImageFilterto shift and scale the pixels.
 NB: since this filter normalizes the data to lie within -1 to 1, integral types will produce an image that DOES NOT HAVE a unit variance.
-
-li {ImageProcessing/NormalizeImageFilter,Normalize an image}
+see  NormalizeToConstantImageFilter
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/NormalizeImageFilter,Normalize an image}
 
 "
 %feature("docstring") itk::simple::NormalizeImageFilter::Execute "Normalize an image by setting its mean to zero and variance to one.
@@ -3111,27 +3696,66 @@ li {ImageProcessing/NormalizeImageFilter,Normalize an image}
 
  NormalizeImageFiltershifts and scales an image so that the pixels in the image have a zero mean and unit variance. This filter uses StatisticsImageFilterto compute the mean and variance of the input and then applies ShiftScaleImageFilterto shift and scale the pixels.
 NB: since this filter normalizes the data to lie within -1 to 1, integral types will produce an image that DOES NOT HAVE a unit variance.
-
-li {ImageProcessing/NormalizeImageFilter,Normalize an image}
+see  NormalizeToConstantImageFilter
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/NormalizeImageFilter,Normalize an image}
 
 "
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1NormalizeToConstantImageFilter.xml
+%feature("docstring") itk::simple::NormalizeToConstantImageFilter "Scales image pixel intensities to make the sum of all pixels equal a user-defined constant.
+
+The default value of the constant is 1. It can be changed with SetConstant().
+This transform is especially useful for normalizing a convolution kernel.
+This code was contributed in the Insight Journal paper: FFT based convolution by Lehmann G.http://hdl.handle.net/10380/3154
+author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+see  NormalizeImageFilter
+see  StatisticsImageFilter
+see  DivideImageFilter
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/NormalizeToConstantImageFilter,Scale all pixels so that their sum is a specified constant}
+
+"
+%feature("docstring") itk::simple::NormalizeToConstantImageFilter::Execute "Scales image pixel intensities to make the sum of all pixels equal a user-defined constant.
+"
+%feature("docstring") itk::simple::NormalizeToConstant "Scales image pixel intensities to make the sum of all pixels equal a user-defined constant.
+
+The default value of the constant is 1. It can be changed with SetConstant().
+This transform is especially useful for normalizing a convolution kernel.
+This code was contributed in the Insight Journal paper: FFT based convolution by Lehmann G.http://hdl.handle.net/10380/3154
+author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+see  NormalizeImageFilter
+see  StatisticsImageFilter
+see  DivideImageFilter
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/NormalizeToConstantImageFilter,Scale all pixels so that their sum is a specified constant}
+
+"
+%feature("docstring") itk::simple::NormalizeToConstantImageFilter::SetConstant "virtual void itk::NormalizeToConstantImageFilter::SetConstant(RealType _arg)
+
+Set/get the normalization constant.
+"
+
+%feature("docstring") itk::simple::NormalizeToConstantImageFilter::GetConstant "virtual RealType itk::NormalizeToConstantImageFilter::GetConstant() const
+
+"
+
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1NotImageFilter.xml
 %feature("docstring") itk::simple::NotImageFilter "Implements the NOT logical operator pixel-wise on an image.
 
-This class is parametrized over the types of an input image and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
+This class is templated over the types of an input image and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
 Since the logical NOT operation is only defined in C++ for integer types, the images passed to this filter must comply with the requirement of using integer pixel type.
 The total operation over one pixel will be
-output_pixel = static_cast<OutputPixelType>( !input_pixel )
+output_pixel=static_cast<OutputPixelType>(!input_pixel)
 Where ! is the unary NOT operator in C++.
 "
 %feature("docstring") itk::simple::NotImageFilter::Execute "Implements the NOT logical operator pixel-wise on an image.
 "
 %feature("docstring") itk::simple::Not "Implements the NOT logical operator pixel-wise on an image.
 
-This class is parametrized over the types of an input image and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
+This class is templated over the types of an input image and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
 Since the logical NOT operation is only defined in C++ for integer types, the images passed to this filter must comply with the requirement of using integer pixel type.
 The total operation over one pixel will be
-output_pixel = static_cast<OutputPixelType>( !input_pixel )
+output_pixel=static_cast<OutputPixelType>(!input_pixel)
 Where ! is the unary NOT operator in C++.
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1OpeningByReconstructionImageFilter.xml
@@ -3178,85 +3802,58 @@ Set/Get whether the original intensities of the image retained for those pixels 
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1OrImageFilter.xml
 %feature("docstring") itk::simple::OrImageFilter "Implements the OR logical operator pixel-wise between two images.
 
-This class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
+This class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
 Since the logical OR operation is only defined in C++ for integer types, the images passed to this filter must comply with the requirement of using integer pixel type.
 The total operation over one pixel will be
-output_pixel = static_cast<OutputPixelType>( input1_pixel | input2_pixel )
+output_pixel=static_cast<OutputPixelType>(input1_pixel|input2_pixel)
 Where | is the boolean OR operator in C++.
-
-li {ImageProcessing/OrImageFilter,Binary OR two images}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/OrImageFilter,Binary OR two images}
 
 "
 %feature("docstring") itk::simple::OrImageFilter::Execute "Implements the OR logical operator pixel-wise between two images.
 "
 %feature("docstring") itk::simple::Or "Implements the OR logical operator pixel-wise between two images.
 
-This class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
+This class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
 Since the logical OR operation is only defined in C++ for integer types, the images passed to this filter must comply with the requirement of using integer pixel type.
 The total operation over one pixel will be
-output_pixel = static_cast<OutputPixelType>( input1_pixel | input2_pixel )
+output_pixel=static_cast<OutputPixelType>(input1_pixel|input2_pixel)
 Where | is the boolean OR operator in C++.
-
-li {ImageProcessing/OrImageFilter,Binary OR two images}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/OrImageFilter,Binary OR two images}
 
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1OtsuThresholdImageFilter.xml
 %feature("docstring") itk::simple::OtsuThresholdImageFilter "Threshold an image using the Otsu Threshold.
 
-This filter creates a binary thresholded image that separates an image into foreground and background components. The filter computes the threshold using the OtsuThresholdImageCalculatorand applies that theshold to the input image using the BinaryThresholdImageFilter. The NunberOfHistogram bins can be set for the Calculator. The InsideValue and OutsideValue can be set for the BinaryThresholdImageFilter.
-see  OtsuThresholdImageCalculator
-see  BinaryThresholdImageFilter
-
-li {Segmentation/OtsuThresholdImageFilter,Separate foreground and background using Otsu's method}
+This filter creates a binary thresholded image that separates an image into foreground and background components. The filter computes the threshold using the OtsuThresholdCalculatorand applies that theshold to the input image using the BinaryThresholdImageFilter.
+author Richard Beare
+Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+This implementation was taken from the Insight Journal paper:http://hdl.handle.net/10380/3279orhttp://www.insight-journal.org/browse/publication/811
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Segmentation/OtsuThresholdImageFilter,Separate foreground and background using Otsu's method}
 
 "
 %feature("docstring") itk::simple::OtsuThresholdImageFilter::Execute "Threshold an image using the Otsu Threshold.
 "
 %feature("docstring") itk::simple::OtsuThreshold "Threshold an image using the Otsu Threshold.
 
-This filter creates a binary thresholded image that separates an image into foreground and background components. The filter computes the threshold using the OtsuThresholdImageCalculatorand applies that theshold to the input image using the BinaryThresholdImageFilter. The NunberOfHistogram bins can be set for the Calculator. The InsideValue and OutsideValue can be set for the BinaryThresholdImageFilter.
-see  OtsuThresholdImageCalculator
-see  BinaryThresholdImageFilter
-
-li {Segmentation/OtsuThresholdImageFilter,Separate foreground and background using Otsu's method}
-
-"
-%feature("docstring") itk::simple::OtsuThresholdImageFilter::SetInsideValue "virtual void itk::OtsuThresholdImageFilter::SetInsideValue(OutputPixelType _arg)
-
-Set the inside pixel value. The default value NumericTraits<OutputPixelType>::max()
-"
-
-%feature("docstring") itk::simple::OtsuThresholdImageFilter::GetInsideValue "virtual OutputPixelType itk::OtsuThresholdImageFilter::GetInsideValue() const
-
-Get the inside pixel value.
-"
-
-%feature("docstring") itk::simple::OtsuThresholdImageFilter::SetOutsideValue "virtual void itk::OtsuThresholdImageFilter::SetOutsideValue(OutputPixelType _arg)
-
-Set the outside pixel value. The default value NumericTraits<OutputPixelType>::Zero.
-"
-
-%feature("docstring") itk::simple::OtsuThresholdImageFilter::GetOutsideValue "virtual OutputPixelType itk::OtsuThresholdImageFilter::GetOutsideValue() const
-
-Get the outside pixel value.
-"
-
-%feature("docstring") itk::simple::OtsuThresholdImageFilter::SetNumberOfHistogramBins "virtual void itk::OtsuThresholdImageFilter::SetNumberOfHistogramBins(SizeValueType _arg)
-
-Set/Get the number of histogram bins. Defaults is 128.
-"
-
-%feature("docstring") itk::simple::OtsuThresholdImageFilter::GetNumberOfHistogramBins "virtual SizeValueType itk::OtsuThresholdImageFilter::GetNumberOfHistogramBins() const
+This filter creates a binary thresholded image that separates an image into foreground and background components. The filter computes the threshold using the OtsuThresholdCalculatorand applies that theshold to the input image using the BinaryThresholdImageFilter.
+author Richard Beare
+Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+This implementation was taken from the Insight Journal paper:http://hdl.handle.net/10380/3279orhttp://www.insight-journal.org/browse/publication/811
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Segmentation/OtsuThresholdImageFilter,Separate foreground and background using Otsu's method}
 
 "
-
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1PasteImageFilter.xml
 %feature("docstring") itk::simple::PasteImageFilter "Paste an image into another image.
 
  PasteImageFilterallows you to take a section of one image and paste into another image. The SetDestinationIndex()method prescribes where in the first input to start pasting data from the second input. The SetSourceRegion method prescribes the section of the second image to paste into the first. If the output requested region does not have include the SourceRegion after it has been repositioned to DestinationIndex, then the output will just be a copy of the input.
 The two inputs and output image will have the same pixel type.
-
-li {ImageProcessing/PasteImageFilter,Paste a part of one image into another image}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/PasteImageFilter,Paste a part of one image into another image}
 
 "
 %feature("docstring") itk::simple::PasteImageFilter::Execute "Paste an image into another image.
@@ -3265,8 +3862,8 @@ li {ImageProcessing/PasteImageFilter,Paste a part of one image into another imag
 
  PasteImageFilterallows you to take a section of one image and paste into another image. The SetDestinationIndex()method prescribes where in the first input to start pasting data from the second input. The SetSourceRegion method prescribes the section of the second image to paste into the first. If the output requested region does not have include the SourceRegion after it has been repositioned to DestinationIndex, then the output will just be a copy of the input.
 The two inputs and output image will have the same pixel type.
-
-li {ImageProcessing/PasteImageFilter,Paste a part of one image into another image}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/PasteImageFilter,Paste a part of one image into another image}
 
 "
 %feature("docstring") itk::simple::PasteImageFilter::SetDestinationIndex "virtual void itk::PasteImageFilter::SetDestinationIndex(InputImageIndexType _arg)
@@ -3284,8 +3881,8 @@ Set/Get the destination index (where in the first input the second input will be
 PermuateAxesImageFilter permutes the image axes according to a user specified order. The permutation order is set via method SetOrder( order ) where the input is an array of ImageDimension number of unsigned int. The elements of the array must be a rearrangment of the numbers from 0 to ImageDimension - 1.
 The i-th axis of the output image corresponds with the order[i]-th axis of the input image.
 The output meta image information (LargestPossibleRegion, spacing, origin) is computed by permuting the corresponding input meta information.
-
-li {ImageProcessing/PermuteAxesImageFilter,Switch the axes of an image}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/PermuteAxesImageFilter,Switch the axes of an image}
 
 "
 %feature("docstring") itk::simple::PermuteAxesImageFilter::Execute "Permutes the image axes according to a user specified order.
@@ -3295,8 +3892,8 @@ li {ImageProcessing/PermuteAxesImageFilter,Switch the axes of an image}
 PermuateAxesImageFilter permutes the image axes according to a user specified order. The permutation order is set via method SetOrder( order ) where the input is an array of ImageDimension number of unsigned int. The elements of the array must be a rearrangment of the numbers from 0 to ImageDimension - 1.
 The i-th axis of the output image corresponds with the order[i]-th axis of the input image.
 The output meta image information (LargestPossibleRegion, spacing, origin) is computed by permuting the corresponding input meta information.
-
-li {ImageProcessing/PermuteAxesImageFilter,Switch the axes of an image}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/PermuteAxesImageFilter,Switch the axes of an image}
 
 "
 %feature("docstring") itk::simple::PermuteAxesImageFilter::SetOrder "void itk::PermuteAxesImageFilter::SetOrder(const PermuteOrderArrayType &order)
@@ -3309,6 +3906,25 @@ Set the permutation order. The elements of order must be a rearrangement of the 
 Get the permutation order.
 "
 
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1PowImageFilter.xml
+%feature("docstring") itk::simple::PowImageFilter "Computes the powers of 2 images.
+
+This class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
+The output of the pow function will be cast to the pixel type of the output image.
+The total operation over one pixel will beoutput_pixel=static_cast<TOutput>(vcl_pow(static_cast<RealType>(A),static_cast<RealType>(B)));
+The pow function can be applied to two images with the following: SetInput1(image1); SetInput2(image2);
+Additionally, this filter can be used to raise every pixel of an image to a power of a constant by using SetInput1(image1); SetConstant2(constant);
+"
+%feature("docstring") itk::simple::PowImageFilter::Execute "Computes the powers of 2 images.
+"
+%feature("docstring") itk::simple::Pow "Computes the powers of 2 images.
+
+This class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
+The output of the pow function will be cast to the pixel type of the output image.
+The total operation over one pixel will beoutput_pixel=static_cast<TOutput>(vcl_pow(static_cast<RealType>(A),static_cast<RealType>(B)));
+The pow function can be applied to two images with the following: SetInput1(image1); SetInput2(image2);
+Additionally, this filter can be used to raise every pixel of an image to a power of a constant by using SetInput1(image1); SetConstant2(constant);
+"
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1RealAndImaginaryToComplexImageFilter.xml
 %feature("docstring") itk::simple::RealAndImaginaryToComplexImageFilter "Implements pixel-wise conversion of real and imaginary data into complex voxels.
 
@@ -3331,8 +3947,8 @@ Details of the implementation are described in the technical report: R. Deriche,
 Further improvements of the algorithm are described in: G. Farneback & C.-F. Westin, On Implementation of Recursive Gaussian Filters, so far unpublished.
 As compared to itk::DiscreteGaussianImageFilter, this filter tends to be faster for large kernels, and it can take the derivative of the blurred image in one step. Also, note that we have itk::RecursiveGaussianImageFilter::SetSigma(), but itk::DiscreteGaussianImageFilter::SetVariance().
 see  DiscreteGaussianImageFilter
-li {EdgesAndGradients/RecursiveGaussianImageFilter,Find higher derivatives of an image}
-
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{EdgesAndGradients/RecursiveGaussianImageFilter,Find higher derivatives of an image}
 
 "
 %feature("docstring") itk::simple::RecursiveGaussianImageFilter::Execute "Base class for computing IIR convolution with an approximation of a Gaussian kernel.
@@ -3345,8 +3961,8 @@ Details of the implementation are described in the technical report: R. Deriche,
 Further improvements of the algorithm are described in: G. Farneback & C.-F. Westin, On Implementation of Recursive Gaussian Filters, so far unpublished.
 As compared to itk::DiscreteGaussianImageFilter, this filter tends to be faster for large kernels, and it can take the derivative of the blurred image in one step. Also, note that we have itk::RecursiveGaussianImageFilter::SetSigma(), but itk::DiscreteGaussianImageFilter::SetVariance().
 see  DiscreteGaussianImageFilter
-li {EdgesAndGradients/RecursiveGaussianImageFilter,Find higher derivatives of an image}
-
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{EdgesAndGradients/RecursiveGaussianImageFilter,Find higher derivatives of an image}
 
 "
 %feature("docstring") itk::simple::RecursiveGaussianImageFilter::SetSigma "virtual void itk::RecursiveGaussianImageFilter::SetSigma(ScalarRealType _arg)
@@ -3397,8 +4013,8 @@ This filter produces an output image of the same dimension as the input image. T
 If you are interested in changing the dimension of the image, you may want to consider the ExtractImageFilter. For example for extracting a 2D image from a slice of a 3D image.
 The region to extract is set using the method SetRegionOfInterest.
 see  ExtractImageFilter
-
-li {ImageProcessing/RegionOfInterestImageFilter,Extract a portion of an image (region of interest)}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/RegionOfInterestImageFilter,Extract a portion of an image (region of interest)}
 
 "
 %feature("docstring") itk::simple::RegionOfInterestImageFilter::Execute "Extract a region of interest from the input image.
@@ -3409,10 +4025,142 @@ This filter produces an output image of the same dimension as the input image. T
 If you are interested in changing the dimension of the image, you may want to consider the ExtractImageFilter. For example for extracting a 2D image from a slice of a 3D image.
 The region to extract is set using the method SetRegionOfInterest.
 see  ExtractImageFilter
-
-li {ImageProcessing/RegionOfInterestImageFilter,Extract a portion of an image (region of interest)}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/RegionOfInterestImageFilter,Extract a portion of an image (region of interest)}
 
 "
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1RelabelComponentImageFilter.xml
+%feature("docstring") itk::simple::RelabelComponentImageFilter "Relabel the components in an image such that consecutive labels are used.
+
+ RelabelComponentImageFilterremaps the labels associated with the objects in an image (as from the output of ConnectedComponentImageFilter) such that the label numbers are consecutive with no gaps between the label numbers used. By default, the relabeling will also sort the labels based on the size of the object: the largest object will have label #1, the second largest will have label #2, etc.
+Label #0 is assumed to be background is left unaltered by the relabeling.
+ RelabelComponentImageFilteris typically used on the output of the ConnectedComponentImageFilterfor those applications that want to extract the largest object or the k largest objects. Any particular object can be extracted from the relabeled output using a BinaryThresholdImageFilter. A group of objects can be extracted from the relabled output using a ThresholdImageFilter.
+Once all the objects are relabeled, the application can query the number of objects and the size of each object. Objectsizes are returned in a vector. The size of the background is not calculated. So the size of object #1 is GetSizeOfObjectsInPixels()[0], the size of object #2 is GetSizeOfObjectsInPixels()[1], etc.
+If user sets a minimum object size, all objects with fewer pixelss than the minimum will be discarded, so that the number of objects reported will be only those remaining. The GetOriginalNumberOfObjects method can be called to find out how many objects were present before the small ones were discarded.
+ RelabelComponentImageFiltercan be run as an in place filter, where it will overwrite its output. The default is run out of place (or generate a separate output). In place operation can be controlled via methods in the superclass, InPlaceImageFilter::InPlaceOn()and InPlaceImageFilter::InPlaceOff().
+see  ConnectedComponentImageFilter, BinaryThresholdImageFilter, ThresholdImageFilter
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/RelabelComponentImageFilter,Assign contiguous labels to connected regions of an image}
+
+"
+%feature("docstring") itk::simple::RelabelComponentImageFilter::Execute "Relabel the components in an image such that consecutive labels are used.
+"
+%feature("docstring") itk::simple::RelabelComponent "Relabel the components in an image such that consecutive labels are used.
+
+ RelabelComponentImageFilterremaps the labels associated with the objects in an image (as from the output of ConnectedComponentImageFilter) such that the label numbers are consecutive with no gaps between the label numbers used. By default, the relabeling will also sort the labels based on the size of the object: the largest object will have label #1, the second largest will have label #2, etc.
+Label #0 is assumed to be background is left unaltered by the relabeling.
+ RelabelComponentImageFilteris typically used on the output of the ConnectedComponentImageFilterfor those applications that want to extract the largest object or the k largest objects. Any particular object can be extracted from the relabeled output using a BinaryThresholdImageFilter. A group of objects can be extracted from the relabled output using a ThresholdImageFilter.
+Once all the objects are relabeled, the application can query the number of objects and the size of each object. Objectsizes are returned in a vector. The size of the background is not calculated. So the size of object #1 is GetSizeOfObjectsInPixels()[0], the size of object #2 is GetSizeOfObjectsInPixels()[1], etc.
+If user sets a minimum object size, all objects with fewer pixelss than the minimum will be discarded, so that the number of objects reported will be only those remaining. The GetOriginalNumberOfObjects method can be called to find out how many objects were present before the small ones were discarded.
+ RelabelComponentImageFiltercan be run as an in place filter, where it will overwrite its output. The default is run out of place (or generate a separate output). In place operation can be controlled via methods in the superclass, InPlaceImageFilter::InPlaceOn()and InPlaceImageFilter::InPlaceOff().
+see  ConnectedComponentImageFilter, BinaryThresholdImageFilter, ThresholdImageFilter
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/RelabelComponentImageFilter,Assign contiguous labels to connected regions of an image}
+
+"
+%feature("docstring") itk::simple::RelabelComponentImageFilter::SetMinimumObjectSize "virtual void itk::RelabelComponentImageFilter::SetMinimumObjectSize(ObjectSizeType _arg)
+
+Set the minimum size in pixels for an object. All objects smaller than this size will be discarded and will not appear in the output label map. NumberOfObjects will count only the objects whose pixel counts are greater than or equal to the minimum size. Call GetOriginalNumberOfObjects to find out how many objects were present in the original label map.
+"
+
+%feature("docstring") itk::simple::RelabelComponentImageFilter::GetMinimumObjectSize "virtual ObjectSizeType itk::RelabelComponentImageFilter::GetMinimumObjectSize() const
+
+Get the caller-defined minimum size of an object in pixels. If the caller has not set the minimum, 0 will be returned, which is to be interpreted as meaning that no minimum exists, and all objects in the original label map will be passed through to the output.
+"
+
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1RenyiEntropyThresholdImageFilter.xml
+%feature("docstring") itk::simple::RenyiEntropyThresholdImageFilter "Threshold an image using the RenyiEntropy Threshold.
+
+This filter creates a binary thresholded image that separates an image into foreground and background components. The filter computes the threshold using the RenyiEntropyThresholdCalculatorand applies that theshold to the input image using the BinaryThresholdImageFilter.
+author Richard Beare. Department of Medicine, Monash University, Melbourne, Australia.
+Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+This implementation was taken from the Insight Journal paper:http://hdl.handle.net/10380/3279orhttp://www.insight-journal.org/browse/publication/811
+"
+%feature("docstring") itk::simple::RenyiEntropyThresholdImageFilter::Execute "Threshold an image using the RenyiEntropy Threshold.
+"
+%feature("docstring") itk::simple::RenyiEntropyThreshold "Threshold an image using the RenyiEntropy Threshold.
+
+This filter creates a binary thresholded image that separates an image into foreground and background components. The filter computes the threshold using the RenyiEntropyThresholdCalculatorand applies that theshold to the input image using the BinaryThresholdImageFilter.
+author Richard Beare. Department of Medicine, Monash University, Melbourne, Australia.
+Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+This implementation was taken from the Insight Journal paper:http://hdl.handle.net/10380/3279orhttp://www.insight-journal.org/browse/publication/811
+"
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1ResampleImageFilter.xml
+%feature("docstring") itk::simple::ResampleImageFilter "Resample an image via a coordinate transform.
+
+ ResampleImageFilterresamples an existing image through some coordinate transform, interpolating via some image function. The class is templated over the types of the input and output images.
+Note that the choice of interpolator function can be important. This function is set via SetInterpolator(). The default is LinearInterpolateImageFunction<InputImageType, TInterpolatorPrecisionType>, which is reasonable for ordinary medical images. However, some synthetic images have pixels drawn from a finite prescribed set. An example would be a mask indicating the segmentation of a brain into a small number of tissue types. For such an image, one does not want to interpolate between different pixel values, and so NearestNeighborInterpolateImageFunction< InputImageType, TCoordRep > would be a better choice.
+If an sample is taken from outside the image domain, the default behavior is to use a default pixel value. If different behavior is desired, an extrapolator function can be set with SetExtrapolator().
+Output information (spacing, size and direction) for the output image should be set. This information has the normal defaults of unit spacing, zero origin and identity direction. Optionally, the output information can be obtained from a reference image. If the reference image is provided and UseReferenceImage is On, then the spacing, origin and direction of the reference image will be used.
+Since this filter produces an image which is a different size than its input, it needs to override several of the methods defined in ProcessObjectin order to properly manage the pipeline execution model. In particular, this filter overrides ProcessObject::GenerateInputRequestedRegion()and ProcessObject::GenerateOutputInformation().
+This filter is implemented as a multithreaded filter. It provides a ThreadedGenerateData()method for its implementation.warning For multithreading, the TransformPoint method of the user-designated coordinate transform must be threadsafe.
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{SimpleOperations/TranslationTransform,Translate an image} {ImageProcessing/Upsampling,Upsampling an image} {ImageProcessing/ResampleImageFilter,Resample (stretch or compress) an image}
+
+"
+%feature("docstring") itk::simple::ResampleImageFilter::Execute "Resample an image via a coordinate transform.
+"
+%feature("docstring") itk::simple::Resample "Resample an image via a coordinate transform.
+
+ ResampleImageFilterresamples an existing image through some coordinate transform, interpolating via some image function. The class is templated over the types of the input and output images.
+Note that the choice of interpolator function can be important. This function is set via SetInterpolator(). The default is LinearInterpolateImageFunction<InputImageType, TInterpolatorPrecisionType>, which is reasonable for ordinary medical images. However, some synthetic images have pixels drawn from a finite prescribed set. An example would be a mask indicating the segmentation of a brain into a small number of tissue types. For such an image, one does not want to interpolate between different pixel values, and so NearestNeighborInterpolateImageFunction< InputImageType, TCoordRep > would be a better choice.
+If an sample is taken from outside the image domain, the default behavior is to use a default pixel value. If different behavior is desired, an extrapolator function can be set with SetExtrapolator().
+Output information (spacing, size and direction) for the output image should be set. This information has the normal defaults of unit spacing, zero origin and identity direction. Optionally, the output information can be obtained from a reference image. If the reference image is provided and UseReferenceImage is On, then the spacing, origin and direction of the reference image will be used.
+Since this filter produces an image which is a different size than its input, it needs to override several of the methods defined in ProcessObjectin order to properly manage the pipeline execution model. In particular, this filter overrides ProcessObject::GenerateInputRequestedRegion()and ProcessObject::GenerateOutputInformation().
+This filter is implemented as a multithreaded filter. It provides a ThreadedGenerateData()method for its implementation.warning For multithreading, the TransformPoint method of the user-designated coordinate transform must be threadsafe.
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{SimpleOperations/TranslationTransform,Translate an image} {ImageProcessing/Upsampling,Upsampling an image} {ImageProcessing/ResampleImageFilter,Resample (stretch or compress) an image}
+
+"
+%feature("docstring") itk::simple::ResampleImageFilter::SetSize "virtual void itk::ResampleImageFilter::SetSize(SizeType _arg)
+
+Set the size of the output image.
+"
+
+%feature("docstring") itk::simple::ResampleImageFilter::GetSize "virtual const SizeType& itk::ResampleImageFilter::GetSize()
+
+Get the size of the output image.
+"
+
+%feature("docstring") itk::simple::ResampleImageFilter::SetOutputOrigin "virtual void itk::ResampleImageFilter::SetOutputOrigin(OriginPointType _arg)
+
+Set the output image origin.
+"
+
+%feature("docstring") itk::simple::ResampleImageFilter::GetOutputOrigin "virtual const OriginPointType& itk::ResampleImageFilter::GetOutputOrigin()
+
+Get the output image origin.
+"
+
+%feature("docstring") itk::simple::ResampleImageFilter::SetOutputSpacing "virtual void itk::ResampleImageFilter::SetOutputSpacing(SpacingType _arg)
+
+Set the output image spacing.
+"
+
+%feature("docstring") itk::simple::ResampleImageFilter::GetOutputSpacing "virtual const SpacingType& itk::ResampleImageFilter::GetOutputSpacing()
+
+Get the output image spacing.
+"
+
+%feature("docstring") itk::simple::ResampleImageFilter::SetOutputDirection "virtual void itk::ResampleImageFilter::SetOutputDirection(DirectionType _arg)
+
+Set the output direciton cosine matrix.
+"
+
+%feature("docstring") itk::simple::ResampleImageFilter::GetOutputDirection "virtual const DirectionType& itk::ResampleImageFilter::GetOutputDirection()
+
+"
+
+%feature("docstring") itk::simple::ResampleImageFilter::SetDefaultPixelValue "virtual void itk::ResampleImageFilter::SetDefaultPixelValue(PixelType _arg)
+
+Set the pixel value when a transformed pixel is outside of the image. The default default pixel value is 0.
+"
+
+%feature("docstring") itk::simple::ResampleImageFilter::GetDefaultPixelValue "virtual const PixelType& itk::ResampleImageFilter::GetDefaultPixelValue()
+
+Get the pixel value when a transformed pixel is outside of the image
+"
+
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1RescaleIntensityImageFilter.xml
 %feature("docstring") itk::simple::RescaleIntensityImageFilter "Applies a linear transformation to the intensity levels of the input Image.
 
@@ -3422,8 +4170,8 @@ par  f[ outputPixel = ( inputPixel - inputMin) cdot frac{(outputMax - outputMin 
 All computations are performed in the precison of the input pixel's RealType. Before assigning the computed value to the output pixel.
 NOTE: In this filter the minimum and maximum values of the input image are computed internally using the MinimumMaximumImageCalculator. Users are not supposed to set those values in this filter. If you need a filter where you can set the minimum and maximum values of the input, please use the IntensityWindowingImageFilter. If you want a filter that can use a user-defined linear transformation for the intensity, then please use the ShiftScaleImageFilter.
 see  IntensityWindowingImageFilter
-
-li {ImageProcessing/RescaleIntensityImageFilter,Rescale the intensity values of an image to a specified range}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/RescaleIntensityImageFilter,Rescale the intensity values of an image to a specified range}
 
 "
 %feature("docstring") itk::simple::RescaleIntensityImageFilter::Execute "Applies a linear transformation to the intensity levels of the input Image.
@@ -3436,8 +4184,8 @@ par  f[ outputPixel = ( inputPixel - inputMin) cdot frac{(outputMax - outputMin 
 All computations are performed in the precison of the input pixel's RealType. Before assigning the computed value to the output pixel.
 NOTE: In this filter the minimum and maximum values of the input image are computed internally using the MinimumMaximumImageCalculator. Users are not supposed to set those values in this filter. If you need a filter where you can set the minimum and maximum values of the input, please use the IntensityWindowingImageFilter. If you want a filter that can use a user-defined linear transformation for the intensity, then please use the ShiftScaleImageFilter.
 see  IntensityWindowingImageFilter
-
-li {ImageProcessing/RescaleIntensityImageFilter,Rescale the intensity values of an image to a specified range}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/RescaleIntensityImageFilter,Rescale the intensity values of an image to a specified range}
 
 "
 %feature("docstring") itk::simple::RescaleIntensityImageFilter::SetOutputMinimum "virtual void itk::RescaleIntensityImageFilter::SetOutputMinimum(OutputPixelType _arg)
@@ -3456,6 +4204,76 @@ li {ImageProcessing/RescaleIntensityImageFilter,Rescale the intensity values of 
 
 "
 
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1ScalarConnectedComponentImageFilter.xml
+%feature("docstring") itk::simple::ScalarConnectedComponentImageFilter "A connected components filter that labels the objects in an arbitrary image. Two pixels are similar if they are within threshold of each other. Uses ConnectedComponentFunctorImageFilter.
+
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/ScalarConnectedComponentImageFilter,Label connected components in a grayscale image}
+
+"
+%feature("docstring") itk::simple::ScalarConnectedComponentImageFilter::Execute "A connected components filter that labels the objects in an arbitrary image. Two pixels are similar if they are within threshold of each other. Uses ConnectedComponentFunctorImageFilter.
+"
+%feature("docstring") itk::simple::ScalarConnectedComponent "A connected components filter that labels the objects in an arbitrary image. Two pixels are similar if they are within threshold of each other. Uses ConnectedComponentFunctorImageFilter.
+
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/ScalarConnectedComponentImageFilter,Label connected components in a grayscale image}
+
+"
+%feature("docstring") itk::simple::ScalarConnectedComponentImageFilter::SetDistanceThreshold "virtual void itk::ScalarConnectedComponentImageFilter::SetDistanceThreshold(const InputPixelType &thresh)
+
+"
+
+%feature("docstring") itk::simple::ScalarConnectedComponentImageFilter::GetDistanceThreshold "virtual InputPixelType itk::ScalarConnectedComponentImageFilter::GetDistanceThreshold()
+
+"
+
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1ScalarToRGBColormapImageFilter.xml
+%feature("docstring") itk::simple::ScalarToRGBColormapImageFilter "Implements pixel-wise intensity->rgb mapping operation on one image.
+
+This class is parameterized over the type of the input image and the type of the output image.
+ ScalarToRGBColormapImageFilter
+see BinaryFunctionImageFilter TernaryFunctionImageFilter
+
+li {SimpleOperations/ScalarToRGBColormapImageFilter,Apply a color map to an image}
+
+"
+%feature("docstring") itk::simple::ScalarToRGBColormapImageFilter::Execute "Implements pixel-wise intensity->rgb mapping operation on one image.
+"
+%feature("docstring") itk::simple::ScalarToRGBColormap "Implements pixel-wise intensity->rgb mapping operation on one image.
+
+This class is parameterized over the type of the input image and the type of the output image.
+ ScalarToRGBColormapImageFilter
+see BinaryFunctionImageFilter TernaryFunctionImageFilter
+
+li {SimpleOperations/ScalarToRGBColormapImageFilter,Apply a color map to an image}
+
+"
+%feature("docstring") itk::simple::ScalarToRGBColormapImageFilter::SetColormap "void itk::ScalarToRGBColormapImageFilter::SetColormap(ColormapType *colormap)
+
+"
+
+%feature("docstring") itk::simple::ScalarToRGBColormapImageFilter::GetColormap "ColormapType::Pointer itk::ScalarToRGBColormapImageFilter::GetColormap()
+
+Set/Get the colormap object.
+"
+
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1ShanbhagThresholdImageFilter.xml
+%feature("docstring") itk::simple::ShanbhagThresholdImageFilter "Threshold an image using the Shanbhag Threshold.
+
+This filter creates a binary thresholded image that separates an image into foreground and background components. The filter computes the threshold using the ShanbhagThresholdCalculatorand applies that theshold to the input image using the BinaryThresholdImageFilter.
+author Richard Beare. Department of Medicine, Monash University, Melbourne, Australia.
+Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+This implementation was taken from the Insight Journal paper:http://hdl.handle.net/10380/3279orhttp://www.insight-journal.org/browse/publication/811
+"
+%feature("docstring") itk::simple::ShanbhagThresholdImageFilter::Execute "Threshold an image using the Shanbhag Threshold.
+"
+%feature("docstring") itk::simple::ShanbhagThreshold "Threshold an image using the Shanbhag Threshold.
+
+This filter creates a binary thresholded image that separates an image into foreground and background components. The filter computes the threshold using the ShanbhagThresholdCalculatorand applies that theshold to the input image using the BinaryThresholdImageFilter.
+author Richard Beare. Department of Medicine, Monash University, Melbourne, Australia.
+Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+This implementation was taken from the Insight Journal paper:http://hdl.handle.net/10380/3279orhttp://www.insight-journal.org/browse/publication/811
+"
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1ShapeDetectionLevelSetImageFilter.xml
 %feature("docstring") itk::simple::ShapeDetectionLevelSetImageFilter "Segments structures in images based on a user supplied edge potential map.
 
@@ -3547,8 +4365,8 @@ Set/Get the amount to Scale each Pixel. The Scale is applied after the Shift.
 outputSize[j] = max( vcl_floor(inputSize[j]/shrinkFactor[j]), 1 );
 NOTE: The physical centers of the input and output will be the same. Because of this, the Origin of the output may not be the same as the Origin of the input. Since this filter produces an image which is a different resolution, origin and with different pixel spacing than its input image, it needs to override several of the methods defined in ProcessObjectin order to properly manage the pipeline execution model. In particular, this filter overrides ProcessObject::GenerateInputRequestedRegion()and ProcessObject::GenerateOutputInformation().
 This filter is implemented as a multithreaded filter. It provides a ThreadedGenerateData()method for its implementation.
-
-li {Images/ShrinkImageFilter,Shrink an image}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Images/ShrinkImageFilter,Shrink an image}
 
 "
 %feature("docstring") itk::simple::ShrinkImageFilter::Execute "Reduce the size of an image by an integer factor in each dimension.
@@ -3559,8 +4377,8 @@ li {Images/ShrinkImageFilter,Shrink an image}
 outputSize[j] = max( vcl_floor(inputSize[j]/shrinkFactor[j]), 1 );
 NOTE: The physical centers of the input and output will be the same. Because of this, the Origin of the output may not be the same as the Origin of the input. Since this filter produces an image which is a different resolution, origin and with different pixel spacing than its input image, it needs to override several of the methods defined in ProcessObjectin order to properly manage the pipeline execution model. In particular, this filter overrides ProcessObject::GenerateInputRequestedRegion()and ProcessObject::GenerateOutputInformation().
 This filter is implemented as a multithreaded filter. It provides a ThreadedGenerateData()method for its implementation.
-
-li {Images/ShrinkImageFilter,Shrink an image}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Images/ShrinkImageFilter,Shrink an image}
 
 "
 %feature("docstring") itk::simple::ShrinkImageFilter::SetShrinkFactors "virtual void itk::ShrinkImageFilter::SetShrinkFactors(ShrinkFactorsType _arg)
@@ -3579,8 +4397,8 @@ Get the shrink factors.
 A linear transformation is applied first on the argument of the sigmoid fuction. The resulting total transfrom is given by
  f[ f(x) = (Max-Min) cdot frac{1}{left(1+e^{- frac{ x - beta }{alpha}}right)} + Min f]  
 Every output pixel is equal to f(x). Where x is the intensity of the homologous input pixel, and alpha and beta are user-provided constants.
-
-li {ImageProcessing/SigmoidImageFilter,Pass image pixels through a sigmoid function}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/SigmoidImageFilter,Pass image pixels through a sigmoid function}
 
 "
 %feature("docstring") itk::simple::SigmoidImageFilter::Execute "Computes the sigmoid function pixel-wise.
@@ -3590,8 +4408,8 @@ li {ImageProcessing/SigmoidImageFilter,Pass image pixels through a sigmoid funct
 A linear transformation is applied first on the argument of the sigmoid fuction. The resulting total transfrom is given by
  f[ f(x) = (Max-Min) cdot frac{1}{left(1+e^{- frac{ x - beta }{alpha}}right)} + Min f]  
 Every output pixel is equal to f(x). Where x is the intensity of the homologous input pixel, and alpha and beta are user-provided constants.
-
-li {ImageProcessing/SigmoidImageFilter,Pass image pixels through a sigmoid function}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/SigmoidImageFilter,Pass image pixels through a sigmoid function}
 
 "
 %feature("docstring") itk::simple::SigmoidImageFilter::SetAlpha "void itk::SigmoidImageFilter::SetAlpha(double alpha)
@@ -3673,25 +4491,25 @@ Get whether spacing is used.
 "
 
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1SignedMaurerDistanceMapImageFilter.xml
-%feature("docstring") itk::simple::SignedMaurerDistanceMapImageFilter "This filter calculates the squared Euclidean distance transform of a binary image in linear time for arbitrary dimensions.
+%feature("docstring") itk::simple::SignedMaurerDistanceMapImageFilter "This filter calculates the Euclidean distance transform of a binary image in linear time for arbitrary dimensions.
 
 par Inputs and Outputs
 This is an image-to-image filter. The dimensionality is arbitrary. The only dimensionality constraint is that the input and output images be of the same dimensions and size. To maintain integer arithmetic within the filter, the default output is the signed squared distance. This implies that the input image should be of type unsigned int or int whereas the output image is of type int. Obviously, if the user wishes to utilize the image spacing or to have a filter with the Euclidean distance (as opposed to the squared distance), output image types of float or double should be used.
 The inside is considered as having negative distances. Outside is treated as having positive distances. To change the convention, use the InsideIsPositive(bool) function.
 par Parameters
-Set/GetBackgroundValue specifies the background of the value of the input binary image. Normally this is zero and, as such, zero is the default value. Other than that, the usage is completely analagous to the itkDanielssonDistanceImageFilterClass except is does not return the Voronoi map.
-Ref: C. R. Maurer, Jr., R. Qi, and V. Raghavan, A Linear Time Algorithm for Computing Exact Euclidean Distance Transforms of Binary Images in Arbitrary Dimensions, IEEE - Transactions on Pattern Analysis and Machine Intelligence, 25(2): 265-270, 2003.
+Set/GetBackgroundValue specifies the background of the value of the input binary image. Normally this is zero and, as such, zero is the default value. Other than that, the usage is completely analagous to the itk::DanielssonDistanceImageFilter class except it does not return the Voronoi map.
+Reference: C. R. Maurer, Jr., R. Qi, and V. Raghavan, A Linear Time Algorithm for Computing Exact Euclidean Distance Transforms of Binary Images in Arbitrary Dimensions, IEEE - Transactions on Pattern Analysis and Machine Intelligence, 25(2): 265-270, 2003.
 "
-%feature("docstring") itk::simple::SignedMaurerDistanceMapImageFilter::Execute "This filter calculates the squared Euclidean distance transform of a binary image in linear time for arbitrary dimensions.
+%feature("docstring") itk::simple::SignedMaurerDistanceMapImageFilter::Execute "This filter calculates the Euclidean distance transform of a binary image in linear time for arbitrary dimensions.
 "
-%feature("docstring") itk::simple::SignedMaurerDistanceMap "This filter calculates the squared Euclidean distance transform of a binary image in linear time for arbitrary dimensions.
+%feature("docstring") itk::simple::SignedMaurerDistanceMap "This filter calculates the Euclidean distance transform of a binary image in linear time for arbitrary dimensions.
 
 par Inputs and Outputs
 This is an image-to-image filter. The dimensionality is arbitrary. The only dimensionality constraint is that the input and output images be of the same dimensions and size. To maintain integer arithmetic within the filter, the default output is the signed squared distance. This implies that the input image should be of type unsigned int or int whereas the output image is of type int. Obviously, if the user wishes to utilize the image spacing or to have a filter with the Euclidean distance (as opposed to the squared distance), output image types of float or double should be used.
 The inside is considered as having negative distances. Outside is treated as having positive distances. To change the convention, use the InsideIsPositive(bool) function.
 par Parameters
-Set/GetBackgroundValue specifies the background of the value of the input binary image. Normally this is zero and, as such, zero is the default value. Other than that, the usage is completely analagous to the itkDanielssonDistanceImageFilterClass except is does not return the Voronoi map.
-Ref: C. R. Maurer, Jr., R. Qi, and V. Raghavan, A Linear Time Algorithm for Computing Exact Euclidean Distance Transforms of Binary Images in Arbitrary Dimensions, IEEE - Transactions on Pattern Analysis and Machine Intelligence, 25(2): 265-270, 2003.
+Set/GetBackgroundValue specifies the background of the value of the input binary image. Normally this is zero and, as such, zero is the default value. Other than that, the usage is completely analagous to the itk::DanielssonDistanceImageFilter class except it does not return the Voronoi map.
+Reference: C. R. Maurer, Jr., R. Qi, and V. Raghavan, A Linear Time Algorithm for Computing Exact Euclidean Distance Transforms of Binary Images in Arbitrary Dimensions, IEEE - Transactions on Pattern Analysis and Machine Intelligence, 25(2): 265-270, 2003.
 "
 %feature("docstring") itk::simple::SignedMaurerDistanceMapImageFilter::SetInsideIsPositive "virtual void itk::SignedMaurerDistanceMapImageFilter::SetInsideIsPositive(bool _arg)
 
@@ -3700,7 +4518,8 @@ Set if the inside represents positive values in the signed distance map. By conv
 
 %feature("docstring") itk::simple::SignedMaurerDistanceMapImageFilter::GetInsideIsPositive "virtual const bool& itk::SignedMaurerDistanceMapImageFilter::GetInsideIsPositive()
 
-Get if the inside represents positive values in the signed distance map. See GetInsideIsPositive()
+Get if the inside represents positive values in the signed distance map.see  GetInsideIsPositive()
+
 "
 
 %feature("docstring") itk::simple::SignedMaurerDistanceMapImageFilter::SetSquaredDistance "virtual void itk::SignedMaurerDistanceMapImageFilter::SetSquaredDistance(bool _arg)
@@ -3723,13 +4542,84 @@ Set if image spacing should be used in computing distances.
 Get whether spacing is used.
 "
 
-// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1SinImageFilter.xml
-%feature("docstring") itk::simple::SinImageFilter "Computes the vcl_sin(x) pixel-wise.
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1SimpleContourExtractorImageFilter.xml
+%feature("docstring") itk::simple::SimpleContourExtractorImageFilter "Computes an image of contours which will be the contour of the first image.
+
+A pixel of the source image is considered to belong to the contour if its pixel value is equal to the input foreground value and it has in its neighborhood at least one pixel which its pixel value is equal to the input background value. The output image will have pixels which will be set to the output foreground value if they belong to the contour, otherwise they will be set to the ouput background value.
+The neighborhood radius is set thanks to the radius params.
+see  Image
+see  Neighborhood
+see  NeighborhoodOperator
+see  NeighborhoodIterator
 
 "
-%feature("docstring") itk::simple::SinImageFilter::Execute "Computes the vcl_sin(x) pixel-wise.
+%feature("docstring") itk::simple::SimpleContourExtractorImageFilter::Execute "Computes an image of contours which will be the contour of the first image.
 "
-%feature("docstring") itk::simple::Sin "Computes the vcl_sin(x) pixel-wise.
+%feature("docstring") itk::simple::SimpleContourExtractor "Computes an image of contours which will be the contour of the first image.
+
+A pixel of the source image is considered to belong to the contour if its pixel value is equal to the input foreground value and it has in its neighborhood at least one pixel which its pixel value is equal to the input background value. The output image will have pixels which will be set to the output foreground value if they belong to the contour, otherwise they will be set to the ouput background value.
+The neighborhood radius is set thanks to the radius params.
+see  Image
+see  Neighborhood
+see  NeighborhoodOperator
+see  NeighborhoodIterator
+
+"
+%feature("docstring") itk::simple::SimpleContourExtractorImageFilter::SetInputForegroundValue "virtual void itk::SimpleContourExtractorImageFilter::SetInputForegroundValue(InputPixelType _arg)
+
+Set the foreground value used in order to identify a foreground pixel in the input image.
+"
+
+%feature("docstring") itk::simple::SimpleContourExtractorImageFilter::GetInputForegroundValue "virtual const InputPixelType& itk::SimpleContourExtractorImageFilter::GetInputForegroundValue()
+
+Get the foreground value used in order to identify a foreground pixel in the input image.
+"
+
+%feature("docstring") itk::simple::SimpleContourExtractorImageFilter::SetInputBackgroundValue "virtual void itk::SimpleContourExtractorImageFilter::SetInputBackgroundValue(InputPixelType _arg)
+
+Set the background value used in order to identify a background pixel in the input image.
+"
+
+%feature("docstring") itk::simple::SimpleContourExtractorImageFilter::GetInputBackgroundValue "virtual const InputPixelType& itk::SimpleContourExtractorImageFilter::GetInputBackgroundValue()
+
+Get the background value used in order to identify a background pixel in the input image.
+"
+
+%feature("docstring") itk::simple::SimpleContourExtractorImageFilter::SetOutputForegroundValue "virtual void itk::SimpleContourExtractorImageFilter::SetOutputForegroundValue(OutputPixelType _arg)
+
+Set the foreground value used in order to identify a foreground pixel in the output image.
+"
+
+%feature("docstring") itk::simple::SimpleContourExtractorImageFilter::GetOutputForegroundValue "virtual const OutputPixelType& itk::SimpleContourExtractorImageFilter::GetOutputForegroundValue()
+
+Get the foreground value used in order to identify a foreground pixel in the output image.
+"
+
+%feature("docstring") itk::simple::SimpleContourExtractorImageFilter::SetOutputBackgroundValue "virtual void itk::SimpleContourExtractorImageFilter::SetOutputBackgroundValue(OutputPixelType _arg)
+
+Set the background value used in order to identify a background pixel in the output image.
+"
+
+%feature("docstring") itk::simple::SimpleContourExtractorImageFilter::GetOutputBackgroundValue "virtual const OutputPixelType& itk::SimpleContourExtractorImageFilter::GetOutputBackgroundValue()
+
+Get the background value used in order to identify a background pixel in the output image.
+"
+
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1SinImageFilter.xml
+%feature("docstring") itk::simple::SinImageFilter "Computes the sine of each pixel.
+
+The computations are performed using vcl_sin(x).
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Math/Trig/SinImageFilter,Compute the sine of each pixel.}
+
+"
+%feature("docstring") itk::simple::SinImageFilter::Execute "Computes the sine of each pixel.
+"
+%feature("docstring") itk::simple::Sin "Computes the sine of each pixel.
+
+The computations are performed using vcl_sin(x).
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Math/Trig/SinImageFilter,Compute the sine of each pixel.}
 
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1SmoothingRecursiveGaussianImageFilter.xml
@@ -3737,8 +4627,8 @@ Get whether spacing is used.
 
 This filter is implemented using the recursive gaussian filters. For multi-component images, the filter works on each component independently.
 For this filter to be able to run in-place the input and output image types need to be the same and/or the same type as the RealImageType.
-
-li {Smoothing/SmoothingRecursiveGaussianImageFilter,Gaussian smoothing that works with image adaptors}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Smoothing/SmoothingRecursiveGaussianImageFilter,Gaussian smoothing that works with image adaptors}
 
 "
 %feature("docstring") itk::simple::SmoothingRecursiveGaussianImageFilter::Execute "Computes the smoothing of an image by convolution with the Gaussian kernels implemented as IIR filters.
@@ -3747,8 +4637,8 @@ li {Smoothing/SmoothingRecursiveGaussianImageFilter,Gaussian smoothing that work
 
 This filter is implemented using the recursive gaussian filters. For multi-component images, the filter works on each component independently.
 For this filter to be able to run in-place the input and output image types need to be the same and/or the same type as the RealImageType.
-
-li {Smoothing/SmoothingRecursiveGaussianImageFilter,Gaussian smoothing that works with image adaptors}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Smoothing/SmoothingRecursiveGaussianImageFilter,Gaussian smoothing that works with image adaptors}
 
 "
 %feature("docstring") itk::simple::SmoothingRecursiveGaussianImageFilter::SetSigma "void itk::SmoothingRecursiveGaussianImageFilter::SetSigma(ScalarRealType sigma)
@@ -3779,6 +4669,8 @@ see  SobelOperator
 see  Neighborhood
 see  NeighborhoodOperator
 see  NeighborhoodIterator
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{EdgesAndGradients/SobelEdgeDetectionImageFilter, SobelEdgeDetectionImageFilter}
 
 "
 %feature("docstring") itk::simple::SobelEdgeDetectionImageFilter::Execute "A 2D or 3D edge detection using the Sobel operator.
@@ -3791,16 +4683,20 @@ see  SobelOperator
 see  Neighborhood
 see  NeighborhoodOperator
 see  NeighborhoodIterator
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{EdgesAndGradients/SobelEdgeDetectionImageFilter, SobelEdgeDetectionImageFilter}
 
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1SqrtImageFilter.xml
-%feature("docstring") itk::simple::SqrtImageFilter "Computes the vcl_sqrt(x) pixel-wise.
+%feature("docstring") itk::simple::SqrtImageFilter "Computes the square root of each pixel.
 
+The computations are performed using vcl_sqrt(x).
 "
-%feature("docstring") itk::simple::SqrtImageFilter::Execute "Computes the vcl_sqrt(x) pixel-wise.
+%feature("docstring") itk::simple::SqrtImageFilter::Execute "Computes the square root of each pixel.
 "
-%feature("docstring") itk::simple::Sqrt "Computes the vcl_sqrt(x) pixel-wise.
+%feature("docstring") itk::simple::Sqrt "Computes the square root of each pixel.
 
+The computations are performed using vcl_sqrt(x).
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1SquaredDifferenceImageFilter.xml
 %feature("docstring") itk::simple::SquaredDifferenceImageFilter "Implements pixel-wise the computation of squared difference.
@@ -3817,8 +4713,8 @@ li cast the double value resulting from sqr() to the pixel type of the output im
 li store the casted value into the output image.
 
 The filter expect all images to have the same dimension (e.g. all 2D, or all 3D, or all ND)
-
-li {ImageProcessing/SquaredDifferenceImageFilter,Compute the squared difference of corresponding pixels in two images}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/SquaredDifferenceImageFilter,Compute the squared difference of corresponding pixels in two images}
 
 "
 %feature("docstring") itk::simple::SquaredDifferenceImageFilter::Execute "Implements pixel-wise the computation of squared difference.
@@ -3837,17 +4733,23 @@ li cast the double value resulting from sqr() to the pixel type of the output im
 li store the casted value into the output image.
 
 The filter expect all images to have the same dimension (e.g. all 2D, or all 3D, or all ND)
-
-li {ImageProcessing/SquaredDifferenceImageFilter,Compute the squared difference of corresponding pixels in two images}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/SquaredDifferenceImageFilter,Compute the squared difference of corresponding pixels in two images}
 
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1SquareImageFilter.xml
 %feature("docstring") itk::simple::SquareImageFilter "Computes the square of the intensity values pixel-wise.
 
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/SquareImageFilter,Square every pixel in an image}
+
 "
 %feature("docstring") itk::simple::SquareImageFilter::Execute "Computes the square of the intensity values pixel-wise.
 "
 %feature("docstring") itk::simple::Square "Computes the square of the intensity values pixel-wise.
+
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/SquareImageFilter,Square every pixel in an image}
 
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1SubtractConstantFromImageFilter.xml
@@ -3879,40 +4781,54 @@ Set the constant that will be used to multiply all the image pixels
 "
 
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1SubtractImageFilter.xml
-%feature("docstring") itk::simple::SubtractImageFilter "Implements an operator for pixel-wise subtraction of two images.
+%feature("docstring") itk::simple::SubtractImageFilter "Pixel-wise subtraction of two images.
 
-Output = Input1 - Input2.
-This class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
-
-li {ImageProcessing/SubtractImageFilter,Subtract two images}
+Subtract each pixel from image2 from its corresponding pixel in image1:
+Output=Input1-Input2.
+This is done using
+ SetInput1(image1); SetInput2(image2);
+This class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
+Additionally, a constant can be subtracted from every pixel in an image using:
+ SetInput1(image1); SetConstant2(constant);
+note The result of AddImageFilterwith a negative constant is not necessarily the same as SubtractImageFilter. This would be the case when the PixelType defines an operator-()that is not the inverse of operator+()
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/SubtractImageFilter,Subtract two images} {ImageProcessing/SubtractConstantFromImageFilter,Subtract a constant from every pixel in an image}
 
 "
-%feature("docstring") itk::simple::SubtractImageFilter::Execute "Implements an operator for pixel-wise subtraction of two images.
+%feature("docstring") itk::simple::SubtractImageFilter::Execute "Pixel-wise subtraction of two images.
 "
-%feature("docstring") itk::simple::Subtract "Implements an operator for pixel-wise subtraction of two images.
+%feature("docstring") itk::simple::Subtract "Pixel-wise subtraction of two images.
 
-Output = Input1 - Input2.
-This class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
-
-li {ImageProcessing/SubtractImageFilter,Subtract two images}
+Subtract each pixel from image2 from its corresponding pixel in image1:
+Output=Input1-Input2.
+This is done using
+ SetInput1(image1); SetInput2(image2);
+This class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
+Additionally, a constant can be subtracted from every pixel in an image using:
+ SetInput1(image1); SetConstant2(constant);
+note The result of AddImageFilterwith a negative constant is not necessarily the same as SubtractImageFilter. This would be the case when the PixelType defines an operator-()that is not the inverse of operator+()
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/SubtractImageFilter,Subtract two images} {ImageProcessing/SubtractConstantFromImageFilter,Subtract a constant from every pixel in an image}
 
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1TanImageFilter.xml
-%feature("docstring") itk::simple::TanImageFilter "Computes the vcl_tan(x) pixel-wise.
+%feature("docstring") itk::simple::TanImageFilter "Computes the tangent of each input pixel.
 
+The computations are performed using vcl_tan(x).
 "
-%feature("docstring") itk::simple::TanImageFilter::Execute "Computes the vcl_tan(x) pixel-wise.
+%feature("docstring") itk::simple::TanImageFilter::Execute "Computes the tangent of each input pixel.
 "
-%feature("docstring") itk::simple::Tan "Computes the vcl_tan(x) pixel-wise.
+%feature("docstring") itk::simple::Tan "Computes the tangent of each input pixel.
 
+The computations are performed using vcl_tan(x).
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1ThresholdImageFilter.xml
 %feature("docstring") itk::simple::ThresholdImageFilter "Set image values to a user-specified value if they are below, above, or between simple threshold values.
 
  ThresholdImageFiltersets image values to a user-specified outside value (by default, black) if the image values are below, above, or between simple threshold values.
 The pixels must support the operators >= and <=.
-
-li {ImageProcessing/ThresholdImageFilter,Threshold an image}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/ThresholdImageFilter,Threshold an image}
 
 "
 %feature("docstring") itk::simple::ThresholdImageFilter::Execute "Set image values to a user-specified value if they are below, above, or between simple threshold values.
@@ -3921,8 +4837,8 @@ li {ImageProcessing/ThresholdImageFilter,Threshold an image}
 
  ThresholdImageFiltersets image values to a user-specified outside value (by default, black) if the image values are below, above, or between simple threshold values.
 The pixels must support the operators >= and <=.
-
-li {ImageProcessing/ThresholdImageFilter,Threshold an image}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/ThresholdImageFilter,Threshold an image}
 
 "
 %feature("docstring") itk::simple::ThresholdImageFilter::SetLower "virtual void itk::ThresholdImageFilter::SetLower(PixelType _arg)
@@ -3953,13 +4869,30 @@ Set the outside pixel value. The default value NumericTraits<PixelType>::Zero.
 Get the outside pixel value.
 "
 
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1TriangleThresholdImageFilter.xml
+%feature("docstring") itk::simple::TriangleThresholdImageFilter "Threshold an image using the Triangle Threshold.
+
+This filter creates a binary thresholded image that separates an image into foreground and background components. The filter computes the threshold using the TriangleThresholdCalculatorand applies that theshold to the input image using the BinaryThresholdImageFilter.
+author Richard Beare. Department of Medicine, Monash University, Melbourne, Australia.
+Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+This implementation was taken from the Insight Journal paper:http://hdl.handle.net/10380/3279orhttp://www.insight-journal.org/browse/publication/811
+"
+%feature("docstring") itk::simple::TriangleThresholdImageFilter::Execute "Threshold an image using the Triangle Threshold.
+"
+%feature("docstring") itk::simple::TriangleThreshold "Threshold an image using the Triangle Threshold.
+
+This filter creates a binary thresholded image that separates an image into foreground and background components. The filter computes the threshold using the TriangleThresholdCalculatorand applies that theshold to the input image using the BinaryThresholdImageFilter.
+author Richard Beare. Department of Medicine, Monash University, Melbourne, Australia.
+Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+This implementation was taken from the Insight Journal paper:http://hdl.handle.net/10380/3279orhttp://www.insight-journal.org/browse/publication/811
+"
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1VectorIndexSelectionCastImageFilter.xml
 %feature("docstring") itk::simple::VectorIndexSelectionCastImageFilter "Extracts the selected index of the vector that is the input pixel type.
 
 This filter is templated over the input image type and output image type.
 The filter expect the input image pixel type to be a vector and the output image pixel type to be a scalar. The only requirement on the type used for representing the vector is that it must provide an operator[].
-
-li {VectorImages/VectorIndexSelectionCastImageFilter,Extract a component of an itkVectorImage}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{VectorImages/VectorIndexSelectionCastImageFilter,Extract a component/channel of a vector image}
 
 "
 %feature("docstring") itk::simple::VectorIndexSelectionCastImageFilter::Execute "Extracts the selected index of the vector that is the input pixel type.
@@ -3968,8 +4901,8 @@ li {VectorImages/VectorIndexSelectionCastImageFilter,Extract a component of an i
 
 This filter is templated over the input image type and output image type.
 The filter expect the input image pixel type to be a vector and the output image pixel type to be a scalar. The only requirement on the type used for representing the vector is that it must provide an operator[].
-
-li {VectorImages/VectorIndexSelectionCastImageFilter,Extract a component of an itkVectorImage}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{VectorImages/VectorIndexSelectionCastImageFilter,Extract a component/channel of a vector image}
 
 "
 %feature("docstring") itk::simple::VectorIndexSelectionCastImageFilter::SetIndex "void itk::VectorIndexSelectionCastImageFilter::SetIndex(unsigned int i)
@@ -3981,6 +4914,25 @@ Get/Set methods for the index
 
 "
 
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1VectorMagnitudeImageFilter.xml
+%feature("docstring") itk::simple::VectorMagnitudeImageFilter "Take an image of vectors as input and produce an image with the magnitude of those vectors.
+
+The filter expects the input image pixel type to be a vector and the output image pixel type to be a scalar.
+This filter assumes that the PixelType of the input image is a VectorType that provides a GetNorm() method.
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{VectorImages/VectorMagnitudeImageFilter,Compute the magnitude of each pixel in a vector image to produce a magnitude image}
+
+"
+%feature("docstring") itk::simple::VectorMagnitudeImageFilter::Execute "Take an image of vectors as input and produce an image with the magnitude of those vectors.
+"
+%feature("docstring") itk::simple::VectorMagnitude "Take an image of vectors as input and produce an image with the magnitude of those vectors.
+
+The filter expects the input image pixel type to be a vector and the output image pixel type to be a scalar.
+This filter assumes that the PixelType of the input image is a VectorType that provides a GetNorm() method.
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{VectorImages/VectorMagnitudeImageFilter,Compute the magnitude of each pixel in a vector image to produce a magnitude image}
+
+"
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1WhiteTopHatImageFilter.xml
 %feature("docstring") itk::simple::WhiteTopHatImageFilter "White top hat extract local maxima that are larger than the structuring element.
 
@@ -4011,6 +4963,8 @@ A safe border is added to input image to avoid borders effects and remove it onc
  WrapPadImageFilterchanges the image bounds of an image. Added pixels are filled in with a wrapped replica of the input image. For instance, if the output image needs a pixel that istwo pixels to the left of the LargestPossibleRegionof the input image, the value assigned will be from the pixeltwo pixels inside the right boundary of the LargestPossibleRegion. The image bounds of the output must be specified.
 Visual explanation of padding regions.This filter is implemented as a multithreaded filter. It provides a ThreadedGenerateData()method for its implementation.
 see  MirrorPadImageFilter, ConstantPadImageFilter
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Images/WrapPadImageFilter,Pad an image by wrapping}
 
 "
 %feature("docstring") itk::simple::WrapPadImageFilter::Execute "Increase the image size by padding with replicants of the input image value.
@@ -4020,52 +4974,76 @@ see  MirrorPadImageFilter, ConstantPadImageFilter
  WrapPadImageFilterchanges the image bounds of an image. Added pixels are filled in with a wrapped replica of the input image. For instance, if the output image needs a pixel that istwo pixels to the left of the LargestPossibleRegionof the input image, the value assigned will be from the pixeltwo pixels inside the right boundary of the LargestPossibleRegion. The image bounds of the output must be specified.
 Visual explanation of padding regions.This filter is implemented as a multithreaded filter. It provides a ThreadedGenerateData()method for its implementation.
 see  MirrorPadImageFilter, ConstantPadImageFilter
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{Images/WrapPadImageFilter,Pad an image by wrapping}
 
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1XorImageFilter.xml
-%feature("docstring") itk::simple::XorImageFilter "Implements the XOR logical operator pixel-wise between two images.
+%feature("docstring") itk::simple::XorImageFilter "Computes the XOR logical operator pixel-wise between two images.
 
-This class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
+This class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
 Since the logical XOR operation is only defined in C++ for integer types, the images passed to this filter must comply with the requirement of using integer pixel type.
 The total operation over one pixel will be
-output_pixel = static_cast<OutputPixelType>( input1_pixel ^ input2_pixel )
+output_pixel=static_cast<OutputPixelType>(input1_pixel^input2_pixel)
 Where ^ is the boolean XOR operator in C++.
-
-li {ImageProcessing/XorImageFilter,Binary XOR (exclusive OR) two images}
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/XorImageFilter,Binary XOR (exclusive OR) two images}
 
 "
-%feature("docstring") itk::simple::XorImageFilter::Execute "Implements the XOR logical operator pixel-wise between two images.
+%feature("docstring") itk::simple::XorImageFilter::Execute "Computes the XOR logical operator pixel-wise between two images.
 "
-%feature("docstring") itk::simple::Xor "Implements the XOR logical operator pixel-wise between two images.
+%feature("docstring") itk::simple::Xor "Computes the XOR logical operator pixel-wise between two images.
 
-This class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
+This class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
 Since the logical XOR operation is only defined in C++ for integer types, the images passed to this filter must comply with the requirement of using integer pixel type.
 The total operation over one pixel will be
-output_pixel = static_cast<OutputPixelType>( input1_pixel ^ input2_pixel )
+output_pixel=static_cast<OutputPixelType>(input1_pixel^input2_pixel)
 Where ^ is the boolean XOR operator in C++.
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/XorImageFilter,Binary XOR (exclusive OR) two images}
 
-li {ImageProcessing/XorImageFilter,Binary XOR (exclusive OR) two images}
+"
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1YenThresholdImageFilter.xml
+%feature("docstring") itk::simple::YenThresholdImageFilter "Threshold an image using the Yen Threshold.
 
+This filter creates a binary thresholded image that separates an image into foreground and background components. The filter computes the threshold using the YenThresholdCalculatorand applies that theshold to the input image using the BinaryThresholdImageFilter.
+author Richard Beare
+Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+This implementation was taken from the Insight Journal paper:http://hdl.handle.net/10380/3279orhttp://www.insight-journal.org/browse/publication/811
+"
+%feature("docstring") itk::simple::YenThresholdImageFilter::Execute "Threshold an image using the Yen Threshold.
+"
+%feature("docstring") itk::simple::YenThreshold "Threshold an image using the Yen Threshold.
+
+This filter creates a binary thresholded image that separates an image into foreground and background components. The filter computes the threshold using the YenThresholdCalculatorand applies that theshold to the input image using the BinaryThresholdImageFilter.
+author Richard Beare
+Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+This implementation was taken from the Insight Journal paper:http://hdl.handle.net/10380/3279orhttp://www.insight-journal.org/browse/publication/811
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1ZeroCrossingBasedEdgeDetectionImageFilter.xml
-%feature("docstring") itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter "
-This filter implements a zero-crossing based edge detecor. The zero-crossing based edge detector looks for pixels in the Laplacian of an image where the value of the Laplacian passes through zero --- points where the Laplacian changes sign. Such points often occur at ``edges'' in images --- i.e. points where the intensity of the image changes rapidly, but they also occur at places that are not as easy to associate with edges. It is best to think of the zero crossing detector as some sort of feature detector rather than as a specific edge detector.
-/par Zero crossings always lie on closed contours and so the output from the zero crossing detector is usually a binary image with single pixel thickness lines showing the positions of the zero crossing points.
-/par In this implementation, the input image is first smoothed with a Gaussian filter, then the LaplacianImageFilteris applied to smoothed image. Finally the zero-crossing of the Laplacian of the smoothed image is detected. The output is a binary image.
-/par Inputs and Outputs The input to the filter should be a scalar, itk::Imageof arbitrary dimension. The output image is a binary, labeled image. See itkZeroCrossingImageFilter for more information on requirements of the data type of the output.
-/par To use this filter, first set the parameters (variance and maximum error) needed by the embedded DiscreteGaussianImageFilter, i.e. See DiscreteGaussianImageFilterfor information about these parameters. Optionally, you may also set foreground and background values for the zero-crossing filter. The default label values are Zero for the background and One for the foreground, as defined in NumericTraitsfor the data type of the output image.
+%feature("docstring") itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter "This filter implements a zero-crossing based edge detecor.
+
+The zero-crossing based edge detector looks for pixels in the Laplacian of an image where the value of the Laplacian passes through zero --- points where the Laplacian changes sign. Such points often occur at ``edges'' in images --- i.e. points where the intensity of the image changes rapidly, but they also occur at places that are not as easy to associate with edges. It is best to think of the zero crossing detector as some sort of feature detector rather than as a specific edge detector.
+par Zero crossings always lie on closed contours and so the output from the zero crossing detector is usually a binary image with single pixel thickness lines showing the positions of the zero crossing points.
+par In this implementation, the input image is first smoothed with a Gaussian filter, then the LaplacianImageFilteris applied to smoothed image. Finally the zero-crossing of the Laplacian of the smoothed image is detected. The output is a binary image.
+par Inputs and Outputs
+The input to the filter should be a scalar, itk::Imageof arbitrary dimension. The output image is a binary, labeled image. See itkZeroCrossingImageFilter for more information on requirements of the data type of the output.
+par To use this filter, first set the parameters (variance and maximum error) needed by the embedded DiscreteGaussianImageFilter, i.e. See DiscreteGaussianImageFilterfor information about these parameters. Optionally, you may also set foreground and background values for the zero-crossing filter. The default label values are Zero for the background and One for the foreground, as defined in NumericTraitsfor the data type of the output image.
 see  DiscreteGaussianImageFilter
 see  LaplacianImageFilter
 see  ZeroCrossingImageFilter
 
 "
-%feature("docstring") itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter::Execute ""
-%feature("docstring") itk::simple::ZeroCrossingBasedEdgeDetection "
-This filter implements a zero-crossing based edge detecor. The zero-crossing based edge detector looks for pixels in the Laplacian of an image where the value of the Laplacian passes through zero --- points where the Laplacian changes sign. Such points often occur at ``edges'' in images --- i.e. points where the intensity of the image changes rapidly, but they also occur at places that are not as easy to associate with edges. It is best to think of the zero crossing detector as some sort of feature detector rather than as a specific edge detector.
-/par Zero crossings always lie on closed contours and so the output from the zero crossing detector is usually a binary image with single pixel thickness lines showing the positions of the zero crossing points.
-/par In this implementation, the input image is first smoothed with a Gaussian filter, then the LaplacianImageFilteris applied to smoothed image. Finally the zero-crossing of the Laplacian of the smoothed image is detected. The output is a binary image.
-/par Inputs and Outputs The input to the filter should be a scalar, itk::Imageof arbitrary dimension. The output image is a binary, labeled image. See itkZeroCrossingImageFilter for more information on requirements of the data type of the output.
-/par To use this filter, first set the parameters (variance and maximum error) needed by the embedded DiscreteGaussianImageFilter, i.e. See DiscreteGaussianImageFilterfor information about these parameters. Optionally, you may also set foreground and background values for the zero-crossing filter. The default label values are Zero for the background and One for the foreground, as defined in NumericTraitsfor the data type of the output image.
+%feature("docstring") itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter::Execute "This filter implements a zero-crossing based edge detecor.
+"
+%feature("docstring") itk::simple::ZeroCrossingBasedEdgeDetection "This filter implements a zero-crossing based edge detecor.
+
+The zero-crossing based edge detector looks for pixels in the Laplacian of an image where the value of the Laplacian passes through zero --- points where the Laplacian changes sign. Such points often occur at ``edges'' in images --- i.e. points where the intensity of the image changes rapidly, but they also occur at places that are not as easy to associate with edges. It is best to think of the zero crossing detector as some sort of feature detector rather than as a specific edge detector.
+par Zero crossings always lie on closed contours and so the output from the zero crossing detector is usually a binary image with single pixel thickness lines showing the positions of the zero crossing points.
+par In this implementation, the input image is first smoothed with a Gaussian filter, then the LaplacianImageFilteris applied to smoothed image. Finally the zero-crossing of the Laplacian of the smoothed image is detected. The output is a binary image.
+par Inputs and Outputs
+The input to the filter should be a scalar, itk::Imageof arbitrary dimension. The output image is a binary, labeled image. See itkZeroCrossingImageFilter for more information on requirements of the data type of the output.
+par To use this filter, first set the parameters (variance and maximum error) needed by the embedded DiscreteGaussianImageFilter, i.e. See DiscreteGaussianImageFilterfor information about these parameters. Optionally, you may also set foreground and background values for the zero-crossing filter. The default label values are Zero for the background and One for the foreground, as defined in NumericTraitsfor the data type of the output image.
 see  DiscreteGaussianImageFilter
 see  LaplacianImageFilter
 see  ZeroCrossingImageFilter
@@ -4110,8 +5088,9 @@ Set the MaximumError parameter needed by the embedded gaussian filter This value
 "
 
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1ZeroCrossingImageFilter.xml
-%feature("docstring") itk::simple::ZeroCrossingImageFilter "
-This filter finds the closest pixel to the zero-crossings (sign changes) in a signed itk::Image. Pixels closest to zero-crossings are labeled with a foreground value. All other pixels are marked with a background value. The algorithm works by detecting differences in sign among neighbors using city-block style connectivity (4-neighbors in 2d, 6-neighbors in 3d, etc.).
+%feature("docstring") itk::simple::ZeroCrossingImageFilter "This filter finds the closest pixel to the zero-crossings (sign changes) in a signed itk::Image.
+
+Pixels closest to zero-crossings are labeled with a foreground value. All other pixels are marked with a background value. The algorithm works by detecting differences in sign among neighbors using city-block style connectivity (4-neighbors in 2d, 6-neighbors in 3d, etc.).
 par Inputs and Outputs
 The input to this filter is an itk::Imageof arbitrary dimension. The algorithm assumes a signed data type (zero-crossings are not defined for unsigned data types), and requires that operator>, operator<, operator==, and operator!= are defined.
 par The output of the filter is a binary, labeled image of user-specified type. By default, zero-crossing pixels are labeled with a default ``foreground'' value of itk::NumericTraits<OutputDataType>::One, where OutputDataType is the data type of the output image. All other pixels are labeled with a default ``background'' value of itk::NumericTraits<OutputDataType>::Zero.
@@ -4121,11 +5100,15 @@ see  Image
 see  Neighborhood
 see  NeighborhoodOperator
 see  NeighborhoodIterator
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/ZeroCrossingImageFilter,Find zero crossings in a signed image}
 
 "
-%feature("docstring") itk::simple::ZeroCrossingImageFilter::Execute ""
-%feature("docstring") itk::simple::ZeroCrossing "
-This filter finds the closest pixel to the zero-crossings (sign changes) in a signed itk::Image. Pixels closest to zero-crossings are labeled with a foreground value. All other pixels are marked with a background value. The algorithm works by detecting differences in sign among neighbors using city-block style connectivity (4-neighbors in 2d, 6-neighbors in 3d, etc.).
+%feature("docstring") itk::simple::ZeroCrossingImageFilter::Execute "This filter finds the closest pixel to the zero-crossings (sign changes) in a signed itk::Image.
+"
+%feature("docstring") itk::simple::ZeroCrossing "This filter finds the closest pixel to the zero-crossings (sign changes) in a signed itk::Image.
+
+Pixels closest to zero-crossings are labeled with a foreground value. All other pixels are marked with a background value. The algorithm works by detecting differences in sign among neighbors using city-block style connectivity (4-neighbors in 2d, 6-neighbors in 3d, etc.).
 par Inputs and Outputs
 The input to this filter is an itk::Imageof arbitrary dimension. The algorithm assumes a signed data type (zero-crossings are not defined for unsigned data types), and requires that operator>, operator<, operator==, and operator!= are defined.
 par The output of the filter is a binary, labeled image of user-specified type. By default, zero-crossing pixels are labeled with a default ``foreground'' value of itk::NumericTraits<OutputDataType>::One, where OutputDataType is the data type of the output image. All other pixels are labeled with a default ``background'' value of itk::NumericTraits<OutputDataType>::Zero.
@@ -4135,6 +5118,8 @@ see  Image
 see  Neighborhood
 see  NeighborhoodOperator
 see  NeighborhoodIterator
+par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
+{ImageProcessing/ZeroCrossingImageFilter,Find zero crossings in a signed image}
 
 "
 %feature("docstring") itk::simple::ZeroCrossingImageFilter::SetForegroundValue "virtual void itk::ZeroCrossingImageFilter::SetForegroundValue(OutputImagePixelType _arg)

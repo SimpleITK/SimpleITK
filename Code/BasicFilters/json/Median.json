@@ -35,5 +35,7 @@
       "python_value" : "[ 2, 3 ]",
       "ruby_value" : "[ 2, 3 ]"
     } ]
-  } ]
+  } ],
+  "briefdescription" : "Applies a median filter to an image.\n",
+  "detaileddescription" : "Computes an image where a given pixel is the median value of the the pixels in a neighborhood about the corresponding input pixel.\nA median filter is one of the family of nonlinear filters. It is used to smooth an image without being biased by outliers or shot noise.\nThis filter requires that the input pixel type provides an operator<() (LessThan Comparable).\n\\see  Image\n\\see  Neighborhood\n\\see  NeighborhoodOperator\n\\see  NeighborhoodIterator\n\\par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}\n{Smoothing/MedianImageFilter,Median filter an image} {Smoothing/RGBMedianImageFilter,Median filter an RGB image}\n\n"
 }
