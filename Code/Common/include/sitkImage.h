@@ -266,7 +266,9 @@ namespace simple
 
     void MakeUniqueForWrite( void );
 
-    /** Method called by certain constructors to convert ITK images
+  private:
+
+   /** Method called by certain constructors to convert ITK images
      * into simpleITK ones.
      *
      * This is the single method which needs to be explicitly
@@ -278,8 +280,6 @@ namespace simple
     void InternalInitialization( typename PixelIDToImageType<typename typelist::TypeAt<InstantiatedPixelIDTypeList,
                                                                                        VPixelIDValue>::Result,
                                                              VImageDimension>::ImageType *i );
-
-  private:
 
     /** Dispatched from the InternalInitialization method. The enable
      * if idiom is used here for method overloading. The second method

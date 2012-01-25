@@ -142,8 +142,11 @@ set ( template_components ${template_components} CACHE INTERNAL "" )
 if(MSVC)
   # /bigobj is required for windows builds because of the size of
   # some object files (CastImage for instance)
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj" )
+  # Also supress the pesky warning about std::vector not being marked
+  # for export in the dll
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj /wd4251" )
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /bigobj" )
+
   # Avoid some warnings
   add_definitions ( -D_SCL_SECURE_NO_WARNINGS )
 endif()
