@@ -10,3 +10,4 @@ set_source_files_properties ( ${SimpleITKBasicFiltersGeneratedSource} PROPERTIES
 add_library ( SimpleITKBasicFilters STATIC ${SimpleITKBasicFiltersSource} ${SimpleITKBasicFiltersGeneratedSource})
 add_dependencies ( SimpleITKBasicFilters BasicFiltersSourceCode)
 
+

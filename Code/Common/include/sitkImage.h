@@ -50,6 +50,9 @@ namespace simple
 
     virtual ~Image( );
 
+    /** \brief Default constructor, creates an image of size 0 */
+    Image( void );
+
     // copy constructor
     Image( const Image &img );
     Image& operator=( const Image &img );

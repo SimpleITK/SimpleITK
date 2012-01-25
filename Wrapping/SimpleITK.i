@@ -38,6 +38,14 @@
 %ignore itk::simple::Image::GetITKBase( void );
 %ignore itk::simple::Image::GetITKBase( void ) const;
 
+
+// This section is copied verbatim into the generated source code.
+// Any include files, definitions, etc. need to go here.
+%{
+#include <SimpleITK.h>
+#include <sitkImageOperators.h>
+%}
+
 // Language Specific Sections
 %include CSharp.i
 %include Java.i
@@ -60,6 +68,7 @@ namespace std
   %template(VectorInt64) vector<int64_t>;
   %template(VectorFloat) vector<float>;
   %template(VectorDouble) vector<double>;
+  %template(VectorOfImage) vector< itk::simple::Image >;
   %template(VectorUIntList) vector< vector<unsigned int> >;
   %template(VectorString) vector< std::string >;
 
@@ -68,12 +77,6 @@ namespace std
 }
 
 
-// This section is copied verbatim into the generated source code.
-// Any include files, definitions, etc. need to go here.
-%{
-#include <SimpleITK.h>
-#include <sitkImageOperators.h>
-%}
 
 // Any new classes need to have an "%include" statement to be wrapped.
 %include "sitkPixelIDValues.h"
@@ -85,6 +88,7 @@ namespace std
 %include "sitkImageFileReader.h"
 %include "sitkHashImageFilter.h"
 %include "sitkStatisticsImageFilter.h"
+%include "sitkJoinSeriesImageFilter.h"
 %include "sitkMeasurementMap.h"
 %include "sitkLabelStatisticsImageFilter.h"
 
@@ -92,7 +96,6 @@ namespace std
 %include "sitkVersion.h"
 
 // Registration classes
-
 
 // Auto-generated headers
 %include "SimpleITKBasicFiltersGeneratedHeaders.i"
