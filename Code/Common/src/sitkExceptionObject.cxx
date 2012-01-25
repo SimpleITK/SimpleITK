@@ -2,6 +2,11 @@
 #include "sitkExceptionObject.h"
 #include "itkMacro.h"
 
+#if defined(_MSC_VER)
+#pragma warning ( disable : 4297 )
+#endif
+
+
 namespace itk
 {
 namespace simple
@@ -12,49 +17,58 @@ GenericException::GenericException() throw()
 {}
 
 GenericException::GenericException( const GenericException &e ) throw()
-try
-  : std::exception( e ),
-    m_PimpleException( new itk::ExceptionObject( *e.m_PimpleException ) )
+
+  : std::exception( e )
 {
+  try
+    {
+    m_PimpleException =  new itk::ExceptionObject( *e.m_PimpleException );
+    }
+  catch(...) // prevent exception from leaving constructor
+    {
+    this->m_PimpleException = NULL;
+    }
 }
-catch(...) // catch exception from initialization list
-  {
-  this->m_PimpleException = NULL;
-  }
 
 GenericException::GenericException(const char *file, unsigned int lineNumber) throw()
-try
-  : m_PimpleException( new itk::ExceptionObject( file, lineNumber ) )
 {
+  try
+    {
+    m_PimpleException =  new itk::ExceptionObject( file, lineNumber );
+    }
+  catch(...) // prevent exception from leaving constructor
+    {
+    this->m_PimpleException = NULL;
+    }
 }
-catch(...) // catch exception from initialization list
-  {
-  this->m_PimpleException = NULL;
-  }
 
 /** Constructor. Needed to ensure the exception object can be copied. */
 GenericException::GenericException(const std::string & file, unsigned int lineNumber) throw()
-try
-  : m_PimpleException( new itk::ExceptionObject( file, lineNumber ) )
 {
+  try
+    {
+    m_PimpleException =  new itk::ExceptionObject( file, lineNumber );
+    }
+  catch(...) // prevent exception from leaving constructor
+    {
+    this->m_PimpleException = NULL;
+    }
 }
-catch(...) // catch exception from initialization list
-  {
-  this->m_PimpleException = NULL;
-  }
 
 /** Constructor. Needed to ensure the exception object can be copied. */
 GenericException::GenericException(const std::string & file,
                                    unsigned int lineNumber,
                                    const std::string & desc) throw()
-try
-  : m_PimpleException( new itk::ExceptionObject( file, lineNumber, desc ) )
 {
+  try
+    {
+    m_PimpleException =  new itk::ExceptionObject( file, lineNumber, desc );
+    }
+  catch(...) // prevent exception from leaving constructor
+    {
+    this->m_PimpleException = NULL;
+    }
 }
-catch(...) // catch exception from initialization list
-  {
-  this->m_PimpleException = NULL;
-  }
 
 GenericException::~GenericException() throw( )
 {
