@@ -28,7 +28,7 @@ std::ostream& operator<< (std::ostream& os, const std::vector<T>& v)
 }
 }
 
-Image ImportImageAsInt8(
+Image ImportAsInt8(
     int8_t * buffer,
     const std::vector< unsigned int > &size,
     const std::vector< double > &spacing,
