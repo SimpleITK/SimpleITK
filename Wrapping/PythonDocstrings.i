@@ -772,6 +772,57 @@ Set/Get whether the connected components are defined strictly by face connectivi
 
 "
 
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1BinaryProjectionImageFilter.xml
+%feature("docstring") itk::simple::BinaryProjectionImageFilter "Binary projection.
+
+This class was contributed to the Insight Journal by Gaetan Lehmann. the original paper can be found athttp://hdl.handle.net/1926/164
+author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+see  ProjectionImageFilter
+see  MedianProjectionImageFilter
+see  MeanProjectionImageFilter
+see  MeanProjectionImageFilter
+see  MaximumProjectionImageFilter
+see  MinimumProjectionImageFilter
+see  StandardDeviationProjectionImageFilter
+see  SumProjectionImageFilter
+
+"
+%feature("docstring") itk::simple::BinaryProjectionImageFilter::Execute "Binary projection.
+"
+%feature("docstring") itk::simple::BinaryProjection "Binary projection.
+
+This class was contributed to the Insight Journal by Gaetan Lehmann. the original paper can be found athttp://hdl.handle.net/1926/164
+author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+see  ProjectionImageFilter
+see  MedianProjectionImageFilter
+see  MeanProjectionImageFilter
+see  MeanProjectionImageFilter
+see  MaximumProjectionImageFilter
+see  MinimumProjectionImageFilter
+see  StandardDeviationProjectionImageFilter
+see  SumProjectionImageFilter
+
+"
+%feature("docstring") itk::simple::BinaryProjectionImageFilter::SetForegroundValue "virtual void itk::BinaryProjectionImageFilter::SetForegroundValue(InputPixelType _arg)
+
+Set the value in the image to consider as foreground. Defaults to maximum value of PixelType. Subclasses may alias this to DilateValue or ErodeValue.
+"
+
+%feature("docstring") itk::simple::BinaryProjectionImageFilter::GetForegroundValue "virtual InputPixelType itk::BinaryProjectionImageFilter::GetForegroundValue() const
+
+Get the value in the image considered as foreground. Defaults to maximum value of PixelType.
+"
+
+%feature("docstring") itk::simple::BinaryProjectionImageFilter::SetBackgroundValue "virtual void itk::BinaryProjectionImageFilter::SetBackgroundValue(OutputPixelType _arg)
+
+Set the value used as background. Any pixel value which is not DilateValue is considered background. BackgroundValue is used for defining boundary conditions. Defaults to NumericTraits<PixelType>::NonpositiveMin().
+"
+
+%feature("docstring") itk::simple::BinaryProjectionImageFilter::GetBackgroundValue "virtual OutputPixelType itk::BinaryProjectionImageFilter::GetBackgroundValue() const
+
+Get the value used as background. Any pixel value which is not DilateValue is considered background. BackgroundValue is used for defining boundary conditions. Defaults to NumericTraits<PixelType>::NonpositiveMin().
+"
+
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1BinaryThinningImageFilter.xml
 %feature("docstring") itk::simple::BinaryThinningImageFilter "This filter computes one-pixel-wide edges of the input image.
 
@@ -3006,6 +3057,36 @@ This implementation was taken from the Insight Journal paper:http://hdl.handle.n
 see  LabelMapToBinaryImageFilter, LabelMapMaskImageFilter
 
 "
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1LabelToRGBImageFilter.xml
+%feature("docstring") itk::simple::LabelToRGBImageFilter "Apply a colormap to a label image.
+
+Apply a colormap to a label image. The set of colors is a good selection of distinct colors. The user can choose to use a background value. In that case, a gray pixel with the same intensity than the background label is produced.
+This code was contributed in the Insight Journal paper: The watershed transform in ITK - discussion and new developments by Beare R., Lehmann G.http://hdl.handle.net/1926/202http://www.insight-journal.org/browse/publication/92
+author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+Richard Beare. Department of Medicine, Monash University, Melbourne, Australia.
+see ScalarToRGBPixelFunctor LabelOverlayImageFilter
+
+"
+%feature("docstring") itk::simple::LabelToRGBImageFilter::Execute "Apply a colormap to a label image.
+"
+%feature("docstring") itk::simple::LabelToRGB "Apply a colormap to a label image.
+
+Apply a colormap to a label image. The set of colors is a good selection of distinct colors. The user can choose to use a background value. In that case, a gray pixel with the same intensity than the background label is produced.
+This code was contributed in the Insight Journal paper: The watershed transform in ITK - discussion and new developments by Beare R., Lehmann G.http://hdl.handle.net/1926/202http://www.insight-journal.org/browse/publication/92
+author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+Richard Beare. Department of Medicine, Monash University, Melbourne, Australia.
+see ScalarToRGBPixelFunctor LabelOverlayImageFilter
+
+"
+%feature("docstring") itk::simple::LabelToRGBImageFilter::SetBackgroundValue "virtual void itk::LabelToRGBImageFilter::SetBackgroundValue(LabelPixelType _arg)
+
+Set/Get the background value
+"
+
+%feature("docstring") itk::simple::LabelToRGBImageFilter::GetBackgroundValue "virtual const LabelPixelType& itk::LabelToRGBImageFilter::GetBackgroundValue()
+
+"
+
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1LaplacianImageFilter.xml
 %feature("docstring") itk::simple::LaplacianImageFilter "
 This filter computes the Laplacian of a scalar-valued image. The Laplacian is an isotropic measure of the 2nd spatial derivative of an image. The Laplacian of an image highlights regions of rapid intensity change and is therefore often used for edge detection. Often, the Laplacian is applied to an image that has first been smoothed with a Gaussian filter in order to reduce its sensitivity to noise.
@@ -3274,6 +3355,35 @@ par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
 {ImageProcessing/MaximumImageFilter,Pixel wise compare two input images and set the output pixel to their max}
 
 "
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1MaximumProjectionImageFilter.xml
+%feature("docstring") itk::simple::MaximumProjectionImageFilter "Maximum projection.
+
+this class was contributed to the insight journal by Gaetan Lehmann. the original paper can be found athttp://hdl.handle.net/1926/164
+author Gaetan Lehmann. Biologie du Developpement et de la reproduction, inra de jouy-en-josas, France.
+see  ProjectionImageFilter
+see  MedianProjectionImageFilter
+see  MeanProjectionImageFilter
+see  MinimumProjectionImageFilter
+see  StandardDeviationProjectionImageFilter
+see  SumProjectionImageFilter
+see  BinaryProjectionImageFilter
+
+"
+%feature("docstring") itk::simple::MaximumProjectionImageFilter::Execute "Maximum projection.
+"
+%feature("docstring") itk::simple::MaximumProjection "Maximum projection.
+
+this class was contributed to the insight journal by Gaetan Lehmann. the original paper can be found athttp://hdl.handle.net/1926/164
+author Gaetan Lehmann. Biologie du Developpement et de la reproduction, inra de jouy-en-josas, France.
+see  ProjectionImageFilter
+see  MedianProjectionImageFilter
+see  MeanProjectionImageFilter
+see  MinimumProjectionImageFilter
+see  StandardDeviationProjectionImageFilter
+see  SumProjectionImageFilter
+see  BinaryProjectionImageFilter
+
+"
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1MeanImageFilter.xml
 %feature("docstring") itk::simple::MeanImageFilter "Applies an averaging filter to an image.
 
@@ -3299,6 +3409,35 @@ see  NeighborhoodOperator
 see  NeighborhoodIterator
 par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
 {Smoothing/MeanImageFilter,Mean filter an image}
+
+"
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1MeanProjectionImageFilter.xml
+%feature("docstring") itk::simple::MeanProjectionImageFilter "Mean projection.
+
+This class was contributed to the Insight Journal by Gaetan Lehmann. The original paper can be found athttp://hdl.handle.net/1926/164
+author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+see  ProjectionImageFilter
+see  MedianProjectionImageFilter
+see  MinimumProjectionImageFilter
+see  StandardDeviationProjectionImageFilter
+see  SumProjectionImageFilter
+see  BinaryProjectionImageFilter
+see  MaximumProjectionImageFilter
+
+"
+%feature("docstring") itk::simple::MeanProjectionImageFilter::Execute "Mean projection.
+"
+%feature("docstring") itk::simple::MeanProjection "Mean projection.
+
+This class was contributed to the Insight Journal by Gaetan Lehmann. The original paper can be found athttp://hdl.handle.net/1926/164
+author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+see  ProjectionImageFilter
+see  MedianProjectionImageFilter
+see  MinimumProjectionImageFilter
+see  StandardDeviationProjectionImageFilter
+see  SumProjectionImageFilter
+see  BinaryProjectionImageFilter
+see  MaximumProjectionImageFilter
 
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1MedianImageFilter.xml
@@ -3330,6 +3469,35 @@ par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
 {Smoothing/MedianImageFilter,Median filter an image} {Smoothing/RGBMedianImageFilter,Median filter an RGB image}
 
 "
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1MedianProjectionImageFilter.xml
+%feature("docstring") itk::simple::MedianProjectionImageFilter "Median projection.
+
+This class was contributed to the Insight Journal by Gaetan Lehmann. The original paper can be found athttp://hdl.handle.net/1926/164
+author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+see  ProjectionImageFilter
+see  StandardDeviationProjectionImageFilter
+see  SumProjectionImageFilter
+see  BinaryProjectionImageFilter
+see  MaximumProjectionImageFilter
+see  MinimumProjectionImageFilter
+see  MeanProjectionImageFilter
+
+"
+%feature("docstring") itk::simple::MedianProjectionImageFilter::Execute "Median projection.
+"
+%feature("docstring") itk::simple::MedianProjection "Median projection.
+
+This class was contributed to the Insight Journal by Gaetan Lehmann. The original paper can be found athttp://hdl.handle.net/1926/164
+author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+see  ProjectionImageFilter
+see  StandardDeviationProjectionImageFilter
+see  SumProjectionImageFilter
+see  BinaryProjectionImageFilter
+see  MaximumProjectionImageFilter
+see  MinimumProjectionImageFilter
+see  MeanProjectionImageFilter
+
+"
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1MinimumImageFilter.xml
 %feature("docstring") itk::simple::MinimumImageFilter "Implements a pixel-wise operator Min(a,b) between two images.
 
@@ -3347,6 +3515,33 @@ The pixel values of the output image are the minimum between the corresponding p
 This class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.
 par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
 {ImageProcessing/MinimumImageFilter,Pixel wise compare two input images and set the output pixel to their min}
+
+"
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1MinimumProjectionImageFilter.xml
+%feature("docstring") itk::simple::MinimumProjectionImageFilter "Minimum projection.
+
+This class was contributed to the Insight Journal by Gaetan Lehmann. The original paper can be found athttp://hdl.handle.net/1926/164
+author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+see  ProjectionImageFilter
+see  StandardDeviationProjectionImageFilter
+see  SumProjectionImageFilter
+see  BinaryProjectionImageFilter
+see  MaximumProjectionImageFilter
+see  MeanProjectionImageFilter
+
+"
+%feature("docstring") itk::simple::MinimumProjectionImageFilter::Execute "Minimum projection.
+"
+%feature("docstring") itk::simple::MinimumProjection "Minimum projection.
+
+This class was contributed to the Insight Journal by Gaetan Lehmann. The original paper can be found athttp://hdl.handle.net/1926/164
+author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+see  ProjectionImageFilter
+see  StandardDeviationProjectionImageFilter
+see  SumProjectionImageFilter
+see  BinaryProjectionImageFilter
+see  MaximumProjectionImageFilter
+see  MeanProjectionImageFilter
 
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1MinMaxCurvatureFlowImageFilter.xml
@@ -4752,6 +4947,37 @@ par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
 {ImageProcessing/SquareImageFilter,Square every pixel in an image}
 
 "
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1StandardDeviationProjectionImageFilter.xml
+%feature("docstring") itk::simple::StandardDeviationProjectionImageFilter "Mean projection.
+
+This class was contributed to the Insight Journal by Gaetan Lehmann. The original paper can be found athttp://hdl.handle.net/1926/164
+author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+see  ProjectionImageFilter
+see  MedianProjectionImageFilter
+see  MeanProjectionImageFilter
+see  SumProjectionImageFilter
+see  MeanProjectionImageFilter
+see  MaximumProjectionImageFilter
+see  MinimumProjectionImageFilter
+see  BinaryProjectionImageFilter
+
+"
+%feature("docstring") itk::simple::StandardDeviationProjectionImageFilter::Execute "Mean projection.
+"
+%feature("docstring") itk::simple::StandardDeviationProjection "Mean projection.
+
+This class was contributed to the Insight Journal by Gaetan Lehmann. The original paper can be found athttp://hdl.handle.net/1926/164
+author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.
+see  ProjectionImageFilter
+see  MedianProjectionImageFilter
+see  MeanProjectionImageFilter
+see  SumProjectionImageFilter
+see  MeanProjectionImageFilter
+see  MaximumProjectionImageFilter
+see  MinimumProjectionImageFilter
+see  BinaryProjectionImageFilter
+
+"
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1SubtractConstantFromImageFilter.xml
 %feature("docstring") itk::simple::SubtractConstantFromImageFilter "Subract a constant from all input pixels.
 
@@ -4809,6 +5035,37 @@ Additionally, a constant can be subtracted from every pixel in an image using:
 note The result of AddImageFilterwith a negative constant is not necessarily the same as SubtractImageFilter. This would be the case when the PixelType defines an operator-()that is not the inverse of operator+()
 par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}
 {ImageProcessing/SubtractImageFilter,Subtract two images} {ImageProcessing/SubtractConstantFromImageFilter,Subtract a constant from every pixel in an image}
+
+"
+// Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1SumProjectionImageFilter.xml
+%feature("docstring") itk::simple::SumProjectionImageFilter "Sum projection.
+
+This class was contributed to the Insight Journal by Gaetan Lehmann. The original paper can be found athttp://hdl.handle.net/1926/164
+author Gaetan Lehmann. Biologie du Developpement et de la Reproduction , INRA de Jouy-en-Josas, France.
+see  ProjectionImageFilter
+see  MedianProjectionImageFilter
+see  MeanProjectionImageFilter
+see  MeanProjectionImageFilter
+see  MaximumProjectionImageFilter
+see  MinimumProjectionImageFilter
+see  BinaryProjectionImageFilter
+see  StandardDeviationProjectionImageFilter
+
+"
+%feature("docstring") itk::simple::SumProjectionImageFilter::Execute "Sum projection.
+"
+%feature("docstring") itk::simple::SumProjection "Sum projection.
+
+This class was contributed to the Insight Journal by Gaetan Lehmann. The original paper can be found athttp://hdl.handle.net/1926/164
+author Gaetan Lehmann. Biologie du Developpement et de la Reproduction , INRA de Jouy-en-Josas, France.
+see  ProjectionImageFilter
+see  MedianProjectionImageFilter
+see  MeanProjectionImageFilter
+see  MeanProjectionImageFilter
+see  MaximumProjectionImageFilter
+see  MinimumProjectionImageFilter
+see  BinaryProjectionImageFilter
+see  StandardDeviationProjectionImageFilter
 
 "
 // Generated for ClassName from ../ITK-doxygen/Utilities/Doxygen/xml/classitk_1_1TanImageFilter.xml
