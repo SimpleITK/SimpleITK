@@ -16,7 +16,7 @@ namespace itk
    * programming idiom to modify the behavior of the simple image
    * class based on the different image types.
    *
-   * This class is desinged to utilize the trivial copy,
+   * This class is designed to utilize the trivial copy,
    * and assgnement operators
    */
   class PimpleImageBase
@@ -80,7 +80,7 @@ namespace itk
 
     virtual int8_t   *GetBufferAsInt8( ) = 0;
     virtual uint8_t  *GetBufferAsUInt8( ) = 0;
-    virtual int16_t  *GetBufferAsInt16( )= 0;
+    virtual int16_t  *GetBufferAsInt16( ) = 0;
     virtual uint16_t *GetBufferAsUInt16( ) = 0;
     virtual int32_t  *GetBufferAsInt32( ) = 0;
     virtual uint32_t *GetBufferAsUInt32( ) = 0;
@@ -88,6 +88,17 @@ namespace itk
     virtual uint64_t *GetBufferAsUInt64( ) = 0;
     virtual float    *GetBufferAsFloat( ) = 0;
     virtual double   *GetBufferAsDouble( ) = 0;
+
+    virtual const int8_t   *GetBufferAsInt8( ) const = 0;
+    virtual const uint8_t  *GetBufferAsUInt8( ) const = 0;
+    virtual const int16_t  *GetBufferAsInt16( ) const = 0;
+    virtual const uint16_t *GetBufferAsUInt16( ) const = 0;
+    virtual const int32_t  *GetBufferAsInt32( ) const = 0;
+    virtual const uint32_t *GetBufferAsUInt32( ) const = 0;
+    virtual const int64_t  *GetBufferAsInt64( ) const = 0;
+    virtual const uint64_t *GetBufferAsUInt64( ) const = 0;
+    virtual const float    *GetBufferAsFloat( ) const = 0;
+    virtual const double   *GetBufferAsDouble( ) const = 0;
   };
 
   } // end namespace simple

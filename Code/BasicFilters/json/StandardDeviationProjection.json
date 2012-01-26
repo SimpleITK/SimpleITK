@@ -1,0 +1,30 @@
+{
+  "name" : "StandardDeviationProjection",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "output_pixel_type" : "typename itk::NumericTraits<typename InputImageType::PixelType>::RealType",
+  "members" : [ {
+    "name" : "ProjectionDimension",
+    "type" : "unsigned int",
+    "default" : "0u"
+  } ],
+  "tests" : [  {
+    "tag" : "z-projection",
+    "description" : "project in the 2nd dimension",
+    "inputA" : "Input/RA-Float.nrrd",
+    "settings" : [ {
+      "parameter" : "ProjectionDimension",
+      "value" : "2u",
+      "lua_value" : "2",
+      "python_value" : "2",
+      "ruby_value" : "2",
+      "java_value" : "2",
+      "tcl_value" : "2",
+      "R_value" : "2"
+    } ]
+     "tolerance" : "0.0001"
+  } ]
+}

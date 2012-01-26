@@ -5,7 +5,7 @@
   "number_of_inputs" : 2,
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelIDTypeList",
-  "public_declarations" : "    typedef enum { SAME = 0, VALID = 1} OutputRegionMode;",
+  "public_declarations" : "    typedef enum { SAME = 0, VALID = 1} OutputRegionModeType;",
   "custom_set_input" : "filter->SetInput( image1 ); filter->SetKernelImage( image2 );",
   "members" : [ {
     "name" : "Normalize",
@@ -18,7 +18,7 @@
     "detaileddescriptionGet" : ""
   }, {
     "name" : "OutputRegionMode",
-    "type" : "ConvolutionImageFilter::OutputRegionMode",
+    "type" : "ConvolutionImageFilter::OutputRegionModeType",
     "default" : "itk::simple::ConvolutionImageFilter::SAME",
     "custom_itk_cast" : "filter->SetOutputRegionMode( typename FilterType::OutputRegionModeType( int( this->m_OutputRegionMode ) ) );"
   } ],

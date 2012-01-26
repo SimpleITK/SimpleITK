@@ -27,6 +27,7 @@ namespace itk {
       void SetSpacing( const std::vector< double > &spacing );
       void SetOrigin( const std::vector< double > &origin );
       void SetSize( const std::vector< unsigned int > &size );
+      void SetDirection( const std::vector< double > &direction );
 
       void SetBufferAsInt8( int8_t * buffer, unsigned int numberOfComponents = 1 );
       void SetBufferAsUInt8( uint8_t *, unsigned int numberOfComponents = 1 );
@@ -73,6 +74,7 @@ namespace itk {
       std::vector< double >         m_Origin;
       std::vector< double >         m_Spacing;
       std::vector< unsigned int >   m_Size;
+      std::vector< double >         m_Direction;
 
       void        * m_Buffer;
 
