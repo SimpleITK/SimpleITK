@@ -8,6 +8,8 @@
 #include <itkImage.h>
 #include <itkVectorImage.h>
 
+#include <iterator>
+
 // private namespace
 namespace
 {
