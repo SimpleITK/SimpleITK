@@ -15,7 +15,7 @@
     "tag" : "defaults",
     "description" : "run with some defaults",
     "inputA" : "Input/RA-Float.nrrd",
-     "md5hash" : "fb78c55635b17fc9ff38ef0ef14f0948"
+    "md5hash" : "fb78c55635b17fc9ff38ef0ef14f0948"
   }, {
     "tag" : "another-dimension",
     "description" : "project in the 3rd dimension",
@@ -29,8 +29,8 @@
       "java_value" : "2",
       "tcl_value" : "2",
       "R_value" : "2"
-    } ]
-     "md5hash" : "f3f0d97c83c6b0d92df10c28e2481520"
+    } ],
+    "md5hash" : "f3f0d97c83c6b0d92df10c28e2481520"
   }, {
     "tag" : "short-image",
     "description" : "project with a short image",
@@ -44,13 +44,14 @@
       "java_value" : "1",
       "tcl_value" : "1",
       "R_value" : "1"
-    } ]
-     "md5hash" : "5390344262c91e83bc9208b0991a2fc9"
-  } , {
+    } ],
+    "md5hash" : "5390344262c91e83bc9208b0991a2fc9"
+  }, {
     "tag" : "rgb-image",
     "description" : "project with a rgb image in 2D",
     "inputA" : "Input/VM1111Shrink-RGB.png",
-     "md5hash" : "92134e0dd38fccdf054ff23e67a72e75"
-  } ]
-  
+    "md5hash" : "92134e0dd38fccdf054ff23e67a72e75"
+  } ],
+  "briefdescription" : "Maximum projection.\n",
+  "detaileddescription" : "this class was contributed to the insight journal by Gaetan Lehmann. the original paper can be found athttp://hdl.handle.net/1926/164\n\\author Gaetan Lehmann. Biologie du Developpement et de la reproduction, inra de jouy-en-josas, France.\n\\see  ProjectionImageFilter\n\\see  MedianProjectionImageFilter\n\\see  MeanProjectionImageFilter\n\\see  MinimumProjectionImageFilter\n\\see  StandardDeviationProjectionImageFilter\n\\see  SumProjectionImageFilter\n\\see  BinaryProjectionImageFilter\n\n"
 }
