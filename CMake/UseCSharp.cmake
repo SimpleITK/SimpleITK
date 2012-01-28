@@ -77,7 +77,7 @@ macro( CSHARP_ADD_PROJECT type name )
       elseif( ${it} MATCHES "[*]" )
         # For dependencies, we need to expand wildcards
         FILE( GLOB it_glob ${it} )
-        list( APPEND sources ${it_glob} )
+        list( APPEND sources ${it} )
 	list( APPEND sources_dep ${it_glob} )
       endif( )
     endif ( )
