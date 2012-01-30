@@ -5,7 +5,7 @@ find_package(Git REQUIRED)
 #-----------------------------------------------------------------------------
 set(BUILDNAME "NoBuldNameGiven")
 set(SITE      "NoSiteGiven")
-option( ${CMAKE_PROJECT_NAME}_BUILD_TESTING "Turn on Testing for SimpleITK" ON )
+option( BUILD_TESTING "Turn on Testing for SimpleITK" ON )
 
 configure_file(../CMake/CTestCustom.cmake.in CTestCustom.cmake)
 
@@ -264,7 +264,7 @@ ExternalProject_Add(${proj}
     # Swig
     -DSWIG_DIR:PATH=${SWIG_DIR}
     -DSWIG_EXECUTABLE:PATH=${SWIG_EXECUTABLE}
-    -DBUILD_TESTING:BOOL=${CMAKE_PROJECT_NAME}_BUILD_TESTING
+    -DBUILD_TESTING:BOOL=${BUILD_TESTING}
     -DWRAP_LUA:BOOL=${WRAP_LUA}
     -DWRAP_PYTHON:BOOL=${WRAP_PYTHON}
     -DWRAP_RUBY:BOOL=${WRAP_RUBY}

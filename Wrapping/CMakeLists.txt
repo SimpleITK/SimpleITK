@@ -1,4 +1,6 @@
 
+# remove me
+include(${ITK_USE_FILE})
 
 #
 # General SWIG configuration
@@ -8,23 +10,14 @@ if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA OR WRAP_CSHARP OR WRAP_TCL OR WRAP_R O
 
   message( STATUS "CMAKE_MODULE_PATH: ${CMAKE_MODULE_PATH}")
   include (UseSWIGLocal)
+
   set_source_files_properties ( SimpleITK.i PROPERTIES CPLUSPLUS ON )
-  file ( GLOB SWIG_HEADERS ${SimpleITK_SOURCE_DIR}/Code/*/*.h)
 
-  set ( DEPENDANT_GENERATED_HEADERS "" )
-  foreach ( filter ${GENERATED_FILTER_LIST} )
-    set ( DEPENDANT_GENERATED_HEADERS ${DEPENDANT_GENERATED_HEADERS} ${SimpleITK_BINARY_DIR}/Code/BasicFilters/include/sitk${filter}ImageFilter.h )
-  endforeach()
-
-  set ( SWIG_HEADERS ${SWIG_HEADERS} ${SimpleITK_BINARY_DIR}/Code/BasicFilters/include/SimpleITKBasicFiltersGeneratedHeaders.i
-    ${SimpleITK_BINARY_DIR}/Code/BasicFilters/include/SimpleITKBasicFiltersGeneratedHeaders.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/CSharp.i
-    ${CMAKE_CURRENT_SOURCE_DIR}/CSharpTypemapHelper.i
-    ${CMAKE_CURRENT_SOURCE_DIR}/Java.i
-    ${CMAKE_CURRENT_SOURCE_DIR}/Lua.i
-    ${CMAKE_CURRENT_SOURCE_DIR}/Python.i
-    ${CMAKE_CURRENT_SOURCE_DIR}/Tcl.i
-    ${DEPENDANT_GENERATED_HEADERS} )
+  # make a manual list of dependencies for the Swig.i files
+  list( APPEND SWIG_EXTRA_DEPS "${SimpleITK_BINARY_DIR}/Code/BasicFilters/include/SimpleITKBasicFiltersGeneratedHeaders.i"
+    "${SimpleITK_BINARY_DIR}/Code/BasicFilters/include/SimpleITKBasicFiltersGeneratedHeaders.h"
+    BasicFiltersSourceCode
+     )
 
   # check if uint64_t is the same as unsigned long
   try_compile(SITK_ULONG_SAME_AS_UINT64
@@ -35,8 +28,6 @@ if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA OR WRAP_CSHARP OR WRAP_TCL OR WRAP_R O
   if(${SITK_ULONG_SAME_AS_UINT64} )
     set ( CMAKE_SWIG_GLOBAL_FLAGS "-DSWIGWORDSIZE64" )
   endif()
-
-  set ( SWIG_MODULE_SimpleITK_EXTRA_DEPS ${SWIG_HEADERS} )
 
 endif()
 
@@ -58,10 +49,11 @@ if ( WRAP_LUA )
   # Run swig
   set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS})
   set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
-  set(SWIG_MODULE_SimpleITKLua_EXTRA_DEPS SimpleITKCommon SimpleITKBasicFilters SimpleITKIO ${SWIG_HEADERS})
+  set(SWIG_MODULE_SimpleITKLua_EXTRA_DEPS ${SWIG_EXTRA_DEPS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/Lua.i )
   SWIG_module_initialize ( SimpleITKLua lua )
-  SWIG_add_source_to_module ( SimpleITKLua swig_generated_source SimpleITK.i ${SWIG_HEADERS} )
-  set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKLUA_wrap.cxx COMPILE_FLAGS "-w")
+  SWIG_add_source_to_module ( SimpleITKLua swig_generated_source SimpleITK.i ${SWIG_EXTRA_DEPS} )
+  set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKLUA_wrap.cxx PROPERTIES COMPILE_FLAGS "-w" )
 
   add_executable ( SimpleITKLua SimpleITKLuaMain.cxx SimpleITKLUA_wrap.cxx )
   target_link_libraries ( SimpleITKLua ${SimpleITK_LIBRARIES} ${LUA_LIB} )
@@ -73,24 +65,18 @@ endif()
 # python SWIG configuration
 #
 if ( WRAP_PYTHON )
-  find_package ( PythonLibs REQUIRED )
-  find_package ( PythonInterp REQUIRED )
-  execute_process( COMMAND ${PYTHON_EXECUTABLE} --version
-    ERROR_VARIABLE _python_version_string )
-  string( REGEX MATCH "[0-9]+[.][0-9]+" _python_version "${_python_version_string}" )
-  if( ${_python_version} VERSION_LESS 2.6 )
-    # This is necessary for the new buffer protocol used for numpy support.
-    message( FATAL_ERROR "Python version must be 2.6 or greater." )
-  endif()
+  find_package ( PythonLibs 2.6 REQUIRED )
+  find_package ( PythonInterp 2.6 REQUIRED )
   include_directories ( ${PYTHON_INCLUDE_DIR} ${SimpleITK_SOURCE_DIR}/Wrapping )
 
   # Run swig
-  set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS})
+  set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS} -features autodoc=1 -keyword)
   set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
-  set(SWIG_MODULE_SimpleITK_EXTRA_DEPS SimpleITKCommon SimpleITKBasicFilters SimpleITKIO ${SWIG_HEADERS})
+  set(SWIG_MODULE_SimpleITK_EXTRA_DEPS ${SWIG_EXTRA_DEPS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/Python.i )
   SWIG_add_module ( SimpleITK python SimpleITK.i SimpleITKPYTHON_wrap.cxx )
-  SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${PYTHON_LIBRARIES} ${ITK_LIBRARIES})
-  set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKPYTHON_wrap.cxx COMPILE_FLAGS "-w")
+  SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${PYTHON_LIBRARIES})
+  set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKPYTHON_wrap.cxx PROPERTIES COMPILE_FLAGS "-w")
 
   # Installation
   set( SIMPLEITK_PYTHON_MODULE_DIR "${SimpleITK_BINARY_DIR}/Wrapping" )
@@ -104,34 +90,37 @@ if ( WRAP_PYTHON )
 
   add_dependencies( ${SWIG_MODULE_SimpleITK_REAL_NAME} ConfigureFileBuildtime )
 
-  set( PythonVirtualenvHome ${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVirtualenv )
-  add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_REAL_NAME}
-    PRE_BUILD
-    COMMAND ${CMAKE_COMMAND} -E remove_directory "${PythonVirtualenvHome}"
-    COMMAND ${PYTHON_EXECUTABLE}
-    ${SimpleITK_SOURCE_DIR}/Utilities/virtualenv/virtualenv.py
-    --python=${PYTHON_EXECUTABLE}
-    --distribute
-    ${PythonVirtualenvHome}
-    COMMENT "Creating Python virtualenv" )
+  if ( BUILD_TESTING )
 
-  # virtualenv places the python executable in different
-  # locations. Also note than on windows installations where python is
-  # installed only for a single user the may be a missing dll issue.
-  if( WIN32 )
-    set( PYTHON_EXECUTABLE "${PythonVirtualenvHome}/Scripts/python" )
-  else( )
-    set( PYTHON_EXECUTABLE "${PythonVirtualenvHome}/bin/python" )
+    set( PythonVirtualenvHome ${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVirtualenv )
+
+    set( ORIGINAL_PYTHON_EXECUTABLE ${PYTHON_EXECUTABLE} )
+
+    # virtualenv places the python executable in different
+    # locations. Also note than on windows installations where python is
+    # installed only for a single user the may be a missing dll issue.
+    if( WIN32 )
+      set( PYTHON_EXECUTABLE "${PythonVirtualenvHome}/Scripts/python" )
+    else( )
+      set( PYTHON_EXECUTABLE "${PythonVirtualenvHome}/bin/python" )
+    endif()
+
+    add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_REAL_NAME}
+      POST_BUILD
+      COMMAND ${ORIGINAL_PYTHON_EXECUTABLE}
+        ${SimpleITK_SOURCE_DIR}/Utilities/virtualenv/virtualenv.py
+        --python=${ORIGINAL_PYTHON_EXECUTABLE}
+        --distribute
+        --clear
+      ${PythonVirtualenvHome}
+      COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/PythonPackage/ez_setup.py" "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/"
+      COMMAND ${CMAKE_COMMAND} -E touch "${CMAKE_CURRENT_BINARY_DIR}/__init__.py"
+      COMMAND ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/setup.py" install
+      COMMENT "Installing python module to the virtualenv" )
+
   endif()
 
 
-  add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_REAL_NAME}
-    POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/PythonPackage/ez_setup.py" "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/"
-    COMMAND ${CMAKE_COMMAND} -E touch "${CMAKE_CURRENT_BINARY_DIR}/__init__.py"
-    COMMAND ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/setup.py"
-    install
-    COMMENT "Installing python module to the virtualenv" )
 endif()
 
 #
@@ -144,12 +133,12 @@ if ( WRAP_RUBY )
   # Run swig
   set(CMAKE_SWIG_FLAGS -autorename -module simpleitk ${CMAKE_SWIG_GLOBAL_FLAGS})
   set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
-  set(SWIG_MODULE_simpleitk_EXTRA_DEPS SimpleITKCommon SimpleITKBasicFilters SimpleITKIO ${SWIG_HEADERS})
-  SWIG_MODULE_INITIALIZE ( SimpleITK ruby )
+  set(SWIG_MODULE_simpleitk_EXTRA_DEPS ${SWIG_EXTRA_DEPS}
+     ${CMAKE_CURRENT_SOURCE_DIR}/Ruby.i)
 
   SWIG_add_module ( simpleitk ruby SimpleITK.i SimpleITKRUBY_wrap.cxx )
-  SWIG_link_libraries ( simpleitk ${SimpleITK_LIBRARIES} ${RUBY_LIBRARY} ${ITK_LIBRARIES})
-  set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKRUBY_wrap.cxx COMPILE_FLAGS "-w")
+  SWIG_link_libraries ( simpleitk ${SimpleITK_LIBRARIES} ${RUBY_LIBRARY})
+  set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKRUBY_wrap.cxx  PROPERTIES COMPILE_FLAGS "-w")
 
 endif()
 
@@ -161,30 +150,41 @@ if ( WRAP_JAVA )
   find_package ( JNI REQUIRED )
   include_directories ( ${JAVA_INCLUDE_PATH} ${JNI_INCLUDE_DIRS} )
 
+  FIND_PROGRAM(Java_JAVADOC_EXECUTABLE
+    NAMES javadoc
+    HINTS ${_JAVA_HINTS}
+    PATHS ${_JAVA_PATHS}
+    )
+
   # Make sure the nested directory structure exists
-  set(JAVA_SOURCE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/org/itk/simple)
+  set(JAVA_SOURCE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/)
   set(JAVA_BINARY_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/build)
   file(MAKE_DIRECTORY ${JAVA_SOURCE_DIRECTORY})
   file(MAKE_DIRECTORY ${JAVA_BINARY_DIRECTORY})
 
   # Nicely write the bridge code in org/itk/simple
-  set(CMAKE_SWIG_OUTDIR ${JAVA_SOURCE_DIRECTORY})
+  set(CMAKE_SWIG_OUTDIR ${JAVA_SOURCE_DIRECTORY}/org/itk/simple/)
   set(CMAKE_SWIG_FLAGS -package "org.itk.simple" ${CMAKE_SWIG_GLOBAL_FLAGS})
-  set(SWIG_MODULE_SimpleITKJava_EXTRA_DEPS SimpleITKCommon SimpleITKBasicFilters SimpleITKIO)
+  set(SWIG_MODULE_SimpleITKJava_EXTRA_DEPS ${SWIG_EXTRA_DEPS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/Java.i )
   SWIG_add_module ( SimpleITKJava java SimpleITK.i SimpleITKJAVA_wrap.cxx)
   SWIG_link_libraries(SimpleITKJava ${SimpleITK_LIBRARIES})
-  set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKJAVA_wrap.cxx COMPILE_FLAGS "-w")
+  set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKJAVA_wrap.cxx  PROPERTIES COMPILE_FLAGS "-w")
 
   # Add target for org.itk.simple.jar
-  add_custom_target(org_itk_simple_jar ALL DEPENDS org.itk.simple.jar)
+  add_custom_target(org_itk_simple_jar ALL DEPENDS ${JAR_FILE})
+  set(JAVA_SOURCE_CODE ${JAVA_SOURCE_DIRECTORY}/org/itk/simple/*.java)
 
   # Add custom command and target to compile the generated files and put them in a jar file
   # Make sure the commands depend on the output library from SWIG
   add_custom_command(
-    OUTPUT org.itk.simple.jar
+    OUTPUT ${JAR_FILE}
     COMMENT "Creating jar file..."
-    COMMAND ${Java_JAVAC_EXECUTABLE} -d ${JAVA_BINARY_DIRECTORY} ${JAVA_SOURCE_DIRECTORY}/*.java
-    COMMAND ${Java_JAR_EXECUTABLE} cf ${CMAKE_CURRENT_BINARY_DIR}/org.itk.simple.jar -C ${JAVA_BINARY_DIRECTORY} org
+    COMMAND ${Java_JAVAC_EXECUTABLE} -d ${JAVA_BINARY_DIRECTORY} ${JAVA_SOURCE_CODE}
+    COMMAND ${Java_JAR_EXECUTABLE} cf ${CMAKE_CURRENT_BINARY_DIR}/${JAR_FILE} -C ${JAVA_BINARY_DIRECTORY} org
+    COMMAND ${Java_JAVADOC_EXECUTABLE} -quiet -d ${JAVA_BINARY_DIRECTORY}/javadoc -sourcepath ${JAVA_SOURCE_DIRECTORY} org.itk.simple
+    COMMAND ${Java_JAR_EXECUTABLE} cf ${CMAKE_CURRENT_BINARY_DIR}/${JAVADOC_FILE} -C ${JAVA_BINARY_DIRECTORY}/javadoc org
+    COMMAND ${Java_JAR_EXECUTABLE} cf ${CMAKE_CURRENT_BINARY_DIR}/${JAVA_SOURCE_FILE} org
     DEPENDS ${SWIG_MODULE_SimpleITK_REAL_NAME} SimpleITKJava SimpleITKCommon SimpleITKBasicFilters SimpleITKIO
     )
 
@@ -192,7 +192,7 @@ if ( WRAP_JAVA )
   string(REGEX REPLACE "include"  "jre/lib/ext" JAVA_EXTENSION_DIR ${JAVA_INCLUDE_PATH} )
 
   # Add the install target
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/org.itk.simple.jar DESTINATION ${JAVA_EXTENSION_DIR})
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${JAR_FILE} DESTINATION ${JAVA_EXTENSION_DIR})
 
 endif()
 
@@ -200,7 +200,7 @@ endif()
 # C# SWIG configuration
 #
 if ( WRAP_CSHARP )
-  
+
   # Find C#
   find_package( CSharp REQUIRED )
   include( ${CSHARP_USE_FILE} )
@@ -219,7 +219,9 @@ if ( WRAP_CSHARP )
     set(CMAKE_SWIG_FLAGS -dllimport \"SimpleITKCSharpNative\")
   endif ( UNIX )
   set(CMAKE_SWIG_FLAGS -namespace \"itk.simple\" ${CMAKE_SWIG_GLOBAL_FLAGS} ${CMAKE_SWIG_FLAGS})
-  set(SWIG_MODULE_SimpleITKCSharpNative_EXTRA_DEPS SimpleITKCommon SimpleITKBasicFilters SimpleITKIO ${SWIG_HEADERS})
+  set(SWIG_MODULE_SimpleITKCSharpNative_EXTRA_DEPS ${SWIG_EXTRA_DEPS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/CSharp.i
+    ${CMAKE_CURRENT_SOURCE_DIR}/CSharpTypemapHelper.i )
   swig_add_module(SimpleITKCSharpNative csharp SimpleITK.i)
   swig_link_libraries(SimpleITKCSharpNative ${SimpleITK_LIBRARIES})
   set_target_properties(SimpleITKCSharpNative PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CSHARP_BINARY_DIRECTORY})
@@ -262,12 +264,20 @@ if ( WRAP_TCL )
   # Run swig
   set(CMAKE_SWIG_FLAGS "-nosafe" ${CMAKE_SWIG_GLOBAL_FLAGS})
   set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
-  set(SWIG_MODULE_SimpleITKTcl_EXTRA_DEPS SimpleITKCommon SimpleITKBasicFilters SimpleITKIO ${SWIG_HEADERS})
-  SWIG_add_module ( SimpleITKTcl tcl SimpleITK.i SimpleITKTCL_wrap.cxx )
-  SWIG_link_libraries ( SimpleITKTcl ${SimpleITK_LIBRARIES} ${TCL_LIBRARY} ${ITK_LIBRARIES})
-  set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKTCL_wrap.cxx COMPILE_FLAGS "-w")
+  set(SWIG_MODULE_SimpleITKTcl_EXTRA_DEPS ${SWIG_EXTRA_DEPS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/Tcl.i )
+#  SWIG_add_module ( SimpleITKTcl tcl SimpleITK.i SimpleITKTCL_wrap.cxx )
+#  SWIG_link_libraries ( SimpleITKTcl ${SimpleITK_LIBRARIES} ${TCL_LIBRARY})
+#  set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKTCL_wrap.cxx  PROPERTIES COMPILE_FLAGS "-w")
+#  add_executable ( SimpleITKTclsh SimpleITKTCL_wrap.cxx )
+#  target_link_libraries ( SimpleITKTclsh ${SimpleITK_LIBRARIES} ${TCL_LIBRARY})
+
+  SWIG_module_initialize ( SimpleITKTCL tcl )
+  SWIG_add_source_to_module ( SimpleITKTCL swig_generated_source SimpleITK.i ${SWIG_EXTRA_DEPS} )
+  set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKTCL_wrap.cxx PROPERTIES COMPILE_FLAGS "-w" )
   add_executable ( SimpleITKTclsh SimpleITKTCL_wrap.cxx )
-  target_link_libraries ( SimpleITKTclsh ${SimpleITK_LIBRARIES} ${TCL_LIBRARY} ${ITK_LIBRARIES})
+  target_link_libraries ( SimpleITKTclsh ${SimpleITK_LIBRARIES} ${TCL_LIBRARY} )
+
 
 endif()
 
@@ -281,9 +291,11 @@ if ( WRAP_R )
   # Run swig
   set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS})
   set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
-  set(SWIG_MODULE_SimpleITK_EXTRA_DEPS SimpleITKCommon SimpleITKBasicFilters SimpleITKIO ${SWIG_HEADERS})
+  set(SWIG_MODULE_SimpleITK_EXTRA_DEPS ${SWIG_EXTRA_DEPS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/R.i)
   SWIG_add_module ( SimpleITK r SimpleITK.i SimpleITKR_wrap.cxx )
-  SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${R_LIBRARIES} ${ITK_LIBRARIES})
+  SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${R_LIBRARIES})
+  set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITK_wrap.cxx PROPERTIES COMPILE_FLAGS "-w")
 
 endif()
 

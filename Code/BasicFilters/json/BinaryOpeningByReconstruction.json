@@ -6,6 +6,24 @@
   "pixel_types" : "IntegerPixelIDTypeList",
   "no_output_type" : 1,
   "members" : [ {
+    "name" : "ForegroundValue",
+    "type" : "double",
+    "default" : "1.0",
+    "pixeltype" : "Input",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set the value in the image to consider as \"foreground\". Defaults to maximum value of PixelType.\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : "Get the value in the image considered as \"foreground\". Defaults to maximum value of PixelType.\n"
+  }, {
+    "name" : "BackgroundValue",
+    "type" : "double",
+    "default" : "0.0",
+    "pixeltype" : "Input",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set the value in eroded part of the image. Defaults to zero\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : "Set the value in eroded part of the image. Defaults to zero\n"
+  }, {
     "name" : "FullyConnected",
     "type" : "bool",
     "default" : "false",
@@ -19,12 +37,12 @@
   "tests" : [ {
     "tag" : "BinaryOpeningByReconstruction",
     "description" : "Test binary closing by reconstruction",
-    "inputA" : "Input/STAPLE1.png",
-    "md5hash" : "095f00a68a84df4396914fa758f34dcc",
+    "inputA" : "Input/2th_cthead1.png",
+    "md5hash" : "2dff38c9c5d2f516e7435f3e2291d6c1",
     "settings" : [ {
       "parameter" : "KernelRadius",
       "no_get_method" : 1,
-      "value" : 1
+      "value" : 5
     }, {
       "parameter" : "KernelType",
       "value" : "itk::simple::${name}ImageFilter::Ball",
@@ -34,6 +52,9 @@
       "java_value" : "${name}ImageFilter.KernelType.Ball",
       "tcl_value" : "$$${name}ImageFilter_Ball",
       "csharp_value" : "${name}ImageFilter.KernelType.Ball"
+    }, {
+      "parameter" : "ForegroundValue",
+      "value" : "200"
     } ]
   } ],
   "briefdescription" : "binary morphological closing of an image.\n",

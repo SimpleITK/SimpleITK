@@ -1,7 +1,7 @@
 %module SimpleITK
 
 // Remove some warnings
-#pragma SWIG nowarn=362,503,401,389,516
+#pragma SWIG nowarn=362,503,401,389,516,511
 
 // Use STL support
 %include <std_vector.i>
@@ -18,7 +18,7 @@
 %exception {
   try {
     $action
-  } catch( itk::ExceptionObject &ex ) {
+  } catch( std::exception &ex ) {
     char error_msg[1024];
 // TODO this should be replaces with some try compile stuff
 
@@ -37,6 +37,14 @@
 // Global Tweaks to sitk::Image
 %ignore itk::simple::Image::GetITKBase( void );
 %ignore itk::simple::Image::GetITKBase( void ) const;
+
+
+// This section is copied verbatim into the generated source code.
+// Any include files, definitions, etc. need to go here.
+%{
+#include <SimpleITK.h>
+#include <sitkImageOperators.h>
+%}
 
 // Language Specific Sections
 %include CSharp.i
@@ -60,6 +68,7 @@ namespace std
   %template(VectorInt64) vector<int64_t>;
   %template(VectorFloat) vector<float>;
   %template(VectorDouble) vector<double>;
+  %template(VectorOfImage) vector< itk::simple::Image >;
   %template(VectorUIntList) vector< vector<unsigned int> >;
   %template(VectorString) vector< std::string >;
 
@@ -68,12 +77,6 @@ namespace std
 }
 
 
-// This section is copied verbatim into the generated source code.
-// Any include files, definitions, etc. need to go here.
-%{
-#include <SimpleITK.h>
-#include <sitkImageOperators.h>
-%}
 
 // Any new classes need to have an "%include" statement to be wrapped.
 %include "sitkPixelIDValues.h"
@@ -85,6 +88,7 @@ namespace std
 %include "sitkImageFileReader.h"
 %include "sitkHashImageFilter.h"
 %include "sitkStatisticsImageFilter.h"
+%include "sitkJoinSeriesImageFilter.h"
 %include "sitkMeasurementMap.h"
 %include "sitkLabelStatisticsImageFilter.h"
 
@@ -92,16 +96,11 @@ namespace std
 %include "sitkVersion.h"
 
 // Registration classes
-%include "sitkTransform.h"
-%include "sitkAffineTransform.h"
-%include "sitkInterpolate.h"
-%include "sitkLinearInterpolate.h"
-%include "sitkMetric.h"
-%include "sitkMattesMutualInformationMetric.h"
-%include "sitkOptimizer.h"
-%include "sitkRegularStepGradientDescentOptimizer.h"
-%include "sitkRegistration.h"
 
+// Only C# can handle import filter
+#if SWIGCSHARP
+%include "sitkImportImageFilter.h"
+#endif
 
 // Auto-generated headers
 %include "SimpleITKBasicFiltersGeneratedHeaders.i"

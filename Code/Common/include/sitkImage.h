@@ -28,6 +28,9 @@ namespace itk
 // Forward decalaration for pointer
 class DataObject;
 
+template<class T>
+class SmartPointer;
+
 namespace simple
 {
 
@@ -46,6 +49,9 @@ namespace simple
     typedef Image              Self;
 
     virtual ~Image( );
+
+    /** \brief Default constructor, creates an image of size 0 */
+    Image( void );
 
     // copy constructor
     Image( const Image &img );
@@ -108,6 +114,15 @@ namespace simple
     std::vector< double > GetSpacing( void ) const;
     void SetSpacing( const std::vector< double > &spacing );
 
+    /** \brief Set/Get the Direction
+     *
+     * Internally, the Direction is represented by a matrix 2x2 for a
+     * 2D and and 3x3 for a 3D image. The matrix is passed as a 1D
+     * array in row-major form.
+     */
+    std::vector< double > GetDirection() const;
+    void SetDirection ( const std::vector< double > &direction );
+
     /** Transform index to physical point */
     std::vector< double > TransformIndexToPhysicalPoint( const std::vector< int64_t > &index ) const;
 
@@ -149,7 +164,7 @@ namespace simple
     uint32_t GetPixelAsUInt64( const std::vector<uint32_t> &idx ) const;
     float    GetPixelAsFloat( const std::vector<uint32_t> &idx ) const;
     double   GetPixelAsDouble(  const std::vector<uint32_t> &idx ) const;
-    /* @} */
+    /** @} */
 
     /** \brief Set the value of a pixel
      *
@@ -208,7 +223,18 @@ namespace simple
     uint64_t *GetBufferAsUInt64( );
     float    *GetBufferAsFloat( );
     double   *GetBufferAsDouble( );
-    /* @} */
+
+    const int8_t   *GetBufferAsInt8( ) const;
+    const uint8_t  *GetBufferAsUInt8( ) const;
+    const int16_t  *GetBufferAsInt16( ) const;
+    const uint16_t *GetBufferAsUInt16( ) const;
+    const int32_t  *GetBufferAsInt32( ) const;
+    const uint32_t *GetBufferAsUInt32( ) const;
+    const int64_t  *GetBufferAsInt64( ) const;
+    const uint64_t *GetBufferAsUInt64( ) const;
+    const float    *GetBufferAsFloat( ) const;
+    const double   *GetBufferAsDouble( ) const;
+    /** @} */
 
 
   protected:
@@ -259,7 +285,7 @@ namespace simple
   private:
 
     /** Dispatched from the InternalInitialization method. The enable
-     * if idom is used here for method overloading. The second method
+     * if idiom is used here for method overloading. The second method
      * is for non-instantiated image, which turn into a void pointer
      * for the paramter. However, this second method should never be
      * executed.

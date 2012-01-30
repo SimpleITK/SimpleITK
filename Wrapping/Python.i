@@ -216,7 +216,9 @@ def GetArrayFromImage(image):
         raise ImportError('Numpy not available.')
 
     imageByteArray, shape, pixelID = _SimpleITK._GetArrayFromImage(image)
-    if   pixelID == sitkUInt8:
+    if pixelID == sitkUnknown:
+         raise Exception("Logic Error: invalid pixel type")
+    elif   pixelID == sitkUInt8:
         arr = numpy.frombuffer(imageByteArray, dtype=numpy.uint8)
     elif pixelID == sitkInt8:
         arr = numpy.frombuffer(imageByteArray, dtype=numpy.int8)

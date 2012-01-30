@@ -14,7 +14,7 @@ namespace itk {
 namespace simple {
 
 
-itk::ImageIOBase::Pointer
+itk::SmartPointer<ImageIOBase>
 ImageReaderBase
 ::GetImageIOBase(const std::string &fileName)
 {

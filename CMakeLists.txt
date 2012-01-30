@@ -4,9 +4,17 @@ project ( SimpleITK )
 # Include extra CMake files
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake")
 
-find_package(ITK REQUIRED)
+
+find_package(ITK REQUIRED ) # the modules needed can be listed here as required components
 if(ITK_FOUND)
-  include(${ITK_USE_FILE})
+
+  # Add compiler flags needed to use ITK.
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${ITK_REQUIRED_C_FLAGS}")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ITK_REQUIRED_CXX_FLAGS}")
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${ITK_REQUIRED_LINK_FLAGS}")
+  set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${ITK_REQUIRED_LINK_FLAGS}")
+  set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${ITK_REQUIRED_LINK_FLAGS}")
+
 endif()
 
 if( NOT ITK_USE_REVIEW )
@@ -73,7 +81,7 @@ check_include_file_cxx( tr1/type_traits SITK_HAS_STLTR1_TR1_TYPE_TRAITS )
 check_include_file_cxx( type_traits SITK_HAS_STLTR1_TYPE_TRAITS )
 
 if ( NOT SITK_HAS_STLTR1_TR1_FUNCTIONAL AND NOT SITK_HAS_STLTR1_FUNCTIONAL )
-  message( FATAL_ERROR 
+  message( FATAL_ERROR
     "SimpleITK requires usage of parts C++ Technical Report 1 (TR1).\n"
     "It may be available as an optional download for your compiler. Please see the FAQ for details.\n"
     "http://www.itk.org/Wiki/ITK_Release_4/SimpleITK/FAQ#Do_I_need_to_download_an_option_package_for_TR1_support.3F")
@@ -110,6 +118,10 @@ configure_file( ${SimpleITK_SOURCE_DIR}/sitkConfigure.h.in
 
 # Version information
 include(Version.cmake)
+set(JAR_FILE simpleitk-${SimpleITK_Major}.${SimpleITK_Minor}.${SimpleITK_Patch}.jar)
+set(JAVADOC_FILE simpleitk-javadoc-${SimpleITK_Major}.${SimpleITK_Minor}.${SimpleITK_Patch}.jar)
+set(JAVA_SOURCE_FILE simpleitk-source-${SimpleITK_Major}.${SimpleITK_Minor}.${SimpleITK_Patch}.jar)
+
 
 # Create cached list of all template components
 file( GLOB template_components
@@ -131,7 +143,6 @@ endif()
 #------------------------------------------------------------------------------
 # Help other projects use SimpleITK
 
-# Copy the UseITK.cmake file to the binary tree for backward compatability.
 configure_file(${SimpleITK_SOURCE_DIR}/UseSimpleITK.cmake.in
                ${SimpleITK_BINARY_DIR}/UseSimpleITK.cmake COPYONLY IMMEDIATE)
 
@@ -180,6 +191,18 @@ option ( BUILD_DOCUMENTS "Build the Documentation subdirectory" OFF )
 if ( BUILD_DOCUMENTS )
   add_subdirectory ( Documentation )
 endif()
+
+#------------------------------------------------------------------------------
+# INSTALLATION
+
+file( GLOB __files ${CMAKE_SOURCE_DIR}/Code/Common/include/*.h
+  ${CMAKE_SOURCE_DIR}/Code/Registration/include/*.h
+  ${CMAKE_SOURCE_DIR}/Code/BasicFilters/include/*.h
+  ${CMAKE_BINARY_DIR}/sitkConfigure.h
+  ${BasicFiltersGeneratedHeader} )
+install(FILES ${__files}
+  DESTINATION include
+  COMPONENT Development)
 
 #------------------------------------------------------------------------------
 # CPack

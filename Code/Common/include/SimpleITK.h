@@ -20,6 +20,7 @@
 
 
 #include "sitkHashImageFilter.h"
+#include "sitkJoinSeriesImageFilter.h"
 #include "sitkPixelIDTypeLists.h"
 #include "sitkStatisticsImageFilter.h"
 #include "sitkLabelStatisticsImageFilter.h"
@@ -27,12 +28,6 @@
 #include "sitkCastImageFilter.h"
 
 // Registration support
-#include "sitkTransform.h"
-#include "sitkAffineTransform.h"
-#include "sitkLinearInterpolate.h"
-#include "sitkMattesMutualInformationMetric.h"
-#include "sitkRegistration.h"
-#include "sitkRegularStepGradientDescentOptimizer.h"
 
 
 // These headers are auto-generated

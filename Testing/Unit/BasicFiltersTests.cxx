@@ -11,6 +11,7 @@
 #include <sitkExtractImageFilter.h>
 #include <sitkFastMarchingImageFilter.h>
 #include <sitkScalarToRGBColormapImageFilter.h>
+#include <sitkJoinSeriesImageFilter.h>
 
 #include "itkRecursiveGaussianImageFilter.h"
 #include "itkExtractImageFilter.h"
@@ -193,4 +194,27 @@ TEST(BasicFilters,LabelStatistics) {
   EXPECT_EQ( myBasicMeasurementMap.size(), 8u ); //4 measurements produced
 
   EXPECT_EQ ( myMeasurementMap.ToString(), "Count, Maximum, Mean, Minimum, Sigma, Sum, Variance, approxMedian, \n36172, 99, 13.0911, 0, 16.4065, 473533, 269.173, 12, \n" );
+}
+
+TEST(BasicFilters,JoinSeriesImageFilter) {
+  itk::simple::JoinSeriesImageFilter j;
+
+  EXPECT_EQ( j.GetName(), std::string( "JoinSeries" ) );
+  EXPECT_NO_THROW( j.ToString() );
+
+  EXPECT_EQ ( j.GetSpacing(), 1.0 );
+  EXPECT_EQ ( j.GetOrigin(), 0.0 );
+
+  itk::simple::Image image = itk::simple::ReadImage ( dataFinder.GetFile ( "Input/cthead1.png" ) );
+
+  std::vector< itk::simple::Image > v( 5, image );
+
+  itk::simple::Image result = itk::simple::JoinSeries( v, 2.0, 0.5 );
+
+  EXPECT_EQ ( result.GetSpacing()[2], 2.0 );
+  EXPECT_EQ ( result.GetOrigin()[2], 0.5 );
+
+  std::cout << result.ToString();
+
+  EXPECT_EQ ( itk::simple::Hash( result ), "04a39fb32832eef77e1cf8570d94e10cc75eb525" );
 }

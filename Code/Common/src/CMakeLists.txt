@@ -1,16 +1,14 @@
 set ( SimpleITKCommonSource
   sitkImage.cxx
   sitkPixelIDValues.cxx
+  sitkExceptionObject.cxx
   ${CMAKE_CURRENT_BINARY_DIR}/sitkVersion.cxx
   ../include/Ancillary/hl_md5.cxx
   ../include/Ancillary/hl_sha1.cxx
-  # NOTE: THIS IS A HACK AND NEEDS TO BE CHANGED
-  ../../Registration/sitkAffineTransform.cxx
-  ../../Registration/sitkMattesMutualInformationMetric.cxx
-  ../../Registration/sitkLinearInterpolate.cxx
-  ../../Registration/sitkRegistration.cxx
-
   )
+
+
+include(${ITK_USE_FILE})
 
 add_library ( SimpleITKCommon STATIC ${SimpleITKCommonSource} ${SimpleITKAncillarySource} )
 target_link_libraries ( SimpleITKCommon ${ITK_LIBRARIES} )

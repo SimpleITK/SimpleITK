@@ -24,20 +24,26 @@ namespace itk {
 
       ImportImageFilter();
 
-      void SetSpacing( const std::vector< double > &spacing );
-      void SetOrigin( const std::vector< double > &origin );
-      void SetSize( const std::vector< unsigned int > &size );
+      Self& SetSize( const std::vector< unsigned int > &size );
+      const std::vector< unsigned int > &GetSize( ) const;
 
-      void SetBufferAsInt8( int8_t * buffer, unsigned int numberOfComponents = 1 );
-      void SetBufferAsUInt8( uint8_t *, unsigned int numberOfComponents = 1 );
-      void SetBufferAsInt16( int16_t *, unsigned int numberOfComponents = 1 );
-      void SetBufferAsUInt16( uint16_t *, unsigned int numberOfComponents = 1 );
-      void SetBufferAsInt32( int32_t *, unsigned int numberOfComponents = 1 );
-      void SetBufferAsUInt32( uint32_t *, unsigned int numberOfComponents = 1 );
+      Self& SetSpacing( const std::vector< double > &spacing );
+      const std::vector< double > &GetSpacing( ) const;
 
-      void SetBufferAsFloat( float *, unsigned int numberOfComponents = 1 );
-      void SetBufferAsDouble( double *, unsigned int numberOfComponents = 1 );
+      Self& SetOrigin( const std::vector< double > &origin );
+      const std::vector< double > &GetOrigin( ) const;
 
+      Self& SetDirection( const std::vector< double > &direction );
+      const std::vector< double > &GetDirection( ) const;
+
+      Self& SetBufferAsInt8( int8_t * buffer, unsigned int numberOfComponents = 1 );
+      Self& SetBufferAsUInt8( uint8_t * buffer, unsigned int numberOfComponents = 1 );
+      Self& SetBufferAsInt16( int16_t * buffer, unsigned int numberOfComponents = 1 );
+      Self& SetBufferAsUInt16( uint16_t * buffer, unsigned int numberOfComponents = 1 );
+      Self& SetBufferAsInt32( int32_t * buffer, unsigned int numberOfComponents = 1 );
+      Self& SetBufferAsUInt32( uint32_t * buffer, unsigned int numberOfComponents = 1 );
+      Self& SetBufferAsFloat( float * buffer, unsigned int numberOfComponents = 1 );
+      Self& SetBufferAsDouble( double * buffer, unsigned int numberOfComponents = 1 );
 
       std::string ToString() const;
 
@@ -73,12 +79,85 @@ namespace itk {
       std::vector< double >         m_Origin;
       std::vector< double >         m_Spacing;
       std::vector< unsigned int >   m_Size;
+      std::vector< double >         m_Direction;
 
       void        * m_Buffer;
 
     };
+
+  Image ImportAsInt8(
+    int8_t * buffer,
+    const std::vector< unsigned int > &size,
+    const std::vector< double > &spacing = std::vector< double >( 3, 1.0 ),
+    const std::vector< double > &origin = std::vector< double >( 3, 0.0 ),
+    const std::vector< double > &direction = std::vector< double >(),
+    unsigned int numberOfComponents = 1
+    );
+
+  Image ImportAsUInt8(
+    uint8_t * buffer,
+    const std::vector< unsigned int > &size,
+    const std::vector< double > &spacing = std::vector< double >( 3, 1.0 ),
+    const std::vector< double > &origin = std::vector< double >( 3, 0.0 ),
+    const std::vector< double > &direction = std::vector< double >(),
+    unsigned int numberOfComponents = 1
+    );
+
+  Image ImportAsInt16(
+    int16_t * buffer,
+    const std::vector< unsigned int > &size,
+    const std::vector< double > &spacing = std::vector< double >( 3, 1.0 ),
+    const std::vector< double > &origin = std::vector< double >( 3, 0.0 ),
+    const std::vector< double > &direction = std::vector< double >(),
+    unsigned int numberOfComponents = 1
+    );
+
+  Image ImportAsUInt16(
+    uint16_t * buffer,
+    const std::vector< unsigned int > &size,
+    const std::vector< double > &spacing = std::vector< double >( 3, 1.0 ),
+    const std::vector< double > &origin = std::vector< double >( 3, 0.0 ),
+    const std::vector< double > &direction = std::vector< double >(),
+    unsigned int numberOfComponents = 1
+    );
+
+  Image ImportAsInt32(
+    int32_t * buffer,
+    const std::vector< unsigned int > &size,
+    const std::vector< double > &spacing = std::vector< double >( 3, 1.0 ),
+    const std::vector< double > &origin = std::vector< double >( 3, 0.0 ),
+    const std::vector< double > &direction = std::vector< double >(),
+    unsigned int numberOfComponents = 1
+    );
+
+  Image ImportAsUInt32(
+    uint32_t * buffer,
+    const std::vector< unsigned int > &size,
+    const std::vector< double > &spacing = std::vector< double >( 3, 1.0 ),
+    const std::vector< double > &origin = std::vector< double >( 3, 0.0 ),
+    const std::vector< double > &direction = std::vector< double >(),
+    unsigned int numberOfComponents = 1
+    );
+
+  Image ImportAsFloat(
+    float * buffer,
+    const std::vector< unsigned int > &size,
+    const std::vector< double > &spacing = std::vector< double >( 3, 1.0 ),
+    const std::vector< double > &origin = std::vector< double >( 3, 0.0 ),
+    const std::vector< double > &direction = std::vector< double >(),
+    unsigned int numberOfComponents = 1
+    );
+
+  Image ImportAsDouble(
+    double * buffer,
+    const std::vector< unsigned int > &size,
+    const std::vector< double > &spacing = std::vector< double >( 3, 1.0 ),
+    const std::vector< double > &origin = std::vector< double >( 3, 0.0 ),
+    const std::vector< double > &direction = std::vector< double >(),
+    unsigned int numberOfComponents = 1
+    );
+
   }
 }
 
 #endif
-
