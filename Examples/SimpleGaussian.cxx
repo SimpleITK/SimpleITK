@@ -3,6 +3,7 @@
 // objects.
 #include <SimpleITK.h>
 #include <iostream>
+#include <stdlib.h>
 
 
 // create convenient namespace alias
