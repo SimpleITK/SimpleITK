@@ -172,6 +172,12 @@ include(${SimpleITK_SOURCE_DIR}/Utilities/Doxygen/Doxygen.cmake)
 #
 include(SITKLanguageOptions)
 
+
+#------------------------------------------------------------------------------
+# set things up for testing, this configuration needs to occour before
+# we enter the sub-directories
+include(CTest)
+
 #------------------------------------------------------------------------------
 # Go to subdirectories
 add_subdirectory ( Utilities )
@@ -184,8 +190,7 @@ add_subdirectory ( Examples )
 include(${SimpleITK_SOURCE_DIR}/Utilities/KWStyle/KWStyle.cmake)
 
 #------------------------------------------------------------------------------
-# set things up for testing
-include(CTest)
+# set things up for testing, if enabled
 
 if ( BUILD_TESTING )
   enable_testing()
