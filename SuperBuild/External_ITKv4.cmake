@@ -14,7 +14,7 @@ VariableListToArgs( ITK_LANGUAGES_VARS  ep_languages_args )
 set(proj ITK)  ## Use ITK convention of calling it ITK
 set(ITK_REPOSITORY git://itk.org/ITK.git)
 set(ITK_DIR ${CMAKE_INSTALL_PREFIX}/lib/cmake/ITK-4.1)
-set(ITK_TAG_COMMAND GIT_TAG 1914ce858e8396768e692f07fc4c5fca31c603ea ) # Fri Jan 27 nightly-master
+set(ITK_TAG_COMMAND GIT_TAG 1e725da525ade3c18a91ec2cf6dbf7dcdefe149c ) # Tue Jan 31 nightly-master
 set(WrapITK_DIR ${CMAKE_INSTALL_PREFIX}/lib/cmake/ITK-4.0/WrapITK)
 
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt" "${ep_languages_cache}\n${ep_common_cache}" )
