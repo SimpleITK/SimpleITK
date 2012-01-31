@@ -1,8 +1,10 @@
     /**
-     * itk::simple::${name}ImageFilter Functional Interface
+     * \brief itk::simple::${name}ImageFilter Procedural Interface
      *
      * This function directly calls the execute method of ${name}ImageFilter
-     * in order to support a fully functional API
+     * in order to support a procedual API
+     *
+     * \sa itk::simple::${name}ImageFilter for the object oriented interface
      */
     Image ${name} ( const Image& image$(if number_of_inputs == 2 then OUT=', const Image& image2' end)$(when members $(foreach members ,
       ${type} in${name} = ${default})) );
