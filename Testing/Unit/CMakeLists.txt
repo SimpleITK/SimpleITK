@@ -176,12 +176,8 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
   # C# Tests
   if ( WRAP_CSHARP )
     set( OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/CSharpTests/Test${FILTERNAME}ImageFilter.cs" )
-    set( csharp_compiler_safe ${CSHARP_COMPILER} )
     if ( WIN32 )
       string( REPLACE "/" "\\" OUTPUT_TEST_FILENAME_SAFE ${OUTPUT_TEST_FILENAME} )
-      if ( csharp_compiler_safe MATCHES "bat" )
-        set( csharp_compiler_safe call ${CSHARP_COMPILER} )
-      endif ( csharp_compiler_safe MATCHES "bat" )
     else ( UNIX )
       string( REPLACE "\\" "/" OUTPUT_TEST_FILENAME_SAFE ${OUTPUT_TEST_FILENAME} )
     endif ( WIN32 )
@@ -189,7 +185,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
       OUTPUT "${OUTPUT_TEST_FILENAME}"
       COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
       COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/CSharp ${template_include_dir} TestTemplate.cs.in "${OUTPUT_TEST_FILENAME}"
-      COMMAND ${csharp_compiler_safe}
+      COMMAND ${CSHARP_COMPILER}
         /t:exe /platform:${CSHARP_PLATFORM}
         /lib:${CSHARP_BINARY_DIRECTORY} /reference:System.dll /reference:SimpleITKCSharpManaged.dll
         /out:${CSHARP_BINARY_DIRECTORY}/Test${FILTERNAME}ImageFilter.exe ${OUTPUT_TEST_FILENAME_SAFE}
