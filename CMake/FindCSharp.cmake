@@ -26,12 +26,12 @@ unset( CSHARP_FOUND CACHE )
 
 if( WIN32 )
   find_package( DotNetFrameworkSdk )
-  if (NOT CSHARP_DOTNET_FOUND)
+  if( NOT CSHARP_DOTNET_FOUND )
     find_package( Mono )
-  endif (NOT CSHARP_DOTNET_FOUND)
+  endif( )
 else( UNIX )
   find_package( Mono )
-endif( WIN32 )
+endif( )
 
 if( CSHARP_DOTNET_FOUND )
   set( CSHARP_TYPE ".NET" CACHE STRING "Using the .NET compiler" )
@@ -43,7 +43,14 @@ elseif( CSHARP_MONO_FOUND )
   set( CSHARP_VERSION ${CSHARP_MONO_VERSION} CACHE STRING "C# Mono compiler version" FORCE )
   set( CSHARP_COMPILER ${CSHARP_MONO_COMPILER_${CSHARP_MONO_VERSION}} CACHE STRING "Full path to Mono compiler" FORCE )
   set( CSHARP_INTERPRETER ${CSHARP_MONO_INTERPRETER_${CSHARP_MONO_VERSION}} CACHE STRING "Full path to Mono interpretor" FORCE )
-endif( CSHARP_DOTNET_FOUND )
+endif( )
+
+# Handle WIN32 specific issues
+if ( WIN32 )
+  if ( CSHARP_COMPILER MATCHES "bat" )
+    set( CSHARP_COMPILER "call ${CSHARP_COMPILER}" )
+  endif ( )
+endif( )
 
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(CSHARP DEFAULT_MSG CSHARP_TYPE CSHARP_VERSION CSHARP_COMPILER)
 
@@ -51,4 +58,3 @@ FIND_PACKAGE_HANDLE_STANDARD_ARGS(CSHARP DEFAULT_MSG CSHARP_TYPE CSHARP_VERSION 
 # http://public.kitware.com/Bug/view.php?id=7757
 get_filename_component( current_list_path ${CMAKE_CURRENT_LIST_FILE} PATH )
 set( CSHARP_USE_FILE ${current_list_path}/UseCSharp.cmake )
-
