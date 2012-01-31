@@ -3,6 +3,7 @@
 #endif
 
 #include "sitkImportImageFilter.h"
+#include "sitkExceptionObject.h"
 
 #include <itkImage.h>
 #include <itkVectorImage.h>

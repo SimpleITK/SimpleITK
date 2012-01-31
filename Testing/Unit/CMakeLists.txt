@@ -227,7 +227,7 @@ set ( GTestSource
 )
 include_directories ( GoogleTest ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
-add_library(gtest ${GTestSource})
+add_library(gtest STATIC ${GTestSource})
 if (CMAKE_USE_PTHREADS_INIT)
   target_link_libraries(gtest ${CMAKE_THREAD_LIBS_INIT})
 endif()

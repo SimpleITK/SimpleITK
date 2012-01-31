@@ -17,7 +17,7 @@ namespace itk {
      * libraries and applications that may have their own representation of an
      * image class.
      */
-    class ImportImageFilter
+    class SITKIO_EXPORT ImportImageFilter
       : public ImageReaderBase {
     public:
       typedef ImportImageFilter Self;
