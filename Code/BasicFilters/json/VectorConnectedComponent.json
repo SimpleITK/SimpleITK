@@ -24,7 +24,7 @@
     "inputA" : "Input/VM1111Shrink-RGBNorm.nrrd",
     "settings" : [ {
       "parameter" : "DistanceThreshold",
-      "value" : ".0001"
+      "value" : "0.0001"
     } ],
     "md5hash" : "7f6fe34795a9d213193634b2a78dba34"
   } ]
