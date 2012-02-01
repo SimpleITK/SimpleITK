@@ -1376,9 +1376,9 @@ INCLUDE_FILE_PATTERNS  =
 # instead of the = operator.
 
 PREDEFINED             = "itkNotUsed(x)=" \
-                          "SimpleITKBasicFilters_EXPORTS=" \
-                          "SimpleITKIO_EXPORTS=" \
-                          "SimpleITKCommon_EXPORTS="
+                          "SITKBasicFilters_EXPORTS=" \
+                          "SITKITKIO_EXPORTS=" \
+                          "SITKITKCommon_EXPORTS="
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then
 # this tag can be used to specify a list of macro names that should be expanded.
