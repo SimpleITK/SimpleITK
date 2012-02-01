@@ -9,7 +9,7 @@
 TEST_F(CSharp,ExampleSimpleGaussian) {
 
   std::string ExePath = dataFinder.GetCSharpBinaryDirectory();
-  std::string ExeName = "ExampleSimpleGaussian.exe";
+  std::string ExeName = "SimpleITKCSharpExampleSimpleGaussian.exe";
   std::string ExePathAndName = ExePath + "/" + ExeName;
 
   // Run SimpleGaussian example
