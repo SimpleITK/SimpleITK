@@ -34,7 +34,14 @@ endif( )
 
 unset( CSHARP_DOTNET_VERSIONS CACHE ) # Clear versions
 
-set( csharp_dotnet_framework_dir "$ENV{windir}/Microsoft.NET/Framework" )
+# Get the framework directory based on platform
+if( ${CSHARP_PLATFORM} MATCHES "x64|itanium" )
+  set( csharp_dotnet_framework_dir "$ENV{windir}/Microsoft.NET/Framework64" )
+else( )
+  set( csharp_dotnet_framework_dir "$ENV{windir}/Microsoft.NET/Framework" )
+endif( )
+
+# Search for .NET versions
 string( REPLACE "\\" "/" csharp_dotnet_framework_dir ${csharp_dotnet_framework_dir} )
 file( GLOB_RECURSE csharp_dotnet_executables "${csharp_dotnet_framework_dir}/csc.exe" )
 list( SORT csharp_dotnet_executables )

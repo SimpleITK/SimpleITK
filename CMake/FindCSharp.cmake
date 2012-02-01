@@ -24,6 +24,12 @@ unset( CSHARP_TYPE CACHE )
 unset( CSHARP_VERSION CACHE )
 unset( CSHARP_FOUND CACHE )
 
+# By default use anycpu platform, allow the user to override
+set( CSHARP_PLATFORM "anycpu" CACHE STRING "C# target platform: x86, x64, anycpu, or itanium" )
+if( NOT ${CSHARP_PLATFORM} MATCHES "x86|x64|anycpu|itanium" )
+  message( FATAL_ERROR "The C# target platform '${CSHARP_PLATFORM}' is not valid. Please enter one of the following: x86, x64, anycpu, or itanium" )
+endif( )
+
 if( WIN32 )
   find_package( DotNetFrameworkSdk )
   if( NOT CSHARP_DOTNET_FOUND )
