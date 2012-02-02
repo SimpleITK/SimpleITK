@@ -290,8 +290,10 @@ macro(ADD_GOOGLE_TESTS target)
   list ( REMOVE_DUPLICATES AllTestsHits )
   # Add all the remaining tests to CTest's test list
   foreach(hit ${AllTestsHits})
-    # message ( STATUS "Adding test ${target} --gtest_filter=${hit}" )
-    add_test(NAME ${hit} COMMAND ${target} --gtest_filter=${hit})
+    # Take the first item in gtest list as the name
+    string( REGEX MATCH "[^:]+" name ${hit} )
+    #message ( STATUS "Adding test ${name} as ${target} --gtest_filter=${hit}" )
+    add_test(NAME ${name} COMMAND ${target} --gtest_filter=${hit})
   endforeach()
 endmacro()
 
