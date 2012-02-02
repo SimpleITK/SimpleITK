@@ -403,6 +403,9 @@ if ( WRAP_JAVA )
   #
   add_java_test( Example.SimpleGaussian
     "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussian.java"
+    --compare
+      "${TEST_HARNESS_TEMP_DIRECTORY}/Java.SimpleGaussian.nrrd"
+      "${TEST_HARNESS_DATA_DIRECTORY}/Baseline/Example_SimpleGaussian_2.0.nrrd"
     "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
     "2.0"
     "${TEST_HARNESS_TEMP_DIRECTORY}/Java.SimpleGaussian.nrrd" )
@@ -447,15 +450,21 @@ if ( WRAP_PYTHON )
   #
   add_python_test( Example.SimpleGaussian
     "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussian.py"
+    --compare
+      "${TEST_HARNESS_TEMP_DIRECTORY}/Python.SimpleGaussian.nrrd"
+      "${TEST_HARNESS_DATA_DIRECTORY}/Baseline/Example_SimpleGaussian_2.0.nrrd"
     "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
     "2.0"
     "${TEST_HARNESS_TEMP_DIRECTORY}/Python.SimpleGaussian.nrrd" )
 
   add_python_test( Example.SimpleGaussianProcedural
     "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussianProcedural.py"
+    --compare
+      "${TEST_HARNESS_TEMP_DIRECTORY}/Python.SimpleGaussianProcedural.nrrd"
+      "${TEST_HARNESS_DATA_DIRECTORY}/Baseline/Example_SimpleGaussian_2.0.nrrd"
     "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
     "2.0"
-    "${TEST_HARNESS_TEMP_DIRECTORY}/Python.SimpleGaussian.nrrd" )
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Python.SimpleGaussianProcedural.nrrd" )
 
   add_python_test( Example.ImageCreateAndSet
     "${SimpleITK_SOURCE_DIR}/Examples/ImageCreateAndSet.py" )
@@ -536,6 +545,9 @@ if ( WRAP_LUA )
   #
   add_lua_test( Example.SimpleGaussian
     "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussian.lua"
+    --compare
+      "${TEST_HARNESS_TEMP_DIRECTORY}/Lua.SimpleGaussian.nrrd"
+      "${TEST_HARNESS_DATA_DIRECTORY}/Baseline/Example_SimpleGaussian_2.0.nrrd"
     "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
     "2.0"
     "${TEST_HARNESS_TEMP_DIRECTORY}/Lua.SimpleGaussian.nrrd" )
@@ -572,6 +584,9 @@ if ( WRAP_RUBY )
   #
   add_ruby_test( Example.SimpleGaussian
     "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussian.rb"
+    --compare
+      "${TEST_HARNESS_TEMP_DIRECTORY}/Ruby.SimpleGaussian.nrrd"
+      "${TEST_HARNESS_DATA_DIRECTORY}/Baseline/Example_SimpleGaussian_2.0.nrrd"
     "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
     "2.0"
     "${TEST_HARNESS_TEMP_DIRECTORY}/Ruby.SimpleGaussian.nrrd" )
@@ -608,6 +623,9 @@ if ( WRAP_TCL )
   #
   add_tcl_test( Example.SimpleGaussian
     "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussian.tcl"
+    --compare
+      "${TEST_HARNESS_TEMP_DIRECTORY}/Tcl.SimpleGaussian.nrrd"
+      "${TEST_HARNESS_DATA_DIRECTORY}/Baseline/Example_SimpleGaussian_2.0.nrrd"
     "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
     "2.0"
     "${TEST_HARNESS_TEMP_DIRECTORY}/Tcl.SimpleGaussian.nrrd" )
