@@ -96,7 +96,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
     COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitk ${template_include_dir} TestTemplate.cxx.in "${OUTPUT_TEST_FILENAME}"
     DEPENDS ${filter_json_file} ${CXX_TEMPLATE_FILES}
     )
-  set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "BasicFilters.${FILTERNAME}")
+  set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "BasicFilters.${FILTERNAME}:BasicFilters.${FILTERNAME}_*" )
   set ( GENERATED_TEST_SOURCE ${GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
 
   if ( WRAP_LUA )
@@ -286,8 +286,10 @@ macro(ADD_GOOGLE_TESTS target)
   list ( REMOVE_DUPLICATES AllTestsHits )
   # Add all the remaining tests to CTest's test list
   foreach(hit ${AllTestsHits})
-    # message ( STATUS "Adding test ${target} --gtest_filter=${hit}" )
-    add_test(NAME ${hit} COMMAND ${target} --gtest_filter=${hit})
+    # Take the first item in gtest list as the name
+    string( REGEX MATCH "[^:]+" name ${hit} )
+    #message ( STATUS "Adding test ${name} as ${target} --gtest_filter=${hit}" )
+    add_test(NAME ${name} COMMAND ${target} --gtest_filter=${hit})
   endforeach()
 endmacro()
 

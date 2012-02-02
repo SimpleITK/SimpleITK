@@ -39,7 +39,7 @@
     "settings" : [ ],
     "md5hash" : "b6ffed53246b990f01edf80b1f2e27ff"
   }, {
-    "tag" : "default-on-float",
+    "tag" : "default_on_float",
     "description" : "Default parameter settings",
     "inputA" : "Input/RA-Float.nrrd",
     "settings" : [ ],

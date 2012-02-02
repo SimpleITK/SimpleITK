@@ -17,7 +17,7 @@
     "inputA" : "Input/RA-Float.nrrd",
     "md5hash" : "5591e0307db733396e8cc8143e7f29f7"
   }, {
-    "tag" : "another-dimension",
+    "tag" : "another_dimension",
     "description" : "project in the 3rd dimension",
     "inputA" : "Input/RA-Float.nrrd",
     "settings" : [ {
@@ -32,7 +32,7 @@
     } ],
     "md5hash" : "6c16b87a823ca190294ac8b678ba4300"
   }, {
-    "tag" : "short-image",
+    "tag" : "short_image",
     "description" : "project with a short image",
     "inputA" : "Input/Ramp-Up-Short.nrrd",
     "settings" : [ {
@@ -47,7 +47,7 @@
     } ],
     "md5hash" : "c4d83f61ffd5cc3a163155bb5d6a0698"
   }, {
-    "tag" : "rgb-image",
+    "tag" : "rgb_image",
     "description" : "project with a rgb image in 2D",
     "inputA" : "Input/VM1111Shrink-RGB.png",
     "md5hash" : "344c2d7cf14b5e8b30b266b77a0548c2"

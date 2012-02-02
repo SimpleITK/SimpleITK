@@ -39,7 +39,7 @@
     "settings" : [ ],
     "md5hash" : "6407fbe2108de8b2abf06991c0e8ab12"
   }, {
-    "tag" : "default-on-float",
+    "tag" : "default_on_float",
     "description" : "Default parameter settings",
     "inputA" : "Input/Ramp-Zero-One-Float.nrrd",
     "settings" : [ ],

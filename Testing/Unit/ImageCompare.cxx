@@ -42,9 +42,12 @@ bool ImageCompare::compare ( const sitk::Image& image, std::string inTestCase, s
 
   std::string name = testCase
     .append( "_" )
-    .append(testName)
-    .append("_")
-    .append ( tag );
+    .append(testName);
+
+  if ( tag != "" )
+    {
+    name.append("_").append ( tag );
+    }
 
   // Extract the center slice of our image
   if ( image.GetDimension() == 3 )
