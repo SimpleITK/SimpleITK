@@ -4,6 +4,7 @@
 #include "sitkMacro.h"
 #include "sitkMemberFunctionFactory.h"
 #include "sitkImage.h"
+#include "sitkBasicFilters.h"
 
 namespace itk {
   namespace simple {
@@ -11,7 +12,7 @@ namespace itk {
     /** \class HashImageFilter
      * \brief Compute the sha1 or md5 hash of an image
      */
-    class HashImageFilter {
+    class SITKBasicFilters_EXPORT HashImageFilter {
     public:
       typedef HashImageFilter Self;
 
@@ -49,7 +50,7 @@ namespace itk {
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
     };
 
-    std::string Hash ( const Image& image, HashImageFilter::HashFunction function = HashImageFilter::SHA1 );
+    SITKBasicFilters_EXPORT std::string Hash ( const Image& image, HashImageFilter::HashFunction function = HashImageFilter::SHA1 );
   }
 }
 #endif

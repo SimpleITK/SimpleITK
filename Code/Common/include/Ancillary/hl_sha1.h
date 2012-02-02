@@ -72,6 +72,10 @@
 #ifndef SHA1_H
 #define SHA1_H
 
+
+// included for import export macros
+#include "sitkCommon.h"
+
 //---------------------------------------------------------------------- 
 //hl includes
 // #include "hl_types.h"
@@ -140,7 +144,7 @@ typedef struct HL_SHA1_CTX
  *   		If you want to create a hash based on a string or file quickly
  *   		you should use the sha1wrapper class instead of SHA1.
  */  
-class SHA1
+class SITKCommon_EXPORT SHA1
 {
 	private:
 

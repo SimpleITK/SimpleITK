@@ -4,6 +4,7 @@
 #include "sitkMacro.h"
 #include "sitkImage.h"
 #include "sitkMemberFunctionFactory.h"
+#include "sitkBasicFilters.h"
 
 namespace itk {
   namespace simple {
@@ -14,8 +15,7 @@ namespace itk {
    * All SimpleITK filters which take one input image should inherit from this
    * class
    */
-  class ImageFilter:
-      protected NonCopyable
+  class SITKBasicFilters_EXPORT ImageFilter :protected NonCopyable
   {
     public:
       typedef ImageFilter Self;

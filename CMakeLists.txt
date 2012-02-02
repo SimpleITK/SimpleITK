@@ -61,6 +61,12 @@ option ( SITK_EXPRESS_INSTANTIATEDPIXELS "Instantiate very few pixel types ( for
 mark_as_advanced ( SITK_EXPRESS_INSTANTIATEDPIXELS )
 
 
+#-----------------------------------------------------------------------------
+# SimpleITK build configuration options.
+option(BUILD_SHARED_LIBS "Build SimpleITK ITK with shared libraries. This does not effect wrapped languages." OFF)
+set(SITK_BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS})
+
+
 #-----------------------------------------------------------
 # Place all checks and try compile variable for sitkConfigure.h here
 
@@ -116,6 +122,9 @@ endif ( NOT SITK_HAS_STDINT_H )
 configure_file( ${SimpleITK_SOURCE_DIR}/sitkConfigure.h.in
   ${SimpleITK_BINARY_DIR}/sitkConfigure.h )
 
+
+
+#-----------------------------------------------------------------------------
 # Version information
 include(Version.cmake)
 set(JAR_FILE simpleitk-${SimpleITK_Major}.${SimpleITK_Minor}.${SimpleITK_Patch}.jar)
@@ -133,8 +142,11 @@ set ( template_components ${template_components} CACHE INTERNAL "" )
 if(MSVC)
   # /bigobj is required for windows builds because of the size of
   # some object files (CastImage for instance)
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj" )
+  # Also supress the pesky warning about std::vector not being marked
+  # for export in the dll
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj /wd4251" )
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /bigobj" )
+
   # Avoid some warnings
   add_definitions ( -D_SCL_SECURE_NO_WARNINGS )
 endif()
@@ -160,6 +172,12 @@ include(${SimpleITK_SOURCE_DIR}/Utilities/Doxygen/Doxygen.cmake)
 #
 include(SITKLanguageOptions)
 
+
+#------------------------------------------------------------------------------
+# set things up for testing, this configuration needs to occour before
+# we enter the sub-directories
+include(CTest)
+
 #------------------------------------------------------------------------------
 # Go to subdirectories
 add_subdirectory ( Utilities )
@@ -172,8 +190,7 @@ add_subdirectory ( Examples )
 include(${SimpleITK_SOURCE_DIR}/Utilities/KWStyle/KWStyle.cmake)
 
 #------------------------------------------------------------------------------
-# set things up for testing
-include(CTest)
+# set things up for testing, if enabled
 
 if ( BUILD_TESTING )
   enable_testing()

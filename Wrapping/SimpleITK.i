@@ -78,6 +78,15 @@ namespace std
 
 
 
+// define these preprocessor directives to nothing for the swig interface
+#define SITKCommon_EXPORT
+#define SITKCommon_HIDDEN
+#define SITKBasicFilters_EXPORT
+#define SITKBasicFilters_HIDDEN
+#define SITKIO_EXPORT
+#define SITKIO_HIDDEN
+
+
 // Any new classes need to have an "%include" statement to be wrapped.
 %include "sitkPixelIDValues.h"
 %include "sitkImage.h"

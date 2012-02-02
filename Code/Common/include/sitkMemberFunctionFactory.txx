@@ -7,6 +7,7 @@
 #include "sitkDetail.h"
 #include "sitkPixelIDTokens.h"
 #include "sitkEnableIf.h"
+#include "sitkExceptionObject.h"
 
 namespace itk
 {

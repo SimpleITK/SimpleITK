@@ -3,9 +3,11 @@
 
 #include <stdint.h>
 
+
+
 // Utility classes
-#include "sitkDetail.h"
 #include "sitkMacro.h"
+#include "sitkDetail.h"
 #include "sitkVersion.h"
 #include "sitkImage.h"
 #include "sitkShow.h"
