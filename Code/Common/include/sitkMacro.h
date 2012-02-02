@@ -2,9 +2,10 @@
 #define __sitkMacro_h
 
 #include <stdint.h>
-#include <assert.h>
+#include <cassert>
 #include <vector>
 #include <sstream>
+#include <limits>
 
 #include "sitkConfigure.h"
 
