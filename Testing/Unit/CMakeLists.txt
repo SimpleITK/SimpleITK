@@ -17,7 +17,6 @@ set ( TestSource
   itkHashImageFilterTest.cxx
   ImportImageTest.cxx
   CXXTests.cxx
-  CSharpTests.cxx
   )
 
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/PythonTests)
@@ -304,6 +303,60 @@ add_google_tests(SimpleITKUnitTestDriver ${TestSource})
 set( ITK_TEST_DRIVER  "itkTestDriver" )
 
 
+if ( WRAP_CSHARP )
+
+  #
+  # This is a macro which compiles the program and set up the
+  # enviroment for executing JAVA examples and tests.
+  #
+  macro(add_csharp_test name csharp_file)
+
+    # the root is with out extension or path
+    get_filename_component( CSHARP_EXECUTABLE ${csharp_file} NAME_WE )
+
+    # make sure the executable has CSharp in it
+    if ( NOT CSHARP_EXECUTABLE MATCHES "CSharp" )
+      message( "No CSharp in name, adding" )
+      set( CSHARP_EXECUTABLE "CSharp${CSHARP_EXECUTABLE}" )
+    else()
+      message( "CSharp in name" )
+    endif()
+
+    # add the target to compile the test
+    csharp_add_executable(
+        ${CSHARP_EXECUTABLE}
+        SimpleITKCSharpManaged.dll
+    	${csharp_file}
+    )
+
+    # because each executable is it's own target we actually don't
+    # need to make a target depend on this list
+    list( APPEND compiled_csharp_tests "${CSHARP_BINARY_DIRECTORY}/${CSHARP_EXECUTABLE}.exe")
+
+    add_test(NAME CSharp.${name}
+      COMMAND "${ITK_TEST_DRIVER}"
+      "${CSHARP_INTERPRETER}"
+      "${CSHARP_BINARY_DIRECTORY}/${CSHARP_EXECUTABLE}.exe"
+      ${ARGN}
+      )
+  endmacro()
+
+
+  #
+  # CSharp Examples
+  #
+  add_csharp_test( Example.SimpleGaussian
+    "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussian.cs"
+    --compare
+      "${TEST_HARNESS_TEMP_DIRECTORY}/CSharp.SimpleGaussian.nrrd"
+      "${TEST_HARNESS_DATA_DIRECTORY}/Baseline/Example_SimpleGaussian_2.0.nrrd"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
+    "2.0"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/CSharp.SimpleGaussian.nrrd" )
+
+endif ( WRAP_CSHARP )
+
+
 if ( WRAP_JAVA )
 
   #
@@ -365,6 +418,7 @@ if ( WRAP_JAVA )
   add_custom_target( CompileJavaTests ALL DEPENDS ${compiled_java_tests} )
 
 endif ( WRAP_JAVA )
+
 
 if ( WRAP_PYTHON )
 
