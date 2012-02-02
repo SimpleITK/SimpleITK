@@ -103,11 +103,23 @@ end)
   OUT = OUT .. [[
   }]]
    end)
+}
+
+  namespace {  bool firstPassSoTestFunctional = true; }
+$(foreach tests
+TEST(BasicFilters,${name}_${tag})
+  { // BEGIN FOR EACH TEST
+  /* TAG: ${tag} DESCRIPTION: ${description} */
+
+  itk::simple::ImageFileReader reader;
+  itk::simple::${name}ImageFilter filter;
+  itk::simple::Image inputA( 0, 0, itk::simple::sitkUInt8 );
+  itk::simple::Image inputB( 0, 0, itk::simple::sitkUInt8 );
+  itk::simple::Image output( 0, 0, itk::simple::sitkUInt8 );
+  itk::simple::HashImageFilter hasher;
+  std::string inputSHA1hash;
 
 
-  bool firstPassSoTestFunctional = true;
-  $(foreach tests
-    /* ${description} */
   ASSERT_NO_THROW ( inputA = reader.SetFileName ( dataFinder.GetFile ( "${inputA}" ) ).Execute() ) << "Failed to load ${inputA}";
     $(if inputA_cast then
       OUT=[[
@@ -208,16 +220,15 @@ end)
   // Check the hash
   VERIFYHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed in ${tag} with input ${inputA} and ${inputB}"); ]]
   end
-  end)
-  $(if tolerance then
+  end) $(if tolerance then
   OUT = [[
- IMAGECOMPAREWITHTOLERANCE ( output, "${tag}", ${tolerance} );
+ IMAGECOMPAREWITHTOLERANCE ( output, "", ${tolerance} );
   ]]
-  end)
-  $(when measurements $(foreach measurements
+  end) $(when measurements $(foreach measurements
     EXPECT_NEAR(${value}, filter.Get${name}(), ${tolerance} );))
-  )
-}
+} // END FOR EACH TEST
+)
+
 
 #if defined(WRAP_LUA)
 

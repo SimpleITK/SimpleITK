@@ -96,7 +96,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
     COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitk ${template_include_dir} TestTemplate.cxx.in "${OUTPUT_TEST_FILENAME}"
     DEPENDS ${filter_json_file} ${CXX_TEMPLATE_FILES}
     )
-  set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "BasicFilters.${FILTERNAME}")
+  set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "BasicFilters.${FILTERNAME}:BasicFilters.${FILTERNAME}_*" )
   set ( GENERATED_TEST_SOURCE ${GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
 
   if ( WRAP_LUA )
