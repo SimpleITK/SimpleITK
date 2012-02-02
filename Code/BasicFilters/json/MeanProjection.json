@@ -12,7 +12,7 @@
     "default" : "0u"
   } ],
   "tests" : [ {
-    "tag" : "z-projection",
+    "tag" : "z_projection",
     "description" : "project in the 2nd dimension",
     "inputA" : "Input/RA-Float.nrrd",
     "settings" : [ {
