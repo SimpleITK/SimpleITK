@@ -7,6 +7,7 @@
 #   CSHARP_TYPE - the type of the C# compiler (eg. ".NET" or "Mono")
 #   CSHARP_VERSION - the version of the C# compiler (eg. "v4.0" or "2.10.2")
 #   CSHARP_COMPILER - the path to the C# compiler executable (eg. "C:/Windows/Microsoft.NET/Framework/v4.0.30319/csc.exe" or "/usr/bin/gmcs")
+#   CSHARP_INTERPRETER - the path to interpreter needed to run CSharp executables
 #
 # This file is based on the work of GDCM:
 #   http://gdcm.svn.sf.net/viewvc/gdcm/trunk/CMake/FindCSharp.cmake
