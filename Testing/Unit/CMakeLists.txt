@@ -307,7 +307,7 @@ if ( WRAP_CSHARP )
 
   #
   # This is a macro which compiles the program and set up the
-  # enviroment for executing JAVA examples and tests.
+  # enviroment for executing CSharp examples and tests.
   #
   macro(add_csharp_test name csharp_file)
 
@@ -324,7 +324,7 @@ if ( WRAP_CSHARP )
 
     # add the target to compile the test
     csharp_add_executable(
-        ${CSHARP_EXECUTABLE}
+        "${CSHARP_EXECUTABLE}"
         SimpleITKCSharpManaged.dll
     	${csharp_file}
     )
@@ -332,6 +332,8 @@ if ( WRAP_CSHARP )
     # because each executable is it's own target we actually don't
     # need to make a target depend on this list
     list( APPEND compiled_csharp_tests "${CSHARP_BINARY_DIRECTORY}/${CSHARP_EXECUTABLE}.exe")
+
+    add_dependencies("${CSHARP_EXECUTABLE}" SimpleITKCSharpManaged)
 
     add_test(NAME CSharp.${name}
       COMMAND "${ITK_TEST_DRIVER}"
