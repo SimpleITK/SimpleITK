@@ -316,10 +316,7 @@ if ( WRAP_CSHARP )
 
     # make sure the executable has CSharp in it
     if ( NOT CSHARP_EXECUTABLE MATCHES "CSharp" )
-      message( "No CSharp in name, adding" )
       set( CSHARP_EXECUTABLE "CSharp${CSHARP_EXECUTABLE}" )
-    else()
-      message( "CSharp in name" )
     endif()
 
     # add the target to compile the test
