@@ -36,11 +36,14 @@ ${GITCONFIG} alias.stage-cmd "!${stage_cmd}"
 ${GITCONFIG} alias.stage-push "!bash -c \"git fetch stage --prune && git push stage HEAD\""
 # List all staged topic branches.
 ${GITCONFIG} alias.stage-branch "!bash -c \"${stage_cmd} print\""
+${GITCONFIG} alias.stage-print "!bash -c \"${stage_cmd} print\""
 # Merge the current topic branch (if staged) into the next branch.
-${GITCONFIG} alias.stage-merge-next "!bash -c \"${stage_cmd} merge -b next ${git_branch}\""
+${GITCONFIG} alias.stage-merge "!bash -c \"${stage_cmd} merge -b next ${git_branch}\""
 # Merge the current topic branch (if staged) into the master branch.
-${GITCONFIG} alias.stage-merge "!bash -c \"${stage_cmd} merge ${git_branch}\""
+# this should be harder to do, and only done by a few, so no alias is provided
+#${GITCONFIG} alias.stage-merge "!bash -c \"${stage_cmd} merge ${git_branch}\""
+
 # Alias to push the current topic branch to Gerrit
+${GITCONFIG} alias.gerrit-push "!bash -c \"git fetch gerrit && git push gerrit HEAD:refs/for/master/${git_branch}\""
+# while we currently don't need a script, it may make a future need easier
 ${GITCONFIG} alias.gerrit-push "!bash Utilities/Git/git-gerrit-push"
-# Alias to push and merge the active topic to the stage
-${GITCONFIG} alias.gerrit-merge "!bash Utilities/Git/git-gerrit-merge"
