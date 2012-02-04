@@ -38,9 +38,6 @@ elseif ( CSHARP_TYPE MATCHES "Mono" )
   include( ${Mono_USE_FILE} )
 endif ( CSHARP_TYPE MATCHES ".NET" )
 
-# For the moment, always compile for ANYCPU
-set( CSHARP_PLATFORM "anycpu" CACHE INTERNAL "" )
-
 macro( CSHARP_ADD_LIBRARY name )
   CSHARP_ADD_PROJECT( "library" ${name} ${ARGN} )
 endmacro( CSHARP_ADD_LIBRARY )
