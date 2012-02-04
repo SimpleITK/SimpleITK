@@ -37,11 +37,11 @@ gerrit_user() {
   echo -e "\nConfiguring 'gerrit' remote with user '$gu'..."
   if git config remote.gerrit.url >/dev/null; then
     # Correct the remote url
-    git remote set-url gerrit $gu@review.source.kitware.com:ITK || \
+    git remote set-url gerrit $gu@review.source.kitware.com:SimpleITK || \
       die "Could not amend gerrit remote."
   else
     # Add a new one
-    git remote add gerrit $gu@review.source.kitware.com:ITK || \
+    git remote add gerrit $gu@review.source.kitware.com:SimpleITK || \
       die "Could not add gerrit remote."
   fi
   cat << EOF
@@ -70,7 +70,7 @@ Gerrit is a code review system that works with Git.
 
 In order to use Gerrit, an account must be registered at the review site:
 
-  http://review.source.kitware.com/p/ITK
+  http://review.source.kitware.com/p/SimpleITK
 
 In order to register you need an OpenID
 

@@ -21,7 +21,7 @@
 # Run this script to set up development with git.
 
 die() {
-  echo 'Failure during ITK Git development setup' 1>&2
+  echo 'Failure during SimpleITK Git development setup' 1>&2
   echo '----------------------------------------' 1>&2
   echo '' 1>&2
   echo "$@" 1>&2
@@ -80,8 +80,8 @@ echo -e "Git version $git_version is OK.\n"
 
 # add an "upstream" remote to make easier to maintain a fork outside of itk.org,
 # with an origin which is not itk.org
-if [ "`git config remote.origin.url`" != "git://itk.org/ITK.git" ]; then
-  echo "We advise setting git://itk.org/ITK.git as your origin.
+if [ "`git config remote.origin.url`" != "git://itk.org/SimpleITK.git" ]; then
+  echo "We advise setting git://itk.org/SimpleITK.git as your origin.
 
 If you choose not to do that, then other instructions will not work as expected."
 
@@ -92,14 +92,14 @@ If you choose not to do that, then other instructions will not work as expected.
 
 Please run the following to correct the origin url:
 
-git remote set-url origin git://itk.org/ITK.git
+git remote set-url origin git://itk.org/SimpleITK.git
 "
     exit 1
   else
     echo "Setting up upstream remote to the itk.org repository..."
     if ! git config remote.upstream.url > /dev/null ; then
-      git remote add upstream git://itk.org/ITK.git
-      git remote set-url --push upstream git@itk.org:ITK.git
+      git remote add upstream git://itk.org/SimpleITK.git
+      git remote set-url --push upstream git@itk.org:SimpleITK.git
       echo "Done"
     else
       echo "upstream is already configured."
@@ -107,9 +107,9 @@ git remote set-url origin git://itk.org/ITK.git
     echo
     echo "WARNING: continuing with non-standard origin remote."
   fi
-elif [ "`git config remote.origin.pushurl`" != "git@itk.org:ITK.git" ]; then
+elif [ "`git config remote.origin.pushurl`" != "git@itk.org:SimpleITK.git" ]; then
   echo "Setting pushurl for origin."
-  git remote set-url --push origin git@itk.org:ITK.git
+  git remote set-url --push origin git@itk.org:SimpleITK.git
 else
   echo "Configuration of origin verified."
 fi

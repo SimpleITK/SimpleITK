@@ -28,9 +28,9 @@ ${GITCONFIG} alias.prepush 'log --graph --stat origin/master..'
 
 # Staging aliases - can help streamline staging topic branches.
 GITCONFIG="${GIT} config"
-stage_cmd='ssh git@itk.org stage ITK'
+stage_cmd='ssh git@itk.org stage SimpleITK'
 git_branch="\$(git symbolic-ref HEAD | sed -e 's|^refs/heads/||')"
-# General alias to run the SSH command, e.g. git stage-cmd print.
+# General alias to run the SSH command, e.g. git stage-cmd merge -b master mytopic.
 ${GITCONFIG} alias.stage-cmd "!${stage_cmd}"
 # Push the current topic branch to the stage.
 ${GITCONFIG} alias.stage-push "!bash -c \"git fetch stage --prune && git push stage HEAD\""

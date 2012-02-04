@@ -39,23 +39,23 @@ if git config remote.stage.url >/dev/null; then
   echo "Topic stage remote was already configured."
 else
   echo "Configuring the topic stage remote..."
-  git remote add stage git://itk.org/stage/ITK.git || \
+  git remote add stage git://itk.org/stage/SimpleITK.git || \
     die "Could not add the topic stage remote."
-  git config remote.stage.pushurl git@itk.org:stage/ITK.git
+  git config remote.stage.pushurl git@itk.org:stage/SimpleITK.git
 fi
 
 read -ep "Do you want to test push access itk.org? [y/N]: " access
 if [ "$access" == "y" ] || [ "$access" == "Y" ]; then
 
   echo "Configuring push urls..."
-  if [ "`git config remote.origin.url`" == "git://itk.org/ITK.git" ]; then
-    git config remote.origin.pushurl git@itk.org:ITK.git
+  if [ "`git config remote.origin.url`" == "git://itk.org/SimpleITK.git" ]; then
+    git config remote.origin.pushurl git@itk.org:SimpleITK.git
   fi
 
   pushd ../../Testing/Data >/dev/null
-  # not sure how the ITKData should be managed... so do as if the one at
+  # not sure how the SimpleITKData should be managed... so do as if the one at
   # itk.org was the only where we want to push
-  git config remote.origin.pushurl git@itk.org:ITKData.git
+  git config remote.origin.pushurl git@itk.org:SimpleITKData.git
   popd >/dev/null
   echo -e "Done.\n"
 
@@ -95,15 +95,15 @@ EOF
     fi
   fi
   echo "Testing ssh capabilities..."
-  git ls-remote git@itk.org:stage/ITK.git refs/heads/master || \
+  git ls-remote git@itk.org:stage/SimpleITK.git refs/heads/master || \
     die "SSH test to git@itk.org failed. You may need to request access at:
 
 https://www.kitware.com/Admin/SendPassword.cgi
 
-Note that push access to the stage/ITK is separate to Gerrit.
+Note that push access to the stage/SimpleITK is separate to Gerrit.
 "
 
-  echo "Test successful! ITK push access confirmed. Summary of project access:"
+  echo "Test successful! SimpleITK push access confirmed. Summary of project access:"
   echo
   # This command queries gitolite for your access privileges
   ssh git@itk.org info
