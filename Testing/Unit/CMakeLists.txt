@@ -332,12 +332,22 @@ if ( WRAP_CSHARP )
 
     add_dependencies("${CSHARP_EXECUTABLE}" SimpleITKCSharpManaged)
 
-    add_test(NAME CSharp.${name}
-      COMMAND "${ITK_TEST_DRIVER}"
-      "${CSHARP_INTERPRETER}"
-      "${CSHARP_BINARY_DIRECTORY}/${CSHARP_EXECUTABLE}.exe"
-      ${ARGN}
-      )
+    # the interpreter is set to "" when none is needed
+    if( CSHARP_INTERPRETER )
+      add_test(NAME CSharp.${name}
+        COMMAND "${ITK_TEST_DRIVER}"
+        "${CSHARP_INTERPRETER}"
+        "${CSHARP_BINARY_DIRECTORY}/${CSHARP_EXECUTABLE}.exe"
+        ${ARGN}
+        )
+    else ()
+      add_test(NAME CSharp.${name}
+        COMMAND "${ITK_TEST_DRIVER}"
+        "${CSHARP_BINARY_DIRECTORY}/${CSHARP_EXECUTABLE}.exe"
+        ${ARGN}
+        )
+    endif()
+
   endmacro()
 
 
