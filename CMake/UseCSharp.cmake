@@ -62,20 +62,20 @@ macro( CSHARP_ADD_PROJECT type name )
   foreach( it ${ARGN} )
     if( ${it} MATCHES "(.*)(dll)" )
        # Argument is a dll, add reference
-       set( refs "${refs} /reference:${it}" )
+       list( APPEND refs /reference:${it} )
     else( )
       # Argument is a source file
       if( EXISTS ${it} )
         list( APPEND sources ${it} )
         list( APPEND sources_dep ${it} )
       elseif( EXISTS ${CSHARP_SOURCE_DIRECTORY}/${it} )
-        list( APPEND sources "${CSHARP_SOURCE_DIRECTORY}/${it}" )
-        list( APPEND sources_dep "${CSHARP_SOURCE_DIRECTORY}/${it}" )
+        list( APPEND sources ${CSHARP_SOURCE_DIRECTORY}/${it} )
+        list( APPEND sources_dep ${CSHARP_SOURCE_DIRECTORY}/${it} )
       elseif( ${it} MATCHES "[*]" )
         # For dependencies, we need to expand wildcards
         FILE( GLOB it_glob ${it} )
         list( APPEND sources ${it} )
-	list( APPEND sources_dep ${it_glob} )
+        list( APPEND sources_dep ${it_glob} )
       endif( )
     endif ( )
   endforeach( )
@@ -98,7 +98,7 @@ macro( CSHARP_ADD_PROJECT type name )
   MESSAGE( STATUS "Adding C# ${type} ${name}: '${CSHARP_COMPILER} /t:${type} /out:${name}.${output} /platform:${CSHARP_PLATFORM} ${refs} ${sources}'" )
   add_custom_command(
     COMMENT "Compiling C# ${type} ${name}: '${CSHARP_COMPILER} /t:${type} /out:${name}.${output} /platform:${CSHARP_PLATFORM} ${refs} ${sources}'"
-    OUTPUT ${name}.${output}
+    OUTPUT ${CSHARP_BINARY_DIRECTORY}/${name}.${output}
     COMMAND ${CSHARP_COMPILER}
     ARGS /t:${type} /out:${name}.${output} /platform:${CSHARP_PLATFORM} ${refs} ${sources}
     WORKING_DIRECTORY ${CSHARP_BINARY_DIRECTORY}
@@ -106,7 +106,7 @@ macro( CSHARP_ADD_PROJECT type name )
   )
   add_custom_target(
     ${name} ALL
-    DEPENDS ${name}.${output}
+    DEPENDS ${CSHARP_BINARY_DIRECTORY}/${name}.${output}
     SOURCES ${sources_dep}
   )
 endmacro( CSHARP_ADD_PROJECT )
