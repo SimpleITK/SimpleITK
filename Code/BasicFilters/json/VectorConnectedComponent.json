@@ -21,11 +21,11 @@
   "tests" : [ {
     "tag" : "wDistance",
     "description" : "2D RGB",
-    "inputA" : "Input/VM1111Shrink-RGBNorm.nrrd",
+    "inputA" : "Input/noisy-vector-grid.nrrd",
     "settings" : [ {
       "parameter" : "DistanceThreshold",
-      "value" : "0.0001"
+      "value" : "0.01"
     } ],
-    "md5hash" : "7f6fe34795a9d213193634b2a78dba34"
+    "md5hash" : "0dbaaa98c1da2d8e1865c95e53a542de"
   } ]
 }
