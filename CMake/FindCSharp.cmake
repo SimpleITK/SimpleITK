@@ -7,6 +7,7 @@
 #   CSHARP_TYPE - the type of the C# compiler (eg. ".NET" or "Mono")
 #   CSHARP_VERSION - the version of the C# compiler (eg. "v4.0" or "2.10.2")
 #   CSHARP_COMPILER - the path to the C# compiler executable (eg. "C:/Windows/Microsoft.NET/Framework/v4.0.30319/csc.exe" or "/usr/bin/gmcs")
+#   CSHARP_INTERPRETER - the path to interpreter needed to run CSharp executables
 #
 # This file is based on the work of GDCM:
 #   http://gdcm.svn.sf.net/viewvc/gdcm/trunk/CMake/FindCSharp.cmake
@@ -23,6 +24,12 @@ unset( CSHARP_INTERPRETER CACHE )
 unset( CSHARP_TYPE CACHE )
 unset( CSHARP_VERSION CACHE )
 unset( CSHARP_FOUND CACHE )
+
+# By default use anycpu platform, allow the user to override
+set( CSHARP_PLATFORM "anycpu" CACHE STRING "C# target platform: x86, x64, anycpu, or itanium" )
+if( NOT ${CSHARP_PLATFORM} MATCHES "x86|x64|anycpu|itanium" )
+  message( FATAL_ERROR "The C# target platform '${CSHARP_PLATFORM}' is not valid. Please enter one of the following: x86, x64, anycpu, or itanium" )
+endif( )
 
 if( WIN32 )
   find_package( DotNetFrameworkSdk )

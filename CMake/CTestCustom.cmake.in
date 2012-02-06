@@ -27,7 +27,10 @@ SET(CTEST_CUSTOM_WARNING_EXCEPTION
   ".*ranlib:.*file:.*has no symbols"
   "libtool:.*file:.*has no symbols"
 
-  # ignore apple warning
+  # Ignore warning building SWIG
+  "Swig/Source/DOH"
+
+  # Ignore apple warning
   "ld.*warning.*duplicate dylib.*"
 
   # Ignore warning from the SWIG wrapped file ( not much we can do about those )
