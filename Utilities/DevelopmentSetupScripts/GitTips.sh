@@ -60,17 +60,4 @@ For more information, see
 EOF
 fi
 
-if ! git config hooks.uncrustify >/dev/null; then
-  cat << EOF
-
-ITK comes with a pre-commit hook to help committed code to conform to the ITK
-Style Guidelines (See Documentation/Style.pdf).  When committing code, it can be
-passed through uncrustify (http://uncrustify.sourceforge.net).  However, this
-feature is disabled by default.  To enable this feature,
-
-  git config --bool hooks.uncrustify true
-
-EOF
-fi
-
 echo "Done."
