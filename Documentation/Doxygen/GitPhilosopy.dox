@@ -9,10 +9,10 @@ In order to properly manage this workflow, we need to be very careful
 about always basing our branches off of master and tracking the
 dependencies of each branch.  The steps needed to do this are:
 
--# base new topics of of the most up to date master
+-# base new topics off of the most up to date master
 -# merge to next
 -# if there is a conflict when merging to next, abort the merge, find the branch that causes the conflict, and merge it into your branch, resolving conflicts here
--# merge to next only when there are no (serious) conflicts left
+-# merge to next only when there are no conflicts left
 
  Here are the details:
 \code
@@ -20,9 +20,8 @@ dependencies of each branch.  The steps needed to do this are:
  $ git pull (just to make sure master is up to date)
  $ git checkout -b BRANCHNAME (we should also standardize our branch names)
  ... do work and make commits on BRANCHNAME ...
- $ git checkout next
- $ git pull
- $ git merge BRANCH_NAME
+ $ git stage-push
+ $ git stage-merge
 \endcode
 Here's where the tricky part is.  If you get conflicts here, that
 means that there's some branch that's been merged to next which
@@ -30,35 +29,10 @@ conflicts with your changes and isn't in master.  Instead of just
 resolving this conflict while merging BRANCH_NAME, you should
 introduce a dependency with the conflicting branch.  To do this you
 need to find the branch that conflicts and merge it with your own
-(resolving the conflict here instead).  The steps are:
+(resolving the conflict here instead).
 
-\code
- $ git reset --hard next (abort the merge)
- $ git log CONFLICTING_FILE.xxx (figure out what commit most recently changed each conflicting file)
- $ gitk
-\endcode
-
-I use gitk, but there are probably other ways to do this.  With gitk,
-copy the commit hash you found with git log into the box marked "SHA1
-ID:" (right below the commit graph) and hit enter.  This will
-highlight the commit where CONFLICTING_FILE.xxx was most recently
-changed.  Use the "Child" link to walk through each commit in the
-branch until you reach a commit message that says "Merge branch
-'CONFLICTING_BRANCH' into next."  The commit just before this merge
-commit is the head of the conflicting branch, so copy its hash (we'll
-use xxxxxhashxxxx).  You're finally done with gitk.
-
-\code
- $ git checkout BRANCH_NAME
- $ git merge --no-ff --log xxxxxhashxxxx
-\endcode
-Here's where you actually resolve the conflicts.  Once done, your
- branch now depends on CONFLICTING_BRANCH.  Now you should be able to
- cleanly merge to next
-\code
- $ git checkout next
- $ git merge --no-ff --log BRANCH_NAME
-\endcode
+The stage should produce a message to aid in the process of resolving
+the failed merge.
 
 \section Discussion A philosophical discussion
 

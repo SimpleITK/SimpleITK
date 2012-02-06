@@ -9,7 +9,7 @@ Users can contribute patches through the gerrit code review system:
 <a href="http://review.source.kitware.com/#q,SimpleITK,n,z">http://review.source.kitware.com/#q,SimpleITK,n,z</a>
 
 General information about Gerrit can be found here:
-<a href="http://gerrit.googlecode.com/svn/documentation/2.1.7/user-upload.html">http://gerrit.googlecode.com/svn/documentation/2.1.7/user-upload.html</a>
+<a href="http://gerrit.googlecode.com/svn/documentation/2.2.1/user-upload.html">http://gerrit.googlecode.com/svn/documentation/2.2.1/user-upload.html</a>
 
 A quick overview of the process:
 
@@ -31,8 +31,8 @@ The SimpleITK Dashboard is a central location where systems report on
 continuous or nightly compilation and testing results. It is a
 invaluable tool in the extreme programing or agile development
 process. The <a
-href="http://www.cdash.org/CDash/index.php?project=Insight#ITKv4_SimpleITK">SimpleITK
-dashboard</a> is locate along side ITK's dashboard.
+href="http://www.cdash.org/CDash/index.php?project=simpleITK">SimpleITK
+dashboard</a> is now a standalone dashboard.
 
 The following is a brief overview on how to contribute a nightly
 build to SimpleITK. Additional relevant information can be found on
@@ -145,23 +145,17 @@ Fortunately, there is a tool which can cache results of compilation and
 reduce recompilation. Using <a href="http://ccache.samba.org/">ccache</a>
 can greatly accelerate the development time when rebuilding
 SimpleITK frequently. Usage is quite simple, download and
-install. However, getting CMake to work with the compiler requires a
-couple little scripts, which I called "ccache-cc" and "ccache-c++":
+install. However, getting CMake to work with the compiler requires
+setting a few enviromental variables:
 
 \verbatim
-# !/usr/bin/env bash
-/usr/local/bin/ccache /usr/bin/cc "$@"
+CXX=/usr/local/bin/ccache /usr/bin/g++-4.2
+CC=/usr/local/bin/ccache /usr/bin/gcc-4.2
 \endverbatim
 
-\verbatim
-# !/usr/bin/env bash
-/usr/local/bin/ccache /usr/bin/c++ "$@"
-\endverbatim
-
-Then to configure SimpleITK, set your environment variable CC, and CXX,
-to the previous scripts respectfully. This should be done before CMake
-is run, so that it will correctly detect the compiler and configure
-SimpleITK. Now enjoy the faster re-compilation times.
+These variables need to be set bfore CMake is run, so that it will
+correctly detect the compiler and configure SimpleITK. Now enjoy the
+faster re-compilation times.
 
 
 */
