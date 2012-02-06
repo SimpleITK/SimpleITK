@@ -46,9 +46,9 @@ gerrit_user() {
   fi
   cat << EOF
 
-For more information on Gerrit usage, see
+For more information on Gerrit usage, see the ITK development process
 
-  http://www.itk.org/Wiki/ITK/Gerrit
+  http://www.itk.org/Wiki/ITK/Develop
 EOF
 }
 
@@ -72,7 +72,8 @@ In order to use Gerrit, an account must be registered at the review site:
 
   http://review.source.kitware.com/p/SimpleITK
 
-In order to register you need an OpenID
+If you already have an account for ITK, VTK, etc. it should work for
+SimpleITK. To create a new account you will need an OpenID:
 
   http://openid.net/get-an-openid/
 
@@ -96,11 +97,20 @@ else
     cat << EOF
 This hook automatically add a "Change-Id" footer to commit messages
 to make interaction with Gerrit easier.
+EOF
+
+read -ep "Would you like to enable it? [Y/n]: " ans
+if [ "$ans" == "y" ] || [ "$ans" == "Y" ]; then
+  git config hooks.GerritId true
+
+  cat << EOF
+
 To disable this feature, run
 
   git config hooks.GerritId false
 
 EOF
-  git config hooks.GerritId true
+fi
+
   echo "Done."
 fi
