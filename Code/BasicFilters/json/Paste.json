@@ -46,7 +46,7 @@
       "ruby_value" : "[ 200, 150 ]"
     } ]
   }, {
-    "tag" : "defaults-rgb",
+    "tag" : "defaults_rgb",
     "description" : "use the defaults on a 2D rgb image",
     "inputA" : "Input/VM1111Shrink-RGB.png",
     "inputB" : "Input/fruit.png",

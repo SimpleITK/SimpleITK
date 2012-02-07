@@ -39,7 +39,7 @@
     "settings" : [ ],
     "tolerance" : "0.0001"
   }, {
-    "tag" : "near identity",
+    "tag" : "near_identity",
     "description" : "same image in input and match should be same output",
     "inputA" : "Input/RA-Short.nrrd",
     "inputB" : "Input/RA-Short.nrrd",

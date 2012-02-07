@@ -34,7 +34,7 @@
     "inputA" : "Input/2th_cthead1.mha",
     "md5hash" : "3fc3603b27bf51df592190227d6cd6ed"
   }, {
-    "tag" : "another-dimension",
+    "tag" : "another_dimension",
     "description" : "project in the 2rd dimension",
     "inputA" : "Input/WhiteDots.png",
     "settings" : [ {

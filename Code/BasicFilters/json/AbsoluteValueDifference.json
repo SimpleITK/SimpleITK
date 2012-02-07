@@ -14,7 +14,7 @@
     "settings" : [ ],
     "md5hash" : "ecb99e6ffea7be1e5419350f725da86b"
   }, {
-    "tag" : "default",
+    "tag" : "another",
     "description" : "checker board with default parameters",
     "inputA" : "Input/WhiteDots.png",
     "inputB" : "Input/BlackDots.png",

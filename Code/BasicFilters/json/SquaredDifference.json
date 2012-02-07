@@ -14,14 +14,14 @@
     "settings" : [ ],
     "md5hash" : "f5161e3505304fa15a232fcdbf08a776"
   }, {
-    "tag" : "Ramp-Short",
+    "tag" : "Ramp_Short1",
     "description" : "Ramp",
     "inputA" : "Input/Ramp-Zero-One-Float.nrrd",
     "inputB" : "Input/Ramp-One-Zero-Float.nrrd",
     "settings" : [ ],
     "md5hash" : "33104fb1c98375529a63436e4d8b189d"
   }, {
-    "tag" : "Ramp-Short",
+    "tag" : "Ramp_Short2",
     "description" : "Ramp",
     "inputA" : "Input/Ramp-Up-Short.nrrd",
     "inputB" : "Input/Ramp-Down-Short.nrrd",

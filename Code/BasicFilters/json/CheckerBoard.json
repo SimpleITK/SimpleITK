@@ -25,7 +25,7 @@
     "settings" : [ ],
     "md5hash" : "f84fcf68e702d715a4de52821cfa0f5e"
   }, {
-    "tag" : "2d with pattern",
+    "tag" : "2d_with_pattern",
     "description" : "checker board with pattern",
     "inputA" : "Input/BlackDots.png",
     "inputB" : "Input/WhiteDots.png",
