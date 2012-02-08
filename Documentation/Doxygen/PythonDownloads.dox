@@ -9,6 +9,17 @@ It is also referenced from Python package index Pypi to facilitate automatic dow
 $ easy_install SimpleITK
 \endcode
 
+\section v040b SimpleITK 0.4.0 Beta
+
+         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.4.0/Python/SimpleITK-0.4.0-py2.7-macosx-10.7-intel.egg#md5=4ebed06667e0f28018b097bf0d4cf1ef">SimpleITK-0.4.0.macosx-10.7-intel-py2.7.egg</a>
+         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.4.0/Python/SimpleITK-0.4.0-py2.6-macosx-10.7-intel.egg#md5=ae03d1c9e130b3c27b406a7ec231e397">SimpleITK-0.4.0.macosx-10.7-intel-py2.6.egg</a>
+         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.4.0/Python/SimpleITK-0.4.0-py2.6-macosx-10.6-universal.egg#md5=5b78326efce046afd11e18e7bc2bbe4e">SimpleITK-0.4.0.macosx-10.6-universal-py2.6.egg</a>
+         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.4.0/Python/SimpleITK-0.4.0-py2.6-linux-x86_64.egg#md5=66f0cc07884058764b85bbb0859df080">SimpleITK-0.4.0-py2.6-linux-x86_64.egg</a>
+         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.4.0/Python/SimpleITK-0.4.0-py2.7-linux-i686.egg#md5=703c169e2c6fbedbfdd2507f02006ec9">SimpleITK-0.4.0-py2.7-linux-i686.egg</a>
+         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.4.0/Python/SimpleITK-0.4.0-py2.7-linux-x86_64.egg#md5=ab3e2bdcceb4ab8ad1f75be2c407ed9f">SimpleITK-0.4.0-py2.7-linux-x86_64.egg</a>
+         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.4.0/Python/SimpleITK-0.4.0-py2.7-win-amd64.egg#md5=db971a84eb950864fd7e3b25bc39e2b9">SimpleITK-0.4.0.macosx-10.7-win-amd64.egg</a>
+         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.4.0/Python/SimpleITK-0.4.0-py2.7-win32.egg#md5=e29c6731c90f7e63555367e543455cc8">SimpleITK-0.4.0.macosx-10.7-win32.egg</a>
+
 \section v030b SimpleITK 0.3.0 Beta
 
          \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.3.0/Python/SimpleITK-0.3.0-py2.7-macosx-10.7-intel.egg#md5=fc2c3a4f6212b4c9ba7afc6e8a5b4b19">SimpleITK-0.3.0.macosx-10.7-intel-py2.7.egg</a>
