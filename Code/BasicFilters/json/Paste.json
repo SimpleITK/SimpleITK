@@ -76,7 +76,7 @@
       "tcl_value" : "[list 20 15]",
       "python_value" : "[ 20, 15 ]",
       "ruby_value" : "[ 20, 15 ]",
-      "R_value" : "[ 20, 15 ]"
+      "R_value" : "c( 20, 15 )"
     }, {
       "parameter" : "SourceIndex",
       "type" : "int",
