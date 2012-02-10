@@ -72,6 +72,7 @@
       "java_value" : "${name}ImageFilter.OrderEnumType.FirstOrder",
       "tcl_value" : "$$${name}ImageFilter_FirstOrder",
       "csharp_value" : "${name}ImageFilter.OrderEnumType.FirstOrder"
+      "R_value" : "'FirstOrder'"
     } ],
     "tolerance" : 1.0E-10
   } ],

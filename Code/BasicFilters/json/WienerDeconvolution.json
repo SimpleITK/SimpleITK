@@ -46,7 +46,8 @@
     "settings" : [ {
       "parameter" : "Normalize",
       "value" : "true",
-      "python_value" : "True"
+      "python_value" : "True",
+      "R_value" : "TRUE"
     } ]
   } ],
   "briefdescription" : "The Wiener deconvolution image filter is designed to restore an image convolved with a blurring kernel while keeping noise enhancement to a minimum.\n",
