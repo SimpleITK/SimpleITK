@@ -73,6 +73,36 @@ namespace itk
       paths.push_back("/Developer"); //A common place to look
       paths.push_back("/opt/ImageJ");   //A common place to look
       paths.push_back("/usr/local/ImageJ");   //A common place to look
+
+#ifdef __x86_64__
+      // Mac 64-bit
+      //
+      ExecutableName = itksys::SystemTools::FindDirectory( "ImageJ64.app" );
+      if( ExecutableName == "" )
+        {
+        // Just assume it is registered properly in a place where the open command will find it.
+        ExecutableName="ImageJ64";
+        }
+      CommandLine << "open -a " << ExecutableName  << " \"" << TempFile << "\"";
+      WriteImage ( image, TempFile );
+      // try executing the command
+      int ret = system ( CommandLine.str().c_str() );
+
+      // failed to find ImageJ64.app.  Try ImageJ.app
+      if (ret) {
+	  ExecutableName = itksys::SystemTools::FindDirectory( "ImageJ.app" );
+	  if( ExecutableName == "" )
+	  {
+          // Just assume it is registered properly in a place where the open command will find it.
+	  ExecutableName="ImageJ";
+        }
+        CommandLine << "open -a " << ExecutableName  << " \"" << TempFile << "\"";
+        system ( CommandLine.str().c_str() );
+      }
+      return;
+#endif
+
+      // Mac 32-bit
       ExecutableName = itksys::SystemTools::FindDirectory( "ImageJ.app" );
       if( ExecutableName == "" )
         {
@@ -80,6 +110,7 @@ namespace itk
         ExecutableName="ImageJ";
         }
       CommandLine << "open -a " << ExecutableName  << " \"" << TempFile << "\"";
+
 #else
       // Must be Linux
       ExecutableName = itksys::SystemTools::FindFile ( "ImageJ" );
