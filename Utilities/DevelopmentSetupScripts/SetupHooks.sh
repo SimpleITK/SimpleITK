@@ -65,11 +65,4 @@ git config hooks.submodule false
 git config hooks.KWStyle.conf "Utilities/KWStyle/SITK.kws.xml.in"
 git config hooks.KWStyle.overwriteRulesConf "Utilities/KWStyle/SITKOverwrite.txt"
 
-git config hooks.uncrustify false
-
-# Set up hook chaining.
-echo "Setting up SimpleITK hook chaining: prepare-commit-msg, commit-msg, pre-commit"
-git config hooks.chain-prepare-commit-msg Utilities/Hooks/prepare-commit-msg
-git config hooks.chain-pre-commit Utilities/Hooks/pre-commit
-
 echo "Done."
