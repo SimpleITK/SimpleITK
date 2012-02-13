@@ -29,7 +29,7 @@ egrep-q "^# Start SimpleITK commit messages" -- "$commit_msg" && return 0
 
 # Insert our extra instructions.
 commit_msg_tmp="$commit_msg.$$"
-sed 's/^# On branch.*/'\
+sed 's/^# \(On\|Not currently on any\) branch.*/'\
 '# Standard SimpleITK commit message prefix (follow with a space):\
 #   BUG:    - fix for runtime crash or incorrect result\
 #   COMP:   - compiler error or warning fix\

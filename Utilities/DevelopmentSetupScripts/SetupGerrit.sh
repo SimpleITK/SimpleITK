@@ -99,18 +99,18 @@ This hook automatically add a "Change-Id" footer to commit messages
 to make interaction with Gerrit easier.
 EOF
 
-read -ep "Would you like to enable it? [Y/n]: " ans
-if [ "$ans" == "y" ] || [ "$ans" == "Y" ]; then
-  git config hooks.GerritId true
+    read -ep "Would you like to enable it? [Y/n]: " ans
+    if [ "$ans" == "y" ] || [ "$ans" == "Y" ]; then
+        git config hooks.GerritId true
 
-  cat << EOF
+        cat << EOF
 
 To disable this feature, run
 
   git config hooks.GerritId false
 
 EOF
-fi
+    fi
 
-  echo "Done."
+    echo "Done."
 fi

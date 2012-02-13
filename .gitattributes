@@ -1,3 +1,1 @@
-.git*            export-ignore
-
-BuildDocs        crlf=input
+.hooks*          export-ignore
