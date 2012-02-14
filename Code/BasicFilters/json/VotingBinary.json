@@ -37,7 +37,7 @@
     "description" : "No parameters changed",
       "inputA" : "Input/BlackDots.png",
     "settings" : [],
-    "md5hash" : "fcd6bcb56c1689fcef28b57c22475bad"
+    "md5hash" : "b8edfef34f6e58075d619891c6c3f5a"
   } ,{
     "tag" : "VotingBinary",
     "description" : "Basic voting",
