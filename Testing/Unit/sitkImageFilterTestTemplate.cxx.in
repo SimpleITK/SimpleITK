@@ -13,14 +13,15 @@
 #include <sitkCastImageFilter.h>
 #include <sitkVersion.h>
 
-#define VERIFYHASH(hash,hashType,image,message)    \
-  {                                             \
-  std::string actualHashValue = hasher.SetHashFunction ( itk::simple::HashImageFilter::hashType ).Execute ( image ); \
-  EXPECT_EQ ( hash, actualHashValue  ) << message;                      \
-  if ( hash != actualHashValue ) {                                      \
-    itk::simple::WriteImage ( image, dataFinder.GetOutputFile ( actualHashValue + ".nrrd" ) ); \
-    std::cout << "Saved image as " << dataFinder.GetOutputFile ( actualHashValue + ".nrrd" ) << std::endl; \
-  }                                                                     \
+#define VERIFYHASH(hash,hashType,image,message)                         \
+  {                                                                     \
+    std::string actualHashValue = itk::simple::Hash( image, itk::simple::HashImageFilter::hashType ); \
+    EXPECT_EQ ( hash, actualHashValue  ) << message;                    \
+    if ( hash != actualHashValue )                                      \
+      {                                                                 \
+      itk::simple::WriteImage ( image, dataFinder.GetOutputFile ( actualHashValue + ".nrrd" ) ); \
+      std::cout << "Saved image as " << dataFinder.GetOutputFile ( actualHashValue + ".nrrd" ) << std::endl; \
+      }                                                                 \
   }
 
 
@@ -30,7 +31,6 @@ TEST(BasicFilters,${name}) {
   itk::simple::Image inputA( 0, 0, itk::simple::sitkUInt8 );
   itk::simple::Image inputB( 0, 0, itk::simple::sitkUInt8 );
   itk::simple::Image output( 0, 0, itk::simple::sitkUInt8 );
-  itk::simple::HashImageFilter hasher;
   std::string inputSHA1hash;
 
   $(if #tests == 0 then
