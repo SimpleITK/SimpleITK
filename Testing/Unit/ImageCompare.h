@@ -35,6 +35,27 @@ ImageCompare imageCompare;  \
   EXPECT_TRUE( imageCompare.compare( x, "", tag ) ) << imageCompare.getMessage(); \
   }
 
+#define IMAGECOMPAREWITHHASH( hash, hashType, image, message )        \
+  { \
+  std::string actualHashValue = itk::simple::Hash( image, itk::simple::HashImageFilter::hashType ); \
+  EXPECT_EQ ( hash, actualHashValue  ) << message;                      \
+  if ( hash != actualHashValue )                                        \
+    {                                                                   \
+    std::string TestImageFilename = dataFinder.GetOutputFile ( actualHashValue + ".png"); \
+    try {                                                               \
+      ImageCompare::NormalizeAndSave( image, TestImageFilename );       \
+                                                                        \
+      std::cout << "<DartMeasurementFile name=\"TestImage\" type=\"image/png\">"; \
+      std::cout << TestImageFilename << "</DartMeasurementFile>" << std::endl; \
+    } catch (... ) {                                                    \
+      std::cerr << "Unknow Error while writing image for measurement" << std::endl; \
+    }                                                                   \
+                                                                        \
+    itk::simple::WriteImage ( image, dataFinder.GetOutputFile ( actualHashValue + ".nrrd" ) ); \
+    std::cout << "Saved actual image as " << dataFinder.GetOutputFile ( actualHashValue + ".nrrd" ) << std::endl; \
+    }                                                                   \
+  }
+
 #define IMAGECOMPARE_WITH_TESTCASE( x, testCase, tag )  \
   { \
 ImageCompare imageCompare;  \
