@@ -208,18 +208,14 @@ end)
       }
 
   $(if md5hash then
-    if inputB then
   OUT = [[
   // Check the hash
-  VERIFYHASH("${md5hash}",MD5,output,"Output MD5 hash failed in ${tag} with input ${inputA} and ${inputB}");]]
-  end
+  VERIFYHASH("${md5hash}",MD5,output,"Output MD5 hash failed in ${tag}");]]
   end)
   $(if sha1hash then
-    if inputB then
   OUT = [[
   // Check the hash
-  VERIFYHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed in ${tag} with input ${inputA} and ${inputB}"); ]]
-  end
+  VERIFYHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed in ${tag}"); ]]
   end) $(if tolerance then
   OUT = [[
  IMAGECOMPAREWITHTOLERANCE ( output, "", ${tolerance} );
