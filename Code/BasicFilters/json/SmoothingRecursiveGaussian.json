@@ -4,7 +4,7 @@
   "template_test_filename" : "ImageFilter",
   "doc" : "",
   "pixel_types" : "BasicPixelIDTypeList",
-  "output_pixel_type" : "float",
+  "output_image_type" : "typename InputImageType::template Rebind<float>::Type",
   "members" : [ {
     "name" : "Sigma",
     "type" : "double",
