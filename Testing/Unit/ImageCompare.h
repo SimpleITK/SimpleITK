@@ -16,6 +16,8 @@ public:
   std::string getMessage() { return mMessage; }
   Self& setTolerance ( double t ) { mTolerance = t; return *this; }
   double getTolerance() { return mTolerance; }
+
+  static void NormalizeAndSave ( const itk::simple::Image &image, const std::string &filename );
 protected:
   std::string mMessage;
   double mTolerance;
