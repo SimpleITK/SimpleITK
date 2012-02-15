@@ -13,16 +13,6 @@
 #include <sitkCastImageFilter.h>
 #include <sitkVersion.h>
 
-#define VERIFYHASH(hash,hashType,image,message)    \
-  {                                             \
-  std::string actualHashValue = hasher.SetHashFunction ( itk::simple::HashImageFilter::hashType ).Execute ( image ); \
-  EXPECT_EQ ( hash, actualHashValue  ) << message;                      \
-  if ( hash != actualHashValue ) {                                      \
-    itk::simple::WriteImage ( image, dataFinder.GetOutputFile ( actualHashValue + ".nrrd" ) ); \
-    std::cout << "Saved image as " << dataFinder.GetOutputFile ( actualHashValue + ".nrrd" ) << std::endl; \
-  }                                                                     \
-  }
-
 
 TEST(BasicFilters,${name}) {
   itk::simple::ImageFileReader reader;
@@ -30,7 +20,6 @@ TEST(BasicFilters,${name}) {
   itk::simple::Image inputA( 0, 0, itk::simple::sitkUInt8 );
   itk::simple::Image inputB( 0, 0, itk::simple::sitkUInt8 );
   itk::simple::Image output( 0, 0, itk::simple::sitkUInt8 );
-  itk::simple::HashImageFilter hasher;
   std::string inputSHA1hash;
 
   $(if #tests == 0 then
@@ -208,18 +197,14 @@ end)
       }
 
   $(if md5hash then
-    if inputB then
   OUT = [[
   // Check the hash
-  VERIFYHASH("${md5hash}",MD5,output,"Output MD5 hash failed in ${tag} with input ${inputA} and ${inputB}");]]
-  end
+  IMAGECOMPAREWITHHASH("${md5hash}",MD5,output,"Output MD5 hash failed in ${tag}");]]
   end)
   $(if sha1hash then
-    if inputB then
   OUT = [[
   // Check the hash
-  VERIFYHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed in ${tag} with input ${inputA} and ${inputB}"); ]]
-  end
+  IMAGECOMPAREWITHHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed in ${tag}"); ]]
   end) $(if tolerance then
   OUT = [[
  IMAGECOMPAREWITHTOLERANCE ( output, "", ${tolerance} );
@@ -269,13 +254,13 @@ TEST_F(Lua,${name}) {
     $(if md5hash then
       OUT = [[
   // Check the hash
-  VERIFYHASH("${md5hash}",MD5,output,"Output MD5 hash failed");
+  IMAGECOMPAREWITHHASH("${md5hash}",MD5,output,"Output MD5 hash failed");
                ]]
       end)
     $(if sha1hash then
       OUT = [[
   // Check the hash
-  VERIFYHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed");
+  IMAGECOMPAREWITHHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed");
                ]]
       end)
     $(if tolerance then
@@ -327,13 +312,13 @@ TEST_F(Python,${name}) {
     $(if md5hash then
       OUT = [[
   // Check the hash
-  VERIFYHASH("${md5hash}",MD5,output,"Output MD5 hash failed");
+  IMAGECOMPAREWITHHASH("${md5hash}",MD5,output,"Output MD5 hash failed");
                ]]
       end)
     $(if sha1hash then
       OUT = [[
   // Check the hash
-  VERIFYHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed");
+  IMAGECOMPAREWITHHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed");
                ]]
       end)
     $(if tolerance then
@@ -385,13 +370,13 @@ TEST_F(Tcl,${name}) {
     $(if md5hash then
       OUT = [[
   // Check the hash
-  VERIFYHASH("${md5hash}",MD5,output,"Output MD5 hash failed");
+  IMAGECOMPAREWITHHASH("${md5hash}",MD5,output,"Output MD5 hash failed");
                ]]
       end)
     $(if sha1hash then
       OUT = [[
   // Check the hash
-  VERIFYHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed");
+  IMAGECOMPAREWITHHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed");
                ]]
       end)
     $(if tolerance then
@@ -443,13 +428,13 @@ TEST_F(R,${name}) {
     $(if md5hash then
       OUT = [[
   // Check the hash
-  VERIFYHASH("${md5hash}",MD5,output,"Output MD5 hash failed");
+  IMAGECOMPAREWITHHASH("${md5hash}",MD5,output,"Output MD5 hash failed");
                ]]
       end)
     $(if sha1hash then
       OUT = [[
   // Check the hash
-  VERIFYHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed");
+  IMAGECOMPAREWITHHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed");
                ]]
       end)
     $(if tolerance then
@@ -509,13 +494,13 @@ TEST_F(Java,${name}) {
     $(if md5hash then
       OUT = [[
   // Check the hash
-  VERIFYHASH("${md5hash}",MD5,output,"Output MD5 hash failed");
+  IMAGECOMPAREWITHHASH("${md5hash}",MD5,output,"Output MD5 hash failed");
                ]]
       end)
     $(if sha1hash then
       OUT = [[
   // Check the hash
-  VERIFYHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed");
+  IMAGECOMPAREWITHHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed");
                ]]
       end)
     $(if tolerance then
@@ -570,13 +555,13 @@ TEST_F(Ruby,${name}) {
     $(if md5hash then
       OUT = [[
   // Check the hash
-  VERIFYHASH("${md5hash}",MD5,output,"Output MD5 hash failed");
+  IMAGECOMPAREWITHHASH("${md5hash}",MD5,output,"Output MD5 hash failed");
                ]]
       end)
     $(if sha1hash then
       OUT = [[
   // Check the hash
-  VERIFYHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed");
+  IMAGECOMPAREWITHHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed");
                ]]
       end)
     $(if tolerance then
@@ -641,13 +626,13 @@ TEST_F(CSharp,${name}) {
     $(if md5hash then
       OUT = [[
   // Check the hash
-  VERIFYHASH("${md5hash}",MD5,output,"Output MD5 hash failed");
+  IMAGECOMPAREWITHHASH("${md5hash}",MD5,output,"Output MD5 hash failed");
                ]]
       end)
     $(if sha1hash then
       OUT = [[
   // Check the hash
-  VERIFYHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed");
+  IMAGECOMPAREWITHHASH("${sha1hash}",SHA1,output,"Output SHA1 hash failed");
                ]]
       end)
     $(if tolerance then

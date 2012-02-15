@@ -5,8 +5,22 @@
 
 namespace sitk = itk::simple;
 
-static void NormalizeAndSave ( sitk::Image image, std::string filename )
+void ImageCompare::NormalizeAndSave ( const sitk::Image &input, const std::string &filename )
 {
+  sitk::Image image = input;
+
+  // Extract the center slice of our image
+  if ( input.GetDimension() == 3 )
+    {
+    std::vector<int> idx( 3, 0 );
+    std::vector<unsigned int> sz = input.GetSize();
+
+    // set to just the center slice
+    idx[2] = (int)( input.GetDepth() / 2.0 );
+    sz[2] = 1;
+    image = sitk::Extract( input, sz, idx );
+    }
+
   sitk::StatisticsImageFilter stats;
   stats.Execute ( image );
   sitk::Image out = sitk::IntensityWindowing ( image, stats.GetMinimum(), stats.GetMaximum(), 0, 255 );
