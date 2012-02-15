@@ -71,6 +71,9 @@
 //STL includes
 #include <string>
 
+// included for import export macros
+#include "sitkCommon.h"
+
 //---------------------------------------------------------------------- 
 //hl includes
 // #include "hl_types.h"
@@ -108,7 +111,7 @@ typedef struct
  *   		If you want to create a hash based on a string or file quickly
  *   		you should use the md5wrapper class instead of MD5.
  */  
-class MD5
+class SITKCommon_EXPORT MD5
 {
 
 	private:

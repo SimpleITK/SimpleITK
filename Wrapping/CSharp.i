@@ -12,6 +12,15 @@
 %CSharpPointerTypemapHelper( itk::SingleValuedCostFunction::Pointer, IntPtr )
 %CSharpPointerTypemapHelper( itk::TransformBase::Pointer, IntPtr )
 
+%CSharpTypemapHelper( int8_t*, IntPtr )
+%CSharpTypemapHelper( uint8_t*, IntPtr )
+%CSharpTypemapHelper( int16_t*, IntPtr )
+%CSharpTypemapHelper( uint16_t*, IntPtr )
+%CSharpTypemapHelper( int32_t*, IntPtr )
+%CSharpTypemapHelper( uint32_t*, IntPtr )
+%CSharpTypemapHelper( float*, IntPtr )
+%CSharpTypemapHelper( double*, IntPtr )
+
 // Add override to ToString method
 %csmethodmodifiers ToString "public override";
 
@@ -19,4 +28,4 @@
 // TODO:
 //%apply unsigned int INOUT[] {unsigned int DefaultOrder[3]}
 
-#endif  // End of C# specific sections
+#endif // End of C# specific sections

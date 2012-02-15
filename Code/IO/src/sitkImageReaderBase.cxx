@@ -1,6 +1,7 @@
 
 #include "sitkImageReaderBase.h"
 #include "sitkMacro.h"
+#include "sitkExceptionObject.h"
 
 #include <stdint.h>
 
@@ -14,7 +15,7 @@ namespace itk {
 namespace simple {
 
 
-itk::ImageIOBase::Pointer
+itk::SmartPointer<ImageIOBase>
 ImageReaderBase
 ::GetImageIOBase(const std::string &fileName)
 {

@@ -7,15 +7,27 @@
   "members" : [ {
     "name" : "Variance",
     "type" : "double",
-    "default" : "1.0"
+    "default" : "1.0",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Convenience Set methods for setting all dimensional parameters to the same values.\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
   }, {
     "name" : "MaximumKernelWidth",
     "type" : "unsigned int",
-    "default" : "32u"
+    "default" : "32u",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set the kernel to be no wider than MaximumKernelWidth pixels, even if MaximumError demands it. The default is 32 pixels.\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : "Set the kernel to be no wider than MaximumKernelWidth pixels, even if MaximumError demands it. The default is 32 pixels.\n"
   }, {
     "name" : "MaximumError",
     "type" : "double",
-    "default" : "0.01"
+    "default" : "0.01",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
   }, {
     "name" : "UseImageSpacing",
     "type" : "bool",
@@ -46,8 +58,16 @@
       "value" : "100.0"
     }, {
       "parameter" : "MaximumKernelWidth",
-      "value" : "64"
+      "value" : "64u",
+      "lua_value" : "64",
+      "python_value" : "64",
+      "ruby_value" : "64",
+      "java_value" : "64",
+      "tcl_value" : "64",
+      "R_value" : "64"
     } ],
     "md5hash" : "f2f002ec76313284a4cff24c3e5eb577"
-  }  ]
+  } ],
+  "briefdescription" : "Blurs an image by separable convolution with discrete gaussian kernels. This filter performs Gaussian blurring by separable convolution of an image and a discrete Gaussian operator (kernel).\n",
+  "detaileddescription" : "The Gaussian operator used here was described by Tony Lindeberg (Discrete Scale-Space Theory and the Scale-Space Primal Sketch. Dissertation. Royal Institute of Technology, Stockholm, Sweden. May 1991.) The Gaussian kernel used here was designed so that smoothing and derivative operations commute after discretization.\nThe variance or standard deviation (sigma) will be evaluated as pixel units if SetUseImageSpacing is off (false) or as physical units if SetUseImageSpacing is on (true, default). The variance can be set independently in each dimension.\nWhen the Gaussian kernel is small, this filter tends to run faster than itk::RecursiveGaussianImageFilter.\n\\see  GaussianOperator\n\\see  Image\n\\see  Neighborhood\n\\see  NeighborhoodOperator\n\\see  RecursiveGaussianImageFilter\n\\par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}\n{Smoothing/DiscreteGaussianImageFilter,Smooth an image with a discrete Gaussian filter}\n\n"
 }

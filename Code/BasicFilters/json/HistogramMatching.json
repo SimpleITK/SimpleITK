@@ -39,7 +39,7 @@
     "settings" : [ ],
     "tolerance" : "0.0001"
   }, {
-    "tag" : "near identity",
+    "tag" : "near_identity",
     "description" : "same image in input and match should be same output",
     "inputA" : "Input/RA-Short.nrrd",
     "inputB" : "Input/RA-Short.nrrd",
@@ -59,6 +59,6 @@
     } ],
     "md5hash" : "a963bd6a755b853103a2d195e01a50d3"
   } ],
-  "briefdescription" : "Normalize the grayscale values between two image by histogram matching.\n",
+  "briefdescription" : "Normalize the grayscale values between two images by histogram matching.\n",
   "detaileddescription" : " HistogramMatchingImageFilternormalizes the grayscale values of a source image based on the grayscale values of a reference image. This filter uses a histogram matching technique where the histograms of the two images are matched only at a specified number of quantile values.\nThis filter was orginally designed to normalize MR images of the same MR protocol and same body part. The algorithm works best if background pixels are excluded from both the source and reference histograms. A simple background exclusion method is to exclude all pixels whose grayscale values are smaller than the mean grayscale value. ThresholdAtMeanIntensityOn()switches on this simple background exclusion method.\nThe source image can be set via either SetInput()or SetSourceImage(). The reference image can be set via SetReferenceImage().\n SetNumberOfHistogramLevels()sets the number of bins used when creating histograms of the source and reference images. SetNumberOfMatchPoints()governs the number of quantile values to be matched.\nThis filter assumes that both the source and reference are of the same type and that the input and output image type have the same number of dimension and have scalar pixel types.\n"
 }

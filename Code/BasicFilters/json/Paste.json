@@ -46,7 +46,7 @@
       "ruby_value" : "[ 200, 150 ]"
     } ]
   }, {
-    "tag" : "defaults-rgb",
+    "tag" : "defaults_rgb",
     "description" : "use the defaults on a 2D rgb image",
     "inputA" : "Input/VM1111Shrink-RGB.png",
     "inputB" : "Input/fruit.png",
@@ -93,5 +93,5 @@
     } ]
   } ],
   "briefdescription" : "Paste an image into another image.\n",
-  "detaileddescription" : " PasteImageFilterallows you to take a section of one image and paste into another image. The SetDestinationIndex()method prescribes where in the first input to start pasting data from the second input. The SetSourceRegion method prescribes the section of the second image to paste into the first. If the output requested region does not have include the SourceRegion after it has been repositioned to DestinationIndex, then the output will just be a copy of the input.\nThe two inputs and output image will have the same pixel type.\n\n\\li {ImageProcessing/PasteImageFilter,Paste a part of one image into another image}\n\n"
+  "detaileddescription" : " PasteImageFilterallows you to take a section of one image and paste into another image. The SetDestinationIndex()method prescribes where in the first input to start pasting data from the second input. The SetSourceRegion method prescribes the section of the second image to paste into the first. If the output requested region does not have include the SourceRegion after it has been repositioned to DestinationIndex, then the output will just be a copy of the input.\nThe two inputs and output image will have the same pixel type.\n\\par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}\n{ImageProcessing/PasteImageFilter,Paste a part of one image into another image}\n\n"
 }

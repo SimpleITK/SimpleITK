@@ -19,6 +19,6 @@
     "tolerance" : 0.01,
     "settings" : [ ]
   } ],
-  "briefdescription" : "Computes the ABS(x) pixel-wise.\n",
-  "detaileddescription" : "\n\\li {ImageProcessing/AbsImageFilter,Compute the absolute value of an image}\n\n"
+  "briefdescription" : "Computes the absolute value of each pixel.\n",
+  "detaileddescription" : "vnl_math_abs() is used to perform the computation.\n\\par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}\n{ImageProcessing/AbsImageFilter,Compute the absolute value of an image}\n\n"
 }

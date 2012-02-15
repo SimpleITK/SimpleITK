@@ -5,8 +5,8 @@ $(include DoNotEditWarning.h.in)
 
 #include <memory>
 
-#include "sitkDualImageFilter.h"
-$(include AddExtraIncludes.h.in)
+#include "sitkImageFilter.h"
+#include "sitkBasicFilters.h"
 
 namespace itk {
   namespace simple {
@@ -69,9 +69,9 @@ $(include ClassEnd.h.in)
      * This function directly calls the execute method of ${name}ImageFilter
      * in order to support a fully functional API
      */
-  Image ${name} ( const Image&$(if number_of_inputs == 2 then OUT=', const Image&' end),
-                   uint32_t inRadius = 1, ${name}ImageFilter::KernelType inKernel =${name}ImageFilter::Ball
-                   $(when members $(foreach members , ${type} in${name} = ${default})) );
+  Image SITKBasicFilters_EXPORT ${name} ( const Image&$(if number_of_inputs == 2 then OUT=', const Image&' end),
+                                          uint32_t inRadius = 1, ${name}ImageFilter::KernelType inKernel =${name}ImageFilter::Ball
+                                          $(when members $(foreach members , ${type} in${name} = ${default})) );
 
    /**
      * itk::simple::${name}ImageFilter Functional Interface
@@ -79,9 +79,9 @@ $(include ClassEnd.h.in)
      * This function directly calls the execute method of ${name}ImageFilter
      * in order to support a fully functional API
      */
-  Image ${name} ( const Image&$(if number_of_inputs == 2 then OUT=', const Image&' end),
-                   const std::vector<uint32_t> inVectorRadius, ${name}ImageFilter::KernelType inKernel =${name}ImageFilter::Ball
-                   $(when members $(foreach members , ${type} in${name} = ${default})) );
+  Image SITKBasicFilters_EXPORT ${name} ( const Image&$(if number_of_inputs == 2 then OUT=', const Image&' end),
+                                          const std::vector<uint32_t> inVectorRadius, ${name}ImageFilter::KernelType inKernel =${name}ImageFilter::Ball
+                                          $(when members $(foreach members , ${type} in${name} = ${default})) );
   }
 }
 #endif

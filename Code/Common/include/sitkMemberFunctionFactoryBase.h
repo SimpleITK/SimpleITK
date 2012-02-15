@@ -12,9 +12,11 @@
 #endif
 
 #include "sitkPixelIDTypes.h"
+#include "sitkPixelIDTypeLists.h"
 #include "sitkMacro.h"
 #include "sitkNonCopyable.h"
 
+#include "Ancillary/TypeList.h"
 #include "Ancillary/FunctionTraits.h"
 
 #if defined SITK_HAS_STLTR1_TR1_UNORDERED_MAP && defined SITK_UNORDERED_MAP_FUNCTIONAL

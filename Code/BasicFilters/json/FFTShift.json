@@ -11,23 +11,23 @@
     "default" : "false",
     "doc" : "",
     "briefdescriptionSet" : "",
-    "detaileddescriptionSet" : "Set/Get whether the filter must perform an inverse transform or not. This option has no effect if none of the size of the input image is odd, but is required to be able to restore the original image if at least one of the size is odd.\n",
+    "detaileddescriptionSet" : "Set/Get whether the filter must invert the transform or not. This option has no effect if none of the size of the input image is even, but is required to restore the original image if at least one of the dimensions has an odd size.\n",
     "briefdescriptionGet" : "",
     "detaileddescriptionGet" : ""
   } ],
   "tests" : [ {
-    "tag" : "defaults-complex",
+    "tag" : "defaults_complex",
     "description" : "Test FFTShift complex",
     "inputA" : "Input/RA-FFT-Complex.nrrd",
     "md5hash" : "9b4b0f11dd58a03d94d0e246e14cf63d",
     "settings" : [ ]
   }, {
-    "tag" : "defaults-float",
+    "tag" : "defaults_float",
     "description" : "Test FFTShift float",
     "inputA" : "Input/RA-Slice-Float.nrrd",
     "md5hash" : "94409cf6d85e17a3dba2f2aba214d4ac",
     "settings" : [ ]
   } ],
-  "briefdescription" : "Shift the zero-frequency components to center of the image.\n",
-  "detaileddescription" : "The fourier transform produce an image where the zero frequency components are in the corner of the image, making it difficult to understand. This filter shift the component to the center of the image. Note that with images with odd size, applying this filter twice will not produce the same image than the original one without using SetInverse(true) on one (and only one) of the two filters.\nhttp://hdl.handle.net/1926/321\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\\see  FFTRealToComplexConjugateImageFilter, FFTComplexConjugateToRealImageFilter, Log10ImageFilter, RescaleIntensityImageFilter\n\n"
+  "briefdescription" : "Shift the zero-frequency components of a Fourier transfrom to the center of the image.\n",
+  "detaileddescription" : "The Fourier transform produces an image where the zero frequency components are in the corner of the image, making it difficult to understand. This filter shifts the component to the center of the image.\n\\note For images with an odd-sized dimension, applying this filter twice will not produce the same image as the original one without using SetInverse(true) on one (and only one) of the two filters.\nhttp://hdl.handle.net/1926/321\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\\see  ForwardFFTImageFilter, InverseFFTImageFilter\n\n"
 }

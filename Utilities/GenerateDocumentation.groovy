@@ -45,8 +45,7 @@ XMLFileOptions.each {
   }
 }
 if ( !XMLFile ) {
-  println ( "Could not  not exist, or is not readable, tried: " )
-  XMLFileOptions.each { print it.name + " " }
+  println ( "Tried to read a file for " + definition.name + " tried: " + XMLFileOptions )
   System.exit ( 1 )
 }
 

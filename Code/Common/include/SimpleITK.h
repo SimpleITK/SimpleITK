@@ -3,9 +3,11 @@
 
 #include <stdint.h>
 
+
+
 // Utility classes
-#include "sitkDetail.h"
 #include "sitkMacro.h"
+#include "sitkDetail.h"
 #include "sitkVersion.h"
 #include "sitkImage.h"
 #include "sitkShow.h"
@@ -20,6 +22,7 @@
 
 
 #include "sitkHashImageFilter.h"
+#include "sitkJoinSeriesImageFilter.h"
 #include "sitkPixelIDTypeLists.h"
 #include "sitkStatisticsImageFilter.h"
 #include "sitkLabelStatisticsImageFilter.h"

@@ -1,8 +1,11 @@
     /**\class ${name}ImageFilter
+     *
      * $(if briefdescription then OUT=[[\brief ${briefdescription}]] end)
      * $(if detaileddescription then OUT=[[${detaileddescription}]] end)
+     *
+     * \sa itk::simple::${name} for the procedual interface
      */
-    class ${name}ImageFilter : public $(if number_of_inputs == 2 then OUT=[[DualImageFilter]] else OUT=[[ImageFilter]] end) {
+    class SITKBasicFilters_EXPORT ${name}ImageFilter : public $(if number_of_inputs == 2 then OUT=[[DualImageFilter]] else OUT=[[ImageFilter]] end) {
     public:
       typedef ${name}ImageFilter Self;
 

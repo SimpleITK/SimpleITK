@@ -32,5 +32,5 @@
     "md5hash" : "da3f74fce21be8b788da331377f7f361"
   } ],
   "briefdescription" : "Extracts the selected index of the vector that is the input pixel type.\n",
-  "detaileddescription" : "This filter is templated over the input image type and output image type.\nThe filter expect the input image pixel type to be a vector and the output image pixel type to be a scalar. The only requirement on the type used for representing the vector is that it must provide an operator[].\n\n\\li {VectorImages/VectorIndexSelectionCastImageFilter,Extract a component of an itkVectorImage}\n\n"
+  "detaileddescription" : "This filter is templated over the input image type and output image type.\nThe filter expect the input image pixel type to be a vector and the output image pixel type to be a scalar. The only requirement on the type used for representing the vector is that it must provide an operator[].\n\\par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}\n{VectorImages/VectorIndexSelectionCastImageFilter,Extract a component/channel of a vector image}\n\n"
 }

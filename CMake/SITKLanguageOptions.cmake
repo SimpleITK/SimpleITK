@@ -24,8 +24,8 @@ endmacro()
 #
 option ( WRAP_LUA "Wrap Lua" ON )
 
-find_package ( PythonInterp QUIET)
-find_package ( PythonLibs QUIET )
+find_package ( PythonInterp 2.6 QUIET)
+find_package ( PythonLibs 2.6 QUIET )
 if ( ${PYTHONLIBS_FOUND} AND ${PYTHONINTERP_FOUND} )
   set( WRAP_PYTHON_DEFAULT ON )
 else ( ${PYTHONLIBS_FOUND} AND ${PYTHONINTERP_FOUND} )
@@ -109,6 +109,11 @@ if ( ${CSHARP_FOUND} )
 else ( ${CSHARP_FOUND} )
   set ( WRAP_CSHARP_DEFAULT OFF )
 endif ( ${CSHARP_FOUND} )
+list( APPEND SITK_LANGUAGES_VARS
+  CSHARP_COMPILER
+  CSHARP_INTERPRETER
+  CSHARP_PLATFORM
+)
 option ( WRAP_CSHARP "Wrap C#" ${WRAP_CSHARP_DEFAULT} )
 
 #
@@ -124,7 +129,7 @@ if ( ${WRAP_R} )
   find_package( R )
 endif()
 
-list( APPEND SITK_LANGUAGES_VARS 
+list( APPEND SITK_LANGUAGES_VARS
  R_INCLUDE_DIR
  R_LIBRARIES
  R_LIBRARY_BASE

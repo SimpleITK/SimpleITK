@@ -2,7 +2,6 @@
 #include <memory>
 
 #include "ImageCompare.h"
-#include "itkExceptionObject.h"
 
 namespace sitk = itk::simple;
 
@@ -43,9 +42,12 @@ bool ImageCompare::compare ( const sitk::Image& image, std::string inTestCase, s
 
   std::string name = testCase
     .append( "_" )
-    .append(testName)
-    .append("_")
-    .append ( tag );
+    .append(testName);
+
+  if ( tag != "" )
+    {
+    name.append("_").append ( tag );
+    }
 
   // Extract the center slice of our image
   if ( image.GetDimension() == 3 )
@@ -84,7 +86,7 @@ bool ImageCompare::compare ( const sitk::Image& image, std::string inTestCase, s
     {
     baseline = sitk::ImageFileReader().SetFileName ( baselineFileName ).Execute();
     }
-  catch ( itk::ExceptionObject& e )
+  catch ( std::exception& e )
     {
     mMessage = "ImageCompare: Failed to load image " + baselineFileName + " because: " + e.what();
     return false;
@@ -120,7 +122,7 @@ bool ImageCompare::compare ( const sitk::Image& image, std::string inTestCase, s
       }
 
     }
-  catch ( itk::ExceptionObject& e )
+  catch ( std::exception& e )
     {
     mMessage = "ImageCompare: Failed to subtract image " + baselineFileName + " because: " + e.what();
     return false;

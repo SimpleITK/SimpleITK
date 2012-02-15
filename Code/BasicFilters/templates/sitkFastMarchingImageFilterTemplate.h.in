@@ -6,7 +6,7 @@ $(include DoNotEditWarning.h.in)
 #include <memory>
 
 #include "sitkDualImageFilter.h"
-$(include AddExtraIncludes.h.in)
+#include "sitkBasicFilters.h"
 
 namespace itk {
   namespace simple {
@@ -69,7 +69,7 @@ $(include ClassEnd.h.in)
      * This function directly calls the execute method of ${name}ImageFilter
      * in order to support a fully functional API
      */
-    Image ${name} ( const Image& imageA,
+    Image SITKBasicFilters_EXPORT ${name} ( const Image& imageA,
       std::vector< std::vector<unsigned int> > inTrialPoints$(when members $(foreach members ,
       ${type} in${name} = ${default})) );
 

@@ -1,5 +1,4 @@
 #include "sitkImage.h"
-#include "sitkMemberFunctionFactory.h"
 
 #include "itkImage.h"
 #include "itkVectorImage.h"
@@ -8,7 +7,10 @@
 
 #include "itkImageDuplicator.h"
 
+#include "sitkExceptionObject.h"
 #include "sitkPimpleImageBase.hxx"
+#include "sitkPixelIDTypeLists.h"
+#include "sitkMemberFunctionFactory.h"
 
 
 namespace itk
@@ -180,6 +182,12 @@ namespace itk
   {
     delete this->m_PimpleImage;
     this->m_PimpleImage = NULL;
+  }
+
+  Image::Image( )
+    : m_PimpleImage( NULL )
+  {
+    Allocate ( 0, 0, 0, sitkUInt8 );
   }
 
   Image::Image( const Image &img )
@@ -402,7 +410,6 @@ namespace itk
       return this->m_PimpleImage->GetBufferAsInt8( );
     }
 
-
     uint8_t *Image::GetBufferAsUInt8( )
     {
       assert( m_PimpleImage );
@@ -463,6 +470,66 @@ namespace itk
     {
       assert( m_PimpleImage );
       this->MakeUniqueForWrite();
+      return this->m_PimpleImage->GetBufferAsDouble( );
+    }
+
+    const int8_t *Image::GetBufferAsInt8( ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetBufferAsInt8( );
+    }
+
+    const uint8_t *Image::GetBufferAsUInt8( ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetBufferAsUInt8( );
+    }
+
+    const int16_t *Image::GetBufferAsInt16( ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetBufferAsInt16( );
+    }
+
+    const uint16_t *Image::GetBufferAsUInt16( ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetBufferAsUInt16( );
+    }
+
+    const int32_t *Image::GetBufferAsInt32( ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetBufferAsInt32( );
+    }
+
+    const uint32_t *Image::GetBufferAsUInt32( ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetBufferAsUInt32( );
+    }
+
+    const int64_t *Image::GetBufferAsInt64( ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetBufferAsInt64( );
+    }
+
+    const uint64_t *Image::GetBufferAsUInt64( )  const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetBufferAsUInt64( );
+    }
+
+    const float *Image::GetBufferAsFloat( ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetBufferAsFloat( );
+    }
+
+    const double *Image::GetBufferAsDouble( ) const
+    {
+      assert( m_PimpleImage );
       return this->m_PimpleImage->GetBufferAsDouble( );
     }
 
@@ -562,7 +629,7 @@ namespace itk
 
 #define SITK_TEMPLATE_InternalInitialization_D( _I, _D )                \
   namespace itk { namespace simple {                                    \
-  template void Image::InternalInitialization<_I,_D>(  PixelIDToImageType< typelist::TypeAt<InstantiatedPixelIDTypeList, \
+  template SITKCommon_EXPORT void Image::InternalInitialization<_I,_D>(  PixelIDToImageType< typelist::TypeAt<InstantiatedPixelIDTypeList, \
                                                                                             _I>::Result, \
                                                                            _D>::ImageType *i ); \
   } }

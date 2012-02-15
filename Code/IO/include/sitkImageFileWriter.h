@@ -4,6 +4,7 @@
 #include "sitkMacro.h"
 #include "sitkImage.h"
 #include "sitkMemberFunctionFactory.h"
+#include "sitkIO.h"
 
 #include <memory>
 
@@ -17,7 +18,7 @@ namespace itk {
      * location specified in FileName. If writing fails, an ITK exception is
      * thrown.
      */
-    class ImageFileWriter {
+    class SITKIO_EXPORT ImageFileWriter {
     public:
       typedef ImageFileWriter Self;
 
@@ -46,7 +47,7 @@ namespace itk {
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 
     };
-    void WriteImage ( const Image& image, std::string filename );
+    SITKIO_EXPORT void WriteImage ( const Image& image, std::string filename );
   }
 }
 

@@ -1,4 +1,7 @@
 #include "SimpleITK.h"
+#include <stdlib.h>
+#include <iostream>
+
 
 // create convenient namespace alias
 namespace sitk = itk::simple;

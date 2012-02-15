@@ -1,0 +1,62 @@
+{
+  "name" : "ThresholdMaximumConnectedComponents",
+  "template_code_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "ScalarPixelIDTypeList",
+  "output_pixel_type" : "uint8_t",
+  "members" : [ {
+    "name" : "MinimumObjectSizeInPixels",
+    "type" : "uint32_t",
+    "default" : "0u"
+  }, {
+    "name" : "UpperBoundary",
+    "type" : "double",
+    "default" : "std::numeric_limits<double>::max()",
+    "pixeltype" : "Input",
+    "custom_itk_cast" : "filter->SetUpperBoundary( static_cast<typename InputImageType::PixelType> ( std::min<double>( this->m_UpperBoundary, itk::NumericTraits<typename InputImageType::PixelType>::max() ) ) );"
+  }, {
+    "name" : "InsideValue",
+    "type" : "uint8_t",
+    "default" : "1u",
+    "pixeltype" : "Output"
+  }, {
+    "name" : "OutsideValue",
+    "type" : "uint8_t",
+    "default" : "0u",
+    "pixeltype" : "Output"
+  } ],
+  "custom_methods" : [ ],
+  "tests" : [ {
+    "tag" : "default",
+    "description" : "2D",
+    "inputA" : "Input/cthead1.png",
+    "settings" : [ ],
+    "md5hash" : "c84b75c78c33844251a1095d9cbcffb9"
+  }, {
+    "tag" : "parameters",
+    "description" : "2D",
+    "inputA" : "Input/cthead1.png",
+    "settings" : [ {
+      "parameter" : "MinimumObjectSizeInPixels",
+      "value" : "40u",
+      "lua_value" : "40",
+      "python_value" : "40",
+      "ruby_value" : "40",
+      "java_value" : "40",
+      "tcl_value" : "40",
+      "R_value" : "40"
+
+    }, {
+      "parameter" : "UpperBoundary",
+      "value" : "150"
+    } ],
+    "md5hash" : "27c6cf8494fcc4e414f1c420e7a9ca6f"
+  }, {
+    "tag" : "float",
+    "description" : "3D-float",
+    "inputA" : "Input/RA-Float.nrrd",
+    "settings" : [ ],
+    "md5hash" : "e475b27bd0dd66ede330c4eab93c17e9"
+  } ]
+}

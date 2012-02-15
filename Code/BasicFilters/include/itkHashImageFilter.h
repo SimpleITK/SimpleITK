@@ -24,7 +24,7 @@ namespace itk {
  * \todo Update in-place on to default after fixing bug in InPlaceImageFilter
  */
 template < class TImageType >
-class ITK_EXPORT HashImageFilter:
+class HashImageFilter:
     public CastImageFilter< TImageType, TImageType >
 {
 public:

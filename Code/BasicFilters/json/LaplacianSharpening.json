@@ -33,6 +33,6 @@
     "settings" : [ ],
     "md5hash" : "f3ad8145d54e583b3e2354b24769df58"
   } ],
-  "briefdescription" : "",
-  "detaileddescription" : "This filter sharpens an image using a Laplacian. LaplacianSharpening highlights regions of rapid intensity change and therefore highlights or enhances the edges. The result is an image that appears more in focus.\n\\par The LaplacianSharpening at each pixel location is computed by\nconvolution with the itk::LaplacianOperator.\n\\par Inputs and Outputs\nThe input to this filter is a scalar-valued itk::Imageof arbitrary dimension. The output is a scalar-valued itk::Image.\n\\see  Image\n\\see  Neighborhood\n\\see  NeighborhoodOperator\n\\see  NeighborhoodIterator\n\\see  LaplacianOperator\n\n"
+  "briefdescription" : "This filter sharpens an image using a Laplacian. LaplacianSharpening highlights regions of rapid intensity change and therefore highlights or enhances the edges. The result is an image that appears more in focus.\n",
+  "detaileddescription" : "\\par The LaplacianSharpening at each pixel location is computed by\nconvolution with the itk::LaplacianOperator.\n\\par Inputs and Outputs\nThe input to this filter is a scalar-valued itk::Imageof arbitrary dimension. The output is a scalar-valued itk::Image.\n\\see  Image\n\\see  Neighborhood\n\\see  NeighborhoodOperator\n\\see  NeighborhoodIterator\n\\see  LaplacianOperator\n\\par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}\n{ImageProcessing/LaplacianSharpeningImageFilter,Sharpen an image}\n\n"
 }
