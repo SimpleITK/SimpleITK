@@ -172,6 +172,9 @@ include(${SimpleITK_SOURCE_DIR}/Utilities/Doxygen/Doxygen.cmake)
 #
 include(SITKLanguageOptions)
 
+#------------------------------------------------------------------------------
+# Ensure that development strips have been setup
+include(sitkCheckSourceTree)
 
 #------------------------------------------------------------------------------
 # set things up for testing, this configuration needs to occour before
