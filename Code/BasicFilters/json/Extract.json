@@ -52,7 +52,8 @@
       "ruby_value" : "Simpleitk::${name}ImageFilter::DIRECTIONCOLLAPSETOIDENTITY",
       "java_value" : "${name}ImageFilter.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
       "tcl_value" : "$$${name}ImageFilter_DIRECTIONCOLLAPSETOIDENTITY",
-      "csharp_value" : "itk.simple.${name}ImageFilter.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY"
+      "csharp_value" : "itk.simple.${name}ImageFilter.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
+      "r_value" : "\'DIRECTIONCOLLAPSETOIDENTITY\'"
     } ]
   }, {
     "tag" : "more",
@@ -83,7 +84,8 @@
       "ruby_value" : "Simpleitk::${name}ImageFilter::DIRECTIONCOLLAPSETOIDENTITY",
       "java_value" : "${name}ImageFilter.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
       "tcl_value" : "$$${name}ImageFilter_DIRECTIONCOLLAPSETOIDENTITY",
-      "csharp_value" : "itk.simple.${name}ImageFilter.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY"
+      "csharp_value" : "itk.simple.${name}ImageFilter.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
+      "r_value" : "\'DIRECTIONCOLLAPSETOIDENTITY\'"
     } ]
   } ],
   "briefdescription" : "Decrease the image size by cropping the image to the selected region bounds.\n",

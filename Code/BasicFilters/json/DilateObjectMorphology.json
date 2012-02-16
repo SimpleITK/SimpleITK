@@ -28,7 +28,8 @@
       "ruby_value" : "Simpleitk::${name}ImageFilter::Ball",
       "java_value" : "${name}ImageFilter.KernelType.Ball",
       "tcl_value" : "$$${name}ImageFilter_Ball",
-      "csharp_value" : "${name}ImageFilter.KernelType.Ball"
+      "csharp_value" : "${name}ImageFilter.KernelType.Ball",
+      "R_value" : "\'Ball\'"
     } ]
   }, {
     "tag" : "short",
@@ -47,7 +48,8 @@
       "ruby_value" : "Simpleitk::${name}ImageFilter::Ball",
       "java_value" : "${name}ImageFilter.KernelType.Ball",
       "tcl_value" : "$$${name}ImageFilter_Ball",
-      "csharp_value" : "${name}ImageFilter.KernelType.Ball"
+      "csharp_value" : "${name}ImageFilter.KernelType.Ball",
+      "R_value" : "\'Ball\'"
     } ]
   } ],
   "briefdescription" : "dilation of an object in an image\n",

@@ -33,7 +33,8 @@
       "ruby_value" : "Simpleitk::${name}ImageFilter::Ball",
       "java_value" : "${name}ImageFilter.KernelType.Ball",
       "tcl_value" : "$$${name}ImageFilter_Ball",
-      "csharp_value" : "${name}ImageFilter.KernelType.Ball"
+      "csharp_value" : "${name}ImageFilter.KernelType.Ball",
+      "R_value" : "\'Ball\'"
     } ]
   } ],
   "briefdescription" : "Black top hat extract local minima that are smaller than the structuring element.\n",
