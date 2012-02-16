@@ -296,6 +296,26 @@ if ( WRAP_R )
   SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${R_LIBRARIES})
   set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITK_wrap.cxx PROPERTIES COMPILE_FLAGS "-w")
 
+  get_target_property( SIMPLEITKR_BINARY_MODULE ${SWIG_MODULE_SimpleITK_REAL_NAME} LOCATION )
+  file(TO_NATIVE_PATH "${SIMPLEITKR_BINARY_MODULE}" SIMPLEITKR_NATIVE_BINARY_MODULE )
+
+  include( sitkConfigureFileBuildtime )
+  configure_file_buildtime( "${CMAKE_CURRENT_SOURCE_DIR}/LoadSimpleITK.R.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/LoadSimpleITK.R" )
+  configure_file_buildtime( "${CMAKE_CURRENT_SOURCE_DIR}/makeSimpleITKRData.R.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/makeSimpleITKRData.R" )
+
+
+  add_dependencies( ${SWIG_MODULE_SimpleITK_REAL_NAME} ConfigureFileBuildtime )
+
+  add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_REAL_NAME}
+      POST_BUILD
+      COMMAND ${R_COMMAND}
+        --slave --vanilla
+        "--file=${CMAKE_CURRENT_BINARY_DIR}/makeSimpleITKRData.R"
+      COMMENT "Pre-compiling SimpleITK.R" )
+
+
 endif()
 
 # Packaging for distribution
