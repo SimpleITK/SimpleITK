@@ -79,7 +79,8 @@
       "value" : "{113,84}",
       "tcl_value" : "[list 113 84]",
       "python_value" : "[ 113, 84 ]",
-      "ruby_value" : "[ 113, 84 ]"
+      "ruby_value" : "[ 113, 84 ]",
+      "R_value" : "c( 113, 84 )"
     }, {
       "parameter" : "Seed2",
       "type" : "uint32_t",
@@ -87,7 +88,8 @@
       "value" : "{120,99}",
       "tcl_value" : "[list 120 99]",
       "python_value" : "[ 120, 99 ]",
-      "ruby_value" : "[ 120, 99 ]"
+      "ruby_value" : "[ 120, 99 ]",
+      "R_value" : "[ 120, 99 ]"
     }, {
       "parameter" : "Threshold",
       "value" : "0.001"

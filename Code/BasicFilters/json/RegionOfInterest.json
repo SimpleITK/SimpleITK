@@ -54,7 +54,8 @@
       "value" : "{167, 151}",
       "tcl_value" : "[list 167 151]",
       "python_value" : "[ 167, 151 ]",
-      "ruby_value" : "[ 167, 151 ]"
+      "ruby_value" : "[ 167, 151 ]",
+      "R_value" : "c( 167, 151 )"
     } ]
   } ],
   "briefdescription" : "Extract a region of interest from the input image.\n",

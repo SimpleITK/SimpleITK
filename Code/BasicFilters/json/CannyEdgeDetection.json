@@ -71,7 +71,8 @@
       "value" : "{1.0,1.0,1.0}",
       "tcl_value" : "[list 1.0 1.0 1.0]",
       "python_value" : "[ 1.0, 1.0, 1.0]",
-      "ruby_value" : "[ 1.0, 1.0, 1.0 ]"
+      "ruby_value" : "[ 1.0, 1.0, 1.0 ]",
+      "R_value" : "c( 1.0, 1.0, 1.0 )"
     } ],
     "md5hash" : "a9f58b23223cdbcd5baead53dd8f75d8"
   } ],

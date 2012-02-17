@@ -68,6 +68,7 @@
       "tcl_value" : "[list 10 0 10]",
       "python_value" : "[ 10, 0, 10 ]",
       "ruby_value" : "[ 10, 0, 10 ]"
+      "R_value" : "c( 10, 0, 10 )"
     }, {
       "parameter" : "Index",
       "type" : "int",
@@ -75,7 +76,8 @@
       "value" : "{16, 20, 51}",
       "tcl_value" : "[list 16 20 51]",
       "python_value" : "[ 16, 20, 51 ]",
-      "ruby_value" : "[ 16, 20, 51 ]"
+      "ruby_value" : "[ 16, 20, 51 ]",
+      "R_value" : "c( 16, 20, 51 )"
     }, {
       "parameter" : "DirectionCollapseToStrategy",
       "value" : "itk::simple::${name}ImageFilter::DIRECTIONCOLLAPSETOIDENTITY",

@@ -36,7 +36,8 @@
       "value" : "{20,4}",
       "tcl_value" : "[list 20 4]",
       "python_value" : "[ 20, 4 ]",
-      "ruby_value" : "[ 20, 4 ]"
+      "ruby_value" : "[ 20, 4 ]",
+      "R_value" : "c( 20, 4 )"
     } ],
     "md5hash" : "379bd66a18b7ae029c101ebdcb20a8b3"
   } ],

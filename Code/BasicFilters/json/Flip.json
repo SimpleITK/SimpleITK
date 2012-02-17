@@ -45,7 +45,8 @@
       "value" : "{ true, false, true }",
       "tcl_value" : "[list 1 0 1]",
       "python_value" : "[ 1, 0, 1 ]",
-      "ruby_value" : "[ 1, 0, 1 ]"
+      "ruby_value" : "[ 1, 0, 1 ]",
+      "R_value" : "c( 1, 0, 1 )"
     } ]
   } ],
   "briefdescription" : "Flips an image across user specified axes.\n",
