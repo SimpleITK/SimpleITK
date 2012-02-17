@@ -4,6 +4,8 @@
 #include <itksys/SystemTools.hxx>
 #include <itksys/Process.h>
 #include <stdlib.h>
+#include <iostream>
+#include <iterator>
 
 namespace itk
 {
@@ -11,6 +13,10 @@ namespace itk
   {
 
   static int ShowImageCount = 0;
+
+  // time to wait in mili-seconds before we check if the process is OK
+  const unsigned int ProcessDelay = 500;
+
 
   static std::string FormatFileName ( std::string TempDirectory, std::string name )
   {
@@ -29,6 +35,98 @@ namespace itk
   return TempFile;
   }
 
+  /**
+   * This function take a list of command line arguments, and runs a
+   * process based on it. It wait for a fraction of a section before
+   * checking it's state, to verify it was launched OK.
+   */
+  static void ExecuteShow( const std::vector<std::string> & cmdLine )
+  {
+
+    // if debug
+    // std::copy( cmdLine.begin(), cmdLine.end(), std::ostream_iterator<std::string>( std::cout, " " ) );
+    // std::cout << std::endl;
+
+    std::vector<const char*> cmd( cmdLine.size() + 1, NULL );
+
+    for ( unsigned int i = 0; i < cmdLine.size(); ++i )
+      {
+      cmd[i] = cmdLine[i].c_str();
+      }
+
+    itksysProcess *kp = itksysProcess_New();
+
+    itksysProcess_SetCommand( kp, &cmd[0] );
+
+    itksysProcess_SetOption( kp, itksysProcess_Option_Detach, 1 );
+
+    // For detached processes, this appears not to be the default
+    itksysProcess_SetPipeShared( kp, itksysProcess_Pipe_STDERR, 1);
+    itksysProcess_SetPipeShared( kp, itksysProcess_Pipe_STDOUT, 1);
+
+    itksysProcess_Execute( kp );
+
+    // Wait one second then check to see if we launched ok.
+    // N.B. Because the launched process may spawn a child process for
+    // the acutal application we want, this methods is needed to be
+    // called before the GetState, so that we get more then the
+    // imediate result of the initial execution.
+    double timeout = ProcessDelay;
+    itksysProcess_WaitForExit( kp, &timeout );
+
+
+    switch (itksysProcess_GetState(kp))
+      {
+      case itksysProcess_State_Executing:
+        // This first case is what we expect if everything went OK.
+
+        // We want the other process to continue going
+        itksysProcess_Delete( kp ); // implicitly disowns
+        break;
+
+      case itksysProcess_State_Exited:
+        {
+        int exitValue = itksysProcess_GetExitValue(kp);
+        if ( exitValue != 0 )
+          {
+          sitkExceptionMacro (  << "Process returned " << exitValue << "." );
+          }
+        }
+        break;
+
+      case itksysProcess_State_Killed:
+        itksysProcess_Delete( kp );
+        sitkExceptionMacro (  << "Child was killed by parent." );
+        break;
+
+      case itksysProcess_State_Exception:
+        {
+        std::string exceptionString = itksysProcess_GetExceptionString(kp);
+        itksysProcess_Delete( kp );
+        sitkExceptionMacro (  << "Child terminated abnormally: " << exceptionString );;
+        }
+        break;
+
+      case itksysProcess_State_Error:
+        {
+        std::string errorString = itksysProcess_GetErrorString(kp);
+        itksysProcess_Delete( kp );
+        sitkExceptionMacro (  << "Error in administrating child process: [" << errorString << "]" );
+        }
+        break;
+
+      // these states should not occour, because they are the result
+      // from actions we don't take
+      case itksysProcess_State_Expired:
+      case itksysProcess_State_Disowned:
+      case itksysProcess_State_Starting:
+      default:
+        itksysProcess_Delete( kp );
+        sitkExceptionMacro (  << "Unexpected process state!" );
+      };
+
+  }
+
     void Show( const Image &image, const std::string name)
     {
       // Try to find ImageJ, write out a file and open
@@ -36,8 +134,9 @@ namespace itk
       std::string ExecutableName = itksys::SystemTools::FindFile( "ImageJ" );
       std::string TempDirectory = "";
       std::string TempFile = "";
-      std::ostringstream CommandLine;
+      std::vector<std::string> CommandLine;
 #if defined(WIN32)
+
       // Windows
       // Create possible paths
       ExecutableName = "ImageJ.exe";
@@ -63,7 +162,9 @@ namespace itk
         }
       TempDirectory = TempDirectory + "\\";
       TempFile = FormatFileName ( TempDirectory, name );
-      CommandLine << "\"" + ExecutableName + "\" -o \"" + TempFile + "\"";
+      CommandLine.push_back( ExecutableName );
+      CommandLine.push_back( "-o" );
+      CommandLine.push_back( TempFile );
 #else
       // Handle Linux and Mac
       TempDirectory = "/tmp/";
@@ -79,7 +180,10 @@ namespace itk
         // Just assume it is registered properly in a place where the open command will find it.
         ExecutableName="ImageJ";
         }
-      CommandLine << "open -a " << ExecutableName  << " \"" << TempFile << "\"";
+      CommandLine.push_back( "open" );
+      CommandLine.push_back( "-a" );
+      CommandLine.push_back( ExecutableName );
+      CommandLine.push_back( TempFile );
 #else
       // Must be Linux
       ExecutableName = itksys::SystemTools::FindFile ( "ImageJ" );
@@ -87,23 +191,18 @@ namespace itk
         {
         ExecutableName = itksys::SystemTools::FindFile ( "imagej" );
         }
-      CommandLine << "\"" + ExecutableName + "\" -o \"" << TempFile << "\" &";
+      CommandLine.push_back( ExecutableName );
+      CommandLine.push_back( "-o" );
+      CommandLine.push_back( TempFile );
 #endif
 #endif
 
       WriteImage ( image, TempFile );
-      //std::cout << "Attempting: " << CommandLine.str().c_str() << std::endl;
-      system ( CommandLine.str().c_str() );
+
+      // run the compiled command-line in a process which will detach
+      ExecuteShow( CommandLine );
+
     }
 
   }
 }
-
-/*
-
-i = SimpleITK.ReadImage ( '/home/blezek/Data/Fixed.nrrd' )
-SimpleITK.Show ( i, "test" )
-
- i = SimpleITK.ReadImage ( 'RA-Float.nrrd' )
- SimpleITK.Show ( i )
-*/
