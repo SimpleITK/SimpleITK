@@ -37,7 +37,7 @@ namespace itk
 
   /**
    * This function take a list of command line arguments, and runs a
-   * process based on it. It wait for a fraction of a section before
+   * process based on it. It waits for a fraction of a second before
    * checking it's state, to verify it was launched OK.
    */
   static void ExecuteShow( const std::vector<std::string> & cmdLine )
@@ -174,6 +174,45 @@ namespace itk
       paths.push_back("/Developer"); //A common place to look
       paths.push_back("/opt/ImageJ");   //A common place to look
       paths.push_back("/usr/local/ImageJ");   //A common place to look
+
+#ifdef __x86_64__
+      // Mac 64-bit
+      //
+      ExecutableName = itksys::SystemTools::FindDirectory( "ImageJ64.app" );
+      if( ExecutableName == "" )
+        {
+        // Just assume it is registered properly in a place where the open command will find it.
+        ExecutableName="ImageJ64";
+        }
+      WriteImage ( image, TempFile );
+
+      CommandLine.push_back( "open" );
+      CommandLine.push_back( "-a" );
+      CommandLine.push_back( ExecutableName );
+      CommandLine.push_back( TempFile );
+
+      try
+        {
+        ExecuteShow( CommandLine );
+        }
+      catch(...)
+        {
+        // failed to find ImageJ64.app.  Try ImageJ.app
+
+        ExecutableName = itksys::SystemTools::FindDirectory( "ImageJ.app" );
+        if( ExecutableName == "" )
+          {
+          // Just assume it is registered properly in a place where the open command will find it.
+          ExecutableName="ImageJ";
+          }
+        CommandLine[2] = ExecutableName;
+        // run the compiled command-line in a process which will detach
+        ExecuteShow( CommandLine );
+        }
+      return;
+#endif
+
+      // Mac 32-bit
       ExecutableName = itksys::SystemTools::FindDirectory( "ImageJ.app" );
       if( ExecutableName == "" )
         {
@@ -184,6 +223,7 @@ namespace itk
       CommandLine.push_back( "-a" );
       CommandLine.push_back( ExecutableName );
       CommandLine.push_back( TempFile );
+
 #else
       // Must be Linux
       ExecutableName = itksys::SystemTools::FindFile ( "ImageJ" );
