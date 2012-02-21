@@ -35,11 +35,13 @@
     "settings" : [ {
       "parameter" : "RunOneIteration",
       "value" : "false",
-      "python_value" : "False"
+      "python_value" : "False",
+      "R_value" : "FALSE"
     }, {
       "parameter" : "FullyConnected",
       "value" : "true",
-      "python_value" : "True"
+      "python_value" : "True",
+      "R_value" : "TRUE"
     } ]
   } ],
   "briefdescription" : "geodesic gray scale erosion of an image\n",

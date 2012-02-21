@@ -39,7 +39,8 @@
       "ruby_value" : "Simpleitk::${name}ImageFilter::Ball",
       "java_value" : "${name}ImageFilter.KernelType.Ball",
       "tcl_value" : "$$${name}ImageFilter_Ball",
-      "csharp_value" : "${name}ImageFilter.KernelType.Ball"
+      "csharp_value" : "${name}ImageFilter.KernelType.Ball",
+      "R_value" : "\'Ball\'"
     }, {
       "parameter" : "ForegroundValue",
       "value" : "255.0"
@@ -56,7 +57,8 @@
       "value" : "{20,1}",
       "tcl_value" : "[list 20 1]",
       "python_value" : "[ 20, 1 ]",
-      "ruby_value" : "[ 20, 1 ]"
+      "ruby_value" : "[ 20, 1 ]",
+      "R_value" : "c( 20, 1 )"
     }, {
       "parameter" : "KernelType",
       "value" : "itk::simple::${name}ImageFilter::Box",
@@ -65,7 +67,8 @@
       "ruby_value" : "Simpleitk::${name}ImageFilter::Box",
       "java_value" : "${name}ImageFilter.KernelType.Box",
       "tcl_value" : "$$${name}ImageFilter_Box",
-      "csharp_value" : "${name}ImageFilter.KernelType.Box"
+      "csharp_value" : "${name}ImageFilter.KernelType.Box",
+      "R_value" : "\'Ball\'"
     }, {
       "parameter" : "ForegroundValue",
       "value" : "255"

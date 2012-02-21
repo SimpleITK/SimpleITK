@@ -53,7 +53,8 @@
     }, {
       "parameter" : "FullyConnected",
       "value" : "true",
-      "python_value" : "True"
+      "python_value" : "True",
+      "R_value" : "TRUE"
     } ]
   } ],
   "briefdescription" : "Labels the pixels on the border of the objects in a binary image.\n",

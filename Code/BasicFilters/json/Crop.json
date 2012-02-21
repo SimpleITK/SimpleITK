@@ -46,7 +46,8 @@
       "value" : "{100, 100}",
       "tcl_value" : "[list 100 100]",
       "python_value" : "[ 100, 100 ]",
-      "ruby_value" : "[ 100, 100 ]"
+      "ruby_value" : "[ 100, 100 ]",
+      "R_value" : "c( 100, 100 )"
     }, {
       "parameter" : "UpperBoundaryCropSize",
       "type" : "unsigned int",
@@ -54,7 +55,8 @@
       "value" : "{167, 151}",
       "tcl_value" : "[list 167 151]",
       "python_value" : "[ 167, 151 ]",
-      "ruby_value" : "[ 167, 151 ]"
+      "ruby_value" : "[ 167, 151 ]",
+      "R_value" : "c( 167, 151 )"
     } ]
   } ],
   "briefdescription" : "Decrease the image size by cropping the image by an itk::Sizeat both the upper and lower bounds of the largest possible region.\n",

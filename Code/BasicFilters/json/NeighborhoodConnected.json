@@ -56,7 +56,8 @@
       "value" : [ "{100,100}", "{95,85}" ],
       "tcl_value" : [ "100 100", "95 85" ],
       "python_value" : [ "[100,100]", "[95,85]" ],
-      "ruby_value" : [ "[100,100]", "[95,85]" ]
+      "ruby_value" : [ "[100,100]", "[95,85]" ],
+      "R_value" : [ "c(100,100)", "c(95,85)" ]
     }, {
       "parameter" : "Upper",
       "value" : 255
@@ -75,7 +76,8 @@
       "tcl_value" : "[list 5 5]",
       "python_value" : "[5,5]",
       "lua_value" : "{5,5}",
-      "ruby_value" : "[5,5]"
+      "ruby_value" : "[5,5]",
+      "R_value" : "c(5,5)"
     } ]
   } ],
   "briefdescription" : "Label pixels that are connected to a seed and lie within a neighborhood.\n",

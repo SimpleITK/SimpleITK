@@ -43,7 +43,8 @@
       "value" : "{200, 150}",
       "tcl_value" : "[list 200 150]",
       "python_value" : "[ 200, 150 ]",
-      "ruby_value" : "[ 200, 150 ]"
+      "ruby_value" : "[ 200, 150 ]",
+      "R_value" : "c( 200, 150 )"
     } ]
   }, {
     "tag" : "defaults_rgb",
@@ -58,7 +59,8 @@
       "value" : "{179, 240}",
       "tcl_value" : "[list 179 240]",
       "python_value" : "[ 179, 240 ]",
-      "ruby_value" : "[ 179, 240 ]"
+      "ruby_value" : "[ 179, 240 ]",
+      "R_value" : "c( 179, 240 )"
     } ]
   }, {
     "tag" : "set_parameters",
@@ -73,7 +75,8 @@
       "value" : "{20, 15}",
       "tcl_value" : "[list 20 15]",
       "python_value" : "[ 20, 15 ]",
-      "ruby_value" : "[ 20, 15 ]"
+      "ruby_value" : "[ 20, 15 ]",
+      "R_value" : "[ 20, 15 ]"
     }, {
       "parameter" : "SourceIndex",
       "type" : "int",
@@ -81,7 +84,8 @@
       "value" : "{100, 100}",
       "tcl_value" : "[list 100 100]",
       "python_value" : "[ 100, 100 ]",
-      "ruby_value" : "[ 100, 100 ]"
+      "ruby_value" : "[ 100, 100 ]",
+      "R_value" : "c( 100, 100 )"
     }, {
       "parameter" : "DestinationIndex",
       "type" : "int",
@@ -89,7 +93,8 @@
       "value" : "{100, 100}",
       "tcl_value" : "[list 100 100]",
       "python_value" : "[ 100, 100 ]",
-      "ruby_value" : "[ 100, 100 ]"
+      "ruby_value" : "[ 100, 100 ]",
+      "R_value" : "c( 100, 100 )"
     } ]
   } ],
   "briefdescription" : "Paste an image into another image.\n",

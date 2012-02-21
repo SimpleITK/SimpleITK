@@ -38,7 +38,8 @@
       "value" : "{5,10,15}",
       "tcl_value" : "[list 5 10 15]",
       "python_value" : "[ 5, 10, 15 ]",
-      "ruby_value" : "[ 5, 10, 15 ]"
+      "ruby_value" : "[ 5, 10, 15 ]",
+      "R_value" : "c( 5, 10, 15 )"
     }, {
       "parameter" : "PadUpperBound",
       "type" : "unsigned int",
@@ -46,7 +47,8 @@
       "value" : "{3,6,9}",
       "tcl_value" : "[list 3 6 9]",
       "python_value" : "[ 3, 6, 9 ]",
-      "ruby_value" : "[ 3, 6, 9 ]"
+      "ruby_value" : "[ 3, 6, 9 ]",
+      "R_value" : "c( 3, 6, 9 )"
     } ]
   } ],
   "briefdescription" : "Increase the image size by padding with replicants of the input image value.\n",

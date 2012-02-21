@@ -29,7 +29,8 @@
     "settings" : [ {
       "parameter" : "FullyConnected",
       "value" : "true",
-      "python_value" : "True"
+      "python_value" : "True",
+      "R_value" : "TRUE"
     } ],
     "md5hash" : "e40b7cdfc1b34ae2e6b13660d626cc29"
   } ],

@@ -37,7 +37,8 @@
       "value" : "{0,1}",
       "tcl_value" : "[list 0 1]",
       "python_value" : "[ 0, 1 ]",
-      "ruby_value" : "[ 0, 1 ]"
+      "ruby_value" : "[ 0, 1 ]",
+      "R_value" : "c( 0, 1 )"
     } ]
   }, {
     "tag" : "more",
@@ -51,7 +52,8 @@
       "value" : "{1,2,0}",
       "tcl_value" : "[list 1 2 0]",
       "python_value" : "[ 1, 2, 0 ]",
-      "ruby_value" : "[ 1, 2, 0 ]"
+      "ruby_value" : "[ 1, 2, 0 ]",
+      "R_value" : "c( 1, 2, 0 )"
     } ]
   } ],
   "briefdescription" : "Permutes the image axes according to a user specified order.\n",

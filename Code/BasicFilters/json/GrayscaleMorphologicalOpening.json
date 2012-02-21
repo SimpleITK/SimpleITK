@@ -23,7 +23,8 @@
       "ruby_value" : "Simpleitk::${name}ImageFilter::Ball",
       "java_value" : "${name}ImageFilter.KernelType.Ball",
       "tcl_value" : "$$${name}ImageFilter_Ball",
-      "csharp_value" : "${name}ImageFilter.KernelType.Ball"
+      "csharp_value" : "${name}ImageFilter.KernelType.Ball",
+      "R_value" : "\'Box\'"
     } ]
   }, {
     "tag" : "GrayscaleMorphologicalOpeningVectorRadius1",
@@ -37,7 +38,8 @@
       "value" : "{20,5,2}",
       "tcl_value" : "[list 20 5 2]",
       "python_value" : "[ 20, 5, 2 ]",
-      "ruby_value" : "[ 20, 5, 2 ]"
+      "ruby_value" : "[ 20, 5, 2 ]",
+      "R_value" : "c( 20, 5, 2 )"
     }, {
       "parameter" : "KernelType",
       "value" : "itk::simple::${name}ImageFilter::Cross",
@@ -46,7 +48,8 @@
       "ruby_value" : "Simpleitk::${name}ImageFilter::Cross",
       "java_value" : "${name}ImageFilter.KernelType.Cross",
       "tcl_value" : "$$${name}ImageFilter_Cross",
-      "csharp_value" : "itk.simple.${name}ImageFilter.KernelType.Cross"
+      "csharp_value" : "itk.simple.${name}ImageFilter.KernelType.Cross",
+      "R_value" : "\'Cross\'"
     } ]
   }, {
     "tag" : "GrayscaleMorphologicalOpeningVectorRadius2",
@@ -60,7 +63,8 @@
       "value" : "{20,5}",
       "tcl_value" : "[list 20 5]",
       "python_value" : "[ 20, 5 ]",
-      "ruby_value" : "[ 20, 5 ]"
+      "ruby_value" : "[ 20, 5 ]",
+      "R_value" : "c( 20, 5 )"
     }, {
       "parameter" : "KernelType",
       "value" : "itk::simple::${name}ImageFilter::Box",
@@ -69,7 +73,8 @@
       "ruby_value" : "Simpleitk::${name}ImageFilter::Box",
       "java_value" : "${name}ImageFilter.KernelType.Box",
       "tcl_value" : "$$${name}ImageFilter_Box",
-      "csharp_value" : "itk.simple.${name}ImageFilter.KernelType.Box"
+      "csharp_value" : "itk.simple.${name}ImageFilter.KernelType.Box",
+      "R_value" : "\'Box\'"
     } ]
   } ],
   "briefdescription" : "gray scale dilation of an image\n",

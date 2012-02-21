@@ -415,9 +415,15 @@ TEST_F(R,${name}) {
         ]]
     end)
 
+  // This is nothing but a hack to tell the scripts where the file is
+  // to load the SimpleITK R library
+  SetEnvironment ( "R_SIMPLEITK_LOADER", dataFinder.GetBuildDirectory()+"/Wrapping/LoadSimpleITK.R" );
+
+
   std::string Script = dataFinder.GetBuildDirectory() + "/Testing/Unit/RTests/${name}ImageFilterTest.R";
   $(foreach tests
     {
+
     /* ${description} */
     std::vector<std::string> CommandLine;
     std::string outputFileName = dataFinder.GetOutputFile ( "R-${name}-${tag}.nrrd" );
@@ -426,12 +432,16 @@ TEST_F(R,${name}) {
       ASSERT_TRUE ( itksys::SystemTools::RemoveFile ( outputFileName.c_str() ) ) << "Deleting file " << outputFileName;
     }
     CommandLine.push_back ( dataFinder.GetRExecutable() );
-    CommandLine.push_back ( Script );
+    CommandLine.push_back ( "--slave" );
+    CommandLine.push_back ( "--vanilla" );
+    CommandLine.push_back ( std::string("--file=")+Script );
+    CommandLine.push_back ( "--args" );
     CommandLine.push_back ( "${tag}" );
     CommandLine.push_back ( dataFinder.GetFile ( "${inputA}" ) );
     $(if inputB then
       OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
       end)
+
     CommandLine.push_back ( outputFileName );
     EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
@@ -460,6 +470,7 @@ TEST_F(R,${name}) {
                ]]
       end)
       }
+
     )
 }
 #endif

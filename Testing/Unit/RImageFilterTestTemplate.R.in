@@ -26,7 +26,7 @@
 # This is R code to test ${name}
 #
 
-library(SimpleITK)
+source( Sys.getenv( "R_SIMPLEITK_LOADER" ) )
 
 inputs <- 1
 $(if number_of_inputs then
@@ -37,9 +37,10 @@ args <- commandArgs( TRUE )
 
 numberOfArguments <- length(args)
 
-if numberOfArguments < inputs + 2:
+if ( numberOfArguments < inputs + 2) {
     print ( "Usage: ${name} tag <input(s)> output" )
     quit( save="no", status=1 )
+}
 
 tag <- args[[1]]
 
@@ -72,7 +73,7 @@ $(if parameter == "SeedList" then
     ]]
 else
 OUT=[[
-   filter <- filter.Set${parameter}( $(if R_value then OUT='${R_value}' else OUT='${value}' end) )
+   filter <- ${name}ImageFilter_Set${parameter}( filter, $(if R_value then OUT='${R_value}' else OUT='${value}' end) )
   ]]
 end)
 )
@@ -86,9 +87,9 @@ output <- ${name}ImageFilter_Execute ( filter, inputA, inputB )]]
   else
 OUT=[[output <- ${name}ImageFilter_Execute ( filter, inputA )]]
   end)
+  writer <- ImageFileWriter_SetFileName( writer, lastargument )
+  writer <- ImageFileWriter_Execute( writer, output )
   }
-writer <- ImageFileWriter_SetFileName( writer, lastargument )
-writer <- ImageFileWriter_Execute( writer, output )
 )
 
 quit( save="no", status=0 )
