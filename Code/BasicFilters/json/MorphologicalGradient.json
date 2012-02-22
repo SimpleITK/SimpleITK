@@ -24,7 +24,8 @@
       "ruby_value" : "Simpleitk::${name}ImageFilter::Ball",
       "java_value" : "${name}ImageFilter.KernelType.Ball",
       "tcl_value" : "$$${name}ImageFilter_Ball",
-      "csharp_value" : "${name}ImageFilter.KernelType.Ball"
+      "csharp_value" : "${name}ImageFilter.KernelType.Ball",
+      "R_value" : "\'Ball'"
     } ]
   } ],
   "briefdescription" : "gray scale dilation of an image\n",

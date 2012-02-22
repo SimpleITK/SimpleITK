@@ -28,21 +28,37 @@ foreach( line ${results})
   
 endforeach()
 
+set( CONFIGUREBUILDTIME_filename ${filename} )
+set( CONFIGUREBUILDTIME_out_filename ${out_filename} )
+
+list( APPEND vars CONFIGUREBUILDTIME_filename CONFIGUREBUILDTIME_out_filename )
 
 VariableListToArgs( vars configure_vars )
 
 file( WRITE "${CMAKE_BINARY_DIR}/CMake/configure_file_buildtime.cmake"
-  "configure_file( \"${filename}\" \"${out_filename}\" )" )
+  "configure_file( \"\${CONFIGUREBUILDTIME_filename}\" \"\${CONFIGUREBUILDTIME_out_filename}\" )" )
 
-set( cmd ${CMAKE_COMMAND} "${configure_vars}" -P "${CMAKE_BINARY_DIR}/CMake/configure_file_buildtime.cmake")
+set( cmd ${CMAKE_COMMAND} "${configure_vars}"  -P "${CMAKE_BINARY_DIR}/CMake/configure_file_buildtime.cmake")
 
-add_custom_command(
-  OUTPUT "${out_filename}"
-  WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-  COMMENT "BuildTime Configure of ${filename} to ${out_filename}\n COMMAND ${cmd}"
-  COMMAND  ${cmd}
-)
+# use the type target property to check to see if our target already exists
+get_target_property(target_type ConfigureFileBuildtime TYPE)
 
-add_custom_target(ConfigureFileBuildtime ALL DEPENDS "${out_filename}" )
+if( target_type )
+  add_custom_command( TARGET ConfigureFileBuildtime
+    PRE_BUILD
+    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+    COMMENT "BuildTime Configuration of ${filename} to ${out_filename}"
+    COMMAND  ${cmd}
+    )
+else()
+  add_custom_command(
+    OUTPUT "${out_filename}"
+    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+    DEPENDS "${filename}"
+    COMMENT "BuildTime Configuration of ${filename} to ${out_filename}"
+    COMMAND  ${cmd}
+    )
+  add_custom_target(ConfigureFileBuildtime ALL DEPENDS "${out_filename}" )
+endif()
 
 endfunction()

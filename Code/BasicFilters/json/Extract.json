@@ -52,7 +52,8 @@
       "ruby_value" : "Simpleitk::${name}ImageFilter::DIRECTIONCOLLAPSETOIDENTITY",
       "java_value" : "${name}ImageFilter.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
       "tcl_value" : "$$${name}ImageFilter_DIRECTIONCOLLAPSETOIDENTITY",
-      "csharp_value" : "itk.simple.${name}ImageFilter.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY"
+      "csharp_value" : "itk.simple.${name}ImageFilter.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
+      "r_value" : "\'DIRECTIONCOLLAPSETOIDENTITY\'"
     } ]
   }, {
     "tag" : "more",
@@ -67,6 +68,7 @@
       "tcl_value" : "[list 10 0 10]",
       "python_value" : "[ 10, 0, 10 ]",
       "ruby_value" : "[ 10, 0, 10 ]"
+      "R_value" : "c( 10, 0, 10 )"
     }, {
       "parameter" : "Index",
       "type" : "int",
@@ -74,7 +76,8 @@
       "value" : "{16, 20, 51}",
       "tcl_value" : "[list 16 20 51]",
       "python_value" : "[ 16, 20, 51 ]",
-      "ruby_value" : "[ 16, 20, 51 ]"
+      "ruby_value" : "[ 16, 20, 51 ]",
+      "R_value" : "c( 16, 20, 51 )"
     }, {
       "parameter" : "DirectionCollapseToStrategy",
       "value" : "itk::simple::${name}ImageFilter::DIRECTIONCOLLAPSETOIDENTITY",
@@ -83,7 +86,8 @@
       "ruby_value" : "Simpleitk::${name}ImageFilter::DIRECTIONCOLLAPSETOIDENTITY",
       "java_value" : "${name}ImageFilter.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
       "tcl_value" : "$$${name}ImageFilter_DIRECTIONCOLLAPSETOIDENTITY",
-      "csharp_value" : "itk.simple.${name}ImageFilter.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY"
+      "csharp_value" : "itk.simple.${name}ImageFilter.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
+      "r_value" : "\'DIRECTIONCOLLAPSETOIDENTITY\'"
     } ]
   } ],
   "briefdescription" : "Decrease the image size by cropping the image to the selected region bounds.\n",

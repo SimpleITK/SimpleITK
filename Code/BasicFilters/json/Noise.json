@@ -33,7 +33,8 @@
       "value" : "{2,3}",
       "tcl_value" : "[list 2 3]",
       "python_value" : "[ 2, 3 ]",
-      "ruby_value" : "[ 2, 3 ]"
+      "ruby_value" : "[ 2, 3 ]",
+      "R_value" : "c( 2, 3 )"
     } ]
   }, {
     "tag" : "by333",
@@ -47,7 +48,8 @@
       "value" : "{3,3,3}",
       "tcl_value" : "[list 3 3 3]",
       "python_value" : "[ 3, 3, 3 ]",
-      "ruby_value" : "[ 3, 3, 3 ]"
+      "ruby_value" : "[ 3, 3, 3 ]",
+      "R_value" : "c( 3, 3, 3 )"
     } ]
   } ],
   "briefdescription" : "Calculate the local noise in an image.\n",

@@ -80,7 +80,7 @@ class DataFinder {
   std::string GetTclExecutable() { return this->FindExecutable ( "SimpleITKTclsh" ); }
   std::string GetPythonExecutable() { return std::string ( PYTHON_EXECUTABLE_PATH ); }
   std::string GetRubyExecutable() { return std::string ( RUBY_EXECUTABLE_PATH ); }
-  std::string GetRExecutable() { return std::string ( RSCRIPT_EXECUTABLE_PATH ); }
+  std::string GetRExecutable() { return std::string ( R_EXECUTABLE_PATH ); }
   std::string GetJavaExecutable() { return std::string ( JAVA_EXECUTABLE_PATH ); }
   std::string GetCSharpCompiler() { return std::string( CSHARP_COMPILER ); }
   std::string GetCSharpInterpreter() { return std::string( CSHARP_INTERPRETER ); }
