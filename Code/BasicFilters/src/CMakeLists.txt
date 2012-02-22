@@ -13,3 +13,6 @@ target_link_libraries ( SimpleITKBasicFilters SimpleITKCommon ${ITK_LIBRARIES} )
 add_dependencies ( SimpleITKBasicFilters BasicFiltersSourceCode)
 
 sitk_install_exported_target( SimpleITKBasicFilters )
+install( FILES ${CMAKE_CURRENT_BINARY_DIR}/../include/SimpleITKBasicFiltersGeneratedHeaders.h
+  DESTINATION ${SimpleITK_INSTALL_INCLUDE_DIR}
+  COMPONENT Development )
