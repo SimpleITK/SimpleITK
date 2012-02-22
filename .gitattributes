@@ -1,1 +1,29 @@
+.git*            export-ignore
 .hooks*          export-ignore
+.mailmap         export-ignore
+
+*.bat           -crlf
+*.bin           -crlf
+*.jpg           -crlf
+*.mha           -crlf
+*.pdf           -crlf
+*.png           -crlf
+*.raw           -crlf
+*.nrrd          -crlf
+*.sh             crlf=input
+*.sh.in          crlf=input
+
+*.c              whitespace=tab-in-indent,no-lf-at-eof  hooks.style=KWStyle,uncrustify
+*.h              whitespace=tab-in-indent,no-lf-at-eof  hooks.style=KWStyle,uncrustify
+*.cxx            whitespace=tab-in-indent,no-lf-at-eof  hooks.style=KWStyle,uncrustify
+*.hxx            whitespace=tab-in-indent,no-lf-at-eof  hooks.style=KWStyle,uncrustify
+*.txx            whitespace=tab-in-indent,no-lf-at-eof  hooks.style=KWStyle,uncrustify
+*.txt            whitespace=tab-in-indent,no-lf-at-eof
+*.cmake          whitespace=tab-in-indent,no-lf-at-eof
+*.i              whitespace=tab-in-indent,no-lf-at-eof
+*.cs             whitespace=tab-in-indent,no-lf-at-eof
+*.py             whitespace=tab-in-indent,no-lf-at-eof
+*.java           whitespace=tab-in-indent,no-lf-at-eof
+*.rb             whitespace=tab-in-indent,no-lf-at-eof
+*.R              whitespace=tab-in-indent,no-lf-at-eof
+*.tcl            whitespace=tab-in-indent,no-lf-at-eof
