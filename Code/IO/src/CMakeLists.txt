@@ -15,6 +15,8 @@ include(${ITK_USE_FILE})
 add_library ( SimpleITKIO ${SimpleITKIOSource} )
 target_link_libraries ( SimpleITKIO SimpleITKCommon )
 
+sitk_install_exported_target( SimpleITKIO )
+
 # Add custom command that will delete java files which need to be rebuilt when changes
 # are made to IO
 if( WRAP_JAVA )

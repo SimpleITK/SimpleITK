@@ -44,7 +44,7 @@ set ( SimpleITK_INCLUDE_DIRS
 
 include_directories( ${SimpleITK_INCLUDE_DIRS} )
 
-set ( SimpleITK_LIBRARIES SimpleITKCommon SimpleITKIO SimpleITKBasicFilters  ${ITK_LIBRARIES} )
+set ( SimpleITK_LIBRARIES SimpleITKCommon SimpleITKIO SimpleITKBasicFilters )
 
 # Be sure to clear these each time
 set ( GENERATED_TEST_LIST "" CACHE INTERNAL "" )
@@ -151,15 +151,85 @@ if(MSVC)
   add_definitions ( -D_SCL_SECURE_NO_WARNINGS )
 endif()
 
+#------------------------------------------------------------------------------
+# Variables for use in install rules:
+if(NOT SimpleITK_INSTALL_RUNTIME_DIR)
+  set(SimpleITK_INSTALL_RUNTIME_DIR "bin")
+endif()
+if(NOT SimpleITK_INSTALL_LIBRARY_DIR)
+  set(SimpleITK_INSTALL_LIBRARY_DIR "lib")
+endif()
+if(NOT SimpleITK_INSTALL_ARCHIVE_DIR)
+  set(SimpleITK_INSTALL_ARCHIVE_DIR "lib")
+endif()
+if(NOT SimpleITK_INSTALL_INCLUDE_DIR)
+  set(SimpleITK_INSTALL_INCLUDE_DIR "include/SimpleITK-${SimpleITK_Major}.${SimpleITK_Minor}")
+endif()
+if(NOT SimpleITK_INSTALL_PACKAGE_DIR)
+  set(SimpleITK_INSTALL_PACKAGE_DIR "lib/cmake/SimpleITK-${SimpleITK_Major}.${SimpleITK_Minor}")
+endif()
+
+function(sitk_install_exported_target tgt)
+  # Remove the build tree's SimpleITKTargets file if this is the first call:
+  get_property(first_time GLOBAL PROPERTY SimpleITK_FIRST_EXPORTED_TARGET)
+  if(NOT first_time)
+    file(REMOVE ${CMAKE_BINARY_DIR}/SimpleITKTargets.cmake)
+    set_property(GLOBAL PROPERTY SimpleITK_FIRST_EXPORTED_TARGET 1)
+  endif()
+
+  set_property(TARGET ${tgt} PROPERTY VERSION 1)
+  set_property(TARGET ${tgt} PROPERTY SOVERSION 1)
+  set_property(TARGET ${tgt} PROPERTY
+    OUTPUT_NAME ${tgt}-${SimpleITK_Major}.${SimpleITK_Minor})
+
+  export(TARGETS ${tgt}
+    APPEND FILE "${CMAKE_BINARY_DIR}/SimpleITKTargets.cmake"
+    )
+
+  install(TARGETS ${tgt}
+    EXPORT SimpleITKTargets
+    RUNTIME DESTINATION ${SimpleITK_INSTALL_RUNTIME_DIR}
+    LIBRARY DESTINATION ${SimpleITK_INSTALL_LIBRARY_DIR}
+    ARCHIVE DESTINATION ${SimpleITK_INSTALL_ARCHIVE_DIR}
+    )
+endfunction()
+
+#------------------------------------------------------------------------------
+# Configure SimpleITKConfig.cmake for the build tree.
+set(SimpleITKConfig_TREE "build")
+set(SimpleITKConfig_CODE "")
+set(SimpleITKConfig_INCLUDE_DIRS ${SimpleITK_INCLUDE_DIRS})
+
+configure_file(SimpleITKConfig.cmake.in
+               SimpleITKConfig.cmake @ONLY IMMEDIATE)
+
+#------------------------------------------------------------------------------
+# Configure SimpleITKConfig.cmake for the install tree.
+set(SimpleITKConfig_TREE "install")
+
+set(SimpleITKConfig_CODE "set(SimpleITK_INSTALL_PREFIX \"\${_SimpleITKConfig_DIR}\")")
+# Construct the proper number of get_filename_component(... PATH)
+# calls to compute the installation prefix.
+string(REGEX REPLACE "/" ";" _count "${SimpleITK_INSTALL_PACKAGE_DIR}")
+foreach(p ${_count})
+  set(SimpleITKConfig_CODE "${SimpleITKConfig_CODE}
+get_filename_component(SimpleITK_INSTALL_PREFIX \"\${SimpleITK_INSTALL_PREFIX}\" PATH)")
+endforeach(p)
+set(SimpleITKConfig_CODE "${SimpleITKConfig_CODE}\n")
+
+set(SimpleITKConfig_INCLUDE_DIRS
+  "\${SimpleITK_INSTALL_PREFIX}/${SimpleITK_INSTALL_INCLUDE_DIR}")
+
+configure_file(SimpleITKConfig.cmake.in
+               CMakeFiles/SimpleITKConfig.cmake @ONLY IMMEDIATE)
 
 #------------------------------------------------------------------------------
 # Help other projects use SimpleITK
+configure_file(UseSimpleITK.cmake.in
+               UseSimpleITK.cmake COPYONLY IMMEDIATE)
 
-configure_file(${SimpleITK_SOURCE_DIR}/UseSimpleITK.cmake.in
-               ${SimpleITK_BINARY_DIR}/UseSimpleITK.cmake COPYONLY IMMEDIATE)
-
-# Create the SimpleITKConfig.cmake file containing the SimpleITK configuration.
-include(${SimpleITK_SOURCE_DIR}/sitkGenerateSimpleITKConfig.cmake)
+configure_file(SimpleITKConfigVersion.cmake.in
+               SimpleITKConfigVersion.cmake @ONLY IMMEDIATE)
 
 #------------------------------------------------------------------------------
 # Set up Documentation
@@ -215,13 +285,42 @@ endif()
 #------------------------------------------------------------------------------
 # INSTALLATION
 
-file( GLOB __files ${CMAKE_SOURCE_DIR}/Code/Common/include/*.h
-  ${CMAKE_SOURCE_DIR}/Code/Registration/include/*.h
+install(FILES ${SimpleITK_BINARY_DIR}/CMakeFiles/SimpleITKConfig.cmake
+              ${SimpleITK_BINARY_DIR}/SimpleITKConfigVersion.cmake
+              ${SimpleITK_BINARY_DIR}/UseSimpleITK.cmake
+  DESTINATION ${SimpleITK_INSTALL_PACKAGE_DIR}
+  COMPONENT Development)
+
+install(EXPORT SimpleITKTargets
+  DESTINATION ${SimpleITK_INSTALL_PACKAGE_DIR}
+  COMPONENT Development)
+
+file( GLOB __files
   ${CMAKE_SOURCE_DIR}/Code/BasicFilters/include/*.h
+  ${CMAKE_SOURCE_DIR}/Code/BasicFilters/include/*.txx
+  ${CMAKE_SOURCE_DIR}/Code/Common/include/*.h
+  ${CMAKE_SOURCE_DIR}/Code/Common/include/*.txx
+  ${CMAKE_SOURCE_DIR}/Code/IO/include/*.h
+  ${CMAKE_SOURCE_DIR}/Code/IO/include/*.txx
+  ${CMAKE_SOURCE_DIR}/Code/Registration/include/*.h
+  ${CMAKE_SOURCE_DIR}/Code/Registration/include/*.txx
+  )
+
+set(__files ${__files}
   ${CMAKE_BINARY_DIR}/sitkConfigure.h
-  ${BasicFiltersGeneratedHeader} )
+  ${SimpleITKBasicFiltersGeneratedHeader}
+  )
+
 install(FILES ${__files}
-  DESTINATION include
+  DESTINATION ${SimpleITK_INSTALL_INCLUDE_DIR}
+  COMPONENT Development)
+
+file( GLOB __files
+  ${CMAKE_SOURCE_DIR}/Code/Common/include/Ancillary/*.h
+  )
+
+install(FILES ${__files}
+  DESTINATION ${SimpleITK_INSTALL_INCLUDE_DIR}/Ancillary
   COMPONENT Development)
 
 #------------------------------------------------------------------------------
