@@ -190,8 +190,9 @@ if ( WRAP_JAVA )
   # Get the location of the extension directory
   string(REGEX REPLACE "include"  "jre/lib/ext" JAVA_EXTENSION_DIR ${JAVA_INCLUDE_PATH} )
 
+  # TODO: add new target to install simpleitk java
   # Add the install target
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${JAR_FILE} DESTINATION ${JAVA_EXTENSION_DIR})
+  # install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${JAR_FILE} DESTINATION ${JAVA_EXTENSION_DIR})
 
 endif()
 
