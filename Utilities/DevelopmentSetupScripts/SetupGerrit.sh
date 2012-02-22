@@ -100,7 +100,7 @@ to make interaction with Gerrit easier.
 EOF
 
     read -ep "Would you like to enable it? [Y/n]: " ans
-    if [ "$ans" == "y" ] || [ "$ans" == "Y" ]; then
+    if [ "$ans" != "n" ] && [ "$ans" != "N" ]; then
         git config hooks.GerritId true
 
         cat << EOF
