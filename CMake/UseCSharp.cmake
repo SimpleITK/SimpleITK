@@ -38,17 +38,6 @@ elseif ( CSHARP_TYPE MATCHES "Mono" )
   include( ${Mono_USE_FILE} )
 endif ( CSHARP_TYPE MATCHES ".NET" )
 
-# Determine platform
-if( MSVC )
-  if( ${CMAKE_GENERATOR} MATCHES "^(.*)(Win64)$" )
-    set( CSHARP_PLATFORM "x64" CACHE INTERNAL "" )
-  else()
-    set( CSHARP_PLATFORM "x86" CACHE INTERNAL "" )
-  endif()
-else()
-  set( CSHARP_PLATFORM "anycpu" CACHE INTERNAL "" )
-endif()
-
 macro( CSHARP_ADD_LIBRARY name )
   CSHARP_ADD_PROJECT( "library" ${name} ${ARGN} )
 endmacro( CSHARP_ADD_LIBRARY )
@@ -59,7 +48,7 @@ endmacro( CSHARP_ADD_EXECUTABLE )
 
 # Private macro
 macro( CSHARP_ADD_PROJECT type name )
-  set( refs /reference:System.dll )
+  set( refs "/reference:System.dll" )
   set( sources )
   set( sources_dep )
 
@@ -73,20 +62,20 @@ macro( CSHARP_ADD_PROJECT type name )
   foreach( it ${ARGN} )
     if( ${it} MATCHES "(.*)(dll)" )
        # Argument is a dll, add reference
-       set( refs ${refs} /reference:${it} )
+       list( APPEND refs /reference:${it} )
     else( )
       # Argument is a source file
       if( EXISTS ${it} )
-        set( sources ${it} ${sources} )
-        set( sources_dep ${it} ${sources_dep} )
+        list( APPEND sources ${it} )
+        list( APPEND sources_dep ${it} )
       elseif( EXISTS ${CSHARP_SOURCE_DIRECTORY}/${it} )
-        set( sources ${CSHARP_SOURCE_DIRECTORY}/${it} ${sources} )
-        set( sources_dep ${CSHARP_SOURCE_DIRECTORY}/${it} ${sources_dep} )
+        list( APPEND sources ${CSHARP_SOURCE_DIRECTORY}/${it} )
+        list( APPEND sources_dep ${CSHARP_SOURCE_DIRECTORY}/${it} )
       elseif( ${it} MATCHES "[*]" )
         # For dependencies, we need to expand wildcards
         FILE( GLOB it_glob ${it} )
-        set( sources ${it} ${sources} )
-        set( sources_dep ${it_glob} ${sources_dep} )
+        list( APPEND sources ${it} )
+        list( APPEND sources_dep ${it_glob} )
       endif( )
     endif ( )
   endforeach( )
@@ -99,28 +88,25 @@ macro( CSHARP_ADD_PROJECT type name )
   list( SORT sources_dep ${sources_dep} )
 
   # Perform platform specific actions
-  set( csharp_compiler_safe ${CSHARP_COMPILER} )
   if (WIN32)
     string( REPLACE "/" "\\" sources ${sources} )
-    if ( csharp_compiler_safe MATCHES "bat" )
-      set( csharp_compiler_safe call ${CSHARP_COMPILER} )
-    endif ( csharp_compiler_safe MATCHES "bat" )
   else (UNIX)
     string( REPLACE "\\" "/" sources ${sources} )
   endif (WIN32)
 
   # Add custom target and command
+  MESSAGE( STATUS "Adding C# ${type} ${name}: '${CSHARP_COMPILER} /t:${type} /out:${name}.${output} /platform:${CSHARP_PLATFORM} ${refs} ${sources}'" )
   add_custom_command(
-    COMMENT "Compiling C# ${type} ${name}"
-    OUTPUT ${name}.${output}
-    COMMAND ${csharp_compiler_safe}
+    COMMENT "Compiling C# ${type} ${name}: '${CSHARP_COMPILER} /t:${type} /out:${name}.${output} /platform:${CSHARP_PLATFORM} ${refs} ${sources}'"
+    OUTPUT ${CSHARP_BINARY_DIRECTORY}/${name}.${output}
+    COMMAND ${CSHARP_COMPILER}
     ARGS /t:${type} /out:${name}.${output} /platform:${CSHARP_PLATFORM} ${refs} ${sources}
     WORKING_DIRECTORY ${CSHARP_BINARY_DIRECTORY}
     DEPENDS ${sources_dep}
   )
   add_custom_target(
     ${name} ALL
-    DEPENDS ${name}.${output}
+    DEPENDS ${CSHARP_BINARY_DIRECTORY}/${name}.${output}
     SOURCES ${sources_dep}
   )
 endmacro( CSHARP_ADD_PROJECT )

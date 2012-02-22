@@ -2,7 +2,7 @@
 #define __sitkImage_h
 
 #include "sitkMacro.h"
-#include "sitkConfigure.h"
+#include "sitkCommon.h"
 #include "sitkDetail.h"
 #include "sitkPixelIDTokens.h"
 #include "sitkEnableIf.h"
@@ -28,6 +28,9 @@ namespace itk
 // Forward decalaration for pointer
 class DataObject;
 
+template<class T>
+class SmartPointer;
+
 namespace simple
 {
 
@@ -40,12 +43,15 @@ namespace simple
   /** \class Image
    * \brief The main Image class for SimpleITK
    */
-  class Image
+  class SITKCommon_EXPORT Image
   {
   public:
     typedef Image              Self;
 
     virtual ~Image( );
+
+    /** \brief Default constructor, creates an image of size 0 */
+    Image( void );
 
     // copy constructor
     Image( const Image &img );
@@ -158,7 +164,7 @@ namespace simple
     uint32_t GetPixelAsUInt64( const std::vector<uint32_t> &idx ) const;
     float    GetPixelAsFloat( const std::vector<uint32_t> &idx ) const;
     double   GetPixelAsDouble(  const std::vector<uint32_t> &idx ) const;
-    /* @} */
+    /** @} */
 
     /** \brief Set the value of a pixel
      *
@@ -217,7 +223,18 @@ namespace simple
     uint64_t *GetBufferAsUInt64( );
     float    *GetBufferAsFloat( );
     double   *GetBufferAsDouble( );
-    /* @} */
+
+    const int8_t   *GetBufferAsInt8( ) const;
+    const uint8_t  *GetBufferAsUInt8( ) const;
+    const int16_t  *GetBufferAsInt16( ) const;
+    const uint16_t *GetBufferAsUInt16( ) const;
+    const int32_t  *GetBufferAsInt32( ) const;
+    const uint32_t *GetBufferAsUInt32( ) const;
+    const int64_t  *GetBufferAsInt64( ) const;
+    const uint64_t *GetBufferAsUInt64( ) const;
+    const float    *GetBufferAsFloat( ) const;
+    const double   *GetBufferAsDouble( ) const;
+    /** @} */
 
 
   protected:
@@ -252,7 +269,9 @@ namespace simple
 
     void MakeUniqueForWrite( void );
 
-    /** Method called by certain constructors to convert ITK images
+  private:
+
+   /** Method called by certain constructors to convert ITK images
      * into simpleITK ones.
      *
      * This is the single method which needs to be explicitly
@@ -265,10 +284,8 @@ namespace simple
                                                                                        VPixelIDValue>::Result,
                                                              VImageDimension>::ImageType *i );
 
-  private:
-
     /** Dispatched from the InternalInitialization method. The enable
-     * if idom is used here for method overloading. The second method
+     * if idiom is used here for method overloading. The second method
      * is for non-instantiated image, which turn into a void pointer
      * for the paramter. However, this second method should never be
      * executed.

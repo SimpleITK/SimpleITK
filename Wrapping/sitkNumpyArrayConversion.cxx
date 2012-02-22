@@ -1,6 +1,10 @@
 #include <string.h>
 
 #include "sitkImage.h"
+#include "sitkConditional.h"
+#include "sitkExceptionObject.h"
+
+namespace sitk = itk::simple;
 
 // Python is written in C
 #ifdef __cplusplus
@@ -32,14 +36,14 @@ sitk_GetArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
   typedef std::vector< unsigned int > SizeType;
   SizeType size;
   size_t pixelSize;
-  itk::simple::PixelIDValueType pixelIDValue;
+  sitk::PixelIDValueType pixelIDValue;
 
   unsigned int dimension;
 
   /* Cast over to a sitk Image. */
   PyObject * pyImage;
   void * voidImage;
-  itk::simple::Image * sitkImage;
+  const sitk::Image * sitkImage;
   int res = 0;
   if( !PyArg_ParseTuple( args, "O", &pyImage ) )
     {
@@ -48,70 +52,87 @@ sitk_GetArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
   res = SWIG_ConvertPtr( pyImage, &voidImage, SWIGTYPE_p_itk__simple__Image, 0 );
   if( !SWIG_IsOK( res ) )
     {
-    SWIG_exception_fail(SWIG_ArgError(res), "in method 'GetArrayFromImage', argument needs to be of type 'itk::simple::Image *'");
+    SWIG_exception_fail(SWIG_ArgError(res), "in method 'GetArrayFromImage', argument needs to be of type 'sitk::Image *'");
     }
-  sitkImage = reinterpret_cast< itk::simple::Image * >( voidImage );
+  sitkImage = reinterpret_cast< sitk::Image * >( voidImage );
 
   pixelIDValue = sitkImage->GetPixelIDValue();
   pixelSize = 1;
   switch( pixelIDValue )
     {
-  case itk::simple::sitkUInt8:
+  case sitk::sitkUnknown:
+    PyErr_SetString( PyExc_RuntimeError, "Unknown pixel type." );
+    SWIG_fail;
+    break;
+  case sitk::ConditionalValue< sitk::sitkUInt8 != sitk::sitkUnknown, sitk::sitkUInt8, -2 >::Value:
     sitkBufferPtr = (const void *)sitkImage->GetBufferAsUInt8();
     pixelSize  = sizeof( uint8_t );
     break;
-  case itk::simple::sitkInt8:
+  case sitk::ConditionalValue< sitk::sitkInt8 != sitk::sitkUnknown, sitk::sitkInt8, -3 >::Value:
     sitkBufferPtr = (const void *)sitkImage->GetBufferAsInt8();
     pixelSize  = sizeof( int8_t );
     break;
-  case itk::simple::sitkUInt16:
+  case sitk::ConditionalValue< sitk::sitkUInt16 != sitk::sitkUnknown, sitk::sitkUInt16, -4 >::Value:
     sitkBufferPtr = (const void *)sitkImage->GetBufferAsUInt16();
     pixelSize  = sizeof( uint16_t );
     break;
-  case itk::simple::sitkInt16:
+  case sitk::ConditionalValue< sitk::sitkInt16 != sitk::sitkUnknown, sitk::sitkInt16, -5 >::Value:
     sitkBufferPtr = (const void *)sitkImage->GetBufferAsInt16();
     pixelSize  = sizeof( int16_t );
     break;
-  case itk::simple::sitkUInt32:
+  case sitk::ConditionalValue< sitk::sitkUInt32 != sitk::sitkUnknown, sitk::sitkUInt32, -6 >::Value:
     sitkBufferPtr = (const void *)sitkImage->GetBufferAsUInt32();
     pixelSize  = sizeof( uint32_t );
     break;
-  case itk::simple::sitkInt32:
+  case sitk::ConditionalValue< sitk::sitkInt32 != sitk::sitkUnknown, sitk::sitkInt32, -7 >::Value:
     sitkBufferPtr = (const void *)sitkImage->GetBufferAsInt32();
     pixelSize  = sizeof( int32_t );
     break;
-// \todo reenable when vxl pixel long types are fixed
-  //case itk::simple::sitkUInt64:
-    //pixelDtype = 6;
-    //sitkBufferPtr = (const void *)sitkImage->GetBufferAsUInt64();
-    //pixelSize  = sizeof( uint64_t );
-    //break;
-  //case itk::simple::sitkInt64:
-    //pixelDtype = 7;
-    //sitkBufferPtr = (const void *)sitkImage->GetBufferAsInt64();
-    //pixelSize  = sizeof( int64_t );
-    //break;
-  case itk::simple::sitkFloat32:
+  case sitk::ConditionalValue< sitk::sitkUInt64 != sitk::sitkUnknown, sitk::sitkUInt64, -8 >::Value:
+    sitkBufferPtr = (const void *)sitkImage->GetBufferAsUInt64();
+    pixelSize  = sizeof( uint64_t );
+    break;
+  case sitk::ConditionalValue< sitk::sitkInt64 != sitk::sitkUnknown, sitk::sitkInt64, -9 >::Value:
+     sitkBufferPtr = (const void *)sitkImage->GetBufferAsInt64();
+     pixelSize  = sizeof( int64_t );
+     break;
+  case sitk::ConditionalValue< sitk::sitkFloat32 != sitk::sitkUnknown, sitk::sitkFloat32, -10 >::Value:
     sitkBufferPtr = (const void *)sitkImage->GetBufferAsFloat();
     pixelSize  = sizeof( float );
     break;
-  case itk::simple::sitkFloat64:
+  case sitk::ConditionalValue< sitk::sitkFloat64 != sitk::sitkUnknown, sitk::sitkFloat64, -11 >::Value:
     sitkBufferPtr = (const void *)sitkImage->GetBufferAsDouble(); // \todo rename to Float64 for consistency
     pixelSize  = sizeof( double );
     break;
+  case sitk::ConditionalValue< sitk::sitkComplexFloat32 != sitk::sitkUnknown, sitk::sitkComplexFloat32, -12 >::Value:
+  case sitk::ConditionalValue< sitk::sitkComplexFloat64 != sitk::sitkUnknown, sitk::sitkComplexFloat64, -13 >::Value:
+    PyErr_SetString( PyExc_RuntimeError, "Images of Complex Pixel types currently are not supported." );
+    SWIG_fail;
+    break;
 // \todo re-enable when Image class gets more GetBuffer support
-  //case itk::simple::sitkComplexFloat32:
+  //case sitk::sitkComplexFloat32:
     //pixelDtype = 10;
     //sitkBufferPtr = (const void *)sitkImage->GetBufferAsComplexFloat32();
     //pixelSize  = sizeof( std::complex<float> );
     //break;
-  //case itk::simple::sitkComplexFloat64:
+  //case sitk::sitkComplexFloat64:
     //pixelDtype = 11;
     //sitkBufferPtr = (const void *)sitkImage->GetBufferAsComplexFloat64();
     //pixelSize  = sizeof( std::complex<double> );
     //break;
-  // \todo sitkVectorUInt8, etc.?
-
+  case sitk::ConditionalValue< sitk::sitkVectorUInt8 != sitk::sitkUnknown, sitk::sitkVectorUInt8, -14 >::Value:
+  case sitk::ConditionalValue< sitk::sitkVectorInt8 != sitk::sitkUnknown, sitk::sitkVectorInt8, -15 >::Value:
+  case sitk::ConditionalValue< sitk::sitkVectorUInt16 != sitk::sitkUnknown, sitk::sitkVectorUInt16, -16 >::Value:
+  case sitk::ConditionalValue< sitk::sitkVectorInt16 != sitk::sitkUnknown, sitk::sitkVectorInt16, -17 >::Value:
+  case sitk::ConditionalValue< sitk::sitkVectorUInt32 != sitk::sitkUnknown, sitk::sitkVectorUInt32, -18 >::Value:
+  case sitk::ConditionalValue< sitk::sitkVectorInt32 != sitk::sitkUnknown, sitk::sitkVectorInt32, -19 >::Value:
+  case sitk::ConditionalValue< sitk::sitkVectorUInt64 != sitk::sitkUnknown, sitk::sitkVectorUInt64, -20 >::Value:
+  case sitk::ConditionalValue< sitk::sitkVectorInt64 != sitk::sitkUnknown, sitk::sitkVectorInt64, -21 >::Value:
+  case sitk::ConditionalValue< sitk::sitkVectorFloat32 != sitk::sitkUnknown, sitk::sitkVectorFloat32, -22 >::Value:
+  case sitk::ConditionalValue< sitk::sitkVectorFloat64 != sitk::sitkUnknown, sitk::sitkVectorFloat64, -23 >::Value:
+    PyErr_SetString( PyExc_RuntimeError, "Images of Vector Pixel types currently are not supported." );
+    SWIG_fail;
+    break;
   default:
     PyErr_SetString( PyExc_RuntimeError, "Unknown pixel type." );
     SWIG_fail;
@@ -214,7 +235,7 @@ sitk_GetImageFromArray( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
   // This restricts us to Python 2.6 or better
   Py_buffer arrayView;
   arrayView.buf = NULL;
-  itk::simple::Image * image = NULL;
+  sitk::Image * image = NULL;
   PyObject * pyImage = NULL;
   void * sitkBufferPtr;
 
@@ -252,53 +273,53 @@ sitk_GetImageFromArray( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
       switch( dtype_num_long )
         {
       case 1:
-        image = new itk::simple::Image( shape[1], shape[0], itk::simple::sitkInt8 );
+        image = new sitk::Image( shape[1], shape[0], sitk::sitkInt8 );
         sitkBufferPtr = (void *)image->GetBufferAsInt8();
         break;
       case 2:
-        image = new itk::simple::Image( shape[1], shape[0], itk::simple::sitkUInt8 );
+        image = new sitk::Image( shape[1], shape[0], sitk::sitkUInt8 );
         sitkBufferPtr = (void *)image->GetBufferAsUInt8();
         break;
       case 3:
-        image = new itk::simple::Image( shape[1], shape[0], itk::simple::sitkInt16 );
+        image = new sitk::Image( shape[1], shape[0], sitk::sitkInt16 );
         sitkBufferPtr = (void *)image->GetBufferAsInt16();
         break;
       case 4:
-        image = new itk::simple::Image( shape[1], shape[0], itk::simple::sitkUInt16 );
+        image = new sitk::Image( shape[1], shape[0], sitk::sitkUInt16 );
         sitkBufferPtr = (void *)image->GetBufferAsUInt16();
         break;
       case 5:
-        image = new itk::simple::Image( shape[1], shape[0], itk::simple::sitkInt32 );
+        image = new sitk::Image( shape[1], shape[0], sitk::sitkInt32 );
         sitkBufferPtr = (void *)image->GetBufferAsInt32();
         break;
       case 6:
-        image = new itk::simple::Image( shape[1], shape[0], itk::simple::sitkUInt32 );
+        image = new sitk::Image( shape[1], shape[0], sitk::sitkUInt32 );
         sitkBufferPtr = (void *)image->GetBufferAsUInt32();
         break;
         //! \todo when sitk gets these implemented
       //case 7:
-        //image = new itk::simple::Image( shape[1], shape[0], itk::simple::sitkInt64 );
+        //image = new sitk::Image( shape[1], shape[0], sitk::sitkInt64 );
         //sitkBufferPtr = (void *)image->GetBufferAsInt64();
         //break;
       //case 8:
-        //image = new itk::simple::Image( shape[1], shape[0], itk::simple::sitkUInt64 );
+        //image = new sitk::Image( shape[1], shape[0], sitk::sitkUInt64 );
         //sitkBufferPtr = (void *)image->GetBufferAsUInt64();
         //break;
       case 11:
-        image = new itk::simple::Image( shape[1], shape[0], itk::simple::sitkFloat32 );
+        image = new sitk::Image( shape[1], shape[0], sitk::sitkFloat32 );
         sitkBufferPtr = (void *)image->GetBufferAsFloat();
         break;
       case 12:
-        image = new itk::simple::Image( shape[1], shape[0], itk::simple::sitkFloat64 );
+        image = new sitk::Image( shape[1], shape[0], sitk::sitkFloat64 );
         sitkBufferPtr = (void *)image->GetBufferAsDouble();
         break;
 //! \todo re-enable when Image class gets more GetBuffer support
       //case 14:
-        //image = new itk::simple::Image( shape[1], shape[0], itk::simple::sitkComplexFloat32 );
+        //image = new sitk::Image( shape[1], shape[0], sitk::sitkComplexFloat32 );
         //sitkBufferPtr = (void *)image->GetBufferAsComplexFloat();
         //break;
       //case 15:
-        //image = new itk::simple::Image( shape[1], shape[0], itk::simple::sitkComplexFloat64 );
+        //image = new sitk::Image( shape[1], shape[0], sitk::sitkComplexFloat64 );
         //sitkBufferPtr = (void *)image->GetBufferAsComplexDouble();
         //break;
       default:
@@ -311,53 +332,53 @@ sitk_GetImageFromArray( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
       switch( dtype_num_long )
         {
       case 1:
-        image = new itk::simple::Image( shape[2], shape[1], shape[0], itk::simple::sitkInt8 );
+        image = new sitk::Image( shape[2], shape[1], shape[0], sitk::sitkInt8 );
         sitkBufferPtr = (void *)image->GetBufferAsInt8();
         break;
       case 2:
-        image = new itk::simple::Image( shape[2], shape[1], shape[0], itk::simple::sitkUInt8 );
+        image = new sitk::Image( shape[2], shape[1], shape[0], sitk::sitkUInt8 );
         sitkBufferPtr = (void *)image->GetBufferAsUInt8();
         break;
       case 3:
-        image = new itk::simple::Image( shape[2], shape[1], shape[0], itk::simple::sitkInt16 );
+        image = new sitk::Image( shape[2], shape[1], shape[0], sitk::sitkInt16 );
         sitkBufferPtr = (void *)image->GetBufferAsInt16();
         break;
       case 4:
-        image = new itk::simple::Image( shape[2], shape[1], shape[0], itk::simple::sitkUInt16 );
+        image = new sitk::Image( shape[2], shape[1], shape[0], sitk::sitkUInt16 );
         sitkBufferPtr = (void *)image->GetBufferAsUInt16();
         break;
       case 5:
-        image = new itk::simple::Image( shape[2], shape[1], shape[0], itk::simple::sitkInt32 );
+        image = new sitk::Image( shape[2], shape[1], shape[0], sitk::sitkInt32 );
         sitkBufferPtr = (void *)image->GetBufferAsInt32();
         break;
       case 6:
-        image = new itk::simple::Image( shape[2], shape[1], shape[0], itk::simple::sitkUInt32 );
+        image = new sitk::Image( shape[2], shape[1], shape[0], sitk::sitkUInt32 );
         sitkBufferPtr = (void *)image->GetBufferAsUInt32();
         break;
         //! \todo when sitk gets these implemented
       //case 7:
-        //image = new itk::simple::Image( shape[2], shape[1], shape[0], itk::simple::sitkInt64 );
+        //image = new sitk::Image( shape[2], shape[1], shape[0], sitk::sitkInt64 );
         //sitkBufferPtr = (void *)image->GetBufferAsInt64();
         //break;
       //case 8:
-        //image = new itk::simple::Image( shape[2], shape[1], shape[0], itk::simple::sitkUInt64 );
+        //image = new sitk::Image( shape[2], shape[1], shape[0], sitk::sitkUInt64 );
         //sitkBufferPtr = (void *)image->GetBufferAsUInt64();
         //break;
       case 11:
-        image = new itk::simple::Image( shape[2], shape[1], shape[0], itk::simple::sitkFloat32 );
+        image = new sitk::Image( shape[2], shape[1], shape[0], sitk::sitkFloat32 );
         sitkBufferPtr = (void *)image->GetBufferAsFloat();
         break;
       case 12:
-        image = new itk::simple::Image( shape[2], shape[1], shape[0], itk::simple::sitkFloat64 );
+        image = new sitk::Image( shape[2], shape[1], shape[0], sitk::sitkFloat64 );
         sitkBufferPtr = (void *)image->GetBufferAsDouble();
         break;
 //! \todo re-enable when Image class gets more GetBuffer support
       //case 14:
-        //image = new itk::simple::Image( shape[2], shape[1], shape[0], itk::simple::sitkComplexFloat32 );
+        //image = new sitk::Image( shape[2], shape[1], shape[0], sitk::sitkComplexFloat32 );
         //sitkBufferPtr = (void *)image->GetBufferAsComplexFloat();
         //break;
       //case 15:
-        //image = new itk::simple::Image( shape[2], shape[1], shape[0], itk::simple::sitkComplexFloat64 );
+        //image = new sitk::Image( shape[2], shape[1], shape[0], sitk::sitkComplexFloat64 );
         //sitkBufferPtr = (void *)image->GetBufferAsComplexDouble();
         //break;
       default:
@@ -371,7 +392,7 @@ sitk_GetImageFromArray( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
       SWIG_fail;
       }
     }
-  catch( const itk::ExceptionObject &e )
+  catch( const std::exception &e )
     {
     std::string msg = "Exception thrown in SimpleITK new Image: ";
     msg += e.what();

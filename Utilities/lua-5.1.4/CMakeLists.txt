@@ -5,7 +5,7 @@ endif()
 
 file ( GLOB LUA_LIB_SOURCE src/*.c )
 list ( REMOVE_ITEM LUA_LIB_SOURCE src/lua.c )
-add_library ( lua5 ${LUA_LIB_SOURCE} )
+add_library ( lua5 STATIC ${LUA_LIB_SOURCE} )
 
 set ( LUA_SOURCE src/lua.c )
 add_executable ( lua ${LUA_SOURCE} )

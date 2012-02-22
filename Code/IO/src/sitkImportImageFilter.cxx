@@ -3,9 +3,12 @@
 #endif
 
 #include "sitkImportImageFilter.h"
+#include "sitkExceptionObject.h"
 
 #include <itkImage.h>
 #include <itkVectorImage.h>
+
+#include <iterator>
 
 // private namespace
 namespace
@@ -15,6 +18,153 @@ const unsigned int UnusedDimension = 2;
 
 namespace itk {
 namespace simple {
+
+namespace
+{
+template < class T >
+std::ostream& operator<< (std::ostream& os, const std::vector<T>& v)
+{
+  os << "[";
+  std::copy( v.begin(), v.end(), std::ostream_iterator<T>(os, ", " ) );
+  return os << "]";
+}
+}
+
+Image ImportAsInt8(
+    int8_t * buffer,
+    const std::vector< unsigned int > &size,
+    const std::vector< double > &spacing,
+    const std::vector< double > &origin,
+    const std::vector< double > &direction,
+    unsigned int numberOfComponents
+) {
+    ImportImageFilter import;
+    import.SetSize( size );
+    import.SetSpacing( spacing );
+    import.SetOrigin( origin );
+    import.SetDirection( direction );
+    import.SetBufferAsInt8( buffer, numberOfComponents );
+    return import.Execute();
+}
+
+Image ImportAsUInt8(
+    uint8_t * buffer,
+    const std::vector< unsigned int > &size,
+    const std::vector< double > &spacing,
+    const std::vector< double > &origin,
+    const std::vector< double > &direction,
+    unsigned int numberOfComponents
+) {
+    ImportImageFilter import;
+    import.SetSize( size );
+    import.SetSpacing( spacing );
+    import.SetOrigin( origin );
+    import.SetDirection( direction );
+    import.SetBufferAsUInt8( buffer, numberOfComponents );
+    return import.Execute();
+}
+
+Image ImportAsInt16(
+    int16_t * buffer,
+    const std::vector< unsigned int > &size,
+    const std::vector< double > &spacing,
+    const std::vector< double > &origin,
+    const std::vector< double > &direction,
+    unsigned int numberOfComponents
+) {
+    ImportImageFilter import;
+    import.SetSize( size );
+    import.SetSpacing( spacing );
+    import.SetOrigin( origin );
+    import.SetDirection( direction );
+    import.SetBufferAsInt16( buffer, numberOfComponents );
+    return import.Execute();
+}
+
+Image ImportAsUInt16(
+    uint16_t * buffer,
+    const std::vector< unsigned int > &size,
+    const std::vector< double > &spacing,
+    const std::vector< double > &origin,
+    const std::vector< double > &direction,
+    unsigned int numberOfComponents
+) {
+    ImportImageFilter import;
+    import.SetSize( size );
+    import.SetSpacing( spacing );
+    import.SetOrigin( origin );
+    import.SetDirection( direction );
+    import.SetBufferAsUInt16( buffer, numberOfComponents );
+    return import.Execute();
+}
+
+Image ImportAsInt32(
+    int32_t * buffer,
+    const std::vector< unsigned int > &size,
+    const std::vector< double > &spacing,
+    const std::vector< double > &origin,
+    const std::vector< double > &direction,
+    unsigned int numberOfComponents
+) {
+    ImportImageFilter import;
+    import.SetSize( size );
+    import.SetSpacing( spacing );
+    import.SetOrigin( origin );
+    import.SetDirection( direction );
+    import.SetBufferAsInt32( buffer, numberOfComponents );
+    return import.Execute();
+}
+
+Image ImportAsUInt32(
+    uint32_t * buffer,
+    const std::vector< unsigned int > &size,
+    const std::vector< double > &spacing,
+    const std::vector< double > &origin,
+    const std::vector< double > &direction,
+    unsigned int numberOfComponents
+) {
+    ImportImageFilter import;
+    import.SetSize( size );
+    import.SetSpacing( spacing );
+    import.SetOrigin( origin );
+    import.SetDirection( direction );
+    import.SetBufferAsUInt32( buffer, numberOfComponents );
+    return import.Execute();
+}
+
+Image ImportAsFloat(
+    float * buffer,
+    const std::vector< unsigned int > &size,
+    const std::vector< double > &spacing,
+    const std::vector< double > &origin,
+    const std::vector< double > &direction,
+    unsigned int numberOfComponents
+) {
+    ImportImageFilter import;
+    import.SetSize( size );
+    import.SetSpacing( spacing );
+    import.SetOrigin( origin );
+    import.SetDirection( direction );
+    import.SetBufferAsFloat( buffer, numberOfComponents );
+    return import.Execute();
+}
+
+Image ImportAsDouble(
+    double * buffer,
+    const std::vector< unsigned int > &size,
+    const std::vector< double > &spacing,
+    const std::vector< double > &origin,
+    const std::vector< double > &direction,
+    unsigned int numberOfComponents
+) {
+    ImportImageFilter import;
+    import.SetSize( size );
+    import.SetSpacing( spacing );
+    import.SetOrigin( origin );
+    import.SetDirection( direction );
+    import.SetBufferAsDouble( buffer, numberOfComponents );
+    return import.Execute();
+}
 
 ImportImageFilter::ImportImageFilter()
 {
@@ -33,22 +183,51 @@ ImportImageFilter::ImportImageFilter()
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
 }
 
-void ImportImageFilter::SetSpacing( const std::vector< double > &spacing )
+ImportImageFilter::Self& ImportImageFilter::SetSpacing( const std::vector< double > &spacing )
 {
   this->m_Spacing = spacing;
+  return *this;
 }
 
-void ImportImageFilter::SetOrigin( const std::vector< double > &origin )
+const std::vector< double > &ImportImageFilter::GetSpacing( ) const
+{
+  return this->m_Spacing;
+}
+
+ImportImageFilter::Self& ImportImageFilter::SetOrigin( const std::vector< double > &origin )
 {
   this->m_Origin = origin;
+  return *this;
 }
 
-void ImportImageFilter::SetSize( const std::vector< unsigned int > &size )
+const std::vector< double > &ImportImageFilter::GetOrigin( ) const
+{
+  return this->m_Origin;
+}
+
+ImportImageFilter::Self& ImportImageFilter::SetSize( const std::vector< unsigned int > &size )
 {
   this->m_Size = size;
+  return *this;
 }
 
-void ImportImageFilter::SetBufferAsInt8( int8_t * buffer, unsigned int numberOfComponents )
+const std::vector< unsigned int > &ImportImageFilter::GetSize( ) const
+{
+  return this->m_Size;
+}
+
+ImportImageFilter::Self& ImportImageFilter::SetDirection( const std::vector< double > &direction )
+{
+  this->m_Direction = direction;
+  return *this;
+}
+
+const std::vector< double > &ImportImageFilter::GetDirection( ) const
+{
+  return this->m_Direction;
+}
+
+ImportImageFilter::Self& ImportImageFilter::SetBufferAsInt8( int8_t * buffer, unsigned int numberOfComponents )
 {
   this->m_Buffer = buffer;
   this->m_NumberOfComponentsPerPixel = numberOfComponents;
@@ -60,8 +239,9 @@ void ImportImageFilter::SetBufferAsInt8( int8_t * buffer, unsigned int numberOfC
     {
     this->m_PixelIDValue = ImageTypeToPixelIDValue< itk::VectorImage<int8_t, UnusedDimension> >::Result;
     }
+  return *this;
 }
-void ImportImageFilter::SetBufferAsUInt8( uint8_t * buffer, unsigned int numberOfComponents )
+ImportImageFilter::Self& ImportImageFilter::SetBufferAsUInt8( uint8_t * buffer, unsigned int numberOfComponents )
 {
   this->m_Buffer = buffer;
   this->m_NumberOfComponentsPerPixel = numberOfComponents;
@@ -73,8 +253,9 @@ void ImportImageFilter::SetBufferAsUInt8( uint8_t * buffer, unsigned int numberO
     {
     this->m_PixelIDValue = ImageTypeToPixelIDValue< itk::VectorImage<int8_t, UnusedDimension> >::Result;
     }
+  return *this;
 }
-void ImportImageFilter::SetBufferAsInt16( int16_t * buffer, unsigned int numberOfComponents )
+ImportImageFilter::Self& ImportImageFilter::SetBufferAsInt16( int16_t * buffer, unsigned int numberOfComponents )
 {
   this->m_Buffer = buffer;
   this->m_NumberOfComponentsPerPixel = numberOfComponents;
@@ -86,8 +267,9 @@ void ImportImageFilter::SetBufferAsInt16( int16_t * buffer, unsigned int numberO
     {
     this->m_PixelIDValue = ImageTypeToPixelIDValue< itk::VectorImage<int8_t, UnusedDimension> >::Result;
     }
+  return *this;
 }
-void ImportImageFilter::SetBufferAsUInt16( uint16_t * buffer, unsigned int numberOfComponents )
+ImportImageFilter::Self& ImportImageFilter::SetBufferAsUInt16( uint16_t * buffer, unsigned int numberOfComponents )
 {
   this->m_Buffer = buffer;
   this->m_NumberOfComponentsPerPixel = numberOfComponents;
@@ -99,8 +281,9 @@ void ImportImageFilter::SetBufferAsUInt16( uint16_t * buffer, unsigned int numbe
     {
     this->m_PixelIDValue = ImageTypeToPixelIDValue< itk::VectorImage<int8_t, UnusedDimension> >::Result;
     }
+  return *this;
 }
-void ImportImageFilter::SetBufferAsInt32( int32_t * buffer, unsigned int numberOfComponents )
+ImportImageFilter::Self& ImportImageFilter::SetBufferAsInt32( int32_t * buffer, unsigned int numberOfComponents )
 {
   this->m_Buffer = buffer;
   this->m_NumberOfComponentsPerPixel = numberOfComponents;
@@ -112,8 +295,9 @@ void ImportImageFilter::SetBufferAsInt32( int32_t * buffer, unsigned int numberO
     {
     this->m_PixelIDValue = ImageTypeToPixelIDValue< itk::VectorImage<int8_t, UnusedDimension> >::Result;
     }
+  return *this;
 }
-void ImportImageFilter::SetBufferAsUInt32( uint32_t * buffer, unsigned int numberOfComponents )
+ImportImageFilter::Self& ImportImageFilter::SetBufferAsUInt32( uint32_t * buffer, unsigned int numberOfComponents )
 {
   this->m_Buffer = buffer;
   this->m_NumberOfComponentsPerPixel = numberOfComponents;
@@ -125,9 +309,10 @@ void ImportImageFilter::SetBufferAsUInt32( uint32_t * buffer, unsigned int numbe
     {
     this->m_PixelIDValue = ImageTypeToPixelIDValue< itk::VectorImage<int8_t, UnusedDimension> >::Result;
     }
+  return *this;
 }
 
-void ImportImageFilter::SetBufferAsFloat( float * buffer, unsigned int numberOfComponents )
+ImportImageFilter::Self& ImportImageFilter::SetBufferAsFloat( float * buffer, unsigned int numberOfComponents )
 {
   this->m_Buffer = buffer;
   this->m_NumberOfComponentsPerPixel = numberOfComponents;
@@ -139,8 +324,9 @@ void ImportImageFilter::SetBufferAsFloat( float * buffer, unsigned int numberOfC
     {
     this->m_PixelIDValue = ImageTypeToPixelIDValue< itk::VectorImage<int8_t, UnusedDimension> >::Result;
     }
+  return *this;
 }
-void ImportImageFilter::SetBufferAsDouble( double * buffer, unsigned int numberOfComponents )
+ImportImageFilter::Self& ImportImageFilter::SetBufferAsDouble( double * buffer, unsigned int numberOfComponents )
 {
   this->m_Buffer = buffer;
   this->m_NumberOfComponentsPerPixel = numberOfComponents;
@@ -152,6 +338,7 @@ void ImportImageFilter::SetBufferAsDouble( double * buffer, unsigned int numberO
     {
     this->m_PixelIDValue = ImageTypeToPixelIDValue< itk::VectorImage<int8_t, UnusedDimension> >::Result;
     }
+  return *this;
 }
 
 
@@ -164,9 +351,10 @@ std::string ImportImageFilter::ToString() const
   out << "itk::simple::ImportImageFilter\n"
       << PRINT_IVAR_MACRO( m_NumberOfComponentsPerPixel )
       << PRINT_IVAR_MACRO( m_PixelIDValue )
-    //         << PRINT_IVAR_MACRO( m_Origin )
-//          << PRINT_IVAR_MACRO( m_Spacing )
-//          << PRINT_IVAR_MACRO( m_Size )
+      << PRINT_IVAR_MACRO( m_Origin )
+      << PRINT_IVAR_MACRO( m_Spacing )
+      << PRINT_IVAR_MACRO( m_Size )
+      << PRINT_IVAR_MACRO( m_Direction )
       << PRINT_IVAR_MACRO( m_Buffer );
   return out.str();
 }
@@ -214,17 +402,6 @@ Image ImportImageFilter::ExecuteInternal( )
 
   typename ImageType::Pointer image = ImageType::New();
 
-  //
-  //  Origin
-  //
-  typename ImageType::PointType origin = sitkSTLVectorToITK< typename ImageType::PointType >( this->m_Origin );
-  image->SetOrigin( origin );
-
-  //
-  //  Spacing
-  //
-  typename ImageType::SpacingType spacing = sitkSTLVectorToITK< typename ImageType::SpacingType >( this->m_Spacing );
-  image->SetSpacing( spacing );
 
   //
   //  Size and Region
@@ -232,6 +409,7 @@ Image ImportImageFilter::ExecuteInternal( )
   typename ImageType::RegionType region;
   typename ImageType::SizeType size = sitkSTLVectorToITK< typename ImageType::SizeType >( this->m_Size );
   region.SetSize(size);
+  // set the size and region to the ITK image.
   image->SetRegions( region );
 
 
@@ -240,8 +418,6 @@ Image ImportImageFilter::ExecuteInternal( )
     {
     numberOfElements *= size[si];
     }
-
-  // todo set direction
 
   const bool TheContainerWillTakeCareOfDeletingTheMemoryBuffer = false;
 
@@ -256,7 +432,35 @@ Image ImportImageFilter::ExecuteInternal( )
   //
   this->SetNumberOfComponentsOnImage( image.GetPointer() );
 
-  return Image(image);
+  Image sitkimage( image );
+
+  this->m_Origin.resize( Dimension );
+  this->m_Spacing.resize( Dimension );
+
+  sitkimage.SetOrigin( this->m_Origin );
+  sitkimage.SetSpacing( this->m_Spacing );
+
+  if (this->m_Direction.size() != 0 )
+      sitkimage.SetDirection( this->m_Direction );
+  else if (Dimension == 2)
+    {
+    // make a 2x2 identity matrix
+    std::vector<double> dir(4, 0.);
+    dir[0] = 1.;
+    dir[3] = 1.;
+    sitkimage.SetDirection( dir );
+    }
+  else if (Dimension == 3)
+    {
+    // make a 3x3 identity matrix
+    std::vector<double> dir(9, 0.);
+    dir[0] = 1.;
+    dir[4] = 1.;
+    dir[8] = 1.;
+    sitkimage.SetDirection( dir );
+    }
+
+  return sitkimage;
 }
 
 template <class TFilterType>

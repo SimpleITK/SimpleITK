@@ -5,8 +5,8 @@ $(include DoNotEditWarning.h.in)
 
 #include <memory>
 
-#include "sitkDualImageFilter.h"
-$(include AddExtraIncludes.h.in)
+#include "sitkImageFilter.h"
+#include "sitkBasicFilters.h"
 
 namespace itk {
   namespace simple {
@@ -80,9 +80,9 @@ $(include ClassEnd.h.in)
      * This function directly calls the execute method of ${name}ImageFilter
      * in order to support a fully functional API
      */
-    Image ${name} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end),
-      std::vector< std::vector<unsigned int> > inSeedList$(when members $(foreach members ,
-      ${type} in${name} = ${default})) );
+    Image SITKBasicFilters_EXPORT ${name} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end),
+                                            std::vector< std::vector<unsigned int> > inSeedList$(when members $(foreach members ,
+                                                                                                                ${type} in${name} = ${default})) );
 
   } // end namespace simple
 } // end namespace itk

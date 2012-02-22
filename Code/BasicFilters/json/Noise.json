@@ -48,6 +48,8 @@
       "tcl_value" : "[list 3 3 3]",
       "python_value" : "[ 3, 3, 3 ]",
       "ruby_value" : "[ 3, 3, 3 ]"
-    }  ]
-  } ]
+    } ]
+  } ],
+  "briefdescription" : "Calculate the local noise in an image.\n",
+  "detaileddescription" : "Computes an image where a given pixel is the standard deviation of the pixels in a neighborhood about the corresponding input pixel. This serves as an estimate of the local noise (or texture) in an image. Currently, this noise estimate assume a piecewise constant image. This filter should be extended to fitting a (hyper) plane to the neighborhood and calculating the standard deviation of the residuals to this (hyper) plane.\n\\see  Image\n\\see  Neighborhood\n\\see  NeighborhoodOperator\n\\see  NeighborhoodIterator\n\\par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}\n{Statistics/NoiseImageFilter,Compute the local noise in an image}\n\n"
 }

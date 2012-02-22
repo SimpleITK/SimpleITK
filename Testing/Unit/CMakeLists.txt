@@ -1,4 +1,7 @@
 
+# remove me
+include(${ITK_USE_FILE})
+
 # Find tests generated in the binary directory
 # To add a new file, just add it to this list.  Any GoogleTests inside will be automatically
 # added to ctest.
@@ -14,7 +17,6 @@ set ( TestSource
   itkHashImageFilterTest.cxx
   ImportImageTest.cxx
   CXXTests.cxx
-  CSharpTests.cxx
   )
 
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/PythonTests)
@@ -93,7 +95,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
     COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitk ${template_include_dir} TestTemplate.cxx.in "${OUTPUT_TEST_FILENAME}"
     DEPENDS ${filter_json_file} ${CXX_TEMPLATE_FILES}
     )
-  set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "BasicFilters.${FILTERNAME}")
+  set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "BasicFilters.${FILTERNAME}:BasicFilters.${FILTERNAME}_*" )
   set ( GENERATED_TEST_SOURCE ${GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
 
   if ( WRAP_LUA )
@@ -163,7 +165,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
       OUTPUT  "${OUTPUT_TEST_FILENAME}"
       COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
       COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Java ${template_include_dir} TestTemplate.java.in "${OUTPUT_TEST_FILENAME}"
-      COMMAND ${Java_JAVAC_EXECUTABLE} -classpath ${SimpleITK_BINARY_DIR}/Wrapping/org.itk.simple.jar ${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/org/itk/simple/testing/${FILTERNAME}ImageFilterTest.java
+      COMMAND ${Java_JAVAC_EXECUTABLE} -classpath ${SimpleITK_BINARY_DIR}/Wrapping/${JAR_FILE} ${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/org/itk/simple/testing/${FILTERNAME}ImageFilterTest.java
       DEPENDS ${filter_json_file} ${JAVA_TEMPLATE_FILES} SimpleITKJava
       )
     set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Java.${FILTERNAME}")
@@ -173,12 +175,8 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
   # C# Tests
   if ( WRAP_CSHARP )
     set( OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/CSharpTests/Test${FILTERNAME}ImageFilter.cs" )
-    set( csharp_compiler_safe ${CSHARP_COMPILER} )
     if ( WIN32 )
       string( REPLACE "/" "\\" OUTPUT_TEST_FILENAME_SAFE ${OUTPUT_TEST_FILENAME} )
-      if ( csharp_compiler_safe MATCHES "bat" )
-        set( csharp_compiler_safe call ${CSHARP_COMPILER} )
-      endif ( csharp_compiler_safe MATCHES "bat" )
     else ( UNIX )
       string( REPLACE "\\" "/" OUTPUT_TEST_FILENAME_SAFE ${OUTPUT_TEST_FILENAME} )
     endif ( WIN32 )
@@ -186,7 +184,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
       OUTPUT "${OUTPUT_TEST_FILENAME}"
       COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
       COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/CSharp ${template_include_dir} TestTemplate.cs.in "${OUTPUT_TEST_FILENAME}"
-      COMMAND ${csharp_compiler_safe}
+      COMMAND ${CSHARP_COMPILER}
         /t:exe /platform:${CSHARP_PLATFORM}
         /lib:${CSHARP_BINARY_DIRECTORY} /reference:System.dll /reference:SimpleITKCSharpManaged.dll
         /out:${CSHARP_BINARY_DIRECTORY}/Test${FILTERNAME}ImageFilter.exe ${OUTPUT_TEST_FILENAME_SAFE}
@@ -224,7 +222,7 @@ set ( GTestSource
 )
 include_directories ( GoogleTest ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
-add_library(gtest ${GTestSource})
+add_library(gtest STATIC ${GTestSource})
 if (CMAKE_USE_PTHREADS_INIT)
   target_link_libraries(gtest ${CMAKE_THREAD_LIBS_INIT})
 endif()
@@ -287,8 +285,10 @@ macro(ADD_GOOGLE_TESTS target)
   list ( REMOVE_DUPLICATES AllTestsHits )
   # Add all the remaining tests to CTest's test list
   foreach(hit ${AllTestsHits})
-    # message ( STATUS "Adding test ${target} --gtest_filter=${hit}" )
-    add_test(NAME ${hit} COMMAND ${target} --gtest_filter=${hit})
+    # Take the first item in gtest list as the name
+    string( REGEX MATCH "[^:]+" name ${hit} )
+    #message ( STATUS "Adding test ${name} as ${target} --gtest_filter=${hit}" )
+    add_test(NAME ${name} COMMAND ${target} --gtest_filter=${hit})
   endforeach()
 endmacro()
 
@@ -305,6 +305,69 @@ add_google_tests(SimpleITKUnitTestDriver ${TestSource})
 set( ITK_TEST_DRIVER  "itkTestDriver" )
 
 
+if ( WRAP_CSHARP )
+
+  #
+  # This is a macro which compiles the program and set up the
+  # enviroment for executing CSharp examples and tests.
+  #
+  macro(add_csharp_test name csharp_file)
+
+    # the root is with out extension or path
+    get_filename_component( CSHARP_EXECUTABLE ${csharp_file} NAME_WE )
+
+    # make sure the executable has CSharp in it
+    if ( NOT CSHARP_EXECUTABLE MATCHES "CSharp" )
+      set( CSHARP_EXECUTABLE "CSharp${CSHARP_EXECUTABLE}" )
+    endif()
+
+    # add the target to compile the test
+    csharp_add_executable(
+        "${CSHARP_EXECUTABLE}"
+        SimpleITKCSharpManaged.dll
+    	${csharp_file}
+    )
+
+    # because each executable is it's own target we actually don't
+    # need to make a target depend on this list
+    list( APPEND compiled_csharp_tests "${CSHARP_BINARY_DIRECTORY}/${CSHARP_EXECUTABLE}.exe")
+
+    add_dependencies("${CSHARP_EXECUTABLE}" SimpleITKCSharpManaged)
+
+    # the interpreter is set to "" when none is needed
+    if( CSHARP_INTERPRETER )
+      add_test(NAME CSharp.${name}
+        COMMAND "${ITK_TEST_DRIVER}"
+        "${CSHARP_INTERPRETER}"
+        "${CSHARP_BINARY_DIRECTORY}/${CSHARP_EXECUTABLE}.exe"
+        ${ARGN}
+        )
+    else ()
+      add_test(NAME CSharp.${name}
+        COMMAND "${ITK_TEST_DRIVER}"
+        "${CSHARP_BINARY_DIRECTORY}/${CSHARP_EXECUTABLE}.exe"
+        ${ARGN}
+        )
+    endif()
+
+  endmacro()
+
+
+  #
+  # CSharp Examples
+  #
+  add_csharp_test( Example.SimpleGaussian
+    "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussian.cs"
+    --compare
+      "${TEST_HARNESS_TEMP_DIRECTORY}/CSharp.SimpleGaussian.nrrd"
+      "${TEST_HARNESS_DATA_DIRECTORY}/Baseline/Example_SimpleGaussian_2.0.nrrd"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
+    "2.0"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/CSharp.SimpleGaussian.nrrd" )
+
+endif ( WRAP_CSHARP )
+
+
 if ( WRAP_JAVA )
 
   #
@@ -318,10 +381,10 @@ if ( WRAP_JAVA )
 
     if(WIN32)
       set( _JAVA_LIBRARY_PATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/$<CONFIGURATION>" )
-      set( _JAVA_CLASSPATH "${SimpleITK_BINARY_DIR}/Wrapping/org.itk.simple.jar;${CMAKE_CURRENT_BINARY_DIR}/$<CONFIGURATION>" )
+      set( _JAVA_CLASSPATH "${SimpleITK_BINARY_DIR}/Wrapping/${JAR_FILE};${CMAKE_CURRENT_BINARY_DIR}/$<CONFIGURATION>" )
     else(WIN32)
       set( _JAVA_LIBRARY_PATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}" )
-      set( _JAVA_CLASSPATH "${SimpleITK_BINARY_DIR}/Wrapping/org.itk.simple.jar:${CMAKE_CURRENT_BINARY_DIR}" )
+      set( _JAVA_CLASSPATH "${SimpleITK_BINARY_DIR}/Wrapping/${JAR_FILE}:${CMAKE_CURRENT_BINARY_DIR}" )
     endif(WIN32)
 
     add_custom_command(
@@ -351,6 +414,9 @@ if ( WRAP_JAVA )
   #
   add_java_test( Example.SimpleGaussian
     "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussian.java"
+    --compare
+      "${TEST_HARNESS_TEMP_DIRECTORY}/Java.SimpleGaussian.nrrd"
+      "${TEST_HARNESS_DATA_DIRECTORY}/Baseline/Example_SimpleGaussian_2.0.nrrd"
     "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
     "2.0"
     "${TEST_HARNESS_TEMP_DIRECTORY}/Java.SimpleGaussian.nrrd" )
@@ -366,6 +432,7 @@ if ( WRAP_JAVA )
   add_custom_target( CompileJavaTests ALL DEPENDS ${compiled_java_tests} )
 
 endif ( WRAP_JAVA )
+
 
 if ( WRAP_PYTHON )
 
@@ -394,15 +461,21 @@ if ( WRAP_PYTHON )
   #
   add_python_test( Example.SimpleGaussian
     "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussian.py"
+    --compare
+      "${TEST_HARNESS_TEMP_DIRECTORY}/Python.SimpleGaussian.nrrd"
+      "${TEST_HARNESS_DATA_DIRECTORY}/Baseline/Example_SimpleGaussian_2.0.nrrd"
     "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
     "2.0"
     "${TEST_HARNESS_TEMP_DIRECTORY}/Python.SimpleGaussian.nrrd" )
 
   add_python_test( Example.SimpleGaussianProcedural
     "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussianProcedural.py"
+    --compare
+      "${TEST_HARNESS_TEMP_DIRECTORY}/Python.SimpleGaussianProcedural.nrrd"
+      "${TEST_HARNESS_DATA_DIRECTORY}/Baseline/Example_SimpleGaussian_2.0.nrrd"
     "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
     "2.0"
-    "${TEST_HARNESS_TEMP_DIRECTORY}/Python.SimpleGaussian.nrrd" )
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Python.SimpleGaussianProcedural.nrrd" )
 
   add_python_test( Example.ImageCreateAndSet
     "${SimpleITK_SOURCE_DIR}/Examples/ImageCreateAndSet.py" )
@@ -483,10 +556,13 @@ if ( WRAP_LUA )
   #
   add_lua_test( Example.SimpleGaussian
     "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussian.lua"
+    --compare
+      "${TEST_HARNESS_TEMP_DIRECTORY}/Lua.SimpleGaussian.nrrd"
+      "${TEST_HARNESS_DATA_DIRECTORY}/Baseline/Example_SimpleGaussian_2.0.nrrd"
     "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
     "2.0"
     "${TEST_HARNESS_TEMP_DIRECTORY}/Lua.SimpleGaussian.nrrd" )
-  
+
 endif ( WRAP_LUA )
 
 if ( WRAP_RUBY )
@@ -519,6 +595,9 @@ if ( WRAP_RUBY )
   #
   add_ruby_test( Example.SimpleGaussian
     "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussian.rb"
+    --compare
+      "${TEST_HARNESS_TEMP_DIRECTORY}/Ruby.SimpleGaussian.nrrd"
+      "${TEST_HARNESS_DATA_DIRECTORY}/Baseline/Example_SimpleGaussian_2.0.nrrd"
     "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
     "2.0"
     "${TEST_HARNESS_TEMP_DIRECTORY}/Ruby.SimpleGaussian.nrrd" )
@@ -555,6 +634,9 @@ if ( WRAP_TCL )
   #
   add_tcl_test( Example.SimpleGaussian
     "${SimpleITK_SOURCE_DIR}/Examples/SimpleGaussian.tcl"
+    --compare
+      "${TEST_HARNESS_TEMP_DIRECTORY}/Tcl.SimpleGaussian.nrrd"
+      "${TEST_HARNESS_DATA_DIRECTORY}/Baseline/Example_SimpleGaussian_2.0.nrrd"
     "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
     "2.0"
     "${TEST_HARNESS_TEMP_DIRECTORY}/Tcl.SimpleGaussian.nrrd" )

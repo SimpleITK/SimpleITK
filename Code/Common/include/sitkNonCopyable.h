@@ -1,6 +1,8 @@
 #ifndef __sitkNonCopyable_h
 #define __sitkNonCopyable_h
 
+#include "sitkCommon.h"
+
 namespace itk
 {
 namespace simple
@@ -29,7 +31,7 @@ namespace simple
 * \endcode
 *
 */
-class NonCopyable
+class SITKCommon_EXPORT NonCopyable
 {
 protected:
   NonCopyable() {}

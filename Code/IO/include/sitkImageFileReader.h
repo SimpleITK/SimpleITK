@@ -16,7 +16,7 @@ namespace itk {
      * This reader handles scalar and vector images and returns an image with
      * the same type as the file on disk.
      */
-    class ImageFileReader
+    class SITKIO_EXPORT ImageFileReader
       : public ImageReaderBase
     {
     public:
@@ -44,7 +44,7 @@ namespace itk {
       std::string m_FileName;
     };
 
-    Image ReadImage ( std::string filename );
+    SITKIO_EXPORT Image ReadImage ( std::string filename );
   }
 }
 

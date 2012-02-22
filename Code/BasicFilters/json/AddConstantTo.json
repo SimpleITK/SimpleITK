@@ -37,7 +37,7 @@
     } ],
     "md5hash" : "bf48d507dca5e384f049112b145fd7df"
   }, {
-    "tag" : "2d-rgb",
+    "tag" : "2d_rgb",
     "description" : "2D-RGB",
     "inputA" : "Input/VM1111Shrink-RGBFloat.nrrd",
     "settings" : [ {

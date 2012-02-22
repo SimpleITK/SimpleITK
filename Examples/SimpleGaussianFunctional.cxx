@@ -2,6 +2,8 @@
 // This one header will include all SimpleITK filters and external
 // objects.
 #include <SimpleITK.h>
+#include <stdlib.h>
+#include <iostream>
 
 // create convenient namespace alias
 namespace sitk = itk::simple;

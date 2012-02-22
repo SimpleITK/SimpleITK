@@ -18,9 +18,9 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 
 [assembly: AssemblyVersion("@ITK_VERSION_MAJOR@.@ITK_VERSION_MINOR@.@ITK_VERSION_PATCH@")]
-[assembly: AssemblyTitle("@PROJECT_NAME@ C# Wrapper @ITK_VERSION_MAJOR@.@ITK_VERSION_MINOR@.@ITK_VERSION_PATCH@")]
+[assembly: AssemblyTitle("@PROJECT_NAME@ C# @CSHARP_PLATFORM@ wrapper @ITK_VERSION_MAJOR@.@ITK_VERSION_MINOR@.@ITK_VERSION_PATCH@")]
 [assembly: AssemblyCopyright("Copyright Insight Software Consortium, Apache License, Version 2.0")]
-[assembly: AssemblyDescription("@PROJECT_NAME@ C# Wrapper @ITK_VERSION_MAJOR@.@ITK_VERSION_MINOR@.@ITK_VERSION_PATCH@, compiled with @CSHARP_TYPE@ @CSHARP_VERSION@")]
+[assembly: AssemblyDescription("@PROJECT_NAME@ C# @CSHARP_PLATFORM@ wrapper @ITK_VERSION_MAJOR@.@ITK_VERSION_MINOR@.@ITK_VERSION_PATCH@, compiled with @CSHARP_TYPE@ @CSHARP_VERSION@")]
 [assembly: AssemblyCompany("Insight Software Consortium")]
 [assembly: AssemblyFileVersion("@ITK_VERSION_MAJOR@.@ITK_VERSION_MINOR@.@ITK_VERSION_PATCH@")]
 [assembly: AssemblyCulture("")]
