@@ -4,9 +4,6 @@
 include(${SimpleITK_SOURCE_DIR}/CMake/generate_filter_source.cmake)
 generate_filter_source()
 
-# Glob non-generated BasicFilters and add to cache
-file ( GLOB SimpleITKBasicFiltersSource src/*.cxx )
-
 add_subdirectory( src )
 
 # Add custom command that will delete java files which need to be rebuilt when changes

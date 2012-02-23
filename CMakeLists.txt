@@ -44,7 +44,7 @@ set ( SimpleITK_INCLUDE_DIRS
 
 include_directories( ${SimpleITK_INCLUDE_DIRS} )
 
-set ( SimpleITK_LIBRARIES SimpleITKCommon SimpleITKIO SimpleITKBasicFilters  ${ITK_LIBRARIES} )
+set ( SimpleITK_LIBRARIES SimpleITKCommon SimpleITKIO CACHE INTERNAL "" )
 
 # Be sure to clear these each time
 set ( GENERATED_TEST_LIST "" CACHE INTERNAL "" )
