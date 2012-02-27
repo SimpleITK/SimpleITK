@@ -52,6 +52,7 @@ public:
       std::copy( inParams.begin(), inParams.end(), p.begin() );
       this->GetTransformBase()->SetFixedParameters( p );
     }
+
   std::vector< double >  GetFixedParameters( void ) const
     {
       const itk::TransformBase::ParametersType &p = this->GetTransformBase()->GetFixedParameters();
@@ -134,10 +135,8 @@ public:
 
   virtual PimpleTransformBase *DeepCopy( void ) const
     {
-      std::auto_ptr<Self> copy( new Self() );
-      copy->m_Transform->SetFixedParameters( this->m_Transform->GetFixedParameters() );
-      copy->m_Transform->SetParameters( this->m_Transform->GetParameters() );
-      return copy.release();
+      PimpleTransformBase *copy( new Self( this->m_Transform->Clone() ) );
+      return copy;
     }
 
   virtual int GetReferenceCount( ) const
@@ -182,6 +181,10 @@ private:
 
   TransformPointer m_Transform;
 };
+
+//
+// class Transform
+//
 
 Transform::Transform( )
   : m_PimpleTransform( NULL )
@@ -267,34 +270,34 @@ void Transform::MakeUniqueForWrite( void )
         m_PimpleTransform = new PimpleTransform<itk::AffineTransform< double, VDimension > >();
         break;
       case sitkComposite:
-      {
-      typename itk::CompositeTransform<double, VDimension>::Pointer compositeTransform;
+        {
+        typename itk::CompositeTransform<double, VDimension>::Pointer compositeTransform;
 
-      if ( !base )
-        {
-        compositeTransform = itk::CompositeTransform<double, VDimension>::New();
-        }
-      else
-        {
-        compositeTransform = dynamic_cast<itk::CompositeTransform<double, VDimension>*>( base );
-        if ( !compositeTransform )
+        if ( !base )
           {
-          sitkExceptionMacro("Unexpectedly unable to convert to CompositeTransform" );
+          compositeTransform = itk::CompositeTransform<double, VDimension>::New();
           }
+        else
+          {
+          compositeTransform = dynamic_cast<itk::CompositeTransform<double, VDimension>*>( base );
+          if ( !compositeTransform )
+            {
+            sitkExceptionMacro("Unexpectedly unable to convert to CompositeTransform" );
+            }
+          }
+
+        if ( compositeTransform->IsTransformQueueEmpty() )
+          {
+
+          // Load an identity transform in case no transforms are loaded.
+          typedef itk::IdentityTransform<double, VDimension> IdentityTransformType;
+          typename IdentityTransformType::Pointer identityTransform = IdentityTransformType::New();
+
+          compositeTransform->AddTransform( identityTransform );
+          }
+        m_PimpleTransform = new PimpleTransform<itk::CompositeTransform<double, VDimension> >( compositeTransform );
         }
-
-      if ( compositeTransform->IsTransformQueueEmpty() )
-        {
-
-        // Load an identity transform in case no transforms are loaded.
-        typedef itk::IdentityTransform<double, VDimension> IdentityTransformType;
-        typename IdentityTransformType::Pointer identityTransform = IdentityTransformType::New();
-
-        compositeTransform->AddTransform( identityTransform );
-        }
-      m_PimpleTransform = new PimpleTransform<itk::CompositeTransform<double, VDimension> >( compositeTransform );
-      }
-      break;
+        break;
       case sitkIdentity:
       default:
         m_PimpleTransform = new PimpleTransform<itk::IdentityTransform< double, VDimension > >();

@@ -33,7 +33,7 @@ class SITKCommon_EXPORT Transform
 public:
   typedef Transform Self;
 
-  /** Questionable default constructable
+  /** By default a 3-d identity transform is constructed
    */
   Transform( void );
   template<unsigned int NDimension>
@@ -87,9 +87,10 @@ private:
   template< unsigned int VDimension>
   void InternalIntitialization(  TransformEnum type, itk::TransformBase *base = NULL );
 
+  // As is the architecture of all SimpleITK pimples,
+  // this pointer should never be null and should always point to a
+  // valid object
   PimpleTransformBase *m_PimpleTransform;
-
-
 };
 }
 }
