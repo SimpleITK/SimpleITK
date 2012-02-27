@@ -108,13 +108,6 @@ endif()
 # augment compiler flags
 #-------------------------------------------------------------------------
 include(CompilerFlagSettings)
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${C_DEBUG_DESIRED_FLAGS}" )
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX_DEBUG_DESIRED_FLAGS}" )
-else() # Release, or anything else
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${C_RELEASE_DESIRED_FLAGS}" )
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX_RELEASE_DESIRED_FLAGS}" )
-endif()
 
 
 # the hidden visibility for inline methods should be consistent between ITK and SimpleITK
@@ -249,6 +242,9 @@ foreach(ep ${external_project_list})
 endforeach()
 file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/ExternalProjectDependencies.txt "${ep_dependency_graph}\n")
 
+
+set( CMAKE_CXX_FLAGS  )
+
 #
 # Use CMake file which present options for wrapped languages, and finds languages as needed
 #
@@ -271,6 +267,7 @@ ExternalProject_Add(${proj}
     -C "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK-build/CMakeCacheInit.txt"
     ${ep_common_args}
     -DBUILD_SHARED_LIBS:BOOL=${BUILD_SHARED_LIBS}
+    -DCMAKE_CXX_FLAGS:STRING=${CMAKE_CXX_FLAGS}\ ${CXX_ADDITIONAL_WARNING_FLAGS}
     ${ep_languages_args}
     # ITK
     -DITK_DIR:PATH=${ITK_DIR}
