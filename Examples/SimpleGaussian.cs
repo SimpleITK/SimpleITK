@@ -15,7 +15,7 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-﻿using System;
+using System;
 using itk.simple;
 
 namespace itk.simple.examples {
