@@ -3,7 +3,7 @@
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
   "doc" : "",
-  "pixel_types" : "BasicPixelIDTypeList",
+  "pixel_types" : "typelist::Append<BasicPixelIDTypeList, VectorPixelIDTypeList>::Type",
   "output_image_type" : "typename InputImageType::template Rebind<float>::Type",
   "members" : [ {
     "name" : "Sigma",
@@ -30,6 +30,15 @@
     "inputA" : "Input/RA-Float.nrrd",
     "settings" : [ ],
     "tolerance" : 1.0E-4
+  }, {
+    "tag" : "rgb_image",
+    "description" : "Smooth a vector image",
+    "inputA" : "Input/VM1111Shrink-RGB.png",
+    "settings" : [ {
+      "parameter" : "Sigma",
+      "value" : "5.0"
+    } ],
+    "tolerance" : 1.0E-5
   } ],
   "briefdescription" : "Computes the smoothing of an image by convolution with the Gaussian kernels implemented as IIR filters.\n",
   "detaileddescription" : "This filter is implemented using the recursive gaussian filters. For multi-component images, the filter works on each component independently.\nFor this filter to be able to run in-place the input and output image types need to be the same and/or the same type as the RealImageType.\n\\par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}\n{Smoothing/SmoothingRecursiveGaussianImageFilter,Gaussian smoothing that works with image adaptors}\n\n"

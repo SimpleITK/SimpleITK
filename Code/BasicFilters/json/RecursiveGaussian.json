@@ -3,8 +3,8 @@
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
   "doc" : "",
-  "pixel_types" : "BasicPixelIDTypeList",
-  "output_pixel_type" : "float",
+  "pixel_types" : "typelist::Append<BasicPixelIDTypeList, VectorPixelIDTypeList>::Type",
+  "output_image_type" : "typename InputImageType::template Rebind<float>::Type",
   "public_declarations" : "typedef  enum { ZeroOrder, FirstOrder, SecondOrder } OrderEnumType;",
   "members" : [ {
     "name" : "Sigma",
@@ -47,6 +47,33 @@
     "settings" : [ ],
     "tolerance" : 0,
     "md5hash" : null
+  }, {
+    "tag" : "rgb_image",
+    "description" : "First derivative on a vector image",
+    "inputA" : "Input/VM1111Shrink-RGB.png",
+    "settings" : [ {
+      "parameter" : "Sigma",
+      "value" : "3.0"
+    }, {
+      "parameter" : "Direction",
+      "value" : "1u",
+      "lua_value" : "1",
+      "python_value" : "1",
+      "ruby_value" : "1",
+      "java_value" : "1",
+      "tcl_value" : "1",
+      "R_value" : "1"
+    }, {
+      "parameter" : "Order",
+      "value" : "itk::simple::${name}ImageFilter::FirstOrder",
+      "lua_value" : "SimpleITK.${name}ImageFilter_FirstOrder",
+      "python_value" : "SimpleITK.${name}ImageFilter.FirstOrder",
+      "ruby_value" : "Simpleitk::${name}ImageFilter::FirstOrder",
+      "java_value" : "${name}ImageFilter.OrderEnumType.FirstOrder",
+      "tcl_value" : "$$${name}ImageFilter_FirstOrder",
+      "csharp_value" : "${name}ImageFilter.OrderEnumType.FirstOrder"
+    } ],
+    "tolerance" : 1.0E-10
   } ],
   "briefdescription" : "Base class for computing IIR convolution with an approximation of a Gaussian kernel.\n",
   "detaileddescription" : " \\f[ \\frac{ 1 }{ \\sigma \\sqrt{ 2 \\pi } } \\exp{ \\left( - \\frac{x^2}{ 2 \\sigma^2 } \\right) } \\f]  \n RecursiveGaussianImageFilteris the base class for recursive filters that approximate convolution with the Gaussian kernel. This class implements the recursive filtering method proposed by R.Deriche in IEEE-PAMI Vol.12, No.1, January 1990, pp 78-87, \"Fast Algorithms for Low-Level Vision\"\nDetails of the implementation are described in the technical report: R. Deriche, \"Recursively Implementing The Gaussian and Its Derivatives\", INRIA, 1993,ftp://ftp.inria.fr/INRIA/tech-reports/RR/RR-1893.ps.gz\nFurther improvements of the algorithm are described in: G. Farneback & C.-F. Westin, \"On Implementation of Recursive Gaussian Filters\", so far unpublished.\nAs compared to itk::DiscreteGaussianImageFilter, this filter tends to be faster for large kernels, and it can take the derivative of the blurred image in one step. Also, note that we have itk::RecursiveGaussianImageFilter::SetSigma(), but itk::DiscreteGaussianImageFilter::SetVariance().\n\\see  DiscreteGaussianImageFilter\n\\par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}\n{EdgesAndGradients/RecursiveGaussianImageFilter,Find higher derivatives of an image}\n\n"
