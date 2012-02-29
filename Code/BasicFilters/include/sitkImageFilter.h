@@ -63,6 +63,20 @@ namespace itk {
 
       /** return user readable name fo the filter */
       virtual std::string GetName() const = 0;
+    protected:
+
+      template< class TImageType >
+      static typename TImageType::ConstPointer CastImageToITK( const Image &img )
+      {
+        typename TImageType::ConstPointer itkImage =
+          dynamic_cast < const TImageType* > ( img.GetITKBase() );
+
+        if ( itkImage.IsNull() )
+          {
+          sitkExceptionMacro( "Unexpected template dispatch error!" );
+          }
+        return itkImage;
+      }
 
     private:
 
