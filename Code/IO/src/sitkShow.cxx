@@ -18,6 +18,7 @@ namespace itk
   const unsigned int ProcessDelay = 500;
 
 
+  //
   static std::string FormatFileName ( std::string TempDirectory, std::string name )
   {
   std::string TempFile = TempDirectory;
@@ -35,6 +36,98 @@ namespace itk
   return TempFile;
   }
 
+#if defined(WIN32)
+  //
+  // Function that converts slashes or backslashes to double backslashes.  We need
+  // to do this so the file name is properly parsed by ImageJ if it's used in a macro.
+  //
+  static std::string DoubleBackslashes(const std::string word)
+  {
+    std::string result;
+
+    for (unsigned int i=0; i<word.length(); i++)
+      {
+      // put in and extra backslash
+      if (word[i] == '\\' || word[i]=='/')
+        {
+        result.push_back('\\');
+        result.push_back('\\');
+        }
+      else
+        {
+        result.push_back(word[i]);
+        }
+      }
+
+    return result;
+  }
+#endif
+
+  //
+  //
+  static std::string BuildFullFileName(const std::string name)
+  {
+  std::string TempDirectory;
+
+#ifdef WIN32
+  if ( !itksys::SystemTools::GetEnv ( "TMP", TempDirectory )
+    && !itksys::SystemTools::GetEnv ( "TEMP", TempDirectory )
+    && !itksys::SystemTools::GetEnv ( "USERPROFILE", TempDirectory )
+    && !itksys::SystemTools::GetEnv ( "WINDIR", TempDirectory ) )
+    {
+    sitkExceptionMacro ( << "Can not find temporary directory.  Tried TMP, TEMP, USERPROFILE, and WINDIR environment variables" );
+    }
+  TempDirectory = TempDirectory + "\\";
+  TempDirectory = DoubleBackslashes(TempDirectory);
+#else
+  TempDirectory = "/tmp/";
+#endif
+  return FormatFileName ( TempDirectory, name );
+  }
+
+
+  //
+  //
+  static std::string FindApplication(const std::string name)
+  {
+
+  std::vector<std::string> paths;
+  std::string ExecutableName=name;
+
+#ifdef WIN32
+  std::string ProgramFiles;
+  if ( itksys::SystemTools::GetEnv ( "PROGRAMFILES", ProgramFiles ) )
+    {
+    paths.push_back ( ProgramFiles + "\\ImageJ\\" );
+    }
+
+    // Find the executable
+    ExecutableName = itksys::SystemTools::FindFile ( ExecutableName.c_str(), paths );
+    if ( ExecutableName == "" )
+      {
+      sitkExceptionMacro ( << "Can not find location of " << name );
+      }
+
+#elif defined(__APPLE__)
+
+  paths.push_back("/Applications"); //A common place to look
+  paths.push_back("/Developer"); //A common place to look
+  paths.push_back("/opt/ImageJ");   //A common place to look
+  paths.push_back("/usr/local/ImageJ");   //A common place to look
+
+  ExecutableName = itksys::SystemTools::FindDirectory( name.c_str() );
+
+#else
+
+  // linux and other systems
+  ExecutableName = itksys::SystemTools::FindFile ( name.c_str() );
+
+#endif
+
+  return ExecutableName;
+  }
+
+
   /**
    * This function take a list of command line arguments, and runs a
    * process based on it. It waits for a fraction of a second before
@@ -44,8 +137,8 @@ namespace itk
   {
 
     // if debug
-    // std::copy( cmdLine.begin(), cmdLine.end(), std::ostream_iterator<std::string>( std::cout, " " ) );
-    // std::cout << std::endl;
+    //std::copy( cmdLine.begin(), cmdLine.end(), std::ostream_iterator<std::string>( std::cout, " " ) );
+    //std::cout << std::endl;
 
     std::vector<const char*> cmd( cmdLine.size() + 1, NULL );
 
@@ -127,122 +220,162 @@ namespace itk
 
   }
 
-    void Show( const Image &image, const std::string name)
+  void Show( const Image &image, const std::string name)
+  {
+  // Try to find ImageJ, write out a file and open
+  std::string ExecutableName;
+  std::string TempFile = "";
+  std::string Macro = "";
+  std::vector<std::string> CommandLine;
+
+
+  TempFile = BuildFullFileName(name);
+  //std::cout << "Full file name:\t" << TempFile << std::endl;
+
+  // write out the image
+  WriteImage ( image, TempFile );
+
+
+  bool colorFlag = false;
+
+
+  // If the image is 3 channel, 8 or 16 bit, assume it's a color image and build an
+  // ImageJ macro to view it as a composite image.
+  //
+  if ( (image.GetNumberOfComponentsPerPixel() == 3)
+    && ((image.GetPixelIDValue()==sitkVectorUInt8) || (image.GetPixelIDValue()==sitkVectorUInt16)) )
     {
-      // Try to find ImageJ, write out a file and open
-      std::vector<std::string> paths;
-      std::string ExecutableName = itksys::SystemTools::FindFile( "ImageJ" );
-      std::string TempDirectory = "";
-      std::string TempFile = "";
-      std::vector<std::string> CommandLine;
 #if defined(WIN32)
-
-      // Windows
-      // Create possible paths
-      ExecutableName = "ImageJ.exe";
-      std::string ProgramFiles;
-      if ( itksys::SystemTools::GetEnv ( "PROGRAMFILES", ProgramFiles ) )
-        {
-        paths.push_back ( ProgramFiles + "\\ImageJ\\" );
-        }
-
-      // Find the executable
-      ExecutableName = itksys::SystemTools::FindFile ( ExecutableName.c_str(), paths );
-      if ( ExecutableName == "" )
-        {
-        sitkExceptionMacro ( << "Can not find location of " << ExecutableName );
-        }
-
-      if ( !itksys::SystemTools::GetEnv ( "TMP", TempDirectory )
-           && !itksys::SystemTools::GetEnv ( "TEMP", TempDirectory )
-           && !itksys::SystemTools::GetEnv ( "USERPROFILE", TempDirectory )
-           && !itksys::SystemTools::GetEnv ( "WINDIR", TempDirectory ) )
-        {
-        sitkExceptionMacro ( << "Can not find temporary directory.  Tried TMP, TEMP, USERPROFILE, and WINDIR environment variables" );
-        }
-      TempDirectory = TempDirectory + "\\";
-      TempFile = FormatFileName ( TempDirectory, name );
-      CommandLine.push_back( ExecutableName );
-      CommandLine.push_back( "-o" );
-      CommandLine.push_back( TempFile );
+    // Windows needs single quotes while *nix needs double.
+    Macro = "open(\'" + TempFile + "\');";
+    Macro += " run(\'Make Composite\', \'display=Composite\'); ";
 #else
-      // Handle Linux and Mac
-      TempDirectory = "/tmp/";
-      TempFile = FormatFileName ( TempDirectory, name );
-#if defined(__APPLE__)
-      paths.push_back("/Applications"); //A common place to look
-      paths.push_back("/Developer"); //A common place to look
-      paths.push_back("/opt/ImageJ");   //A common place to look
-      paths.push_back("/usr/local/ImageJ");   //A common place to look
-
-#ifdef __x86_64__
-      // Mac 64-bit
-      //
-      ExecutableName = itksys::SystemTools::FindDirectory( "ImageJ64.app" );
-      if( ExecutableName == "" )
-        {
-        // Just assume it is registered properly in a place where the open command will find it.
-        ExecutableName="ImageJ64";
-        }
-      WriteImage ( image, TempFile );
-
-      CommandLine.push_back( "open" );
-      CommandLine.push_back( "-a" );
-      CommandLine.push_back( ExecutableName );
-      CommandLine.push_back( TempFile );
-
-      try
-        {
-        ExecuteShow( CommandLine );
-        }
-      catch(...)
-        {
-        // failed to find ImageJ64.app.  Try ImageJ.app
-
-        ExecutableName = itksys::SystemTools::FindDirectory( "ImageJ.app" );
-        if( ExecutableName == "" )
-          {
-          // Just assume it is registered properly in a place where the open command will find it.
-          ExecutableName="ImageJ";
-          }
-        CommandLine[2] = ExecutableName;
-        // run the compiled command-line in a process which will detach
-        ExecuteShow( CommandLine );
-        }
-      return;
+    Macro = "open(\"" + TempFile + "\");";
+    Macro += " run(\"Make Composite\", \"display=Composite\"); ";
 #endif
-
-      // Mac 32-bit
-      ExecutableName = itksys::SystemTools::FindDirectory( "ImageJ.app" );
-      if( ExecutableName == "" )
-        {
-        // Just assume it is registered properly in a place where the open command will find it.
-        ExecutableName="ImageJ";
-        }
-      CommandLine.push_back( "open" );
-      CommandLine.push_back( "-a" );
-      CommandLine.push_back( ExecutableName );
-      CommandLine.push_back( TempFile );
-
-#else
-      // Must be Linux
-      ExecutableName = itksys::SystemTools::FindFile ( "ImageJ" );
-      if ( ExecutableName == "" )
-        {
-        ExecutableName = itksys::SystemTools::FindFile ( "imagej" );
-        }
-      CommandLine.push_back( ExecutableName );
-      CommandLine.push_back( "-o" );
-      CommandLine.push_back( TempFile );
-#endif
-#endif
-
-      WriteImage ( image, TempFile );
-
-      // run the compiled command-line in a process which will detach
-      ExecuteShow( CommandLine );
-
+    colorFlag = true;
+    //std::cout << "Macro:\t" << Macro << std::endl;
     }
+
+
+#if defined(WIN32)
+  // Windows
+  ExecutableName = FindApplication("ImageJ.exe");
+
+  CommandLine.push_back( ExecutableName );
+  if (colorFlag)
+    {
+    //CommandLine.push_back( "-debug" );
+    CommandLine.push_back( "-eval" );
+    CommandLine.push_back( Macro );
+    }
+  else
+    {
+    CommandLine.push_back( "-o" );
+    CommandLine.push_back( TempFile );
+    }
+
+#elif defined(__APPLE__)
+
+# if defined(__x86_64__)
+  // Mac 64-bit
+  //
+  // This is a funny special case because it tries to launch ImageJ64, then if that
+  // fails it falls through to the Mac 32-bit code.
+  //
+  ExecutableName = FindApplication( "ImageJ64.app" );
+  if( ExecutableName == "" )
+    {
+    // Just assume it is registered properly in a place where the open command will find it.
+    ExecutableName="ImageJ64";
+    }
+
+  CommandLine.push_back( "open" );
+  CommandLine.push_back( "-a" );
+  CommandLine.push_back( ExecutableName );
+  if (colorFlag)
+    {
+    // the "-n" flag tells OSX to launch a new instance of ImageJ, even if one is already running.
+    // we do this because otherwise the macro command line argument is not correctly passed to
+    // a previously running instance of ImageJ.
+    CommandLine.push_back( "-n" );
+    CommandLine.push_back( "--args" );
+    CommandLine.push_back( "-eval" );
+    CommandLine.push_back( Macro );
+    }
+  else
+    {
+    CommandLine.push_back( TempFile );
+    }
+
+  bool fail64 = false;
+
+  try
+    {
+    ExecuteShow( CommandLine );
+    }
+  catch(...)
+    {
+    fail64 = true;
+    }
+
+  if (!fail64)
+    // 64-bit app worked, so we're done
+    return;
+
+   // if 64-bit app failed, we fall through to the 32-bit code
+#  endif // __x86_64__
+
+
+  // Mac 32-bit
+  ExecutableName = FindApplication( "ImageJ.app" );
+  CommandLine.push_back( "open" );
+  CommandLine.push_back( "-a" );
+  CommandLine.push_back( ExecutableName );
+  if (colorFlag)
+    {
+    // The "-n" flag tells OSX to launch a new instance of ImageJ, even if one is already running.
+    // We do this because otherwise the macro command line argument is not correctly passed to
+    // a previously running instance of ImageJ.
+    CommandLine.push_back( "-n" );
+    CommandLine.push_back( "--args" );
+    CommandLine.push_back( "-eval" );
+    CommandLine.push_back( Macro );
+    }
+  else
+    {
+    CommandLine.push_back( TempFile );
+    }
+
+#else
+
+  // Linux and other systems
+  ExecutableName = FindApplication("ImageJ");
+  if (ExecutableName == "")
+    {
+    ExecutableName = FindApplication("imagej");
+    }
+  CommandLine.push_back( ExecutableName );
+
+  // Don't think the "-o" actually works on linux. -davechen
+  CommandLine.push_back( "-o" );
+
+  if (colorFlag)
+    {
+    // on Linux ImageJ uses a "-e" instead of "-eval".  Why?  Heck if I know.
+    CommandLine.push_back( "-e" );
+    CommandLine.push_back( Macro );
+    }
+  else
+    {
+    CommandLine.push_back( TempFile );
+    }
+
+#endif
+
+  // run the compiled command-line in a process which will detach
+  ExecuteShow( CommandLine );
+  }
 
   }
 }
