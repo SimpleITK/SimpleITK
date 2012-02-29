@@ -107,17 +107,10 @@ Image JoinSeriesImageFilter::ExecuteInternal ( const std::vector<Image> & images
   for ( unsigned int i = 0; i < images.size(); ++i )
     {
     // Get the pointer to the ITK image contained in image1
-    typename InputImageType::ConstPointer image =
-      dynamic_cast <const InputImageType*> ( images[i].GetITKBase() );
+    typename InputImageType::ConstPointer image = this->CastImageToITK<InputImageType>( images[i] );
 
-        // Check that ITK image pointer was properly retrieved
-        if ( image.IsNull() )
-          {
-          sitkExceptionMacro( "The " << i << " input does not match the dimension or type of the first!" );
-          }
-
-          filter->SetInput( i, image );
-        }
+    filter->SetInput( i, image );
+    }
 
 
   filter->SetSpacing( this->m_Spacing );

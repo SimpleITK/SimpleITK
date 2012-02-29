@@ -1,22 +1,8 @@
   // Get the pointer to the ITK image contained in image1
-  typename InputImageType::ConstPointer image1 =
-    dynamic_cast <const InputImageType*> ( inImage1.GetITKBase() );
-
-  // Check that ITK image pointer was properly retrieved
-  if ( image1.IsNull() )
-    {
-    sitkExceptionMacro( "Unexpected template dispatch error!" );
-    }$(if number_of_inputs == 2 then
+  typename InputImageType::ConstPointer image1 =   this->CastImageToITK<InputImageType>( inImage1 );
+$(if number_of_inputs == 2 then
 OUT=[[
 
-
   // Get the a pointer to the ITK image contained in image2
-  typename InputImageType2::ConstPointer image2 =
-  dynamic_cast <const InputImageType2*> ( inImage2.GetITKBase() );
-
-  // Check that ITK image pointer was properly retrieved
-  if ( image2.IsNull() )
-    {
-    sitkExceptionMacro( "Unexpected template dispatch error!" );
-    }]]
+  typename InputImageType2::ConstPointer image2 =   this->CastImageToITK<InputImageType2>( inImage2 );]]
 end)
