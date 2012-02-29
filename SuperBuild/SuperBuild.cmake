@@ -263,8 +263,6 @@ endforeach()
 file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/ExternalProjectDependencies.txt "${ep_dependency_graph}\n")
 
 
-set( CMAKE_CXX_FLAGS  )
-
 #
 # Use CMake file which present options for wrapped languages, and finds languages as needed
 #
