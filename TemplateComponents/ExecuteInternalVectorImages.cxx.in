@@ -6,17 +6,33 @@ OUT=[[
 template <class TImageType> Image
 ${name}ImageFilter::ExecuteInternalVectorImage ( const Image& inImage1 )
 {
-  // Define the input and output image types
-  typedef TImageType                                                         InputImageType;
-  typedef typename InputImageType::InternalPixelType                         ComponentType;
-  typedef typename itk::Image<ComponentType, InputImageType::ImageDimension> ComponentImageType;
+  typedef TImageType                                                               VectorInputImageType;
+  typedef typename VectorInputImageType::InternalPixelType                         ComponentType;
+  typedef typename itk::Image<ComponentType, VectorInputImageType::ImageDimension> ComponentImageType;
 
-  // fix me
-  typedef InputImageType OutputImageType;
+  // we must define the input and output image types should be the
+  // same as the scalar execute internal method
+  typedef ComponentImageType  InputImageType;
+]]
+if output_image_type then
+OUT=OUT..[[
+  //Define output image type
+  typedef ${output_image_type} OutputImageType;]]
+elseif output_pixel_type then
+OUT=OUT..[[
+  // Define output image type
+  typedef itk::Image< ${output_pixel_type}, InputImageType::ImageDimension > OutputImageType;]]
+else
+  OUT=OUT..[[
+  // Define output image type
+  typedef InputImageType OutputImageType;]]
+end
+
+OUT=OUT..[[
 
   // Get the pointer to the ITK image contained in image1
-  typename InputImageType::ConstPointer image1 =
-    dynamic_cast <const InputImageType*> ( inImage1.GetITKBase() );
+  typename VectorInputImageType::ConstPointer image1 =
+    dynamic_cast <const VectorInputImageType*> ( inImage1.GetITKBase() );
 
   // Check that ITK image pointer was properly retrieved
   if ( image1.IsNull() )
@@ -24,11 +40,11 @@ ${name}ImageFilter::ExecuteInternalVectorImage ( const Image& inImage1 )
     sitkExceptionMacro( "Unexpected template dispatch error!" );
     }
 
-  typedef itk::VectorIndexSelectionCastImageFilter< InputImageType, ComponentImageType > ComponentExtratorType;
+  typedef itk::VectorIndexSelectionCastImageFilter< VectorInputImageType, ComponentImageType > ComponentExtratorType;
   typename ComponentExtratorType::Pointer extractor = ComponentExtratorType::New();
   extractor->SetInput( image1 );
 
-  typedef itk::ComposeImageFilter<ComponentImageType> ToVectorFilterType;
+  typedef itk::ComposeImageFilter<OutputImageType> ToVectorFilterType;
   typename ToVectorFilterType::Pointer toVector = ToVectorFilterType::New();
 
   unsigned int numComps = image1->GetNumberOfComponentsPerPixel();
@@ -37,10 +53,10 @@ ${name}ImageFilter::ExecuteInternalVectorImage ( const Image& inImage1 )
     extractor->SetIndex( i );
     extractor->Update();
 
-    Image tmp = this->ExecuteInternal<ComponentImageType>( Image( extractor->GetOutput() ) );
+    Image tmp = this->ExecuteInternal<InputImageType>( Image( extractor->GetOutput() ) );
 
-    typename ComponentImageType::ConstPointer tempITKImage =
-      dynamic_cast <const ComponentImageType*> ( tmp.GetITKBase() );
+    typename OutputImageType::ConstPointer tempITKImage =
+      dynamic_cast <const OutputImageType*> ( tmp.GetITKBase() );
 
     toVector->SetInput( i, tempITKImage );
     }
