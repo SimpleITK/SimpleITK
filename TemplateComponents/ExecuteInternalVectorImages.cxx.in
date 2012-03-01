@@ -6,22 +6,39 @@ OUT=[[
 template <class TImageType> Image
 ${name}ImageFilter::ExecuteInternalVectorImage ( const Image& inImage1 )
 {
-  // Define the input and output image types
-  typedef TImageType                                                         InputImageType;
-  typedef typename InputImageType::InternalPixelType                         ComponentType;
-  typedef typename itk::Image<ComponentType, InputImageType::ImageDimension> ComponentImageType;
+  typedef TImageType                                                               VectorInputImageType;
+  typedef typename VectorInputImageType::InternalPixelType                         ComponentType;
+  typedef typename itk::Image<ComponentType, VectorInputImageType::ImageDimension> ComponentImageType;
 
-  // fix me
-  typedef InputImageType OutputImageType;
+  // we must define the input and output image types should be the
+  // same as the scalar execute internal method
+  typedef ComponentImageType  InputImageType;
+]]
+if output_image_type then
+OUT=OUT..[[
+  //Define output image type
+  typedef ${output_image_type} OutputImageType;]]
+elseif output_pixel_type then
+OUT=OUT..[[
+  // Define output image type
+  typedef itk::Image< ${output_pixel_type}, InputImageType::ImageDimension > OutputImageType;]]
+else
+  OUT=OUT..[[
+  // Define output image type
+  typedef InputImageType OutputImageType;]]
+end
+
+OUT=OUT..[[
 
   // Get the pointer to the ITK image contained in image1
-  typename InputImageType::ConstPointer image1 = this->CastImageToITK<InputImageType>( inImage1 );
+  typename VectorInputImageType::ConstPointer image1 =
+    this->CastImageToITK<VectorInputImageType>( inImage1 );
 
-  typedef itk::VectorIndexSelectionCastImageFilter< InputImageType, ComponentImageType > ComponentExtratorType;
+  typedef itk::VectorIndexSelectionCastImageFilter< VectorInputImageType, ComponentImageType > ComponentExtratorType;
   typename ComponentExtratorType::Pointer extractor = ComponentExtratorType::New();
   extractor->SetInput( image1 );
 
-  typedef itk::ComposeImageFilter<ComponentImageType> ToVectorFilterType;
+  typedef itk::ComposeImageFilter<OutputImageType> ToVectorFilterType;
   typename ToVectorFilterType::Pointer toVector = ToVectorFilterType::New();
 
   unsigned int numComps = image1->GetNumberOfComponentsPerPixel();
@@ -30,9 +47,9 @@ ${name}ImageFilter::ExecuteInternalVectorImage ( const Image& inImage1 )
     extractor->SetIndex( i );
     extractor->Update();
 
-    Image tmp = this->ExecuteInternal<ComponentImageType>( Image( extractor->GetOutput() ) );
+    Image tmp = this->ExecuteInternal<InputImageType>( Image( extractor->GetOutput() ) );
 
-    typename ComponentImageType::ConstPointer tempITKImage = this->CastImageToITK<ComponentImageType>( tmp );
+    typename OutputImageType::ConstPointer tempITKImage = this->CastImageToITK<OutputImageType>( tmp );
 
     toVector->SetInput( i, tempITKImage );
     }

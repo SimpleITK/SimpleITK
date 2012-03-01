@@ -22,6 +22,15 @@
     "inputA" : "Input/Ramp-Up-Short.nrrd",
     "settings" : [ ],
     "tolerance" : "0.0001"
+  }, {
+    "tag" : "vector",
+    "description" : "Running with vector image to normalize to 0",
+    "inputA" : "Input/VM1111Shrink-RGB.png",
+    "settings" : [ {
+      "parameter" : "Constant",
+      "value" : "0.0" }
+    ],
+    "tolerance" : "0.0001"
   } ],
   "briefdescription" : "Scales image pixel intensities to make the sum of all pixels equal a user-defined constant.\n",
   "detaileddescription" : "The default value of the constant is 1. It can be changed with SetConstant().\nThis transform is especially useful for normalizing a convolution kernel.\nThis code was contributed in the Insight Journal paper: \"FFT based convolution\" by Lehmann G.http://hdl.handle.net/10380/3154\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\\see  NormalizeImageFilter\n\\see  StatisticsImageFilter\n\\see  DivideImageFilter\n\\par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}\n{ImageProcessing/NormalizeToConstantImageFilter,Scale all pixels so that their sum is a specified constant}\n\n"
