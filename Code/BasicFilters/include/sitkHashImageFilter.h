@@ -22,6 +22,7 @@
 #include "sitkMemberFunctionFactory.h"
 #include "sitkImage.h"
 #include "sitkBasicFilters.h"
+#include "sitkImageFilter.h"
 
 namespace itk {
   namespace simple {

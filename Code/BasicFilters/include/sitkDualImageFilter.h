@@ -47,6 +47,20 @@ namespace itk {
       virtual Image Execute ( const Image&, const Image& ) = 0;
 
       virtual ~DualImageFilter() {}
+    protected:
+
+      template< class TImageType >
+        typename TImageType::ConstPointer CastImageToITK( const Image &img )
+      {
+        typename TImageType::ConstPointer itkImage =
+          dynamic_cast < const TImageType* > ( img.GetITKBase() );
+
+        if ( itkImage.IsNull() )
+          {
+          sitkExceptionMacro( "Unexpected template dispatch error!" );
+          }
+        return itkImage;
+      }
 
     private:
 

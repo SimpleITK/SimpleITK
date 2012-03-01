@@ -32,13 +32,7 @@ OUT=OUT..[[
 
   // Get the pointer to the ITK image contained in image1
   typename VectorInputImageType::ConstPointer image1 =
-    dynamic_cast <const VectorInputImageType*> ( inImage1.GetITKBase() );
-
-  // Check that ITK image pointer was properly retrieved
-  if ( image1.IsNull() )
-    {
-    sitkExceptionMacro( "Unexpected template dispatch error!" );
-    }
+    this->CastImageToITK<VectorInputImageType>( inImage1 );
 
   typedef itk::VectorIndexSelectionCastImageFilter< VectorInputImageType, ComponentImageType > ComponentExtratorType;
   typename ComponentExtratorType::Pointer extractor = ComponentExtratorType::New();
@@ -55,8 +49,7 @@ OUT=OUT..[[
 
     Image tmp = this->ExecuteInternal<InputImageType>( Image( extractor->GetOutput() ) );
 
-    typename OutputImageType::ConstPointer tempITKImage =
-      dynamic_cast <const OutputImageType*> ( tmp.GetITKBase() );
+    typename OutputImageType::ConstPointer tempITKImage = this->CastImageToITK<OutputImageType>( tmp );
 
     toVector->SetInput( i, tempITKImage );
     }
