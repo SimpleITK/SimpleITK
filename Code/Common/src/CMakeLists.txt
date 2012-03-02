@@ -1,5 +1,6 @@
 set ( SimpleITKCommonSource
   sitkImage.cxx
+  sitkTransform.cxx
   sitkPixelIDValues.cxx
   sitkExceptionObject.cxx
   ${CMAKE_CURRENT_BINARY_DIR}/sitkVersion.cxx
