@@ -214,7 +214,6 @@ list( APPEND ep_common_list CMAKE_OSX_ARCHITECTURES )
 VariableListToCache( ep_common_list ep_common_cache )
 
 list( APPEND ep_common_args
-  -DCMAKE_SKIP_RPATH:BOOL=ON
   -DBUILD_EXAMPLES:BOOL=OFF
 )
 

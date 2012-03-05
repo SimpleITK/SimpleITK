@@ -51,7 +51,7 @@ namespace simple
  * Contributed in the users list
  * http://public.kitware.com/pipermail/insight-users/2004-February/006542.html
  */
-class JoinSeriesImageFilter
+class SITKBasicFilters_EXPORT JoinSeriesImageFilter
   : public ImageFilter
 {
 public:
@@ -103,7 +103,7 @@ private:
 
 };
 
-Image JoinSeries ( const std::vector<Image>& images, double inSpacing = 1.0, double inOrigin = 0.0 );
+Image SITKBasicFilters_EXPORT JoinSeries ( const std::vector<Image>& images, double inSpacing = 1.0, double inOrigin = 0.0 );
 
 }
 }
