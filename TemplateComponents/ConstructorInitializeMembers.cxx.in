@@ -1,5 +1,8 @@
+$(when measurements $(foreach measurements
+ this->m_${name} = ${default}
+))
 $(foreach members
 $(if default then
 OUT = [[
-  this->m_${name} = ${default};]] end)
-)
+  this->m_${name} = ${default};]]
+end))
