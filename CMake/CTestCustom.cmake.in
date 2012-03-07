@@ -28,7 +28,7 @@ SET(CTEST_CUSTOM_WARNING_EXCEPTION
   "libtool:.*file:.*has no symbols"
 
   # Ignore warning building SWIG
-  "Swig/Source/DOH"
+  "Swig-prefix/src/Swig/Source"
 
   # Ignore apple warning
   "ld.*warning.*duplicate dylib.*"
