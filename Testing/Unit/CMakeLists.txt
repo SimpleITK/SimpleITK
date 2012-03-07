@@ -249,6 +249,12 @@ add_executable(SimpleITKUnitTestDriver
 )
 target_link_libraries ( SimpleITKUnitTestDriver gtest ${SimpleITK_LIBRARIES} )
 
+add_executable(sitkShowTest
+  sitkShowTest.cxx
+  )
+target_link_libraries ( sitkShowTest ${SimpleITK_LIBRARIES} )
+
+
 # Add all the tests by parsing the source code
 # This macro searches for GoogleTest macros and adds them as test automatically
 macro(ADD_GOOGLE_TESTS target)
