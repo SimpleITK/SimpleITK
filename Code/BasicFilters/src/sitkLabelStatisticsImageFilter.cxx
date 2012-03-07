@@ -218,20 +218,12 @@ Image LabelStatisticsImageFilter::Execute ( const Image& image1 , const Image & 
 template <class TImageType, class TLabelImageType>
 Image LabelStatisticsImageFilter::DualExecuteInternal ( const Image& inImage1, const Image& inLabels )
   {
-  typename TImageType::ConstPointer image1 =
-    dynamic_cast <const TImageType* > ( inImage1.GetITKBase() );
+    typedef TImageType                                InputImageType;
+    typedef TLabelImageType                           LabelImageType;
 
-  if ( image1.IsNull() )
-    {
-    sitkExceptionMacro( "Unexpected template dispatch error!" );
-    }
+    typename InputImageType::ConstPointer image1 = this->CastImageToITK<InputImageType>( inImage1 );
 
-  typename TLabelImageType::ConstPointer labelImage =
-    dynamic_cast <const TLabelImageType* > ( inLabels.GetITKBase() );
-  if ( labelImage.IsNull() )
-    {
-    sitkExceptionMacro( "Unexpected template dispatch error!" );
-    }
+    typename LabelImageType::ConstPointer labelImage = this->CastImageToITK<LabelImageType>( inLabels );
 
   //Need to find range of valid pixel values for histogram calulations
   typedef itk::LabelStatisticsImageFilter<TImageType,TLabelImageType> FilterType;

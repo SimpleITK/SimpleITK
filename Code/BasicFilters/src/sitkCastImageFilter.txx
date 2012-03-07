@@ -41,13 +41,7 @@ CastImageFilter::ExecuteInternalCast( const Image& inImage )
   typedef TImageType       InputImageType;
   typedef TOutputImageType OutputImageType;
 
-  typename InputImageType::ConstPointer image =
-    dynamic_cast <const InputImageType*> ( inImage.GetITKBase() );
-
-  if ( image.IsNull() )
-    {
-    sitkExceptionMacro( << "Could not cast input image to proper type" );
-    }
+  typename InputImageType::ConstPointer image = this->CastImageToITK<InputImageType>( inImage );
 
   typedef itk::CastImageFilter<InputImageType, OutputImageType> FilterType;
   typename FilterType::Pointer filter = FilterType::New();
@@ -66,13 +60,7 @@ Image CastImageFilter::ExecuteInternalToVector( const Image& inImage )
   typedef TImageType       InputImageType;
   typedef TOutputImageType OutputImageType;
 
-  typename InputImageType::ConstPointer image =
-    dynamic_cast <const InputImageType*> ( inImage.GetITKBase() );
-
-  if ( image.IsNull() )
-    {
-    sitkExceptionMacro( << "Could not cast input image to proper type" );
-    }
+  typename InputImageType::ConstPointer image = this->CastImageToITK<InputImageType>( inImage );
 
   typedef itk::ComposeImageFilter<InputImageType> FilterType;
   typename FilterType::Pointer filter = FilterType::New();
@@ -98,13 +86,7 @@ Image CastImageFilter::ExecuteInternalToLabel( const Image& inImage )
 
   typedef itk::Image<LabelType, InputImageType::ImageDimension> LabelImageType;
 
-  typename InputImageType::ConstPointer image =
-    dynamic_cast <const InputImageType*> ( inImage.GetITKBase() );
-
-  if ( image.IsNull() )
-    {
-    sitkExceptionMacro( << "Could not cast input image to proper type" );
-    }
+  typename InputImageType::ConstPointer image = this->CastImageToITK<InputImageType>( inImage );
 
   typedef itk::LabelImageToLabelMapFilter<InputImageType, OutputImageType> FilterType;
   typename FilterType::Pointer filter = FilterType::New();
@@ -122,13 +104,8 @@ Image CastImageFilter::ExecuteInternalLabelToImage( const Image& inImage )
   typedef TImageType                                InputImageType;
   typedef TOutputImageType                          OutputImageType;
 
-  typename InputImageType::ConstPointer image =
-    dynamic_cast <const InputImageType*> ( inImage.GetITKBase() );
+  typename InputImageType::ConstPointer image = this->CastImageToITK<InputImageType>( inImage );
 
-  if ( image.IsNull() )
-    {
-    sitkExceptionMacro( << "Could not cast input image to proper type" );
-    }
 
   typedef itk::LabelMapToLabelImageFilter<InputImageType, OutputImageType> FilterType;
   typename FilterType::Pointer filter = FilterType::New();

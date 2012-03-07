@@ -14,6 +14,12 @@
     "inputA" : "Input/Ramp-Up-Short.nrrd",
     "settings" : [ ],
     "tolerance" : "0.0001"
+  }, {
+    "tag" : "vector",
+    "description" : "Simply run with default settings for a vector image",
+    "inputA" : "Input/VM1111Shrink-RGB.png",
+    "settings" : [ ],
+    "tolerance" : "0.0001"
   } ],
   "briefdescription" : "Normalize an image by setting its mean to zero and variance to one.\n",
   "detaileddescription" : " NormalizeImageFiltershifts and scales an image so that the pixels in the image have a zero mean and unit variance. This filter uses StatisticsImageFilterto compute the mean and variance of the input and then applies ShiftScaleImageFilterto shift and scale the pixels.\nNB: since this filter normalizes the data to lie within -1 to 1, integral types will produce an image that DOES NOT HAVE a unit variance.\n\\see  NormalizeToConstantImageFilter\n\\par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}\n{ImageProcessing/NormalizeImageFilter,Normalize an image}\n\n"
