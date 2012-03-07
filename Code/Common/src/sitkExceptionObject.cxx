@@ -39,7 +39,10 @@ GenericException::GenericException( const GenericException &e ) throw()
 {
   try
     {
-    m_PimpleException =  new itk::ExceptionObject( *e.m_PimpleException );
+    if ( e.m_PimpleException != NULL )
+      {
+      m_PimpleException =  new itk::ExceptionObject( *e.m_PimpleException );
+      }
     }
   catch(...) // prevent exception from leaving constructor
     {
@@ -100,7 +103,7 @@ GenericException & GenericException::operator=(const GenericException & orig)
   return *this;
 }
 
-bool GenericException::operator==(const GenericException & orig)
+bool GenericException::operator==(const GenericException & orig) const
 {
   if ( this->m_PimpleException && orig.m_PimpleException)
     {
@@ -115,7 +118,7 @@ bool GenericException::operator==(const GenericException & orig)
 }
 
 /** Return a description of the error */
-std::string GenericException::ToString()
+std::string GenericException::ToString() const
 {
   if ( this->m_PimpleException )
     {

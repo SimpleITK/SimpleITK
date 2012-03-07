@@ -59,3 +59,50 @@ TEST_F(sitkExceptionsTest, Test2) {
 
   SUCCEED();
 }
+
+TEST_F(sitkExceptionsTest, Test3) {
+
+  // This test is designed to improve coverage of the GenericException class
+
+  // Default constructor
+  const itk::simple::GenericException empty;
+  itk::simple::GenericException e0;
+
+
+  itk::simple::GenericException e1( __FILE__, __LINE__ );
+
+  itk::simple::GenericException e2( __FILE__, __LINE__, "testing yet another constructor" );
+
+  // copy constructor
+  itk::simple::GenericException e3( e2 );
+
+
+  // asignment
+  e0 = e2;
+  e0 = e1;
+  e0 = empty;
+
+  // test self assigment too
+  e0 = e0;
+
+
+  EXPECT_TRUE( e1 == e1 );
+  EXPECT_TRUE( empty == empty );
+  EXPECT_FALSE( e2 == e1 );
+
+  EXPECT_NO_THROW( e2.ToString() );
+  EXPECT_NO_THROW( e2.GetLocation() );
+  EXPECT_NO_THROW( e2.GetDescription() );
+  EXPECT_NO_THROW( e2.GetFile() );
+  EXPECT_NO_THROW( e2.GetLine() );
+  EXPECT_NO_THROW( e2.what() );
+
+  // check accessor for empty/null
+  EXPECT_NO_THROW( empty.ToString() );
+  EXPECT_NO_THROW( empty.GetLocation() );
+  EXPECT_NO_THROW( empty.GetDescription() );
+  EXPECT_NO_THROW( empty.GetFile() );
+  EXPECT_NO_THROW( empty.GetLine() );
+  EXPECT_NO_THROW( empty.what() );
+
+}

@@ -68,11 +68,11 @@ public:
   GenericException & operator=(const GenericException & orig);
 
   /** Equivalence operator. */
-  virtual bool operator==(const GenericException & orig);
+  virtual bool operator==(const GenericException & orig) const;
 
 
   /** Return a description of the error */
-  std::string ToString();
+  std::string ToString() const;
 
   const char * what() const throw();
 
