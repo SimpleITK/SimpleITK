@@ -4,5 +4,6 @@ $(when measurements $(foreach measurements
 $(foreach members
 $(if default then
 OUT = [[
-  this->m_${name} = ${default};]]
+  this->m_${name} = ${default};
+]]
 end))
