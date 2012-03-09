@@ -27,6 +27,8 @@ $(include AddExtraIncludes.cxx.in)
 
 #include "itkFlatStructuringElement.h"
 
+#include <iterator>
+
 namespace itk {
 namespace simple {
 
