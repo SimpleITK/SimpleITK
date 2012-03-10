@@ -18,8 +18,8 @@
 #ifndef __sitkImage_h
 #define __sitkImage_h
 
-#include "sitkMacro.h"
 #include "sitkCommon.h"
+#include "sitkTemplateFunctions.h"
 #include "sitkDetail.h"
 #include "sitkPixelIDTokens.h"
 #include "sitkEnableIf.h"
