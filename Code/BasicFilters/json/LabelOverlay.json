@@ -22,7 +22,7 @@
     "name" : "BackgroundValue",
     "type" : "double",
     "default" : "0.0",
-    "pixeltype" : "Input",
+    "custom_cast" : "filter->SetBrakgroundValue(static_cast< typename InputImage2::PixelType>( m_BackgroundValue );",
     "briefdescriptionSet" : "",
     "briefdescriptionGet" : "",
     "detaileddescriptionGet" : ""
