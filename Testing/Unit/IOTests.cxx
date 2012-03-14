@@ -130,7 +130,7 @@ TEST(IO, SeriesReader) {
   reader.SetFileNames ( fileNames );
   image = reader.Execute();
   EXPECT_EQ ( 3u, image.GetDepth() );
-  EXPECT_EQ ( "5bd8cb076d9582875be0b65ce5ecb596b3a982b6", sitk::Hash( image ) );
+  EXPECT_EQ ( "bb42b8d3991132b4860adbc4b3f6c38313f52b4c", sitk::Hash( image ) );
 
 }
 
