@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkMemberFunctionFactory_txx
-#define __sitkMemberFunctionFactory_txx
+#ifndef __sitkMemberFunctionFactory_hxx
+#define __sitkMemberFunctionFactory_hxx
 
 #include <cassert>
 

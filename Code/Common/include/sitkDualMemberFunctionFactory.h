@@ -178,6 +178,6 @@ protected:
 } // end namespace simple
 } // end namespace itk
 
-#include "sitkDualMemberFunctionFactory.txx"
+#include "sitkDualMemberFunctionFactory.hxx"
 
 #endif //  __sitkDualMemberFunctionFactory_h
