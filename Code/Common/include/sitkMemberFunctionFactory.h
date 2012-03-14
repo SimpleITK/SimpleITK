@@ -160,6 +160,6 @@ protected:
 } // end namespace simple
 } // end namespace itk
 
-#include "sitkMemberFunctionFactory.txx"
+#include "sitkMemberFunctionFactory.hxx"
 
 #endif //  __sitkMemberFunctionFactory_h

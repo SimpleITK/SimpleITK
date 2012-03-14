@@ -116,6 +116,6 @@ private:
 } // end namespace itk
 
 
-#include "itkHashImageFilter.txx"
+#include "itkHashImageFilter.hxx"
 
 #endif // __itkHashImageFilter_h

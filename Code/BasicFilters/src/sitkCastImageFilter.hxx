@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkCastImageFilter_txx
-#define __sitkCastImageFilter_txx
+#ifndef __sitkCastImageFilter_hxx
+#define __sitkCastImageFilter_hxx
 
 #include "sitkCastImageFilter.h"
 
@@ -118,4 +118,4 @@ Image CastImageFilter::ExecuteInternalLabelToImage( const Image& inImage )
 } // end namespace simple
 } // end namespace itk
 
-#endif //__sitkCastImageFilter_txx
+#endif //__sitkCastImageFilter_hxx
