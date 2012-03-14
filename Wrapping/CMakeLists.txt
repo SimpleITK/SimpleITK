@@ -184,7 +184,7 @@ if ( WRAP_JAVA )
     COMMAND ${Java_JAVADOC_EXECUTABLE} -quiet -d ${JAVA_BINARY_DIRECTORY}/javadoc -sourcepath ${JAVA_SOURCE_DIRECTORY} org.itk.simple
     COMMAND ${Java_JAR_EXECUTABLE} cf ${CMAKE_CURRENT_BINARY_DIR}/${JAVADOC_FILE} -C ${JAVA_BINARY_DIRECTORY}/javadoc org
     COMMAND ${Java_JAR_EXECUTABLE} cf ${CMAKE_CURRENT_BINARY_DIR}/${JAVA_SOURCE_FILE} org
-    DEPENDS ${SWIG_MODULE_SimpleITK_REAL_NAME} SimpleITKJava
+    DEPENDS ${SWIG_MODULE_SimpleITK_REAL_NAME} SimpleITKJava SimpleITKCommon SimpleITKBasicFilters SimpleITKIO
     )
 
   # Get the location of the extension directory
