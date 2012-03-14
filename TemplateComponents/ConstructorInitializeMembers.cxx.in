@@ -1,3 +1,6 @@
+$(when measurements $(foreach measurements
+  this->m_${name} = ${default};
+))
 $(foreach members
 $(if default then
 OUT = [[
