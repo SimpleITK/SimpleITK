@@ -1,0 +1,39 @@
+{
+  "name" : "ConfidenceConnected",
+  "template_code_filename" : "RegionGrowingImageFilter",
+  "template_type" : "RegionGrowing",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "output_pixel_type" : "uint8_t",
+  "members" : [ {
+    "name" : "NumberOfIterations",
+    "type" : "unsigned int",
+    "default" : "4u"
+  }, {
+    "name" : "Multiplier",
+    "type" : "double",
+    "default" : "4.5"
+  }, {
+    "name" : "InitialNeighborhoodRadius",
+    "type" : "unsigned int",
+    "default" : "1u"
+  }, {
+    "name" : "ReplaceValue",
+    "type" : "uint8_t",
+    "default" : "1u",
+    "pixeltype" : "Output"
+  } ],
+  "tests" : [ {
+    "tag" : "defaults",
+    "description" : "Simply run with default settings",
+    "inputA" : "Input/RA-Float.nrrd",
+    "settings" : [ ],
+    "md5hash" : "ec87a838931d4d5d2e94a04644788a55"
+  }, {
+    "tag" : "2d",
+    "description" : "Run with 2d sample settings",
+    "inputA" : "Input/STAPLE1.png",
+    "settings" : [ ]
+  } ]
+}
