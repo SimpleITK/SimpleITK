@@ -7,15 +7,6 @@
   "pixel_types" : "BasicPixelIDTypeList",
   "output_pixel_type" : "uint8_t",
   "members" : [ {
-    "name" : "Upper",
-    "type" : "double",
-    "default" : 1,
-    "pixeltype" : "Input",
-    "briefdescriptionSet" : "",
-    "detaileddescriptionSet" : "Set Upper and Lower Threshold inputs as values\n",
-    "briefdescriptionGet" : "",
-    "detaileddescriptionGet" : "Get Upper and Lower Threshold inputs as values\n"
-  }, {
     "name" : "Lower",
     "type" : "double",
     "default" : 0,
@@ -24,6 +15,15 @@
     "detaileddescriptionSet" : "",
     "briefdescriptionGet" : "",
     "detaileddescriptionGet" : ""
+  }, {
+    "name" : "Upper",
+    "type" : "double",
+    "default" : 1,
+    "pixeltype" : "Input",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set Upper and Lower Threshold inputs as values\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : "Get Upper and Lower Threshold inputs as values\n"
   }, {
     "name" : "ReplaceValue",
     "type" : "uint8_t",
