@@ -85,7 +85,7 @@ namespace itk {
 
     };
 
-  Image ImportAsInt8(
+  Image SITKIO_EXPORT ImportAsInt8(
     int8_t * buffer,
     const std::vector< unsigned int > &size,
     const std::vector< double > &spacing = std::vector< double >( 3, 1.0 ),
@@ -94,7 +94,7 @@ namespace itk {
     unsigned int numberOfComponents = 1
     );
 
-  Image ImportAsUInt8(
+  Image SITKIO_EXPORT ImportAsUInt8(
     uint8_t * buffer,
     const std::vector< unsigned int > &size,
     const std::vector< double > &spacing = std::vector< double >( 3, 1.0 ),
@@ -103,7 +103,7 @@ namespace itk {
     unsigned int numberOfComponents = 1
     );
 
-  Image ImportAsInt16(
+  Image SITKIO_EXPORT ImportAsInt16(
     int16_t * buffer,
     const std::vector< unsigned int > &size,
     const std::vector< double > &spacing = std::vector< double >( 3, 1.0 ),
@@ -112,7 +112,7 @@ namespace itk {
     unsigned int numberOfComponents = 1
     );
 
-  Image ImportAsUInt16(
+  Image SITKIO_EXPORT ImportAsUInt16(
     uint16_t * buffer,
     const std::vector< unsigned int > &size,
     const std::vector< double > &spacing = std::vector< double >( 3, 1.0 ),
@@ -121,7 +121,7 @@ namespace itk {
     unsigned int numberOfComponents = 1
     );
 
-  Image ImportAsInt32(
+  Image SITKIO_EXPORT ImportAsInt32(
     int32_t * buffer,
     const std::vector< unsigned int > &size,
     const std::vector< double > &spacing = std::vector< double >( 3, 1.0 ),
@@ -130,7 +130,7 @@ namespace itk {
     unsigned int numberOfComponents = 1
     );
 
-  Image ImportAsUInt32(
+  Image SITKIO_EXPORT ImportAsUInt32(
     uint32_t * buffer,
     const std::vector< unsigned int > &size,
     const std::vector< double > &spacing = std::vector< double >( 3, 1.0 ),
@@ -139,7 +139,7 @@ namespace itk {
     unsigned int numberOfComponents = 1
     );
 
-  Image ImportAsFloat(
+  Image SITKIO_EXPORT ImportAsFloat(
     float * buffer,
     const std::vector< unsigned int > &size,
     const std::vector< double > &spacing = std::vector< double >( 3, 1.0 ),
@@ -148,7 +148,7 @@ namespace itk {
     unsigned int numberOfComponents = 1
     );
 
-  Image ImportAsDouble(
+  Image SITKIO_EXPORT ImportAsDouble(
     double * buffer,
     const std::vector< unsigned int > &size,
     const std::vector< double > &spacing = std::vector< double >( 3, 1.0 ),
