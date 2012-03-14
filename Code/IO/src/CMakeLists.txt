@@ -13,7 +13,9 @@ include_directories( ${CMAKE_CURRENT_SOURCE_DIR} )
 include(${ITK_USE_FILE})
 
 add_library ( SimpleITKIO ${SimpleITKIOSource} )
-target_link_libraries ( SimpleITKIO SimpleITKCommon )
+target_link_libraries ( SimpleITKIO ${ITK_LIBRARIES} SimpleITKCommon )
+
+sitk_install_exported_target( SimpleITKIO )
 
 # Add custom command that will delete java files which need to be rebuilt when changes
 # are made to IO
