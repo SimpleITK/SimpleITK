@@ -55,8 +55,7 @@ include(VariableList)
 # SimpleITK Addition: install to the common library
 # directory, so that all libs/include etc ends up
 # in one common tree
-# How should installation occur? in during the superbuild install phase, or a separate call to install in the super build?
-#set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_BINARY_DIR} CACHE PATH "Where all the prerequisite libraries go" FORCE)
+set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_BINARY_DIR} CACHE PATH "Where all the prerequisite libraries go" FORCE)
 
 # Compute -G arg for configuring external projects with the same CMake generator:
 if(CMAKE_EXTRA_GENERATOR)
