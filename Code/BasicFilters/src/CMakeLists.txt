@@ -26,8 +26,13 @@ set ( _stride 50 )
 set ( _library_i 0 )
 foreach ( _start RANGE 0 ${_length} ${_stride} )
 
+  # the above foreach range in inclusive, which is not quite what is wanted
+  if( _start VERSION_EQUAL ${_length} )
+    break()
+  endif()
+
   # compute the end of the range ensuring that the inclusive range
-  # [_start, _end] is all valid indecies
+  # [_start, _end] is all valid indicies
   math( EXPR _end "${_start} + ${_stride} - 1" )
   if ( ${_end} VERSION_GREATER ${_length} OR
       ${_end} VERSION_EQUAL ${_length} )
@@ -36,6 +41,7 @@ foreach ( _start RANGE 0 ${_length} ${_stride} )
 
   # extract out the range into SRC
   set ( SRC "" )
+  message( "_length: ${_length} _start: ${_start} _end:${_end}" )
   foreach( _j RANGE ${_start} ${_end} )
     list ( GET SimpleITKBasicFiltersSource ${_j} _v )
     list ( APPEND SRC ${_v} )
@@ -45,6 +51,8 @@ foreach ( _start RANGE 0 ${_length} ${_stride} )
   target_link_libraries ( SimpleITKBasicFilters${_library_i} SimpleITKCommon ${ITK_LIBRARIES} )
   add_dependencies ( SimpleITKBasicFilters${_library_i} BasicFiltersSourceCode )
 
+  sitk_install_exported_target( SimpleITKBasicFilters${_library_i} )
+
   # append this new library to the globaly cached list
   list ( APPEND SimpleITK_LIBRARIES SimpleITKBasicFilters${_library_i} )
   set ( SimpleITK_LIBRARIES ${SimpleITK_LIBRARIES} CACHE INTERNAL "" )
@@ -53,7 +61,7 @@ foreach ( _start RANGE 0 ${_length} ${_stride} )
 
 endforeach ()
 
-sitk_install_exported_target( SimpleITKBasicFilters )
+
 install( FILES ${CMAKE_CURRENT_BINARY_DIR}/../include/SimpleITKBasicFiltersGeneratedHeaders.h
   DESTINATION ${SimpleITK_INSTALL_INCLUDE_DIR}
   COMPONENT Development )
