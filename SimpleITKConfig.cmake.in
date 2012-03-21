@@ -1,22 +1,54 @@
 #-----------------------------------------------------------------------------
 #
-# SimpleITKConfig.cmake - SimpleITK CMake configuration file for external projects.
+# SimpleITKConfig.cmake - SimpleITK CMake configuration file for external
+# projects.
 #
-# This file is configured by SimpleITK and used by the UseSimpleITK.cmake module
-# to load SimpleITK's settings for an external project.
+# This file is configured by SimpleITK, imported into client projects by
+# find_package(SimpleITK), and provides values for UseSimpleITK.cmake.
+
+# This SimpleITKConfig file is configured for the @SimpleITKConfig_TREE@ tree
+
+# Compute this installation's prefix from this file's location:
+get_filename_component(_SimpleITKConfig_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+@SimpleITKConfig_CODE@
+# The C and C++ flags added by SimpleITK to the cmake-configured flags.
+set(SimpleITK_REQUIRED_C_FLAGS "@SimpleITK_REQUIRED_C_FLAGS@")
+set(SimpleITK_REQUIRED_CXX_FLAGS "@SimpleITK_REQUIRED_CXX_FLAGS@")
+set(SimpleITK_REQUIRED_LINK_FLAGS "@SimpleITK_REQUIRED_LINK_FLAGS@")
 
 # The SimpleITK include file directories.
-set(SimpleITK_INCLUDE_DIRS "@SimpleITK_INCLUDE_DIRS_CONFIG@")
+set(SimpleITK_INCLUDE_DIRS "@SimpleITKConfig_INCLUDE_DIRS@")
 
 # The SimpleITK library directories.
-set(SimpleITK_LIBRARY_DIRS "@SimpleITK_LIBRARY_DIRS_CONFIG@")
+set(ITK_LIBRARY_DIRS "@ITK_LIBRARY_DIRS@")
+set(SimpleITK_LIBRARY_DIRS "${ITK_LIBRARY_DIRS}")
 
 # The location of the UseITK.cmake file.
-set(SimpleITK_USE_FILE "@SimpleITK_USE_FILE@")
+set(SimpleITK_USE_FILE "${_SimpleITKConfig_DIR}/UseSimpleITK.cmake")
+
+# Find the ITKTargets.cmake file (fallback code that needs to stay here only
+# temporarily - eventually ITK will export this value and this chunk can
+# disappear...)
+set(ITK_CONFIG_TARGETS_FILE "@ITK_CONFIG_TARGETS_FILE@")
+if(NOT ITK_CONFIG_TARGETS_FILE)
+  if(EXISTS "@ITK_DIR@/ITKTargets.cmake")
+    set(ITK_CONFIG_TARGETS_FILE "@ITK_DIR@/ITKTargets.cmake")
+  endif()
+endif()
+
+# Import ITK targets.
+if(NOT ITK_TARGETS_IMPORTED)
+  set(ITK_TARGETS_IMPORTED 1)
+  include("${ITK_CONFIG_TARGETS_FILE}")
+endif()
+
+# Import SimpleITK targets.
+set(SimpleITK_TARGETS_FILE "${_SimpleITKConfig_DIR}/SimpleITKTargets.cmake")
+if(NOT SimpleITK_TARGETS_IMPORTED)
+  set(SimpleITK_TARGETS_IMPORTED 1)
+  include("${SimpleITK_TARGETS_FILE}")
+endif()
 
 # A list of all libraries for SimpleITK.  Those listed here should
-# automatically pull in their dependencies.
-set(SimpleITK_LIBRARIES SimpleITKBasicFilters
-                        SimpleITKCommon
-                        SimpleITKIO)
-
+# automatically pull in their dependencies via imported targets.
+set(SimpleITK_LIBRARIES "@SimpleITK_LIBRARIES@")
