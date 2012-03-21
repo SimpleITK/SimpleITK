@@ -1,0 +1,56 @@
+{
+  "name" : "IsolatedConnected",
+  "template_code_filename" : "ImageFilter",
+  "template_type" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "pixel_types" : "BasicPixelIDTypeList",
+  "output_pixel_type" : "uint8_t",
+  "members" : [ {
+    "name" : "Seed1",
+    "type" : "std::vector<unsigned int>",
+    "default" : "std::vector<unsigned int>(3, 0)",
+    "dim_vec" : 1,
+    "itk_type" : "typename FilterType::IndexType"
+  }, {
+    "name" : "Seed2",
+    "type" : "std::vector<unsigned int>",
+    "default" : "std::vector<unsigned int>(3, 0)",
+    "dim_vec" : 1,
+    "itk_type" : "typename FilterType::IndexType"
+  }, {
+    "name" : "Lower",
+    "type" : "double",
+    "default" : 0,
+    "pixeltype" : "Input"
+  }, {
+    "name" : "Upper",
+    "type" : "double",
+    "default" : 1,
+    "pixeltype" : "Input"
+  }, {
+    "name" : "ReplaceValue",
+    "type" : "uint8_t",
+    "default" : "1u",
+    "pixeltype" : "Output"
+  }, {
+    "name" : "IsolatedValueTolerance",
+    "type" : "double",
+    "default" : "1.0",
+    "pixeltype" : "Input"
+  }, {
+    "name" : "FindUpperThreshold",
+    "type" : "bool",
+    "default" : "true",
+    "doc" : ""
+  }  ],
+  "measurements" : [ {
+    "name" : "ThresholdingFailed",
+    "type" : "bool",
+    "default" : "false"
+  }, {
+    "name" : "IsolatedValue",
+    "type" : "double",
+    "default" : "0.0"
+  } ],
+  "tests" : [  ]
+}
