@@ -6,15 +6,6 @@
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelIDTypeList",
   "members" : [ {
-    "name" : "Upper",
-    "type" : "double",
-    "default" : 1,
-    "pixeltype" : "Input",
-    "briefdescriptionSet" : "",
-    "detaileddescriptionSet" : "Set/Get the upper threshold. The default is the largest possible value for the InputPixelType.\n",
-    "briefdescriptionGet" : "",
-    "detaileddescriptionGet" : ""
-  }, {
     "name" : "Lower",
     "type" : "double",
     "default" : 0,
@@ -24,13 +15,12 @@
     "briefdescriptionGet" : "",
     "detaileddescriptionGet" : ""
   }, {
-    "name" : "ReplaceValue",
+    "name" : "Upper",
     "type" : "double",
     "default" : 1,
-    "pixeltype" : "Output",
-    "doc" : "Pixels that lie within Lower and Upper (inclusive)\n       will be replaced with this value. The default is 1.",
+    "pixeltype" : "Input",
     "briefdescriptionSet" : "",
-    "detaileddescriptionSet" : "Set/Get value to replace thresholded pixels. Pixels that lie * within Lower and Upper (inclusive) will be replaced with this value. The default is 1.\n",
+    "detaileddescriptionSet" : "Set/Get the upper threshold. The default is the largest possible value for the InputPixelType.\n",
     "briefdescriptionGet" : "",
     "detaileddescriptionGet" : ""
   }, {
@@ -44,6 +34,16 @@
     "detaileddescriptionSet" : "Set the radius of the neighborhood used for a mask.\n",
     "briefdescriptionGet" : "",
     "detaileddescriptionGet" : "Get the radius of the neighborhood used to compute the median\n"
+  }, {
+    "name" : "ReplaceValue",
+    "type" : "double",
+    "default" : 1,
+    "pixeltype" : "Output",
+    "doc" : "Pixels that lie within Lower and Upper (inclusive)\n       will be replaced with this value. The default is 1.",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set/Get value to replace thresholded pixels. Pixels that lie * within Lower and Upper (inclusive) will be replaced with this value. The default is 1.\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
   } ],
   "tests" : [ {
     "tag" : "2d",
