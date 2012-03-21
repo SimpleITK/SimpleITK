@@ -37,7 +37,7 @@ public:
    */
   Transform( void );
   template<unsigned int NDimension>
-  Transform( itk::CompositeTransform< double, NDimension >* compositeTransform )
+  explicit Transform( itk::CompositeTransform< double, NDimension >* compositeTransform )
     {
       sitkStaticAssert( NDimension == 2 | NDimension == 3, "Only 2D and 3D transforms are supported" );
       if ( compositeTransform == NULL )
@@ -67,7 +67,11 @@ public:
   Transform &AddTransform( Transform &t );
 
   // read
+  static Transform ReadTransform( const std::string &filename );
+
   // write
+  void WriteTransform( const std::string &filename ) const;
+  static void WriteTransform( const Transform &transform, const std::string &filename);
 
   // set identity
 
