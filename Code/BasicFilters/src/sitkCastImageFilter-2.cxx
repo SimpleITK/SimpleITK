@@ -16,7 +16,7 @@
 *
 *=========================================================================*/
 #include "sitkCastImageFilter.h"
-#include "sitkCastImageFilter.txx"
+#include "sitkCastImageFilter.hxx"
 
 
 namespace itk
