@@ -15,6 +15,7 @@ set ( TestSource
   BasicFiltersTests.cxx
   LabelStatisticsTest.cxx
   sitkExceptionsTests.cxx
+  sitkTransformTests.cxx
   itkHashImageFilterTest.cxx
   ImportImageTest.cxx
   CXXTests.cxx
