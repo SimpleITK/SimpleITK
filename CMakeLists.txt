@@ -139,6 +139,9 @@ file( GLOB template_components
     )
 set ( template_components ${template_components} CACHE INTERNAL "" )
 
+#------------------------------------------------------------------------------
+# These are some system specific compiler options needed to build SimpleITK
+
 if(MSVC)
   # /bigobj is required for windows builds because of the size of
   # some object files (CastImage for instance)
@@ -193,6 +196,23 @@ function(sitk_install_exported_target tgt)
     ARCHIVE DESTINATION ${SimpleITK_INSTALL_ARCHIVE_DIR}
     )
 endfunction()
+
+include(CheckCXXCompilerFlag)
+
+
+# The fPIC flags is used to create position independent code. It is
+# required on some systems to produce shared libraries. On Apple
+# systems the flag has no effect as it is the default. On other
+# platforms, this flag may enable libraries to be better shared
+# between processes. Therefore, if the compiler supports it, we will
+# use it.
+check_cxx_compiler_flag( "-fPIC" CXX_HAS_fPIC )
+if( CXX_HAS_fPIC )
+  if(NOT "${CMAKE_CXX_FLAGS}" MATCHES "-fPIC")
+    set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC" )
+  endif()
+endif( )
+
 
 #------------------------------------------------------------------------------
 # Configure SimpleITKConfig.cmake for the build tree.
