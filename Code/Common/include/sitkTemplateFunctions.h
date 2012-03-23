@@ -28,8 +28,13 @@
 namespace itk {
 namespace simple {
 
+/** \brief A function which does nothing
+ *
+ * This function is to be used to mark parameters as unused to supress
+ * compiler warning.
+ */
 template <typename T>
-void Unused( const T &) {};
+void SITKCommon_HIDDEN Unused( const T &) {};
 
 /** \brief Print the elements of std::vector to the provided output stream
  *
