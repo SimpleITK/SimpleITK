@@ -1,0 +1,47 @@
+{
+  "name" : "InverseDeconvolution",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 2,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "public_declarations" : "    typedef enum { SAME = 0, VALID = 1} OutputRegionModeType;",
+  "custom_set_input" : "filter->SetInput( image1 ); filter->SetKernelImage( image2 );",
+  "members" : [ {
+    "name" : "Normalize",
+    "type" : "bool",
+    "default" : "false",
+    "doc" : "",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Normalize the output image by the sum of the kernel components\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
+  }, {
+    "name" : "OutputRegionMode",
+    "type" : "InverseDeconvolutionImageFilter::OutputRegionModeType",
+    "default" : "itk::simple::InverseDeconvolutionImageFilter::SAME",
+    "custom_itk_cast" : "filter->SetOutputRegionMode( typename FilterType::OutputRegionModeType( int( this->m_OutputRegionMode ) ) );"
+  }, {
+    "name" : "KernelZeroMagnitudeThreshold",
+    "type" : "double",
+    "default" : "1.0e-4",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set the threshold value used to determine whether a frequency of the Fourier transform of the blurring kernel is considered to be zero. Default value is 1.0e-4.",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : "Get the threshold value used to determine whether a frequency of the Fourier transform of the blurring kernel is considered to be zero. Default value is 1.0e-4."
+  } ],
+  "tests" : [ {
+    "tag" : "defaults",
+    "description" : "Inverse deconvolution of image blurred with a Gaussian kernel",
+    "inputA" : "Input/DeconvolutionInput.nrrd",
+    "inputB" : "Input/DeconvolutionKernel.nrrd",
+    "settings" : [ {
+      "parameter" : "Normalize",
+      "value" : "true",
+      "python_value" : "True"
+    } ],
+    "tolerance" : "0.0001"
+  } ],
+  "briefdescription" : "",
+  "detaileddescription" : ""
+}
