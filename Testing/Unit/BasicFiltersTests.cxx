@@ -27,6 +27,12 @@
 #include <sitkLabelStatisticsImageFilter.h>
 #include <sitkExtractImageFilter.h>
 #include <sitkFastMarchingImageFilter.h>
+#include <sitkInverseDeconvolutionImageFilter.h>
+#include <sitkTikhonovDeconvolutionImageFilter.h>
+#include <sitkWienerDeconvolutionImageFilter.h>
+#include <sitkLandweberDeconvolutionImageFilter.h>
+#include <sitkProjectedLandweberDeconvolutionImageFilter.h>
+#include <sitkRichardsonLucyDeconvolutionImageFilter.h>
 #include <sitkScalarToRGBColormapImageFilter.h>
 #include <sitkJoinSeriesImageFilter.h>
 
@@ -34,6 +40,12 @@
 #include "itkExtractImageFilter.h"
 #include "itkFastMarchingImageFilterBase.h"
 #include "itkScalarToRGBColormapImageFilter.h"
+#include "itkInverseDeconvolutionImageFilter.h"
+#include "itkTikhonovDeconvolutionImageFilter.h"
+#include "itkWienerDeconvolutionImageFilter.h"
+#include "itkLandweberDeconvolutionImageFilter.h"
+#include "itkProjectedLandweberDeconvolutionImageFilter.h"
+#include "itkRichardsonLucyDeconvolutionImageFilter.h"
 
 TEST(BasicFilters,ScalarToRGBColormap_ENUMCHECK) {
   typedef itk::ScalarToRGBColormapImageFilter< itk::Image<float,3>, itk::Image< itk::RGBPixel<float>,3> > ITKType;
@@ -54,32 +66,61 @@ TEST(BasicFilters,ScalarToRGBColormap_ENUMCHECK) {
 }
 
 TEST(BasicFilters,RecursiveGaussian_ENUMCHECK) {
-
   typedef itk::RecursiveGaussianImageFilter< itk::Image<float,3> > ITKRecursiveGausianType;
   EXPECT_EQ( (int)ITKRecursiveGausianType::ZeroOrder, (int)itk::simple::RecursiveGaussianImageFilter::ZeroOrder );
   EXPECT_EQ( (int)ITKRecursiveGausianType::FirstOrder, (int)itk::simple::RecursiveGaussianImageFilter::FirstOrder );
   EXPECT_EQ( (int)ITKRecursiveGausianType::SecondOrder, (int)itk::simple::RecursiveGaussianImageFilter::SecondOrder );
 }
 
-
 TEST(BasicFilters,Extract_ENUMCHECK) {
-
   typedef itk::ExtractImageFilter< itk::Image<float,3>, itk::Image<float,3> > ITKExtractType;
   EXPECT_EQ( (int)ITKExtractType::DIRECTIONCOLLAPSETOUNKOWN, (int)itk::simple::ExtractImageFilter::DIRECTIONCOLLAPSETOUNKOWN );
   EXPECT_EQ( (int)ITKExtractType::DIRECTIONCOLLAPSETOIDENTITY, (int)itk::simple::ExtractImageFilter::DIRECTIONCOLLAPSETOIDENTITY );
   EXPECT_EQ( (int)ITKExtractType::DIRECTIONCOLLAPSETOSUBMATRIX, (int)itk::simple::ExtractImageFilter::DIRECTIONCOLLAPSETOSUBMATRIX );
   EXPECT_EQ( (int)ITKExtractType::DIRECTIONCOLLAPSETOGUESS, (int)itk::simple::ExtractImageFilter::DIRECTIONCOLLAPSETOGUESS );
-
 }
 
-
 TEST(BasicFilters,FastMarching_ENUMCHECK) {
-
   typedef itk::FastMarchingImageFilterBase< itk::Image<float,3>, itk::Image<float,3> > ITKType;
-
   EXPECT_EQ( (int) ITKType::Nothing, (int) itk::simple::FastMarchingImageFilter::Nothing );
   EXPECT_EQ( (int) ITKType::NoHandles, (int) itk::simple::FastMarchingImageFilter::NoHandles );
   EXPECT_EQ( (int) ITKType::Strict, (int) itk::simple::FastMarchingImageFilter::Strict );
+}
+
+TEST(BasicFilters,InverseDeconvolution_ENUMCHECK) {
+  typedef itk::InverseDeconvolutionImageFilter< itk::Image<float,3>, itk::Image<float,3> > ITKType;
+  EXPECT_EQ( (int) ITKType::SAME, (int) itk::simple::InverseDeconvolutionImageFilter::SAME );
+  EXPECT_EQ( (int) ITKType::VALID, (int) itk::simple::InverseDeconvolutionImageFilter::VALID );
+}
+
+TEST(BasicFilters,TikhonovDeconvolution_ENUMCHECK) {
+  typedef itk::TikhonovDeconvolutionImageFilter< itk::Image<float,3>, itk::Image<float,3> > ITKType;
+  EXPECT_EQ( (int) ITKType::SAME, (int) itk::simple::TikhonovDeconvolutionImageFilter::SAME );
+  EXPECT_EQ( (int) ITKType::VALID, (int) itk::simple::TikhonovDeconvolutionImageFilter::VALID );
+}
+
+TEST(BasicFilters,WienerDeconvolution_ENUMCHECK) {
+  typedef itk::WienerDeconvolutionImageFilter< itk::Image<float,3>, itk::Image<float,3> > ITKType;
+  EXPECT_EQ( (int) ITKType::SAME, (int) itk::simple::WienerDeconvolutionImageFilter::SAME );
+  EXPECT_EQ( (int) ITKType::VALID, (int) itk::simple::WienerDeconvolutionImageFilter::VALID );
+}
+
+TEST(BasicFilters,LandweberDeconvolution_ENUMCHECK) {
+  typedef itk::LandweberDeconvolutionImageFilter< itk::Image<float,3>, itk::Image<float,3> > ITKType;
+  EXPECT_EQ( (int) ITKType::SAME, (int) itk::simple::LandweberDeconvolutionImageFilter::SAME );
+  EXPECT_EQ( (int) ITKType::VALID, (int) itk::simple::LandweberDeconvolutionImageFilter::VALID );
+}
+
+TEST(BasicFilters,ProjectedLandweberDeconvolution_ENUMCHECK) {
+  typedef itk::ProjectedLandweberDeconvolutionImageFilter< itk::Image<float,3>, itk::Image<float,3> > ITKType;
+  EXPECT_EQ( (int) ITKType::SAME, (int) itk::simple::ProjectedLandweberDeconvolutionImageFilter::SAME );
+  EXPECT_EQ( (int) ITKType::VALID, (int) itk::simple::ProjectedLandweberDeconvolutionImageFilter::VALID );
+}
+
+TEST(BasicFilters,RichardsonLucyDeconvolution_ENUMCHECK) {
+  typedef itk::RichardsonLucyDeconvolutionImageFilter< itk::Image<float,3>, itk::Image<float,3> > ITKType;
+  EXPECT_EQ( (int) ITKType::SAME, (int) itk::simple::RichardsonLucyDeconvolutionImageFilter::SAME );
+  EXPECT_EQ( (int) ITKType::VALID, (int) itk::simple::RichardsonLucyDeconvolutionImageFilter::VALID );
 }
 
 TEST(BasicFilters,Cast) {
