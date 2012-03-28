@@ -22,7 +22,9 @@
 #include <itksys/Process.h>
 #include <stdlib.h>
 #include <iostream>
+#include <sstream>
 #include <iterator>
+#include <ctype.h>
 
 namespace itk
 {
@@ -35,20 +37,221 @@ namespace itk
   const unsigned int ProcessDelay = 500;
 
 
+#if defined(WIN32)
+  static std::string ShowImageCommand = "%a -o %f";
+  static std::string ShowColorImageCommand = "%a -eval %m";
+
+#elif defined(__APPLE__)
+  static std::string ShowImageCommand = "open -a %a %f";
+  // the "-n" flag tells OSX to launch a new instance of ImageJ, even if one is already running.
+  // we do this because otherwise the macro command line argument is not correctly passed to
+  // a previously running instance of ImageJ.
+  static std::string ShowColorImageCommand = "open -a %a -n --args -eval %m";
+
+#else
+  // linux and other systems
+  static std::string ShowImageCommand = "%a -o %f";
+  static std::string ShowColorImageCommand = "%a -e %m";
+#endif
+
+
+  // Function to replace %tokens in a string.  The tokens are %a, %f, %m for
+  // application, filename and macro respectively.  %% will send % to the output string.
+  //
+  static std::string ReplaceWords(std::string command, std::string app, std::string filename, std::string macro, bool& fileFlag)
+    {
+    std::string result;
+
+    unsigned int i=0;
+    while (i<command.length())
+      {
+
+      if (command[i] != '%')
+        {
+        result.push_back(command[i]);
+        }
+      else
+        {
+        if (i<command.length()-1)
+          {
+          // check the next character after the %
+          switch(command[i+1])
+            {
+            case '%':
+              // %%
+              result.push_back(command[i]);
+              i++;
+              break;
+            case 'a':
+              // %a for application
+              result.append(app);
+              i++;
+              break;
+            case 'f':
+              // %f for filename
+              result.append(filename);
+              fileFlag = true;
+              i++;
+              break;
+            case 'm':
+              // %m for macro
+              result.append(macro);
+              fileFlag = true;
+              i++;
+              break;
+            }
+
+          }
+        else
+          {
+          // if the % is the last character in the string just pass it through
+          result.push_back(command[i]);
+          }
+        }
+      i++;
+      }
+    return result;
+    }
+
+  // Function to strip the matching leading and trailing quotes off a string
+  // if there are any.  We need to do this because the way arguments are passed
+  // to itksysProcess_Execute
+  //
+  static std::string UnquoteWord(std::string word)
+    {
+    unsigned int l = word.length();
+
+    if (l<2)
+      {
+      return word;
+      }
+    //std::cout << "crap: " << word[0] << " " << word[l-1] << " " << l << std::endl;
+
+    switch(word[0])
+      {
+
+      case '\'':
+      case '\"':
+        if (word[l-1] == word[0])
+          {
+          std::cout <<  "Unquoted: " << word.substr(1, l-2);
+          return word.substr(1, l-2);
+          }
+        else
+          {
+          return word;
+          }
+        break;
+
+      default:
+        return word;
+        break;
+      }
+    }
+
+  static std::vector<std::string> ConvertCommand(std::string command, std::string app, std::string filename, std::string macro="")
+    {
+    bool fileFlag=false;
+    std::string new_command = ReplaceWords(command, app, filename, macro, fileFlag);
+    std::istringstream iss(new_command);
+    std::vector<std::string> result;
+    std::vector<unsigned char> quoteStack;
+    std::string word;
+    unsigned int i=0;
+
+    //std::cout << new_command << std::endl;
+
+    while (i<new_command.length())
+      {
+      switch (new_command[i])
+        {
+
+        case '\'':
+        case '\"':
+          word.push_back(new_command[i]);
+          if (quoteStack.size())
+            {
+            if (new_command[i] == quoteStack[quoteStack.size()-1])
+              {
+              // we have a matching pair, so pop it off the stack
+              quoteStack.pop_back();
+              }
+            else
+              {
+              // the top of the stack and the new one don't match, so push it on
+              quoteStack.push_back(new_command[i]);
+              }
+            }
+          else
+            {
+            // quoteStack is empty so push this new quote on the stack.
+            quoteStack.push_back(new_command[i]);
+            }
+          break;
+
+        case ' ':
+          if (quoteStack.size())
+            {
+            // the space occurs inside a quote, so tack it onto the current word.
+            word.push_back(new_command[i]);
+            }
+          else
+            {
+            // the space isn't inside a quote, so we've ended a word.
+            word = UnquoteWord(word);
+            result.push_back(word);
+            word.clear();
+            }
+          break;
+
+        default:
+          word.push_back(new_command[i]);
+          break;
+        }
+      i++;
+
+      }
+
+    if (word.length())
+      {
+      word = UnquoteWord(word);
+      result.push_back(word);
+      }
+
+
+    // if the filename token wasn't found in the command string, add the filename to the end of the command vector.
+    if (!fileFlag)
+      {
+      result.push_back(filename);
+      }
+    return result;
+    }
+
   //
   static std::string FormatFileName ( std::string TempDirectory, std::string name )
   {
   std::string TempFile = TempDirectory;
+  std::string Extension = ".nii";
+
+  itksys::SystemTools::GetEnv ( "SITK_SHOW_EXTENSION", Extension );
+
   if ( name != "" )
     {
-    TempFile = TempFile + name + ".nii";
+    TempFile = TempFile + name + Extension;
     }
   else
     {
     std::ostringstream tmp;
-    tmp << "TempFile-" << ShowImageCount;
+
+#ifdef WIN32
+    int pid = _getpid();
+#else
+    int pid = getpid();
+#endif
+
+    tmp << "TempFile-" << pid << "-" << ShowImageCount;
     ShowImageCount++;
-    TempFile = TempFile + tmp.str() + ".nii";
+    TempFile = TempFile + tmp.str() + Extension;
     }
   return TempFile;
   }
@@ -154,7 +357,7 @@ namespace itk
   {
 
     // if debug
-    //std::copy( cmdLine.begin(), cmdLine.end(), std::ostream_iterator<std::string>( std::cout, " " ) );
+    //std::copy( cmdLine.begin(), cmdLine.end(), std::ostream_iterator<std::string>( std::cout, "\n" ) );
     //std::cout << std::endl;
 
     std::vector<const char*> cmd( cmdLine.size() + 1, NULL );
@@ -241,6 +444,7 @@ namespace itk
   {
   // Try to find ImageJ, write out a file and open
   std::string ExecutableName;
+  std::string Command, Command3D;
   std::string TempFile = "";
   std::string Macro = "";
   std::vector<std::string> CommandLine;
@@ -264,33 +468,59 @@ namespace itk
     {
 #if defined(WIN32)
     // Windows needs single quotes while *nix needs double.
-    Macro = "open(\'" + TempFile + "\');";
-    Macro += " run(\'Make Composite\', \'display=Composite\'); ";
+    Macro = "\"open(\'" + TempFile + "\');";
+    Macro += " run(\'Make Composite\', \'display=Composite\'); \"";
 #else
-    Macro = "open(\"" + TempFile + "\");";
-    Macro += " run(\"Make Composite\", \"display=Composite\"); ";
+    Macro = "\'open(\"" + TempFile + "\");";
+    Macro += " run(\"Make Composite\", \"display=Composite\"); \'";
 #endif
     colorFlag = true;
     //std::cout << "Macro:\t" << Macro << std::endl;
     }
 
 
-#if defined(WIN32)
-  // Windows
-  ExecutableName = FindApplication("ImageJ.exe");
 
-  CommandLine.push_back( ExecutableName );
+  // check for user-defined environment variables
+  //
   if (colorFlag)
     {
-    //CommandLine.push_back( "-debug" );
-    CommandLine.push_back( "-eval" );
-    CommandLine.push_back( Macro );
+    itksys::SystemTools::GetEnv ( "SITK_SHOW_COLOR_COMMAND", Command );
+    if (!Command.length())
+      {
+      itksys::SystemTools::GetEnv ( "SITK_SHOW_COMMAND", Command );
+      }
+    if (!Command.length())
+      {
+      Command = ShowColorImageCommand;
+      }
     }
   else
     {
-    CommandLine.push_back( "-o" );
-    CommandLine.push_back( TempFile );
+      itksys::SystemTools::GetEnv ( "SITK_SHOW_COMMAND", Command );
+      if (!Command.length())
+        {
+        Command = ShowImageCommand;
+        }
     }
+  itksys::SystemTools::GetEnv ( "SITK_SHOW_3D_COMMAND", Command3D );
+  if (!Command3D.length())
+    {
+    Command3D = Command;
+    }
+
+  if (image.GetDimension() == 3)
+    {
+    Command = Command3D;
+    }
+
+
+#if defined(WIN32)
+
+  // Windows
+  //
+  ExecutableName = FindApplication("ImageJ.exe");
+
+  CommandLine = ConvertCommand(Command, ExecutableName, TempFile, Macro);
 
 #elif defined(__APPLE__)
 
@@ -307,23 +537,7 @@ namespace itk
     ExecutableName="ImageJ64";
     }
 
-  CommandLine.push_back( "open" );
-  CommandLine.push_back( "-a" );
-  CommandLine.push_back( ExecutableName );
-  if (colorFlag)
-    {
-    // the "-n" flag tells OSX to launch a new instance of ImageJ, even if one is already running.
-    // we do this because otherwise the macro command line argument is not correctly passed to
-    // a previously running instance of ImageJ.
-    CommandLine.push_back( "-n" );
-    CommandLine.push_back( "--args" );
-    CommandLine.push_back( "-eval" );
-    CommandLine.push_back( Macro );
-    }
-  else
-    {
-    CommandLine.push_back( TempFile );
-    }
+  CommandLine = ConvertCommand(Command, ExecutableName, TempFile, Macro);
 
   bool fail64 = false;
 
@@ -346,23 +560,8 @@ namespace itk
 
   // Mac 32-bit
   ExecutableName = FindApplication( "ImageJ.app" );
-  CommandLine.push_back( "open" );
-  CommandLine.push_back( "-a" );
-  CommandLine.push_back( ExecutableName );
-  if (colorFlag)
-    {
-    // The "-n" flag tells OSX to launch a new instance of ImageJ, even if one is already running.
-    // We do this because otherwise the macro command line argument is not correctly passed to
-    // a previously running instance of ImageJ.
-    CommandLine.push_back( "-n" );
-    CommandLine.push_back( "--args" );
-    CommandLine.push_back( "-eval" );
-    CommandLine.push_back( Macro );
-    }
-  else
-    {
-    CommandLine.push_back( TempFile );
-    }
+
+  CommandLine = ConvertCommand(Command, ExecutableName, TempFile, Macro);
 
 #else
 
@@ -372,22 +571,8 @@ namespace itk
     {
     ExecutableName = FindApplication("imagej");
     }
-  CommandLine.push_back( ExecutableName );
 
-  // Don't think the "-o" actually works on linux. -davechen
-  CommandLine.push_back( "-o" );
-
-  if (colorFlag)
-    {
-    // on Linux ImageJ uses a "-e" instead of "-eval".  Why?  Heck if I know.
-    CommandLine.push_back( "-e" );
-    CommandLine.push_back( Macro );
-    }
-  else
-    {
-    CommandLine.push_back( TempFile );
-    }
-
+  CommandLine = ConvertCommand(Command, ExecutableName, TempFile, Macro);
 #endif
 
   // run the compiled command-line in a process which will detach
