@@ -11,10 +11,20 @@ Users can contribute patches through the gerrit code review system:
 General information about Gerrit can be found here:
 <a href="http://gerrit.googlecode.com/svn/documentation/2.2.1/user-upload.html">http://gerrit.googlecode.com/svn/documentation/2.2.1/user-upload.html</a>
 
-A quick overview of the process:
+
+For those already familiar with git, gerrit, ITK and building SimpelITK, here is a quick overview of the process:
+
+The first thing which should be done before any code is commited locally is running the script to setup your local git repository for development.
 
 \code
-$ git remote add gerrit $username$@review.source.kitware.com:SimpleITK
+$ Utilities/SetupForDevelopment.sh
+\endcode
+
+This will guide you through the processes of adding several repositories and local configuration options.
+
+The following is an overview of how to add commits locally, and push the changes to gerrit:
+
+\code
 $ git checkout master
 $ git pull
 $ git checkout -b $MyTopic$
@@ -22,8 +32,19 @@ hack and edit
 compile and test
 $ git add $MyHackedFiles$
 $ git commit
-$ git push gerrit HEAD:refs/for/master/$MyTopic$
+$ git prepush
+$ git gerrit-push
 \endcode
+
+The goal of this workflow here is just have one or two commits in the
+topic, so that it will be easy to review. If longer topics are needed,
+that is OK to, but please try to reach out to the SimpleITK
+development community first.
+
+If you are not too familiar with these tools, this aspect of submitting
+patch to gerrit is the same as for ITK development. So the overview of
+ITK development process may be a better starting point:
+<a href="http://www.itk.org/Wiki/ITK/Git/Develop">http://www.itk.org/Wiki/ITK/Git/Develop</a>
 
 \subsection Dashboards Setup a Dashboard
 
