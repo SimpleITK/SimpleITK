@@ -43,6 +43,13 @@ function(test_cxx_flags cxx_flag_var flag_list)
   set(${cxx_flag_var} "${local_cxx_flags}" PARENT_SCOPE)
 endfunction(test_cxx_flags)
 
+# Add needed flag for gnu on linux like enviroments
+#if(NOT APPLE AND "${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
+#  if(NOT "${CMAKE_CXX_FLAGS}" MATCHES "-fPIC")
+    set(FPIC_CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+#  endif()
+#endif()
+
 
 # On windows, the most verbose compiler options
 # is reporting 1000's of wanings in windows
@@ -76,7 +83,7 @@ set(warning_flags_to_test
 )
 
 # add C++ only flag
-set(cxx_flags_to_test ${warning_flags_to_test} -Wno-invalid-offsetof )
+set(cxx_flags_to_test ${warning_flags_to_test} -Wno-invalid-offsetof ${FPIC_CMAKE_CXX_FLAGS} )
 
 test_cxx_flags(CXX_ADDITIONAL_WARNING_FLAGS cxx_flags_to_test)
 
