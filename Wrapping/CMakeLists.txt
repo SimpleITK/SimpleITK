@@ -87,6 +87,11 @@ if ( WRAP_PYTHON )
   configure_file_buildtime( "${CMAKE_CURRENT_SOURCE_DIR}/PythonPackage/setup.py.in"
     "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/setup.py" )
 
+  configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/PythonPackage/ez_setup.py"
+    "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/ez_setup.py"
+    COPYONLY )
+
   add_dependencies( ${SWIG_MODULE_SimpleITK_REAL_NAME} ConfigureFileBuildtime )
 
   if ( BUILD_TESTING )
@@ -112,7 +117,6 @@ if ( WRAP_PYTHON )
         --distribute
         --clear
       ${PythonVirtualenvHome}
-      COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/PythonPackage/ez_setup.py" "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/"
       COMMAND ${CMAKE_COMMAND} -E touch "${CMAKE_CURRENT_BINARY_DIR}/__init__.py"
       COMMAND ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/setup.py" install
       COMMENT "Installing python module to the virtualenv" )
