@@ -1,0 +1,53 @@
+{
+  "name" : "InverseDeconvolution",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 2,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "include_files" : [ "itkConstantBoundaryCondition.h", "itkPeriodicBoundaryCondition.h", "itkZeroFluxNeumannBoundaryCondition.h" ],
+  "public_declarations" : "    typedef enum { SAME = 0, VALID = 1} OutputRegionModeType;\n    typedef enum { ZERO_PAD = 0, ZERO_FLUX_NEUMANN_PAD = 1, PERIODIC_PAD = 2 } BoundaryConditionType;",
+  "custom_set_input" : "filter->SetInput( image1 ); filter->SetKernelImage( image2 );",
+  "members" : [ {
+    "name" : "KernelZeroMagnitudeThreshold",
+    "type" : "double",
+    "default" : "1.0e-4",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Set the threshold value used to determine whether a frequency of the Fourier transform of the blurring kernel is considered to be zero. Default value is 1.0e-4.",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : "Get the threshold value used to determine whether a frequency of the Fourier transform of the blurring kernel is considered to be zero. Default value is 1.0e-4."
+  }, {
+    "name" : "Normalize",
+    "type" : "bool",
+    "default" : "false",
+    "doc" : "",
+    "briefdescriptionSet" : "",
+    "detaileddescriptionSet" : "Normalize the output image by the sum of the kernel components\n",
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : ""
+  }, {
+    "name" : "BoundaryCondition",
+    "type" : "InverseDeconvolutionImageFilter::BoundaryConditionType",
+    "default" : "itk::simple::InverseDeconvolutionImageFilter::ZERO_FLUX_NEUMANN_PAD",
+    "custom_itk_cast" : "itk::ConstantBoundaryCondition< InputImageType > cbc;\n  itk::ZeroFluxNeumannBoundaryCondition< InputImageType > zbc;\n  itk::PeriodicBoundaryCondition< InputImageType > pbc;\n  switch ( m_BoundaryCondition )\n    {\n    case ZERO_PAD:\n    {\n    filter->SetBoundaryCondition( &cbc );\n    }\n    break;\n\n    case ZERO_FLUX_NEUMANN_PAD:\n    {\n    filter->SetBoundaryCondition( &zbc );\n    }\n    break;\n\n    case PERIODIC_PAD:\n    {\n    filter->SetBoundaryCondition( &pbc );\n    }\n    break;\n }"
+  }, {
+    "name" : "OutputRegionMode",
+    "type" : "InverseDeconvolutionImageFilter::OutputRegionModeType",
+    "default" : "itk::simple::InverseDeconvolutionImageFilter::SAME",
+    "custom_itk_cast" : "filter->SetOutputRegionMode( typename FilterType::OutputRegionModeType( int( this->m_OutputRegionMode ) ) );"
+  } ],
+  "tests" : [ {
+    "tag" : "defaults",
+    "description" : "Inverse deconvolution of image blurred with a Gaussian kernel",
+    "inputA" : "Input/DeconvolutionInput.nrrd",
+    "inputB" : "Input/DeconvolutionKernel.nrrd",
+    "settings" : [ {
+      "parameter" : "Normalize",
+      "value" : "true",
+      "python_value" : "True"
+    } ],
+    "tolerance" : "0.0001"
+  } ],
+  "briefdescription" : "",
+  "detaileddescription" : ""
+}
