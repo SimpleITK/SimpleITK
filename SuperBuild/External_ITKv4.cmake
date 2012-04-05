@@ -13,8 +13,10 @@ VariableListToArgs( ITK_LANGUAGES_VARS  ep_languages_args )
 
 set(proj ITK)  ## Use ITK convention of calling it ITK
 set(ITK_REPOSITORY git://itk.org/ITK.git)
+
+# NOTE: it is very important to update the ITK_DIR path with the
+# current version of ITK
 set(ITK_TAG_COMMAND GIT_TAG v4.1.0 )
-set(WrapITK_DIR ${CMAKE_INSTALL_PREFIX}/lib/cmake/ITK-4.0/WrapITK)
 
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt" "${ep_languages_cache}\n${ep_common_cache}" )
 
@@ -59,3 +61,8 @@ ExternalProject_Add(${proj}
   DEPENDS
   ${ITK_DEPENDENCIES}
   )
+
+
+ExternalProject_Get_Property(ITK install_dir)
+set(ITK_DIR "${install_dir}/lib/cmake/ITK-4.1" )
+set(WrapITK_DIR "${install_dir}/lib/cmake/ITK-4.1/WrapITK")
