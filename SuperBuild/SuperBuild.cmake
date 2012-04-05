@@ -245,7 +245,7 @@ VariableListToArgs( SITK_LANGUAGES_VARS  ep_languages_args )
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK-build/CMakeCacheInit.txt" "${ep_common_cache}\n${ep_languages_cache}" )
 
 ExternalProject_Get_Property(ITK install_dir)
-set(itk_dir "${intall_dir}")
+set(itk_dir "${intall_dir}/lib/cmake")
 
 set(proj SimpleITK)
 ExternalProject_Add(${proj}
