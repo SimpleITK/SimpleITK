@@ -50,6 +50,7 @@ namespace itk {
       double GetMinimum ( ) const;
       double GetMaximum ( ) const;
       double GetMean    ( ) const;
+      double GetSigma   ( ) const;
       double GetVariance( ) const;
       double GetSum     ( ) const;
 
