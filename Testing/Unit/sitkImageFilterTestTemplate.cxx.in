@@ -226,9 +226,15 @@ end)
   end) $(if tolerance then
   OUT = [[
  IMAGECOMPAREWITHTOLERANCE ( output, "", ${tolerance} );
-  ]]
-  end) $(when measurements $(foreach measurements
-    EXPECT_NEAR(${value}, filter.Get${name}(), ${tolerance} );))
+  ]]end) $(when measurements_results
+$(foreach measurements_results
+$(if tolerance then
+        OUT=[[EXPECT_NEAR(${value}, filter.Get${name}(), ${tolerance} );]]
+else
+        OUT=[[EXPECT_EQ(${value}, filter.Get${name}() );]]
+end)
+))
+
 } // END FOR EACH TEST
 )
 
