@@ -6,7 +6,7 @@
   "doc" : "",
   "pixel_types" : "BasicPixelIDTypeList",
   "pixel_types2" : "IntegerPixelIDTypeList",
-  "output_image_type" : "itk::VectorImage< typename InputImageType2::PixelType, InputImageType::ImageDimension >",
+  "output_image_type" : "itk::VectorImage< typename InputImageType::PixelType, InputImageType::ImageDimension >",
   "filter_type" : "itk::LabelOverlayImageFilter<InputImageType, InputImageType2, OutputImageType>",
   "custom_set_input" : "filter->SetInput1( image1 ); filter->SetInput2( image2 );",
   "members" : [ {
