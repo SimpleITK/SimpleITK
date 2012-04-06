@@ -513,6 +513,12 @@ if ( WRAP_PYTHON )
     "20"
     "2" )
 
+  add_python_test( Example.GeodesicActiceContourSegmentation
+    "${SimpleITK_SOURCE_DIR}/Examples/GeodesicActiceContourSegmentation.py"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/cthead1.png"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Python.Example.GeodesicActiceContourSegmentation.nrrd"
+    .3 10 .9 50 55
+    )
 
   #
   # Python Tests
