@@ -234,23 +234,23 @@ TEST(BasicFilters,Statistics) {
   stats.Execute( image );
 
 
-  EXPECT_EQ ( stats.GetMinimum(), 0 );
-  EXPECT_EQ ( stats.GetMaximum(), 255 );
-  EXPECT_NEAR ( stats.GetMean(), 77.7415, 0.001 );
-  EXPECT_NEAR ( stats.GetSigma(),  78.2619, 0.01 );
-  EXPECT_NEAR ( stats.GetVariance(),  14444296.271, 0.01 );
-  EXPECT_EQ ( stats.GetSum(), 5094871);
+  EXPECT_EQ ( stats.GetMinimum(), -1146 );
+  EXPECT_EQ ( stats.GetMaximum(), 32767 );
+  EXPECT_NEAR ( stats.GetMean(), 25887.390, 0.001 );
+  EXPECT_NEAR ( stats.GetSigma(),  3800.565, 0.01 );
+  EXPECT_NEAR ( stats.GetVariance(), 14444296.271, 10 );
+  EXPECT_EQ ( stats.GetSum(), 6786223965 );
 
   image = itk::simple::ReadImage ( dataFinder.GetFile ( "Input/cthead1.png" ) );
 
   const itk::simple::MeasurementMap measurements = itk::simple::Statistics( image );
 
-  EXPECT_NEAR ( measurements.find("Minimum")->second, -1146, 0.01 );
-  EXPECT_NEAR ( measurements.find("Maximum")->second, 32767, 0.01 );
-  EXPECT_NEAR ( measurements.find("Mean")->second, 25887.390, 0.001 );
-  EXPECT_NEAR ( measurements.find("Sigma")->second,  3800.565, 0.01 );
-  EXPECT_NEAR ( measurements.find("Variance")->second,  14444296.271, 0.01 );
-  EXPECT_NEAR ( measurements.find("Sum")->second,  6786223965, 1 );
+  EXPECT_EQ ( measurements.find("Minimum")->second, 0 );
+  EXPECT_EQ ( measurements.find("Maximum")->second, 255 );
+  EXPECT_NEAR ( measurements.find("Mean")->second, 77.7415, 0.001 );
+  EXPECT_NEAR ( measurements.find("Sigma")->second, 78.2619, 0.01 );
+  EXPECT_NEAR ( measurements.find("Variance")->second,  6124.9260064656282, 1 );
+  EXPECT_EQ ( measurements.find("Sum")->second, 5094871 );
 
 }
 
