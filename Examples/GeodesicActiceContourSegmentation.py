@@ -66,6 +66,9 @@ geodesicActiveContour.SetNumberOfIterations( 1000 )
 
 levelset = geodesicActiveContour.Execute( initialImage, featureImage )
 
+print( "RMS Change: ", geodesicActiveContour.GetRMSChange() )
+print( "Elapsed Iterations: ", geodesicActiveContour.GetElapsedIterations() )
+
 contour = sitk.BinaryContour( sitk.BinaryThreshold( levelset, -1000, 0 ) )
 
 sitk.Show( sitk.LabelOverlay( image, contour ) )
