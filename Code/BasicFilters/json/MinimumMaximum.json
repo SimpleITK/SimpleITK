@@ -15,6 +15,33 @@
     "type" : "double",
     "default" : 0.0
   } ],
-  "tests" : [  ]
+  "tests" : [ {
+    "tag" : "2d",
+    "description" : "2d with unsigned char",
+    "inputA" : "Input/cthead1.png",
+    "settings" : [ ],
+    "measurements_results" : [ {
+      "name" : "Minimum",
+      "value" : 0,
+      "tolerance" : 0
+    }, {
+      "name" : "Maximum",
+      "value" : 255,
+      "tolerance" : 0
+    } ]
+  }, {
+    "tag" : "float",
+    "description" : "3d float image",
+    "inputA" : "Input/RA-Float.nrrd",
+    "settings" : [ ],
+    "measurements_results" : [ {
+      "name" : "Minimum",
+      "value" : -1146,
+      "tolerance" : 0
+    }, {
+      "name" : "Maximum",
+      "value" : 32767,
+      "tolerance" : 0
+    } ]
   } ]
 }
