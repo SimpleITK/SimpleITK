@@ -1,0 +1,50 @@
+{
+  "name" : "ThresholdSegmentationLevelSet",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 2,
+  "pixel_types" : "RealPixelIDTypeList",
+  "filter_type" : "itk::ThresholdSegmentationLevelSetImageFilter<InputImageType, InputImageType>",
+  "custom_set_input" : "filter->SetInput( image1 ); filter->SetFeatureImage( image2 );",
+  "members" : [  {
+    "name" : "LowerThreshold",
+    "type" : "double",
+    "default" : "0.0",
+    "pixeltype" : "Input"
+  }, {
+    "name" : "UpperThreshold",
+    "type" : "double",
+    "default" : "255.0",
+    "pixeltype" : "Input"
+  }, {
+    "name" : "MaximumRMSError",
+    "type" : "double",
+    "default" : 0.02,
+    "doc" : "Value of RMS change below which the filter should stop. This is a convergence criterion."
+  }, {
+    "name" : "PropagationScaling",
+    "type" : "double",
+    "default" : "1.0",
+    "doc" : "Weight of direct propagation contribution to the speed term"
+  }, {
+    "name" : "CurvatureScaling",
+    "type" : "double",
+    "default" : "1.0",
+    "doc" : "Weight of the curvature contribution to the speed term"
+  }, {
+    "name" : "NumberOfIterations",
+    "type" : "uint32_t",
+    "default" : "1000u",
+    "doc" : "Number of iterations to run"
+  } ],
+  "measurements" : [ {
+    "name" : "ElapsedIterations",
+    "type" : "uint32_t",
+    "default" : 0
+  }, {
+    "name" : "RMSChange",
+    "type" : "double",
+    "default" : 0.0
+  } ],
+  "tests" : [ ]
+}
