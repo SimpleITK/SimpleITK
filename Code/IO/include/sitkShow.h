@@ -43,7 +43,35 @@ namespace simple
    *  The user can also select applications specifically for color images or 3D
    *  images using the SITK_SHOW_COLOR_COMMAND and SITK_SHOW_3D_COMMAND environment
    *  variables.
+   *
+   *  SITK_SHOW_COMMAND, SITK_SHOW_COLOR_COMMAND and SITK_SHOW_3D_COMMAND allow
+   *  the following %tokens in their strings.
+   *
+   *      %a  for the ImageJ application
+   *      %f  for SimpleITK's temporary image file
+   *      %m  for the ImageJ color-image macro
+   *
+   *  For example, the default SITK_SHOW_COMMAND string on Linux systems is:
+   *
+   *      %a -o %f
+   *
+   *  After token substitution it may become:
+   *
+   *      ImageJ -o /tmp/Temp-65535-0.nii
+   *
+   *  For another example, the default SITK_SHOW_COLOR_COMMAND string on Mac OS X is:
+   *
+   *      open -a %a -n --args -eval %m
+   *
+   *  After token substitution the string may become:
+   *
+   *      open -a ImageJ64 -n --args -eval 'open("/tmp/TempFile-20238-0.nii"); run("Make Composite", "display=Composite");'
+   *
+   * If neither the "%f" or "%m" tokens are found, the temporary file name is automatically appended
+   * to the command arguments.
    **/
+
+
    void SITKIO_EXPORT Show ( const Image &image, const std::string title = "" );
 }
 }
