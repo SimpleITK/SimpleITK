@@ -36,5 +36,24 @@
     "type" : "double",
     "default" : 0.0
   } ],
-  "tests" : [ ]
+  "tests" : [ {
+    "tag" : "cthead",
+    "description" : "Segmentation of brain in CT",
+    "inputA" : "Input/2th_cthead1_distance.nrrd",
+    "inputB" : "Input/cthead1-Float.mha",
+    "settings" : [ {
+      "parameter" : "PropagationScaling",
+      "value" : "0.0"
+    } ],
+    "tolerance" : 0.1,
+    "measurements_results" : [ {
+      "name" : "ElapsedIterations",
+      "value" : 3,
+      "tolerance" : 3
+    }, {
+      "name" : "RMSChange",
+      "value" : 0.015,
+      "tolerance" : 0.006
+    } ]
+  } ]
 }
