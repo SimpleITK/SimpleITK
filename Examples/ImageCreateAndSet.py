@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 #=========================================================================
 #
 #  Copyright Insight Software Consortium
@@ -15,9 +16,9 @@
 #  limitations under the License.
 #
 #=========================================================================
-#!/usr/bin/env python
 
 import SimpleITK as sitk
+import os
 
 xImg = sitk.Image( 256, 256, sitk.sitkFloat32 )
 yImg = sitk.Image( 256, 256, sitk.sitkFloat32 )
@@ -35,4 +36,6 @@ yImg = yImg - yImg.GetSize()[1] / 2
 
 gaussianImg = sitk.Exp( -1 * (xImg*xImg + yImg*yImg) / (2.0 * sigma**2) )
 
-# sitk.Show( gaussianImg )
+
+if ( not os.environ.has_key("SITK_NOSHOW") ):
+    sitk.Show( gaussianImg, "Gaussian Blob" )

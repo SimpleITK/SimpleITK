@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 #=========================================================================
 #
 #  Copyright Insight Software Consortium
@@ -15,10 +16,10 @@
 #  limitations under the License.
 #
 #=========================================================================
-#!/usr/bin/env python
 
 import SimpleITK as sitk
 import sys
+import os
 
 if len ( sys.argv ) != 2:
     print "Usage: %s inputImage" % ( sys.argv[0] )
@@ -26,4 +27,6 @@ if len ( sys.argv ) != 2:
 
 inputImage = sitk.ReadImage( sys.argv[1] )
 
-sitk.Show( inputImage )
+
+if ( not os.environ.has_key("SITK_NOSHOW") ):
+    sitk.Show( inputImage )

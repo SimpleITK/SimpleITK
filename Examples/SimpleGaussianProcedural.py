@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 #=========================================================================
 #
 #  Copyright Insight Software Consortium
@@ -15,10 +16,10 @@
 #  limitations under the License.
 #
 #=========================================================================
-#!/usr/bin/env python
 
 import SimpleITK as sitk
 import sys
+import os
 
 if len ( sys.argv ) < 4:
     print "Usage: %s <input> <sigma> <output>" % ( sys.argv[0] )
@@ -32,3 +33,7 @@ pixelID = image.GetPixelIDValue()
 image  = sitk.SmoothingRecursiveGaussian( image,  float( sys.argv[2] ) )
 
 sitk.WriteImage( sitk.Cast( image, pixelID ), sys.argv[3] )
+
+
+if ( not os.environ.has_key("SITK_NOSHOW") ):
+    sitk.Show( sitk.Cast( image, pixelID ), "Simple Gaussian Procedural" )
