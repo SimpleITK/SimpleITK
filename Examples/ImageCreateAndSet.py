@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 #=========================================================================
 #
 #  Copyright Insight Software Consortium
@@ -15,7 +16,6 @@
 #  limitations under the License.
 #
 #=========================================================================
-#!/usr/bin/env python
 
 import SimpleITK as sitk
 
