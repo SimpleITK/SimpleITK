@@ -20,6 +20,7 @@
 
 import sys
 import SimpleITK as sitk
+import os
 
 # verify that we have the correct number of arguments
 if ( len( sys.argv ) != 5 ):
@@ -55,4 +56,6 @@ image = image * ~boundary
 # add the replace value to the pixel on the board
 image = image + ( boundary * replaceValue )
 
-# sitk.Show( image )
+
+if ( not os.environ.has_key("SITK_NOSHOW") ):
+    sitk.Show( image, "Boarder Segmentation" )

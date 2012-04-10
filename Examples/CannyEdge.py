@@ -19,6 +19,7 @@
 
 import SimpleITK as sitk
 import sys
+import os
 
 if len ( sys.argv ) < 2:
     print "Usage: %s <input>" % ( sys.argv[0] )
@@ -27,10 +28,10 @@ if len ( sys.argv ) < 2:
 
 image = sitk.Cast( sitk.ReadImage( sys.argv[1] ), sitk.sitkFloat32 ) 
 
-edges = sitk.CannyEdgeDetection( image, 100, 300, [4]*3 )
+edges = sitk.CannyEdgeDetection( image, inLowerThreshold=200, inUpperThreshold=400, inVariance=[4]*3 )
 
 stats = sitk.StatisticsImageFilter()
 stats.Execute( image )
 
-# sitk.Show( sitk.Maximum( image, edges*stats.GetMaximum()*.5) )
-
+if ( not os.environ.has_key("SITK_NOSHOW") ):
+    sitk.Show( sitk.Maximum( image*0.5, edges*stats.GetMaximum()*.5) )

@@ -19,6 +19,7 @@
 
 import SimpleITK as sitk
 import sys
+import os
 
 if len ( sys.argv ) < 4:
     print "Usage: FFTConvolution <input> <kernel> <output>";
@@ -78,3 +79,7 @@ img = sitk.Crop( img, [128]*2, [128]*2 )
 ### Writing ###
 # write the output image the same type as the input
 sitk.WriteImage( sitk.Cast( img, pixelID ), outputFileName )
+
+
+if ( not os.environ.has_key("SITK_NOSHOW") ):
+    sitk.Show( sitk.Cast( img, pixelID ), "FFT Convolution" )
