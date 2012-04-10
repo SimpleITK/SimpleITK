@@ -73,17 +73,17 @@ inline Image operator|( const Image &img1, const Image &img2 ) { return Or(img1,
 inline Image operator^( const Image &img1, const Image &img2 ) { return Xor(img1, img2 ); }
 
 /** \todo these operators should some how be done "in-place" */
-inline Image &operator+=( Image &img1, const Image &img2 ) { return img1 = Add(img1, img2 ); }
-inline Image &operator+=( Image &img1, double s ) { return img1 = AddConstantTo(img1, s ); }
-inline Image &operator-=( Image &img1, const Image &img2 ) { return img1 = Subtract(img1, img2 ); }
-inline Image &operator-=( Image &img1, double s ) { return img1 = SubtractConstantFrom(img1, s ); }
-inline Image &operator*=( Image &img1, const Image &img2 ) { return img1 = Multiply(img1, img2 ); }
-inline Image &operator*=( Image &img1, double s ) { return img1 = MultiplyByConstant(img1, s ); }
-inline Image &operator/=( Image &img1, const Image &img2 ) { return img1 = Divide(img1, img2 ); }
-inline Image &operator/=( Image &img1, double s ) { return img1 = DivideByConstant(img1, s ); }
-inline Image &operator&=( Image &img1, const Image &img2 ) { return img1 = And(img1, img2 ); }
-inline Image &operator|=( Image &img1, const Image &img2 ) { return img1 = Or(img1, img2 ); }
-inline Image &operator^=( Image &img1, const Image &img2 ) { return img1 = Xor(img1, img2 ); }
+inline Image operator+=( Image &img1, const Image &img2 ) { return img1 = Add(img1, img2 ); }
+inline Image operator+=( Image &img1, double s ) { return img1 = AddConstantTo(img1, s ); }
+inline Image operator-=( Image &img1, const Image &img2 ) { return img1 = Subtract(img1, img2 ); }
+inline Image operator-=( Image &img1, double s ) { return img1 = SubtractConstantFrom(img1, s ); }
+inline Image operator*=( Image &img1, const Image &img2 ) { return img1 = Multiply(img1, img2 ); }
+inline Image operator*=( Image &img1, double s ) { return img1 = MultiplyByConstant(img1, s ); }
+inline Image operator/=( Image &img1, const Image &img2 ) { return img1 = Divide(img1, img2 ); }
+inline Image operator/=( Image &img1, double s ) { return img1 = DivideByConstant(img1, s ); }
+inline Image operator&=( Image &img1, const Image &img2 ) { return img1 = And(img1, img2 ); }
+inline Image operator|=( Image &img1, const Image &img2 ) { return img1 = Or(img1, img2 ); }
+inline Image operator^=( Image &img1, const Image &img2 ) { return img1 = Xor(img1, img2 ); }
 /**@} */
 }
 }
