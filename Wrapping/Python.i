@@ -45,7 +45,6 @@
 
 
 //      def __floordiv__( other )
-//      def __neg__( )
 
 
         %pythoncode %{
@@ -68,6 +67,11 @@
             if isinstance( other, Image ):
                return Divide( self, other )
             return DivideByConstant( self, other )
+
+        def __neg__( self ):
+            return UnaryMinus( self )
+        def __pos__( self ):
+            return self
 
         # NOTE: for the reverse methods other cannot be an image, so
         # therefore other should be able to be considered a constant.
@@ -104,7 +108,7 @@
                return Pow( self, other )
             return PowToConstant( self, other )
         def __mod__( self, other ): return Modulus( self, other )
-        def __abs__( self ): Abs( self )
+        def __abs__( self ): return Abs( self )
         
         # iterator and container methods
 
