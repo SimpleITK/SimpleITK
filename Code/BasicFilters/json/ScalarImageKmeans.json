@@ -1,0 +1,45 @@
+{
+  "name" : "ScalarImageKmeans",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "doc" : "Docs",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "output_pixel_type" : "uint8_t",
+  "members" : [ {
+    "name" : "ClassWithInitialMean",
+    "type" : "std::vector<double>",
+    "default" : "std::vector<double>()",
+    "no_print" : 1,
+    "custom_itk_cast" : "for( unsigned int i = 0; i < this->m_ClassWithInitialMean.size(); ++i ) filter->AddClassWithInitialMean( this->m_ClassWithInitialMean[i] );"
+  }, {
+    "name" : "UseNonContiguousLabels",
+    "type" : "bool",
+    "default" : "false",
+    "doc" : ""
+  } ],
+"measurements" : [ {
+    "name" : "FinalMeans",
+    "type" : "std::vector<double>",
+    "default" : "std::vector<double>()",
+    "custom_itk_cast" : "this->m_FinalMeans = std::vector<double>( filter->GetFinalMeans().begin(), filter->GetFinalMeans().end() );"
+    "briefdescriptionGet" : "",
+    "detaileddescriptionGet" : "",
+    "no_print" : 1
+  } ],
+  "tests" : [  {
+    "tag" : "basic",
+    "description" : "basic segmentation",
+    "inputA" : "Input/RA-Float.nrrd",
+    "settings" : [ {
+      "parameter" : "ClassWithInitialMean",
+      "type" : "double",
+      "dim_vec" : 1,
+      "value" : "{25000, 30000}",
+      "tcl_value" : "[list 25000 30000]",
+      "python_value" : "[ 25000, 30000 ]",
+      "ruby_value" : "[ 25000, 30000 ]",
+      "R_value" : "c( 25000, 30000 )"
+    } ],
+    "md5hash" : "6eb61d9e67f6d5d37e201f486bbf2bd4"
+  } ]
+}
