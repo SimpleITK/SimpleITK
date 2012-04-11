@@ -27,7 +27,7 @@
     "inputA" : "Input/SmallWhiteCircle.nrrd",
     "inputB" : "Input/LargeWhiteCircle.nrrd",
     "settings" : [ ],
-    "measurements" : [ {
+    "measurements_results" : [ {
       "name" : "AverageHausdorffDistance",
       "value" : 10.25,
       "tolerance" : 0.1
