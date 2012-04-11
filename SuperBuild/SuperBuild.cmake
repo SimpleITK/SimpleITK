@@ -244,9 +244,6 @@ VariableListToArgs( SITK_LANGUAGES_VARS  ep_languages_args )
 
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK-build/CMakeCacheInit.txt" "${ep_common_cache}\n${ep_languages_cache}" )
 
-ExternalProject_Get_Property(ITK install_dir)
-set(itk_dir "${intall_dir}")
-
 set(proj SimpleITK)
 ExternalProject_Add(${proj}
   DOWNLOAD_COMMAND ""
@@ -267,7 +264,7 @@ ExternalProject_Add(${proj}
     -DCMAKE_BUNDLE_OUTPUT_DIRECTORY:PATH=<BINARY_DIR>/bin
     ${ep_languages_args}
     # ITK
-    -DITK_DIR:PATH=${itk_dir}
+    -DITK_DIR:PATH=${ITK_DIR}
     # Swig
     -DSWIG_DIR:PATH=${SWIG_DIR}
     -DSWIG_EXECUTABLE:PATH=${SWIG_EXECUTABLE}

@@ -254,6 +254,12 @@ add_executable(sitkShowTest
   )
 target_link_libraries ( sitkShowTest ${SimpleITK_LIBRARIES} )
 
+add_executable( sitkSystemInformationTest
+  sitkSystemInformationTest.cxx )
+target_link_libraries( sitkSystemInformationTest
+  ${SimpleITK_LIBRARIES} )
+add_test( NAME sitkSystemInformaionTest COMMAND sitkSystemInformationTest ${CMAKE_BINARY_DIR} )
+
 
 # Add all the tests by parsing the source code
 # This macro searches for GoogleTest macros and adds them as test automatically
