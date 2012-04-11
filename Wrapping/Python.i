@@ -69,7 +69,9 @@
             return DivideByConstant( self, other )
 
         def __neg__( self ):
-            esreturn UnaryMinus( self )
+            return UnaryMinus( self )
+        def __pos__( self ):
+            return self
 
         # NOTE: for the reverse methods other cannot be an image, so
         # therefore other should be able to be considered a constant.
