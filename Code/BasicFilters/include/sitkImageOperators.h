@@ -24,6 +24,7 @@
 #include "sitkDivideImageFilter.h"
 #include "sitkMultiplyByConstantImageFilter.h"
 #include "sitkAddConstantToImageFilter.h"
+#include "sitkUnaryMinusImageFilter.h"
 #include "sitkSubtractConstantFromImageFilter.h"
 #include "sitkSubtractConstantByImageFilter.h"
 #include "sitkDivideByConstantImageFilter.h"
@@ -39,10 +40,10 @@ namespace simple {
 /**
 * \brief Performs the operator on a per pixel basis.
 *
-* All operloaded simpleITK operators are performed on a per-pixel
+* All overloaded simpleITK operators are performed on a per-pixel
 * basis, and implemented with the coresponding image filters. These
 * operators gernerally don't work with label images, and the logical
-* operators don't work with images of real componented or vector images.
+* operators don't work with images of real components or vector images.
 * @{
 */
 inline Image operator+( const Image &img1, const Image &img2 ) { return Add(img1, img2 ); }
@@ -66,6 +67,8 @@ inline Image operator/( double s,  const Image &img  ) { return DivideConstantBy
 // Modoulo does not appear to be defined?
 // Image operator%( Image &img1, Image &img2 )
 // Image &operator%=( Image &img1, double s )
+
+inline Image operator-( const Image img ) { return UnaryMinus( img ); }
 
 inline Image operator~( const Image &img ) { return Not( img ); }
 inline Image operator&( const Image &img1, const Image &img2 ) { return And(img1, img2 ); }
