@@ -17,7 +17,7 @@ list ( LENGTH SimpleITKBasicFiltersSource _length )
 
 # these files are the instantiated ITK filter, but they do not do IO,
 # so we don't need to register the IO factoried here.
-set ( ITK_NO_IO_FACTORY_REGISTER_MANAGER )
+set ( ITK_NO_IO_FACTORY_REGISTER_MANAGER 1 )
 include ( ${ITK_USE_FILE} )
 
 # Break all these source files into a bunch of libraries base on every
