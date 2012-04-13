@@ -9,11 +9,13 @@
   "measurements" : [ {
     "name" : "Minimum",
     "type" : "double",
-    "default" : 0.0
+    "default" : 0.0,
+    "briefdescriptionGet" : "The minimum value in the image."
   }, {
     "name" : "Maximum",
     "type" : "double",
-    "default" : 0.0
+    "default" : 0.0,
+    "briefdescriptionGet" : "The maximum value in the image."
   } ],
   "tests" : [ {
     "tag" : "2d",
