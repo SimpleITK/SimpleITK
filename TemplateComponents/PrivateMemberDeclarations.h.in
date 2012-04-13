@@ -1,9 +1,12 @@
 $(foreach members
-      /* ${doc} */
+$(if doc then
+OUT=[[
+      /* ${doc} */]]end)
       ${type} m_${name};
 
-)
-$(when measurements $(foreach measurements
-      /* ${doc} */
+)$(when measurements $(foreach measurements
+$(if doc then
+OUT=[[
+      /* ${doc} */]]end)
       ${type} m_${name};
 ))
