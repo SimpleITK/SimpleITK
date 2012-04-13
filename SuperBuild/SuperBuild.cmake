@@ -172,6 +172,7 @@ list( APPEND ep_common_list
   CMAKE_GENERATOR
   CMAKE_EXTRA_GENERATOR
   MEMORYCHECK_COMMAND_OPTIONS
+  MEMORYCHECK_SUPPRESSIONS_FILE
   MEMORYCHECK_COMMAND
   CMAKE_SHARED_LINKER_FLAGS
   CMAKE_EXE_LINKER_FLAGS
@@ -179,9 +180,17 @@ list( APPEND ep_common_list
   SITE
   BUILDNAME )
 
+if( APPLE )
+  list( APPEND ep_common_list
+    CMAKE_OSX_SYSROOT
+    CMAKE_OSX_DEPLOYMENT_TARGET )
+endif()
+
 VariableListToArgs( ep_common_list ep_common_args )
 
-list( APPEND ep_common_list CMAKE_OSX_ARCHITECTURES )
+if( APPLE )
+  list( APPEND ep_common_list CMAKE_OSX_ARCHITECTURES )
+endif()
 VariableListToCache( ep_common_list ep_common_cache )
 
 list( APPEND ep_common_args
