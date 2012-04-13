@@ -43,5 +43,7 @@
       "value" : 32767,
       "tolerance" : 0
     } ]
-  } ]
+  } ],
+  "briefdescription" : "Computes the minimum and the maximum intensity values of an image.\n",
+  "detaileddescription" : "It is templated over input image type only. This filter just copies the input image through this output to be included within the pipeline. The implementation uses the StatisticsImageFilter.\n\\see  StatisticsImageFilter\n\n"
 }
