@@ -18,6 +18,13 @@ set(ITK_REPOSITORY git://itk.org/ITK.git)
 # current version of ITK
 set(ITK_TAG_COMMAND GIT_TAG v4.1.0 )
 
+if( ${ITK_WRAPPING} OR ${BUILD_SHARED_LIBS} )
+  set( ITK_BUILD_SHARED_LIBS ON )
+else()
+  set( ITK_BUILD_SHARED_LIBS OFF )
+endif()
+
+
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt" "${ep_languages_cache}\n${ep_common_cache}" )
 
 ExternalProject_Add(${proj}
@@ -34,7 +41,7 @@ ExternalProject_Add(${proj}
   ${ep_languages_args}
   -DBUILD_EXAMPLES:BOOL=OFF
   -DBUILD_TESTING:BOOL=OFF
-  -DBUILD_SHARED_LIBS:BOOL=${ITK_WRAPPING}
+  -DBUILD_SHARED_LIBS:BOOL=${ITK_BUILD_SHARED_LIBS}
   -DCMAKE_SKIP_RPATH:BOOL=ON
   -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
   -DITK_LEGACY_REMOVE:BOOL=ON
