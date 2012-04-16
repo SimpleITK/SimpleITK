@@ -30,11 +30,13 @@
   "measurements" : [ {
     "name" : "ElapsedIterations",
     "type" : "uint32_t",
-    "default" : 0
+    "default" : 0,
+    "briefdescriptionGet" : "Number of iterations run."
   }, {
     "name" : "RMSChange",
     "type" : "double",
-    "default" : 0.0
+    "default" : 0.0,
+    "briefdescriptionGet" : "The Root Mean Square of the levelset upon termination."
   } ],
   "tests" : [ {
     "tag" : "cthead",
