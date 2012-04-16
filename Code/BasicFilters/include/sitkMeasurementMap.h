@@ -35,7 +35,7 @@ typedef std::map<std::string, double> BasicMeasurementMap;
  *          It is a thin wrapper around an std::map<std::string,double>
  *          that adds some convenience functions.
  */
-class SITKBasicFilters_EXPORT MeasurementMap: public BasicMeasurementMap
+class SITKBasicFilters0_EXPORT MeasurementMap: public BasicMeasurementMap
 {
 public:
   MeasurementMap();

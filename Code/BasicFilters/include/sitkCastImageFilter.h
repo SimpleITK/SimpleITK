@@ -36,7 +36,7 @@ namespace simple
  * Several different ITK classes are implemented under the hood, to
  * convert between different image types.
  */
-class SITKBasicFilters_EXPORT CastImageFilter
+class SITKBasicFilters0_EXPORT CastImageFilter
   : public ImageFilter
 {
 public:
@@ -170,7 +170,7 @@ private:
 
 };
 
-  SITKBasicFilters_EXPORT Image Cast ( const Image& image, PixelIDValueType pixelID );
+  SITKBasicFilters0_EXPORT Image Cast ( const Image& image, PixelIDValueType pixelID );
 
 }
 }

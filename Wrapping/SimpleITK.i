@@ -98,6 +98,8 @@ namespace std
 // define these preprocessor directives to nothing for the swig interface
 #define SITKCommon_EXPORT
 #define SITKCommon_HIDDEN
+#define SITKBasicFilters0_EXPORT
+#define SITKBasicFilters0_HIDDEN
 #define SITKBasicFilters_EXPORT
 #define SITKBasicFilters_HIDDEN
 #define SITKIO_EXPORT

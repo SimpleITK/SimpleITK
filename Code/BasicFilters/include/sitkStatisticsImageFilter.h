@@ -27,7 +27,7 @@ namespace itk {
     /** \class StatisticsImageFilter
      * \brief Compute min, max, variance, and mean of an image
      */
-    class SITKBasicFilters_EXPORT StatisticsImageFilter : public ImageFilter {
+    class SITKBasicFilters0_EXPORT StatisticsImageFilter : public ImageFilter {
     public:
       typedef StatisticsImageFilter Self;
 
@@ -69,7 +69,7 @@ namespace itk {
       double QueryValue( const std::string) const;
     };
 
-    SITKBasicFilters_EXPORT itk::simple::MeasurementMap Statistics ( const Image& );
+    SITKBasicFilters0_EXPORT itk::simple::MeasurementMap Statistics ( const Image& );
   }
 }
 #endif

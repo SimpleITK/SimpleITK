@@ -7,12 +7,26 @@ include_directories (
 
 set_source_files_properties ( ${SimpleITKBasicFiltersGeneratedSource} PROPERTIES GENERATED 1 )
 
+if(BUILD_SHARED_LIBS)
+  if (WIN32)
+    add_definitions(-DSimpleITKBasicFilters_EXPORTS)
+  endif()
+endif()
+
 # Glob non-generated BasicFilters and add to cache
 file ( GLOB SimpleITKBasicFiltersSource *.cxx )
-list ( APPEND SimpleITKBasicFiltersSource ${SimpleITKBasicFiltersGeneratedSource} )
+
+add_library ( SimpleITKBasicFilters0 ${SimpleITKBasicFiltersSource} )
+target_link_libraries ( SimpleITKBasicFilters0 SimpleITKCommon ${ITK_LIBRARIES} )
+sitk_install_exported_target( SimpleITKBasicFilters0 )
+
+# append this new library to the globaly cached list
+list ( APPEND SimpleITK_LIBRARIES SimpleITKBasicFilters0 )
+set ( SimpleITK_LIBRARIES ${SimpleITK_LIBRARIES} CACHE INTERNAL "" )
 
 # sort the list to en-sure the same list across platforms
-list ( SORT SimpleITKBasicFiltersSource )
+list ( SORT SimpleITKBasicFiltersGeneratedSource )
+set ( SimpleITKBasicFiltersSource ${SimpleITKBasicFiltersGeneratedSource} )
 list ( LENGTH SimpleITKBasicFiltersSource _length )
 
 # these files are the instantiated ITK filter, but they do not do IO,
@@ -23,7 +37,7 @@ include ( ${ITK_USE_FILE} )
 # Break all these source files into a bunch of libraries base on every
 # n files in the list.
 set ( _stride 50 )
-set ( _library_i 0 )
+set ( _library_i 1 )
 foreach ( _start RANGE 0 ${_length} ${_stride} )
 
   # the above foreach range in inclusive, which is not quite what is wanted
@@ -48,7 +62,7 @@ foreach ( _start RANGE 0 ${_length} ${_stride} )
   endforeach()
 
   add_library ( SimpleITKBasicFilters${_library_i} ${SRC} )
-  target_link_libraries ( SimpleITKBasicFilters${_library_i} SimpleITKCommon ${ITK_LIBRARIES} )
+  target_link_libraries ( SimpleITKBasicFilters${_library_i} SimpleITKCommon SimpleITKBasicFilters0 ${ITK_LIBRARIES} )
   add_dependencies ( SimpleITKBasicFilters${_library_i} BasicFiltersSourceCode )
 
   sitk_install_exported_target( SimpleITKBasicFilters${_library_i} )
