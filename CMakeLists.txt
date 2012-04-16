@@ -317,13 +317,13 @@ install(EXPORT SimpleITKTargets
 
 file( GLOB __files
   ${CMAKE_SOURCE_DIR}/Code/BasicFilters/include/*.h
-  ${CMAKE_SOURCE_DIR}/Code/BasicFilters/include/*.txx
+  ${CMAKE_SOURCE_DIR}/Code/BasicFilters/include/*.hxx
   ${CMAKE_SOURCE_DIR}/Code/Common/include/*.h
-  ${CMAKE_SOURCE_DIR}/Code/Common/include/*.txx
+  ${CMAKE_SOURCE_DIR}/Code/Common/include/*.hxx
   ${CMAKE_SOURCE_DIR}/Code/IO/include/*.h
-  ${CMAKE_SOURCE_DIR}/Code/IO/include/*.txx
+  ${CMAKE_SOURCE_DIR}/Code/IO/include/*.hxx
   ${CMAKE_SOURCE_DIR}/Code/Registration/include/*.h
-  ${CMAKE_SOURCE_DIR}/Code/Registration/include/*.txx
+  ${CMAKE_SOURCE_DIR}/Code/Registration/include/*.hxx
   )
 
 set(__files ${__files}
