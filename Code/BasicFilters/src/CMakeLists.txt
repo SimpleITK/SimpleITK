@@ -14,8 +14,22 @@ if(BUILD_SHARED_LIBS)
   endif()
 endif()
 
-# Glob non-generated BasicFilters and add to cache
-file ( GLOB SimpleITKBasicFiltersSource *.cxx )
+
+set ( SimpleITKBasicFiltersSource
+  sitkCastImageFilter-2.cxx
+  sitkCastImageFilter-2l.cxx
+  sitkCastImageFilter-2v.cxx
+  sitkCastImageFilter-3.cxx
+  sitkCastImageFilter-3l.cxx
+  sitkCastImageFilter-3v.cxx
+  sitkCastImageFilter.cxx
+  sitkHashImageFilter.cxx
+  sitkImageFilter.cxx
+  sitkJoinSerriesImageFilter.cxx
+  sitkLabelStatisticsImageFilter.cxx
+  sitkMeasurementMap.cxx
+  sitkStatisticsImageFilter.cxx
+)
 
 add_library ( SimpleITKBasicFilters0 ${SimpleITKBasicFiltersSource} )
 target_link_libraries ( SimpleITKBasicFilters0 SimpleITKCommon ${ITK_LIBRARIES} )
