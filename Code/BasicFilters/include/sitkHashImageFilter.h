@@ -30,7 +30,7 @@ namespace itk {
     /** \class HashImageFilter
      * \brief Compute the sha1 or md5 hash of an image
      */
-    class SITKBasicFilters_EXPORT HashImageFilter {
+    class SITKBasicFilters0_EXPORT HashImageFilter {
     public:
       typedef HashImageFilter Self;
 
@@ -68,7 +68,7 @@ namespace itk {
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
     };
 
-    SITKBasicFilters_EXPORT std::string Hash ( const Image& image, HashImageFilter::HashFunction function = HashImageFilter::SHA1 );
+    SITKBasicFilters0_EXPORT std::string Hash ( const Image& image, HashImageFilter::HashFunction function = HashImageFilter::SHA1 );
   }
 }
 #endif

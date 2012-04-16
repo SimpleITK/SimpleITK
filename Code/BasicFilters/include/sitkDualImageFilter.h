@@ -29,7 +29,7 @@ namespace itk {
    * All SimpleITK filters which take two input images should inherit from this
    * class
    */
-  class SITKBasicFilters_EXPORT DualImageFilter :
+  class SITKBasicFilters0_EXPORT DualImageFilter :
       protected NonCopyable
   {
     public:

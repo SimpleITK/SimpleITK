@@ -35,6 +35,6 @@
 
 #endif
 
-#define SITKCommon_HIDDEN SITK_ABI_HIDDEN
+#define SITKIO_HIDDEN SITK_ABI_HIDDEN
 
 #endif // __sitkIO_h
