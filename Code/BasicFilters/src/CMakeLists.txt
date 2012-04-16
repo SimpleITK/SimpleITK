@@ -8,11 +8,10 @@ include_directories (
 
 set_source_files_properties ( ${SimpleITKBasicFiltersGeneratedSource} PROPERTIES GENERATED 1 )
 
-if(BUILD_SHARED_LIBS)
-  if (WIN32)
-    add_definitions(-DSimpleITKBasicFilters_EXPORTS)
-  endif()
-endif()
+# these files are the instantiated ITK filter, but they do not do IO,
+# so we don't need to register the IO factoried here.
+set ( ITK_NO_IO_FACTORY_REGISTER_MANAGER 1 )
+include ( ${ITK_USE_FILE} )
 
 
 set ( SimpleITKBasicFiltersSource
@@ -44,10 +43,12 @@ list ( SORT SimpleITKBasicFiltersGeneratedSource )
 set ( SimpleITKBasicFiltersSource ${SimpleITKBasicFiltersGeneratedSource} )
 list ( LENGTH SimpleITKBasicFiltersSource _length )
 
-# these files are the instantiated ITK filter, but they do not do IO,
-# so we don't need to register the IO factoried here.
-set ( ITK_NO_IO_FACTORY_REGISTER_MANAGER 1 )
-include ( ${ITK_USE_FILE} )
+# The other filters an automatically split into files. They all
+# use the following for export their interface. There must not be and
+# inter-filter include.
+if(BUILD_SHARED_LIBS)
+  add_definitions(-DSimpleITKBasicFilters_EXPORTS)
+endif()
 
 # Break all these source files into a bunch of libraries base on every
 # n files in the list.
@@ -70,7 +71,6 @@ foreach ( _start RANGE 0 ${_length} ${_stride} )
 
   # extract out the range into SRC
   set ( SRC "" )
-  message( "_length: ${_length} _start: ${_start} _end:${_end}" )
   foreach( _j RANGE ${_start} ${_end} )
     list ( GET SimpleITKBasicFiltersSource ${_j} _v )
     list ( APPEND SRC ${_v} )
