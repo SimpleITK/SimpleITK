@@ -458,7 +458,7 @@ if ( WRAP_PYTHON )
 
     add_test(NAME Python.${name}
       COMMAND "${ITK_TEST_DRIVER}"
-      --add-before-env SITK_NOSHOW ""
+      --add-before-env SITK_NOSHOW "YES"
       ${command}
       ${ARGN}
       )
