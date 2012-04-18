@@ -15,6 +15,9 @@
 *  limitations under the License.
 *
 *=========================================================================*/
+#ifndef __sitkPermiteAxis_Static_hxx
+#define __sitkPermiteAxis_Static_hxx
+
 #include "sitkPermuteAxesImageFilter.h"
 
 // This file is intended to contain the definition of static
@@ -29,3 +32,5 @@ namespace itk {
 
   }
 }
+
+#endif
