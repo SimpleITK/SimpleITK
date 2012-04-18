@@ -24,6 +24,7 @@
 #include "sitkDivideImageFilter.h"
 #include "sitkMultiplyByConstantImageFilter.h"
 #include "sitkAddConstantToImageFilter.h"
+#include "sitkUnaryMinusImageFilter.h"
 #include "sitkSubtractConstantFromImageFilter.h"
 #include "sitkSubtractConstantByImageFilter.h"
 #include "sitkDivideByConstantImageFilter.h"
@@ -39,10 +40,10 @@ namespace simple {
 /**
 * \brief Performs the operator on a per pixel basis.
 *
-* All operloaded simpleITK operators are performed on a per-pixel
+* All overloaded simpleITK operators are performed on a per-pixel
 * basis, and implemented with the coresponding image filters. These
 * operators gernerally don't work with label images, and the logical
-* operators don't work with images of real componented or vector images.
+* operators don't work with images of real components or vector images.
 * @{
 */
 inline Image operator+( const Image &img1, const Image &img2 ) { return Add(img1, img2 ); }
@@ -67,23 +68,25 @@ inline Image operator/( double s,  const Image &img  ) { return DivideConstantBy
 // Image operator%( Image &img1, Image &img2 )
 // Image &operator%=( Image &img1, double s )
 
+inline Image operator-( const Image img ) { return UnaryMinus( img ); }
+
 inline Image operator~( const Image &img ) { return Not( img ); }
 inline Image operator&( const Image &img1, const Image &img2 ) { return And(img1, img2 ); }
 inline Image operator|( const Image &img1, const Image &img2 ) { return Or(img1, img2 ); }
 inline Image operator^( const Image &img1, const Image &img2 ) { return Xor(img1, img2 ); }
 
 /** \todo these operators should some how be done "in-place" */
-inline Image &operator+=( Image &img1, const Image &img2 ) { return img1 = Add(img1, img2 ); }
-inline Image &operator+=( Image &img1, double s ) { return img1 = AddConstantTo(img1, s ); }
-inline Image &operator-=( Image &img1, const Image &img2 ) { return img1 = Subtract(img1, img2 ); }
-inline Image &operator-=( Image &img1, double s ) { return img1 = SubtractConstantFrom(img1, s ); }
-inline Image &operator*=( Image &img1, const Image &img2 ) { return img1 = Multiply(img1, img2 ); }
-inline Image &operator*=( Image &img1, double s ) { return img1 = MultiplyByConstant(img1, s ); }
-inline Image &operator/=( Image &img1, const Image &img2 ) { return img1 = Divide(img1, img2 ); }
-inline Image &operator/=( Image &img1, double s ) { return img1 = DivideByConstant(img1, s ); }
-inline Image &operator&=( Image &img1, const Image &img2 ) { return img1 = And(img1, img2 ); }
-inline Image &operator|=( Image &img1, const Image &img2 ) { return img1 = Or(img1, img2 ); }
-inline Image &operator^=( Image &img1, const Image &img2 ) { return img1 = Xor(img1, img2 ); }
+inline Image operator+=( Image &img1, const Image &img2 ) { return img1 = Add(img1, img2 ); }
+inline Image operator+=( Image &img1, double s ) { return img1 = AddConstantTo(img1, s ); }
+inline Image operator-=( Image &img1, const Image &img2 ) { return img1 = Subtract(img1, img2 ); }
+inline Image operator-=( Image &img1, double s ) { return img1 = SubtractConstantFrom(img1, s ); }
+inline Image operator*=( Image &img1, const Image &img2 ) { return img1 = Multiply(img1, img2 ); }
+inline Image operator*=( Image &img1, double s ) { return img1 = MultiplyByConstant(img1, s ); }
+inline Image operator/=( Image &img1, const Image &img2 ) { return img1 = Divide(img1, img2 ); }
+inline Image operator/=( Image &img1, double s ) { return img1 = DivideByConstant(img1, s ); }
+inline Image operator&=( Image &img1, const Image &img2 ) { return img1 = And(img1, img2 ); }
+inline Image operator|=( Image &img1, const Image &img2 ) { return img1 = Or(img1, img2 ); }
+inline Image operator^=( Image &img1, const Image &img2 ) { return img1 = Xor(img1, img2 ); }
 /**@} */
 }
 }

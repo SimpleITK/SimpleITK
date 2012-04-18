@@ -86,6 +86,18 @@ typedef typelist::MakeTypeList<BasicPixelID<float>,
 typedef typelist::MakeTypeList< BasicPixelID<std::complex< float > >,
                                 BasicPixelID<std::complex< double > > >::Type ComplexPixelIDTypeList;
 
+/** List of pixel ids which are signed
+ *
+ * \sa BasicPixelID
+ */
+typedef typelist::MakeTypeList<BasicPixelID<int8_t>,
+                               BasicPixelID<int16_t>,
+                               BasicPixelID<int32_t>,
+//                               BasicPixelID<int64_t>,
+                               BasicPixelID<float>,
+                               BasicPixelID<double> >::Type SignedPixelIDTypeList;
+
+
 
 /** List of pixel ids which are vectors for itk::VectorImage class.
  *
@@ -107,6 +119,16 @@ typedef typelist::MakeTypeList<VectorPixelID<int8_t>,
  */
 typedef typelist::MakeTypeList<VectorPixelID<float>,
                                VectorPixelID<double> >::Type RealVectorPixelIDTypeList;
+
+/** List of pixel ids which are signed of vectors
+ *
+ * \sa BasicPixelID
+ */
+typedef typelist::MakeTypeList< VectorPixelID<int8_t>,
+                                VectorPixelID<int16_t>,
+                                VectorPixelID<int32_t>,
+                                VectorPixelID<float>,
+                                VectorPixelID<double> >::Type SignedVectorPixelIDTypeList;
 
 
 /** List of pixel ids which are for itk::LabelMap Image class.
