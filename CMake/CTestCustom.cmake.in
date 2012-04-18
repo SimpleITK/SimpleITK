@@ -28,7 +28,10 @@ SET(CTEST_CUSTOM_WARNING_EXCEPTION
   "libtool:.*file:.*has no symbols"
 
   # Ignore warning building SWIG
-  "Swig-prefix/src/Swig/Source"
+  "Swig-prefix/src/Swig"
+
+  # Ignore warning building PCRE
+  "PCRE-prefix/src/PCRE"
 
   # Ignore apple warning
   "ld.*warning.*duplicate dylib.*"
@@ -36,5 +39,7 @@ SET(CTEST_CUSTOM_WARNING_EXCEPTION
   # Ignore warning from the SWIG wrapped file ( not much we can do about those )
   ".*_wrap.cxx"
 
+  # Ignore warning in lua about the use of `tmpnam' is dangerous
+  "loslib.*[Ww]arning: the use of ?tmpnam? is dangerous"
 )
 

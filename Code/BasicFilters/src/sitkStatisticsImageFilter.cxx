@@ -87,6 +87,10 @@ double StatisticsImageFilter::GetMean    ( ) const
   {
   return this->QueryValue( "Mean" );
   }
+double StatisticsImageFilter::GetSigma( ) const
+  {
+  return this->QueryValue( "Sigma" );
+  }
 double StatisticsImageFilter::GetVariance( ) const
   {
   return this->QueryValue( "Variance" );
@@ -141,6 +145,7 @@ Image StatisticsImageFilter::ExecuteInternal ( const Image& inImage1 )
   m_MeasurementMap["Minimum"] =filter->GetMinimum();
   m_MeasurementMap["Maximum"] =filter->GetMaximum();
   m_MeasurementMap["Mean"]    =filter->GetMean();
+  m_MeasurementMap["Sigma"]=filter->GetSigma();
   m_MeasurementMap["Variance"]=filter->GetVariance();
   m_MeasurementMap["Sum"]=filter->GetSum();
 
