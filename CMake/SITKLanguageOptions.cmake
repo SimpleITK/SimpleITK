@@ -11,9 +11,10 @@
 
 # for wrapping to wrok correctly fPIC is needed on certain system.
 macro(check_PIC_flag Language)
-  if ( UNIX AND NOT APPLE )
+  string( TOUPPER ${Language} LANGUAGE )
+  if ( UNIX AND NOT APPLE AND WRAP_${LANGUAGE} )
     if ( NOT ${CMAKE_CXX_FLAGS} MATCHES "-fPIC")
-      message ( FATAL_ERROR "${Language} wrapping requires CMAKE_CXX_FLAGS (or equivalent) to include -fPIC and ITK built with this flag" )
+      message ( FATAL_ERROR "${Language} wrapping requires CMAKE_CXX_FLAGS (or equivalent) to include -fPIC and ITK built with this flag." )
     endif()
   endif()
 endmacro()
@@ -38,8 +39,8 @@ list( APPEND SITK_LANGUAGES_VARS
   PYTHON_INCLUDE_DIR
 #  PYTHON_INCLUDE_PATH ( depricated )
    )
-check_PIC_flag ( Python )
 option( WRAP_PYTHON "Wrap Python" ${WRAP_PYTHON_DEFAULT} )
+check_PIC_flag ( Python )
 
 find_package ( Java COMPONENTS Development Runtime QUIET )
 find_package ( JNI QUIET )
@@ -48,7 +49,6 @@ if ( ${JAVA_FOUND} AND ${JNI_FOUND} )
 else ( ${JAVA_FOUND} AND ${JNI_FOUND} )
   set( WRAP_JAVA_DEFAULT OFF )
 endif ( ${JAVA_FOUND} AND ${JNI_FOUND} )
-check_PIC_flag ( Java )
 list( APPEND SITK_LANGUAGES_VARS 
   Java_JAVA_EXECUTABLE
   Java_JAVAC_EXECUTABLE
@@ -71,6 +71,7 @@ list( APPEND SITK_LANGUAGES_VARS
 
   )
 option ( WRAP_JAVA "Wrap Java" ${WRAP_JAVA_DEFAULT} )
+check_PIC_flag ( Java )
 
 find_package ( TCL QUIET )
 if ( ${TCL_FOUND} )
@@ -102,6 +103,7 @@ list( APPEND SITK_LANGUAGES_VARS
   RUBY_FOUND
   RUBY_INCLUDE_PATH )
 option ( WRAP_RUBY "Wrap Ruby" ${WRAP_RUBY_DEFAULT} )
+check_PIC_flag ( Ruby )
 
 find_package( CSharp QUIET )
 if ( ${CSHARP_FOUND} )
