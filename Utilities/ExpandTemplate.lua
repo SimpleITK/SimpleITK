@@ -415,13 +415,14 @@ function expand(str, ...)
           push(R, evar(strsub(str, b+1, e-1)))
           i = e+1
           pos = i
+        elseif strfind(str, '^%$', i) then
+          local tempstr = strsub(str,pos+1,i-1)
+          push(R, strsub(str, pos+1, i-1))
+          i = i+1
+          pos = i
         elseif strfind(str, '^%a', i) then
           push(R, strsub(str, pos, i-2))
           push(R, evar(strsub(str, i, i)))
-          i = i+1
-          pos = i
-        elseif strfind(str, '^%$', i) then
-          push(R, strsub(str, pos+1, i))
           i = i+1
           pos = i
         end
