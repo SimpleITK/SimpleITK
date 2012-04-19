@@ -10,7 +10,7 @@
     "type" : "std::vector<double>",
     "default" : "std::vector<double>()",
     "no_print" : 1,
-    "custom_itk_cast" : "for( unsigned int i = 0; i < this->m_ClassWithInitialMean.size(); ++i ) filter->AddClassWithInitialMean( this->m_ClassWithInitialMean[i] );"
+    "custom_itk_cast" : "if( this->m_ClassWithInitialMean.size() == 0 ) {\n     filter->AddClassWithInitialMean( NumericTraits<typename InputImageType::PixelType>::ZeroValue() );\n     filter->AddClassWithInitialMean( NumericTraits<typename InputImageType::PixelType>::OneValue() );\n   }\n   else\n   {\n     for( unsigned int i = 0; i < this->m_ClassWithInitialMean.size(); ++i )\n       filter->AddClassWithInitialMean( this->m_ClassWithInitialMean[i] );\n    }"
   }, {
     "name" : "UseNonContiguousLabels",
     "type" : "bool",
