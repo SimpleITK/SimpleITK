@@ -6273,6 +6273,60 @@ virtual OutputImagePixelType itk::ZeroCrossingImageFilter::GetBackgroundValue() 
 
 */"
 
+// Generated for ClassName from /scratch/blowekamp/build/ITK-gerrit/Utilities/Doxygen/xml/classitk_1_1ScalarImageKmeansImageFilter.xml
+%typemap(javaimports) itk::simple::ScalarImageKmeansImageFilter "/** Classifies the intensity values of a scalar image using the K-Means algorithm.
+
+Given an input image with scalar values, it uses the K-Means statistical classifier in order to define labels for every pixel in the image. The filter is templated over the type of the input image. The output image is predefined as having the same dimension of the input image and pixel type unsigned char, under the assumption that the classifier will generate less than 256 classes.
+You may want to look also at the RelabelImageFilter that may be used as a postprocessing stage, in particular if you are interested in ordering the labels by their relative size in number of pixels.
+see  Image
+see 
+see  ImageKmeansModelEstimator
+see 
+see KdTreeBasedKmeansEstimator, WeightedCentroidKdTreeGenerator, KdTree
+see 
+see RelabelImageFilter
+par Wiki Examples:
+
+li All Examples
+
+li Cluster the pixels in a greyscale image
+
+*/"
+%javamethodmodifiers itk::simple::ScalarImageKmeansImageFilter::execute() "
+/**Classifies the intensity values of a scalar image using the K-Means algorithm.
+
+*/"
+%javamethodmodifiers itk::simple::ScalarImageKmeans "/**
+Classifies the intensity values of a scalar image using the K-Means algorithm.
+
+Given an input image with scalar values, it uses the K-Means statistical classifier in order to define labels for every pixel in the image. The filter is templated over the type of the input image. The output image is predefined as having the same dimension of the input image and pixel type unsigned char, under the assumption that the classifier will generate less than 256 classes.
+You may want to look also at the RelabelImageFilter that may be used as a postprocessing stage, in particular if you are interested in ordering the labels by their relative size in number of pixels.
+see  Image
+see 
+see  ImageKmeansModelEstimator
+see 
+see KdTreeBasedKmeansEstimator, WeightedCentroidKdTreeGenerator, KdTree
+see 
+see RelabelImageFilter
+par Wiki Examples:
+
+li All Examples
+
+li Cluster the pixels in a greyscale image
+
+*/"
+%javamethodmodifiers itk::simple::ScalarImageKmeansImageFilter::setUseNonContiguousLabels "/**
+virtual void itk::ScalarImageKmeansImageFilter::SetUseNonContiguousLabels(bool _arg)
+
+Set/Get the UseNonContiguousLabels flag. When this is set to false the labels are numbered contiguously, like in {0,1,3..N}. When the flag is set to true, the labels are selected in order to span the dynamic range of the output image. This last option is useful when the output image is intended only for display. The default value is false.
+*/"
+
+%javamethodmodifiers itk::simple::ScalarImageKmeansImageFilter::getUseNonContiguousLabels "/**
+virtual const bool& itk::ScalarImageKmeansImageFilter::GetUseNonContiguousLabels()
+
+Set/Get the UseNonContiguousLabels flag. When this is set to false the labels are numbered contiguously, like in {0,1,3..N}. When the flag is set to true, the labels are selected in order to span the dynamic range of the output image. This last option is useful when the output image is intended only for display. The default value is false.
+*/"
+
 // Generated for ClassName from /scratch/blowekamp/build/ITK-gerrit/Utilities/Doxygen/xml/classitk_1_1IsolatedConnectedImageFilter.xml
 %typemap(javaimports) itk::simple::IsolatedConnectedImageFilter "/** Label pixels that are connected to one set of seeds but not another.
 
@@ -6282,8 +6336,8 @@ The user can also supply the Lower and Upper values to restrict the search. Howe
 The user can specify more than one seed for both regions to separate. The algorithm will try find the threshold that ensures that all of the first seeds are contained in the resulting segmentation and all of the second seeds are not contained in the segmentation.
 It is possible that the algorithm may not be able to find the isolating threshold because no such threshold exists. The user can check for this by querying the GetThresholdingFailed()flag.
 */"
-%javamethodmodifiers itk::simple::IsolatedConnectedImageFilter::execute() "
-/**Label pixels that are connected to one set of seeds but not another.
+%javamethodmodifiers itk::simple::IsolatedConnectedImageFilter::execute() "/**
+Label pixels that are connected to one set of seeds but not another.
 
 */"
 %javamethodmodifiers itk::simple::IsolatedConnected "/**
