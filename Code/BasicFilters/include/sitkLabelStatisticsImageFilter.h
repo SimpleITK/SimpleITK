@@ -28,7 +28,7 @@ namespace itk {
     /** \class LabelStatisticsImageFilter
      * \brief Compute min, max, variance, and mean of an image
      */
-    class SITKBasicFilters_EXPORT LabelStatisticsImageFilter : public DualImageFilter {
+    class SITKBasicFilters0_EXPORT LabelStatisticsImageFilter : public DualImageFilter {
     public:
       typedef LabelStatisticsImageFilter       Self;
 
@@ -93,7 +93,7 @@ namespace itk {
       double QueryValue(const LabelIdentifierType, const std::string) const;
     };
 
-    SITKBasicFilters_EXPORT LabelStatisticsImageFilter::LabelStatisticsMap LabelStatistics ( const Image&, const Image& );
+    SITKBasicFilters0_EXPORT LabelStatisticsImageFilter::LabelStatisticsMap LabelStatistics ( const Image&, const Image& );
   }
 }
 #endif

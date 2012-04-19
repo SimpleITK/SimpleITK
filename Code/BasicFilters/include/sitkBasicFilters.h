@@ -20,6 +20,19 @@
 
 #include "sitkMacro.h"
 
+
+#if defined( SITKDLL )
+  #ifdef SimpleITKBasicFilters0_EXPORTS
+    #define SITKBasicFilters0_EXPORT SITK_ABI_EXPORT
+  #else
+    #define SITKBasicFilters0_EXPORT SITK_ABI_IMPORT
+  #endif  /* SimpleITKBasicFilters0_EXPORTS */
+#else
+  // Don't hide symbols in the static SimpleITKBasicFilters library in case
+  // -fvisibility=hidden is used
+  #define SITKBasicFilters0_EXPORT
+#endif
+
 #if defined( SITKDLL )
   #ifdef SimpleITKBasicFilters_EXPORTS
     #define SITKBasicFilters_EXPORT SITK_ABI_EXPORT
@@ -32,7 +45,7 @@
   #define SITKBasicFilters_EXPORT
 #endif
 
-
+#define SITKBasicFilters0_HIDDEN SITK_ABI_HIDDEN
 #define SITKBasicFilters_HIDDEN SITK_ABI_HIDDEN
 
 #endif // __sitkBasicFilters_h

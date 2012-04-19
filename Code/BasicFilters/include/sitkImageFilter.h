@@ -32,7 +32,7 @@ namespace itk {
    * All SimpleITK filters which take one input image should inherit from this
    * class
    */
-  class SITKBasicFilters_EXPORT ImageFilter :protected NonCopyable
+  class SITKBasicFilters0_EXPORT ImageFilter :protected NonCopyable
   {
     public:
       typedef ImageFilter Self;

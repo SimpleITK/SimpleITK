@@ -24,6 +24,7 @@
 #include <sitkRecursiveGaussianImageFilter.h>
 #include <sitkCastImageFilter.h>
 #include <sitkPixelIDValues.h>
+#include <sitkStatisticsImageFilter.h>
 #include <sitkLabelStatisticsImageFilter.h>
 #include <sitkExtractImageFilter.h>
 #include <sitkFastMarchingImageFilter.h>
@@ -221,12 +222,47 @@ TEST(BasicFilters,HashImageFilter) {
   EXPECT_EQ ( itk::simple::HashImageFilter::MD5, hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).GetHashFunction() );
 }
 
+TEST(BasicFilters,Statistics) {
+
+  itk::simple::Image image = itk::simple::ReadImage ( dataFinder.GetFile ( "Input/RA-Float.nrrd" ) );
+
+  itk::simple::StatisticsImageFilter stats;
+
+  EXPECT_EQ ( stats.GetName(), "Statistics" );
+  EXPECT_NO_THROW ( stats.ToString() );
+
+  stats.Execute( image );
+
+
+  EXPECT_EQ ( stats.GetMinimum(), -1146 );
+  EXPECT_EQ ( stats.GetMaximum(), 32767 );
+  EXPECT_NEAR ( stats.GetMean(), 25887.390, 0.001 );
+  EXPECT_NEAR ( stats.GetSigma(),  3800.565, 0.01 );
+  EXPECT_NEAR ( stats.GetVariance(), 14444296.271, 10 );
+  EXPECT_EQ ( stats.GetSum(), 6786223965 );
+
+  image = itk::simple::ReadImage ( dataFinder.GetFile ( "Input/cthead1.png" ) );
+
+  const itk::simple::MeasurementMap measurements = itk::simple::Statistics( image );
+
+  EXPECT_EQ ( measurements.find("Minimum")->second, 0 );
+  EXPECT_EQ ( measurements.find("Maximum")->second, 255 );
+  EXPECT_NEAR ( measurements.find("Mean")->second, 77.7415, 0.001 );
+  EXPECT_NEAR ( measurements.find("Sigma")->second, 78.2619, 0.01 );
+  EXPECT_NEAR ( measurements.find("Variance")->second,  6124.9260064656282, 1 );
+  EXPECT_EQ ( measurements.find("Sum")->second, 5094871 );
+
+}
+
 TEST(BasicFilters,LabelStatistics) {
   itk::simple::Image image = itk::simple::ReadImage ( dataFinder.GetFile ( "Input/cthead1.png" ) );
   itk::simple::Image labels = itk::simple::ReadImage ( dataFinder.GetFile ( "Input/2th_cthead1.mha" ) );
 
   itk::simple::LabelStatisticsImageFilter stats;
   stats.Execute ( image, labels );
+
+  EXPECT_EQ( stats.GetName(), "LabelStatistics" );
+  EXPECT_NO_THROW( stats.ToString() );
 
   EXPECT_TRUE ( stats.HasLabel ( 0 ) );
   EXPECT_NEAR ( stats.GetMinimum ( 0 ), 0, 0.01 );

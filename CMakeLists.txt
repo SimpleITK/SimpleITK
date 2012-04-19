@@ -44,7 +44,7 @@ set ( SimpleITK_INCLUDE_DIRS
 
 include_directories( ${SimpleITK_INCLUDE_DIRS} )
 
-set ( SimpleITK_LIBRARIES SimpleITKCommon SimpleITKIO SimpleITKBasicFilters )
+set ( SimpleITK_LIBRARIES SimpleITKCommon SimpleITKIO CACHE INTERNAL "" )
 
 # Be sure to clear these each time
 set ( GENERATED_TEST_LIST "" CACHE INTERNAL "" )
@@ -317,13 +317,13 @@ install(EXPORT SimpleITKTargets
 
 file( GLOB __files
   ${CMAKE_SOURCE_DIR}/Code/BasicFilters/include/*.h
-  ${CMAKE_SOURCE_DIR}/Code/BasicFilters/include/*.txx
+  ${CMAKE_SOURCE_DIR}/Code/BasicFilters/include/*.hxx
   ${CMAKE_SOURCE_DIR}/Code/Common/include/*.h
-  ${CMAKE_SOURCE_DIR}/Code/Common/include/*.txx
+  ${CMAKE_SOURCE_DIR}/Code/Common/include/*.hxx
   ${CMAKE_SOURCE_DIR}/Code/IO/include/*.h
-  ${CMAKE_SOURCE_DIR}/Code/IO/include/*.txx
+  ${CMAKE_SOURCE_DIR}/Code/IO/include/*.hxx
   ${CMAKE_SOURCE_DIR}/Code/Registration/include/*.h
-  ${CMAKE_SOURCE_DIR}/Code/Registration/include/*.txx
+  ${CMAKE_SOURCE_DIR}/Code/Registration/include/*.hxx
   )
 
 set(__files ${__files}
