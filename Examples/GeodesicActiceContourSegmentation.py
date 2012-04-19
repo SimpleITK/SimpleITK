@@ -71,4 +71,5 @@ print( "Elapsed Iterations: ", geodesicActiveContour.GetElapsedIterations() )
 
 contour = sitk.BinaryContour( sitk.BinaryThreshold( levelset, -1000, 0 ) )
 
-sitk.Show( sitk.LabelOverlay( image, contour ) )
+if ( not os.environ.has_key("SITK_NOSHOW") ):
+    sitk.Show( sitk.LabelOverlay( image, contour ), "Levelset Countour" )
