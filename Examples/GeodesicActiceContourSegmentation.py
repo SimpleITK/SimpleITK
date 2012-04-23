@@ -17,6 +17,7 @@
 #=========================================================================
 
 import SimpleITK as sitk
+import os
 import sys
 
 if len ( sys.argv ) < 8:
