@@ -70,11 +70,13 @@
   "measurements" : [ {
     "name" : "ThresholdingFailed",
     "type" : "bool",
-    "default" : "false"
+    "default" : "false",
+    "briefdescriptionGet" : ""
   }, {
     "name" : "IsolatedValue",
     "type" : "double",
-    "default" : "0.0"
+    "default" : "0.0",
+    "briefdescriptionGet" : ""
   } ],
   "tests" : [ {
     "tag" : "cthead",
@@ -86,7 +88,7 @@
       "type" : "uint32_t",
       "dim_vec" : 1,
       "value" : "{150,150}",
-      "tcl_value" : "[list 150150]",
+      "tcl_value" : "[list 150 150]",
       "python_value" : "[ 150,150 ]",
       "ruby_value" : "[ 150, 150  ]",
       "R_value" : "c( 150, 150 )"
