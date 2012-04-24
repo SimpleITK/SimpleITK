@@ -18,31 +18,38 @@
 #ifndef __sitkBoundaryConditions_h
 #define __sitkBoundaryConditions_h
 
+#include <memory>
 #include <itkConstantBoundaryCondition.h>
 #include <itkPeriodicBoundaryCondition.h>
 #include <itkZeroFluxNeumannBoundaryCondition.h>
 
-
 namespace itk {
   namespace simple {
 
+  /** Creates a boundary condition object from an enum. Uses an
+   * auto_ptr for dynamically allocated object, to enforce the user to
+   * take ownership of the object.
+   *
+   */
   template< class TFilter, class TInternalFilter >
-  ImageBoundaryCondition< typename TInternalFilter::InputImageType > *
+  std::auto_ptr<ImageBoundaryCondition< typename TInternalFilter::InputImageType > >
   CreateNewBoundaryConditionInstance(typename TFilter::BoundaryConditionType bc)
-    {
+  {
+    typedef std::auto_ptr<ImageBoundaryCondition< typename TInternalFilter::InputImageType > > PointerType;
+
     switch ( bc )
       {
       case TFilter::ZERO_PAD:
-        return new ConstantBoundaryCondition< typename TInternalFilter::InputImageType >();
+        return PointerType(new ConstantBoundaryCondition< typename TInternalFilter::InputImageType >() );
         break;
 
       case TFilter::PERIODIC_PAD:
-        return new PeriodicBoundaryCondition< typename TInternalFilter::InputImageType >();
+        return PointerType( new PeriodicBoundaryCondition< typename TInternalFilter::InputImageType >() );
         break;
 
       case TFilter::ZERO_FLUX_NEUMANN_PAD:
       default:
-        return new ZeroFluxNeumannBoundaryCondition< typename TInternalFilter::InputImageType >();
+        return PointerType( new ZeroFluxNeumannBoundaryCondition< typename TInternalFilter::InputImageType >() );
         break;
       }
     }
