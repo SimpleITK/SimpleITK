@@ -319,6 +319,67 @@ protected:
 };
 
 
+template< typename TMemberFunctionPointer, typename TKey>
+class MemberFunctionFactoryBase<TMemberFunctionPointer, TKey, 4> :
+    protected NonCopyable
+{
+protected:
+
+  typedef TMemberFunctionPointer                                               MemberFunctionType;
+  typedef typename ::detail::FunctionTraits<MemberFunctionType>::ResultType    MemberFunctionResultType;
+  typedef typename ::detail::FunctionTraits<MemberFunctionType>::Argument0Type MemberFunctionArgument0Type;
+  typedef typename ::detail::FunctionTraits<MemberFunctionType>::Argument1Type MemberFunctionArgument1Type;
+  typedef typename ::detail::FunctionTraits<MemberFunctionType>::Argument2Type MemberFunctionArgument2Type;
+  typedef typename ::detail::FunctionTraits<MemberFunctionType>::Argument3Type MemberFunctionArgument3Type;
+  typedef typename ::detail::FunctionTraits<MemberFunctionType>::ClassType     ObjectType;
+
+
+  MemberFunctionFactoryBase( void )
+#if defined SITK_HAS_UNORDERED_MAP
+    :  m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
+       m_PFunction2( typelist::Length<InstantiatedPixelIDTypeList>::Result )
+#endif
+    { }
+
+public:
+
+  /**  the pointer MemberFunctionType redefined ad a tr1::function
+   * object */
+  typedef std::tr1::function< MemberFunctionResultType ( MemberFunctionArgument3Type, MemberFunctionArgument2Type, MemberFunctionArgument1Type,  MemberFunctionArgument0Type) > FunctionObjectType;
+
+
+protected:
+
+  typedef TKey KeyType;
+
+  /** A function which binds the objectPointer to the calling object
+   *  argument in the member function pointer, and returns a function
+   *  object
+   */
+  static FunctionObjectType  BindObject( MemberFunctionType pfunc, ObjectType *objectPointer)
+    {
+      // needed for _1 place holder
+      using namespace std::tr1::placeholders;
+
+      // this is really only needed because std::bind1st does not work
+      // with tr1::function... that is with tr1::bind, we need to
+      // specify the other arguments, and can't just bind the first
+      return std::tr1::bind( pfunc, objectPointer, _1, _2, _3, _4 );
+    }
+
+
+  // maps of Keys to pointers to member functions
+#if defined SITK_HAS_UNORDERED_MAP
+  std::tr1::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
+  std::tr1::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
+#else
+  std::map<TKey, FunctionObjectType> m_PFunction3;
+  std::map<TKey, FunctionObjectType> m_PFunction2;
+#endif
+
+};
+
+
 } // end namespace detail
 } // end namespace simple
 } // end namespace itk
