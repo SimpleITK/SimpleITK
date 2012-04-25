@@ -75,7 +75,7 @@ namespace itk
   typename EnableIf<IsBasic<TImageType>::Value>::Type
   Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int numberOfComponents )
   {
-    if ( numberOfComponents != 1 )
+    if ( numberOfComponents != 1  && numberOfComponents != 0 )
       {
       sitkExceptionMacro( "Specified number of components as " << numberOfComponents
                           << " but did not specify pixelID as a vector type!" );
@@ -110,7 +110,7 @@ namespace itk
   {
     if ( numberOfComponents == 0 )
       {
-      sitkExceptionMacro( "Specified number of components as zero!" );
+      numberOfComponents = TImageType::ImageDimension;
       }
 
     typename TImageType::IndexType  index;
@@ -133,7 +133,6 @@ namespace itk
     zero.SetSize( numberOfComponents );
     zero.Fill ( itk::NumericTraits<typename TImageType::PixelType::ValueType>::Zero );
 
-
     typename TImageType::Pointer image = TImageType::New();
     image->SetRegions ( region );
     image->SetVectorLength( numberOfComponents );
@@ -150,7 +149,7 @@ namespace itk
   typename EnableIf<IsLabel<TImageType>::Value>::Type
   Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int numberOfComponents )
   {
-    if ( numberOfComponents != 1 )
+    if ( numberOfComponents != 1 && numberOfComponents != 0 )
       {
       sitkExceptionMacro( "Specified number of components as " << numberOfComponents
                           << " but did not specify pixelID as a vector type!" );
@@ -221,7 +220,7 @@ namespace itk
   Image::Image( )
     : m_PimpleImage( NULL )
   {
-    Allocate ( 0, 0, 0, sitkUInt8 );
+    Allocate ( 0, 0, 0, sitkUInt8, 1 );
   }
 
   Image::Image( const Image &img )
@@ -242,16 +241,17 @@ namespace itk
     Image::Image( unsigned int Width, unsigned int Height, PixelIDValueEnum ValueEnum )
       : m_PimpleImage( NULL )
     {
-      Allocate ( Width, Height, 0, ValueEnum, 1 );
+      Allocate ( Width, Height, 0, ValueEnum, 0 );
     }
 
     Image::Image( unsigned int Width, unsigned int Height, unsigned int Depth, PixelIDValueEnum ValueEnum )
       : m_PimpleImage( NULL )
     {
-      Allocate ( Width, Height, Depth, ValueEnum, 1 );
+      Allocate ( Width, Height, Depth, ValueEnum, 0 );
     }
 
     Image::Image( const std::vector< unsigned int > &size, PixelIDValueEnum ValueEnum, unsigned int numberOfComponents )
+      : m_PimpleImage( NULL )
     {
       if ( size.size() == 2 )
         {
