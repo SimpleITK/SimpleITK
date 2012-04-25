@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 #=========================================================================
 #
 #  Copyright Insight Software Consortium
@@ -15,10 +16,10 @@
 #  limitations under the License.
 #
 #=========================================================================
-#!/usr/bin/env python
 
 import SimpleITK as sitk
 import sys
+import os
 
 if len ( sys.argv ) < 2:
     print "Usage: N4BiasFieldCorrection inputImage " + \
@@ -58,3 +59,7 @@ if len ( sys.argv ) > 5:
 output = corrector.Execute( inputImage, maskImage )    
 
 sitk.WriteImage( output, sys.argv[2] )
+
+
+if ( not os.environ.has_key("SITK_NOSHOW") ):
+    sitk.Show( output, "N4 Corrected" )

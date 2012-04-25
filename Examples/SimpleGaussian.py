@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 #=========================================================================
 #
 #  Copyright Insight Software Consortium
@@ -18,6 +19,7 @@
 
 import SimpleITK as sitk
 import sys
+import os
 
 if len ( sys.argv ) < 4:
     print "Usage: SimpleGaussian <input> <sigma> <output>";
@@ -41,3 +43,7 @@ image = caster.Execute( image )
 writer = sitk.ImageFileWriter()
 writer.SetFileName ( sys.argv[3] )
 writer.Execute ( image );
+
+
+if ( not os.environ.has_key("SITK_NOSHOW") ):
+    sitk.Show( image, "Simple Gaussian" )

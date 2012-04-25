@@ -464,6 +464,7 @@ if ( WRAP_PYTHON )
 
     add_test(NAME Python.${name}
       COMMAND "${ITK_TEST_DRIVER}"
+      --add-before-env SITK_NOSHOW "YES"
       ${command}
       ${ARGN}
       )
@@ -512,12 +513,13 @@ if ( WRAP_PYTHON )
 
  add_python_test( Example.N4BiasFieldCorrection
     "${SimpleITK_SOURCE_DIR}/Examples/N4BiasFieldCorrection.py"
-    "${TEST_HARNESS_DATA_DIRECTORY}/Input/cthead1.png"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/OAS1_0001_MR1_mpr-1_anon.nrrd"
     "${TEST_HARNESS_TEMP_DIRECTORY}/Python.Example.N4BiasFieldCorrection.nrrd"
-    "1"
-    "${TEST_HARNESS_DATA_DIRECTORY}/Input/2th_cthead1.mha"
-    "20"
-    "2" )
+    "1" )
+
+  add_python_test( Example.ReadAndShow
+    "${SimpleITK_SOURCE_DIR}/Examples/ReadAndShow.py"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/VM1111Shrink-RGB.png" )
 
   add_python_test( Example.GeodesicActiceContourSegmentation
     "${SimpleITK_SOURCE_DIR}/Examples/GeodesicActiceContourSegmentation.py"

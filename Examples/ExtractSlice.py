@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 #=========================================================================
 #
 #  Copyright Insight Software Consortium
@@ -15,10 +16,10 @@
 #  limitations under the License.
 #
 #=========================================================================
-#!/usr/bin/env python
 
 import SimpleITK as sitk
 import sys
+import os
 
 if len ( sys.argv ) != 4:
     print "Usage: %s inputImage sliceNumber outputImage" % ( sys.argv[0] )
@@ -38,3 +39,7 @@ Extractor.SetSize( size )
 Extractor.SetIndex( index )
 
 sitk.WriteImage( Extractor.Execute( inputImage ), str(sys.argv[3]) )
+
+
+if ( not os.environ.has_key("SITK_NOSHOW") ):
+    sitk.Show( Extractor.Execute( inputImage ) )
