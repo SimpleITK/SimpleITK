@@ -225,6 +225,41 @@ TEST_F(Image,Constructors) {
   EXPECT_EQ ( 0u, image.GetDepth() );
   EXPECT_EQ ( 1u, image.GetNumberOfComponentsPerPixel() );
 
+  // Test the constructors for vector images
+  std::vector<unsigned int> s2d(2, 10);
+  std::vector<unsigned int> s3d(3, 5);
+
+  image = itk::simple::Image( s2d, itk::simple::sitkVectorUInt8 );
+
+  EXPECT_EQ ( image.GetDimension(), 2u );
+  EXPECT_EQ ( 2u, image.GetNumberOfComponentsPerPixel() );
+  image = itk::simple::Image( s3d, itk::simple::sitkVectorFloat32 );
+  EXPECT_EQ ( image.GetDimension(), 3u );
+  EXPECT_EQ ( 3u, image.GetNumberOfComponentsPerPixel() );
+
+  image = itk::simple::Image( s2d, itk::simple::sitkVectorInt16, 5 );
+  EXPECT_EQ ( image.GetDimension(), 2u );
+  EXPECT_EQ ( 5u, image.GetNumberOfComponentsPerPixel() );
+  image = itk::simple::Image( s3d, itk::simple::sitkVectorFloat64, 10 );
+  EXPECT_EQ ( image.GetDimension(), 3u );
+  EXPECT_EQ ( 10u, image.GetNumberOfComponentsPerPixel() );
+
+
+  // check for error when incorrect number of dimensions are requested
+  std::vector<unsigned int> s1d(1, 100);
+  std::vector<unsigned int> s4d(4, 100);
+  ASSERT_ANY_THROW( itk::simple::Image( s1d, itk::simple::sitkVectorFloat64 ) );
+  ASSERT_ANY_THROW( itk::simple::Image( s4d, itk::simple::sitkVectorFloat64 ) );
+
+  // check for error with bad pixelID
+  ASSERT_ANY_THROW( itk::simple::Image( s2d, itk::simple::sitkUnknown ) );
+  ASSERT_ANY_THROW( itk::simple::Image( s2d, itk::simple::PixelIDValueEnum(-100) ) );
+
+  // check for error when non-vector type requests components ( should
+  // this be an error or should we just be converted to a vector )
+  ASSERT_ANY_THROW( itk::simple::Image( s2d, itk::simple::sitkInt16, 10 ) );
+  ASSERT_ANY_THROW( itk::simple::Image( s2d, itk::simple::sitkLabelUInt8, 10 ) );
+
   // currently we don't have a good interface to check the values of
   // these images, let just construct these types need todo better
   // testing!
