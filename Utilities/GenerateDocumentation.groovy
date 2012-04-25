@@ -1,3 +1,4 @@
+#!/usr/bin/env groovy
 /*=========================================================================
 *
 *  Copyright Insight Software Consortium
@@ -15,7 +16,6 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#!/usr/bin/env groovy
 
 // Jackson is a JSON parser
 @Grab(group='org.codehaus.jackson', module='jackson-mapper-asl', version='1.8.0')
