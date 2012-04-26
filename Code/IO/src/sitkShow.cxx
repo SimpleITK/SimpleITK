@@ -122,7 +122,7 @@ namespace itk
   //
   static std::string UnquoteWord(std::string word)
     {
-    unsigned int l = word.length();
+    size_t l = word.length();
 
     if (l<2)
       {
@@ -359,9 +359,10 @@ namespace itk
   static void ExecuteShow( const std::vector<std::string> & cmdLine )
   {
 
-    // if debug
-    //std::copy( cmdLine.begin(), cmdLine.end(), std::ostream_iterator<std::string>( std::cout, "\n" ) );
-    //std::cout << std::endl;
+#ifndef NDEBUG
+    std::copy( cmdLine.begin(), cmdLine.end(), std::ostream_iterator<std::string>( std::cout, "\n" ) );
+    std::cout << std::endl;
+#endif
 
     std::vector<const char*> cmd( cmdLine.size() + 1, NULL );
 
