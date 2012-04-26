@@ -92,6 +92,7 @@ namespace simple
     Image( unsigned int width, unsigned int height, unsigned int depth, PixelIDValueEnum valueEnum );
     Image( const std::vector< unsigned int > &size, PixelIDValueEnum valueEnum, unsigned int numberOfComponents = 0 );
 
+
     template <typename TImageType>
     explicit Image( itk::SmartPointer<TImageType> image )
       : m_PimpleImage( NULL )
@@ -241,6 +242,10 @@ namespace simple
      * counted. Additionally, while this image is made unique before
      * returnign the pointer, additional copying and usage may
      * introduce unexpected aliasing.
+     *
+     * The correct method for the current pixel type of the image must
+     * be called or else an exception will be generated. For vector
+     * pixel types the type of the component of the vector must be called.
      *
      * \sa Image::GetPixelIDValue
      * @{
