@@ -52,8 +52,7 @@
     "settings" : [ {
       "parameter" : "Normalize",
       "value" : "true",
-      "python_value" : "True",
-      "R_value" : "TRUE"
+      "python_value" : "True"
     } ],
     "tolerance" : "0.0001"
   } ],
