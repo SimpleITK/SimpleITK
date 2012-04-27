@@ -56,7 +56,7 @@
       "parameter" : "ThresholdAtMeanIntensity",
       "value" : "false",
       "python_value" : "False",
-      "R_value" : "FALSE"
+      "r_value" : "FALSE"
     } ],
     "md5hash" : "a963bd6a755b853103a2d195e01a50d3"
   } ],

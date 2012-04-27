@@ -46,8 +46,7 @@
       "value" : "{10, 10}",
       "tcl_value" : "[list 10 10]",
       "python_value" : "[ 10, 10 ]",
-      "ruby_value" : "[ 10, 10 ]",
-      "R_value" : "c( 10, 10) "
+      "ruby_value" : "[ 10, 10 ]"
     }, {
       "parameter" : "Index",
       "type" : "int",

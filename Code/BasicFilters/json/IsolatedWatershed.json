@@ -89,7 +89,7 @@
       "tcl_value" : "[list 120 99]",
       "python_value" : "[ 120, 99 ]",
       "ruby_value" : "[ 120, 99 ]",
-      "R_value" : "c( 120, 99 )"
+      "R_value" : "[ 120, 99 ]"
     }, {
       "parameter" : "Threshold",
       "value" : "0.001"
