@@ -397,6 +397,9 @@ function expand(str, ...)
 
   function estring(str)
     local b,e,i
+    -- print ( "---------" )
+    -- print ( "estring: starting with " .. str );
+    -- print ( "---------" )
     b,i = strfind(str, '%$.')
     if not b then return str end
 
@@ -404,6 +407,8 @@ function expand(str, ...)
     repeat
       b,e = strfind(str, '^%b{}', i)
       if b then
+        -- Found dollar substitution ${dosomething}
+        -- print ( '\testring: matched ^%b{} to "' .. string.sub ( str, b, e ) .. '"  calling evaluate recursively \n' )
         push(R, strsub(str, pos, b-2))
         push(R, evar(strsub(str, b+1, e-1)))
         i = e+1
@@ -411,17 +416,16 @@ function expand(str, ...)
       else
         b,e = strfind(str, '^%b()', i)
         if b then
+          -- Found dollar command $(dosomething)
+          -- print ( '\testring: matched ^%b() to "' .. string.sub ( str, b, e ) .. '"  calling evaluate recursively \n' )
           push(R, strsub(str, pos, b-2))
           push(R, evar(strsub(str, b+1, e-1)))
           i = e+1
           pos = i
-        elseif strfind(str, '^%a', i) then
-          push(R, strsub(str, pos, i-2))
-          push(R, evar(strsub(str, i, i)))
-          i = i+1
-          pos = i
         elseif strfind(str, '^%$', i) then
-          push(R, strsub(str, pos+1, i))
+          -- Found double dollar ($$)
+          -- print ( '\testring: matched ^%$ @ ' .. i .. ' to "' .. strsub ( str, pos ) .. '" returning ' .. strsub(str,pos,i-1) .. '\n');
+          push(R, strsub(str, pos, i-1))
           i = i+1
           pos = i
         end
