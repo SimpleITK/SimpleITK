@@ -4,7 +4,7 @@
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "doc" : "",
-  "pixel_types" : "BasicPixelIDTypeList",
+  "pixel_types" : "typelist::Append<BasicPixelIDTypeList, VectorPixelIDTypeList>::Type",
   "filter_type" : "itk::ResampleImageFilter<InputImageType, OutputImageType, double>",
   "members" : [ {
     "name" : "Size",
@@ -84,6 +84,30 @@
       "python_value" : "[ 64, 64, 64]",
       "ruby_value" : "[ 64, 64, 64]",
       "R_value" : "c( 64, 64, 64)"
+    } ],
+    "tolerance" : "0.001"
+  }, {
+    "tag" : "vector",
+    "description" : "resample a vector image",
+    "inputA" : "Input/VM1111Shrink-RGBFloat.nrrd",
+    "settings" : [ {
+      "parameter" : "Size",
+      "type" : "uint32_t",
+      "dim_vec" : 1,
+      "value" : "{512, 512}",
+      "tcl_value" : "[list 512 512 ]",
+      "python_value" : "[ 512, 512]",
+      "ruby_value" : "[ 512, 512]",
+      "R_value" : "c( 512, 512 )"
+    }, {
+      "parameter" : "OutputSpacing",
+      "type" : "double",
+      "dim_vec" : 1,
+      "value" : "{0.73, 0.73}",
+      "tcl_value" : "[list 0.73 0.73 ]",
+      "python_value" : "[ 0.73, 0.73]",
+      "ruby_value" : "[ 0.73, 0.73]",
+      "R_value" : "c( 0.73, 0.73 )"
     } ],
     "tolerance" : "0.001"
   } ],
