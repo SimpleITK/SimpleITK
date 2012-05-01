@@ -69,8 +69,8 @@ endif()
 # SimpleITK options
 #------------------------------------------------------------------------------
 
+option( BUILD_EXAMPLES "Enable Building of the SimpleITK Examples as a separate project." ON )
 
-#-----------------------------------------------------------------------------
 # Set a default build type if none was specified
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   message(STATUS "Setting build type to 'Release' as none was specified.")
@@ -79,12 +79,7 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 endif()
 
-
-
-
-#-----------------------------------------------------------------------------
 # Default to build shared libraries off
-#------------------------------------------------------------------------------
 option(BUILD_SHARED_LIBS "Build SimpleITK ITK with shared libraries. This does not effect wrapped languages." OFF)
 
 # as this option does not robustly work across platforms it will be marked as advanced
@@ -250,7 +245,7 @@ list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES ITK)
 #------------------------------------------------------------------------------
 # List of external projects
 #------------------------------------------------------------------------------
-set(external_project_list  ITK swig)
+set(external_project_list  ITK swig SimpleITKExamples)
 
 #-----------------------------------------------------------------------------
 # Dump external project dependencies
@@ -315,3 +310,13 @@ ExternalProject_Add_Step(${proj} forcebuild
   DEPENDERS build
   ALWAYS 1
 )
+
+
+#------------------------------------------------------------------------------
+# SimpleITKExamples
+#------------------------------------------------------------------------------
+
+# We build SimpleITKExamples as an enternal project to verify
+# installation of SimpleITK
+
+include(External_SimpleITKExamples)
