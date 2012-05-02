@@ -213,44 +213,6 @@ if( CXX_HAS_fPIC )
   endif()
 endif( )
 
-
-#------------------------------------------------------------------------------
-# Configure SimpleITKConfig.cmake for the build tree.
-set(SimpleITKConfig_TREE "build")
-set(SimpleITKConfig_CODE "")
-set(SimpleITKConfig_INCLUDE_DIRS ${SimpleITK_INCLUDE_DIRS})
-
-configure_file(SimpleITKConfig.cmake.in
-               SimpleITKConfig.cmake @ONLY IMMEDIATE)
-
-#------------------------------------------------------------------------------
-# Configure SimpleITKConfig.cmake for the install tree.
-set(SimpleITKConfig_TREE "install")
-
-set(SimpleITKConfig_CODE "set(SimpleITK_INSTALL_PREFIX \"\${_SimpleITKConfig_DIR}\")")
-# Construct the proper number of get_filename_component(... PATH)
-# calls to compute the installation prefix.
-string(REGEX REPLACE "/" ";" _count "${SimpleITK_INSTALL_PACKAGE_DIR}")
-foreach(p ${_count})
-  set(SimpleITKConfig_CODE "${SimpleITKConfig_CODE}
-get_filename_component(SimpleITK_INSTALL_PREFIX \"\${SimpleITK_INSTALL_PREFIX}\" PATH)")
-endforeach(p)
-set(SimpleITKConfig_CODE "${SimpleITKConfig_CODE}\n")
-
-set(SimpleITKConfig_INCLUDE_DIRS
-  "\${SimpleITK_INSTALL_PREFIX}/${SimpleITK_INSTALL_INCLUDE_DIR}")
-
-configure_file(SimpleITKConfig.cmake.in
-               CMakeFiles/SimpleITKConfig.cmake @ONLY IMMEDIATE)
-
-#------------------------------------------------------------------------------
-# Help other projects use SimpleITK
-configure_file(UseSimpleITK.cmake.in
-               UseSimpleITK.cmake COPYONLY IMMEDIATE)
-
-configure_file(SimpleITKConfigVersion.cmake.in
-               SimpleITKConfigVersion.cmake @ONLY IMMEDIATE)
-
 #------------------------------------------------------------------------------
 # Set up Documentation
 include(${SimpleITK_SOURCE_DIR}/Utilities/Doxygen/Doxygen.cmake)
@@ -301,6 +263,45 @@ option ( BUILD_DOCUMENTS "Build the Documentation subdirectory" OFF )
 if ( BUILD_DOCUMENTS )
   add_subdirectory ( Documentation )
 endif()
+
+
+#------------------------------------------------------------------------------
+# Configure SimpleITKConfig.cmake for the build tree.
+set(SimpleITKConfig_TREE "build")
+set(SimpleITKConfig_CODE "")
+set(SimpleITKConfig_INCLUDE_DIRS ${SimpleITK_INCLUDE_DIRS})
+
+configure_file(SimpleITKConfig.cmake.in
+               SimpleITKConfig.cmake @ONLY IMMEDIATE)
+
+#------------------------------------------------------------------------------
+# Configure SimpleITKConfig.cmake for the install tree.
+set(SimpleITKConfig_TREE "install")
+
+set(SimpleITKConfig_CODE "set(SimpleITK_INSTALL_PREFIX \"\${_SimpleITKConfig_DIR}\")")
+# Construct the proper number of get_filename_component(... PATH)
+# calls to compute the installation prefix.
+string(REGEX REPLACE "/" ";" _count "${SimpleITK_INSTALL_PACKAGE_DIR}")
+foreach(p ${_count})
+  set(SimpleITKConfig_CODE "${SimpleITKConfig_CODE}
+get_filename_component(SimpleITK_INSTALL_PREFIX \"\${SimpleITK_INSTALL_PREFIX}\" PATH)")
+endforeach(p)
+set(SimpleITKConfig_CODE "${SimpleITKConfig_CODE}\n")
+
+set(SimpleITKConfig_INCLUDE_DIRS
+  "\${SimpleITK_INSTALL_PREFIX}/${SimpleITK_INSTALL_INCLUDE_DIR}")
+
+configure_file(SimpleITKConfig.cmake.in
+               CMakeFiles/SimpleITKConfig.cmake @ONLY IMMEDIATE)
+
+#------------------------------------------------------------------------------
+# Help other projects use SimpleITK
+configure_file(UseSimpleITK.cmake.in
+               UseSimpleITK.cmake COPYONLY IMMEDIATE)
+
+configure_file(SimpleITKConfigVersion.cmake.in
+               SimpleITKConfigVersion.cmake @ONLY IMMEDIATE)
+
 
 #------------------------------------------------------------------------------
 # INSTALLATION
