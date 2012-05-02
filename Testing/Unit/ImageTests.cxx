@@ -454,6 +454,9 @@ TEST_F(Image,Operators)
   sitk::Image imgB = *floatImage;
   sitk::Image imgC = *floatImage;
 
+  itk::Index<3> idx;
+  idx.Fill( 0 );
+
   std::cout << "Testing Arithmetic operators" << std::endl;
   imgA += 1; // all 1s
   imgB = imgA;
@@ -464,7 +467,7 @@ TEST_F(Image,Operators)
   // 1 = 2 - 1
   imgA = imgC - imgA;
 
-  float v =  dynamic_cast<itk::Image<float,3>*>( imgA.GetITKBase() )->GetPixel( itk::Index<3>());
+  float v =  dynamic_cast<itk::Image<float,3>*>( imgA.GetITKBase() )->GetPixel( idx);
   EXPECT_EQ( v, 1 ) << "value check 1";
 
   // 4 = 2 * 2
@@ -479,11 +482,11 @@ TEST_F(Image,Operators)
   // 20 = .4 * 50;
   imgA = imgC * 50;
 
-  v =  dynamic_cast<itk::Image<float,3>*>( imgA.GetITKBase() )->GetPixel( itk::Index<3>());
+  v =  dynamic_cast<itk::Image<float,3>*>( imgA.GetITKBase() )->GetPixel( idx);
   EXPECT_EQ( v, 20 ) << "value check 2";
 
   // original value should have never changed
-  v =  dynamic_cast<itk::Image<float,3>*>( floatImage->GetITKBase() )->GetPixel( itk::Index<3>());
+  v =  dynamic_cast<itk::Image<float,3>*>( floatImage->GetITKBase() )->GetPixel( idx);
   EXPECT_EQ( v, 0 ) << "value check 3";
 
   // 0 = 20 + -20
@@ -502,7 +505,7 @@ TEST_F(Image,Operators)
   imgA = ~~*shortImage;
   imgB = ~imgA;
 
-  v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetITKBase() )->GetPixel( itk::Index<3>());
+  v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetITKBase() )->GetPixel( idx);
   EXPECT_EQ( v, 0 );
 
   // 0 = 0 & 1
@@ -517,9 +520,9 @@ TEST_F(Image,Operators)
   // 0 = 1 ^ 1
   imgA = imgB ^ imgA;
 
-  v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetITKBase() )->GetPixel( itk::Index<3>());
+  v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetITKBase() )->GetPixel( idx);
   EXPECT_EQ( v, 0 ) << "value check 4";
-  v =  dynamic_cast<itk::Image<short,3>*>( imgB.GetITKBase() )->GetPixel( itk::Index<3>());
+  v =  dynamic_cast<itk::Image<short,3>*>( imgB.GetITKBase() )->GetPixel( idx);
   EXPECT_EQ( v, 1 ) << "value check 5";
 
   std::cout << "Testing Compoung assignment operators" << std::endl;
@@ -546,7 +549,7 @@ TEST_F(Image,Operators)
   // 8 = 16 / 2
   imgA /= 2;
 
-  v =  dynamic_cast<itk::Image<float,3>*>( imgA.GetITKBase() )->GetPixel( itk::Index<3>());
+  v =  dynamic_cast<itk::Image<float,3>*>( imgA.GetITKBase() )->GetPixel( idx);
   EXPECT_EQ( v, 8 ) << "value check 6";
 
   // 1 = 8 / 8
@@ -557,7 +560,7 @@ TEST_F(Image,Operators)
   // 1 = 1  & 1
   imgA &= imgA;
 
-  v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetITKBase() )->GetPixel( itk::Index<3>());
+  v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetITKBase() )->GetPixel( idx);
   EXPECT_EQ( v, 1 ) << "value check 7";
 
   // 1 = 1 | 0
@@ -567,7 +570,7 @@ TEST_F(Image,Operators)
   imgA ^= *shortImage;
 
 
-  v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetITKBase() )->GetPixel( itk::Index<3>());
+  v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetITKBase() )->GetPixel( idx);
   EXPECT_EQ( v, 1 ) << "value check 8";
 }
 
