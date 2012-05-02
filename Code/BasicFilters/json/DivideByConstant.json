@@ -6,47 +6,68 @@
   "number_of_inputs" : 1,
   "doc" : "Divide an image by a constant. The result is cast to the type of the input",
   "pixel_types" : "NonLabelPixelIDTypeList",
-  "include_files" : [ "sitkConditional.h", "sitkPixelIDTokens.h" ],
+  "include_files" : [
+    "sitkConditional.h",
+    "sitkPixelIDTokens.h"
+  ],
   "filter_type" : "itk::DivideImageFilter<InputImageType, itk::Image< typename itk::simple::Conditional< std::tr1::is_same<typename InputImageType::PixelType, std::complex<float> >::value, float, double>::Type, InputImageType::ImageDimension>, InputImageType>",
-  "members" : [ {
-    "name" : "Constant",
-    "type" : "double",
-    "default" : 1,
-    "custom_itk_cast" : "filter->SetConstant2( m_Constant );",
-    "doc" : "The constant by which to divide the input image",
-    "briefdescriptionSet" : "",
-    "detaileddescriptionSet" : "Set the constant value that will be used for dividing all the image pixels\n",
-    "briefdescriptionGet" : "",
-    "detaileddescriptionGet" : ""
-  } ],
-  "tests" : [ {
-    "tag" : "2d",
-    "description" : "2D",
-    "inputA" : "Input/STAPLE1.png",
-    "settings" : [ {
-      "parameter" : "Constant",
-      "value" : 1
-    } ],
-    "md5hash" : "095f00a68a84df4396914fa758f34dcc"
-  }, {
-    "tag" : "3d",
-    "description" : "3D",
-    "inputA" : "Input/RA-Short.nrrd",
-    "settings" : [ {
-      "parameter" : "Constant",
-      "value" : 1.1
-    } ],
-    "md5hash" : "cf4013912737472a277e080cc1654c22"
-  }, {
-    "tag" : "2d_rgb",
-    "description" : "3D-RGB",
-    "inputA" : "Input/VM1111Shrink-RGBFloat.nrrd",
-    "settings" : [ {
-      "parameter" : "Constant",
-      "value" : 255
-    } ],
-    "md5hash" : "c0a4d7ab0b2fd17cce2de4ecd6f2bffe"
-  } ],
+  "members" : [
+    {
+      "name" : "Constant",
+      "type" : "double",
+      "default" : 1,
+      "custom_itk_cast" : "filter->SetConstant2( m_Constant );",
+      "doc" : "The constant by which to divide the input image",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the constant value that will be used for dividing all the image pixels\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "2d",
+      "description" : "2D",
+      "settings" : [
+        {
+          "parameter" : "Constant",
+          "value" : 1
+        }
+      ],
+      "md5hash" : "095f00a68a84df4396914fa758f34dcc",
+      "inputs" : [
+        "Input/STAPLE1.png"
+      ]
+    },
+    {
+      "tag" : "3d",
+      "description" : "3D",
+      "settings" : [
+        {
+          "parameter" : "Constant",
+          "value" : 1.1
+        }
+      ],
+      "md5hash" : "cf4013912737472a277e080cc1654c22",
+      "inputs" : [
+        "Input/RA-Short.nrrd"
+      ]
+    },
+    {
+      "tag" : "2d_rgb",
+      "description" : "3D-RGB",
+      "settings" : [
+        {
+          "parameter" : "Constant",
+          "value" : 255
+        }
+      ],
+      "md5hash" : "c0a4d7ab0b2fd17cce2de4ecd6f2bffe",
+      "inputs" : [
+        "Input/VM1111Shrink-RGBFloat.nrrd"
+      ]
+    }
+  ],
   "briefdescription" : "Divide input pixels by a constant.\n",
   "detaileddescription" : "This filter is templated over the input image type and the output image type.\n\\author Tom Vercauteren, INRIA & Mauna Kea Technologies\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/510\n\\see  UnaryFunctorImageFilter\n\n"
 }
