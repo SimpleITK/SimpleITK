@@ -5,7 +5,7 @@
   "number_of_inputs" : 1,
   "doc" : "",
   "pixel_types" : "typelist::Append< SignedPixelIDTypeList, ComplexPixelIDTypeList >::Type",
-  "filter_type" : "itk::UnaryFunctorImageFilter< InputImageType, OutputImageType, itk::Functor::UnaryMinus<typename InputImageType::PixelType, typename OutputImageType::PixelType> >"
+  "filter_type" : "itk::UnaryFunctorImageFilter< InputImageType, OutputImageType, itk::Functor::UnaryMinus<typename InputImageType::PixelType, typename OutputImageType::PixelType> >",
   "vector_pixel_types_by_component" : "SignedVectorPixelIDTypeList",
   "members" : [ ],
   "tests" : [ {

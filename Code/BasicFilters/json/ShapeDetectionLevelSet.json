@@ -52,8 +52,8 @@
       "tolerance" : 10
     }, {
       "name" : "RMSChange",
-      "value" : .02,
-      "tolerance" : .002
+      "value" : 0.02,
+      "tolerance" : 0.002
     } ]
   } ],
   "briefdescription" : "Segments structures in images based on a user supplied edge potential map.\n",

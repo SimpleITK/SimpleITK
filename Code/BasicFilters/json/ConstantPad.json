@@ -57,7 +57,7 @@
       "value" : "{3,6,9}",
       "tcl_value" : "[list 3 6 9]",
       "python_value" : "[ 3, 6, 9 ]",
-      "ruby_value" : "[ 3, 6, 9 ]"
+      "ruby_value" : "[ 3, 6, 9 ]",
       "R_value" : "c( 3, 6, 9 )"
     } ]
   } ],
