@@ -37,7 +37,7 @@ namespace simple
  * convert between different image types.
  */
 class SITKBasicFilters0_EXPORT CastImageFilter
-  : public ImageFilter
+  : public ImageFilter<1>
 {
 public:
   typedef CastImageFilter      Self;

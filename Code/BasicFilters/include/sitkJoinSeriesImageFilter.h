@@ -52,7 +52,7 @@ namespace simple
  * http://public.kitware.com/pipermail/insight-users/2004-February/006542.html
  */
 class SITKBasicFilters0_EXPORT JoinSeriesImageFilter
-  : public ImageFilter
+  : public ImageFilter<1>
 {
 public:
   typedef JoinSeriesImageFilter      Self;

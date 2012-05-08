@@ -37,7 +37,6 @@ if { [llength [set argv]] < ( [set inputs] + 1 ) } {
 }
 set tag [lindex [set argv] 0]
 set ValidTags ""
-ImageFileReader reader
 ImageFileWriter writer
 ${name}ImageFilter filter
 
@@ -47,7 +46,7 @@ $(if #tests == 0 then
 
 $(foreach tests
 lappend ValidTags "${tag}"
-if { [set tag] == "${tag}" } { 
+if { [set tag] == "${tag}" } {
 
 $(when settings
 $(foreach settings
@@ -68,21 +67,28 @@ OUT=[[
   filter Set${parameter} $(if tcl_value then OUT='${tcl_value}' else OUT='${value}'end)]]
 end)
 ))
-  set inputA [[reader SetFileName [lindex [set argv] 1]] Execute]
+
+  set inputs {}
+
+  for {set i 1} { $$i < $$argc-1 } {incr i } {
+      puts "reading [lindex $$argv $$i]"
+      lappend inputs [ ReadImage [lindex $$argv $$i] ]
+  }
+
 $(if inputA_cast then
 OUT=[[
-      set inputA [ Cast [set inputA] [set ${inputA_cast} ] ]
+      set inputs [lreplace $$inputs 0 0 [ Cast [lindex $$inputs 0] [set ${inputA_cast}] ] ]
      ]]
 end)
-  $(if inputB then
-  OUT="set inputB [[reader SetFileName [lindex [set argv] 2]] Execute]; \
-  set output [filter Execute [set inputA] [set inputB] ]"
-    else
-      OUT=[[
-  set output [filter Execute [set inputA] ]
-      ]]
-    end)
-  [writer SetFileName [lindex [set argv] end] ] Execute [set output]
+$(if inputB_cast then
+OUT=[[
+      set inputs [lreplace $$inputs 1 1 [ Cast [lindex $$inputs 1] [set $${inputB_cast}] ] ]
+     ]]
+end)
+
+  set output [eval filter Execute $$inputs ]
+
+  [writer SetFileName [lindex $$argv end] ] Execute $$output
   exit
 }
 )

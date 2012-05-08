@@ -32,13 +32,13 @@ class ${name}ImageFilterTest {
   public static void main( String argv[] ) {
 
     // Get the right number of inputs
-    int inputs = 1;
+    int num_inputs = 1;
     $(if number_of_inputs then
-        OUT=[[inputs = ${number_of_inputs};]]
+        OUT=[[num_inputs = ${number_of_inputs};]]
       end)
 
     // Check the command line arguments
-    if ( argv.length < inputs + 1 ) {
+    if ( argv.length < num_inputs + 1 ) {
       System.out.println("Usage: ${name} tag <input(s)> output");
       return;
     }
@@ -58,22 +58,32 @@ class ${name}ImageFilterTest {
     ]]
     end)
 
-    // Run each test
+    // Run each testzf
 $(foreach tests
     if (tag.equals( "${tag}" )) {
 
-      // Read image(s)
-      Image inputA = reader.setFileName( argv[1] ).execute();
 
-$(if inputA_cast then
-        OUT=[[
-       CastImageFilter caster = new CastImageFilter();
-       caster.setOutputPixelType( PixelIDValueEnum.${inputA_cast}.swigValue() );
-       inputA  = caster.execute( inputA );]]
+      Image[] inputs;
+      inputs = new Image[ ${#inputs} ];
+
+     // Read image(s)
+$(for i=0,#inputs-1 do
+OUT=OUT..[[
+      inputs[]]..i..[[] = reader.setFileName( argv[]]..i..[[+1] ).execute();
+]]
 end)
-$(if inputB then
-      OUT=[[
-      Image inputB = reader.setFileName ( argv[2] ).execute();]]
+
+      CastImageFilter caster = new CastImageFilter();
+$(if inputA_cast then
+ OUT=[[
+      caster.setOutputPixelType( PixelIDValueEnum.${inputA_cast}.swigValue() );
+      inputs[0]  = caster.execute( inputs[0] );
+]]
+end)$(if inputB_cast then
+ OUT=[[
+      caster.setOutputPixelType( PixelIDValueEnum.${inputB_cast}.swigValue() );
+      inputs[1]  = caster.execute( inputs[1] );
+]]
 end)
 
       $(when settings
@@ -84,7 +94,7 @@ $(if parameter == "SeedList" then
       $(for i=1,#value do OUT=OUT .. "{\
         int v[] = " .. value[i] .. ";\
         VectorUInt32 idx = new VectorUInt32();\
-        for (int i = 0; i < inputA.getDimension(); i++) {\
+        for (int i = 0; i < inputs[0].getDimension(); i++) {\
           idx.push_back(v[i]);\
         }\
         filter.addSeed(idx);\
@@ -95,7 +105,7 @@ elseif parameter == "TrialPoints" then
       $(for i=1,#value do OUT=OUT .. "{\
         int v[] = " .. value[i] .. ";\
         VectorUInt32 idx = new VectorUInt32();\
-        for (int i = 0; i < inputA.getDimension(); i++) {\
+        for (int i = 0; i < inputs[0].getDimension(); i++) {\
           idx.push_back(v[i]);\
         }\
         filter.addTrialPoint(idx);\
@@ -172,13 +182,7 @@ end)
 )
 
       // Run the filter
-$(if inputB then
-      OUT=[[
-      Image output = filter.execute ( inputA, inputB );]]
-else
-      OUT=[[
-      Image output = filter.execute ( inputA );]]
-end)
+      Image output = filter.execute ( $(if #inputs > 0 then OUT=[[inputs[0] ]] end)$(for inum=1,#inputs-1 do OUT=OUT..", inputs["..inum.."]" end) );
 
       // Write output
       writer.setFileName( argv[argv.length - 1] ).execute( output );

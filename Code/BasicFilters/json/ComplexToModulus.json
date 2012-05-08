@@ -6,14 +6,18 @@
   "doc" : "Some global documentation",
   "pixel_types" : "ComplexPixelIDTypeList",
   "output_pixel_type" : "typename InputImageType::PixelType::value_type",
-  "members" : [ ],
-  "tests" : [ {
-    "tag" : "defaults",
-    "description" : "Test Complex to modulus",
-    "inputA" : "Input/RA-FFT-Complex.nrrd",
-    "tolerance" : "0.01",
-    "settings" : [ ]
-  } ],
+  "members" : [],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Test Complex to modulus",
+      "tolerance" : "0.01",
+      "settings" : [],
+      "inputs" : [
+        "Input/RA-FFT-Complex.nrrd"
+      ]
+    }
+  ],
   "briefdescription" : "Computes pixel-wise the Modulus of a complex image.\n",
   "detaileddescription" : ""
 }
