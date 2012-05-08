@@ -33,7 +33,7 @@
           "java_value" : "${name}ImageFilter.KernelType.Ball",
           "tcl_value" : "$$${name}ImageFilter_Ball",
           "csharp_value" : "${name}ImageFilter.KernelType.Ball",
-          "R_value" : ":Ball:"
+          "R_value" : "':Ball:'"
         }
       ],
       "inputs" : [
@@ -59,7 +59,7 @@
           "java_value" : "${name}ImageFilter.KernelType.Ball",
           "tcl_value" : "$$${name}ImageFilter_Ball",
           "csharp_value" : "${name}ImageFilter.KernelType.Ball",
-          "R_value" : ":Ball:"
+          "R_value" : "':Ball:'"
         }
       ],
       "inputs" : [
