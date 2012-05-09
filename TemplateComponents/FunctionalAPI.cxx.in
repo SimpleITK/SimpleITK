@@ -1,8 +1,7 @@
 //
 // Function to run the Execute method of this filter
 //
-Image ${name} ( $(include ImageParameters.in)$(when members $(foreach members ,
-  ${type} in${name})) )
+Image ${name} ( $(include ImageParameters.in)$(include MemberParameters.in) )
 {
   ${name}ImageFilter filter;
   return filter.Execute ( $(for inum=1,number_of_inputs do
@@ -10,5 +9,10 @@ Image ${name} ( $(include ImageParameters.in)$(when members $(foreach members ,
                                 OUT=OUT..', '
                               end
                               OUT=OUT .. 'image' .. inum
-                            end)$(when members $(foreach members , in${name})) );
+                            end)$(for i = 1,#members do
+                            if (number_of_inputs > 0 or i > 1) then
+                              OUT = OUT .. ", "
+                            end
+                            OUT= OUT .. ' in' .. members[i].name
+                            end) );
 }
