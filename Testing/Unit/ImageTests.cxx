@@ -39,13 +39,20 @@
 
 #include <stdint.h>
 
+namespace
+{
+template < class T >
+std::ostream& operator<< (std::ostream& os, const std::vector<T>& v)
+{
+  os << "[";
+  std::copy( v.begin(), v.end(), std::ostream_iterator<T>(os, ", " ) );
+  return os << "]";
+}
+
+}
+
 using  itk::simple::InstantiatedPixelIDTypeList;
 
-const double id2d[] = {1.0, 0.0,
-                       0.0, 1.0};
-const double id3d[] = {1.0, 0.0, 0.0,
-                       0.0, 1.0, 0.0,
-                       0.0, 0.0, 1.0};
 
 class Image : public ::testing::Test {
 public:
@@ -92,6 +99,13 @@ public:
 
     itkFloatVector2DImage = FloatVector2DImageType::New();
     floatVector2DImage = new itk::simple::Image( itkFloatVector2DImage );
+
+    directionI2D = std::vector<double>(4, 0.0 );
+    directionI3D = std::vector<double>(9, 0.0 );
+
+    directionI2D[0] = directionI2D[3] = 1.0;
+
+    directionI3D[0] = directionI3D[4] = directionI3D[8] = 1.0;
   }
 
   itk::ImageBase<3>::Pointer itkShortImage;
@@ -113,6 +127,10 @@ public:
 
   itk::simple::Image* differentSizedImage;
   ShortImageType::Pointer itkDifferentSizedImage;
+
+
+  std::vector<double> directionI2D;
+  std::vector<double> directionI3D;
 };
 
 
@@ -203,6 +221,7 @@ TEST_F(Image,Constructors) {
   EXPECT_EQ ( 64u, image.GetWidth() );
   EXPECT_EQ ( 65u, image.GetHeight() );
   EXPECT_EQ ( 66u, image.GetDepth() );
+  EXPECT_EQ( image.GetDirection(), directionI3D );
 
   image = itk::simple::Image ( 64, 65, 66, itk::simple::sitkInt16 );
   EXPECT_EQ ( "645b71695b94923c868e16b943d8acf8f6788617", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt16";
@@ -213,6 +232,7 @@ TEST_F(Image,Constructors) {
   EXPECT_EQ ( 64u, image.GetWidth() );
   EXPECT_EQ ( 65u, image.GetHeight() );
   EXPECT_EQ ( 66u, image.GetDepth() );
+  EXPECT_EQ( image.GetDirection(), directionI3D );
 
   image = itk::simple::Image ( 64, 65, itk::simple::sitkUInt16 );
   EXPECT_EQ ( "e3c464cc1b73df3f48bacf238a80f88b5ab0d3e6", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt16";
@@ -224,6 +244,42 @@ TEST_F(Image,Constructors) {
   EXPECT_EQ ( 65u, image.GetHeight() );
   EXPECT_EQ ( 0u, image.GetDepth() );
   EXPECT_EQ ( 1u, image.GetNumberOfComponentsPerPixel() );
+  EXPECT_EQ( image.GetDirection(), directionI2D );
+
+  // Test the constructors for vector images
+  std::vector<unsigned int> s2d(2, 10);
+  std::vector<unsigned int> s3d(3, 5);
+
+  image = itk::simple::Image( s2d, itk::simple::sitkVectorUInt8 );
+
+  EXPECT_EQ ( image.GetDimension(), 2u );
+  EXPECT_EQ ( 2u, image.GetNumberOfComponentsPerPixel() );
+  image = itk::simple::Image( s3d, itk::simple::sitkVectorFloat32 );
+  EXPECT_EQ ( image.GetDimension(), 3u );
+  EXPECT_EQ ( 3u, image.GetNumberOfComponentsPerPixel() );
+
+  image = itk::simple::Image( s2d, itk::simple::sitkVectorInt16, 5 );
+  EXPECT_EQ ( image.GetDimension(), 2u );
+  EXPECT_EQ ( 5u, image.GetNumberOfComponentsPerPixel() );
+  image = itk::simple::Image( s3d, itk::simple::sitkVectorFloat64, 10 );
+  EXPECT_EQ ( image.GetDimension(), 3u );
+  EXPECT_EQ ( 10u, image.GetNumberOfComponentsPerPixel() );
+
+
+  // check for error when incorrect number of dimensions are requested
+  std::vector<unsigned int> s1d(1, 100);
+  std::vector<unsigned int> s4d(4, 100);
+  ASSERT_ANY_THROW( itk::simple::Image( s1d, itk::simple::sitkVectorFloat64 ) );
+  ASSERT_ANY_THROW( itk::simple::Image( s4d, itk::simple::sitkVectorFloat64 ) );
+
+  // check for error with bad pixelID
+  ASSERT_ANY_THROW( itk::simple::Image( s2d, itk::simple::sitkUnknown ) );
+  ASSERT_ANY_THROW( itk::simple::Image( s2d, itk::simple::PixelIDValueEnum(-100) ) );
+
+  // check for error when non-vector type requests components ( should
+  // this be an error or should we just be converted to a vector )
+  ASSERT_ANY_THROW( itk::simple::Image( s2d, itk::simple::sitkInt16, 10 ) );
+  ASSERT_ANY_THROW( itk::simple::Image( s2d, itk::simple::sitkLabelUInt8, 10 ) );
 
   // currently we don't have a good interface to check the values of
   // these images, let just construct these types need todo better
@@ -234,6 +290,7 @@ TEST_F(Image,Constructors) {
   EXPECT_EQ ( 65u, image.GetHeight() );
   EXPECT_EQ ( 66u, image.GetDepth() );
   EXPECT_EQ ( 1u, image.GetNumberOfComponentsPerPixel() );
+  EXPECT_EQ( image.GetDirection(), directionI3D );
 
   image = itk::simple::Image ( 64, 65, 66, itk::simple::sitkLabelUInt16 );
 
@@ -328,10 +385,7 @@ TEST_F(Image,Properties) {
   ASSERT_ANY_THROW( shortImage->SetOrigin( newOrigin ) ) << "setting with too short origin";
 
   // GetDirection
-  for( unsigned int i = 0 ; i < 9; ++i )
-    {
-    EXPECT_EQ ( shortImage->GetDirection()[i], id3d[i] ) << " Checking Get Direction matrix at index " << i;
-    }
+  EXPECT_EQ ( shortImage->GetDirection(), directionI3D ) << " Checking Get Direction matrix for identity";
 
 
   // SetDirection
@@ -400,6 +454,9 @@ TEST_F(Image,Operators)
   sitk::Image imgB = *floatImage;
   sitk::Image imgC = *floatImage;
 
+  itk::Index<3> idx;
+  idx.Fill( 0 );
+
   std::cout << "Testing Arithmetic operators" << std::endl;
   imgA += 1; // all 1s
   imgB = imgA;
@@ -410,7 +467,7 @@ TEST_F(Image,Operators)
   // 1 = 2 - 1
   imgA = imgC - imgA;
 
-  float v =  dynamic_cast<itk::Image<float,3>*>( imgA.GetITKBase() )->GetPixel( itk::Index<3>());
+  float v =  dynamic_cast<itk::Image<float,3>*>( imgA.GetITKBase() )->GetPixel( idx);
   EXPECT_EQ( v, 1 ) << "value check 1";
 
   // 4 = 2 * 2
@@ -425,11 +482,11 @@ TEST_F(Image,Operators)
   // 20 = .4 * 50;
   imgA = imgC * 50;
 
-  v =  dynamic_cast<itk::Image<float,3>*>( imgA.GetITKBase() )->GetPixel( itk::Index<3>());
+  v =  dynamic_cast<itk::Image<float,3>*>( imgA.GetITKBase() )->GetPixel( idx);
   EXPECT_EQ( v, 20 ) << "value check 2";
 
   // original value should have never changed
-  v =  dynamic_cast<itk::Image<float,3>*>( floatImage->GetITKBase() )->GetPixel( itk::Index<3>());
+  v =  dynamic_cast<itk::Image<float,3>*>( floatImage->GetITKBase() )->GetPixel( idx);
   EXPECT_EQ( v, 0 ) << "value check 3";
 
   // 0 = 20 + -20
@@ -448,7 +505,7 @@ TEST_F(Image,Operators)
   imgA = ~~*shortImage;
   imgB = ~imgA;
 
-  v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetITKBase() )->GetPixel( itk::Index<3>());
+  v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetITKBase() )->GetPixel( idx);
   EXPECT_EQ( v, 0 );
 
   // 0 = 0 & 1
@@ -463,9 +520,9 @@ TEST_F(Image,Operators)
   // 0 = 1 ^ 1
   imgA = imgB ^ imgA;
 
-  v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetITKBase() )->GetPixel( itk::Index<3>());
+  v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetITKBase() )->GetPixel( idx);
   EXPECT_EQ( v, 0 ) << "value check 4";
-  v =  dynamic_cast<itk::Image<short,3>*>( imgB.GetITKBase() )->GetPixel( itk::Index<3>());
+  v =  dynamic_cast<itk::Image<short,3>*>( imgB.GetITKBase() )->GetPixel( idx);
   EXPECT_EQ( v, 1 ) << "value check 5";
 
   std::cout << "Testing Compoung assignment operators" << std::endl;
@@ -492,7 +549,7 @@ TEST_F(Image,Operators)
   // 8 = 16 / 2
   imgA /= 2;
 
-  v =  dynamic_cast<itk::Image<float,3>*>( imgA.GetITKBase() )->GetPixel( itk::Index<3>());
+  v =  dynamic_cast<itk::Image<float,3>*>( imgA.GetITKBase() )->GetPixel( idx);
   EXPECT_EQ( v, 8 ) << "value check 6";
 
   // 1 = 8 / 8
@@ -503,7 +560,7 @@ TEST_F(Image,Operators)
   // 1 = 1  & 1
   imgA &= imgA;
 
-  v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetITKBase() )->GetPixel( itk::Index<3>());
+  v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetITKBase() )->GetPixel( idx);
   EXPECT_EQ( v, 1 ) << "value check 7";
 
   // 1 = 1 | 0
@@ -513,7 +570,7 @@ TEST_F(Image,Operators)
   imgA ^= *shortImage;
 
 
-  v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetITKBase() )->GetPixel( itk::Index<3>());
+  v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetITKBase() )->GetPixel( idx);
   EXPECT_EQ( v, 1 ) << "value check 8";
 }
 
@@ -790,6 +847,115 @@ TEST_F(Image, GetBuffer)
   ASSERT_ANY_THROW( img.GetBufferAsFloat() ) << " Get with wrong type";
 
 }
+
+
+TEST_F(Image, GetBufferVector)
+{
+
+  // this test is designed to run all GetBuffer methods for vector images
+  sitk::Image img = sitk::Image( 10, 10, sitk::sitkVectorUInt8 );
+  EXPECT_EQ( img.GetBufferAsUInt8()[99], 0 ) << " Get last element in buffer ";
+  ASSERT_ANY_THROW( img.GetBufferAsInt16() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt16() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsInt32() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt32() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsInt64() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt64() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsFloat() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsDouble() ) << " Get with wrong type";
+
+  img = sitk::Image( 10, 10, sitk::sitkVectorInt8 );
+  EXPECT_EQ( img.GetBufferAsInt8()[99], 0 ) << " Get last element in buffer ";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt8() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsInt16() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt16() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsInt32() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt32() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsInt64() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt64() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsFloat() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsDouble() ) << " Get with wrong type";
+
+  img = sitk::Image( 10, 10, 10, sitk::sitkVectorUInt8 );
+  EXPECT_EQ( img.GetBufferAsUInt8()[99], 0 ) << " Get 3D with 3D ";
+  ASSERT_ANY_THROW( img.GetBufferAsInt16() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt16() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsInt32() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt32() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsFloat() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsDouble() ) << " Get with wrong type";
+
+
+  img = sitk::Image( 10, 10, sitk::sitkVectorInt16 );
+  EXPECT_EQ( img.GetBufferAsInt16()[99], 0 ) << " Get last element in buffer ";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt8() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt16() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsInt32() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt32() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsFloat() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsDouble() ) << " Get with wrong type";
+
+  img = sitk::Image( 10, 10, sitk::sitkVectorUInt16 );
+  EXPECT_EQ( img.GetBufferAsUInt16()[99], 0 ) << " Get last element in buffer ";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt8() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsInt16() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsInt32() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt32() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsFloat() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsDouble() ) << " Get with wrong type";
+
+  img = sitk::Image( 10, 10, sitk::sitkVectorInt32 );
+  EXPECT_EQ( img.GetBufferAsInt32()[99], 0 ) << " Get last element in buffer ";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt8() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsInt16() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt16() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt32() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsFloat() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsDouble() ) << " Get with wrong type";
+
+  img = sitk::Image( 10, 10, sitk::sitkVectorUInt32 );
+  EXPECT_EQ( img.GetBufferAsUInt32()[99], 0u ) << " Get last element in buffer ";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt8() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsInt16() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt16() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsInt32() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsFloat() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsDouble() ) << " Get with wrong type";
+
+
+  // currently Int64 pixel types are instantiated yet,
+  // so an exception will be thrown.
+  try
+    {
+    img = sitk::Image( 10, 10, sitk::sitkVectorUInt64 );
+    EXPECT_EQ( img.GetBufferAsUInt64()[99], 0u ) << " Get last element in buffer ";
+
+    img = sitk::Image( 10, 10, sitk::sitkVectorInt64 );
+    EXPECT_EQ( img.GetBufferAsInt64()[99], 0u ) << " Get last element in buffer ";
+    }
+  catch ( std::exception &e)
+    {
+    std::cout << "Exception: " << e.what() << std::endl;
+    }
+
+  img = sitk::Image( 10, 10, sitk::sitkVectorFloat32 );
+  EXPECT_EQ( img.GetBufferAsFloat()[99], 0u ) << " Get last element in buffer ";
+  ASSERT_ANY_THROW( img.GetBufferAsInt16() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt16() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsInt32() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsDouble() ) << " Get with wrong type";
+
+  img = sitk::Image( 10, 10, sitk::sitkVectorFloat64 );
+  EXPECT_EQ( img.GetBufferAsDouble()[99], 0 ) << " Get last element in buffer ";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt8() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsInt16() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt16() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsInt32() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsUInt32() ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetBufferAsFloat() ) << " Get with wrong type";
+
+}
+
 
 TEST_F(Image,Mandelbrot)
 {
