@@ -12,13 +12,14 @@ macro( get_dependent_template_components out_var_name json_file input_dir )
 
   # Get the line from the json file that indicates the correct template
   file(STRINGS ${json_file} template_line REGEX ".*template_code_filename.*")
-  string(REGEX MATCH ":.*\".*ImageFilter" first_strip ${template_line})
+  string(REGEX MATCH ":.*\".*\"" first_strip ${template_line})
 
   # Only continue if we found something for first_strip
   if(first_strip)
 
-    # Strip down to just the name and then fill out full path
-    string(REGEX MATCH "[^\"]*ImageFilter" template_name ${first_strip})
+    # strip down to what in between the ""
+    string(REGEX MATCH "\".+\"" second_strip ${first_strip})
+    string(REGEX MATCH "[^\"]+" template_name ${second_strip} )
     set(template_file_h ${input_dir}/templates/sitk${template_name}Template.h.in)
     set(template_file_cxx ${input_dir}/templates/sitk${template_name}Template.cxx.in)
 
@@ -133,6 +134,7 @@ macro(generate_filter_source)
   # Glob all json files in the current directory
   file ( GLOB json_config_files ${generated_code_input_path}/json/[a-zA-Z]*.json)
 
+  message( "Processing json files..." )
   # Loop through json files and expand each one
   foreach ( f ${json_config_files} )
     get_filename_component ( class ${f} NAME_WE )
