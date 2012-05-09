@@ -9,7 +9,7 @@
     {
       "name" : "SafeBorder",
       "type" : "bool",
-      "default" : true,
+      "default" : "true",
       "doc" : "",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "A safe border is added to input image to avoid borders effects and remove it once the closing is done\n",
