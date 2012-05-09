@@ -1,17 +1,17 @@
-Image ${name}ImageFilter::Execute ( const Image & image1$(if number_of_inputs==2 then OUT=[[, const Image& image2]] end) )
+Image ${name}ImageFilter::Execute ( $(include ImageParameters.in) )
 {
 
   PixelIDValueType type = image1.GetPixelIDValue();
-  unsigned int dimension = image1.GetDimension();$(if number_of_inputs and number_of_inputs == 2 then
-OUT=[[
+  unsigned int dimension = image1.GetDimension();
 
+  $(for inum=2,number_of_inputs do
+           OUT= OUT .. '\n    if ( type != image' .. inum .. '.GetPixelIDValue() || dimension != image' .. inum .. '.GetDimension() ) { sitkExceptionMacro ( "Image' .. inum .. ' for ${name}ImageFilter doesnt match type or dimension!" ); }'
+             end)
 
-  // todo need better error handling and potential type conversion
-  if ( type != image2.GetPixelIDValue() ||
-       dimension != image2.GetDimension() )
-    {
-      sitkExceptionMacro ( "Both images for ${name}ImageFilter don't match type or dimension!" );
-    }]] end)
-
-  return this->m_MemberFactory->GetMemberFunction( type, dimension )( image1 $(if number_of_inputs==2 then OUT=[[, image2]] end) );
+    return this->m_MemberFactory->GetMemberFunction( type, dimension )( $(for inum=1,number_of_inputs do
+  if inum>1 then
+    OUT=OUT .. ', '
+  end
+  OUT= OUT .. 'image' .. inum
+                                                                          end) );
 }

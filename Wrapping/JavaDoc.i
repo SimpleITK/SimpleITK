@@ -6273,3 +6273,245 @@ virtual OutputImagePixelType itk::ZeroCrossingImageFilter::GetBackgroundValue() 
 
 */"
 
+// Generated for ClassName from /scratch/blowekamp/build/ITK-gerrit/Utilities/Doxygen/xml/classitk_1_1ScalarImageKmeansImageFilter.xml
+%typemap(javaimports) itk::simple::ScalarImageKmeansImageFilter "/** Classifies the intensity values of a scalar image using the K-Means algorithm.
+
+Given an input image with scalar values, it uses the K-Means statistical classifier in order to define labels for every pixel in the image. The filter is templated over the type of the input image. The output image is predefined as having the same dimension of the input image and pixel type unsigned char, under the assumption that the classifier will generate less than 256 classes.
+You may want to look also at the RelabelImageFilter that may be used as a postprocessing stage, in particular if you are interested in ordering the labels by their relative size in number of pixels.
+see  Image
+see 
+see  ImageKmeansModelEstimator
+see 
+see KdTreeBasedKmeansEstimator, WeightedCentroidKdTreeGenerator, KdTree
+see 
+see RelabelImageFilter
+par Wiki Examples:
+
+li All Examples
+
+li Cluster the pixels in a greyscale image
+
+*/"
+%javamethodmodifiers itk::simple::ScalarImageKmeansImageFilter::execute() "
+/**Classifies the intensity values of a scalar image using the K-Means algorithm.
+
+*/"
+%javamethodmodifiers itk::simple::ScalarImageKmeans "/**
+Classifies the intensity values of a scalar image using the K-Means algorithm.
+
+Given an input image with scalar values, it uses the K-Means statistical classifier in order to define labels for every pixel in the image. The filter is templated over the type of the input image. The output image is predefined as having the same dimension of the input image and pixel type unsigned char, under the assumption that the classifier will generate less than 256 classes.
+You may want to look also at the RelabelImageFilter that may be used as a postprocessing stage, in particular if you are interested in ordering the labels by their relative size in number of pixels.
+see  Image
+see 
+see  ImageKmeansModelEstimator
+see 
+see KdTreeBasedKmeansEstimator, WeightedCentroidKdTreeGenerator, KdTree
+see 
+see RelabelImageFilter
+par Wiki Examples:
+
+li All Examples
+
+li Cluster the pixels in a greyscale image
+
+*/"
+%javamethodmodifiers itk::simple::ScalarImageKmeansImageFilter::setUseNonContiguousLabels "/**
+virtual void itk::ScalarImageKmeansImageFilter::SetUseNonContiguousLabels(bool _arg)
+
+Set/Get the UseNonContiguousLabels flag. When this is set to false the labels are numbered contiguously, like in {0,1,3..N}. When the flag is set to true, the labels are selected in order to span the dynamic range of the output image. This last option is useful when the output image is intended only for display. The default value is false.
+*/"
+
+%javamethodmodifiers itk::simple::ScalarImageKmeansImageFilter::getUseNonContiguousLabels "/**
+virtual const bool& itk::ScalarImageKmeansImageFilter::GetUseNonContiguousLabels()
+
+Set/Get the UseNonContiguousLabels flag. When this is set to false the labels are numbered contiguously, like in {0,1,3..N}. When the flag is set to true, the labels are selected in order to span the dynamic range of the output image. This last option is useful when the output image is intended only for display. The default value is false.
+*/"
+
+// Generated for ClassName from /scratch/blowekamp/build/ITK-gerrit/Utilities/Doxygen/xml/classitk_1_1IsolatedConnectedImageFilter.xml
+%typemap(javaimports) itk::simple::IsolatedConnectedImageFilter "/** Label pixels that are connected to one set of seeds but not another.
+
+ IsolatedConnectedImageFilterfinds the optimal threshold to separate two regions. It has two modes, one to separate dark regions surrounded by bright regions by automatically finding a minimum isolating upper threshold, and another to separate bright regions surrounded by dark regions by automatically finding a maximum lower isolating threshold. The mode can be chosen by setting FindUpperThresholdOn()/Off(). In both cases, the isolating threshold is retrieved with GetIsolatedValue().
+The algorithm labels pixels with ReplaceValue that are connected to Seeds1 AND NOT connected to Seeds2. When finding the threshold to separate two dark regions surrounded by bright regions, given a fixed lower threshold, the filter adjusts the upper threshold until the two sets of seeds are not connected. The algorithm uses a binary search to adjust the upper threshold, starting at Upper. The reverse is true for finding the threshold to separate two bright regions. Lower defaults to the smallest possible value for the InputImagePixelType, and Upper defaults to the largest possible value for the InputImagePixelType.
+The user can also supply the Lower and Upper values to restrict the search. However, if the range is too restrictive, it could happen that no isolating threshold can be found between the user specified Lower and Upper values. Therefore, unless the user is sure of the bounds to set, it is recommended that the user set these values to the lowest and highest intensity values in the image, respectively.
+The user can specify more than one seed for both regions to separate. The algorithm will try find the threshold that ensures that all of the first seeds are contained in the resulting segmentation and all of the second seeds are not contained in the segmentation.
+It is possible that the algorithm may not be able to find the isolating threshold because no such threshold exists. The user can check for this by querying the GetThresholdingFailed()flag.
+*/"
+%javamethodmodifiers itk::simple::IsolatedConnectedImageFilter::execute() "/**
+Label pixels that are connected to one set of seeds but not another.
+
+*/"
+%javamethodmodifiers itk::simple::IsolatedConnected "/**
+Label pixels that are connected to one set of seeds but not another.
+
+ IsolatedConnectedImageFilterfinds the optimal threshold to separate two regions. It has two modes, one to separate dark regions surrounded by bright regions by automatically finding a minimum isolating upper threshold, and another to separate bright regions surrounded by dark regions by automatically finding a maximum lower isolating threshold. The mode can be chosen by setting FindUpperThresholdOn()/Off(). In both cases, the isolating threshold is retrieved with GetIsolatedValue().
+The algorithm labels pixels with ReplaceValue that are connected to Seeds1 AND NOT connected to Seeds2. When finding the threshold to separate two dark regions surrounded by bright regions, given a fixed lower threshold, the filter adjusts the upper threshold until the two sets of seeds are not connected. The algorithm uses a binary search to adjust the upper threshold, starting at Upper. The reverse is true for finding the threshold to separate two bright regions. Lower defaults to the smallest possible value for the InputImagePixelType, and Upper defaults to the largest possible value for the InputImagePixelType.
+The user can also supply the Lower and Upper values to restrict the search. However, if the range is too restrictive, it could happen that no isolating threshold can be found between the user specified Lower and Upper values. Therefore, unless the user is sure of the bounds to set, it is recommended that the user set these values to the lowest and highest intensity values in the image, respectively.
+The user can specify more than one seed for both regions to separate. The algorithm will try find the threshold that ensures that all of the first seeds are contained in the resulting segmentation and all of the second seeds are not contained in the segmentation.
+It is possible that the algorithm may not be able to find the isolating threshold because no such threshold exists. The user can check for this by querying the GetThresholdingFailed()flag.
+*/"
+%javamethodmodifiers itk::simple::IsolatedConnectedImageFilter::setSeed1 "/**
+void itk::IsolatedConnectedImageFilter::SetSeed1(const IndexType &seed)
+
+Set seed point 1. This seed will be isolated from Seed2 (if possible). All pixels connected to this seed will be replaced with ReplaceValue. This method is deprecated, please use AddSeed()
+*/"
+
+%javamethodmodifiers itk::simple::IsolatedConnectedImageFilter::setSeed2 "/**
+void itk::IsolatedConnectedImageFilter::SetSeed2(const IndexType &seed)
+
+Set seed point 2. This seed will be isolated from Seed1 (if possible). This method is deprecated, please use AddSeed()
+*/"
+
+%javamethodmodifiers itk::simple::IsolatedConnectedImageFilter::setLower "/**
+virtual void itk::IsolatedConnectedImageFilter::SetLower(InputImagePixelType _arg)
+
+Set/Get the limit on the lower threshold value. The default is the NonpositiveMin() for the InputPixelType.
+*/"
+
+%javamethodmodifiers itk::simple::IsolatedConnectedImageFilter::getLower "/**
+virtual const InputImagePixelType& itk::IsolatedConnectedImageFilter::GetLower()
+
+Set/Get the limit on the lower threshold value. The default is the NonpositiveMin() for the InputPixelType.
+*/"
+
+%javamethodmodifiers itk::simple::IsolatedConnectedImageFilter::setUpper "/**
+virtual void itk::IsolatedConnectedImageFilter::SetUpper(InputImagePixelType _arg)
+
+Set/Get the limit on the upper threshold value. The default is the max() for the InputPixelType.
+*/"
+
+%javamethodmodifiers itk::simple::IsolatedConnectedImageFilter::getUpper "/**
+virtual const InputImagePixelType& itk::IsolatedConnectedImageFilter::GetUpper()
+
+Set/Get the limit on the upper threshold value. The default is the max() for the InputPixelType.
+*/"
+
+%javamethodmodifiers itk::simple::IsolatedConnectedImageFilter::setReplaceValue "/**
+virtual void itk::IsolatedConnectedImageFilter::SetReplaceValue(OutputImagePixelType _arg)
+
+Set/Get value to replace thresholded pixels. Pixels that lie within the thresholds will be replaced with this value. The default is 1.
+*/"
+
+%javamethodmodifiers itk::simple::IsolatedConnectedImageFilter::getReplaceValue "/**
+virtual const OutputImagePixelType& itk::IsolatedConnectedImageFilter::GetReplaceValue()
+
+Set/Get value to replace thresholded pixels. Pixels that lie within the thresholds will be replaced with this value. The default is 1.
+*/"
+
+%javamethodmodifiers itk::simple::IsolatedConnectedImageFilter::setIsolatedValueTolerance "/**
+virtual void itk::IsolatedConnectedImageFilter::SetIsolatedValueTolerance(InputImagePixelType _arg)
+
+Set/Get the precision required for the intensity threshold value. The default is 1.
+*/"
+
+%javamethodmodifiers itk::simple::IsolatedConnectedImageFilter::getIsolatedValueTolerance "/**
+virtual const InputImagePixelType& itk::IsolatedConnectedImageFilter::GetIsolatedValueTolerance()
+
+Set/Get the precision required for the intensity threshold value. The default is 1.
+*/"
+
+%javamethodmodifiers itk::simple::IsolatedConnectedImageFilter::setFindUpperThreshold "/**
+virtual void itk::IsolatedConnectedImageFilter::SetFindUpperThreshold(bool _arg)
+
+Set/Get whether to find an upper threshold (separating two dark regions) or a lower threshold (separating two bright regions).
+*/"
+
+%javamethodmodifiers itk::simple::IsolatedConnectedImageFilter::getFindUpperThreshold "/**
+virtual const bool& itk::IsolatedConnectedImageFilter::GetFindUpperThreshold()
+
+Set/Get whether to find an upper threshold (separating two dark regions) or a lower threshold (separating two bright regions).
+*/"
+
+// Generated for ClassName from /scratch/blowekamp/build/ITK-gerrit/Utilities/Doxygen/xml/classitk_1_1IsolatedConnectedImageFilter.xml
+%typemap(javaimports) itk::simple::IsolatedConnectedImageFilter "/** Label pixels that are connected to one set of seeds but not another.
+
+ IsolatedConnectedImageFilterfinds the optimal threshold to separate two regions. It has two modes, one to separate dark regions surrounded by bright regions by automatically finding a minimum isolating upper threshold, and another to separate bright regions surrounded by dark regions by automatically finding a maximum lower isolating threshold. The mode can be chosen by setting FindUpperThresholdOn()/Off(). In both cases, the isolating threshold is retrieved with GetIsolatedValue().
+The algorithm labels pixels with ReplaceValue that are connected to Seeds1 AND NOT connected to Seeds2. When finding the threshold to separate two dark regions surrounded by bright regions, given a fixed lower threshold, the filter adjusts the upper threshold until the two sets of seeds are not connected. The algorithm uses a binary search to adjust the upper threshold, starting at Upper. The reverse is true for finding the threshold to separate two bright regions. Lower defaults to the smallest possible value for the InputImagePixelType, and Upper defaults to the largest possible value for the InputImagePixelType.
+The user can also supply the Lower and Upper values to restrict the search. However, if the range is too restrictive, it could happen that no isolating threshold can be found between the user specified Lower and Upper values. Therefore, unless the user is sure of the bounds to set, it is recommended that the user set these values to the lowest and highest intensity values in the image, respectively.
+The user can specify more than one seed for both regions to separate. The algorithm will try find the threshold that ensures that all of the first seeds are contained in the resulting segmentation and all of the second seeds are not contained in the segmentation.
+It is possible that the algorithm may not be able to find the isolating threshold because no such threshold exists. The user can check for this by querying the GetThresholdingFailed()flag.
+*/"
+%javamethodmodifiers itk::simple::IsolatedConnectedImageFilter::execute() "
+/**Label pixels that are connected to one set of seeds but not another.
+
+*/"
+%javamethodmodifiers itk::simple::IsolatedConnected "/**
+Label pixels that are connected to one set of seeds but not another.
+
+ IsolatedConnectedImageFilterfinds the optimal threshold to separate two regions. It has two modes, one to separate dark regions surrounded by bright regions by automatically finding a minimum isolating upper threshold, and another to separate bright regions surrounded by dark regions by automatically finding a maximum lower isolating threshold. The mode can be chosen by setting FindUpperThresholdOn()/Off(). In both cases, the isolating threshold is retrieved with GetIsolatedValue().
+The algorithm labels pixels with ReplaceValue that are connected to Seeds1 AND NOT connected to Seeds2. When finding the threshold to separate two dark regions surrounded by bright regions, given a fixed lower threshold, the filter adjusts the upper threshold until the two sets of seeds are not connected. The algorithm uses a binary search to adjust the upper threshold, starting at Upper. The reverse is true for finding the threshold to separate two bright regions. Lower defaults to the smallest possible value for the InputImagePixelType, and Upper defaults to the largest possible value for the InputImagePixelType.
+The user can also supply the Lower and Upper values to restrict the search. However, if the range is too restrictive, it could happen that no isolating threshold can be found between the user specified Lower and Upper values. Therefore, unless the user is sure of the bounds to set, it is recommended that the user set these values to the lowest and highest intensity values in the image, respectively.
+The user can specify more than one seed for both regions to separate. The algorithm will try find the threshold that ensures that all of the first seeds are contained in the resulting segmentation and all of the second seeds are not contained in the segmentation.
+It is possible that the algorithm may not be able to find the isolating threshold because no such threshold exists. The user can check for this by querying the GetThresholdingFailed()flag.
+*/"
+%javamethodmodifiers itk::simple::IsolatedConnectedImageFilter::setSeed1 "/**
+void itk::IsolatedConnectedImageFilter::SetSeed1(const IndexType &seed)
+
+Set seed point 1. This seed will be isolated from Seed2 (if possible). All pixels connected to this seed will be replaced with ReplaceValue. This method is deprecated, please use AddSeed()
+*/"
+
+%javamethodmodifiers itk::simple::IsolatedConnectedImageFilter::setSeed2 "/**
+void itk::IsolatedConnectedImageFilter::SetSeed2(const IndexType &seed)
+
+Set seed point 2. This seed will be isolated from Seed1 (if possible). This method is deprecated, please use AddSeed()
+*/"
+
+%javamethodmodifiers itk::simple::IsolatedConnectedImageFilter::setLower "/**
+virtual void itk::IsolatedConnectedImageFilter::SetLower(InputImagePixelType _arg)
+
+Set/Get the limit on the lower threshold value. The default is the NonpositiveMin() for the InputPixelType.
+*/"
+
+%javamethodmodifiers itk::simple::IsolatedConnectedImageFilter::getLower "/**
+virtual const InputImagePixelType& itk::IsolatedConnectedImageFilter::GetLower()
+
+Set/Get the limit on the lower threshold value. The default is the NonpositiveMin() for the InputPixelType.
+*/"
+
+%javamethodmodifiers itk::simple::IsolatedConnectedImageFilter::setUpper "/**
+virtual void itk::IsolatedConnectedImageFilter::SetUpper(InputImagePixelType _arg)
+
+Set/Get the limit on the upper threshold value. The default is the max() for the InputPixelType.
+*/"
+
+%javamethodmodifiers itk::simple::IsolatedConnectedImageFilter::getUpper "/**
+virtual const InputImagePixelType& itk::IsolatedConnectedImageFilter::GetUpper()
+
+Set/Get the limit on the upper threshold value. The default is the max() for the InputPixelType.
+*/"
+
+%javamethodmodifiers itk::simple::IsolatedConnectedImageFilter::setReplaceValue "/**
+virtual void itk::IsolatedConnectedImageFilter::SetReplaceValue(OutputImagePixelType _arg)
+
+Set/Get value to replace thresholded pixels. Pixels that lie within the thresholds will be replaced with this value. The default is 1.
+*/"
+
+%javamethodmodifiers itk::simple::IsolatedConnectedImageFilter::getReplaceValue "/**
+virtual const OutputImagePixelType& itk::IsolatedConnectedImageFilter::GetReplaceValue()
+
+Set/Get value to replace thresholded pixels. Pixels that lie within the thresholds will be replaced with this value. The default is 1.
+*/"
+
+%javamethodmodifiers itk::simple::IsolatedConnectedImageFilter::setIsolatedValueTolerance "/**
+virtual void itk::IsolatedConnectedImageFilter::SetIsolatedValueTolerance(InputImagePixelType _arg)
+
+Set/Get the precision required for the intensity threshold value. The default is 1.
+*/"
+
+%javamethodmodifiers itk::simple::IsolatedConnectedImageFilter::getIsolatedValueTolerance "/**
+virtual const InputImagePixelType& itk::IsolatedConnectedImageFilter::GetIsolatedValueTolerance()
+
+Set/Get the precision required for the intensity threshold value. The default is 1.
+*/"
+
+%javamethodmodifiers itk::simple::IsolatedConnectedImageFilter::setFindUpperThreshold "/**
+virtual void itk::IsolatedConnectedImageFilter::SetFindUpperThreshold(bool _arg)
+
+Set/Get whether to find an upper threshold (separating two dark regions) or a lower threshold (separating two bright regions).
+*/"
+
+%javamethodmodifiers itk::simple::IsolatedConnectedImageFilter::getFindUpperThreshold "/**
+virtual const bool& itk::IsolatedConnectedImageFilter::GetFindUpperThreshold()
+
+Set/Get whether to find an upper threshold (separating two dark regions) or a lower threshold (separating two bright regions).
+*/"
+

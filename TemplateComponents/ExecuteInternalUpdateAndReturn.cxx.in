@@ -2,7 +2,11 @@
   filter->Update();
 
 $(when measurements $(foreach measurements
-  this->m_${name} = filter->Get${name}();
+$(if custom_itk_cast then
+OUT=[[  ${custom_itk_cast}]]
+else
+OUT=[[  this->m_${name} = filter->Get${name}();]]
+end)
 ))
 
   return Image( filter->GetOutput() );

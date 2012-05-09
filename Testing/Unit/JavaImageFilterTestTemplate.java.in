@@ -32,13 +32,13 @@ class ${name}ImageFilterTest {
   public static void main( String argv[] ) {
 
     // Get the right number of inputs
-    int inputs = 1;
+    int num_inputs = 1;
     $(if number_of_inputs then
-        OUT=[[inputs = ${number_of_inputs};]]
+        OUT=[[num_inputs = ${number_of_inputs};]]
       end)
 
     // Check the command line arguments
-    if ( argv.length < inputs + 1 ) {
+    if ( argv.length < num_inputs + 1 ) {
       System.out.println("Usage: ${name} tag <input(s)> output");
       return;
     }
@@ -58,22 +58,32 @@ class ${name}ImageFilterTest {
     ]]
     end)
 
-    // Run each test
+    // Run each testzf
 $(foreach tests
     if (tag.equals( "${tag}" )) {
 
-      // Read image(s)
-      Image inputA = reader.setFileName( argv[1] ).execute();
 
-$(if inputA_cast then
-        OUT=[[
-       CastImageFilter caster = new CastImageFilter();
-       caster.setOutputPixelType( PixelIDValueEnum.${inputA_cast}.swigValue() );
-       inputA  = caster.execute( inputA );]]
+      Image[] inputs;
+      inputs = new Image[ ${#inputs} ];
+
+     // Read image(s)
+$(for i=0,#inputs-1 do
+OUT=OUT..[[
+      inputs[]]..i..[[] = reader.setFileName( argv[]]..i..[[+1] ).execute();
+]]
 end)
-$(if inputB then
-      OUT=[[
-      Image inputB = reader.setFileName ( argv[2] ).execute();]]
+
+      CastImageFilter caster = new CastImageFilter();
+$(if inputA_cast then
+ OUT=[[
+      caster.setOutputPixelType( PixelIDValueEnum.${inputA_cast}.swigValue() );
+      inputs[0]  = caster.execute( inputs[0] );
+]]
+end)$(if inputB_cast then
+ OUT=[[
+      caster.setOutputPixelType( PixelIDValueEnum.${inputB_cast}.swigValue() );
+      inputs[1]  = caster.execute( inputs[1] );
+]]
 end)
 
       $(when settings
@@ -84,7 +94,7 @@ $(if parameter == "SeedList" then
       $(for i=1,#value do OUT=OUT .. "{\
         int v[] = " .. value[i] .. ";\
         VectorUInt32 idx = new VectorUInt32();\
-        for (int i = 0; i < inputA.getDimension(); i++) {\
+        for (int i = 0; i < inputs[0].getDimension(); i++) {\
           idx.push_back(v[i]);\
         }\
         filter.addSeed(idx);\
@@ -95,7 +105,7 @@ elseif parameter == "TrialPoints" then
       $(for i=1,#value do OUT=OUT .. "{\
         int v[] = " .. value[i] .. ";\
         VectorUInt32 idx = new VectorUInt32();\
-        for (int i = 0; i < inputA.getDimension(); i++) {\
+        for (int i = 0; i < inputs[0].getDimension(); i++) {\
           idx.push_back(v[i]);\
         }\
         filter.addTrialPoint(idx);\
@@ -124,42 +134,42 @@ elseif dim_vec == 1 then
           OUT="${type}"
         end) v[] = $(if java_value then OUT='${java_value}' else OUT='${value}' end);
         $(if type == "bool" then
-          OUT="VectorBool idx = new VectorBool( inputA.getDimension() );"
+          OUT="VectorBool idx = new VectorBool( v.length );"
         elseif type == "unsigned int" then
-          OUT="VectorUInt32 idx = new VectorUInt32( inputA.getDimension() );"
+          OUT="VectorUInt32 idx = new VectorUInt32( v.length );"
         elseif type == "int" then
-          OUT="VectorInt32 idx = new VectorInt32( inputA.getDimension() );"
+          OUT="VectorInt32 idx = new VectorInt32( v.length );"
         elseif type == "unsigned long" then
-         OUT="VectorULong idx = new VectorULong( inputA.getDimension() );"
+         OUT="VectorULong idx = new VectorULong( v.length );"
         elseif type == "long" then
-         OUT="VectorLong idx = new VectorLong( inputA.getDimension() );"
+         OUT="VectorLong idx = new VectorLong( v.length );"
         elseif type == "unsigned short" then
-          OUT="VectorUShort idx = new VectorUShort( inputA.getDimension() );"
+          OUT="VectorUShort idx = new VectorUShort( v.length );"
         elseif type == "short" then
-          OUT="VectorShort idx = new VectorShort( inputA.getDimension() );"
+          OUT="VectorShort idx = new VectorShort( v.length );"
         elseif type == "float" then
-          OUT="VectorFloat idx = new VectorFloat( inputA.getDimension() );"
+          OUT="VectorFloat idx = new VectorFloat( v.length );"
         elseif type == "double" then
-          OUT="VectorDouble idx = new VectorDouble( inputA.getDimension() );"
+          OUT="VectorDouble idx = new VectorDouble( v.length );"
         elseif type == "uint8_t" then
-          OUT="VectorUInt16 idx = new VectorUInt16( inputA.getDimension() );"
+          OUT="VectorUInt16 idx = new VectorUInt16( v.length );"
         elseif type == "uint16_t" then
-          OUT="VectorUInt16 idx = new VectorUInt16( inputA.getDimension() );"
+          OUT="VectorUInt16 idx = new VectorUInt16( v.length );"
         elseif type == "uint32_t" then
-          OUT="VectorUInt32 idx = new VectorUInt32( inputA.getDimension() );"
+          OUT="VectorUInt32 idx = new VectorUInt32( v.length );"
         elseif type == "uint64_t" then
-          OUT="VectorUInt64 idx = new VectorUInt64( inputA.getDimension() );"
+          OUT="VectorUInt64 idx = new VectorUInt64( v.length );"
         elseif type == "int8_t" then
-          OUT="VectorInt16 idx = new VectorInt16( inputA.getDimension() );"
+          OUT="VectorInt16 idx = new VectorInt16( v.length );"
         elseif type == "int16_t" then
-          OUT="VectorInt16 idx = new VectorInt16( inputA.getDimension() );"
+          OUT="VectorInt16 idx = new VectorInt16( v.length );"
         elseif type == "int32_t" then
-          OUT="VectorInt32 idx = new VectorInt32( inputA.getDimension() );"
+          OUT="VectorInt32 idx = new VectorInt32( v.length );"
         elseif type == "int64_t" then
-          OUT="VectorInt64 idx = new VectorInt64( inputA.getDimension() );"
+          OUT="VectorInt64 idx = new VectorInt64( v.length );"
         end)
        
-        for (int i = 0; i < inputA.getDimension( ); i++) {
+        for (int i = 0; i < v.length; i++) {
           idx.set( i, v[i] );
         }
         filter.set${parameter}(idx);
@@ -172,13 +182,7 @@ end)
 )
 
       // Run the filter
-$(if inputB then
-      OUT=[[
-      Image output = filter.execute ( inputA, inputB );]]
-else
-      OUT=[[
-      Image output = filter.execute ( inputA );]]
-end)
+      Image output = filter.execute ( $(if #inputs > 0 then OUT=[[inputs[0] ]] end)$(for inum=1,#inputs-1 do OUT=OUT..", inputs["..inum.."]" end) );
 
       // Write output
       writer.setFileName( argv[argv.length - 1] ).execute( output );

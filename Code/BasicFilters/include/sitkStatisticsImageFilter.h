@@ -27,7 +27,7 @@ namespace itk {
     /** \class StatisticsImageFilter
      * \brief Compute min, max, variance, and mean of an image
      */
-    class SITKBasicFilters0_EXPORT StatisticsImageFilter : public ImageFilter {
+    class SITKBasicFilters0_EXPORT StatisticsImageFilter : public ImageFilter<1> {
     public:
       typedef StatisticsImageFilter Self;
 

@@ -6,50 +6,66 @@
   "doc" : "",
   "pixel_types" : "IntegerPixelIDTypeList",
   "public_declarations" : "Self &SetRadius( unsigned int r ) { this->m_Radius = std::vector<unsigned int>(3, r ); return *this; }",
-  "members" : [ {
-    "name" : "Radius",
-    "type" : "std::vector<unsigned int>",
-    "default" : "std::vector<unsigned int>(3, 1)",
-    "dim_vec" : 1,
-    "doc" : "",
-    "itk_type" : "typename FilterType::InputSizeType"
-  }, {
-    "name" : "BirthThreshold",
-    "type" : "unsigned int",
-    "default" : "1u"
-  },  {
-    "name" : "SurvivalThreshold",
-    "type" : "unsigned int",
-    "default" : "1u"
-  }, {
-    "name" : "ForegroundValue",
-    "type" : "double",
-    "default" : "1.0",
-    "pixeltype" : "Input"
-  }, {
-    "name" : "BackgroundValue",
-    "type" : "double",
-    "default" : "0.0",
-    "pixeltype" : "Input"
-  } ],
-  "tests" : [ {
-    "tag" : "default",
-    "description" : "No parameters changed",
-      "inputA" : "Input/BlackDots.png",
-    "settings" : [],
-    "md5hash" : "eb8edfef34f6e58075d619891c6c3f5a"
-  } ,{
-    "tag" : "VotingBinary",
-    "description" : "Basic voting",
-      "inputA" : "Input/BlackDots.png",
-    "settings" : [ {
-      "parameter" : "Radius",
-      "no_get_method" : 1,
-      "value" : 3
-    }, {
-      "parameter" : "ForegroundValue",
-      "value" : "255.0"
-    } ],
-    "md5hash" : "f7b28f228b1784664b82f4dd1417be4c"
-  } ]
+  "members" : [
+    {
+      "name" : "Radius",
+      "type" : "std::vector<unsigned int>",
+      "default" : "std::vector<unsigned int>(3, 1)",
+      "dim_vec" : 1,
+      "doc" : "",
+      "itk_type" : "typename FilterType::InputSizeType"
+    },
+    {
+      "name" : "BirthThreshold",
+      "type" : "unsigned int",
+      "default" : "1u"
+    },
+    {
+      "name" : "SurvivalThreshold",
+      "type" : "unsigned int",
+      "default" : "1u"
+    },
+    {
+      "name" : "ForegroundValue",
+      "type" : "double",
+      "default" : "1.0",
+      "pixeltype" : "Input"
+    },
+    {
+      "name" : "BackgroundValue",
+      "type" : "double",
+      "default" : "0.0",
+      "pixeltype" : "Input"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "No parameters changed",
+      "settings" : [],
+      "md5hash" : "eb8edfef34f6e58075d619891c6c3f5a",
+      "inputs" : [
+        "Input/BlackDots.png"
+      ]
+    },
+    {
+      "tag" : "VotingBinary",
+      "description" : "Basic voting",
+      "settings" : [
+        {
+          "parameter" : "Radius",
+          "no_get_method" : 1,
+          "value" : 3
+        },
+        {
+          "parameter" : "ForegroundValue",
+          "value" : "255.0"
+        }
+      ],
+      "md5hash" : "f7b28f228b1784664b82f4dd1417be4c",
+      "inputs" : [
+        "Input/BlackDots.png"
+      ]
+    }
+  ]
 }

@@ -1,15 +1,12 @@
 $(if custom_set_input then
 OUT='  ${custom_set_input}'
-elseif number_of_inputs == 2 then
-OUT=[[
-  filter->SetInput( 0, image1 );
-  filter->SetInput( 1, image2 );
-]]
-else
-OUT=[[
-  filter->SetInput( image1 );
-]]
-end)$(foreach members
+    else
+      for nimg=1,number_of_inputs do
+OUT= OUT .. 'filter->SetInput( ' .. nimg-1 .. ', image' .. nimg ..' );\n'
+end
+end)
+
+$(foreach members
 $(if custom_itk_cast then
 OUT = '  ${custom_itk_cast}'
 elseif dim_vec and dim_vec == 1 then

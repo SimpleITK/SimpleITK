@@ -3,5 +3,5 @@ OUT=[[
 
 
       /** Execute the filter on the input image$(if number_of_inputs == 2 then OUT='s'end) with the given parameters */
-      Image Execute ( const Image &image$(if number_of_inputs == 2 then OUT=', const Image &image2' end)$(foreach members ,
+      Image Execute ( $(include ImageParameters.in)$(foreach members ,
         ${type} in${name}) );]]end)
