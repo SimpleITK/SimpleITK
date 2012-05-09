@@ -37,7 +37,7 @@ namespace simple
  *
  */
 class SITKBasicFilters0_EXPORT ComposeImageFilter
-  : public ImageFilter
+  : public ImageFilter<1>
 {
 public:
   typedef ComposeImageFilter      Self;
