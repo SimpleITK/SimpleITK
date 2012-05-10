@@ -6,14 +6,18 @@
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelIDTypeList",
   "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
-  "members" : [ ],
-  "tests" : [ {
-    "tag" : "defaults",
-    "description" : "Simply run with default settings",
-    "inputA" : "Input/Ramp-Zero-One-Float.nrrd",
-    "settings" : [ ],
-    "tolerance" : 0.01
-  } ],
+  "members" : [],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Simply run with default settings",
+      "settings" : [],
+      "tolerance" : 0.01,
+      "inputs" : [
+        "Input/Ramp-Zero-One-Float.nrrd"
+      ]
+    }
+  ],
   "briefdescription" : "Computes the exponential function of each pixel.\n",
   "detaileddescription" : "The computation is performed using vcl_exp(x).\n"
 }

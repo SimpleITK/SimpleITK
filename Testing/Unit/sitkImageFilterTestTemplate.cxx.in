@@ -120,33 +120,38 @@ TEST(BasicFilters,${name}_${tag})
 
   itk::simple::ImageFileReader reader;
   itk::simple::${name}ImageFilter filter;
-  itk::simple::Image inputA( 0, 0, itk::simple::sitkUInt8 );
-  itk::simple::Image inputB( 0, 0, itk::simple::sitkUInt8 );
-  itk::simple::Image output( 0, 0, itk::simple::sitkUInt8 );
+  itk::simple::Image output;
   itk::simple::HashImageFilter hasher;
   std::string inputSHA1hash;
 
+  std::vector<itk::simple::Image> inputs;
+  std::vector<std::string> inputFileNames;
 
-  ASSERT_NO_THROW ( inputA = reader.SetFileName ( dataFinder.GetFile ( "${inputA}" ) ).Execute() ) << "Failed to load ${inputA}";
-    $(if inputA_cast then
+$(for inum=1,#inputs do
+    OUT=OUT..[[
+  inputFileNames.push_back( "]]..inputs[inum]..[["  );
+]]
+end)
+
+  for ( unsigned int i = 0; i < inputFileNames.size(); ++i )
+    {
+    ASSERT_NO_THROW ( inputs.push_back( reader.SetFileName ( dataFinder.GetFile ( inputFileNames[i]  ) ).Execute() ) ) << "Failed to load " << inputFileNames[i];
+
+$(if inputA_cast then
       OUT=[[
-      ASSERT_NO_THROW( inputA = itk::simple::Cast( inputA, itk::simple::${inputA_cast } ) ) << "Failed to cast ${inputA} to ${inputA_cast}";
-            ]]
-      end)
-  ASSERT_TRUE ( inputA.GetITKBase() != NULL ) << "Could not read ${inputA}";
-    $(if inputB then
+      if ( i == 0 )
+        {
+          ASSERT_NO_THROW( inputs[i]  = itk::simple::Cast( inputs[i], itk::simple::${inputA_cast } ) ) << "Failed to cast inputA to ${inputA_cast}";
+        }
+]] end)$(if inputB_cast then
       OUT=[[
-  ASSERT_NO_THROW ( inputB = reader.SetFileName ( dataFinder.GetFile ( "${inputB}" ) ).Execute() ) << "Failed to load ${inputB}";
-  ]]
-      if inputB_cast then
-      OUT=[[
-  ASSERT_NO_THROW( inputB = itk::simple::Cast( inputB, itk::simple::${inputB_cast } ) ) << "Failed to cast ${inputB} to ${inputB_cast}";
-            ]]
-      end
-      OUT=OUT..[[
-  ASSERT_TRUE ( inputB.GetITKBase() != NULL ) << "Could not read ${inputB}";
-            ]]
-      end)
+    if ( i == 1 )
+      {
+      ASSERT_NO_THROW( inputs[i] = itk::simple::Cast( inputs[i], itk::simple::${inputB_cast } ) ) << "Failed to cast inputB to ${inputB_cast}";
+      }
+]] end)
+    ASSERT_TRUE ( inputs[i].GetITKBase() != NULL ) << "Could not read " << inputFileNames[i];
+    }
 
     if ( firstPassSoTestFunctional ) {
       firstPassSoTestFunctional = false;
@@ -154,8 +159,8 @@ TEST(BasicFilters,${name}_${tag})
       // Do we get the same image back, if we use the functional interface?
       itk::simple::Image fromFunctional( 0, 0, itk::simple::sitkUInt8 );
       itk::simple::Image fromProcedural( 0, 0, itk::simple::sitkUInt8 );
-      ASSERT_NO_THROW ( fromProcedural = filter.Execute ( inputA $(if inputB then OUT=", inputB" end) ) ) << "Procedural interface to ${name}";
-      ASSERT_NO_THROW ( fromFunctional = itk::simple::${name} ( inputA $(if inputB then OUT=", inputB" end)
+      ASSERT_NO_THROW ( fromProcedural = filter.Execute ( $(if #inputs > 0 then OUT=[[inputs[0] ]] end)$(for inum=1,#inputs-1 do OUT=OUT..", inputs["..inum.."]" end) ) ) << "Procedural interface to ${name}";
+      ASSERT_NO_THROW ( fromFunctional = itk::simple::${name} ( $(if #inputs > 0 then OUT=[[inputs[0] ]] end)$(for inum=1,#inputs-1 do OUT=OUT..", inputs["..inum.."]" end)
                                                                        $(if template_type and template_type == "RegionGrowing" then OUT=", std::vector< std::vector<unsigned int> >()" end)
                                                                        $(if template_code_filename and template_code_filename == "FastMarchingImageFilter" then OUT=", std::vector< std::vector<unsigned int> >()" end)
                                                                        $(if template_code_filename and template_code_filename == "KernelImageFilter" then OUT=[[, 1, itk::simple::${name}ImageFilter::Ball]] end)
@@ -171,10 +176,10 @@ OUT=[[
 $(foreach settings
   $(if parameter == "SeedList" then
   OUT='filter.ClearSeeds();\
-  $(for i=1,#value do OUT=OUT .. "{unsigned int __seed[] = " .. value[i] .. "; filter.AddSeed( std::vector<unsigned int>(__seed, __seed + inputA.GetDimension()) );}" end);'
+  $(for i=1,#value do OUT=OUT .. "{unsigned int __seed[] = " .. value[i] .. "; filter.AddSeed( std::vector<unsigned int>(__seed, __seed + inputs[0].GetDimension()) );}" end);'
   elseif parameter == "TrialPoints" then
   OUT='filter.ClearTrialPoints();\
-  $(for i=1,#value do OUT=OUT .. "{unsigned int __point[] = " .. value[i] .. "; filter.AddTrialPoint( std::vector<unsigned int>(__point, __point + inputA.GetDimension()) );}" end);'
+  $(for i=1,#value do OUT=OUT .. "{unsigned int __point[] = " .. value[i] .. "; filter.AddTrialPoint( std::vector<unsigned int>(__point, __point + inputs[0].GetDimension()) );}" end);'
   elseif dim_vec and dim_vec == 1 then
   OUT='{\
   ${type} arr[] = ${value};\
@@ -195,23 +200,26 @@ end)
 )]]
 end)
 
-    if ( inputA.GetPixelIDValue() != itk::simple::sitkLabelUInt8 &&
-         inputA.GetPixelIDValue() != itk::simple::sitkLabelUInt16 &&
-         inputA.GetPixelIDValue() != itk::simple::sitkLabelUInt32 &&
-         inputA.GetPixelIDValue() != itk::simple::sitkLabelUInt64 )
-      {
-      inputSHA1hash =  itk::simple::Hash( inputA );
-      }
-  ASSERT_NO_THROW ( output =  filter.Execute ( inputA $(if inputB then OUT=", inputB" end) ) );
 
-    if ( inputA.GetPixelIDValue() != itk::simple::sitkLabelUInt8 &&
-         inputA.GetPixelIDValue() != itk::simple::sitkLabelUInt16 &&
-         inputA.GetPixelIDValue() != itk::simple::sitkLabelUInt32 &&
-         inputA.GetPixelIDValue() != itk::simple::sitkLabelUInt64 )
+    if ( !inputs.empty() &&
+         inputs[0].GetPixelIDValue() != itk::simple::sitkLabelUInt8 &&
+         inputs[0].GetPixelIDValue() != itk::simple::sitkLabelUInt16 &&
+         inputs[0].GetPixelIDValue() != itk::simple::sitkLabelUInt32 &&
+         inputs[0].GetPixelIDValue() != itk::simple::sitkLabelUInt64 )
+      {
+      inputSHA1hash =  itk::simple::Hash( inputs[0] );
+      }
+   ASSERT_NO_THROW ( output =  filter.Execute ( $(if #inputs > 0 then OUT=[[inputs[0] ]] end)$(for inum=1,#inputs-1 do OUT=OUT..", inputs["..inum.."]" end) ) );
+
+    if ( !inputs.empty() &&
+         inputs[0].GetPixelIDValue() != itk::simple::sitkLabelUInt8 &&
+         inputs[0].GetPixelIDValue() != itk::simple::sitkLabelUInt16 &&
+         inputs[0].GetPixelIDValue() != itk::simple::sitkLabelUInt32 &&
+         inputs[0].GetPixelIDValue() != itk::simple::sitkLabelUInt64 )
       {
       // Check that the input is not modified
       // This will fail if the filter is being run in-place
-      EXPECT_EQ ( inputSHA1hash,  itk::simple::Hash( inputA ) ) << "Input was modified by filter.";
+      EXPECT_EQ ( inputSHA1hash,  itk::simple::Hash( inputs[0] ) ) << "Input was modified by filter.";
       }
 
   $(if md5hash then
@@ -261,10 +269,10 @@ TEST_F(Lua,${name}) {
     CommandLine.push_back ( dataFinder.GetLuaExecutable() );
     CommandLine.push_back ( Script );
     CommandLine.push_back ( "${tag}" );
-    CommandLine.push_back ( dataFinder.GetFile ( "${inputA}" ) );
-    $(if inputB then
-      OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
-      end)
+$(for inum=1,#inputs do
+    OUT=OUT..[[
+  CommandLine.push_back( dataFinder.GetFile ("]]..inputs[inum]..[[")  );
+]] end)
     CommandLine.push_back ( outputFileName );
     EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
@@ -319,10 +327,10 @@ TEST_F(Python,${name}) {
     CommandLine.push_back ( dataFinder.GetPythonExecutable() );
     CommandLine.push_back ( Script );
     CommandLine.push_back ( "${tag}" );
-    CommandLine.push_back ( dataFinder.GetFile ( "${inputA}" ) );
-    $(if inputB then
-      OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
-      end)
+$(for inum=1,#inputs do
+    OUT=OUT..[[
+  CommandLine.push_back( dataFinder.GetFile ("]]..inputs[inum]..[[")  );
+]] end)
     CommandLine.push_back ( outputFileName );
     EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
@@ -377,10 +385,10 @@ TEST_F(Tcl,${name}) {
     CommandLine.push_back ( dataFinder.GetTclExecutable ( ) );
     CommandLine.push_back ( Script );
     CommandLine.push_back ( "${tag}" );
-    CommandLine.push_back ( dataFinder.GetFile ( "${inputA}" ) );
-    $(if inputB then
-      OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
-      end)
+$(for inum=1,#inputs do
+    OUT=OUT..[[
+  CommandLine.push_back( dataFinder.GetFile ("]]..inputs[inum]..[[")  );
+]] end)
     CommandLine.push_back ( outputFileName );
     EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
@@ -444,11 +452,10 @@ TEST_F(R,${name}) {
     CommandLine.push_back ( std::string("--file=")+Script );
     CommandLine.push_back ( "--args" );
     CommandLine.push_back ( "${tag}" );
-    CommandLine.push_back ( dataFinder.GetFile ( "${inputA}" ) );
-    $(if inputB then
-      OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
-      end)
-
+$(for inum=1,#inputs do
+    OUT=OUT..[[
+  CommandLine.push_back( dataFinder.GetFile ("]]..inputs[inum]..[[")  );
+]] end)
     CommandLine.push_back ( outputFileName );
     EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
@@ -512,10 +519,10 @@ TEST_F(Java,${name}) {
     CommandLine.push_back ( "-Djava.library.path=" + JavaPath );
     CommandLine.push_back ( Script );
     CommandLine.push_back ( "${tag}" );
-    CommandLine.push_back ( dataFinder.GetFile ( "${inputA}" ) );
-    $(if inputB then
-      OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
-      end)
+$(for inum=1,#inputs do
+    OUT=OUT..[[
+  CommandLine.push_back( dataFinder.GetFile ("]]..inputs[inum]..[[")  );
+]] end)
     CommandLine.push_back ( outputFileName );
     EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
@@ -573,10 +580,10 @@ TEST_F(Ruby,${name}) {
     CommandLine.push_back ( dataFinder.GetRubyExecutable() );
     CommandLine.push_back ( Script );
     CommandLine.push_back ( "${tag}" );
-    CommandLine.push_back ( dataFinder.GetFile ( "${inputA}" ) );
-    $(if inputB then
-      OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
-      end)
+$(for inum=1,#inputs do
+    OUT=OUT..[[
+  CommandLine.push_back( dataFinder.GetFile ("]]..inputs[inum]..[[")  );
+]] end)
     CommandLine.push_back ( outputFileName );
     EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
@@ -644,10 +651,10 @@ TEST_F(CSharp,${name}) {
     CommandLine.push_back ( ExePathAndName );
     CommandLine.push_back ( dataFinder.GetFile ( "Input/RA-Short.nrrd" ).c_str() );
     CommandLine.push_back ( "${tag}" );
-    CommandLine.push_back ( dataFinder.GetFile ( "${inputA}" ) );
-    $(if inputB then
-      OUT=[[  CommandLine.push_back ( dataFinder.GetFile ( "${inputB}" ) );]]
-      end)
+$(for inum=1,#inputs do
+    OUT=OUT..[[
+  CommandLine.push_back( dataFinder.GetFile ("]]..inputs[inum]..[[")  );
+]] end)
     CommandLine.push_back ( outputFileName );
     EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );

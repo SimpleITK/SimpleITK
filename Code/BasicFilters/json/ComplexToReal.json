@@ -6,14 +6,18 @@
   "doc" : "Some global documentation",
   "pixel_types" : "ComplexPixelIDTypeList",
   "output_pixel_type" : "typename InputImageType::PixelType::value_type",
-  "members" : [ ],
-  "tests" : [ {
-    "tag" : "defaults",
-    "description" : "Test Complex to real",
-    "inputA" : "Input/RA-FFT-Complex.nrrd",
-    "md5hash" : "3278e36babb23c17fecc09d2e1b3f575",
-    "settings" : [ ]
-  } ],
+  "members" : [],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Test Complex to real",
+      "md5hash" : "3278e36babb23c17fecc09d2e1b3f575",
+      "settings" : [],
+      "inputs" : [
+        "Input/RA-FFT-Complex.nrrd"
+      ]
+    }
+  ],
   "briefdescription" : "Computes pixel-wise the real(x) part of a complex image.\n",
   "detaileddescription" : ""
 }
