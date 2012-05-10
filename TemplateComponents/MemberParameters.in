@@ -1,0 +1,6 @@
+$(for i = 1,#members do
+  if (number_of_inputs > 0 or i > 1) then
+    OUT = OUT .. ", "
+  end
+    OUT= OUT .. members[i].type .. ' in' .. members[i].name
+end)
