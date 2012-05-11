@@ -9,7 +9,7 @@
     {
       "name" : "TimeStep",
       "type" : "double",
-      "default" : 0.125,
+      "default" : 0.0625,
       "doc" : "Time step for PDE solver"
     },
     {
@@ -29,6 +29,21 @@
       "type" : "uint32_t",
       "default" : "5u",
       "doc" : "Number of iterations to run"
+    }
+  ],
+  "custom_methods" : [
+    {
+      "name" : "EstimateOptimalTimeStep",
+        "doc" : "This method autmatically sets the optimal timestep for an image given its spacing.",
+    "return_type" : "void",
+    "parameters" : [
+      {
+        "type" : "Image &",
+        "var_name" : "inImage",
+        "last" : 1
+      }
+    ],
+  "body" : "std::vector<double> spacing = inImage.GetSpacing();\ndouble minSpacing = *std::min_element( spacing.begin(), spacing.end()); this->m_TimeStep = minSpacing / std::pow(2.0, static_cast< double >( inImage.GetDimension() ) + 1.0 );"
     }
   ],
   "tests" : [
