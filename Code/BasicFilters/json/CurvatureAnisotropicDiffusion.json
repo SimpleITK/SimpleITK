@@ -9,7 +9,7 @@
     {
       "name" : "TimeStep",
       "type" : "double",
-      "default" : 0.125,
+      "default" : 0.0625,
       "doc" : "Time step for PDE solver"
     },
     {

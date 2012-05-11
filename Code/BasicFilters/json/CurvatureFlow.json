@@ -11,7 +11,7 @@
     {
       "name" : "TimeStep",
       "type" : "double",
-      "default" : 0.1,
+      "default" : 0.05,
       "doc" : "Time step for curvature flow",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set the timestep parameter.\n",
