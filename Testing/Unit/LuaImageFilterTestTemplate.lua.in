@@ -95,19 +95,26 @@ end)
 )
 )
 
-    inputA = reader:SetFileName ( arg[2] ):Execute();
+    inputs = {}
+    for i=2,#arg-1 do
+       print( "reading..."..arg[i] );
+       table.insert( inputs, reader:SetFileName ( arg[i] ):Execute() );
+    end
+
 $(if inputA_cast then
 OUT=[[
-     inputA = SimpleITK.Cast( inputA, SimpleITK.${inputA_cast} );
+      inputs[1] = SimpleITK.Cast( inputs[1], SimpleITK.${inputA_cast} );
      ]]
 end)
-    $(if inputB then
-    OUT=[[
-    inputB = reader:SetFileName ( arg[3] ):Execute();
-    ]]
-    end)
-    
-    output = filter:Execute ( inputA $(if inputB then OUT=[[, inputB]] end) )
+$(if inputB_cast then
+OUT=[[
+      inputs[2] = SimpleITK.Cast( inputs[2], SimpleITK.${inputB_cast} );
+     ]]
+end)
+
+
+
+    output = filter:Execute ( unpack( inputs ) )
 
     writer:SetFileName ( arg[#arg] ):Execute ( output )
   end

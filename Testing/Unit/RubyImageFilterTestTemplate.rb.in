@@ -99,21 +99,30 @@ OUT=[[
 end)
 )
 )
-  inputA = reader.set_file_name( ARGV[1] ).execute
+  inputs = Array.new
+
+  for i in 1..ARGV.length-2
+    puts "reading.."+ARGV[i]
+    inputs.push( Simpleitk::read_image( ARGV[i] ) )
+  end
 $(if inputA_cast then
 
 -- the first char of the string needs to be converted to upper case
 OUT=[[
   caster = Simpleitk::CastImageFilter.new
   caster.set_output_pixel_type( Simpleitk::${inputA_cast:gsub("^%l", inputA_cast.upper ) })
-  inputA = caster.execute( inputA ) ]]
+  inputs[0] = caster.execute( inputs[0] ) ]]
 end)
-  $(if inputB then
-  OUT=[[inputB = reader.set_file_name( ARGV[2] ).execute
-  output = filter.execute( inputA, inputB )]]
-    else
-  OUT=[[output = filter.execute( inputA )]]
-  end)
+$(if inputB_cast then
+
+-- the first char of the string needs to be converted to upper case
+OUT=[[
+  caster = Simpleitk::CastImageFilter.new
+  caster.set_output_pixel_type( Simpleitk::${inputB_cast:gsub("^%l", inputB_cast.upper ) })
+  inputs[1] = caster.execute( inputs[1] ) ]]
+end)
+
+  output = filter.execute( *inputs )
   writer.set_file_name( ARGV[ARGV.length-1] ).execute( output )
 end
 )

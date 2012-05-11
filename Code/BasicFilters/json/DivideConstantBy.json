@@ -6,36 +6,52 @@
   "number_of_inputs" : 1,
   "doc" : "",
   "pixel_types" : "typelist::Append<BasicPixelIDTypeList, ComplexPixelIDTypeList>::Type",
-  "include_files" : [ "sitkConditional.h", "sitkPixelIDTokens.h" ],
+  "include_files" : [
+    "sitkConditional.h",
+    "sitkPixelIDTokens.h"
+  ],
   "filter_type" : "itk::DivideImageFilter<itk::Image< typename itk::simple::Conditional< std::tr1::is_same<typename InputImageType::PixelType, std::complex<float> >::value, float, double>::Type,  InputImageType::ImageDimension>, InputImageType, InputImageType>",
-    "custom_set_input" : "filter->SetInput2( image1 );",
-  "members" : [ {
-    "name" : "Constant",
-    "type" : "double",
-    "default" : "1.0",
-    "custom_itk_cast" : "filter->SetConstant1( m_Constant );",
-    "briefdescriptionSet" : "",
-    "detaileddescriptionSet" : "Set the constant value which will be used as the dividend and each pixel is used as the divisor\n",
-    "briefdescriptionGet" : "",
-    "detaileddescriptionGet" : ""
-  } ],
-  "tests" : [ {
-    "tag" : "2d",
-    "description" : "2D",
-    "inputA" : "Input/STAPLE1.png",
-    "settings" : [ {
-      "parameter" : "Constant",
-      "value" : "255"
-    } ],
-    "md5hash" : "1c5971f23121c571530a4790ead32c85"
-  }, {
-    "tag" : "3d",
-    "description" : "3D",
-    "inputA" : "Input/RA-Short.nrrd",
-    "settings" : [ {
-      "parameter" : "Constant",
-      "value" : "0"
-    } ],
-    "md5hash" : "f01ea2e114072d252af0b63ddfebc1aa"
-  } ]
+  "custom_set_input" : "filter->SetInput2( image1 );",
+  "members" : [
+    {
+      "name" : "Constant",
+      "type" : "double",
+      "default" : "1.0",
+      "custom_itk_cast" : "filter->SetConstant1( m_Constant );",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the constant value which will be used as the dividend and each pixel is used as the divisor\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "2d",
+      "description" : "2D",
+      "settings" : [
+        {
+          "parameter" : "Constant",
+          "value" : "255"
+        }
+      ],
+      "md5hash" : "1c5971f23121c571530a4790ead32c85",
+      "inputs" : [
+        "Input/STAPLE1.png"
+      ]
+    },
+    {
+      "tag" : "3d",
+      "description" : "3D",
+      "settings" : [
+        {
+          "parameter" : "Constant",
+          "value" : "0"
+        }
+      ],
+      "md5hash" : "f01ea2e114072d252af0b63ddfebc1aa",
+      "inputs" : [
+        "Input/RA-Short.nrrd"
+      ]
+    }
+  ]
 }

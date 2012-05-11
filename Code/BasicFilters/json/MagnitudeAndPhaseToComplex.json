@@ -6,15 +6,19 @@
   "doc" : "Some global documentation",
   "pixel_types" : "RealPixelIDTypeList",
   "output_pixel_type" : "std::complex<typename InputImageType::PixelType>",
-  "members" : [ ],
-  "tests" : [ {
-    "tag" : "defaults",
-    "description" : "Test defaults",
-    "inputA" : "Input/RA-Slice-Float.nrrd",
-    "inputB" : "Input/RA-Slice-Float.nrrd",
-    "tolerance" : "0.001",
-    "settings" : [ ]
-  } ],
+  "members" : [],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Test defaults",
+      "tolerance" : "0.001",
+      "settings" : [],
+      "inputs" : [
+        "Input/RA-Slice-Float.nrrd",
+        "Input/RA-Slice-Float.nrrd"
+      ]
+    }
+  ],
   "briefdescription" : "Implements pixel-wise conversion of magnitude and phase data into complex voxels.\n",
   "detaileddescription" : "This filter is parametrized over the types of the two input images and the type of the output image.\nThe filter expect all images to have the same dimension (e.g. all 2D, or all 3D, or all ND)\n"
 }

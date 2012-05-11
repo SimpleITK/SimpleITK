@@ -22,8 +22,8 @@ $(include DoNotEditWarning.h.in)
 
 #include <memory>
 
-#include "sitkDualImageFilter.h"
 #include "sitkBasicFilters.h"
+#include "sitkImageFilter.h"
 
 namespace itk {
   namespace simple {

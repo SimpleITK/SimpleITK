@@ -9,7 +9,7 @@
 *         http://www.apache.org/licenses/LICENSE-2.0.txt
 *
 *  Unless required by applicable law or agreed to in writing, software
-*  distributed under the License is distributed on an "AS IS" BASIS,
+*  distributed under the Licfense is distributed on an "AS IS" BASIS,
 *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 *  See the License for the specific language governing permissions and
 *  limitations under the License.
@@ -23,6 +23,7 @@
 
 // This is C# code to test ${name}
 using System;
+using System.Collections.Generic;
 using itk.simple;
 
 public class Test${name}ImageFilter {
@@ -32,14 +33,14 @@ public class Test${name}ImageFilter {
         try {
 
             // Get the right number of inputs
-            int inputs = 1;
+            int num_inputs = 1;
 $(if number_of_inputs then
             OUT=[[
-            inputs = ${number_of_inputs};]]
+            num_inputs = ${number_of_inputs};]]
 end)
 
             // Check the command line arguments
-            if ( args.Length < inputs + 1 ) {
+            if ( args.Length < num_inputs + 1 ) {
                 Console.WriteLine("Usage: ${name} tag <input(s)> output");
                 return 1;
             }
@@ -50,6 +51,7 @@ end)
             ImageFileReader reader = new ImageFileReader();
             ImageFileWriter writer = new ImageFileWriter();
             ${name}ImageFilter filter = new ${name}ImageFilter();
+			List<Image> inputs = new List<Image>();
 $(if #tests == 0 then
             OUT=[[
             // No tests defined => exit with error code
@@ -59,22 +61,21 @@ end)
             // Run each test
 $(foreach tests
             if (tag.Equals( "${tag}" )) {
+
                 // Read image(s)
-                Image inputA = reader.SetFileName( args[2] ).Execute();
+				for ( int i = 2; i < args.Length; i++ ) {
+
+					inputs.Add( reader.SetFileName( args[i] ).Execute() );
+				}
 
 $(if inputA_cast then
                  OUT=[[
                  CastImageFilter caster = new CastImageFilter();
                  caster.SetOutputPixelType( PixelIDValueEnum.${inputA_cast}.swigValue );
-                 inputA = caster.Execute( inputA );]]                
+                 inputs[0] = caster.Execute( inputs[0] );]]
 end)
 
-$(if inputB then
-                OUT=[[
-                Image inputB = reader.SetFileName ( args[3] ).Execute();
 
-]]
-end)
 $(when settings
                 // Set parameters
 $(foreach settings
@@ -143,13 +144,7 @@ end)
 )
 )
                 // Run the filter
-$(if inputB then
-                OUT=[[
-                Image output = filter.Execute ( inputA, inputB );]]
-else
-                OUT=[[
-                Image output = filter.Execute ( inputA );]]
-end)
+                Image output = filter.Execute ( $(if #inputs > 0 then OUT=[[inputs[0] ]] end)$(for inum=1,#inputs-1 do OUT=OUT..", inputs["..inum.."]" end) );
 
                 // Write output
                 writer.SetFileName( args[args.Length-1] ).Execute( output );

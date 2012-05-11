@@ -1,0 +1,6 @@
+$(for inum=1,number_of_inputs do
+ if inum>1 then
+       OUT=OUT.. ', '
+  end
+  OUT= OUT .. 'const Image& image' .. inum
+  end )
