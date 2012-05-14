@@ -89,6 +89,8 @@ $(include ToStringBody.cxx.in)
 $(include ToStringReturn.cxx.in)
 }
 
+$(include CustomMethods.cxx.in)
+
 //
 // Set/Get Member Properties
 //

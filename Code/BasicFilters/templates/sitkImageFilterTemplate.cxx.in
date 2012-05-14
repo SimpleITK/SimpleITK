@@ -36,6 +36,9 @@ $(include ConstructorMemberFunctionSetup.cxx.in)
 $(include ConstructorVectorPixels.cxx.in)
 }
 
+
+$(include CustomMethods.cxx.in)
+
 //
 // ToString
 //

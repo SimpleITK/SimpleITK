@@ -53,6 +53,8 @@ $(include ToStringBody.cxx.in)  out << " TrialPoints:" << std::endl;
 $(include ToStringReturn.cxx.in)
 }
 
+$(include CustomMethods.cxx.in)
+
 //
 // Execute
 //$(if members and #members > 0 then
