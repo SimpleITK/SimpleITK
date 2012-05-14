@@ -57,8 +57,7 @@
       "parameters" : [
         {
           "type" : "const Image &",
-          "var_name" : "refImage",
-          "last" : 1
+          "var_name" : "refImage"
         }
       ],
       "body" : "this->SetSize( refImage.GetSize() ); this->SetOrigin( refImage.GetOrigin() ); this->SetSpacing( refImage.GetSpacing() );this->SetDirection( refImage.GetDirection() );"
