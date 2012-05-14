@@ -5,6 +5,9 @@
   "number_of_inputs" : 1,
   "doc" : "Some global documentation",
   "pixel_types" : "RealPixelIDTypeList",
+  "include_files" : [
+    "algorithm"
+  ],
   "members" : [
     {
       "name" : "TimeStep",
@@ -39,8 +42,7 @@
     "parameters" : [
       {
         "type" : "Image &",
-        "var_name" : "inImage",
-        "last" : 1
+        "var_name" : "inImage"
       }
     ],
   "body" : "std::vector<double> spacing = inImage.GetSpacing();\ndouble minSpacing = *std::min_element( spacing.begin(), spacing.end()); this->m_TimeStep = minSpacing / std::pow(2.0, static_cast< double >( inImage.GetDimension() ) );"
