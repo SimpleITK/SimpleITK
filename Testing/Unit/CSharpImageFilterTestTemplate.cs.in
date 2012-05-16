@@ -63,7 +63,7 @@ $(foreach tests
             if (tag.Equals( "${tag}" )) {
 
                 // Read image(s)
-				for ( int i = 2; i < args.Length; i++ ) {
+				for ( int i = 2; i < args.Length-1; i++ ) {
 
 					inputs.Add( reader.SetFileName( args[i] ).Execute() );
 				}
