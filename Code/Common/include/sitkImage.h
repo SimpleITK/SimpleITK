@@ -74,8 +74,24 @@ namespace simple
     Image( const Image &img );
     Image& operator=( const Image &img );
 
-    Image( unsigned int Width, unsigned int Height, PixelIDValueEnum ValueEnum );
-    Image( unsigned int Width, unsigned int Height, unsigned int Depth, PixelIDValueEnum ValueEnum );
+    /** \brief Constructors for 2D, 3D images where pixel type and
+     * number of components can be specified.
+     *
+     * If the pixel type is a scalar or a label pixel type, then the
+     * number of components must be specified as 0 or 1.
+     *
+     * If the pixel type is a vector pixel type, then the number of
+     * components defaults to the image dimension, unless the
+     * numberOfComponents is explicitly specified.
+     *
+     * Unlike the standard convention for Dimensional Vectors the size
+     * parameter must be the exact dimension requesting. That is it must be of
+     * length 2 of a 2D image and of length 3 for a 3D image.
+     */
+    Image( unsigned int width, unsigned int height, PixelIDValueEnum valueEnum  );
+    Image( unsigned int width, unsigned int height, unsigned int depth, PixelIDValueEnum valueEnum );
+    Image( const std::vector< unsigned int > &size, PixelIDValueEnum valueEnum, unsigned int numberOfComponents = 0 );
+
 
     template <typename TImageType>
     explicit Image( itk::SmartPointer<TImageType> image )
@@ -227,6 +243,10 @@ namespace simple
      * returnign the pointer, additional copying and usage may
      * introduce unexpected aliasing.
      *
+     * The correct method for the current pixel type of the image must
+     * be called or else an exception will be generated. For vector
+     * pixel types the type of the component of the vector must be called.
+     *
      * \sa Image::GetPixelIDValue
      * @{
      */
@@ -262,7 +282,7 @@ namespace simple
      * This method internally utlizes the member function factory to
      * dispatch to methods instantiated on the image of the pixel ID
      */
-    void Allocate ( unsigned int Width, unsigned int Height, unsigned int Depth, PixelIDValueEnum ValueEnum );
+    void Allocate ( unsigned int Width, unsigned int Height, unsigned int Depth, PixelIDValueEnum ValueEnum, unsigned int numberOfComponents );
 
     /** \brief Dispatched methods for allocating images
      *
@@ -273,15 +293,15 @@ namespace simple
      */
     template<class TImageType>
     typename EnableIf<IsBasic<TImageType>::Value>::Type
-    AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth );
+    AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int numberOfComponents );
 
     template<class TImageType>
     typename EnableIf<IsVector<TImageType>::Value>::Type
-    AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth );
+    AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int numberOfComponents );
 
     template<class TImageType>
     typename EnableIf<IsLabel<TImageType>::Value>::Type
-    AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth );
+    AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int numberOfComponents );
     /**@}*/
 
     void MakeUniqueForWrite( void );
