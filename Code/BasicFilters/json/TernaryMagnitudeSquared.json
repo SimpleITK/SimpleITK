@@ -28,7 +28,7 @@
         "Input/RA-Float.nrrd"
       ],
       "settings" : [],
-      "md5hash" : "011ff229a79168067c5c6c4f74002e19"
+      "tolerance" : 1e-6
     }
   ]
 }
