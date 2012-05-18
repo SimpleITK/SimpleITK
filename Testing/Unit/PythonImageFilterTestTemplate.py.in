@@ -71,18 +71,27 @@ OUT=[[
 end)
 )
 )
-    inputA = reader.SetFileName ( sys.argv[2] ).Execute()
+
+    inputs = []
+
+    for i in range(2, len(sys.argv)-1 ):
+      print "reading ", sys.argv[i]
+      inputs.append( SimpleITK.ReadImage( sys.argv[i] ) );
+
+
 $(if inputA_cast then
 OUT=[[
-    inputA = SimpleITK.Cast( inputA, SimpleITK.${inputA_cast} );
+    inputs[0] = SimpleITK.Cast( inputs[0], SimpleITK.${inputA_cast} );
      ]]
 end)
-    $(if inputB then
-    OUT=[[inputB = reader.SetFileName ( sys.argv[3] ).Execute()
-    output = filter.Execute ( inputA, inputB )]]
-      else
-    OUT=[[output = filter.Execute ( inputA )]]
-      end)
+
+$(if inputB_cast then
+OUT=[[
+    inputs[1] = SimpleITK.Cast( inputs[1], SimpleITK.${inputB_cast} );
+     ]]
+end)
+
+    output = filter.Execute( *tuple(inputs) )
+
     writer.SetFileName ( sys.argv[-1] ).Execute ( output )
 )
-

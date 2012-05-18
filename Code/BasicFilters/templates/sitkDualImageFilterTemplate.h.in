@@ -22,7 +22,7 @@ $(include DoNotEditWarning.h.in)
 
 #include <memory>
 
-#include "sitkDualImageFilter.h"
+#include "sitkImageFilter.h"
 #include "sitkDualMemberFunctionFactory.h"
 #include "sitkBasicFilters.h"
 

@@ -44,7 +44,6 @@ if ( numberOfArguments < inputs + 2) {
 
 tag <- args[[1]]
 
-reader <- ImageFileReader()
 writer <- ImageFileWriter()
 filter <- ${name}ImageFilter()
 
@@ -78,17 +77,24 @@ OUT=[[
 end)
 )
 )
-    reader <- ImageFileReader_SetFileName ( reader, argument2 )
-    inputA <- ImageFileReader_Execute ( reader )
-    $(if inputB then
-OUT=[[inputB <- ImageFileReader_SetFileName ( reader, argument3 )
-    inputB <- ImageFileReader_Execute ( reader )
-output <- ${name}ImageFilter_Execute ( filter, inputA, inputB )]]
-  else
-OUT=[[output <- ${name}ImageFilter_Execute ( filter, inputA )]]
-  end)
-  writer <- ImageFileWriter_SetFileName( writer, lastargument )
-  writer <- ImageFileWriter_Execute( writer, output )
+
+  inputs <- list()
+  for ( i in 3:length(args)-1 )
+  {
+  inputs[[length(inputs)+1]] <-ReadImage( args[[i]] )
+  }
+
+$(if inputA_cast then
+ OUT="  inputs[[1]] = Cast( inputs[[1]], ':${inputA_cast}:' )"
+end)
+$(if inputB_cast then
+ OUT="  inputs[[2]] = Cast( inputs[[2]], ':${inputB_cast}:' )"
+end)
+
+  output <- filter$Execute ( $(if #inputs > 0 then OUT="inputs[[1]] " end)$(for inum=2,#inputs do OUT=OUT..", inputs[["..inum.."]]" end) )
+
+  writer <- writer$SetFileName( lastargument )
+  writer <- writer$Execute( output )
   }
 )
 

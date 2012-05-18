@@ -1,0 +1,34 @@
+{
+  "name" : "TernaryMagnitudeSquared",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 3,
+  "doc" : "",
+  "filter_type" : "itk::TernaryMagnitudeSquaredImageFilter<InputImageType, InputImageType2, InputImageType3, OutputImageType >",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [],
+  "tests" : [
+    {
+      "tag" : "2d",
+      "description" : "2D",
+      "inputs" : [
+        "Input/STAPLE1.png",
+        "Input/STAPLE2.png",
+        "Input/STAPLE1.png"
+      ],
+      "settings" : [],
+      "md5hash" : "b095bd511398c8d902bf27566760c6dd"
+    },
+    {
+      "tag" : "3d",
+      "description" : "3D",
+      "inputs" : [
+        "Input/RA-Float.nrrd",
+        "Input/RA-Float.nrrd",
+        "Input/RA-Float.nrrd"
+      ],
+      "settings" : [],
+      "tolerance" : 1e-6
+    }
+  ]
+}
