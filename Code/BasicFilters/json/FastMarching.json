@@ -64,9 +64,7 @@
             "[70,70]",
             "[200,180]"
           ],
-          "R_value" : [
-            "list(c(70,70), c(200,180))"
-          ]
+          "R_value" : "list(c(70,70), c(200,180))"
         },
         {
           "parameter" : "NormalizationFactor",
