@@ -26,7 +26,7 @@
           "java_value" : "${name}ImageFilter.KernelType.Ball",
           "tcl_value" : "$$${name}ImageFilter_Ball",
           "csharp_value" : "${name}ImageFilter.KernelType.Ball",
-          "R_value" : "':Box:'"
+          "R_value" : "'Box'"
         }
       ],
       "inputs" : [
@@ -57,7 +57,7 @@
           "java_value" : "${name}ImageFilter.KernelType.Cross",
           "tcl_value" : "$$${name}ImageFilter_Cross",
           "csharp_value" : "itk.simple.${name}ImageFilter.KernelType.Cross",
-          "R_value" : "':Cross:'"
+          "R_value" : "'Cross'"
         }
       ],
       "inputs" : [
@@ -88,7 +88,7 @@
           "java_value" : "${name}ImageFilter.KernelType.Box",
           "tcl_value" : "$$${name}ImageFilter_Box",
           "csharp_value" : "itk.simple.${name}ImageFilter.KernelType.Box",
-          "R_value" : "':Box:'"
+          "R_value" : "'Box'"
         }
       ],
       "inputs" : [
