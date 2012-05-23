@@ -33,6 +33,7 @@ $(if number_of_inputs then
     OUT=[[inputs <- ${number_of_inputs}]]
   end)
 
+# arguments after --args
 args <- commandArgs( TRUE )
 
 numberOfArguments <- length(args)
@@ -65,14 +66,14 @@ if(tag == "${tag}") {
 $(foreach settings
 $(if parameter == "SeedList" then
     OUT=[[
-      filter <- filter.ClearSeeds()
+      filter <- filter$$ClearSeeds()
       $(for i=1,#value do
-        OUT=OUT .. "filter <- filter.AddSeed( SimpleITK.Index" .. value[i] .. " )\n"
+        OUT=OUT .. "filter <- filter$$AddSeed( " .. R_value[i] .. " )\n"
        end)
     ]]
 else
 OUT=[[
-   filter <- ${name}ImageFilter_Set${parameter}( filter, $(if R_value then OUT='${R_value}' else OUT='${value}' end) )
+   filter <- filter$$Set${parameter}($(if R_value then OUT='${R_value}' else OUT='${value}' end) )
   ]]
 end)
 )
@@ -81,20 +82,21 @@ end)
   inputs <- list()
   for ( i in 3:length(args)-1 )
   {
-  inputs[[length(inputs)+1]] <-ReadImage( args[[i]] )
+  inputs[[length(inputs)+1]] <- ReadImage( args[[i]] )
   }
 
 $(if inputA_cast then
- OUT="  inputs[[1]] = Cast( inputs[[1]], ':${inputA_cast}:' )"
+ OUT="  inputs[[1]] = Cast( inputs[[1]], R${inputA_cast}_get() )"
 end)
 $(if inputB_cast then
- OUT="  inputs[[2]] = Cast( inputs[[2]], ':${inputB_cast}:' )"
+ OUT="  inputs[[2]] = Cast( inputs[[2]], R${inputB_cast}_get() )"
 end)
 
-  output <- filter$Execute ( $(if #inputs > 0 then OUT="inputs[[1]] " end)$(for inum=2,#inputs do OUT=OUT..", inputs[["..inum.."]]" end) )
+  output <- filter$$Execute ( $(if #inputs > 0 then OUT="inputs[[1]] " end)$(for inum=2,#inputs do OUT=OUT..", inputs[["..inum.."]]" end) )
 
-  writer <- writer$SetFileName( lastargument )
-  writer <- writer$Execute( output )
+  writer <- writer$$SetFileName( lastargument )
+  writer <- writer$$Execute( output )
+
   }
 )
 
