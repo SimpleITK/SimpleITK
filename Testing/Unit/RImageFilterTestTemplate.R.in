@@ -55,9 +55,6 @@ quit( save="no", status=1 )
     ]]
   end)
 
-argument2 <- args[[2]]
-argument3 <- args[[3]]
-
 lastargument <- args[[numberOfArguments]]
 
 $(foreach tests
