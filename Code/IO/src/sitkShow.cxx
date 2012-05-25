@@ -42,26 +42,30 @@ namespace itk
 
 #if defined(WIN32)
   static std::string ShowImageCommand = "%a -o %f";
-  static std::string ShowColorImageCommand = "%a -eval %m";
+  static std::string ShowColorImageCommand = "%a -eval "
+                                              "\"open(\'%f\'); run(\'Make Composite\', \'display=Composite\'); \"";
 
 #elif defined(__APPLE__)
   static std::string ShowImageCommand = "open -a %a %f";
-  // the "-n" flag tells OSX to launch a new instance of ImageJ, even if one is already running.
-  // we do this because otherwise the macro command line argument is not correctly passed to
+  // The "-n" flag tells OSX to launch a new instance of ImageJ, even if one is already running.
+  // We do this because otherwise the macro command line argument is not correctly passed to
   // a previously running instance of ImageJ.
-  static std::string ShowColorImageCommand = "open -a %a -n --args -eval %m";
+  static std::string ShowColorImageCommand = "open -a %a -n --args -eval "
+                                             "\'open(\"%f\"); run(\"Make Composite\", \"display=Composite\"); \'";
 
 #else
   // linux and other systems
   static std::string ShowImageCommand = "%a -o %f";
-  static std::string ShowColorImageCommand = "%a -e %m";
+  static std::string ShowColorImageCommand = "%a -e "
+                                             "\'open(\"%f\"); run(\"Make Composite\", \"display=Composite\"); \'";
 #endif
 
 
-  // Function to replace %tokens in a string.  The tokens are %a, %f, %m for
-  // application, filename and macro respectively.  %% will send % to the output string.
+  // Function to replace %tokens in a string.  The tokens are %a and %f for
+  // application and file name respectively.  %% will send % to the output string.
+  // Multiple occurances of a token are allowed.
   //
-  static std::string ReplaceWords(std::string command, std::string app, std::string filename, std::string macro, bool& fileFlag)
+  static std::string ReplaceWords(std::string command, std::string app, std::string filename, bool& fileFlag)
     {
     std::string result;
 
@@ -93,12 +97,6 @@ namespace itk
             case 'f':
               // %f for filename
               result.append(filename);
-              fileFlag = true;
-              i++;
-              break;
-            case 'm':
-              // %m for macro
-              result.append(macro);
               fileFlag = true;
               i++;
               break;
@@ -152,10 +150,10 @@ namespace itk
       }
     }
 
-  static std::vector<std::string> ConvertCommand(std::string command, std::string app, std::string filename, std::string macro="")
+  static std::vector<std::string> ConvertCommand(std::string command, std::string app, std::string filename)
     {
     bool fileFlag=false;
-    std::string new_command = ReplaceWords(command, app, filename, macro, fileFlag);
+    std::string new_command = ReplaceWords(command, app, filename, fileFlag);
     std::istringstream iss(new_command);
     std::vector<std::string> result;
     std::vector<unsigned char> quoteStack;
@@ -464,23 +462,10 @@ namespace itk
   bool colorFlag = false;
 
 
-  // If the image is 3 channel, 8 or 16 bit, assume it's a color image and build an
-  // ImageJ macro to view it as a composite image.
+  // If the image is 3 channel, 8 or 16 bit, assume it's a color image.
   //
-  if ( (image.GetNumberOfComponentsPerPixel() == 3)
-    && ((image.GetPixelIDValue()==sitkVectorUInt8) || (image.GetPixelIDValue()==sitkVectorUInt16)) )
-    {
-#if defined(WIN32)
-    // Windows needs single quotes while *nix needs double.
-    Macro = "\"open(\'" + TempFile + "\');";
-    Macro += " run(\'Make Composite\', \'display=Composite\'); \"";
-#else
-    Macro = "\'open(\"" + TempFile + "\");";
-    Macro += " run(\"Make Composite\", \"display=Composite\"); \'";
-#endif
-    colorFlag = true;
-    //std::cout << "Macro:\t" << Macro << std::endl;
-    }
+  colorFlag = ( (image.GetNumberOfComponentsPerPixel() == 3)
+                  && ((image.GetPixelIDValue()==sitkVectorUInt8) || (image.GetPixelIDValue()==sitkVectorUInt16)) );
 
 
 
@@ -524,7 +509,7 @@ namespace itk
   //
   ExecutableName = FindApplication("ImageJ.exe");
 
-  CommandLine = ConvertCommand(Command, ExecutableName, TempFile, Macro);
+  CommandLine = ConvertCommand(Command, ExecutableName, TempFile);
 
 #elif defined(__APPLE__)
 
@@ -541,7 +526,7 @@ namespace itk
     ExecutableName="ImageJ64";
     }
 
-  CommandLine = ConvertCommand(Command, ExecutableName, TempFile, Macro);
+  CommandLine = ConvertCommand(Command, ExecutableName, TempFile);
 
   bool fail64 = false;
 
@@ -565,7 +550,7 @@ namespace itk
   // Mac 32-bit
   ExecutableName = FindApplication( "ImageJ.app" );
 
-  CommandLine = ConvertCommand(Command, ExecutableName, TempFile, Macro);
+  CommandLine = ConvertCommand(Command, ExecutableName, TempFile);
 
 #else
 
@@ -576,7 +561,7 @@ namespace itk
     ExecutableName = FindApplication("imagej");
     }
 
-  CommandLine = ConvertCommand(Command, ExecutableName, TempFile, Macro);
+  CommandLine = ConvertCommand(Command, ExecutableName, TempFile);
 #endif
 
   // run the compiled command-line in a process which will detach
