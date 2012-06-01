@@ -57,7 +57,7 @@ struct DualMemberFunctionInstantiater
       typedef TAddressor                                                             AddressorType;
 
       AddressorType addressor;
-      m_Factory.Register(addressor.operator()<ImageType1, ImageType2>(), (ImageType1*)(NULL), (ImageType2*)(NULL) );
+      m_Factory.Register(addressor.template operator()<ImageType1, ImageType2>(), (ImageType1*)(NULL), (ImageType2*)(NULL) );
 
     }
 
