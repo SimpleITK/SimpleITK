@@ -1,0 +1,42 @@
+{
+  "name" : "Gradient",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "output_image_type" : "itk::VectorImage<float, InputImageType::ImageDimension>",
+  "filter_type" : "itk::GradientImageFilter<InputImageType, float, float, OutputImageType>",
+  "members" : [
+    {
+      "name" : "UseImageSpacing",
+      "type" : "bool",
+      "default" : "true"
+    },
+    {
+      "name" : "UseImageDirection",
+      "type" : "bool",
+      "default" : "false"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "Simply run with default settings from 2d image",
+      "settings" : [],
+      "tolerance" : 1e-05,
+      "inputs" : [
+        "Input/cthead1.png"
+      ]
+    },
+    {
+      "tag" : "default_float",
+      "description" : "Simply run with default settings from float image",
+      "settings" : [],
+      "tolerance" : 1e-05,
+      "inputs" : [
+        "Input/RA-Float.nrrd"
+      ]
+    }
+  ]
+}
