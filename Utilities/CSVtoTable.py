@@ -87,7 +87,7 @@ color = "FFFFFF"
 
 try:
     if doxyFlag:
-        outfile.write( "/** \page SimpleITK Filter Coverage\n" )
+        outfile.write( "/** \page Filter_Coverage Filter Coverage\n" )
         outfile.write( "\n" )
 
     outfile.write( "<table>\n" )
