@@ -30,36 +30,71 @@ class bcolors:
     HEADER='\033[95m';  OKBLUE='\033[94m'; OKGREEN='\033[92m';
     WARNING='\033[93m'; FAIL='\033[91m';   ENDC='\033[0m';
 
+def usage():
+    """How to use this script"""
+    print ""
+    print "CSVtoTable.py [options] [input_file [output_file]]"
+    print ""
+    print "    -h    This help message"
+    print "    -d    Make a Doxygen file"
+    print ""
 
-inname = "filters.csv"
-outname = "filters.html"
+#   Variables
+#
+inname   = "filters.csv"
+outname   = "filters.html"
+doxyFlag = False
 
 fieldnames      = ( 'Filter', 'ITK', 'SITK', 'Remark', 'ToDo' )    # fields in the CSV file
 
-args = sys.argv[1:]
 
+#
+#   Handle command line options
+#
+
+try:
+    opts, args = getopt.getopt(sys.argv[1:], "hd",
+        [ "help", "doxygen" ] )
+except getopt.GetoptError, err:
+    print str(err)
+    usage()
+    sys.exit(2)
+
+for o, a in opts:
+    if o in ("-h", "--help"):
+        usage()
+        sys.exit()
+    elif o in ("-d", "--doxygen"):
+        doxyFlag = True
+    else:
+        assert False, "unhandled option"
+
+#  get the input and output file names
 if len(args):
     inname = args[0]
     if len(args)>1:
         outname = args[1]
 
 
-print inname
-print outname
+print inname, outname
 
 
 outfile = open(outname, "w")
 color = "FFFFFF"
 
 try:
-    outfile.write( "<table>\n")
-    outfile.write( "<tr>\n")
-    outfile.write( "<th>Filter name</th>\n")
-    outfile.write( "<th>ITK</th>\n")
-    outfile.write( "<th>SimpleITK</th>\n")
-    outfile.write( "<th>Remarks</th>\n")
-    outfile.write( "<th>ToDo</th>\n")
-    outfile.write( "</tr>\n")
+    if doxyFlag:
+        outfile.write( "/** \page SimpleITK Filter Coverage\n" )
+        outfile.write( "\n" )
+
+    outfile.write( "<table>\n" )
+    outfile.write( "<tr>\n" )
+    outfile.write( "<th>Filter name</th>\n" )
+    outfile.write( "<th>ITK</th>\n" )
+    outfile.write( "<th>SimpleITK</th>\n" )
+    outfile.write( "<th>Remarks</th>\n" )
+    outfile.write( "<th>ToDo</th>\n" )
+    outfile.write( "</tr>\n" )
 
     with open(inname,"rU") as fp:
         reader = csv.DictReader(fp)
@@ -96,21 +131,25 @@ try:
                     color = "FF7070"    # Red
 
 
-            outfile.write( "<tr bgcolor="+color+">\n")
-            outfile.write( "<td>"+filt+"</td>\n")
-            outfile.write( "<td>"+str(iflag)+"</td>\n")
-            outfile.write( "<td>"+str(sflag)+"</td>\n")
-            outfile.write( "<td>"+remark+"</td>\n")
+            outfile.write( "<tr bgcolor="+color+">\n" )
+            outfile.write( "<td>"+filt+"</td>\n" )
+            outfile.write( "<td>"+str(iflag)+"</td>\n" )
+            outfile.write( "<td>"+str(sflag)+"</td>\n" )
+            outfile.write( "<td>"+remark+"</td>\n" )
             if not sflag:
-                outfile.write( "<td>"+str(todo)+"</td>\n")
+                outfile.write( "<td>"+str(todo)+"</td>\n" )
             else:
-                outfile.write( "<td></td>\n")
-            outfile.write( "</tr>\n")
+                outfile.write( "<td></td>\n" )
+            outfile.write( "</tr>\n" )
 
 except:
     print "Failed to read input file ", inname
     print sys.exc_info()[0]
     sys.exit(1)
 
-outfile.write( "</table>\n")
+outfile.write( "</table>\n" )
+
+if doxyFlag:
+    outfile.write( "*/\n" )
+
 outfile.close()
