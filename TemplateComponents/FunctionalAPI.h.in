@@ -6,5 +6,9 @@
      *
      * \sa itk::simple::${name}ImageFilter for the object oriented interface
      */
-    SITKBasicFilters_EXPORT Image ${name} ( $(include ImageParameters.in)$(when members $(foreach members ,
-      ${type} in${name} = ${default})) );
+    SITKBasicFilters_EXPORT Image ${name} ( $(include ImageParameters.in)$(for i = 1,#members do
+  if (number_of_inputs > 0 or i > 1) then
+    OUT = OUT .. ", "
+  end
+    OUT= OUT .. members[i].type .. ' in' .. members[i].name .. " = " .. members[i].default
+end) );

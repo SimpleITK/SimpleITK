@@ -166,8 +166,7 @@ custom method are:
     - \b type: (\e string) The parameter's type
     - \b var_name: (\e string) The name of the variable to be used in the \b body
     field for the custom method
-    - \b last: (0 or 1) If set to 1, no comma will be added after this
-    parameter in the signature, otherwise a comma will be added
+
   - \b body: (\e string) This string is the body of the method and will be
   placed directly into the header file. The parameter names specified with
   \b var_name in each of the parameter obects can be used in this body
@@ -180,8 +179,7 @@ A sample custom method might look like:
   "return_type" : "bool",
   "parameters" : [
     { "type" : "std::string",
-      "var_name" : "inString",
-      "last" : 1
+      "var_name" : "inString"
     }
   ],
   "body" : "if (!strcmp(inString.c_str(), "Foo")) { return true; } else { return false; }"

@@ -9,7 +9,7 @@
     {
       "name" : "TimeStep",
       "type" : "double",
-      "default" : 0.125,
+      "default" : 0.05,
       "doc" : "Time step for PDE solver"
     },
     {
@@ -17,6 +17,11 @@
       "type" : "uint32_t",
       "default" : "5u",
       "doc" : "Number of iterations to run"
+    },
+    {
+      "name" : "StencilRadius",
+      "type" : "int",
+      "default" : 2
     }
   ],
   "tests" : [
