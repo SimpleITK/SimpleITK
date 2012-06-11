@@ -71,7 +71,13 @@
         },
         {
           "parameter" : "InitialNeighborhoodRadius",
-          "value" : 10
+          "value" : "10u",
+          "lua_value" : "10",
+          "python_value" : "10",
+          "ruby_value" : "10",
+          "java_value" : "10",
+          "tcl_value" : "10",
+          "R_value" : "10"
         }
       ],
       "md5hash" : "d9617e028958be235069f542d1c2111b",
