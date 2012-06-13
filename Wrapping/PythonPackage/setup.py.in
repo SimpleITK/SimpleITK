@@ -11,7 +11,7 @@ setup(
     version = '@SimpleITK_Major@.@SimpleITK_Minor@.@SimpleITK_Patch@',
     author = 'Insight Software Consortium',
     author_email = 'insight-users@itk.org',
-    py_modules = ['SimpleITK',],
+    py_modules = ['SimpleITK'],
     data_files = [(get_python_lib(), [r'@SIMPLEITK_NATIVE_BINARY_MODULE@'])],
     download_url = r'http://www.itk.org/SimpleITKDoxygen/html/PyDownload.html',
     platforms = [],

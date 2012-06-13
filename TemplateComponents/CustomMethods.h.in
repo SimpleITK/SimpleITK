@@ -4,8 +4,10 @@ OUT = [[
 
 $(foreach custom_methods
       /** ${doc} */
-      ${return_type} ${name}( $(foreach parameters ${type} ${var_name}$(if last == 0 then OUT=', ' end)) )
-        {
-        ${body}
-        };
+      ${return_type} ${name}( $(for inum=1,#parameters do
+                                if inum>1 then
+                                   OUT = OUT .. ', '
+                                end
+                                OUT = OUT .. parameters[inum].type .. ' ' .. parameters[inum].var_name
+                               end) );
 )]]end)

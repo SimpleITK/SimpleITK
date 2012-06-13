@@ -9,7 +9,7 @@
     {
       "name" : "SafeBorder",
       "type" : "bool",
-      "default" : true,
+      "default" : "true",
       "doc" : "",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "A safe border is added to input image to avoid borders effects and remove it once the closing is done\n",
@@ -38,7 +38,7 @@
           "java_value" : "${name}ImageFilter.KernelType.Ball",
           "tcl_value" : "$$${name}ImageFilter_Ball",
           "csharp_value" : "${name}ImageFilter.KernelType.Ball",
-          "R_value" : "':Ball:'"
+          "R_value" : "'Ball'"
         }
       ],
       "inputs" : [

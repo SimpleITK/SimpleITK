@@ -1,0 +1,76 @@
+{
+  "name" : "PhysicalPointSource",
+  "itk_name" : "PhysicalPointImageSource",
+  "template_code_filename" : "ImageSource",
+  "template_test_filename" : "ImageFilter",
+  "doc" : "",
+  "number_of_inputs" : 0,
+  "pixel_types" : "VectorPixelIDTypeList",
+  "output_image_type" : "TImageType",
+  "filter_type" : "PhysicalPointImageSource<OutputImageType>",
+  "include_files" : [
+    "sitkDirectionConvert.hxx"
+  ],
+  "members" : [
+    {
+      "name" : "OutputPixelType",
+      "type" : "PixelIDValueType",
+      "default" : "itk::simple::sitkVectorFloat32",
+      "no_print" : 1,
+      "custom_itk_cast" : ""
+    },
+    {
+      "name" : "Size",
+      "type" : "std::vector<unsigned int>",
+      "dim_vec" : 1,
+      "default" : "std::vector<unsigned int>(3, 64)",
+      "itk_type" : "typename FilterType::SizeType"
+    },
+    {
+      "name" : "Origin",
+      "type" : "std::vector<double>",
+      "dim_vec" : 1,
+      "default" : "std::vector<double>(3, 0.0)",
+      "itk_type" : "typename FilterType::PointType"
+    },
+    {
+      "name" : "Spacing",
+      "type" : "std::vector<double>",
+      "dim_vec" : 1,
+      "default" : "std::vector<double>(3, 1.0)",
+      "itk_type" : "typename FilterType::SpacingType"
+    },
+    {
+      "name" : "Direction",
+      "type" : "std::vector<double>",
+      "default" : "std::vector<double>()",
+      "doc" : "Passing a zero sized array, defaults to identiy matrix. The size of the array must exactly match the direction matrix for the dimension of the image.",
+      "no_print" : 1,
+      "custom_itk_cast" : "filter->SetDirection( VectorToITKDirection<typename FilterType::DirectionType>( this->m_Direction ) );"
+    }
+  ],
+  "custom_methods" : [
+    {
+      "name" : "SetReferenceImage",
+      "doc" : "This methods sets the size, origin, spacing and direction to that of the provided image",
+      "return_type" : "void",
+      "parameters" : [
+        {
+          "type" : "const Image &",
+          "var_name" : "refImage"
+        }
+      ],
+      "body" : "this->SetSize( refImage.GetSize() ); this->SetOrigin( refImage.GetOrigin() ); this->SetSpacing( refImage.GetSpacing() );this->SetDirection( refImage.GetDirection() );"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "Simply run with default settings",
+      "settings" : [],
+      "md5hash" : "d0857811f2d6f37882341c858000911d"
+      "inputs" : [
+      ]
+    }
+  ]
+}

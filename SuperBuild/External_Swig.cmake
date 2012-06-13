@@ -65,5 +65,12 @@ if(NOT SWIG_DIR)
 
     set(SWIG_DIR ${swig_install_dir}/share/swig/${TARGET_SWIG_VERSION})
     set(SWIG_EXECUTABLE ${swig_install_dir}/bin/swig)
+
+    ExternalProject_Add_Step(Swig cpvec
+      COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/../Wrapping/std_vector_for_R_swig.i ${SWIG_DIR}/r/std_vector.i
+       DEPENDEES install
+    )
+
+
   endif()
 endif(NOT SWIG_DIR)

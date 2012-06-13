@@ -29,11 +29,51 @@ namespace simple
   /** Display an image using ImageJ
    *
    *  This function requires that ImageJ
-   *  (\see http://rsb.info.nih.gov/ij/) be properly installed for Mac
+   *  (http://rsb.info.nih.gov/ij/) be properly installed for Mac
    *  and Windows, and in the user's path for Linux.  ImageJ must have
-   *  a plugin for reading Nifti formatted files (\see
-   *  http://www.loci.wisc.edu/bio-formats/imagej)
+   *  a plugin for reading Nifti formatted files (http://www.loci.wisc.edu/bio-formats/imagej).
+   *
+   *  Nifti is the default file format used to export images.  A different
+   *  format can by chosen by setting the SITK_SHOW_EXTENSION environment variable.
+   *  For example, set SITK_SHOW_EXTENSION to ".png" to use PNG format.
+   *
+   *  The user can specify an application other than ImageJ to view images via
+   *  the SITK_SHOW_COMMAND environment variable.
+   *
+   *  The user can also select applications specifically for color images or 3D
+   *  images using the SITK_SHOW_COLOR_COMMAND and SITK_SHOW_3D_COMMAND environment
+   *  variables.
+   *
+   *  SITK_SHOW_COMMAND, SITK_SHOW_COLOR_COMMAND and SITK_SHOW_3D_COMMAND allow
+   *  the following %tokens in their strings.
+   *
+   *      %a  for the ImageJ application
+   *      %f  for SimpleITK's temporary image file
+   *
+   *  For example, the default SITK_SHOW_COMMAND string on Linux systems is:
+   *
+   *      %a -o %f
+   *
+   *  After token substitution it may become:
+   *
+   *      ImageJ -o /tmp/Temp-65535-0.nii
+   *
+   *  For another example, the default SITK_SHOW_COLOR_COMMAND string on Mac OS X is:
+   *
+   *       open -a %a -n --args -eval \'open(\"%f\"); run(\"Make Composite\", \"display=Composite\"); \'
+   *
+   *  After token substitution the string may become:
+   *
+   *      open -a ImageJ64 -n --args -eval 'open("/tmp/TempFile-20238-0.nii"); run("Make Composite", "display=Composite");'
+   *
+   *  The string after "-eval" is an ImageJ macro the opens the file and runs ImageJ's Make Composite command
+   *  to display the image in color.
+   *
+   *  If the "%f" token is not found in the command string, the temporary file name is automatically appended
+   *  to the command argument list.
    **/
+
+
    void SITKIO_EXPORT Show ( const Image &image, const std::string title = "" );
 }
 }

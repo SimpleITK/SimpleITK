@@ -6,6 +6,9 @@
   "doc" : "",
   "pixel_types" : "typelist::Append<BasicPixelIDTypeList, VectorPixelIDTypeList>::Type",
   "filter_type" : "itk::ResampleImageFilter<InputImageType, OutputImageType, double>",
+  "include_files" : [
+    "sitkDirectionConvert.hxx"
+  ],
   "members" : [
     {
       "name" : "Size",
@@ -49,7 +52,7 @@
       "default" : "std::vector<double>()",
       "doc" : "Passing a zero sized array, defaults to identiy matrix. The size of the array must exactly match the direction matrix for the dimension of the image.",
       "no_print" : 1,
-      "custom_itk_cast" : "typename InputImageType::DirectionType itkDirection;\n if ( m_OutputDirection.size() == 0 )\n { itkDirection.SetIdentity(); }\n else if( m_OutputDirection.size() == InputImageType::ImageDimension*InputImageType::ImageDimension )\n {\n std::copy( m_OutputDirection.begin(), m_OutputDirection.end(), itkDirection.GetVnlMatrix().begin() );\n} else {\n}\n filter->SetOutputDirection( itkDirection );",
+      "custom_itk_cast" : "filter->SetOutputDirection( VectorToITKDirection<typename FilterType::DirectionType>( this->m_OutputDirection ) );",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set the output direciton cosine matrix.\n",
       "briefdescriptionGet" : "",
@@ -69,13 +72,12 @@
   "custom_methods" : [
     {
       "name" : "SetReferenceImage",
-      "doc" : "This methods sets the output size, origin, and spacing to that of the provided image",
+      "doc" : "This methods sets the output size, origin, spacing and direction to that of the provided image",
       "return_type" : "void",
       "parameters" : [
         {
           "type" : "const Image &",
-          "var_name" : "refImage",
-          "last" : 1
+          "var_name" : "refImage"
         }
       ],
       "body" : "this->SetSize( refImage.GetSize() ); this->SetOutputOrigin( refImage.GetOrigin() ); this->SetOutputSpacing( refImage.GetSpacing() );this->SetOutputDirection( refImage.GetDirection() );"

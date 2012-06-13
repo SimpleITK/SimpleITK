@@ -1,0 +1,18 @@
+$(if custom_methods and #custom_methods > 0 then
+filter_name = name
+OUT = [[
+
+//
+// Custom Methods
+//
+$(foreach custom_methods
+${return_type} ${filter_name}ImageFilter::${name}( $(for inum=1,#parameters do
+                        if inum>1 then
+                            OUT = OUT .. ', '
+                        end
+                        OUT = OUT .. parameters[inum].type .. ' ' .. parameters[inum].var_name
+                      end) )
+{
+  ${body}
+};
+)]]end)

@@ -58,7 +58,7 @@
           "java_value" : "${name}ImageFilter.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
           "tcl_value" : "$$${name}ImageFilter_DIRECTIONCOLLAPSETOIDENTITY",
           "csharp_value" : "itk.simple.${name}ImageFilter.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
-          "R_value" : "':DIRECTIONCOLLAPSETOIDENTITY:'"
+          "R_value" : "'DIRECTIONCOLLAPSETOIDENTITY'"
         }
       ],
       "inputs" : [
@@ -99,7 +99,7 @@
           "java_value" : "${name}ImageFilter.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
           "tcl_value" : "$$${name}ImageFilter_DIRECTIONCOLLAPSETOIDENTITY",
           "csharp_value" : "itk.simple.${name}ImageFilter.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
-          "R_value" : "':DIRECTIONCOLLAPSETOIDENTITY:'"
+          "R_value" : "'DIRECTIONCOLLAPSETOIDENTITY'"
         }
       ],
       "inputs" : [

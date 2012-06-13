@@ -1,5 +1,10 @@
+cmake_minimum_required(VERSION 2.8)
+project(SimpleITKSegmentationExamples)
 
-include_directories ( ${SimpleITK_INCLUDE_DIRS} )
+if(NOT SimpleITK_SOURCE_DIR)
+  find_package(SimpleITK REQUIRED)
+  include(${SimpleITK_USE_FILE})
+endif()
 
 # Add executable example targets
 add_executable ( ConnectedThresholdImageFilter ConnectedThresholdImageFilter.cxx )

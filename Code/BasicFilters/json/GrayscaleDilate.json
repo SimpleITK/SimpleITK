@@ -25,7 +25,7 @@
           "java_value" : "${name}ImageFilter.KernelType.Ball",
           "tcl_value" : "$$${name}ImageFilter_Ball",
           "csharp_value" : "${name}ImageFilter.KernelType.Ball",
-          "R_value" : "':Ball:'"
+          "R_value" : "'Ball'"
         }
       ],
       "md5hash" : "cb692559f1eb21e4c932f6bbb3850ad3",
