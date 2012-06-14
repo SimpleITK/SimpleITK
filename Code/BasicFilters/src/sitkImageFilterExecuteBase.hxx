@@ -15,36 +15,37 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#include "sitkImageFilter.h"
-#include "sitkImageFilterExecuteBase.hxx"
+#include "sitkImageFilterExecuteBase.h"
 
 namespace itk {
 namespace simple {
 
 //----------------------------------------------------------------------------
 
-//
-// Default constructor that initializes parameters
-//
-template< unsigned int N >
-ImageFilter< N >::ImageFilter ()
-  {
-  }
+ImageFilterExecuteBase< 0 >::~ImageFilterExecuteBase ()
+{
+}
 
-//
-// Default destructor
-//
-template< unsigned int N >
-ImageFilter< N >::~ImageFilter ()
-  {
-  }
+ImageFilterExecuteBase< 1 >::~ImageFilterExecuteBase ()
+{
+}
 
-template class ImageFilter<0>;
-template class ImageFilter<1>;
-template class ImageFilter<2>;
-template class ImageFilter<3>;
-template class ImageFilter<4>;
-template class ImageFilter<5>;
+
+ImageFilterExecuteBase< 2 >::~ImageFilterExecuteBase ()
+{
+}
+
+ImageFilterExecuteBase< 3 >::~ImageFilterExecuteBase ()
+{
+}
+
+ImageFilterExecuteBase< 4 >::~ImageFilterExecuteBase ()
+{
+}
+
+ImageFilterExecuteBase< 5 >::~ImageFilterExecuteBase ()
+{
+}
 
 } // end namespace simple
 } // end namespace itk
