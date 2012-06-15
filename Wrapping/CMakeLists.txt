@@ -299,23 +299,19 @@ if ( WRAP_R )
     ${CMAKE_CURRENT_SOURCE_DIR}/R.i )
   SWIG_add_module ( SimpleITK r SimpleITK.i SimpleITKR_wrap.cxx )
   SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${R_LIBRARIES})
-  set_target_properties(SimpleITK PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Rpackaging/SimpleITK/src/)
 
   set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITK_wrap.cxx PROPERTIES COMPILE_FLAGS "-w")
 
   get_target_property( SIMPLEITKR_BINARY_MODULE ${SWIG_MODULE_SimpleITK_REAL_NAME} LOCATION )
   file(TO_NATIVE_PATH "${SIMPLEITKR_BINARY_MODULE}" SIMPLEITKR_NATIVE_BINARY_MODULE )
 
-  include( sitkConfigureFileBuildtime )
-  configure_file_buildtime( "${CMAKE_CURRENT_SOURCE_DIR}/LoadSimpleITK.R.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/LoadSimpleITK.R" )
-  configure_file_buildtime( "${CMAKE_CURRENT_SOURCE_DIR}/makeSimpleITKRData.R.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/makeSimpleITKRData.R" )
-
 
   add_dependencies( ${SWIG_MODULE_SimpleITK_REAL_NAME} ConfigureFileBuildtime )
 
-  ## copy the R file and shared library to a binary package
+  # set the output directory for the R library to the binary packaging location
+  set_target_properties( ${SWIG_MODULE_SimpleITK_REAL_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Rpackaging/SimpleITK/src/)
+
+  # copy the R files a binary package
   add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_REAL_NAME}
       PRE_BUILD
       COMMAND ${CMAKE_COMMAND} -E copy_directory ${SimpleITK_SOURCE_DIR}/Wrapping/Rpackaging ${CMAKE_CURRENT_BINARY_DIR}/Rpackaging
@@ -328,7 +324,7 @@ if ( WRAP_R )
       COMMAND ${R_COMMAND} CMD INSTALL ${CMAKE_CURRENT_BINARY_DIR}/Rpackaging/SimpleITK --library=${CMAKE_CURRENT_BINARY_DIR}/RLib
       # create a binary package
       COMMAND ${R_COMMAND} CMD INSTALL --build ${CMAKE_CURRENT_BINARY_DIR}/Rpackaging/SimpleITK --library=${CMAKE_CURRENT_BINARY_DIR}/RLib
-      COMMENT "Installing R package for testing"
+      COMMENT "Installing R package for testing..."
        )
 
 endif()

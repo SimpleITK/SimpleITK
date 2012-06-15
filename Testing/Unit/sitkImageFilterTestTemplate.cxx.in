@@ -435,9 +435,9 @@ TEST_F(R,${name}) {
         ]]
     end)
 
-  // This is nothing but a hack to tell the scripts where the file is
-  // to load the SimpleITK R library
-  SetEnvironment ( "R_SIMPLEITK_LOADER", dataFinder.GetBuildDirectory()+"/Wrapping/LoadSimpleITK.R" );
+  // Set-up the R enviroment to include the SimpleITK R library in the
+  // build directory.
+  SetEnvironment ( "R_LIBS", dataFinder.GetBuildDirectory()+"/Wrapping/RLib" );
 
 
   std::string Script = dataFinder.GetBuildDirectory() + "/Testing/Unit/RTests/${name}ImageFilterTest.R";
