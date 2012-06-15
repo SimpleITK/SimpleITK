@@ -80,9 +80,9 @@ setMethod('&', signature(e1="_p_itk__simple__Image", e2="_p_itk__simple__Image")
 setMethod('|', signature(e1="_p_itk__simple__Image", e2="_p_itk__simple__Image"),
           function(e1, e2) Or(e1, e2)
           )
-setMethod("xor", signature(e1="_p_itk__simple__Image", e2="_p_itk__simple__Image"),
-          function(e1, e2) Xor(e1, e2)
-          )
+setMethod("xor", signature(x="_p_itk__simple__Image", y="_p_itk__simple__Image"),
+          function(x, y) Xor(x, y)
+         )
 
 setMethod('!', signature(x="_p_itk__simple__Image"),
           function(x) Not(x)
