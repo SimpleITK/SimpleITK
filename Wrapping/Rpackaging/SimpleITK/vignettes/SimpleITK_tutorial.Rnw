@@ -1,0 +1,265 @@
+%\documentclass{article}
+\documentclass{InsightArticle}
+
+% to be able to use options in graphics
+\ifx\pdfoutput\undefined
+\usepackage[dvips,
+bookmarks,
+bookmarksopen,
+backref,
+colorlinks,linkcolor={blue},citecolor={blue},urlcolor={blue},
+]{hyperref}
+\usepackage[dvips]{graphicx}
+\else
+\usepackage[bookmarks,
+bookmarksopen,
+backref,
+colorlinks,linkcolor={blue},citecolor={blue},urlcolor={blue},
+]{hyperref}
+\usepackage[pdftex]{graphicx}
+\fi
+\SweaveOpts{keep.source=TRUE}
+% for pseudo code
+\usepackage{listings}
+% subfigures
+\usepackage{subfigure}
+
+\title{SimpleITK in R}
+%\release{0.00}
+
+% At minimum, give your name and an email address.  You can include a
+% snail-mail address if you like.
+\author{Richard Beare}
+%\authoraddress{Richard.Beare@monash.edu\\Department of Medicine\\Monash University\\and\\Developmental Imaging\\Murdoch Childrens Research Institute\\Melbourne\\Australia}
+\begin{document}
+\maketitle
+
+%\ifhtml
+%\chapter*{Front Matter\label{front}}
+%\fi
+\begin{abstract}
+\noindent
+{\em R}, also known as ``Gnu S'' is a widely used, open source,
+language based environment for statistics and computational
+modelling. It will be reasonably familiar to users of other
+interactive, interpreted environments, like Matlab or python. This
+article provides an introduction to the SimpleITK package that has
+been built using the Swig generated wrapping of the SimpleITK
+library.
+\end{abstract}
+
+\tableofcontents
+
+\section{Introduction}
+{\em R} is an advanced language environment that supports extension
+via an advanced package mechanism and object-oriented and generic
+programming mechanisms. The traditional application domain of {\em R}
+is in interactive statistical analysis, but the language is general
+purpose and facilities are available to support many forms of
+computational work. There are already a number of packages for medical
+imaging and general purpose imaging, but none with the extent of low
+level operators provided by SimpleITK. {\em R} has quite nice features
+that makes interfacing to objects like images quite convenient. This
+package makes extensive use of {\em external references} and language
+operator overloading facilities.
+
+\section{Very basic {\em R} tutorial}
+{\em R} has extensive online documentation - see the Documentation
+links on the r-project pages. Here are some basic concepts to start
+the project. Skip to the next section if you are already familiar with {\em R}.
+
+\begin{itemize}
+\item Assignment - traditionally the assignment operator is {\tt <-}, but {\tt =} can be used in most places now:
+<<>>=
+a <- 1  # assign a variable
+b = a
+@@
+  \item Creating vectors - everything in {\em R} is at least a vector, and vectors can contain numbers or strings:
+<<>>=
+a <- c(1,2,34, 20, 10)
+a
+b = c('a', 'k', 'hello')
+b
+d <- 1:10
+d
+@@
+    {\em c} is the concatenate operator and can be used with vectors and lists.
+  \item Displaying objects - as seen above, typing a variable name invokes the generic {\em show} method, which typically provides an informative display of an obje. We'll see how this comes in handy later with images.
+  \item Creating arrays
+<<>>=
+b<-array(1:20, dim=c(5,4))
+b
+@@
+  \item Vector and array subsetting - there are a rich set of these operations with capabilities similar to Matlab. Indexing starts from 1.
+<<>>=
+a[1:2]
+a[3:1]
+a[-1]  # delete first element
+b[1,]  # first row of b
+b[1,c(1,4,2)]
+@@
+    \item Lists - can contain different object types
+<<>>=
+L1 = list('a', 1, 'hello')
+L1
+is.list(L1)
+L1[[2]]
+@@
+Notice that we are using the double bracket operator to access list elements.
+
+\item Naming components - so far we have been illustrating standard, index-based, access. It is possible to name array, vector and list components which provides options for clear accessing.
+<<>>=
+L1 <- list(first=1, second='hello', third=b)
+L1$second
+L1[["first"]]
+
+colnames(b) <- c("first", "second", "third", "last")
+b[,"last"]
+@@
+These options provide useful ways of keeping consistency in complex analyses with evolving data structures.
+\item Other data structures. The main structure not discussed here is a special list, called a data frame, that is widely used by the statistical model-fitting procedures. Classes, methods and other language facilities are also available, but used mainly by package developers.
+\end{itemize}
+
+\section{Getting started with SimpleITK}
+Building and installation instructions are later. Lets jump straight into some examples. In order to display images you need to install ImageJ with the nifti plugin, and be in your path. The results in this docment are displayed slightly differently, using internal {\em R} plotting routines, for compatability with the Sweave document processing.
+
+\subsection{Image anatomy and access methods}
+\begin{itemize}
+\item Load the SimpleITK library. This may require that the {\tt R\_LIBS} environment variable is set.
+<<>>=
+library(SimpleITK)
+@@
+<<echo=FALSE>>=
+# override show function
+setMethod('show', '_p_itk__simple__Image',
+          function(object)
+          {
+            require(grid)
+            a <- t(as.array(object))
+            rg <- range(a)
+            A <- (a-rg[1])/(rg[2]-rg[1])
+            dd <- dim(a)
+            sp <- object$GetSpacing()
+
+            grid.raster(A)
+          }
+
+          )
+
+@@
+\item Load an image
+<<>>=
+im <- ReadImage('/home/richardb/Projects/ITK4/SimpleITK/Testing/Data/Input/cthead1.png')
+@@
+\item Display
+<<fig=TRUE>>=
+im
+@@
+\item Get some information about the image
+<<>>=
+print(im)
+im$GetSpacing()
+im$GetSize()
+@@
+These vector quantities are translated directly to R vectors. The same applies to filters, as we'll see later.
+\item Get one pixel value
+<<>>=
+im[100, 120]
+@@
+\item Extract the first 100 columns
+<<fig=TRUE>>=
+im[1:100,]
+@@
+\item First 100 columns, then same data flipped
+<<fig=TRUE>>=
+im[c(1:100,100:1),]
+@@
+\item Remove the first 100 rows
+<<fig=TRUE>>=
+im[,-(1:100)]
+@@
+\item Subsample by 2
+<<fig=TRUE>>=
+im[seq(1,256, by=2), seq(1,256, by=2)]
+@@
+
+As you can see, we can use array acess techniques to images. The results of each of these operations is an image, not an array. Evidently, we can do some pretty crazy things using this notation, which means that it is very difficult to decide what to do with image metadata, such as spacing and origin. Currently nothing clever is being done with either - spacing is left as per the input, which could easily be wrong. Origin is left as default image constructor.
+\item Lets explore the image class in a little more detail to find out what access methods are available:
+<<>>=
+getMethod('$', class(im))
+@@
+This provides a list of accessor functions that can be used via the \$ notation illustrated above. Most classes create by the swig processing work this way.
+\item Finally, lets allocate an image
+<<>>=
+im2 <- Image(10,10, 20, 'sitkUInt16')
+print(im2)
+@@
+
+The important points to note here is that the enumerated type describing the pixel type is represented as a string.
+\item Translating images to {\em R} arrays:
+<<>>=
+arr <- as.array(im)
+class(im)
+class(arr)
+# now we can do something crazy
+s <- svd(arr)
+@@
+\item And back again
+<<fig=TRUE>>=
+nim <- as.image(s$u)
+nim
+@@
+
+Points to note here - {\em R} only supports integer and double types (logical types are also integers). Therefore conversion of any image will end up as an array of one of these types. Similarly, conversion of arrays to images also ends up as one of these types. By default, any {\em R} matrix will be double precision, but can be coerced to integer using the {\em as.integer} or {\em storage.mode} functions. Image pixel types can be converted using the {\em Cast} filters.
+
+\end{itemize}
+
+\subsection{Image operations with Simple ITK classes}
+Finally, onto the crux of the matter. Let's look at doing some image filtering. There are two basic approaches with SimpleITK - the procedural and the filter approach
+\begin{itemize}
+\item Gaussian blurring:
+<<fig=TRUE>>=
+res <- SmoothingRecursiveGaussian(im, 3)
+res
+@@
+\item or
+<<fig=TRUE>>=
+filt <- SmoothingRecursiveGaussianImageFilter()
+# check the accessors
+getMethod('$', class(filt))
+filt$SetSigma(5)
+filt$NormalizeAcrossScaleOn()
+res2 <- filt$Execute(im)
+res2
+@@
+
+Notice that we can explore the accessor functions in the same way as images. Also note that calling the accessor functions without assigning the result to a variable causes the {\em show} method to display a representation of the object.
+\item Cryptic error messages - unfortunately it isn't easy to figure out what arguments are expected by the procedural interface. For example, if we assumed that the sigma parameter was a vector, we'd get the following unhelpful response:
+<<>>=
+try(res3 <- SmoothingRecursiveGaussian(im, c(3, 3)))
+geterrmessage()
+@@
+Note that the {\em try} and {\em geterrmessage} commands are to allow Sweave to complete. They aren't needed in interactive sessions.
+\end{itemize}
+
+
+
+\subsection{Still to come}
+Image arithmetic.
+
+Testing.
+
+\subsection{Caveats}
+Beware of images from saved workspaces. External references, which is how images are represented, are not preserved when objects are saved to disk. Thus, attempting to use images from a saved workspace will result in ungraceful crashes.
+
+\section{Building and Installing}
+Fetch SimpleITK from the git repository and fetch the patches from gerrit containing my updates: http://review.source.kitware.com/5162.
+
+Then go to SimpleITK/Wrapping/Rpackages/ and run
+
+{\tt R CMD INSTALL --library=/path/to/R/library SimpleITK} and you will (eventually) end up with an installed package. This uses the SuperBuild process, but swig has been replaced with the development version containing my changes. So far only tested on linux.
+
+Soon this document should also get created as part of the build process.
+\section{Development}
+
+\end{document}

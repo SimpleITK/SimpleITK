@@ -26,7 +26,7 @@
 # This is R code to test ${name}
 #
 
-source( Sys.getenv( "R_SIMPLEITK_LOADER" ) )
+library(SimpleITK)
 
 inputs <- 1
 $(if number_of_inputs then
