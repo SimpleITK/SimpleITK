@@ -1,0 +1,35 @@
+{
+  "name" : "MorphologicalWatershedFromMarkers",
+  "template_code_filename" : "DualImageFilter",
+  "number_of_inputs" : 2,
+  "pixel_types" : "ScalarPixelIDTypeList",
+  "pixel_types2" : "IntegerPixelIDTypeList",
+  "filter_type" : "itk::MorphologicalWatershedFromMarkersImageFilter<InputImageType, InputImageType2>",
+  "custom_set_input" : "filter->SetInput1( image1 ); filter->SetInput2( image2 );",
+  "members" : [
+    {
+      "name" : "MarkWatershedLine",
+      "type" : "bool",
+      "default" : "true"
+    },
+    {
+      "name" : "FullyConnected",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : ""
+    }
+  ],
+  "custom_methods" : [],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Simply run with default settings",
+      "settings" : [],
+      "md5hash" : "c32759ecb10cbff555c750b8b7a8d32e",
+      "inputs" : [
+        "Input/cthead1-grad-mag.nrrd",
+        "Input/cthead1-marker.png"
+      ]
+    }
+  ]
+}
