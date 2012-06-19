@@ -322,16 +322,19 @@ if ( WRAP_R )
   add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_TARGET_NAME}
       PRE_BUILD
       COMMAND ${CMAKE_COMMAND} -E copy_directory ${SimpleITK_SOURCE_DIR}/Wrapping/Rpackaging ${CMAKE_CURRENT_BINARY_DIR}/Rpackaging
+      COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/Rpackaging/SimpleITK/data/
   )
   add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_TARGET_NAME}
       POST_BUILD
       COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/RLib
       COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK.R ${CMAKE_CURRENT_BINARY_DIR}/Rpackaging/SimpleITK/R/
-      # install for running tests
-      COMMAND ${R_COMMAND} CMD INSTALL ${CMAKE_CURRENT_BINARY_DIR}/Rpackaging/SimpleITK --library=${CMAKE_CURRENT_BINARY_DIR}/RLib
-      # create a binary package
+      # copy sample images
+      COMMAND ${CMAKE_COMMAND} -E copy ${SimpleITK_SOURCE_DIR}/Testing/Data/Input/cthead1.png  ${CMAKE_CURRENT_BINARY_DIR}/Rpackaging/SimpleITK/data/
+      COMMAND ${CMAKE_COMMAND} -E copy ${SimpleITK_SOURCE_DIR}/Testing/Data/Input/cthead1-Float.mha  ${CMAKE_CURRENT_BINARY_DIR}/Rpackaging/SimpleITK/data/
+      # install for running tests and create binary package
       COMMAND ${R_COMMAND} CMD INSTALL --build ${CMAKE_CURRENT_BINARY_DIR}/Rpackaging/SimpleITK --library=${CMAKE_CURRENT_BINARY_DIR}/RLib
-      COMMENT "Installing R package for testing..."
+
+      COMMENT "Installing R package for testing and building binary version for distribution"
        )
 
 endif()

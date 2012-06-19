@@ -7,6 +7,10 @@ setMethod('+', signature(e1="_p_itk__simple__Image", e2="numeric"),
           function(e1, e2) AddConstantTo(e1, e2)
           )
 
+setMethod('+', signature(e1="numeric", e2="_p_itk__simple__Image"),
+          function(e1, e2) AddConstantTo(e2, e1)
+          )
+
 setMethod('-', signature(e1="_p_itk__simple__Image", e2="_p_itk__simple__Image"),
           function(e1, e2) Subtract(e1, e2)
           )
@@ -25,6 +29,9 @@ setMethod('*', signature(e1="_p_itk__simple__Image", e2="_p_itk__simple__Image")
 
 setMethod('*', signature(e1="_p_itk__simple__Image", e2="numeric"),
           function(e1, e2) MultiplyByConstant(e1, e2)
+          )
+setMethod('*', signature(e1="numeric", e2="_p_itk__simple__Image"),
+          function(e1, e2) MultiplyByConstant(e2, e1)
           )
 
 setMethod('/', signature(e1="_p_itk__simple__Image", e2="_p_itk__simple__Image"),
@@ -91,35 +98,89 @@ setMethod('!', signature(x="_p_itk__simple__Image"),
 # Nothing in sITK yet for image == image, image == const. Could construct
 # some from filter combinations - e.g. image == , >= , <=, <, > const can be
 # binary threshold
+# this isn't ideal and should be replaced ASAP. It is incorrect
+# for pixel types with negatives. It gives a flavour though
+# can be corrected by looking up the min and max pixel values
 setMethod('==', signature(e1="_p_itk__simple__Image", e2="numeric"),
           function(e1, e2) {
             BinaryThreshold(e1, e2, e2, 1, 0)
           }
           )
+setMethod('==', signature( e1="numeric", e2="_p_itk__simple__Image"),
+          function(e1, e2) {
+            BinaryThreshold(e2, e1, e1, 1, 0)
+          }
+          )
+setMethod('==', signature( e1="_p_itk__simple__Image", e2="_p_itk__simple__Image"),
+          function(e1, e2) {
+            stop("Not implemented")
+            #(e1 - e2) == 0
+          }
+          )
+
 setMethod('<=', signature(e1="_p_itk__simple__Image", e2="numeric"),
           function(e1, e2) {
             # can we look up pixel traits?
             BinaryThreshold(e1, 0, e2, 1, 0)
           }
           )
+setMethod('<=', signature(e1="numeric", e2="_p_itk__simple__Image"),
+          function(e1, e2) {
+            # can we look up pixel traits?
+            BinaryThreshold(e2, e1, 255, 1, 0)
+          }
+          )
+setMethod('<=', signature(e1="_p_itk__simple__Image", e2="_p_itk__simple__Image"),
+          function(e1, e2) {
+            stop("Not implemented")
+          }
+          )
+
 setMethod('>=', signature(e1="_p_itk__simple__Image", e2="numeric"),
           function(e1, e2) {
             # can we look up pixel traits?
             BinaryThreshold(e1, e2, 255, 1, 0)
           }
           )
+setMethod('>=', signature(e1="numeric", e2="_p_itk__simple__Image"),
+          function(e1, e2) {
+            BinaryThreshold(e2, 0, e1, 1, 0)
+          }
+          )
+setMethod('>=', signature(e1="_p_itk__simple__Image", e2="_p_itk__simple__Image"),
+          function(e1, e2) {
+            stop("Not implemented")
+          }
+          )
 
 setMethod('<', signature(e1="_p_itk__simple__Image", e2="numeric"),
           function(e1, e2) {
-            # can we look up pixel traits?
-            # note that we are swapping outside values around
-            # so that we don't need to add to e2
             BinaryThreshold(e1, e2, 255, 0, 1)
+          }
+          )
+setMethod('<', signature(e1="numeric", e2="_p_itk__simple__Image"),
+          function(e1, e2) {
+            BinaryThreshold(e2, 0, e1, 0, 1)
+          }
+          )
+setMethod('<', signature(e1="_p_itk__simple__Image", e2="_p_itk__simple__Image"),
+          function(e1, e2) {
+            stop("Not implemented")
           }
           )
 setMethod('>', signature(e1="_p_itk__simple__Image", e2="numeric"),
           function(e1, e2) {
-            # can we look up pixel traits?
             BinaryThreshold(e1, 0, e2, 0, 1)
+          }
+          )
+setMethod('>', signature(e1="numeric", e2="_p_itk__simple__Image"),
+          function(e1, e2) {
+            BinaryThreshold(e2, e1, 255, 0, 1)
+          }
+          )
+
+setMethod('>', signature(e1="_p_itk__simple__Image", e2="_p_itk__simple__Image"),
+          function(e1, e2) {
+            stop("Not implemented")
           }
           )

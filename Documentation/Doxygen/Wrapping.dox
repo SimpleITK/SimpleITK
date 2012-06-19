@@ -51,140 +51,90 @@ import org.itk.simple.SmartPointerImage;
 
 \section R R
 
-- 1) Enable WRAP_R in the CMake configuration of SimpleITK.
+\subsection R_prerequisites Prerequisites
 
+The simpleITK wrappers require R(>= 2.14), git and cmake to build. This section desribes how
+to install these from package managers on ubuntu and CentOS (RedHat Enterprise) systems.
 
-- 2) Configure and Build.
+Commands below must, in general, be run by the root user.
 
+\subsubsection Rubuntu Ubuntu
 
-- 3) Go to the binary directory {SIMPLEITK_BINARY_DIR}
+Test host: Ubuntu 12.04 LTS (Precise) amd64 UEC
 
-   All the following commands assume that you stay in this directory.
+apt-get update
 
-- 4) launch R
+apt-get install git cmake-curses-gui
 
+apt-get install g++ r-base-core r-base-dev
 
-- 5) inside R type:
+This installs R-2.14.1
 
-\code
-package.skeleton(name="SimpleITK", code_files="Wrapping/SimpleITK.R")
-\endcode
+\subsubsection RRHEL CentOS/RHEL
 
-this will create a directory named SimpleITK with
-the content:
+Test host: Centos 6.2 amd64
 
+Add the epel repository to access recent versions of CMake
+
+rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-7.noarch.rpm
+
+yum install make cmake28 git gcc-c++ R R-devel
+
+This installs R-2.15
+
+Note that you will need to use cmake28, instead of cmake, in commands below.
+
+----------------------------------------------
+
+\subsection RBuild Building
+
+- 1) Use the SuperBuild process - point cmake at SimpleITK/SuperBuild. This will build a modified version of swig. If your source tree has been cloned with git into a directory called SimpleITK, you should do something like this:
 \verbatim
-                DESCRIPTION
-                libs
-                R
-                Read-and-delete-me
-                src
-\endverbatim
-
-- 6) Copy the file
-
-\verbatim
-       SimpleITK/Wrapping/R_Package/DESCRIPTION
-\endverbatim
-   into the current
-
-\verbatim
-       SimpleITK/DESCRIPTION
-\endverbatim
-
-- 7) Quit R
-
-
-- 8) Verify that the file
-
-\verbatim
-      Wrapping/SimpleITK.R
-\endverbatim
-   was copied to the new SimpleITK/R directory
-
-
-- 9) Add to that same directory "SimpleITK/R" another file zzz.R with the content
-
-\code
-   .First.lib <- function(lib,pkg) {
-      library.dynam("SimpleITK.so",pkg,lib)
-     }
-\endcode
-
-
-- 10) Create a destination directory
-
-\verbatim
-     mkdir -p  ~/R/x86_64-pc-linux-gnu-library/2.10/
+        mkdir BuildSITK
+        cd BuildSITK
+        # start your preferred cmake interface
+        cmake ../SimpleITK/SuperBuild
 \endverbatim
 
 
-- 11) type
+- 2) Configure - If R is installed in a standard location then WRAP_R should be enabled by default. If not, look in the advanced section to find which R related sections are missing. Determine whether these components have been installed, or fill them in manually if necessary. Optionally turn of other wrapper interfaces  to reduce build time.
 
-R CMD INSTALL -l ~/R/x86_64-pc-linux-gnu-library/2.10/ SimpleITK
-
-   This should create a "SimpleITK" directory in
-
-      ~/R/x86_64-pc-linux-gnu-library/2.10
-
-
-- 12) Create a subdirectory "libs" in that destination:
-
+- 3) Build - (on unix). Or equivalent on others.
 \verbatim
-      mkdir ~/R/x86_64-pc-linux-gnu-library/2.10/libs
+	make
+\endverbatim
+
+- 4) Testing - a version of the R package will be installed in the build directories for testing. Go to $SIMPLE_ITK_BUILD_DIR and run R specific tests using:
+\verbatim
+        ctest -R "R\." -V
 \endverbatim
 
 
-- 13) copy the shared library in the new installation
-
+- 4) An installable package will be created in $SIMPLE_ITK_BUILD_DIR/Wrapping. It will be called something like:
 \verbatim
- cp bin/libSimpleITK.so ~/R/x86_64-pc-linux-gnu-library/2.10/SimpleITK/libs/SimpleITK.so
+SimpleITK_0.5-1_R_x86_64-unknown-linux-gnu.tar.gz
+\endverbatim
+This can be installed using the R package mechanism in either a user or system location.
+
+     For a user level installation do:
+\verbatim
+        mkdir ~/Rlibs
+        export R_LIBS=~/Rlibs
+        R CMD INSTALL $SIMPLE_ITK_BUILD_DIR/Wrapping/SimpleITK_0.5-1_R_x86_64-unknown-linux-gnu.tar.gz
 \endverbatim
 
-    Note the change of name from "libSimpleITKR.so" to "SimpleITK.so"
-
-
-- 14) Set the environment variable R_LIBS_USER  to
-
-         ~/R/x86_64-pc-linux-gnu-library/2.10
-
-
-- 15) Run the example
-
+     For a system level installation do this as root:
 \verbatim
-     cp  SimpleITK/Testing/Data/Input/STAPLE1.png .
-     R -f SimpleITK/Examples/SimpleGaussian.R
+        R CMD INSTALL $SIMPLE_ITK_BUILD_DIR/Wrapping/Rpackaging/SimpleITK_0.5-1_R_x86_64-unknown-linux-gnu.tar.gz
 \endverbatim
 
-    you shouldn now find in the local directory
-    a file with name
-
-               smoothedSTAPLE1.mhd
-
-
-- 16) Run the "R" tests
-
+- 6) Start R and view the documentation
 \verbatim
-             ctest -R  "R\."   -V
+        R
+        > library(SimpleITK)
+        > vignette("SimpleITK_tutorial")
 \endverbatim
 
-
-
----------------------------------------------
-
-Installin R in Ubuntu
-
-install the following packages:
-\verbatim
-  dpatch libbz2-dev patchutils r-base-core r-base-dev r-base-html r-base-latex r-cran-boot r-cran-cluster r-cran-codetools r-cran-foreign r-cran-kernsmooth r-cran-lattice r-cran-matrix r-cran-mgcv r-cran-nlme r-cran-rpart
-  r-cran-survival r-cran-vr r-recommended
-\endverbatim
-
-
-suggested:
-
-  ess r-doc-info r-doc-pdf r-doc-html r-mathlib cdbs debhelper
-
-
+----------------------------------------------
 
 */
