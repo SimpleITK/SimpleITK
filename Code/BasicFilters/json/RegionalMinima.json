@@ -1,0 +1,46 @@
+{
+  "name" : "RegionalMinima",
+  "template_code_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "pixel_types" : "ScalarPixelIDTypeList",
+  "output_pixel_type" : "uint32_t",
+  "members" : [
+    {
+      "name" : "BackgroundValue",
+      "type" : "double",
+      "default" : "0.0",
+      "pixeltype" : "Input",
+      "doc" : ""
+    },
+    {
+      "name" : "ForegroundValue",
+      "type" : "double",
+      "default" : "1.0",
+      "pixeltype" : "Input",
+      "doc" : ""
+    },
+    {
+      "name" : "FullyConnected",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : ""
+    },
+    {
+      "name" : "FlatIsMinima",
+      "type" : "bool",
+      "default" : "true"
+    }
+  ],
+  "custom_methods" : [],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Simply run with default settings",
+      "settings" : [],
+      "md5hash" : "3be99cf6b3116f16f6663cd2c4edb5b4",
+      "inputs" : [
+        "Input/cthead1.png"
+      ]
+    }
+  ]
+}
