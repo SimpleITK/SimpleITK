@@ -12,7 +12,7 @@ VariableListToArgs( ITK_LANGUAGES_VARS  ep_languages_args )
 
 
 set(proj ITK)  ## Use ITK convention of calling it ITK
-set(ITK_REPOSITORY http://itk.org/ITK.git)
+set(ITK_REPOSITORY git://itk.org/ITK.git)
 
 # NOTE: it is very important to update the ITK_DIR path with the
 # current version of ITK
