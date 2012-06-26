@@ -15,22 +15,32 @@
 # Make sure find package macros are included
 include( FindPackageHandleStandardArgs )
 
-SET(TEMP_CMAKE_FIND_APPBUNDLE ${CMAKE_FIND_APPBUNDLE})
-SET(CMAKE_FIND_APPBUNDLE "NEVER")
-FIND_PROGRAM(R_COMMAND R DOC "R executable.")
-IF (R_COMMAND)
-  EXECUTE_PROCESS(WORKING_DIRECTORY . COMMAND ${R_COMMAND} RHOME OUTPUT_VARIABLE R_BASE_DIR OUTPUT_STRIP_TRAILING_WHITESPACE)
-  SET(R_HOME ${R_BASE_DIR} CACHE PATH "R home directory obtained from R RHOME")
-  mark_as_advanced( R_HOME )
-ENDIF (R_COMMAND)
-FIND_PROGRAM(RSCRIPT_EXECUTABLE Rscript DOC "Rscript executable.")
+set(TEMP_CMAKE_FIND_APPBUNDLE ${CMAKE_FIND_APPBUNDLE})
+set(CMAKE_FIND_APPBUNDLE "NEVER")
+find_program(R_COMMAND R DOC "R executable.")
+if(R_COMMAND)
+  execute_process(WORKING_DIRECTORY . COMMAND ${R_COMMAND} RHOME OUTPUT_VARIABLE R_BASE_DIR OUTPUT_STRIP_TRAILING_WHITESPACE)
+  set(R_HOME ${R_BASE_DIR} CACHE PATH "R home directory obtained from R RHOME")
+  mark_as_advanced(R_HOME)
+endif(R_COMMAND)
 
-SET(CMAKE_FIND_APPBUNDLE ${TEMP_CMAKE_FIND_APPBUNDLE})
+find_program(RSCRIPT_EXECUTABLE Rscript DOC "Rscript executable.")
 
-FIND_PATH(R_INCLUDE_DIR R.h PATHS /usr/local/lib /usr/local/lib64 PATH_SUFFIXES R/include DOC "Path to file R.h")
-FIND_LIBRARY(R_LIBRARY_BASE R PATHS ${R_BASE_DIR} PATH_SUFFIXES /lib DOC "R library (example libR.a, libR.dylib, etc.).")
+set(CMAKE_FIND_APPBUNDLE ${TEMP_CMAKE_FIND_APPBUNDLE})
 
-SET(R_LIBRARIES ${R_LIBRARY_BASE})
-mark_as_advanced( R_LIBRARIES R_INCLUDE_DIR R_COMMAND R_LIBRARY_BASE )
+find_path(R_INCLUDE_DIR R.h PATHS /usr/local/lib /usr/local/lib64 PATH_SUFFIXES R/include DOC "Path to file R.h")
+find_library(R_LIBRARY_BASE R PATHS ${R_BASE_DIR} PATH_SUFFIXES /lib DOC "R library (example libR.a, libR.dylib, etc.).")
 
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(R DEFAULT_MSG R_LIBRARIES R_INCLUDE_DIR R_COMMAND R_LIBRARY_BASE )
+set(R_LIBRARIES ${R_LIBRARY_BASE})
+mark_as_advanced(RSCRIPT_EXECUTABLE R_LIBRARIES R_INCLUDE_DIR R_COMMAND R_LIBRARY_BASE)
+
+
+set( _REQUIRED_R_VARIABLES R_INCLUDE_DIR R_COMMAND R_LIBRARY_BASE )
+
+if( APPLE )
+  # On linux platform some times the libR.so is not available, however
+  # on apple a link error results if the library is linked.
+  list(  APPEND _REQUIRED_R_VARIABLES R_LIBRARIES )
+endif()
+
+find_package_handle_standard_args(R DEFAULT_MSG ${_REQUIRED_R_VARIABLES} )
