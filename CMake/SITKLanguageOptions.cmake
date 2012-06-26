@@ -122,14 +122,12 @@ option ( WRAP_CSHARP "Wrap C#" ${WRAP_CSHARP_DEFAULT} )
 # Below here are the 2nd tier languages they are not enabled automatically if detected
 #
 
-# TODO FindR does not conform to the expected behavior:
-# http://www.cmake.org/cmake/help/cmake-2-8-docs.html#command:find_package
-# specifically R_FOUND is not defined. Additionally, the defined variables are not marked as advanced.
-option ( WRAP_R "Wrap R" OFF )
-mark_as_advanced( WRAP_R )
-if ( ${WRAP_R} )
-  find_package( R )
-endif()
+find_package(R QUIET)
+if ( ${R_FOUND} )
+  set ( WRAP_R_DEFAULT ON )
+else( ${R_FOUND} )
+  set ( WRAP_R_DEFAULT OFF )
+endif( ${R_FOUND} )
 
 list( APPEND SITK_LANGUAGES_VARS
  R_INCLUDE_DIR
@@ -137,3 +135,8 @@ list( APPEND SITK_LANGUAGES_VARS
  R_LIBRARY_BASE
  R_COMMAND
  RSCRIPT_EXECUTABLE )
+option ( WRAP_R "Wrap R" ${WRAP_R_DEFAULT} )
+
+if( WIN32 )
+  mark_as_advanced( WRAP_R )
+endif()
