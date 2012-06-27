@@ -1,0 +1,65 @@
+{
+  "name" : "AdaptiveHistogramEqualization",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "filter_type" : "itk::AdaptiveHistogramEqualizationImageFilter<InputImageType>",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "public_declarations" : "Self &SetRadius( unsigned int r ) { this->m_Radius = std::vector<unsigned int>(3, r ); return *this; }",
+  "members" : [
+    {
+      "name" : "Radius",
+      "type" : "std::vector<unsigned int>",
+      "default" : "std::vector<unsigned int>(3, 5)",
+      "dim_vec" : 1,
+      "no_print" : 1,
+      "itk_type" : "typename FilterType::RadiusType"
+    },
+    {
+      "name" : "Alpha",
+      "type" : "float",
+      "default" : "0.3f"
+    },
+    {
+      "name" : "Beta",
+      "type" : "float",
+      "default" : "0.3f"
+    },
+    {
+      "name" : "UseLookupTable",
+      "type" : "bool",
+      "default" : "false"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Simply run with default settings",
+      "settings" : [],
+      "tolerance" : "1e-5",
+      "inputs" : [
+        "Input/RA-Slice-Float.nrrd"
+      ]
+    },
+   {
+      "tag" : "histo",
+      "description" : "values set for classical histogram qualization",
+      "settings" : [
+        {
+          "parameter" : "Alpha",
+          "value" : 0.0
+        },
+        {
+          "parameter" : "Beta",
+          "value" : 0.0
+        }
+        ],
+      "tolerance" : "1e-5",
+      "inputA_cast" : "sitkFloat32",
+      "inputs" : [
+        "Input/cthead1.png"
+      ]
+    }
+  ]
+}
