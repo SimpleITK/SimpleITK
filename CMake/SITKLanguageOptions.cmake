@@ -123,11 +123,11 @@ option ( WRAP_CSHARP "Wrap C#" ${WRAP_CSHARP_DEFAULT} )
 #
 
 find_package(R QUIET)
-if ( ${R_FOUND} )
+if ( ${R_FOUND} AND NOT WIN32 )
   set ( WRAP_R_DEFAULT ON )
-else( ${R_FOUND} )
+else( )
   set ( WRAP_R_DEFAULT OFF )
-endif( ${R_FOUND} )
+endif( )
 
 list( APPEND SITK_LANGUAGES_VARS
  R_INCLUDE_DIR
