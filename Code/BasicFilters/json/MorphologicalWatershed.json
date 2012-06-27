@@ -1,0 +1,59 @@
+{
+  "name" : "MorphologicalWatershed",
+  "template_code_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "pixel_types" : "ScalarPixelIDTypeList",
+  "output_pixel_type" : "uint32_t",
+  "members" : [
+    {
+      "name" : "Level",
+      "type" : "double",
+      "default" : "0.0"
+    },
+    {
+      "name" : "MarkWatershedLine",
+      "type" : "bool",
+      "default" : "true"
+    },
+    {
+      "name" : "FullyConnected",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : ""
+    }
+  ],
+  "custom_methods" : [],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Simply run with default settings",
+      "settings" : [],
+      "md5hash" : "406079d7904d4e9ab0b5f29f7a3a1ea8",
+      "inputs" : [
+        "Input/cthead1-grad-mag.nrrd"
+      ]
+    },
+    {
+      "tag" : "level_1",
+      "description" : "Set some parameters",
+      "settings" : [],
+      "md5hash" : "a204ce7cf8ec4e7bc6538f0515a8910e",
+      "inputs" : [
+        "Input/cthead1-grad-mag.nrrd"
+      ],
+      "settings" : [
+        {
+          "parameter" : "Level",
+          "value" : "1.0"
+        },
+        {
+          "parameter" : "MarkWatershedLine",
+          "value" : "false",
+          "python_value" : "False",
+          "R_value" : "FALSE"
+        }
+
+      ]
+    }
+  ]
+}
