@@ -67,6 +67,21 @@ struct ExecuteInternalVectorImageAddressor
   }
 };
 
+/** An addressor of ExecuteInternal to be utilized with
+ * registering member functions with the factory.
+ */
+template < class TMemberFunctionPointer >
+struct ExecuteInternalLabelImageAddressor
+{
+  typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
+
+  template< typename TImageType >
+  TMemberFunctionPointer operator() ( void ) const
+  {
+    return &ObjectType::template ExecuteInternalLabelImage< TImageType >;
+  }
+};
+
 
 }
 }
