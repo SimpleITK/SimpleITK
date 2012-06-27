@@ -55,7 +55,7 @@
           "value" : 0.0
         }
         ],
-      "tolerance" : "1e-5",
+      "tolerance" : "5e-4",
       "inputA_cast" : "sitkFloat32",
       "inputs" : [
         "Input/cthead1.png"
