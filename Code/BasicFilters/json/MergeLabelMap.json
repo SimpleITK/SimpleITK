@@ -1,0 +1,20 @@
+{
+  "name" : "MergeLabelMap",
+  "template_code_filename" : "MultiInputImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "itk_name" : "MergeLabelMapFilter"
+  "number_of_inputs" : 1,
+  "pixel_types" : "LabelPixelIDTypeList",
+  "filter_type" : "itk::MergeLabelMapFilter<InputImageType>",
+  "public_declarations" : "typedef enum { KEEP = 0, AGGREGATE = 1, PACK = 2, STRICT = 3 } MethodChoiceType;"
+  "members" : [
+     {
+      "name" : "Method",
+      "type" : "MergeLabelMapImageFilter::MethodChoiceType",
+      "default" : "itk::simple::MergeLabelMapImageFilter::KEEP",
+      "custom_itk_cast" : "filter->SetMethod( static_cast<typename FilterType::MethodChoice>( this->m_Method ) );\n"
+    }
+   ],
+  "tests" : [
+  ]
+}
