@@ -48,12 +48,11 @@ $(include ToStringReturn.cxx.in)
 //-----------------------------------------------------------------------------
 
 //
-// Execute
+// Execute with paramters
 //
 $(if members and #members > 0 then
 OUT = [[
-
-Image ${name}ImageFilter::Execute ( std::vector<Image> &images$(include MemberParameters.in) )
+Image ${name}ImageFilter::Execute ( const std::vector<Image> &images$(include MemberParameters.in) )
 {
 $(foreach members
 $(if (not no_set_method) or (no_set_method == 0) then
@@ -62,69 +61,61 @@ end)
 )
   return this->Execute ( images );
 }
-
-
-Image ${name}ImageFilter::Execute ( const Image& image1$(include MemberParameters.in) )
-  {
-  std::vector<Image> images;
-  images.push_back( image1 );
-  return this->Execute( images$(for i = 1,#members do
-                        OUT= OUT .. ', in' .. members[i].name
-                          end) );
-  }
-
-
-Image ${name}ImageFilter::Execute ( const Image& image1, const Image& image2$(include MemberParameters.in) )
-  {
-  std::vector<Image> images;
-  images.push_back( image1 );
-  images.push_back( image2 );
-  return this->Execute( images$(for i = 1,#members do
-                        OUT= OUT .. ', in' .. members[i].name
-                          end) );
-  }
-
-
-Image ${name}ImageFilter::Execute ( const Image& image1, const Image& image2, const Image& image3$(include MemberParameters.in) )
-  {
-  std::vector<Image> images;
-  images.push_back( image1 );
-  images.push_back( image2 );
-  images.push_back( image3 );
-  return this->Execute( images$(for i = 1,#members do
-                        OUT= OUT .. ', in' .. members[i].name
-                          end) );
-  }
-
 ]]
-end)
+for inum=1,5 do
+  OUT=OUT .. [[
+Image ${name}ImageFilter::Execute ( const Image& image1]]
 
-
-Image ${name}ImageFilter::Execute ( const Image& image1 )
+  for jnum=2,inum do
+    OUT=OUT .. ', const Image& image' .. jnum
+  end
+  OUT=OUT .. [[$(include MemberParameters.in) )
 {
   std::vector<Image> images;
-  images.push_back( image1 );
+]]
+
+  for jnum=1,inum do
+    OUT=OUT .. [[
+  images.push_back( image]]..jnum..[[ );
+]]
+  end
+
+  OUT=OUT .. [[
+  return this->Execute( images$(for i = 1,#members do
+                        OUT= OUT .. ', in' .. members[i].name
+                          end) );
+}
+
+]] end end)
+
+//
+// Execute no paramters
+//
+$(for inum=1,5 do
+  OUT=OUT .. [[
+Image ${name}ImageFilter::Execute ( const Image& image1]]
+
+  for jnum=2,inum do
+    OUT=OUT .. ', const Image& image' .. jnum
+  end
+  OUT=OUT .. [[ )
+{
+  std::vector<Image> images;
+]]
+
+  for jnum=1,inum do
+    OUT=OUT .. [[
+  images.push_back( image]]..jnum..[[ );
+]]
+  end
+
+  OUT=OUT .. [[
   return this->Execute( images );
 }
 
-Image ${name}ImageFilter::Execute ( const Image& image1, const Image& image2 )
-{
-  std::vector<Image> images;
-  images.push_back( image1 );
-  images.push_back( image2 );
-  return this->Execute( images );
-}
+]] end)
 
-Image ${name}ImageFilter::Execute ( const Image& image1, const Image& image2, const Image& image3 )
-{
-  std::vector<Image> images;
-  images.push_back( image1 );
-  images.push_back( image2 );
-  images.push_back( image3 );
-  return this->Execute( images );
-}
-
-Image ${name}ImageFilter::Execute ( std::vector<Image> &images )
+Image ${name}ImageFilter::Execute ( const std::vector<Image> &images )
 {
   if ( images.empty() )
     {
@@ -152,7 +143,7 @@ Image ${name}ImageFilter::Execute ( std::vector<Image> &images )
 // ExecuteInternal
 //
 template <class TImageType>
-Image ${name}ImageFilter::ExecuteInternal ( std::vector<Image> &images )
+Image ${name}ImageFilter::ExecuteInternal ( const std::vector<Image> &images )
 {
 $(include ExecuteInternalTypedefs.cxx.in)
 
@@ -175,38 +166,39 @@ $(include ExecuteInternalUpdateAndReturn.cxx.in)
 //
 // Function to run the Execute method of this filter
 //
-Image ${name} ( std::vector<Image> & images$(include MemberParameters.in) )
+Image ${name} ( const std::vector<Image> & images$(include MemberParameters.in) )
 {
   ${name}ImageFilter filter;
   return filter.Execute ( images$(for i = 1,#members do
                           OUT= OUT .. ', in' .. members[i].name
                           end) );
 }
-
-Image ${name} ( const Image &image1$(include MemberParameters.in) )
+$(for inum=1,5 do
+  OUT=OUT .. [[
+Image ${name} ( const Image& image1]]
+  for jnum=2,inum do
+    OUT=OUT .. ', const Image& image' .. jnum
+  end
+  OUT=OUT .. [[$(include MemberParameters.in) )
 {
+]]
+
+  OUT=OUT .. [[
   ${name}ImageFilter filter;
-  return filter.Execute ( image1$(for i = 1,#members do
-                          OUT= OUT .. ', in' .. members[i].name
-                          end) );
+  return filter.Execute ( image1]]
+
+  for jnum=2,inum do
+    OUT=OUT .. ', image' .. jnum
+  end
+
+  for i = 1,#members do
+    OUT= OUT .. ', in' .. members[i].name
+  end
+
+  OUT=OUT..[[ );
 }
 
-Image ${name} ( const Image &image1, const Image &image2$(include MemberParameters.in) )
-{
-  ${name}ImageFilter filter;
-  return filter.Execute ( image1, image2$(for i = 1,#members do
-                          OUT= OUT .. ', in' .. members[i].name
-                          end) );
-}
-
-Image ${name} ( const Image &image1, const Image &image2, const Image &image3$(include MemberParameters.in) )
-{
-  ${name}ImageFilter filter;
-  return filter.Execute ( image1, image2, image3$(for i = 1,#members do
-                          OUT= OUT .. ', in' .. members[i].name
-                          end) );
-}
-
+]] end)
 
 } // end namespace simple
 } // end namespace itk
