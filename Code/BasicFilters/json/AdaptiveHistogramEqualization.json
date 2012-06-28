@@ -37,7 +37,7 @@
       "tag" : "defaults",
       "description" : "Simply run with default settings",
       "settings" : [],
-      "tolerance" : "1e-5",
+      "tolerance" : "5e-4",
       "inputs" : [
         "Input/RA-Slice-Float.nrrd"
       ]
@@ -55,7 +55,7 @@
           "value" : 0.0
         }
         ],
-      "tolerance" : "5e-4",
+      "tolerance" : "1e-5",
       "inputA_cast" : "sitkFloat32",
       "inputs" : [
         "Input/cthead1.png"
