@@ -37,21 +37,6 @@ namespace simple {
 template <typename T>
 void SITKCommon_HIDDEN Unused( const T &) {};
 
-/** \brief Print the elements of std::vector to the provided output stream
- *
- * The elements of the std::vector are required to have operator<<
- */
-template< typename T >
-void SITKCommon_HIDDEN printStdVector( const std::vector< T > & vec, std::ostream & os )
-{
-  os << "[";
-  for(unsigned int cntr = 0; cntr < vec.size()-1; ++cntr)
-    {
-    os << vec[cntr] << ",";
-    }
-  os << vec[vec.size()-1] << "]";
-}
-
 /**
  * \brief Output the element of an std::vector to the output stream
  *
