@@ -87,10 +87,10 @@ public:
 
     itk::Image<float,3>::Pointer fim = itk::Image<float,3>::New();
     fim->SetRegions ( region );
-    im->SetOrigin( origin );
-    im->SetSpacing( spacing );
+    fim->SetOrigin( origin );
+    fim->SetSpacing( spacing );
     fim->Allocate();
-    im->FillBuffer ( 0 );
+    fim->FillBuffer ( 0 );
     itkFloatImage = fim;
     floatImage = new itk::simple::Image( fim.GetPointer() );
 
@@ -309,8 +309,8 @@ TEST_F(Image,Constructors) {
 
 TEST_F(Image,Hash) {
   itk::simple::HashImageFilter hasher;
-  EXPECT_EQ ( "645b71695b94923c868e16b943d8acf8f6788617", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( *shortImage ) ) << " SHA1 hash value";
-  EXPECT_EQ ( "d4ca27c766665f7422027ab1b977b2ef", hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).Execute ( *shortImage ) ) << " MD5 hash value";
+  EXPECT_EQ ( "a998ea8b4999b4db9cbad033a52fe6d654211ff9", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( *shortImage ) ) << " SHA1 hash value";
+  EXPECT_EQ ( "8cdd56962c5b3aabbfac56cd4dce1c7e", hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).Execute ( *shortImage ) ) << " MD5 hash value";
 
   EXPECT_EQ ( "3b6bfcb1922bf8b29b171062ad722c82f8aa3f50", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( *floatImage ) ) << " SHA1 hash value";
   EXPECT_EQ ( "e5eba8af943d7911220c9f2fb9b5b9c8", hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).Execute ( *floatImage ) ) << " MD5 hash value";
@@ -502,7 +502,7 @@ TEST_F(Image,Operators)
   imgC = imgA / 4;
 
   std::cout << "Testing Logical Operators" << std::endl;
-  imgA = ~~*shortImage;
+  imgA = ~*shortImage;
   imgB = ~imgA;
 
   v =  dynamic_cast<itk::Image<short,3>*>( imgA.GetITKBase() )->GetPixel( idx);
@@ -555,7 +555,7 @@ TEST_F(Image,Operators)
   // 1 = 8 / 8
   imgA /= imgA;
 
-  imgA = ~*shortImage;
+  imgA = ~~*shortImage;
 
   // 1 = 1  & 1
   imgA &= imgA;

@@ -26,7 +26,7 @@
 # This is R code to test ${name}
 #
 
-source( Sys.getenv( "R_SIMPLEITK_LOADER" ) )
+library(SimpleITK)
 
 inputs <- 1
 $(if number_of_inputs then
@@ -54,9 +54,6 @@ print ( 'No tests defined!' )
 quit( save="no", status=1 )
     ]]
   end)
-
-argument2 <- args[[2]]
-argument3 <- args[[3]]
 
 lastargument <- args[[numberOfArguments]]
 

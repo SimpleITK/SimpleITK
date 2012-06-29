@@ -18,6 +18,7 @@
 #include <SimpleITKTestHarness.h>
 #include <itkHashImageFilter.h>
 #include <itkImageFileReader.h>
+#include <sitkCastImageFilter.h>
 
 class HashImageFilterTest
   : public ::testing::Test {
@@ -153,6 +154,20 @@ TEST_F(HashImageFilterTest, VectorImages ) {
 
   EXPECT_EQ( hasher->GetHash(), "3ccccde44efaa3d688a86e94335c1f16" );
   }
+}
+
+TEST_F(HashImageFilterTest, LabelMap ) {
+
+  itk::simple::Image img = itk::simple::ReadImage( dataFinder.GetFile ( "Input/2th_cthead1.png" ) );
+
+  std::string hash;
+
+  EXPECT_NO_THROW( hash = itk::simple::Hash( itk::simple::Cast( img, itk::simple::sitkLabelUInt16 ) ) );
+  EXPECT_EQ( hash, "134248ff026387fe17bd0bfa62357fa390d52985" );
+
+  EXPECT_NO_THROW( hash = itk::simple::Hash( itk::simple::Cast( img, itk::simple::sitkLabelUInt32 ) ) );
+  EXPECT_EQ( hash, "c4dc6e128902159fe04cacec27b784cd995533af" );
+
 }
 
 TEST_F(HashImageFilterTest, Coverage ) {

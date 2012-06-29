@@ -16,6 +16,7 @@
 *
 *=========================================================================*/
 #include "sitkImageFilter.h"
+#include "sitkImageFilterExecuteBase.hxx"
 
 namespace itk {
 namespace simple {

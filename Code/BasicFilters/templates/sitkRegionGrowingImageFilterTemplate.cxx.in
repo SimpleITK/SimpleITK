@@ -45,13 +45,14 @@ $(include ToStringSignature.cxx.in)
 $(include ToStringBody.cxx.in)  out << " SeedList:" << std::endl;
   for (unsigned int i = 0; i < this->m_SeedList.size(); ++i)
     {
-    out << "  ";
-    printStdVector(this->m_SeedList[i], out);
-    out << std::endl;
+    out << "  " << this->m_SeedList[i] << std::endl;
     }
 
 $(include ToStringReturn.cxx.in)
 }
+
+
+$(include CustomMethods.cxx.in)
 
 //
 // Execute

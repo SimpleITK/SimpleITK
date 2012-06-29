@@ -17,9 +17,13 @@
 *=========================================================================*/
 
 #include "sitkHashImageFilter.h"
+#include "sitkCastImageFilter.h"
 #include "itkHashImageFilter.h"
 #include "itkVectorImage.h"
+#include "itkLabelMap.h"
+#include "itkLabelObject.h"
 
+#include <typeinfo>
 #include <string>
 
 namespace itk {
@@ -31,6 +35,9 @@ namespace itk {
 
       this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
       this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
+
+      this->m_MemberFactory->RegisterMemberFunctions < LabelPixelIDTypeList, 3, detail::ExecuteInternalLabelImageAddressor<MemberFunctionType> > ();
+      this->m_MemberFactory->RegisterMemberFunctions < LabelPixelIDTypeList, 2, detail::ExecuteInternalLabelImageAddressor<MemberFunctionType> > ();
     }
 
     std::string HashImageFilter::ToString() const {
@@ -69,6 +76,22 @@ namespace itk {
       return this->m_MemberFactory->GetMemberFunction( type, dimension )( image );
     }
 
+    template <class TLabelImageType>
+    std::string HashImageFilter::ExecuteInternalLabelImage( const Image &inImage )
+    {
+      typedef TLabelImageType LabelImageType;
+
+      typedef itk::Image< typename LabelImageType::PixelType, LabelImageType::ImageDimension > ScalarImageType;
+
+      // The image id for a scalar image of the label map image
+      PixelIDValueType scalarID = PixelIDToPixelIDValue< typename ImageTypeToPixelID<ScalarImageType>::PixelIDType >::Result;
+
+      // convert the LabelMapImage to a scalar image
+      Image img = Cast( inImage, scalarID );
+
+      return this->Execute( img );
+    }
+
     template <class TImageType>
     std::string HashImageFilter::ExecuteInternal ( const Image& inImage )
     {
@@ -96,7 +119,9 @@ namespace itk {
 
       return hasher->GetHash();
     }
-    std::string Hash ( const Image& image, HashImageFilter::HashFunction function ) {
+
+    std::string Hash ( const Image& image, HashImageFilter::HashFunction function )
+    {
       return HashImageFilter().SetHashFunction ( function ).Execute ( image );
     }
   }

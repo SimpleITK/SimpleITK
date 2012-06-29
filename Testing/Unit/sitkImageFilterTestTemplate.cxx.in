@@ -164,7 +164,12 @@ $(if inputA_cast then
                                                                        $(if template_type and template_type == "RegionGrowing" then OUT=", std::vector< std::vector<unsigned int> >()" end)
                                                                        $(if template_code_filename and template_code_filename == "FastMarchingImageFilter" then OUT=", std::vector< std::vector<unsigned int> >()" end)
                                                                        $(if template_code_filename and template_code_filename == "KernelImageFilter" then OUT=[[, 1, itk::simple::${name}ImageFilter::Ball]] end)
-                                                                       $(foreach members , ${default})
+                                                                       $(for i = 1,#members do
+                                                                         if (number_of_inputs > 0 or i > 1) then OUT = OUT .. ", " end
+                                                                         OUT= OUT .. members[i].default
+                                                                        end)
+
+
                                                                       ) ) << "Functional interface to ${name}";
       hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
       EXPECT_EQ ( hasher.Execute ( fromProcedural ), hasher.Execute ( fromFunctional ) ) << "procedural and functional are not the same!";
@@ -430,9 +435,9 @@ TEST_F(R,${name}) {
         ]]
     end)
 
-  // This is nothing but a hack to tell the scripts where the file is
-  // to load the SimpleITK R library
-  SetEnvironment ( "R_SIMPLEITK_LOADER", dataFinder.GetBuildDirectory()+"/Wrapping/LoadSimpleITK.R" );
+  // Set-up the R enviroment to include the SimpleITK R library in the
+  // build directory.
+  SetEnvironment ( "R_LIBS", dataFinder.GetBuildDirectory()+"/Wrapping/RLib" );
 
 
   std::string Script = dataFinder.GetBuildDirectory() + "/Testing/Unit/RTests/${name}ImageFilterTest.R";

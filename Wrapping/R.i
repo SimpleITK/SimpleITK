@@ -364,7 +364,7 @@
     SEXP res = 0;
     double *dans=0;
     int *ians=0;
-    unsigned pixcount=1;
+    unsigned pixcount=src.GetNumberOfComponentsPerPixel();
     for (unsigned k = 0; k < sz.size();k++)
       {
         pixcount *= sz[k];
@@ -380,13 +380,21 @@
         }
         break;
       case itk::simple::ConditionalValue< itk::simple::sitkInt8 != itk::simple::sitkUnknown, itk::simple::sitkInt8, -3 >::Value:
+case itk::simple::ConditionalValue< itk::simple::sitkVectorInt8 != itk::simple::sitkUnknown, itk::simple::sitkVectorInt8, -15 >::Value:
       case itk::simple::ConditionalValue< itk::simple::sitkUInt8 != itk::simple::sitkUnknown, itk::simple::sitkUInt8, -2 >::Value:
+      case itk::simple::ConditionalValue< itk::simple::sitkVectorUInt8 != itk::simple::sitkUnknown, itk::simple::sitkVectorUInt8, -14 >::Value:
       case itk::simple::ConditionalValue< itk::simple::sitkInt16 != itk::simple::sitkUnknown, itk::simple::sitkInt16, -5 >::Value:
+      case itk::simple::ConditionalValue< itk::simple::sitkVectorInt16 != itk::simple::sitkUnknown, itk::simple::sitkVectorInt16, -17 >::Value:
       case itk::simple::ConditionalValue< itk::simple::sitkUInt16 != itk::simple::sitkUnknown, itk::simple::sitkUInt16, -4 >::Value:
+      case itk::simple::ConditionalValue< itk::simple::sitkVectorUInt16 != itk::simple::sitkUnknown, itk::simple::sitkVectorUInt16, -16 >::Value:
       case itk::simple::ConditionalValue< itk::simple::sitkInt32 != itk::simple::sitkUnknown, itk::simple::sitkInt32, -7 >::Value:
+      case itk::simple::ConditionalValue< itk::simple::sitkVectorInt32 != itk::simple::sitkUnknown, itk::simple::sitkVectorInt32, -19 >::Value:
       case itk::simple::ConditionalValue< itk::simple::sitkUInt32 != itk::simple::sitkUnknown, itk::simple::sitkUInt32, -6 >::Value:
+      case itk::simple::ConditionalValue< itk::simple::sitkVectorUInt32 != itk::simple::sitkUnknown, itk::simple::sitkVectorUInt32, -18 >::Value:
       case itk::simple::ConditionalValue< itk::simple::sitkUInt64 != itk::simple::sitkUnknown, itk::simple::sitkUInt64, -8 >::Value:
+      case itk::simple::ConditionalValue< itk::simple::sitkVectorUInt64 != itk::simple::sitkUnknown, itk::simple::sitkVectorUInt64, -20 >::Value:
       case itk::simple::ConditionalValue< itk::simple::sitkInt64 != itk::simple::sitkUnknown, itk::simple::sitkInt64, -9 >::Value:
+      case itk::simple::ConditionalValue< itk::simple::sitkVectorInt64 != itk::simple::sitkUnknown, itk::simple::sitkVectorInt64, -21 >::Value:
         {
           // allocate an integer array
           PROTECT(res = Rf_allocVector(INTSXP, pixcount));
@@ -404,60 +412,71 @@
     switch (PID)
       {
       case itk::simple::ConditionalValue< itk::simple::sitkUInt8 != itk::simple::sitkUnknown, itk::simple::sitkUInt8, -2 >::Value:
+      case itk::simple::ConditionalValue< itk::simple::sitkVectorUInt8 != itk::simple::sitkUnknown, itk::simple::sitkVectorUInt8, -14 >::Value:
         {
         uint8_t * buff = src.GetBufferAsUInt8();
         std::copy(buff,buff + pixcount,ians);
         }
         break;
       case itk::simple::ConditionalValue< itk::simple::sitkInt8 != itk::simple::sitkUnknown, itk::simple::sitkInt8, -3 >::Value:
+      case itk::simple::ConditionalValue< itk::simple::sitkVectorInt8 != itk::simple::sitkUnknown, itk::simple::sitkVectorInt8, -15 >::Value:
         {
         int8_t * buff = src.GetBufferAsInt8();
         std::copy(buff,buff + pixcount,ians);
         }
         break;
       case itk::simple::ConditionalValue< itk::simple::sitkUInt16 != itk::simple::sitkUnknown, itk::simple::sitkUInt16, -4 >::Value:
+case itk::simple::ConditionalValue< itk::simple::sitkVectorUInt16 != itk::simple::sitkUnknown, itk::simple::sitkVectorUInt16, -16 >::Value:
         {
         uint16_t * buff = src.GetBufferAsUInt16();
         std::copy(buff,buff + pixcount,ians);
         }
         break;
       case itk::simple::ConditionalValue< itk::simple::sitkInt16 != itk::simple::sitkUnknown, itk::simple::sitkInt16, -5 >::Value:
+      case itk::simple::ConditionalValue< itk::simple::sitkVectorInt16 != itk::simple::sitkUnknown, itk::simple::sitkVectorInt16, -17 >::Value:
         {
         int16_t * buff = src.GetBufferAsInt16();
         std::copy(buff,buff + pixcount,ians);
         }
         break;
       case itk::simple::ConditionalValue< itk::simple::sitkUInt32 != itk::simple::sitkUnknown, itk::simple::sitkUInt32, -6 >::Value:
+      case itk::simple::ConditionalValue< itk::simple::sitkVectorUInt32 != itk::simple::sitkUnknown, itk::simple::sitkVectorUInt32, -18 >::Value:
         {
         uint32_t * buff = src.GetBufferAsUInt32();
         std::copy(buff,buff + pixcount,ians);
         }
         break;
       case itk::simple::ConditionalValue< itk::simple::sitkInt32 != itk::simple::sitkUnknown, itk::simple::sitkInt32, -7 >::Value:
+      case itk::simple::ConditionalValue< itk::simple::sitkVectorInt32 != itk::simple::sitkUnknown, itk::simple::sitkVectorInt32, -19 >::Value:
         {
         int32_t * buff = src.GetBufferAsInt32();
         std::copy(buff,buff + pixcount,ians);
         }
         break;
       case itk::simple::ConditionalValue< itk::simple::sitkUInt64 != itk::simple::sitkUnknown, itk::simple::sitkUInt64, -8 >::Value:
+      case itk::simple::ConditionalValue< itk::simple::sitkVectorUInt64 != itk::simple::sitkUnknown, itk::simple::sitkVectorUInt64, -20 >::Value:
+
         {
         uint64_t * buff = src.GetBufferAsUInt64();
         std::copy(buff,buff + pixcount,ians);
         }
         break;
       case itk::simple::ConditionalValue< itk::simple::sitkInt64 != itk::simple::sitkUnknown, itk::simple::sitkInt64, -9 >::Value:
+      case itk::simple::ConditionalValue< itk::simple::sitkVectorInt64 != itk::simple::sitkUnknown, itk::simple::sitkVectorInt64, -21 >::Value:
         {
         int64_t * buff = src.GetBufferAsInt64();
         std::copy(buff,buff + pixcount,ians);
         }
         break;
       case itk::simple::ConditionalValue< itk::simple::sitkFloat32 != itk::simple::sitkUnknown, itk::simple::sitkFloat32, -10 >::Value:
+      case itk::simple::ConditionalValue< itk::simple::sitkVectorFloat32 != itk::simple::sitkUnknown, itk::simple::sitkVectorFloat32, -22 >::Value:
         {
         float * buff = src.GetBufferAsFloat();
         std::copy(buff,buff + pixcount,dans);
         }
         break;
       case itk::simple::ConditionalValue< itk::simple::sitkFloat64 != itk::simple::sitkUnknown, itk::simple::sitkFloat64, -11 >::Value:
+      case itk::simple::ConditionalValue< itk::simple::sitkVectorFloat64 != itk::simple::sitkUnknown, itk::simple::sitkVectorFloat64, -23 >::Value:
         {
         double * buff = src.GetBufferAsDouble();
         std::copy(buff,buff + pixcount,dans);
@@ -509,11 +528,10 @@ itk::simple::Image ArrayAsIm(SEXP arr,
 %Rruntime %{
 
   setMethod('show', '_p_itk__simple__Image', function(object) Show(object))
-    setMethod('print', '_p_itk__simple__Image', function(x, ...)cat(x$ToString()))
+  setMethod('print', '_p_itk__simple__Image', function(x, ...)cat(x$ToString()))
 
-    setMethod('print', '_p_itk__simple__ImageFilter', function(x, ...)cat(x$ToString()))
-    setMethod('show', '_p_itk__simple__ImageFilter', function(object)cat(object$ToString()))
-
+  setMethod('print', '_p_itk__simple__ImageFilter', function(x, ...)cat(x$ToString()))
+  setMethod('show', '_p_itk__simple__ImageFilter', function(object)cat(object$ToString()))
 
     %}
 #endif

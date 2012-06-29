@@ -49,7 +49,6 @@ namespace simple
    *
    *      %a  for the ImageJ application
    *      %f  for SimpleITK's temporary image file
-   *      %m  for the ImageJ color-image macro
    *
    *  For example, the default SITK_SHOW_COMMAND string on Linux systems is:
    *
@@ -61,14 +60,17 @@ namespace simple
    *
    *  For another example, the default SITK_SHOW_COLOR_COMMAND string on Mac OS X is:
    *
-   *      open -a %a -n --args -eval %m
+   *       open -a %a -n --args -eval \'open(\"%f\"); run(\"Make Composite\", \"display=Composite\"); \'
    *
    *  After token substitution the string may become:
    *
    *      open -a ImageJ64 -n --args -eval 'open("/tmp/TempFile-20238-0.nii"); run("Make Composite", "display=Composite");'
    *
-   * If neither the "%f" or "%m" tokens are found, the temporary file name is automatically appended
-   * to the command arguments.
+   *  The string after "-eval" is an ImageJ macro the opens the file and runs ImageJ's Make Composite command
+   *  to display the image in color.
+   *
+   *  If the "%f" token is not found in the command string, the temporary file name is automatically appended
+   *  to the command argument list.
    **/
 
 
