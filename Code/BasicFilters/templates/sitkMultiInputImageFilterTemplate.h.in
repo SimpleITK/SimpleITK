@@ -53,32 +53,23 @@ $(include MemberGetSetDeclarations.h.in)
 $(include ClassNameAndPrint.h.in)
 
       /** Execute the filter on the input images */
-      Image Execute ( const std::vector<Image> &images);
-$(for inum=1,5 do
-  OUT=OUT..[[
-      Image Execute ( const Image& image1]]
-
-  for jnum=2,inum do
-    OUT=OUT .. ', const Image& image' .. jnum
-  end
-  OUT=OUT..[[ );
-]] end)
-
+      Image Execute ( const Image& image1 );
+      Image Execute ( const Image& image1, const Image& image2 );
+      Image Execute ( const Image& image1, const Image& image2, const Image& image3 );
+      Image Execute ( std::vector<Image> &images);
 $(if members and #members > 0 then
 OUT=[[
 
       /** Execute the filter on the input images with the given parameters */
-      Image Execute ( const std::vector<Image> &images$(foreach members , ${type} in${name}) );
-]]
-for inum=1,5 do
-  OUT=OUT..[[
-      Image Execute ( const Image& image1]]
-
-  for jnum=2,inum do
-    OUT=OUT .. ', const Image& image' .. jnum
-  end
-  OUT=OUT..[[$(include MemberParameters.in) );
-]] end end)
+      Image Execute ( const Image& image1$(foreach members ,
+        ${type} in${name}) );
+      Image Execute ( const Image& image1, const Image& image2$(foreach members ,
+        ${type} in${name}) );
+      Image Execute ( const Image& image1, const Image& image2, const Image& image3$(foreach members ,
+        ${type} in${name}) );
+      Image Execute ( std::vector<Image> &images$(foreach members ,
+        ${type} in${name}) );
+]]end)
 
 $(include CustomMethods.h.in)
 
@@ -86,8 +77,8 @@ $(include CustomMethods.h.in)
 
       /** Setup for member function dispatching */
 
-      typedef Image (Self::*MemberFunctionType)( const std::vector<Image> & );
-      template <class TImageType> Image ExecuteInternal ( const std::vector<Image> &images );
+      typedef Image (Self::*MemberFunctionType)( std::vector<Image> & );
+      template <class TImageType> Image ExecuteInternal ( std::vector<Image> &images );
 
 $(if vector_pixel_types_by_component then
       throw 'vector_pixel_types_by_component must not be set with multi image filters'
@@ -106,25 +97,14 @@ $(include PrivateMemberDeclarations.h.in)$(include ClassEnd.h.in)
      *
      * \sa itk::simple::${name}ImageFilter for the object oriented interface
      */
-     SITKBasicFilters_EXPORT Image ${name} ( const std::vector<Image> &images$(when members $(foreach members ,
+     SITKBasicFilters_EXPORT Image ${name} ( const Image &image1$(when members $(foreach members ,
       ${type} in${name} = ${default})) );
-
-$(for inum=1,5 do
-  OUT=OUT..[[
-     SITKBasicFilters_EXPORT Image ${name} ( const Image& image1]]
-
-  for jnum=2,inum do
-    OUT=OUT .. ', const Image& image' .. jnum
-  end
-  if members then
-    for num=1,#members do
-      OUT=OUT ..', '.. members[num].type .. ' in'.. members[num].name .. ' = ' .. members[num].default
-    end
-  end
-
-  OUT=OUT..[[ );
-]]
-end)
+SITKBasicFilters_EXPORT Image ${name} ( const Image &image1, const Image &image2$(when members $(foreach members ,
+      ${type} in${name} = ${default})) );
+SITKBasicFilters_EXPORT Image ${name} ( const Image &image1, const Image &image2, const Image &image3$(when members $(foreach members ,
+      ${type} in${name} = ${default})) );
+     SITKBasicFilters_EXPORT Image ${name} ( std::vector<Image> &images$(when members $(foreach members ,
+      ${type} in${name} = ${default})) );
 
 }
 }
