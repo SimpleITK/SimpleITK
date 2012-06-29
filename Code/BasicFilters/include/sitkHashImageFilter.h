@@ -61,9 +61,11 @@ namespace itk {
       HashFunction m_HashFunction;
 
       template <class TImageType> std::string ExecuteInternal ( const Image& image );
+      template <class TImageType> std::string ExecuteInternalLabelImage ( const Image& image );
 
       // friend to get access to executeInternal member
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
+      friend struct detail::ExecuteInternalLabelImageAddressor<MemberFunctionType>;
 
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
     };
