@@ -11,7 +11,6 @@
       "name" : "ClassWithInitialMean",
       "type" : "std::vector<double>",
       "default" : "std::vector<double>()",
-      "no_print" : 1,
       "custom_itk_cast" : "if( this->m_ClassWithInitialMean.size() == 0 ) {\n     filter->AddClassWithInitialMean( NumericTraits<typename InputImageType::PixelType>::ZeroValue() );\n     filter->AddClassWithInitialMean( NumericTraits<typename InputImageType::PixelType>::OneValue() );\n   }\n   else\n   {\n     for( unsigned int i = 0; i < this->m_ClassWithInitialMean.size(); ++i )\n       filter->AddClassWithInitialMean( this->m_ClassWithInitialMean[i] );\n    }"
     },
     {
@@ -32,8 +31,7 @@
       "default" : "std::vector<double>()",
       "custom_itk_cast" : "this->m_FinalMeans = std::vector<double>( filter->GetFinalMeans().begin(), filter->GetFinalMeans().end() );",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "",
-      "no_print" : 1
+      "detaileddescriptionGet" : ""
     }
   ],
   "tests" : [
