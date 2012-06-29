@@ -25,7 +25,6 @@ set ( SimpleITKBasicFiltersSource
   sitkHashImageFilter.cxx
   sitkImageFilter.cxx
   sitkJoinSerriesImageFilter.cxx
-  sitkComposeImageFilter.cxx
   sitkLabelStatisticsImageFilter.cxx
   sitkMeasurementMap.cxx
   sitkStatisticsImageFilter.cxx

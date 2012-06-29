@@ -40,7 +40,6 @@
 
 #include "sitkHashImageFilter.h"
 #include "sitkJoinSeriesImageFilter.h"
-#include "sitkComposeImageFilter.h"
 #include "sitkPixelIDTypeLists.h"
 #include "sitkStatisticsImageFilter.h"
 #include "sitkLabelStatisticsImageFilter.h"
