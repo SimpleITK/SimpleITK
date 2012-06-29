@@ -45,6 +45,20 @@
       "detaileddescriptionGet" : "Set/Get value to replace thresholded pixels\n"
     }
   ],
+ "measurements" : [
+    {
+      "name" : "Mean",
+      "type" : "std::vector<double>",
+      "default" : "std::vector<double>()",
+      "custom_itk_cast" : "std::vector<double>( filter->GetMean().begin(), filter->GetMean().end() );"
+    },
+    {
+      "name" : "Covariance",
+      "type" : "std::vector<double>",
+      "default" : "std::vector<double>()",
+      "custom_itk_cast" : "std::vector<double>( filter->GetCovariance().begin(), filter->GetCovariance().end() );"
+    }
+  ],
   "tests" : [
     {
       "tag" : "VM_segmentation",
