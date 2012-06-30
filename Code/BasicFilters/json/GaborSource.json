@@ -65,7 +65,6 @@
       "type" : "std::vector<double>",
       "default" : "std::vector<double>()",
       "doc" : "Passing a zero sized array, defaults to identiy matrix. The size of the array must exactly match the direction matrix for the dimension of the image.",
-      "no_print" : 1,
       "custom_itk_cast" : "filter->SetDirection( VectorToITKDirection<typename FilterType::DirectionType>( this->m_Direction ) );"
     }
   ],

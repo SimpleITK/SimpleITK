@@ -24,6 +24,7 @@
 
 #include <vector>
 #include <ostream>
+#include <iterator>
 
 namespace itk {
 namespace simple {
@@ -36,19 +37,24 @@ namespace simple {
 template <typename T>
 void SITKCommon_HIDDEN Unused( const T &) {};
 
-/** \brief Print the elements of std::vector to the provided output stream
+/**
+ * \brief Output the element of an std::vector to the output stream
  *
- * The elements of the std::vector are required to have operator<<
+ * The elements of the std::vector are required to have operator<<.
+ *
+ * The format of the output should be "[ T, T, T ]".
  */
-template< typename T >
-void SITKCommon_HIDDEN printStdVector( const std::vector< T > & vec, std::ostream & os )
+template <typename T>
+SITKCommon_HIDDEN std::ostream & operator<<( std::ostream & os, const std::vector<T>& v)
 {
-  os << "[";
-  for(unsigned int cntr = 0; cntr < vec.size()-1; ++cntr)
+  if ( v.empty() )
     {
-    os << vec[cntr] << ",";
+    return os << "[ ]";
     }
-  os << vec[vec.size()-1] << "]";
+
+  os << "[ ";
+  std::copy( v.begin(), v.end()-1, std::ostream_iterator<T>(os, ", ") );
+  return os << v.back() << " ]";
 }
 
 /** \brief Copy the elements of an std::vector into an ITK fixed width vector

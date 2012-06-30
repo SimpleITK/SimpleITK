@@ -33,8 +33,8 @@ void ImageCompare::NormalizeAndSave ( const sitk::Image &input, const std::strin
     std::vector<unsigned int> sz = input.GetSize();
 
     // set to just the center slice
-    idx[2] = (int)( input.GetDepth() / 2.0 );
-    sz[2] = 1;
+    idx[2] = (int)( input.GetDepth() / 2 );
+    sz[2] = 0;
     image = sitk::Extract( input, sz, idx );
     }
 
@@ -87,7 +87,7 @@ bool ImageCompare::compare ( const sitk::Image& image, std::string inTestCase, s
     std::vector<unsigned int> sz = image.GetSize();
 
     // set to just the center slice
-    idx[2] = (int)( image.GetDepth() / 2.0 );
+    idx[2] = (int)( image.GetDepth() / 2 );
     sz[2] = 1;
     centerSlice = sitk::RegionOfInterest( image, sz, idx );
     }
@@ -198,17 +198,31 @@ bool ImageCompare::compare ( const sitk::Image& image, std::string inTestCase, s
     std::string ActualImageFilename = OutputDir + "/" + name + "_Actual.png";
     std::string DifferenceImageFilename = OutputDir + "/" + name + "_Difference.png";
 
-    NormalizeAndSave ( baseline, ExpectedImageFilename );
-    NormalizeAndSave ( centerSlice, ActualImageFilename );
-    NormalizeAndSave ( sitk::Sqrt(diffSquared), DifferenceImageFilename );
+    try
+      {
+      NormalizeAndSave ( baseline, ExpectedImageFilename );
+      NormalizeAndSave ( centerSlice, ActualImageFilename );
+      NormalizeAndSave ( sitk::Sqrt(diffSquared), DifferenceImageFilename );
 
-    // Let ctest know about it
-    std::cout << "<DartMeasurementFile name=\"ExpectedImage\" type=\"image/png\">";
-    std::cout << ExpectedImageFilename << "</DartMeasurementFile>" << std::endl;
-    std::cout << "<DartMeasurementFile name=\"ActualImage\" type=\"image/png\">";
-    std::cout << ActualImageFilename << "</DartMeasurementFile>" << std::endl;
-    std::cout << "<DartMeasurementFile name=\"DifferenceImage\" type=\"image/png\">";
-    std::cout << DifferenceImageFilename << "</DartMeasurementFile>" << std::endl;
+      // Let ctest know about it
+      std::cout << "<DartMeasurementFile name=\"ExpectedImage\" type=\"image/png\">";
+      std::cout << ExpectedImageFilename << "</DartMeasurementFile>" << std::endl;
+      std::cout << "<DartMeasurementFile name=\"ActualImage\" type=\"image/png\">";
+      std::cout << ActualImageFilename << "</DartMeasurementFile>" << std::endl;
+      std::cout << "<DartMeasurementFile name=\"DifferenceImage\" type=\"image/png\">";
+      std::cout << DifferenceImageFilename << "</DartMeasurementFile>" << std::endl;
+
+      }
+    catch( std::exception &e )
+      {
+      std::cerr << "Exception encountered while trying to normalize and save images for dashboard!" << std::endl;
+      std::cerr << e.what() << std::endl;
+      }
+    catch(...)
+      {
+      std::cerr << "Unexpected error while trying to normalize and save images for dashboard!" << std::endl;
+      }
+
 
     return false;
   }
