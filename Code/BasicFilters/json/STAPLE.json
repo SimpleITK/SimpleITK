@@ -1,0 +1,62 @@
+{
+  "name" : "STAPLE",
+  "template_code_filename" : "MultiInputImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "output_pixel_type" : "typename itk::NumericTraits<typename InputImageType::PixelType>::RealType",
+  "filter_type" : "itk::STAPLEImageFilter<InputImageType, OutputImageType>",
+  "members" : [
+    {
+      "name" : "ConfidenceWeight",
+      "type" : "double",
+      "default" : "1.0"
+    },
+    {
+      "name" : "ForegroundValue",
+      "type" : "double",
+      "default" : "1.0",
+      "pixeltype" : "Input"
+    },
+    {
+      "name" : "MaximumIterations",
+      "type" : "unsigned int",
+      "default" : "std::numeric_limits<unsigned int>::max()"
+    }
+  ],
+  "measurements" : [
+    {
+      "name" : "ElapsedIterations",
+      "type" : "uint32_t",
+      "default" : 0,
+      "briefdescriptionGet" : "Number of iterations run."
+    },
+    {
+      "name" : "Sensitivity",
+      "type" : "std::vector<double>",
+      "default" : "std::vector<double>()"
+    },
+    {
+      "name" : "Specificity ",
+      "type" : "std::vector<double>",
+      "default" : "std::vector<double>()"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "basic",
+      "description" : "Basic usage with required parameters",
+      "settings" : [
+        {
+          "parameter" : "ForegroundValue",
+          "value" : "255.0"
+        }
+      ],
+      "tolerance" : "1e-5",
+      "inputs" : [
+        "Input/STAPLE1.png",
+        "Input/STAPLE2.png"
+      ]
+    }
+  ]
+}
