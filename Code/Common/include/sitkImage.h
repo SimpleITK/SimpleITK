@@ -169,7 +169,20 @@ namespace simple
     unsigned int GetDepth( void ) const;
 
 
+    /** \brief Copy common meta-data from an image to this one.
+     *
+     * Copies the Origin, Spacing, and Direction from the source image
+     * to this image.
+     *
+     * It is required for the source Image's dimension and size to
+     * match, this image's attributes, otherwise an exception will be
+     * generated.
+     *
+     */
+    void CopyInformation( const Image &srcImage );
+
     std::string GetPixelIDTypeAsString( void ) const;
+
     std::string ToString( void ) const;
 
     /** \brief Get the value of a pixel

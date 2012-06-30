@@ -379,6 +379,27 @@ namespace itk
       this->m_PimpleImage->SetDirection( direction );
     }
 
+    void Image::CopyInformation( const Image & srcImage )
+    {
+      // check that the dimension match
+      if ( this->GetDimension() != srcImage.GetDimension() )
+        {
+        sitkExceptionMacro( "Source Image for information does not match this image's dimension." );
+        }
+
+
+      // check that the image size's match
+      if ( this->GetSize() != srcImage.GetSize() )
+        {
+        sitkExceptionMacro( "Source image size of " << srcImage.GetSize()
+                            << " does not match this image's size of " << this->GetSize() << "!" );
+        }
+
+      this->SetOrigin( srcImage.GetOrigin() );
+      this->SetSpacing( srcImage.GetSpacing() );
+      this->SetDirection( srcImage.GetDirection() );
+    }
+
     // Index to Physical Point
     std::vector< double > Image::TransformIndexToPhysicalPoint( const std::vector< int64_t > &idx ) const
     {
