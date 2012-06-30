@@ -28,19 +28,19 @@ find_program(RSCRIPT_EXECUTABLE Rscript DOC "Rscript executable.")
 
 set(CMAKE_FIND_APPBUNDLE ${TEMP_CMAKE_FIND_APPBUNDLE})
 
-find_path(R_INCLUDE_DIR R.h PATHS /usr/local/lib /usr/local/lib64 PATH_SUFFIXES R/include DOC "Path to file R.h")
+find_path(R_INCLUDE_DIR R.h PATHS /usr/local/lib /usr/local/lib64 ${R_BASE_DIR} PATH_SUFFIXES R/include DOC "Path to file R.h")
 find_library(R_LIBRARY_BASE R PATHS ${R_BASE_DIR} PATH_SUFFIXES /lib DOC "R library (example libR.a, libR.dylib, etc.).")
 
 set(R_LIBRARIES ${R_LIBRARY_BASE})
 mark_as_advanced(RSCRIPT_EXECUTABLE R_LIBRARIES R_INCLUDE_DIR R_COMMAND R_LIBRARY_BASE)
 
 
-set( _REQUIRED_R_VARIABLES R_INCLUDE_DIR R_COMMAND R_LIBRARY_BASE )
+set( _REQUIRED_R_VARIABLES R_INCLUDE_DIR R_COMMAND )
 
 if( APPLE )
   # On linux platform some times the libR.so is not available, however
   # on apple a link error results if the library is linked.
-  list(  APPEND _REQUIRED_R_VARIABLES R_LIBRARIES )
+  list(  APPEND _REQUIRED_R_VARIABLES R_LIBRARIES R_LIBRARY_BASE )
 endif()
 
 find_package_handle_standard_args(R DEFAULT_MSG ${_REQUIRED_R_VARIABLES} )
