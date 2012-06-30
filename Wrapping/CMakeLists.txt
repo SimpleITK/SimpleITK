@@ -298,7 +298,12 @@ if ( WRAP_R )
   set(SWIG_MODULE_SimpleITK_EXTRA_DEPS ${SWIG_EXTRA_DEPS}
     ${CMAKE_CURRENT_SOURCE_DIR}/R.i )
   SWIG_add_module ( SimpleITK r SimpleITK.i SimpleITKR_wrap.cxx )
-  SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${R_LIBRARIES})
+  SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} )
+
+  # on some platforms the r libraries are not required at link time...
+  if(R_LIBRARIES)
+    SWIG_link_libraries ( SimpleITK ${R_LIBRARIES} )
+  endif()
 
   set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITK_wrap.cxx PROPERTIES COMPILE_FLAGS "-w")
 
