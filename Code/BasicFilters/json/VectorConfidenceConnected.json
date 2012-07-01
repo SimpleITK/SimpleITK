@@ -1,0 +1,103 @@
+{
+  "name" : "VectorConfidenceConnected",
+  "template_code_filename" : "RegionGrowingImageFilter",
+  "template_type" : "RegionGrowing",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "VectorPixelIDTypeList",
+  "output_pixel_type" : "uint8_t",
+  "members" : [
+    {
+      "name" : "NumberOfIterations",
+      "type" : "unsigned int",
+      "default" : "4u",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the number of iterations\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the number of iterations\n"
+    },
+    {
+      "name" : "Multiplier",
+      "type" : "double",
+      "default" : "4.5",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the multiplier to define the confidence interval. Multiplier can be anything greater than zero. A typical value is 2.5\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the multiplier to define the confidence interval. Multiplier can be anything greater than zero. A typical value is 2.5\n"
+    },
+    {
+      "name" : "InitialNeighborhoodRadius",
+      "type" : "unsigned int",
+      "default" : "1u",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Get/Set the radius of the neighborhood over which the statistics are evaluated\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get/Set the radius of the neighborhood over which the statistics are evaluated\n"
+    },
+    {
+      "name" : "ReplaceValue",
+      "type" : "uint8_t",
+      "default" : "1u",
+      "pixeltype" : "Output",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get value to replace thresholded pixels\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get value to replace thresholded pixels\n"
+    }
+  ],
+ "measurements" : [
+    {
+      "name" : "Mean",
+      "type" : "std::vector<double>",
+      "default" : "std::vector<double>()",
+      "custom_itk_cast" : "std::vector<double>( filter->GetMean().begin(), filter->GetMean().end() );"
+    },
+    {
+      "name" : "Covariance",
+      "type" : "std::vector<double>",
+      "default" : "std::vector<double>()",
+      "custom_itk_cast" : "std::vector<double>( filter->GetCovariance().begin(), filter->GetCovariance().end() );"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "VM_segmentation",
+      "description" : "Simply run with default settings",
+      "settings" : [
+        {
+          "parameter" : "SeedList",
+          "dim" : 2,
+          "value" : [
+            "{10,10}"
+          ],
+          "tcl_value" : [
+            "10 10"
+          ],
+          "python_value" : [
+            "[10,10]"
+          ],
+          "ruby_value" : [
+            "[10,10]"
+          ],
+          "R_value" : [
+            "c(10,10)"
+          ]
+        },
+        {
+          "parameter" : "InitialNeighborhoodRadius",
+          "value" : "10u",
+          "lua_value" : "10",
+          "python_value" : "10",
+          "ruby_value" : "10",
+          "java_value" : "10",
+          "tcl_value" : "10",
+          "R_value" : "10"
+        }
+      ],
+      "md5hash" : "d9617e028958be235069f542d1c2111b",
+      "inputs" : [
+        "Input/VM1111Shrink-RGBFloat.nrrd"
+      ]
+    }
+  ]
+}
