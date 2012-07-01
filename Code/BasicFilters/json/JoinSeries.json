@@ -48,7 +48,7 @@
         },
         {
           "parameter" : "Spacing",
-          "value" : ".0123"
+          "value" : "0.0123"
         }
       ],
       "md5hash" : "f571cec13d5db25aa3337bb72b93e2f2",
