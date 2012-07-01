@@ -36,17 +36,6 @@ const unsigned int UnusedDimension = 2;
 namespace itk {
 namespace simple {
 
-namespace
-{
-template < class T >
-std::ostream& operator<< (std::ostream& os, const std::vector<T>& v)
-{
-  os << "[";
-  std::copy( v.begin(), v.end(), std::ostream_iterator<T>(os, ", " ) );
-  return os << "]";
-}
-}
-
 Image ImportAsInt8(
     int8_t * buffer,
     const std::vector< unsigned int > &size,
