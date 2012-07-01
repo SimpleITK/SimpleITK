@@ -51,6 +51,11 @@ std::ostream& operator<< (std::ostream& os, const std::vector<T>& v)
 
 }
 
+
+const double adir[] = {0.0, 0.0, 1.0,
+                       -1.0, 0.0, 0.0,
+                       0.0, -1.0, 0.0};
+
 using  itk::simple::InstantiatedPixelIDTypeList;
 
 
@@ -131,6 +136,7 @@ public:
 
   std::vector<double> directionI2D;
   std::vector<double> directionI3D;
+
 };
 
 
@@ -389,9 +395,6 @@ TEST_F(Image,Properties) {
 
 
   // SetDirection
-  const double adir[] = {0.0, 0.0, 1.0,
-                         -1.0, 0.0, 0.0,
-                         0.0, -1.0, 0.0};
   std::vector<double> vdir( adir, adir+9);
   shortImage->SetDirection( vdir );
   for( unsigned int i = 0 ; i < 9; ++i )
@@ -405,6 +408,35 @@ TEST_F(Image,Properties) {
 }
 
 namespace sitk = itk::simple;
+
+
+TEST_F(Image, CopyInformation)
+{
+
+  sitk::Image img1( 10, 20, sitk::sitkFloat32 );
+  sitk::Image img3d( 10, 10, 10, sitk::sitkUInt32 );
+
+
+  // number if dimension are different
+  EXPECT_ANY_THROW( img1.CopyInformation( img3d ) );
+
+  sitk::Image img2( 10, 10, sitk::sitkUInt16 );
+
+  // image sizes don't match
+  EXPECT_ANY_THROW( img1.CopyInformation( img2 ) );
+
+  // fix the size to match
+
+  img2 = sitk::Image( img1.GetSize(), sitk::sitkFloat64);
+  img2.SetOrigin( shortImage->GetOrigin() );
+  img2.SetSpacing( shortImage->GetSpacing() );
+
+  EXPECT_NO_THROW( img1.CopyInformation( img2 ) );
+  EXPECT_EQ( img1.GetSpacing(), img2.GetSpacing() );
+  EXPECT_EQ( img1.GetOrigin(), img2.GetOrigin() );
+  EXPECT_EQ( img1.GetDirection(), img2.GetDirection() );
+
+}
 
 TEST_F(Image, CopyOnWrite)
 {
