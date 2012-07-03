@@ -47,30 +47,38 @@ namespace simple
    *  SITK_SHOW_COMMAND, SITK_SHOW_COLOR_COMMAND and SITK_SHOW_3D_COMMAND allow
    *  the following %tokens in their strings.
    *
-   *      %a  for the ImageJ application
-   *      %f  for SimpleITK's temporary image file
+   *      \li \c "%a"  for the ImageJ application
+   *      \li \c "%f"  for SimpleITK's temporary image file
    *
    *  For example, the default SITK_SHOW_COMMAND string on Linux systems is:
    *
-   *      %a -o %f
+   *  \code
+   *  %a -o %f
+   *  \endcode
    *
    *  After token substitution it may become:
    *
-   *      ImageJ -o /tmp/Temp-65535-0.nii
+   *  \code
+   *  ImageJ -o /tmp/Temp-65535-0.nii
+   *  \endcode
    *
    *  For another example, the default SITK_SHOW_COLOR_COMMAND string on Mac OS X is:
    *
-   *       open -a %a -n --args -eval \'open(\"%f\"); run(\"Make Composite\", \"display=Composite\"); \'
+   *  \code
+   *  open -a %a -n --args -eval \'open(\"%f\"); run(\"Make Composite\", \"display=Composite\"); \'
+   *  \endcode
    *
    *  After token substitution the string may become:
    *
-   *      open -a ImageJ64 -n --args -eval 'open("/tmp/TempFile-20238-0.nii"); run("Make Composite", "display=Composite");'
+   *  \code
+   *  open -a ImageJ64 -n --args -eval 'open("/tmp/TempFile-20238-0.nii"); run("Make Composite", "display=Composite");'
+   *  \endcode
    *
-   *  The string after "-eval" is an ImageJ macro the opens the file and runs ImageJ's Make Composite command
-   *  to display the image in color.
+   *  The string after \c "-eval" is an ImageJ macro the opens the file and runs ImageJ's Make Composite
+   *  command to display the image in color.
    *
-   *  If the "%f" token is not found in the command string, the temporary file name is automatically appended
-   *  to the command argument list.
+   *  If the \c "%f" token is not found in the command string, the temporary file name is automatically
+   *  appended to the command argument list.
    **/
 
 
