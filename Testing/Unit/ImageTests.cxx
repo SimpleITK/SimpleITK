@@ -61,6 +61,8 @@ using  itk::simple::InstantiatedPixelIDTypeList;
 
 class Image : public ::testing::Test {
 public:
+  typedef std::auto_ptr<itk::simple::Image> sitkAutoImagePointer;
+
   virtual void SetUp() {
     itk::ImageBase<3>::IndexType index;
     itk::ImageBase<3>::SizeType size;
@@ -88,7 +90,7 @@ public:
     im->Allocate();
     im->FillBuffer ( 100 );
     itkShortImage = im;
-    shortImage = new itk::simple::Image( im.GetPointer() );
+    shortImage = sitkAutoImagePointer( new itk::simple::Image( im.GetPointer() ) );
 
     itk::Image<float,3>::Pointer fim = itk::Image<float,3>::New();
     fim->SetRegions ( region );
@@ -97,13 +99,13 @@ public:
     fim->Allocate();
     fim->FillBuffer ( 0 );
     itkFloatImage = fim;
-    floatImage = new itk::simple::Image( fim.GetPointer() );
+    floatImage = sitkAutoImagePointer( new itk::simple::Image( fim.GetPointer() ) );
 
     itkFloatVectorImage = FloatVectorImageType::New();
-    floatVectorImage = new itk::simple::Image( itkFloatVectorImage.GetPointer() );
+    floatVectorImage = sitkAutoImagePointer( new itk::simple::Image( itkFloatVectorImage.GetPointer() ) );
 
     itkFloatVector2DImage = FloatVector2DImageType::New();
-    floatVector2DImage = new itk::simple::Image( itkFloatVector2DImage );
+    floatVector2DImage = sitkAutoImagePointer( new itk::simple::Image( itkFloatVector2DImage ) );
 
     directionI2D = std::vector<double>(4, 0.0 );
     directionI3D = std::vector<double>(9, 0.0 );
@@ -116,21 +118,21 @@ public:
   itk::ImageBase<3>::Pointer itkShortImage;
 
   typedef itk::Image<short,3> ShortImageType;
-  itk::simple::Image* shortImage;
+  sitkAutoImagePointer shortImage;
 
   typedef itk::Image<float,3> FloatImageType;
-  itk::simple::Image* floatImage;
+  sitkAutoImagePointer floatImage;
   FloatImageType::Pointer itkFloatImage;
 
   typedef itk::VectorImage<float,3> FloatVectorImageType;
-  itk::simple::Image* floatVectorImage;
+  sitkAutoImagePointer floatVectorImage;
   FloatVectorImageType::Pointer itkFloatVectorImage;
 
   typedef itk::VectorImage<float,2> FloatVector2DImageType;
-  itk::simple::Image* floatVector2DImage;
+  sitkAutoImagePointer floatVector2DImage;
   FloatVector2DImageType::Pointer itkFloatVector2DImage;
 
-  itk::simple::Image* differentSizedImage;
+  sitkAutoImagePointer differentSizedImage;
   ShortImageType::Pointer itkDifferentSizedImage;
 
 
@@ -446,13 +448,13 @@ TEST_F(Image, CopyOnWrite)
     << " Reference Count for just constructed Image";
 
   // use the image from the fixture to test some copy constructor
-  EXPECT_EQ(static_cast<const sitk::Image *>(shortImage)->GetITKBase()->GetReferenceCount(), 2 )
+  EXPECT_EQ(static_cast<const sitk::Image *>(shortImage.get())->GetITKBase()->GetReferenceCount(), 2 )
     << " Reference Count for shared shortImage initial";
   sitk::Image img0 = *shortImage;
-  EXPECT_EQ(static_cast<const sitk::Image *>(shortImage)->GetITKBase()->GetReferenceCount(), 3 )
+  EXPECT_EQ(static_cast<const sitk::Image *>(shortImage.get())->GetITKBase()->GetReferenceCount(), 3 )
     << " Reference Count for shared shortImage copy";
   sitk::Image imgCopy = img0;
-  EXPECT_EQ(static_cast<const sitk::Image *>(shortImage)->GetITKBase()->GetReferenceCount(), 4 )
+  EXPECT_EQ(static_cast<const sitk::Image *>(shortImage.get())->GetITKBase()->GetReferenceCount(), 4 )
     << " Reference Count for shared shortImage second copy";
 
   // check set origin for copy on write
