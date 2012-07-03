@@ -36,6 +36,8 @@
 #include <sitkRichardsonLucyDeconvolutionImageFilter.h>
 #include <sitkScalarToRGBColormapImageFilter.h>
 #include <sitkJoinSeriesImageFilter.h>
+#include <sitkGradientAnisotropicDiffusionImageFilter.h>
+#include <sitkCurvatureAnisotropicDiffusionImageFilter.h>
 
 #include "itkRecursiveGaussianImageFilter.h"
 #include "itkExtractImageFilter.h"
@@ -47,6 +49,7 @@
 #include "itkLandweberDeconvolutionImageFilter.h"
 #include "itkProjectedLandweberDeconvolutionImageFilter.h"
 #include "itkRichardsonLucyDeconvolutionImageFilter.h"
+
 
 TEST(BasicFilters,ScalarToRGBColormap_ENUMCHECK) {
   typedef itk::ScalarToRGBColormapImageFilter< itk::Image<float,3>, itk::Image< itk::RGBPixel<float>,3> > ITKType;
@@ -122,6 +125,83 @@ TEST(BasicFilters,RichardsonLucyDeconvolution_ENUMCHECK) {
   typedef itk::RichardsonLucyDeconvolutionImageFilter< itk::Image<float,3>, itk::Image<float,3> > ITKType;
   EXPECT_EQ( (int) ITKType::SAME, (int) itk::simple::RichardsonLucyDeconvolutionImageFilter::SAME );
   EXPECT_EQ( (int) ITKType::VALID, (int) itk::simple::RichardsonLucyDeconvolutionImageFilter::VALID );
+}
+
+TEST(BasicFilter,GradientAnisotropicDiffusion_EstimateOptimalTimeStep) {
+  // This test is to check the correctness of the
+  // EstimateOptimalTimeStep
+
+  namespace sitk = itk::simple;
+
+  sitk::Image img;
+  ASSERT_NO_THROW( img = sitk::ReadImage( dataFinder.GetFile ( "Input/RA-Float.nrrd" ) ) ) << "Reading input Image.";
+
+  std::vector<double> spacing( 3, 1.0 );
+
+  img.SetSpacing( spacing );
+  sitk::GradientAnisotropicDiffusionImageFilter filter;
+
+  filter.SetTimeStep( 0 );
+
+  EXPECT_EQ( filter.EstimateOptimalTimeStep( img ), 0.125 );
+  EXPECT_EQ( filter.GetTimeStep(), 0.125 );
+
+  spacing[0] = 2.0;
+  spacing[1] = 2.0;
+  spacing[2] = 10.0;
+  img.SetSpacing( spacing );
+
+  EXPECT_EQ( filter.EstimateOptimalTimeStep( img ), 0.25 );
+  EXPECT_EQ( filter.GetTimeStep(), 0.25 );
+
+  img = sitk::Image( 100, 100, sitk::sitkUInt32 );
+
+  spacing[0] = 10.0;
+  spacing[1] = 100.0;
+  img.SetSpacing( spacing );
+
+  EXPECT_EQ( filter.EstimateOptimalTimeStep( img ), 2.5 );
+  EXPECT_EQ( filter.GetTimeStep(), 2.5 );
+
+}
+
+
+TEST(BasicFilter,CurvatureAnisotropicDiffusion_EstimateOptimalTimeStep) {
+  // This test is to check the correctness of the
+  // EstimateOptimalTimeStep
+
+  namespace sitk = itk::simple;
+
+  sitk::Image img;
+  ASSERT_NO_THROW( img = sitk::ReadImage( dataFinder.GetFile ( "Input/RA-Float.nrrd" ) ) ) << "Reading input Image.";
+
+  std::vector<double> spacing( 3, 1.0 );
+  img.SetSpacing( spacing );
+
+  sitk::CurvatureAnisotropicDiffusionImageFilter filter;
+
+  filter.SetTimeStep( 0 );
+
+  EXPECT_EQ( filter.EstimateOptimalTimeStep( img ), 0.0625 );
+  EXPECT_EQ( filter.GetTimeStep(), 0.0625 );
+
+  spacing[0] = 2.0;
+  spacing[1] = 2.0;
+  spacing[2] = 10.0;
+  img.SetSpacing( spacing );
+
+  EXPECT_EQ( filter.EstimateOptimalTimeStep( img ), 0.125 );
+  EXPECT_EQ( filter.GetTimeStep(), 0.125 );
+
+  img = sitk::Image( 100, 100, sitk::sitkUInt32 );
+
+  spacing[0] = 10.0;
+  spacing[1] = 100.0;
+  img.SetSpacing( spacing );
+
+  EXPECT_EQ( filter.EstimateOptimalTimeStep( img ), 1.25 );
+  EXPECT_EQ( filter.GetTimeStep(), 1.25 );
+
 }
 
 TEST(BasicFilters,Cast) {
