@@ -25,8 +25,11 @@
 #include <sstream>
 #include <iterator>
 #include <ctype.h>
+
 #ifdef WIN32
 #include <process.h>
+#else
+#include <unistd.h>
 #endif
 
 namespace itk
