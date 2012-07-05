@@ -28,7 +28,7 @@ find_program(RSCRIPT_EXECUTABLE Rscript DOC "Rscript executable.")
 
 set(CMAKE_FIND_APPBUNDLE ${TEMP_CMAKE_FIND_APPBUNDLE})
 
-find_path(R_INCLUDE_DIR R.h PATHS /usr/local/lib /usr/local/lib64 ${R_BASE_DIR} PATH_SUFFIXES R/include DOC "Path to file R.h")
+find_path(R_INCLUDE_DIR R.h PATHS /usr/local/lib /usr/local/lib64 /usr/share ${R_BASE_DIR} PATH_SUFFIXES R/include DOC "Path to file R.h")
 find_library(R_LIBRARY_BASE R PATHS ${R_BASE_DIR} PATH_SUFFIXES /lib DOC "R library (example libR.a, libR.dylib, etc.).")
 
 set(R_LIBRARIES ${R_LIBRARY_BASE})
