@@ -37,15 +37,15 @@
   "custom_methods" : [
     {
       "name" : "EstimateOptimalTimeStep",
-        "doc" : "This method autmatically sets the optimal timestep for an image given its spacing.",
-    "return_type" : "void",
+        "doc" : "This method autmatically  sets the optimal timestep for an image given its spacing.",
+    "return_type" : "double",
     "parameters" : [
       {
         "type" : "Image &",
         "var_name" : "inImage"
       }
     ],
-  "body" : "std::vector<double> spacing = inImage.GetSpacing();\ndouble minSpacing = *std::min_element( spacing.begin(), spacing.end()); this->m_TimeStep = minSpacing / std::pow(2.0, static_cast< double >( inImage.GetDimension() ) );"
+  "body" : "std::vector<double> spacing = inImage.GetSpacing();\ndouble minSpacing = *std::min_element( spacing.begin(), spacing.end()); this->m_TimeStep = minSpacing / std::pow(2.0, static_cast< double >( inImage.GetDimension() ) ); return this->m_TimeStep;"
     }
   ],
   "tests" : [
