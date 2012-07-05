@@ -60,11 +60,12 @@ MACRO(SWIG_MODULE_INITIALIZE name language)
   ENDIF("x${SWIG_MODULE_${name}_LANGUAGE}x" MATCHES "^xPYTHONx$")
   IF("x${SWIG_MODULE_${name}_LANGUAGE}x" MATCHES "^xRUBYx$")
     STRING(TOLOWER "${name}" ruby_module_name)
-    SET(SWIG_MODULE_${name}_REAL_NAME "${ruby_module_name}")
   ENDIF("x${SWIG_MODULE_${name}_LANGUAGE}x" MATCHES "^xRUBYx$")
   IF("x${SWIG_MODULE_${name}_LANGUAGE}x" MATCHES "^xPERLx$")
     SET(SWIG_MODULE_${name}_EXTRA_FLAGS "-shadow")
   ENDIF("x${SWIG_MODULE_${name}_LANGUAGE}x" MATCHES "^xPERLx$")
+
+  SET( SWIG_MODULE_${name}_TARGET_NAME "${name}_${SWIG_MODULE_${name}_LANGUAGE}" )
 
 ENDMACRO(SWIG_MODULE_INITIALIZE)
 
@@ -215,10 +216,11 @@ MACRO(SWIG_ADD_MODULE name language)
   GET_DIRECTORY_PROPERTY(swig_extra_clean_files ADDITIONAL_MAKE_CLEAN_FILES)
   SET_DIRECTORY_PROPERTIES(PROPERTIES
     ADDITIONAL_MAKE_CLEAN_FILES "${swig_extra_clean_files};${swig_generated_sources}")
-  ADD_LIBRARY(${SWIG_MODULE_${name}_REAL_NAME}
+  ADD_LIBRARY( ${SWIG_MODULE_${name}_TARGET_NAME}
     MODULE
     ${swig_generated_sources}
     ${swig_other_sources})
+  SET_TARGET_PROPERTIES( ${SWIG_MODULE_${name}_TARGET_NAME} PROPERTIES OUTPUT_NAME ${SWIG_MODULE_${name}_REAL_NAME})
   STRING(TOLOWER "${language}" swig_lowercase_language)
   IF ("${swig_lowercase_language}" STREQUAL "java")
     IF (APPLE)
@@ -228,12 +230,12 @@ MACRO(SWIG_ADD_MODULE name language)
         #   MacOS  : libLIBRARY.jnilib
         #   Windows: LIBRARY.dll
         #   Linux  : libLIBRARY.so
-        SET_TARGET_PROPERTIES (${SWIG_MODULE_${name}_REAL_NAME} PROPERTIES SUFFIX ".jnilib")
+        SET_TARGET_PROPERTIES (${SWIG_MODULE_${name}_TARGET_NAME} PROPERTIES SUFFIX ".jnilib")
       ENDIF (APPLE)
   ENDIF ("${swig_lowercase_language}" STREQUAL "java")
   IF ("${swig_lowercase_language}" STREQUAL "python")
     # this is only needed for the python case where a _modulename.so is generated
-    SET_TARGET_PROPERTIES(${SWIG_MODULE_${name}_REAL_NAME} PROPERTIES PREFIX "")
+    SET_TARGET_PROPERTIES(${SWIG_MODULE_${name}_TARGET_NAME} PROPERTIES PREFIX "")
     # Python extension modules on Windows must have the extension ".pyd"
     # instead of ".dll" as of Python 2.5.  Older python versions do support
     # this suffix.
@@ -243,18 +245,18 @@ MACRO(SWIG_ADD_MODULE name language)
     # .pyd is now the only filename extension that will be searched for.
     # </quote>
     IF(WIN32 AND NOT CYGWIN)
-      SET_TARGET_PROPERTIES(${SWIG_MODULE_${name}_REAL_NAME} PROPERTIES SUFFIX ".pyd")
+      SET_TARGET_PROPERTIES(${SWIG_MODULE_${name}_TARGET_NAME} PROPERTIES SUFFIX ".pyd")
     ENDIF(WIN32 AND NOT CYGWIN)
   ENDIF ("${swig_lowercase_language}" STREQUAL "python")
   IF ("${swig_lowercase_language}" STREQUAL "ruby")
-    SET_TARGET_PROPERTIES(${SWIG_MODULE_${name}_REAL_NAME} PROPERTIES PREFIX "")
+    SET_TARGET_PROPERTIES(${SWIG_MODULE_${name}_TARGET_NAME} PROPERTIES PREFIX "")
     IF(APPLE)
-      SET_TARGET_PROPERTIES(${SWIG_MODULE_${name}_REAL_NAME} PROPERTIES SUFFIX ".bundle")
-      SET_TARGET_PROPERTIES(${SWIG_MODULE_${name}_REAL_NAME} PROPERTIES COMPILE_FLAGS "-bundle")
+      SET_TARGET_PROPERTIES(${SWIG_MODULE_${name}_TARGET_NAME} PROPERTIES SUFFIX ".bundle")
+      SET_TARGET_PROPERTIES(${SWIG_MODULE_${name}_TARGET_NAME} PROPERTIES COMPILE_FLAGS "-bundle")
     ENDIF(APPLE)
   ENDIF ("${swig_lowercase_language}" STREQUAL "ruby")
   IF ("${swig_lowercase_language}" STREQUAL "r")
-    SET_TARGET_PROPERTIES(${SWIG_MODULE_${name}_REAL_NAME} PROPERTIES PREFIX "")
+    SET_TARGET_PROPERTIES(${SWIG_MODULE_${name}_TARGET_NAME} PROPERTIES PREFIX "")
   ENDIF ()
 ENDMACRO(SWIG_ADD_MODULE)
 
@@ -262,10 +264,10 @@ ENDMACRO(SWIG_ADD_MODULE)
 # Like TARGET_LINK_LIBRARIES but for swig modules
 #
 MACRO(SWIG_LINK_LIBRARIES name)
-  IF(SWIG_MODULE_${name}_REAL_NAME)
-    TARGET_LINK_LIBRARIES(${SWIG_MODULE_${name}_REAL_NAME} ${ARGN})
-  ELSE(SWIG_MODULE_${name}_REAL_NAME)
+  IF(SWIG_MODULE_${name}_TARGET_NAME)
+    TARGET_LINK_LIBRARIES(${SWIG_MODULE_${name}_TARGET_NAME} ${ARGN})
+  ELSE(SWIG_MODULE_${name}_TARGET_NAME)
     MESSAGE(SEND_ERROR "Cannot find Swig library \"${name}\".")
-  ENDIF(SWIG_MODULE_${name}_REAL_NAME)
+  ENDIF(SWIG_MODULE_${name}_TARGET_NAME)
 ENDMACRO(SWIG_LINK_LIBRARIES name)
 

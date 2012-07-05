@@ -80,7 +80,7 @@ if ( WRAP_PYTHON )
   # Installation
   set( SIMPLEITK_PYTHON_MODULE_DIR "${SimpleITK_BINARY_DIR}/Wrapping" )
   file(TO_NATIVE_PATH "${SIMPLEITK_PYTHON_MODULE_DIR}" SIMPLEITK_NATIVE_PYTHON_MODULE_DIR )
-  get_target_property( SIMPLEITK_BINARY_MODULE ${SWIG_MODULE_SimpleITK_REAL_NAME} LOCATION )
+  get_target_property( SIMPLEITK_BINARY_MODULE ${SWIG_MODULE_SimpleITK_TARGET_NAME} LOCATION )
   file(TO_NATIVE_PATH "${SIMPLEITK_BINARY_MODULE}" SIMPLEITK_NATIVE_BINARY_MODULE )
 
   include( sitkConfigureFileBuildtime )
@@ -92,7 +92,7 @@ if ( WRAP_PYTHON )
     "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/ez_setup.py"
     COPYONLY )
 
-  add_dependencies( ${SWIG_MODULE_SimpleITK_REAL_NAME} ConfigureFileBuildtime )
+  add_dependencies( ${SWIG_MODULE_SimpleITK_TARGET_NAME} ConfigureFileBuildtime )
 
   if ( BUILD_TESTING )
 
@@ -109,7 +109,7 @@ if ( WRAP_PYTHON )
       set( PYTHON_EXECUTABLE "${PythonVirtualenvHome}/bin/python" )
     endif()
 
-    add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_REAL_NAME}
+    add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_TARGET_NAME}
       POST_BUILD
       COMMAND ${ORIGINAL_PYTHON_EXECUTABLE}
         ${SimpleITK_SOURCE_DIR}/Utilities/virtualenv/virtualenv.py
@@ -188,7 +188,7 @@ if ( WRAP_JAVA )
     COMMAND ${Java_JAVADOC_EXECUTABLE} -quiet -d ${JAVA_BINARY_DIRECTORY}/javadoc -sourcepath ${JAVA_SOURCE_DIRECTORY} org.itk.simple
     COMMAND ${Java_JAR_EXECUTABLE} cf ${CMAKE_CURRENT_BINARY_DIR}/${JAVADOC_FILE} -C ${JAVA_BINARY_DIRECTORY}/javadoc org
     COMMAND ${Java_JAR_EXECUTABLE} cf ${CMAKE_CURRENT_BINARY_DIR}/${JAVA_SOURCE_FILE} org
-    DEPENDS ${SWIG_MODULE_SimpleITK_REAL_NAME} SimpleITKJava
+    DEPENDS ${SWIG_MODULE_SimpleITKJava_TARGET_NAME}
     )
 
   # Get the location of the extension directory
@@ -228,17 +228,17 @@ if ( WRAP_CSHARP )
     ${CMAKE_CURRENT_SOURCE_DIR}/CSharpTypemapHelper.i )
   swig_add_module(SimpleITKCSharpNative csharp SimpleITK.i)
   swig_link_libraries(SimpleITKCSharpNative ${SimpleITK_LIBRARIES})
-  set_target_properties(SimpleITKCSharpNative PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CSHARP_BINARY_DIRECTORY})
+  set_target_properties(${SWIG_MODULE_SimpleITK_TARGET_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CSHARP_BINARY_DIRECTORY})
   if ( UNIX )
-    set_target_properties(SimpleITKCSharpNative PROPERTIES PREFIX "lib")
-    set_target_properties(SimpleITKCSharpNative PROPERTIES SUFFIX ".so")
+    set_target_properties(${SWIG_MODULE_SimpleITK_TARGET_NAME} PROPERTIES PREFIX "lib")
+    set_target_properties(${SWIG_MODULE_SimpleITK_TARGET_NAME} PROPERTIES SUFFIX ".so")
   else ( WIN32 )
-    set_target_properties(SimpleITKCSharpNative PROPERTIES PREFIX "")
-    set_target_properties(SimpleITKCSharpNative PROPERTIES SUFFIX ".dll")
+    set_target_properties(${SWIG_MODULE_SimpleITK_TARGET_NAME} PROPERTIES PREFIX "")
+    set_target_properties(${SWIG_MODULE_SimpleITK_TARGET_NAME} PROPERTIES SUFFIX ".dll")
     foreach ( CMAKE_CONFIGURATION_TYPE ${CMAKE_CONFIGURATION_TYPES} )
       string(TOUPPER ${CMAKE_CONFIGURATION_TYPE} CMAKE_CONFIGURATION_TYPE)
-      set_target_properties(SimpleITKCSharpNative PROPERTIES LIBRARY_OUTPUT_DIRECTORY_${CMAKE_CONFIGURATION_TYPE} "${CSHARP_BINARY_DIRECTORY}")
-      set_target_properties(SimpleITKCSharpNative PROPERTIES RUNTIME_OUTPUT_DIRECTORY_${CMAKE_CONFIGURATION_TYPE} "${CSHARP_BINARY_DIRECTORY}")
+      set_target_properties(${SWIG_MODULE_SimpleITK_TARGET_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY_${CMAKE_CONFIGURATION_TYPE} "${CSHARP_BINARY_DIRECTORY}")
+      set_target_properties(${SWIG_MODULE_SimpleITK_TARGET_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_${CMAKE_CONFIGURATION_TYPE} "${CSHARP_BINARY_DIRECTORY}")
     endforeach( )
   endif( UNIX )
 
@@ -254,7 +254,7 @@ if ( WRAP_CSHARP )
     SimpleITKCSharpManaged
     ${CSHARP_SOURCE_DIRECTORY}/*.cs
   )
-  add_dependencies(SimpleITKCSharpManaged SimpleITKCSharpNative)
+  add_dependencies(SimpleITKCSharpManaged ${SWIG_MODULE_SimpleITK_TARGET_NAME})
 
 endif()
 
@@ -307,21 +307,21 @@ if ( WRAP_R )
 
   set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITK_wrap.cxx PROPERTIES COMPILE_FLAGS "-w")
 
-  get_target_property( SIMPLEITKR_BINARY_MODULE ${SWIG_MODULE_SimpleITK_REAL_NAME} LOCATION )
+  get_target_property( SIMPLEITKR_BINARY_MODULE ${SWIG_MODULE_SimpleITK_TARGET_NAME} LOCATION )
   file(TO_NATIVE_PATH "${SIMPLEITKR_BINARY_MODULE}" SIMPLEITKR_NATIVE_BINARY_MODULE )
 
 
-  add_dependencies( ${SWIG_MODULE_SimpleITK_REAL_NAME} ConfigureFileBuildtime )
+  add_dependencies( ${SWIG_MODULE_SimpleITK_TARGET_NAME} ConfigureFileBuildtime )
 
   # set the output directory for the R library to the binary packaging location
-  set_target_properties( ${SWIG_MODULE_SimpleITK_REAL_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Rpackaging/SimpleITK/src/)
+  set_target_properties( ${SWIG_MODULE_SimpleITK_TARGET_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Rpackaging/SimpleITK/src/)
 
   # copy the R files a binary package
-  add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_REAL_NAME}
+  add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_TARGET_NAME}
       PRE_BUILD
       COMMAND ${CMAKE_COMMAND} -E copy_directory ${SimpleITK_SOURCE_DIR}/Wrapping/Rpackaging ${CMAKE_CURRENT_BINARY_DIR}/Rpackaging
   )
-  add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_REAL_NAME}
+  add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_TARGET_NAME}
       POST_BUILD
       COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/RLib
       COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK.R ${CMAKE_CURRENT_BINARY_DIR}/Rpackaging/SimpleITK/R/
