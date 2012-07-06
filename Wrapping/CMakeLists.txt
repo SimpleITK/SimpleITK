@@ -307,7 +307,7 @@ if ( WRAP_R )
     SWIG_link_libraries ( SimpleITK ${R_LIBRARIES} )
   endif()
 
-  set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITK_wrap.cxx PROPERTIES COMPILE_FLAGS "-w")
+  set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKR_wrap.cxx PROPERTIES COMPILE_FLAGS "-w")
 
   get_target_property( SIMPLEITKR_BINARY_MODULE ${SWIG_MODULE_SimpleITK_TARGET_NAME} LOCATION )
   file(TO_NATIVE_PATH "${SIMPLEITKR_BINARY_MODULE}" SIMPLEITKR_NATIVE_BINARY_MODULE )
