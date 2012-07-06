@@ -131,10 +131,12 @@ macro(generate_filter_source)
     file(MAKE_DIRECTORY ${generated_code_output_path}/src)
   endif()
 
+
+  message( STATUS "Processing json files..." )
+
   # Glob all json files in the current directory
   file ( GLOB json_config_files ${generated_code_input_path}/json/[a-zA-Z]*.json)
 
-  message( "Processing json files..." )
   # Loop through json files and expand each one
   foreach ( f ${json_config_files} )
     get_filename_component ( class ${f} NAME_WE )
@@ -144,6 +146,8 @@ macro(generate_filter_source)
                       SimpleITK${directory_name} )
 
   endforeach()
+
+  message( STATUS "Processing json files...done" )
 
   ######
   # Make target for generated source and headers
