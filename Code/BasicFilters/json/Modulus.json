@@ -14,7 +14,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the dividend\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get the dividend\n"
     }
   ],
   "tests" : [

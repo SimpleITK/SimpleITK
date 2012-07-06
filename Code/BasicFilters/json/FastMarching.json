@@ -19,7 +19,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the Normalization Factor for the Speed Image. The values in the Speed Imageis divided by this factor. This allows the use of images with integer pixel types to represent the speed.\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get the Normalization Factor for the Speed Image. The values in the Speed Imageis divided by this factor. This allows the use of images with integer pixel types to represent the speed.\n"
     },
     {
       "name" : "StoppingValue",

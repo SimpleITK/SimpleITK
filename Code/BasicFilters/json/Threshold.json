@@ -15,7 +15,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get methods to set the lower threshold\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get methods to set the lower threshold\n"
     },
     {
       "name" : "Upper",
@@ -25,7 +25,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get methods to set the upper threshold\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get methods to set the upper threshold\n"
     },
     {
       "name" : "OutsideValue",
@@ -33,7 +33,7 @@
       "default" : "0.0",
       "pixeltype" : "Output",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set the \"outside\" pixel value. The default value NumericTraits<PixelType>::Zero.\n",
+      "detaileddescriptionSet" : "End concept checking Set the \"outside\" pixel value. The default value NumericTraits<PixelType>::Zero.\n",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : "Get the \"outside\" pixel value.\n"
     }
@@ -90,5 +90,5 @@
     }
   ],
   "briefdescription" : "Set image values to a user-specified value if they are below, above, or between simple threshold values.\n",
-  "detaileddescription" : " ThresholdImageFiltersets image values to a user-specified \"outside\" value (by default, \"black\") if the image values are below, above, or between simple threshold values.\nThe pixels must support the operators >= and <=.\n\\par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}\n{ImageProcessing/ThresholdImageFilter,Threshold an image}\n\n"
+  "detaileddescription" : " ThresholdImageFiltersets image values to a user-specified \"outside\" value (by default, \"black\") if the image values are below, above, or between simple threshold values.\nThe pixels must support the operators >= and <=.\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Threshold an image\n\n"
 }

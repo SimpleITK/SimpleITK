@@ -73,7 +73,7 @@
       "tag" : "default",
       "description" : "Simply run with default settings",
       "settings" : [],
-      "tolerance" : 1e-05,
+      "tolerance" : "1e-5",
       "inputs" : []
     }
   ]

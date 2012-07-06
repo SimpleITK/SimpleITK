@@ -14,7 +14,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.\n"
     }
   ],
   "custom_methods" : [],
@@ -46,5 +46,5 @@
     }
   ],
   "briefdescription" : "Label the objects in a binary image.\n",
-  "detaileddescription" : " ConnectedComponentImageFilterlabels the objects in a binary image. Each distinct object is assigned a unique label. The filter experiments with some improvements to the existing implementation, and is based on run length encoding along raster lines. The final object labels start with 1 and are consecutive. Objects that are reached earlier by a raster order scan have a lower label. This is different to the behaviour of the original connected component image filter which did not produce consecutive labels or impose any particular ordering.\n\\see  ImageToImageFilter\n\\par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}\n{ImageProcessing/ConnectedComponentImageFilter,Label connected components in a binary image}\n\n"
+  "detaileddescription" : " ConnectedComponentImageFilterlabels the objects in a binary image. Each distinct object is assigned a unique label. The filter experiments with some improvements to the existing implementation, and is based on run length encoding along raster lines. The final object labels start with 1 and are consecutive. Objects that are reached earlier by a raster order scan have a lower label. This is different to the behaviour of the original connected component image filter which did not produce consecutive labels or impose any particular ordering.\n\\see  ImageToImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Label connected components in a binary image\n\n"
 }

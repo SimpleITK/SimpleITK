@@ -15,7 +15,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get whether the filter should run one iteration or until convergence. When run to convergence, this filter is equivalent to \"reconstruction by dilation\". Default is off.\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get whether the filter should run one iteration or until convergence. When run to convergence, this filter is equivalent to \"reconstruction by dilation\". Default is off.\n"
     },
     {
       "name" : "FullyConnected",
@@ -25,7 +25,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.\n"
     }
   ],
   "custom_methods" : [],

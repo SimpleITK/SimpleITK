@@ -68,6 +68,6 @@
       ]
     }
   ],
-  "briefdescription" : "Divide input pixels by a constant.\n",
-  "detaileddescription" : "This filter is templated over the input image type and the output image type.\n\\author Tom Vercauteren, INRIA & Mauna Kea Technologies\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/510\n\\see  UnaryFunctorImageFilter\n\n"
+  "briefdescription" : "Add a constant to all input pixels.\n",
+  "detaileddescription" : "This filter is templated over the input image type and the output image type.\n\\author Tom Vercauteren, INRIA & Mauna Kea Technologies\nBased on filters from the Insight Journal paper:http://hdl.handle.net/1926/510\n\\see  DivideImageFilter\n\n"
 }

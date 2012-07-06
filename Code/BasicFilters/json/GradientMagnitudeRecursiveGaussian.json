@@ -15,7 +15,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set Sigma value. Sigma is measured in the units of image spacing.\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set Sigma value. Sigma is measured in the units of image spacing.\n"
     },
     {
       "name" : "NormalizeAcrossScale",
@@ -25,7 +25,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Define which normalization factor will be used for the Gaussian\\see  RecursiveGaussianImageFilter::SetNormalizeAcrossScale\n\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Define which normalization factor will be used for the Gaussian\\see  RecursiveGaussianImageFilter::SetNormalizeAcrossScale\n\n"
     }
   ],
   "tests" : [
@@ -40,5 +40,5 @@
     }
   ],
   "briefdescription" : "Computes the Magnitude of the Gradient of an image by convolution with the first derivative of a Gaussian.\n",
-  "detaileddescription" : "This filter is implemented using the recursive gaussian filters\n\\par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}\n{EdgesAndGradients/GradientMagnitudeRecursiveGaussianImageFilter,Find the gradient magnitude of the image first smoothed with a Gaussian kernel}\n\n"
+  "detaileddescription" : "This filter is implemented using the recursive gaussian filters\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Find the gradient magnitude of the image first smoothed with a Gaussian kernel\n\n"
 }

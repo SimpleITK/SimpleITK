@@ -30,5 +30,7 @@
       "settings" : [],
       "tolerance" : 0.002
     }
-  ]
+  ],
+  "briefdescription" : "Pixel-wise addition of three images.\n",
+  "detaileddescription" : "This class is templated over the types of the three input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\n"
 }

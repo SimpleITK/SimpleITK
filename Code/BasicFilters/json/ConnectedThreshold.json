@@ -13,7 +13,7 @@
       "default" : 0,
       "pixeltype" : "Input",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "",
+      "detaileddescriptionSet" : "Set Upper and Lower Threshold inputs as values\n",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : ""
     },
@@ -36,7 +36,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get value to replace thresholded pixels. Pixels that lie * within Lower and Upper (inclusive) will be replaced with this value. The default is 1.\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get value to replace thresholded pixels. Pixels that lie * within Lower and Upper (inclusive) will be replaced with this value. The default is 1.\n"
     }
   ],
   "tests" : [

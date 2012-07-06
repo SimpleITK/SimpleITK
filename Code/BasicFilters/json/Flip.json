@@ -17,7 +17,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the axis to be flipped. The image is flipped along axes for which array[i] is true.\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get the axis to be flipped. The image is flipped along axes for which array[i] is true.\n"
     },
     {
       "name" : "FlipAboutOrigin",
@@ -25,9 +25,9 @@
       "default" : "false",
       "doc" : "",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "",
+      "detaileddescriptionSet" : "Controls how the output origin is computed. If FlipAboutOrigin is \"on\", the flip will occur about the origin of the axis, otherwise, the flip will occur about the center of the axis.\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Controls how the output origin is computed. If FlipAboutOrigin is \"on\", the flip will occur about the origin of the axis, otherwise, the flip will occur about the center of the axis.\n"
     }
   ],
   "tests" : [
@@ -62,5 +62,5 @@
     }
   ],
   "briefdescription" : "Flips an image across user specified axes.\n",
-  "detaileddescription" : " FlipImageFilterflips an image across user specified axes. The flip axes are set via method SetFlipAxes( array ) where the input is a FixedArray<bool,ImageDimension>. The image is flipped across axes for which array[i] is true.\nIn terms of grid coordinates the image is flipped within the LargestPossibleRegion of the input image. As such, the LargestPossibleRegion of the ouput image is the same as the input.\nIn terms of geometric coordinates, the output origin is such that the image is flipped with respect to the coordinate axes.\n\\par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}\n{Images/FlipImageFilter,Flip an image over specified axes}\n\n"
+  "detaileddescription" : " FlipImageFilterflips an image across user specified axes. The flip axes are set via method SetFlipAxes( array ) where the input is a FixedArray<bool,ImageDimension>. The image is flipped across axes for which array[i] is true.\nIn terms of grid coordinates the image is flipped within the LargestPossibleRegion of the input image. As such, the LargestPossibleRegion of the ouput image is the same as the input.\nIn terms of geometric coordinates, the output origin is such that the image is flipped with respect to the coordinate axes.\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Flip an image over specified axes\n\n"
 }

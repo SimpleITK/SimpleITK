@@ -13,7 +13,7 @@
       "default" : "1.0",
       "doc" : "",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "",
+      "detaileddescriptionSet" : "Set Sigma value. Sigma is measured in the units of image spacing. You may use the method SetSigma to set the same value across each axis or use the method SetSigmaArray if you need different values along each axis.\n",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : ""
     },
@@ -25,7 +25,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "This method does not effect the output of this filter.\n\\see  RecursiveGaussianImageFilter::SetNormalizeAcrossScale\n\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "This method does not effect the output of this filter.\n\\see  RecursiveGaussianImageFilter::SetNormalizeAcrossScale\n\n"
     }
   ],
   "tests" : [
@@ -54,5 +54,5 @@
     }
   ],
   "briefdescription" : "Computes the smoothing of an image by convolution with the Gaussian kernels implemented as IIR filters.\n",
-  "detaileddescription" : "This filter is implemented using the recursive gaussian filters. For multi-component images, the filter works on each component independently.\nFor this filter to be able to run in-place the input and output image types need to be the same and/or the same type as the RealImageType.\n\\par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}\n{Smoothing/SmoothingRecursiveGaussianImageFilter,Gaussian smoothing that works with image adaptors}\n\n"
+  "detaileddescription" : "This filter is implemented using the recursive gaussian filters. For multi-component images, the filter works on each component independently.\nFor this filter to be able to run in-place the input and output image types need to be the same and/or the same type as the RealImageType.\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Gaussian smoothing that works with image adaptors\n\n"
 }

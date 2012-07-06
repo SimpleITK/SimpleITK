@@ -16,7 +16,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin().\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin().\n"
     },
     {
       "name" : "ForegroundValue",
@@ -27,7 +27,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the value used as \"foreground\" in the output image. Defaults to NumericTraits<PixelType>::max().\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get the value used as \"foreground\" in the output image. Defaults to NumericTraits<PixelType>::max().\n"
     }
   ],
   "tests" : [
