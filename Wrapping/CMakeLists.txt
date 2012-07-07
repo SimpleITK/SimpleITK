@@ -256,7 +256,7 @@ if ( WRAP_CSHARP )
     SimpleITKCSharpManaged
     ${CSHARP_SOURCE_DIRECTORY}/*.cs
   )
-  add_dependencies(SimpleITKCSharpManaged ${SWIG_MODULE_SimpleITK_TARGET_NAME})
+  add_dependencies(SimpleITKCSharpManaged ${SWIG_MODULE_SimpleITKCSharpNative_TARGET_NAME})
 
 endif()
 
