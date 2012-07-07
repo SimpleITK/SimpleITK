@@ -530,8 +530,8 @@ itk::simple::Image ArrayAsIm(SEXP arr,
   setMethod('show', '_p_itk__simple__Image', function(object) Show(object))
   setMethod('print', '_p_itk__simple__Image', function(x, ...)cat(x$ToString()))
 
-  setMethod('print', '_p_itk__simple__ImageFilter', function(x, ...)cat(x$ToString()))
-  setMethod('show', '_p_itk__simple__ImageFilter', function(object)cat(object$ToString()))
+  setMethod('print', 'C++Reference', function(x, ...)cat(x$ToString()))
+  setMethod('show', 'C++Reference', function(object)cat(object$ToString()))
 
     %}
 #endif

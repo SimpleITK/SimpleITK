@@ -45,7 +45,8 @@ modelling. It will be reasonably familiar to users of other
 interactive, interpreted environments, like Matlab or python. This
 article provides an introduction to the SimpleITK package that has
 been built using the Swig generated wrapping of the SimpleITK
-library.
+library. Note that some of the text is written for readers unfamiliar
+with {\em R} and can be skipped by experienced users.
 \end{abstract}
 
 \tableofcontents
@@ -149,7 +150,7 @@ setMethod('show', '_p_itk__simple__Image',
 @@
 \item Load an image
 <<>>=
-im <- ReadImage('/home/richardb/Projects/ITK4/SimpleITK/Testing/Data/Input/cthead1.png')
+im <- ReadImage(system.file("data/cthead1.png", package="SimpleITK"))
 @@
 \item Display
 <<fig=TRUE>>=
@@ -253,13 +254,7 @@ Testing.
 Beware of images from saved workspaces. External references, which is how images are represented, are not preserved when objects are saved to disk. Thus, attempting to use images from a saved workspace will result in ungraceful crashes.
 
 \section{Building and Installing}
-Fetch SimpleITK from the git repository and fetch the patches from gerrit containing my updates: http://review.source.kitware.com/5162.
-
-Then go to SimpleITK/Wrapping/Rpackages/ and run
-
-{\tt R CMD INSTALL --library=/path/to/R/library SimpleITK} and you will (eventually) end up with an installed package. This uses the SuperBuild process, but swig has been replaced with the development version containing my changes. So far only tested on linux.
-
-Soon this document should also get created as part of the build process.
+Fetch SimpleITK from the git repository. Visit \url{http://www.itk.org/SimpleITKDoxygen/html/Wrapping.html} for the latest instructions on building and installing.
 \section{Development}
 
 \end{document}

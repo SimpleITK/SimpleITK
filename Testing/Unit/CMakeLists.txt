@@ -337,7 +337,7 @@ if ( WRAP_CSHARP )
     csharp_add_executable(
         "${CSHARP_EXECUTABLE}"
         SimpleITKCSharpManaged.dll
-    	${csharp_file}
+        ${csharp_file}
     )
 
     # because each executable is it's own target we actually don't
@@ -663,3 +663,39 @@ if ( WRAP_TCL )
     "${TEST_HARNESS_TEMP_DIRECTORY}/Tcl.SimpleGaussian.nrrd" )
 
 endif ( WRAP_TCL )
+
+if ( WRAP_R )
+
+  #
+  # This is a macro which set up the enviroment for executing R examples and tests
+  #
+  macro(add_r_test name)
+
+    set(command "${R_COMMAND}")
+
+    # add extra command which may be needed on some systems
+    if(CMAKE_OSX_ARCHITECTURES)
+      list(GET CMAKE_OSX_ARCHITECTURES 0 test_arch)
+      set(command arch -${test_arch} ${command})
+    endif()
+
+    add_test(NAME R.${name}
+      COMMAND
+      ${command}
+      ${ARGN}
+      )
+
+    set_property(TEST R.${name}
+                 PROPERTY ENVIRONMENT R_LIBS=${SimpleITK_BINARY_DIR}/Wrapping/RLib/
+                 )
+  endmacro()
+
+
+  #
+  # R tests and Examples
+  #
+  add_r_test( Arithmetic
+    "--file=${SimpleITK_SOURCE_DIR}/Testing/Unit/RArithmeticTest.R"
+     )
+
+endif ( WRAP_R )
