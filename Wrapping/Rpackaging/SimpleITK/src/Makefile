@@ -1,4 +1,6 @@
 all:
 	echo "Dummy makefile for binary package"
 clean:
-	${RM} SimpleITK.so
+
+# don't clean, otherwise R CMD build doesn't work as
+# this isn't really a source package

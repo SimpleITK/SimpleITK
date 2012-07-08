@@ -166,7 +166,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
       COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
       COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Java ${template_include_dir} TestTemplate.java.in "${OUTPUT_TEST_FILENAME}"
       COMMAND ${Java_JAVAC_EXECUTABLE} -classpath ${SimpleITK_BINARY_DIR}/Wrapping/${JAR_FILE} ${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/org/itk/simple/testing/${FILTERNAME}ImageFilterTest.java
-      DEPENDS ${filter_json_file} ${JAVA_TEMPLATE_FILES} SimpleITKJava
+      DEPENDS ${filter_json_file} ${JAVA_TEMPLATE_FILES} ${SWIG_MODULE_SimpleITKJava_TARGET_NAME}
       )
     set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Java.${FILTERNAME}")
     set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
@@ -337,7 +337,7 @@ if ( WRAP_CSHARP )
     csharp_add_executable(
         "${CSHARP_EXECUTABLE}"
         SimpleITKCSharpManaged.dll
-    	${csharp_file}
+        ${csharp_file}
     )
 
     # because each executable is it's own target we actually don't
@@ -406,7 +406,7 @@ if ( WRAP_JAVA )
       ARGS -classpath "${_JAVA_CLASSPATH}"
       -d "${CMAKE_CURRENT_BINARY_DIR}"
       "${java_file}"
-      DEPENDS ${java_file} SimpleITKJava org_itk_simple_jar
+      DEPENDS ${java_file} ${SWIG_MODULE_SimpleITKJava_TARGET_NAME} org_itk_simple_jar
       )
 
     list( APPEND compiled_java_tests "${CMAKE_CURRENT_BINARY_DIR}/${_java_file_class}")
@@ -663,3 +663,39 @@ if ( WRAP_TCL )
     "${TEST_HARNESS_TEMP_DIRECTORY}/Tcl.SimpleGaussian.nrrd" )
 
 endif ( WRAP_TCL )
+
+if ( WRAP_R )
+
+  #
+  # This is a macro which set up the enviroment for executing R examples and tests
+  #
+  macro(add_r_test name)
+
+    set(command "${R_COMMAND}")
+
+    # add extra command which may be needed on some systems
+    if(CMAKE_OSX_ARCHITECTURES)
+      list(GET CMAKE_OSX_ARCHITECTURES 0 test_arch)
+      set(command arch -${test_arch} ${command})
+    endif()
+
+    add_test(NAME R.${name}
+      COMMAND
+      ${command}
+      ${ARGN}
+      )
+
+    set_property(TEST R.${name}
+                 PROPERTY ENVIRONMENT R_LIBS=${SimpleITK_BINARY_DIR}/Wrapping/RLib/
+                 )
+  endmacro()
+
+
+  #
+  # R tests and Examples
+  #
+  add_r_test( Arithmetic
+    "--file=${SimpleITK_SOURCE_DIR}/Testing/Unit/RArithmeticTest.R"
+     )
+
+endif ( WRAP_R )

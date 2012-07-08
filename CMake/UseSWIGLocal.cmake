@@ -5,12 +5,13 @@
 #   SWIG_LINK_LIBRARIES(name [ libraries ])
 #     - Link libraries to swig module
 # All other macros are for internal use only.
-# To get the actual name of the swig module,
-# use: ${SWIG_MODULE_${name}_REAL_NAME}.
+# To get the actual target name of the swig moduel,
+# use:  ${SWIG_MODULE_${name}_TARGET_NAME}.
+# The target name can be used to set dependecies between targets.
 # Set Source files properties such as CPLUSPLUS and SWIG_FLAGS to specify
 # special behavior of SWIG. Also global CMAKE_SWIG_FLAGS can be used to add
 # special flags to all swig calls.
-# Another special variable is CMAKE_SWIG_OUTDIR, it allows one to specify 
+# Another special variable is CMAKE_SWIG_OUTDIR, it allows one to specify
 # where to write all the swig generated module (swig -outdir option)
 # The name-specific variable SWIG_MODULE_<name>_EXTRA_DEPS may be used
 # to specify extra dependencies for the generated modules.
@@ -51,20 +52,15 @@ MACRO(SWIG_MODULE_INITIALIZE name language)
     MESSAGE(FATAL_ERROR "SWIG Error: Language \"${language}\" not found")
   ENDIF("x${SWIG_MODULE_${name}_LANGUAGE}x" MATCHES "^xUNKNOWNx$")
 
-  SET(SWIG_MODULE_${name}_REAL_NAME "${name}")
-  IF("x${SWIG_MODULE_${name}_LANGUAGE}x" MATCHES "^xPYTHONx$")
-    # when swig is used without the -interface it will produce in the module.py
-    # a 'import _modulename' statement, which implies having a corresponding 
-    # _modulename.so (*NIX), _modulename.pyd (Win32).
-    SET(SWIG_MODULE_${name}_REAL_NAME "_${name}")
-  ENDIF("x${SWIG_MODULE_${name}_LANGUAGE}x" MATCHES "^xPYTHONx$")
   IF("x${SWIG_MODULE_${name}_LANGUAGE}x" MATCHES "^xRUBYx$")
     STRING(TOLOWER "${name}" ruby_module_name)
-    SET(SWIG_MODULE_${name}_REAL_NAME "${ruby_module_name}")
   ENDIF("x${SWIG_MODULE_${name}_LANGUAGE}x" MATCHES "^xRUBYx$")
+
   IF("x${SWIG_MODULE_${name}_LANGUAGE}x" MATCHES "^xPERLx$")
     SET(SWIG_MODULE_${name}_EXTRA_FLAGS "-shadow")
   ENDIF("x${SWIG_MODULE_${name}_LANGUAGE}x" MATCHES "^xPERLx$")
+
+  SET( SWIG_MODULE_${name}_TARGET_NAME "${name}_${SWIG_MODULE_${name}_LANGUAGE}" )
 
 ENDMACRO(SWIG_MODULE_INITIALIZE)
 
@@ -101,13 +97,13 @@ MACRO(SWIG_ADD_SOURCE_TO_MODULE name outfiles infile)
   ENDIF("${swig_source_file_flags}" STREQUAL "NOTFOUND")
   SET(swig_source_file_fullname "${infile}")
   IF(${swig_source_file_path} MATCHES "^${CMAKE_CURRENT_SOURCE_DIR}")
-    STRING(REGEX REPLACE 
+    STRING(REGEX REPLACE
       "^${CMAKE_CURRENT_SOURCE_DIR}" ""
       swig_source_file_relative_path
       "${swig_source_file_path}")
   ELSE(${swig_source_file_path} MATCHES "^${CMAKE_CURRENT_SOURCE_DIR}")
     IF(${swig_source_file_path} MATCHES "^${CMAKE_CURRENT_BINARY_DIR}")
-      STRING(REGEX REPLACE 
+      STRING(REGEX REPLACE
         "^${CMAKE_CURRENT_BINARY_DIR}" ""
         swig_source_file_relative_path
         "${swig_source_file_path}")
@@ -186,7 +182,7 @@ MACRO(SWIG_ADD_SOURCE_TO_MODULE name outfiles infile)
     "${swig_source_file_fullname}"
     MAIN_DEPENDENCY "${swig_source_file_fullname}"
     DEPENDS ${SWIG_MODULE_${name}_EXTRA_DEPS}
-    COMMENT "Swig source to generate ${SWIG_MODULE_${name}_LANGUAGE} wrapping") 
+    COMMENT "Swig source to generate ${SWIG_MODULE_${name}_LANGUAGE} wrapping")
   SET_SOURCE_FILES_PROPERTIES("${swig_generated_file_fullname}" ${swig_extra_generated_files}
     PROPERTIES GENERATED 1)
   SET(${outfiles} "${swig_generated_file_fullname}" ${swig_extra_generated_files})
@@ -215,10 +211,11 @@ MACRO(SWIG_ADD_MODULE name language)
   GET_DIRECTORY_PROPERTY(swig_extra_clean_files ADDITIONAL_MAKE_CLEAN_FILES)
   SET_DIRECTORY_PROPERTIES(PROPERTIES
     ADDITIONAL_MAKE_CLEAN_FILES "${swig_extra_clean_files};${swig_generated_sources}")
-  ADD_LIBRARY(${SWIG_MODULE_${name}_REAL_NAME}
+  ADD_LIBRARY( ${SWIG_MODULE_${name}_TARGET_NAME}
     MODULE
     ${swig_generated_sources}
     ${swig_other_sources})
+  SET_TARGET_PROPERTIES( ${SWIG_MODULE_${name}_TARGET_NAME} PROPERTIES OUTPUT_NAME "${name}" )
   STRING(TOLOWER "${language}" swig_lowercase_language)
   IF ("${swig_lowercase_language}" STREQUAL "java")
     IF (APPLE)
@@ -228,12 +225,19 @@ MACRO(SWIG_ADD_MODULE name language)
         #   MacOS  : libLIBRARY.jnilib
         #   Windows: LIBRARY.dll
         #   Linux  : libLIBRARY.so
-        SET_TARGET_PROPERTIES (${SWIG_MODULE_${name}_REAL_NAME} PROPERTIES SUFFIX ".jnilib")
+        SET_TARGET_PROPERTIES (${SWIG_MODULE_${name}_TARGET_NAME} PROPERTIES SUFFIX ".jnilib")
       ENDIF (APPLE)
   ENDIF ("${swig_lowercase_language}" STREQUAL "java")
   IF ("${swig_lowercase_language}" STREQUAL "python")
+
+    # when swig is used without the -interface it will produce in the module.py
+    # a 'import _modulename' statement, which implies having a corresponding
+    # _modulename.so (*NIX), _modulename.pyd (Win32).
+    SET_TARGET_PROPERTIES( ${SWIG_MODULE_${name}_TARGET_NAME} PROPERTIES OUTPUT_NAME "_${name}" )
+
     # this is only needed for the python case where a _modulename.so is generated
-    SET_TARGET_PROPERTIES(${SWIG_MODULE_${name}_REAL_NAME} PROPERTIES PREFIX "")
+    SET_TARGET_PROPERTIES(${SWIG_MODULE_${name}_TARGET_NAME} PROPERTIES PREFIX "")
+
     # Python extension modules on Windows must have the extension ".pyd"
     # instead of ".dll" as of Python 2.5.  Older python versions do support
     # this suffix.
@@ -243,18 +247,18 @@ MACRO(SWIG_ADD_MODULE name language)
     # .pyd is now the only filename extension that will be searched for.
     # </quote>
     IF(WIN32 AND NOT CYGWIN)
-      SET_TARGET_PROPERTIES(${SWIG_MODULE_${name}_REAL_NAME} PROPERTIES SUFFIX ".pyd")
+      SET_TARGET_PROPERTIES(${SWIG_MODULE_${name}_TARGET_NAME} PROPERTIES SUFFIX ".pyd")
     ENDIF(WIN32 AND NOT CYGWIN)
   ENDIF ("${swig_lowercase_language}" STREQUAL "python")
   IF ("${swig_lowercase_language}" STREQUAL "ruby")
-    SET_TARGET_PROPERTIES(${SWIG_MODULE_${name}_REAL_NAME} PROPERTIES PREFIX "")
+    SET_TARGET_PROPERTIES(${SWIG_MODULE_${name}_TARGET_NAME} PROPERTIES PREFIX "")
     IF(APPLE)
-      SET_TARGET_PROPERTIES(${SWIG_MODULE_${name}_REAL_NAME} PROPERTIES SUFFIX ".bundle")
-      SET_TARGET_PROPERTIES(${SWIG_MODULE_${name}_REAL_NAME} PROPERTIES COMPILE_FLAGS "-bundle")
+      SET_TARGET_PROPERTIES(${SWIG_MODULE_${name}_TARGET_NAME} PROPERTIES SUFFIX ".bundle")
+      SET_TARGET_PROPERTIES(${SWIG_MODULE_${name}_TARGET_NAME} PROPERTIES COMPILE_FLAGS "-bundle")
     ENDIF(APPLE)
   ENDIF ("${swig_lowercase_language}" STREQUAL "ruby")
   IF ("${swig_lowercase_language}" STREQUAL "r")
-    SET_TARGET_PROPERTIES(${SWIG_MODULE_${name}_REAL_NAME} PROPERTIES PREFIX "")
+    SET_TARGET_PROPERTIES(${SWIG_MODULE_${name}_TARGET_NAME} PROPERTIES PREFIX "")
   ENDIF ()
 ENDMACRO(SWIG_ADD_MODULE)
 
@@ -262,10 +266,9 @@ ENDMACRO(SWIG_ADD_MODULE)
 # Like TARGET_LINK_LIBRARIES but for swig modules
 #
 MACRO(SWIG_LINK_LIBRARIES name)
-  IF(SWIG_MODULE_${name}_REAL_NAME)
-    TARGET_LINK_LIBRARIES(${SWIG_MODULE_${name}_REAL_NAME} ${ARGN})
-  ELSE(SWIG_MODULE_${name}_REAL_NAME)
+  IF(SWIG_MODULE_${name}_TARGET_NAME)
+    TARGET_LINK_LIBRARIES(${SWIG_MODULE_${name}_TARGET_NAME} ${ARGN})
+  ELSE(SWIG_MODULE_${name}_TARGET_NAME)
     MESSAGE(SEND_ERROR "Cannot find Swig library \"${name}\".")
-  ENDIF(SWIG_MODULE_${name}_REAL_NAME)
+  ENDIF(SWIG_MODULE_${name}_TARGET_NAME)
 ENDMACRO(SWIG_LINK_LIBRARIES name)
-
