@@ -18,7 +18,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the opacity of the colored label image. The value must be between 0 and 1\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get the opacity of the colored label image. The value must be between 0 and 1\n"
     },
     {
       "name" : "BackgroundValue",
@@ -27,7 +27,8 @@
       "custom_cast" : "filter->SetBrakgroundValue(static_cast< typename InputImage2::PixelType>( m_BackgroundValue );",
       "briefdescriptionSet" : "",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get the background value\n",
+      "detaileddescriptionSet" : "Set/Get the background value\n"
     }
   ],
   "tests" : [
@@ -41,5 +42,7 @@
         "Input/2th_cthead1.mha"
       ]
     }
-  ]
+  ],
+  "briefdescription" : "Apply a colormap to a label image and put it on top of the input image.\n",
+  "detaileddescription" : "Apply a colormap to a label image and put it on top of the input image. The set of colors is a good selection of distinct colors. The opacity of the label image can be defined by the user. The user can also choose if the want to use a background and which label value is the background. A background label produce a gray pixel with the same intensity than the input one.\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\nThis class was contributed to the Insight Journalhttp://hdl.handle.net/1926/172\n\\see ScalarToRGBPixelFunctor LabelToRGBImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Overlay a LabelMap on an image\n\n"
 }

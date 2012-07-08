@@ -14,7 +14,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the lower threshold. The default is 0.\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get the lower threshold. The default is 0.\n"
     },
     {
       "name" : "Upper",
@@ -24,7 +24,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the upper threshold. The default is the largest possible value for the InputPixelType.\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get the upper threshold. The default is the largest possible value for the InputPixelType.\n"
     },
     {
       "name" : "Radius",
@@ -47,7 +47,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get value to replace thresholded pixels. Pixels that lie * within Lower and Upper (inclusive) will be replaced with this value. The default is 1.\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get value to replace thresholded pixels. Pixels that lie * within Lower and Upper (inclusive) will be replaced with this value. The default is 1.\n"
     }
   ],
   "tests" : [

@@ -16,9 +16,9 @@
       "type" : "double",
       "default" : "1.0e-4",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set the threshold value used to determine whether a frequency of the Fourier transform of the blurring kernel is considered to be zero. Default value is 1.0e-4.",
+      "detaileddescriptionSet" : "Set/get the threshold value uused to determine whether a frequency of the Fourier transform of the blurring kernel is considered to be zero. Default value is 1.0e-4.\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Get the threshold value used to determine whether a frequency of the Fourier transform of the blurring kernel is considered to be zero. Default value is 1.0e-4."
+      "detaileddescriptionGet" : "Set/get the threshold value uused to determine whether a frequency of the Fourier transform of the blurring kernel is considered to be zero. Default value is 1.0e-4.\n"
     },
     {
       "name" : "Normalize",
@@ -62,6 +62,6 @@
       ]
     }
   ],
-  "briefdescription" : "",
-  "detaileddescription" : ""
+  "briefdescription" : "The direct linear inverse deconvolution filter.\n",
+  "detaileddescription" : "The inverse filter is the most straightforward deconvolution method. Considering that convolution of two images in the spatial domain is equivalent to multiplying the Fourier transform of the two images, the inverse filter consists of inverting the multiplication. In other words, this filter computes the following: \\f[ hat{F}(\\omega) = \\begin{cases} G(\\omega) / H(\\omega) & \\text{if \\f$|H(\\omega)| \\geq \\epsilon\\f$} \\\\ 0 & \\text{otherwise} \\end{cases} \\f]  where\\f$\\hat{F}(\\omega)\\f$ is the Fourier transform of the estimate produced by this filter,\\f$G(\\omega)\\f$ is the Fourier transform of the input blurred image,\\f$H(\\omega)\\f$ is the Fourier transform of the blurring kernel, and\\f$\\epsilon\\f$ is a constant real non-negative threshold (called KernelZeroMagnitudeThreshold in this filter) that determines when the magnitude of a complex number is considered zero.\n\\author Gaetan Lehmann, Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France\nCory Quammen, The University of North Carolina at Chapel Hill\n\n"
 }

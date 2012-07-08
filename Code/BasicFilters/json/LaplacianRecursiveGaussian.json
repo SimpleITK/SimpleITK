@@ -23,7 +23,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Define which normalization factor will be used for the Gaussian\\see  RecursiveGaussianImageFilter::SetNormalizeAcrossScale\n\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Define which normalization factor will be used for the Gaussian\\see  RecursiveGaussianImageFilter::SetNormalizeAcrossScale\n\n"
     }
   ],
   "tests" : [
@@ -38,5 +38,5 @@
     }
   ],
   "briefdescription" : "Computes the Laplacian of Gaussian (LoG) of an image.\n",
-  "detaileddescription" : "Computes the Laplacian of Gaussian (LoG) of an image by convolution with the second derivative of a Gaussian. This filter is implemented using the recursive gaussian filters.\n\\par Wiki Examples:  {http://www.itk.org/Wiki/ITK/Examples}\n{EdgesAndGradients/LaplacianRecursiveGaussianImageFilter,Compute the Laplacian of Gaussian (LoG) of an image}\n\n"
+  "detaileddescription" : "Computes the Laplacian of Gaussian (LoG) of an image by convolution with the second derivative of a Gaussian. This filter is implemented using the recursive gaussian filters.\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Compute the Laplacian of Gaussian (LoG) of an image\n\n"
 }

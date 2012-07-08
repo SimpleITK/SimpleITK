@@ -16,9 +16,9 @@
       "type" : "double",
       "default" : "0.1",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set the relaxation factor.",
+      "detaileddescriptionSet" : "Set/get relaxation factor.\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Get the relaxation factor."
+      "detaileddescriptionGet" : "Set/get relaxation factor.\n"
     },
     {
       "name" : "NumberOfIterations",
@@ -71,6 +71,6 @@
       ]
     }
   ],
-  "briefdescription" : "Deconvolve an image using the projected Landweber deconvolution algorithm.",
-  "detaileddescription" : "This filter performs the same calculation per iteration as the LandweberDeconvolutionImageFilter. However, at each iteration, negative pixels in the intermediate result are projected (set) to zero. This is useful if the solution is assumed to always be non-negative, which is the case when dealing with images formed by counting photons, for example.\nThis code was adapted from the Insight Journal contribution:\n\"Deconvolution: infrastructure and reference algorithms\" by Gaetan Lehmann\nhttp://hdl.handle.net/10380/3207\n\\author Gaeten Lehmann, Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France\n\\author Cory Quammen, The University of North Carolina at Chapel Hill"
+  "briefdescription" : "Deconvolve an image using the Landweber deconvolution algorithm.\n",
+  "detaileddescription" : "This filter implements the Landweber deconvolution algorthm as defined in Bertero M and Boccacci P, \"Introduction to Inverse\n Problems in Imaging\", 1998. The algorithm assumes that the input image has been formed by a linear shift-invariant system with a known kernel.\nThe Landweber algorithm converges to a solution that minimizes the sum of squared errors\\f$||f \\otimes h - g||\\f$ where\\f$f\\f$ is the estimate of the unblurred image,\\f$\\otimes\\f$ is the convolution operator,\\f$h\\f$ is the blurring kernel, and\\f$g\\f$ is the blurred input image. As such, it is best suited for images that have zero-mean Gaussian white noise.\nThis is the base implementation of the Landweber algorithm. It may produce results with negative values. For a version of this algorithm that enforces a positivity constraint on each intermediate solution, see ProjectedLandweberDeconvolutionImageFilter.\nThis code was adapted from the Insight Journal contribution:\n\"Deconvolution: infrastructure and reference algorithms\" by Gaetan Lehmannhttp://hdl.handle.net/10380/3207\n\\author Gaetan Lehmann, Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France\nCory Quammen, The University of North Carolina at Chapel Hill\n\\see  IterativeDeconvolutionImageFilter\n\\see \n\\see  RichardsonLucyDeconvolutionImageFilter\n\\see \n\\see  ProjectedLandweberDeconvolutionImageFilter\n\n"
 }

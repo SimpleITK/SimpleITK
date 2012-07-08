@@ -14,7 +14,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations\n"
     }
   ],
   "tests" : [
@@ -22,10 +22,12 @@
       "tag" : "default",
       "description" : "Simply run with default settings",
       "settings" : [],
-      "tolerance" : 1e-5,
+      "tolerance" : 1e-05,
       "inputs" : [
         "Input/RA-Float.nrrd"
       ]
     }
-  ]
+  ],
+  "briefdescription" : "Computes the gradient magnitude of an image region at each pixel.\n",
+  "detaileddescription" : "\\see  Image\n\\see \n\\see  Neighborhood\n\\see \n\\see  NeighborhoodOperator\n\\see \n\\see  NeighborhoodIterator\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Compute the gradient magnitude image\n\n"
 }

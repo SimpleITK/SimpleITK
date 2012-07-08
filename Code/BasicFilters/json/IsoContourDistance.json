@@ -15,7 +15,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the value of the level set to be located. The default value is 0.\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get the value of the level set to be located. The default value is 0.\n"
     },
     {
       "name" : "FarValue",
@@ -25,7 +25,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the value of the level set to be located. The default value is 0.\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get the value of the level set to be located. The default value is 0.\n"
     }
   ],
   "tests" : [

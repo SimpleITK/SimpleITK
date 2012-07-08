@@ -5,7 +5,7 @@
   "number_of_inputs" : 1,
   "pixel_types" : "ScalarPixelIDTypeList",
   "output_image_type" : "typename InputImageType::template Rebind<typename InputImageType::PixelType, InputImageType::ImageDimension+1>::Type",
-  "custom_register" : "this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();"
+  "custom_register" : "this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();",
   "members" : [
     {
       "name" : "Origin",
