@@ -28,7 +28,7 @@
         "Input/RA-Float.nrrd"
       ],
       "settings" : [],
-      "tolerance" : 2e-3
+      "tolerance" : 0.002
     }
   ]
 }

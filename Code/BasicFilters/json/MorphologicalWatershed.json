@@ -36,11 +36,6 @@
     {
       "tag" : "level_1",
       "description" : "Set some parameters",
-      "settings" : [],
-      "md5hash" : "a204ce7cf8ec4e7bc6538f0515a8910e",
-      "inputs" : [
-        "Input/cthead1-grad-mag.nrrd"
-      ],
       "settings" : [
         {
           "parameter" : "Level",
@@ -52,7 +47,10 @@
           "python_value" : "False",
           "R_value" : "FALSE"
         }
-
+      ],
+      "md5hash" : "a204ce7cf8ec4e7bc6538f0515a8910e",
+      "inputs" : [
+        "Input/cthead1-grad-mag.nrrd"
       ]
     }
   ]

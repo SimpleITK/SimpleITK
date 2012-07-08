@@ -45,7 +45,7 @@
       "detaileddescriptionGet" : "Set/Get value to replace thresholded pixels\n"
     }
   ],
- "measurements" : [
+  "measurements" : [
     {
       "name" : "Mean",
       "type" : "std::vector<double>",

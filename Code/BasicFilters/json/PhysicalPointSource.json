@@ -67,9 +67,8 @@
       "tag" : "default",
       "description" : "Simply run with default settings",
       "settings" : [],
-      "md5hash" : "d0857811f2d6f37882341c858000911d"
-      "inputs" : [
-      ]
+      "md5hash" : "d0857811f2d6f37882341c858000911d",
+      "inputs" : []
     }
   ]
 }
