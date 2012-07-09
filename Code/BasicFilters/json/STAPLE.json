@@ -46,12 +46,14 @@
     {
       "name" : "Sensitivity",
       "type" : "std::vector<double>",
-      "default" : "std::vector<double>()"
+      "default" : "std::vector<double>()",
+      "briefdescriptionGet" : "After the filter is updated, this method returns a std::vector<double> of all Sensitivity (true positive fraction, p) values for the expert input volumes."
     },
     {
       "name" : "Specificity ",
       "type" : "std::vector<double>",
-      "default" : "std::vector<double>()"
+      "default" : "std::vector<double>()",
+      "briefdescriptionGet" : "After the filter is updated, this method returns the Specificity (true negative fraction, q) value for the i-th expert input volume."
     }
   ],
   "tests" : [
