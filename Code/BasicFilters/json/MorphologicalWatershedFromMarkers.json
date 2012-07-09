@@ -6,6 +6,7 @@
   "pixel_types2" : "IntegerPixelIDTypeList",
   "filter_type" : "itk::MorphologicalWatershedFromMarkersImageFilter<InputImageType, InputImageType2>",
   "custom_set_input" : "filter->SetInput1( image1 ); filter->SetInput2( image2 );",
+  "doc" : "",
   "members" : [
     {
       "name" : "MarkWatershedLine",
@@ -20,7 +21,6 @@
       "name" : "FullyConnected",
       "type" : "bool",
       "default" : "false",
-      "doc" : "",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.\n",
       "briefdescriptionGet" : "",

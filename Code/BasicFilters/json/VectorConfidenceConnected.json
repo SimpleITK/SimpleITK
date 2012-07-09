@@ -50,13 +50,15 @@
       "name" : "Mean",
       "type" : "std::vector<double>",
       "default" : "std::vector<double>()",
-      "custom_itk_cast" : "std::vector<double>( filter->GetMean().begin(), filter->GetMean().end() );"
+      "custom_itk_cast" : "std::vector<double>( filter->GetMean().begin(), filter->GetMean().end() );",
+      "briefdescriptionGet" : "The Mean vector computed during segmentation"
     },
     {
       "name" : "Covariance",
       "type" : "std::vector<double>",
       "default" : "std::vector<double>()",
-      "custom_itk_cast" : "std::vector<double>( filter->GetCovariance().begin(), filter->GetCovariance().end() );"
+      "custom_itk_cast" : "std::vector<double>( filter->GetCovariance().begin(), filter->GetCovariance().end() );",
+      "briefdescriptionGet" : "The Covariance matrix computed during segmentation"
     }
   ],
   "tests" : [
