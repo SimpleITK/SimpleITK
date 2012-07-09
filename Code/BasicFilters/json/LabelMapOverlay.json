@@ -18,7 +18,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the opacity of the colored label image. The value must be between 0 and 1\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get the opacity of the colored label image. The value must be between 0 and 1\n"
     }
   ],
   "tests" : [

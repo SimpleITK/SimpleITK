@@ -16,7 +16,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the background value\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get the background value\n"
     }
   ],
   "tests" : [

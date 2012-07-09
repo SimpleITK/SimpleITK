@@ -14,7 +14,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the amount to Shift each Pixel. The shift is followed by a Scale.\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get the amount to Shift each Pixel. The shift is followed by a Scale.\n"
     },
     {
       "name" : "Scale",
@@ -23,7 +23,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the amount to Scale each Pixel. The Scale is applied after the Shift.\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get the amount to Scale each Pixel. The Scale is applied after the Shift.\n"
     }
   ],
   "tests" : [

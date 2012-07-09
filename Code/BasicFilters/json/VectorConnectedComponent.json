@@ -11,7 +11,11 @@
       "name" : "DistanceThreshold",
       "type" : "double",
       "default" : "1.0",
-      "custom_cast" : "filter->SetDistanceThreshold( static_cast<typename InputImageType::InputValueType>( this->m_DistanceThreshold ) );"
+      "custom_cast" : "filter->SetDistanceThreshold( static_cast<typename InputImageType::InputValueType>( this->m_DistanceThreshold ) );",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
     },
     {
       "name" : "FullyConnected",
@@ -36,5 +40,7 @@
         "Input/noisy-vector-grid.nrrd"
       ]
     }
-  ]
+  ],
+  "briefdescription" : "A connected components filter that labels the objects in a vector image. Two vectors are pointing similar directions if one minus their dot product is less than a threshold. Vectors that are 180 degrees out of phase are similar. Assumes that vectors are normalized.\n",
+  "detaileddescription" : ""
 }

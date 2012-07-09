@@ -17,4 +17,7 @@ rm -f Wrapping/JavaDoc.i
 # Find all the JSON, re-write it
 for f in Code/BasicFilters/json/*.json; do
     Utilities/GenerateDocumentation.groovy $f $1 Wrapping/PythonDocstrings.i Wrapping/JavaDoc.i
+
+    # run the python script to return to standard formatting
+    Utilities/JSONInputAToInputs.py $f
 done

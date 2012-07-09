@@ -18,7 +18,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "The label to mask or to not mask, depending on the value of the Negated ivar.\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "The label to mask or to not mask, depending on the value of the Negated ivar.\n"
     },
     {
       "name" : "BackgroundValue",
@@ -29,7 +29,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::Zero.\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::Zero.\n"
     },
     {
       "name" : "Negated",
@@ -39,7 +39,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get whether the Label should be masked or not.\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get whether the Label should be masked or not.\n"
     }
   ],
   "tests" : [

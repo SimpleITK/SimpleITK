@@ -37,15 +37,15 @@
   "custom_methods" : [
     {
       "name" : "EstimateOptimalTimeStep",
-        "doc" : "This method autmatically  sets the optimal timestep for an image given its spacing.",
-    "return_type" : "double",
-    "parameters" : [
-      {
-        "type" : "Image &",
-        "var_name" : "inImage"
-      }
-    ],
-  "body" : "std::vector<double> spacing = inImage.GetSpacing();\ndouble minSpacing = *std::min_element( spacing.begin(), spacing.end()); this->m_TimeStep = minSpacing / std::pow(2.0, static_cast< double >( inImage.GetDimension() ) ); return this->m_TimeStep;"
+      "doc" : "This method autmatically  sets the optimal timestep for an image given its spacing.",
+      "return_type" : "double",
+      "parameters" : [
+        {
+          "type" : "Image &",
+          "var_name" : "inImage"
+        }
+      ],
+      "body" : "std::vector<double> spacing = inImage.GetSpacing();\ndouble minSpacing = *std::min_element( spacing.begin(), spacing.end()); this->m_TimeStep = minSpacing / std::pow(2.0, static_cast< double >( inImage.GetDimension() ) ); return this->m_TimeStep;"
     }
   ],
   "tests" : [
@@ -91,5 +91,5 @@
     }
   ],
   "briefdescription" : "",
-  "detaileddescription" : "This filter performs anisotropic diffusion on a scalar itk::Imageusing the classic Perona-Malik, gradient magnitude based equation implemented in itkGradientNDAnisotropicDiffusionFunction. For detailed information on anisotropic diffusion, see itkAnisotropicDiffusionFunction and itkGradientNDAnisotropicDiffusionFunction.\n\\par Inputs and Outputs\nThe input to this filter should be a scalar itk::Imageof any dimensionality. The output image will be a diffused copy of the input.\n\\par Parameters\nPlease see the description of parameters given in itkAnisotropicDiffusionImageFilter.\n\\see  AnisotropicDiffusionImageFilter\n\\see  AnisotropicDiffusionFunction\n\\see GradientAnisotropicDiffusionFunction\n\n"
+  "detaileddescription" : "This filter performs anisotropic diffusion on a scalar itk::Imageusing the classic Perona-Malik, gradient magnitude based equation implemented in itkGradientNDAnisotropicDiffusionFunction. For detailed information on anisotropic diffusion, see itkAnisotropicDiffusionFunction and itkGradientNDAnisotropicDiffusionFunction.\n\\par Inputs and Outputs\nThe input to this filter should be a scalar itk::Imageof any dimensionality. The output image will be a diffused copy of the input.\n\\par Parameters\nPlease see the description of parameters given in itkAnisotropicDiffusionImageFilter.\n\\see  AnisotropicDiffusionImageFilter\n\\see \n\\see  AnisotropicDiffusionFunction\n\\see \n\\see GradientAnisotropicDiffusionFunction\n\n"
 }

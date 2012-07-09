@@ -34,7 +34,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the Watershed threshold. The default is 0.\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get the Watershed threshold. The default is 0.\n"
     },
     {
       "name" : "UpperValueLimit",
@@ -43,7 +43,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the limit on the upper waterlevel value. The default is 1.0.\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get the limit on the upper waterlevel value. The default is 1.0.\n"
     },
     {
       "name" : "IsolatedValueTolerance",
@@ -52,7 +52,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the precision required for the intensity threshold value. The default is .001.\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get the precision required for the intensity threshold value. The default is .001.\n"
     },
     {
       "name" : "ReplaceValue1",
@@ -62,7 +62,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get value to replace Seed1(Seed2) pixels, pixels that are within the basin that contains Seed1(Seed2) this value. The default is 1(0).\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get value to replace Seed1(Seed2) pixels, pixels that are within the basin that contains Seed1(Seed2) this value. The default is 1(0).\n"
     },
     {
       "name" : "ReplaceValue2",
@@ -70,9 +70,9 @@
       "default" : "2u",
       "pixeltype" : "Output",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get value to replace Seed1(Seed2) pixels, pixels that are within the basin that contains Seed1(Seed2) this value. The default is 1(0).\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get value to replace Seed1(Seed2) pixels, pixels that are within the basin that contains Seed1(Seed2) this value. The default is 1(0).\n"
     }
   ],
   "tests" : [
