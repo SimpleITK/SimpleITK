@@ -80,6 +80,39 @@ namespace itk {
         return itkImage;
       }
 
+      // Simple ITK must use a zero based index
+      template< class TImageType>
+      static void FixNonZeroIndex( TImageType * img )
+      {
+        assert( img != NULL );
+
+        typename TImageType::RegionType r = img->GetLargestPossibleRegion();
+        typename TImageType::IndexType idx = r.GetIndex();
+
+        for( unsigned int i = 0; i < TImageType::ImageDimension; ++i )
+          {
+
+          if ( idx[i] != 0 )
+            {
+            // if any of the indcies are non-zero, then just fix it
+            typename TImageType::PointType o;
+            img->TransformIndexToPhysicalPoint( idx, o );
+            img->SetOrigin( o );
+
+            idx.Fill( 0 );
+            r.SetIndex( idx );
+
+            // Need to set the buffered region to match largest
+            img->SetRegions( r );
+
+            return;
+            }
+          }
+
+
+
+      }
+
     private:
 
     };

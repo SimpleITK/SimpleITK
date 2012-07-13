@@ -9,4 +9,6 @@ OUT=[[  this->m_${name} = filter->Get${name}();]]
 end)
 ))
 
-  return Image( filter->GetOutput() );
+  typename FilterType::OutputImageType *itkOutImage = filter->GetOutput();
+  this->FixNonZeroIndex( itkOutImage );
+  return Image( itkOutImage );
