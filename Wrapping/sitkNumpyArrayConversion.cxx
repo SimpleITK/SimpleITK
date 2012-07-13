@@ -167,16 +167,12 @@ sitk_GetArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
     SWIG_fail;
     }
 
-  // For more information on the Py_buffer protocol, see PEP 3118
-  // http://www.python.org/dev/peps/pep-3118/
-  // This restricts us to Python 2.6 or better
-  Py_buffer byteArrayView;
-  if( PyObject_GetBuffer( byteArray, &byteArrayView, PyBUF_WRITABLE ) < 0 )
+  char *arrayView;
+  if( (arrayView = PyByteArray_AsString( byteArray ) ) == NULL  )
     {
     SWIG_fail;
     }
-  memcpy( byteArrayView.buf, sitkBufferPtr, len );
-  PyBuffer_Release( &byteArrayView );
+  memcpy( arrayView, sitkBufferPtr, len );
 
   if( size.size() == 2 )
     {
