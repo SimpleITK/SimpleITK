@@ -62,7 +62,24 @@ namespace itk
 
         if ( image == NULL )
           {
-          sitkExceptionMacro( << "unable to initialize an image with NULL" );
+          sitkExceptionMacro( << "Unable to initialize an image with NULL" );
+          }
+
+        if ( image->GetLargestPossibleRegion() != image->GetBufferedRegion() )
+          {
+          sitkExceptionMacro( << "The image has a LargestPossibleRegion of " << image->GetLargestPossibleRegion()
+                              << " while the buffered region is " << image->GetBufferedRegion() << std::endl
+                              << "SimpleITK does not support streamming or unbuffered regions!" );
+          }
+
+        const IndexType & idx = image->GetBufferedRegion().GetIndex();
+        for ( unsigned int i = 0; i < ImageType::ImageDimension; ++i )
+          {
+          if ( idx[i] != 0 )
+            {
+            sitkExceptionMacro( << "The image has a staring index of " << idx
+                                << "SimpleITK only supports images with a zero starting index!" );
+            }
           }
       }
 
