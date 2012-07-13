@@ -236,7 +236,8 @@ def GetArrayFromImage(image):
     if not HAVE_NUMPY:
         raise ImportError('Numpy not available.')
 
-    imageByteArray, shape = _SimpleITK._GetArrayFromImage(image)
+    imageByteArray = _SimpleITK._GetArrayFromImage(image)
+
     pixelID = image.GetPixelIDValue()
     if pixelID == sitkUnknown:
          raise Exception("Logic Error: invalid pixel type")
@@ -264,6 +265,10 @@ def GetArrayFromImage(image):
         arr = numpy.frombuffer(imageByteArray, dtype=numpy.complex64 )
     elif pixelID == sitkComplexFloat64:
         arr = numpy.frombuffer(imageByteArray, dtype=numpy.complex128 )
+
+    shape = image.GetSize();
+    if image.GetNumberOfComponentsPerPixel() > 1:
+      shape += image.GetNumberOfComponentsPerPixel()
 
     arr.shape = shape
 

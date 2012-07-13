@@ -41,12 +41,8 @@ extern "C"
 static PyObject *
 sitk_GetArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
 {
-  // Holds the return tuple
-  PyObject * resultTuple = NULL;
   // Holds the bulk data
   PyObject * byteArray = NULL;
-  // Numpy array shape
-  PyObject * shape = NULL;
 
   const void * sitkBufferPtr;
   Py_ssize_t len;
@@ -164,6 +160,7 @@ sitk_GetArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
   byteArray = PyByteArray_FromStringAndSize( NULL, len );
   if( !byteArray )
     {
+    PyErr_SetString( PyExc_RuntimeError, "Error initializing bytearray." );
     SWIG_fail;
     }
 
@@ -174,46 +171,9 @@ sitk_GetArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
     }
   memcpy( arrayView, sitkBufferPtr, len );
 
-  if( size.size() == 2 )
-    {
-    shape = Py_BuildValue( "(ii)", size[1], size[0] );
-    }
-  else if( size.size() == 3 )
-    {
-    shape = Py_BuildValue( "(iii)", size[2], size[1], size[0] );
-    }
-  else if( size.size() == 4 )
-    {
-    shape = Py_BuildValue( "(iiii)", size[3], size[2], size[1], size[0] );
-    }
-  else
-    {
-    PyErr_SetString( PyExc_ValueError, "Unexpected Image dimension." );
-    SWIG_fail;
-    }
-  if( !shape )
-    {
-    SWIG_fail;
-    }
-
-  resultTuple = PyTuple_New( 2 );
-  if( !resultTuple )
-    {
-    SWIG_fail;
-    }
-  if( PyTuple_SetItem( resultTuple, 0, byteArray ) != 0 )
-    {
-    SWIG_fail;
-    }
-  if( PyTuple_SetItem( resultTuple, 1, shape ) != 0 )
-    {
-    SWIG_fail;
-    }
-  return resultTuple;
+  return byteArray;
 
 fail:
-  Py_XDECREF( resultTuple ); // this should come first
-  Py_XDECREF( shape );
   Py_XDECREF( byteArray );
   return NULL;
 }
