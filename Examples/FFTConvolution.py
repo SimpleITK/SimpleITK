@@ -20,6 +20,7 @@
 import SimpleITK as sitk
 import sys
 import os
+import math
 
 if len ( sys.argv ) < 4:
     print "Usage: FFTConvolution <input> <kernel> <output>";
@@ -59,18 +60,25 @@ stats = sitk.StatisticsImageFilter();
 stats.Execute( kernel )
 kernel = sitk.Cast( kernel , sitk.sitkFloat32 ) / stats.GetSum()
 
-padding = [0]*2
-padding[0] = (size[0] - kernel.GetSize()[0])/2
-padding[1] = (size[1] - kernel.GetSize()[1])/2
+upadding = [0]*2
+upadding[0] = int( math.floor( (size[0] - kernel.GetSize()[0])/2.0 ) )
+upadding[1] = int( math.floor( (size[1] - kernel.GetSize()[1])/2.0 ) )
+
+lpadding = [0]*2
+lpadding[0] = int( math.ceil( (size[0] - kernel.GetSize()[0])/2.0 ) )
+lpadding[1] = int( math.ceil( (size[1] - kernel.GetSize()[1])/2.0 ) )
 
 # pad the kernel to prevent edge artifacts
-kernel = sitk.ConstantPad( kernel, padding, padding, 0.0 )
+kernel = sitk.ConstantPad( kernel, upadding, lpadding, 0.0 )
 
 # perform FFT on kernel
 fftkernel = sitk.ForwardFFT( sitk.FFTShift( kernel ) )
 
+# meta-data must match for multiplication
 fftkernel.SetSpacing( fftimg.GetSpacing() )
 fftkernel.SetOrigin( fftimg.GetOrigin() )
+fftkernel.SetDirection( fftimg.GetDirection() )
+
 
 ### Convolution ###
 # Finally perform the convolution in Fourier space by multiplication
@@ -84,5 +92,8 @@ img = sitk.Crop( img, [128]*2, [128]*2 )
 sitk.WriteImage( sitk.Cast( img, pixelID ), outputFileName )
 
 
+
 if ( not os.environ.has_key("SITK_NOSHOW") ):
-    sitk.Show( sitk.Cast( img, pixelID ), "FFT Convolution" )
+    sitk.Show( sitk.ReadImage( inputFileName ), "original" )
+    sitk.Show( sitk.ReadImage( kernelFileName ), "kernel" )
+    sitk.Show( sitk.Cast( img, pixelID ), "FFT_Convolution" )
