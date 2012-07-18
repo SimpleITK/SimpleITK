@@ -217,8 +217,8 @@
 #include "sitkNumpyArrayConversion.cxx"
 %}
 // Numpy array conversion support
-%native(_GetArrayFromImage) PyObject *sitk_GetArrayFromImage( PyObject *self, PyObject *args );
-%native(_GetImageFromArray) PyObject *sitk_GetImageFromArray( PyObject *self, PyObject *args );
+%native(_GetByteArrayFromImage) PyObject *sitk_GetByteArrayFromImage( PyObject *self, PyObject *args );
+%native(_SetImageFromArray) PyObject *sitk_SetImageFromArray( PyObject *self, PyObject *args );
 
 %pythoncode %{
 
@@ -305,39 +305,19 @@ def GetArrayFromImage(image):
     if not HAVE_NUMPY:
         raise ImportError('Numpy not available.')
 
-    imageByteArray = _SimpleITK._GetArrayFromImage(image)
+    imageByteArray = _SimpleITK._GetByteArrayFromImage(image)
 
     pixelID = image.GetPixelIDValue()
     if pixelID == sitkUnknown:
          raise Exception("Logic Error: invalid pixel type")
-    elif pixelID == sitkUInt8 or pixelID == sitkVectorUInt8:
-        arr = numpy.frombuffer(imageByteArray, dtype=numpy.uint8 )
-    elif pixelID == sitkInt8 or pixelID == sitkVectorInt8:
-        arr = numpy.frombuffer(imageByteArray, dtype=numpy.int8 )
-    elif pixelID == sitkUInt16 or pixelID == sitkVectorUInt16:
-        arr = numpy.frombuffer(imageByteArray, dtype=numpy.uint16 )
-    elif pixelID == sitkInt16 or pixelID == sitkVectorInt16:
-        arr = numpy.frombuffer(imageByteArray, dtype=numpy.int16 )
-    elif pixelID == sitkUInt32 or pixelID == sitkVectorUInt32:
-        arr = numpy.frombuffer(imageByteArray, dtype=numpy.uint32 )
-    elif pixelID == sitkInt32 or pixelID == sitkVectorInt32:
-        arr = numpy.frombuffer(imageByteArray, dtype=numpy.int32 )
-    elif pixelID == sitkUInt64 or pixelID == sitkVectorUInt64:
-        arr = numpy.frombuffer(imageByteArray, dtype=numpy.uint64 )
-    elif pixelID == sitkInt64 or pixelID == sitkVectorInt64:
-        arr = numpy.frombuffer(imageByteArray, dtype=numpy.int64 )
-    elif pixelID == sitkFloat32 or pixelID == sitkVectorFloat32:
-        arr = numpy.frombuffer(imageByteArray, dtype=numpy.float32 )
-    elif pixelID == sitkFloat64 or pixelID == sitkVectorFloat64:
-        arr = numpy.frombuffer(imageByteArray, dtype=numpy.float64 )
-    elif pixelID == sitkComplexFloat32:
-        arr = numpy.frombuffer(imageByteArray, dtype=numpy.complex64 )
-    elif pixelID == sitkComplexFloat64:
-        arr = numpy.frombuffer(imageByteArray, dtype=numpy.complex128 )
+
+    dtype = _get_numpy_dtype( image )
+
+    arr = numpy.frombuffer(imageByteArray, dtype )
 
     shape = image.GetSize();
     if image.GetNumberOfComponentsPerPixel() > 1:
-      shape += image.GetNumberOfComponentsPerPixel()
+      shape += ( image.GetNumberOfComponentsPerPixel(), )
 
     arr.shape = shape
 
@@ -346,7 +326,23 @@ def GetArrayFromImage(image):
 def GetImageFromArray( arr ):
     """Get a SimpleITK Image from a numpy array."""
 
-    return _SimpleITK._GetImageFromArray( arr )
+    if not HAVE_NUMPY:
+        raise ImportError('Numpy not available.')
+
+    z = numpy.asarray( arr )
+    id = _get_sitk_pixelid( z )
+
+    assert len( z.shape ) in ( 2, 3, 4 ), \
+      "Only arrays of 2, 3 or 4 dimensions are supported."
+
+    if len( z.shape ) in ( 2, 3 ):
+      img = Image( z.shape, id )
+    elif len( z.shape == 4 ):
+      img = Image( z.shape[:3], id, numberOfComponents = z.shape[3] )
+
+    _SimpleITK._SetImageFromArray( z.tostring(), img )
+
+    return img
 %}
 
 #endif
