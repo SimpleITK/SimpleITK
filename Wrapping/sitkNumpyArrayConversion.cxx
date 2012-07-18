@@ -128,17 +128,6 @@ sitk_GetArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
     PyErr_SetString( PyExc_RuntimeError, "Images of Complex Pixel types currently are not supported." );
     SWIG_fail;
     break;
-// \todo re-enable when Image class gets more GetBuffer support
-  //case sitk::sitkComplexFloat32:
-    //pixelDtype = 10;
-    //sitkBufferPtr = (const void *)sitkImage->GetBufferAsComplexFloat32();
-    //pixelSize  = sizeof( std::complex<float> );
-    //break;
-  //case sitk::sitkComplexFloat64:
-    //pixelDtype = 11;
-    //sitkBufferPtr = (const void *)sitkImage->GetBufferAsComplexFloat64();
-    //pixelSize  = sizeof( std::complex<double> );
-    //break;
   default:
     PyErr_SetString( PyExc_RuntimeError, "Unknown pixel type." );
     SWIG_fail;
