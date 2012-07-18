@@ -228,6 +228,75 @@ try:
 except ImportError:
     HAVE_NUMPY = False
 
+
+def _get_numpy_dtype( sitkImage ):
+    """Given a SimpleITK image, returns the numpy.dtype which describes the data"""
+
+    if not HAVE_NUMPY:
+        raise ImportError('Numpy not available.')
+
+    # this is a mapping from sitk's pixel id to numpy's dtype
+    _sitk_np = {sitkUInt8:numpy.uint8,
+                sitkUInt16:numpy.uint16,
+                sitkUInt32:numpy.uint32,
+                sitkUInt64:numpy.uint64,
+                sitkInt8:numpy.int8,
+                sitkInt16:numpy.int16,
+                sitkInt32:numpy.int32,
+                sitkInt64:numpy.int64,
+                sitkFloat32:numpy.float32,
+                sitkFloat64:numpy.float64,
+                sitkComplexFloat32:numpy.complex64,
+                sitkComplexFloat64:numpy.complex128,
+                sitkVectorUInt8:numpy.uint8,
+                sitkVectorInt8:numpy.int8,
+                sitkVectorUInt16:numpy.uint16,
+                sitkVectorInt16:numpy.int16,
+                sitkVectorUInt32:numpy.uint32,
+                sitkVectorInt32:numpy.int32,
+                sitkVectorUInt64:numpy.uint64,
+                sitkVectorInt64:numpy.int64,
+                sitkVectorFloat32:numpy.float32,
+                sitkVectorFloat64:numpy.float64,
+                sitkLabelUInt8:numpy.uint8,
+                sitkLabelUInt16:numpy.uint16,
+                sitkLabelUInt32:numpy.uint32,
+                sitkLabelUInt64:numpy.uint64
+                }
+
+    return _sitk_np[ sitkImage.GetPixelIDValue() ]
+
+
+
+def _get_sitk_pixelid(numpy_array_type):
+    """Returns a SimpleITK PixelID given a numpy array."""
+
+    if not HAVE_NUMPY:
+        raise ImportError('Numpy not available.')
+
+    # This is a Mapping from numpy array types to VTK array types.
+    _np_sitk = {numpy.character:sitkUInt8,
+                numpy.uint8:sitkUInt8,
+                numpy.uint16:sitkUInt16,
+                numpy.uint32:sitkUInt32,
+                numpy.uint64:sitkUInt64,
+                numpy.int8:sitkInt8,
+                numpy.int16:sitkInt16,
+                numpy.int32:sitkInt32,
+                numpy.int64:sitkInt64,
+                numpy.float32:sitkFloat32,
+                numpy.float64:sitkFloat64,
+                numpy.complex64:sitkComplexFloat32,
+                numpy.complex128:sitkComplexFloat64
+                }
+
+    try:
+        return _np_sitk[numpy_array_type.dtype]
+    except KeyError:
+        for key in _np_sitk:
+            if numpy.issubdtype(numpy_array_type.dtype, key):
+                return _np_sitk[key]
+
 # SimplyITK <-> Numpy Array conversion support.
 
 def GetArrayFromImage(image):
