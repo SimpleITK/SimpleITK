@@ -24,6 +24,8 @@
 #include <iostream>
 #include <sstream>
 #include <iterator>
+#include <string>
+#include <algorithm>
 #include <ctype.h>
 
 #ifdef WIN32
@@ -39,28 +41,29 @@ namespace itk
 
   static int ShowImageCount = 0;
 
-  // time to wait in mili-seconds before we check if the process is OK
+  // time to wait in milli-seconds before we check if the process is OK
   const unsigned int ProcessDelay = 500;
 
 
 #if defined(WIN32)
-  static std::string ShowImageCommand = "%a -o %f";
+  static std::string ShowImageCommand = "%a -o %f -eval \"rename(\'%t\'); \"";
   static std::string ShowColorImageCommand = "%a -eval "
-                                              "\"open(\'%f\'); run(\'Make Composite\', \'display=Composite\'); \"";
+                                              "\"open(\'%f\'); run(\'Make Composite\', \'display=Composite\'); rename(\'%t\'); \"";
 
 #elif defined(__APPLE__)
-  static std::string ShowImageCommand = "open -a %a %f";
   // The "-n" flag tells OSX to launch a new instance of ImageJ, even if one is already running.
   // We do this because otherwise the macro command line argument is not correctly passed to
   // a previously running instance of ImageJ.
+  static std::string ShowImageCommand = "open -a %a -n --args -eval "
+                                             "\'open(\"%f\"); rename(\"%t\"); \'";
   static std::string ShowColorImageCommand = "open -a %a -n --args -eval "
-                                             "\'open(\"%f\"); run(\"Make Composite\", \"display=Composite\"); \'";
+                                             "\'open(\"%f\"); run(\"Make Composite\", \"display=Composite\"); rename(\"%t\"); \'";
 
 #else
   // linux and other systems
-  static std::string ShowImageCommand = "%a -o %f";
+  static std::string ShowImageCommand = "%a -o %f -e \'rename(\"%t\"); \'";
   static std::string ShowColorImageCommand = "%a -e "
-                                             "\'open(\"%f\"); run(\"Make Composite\", \"display=Composite\"); \'";
+                                             "\'open(\"%f\"); run(\"Make Composite\", \"display=Composite\"); rename(\"%t\"); \'";
 #endif
 
 
@@ -68,7 +71,7 @@ namespace itk
   // application and file name respectively.  %% will send % to the output string.
   // Multiple occurances of a token are allowed.
   //
-  static std::string ReplaceWords(std::string command, std::string app, std::string filename, bool& fileFlag)
+  static std::string ReplaceWords(std::string command, std::string app, std::string filename, std::string title, bool& fileFlag)
     {
     std::string result;
 
@@ -95,6 +98,11 @@ namespace itk
             case 'a':
               // %a for application
               result.append(app);
+              i++;
+              break;
+            case 't':
+              // %t for title
+              result.append(title);
               i++;
               break;
             case 'f':
@@ -138,7 +146,7 @@ namespace itk
       case '\"':
         if (word[l-1] == word[0])
           {
-          std::cout <<  "Unquoted: " << word.substr(1, l-2);
+          //std::cout <<  "Unquoted: " << word.substr(1, l-2);
           return word.substr(1, l-2);
           }
         else
@@ -153,10 +161,16 @@ namespace itk
       }
     }
 
-  static std::vector<std::string> ConvertCommand(std::string command, std::string app, std::string filename)
+  static std::vector<std::string> ConvertCommand(std::string command, std::string app, std::string filename, std::string title="")
     {
+
+    if (title == "")
+      {
+      title = filename;
+      }
+
     bool fileFlag=false;
-    std::string new_command = ReplaceWords(command, app, filename, fileFlag);
+    std::string new_command = ReplaceWords(command, app, filename, title, fileFlag);
     std::istringstream iss(new_command);
     std::vector<std::string> result;
     std::vector<unsigned char> quoteStack;
@@ -237,26 +251,33 @@ namespace itk
   std::string TempFile = TempDirectory;
   std::string Extension = ".nii";
 
+
   itksys::SystemTools::GetEnv ( "SITK_SHOW_EXTENSION", Extension );
+
+#ifdef WIN32
+  int pid = _getpid();
+#else
+  int pid = getpid();
+#endif
+
+  std::ostringstream tmp;
 
   if ( name != "" )
     {
-    TempFile = TempFile + name + Extension;
+    // remove whitespace
+    name.erase(std::remove_if(name.begin(), name.end(), &::isspace), name.end());
+
+    tmp << name << "-" << pid << "-" << ShowImageCount;
+    TempFile = TempFile + tmp.str() + Extension;
     }
   else
     {
-    std::ostringstream tmp;
 
-#ifdef WIN32
-    int pid = _getpid();
-#else
-    int pid = getpid();
-#endif
 
     tmp << "TempFile-" << pid << "-" << ShowImageCount;
-    ShowImageCount++;
     TempFile = TempFile + tmp.str() + Extension;
     }
+  ShowImageCount++;
   return TempFile;
   }
 
@@ -325,21 +346,23 @@ namespace itk
     paths.push_back ( ProgramFiles + "\\ImageJ\\" );
     }
 
-    // Find the executable
-    ExecutableName = itksys::SystemTools::FindFile ( ExecutableName.c_str(), paths );
-    if ( ExecutableName == "" )
-      {
-      sitkExceptionMacro ( << "Can not find location of " << name );
-      }
+  // Find the executable
+  ExecutableName = itksys::SystemTools::FindFile ( ExecutableName.c_str(), paths );
+  if ( ExecutableName == "" )
+    {
+    sitkExceptionMacro ( << "Can not find location of " << name );
+    }
 
 #elif defined(__APPLE__)
 
-  paths.push_back("/Applications"); //A common place to look
-  paths.push_back("/Developer"); //A common place to look
-  paths.push_back("/opt/ImageJ");   //A common place to look
-  paths.push_back("/usr/local/ImageJ");   //A common place to look
+  // Common places on the Mac to look
+  paths.push_back("/Applications");
+  paths.push_back("/Applications/ImageJ");
+  paths.push_back("/Developer");
+  paths.push_back("/opt/ImageJ");
+  paths.push_back("/usr/local/ImageJ");
 
-  ExecutableName = itksys::SystemTools::FindDirectory( name.c_str() );
+  ExecutableName = itksys::SystemTools::FindDirectory( name.c_str(), paths );
 
 #else
 
@@ -360,6 +383,7 @@ namespace itk
   static void ExecuteShow( const std::vector<std::string> & cmdLine )
   {
 
+#undef NDEBUG
 #ifndef NDEBUG
     std::copy( cmdLine.begin(), cmdLine.end(), std::ostream_iterator<std::string>( std::cout, "\n" ) );
     std::cout << std::endl;
@@ -445,7 +469,7 @@ namespace itk
 
   }
 
-  void Show( const Image &image, const std::string name)
+  void Show( const Image &image, const std::string title)
   {
   // Try to find ImageJ, write out a file and open
   std::string ExecutableName;
@@ -455,7 +479,7 @@ namespace itk
   std::vector<std::string> CommandLine;
 
 
-  TempFile = BuildFullFileName(name);
+  TempFile = BuildFullFileName(title);
   //std::cout << "Full file name:\t" << TempFile << std::endl;
 
   // write out the image
@@ -506,70 +530,52 @@ namespace itk
     }
 
 
+  // Find the ImageJ executable
+  //
+
 #if defined(WIN32)
 
   // Windows
-  //
   ExecutableName = FindApplication("ImageJ.exe");
-
-  CommandLine = ConvertCommand(Command, ExecutableName, TempFile);
 
 #elif defined(__APPLE__)
 
 # if defined(__x86_64__)
+
   // Mac 64-bit
-  //
-  // This is a funny special case because it tries to launch ImageJ64, then if that
-  // fails it falls through to the Mac 32-bit code.
-  //
   ExecutableName = FindApplication( "ImageJ64.app" );
-  if( ExecutableName == "" )
+  if (!ExecutableName.length())
     {
-    // Just assume it is registered properly in a place where the open command will find it.
-    ExecutableName="ImageJ64";
+    ExecutableName = "ImageJ64.app";
     }
 
-  CommandLine = ConvertCommand(Command, ExecutableName, TempFile);
-
-  bool fail64 = false;
-
-  try
-    {
-    ExecuteShow( CommandLine );
-    }
-  catch(...)
-    {
-    fail64 = true;
-    }
-
-  if (!fail64)
-    // 64-bit app worked, so we're done
-    return;
-
-   // if 64-bit app failed, we fall through to the 32-bit code
-#  endif // __x86_64__
-
+#  else
 
   // Mac 32-bit
   ExecutableName = FindApplication( "ImageJ.app" );
-
-  CommandLine = ConvertCommand(Command, ExecutableName, TempFile);
+  if (!ExecutableName.length())
+    {
+    ExecutableName = "ImageJ.app";
+    }
+#  endif // __x86_64__
 
 #else
 
   // Linux and other systems
   ExecutableName = FindApplication("ImageJ");
-  if (ExecutableName == "")
+  if (!ExecutableName.length())
     {
     ExecutableName = FindApplication("imagej");
     }
-
-  CommandLine = ConvertCommand(Command, ExecutableName, TempFile);
 #endif
+
+
+  // Replace the string tokens and split the command string into seperate words.
+  CommandLine = ConvertCommand(Command, ExecutableName, TempFile, title);
 
   // run the compiled command-line in a process which will detach
   ExecuteShow( CommandLine );
   }
 
-  }
+  } // namespace simple
 }
