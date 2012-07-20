@@ -20,20 +20,25 @@
 // Make __str__ transparent by renaming ToString to __str__
 %rename(__str__) ToString;
 
+%rename( __GetPixelAsInt8__ ) itk::simple::Image::GetPixelAsInt8;
 %rename( __GetPixelAsUInt8__ ) itk::simple::Image::GetPixelAsUInt8;
 %rename( __GetPixelAsInt16__ ) itk::simple::Image::GetPixelAsInt16;
 %rename( __GetPixelAsUInt16__ ) itk::simple::Image::GetPixelAsUInt16;
 %rename( __GetPixelAsInt32__ ) itk::simple::Image::GetPixelAsInt32;
 %rename( __GetPixelAsUInt32__ ) itk::simple::Image::GetPixelAsUInt32;
+%rename( __GetPixelAsInt64__ ) itk::simple::Image::GetPixelAsInt64;
+%rename( __GetPixelAsUInt64__ ) itk::simple::Image::GetPixelAsUInt64;
 %rename( __GetPixelAsFloat__ ) itk::simple::Image::GetPixelAsFloat;
 %rename( __GetPixelAsDouble__ ) itk::simple::Image::GetPixelAsDouble;
 
-
+%rename( __SetPixelAsInt8__ ) itk::simple::Image::SetPixelAsInt8;
 %rename( __SetPixelAsUInt8__ ) itk::simple::Image::SetPixelAsUInt8;
 %rename( __SetPixelAsInt16__ ) itk::simple::Image::SetPixelAsInt16;
 %rename( __SetPixelAsUInt16__ ) itk::simple::Image::SetPixelAsUInt16;
 %rename( __SetPixelAsInt32__ ) itk::simple::Image::SetPixelAsInt32;
 %rename( __SetPixelAsUInt32__ ) itk::simple::Image::SetPixelAsUInt32;
+%rename( __SetPixelAsInt64__ ) itk::simple::Image::SetPixelAsInt64;
+%rename( __SetPixelAsUInt64__ ) itk::simple::Image::SetPixelAsUInt64;
 %rename( __SetPixelAsFloat__ ) itk::simple::Image::SetPixelAsFloat;
 %rename( __SetPixelAsDouble__ ) itk::simple::Image::SetPixelAsDouble;
 
@@ -109,7 +114,7 @@
             return PowToConstant( self, other )
         def __mod__( self, other ): return Modulus( self, other )
         def __abs__( self ): return Abs( self )
-        
+
         # iterator and container methods
 
         def __iter__( self ):
@@ -146,6 +151,8 @@
             pixelID = self.GetPixelIDValue()
             if pixelID == sitkUnknown:
                raise Exception("Logic Error: invalid pixel type")
+            if pixelID == sitkInt8:
+               return self.__GetPixelAsInt8__( idx )
             if pixelID == sitkUInt8 or pixelID == sitkLabelUInt8:
                return self.__GetPixelAsUInt8__( idx )
             if pixelID == sitkInt16:
@@ -156,6 +163,10 @@
                return self.__GetPixelAsInt32__( idx )
             if pixelID == sitkUInt32 or pixelID == sitkLabelUInt32:
                return self.__GetPixelAsUInt32__( idx )
+            if pixelID == sitkInt64:
+               return self.__GetPixelAsInt64__( idx )
+            if pixelID == sitkUInt64 or pixelID == sitkLabelUInt64:
+               return self.__GetPixelAsUInt64__( idx )
             if pixelID == sitkFloat32:
                return self.__GetPixelAsFloat__( idx )
             if pixelID == sitkFloat64:
@@ -170,6 +181,8 @@
             pixelID = self.GetPixelIDValue()
             if pixelID == sitkUnknown:
                raise Exception("Logic Error: invalid pixel type")
+            if pixelID == sitkInt8:
+               return self.__SetPixelAsInt8__( idx )
             if pixelID == sitkUInt8 or pixelID == sitkLabelUInt8:
                return self.__SetPixelAsUInt8__( idx, value )
             if pixelID == sitkInt16:
@@ -180,6 +193,10 @@
                return self.__SetPixelAsInt32__( idx, value )
             if pixelID == sitkUInt32 or pixelID == sitkLabelUInt32:
                return self.__SetPixelAsUInt32__( idx, value )
+            if pixelID == sitkInt64:
+               return self.__SetPixelAsInt64__( idx )
+            if pixelID == sitkUInt64 or pixelID == sitkLabelUInt64:
+               return self.__SetPixelAsUInt64__( idx )
             if pixelID == sitkFloat32:
                return self.__SetPixelAsFloat__( idx, value )
             if pixelID == sitkFloat64:
