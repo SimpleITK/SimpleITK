@@ -22,7 +22,6 @@ $(include AddExtraIncludes.cxx.in)
 
 #include "itkNthElementImageAdaptor.h"
 #include "itkCastImageFilter.h"
-#include "itkImageToVectorImageFilter.h"
 #include "itkVectorImageToImageAdaptor.h"
 
 #include "itkFlatStructuringElement.h"
