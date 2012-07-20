@@ -319,7 +319,7 @@ def GetArrayFromImage(image):
     if image.GetNumberOfComponentsPerPixel() > 1:
       shape += ( image.GetNumberOfComponentsPerPixel(), )
 
-    arr.shape = shape
+    arr.shape = shape[::-1]
 
     return arr
 
@@ -336,9 +336,9 @@ def GetImageFromArray( arr ):
       "Only arrays of 2, 3 or 4 dimensions are supported."
 
     if len( z.shape ) in ( 2, 3 ):
-      img = Image( z.shape, id )
+      img = Image( z.shape[::-1], id )
     elif len( z.shape == 4 ):
-      img = Image( z.shape[:3], id, numberOfComponents = z.shape[3] )
+      img = Image( (z.shape[3], z.shape[2], z.shape[1]) , id, numberOfComponents = z.shape[0] )
 
     _SimpleITK._SetImageFromArray( z.tostring(), img )
 
