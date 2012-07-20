@@ -43,7 +43,11 @@ sitk_GetByteArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
   PyObject * byteArray = NULL;
 
   const void * sitkBufferPtr;
+#ifdef PY_SSIZE_T_CLEAN
   Py_ssize_t len;
+#else
+  int len;
+#endif
   std::vector< unsigned int > size;
   size_t pixelSize = 1;
 
@@ -176,8 +180,13 @@ sitk_SetImageFromArray( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
   PyObject * pyImage = NULL;
 
   const void *buffer;
+#ifdef PY_SSIZE_T_CLEAN
   Py_ssize_t buffer_len;
-  Py_buffer  *pyBuffer = NULL;
+#else
+  int buffer_len;
+#endif
+  Py_buffer  pyBuffer;
+  memset(&pyBuffer, 0, sizeof(Py_buffer));
 
   const sitk::Image * sitkImage = NULL;
   void * sitkBufferPtr = NULL;
