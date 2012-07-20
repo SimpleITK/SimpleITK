@@ -196,12 +196,30 @@ sitk_SetImageFromArray( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
   std::vector< unsigned int > size;
   size_t len = 1;
 
-  // This function takes 2 arguments from python, the first is an
-  // python object which support the old "ReadBuffer" interface
-  if( !PyArg_ParseTuple( args, "s#O", &buffer, &buffer_len, &pyImage ) )
+  // We wish to support both the new PEP3118 buffer interface and the
+  // older. So we first try to parse the arguments with the new buffer
+  // protocol, then the old.
+  if (!PyArg_ParseTuple( args, "s*O", &pyBuffer, &pyImage ) )
     {
-    return NULL;
+    PyErr_Clear();
+    // This function takes 2 arguments from python, the first is an
+    // python object which support the old "ReadBuffer" interface
+    if( !PyArg_ParseTuple( args, "s#O", &buffer, &buffer_len, &pyImage ) )
+      {
+      return NULL;
+      }
     }
+    else
+      {
+      if ( PyBuffer_IsContiguous( &pyBuffer, 'C' ) != 1 )
+        {
+        PyBuffer_Release( &pyBuffer );
+        PyErr_SetString( PyExc_TypeError, "A C Contiguous buffer object is required." );
+        return NULL;
+        }
+      buffer_len = pyBuffer.len;
+      buffer = pyBuffer.buf;
+      }
 
   /* Cast over to a sitk Image. */
   {
@@ -214,10 +232,6 @@ sitk_SetImageFromArray( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
       }
     sitkImage = reinterpret_cast< sitk::Image * >( voidImage );
   }
-
-  //PyObject_CheckReadBuffer( arr ) old buffer protocol
-  //PyObject_CheckBuffer( arr ) PEP 3118 interface
-
 
   try
     {
@@ -316,10 +330,12 @@ sitk_SetImageFromArray( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
 
   memcpy( (void *)sitkBufferPtr, buffer, len );
 
+
+  PyBuffer_Release( &pyBuffer );
   Py_RETURN_NONE;
 
 fail:
-  //PyBuffer_Release( pyBuffer );
+  PyBuffer_Release( &pyBuffer );
   return NULL;
 }
 
