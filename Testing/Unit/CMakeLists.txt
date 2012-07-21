@@ -539,12 +539,8 @@ if ( WRAP_PYTHON )
     "${TEST_HARNESS_TEMP_DIRECTORY}")
 
   # Numpy test.
-  execute_process( COMMAND ${PYTHON_EXECUTABLE} -c "import numpy"
-    RESULT_VARIABLE _can_import_numpy )
-  if( ${_can_import_numpy} EQUAL "0" )
-    add_python_test( Test.Numpy
-      "${SimpleITK_SOURCE_DIR}/Testing/Unit/NumpyArrayConversionTest.py" )
-  endif()
+  add_python_test( Test.Numpy
+    "${SimpleITK_SOURCE_DIR}/Testing/Unit/NumpyArrayConversionTest.py" )
 
 endif( WRAP_PYTHON )
 
