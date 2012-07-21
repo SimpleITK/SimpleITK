@@ -43,11 +43,7 @@ sitk_GetByteArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
   PyObject * byteArray = NULL;
 
   const void * sitkBufferPtr;
-#ifdef PY_SSIZE_T_CLEAN
   Py_ssize_t len;
-#else
-  int len;
-#endif
   std::vector< unsigned int > size;
   size_t pixelSize = 1;
 
@@ -180,11 +176,7 @@ sitk_SetImageFromArray( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
   PyObject * pyImage = NULL;
 
   const void *buffer;
-#ifdef PY_SSIZE_T_CLEAN
   Py_ssize_t buffer_len;
-#else
-  int buffer_len;
-#endif
   Py_buffer  pyBuffer;
   memset(&pyBuffer, 0, sizeof(Py_buffer));
 
@@ -202,12 +194,21 @@ sitk_SetImageFromArray( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
   if (!PyArg_ParseTuple( args, "s*O", &pyBuffer, &pyImage ) )
     {
     PyErr_Clear();
+
+#ifdef PY_SSIZE_T_CLEAN
+    typedef Py_ssize_t bufSizeType;
+#else
+    typedef int bufSizeType;
+#endif
+
+    bufSizeType _len;
     // This function takes 2 arguments from python, the first is an
     // python object which support the old "ReadBuffer" interface
-    if( !PyArg_ParseTuple( args, "s#O", &buffer, &buffer_len, &pyImage ) )
+    if( !PyArg_ParseTuple( args, "s#O", &buffer, &_len, &pyImage ) )
       {
       return NULL;
       }
+    buffer_len = _len;
     }
     else
       {
