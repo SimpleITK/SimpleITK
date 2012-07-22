@@ -87,12 +87,30 @@ namespace simple
      * Unlike the standard convention for Dimensional Vectors the size
      * parameter must be the exact dimension requesting. That is it must be of
      * length 2 of a 2D image and of length 3 for a 3D image.
+     * @{
      */
     Image( unsigned int width, unsigned int height, PixelIDValueEnum valueEnum  );
     Image( unsigned int width, unsigned int height, unsigned int depth, PixelIDValueEnum valueEnum );
     Image( const std::vector< unsigned int > &size, PixelIDValueEnum valueEnum, unsigned int numberOfComponents = 0 );
+    /**@}*/
 
 
+    /** \brief Construct an SimpleITK Image from an pointer to an ITK
+     * image
+     *
+     * The SimpleITK image will add a reference to the underlying the
+     * ITK image and hold a pointer to the image. If the image is
+     * manipulated directly from the ITK interface, SimpleITK may be
+     * unaware of it, and may cause complication related to aliasing
+     * and SimpleITK copy on write policy.
+     *
+     * If simpleITK does not support the image type, a compile-time
+     * error or assertion will fail.
+     *
+     * The ITK image must be fully buffered, and must have a zero
+     * starting index for the Buffered/Largest regions.
+     * @{
+     */
     template <typename TImageType>
     explicit Image( itk::SmartPointer<TImageType> image )
       : m_PimpleImage( NULL )
@@ -101,7 +119,6 @@ namespace simple
                           "invalid pixel type" );
         this->InternalInitialization<ImageTypeToPixelIDValue<TImageType>::Result, TImageType::ImageDimension>( image.GetPointer() );
       }
-
     template <typename TImageType>
     explicit Image( TImageType* image )
       : m_PimpleImage( NULL )
@@ -110,6 +127,7 @@ namespace simple
                           "invalid pixel type" );
         this->InternalInitialization<ImageTypeToPixelIDValue<TImageType>::Result, TImageType::ImageDimension>( image );
       }
+    /**@}*/
 
     /** Get access to internal ITK data object.
      *
@@ -350,9 +368,6 @@ namespace simple
     ConditionalInternalInitialization( TImageType *) { assert( false ); }
      /**@}*/
 
-// SWIG does not appear to process private classes correctly
-#ifndef SWIG
-
     /** An addressor of AllocateInternal to be utilized with
      * registering member functions with the factory.
      */
@@ -368,7 +383,6 @@ namespace simple
       }
     };
 
-#endif
     PimpleImageBase *m_PimpleImage;
   };
 
