@@ -8,6 +8,7 @@
 #   CSHARP_VERSION - the version of the C# compiler (eg. "v4.0" or "2.10.2")
 #   CSHARP_COMPILER - the path to the C# compiler executable (eg. "C:/Windows/Microsoft.NET/Framework/v4.0.30319/csc.exe" or "/usr/bin/gmcs")
 #   CSHARP_INTERPRETER - the path to interpreter needed to run CSharp executables
+#   CSHARP_PLATFORM - the C# target platform
 #
 # This file is based on the work of GDCM:
 #   http://gdcm.svn.sf.net/viewvc/gdcm/trunk/CMake/FindCSharp.cmake
@@ -59,7 +60,9 @@ if ( WIN32 )
   endif ( )
 endif( )
 
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(CSHARP DEFAULT_MSG CSHARP_TYPE CSHARP_VERSION CSHARP_COMPILER)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(CSharp DEFAULT_MSG CSHARP_TYPE CSHARP_VERSION CSHARP_COMPILER)
+
+mark_as_advanced( CSHARP_PLATFORM CSHARP_TYPE CSHARP_VERSION CSHARP_COMPILER CSHARP_INTERPRETER )
 
 # Set the USE_FILE path
 # http://public.kitware.com/Bug/view.php?id=7757
