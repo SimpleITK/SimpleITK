@@ -34,9 +34,20 @@ endif( DEFINED CSHARP_MONO_FOUND )
 unset( CSHARP_MONO_VERSIONS CACHE ) # Clear versions
 if( WIN32 )
   # Search for Mono on Win32 systems
+  # See http://mono-project.com/OldReleases and http://www.go-mono.com/mono-downloads/download.html
   set( csharp_mono_bin_dirs )
   set( csharp_mono_search_hints
+    "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Novell\\Mono\\2.11.2;SdkInstallRoot]/bin"
+    "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Novell\\Mono\\2.10.9;SdkInstallRoot]/bin"
+    "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Novell\\Mono\\2.10.8;SdkInstallRoot]/bin"
+    "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Novell\\Mono\\2.10.7;SdkInstallRoot]/bin"
+    "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Novell\\Mono\\2.10.6;SdkInstallRoot]/bin"
+    "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Novell\\Mono\\2.10.5;SdkInstallRoot]/bin"
+    "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Novell\\Mono\\2.10.4;SdkInstallRoot]/bin"
+    "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Novell\\Mono\\2.10.3;SdkInstallRoot]/bin"
     "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Novell\\Mono\\2.10.2;SdkInstallRoot]/bin"
+    "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Novell\\Mono\\2.10.1;SdkInstallRoot]/bin"
+    "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Novell\\Mono\\2.10;SdkInstallRoot]/bin"
     "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Novell\\Mono\\2.8;SdkInstallRoot]/bin"
     "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Novell\\Mono\\2.6.7;SdkInstallRoot]/bin"
     "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Novell\\Mono\\2.6.4;SdkInstallRoot]/bin"
@@ -94,7 +105,7 @@ if( WIN32 )
 
 else( UNIX )
   # Search for Mono on non-Win32 systems
-  set( chsarp_mono_names "dmcs" "gmcs" "mcs" "dmcs.exe" "gmcs.exe" "mcs.exe" )
+  set( chsarp_mono_names "mcs" "mcs.exe" "dmcs" "dmcs.exe" "smcs" "smcs.exe" "gmcs" "gmcs.exe" )
   set(
     csharp_mono_paths
     "/usr/bin/"
