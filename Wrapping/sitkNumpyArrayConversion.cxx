@@ -61,7 +61,7 @@ sitk_GetByteArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
   res = SWIG_ConvertPtr( pyImage, &voidImage, SWIGTYPE_p_itk__simple__Image, 0 );
   if( !SWIG_IsOK( res ) )
     {
-    SWIG_exception_fail(SWIG_ArgError(res), "in method 'GetArrayFromImage', argument needs to be of type 'sitk::Image *'");
+    SWIG_exception_fail(SWIG_ArgError(res), "in method 'GetByteArrayFromImage', argument needs to be of type 'sitk::Image *'");
     }
   sitkImage = reinterpret_cast< sitk::Image * >( voidImage );
 
@@ -229,7 +229,7 @@ sitk_SetImageFromArray( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
     res = SWIG_ConvertPtr( pyImage, &voidImage, SWIGTYPE_p_itk__simple__Image, 0 );
     if( !SWIG_IsOK( res ) )
       {
-      SWIG_exception_fail(SWIG_ArgError(res), "in method 'GetImageFromArray', argument needs to be of type 'sitk::Image *'");
+      SWIG_exception_fail(SWIG_ArgError(res), "in method 'SetImageFromArray', argument needs to be of type 'sitk::Image *'");
       }
     sitkImage = reinterpret_cast< sitk::Image * >( voidImage );
   }
