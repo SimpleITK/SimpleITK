@@ -274,7 +274,7 @@ def _get_sitk_pixelid(numpy_array_type):
     if not HAVE_NUMPY:
         raise ImportError('Numpy not available.')
 
-    # This is a Mapping from numpy array types to VTK array types.
+    # This is a Mapping from numpy array types to sitks pixel types.
     _np_sitk = {numpy.character:sitkUInt8,
                 numpy.uint8:sitkUInt8,
                 numpy.uint16:sitkUInt16,
@@ -308,8 +308,7 @@ def GetArrayFromImage(image):
     imageByteArray = _SimpleITK._GetByteArrayFromImage(image)
 
     pixelID = image.GetPixelIDValue()
-    if pixelID == sitkUnknown:
-         raise Exception("Logic Error: invalid pixel type")
+    assert pixelID != sitkUnknown, "An SimpleITK image of Unknow pixel type should now exists!"
 
     dtype = _get_numpy_dtype( image )
 
