@@ -5,7 +5,7 @@
 #   CSHARP_DOTNET_FOUND
 #   CSHARP_DOTNET_COMPILER_${version} eg. "CSHARP_DOTNET_COMPILER_v4.0.30319"
 #   CSHARP_DOTNET_VERSION eg. "v4.0.30319"
-#   CSHARP_DOTNET_VERSIONS eg. "v3.5, v4.0.30319"
+#   CSHARP_DOTNET_VERSIONS eg. "v2.0.50727, v3.5, v4.0.30319"
 #   DotNetFrameworkSdk_USE_FILE
 #
 # Additional references can be found here:
@@ -52,8 +52,6 @@ foreach ( csharp_dotnet_executable ${csharp_dotnet_executables} )
     # TODO: Consider using REGEX
     string( REPLACE "${csharp_dotnet_framework_dir}/" "" csharp_dotnet_version_temp ${csharp_dotnet_executable} )
     string( REPLACE "/csc.exe" "" csharp_dotnet_version_temp ${csharp_dotnet_version_temp} )
-    set( CSHARP_DOTNET_VERSION ${csharp_dotnet_version_temp} CACHE STRING "C# .NET compiler version" )
-    mark_as_advanced( CSHARP_DOTNET_VERSION )
 
     # Add variable holding executable
     set( CSHARP_DOTNET_COMPILER_${csharp_dotnet_version_temp} ${csharp_dotnet_executable} CACHE STRING "C# .NET compiler ${csharp_dotnet_version}" FORCE )
@@ -75,7 +73,19 @@ endforeach( csharp_dotnet_executable )
 if( CSHARP_DOTNET_FOUND )
   # Report the found versions
   message( STATUS "Found the following C# .NET versions: ${CSHARP_DOTNET_VERSIONS}" )
-endif( CSHARP_DOTNET_FOUND )
+
+  # Set the compiler version
+  # Do not force, so that the user can manually select their own version if they wish
+  if ( DEFINED CSHARP_DOTNET_COMPILER_v2.0.50727 )
+    # If available, select .NET v2.0.50727 (this is the minimal version as it supports generics, and allows use of VS2008)
+    set( CSHARP_DOTNET_VERSION "v2.0.50727" CACHE STRING "C# .NET compiler version" )
+  else( )
+    # Select the highest version (first in reverse sorted list)
+    list( GET CSHARP_DOTNET_VERSIONS 0 csharp_dotnet_version_temp )
+    set( CSHARP_DOTNET_VERSION ${csharp_dotnet_version_temp} CACHE STRING "C# .NET compiler version" )
+  endif( )
+  mark_as_advanced( CSHARP_DOTNET_VERSION )
+endif( )
 
 # Set USE_FILE
 get_filename_component( current_list_path ${CMAKE_CURRENT_LIST_FILE} PATH )
