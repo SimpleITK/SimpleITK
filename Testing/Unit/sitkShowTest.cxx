@@ -47,6 +47,6 @@ int main (int argc, char *argv[])
     sitk::Show(img);
 
     img = sitk::ReadImage( dataFinder.GetFile ( "Input/cthead1-Float.mha" ) );
-    sitk::Show(img);
+    sitk::Show(img, "Dave was here");
     }
 }

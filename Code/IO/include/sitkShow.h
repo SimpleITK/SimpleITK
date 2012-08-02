@@ -79,6 +79,13 @@ namespace simple
    *
    *  If the \c "%f" token is not found in the command string, the temporary file name is automatically
    *  appended to the command argument list.
+   *
+   *
+   *  By default, for a 64-bit build of SimpleITK on Macs, sitkShow searches for ImageJ64.app.
+   *  For a 32-bit Mac build, sitkShow searches for ImageJ.app.  If the user prefers a different
+   *  version of ImageJ (or a different image viewer altogether), it can be specified using
+   *  the SITK_SHOW_COMMAND environment variable.
+   *
    **/
 
 
