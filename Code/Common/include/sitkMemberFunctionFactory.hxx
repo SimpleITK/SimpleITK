@@ -56,7 +56,7 @@ struct MemberFunctionInstantiater
       typedef TAddressor                                                            AddressorType;
 
       AddressorType addressor;
-      m_Factory.Register(addressor.operator()<ImageType>(), (ImageType*)(NULL));
+      m_Factory.Register(addressor.CLANG_TEMPLATE operator()<ImageType>(), (ImageType*)(NULL));
 
     }
 
