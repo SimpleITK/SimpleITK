@@ -44,4 +44,9 @@
 #define SITK_HAS_UNORDERED_MAP
 #endif
 
+#if defined(__clang__)
+#define CLANG_TEMPLATE template
+#else
+#define CLANG_TEMPLATE
+#endif
 #endif // __sitkConfigure_h
