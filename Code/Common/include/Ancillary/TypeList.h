@@ -319,18 +319,18 @@ struct Visit
   {
     typedef typename TTypeList::Head Head;
     typedef typename TTypeList::Tail Tail;
-    visitor.operator()<Head>( );
+    visitor.CLANG_TEMPLATE operator()<Head>( );
     Visit<Tail> next;
-    next.operator()<Predicate>( visitor );
+    next.CLANG_TEMPLATE operator()<Predicate>( visitor );
   }
   template < class Predicate >
   void operator()( const Predicate &visitor )
   {
     typedef typename TTypeList::Head Head;
     typedef typename TTypeList::Tail Tail;
-    visitor.operator()<Head>( );
+    visitor.CLANG_TEMPLATE operator()<Head>( );
     Visit<Tail> next;
-    next.operator()<Predicate>( visitor );
+    next.CLANG_TEMPLATE operator()<Predicate>( visitor );
   }
 };
 template <> struct Visit < NullType>
@@ -371,14 +371,14 @@ struct DualVisit
   void operator()( Visitor &visitor ) const
   {
     DualVisitImpl<TLeftTypeList, TRightTypeList > impl;
-    return impl.operator()<Visitor>( visitor );
+    return impl.CLANG_TEMPLATE operator()<Visitor>( visitor );
   }
 
   template <typename Visitor>
   void operator()( const Visitor &visitor ) const
   {
     DualVisitImpl<TLeftTypeList, TRightTypeList > impl;
-    return impl.operator()<Visitor>( visitor );
+    return impl.CLANG_TEMPLATE operator()<Visitor>( visitor );
   }
 };
 
@@ -411,7 +411,7 @@ struct DualVisitImpl
     goRight.visitRHS<Visitor>( visitor );
 
     DualVisitImpl<LeftTail, TRightTypeList> goLeft;
-    goLeft.operator()<Visitor>( visitor );
+    goLeft.CLANG_TEMPLATE operator()<Visitor>( visitor );
   }
 
   template <typename Visitor>
@@ -427,7 +427,7 @@ struct DualVisitImpl
     goRight.visitRHS<Visitor>( visitor );
 
     DualVisitImpl<LeftTail, TRightTypeList> goLeft;
-    goLeft.operator()<Visitor>( visitor );
+    goLeft.CLANG_TEMPLATE operator()<Visitor>( visitor );
   }
 
   template <typename Visitor>
@@ -438,10 +438,10 @@ struct DualVisitImpl
     typedef typename TLeftTypeList::Tail  LeftTail;
     typedef typename TRightTypeList::Tail RightTail;
 
-    visitor.operator()<LeftHead, RightHead>( );
+    visitor.CLANG_TEMPLATE operator()<LeftHead, RightHead>( );
 
     DualVisitImpl< TLeftTypeList, RightTail> goRight;
-    goRight.visitRHS<Visitor>( visitor );
+    goRight.CLANG_TEMPLATE visitRHS<Visitor>( visitor );
   }
   template <typename Visitor>
   void visitRHS( const Visitor &visitor ) const
@@ -451,10 +451,10 @@ struct DualVisitImpl
     typedef typename TLeftTypeList::Tail  LeftTail;
     typedef typename TRightTypeList::Tail RightTail;
 
-    visitor.operator()<LeftHead, RightHead>( );
+    visitor.CLANG_TEMPLATE operator()<LeftHead, RightHead>( );
 
     DualVisitImpl< TLeftTypeList, RightTail> goRight;
-    goRight.visitRHS<Visitor>( visitor );
+    goRight.CLANG_TEMPLATE visitRHS<Visitor>( visitor );
   }
 };
 
