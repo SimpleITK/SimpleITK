@@ -8,12 +8,30 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake")
 find_package(ITK REQUIRED ) # the modules needed can be listed here as required components
 if(ITK_FOUND)
 
+  # NOTE: We are purposely not calling UseITK yet. However, we must make
+  # sure the requred compilation and linker flags are set. Since, we
+  # are trying to encapsulate ITK, we need to very carefully control
+  # in access to the headers and libraries, hence each SimpleITK
+  # library will call UseITK.
+
   # Add compiler flags needed to use ITK.
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${ITK_REQUIRED_C_FLAGS}")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ITK_REQUIRED_CXX_FLAGS}")
   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${ITK_REQUIRED_LINK_FLAGS}")
   set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${ITK_REQUIRED_LINK_FLAGS}")
   set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${ITK_REQUIRED_LINK_FLAGS}")
+
+  # While CMake libraries nicely carry along the link library paths,
+  # this is not true for system or non-cmake libraries. So, it must be
+  # manually included.
+
+  # Add FFTW library directories
+  if (ITK_USE_FFTWF OR ITK_USE_FFTWD)
+    # TODO: this really should be added to the the ITKConfig.cmake
+    link_directories("${ITK_FFTW_LIBDIR}")
+  endif()
+  link_directories( "${ITK_LIBRARY_DIRS}")
+
 
 endif()
 
