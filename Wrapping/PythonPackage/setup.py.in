@@ -6,13 +6,16 @@ from distutils.sysconfig import get_python_lib
 from distutils.core import Extension
 from distutils.util import get_platform
 
+doc_files = @SimpleITK_DOC_FILES_AS_LIST@
+
 setup(
     name = 'SimpleITK',
     version = '@SimpleITK_Major@.@SimpleITK_Minor@.@SimpleITK_Patch@',
     author = 'Insight Software Consortium',
     author_email = 'insight-users@itk.org',
     py_modules = ['SimpleITK'],
-    data_files = [(get_python_lib(), [r'@SIMPLEITK_NATIVE_BINARY_MODULE@'])],
+    data_files = [(get_python_lib(), [r'@SIMPLEITK_NATIVE_BINARY_MODULE@']),
+                  ('',doc_files)],
     download_url = r'http://www.itk.org/SimpleITKDoxygen/html/PyDownload.html',
     platforms = [],
     zip_safe = False,

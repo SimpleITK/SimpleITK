@@ -186,6 +186,9 @@ endif()
 if(NOT SimpleITK_INSTALL_INCLUDE_DIR)
   set(SimpleITK_INSTALL_INCLUDE_DIR "include/SimpleITK-${SimpleITK_Major}.${SimpleITK_Minor}")
 endif()
+if(NOT SimpleITK_INSTALL_DOC_DIR)
+  set(SimpleITK_INSTALL_DOC_DIR share/doc/SimpleITK-${ITK_VERSION_MAJOR}.${ITK_VERSION_MINOR})
+endif()
 if(NOT SimpleITK_INSTALL_PACKAGE_DIR)
   set(SimpleITK_INSTALL_PACKAGE_DIR "lib/cmake/SimpleITK-${SimpleITK_Major}.${SimpleITK_Minor}")
 endif()
@@ -217,6 +220,11 @@ endfunction()
 
 include(CheckCXXCompilerFlag)
 
+set ( SimpleITK_DOC_FILES
+  "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE"
+  "${CMAKE_CURRENT_SOURCE_DIR}/NOTICE"
+  "${CMAKE_CURRENT_SOURCE_DIR}/Readme.md"
+  )
 
 # The fPIC flags is used to create position independent code. It is
 # required on some systems to produce shared libraries. On Apple
@@ -361,6 +369,9 @@ file( GLOB __files
 install(FILES ${__files}
   DESTINATION ${SimpleITK_INSTALL_INCLUDE_DIR}/Ancillary
   COMPONENT Development)
+
+install(FILES ${SimpleITK_DOC_FILES} DESTINATION "${SimpleITK_INSTALL_DOC_DIR}" COMPONENT Runtime)
+
 
 #------------------------------------------------------------------------------
 # CPack
