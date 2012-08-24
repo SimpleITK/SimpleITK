@@ -202,11 +202,52 @@ endfunction()
 
 include(CheckCXXCompilerFlag)
 
+#------------------------------------------------------------------------------
+# assemble a list of important documentation from Simple ITK and ITK
+
 set ( SimpleITK_DOC_FILES
   "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE"
   "${CMAKE_CURRENT_SOURCE_DIR}/NOTICE"
   "${CMAKE_CURRENT_SOURCE_DIR}/Readme.md"
   )
+
+# add important files from ITK
+
+# if using from build tree then ITK_USE_FILE will be
+# ITK_SOURCE_DIR/CMake/UseITK.cmake. The needed docs should be in the
+# root of the source tree
+get_filename_component( _itk_root "${ITK_USE_FILE}" PATH )
+get_filename_component( _itk_root "${_itk_root}" PATH )
+set( _itk_source_path "${_itk_root}" )
+
+get_filename_component( _itk_root "${_itk_root}" PATH )
+get_filename_component( _itk_root "${_itk_root}" PATH )
+set( _itk_doc_path "${_itk_root}/share/doc/ITK-${ITK_VERSION_MAJOR}.${ITK_VERSION_MINOR}" )
+
+if( EXISTS "${_itk_source_path}/NOTICE" )
+  set( ITK_DOC_FILES
+    # "${_itk_source_path}/LICENSE" SimpleITK has same license file
+    "${_itk_source_path}/NOTICE"
+    "${_itk_source_path}/README.txt"
+    )
+elseif( EXISTS "${_itk_doc_path}/NOTICE" )
+  set( ITK_DOC_FILES
+    # "${_itk_doc_path}/LICENSE" SimpleITK has same license file
+    "${_itk_doc_path}/NOTICE"
+    "${_itk_doc_path}/README.txt"
+    )
+else()
+  message( "doc_path: ${_itk_doc_path}" )
+  message( WARNING "Unable to file ITK's NOTICE File!\n This file will not be included in SimpleITK packaging!" )
+endif()
+
+
+foreach(_f IN LISTS ITK_DOC_FILES)
+  get_filename_component( _name "${_f}" NAME )
+  set( _o "${CMAKE_CURRENT_BINARY_DIR}/ITK-${ITK_VERSION_MAJOR}.${ITK_VERSION_MINOR}-${_name}" )
+  configure_file( "${_f}"  "${_o}" )
+  list( APPEND SimpleITK_DOC_FILES "${_o}" )
+endforeach()
 
 # The fPIC flags is used to create position independent code. It is
 # required on some systems to produce shared libraries. On Apple
