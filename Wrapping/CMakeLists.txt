@@ -88,14 +88,27 @@ if ( WRAP_PYTHON )
     # create a python list for the import documents to include in
     # packaging
 
+    # This string is targed for setup.py. It will be passed through
+    # the build-time configuration script and as a command line
+    # argument. This sequence is having portability issues with
+    # quote. So Windows needs separate handling from Unix-like
+    # platforms.
+    if( WIN32 )
+      set( _q "'" )
+    else()
+      set( _q "\\'")
+    endif()
+
     # specially handle the first element
-    list( GET SimpleITK_DOC_FILES 0 _e )
-    set( SimpleITK_DOC_FILES_AS_LIST "[\\'${_e}\\'")
+    list( GET SimpleITK_DOC_FILES 0 d )
+    file(TO_NATIVE_PATH "${d}" d )
+    set( SimpleITK_DOC_FILES_AS_LIST "[r${_q}${d}${_q}")
     set( _doc_list "${SimpleITK_DOC_FILES}" )
     list( REMOVE_AT _doc_list 0 )
 
     foreach( d ${_doc_list} )
-      set( SimpleITK_DOC_FILES_AS_LIST "${SimpleITK_DOC_FILES_AS_LIST}, r\\'${d}\\'")
+      file(TO_NATIVE_PATH "${d}" d )
+      set( SimpleITK_DOC_FILES_AS_LIST "${SimpleITK_DOC_FILES_AS_LIST},r${_q}${d}${_q}")
     endforeach()
     set( SimpleITK_DOC_FILES_AS_LIST "${SimpleITK_DOC_FILES_AS_LIST}]")
 
