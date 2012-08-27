@@ -383,7 +383,6 @@ namespace itk
   static void ExecuteShow( const std::vector<std::string> & cmdLine )
   {
 
-#undef NDEBUG
 #ifndef NDEBUG
     std::copy( cmdLine.begin(), cmdLine.end(), std::ostream_iterator<std::string>( std::cout, "\n" ) );
     std::cout << std::endl;

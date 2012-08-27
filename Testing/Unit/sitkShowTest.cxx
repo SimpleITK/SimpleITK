@@ -29,24 +29,79 @@ int main (int argc, char *argv[])
 
   sitk::Image img;
 
+  std::cout << "Starting sitkShowTest\n";
+
   if (argc > 1)
     {
     for (int i=1; i<argc; i++)
       {
-      img = sitk::ReadImage( argv[i] );
-      sitk::Show(img);
+      try
+        {
+        std::cout << "Reading " << argv[i] << std::endl;
+        img = sitk::ReadImage( argv[i] );
+        std::cout << "Showing " << argv[i] << std::endl;
+        sitk::Show(img);
+        }
+      catch (std::exception &e)
+        {
+        std::cout << "Exception: " << e.what() << std::endl;
+        }
+      catch (...)
+        {
+        std::cout << "Default exception\n";
+        }
       }
     }
+
   else
     {
+    try
+      {
+      std::cout << "Read 1\n";
+      img = sitk::ReadImage( dataFinder.GetFile ( "Input/RA-Float.nrrd" ) );
+      std::cout << "Show 1\n";
+      sitk::Show(img);
+      }
+    catch (std::exception &e)
+      {
+      std::cout << "Exception: " << e.what() << std::endl;
+      }
+    catch (...)
+      {
+      std::cout << "Default exception\n";
+      }
 
-    img = sitk::ReadImage( dataFinder.GetFile ( "Input/RA-Float.nrrd" ) );
-    sitk::Show(img);
 
-    img = sitk::ReadImage( dataFinder.GetFile ( "Input/VM1111Shrink-RGB.png" ) );
-    sitk::Show(img);
+    try
+      {
+      std::cout << "Read 2\n";
+      img = sitk::ReadImage( dataFinder.GetFile ( "Input/VM1111Shrink-RGB.png" ) );
+      std::cout << "Show 2\n";
+      sitk::Show(img);
+      }
+    catch (std::exception &e)
+      {
+      std::cout << "Exception: " << e.what() << std::endl;
+      }
+    catch (...)
+      {
+      std::cout << "Default exception\n";
+      }
 
-    img = sitk::ReadImage( dataFinder.GetFile ( "Input/cthead1-Float.mha" ) );
-    sitk::Show(img, "Dave was here");
+    try
+      {
+      std::cout << "Read 3\n";
+      img = sitk::ReadImage( dataFinder.GetFile ( "Input/cthead1-Float.mha" ) );
+      std::cout << "Show 3\n";
+      sitk::Show(img, "Dave was here");
+      }
+    catch (std::exception &e)
+      {
+      std::cout << "Exception: " << e.what() << std::endl;
+      }
+    catch (...)
+      {
+      std::cout << "Default exception\n";
+      }
     }
 }
