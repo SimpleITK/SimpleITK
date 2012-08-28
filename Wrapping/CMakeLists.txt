@@ -83,6 +83,37 @@ if ( WRAP_PYTHON )
   get_target_property( SIMPLEITK_BINARY_MODULE ${SWIG_MODULE_SimpleITK_TARGET_NAME} LOCATION )
   file(TO_NATIVE_PATH "${SIMPLEITK_BINARY_MODULE}" SIMPLEITK_NATIVE_BINARY_MODULE )
 
+
+  if ( SimpleITK_DOC_FILES )
+    # create a python list for the import documents to include in
+    # packaging
+
+    # This string is targed for setup.py. It will be passed through
+    # the build-time configuration script and as a command line
+    # argument. This sequence is having portability issues with
+    # quote. So Windows needs separate handling from Unix-like
+    # platforms.
+    if( WIN32 )
+      set( _q "'" )
+    else()
+      set( _q "\\'")
+    endif()
+
+    # specially handle the first element
+    list( GET SimpleITK_DOC_FILES 0 d )
+    file(TO_NATIVE_PATH "${d}" d )
+    set( SimpleITK_DOC_FILES_AS_LIST "[r${_q}${d}${_q}")
+    set( _doc_list "${SimpleITK_DOC_FILES}" )
+    list( REMOVE_AT _doc_list 0 )
+
+    foreach( d ${_doc_list} )
+      file(TO_NATIVE_PATH "${d}" d )
+      set( SimpleITK_DOC_FILES_AS_LIST "${SimpleITK_DOC_FILES_AS_LIST},r${_q}${d}${_q}")
+    endforeach()
+    set( SimpleITK_DOC_FILES_AS_LIST "${SimpleITK_DOC_FILES_AS_LIST}]")
+
+  endif()
+
   include( sitkConfigureFileBuildtime )
   configure_file_buildtime( "${CMAKE_CURRENT_SOURCE_DIR}/PythonPackage/setup.py.in"
     "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/setup.py" )
