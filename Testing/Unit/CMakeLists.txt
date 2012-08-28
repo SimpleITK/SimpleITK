@@ -1,5 +1,6 @@
 
 # remove me
+set ( ITK_NO_IO_FACTORY_REGISTER_MANAGER 1 )
 include(${ITK_USE_FILE})
 
 # Find tests generated in the binary directory
