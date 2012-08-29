@@ -1,5 +1,7 @@
-cmake_minimum_required ( VERSION 2.8 FATAL_ERROR )
+cmake_minimum_required ( VERSION 2.8.1 FATAL_ERROR )
 project ( SimpleITK )
+
+cmake_policy( VERSION 2.8.1 )
 
 # Include extra CMake files
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake")
