@@ -31,6 +31,7 @@ set ( SimpleITKBasicFiltersSource
 
 add_library ( SimpleITKBasicFilters0 ${SimpleITKBasicFiltersSource} )
 target_link_libraries ( SimpleITKBasicFilters0 SimpleITKCommon ${ITK_LIBRARIES} )
+set_target_properties( SimpleITKBasicFilters0  PROPERTIES SKIP_BUILD_RPATH TRUE )
 sitk_install_exported_target( SimpleITKBasicFilters0 )
 
 # append this new library to the globaly cached list
@@ -77,6 +78,7 @@ foreach ( _start RANGE 0 ${_length} ${_stride} )
 
   add_library ( SimpleITKBasicFilters${_library_i} ${SRC} )
   target_link_libraries ( SimpleITKBasicFilters${_library_i} SimpleITKCommon SimpleITKBasicFilters0 ${ITK_LIBRARIES} )
+  set_target_properties( SimpleITKBasicFilters${_library_i}  PROPERTIES SKIP_BUILD_RPATH TRUE )
   add_dependencies ( SimpleITKBasicFilters${_library_i} BasicFiltersSourceCode )
 
   sitk_install_exported_target( SimpleITKBasicFilters${_library_i} )
