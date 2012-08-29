@@ -319,7 +319,7 @@ TEST(BasicFilters,Statistics) {
   EXPECT_NEAR ( stats.GetMean(), 25887.390, 0.001 );
   EXPECT_NEAR ( stats.GetSigma(),  3800.565, 0.01 );
   EXPECT_NEAR ( stats.GetVariance(), 14444296.271, 10 );
-  EXPECT_EQ ( stats.GetSum(), 6786223965 );
+  EXPECT_EQ ( stats.GetSum(), 6786223965.0 );
 
   image = itk::simple::ReadImage ( dataFinder.GetFile ( "Input/cthead1.png" ) );
 
