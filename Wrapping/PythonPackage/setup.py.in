@@ -5,17 +5,73 @@ from setuptools import setup
 from distutils.sysconfig import get_python_lib
 from distutils.core import Extension
 from distutils.util import get_platform
+import re
+
 
 doc_files = @SimpleITK_DOC_FILES_AS_LIST@
 
+def get_pep386version():
+    """This method examines the CMAKE set version variable and the most recent tags to make a pep 386 compliant version string."""
+    sitkMAJOR = "@SimpleITK_Major@"
+    sitkMINOR = "@SimpleITK_Minor@"
+    sitkPATCH = "@SimpleITK_Patch@"
+
+    # result of git describe
+    sitkDESCRIBE = "@GIT_TAG@"
+
+    parts = sitkDESCRIBE.split('-')
+
+    tag = parts[0]
+    post = 0
+    if (len(parts) >= 2):
+        post = parts[1]
+    hash = "unknown"
+    if (len(parts) >= 3):
+        gitHash = parts[2]
+
+
+    # we expect the tags to conform to the following pattern "vN.N[.N]+(a|b|c|rc[N]"
+    versionregex = re.compile( "v([0-9]+)\.([0-9]+)(\.([0-9]+))?((a|b|c|rc([0-9]+)))" )
+    result = versionregex.search( tag )
+
+    if ( not result ):
+        version = str(sitkMAJOR)+"."+str(sitkMINOR)+"."+str(sitkPATCH)
+        return version
+
+    tagMAJOR = result.group(1)
+    tagMINOR = result.group(2)
+    # skip group with dot
+    tagPATCH = "0"
+    if (result.group(4)):
+        tagPATCH = result.group(4)
+
+    tagPRERELEASE = result.group(5)
+
+
+
+    version = str(sitkMAJOR)+"."+str(sitkMINOR)+"."+str(sitkPATCH)
+
+    if (len(tagPRERELEASE)):
+        version += tagPRERELEASE
+
+    if((tagMAJOR==sitkMAJOR) and (tagMINOR==sitkMINOR) and (tagPATCH==sitkPATCH)):
+        # tag and version match we should be release
+        if (post!=0 ):
+            version += ".post"+post
+    else:
+         if (post!=0 ):
+             version += ".dev"+post
+
+    return version
+
+
 setup(
     name = 'SimpleITK',
-    version = '@SimpleITK_Major@.@SimpleITK_Minor@.@SimpleITK_Patch@',
+    version = get_pep386version(),
     author = 'Insight Software Consortium',
     author_email = 'insight-users@itk.org',
-    py_modules = ['SimpleITK'],
-    data_files = [(get_python_lib(), [r'@SIMPLEITK_NATIVE_BINARY_MODULE@']),
-                  ('',doc_files)],
+    py_modules = ['SimpleITK',],
+    data_files = [(get_python_lib(), [r'@SIMPLEITK_NATIVE_BINARY_MODULE@'])],
     download_url = r'http://www.itk.org/SimpleITKDoxygen/html/PyDownload.html',
     platforms = [],
     zip_safe = False,
