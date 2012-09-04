@@ -340,11 +340,23 @@ namespace itk
   std::string ExecutableName=name;
 
 #ifdef WIN32
+
   std::string ProgramFiles;
   if ( itksys::SystemTools::GetEnv ( "PROGRAMFILES", ProgramFiles ) )
     {
     paths.push_back ( ProgramFiles + "\\ImageJ\\" );
     }
+
+  if ( itksys::SystemTools::GetEnv ( "PROGRAMFILES(x86)", ProgramFiles ) )
+    {
+    paths.push_back ( ProgramFiles + "\\ImageJ\\" );
+    }
+
+  if ( itksys::SystemTools::GetEnv ( "PROGRAMW6432", ProgramFiles ) )
+    {
+    paths.push_back ( ProgramFiles + "\\ImageJ\\" );
+    }
+
 
   // Find the executable
   ExecutableName = itksys::SystemTools::FindFile ( ExecutableName.c_str(), paths );
