@@ -31,7 +31,7 @@ def get_pep386version():
 
 
     # we expect the tags to conform to the following pattern "vN.N[.N]+(a|b|c|rc[N]"
-    versionregex = re.compile( "v([0-9]+)\.([0-9]+)(\.([0-9]+))?((a|b|c|rc([0-9]+)))" )
+    versionregex = re.compile( "v([0-9]+)\.([0-9]+)(\.([0-9]+))?(a|b|c|rc([0-9]+))?" )
     result = versionregex.search( tag )
 
     if ( not result ):
@@ -45,7 +45,9 @@ def get_pep386version():
     if (result.group(4)):
         tagPATCH = result.group(4)
 
-    tagPRERELEASE = result.group(5)
+    tagPRERELEASE = ''
+    if (result.group(5)):
+        tagPRERELEASE = result.group(5)
 
 
 
