@@ -1,7 +1,7 @@
 # Version info
 set(SimpleITK_Major 0)
 set(SimpleITK_Minor 5)
-set(SimpleITK_Patch 0)
+set(SimpleITK_Patch 1)
 
 include(GetGitRevisionDescription)
 get_git_head_revision(GIT_REFSPEC GIT_SHA1)
