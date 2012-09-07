@@ -79,8 +79,10 @@ if len(args):
 
 print inname, outname
 
+# if outname includes a path that doesn't exist, create that path
 if not os.path.isdir( os.path.dirname( outname ) ):
-    os.makedirs( os.path.dirname( outname ) )
+    if len(os.path.dirname(outname)):
+        os.makedirs( os.path.dirname( outname ) )
 
 outfile = open(outname, "w")
 color = "FFFFFF"
@@ -150,6 +152,37 @@ except:
     print sys.exc_info()[0]
     sys.exit(1)
 
+outfile.write( "</table>\n" )
+
+# Legend table
+outfile.write( "<p style=\"font-size:20px; margin-bottom:0px;\"><b>Legend</b></p>\n" )
+
+outfile.write( "<table border=1>\n" )
+
+outfile.write( "<tr>\n" )
+outfile.write( "<th>Color</th>\n" )
+outfile.write( "<th>Meaning</th>\n" )
+outfile.write( "</tr>\n" )
+
+outfile.write( "<tr>\n" )
+outfile.write( "<td bgcolor=20FF20> </th>\n" )
+outfile.write( "<td>Supported by SimpleITK and ITK</td>\n" )
+outfile.write( "</tr>\n" )
+
+outfile.write( "<tr>\n" )
+outfile.write( "<td bgcolor=C0FFC0> </th>\n" )
+outfile.write( "<td>SimpleITK only filter</td>\n" )
+outfile.write( "</tr>\n" )
+
+outfile.write( "<tr>\n" )
+outfile.write( "<td bgcolor=FFFFFF> </th>\n" )
+outfile.write( "<td>ITK filter that we plan to support in the future</td>\n" )
+outfile.write( "</tr>\n" )
+
+outfile.write( "<tr>\n" )
+outfile.write( "<td bgcolor=FF7070> </th>\n" )
+outfile.write( "<td>ITK filter that we will not support</td>\n" )
+outfile.write( "</tr>\n" )
 outfile.write( "</table>\n" )
 
 if doxyFlag:
