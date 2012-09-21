@@ -37,9 +37,8 @@
     {
       "tag" : "cthead",
       "description" : "Segmentation of brain in CT",
-      "settings" : [
-      ],
-      "tolerance" : 1e6,
+      "settings" : [],
+      "tolerance" : 1000000.0,
       "measurements_results" : [
         {
           "name" : "ElapsedIterations",
