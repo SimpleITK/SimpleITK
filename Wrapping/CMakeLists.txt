@@ -119,8 +119,8 @@ if ( WRAP_PYTHON )
     "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/setup.py" )
 
   configure_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/PythonPackage/ez_setup.py"
-    "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/ez_setup.py"
+    "${CMAKE_CURRENT_SOURCE_DIR}/PythonPackage/distribute_setup.py"
+    "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/distribute_setup.py"
     COPYONLY )
 
   add_dependencies( ${SWIG_MODULE_SimpleITK_TARGET_NAME} ConfigureFileBuildtime )
