@@ -30,7 +30,7 @@
         "Input/DeconvolutionInput.nrrd",
         "Input/Gaussian_1.5.nrrd"
       ]
-    }
+    },
     {
       "tag" : "3D",
       "description" : "Basic xcorr with an even kernel",
