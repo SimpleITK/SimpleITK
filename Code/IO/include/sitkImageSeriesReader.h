@@ -38,11 +38,26 @@ namespace itk {
 
       ImageSeriesReader();
 
-      std::vector<std::string> GetGDCMSeriesFileNames( const std::string &directory,
-                                                       bool useSeriesDetails= true,
-                                                       bool recursive = false,
-                                                       bool loadSequences = false,
-                                                       bool loadPrivateTags = false );
+      /** \brief Generate a sequence of filenames from a directory
+       * with DICOM series.
+       *
+       * This method generates a sequence of filenames whose filenames
+       * points to a DICOM file. The ordering is based of one of
+       * several strategies, which will read all images in the
+       * directory ( assuming there is only one study/series ).
+       *
+       * \param directory Set the directory that contains the DICOM series.
+       * \param useSeriesDetails Use additional series information such as ProtocolName and SeriesName to identify when a single SeriesUID contains multiple 3D volumes - as can occur with perfusion and DTI imaging.
+       * \param loadSequences Parse any sequences in the DICOM file. This makes loading DICOM files faster when sequences are not needed.
+       * \param loadPrivateTags Parse any private tags in the DICOM file. Defaults to false to skip private tags. This makes loading DICOM files faster when private tags are not needed.
+       *
+       * \sa itk::GDCMSeriesFileNames
+       */
+      static std::vector<std::string> GetGDCMSeriesFileNames( const std::string &directory,
+                                                              bool useSeriesDetails= true,
+                                                              bool recursive = false,
+                                                              bool loadSequences = false,
+                                                              bool loadPrivateTags = false );
 
       Self& SetFileNames ( const std::vector<std::string> &fns );
       const std::vector<std::string> &GetFileNames() const;
