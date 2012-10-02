@@ -38,6 +38,12 @@ namespace itk {
 
       ImageSeriesReader();
 
+      std::vector<std::string> GetGDCMSeriesFileNames( const std::string &directory,
+                                                       bool useSeriesDetails= true,
+                                                       bool recursive = false,
+                                                       bool loadSequences = false,
+                                                       bool loadPrivateTags = false );
+
       Self& SetFileNames ( const std::vector<std::string> &fns );
       const std::vector<std::string> &GetFileNames() const;
 

@@ -24,6 +24,7 @@
 #include <itkImageIOBase.h>
 #include <itkImageSeriesReader.h>
 
+#include "itkGDCMSeriesFileNames.h"
 
 namespace itk {
   namespace simple {
@@ -32,6 +33,27 @@ namespace itk {
       ImageSeriesReader reader;
       return reader.SetFileNames ( filenames ).Execute();
     }
+
+
+  std::vector<std::string> ImageSeriesReader::GetGDCMSeriesFileNames( const std::string &directory,
+                                                                      bool useSeriesDetails,
+                                                                      bool recursive,
+                                                                      bool loadSequences,
+                                                                      bool loadPrivateTags )
+  {
+    GDCMSeriesFileNames::Pointer gdcmSeries = GDCMSeriesFileNames::New();
+
+    gdcmSeries->SetInputDirectory( directory );
+    gdcmSeries->SetUseSeriesDetails( useSeriesDetails );
+    gdcmSeries->SetRecursive( recursive );
+    gdcmSeries->SetLoadSequences( loadSequences );
+    gdcmSeries->SetLoadPrivateTags( loadPrivateTags );
+
+    gdcmSeries->Update();
+
+    //gdcm->GetSeriesUIDS()
+    return gdcmSeries->GetInputFileNames();
+  }
 
     ImageSeriesReader::ImageSeriesReader() {
 
