@@ -50,11 +50,21 @@ fieldnames      = ( 'Filter', 'ITK', 'SITK', 'Remark', 'ToDo' )    # fields in t
 
 #
 #
+class unix_dialect(csv.Dialect):
+    """Describe the usual properties of unix-generated CSV files."""
+    delimiter = ','
+    quotechar = '"'
+    doublequote = True
+    skipinitialspace = False
+    lineterminator = '\n'
+    quoting = csv.QUOTE_MINIMAL
+
 def writeCSV(name):
     """Write the results out to a common-spaced-value file (readable by any spreadsheet program)"""
+    csv.register_dialect("unix_dialect", unix_dialect)
     try:
         with open(name, "w") as fp:
-            writer = csv.DictWriter(fp, fieldnames=fieldnames)
+            writer = csv.DictWriter(fp, fieldnames=fieldnames, dialect="unix_dialect")
             headers = dict( (n,n) for n in fieldnames)
             writer.writerow(headers)
             for filt in fs.filters:
