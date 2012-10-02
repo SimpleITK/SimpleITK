@@ -1,7 +1,8 @@
-import ez_setup
-ez_setup.use_setuptools(version="0.6c11")
+from distribute_setup import use_setuptools
+use_setuptools(version="0.6c11")
+#ez_setup.use_setuptools(version="0.6c11")
 
-from setuptools import setup
+from distutils.core import setup
 from distutils.sysconfig import get_python_lib
 from distutils.core import Extension
 from distutils.util import get_platform
@@ -76,7 +77,6 @@ setup(
     data_files = [(get_python_lib(), [r'@SIMPLEITK_NATIVE_BINARY_MODULE@'])],
     download_url = r'http://www.itk.org/SimpleITKDoxygen/html/PyDownload.html',
     platforms = [],
-    zip_safe = False,
     description = r'Simplified interface to the Insight Toolkit for image registration and segmentation',
     long_description  = 'Provide an abstraction layer to ITK that enables developers\
     and users to access the powerful features of the InsightToolkit in a more \
