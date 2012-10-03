@@ -15,8 +15,8 @@ set(proj ITK)  ## Use ITK convention of calling it ITK
 set(ITK_REPOSITORY git://itk.org/ITK.git)
 
 # NOTE: it is very important to update the ITK_DIR path with the
-# current version of ITK
-set(ITK_TAG_COMMAND GIT_TAG v4.2.0 )
+# A version in the ITK 4.3 development which contains a patch for LabelMapContourOverlay
+set(ITK_TAG_COMMAND GIT_TAG c51babdcdacd468f19811225d7a1f91665f1b763 )
 
 if( ${ITK_WRAPPING} OR ${BUILD_SHARED_LIBS} )
   set( ITK_BUILD_SHARED_LIBS ON )
@@ -71,5 +71,5 @@ ExternalProject_Add(${proj}
 
 
 ExternalProject_Get_Property(ITK install_dir)
-set(ITK_DIR "${install_dir}/lib/cmake/ITK-4.2" )
-set(WrapITK_DIR "${install_dir}/lib/cmake/ITK-4.2/WrapITK")
+set(ITK_DIR "${install_dir}/lib/cmake/ITK-4.3" )
+set(WrapITK_DIR "${install_dir}/lib/cmake/ITK-4.3/WrapITK")
