@@ -77,7 +77,7 @@
       "tag" : "default",
       "description" : "Simply run with default settings",
       "inputA_cast" : "sitkLabelUInt8",
-      "md5hash" : "299b2f5dbf018c868d65d9d5511fe470",
+      "md5hash" : "5d547351bbab8db03fc92e4e860afc8f",
       "settings" : [],
       "inputs" : [
         "Input/2th_cthead1.mha",
