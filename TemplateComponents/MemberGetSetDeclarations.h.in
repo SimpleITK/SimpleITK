@@ -37,7 +37,7 @@ $(if (not no_get_method) or (no_get_method == 0) then
       ${type} Get${name}() { return this->m_${name}; }'
 end))$(when measurements $(foreach measurements
 
-     /** \brief ${briefdescriptionGet}
+     /**$(if briefdescriptionGet then OUT=[[ \brief ${briefdescriptionGet}]]end)
       *$(if detaileddescriptionGet then OUT =[[
       *  ${detaileddescriptionGet}
       *]]end)
