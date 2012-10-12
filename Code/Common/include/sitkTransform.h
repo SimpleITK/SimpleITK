@@ -64,6 +64,12 @@ public:
   void SetParameters ( const std::vector<double>& parameters );
   std::vector<double> GetParameters( void ) const ;
 
+  /** Set/Get Fixed Parameter
+   */
+  void SetFixedParameters ( const std::vector<double>& parameters );
+  std::vector<double> GetFixedParameters( void ) const ;
+
+  // Make composition
   Transform &AddTransform( Transform &t );
 
   // read

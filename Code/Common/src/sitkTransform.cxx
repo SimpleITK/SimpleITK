@@ -337,6 +337,19 @@ void Transform::MakeUniqueForWrite( void )
     return this->m_PimpleTransform->GetParameters();
   }
 
+  void Transform::SetFixedParameters ( const std::vector<double>& parameters )
+  {
+    assert( m_PimpleTransform );
+    this->MakeUniqueForWrite();
+    this->m_PimpleTransform->SetFixedParameters( parameters );
+  }
+
+  std::vector<double> Transform::GetFixedParameters( void ) const
+  {
+    assert( m_PimpleTransform );
+    return this->m_PimpleTransform->GetFixedParameters();
+  }
+
   Transform &Transform::AddTransform( Transform &t )
   {
     assert( m_PimpleTransform );
