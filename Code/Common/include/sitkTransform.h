@@ -44,7 +44,7 @@ public:
         {
         sitkExceptionMacro( "Unable to construct a null transform!" );
         }
-      this->InternalIntitialization<NDimension>( sitkComposite, compositeTransform );
+      this->InternalInitialization<NDimension>( sitkComposite, compositeTransform );
     }
   Transform( unsigned int dimensions, TransformEnum type);
   virtual ~Transform( void );
@@ -85,7 +85,7 @@ protected:
 private:
 
   template< unsigned int VDimension>
-  void InternalIntitialization(  TransformEnum type, itk::TransformBase *base = NULL );
+  void InternalInitialization(  TransformEnum type, itk::TransformBase *base = NULL );
 
   // As is the architecture of all SimpleITK pimples,
   // this pointer should never be null and should always point to a

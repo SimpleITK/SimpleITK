@@ -197,11 +197,11 @@ Transform::Transform( )
   {
     if ( dimensions == 2 )
       {
-      this->InternalIntitialization<2 >(type);
+      this->InternalInitialization<2 >(type);
       }
     else if ( dimensions == 3 )
       {
-      this->InternalIntitialization<3>(type);
+      this->InternalInitialization<3>(type);
       }
     else
       {
@@ -242,7 +242,7 @@ void Transform::MakeUniqueForWrite( void )
 }
 
   template< unsigned int VDimension>
-  void  Transform::InternalIntitialization(  TransformEnum type, itk::TransformBase *base )
+  void  Transform::InternalInitialization(  TransformEnum type, itk::TransformBase *base )
   {
     switch( type )
       {
