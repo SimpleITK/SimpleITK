@@ -257,7 +257,7 @@ ImportImageFilter::Self& ImportImageFilter::SetBufferAsUInt8( uint8_t * buffer, 
     }
   else
     {
-    this->m_PixelIDValue = ImageTypeToPixelIDValue< itk::VectorImage<int8_t, UnusedDimension> >::Result;
+    this->m_PixelIDValue = ImageTypeToPixelIDValue< itk::VectorImage<uint8_t, UnusedDimension> >::Result;
     }
   return *this;
 }
@@ -271,7 +271,7 @@ ImportImageFilter::Self& ImportImageFilter::SetBufferAsInt16( int16_t * buffer, 
     }
   else
     {
-    this->m_PixelIDValue = ImageTypeToPixelIDValue< itk::VectorImage<int8_t, UnusedDimension> >::Result;
+    this->m_PixelIDValue = ImageTypeToPixelIDValue< itk::VectorImage<int16_t, UnusedDimension> >::Result;
     }
   return *this;
 }
@@ -285,7 +285,7 @@ ImportImageFilter::Self& ImportImageFilter::SetBufferAsUInt16( uint16_t * buffer
     }
   else
     {
-    this->m_PixelIDValue = ImageTypeToPixelIDValue< itk::VectorImage<int8_t, UnusedDimension> >::Result;
+    this->m_PixelIDValue = ImageTypeToPixelIDValue< itk::VectorImage<uint16_t, UnusedDimension> >::Result;
     }
   return *this;
 }
@@ -299,7 +299,7 @@ ImportImageFilter::Self& ImportImageFilter::SetBufferAsInt32( int32_t * buffer, 
     }
   else
     {
-    this->m_PixelIDValue = ImageTypeToPixelIDValue< itk::VectorImage<int8_t, UnusedDimension> >::Result;
+    this->m_PixelIDValue = ImageTypeToPixelIDValue< itk::VectorImage<int32_t, UnusedDimension> >::Result;
     }
   return *this;
 }
@@ -313,7 +313,7 @@ ImportImageFilter::Self& ImportImageFilter::SetBufferAsUInt32( uint32_t * buffer
     }
   else
     {
-    this->m_PixelIDValue = ImageTypeToPixelIDValue< itk::VectorImage<int8_t, UnusedDimension> >::Result;
+    this->m_PixelIDValue = ImageTypeToPixelIDValue< itk::VectorImage<uint32_t, UnusedDimension> >::Result;
     }
   return *this;
 }
@@ -328,7 +328,7 @@ ImportImageFilter::Self& ImportImageFilter::SetBufferAsFloat( float * buffer, un
     }
   else
     {
-    this->m_PixelIDValue = ImageTypeToPixelIDValue< itk::VectorImage<int8_t, UnusedDimension> >::Result;
+    this->m_PixelIDValue = ImageTypeToPixelIDValue< itk::VectorImage<float, UnusedDimension> >::Result;
     }
   return *this;
 }
@@ -342,7 +342,7 @@ ImportImageFilter::Self& ImportImageFilter::SetBufferAsDouble( double * buffer, 
     }
   else
     {
-    this->m_PixelIDValue = ImageTypeToPixelIDValue< itk::VectorImage<int8_t, UnusedDimension> >::Result;
+    this->m_PixelIDValue = ImageTypeToPixelIDValue< itk::VectorImage<double, UnusedDimension> >::Result;
     }
   return *this;
 }

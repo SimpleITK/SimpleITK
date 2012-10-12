@@ -209,9 +209,16 @@ TEST_F(Import,Direction) {
 TEST_F(Import,ExhaustiveTypes) {
 
   sitk::ImportImageFilter importer;
+
   importer.SetSize( std::vector< unsigned int >( 2, 16u ) );
   importer.SetSpacing( spacing1 );
   importer.SetOrigin( origin0 );
+
+  EXPECT_EQ( importer.GetSize()[0], 16u );
+  EXPECT_EQ( importer.GetSpacing()[0], spacing1[0] );
+  EXPECT_EQ( importer.GetOrigin()[0], origin0[1] );
+  importer.GetDirection();
+
 
   uint8_buffer = std::vector< uint8_t >( 16*16, 1 );
   importer.SetBufferAsUInt8( &uint8_buffer[0] );
@@ -245,8 +252,47 @@ TEST_F(Import,ExhaustiveTypes) {
   importer.SetBufferAsDouble( &double_buffer[0] );
   EXPECT_EQ ( "00393fe0b94729ff0f777ce848104697ce689c70", sitk::Hash( importer.Execute() ) ) << " hash value for double";
 
-}
 
+  uint8_buffer = std::vector< uint8_t >( 16*16*2, 1 );
+  importer.SetBufferAsUInt8( &uint8_buffer[0], 2 );
+  EXPECT_EQ ( "3ef8a08ec90e244fe2a8948b701eafcc1d065712", sitk::Hash( importer.Execute() ) ) << " hash value for vector of uint8";
+
+  int8_buffer = std::vector< int8_t >( 16*16*3, -1 );
+  importer.SetBufferAsInt8( &int8_buffer[0], 3 );
+  EXPECT_EQ ( "fc1b469729f5a061d4b8b5eb1efba13a7b52d5a7", sitk::Hash( importer.Execute() ) ) << " hash value for vector of int8";
+
+  uint16_buffer = std::vector< uint16_t >( 16*16*4, 2 );
+  importer.SetBufferAsUInt16( &uint16_buffer[0], 4 );
+  EXPECT_EQ ( "f449215906661bacee88ef886c38f3049d9a232b", sitk::Hash( importer.Execute() ) ) << " hash value for vector of uint16";
+
+  int16_buffer = std::vector< int16_t >( 16*16*5, -3 );
+  importer.SetBufferAsInt16( &int16_buffer[0], 5 );
+  EXPECT_EQ ( "7bce93764d2393b987ed2b17281073ddb520af46", sitk::Hash( importer.Execute() ) ) << " hash value for vector of int16";
+
+  uint32_buffer = std::vector< uint32_t >( 16*16*6, 8 );
+  importer.SetBufferAsUInt32( &uint32_buffer[0], 6 );
+  EXPECT_EQ ( "c558884e4bf07ece6a2644307aa3b4eb84be8a11", sitk::Hash( importer.Execute() ) ) << " hash value for vector of uint32";
+
+  int32_buffer = std::vector< int32_t >( 16*16*7, -123 );
+  importer.SetBufferAsInt32( &int32_buffer[0], 7 );
+  EXPECT_EQ ( "c65dc5820f3691fc4b6b3b9aaba1f506ca3f697e" , sitk::Hash( importer.Execute() ) ) << " hash value for vector of int32";
+
+  float_buffer = std::vector< float >( 16*16*8, 1.123 );
+  importer.SetBufferAsFloat( &float_buffer[0], 8 );
+  EXPECT_EQ ( "9fb1d83b9c9a5645e7b136761d6924ea7d859284", sitk::Hash( importer.Execute() ) ) << " hash value for vector of float";
+
+  double_buffer = std::vector< double >( 16*16*9, 321.123 );
+  importer.SetBufferAsDouble( &double_buffer[0], 9 );
+  EXPECT_EQ ( "80514b97613fc659c9ceb45bb44c8a02fec9c4db", sitk::Hash( importer.Execute() ) ) << " hash value for vector of double";
+
+  importer.SetSize( std::vector< unsigned int >( 5, 16u ) );
+  EXPECT_ANY_THROW( importer.Execute() );
+  importer.SetBufferAsDouble( &double_buffer[0], 0 );
+  EXPECT_ANY_THROW( importer.Execute() );
+
+
+
+}
 
 TEST_F(Import,Procedual) {
 
