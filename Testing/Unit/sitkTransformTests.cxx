@@ -46,13 +46,11 @@ TEST(TransformTest, Construction) {
   sitk::Transform tx7( 3, sitk::sitkScaleLogarithmic);
   std::cout << tx7.ToString() << std::endl;
 
-  sitk::Transform tx8( 2, sitk::sitkQuaternionRigid);
-  std::cout << tx8.ToString() << std::endl;
+  EXPECT_ANY_THROW( sitk::Transform tx8( 2, sitk::sitkQuaternionRigid) );
   sitk::Transform tx9( 3, sitk::sitkQuaternionRigid);
   std::cout << tx9.ToString() << std::endl;
 
-  sitk::Transform tx10( 2, sitk::sitkVersor);
-  std::cout << tx10.ToString() << std::endl;
+  EXPECT_ANY_THROW( sitk::Transform tx10( 2, sitk::sitkVersor) );
   sitk::Transform tx11( 3, sitk::sitkVersor);
   std::cout << tx11.ToString() << std::endl;
 
@@ -70,4 +68,112 @@ TEST(TransformTest, Construction) {
   // default constructable
   sitk::Transform tx16;
   std::cout << tx0.ToString() << std::endl;
+}
+
+TEST(TransformTest, Copy) {
+
+  // Test the copy constructor and asignment operators
+
+  sitk::Transform tx1( 2, sitk::sitkTranslation);
+  sitk::Transform tx2( tx1 );
+  sitk::Transform tx3 = sitk::Transform();
+
+  tx1 = sitk::Transform();
+  tx2 = tx1;
+
+  // check self assignment
+  tx3 = tx3;
+
+}
+
+TEST(TransformTest, SetGetParameters) {
+
+  sitk::Transform tx;
+  EXPECT_TRUE( tx.GetParameters().empty() );
+  EXPECT_TRUE( tx.GetFixedParameters().empty() );
+
+  tx = sitk::Transform( 3, sitk::sitkTranslation );
+  EXPECT_EQ( tx.GetParameters().size(), 3u );
+  EXPECT_TRUE( tx.GetFixedParameters().empty() );
+
+  tx = sitk::Transform( 2, sitk::sitkScale );
+  EXPECT_EQ( tx.GetParameters().size(), 2u );
+  EXPECT_TRUE( tx.GetFixedParameters().empty() );
+
+  tx = sitk::Transform( 3, sitk::sitkScaleLogarithmic );
+  EXPECT_EQ( tx.GetParameters().size(), 3u );
+  EXPECT_TRUE( tx.GetFixedParameters().empty() );
+
+  tx = sitk::Transform( 3, sitk::sitkQuaternionRigid );
+  EXPECT_EQ( tx.GetParameters().size(), 7u );
+  EXPECT_EQ( tx.GetFixedParameters().size(), 3u );
+
+  tx = sitk::Transform( 3, sitk::sitkVersor );
+  EXPECT_EQ( tx.GetParameters().size(), 3u );
+  EXPECT_EQ( tx.GetFixedParameters().size(), 3u );
+
+  tx = sitk::Transform( 2, sitk::sitkAffine );
+  EXPECT_EQ( tx.GetParameters().size(), 6u );
+  EXPECT_EQ( tx.GetFixedParameters().size(), 2u );
+
+
+
+}
+
+TEST(TransformTest, CopyOnWrite) {
+
+  sitk::Transform tx1 = sitk::Transform( 2, sitk::sitkAffine );
+  sitk::Transform tx2 = tx1;
+  sitk::Transform tx3 = tx1;
+
+  std::vector<double> params = tx1.GetParameters();
+  params[1] = 0.2;
+
+  tx2.SetParameters( params );
+
+  ASSERT_EQ( tx1.GetParameters().size(), 6u );
+  EXPECT_EQ( tx1.GetParameters()[1], 0.0 );
+
+  ASSERT_EQ( tx2.GetParameters().size(), 6u );
+  EXPECT_EQ( tx2.GetParameters()[1], 0.2 );
+
+  ASSERT_EQ( tx3.GetParameters().size(), 6u );
+  EXPECT_EQ( tx3.GetParameters()[1], 0.0 );
+
+  params[1] = 0.3;
+  tx3.SetParameters( params );
+
+  ASSERT_EQ( tx1.GetParameters().size(), 6u );
+  EXPECT_EQ( tx1.GetParameters()[1], 0.0 );
+
+  ASSERT_EQ( tx2.GetParameters().size(), 6u );
+  EXPECT_EQ( tx2.GetParameters()[1], 0.2 );
+
+  ASSERT_EQ( tx3.GetParameters().size(), 6u );
+  EXPECT_EQ( tx3.GetParameters()[1], 0.3 );
+
+  tx1 = tx2;
+
+  ASSERT_EQ( tx1.GetParameters().size(), 6u );
+  EXPECT_EQ( tx1.GetParameters()[1], 0.2 );
+
+  ASSERT_EQ( tx2.GetParameters().size(), 6u );
+  EXPECT_EQ( tx2.GetParameters()[1], 0.2 );
+
+  ASSERT_EQ( tx3.GetParameters().size(), 6u );
+  EXPECT_EQ( tx3.GetParameters()[1], 0.3 );
+
+
+  params[1] = 0.4;
+  tx1.SetParameters( params );
+
+  ASSERT_EQ( tx1.GetParameters().size(), 6u );
+  EXPECT_EQ( tx1.GetParameters()[1], 0.4 );
+
+  ASSERT_EQ( tx2.GetParameters().size(), 6u );
+  EXPECT_EQ( tx2.GetParameters()[1], 0.2 );
+
+  ASSERT_EQ( tx3.GetParameters().size(), 6u );
+  EXPECT_EQ( tx3.GetParameters()[1], 0.3 );
+
 }
