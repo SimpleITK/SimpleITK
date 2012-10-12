@@ -33,17 +33,27 @@ namespace itk
 namespace simple
 {
 
+// This is a base class of the private implementatino of the transform
+// class.
+//
+// The interface provide virutal method and other generic methods to
+// the concrete ITK transform type, there by provide encapsulation and
+// a uniform interface
 class PimpleTransformBase
 {
 public:
   virtual ~PimpleTransformBase( void ) {};
 
+  // Get Access to the internal ITK transform class
   virtual TransformBase::Pointer GetTransformBase( void ) = 0;
   virtual TransformBase::ConstPointer GetTransformBase( void ) const = 0;
 
+  // general methods to get information about the internal class
   virtual unsigned int GetInputDimension( void ) const = 0;
   virtual unsigned int GetOutputDimension( void ) const = 0;
 
+  // Set the fixed parameter for the transform, converting from the
+  // simpleITK std::vector to the ITK's array.
   void SetFixedParameters( const std::vector< double > &inParams )
     {
       itk::TransformBase::ParametersType p( inParams.size() );
@@ -53,11 +63,13 @@ public:
       this->GetTransformBase()->SetFixedParameters( p );
     }
 
+  // Get the fixed parameters form the transform
   std::vector< double >  GetFixedParameters( void ) const
     {
       const itk::TransformBase::ParametersType &p = this->GetTransformBase()->GetFixedParameters();
       return std::vector< double >( p.begin(), p.end() );
     }
+
 
   unsigned int GetNumberOfParameters( void ) const { return this->GetTransformBase()->GetNumberOfParameters(); }
 
@@ -119,6 +131,15 @@ public:
   PimpleTransform( )
     {
       this->m_Transform = TransformType::New();
+    }
+
+  PimpleTransform( Self &s )
+    : m_Transform( s.m_Transform )
+    {}
+
+  PimpleTransform &operator=( const PimpleTransform &s )
+    {
+      m_Transform = s.m_Transform;
     }
 
   virtual TransformBase::Pointer GetTransformBase( void ) { return this->m_Transform.GetPointer(); }
@@ -257,13 +278,19 @@ void Transform::MakeUniqueForWrite( void )
         m_PimpleTransform = new PimpleTransform<itk::ScaleLogarithmicTransform< double, VDimension > >();
         break;
       case sitkQuaternionRigid:
-        // todo what todo about transform which require a specific dimension
-        assert( VDimension == 3 );
+        if( VDimension != 3)
+          {
+          sitkExceptionMacro( "A sitkQuaternionRigid Transform only works for 3D!");
+          }
+
         m_PimpleTransform = new PimpleTransform<itk::QuaternionRigidTransform< double > >();
         break;
       case sitkVersor:
-        // todo what todo about transform which require a specific dimension
-        assert( VDimension == 3 );
+        if( VDimension != 3)
+          {
+          sitkExceptionMacro( "A sitkVersor Transform only works for 3D!");
+          }
+
         m_PimpleTransform = new PimpleTransform<itk::VersorTransform< double > >();
         break;
       case sitkAffine:
