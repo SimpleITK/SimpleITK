@@ -316,11 +316,11 @@ class Doxy2SWIG:
         if kind in ('date', 'rcs', 'version'):
             pass
         elif kind == 'warning':
-            self.add_text(['\n', 'WARNING: '])
+            self.add_text(['\n', 'WARNING:'])
             self.generic_parse(node)
         elif kind == 'see':
             self.add_text('\n')
-            self.add_text('See: ')
+            self.add_text('See:')
             self.generic_parse(node)
         else:
             self.generic_parse(node)

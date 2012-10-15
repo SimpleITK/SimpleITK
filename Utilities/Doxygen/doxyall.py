@@ -58,7 +58,9 @@ for x in files:
 
         for line in fin:
             line2 = line.replace("itk::simple::detail::", "itk::simple::")
+            line2 = line2.rstrip()
             fout.write(line2)
+            fout.write('\n')
 
         fin.close()
     except:
