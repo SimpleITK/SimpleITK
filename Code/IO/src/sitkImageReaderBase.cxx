@@ -20,6 +20,12 @@
 #include "sitkMacro.h"
 #include "sitkExceptionObject.h"
 
+
+// Include the Transform IO here, so that the IO factory registration
+// will occour.
+#include <itkTransformFileReader.h>
+#include <itkTransformFileWriter.h>
+
 #include <stdint.h>
 
 #include <string>
