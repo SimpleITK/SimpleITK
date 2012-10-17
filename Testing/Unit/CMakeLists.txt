@@ -246,46 +246,9 @@ endif()
 
 add_executable(SimpleITKUnitTestDriver
   SimpleITKUnitTestDriver.cxx ${TestSource} ImageCompare.cxx
+  ${GENERATED_TEST_SOURCE}
 )
-
-# Break the test source into some static libraries
-set( TestLibraries "" )
-list( LENGTH GENERATED_TEST_SOURCE _length )
-set( _stride 50 )
-set( _library_i 1 )
-foreach( _start RANGE 0 ${_length} ${_stride} )
-
-  # the above foreach range in inclusive, which is not quite what is wanted
-  if( _start VERSION_EQUAL ${_length} )
-    break()
-  endif()
-
-  # compute the end of the range ensuring that the inclusive range
-  # [_start, _end] is all valid indicies
-  math( EXPR _end "${_start} + ${_stride} - 1" )
-  if( ${_end} VERSION_GREATER ${_length} OR
-      ${_end} VERSION_EQUAL ${_length} )
-    math( EXPR _end "${_length} - 1" )
-  endif()
-
-  # extract out the range into SRC
-  set( SRC "" )
-  foreach( _j RANGE ${_start} ${_end} )
-    list( GET GENERATED_TEST_SOURCE ${_j} _v )
-    list( APPEND SRC ${_v} )
-  endforeach()
-
-  add_library( SimpleITKTest${_library_i} STATIC ${SRC} )
-  target_link_libraries( SimpleITKTest${_library_i} SimpleITKCommon SimpleITKBasicFilters0 ${ITK_LIBRARIES} )
-
-  # append this new library to the globaly cached list
-  list( APPEND TestLibraries SimpleITKTest${_library_i} )
-
-  math( EXPR _library_i "${_library_i} + 1 " )
-
-endforeach()
-
-target_link_libraries ( SimpleITKUnitTestDriver gtest ${SimpleITK_LIBRARIES} ${TestLibraries})
+target_link_libraries ( SimpleITKUnitTestDriver gtest ${SimpleITK_LIBRARIES} )
 
 add_executable(sitkShowTest
   sitkShowTest.cxx
