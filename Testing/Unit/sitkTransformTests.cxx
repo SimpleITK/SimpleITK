@@ -234,3 +234,35 @@ TEST(TransformTest, ReadTransformResample) {
 
 
 }
+
+TEST(TransformTest, TransformPoint) {
+  sitk::Transform tx2 = sitk::Transform( 2, sitk::sitkIdentity );
+  sitk::Transform tx3 = sitk::Transform( 3, sitk::sitkIdentity );
+
+  std::vector<double> ipt;
+  ipt.push_back( 1.1 );
+  ipt.push_back( 2.22 );
+
+  std::vector<double> opt;
+
+  opt = tx2.TransformPoint( ipt );
+  ASSERT_EQ( opt.size(), 2 );
+  EXPECT_EQ( opt[0], 1.1 );
+  EXPECT_EQ( opt[1], 2.22 );
+
+  EXPECT_ANY_THROW( tx3.TransformPoint( ipt ) );
+
+  ipt.push_back( 3.333 );
+
+  EXPECT_ANY_THROW( opt = tx2.TransformPoint( ipt ) );
+  ASSERT_EQ( opt.size(), 2 );
+  EXPECT_EQ( opt[0], 1.1 );
+  EXPECT_EQ( opt[1], 2.22 );
+
+  opt = tx3.TransformPoint( ipt );
+  ASSERT_EQ( opt.size(), 3 );
+  EXPECT_EQ( opt[0], 1.1 );
+  EXPECT_EQ( opt[1], 2.22 );
+  EXPECT_EQ( opt[1], 3.333 );
+
+}
