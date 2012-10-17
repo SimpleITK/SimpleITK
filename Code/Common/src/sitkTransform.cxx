@@ -404,10 +404,6 @@ void Transform::MakeUniqueForWrite( void )
       {
       sitkExceptionMacro( "Read transform file: \"" << filename << "\", but there appears to be not transform in the file!" );
       }
-    else if( list->size() != 1 )
-      {
-      std::cerr << "Warning: There is more than one tranform in the file! Only using the first transform.\n";
-      }
 
     if( list->front()->GetInputSpaceDimension() == 3
         && list->front()->GetOutputSpaceDimension() == 3 )
@@ -415,42 +411,69 @@ void Transform::MakeUniqueForWrite( void )
       typedef itk::CompositeTransform<double, 3> CompositeTransformType;
       typedef CompositeTransformType::TransformType TransformType;
 
-      CompositeTransformType::Pointer comp = CompositeTransformType::New();
-      comp->ClearTransformQueue();
+      CompositeTransformType::Pointer comp;
 
-      TransformType* itktx = dynamic_cast<TransformType*>(list->front().GetPointer());
-
-      if (itktx)
+      // check if transform is a composite
+      comp = dynamic_cast<CompositeTransformType*>(list->front().GetPointer());
+      if ( comp )
         {
-        comp->AddTransform( itktx );
+        return Transform( comp.GetPointer() );
         }
 
-      return Transform( comp.GetPointer() );
+      if( list->size() != 1 )
+        {
+        std::cerr << "Warning: There is more than one tranform in the file! Only using the first transform.\n";
+        }
+
+
+      typedef itk::Transform<double, 3, 3> TransformType;
+      TransformType* itktx = dynamic_cast<TransformType*>(list->front().GetPointer());
+      if (itktx)
+        {
+        comp = CompositeTransformType::New();
+        comp->ClearTransformQueue();
+        comp->AddTransform( itktx );
+        return Transform( comp.GetPointer() );
+        }
+
       }
-    else if( list->front()->GetInputSpaceDimension() == 2
+
+    if( list->front()->GetInputSpaceDimension() == 2
         && list->front()->GetOutputSpaceDimension() == 2)
       {
       typedef itk::CompositeTransform<double, 2> CompositeTransformType;
-      typedef CompositeTransformType::TransformType TransformType;
 
-      CompositeTransformType::Pointer comp = CompositeTransformType::New();
-      comp->ClearTransformQueue();
+      CompositeTransformType::Pointer comp;
 
+      // check if transform is a composite
+      comp = dynamic_cast<CompositeTransformType*>(list->front().GetPointer());
+      if ( comp )
+        {
+        return Transform( comp.GetPointer() );
+        }
+
+      if( list->size() != 1 )
+        {
+        std::cerr << "Warning: There is more than one tranform in the file! Only using the first transform.\n";
+        }
+
+      typedef itk::Transform<double, 2, 2> TransformType;
       TransformType* itktx = dynamic_cast<TransformType*>(list->front().GetPointer());
 
       if (itktx)
         {
+        comp = CompositeTransformType::New();
+        comp->ClearTransformQueue();
         comp->AddTransform( itktx );
+        return Transform( comp.GetPointer() );
         }
 
-      return Transform( comp.GetPointer() );
       }
-    else
-      {
-      sitkExceptionMacro( "Transform with InputSpaceDimension: " <<  list->front()->GetInputSpaceDimension()
-                          << " and OutputSpaceDimension: " << list->front()->GetOutputSpaceDimension()
-                          << "is not supported." );
-      }
+
+    sitkExceptionMacro( "Unable to transform with InputSpaceDimension: " <<  list->front()->GetInputSpaceDimension()
+                        << " and OutputSpaceDimension: " << list->front()->GetOutputSpaceDimension() << "."
+                        << "Transform of type " << list->front()->GetNameOfClass() << "is not supported." );
+
   }
 
   void Transform::WriteTransform( const std::string &filename ) const
@@ -465,6 +488,7 @@ void Transform::MakeUniqueForWrite( void )
     writer->SetFileName(filename.c_str());
     writer->SetInput( transform.GetITKBase() );
     writer->Update();
+
   }
 
 }
