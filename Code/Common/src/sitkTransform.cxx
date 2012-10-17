@@ -101,10 +101,14 @@ public:
       return out.str();
     }
 
-  // note: the returned pointer need to be externally managed and
+  // note: the returned pointer needs to be externally managed and
   // deleted
   // Also the return pointer could be this
   virtual PimpleTransformBase* AddTransform( Transform &t ) = 0;
+
+
+  virtual std::vector< double > TransformPoint( const std::vector< double > &t ) const = 0;
+
 protected:
 
 };
@@ -196,6 +200,21 @@ public:
       composite->AddTransform( this->m_Transform );
       composite->AddTransform( t );
       return new PimpleTransform<CompositeTransformType>( composite );
+    }
+
+
+
+  virtual std::vector< double > TransformPoint( const std::vector< double > &pt ) const
+    {
+      if (pt.size() != this->GetInputDimension() )
+        {
+        sitkExceptionMacro("vector dimension mismatch");
+        }
+
+      typename TransformType::OutputPointType opt =
+        this->m_Transform->TransformPoint( sitkSTLVectorToITK< typename TransformType::InputPointType >(pt));
+
+      return sitkITKVectorToSTL<double>( opt );
     }
 
 private:
@@ -377,13 +396,19 @@ void Transform::MakeUniqueForWrite( void )
     return this->m_PimpleTransform->GetFixedParameters();
   }
 
-  Transform &Transform::AddTransform( Transform &t )
+  Transform &Transform::AddTransform( Transform t )
   {
     assert( m_PimpleTransform );
     this->MakeUniqueForWrite();
     // this returns a pointer which may be the same or a new object
     this->m_PimpleTransform  = this->m_PimpleTransform->AddTransform( t );
     return *this;
+  }
+
+  std::vector< double > Transform::TransformPoint( const std::vector< double > &point ) const
+  {
+    assert( m_PimpleTransform );
+    return this->m_PimpleTransform->TransformPoint( point );
   }
 
   std::string Transform::ToString( void ) const

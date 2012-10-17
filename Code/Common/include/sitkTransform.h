@@ -108,7 +108,9 @@ public:
   /**@}*/
 
   // Make composition
-  Transform &AddTransform( Transform &t );
+  Transform &AddTransform( Transform t );
+
+  std::vector< double > TransformPoint( const std::vector< double > &point ) const;
 
   // read
   static Transform ReadTransform( const std::string &filename );
