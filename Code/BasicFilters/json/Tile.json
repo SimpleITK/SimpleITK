@@ -52,6 +52,61 @@
         "Input/cthead1.png",
         "Input/cthead1.png"
       ]
+    },
+    {
+      "tag" : "input1",
+      "description" : "one input",
+      "settings" : [],
+      "md5hash" : "6917e69a9b0afebd88d732fccfaf0d24",
+      "inputs" : [
+        "Input/Ramp-One-Zero-Float.nrrd"
+      ]
+    },
+    {
+      "tag" : "input2",
+      "description" : "two input",
+      "settings" : [],
+      "md5hash" : "882bddbd8a2961f76e7f72da9818c1ea",
+      "inputs" : [
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd"
+      ]
+    },
+    {
+      "tag" : "input3",
+      "description" : "three input",
+      "settings" : [],
+      "md5hash" : "923a6a6697b31ce15b859cddd6f7639f",
+      "inputs" : [
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd"
+      ]
+    },
+    {
+      "tag" : "input4",
+      "description" : "four input",
+      "settings" : [],
+      "md5hash" : "5498cbc56a48a749470da30c8385ae62",
+      "inputs" : [
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd"
+      ]
+    },
+    {
+      "tag" : "input5",
+      "description" : "five input",
+      "settings" : [],
+      "md5hash" : "1e935c866ca4327b59cfe6b996993091",
+      "inputs" : [
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd"
+      ]
     }
   ],
   "briefdescription" : "Tile multiple input images into a single output image.\n",
