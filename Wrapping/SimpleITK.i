@@ -109,6 +109,7 @@ namespace std
 // Any new classes need to have an "%include" statement to be wrapped.
 %include "sitkPixelIDValues.h"
 %include "sitkImage.h"
+%include "sitkTransform.h"
 %include "sitkShow.h"
 %include "sitkImageFilter.h"
 %include "sitkImageFileWriter.h"
@@ -123,8 +124,6 @@ namespace std
 
 %include "sitkCastImageFilter.h"
 %include "sitkVersion.h"
-
-// Registration classes
 
 // Only C# can handle import filter
 #if SWIGCSHARP

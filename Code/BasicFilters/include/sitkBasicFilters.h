@@ -20,6 +20,8 @@
 
 #include "sitkMacro.h"
 
+// todo this should be moved to a more local place
+#include "sitkTransform.h"
 
 #if defined( SITKDLL )
   #ifdef SimpleITKBasicFilters0_EXPORTS

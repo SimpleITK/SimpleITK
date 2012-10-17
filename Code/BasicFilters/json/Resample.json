@@ -7,9 +7,19 @@
   "pixel_types" : "typelist::Append<BasicPixelIDTypeList, VectorPixelIDTypeList>::Type",
   "filter_type" : "itk::ResampleImageFilter<InputImageType, OutputImageType, double>",
   "include_files" : [
-    "sitkDirectionConvert.hxx"
+    "sitkDirectionConvert.hxx",
+    "sitkTransform.h"
   ],
   "members" : [
+    {
+      "name" : "Transform",
+      "type" : "Transform",
+      "default" : "itk::simple::Transform()",
+      "custom_itk_cast" : "const typename FilterType::TransformType *itkTx;\
+    if ( !(itkTx = dynamic_cast<const typename FilterType::TransformType *>(this->m_Transform.GetITKBase() )) ) sitkExceptionMacro( \"Unexpected error converting transform! Possible miss matching dimensions!\" );\
+    filter->SetTransform( itkTx );",
+     "no_print" : "1"
+    },
     {
       "name" : "Size",
       "type" : "std::vector<uint32_t>",
