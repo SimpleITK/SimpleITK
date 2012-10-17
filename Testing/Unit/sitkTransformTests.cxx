@@ -17,7 +17,8 @@
 *=========================================================================*/
 
 #include "sitkTransform.h"
-
+#include "sitkResampleImageFilter.h"
+#include "sitkHashImageFilter.h"
 #include "SimpleITKTestHarness.h"
 
 namespace sitk = itk::simple;
@@ -194,5 +195,42 @@ TEST(TransformTest, AddTransform) {
 
   sitk::Transform tx3( 3, sitk::sitkComposite );
   tx1 = tx3;
-  tx3.AddTransform( sitk::Transform( 3, sitk::
+  tx3.AddTransform( sitk::Transform( 3, sitk::sitkAffine ) );
+
+}
+
+TEST(TransformTest, ReadTransformResample) {
+
+  const char *txFiles[] = {
+    "Input/xforms/affine_i_3.txt",
+    "Input/xforms/composite_i_3.txt",
+    "Input/xforms/i_3.txt",
+    "Input/xforms/scale_i_3.txt",
+    "Input/xforms/translation_i_3.txt",
+    "Input/xforms/quaternion_rigid_i_3.txt",
+    "Input/xforms/scale_logarithmic_i_3.txt",
+    "Input/xforms/versor_i_3.txt",
+    "" // end with zero length string
+  };
+
+  sitk::Transform tx;
+
+  sitk::Image img = sitk::ReadImage( dataFinder.GetFile("Input/RA-Short.nrrd" ) );
+
+  const char **ptxFiles = txFiles;
+  while( strlen( *ptxFiles ) != 0 )
+    {
+    std::string fname = dataFinder.GetFile( *ptxFiles );
+    std::cout << "Reading: " << *ptxFiles << std::endl;
+
+    EXPECT_NO_THROW( tx = sitk::Transform::ReadTransform( fname ) );
+
+    sitk::Image out = sitk::Resample( img, tx );
+
+    EXPECT_EQ( sitk::Hash( out ), "da39a3ee5e6b4b0d3255bfef95601890afd80709" ) << "Hash for resampling identity matrix.";
+
+    ++ptxFiles;
+    }
+
+
 }
