@@ -177,3 +177,22 @@ TEST(TransformTest, CopyOnWrite) {
   EXPECT_EQ( tx3.GetParameters()[1], 0.3 );
 
 }
+
+
+
+TEST(TransformTest, AddTransform) {
+
+  sitk::Transform tx1 = sitk::Transform( 2, sitk::sitkAffine );
+  tx1.AddTransform( sitk::Transform( 2, sitk::sitkAffine ) );
+  // check we can't add miss match dimension
+  ASSERT_ANY_THROW( tx1.AddTransform( sitk::Transform( 3, sitk::sitkAffine ) ) );
+
+
+  sitk::Transform tx2 = tx1;
+  tx1.AddTransform( sitk::Transform( 2, sitk::sitkIdentity ) );
+
+
+  sitk::Transform tx3( 3, sitk::sitkComposite );
+  tx1 = tx3;
+  tx3.AddTransform( sitk::Transform( 3, sitk::
+}
