@@ -28,14 +28,23 @@ enum TransformEnum { sitkIdentity,
                      sitkComposite };
 
 
+/** \class Tranform
+ * \brief A simplified wrapper around a variety of ITK transforms.
+ *
+ */
 class SITKCommon_EXPORT Transform
 {
 public:
   typedef Transform Self;
 
-  /** By default a 3-d identity transform is constructed
+  /** \brief By default a 3-d identity transform is constructed
    */
   Transform( void );
+
+  /** \brief Construct a SimpleITK Transform from a pointer to an ITK
+   * composite transform.
+   *
+   */
   template<unsigned int NDimension>
   explicit Transform( itk::CompositeTransform< double, NDimension >* compositeTransform )
     {
@@ -46,28 +55,57 @@ public:
         }
       this->InternalInitialization<NDimension>( sitkComposite, compositeTransform );
     }
+
+  /** \brief Construct a specific transformation
+   */
   Transform( unsigned int dimensions, TransformEnum type);
+
   virtual ~Transform( void );
 
-  //
+  /** \brief Copy constructor and assignment operator
+   *
+   * Performs a shallow copy of the internal ITK transform. A deep
+   * copy will be done if the transform in modified.
+   * @{
+   */
   Transform &operator=( const Transform & );
   Transform( const Transform & );
+  /**@}*/
 
 
+  /** Get access to internal ITK data object.
+   *
+   * The return value should imediately be assigned to as
+   * itk::SmartPointer.
+   *
+   * In many cases the value may need to be dynamically casted to
+   * the the actual transform type.
+   *
+   * @{
+   */
   itk::TransformBase* GetITKBase( void );
   const itk::TransformBase* GetITKBase( void ) const;
+  /**@}*/
 
+  /** Return the dimension of the Transform ( 2D or 3D )
+   */
   unsigned int GetDimension( void ) const;
 
-  /** Set/Get Parameter
+  // todo get transform type
+
+  /** Set/Get Transform Parameter
+   * @{
    */
   void SetParameters ( const std::vector<double>& parameters );
   std::vector<double> GetParameters( void ) const ;
+  /**@}*/
 
-  /** Set/Get Fixed Parameter
+  /** Set/Get Fixed Transform Parameter
+   * @{
    */
   void SetFixedParameters ( const std::vector<double>& parameters );
   std::vector<double> GetFixedParameters( void ) const ;
+  /**@}*/
 
   // Make composition
   Transform &AddTransform( Transform &t );
@@ -79,7 +117,7 @@ public:
   void WriteTransform( const std::string &filename ) const;
   static void WriteTransform( const Transform &transform, const std::string &filename);
 
-  // set identity
+  // todo set identity
 
   std::string ToString( void ) const;
 
