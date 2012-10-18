@@ -16,7 +16,6 @@
 *
 *=========================================================================*/
 #include "sitkTransform.h"
-#include "sitkExceptionObject.h"
 #include "sitkTemplateFunctions.h"
 
 #include "itkTransformBase.h"
@@ -200,16 +199,16 @@ public:
       return this->AddTransform( base, typename std::tr1::is_same<TTransformType, CompositeTransformType>::type() );
     }
 
-  PimpleTransformBase* AddTransform( typename CompositeTransformType::TransformType* &t, std::tr1::true_type isCompositeTransform )
+  PimpleTransformBase* AddTransform( typename CompositeTransformType::TransformType* t, std::tr1::true_type isCompositeTransform )
     {
       Unused( isCompositeTransform );
-      assert( t.GetDimension() == TransformType::InputSpaceDimension );
+      assert( t->GetDimension() == TransformType::InputSpaceDimension );
 
       m_Transform->AddTransform( t );
       return this;
     }
 
-  PimpleTransformBase* AddTransform( typename CompositeTransformType::TransformType* &t, std::tr1::false_type isNotCompositeTransform )
+  PimpleTransformBase* AddTransform( typename CompositeTransformType::TransformType* t, std::tr1::false_type isNotCompositeTransform )
     {
       Unused( isNotCompositeTransform );
 

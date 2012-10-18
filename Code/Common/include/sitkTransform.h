@@ -19,6 +19,7 @@
 #define __sitkTransform_h
 
 #include "sitkCommon.h"
+#include "sitkExceptionObject.h"
 #include <vector>
 
 
