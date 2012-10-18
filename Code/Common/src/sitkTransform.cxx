@@ -202,7 +202,7 @@ public:
   PimpleTransformBase* AddTransform( typename CompositeTransformType::TransformType* t, std::tr1::true_type isCompositeTransform )
     {
       Unused( isCompositeTransform );
-      assert( t->GetDimension() == TransformType::InputSpaceDimension );
+      assert( t->GetInputSpaceDimension() == TransformType::InputSpaceDimension );
 
       m_Transform->AddTransform( t );
       return this;
