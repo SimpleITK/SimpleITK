@@ -16,8 +16,11 @@
       "type" : "Transform",
       "default" : "itk::simple::Transform()",
       "custom_itk_cast" : "const typename FilterType::TransformType *itkTx;\
-    if ( !(itkTx = dynamic_cast<const typename FilterType::TransformType *>(this->m_Transform.GetITKBase() )) ) sitkExceptionMacro( \"Unexpected error converting transform! Possible miss matching dimensions!\" );\
-    filter->SetTransform( itkTx );",
+    if ( !(itkTx = dynamic_cast<const typename FilterType::TransformType *>(this->m_Transform.GetITKBase() )) ) {\
+      if( this->m_Transform.GetITKBase()->GetNameOfClass() != std::string(\"IdentityTransform\") )\
+      sitkExceptionMacro( \"Unexpected error converting transform! Possible miss matching dimensions!\" );\
+     }\
+    else { filter->SetTransform( itkTx ); }",
      "no_print" : "1"
     },
     {
