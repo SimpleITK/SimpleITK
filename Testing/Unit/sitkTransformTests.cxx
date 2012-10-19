@@ -263,6 +263,6 @@ TEST(TransformTest, TransformPoint) {
   ASSERT_EQ( opt.size(), 3 );
   EXPECT_EQ( opt[0], 1.1 );
   EXPECT_EQ( opt[1], 2.22 );
-  EXPECT_EQ( opt[1], 3.333 );
+  EXPECT_EQ( opt[2], 3.333 );
 
 }
