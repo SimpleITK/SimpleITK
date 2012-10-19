@@ -44,7 +44,7 @@
     },
     {
       "name" : "SliceDimension",
-      "type" : "int",
+      "type" : "unsigned int",
       "default" : "0u",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the slice dimension - defaults to image dimension - 1.\n",
