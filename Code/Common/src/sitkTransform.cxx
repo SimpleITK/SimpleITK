@@ -417,7 +417,12 @@ void Transform::MakeUniqueForWrite( void )
     assert( m_PimpleTransform );
     this->MakeUniqueForWrite();
     // this returns a pointer which may be the same or a new object
-    this->m_PimpleTransform  = this->m_PimpleTransform->AddTransform( t );
+    PimpleTransformBase *temp = this->m_PimpleTransform->AddTransform( t );
+    if ( temp != this->m_PimpleTransform )
+      {
+      delete this->m_PimpleTransform;
+      this->m_PimpleTransform = temp;
+      }
     return *this;
   }
 
