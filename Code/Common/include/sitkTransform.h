@@ -66,7 +66,7 @@ public:
   template<unsigned int NDimension>
   explicit Transform( itk::CompositeTransform< double, NDimension >* compositeTransform )
     {
-      sitkStaticAssert( NDimension == 2 | NDimension == 3, "Only 2D and 3D transforms are supported" );
+      sitkStaticAssert( NDimension == 2 || NDimension == 3, "Only 2D and 3D transforms are supported" );
       if ( compositeTransform == NULL )
         {
         sitkExceptionMacro( "Unable to construct a null transform!" );
