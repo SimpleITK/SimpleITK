@@ -246,7 +246,7 @@ TEST(TransformTest, TransformPoint) {
   std::vector<double> opt;
 
   opt = tx2.TransformPoint( ipt );
-  ASSERT_EQ( opt.size(), 2 );
+  ASSERT_EQ( opt.size(), 2u );
   EXPECT_EQ( opt[0], 1.1 );
   EXPECT_EQ( opt[1], 2.22 );
 
@@ -255,12 +255,12 @@ TEST(TransformTest, TransformPoint) {
   ipt.push_back( 3.333 );
 
   EXPECT_ANY_THROW( opt = tx2.TransformPoint( ipt ) );
-  ASSERT_EQ( opt.size(), 2 );
+  ASSERT_EQ( opt.size(), 2u );
   EXPECT_EQ( opt[0], 1.1 );
   EXPECT_EQ( opt[1], 2.22 );
 
   opt = tx3.TransformPoint( ipt );
-  ASSERT_EQ( opt.size(), 3 );
+  ASSERT_EQ( opt.size(), 3u );
   EXPECT_EQ( opt[0], 1.1 );
   EXPECT_EQ( opt[1], 2.22 );
   EXPECT_EQ( opt[2], 3.333 );
