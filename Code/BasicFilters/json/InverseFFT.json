@@ -10,7 +10,7 @@
   "tests" : [
     {
       "tag" : "defaults",
-      "description" : "Test ReserseFFT",
+      "description" : "Test Inverse FFT",
       "tolerance" : "0.01",
       "settings" : [],
       "inputs" : [

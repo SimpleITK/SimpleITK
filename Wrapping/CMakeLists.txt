@@ -42,7 +42,7 @@ if ( WRAP_LUA )
     set ( LUA_LIB ${LUA_LIBRARIES} )
   else()
     set ( LUA_LIB lua5 )
-    include_directories ( ${SimpleITK_SOURCE_DIR}/Utilities/lua-5.1.4/src )
+    include_directories ( ${SimpleITK_SOURCE_DIR}/Utilities/lua-5.1.5/src )
   endif()
 
   # Run swig
