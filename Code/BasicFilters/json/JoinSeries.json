@@ -28,12 +28,55 @@
   ],
   "tests" : [
     {
-      "tag" : "default",
+      "tag" : "default1",
+      "description" : "default join seriees on 2D",
+      "settings" : [],
+      "md5hash" : "095f00a68a84df4396914fa758f34dcc",
+      "inputs" : [
+        "Input/STAPLE1.png"
+      ]
+    },
+    {
+      "tag" : "default2",
+      "description" : "default join seriees on 2D",
+      "settings" : [],
+      "md5hash" : "fbb1e5d9a3b88fae4ea7c07414fffed5",
+      "inputs" : [
+        "Input/STAPLE1.png",
+        "Input/STAPLE2.png"
+      ]
+    },
+    {
+      "tag" : "default3",
       "description" : "default join seriees on 2D",
       "settings" : [],
       "md5hash" : "6a4bf01b139ed17f802fbdfb7e6b761b",
       "inputs" : [
         "Input/STAPLE1.png",
+        "Input/STAPLE2.png",
+        "Input/STAPLE2.png"
+      ]
+    },
+    {
+      "tag" : "default4",
+      "description" : "default join seriees on 2D",
+      "settings" : [],
+      "md5hash" : "64a44a24d6828741c9585a9e972f2e8a",
+      "inputs" : [
+        "Input/STAPLE1.png",
+        "Input/STAPLE2.png",
+        "Input/STAPLE2.png",
+        "Input/STAPLE2.png"
+      ]
+    },
+    {
+      "tag" : "default5",
+      "description" : "default join seriees on 2D",
+      "settings" : [],
+      "md5hash" : "64a44a24d6828741c9585a9e972f2e8a",
+      "inputs" : [
+        "Input/STAPLE1.png",
+        "Input/STAPLE2.png",
         "Input/STAPLE2.png",
         "Input/STAPLE2.png"
       ]

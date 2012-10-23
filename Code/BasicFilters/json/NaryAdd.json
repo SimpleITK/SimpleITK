@@ -7,13 +7,49 @@
   "members" : [],
   "tests" : [
     {
-      "tag" : "default",
-      "description" : "adding 3 images",
+      "tag" : "default2",
+      "description" : "adding of 2 images",
+      "settings" : [],
+      "md5hash" : "d83255b0121596228f3c23a312d9af69",
+      "inputs" : [
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-Zero-One-Float.nrrd"
+      ]
+    },
+    {
+      "tag" : "default3",
+      "description" : "adding of 3 images",
       "settings" : [],
       "md5hash" : "4628b3b09af910ac432e2a740b20c742",
       "inputs" : [
         "Input/Ramp-One-Zero-Float.nrrd",
         "Input/Ramp-Zero-One-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd"
+      ]
+    },
+    {
+      "tag" : "default4",
+      "description" : "adding of 4 images",
+      "settings" : [],
+      "md5hash" : "64140d8b2b8826dbfa6f3bb1d3fbe3eb",
+      "inputs" : [
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-Zero-One-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd"
+
+      ]
+    },
+    {
+      "tag" : "default5",
+      "description" : "adding of 5 images",
+      "settings" : [],
+      "md5hash" : "c0b3778cf51f4311678a2c9e0561daed",
+      "inputs" : [
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-Zero-One-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd",
         "Input/Ramp-One-Zero-Float.nrrd"
       ]
     }
