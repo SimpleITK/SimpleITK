@@ -4,11 +4,11 @@ setMethod('+', signature(e1="_p_itk__simple__Image", e2="_p_itk__simple__Image")
           )
 
 setMethod('+', signature(e1="_p_itk__simple__Image", e2="numeric"),
-          function(e1, e2) AddConstantTo(e1, e2)
+          function(e1, e2) Add(e1, e2)
           )
 
 setMethod('+', signature(e1="numeric", e2="_p_itk__simple__Image"),
-          function(e1, e2) AddConstantTo(e2, e1)
+          function(e1, e2) Add(e2, e1)
           )
 
 setMethod('-', signature(e1="_p_itk__simple__Image", e2="_p_itk__simple__Image"),
@@ -16,11 +16,11 @@ setMethod('-', signature(e1="_p_itk__simple__Image", e2="_p_itk__simple__Image")
           )
 
 setMethod('-', signature(e1="_p_itk__simple__Image", e2="numeric"),
-          function(e1, e2) SubtractConstantFrom(e1, e2)
+          function(e1, e2) Subtract(e1, e2)
           )
 
 setMethod('-', signature(e1="numeric", e2="_p_itk__simple__Image"),
-          function(e1, e2) SubtractConstantBy(e2, e1)
+          function(e1, e2) Subtract(e1, e2)
           )
 
 setMethod('*', signature(e1="_p_itk__simple__Image", e2="_p_itk__simple__Image"),
@@ -28,10 +28,10 @@ setMethod('*', signature(e1="_p_itk__simple__Image", e2="_p_itk__simple__Image")
           )
 
 setMethod('*', signature(e1="_p_itk__simple__Image", e2="numeric"),
-          function(e1, e2) MultiplyByConstant(e1, e2)
+          function(e1, e2) Multiply(e1, e2)
           )
 setMethod('*', signature(e1="numeric", e2="_p_itk__simple__Image"),
-          function(e1, e2) MultiplyByConstant(e2, e1)
+          function(e1, e2) Multiply(e1, e2)
           )
 
 setMethod('/', signature(e1="_p_itk__simple__Image", e2="_p_itk__simple__Image"),
@@ -39,11 +39,11 @@ setMethod('/', signature(e1="_p_itk__simple__Image", e2="_p_itk__simple__Image")
           )
 
 setMethod('/', signature(e1="_p_itk__simple__Image", e2="numeric"),
-          function(e1, e2) DivideByConstant(e1, e2)
+          function(e1, e2) Divide(e1, e2)
           )
 
 setMethod('/', signature(e1="numeric", e2="_p_itk__simple__Image"),
-          function(e1, e2) DivideConstantBy(e2, e1)
+          function(e1, e2) Divide(e1, e2)
           )
 
 setMethod('^', signature(e1="_p_itk__simple__Image", e2="_p_itk__simple__Image"),
@@ -51,11 +51,11 @@ setMethod('^', signature(e1="_p_itk__simple__Image", e2="_p_itk__simple__Image")
           )
 
 setMethod('^', signature(e1="_p_itk__simple__Image", e2="numeric"),
-          function(e1, e2) PowToConstant(e1, e2)
+          function(e1, e2) Pow(e1, e2)
           )
 
 setMethod('^', signature(e1="numeric", e2="_p_itk__simple__Image"),
-          function(e1, e2) stop("Unsupported maths op const^image")
+          function(e1, e2) Pow(e1, e2)
           )
 
 setMethod('%%', signature(e1="_p_itk__simple__Image", e2="numeric"),
