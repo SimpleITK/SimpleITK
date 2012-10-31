@@ -59,19 +59,19 @@
         def __add__( self, other ):
             if isinstance( other, Image ):
                return Add( self, other )
-            return AddConstantTo( self, other )
+            return Add( self, float(other)  )
         def __sub__( self, other ):
             if isinstance( other, Image ):
                return Subtract( self, other )
-            return SubtractConstantFrom( self, other )
+            return Subtract( self, float(other) )
         def __mul__( self, other ):
             if isinstance( other, Image ):
                return Multiply( self, other )
-            return MultiplyByConstant( self, other )
+            return Multiply( self, float(other) )
         def __div__( self, other ):
             if isinstance( other, Image ):
                return Divide( self, other )
-            return DivideByConstant( self, other )
+            return Divide( self, float(other) )
 
         def __neg__( self ):
             return UnaryMinus( self )
@@ -82,17 +82,17 @@
         # therefore other should be able to be considered a constant.
 
         def __radd__( self, other ):
-            return AddConstantTo( self, other )
+            return Add( float(other), self )
         def __rsub__( self, other ):
-            return SubtractConstantBy( self, other )
+            return Subtract( float(other), self )
         def __rmul__( self, other ):
-            return MultiplyByConstant( self, other )
+           return Multiply( float(other), self )
         def __rdiv__( self, other ):
-            return DivideConstantBy( self, other )
+           return Divide( float(other), self )
 
          # NOTE: the __i*__ methods are not implemented because there
          # currently in no way to make the underlying filters run
-         # inplace". But python will implement a default version based
+         # inplace. But python will implement a default version based
          # on the standard method
         def __iadd__ ( self, other ):
             self = Add( self, other )
@@ -111,7 +111,7 @@
         def __pow__( self, other ):
             if isinstance( other, Image ):
                return Pow( self, other )
-            return PowToConstant( self, other )
+            return Pow( self, float(other) )
         def __mod__( self, other ): return Modulus( self, other )
         def __abs__( self ): return Abs( self )
 
