@@ -59,19 +59,31 @@
         def __add__( self, other ):
             if isinstance( other, Image ):
                return Add( self, other )
-            return AddConstantTo( self, other )
+            try:
+               return Add( self, float(other)  )
+            except ValueError:
+               return NotImplemented
         def __sub__( self, other ):
             if isinstance( other, Image ):
                return Subtract( self, other )
-            return SubtractConstantFrom( self, other )
+            try:
+               return Subtract( self, float(other) )
+            except ValueError:
+               return NotImplemented
         def __mul__( self, other ):
             if isinstance( other, Image ):
                return Multiply( self, other )
-            return MultiplyByConstant( self, other )
+            try:
+               return Multiply( self, float(other) )
+            except ValueError:
+               return NotImplemented
         def __div__( self, other ):
             if isinstance( other, Image ):
                return Divide( self, other )
-            return DivideByConstant( self, other )
+            try:
+               return Divide( self, float(other) )
+            except ValueError:
+               return NotImplemented
 
         def __neg__( self ):
             return UnaryMinus( self )
@@ -82,17 +94,29 @@
         # therefore other should be able to be considered a constant.
 
         def __radd__( self, other ):
-            return AddConstantTo( self, other )
+            try:
+               return Add( float(other), self )
+            except ValueError:
+               return NotImplemented
         def __rsub__( self, other ):
-            return SubtractConstantBy( self, other )
+            try:
+               return Subtract( float(other), self )
+            except ValueError:
+               return NotImplemented
         def __rmul__( self, other ):
-            return MultiplyByConstant( self, other )
+            try:
+               return Multiply( float(other), self )
+            except ValueError:
+               return NotImplemented
         def __rdiv__( self, other ):
-            return DivideConstantBy( self, other )
+            try:
+               return Divide( float(other), self )
+            except ValueError:
+               return NotImplemented
 
          # NOTE: the __i*__ methods are not implemented because there
          # currently in no way to make the underlying filters run
-         # inplace". But python will implement a default version based
+         # inplace. But python will implement a default version based
          # on the standard method
         def __iadd__ ( self, other ):
             self = Add( self, other )
@@ -100,9 +124,42 @@
 
         # logic operators
 
-        def __and__( self, other ): return And( self, other )
-        def __or__( self, other ): return Or( self, other )
-        def __xor__( self, other ): return Xor( self, other )
+        def __and__( self, other ):
+            if isinstance( other, Image ):
+               return And( self, other )
+            try:
+               return And( self, float(other) )
+            except ValueError:
+               return NotImplemented
+        def __rand__( self, other ):
+            try:
+               return And( float(other), self )
+            except ValueError:
+               return NotImplemented
+        def __or__( self, other ):
+            if isinstance( other, Image ):
+               return Or( self, other )
+            try:
+               return Or( self, float(other) )
+            except ValueError:
+               return NotImplemented
+        def __ror__( self, other ):
+            try:
+               return Or( float(other), self )
+            except ValueError:
+               return NotImplemented
+        def __xor__( self, other ):
+            if isinstance( other, Image ):
+               return Xor( self, other )
+            try:
+               return Xor( self, float(other) )
+            except ValueError:
+               return NotImplemented
+        def __rxor__( self, other ):
+            try:
+               return Xor( float(other), self )
+            except ValueError:
+               return NotImplemented
         def __invert__( self ): return Not( self )
 
 
@@ -111,7 +168,15 @@
         def __pow__( self, other ):
             if isinstance( other, Image ):
                return Pow( self, other )
-            return PowToConstant( self, other )
+            try:
+               return Pow( self, float(other) )
+            except ValueError:
+               return NotImplemented
+        def __rpow__( self, other ):
+            try:
+               return Pow( float(other), self )
+            except ValueError:
+               return NotImplemented
         def __mod__( self, other ): return Modulus( self, other )
         def __abs__( self ): return Abs( self )
 
