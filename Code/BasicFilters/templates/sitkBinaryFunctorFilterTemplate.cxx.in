@@ -1,0 +1,211 @@
+/*=========================================================================
+*
+*  Copyright Insight Software Consortium
+*
+*  Licensed under the Apache License, Version 2.0 (the "License");
+*  you may not use this file except in compliance with the License.
+*  You may obtain a copy of the License at
+*
+*         http://www.apache.org/licenses/LICENSE-2.0.txt
+*
+*  Unless required by applicable law or agreed to in writing, software
+*  distributed under the License is distributed on an "AS IS" BASIS,
+*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*  See the License for the specific language governing permissions and
+*  limitations under the License.
+*
+*=========================================================================*/
+$(include DoNotEditWarning.cxx.in)
+
+$(include StandardIncludes.cxx.in)
+$(include AddExtraIncludes.cxx.in)
+
+namespace itk {
+namespace simple {
+
+
+namespace {
+template <typename TPixel>
+static void ToPixelType( ${constant_type} inPixel, TPixel &outPixel)
+{
+  outPixel = static_cast<TPixel>( inPixel );
+}
+
+template <typename TComponent>
+static void ToPixelType( ${constant_type} inPixel, itk::VariableLengthVector<TComponent> &outPixel)
+{
+  outPixel.Fill( static_cast<TComponent>( inPixel ) );
+}
+}
+
+//-----------------------------------------------------------------------------
+
+//
+// Default constructor that initializes parameters
+//
+$(include ConstructorSignature.cxx.in)
+{
+$(include ConstructorInitializeMembers.cxx.in)
+$(include ConstructorMemberFunctionSetup.cxx.in)
+
+$(include ConstructorVectorPixels.cxx.in)
+
+  this->m_MemberFactory1.reset( new detail::MemberFunctionFactory<MemberFunction1Type>( this ) );
+  this->m_MemberFactory1->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
+  this->m_MemberFactory1->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
+
+  this->m_MemberFactory2.reset( new detail::MemberFunctionFactory<MemberFunction2Type>( this ) );
+  this->m_MemberFactory2->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
+  this->m_MemberFactory2->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
+}
+
+
+$(include CustomMethods.cxx.in)
+
+//
+// ToString
+//
+$(include ToStringSignature.cxx.in)
+{
+$(include ToStringBody.cxx.in)
+$(include ToStringReturn.cxx.in)
+}
+
+//
+// Execute
+//$(include ExecuteWithParameters.cxx.in)
+$(if members and #members > 0 then
+OUT = [[
+
+Image ${name}ImageFilter::Execute ( const Image& image1, ${constant_type} constant$(include MemberParameters.in) )
+{
+$(foreach members
+$(if (not no_set_method) or (no_set_method == 0) then
+OUT = '  this->Set${name} ( in${name} );'
+end)
+)
+return this->Execute ( image1, constant );
+}
+
+
+Image ${name}ImageFilter::Execute ( ${constant_type} constant, const Image& image2$(include MemberParameters.in) )
+{
+$(foreach members
+$(if (not no_set_method) or (no_set_method == 0) then
+OUT = '  this->Set${name} ( in${name} );'
+end)
+)
+return this->Execute ( constant, image2 );
+}
+]]
+end)
+
+
+
+$(include ExecuteNoParameters.cxx.in)
+
+Image ${name}ImageFilter::Execute ( ${constant_type} constant, const Image& image2 )
+{
+
+  PixelIDValueType type = image2.GetPixelIDValue();
+  unsigned int dimension = image2.GetDimension();
+
+  return this->m_MemberFactory1->GetMemberFunction( type, dimension )( constant, image2 );
+}
+
+Image ${name}ImageFilter::Execute ( const Image& image1, ${constant_type} constant )
+{
+
+  PixelIDValueType type = image1.GetPixelIDValue();
+  unsigned int dimension = image1.GetDimension();
+
+
+  return this->m_MemberFactory2->GetMemberFunction( type, dimension )( image1, constant );
+}
+
+//-----------------------------------------------------------------------------
+
+//
+// ExecuteInternal
+//
+$(include ExecuteInternalSignature.cxx.in)
+{
+$(include ExecuteInternalTypedefs.cxx.in)
+
+$(include ExecuteInternalGetImagePointers.cxx.in)
+
+$(include ExecuteInternalITKFilter.cxx.in)
+
+$(include ExecuteInternalSetITKFilterInputs.cxx.in)
+$(include ExecuteInternalUpdateAndReturn.cxx.in)
+}
+
+
+template <class TImageType>
+Image ${name}ImageFilter::ExecuteInternal ( ${constant_type} constant, const Image& inImage2 )
+{
+$(include ExecuteInternalTypedefs.cxx.in)
+
+  // Get the pointer to the ITK image contained in image2
+  typename InputImageType2::ConstPointer image2 = this->CastImageToITK<InputImageType2>( inImage2 );
+
+$(include ExecuteInternalITKFilter.cxx.in)
+
+  typename InputImageType::PixelType c;
+  NumericTraits<typename InputImageType2::PixelType>::SetLength( c, image2->GetNumberOfComponentsPerPixel() );
+  ToPixelType( constant, c );
+  filter->SetConstant1( c );
+  filter->SetInput2( image2 );
+$(include ExecuteInternalSetITKFilterParameters.cxx.in)
+$(include ExecuteInternalUpdateAndReturn.cxx.in)
+}
+
+
+template <class TImageType>
+Image ${name}ImageFilter::ExecuteInternal ( const Image& inImage1, ${constant_type} constant )
+{
+$(include ExecuteInternalTypedefs.cxx.in)
+
+  // Get the pointer to the ITK image contained in image1
+  typename InputImageType::ConstPointer image1 = this->CastImageToITK<InputImageType>( inImage1 );
+
+$(include ExecuteInternalITKFilter.cxx.in)
+
+  typename InputImageType2::PixelType c;
+  NumericTraits<typename InputImageType::PixelType>::SetLength( c, image1->GetNumberOfComponentsPerPixel() );
+  ToPixelType( constant, c );
+  filter->SetInput1( image1 );
+  filter->SetConstant2( c );
+$(include ExecuteInternalSetITKFilterParameters.cxx.in)
+$(include ExecuteInternalUpdateAndReturn.cxx.in)
+}
+
+//-----------------------------------------------------------------------------
+
+$(include ExecuteInternalVectorImages.cxx.in)
+$(include FunctionalAPI.cxx.in)
+
+Image ${name} ( const Image& image1, ${constant_type} constant$(include MemberParameters.in) )
+{
+  ${name}ImageFilter filter;
+  return filter.Execute ( image1, constant$(for i = 1,#members do
+                            if (number_of_inputs > 0 or i > 1) then
+                              OUT = OUT .. ", "
+                            end
+                            OUT= OUT .. ' in' .. members[i].name
+                            end) );
+}
+
+Image ${name} ( ${constant_type} constant, const Image& image2$(include MemberParameters.in) )
+{
+  ${name}ImageFilter filter;
+  return filter.Execute ( constant, image2$(for i = 1,#members do
+                            if (number_of_inputs > 0 or i > 1) then
+                              OUT = OUT .. ", "
+                            end
+                            OUT= OUT .. ' in' .. members[i].name
+                            end) );
+}
+
+} // end namespace simple
+} // end namespace itk
