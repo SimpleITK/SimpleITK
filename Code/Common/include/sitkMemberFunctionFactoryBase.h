@@ -224,7 +224,7 @@ public:
   /**  the pointer MemberFunctionType redefined ad a tr1::function
    * object
    */
-  typedef std::tr1::function< MemberFunctionResultType ( MemberFunctionArgument1Type,  MemberFunctionArgument0Type) > FunctionObjectType;
+  typedef std::tr1::function< MemberFunctionResultType ( MemberFunctionArgument0Type,  MemberFunctionArgument1Type) > FunctionObjectType;
 
 
 protected:
@@ -284,7 +284,7 @@ public:
 
   /**  the pointer MemberFunctionType redefined ad a tr1::function
    * object */
-  typedef std::tr1::function< MemberFunctionResultType ( MemberFunctionArgument2Type, MemberFunctionArgument1Type,  MemberFunctionArgument0Type) > FunctionObjectType;
+  typedef std::tr1::function< MemberFunctionResultType ( MemberFunctionArgument0Type, MemberFunctionArgument1Type,  MemberFunctionArgument1Type) > FunctionObjectType;
 
 
 protected:
@@ -345,7 +345,7 @@ public:
 
   /**  the pointer MemberFunctionType redefined ad a tr1::function
    * object */
-  typedef std::tr1::function< MemberFunctionResultType ( MemberFunctionArgument3Type, MemberFunctionArgument2Type, MemberFunctionArgument1Type,  MemberFunctionArgument0Type) > FunctionObjectType;
+  typedef std::tr1::function< MemberFunctionResultType ( MemberFunctionArgument0Type, MemberFunctionArgument1Type, MemberFunctionArgument2Type,  MemberFunctionArgument3Type) > FunctionObjectType;
 
 
 protected:
