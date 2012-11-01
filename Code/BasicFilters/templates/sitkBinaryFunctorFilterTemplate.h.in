@@ -36,39 +36,39 @@ $(include ClassNameAndPrint.h.in)
 $(include ExecuteMethodNoParameters.h.in)$(include ExecuteMethodWithParameters.h.in)$(include CustomMethods.h.in)
 
       /** Execute the filter with an image and a constant */
-      Image Execute ( const Image& image1, double constant );
-      Image Execute ( double constant, const Image& image2 );
+      Image Execute ( const Image& image1, ${constant_type} constant );
+      Image Execute ( ${constant_type} constant, const Image& image2 );
 $(if members and #members > 0 then
 OUT=[[
 
       /** Execute the filter on an image and a constant with the given parameters */
-      Image Execute ( const Image& image1, double constant$(include MemberParameters.in) );
-      Image Execute ( double constant, const Image& image2$(include MemberParameters.in) );]]
+      Image Execute ( const Image& image1, ${constant_type} constant$(include MemberParameters.in) );
+      Image Execute ( ${constant_type} constant, const Image& image2$(include MemberParameters.in) );]]
 end)
 
 $(include ExecuteInternalMethod.h.in)
 
 $(include MemberFunctionDispatch.h.in)
-      typedef Image (Self::*MemberFunction1Type)( double constant, const Image& image2 );
-      template <class TImageType> Image ExecuteInternal ( double constant, const Image& image2 );
+      typedef Image (Self::*MemberFunction1Type)( ${constant_type} constant, const Image& image2 );
+      template <class TImageType> Image ExecuteInternal ( ${constant_type} constant, const Image& image2 );
       friend struct detail::MemberFunctionAddressor<MemberFunction1Type>;
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunction1Type> > m_MemberFactory1;
 
-      typedef Image (Self::*MemberFunction2Type)( const Image& image1, double constant );
-      template <class TImageType> Image ExecuteInternal ( const Image& image1, double constant );
+      typedef Image (Self::*MemberFunction2Type)( const Image& image1, ${constant_type} constant );
+      template <class TImageType> Image ExecuteInternal ( const Image& image1, ${constant_type} constant );
       friend struct detail::MemberFunctionAddressor<MemberFunction2Type>;
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunction2Type> > m_MemberFactory2;
 
 $(include PrivateMemberDeclarations.h.in)$(include ClassEnd.h.in)
 
 $(include FunctionalAPI.h.in)
-    SITKBasicFilters_EXPORT Image ${name} ( const Image& image1, double constant$(for i = 1,#members do
+    SITKBasicFilters_EXPORT Image ${name} ( const Image& image1, ${constant_type} constant$(for i = 1,#members do
   if (number_of_inputs > 0 or i > 1) then
     OUT = OUT .. ", "
   end
     OUT= OUT .. members[i].type .. ' in' .. members[i].name .. " = " .. members[i].default
 end) );
-    SITKBasicFilters_EXPORT Image ${name} ( double constant, const Image& image2$(for i = 1,#members do
+    SITKBasicFilters_EXPORT Image ${name} ( ${constant_type} constant, const Image& image2$(for i = 1,#members do
   if (number_of_inputs > 0 or i > 1) then
     OUT = OUT .. ", "
   end

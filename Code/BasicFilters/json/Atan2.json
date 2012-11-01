@@ -2,6 +2,7 @@
   "name" : "Atan2",
   "template_code_filename" : "BinaryFunctorFilter",
   "template_test_filename" : "ImageFilter",
+  "constant_type" : "double",
   "number_of_inputs" : 2,
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelIDTypeList",

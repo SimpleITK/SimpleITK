@@ -26,13 +26,13 @@ namespace simple {
 
 namespace {
 template <typename TPixel>
-static void ToPixelType( double inPixel, TPixel &outPixel)
+static void ToPixelType( ${constant_type} inPixel, TPixel &outPixel)
 {
   outPixel = static_cast<TPixel>( inPixel );
 }
 
 template <typename TComponent>
-static void ToPixelType( double inPixel, itk::VariableLengthVector<TComponent> &outPixel)
+static void ToPixelType( ${constant_type} inPixel, itk::VariableLengthVector<TComponent> &outPixel)
 {
   outPixel.Fill( static_cast<TComponent>( inPixel ) );
 }
@@ -77,7 +77,7 @@ $(include ToStringReturn.cxx.in)
 $(if members and #members > 0 then
 OUT = [[
 
-Image ${name}ImageFilter::Execute ( const Image& image1, double constant$(include MemberParameters.in) )
+Image ${name}ImageFilter::Execute ( const Image& image1, ${constant_type} constant$(include MemberParameters.in) )
 {
 $(foreach members
 $(if (not no_set_method) or (no_set_method == 0) then
@@ -88,7 +88,7 @@ return this->Execute ( image1, constant );
 }
 
 
-Image ${name}ImageFilter::Execute ( double constant, const Image& image2$(include MemberParameters.in) )
+Image ${name}ImageFilter::Execute ( ${constant_type} constant, const Image& image2$(include MemberParameters.in) )
 {
 $(foreach members
 $(if (not no_set_method) or (no_set_method == 0) then
@@ -104,7 +104,7 @@ end)
 
 $(include ExecuteNoParameters.cxx.in)
 
-Image ${name}ImageFilter::Execute ( double constant, const Image& image2 )
+Image ${name}ImageFilter::Execute ( ${constant_type} constant, const Image& image2 )
 {
 
   PixelIDValueType type = image2.GetPixelIDValue();
@@ -113,7 +113,7 @@ Image ${name}ImageFilter::Execute ( double constant, const Image& image2 )
   return this->m_MemberFactory1->GetMemberFunction( type, dimension )( constant, image2 );
 }
 
-Image ${name}ImageFilter::Execute ( const Image& image1, double constant )
+Image ${name}ImageFilter::Execute ( const Image& image1, ${constant_type} constant )
 {
 
   PixelIDValueType type = image1.GetPixelIDValue();
@@ -142,7 +142,7 @@ $(include ExecuteInternalUpdateAndReturn.cxx.in)
 
 
 template <class TImageType>
-Image ${name}ImageFilter::ExecuteInternal ( double constant, const Image& inImage2 )
+Image ${name}ImageFilter::ExecuteInternal ( ${constant_type} constant, const Image& inImage2 )
 {
 $(include ExecuteInternalTypedefs.cxx.in)
 
@@ -162,7 +162,7 @@ $(include ExecuteInternalUpdateAndReturn.cxx.in)
 
 
 template <class TImageType>
-Image ${name}ImageFilter::ExecuteInternal ( const Image& inImage1, double constant )
+Image ${name}ImageFilter::ExecuteInternal ( const Image& inImage1, ${constant_type} constant )
 {
 $(include ExecuteInternalTypedefs.cxx.in)
 
@@ -185,7 +185,7 @@ $(include ExecuteInternalUpdateAndReturn.cxx.in)
 $(include ExecuteInternalVectorImages.cxx.in)
 $(include FunctionalAPI.cxx.in)
 
-Image ${name} ( const Image& image1, double constant$(include MemberParameters.in) )
+Image ${name} ( const Image& image1, ${constant_type} constant$(include MemberParameters.in) )
 {
   ${name}ImageFilter filter;
   return filter.Execute ( image1, constant$(for i = 1,#members do
@@ -196,7 +196,7 @@ Image ${name} ( const Image& image1, double constant$(include MemberParameters.i
                             end) );
 }
 
-Image ${name} ( double constant, const Image& image2$(include MemberParameters.in) )
+Image ${name} ( ${constant_type} constant, const Image& image2$(include MemberParameters.in) )
 {
   ${name}ImageFilter filter;
   return filter.Execute ( constant, image2$(for i = 1,#members do
