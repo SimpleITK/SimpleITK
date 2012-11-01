@@ -22,7 +22,6 @@
 #include "sitkSubtractImageFilter.h"
 #include "sitkMultiplyImageFilter.h"
 #include "sitkDivideImageFilter.h"
-#include "sitkAddConstantToImageFilter.h"
 #include "sitkUnaryMinusImageFilter.h"
 #include "sitkNotImageFilter.h"
 #include "sitkAndImageFilter.h"
