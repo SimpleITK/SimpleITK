@@ -128,36 +128,36 @@
             if isinstance( other, Image ):
                return And( self, other )
             try:
-               return And( self, float(other) )
+               return And( self, int(other) )
             except ValueError:
                return NotImplemented
         def __rand__( self, other ):
             try:
-               return And( float(other), self )
+               return And( int(other), self )
             except ValueError:
                return NotImplemented
         def __or__( self, other ):
             if isinstance( other, Image ):
                return Or( self, other )
             try:
-               return Or( self, float(other) )
+               return Or( self, int(other) )
             except ValueError:
                return NotImplemented
         def __ror__( self, other ):
             try:
-               return Or( float(other), self )
+               return Or( int(other), self )
             except ValueError:
                return NotImplemented
         def __xor__( self, other ):
             if isinstance( other, Image ):
                return Xor( self, other )
             try:
-               return Xor( self, float(other) )
+               return Xor( self, int(other) )
             except ValueError:
                return NotImplemented
         def __rxor__( self, other ):
             try:
-               return Xor( float(other), self )
+               return Xor( int(other), self )
             except ValueError:
                return NotImplemented
         def __invert__( self ): return Not( self )
