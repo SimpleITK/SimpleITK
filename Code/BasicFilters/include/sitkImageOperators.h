@@ -58,18 +58,18 @@ inline Image operator/( double s,  const Image &img  ) { return Divide(s, img );
 // Image operator%( Image &img1, Image &img2 )
 // Image &operator%=( Image &img1, double s )
 
-inline Image operator-( const Image img ) { return UnaryMinus( img ); }
+inline Image operator-( const Image &img ) { return UnaryMinus( img ); }
 
 inline Image operator~( const Image &img ) { return Not( img ); }
 inline Image operator&( const Image &img1, const Image &img2 ) { return And(img1, img2 ); }
-inline Image operator&( const Image &img,  double s ) { return And(img, s ); }
-inline Image operator&( double s, const Image &img ) { return And(s, img ); }
+inline Image operator&( const Image &img,  int s ) { return And(img, s ); }
+inline Image operator&( int s, const Image &img ) { return And(s, img ); }
 inline Image operator|( const Image &img1, const Image &img2 ) { return Or(img1, img2 ); }
-inline Image operator|( const Image &img, double s ) { return Or(img, s ); }
-inline Image operator|( double s, const Image &img ) { return Or(s, img ); }
+inline Image operator|( const Image &img, int s ) { return Or(img, s ); }
+inline Image operator|( int s, const Image &img ) { return Or(s, img ); }
 inline Image operator^( const Image &img1, const Image &img2 ) { return Xor(img1, img2 ); }
-inline Image operator^( const Image &img, double s ) { return Xor(img, s ); }
-inline Image operator^( double s, const Image &img ) { return Xor(s, img ); }
+inline Image operator^( const Image &img, int s ) { return Xor(img, s ); }
+inline Image operator^( int s, const Image &img ) { return Xor(s, img ); }
 
 /** \todo these operators should some how be done "in-place" */
 inline Image operator+=( Image &img1, const Image &img2 ) { return img1 = Add(img1, img2 ); }
@@ -81,11 +81,11 @@ inline Image operator*=( Image &img1, double s ) { return img1 = Multiply(img1, 
 inline Image operator/=( Image &img1, const Image &img2 ) { return img1 = Divide(img1, img2 ); }
 inline Image operator/=( Image &img1, double s ) { return img1 = Divide(img1, s ); }
 inline Image operator&=( Image &img1, const Image &img2 ) { return img1 = And(img1, img2 ); }
-inline Image operator&=( Image &img1, double s ) { return img1 = And(img1, s ); }
+inline Image operator&=( Image &img1, int s ) { return img1 = And(img1, s ); }
 inline Image operator|=( Image &img1, const Image &img2 ) { return img1 = Or(img1, img2 ); }
-inline Image operator|=( Image &img1, double s ) { return img1 = Or(img1, s ); }
+inline Image operator|=( Image &img1, int s ) { return img1 = Or(img1, s ); }
 inline Image operator^=( Image &img1, const Image &img2 ) { return img1 = Xor(img1, img2 ); }
-inline Image operator^=( Image &img1, double s ) { return img1 = Xor(img1, s ); }
+inline Image operator^=( Image &img1, int s ) { return img1 = Xor(img1, s ); }
 /**@} */
 }
 }
