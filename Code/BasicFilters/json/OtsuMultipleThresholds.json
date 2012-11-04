@@ -52,13 +52,8 @@
       "settings" : [
         {
           "parameter" : "NumberOfThresholds",
-          "value" : "2u",
-          "lua_value" : "2",
-          "python_value" : "2",
-          "ruby_value" : "2",
-          "java_value" : "2",
-          "tcl_value" : "2",
-          "R_value" : "2"
+          "value" : 2,
+          "java_value" : "(short) 2"
         }
       ],
       "md5hash" : "1fe9f00799c337af86a99d243dad6c43",
@@ -72,13 +67,8 @@
       "settings" : [
         {
           "parameter" : "NumberOfThresholds",
-          "value" : "3u",
-          "lua_value" : "3",
-          "python_value" : "3",
-          "ruby_value" : "3",
-          "java_value" : "3",
-          "tcl_value" : "3",
-          "R_value" : "3"
+          "value" : "3",
+          "java_value" : "(short) 3"
         },
         {
           "parameter" : "NumberOfHistogramBins",

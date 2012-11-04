@@ -27,7 +27,6 @@
       "type" : "uint8_t",
       "default" : "1u",
       "pixeltype" : "Output",
-
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the output value used as \"foreground\". Defaults to maximum value of PixelType.\n",
       "briefdescriptionGet" : "",
@@ -73,7 +72,8 @@
         },
         {
           "parameter" : "ForegroundValue",
-          "value" : "255"
+          "value" : "255",
+          "java_value" : "(short) 255"
         }
       ],
       "md5hash" : "a81279c72a568a62749b2f79692ce15a",
