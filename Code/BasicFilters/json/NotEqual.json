@@ -35,5 +35,15 @@
     }
   ],
   "tests" : [
+    {
+      "tag" : "default",
+      "description" : "same images",
+      "settings" : [],
+      "md5hash" : "fcd6bcb56c1689fcef28b57c22475bad",
+      "inputs" : [
+        "Input/cthead1.png",
+        "Input/cthead1.png"
+      ]
+    }
   ]
 }

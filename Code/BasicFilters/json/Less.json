@@ -35,5 +35,25 @@
     }
   ],
   "tests" : [
+      {
+      "tag" : "default",
+      "description" : "same images",
+      "settings" : [],
+      "md5hash" : "fcd6bcb56c1689fcef28b57c22475bad",
+      "inputs" : [
+        "Input/cthead1.png",
+        "Input/cthead1.png"
+      ]
+    },
+    {
+      "tag" : "rampVramp",
+      "description" : "2D",
+      "settings" : [],
+      "md5hash" : "c23ac004a9de8cfc66224a9a7ddb9b25",
+      "inputs" : [
+        "Input/Ramp-Up-Short.nrrd",
+        "Input/Ramp-Down-Short.nrrd"
+      ]
+    }
   ]
 }
