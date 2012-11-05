@@ -11,7 +11,7 @@
       "name" : "DistanceThreshold",
       "type" : "double",
       "default" : "1.0",
-      "custom_cast" : "filter->SetDistanceThreshold( static_cast<typename InputImageType::InputValueType>( this->m_DistanceThreshold ) );",
+      "custom_itk_cast" : "filter->SetDistanceThreshold( static_cast<typename FilterType::InputValueType>( this->m_DistanceThreshold ) );",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "",
       "briefdescriptionGet" : "",
