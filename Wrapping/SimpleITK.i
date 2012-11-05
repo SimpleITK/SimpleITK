@@ -91,6 +91,8 @@ namespace std
 
   // Support for LabelStatisticsImageFilter/MeasurementMap
   %template(BasicMeasurementMap) map<std::string, double>;
+
+  %template(DoubleDoubleMap) map<double, double>;
 }
 
 
