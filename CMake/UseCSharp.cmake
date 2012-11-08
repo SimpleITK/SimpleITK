@@ -85,7 +85,8 @@ macro( CSHARP_ADD_PROJECT type name )
   if ( ${sources_length} LESS 1 )
     MESSAGE( SEND_ERROR "No C# sources were specified for ${type} ${name}" )
   endif ()
-  list( SORT sources_dep ${sources_dep} )
+  list( SORT sources_dep )
+  message( "DEP: ${sources_dep}" )
 
   # Perform platform specific actions
   if (WIN32)
