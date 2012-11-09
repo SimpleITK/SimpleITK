@@ -106,11 +106,11 @@ option ( WRAP_RUBY "Wrap Ruby" ${WRAP_RUBY_DEFAULT} )
 check_PIC_flag ( Ruby )
 
 find_package( CSharp QUIET )
-if ( ${CSHARP_FOUND} )
+if ( ${CSHARP_FOUND} AND MSVC )
   set ( WRAP_CSHARP_DEFAULT ON )
-else ( ${CSHARP_FOUND} )
-  set ( WRAP_CSHARP_DEFAULT OFF )
-endif ( ${CSHARP_FOUND} )
+else ()
+  set ( wrap_csharp_default off )
+endif ()
 list( APPEND SITK_LANGUAGES_VARS
   CSHARP_COMPILER
   CSHARP_INTERPRETER
