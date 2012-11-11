@@ -31,6 +31,12 @@
       "type" : "uint32_t",
       "default" : "1000u",
       "doc" : "Number of iterations to run"
+    },
+    {
+      "name" : "ReverseExpansionDirection",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : "Turn On/Off the flag which determines whether Positive or Negative speed terms will cause surface expansion.  If set to TRUE then negative speed terms will cause the surface to expand and positive speed terms will cause the surface to contract.  If set to FALSE (default) then positive speed terms will cause the surface to expand and negative speed terms will cause the surface to contract.  This method can be safely used to reverse the expansion/contraction as appropriate to a particular application or data set."
     }
   ],
   "measurements" : [
