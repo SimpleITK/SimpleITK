@@ -36,12 +36,14 @@ namespace itk {
 
 
   std::vector<std::string> ImageSeriesReader::GetGDCMSeriesFileNames( const std::string &directory,
+                                                                      const std::string &seriesID,
                                                                       bool useSeriesDetails,
                                                                       bool recursive,
                                                                       bool loadSequences,
                                                                       bool loadPrivateTags )
   {
     GDCMSeriesFileNames::Pointer gdcmSeries = GDCMSeriesFileNames::New();
+
 
     gdcmSeries->SetInputDirectory( directory );
     gdcmSeries->SetUseSeriesDetails( useSeriesDetails );
@@ -51,8 +53,15 @@ namespace itk {
 
     gdcmSeries->Update();
 
-    //gdcm->GetSeriesUIDS()
-    return gdcmSeries->GetInputFileNames();
+    return gdcmSeries->GetFileNames(seriesID);
+  }
+
+  std::vector<std::string> ImageSeriesReader::GetGDCMSeriesIDs( const std::string &directory )
+  {
+    GDCMSeriesFileNames::Pointer gdcmSeries = GDCMSeriesFileNames::New();
+
+    gdcmSeries->SetInputDirectory( directory );
+    return gdcmSeries->GetSeriesUIDs();
   }
 
     ImageSeriesReader::ImageSeriesReader() {
