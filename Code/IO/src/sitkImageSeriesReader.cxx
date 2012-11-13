@@ -29,9 +29,10 @@
 namespace itk {
   namespace simple {
 
-    Image ReadImage ( const std::vector<std::string> &filenames ) {
-      ImageSeriesReader reader;
-      return reader.SetFileNames ( filenames ).Execute();
+  Image ReadImage ( const std::vector<std::string> &filenames )
+    {
+    ImageSeriesReader reader;
+    return reader.SetFileNames ( filenames ).Execute();
     }
 
 
@@ -41,9 +42,8 @@ namespace itk {
                                                                       bool recursive,
                                                                       bool loadSequences,
                                                                       bool loadPrivateTags )
-  {
+    {
     GDCMSeriesFileNames::Pointer gdcmSeries = GDCMSeriesFileNames::New();
-
 
     gdcmSeries->SetInputDirectory( directory );
     gdcmSeries->SetUseSeriesDetails( useSeriesDetails );
@@ -54,75 +54,78 @@ namespace itk {
     gdcmSeries->Update();
 
     return gdcmSeries->GetFileNames(seriesID);
-  }
+    }
 
   std::vector<std::string> ImageSeriesReader::GetGDCMSeriesIDs( const std::string &directory )
-  {
+    {
     GDCMSeriesFileNames::Pointer gdcmSeries = GDCMSeriesFileNames::New();
 
     gdcmSeries->SetInputDirectory( directory );
     return gdcmSeries->GetSeriesUIDs();
-  }
-
-    ImageSeriesReader::ImageSeriesReader() {
-
-      // list of pixel types supported
-      typedef NonLabelPixelIDTypeList PixelIDTypeList;
-
-      this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
-
-      this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
-      this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
     }
 
-    ImageSeriesReader& ImageSeriesReader::SetFileNames ( const std::vector<std::string> &filenames ) {
-      this->m_FileNames = filenames;
-      return *this;
+  ImageSeriesReader::ImageSeriesReader()
+    {
+
+    // list of pixel types supported
+    typedef NonLabelPixelIDTypeList PixelIDTypeList;
+
+    this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
+
+    this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
+    this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
     }
 
-    const std::vector<std::string> &ImageSeriesReader::GetFileNames() const {
-      return this->m_FileNames;
+  ImageSeriesReader& ImageSeriesReader::SetFileNames ( const std::vector<std::string> &filenames )
+    {
+    this->m_FileNames = filenames;
+    return *this;
     }
 
-    Image ImageSeriesReader::Execute () {
-      // todo check if filename does not exits for robust error handling
-      assert( !this->m_FileNames.empty() );
+  const std::vector<std::string> &ImageSeriesReader::GetFileNames() const
+    {
+    return this->m_FileNames;
+    }
 
-      PixelIDValueType type = sitkUnknown;
-      unsigned int dimension = 0;
+  Image ImageSeriesReader::Execute ()
+    {
+    // todo check if filename does not exits for robust error handling
+    assert( !this->m_FileNames.empty() );
 
-      this->GetPixelIDFromImageIO( this->m_FileNames.front(), type, dimension );
+    PixelIDValueType type = sitkUnknown;
+    unsigned int dimension = 0;
 
-      // increment for series
-      ++dimension;
+    this->GetPixelIDFromImageIO( this->m_FileNames.front(), type, dimension );
 
-      if (dimension == 4) {
+    // increment for series
+    ++dimension;
 
-	  unsigned int size = this->GetDimensionFromImageIO( this->m_FileNames.front(), 2);
-	  if (size == 1)
-	      --dimension;
+    if (dimension == 4)
+      {
+      unsigned int size = this->GetDimensionFromImageIO( this->m_FileNames.front(), 2);
+      if (size == 1)
+      --dimension;
       }
 
-      if ( dimension != 2 && dimension != 3 )
-        {
-        sitkExceptionMacro( "The file in the series have unsupported " << dimension - 1 << " dimensions." );
-        }
+    if ( dimension != 2 && dimension != 3 )
+      {
+      sitkExceptionMacro( "The file in the series have unsupported " << dimension - 1 << " dimensions." );
+      }
 
-      if ( !this->m_MemberFactory->HasMemberFunction( type, dimension ) )
-        {
-        sitkExceptionMacro( << "PixelType is not supported!" << std::endl
-                            << "Pixel Type: "
-                            << GetPixelIDValueAsString( type ) << std::endl
-                            << "Refusing to load! " << std::endl );
-        }
+    if ( !this->m_MemberFactory->HasMemberFunction( type, dimension ) )
+      {
+      sitkExceptionMacro( << "PixelType is not supported!" << std::endl
+                          << "Pixel Type: "
+                          << GetPixelIDValueAsString( type ) << std::endl
+                          << "Refusing to load! " << std::endl );
+      }
 
-      return this->m_MemberFactory->GetMemberFunction( type, dimension )();
+    return this->m_MemberFactory->GetMemberFunction( type, dimension )();
     }
 
-  template <class TImageType>
-  Image
+  template <class TImageType> Image
   ImageSeriesReader::ExecuteInternal( void )
-  {
+    {
 
     typedef TImageType                        ImageType;
     typedef itk::ImageSeriesReader<ImageType> Reader;
@@ -134,7 +137,7 @@ namespace itk {
     reader->SetFileNames( this->m_FileNames );
     reader->Update();
     return Image( reader->GetOutput() );
-  }
+    }
 
   }
 }
