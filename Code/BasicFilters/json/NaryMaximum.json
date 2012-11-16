@@ -7,13 +7,49 @@
   "members" : [],
   "tests" : [
     {
-      "tag" : "default",
+      "tag" : "default2",
+      "description" : "max of 2 images",
+      "settings" : [],
+      "md5hash" : "00c5a06c3a1b3be415732bd5073450ef",
+      "inputs" : [
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-Zero-One-Float.nrrd"
+      ]
+    },
+    {
+      "tag" : "default3",
       "description" : "max of 3 images",
       "settings" : [],
       "md5hash" : "00c5a06c3a1b3be415732bd5073450ef",
       "inputs" : [
         "Input/Ramp-One-Zero-Float.nrrd",
         "Input/Ramp-Zero-One-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd"
+      ]
+    },
+    {
+      "tag" : "default4",
+      "description" : "max of 4 images",
+      "settings" : [],
+      "md5hash" : "00c5a06c3a1b3be415732bd5073450ef",
+      "inputs" : [
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-Zero-One-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd"
+
+      ]
+    },
+    {
+      "tag" : "default5",
+      "description" : "max of 4 images",
+      "settings" : [],
+      "md5hash" : "00c5a06c3a1b3be415732bd5073450ef",
+      "inputs" : [
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-Zero-One-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd",
         "Input/Ramp-One-Zero-Float.nrrd"
       ]
     }
