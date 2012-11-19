@@ -17,7 +17,7 @@ set(ITK_REPOSITORY git://itk.org/ITK.git)
 # NOTE: it is very important to update the ITK_DIR path with the
 # A version in the ITK 4.3 development which contains a patch for
 # SignedDanielssonDistanceMap
-set(ITK_TAG_COMMAND GIT_TAG af8d6ee5f9fa46a916b8b46e03a0b10b38b23e80 )
+set(ITK_TAG_COMMAND GIT_TAG v4.3rc01 )
 
 if( ${ITK_WRAPPING} OR ${BUILD_SHARED_LIBS} )
   set( ITK_BUILD_SHARED_LIBS ON )
