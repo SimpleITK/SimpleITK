@@ -39,11 +39,27 @@ set(__get_git_revision_description YES)
 # to find the path to this module rather than the path to a calling list file
 get_filename_component(_gitdescmoddir ${CMAKE_CURRENT_LIST_FILE} PATH)
 
-function(get_git_head_revision _refspecvar _hashvar)
-	set(GIT_DIR "${CMAKE_SOURCE_DIR}/.git")
-	if(NOT EXISTS "${GIT_DIR}")
+find_package(Git QUIET)
+
+function(get_git_head_revision _refvar _hashvar)
+	if(NOT GIT_EXECUTABLE)
+		set(${_refvar} "GIT-NOTFOUND" PARENT_SCOPE)
+		set(${_hashvar} "GIT-NOTFOUND" PARENT_SCOPE)
+		return()
+	endif()
+	execute_process(COMMAND ${GIT_EXECUTABLE} rev-parse --git-dir
+		WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+		OUTPUT_VARIABLE GIT_DIR
+		ERROR_VARIABLE error
+		RESULT_VARIABLE failed
+		OUTPUT_STRIP_TRAILING_WHITESPACE
+		)
+	if(NOT IS_ABSOLUTE "${GIT_DIR}")
+		set(GIT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/${GIT_DIR}")
+	endif()
+	if(failed OR NOT EXISTS "${GIT_DIR}/HEAD")
 		# not in git
-		set(${_refspecvar} "GITDIR-NOTFOUND" PARENT_SCOPE)
+		set(${_refvar} "GITDIR-NOTFOUND" PARENT_SCOPE)
 		set(${_hashvar} "GITDIR-NOTFOUND" PARENT_SCOPE)
 		return()
 	endif()
@@ -51,20 +67,30 @@ function(get_git_head_revision _refspecvar _hashvar)
 	if(NOT EXISTS "${GIT_DATA}")
 		file(MAKE_DIRECTORY "${GIT_DATA}")
 	endif()
-	set(HEAD_FILE "${GIT_DATA}/HEAD")
-	configure_file("${GIT_DIR}/HEAD" "${HEAD_FILE}" COPYONLY)
+	configure_file("${GIT_DIR}/HEAD" "${GIT_DATA}/HEAD" COPYONLY)
 
-	configure_file("${_gitdescmoddir}/GetGitRevisionDescription.cmake.in" "${GIT_DATA}/grabRef.cmake" @ONLY)
-	include("${GIT_DATA}/grabRef.cmake")
-
-	set(${_refspecvar} "${HEAD_REF}" PARENT_SCOPE)
+	file(STRINGS "${GIT_DIR}/HEAD" head LIMIT_COUNT 1 LIMIT_INPUT 1024)
+	if("${head}" MATCHES "^ref: (.*)$")
+		set(HEAD_REF "${CMAKE_MATCH_1}")
+		if(EXISTS "${GIT_DIR}/${HEAD_REF}")
+			configure_file("${GIT_DIR}/${HEAD_REF}" "${GIT_DATA}/HEAD-REF" COPYONLY)
+		endif()
+	else()
+		set(HEAD_REF "")
+	endif()
+	execute_process(COMMAND ${GIT_EXECUTABLE} rev-parse HEAD
+		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+		OUTPUT_VARIABLE HEAD_HASH OUTPUT_STRIP_TRAILING_WHITESPACE
+		ERROR_VARIABLE error
+		RESULT_VARIABLE failed)
+	if(failed)
+		set(HEAD_HASH "HEAD-HASH-NOTFOUND")
+	endif()
+	set(${_refvar} "${HEAD_REF}" PARENT_SCOPE)
 	set(${_hashvar} "${HEAD_HASH}" PARENT_SCOPE)
 endfunction()
 
 function(git_describe _var)
-	if(NOT GIT_FOUND)
-		find_package(Git QUIET)
-	endif()
 	get_git_head_revision(refspec hash)
 	if(NOT GIT_FOUND)
 		set(${_var} "GIT-NOTFOUND"  PARENT_SCOPE)
