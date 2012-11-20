@@ -14,6 +14,7 @@ set ( TestSource
   TypeListsTests.cxx
   BasicFiltersTests.cxx
   LabelStatisticsTest.cxx
+  sitkOperatorTests.cxx
   sitkExceptionsTests.cxx
   sitkTransformTests.cxx
   itkHashImageFilterTest.cxx
