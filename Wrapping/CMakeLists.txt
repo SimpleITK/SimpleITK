@@ -145,6 +145,7 @@ if ( WRAP_PYTHON )
       COMMAND ${ORIGINAL_PYTHON_EXECUTABLE}
         ${SimpleITK_SOURCE_DIR}/Utilities/virtualenv/virtualenv.py
         --python=${ORIGINAL_PYTHON_EXECUTABLE}
+        --distribute
         --clear
       ${PythonVirtualenvHome}
       COMMAND ${CMAKE_COMMAND} -E touch "${CMAKE_CURRENT_BINARY_DIR}/__init__.py"
