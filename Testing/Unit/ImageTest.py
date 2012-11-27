@@ -16,6 +16,8 @@
 #
 #==========================================================================*/
 
+from __future__ import print_function
+
 import SimpleITK as sitk
 import sys
 
@@ -58,9 +60,9 @@ image[1,1]
 image[ [ 1,1 ] ]
 
 if sum(image) != 6:
-    print "image sum not 6"
+    print( "image sum not 6" )
     sys.exit( 1 )
 
 if len( image ) != 100:
-    print "len not 100!"
+    print( "len not 100!" )
     sys.exit(1)

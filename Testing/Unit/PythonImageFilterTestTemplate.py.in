@@ -22,6 +22,7 @@
 # Please look at PythonImageFilterTestTemplate.py.in to make changes.
 #
 
+from __future__ import print_function
 
 # This is Python code to test ${name}
 import SimpleITK
@@ -33,7 +34,7 @@ $(if number_of_inputs then
   end)
 
 if len ( sys.argv ) < inputs + 2:
-    print ( "Usage: ${name} tag <input(s)> output" )
+    print( "Usage: ${name} tag <input(s)> output" )
     sys.exit ( 1 )
 
 tag = sys.argv[1]
@@ -44,7 +45,7 @@ filter = SimpleITK.${name}ImageFilter()
 
 $(if #tests == 0 then
     OUT=[[
-print ( "No tests defined!" )
+print( "No tests defined!" )
 sys.exit ( 1 )
     ]]
   end)
@@ -75,7 +76,7 @@ end)
     inputs = []
 
     for i in range(2, len(sys.argv)-1 ):
-      print "reading ", sys.argv[i]
+      print( "reading ", sys.argv[i] )
       inputs.append( SimpleITK.ReadImage( sys.argv[i] ) );
 
 
