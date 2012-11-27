@@ -80,7 +80,7 @@ namespace itk {
 
     };
 
-  SITKIO_EXPORT void WriteImage ( const Image& image, const std::string &filename, bool inUseCompression=true );
+  SITKIO_EXPORT void WriteImage ( const Image& image, const std::string &filename, bool inUseCompression=false );
   }
 }
 

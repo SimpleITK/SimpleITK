@@ -33,7 +33,7 @@ void WriteImage ( const Image& image, const std::string &inFileName, bool inUseC
 
 ImageFileWriter::ImageFileWriter()
   {
-  this->m_UseCompression = true;
+  this->m_UseCompression = false;
 
   this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 

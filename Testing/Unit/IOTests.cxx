@@ -155,7 +155,7 @@ TEST(IO,WriteOptions) {
 
   sitk::ImageFileWriter writer;
 
-  EXPECT_EQ( true, writer.GetUseCompression() );
+  EXPECT_EQ( false, writer.GetUseCompression() );
 
   writer.SetUseCompression( false );
   EXPECT_EQ( false, writer.GetUseCompression() );
