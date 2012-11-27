@@ -151,11 +151,36 @@ TEST(IO, SeriesReader) {
 
 }
 
+TEST(IO,WriteOptions) {
+
+  sitk::ImageFileWriter writer;
+
+  EXPECT_EQ( false, writer.GetUseCompression() );
+
+  writer.SetUseCompression( false );
+  EXPECT_EQ( false, writer.GetUseCompression() );
+
+  writer.UseCompressionOn();
+  EXPECT_EQ( true, writer.GetUseCompression() );
+
+  writer.UseCompressionOff();
+  EXPECT_EQ( false, writer.GetUseCompression() );
+
+  sitk::Image image = sitk::ReadImage( dataFinder.GetFile ( "Input/BlackDots.png" ) );
+  EXPECT_EQ ( "0188164c9932359b3f33f176d0d73661c4dc04a8", sitk::Hash( image ) );
+
+  writer.Execute( image, dataFinder.GetOutputFile( "with_compression.nrrd" ), true );
+  EXPECT_EQ( true, writer.GetUseCompression() );
+
+  writer.Execute( image, dataFinder.GetOutputFile( "without_compression.nrrd" ), false );
+  EXPECT_EQ( false, writer.GetUseCompression() );
+
+}
 
 TEST(IO,Write) {
 
   sitk::Image image = sitk::ReadImage( dataFinder.GetFile ( "Input/BlackDots.png" ) );
   EXPECT_EQ ( "0188164c9932359b3f33f176d0d73661c4dc04a8", sitk::Hash( image ) );
 
-  ASSERT_THROW(sitk::WriteImage( image, dataFinder.GetOutputFile ( "this.isafilenamewithnoimageio" ) ),  std::exception ) << "Chcking for assert on bad output image name.";
+  ASSERT_THROW(sitk::WriteImage( image, dataFinder.GetOutputFile ( "this.isafilenamewithnoimageio" ) ),  std::exception ) << "Checking for assert on bad output image name.";
 }

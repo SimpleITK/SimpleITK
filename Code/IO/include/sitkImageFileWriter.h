@@ -47,15 +47,30 @@ namespace itk {
 
       ImageFileWriter( void );
 
+      /** \brief Enable compression if available for file type.
+       *
+       * These methods Set/Get/Toggle the UseCompression flag which
+       * get's passed to image file's itk::ImageIO object. This is
+       * only a request as not all file formatts support compression.
+       * @{ */
+      Self& SetUseCompression( bool UseCompression );
+      bool GetUseCompression( void ) const;
+
+      Self & UseCompressionOn( void ) { return this->SetUseCompression(true); }
+      Self & UseCompressionOff( void ) { return this->SetUseCompression(false); }
+      /** @} */
+
       Self& SetFileName ( std::string fn );
       std::string GetFileName();
 
       Self& Execute ( const Image& );
+      Self& Execute ( const Image& , const std::string &inFileName, bool inUseCompression );
 
     private:
 
       template <class T> Self& ExecuteInternal ( const Image& );
 
+      bool m_UseCompression;
       std::string m_FileName;
 
       // friend to get access to executeInternal member
@@ -64,7 +79,8 @@ namespace itk {
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 
     };
-    SITKIO_EXPORT void WriteImage ( const Image& image, std::string filename );
+
+  SITKIO_EXPORT void WriteImage ( const Image& image, const std::string &filename, bool inUseCompression=false );
   }
 }
 
