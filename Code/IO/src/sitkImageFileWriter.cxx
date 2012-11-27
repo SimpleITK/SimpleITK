@@ -24,14 +24,34 @@
 
 namespace itk {
 namespace simple {
-  void WriteImage ( const Image& image, std::string filename ) { ImageFileWriter writer; writer.SetFileName ( filename ).Execute ( image ); }
+void WriteImage ( const Image& image, const std::string &inFileName, bool inUseCompression )
+  {
+    ImageFileWriter writer;
+    writer.Execute ( image, inFileName, inUseCompression );
+  }
+
 
 ImageFileWriter::ImageFileWriter()
   {
+  this->m_UseCompression = true;
+
   this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
+  }
+
+
+  ImageFileWriter::Self&
+  ImageFileWriter::SetUseCompression( bool UseCompression )
+  {
+    this->m_UseCompression = UseCompression;
+    return *this;
+  }
+
+  bool ImageFileWriter::GetUseCompression( void ) const
+  {
+    return this->m_UseCompression;
   }
 
 ImageFileWriter& ImageFileWriter::SetFileName ( std::string fn )
@@ -43,6 +63,13 @@ ImageFileWriter& ImageFileWriter::SetFileName ( std::string fn )
 std::string ImageFileWriter::GetFileName()
   {
   return this->m_FileName;
+  }
+
+  ImageFileWriter& ImageFileWriter::Execute ( const Image& image, const std::string &inFileName, bool inUseCompression )
+  {
+    this->SetFileName( inFileName );
+    this->SetUseCompression( inUseCompression );
+    return this->Execute( image );
   }
 
 ImageFileWriter& ImageFileWriter::Execute ( const Image& image )
@@ -62,7 +89,7 @@ ImageFileWriter& ImageFileWriter::ExecuteInternal( const Image& inImage )
 
     typedef itk::ImageFileWriter<InputImageType> Writer;
     typename Writer::Pointer writer = Writer::New();
-    writer->UseCompressionOn();
+    writer->SetUseCompression( this->m_UseCompression );
     writer->SetFileName ( this->m_FileName.c_str() );
     writer->SetInput ( image );
     writer->Update();
