@@ -17,13 +17,15 @@
 #
 #=========================================================================
 
+from __future__ import print_function
+
 import SimpleITK as sitk
 import sys
 import os
 import math
 
 if len ( sys.argv ) < 4:
-    print "Usage: FFTConvolution <input> <kernel> <output>";
+    print( "Usage: FFTConvolution <input> <kernel> <output>" )
     sys.exit ( 1 )
 
 
@@ -93,7 +95,7 @@ sitk.WriteImage( sitk.Cast( img, pixelID ), outputFileName )
 
 
 
-if ( not os.environ.has_key("SITK_NOSHOW") ):
+if ( not "SITK_NOSHOW" in os.environ ):
     sitk.Show( sitk.ReadImage( inputFileName ), "original" )
     sitk.Show( sitk.ReadImage( kernelFileName ), "kernel" )
     sitk.Show( sitk.Cast( img, pixelID ), "FFT_Convolution" )

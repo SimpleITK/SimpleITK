@@ -17,12 +17,14 @@
 #
 #=========================================================================
 
+from __future__ import print_function
+
 import SimpleITK as sitk
 import sys
 import os
 
 if len ( sys.argv ) < 2:
-    print "Usage: %s <input>" % ( sys.argv[0] )
+    print( "Usage: %s <input>" % ( sys.argv[0] ) )
     sys.exit ( 1 )
 
 
@@ -33,5 +35,5 @@ edges = sitk.CannyEdgeDetection( image, inLowerThreshold=200, inUpperThreshold=4
 stats = sitk.StatisticsImageFilter()
 stats.Execute( image )
 
-if ( not os.environ.has_key("SITK_NOSHOW") ):
+if ( not "SITK_NOSHOW" in os.environ ):
     sitk.Show( sitk.Maximum( image*0.5, edges*stats.GetMaximum()*.5) )

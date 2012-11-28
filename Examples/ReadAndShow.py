@@ -17,16 +17,18 @@
 #
 #=========================================================================
 
+from __future__ import print_function
+
 import SimpleITK as sitk
 import sys
 import os
 
 if len ( sys.argv ) != 2:
-    print "Usage: %s inputImage" % ( sys.argv[0] )
+    print( "Usage: %s inputImage" % ( sys.argv[0] ) )
     sys.exit ( 1 )
 
 inputImage = sitk.ReadImage( sys.argv[1] )
 
 
-if ( not os.environ.has_key("SITK_NOSHOW") ):
+if ( not "SITK_NOSHOW" in os.environ ):
     sitk.Show( inputImage )

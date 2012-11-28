@@ -16,12 +16,14 @@
 #
 #=========================================================================
 
+from __future__ import print_function
+
 import SimpleITK as sitk
 import os
 import sys
 
 if len ( sys.argv ) < 8:
-    print "Usage:", sys.argv[0], " <inputImage> <outputImage> <sigma> <InitialDistance> <PropagationScaling> <seedX> <seedY> <?seedZ>";
+    print( "Usage:", sys.argv[0], " <inputImage> <outputImage> <sigma> <InitialDistance> <PropagationScaling> <seedX> <seedY> <?seedZ>" )
     sys.exit ( 1 )
 
 inputImage = sys.argv[1]
@@ -72,5 +74,5 @@ print( "Elapsed Iterations: ", geodesicActiveContour.GetElapsedIterations() )
 
 contour = sitk.BinaryContour( sitk.BinaryThreshold( levelset, -1000, 0 ) )
 
-if ( not os.environ.has_key("SITK_NOSHOW") ):
+if ( not "SITK_NOSHOW" in os.environ ):
     sitk.Show( sitk.LabelOverlay( image, contour ), "Levelset Countour" )
