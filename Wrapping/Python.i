@@ -193,42 +193,42 @@
                return Less( self, other )
             try:
                return Less( self, float(other) )
-            except ValueError, TypeError:
+            except (ValueError, TypeError):
                return NotImplemented
         def __le__( self, other ):
             if isinstance( other, Image ):
                return LessEqual( self, other )
             try:
                return LessEqual( self, float(other) )
-            except ValueError, TypeError:
+            except (ValueError, TypeError):
                return NotImplemented
         def __eq__( self, other ):
             if isinstance( other, Image ):
                return Equal( self, other )
             try:
                return Equal( self, float(other) )
-            except ValueError, TypeError:
+            except (ValueError, TypeError):
                return NotImplemented
         def __ne__( self, other ):
             if isinstance( other, Image ):
                return NotEqual( self, other )
             try:
                return NotEqual( self, float(other) )
-            except ValueError, TypeError:
+            except (ValueError, TypeError):
                return NotImplemented
         def __gt__( self, other ):
             if isinstance( other, Image ):
                return Greater( self, other )
             try:
                return Greater( self, int(other) )
-            except ValueError, TypeError:
+            except (ValueError, TypeError):
                return NotImplemented
         def __ge__( self, other ):
             if isinstance( other, Image ):
                return GreaterEqual( self, other )
             try:
                return GreaterEqual( self, int(other) )
-            except ValueError, TypeError:
+            except (ValueError, TypeError):
                return NotImplemented
 
 
