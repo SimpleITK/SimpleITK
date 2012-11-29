@@ -12,7 +12,7 @@ set ( TestSource
   RegistrationTests.cxx
   IOTests.cxx
   TypeListsTests.cxx
-  BasicFiltersTests.cxx
+  sitkBasicFiltersTests.cxx
   LabelStatisticsTest.cxx
   sitkExceptionsTests.cxx
   itkHashImageFilterTest.cxx
