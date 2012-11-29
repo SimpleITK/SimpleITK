@@ -542,7 +542,7 @@ if ( WRAP_PYTHON )
     "${SimpleITK_SOURCE_DIR}/Testing/Unit/ImageTest.py" )
 
   add_python_test( Test.IOTest
-    "${SimpleITK_SOURCE_DIR}/Testing/Unit/ImageTest.py"
+    "${SimpleITK_SOURCE_DIR}/Testing/Unit/IOTest.py"
     "${TEST_HARNESS_TEMP_DIRECTORY}")
 
   # Numpy test.
