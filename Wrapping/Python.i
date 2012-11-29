@@ -206,7 +206,10 @@
             return
 
         def __len__( self ):
-            return reduce( operator.mul, self.GetSize(), 1 )
+            l = 1
+            for ds in self.GetSize():
+              l *= ds
+            return l
 
         # set/get pixel methods
 
