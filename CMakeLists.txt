@@ -23,15 +23,6 @@ if(ITK_FOUND)
   set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${ITK_REQUIRED_LINK_FLAGS}")
   set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${ITK_REQUIRED_LINK_FLAGS}")
 
-  # While CMake libraries nicely carry along the link library paths,
-  # this is not true for system or non-cmake libraries. So, it must be
-  # manually included.
-
-  # Add FFTW library directories
-  if (ITK_USE_FFTWF OR ITK_USE_FFTWD)
-    # TODO: this really should be added to the the ITKConfig.cmake
-    link_directories("${ITK_FFTW_LIBDIR}")
-  endif()
   link_directories( "${ITK_LIBRARY_DIRS}")
 
 
