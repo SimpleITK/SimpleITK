@@ -142,7 +142,7 @@ if ( WRAP_PYTHON )
       set( PYTHON_EXECUTABLE "${PythonVirtualenvHome}/bin/python" )
     endif()
 
-    # Numpy
+    # Manual numpy installation
     execute_process(
       COMMAND ${ORIGINAL_PYTHON_EXECUTABLE} -c "from __future__ import  print_function; import numpy; import os; print(os.path.dirname(numpy.__file__))"
       OUTPUT_VARIABLE NUMPY_PATH
@@ -162,6 +162,8 @@ if ( WRAP_PYTHON )
       endif ()
     endif()
 
+
+    # virtualenv creation
     add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_TARGET_NAME}
       POST_BUILD
       COMMAND ${ORIGINAL_PYTHON_EXECUTABLE}
