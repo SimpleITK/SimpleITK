@@ -151,36 +151,35 @@ TEST(IO, SeriesReader) {
 
 }
 
-TEST(IO,WriteOptions) {
-
-  sitk::ImageFileWriter writer;
-
-  EXPECT_EQ( false, writer.GetUseCompression() );
-
-  writer.SetUseCompression( false );
-  EXPECT_EQ( false, writer.GetUseCompression() );
-
-  writer.UseCompressionOn();
-  EXPECT_EQ( true, writer.GetUseCompression() );
-
-  writer.UseCompressionOff();
-  EXPECT_EQ( false, writer.GetUseCompression() );
-
-  sitk::Image image = sitk::ReadImage( dataFinder.GetFile ( "Input/BlackDots.png" ) );
-  EXPECT_EQ ( "0188164c9932359b3f33f176d0d73661c4dc04a8", sitk::Hash( image ) );
-
-  writer.Execute( image, dataFinder.GetOutputFile( "with_compression.nrrd" ), true );
-  EXPECT_EQ( true, writer.GetUseCompression() );
-
-  writer.Execute( image, dataFinder.GetOutputFile( "without_compression.nrrd" ), false );
-  EXPECT_EQ( false, writer.GetUseCompression() );
-
-}
 
 TEST(IO,Write) {
 
   sitk::Image image = sitk::ReadImage( dataFinder.GetFile ( "Input/BlackDots.png" ) );
   EXPECT_EQ ( "0188164c9932359b3f33f176d0d73661c4dc04a8", sitk::Hash( image ) );
 
-  ASSERT_THROW(sitk::WriteImage( image, dataFinder.GetOutputFile ( "this.isafilenamewithnoimageio" ) ),  std::exception ) << "Checking for assert on bad output image name.";
+  ASSERT_THROW(sitk::WriteImage( image, dataFinder.GetOutputFile ( "this.isafilenamewithnoimageio" ) ),  std::exception ) << "Chcking for assert on bad output image name.";
+}
+
+
+TEST(IO, DicomSeriesReader) {
+
+  std::vector< std::string > fileNames;
+  std::vector< std::string > seriesIDs;
+  std::string dicomDir;
+
+  sitk::ImageSeriesReader reader;
+
+  dicomDir = dataFinder.GetDirectory( ) + "/Input/DicomSeries";
+
+  seriesIDs = reader.GetGDCMSeriesIDs( dicomDir );
+
+  EXPECT_EQ( "1.2.840.113619.2.133.1762890640.1886.1055165015.999", seriesIDs[0] );
+
+  fileNames = reader.GetGDCMSeriesFileNames( dicomDir );
+
+  sitk::Image image = reader.SetFileNames( fileNames ).Execute();
+  EXPECT_EQ( "f5ad2854d68fc87a141e112e529d47424b58acfb", sitk::Hash( image ) );
+
+  fileNames = reader.GetGDCMSeriesFileNames( dicomDir, "1.2.840.113619.2.133.1762890640.1886.1055165015.999" );
+  EXPECT_EQ( 3u, fileNames.size() );
 }

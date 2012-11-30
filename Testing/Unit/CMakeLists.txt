@@ -10,7 +10,7 @@ set ( TestSource
   ImageTests.cxx
   CommonTests.cxx
   RegistrationTests.cxx
-  IOTests.cxx
+  sitkImageIOTests.cxx
   TypeListsTests.cxx
   sitkBasicFiltersTests.cxx
   LabelStatisticsTest.cxx
