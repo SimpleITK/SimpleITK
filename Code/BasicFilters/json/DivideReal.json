@@ -18,7 +18,7 @@
       "tag" : "defaults",
       "description" : "Simply run with default settings",
       "settings" : [],
-      "md5hash" : "af2d18b65fdfa4f9cb1e84c777b4a72b",
+      "tolerance" : "1e-8",
       "inputs" : [
         "Input/Ramp-Up-Short.nrrd",
         "Input/Ramp-Down-Short.nrrd"
