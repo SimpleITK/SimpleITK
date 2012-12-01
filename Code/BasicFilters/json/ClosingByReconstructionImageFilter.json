@@ -1,5 +1,5 @@
 {
-  "name" : "ClosingByReconstruction",
+  "name" : "ClosingByReconstructionImageFilter",
   "template_code_filename" : "KernelImageFilter",
   "number_of_inputs" : 1,
   "doc" : "",

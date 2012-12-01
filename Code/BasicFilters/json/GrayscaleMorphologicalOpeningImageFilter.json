@@ -1,5 +1,5 @@
 {
-  "name" : "GrayscaleMorphologicalOpening",
+  "name" : "GrayscaleMorphologicalOpeningImageFilter",
   "template_code_filename" : "KernelImageFilter",
   "number_of_inputs" : 1,
   "doc" : "Performs morphological opening in a grayscale image.",

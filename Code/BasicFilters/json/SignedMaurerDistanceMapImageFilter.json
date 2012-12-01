@@ -1,5 +1,5 @@
 {
-  "name" : "SignedMaurerDistanceMap",
+  "name" : "SignedMaurerDistanceMapImageFilter",
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
   "doc" : "Docs",

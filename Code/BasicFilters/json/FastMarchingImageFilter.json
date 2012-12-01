@@ -1,5 +1,5 @@
 {
-  "name" : "FastMarching",
+  "name" : "FastMarchingImageFilter",
   "itk_name" : "FastMarchingImageFilterBase",
   "include_files" : [
     "itkFastMarchingThresholdStoppingCriterion.h"

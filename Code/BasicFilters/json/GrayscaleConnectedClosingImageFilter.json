@@ -1,5 +1,5 @@
 {
-  "name" : "GrayscaleConnectedClosing",
+  "name" : "GrayscaleConnectedClosingImageFilter",
   "template_code_filename" : "ImageFilter",
   "template_type" : "ImageFilter",
   "number_of_inputs" : 1,

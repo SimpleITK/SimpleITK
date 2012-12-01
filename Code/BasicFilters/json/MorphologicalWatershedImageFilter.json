@@ -1,5 +1,5 @@
 {
-  "name" : "MorphologicalWatershed",
+  "name" : "MorphologicalWatershedImageFilter",
   "template_code_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "pixel_types" : "ScalarPixelIDTypeList",

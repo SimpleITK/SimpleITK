@@ -1,5 +1,5 @@
 {
-  "name" : "Abs",
+  "name" : "AbsImageFilter",
   "template_code_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "doc" : "Compute the voxel-wise absolute value of an image",

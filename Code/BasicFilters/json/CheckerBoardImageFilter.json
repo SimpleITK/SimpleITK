@@ -1,5 +1,5 @@
 {
-  "name" : "CheckerBoard",
+  "name" : "CheckerBoardImageFilter",
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
   "filter_type" : "itk::CheckerBoardImageFilter<InputImageType>",

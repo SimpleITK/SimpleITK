@@ -1,5 +1,5 @@
 {
-  "name" : "GrayscaleErode",
+  "name" : "GrayscaleErodeImageFilter",
   "template_code_filename" : "KernelImageFilter",
   "number_of_inputs" : 1,
   "doc" : "Performs Erode in a grayscale image.",

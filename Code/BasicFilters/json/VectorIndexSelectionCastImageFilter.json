@@ -1,5 +1,5 @@
 {
-  "name" : "VectorIndexSelectionCast",
+  "name" : "VectorIndexSelectionCastImageFilter",
   "template_code_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "doc" : "",

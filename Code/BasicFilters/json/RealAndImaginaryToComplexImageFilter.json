@@ -1,5 +1,5 @@
 {
-  "name" : "RealAndImaginaryToComplex",
+  "name" : "RealAndImaginaryToComplexImageFilter",
   "itk_name" : "ComposeImageFilter",
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",

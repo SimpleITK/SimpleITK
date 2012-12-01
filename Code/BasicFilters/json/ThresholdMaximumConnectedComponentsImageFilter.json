@@ -1,5 +1,5 @@
 {
-  "name" : "ThresholdMaximumConnectedComponents",
+  "name" : "ThresholdMaximumConnectedComponentsImageFilter",
   "template_code_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "doc" : "",

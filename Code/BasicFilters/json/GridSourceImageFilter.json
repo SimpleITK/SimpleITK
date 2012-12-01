@@ -1,5 +1,5 @@
 {
-  "name" : "GridSource",
+  "name" : "GridSourceImageFilter",
   "itk_name" : "GridImageSource",
   "template_code_filename" : "ImageSource",
   "template_test_filename" : "ImageFilter",

@@ -1,5 +1,5 @@
 {
-  "name" : "ConnectedThreshold",
+  "name" : "ConnectedThresholdImageFilter",
   "template_code_filename" : "RegionGrowingImageFilter",
   "template_type" : "RegionGrowing",
   "number_of_inputs" : 1,

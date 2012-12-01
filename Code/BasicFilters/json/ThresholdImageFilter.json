@@ -1,5 +1,5 @@
 {
-  "name" : "Threshold",
+  "name" : "ThresholdImageFilter",
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
   "filter_type" : "itk::ThresholdImageFilter<InputImageType>",

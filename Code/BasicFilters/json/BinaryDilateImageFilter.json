@@ -1,5 +1,5 @@
 {
-  "name" : "BinaryDilate",
+  "name" : "BinaryDilateImageFilter",
   "template_code_filename" : "KernelImageFilter",
   "number_of_inputs" : 1,
   "doc" : "Performs Dilation in a binary image.",

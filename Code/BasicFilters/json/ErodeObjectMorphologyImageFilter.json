@@ -1,5 +1,5 @@
 {
-  "name" : "ErodeObjectMorphology",
+  "name" : "ErodeObjectMorphologyImageFilter",
   "template_code_filename" : "KernelImageFilter",
   "number_of_inputs" : 1,
   "doc" : "Performs Erosion of an object.\n\\todo This filter is redundent with binary erode and fg/bg options",
