@@ -58,7 +58,7 @@ $(include CustomMethods.cxx.in)
 //$(if members and #members > 0 then
 OUT = [[
 
-Image ${name}ImageFilter::Execute ( const Image& image1,
+Image ${name}::Execute ( const Image& image1,
   std::vector< std::vector<unsigned int> > inTrialPoints$(foreach members ,
   ${type} in${name}) )
 {
@@ -125,7 +125,7 @@ Image ${name} ( const Image& imageA,
   std::vector< std::vector<unsigned int> > inTrialPoints$(when members $(foreach members ,
   ${type} in${name} ) ) )
 {
-  ${name}ImageFilter filter;
+  ${name} filter;
   return filter.Execute ( imageA, inTrialPoints$(when members $(foreach members , in${name} ) ) );
 }
 

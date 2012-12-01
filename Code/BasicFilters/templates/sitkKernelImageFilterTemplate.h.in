@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitk${name}ImageFilter_h
-#define __sitk${name}ImageFilter_h
+#ifndef __sitk${name}_h
+#define __sitk${name}_h
 
 $(include DoNotEditWarning.h.in)
 
@@ -28,7 +28,7 @@ $(include DoNotEditWarning.h.in)
 namespace itk {
   namespace simple {
 
-    /** \class ${name}ImageFilter
+    /** \class ${name}
      *
      * ${doc}
      */
@@ -81,23 +81,23 @@ $(include ClassEnd.h.in)
 
 
     /**
-     * itk::simple::${name}ImageFilter Functional Interface
+     * itk::simple::${name} Functional Interface
      *
-     * This function directly calls the execute method of ${name}ImageFilter
+     * This function directly calls the execute method of ${name}
      * in order to support a fully functional API
      */
   Image SITKBasicFilters_EXPORT ${name} ( const Image&$(if number_of_inputs == 2 then OUT=', const Image&' end),
-                                          uint32_t inRadius = 1, ${name}ImageFilter::KernelType inKernel =${name}ImageFilter::Ball
+                                          uint32_t inRadius = 1, ${name}::KernelType inKernel =${name}ImageFilter::Ball
                                           $(when members $(foreach members , ${type} in${name} = ${default})) );
 
    /**
-     * itk::simple::${name}ImageFilter Functional Interface
+     * itk::simple::${name} Functional Interface
      *
-     * This function directly calls the execute method of ${name}ImageFilter
+     * This function directly calls the execute method of ${name}
      * in order to support a fully functional API
      */
   Image SITKBasicFilters_EXPORT ${name} ( const Image&$(if number_of_inputs == 2 then OUT=', const Image&' end),
-                                          const std::vector<uint32_t> inVectorRadius, ${name}ImageFilter::KernelType inKernel =${name}ImageFilter::Ball
+                                          const std::vector<uint32_t> inVectorRadius, ${name}::KernelType inKernel =${name}ImageFilter::Ball
                                           $(when members $(foreach members , ${type} in${name} = ${default})) );
   }
 }

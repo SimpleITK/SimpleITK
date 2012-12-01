@@ -82,19 +82,19 @@ $(include CustomMethods.cxx.in)
 // Set/Get Member Properties
 //
 
-${name}ImageFilter::Self& ${name}ImageFilter::SetKernelRadius(uint32_t r)
+${name}::Self& ${name}ImageFilter::SetKernelRadius(uint32_t r)
 {
   this->m_BVectorRadius = false;
   this->m_KernelRadius = r;
   return *this;
 }
-${name}ImageFilter::Self& ${name}ImageFilter::SetKernelRadius(const std::vector<uint32_t>  &r )
+${name}::Self& ${name}ImageFilter::SetKernelRadius(const std::vector<uint32_t>  &r )
 {
   this->m_BVectorRadius = true;
   this->m_VectorKernelRadius = r;
   return *this;
 }
-std::vector<uint32_t> ${name}ImageFilter::GetKernelRadius() const
+std::vector<uint32_t> ${name}::GetKernelRadius() const
 {
 
   if ( !this->m_BVectorRadius )
@@ -104,12 +104,12 @@ std::vector<uint32_t> ${name}ImageFilter::GetKernelRadius() const
     }
   return this->m_VectorKernelRadius;
 }
-${name}ImageFilter::Self& ${name}ImageFilter::SetKernelType(KernelType t)
+${name}::Self& ${name}ImageFilter::SetKernelType(KernelType t)
 {
   this->m_KernelType = t;
   return *this;
 }
-${name}ImageFilter::KernelType ${name}ImageFilter::GetKernelType() const
+${name}::KernelType ${name}ImageFilter::GetKernelType() const
 {
   return this->m_KernelType;
 }
@@ -133,7 +133,7 @@ $(include ExecuteInternalGetImagePointers.cxx.in)
 
   // Use correct kernel types
   typedef itk::FlatStructuringElement< InputImageType::ImageDimension > ITKKernelType;
-  typedef itk::${name}ImageFilter<InputImageType,$(if number_of_inputs == 2 then OUT=[[ InputImageType,]] end)$(if additional_template_types then OUT=[[ $(foreach additional_template_types ${type},)]]end)$(if not no_output_type then OUT=[[ OutputImageType,]] end) ITKKernelType> FilterType;
+  typedef itk::${name}<InputImageType,$(if number_of_inputs == 2 then OUT=[[ InputImageType,]] end)$(if additional_template_types then OUT=[[ $(foreach additional_template_types ${type},)]]end)$(if not no_output_type then OUT=[[ OutputImageType,]] end) ITKKernelType> FilterType;
 
   ITKKernelType kernel;
   typename ITKKernelType::SizeType radius;
@@ -190,10 +190,10 @@ $(include ExecuteInternalUpdateAndReturn.cxx.in)
 // Function to run the Execute method of this filter
 //
 Image ${name} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end),
-                 uint32_t inRadius,  ${name}ImageFilter::KernelType inKernel
+                 uint32_t inRadius,  ${name}::KernelType inKernel
                  $(when members $(foreach members , ${type} in${name})) )
 {
-  ${name}ImageFilter filter;
+  ${name} filter;
   return filter.SetKernelRadius( inRadius ).SetKernelType( inKernel ).Execute ( imageA$(if number_of_inputs == 2 then OUT=', imageB' end)$(when members $(foreach members , in${name})) );
 }
 
@@ -202,10 +202,10 @@ Image ${name} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const 
 // Function to run the Execute method of this filter
 //
 Image ${name} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end),
-                 std::vector<uint32_t> inVectorRadius,  ${name}ImageFilter::KernelType inKernel
+                 std::vector<uint32_t> inVectorRadius,  ${name}::KernelType inKernel
                  $(when members $(foreach members , ${type} in${name})) )
 {
-  ${name}ImageFilter filter;
+  ${name} filter;
   return filter.SetKernelRadius( inVectorRadius ).SetKernelType( inKernel ).Execute ( imageA$(if number_of_inputs == 2 then OUT=', imageB' end)$(when members $(foreach members , in${name})) );
 }
 

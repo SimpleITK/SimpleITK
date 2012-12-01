@@ -1,1 +1,1 @@
-${name}ImageFilter::${name}ImageFilter ()
+${name}::${name}ImageFilter ()
