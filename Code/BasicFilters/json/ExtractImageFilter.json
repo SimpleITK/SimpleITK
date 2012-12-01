@@ -51,13 +51,13 @@
       "settings" : [
         {
           "parameter" : "DirectionCollapseToStrategy",
-          "value" : "itk::simple::${name}ImageFilter::DIRECTIONCOLLAPSETOIDENTITY",
-          "lua_value" : "SimpleITK.${name}ImageFilter_DIRECTIONCOLLAPSETOIDENTITY",
-          "python_value" : "SimpleITK.${name}ImageFilter.DIRECTIONCOLLAPSETOIDENTITY",
-          "ruby_value" : "Simpleitk::${name}ImageFilter::DIRECTIONCOLLAPSETOIDENTITY",
-          "java_value" : "${name}ImageFilter.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
-          "tcl_value" : "$$${name}ImageFilter_DIRECTIONCOLLAPSETOIDENTITY",
-          "csharp_value" : "itk.simple.${name}ImageFilter.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
+          "value" : "itk::simple::${name}::DIRECTIONCOLLAPSETOIDENTITY",
+          "lua_value" : "SimpleITK.${name}_DIRECTIONCOLLAPSETOIDENTITY",
+          "python_value" : "SimpleITK.${name}.DIRECTIONCOLLAPSETOIDENTITY",
+          "ruby_value" : "Simpleitk::${name}::DIRECTIONCOLLAPSETOIDENTITY",
+          "java_value" : "${name}.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
+          "tcl_value" : "$$${name}_DIRECTIONCOLLAPSETOIDENTITY",
+          "csharp_value" : "itk.simple.${name}.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
           "R_value" : "'DIRECTIONCOLLAPSETOIDENTITY'"
         }
       ],
@@ -92,13 +92,13 @@
         },
         {
           "parameter" : "DirectionCollapseToStrategy",
-          "value" : "itk::simple::${name}ImageFilter::DIRECTIONCOLLAPSETOIDENTITY",
-          "lua_value" : "SimpleITK.${name}ImageFilter_DIRECTIONCOLLAPSETOIDENTITY",
-          "python_value" : "SimpleITK.${name}ImageFilter.DIRECTIONCOLLAPSETOIDENTITY",
-          "ruby_value" : "Simpleitk::${name}ImageFilter::DIRECTIONCOLLAPSETOIDENTITY",
-          "java_value" : "${name}ImageFilter.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
-          "tcl_value" : "$$${name}ImageFilter_DIRECTIONCOLLAPSETOIDENTITY",
-          "csharp_value" : "itk.simple.${name}ImageFilter.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
+          "value" : "itk::simple::${name}::DIRECTIONCOLLAPSETOIDENTITY",
+          "lua_value" : "SimpleITK.${name}_DIRECTIONCOLLAPSETOIDENTITY",
+          "python_value" : "SimpleITK.${name}.DIRECTIONCOLLAPSETOIDENTITY",
+          "ruby_value" : "Simpleitk::${name}::DIRECTIONCOLLAPSETOIDENTITY",
+          "java_value" : "${name}.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
+          "tcl_value" : "$$${name}_DIRECTIONCOLLAPSETOIDENTITY",
+          "csharp_value" : "itk.simple.${name}.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
           "R_value" : "'DIRECTIONCOLLAPSETOIDENTITY'"
         }
       ],

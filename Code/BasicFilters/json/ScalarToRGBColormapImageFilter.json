@@ -35,13 +35,13 @@
       "settings" : [
         {
           "parameter" : "Colormap",
-          "value" : "itk::simple::${name}ImageFilter::Hot",
-          "lua_value" : "SimpleITK.${name}ImageFilter_Hot",
-          "python_value" : "SimpleITK.${name}ImageFilter.Hot",
-          "ruby_value" : "Simpleitk::${name}ImageFilter::Hot",
-          "java_value" : "${name}ImageFilter.ColormapType.Hot",
-          "tcl_value" : "$$${name}ImageFilter_Hot",
-          "csharp_value" : "itk.simple.${name}ImageFilter.ColormapType.Hot",
+          "value" : "itk::simple::${name}::Hot",
+          "lua_value" : "SimpleITK.${name}_Hot",
+          "python_value" : "SimpleITK.${name}.Hot",
+          "ruby_value" : "Simpleitk::${name}::Hot",
+          "java_value" : "${name}.ColormapType.Hot",
+          "tcl_value" : "$$${name}_Hot",
+          "csharp_value" : "itk.simple.${name}.ColormapType.Hot",
           "R_value" : "'Hot'"
         }
       ],

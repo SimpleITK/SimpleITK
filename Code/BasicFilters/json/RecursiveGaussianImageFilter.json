@@ -77,13 +77,13 @@
         },
         {
           "parameter" : "Order",
-          "value" : "itk::simple::${name}ImageFilter::FirstOrder",
-          "lua_value" : "SimpleITK.${name}ImageFilter_FirstOrder",
-          "python_value" : "SimpleITK.${name}ImageFilter.FirstOrder",
-          "ruby_value" : "Simpleitk::${name}ImageFilter::FirstOrder",
-          "java_value" : "${name}ImageFilter.OrderEnumType.FirstOrder",
-          "tcl_value" : "$$${name}ImageFilter_FirstOrder",
-          "csharp_value" : "${name}ImageFilter.OrderEnumType.FirstOrder",
+          "value" : "itk::simple::${name}::FirstOrder",
+          "lua_value" : "SimpleITK.${name}_FirstOrder",
+          "python_value" : "SimpleITK.${name}.FirstOrder",
+          "ruby_value" : "Simpleitk::${name}::FirstOrder",
+          "java_value" : "${name}.OrderEnumType.FirstOrder",
+          "tcl_value" : "$$${name}_FirstOrder",
+          "csharp_value" : "${name}.OrderEnumType.FirstOrder",
           "R_value" : "'FirstOrder'"
         }
       ],
