@@ -121,7 +121,7 @@ $(include ExecuteInternalUpdateAndReturn.cxx.in)
 //
 // Function to run the Execute method of this filter
 //
-Image ${name} ( const Image& imageA,
+Image ${name:match("(.*[^(ImageFilter)])")} ( const Image& imageA,
   std::vector< std::vector<unsigned int> > inTrialPoints$(when members $(foreach members ,
   ${type} in${name} ) ) )
 {

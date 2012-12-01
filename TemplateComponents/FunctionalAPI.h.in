@@ -6,7 +6,7 @@
      *
      * \sa itk::simple::${name} for the object oriented interface
      */
-    SITKBasicFilters_EXPORT Image ${name} ( $(include ImageParameters.in)$(for i = 1,#members do
+SITKBasicFilters_EXPORT Image ${name:match("(.*[^(ImageFilter)])")} ( $(include ImageParameters.in)$(for i = 1,#members do
   if (number_of_inputs > 0 or i > 1) then
     OUT = OUT .. ", "
   end

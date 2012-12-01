@@ -185,7 +185,7 @@ $(include ExecuteInternalUpdateAndReturn.cxx.in)
 $(include ExecuteInternalVectorImages.cxx.in)
 $(include FunctionalAPI.cxx.in)
 
-Image ${name} ( const Image& image1, ${constant_type} constant$(include MemberParameters.in) )
+Image ${name:match("(.*[^(ImageFilter)])")} ( const Image& image1, ${constant_type} constant$(include MemberParameters.in) )
 {
   ${name} filter;
   return filter.Execute ( image1, constant$(for i = 1,#members do
@@ -196,7 +196,7 @@ Image ${name} ( const Image& image1, ${constant_type} constant$(include MemberPa
                             end) );
 }
 
-Image ${name} ( ${constant_type} constant, const Image& image2$(include MemberParameters.in) )
+Image ${name:match("(.*[^(ImageFilter)])")} ( ${constant_type} constant, const Image& image2$(include MemberParameters.in) )
 {
   ${name} filter;
   return filter.Execute ( constant, image2$(for i = 1,#members do

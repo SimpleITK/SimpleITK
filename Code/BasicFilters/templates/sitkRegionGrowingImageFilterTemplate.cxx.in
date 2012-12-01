@@ -109,7 +109,7 @@ $(include ExecuteInternalUpdateAndReturn.cxx.in)
 //
 // Function to run the Execute method of this filter
 //
-Image ${name} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end),
+Image ${name:match("(.*[^(ImageFilter)])")} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end),
   std::vector< std::vector<unsigned int> > inSeedList$(when members $(foreach members ,
   ${type} in${name} ) ) )
 {

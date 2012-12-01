@@ -189,7 +189,7 @@ $(include ExecuteInternalUpdateAndReturn.cxx.in)
 //
 // Function to run the Execute method of this filter
 //
-Image ${name} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end),
+Image ${name:match("(.*[^(ImageFilter)])")} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end),
                  uint32_t inRadius,  ${name}::KernelType inKernel
                  $(when members $(foreach members , ${type} in${name})) )
 {
@@ -201,7 +201,7 @@ Image ${name} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const 
 //
 // Function to run the Execute method of this filter
 //
-Image ${name} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end),
+Image ${name:match("(.*[^(ImageFilter)])")} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end),
                  std::vector<uint32_t> inVectorRadius,  ${name}::KernelType inKernel
                  $(when members $(foreach members , ${type} in${name})) )
 {
