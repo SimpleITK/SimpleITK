@@ -46,7 +46,7 @@ if ( numberOfArguments < inputs + 2) {
 tag <- args[[1]]
 
 writer <- ImageFileWriter()
-filter <- ${name}ImageFilter()
+filter <- ${name}()
 
 $(if #tests == 0 then
     OUT=[[

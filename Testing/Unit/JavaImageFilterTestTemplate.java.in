@@ -27,7 +27,7 @@ import java.math.BigInteger;
 // This is Java code to test ${name}
 import org.itk.simple.*;
 
-class ${name}ImageFilterTest {
+class ${name}Test {
 
   public static void main( String argv[] ) {
 
@@ -48,7 +48,7 @@ class ${name}ImageFilterTest {
     // Instantiate objects
     ImageFileReader reader = new ImageFileReader();
     ImageFileWriter writer = new ImageFileWriter();
-    ${name}ImageFilter filter = new ${name}ImageFilter();
+    ${name} filter = new ${name}ImageFilter();
 
     $(if #tests == 0 then
     OUT=[[

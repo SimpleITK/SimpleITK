@@ -38,7 +38,7 @@ if { [llength [set argv]] < ( [set inputs] + 1 ) } {
 set tag [lindex [set argv] 0]
 set ValidTags ""
 ImageFileWriter writer
-${name}ImageFilter filter
+${name} filter
 
 $(if #tests == 0 then
     OUT=[[puts "No tests defined!"; exit 1;]]
