@@ -82,13 +82,13 @@ $(include CustomMethods.cxx.in)
 // Set/Get Member Properties
 //
 
-${name}::Self& ${name}ImageFilter::SetKernelRadius(uint32_t r)
+${name}::Self& ${name}::SetKernelRadius(uint32_t r)
 {
   this->m_BVectorRadius = false;
   this->m_KernelRadius = r;
   return *this;
 }
-${name}::Self& ${name}ImageFilter::SetKernelRadius(const std::vector<uint32_t>  &r )
+${name}::Self& ${name}::SetKernelRadius(const std::vector<uint32_t>  &r )
 {
   this->m_BVectorRadius = true;
   this->m_VectorKernelRadius = r;
@@ -104,12 +104,12 @@ std::vector<uint32_t> ${name}::GetKernelRadius() const
     }
   return this->m_VectorKernelRadius;
 }
-${name}::Self& ${name}ImageFilter::SetKernelType(KernelType t)
+${name}::Self& ${name}::SetKernelType(KernelType t)
 {
   this->m_KernelType = t;
   return *this;
 }
-${name}::KernelType ${name}ImageFilter::GetKernelType() const
+${name}::KernelType ${name}::GetKernelType() const
 {
   return this->m_KernelType;
 }
