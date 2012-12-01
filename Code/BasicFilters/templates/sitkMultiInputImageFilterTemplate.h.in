@@ -106,12 +106,12 @@ $(include PrivateMemberDeclarations.h.in)$(include ClassEnd.h.in)
      *
      * \sa itk::simple::${name} for the object oriented interface
      */
-     SITKBasicFilters_EXPORT Image ${name:match("(.*[^(ImageFilter)])")} ( const std::vector<Image> &images$(when members $(foreach members ,
+     SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", "")} ( const std::vector<Image> &images$(when members $(foreach members ,
       ${type} in${name} = ${default})) );
 
 $(for inum=1,5 do
   OUT=OUT..[[
-     SITKBasicFilters_EXPORT Image ${name:match("(.*[^(ImageFilter)])")} ( const Image& image1]]
+     SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", "")} ( const Image& image1]]
 
   for jnum=2,inum do
     OUT=OUT .. ', const Image& image' .. jnum

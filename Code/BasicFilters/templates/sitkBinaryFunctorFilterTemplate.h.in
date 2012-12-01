@@ -62,13 +62,13 @@ $(include MemberFunctionDispatch.h.in)
 $(include PrivateMemberDeclarations.h.in)$(include ClassEnd.h.in)
 
 $(include FunctionalAPI.h.in)
-    SITKBasicFilters_EXPORT Image ${name:match("(.*[^(ImageFilter)])")} ( const Image& image1, ${constant_type} constant$(for i = 1,#members do
+    SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", "")} ( const Image& image1, ${constant_type} constant$(for i = 1,#members do
   if (number_of_inputs > 0 or i > 1) then
     OUT = OUT .. ", "
   end
     OUT= OUT .. members[i].type .. ' in' .. members[i].name .. " = " .. members[i].default
 end) );
-    SITKBasicFilters_EXPORT Image ${name:match("(.*[^(ImageFilter)])")} ( ${constant_type} constant, const Image& image2$(for i = 1,#members do
+    SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", "")} ( ${constant_type} constant, const Image& image2$(for i = 1,#members do
   if (number_of_inputs > 0 or i > 1) then
     OUT = OUT .. ", "
   end
