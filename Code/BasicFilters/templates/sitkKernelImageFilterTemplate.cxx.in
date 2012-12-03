@@ -38,8 +38,7 @@ namespace simple {
 //
 $(include ConstructorSignature.cxx.in)
 {
-  this->m_BVectorRadius = false;
-  this->m_KernelRadius = 1;
+  this->m_KernelRadius = std::vector<uint32_t>( 3, 1 );
   this->m_KernelType = Ball;
 $(include ConstructorInitializeMembers.cxx.in)
 $(include ConstructorMemberFunctionSetup.cxx.in)
@@ -84,25 +83,18 @@ $(include CustomMethods.cxx.in)
 
 ${name}ImageFilter::Self& ${name}ImageFilter::SetKernelRadius(uint32_t r)
 {
-  this->m_BVectorRadius = false;
-  this->m_KernelRadius = r;
+  this->m_KernelRadius.resize(3);
+  std::fill( this->m_KernelRadius.begin(), this->m_KernelRadius.end(), r );
   return *this;
 }
 ${name}ImageFilter::Self& ${name}ImageFilter::SetKernelRadius(const std::vector<uint32_t>  &r )
 {
-  this->m_BVectorRadius = true;
-  this->m_VectorKernelRadius = r;
+  this->m_KernelRadius = r;
   return *this;
 }
 std::vector<uint32_t> ${name}ImageFilter::GetKernelRadius() const
 {
-
-  if ( !this->m_BVectorRadius )
-    {
-    // copy scalar radius to std vector
-    return std::vector<uint32_t>( 1, this->m_KernelRadius);
-    }
-  return this->m_VectorKernelRadius;
+  return this->m_KernelRadius;
 }
 ${name}ImageFilter::Self& ${name}ImageFilter::SetKernelType(KernelType t)
 {
@@ -131,32 +123,14 @@ $(include ExecuteInternalTypedefs.cxx.in)
 
 $(include ExecuteInternalGetImagePointers.cxx.in)
 
+
   // Use correct kernel types
   typedef itk::FlatStructuringElement< InputImageType::ImageDimension > ITKKernelType;
   typedef itk::${name}ImageFilter<InputImageType,$(if number_of_inputs == 2 then OUT=[[ InputImageType,]] end)$(if additional_template_types then OUT=[[ $(foreach additional_template_types ${type},)]]end)$(if not no_output_type then OUT=[[ OutputImageType,]] end) ITKKernelType> FilterType;
 
   ITKKernelType kernel;
-  typename ITKKernelType::SizeType radius;
+  typename ITKKernelType::SizeType radius = sitkSTLVectorToITK<typename ITKKernelType::SizeType>( this->m_KernelRadius );
 
-  // set the radius via vector or scalar
-  if ( this->m_BVectorRadius )
-    {
-    for ( unsigned int i = 0; i < InputImageType::ImageDimension; ++i )
-      {
-      if ( i < this->m_VectorKernelRadius.size() )
-        {
-        radius[i] = this->m_VectorKernelRadius[i];
-        }
-      else
-        {
-        radius[i] = 1;
-        }
-      }
-    }
-  else
-    {
-    radius.Fill( this->m_KernelRadius );
-    }
   switch (m_KernelType)
     {
     case Annulus:
@@ -176,7 +150,6 @@ $(include ExecuteInternalGetImagePointers.cxx.in)
     }
 
   typename FilterType::Pointer filter = FilterType::New();
-
 $(include ExecuteInternalSetITKFilterInputs.cxx.in)
   filter->SetKernel( kernel );
 $(include ExecuteInternalUpdateAndReturn.cxx.in)
