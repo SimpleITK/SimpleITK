@@ -124,7 +124,7 @@ endif()
 #------------------------------------------------------------------------------
 # WIN32 /bigobj is required for windows builds because of the size of
 #------------------------------------------------------------------------------
-if (WIN32)
+if (MSVC)
   # some object files (CastImage for instance)
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj" )
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /bigobj" )
