@@ -46,7 +46,7 @@
           "lua_value" : "15000",
           "python_value" : "15000",
           "ruby_value" : "15000",
-          "java_value" : "15000",
+          "java_value" : "BigInteger.valueOf(15000)",
           "tcl_value" : "15000",
           "R_value" : "15000"
         }
