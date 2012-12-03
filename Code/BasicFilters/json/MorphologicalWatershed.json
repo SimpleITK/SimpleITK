@@ -9,6 +9,7 @@
       "name" : "Level",
       "type" : "double",
       "default" : "0.0",
+      "pixeltype" : "Input",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "",
       "briefdescriptionGet" : "",
