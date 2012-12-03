@@ -47,7 +47,21 @@ $(include PrivateMemberDeclarations.h.in)
 $(include ClassEnd.h.in)
 
 
-$(include FunctionalAPI.h.in)
+
+   /**
+     * \brief itk::simple::${name} Procedural Interface
+     *
+     * This function directly calls the execute method of ${name}
+     * in order to support a procedual API
+     *
+     * \sa itk::simple::${name} for the object oriented interface
+     */
+SITKBasicFilters_EXPORT Image ${name:gsub("ImageSource$", "Source")} ( $(include ImageParameters.in)$(for i = 1,#members do
+  if (number_of_inputs > 0 or i > 1) then
+    OUT = OUT .. ", "
+  end
+    OUT= OUT .. members[i].type .. " " .. members[i].name:sub(1,1):lower() .. members[i].name:sub(2,-1) .. " = " .. members[i].default
+end) );
   }
 }
 #endif
