@@ -128,8 +128,6 @@ if ( WRAP_PYTHON )
   if ( BUILD_TESTING )
 
     set( PythonVirtualenvHome "${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVirtualenv" )
-    set( PythonVirtualenvLib "${PythonVirtualenvHome}/lib/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/" )
-
 
     set( ORIGINAL_PYTHON_EXECUTABLE ${PYTHON_EXECUTABLE} )
 
@@ -142,39 +140,17 @@ if ( WRAP_PYTHON )
       set( PYTHON_EXECUTABLE "${PythonVirtualenvHome}/bin/python" )
     endif()
 
-    # Manual numpy installation
-    execute_process(
-      COMMAND ${ORIGINAL_PYTHON_EXECUTABLE} -c "from __future__ import  print_function; import numpy; import os; print(os.path.dirname(numpy.__file__))"
-      OUTPUT_VARIABLE NUMPY_PATH
-      ERROR_VARIABLE error
-      RESULT_VARIABLE failed
-      OUTPUT_STRIP_TRAILING_WHITESPACE
-      )
-
-    set( _numpy_copycmd "" )
-    if( failed )
-      message( WARNING "Failed to determine numpy.__file__ path: \"${error}\"" )
-    else()
-      if ( UNIX )
-        set ( _numpy_copycmd COMMAND ${CMAKE_COMMAND} -E create_symlink "${NUMPY_PATH}" "${PythonVirtualenvLib}/numpy" )
-      else ()
-        set ( _numpy_copycmd COMMAND ${CMAKE_COMMAND} -E copy_directory "${NUMPY_PATH}" "${PythonVirtualenvLib}/numpy" )
-      endif ()
-    endif()
-
+    # configure a scripts which creates the virtualenv and installs numpy
+    configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/PythonVirtualEnvInstall.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/PythonVirtualEnvInstall.cmake"
+    @ONLY )
 
     # virtualenv creation
     add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_TARGET_NAME}
       POST_BUILD
-      COMMAND ${ORIGINAL_PYTHON_EXECUTABLE}
-        ${SimpleITK_SOURCE_DIR}/Utilities/virtualenv/virtualenv.py
-        --python=${ORIGINAL_PYTHON_EXECUTABLE}
-        --distribute
-        --clear
-      ${PythonVirtualenvHome}
-      COMMAND ${CMAKE_COMMAND} -E touch "${CMAKE_CURRENT_BINARY_DIR}/__init__.py"
+      COMMAND ${CMAKE_COMMAND} -P "${CMAKE_CURRENT_BINARY_DIR}/PythonVirtualEnvInstall.cmake"
       COMMAND ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/setup.py" install
-      ${_numpy_copycmd}
       COMMENT "Installing python module to the virtualenv" )
 
   endif()
@@ -187,7 +163,7 @@ endif()
 #
 if ( WRAP_RUBY )
   find_package ( Ruby REQUIRED )
-  include_directories ( ${RUBY_INCLUDE_DIRS} )
+
 
   # Run swig
   set(CMAKE_SWIG_FLAGS -autorename -module simpleitk ${CMAKE_SWIG_GLOBAL_FLAGS})
