@@ -56,7 +56,7 @@ Image ${name}ImageFilter::Execute ( const std::vector<Image> &images$(include Me
 {
 $(foreach members
 $(if (not no_set_method) or (no_set_method == 0) then
-OUT = '  this->Set${name} ( in${name} );'
+OUT = '  this->Set${name} ( ${name:sub(1,1):lower() .. name:sub(2,-1)} );'
 end)
 )
   return this->Execute ( images );
@@ -82,7 +82,7 @@ Image ${name}ImageFilter::Execute ( const Image& image1]]
 
   OUT=OUT .. [[
   return this->Execute( images$(for i = 1,#members do
-                        OUT= OUT .. ', in' .. members[i].name
+                        OUT= OUT .. ', ' .. members[i].name:sub(1,1):lower() .. members[i].name:sub(2,-1)
                           end) );
 }
 
@@ -170,7 +170,7 @@ Image ${name} ( const std::vector<Image> & images$(include MemberParameters.in) 
 {
   ${name}ImageFilter filter;
   return filter.Execute ( images$(for i = 1,#members do
-                          OUT= OUT .. ', in' .. members[i].name
+                          OUT= OUT .. ', ' .. members[i].name:sub(1,1):lower() .. members[i].name:sub(2,-1)
                           end) );
 }
 $(for inum=1,5 do
@@ -192,7 +192,7 @@ Image ${name} ( const Image& image1]]
   end
 
   for i = 1,#members do
-    OUT= OUT .. ', in' .. members[i].name
+    OUT= OUT .. ', ' .. members[i].name:sub(1,1):lower() .. members[i].name:sub(2,-1)
   end
 
   OUT=OUT..[[ );

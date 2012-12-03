@@ -60,7 +60,7 @@ namespace itk {
       Self & UseCompressionOff( void ) { return this->SetUseCompression(false); }
       /** @} */
 
-      Self& SetFileName ( std::string fn );
+      Self& SetFileName ( std::string fileName );
       std::string GetFileName();
 
       Self& Execute ( const Image& );
@@ -80,7 +80,7 @@ namespace itk {
 
     };
 
-  SITKIO_EXPORT void WriteImage ( const Image& image, const std::string &filename, bool inUseCompression=false );
+  SITKIO_EXPORT void WriteImage ( const Image& image, const std::string &fileName, bool inUseCompression=false );
   }
 }
 
