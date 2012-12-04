@@ -1,0 +1,24 @@
+{
+  "name" : "LabelMapToLabelImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "output_image_type" : "itk::Image<typename InputImageType::LabelType , InputImageType::ImageDimension>",
+  "number_of_inputs" : 1,
+  "doc" : "Docs",
+  "pixel_types" : "LabelPixelIDTypeList",
+  "members" : [],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "Simply run with default settings",
+      "inputA_cast" : "sitkLabelUInt8",
+      "md5hash" : "12d50e2d291cf91b0384bd1eb123b0f0",
+      "settings" : [],
+      "inputs" : [
+        "Input/2th_cthead1.mha"
+      ]
+    }
+  ],
+  "briefdescription" : "Converts a LabelMapto a labeled image.\n",
+  "detaileddescription" : " LabelMapToBinaryImageFilterto a label image.\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\\see  LabelMapToBinaryImageFilter, LabelMapMaskImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Convert a LabelMap to a normal image with different values representing each region\n\n"
+}

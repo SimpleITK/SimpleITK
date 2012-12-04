@@ -1,0 +1,48 @@
+{
+  "name" : "NormalizeToConstantImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "output_pixel_type" : "typename itk::NumericTraits<typename InputImageType::PixelType>::RealType",
+  "members" : [
+    {
+      "name" : "Constant",
+      "type" : "double",
+      "default" : "1.0",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/get the normalization constant.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/get the normalization constant.\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Simply run with default settings",
+      "settings" : [],
+      "tolerance" : "0.0001",
+      "inputs" : [
+        "Input/Ramp-Up-Short.nrrd"
+      ]
+    },
+    {
+      "tag" : "vector",
+      "description" : "Running with vector image to normalize to 0",
+      "settings" : [
+        {
+          "parameter" : "Constant",
+          "value" : "0.0"
+        }
+      ],
+      "tolerance" : "0.0001",
+      "inputs" : [
+        "Input/VM1111Shrink-RGB.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Scales image pixel intensities to make the sum of all pixels equal a user-defined constant.\n",
+  "detaileddescription" : "The default value of the constant is 1. It can be changed with SetConstant().\nThis transform is especially useful for normalizing a convolution kernel.\nThis code was contributed in the Insight Journal paper: \"FFT based\n convolution\" by Lehmann G.http://hdl.handle.net/10380/3154\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\\see  NormalizeImageFilter\n\\see \n\\see  StatisticsImageFilter\n\\see \n\\see  DivideImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Scale all pixels so that their sum is a specified constant\n\n"
+}

@@ -1,0 +1,73 @@
+{
+  "name" : "NoiseImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "public_declarations" : "Self &SetRadius( unsigned int r ) { this->m_Radius = std::vector<unsigned int>(3, r ); return *this; }",
+  "members" : [
+    {
+      "name" : "Radius",
+      "type" : "std::vector<unsigned int>",
+      "default" : "std::vector<unsigned int>(3, 1)",
+      "dim_vec" : 1,
+      "doc" : "",
+      "itk_type" : "typename FilterType::RadiusType"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Test MeanImageFilter with default parametrs",
+      "md5hash" : "76b7e9b810eb9396b7bb636b4f8b5d23",
+      "settings" : [],
+      "inputs" : [
+        "Input/VM1111Shrink-RGBFloat.nrrd"
+      ]
+    },
+    {
+      "tag" : "by23",
+      "description" : "Test by 23",
+      "md5hash" : "4d05e86ba6a96eeaf6217e317c85dbfa",
+      "settings" : [
+        {
+          "parameter" : "Radius",
+          "type" : "unsigned int",
+          "dim_vec" : 1,
+          "value" : "{2,3}",
+          "tcl_value" : "[list 2 3]",
+          "python_value" : "[ 2, 3 ]",
+          "ruby_value" : "[ 2, 3 ]",
+          "R_value" : "c( 2, 3 )"
+        }
+      ],
+      "inputs" : [
+        "Input/VM1111Shrink-RGB.png"
+      ]
+    },
+    {
+      "tag" : "by333",
+      "description" : "Test by 333",
+      "md5hash" : "fc4975287b204ba91dd4d85523b91a06",
+      "settings" : [
+        {
+          "parameter" : "Radius",
+          "type" : "unsigned int",
+          "dim_vec" : 1,
+          "value" : "{3,3,3}",
+          "tcl_value" : "[list 3 3 3]",
+          "python_value" : "[ 3, 3, 3 ]",
+          "ruby_value" : "[ 3, 3, 3 ]",
+          "R_value" : "c( 3, 3, 3 )"
+        }
+      ],
+      "inputs" : [
+        "Input/RA-Short.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "Calculate the local noise in an image.\n",
+  "detaileddescription" : "Computes an image where a given pixel is the standard deviation of the pixels in a neighborhood about the corresponding input pixel. This serves as an estimate of the local noise (or texture) in an image. Currently, this noise estimate assume a piecewise constant image. This filter should be extended to fitting a (hyper) plane to the neighborhood and calculating the standard deviation of the residuals to this (hyper) plane.\n\\see  Image\n\\see \n\\see  Neighborhood\n\\see \n\\see  NeighborhoodOperator\n\\see \n\\see  NeighborhoodIterator\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Compute the local noise in an image\n\n"
+}

@@ -60,8 +60,8 @@ macro( expand_template FILENAME input_dir output_dir library_name )
   # Set common variables
   set ( expand_template_script ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua )
   set ( template_include_dir ${SimpleITK_SOURCE_DIR}/TemplateComponents )
-  set ( output_h "${output_dir}/include/sitk${FILENAME}ImageFilter.h" )
-  set ( output_cxx "${output_dir}/src/sitk${FILENAME}ImageFilter.cxx" )
+  set ( output_h "${output_dir}/include/sitk${FILENAME}.h" )
+  set ( output_cxx "${output_dir}/src/sitk${FILENAME}.cxx" )
 
   set ( input_json_file ${input_dir}/json/${FILENAME}.json )
   set ( template_file_h ${input_dir}/templates/sitkImageFilterTemplate.h.in )
@@ -178,8 +178,8 @@ macro(generate_filter_source)
   file ( APPEND ${generated_headers_h} "#define __SimpleITK${directory_name}GeneratedHeaders_h\n")
 
   foreach ( filter ${GENERATED_FILTER_LIST} )
-    file ( APPEND ${generated_headers_h} "#include \"sitk${filter}ImageFilter.h\"\n" )
-    file ( APPEND ${generated_headers_i} "%include \"sitk${filter}ImageFilter.h\"\n" )
+    file ( APPEND ${generated_headers_h} "#include \"sitk${filter}.h\"\n" )
+    file ( APPEND ${generated_headers_i} "%include \"sitk${filter}.h\"\n" )
   endforeach()
 
   file ( APPEND ${generated_headers_h} "#endif\n")

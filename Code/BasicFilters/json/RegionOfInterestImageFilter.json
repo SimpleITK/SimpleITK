@@ -1,0 +1,77 @@
+{
+  "name" : "RegionOfInterestImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "The RegionOfInterest filter extract an N-D image from an N-D image. If a 2-D image is desired then the Extract image filter should be used.",
+  "pixel_types" : "NonLabelPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "Size",
+      "type" : "std::vector<unsigned int>",
+      "default" : "std::vector<unsigned int>(3, 1)",
+      "dim_vec" : 1,
+      "itk_type" : "typename InputImageType::SizeType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "",
+      "custom_itk_cast" : ""
+    },
+    {
+      "name" : "Index",
+      "type" : "std::vector<int>",
+      "default" : "std::vector<int>(3, 0)",
+      "dim_vec" : 1,
+      "itk_type" : "typename InputImageType::IndexType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "\todo the internal setting of the method need work!!!",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "",
+      "custom_itk_cast" : " typename InputImageType::RegionType itkRegion;\n  for( unsigned int i = 0; i < inImage1.GetDimension(); ++i )\n    {\n    itkRegion.SetIndex( i, m_Index[i] );\n    itkRegion.SetSize( i, m_Size[i] );\n    }\n  filter->SetRegionOfInterest( itkRegion );"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "use the defaults which sets a 0 size image",
+      "md5hash" : "f1d3ff8443297732862df21dc4e57262",
+      "settings" : [],
+      "inputs" : [
+        "Input/RA-Float.nrrd"
+      ]
+    },
+    {
+      "tag" : "more",
+      "description" : "croping",
+      "md5hash" : "1b6e2f0bfb379619334f3c25e0e408a1",
+      "settings" : [
+        {
+          "parameter" : "Size",
+          "type" : "unsigned int",
+          "dim_vec" : 1,
+          "value" : "{10, 10}",
+          "tcl_value" : "[list 10 10]",
+          "python_value" : "[ 10, 10 ]",
+          "ruby_value" : "[ 10, 10 ]",
+          "R_value" : "c( 10, 10) "
+        },
+        {
+          "parameter" : "Index",
+          "type" : "int",
+          "dim_vec" : 1,
+          "value" : "{167, 151}",
+          "tcl_value" : "[list 167 151]",
+          "python_value" : "[ 167, 151 ]",
+          "ruby_value" : "[ 167, 151 ]",
+          "R_value" : "c( 167, 151 )"
+        }
+      ],
+      "inputs" : [
+        "Input/VM1111Shrink-RGB.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Extract a region of interest from the input image.\n",
+  "detaileddescription" : "This filter produces an output image of the same dimension as the input image. The user specifies the region of the input image that will be contained in the output image. The origin coordinates of the output images will be computed in such a way that if mapped to physical space, the output image will overlay the input image with perfect registration. In other words, a registration process between the output image and the input image will return an identity transform.\nIf you are interested in changing the dimension of the image, you may want to consider the ExtractImageFilter. For example for extracting a 2D image from a slice of a 3D image.\nThe region to extract is set using the method SetRegionOfInterest.\n\\see  ExtractImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Extract a portion of an image (region of interest)\n\n"
+}

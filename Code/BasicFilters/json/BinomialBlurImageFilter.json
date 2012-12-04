@@ -1,0 +1,34 @@
+{
+  "name" : "BinomialBlurImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "Repetitions",
+      "type" : "unsigned int",
+      "default" : "1u",
+      "doc" : "",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Get and set the number of times to repeat the filter.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get and set the number of times to repeat the filter.\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Test BinomialBlurImageFilter with default parametrs",
+      "md5hash" : "ccd2e6e83817056f586e37f59e43bfff",
+      "settings" : [],
+      "inputs" : [
+        "Input/VM1111Shrink-RGBFloat.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "Performs a separable blur on each dimension of an image.\n",
+  "detaileddescription" : "The binomial blur consists of a nearest neighbor average along each image dimension. The net result after n-iterations approaches convultion with a gaussian.\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Blur an image\n\n"
+}

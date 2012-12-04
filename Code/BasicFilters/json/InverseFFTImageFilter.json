@@ -1,0 +1,23 @@
+{
+  "name" : "InverseFFTImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "ComplexPixelIDTypeList",
+  "filter_type" : "itk::InverseFFTImageFilter<InputImageType>",
+  "members" : [],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Test Inverse FFT",
+      "tolerance" : "0.01",
+      "settings" : [],
+      "inputs" : [
+        "Input/RA-FFT-Complex.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "Base class for inverse Fast Fourier Transform.\n",
+  "detaileddescription" : "This is a base class for the \"inverse\" or \"reverse\" Discrete Fourier Transform. This is an abstract base class: the actual implementation is provided by the best child available on the system when the object is created via the object factory system.\nThis class transforms a full complex image with Hermitian symmetry into its real spatial domain representation. If the input does not have Hermitian symmetry, the imaginary component is discarded.\n\\see  ForwardFFTImageFilter, InverseFFTImageFilter\n\n"
+}

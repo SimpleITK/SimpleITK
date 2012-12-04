@@ -1,0 +1,93 @@
+{
+  "name" : "VotingBinaryImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "public_declarations" : "Self &SetRadius( unsigned int r ) { this->m_Radius = std::vector<unsigned int>(3, r ); return *this; }",
+  "members" : [
+    {
+      "name" : "Radius",
+      "type" : "std::vector<unsigned int>",
+      "default" : "std::vector<unsigned int>(3, 1)",
+      "dim_vec" : 1,
+      "doc" : "",
+      "itk_type" : "typename FilterType::InputSizeType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the radius of the neighborhood used to compute the median.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the radius of the neighborhood used to compute the median\n"
+    },
+    {
+      "name" : "BirthThreshold",
+      "type" : "unsigned int",
+      "default" : "1u",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Birth threshold. Pixels that are OFF will turn ON when the number of neighbors ON is larger than the value defined in this threshold.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Birth threshold. Pixels that are OFF will turn ON when the number of neighbors ON is larger than the value defined in this threshold.\n"
+    },
+    {
+      "name" : "SurvivalThreshold",
+      "type" : "unsigned int",
+      "default" : "1u",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Survival threshold. Pixels that are ON will turn OFF when the number of neighbors ON is smaller than the value defined in this survival threshold.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Survival threshold. Pixels that are ON will turn OFF when the number of neighbors ON is smaller than the value defined in this survival threshold.\n"
+    },
+    {
+      "name" : "ForegroundValue",
+      "type" : "double",
+      "default" : "1.0",
+      "pixeltype" : "Input",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the value associated with the Foreground (or the object) on the binary input image and the Background .\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the value associated with the Foreground (or the object) on the binary input image and the Background .\n"
+    },
+    {
+      "name" : "BackgroundValue",
+      "type" : "double",
+      "default" : "0.0",
+      "pixeltype" : "Input",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the value associated with the Foreground (or the object) on the binary input image and the Background .\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the value associated with the Foreground (or the object) on the binary input image and the Background .\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "No parameters changed",
+      "settings" : [],
+      "md5hash" : "eb8edfef34f6e58075d619891c6c3f5a",
+      "inputs" : [
+        "Input/BlackDots.png"
+      ]
+    },
+    {
+      "tag" : "VotingBinary",
+      "description" : "Basic voting",
+      "settings" : [
+        {
+          "parameter" : "Radius",
+          "no_get_method" : 1,
+          "value" : 3
+        },
+        {
+          "parameter" : "ForegroundValue",
+          "value" : "255.0"
+        }
+      ],
+      "md5hash" : "f7b28f228b1784664b82f4dd1417be4c",
+      "inputs" : [
+        "Input/BlackDots.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Applies a voting operation in a neighborhood of each pixel.\n",
+  "detaileddescription" : "\\note Pixels which are not Foreground or Background will remain unchanged.\n\\see  Image\n\\see \n\\see  Neighborhood\n\\see \n\\see  NeighborhoodOperator\n\\see \n\\see  NeighborhoodIterator\n\n"
+}

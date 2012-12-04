@@ -1,0 +1,152 @@
+{
+  "name" : "ResampleImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "typelist::Append<BasicPixelIDTypeList, VectorPixelIDTypeList>::Type",
+  "filter_type" : "itk::ResampleImageFilter<InputImageType, OutputImageType, double>",
+  "include_files" : [
+    "sitkDirectionConvert.hxx",
+    "sitkTransform.h"
+  ],
+  "members" : [
+    {
+      "name" : "Transform",
+      "type" : "Transform",
+      "default" : "itk::simple::Transform()",
+      "custom_itk_cast" : "const typename FilterType::TransformType *itkTx;\
+    if ( !(itkTx = dynamic_cast<const typename FilterType::TransformType *>(this->m_Transform.GetITKBase() )) ) {\
+      if( this->m_Transform.GetITKBase()->GetNameOfClass() != std::string(\"IdentityTransform\") )\
+      sitkExceptionMacro( \"Unexpected error converting transform! Possible miss matching dimensions!\" );\
+     }\
+    else { filter->SetTransform( itkTx ); }",
+     "no_print" : "1"
+    },
+    {
+      "name" : "Size",
+      "type" : "std::vector<uint32_t>",
+      "default" : "std::vector<uint32_t>(3, 0)",
+      "dim_vec" : 1,
+      "doc" : "",
+      "itk_type" : "typename FilterType::SizeType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the size of the output image.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the size of the output image.\n"
+    },
+    {
+      "name" : "OutputOrigin",
+      "type" : "std::vector<double>",
+      "default" : "std::vector<double>(3, 0.0)",
+      "dim_vec" : 1,
+      "doc" : "",
+      "itk_type" : "typename FilterType::OriginPointType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the output image origin.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the output image origin.\n"
+    },
+    {
+      "name" : "OutputSpacing",
+      "type" : "std::vector<double>",
+      "default" : "std::vector<double>(3, 1.0)",
+      "dim_vec" : 1,
+      "doc" : "",
+      "itk_type" : "typename FilterType::SpacingType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the output image spacing.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the output image spacing.\n"
+    },
+    {
+      "name" : "OutputDirection",
+      "type" : "std::vector<double>",
+      "default" : "std::vector<double>()",
+      "doc" : "Passing a zero sized array, defaults to identiy matrix. The size of the array must exactly match the direction matrix for the dimension of the image.",
+      "custom_itk_cast" : "filter->SetOutputDirection( VectorToITKDirection<typename FilterType::DirectionType>( this->m_OutputDirection ) );",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the output direciton cosine matrix.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set the output direciton cosine matrix.\n"
+    },
+    {
+      "name" : "DefaultPixelValue",
+      "type" : "double",
+      "default" : "0.0",
+      "pixeltype" : "Input",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the pixel value when a transformed pixel is outside of the image. The default default pixel value is 0.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the pixel value when a transformed pixel is outside of the image\n"
+    }
+  ],
+  "custom_methods" : [
+    {
+      "name" : "SetReferenceImage",
+      "doc" : "This methods sets the output size, origin, spacing and direction to that of the provided image",
+      "return_type" : "void",
+      "parameters" : [
+        {
+          "type" : "const Image &",
+          "var_name" : "refImage"
+        }
+      ],
+      "body" : "this->SetSize( refImage.GetSize() ); this->SetOutputOrigin( refImage.GetOrigin() ); this->SetOutputSpacing( refImage.GetSpacing() );this->SetOutputDirection( refImage.GetDirection() );"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "run with some defaults",
+      "settings" : [
+        {
+          "parameter" : "Size",
+          "type" : "uint32_t",
+          "dim_vec" : 1,
+          "value" : "{64,64,64}",
+          "tcl_value" : "[list 64 64 64]",
+          "python_value" : "[ 64, 64, 64]",
+          "ruby_value" : "[ 64, 64, 64]",
+          "R_value" : "c( 64, 64, 64)"
+        }
+      ],
+      "tolerance" : "0.001",
+      "inputs" : [
+        "Input/RA-Float.nrrd"
+      ]
+    },
+    {
+      "tag" : "vector",
+      "description" : "resample a vector image",
+      "settings" : [
+        {
+          "parameter" : "Size",
+          "type" : "uint32_t",
+          "dim_vec" : 1,
+          "value" : "{512, 512}",
+          "tcl_value" : "[list 512 512 ]",
+          "python_value" : "[ 512, 512]",
+          "ruby_value" : "[ 512, 512]",
+          "R_value" : "c( 512, 512 )"
+        },
+        {
+          "parameter" : "OutputSpacing",
+          "type" : "double",
+          "dim_vec" : 1,
+          "value" : "{0.73, 0.73}",
+          "tcl_value" : "[list 0.73 0.73 ]",
+          "python_value" : "[ 0.73, 0.73]",
+          "ruby_value" : "[ 0.73, 0.73]",
+          "R_value" : "c( 0.73, 0.73 )"
+        }
+      ],
+      "tolerance" : "0.001",
+      "inputs" : [
+        "Input/VM1111Shrink-RGBFloat.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "Resample an image via a coordinate transform.\n",
+  "detaileddescription" : " ResampleImageFilterresamples an existing image through some coordinate transform, interpolating via some image function. The class is templated over the types of the input and output images.\nNote that the choice of interpolator function can be important. This function is set via SetInterpolator(). The default is LinearInterpolateImageFunction<InputImageType, TInterpolatorPrecisionType>, which is reasonable for ordinary medical images. However, some synthetic images have pixels drawn from a finite prescribed set. An example would be a mask indicating the segmentation of a brain into a small number of tissue types. For such an image, one does not want to interpolate between different pixel values, and so NearestNeighborInterpolateImageFunction< InputImageType, TCoordRep > would be a better choice.\nIf an sample is taken from outside the image domain, the default behavior is to use a default pixel value. If different behavior is desired, an extrapolator function can be set with SetExtrapolator().\nOutput information (spacing, size and direction) for the output image should be set. This information has the normal defaults of unit spacing, zero origin and identity direction. Optionally, the output information can be obtained from a reference image. If the reference image is provided and UseReferenceImage is On, then the spacing, origin and direction of the reference image will be used.\nSince this filter produces an image which is a different size than its input, it needs to override several of the methods defined in ProcessObjectin order to properly manage the pipeline execution model. In particular, this filter overrides ProcessObject::GenerateInputRequestedRegion()and ProcessObject::GenerateOutputInformation().\nThis filter is implemented as a multithreaded filter. It provides a ThreadedGenerateData()method for its implementation.\\warning For multithreading, the TransformPoint method of the user-designated coordinate transform must be threadsafe.\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Translate an image\n\n\\li Upsampling an image\n\n\\li Resample (stretch or compress) an image\n\n"
+}

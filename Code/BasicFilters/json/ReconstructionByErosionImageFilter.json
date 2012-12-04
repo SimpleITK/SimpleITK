@@ -1,0 +1,37 @@
+{
+  "name" : "ReconstructionByErosionImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 2,
+  "pixel_types" : "BasicPixelIDTypeList",
+  "filter_type" : "itk::ReconstructionByErosionImageFilter<InputImageType,OutputImageType>",
+  "members" : [
+    {
+      "name" : "FullyConnected",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : "",
+      "briefdescriptionSet" : ""
+    },
+    {
+      "name" : "UseInternalCopy",
+      "type" : "bool",
+      "default" : "true"
+    }
+  ],
+  "custom_methods" : [],
+  "tests" : [
+    {
+      "tag" : "basic",
+      "description" : "Test binary reconstruction by erosion",
+      "md5hash" : "9e52bcf554ad8e9c5391280a18f186f7",
+      "settings" : [],
+      "inputs" : [
+        "Input/2th_cthead1.png",
+        "Input/cthead1-seed.png"
+      ]
+    }
+  ],
+  "briefdescription" : "grayscale reconstruction by erosion of an image\n",
+  "detaileddescription" : "Reconstruction by erosion operates on a \"marker\" image and a \"mask\" image, and is defined as the erosion of the marker image with respect to the mask image iterated until stability.\nThe marker image must be less than or equal to the mask image (on a pixel by pixel basis).\nGeodesic morphology is described in Chapter 6.2 of Pierre Soille's book \"Morphological Image Analysis: Principles and Applications\", Second Edition, Springer, 2003.\nAlgorithm implemented in this filter is based on algorithm described by Kevin Robinson and Paul F. Whelan in \"Efficient Morphological\n   Reconstruction: A Downhill Filter\", Pattern Recognition Letters, Volume 25, Issue 15, November 2004, Pages 1759-1767.\nThe algorithm, a description of the transform and some applications can be found in \"Morphological Grayscale Reconstruction in Image Analysis:\n   Applications and Efficient Algorithms\", Luc Vincent, IEEE Transactions on image processing, Vol. 2, April 1993.\n\\author Richard Beare. Department of Medicine, Monash University, Melbourne, Australia.\n\\see  MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter, ReconstructionByErosionImageFilter, OpeningByReconstructionImageFilter, ClosingByReconstructionImageFilter, ReconstructionImageFilter\n\n"
+}

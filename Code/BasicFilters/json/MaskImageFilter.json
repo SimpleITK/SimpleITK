@@ -1,0 +1,36 @@
+{
+  "name" : "MaskImageFilter",
+  "template_code_filename" : "DualImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 2,
+  "doc" : "Some global documentation\n\\todo MaskImageFilter will support VectorImages shortly",
+  "pixel_types" : "typelist::Append<BasicPixelIDTypeList, ComplexPixelIDTypeList>::Type",
+  "pixel_types2" : "IntegerPixelIDTypeList",
+  "custom_set_input" : "filter->SetInput1( image1 ); filter->SetInput2( image2 );",
+  "members" : [
+    {
+      "name" : "OutsideValue",
+      "type" : "double",
+      "default" : 0,
+      "pixeltype" : "Output",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Method to explicitly set the outside value of the mask. Defaults to 0\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "2d",
+      "description" : "2d",
+      "settings" : [],
+      "md5hash" : "c57d7fda3e42374881c3c3181d15bf90",
+      "inputs" : [
+        "Input/STAPLE1.png",
+        "Input/STAPLE2.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Mask an image with a mask. image with the mask.\n",
+  "detaileddescription" : "This class is templated over the types of the input image type, the mask image type and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\nThe pixel type of the input 2 image must have a valid definition of the operator != with zero. This condition is required because internally this filter will perform the operation\nifpixel_from_mask_image!=0pixel_output_image=pixel_input_imageelsepixel_output_image=outside_value\nThe pixel from the input 1 is cast to the pixel type of the output image.\nNote that the input and the mask images must be of the same size.\n\\warning Any pixel value other than 0 will not be masked out.\n\\see  MaskNegatedImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Apply a mask to an image\n\n"
+}

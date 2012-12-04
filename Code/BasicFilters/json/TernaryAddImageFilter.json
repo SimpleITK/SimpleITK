@@ -1,0 +1,25 @@
+{
+  "name" : "TernaryAddImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 3,
+  "doc" : "",
+  "filter_type" : "itk::TernaryAddImageFilter<InputImageType, InputImageType2, InputImageType3, OutputImageType >",
+  "pixel_types" : "NonLabelPixelIDTypeList",
+  "members" : [],
+  "tests" : [
+    {
+      "tag" : "2d",
+      "description" : "2D",
+      "inputs" : [
+        "Input/STAPLE1.png",
+        "Input/STAPLE2.png",
+        "Input/STAPLE1.png"
+      ],
+      "settings" : [],
+      "md5hash" : "dbe269ea2abf0fbe16e9e5d633afea51"
+    }
+  ],
+  "briefdescription" : "Pixel-wise addition of three images.\n",
+  "detaileddescription" : "This class is templated over the types of the three input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\n"
+}

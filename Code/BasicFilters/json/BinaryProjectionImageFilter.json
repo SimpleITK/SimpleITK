@@ -1,0 +1,71 @@
+{
+  "name" : "BinaryProjectionImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "ProjectionDimension",
+      "type" : "unsigned int",
+      "default" : "0u"
+    },
+    {
+      "name" : "ForegroundValue",
+      "type" : "double",
+      "default" : "1.0",
+      "pixeltype" : "Input",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the value in the image to consider as \"foreground\". Defaults to maximum value of PixelType. Subclasses may alias this to DilateValue or ErodeValue.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the value in the image considered as \"foreground\". Defaults to maximum value of PixelType.\n"
+    },
+    {
+      "name" : "BackgroundValue",
+      "type" : "double",
+      "default" : "0.0",
+      "pixeltype" : "Input",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the value used as \"background\". Any pixel value which is not DilateValue is considered background. BackgroundValue is used for defining boundary conditions. Defaults to NumericTraits<PixelType>::NonpositiveMin().\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the value used as \"background\". Any pixel value which is not DilateValue is considered background. BackgroundValue is used for defining boundary conditions. Defaults to NumericTraits<PixelType>::NonpositiveMin().\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "run with some defaults",
+      "md5hash" : "3fc3603b27bf51df592190227d6cd6ed",
+      "inputs" : [
+        "Input/2th_cthead1.mha"
+      ]
+    },
+    {
+      "tag" : "another_dimension",
+      "description" : "project in the 2rd dimension",
+      "settings" : [
+        {
+          "parameter" : "ProjectionDimension",
+          "value" : "1u",
+          "lua_value" : "1",
+          "python_value" : "1",
+          "ruby_value" : "1",
+          "java_value" : "1",
+          "tcl_value" : "1",
+          "R_value" : "1"
+        },
+        {
+          "parameter" : "ForegroundValue",
+          "value" : "255"
+        }
+      ],
+      "md5hash" : "827f263ef9fb63d05499d14fcef32f60",
+      "inputs" : [
+        "Input/WhiteDots.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Binary projection.\n",
+  "detaileddescription" : "This class was contributed to the Insight Journal by Gaetan Lehmann. the original paper can be found athttp://hdl.handle.net/1926/164\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\\see  ProjectionImageFilter\n\\see \n\\see  MedianProjectionImageFilter\n\\see \n\\see  MeanProjectionImageFilter\n\\see \n\\see  MeanProjectionImageFilter\n\\see \n\\see  MaximumProjectionImageFilter\n\\see \n\\see  MinimumProjectionImageFilter\n\\see \n\\see  StandardDeviationProjectionImageFilter\n\\see \n\\see  SumProjectionImageFilter\n\n"
+}

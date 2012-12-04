@@ -1,0 +1,67 @@
+{
+  "name" : "InverseDeconvolutionImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 2,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "include_files" : [
+    "sitkBoundaryConditions.hxx"
+  ],
+  "public_declarations" : "typedef enum { SAME = 0, VALID = 1} OutputRegionModeType;\n      typedef enum { ZERO_PAD = 0, ZERO_FLUX_NEUMANN_PAD = 1, PERIODIC_PAD = 2 } BoundaryConditionType;",
+  "custom_set_input" : "filter->SetInput( image1 ); filter->SetKernelImage( image2 );",
+  "members" : [
+    {
+      "name" : "KernelZeroMagnitudeThreshold",
+      "type" : "double",
+      "default" : "1.0e-4",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/get the threshold value uused to determine whether a frequency of the Fourier transform of the blurring kernel is considered to be zero. Default value is 1.0e-4.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/get the threshold value uused to determine whether a frequency of the Fourier transform of the blurring kernel is considered to be zero. Default value is 1.0e-4.\n"
+    },
+    {
+      "name" : "Normalize",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : "",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Normalize the output image by the sum of the kernel components\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
+    },
+    {
+      "name" : "BoundaryCondition",
+      "type" : "InverseDeconvolutionImageFilter::BoundaryConditionType",
+      "default" : "itk::simple::InverseDeconvolutionImageFilter::ZERO_FLUX_NEUMANN_PAD",
+      "custom_itk_cast" : "std::auto_ptr< ImageBoundaryCondition< InputImageType > > bc( CreateNewBoundaryConditionInstance< Self, FilterType >( m_BoundaryCondition ) ); filter->SetBoundaryCondition( bc.get() );\n"
+    },
+    {
+      "name" : "OutputRegionMode",
+      "type" : "InverseDeconvolutionImageFilter::OutputRegionModeType",
+      "default" : "itk::simple::InverseDeconvolutionImageFilter::SAME",
+      "custom_itk_cast" : "filter->SetOutputRegionMode( typename FilterType::OutputRegionModeType( int( this->m_OutputRegionMode ) ) );"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Inverse deconvolution of image blurred with a Gaussian kernel",
+      "settings" : [
+        {
+          "parameter" : "Normalize",
+          "value" : "true",
+          "python_value" : "True",
+          "R_value" : "TRUE"
+        }
+      ],
+      "tolerance" : "0.0001",
+      "inputs" : [
+        "Input/DeconvolutionInput.nrrd",
+        "Input/DeconvolutionKernel.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "The direct linear inverse deconvolution filter.\n",
+  "detaileddescription" : "The inverse filter is the most straightforward deconvolution method. Considering that convolution of two images in the spatial domain is equivalent to multiplying the Fourier transform of the two images, the inverse filter consists of inverting the multiplication. In other words, this filter computes the following: \\f[ hat{F}(\\omega) = \\begin{cases} G(\\omega) / H(\\omega) & \\text{if \\f$|H(\\omega)| \\geq \\epsilon\\f$} \\\\ 0 & \\text{otherwise} \\end{cases} \\f]  where\\f$\\hat{F}(\\omega)\\f$ is the Fourier transform of the estimate produced by this filter,\\f$G(\\omega)\\f$ is the Fourier transform of the input blurred image,\\f$H(\\omega)\\f$ is the Fourier transform of the blurring kernel, and\\f$\\epsilon\\f$ is a constant real non-negative threshold (called KernelZeroMagnitudeThreshold in this filter) that determines when the magnitude of a complex number is considered zero.\n\\author Gaetan Lehmann, Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France\nCory Quammen, The University of North Carolina at Chapel Hill\n\n"
+}

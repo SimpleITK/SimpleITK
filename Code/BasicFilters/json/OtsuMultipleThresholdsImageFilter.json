@@ -1,0 +1,92 @@
+{
+  "name" : "OtsuMultipleThresholdsImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "pixel_types" : "BasicPixelIDTypeList",
+  "output_pixel_type" : "uint8_t",
+  "members" : [
+    {
+      "name" : "NumberOfThresholds",
+      "type" : "uint8_t",
+      "default" : "1u",
+      "pixeltype" : "Output",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the number of thresholds. Default is 1.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the number of thresholds. Default is 1.\n"
+    },
+    {
+      "name" : "LabelOffset",
+      "type" : "uint8_t",
+      "default" : "0u",
+      "pixeltype" : "Output",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the offset which labels have to start from. Default is 0.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the offset which labels have to start from. Default is 0.\n"
+    },
+    {
+      "name" : "NumberOfHistogramBins",
+      "type" : "uint32_t",
+      "default" : "128u",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the number of histogram bins. Default is 128.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the number of histogram bins. Default is 128.\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "Default parameter settings",
+      "settings" : [],
+      "md5hash" : "a9c3b0c0971c5cbda12b29db916451c6",
+      "inputs" : [
+        "Input/RA-Short.nrrd"
+      ]
+    },
+    {
+      "tag" : "two_on_float",
+      "description" : "Default parameter settings",
+      "settings" : [
+        {
+          "parameter" : "NumberOfThresholds",
+          "value" : 2,
+          "java_value" : "(short) 2"
+        }
+      ],
+      "md5hash" : "1fe9f00799c337af86a99d243dad6c43",
+      "inputs" : [
+        "Input/Ramp-Zero-One-Float.nrrd"
+      ]
+    },
+    {
+      "tag" : "three_on",
+      "description" : "Default parameter settings",
+      "settings" : [
+        {
+          "parameter" : "NumberOfThresholds",
+          "value" : "3",
+          "java_value" : "(short) 3"
+        },
+        {
+          "parameter" : "NumberOfHistogramBins",
+          "value" : "256u",
+          "lua_value" : "256",
+          "python_value" : "256",
+          "ruby_value" : "256",
+          "java_value" : "256",
+          "tcl_value" : "256",
+          "R_value" : "256"
+        }
+      ],
+      "md5hash" : "0a75ab53c840356b54e3db5138639a59",
+      "inputs" : [
+        "Input/cthead1.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Threshold an image using multiple Otsu Thresholds.\n",
+  "detaileddescription" : "This filter creates a labeled image that separates the input image into various classes. The filter computes the thresholds using the OtsuMultipleThresholdsCalculatorand applies those thesholds to the input image using the ThresholdLabelerImageFilter. The NumberOfHistogramBins and NumberOfThresholds can be set for the Calculator. The LabelOffset can be set for the ThresholdLabelerImageFilter.\n\\see ScalarImageToHistogramGenerator\n\\see \n\\see  OtsuMultipleThresholdsCalculator\n\\see \n\\see  ThresholdLabelerImageFilter\n\n"
+}

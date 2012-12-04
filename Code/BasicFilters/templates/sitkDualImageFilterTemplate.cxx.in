@@ -56,7 +56,7 @@ $(include CustomMethods.cxx.in)
 //
 // Execute
 //$(include ExecuteWithParameters.cxx.in)
-Image ${name}ImageFilter::Execute ( const Image & image1, const Image& image2 )
+Image ${name}::Execute ( const Image & image1, const Image& image2 )
 {
 
   PixelIDValueType type1 = image1.GetPixelIDValue();
@@ -69,7 +69,7 @@ Image ${name}ImageFilter::Execute ( const Image & image1, const Image& image2 )
        image1.GetHeight() != image2.GetHeight() ||
        image1.GetDepth() != image2.GetDepth() )
     {
-      sitkExceptionMacro ( "Both images for ${name}ImageFilter don't match type or dimension!" );
+      sitkExceptionMacro ( "Both images for ${name} don't match type or dimension!" );
     }
 
   return this->m_DualMemberFactory->GetMemberFunction( type1, type2, dimension )( image1, image2 );
@@ -82,7 +82,7 @@ Image ${name}ImageFilter::Execute ( const Image & image1, const Image& image2 )
 // ExecuteInternal
 //
 template <class TImageType, class TImageType2>
-Image ${name}ImageFilter::DualExecuteInternal ( const Image& inImage1, const Image& inImage2 )
+Image ${name}::DualExecuteInternal ( const Image& inImage1, const Image& inImage2 )
 {
   // Define the input and output image types
   typedef TImageType     InputImageType;

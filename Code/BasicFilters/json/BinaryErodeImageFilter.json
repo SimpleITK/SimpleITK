@@ -1,0 +1,64 @@
+{
+  "name" : "BinaryErodeImageFilter",
+  "template_code_filename" : "KernelImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Performs Erosion in a binary image.",
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "BackgroundValue",
+      "type" : "double",
+      "default" : "0.0",
+      "pixeltype" : "Input",
+      "doc" : ""
+    },
+    {
+      "name" : "ForegroundValue",
+      "type" : "double",
+      "default" : "1.0",
+      "pixeltype" : "Input",
+      "doc" : ""
+    },
+    {
+      "name" : "BoundaryToForeground",
+      "type" : "bool",
+      "default" : "true",
+      "doc" : ""
+    }
+  ],
+  "custom_methods" : [],
+  "tests" : [
+    {
+      "tag" : "BinaryErode",
+      "description" : "Test binary erosion",
+      "md5hash" : "9e37516c795d7f25847851666ef53ef9",
+      "settings" : [
+        {
+          "parameter" : "KernelRadius",
+          "no_get_method" : 1,
+          "value" : 1
+        },
+        {
+          "parameter" : "KernelType",
+          "value" : "itk::simple::${name}::Ball",
+          "lua_value" : "SimpleITK.${name}_Ball",
+          "python_value" : "SimpleITK.${name}.Ball",
+          "ruby_value" : "Simpleitk::${name}::Ball",
+          "java_value" : "${name}.KernelType.Ball",
+          "tcl_value" : "$$${name}_Ball",
+          "csharp_value" : "${name}.KernelType.Ball",
+          "R_value" : "'Ball'"
+        },
+        {
+          "parameter" : "ForegroundValue",
+          "value" : "255"
+        }
+      ],
+      "inputs" : [
+        "Input/STAPLE1.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Fast binary erosion.\n",
+  "detaileddescription" : " BinaryErodeImageFilteris a binary erosion morphologic operation. This implementation is based on the papers:\nL.Vincent \"Morphological transformations of binary images with\n arbitrary structuring elements\", and\nN.Nikopoulos et al. \"An efficient algorithm for 3d binary morphological transformations with 3d structuring elements for arbitrary size and shape\". IEEE Transactions on ImageProcessing. Vol. 9. No. 3. 2000. pp. 283-286.\nGray scale images can be processed as binary images by selecting a \"ErodeValue\". Pixel values matching the erode value are considered the \"foreground\" and all other pixels are \"background\". This is useful in processing segmented images where all pixels in segment #1 have value 1 and pixels in segment #2 have value 2, etc. A particular \"segment number\" can be processed. ErodeValue defaults to the maximum possible value of the PixelType. The eroded pixels will receive the BackgroundValue (defaults to 0).\nThe structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element having values > 0 are candidates for affecting the center pixel. A reasonable choice of structuring element is itk::BinaryBallStructuringElement.\n\\see  ImageToImageFilter BinaryDilateImageFilter BinaryMorphologyImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Erode a binary image\n\n"
+}

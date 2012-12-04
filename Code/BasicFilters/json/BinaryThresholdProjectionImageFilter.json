@@ -1,0 +1,87 @@
+{
+  "name" : "BinaryThresholdProjectionImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "\todo this filter should work with VectorImages too.",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "output_pixel_type" : "uint8_t",
+  "members" : [
+    {
+      "name" : "ProjectionDimension",
+      "type" : "unsigned int",
+      "default" : "0u"
+    },
+    {
+      "name" : "ThresholdValue",
+      "type" : "double",
+      "default" : "0.0",
+      "pixeltype" : "Input",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the input value consider as \"threshold\". Defaults to NumericTraits<InputPixelType>::max()\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the input value consider as \"threshold\". Defaults to NumericTraits<InputPixelType>::max()\n"
+    },
+    {
+      "name" : "ForegroundValue",
+      "type" : "uint8_t",
+      "default" : "1u",
+      "pixeltype" : "Output",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the output value used as \"foreground\". Defaults to maximum value of PixelType.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the output value used as \"foreground\". Defaults to maximum value of PixelType.\n"
+    },
+    {
+      "name" : "BackgroundValue",
+      "type" : "uint8_t",
+      "default" : "0u",
+      "pixeltype" : "Output",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the output value used as \"background\". Defaults to NumericTraits<PixelType>::NonpositiveMin().\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the output value used as \"background\". Defaults to NumericTraits<PixelType>::NonpositiveMin().\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "run with some defaults",
+      "md5hash" : "25e29eca666fc2836841f42fce5f3cc2",
+      "inputs" : [
+        "Input/cthead1.png"
+      ]
+    },
+    {
+      "tag" : "another_dimension",
+      "description" : "project in the 2rd dimension",
+      "settings" : [
+        {
+          "parameter" : "ThresholdValue",
+          "value" : "28326"
+        },
+        {
+          "parameter" : "ProjectionDimension",
+          "value" : "2u",
+          "lua_value" : "2",
+          "python_value" : "2",
+          "ruby_value" : "2",
+          "java_value" : "2",
+          "tcl_value" : "2",
+          "R_value" : "2"
+        },
+        {
+          "parameter" : "ForegroundValue",
+          "value" : "255",
+          "java_value" : "(short) 255"
+        }
+      ],
+      "md5hash" : "a81279c72a568a62749b2f79692ce15a",
+      "inputs" : [
+        "Input/RA-Short.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "BinaryThreshold projection.\n",
+  "detaileddescription" : "This class was contributed to the Insight Journal by Gaetan Lehmann. the original paper can be found athttp://hdl.handle.net/1926/164\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\\see  ProjectionImageFilter\n\\see \n\\see  MedianProjectionImageFilter\n\\see \n\\see  MeanProjectionImageFilter\n\\see \n\\see  MeanProjectionImageFilter\n\\see \n\\see  MaximumProjectionImageFilter\n\\see \n\\see  MinimumProjectionImageFilter\n\\see \n\\see  StandardDeviationProjectionImageFilter\n\\see \n\\see  SumProjectionImageFilter\n\n"
+}

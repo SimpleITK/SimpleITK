@@ -1,0 +1,112 @@
+{
+  "name" : "ExtractImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Extract image filter extracts a 2D image from a 2D or 3D image. If the same dimension output is required then the RegionOfInterestFilter should be used.",
+  "pixel_types" : "NonLabelPixelIDTypeList",
+  "public_declarations" : "    typedef enum { DIRECTIONCOLLAPSETOUNKOWN = 0, DIRECTIONCOLLAPSETOIDENTITY = 1, DIRECTIONCOLLAPSETOSUBMATRIX = 2, DIRECTIONCOLLAPSETOGUESS = 3} DirectionCollapseStrategyType;",
+  "filter_type" : "itk::ExtractImageFilter<InputImageType, typename InputImageType::template Rebind<typename InputImageType::PixelType, 2>::Type >",
+  "members" : [
+    {
+      "name" : "Size",
+      "type" : "std::vector<unsigned int>",
+      "default" : "std::vector<unsigned int>(3, 1)",
+      "dim_vec" : 1,
+      "itk_type" : "typename InputImageType::SizeType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "",
+      "custom_itk_cast" : ""
+    },
+    {
+      "name" : "Index",
+      "type" : "std::vector<int>",
+      "default" : "std::vector<int>(3, 0)",
+      "dim_vec" : 1,
+      "itk_type" : "typename InputImageType::IndexType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "\todo the internal setting of the method needs work!!!",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "",
+      "custom_itk_cast" : " typename InputImageType::RegionType itkRegion;\n  for( unsigned int i = 0; i < inImage1.GetDimension(); ++i )\n    {\n    itkRegion.SetIndex( i, m_Index[i] );\n    itkRegion.SetSize( i, m_Size[i] );\n    }\n  filter->SetExtractionRegion( itkRegion );"
+    },
+    {
+      "name" : "DirectionCollapseToStrategy",
+      "type" : "ExtractImageFilter::DirectionCollapseStrategyType",
+      "default" : "itk::simple::ExtractImageFilter::DIRECTIONCOLLAPSETOGUESS",
+      "custom_itk_cast" : "filter->SetDirectionCollapseToStrategy( typename FilterType::DirectionCollapseStrategyEnum( int( this->m_DirectionCollapseToStrategy ) ) );",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the strategy to be used to collapse pysical space dimensions.\nitk::itkExtractImageFilter::DIRECTIONCOLLAPSETOIDENTITY Set the strategy so that all collapsed images have an identity direction. Use this strategy when you know that retention of the physical space orientation of the collapsed image is not important.\nitk::itkExtractImageFilter::DIRECTIONCOLLAPSETOGUESS Set the strategy so that all collapsed images where output direction is the sub-matrix it it is positive definite, else return identity. This is backwards compatible with ITKv3, but is highly discouraged because the results are difficult to anticipate under differing data scenerios.\nitk::itkExtractImageFilter::DIRECTIONCOLLAPSETOSUBMATRIX Set the strategy so that all collapsed images where output direction is the sub-matrix it it is positive definite, else throw an exception. Use this strategy when it is known that properly identified physical space sub-volumes can be reliably extracted from a higher dimensional space. For example when the application programmer knows that a 4D image is 3D+time, and that the 3D sub-space is properly defined.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "NOTE: The SetDirectionCollapseToUknown is explicitly not defined. It is a state that a filter can be in only when it is first instantiate prior to being initialized. Get the currently set strategy for collapsing directions of physical space.\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "use the defaults on a 2D image",
+      "md5hash" : "93b885adfe0da089cdf634904fd59f71",
+      "settings" : [
+        {
+          "parameter" : "DirectionCollapseToStrategy",
+          "value" : "itk::simple::${name}::DIRECTIONCOLLAPSETOIDENTITY",
+          "lua_value" : "SimpleITK.${name}_DIRECTIONCOLLAPSETOIDENTITY",
+          "python_value" : "SimpleITK.${name}.DIRECTIONCOLLAPSETOIDENTITY",
+          "ruby_value" : "Simpleitk::${name}::DIRECTIONCOLLAPSETOIDENTITY",
+          "java_value" : "${name}.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
+          "tcl_value" : "$$${name}_DIRECTIONCOLLAPSETOIDENTITY",
+          "csharp_value" : "itk.simple.${name}.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
+          "R_value" : "'DIRECTIONCOLLAPSETOIDENTITY'"
+        }
+      ],
+      "inputs" : [
+        "Input/cthead1.png"
+      ]
+    },
+    {
+      "tag" : "more",
+      "description" : "croping",
+      "md5hash" : "01bae0803fe74512dbd9d00fc8da4879",
+      "settings" : [
+        {
+          "parameter" : "Size",
+          "type" : "unsigned int",
+          "dim_vec" : 1,
+          "value" : "{10, 0, 10}",
+          "tcl_value" : "[list 10 0 10]",
+          "python_value" : "[ 10, 0, 10 ]",
+          "ruby_value" : "[ 10, 0, 10 ]",
+          "R_value" : "c( 10, 0, 10 )"
+        },
+        {
+          "parameter" : "Index",
+          "type" : "int",
+          "dim_vec" : 1,
+          "value" : "{16, 20, 51}",
+          "tcl_value" : "[list 16 20 51]",
+          "python_value" : "[ 16, 20, 51 ]",
+          "ruby_value" : "[ 16, 20, 51 ]",
+          "R_value" : "c( 16, 20, 51 )"
+        },
+        {
+          "parameter" : "DirectionCollapseToStrategy",
+          "value" : "itk::simple::${name}::DIRECTIONCOLLAPSETOIDENTITY",
+          "lua_value" : "SimpleITK.${name}_DIRECTIONCOLLAPSETOIDENTITY",
+          "python_value" : "SimpleITK.${name}.DIRECTIONCOLLAPSETOIDENTITY",
+          "ruby_value" : "Simpleitk::${name}::DIRECTIONCOLLAPSETOIDENTITY",
+          "java_value" : "${name}.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
+          "tcl_value" : "$$${name}_DIRECTIONCOLLAPSETOIDENTITY",
+          "csharp_value" : "itk.simple.${name}.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
+          "R_value" : "'DIRECTIONCOLLAPSETOIDENTITY'"
+        }
+      ],
+      "inputs" : [
+        "Input/RA-Float.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "Decrease the image size by cropping the image to the selected region bounds.\n",
+  "detaileddescription" : " ExtractImageFilterchanges the image boundary of an image by removing pixels outside the target region. The target region must be specified.\n ExtractImageFilteralso collapses dimensions so that the input image may have more dimensions than the output image (i.e. 4-D input image to a 3-D output image). To specify what dimensions to collapse, the ExtractionRegion must be specified. For any dimension dim where ExtractionRegion.Size[dim] = 0, that dimension is collapsed. The index to collapse on is specified by ExtractionRegion.Index[dim]. For example, we have a image 4D = a 4x4x4x4 image, and we want to get a 3D image, 3D = a 4x4x4 image, specified as [x,y,z,2] from 4D (i.e. the 3rd \"time\" slice from 4D). The ExtractionRegion.Size = [4,4,4,0] and ExtractionRegion.Index = [0,0,0,2].\nThe number of dimension in ExtractionRegion.Size and Indexmust = InputImageDimension. The number of non-zero dimensions in ExtractionRegion.Size must = OutputImageDimension.\nThe output image produced by this filter will have the same origin as the input image, while the ImageRegionof the output image will start at the starting index value provided in the ExtractRegion parameter. If you are looking for a filter that will re-compute the origin of the output image, and provide an output image region whose index is set to zeros, then you may want to use the RegionOfInterestImageFilter. The output spacing is is simply the collapsed version of the input spacing.\nDetermining the direction of the collapsed output image from an larger dimensional input space is an ill defined problem in general. It is required that the application developer select the desired transformation strategy for collapsing direction cosigns. It is REQUIRED that a strategy be explicitly requested (i.e. there is no working default). Direction Collapsing Strategies: 1) DirectionCollapseToUnknown(); This is the default and the filter can not run when this is set. The reason is to explicitly force the application developer to define their desired behavior. 1) DirectionCollapseToIdentity(); Output has identity direction no matter what 2) DirectionCollapseToSubmatrix(); Output direction is the sub-matrix if it is positive definite, else throw an exception.\nThis filter is implemented as a multithreaded filter. It provides a ThreadedGenerateData()method for its implementation.\n\\note This filter is derived from InPlaceImageFilter. When the input to this filter matched the output requirested region, like with streaming filter for input, then setting this filter to run in-place will result in no copying of the bulk pixel data.\n\\see  CropImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Crop an image by specifying the region to keep\n\n"
+}

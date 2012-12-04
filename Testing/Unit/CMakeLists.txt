@@ -91,7 +91,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
   set (template_expansion_script ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua)
   set (template_include_dir ${SimpleITK_SOURCE_DIR}/TemplateComponents)
 
-  set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILTERNAME}ImageFilterTest.cxx")
+  set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILTERNAME}Test.cxx")
   add_custom_command (
     OUTPUT  ${OUTPUT_TEST_FILENAME}
     COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
@@ -102,7 +102,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
   set ( GENERATED_TEST_SOURCE ${GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
 
   if ( WRAP_LUA )
-    set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/LuaTests/${FILTERNAME}ImageFilterTest.lua")
+    set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/LuaTests/${FILTERNAME}Test.lua")
     add_custom_command (
       OUTPUT "${OUTPUT_TEST_FILENAME}"
       COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
@@ -114,7 +114,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
   endif()
 
   if ( WRAP_PYTHON )
-    set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/${FILTERNAME}ImageFilterTest.py")
+    set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/${FILTERNAME}Test.py")
     add_custom_command (
       OUTPUT  "${OUTPUT_TEST_FILENAME}"
       COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
@@ -126,7 +126,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
   endif()
 
   if ( WRAP_TCL )
-    set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/TclTests/${FILTERNAME}ImageFilterTest.tcl")
+    set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/TclTests/${FILTERNAME}Test.tcl")
     add_custom_command (
       OUTPUT  "${OUTPUT_TEST_FILENAME}"
       COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
@@ -138,7 +138,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
   endif()
 
   if ( WRAP_R )
-    set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/RTests/${FILTERNAME}ImageFilterTest.R")
+    set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/RTests/${FILTERNAME}Test.R")
     add_custom_command (
       OUTPUT  "${OUTPUT_TEST_FILENAME}"
       COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
@@ -150,7 +150,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
   endif()
 
   if ( WRAP_RUBY )
-    set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/RubyTests/${FILTERNAME}ImageFilterTest.rb")
+    set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/RubyTests/${FILTERNAME}Test.rb")
     add_custom_command (
       OUTPUT  "${OUTPUT_TEST_FILENAME}"
       COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
@@ -163,12 +163,12 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
 
   # Java Tests
   if ( WRAP_JAVA )
-    set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/org/itk/simple/testing/${FILTERNAME}ImageFilterTest.java")
+    set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/org/itk/simple/testing/${FILTERNAME}Test.java")
     add_custom_command (
       OUTPUT  "${OUTPUT_TEST_FILENAME}"
       COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
       COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Java ${template_include_dir} TestTemplate.java.in "${OUTPUT_TEST_FILENAME}"
-      COMMAND ${Java_JAVAC_EXECUTABLE} -classpath ${SimpleITK_BINARY_DIR}/Wrapping/${JAR_FILE} ${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/org/itk/simple/testing/${FILTERNAME}ImageFilterTest.java
+      COMMAND ${Java_JAVAC_EXECUTABLE} -classpath ${SimpleITK_BINARY_DIR}/Wrapping/${JAR_FILE} ${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/org/itk/simple/testing/${FILTERNAME}Test.java
       DEPENDS ${filter_json_file} ${JAVA_TEMPLATE_FILES} ${SWIG_MODULE_SimpleITKJava_TARGET_NAME}
       )
     set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Java.${FILTERNAME}")
@@ -177,7 +177,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
 
   # C# Tests
   if ( WRAP_CSHARP )
-    set( OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/CSharpTests/Test${FILTERNAME}ImageFilter.cs" )
+    set( OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/CSharpTests/Test${FILTERNAME}.cs" )
     if ( WIN32 )
       string( REPLACE "/" "\\" OUTPUT_TEST_FILENAME_SAFE ${OUTPUT_TEST_FILENAME} )
     else ( UNIX )
@@ -190,7 +190,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
       COMMAND ${CSHARP_COMPILER}
         /t:exe /platform:${CSHARP_PLATFORM}
         /lib:${CSHARP_BINARY_DIRECTORY} /reference:System.dll /reference:SimpleITKCSharpManaged.dll
-        /out:${CSHARP_BINARY_DIRECTORY}/Test${FILTERNAME}ImageFilter.exe ${OUTPUT_TEST_FILENAME_SAFE}
+        /out:${CSHARP_BINARY_DIRECTORY}/Test${FILTERNAME}.exe ${OUTPUT_TEST_FILENAME_SAFE}
       DEPENDS ${filter_json_file} ${CSHARP_TEMPLATE_FILES}
       )
     set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "CSharp.${FILTERNAME}")

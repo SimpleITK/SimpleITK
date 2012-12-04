@@ -1,0 +1,51 @@
+{
+  "name" : "LaplacianSharpeningImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "doc" : "",
+  "number_of_inputs" : 1,
+  "pixel_types" : "BasicPixelIDTypeList",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "UseImageSpacing",
+      "type" : "bool",
+      "default" : "true",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "Simply run with default settings with a floating point image",
+      "settings" : [],
+      "tolerance" : 0.0001,
+      "inputs" : [
+        "Input/RA-Float.nrrd"
+      ]
+    },
+    {
+      "tag" : "shortdefault",
+      "description" : "Simply run with default settings on a short image",
+      "settings" : [],
+      "md5hash" : "93a629b9dfad6814c5acbabd42f10c4c",
+      "inputs" : [
+        "Input/RA-Short.nrrd"
+      ]
+    },
+    {
+      "tag" : "vectordefault",
+      "description" : "Run with defaults setting on an RGB image",
+      "settings" : [],
+      "md5hash" : "f3ad8145d54e583b3e2354b24769df58",
+      "inputs" : [
+        "Input/fruit.png"
+      ]
+    }
+  ],
+  "briefdescription" : "This filter sharpens an image using a Laplacian. LaplacianSharpening highlights regions of rapid intensity change and therefore highlights or enhances the edges. The result is an image that appears more in focus.\n",
+  "detaileddescription" : "\\par The LaplacianSharpening at each pixel location is computed by\nconvolution with the itk::LaplacianOperator.\n\\par Inputs and Outputs\nThe input to this filter is a scalar-valued itk::Imageof arbitrary dimension. The output is a scalar-valued itk::Image.\n\\see  Image\n\\see \n\\see  Neighborhood\n\\see \n\\see  NeighborhoodOperator\n\\see \n\\see  NeighborhoodIterator\n\\see \n\\see  LaplacianOperator\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Sharpen an image\n\n"
+}
