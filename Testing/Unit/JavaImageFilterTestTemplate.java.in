@@ -48,7 +48,7 @@ class ${name}Test {
     // Instantiate objects
     ImageFileReader reader = new ImageFileReader();
     ImageFileWriter writer = new ImageFileWriter();
-    ${name} filter = new ${name}ImageFilter();
+    ${name} filter = new ${name}();
 
     $(if #tests == 0 then
     OUT=[[
