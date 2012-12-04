@@ -10,5 +10,5 @@
   if (number_of_inputs > 0 or i > 1) then
     OUT = OUT .. ", "
   end
-    OUT= OUT .. members[i].type .. ' in' .. members[i].name .. " = " .. members[i].default
+    OUT= OUT .. members[i].type .." ".. members[i].name:sub(1,1):lower() .. members[i].name:sub(2,-1) .. " = " .. members[i].default
 end) );

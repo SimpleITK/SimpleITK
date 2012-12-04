@@ -17,12 +17,14 @@
 #
 #=========================================================================
 
+from __future__ import print_function
+
 import SimpleITK as sitk
 import sys
 import os
 
 if len ( sys.argv ) < 4:
-    print "Usage: SimpleGaussian <input> <sigma> <output>";
+    print( "Usage: SimpleGaussian <input> <sigma> <output>" )
     sys.exit ( 1 )
 
 
@@ -45,5 +47,5 @@ writer.SetFileName ( sys.argv[3] )
 writer.Execute ( image );
 
 
-if ( not os.environ.has_key("SITK_NOSHOW") ):
+if ( not "SITK_NOSHOW" in os.environ ):
     sitk.Show( image, "Simple Gaussian" )

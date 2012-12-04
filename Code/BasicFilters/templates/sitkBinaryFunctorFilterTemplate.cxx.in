@@ -81,7 +81,7 @@ Image ${name}ImageFilter::Execute ( const Image& image1, ${constant_type} consta
 {
 $(foreach members
 $(if (not no_set_method) or (no_set_method == 0) then
-OUT = '  this->Set${name} ( in${name} );'
+OUT = '  this->Set${name} ( ${name:sub(1,1):lower() .. name:sub(2,-1)} );'
 end)
 )
 return this->Execute ( image1, constant );
@@ -92,7 +92,7 @@ Image ${name}ImageFilter::Execute ( ${constant_type} constant, const Image& imag
 {
 $(foreach members
 $(if (not no_set_method) or (no_set_method == 0) then
-OUT = '  this->Set${name} ( in${name} );'
+OUT = '  this->Set${name} ( ${name:sub(1,1):lower() .. name:sub(2,-1)} );'
 end)
 )
 return this->Execute ( constant, image2 );
@@ -192,7 +192,7 @@ Image ${name} ( const Image& image1, ${constant_type} constant$(include MemberPa
                             if (number_of_inputs > 0 or i > 1) then
                               OUT = OUT .. ", "
                             end
-                            OUT= OUT .. ' in' .. members[i].name
+                            OUT= OUT .. members[i].name:sub(1,1):lower() .. members[i].name:sub(2,-1)
                             end) );
 }
 
@@ -203,7 +203,7 @@ Image ${name} ( ${constant_type} constant, const Image& image2$(include MemberPa
                             if (number_of_inputs > 0 or i > 1) then
                               OUT = OUT .. ", "
                             end
-                            OUT= OUT .. ' in' .. members[i].name
+                            OUT= OUT .. members[i].name:sub(1,1):lower() .. members[i].name:sub(2,-1)
                             end) );
 }
 

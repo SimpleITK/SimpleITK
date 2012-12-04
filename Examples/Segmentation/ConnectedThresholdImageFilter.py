@@ -16,6 +16,8 @@
  '
  '========================================================================='''
 
+from __future__ import print_function
+
 import SimpleITK
 import sys
 
@@ -25,7 +27,7 @@ if __name__ == '__main__':
   # Check Command Line
   #
   if len( sys.argv ) < 7:
-    print "Usage: ConnectedThresholdImageFilter inputImage outputImage lowerThreshold upperThreshold seedX seedY [seed2X seed2Y ... ]";
+    print("Usage: ConnectedThresholdImageFilter inputImage outputImage lowerThreshold upperThreshold seedX seedY [seed2X seed2Y ... ]");
     sys.exit( 1 )
   
   
@@ -61,7 +63,7 @@ if __name__ == '__main__':
   for i in range( 5, len(sys.argv)-1, 2 ):
     seed = SimpleITK.Index( int(sys.argv[i]), int(sys.argv[i+1]) )
     segmentationFilter.AddSeed( seed )
-    print "Adding seed at " + seed.ToString()
+    print( "Adding seed at ", seed.ToString() )
   
   # Run the segmentation filter
   image = segmentationFilter.Execute( image )

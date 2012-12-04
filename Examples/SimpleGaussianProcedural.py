@@ -17,12 +17,14 @@
 #
 #=========================================================================
 
+from __future__ import print_function
+
 import SimpleITK as sitk
 import sys
 import os
 
 if len ( sys.argv ) < 4:
-    print "Usage: %s <input> <sigma> <output>" % ( sys.argv[0] )
+    print( "Usage: %s <input> <sigma> <output>" % ( sys.argv[0] ) )
     sys.exit ( 1 )
 
 
@@ -35,5 +37,5 @@ image  = sitk.SmoothingRecursiveGaussian( image,  float( sys.argv[2] ) )
 sitk.WriteImage( sitk.Cast( image, pixelID ), sys.argv[3] )
 
 
-if ( not os.environ.has_key("SITK_NOSHOW") ):
+if ( not "SITK_NOSHOW" in os.environ ):
     sitk.Show( sitk.Cast( image, pixelID ), "Simple Gaussian Procedural" )

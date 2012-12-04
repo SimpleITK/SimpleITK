@@ -1,0 +1,28 @@
+{
+  "name" : "DivideReal",
+  "itk_name" : "BinaryFunctorImageFilter",
+  "template_code_filename" : "BinaryFunctorFilter",
+  "template_test_filename" : "ImageFilter",
+  "constant_type" : "double",
+  "output_pixel_type" : "typename itk::NumericTraits<typename InputImageType::PixelType>::RealType",
+  "include_files" : [
+    "itkDivideRealFunctor.h"
+  ],
+  "number_of_inputs" : 2,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "filter_type" : "itk::BinaryFunctorImageFilter< InputImageType, InputImageType2, OutputImageType, Functor::DivReal< typename InputImageType::PixelType, typename InputImageType2::PixelType, typename OutputImageType::PixelType> >"
+  "members" : [],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Simply run with default settings",
+      "settings" : [],
+      "tolerance" : "1e-8",
+      "inputs" : [
+        "Input/Ramp-Up-Short.nrrd",
+        "Input/Ramp-Down-Short.nrrd"
+      ]
+    }
+  ]
+}

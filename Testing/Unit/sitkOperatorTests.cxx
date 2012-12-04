@@ -20,6 +20,8 @@
 #include "SimpleITK.h"
 #include "SimpleITKTestHarness.h"
 
+
+
 namespace sitk = itk::simple;
 
 TEST(OperatorTests,ComparisonLogic)
@@ -119,5 +121,31 @@ TEST(OperatorTests, Arithmetic)
   EXPECT_EQ( "9477ff236835c28038e92121453738c7d4e9b471", sitk::Hash( 3/img1 ) );
   EXPECT_EQ( "116d707122e1c00c7328c57232a904df3a1f629d", sitk::Hash( img2/2 ) );
   EXPECT_EQ( "01e56888e4d212385251a2697aaf24a4287c1745", sitk::Hash( img2/img1 ));
+
+}
+
+
+TEST(OperatorTests, AdditionalDivide)
+{
+
+  sitk::Image img1 ( 10, 10, sitk::sitkInt32 );
+  sitk::Image img2 ( 10, 10, sitk::sitkInt32 );
+
+  img1 += 1;
+  img2 += 2;
+
+  std::vector<uint32_t> idx( 2, 4);
+
+  EXPECT_EQ( "3d59f8de55a42cc13fb2ebda6de3a5193f2ee561", sitk::Hash( sitk::DivideFloor(img1, img2) ) );
+  EXPECT_EQ( "0dfef91fb04d1c86259591af2bb8c47498910af1", sitk::Hash( sitk::DivideFloor(-img1, img2) ) );
+
+  EXPECT_EQ( "3d59f8de55a42cc13fb2ebda6de3a5193f2ee561", sitk::Hash( sitk::DivideFloor(1, img2) ) );
+  EXPECT_EQ( "0dfef91fb04d1c86259591af2bb8c47498910af1", sitk::Hash( sitk::DivideFloor(img1, -2) ) );
+
+  EXPECT_EQ( 0.5,  sitk::DivideReal(img1, img2).GetPixelAsDouble(idx) );
+  EXPECT_EQ( -0.5,  sitk::DivideReal(-img1, img2).GetPixelAsDouble(idx) );
+
+  EXPECT_EQ( 0.5,  sitk::DivideReal(1, img2).GetPixelAsDouble(idx) );
+  EXPECT_EQ( -0.25,  sitk::DivideReal(img1, -4).GetPixelAsDouble(idx) );
 
 }
