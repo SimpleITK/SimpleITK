@@ -1,4 +1,3 @@
-1
 # remove me
 include(${ITK_USE_FILE})
 
