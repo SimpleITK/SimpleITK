@@ -1,4 +1,4 @@
-
+1
 # remove me
 include(${ITK_USE_FILE})
 
@@ -163,7 +163,7 @@ endif()
 #
 if ( WRAP_RUBY )
   find_package ( Ruby REQUIRED )
-
+  include_directories ( ${RUBY_INCLUDE_DIRS} )
 
   # Run swig
   set(CMAKE_SWIG_FLAGS -autorename -module simpleitk ${CMAKE_SWIG_GLOBAL_FLAGS})
