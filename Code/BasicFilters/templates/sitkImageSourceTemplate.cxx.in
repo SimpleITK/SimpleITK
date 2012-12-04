@@ -89,7 +89,24 @@ $(include ExecuteInternalUpdateAndReturn.cxx.in)
 //-----------------------------------------------------------------------------
 
 $(include ExecuteInternalVectorImages.cxx.in)
-$(include FunctionalAPI.cxx.in)
+//
+// Function to run the Execute method of this filter
+//
+Image ${name:gsub("ImageSource$", "Source")} ( $(include ImageParameters.in)$(include MemberParameters.in) )
+{
+  ${name} filter;
+  return filter.Execute ( $(for inum=1,number_of_inputs do
+                              if inum>1 then
+                                OUT=OUT..', '
+                              end
+                              OUT=OUT .. 'image' .. inum
+                            end)$(for i = 1,#members do
+                            if (number_of_inputs > 0 or i > 1) then
+                              OUT = OUT .. ", "
+                            end
+                            OUT= OUT .. members[i].name:sub(1,1):lower() .. members[i].name:sub(2,-1)
+                            end) );
+}
 
 } // end namespace simple
 } // end namespace itk

@@ -160,7 +160,7 @@ $(if inputA_cast then
       itk::simple::Image fromFunctional( 0, 0, itk::simple::sitkUInt8 );
       itk::simple::Image fromProcedural( 0, 0, itk::simple::sitkUInt8 );
       ASSERT_NO_THROW ( fromProcedural = filter.Execute ( $(if #inputs > 0 then OUT=[[inputs[0] ]] end)$(for inum=1,#inputs-1 do OUT=OUT..", inputs["..inum.."]" end) ) ) << "Procedural interface to ${name}";
-      ASSERT_NO_THROW ( fromFunctional = itk::simple::${name:gsub("ImageFilter$", "")} ( $(if #inputs > 0 then OUT=[[inputs[0] ]] end)$(for inum=1,#inputs-1 do OUT=OUT..", inputs["..inum.."]" end)
+      ASSERT_NO_THROW ( fromFunctional = itk::simple::${name:gsub("ImageFilter$", ""):gsub("ImageSource$", "Source")} ( $(if #inputs > 0 then OUT=[[inputs[0] ]] end)$(for inum=1,#inputs-1 do OUT=OUT..", inputs["..inum.."]" end)
                                                                        $(if template_type and template_type == "RegionGrowing" then OUT=", std::vector< std::vector<unsigned int> >()" end)
                                                                        $(if template_code_filename and template_code_filename == "FastMarchingImageFilter" then OUT=", std::vector< std::vector<unsigned int> >()" end)
                                                                        $(if template_code_filename and template_code_filename == "KernelImageFilter" then OUT=[[, 1, itk::simple::${name}::Ball]] end)
