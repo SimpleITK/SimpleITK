@@ -1,12 +1,12 @@
     /**
-     * \brief itk::simple::${name}ImageFilter Procedural Interface
+     * \brief itk::simple::${name} Procedural Interface
      *
-     * This function directly calls the execute method of ${name}ImageFilter
+     * This function directly calls the execute method of ${name}
      * in order to support a procedual API
      *
-     * \sa itk::simple::${name}ImageFilter for the object oriented interface
+     * \sa itk::simple::${name} for the object oriented interface
      */
-    SITKBasicFilters_EXPORT Image ${name} ( $(include ImageParameters.in)$(for i = 1,#members do
+SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", "")} ( $(include ImageParameters.in)$(for i = 1,#members do
   if (number_of_inputs > 0 or i > 1) then
     OUT = OUT .. ", "
   end

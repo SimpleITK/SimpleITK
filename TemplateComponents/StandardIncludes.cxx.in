@@ -7,12 +7,12 @@
 #include "itkVectorIndexSelectionCastImageFilter.h"
 #include "itkComposeImageFilter.h"
 
-#include "sitk${name}ImageFilter.h"
+#include "sitk${name}.h"
 $(if itk_name then
   OUT=[[
 #include "itk${itk_name}.h"]]
 else
   OUT=[[
-#include "itk${name}ImageFilter.h"]]
+#include "itk${name}.h"]]
 end)
 

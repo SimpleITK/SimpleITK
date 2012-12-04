@@ -1,0 +1,34 @@
+{
+  "name" : "HalfHermitianToRealInverseFFTImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "ComplexPixelIDTypeList",
+  "filter_type" : "itk::HalfHermitianToRealInverseFFTImageFilter<InputImageType>",
+  "members" : [
+    {
+      "name" : "ActualXDimensionIsOdd",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : "",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Was the original truncated dimension size odd?\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Was the original truncated dimension size odd?\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Test half inverse FFT",
+      "tolerance" : "0.01",
+      "settings" : [],
+      "inputs" : [
+        "Input/RA-HalfFFT-Complex.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "Base class for specialized complex-to-real inverse Fast Fourier Transform.\n",
+  "detaileddescription" : "This is a base class for the \"inverse\" or \"reverse\" Discrete Fourier Transform. This is an abstract base class: the actual implementation is provided by the best child class available on the system when the object is created via the object factory system.\nThe input to this filter is assumed to have the same format as the output of the RealToHalfHermitianForwardFFTImageFilter. That is, the input is assumed to consist of roughly half the full complex image resulting from a real-to-complex discrete Fourier transform. This half is expected to be the first half of the image in the X-dimension. Because this filter assumes that the input stores only about half of the non-redundant complex pixels, the output is larger in the X-dimension than it is in the input. To determine the actual size of the output image, this filter needs additional information in the form of a flag indicating whether the output image has an odd size in the X-dimension. Use SetActualXDimensionIsOdd()to set this flag.\n\\see  ForwardFFTImageFilter, HalfHermitianToRealInverseFFTImageFilter\n\n"
+}

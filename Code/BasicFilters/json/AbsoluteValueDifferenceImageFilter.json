@@ -1,0 +1,34 @@
+{
+  "name" : "AbsoluteValueDifferenceImageFilter",
+  "template_code_filename" : "BinaryFunctorFilter",
+  "template_test_filename" : "ImageFilter",
+  "constant_type" : "double",
+  "number_of_inputs" : 2,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "checker board with default parameters",
+      "settings" : [],
+      "md5hash" : "ecb99e6ffea7be1e5419350f725da86b",
+      "inputs" : [
+        "Input/BlackDots.png",
+        "Input/WhiteDots.png"
+      ]
+    },
+    {
+      "tag" : "another",
+      "description" : "checker board with default parameters",
+      "settings" : [],
+      "md5hash" : "ecb99e6ffea7be1e5419350f725da86b",
+      "inputs" : [
+        "Input/WhiteDots.png",
+        "Input/BlackDots.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Implements pixel-wise the computation of absolute value difference.\n",
+  "detaileddescription" : "This filter is parametrized over the types of the two input images and the type of the output image.\nNumeric conversions (castings) are done by the C++ defaults.\nThe filter will walk over all the pixels in the two input images, and for each one of them it will do the following:\n\n\\li Cast the input 1 pixel value to double .\n\\li Cast the input 2 pixel value to double .\n\\li Compute the difference of the two pixel values.\n\\li Compute the absolute value of the difference.\n\\li Cast the double value resulting from the absolute value to the pixel type of the output image.\n\\li Store the casted value into the output image.\nThe filter expects all images to have the same dimension (e.g. all 2D, or all 3D, or all ND).\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Compute the absolute value of the difference of corresponding pixels in two images\n\n"
+}

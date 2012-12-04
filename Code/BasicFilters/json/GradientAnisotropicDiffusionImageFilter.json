@@ -1,0 +1,95 @@
+{
+  "name" : "GradientAnisotropicDiffusionImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "RealPixelIDTypeList",
+  "include_files" : [
+    "algorithm"
+  ],
+  "members" : [
+    {
+      "name" : "TimeStep",
+      "type" : "double",
+      "default" : 0.125,
+      "doc" : "Time step for PDE solver"
+    },
+    {
+      "name" : "ConductanceParameter",
+      "type" : "double",
+      "default" : 3,
+      "doc" : "Conductance parameter governing sensitivity of the conductance equation."
+    },
+    {
+      "name" : "ConductanceScalingUpdateInterval",
+      "type" : "unsigned int",
+      "default" : "1u",
+      "doc" : "Interval at which a new scaling for the conductance term is calculated."
+    },
+    {
+      "name" : "NumberOfIterations",
+      "type" : "uint32_t",
+      "default" : "5u",
+      "doc" : "Number of iterations to run"
+    }
+  ],
+  "custom_methods" : [
+    {
+      "name" : "EstimateOptimalTimeStep",
+      "doc" : "This method autmatically  sets the optimal timestep for an image given its spacing.",
+      "return_type" : "double",
+      "parameters" : [
+        {
+          "type" : "Image &",
+          "var_name" : "inImage"
+        }
+      ],
+      "body" : "std::vector<double> spacing = inImage.GetSpacing();\ndouble minSpacing = *std::min_element( spacing.begin(), spacing.end()); this->m_TimeStep = minSpacing / std::pow(2.0, static_cast< double >( inImage.GetDimension() ) ); return this->m_TimeStep;"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Simply run with default settings",
+      "settings" : [
+        {
+          "parameter" : "TimeStep",
+          "value" : 0.01
+        }
+      ],
+      "tolerance" : 0,
+      "md5hash" : null,
+      "inputs" : [
+        "Input/RA-Float.nrrd"
+      ]
+    },
+    {
+      "tag" : "longer",
+      "description" : "Change number of iterations and timestep",
+      "settings" : [
+        {
+          "parameter" : "TimeStep",
+          "value" : 0.01
+        },
+        {
+          "parameter" : "NumberOfIterations",
+          "value" : "10u",
+          "lua_value" : "10",
+          "python_value" : "10",
+          "ruby_value" : "10",
+          "java_value" : "10",
+          "tcl_value" : "10",
+          "R_value" : "10"
+        }
+      ],
+      "tolerance" : 0,
+      "md5hash" : null,
+      "inputs" : [
+        "Input/RA-Float.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "",
+  "detaileddescription" : "This filter performs anisotropic diffusion on a scalar itk::Imageusing the classic Perona-Malik, gradient magnitude based equation implemented in itkGradientNDAnisotropicDiffusionFunction. For detailed information on anisotropic diffusion, see itkAnisotropicDiffusionFunction and itkGradientNDAnisotropicDiffusionFunction.\n\\par Inputs and Outputs\nThe input to this filter should be a scalar itk::Imageof any dimensionality. The output image will be a diffused copy of the input.\n\\par Parameters\nPlease see the description of parameters given in itkAnisotropicDiffusionImageFilter.\n\\see  AnisotropicDiffusionImageFilter\n\\see \n\\see  AnisotropicDiffusionFunction\n\\see \n\\see GradientAnisotropicDiffusionFunction\n\n"
+}

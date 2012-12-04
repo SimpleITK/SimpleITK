@@ -1,0 +1,62 @@
+{
+  "name" : "ShiftScaleImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "Shift",
+      "type" : "double",
+      "default" : 0,
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the amount to Shift each Pixel. The shift is followed by a Scale.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the amount to Shift each Pixel. The shift is followed by a Scale.\n"
+    },
+    {
+      "name" : "Scale",
+      "type" : "double",
+      "default" : "1.0",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the amount to Scale each Pixel. The Scale is applied after the Shift.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the amount to Scale each Pixel. The Scale is applied after the Shift.\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : " default parameters",
+      "settings" : [],
+      "md5hash" : "a963bd6a755b853103a2d195e01a50d3",
+      "inputs" : [
+        "Input/RA-Short.nrrd"
+      ]
+    },
+    {
+      "tag" : "params",
+      "description" : " default parameters",
+      "settings" : [
+        {
+          "parameter" : "Shift",
+          "type" : "double",
+          "value" : "100"
+        },
+        {
+          "parameter" : "Scale",
+          "type" : "double",
+          "value" : "0.5"
+        }
+      ],
+      "md5hash" : "e3bee902dc9339d28359ebfb96a70186",
+      "inputs" : [
+        "Input/RA-Short.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "Shift and scale the pixels in an image.\n",
+  "detaileddescription" : " ShiftScaleImageFiltershifts the input pixel by Shift (default 0.0) and then scales the pixel by Scale (default 1.0). All computattions are performed in the precison of the input pixel's RealType. Before assigning the computed value to the output pixel, the value is clamped at the NonpositiveMin and max of the pixel type.\n"
+}

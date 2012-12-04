@@ -1,1 +1,1 @@
-std::string ${name}ImageFilter::ToString() const
+std::string ${name}::ToString() const

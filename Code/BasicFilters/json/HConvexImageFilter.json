@@ -1,0 +1,49 @@
+{
+  "name" : "HConvexImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "Height",
+      "type" : "double",
+      "default" : "2.0",
+      "pixeltype" : "Input",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the height that a local maximum must be above the local background (local contrast) in order to survive the processing. Local maxima below this value are replaced with an estimate of the local background.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the height that a local maximum must be above the local background (local contrast) in order to survive the processing. Local maxima below this value are replaced with an estimate of the local background.\n"
+    },
+    {
+      "name" : "FullyConnected",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : "",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.\n"
+    }
+  ],
+  "custom_methods" : [],
+  "tests" : [
+    {
+      "tag" : "HConvex",
+      "description" : "Test HConvex",
+      "md5hash" : "f3a7b95a51710d51b3b73e0eb77eb1eb",
+      "settings" : [
+        {
+          "parameter" : "Height",
+          "value" : 10000
+        }
+      ],
+      "inputs" : [
+        "Input/RA-Short.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "Identify local maxima whose height above the baseline is greater than h.\n",
+  "detaileddescription" : " HConvexImageFilterextract local maxima that are more than h intensity units above the (local) background. This has the effect of extracting objects that are brighter than background by at least h intensity units.\nThis filter uses the HMaximaImageFilter.\nGeodesic morphology and the H-Convex algorithm is described in Chapter 6 of Pierre Soille's book \"Morphological Image Analysis:\n Principles and Applications\", Second Edition, Springer, 2003.\n\\see  GrayscaleGeodesicDilateImageFilter, HMinimaImageFilter\n\\see \n\\see  MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter\n\n"
+}

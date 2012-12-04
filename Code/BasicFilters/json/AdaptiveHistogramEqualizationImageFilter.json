@@ -1,0 +1,79 @@
+{
+  "name" : "AdaptiveHistogramEqualizationImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "filter_type" : "itk::AdaptiveHistogramEqualizationImageFilter<InputImageType>",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "public_declarations" : "Self &SetRadius( unsigned int r ) { this->m_Radius = std::vector<unsigned int>(3, r ); return *this; }",
+  "members" : [
+    {
+      "name" : "Radius",
+      "type" : "std::vector<unsigned int>",
+      "default" : "std::vector<unsigned int>(3, 5)",
+      "dim_vec" : 1,
+      "no_print" : 1,
+      "itk_type" : "typename FilterType::RadiusType"
+    },
+    {
+      "name" : "Alpha",
+      "type" : "float",
+      "default" : "0.3f",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the value of alpha. Alpha=0 produces the adaptive histogram equalization (provided beta=0). Alpha=1 produces an unsharp mask. Default is 0.3.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the value of alpha. Alpha=0 produces the adaptive histogram equalization (provided beta=0). Alpha=1 produces an unsharp mask. Default is 0.3.\n"
+    },
+    {
+      "name" : "Beta",
+      "type" : "float",
+      "default" : "0.3f",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the value of beta. If beta=1 (and alpha=1), then the output image matches the input image. As beta approaches 0, the filter behaves as an unsharp mask. Default is 0.3.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the value of beta. If beta=1 (and alpha=1), then the output image matches the input image. As beta approaches 0, the filter behaves as an unsharp mask. Default is 0.3.\n"
+    },
+    {
+      "name" : "UseLookupTable",
+      "type" : "bool",
+      "default" : "false",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get whether an optimized lookup table for the intensity mapping function is used. Default is off.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get whether an optimized lookup table for the intensity mapping function is used. Default is off.\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Simply run with default settings",
+      "settings" : [],
+      "tolerance" : "5e-4",
+      "inputs" : [
+        "Input/RA-Slice-Float.nrrd"
+      ]
+    },
+    {
+      "tag" : "histo",
+      "description" : "values set for classical histogram qualization",
+      "settings" : [
+        {
+          "parameter" : "Alpha",
+          "value" : 0.0
+        },
+        {
+          "parameter" : "Beta",
+          "value" : 0.0
+        }
+      ],
+      "tolerance" : "1e-5",
+      "inputA_cast" : "sitkFloat32",
+      "inputs" : [
+        "Input/cthead1.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Power Law Adaptive Histogram Equalization.\n",
+  "detaileddescription" : "Histogram equalization modifies the contrast in an image. The AdaptiveHistogramEqualizationImageFilteris a superset of many contrast enhancing filters. By modifying its parameters (alpha, beta, and window), the AdaptiveHistogramEqualizationImageFiltercan produce an adaptively equalized histogram or a version of unsharp mask (local mean subtraction). Instead of applying a strict histogram equalization in a window about a pixel, this filter prescribes a mapping function (power law) controlled by the parameters alpha and beta.\nThe parameter alpha controls how much the filter acts like the classical histogram equalization method (alpha=0) to how much the filter acts like an unsharp mask (alpha=1).\nThe parameter beta controls how much the filter acts like an unsharp mask (beta=0) to much the filter acts like pass through (beta=1, with alpha=1).\nThe parameter window controls the size of the region over which local statistics are calculated.\nBy altering alpha, beta and window, a host of equalization and unsharp masking filters is available.\nFor detail description, reference \"Adaptive Image Contrast\n Enhancement using Generalizations of Histogram Equalization.\" J.Alex Stark. IEEE Transactions on ImageProcessing, May 2000.\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Adaptive histogram equalization\n\n"
+}

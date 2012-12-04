@@ -1,0 +1,51 @@
+{
+  "name" : "BlackTopHatImageFilter",
+  "template_code_filename" : "KernelImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "SafeBorder",
+      "type" : "bool",
+      "default" : "true",
+      "doc" : "",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "A safe border is added to input image to avoid borders effects and remove it once the closing is done\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "A safe border is added to input image to avoid borders effects and remove it once the closing is done\n"
+    }
+  ],
+  "custom_methods" : [],
+  "tests" : [
+    {
+      "tag" : "BlackTopHapErode",
+      "description" : "Test black top hat",
+      "md5hash" : "445a5da6221f6d976d169b70c5538614",
+      "settings" : [
+        {
+          "parameter" : "KernelRadius",
+          "no_get_method" : 1,
+          "value" : 1
+        },
+        {
+          "parameter" : "KernelType",
+          "value" : "itk::simple::${name}::Ball",
+          "lua_value" : "SimpleITK.${name}_Ball",
+          "python_value" : "SimpleITK.${name}.Ball",
+          "ruby_value" : "Simpleitk::${name}::Ball",
+          "java_value" : "${name}.KernelType.Ball",
+          "tcl_value" : "$$${name}_Ball",
+          "csharp_value" : "${name}.KernelType.Ball",
+          "R_value" : "'Ball'"
+        }
+      ],
+      "inputs" : [
+        "Input/STAPLE1.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Black top hat extract local minima that are smaller than the structuring element.\n",
+  "detaileddescription" : "Black top hat extract local minima that are smaller than the structuring element. It subtract the background in the input image. The output of the filter transforms the black peaks in white peaks.\nTop-hats are described in Chapter 4.5 of Pierre Soille's book \"Morphological Image Analysis: Principles and Applications\", Second Edition, Springer, 2003.\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\n"
+}

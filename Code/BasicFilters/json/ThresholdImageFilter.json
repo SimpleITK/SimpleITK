@@ -1,0 +1,94 @@
+{
+  "name" : "ThresholdImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "filter_type" : "itk::ThresholdImageFilter<InputImageType>",
+  "number_of_inputs" : 1,
+  "pixel_types" : "BasicPixelIDTypeList",
+  "doc" : "",
+  "members" : [
+    {
+      "name" : "Lower",
+      "type" : "double",
+      "default" : "0.0",
+      "pixeltype" : "Input",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get methods to set the lower threshold\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get methods to set the lower threshold\n"
+    },
+    {
+      "name" : "Upper",
+      "type" : "double",
+      "default" : "1.0",
+      "pixeltype" : "Input",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get methods to set the upper threshold\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get methods to set the upper threshold\n"
+    },
+    {
+      "name" : "OutsideValue",
+      "type" : "double",
+      "default" : "0.0",
+      "pixeltype" : "Output",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "End concept checking Set the \"outside\" pixel value. The default value NumericTraits<PixelType>::Zero.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the \"outside\" pixel value.\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "Default",
+      "description" : "Default",
+      "md5hash" : "59071590099d21dd439896592338bf95",
+      "settings" : [],
+      "inputs" : [
+        "Input/RA-Short.nrrd"
+      ]
+    },
+    {
+      "tag" : "Threshold1",
+      "description" : "Threshold settings 1",
+      "md5hash" : "f70a31938657e0163b82521af4f8e3b0",
+      "settings" : [
+        {
+          "parameter" : "Lower",
+          "value" : "25000"
+        },
+        {
+          "parameter" : "Upper",
+          "value" : "65535"
+        }
+      ],
+      "inputs" : [
+        "Input/RA-Slice-Short.png"
+      ]
+    },
+    {
+      "tag" : "Threshold2",
+      "description" : "Threshold settings 2",
+      "md5hash" : "898743e4ec2e75c0169d025fb29b7ead",
+      "settings" : [
+        {
+          "parameter" : "Lower",
+          "value" : "0"
+        },
+        {
+          "parameter" : "Upper",
+          "value" : "25000"
+        },
+        {
+          "parameter" : "OutsideValue",
+          "value" : "25000"
+        }
+      ],
+      "inputs" : [
+        "Input/RA-Slice-Short.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Set image values to a user-specified value if they are below, above, or between simple threshold values.\n",
+  "detaileddescription" : " ThresholdImageFiltersets image values to a user-specified \"outside\" value (by default, \"black\") if the image values are below, above, or between simple threshold values.\nThe pixels must support the operators >= and <=.\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Threshold an image\n\n"
+}

@@ -1,0 +1,98 @@
+{
+  "name" : "RecursiveGaussianImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "doc" : "",
+  "number_of_inputs" : 1,
+  "pixel_types" : "typelist::Append<BasicPixelIDTypeList, VectorPixelIDTypeList>::Type",
+  "output_image_type" : "typename InputImageType::template Rebind<float>::Type",
+  "public_declarations" : "typedef  enum { ZeroOrder, FirstOrder, SecondOrder } OrderEnumType;",
+  "members" : [
+    {
+      "name" : "Sigma",
+      "type" : "double",
+      "default" : "1.0",
+      "doc" : "",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the Sigma, measured in world coordinates, of the Gaussian kernel. The default is 1.0.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the Sigma, measured in world coordinates, of the Gaussian kernel. The default is 1.0.\n"
+    },
+    {
+      "name" : "NormalizeAcrossScale",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : "",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the flag for normalizing the gaussian over scale-space.This flag enables the analysis of the differential shape of\n features independent of their size ( both pixels and physical\n size ). Following the notation of Tony Lindeberg:\n\n Let \\form#194 be the scale-space\n representation of image \\form#195\n where \\form#196 is\n the Gaussian function and \\form#197 denotes convolution. This\n is a change from above with \\form#198.\n\n Then the normalized derivative operator for normalized\n coordinates across scale is:\n \\f[ \\partial_\\xi = \\sqrt{t} \\partial_x \\f]  The resulting scaling factor is \\f[ \\sigma^N \\f]  where N is the order of the derivative.\nWhen this flag is ON the filter will be normalized in such a way that the values of derivatives are not biased by the size of the object. That is to say the maximum value a feature reaches across scale is independent of the scale of the object.\nFor analyzing an image across scale-space you want to enable this flag. It is disabled by default.\n\\note Not all scale space axioms are satisfied by this filter, some are only approximated. Particularly, at fine scales ( say less than 1 pixel ) other methods such as a discrete Gaussian kernel should be considered.\n\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
+    },
+    {
+      "name" : "Order",
+      "type" : "itk::simple::RecursiveGaussianImageFilter::OrderEnumType",
+      "default" : "itk::simple::RecursiveGaussianImageFilter::ZeroOrder",
+      "doc" : "",
+      "custom_itk_cast" : "filter->SetOrder( static_cast<typename FilterType::OrderEnumType>( this->GetOrder()) );",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the Order of the Gaussian to convolve with.\n\\li ZeroOrder is equivalent to convolving with a Gaussian. This is the default.\n\\li FirstOrder is equivalent to convolving with the first derivative of a Gaussian.\n\\li SecondOrder is equivalent to convolving with the second derivative of a Gaussian.\n\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the Order of the Gaussian to convolve with.\n\\li ZeroOrder is equivalent to convolving with a Gaussian. This is the default.\n\\li FirstOrder is equivalent to convolving with the first derivative of a Gaussian.\n\\li SecondOrder is equivalent to convolving with the second derivative of a Gaussian.\n\n"
+    },
+    {
+      "name" : "Direction",
+      "type" : "unsigned int",
+      "default" : "0u",
+      "doc" : ""
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "Simply run with default settings",
+      "settings" : [],
+      "tolerance" : 0,
+      "md5hash" : null,
+      "inputs" : [
+        "Input/RA-Float.nrrd"
+      ]
+    },
+    {
+      "tag" : "rgb_image",
+      "description" : "First derivative on a vector image",
+      "settings" : [
+        {
+          "parameter" : "Sigma",
+          "value" : "3.0"
+        },
+        {
+          "parameter" : "Direction",
+          "value" : "1u",
+          "lua_value" : "1",
+          "python_value" : "1",
+          "ruby_value" : "1",
+          "java_value" : "1",
+          "tcl_value" : "1",
+          "R_value" : "1"
+        },
+        {
+          "parameter" : "Order",
+          "value" : "itk::simple::${name}::FirstOrder",
+          "lua_value" : "SimpleITK.${name}_FirstOrder",
+          "python_value" : "SimpleITK.${name}.FirstOrder",
+          "ruby_value" : "Simpleitk::${name}::FirstOrder",
+          "java_value" : "${name}.OrderEnumType.FirstOrder",
+          "tcl_value" : "$$${name}_FirstOrder",
+          "csharp_value" : "${name}.OrderEnumType.FirstOrder",
+          "R_value" : "'FirstOrder'"
+        }
+      ],
+      "tolerance" : 1e-10,
+      "inputs" : [
+        "Input/VM1111Shrink-RGB.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Base class for computing IIR convolution with an approximation of a Gaussian kernel.\n",
+  "detaileddescription" : " \\f[ \\frac{ 1 }{ \\sigma \\sqrt{ 2 \\pi } } \\exp{ \\left( - \\frac{x^2}{ 2 \\sigma^2 } \\right) } \\f]  \n RecursiveGaussianImageFilteris the base class for recursive filters that approximate convolution with the Gaussian kernel. This class implements the recursive filtering method proposed by R.Deriche in IEEE-PAMI Vol.12, No.1, January 1990, pp 78-87, \"Fast Algorithms for Low-Level Vision\"\nDetails of the implementation are described in the technical report: R. Deriche, \"Recursively Implementing The Gaussian and Its Derivatives\", INRIA, 1993,ftp://ftp.inria.fr/INRIA/tech-reports/RR/RR-1893.ps.gz\nFurther improvements of the algorithm are described in: G. Farneback & C.-F. Westin, \"On Implementation of Recursive Gaussian\n Filters\", so far unpublished.\nAs compared to itk::DiscreteGaussianImageFilter, this filter tends to be faster for large kernels, and it can take the derivative of the blurred image in one step. Also, note that we have itk::RecursiveGaussianImageFilter::SetSigma(), but itk::DiscreteGaussianImageFilter::SetVariance().\n\\see  DiscreteGaussianImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Find higher derivatives of an image\n\n"
+}

@@ -1,9 +1,9 @@
 //
 // Function to run the Execute method of this filter
 //
-Image ${name} ( $(include ImageParameters.in)$(include MemberParameters.in) )
+Image ${name:gsub("ImageFilter$", "")} ( $(include ImageParameters.in)$(include MemberParameters.in) )
 {
-  ${name}ImageFilter filter;
+  ${name} filter;
   return filter.Execute ( $(for inum=1,number_of_inputs do
                               if inum>1 then
                                 OUT=OUT..', '

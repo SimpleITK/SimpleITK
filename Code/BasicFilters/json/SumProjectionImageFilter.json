@@ -1,0 +1,40 @@
+{
+  "name" : "SumProjectionImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "\todo this filter should work with VectorImages too. \todo output type should be AccumulateType",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "output_pixel_type" : "typename itk::NumericTraits<typename InputImageType::PixelType>::RealType",
+  "members" : [
+    {
+      "name" : "ProjectionDimension",
+      "type" : "unsigned int",
+      "default" : "0u"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "z_projection",
+      "description" : "project in the 2nd dimension",
+      "settings" : [
+        {
+          "parameter" : "ProjectionDimension",
+          "value" : "2u",
+          "lua_value" : "2",
+          "python_value" : "2",
+          "ruby_value" : "2",
+          "java_value" : "2",
+          "tcl_value" : "2",
+          "R_value" : "2"
+        }
+      ],
+      "tolerance" : "0.0001",
+      "inputs" : [
+        "Input/RA-Float.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "Sum projection.\n",
+  "detaileddescription" : "This class was contributed to the Insight Journal by Gaetan Lehmann. The original paper can be found athttp://hdl.handle.net/1926/164\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction , INRA de Jouy-en-Josas, France.\n\\see  ProjectionImageFilter\n\\see \n\\see  MedianProjectionImageFilter\n\\see \n\\see  MeanProjectionImageFilter\n\\see \n\\see  MeanProjectionImageFilter\n\\see \n\\see  MaximumProjectionImageFilter\n\\see \n\\see  MinimumProjectionImageFilter\n\\see \n\\see  BinaryProjectionImageFilter\n\\see \n\\see  StandardDeviationProjectionImageFilter\n\n"
+}

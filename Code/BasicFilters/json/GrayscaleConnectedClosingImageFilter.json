@@ -1,0 +1,62 @@
+{
+  "name" : "GrayscaleConnectedClosingImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_type" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "Seed",
+      "type" : "std::vector<uint32_t>",
+      "default" : "std::vector<uint32_t>(3, 0)",
+      "dim_vec" : 1,
+      "itk_type" : "typename FilterType::InputImageIndexType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the seed pixel for the segmentation\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the seed pixel for the segmentation\n"
+    },
+    {
+      "name" : "FullyConnected",
+      "type" : "bool",
+      "default" : "false",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "Default parameter settings",
+      "settings" : [],
+      "md5hash" : "b78f55409af9d474c831d79496dedf55",
+      "inputs" : [
+        "Input/cthead1.png"
+      ]
+    },
+    {
+      "tag" : "seed",
+      "description" : "with seed parameter set",
+      "settings" : [
+        {
+          "parameter" : "Seed",
+          "type" : "uint32_t",
+          "dim_vec" : 1,
+          "value" : "{142,170}",
+          "tcl_value" : "[list 142 170]",
+          "python_value" : "[ 142, 170 ]",
+          "ruby_value" : "[ 142, 170 ]",
+          "R_value" : "c( 142, 170 )"
+        }
+      ],
+      "md5hash" : "86e55f748ca0719fda1ee360b823dd67",
+      "inputs" : [
+        "Input/cthead1.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Enhance pixels associated with a dark object (identified by a seed pixel) where the dark object is surrounded by a brigher object.\n",
+  "detaileddescription" : "GrayscaleConnectedClosingImagefilter is useful for enhancing dark objects that are surrounded by bright borders. This filter makes it easier to threshold the image and extract just the object of interest.\nGeodesic morphology and the connected closing algorithm are described in Chapter 6 of Pierre Soille's book \"Morphological Image\nAnalysis: Principles and Applications\", Second Edition, Springer, 2003.\n\\see  GrayscaleGeodesicDilateImageFilter\n\\see \n\\see  MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter\n\n"
+}

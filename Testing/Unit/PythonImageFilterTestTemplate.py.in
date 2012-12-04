@@ -41,7 +41,7 @@ tag = sys.argv[1]
 
 reader = SimpleITK.ImageFileReader()
 writer = SimpleITK.ImageFileWriter()
-filter = SimpleITK.${name}ImageFilter()
+filter = SimpleITK.${name}()
 
 $(if #tests == 0 then
     OUT=[[

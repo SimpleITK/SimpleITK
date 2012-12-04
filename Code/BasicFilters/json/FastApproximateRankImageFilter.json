@@ -1,0 +1,70 @@
+{
+  "name" : "FastApproximateRankImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "pixel_types" : "BasicPixelIDTypeList",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "public_declarations" : "Self &SetRadius( unsigned int r ) { this->m_Radius = std::vector<unsigned int>(3, r ); return *this; }",
+  "members" : [
+    {
+      "name" : "Rank",
+      "type" : "double",
+      "default" : "0.5",
+      "doc" : ""
+    },
+    {
+      "name" : "Radius",
+      "type" : "std::vector<unsigned int>",
+      "default" : "std::vector<unsigned int>(3, 1)",
+      "dim_vec" : 1,
+      "doc" : "",
+      "itk_type" : "typename FilterType::RadiusType"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "default",
+      "md5hash" : "8b86ebe8c8eb3ea42c7838f3d66155aa",
+      "settings" : [],
+      "inputs" : [
+        "Input/cthead1.png"
+      ]
+    },
+    {
+      "tag" : "by23",
+      "description" : "Test by 23",
+      "md5hash" : "67615832b6f0e0bb877ce03418d3328c",
+      "settings" : [
+        {
+          "parameter" : "Rank",
+          "type" : "double",
+          "value" : "1.0"
+        },
+        {
+          "parameter" : "Radius",
+          "type" : "unsigned int",
+          "dim_vec" : 1,
+          "value" : "{2,3}",
+          "tcl_value" : "[list 2 3]",
+          "python_value" : "[ 2, 3 ]",
+          "ruby_value" : "[ 2, 3 ]",
+          "R_value" : "c( 2, 3 )"
+        }
+      ],
+      "inputs" : [
+        "Input/cthead1.png"
+      ]
+    },
+    {
+      "tag" : "Vector",
+      "description" : "Vector image",
+      "md5hash" : "ab252b5b4214aa0653de26e33ea2c822",
+      "settings" : [],
+      "inputs" : [
+        "Input/VM1111Shrink-RGBFloat.nrrd"
+      ]
+    }
+  ]
+}

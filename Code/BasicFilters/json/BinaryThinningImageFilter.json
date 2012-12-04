@@ -1,0 +1,23 @@
+{
+  "name" : "BinaryThinningImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "\\todo this filter may not work in 3D\n \\note the output of this filter is still the same as the input type eventhought the output is 0 or 1.",
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "members" : [],
+  "custom_methods" : [],
+  "tests" : [
+    {
+      "tag" : "BinaryThinning",
+      "description" : "Test binnary thinning",
+      "md5hash" : "153ad0b2f3658dee3b14ad93d0cfe550",
+      "settings" : [],
+      "inputs" : [
+        "Input/BlackDots.png"
+      ]
+    }
+  ],
+  "briefdescription" : "This filter computes one-pixel-wide edges of the input image.\n",
+  "detaileddescription" : "This class is parametrized over the type of the input image and the type of the output image.\nThe input is assumed to be a binary image. If the foreground pixels of the input image do not have a value of 1, they are rescaled to 1 internally to simplify the computation.\nThe filter will produce a skeleton of the object. The output background values are 0, and the foreground values are 1.\nThis filter is a sequential thinning algorithm and known to be computational time dependable on the image size. The algorithm corresponds with the 2D implementation described in:\nRafael C. Gonzales and Richard E. Woods. Digital ImageProcessing. Addison Wesley, 491-494, (1993).\nTo do: Make this filter ND.\n\\see  MorphologyImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Skeletonize/thin an image\n\n"
+}
