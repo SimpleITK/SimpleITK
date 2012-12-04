@@ -228,29 +228,33 @@
         # iterator and container methods
 
         def __iter__( self ):
-            self.iter_index = [0] * self.GetDimension()
-            return self
 
-        def next( self ):
-            old_index = tuple( self.iter_index )
+            if len(self) == 0:
+              raise StopIteration
 
             dim = self.GetDimension()
+            size = self.GetSize()
+            idx = [0] * dim
 
-            if self.iter_index[dim-1] >= self.GetSize()[dim-1]:
-               raise StopIteration
+            while idx[dim-1] < size[dim-1]:
 
-            # increment the idx
-            for d in range( 0, dim ):
-                self.iter_index[d] += 1
-                if self.iter_index[d] >= self.GetSize()[d] and d != dim  - 1:
-                   self.iter_index[d] = 0
+              yield self[ idx ]
+
+              # increment the idx
+              for d in range( 0, dim ):
+                idx[d] += 1
+                if idx[d] >= size[d] and d != dim  - 1:
+                   idx[d] = 0
                 else:
                    break
 
-            return self[ old_index ]
+            return
 
         def __len__( self ):
-            return reduce( operator.mul, self.GetSize(), 1 )
+            l = 1
+            for ds in self.GetSize():
+              l *= ds
+            return l
 
         # set/get pixel methods
 

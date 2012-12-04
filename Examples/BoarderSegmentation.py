@@ -17,6 +17,7 @@
 #
 #=========================================================================
 
+from __future__ import print_function
 
 import sys
 import SimpleITK as sitk
@@ -57,5 +58,5 @@ image = image * ~boundary
 image = image + ( boundary * replaceValue )
 
 
-if ( not os.environ.has_key("SITK_NOSHOW") ):
+if ( not "SITK_NOSHOW" in os.environ ):
     sitk.Show( image, "Boarder Segmentation" )
