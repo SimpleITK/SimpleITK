@@ -5,7 +5,7 @@ Image ${name}ImageFilter::Execute ( $(include ImageParameters.in)$(include Membe
 {
 $(foreach members
 $(if (not no_set_method) or (no_set_method == 0) then
-OUT = '  this->Set${name} ( in${name} );'
+OUT = '  this->Set${name} ( ${name:sub(1,1):lower() .. name:sub(2,-1)} );'
 end)
 )
   return this->Execute ( $(for inum=1,number_of_inputs do

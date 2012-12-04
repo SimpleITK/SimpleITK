@@ -38,7 +38,6 @@ namespace itk {
 
       ImageSeriesReader();
 
-
       /** \brief Generate a sequence of filenames from a directory with a DICOM data set.
        *
        * This method generates a sequence of filenames whose filenames
@@ -94,7 +93,7 @@ namespace itk {
        **/
       static std::vector<std::string> GetGDCMSeriesIDs( const std::string &directory );
 
-      Self& SetFileNames ( const std::vector<std::string> &fns );
+      Self& SetFileNames ( const std::vector<std::string> &fileNames );
       const std::vector<std::string> &GetFileNames() const;
 
       Image Execute();
@@ -114,7 +113,7 @@ namespace itk {
 
       std::vector<std::string> m_FileNames;
     };
-  SITKIO_EXPORT Image ReadImage ( const std::vector<std::string> &filenames );
+  SITKIO_EXPORT Image ReadImage ( const std::vector<std::string> &fileNames );
   }
 }
 
