@@ -36,8 +36,11 @@ image * image
 image * 1
 1 * image
 image / image
-image / 1
-1 / image
+1.0 / image
+image / 1.0
+image // image
+image // 1
+1 // image
 image & image
 image | image
 image ^ image
@@ -47,6 +50,7 @@ image += image
 image -= image
 image *= image
 image /= image
+image //= image
 
 image = image * 0
 

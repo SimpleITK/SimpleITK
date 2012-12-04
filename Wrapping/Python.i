@@ -49,9 +49,6 @@
 %extend itk::simple::Image {
 
 
-//      def __floordiv__( other )
-
-
         %pythoncode %{
 
         # mathematical operators
@@ -84,6 +81,21 @@
                return Divide( self, float(other) )
             except ValueError:
                return NotImplemented
+        def __floordiv__( self, other ):
+            if isinstance( other, Image ):
+               return DivideFloor( self, other )
+            try:
+               return DivideFloor( self, float(other) )
+            except ValueError:
+               return NotImplemented
+        def __truediv__( self, other ):
+            if isinstance( other, Image ):
+               return DivideReal( self, other )
+            try:
+               return DivideReal( self, float(other) )
+            except ValueError:
+               return NotImplemented
+
 
         def __neg__( self ):
             return UnaryMinus( self )
@@ -113,6 +125,18 @@
                return Divide( float(other), self )
             except ValueError:
                return NotImplemented
+        def __rfloordiv__( self, other ):
+            try:
+               return DivideFloor( float(other), self )
+            except ValueError:
+               return NotImplemented
+        def __rtruediv__( self, other ):
+            try:
+               return DivideReal( float(other), self )
+            except ValueError:
+               return NotImplemented
+
+
 
          # NOTE: the __i*__ methods are not implemented because there
          # currently in no way to make the underlying filters run
