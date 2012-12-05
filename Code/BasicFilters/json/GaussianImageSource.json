@@ -1,13 +1,12 @@
 {
-  "name" : "GaussianSourceImageFilter",
-  "itk_name" : "GaussianImageSource",
+  "name" : "GaussianImageSource",
   "template_code_filename" : "ImageSource",
   "template_test_filename" : "ImageFilter",
   "doc" : "",
   "number_of_inputs" : 0,
   "pixel_types" : "BasicPixelIDTypeList",
   "output_image_type" : "TImageType",
-  "filter_type" : "GaussianImageSource<OutputImageType>",
+  "filter_type" : "itk::GaussianImageSource<OutputImageType>",
   "include_files" : [
     "sitkDirectionConvert.hxx"
   ],

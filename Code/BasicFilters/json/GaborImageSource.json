@@ -1,13 +1,12 @@
 {
-  "name" : "GaborSourceImageFilter",
-  "itk_name" : "GaborImageSource",
+  "name" : "GaborImageSource",
   "template_code_filename" : "ImageSource",
   "template_test_filename" : "ImageFilter",
   "doc" : "",
   "number_of_inputs" : 0,
   "pixel_types" : "BasicPixelIDTypeList",
   "output_image_type" : "TImageType",
-  "filter_type" : "GaborImageSource<OutputImageType>",
+  "filter_type" : "itk::GaborImageSource<OutputImageType>",
   "include_files" : [
     "sitkDirectionConvert.hxx"
   ],
