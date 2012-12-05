@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitk${name}ImageFilter_h
-#define __sitk${name}ImageFilter_h
+#ifndef __sitk${name}_h
+#define __sitk${name}_h
 
 $(include DoNotEditWarning.h.in)
 
@@ -29,7 +29,7 @@ $(include DoNotEditWarning.h.in)
 namespace itk {
   namespace simple {
 
-    /** \class ${name}ImageFilter
+    /** \class ${name}
      *
      * ${doc}
      */

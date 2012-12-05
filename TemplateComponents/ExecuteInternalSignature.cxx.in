@@ -1,5 +1,5 @@
 template <class TImageType>
-Image ${name}ImageFilter::ExecuteInternal ( $(for inum=1,number_of_inputs do
+Image ${name}::ExecuteInternal ( $(for inum=1,number_of_inputs do
  if inum>1 then
        OUT=OUT.. ', '
   end

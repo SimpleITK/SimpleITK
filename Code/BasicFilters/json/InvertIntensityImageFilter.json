@@ -1,0 +1,35 @@
+{
+  "name" : "InvertIntensityImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "Maximum",
+      "type" : "double",
+      "default" : 255,
+      "pixeltype" : "Input",
+      "doc" : "Maximum output",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "3d",
+      "description" : "3D",
+      "settings" : [],
+      "md5hash" : "76765a57f26a7979f33efc8ed9801a55",
+      "inputs" : [
+        "Input/RA-Short.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "Invert the intensity of an image.\n",
+  "detaileddescription" : " InvertIntensityImageFilterinverts intensity of pixels by subtracting pixel value to a maximum value. The maximum value can be set with SetMaximum and defaults the maximum of input pixel type. This filter can be used to invert, for example, a binary image, a distance map, etc.\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\\see  IntensityWindowingImageFilter ShiftScaleImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Invert an image\n\n"
+}

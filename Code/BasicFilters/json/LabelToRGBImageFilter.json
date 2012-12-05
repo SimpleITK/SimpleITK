@@ -1,0 +1,35 @@
+{
+  "name" : "LabelToRGBImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "output_image_type" : "itk::VectorImage< uint8_t, InputImageType::ImageDimension>",
+  "doc" : "Docs",
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "BackgroundValue",
+      "type" : "double",
+      "default" : "0.0",
+      "pixeltype" : "Input",
+      "doc" : "",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the background value\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the background value\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "Simply run with default settings",
+      "md5hash" : "850e04c66180956c8a19471309fa2391",
+      "settings" : [],
+      "inputs" : [
+        "Input/2th_cthead1.mha"
+      ]
+    }
+  ],
+  "briefdescription" : "Apply a colormap to a label image.\n",
+  "detaileddescription" : "Apply a colormap to a label image. The set of colors is a good selection of distinct colors. The user can choose to use a background value. In that case, a gray pixel with the same intensity than the background label is produced.\nThis code was contributed in the Insight Journal paper: \"The watershed transform in ITK - discussion and new developments\" by Beare R., Lehmann G.http://hdl.handle.net/1926/202http://www.insight-journal.org/browse/publication/92\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\nRichard Beare. Department of Medicine, Monash University, Melbourne, Australia.\n\\see ScalarToRGBPixelFunctor LabelOverlayImageFilter\n\n"
+}

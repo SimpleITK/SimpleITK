@@ -1,0 +1,73 @@
+{
+  "name" : "BoxSigmaImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "public_declarations" : "Self &SetRadius( unsigned int r ) { this->m_Radius = std::vector<unsigned int>(3, r ); return *this; }",
+  "members" : [
+    {
+      "name" : "Radius",
+      "type" : "std::vector<unsigned int>",
+      "default" : "std::vector<unsigned int>(3, 1)",
+      "dim_vec" : 1,
+      "doc" : "",
+      "itk_type" : "typename FilterType::RadiusType"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Test MeanImageFilter with default parametrs",
+      "md5hash" : "500013c78f4508052b63c072e261b329",
+      "settings" : [],
+      "inputs" : [
+        "Input/VM1111Shrink-RGBFloat.nrrd"
+      ]
+    },
+    {
+      "tag" : "by23",
+      "description" : "Test by 23",
+      "md5hash" : "e0a8cfe245c47b73047c1c5292beb719",
+      "settings" : [
+        {
+          "parameter" : "Radius",
+          "type" : "unsigned int",
+          "dim_vec" : 1,
+          "value" : "{2,3}",
+          "tcl_value" : "[list 2 3]",
+          "python_value" : "[ 2, 3 ]",
+          "ruby_value" : "[ 2, 3 ]",
+          "R_value" : "c( 2, 3 )"
+        }
+      ],
+      "inputs" : [
+        "Input/VM1111Shrink-RGB.png"
+      ]
+    },
+    {
+      "tag" : "by333",
+      "description" : "Test by 333",
+      "md5hash" : "aa7be2354551dd5310c9d75ac026400d",
+      "settings" : [
+        {
+          "parameter" : "Radius",
+          "type" : "unsigned int",
+          "dim_vec" : 1,
+          "value" : "{3,3,3}",
+          "tcl_value" : "[list 3 3 3]",
+          "python_value" : "[ 3, 3, 3 ]",
+          "ruby_value" : "[ 3, 3, 3 ]",
+          "R_value" : "c( 3, 3, 3 )"
+        }
+      ],
+      "inputs" : [
+        "Input/RA-Short.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "Implements a fast rectangular sigma filter using the accumulator approach.\n",
+  "detaileddescription" : "This code was contributed in the Insight Journal paper: \"Efficient implementation of kernel filtering\" by Beare R., Lehmann Ghttp://hdl.handle.net/1926/555http://www.insight-journal.org/browse/publication/160\n\\author Gaetan Lehmann\n\n"
+}

@@ -1,0 +1,47 @@
+{
+  "name" : "LabelMapToBinaryImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "output_image_type" : "itk::Image<uint8_t, InputImageType::ImageDimension>",
+  "number_of_inputs" : 1,
+  "doc" : "Docs",
+  "pixel_types" : "LabelPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "BackgroundValue",
+      "type" : "double",
+      "default" : "0",
+      "doc" : "",
+      "pixeltype" : "Output",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin().\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin().\n"
+    },
+    {
+      "name" : "ForegroundValue",
+      "type" : "double",
+      "default" : "1.0",
+      "doc" : "",
+      "pixeltype" : "Output",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the value used as \"foreground\" in the output image. Defaults to NumericTraits<PixelType>::max().\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the value used as \"foreground\" in the output image. Defaults to NumericTraits<PixelType>::max().\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "Simply run with default settings",
+      "inputA_cast" : "sitkLabelUInt8",
+      "md5hash" : "5c1d8fbca877e6b9aba8ad58b03a6cd5",
+      "settings" : [],
+      "inputs" : [
+        "Input/2th_cthead1.mha"
+      ]
+    }
+  ],
+  "briefdescription" : "Convert a LabelMapto a binary image.\n",
+  "detaileddescription" : " LabelMapToBinaryImageFilterto a binary image. All the objects in the image are used as foreground. The background values of the original binary image can be restored by passing this image to the filter with the SetBackgroundImage()method.\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\\see  LabelMapToLabelImageFilter, LabelMapMaskImageFilter\n\n"
+}

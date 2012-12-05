@@ -1,0 +1,40 @@
+{
+  "name" : "NormalizedCorrelationImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 3,
+  "pixel_types" : "BasicPixelIDTypeList",
+  "include_files" : [
+    "sitkImageToKernel.hxx"
+  ],
+  "output_pixel_type" : "typename itk::NumericTraits<typename InputImageType::PixelType>::RealType",
+  "filter_type" : "itk::NormalizedCorrelationImageFilter<InputImageType, InputImageType2, OutputImageType, typename InputImageType::PixelType >",
+  "custom_set_input" : "filter->SetInput( 0, image1 ); filter->SetMaskImage( image2 ); filter->SetTemplate( *CreateOperatorFromImage( image3.GetPointer() ).get() );",
+  "members" : [],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Basic xcorr with and odd kernel",
+      "settings" : [],
+      "tolerance" : "0.0001",
+      "inputs" : [
+        "Input/cthead1-Float.mha",
+        "Input/cthead1-Float.mha",
+        "Input/Gaussian_1.5.nrrd"
+      ]
+    },
+    {
+      "tag" : "EvenKernel",
+      "description" : "Basic xcorr with an even kernel",
+      "settings" : [],
+      "tolerance" : "0.0001",
+      "inputs" : [
+        "Input/cthead1-Float.mha",
+        "Input/cthead1-Float.mha",
+        "Input/DeconvolutionKernel.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "Computes the normalized correlation of an image and a template.\n",
+  "detaileddescription" : "This filter calculates the normalized correlation between an image and the template. Normalized correlation is frequently use in feature detection because it is invariant to local changes in contrast.\nThe filter can be given a mask. When presented with an input image and a mask, the normalized correlation is only calculated at those pixels under the mask.\n\\see  Image\n\\see \n\\see  Neighborhood\n\\see \n\\see  NeighborhoodOperator\n\\see \n\\see  NeighborhoodIterator\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Normalized correlation\n\n"
+}

@@ -1,0 +1,57 @@
+{
+  "name" : "CheckerBoardImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "filter_type" : "itk::CheckerBoardImageFilter<InputImageType>",
+  "number_of_inputs" : 2,
+  "doc" : "Some global documentation",
+  "pixel_types" : "NonLabelPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "CheckerPattern",
+      "type" : "std::vector<uint32_t>",
+      "default" : "std::vector<uint32_t>(3, 4)",
+      "dim_vec" : 1,
+      "itk_type" : "typename FilterType::PatternArrayType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set array with number of checks to make per image dimension\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set array with number of checks to make per image dimension\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "checker board with default parameters",
+      "settings" : [],
+      "md5hash" : "f84fcf68e702d715a4de52821cfa0f5e",
+      "inputs" : [
+        "Input/BlackDots.png",
+        "Input/WhiteDots.png"
+      ]
+    },
+    {
+      "tag" : "2d_with_pattern",
+      "description" : "checker board with pattern",
+      "settings" : [
+        {
+          "parameter" : "CheckerPattern",
+          "type" : "uint32_t",
+          "dim_vec" : 1,
+          "value" : "{20,4}",
+          "tcl_value" : "[list 20 4]",
+          "python_value" : "[ 20, 4 ]",
+          "ruby_value" : "[ 20, 4 ]",
+          "R_value" : "c( 20, 4 )"
+        }
+      ],
+      "md5hash" : "379bd66a18b7ae029c101ebdcb20a8b3",
+      "inputs" : [
+        "Input/BlackDots.png",
+        "Input/WhiteDots.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Combines two images in a checkerboard pattern.\n",
+  "detaileddescription" : " CheckerBoardImageFiltertakes two input images that must have the same dimension, size, origin and spacing and produces an output image of the same size by combinining the pixels from the two input images in a checkerboard pattern. This filter is commonly used for visually comparing two images, in particular for evaluating the results of an image registration process.\nThis filter is implemented as a multithreaded filter. It provides a ThreadedGenerateData()method for its implementation.\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Combine two images by alternating blocks of a checkerboard pattern\n\n"
+}

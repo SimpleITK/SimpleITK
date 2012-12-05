@@ -1,0 +1,24 @@
+{
+  "name" : "LabelMapToRGBImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "output_image_type" : "itk::VectorImage< unsigned char, InputImageType::ImageDimension>",
+  "number_of_inputs" : 1,
+  "doc" : "Docs",
+  "pixel_types" : "LabelPixelIDTypeList",
+  "members" : [],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "Simply run with default settings",
+      "inputA_cast" : "sitkLabelUInt8",
+      "md5hash" : "850e04c66180956c8a19471309fa2391",
+      "settings" : [],
+      "inputs" : [
+        "Input/2th_cthead1.mha"
+      ]
+    }
+  ],
+  "briefdescription" : "Convert a LabelMapto a colored image.\n",
+  "detaileddescription" : "\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\\see  LabelMapToBinaryImageFilter, LabelMapMaskImageFilter\n\n"
+}

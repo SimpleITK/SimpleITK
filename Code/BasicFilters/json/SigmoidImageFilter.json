@@ -1,0 +1,55 @@
+{
+  "name" : "SigmoidImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "Alpha",
+      "type" : "double",
+      "default" : 1,
+      "doc" : "Alpha",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : ""
+    },
+    {
+      "name" : "Beta",
+      "type" : "double",
+      "default" : 0,
+      "doc" : "Alpha",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : ""
+    },
+    {
+      "name" : "OutputMaximum",
+      "type" : "double",
+      "default" : 255,
+      "pixeltype" : "Output",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : ""
+    },
+    {
+      "name" : "OutputMinimum",
+      "type" : "double",
+      "default" : 0,
+      "pixeltype" : "Input",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : ""
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Simply run with default settings",
+      "settings" : [],
+      "md5hash" : "c9222b9c9150e0d7a07e9de184c10167",
+      "inputs" : [
+        "Input/Ramp-Zero-One-Float.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "Computes the sigmoid function pixel-wise.\n",
+  "detaileddescription" : "A linear transformation is applied first on the argument of the sigmoid fuction. The resulting total transfrom is given by\n \\f[ f(x) = (Max-Min) \\cdot \\frac{1}{\\left(1+e^{- \\frac{ x - \\beta }{\\alpha}}\\right)} + Min \\f]  \nEvery output pixel is equal to f(x). Where x is the intensity of the homologous input pixel, and alpha and beta are user-provided constants.\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Pass image pixels through a sigmoid function\n\n"
+}

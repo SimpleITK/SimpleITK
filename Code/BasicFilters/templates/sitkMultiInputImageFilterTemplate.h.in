@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitk${name}ImageFilter_h
-#define __sitk${name}ImageFilter_h
+#ifndef __sitk${name}_h
+#define __sitk${name}_h
 
 $(include DoNotEditWarning.h.in)
 
@@ -28,22 +28,22 @@ $(include DoNotEditWarning.h.in)
 namespace itk {
   namespace simple {
 
-   /**\class ${name}ImageFilter
+   /**\class ${name}
      *
      * $(if briefdescription then OUT=[[\brief ${briefdescription}]] end)
      * $(if detaileddescription then OUT=[[${detaileddescription}]] end)
      *
      * \sa itk::simple::${name} for the procedual interface
      */
-    class SITKBasicFilters_EXPORT ${name}ImageFilter
+    class SITKBasicFilters_EXPORT ${name}
       : public ImageFilter<3>
     {
     public:
-      typedef ${name}ImageFilter Self;
+      typedef ${name} Self;
 
       /** Default Constructor that takes no arguments and initializes
        * default parameters */
-      ${name}ImageFilter();
+      ${name}();
 
       /** Define the pixels types supported by this filter */
       typedef ${pixel_types}  PixelIDTypeList;
@@ -99,19 +99,19 @@ $(include PrivateMemberDeclarations.h.in)$(include ClassEnd.h.in)
 
 
     /**
-     * \brief itk::simple::${name}ImageFilter Procedural Interface
+     * \brief itk::simple::${name} Procedural Interface
      *
-     * This function directly calls the execute method of ${name}ImageFilter
+     * This function directly calls the execute method of ${name}
      * in order to support a procedual API
      *
-     * \sa itk::simple::${name}ImageFilter for the object oriented interface
+     * \sa itk::simple::${name} for the object oriented interface
      */
-     SITKBasicFilters_EXPORT Image ${name} ( const std::vector<Image> &images$(when members $(foreach members ,
+     SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", "")} ( const std::vector<Image> &images$(when members $(foreach members ,
       ${type} in${name} = ${default})) );
 
 $(for inum=1,5 do
   OUT=OUT..[[
-     SITKBasicFilters_EXPORT Image ${name} ( const Image& image1]]
+     SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", "")} ( const Image& image1]]
 
   for jnum=2,inum do
     OUT=OUT .. ', const Image& image' .. jnum

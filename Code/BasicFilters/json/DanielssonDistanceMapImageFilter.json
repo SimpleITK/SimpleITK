@@ -1,0 +1,51 @@
+{
+  "name" : "DanielssonDistanceMapImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "doc" : "Docs",
+  "number_of_inputs" : 1,
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "output_pixel_type" : "float",
+  "members" : [
+    {
+      "name" : "InputIsBinary",
+      "type" : "bool",
+      "default" : "false",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set if the input is binary. If this variable is set, each nonzero pixel in the input image will be given a unique numeric code to be used by the Voronoi partition. If the image is binary but you are not interested in the Voronoi regions of the different nonzero pixels, then you need not set this.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get if the input is binary. See SetInputIsBinary().\n"
+    },
+    {
+      "name" : "SquaredDistance",
+      "type" : "bool",
+      "default" : "false",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set if the distance should be squared.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the distance squared.\n"
+    },
+    {
+      "name" : "UseImageSpacing",
+      "type" : "bool",
+      "default" : "false",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set if image spacing should be used in computing distances.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get whether spacing is used.\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "Default parameter settings",
+      "tolerance" : "0.01",
+      "settings" : [],
+      "inputs" : [
+        "Input/2th_cthead1.png"
+      ]
+    }
+  ],
+  "briefdescription" : "This filter computes the distance map of the input image as an approximation with pixel accuracy to the Euclidean distance.\n",
+  "detaileddescription" : "TInputImageInput ImageType\nTOutputImageOutput ImageType\nTVoronoiImageVoronoi ImageType. Note the default value is TInputImage.\nThe input is assumed to contain numeric codes defining objects. The filter will produce as output the following images:\n\n\\li AVoronoi partitionusing the same numeric codes as the input.\n\\li Adistance mapwith the approximation to the euclidean distance. from a particular pixel to the nearest object to this pixel in the input image.\n\\li Avector mapcontaining the component of the vector relating the current pixel with the closest point of the closest object to this pixel. Given that the components of the distance are computed in \"pixels\", the vector is represented by an itk::Offset. That is, physical coordinates are not used.\nThis filter is N-dimensional and known to be efficient in computational time. The algorithm is the N-dimensional version of the 4SED algorithm given for two dimensions in:\nDanielsson, Per-Erik. Euclidean Distance Mapping. Computer Graphics and ImageProcessing 14, 227-248 (1980).\n"
+}

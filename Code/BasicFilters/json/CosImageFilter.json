@@ -1,0 +1,32 @@
+{
+  "name" : "CosImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "members" : [],
+  "tests" : [
+    {
+      "tag" : "float",
+      "description" : "Cosine of an image",
+      "tolerance" : 0.01,
+      "settings" : [],
+      "inputs" : [
+        "Input/RA-Slice-Float.nrrd"
+      ]
+    },
+    {
+      "tag" : "short",
+      "description" : "Cosine of an image",
+      "tolerance" : 0.01,
+      "settings" : [],
+      "inputs" : [
+        "Input/RA-Slice-Short.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "Computes the cosine of each pixel.\n",
+  "detaileddescription" : "This filter is templated over the pixel type of the input image and the pixel type of the output image.\nThe filter walks over all of the pixels in the input image, and for each pixel does the following:\n\n\\li cast the pixel value to double ,\n\\li apply the vcl_cos() function to the double value,\n\\li cast the double value resulting from vcl_cos() to the pixel type of the output image,\n\\li store the cast value into the output image.\nThe filter expects both images to have the same dimension (e.g. both 2D, or both 3D, or both ND)\n"
+}

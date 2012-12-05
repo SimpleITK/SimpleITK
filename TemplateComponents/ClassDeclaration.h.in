@@ -1,17 +1,17 @@
-    /**\class ${name}ImageFilter
+    /**\class ${name}
      *
      * $(if briefdescription then OUT=[[\brief ${briefdescription}]] end)
      * $(if detaileddescription then OUT=[[${detaileddescription}]] end)
      *
      * \sa itk::simple::${name} for the procedual interface
      */
-    class SITKBasicFilters_EXPORT ${name}ImageFilter : public $(if number_of_inputs then OUT=[[ImageFilter<${number_of_inputs}>]] else OUT=[[ImageFilter<1>]] end) {
+    class SITKBasicFilters_EXPORT ${name} : public $(if number_of_inputs then OUT=[[ImageFilter<${number_of_inputs}>]] else OUT=[[ImageFilter<1>]] end) {
     public:
-      typedef ${name}ImageFilter Self;
+      typedef ${name} Self;
 
       /** Default Constructor that takes no arguments and initializes
        * default parameters */
-      ${name}ImageFilter();
+      ${name}();
 
       /** Define the pixels types supported by this filter */
       typedef ${pixel_types}  PixelIDTypeList;
