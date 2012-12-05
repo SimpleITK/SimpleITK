@@ -72,7 +72,13 @@
         },
         {
           "parameter" : "NumberOfHistogramBins",
-          "value" : 256
+          "value" : "256u",
+          "lua_value" : "256",
+          "python_value" : "256",
+          "ruby_value" : "256",
+          "java_value" : "256",
+          "tcl_value" : "256",
+          "R_value" : "256"
         }
       ],
       "md5hash" : "0a75ab53c840356b54e3db5138639a59",

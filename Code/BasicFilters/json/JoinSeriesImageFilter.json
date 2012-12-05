@@ -3,7 +3,7 @@
   "template_code_filename" : "MultiInputImageFilter",
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
-  "pixel_types" : "ScalarPixelIDTypeList",
+  "pixel_types" : "NonLabelPixelIDTypeList",
   "output_image_type" : "typename InputImageType::template Rebind<typename InputImageType::PixelType, InputImageType::ImageDimension+1>::Type",
   "custom_register" : "this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();",
   "members" : [
@@ -38,7 +38,7 @@
     },
     {
       "tag" : "default2",
-      "description" : "default join seriees on 2D",
+      "description" : "default join series on 2D",
       "settings" : [],
       "md5hash" : "fbb1e5d9a3b88fae4ea7c07414fffed5",
       "inputs" : [
@@ -59,7 +59,7 @@
     },
     {
       "tag" : "default4",
-      "description" : "default join seriees on 2D",
+      "description" : "default join series on 2D",
       "settings" : [],
       "md5hash" : "64a44a24d6828741c9585a9e972f2e8a",
       "inputs" : [
@@ -71,7 +71,7 @@
     },
     {
       "tag" : "default5",
-      "description" : "default join seriees on 2D",
+      "description" : "default join series on 2D",
       "settings" : [],
       "md5hash" : "64a44a24d6828741c9585a9e972f2e8a",
       "inputs" : [

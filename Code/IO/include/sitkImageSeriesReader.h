@@ -46,6 +46,7 @@ namespace itk {
        * directory ( assuming there is only one study/series ).
        *
        * \param directory         Set the directory that contains the DICOM data set.
+       * \param recursive         Recursively parse the input directory.
        * \param useSeriesDetails  Use additional series information such as ProtocolName and SeriesName to identify when a single SeriesUID contains multiple 3D volumes - as can occur with perfusion and DTI imaging.
        * \param loadSequences     Parse any sequences in the DICOM data set. Loading DICOM files is faster when sequences are not needed.
        * \param loadPrivateTags   Parse any private tags in the DICOM data set. Defaults to false to skip private tags. Loading DICOM files faster is when private tags are not needed.
@@ -72,6 +73,7 @@ namespace itk {
        * only one study/series ).
        *
        * \param directory         Set the directory that contains the DICOM data set.
+       * \param recursive         Recursively parse the input directory.
        * \param seriesID          Set the name that identifies a particular series.
        * \param useSeriesDetails  Use additional series information such as ProtocolName and SeriesName to identify when a single SeriesUID contains multiple 3D volumes - as can occur with perfusion and DTI imaging.
        * \param loadSequences     Parse any sequences in the DICOM data set. Loading DICOM files is faster when sequences are not needed.
