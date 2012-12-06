@@ -22,7 +22,7 @@
       "tag" : "Ramp_Short1",
       "description" : "Ramp",
       "settings" : [],
-      "md5hash" : "33104fb1c98375529a63436e4d8b189d",
+      "tolerance" : "1e-8",
       "inputs" : [
         "Input/Ramp-Zero-One-Float.nrrd",
         "Input/Ramp-One-Zero-Float.nrrd"
@@ -32,7 +32,7 @@
       "tag" : "Ramp_Short2",
       "description" : "Ramp",
       "settings" : [],
-      "md5hash" : "8d857b95486c7a75db387c73252ec886",
+      "tolerance" : "1e-8",
       "inputs" : [
         "Input/Ramp-Up-Short.nrrd",
         "Input/Ramp-Down-Short.nrrd"

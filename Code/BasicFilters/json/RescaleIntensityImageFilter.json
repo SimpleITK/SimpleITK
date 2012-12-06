@@ -35,7 +35,7 @@
       "tag" : "3d",
       "description" : "3D",
       "settings" : [],
-      "md5hash" : "466c989baecd563601987467d68654cd",
+      "tolerance" : "1e-8",
       "inputs" : [
         "Input/RA-Float.nrrd"
       ]

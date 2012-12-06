@@ -57,7 +57,7 @@
       "tag" : "short",
       "description" : "Simply run with a short image with default settings",
       "settings" : [],
-      "md5hash" : "6e662082d8660601078d780529ae8046",
+      "tolerance" : "1e-8",
       "inputs" : [
         "Input/RA-Slice-Short.nrrd"
       ]
