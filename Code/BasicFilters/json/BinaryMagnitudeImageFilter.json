@@ -21,7 +21,7 @@
       "tag" : "3d",
       "description" : "3D",
       "settings" : [],
-      "md5hash" : "1cd2796868a78f53a53849137989c153",
+      "tolerance" : "1e-8",
       "inputs" : [
         "Input/RA-Short.nrrd",
         "Input/RA-Short.nrrd"
