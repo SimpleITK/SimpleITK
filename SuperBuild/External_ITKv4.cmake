@@ -15,8 +15,7 @@ set(proj ITK)  ## Use ITK convention of calling it ITK
 set(ITK_REPOSITORY git://itk.org/ITK.git)
 
 # NOTE: it is very important to update the ITK_DIR path with the
-# A bit after the 4.3rc03 tag which has DCMTK disabled
-set(ITK_TAG_COMMAND GIT_TAG ff3a73976588b3a277b9d596de047e0ae5fcbe01 )
+set(ITK_TAG_COMMAND GIT_TAG v4.3rc04 )
 
 if( ${ITK_WRAPPING} OR ${BUILD_SHARED_LIBS} )
   set( ITK_BUILD_SHARED_LIBS ON )
