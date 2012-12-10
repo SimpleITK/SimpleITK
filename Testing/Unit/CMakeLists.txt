@@ -17,6 +17,7 @@ set ( TestSource
   sitkOperatorTests.cxx
   sitkExceptionsTests.cxx
   itkHashImageFilterTest.cxx
+  itkSliceImageFilterTest.cxx
   ImportImageTest.cxx
   CXXTests.cxx
   )
