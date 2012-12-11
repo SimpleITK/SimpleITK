@@ -283,33 +283,104 @@
         # set/get pixel methods
 
         def __getitem__( self, idx ):
-            """Returns the value of pixel at index idx.
+            """ Get an pixel value or a sliced image.
 
-            The dimension of idx should match that of the image."""
-            pixelID = self.GetPixelIDValue()
-            if pixelID == sitkUnknown:
-               raise Exception("Logic Error: invalid pixel type")
-            if pixelID == sitkInt8:
-               return self.__GetPixelAsInt8__( idx )
-            if pixelID == sitkUInt8 or pixelID == sitkLabelUInt8:
-               return self.__GetPixelAsUInt8__( idx )
-            if pixelID == sitkInt16:
-               return self.__GetPixelAsInt16__( idx )
-            if pixelID == sitkUInt16 or pixelID == sitkLabelUInt16:
-               return self.__GetPixelAsUInt16__( idx )
-            if pixelID == sitkInt32:
-               return self.__GetPixelAsInt32__( idx )
-            if pixelID == sitkUInt32 or pixelID == sitkLabelUInt32:
-               return self.__GetPixelAsUInt32__( idx )
-            if pixelID == sitkInt64:
-               return self.__GetPixelAsInt64__( idx )
-            if pixelID == sitkUInt64 or pixelID == sitkLabelUInt64:
-               return self.__GetPixelAsUInt64__( idx )
-            if pixelID == sitkFloat32:
-               return self.__GetPixelAsFloat__( idx )
-            if pixelID == sitkFloat64:
-               return self.__GetPixelAsDouble__( idx )
-            raise Exception("Unknown pixel type")
+            This operator implements basic indexing where idx is an
+            arguments or a squence of integers the same dimension as
+            the image. The result will be a pixel value from that
+            index.
+
+            Multi-dimension extended slice based indexing is also
+            implemented. The return is a copy of a new image. The
+            standard sliced based indices are supported including
+            negative indices, to indicate location relative to the
+            end, along with negative step sized to indicate reversing
+            of direction.
+
+            If the length of idx is less than the number of dimension
+            of the image it will be padded with the defaults slice
+            ":".
+
+            A 2D image can be extracted from a 3D image by providing
+            one argument being an integer instead of a slice."""
+
+            dim = self.GetDimension()
+            size = self.GetSize()
+
+            try:
+              if (len(idx) < dim):
+                # if the argument tuple has fewer elements then the dimension of the image then extend to match that of the image
+                idx = tuple(idx) + (slice(None),)*(dim-len(idx))
+            except TypeError:
+              # if the len function didn't work then, assume is a
+              # non-iterable, and make it a single element in a tuple.
+              idx = (idx,) + (slice(None),)*(dim-1)
+
+            if (len(idx) > dim):
+               raise IndexError("invalid index")
+
+            # All the indices are integers just return GetPixel value
+            if all( type(i) is int for i in idx ):
+              # if any of the arguments are negative integers subract them for the size
+              idx = [idx[i] if idx[i] >= 0 else (size[i] + idx[i]) for i in range(len(idx))]
+
+              if any( idx[i] < 0 or idx[i] >= size[i] for i in range(len(idx))):
+                raise IndexError("index out of bounds")
+
+              return self.GetPixel(*tuple(idx))
+
+
+            # If we have a 3D image, we can extract 2D image is one index is a int and the reset are slices
+            slice_dim = -1
+            if ( dim == 3 ):
+              # find only a single dimension with has an integer index
+              for i in range(len(idx)):
+                if type(idx[i]) is slice:
+                  continue
+                elif type(idx[i]) is int:
+                  if(slice_dim == -1):
+                    slice_dim = abs(i)
+                  else:
+                    slice_dim = -1
+                    break
+
+            if slice_dim != -1:
+              # replace int slice_dim with a slice
+              s = idx[slice_dim]
+              if s < 0:
+                s += size[slice_dim]
+
+              if s < 0 or s >= size[slice_dim]:
+                 raise IndexError("index  out of bounds")
+
+              idx = tuple(idx[:slice_dim]) + (slice(s, s+1),)+ tuple(idx[slice_dim+1:])
+
+            # Use the slice filter when all the elements are slices ( or have been processed to be )
+            if all( type(i) is slice for i in idx ):
+
+              # perform standard slice indexing, to clamp to ranges and add in defaults
+              sidx = [ idx[i].indices(size[i]) for i in range(len(idx ))]
+
+              # extract each element of the indices rages together
+              (start, stop, step) = zip(*sidx)
+
+              # run the slice filter
+              img = Slice(self, start=start, stop=stop, step=step)
+
+              if (slice_dim != -1):
+                size = img.GetSize();
+
+                # set the slice dimension size to 0
+                size = size[:slice_dim]+(0,)+size[slice_dim+1:]
+
+                # reduce the 3D image to a 2D
+                img = Extract( img, size )
+
+              return img
+
+
+            # the index parameter was an invalid set of objects
+            raise IndexError("invalid index")
 
 
         def __setitem__( self, idx, value ):
@@ -342,16 +413,41 @@
             raise Exception("Unknown pixel type")
 
         def GetPixel(self, *idx):
-             """Returns the value of a pixel.
+          """Returns the value of a pixel.
 
-	     This method takes 2 parameters in 2D: the x and y index,
+             This method takes 2 parameters in 2D: the x and y index,
              and 3 parameters in 3D: the x, y and z index."""
-             return self[idx]
+
+
+          pixelID = self.GetPixelIDValue()
+          if pixelID == sitkUnknown:
+            raise Exception("invalid pixel type")
+          if pixelID == sitkInt8:
+            return self.__GetPixelAsInt8__( idx )
+          if pixelID == sitkUInt8 or pixelID == sitkLabelUInt8:
+            return self.__GetPixelAsUInt8__( idx )
+          if pixelID == sitkInt16:
+            return self.__GetPixelAsInt16__( idx )
+          if pixelID == sitkUInt16 or pixelID == sitkLabelUInt16:
+            return self.__GetPixelAsUInt16__( idx )
+          if pixelID == sitkInt32:
+            return self.__GetPixelAsInt32__( idx )
+          if pixelID == sitkUInt32 or pixelID == sitkLabelUInt32:
+            return self.__GetPixelAsUInt32__( idx )
+          if pixelID == sitkInt64:
+            return self.__GetPixelAsInt64__( idx )
+          if pixelID == sitkUInt64 or pixelID == sitkLabelUInt64:
+            return self.__GetPixelAsUInt64__( idx )
+          if pixelID == sitkFloat32:
+            return self.__GetPixelAsFloat__( idx )
+          if pixelID == sitkFloat64:
+            return self.__GetPixelAsDouble__( idx )
+          raise Exception("unknown pixel type")
 
         def SetPixel(self, *args):
              """Sets the value of a pixel.
 
-	     This method takes 3 parameters in 2D: the x and y index then the value,
+             This method takes 3 parameters in 2D: the x and y index then the value,
              and 4 parameters in 3D: the x, y and z index then the value."""
              if len(args) < 2:
                 raise Exception( "Wrong number of arguments, coordinates arguments then value" )
