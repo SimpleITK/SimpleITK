@@ -271,7 +271,7 @@ TEST_F(Lua,${name}) {
     if ( itksys::SystemTools::FileExists ( outputFileName.c_str() ) ) {
       ASSERT_TRUE ( itksys::SystemTools::RemoveFile ( outputFileName.c_str() ) ) << "Deleting file " << outputFileName;
     }
-    CommandLine.push_back ( dataFinder.GetLuaExecutable() );
+    CommandLine = dataFinder.GetLuaExecutable();
     CommandLine.push_back ( Script );
     CommandLine.push_back ( "${tag}" );
 $(for inum=1,#inputs do
@@ -329,7 +329,7 @@ TEST_F(Python,${name}) {
     if ( itksys::SystemTools::FileExists ( outputFileName.c_str() ) ) {
       ASSERT_TRUE ( itksys::SystemTools::RemoveFile ( outputFileName.c_str() ) ) << "Deleting file " << outputFileName;
     }
-    CommandLine.push_back ( dataFinder.GetPythonExecutable() );
+    CommandLine = dataFinder.GetPythonExecutable();
     CommandLine.push_back ( Script );
     CommandLine.push_back ( "${tag}" );
 $(for inum=1,#inputs do
@@ -387,7 +387,7 @@ TEST_F(Tcl,${name}) {
     if ( itksys::SystemTools::FileExists ( outputFileName.c_str() ) ) {
       ASSERT_TRUE ( itksys::SystemTools::RemoveFile ( outputFileName.c_str() ) ) << "Deleting file " << outputFileName;
     }
-    CommandLine.push_back ( dataFinder.GetTclExecutable ( ) );
+    CommandLine = dataFinder.GetTclExecutable ( );
     CommandLine.push_back ( Script );
     CommandLine.push_back ( "${tag}" );
 $(for inum=1,#inputs do
@@ -451,7 +451,7 @@ TEST_F(R,${name}) {
     if ( itksys::SystemTools::FileExists ( outputFileName.c_str() ) ) {
       ASSERT_TRUE ( itksys::SystemTools::RemoveFile ( outputFileName.c_str() ) ) << "Deleting file " << outputFileName;
     }
-    CommandLine.push_back ( dataFinder.GetRExecutable() );
+    CommandLine = dataFinder.GetRExecutable();
     CommandLine.push_back ( "--slave" );
     CommandLine.push_back ( "--vanilla" );
     CommandLine.push_back ( std::string("--file=")+Script );
@@ -518,7 +518,7 @@ TEST_F(Java,${name}) {
     if ( itksys::SystemTools::FileExists ( outputFileName.c_str() ) ) {
       ASSERT_TRUE ( itksys::SystemTools::RemoveFile ( outputFileName.c_str() ) ) << "Deleting file " << outputFileName;
     }
-    CommandLine.push_back ( dataFinder.GetJavaExecutable() );
+    CommandLine = dataFinder.GetJavaExecutable();
     CommandLine.push_back ( "-classpath" );
     CommandLine.push_back ( Classpath );
     CommandLine.push_back ( "-Djava.library.path=" + JavaPath );
@@ -582,7 +582,7 @@ TEST_F(Ruby,${name}) {
     if ( itksys::SystemTools::FileExists ( outputFileName.c_str() ) ) {
       ASSERT_TRUE ( itksys::SystemTools::RemoveFile ( outputFileName.c_str() ) ) << "Deleting file " << outputFileName;
     }
-    CommandLine.push_back ( dataFinder.GetRubyExecutable() );
+    CommandLine = dataFinder.GetRubyExecutable();
     CommandLine.push_back ( Script );
     CommandLine.push_back ( "${tag}" );
 $(for inum=1,#inputs do
@@ -650,8 +650,8 @@ TEST_F(CSharp,${name}) {
       ASSERT_TRUE ( itksys::SystemTools::RemoveFile ( outputFileName.c_str() ) ) << "Deleting file " << outputFileName;
     }
 
-    if ( dataFinder.GetCSharpInterpreter().length() > 0 ) {
-      CommandLine.push_back ( dataFinder.GetCSharpInterpreter() );
+    if ( dataFinder.GetCSharpInterpreter().size() > 0 ) {
+      CommandLine = dataFinder.GetCSharpInterpreter();
     }
     CommandLine.push_back ( ExePathAndName );
     CommandLine.push_back ( dataFinder.GetFile ( "Input/RA-Short.nrrd" ).c_str() );
