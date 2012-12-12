@@ -152,6 +152,11 @@ $(if inputA_cast then
     ASSERT_TRUE ( inputs[i].GetITKBase() != NULL ) << "Could not read " << inputFileNames[i];
     }
 
+    if ( !inputs.empty() )
+      {
+      inputSHA1hash =  itk::simple::Hash( inputs[0] );
+      }
+
   $(if (not no_procedure) or (no_procedure ==0) then
 OUT=[=[
 
@@ -218,22 +223,10 @@ end)
 end)
 
 
-    if ( !inputs.empty() &&
-         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt8 &&
-         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt16 &&
-         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt32 &&
-         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt64 )
-      {
-      inputSHA1hash =  itk::simple::Hash( inputs[0] );
-      }
    filter.DebugOn();
    ASSERT_NO_THROW ( output =  filter.Execute ( $(if #inputs > 0 then OUT=[[inputs[0] ]] end)$(for inum=1,#inputs-1 do OUT=OUT..", inputs["..inum.."]" end) ) );
 
-    if ( !inputs.empty() &&
-         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt8 &&
-         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt16 &&
-         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt32 &&
-         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt64 )
+  if ( !inputs.empty() )
       {
       // Check that the input is not modified
       // This will fail if the filter is being run in-place
