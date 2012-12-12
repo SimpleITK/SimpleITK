@@ -15,6 +15,6 @@ OUT=OUT..[[
      *
      * \sa itk::simple::${name} for the object oriented interface
      */
-        SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", "")} ( $(include ImageParameters.in)$(include MemberParametersWithDefaults.in) );
+        SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( $(include ImageParameters.in)$(include MemberParametersWithDefaults.in) );
 ]]
 end)

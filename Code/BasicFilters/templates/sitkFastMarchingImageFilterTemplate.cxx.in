@@ -120,7 +120,7 @@ $(include ExecuteInternalUpdateAndReturn.cxx.in)
 //
 // Function to run the Execute method of this filter
 //
-Image ${name:gsub("ImageFilter$", "")} ( const Image& imageA,
+Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( const Image& imageA,
   std::vector< std::vector<unsigned int> > trialPoints$(include MemberParameters.in) )
 {
   ${name} filter;

@@ -3,7 +3,7 @@ OUT=[[
 //
 // Function to run the Execute method of this filter
 //
-Image ${name:gsub("ImageFilter$", "")} ( $(include ImageParameters.in)$(include MemberParameters.in) )
+Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( $(include ImageParameters.in)$(include MemberParameters.in) )
 {
   ${name} filter;
   return filter.Execute ( $(for inum=1,number_of_inputs do
