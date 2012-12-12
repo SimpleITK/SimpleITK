@@ -26,6 +26,8 @@ package org.itk.simple.testing;
 import java.math.BigInteger;
 // This is Java code to test ${name}
 import org.itk.simple.*;
+import java.util.Arrays;
+
 
 class ${name}Test {
 
@@ -191,6 +193,14 @@ end)
 
       // Run the filter
       Image output = filter.execute ( $(if #inputs > 0 then OUT=[[inputs[0] ]] end)$(for inum=1,#inputs-1 do OUT=OUT..", inputs["..inum.."]" end) );
+
+      PixelIDValueEnum[] labelIDs = { PixelIDValueEnum.sitkLabelUInt8, PixelIDValueEnum.sitkLabelUInt16, PixelIDValueEnum.sitkLabelUInt32, PixelIDValueEnum.sitkLabelUInt64 };
+
+      if (Arrays.asList(labelIDs).contains(output.getPixelID()))
+        {
+          LabelMapToLabelImageFilter toImage = new LabelMapToLabelImageFilter();
+          output = toImage.execute(output);
+        }
 
       // Write output
       writer.setFileName( argv[argv.length - 1] ).execute( output );
