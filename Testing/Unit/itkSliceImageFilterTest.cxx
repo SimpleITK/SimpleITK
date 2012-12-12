@@ -113,7 +113,7 @@ TEST(SliceImageFilterTests, PhysicalPoint1)
 
           ImageType::Pointer img;
 
-          img = RunFilter( source->GetOutput(), start, stop, step );
+          img = RunFilter<ImageType>( source->GetOutput(), start, stop, step );
 
           EXPECT_TRUE( CheckValueIsPhysicalPoint( img.GetPointer() ) ) << "== Failed - step:" << step[0] << " " << step[1] << " start: " <<start[0] << " " << start[1] << std::endl;
           }
@@ -150,7 +150,7 @@ TEST(SliceImageFilterTests, PhysicalPoint2)
 
           ImageType::Pointer img;
 
-          img = RunFilter( source->GetOutput(), start, stop, step );
+          img = RunFilter<ImageType>( source->GetOutput(), start, stop, step );
 
           EXPECT_TRUE( CheckValueIsPhysicalPoint( img.GetPointer() ) ) << "== Failed - step:" << step[0] << " " << step[1] << " start: " <<start[0] << " " << start[1]  << " stop: " << stop[0] << " " << stop[1] << std::endl;
           }
@@ -188,7 +188,7 @@ TEST(SliceImageFilterTests, PhysicalPoint3)
 
           ImageType::Pointer img;
 
-          img = RunFilter( source->GetOutput(), start, stop, step );
+          img = RunFilter<ImageType>( source->GetOutput(), start, stop, step );
 
           EXPECT_TRUE( CheckValueIsPhysicalPoint( img.GetPointer() ) ) << "== Failed - step:" << step[0] << " " << step[1] << " start: " <<start[0] << " " << start[1]  << " stop: " << stop[0] << " " << stop[1] << std::endl;
           }
@@ -219,7 +219,7 @@ TEST(SliceImageFilterTests,Empty)
 
   ImageType::Pointer img;
 
-  img = RunFilter( source->GetOutput(), start, stop, step );
+  img = RunFilter<ImageType>( source->GetOutput(), start, stop, step );
   std::cout << img;
 
   for( unsigned int i = 0; i < ImageDimension; ++i)
@@ -232,7 +232,7 @@ TEST(SliceImageFilterTests,Empty)
   stop[0] = 10;
   stop[1] = 2;
 
-  img = RunFilter( source->GetOutput(), start, stop, step );
+  img = RunFilter<ImageType>( source->GetOutput(), start, stop, step );
 
   EXPECT_EQ( 8u, img->GetLargestPossibleRegion().GetSize()[0] );
   EXPECT_EQ( 0u, img->GetLargestPossibleRegion().GetSize()[1] );
