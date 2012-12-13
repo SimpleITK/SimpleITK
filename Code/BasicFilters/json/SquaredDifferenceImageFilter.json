@@ -12,7 +12,9 @@
       "tag" : "2DStapleImages",
       "description" : "Default parameter settings",
       "settings" : [],
-      "md5hash" : "f5161e3505304fa15a232fcdbf08a776",
+      "tolerance" : "1e-8",
+      "inputA_cast" : "sitkUInt16",
+      "inputB_cast" : "sitkUInt16",
       "inputs" : [
         "Input/STAPLE1.png",
         "Input/STAPLE2.png"
@@ -33,6 +35,8 @@
       "description" : "Ramp",
       "settings" : [],
       "tolerance" : "1e-8",
+      "inputA_cast" : "sitkUInt32",
+      "inputB_cast" : "sitkUInt32",
       "inputs" : [
         "Input/Ramp-Up-Short.nrrd",
         "Input/Ramp-Down-Short.nrrd"
