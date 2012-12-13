@@ -16,6 +16,23 @@
 *
 *=========================================================================*/
 #include "sitkVersion.h"
+#include "sitkVersionConfig.h"
+
+namespace
+{
+
+std::string MakeExtendedVersionString()
+{
+  std::ostringstream v;
+  v << "SimpleITK Version: " << itk::simple::Version::VersionString() << std::endl
+    << "Compiled: " << itk::simple::Version::BuildDate() << std::endl;
+  return v.str();
+}
+
+static const std::string extendedVersionString = MakeExtendedVersionString();
+
+}
+
 namespace itk
 {
   namespace simple
@@ -23,47 +40,33 @@ namespace itk
 
   unsigned int Version::MajorVersion()
   {
-  return @SimpleITK_Major@;
+    return SimpleITK_VERSION_MAJOR;
   }
   unsigned int Version::MinorVersion()
   {
-  return @SimpleITK_Minor@;
+    return SimpleITK_VERSION_MINOR;
   }
   unsigned int Version::PatchVersion()
   {
-  return @SimpleITK_Patch@;
+    return SimpleITK_VERSION_PATCH;
   }
-  std::string Version::VersionString()
+  unsigned int Version::TweakVersion()
   {
-  std::ostringstream v;
-  v << MajorVersion() << "." << MinorVersion() << "." << PatchVersion();
-  return v.str();
+    return 0;
   }
-  std::string Version::BuildDate()
+  const std::string &Version::VersionString()
   {
-  return std::string ( __DATE__ " " __TIME__ );
+    static const std::string v( SimpleITK_VERSION );
+    return v;
   }
-  std::string Version::GitRefspec()
+  const std::string &Version::BuildDate()
   {
-  return std::string ( "@GIT_REFSPEC@" );
+    static const std::string v( __DATE__ " " __TIME__ );
+    return v;
   }
-  std::string Version::GitSHA1()
+  const std::string &Version::ExtendedVersionString()
   {
-  return std::string ( "@GIT_SHA1@" );
+    return extendedVersionString;
   }
-  std::string Version::GitTag()
-  {
-  return std::string ( "@GIT_TAG@" );
   }
-  std::string Version::ExtendedVersionString()
-  {
-  std::ostringstream v;
-  v << "SimpleITK Version: " << VersionString() << "\n"
-    << "Compiled: " << BuildDate() << "\n"
-    << "Git Tag: " << GitTag() << "\n"
-    << "Git Refspec: " << GitRefspec() << "\n"
-    << "SHA1: " << GitSHA1() << "\n";
-  return v.str();
-  }
-}
 }

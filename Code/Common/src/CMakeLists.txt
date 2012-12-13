@@ -2,11 +2,10 @@ set ( SimpleITKCommonSource
   sitkImage.cxx
   sitkPixelIDValues.cxx
   sitkExceptionObject.cxx
-  ${CMAKE_CURRENT_BINARY_DIR}/sitkVersion.cxx
+  sitkVersion.cxx
   ../include/Ancillary/hl_md5.cxx
   ../include/Ancillary/hl_sha1.cxx
   )
-
 
 set ( ITK_NO_IO_FACTORY_REGISTER_MANAGER 1 )
 include(${ITK_USE_FILE})

@@ -158,8 +158,6 @@ endif()
 
 message(STATUS "Building SimpleITK version \"${SimpleITK_VERSION}\"")
 
-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Code/Common/src/sitkVersion.cxx.in" "${CMAKE_CURRENT_BINARY_DIR}/Code/Common/src/sitkVersion.cxx" @ONLY)
-
 set(JAR_FILE "simpleitk-${SimpleITK_VERSION}.jar")
 set(JAVADOC_FILE "simpleitk-javadoc-${SimpleITK_VERSION}.jar")
 set(JAVA_SOURCE_FILE "simpleitk-source-${SimpleITK_VERSION}.jar")
