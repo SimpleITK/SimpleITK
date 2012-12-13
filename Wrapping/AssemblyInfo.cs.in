@@ -17,16 +17,16 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-[assembly: AssemblyVersion("@SimpleITK_Major@.@SimpleITK_Minor@.@SimpleITK_Patch@")]
-[assembly: AssemblyTitle("@PROJECT_NAME@ C# @CSHARP_PLATFORM@ wrapper @SimpleITK_Major@.@SimpleITK_Minor@.@SimpleITK_Patch@")]
+[assembly: AssemblyVersion("@SimpleITK_VERSION@")]
+[assembly: AssemblyTitle("@PROJECT_NAME@ C# @CSHARP_PLATFORM@ wrapper @SimpleITK_VERSION@")]
 [assembly: AssemblyCopyright("Copyright Insight Software Consortium, Apache License, Version 2.0")]
-[assembly: AssemblyDescription("@PROJECT_NAME@ C# @CSHARP_PLATFORM@ wrapper @SimpleITK_Major@.@SimpleITK_Minor@.@SimpleITK_Patch@, compiled with @CSHARP_TYPE@ @CSHARP_VERSION@, using ITK @ITK_VERSION_MAJOR@.@ITK_VERSION_MINOR@.@ITK_VERSION_PATCH@")]
+[assembly: AssemblyDescription("@PROJECT_NAME@ C# @CSHARP_PLATFORM@ wrapper @SimpleITK_VERSION@, compiled with @CSHARP_TYPE@ @CSHARP_VERSION@, using ITK @ITK_VERSION_MAJOR@.@ITK_VERSION_MINOR@.@ITK_VERSION_PATCH@")]
 [assembly: AssemblyCompany("Insight Software Consortium")]
-[assembly: AssemblyFileVersion("@SimpleITK_Major@.@SimpleITK_Minor@.@SimpleITK_Patch@")]
+[assembly: AssemblyFileVersion("@SimpleITK_VERSION@")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyTrademark("@PROJECT_NAME@")]
 [assembly: AssemblyProduct("@PROJECT_NAME@")]
-[assembly: AssemblyInformationalVersion("@SimpleITK_Major@.@SimpleITK_Minor@.@SimpleITK_Patch@")]
+[assembly: AssemblyInformationalVersion("@SimpleITK_VERSION@")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyDelaySign(false)]
 [assembly: AssemblyKeyName("")]
