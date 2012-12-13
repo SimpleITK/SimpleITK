@@ -3,9 +3,9 @@
 # These functions force a re-configure on each git commit so that you can
 # trust the values of the variables in your build system.
 #
-#  get_git_head_revision(<refspecvar> <hashvar> [<additonal arguments to git describe> ...])
+#  get_git_head_revision(<refvar> <hashvar> [<additonal arguments to git describe> ...])
 #
-# Returns the refspec and sha hash of the current head revision
+# Returns the ref and sha hash of the current head revision
 #
 #  git_describe(<var> [<additonal arguments to git describe> ...])
 #
@@ -88,6 +88,37 @@ function(get_git_head_revision _refvar _hashvar)
 	endif()
 	set(${_refvar} "${HEAD_REF}" PARENT_SCOPE)
 	set(${_hashvar} "${HEAD_HASH}" PARENT_SCOPE)
+endfunction()
+
+# get the number of commits since the file has last been modified
+function(git_commits_since file _commits )
+  get_git_head_revision(ref head)
+
+  execute_process(COMMAND ${GIT_EXECUTABLE} rev-list ${head} -n 1 -- ${file}
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    OUTPUT_VARIABLE tag OUTPUT_STRIP_TRAILING_WHITESPACE
+    ERROR_VARIABLE error
+    RESULT_VARIABLE failed
+    )
+  if(failed)
+    set( tag "")
+  endif()
+
+  execute_process(COMMAND ${GIT_EXECUTABLE} rev-list ${tag}..${head}
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    OUTPUT_VARIABLE rev_list OUTPUT_STRIP_TRAILING_WHITESPACE
+    ERROR_VARIABLE error
+    RESULT_VARIABLE failed
+    )
+
+  if(failed)
+    set( rev_list "")
+  endif()
+
+  string( REGEX MATCHALL "[a-fA-F0-9]+" rev_list "${rev_list}")
+  list( LENGTH rev_list COUNT)
+
+  set(${_commits} "${COUNT}" PARENT_SCOPE)
 endfunction()
 
 function(git_describe _var)
