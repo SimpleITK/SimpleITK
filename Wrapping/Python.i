@@ -285,7 +285,7 @@
         def __getitem__( self, idx ):
             """ Get an pixel value or a sliced image.
 
-            This operator implements basic indexing where idx is an
+            This operator implements basic indexing where idx is
             arguments or a squence of integers the same dimension as
             the image. The result will be a pixel value from that
             index.
@@ -330,7 +330,7 @@
               return self.GetPixel(*tuple(idx))
 
 
-            # If we have a 3D image, we can extract 2D image is one index is a int and the reset are slices
+            # If we have a 3D image, we can extract 2D image if one index is an int and the reset are slices
             slice_dim = -1
             if ( dim == 3 ):
               # find only a single dimension with has an integer index
@@ -368,6 +368,11 @@
               img = Slice(self, start=start, stop=stop, step=step)
 
               if (slice_dim != -1):
+
+                # the stop is on the wrong side of step
+                if any( (s[1]-s[0])//s[2] <= 0 for s in sidx ):
+                  raise IndexError("invalid range")
+
                 size = img.GetSize();
 
                 # set the slice dimension size to 0
