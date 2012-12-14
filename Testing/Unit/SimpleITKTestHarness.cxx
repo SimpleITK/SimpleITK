@@ -28,9 +28,18 @@ void DataFinder::SetRuntimeDirectoryFromArgv0 ( std::string argv0 )
 static void selectArch( std::vector<std::string>& words )
   {
   words.clear();
+
 #ifdef OSX_ARCHITECTURES
-  std::cout << "osx_arch = " << OSX_ARCHITECTURES << std::endl;
+
+  std::string osx_arch(OSX_ARCHITECTURES);
+  if (!osx_arch.length())
+    {
+    // OSX_ARCHITECTURES has no value, so bail out
+    return;
+    }
+
   words.push_back("/usr/bin/arch");
+
 #ifdef __x86_64__
   words.push_back("-x86_64");
 #endif
