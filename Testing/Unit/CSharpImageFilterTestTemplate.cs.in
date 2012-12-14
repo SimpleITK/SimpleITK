@@ -75,6 +75,13 @@ $(if inputA_cast then
                  inputs[0] = caster.Execute( inputs[0] );]]
 end)
 
+$(if inputB_cast then
+                 OUT=[[
+                 CastImageFilter caster = new CastImageFilter();
+                 caster.SetOutputPixelType( PixelIDValueEnum.${inputB_cast}.swigValue );
+                 inputs[1] = caster.Execute( inputs[1] );]]
+end)
+
 
 $(when settings
                 // Set parameters
