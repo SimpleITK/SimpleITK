@@ -94,17 +94,17 @@ public:
   typedef typename InputIndexType::IndexValueType IndexValueType;
   typedef FixedArray< int, ImageDimension >       ArrayType;
 
-  /** Set\Get the first index extracted from the input image */
+  /** Set/Get the first index extracted from the input image */
   itkSetMacro(Start, IndexType);
   itkGetConstReferenceMacro(Start, IndexType);
   void SetStart(IndexValueType start);
 
-  /** Set\Get the excluded end of the range */
+  /** Set/Get the excluded end of the range */
   itkSetMacro(Stop, IndexType);
   itkGetConstReferenceMacro(Stop, IndexType);
   void SetStop(IndexValueType stop);
 
-  /** Set\Get the stride of indexes extracted
+  /** Set/Get the stride of indexes extracted
    *
    * An exception will be generated if 0.
    */
