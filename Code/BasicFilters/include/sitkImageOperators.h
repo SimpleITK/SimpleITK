@@ -22,6 +22,7 @@
 #include "sitkSubtractImageFilter.h"
 #include "sitkMultiplyImageFilter.h"
 #include "sitkDivideImageFilter.h"
+#include "sitkModulusImageFilter.h"
 #include "sitkUnaryMinusImageFilter.h"
 #include "sitkNotImageFilter.h"
 #include "sitkAndImageFilter.h"
@@ -52,6 +53,9 @@ inline Image operator*( double s,  const Image &img ) { return Multiply(s, img )
 inline Image operator/( const Image &img1, const Image &img2 ) { return Divide(img1, img2 ); }
 inline Image operator/( const Image &img, double s  ) { return Divide(img, s ); }
 inline Image operator/( double s,  const Image &img  ) { return Divide(s, img ); }
+inline Image operator%( const Image &img1, const Image &img2 ) { return Modulus(img1, img2 ); }
+inline Image operator%( const Image &img, uint32_t s  ) { return Modulus(img, s ); }
+inline Image operator%( uint32_t s,  const Image &img  ) { return Modulus(s, img ); }
 
 
 // Modoulo does not appear to be defined?
@@ -80,6 +84,8 @@ inline Image operator*=( Image &img1, const Image &img2 ) { return img1 = Multip
 inline Image operator*=( Image &img1, double s ) { return img1 = Multiply(img1, s ); }
 inline Image operator/=( Image &img1, const Image &img2 ) { return img1 = Divide(img1, img2 ); }
 inline Image operator/=( Image &img1, double s ) { return img1 = Divide(img1, s ); }
+inline Image operator%=( Image &img1, const Image &img2 ) { return img1 = Modulus(img1, img2 ); }
+inline Image operator%=( Image &img1, uint32_t s ) { return img1 = Modulus(img1, s ); }
 inline Image operator&=( Image &img1, const Image &img2 ) { return img1 = And(img1, img2 ); }
 inline Image operator&=( Image &img1, int s ) { return img1 = And(img1, s ); }
 inline Image operator|=( Image &img1, const Image &img2 ) { return img1 = Or(img1, img2 ); }

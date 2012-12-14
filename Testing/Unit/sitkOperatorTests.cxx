@@ -122,6 +122,17 @@ TEST(OperatorTests, Arithmetic)
   EXPECT_EQ( "116d707122e1c00c7328c57232a904df3a1f629d", sitk::Hash( img2/2 ) );
   EXPECT_EQ( "01e56888e4d212385251a2697aaf24a4287c1745", sitk::Hash( img2/img1 ));
 
+
+  img1 = sitk::Image( 10,10, sitk::sitkUInt32 );
+  img2 = sitk::Image( 10,10, sitk::sitkUInt32 );
+
+  img1 += 10;
+  img2 += 3;
+
+  EXPECT_EQ( "116d707122e1c00c7328c57232a904df3a1f629d", sitk::Hash( img1%img2 ) );
+  EXPECT_EQ( "01e56888e4d212385251a2697aaf24a4287c1745", sitk::Hash( img1%4 ) );
+  EXPECT_EQ( "3d59f8de55a42cc13fb2ebda6de3a5193f2ee561", sitk::Hash( 3%img2 ));
+
 }
 
 
