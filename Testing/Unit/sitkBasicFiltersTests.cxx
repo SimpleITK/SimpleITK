@@ -38,7 +38,9 @@
 #include <sitkJoinSeriesImageFilter.h>
 #include <sitkGradientAnisotropicDiffusionImageFilter.h>
 #include <sitkCurvatureAnisotropicDiffusionImageFilter.h>
+#include <sitkLabelMapContourOverlayImageFilter.h>
 
+#include "itkVectorImage.h"
 #include "itkRecursiveGaussianImageFilter.h"
 #include "itkExtractImageFilter.h"
 #include "itkFastMarchingImageFilterBase.h"
@@ -49,7 +51,7 @@
 #include "itkLandweberDeconvolutionImageFilter.h"
 #include "itkProjectedLandweberDeconvolutionImageFilter.h"
 #include "itkRichardsonLucyDeconvolutionImageFilter.h"
-
+#include "itkLabelMapContourOverlayImageFilter.h"
 
 TEST(BasicFilters,ScalarToRGBColormap_ENUMCHECK) {
   typedef itk::ScalarToRGBColormapImageFilter< itk::Image<float,3>, itk::Image< itk::RGBPixel<float>,3> > ITKType;
@@ -125,6 +127,18 @@ TEST(BasicFilters,RichardsonLucyDeconvolution_ENUMCHECK) {
   typedef itk::RichardsonLucyDeconvolutionImageFilter< itk::Image<float,3>, itk::Image<float,3> > ITKType;
   EXPECT_EQ( (int) ITKType::SAME, (int) itk::simple::RichardsonLucyDeconvolutionImageFilter::SAME );
   EXPECT_EQ( (int) ITKType::VALID, (int) itk::simple::RichardsonLucyDeconvolutionImageFilter::VALID );
+}
+
+TEST(BasicFilters,LabelMapContourOverlay_ENUMCHECK) {
+  typedef itk::LabelMapContourOverlayImageFilter< itk::LabelMap<itk::LabelObject<int,3> >, itk::Image<float,3>, itk::VectorImage<int,3> > ITKType;
+  EXPECT_EQ( (int) ITKType::PLAIN, (int)         itk::simple::LabelMapContourOverlayImageFilter::PLAIN );
+  EXPECT_EQ( (int) ITKType::CONTOUR, (int)       itk::simple::LabelMapContourOverlayImageFilter::CONTOUR );
+  EXPECT_EQ( (int) ITKType::SLICE_CONTOUR, (int) itk::simple::LabelMapContourOverlayImageFilter::SLICE_CONTOUR );
+
+
+  EXPECT_EQ( (int) ITKType::HIGH_LABEL_ON_TOP, (int) itk::simple::LabelMapContourOverlayImageFilter::HIGH_LABEL_ON_TOP );
+  EXPECT_EQ( (int) ITKType::LOW_LABEL_ON_TOP, (int) itk::simple::LabelMapContourOverlayImageFilter::LOW_LABEL_ON_TOP );
+
 }
 
 TEST(BasicFilter,GradientAnisotropicDiffusion_EstimateOptimalTimeStep) {
