@@ -77,7 +77,7 @@ end)
 
 $(if inputB_cast then
                  OUT=[[
-                 CastImageFilter caster = new CastImageFilter();
+                 caster = new CastImageFilter();
                  caster.SetOutputPixelType( PixelIDValueEnum.${inputB_cast}.swigValue );
                  inputs[1] = caster.Execute( inputs[1] );]]
 end)
