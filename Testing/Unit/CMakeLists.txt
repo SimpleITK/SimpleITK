@@ -17,6 +17,7 @@ set ( TestSource
   sitkOperatorTests.cxx
   sitkExceptionsTests.cxx
   itkHashImageFilterTest.cxx
+  itkSliceImageFilterTest.cxx
   ImportImageTest.cxx
   CXXTests.cxx
   )
@@ -541,6 +542,8 @@ if ( WRAP_PYTHON )
   #
   add_python_test( Test.ImageTest
     "${SimpleITK_SOURCE_DIR}/Testing/Unit/ImageTest.py" )
+  add_python_test( Test.ImageIndexing
+    "${SimpleITK_SOURCE_DIR}/Testing/Unit/ImageIndexingTest.py" )
 
   add_python_test( Test.IOTest
     "${SimpleITK_SOURCE_DIR}/Testing/Unit/IOTest.py"
@@ -548,7 +551,10 @@ if ( WRAP_PYTHON )
 
   # Numpy test.
   add_python_test( Test.Numpy
-    "${SimpleITK_SOURCE_DIR}/Testing/Unit/NumpyArrayConversionTest.py" )
+    "${SimpleITK_SOURCE_DIR}/Testing/Unit/NumpyArrayConversionTest.py"
+  )
+
+
 
 endif( WRAP_PYTHON )
 
