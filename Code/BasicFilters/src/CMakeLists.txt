@@ -1,7 +1,5 @@
 # Include the hand-written and auto-generated code
 include_directories (
- ${CMAKE_CURRENT_SOURCE_DIR}/../include
- ${CMAKE_CURRENT_BINARY_DIR}/../include
  ${CMAKE_CURRENT_SOURCE_DIR}
  )
 
@@ -57,7 +55,7 @@ set ( _library_i 1 )
 foreach ( _start RANGE 0 ${_length} ${_stride} )
 
   # the above foreach range in inclusive, which is not quite what is wanted
-  if( _start VERSION_EQUAL ${_length} )
+  if( _start EQUAL ${_length} )
     break()
   endif()
 

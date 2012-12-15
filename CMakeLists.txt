@@ -50,7 +50,7 @@ set ( SimpleITK_INCLUDE_DIRS
       ${CMAKE_SOURCE_DIR}/Code/BasicFilters/include
       ${CMAKE_SOURCE_DIR}/Code/IO/include
       ${CMAKE_BINARY_DIR}/Code/BasicFilters/include
-      ${CMAKE_BINARY_DIR} #this is only needed for sitkConfigure.h
+      ${CMAKE_BINARY_DIR}/Code/Common/include
       )
 
 include_directories( ${SimpleITK_INCLUDE_DIRS} )
@@ -129,10 +129,6 @@ if ( NOT SITK_HAS_STDINT_H )
     "Please see the FAQ for details and to see if your compiler is supported.\n"
     "http://www.itk.org/Wiki/ITK_Release_4/SimpleITK/FAQ#Do_I_need_to_download_an_optional_package_for_C99.3F")
 endif ( NOT SITK_HAS_STDINT_H )
-
-configure_file( ${SimpleITK_SOURCE_DIR}/sitkConfigure.h.in
-  ${SimpleITK_BINARY_DIR}/sitkConfigure.h )
-
 
 
 #-----------------------------------------------------------------------------
@@ -388,7 +384,6 @@ file( GLOB __files
   )
 
 set(__files ${__files}
-  ${CMAKE_BINARY_DIR}/sitkConfigure.h
   ${SimpleITKBasicFiltersGeneratedHeader}
   )
 

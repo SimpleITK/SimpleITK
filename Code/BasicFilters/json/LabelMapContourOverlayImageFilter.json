@@ -9,7 +9,7 @@
   "output_image_type" : "itk::VectorImage< typename InputImageType2::PixelType, InputImageType::ImageDimension >",
   "filter_type" : "itk::LabelMapContourOverlayImageFilter<InputImageType, InputImageType2, OutputImageType>",
   "custom_set_input" : "filter->SetInput( image1 ); filter->SetInput2( const_cast<InputImageType2*>( image2.GetPointer() ) );",
-  "public_declarations" : "typedef enum { PLAIN = 0, CONTOUR = 1, SLICE_CONTOUR = 2} TypeType;\n      typedef enum { HIGH_LABEL_ON_TOP = 0, LOW_LABEL_ON_TOP = 1 } PriorityType;",
+  "public_declarations" : "typedef enum { PLAIN = 0, CONTOUR = 1, SLICE_CONTOUR = 2} Type;\n      typedef enum { HIGH_LABEL_ON_TOP = 0, LOW_LABEL_ON_TOP = 1 } PriorityType;",
   "members" : [
     {
       "name" : "Opacity",
@@ -52,10 +52,10 @@
       "detaileddescriptionGet" : "Set/Get the slice dimension - defaults to image dimension - 1.\n"
     },
     {
-      "name" : "Type",
-      "type" : "LabelMapContourOverlayImageFilter::TypeType",
+      "name" : "ContourType",
+      "type" : "LabelMapContourOverlayImageFilter::Type",
       "default" : "itk::simple::LabelMapContourOverlayImageFilter::CONTOUR",
-      "custom_itk_cast" : "filter->SetType( int( m_Type ) );",
+      "custom_itk_cast" : "filter->SetType( int( m_ContourType ) );",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the overlay type - CONTOUR is used by default.\n",
       "briefdescriptionGet" : "",

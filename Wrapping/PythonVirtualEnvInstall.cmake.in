@@ -39,7 +39,7 @@ if ( failed )
   message( ERROR ${error} )
 endif()
 
-message( MESSAGE "Installing numpy from ${numpy_dir} to ${PythonVirtualenvLib}/numpy")
+message( STATUS "Installing numpy from ${numpy_dir} to ${PythonVirtualenvLib}/numpy")
 
 if ( UNIX )
   execute_process( COMMAND ${CMAKE_COMMAND} -E create_symlink "${numpy_dir}" "${PythonVirtualenvLib}/numpy"
