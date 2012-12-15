@@ -68,7 +68,7 @@ $(if members and #members > 0 then
 OUT=[[
 
       /** Execute the filter on the input images with the given parameters */
-      Image Execute ( const std::vector<Image> &images$(foreach members , ${type} in${name}) );
+      Image Execute ( const std::vector<Image> &images$(foreach members , ${type} ${name:sub(1,1):lower()}${name:sub(2,-1)}) );
 ]]
 for inum=1,5 do
   OUT=OUT..[[
@@ -107,7 +107,7 @@ $(include PrivateMemberDeclarations.h.in)$(include ClassEnd.h.in)
      * \sa itk::simple::${name} for the object oriented interface
      */
      SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", "")} ( const std::vector<Image> &images$(when members $(foreach members ,
-      ${type} in${name} = ${default})) );
+      ${type} ${name:sub(1,1):lower()}${name:sub(2,-1)} = ${default})) );
 
 $(for inum=1,5 do
   OUT=OUT..[[
@@ -118,7 +118,7 @@ $(for inum=1,5 do
   end
   if members then
     for num=1,#members do
-      OUT=OUT ..', '.. members[num].type .. ' in'.. members[num].name .. ' = ' .. members[num].default
+      OUT=OUT ..', '.. members[num].type .. " ".. members[num].name:sub(1,1):lower() .. members[num].name:sub(2,-1) .. ' = ' .. members[num].default
     end
   end
 
