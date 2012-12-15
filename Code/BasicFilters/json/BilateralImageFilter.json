@@ -58,7 +58,7 @@
           "value" : "500"
         }
       ],
-      "md5hash" : "5ff7381ac99c0c2285aebf9fbc1f2609",
+      "tolerance" : "1e-8",
       "inputs" : [
         "Input/RA-Short.nrrd"
       ]

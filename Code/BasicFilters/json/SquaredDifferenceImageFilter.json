@@ -12,7 +12,9 @@
       "tag" : "2DStapleImages",
       "description" : "Default parameter settings",
       "settings" : [],
-      "md5hash" : "f5161e3505304fa15a232fcdbf08a776",
+      "tolerance" : "1e-8",
+      "inputA_cast" : "sitkUInt16",
+      "inputB_cast" : "sitkUInt16",
       "inputs" : [
         "Input/STAPLE1.png",
         "Input/STAPLE2.png"
@@ -22,7 +24,7 @@
       "tag" : "Ramp_Short1",
       "description" : "Ramp",
       "settings" : [],
-      "md5hash" : "33104fb1c98375529a63436e4d8b189d",
+      "tolerance" : "1e-8",
       "inputs" : [
         "Input/Ramp-Zero-One-Float.nrrd",
         "Input/Ramp-One-Zero-Float.nrrd"
@@ -32,7 +34,9 @@
       "tag" : "Ramp_Short2",
       "description" : "Ramp",
       "settings" : [],
-      "md5hash" : "8d857b95486c7a75db387c73252ec886",
+      "tolerance" : "1e-8",
+      "inputA_cast" : "sitkUInt32",
+      "inputB_cast" : "sitkUInt32",
       "inputs" : [
         "Input/Ramp-Up-Short.nrrd",
         "Input/Ramp-Down-Short.nrrd"

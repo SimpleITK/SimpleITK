@@ -82,7 +82,7 @@ OUT=[[
 end)
 $(if inputB_cast then
 OUT=[[
-      set inputs [lreplace $$inputs 1 1 [ Cast [lindex $$inputs 1] [set $${inputB_cast}] ] ]
+      set inputs [lreplace $$inputs 1 1 [ Cast [lindex $$inputs 1] [set ${inputB_cast}] ] ]
      ]]
 end)
 
