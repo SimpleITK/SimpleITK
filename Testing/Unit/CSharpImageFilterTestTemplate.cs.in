@@ -26,7 +26,7 @@ using System;
 using System.Collections.Generic;
 using itk.simple;
 
-public class Test${name}ImageFilter {
+public class Test${name} {
 
     public static int Main(string[] args) {
 
@@ -50,7 +50,7 @@ end)
             // Instantiate objects
             ImageFileReader reader = new ImageFileReader();
             ImageFileWriter writer = new ImageFileWriter();
-            ${name}ImageFilter filter = new ${name}ImageFilter();
+            ${name} filter = new ${name}();
 			List<Image> inputs = new List<Image>();
 $(if #tests == 0 then
             OUT=[[

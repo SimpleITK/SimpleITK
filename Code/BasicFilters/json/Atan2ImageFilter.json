@@ -1,0 +1,24 @@
+{
+  "name" : "Atan2ImageFilter",
+  "template_code_filename" : "BinaryFunctorFilter",
+  "template_test_filename" : "ImageFilter",
+  "constant_type" : "double",
+  "number_of_inputs" : 2,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Simply run with default settings",
+      "settings" : [],
+      "tolerance" : 0.01,
+      "inputs" : [
+        "Input/Ramp-Zero-One-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "Computes two argument inverse tangent.\n",
+  "detaileddescription" : "The first argument to the atan function is provided by a pixel in the first input image ( SetInput1()) and the corresponding pixel in the second input image ( SetInput2()) is used as the second argument.\nThis class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\nBoth pixel input types are cast to double in order to be used as parameters of vcl_atan2() . The resulting double value is cast to the output pixel type.\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Compute the arctangent of each pixel.\n\n"
+}

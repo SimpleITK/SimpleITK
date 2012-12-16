@@ -1,0 +1,114 @@
+{
+  "name" : "TileImageFilter",
+  "template_code_filename" : "MultiInputImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "Layout",
+      "type" : "std::vector<uint32_t>",
+      "default" : "std::vector<uint32_t>(3, 100)",
+      "dim_vec" : 1,
+      "itk_type" : "typename FilterType::LayoutArrayType"
+    },
+    {
+      "name" : "DefaultPixelValue",
+      "type" : "double",
+      "default" : "0.0",
+      "pixeltype" : "Output"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "tile 3 images",
+      "settings" : [],
+      "md5hash" : "c70685e01c7409914f7664c248b69785",
+      "inputs" : [
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-Zero-One-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd"
+      ]
+    },
+    {
+      "tag" : "2by2",
+      "description" : "tile 3 images 2x2",
+      "settings" : [
+        {
+          "parameter" : "Layout",
+          "type" : "unsigned int",
+          "dim_vec" : 1,
+          "value" : "{2,2}",
+          "tcl_value" : "[list 2 2]",
+          "python_value" : "[ 2, 2 ]",
+          "ruby_value" : "[ 2, 2 ]",
+          "R_value" : "c( 2, 2 )"
+        }
+      ],
+      "md5hash" : "f3015eeed7d0370ba93bdf1bd6630ae0",
+      "inputs" : [
+        "Input/cthead1.png",
+        "Input/cthead1.png",
+        "Input/cthead1.png"
+      ]
+    },
+    {
+      "tag" : "input1",
+      "description" : "one input",
+      "settings" : [],
+      "md5hash" : "6917e69a9b0afebd88d732fccfaf0d24",
+      "inputs" : [
+        "Input/Ramp-One-Zero-Float.nrrd"
+      ]
+    },
+    {
+      "tag" : "input2",
+      "description" : "two input",
+      "settings" : [],
+      "md5hash" : "882bddbd8a2961f76e7f72da9818c1ea",
+      "inputs" : [
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd"
+      ]
+    },
+    {
+      "tag" : "input3",
+      "description" : "three input",
+      "settings" : [],
+      "md5hash" : "923a6a6697b31ce15b859cddd6f7639f",
+      "inputs" : [
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd"
+      ]
+    },
+    {
+      "tag" : "input4",
+      "description" : "four input",
+      "settings" : [],
+      "md5hash" : "5498cbc56a48a749470da30c8385ae62",
+      "inputs" : [
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd"
+      ]
+    },
+    {
+      "tag" : "input5",
+      "description" : "five input",
+      "settings" : [],
+      "md5hash" : "1e935c866ca4327b59cfe6b996993091",
+      "inputs" : [
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "Tile multiple input images into a single output image.\n",
+  "detaileddescription" : "This filter will tile multiple images using a user-specified layout. The tile sizes will be large enough to accommodate the largest image for each tile. The layout is specified with the SetLayout method. The layout has the same dimension as the output image. If all entries of the layout are positive, the tiled output will contain the exact number of tiles. If the layout contains a 0 in the last dimension, the filter will compute a size that will accommodate all of the images. Empty tiles are filled with the value specified with the SetDefault value method. The input images must have a dimension less than or equal to the output image. The output image have a larger dimension than the input images. This filter can be used to create a volume from a series of inputs by specifying a layout of 1,1,0.\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Tile multiple images into another image\n\n\\li Stack multiple 2D images into a 3D image\n\n\\li Tile multiple images side by side\n\n"
+}

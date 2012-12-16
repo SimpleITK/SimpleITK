@@ -1,0 +1,53 @@
+{
+  "name" : "MedianImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "public_declarations" : "Self &SetRadius( unsigned int r ) { this->m_Radius = std::vector<unsigned int>(3, r ); return *this; }",
+  "members" : [
+    {
+      "name" : "Radius",
+      "type" : "std::vector<unsigned int>",
+      "default" : "std::vector<unsigned int>(3, 1)",
+      "dim_vec" : 1,
+      "doc" : "",
+      "itk_type" : "typename FilterType::RadiusType"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Test MeanImageFilter with default parametrs",
+      "md5hash" : "3d91602f6080b45a5431b80d1f78c0a0",
+      "settings" : [],
+      "inputs" : [
+        "Input/VM1111Shrink-RGBFloat.nrrd"
+      ]
+    },
+    {
+      "tag" : "by23",
+      "description" : "Test by 23",
+      "md5hash" : "03610a1cb421d145fe985478d4eb9c0a",
+      "settings" : [
+        {
+          "parameter" : "Radius",
+          "type" : "unsigned int",
+          "dim_vec" : 1,
+          "value" : "{2,3}",
+          "tcl_value" : "[list 2 3]",
+          "python_value" : "[ 2, 3 ]",
+          "ruby_value" : "[ 2, 3 ]",
+          "R_value" : "c( 2, 3 )"
+        }
+      ],
+      "inputs" : [
+        "Input/VM1111Shrink-RGB.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Applies a median filter to an image.\n",
+  "detaileddescription" : "Computes an image where a given pixel is the median value of the the pixels in a neighborhood about the corresponding input pixel.\nA median filter is one of the family of nonlinear filters. It is used to smooth an image without being biased by outliers or shot noise.\nThis filter requires that the input pixel type provides an operator<() (LessThan Comparable).\n\\see  Image\n\\see \n\\see  Neighborhood\n\\see \n\\see  NeighborhoodOperator\n\\see \n\\see  NeighborhoodIterator\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Median filter an image\n\n\\li Median filter an RGB image\n\n"
+}

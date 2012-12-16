@@ -6,7 +6,7 @@ OUT = [[
 // Custom Methods
 //
 $(foreach custom_methods
-${return_type} ${filter_name}ImageFilter::${name}( $(for inum=1,#parameters do
+${return_type} ${filter_name}::${name}( $(for inum=1,#parameters do
                         if inum>1 then
                             OUT = OUT .. ', '
                         end

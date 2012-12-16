@@ -1,0 +1,59 @@
+{
+  "name" : "AntiAliasBinaryImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "output_pixel_type" : "typename itk::NumericTraits<typename InputImageType::PixelType>::RealType",
+  "members" : [
+    {
+      "name" : "MaximumRMSError",
+      "type" : "double",
+      "default" : 0.07,
+      "doc" : "Value of RMS change below which the filter should stop. This is a convergence criterion."
+    },
+    {
+      "name" : "NumberOfIterations",
+      "type" : "uint32_t",
+      "default" : "1000u",
+      "doc" : "Number of iterations to run"
+    }
+  ],
+  "measurements" : [
+    {
+      "name" : "ElapsedIterations",
+      "type" : "uint32_t",
+      "default" : 0,
+      "briefdescriptionGet" : "Number of iterations run."
+    },
+    {
+      "name" : "RMSChange",
+      "type" : "double",
+      "default" : 0.0,
+      "briefdescriptionGet" : "The Root Mean Square of the levelset upon termination."
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "cthead",
+      "description" : "Segmentation of brain in CT",
+      "settings" : [],
+      "tolerance" : 1000000.0,
+      "measurements_results" : [
+        {
+          "name" : "ElapsedIterations",
+          "value" : 3,
+          "tolerance" : 3
+        },
+        {
+          "name" : "RMSChange",
+          "value" : 0.015,
+          "tolerance" : 0.006
+        }
+      ],
+      "inputs" : [
+        "Input/2th_cthead1.png"
+      ]
+    }
+  ]
+}

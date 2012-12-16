@@ -1,0 +1,86 @@
+{
+  "name" : "LaplacianSegmentationLevelSetImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 2,
+  "pixel_types" : "RealPixelIDTypeList",
+  "filter_type" : "itk::LaplacianSegmentationLevelSetImageFilter<InputImageType, InputImageType>",
+  "custom_set_input" : "filter->SetInput( image1 ); filter->SetFeatureImage( image2 );",
+  "members" : [
+    {
+      "name" : "MaximumRMSError",
+      "type" : "double",
+      "default" : 0.02,
+      "doc" : "Value of RMS change below which the filter should stop. This is a convergence criterion."
+    },
+    {
+      "name" : "PropagationScaling",
+      "type" : "double",
+      "default" : "1.0",
+      "doc" : "Weight of direct propagation contribution to the speed term"
+    },
+    {
+      "name" : "CurvatureScaling",
+      "type" : "double",
+      "default" : "1.0",
+      "doc" : "Weight of the curvature contribution to the speed term"
+    },
+    {
+      "name" : "NumberOfIterations",
+      "type" : "uint32_t",
+      "default" : "1000u",
+      "doc" : "Number of iterations to run"
+    },
+    {
+      "name" : "ReverseExpansionDirection",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : "Turn On/Off the flag which determines whether Positive or Negative speed terms will cause surface expansion.  If set to TRUE then negative speed terms will cause the surface to expand and positive speed terms will cause the surface to contract.  If set to FALSE (default) then positive speed terms will cause the surface to expand and negative speed terms will cause the surface to contract.  This method can be safely used to reverse the expansion/contraction as appropriate to a particular application or data set."
+    }
+  ],
+  "measurements" : [
+    {
+      "name" : "ElapsedIterations",
+      "type" : "uint32_t",
+      "default" : 0,
+      "briefdescriptionGet" : "Number of iterations run."
+    },
+    {
+      "name" : "RMSChange",
+      "type" : "double",
+      "default" : 0.0,
+      "briefdescriptionGet" : "The Root Mean Square of the levelset upon termination."
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "cthead",
+      "description" : "Segmentation of brain in CT",
+      "settings" : [
+        {
+          "parameter" : "PropagationScaling",
+          "value" : "0.0"
+        }
+      ],
+      "tolerance" : 0.1,
+      "measurements_results" : [
+        {
+          "name" : "ElapsedIterations",
+          "value" : 3,
+          "tolerance" : 3
+        },
+        {
+          "name" : "RMSChange",
+          "value" : 0.015,
+          "tolerance" : 0.006
+        }
+      ],
+      "inputs" : [
+        "Input/2th_cthead1_distance.nrrd",
+        "Input/cthead1-Float.mha"
+      ]
+    }
+  ],
+  "briefdescription" : "Segments structures in images based on a second derivative image features.\n",
+  "detaileddescription" : "\\par IMPORTANT\nThe SegmentationLevelSetImageFilterclass and the LaplacianSegmentationLevelSetFunctionclass contain additional information necessary to the full understanding of how to use this filter.\n\\par OVERVIEW\nThis class is a level set method segmentation filter. It constructs a speed function which is zero at image edges as detected by a Laplacian filter. The evolving level set front will therefore tend to lock onto zero crossings in the image. The level set front moves fastest near edges.\n\\par The Laplacian segmentation filter is intended primarily as a tool for refining existing segmentations. The initial isosurface (as given in the seed input image) should ideally be very close to the segmentation boundary of interest. The idea is that a rough segmentation can be refined by allowing the isosurface to deform slightly to achieve a better fit to the edge features of an image. One example of such an application is to refine the output of a hand segmented image.\n\\par Because values in the Laplacian feature image will tend to be low except near edge features, this filter is not effective for segmenting large image regions from small seed surfaces.\n\\par INPUTS\nThis filter requires two inputs. The first input is a seed image. This seed image must contain an isosurface that you want to use as the seed for your segmentation. It can be a binary, graylevel, or floating point image. The only requirement is that it contain a closed isosurface that you will identify as the seed by setting the IsosurfaceValue parameter of the filter. For a binary image you will want to set your isosurface value halfway between your on and off values (i.e. for 0's and 1's, use an isosurface value of 0.5).\n\\par The second input is the feature image. This is the image from which the speed function will be calculated. For most applications, this is the image that you want to segment. The desired isosurface in your seed image should lie within the region of your feature image that you are trying to segment.\nNote that this filter does no preprocessing of the feature image before thresholding. Because second derivative calculations are highly sensitive to noise, isotropic or anisotropic smoothing of the feature image can dramatically improve the results.\n\\par See SegmentationLevelSetImageFilterfor more information on Inputs.\n\\par OUTPUTS\nThe filter outputs a single, scalar, real-valued image. Positive *values in the output image are inside the segmentated region and negative *values in the image are outside of the inside region. The zero crossings of *the image correspond to the position of the level set front.\n\\par See SparseFieldLevelSetImageFilterand SegmentationLevelSetImageFilterfor more information.\n\\par PARAMETERS\nThis filter has no parameters other than those described in SegmentationLevelSetImageFilter.\n\\see  SegmentationLevelSetImageFilter\n\\see \n\\see  LaplacianSegmentationLevelSetFunction,\n\\see \n\\see  SparseFieldLevelSetImageFilter\n\n"
+}

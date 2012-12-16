@@ -1,0 +1,60 @@
+{
+  "name" : "LabelMapMaskImageFilter",
+  "template_code_filename" : "DualImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 2,
+  "doc" : "",
+  "pixel_types" : "LabelPixelIDTypeList",
+  "pixel_types2" : "typelist::Append<BasicPixelIDTypeList, ComplexPixelIDTypeList>::Type",
+  "filter_type" : "itk::LabelMapMaskImageFilter<InputImageType, InputImageType2>",
+  "custom_set_input" : "filter->SetInput1( image1 ); filter->SetInput2( image2 );",
+  "members" : [
+    {
+      "name" : "Label",
+      "type" : "uint64_t",
+      "default" : "1u",
+      "doc" : "",
+      "pixeltype" : "Input",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "The label to mask or to not mask, depending on the value of the Negated ivar.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "The label to mask or to not mask, depending on the value of the Negated ivar.\n"
+    },
+    {
+      "name" : "BackgroundValue",
+      "type" : "double",
+      "default" : "0",
+      "doc" : "",
+      "pixeltype" : "Output",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::Zero.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::Zero.\n"
+    },
+    {
+      "name" : "Negated",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : "",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get whether the Label should be masked or not.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get whether the Label should be masked or not.\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "Running with just setting correct label",
+      "inputA_cast" : "sitkLabelUInt8",
+      "md5hash" : "35705eb42bda4024218a0b789564d72e",
+      "settings" : [],
+      "inputs" : [
+        "Input/2th_cthead1.mha",
+        "Input/cthead1.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Mask and image with a LabelMap.\n",
+  "detaileddescription" : " LabelMapMaskImageFiltermask the content of an input image according to the content of the input LabelMap. The masked pixel of the input image are set to the BackgroundValue. LabelMapMaskImageFiltercan keep the input image for one label only, with Negated = false (the default) or it can mask the input image for a single label, when Negated equals true. In Both cases, the label is set with SetLabel().\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\\see  LabelMapToBinaryImageFilter, LabelMapToLabelImageFilter\n\n"
+}

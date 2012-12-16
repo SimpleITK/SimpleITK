@@ -1,0 +1,77 @@
+{
+  "name" : "CropImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "NonLabelPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "LowerBoundaryCropSize",
+      "type" : "std::vector<unsigned int>",
+      "default" : "std::vector<unsigned int>(3, 0)",
+      "doc" : "\todo what does this itk_type attribute do?",
+      "dim_vec" : 1,
+      "itk_type" : "typename InputImageType::SizeType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the cropping sizes for the upper and lower boundaries.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the cropping sizes for the upper and lower boundaries.\n"
+    },
+    {
+      "name" : "UpperBoundaryCropSize",
+      "type" : "std::vector<unsigned int>",
+      "default" : "std::vector<unsigned int>(3, 0)",
+      "doc" : "\todo what does this itk_type attribute do?",
+      "dim_vec" : 1,
+      "itk_type" : "typename InputImageType::SizeType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the cropping sizes for the upper and lower boundaries.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the cropping sizes for the upper and lower boundaries.\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "use the defaults which sets a 0 size image",
+      "md5hash" : "3ccccde44efaa3d688a86e94335c1f16",
+      "settings" : [],
+      "inputs" : [
+        "Input/RA-Float.nrrd"
+      ]
+    },
+    {
+      "tag" : "more",
+      "description" : "croping",
+      "md5hash" : "75a7d1202971ddd01497a4d7b61e655e",
+      "settings" : [
+        {
+          "parameter" : "LowerBoundaryCropSize",
+          "type" : "unsigned int",
+          "dim_vec" : 1,
+          "value" : "{100, 100}",
+          "tcl_value" : "[list 100 100]",
+          "python_value" : "[ 100, 100 ]",
+          "ruby_value" : "[ 100, 100 ]",
+          "R_value" : "c( 100, 100 )"
+        },
+        {
+          "parameter" : "UpperBoundaryCropSize",
+          "type" : "unsigned int",
+          "dim_vec" : 1,
+          "value" : "{167, 151}",
+          "tcl_value" : "[list 167 151]",
+          "python_value" : "[ 167, 151 ]",
+          "ruby_value" : "[ 167, 151 ]",
+          "R_value" : "c( 167, 151 )"
+        }
+      ],
+      "inputs" : [
+        "Input/VM1111Shrink-RGB.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Decrease the image size by cropping the image by an itk::Sizeat both the upper and lower bounds of the largest possible region.\n",
+  "detaileddescription" : " CropImageFilterchanges the image boundary of an image by removing pixels outside the target region. The target region is not specified in advance, but calculated in BeforeThreadedGenerateData().\nThis filter uses ExtractImageFilterto perform the cropping.\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Crop an image by specifying the region to throw away\n\n"
+}

@@ -1,0 +1,99 @@
+{
+  "name" : "BinaryDilateImageFilter",
+  "template_code_filename" : "KernelImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Performs Dilation in a binary image.",
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "BackgroundValue",
+      "type" : "double",
+      "default" : "0.0",
+      "pixeltype" : "Input",
+      "doc" : ""
+    },
+    {
+      "name" : "ForegroundValue",
+      "type" : "double",
+      "default" : "1.0",
+      "pixeltype" : "Input",
+      "doc" : ""
+    },
+    {
+      "name" : "BoundaryToForeground",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : ""
+    }
+  ],
+  "custom_methods" : [],
+  "tests" : [
+    {
+      "tag" : "BinaryDilate",
+      "description" : "Test binary dilation",
+      "settings" : [
+        {
+          "parameter" : "KernelRadius",
+          "no_get_method" : 1,
+          "value" : 1
+        },
+        {
+          "parameter" : "KernelType",
+          "value" : "itk::simple::${name}::Ball",
+          "lua_value" : "SimpleITK.${name}_Ball",
+          "python_value" : "SimpleITK.${name}.Ball",
+          "ruby_value" : "Simpleitk::${name}::Ball",
+          "java_value" : "${name}.KernelType.Ball",
+          "tcl_value" : "$$${name}_Ball",
+          "csharp_value" : "${name}.KernelType.Ball",
+          "R_value" : "'Ball'"
+        },
+        {
+          "parameter" : "ForegroundValue",
+          "value" : "255.0"
+        }
+      ],
+      "md5hash" : "9eef659f21dab5eb49e0f715a5d9a21b",
+      "inputs" : [
+        "Input/STAPLE1.png"
+      ]
+    },
+    {
+      "tag" : "BinaryDilateVectorRadius",
+      "description" : "Test binary dilation with vector radius",
+      "settings" : [
+        {
+          "parameter" : "KernelRadius",
+          "type" : "uint32_t",
+          "dim_vec" : 1,
+          "value" : "{20,1}",
+          "tcl_value" : "[list 20 1]",
+          "python_value" : "[ 20, 1 ]",
+          "ruby_value" : "[ 20, 1 ]",
+          "R_value" : "c( 20, 1 )"
+        },
+        {
+          "parameter" : "KernelType",
+          "value" : "itk::simple::${name}::Box",
+          "lua_value" : "SimpleITK.${name}_Box",
+          "python_value" : "SimpleITK.${name}.Box",
+          "ruby_value" : "Simpleitk::${name}::Box",
+          "java_value" : "${name}.KernelType.Box",
+          "tcl_value" : "$$${name}_Box",
+          "csharp_value" : "${name}.KernelType.Box",
+          "R_value" : "'Box'"
+        },
+        {
+          "parameter" : "ForegroundValue",
+          "value" : "255"
+        }
+      ],
+      "md5hash" : "99108c735fe9727bca09ca28a42827d3",
+      "inputs" : [
+        "Input/STAPLE1.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Fast binary dilation.\n",
+  "detaileddescription" : " BinaryDilateImageFilteris a binary dilation morphologic operation. This implementation is based on the papers:\nL.Vincent \"Morphological transformations of binary images with\n arbitrary structuring elements\", and\nN.Nikopoulos et al. \"An efficient algorithm for 3d binary morphological transformations with 3d structuring elements for arbitrary size and shape\". IEEE Transactions on ImageProcessing. Vol. 9. No. 3. 2000. pp. 283-286.\nGray scale images can be processed as binary images by selecting a \"DilateValue\". Pixel values matching the dilate value are considered the \"foreground\" and all other pixels are \"background\". This is useful in processing segmented images where all pixels in segment #1 have value 1 and pixels in segment #2 have value 2, etc. A particular \"segment number\" can be processed. DilateValue defaults to the maximum possible value of the PixelType.\nThe structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element having values > 0 are candidates for affecting the center pixel. A reasonable choice of structuring element is itk::BinaryBallStructuringElement.\n\\see  ImageToImageFilter BinaryErodeImageFilter BinaryMorphologyImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Dilate a binary image\n\n"
+}

@@ -17,14 +17,16 @@
 #
 #=========================================================================
 
+from __future__ import print_function
+
 import SimpleITK as sitk
 import sys
 import os
 
 if len ( sys.argv ) < 2:
-    print "Usage: N4BiasFieldCorrection inputImage " + \
+    print( "Usage: N4BiasFieldCorrection inputImage " + \
         "outputImage [shrinkFactor] [maskImage] [numberOfIterations] " +\
-        "[numberOfFittingLevels]"
+        "[numberOfFittingLevels]" )
     sys.exit ( 1 )
 
 
@@ -61,5 +63,5 @@ output = corrector.Execute( inputImage, maskImage )
 sitk.WriteImage( output, sys.argv[2] )
 
 
-if ( not os.environ.has_key("SITK_NOSHOW") ):
+if ( not "SITK_NOSHOW" in os.environ ):
     sitk.Show( output, "N4 Corrected" )

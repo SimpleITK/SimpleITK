@@ -1,0 +1,63 @@
+{
+  "name" : "VotingBinaryHoleFillingImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "public_declarations" : "Self &SetRadius( unsigned int r ) { this->m_Radius = std::vector<unsigned int>(3, r ); return *this; }",
+  "members" : [
+    {
+      "name" : "Radius",
+      "type" : "std::vector<unsigned int>",
+      "default" : "std::vector<unsigned int>(3, 1)",
+      "dim_vec" : 1,
+      "doc" : "",
+      "itk_type" : "typename FilterType::InputSizeType"
+    },
+    {
+      "name" : "MajorityThreshold",
+      "type" : "unsigned int",
+      "default" : "1u",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Majority threshold. It is the number of pixels over 50% that will decide whether an OFF pixel will become ON or not. For example, if the neighborhood of a pixel has 124 pixels (excluding itself), the 50% will be 62, and if you set upd a Majority threshold of 5, that means that the filter will require 67 or more neighbor pixels to be ON in order to switch the current OFF pixel to ON. The default value is 1.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Majority threshold. It is the number of pixels over 50% that will decide whether an OFF pixel will become ON or not. For example, if the neighborhood of a pixel has 124 pixels (excluding itself), the 50% will be 62, and if you set upd a Majority threshold of 5, that means that the filter will require 67 or more neighbor pixels to be ON in order to switch the current OFF pixel to ON. The default value is 1.\n"
+    },
+    {
+      "name" : "ForegroundValue",
+      "type" : "double",
+      "default" : "1.0",
+      "pixeltype" : "Input"
+    },
+    {
+      "name" : "BackgroundValue",
+      "type" : "double",
+      "default" : "0.0",
+      "pixeltype" : "Input"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "VotingBinary",
+      "description" : "Basic voting hole filling",
+      "settings" : [
+        {
+          "parameter" : "Radius",
+          "no_get_method" : 1,
+          "value" : 5
+        },
+        {
+          "parameter" : "ForegroundValue",
+          "value" : "255.0"
+        }
+      ],
+      "md5hash" : "accc574edffef3c6ac37d13e28a524c0",
+      "inputs" : [
+        "Input/STAPLE1.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Fills in holes and cavities by applying a voting operation on each pixel.\n",
+  "detaileddescription" : "\\see  Image\n\\see \n\\see  VotingBinaryImageFilter\n\\see \n\\see  VotingBinaryIterativeHoleFillingImageFilter\n\\see \n\\see  Neighborhood\n\\see \n\\see  NeighborhoodOperator\n\\see \n\\see  NeighborhoodIterator\n\n"
+}

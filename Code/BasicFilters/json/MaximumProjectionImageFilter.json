@@ -1,0 +1,76 @@
+{
+  "name" : "MaximumProjectionImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "ProjectionDimension",
+      "type" : "unsigned int",
+      "default" : "0u"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "run with some defaults",
+      "md5hash" : "fb78c55635b17fc9ff38ef0ef14f0948",
+      "inputs" : [
+        "Input/RA-Float.nrrd"
+      ]
+    },
+    {
+      "tag" : "another_dimension",
+      "description" : "project in the 3rd dimension",
+      "settings" : [
+        {
+          "parameter" : "ProjectionDimension",
+          "value" : "2u",
+          "lua_value" : "2",
+          "python_value" : "2",
+          "ruby_value" : "2",
+          "java_value" : "2",
+          "tcl_value" : "2",
+          "R_value" : "2"
+        }
+      ],
+      "md5hash" : "f3f0d97c83c6b0d92df10c28e2481520",
+      "inputs" : [
+        "Input/RA-Float.nrrd"
+      ]
+    },
+    {
+      "tag" : "short_image",
+      "description" : "project with a short image",
+      "settings" : [
+        {
+          "parameter" : "ProjectionDimension",
+          "value" : "1u",
+          "lua_value" : "1",
+          "python_value" : "1",
+          "ruby_value" : "1",
+          "java_value" : "1",
+          "tcl_value" : "1",
+          "R_value" : "1"
+        }
+      ],
+      "md5hash" : "5390344262c91e83bc9208b0991a2fc9",
+      "inputs" : [
+        "Input/Ramp-Up-Short.nrrd"
+      ]
+    },
+    {
+      "tag" : "rgb_image",
+      "description" : "project with a rgb image in 2D",
+      "md5hash" : "92134e0dd38fccdf054ff23e67a72e75",
+      "inputs" : [
+        "Input/VM1111Shrink-RGB.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Maximum projection.\n",
+  "detaileddescription" : "this class was contributed to the insight journal by Gaetan Lehmann. the original paper can be found athttp://hdl.handle.net/1926/164\n\\author Gaetan Lehmann. Biologie du Developpement et de la reproduction, inra de jouy-en-josas, France.\n\\see  ProjectionImageFilter\n\\see \n\\see  MedianProjectionImageFilter\n\\see \n\\see  MeanProjectionImageFilter\n\\see \n\\see  MinimumProjectionImageFilter\n\\see \n\\see  StandardDeviationProjectionImageFilter\n\\see \n\\see  SumProjectionImageFilter\n\\see \n\\see  BinaryProjectionImageFilter\n\n"
+}

@@ -1,0 +1,51 @@
+{
+  "name" : "SignedDanielssonDistanceMapImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "doc" : "Docs",
+  "number_of_inputs" : 1,
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "output_pixel_type" : "float",
+  "members" : [
+    {
+      "name" : "InsideIsPositive",
+      "type" : "bool",
+      "default" : "false",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set if the inside represents positive values in the signed distance map. By convention ON pixels are treated as inside pixels.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get if the inside represents positive values in the signed distance map. See GetInsideIsPositive()\n"
+    },
+    {
+      "name" : "SquaredDistance",
+      "type" : "bool",
+      "default" : "false",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set if the distance should be squared.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the distance squared.\n"
+    },
+    {
+      "name" : "UseImageSpacing",
+      "type" : "bool",
+      "default" : "false",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set if image spacing should be used in computing distances.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get whether spacing is used.\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "Default parameter settings",
+      "tolerance" : "0.01",
+      "settings" : [],
+      "inputs" : [
+        "Input/2th_cthead1.png"
+      ]
+    }
+  ],
+  "briefdescription" : "",
+  "detaileddescription" : "This class is parametrized over the type of the input image and the type of the output image.\nThis filter computes the distance map of the input image as an approximation with pixel accuracy to the Euclidean distance.\nFor purposes of evaluating the signed distance map, the input is assumed to be binary composed of pixels with value 0 and non-zero.\nThe inside is considered as having negative distances. Outside is treated as having positive distances. To change the convention, use the InsideIsPositive(bool) function.\nAs a convention, the distance is evaluated from the boundary of the ON pixels.\nThe filter returns\n\\li A signed distance map with the approximation to the euclidean distance.\n\\li A voronoi partition. (See itkDanielssonDistanceMapImageFilter)\n\\li A vector map containing the component of the vector relating the current pixel with the closest point of the closest object to this pixel. Given that the components of the distance are computed in \"pixels\", the vector is represented by an itk::Offset. That is, physical coordinates are not used. (See itkDanielssonDistanceMapImageFilter)\n\nThis filter internally uses the DanielssonDistanceMap filter. This filter is N-dimensional.\n\\see itkDanielssonDistanceMapImageFilter\n\n"
+}

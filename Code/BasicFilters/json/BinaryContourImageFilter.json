@@ -1,0 +1,78 @@
+{
+  "name" : "BinaryContourImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "FullyConnected",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : "",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.\n"
+    },
+    {
+      "name" : "BackgroundValue",
+      "type" : "double",
+      "default" : "0.0",
+      "pixeltype" : "Input",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the background value used to mark the pixels not on the border of the objects.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the background value used to mark the pixels not on the border of the objects.\n"
+    },
+    {
+      "name" : "ForegroundValue",
+      "type" : "double",
+      "default" : "1.0",
+      "pixeltype" : "Input",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the foreground value used to identify the objects in the input and output images.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the foreground value used to identify the objects in the input and output images.\n"
+    }
+  ],
+  "custom_methods" : [],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "Simply run with default settings",
+      "md5hash" : "3921141f21fcb41e6d4af197e48ffbb5",
+      "settings" : [
+        {
+          "parameter" : "ForegroundValue",
+          "value" : "255.0"
+        }
+      ],
+      "inputs" : [
+        "Input/WhiteDots.png"
+      ]
+    },
+    {
+      "tag" : "custom",
+      "description" : "Run binary mask on a single label",
+      "md5hash" : "09212e4d204a0ed90a445dc832047b22",
+      "settings" : [
+        {
+          "parameter" : "ForegroundValue",
+          "value" : "100"
+        },
+        {
+          "parameter" : "FullyConnected",
+          "value" : "true",
+          "python_value" : "True",
+          "R_value" : "TRUE"
+        }
+      ],
+      "inputs" : [
+        "Input/2th_cthead1.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Labels the pixels on the border of the objects in a binary image.\n",
+  "detaileddescription" : " BinaryContourImageFiltertakes a binary image as input, where the pixels in the objects are the pixels with a value equal to ForegroundValue. Only the pixels on the contours of the objects are kept. The pixels not on the border are changed to BackgroundValue.\nThe connectivity can be changed to minimum or maximum connectivity with SetFullyConnected(). Full connectivity produces thicker contours.\nhttp://hdl.handle.net/1926/1352\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\\see  LabelContourImageFilter BinaryErodeImageFilter SimpleContourExtractorImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Extract the boundaries of connected regions in a binary image\n\n\\li Extract the inner and outer boundaries of blobs in a binary image\n\n"
+}

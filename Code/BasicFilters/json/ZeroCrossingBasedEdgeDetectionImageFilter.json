@@ -1,0 +1,61 @@
+{
+  "name" : "ZeroCrossingBasedEdgeDetectionImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "RealPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "Variance",
+      "type" : "double",
+      "default" : 1.0,
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the variance parameter needed by the embedded gaussian filter\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Standard get/set macros for Gaussian filter parameters.\n"
+    },
+    {
+      "name" : "ForegroundValue",
+      "type" : "uint8_t",
+      "default" : "1u",
+      "pixeltype" : "Output",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Get/Set the label values for the ZeroCrossingImageFilter\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get/Set the label values for the ZeroCrossingImageFilter\n"
+    },
+    {
+      "name" : "BackgroundValue",
+      "type" : "uint8_t",
+      "default" : "0u",
+      "pixeltype" : "Output",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Get/Set the label values for the ZeroCrossingImageFilter\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get/Set the label values for the ZeroCrossingImageFilter\n"
+    },
+    {
+      "name" : "MaximumError",
+      "type" : "double",
+      "default" : "0.1",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the MaximumError parameter needed by the embedded gaussian filter This value is used to set the desired maximum error of the gaussian approximation. Maximum error is the difference between the area under the discrete Gaussian curve and the area under the continuous Gaussian. Maximum error affects the Gaussian operator size. The value must be between 0.0 and 1.0.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Standard get/set macros for Gaussian filter parameters.\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Simply run with default settings",
+      "settings" : [],
+      "tolerance" : 0.01,
+      "inputs" : [
+        "Input/Ramp-Zero-One-Float.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "This filter implements a zero-crossing based edge detecor.\n",
+  "detaileddescription" : "The zero-crossing based edge detector looks for pixels in the Laplacian of an image where the value of the Laplacian passes through zeropoints where the Laplacian changes sign. Such points often occur at ``edges'' in imagesi.e. points where the intensity of the image changes rapidly, but they also occur at places that are not as easy to associate with edges. It is best to think of the zero crossing detector as some sort of feature detector rather than as a specific edge detector.\n\\par Zero crossings always lie on closed contours and so the output from the zero crossing detector is usually a binary image with single pixel thickness lines showing the positions of the zero crossing points.\n\\par In this implementation, the input image is first smoothed with a Gaussian filter, then the LaplacianImageFilteris applied to smoothed image. Finally the zero-crossing of the Laplacian of the smoothed image is detected. The output is a binary image.\n\\par Inputs and Outputs\nThe input to the filter should be a scalar, itk::Imageof arbitrary dimension. The output image is a binary, labeled image. See itkZeroCrossingImageFilter for more information on requirements of the data type of the output.\n\\par To use this filter, first set the parameters (variance and maximum error) needed by the embedded DiscreteGaussianImageFilter, i.e. See DiscreteGaussianImageFilterfor information about these parameters. Optionally, you may also set foreground and background values for the zero-crossing filter. The default label values are Zero for the background and One for the foreground, as defined in NumericTraitsfor the data type of the output image.\n\\see  DiscreteGaussianImageFilter\n\\see \n\\see  LaplacianImageFilter\n\\see \n\\see  ZeroCrossingImageFilter\n\n"
+}

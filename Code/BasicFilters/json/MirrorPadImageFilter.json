@@ -1,0 +1,69 @@
+{
+  "name" : "MirrorPadImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "\todo add SetBound member function to set both properties",
+  "pixel_types" : "NonLabelPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "PadLowerBound",
+      "type" : "std::vector<unsigned int>",
+      "default" : "std::vector<unsigned int>(3, 0)",
+      "doc" : "\todo what does this itk_type attribute do?",
+      "dim_vec" : 1,
+      "itk_type" : "typename InputImageType::SizeType"
+    },
+    {
+      "name" : "PadUpperBound",
+      "type" : "std::vector<unsigned int>",
+      "default" : "std::vector<unsigned int>(3, 0)",
+      "doc" : "\todo what does this itk_type attribute do?",
+      "dim_vec" : 1,
+      "itk_type" : "typename InputImageType::SizeType"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Test MirrorPad with default parameters",
+      "md5hash" : "a9a0207c759cb8d9e0507414992905d6",
+      "settings" : [],
+      "inputs" : [
+        "Input/RA-Slice-Short.png"
+      ]
+    },
+    {
+      "tag" : "more",
+      "description" : "Test MirrorPad reasonable padding",
+      "md5hash" : "e08b5df5d43b6f3704ab48e8291928cd",
+      "settings" : [
+        {
+          "parameter" : "PadLowerBound",
+          "type" : "unsigned int",
+          "dim_vec" : 1,
+          "value" : "{5,10,15}",
+          "tcl_value" : "[list 5 10 15]",
+          "python_value" : "[ 5, 10, 15 ]",
+          "ruby_value" : "[ 5, 10, 15 ]",
+          "R_value" : "c( 5, 10, 15 )"
+        },
+        {
+          "parameter" : "PadUpperBound",
+          "type" : "unsigned int",
+          "dim_vec" : 1,
+          "value" : "{3,6,9}",
+          "tcl_value" : "[list 3 6 9]",
+          "python_value" : "[ 3, 6, 9 ]",
+          "ruby_value" : "[ 3, 6, 9 ]",
+          "R_value" : "c( 3, 6, 9 )"
+        }
+      ],
+      "inputs" : [
+        "Input/Ramp-Down-Short.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "Increase the image size by padding with replicants of the input image value.\n",
+  "detaileddescription" : " MirrorPadImageFilterchanges the image bounds of an image. Any added pixels are filled in with a mirrored replica of the input image. For instance, if the output image needs a pixel that istwo pixels to the left of the LargestPossibleRegionof the input image, the value assigned will be from the pixeltwo pixels inside the left boundary of the LargestPossibleRegion. The image bounds of the output must be specified.\nVisual explanation of padding regions.This filter is implemented as a multithreaded filter. It provides a ThreadedGenerateData()method for its implementation.\n\\see  WrapPadImageFilter, ConstantPadImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Pad an image using mirroring over the boundaries\n\n"
+}

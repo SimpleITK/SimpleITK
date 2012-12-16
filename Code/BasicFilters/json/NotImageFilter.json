@@ -1,0 +1,22 @@
+{
+  "name" : "NotImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "members" : [],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Simply run with default settings",
+      "settings" : [],
+      "md5hash" : "2004dccdb2d68b953fd858a5b6a37d35",
+      "inputs" : [
+        "Input/STAPLE1.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Implements the NOT logical operator pixel-wise on an image.\n",
+  "detaileddescription" : "This class is templated over the types of an input image and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\nSince the logical NOT operation is only defined in C++ for integer types, the images passed to this filter must comply with the requirement of using integer pixel type.\nThe total operation over one pixel will be\noutput_pixel=static_cast<OutputPixelType>(!input_pixel)\nWhere \"!\" is the unary NOT operator in C++.\n"
+}

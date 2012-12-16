@@ -1,0 +1,44 @@
+{
+  "name" : "VectorIndexSelectionCastImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "VectorPixelIDTypeList",
+  "output_pixel_type" : "typename InputImageType::InternalPixelType",
+  "members" : [
+    {
+      "name" : "Index",
+      "type" : "unsigned int",
+      "default" : "0u",
+      "doc" : "",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Get/Set methods for the index\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "blue",
+      "description" : "Extract blue from VH slice",
+      "settings" : [
+        {
+          "parameter" : "Index",
+          "value" : "2u",
+          "lua_value" : "2",
+          "python_value" : "2",
+          "ruby_value" : "2",
+          "java_value" : "2",
+          "tcl_value" : "2",
+          "R_value" : "2"
+        }
+      ],
+      "md5hash" : "da3f74fce21be8b788da331377f7f361",
+      "inputs" : [
+        "Input/VM1111Shrink-RGBFloat.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "Extracts the selected index of the vector that is the input pixel type.\n",
+  "detaileddescription" : "This filter is templated over the input image type and output image type.\nThe filter expect the input image pixel type to be a vector and the output image pixel type to be a scalar. The only requirement on the type used for representing the vector is that it must provide an operator[].\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Extract a component/channel of a vector image\n\n"
+}

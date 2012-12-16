@@ -1,0 +1,119 @@
+{
+  "name" : "DoubleThresholdImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "number_of_inputs" : 1,
+  "output_pixel_type" : "uint8_t",
+  "doc" : "",
+  "members" : [
+    {
+      "name" : "Threshold1",
+      "type" : "double",
+      "default" : "0.0",
+      "pixeltype" : "Input",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the thresholds. Four thresholds should be specified. The two lower thresholds default to NumericTraits<InputPixelType>::NonpositiveMin(). The two upper thresholds default NumericTraits<InputPixelType>::max. Threshold1 <= Threshold2 <= Threshold3 <= Threshold4.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the threshold values.\n"
+    },
+    {
+      "name" : "Threshold2",
+      "type" : "double",
+      "default" : "1.0",
+      "pixeltype" : "Input",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the thresholds. Four thresholds should be specified. The two lower thresholds default to NumericTraits<InputPixelType>::NonpositiveMin(). The two upper thresholds default NumericTraits<InputPixelType>::max. Threshold1 <= Threshold2 <= Threshold3 <= Threshold4.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the threshold values.\n"
+    },
+    {
+      "name" : "Threshold3",
+      "type" : "double",
+      "default" : "254.0",
+      "pixeltype" : "Input",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the thresholds. Four thresholds should be specified. The two lower thresholds default to NumericTraits<InputPixelType>::NonpositiveMin(). The two upper thresholds default NumericTraits<InputPixelType>::max. Threshold1 <= Threshold2 <= Threshold3 <= Threshold4.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the threshold values.\n"
+    },
+    {
+      "name" : "Threshold4",
+      "type" : "double",
+      "default" : "255.0",
+      "pixeltype" : "Input",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the thresholds. Four thresholds should be specified. The two lower thresholds default to NumericTraits<InputPixelType>::NonpositiveMin(). The two upper thresholds default NumericTraits<InputPixelType>::max. Threshold1 <= Threshold2 <= Threshold3 <= Threshold4.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the threshold values.\n"
+    },
+    {
+      "name" : "InsideValue",
+      "type" : "uint8_t",
+      "default" : "1u",
+      "pixeltype" : "Output",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the \"inside\" pixel value. The default value NumericTraits<OutputPixelType>::max()\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the \"inside\" pixel value.\n"
+    },
+    {
+      "name" : "OutsideValue",
+      "type" : "uint8_t",
+      "default" : "0u",
+      "pixeltype" : "Output",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the \"outside\" pixel value. The default value NumericTraits<OutputPixelType>::Zero.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the \"outside\" pixel value.\n"
+    },
+    {
+      "name" : "FullyConnected",
+      "type" : "bool",
+      "default" : "false",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "DoubleThreshold1",
+      "description" : "Default parameter settings",
+      "md5hash" : "dbd0ea7d6f16bb93e9c688cb0f1bfd85",
+      "settings" : [],
+      "inputs" : [
+        "Input/RA-Short.nrrd"
+      ]
+    },
+    {
+      "tag" : "DoubleThreshold2",
+      "description" : "double threshold 2D",
+      "md5hash" : "2c8fc2345ccfa980ef42aef5910efaa3",
+      "settings" : [
+        {
+          "parameter" : "Threshold1",
+          "value" : "0"
+        },
+        {
+          "parameter" : "Threshold2",
+          "value" : "0"
+        },
+        {
+          "parameter" : "Threshold3",
+          "value" : "3000"
+        },
+        {
+          "parameter" : "Threshold4",
+          "value" : "2700"
+        }
+      ],
+      "inputs" : [
+        "Input/RA-Slice-Short.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Binarize an input image using double thresholding.\n",
+  "detaileddescription" : "Double threshold addresses the difficulty in selecting a threshold that will select the objects of interest without selecting extraneous objects. Double threshold considers two threshold ranges: a narrow range and a wide range (where the wide range encompasses the narrow range). If the wide range was used for a traditional threshold (where values inside the range map to the foreground and values outside the range map to the background), many extraneous pixels may survive the threshold operation. If the narrow range was used for a traditional threshold, then too few pixels may survive the threshold.\nDouble threshold uses the narrow threshold image as a marker image and the wide threshold image as a mask image in the geodesic dilation. Essentially, the marker image (narrow threshold) is dilated but constrained to lie within the mask image (wide threshold). Thus, only the objects of interest (those pixels that survived the narrow threshold) are extracted but the those objects appear in the final image as they would have if the wide threshold was used.\n\\see  GrayscaleGeodesicDilateImageFilter\n\\see \n\\see  MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter\n\n"
+}
