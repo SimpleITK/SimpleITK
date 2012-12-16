@@ -80,7 +80,7 @@ $(include ClassEnd.h.in)
      * in order to support a fully functional API
      */
   Image SITKBasicFilters_EXPORT ${name:gsub("ImageFilter$", "")} ( const Image&$(if number_of_inputs == 2 then OUT=', const Image&' end),
-                                          uint32_t inRadius = 1, ${name}::KernelType inKernel =${name}::Ball
+                                          uint32_t radius = 1, ${name}::KernelType kernel =${name}::Ball
                                           $(when members $(foreach members , ${type} in${name} = ${default})) );
 
    /**
@@ -90,8 +90,8 @@ $(include ClassEnd.h.in)
      * in order to support a fully functional API
      */
   Image SITKBasicFilters_EXPORT ${name:gsub("ImageFilter$", "")} ( const Image&$(if number_of_inputs == 2 then OUT=', const Image&' end),
-                                          const std::vector<uint32_t> inVectorRadius, ${name}::KernelType inKernel =${name}::Ball
-                                          $(when members $(foreach members , ${type} in${name} = ${default})) );
+                                          const std::vector<uint32_t> vectorRadius, ${name}::KernelType kernel =${name}::Ball
+                                          $(when members $(foreach members , ${type} ${name:sub(1,1):lower()}${name:sub(2,-1)} = ${default})) );
   }
 }
 #endif
