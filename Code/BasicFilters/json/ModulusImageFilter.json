@@ -4,7 +4,7 @@
   "template_test_filename" : "ImageFilter",
   "constant_type" : "uint32_t",
   "number_of_inputs" : 2,
-  "pixel_types" : "typelist::MakeTypeList<BasicPixelID<uint8_t>,BasicPixelID<uint16_t>,BasicPixelID<uint32_t>,BasicPixelID<uint64_t> >::Type",
+  "pixel_types" : "IntegerPixelIDTypeList",
   "members" : [],
   "tests" : [
     {
