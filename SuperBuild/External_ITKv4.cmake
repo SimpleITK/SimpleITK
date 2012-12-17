@@ -15,8 +15,7 @@ set(proj ITK)  ## Use ITK convention of calling it ITK
 set(ITK_REPOSITORY git://itk.org/ITK.git)
 
 # NOTE: it is very important to update the ITK_DIR path with the
-# after v4.3rc04 and including modulus functor fix
-set(ITK_TAG_COMMAND GIT_TAG ff9d8e279a13a12bf6617f13c31b9122e88ef1fe
+set(ITK_TAG_COMMAND GIT_TAG v4.3.0
  )
 
 if( ${ITK_WRAPPING} OR ${BUILD_SHARED_LIBS} )
