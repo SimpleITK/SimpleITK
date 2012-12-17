@@ -25,6 +25,37 @@ void DataFinder::SetRuntimeDirectoryFromArgv0 ( std::string argv0 )
     }
   }
 
+static void selectArch( std::vector<std::string>& words )
+  {
+  words.clear();
+
+#ifdef OSX_ARCHITECTURES
+
+  std::string osx_arch(OSX_ARCHITECTURES);
+  if (!osx_arch.length())
+    {
+    // OSX_ARCHITECTURES has no value, so bail out
+    return;
+    }
+
+  words.push_back("/usr/bin/arch");
+
+#ifdef __x86_64__
+  words.push_back("-x86_64");
+#endif
+#ifdef __i386__
+  words.push_back("-i386");
+#endif
+#ifdef __ppc__
+  words.push_back("-ppc");
+#endif
+#ifdef __ppc64__
+  words.push_back("-ppc64");
+#endif
+#endif
+  }
+
+
 std::vector<std::string> DataFinder::FindExecutable ( std::string exe )
   {
   return std::vector<std::string>( 1, this->GetRuntimeDirectory() + "/" + exe + EXECUTABLE_SUFFIX );
@@ -42,7 +73,10 @@ std::vector<std::string> DataFinder::GetTclExecutable ()
 
 std::vector<std::string> DataFinder::GetPythonExecutable ()
   {
-  return std::vector<std::string> ( 1, PYTHON_EXECUTABLE_PATH );
+  std::vector<std::string> words;
+  selectArch(words);
+  words.push_back(PYTHON_EXECUTABLE_PATH);
+  return words;
   }
 
 std::vector<std::string> DataFinder::GetRubyExecutable ()
@@ -57,7 +91,10 @@ std::vector<std::string> DataFinder::GetRExecutable ()
 
 std::vector<std::string> DataFinder::GetJavaExecutable ()
   {
-  return std::vector<std::string> ( 1, JAVA_EXECUTABLE_PATH );
+  std::vector<std::string> words;
+  selectArch(words);
+  words.push_back(JAVA_EXECUTABLE_PATH);
+  return words;
   }
 
 std::vector<std::string> DataFinder::GetCSharpCompiler ()
