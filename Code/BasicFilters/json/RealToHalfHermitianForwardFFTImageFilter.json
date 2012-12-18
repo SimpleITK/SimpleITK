@@ -11,7 +11,7 @@
     {
       "tag" : "defaults",
       "description" : "Test real to half FFT",
-      "tolerance" : "0.04",
+      "tolerance" : "0.11",
       "settings" : [],
       "inputs" : [
         "Input/RA-Slice-Float.nrrd"
