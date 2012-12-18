@@ -20,7 +20,7 @@
 *.txx            whitespace=tab-in-indent,no-lf-at-eof  hooks.style=KWStyle,uncrustify
 *.txt            whitespace=tab-in-indent,no-lf-at-eof
 *.cmake          whitespace=tab-in-indent,no-lf-at-eof
-*.i              whitespace=tab-in-indent,no-lf-at-eof
+*.i              whitespace=tab-in-indent,no-lf-at-eof  hooks.MaxObjectKiB=2048
 *.cs             whitespace=tab-in-indent,no-lf-at-eof
 *.py             whitespace=tab-in-indent,no-lf-at-eof
 *.java           whitespace=tab-in-indent,no-lf-at-eof
