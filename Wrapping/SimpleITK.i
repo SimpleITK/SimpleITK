@@ -112,6 +112,7 @@ namespace std
 %include "sitkPixelIDValues.h"
 %include "sitkImage.h"
 %include "sitkShow.h"
+%include "sitkInterpolator.h"
 %include "sitkImageFilter.h"
 %include "sitkImageFileWriter.h"
 %include "sitkImageSeriesReader.h"
