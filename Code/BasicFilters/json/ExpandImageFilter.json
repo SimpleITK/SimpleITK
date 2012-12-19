@@ -16,16 +16,25 @@
       "default" : "std::vector<unsigned int>(3, 1)",
       "dim_vec" : 1,
       "doc" : "",
-      "itk_type" : "typename FilterType::ExpandFactorsType"
+      "itk_type" : "typename FilterType::ExpandFactorsType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the expand factors. Values are clamped to a minimum value of 1. Default is 1 for all dimensions.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the expand factors.\n"
     },
     {
       "name" : "Interpolator",
       "type" : "InterpolatorEnum",
       "default" : "itk::simple::sitkLinear",
       "doc" : "",
-      "custom_itk_cast" : "filter->SetInterpolator( CreateInterpolator( image1.GetPointer(), m_Interpolator ) );"
+      "custom_itk_cast" : "filter->SetInterpolator( CreateInterpolator( image1.GetPointer(), m_Interpolator ) );",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the interpolator function.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get a pointer to the interpolator function.\n"
     }
   ],
-  "tests" : [
-  ]
+  "tests" : [],
+  "briefdescription" : "Expand the size of an image by an integer factor in each dimension.\n",
+  "detaileddescription" : " ExpandImageFilterincreases the size of an image by an integer factor in each dimension using a interpolation method. The output image size in each dimension is given by:\nOutputSize[j] = InputSize[j] * ExpandFactors[j]\nThe output values are obtained by interpolating the input image. The default interpolation type used is the LinearInterpolateImageFunction. The user can specify a particular interpolation function via SetInterpolator(). Note that the input interpolator must derive from base class InterpolateImageFunction.\nThis filter will produce an output with different pixel spacing that its input image such that:\nOutputSpacing[j] = InputSpacing[j] / ExpandFactors[j]\nThe filter is templated over the input image type and the output image type.\nThis filter is implemented as a multithreaded filter and supports streaming.\n\\warning This filter only works for image with scalar pixel types. For vector images use VectorExpandImageFilter.\nThis filter assumes that the input and output image has the same number of dimensions.\n\\see  InterpolateImageFunction\n\\see \n\\see LinearInterpolationImageFunction\n\\see \n\\see  VectorExpandImageFilter\n\n"
 }
