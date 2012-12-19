@@ -24,16 +24,82 @@ namespace itk
 namespace simple
 {
 
-enum InterpolatorEnum { sitkNearestNeighbor = 1,
-                        sitkLinear = 2,
-                        sitkBSpline = 3,
-                        sitkGaussian = 4,
-                        sitkLabelGaussian = 5,
-                        sitkHammingWindowedSinc = 6,
-                        sitkCosineWindowedSinc = 7,
-                        sitkWelchWindowedSinc = 8,
-                        sitkLanczosWindowedSinc = 9,
-                        sitkBlackmanWindowedSinc = 10
+enum InterpolatorEnum {
+  /** \brief Nearest-neighbor interpolation
+   * \sa itk::NearestNeighborInterpolateImageFunction
+   */
+  sitkNearestNeighbor = 1,
+
+  /** \brief N-D linear interpolation
+   * \sa itk::LinearInterpolateImageFunction
+   */
+  sitkLinear = 2,
+
+  /** \brief B-Spline of order 3 interpolation
+   * \sa itk::BSplineInterpolateImageFunction
+   */
+  sitkBSpline = 3,
+
+  /** \brief Gaussian interpolation
+   *
+   * Sigma is set to 0.8 input pixels and alpha is 4.0
+   *
+   * \sa itk::GaussianInterpolateImageFunction
+   */
+  sitkGaussian = 4,
+
+  /** \brief Smoothly interpolate multi-label images
+   *
+   * Sigma is set to 1.0 input pixels and alpha is 1.0
+   *
+   * \sa itk:LabelImageGaussianInterpolateImageFunction
+   */
+  sitkLabelGaussian = 5,
+
+  /** \brief Windowed sinc interpolation
+   *
+   * \f[ w(x) = 0.54 + 0.46 cos(\frac{\pi x}{m} ) \f]
+   *
+   * \sa itk::WindowedSincInterpolateImageFunction
+   * \sa itk::Function::HammingWindowFunction
+   */
+  sitkHammingWindowedSinc = 6,
+
+  /** \brief Windowed sinc interpolation
+   *
+   * \f[ w(x) = cos(\frac{\pi x}{2 m} ) \f]
+   *
+   * \sa itk::WindowedSincInterpolateImageFunction
+   * \sa itk::Function::CosineWindowFunction
+   */
+  sitkCosineWindowedSinc = 7,
+
+  /** \brief Windowed sinc interpolation
+   *
+   * \f[ w(x) = 1 - ( \frac{x^2}{m^2} ) \f]
+   *
+   * \sa itk::WindowedSincInterpolateImageFunction
+   * \sa itk::Function::WelchWindowFunction
+   */
+  sitkWelchWindowedSinc = 8,
+
+  /** \brief Windowed sinc interpolation
+   *
+   * \f[ w(x) = \textrm{sinc} ( \frac{x}{m} ) \f]
+   *
+   * \sa itk::WindowedSincInterpolateImageFunction
+   * \sa itk::Function::LanczosWindowFunction
+   */
+  sitkLanczosWindowedSinc = 9,
+
+  /** \brief Windowed sinc interpolation
+   *
+   * \f[ w(x) = 0.42 + 0.5 cos(\frac{\pi x}{m}) + 0.08 cos(\frac{2 \pi x}{m}) \f]
+   *
+   * \sa itk::WindowedSincInterpolateImageFunction
+   * \sa itk::Function::BlackmanWindowFunction
+   */
+  sitkBlackmanWindowedSinc = 10
 };
 
 
