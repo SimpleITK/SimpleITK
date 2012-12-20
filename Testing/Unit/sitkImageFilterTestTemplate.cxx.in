@@ -650,7 +650,10 @@ TEST_F(CSharp,${name}) {
       ASSERT_TRUE ( itksys::SystemTools::RemoveFile ( outputFileName.c_str() ) ) << "Deleting file " << outputFileName;
     }
 
-    if ( dataFinder.GetCSharpInterpreter().size() > 0 ) {
+    std::vector<std::string> cs_interp = dataFinder.GetCSharpInterpreter();
+
+    if ( cs_interp.size() && cs_interp[0].size() )
+    {
       CommandLine = dataFinder.GetCSharpInterpreter();
     }
     CommandLine.push_back ( ExePathAndName );
