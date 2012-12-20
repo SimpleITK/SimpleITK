@@ -97,9 +97,9 @@
           "lua_value" : "SimpleITK.sitkNearestNeighbor",
           "python_value" : "SimpleITK.sitkNearestNeighbor",
           "ruby_value" : "Simpleitk::sitkNearestNeighbor",
-          "java_value" : "sitkNearestNeighbor",
+          "java_value" : "InterpolatorEnum.sitkNearestNeighbor",
           "tcl_value" : "$$sitkNearestNeighbor",
-          "csharp_value" : "sitkNearestNeighbor",
+          "csharp_value" : "InterpolatorEnum.sitkNearestNeighbor",
           "R_value" : "'sitkNearestNeighbor'"
         }
       ],
@@ -124,9 +124,9 @@
           "lua_value" : "SimpleITK.sitkBSpline",
           "python_value" : "SimpleITK.sitkBSpline",
           "ruby_value" : "Simpleitk::sitkBSpline",
-          "java_value" : "sitkBSpline",
+          "java_value" : "InterpolatorEnum.sitkBSpline",
           "tcl_value" : "$$sitkBSpline",
-          "csharp_value" : "sitkBSpline",
+          "csharp_value" : "InterpolatorEnum.sitkBSpline",
           "R_value" : "'sitkBSpline'"
         }
       ],
@@ -151,9 +151,9 @@
           "lua_value" : "SimpleITK.sitkGaussian",
           "python_value" : "SimpleITK.sitkGaussian",
           "ruby_value" : "Simpleitk::sitkGaussian",
-          "java_value" : "sitkGaussian",
+          "java_value" : "InterpolatorEnum.sitkGaussian",
           "tcl_value" : "$$sitkGaussian",
-          "csharp_value" : "sitkGaussian",
+          "csharp_value" : "InterpolatorEnum.sitkGaussian",
           "R_value" : "'sitkGaussian'"
         }
       ],
@@ -178,9 +178,9 @@
           "lua_value" : "SimpleITK.sitkLabelGaussian",
           "python_value" : "SimpleITK.sitkLabelGaussian",
           "ruby_value" : "Simpleitk::sitkLabelGaussian",
-          "java_value" : "sitkLabelGaussian",
+          "java_value" : "InterpolatorEnum.sitkLabelGaussian",
           "tcl_value" : "$$sitkLabelGaussian",
-          "csharp_value" : "sitkLabelGaussian",
+          "csharp_value" : "InterpolatorEnum.sitkLabelGaussian",
           "R_value" : "'sitkGaussianLabel'"
         }
       ],
