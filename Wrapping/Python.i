@@ -553,6 +553,34 @@ def _get_sitk_pixelid(numpy_array_type):
             if numpy.issubdtype(numpy_array_type.dtype, key):
                 return _np_sitk[key]
 
+def _get_sitk_vector_pixelid(numpy_array_type):
+    """Returns a SimpleITK vecotr PixelID given a numpy array."""
+
+    if not HAVE_NUMPY:
+        raise ImportError('Numpy not available.')
+
+    # This is a Mapping from numpy array types to sitks pixel types.
+    _np_sitk = {numpy.character:sitkVectorUInt8,
+                numpy.uint8:sitkVectorUInt8,
+                numpy.uint16:sitkVectorUInt16,
+                numpy.uint32:sitkVectorUInt32,
+                numpy.uint64:sitkVectorUInt64,
+                numpy.int8:sitkVectorInt8,
+                numpy.int16:sitkVectorInt16,
+                numpy.int32:sitkVectorInt32,
+                numpy.int64:sitkVectorInt64,
+                numpy.float32:sitkVectorFloat32,
+                numpy.float64:sitkVectorFloat64,
+                }
+
+    try:
+        return _np_sitk[numpy_array_type.dtype]
+    except KeyError:
+        for key in _np_sitk:
+            if numpy.issubdtype(numpy_array_type.dtype, key):
+                return _np_sitk[key]
+
+
 # SimplyITK <-> Numpy Array conversion support.
 
 def GetArrayFromImage(image):
@@ -578,22 +606,23 @@ def GetArrayFromImage(image):
 
     return arr
 
-def GetImageFromArray( arr ):
-    """Get a SimpleITK Image from a numpy array."""
+def GetImageFromArray( arr, isVector=False):
+    """Get a SimpleITK Image from a numpy array. If isVector is True, then a 3D array will be treaded as a 2D vector image, otherwise it will be treaded as a 3D image"""
 
     if not HAVE_NUMPY:
         raise ImportError('Numpy not available.')
 
     z = numpy.asarray( arr )
-    id = _get_sitk_pixelid( z )
 
     assert z.ndim in ( 2, 3, 4 ), \
       "Only arrays of 2, 3 or 4 dimensions are supported."
 
-    if z.ndim in ( 2, 3 ):
+    if ( z.ndim == 3 and isVector ) or (z.ndim == 4):
+      id = _get_sitk_vector_pixelid( z )
+      img = Image( z.shape[-2::-1] , id, z.shape[-1] )
+    elif z.ndim in ( 2, 3 ):
+      id = _get_sitk_pixelid( z )
       img = Image( z.shape[::-1], id )
-    elif z.ndim == 4:
-      img = Image( z.shape[:-1] , id, numberOfComponents = z.shape[-1] )
 
     _SimpleITK._SetImageFromArray( z.tostring(), img )
 
