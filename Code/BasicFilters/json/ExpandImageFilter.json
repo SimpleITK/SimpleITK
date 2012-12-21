@@ -47,7 +47,7 @@
     {
       "tag" : "Expand2x3",
       "description" : "expand image 2 x 3",
-      "tolerance" : "1e-6",
+      "tolerance" : "0.08",
       "settings" : [
         {
           "parameter" : "ExpandFactors",
