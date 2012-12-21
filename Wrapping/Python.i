@@ -572,7 +572,7 @@ def GetArrayFromImage(image):
 
     shape = image.GetSize();
     if image.GetNumberOfComponentsPerPixel() > 1:
-      shape += ( image.GetNumberOfComponentsPerPixel(), )
+      shape = ( image.GetNumberOfComponentsPerPixel(), ) + shape
 
     arr.shape = shape[::-1]
 
@@ -587,13 +587,13 @@ def GetImageFromArray( arr ):
     z = numpy.asarray( arr )
     id = _get_sitk_pixelid( z )
 
-    assert len( z.shape ) in ( 2, 3, 4 ), \
+    assert z.ndim in ( 2, 3, 4 ), \
       "Only arrays of 2, 3 or 4 dimensions are supported."
 
-    if len( z.shape ) in ( 2, 3 ):
+    if z.ndim in ( 2, 3 ):
       img = Image( z.shape[::-1], id )
-    elif len( z.shape == 4 ):
-      img = Image( (z.shape[3], z.shape[2], z.shape[1]) , id, numberOfComponents = z.shape[0] )
+    elif z.ndim == 4:
+      img = Image( z.shape[:-1] , id, numberOfComponents = z.shape[-1] )
 
     _SimpleITK._SetImageFromArray( z.tostring(), img )
 
