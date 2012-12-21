@@ -105,6 +105,8 @@ class TestNumpySimpleITKInterface(unittest.TestCase):
         self.assertEqual(nda[2,1].tolist(), [1,2])
         self.assertEqual(nda[0,:,0].tolist(), [0,1,2])
 
+        img2 = sitk.GetImageFromArray( nda, isVector=True)
+        self.assertEqual( h, sitk.Hash(img2) )
 
         # check 3D
         img = sitk.PhysicalPointSource(sitk.sitkVectorFloat32, [3,4,5])
@@ -117,6 +119,11 @@ class TestNumpySimpleITKInterface(unittest.TestCase):
         self.assertEqual(nda[0,0,:,0].tolist(), [0,1,2])
         self.assertEqual(nda[0,:,1,1].tolist(), [0,1,2,3])
 
+
+        img2 = sitk.GetImageFromArray(nda)
+        self.assertEqual(img2.GetSize(), img.GetSize())
+        self.assertEqual(img2.GetNumberOfComponentsPerPixel(), img.GetNumberOfComponentsPerPixel())
+        self.assertEqual(h, sitk.Hash(img2))
 
 
     def test_legacy(self):
