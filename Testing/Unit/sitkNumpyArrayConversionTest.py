@@ -88,6 +88,43 @@ class TestNumpySimpleITKInterface(unittest.TestCase):
 
         self.assertEqual( h, sitk.Hash( img ))
 
+    def test_vector_image_to_numpy(self):
+        """Test converting back and forth between numpy and SimpleITK
+        images were the SimpleITK image has multiple componets and
+        stored as a VectorImage."""
+
+
+        # Check 2D
+        img = sitk.PhysicalPointSource(sitk.sitkVectorFloat32, [3,4])
+        h = sitk.Hash( img )
+
+        nda = sitk.GetArrayFromImage(img)
+
+        self.assertEqual(nda.shape, (4,3,2))
+        self.assertEqual(nda[0,0].tolist(), [0,0])
+        self.assertEqual(nda[2,1].tolist(), [1,2])
+        self.assertEqual(nda[0,:,0].tolist(), [0,1,2])
+
+        img2 = sitk.GetImageFromArray( nda, isVector=True)
+        self.assertEqual( h, sitk.Hash(img2) )
+
+        # check 3D
+        img = sitk.PhysicalPointSource(sitk.sitkVectorFloat32, [3,4,5])
+        h = sitk.Hash( img )
+
+        nda = sitk.GetArrayFromImage(img)
+
+        self.assertEqual(nda.shape, (5,4,3,3))
+        self.assertEqual(nda[0,0,0].tolist(), [0,0,0])
+        self.assertEqual(nda[0,0,:,0].tolist(), [0,1,2])
+        self.assertEqual(nda[0,:,1,1].tolist(), [0,1,2,3])
+
+
+        img2 = sitk.GetImageFromArray(nda)
+        self.assertEqual(img2.GetSize(), img.GetSize())
+        self.assertEqual(img2.GetNumberOfComponentsPerPixel(), img.GetNumberOfComponentsPerPixel())
+        self.assertEqual(h, sitk.Hash(img2))
+
 
     def test_legacy(self):
       """Test SimpleITK Image to numpy array."""

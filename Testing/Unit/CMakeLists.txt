@@ -553,7 +553,7 @@ if ( WRAP_PYTHON )
 
   # Numpy test.
   add_python_test( Test.Numpy
-    "${SimpleITK_SOURCE_DIR}/Testing/Unit/NumpyArrayConversionTest.py"
+    "${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkNumpyArrayConversionTest.py"
   )
 
 
