@@ -58,8 +58,6 @@ ExternalProject_Add(${proj}
   -DITK_WRAP_rgb_unsigned_char:BOOL=ON
   -DITK_WRAP_rgb_unsigned_short:BOOL=ON
   -DITK_WRAP_PYTHON:BOOL=${ITK_WRAPPING}
-  ${ITK_PYTHON_ARGS}
-  ${FFTW_FLAGS}
   BUILD_COMMAND ${BUILD_COMMAND_STRING}
   DEPENDS
   ${ITK_DEPENDENCIES}
