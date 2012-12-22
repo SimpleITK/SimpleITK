@@ -8,6 +8,7 @@
   "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
   "filter_type" : "itk::ResampleImageFilter<InputImageType, OutputImageType, double>",
   "include_files" : [
+    "sitkCreateInterpolator.hxx",
     "sitkDirectionConvert.hxx",
     "sitkTransform.h"
   ],
@@ -22,6 +23,17 @@
       "detaileddescriptionSet" : "Set the coordinate transformation. Set the coordinate transform to use for resampling. Note that this must be in physical coordinates and it is the output-to-input transform, NOT the input-to-output transform that you might naively expect. By default the filter uses an Identity transform. You must provide a different transform here, before attempting to run the filter, if you do not want to use the default Identity transform.\n",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : "Get a pointer to the coordinate transform.\n"
+    },
+    {
+      "name" : "Interpolator",
+      "type" : "InterpolatorEnum",
+      "default" : "itk::simple::sitkLinear",
+      "doc" : "",
+      "custom_itk_cast" : "filter->SetInterpolator( CreateInterpolator( image1.GetPointer(), m_Interpolator ) );",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the interpolator function. The default is LinearInterpolateImageFunction<InputImageType, TInterpolatorPrecisionType>. Some other options are NearestNeighborInterpolateImageFunction(useful for binary masks and other images with a small number of possible pixel values), and BSplineInterpolateImageFunction(which provides a higher order of interpolation).\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get a pointer to the interpolator function.\n"
     },
     {
       "name" : "Size",
