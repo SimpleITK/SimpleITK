@@ -1,0 +1,56 @@
+{
+  "name" : "ScalarToRGBColormapImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "public_declarations" : "    typedef enum { Red, Green, Blue, Grey, Hot, Cool, Spring, Summer, Autumn, Winter, Copper, Jet, HSV, OverUnder } ColormapType;",
+  "output_image_type" : "itk::VectorImage< unsigned char, InputImageType::ImageDimension>",
+  "members" : [
+    {
+      "name" : "Colormap",
+      "type" : "ScalarToRGBColormapImageFilter::ColormapType",
+      "default" : "itk::simple::ScalarToRGBColormapImageFilter::Grey",
+      "custom_itk_cast" : "filter->SetColormap( typename FilterType::ColormapEnumType( int( this->m_Colormap) ) );",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the colormap object.\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "Simply run with default settings",
+      "settings" : [],
+      "md5hash" : "e8c3b4bd5c14125f23899d57c6d38381",
+      "inputs" : [
+        "Input/2th_cthead1.mha"
+      ]
+    },
+    {
+      "tag" : "Hot",
+      "description" : "use hot color map",
+      "settings" : [
+        {
+          "parameter" : "Colormap",
+          "value" : "itk::simple::${name}::Hot",
+          "lua_value" : "SimpleITK.${name}_Hot",
+          "python_value" : "SimpleITK.${name}.Hot",
+          "ruby_value" : "Simpleitk::${name}::Hot",
+          "java_value" : "${name}.ColormapType.Hot",
+          "tcl_value" : "$$${name}_Hot",
+          "csharp_value" : "itk.simple.${name}.ColormapType.Hot",
+          "R_value" : "'Hot'"
+        }
+      ],
+      "md5hash" : "f9cc87e42c0d4f6f4222b6dab1dd5d7c",
+      "inputs" : [
+        "Input/Ramp-Up-Short.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "Implements pixel-wise intensity->rgb mapping operation on one image.\n",
+  "detaileddescription" : "This class is parameterized over the type of the input image and the type of the output image.\nThe input image's scalar pixel values are mapped into a color map. The color map is specified by passing the SetColormap function one of the predefined maps. The following selects the \"Hot\" colormap:RGBFilterType::PointercolormapImageFilter= RGBFilterType::New();colormapImageFilter->SetColormap(RGBFilterType::Hot);\nYou can also specify a custom color map. This is done by creating a CustomColormapFunction, and then creating lists of values for the red, green, and blue channel. An example of setting the red channel of a colormap with only 2 colors is given below. The blue and green channels should be specified in the same manner.\n//Createthecustomcolormaptypedef itk::Function::CustomColormapFunction<RealImageType::PixelType,RGBImageType::PixelType> ColormapType; ColormapType::Pointercolormap= ColormapType::New();//SetuptheredchannelofthecolormapColormapType::ChannelTyperedChannel;redChannel.push_back(0);redChannel.push_back(255);colormap->SetRedChannel(channel);\nThe range of values present in the input image is the range that is mapped to the entire range of colors.\nThis code was contributed in the Insight Journal paper: \"Meeting Andy Warhol Somewhere Over the Rainbow: RGB Colormapping and ITK\" by Tustison N., Zhang H., Lehmann G., Yushkevich P., Gee J.http://hdl.handle.net/1926/1452http://www.insight-journal.org/browse/publication/285\n\\see BinaryFunctionImageFilter TernaryFunctionImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Apply a color map to an image\n\n"
+}

@@ -1,0 +1,81 @@
+{
+  "name" : "DerivativeImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "RealPixelIDTypeList",
+  "vector_pixel_types_by_component" : "RealVectorPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "Direction",
+      "type" : "unsigned int",
+      "default" : "0u",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "End concept checking Standard get/set macros for filter parameters.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "End concept checking Standard get/set macros for filter parameters.\n"
+    },
+    {
+      "name" : "Order",
+      "type" : "unsigned int",
+      "default" : "1u",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "End concept checking Standard get/set macros for filter parameters.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "End concept checking Standard get/set macros for filter parameters.\n"
+    },
+    {
+      "name" : "UseImageSpacing",
+      "type" : "bool",
+      "default" : "true",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Simply run with default settings",
+      "settings" : [],
+      "tolerance" : 0.0001,
+      "inputs" : [
+        "Input/Ramp-Zero-One-Float.nrrd"
+      ]
+    },
+    {
+      "tag" : "zsecondorder",
+      "description" : "Run with direction and order set",
+      "tolerance" : 0.0001,
+      "settings" : [
+        {
+          "parameter" : "Direction",
+          "value" : "2u",
+          "lua_value" : "2",
+          "python_value" : "2",
+          "ruby_value" : "2",
+          "java_value" : "2",
+          "tcl_value" : "2",
+          "R_value" : "2"
+        },
+        {
+          "parameter" : "Order",
+          "value" : "2u",
+          "lua_value" : "2",
+          "python_value" : "2",
+          "ruby_value" : "2",
+          "java_value" : "2",
+          "tcl_value" : "2",
+          "R_value" : "2"
+        }
+      ],
+      "inputs" : [
+        "Input/Ramp-Zero-One-Float.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "Computes the directional derivative of an image. The directional derivative at each pixel location is computed by convolution with a derivative operator of user-specified order.\n",
+  "detaileddescription" : "SetOrder specifies the order of the derivative.\nSetDirection specifies the direction of the derivative with respect to the coordinate axes of the image.\n\\see  Image\n\\see \n\\see  Neighborhood\n\\see \n\\see  NeighborhoodOperator\n\\see \n\\see  NeighborhoodIterator\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Compute the derivative of an image in a particular direction\n\n"
+}

@@ -1,0 +1,85 @@
+{
+  "name" : "FastMarchingImageFilter",
+  "itk_name" : "FastMarchingImageFilterBase",
+  "include_files" : [
+    "itkFastMarchingThresholdStoppingCriterion.h"
+  ],
+  "template_code_filename" : "FastMarchingImageFilter",
+  "number_of_inputs" : 1,
+  "template_test_filename" : "ImageFilter",
+  "output_pixel_type" : "float",
+  "doc" : "Docs",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "public_declarations" : "typedef  enum { Nothing, NoHandles, Strict } TopologyCheckType;",
+  "members" : [
+    {
+      "name" : "NormalizationFactor",
+      "type" : "double",
+      "default" : "1.0",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the Normalization Factor for the Speed Image. The values in the Speed Imageis divided by this factor. This allows the use of images with integer pixel types to represent the speed.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the Normalization Factor for the Speed Image. The values in the Speed Imageis divided by this factor. This allows the use of images with integer pixel types to represent the speed.\n"
+    },
+    {
+      "name" : "StoppingValue",
+      "type" : "double",
+      "default" : "100.0",
+      "custom_itk_cast" : "typedef itk::FastMarchingThresholdStoppingCriterion< InputImageType, OutputImageType > CriterionType;\ntypename CriterionType::Pointer criterion = CriterionType::New();\ncriterion->SetThreshold( m_StoppingValue );\nfilter->SetStoppingCriterion( criterion );",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the Fast Marching algorithm Stopping Value. The Fast Marching algorithm is terminated when the value of the smallest trial point is greater than the stopping value.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the Fast Marching algorithm Stopping Value.\n"
+    },
+    {
+      "name" : "TopologyCheck",
+      "type" : "itk::simple::FastMarchingImageFilter::TopologyCheckType",
+      "default" : "itk::simple::FastMarchingImageFilter::Nothing",
+      "doc" : "",
+      "custom_itk_cast" : "filter->SetTopologyCheck( static_cast<typename FilterType::TopologyCheckType>( this->GetTopologyCheck() ) );"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "Default parameter settings",
+      "md5hash" : "b4b628f078fdfd7c14c55b1aed24e72a",
+      "settings" : [
+        {
+          "parameter" : "TrialPoints",
+          "dim" : 2,
+          "value" : [
+            "{70,70}",
+            "{200,180}"
+          ],
+          "tcl_value" : [
+            "70 70",
+            "200 180"
+          ],
+          "python_value" : [
+            "[70,70]",
+            "[200,180]"
+          ],
+          "ruby_value" : [
+            "[70,70]",
+            "[200,180]"
+          ],
+          "R_value" : "list(c(70,70), c(200,180))"
+        },
+        {
+          "parameter" : "NormalizationFactor",
+          "value" : 255.0
+        },
+        {
+          "parameter" : "StoppingValue",
+          "value" : 50.0
+        }
+      ],
+      "inputs" : [
+        "Input/cthead1-Float.mha"
+      ]
+    }
+  ],
+  "briefdescription" : "Solve an Eikonal equation using Fast Marching.\n",
+  "detaileddescription" : "Fast marching solves an Eikonal equation where the speed is always non-negative and depends on the position only. Starting from an initial position on the front, fast marching systematically moves the front forward one grid point at a time.\nUpdates are preformed using an entropy satisfy scheme where only \"upwind\" neighborhoods are used. This implementation of Fast Marching uses a std::priority_queue to locate the next proper grid position to update.\nFast Marching sweeps through N grid points in (N log N) steps to obtain the arrival time value as the front propagates through the grid.\nImplementation of this class is based on Chapter 8 of \"Level Set Methods and Fast Marching Methods\", J.A. Sethian, Cambridge Press, Second edition, 1999.\nThis class is templated over the level set image type and the speed image type. The initial front is specified by two containers: one containing the known points and one containing the trial points. Alive points are those that are already part of the object, and trial points are considered for inclusion. In order for the filter to evolve, at least some trial points must be specified. These can for instance be specified as the layer of pixels around the alive points.\nThe speed function can be specified as a speed image or a speed constant. The speed image is set using the method SetInput(). If the speed image is NULL, a constant speed function is used and is specified using method the SetSpeedConstant().\nIf the speed function is constant and of value one, fast marching results in an approximate distance function from the initial alive points. FastMarchingImageFilteris used in the ReinitializeLevelSetImageFilterobject to create a signed distance function from the zero level set.\nThe algorithm can be terminated early by setting an appropriate stopping value. The algorithm terminates when the current arrival time being processed is greater than the stopping value.\nThere are two ways to specify the output image information ( LargestPossibleRegion, Spacing, Origin): (a) it is copied directly from the input speed image or (b) it is specified by the user. Default values are used if the user does not specify all the information.\nThe output information is computed as follows. If the speed image is NULL or if the OverrideOutputInformation is set to true, the output information is set from user specified parameters. These parameters can be specified using methods SetOutputRegion(), SetOutputSpacing(), SetOutputDirection(), and SetOutputOrigin(). Else if the speed image is not NULL, the output information is copied from the input speed image.\nPossible Improvements: In the current implemenation, std::priority_queue only allows taking nodes out from the front and putting nodes in from the back. To update a value already on the heap, a new node is added to the heap. The defunct old node is left on the heap. When it is removed from the top, it will be recognized as invalid and not used. Future implementations can implement the heap in a different way allowing the values to be updated. This will generally require some sift-up and sift-down functions and an image of back-pointers going from the image to heap in order to locate the node which is to be updated.\n\\see  LevelSetTypeDefault\n\n"
+}

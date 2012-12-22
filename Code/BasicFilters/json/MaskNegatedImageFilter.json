@@ -1,0 +1,23 @@
+{
+  "name" : "MaskNegatedImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 2,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [],
+  "tests" : [
+    {
+      "tag" : "2d",
+      "description" : "2d",
+      "settings" : [],
+      "md5hash" : "164809eb3ac508dd12c91c82ad8ee20c",
+      "inputs" : [
+        "Input/STAPLE1.png",
+        "Input/STAPLE2.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Mask an image with the negative of a mask.\n",
+  "detaileddescription" : "This class is templated over the types of the input image type, the mask image type and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\nThe pixel type of the input 2 image must have a valid definition of the operator != with zero. This condition is required because internally this filter will perform the operation\nifpixel_from_mask_image!=0pixel_output_image=output_valueelsepixel_output_image=pixel_input_image\nThe pixel from the input 1 is cast to the pixel type of the output image.\nNote that the input and the mask images must be of the same size.\n\\warning Any pixel value other than 0 will not be masked out.\n\\see  MaskImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Apply the inverse of a mask to an image\n\n"
+}

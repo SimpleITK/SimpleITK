@@ -1,4 +1,3 @@
-
 # remove me
 include(${ITK_USE_FILE})
 
@@ -15,7 +14,7 @@ if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA OR WRAP_CSHARP OR WRAP_TCL OR WRAP_R O
   # make a manual list of dependencies for the Swig.i files
   list( APPEND SWIG_EXTRA_DEPS "${SimpleITK_BINARY_DIR}/Code/BasicFilters/include/SimpleITKBasicFiltersGeneratedHeaders.i"
     "${SimpleITK_BINARY_DIR}/Code/BasicFilters/include/SimpleITKBasicFiltersGeneratedHeaders.h"
-    BasicFiltersSourceCode
+    ${SimpleITKBasicFiltersGeneratedHeaders}
      )
 
   # check if uint64_t is the same as unsigned long
@@ -127,7 +126,7 @@ if ( WRAP_PYTHON )
 
   if ( BUILD_TESTING )
 
-    set( PythonVirtualenvHome ${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVirtualenv )
+    set( PythonVirtualenvHome "${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVirtualenv" )
 
     set( ORIGINAL_PYTHON_EXECUTABLE ${PYTHON_EXECUTABLE} )
 
@@ -140,15 +139,16 @@ if ( WRAP_PYTHON )
       set( PYTHON_EXECUTABLE "${PythonVirtualenvHome}/bin/python" )
     endif()
 
+    # configure a scripts which creates the virtualenv and installs numpy
+    configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/PythonVirtualEnvInstall.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/PythonVirtualEnvInstall.cmake"
+    @ONLY )
+
+    # virtualenv creation
     add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_TARGET_NAME}
       POST_BUILD
-      COMMAND ${ORIGINAL_PYTHON_EXECUTABLE}
-        ${SimpleITK_SOURCE_DIR}/Utilities/virtualenv/virtualenv.py
-        --python=${ORIGINAL_PYTHON_EXECUTABLE}
-        --distribute
-        --clear
-      ${PythonVirtualenvHome}
-      COMMAND ${CMAKE_COMMAND} -E touch "${CMAKE_CURRENT_BINARY_DIR}/__init__.py"
+      COMMAND ${CMAKE_COMMAND} -P "${CMAKE_CURRENT_BINARY_DIR}/PythonVirtualEnvInstall.cmake"
       COMMAND ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/setup.py" install
       COMMENT "Installing python module to the virtualenv" )
 

@@ -23,15 +23,6 @@ if(ITK_FOUND)
   set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${ITK_REQUIRED_LINK_FLAGS}")
   set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${ITK_REQUIRED_LINK_FLAGS}")
 
-  # While CMake libraries nicely carry along the link library paths,
-  # this is not true for system or non-cmake libraries. So, it must be
-  # manually included.
-
-  # Add FFTW library directories
-  if (ITK_USE_FFTWF OR ITK_USE_FFTWD)
-    # TODO: this really should be added to the the ITKConfig.cmake
-    link_directories("${ITK_FFTW_LIBDIR}")
-  endif()
   link_directories( "${ITK_LIBRARY_DIRS}")
 
 
@@ -59,7 +50,7 @@ set ( SimpleITK_INCLUDE_DIRS
       ${CMAKE_SOURCE_DIR}/Code/BasicFilters/include
       ${CMAKE_SOURCE_DIR}/Code/IO/include
       ${CMAKE_BINARY_DIR}/Code/BasicFilters/include
-      ${CMAKE_BINARY_DIR} #this is only needed for sitkConfigure.h
+      ${CMAKE_BINARY_DIR}/Code/Common/include
       )
 
 include_directories( ${SimpleITK_INCLUDE_DIRS} )
@@ -138,10 +129,6 @@ if ( NOT SITK_HAS_STDINT_H )
     "Please see the FAQ for details and to see if your compiler is supported.\n"
     "http://www.itk.org/Wiki/ITK_Release_4/SimpleITK/FAQ#Do_I_need_to_download_an_optional_package_for_C99.3F")
 endif ( NOT SITK_HAS_STDINT_H )
-
-configure_file( ${SimpleITK_SOURCE_DIR}/sitkConfigure.h.in
-  ${SimpleITK_BINARY_DIR}/sitkConfigure.h )
-
 
 
 #-----------------------------------------------------------------------------
@@ -397,7 +384,6 @@ file( GLOB __files
   )
 
 set(__files ${__files}
-  ${CMAKE_BINARY_DIR}/sitkConfigure.h
   ${SimpleITKBasicFiltersGeneratedHeader}
   )
 

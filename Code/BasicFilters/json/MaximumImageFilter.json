@@ -1,0 +1,24 @@
+{
+  "name" : "MaximumImageFilter",
+  "template_code_filename" : "BinaryFunctorFilter",
+  "template_test_filename" : "ImageFilter",
+  "constant_type" : "double",
+  "number_of_inputs" : 2,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Simply run with default settings",
+      "settings" : [],
+      "md5hash" : "00c5a06c3a1b3be415732bd5073450ef",
+      "inputs" : [
+        "Input/Ramp-Zero-One-Float.nrrd",
+        "Input/Ramp-One-Zero-Float.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "Implements a pixel-wise operator Max(a,b) between two images.\n",
+  "detaileddescription" : "The pixel values of the output image are the maximum between the corresponding pixels of the two input images.\nThis class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Pixel wise compare two input images and set the output pixel to their max\n\n"
+}

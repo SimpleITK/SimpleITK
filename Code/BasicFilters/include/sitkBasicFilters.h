@@ -19,6 +19,7 @@
 #define __sitkBasicFilters_h
 
 #include "sitkMacro.h"
+#include "sitkInterpolator.h"
 
 // todo this should be moved to a more local place
 #include "sitkTransform.h"

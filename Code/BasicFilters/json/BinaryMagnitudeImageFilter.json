@@ -1,0 +1,35 @@
+{
+  "name" : "BinaryMagnitudeImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 2,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [],
+  "tests" : [
+    {
+      "tag" : "2d",
+      "description" : "2D",
+      "settings" : [],
+      "md5hash" : "ac40268d90c25dd631b54024ae84bffe",
+      "inputs" : [
+        "Input/STAPLE1.png",
+        "Input/STAPLE2.png"
+      ]
+    },
+    {
+      "tag" : "3d",
+      "description" : "3D",
+      "settings" : [],
+      "tolerance" : "1e-8",
+      "inputA_cast" : "sitkUInt32",
+      "inputB_cast" : "sitkUInt32",
+      "inputs" : [
+        "Input/RA-Short.nrrd",
+        "Input/RA-Short.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "Computes the square root of the sum of squares of corresponding input pixels.\n",
+  "detaileddescription" : "This filter is templated over the types of the two input images and the type of the output image.\nNumeric conversions (castings) are done by the C++ defaults.\nThe filter walks over all of the pixels in the two input images, and for each pixel does the following:\n\n\\li cast the input 1 pixel value to double \n\\li cast the input 2 pixel value to double \n\\li compute the sum of squares of the two pixel values\n\\li compute the square root of the sum\n\\li cast the double value resulting from vcl_sqrt() to the pixel type of the output image\n\\li store the cast value into the output image.\nThe filter expects all images to have the same dimension (e.g. all 2D, or all 3D, or all ND)\n"
+}

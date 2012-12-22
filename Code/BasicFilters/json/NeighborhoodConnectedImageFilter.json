@@ -1,0 +1,115 @@
+{
+  "name" : "NeighborhoodConnectedImageFilter",
+  "template_code_filename" : "RegionGrowingImageFilter",
+  "template_type" : "RegionGrowing",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "Lower",
+      "type" : "double",
+      "default" : 0,
+      "pixeltype" : "Input",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the lower threshold. The default is 0.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the lower threshold. The default is 0.\n"
+    },
+    {
+      "name" : "Upper",
+      "type" : "double",
+      "default" : 1,
+      "pixeltype" : "Input",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the upper threshold. The default is the largest possible value for the InputPixelType.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the upper threshold. The default is the largest possible value for the InputPixelType.\n"
+    },
+    {
+      "name" : "Radius",
+      "type" : "std::vector<unsigned int>",
+      "default" : "std::vector<unsigned int>(3, 1)",
+      "doc" : "Radius of the neighborhood used to compute the median",
+      "dim_vec" : 1,
+      "itk_type" : "typename InputImageType::SizeType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the radius of the neighborhood used for a mask.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the radius of the neighborhood used to compute the median\n"
+    },
+    {
+      "name" : "ReplaceValue",
+      "type" : "double",
+      "default" : 1,
+      "pixeltype" : "Output",
+      "doc" : "Pixels that lie within Lower and Upper (inclusive)\n       will be replaced with this value. The default is 1.",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get value to replace thresholded pixels. Pixels that lie * within Lower and Upper (inclusive) will be replaced with this value. The default is 1.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get value to replace thresholded pixels. Pixels that lie * within Lower and Upper (inclusive) will be replaced with this value. The default is 1.\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "2d",
+      "description" : "Run with 2d sample settings",
+      "md5hash" : "52670ac422db7416c4020c8fbd58c254",
+      "settings" : [
+        {
+          "parameter" : "SeedList",
+          "dim" : 2,
+          "value" : [
+            "{100,100}",
+            "{95,85}"
+          ],
+          "tcl_value" : [
+            "100 100",
+            "95 85"
+          ],
+          "python_value" : [
+            "[100,100]",
+            "[95,85]"
+          ],
+          "ruby_value" : [
+            "[100,100]",
+            "[95,85]"
+          ],
+          "R_value" : [
+            "c(100,100)",
+            "c(95,85)"
+          ]
+        },
+        {
+          "parameter" : "Upper",
+          "value" : 255
+        },
+        {
+          "parameter" : "Lower",
+          "value" : 150
+        },
+        {
+          "parameter" : "ReplaceValue",
+          "value" : 255
+        },
+        {
+          "parameter" : "Radius",
+          "dim_vec" : 1,
+          "type" : "unsigned int",
+          "value" : "{5,5}",
+          "java_value" : "{5,5}",
+          "tcl_value" : "[list 5 5]",
+          "python_value" : "[5,5]",
+          "lua_value" : "{5,5}",
+          "ruby_value" : "[5,5]",
+          "R_value" : "c(5,5)"
+        }
+      ],
+      "inputs" : [
+        "Input/STAPLE1.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Label pixels that are connected to a seed and lie within a neighborhood.\n",
+  "detaileddescription" : " NeighborhoodConnectedImageFilterlabels pixels with ReplaceValue that are connected to an initial Seed AND whose neighbors all lie within a Lower and Upper threshold range.\n"
+}

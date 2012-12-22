@@ -1,0 +1,23 @@
+{
+  "name" : "VectorMagnitudeImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "VectorPixelIDTypeList",
+  "filter_type" : "itk::VectorMagnitudeImageFilter< InputImageType, itk::Image<typename itk::NumericTraits< typename InputImageType::PixelType >::ValueType, InputImageType::ImageDimension> >",
+  "members" : [],
+  "tests" : [
+    {
+      "tag" : "3d",
+      "description" : "3D",
+      "settings" : [],
+      "tolerance" : "0.0001",
+      "inputs" : [
+        "Input/RA-Gradient.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "Take an image of vectors as input and produce an image with the magnitude of those vectors.\n",
+  "detaileddescription" : "The filter expects the input image pixel type to be a vector and the output image pixel type to be a scalar.\nThis filter assumes that the PixelType of the input image is a VectorType that provides a GetNorm() method.\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Compute the magnitude of each pixel in a vector image to produce a magnitude image\n\n"
+}

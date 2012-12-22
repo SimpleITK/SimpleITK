@@ -91,6 +91,8 @@ namespace std
 
   // Support for LabelStatisticsImageFilter/MeasurementMap
   %template(BasicMeasurementMap) map<std::string, double>;
+
+  %template(DoubleDoubleMap) map<double, double>;
 }
 
 
@@ -111,6 +113,7 @@ namespace std
 %include "sitkImage.h"
 %include "sitkTransform.h"
 %include "sitkShow.h"
+%include "sitkInterpolator.h"
 %include "sitkImageFilter.h"
 %include "sitkImageFileWriter.h"
 %include "sitkImageSeriesReader.h"

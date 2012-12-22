@@ -1,0 +1,64 @@
+{
+  "name" : "RegionalMaximaImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "pixel_types" : "ScalarPixelIDTypeList",
+  "output_pixel_type" : "uint32_t",
+  "members" : [
+    {
+      "name" : "BackgroundValue",
+      "type" : "double",
+      "default" : "0.0",
+      "pixeltype" : "Output",
+      "doc" : "",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin().\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin().\n"
+    },
+    {
+      "name" : "ForegroundValue",
+      "type" : "double",
+      "default" : "1.0",
+      "pixeltype" : "Output",
+      "doc" : "",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the value in the output image to consider as \"foreground\". Defaults to maximum value of PixelType.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the value in the output image to consider as \"foreground\". Defaults to maximum value of PixelType.\n"
+    },
+    {
+      "name" : "FullyConnected",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : "",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.\n"
+    },
+    {
+      "name" : "FlatIsMaxima",
+      "type" : "bool",
+      "default" : "true",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get wether a flat image must be considered as a maxima or not. Defaults to true.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get wether a flat image must be considered as a maxima or not. Defaults to true.\n"
+    }
+  ],
+  "custom_methods" : [],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Simply run with default settings",
+      "settings" : [],
+      "md5hash" : "6839f3d9dc5b95e9513d723a3b7430f2",
+      "inputs" : [
+        "Input/cthead1.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Produce a binary image where foreground is the regional maxima of the input image.\n",
+  "detaileddescription" : "Regional maxima are flat zones surrounded by pixels of lower value.\nIf the input image is constant, the entire image can be considered as a maxima or not. The desired behavior can be selected with the SetFlatIsMaxima()method.\n\\author Gaetan Lehmann\nThis class was contributed to the Insight Journal by author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France. The paper can be found athttp://hdl.handle.net/1926/153\n\\see  ValuedRegionalMaximaImageFilter\n\\see \n\\see  HConvexImageFilter\n\\see \n\\see  RegionalMinimaImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li RegionalMaximaImageFilter\n\n"
+}

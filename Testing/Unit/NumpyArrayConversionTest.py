@@ -15,7 +15,7 @@
 #   limitations under the License.
 #
 #==========================================================================*/
-
+from __future__ import print_function
 import sys
 import unittest
 
@@ -79,7 +79,7 @@ class TestNumpySimpleITKInterface(unittest.TestCase):
     def test_to_numpy_and_back(self):
         """Test converting an image to numpy and back"""
 
-        img = sitk.GaussianSource( sitk.sitkFloat32,  [100,100], inSigma=[10]*3, inMean = [50,50] )
+        img = sitk.GaussianSource( sitk.sitkFloat32,  [100,100], sigma=[10]*3, mean = [50,50] )
 
         h = sitk.Hash( img )
 

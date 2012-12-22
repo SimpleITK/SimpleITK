@@ -52,11 +52,11 @@ $(include ToStringReturn.cxx.in)
 //
 $(if members and #members > 0 then
 OUT = [[
-Image ${name}ImageFilter::Execute ( const std::vector<Image> &images$(include MemberParameters.in) )
+Image ${name}::Execute ( const std::vector<Image> &images$(include MemberParameters.in) )
 {
 $(foreach members
 $(if (not no_set_method) or (no_set_method == 0) then
-OUT = '  this->Set${name} ( in${name} );'
+OUT = '  this->Set${name} ( ${name:sub(1,1):lower() .. name:sub(2,-1)} );'
 end)
 )
   return this->Execute ( images );
@@ -64,7 +64,7 @@ end)
 ]]
 for inum=1,5 do
   OUT=OUT .. [[
-Image ${name}ImageFilter::Execute ( const Image& image1]]
+Image ${name}::Execute ( const Image& image1]]
 
   for jnum=2,inum do
     OUT=OUT .. ', const Image& image' .. jnum
@@ -82,7 +82,7 @@ Image ${name}ImageFilter::Execute ( const Image& image1]]
 
   OUT=OUT .. [[
   return this->Execute( images$(for i = 1,#members do
-                        OUT= OUT .. ', in' .. members[i].name
+                        OUT= OUT .. ', ' .. members[i].name:sub(1,1):lower() .. members[i].name:sub(2,-1)
                           end) );
 }
 
@@ -93,7 +93,7 @@ Image ${name}ImageFilter::Execute ( const Image& image1]]
 //
 $(for inum=1,5 do
   OUT=OUT .. [[
-Image ${name}ImageFilter::Execute ( const Image& image1]]
+Image ${name}::Execute ( const Image& image1]]
 
   for jnum=2,inum do
     OUT=OUT .. ', const Image& image' .. jnum
@@ -115,7 +115,7 @@ Image ${name}ImageFilter::Execute ( const Image& image1]]
 
 ]] end)
 
-Image ${name}ImageFilter::Execute ( const std::vector<Image> &images )
+Image ${name}::Execute ( const std::vector<Image> &images )
 {
   if ( images.empty() )
     {
@@ -130,7 +130,7 @@ Image ${name}ImageFilter::Execute ( const std::vector<Image> &images )
     if ( type != i->GetPixelIDValue() ||
          dimension != i->GetDimension() )
       {
-      sitkExceptionMacro ( "An image for ${name}ImageFilter doesnt match type or dimension!" );
+      sitkExceptionMacro ( "An image for ${name} doesnt match type or dimension!" );
       }
     }
 
@@ -143,7 +143,7 @@ Image ${name}ImageFilter::Execute ( const std::vector<Image> &images )
 // ExecuteInternal
 //
 template <class TImageType>
-Image ${name}ImageFilter::ExecuteInternal ( const std::vector<Image> &images )
+Image ${name}::ExecuteInternal ( const std::vector<Image> &images )
 {
 $(include ExecuteInternalTypedefs.cxx.in)
 
@@ -166,16 +166,16 @@ $(include ExecuteInternalUpdateAndReturn.cxx.in)
 //
 // Function to run the Execute method of this filter
 //
-Image ${name} ( const std::vector<Image> & images$(include MemberParameters.in) )
+Image ${name:gsub("ImageFilter$", "")} ( const std::vector<Image> & images$(include MemberParameters.in) )
 {
-  ${name}ImageFilter filter;
+  ${name} filter;
   return filter.Execute ( images$(for i = 1,#members do
-                          OUT= OUT .. ', in' .. members[i].name
+                          OUT= OUT .. ', ' .. members[i].name:sub(1,1):lower() .. members[i].name:sub(2,-1)
                           end) );
 }
 $(for inum=1,5 do
   OUT=OUT .. [[
-Image ${name} ( const Image& image1]]
+Image ${name:gsub("ImageFilter$", "")} ( const Image& image1]]
   for jnum=2,inum do
     OUT=OUT .. ', const Image& image' .. jnum
   end
@@ -184,7 +184,7 @@ Image ${name} ( const Image& image1]]
 ]]
 
   OUT=OUT .. [[
-  ${name}ImageFilter filter;
+  ${name} filter;
   return filter.Execute ( image1]]
 
   for jnum=2,inum do
@@ -192,7 +192,7 @@ Image ${name} ( const Image& image1]]
   end
 
   for i = 1,#members do
-    OUT= OUT .. ', in' .. members[i].name
+    OUT= OUT .. ', ' .. members[i].name:sub(1,1):lower() .. members[i].name:sub(2,-1)
   end
 
   OUT=OUT..[[ );

@@ -9,7 +9,9 @@ library(SimpleITK)
 testimA <- ReadImage(system.file("data/cthead1-Float.mha", package="SimpleITK"))
 testimB <- ReadImage(system.file("data/cthead1-Float.mha", package="SimpleITK"))
 
+# need to cast to signed types to compare with R arithmetic
 testimInt <- ReadImage(system.file("data/cthead1.png", package="SimpleITK"))
+testimInt <- Cast(testimInt, RsitkInt16())
 
 testArrayA <- as.array(testimA)
 testArrayB <- as.array(testimB)
@@ -259,8 +261,11 @@ compareTest <- function()
   {
     i0 <- testimInt
     i1 <- 113
+    i2 <- i0 + 1
+
     a0 <- as.array(testimInt)
     a1 <- 113
+    a2 <- a0 + 1
 
     r1 <- i0 == i1
     r2 <- a0 == a1
@@ -268,6 +273,15 @@ compareTest <- function()
     if (!compareBinImArray(r1, r2))
       {
         cat("failure in ==\n")
+        quit(save="no", status=1)
+      }
+
+    r1 <- i0 != i1
+    r2 <- a0 != a1
+
+    if (!compareBinImArray(r1, r2))
+      {
+        cat("failure in !=\n")
         quit(save="no", status=1)
       }
 
@@ -315,6 +329,15 @@ compareTest <- function()
         quit(save="no", status=1)
       }
 
+    r1 <- i1 != i0
+    r2 <- a1 != a0
+
+    if (!compareBinImArray(r1, r2))
+      {
+        cat("failure in !=\n")
+        quit(save="no", status=1)
+      }
+
     r1 <- i1 <= i0
     r2 <- a1 <= a0
 
@@ -350,6 +373,59 @@ compareTest <- function()
         quit(save="no", status=1)
       }
     ## will need to be extended to support image comparison ops.
+###################################
+    r1 <- i0 == i2
+    r2 <- a0 == a2
+
+    if (!compareBinImArray(r1, r2))
+      {
+        cat("failure in ==\n")
+        quit(save="no", status=1)
+      }
+
+    r1 <- i0 != i2
+    r2 <- a0 != a2
+
+    if (!compareBinImArray(r1, r2))
+      {
+        cat("failure in !=\n")
+        quit(save="no", status=1)
+      }
+
+    r1 <- i0 <= i2
+    r2 <- a0 <= a2
+
+    if (!compareBinImArray(r1, r2))
+      {
+        cat("failure in <=\n")
+        quit(save="no", status=1)
+      }
+
+    r1 <- i0 >= i2
+    r2 <- a0 >= a2
+
+    if (!compareBinImArray(r1, r2))
+      {
+        cat("failure in >=\n")
+        quit(save="no", status=1)
+      }
+    r1 <- i0 < i2
+    r2 <- a0 < a2
+
+    if (!compareBinImArray(r1, r2))
+      {
+        cat("failure in <\n")
+        quit(save="no", status=1)
+      }
+
+    r1 <- i0 > i2
+    r2 <- a0 > a2
+
+    if (!compareBinImArray(r1, r2))
+      {
+        cat("failure in >\n")
+        quit(save="no", status=1)
+      }
 
   }
 

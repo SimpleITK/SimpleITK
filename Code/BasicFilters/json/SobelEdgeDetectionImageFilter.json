@@ -1,0 +1,22 @@
+{
+  "name" : "SobelEdgeDetectionImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Some global documentation",
+  "pixel_types" : "RealPixelIDTypeList",
+  "members" : [],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Simply run with default settings",
+      "settings" : [],
+      "tolerance" : 0.01,
+      "inputs" : [
+        "Input/RA-Float.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "A 2D or 3D edge detection using the Sobel operator.\n",
+  "detaileddescription" : "This filter uses the Sobel operator to calculate the image gradient and then finds the magnitude of this gradient vector. The Sobel gradient magnitude (square-root sum of squares) is an indication of edge strength.\n\\see  ImageToImageFilter\n\\see \n\\see  SobelOperator\n\\see \n\\see  Neighborhood\n\\see \n\\see  NeighborhoodOperator\n\\see \n\\see  NeighborhoodIterator\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li SobelEdgeDetectionImageFilter\n\n"
+}

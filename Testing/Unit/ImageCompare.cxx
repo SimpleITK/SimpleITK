@@ -145,7 +145,7 @@ bool ImageCompare::compare ( const sitk::Image& image, std::string inTestCase, s
       // for complex number we multiply the image by it's complex
       // conjugate, this will produce only a real value result
       sitk::Image conj = sitk::RealAndImaginaryToComplex( sitk::ComplexToReal( diff ),
-                                                          sitk::MultiplyByConstant( sitk::ComplexToImaginary( diff ), -1 ) );
+                                                          sitk::Multiply( sitk::ComplexToImaginary( diff ), -1.0 ) );
       diffSquared = sitk::ComplexToReal( sitk::Multiply( diff, conj ) );
       }
     else if ( baseline.GetNumberOfComponentsPerPixel() > 1 )
@@ -153,14 +153,14 @@ bool ImageCompare::compare ( const sitk::Image& image, std::string inTestCase, s
       sitk::Image diff =  sitk::Subtract( sitk::Cast( centerSlice, sitk::sitkVectorFloat32 ), sitk::Cast( baseline, sitk::sitkVectorFloat32 ) );
 
       // for vector image just do a sum of the components
-      diffSquared  = sitk::PowToConstant( sitk::VectorIndexSelectionCast( diff, 0 ), 2 );
+      diffSquared  = sitk::Pow( sitk::VectorIndexSelectionCast( diff, 0 ), 2.0 );
       for ( unsigned int i = 1; i < diff.GetNumberOfComponentsPerPixel(); ++i )
         {
-        sitk::Image temp = sitk::PowToConstant( sitk::VectorIndexSelectionCast( diff, i ), 2 );
+        sitk::Image temp = sitk::Pow( sitk::VectorIndexSelectionCast( diff, i ), 2.0 );
         diffSquared = sitk::Add( temp, diffSquared );
         }
 
-      diffSquared = sitk::DivideByConstant( diffSquared, diff.GetNumberOfComponentsPerPixel() );
+      diffSquared = sitk::Divide( diffSquared, diff.GetNumberOfComponentsPerPixel() );
       }
     else
       {

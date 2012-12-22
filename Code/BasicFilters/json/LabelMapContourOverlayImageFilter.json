@@ -1,0 +1,90 @@
+{
+  "name" : "LabelMapContourOverlayImageFilter",
+  "template_code_filename" : "DualImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 2,
+  "doc" : "",
+  "pixel_types" : "LabelPixelIDTypeList",
+  "pixel_types2" : "BasicPixelIDTypeList",
+  "output_image_type" : "itk::VectorImage< typename InputImageType2::PixelType, InputImageType::ImageDimension >",
+  "filter_type" : "itk::LabelMapContourOverlayImageFilter<InputImageType, InputImageType2, OutputImageType>",
+  "custom_set_input" : "filter->SetInput( image1 ); filter->SetInput2( const_cast<InputImageType2*>( image2.GetPointer() ) );",
+  "public_declarations" : "typedef enum { PLAIN = 0, CONTOUR = 1, SLICE_CONTOUR = 2} Type;\n      typedef enum { HIGH_LABEL_ON_TOP = 0, LOW_LABEL_ON_TOP = 1 } PriorityType;",
+  "members" : [
+    {
+      "name" : "Opacity",
+      "type" : "double",
+      "default" : 0.5,
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the opacity of the colored label image. The value must be between 0 and 1\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the opacity of the colored label image. The value must be between 0 and 1\n"
+    },
+    {
+      "name" : "DilationRadius",
+      "type" : "std::vector<unsigned int>",
+      "default" : "std::vector<unsigned int>(3, 1)",
+      "dim_vec" : 1,
+      "itk_type" : "typename InputImageType::SizeType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the object dilation radius - 0 by default.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the object dilation radius - 0 by default.\n"
+    },
+    {
+      "name" : "ContourThickness",
+      "type" : "std::vector<unsigned int>",
+      "default" : "std::vector<unsigned int>(3, 1)",
+      "dim_vec" : 1,
+      "itk_type" : "typename InputImageType::SizeType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the contour thickness - 1 by default.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the contour thickness - 1 by default.\n"
+    },
+    {
+      "name" : "SliceDimension",
+      "type" : "unsigned int",
+      "default" : "0u",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the slice dimension - defaults to image dimension - 1.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the slice dimension - defaults to image dimension - 1.\n"
+    },
+    {
+      "name" : "ContourType",
+      "type" : "LabelMapContourOverlayImageFilter::Type",
+      "default" : "itk::simple::LabelMapContourOverlayImageFilter::CONTOUR",
+      "custom_itk_cast" : "filter->SetType( int( m_ContourType ) );",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the overlay type - CONTOUR is used by default.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the overlay type - CONTOUR is used by default.\n"
+    },
+    {
+      "name" : "Priority",
+      "type" : "LabelMapContourOverlayImageFilter::PriorityType",
+      "default" : "itk::simple::LabelMapContourOverlayImageFilter::HIGH_LABEL_ON_TOP",
+      "custom_itk_cast" : "filter->SetPriority( int( m_Priority ) );",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the object priority - HIGH_LABEL_ON_TOP by default.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the object priority - HIGH_LABEL_ON_TOP by default.\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "Simply run with default settings",
+      "inputA_cast" : "sitkLabelUInt8",
+      "md5hash" : "5d547351bbab8db03fc92e4e860afc8f",
+      "settings" : [],
+      "inputs" : [
+        "Input/2th_cthead1.mha",
+        "Input/cthead1.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Apply a colormap to the contours (outlines) of each object in a label map and superimpose it on top of the feature image.\n",
+  "detaileddescription" : "The feature image is typically the image from which the labeling was produced. Use the SetInput function to set the LabelMap, and the SetFeatureImage function to set the feature image.\nApply a colormap to a label map and put it on top of the input image. The set of colors is a good selection of distinct colors. The opacity of the label map can be defined by the user. A background label produce a gray pixel with the same intensity than the input one.\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\\see  LabelMapToBinaryImageFilter, LabelMapToLabelImageFilter, LabelMapOverlayImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Color the boundaries of labeled regions in an image\n\n"
+}

@@ -1,0 +1,41 @@
+{
+  "name" : "SliceImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "pixel_types" : "NonLabelPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "Start",
+      "type" : "std::vector<int32_t>",
+      "default" : "std::vector<int32_t>(3, 0)",
+      "dim_vec" : 1,
+      "itk_type" : "typename FilterType::IndexType"
+    },
+    {
+      "name" : "Stop",
+      "type" : "std::vector<int32_t>",
+      "default" : "std::vector<int32_t>(3, std::numeric_limits<int32_t>::max())",
+      "dim_vec" : 1,
+      "itk_type" : "typename FilterType::IndexType"
+    },
+    {
+      "name" : "Step",
+      "type" : "std::vector<int>",
+      "default" : "std::vector<int>(3, 1)",
+      "dim_vec" : 1,
+      "itk_type" : "typename FilterType::ArrayType"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "defaults",
+      "md5hash" : "45a85203a8972250b0e0226b64312eef",
+      "settings" : [],
+      "inputs" : [
+        "Input/VM1111Shrink-RGBFloat.nrrd"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "name" : "PowImageFilter",
+  "template_code_filename" : "BinaryFunctorFilter",
+  "template_test_filename" : "ImageFilter",
+  "constant_type" : "double",
+  "number_of_inputs" : 2,
+  "doc" : "Some global documentation",
+  "pixel_types" : "typelist::Append<BasicPixelIDTypeList, ComplexPixelIDTypeList>::Type",
+  "members" : [],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Simply run with default settings",
+      "settings" : [],
+      "tolerance" : 0.001,
+      "inputs" : [
+        "Input/RA-Float.nrrd",
+        "Input/RA-Float.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "Computes the powers of 2 images.\n",
+  "detaileddescription" : "This class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\nThe output of the pow function will be cast to the pixel type of the output image.\nThe total operation over one pixel will beoutput_pixel=static_cast<TOutput>(vcl_pow(static_cast<RealType>(A),static_cast<RealType>(B)));\nThe pow function can be applied to two images with the following: SetInput1(image1); SetInput2(image2);\nAdditionally, this filter can be used to raise every pixel of an image to a power of a constant by using SetInput1(image1); SetConstant2(constant);\n"
+}

@@ -1,0 +1,66 @@
+{
+  "name" : "BinaryMedianImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "public_declarations" : "Self &SetRadius( unsigned int r ) { this->m_Radius = std::vector<unsigned int>(3, r ); return *this; }",
+  "members" : [
+    {
+      "name" : "Radius",
+      "type" : "std::vector<unsigned int>",
+      "default" : "std::vector<unsigned int>(3, 1)",
+      "dim_vec" : 1,
+      "doc" : "",
+      "itk_type" : "typename FilterType::InputSizeType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the radius of the neighborhood used to compute the median.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the radius of the neighborhood used to compute the median\n"
+    },
+    {
+      "name" : "ForegroundValue",
+      "type" : "double",
+      "default" : "1.0",
+      "pixeltype" : "Input",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the value associated with the Foreground (or the object) on the binary input image and the Background .\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the value associated with the Foreground (or the object) on the binary input image and the Background .\n"
+    },
+    {
+      "name" : "BackgroundValue",
+      "type" : "double",
+      "default" : "0.0",
+      "pixeltype" : "Input",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the value associated with the Foreground (or the object) on the binary input image and the Background .\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the value associated with the Foreground (or the object) on the binary input image and the Background .\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Basic voting",
+      "settings" : [
+        {
+          "parameter" : "Radius",
+          "no_get_method" : 1,
+          "value" : 3
+        },
+        {
+          "parameter" : "ForegroundValue",
+          "value" : "255.0"
+        }
+      ],
+      "md5hash" : "55dd7a167222849c7afb0c5c4f6e096b",
+      "inputs" : [
+        "Input/BlackDots.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Applies a version of the median filter optimized for binary images.\n",
+  "detaileddescription" : "This filter was contributed by Bjorn Hanch Sollie after identifying that the generic Median filter performed unnecessary operations when the input image is binary.\nThis filter computes an image where a given pixel is the median value of the pixels in a neighborhood about the corresponding input pixel. For the case of binary images the median can be obtained by simply counting the neighbors that are foreground.\nA median filter is one of the family of nonlinear filters. It is used to smooth an image without being biased by outliers or shot noise.\n\\see  Image\n\\see \n\\see  Neighborhood\n\\see \n\\see  NeighborhoodOperator\n\\see \n\\see  NeighborhoodIterator\n\n"
+}

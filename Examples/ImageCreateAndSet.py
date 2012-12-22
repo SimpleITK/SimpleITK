@@ -17,6 +17,8 @@
 #
 #=========================================================================
 
+from __future__ import print_function
+
 import SimpleITK as sitk
 import os
 
@@ -31,11 +33,11 @@ for y in range( 0, xImg.GetSize()[1] ):
 
 sigma = 50
 
-xImg = sitk.SubtractConstantFrom( xImg,  xImg.GetSize()[0] / 2 )
+xImg = sitk.Subtract( xImg,  xImg.GetSize()[0] / 2 )
 yImg = yImg - yImg.GetSize()[1] / 2
 
-gaussianImg = sitk.Exp( -1 * (xImg*xImg + yImg*yImg) / (2.0 * sigma**2) )
+gaussianImg = sitk.Exp( -1 * (xImg**2 + yImg**2) / (2.0 * sigma**2) )
 
 
-if ( not os.environ.has_key("SITK_NOSHOW") ):
+if ( not "SITK_NOSHOW" in os.environ ):
     sitk.Show( gaussianImg, "Gaussian Blob" )

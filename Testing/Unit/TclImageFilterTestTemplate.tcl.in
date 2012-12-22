@@ -38,7 +38,7 @@ if { [llength [set argv]] < ( [set inputs] + 1 ) } {
 set tag [lindex [set argv] 0]
 set ValidTags ""
 ImageFileWriter writer
-${name}ImageFilter filter
+${name} filter
 
 $(if #tests == 0 then
     OUT=[[puts "No tests defined!"; exit 1;]]
@@ -82,7 +82,7 @@ OUT=[[
 end)
 $(if inputB_cast then
 OUT=[[
-      set inputs [lreplace $$inputs 1 1 [ Cast [lindex $$inputs 1] [set $${inputB_cast}] ] ]
+      set inputs [lreplace $$inputs 1 1 [ Cast [lindex $$inputs 1] [set ${inputB_cast}] ] ]
      ]]
 end)
 

@@ -4,7 +4,7 @@ OUT=[[
 // Dispatched methods to call ExecuteInternal on each component of the VectorImage
 //
 template <class TImageType> Image
-${name}ImageFilter::ExecuteInternalVectorImage ( const Image& inImage1 )
+${name}::ExecuteInternalVectorImage ( const Image& inImage1 )
 {
   typedef TImageType                                                               VectorInputImageType;
   typedef typename VectorInputImageType::InternalPixelType                         ComponentType;

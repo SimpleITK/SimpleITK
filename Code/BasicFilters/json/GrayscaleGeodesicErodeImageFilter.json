@@ -1,0 +1,59 @@
+{
+  "name" : "GrayscaleGeodesicErodeImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 2,
+  "doc" : "Input1 is input, Input2 is marker image",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "filter_type" : "itk::GrayscaleGeodesicErodeImageFilter<InputImageType, OutputImageType>",
+  "members" : [
+    {
+      "name" : "RunOneIteration",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : "",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get whether the filter should run one iteration or until convergence. When run to convergence, this filter is equivalent to \"reconstruction by erosion\". Default is off.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get whether the filter should run one iteration or until convergence. When run to convergence, this filter is equivalent to \"reconstruction by erosion\". Default is off.\n"
+    },
+    {
+      "name" : "FullyConnected",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : "",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.\n"
+    }
+  ],
+  "custom_methods" : [],
+  "tests" : [
+    {
+      "tag" : "GrayscaleGeodesicDilate",
+      "description" : "Test grayscale geodesic erode",
+      "md5hash" : "095f00a68a84df4396914fa758f34dcc",
+      "settings" : [
+        {
+          "parameter" : "RunOneIteration",
+          "value" : "false",
+          "python_value" : "False",
+          "R_value" : "FALSE"
+        },
+        {
+          "parameter" : "FullyConnected",
+          "value" : "true",
+          "python_value" : "True",
+          "R_value" : "TRUE"
+        }
+      ],
+      "inputs" : [
+        "Input/STAPLE2.png",
+        "Input/STAPLE1.png"
+      ]
+    }
+  ],
+  "briefdescription" : "geodesic gray scale erosion of an image\n",
+  "detaileddescription" : "Geodesic erosion operates on a \"marker\" image and a \"mask\" image. The marker image is eroded using an elementary structuring element (neighborhood of radius one using only the face connected neighbors). The resulting image is then compared with the mask image. The output image is the pixelwise maximum of the eroded marker image and the mask image.\nGeodesic erosion is run either one iteration or until convergence. In the convergence case, the filter is equivalent to \"reconstruction by erosion\". This filter is implemented to handle both scenarios. The one iteration case is multi-threaded. The convergence case is delegated to another instance of the same filter (but configured to run a single iteration).\nThe marker image must be greater than or equal to the mask image (on a pixel by pixel basis).\nGeodesic morphology is described in Chapter 6 of Pierre Soille's book \"Morphological Image Analysis: Principles and Applications\", Second Edition, Springer, 2003.\nA noniterative version of this algorithm can be found in the ReconstructionByErosionImageFilter. This noniterative solution is much faster than the implementation provided here. All ITK filters that previously used GrayscaleGeodesicErodeImageFilteras part of their implementation have been converted to use the ReconstructionByErosionImageFilter. The GrayscaleGeodesicErodeImageFilteris maintained for backward compatibility.\n\\see  MorphologyImageFilter, GrayscaleErodeImageFilter, GrayscaleFunctionErodeImageFilter, BinaryErodeImageFilter, ReconstructionByErosionImageFilter\n\n"
+}

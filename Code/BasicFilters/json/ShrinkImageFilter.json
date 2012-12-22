@@ -1,0 +1,72 @@
+{
+  "name" : "ShrinkImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "\todo need single method to set all dims",
+  "pixel_types" : "NonLabelPixelIDTypeList",
+  "public_declarations" : "Self &SetShrinkFactor( unsigned int s ) { this->m_ShrinkFactors = std::vector<unsigned int>(3, s ); return *this; }",
+  "members" : [
+    {
+      "name" : "ShrinkFactors",
+      "type" : "std::vector<unsigned int>",
+      "default" : "std::vector<unsigned int>(3, 1)",
+      "dim_vec" : 1,
+      "doc" : "",
+      "itk_type" : "typename FilterType::ShrinkFactorsType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the shrink factors. Values are clamped to a minimum value of 1. Default is 1 for all dimensions.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the shrink factors.\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "defaults",
+      "description" : "Test Shirnk with default parameters",
+      "md5hash" : "45a85203a8972250b0e0226b64312eef",
+      "settings" : [],
+      "inputs" : [
+        "Input/VM1111Shrink-RGBFloat.nrrd"
+      ]
+    },
+    {
+      "tag" : "by23",
+      "description" : "Test Shink by 23",
+      "md5hash" : "9d32115482a8d143520fff8ab423f73a",
+      "settings" : [
+        {
+          "parameter" : "ShrinkFactors",
+          "type" : "unsigned int",
+          "dim_vec" : 1,
+          "value" : "{2,3}",
+          "tcl_value" : "[list 2 3]",
+          "python_value" : "[ 2, 3 ]",
+          "ruby_value" : "[ 2, 3 ]",
+          "R_value" : "c( 2, 3 )"
+        }
+      ],
+      "inputs" : [
+        "Input/VM1111Shrink-RGB.png"
+      ]
+    },
+    {
+      "tag" : "by4",
+      "description" : "Test Shink by 4",
+      "md5hash" : "06ef0d7d001245107721dee64feedf0e",
+      "settings" : [
+        {
+          "parameter" : "ShrinkFactor",
+          "type" : "unsigned int",
+          "no_get_method" : 1,
+          "value" : "4"
+        }
+      ],
+      "inputs" : [
+        "Input/RA-Float.nrrd"
+      ]
+    }
+  ],
+  "briefdescription" : "Reduce the size of an image by an integer factor in each dimension.\n",
+  "detaileddescription" : " ShrinkImageFilterreduces the size of an image by an integer factor in each dimension. The algorithm implemented is a simple subsample. The output image size in each dimension is given by:\noutputSize[j] = max( vcl_floor(inputSize[j]/shrinkFactor[j]), 1 );\nNOTE: The physical centers of the input and output will be the same. Because of this, the Origin of the output may not be the same as the Origin of the input. Since this filter produces an image which is a different resolution, origin and with different pixel spacing than its input image, it needs to override several of the methods defined in ProcessObjectin order to properly manage the pipeline execution model. In particular, this filter overrides ProcessObject::GenerateInputRequestedRegion()and ProcessObject::GenerateOutputInformation().\nThis filter is implemented as a multithreaded filter. It provides a ThreadedGenerateData()method for its implementation.\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Shrink an image\n\n"
+}

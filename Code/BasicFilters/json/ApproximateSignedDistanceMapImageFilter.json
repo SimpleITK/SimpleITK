@@ -1,0 +1,62 @@
+{
+  "name" : "ApproximateSignedDistanceMapImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "doc" : "Docs",
+  "number_of_inputs" : 1,
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "output_pixel_type" : "float",
+  "members" : [
+    {
+      "name" : "InsideValue",
+      "type" : "double",
+      "default" : "1u",
+      "pixeltype" : "Input",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get intensity value representing the interior of objects in the mask\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get intensity value representing the interior of objects in the mask\n"
+    },
+    {
+      "name" : "OutsideValue",
+      "type" : "double",
+      "default" : "0u",
+      "pixeltype" : "Input",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get intensity value representing non-objects in the mask\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get intensity value representing non-objects in the mask\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "Default parameter settings",
+      "tolerance" : "0.01",
+      "settings" : [],
+      "inputs" : [
+        "Input/2th_cthead1.png"
+      ]
+    },
+    {
+      "tag" : "modified_parms",
+      "description" : "Setting InsideValue and OutsideValuew",
+      "tolerance" : "0.01",
+      "settings" : [
+        {
+          "parameter" : "InsideValue",
+          "value" : "100"
+        },
+        {
+          "parameter" : "OutsideValue",
+          "value" : "0"
+        }
+      ],
+      "inputs" : [
+        "Input/2th_cthead1.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Create a map of the approximate signed distance from the boundaries of a binary image.\n",
+  "detaileddescription" : "The ApproximateSignedDistanceMapImageFiltertakes as input a binary image and produces a signed distance map. Each pixel value in the output contains the approximate distance from that pixel to the nearest \"object\" in the binary image. This filter differs from the DanielssonDistanceMapImageFilterin that it calculates the distance to the \"object edge\" for pixels within the object.\nNegative values in the output indicate that the pixel at that position is within an object in the input image. The absolute value of a negative pixel represents the approximate distance to the nearest object boundary pixel.\nWARNING: This filter requires that the output type be floating-point. Otherwise internal calculations will not be performed to the appropriate precision, resulting in completely incorrect (read: zero-valued) output.\nThe distances computed by this filter are Chamfer distances, which are only an approximation to Euclidian distances, and are not as exact approximations as those calculated by the DanielssonDistanceMapImageFilter. On the other hand, this filter is faster.\nThis filter requires that an \"inside value\" and \"outside value\" be set as parameters. The \"inside value\" is the intensity value of the binary image which corresponds to objects, and the \"outside value\" is the intensity of the background. (A typical binary image often repesents objects as black (0) and background as white (usually 255), or vice-versa.) Note that this filter is slightly faster if the inside value is less than the outside value. Otherwise an extra iteration through the image is required.\nThis filter uses the FastChamferDistanceImageFilterand the IsoContourDistanceImageFilterinernally to perform the distance calculations.\n\\see  DanielssonDistanceMapImageFilter, SignedDanielssonDistanceMapImageFilter\n\\see \n\\see  FastChamferDistanceImageFilter, IsoContourDistanceImageFilter\n\\author Zach Pincus\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Compute a distance map from objects in a binary image\n\n"
+}

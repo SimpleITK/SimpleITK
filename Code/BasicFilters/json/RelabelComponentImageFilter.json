@@ -1,0 +1,32 @@
+{
+  "name" : "RelabelComponentImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "",
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "MinimumObjectSize",
+      "type" : "uint64_t",
+      "default" : "0u",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the minimum size in pixels for an object. All objects smaller than this size will be discarded and will not appear in the output label map. NumberOfObjects will count only the objects whose pixel counts are greater than or equal to the minimum size. Call GetOriginalNumberOfObjects to find out how many objects were present in the original label map.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the caller-defined minimum size of an object in pixels. If the caller has not set the minimum, 0 will be returned, which is to be interpreted as meaning that no minimum exists, and all objects in the original label map will be passed through to the output.\n"
+    }
+  ],
+  "custom_methods" : [],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "2D",
+      "settings" : [],
+      "md5hash" : "58af064e929f08f9d5bacc8be44ed92e",
+      "inputs" : [
+        "Input/2th_cthead1.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Relabel the components in an image such that consecutive labels are used.\n",
+  "detaileddescription" : " RelabelComponentImageFilterremaps the labels associated with the objects in an image (as from the output of ConnectedComponentImageFilter) such that the label numbers are consecutive with no gaps between the label numbers used. By default, the relabeling will also sort the labels based on the size of the object: the largest object will have label #1, the second largest will have label #2, etc.\nLabel #0 is assumed to be background is left unaltered by the relabeling.\n RelabelComponentImageFilteris typically used on the output of the ConnectedComponentImageFilterfor those applications that want to extract the largest object or the \"k\" largest objects. Any particular object can be extracted from the relabeled output using a BinaryThresholdImageFilter. A group of objects can be extracted from the relabled output using a ThresholdImageFilter.\nOnce all the objects are relabeled, the application can query the number of objects and the size of each object. Objectsizes are returned in a vector. The size of the background is not calculated. So the size of object #1 is GetSizeOfObjectsInPixels()[0], the size of object #2 is GetSizeOfObjectsInPixels()[1], etc.\nIf user sets a minimum object size, all objects with fewer pixelss than the minimum will be discarded, so that the number of objects reported will be only those remaining. The GetOriginalNumberOfObjects method can be called to find out how many objects were present before the small ones were discarded.\n RelabelComponentImageFiltercan be run as an \"in place\" filter, where it will overwrite its output. The default is run out of place (or generate a separate output). \"In place\" operation can be controlled via methods in the superclass, InPlaceImageFilter::InPlaceOn()and InPlaceImageFilter::InPlaceOff().\n\\see  ConnectedComponentImageFilter, BinaryThresholdImageFilter, ThresholdImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Assign contiguous labels to connected regions of an image\n\n"
+}

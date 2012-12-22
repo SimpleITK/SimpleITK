@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitk${name}ImageFilter_h
-#define __sitk${name}ImageFilter_h
+#ifndef __sitk${name}_h
+#define __sitk${name}_h
 
 $(include DoNotEditWarning.h.in)
 
@@ -28,7 +28,7 @@ $(include DoNotEditWarning.h.in)
 namespace itk {
   namespace simple {
 
-    /** \class ${name}ImageFilter
+    /** \class ${name}
      *
      * ${doc}
      */
@@ -77,8 +77,8 @@ OUT=[[
 
       /** Execute the filter on the input image$(if number_of_inputs == 2 then OUT='s'end) with the given parameters */
       Image Execute ( const Image& $(if number_of_inputs == 2 then OUT=', const Image&' end),
-        std::vector< std::vector<unsigned int> > inSeedList$(foreach members ,
-        ${type} in${name}) );]]end)$(include CustomMethods.h.in)
+        std::vector< std::vector<unsigned int> > seedList$(foreach members ,
+        ${type} ${name:sub(1,1):lower()}${name:sub(2,-1)}) );]]end)$(include CustomMethods.h.in)
 
 $(include ExecuteInternalMethod.h.in)
 
@@ -92,14 +92,14 @@ $(include ClassEnd.h.in)
 
 
     /**
-     * itk::simple::${name}ImageFilter Functional Interface
+     * itk::simple::${name} Functional Interface
      *
-     * This function directly calls the execute method of ${name}ImageFilter
+     * This function directly calls the execute method of ${name}
      * in order to support a fully functional API
      */
-    Image SITKBasicFilters_EXPORT ${name} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end),
-                                            std::vector< std::vector<unsigned int> > inSeedList$(when members $(foreach members ,
-                                                                                                                ${type} in${name} = ${default})) );
+    Image SITKBasicFilters_EXPORT ${name:gsub("ImageFilter$", "")} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end),
+                                            std::vector< std::vector<unsigned int> > seedList$(when members $(foreach members ,
+                                            ${type} ${name:sub(1,1):lower()}${name:sub(2,-1)} = ${default})) );
 
   } // end namespace simple
 } // end namespace itk

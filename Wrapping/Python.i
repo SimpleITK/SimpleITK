@@ -49,9 +49,6 @@
 %extend itk::simple::Image {
 
 
-//      def __floordiv__( other )
-
-
         %pythoncode %{
 
         # mathematical operators
@@ -59,19 +56,46 @@
         def __add__( self, other ):
             if isinstance( other, Image ):
                return Add( self, other )
-            return AddConstantTo( self, other )
+            try:
+               return Add( self, float(other)  )
+            except ValueError:
+               return NotImplemented
         def __sub__( self, other ):
             if isinstance( other, Image ):
                return Subtract( self, other )
-            return SubtractConstantFrom( self, other )
+            try:
+               return Subtract( self, float(other) )
+            except ValueError:
+               return NotImplemented
         def __mul__( self, other ):
             if isinstance( other, Image ):
                return Multiply( self, other )
-            return MultiplyByConstant( self, other )
+            try:
+               return Multiply( self, float(other) )
+            except ValueError:
+               return NotImplemented
         def __div__( self, other ):
             if isinstance( other, Image ):
                return Divide( self, other )
-            return DivideByConstant( self, other )
+            try:
+               return Divide( self, float(other) )
+            except ValueError:
+               return NotImplemented
+        def __floordiv__( self, other ):
+            if isinstance( other, Image ):
+               return DivideFloor( self, other )
+            try:
+               return DivideFloor( self, float(other) )
+            except ValueError:
+               return NotImplemented
+        def __truediv__( self, other ):
+            if isinstance( other, Image ):
+               return DivideReal( self, other )
+            try:
+               return DivideReal( self, float(other) )
+            except ValueError:
+               return NotImplemented
+
 
         def __neg__( self ):
             return UnaryMinus( self )
@@ -82,17 +106,41 @@
         # therefore other should be able to be considered a constant.
 
         def __radd__( self, other ):
-            return AddConstantTo( self, other )
+            try:
+               return Add( float(other), self )
+            except ValueError:
+               return NotImplemented
         def __rsub__( self, other ):
-            return SubtractConstantBy( self, other )
+            try:
+               return Subtract( float(other), self )
+            except ValueError:
+               return NotImplemented
         def __rmul__( self, other ):
-            return MultiplyByConstant( self, other )
+            try:
+               return Multiply( float(other), self )
+            except ValueError:
+               return NotImplemented
         def __rdiv__( self, other ):
-            return DivideConstantBy( self, other )
+            try:
+               return Divide( float(other), self )
+            except ValueError:
+               return NotImplemented
+        def __rfloordiv__( self, other ):
+            try:
+               return DivideFloor( float(other), self )
+            except ValueError:
+               return NotImplemented
+        def __rtruediv__( self, other ):
+            try:
+               return DivideReal( float(other), self )
+            except ValueError:
+               return NotImplemented
+
+
 
          # NOTE: the __i*__ methods are not implemented because there
          # currently in no way to make the underlying filters run
-         # inplace". But python will implement a default version based
+         # inplace. But python will implement a default version based
          # on the standard method
         def __iadd__ ( self, other ):
             self = Add( self, other )
@@ -100,10 +148,88 @@
 
         # logic operators
 
-        def __and__( self, other ): return And( self, other )
-        def __or__( self, other ): return Or( self, other )
-        def __xor__( self, other ): return Xor( self, other )
+        def __and__( self, other ):
+            if isinstance( other, Image ):
+               return And( self, other )
+            try:
+               return And( self, int(other) )
+            except ValueError:
+               return NotImplemented
+        def __rand__( self, other ):
+            try:
+               return And( int(other), self )
+            except ValueError:
+               return NotImplemented
+        def __or__( self, other ):
+            if isinstance( other, Image ):
+               return Or( self, other )
+            try:
+               return Or( self, int(other) )
+            except ValueError:
+               return NotImplemented
+        def __ror__( self, other ):
+            try:
+               return Or( int(other), self )
+            except ValueError:
+               return NotImplemented
+        def __xor__( self, other ):
+            if isinstance( other, Image ):
+               return Xor( self, other )
+            try:
+               return Xor( self, int(other) )
+            except ValueError:
+               return NotImplemented
+        def __rxor__( self, other ):
+            try:
+               return Xor( int(other), self )
+            except ValueError:
+               return NotImplemented
         def __invert__( self ): return Not( self )
+
+        # Relational and Equality operators
+
+        def __lt__( self, other ):
+            if isinstance( other, Image ):
+               return Less( self, other )
+            try:
+               return Less( self, float(other) )
+            except (ValueError, TypeError):
+               return NotImplemented
+        def __le__( self, other ):
+            if isinstance( other, Image ):
+               return LessEqual( self, other )
+            try:
+               return LessEqual( self, float(other) )
+            except (ValueError, TypeError):
+               return NotImplemented
+        def __eq__( self, other ):
+            if isinstance( other, Image ):
+               return Equal( self, other )
+            try:
+               return Equal( self, float(other) )
+            except (ValueError, TypeError):
+               return NotImplemented
+        def __ne__( self, other ):
+            if isinstance( other, Image ):
+               return NotEqual( self, other )
+            try:
+               return NotEqual( self, float(other) )
+            except (ValueError, TypeError):
+               return NotImplemented
+        def __gt__( self, other ):
+            if isinstance( other, Image ):
+               return Greater( self, other )
+            try:
+               return Greater( self, int(other) )
+            except (ValueError, TypeError):
+               return NotImplemented
+        def __ge__( self, other ):
+            if isinstance( other, Image ):
+               return GreaterEqual( self, other )
+            try:
+               return GreaterEqual( self, int(other) )
+            except (ValueError, TypeError):
+               return NotImplemented
 
 
         # "function" operators
@@ -111,67 +237,155 @@
         def __pow__( self, other ):
             if isinstance( other, Image ):
                return Pow( self, other )
-            return PowToConstant( self, other )
+            try:
+               return Pow( self, float(other) )
+            except ValueError:
+               return NotImplemented
+        def __rpow__( self, other ):
+            try:
+               return Pow( float(other), self )
+            except ValueError:
+               return NotImplemented
         def __mod__( self, other ): return Modulus( self, other )
         def __abs__( self ): return Abs( self )
 
         # iterator and container methods
 
         def __iter__( self ):
-            self.iter_index = [0] * self.GetDimension()
-            return self
 
-        def next( self ):
-            old_index = tuple( self.iter_index )
+            if len(self) == 0:
+              raise StopIteration
 
             dim = self.GetDimension()
+            size = self.GetSize()
+            idx = [0] * dim
 
-            if self.iter_index[dim-1] >= self.GetSize()[dim-1]:
-               raise StopIteration
+            while idx[dim-1] < size[dim-1]:
 
-            # increment the idx
-            for d in range( 0, dim ):
-                self.iter_index[d] += 1
-                if self.iter_index[d] >= self.GetSize()[d] and d != dim  - 1:
-                   self.iter_index[d] = 0
+              yield self[ idx ]
+
+              # increment the idx
+              for d in range( 0, dim ):
+                idx[d] += 1
+                if idx[d] >= size[d] and d != dim  - 1:
+                   idx[d] = 0
                 else:
                    break
 
-            return self[ old_index ]
+            return
 
         def __len__( self ):
-            return reduce( operator.mul, self.GetSize(), 1 )
+            l = 1
+            for ds in self.GetSize():
+              l *= ds
+            return l
 
         # set/get pixel methods
 
         def __getitem__( self, idx ):
-            """Returns the value of pixel at index idx.
+            """ Get an pixel value or a sliced image.
 
-            The dimension of idx should match that of the image."""
-            pixelID = self.GetPixelIDValue()
-            if pixelID == sitkUnknown:
-               raise Exception("Logic Error: invalid pixel type")
-            if pixelID == sitkInt8:
-               return self.__GetPixelAsInt8__( idx )
-            if pixelID == sitkUInt8 or pixelID == sitkLabelUInt8:
-               return self.__GetPixelAsUInt8__( idx )
-            if pixelID == sitkInt16:
-               return self.__GetPixelAsInt16__( idx )
-            if pixelID == sitkUInt16 or pixelID == sitkLabelUInt16:
-               return self.__GetPixelAsUInt16__( idx )
-            if pixelID == sitkInt32:
-               return self.__GetPixelAsInt32__( idx )
-            if pixelID == sitkUInt32 or pixelID == sitkLabelUInt32:
-               return self.__GetPixelAsUInt32__( idx )
-            if pixelID == sitkInt64:
-               return self.__GetPixelAsInt64__( idx )
-            if pixelID == sitkUInt64 or pixelID == sitkLabelUInt64:
-               return self.__GetPixelAsUInt64__( idx )
-            if pixelID == sitkFloat32:
-               return self.__GetPixelAsFloat__( idx )
-            if pixelID == sitkFloat64:
-               return self.__GetPixelAsDouble__( idx )
-            raise Exception("Unknown pixel type")
+            This operator implements basic indexing where idx is
+            arguments or a squence of integers the same dimension as
+            the image. The result will be a pixel value from that
+            index.
+
+            Multi-dimension extended slice based indexing is also
+            implemented. The return is a copy of a new image. The
+            standard sliced based indices are supported including
+            negative indices, to indicate location relative to the
+            end, along with negative step sized to indicate reversing
+            of direction.
+
+            If the length of idx is less than the number of dimension
+            of the image it will be padded with the defaults slice
+            ":".
+
+            A 2D image can be extracted from a 3D image by providing
+            one argument being an integer instead of a slice."""
+
+            dim = self.GetDimension()
+            size = self.GetSize()
+
+            try:
+              if (len(idx) < dim):
+                # if the argument tuple has fewer elements then the dimension of the image then extend to match that of the image
+                idx = tuple(idx) + (slice(None),)*(dim-len(idx))
+            except TypeError:
+              # if the len function didn't work then, assume is a
+              # non-iterable, and make it a single element in a tuple.
+              idx = (idx,) + (slice(None),)*(dim-1)
+
+            if (len(idx) > dim):
+               raise IndexError("invalid index")
+
+            # All the indices are integers just return GetPixel value
+            if all( type(i) is int for i in idx ):
+              # if any of the arguments are negative integers subract them for the size
+              idx = [idx[i] if idx[i] >= 0 else (size[i] + idx[i]) for i in range(len(idx))]
+
+              if any( idx[i] < 0 or idx[i] >= size[i] for i in range(len(idx))):
+                raise IndexError("index out of bounds")
+
+              return self.GetPixel(*tuple(idx))
+
+
+            # If we have a 3D image, we can extract 2D image if one index is an int and the reset are slices
+            slice_dim = -1
+            if ( dim == 3 ):
+              # find only a single dimension with has an integer index
+              for i in range(len(idx)):
+                if type(idx[i]) is slice:
+                  continue
+                elif type(idx[i]) is int:
+                  if(slice_dim == -1):
+                    slice_dim = abs(i)
+                  else:
+                    slice_dim = -1
+                    break
+
+            if slice_dim != -1:
+              # replace int slice_dim with a slice
+              s = idx[slice_dim]
+              if s < 0:
+                s += size[slice_dim]
+
+              if s < 0 or s >= size[slice_dim]:
+                 raise IndexError("index  out of bounds")
+
+              idx = tuple(idx[:slice_dim]) + (slice(s, s+1),)+ tuple(idx[slice_dim+1:])
+
+            # Use the slice filter when all the elements are slices ( or have been processed to be )
+            if all( type(i) is slice for i in idx ):
+
+              # perform standard slice indexing, to clamp to ranges and add in defaults
+              sidx = [ idx[i].indices(size[i]) for i in range(len(idx ))]
+
+              # extract each element of the indices rages together
+              (start, stop, step) = zip(*sidx)
+
+              # run the slice filter
+              img = Slice(self, start=start, stop=stop, step=step)
+
+              if (slice_dim != -1):
+
+                # the stop is on the wrong side of step
+                if any( (s[1]-s[0])//s[2] <= 0 for s in sidx ):
+                  raise IndexError("invalid range")
+
+                size = img.GetSize();
+
+                # set the slice dimension size to 0
+                size = size[:slice_dim]+(0,)+size[slice_dim+1:]
+
+                # reduce the 3D image to a 2D
+                img = Extract( img, size )
+
+              return img
+
+
+            # the index parameter was an invalid set of objects
+            raise IndexError("invalid index")
 
 
         def __setitem__( self, idx, value ):
@@ -204,16 +418,41 @@
             raise Exception("Unknown pixel type")
 
         def GetPixel(self, *idx):
-             """Returns the value of a pixel.
+          """Returns the value of a pixel.
 
-	     This method takes 2 parameters in 2D: the x and y index,
+             This method takes 2 parameters in 2D: the x and y index,
              and 3 parameters in 3D: the x, y and z index."""
-             return self[idx]
+
+
+          pixelID = self.GetPixelIDValue()
+          if pixelID == sitkUnknown:
+            raise Exception("invalid pixel type")
+          if pixelID == sitkInt8:
+            return self.__GetPixelAsInt8__( idx )
+          if pixelID == sitkUInt8 or pixelID == sitkLabelUInt8:
+            return self.__GetPixelAsUInt8__( idx )
+          if pixelID == sitkInt16:
+            return self.__GetPixelAsInt16__( idx )
+          if pixelID == sitkUInt16 or pixelID == sitkLabelUInt16:
+            return self.__GetPixelAsUInt16__( idx )
+          if pixelID == sitkInt32:
+            return self.__GetPixelAsInt32__( idx )
+          if pixelID == sitkUInt32 or pixelID == sitkLabelUInt32:
+            return self.__GetPixelAsUInt32__( idx )
+          if pixelID == sitkInt64:
+            return self.__GetPixelAsInt64__( idx )
+          if pixelID == sitkUInt64 or pixelID == sitkLabelUInt64:
+            return self.__GetPixelAsUInt64__( idx )
+          if pixelID == sitkFloat32:
+            return self.__GetPixelAsFloat__( idx )
+          if pixelID == sitkFloat64:
+            return self.__GetPixelAsDouble__( idx )
+          raise Exception("unknown pixel type")
 
         def SetPixel(self, *args):
              """Sets the value of a pixel.
 
-	     This method takes 3 parameters in 2D: the x and y index then the value,
+             This method takes 3 parameters in 2D: the x and y index then the value,
              and 4 parameters in 3D: the x, y and z index then the value."""
              if len(args) < 2:
                 raise Exception( "Wrong number of arguments, coordinates arguments then value" )
