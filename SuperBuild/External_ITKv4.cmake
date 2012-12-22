@@ -47,21 +47,17 @@ ExternalProject_Add(${proj}
   -DITK_LEGACY_REMOVE:BOOL=ON
   -DITK_BUILD_ALL_MODULES:BOOL=ON
   -DITK_USE_REVIEW:BOOL=ON
-  -DUSE_WRAP_ITK:BOOL=${ITK_WRAPPING}
-  -DINSTALL_WRAP_ITK_COMPATIBILITY:BOOL=OFF
-  -DWRAP_float:BOOL=ON
-  -DWRAP_unsigned_char:BOOL=ON
-  -DWRAP_signed_short:BOOL=ON
-  -DWRAP_unsigned_short:BOOL=ON
-  -DWRAP_complex_float:BOOL=ON
-  -DWRAP_vector_float:BOOL=ON
-  -DWRAP_covariant_vector_float:BOOL=ON
-  -DWRAP_rgb_signed_short:BOOL=ON
-  -DWRAP_rgb_unsigned_char:BOOL=ON
-  -DWRAP_rgb_unsigned_short:BOOL=ON
-  -DWRAP_ITK_TCL:BOOL=OFF
-  -DWRAP_ITK_JAVA:BOOL=OFF
-  -DWRAP_ITK_PYTHON:BOOL=ON
+  -DITK_WRAP_float:BOOL=ON
+  -DITK_WRAP_unsigned_char:BOOL=ON
+  -DITK_WRAP_signed_short:BOOL=ON
+  -DITK_WRAP_unsigned_short:BOOL=ON
+  -DITK_WRAP_complex_float:BOOL=ON
+  -DITK_WRAP_vector_float:BOOL=ON
+  -DITK_WRAP_covariant_vector_float:BOOL=ON
+  -DITK_WRAP_rgb_signed_short:BOOL=ON
+  -DITK_WRAP_rgb_unsigned_char:BOOL=ON
+  -DITK_WRAP_rgb_unsigned_short:BOOL=ON
+  -DITK_WRAP_PYTHON:BOOL=${ITK_WRAPPING}
   ${ITK_PYTHON_ARGS}
   ${FFTW_FLAGS}
   BUILD_COMMAND ${BUILD_COMMAND_STRING}
