@@ -2,13 +2,22 @@
 #-----------------------------------------------------------------------------
 # Get and build itk
 
-set(ITK_LANGUAGES_VARS
-      PYTHON_EXECUTABLE
-      PYTHON_INCLUDE_DIR
-      )
+get_cmake_property( _varNames VARIABLES )
 
-VariableListToCache( ITK_LANGUAGES_VARS  ep_languages_cache )
-VariableListToArgs( ITK_LANGUAGES_VARS  ep_languages_args )
+foreach (_varName ${_varNames})
+  if(_varName MATCHES "^ITK_" OR _varName MATCHES "FFTW")
+    message( "Variable defined ${_varName}: ${${_varName}}")
+    list(APPEND ITK_VARS ${_varName})
+  endif()
+endforeach()
+
+list(APPEND ITK_VARS
+  PYTHON_EXECUTABLE
+  PYTHON_INCLUDE_DIR
+  )
+
+VariableListToCache( ITK_VARS  ep_itk_cache )
+VariableListToArgs( ITK_VARS  ep_itk_args )
 
 
 set(proj ITK)  ## Use ITK convention of calling it ITK
@@ -25,7 +34,7 @@ else()
 endif()
 
 
-file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt" "${ep_languages_cache}\n${ep_common_cache}" )
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt" "${ep_itk_cache}\n${ep_common_cache}" )
 
 ExternalProject_Add(${proj}
   GIT_REPOSITORY ${ITK_REPOSITORY}
@@ -37,8 +46,8 @@ ExternalProject_Add(${proj}
   CMAKE_ARGS
   --no-warn-unused-cli
   -C "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt"
+  ${ep_itk_args}
   ${ep_common_args}
-  ${ep_languages_args}
   -DBUILD_EXAMPLES:BOOL=OFF
   -DBUILD_TESTING:BOOL=OFF
   -DBUILD_SHARED_LIBS:BOOL=${ITK_BUILD_SHARED_LIBS}
