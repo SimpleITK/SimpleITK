@@ -2,13 +2,22 @@
 #-----------------------------------------------------------------------------
 # Get and build itk
 
-set(ITK_LANGUAGES_VARS
-      PYTHON_EXECUTABLE
-      PYTHON_INCLUDE_DIR
-      )
+get_cmake_property( _varNames VARIABLES )
 
-VariableListToCache( ITK_LANGUAGES_VARS  ep_languages_cache )
-VariableListToArgs( ITK_LANGUAGES_VARS  ep_languages_args )
+foreach (_varName ${_varNames})
+  if(_varName MATCHES "^ITK_" OR _varName MATCHES "FFTW")
+    message( "Variable defined ${_varName}: ${${_varName}}")
+    list(APPEND ITK_VARS ${_varName})
+  endif()
+endforeach()
+
+list(APPEND ITK_VARS
+  PYTHON_EXECUTABLE
+  PYTHON_INCLUDE_DIR
+  )
+
+VariableListToCache( ITK_VARS  ep_itk_cache )
+VariableListToArgs( ITK_VARS  ep_itk_args )
 
 
 set(proj ITK)  ## Use ITK convention of calling it ITK
@@ -25,7 +34,7 @@ else()
 endif()
 
 
-file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt" "${ep_languages_cache}\n${ep_common_cache}" )
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt" "${ep_itk_cache}\n${ep_common_cache}" )
 
 ExternalProject_Add(${proj}
   GIT_REPOSITORY ${ITK_REPOSITORY}
@@ -37,8 +46,8 @@ ExternalProject_Add(${proj}
   CMAKE_ARGS
   --no-warn-unused-cli
   -C "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt"
+  ${ep_itk_args}
   ${ep_common_args}
-  ${ep_languages_args}
   -DBUILD_EXAMPLES:BOOL=OFF
   -DBUILD_TESTING:BOOL=OFF
   -DBUILD_SHARED_LIBS:BOOL=${ITK_BUILD_SHARED_LIBS}
@@ -47,23 +56,17 @@ ExternalProject_Add(${proj}
   -DITK_LEGACY_REMOVE:BOOL=ON
   -DITK_BUILD_ALL_MODULES:BOOL=ON
   -DITK_USE_REVIEW:BOOL=ON
-  -DUSE_WRAP_ITK:BOOL=${ITK_WRAPPING}
-  -DINSTALL_WRAP_ITK_COMPATIBILITY:BOOL=OFF
-  -DWRAP_float:BOOL=ON
-  -DWRAP_unsigned_char:BOOL=ON
-  -DWRAP_signed_short:BOOL=ON
-  -DWRAP_unsigned_short:BOOL=ON
-  -DWRAP_complex_float:BOOL=ON
-  -DWRAP_vector_float:BOOL=ON
-  -DWRAP_covariant_vector_float:BOOL=ON
-  -DWRAP_rgb_signed_short:BOOL=ON
-  -DWRAP_rgb_unsigned_char:BOOL=ON
-  -DWRAP_rgb_unsigned_short:BOOL=ON
-  -DWRAP_ITK_TCL:BOOL=OFF
-  -DWRAP_ITK_JAVA:BOOL=OFF
-  -DWRAP_ITK_PYTHON:BOOL=ON
-  ${ITK_PYTHON_ARGS}
-  ${FFTW_FLAGS}
+  -DITK_WRAP_float:BOOL=ON
+  -DITK_WRAP_unsigned_char:BOOL=ON
+  -DITK_WRAP_signed_short:BOOL=ON
+  -DITK_WRAP_unsigned_short:BOOL=ON
+  -DITK_WRAP_complex_float:BOOL=ON
+  -DITK_WRAP_vector_float:BOOL=ON
+  -DITK_WRAP_covariant_vector_float:BOOL=ON
+  -DITK_WRAP_rgb_signed_short:BOOL=ON
+  -DITK_WRAP_rgb_unsigned_char:BOOL=ON
+  -DITK_WRAP_rgb_unsigned_short:BOOL=ON
+  -DITK_WRAP_PYTHON:BOOL=${ITK_WRAPPING}
   BUILD_COMMAND ${BUILD_COMMAND_STRING}
   DEPENDS
   ${ITK_DEPENDENCIES}
