@@ -4,7 +4,8 @@
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "doc" : "",
-  "pixel_types" : "typelist::Append<BasicPixelIDTypeList, VectorPixelIDTypeList>::Type",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
   "filter_type" : "itk::ResampleImageFilter<InputImageType, OutputImageType, double>",
   "include_files" : [
     "sitkDirectionConvert.hxx",
