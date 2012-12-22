@@ -4,9 +4,11 @@
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "doc" : "",
-  "pixel_types" : "typelist::Append<BasicPixelIDTypeList, VectorPixelIDTypeList>::Type",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
   "filter_type" : "itk::ResampleImageFilter<InputImageType, OutputImageType, double>",
   "include_files" : [
+    "sitkCreateInterpolator.hxx",
     "sitkDirectionConvert.hxx",
     "sitkTransform.h"
   ],
@@ -15,13 +17,23 @@
       "name" : "Transform",
       "type" : "Transform",
       "default" : "itk::simple::Transform()",
-      "custom_itk_cast" : "const typename FilterType::TransformType *itkTx;\
-    if ( !(itkTx = dynamic_cast<const typename FilterType::TransformType *>(this->m_Transform.GetITKBase() )) ) {\
-      if( this->m_Transform.GetITKBase()->GetNameOfClass() != std::string(\"IdentityTransform\") )\
-      sitkExceptionMacro( \"Unexpected error converting transform! Possible miss matching dimensions!\" );\
-     }\
-    else { filter->SetTransform( itkTx ); }",
-     "no_print" : "1"
+      "custom_itk_cast" : "const typename FilterType::TransformType *itkTx;\n    if ( !(itkTx = dynamic_cast<const typename FilterType::TransformType *>(this->m_Transform.GetITKBase() )) ) {\n      if( this->m_Transform.GetITKBase()->GetNameOfClass() != std::string(\"IdentityTransform\") )\n      sitkExceptionMacro( \"Unexpected error converting transform! Possible miss matching dimensions!\" );\n     }\n    else { filter->SetTransform( itkTx ); }",
+      "no_print" : "1",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the coordinate transformation. Set the coordinate transform to use for resampling. Note that this must be in physical coordinates and it is the output-to-input transform, NOT the input-to-output transform that you might naively expect. By default the filter uses an Identity transform. You must provide a different transform here, before attempting to run the filter, if you do not want to use the default Identity transform.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get a pointer to the coordinate transform.\n"
+    },
+    {
+      "name" : "Interpolator",
+      "type" : "InterpolatorEnum",
+      "default" : "itk::simple::sitkLinear",
+      "doc" : "",
+      "custom_itk_cast" : "filter->SetInterpolator( CreateInterpolator( image1.GetPointer(), m_Interpolator ) );",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the interpolator function. The default is LinearInterpolateImageFunction<InputImageType, TInterpolatorPrecisionType>. Some other options are NearestNeighborInterpolateImageFunction(useful for binary masks and other images with a small number of possible pixel values), and BSplineInterpolateImageFunction(which provides a higher order of interpolation).\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get a pointer to the interpolator function.\n"
     },
     {
       "name" : "Size",
