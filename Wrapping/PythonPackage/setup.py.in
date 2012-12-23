@@ -1,7 +1,7 @@
 from distribute_setup import use_setuptools
 use_setuptools()
 
-from distutils.core import setup
+from setuptools import setup
 from distutils.sysconfig import get_python_lib
 from distutils.core import Extension
 from distutils.util import get_platform
