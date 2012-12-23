@@ -29,6 +29,8 @@
 #include "sitkImage.h"
 #include "sitkShow.h"
 
+#include "sitkInterpolator.h"
+
 #include "sitkImageFilter.h"
 
 // IO classes
