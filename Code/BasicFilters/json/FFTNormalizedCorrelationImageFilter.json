@@ -19,7 +19,7 @@
       "tag" : "defaults",
       "description" : "Basic xcorr with and odd kernel",
       "settings" : [],
-      "tolerance" : "0.0001",
+      "tolerance" : "0.0002",
       "inputs" : [
         "Input/DeconvolutionInput.nrrd",
         "Input/Gaussian_1.5.nrrd"

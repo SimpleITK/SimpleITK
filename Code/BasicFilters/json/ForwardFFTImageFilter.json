@@ -11,7 +11,7 @@
     {
       "tag" : "defaults",
       "description" : "Test ForwardFFT",
-      "tolerance" : "0.04",
+      "tolerance" : "0.09",
       "settings" : [],
       "inputs" : [
         "Input/RA-Slice-Float.nrrd"
