@@ -7,6 +7,7 @@ include(${ITK_USE_FILE})
 # To add a new file, just add it to this list.  Any GoogleTests inside will be automatically
 # added to ctest.
 set ( TestSource
+  SimpleITKTestHarness.cxx
   ImageTests.cxx
   CommonTests.cxx
   RegistrationTests.cxx
