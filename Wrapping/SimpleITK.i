@@ -70,6 +70,7 @@
 %include Python.i
 %include Lua.i
 %include R.i
+%include Ruby.i
 
 // Help SWIG handle std vectors
 namespace std

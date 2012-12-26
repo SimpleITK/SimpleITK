@@ -1,6 +1,10 @@
  // R specific swig components
 #if SWIGR
 
+// ignore overload methods of int type when there is an enum
+%ignore itk::simple::CastImageFilter::SetOutputPixelType( PixelIDValueType pixelID );
+%ignore itk::simple::GetPixelIDValueAsString( PixelIDValueType type );
+
 %include <std_vector.i>
  // we don't want a class assigned to unsigned char
 %typemap(scoerceout) unsigned char,
