@@ -42,7 +42,7 @@ namespace itk
   public:
     virtual ~PimpleImageBase( void ) { };
 
-    virtual PixelIDValueType GetPixelIDValue(void) const = 0;
+    virtual PixelIDValueEnum GetPixelID(void) const = 0;
     virtual unsigned int GetDimension( void ) const  = 0;
     virtual unsigned int GetNumberOfComponentsPerPixel( void ) const = 0;
 

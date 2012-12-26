@@ -111,11 +111,11 @@ namespace itk
     virtual const itk::DataObject* GetDataBase( void ) const { return this->m_Image.GetPointer(); }
 
 
-    PixelIDValueType GetPixelIDValue(void) const throw()
+    PixelIDValueEnum GetPixelID(void) const throw()
       {
         // The constructor ensures that we have a valid image
         // this maps the Image's pixel type to the array index
-        return ImageTypeToPixelIDValue<ImageType>::Result;
+        return static_cast<PixelIDValueEnum>(ImageTypeToPixelIDValue<ImageType>::Result);
       }
 
     virtual unsigned int GetDimension( void ) const
@@ -510,7 +510,7 @@ namespace itk
     InternalGetPixel( const std::vector<uint32_t> &idx ) const
       {
         Unused( idx );
-        sitkExceptionMacro( << "The image is of type: " << GetPixelIDValueAsString( this->GetPixelIDValue() )
+        sitkExceptionMacro( << "The image is of type: " << GetPixelIDValueAsString( this->GetPixelID() )
                             << " but the GetPixel access method requires type: "
                             << GetPixelIDValueAsString(  PixelIDToPixelIDValue<TPixelIDType>::Result )
                             << "!" );
@@ -551,7 +551,7 @@ namespace itk
                        typename NumericTraits<typename PixelIDToImageType<TPixelIDType,2>::ImageType::PixelType>::ValueType *>::Type
     InternalGetBuffer( void )
       {
-        sitkExceptionMacro( << "The image is of type: " << GetPixelIDValueAsString( this->GetPixelIDValue() )
+        sitkExceptionMacro( << "The image is of type: " << GetPixelIDValueAsString( this->GetPixelID() )
                             << " but the GetBuffer access method requires type: "
                             << GetPixelIDValueAsString(  PixelIDToPixelIDValue<TPixelIDType>::Result )
                             << "!" );

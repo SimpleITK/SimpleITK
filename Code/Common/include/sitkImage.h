@@ -146,6 +146,7 @@ namespace simple
     /**@}*/
 
     // could return -1 if in valid
+    PixelIDValueEnum GetPixelID( void ) const;
     PixelIDValueType GetPixelIDValue( void ) const;
 
     unsigned int GetDimension( void ) const;

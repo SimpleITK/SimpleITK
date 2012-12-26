@@ -203,11 +203,10 @@ namespace itk
         sitkExceptionMacro( "Unable to construct image of unsupported pixel type" );
         }
 
-      PixelIDValueType type = ValueEnum;
       if ( Depth == 0 ) {
-      allocateMemberFactory.GetMemberFunction( type, 2 )( Width, Height, Depth, numberOfComponents );
+      allocateMemberFactory.GetMemberFunction( ValueEnum, 2 )( Width, Height, Depth, numberOfComponents );
       } else {
-      allocateMemberFactory.GetMemberFunction( type, 3 )( Width, Height, Depth, numberOfComponents );
+      allocateMemberFactory.GetMemberFunction( ValueEnum, 3 )( Width, Height, Depth, numberOfComponents );
       }
     }
 
@@ -282,8 +281,13 @@ namespace itk
 
     PixelIDValueType Image::GetPixelIDValue( void ) const
     {
+      return this->GetPixelID();
+    }
+
+    PixelIDValueEnum Image::GetPixelID( void ) const
+    {
       assert( m_PimpleImage );
-      return this->m_PimpleImage->GetPixelIDValue();
+      return this->m_PimpleImage->GetPixelID();
     }
 
     unsigned int Image::GetDimension( void ) const
