@@ -122,7 +122,7 @@ Image ${name}::Execute ( const std::vector<Image> &images )
     sitkExceptionMacro( "Atleast one input is required" );
     }
 
-  PixelIDValueType type = images.front().GetPixelIDValue();
+  PixelIDValueEnum type = images.front().GetPixelID();
   unsigned int dimension = images.front().GetDimension();
 
   for( std::vector<Image>::const_iterator i = images.begin(); i != images.end(); ++i )
