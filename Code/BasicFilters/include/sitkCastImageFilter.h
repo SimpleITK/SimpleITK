@@ -43,8 +43,9 @@ public:
   typedef CastImageFilter      Self;
 
   /** Set/Get the output pixel type */
+  Self& SetOutputPixelType( PixelIDValueEnum pixelID );
   Self& SetOutputPixelType( PixelIDValueType pixelID );
-  PixelIDValueType GetOutputPixelType( void ) const;
+  PixelIDValueEnum GetOutputPixelType( void ) const;
 
   /**
    * Default Constructor that takes no arguments and initializes
@@ -63,7 +64,7 @@ public:
 
 private:
 
-  PixelIDValueType m_OutputPixelType;
+  PixelIDValueEnum m_OutputPixelType;
 
   /** Methods to actually implement conversion from one image type
    * to another.
@@ -170,7 +171,7 @@ private:
 
 };
 
-  SITKBasicFilters0_EXPORT Image Cast ( const Image& image, PixelIDValueType pixelID );
+  SITKBasicFilters0_EXPORT Image Cast ( const Image& image, PixelIDValueEnum pixelID );
 
 }
 }
