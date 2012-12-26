@@ -196,10 +196,10 @@ itk::simple::MeasurementMap LabelStatisticsImageFilter::GetMeasurementMap( const
 
 Image LabelStatisticsImageFilter::Execute ( const Image& image1 , const Image & labels )
   {
-    PixelIDValueType type = image1.GetPixelIDValue();
+    PixelIDValueEnum type = image1.GetPixelID();
     unsigned int dimension = image1.GetDimension();
 
-    PixelIDValueType labeltype = labels.GetPixelIDValue();
+    PixelIDValueEnum labeltype = labels.GetPixelID();
     unsigned int labeldimension = labels.GetDimension();
 
     if ( dimension != labeldimension )
