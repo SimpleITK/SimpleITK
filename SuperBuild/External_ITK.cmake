@@ -67,6 +67,8 @@ ExternalProject_Add(${proj}
   -DITK_WRAP_rgb_unsigned_char:BOOL=ON
   -DITK_WRAP_rgb_unsigned_short:BOOL=ON
   -DITK_WRAP_PYTHON:BOOL=${ITK_WRAPPING}
+  # Required as to not install into system
+  -DINSTALL_WRAP_ITK_COMPATIBILITY:BOOL=OFF
   # Swig
   -DSWIG_DIR:PATH=${SWIG_DIR}
   -DSWIG_EXECUTABLE:PATH=${SWIG_EXECUTABLE}
