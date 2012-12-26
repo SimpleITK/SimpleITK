@@ -40,6 +40,6 @@ SET(CTEST_CUSTOM_WARNING_EXCEPTION
   ".*_wrap.cxx"
 
   # Ignore warning in lua about the use of `tmpnam' is dangerous
-  "loslib.*[Ww]arning: the use of ?tmpnam? is dangerous"
+  ".*loslib.*the use of ?tmpnam? is dangerous"
 )
 
