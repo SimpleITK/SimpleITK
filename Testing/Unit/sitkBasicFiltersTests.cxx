@@ -229,6 +229,7 @@ TEST(BasicFilters,Cast) {
   EXPECT_EQ ( "3ccccde44efaa3d688a86e94335c1f16", hasher.Execute ( image ) );
 
   EXPECT_EQ ( image.GetPixelIDValue(), itk::simple::sitkFloat32 );
+  EXPECT_EQ ( image.GetPixelID(), itk::simple::sitkFloat32 );
   EXPECT_EQ ( image.GetPixelIDTypeAsString(), "32-bit float" );
 
   typedef std::map<std::string,itk::simple::PixelIDValueType> MapType;
