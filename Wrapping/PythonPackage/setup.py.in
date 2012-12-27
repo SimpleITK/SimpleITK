@@ -5,6 +5,7 @@ from setuptools import setup
 from distutils.sysconfig import get_python_lib
 from distutils.core import Extension
 from distutils.util import get_platform
+from distutils.dist import Distribution
 import re
 
 doc_files = @SimpleITK_DOC_FILES_AS_LIST@
