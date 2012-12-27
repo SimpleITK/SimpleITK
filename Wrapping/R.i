@@ -322,7 +322,7 @@
       case itk::simple::ConditionalValue< itk::simple::sitkComplexFloat64 != itk::simple::sitkUnknown, itk::simple::sitkComplexFloat64, -13 >::Value:
         {
           char error_msg[1024];
-          snprintf( error_msg, 1024, "Exception thrown ImAsArray : complex floating types not supported");
+          snprintf( error_msg, 1024, "Exception thrown SingleBracketOperator : complex floating types not supported");
           Rprintf(error_msg);
         }
         break;
@@ -359,6 +359,7 @@
     // obviously producing a redundant copy. If we do a direct cast,
     // then we're probably not multi-threaded.
     // Lets be slow but memory efficient.
+
     std::vector<unsigned int> sz = src.GetSize();
     itk::simple::PixelIDValueType  PID=src.GetPixelIDValue();
     SEXP res = 0;

@@ -125,6 +125,7 @@ setMethod('[', "_p_itk__simple__Image",
 setMethod('as.array', "_p_itk__simple__Image",
           function(x, drop=TRUE) {
             sz <- x$GetSize()
+            if (.hasSlot(x, "ref")) x = slot(x,"ref")
             ans = .Call("R_swig_ImAsArray", x, FALSE, PACKAGE = "SimpleITK")
             dim(ans) <- sz
             if (drop)

@@ -77,9 +77,12 @@ end)
 )
 
   inputs <- list()
-  for ( i in 3:length(args)-1 )
+  if (length(args) >= 3)
   {
-  inputs[[length(inputs)+1]] <- ReadImage( args[[i]] )
+    for ( i in 3:length(args)-1 )
+    {
+    inputs[[length(inputs)+1]] <- ReadImage( args[[i]] )
+    }
   }
 
 $(if inputA_cast then
