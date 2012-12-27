@@ -24,39 +24,6 @@
 %{
 #include "sitkConditional.h"
 
-  // causes swig problems
-  //namespace sitk = itk::simple;
-
-  itk::simple::PixelIDValueType RsitkUInt8 = itk::simple::sitkUInt8;
-  itk::simple::PixelIDValueType RsitkInt8  = itk::simple::sitkInt8;
-  itk::simple::PixelIDValueType RsitkUInt16 = itk::simple::sitkUInt16;
-  itk::simple::PixelIDValueType RsitkInt16  = itk::simple::sitkInt16;
-  itk::simple::PixelIDValueType RsitkUInt32 = itk::simple::sitkUInt32;
-  itk::simple::PixelIDValueType RsitkInt32  = itk::simple::sitkInt32;
-  itk::simple::PixelIDValueType RsitkUInt64 = itk::simple::sitkUInt64;
-  itk::simple::PixelIDValueType RsitkInt64  = itk::simple::sitkInt64;
-  itk::simple::PixelIDValueType RsitkFloat32 = itk::simple::sitkFloat32;
-  itk::simple::PixelIDValueType RsitkFloat64 = itk::simple::sitkFloat64;
-
-  itk::simple::PixelIDValueType RsitkComplexFloat32 = itk::simple::sitkComplexFloat32;
-  itk::simple::PixelIDValueType RsitkComplexFloat64 = itk::simple::sitkComplexFloat64;
-
-  itk::simple::PixelIDValueType RsitkVectorUInt8   = itk::simple::sitkVectorUInt8;
-  itk::simple::PixelIDValueType RsitkVectorInt8    = itk::simple::sitkVectorInt8;
-  itk::simple::PixelIDValueType RsitkVectorUInt16  = itk::simple::sitkVectorUInt16;
-  itk::simple::PixelIDValueType RsitkVectorInt16   = itk::simple::sitkVectorInt16;
-  itk::simple::PixelIDValueType RsitkVectorUInt32  = itk::simple::sitkVectorUInt32;
-  itk::simple::PixelIDValueType RsitkVectorInt32   = itk::simple::sitkVectorInt32;
-  itk::simple::PixelIDValueType RsitkVectorUInt64  = itk::simple::sitkVectorUInt64;
-  itk::simple::PixelIDValueType RsitkVectorInt64   = itk::simple::sitkVectorInt64;
-  itk::simple::PixelIDValueType RsitkVectorFloat32 = itk::simple::sitkVectorFloat32;
-  itk::simple::PixelIDValueType RsitkVectorFloat64 = itk::simple::sitkVectorFloat64;
-
-
-  itk::simple::PixelIDValueType RsitkLabelUInt8  = itk::simple::sitkLabelUInt8;
-  itk::simple::PixelIDValueType RsitkLabelUInt16 = itk::simple::sitkLabelUInt16;
-  itk::simple::PixelIDValueType RsitkLabelUInt32 = itk::simple::sitkLabelUInt32;
-  itk::simple::PixelIDValueType RsitkLabelUInt64 = itk::simple::sitkLabelUInt64;
 
   // functions for image content access via bracket operator
   itk::simple::Image SingleBracketOperator(std::vector<int> xcoord, std::vector<int> ycoord, std::vector<int> zcoord, const itk::simple::Image src)
