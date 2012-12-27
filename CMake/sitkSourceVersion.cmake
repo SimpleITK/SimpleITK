@@ -30,7 +30,15 @@
 
 include(GetGitRevisionDescription)
 
-get_git_head_revision(GIT_REFSPEC _GIT_VERSION_HASH)
+get_git_head_revision(GIT_REFVAR _GIT_VERSION_HASH)
+
+# if there is not git directory we should be in a distributed package
+# which should contain this additional cmake file with the
+# _GIT_VERSION variables
+if(_GIT_VERSION_HASH STREQUAL "GITDIR-NOTFOUND")
+  include( "${CMAKE_CURRENT_SOURCE_DIR}/CMake/sitkSourceVersionVars.cmake" )
+  return()
+endif()
 
 if(_GIT_VERSION_HASH MATCHES "[a-fA-F0-9]+")
   string(SUBSTRING "${_GIT_VERSION_HASH}" 0 5 _GIT_VERSION_HASH)
@@ -90,3 +98,7 @@ else()
   MATH(EXPR _GIT_VERSION_COUNT "${_GIT_VERSION_COUNT}+1")
   set(_GIT_VERSION_DEV "${_GIT_VERSION_COUNT}")
 endif()
+
+# save variable in a configuration file in case we have no git directory
+configure_file( "${CMAKE_CURRENT_SOURCE_DIR}/CMake/sitkSourceVersionVars.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/sitkSourceVersionVars.cmake" )
