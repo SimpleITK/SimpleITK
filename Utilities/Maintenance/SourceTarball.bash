@@ -19,7 +19,7 @@
 
 usage() {
   die 'USAGE: SourceTarball.bash [(--tgz|--txz|--zip)...] \
-        [--verbose] [-v <version>] [<tag>|<commit>]'
+        [--verbose] [-v <version>] build_dir [<tag>|<commit>]'
 }
 
 info() {
@@ -87,6 +87,36 @@ index_data_objects() {
   return_pipe_status
 }
 
+index_additional_object() {
+
+   file="$1"
+   path=$file
+   test -n "$2" && path=$2/$(basename $file)
+
+   obj=$(git hash-object -t blob -w "$file") &&
+    echo "100644 blob $obj	$path" |
+    git update-index --index-info
+
+  return_pipe_status
+
+}
+
+
+# NOTE: this methods exports the GIT_ALTERNATE_OBJECT_DIRECTORIES variable to effect later processes
+index_submodule_objects() {
+
+   SUBMODULE_LIST=$(git submodule foreach --quiet 'echo $(git rev-parse --git-dir)/objects')
+   export GIT_ALTERNATE_OBJECT_DIRECTORIES=$SUBMODULE_LIST
+   IFS=' '
+   git submodule foreach --quiet  'git ls-tree --full-tree -r $sha1 | awk  -v path=$path '"'"'{ print path, $1, $2, $3, path "/" $4 }'"'"'' |
+   while read path mode type object file; do
+    echo "$mode $type $object	$file" ||
+    return
+   done  |
+   git update-index --index-info
+   return_pipe_status
+}
+
 load_data_objects() {
   find_data_objects "$1" |
   index_data_objects
@@ -122,6 +152,7 @@ formats=
 commit=
 version=
 verbose=
+build_dir=
 
 # Parse command line options.
 while test $# != 0; do
@@ -133,13 +164,22 @@ while test $# != 0; do
     --) shift; break ;;
     -v) shift; version="$1" ;;
     -*) usage ;;
-    *) test -z "$commit" && commit="$1" || usage ;;
+    *) { test -z "$build_dir" && build_dir="$1"; } ||
+       { test -z "$commit" && commit="$1"; } ||
+       usage ;;
   esac
   shift
 done
 test $# = 0 || usage
 test -n "$commit" || commit=HEAD
 test -n "$formats" || formats=tgz
+
+test -n "$build_dir" ||
+  die "Missing required build_dir argument."
+
+test -e "${build_dir}/SimpleITKConfig.cmake" ||
+  die "invalid build directory."
+
 
 if ! git rev-parse --verify -q "$commit" >/dev/null ; then
   die "'$commit' is not a valid commit"
@@ -160,13 +200,19 @@ trap "rm -rf '$GIT_INDEX_FILE'" EXIT &&
 info "Loading tree from $commit..." &&
 git read-tree -m -i $commit &&
 
-info "Loading data for $commit..." &&
-load_data_objects $commit &&
+#info "Loading data for $commit..." &&
+#load_data_objects $commit &&
+
+index_additional_object "${build_dir}/sitkSourceVersionVars.cmake" "CMake" &&
+
+info "Loading data submodule" &&
+index_submodule_objects &&
+
 
 info "Generating source archive..." &&
 tree=$(git write-tree) &&
 result=0 &&
 for fmt in $formats; do
-  git_archive_$fmt $tree "InsightToolkit-$version" || result=1
+  git_archive_$fmt $tree "SimpleITK-$version" || result=1
 done &&
 exit $result
