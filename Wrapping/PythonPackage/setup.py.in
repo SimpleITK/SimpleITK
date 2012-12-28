@@ -1,10 +1,11 @@
 from distribute_setup import use_setuptools
 use_setuptools()
 
-from distutils.core import setup
+from setuptools import setup
 from distutils.sysconfig import get_python_lib
 from distutils.core import Extension
 from distutils.util import get_platform
+from distutils.dist import Distribution
 import re
 
 doc_files = @SimpleITK_DOC_FILES_AS_LIST@
@@ -64,6 +65,19 @@ def get_pep386version():
              version += ".dev"+post
 
     return version
+
+
+# HACK
+# We are using the "data_files" parameter to package up the SimpleITK
+# libraries. However distribute does not detect this as an extension
+# and does not build a egg with the platform name in the egg file
+# name. So we forcable overload a method so that distutils, always
+# reports that we are always an extension.
+def always_has_ext_modules (self):
+    """Always returns true, to force extensimon behavior in packaging."""
+    return True
+Distribution.has_ext_modules =  always_has_ext_modules
+
 
 
 setup(
