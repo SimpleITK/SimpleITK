@@ -94,6 +94,21 @@ std::vector<std::string> DataFinder::GetJavaExecutable ()
   std::vector<std::string> words;
   selectArch(words);
   words.push_back(JAVA_EXECUTABLE_PATH);
+
+#ifdef OSX_ARCHITECTURES
+#ifdef __x86_64__
+  words.push_back("-d64");
+#endif
+#ifdef __i386__
+  words.push_back("-d32");
+#endif
+#ifdef __ppc__
+  words.push_back("-d32");
+#endif
+#ifdef __ppc64__
+  words.push_back("-d64");
+#endif
+#endif
   return words;
   }
 
