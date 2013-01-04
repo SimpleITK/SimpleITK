@@ -19,6 +19,7 @@
 #include "sitkTemplateFunctions.h"
 
 #include "itkTransformBase.h"
+#include "itkTransformFactory.h"
 
 #include "itkIdentityTransform.h"
 #include "itkTranslationTransform.h"
@@ -48,6 +49,22 @@ namespace itk
 {
 namespace simple
 {
+
+namespace
+{
+template<unsigned int Dimension>
+bool RegisterMoreTransforms(void)
+{
+  typedef itk::MatrixOffsetTransformBase<double, Dimension, Dimension> MatrixOffsetTransformType;
+  itk::TransformFactory<MatrixOffsetTransformType>::RegisterTransform();
+  typedef itk::MatrixOffsetTransformBase<double, Dimension, Dimension> MatrixOffsetTransformType;
+  itk::TransformFactory<MatrixOffsetTransformType>::RegisterTransform();
+  return true;
+}
+
+bool initialized = RegisterMoreTransforms<2>() && RegisterMoreTransforms<3>();
+
+}
 
 // This is a base class of the private implementatino of the transform
 // class.
@@ -438,7 +455,7 @@ void Transform::MakeUniqueForWrite( void )
     return this->m_PimpleTransform->ToString();
   }
 
-  Transform Transform::ReadTransform( const std::string &filename )
+  Transform ReadTransform( const std::string &filename )
   {
     TransformFileReader::Pointer reader = TransformFileReader::New();
     reader->SetFileName(filename.c_str() );
@@ -524,11 +541,11 @@ void Transform::MakeUniqueForWrite( void )
 
   void Transform::WriteTransform( const std::string &filename ) const
   {
-    Self::WriteTransform( *this, filename );
+    itk::simple::WriteTransform( *this, filename );
   }
 
   // write
-  void Transform::WriteTransform( const Transform &transform, const std::string &filename)
+  void WriteTransform( const Transform &transform, const std::string &filename)
   {
     itk::TransformFileWriter::Pointer writer = itk::TransformFileWriter::New();
     writer->SetFileName(filename.c_str());

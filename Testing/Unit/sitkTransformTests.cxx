@@ -223,7 +223,7 @@ TEST(TransformTest, ReadTransformResample) {
     std::string fname = dataFinder.GetFile( *ptxFiles );
     std::cout << "Reading: " << *ptxFiles << std::endl;
 
-    EXPECT_NO_THROW( tx = sitk::Transform::ReadTransform( fname ) );
+    EXPECT_NO_THROW( tx = sitk::ReadTransform( fname ) );
 
     sitk::Image out = sitk::Resample( img, tx );
 

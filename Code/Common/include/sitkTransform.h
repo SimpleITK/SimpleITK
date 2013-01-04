@@ -130,12 +130,8 @@ public:
 
   std::vector< double > TransformPoint( const std::vector< double > &point ) const;
 
-  // read
-  static Transform ReadTransform( const std::string &filename );
-
   // write
   void WriteTransform( const std::string &filename ) const;
-  static void WriteTransform( const Transform &transform, const std::string &filename);
 
   // todo set identity
 
@@ -156,6 +152,14 @@ private:
   // valid object
   PimpleTransformBase *m_PimpleTransform;
 };
+
+
+// read
+Transform ReadTransform( const std::string &filename );
+
+// write
+void WriteTransform( const Transform &transform, const std::string &filename);
+
 }
 }
 
