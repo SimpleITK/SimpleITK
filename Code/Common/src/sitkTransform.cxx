@@ -438,7 +438,7 @@ void Transform::MakeUniqueForWrite( void )
     return this->m_PimpleTransform->ToString();
   }
 
-  Transform Transform::ReadTransform( const std::string &filename )
+  Transform ReadTransform( const std::string &filename )
   {
     TransformFileReader::Pointer reader = TransformFileReader::New();
     reader->SetFileName(filename.c_str() );
@@ -524,11 +524,11 @@ void Transform::MakeUniqueForWrite( void )
 
   void Transform::WriteTransform( const std::string &filename ) const
   {
-    Self::WriteTransform( *this, filename );
+    itk::simple::WriteTransform( *this, filename );
   }
 
   // write
-  void Transform::WriteTransform( const Transform &transform, const std::string &filename)
+  void WriteTransform( const Transform &transform, const std::string &filename)
   {
     itk::TransformFileWriter::Pointer writer = itk::TransformFileWriter::New();
     writer->SetFileName(filename.c_str());
