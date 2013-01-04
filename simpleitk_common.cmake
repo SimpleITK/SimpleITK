@@ -339,7 +339,8 @@ while(NOT dashboard_done)
     if(COMMAND dashboard_hook_build)
       dashboard_hook_build()
     endif()
-    ctest_build()
+    ctest_build( BUILD "${CTEST_BINARY_DIRECTORY}" NUMBER_ERRORS
+      build_number_errors )
 
     if(COMMAND dashboard_hook_test)
       dashboard_hook_test()
