@@ -27,6 +27,7 @@
 #include "sitkDetail.h"
 #include "sitkVersion.h"
 #include "sitkImage.h"
+#include "sitkTransform.h"
 #include "sitkShow.h"
 
 #include "sitkInterpolator.h"
@@ -48,8 +49,6 @@
 #include "sitkLabelStatisticsImageFilter.h"
 
 #include "sitkCastImageFilter.h"
-
-// Registration support
 
 
 // These headers are auto-generated
