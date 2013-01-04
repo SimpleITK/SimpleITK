@@ -1,11 +1,37 @@
+#
+# ONLY MODIFY TO CHANGE VERSION
+#
+# The number of commits since last this file has changed it used to
+# define "dev" and "post", modification of this file will reset that
+# version.
+#
+
 # Version info
-set(SimpleITK_Major 0)
-set(SimpleITK_Minor 6)
-set(SimpleITK_Patch 0)
 
-include(GetGitRevisionDescription)
-get_git_head_revision(GIT_REFSPEC GIT_SHA1)
-git_describe(GIT_TAG)
+set(SimpleITK_VERSION_MAJOR 0)
+set(SimpleITK_VERSION_MINOR 6)
+set(SimpleITK_VERSION_PATCH 0)
+#set(SimpleITK_VERSION_TWEAK "")
 
-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Code/Common/src/sitkVersion.cxx.in" "${CMAKE_CURRENT_BINARY_DIR}/Code/Common/src/sitkVersion.cxx" @ONLY)
+# Letter followed by number to indicate alpha, beta, release
+# candidates.
+#
+# a[N]+<b[N]+<c[N]+=rc[N]+
+#set(SimpleITK_VERSION_RC "")
+
+include(sitkSourceVersion)
+
+# The hash is the current git sha1 hash tag of the HEAD.
+set(SimpleITK_VERSION_HASH "${_GIT_VERSION_HASH}")
+
+# DEV or POST is set to the number of commits since this file has been
+# changed. If the MAJOR.MINOR.[PATCH[.TWEAK]] matches "closest"
+# version tag then its consider in the release branch and POST is set
+# while DEV is undefined, otherwise we are considered under
+# development and DEV is set and POST is undefined.
+if(DEFINED _GIT_VERSION_POST)
+  set(SimpleITK_VERSION_POST "${_GIT_VERSION_POST}")
+elseif(DEFINED _GIT_VERSION_DEV)
+  set(SimpleITK_VERSION_DEV "${_GIT_VERSION_DEV}")
+endif()
 
