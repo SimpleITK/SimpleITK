@@ -19,6 +19,7 @@
 #include "sitkTemplateFunctions.h"
 
 #include "itkTransformBase.h"
+#include "itkTransformFactory.h"
 
 #include "itkIdentityTransform.h"
 #include "itkTranslationTransform.h"
@@ -48,6 +49,22 @@ namespace itk
 {
 namespace simple
 {
+
+namespace
+{
+template<unsigned int Dimension>
+bool RegisterMoreTransforms(void)
+{
+  typedef itk::MatrixOffsetTransformBase<double, Dimension, Dimension> MatrixOffsetTransformType;
+  itk::TransformFactory<MatrixOffsetTransformType>::RegisterTransform();
+  typedef itk::MatrixOffsetTransformBase<double, Dimension, Dimension> MatrixOffsetTransformType;
+  itk::TransformFactory<MatrixOffsetTransformType>::RegisterTransform();
+  return true;
+}
+
+bool initialized = RegisterMoreTransforms<2>() && RegisterMoreTransforms<3>();
+
+}
 
 // This is a base class of the private implementatino of the transform
 // class.
