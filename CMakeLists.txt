@@ -134,9 +134,33 @@ endif ( NOT SITK_HAS_STDINT_H )
 #-----------------------------------------------------------------------------
 # Version information
 include(Version.cmake)
-set(JAR_FILE simpleitk-${SimpleITK_Major}.${SimpleITK_Minor}.${SimpleITK_Patch}.jar)
-set(JAVADOC_FILE simpleitk-javadoc-${SimpleITK_Major}.${SimpleITK_Minor}.${SimpleITK_Patch}.jar)
-set(JAVA_SOURCE_FILE simpleitk-source-${SimpleITK_Major}.${SimpleITK_Minor}.${SimpleITK_Patch}.jar)
+
+set(SimpleITK_VERSION "${SimpleITK_VERSION_MAJOR}.${SimpleITK_VERSION_MINOR}")
+if(DEFINED SimpleITK_VERSION_PATCH)
+  set(SimpleITK_VERSION "${SimpleITK_VERSION}.${SimpleITK_VERSION_PATCH}")
+  if(DEFINED SimpleITK_VERSION_TWEAK)
+    set(SimpleITK_VERSION "${SimpleITK_VERSION}.${SimpleITK_VERSION_TWEAK}")
+  endif()
+endif()
+
+if(DEFINED SimpleITK_VERSION_RC)
+  set(SimpleITK_VERSION "${SimpleITK_VERSION}${SimpleITK_VERSION_RC}")
+endif()
+if(DEFINED SimpleITK_VERSION_POST)
+  set(SimpleITK_VERSION "${SimpleITK_VERSION}.post${SimpleITK_VERSION_POST}")
+elseif(DEFINED SimpleITK_VERSION_DEV)
+  set(SimpleITK_VERSION "${SimpleITK_VERSION}.dev${SimpleITK_VERSION_DEV}")
+endif()
+
+if( NOT SimpleITK_BUILD_DISTRIBUTE )
+  set(SimpleITK_VERSION "${SimpleITK_VERSION}-g${SimpleITK_VERSION_HASH}")
+endif()
+
+message(STATUS "Building SimpleITK version \"${SimpleITK_VERSION}\"")
+
+set(JAR_FILE "simpleitk-${SimpleITK_VERSION}.jar")
+set(JAVADOC_FILE "simpleitk-javadoc-${SimpleITK_VERSION}.jar")
+set(JAVA_SOURCE_FILE "simpleitk-source-${SimpleITK_VERSION}.jar")
 
 
 # Create cached list of all template components
@@ -173,13 +197,13 @@ if(NOT SimpleITK_INSTALL_ARCHIVE_DIR)
   set(SimpleITK_INSTALL_ARCHIVE_DIR "lib")
 endif()
 if(NOT SimpleITK_INSTALL_INCLUDE_DIR)
-  set(SimpleITK_INSTALL_INCLUDE_DIR "include/SimpleITK-${SimpleITK_Major}.${SimpleITK_Minor}")
+  set(SimpleITK_INSTALL_INCLUDE_DIR "include/SimpleITK-${SimpleITK_VERSION_MAJOR}.${SimpleITK_VERSION_MINOR}")
 endif()
 if(NOT SimpleITK_INSTALL_DOC_DIR)
-  set(SimpleITK_INSTALL_DOC_DIR share/doc/SimpleITK-${SimpleITK_Major}.${SimpleITK_Minor})
+  set(SimpleITK_INSTALL_DOC_DIR share/doc/SimpleITK-${SimpleITK_VERSION_MAJOR}.${SimpleITK_VERSION_MINOR})
 endif()
 if(NOT SimpleITK_INSTALL_PACKAGE_DIR)
-  set(SimpleITK_INSTALL_PACKAGE_DIR "lib/cmake/SimpleITK-${SimpleITK_Major}.${SimpleITK_Minor}")
+  set(SimpleITK_INSTALL_PACKAGE_DIR "lib/cmake/SimpleITK-${SimpleITK_VERSION_MAJOR}.${SimpleITK_VERSION_MINOR}")
 endif()
 
 function(sitk_install_exported_target tgt)
@@ -193,7 +217,7 @@ function(sitk_install_exported_target tgt)
   set_property(TARGET ${tgt} PROPERTY VERSION 1)
   set_property(TARGET ${tgt} PROPERTY SOVERSION 1)
   set_property(TARGET ${tgt} PROPERTY
-    OUTPUT_NAME ${tgt}-${SimpleITK_Major}.${SimpleITK_Minor})
+    OUTPUT_NAME ${tgt}-${SimpleITK_VERSION_MAJOR}.${SimpleITK_VERSION_MINOR})
 
   export(TARGETS ${tgt}
     APPEND FILE "${CMAKE_BINARY_DIR}/SimpleITKTargets.cmake"

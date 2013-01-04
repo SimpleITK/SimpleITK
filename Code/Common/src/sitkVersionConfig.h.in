@@ -15,35 +15,9 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkVersion_h
-#define __sitkVersion_h
 
-#include "sitkCommon.h"
-
-namespace itk
-{
-
-namespace simple
-{
-
-  /** \class Version
-   * \brief Version info for SimpleITK
-   */
-  class SITKCommon_EXPORT Version
-  {
-  public:
-    static unsigned int MajorVersion();
-    static unsigned int MinorVersion();
-    static unsigned int PatchVersion();
-    static unsigned int TweakVersion();
-    static const std::string &VersionString();
-    static const std::string &BuildDate();
-
-    static const std::string &ExtendedVersionString();
-    std::string ToString() { return Version::ExtendedVersionString(); }
-  };
-
-}
-}
-
-#endif
+#define SimpleITK_VERSION_MAJOR @SimpleITK_VERSION_MAJOR@
+#define SimpleITK_VERSION_MINOR @SimpleITK_VERSION_MINOR@
+#define SimpleITK_VERSION_PATCH @SimpleITK_VERSION_PATCH@
+#define SimpleITK_VERSION_TWEAK @SimpleITK_VERSION_TWEAK@
+#define SimpleITK_VERSION "@SimpleITK_VERSION@"
