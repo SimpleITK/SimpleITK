@@ -240,6 +240,24 @@ if ( WRAP_CSHARP )
   find_package( CSharp REQUIRED )
   include( ${CSHARP_USE_FILE} )
 
+  # CSharp version requirements: http://msdn.microsoft.com/en-us/library/system.version.aspx
+  # major.minor[.build[.revision]] where all components are 32-bit integers
+   set(_build 0)
+  if(DEFINED SimpleITK_VERSION_POST)
+    math(EXPR _build "${SimpleITK_VERSION_POST}")
+  elseif(DEFINED SimpleITK_VERSION_DEV)
+    math(EXPR _build "${SimpleITK_VERSION_DEV}<<16")
+  endif()
+
+  set(_revision 0)
+  if(DEFINED SimpleITK_VERSION_PATCH)
+    math(EXPR _revision "${SimpleITK_VERSION_PATCH}<<16")
+    if(DEFINED SimpleITK_VERSION_TWEAK)
+      math(EXPR _revision "_revision+${SimpleITK_VERSION_TWEAK}")
+    endif()
+  endif()
+  set(SimpleITK_VERSION_CSHARP_AssemblyVersion "${SimpleITK_VERSION_MAJOR}.${SimpleITK_VERSION_MINOR}.${_build}.${_revision}")
+
   # Make sure the nested directory structure exists
   set(CSHARP_SOURCE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/CSharpSources CACHE INTERNAL "")
   set(CSHARP_BINARY_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/CSharpBinaries CACHE INTERNAL "")
