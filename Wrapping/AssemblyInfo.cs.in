@@ -17,7 +17,7 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-[assembly: AssemblyVersion("@SimpleITK_VERSION@")]
+[assembly: AssemblyVersion("@SimpleITK_VERSION_CSHARP_AssemblyVersion@")]
 [assembly: AssemblyTitle("@PROJECT_NAME@ C# @CSHARP_PLATFORM@ wrapper @SimpleITK_VERSION@")]
 [assembly: AssemblyCopyright("Copyright Insight Software Consortium, Apache License, Version 2.0")]
 [assembly: AssemblyDescription("@PROJECT_NAME@ C# @CSHARP_PLATFORM@ wrapper @SimpleITK_VERSION@, compiled with @CSHARP_TYPE@ @CSHARP_VERSION@, using ITK @ITK_VERSION_MAJOR@.@ITK_VERSION_MINOR@.@ITK_VERSION_PATCH@")]
