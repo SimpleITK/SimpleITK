@@ -20,10 +20,11 @@
 # match that of the tag, then it'll be considered the project is in
 # post release mode otherwise it's considered underdevelopment.
 #
-# One of the following variables will be defined as number of commits
-# since the projects Version.cmake file has been modified.
-#
-# _GIT_VERSION_POST
+# Only one of the following variables will be defined.
+# _GIT_VERSION_DEV is defined as number of commits
+# since the projects Version.cmake file has been modified. While
+# _GIT_VERSION_POST is defined as the number of commits since the tag.
+
 # _GIT_VERSION_DEV
 #
 
@@ -45,11 +46,11 @@ if(_GIT_VERSION_HASH MATCHES "[a-fA-F0-9]+")
 endif()
 
 # find the closest anotated tag with the v prefix for version
-git_describe(_GIT_TAG "--match=v*" "--abbrev=0")
+git_describe(_GIT_TAG "--match=v*")
 
 git_commits_since("${PROJECT_SOURCE_DIR}/Version.cmake" _GIT_VERSION_COUNT)
 
-set(VERSION_REGEX "^v([0-9]+)\\.([0-9]+)+(\\.([0-9]+))?(\\.([0-9]+))?((a|b|c|rc)([0-9]+))?")
+set(VERSION_REGEX "^v([0-9]+)\\.([0-9]+)+(\\.([0-9]+))?(\\.([0-9]+))?((a|b|c|rc)[0-9]+)?(-[0-9]+)?")
 
 string(REGEX MATCH "${VERSION_REGEX}" _out "${_GIT_TAG}")
 
@@ -62,13 +63,27 @@ set(_GIT_VERSION_MAJOR "${CMAKE_MATCH_1}")
 set(_GIT_VERSION_MINOR "${CMAKE_MATCH_2}")
 if(NOT "${CMAKE_MATCH_4}" STREQUAL "")
   set(_GIT_VERSION_PATCH "${CMAKE_MATCH_4}")
+elseif(DEFINED ${CMAKE_PROJECT_NAME}_VERSION_PATCH)
+  # cmake VERSION_EQUAL considers 1.1.0 different then 1.1, so we need
+  # to specify this assumed value
+  set(_GIT_VERSION_PATCH 0)
 endif()
 if(NOT "${CMAKE_MATCH_6}" STREQUAL "")
   set(_GIT_VERSION_TWEAK "${CMAKE_MATCH_6}")
+elseif(DEFINED ${CMAKE_PROJECT_NAME}_VERSION_TWEAK)
+  set(_GIT_VERSION_TWEAK 0)
 endif()
 if(NOT "${CMAKE_MATCH_7}" STREQUAL "")
   set(_GIT_VERSION_RC "${CMAKE_MATCH_7}" ) # a,b,rc01 etc
 endif()
+
+if(NOT "${CMAKE_MATCH_9}" STREQUAL "")
+  #trim leading '-'
+  string(SUBSTRING "${CMAKE_MATCH_9}" 1 -1 CMAKE_MATCH_9)
+
+  set(_GIT_TAG_COUNT "${CMAKE_MATCH_9}")
+endif()
+
 
 set(_GIT_VERSION "${_GIT_VERSION_MAJOR}.${_GIT_VERSION_MINOR}")
 if(DEFINED _GIT_VERSION_PATCH)
@@ -89,8 +104,8 @@ endif()
 
 
 if(_GIT_VERSION VERSION_EQUAL _${CMAKE_PROJECT_NAME}_VERSION)
-  if(_GIT_VERSION_COUNT) #ignore if 0
-    set(_GIT_VERSION_POST "${_GIT_VERSION_COUNT}")
+  if(_GIT_TAG_COUNT) #ignore if 0
+    set(_GIT_VERSION_POST "${_GIT_TAG_COUNT}")
   endif()
 else()
   # The first commit after a tag should increase the project version
