@@ -62,9 +62,15 @@ set(_GIT_VERSION_MAJOR "${CMAKE_MATCH_1}")
 set(_GIT_VERSION_MINOR "${CMAKE_MATCH_2}")
 if(NOT "${CMAKE_MATCH_4}" STREQUAL "")
   set(_GIT_VERSION_PATCH "${CMAKE_MATCH_4}")
+elseif(DEFINED ${CMAKE_PROJECT_NAME}_VERSION_PATCH)
+  # cmake VERSION_EQUAL considers 1.1.0 different then 1.1, so we need
+  # to specify this assumed value
+  set(_GIT_VERSION_PATCH 0)
 endif()
 if(NOT "${CMAKE_MATCH_6}" STREQUAL "")
   set(_GIT_VERSION_TWEAK "${CMAKE_MATCH_6}")
+elseif(DEFINED ${CMAKE_PROJECT_NAME}_VERSION_TWEAK)
+  set(_GIT_VERSION_TWEAK 0)
 endif()
 if(NOT "${CMAKE_MATCH_7}" STREQUAL "")
   set(_GIT_VERSION_RC "${CMAKE_MATCH_7}" ) # a,b,rc01 etc
