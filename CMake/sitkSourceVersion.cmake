@@ -115,5 +115,5 @@ else()
 endif()
 
 # save variable in a configuration file in case we have no git directory
-configure_file( "${CMAKE_CURRENT_SOURCE_DIR}/CMake/sitkSourceVersionVars.cmake.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/sitkSourceVersionVars.cmake" )
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/CMake/sitkSourceVersionVars.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/sitkSourceVersionVars.cmake"  @ONLY)
