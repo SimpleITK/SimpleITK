@@ -40,6 +40,14 @@ C++ includes: sitkMemberFunctionFactoryBase.h
 ";
 
 
+%feature("docstring") Tranform "
+
+A simplified wrapper around a variety of ITK transforms.
+
+C++ includes: sitkTransform.h
+";
+
+
 %feature("docstring") itk::Functor::DivFloor "
 
 Cast arguments to double, performs division then takes the floor.
@@ -591,6 +599,73 @@ Self& itk::simple::AdaptiveHistogramEqualizationImageFilter::UseLookupTableOff()
 Self& itk::simple::AdaptiveHistogramEqualizationImageFilter::UseLookupTableOn()
 
 Set the value of UseLookupTable to true or false respectfully.
+
+";
+
+
+%feature("docstring") itk::simple::AddConstantToImageFilter "
+
+Add a constant to all input pixels.
+
+
+This filter is templated over the input image type and the output
+image type.
+Tom Vercauteren, INRIA & Mauna Kea Technologies Based on filters from
+the Insight Journal paper:http://hdl.handle.net/1926/510
+
+See:
+ AddImageFilter
+
+ itk::simple::AddConstantTo for the procedual interface
+
+
+C++ includes: sitkAddConstantToImageFilter.h
+";
+
+%feature("docstring")  itk::simple::AddConstantToImageFilter::AddConstantToImageFilter "
+itk::simple::AddConstantToImageFilter::AddConstantToImageFilter()
+
+Default Constructor that takes no arguments and initializes default
+parameters
+
+";
+
+%feature("docstring")  itk::simple::AddConstantToImageFilter::Execute "
+Image itk::simple::AddConstantToImageFilter::Execute(const Image &image1, double inConstant)
+
+Execute the filter on the input image with the given parameters
+
+";
+
+%feature("docstring")  itk::simple::AddConstantToImageFilter::Execute "
+Image itk::simple::AddConstantToImageFilter::Execute(const Image &image1)
+
+Execute the filter on the input image
+
+";
+
+%feature("docstring")  itk::simple::AddConstantToImageFilter::GetConstant "
+double itk::simple::AddConstantToImageFilter::GetConstant()
+";
+
+%feature("docstring")  itk::simple::AddConstantToImageFilter::GetName "
+std::string itk::simple::AddConstantToImageFilter::GetName() const
+
+Name of this class
+
+";
+
+%feature("docstring")  itk::simple::AddConstantToImageFilter::SetConstant "
+Self& itk::simple::AddConstantToImageFilter::SetConstant(double Constant)
+
+Set the constant that will be used to multiply all the image pixels.
+
+";
+
+%feature("docstring")  itk::simple::AddConstantToImageFilter::ToString "
+std::string itk::simple::AddConstantToImageFilter::ToString() const
+
+Print ourselves out
 
 ";
 
@@ -6196,6 +6271,133 @@ Set the value of UseImageSpacing to true or false respectfully.
 ";
 
 
+%feature("docstring") itk::simple::DivideByConstantImageFilter "
+
+Add a constant to all input pixels.
+
+
+This filter is templated over the input image type and the output
+image type.
+Tom Vercauteren, INRIA & Mauna Kea Technologies Based on filters from
+the Insight Journal paper:http://hdl.handle.net/1926/510
+
+See:
+ DivideImageFilter
+
+ itk::simple::DivideByConstant for the procedual interface
+
+
+C++ includes: sitkDivideByConstantImageFilter.h
+";
+
+%feature("docstring")  itk::simple::DivideByConstantImageFilter::DivideByConstantImageFilter "
+itk::simple::DivideByConstantImageFilter::DivideByConstantImageFilter()
+
+Default Constructor that takes no arguments and initializes default
+parameters
+
+";
+
+%feature("docstring")  itk::simple::DivideByConstantImageFilter::Execute "
+Image itk::simple::DivideByConstantImageFilter::Execute(const Image &image1, double inConstant)
+
+Execute the filter on the input image with the given parameters
+
+";
+
+%feature("docstring")  itk::simple::DivideByConstantImageFilter::Execute "
+Image itk::simple::DivideByConstantImageFilter::Execute(const Image &image1)
+
+Execute the filter on the input image
+
+";
+
+%feature("docstring")  itk::simple::DivideByConstantImageFilter::GetConstant "
+double itk::simple::DivideByConstantImageFilter::GetConstant()
+";
+
+%feature("docstring")  itk::simple::DivideByConstantImageFilter::GetName "
+std::string itk::simple::DivideByConstantImageFilter::GetName() const
+
+Name of this class
+
+";
+
+%feature("docstring")  itk::simple::DivideByConstantImageFilter::SetConstant "
+Self& itk::simple::DivideByConstantImageFilter::SetConstant(double Constant)
+
+Set the constant value that will be used for dividing all the image
+pixels.
+
+";
+
+%feature("docstring")  itk::simple::DivideByConstantImageFilter::ToString "
+std::string itk::simple::DivideByConstantImageFilter::ToString() const
+
+Print ourselves out
+
+";
+
+
+%feature("docstring") itk::simple::DivideConstantByImageFilter "
+
+
+See:
+ itk::simple::DivideConstantBy for the procedual interface
+
+
+C++ includes: sitkDivideConstantByImageFilter.h
+";
+
+%feature("docstring")  itk::simple::DivideConstantByImageFilter::DivideConstantByImageFilter "
+itk::simple::DivideConstantByImageFilter::DivideConstantByImageFilter()
+
+Default Constructor that takes no arguments and initializes default
+parameters
+
+";
+
+%feature("docstring")  itk::simple::DivideConstantByImageFilter::Execute "
+Image itk::simple::DivideConstantByImageFilter::Execute(const Image &image1, double inConstant)
+
+Execute the filter on the input image with the given parameters
+
+";
+
+%feature("docstring")  itk::simple::DivideConstantByImageFilter::Execute "
+Image itk::simple::DivideConstantByImageFilter::Execute(const Image &image1)
+
+Execute the filter on the input image
+
+";
+
+%feature("docstring")  itk::simple::DivideConstantByImageFilter::GetConstant "
+double itk::simple::DivideConstantByImageFilter::GetConstant()
+";
+
+%feature("docstring")  itk::simple::DivideConstantByImageFilter::GetName "
+std::string itk::simple::DivideConstantByImageFilter::GetName() const
+
+Name of this class
+
+";
+
+%feature("docstring")  itk::simple::DivideConstantByImageFilter::SetConstant "
+Self& itk::simple::DivideConstantByImageFilter::SetConstant(double Constant)
+
+Set the constant value which will be used as the dividend and each
+pixel is used as the divisor.
+
+";
+
+%feature("docstring")  itk::simple::DivideConstantByImageFilter::ToString "
+std::string itk::simple::DivideConstantByImageFilter::ToString() const
+
+Print ourselves out
+
+";
+
+
 %feature("docstring") itk::simple::DivideFloorImageFilter "
 
 
@@ -6918,6 +7120,118 @@ Name of this class
 
 %feature("docstring")  itk::simple::ExpNegativeImageFilter::ToString "
 std::string itk::simple::ExpNegativeImageFilter::ToString() const
+
+Print ourselves out
+
+";
+
+
+%feature("docstring") itk::simple::ExpandImageFilter "
+
+Expand the size of an image by an integer factor in each dimension.
+
+
+ExpandImageFilterincreases the size of an image by an integer factor
+in each dimension using a interpolation method. The output image size
+in each dimension is given by: OutputSize[j] = InputSize[j] *
+ExpandFactors[j] The output values are obtained by interpolating the
+input image. The default interpolation type used is the
+LinearInterpolateImageFunction. The user can specify a particular
+interpolation function via SetInterpolator(). Note that the input interpolator must derive from base class
+InterpolateImageFunction. This filter will produce an output with
+different pixel spacing that its input image such that:
+OutputSpacing[j] = InputSpacing[j] / ExpandFactors[j] The filter is
+templated over the input image type and the output image type. This
+filter is implemented as a multithreaded filter and supports
+streaming.
+WARNING:
+This filter only works for image with scalar pixel types. For vector
+images use VectorExpandImageFilter. This filter assumes that the input
+and output image has the same number of dimensions.
+
+See:
+InterpolateImageFunction
+
+
+LinearInterpolationImageFunction
+
+
+VectorExpandImageFilter
+
+ itk::simple::ExpandImageFilter for the procedual interface
+
+
+C++ includes: sitkExpandImageFilter.h
+";
+
+%feature("docstring")  itk::simple::ExpandImageFilter::Execute "
+Image itk::simple::ExpandImageFilter::Execute(const Image &image1, std::vector< unsigned int > expandFactors,
+InterpolatorEnum interpolator)
+
+Execute the filter on the input image with the given parameters
+
+";
+
+%feature("docstring")  itk::simple::ExpandImageFilter::Execute "
+Image itk::simple::ExpandImageFilter::Execute(const Image &image1)
+
+Execute the filter on the input image
+
+";
+
+%feature("docstring")  itk::simple::ExpandImageFilter::ExpandImageFilter "
+itk::simple::ExpandImageFilter::ExpandImageFilter()
+
+Default Constructor that takes no arguments and initializes default
+parameters
+
+";
+
+%feature("docstring")  itk::simple::ExpandImageFilter::GetExpandFactors "
+std::vector<unsigned int> itk::simple::ExpandImageFilter::GetExpandFactors()
+
+Get the expand factors.
+
+";
+
+%feature("docstring")  itk::simple::ExpandImageFilter::GetInterpolator "
+InterpolatorEnum itk::simple::ExpandImageFilter::GetInterpolator()
+
+Get a pointer to the interpolator function.
+
+";
+
+%feature("docstring")  itk::simple::ExpandImageFilter::GetName "
+std::string itk::simple::ExpandImageFilter::GetName() const
+
+Name of this class
+
+";
+
+%feature("docstring")  itk::simple::ExpandImageFilter::SetExpandFactor "
+Self& itk::simple::ExpandImageFilter::SetExpandFactor(unsigned int e)
+
+Custom public declarations
+
+";
+
+%feature("docstring")  itk::simple::ExpandImageFilter::SetExpandFactors "
+Self& itk::simple::ExpandImageFilter::SetExpandFactors(std::vector< unsigned int > ExpandFactors)
+
+Set the expand factors. Values are clamped to a minimum value of 1.
+Default is 1 for all dimensions.
+
+";
+
+%feature("docstring")  itk::simple::ExpandImageFilter::SetInterpolator "
+Self& itk::simple::ExpandImageFilter::SetInterpolator(InterpolatorEnum Interpolator)
+
+Set the interpolator function.
+
+";
+
+%feature("docstring")  itk::simple::ExpandImageFilter::ToString "
+std::string itk::simple::ExpandImageFilter::ToString() const
 
 Print ourselves out
 
@@ -7730,12 +8044,11 @@ Base class for forward Fast Fourier Transform.
 
 
 This is a base class for the \"forward\" or \"direct\" discrete
-Fourier Transform. This is an abstract base class: the actual
-implementation is provided by the best child class available on the
-system when the object is created via the object factory system. This
-class transforms a real input image into its full complex Fourier
-transform. The Fourier transform of a real input image has Hermitian
-symmetry: $ f(\\\\mathbf{x}) = f^*(-\\\\mathbf{x}) $ . That is, when the result of the transform is split in half along
+Fourier Transform. This is an abstract base class: the actual implementation is
+provided by the best child class available on the system when the
+object is created via the object factory system. This class transforms
+a real input image into its full complex Fourier transform. The
+Fourier transform of a real input image has Hermitian symmetry: $ f(\\\\mathbf{x}) = f^*(-\\\\mathbf{x}) $ . That is, when the result of the transform is split in half along
 the x-dimension, the values in the second half of the transform are
 the complex conjugates of values in the first half reflected about the
 center of the image in each dimension. This filter works only for real
@@ -7893,6 +8206,120 @@ Print ourselves out
 ";
 
 
+%feature("docstring") itk::simple::GaborSourceImageFilter "
+
+
+See:
+ itk::simple::GaborSource for the procedual interface
+
+
+C++ includes: sitkGaborSourceImageFilter.h
+";
+
+%feature("docstring")  itk::simple::GaborSourceImageFilter::Execute "
+Image itk::simple::GaborSourceImageFilter::Execute(PixelIDValueType inOutputPixelType, std::vector< unsigned int >
+inSize, std::vector< double > inSigma, std::vector< double > inMean,
+double inFrequency, std::vector< double > inOrigin, std::vector<
+double > inSpacing, std::vector< double > inDirection)
+
+Execute the filter on the input image with the given parameters
+
+";
+
+%feature("docstring")  itk::simple::GaborSourceImageFilter::Execute "
+Image itk::simple::GaborSourceImageFilter::Execute()
+
+Execute the filter on the input image
+
+";
+
+%feature("docstring")  itk::simple::GaborSourceImageFilter::GaborSourceImageFilter "
+itk::simple::GaborSourceImageFilter::GaborSourceImageFilter()
+
+Default Constructor that takes no arguments and initializes default
+parameters
+
+";
+
+%feature("docstring")  itk::simple::GaborSourceImageFilter::GetDirection "
+std::vector<double> itk::simple::GaborSourceImageFilter::GetDirection()
+";
+
+%feature("docstring")  itk::simple::GaborSourceImageFilter::GetFrequency "
+double itk::simple::GaborSourceImageFilter::GetFrequency()
+";
+
+%feature("docstring")  itk::simple::GaborSourceImageFilter::GetMean "
+std::vector<double> itk::simple::GaborSourceImageFilter::GetMean()
+";
+
+%feature("docstring")  itk::simple::GaborSourceImageFilter::GetName "
+std::string itk::simple::GaborSourceImageFilter::GetName() const
+
+Name of this class
+
+";
+
+%feature("docstring")  itk::simple::GaborSourceImageFilter::GetOrigin "
+std::vector<double> itk::simple::GaborSourceImageFilter::GetOrigin()
+";
+
+%feature("docstring")  itk::simple::GaborSourceImageFilter::GetOutputPixelType "
+PixelIDValueType itk::simple::GaborSourceImageFilter::GetOutputPixelType()
+";
+
+%feature("docstring")  itk::simple::GaborSourceImageFilter::GetSigma "
+std::vector<double> itk::simple::GaborSourceImageFilter::GetSigma()
+";
+
+%feature("docstring")  itk::simple::GaborSourceImageFilter::GetSize "
+std::vector<unsigned int> itk::simple::GaborSourceImageFilter::GetSize()
+";
+
+%feature("docstring")  itk::simple::GaborSourceImageFilter::GetSpacing "
+std::vector<double> itk::simple::GaborSourceImageFilter::GetSpacing()
+";
+
+%feature("docstring")  itk::simple::GaborSourceImageFilter::SetDirection "
+Self& itk::simple::GaborSourceImageFilter::SetDirection(std::vector< double > Direction)
+";
+
+%feature("docstring")  itk::simple::GaborSourceImageFilter::SetFrequency "
+Self& itk::simple::GaborSourceImageFilter::SetFrequency(double Frequency)
+";
+
+%feature("docstring")  itk::simple::GaborSourceImageFilter::SetMean "
+Self& itk::simple::GaborSourceImageFilter::SetMean(std::vector< double > Mean)
+";
+
+%feature("docstring")  itk::simple::GaborSourceImageFilter::SetOrigin "
+Self& itk::simple::GaborSourceImageFilter::SetOrigin(std::vector< double > Origin)
+";
+
+%feature("docstring")  itk::simple::GaborSourceImageFilter::SetOutputPixelType "
+Self& itk::simple::GaborSourceImageFilter::SetOutputPixelType(PixelIDValueType OutputPixelType)
+";
+
+%feature("docstring")  itk::simple::GaborSourceImageFilter::SetSigma "
+Self& itk::simple::GaborSourceImageFilter::SetSigma(std::vector< double > Sigma)
+";
+
+%feature("docstring")  itk::simple::GaborSourceImageFilter::SetSize "
+Self& itk::simple::GaborSourceImageFilter::SetSize(std::vector< unsigned int > Size)
+";
+
+%feature("docstring")  itk::simple::GaborSourceImageFilter::SetSpacing "
+Self& itk::simple::GaborSourceImageFilter::SetSpacing(std::vector< double > Spacing)
+";
+
+%feature("docstring")  itk::simple::GaborSourceImageFilter::ToString "
+std::string itk::simple::GaborSourceImageFilter::ToString() const
+
+Print ourselves out
+
+";
+
+
 %feature("docstring") itk::simple::GaussianImageSource "
 
 
@@ -8001,6 +8428,120 @@ Self& itk::simple::GaussianImageSource::SetSpacing(std::vector< double > Spacing
 
 %feature("docstring")  itk::simple::GaussianImageSource::ToString "
 std::string itk::simple::GaussianImageSource::ToString() const
+
+Print ourselves out
+
+";
+
+
+%feature("docstring") itk::simple::GaussianSourceImageFilter "
+
+
+See:
+ itk::simple::GaussianSource for the procedual interface
+
+
+C++ includes: sitkGaussianSourceImageFilter.h
+";
+
+%feature("docstring")  itk::simple::GaussianSourceImageFilter::Execute "
+Image itk::simple::GaussianSourceImageFilter::Execute(PixelIDValueType inOutputPixelType, std::vector< unsigned int >
+inSize, std::vector< double > inSigma, std::vector< double > inMean,
+double inScale, std::vector< double > inOrigin, std::vector< double >
+inSpacing, std::vector< double > inDirection)
+
+Execute the filter on the input image with the given parameters
+
+";
+
+%feature("docstring")  itk::simple::GaussianSourceImageFilter::Execute "
+Image itk::simple::GaussianSourceImageFilter::Execute()
+
+Execute the filter on the input image
+
+";
+
+%feature("docstring")  itk::simple::GaussianSourceImageFilter::GaussianSourceImageFilter "
+itk::simple::GaussianSourceImageFilter::GaussianSourceImageFilter()
+
+Default Constructor that takes no arguments and initializes default
+parameters
+
+";
+
+%feature("docstring")  itk::simple::GaussianSourceImageFilter::GetDirection "
+std::vector<double> itk::simple::GaussianSourceImageFilter::GetDirection()
+";
+
+%feature("docstring")  itk::simple::GaussianSourceImageFilter::GetMean "
+std::vector<double> itk::simple::GaussianSourceImageFilter::GetMean()
+";
+
+%feature("docstring")  itk::simple::GaussianSourceImageFilter::GetName "
+std::string itk::simple::GaussianSourceImageFilter::GetName() const
+
+Name of this class
+
+";
+
+%feature("docstring")  itk::simple::GaussianSourceImageFilter::GetOrigin "
+std::vector<double> itk::simple::GaussianSourceImageFilter::GetOrigin()
+";
+
+%feature("docstring")  itk::simple::GaussianSourceImageFilter::GetOutputPixelType "
+PixelIDValueType itk::simple::GaussianSourceImageFilter::GetOutputPixelType()
+";
+
+%feature("docstring")  itk::simple::GaussianSourceImageFilter::GetScale "
+double itk::simple::GaussianSourceImageFilter::GetScale()
+";
+
+%feature("docstring")  itk::simple::GaussianSourceImageFilter::GetSigma "
+std::vector<double> itk::simple::GaussianSourceImageFilter::GetSigma()
+";
+
+%feature("docstring")  itk::simple::GaussianSourceImageFilter::GetSize "
+std::vector<unsigned int> itk::simple::GaussianSourceImageFilter::GetSize()
+";
+
+%feature("docstring")  itk::simple::GaussianSourceImageFilter::GetSpacing "
+std::vector<double> itk::simple::GaussianSourceImageFilter::GetSpacing()
+";
+
+%feature("docstring")  itk::simple::GaussianSourceImageFilter::SetDirection "
+Self& itk::simple::GaussianSourceImageFilter::SetDirection(std::vector< double > Direction)
+";
+
+%feature("docstring")  itk::simple::GaussianSourceImageFilter::SetMean "
+Self& itk::simple::GaussianSourceImageFilter::SetMean(std::vector< double > Mean)
+";
+
+%feature("docstring")  itk::simple::GaussianSourceImageFilter::SetOrigin "
+Self& itk::simple::GaussianSourceImageFilter::SetOrigin(std::vector< double > Origin)
+";
+
+%feature("docstring")  itk::simple::GaussianSourceImageFilter::SetOutputPixelType "
+Self& itk::simple::GaussianSourceImageFilter::SetOutputPixelType(PixelIDValueType OutputPixelType)
+";
+
+%feature("docstring")  itk::simple::GaussianSourceImageFilter::SetScale "
+Self& itk::simple::GaussianSourceImageFilter::SetScale(double Scale)
+";
+
+%feature("docstring")  itk::simple::GaussianSourceImageFilter::SetSigma "
+Self& itk::simple::GaussianSourceImageFilter::SetSigma(std::vector< double > Sigma)
+";
+
+%feature("docstring")  itk::simple::GaussianSourceImageFilter::SetSize "
+Self& itk::simple::GaussianSourceImageFilter::SetSize(std::vector< unsigned int > Size)
+";
+
+%feature("docstring")  itk::simple::GaussianSourceImageFilter::SetSpacing "
+Self& itk::simple::GaussianSourceImageFilter::SetSpacing(std::vector< double > Spacing)
+";
+
+%feature("docstring")  itk::simple::GaussianSourceImageFilter::ToString "
+std::string itk::simple::GaussianSourceImageFilter::ToString() const
 
 Print ourselves out
 
@@ -10234,6 +10775,129 @@ Print ourselves out
 ";
 
 
+%feature("docstring") itk::simple::GridSourceImageFilter "
+
+
+See:
+ itk::simple::GridSource for the procedual interface
+
+
+C++ includes: sitkGridSourceImageFilter.h
+";
+
+%feature("docstring")  itk::simple::GridSourceImageFilter::Execute "
+Image itk::simple::GridSourceImageFilter::Execute(PixelIDValueType inOutputPixelType, std::vector< unsigned int >
+inSize, std::vector< double > inSigma, std::vector< double >
+inGridSpacing, std::vector< double > inGridOffset, double inScale,
+std::vector< double > inOrigin, std::vector< double > inSpacing,
+std::vector< double > inDirection)
+
+Execute the filter on the input image with the given parameters
+
+";
+
+%feature("docstring")  itk::simple::GridSourceImageFilter::Execute "
+Image itk::simple::GridSourceImageFilter::Execute()
+
+Execute the filter on the input image
+
+";
+
+%feature("docstring")  itk::simple::GridSourceImageFilter::GetDirection "
+std::vector<double> itk::simple::GridSourceImageFilter::GetDirection()
+";
+
+%feature("docstring")  itk::simple::GridSourceImageFilter::GetGridOffset "
+std::vector<double> itk::simple::GridSourceImageFilter::GetGridOffset()
+";
+
+%feature("docstring")  itk::simple::GridSourceImageFilter::GetGridSpacing "
+std::vector<double> itk::simple::GridSourceImageFilter::GetGridSpacing()
+";
+
+%feature("docstring")  itk::simple::GridSourceImageFilter::GetName "
+std::string itk::simple::GridSourceImageFilter::GetName() const
+
+Name of this class
+
+";
+
+%feature("docstring")  itk::simple::GridSourceImageFilter::GetOrigin "
+std::vector<double> itk::simple::GridSourceImageFilter::GetOrigin()
+";
+
+%feature("docstring")  itk::simple::GridSourceImageFilter::GetOutputPixelType "
+PixelIDValueType itk::simple::GridSourceImageFilter::GetOutputPixelType()
+";
+
+%feature("docstring")  itk::simple::GridSourceImageFilter::GetScale "
+double itk::simple::GridSourceImageFilter::GetScale()
+";
+
+%feature("docstring")  itk::simple::GridSourceImageFilter::GetSigma "
+std::vector<double> itk::simple::GridSourceImageFilter::GetSigma()
+";
+
+%feature("docstring")  itk::simple::GridSourceImageFilter::GetSize "
+std::vector<unsigned int> itk::simple::GridSourceImageFilter::GetSize()
+";
+
+%feature("docstring")  itk::simple::GridSourceImageFilter::GetSpacing "
+std::vector<double> itk::simple::GridSourceImageFilter::GetSpacing()
+";
+
+%feature("docstring")  itk::simple::GridSourceImageFilter::GridSourceImageFilter "
+itk::simple::GridSourceImageFilter::GridSourceImageFilter()
+
+Default Constructor that takes no arguments and initializes default
+parameters
+
+";
+
+%feature("docstring")  itk::simple::GridSourceImageFilter::SetDirection "
+Self& itk::simple::GridSourceImageFilter::SetDirection(std::vector< double > Direction)
+";
+
+%feature("docstring")  itk::simple::GridSourceImageFilter::SetGridOffset "
+Self& itk::simple::GridSourceImageFilter::SetGridOffset(std::vector< double > GridOffset)
+";
+
+%feature("docstring")  itk::simple::GridSourceImageFilter::SetGridSpacing "
+Self& itk::simple::GridSourceImageFilter::SetGridSpacing(std::vector< double > GridSpacing)
+";
+
+%feature("docstring")  itk::simple::GridSourceImageFilter::SetOrigin "
+Self& itk::simple::GridSourceImageFilter::SetOrigin(std::vector< double > Origin)
+";
+
+%feature("docstring")  itk::simple::GridSourceImageFilter::SetOutputPixelType "
+Self& itk::simple::GridSourceImageFilter::SetOutputPixelType(PixelIDValueType OutputPixelType)
+";
+
+%feature("docstring")  itk::simple::GridSourceImageFilter::SetScale "
+Self& itk::simple::GridSourceImageFilter::SetScale(double Scale)
+";
+
+%feature("docstring")  itk::simple::GridSourceImageFilter::SetSigma "
+Self& itk::simple::GridSourceImageFilter::SetSigma(std::vector< double > Sigma)
+";
+
+%feature("docstring")  itk::simple::GridSourceImageFilter::SetSize "
+Self& itk::simple::GridSourceImageFilter::SetSize(std::vector< unsigned int > Size)
+";
+
+%feature("docstring")  itk::simple::GridSourceImageFilter::SetSpacing "
+Self& itk::simple::GridSourceImageFilter::SetSpacing(std::vector< double > Spacing)
+";
+
+%feature("docstring")  itk::simple::GridSourceImageFilter::ToString "
+std::string itk::simple::GridSourceImageFilter::ToString() const
+
+Print ourselves out
+
+";
+
+
 %feature("docstring") itk::simple::HConcaveImageFilter "
 
 Identify local minima whose depth below the baseline is greater than
@@ -10666,16 +11330,14 @@ Print ourselves out
 
 %feature("docstring") itk::simple::HalfHermitianToRealInverseFFTImageFilter "
 
-Base class for specialized complex-to-real inverse Fast Fourier
-Transform.
+Base class for specialized complex-to-real inverse Fast Fourier Transform.
 
 
 This is a base class for the \"inverse\" or \"reverse\" Discrete
-Fourier Transform. This is an abstract base class: the actual
-implementation is provided by the best child class available on the
-system when the object is created via the object factory system. The
-input to this filter is assumed to have the same format as the output
-of the RealToHalfHermitianForwardFFTImageFilter. That is, the input is assumed to consist of roughly half the full
+Fourier Transform. This is an abstract base class: the actual implementation is
+provided by the best child class available on the system when the
+object is created via the object factory system. The input to this
+filter is assumed to have the same format as the output of the RealToHalfHermitianForwardFFTImageFilter. That is, the input is assumed to consist of roughly half the full
 complex image resulting from a real-to-complex discrete Fourier
 transform. This half is expected to be the first half of the image in
 the X-dimension. Because this filter assumes that the input stores
@@ -11222,14 +11884,14 @@ std::string itk::simple::Image::ToString(void) const
 %feature("docstring")  itk::simple::Image::TransformIndexToPhysicalPoint "
 std::vector< double > itk::simple::Image::TransformIndexToPhysicalPoint(const std::vector< int64_t > &index) const
 
-Transform index to physical point
+ Transform index to physical point
 
 ";
 
 %feature("docstring")  itk::simple::Image::TransformPhysicalPointToIndex "
 std::vector< int64_t > itk::simple::Image::TransformPhysicalPointToIndex(const std::vector< double > &point) const
 
-Transform physical point to index
+ Transform physical point to index
 
 ";
 
@@ -11826,12 +12488,12 @@ Base class for inverse Fast Fourier Transform.
 
 
 This is a base class for the \"inverse\" or \"reverse\" Discrete
-Fourier Transform. This is an abstract base class: the actual
-implementation is provided by the best child available on the system
-when the object is created via the object factory system. This class
-transforms a full complex image with Hermitian symmetry into its real
-spatial domain representation. If the input does not have Hermitian
-symmetry, the imaginary component is discarded.
+Fourier Transform. This is an abstract base class: the actual implementation is
+provided by the best child available on the system when the object is
+created via the object factory system. This class transforms a full
+complex image with Hermitian symmetry into its real spatial domain
+representation. If the input does not have Hermitian symmetry, the
+imaginary component is discarded.
 See:
  ForwardFFTImageFilter, InverseFFTImageFilter
 
@@ -16100,7 +16762,7 @@ Print ourselves out
 
 %feature("docstring") itk::simple::ModulusImageFilter "
 
-Computes the modulus (x % dividend) pixel-wise.
+Computes the modulus (x % y) pixel-wise.
 
 
 The input pixel type must support the c++ modulus operator (%).
@@ -16115,23 +16777,20 @@ C++ includes: sitkModulusImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ModulusImageFilter::Execute "
-Image itk::simple::ModulusImageFilter::Execute(const Image &image1, double dividend)
+Image itk::simple::ModulusImageFilter::Execute(uint32_t constant, const Image &image2)
+";
 
-Execute the filter on the input image with the given parameters
+%feature("docstring")  itk::simple::ModulusImageFilter::Execute "
+Image itk::simple::ModulusImageFilter::Execute(const Image &image1, uint32_t constant)
+
+Execute the filter with an image and a constant
 
 ";
 
 %feature("docstring")  itk::simple::ModulusImageFilter::Execute "
-Image itk::simple::ModulusImageFilter::Execute(const Image &image1)
+Image itk::simple::ModulusImageFilter::Execute(const Image &image1, const Image &image2)
 
-Execute the filter on the input image
-
-";
-
-%feature("docstring")  itk::simple::ModulusImageFilter::GetDividend "
-double itk::simple::ModulusImageFilter::GetDividend()
-
-Set/Get the dividend.
+Execute the filter on the input images
 
 ";
 
@@ -16147,13 +16806,6 @@ itk::simple::ModulusImageFilter::ModulusImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
-
-";
-
-%feature("docstring")  itk::simple::ModulusImageFilter::SetDividend "
-Self& itk::simple::ModulusImageFilter::SetDividend(double Dividend)
-
-Set/Get the dividend.
 
 ";
 
@@ -16626,6 +17278,73 @@ also decrease algorithm complexity.
 
 %feature("docstring")  itk::simple::MorphologicalWatershedImageFilter::ToString "
 std::string itk::simple::MorphologicalWatershedImageFilter::ToString() const
+
+Print ourselves out
+
+";
+
+
+%feature("docstring") itk::simple::MultiplyByConstantImageFilter "
+
+Multiply all input pixels by a constant.
+
+
+This filter is templated over the input image type and the output
+image type.
+Tom Vercauteren, INRIA & Mauna Kea Technologies Based on filters from
+the Insight Journal paper:http://hdl.handle.net/1926/510
+
+See:
+ MultiplyImageFilter
+
+ itk::simple::MultiplyByConstant for the procedual interface
+
+
+C++ includes: sitkMultiplyByConstantImageFilter.h
+";
+
+%feature("docstring")  itk::simple::MultiplyByConstantImageFilter::Execute "
+Image itk::simple::MultiplyByConstantImageFilter::Execute(const Image &image1, double inConstant)
+
+Execute the filter on the input image with the given parameters
+
+";
+
+%feature("docstring")  itk::simple::MultiplyByConstantImageFilter::Execute "
+Image itk::simple::MultiplyByConstantImageFilter::Execute(const Image &image1)
+
+Execute the filter on the input image
+
+";
+
+%feature("docstring")  itk::simple::MultiplyByConstantImageFilter::GetConstant "
+double itk::simple::MultiplyByConstantImageFilter::GetConstant()
+";
+
+%feature("docstring")  itk::simple::MultiplyByConstantImageFilter::GetName "
+std::string itk::simple::MultiplyByConstantImageFilter::GetName() const
+
+Name of this class
+
+";
+
+%feature("docstring")  itk::simple::MultiplyByConstantImageFilter::MultiplyByConstantImageFilter "
+itk::simple::MultiplyByConstantImageFilter::MultiplyByConstantImageFilter()
+
+Default Constructor that takes no arguments and initializes default
+parameters
+
+";
+
+%feature("docstring")  itk::simple::MultiplyByConstantImageFilter::SetConstant "
+Self& itk::simple::MultiplyByConstantImageFilter::SetConstant(double Constant)
+
+Set the constant that will be used to multiply all the image pixels.
+
+";
+
+%feature("docstring")  itk::simple::MultiplyByConstantImageFilter::ToString "
+std::string itk::simple::MultiplyByConstantImageFilter::ToString() const
 
 Print ourselves out
 
@@ -18410,6 +19129,103 @@ Print ourselves out
 ";
 
 
+%feature("docstring") itk::simple::PhysicalPointSourceImageFilter "
+
+
+See:
+ itk::simple::PhysicalPointSource for the procedual interface
+
+
+C++ includes: sitkPhysicalPointSourceImageFilter.h
+";
+
+%feature("docstring")  itk::simple::PhysicalPointSourceImageFilter::Execute "
+Image itk::simple::PhysicalPointSourceImageFilter::Execute(PixelIDValueType inOutputPixelType, std::vector< unsigned int >
+inSize, std::vector< double > inOrigin, std::vector< double >
+inSpacing, std::vector< double > inDirection)
+
+Execute the filter on the input image with the given parameters
+
+";
+
+%feature("docstring")  itk::simple::PhysicalPointSourceImageFilter::Execute "
+Image itk::simple::PhysicalPointSourceImageFilter::Execute()
+
+Execute the filter on the input image
+
+";
+
+%feature("docstring")  itk::simple::PhysicalPointSourceImageFilter::GetDirection "
+std::vector<double> itk::simple::PhysicalPointSourceImageFilter::GetDirection()
+";
+
+%feature("docstring")  itk::simple::PhysicalPointSourceImageFilter::GetName "
+std::string itk::simple::PhysicalPointSourceImageFilter::GetName() const
+
+Name of this class
+
+";
+
+%feature("docstring")  itk::simple::PhysicalPointSourceImageFilter::GetOrigin "
+std::vector<double> itk::simple::PhysicalPointSourceImageFilter::GetOrigin()
+";
+
+%feature("docstring")  itk::simple::PhysicalPointSourceImageFilter::GetOutputPixelType "
+PixelIDValueType itk::simple::PhysicalPointSourceImageFilter::GetOutputPixelType()
+";
+
+%feature("docstring")  itk::simple::PhysicalPointSourceImageFilter::GetSize "
+std::vector<unsigned int> itk::simple::PhysicalPointSourceImageFilter::GetSize()
+";
+
+%feature("docstring")  itk::simple::PhysicalPointSourceImageFilter::GetSpacing "
+std::vector<double> itk::simple::PhysicalPointSourceImageFilter::GetSpacing()
+";
+
+%feature("docstring")  itk::simple::PhysicalPointSourceImageFilter::PhysicalPointSourceImageFilter "
+itk::simple::PhysicalPointSourceImageFilter::PhysicalPointSourceImageFilter()
+
+Default Constructor that takes no arguments and initializes default
+parameters
+
+";
+
+%feature("docstring")  itk::simple::PhysicalPointSourceImageFilter::SetDirection "
+Self& itk::simple::PhysicalPointSourceImageFilter::SetDirection(std::vector< double > Direction)
+";
+
+%feature("docstring")  itk::simple::PhysicalPointSourceImageFilter::SetOrigin "
+Self& itk::simple::PhysicalPointSourceImageFilter::SetOrigin(std::vector< double > Origin)
+";
+
+%feature("docstring")  itk::simple::PhysicalPointSourceImageFilter::SetOutputPixelType "
+Self& itk::simple::PhysicalPointSourceImageFilter::SetOutputPixelType(PixelIDValueType OutputPixelType)
+";
+
+%feature("docstring")  itk::simple::PhysicalPointSourceImageFilter::SetReferenceImage "
+void itk::simple::PhysicalPointSourceImageFilter::SetReferenceImage(const Image &refImage)
+
+This methods sets the size, origin, spacing and direction to that of
+the provided image
+
+";
+
+%feature("docstring")  itk::simple::PhysicalPointSourceImageFilter::SetSize "
+Self& itk::simple::PhysicalPointSourceImageFilter::SetSize(std::vector< unsigned int > Size)
+";
+
+%feature("docstring")  itk::simple::PhysicalPointSourceImageFilter::SetSpacing "
+Self& itk::simple::PhysicalPointSourceImageFilter::SetSpacing(std::vector< double > Spacing)
+";
+
+%feature("docstring")  itk::simple::PhysicalPointSourceImageFilter::ToString "
+std::string itk::simple::PhysicalPointSourceImageFilter::ToString() const
+
+Print ourselves out
+
+";
+
+
 %feature("docstring") itk::simple::PimpleImageBase "
 
 Private implementation idiom image base class.
@@ -18742,6 +19558,64 @@ Print ourselves out
 ";
 
 
+%feature("docstring") itk::simple::PowToConstantImageFilter "
+
+
+See:
+ itk::simple::PowToConstant for the procedual interface
+
+
+C++ includes: sitkPowToConstantImageFilter.h
+";
+
+%feature("docstring")  itk::simple::PowToConstantImageFilter::Execute "
+Image itk::simple::PowToConstantImageFilter::Execute(const Image &image1, double inConstant)
+
+Execute the filter on the input image with the given parameters
+
+";
+
+%feature("docstring")  itk::simple::PowToConstantImageFilter::Execute "
+Image itk::simple::PowToConstantImageFilter::Execute(const Image &image1)
+
+Execute the filter on the input image
+
+";
+
+%feature("docstring")  itk::simple::PowToConstantImageFilter::GetConstant "
+double itk::simple::PowToConstantImageFilter::GetConstant()
+";
+
+%feature("docstring")  itk::simple::PowToConstantImageFilter::GetName "
+std::string itk::simple::PowToConstantImageFilter::GetName() const
+
+Name of this class
+
+";
+
+%feature("docstring")  itk::simple::PowToConstantImageFilter::PowToConstantImageFilter "
+itk::simple::PowToConstantImageFilter::PowToConstantImageFilter()
+
+Default Constructor that takes no arguments and initializes default
+parameters
+
+";
+
+%feature("docstring")  itk::simple::PowToConstantImageFilter::SetConstant "
+Self& itk::simple::PowToConstantImageFilter::SetConstant(double Constant)
+
+Set the constant that each pixel will be raise to.
+
+";
+
+%feature("docstring")  itk::simple::PowToConstantImageFilter::ToString "
+std::string itk::simple::PowToConstantImageFilter::ToString() const
+
+Print ourselves out
+
+";
+
+
 %feature("docstring") itk::simple::ProjectedLandweberDeconvolutionImageFilter "
 
 Deconvolve an image using the projected Landweber deconvolution
@@ -19004,17 +19878,15 @@ Print ourselves out
 
 %feature("docstring") itk::simple::RealToHalfHermitianForwardFFTImageFilter "
 
-Base class for specialized real-to-complex forward Fast Fourier
-Transform.
+Base class for specialized real-to-complex forward Fast Fourier Transform.
 
 
 This is a base class for the \"forward\" or \"direct\" discrete
-Fourier Transform. This is an abstract base class: the actual
-implementation is provided by the best child class available on the
-system when the object is created via the object factory system. This
-class transforms a real input image into its complex Fourier
-transform. The Fourier transform of a real input image has Hermitian
-symmetry: $ f(\\\\mathbf{x}) = f^*(-\\\\mathbf{x}) $ . That is, when the result of the transform is split in half along
+Fourier Transform. This is an abstract base class: the actual implementation is
+provided by the best child class available on the system when the
+object is created via the object factory system. This class transforms
+a real input image into its complex Fourier transform. The Fourier
+transform of a real input image has Hermitian symmetry: $ f(\\\\mathbf{x}) = f^*(-\\\\mathbf{x}) $ . That is, when the result of the transform is split in half along
 the X-dimension, the values in the second half of the transform are
 the complex conjugates of values in the first half reflected about the
 center of the image in each dimension. This filter takes advantage of
@@ -20080,8 +20952,7 @@ ResampleImageFilterresamples an existing image through some coordinate
 transform, interpolating via some image function. The class is
 templated over the types of the input and output images. Note that the
 choice of interpolator function can be important. This function is set
-via SetInterpolator(). The default is
-LinearInterpolateImageFunction<InputImageType,
+via SetInterpolator(). The default is LinearInterpolateImageFunction<InputImageType,
 TInterpolatorPrecisionType>, which is reasonable for ordinary medical
 images. However, some synthetic images have pixels drawn from a finite
 prescribed set. An example would be a mask indicating the segmentation
@@ -20126,9 +20997,10 @@ C++ includes: sitkResampleImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ResampleImageFilter::Execute "
-Image itk::simple::ResampleImageFilter::Execute(const Image &image1, std::vector< uint32_t > size, std::vector<
-double > outputOrigin, std::vector< double > outputSpacing,
-std::vector< double > outputDirection, double defaultPixelValue)
+Image itk::simple::ResampleImageFilter::Execute(const Image &image1, Transform transform, InterpolatorEnum
+interpolator, std::vector< uint32_t > size, std::vector< double >
+outputOrigin, std::vector< double > outputSpacing, std::vector< double
+> outputDirection, double defaultPixelValue)
 
 Execute the filter on the input image with the given parameters
 
@@ -20145,6 +21017,13 @@ Execute the filter on the input image
 double itk::simple::ResampleImageFilter::GetDefaultPixelValue()
 
 Get the pixel value when a transformed pixel is outside of the image.
+
+";
+
+%feature("docstring")  itk::simple::ResampleImageFilter::GetInterpolator "
+InterpolatorEnum itk::simple::ResampleImageFilter::GetInterpolator()
+
+Get a pointer to the interpolator function.
 
 ";
 
@@ -20183,6 +21062,13 @@ Get the size of the output image.
 
 ";
 
+%feature("docstring")  itk::simple::ResampleImageFilter::GetTransform "
+Transform itk::simple::ResampleImageFilter::GetTransform()
+
+Get a pointer to the coordinate transform.
+
+";
+
 %feature("docstring")  itk::simple::ResampleImageFilter::ResampleImageFilter "
 itk::simple::ResampleImageFilter::ResampleImageFilter()
 
@@ -20196,6 +21082,19 @@ Self& itk::simple::ResampleImageFilter::SetDefaultPixelValue(double DefaultPixel
 
 Set the pixel value when a transformed pixel is outside of the image.
 The default default pixel value is 0.
+
+";
+
+%feature("docstring")  itk::simple::ResampleImageFilter::SetInterpolator "
+Self& itk::simple::ResampleImageFilter::SetInterpolator(InterpolatorEnum Interpolator)
+
+Set the interpolator function. The default is
+LinearInterpolateImageFunction<InputImageType,
+TInterpolatorPrecisionType>. Some other options are
+NearestNeighborInterpolateImageFunction(useful for binary masks and
+other images with a small number of possible pixel values), and
+BSplineInterpolateImageFunction(which provides a higher order of
+interpolation).
 
 ";
 
@@ -20235,6 +21134,19 @@ Set the size of the output image.
 
 ";
 
+%feature("docstring")  itk::simple::ResampleImageFilter::SetTransform "
+Self& itk::simple::ResampleImageFilter::SetTransform(Transform Transform)
+
+Set the coordinate transformation. Set the coordinate transform to use
+for resampling. Note that this must be in physical coordinates and it
+is the output-to-input transform, NOT the input-to-output transform
+that you might naively expect. By default the filter uses an Identity
+transform. You must provide a different transform here, before
+attempting to run the filter, if you do not want to use the default
+Identity transform.
+
+";
+
 %feature("docstring")  itk::simple::ResampleImageFilter::ToString "
 std::string itk::simple::ResampleImageFilter::ToString() const
 
@@ -20252,7 +21164,7 @@ RescaleIntensityImageFilterapplies pixel-wise a linear transformation
 to the intensity values of input image pixels. The linear
 transformation is defined by the user in terms of the minimum and
 maximum values that the output image should have. The following
-equation gives the mapping of the intensity values #39
+equation gives the mapping of the intensity values #44
 All computations are performed in the precison of the input pixel's
 RealType. Before assigning the computed value to the output pixel.
 NOTE: In this filter the minimum and maximum values of the input image
@@ -22735,6 +23647,134 @@ std::string itk::simple::StatisticsImageFilter::ToString() const
 ";
 
 
+%feature("docstring") itk::simple::SubtractConstantByImageFilter "
+
+Subract each pixel from a constant.
+
+
+
+See:
+ itk::simple::SubtractConstantBy for the procedual interface
+
+
+C++ includes: sitkSubtractConstantByImageFilter.h
+";
+
+%feature("docstring")  itk::simple::SubtractConstantByImageFilter::Execute "
+Image itk::simple::SubtractConstantByImageFilter::Execute(const Image &image1, double inConstant)
+
+Execute the filter on the input image with the given parameters
+
+";
+
+%feature("docstring")  itk::simple::SubtractConstantByImageFilter::Execute "
+Image itk::simple::SubtractConstantByImageFilter::Execute(const Image &image1)
+
+Execute the filter on the input image
+
+";
+
+%feature("docstring")  itk::simple::SubtractConstantByImageFilter::GetConstant "
+double itk::simple::SubtractConstantByImageFilter::GetConstant()
+";
+
+%feature("docstring")  itk::simple::SubtractConstantByImageFilter::GetName "
+std::string itk::simple::SubtractConstantByImageFilter::GetName() const
+
+Name of this class
+
+";
+
+%feature("docstring")  itk::simple::SubtractConstantByImageFilter::SetConstant "
+Self& itk::simple::SubtractConstantByImageFilter::SetConstant(double Constant)
+
+Set the constant by which the image will be subtracted from.
+
+";
+
+%feature("docstring")  itk::simple::SubtractConstantByImageFilter::SubtractConstantByImageFilter "
+itk::simple::SubtractConstantByImageFilter::SubtractConstantByImageFilter()
+
+Default Constructor that takes no arguments and initializes default
+parameters
+
+";
+
+%feature("docstring")  itk::simple::SubtractConstantByImageFilter::ToString "
+std::string itk::simple::SubtractConstantByImageFilter::ToString() const
+
+Print ourselves out
+
+";
+
+
+%feature("docstring") itk::simple::SubtractConstantFromImageFilter "
+
+Add a constant to all input pixels.
+
+
+This filter is templated over the input image type and the output
+image type.
+Tom Vercauteren, INRIA & Mauna Kea Technologies Based on filters from
+the Insight Journal paper:http://hdl.handle.net/1926/510
+
+See:
+ SubtractImageFilter
+
+ itk::simple::SubtractConstantFrom for the procedual interface
+
+
+C++ includes: sitkSubtractConstantFromImageFilter.h
+";
+
+%feature("docstring")  itk::simple::SubtractConstantFromImageFilter::Execute "
+Image itk::simple::SubtractConstantFromImageFilter::Execute(const Image &image1, double inConstant)
+
+Execute the filter on the input image with the given parameters
+
+";
+
+%feature("docstring")  itk::simple::SubtractConstantFromImageFilter::Execute "
+Image itk::simple::SubtractConstantFromImageFilter::Execute(const Image &image1)
+
+Execute the filter on the input image
+
+";
+
+%feature("docstring")  itk::simple::SubtractConstantFromImageFilter::GetConstant "
+double itk::simple::SubtractConstantFromImageFilter::GetConstant()
+";
+
+%feature("docstring")  itk::simple::SubtractConstantFromImageFilter::GetName "
+std::string itk::simple::SubtractConstantFromImageFilter::GetName() const
+
+Name of this class
+
+";
+
+%feature("docstring")  itk::simple::SubtractConstantFromImageFilter::SetConstant "
+Self& itk::simple::SubtractConstantFromImageFilter::SetConstant(double Constant)
+
+Set the constant that will be used to multiply all the image pixels.
+
+";
+
+%feature("docstring")  itk::simple::SubtractConstantFromImageFilter::SubtractConstantFromImageFilter "
+itk::simple::SubtractConstantFromImageFilter::SubtractConstantFromImageFilter()
+
+Default Constructor that takes no arguments and initializes default
+parameters
+
+";
+
+%feature("docstring")  itk::simple::SubtractConstantFromImageFilter::ToString "
+std::string itk::simple::SubtractConstantFromImageFilter::ToString() const
+
+Print ourselves out
+
+";
+
+
 %feature("docstring") itk::simple::SubtractImageFilter "
 
 Pixel-wise subtraction of two images.
@@ -23816,6 +24856,59 @@ std::string itk::simple::TileImageFilter::ToString() const
 
 Print ourselves out
 
+";
+
+
+%feature("docstring") itk::simple::Transform "
+C++ includes: sitkTransform.h
+";
+
+%feature("docstring")  itk::simple::Transform::AddTransform "
+Transform& itk::simple::Transform::AddTransform(Transform t)
+";
+
+%feature("docstring")  itk::simple::Transform::GetDimension "
+unsigned int itk::simple::Transform::GetDimension(void) const
+
+Return the dimension of the Transform ( 2D or 3D )
+
+";
+
+%feature("docstring")  itk::simple::Transform::ToString "
+std::string itk::simple::Transform::ToString(void) const
+";
+
+%feature("docstring")  itk::simple::Transform::Transform "
+itk::simple::Transform::Transform(unsigned int dimensions, TransformEnum type)
+
+Construct a specific transformation.
+
+";
+
+%feature("docstring")  itk::simple::Transform::Transform "
+itk::simple::Transform::Transform(itk::CompositeTransform< double, NDimension > *compositeTransform)
+
+Construct a SimpleITK Transform from a pointer to an ITK composite transform.
+
+";
+
+%feature("docstring")  itk::simple::Transform::Transform "
+itk::simple::Transform::Transform(void)
+
+By default a 3-d identity transform is constructed.
+
+";
+
+%feature("docstring")  itk::simple::Transform::TransformPoint "
+std::vector< double > itk::simple::Transform::TransformPoint(const std::vector< double > &point) const
+";
+
+%feature("docstring")  itk::simple::Transform::WriteTransform "
+void itk::simple::Transform::WriteTransform(const std::string &filename) const
+";
+
+%feature("docstring")  itk::simple::Transform::~Transform "
+virtual itk::simple::Transform::~Transform(void)
 ";
 
 
@@ -26787,10 +27880,6 @@ void itk::HDF5TransformIOFactoryRegister__Private(void)
 void itk::JPEGImageIOFactoryRegister__Private(void)
 ";
 
-%feature("docstring")  itk::Functor::LSMImageIOFactoryRegister__Private "
-void itk::LSMImageIOFactoryRegister__Private(void)
-";
-
 %feature("docstring")  itk::Functor::MatlabTransformIOFactoryRegister__Private "
 void itk::MatlabTransformIOFactoryRegister__Private(void)
 ";
@@ -26920,6 +28009,21 @@ This function directly calls the execute method of AddImageFilter in order to su
 
 See:
  itk::simple::AddImageFilter for the object oriented interface
+
+
+";
+
+%feature("docstring")  itk::simple::AddConstantTo "
+Image itk::simple::AddConstantTo(const Image &image1, double inConstant=1.0)
+
+ itk::simple::AddConstantToImageFilter Procedural Interface
+
+
+This function directly calls the execute method of AddConstantToImageFilter in order to support a procedual API
+
+
+See:
+ itk::simple::AddConstantToImageFilter for the object oriented interface
 
 
 ";
@@ -27891,6 +28995,36 @@ See:
 
 ";
 
+%feature("docstring")  itk::simple::DivideByConstant "
+Image itk::simple::DivideByConstant(const Image &image1, double inConstant=1)
+
+ itk::simple::DivideByConstantImageFilter Procedural Interface
+
+
+This function directly calls the execute method of DivideByConstantImageFilter in order to support a procedual API
+
+
+See:
+ itk::simple::DivideByConstantImageFilter for the object oriented interface
+
+
+";
+
+%feature("docstring")  itk::simple::DivideConstantBy "
+Image itk::simple::DivideConstantBy(const Image &image1, double inConstant=1.0)
+
+ itk::simple::DivideConstantByImageFilter Procedural Interface
+
+
+This function directly calls the execute method of DivideConstantByImageFilter in order to support a procedual API
+
+
+See:
+ itk::simple::DivideConstantByImageFilter for the object oriented interface
+
+
+";
+
 %feature("docstring")  itk::simple::DivideFloor "
 Image itk::simple::DivideFloor(double constant, const Image &image2)
 ";
@@ -28030,6 +29164,23 @@ This function directly calls the execute method of ExpImageFilter in order to su
 
 See:
  itk::simple::ExpImageFilter for the object oriented interface
+
+
+";
+
+%feature("docstring")  itk::simple::Expand "
+Image itk::simple::Expand(const Image &image1, std::vector< unsigned int >
+expandFactors=std::vector< unsigned int >(3, 1), InterpolatorEnum
+interpolator=itk::simple::sitkLinear)
+
+ itk::simple::ExpandImageFilter Procedural Interface
+
+
+This function directly calls the execute method of ExpandImageFilter in order to support a procedual API
+
+
+See:
+ itk::simple::ExpandImageFilter for the object oriented interface
 
 
 ";
@@ -28189,11 +29340,18 @@ std::vector< double > direction=std::vector< double >())
  itk::simple::GaborImageSource Procedural Interface
 
 
+ itk::simple::GaborSourceImageFilter Procedural Interface
+
 This function directly calls the execute method of GaborImageSource in order to support a procedual API
 
 
 See:
  itk::simple::GaborImageSource for the object oriented interface
+ This function directly calls the execute method of GaborSourceImageFilter in order to support a procedual API
+
+
+See:
+ itk::simple::GaborSourceImageFilter for the object oriented interface
 
 
 ";
@@ -28210,11 +29368,18 @@ std::vector< double > direction=std::vector< double >())
  itk::simple::GaussianImageSource Procedural Interface
 
 
+ itk::simple::GaussianSourceImageFilter Procedural Interface
+
 This function directly calls the execute method of GaussianImageSource in order to support a procedual API
 
 
 See:
  itk::simple::GaussianImageSource for the object oriented interface
+ This function directly calls the execute method of GaussianSourceImageFilter in order to support a procedual API
+
+
+See:
+ itk::simple::GaussianSourceImageFilter for the object oriented interface
 
 
 ";
@@ -28568,11 +29733,18 @@ std::vector< double > direction=std::vector< double >())
  itk::simple::GridImageSource Procedural Interface
 
 
+ itk::simple::GridSourceImageFilter Procedural Interface
+
 This function directly calls the execute method of GridImageSource in order to support a procedual API
 
 
 See:
  itk::simple::GridImageSource for the object oriented interface
+ This function directly calls the execute method of GridSourceImageFilter in order to support a procedual API
+
+
+See:
+ itk::simple::GridSourceImageFilter for the object oriented interface
 
 
 ";
@@ -29581,7 +30753,15 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Modulus "
-Image itk::simple::Modulus(const Image &image1, double dividend=5.0)
+Image itk::simple::Modulus(uint32_t constant, const Image &image2)
+";
+
+%feature("docstring")  itk::simple::Modulus "
+Image itk::simple::Modulus(const Image &image1, uint32_t constant)
+";
+
+%feature("docstring")  itk::simple::Modulus "
+Image itk::simple::Modulus(const Image &image1, const Image &image2)
 
  itk::simple::ModulusImageFilter Procedural Interface
 
@@ -29684,6 +30864,21 @@ This function directly calls the execute method of MultiplyImageFilter in order 
 
 See:
  itk::simple::MultiplyImageFilter for the object oriented interface
+
+
+";
+
+%feature("docstring")  itk::simple::MultiplyByConstant "
+Image itk::simple::MultiplyByConstant(const Image &image1, double inConstant=1)
+
+ itk::simple::MultiplyByConstantImageFilter Procedural Interface
+
+
+This function directly calls the execute method of MultiplyByConstantImageFilter in order to support a procedual API
+
+
+See:
+ itk::simple::MultiplyByConstantImageFilter for the object oriented interface
 
 
 ";
@@ -30020,11 +31215,18 @@ std::vector< double > direction=std::vector< double >())
  itk::simple::PhysicalPointImageSource Procedural Interface
 
 
+ itk::simple::PhysicalPointSourceImageFilter Procedural Interface
+
 This function directly calls the execute method of PhysicalPointImageSource in order to support a procedual API
 
 
 See:
  itk::simple::PhysicalPointImageSource for the object oriented interface
+ This function directly calls the execute method of PhysicalPointSourceImageFilter in order to support a procedual API
+
+
+See:
+ itk::simple::PhysicalPointSourceImageFilter for the object oriented interface
 
 
 ";
@@ -30048,6 +31250,21 @@ This function directly calls the execute method of PowImageFilter in order to su
 
 See:
  itk::simple::PowImageFilter for the object oriented interface
+
+
+";
+
+%feature("docstring")  itk::simple::PowToConstant "
+Image itk::simple::PowToConstant(const Image &image1, double inConstant=1.0)
+
+ itk::simple::PowToConstantImageFilter Procedural Interface
+
+
+This function directly calls the execute method of PowToConstantImageFilter in order to support a procedual API
+
+
+See:
+ itk::simple::PowToConstantImageFilter for the object oriented interface
 
 
 ";
@@ -30096,6 +31313,10 @@ SITKIO_EXPORT Image itk::simple::ReadImage(const std::vector< std::string > &fil
 
 %feature("docstring")  itk::simple::ReadImage "
 SITKIO_EXPORT Image itk::simple::ReadImage(std::string filename)
+";
+
+%feature("docstring")  itk::simple::ReadTransform "
+Transform itk::simple::ReadTransform(const std::string &filename)
 ";
 
 %feature("docstring")  itk::simple::RealAndImaginaryToComplex "
@@ -30262,11 +31483,12 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Resample "
-Image itk::simple::Resample(const Image &image1, std::vector< uint32_t > size=std::vector<
-uint32_t >(3, 0), std::vector< double > outputOrigin=std::vector<
-double >(3, 0.0), std::vector< double > outputSpacing=std::vector<
-double >(3, 1.0), std::vector< double > outputDirection=std::vector<
-double >(), double defaultPixelValue=0.0)
+Image itk::simple::Resample(const Image &image1, Transform transform=itk::simple::Transform(),
+InterpolatorEnum interpolator=itk::simple::sitkLinear, std::vector<
+uint32_t > size=std::vector< uint32_t >(3, 0), std::vector< double >
+outputOrigin=std::vector< double >(3, 0.0), std::vector< double >
+outputSpacing=std::vector< double >(3, 1.0), std::vector< double >
+outputDirection=std::vector< double >(), double defaultPixelValue=0.0)
 
  itk::simple::ResampleImageFilter Procedural Interface
 
@@ -30795,6 +32017,36 @@ See:
 
 ";
 
+%feature("docstring")  itk::simple::SubtractConstantBy "
+Image itk::simple::SubtractConstantBy(const Image &image1, double inConstant=1.0)
+
+ itk::simple::SubtractConstantByImageFilter Procedural Interface
+
+
+This function directly calls the execute method of SubtractConstantByImageFilter in order to support a procedual API
+
+
+See:
+ itk::simple::SubtractConstantByImageFilter for the object oriented interface
+
+
+";
+
+%feature("docstring")  itk::simple::SubtractConstantFrom "
+Image itk::simple::SubtractConstantFrom(const Image &image1, double inConstant=1.0)
+
+ itk::simple::SubtractConstantFromImageFilter Procedural Interface
+
+
+This function directly calls the execute method of SubtractConstantFromImageFilter in order to support a procedual API
+
+
+See:
+ itk::simple::SubtractConstantFromImageFilter for the object oriented interface
+
+
+";
+
 %feature("docstring")  itk::simple::SumProjection "
 Image itk::simple::SumProjection(const Image &image1, unsigned int projectionDimension=0u)
 
@@ -31228,6 +32480,10 @@ See:
 %feature("docstring")  itk::simple::WriteImage "
 SITKIO_EXPORT void itk::simple::WriteImage(const Image &image, const std::string &fileName, bool
 inUseCompression=false)
+";
+
+%feature("docstring")  itk::simple::WriteTransform "
+void itk::simple::WriteTransform(const Transform &transform, const std::string &filename)
 ";
 
 %feature("docstring")  itk::simple::Xor "
