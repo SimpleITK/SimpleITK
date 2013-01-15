@@ -242,6 +242,12 @@ include(External_ITK)
 list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES ITK)
 
 
+#
+# Use CMake file which present options for wrapped languages, and finds languages as needed
+#
+include(SITKLanguageOptions)
+
+
 #------------------------------------------------------------------------------
 # List of external projects
 #------------------------------------------------------------------------------
@@ -256,11 +262,6 @@ foreach(ep ${external_project_list})
 endforeach()
 file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/ExternalProjectDependencies.txt "${ep_dependency_graph}\n")
 
-
-#
-# Use CMake file which present options for wrapped languages, and finds languages as needed
-#
-include(SITKLanguageOptions)
 
 
 get_cmake_property( _varNames VARIABLES )
