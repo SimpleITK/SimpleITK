@@ -61,7 +61,7 @@ namespace itk
 
 #else
   // linux and other systems
-  static std::string ShowImageCommand = "%a -o %f -e \'rename(\"%t\"); \'";
+  static std::string ShowImageCommand = "%a -e \'open(\"%f\"); rename(\"%t\"); \'";
   static std::string ShowColorImageCommand = "%a -e "
                                              "\'open(\"%f\"); run(\"Make Composite\", \"display=Composite\"); rename(\"%t\"); \'";
 #endif
