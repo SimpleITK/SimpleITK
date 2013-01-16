@@ -264,10 +264,22 @@ file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/ExternalProjectDependencies.txt "${ep_dep
 
 
 
+get_cmake_property( _varNames VARIABLES )
+
+foreach (_varName ${_varNames})
+  if(_varName MATCHES "^SimpleITK_" )
+    message( STATUS "Passing variable \"${_varName}=${${_varName}}\" to SimpleITK external project.")
+    list(APPEND SimpleITKITK_VARS ${_varName})
+  endif()
+endforeach()
+
+
+VariableListToCache( SimpleITK_VARS  ep_simpleitk_cache )
+VariableListToArgs( SimpleITKITK_VARS  ep_simpleitk_args )
 VariableListToCache( SITK_LANGUAGES_VARS  ep_languages_cache )
 VariableListToArgs( SITK_LANGUAGES_VARS  ep_languages_args )
 
-file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK-build/CMakeCacheInit.txt" "${ep_common_cache}\n${ep_languages_cache}" )
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK-build/CMakeCacheInit.txt" "${ep_simpleitk_cache}${ep_common_cache}\n${ep_languages_cache}" )
 
 set(proj SimpleITK)
 ExternalProject_Add(${proj}
@@ -279,6 +291,7 @@ ExternalProject_Add(${proj}
   CMAKE_ARGS
     --no-warn-unused-cli
     -C "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK-build/CMakeCacheInit.txt"
+    ${ep_simpleitk_args}
     ${ep_common_args}
     -DBUILD_SHARED_LIBS:BOOL=${BUILD_SHARED_LIBS}
     -DCMAKE_CXX_FLAGS:STRING=${CMAKE_CXX_FLAGS}\ ${CXX_ADDITIONAL_WARNING_FLAGS}
