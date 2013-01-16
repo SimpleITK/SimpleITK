@@ -1,19 +1,39 @@
-set( TARGET_SWIG_VERSION 2.0.9 )
+
+
+# Make sure this file is included only once
+get_filename_component(CMAKE_CURRENT_LIST_FILENAME ${CMAKE_CURRENT_LIST_FILE} NAME_WE)
+if(${CMAKE_CURRENT_LIST_FILENAME}_FILE_INCLUDED)
+  return()
+endif()
+set(${CMAKE_CURRENT_LIST_FILENAME}_FILE_INCLUDED 1)
+
+# Sanity checks
+if(DEFINED Swig_DIR AND NOT EXISTS ${Swig_DIR})
+  message(FATAL_ERROR "Swig_DIR variable is defined but corresponds to non-existing directory")
+endif()
+
 if(NOT SWIG_DIR)
+
+  set(SWIG_TARGET_VERSION 2.0.9)
+  set(SWIG_DOWNLOAD_SOURCE_HASH "54d534b14a70badc226129159412ea85")
+  set(SWIG_DOWNLOAD_WIN_HASH "a1dc34766cf599f49e2092f7973c85f4" )
+
+
   if(WIN32)
     # swig.exe available as pre-built binary on Windows:
     ExternalProject_Add(Swig
-      URL http://prdownloads.sourceforge.net/swig/swigwin-${TARGET_SWIG_VERSION}.zip
-      URL_MD5 a1dc34766cf599f49e2092f7973c85f4
-      SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/swigwin-${TARGET_SWIG_VERSION}
+      URL http://prdownloads.sourceforge.net/swig/swigwin-${SWIG_TARGET_VERSION}.zip
+      URL_MD5 ${SWIG_DOWNLOAD_WIN_HASH}
+      SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/swigwin-${SWIG_TARGET_VERSION}
       CONFIGURE_COMMAND ""
       BUILD_COMMAND ""
       INSTALL_COMMAND ""
       )
 
-    set(SWIG_DIR ${CMAKE_CURRENT_BINARY_DIR}/swigwin-${TARGET_SWIG_VERSION}) # ??
-    set(SWIG_EXECUTABLE ${CMAKE_CURRENT_BINARY_DIR}/swigwin-${TARGET_SWIG_VERSION}/swig.exe)
+    set(SWIG_DIR ${CMAKE_CURRENT_BINARY_DIR}/swigwin-${SWIG_TARGET_VERSION}) # ??
+    set(SWIG_EXECUTABLE ${CMAKE_CURRENT_BINARY_DIR}/swigwin-${SWIG_TARGET_VERSION}/swig.exe)
   else()
+
     #
     #  PCRE (Perl Compatible Regular Expressions)
     #
@@ -57,13 +77,13 @@ if(NOT SWIG_DIR)
     set ( swig_CONFIGURE_COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/swig_configure_step.cmake )
 
     ExternalProject_add(Swig
-      URL http://prdownloads.sourceforge.net/swig/swig-${TARGET_SWIG_VERSION}.tar.gz
-      URL_MD5 54d534b14a70badc226129159412ea85
+      URL http://prdownloads.sourceforge.net/swig/swig-${SWIG_TARGET_VERSION}.tar.gz
+      URL_MD5 ${SWIG_DOWNLOAD_SOURCE_HASH}
       CONFIGURE_COMMAND ${swig_CONFIGURE_COMMAND}
       DEPENDS PCRE
       )
 
-    set(SWIG_DIR ${swig_install_dir}/share/swig/${TARGET_SWIG_VERSION})
+    set(SWIG_DIR ${swig_install_dir}/share/swig/${SWIG_TARGET_VERSION})
     set(SWIG_EXECUTABLE ${swig_install_dir}/bin/swig)
 
     ExternalProject_Add_Step(Swig cpvec
