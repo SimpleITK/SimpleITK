@@ -212,6 +212,13 @@ list( APPEND ep_common_args
   -DBUILD_EXAMPLES:BOOL=OFF
 )
 
+
+#
+# Use CMake file which present options for wrapped languages, and finds languages as needed
+#
+include(SITKLanguageOptions)
+
+
 #$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 include(ExternalProject)
 #------------------------------------------------------------------------------
@@ -240,13 +247,6 @@ if(ITK_USE_FFTW)
 endif()
 include(External_ITK)
 list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES ITK)
-
-
-#
-# Use CMake file which present options for wrapped languages, and finds languages as needed
-#
-include(SITKLanguageOptions)
-
 
 #------------------------------------------------------------------------------
 # List of external projects
