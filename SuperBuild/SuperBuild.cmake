@@ -212,6 +212,13 @@ list( APPEND ep_common_args
   -DBUILD_EXAMPLES:BOOL=OFF
 )
 
+
+#
+# Use CMake file which present options for wrapped languages, and finds languages as needed
+#
+include(SITKLanguageOptions)
+
+
 #$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 include(ExternalProject)
 #------------------------------------------------------------------------------
@@ -241,7 +248,6 @@ endif()
 include(External_ITK)
 list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES ITK)
 
-
 #------------------------------------------------------------------------------
 # List of external projects
 #------------------------------------------------------------------------------
@@ -256,11 +262,6 @@ foreach(ep ${external_project_list})
 endforeach()
 file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/ExternalProjectDependencies.txt "${ep_dependency_graph}\n")
 
-
-#
-# Use CMake file which present options for wrapped languages, and finds languages as needed
-#
-include(SITKLanguageOptions)
 
 
 VariableListToCache( SITK_LANGUAGES_VARS  ep_languages_cache )
