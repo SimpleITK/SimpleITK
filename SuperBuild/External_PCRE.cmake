@@ -21,6 +21,7 @@ if(NOT PCRE_DIR)
 
   set(PCRE_TARGET_VERSION 8.12)
   set(PCRE_DOWNLOAD_SOURCE_HASH "fa69e4c5d8971544acd71d1f10d59193")
+  set(PCRE_DOWNLOAD_SOURCE_ID "147965")
 
   # follow the standard EP_PREFIX locations
   set ( pcre_binary_dir ${CMAKE_CURRENT_BINARY_DIR}/PCRE-prefix/src/PCRE-build )
@@ -35,6 +36,7 @@ if(NOT PCRE_DIR)
   set ( pcre_CONFIGURE_COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/pcre_configure_step.cmake )
 
   ExternalProject_add(PCRE
+    URL  http://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&id=${PCRE_DOWNLOAD_SOURCE_ID}&name=swigwin-${PCRE_TARGET_VERSION}.tar.gz
     URL http://downloads.sourceforge.net/project/pcre/pcre/${PCRE_TARGET_VERSION}/pcre-${PCRE_TARGET_VERSION}.tar.gz
     URL_MD5 "${PCRE_DOWNLOAD_SOURCE_HASH}"
     CONFIGURE_COMMAND ${pcre_CONFIGURE_COMMAND}
