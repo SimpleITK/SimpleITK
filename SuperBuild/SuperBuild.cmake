@@ -248,21 +248,6 @@ endif()
 include(External_ITK)
 list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES ITK)
 
-#------------------------------------------------------------------------------
-# List of external projects
-#------------------------------------------------------------------------------
-set(external_project_list  ITK swig SimpleITKExamples)
-
-#-----------------------------------------------------------------------------
-# Dump external project dependencies
-#-----------------------------------------------------------------------------
-set(ep_dependency_graph "# External project dependencies")
-foreach(ep ${external_project_list})
-  set(ep_dependency_graph "${ep_dependency_graph}\n${ep}:${${ep}_DEPENDENCIES}")
-endforeach()
-file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/ExternalProjectDependencies.txt "${ep_dependency_graph}\n")
-
-
 
 get_cmake_property( _varNames VARIABLES )
 
@@ -334,3 +319,18 @@ ExternalProject_Add_Step(${proj} forcebuild
 # installation of SimpleITK
 
 include(External_SimpleITKExamples)
+
+
+#------------------------------------------------------------------------------
+# List of external projects
+#------------------------------------------------------------------------------
+set(external_project_list ITK Swig SimpleITKExamples ${CMAKE_PROJECT_NAME})
+
+#-----------------------------------------------------------------------------
+# Dump external project dependencies
+#-----------------------------------------------------------------------------
+set(ep_dependency_graph "# External project dependencies")
+foreach(ep ${external_project_list})
+  set(ep_dependency_graph "${ep_dependency_graph}\n${ep}: ${${ep}_DEPENDENCIES}")
+endforeach()
+file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/ExternalProjectDependencies.txt "${ep_dependency_graph}\n")

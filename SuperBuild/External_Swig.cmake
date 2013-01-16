@@ -34,6 +34,9 @@ if(NOT SWIG_DIR)
     set(SWIG_EXECUTABLE ${CMAKE_CURRENT_BINARY_DIR}/swigwin-${SWIG_TARGET_VERSION}/swig.exe)
   else()
 
+    # Set dependency list
+    set(Swig_DEPENDENCIES "PCRE")
+
     #
     #  PCRE (Perl Compatible Regular Expressions)
     #
@@ -80,7 +83,7 @@ if(NOT SWIG_DIR)
       URL http://prdownloads.sourceforge.net/swig/swig-${SWIG_TARGET_VERSION}.tar.gz
       URL_MD5 ${SWIG_DOWNLOAD_SOURCE_HASH}
       CONFIGURE_COMMAND ${swig_CONFIGURE_COMMAND}
-      DEPENDS PCRE
+      DEPENDS "${Swig_DEPENDENCIES}"
       )
 
     set(SWIG_DIR ${swig_install_dir}/share/swig/${SWIG_TARGET_VERSION})
