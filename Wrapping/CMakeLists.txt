@@ -68,7 +68,12 @@ if ( WRAP_PYTHON )
   include_directories ( ${PYTHON_INCLUDE_DIR} ${SimpleITK_SOURCE_DIR}/Wrapping )
 
   # Run swig
-  set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS} -features autodoc=1 -keyword)
+  set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS} -features autodoc=1
+  -keyword )
+  if( SimpleITK_PYTHON_THREADS )
+    message( WARNING "Python threads has been turned on and is an experimental feature.")
+    set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_FLAGS} -threads)
+  endif()
   set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
   set(SWIG_MODULE_SimpleITK_EXTRA_DEPS ${SWIG_EXTRA_DEPS}
     ${CMAKE_CURRENT_SOURCE_DIR}/Python.i )

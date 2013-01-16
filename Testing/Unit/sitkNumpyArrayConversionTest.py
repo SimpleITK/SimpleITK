@@ -23,10 +23,6 @@ import unittest
 import SimpleITK as sitk
 import numpy as np
 
-def die(message):
-    print(message)
-    sys.exit(1)
-
 sizeX = 4
 sizeY = 5
 sizeZ = 3
