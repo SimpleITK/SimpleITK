@@ -207,20 +207,20 @@ end)
 
 
     if ( !inputs.empty() &&
-         inputs[0].GetPixelIDValue() != itk::simple::sitkLabelUInt8 &&
-         inputs[0].GetPixelIDValue() != itk::simple::sitkLabelUInt16 &&
-         inputs[0].GetPixelIDValue() != itk::simple::sitkLabelUInt32 &&
-         inputs[0].GetPixelIDValue() != itk::simple::sitkLabelUInt64 )
+         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt8 &&
+         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt16 &&
+         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt32 &&
+         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt64 )
       {
       inputSHA1hash =  itk::simple::Hash( inputs[0] );
       }
    ASSERT_NO_THROW ( output =  filter.Execute ( $(if #inputs > 0 then OUT=[[inputs[0] ]] end)$(for inum=1,#inputs-1 do OUT=OUT..", inputs["..inum.."]" end) ) );
 
     if ( !inputs.empty() &&
-         inputs[0].GetPixelIDValue() != itk::simple::sitkLabelUInt8 &&
-         inputs[0].GetPixelIDValue() != itk::simple::sitkLabelUInt16 &&
-         inputs[0].GetPixelIDValue() != itk::simple::sitkLabelUInt32 &&
-         inputs[0].GetPixelIDValue() != itk::simple::sitkLabelUInt64 )
+         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt8 &&
+         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt16 &&
+         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt32 &&
+         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt64 )
       {
       // Check that the input is not modified
       // This will fail if the filter is being run in-place

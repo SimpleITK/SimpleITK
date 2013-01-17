@@ -111,7 +111,7 @@ itk::simple::MeasurementMap StatisticsImageFilter::GetMeasurementMap( ) const
 
 Image StatisticsImageFilter::Execute ( const Image& image1 )
   {
-    PixelIDValueType type = image1.GetPixelIDValue();
+    PixelIDValueEnum type = image1.GetPixelID();
     unsigned int dimension = image1.GetDimension();
 
     return this->m_MemberFactory->GetMemberFunction( type, dimension )( image1 );

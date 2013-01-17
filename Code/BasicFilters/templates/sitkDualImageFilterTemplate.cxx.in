@@ -59,8 +59,8 @@ $(include CustomMethods.cxx.in)
 Image ${name}::Execute ( const Image & image1, const Image& image2 )
 {
 
-  PixelIDValueType type1 = image1.GetPixelIDValue();
-  PixelIDValueType type2 = image2.GetPixelIDValue();
+  PixelIDValueEnum type1 = image1.GetPixelID();
+  PixelIDValueEnum type2 = image2.GetPixelID();
   unsigned int dimension = image1.GetDimension();
 
   // todo need better error handling and potential type conversion

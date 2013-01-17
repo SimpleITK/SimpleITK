@@ -11,7 +11,7 @@ testimB <- ReadImage(system.file("data/cthead1-Float.mha", package="SimpleITK"))
 
 # need to cast to signed types to compare with R arithmetic
 testimInt <- ReadImage(system.file("data/cthead1.png", package="SimpleITK"))
-testimInt <- Cast(testimInt, RsitkInt16())
+testimInt <- Cast(testimInt, 'sitkInt16')
 
 testArrayA <- as.array(testimA)
 testArrayB <- as.array(testimB)

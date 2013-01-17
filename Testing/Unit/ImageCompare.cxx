@@ -137,8 +137,8 @@ bool ImageCompare::compare ( const sitk::Image& image, std::string inTestCase, s
   try
     {
 
-    if ( baseline.GetPixelIDValue() == sitk::sitkComplexFloat32 ||
-         baseline.GetPixelIDValue() == sitk::sitkComplexFloat64 )
+    if ( baseline.GetPixelID() == sitk::sitkComplexFloat32 ||
+         baseline.GetPixelID() == sitk::sitkComplexFloat64 )
       {
 
       sitk::Image diff =  sitk::Subtract( centerSlice, baseline );

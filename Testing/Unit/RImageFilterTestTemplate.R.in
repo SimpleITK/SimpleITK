@@ -86,10 +86,10 @@ end)
   }
 
 $(if inputA_cast then
- OUT="  inputs[[1]] = Cast( inputs[[1]], R${inputA_cast}_get() )"
+ OUT="  inputs[[1]] = Cast( inputs[[1]], '${inputA_cast}' )"
 end)
 $(if inputB_cast then
- OUT="  inputs[[2]] = Cast( inputs[[2]], R${inputB_cast}_get() )"
+ OUT="  inputs[[2]] = Cast( inputs[[2]], '${inputB_cast}' )"
 end)
 
   output <- filter$$Execute ( $(if #inputs > 0 then OUT="inputs[[1]] " end)$(for inum=2,#inputs do OUT=OUT..", inputs[["..inum.."]]" end) )

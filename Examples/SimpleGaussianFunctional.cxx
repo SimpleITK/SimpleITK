@@ -36,7 +36,7 @@ int main ( int argc, char* argv[] ) {
 
   sitk::Image image = sitk::ReadImage ( std::string ( argv[1] ) );
 
-  sitk::PixelIDValueType inputPixelID = image.GetPixelIDValue();
+  sitk::PixelIDValueEnum inputPixelID = image.GetPixelID();
 
   image = sitk::SmoothingRecursiveGaussian ( image, atof ( argv[2] ) );
 

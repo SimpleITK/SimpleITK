@@ -13,7 +13,7 @@
   "members" : [
     {
       "name" : "OutputPixelType",
-      "type" : "PixelIDValueType",
+      "type" : "PixelIDValueEnum",
       "default" : "itk::simple::sitkFloat32",
       "no_print" : "1",
       "custom_itk_cast" : ""

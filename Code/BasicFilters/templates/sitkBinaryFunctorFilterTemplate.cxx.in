@@ -107,7 +107,7 @@ $(include ExecuteNoParameters.cxx.in)
 Image ${name}::Execute ( ${constant_type} constant, const Image& image2 )
 {
 
-  PixelIDValueType type = image2.GetPixelIDValue();
+  PixelIDValueEnum type = image2.GetPixelID();
   unsigned int dimension = image2.GetDimension();
 
   return this->m_MemberFactory1->GetMemberFunction( type, dimension )( constant, image2 );
@@ -116,7 +116,7 @@ Image ${name}::Execute ( ${constant_type} constant, const Image& image2 )
 Image ${name}::Execute ( const Image& image1, ${constant_type} constant )
 {
 
-  PixelIDValueType type = image1.GetPixelIDValue();
+  PixelIDValueEnum type = image1.GetPixelID();
   unsigned int dimension = image1.GetDimension();
 
 
