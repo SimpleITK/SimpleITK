@@ -241,12 +241,15 @@ try_compile(SITK_UNORDERED_MAP_FUNCTIONAL
 # This generates a configuration error if the compiler is not supported
 check_include_file_cxx( stdint.h SITK_HAS_STDINT_H )
 
-if ( NOT SITK_HAS_STDINT_H )
-  message( FATAL_ERROR "SimpleITK requires usage of C99 stdint.\n"
-    "It may be available as an optional download for your compiler.\n"
-    "Please see the FAQ for details and to see if your compiler is supported.\n"
-    "http://www.itk.org/Wiki/ITK_Release_4/SimpleITK/FAQ#Do_I_need_to_download_an_optional_package_for_C99.3F")
-endif ( NOT SITK_HAS_STDINT_H )
+if(NOT STDINT_HAVE_STDINT_H)
+  if( WIN32 )
+    if(MSVC)
+      list(APPEND SimpleITK_INCLUDE_DIRS
+        "${SimpleITK_SOURCE_DIR}/Utilities/C99")
+      add_subdirectory("${SimpleITK_SOURCE_DIR}/Utilities/C99")
+    endif()
+  endif()
+endif()
 
 include_directories( ${SimpleITK_INCLUDE_DIRS} )
 
