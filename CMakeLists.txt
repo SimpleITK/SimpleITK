@@ -53,8 +53,6 @@ set ( SimpleITK_INCLUDE_DIRS
       ${CMAKE_BINARY_DIR}/Code/Common/include
       )
 
-include_directories( ${SimpleITK_INCLUDE_DIRS} )
-
 set ( SimpleITK_LIBRARIES SimpleITKCommon SimpleITKIO CACHE INTERNAL "" )
 
 # Be sure to clear these each time
@@ -76,59 +74,6 @@ mark_as_advanced ( SITK_EXPRESS_INSTANTIATEDPIXELS )
 # SimpleITK build configuration options.
 option(BUILD_SHARED_LIBS "Build SimpleITK ITK with shared libraries. This does not effect wrapped languages." OFF)
 set(SITK_BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS})
-
-
-#-----------------------------------------------------------
-# Place all checks and try compile variable for sitkConfigure.h here
-
-# check for C++0x static_assert
-try_compile(SITK_SUPPORTS_STATIC_ASSERT
-  ${SimpleITK_BINARY_DIR}/CMakeTmp
-  ${SimpleITK_SOURCE_DIR}/CMake/static_assert.cxx )
-
-
-include(CheckIncludeFileCXX)
-
-# check for the required tr1/functional header
-check_include_file_cxx( tr1/functional SITK_HAS_STLTR1_TR1_FUNCTIONAL )
-check_include_file_cxx( functional SITK_HAS_STLTR1_FUNCTIONAL )
-
-# check for the required tr1/type_traits header
-check_include_file_cxx( tr1/type_traits SITK_HAS_STLTR1_TR1_TYPE_TRAITS )
-check_include_file_cxx( type_traits SITK_HAS_STLTR1_TYPE_TRAITS )
-
-if ( NOT SITK_HAS_STLTR1_TR1_FUNCTIONAL AND NOT SITK_HAS_STLTR1_FUNCTIONAL )
-  message( FATAL_ERROR
-    "SimpleITK requires usage of parts C++ Technical Report 1 (TR1).\n"
-    "It may be available as an optional download for your compiler. Please see the FAQ for details.\n"
-    "http://www.itk.org/Wiki/ITK_Release_4/SimpleITK/FAQ#Do_I_need_to_download_an_option_package_for_TR1_support.3F")
-endif ( )
-
-
-# check for the optional tr1/unordered_map header
-check_include_file_cxx( tr1/unordered_map SITK_HAS_STLTR1_TR1_UNORDERED_MAP )
-check_include_file_cxx( unordered_map SITK_HAS_STLTR1_UNORDERED_MAP )
-if ( ${SITK_HAS_STLTR1_UNORDERED_MAP} )
-  set( SITK_UNORDERED_MAP_FUNCTIONAL_DEFINITIONS "-DSITK_HAS_STLTR1_UNORDERED_MAP")
-elseif ( ${SITK_HAS_STLTR1_TR1_UNORDERED_MAP} )
-  set( SITK_UNORDERED_MAP_FUNCTIONAL_DEFINITIONS "-DSITK_HAS_STLTR1_TR1_UNORDERED_MAP" )
-endif()
-try_compile(SITK_UNORDERED_MAP_FUNCTIONAL
-  ${SimpleITK_BINARY_DIR}/CMakeTmp
-  ${SimpleITK_SOURCE_DIR}/CMake/tr1_unordered_map.cxx
-  COMPILE_DEFINITIONS "${SITK_UNORDERED_MAP_FUNCTIONAL_DEFINITIONS}"
-  OUTPUT_VARIABLE out )
-
-# check for stdint
-# This generates a configuration error if the compiler is not supported
-check_include_file_cxx( stdint.h SITK_HAS_STDINT_H )
-
-if ( NOT SITK_HAS_STDINT_H )
-  message( FATAL_ERROR "SimpleITK requires usage of C99 stdint.\n"
-    "It may be available as an optional download for your compiler.\n"
-    "Please see the FAQ for details and to see if your compiler is supported.\n"
-    "http://www.itk.org/Wiki/ITK_Release_4/SimpleITK/FAQ#Do_I_need_to_download_an_optional_package_for_C99.3F")
-endif ( NOT SITK_HAS_STDINT_H )
 
 
 #-----------------------------------------------------------------------------
@@ -170,23 +115,10 @@ file( GLOB template_components
     )
 set ( template_components ${template_components} CACHE INTERNAL "" )
 
-#------------------------------------------------------------------------------
-# These are some system specific compiler options needed to build SimpleITK
-
-if(MSVC)
-  # /bigobj is required for windows builds because of the size of
-  # some object files (CastImage for instance)
-  # Also supress the pesky warning about std::vector not being marked
-  # for export in the dll
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj /wd4251" )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /bigobj" )
-
-  # Avoid some warnings
-  add_definitions ( -D_SCL_SECURE_NO_WARNINGS )
-endif()
 
 #------------------------------------------------------------------------------
 # Variables for use in install rules:
+
 if(NOT SimpleITK_INSTALL_RUNTIME_DIR)
   set(SimpleITK_INSTALL_RUNTIME_DIR "bin")
 endif()
@@ -231,7 +163,93 @@ function(sitk_install_exported_target tgt)
     )
 endfunction()
 
+
+#------------------------------------------------------------------------------
+# These are some system specific compiler options needed to build SimpleITK
+
+if(MSVC)
+  # /bigobj is required for windows builds because of the size of
+  # some object files (CastImage for instance)
+  # Also supress the pesky warning about std::vector not being marked
+  # for export in the dll
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj /wd4251" )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /bigobj" )
+
+  # Avoid some warnings
+  add_definitions ( -D_SCL_SECURE_NO_WARNINGS )
+endif()
+
+
 include(CheckCXXCompilerFlag)
+
+# The fPIC flags is used to create position independent code. It is
+# required on some systems to produce shared libraries. On Apple
+# systems the flag has no effect as it is the default. On other
+# platforms, this flag may enable libraries to be better shared
+# between processes. Therefore, if the compiler supports it, we will
+# use it.
+check_cxx_compiler_flag( "-fPIC" CXX_HAS_fPIC )
+if( CXX_HAS_fPIC )
+  if(NOT "${CMAKE_CXX_FLAGS}" MATCHES "-fPIC")
+    set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC" )
+  endif()
+endif( )
+
+
+
+#-----------------------------------------------------------
+# Place all checks and try compile variable for sitkConfigure.h here
+
+# check for C++0x static_assert
+try_compile(SITK_SUPPORTS_STATIC_ASSERT
+  ${SimpleITK_BINARY_DIR}/CMakeTmp
+  ${SimpleITK_SOURCE_DIR}/CMake/static_assert.cxx )
+
+
+include(CheckIncludeFileCXX)
+
+# check for the required tr1/functional header
+check_include_file_cxx( tr1/functional SITK_HAS_STLTR1_TR1_FUNCTIONAL )
+check_include_file_cxx( functional SITK_HAS_STLTR1_FUNCTIONAL )
+
+# check for the required tr1/type_traits header
+check_include_file_cxx( tr1/type_traits SITK_HAS_STLTR1_TR1_TYPE_TRAITS )
+check_include_file_cxx( type_traits SITK_HAS_STLTR1_TYPE_TRAITS )
+
+if ( NOT SITK_HAS_STLTR1_TR1_FUNCTIONAL AND NOT SITK_HAS_STLTR1_FUNCTIONAL )
+  message( FATAL_ERROR
+    "SimpleITK requires usage of parts C++ Technical Report 1 (TR1).\n"
+    "It may be available as an optional download for your compiler. Please see the FAQ for details.\n"
+    "http://www.itk.org/Wiki/ITK_Release_4/SimpleITK/FAQ#Do_I_need_to_download_an_option_package_for_TR1_support.3F")
+endif ( )
+
+# check for the optional tr1/unordered_map header
+check_include_file_cxx( tr1/unordered_map SITK_HAS_STLTR1_TR1_UNORDERED_MAP )
+check_include_file_cxx( unordered_map SITK_HAS_STLTR1_UNORDERED_MAP )
+if ( ${SITK_HAS_STLTR1_UNORDERED_MAP} )
+  set( SITK_UNORDERED_MAP_FUNCTIONAL_DEFINITIONS "-DSITK_HAS_STLTR1_UNORDERED_MAP")
+elseif ( ${SITK_HAS_STLTR1_TR1_UNORDERED_MAP} )
+  set( SITK_UNORDERED_MAP_FUNCTIONAL_DEFINITIONS "-DSITK_HAS_STLTR1_TR1_UNORDERED_MAP" )
+endif()
+try_compile(SITK_UNORDERED_MAP_FUNCTIONAL
+  ${SimpleITK_BINARY_DIR}/CMakeTmp
+  ${SimpleITK_SOURCE_DIR}/CMake/tr1_unordered_map.cxx
+  COMPILE_DEFINITIONS "${SITK_UNORDERED_MAP_FUNCTIONAL_DEFINITIONS}"
+  OUTPUT_VARIABLE out )
+
+# check for stdint
+# This generates a configuration error if the compiler is not supported
+check_include_file_cxx( stdint.h SITK_HAS_STDINT_H )
+
+if ( NOT SITK_HAS_STDINT_H )
+  message( FATAL_ERROR "SimpleITK requires usage of C99 stdint.\n"
+    "It may be available as an optional download for your compiler.\n"
+    "Please see the FAQ for details and to see if your compiler is supported.\n"
+    "http://www.itk.org/Wiki/ITK_Release_4/SimpleITK/FAQ#Do_I_need_to_download_an_optional_package_for_C99.3F")
+endif ( NOT SITK_HAS_STDINT_H )
+
+include_directories( ${SimpleITK_INCLUDE_DIRS} )
+
 
 #------------------------------------------------------------------------------
 # assemble a list of important documentation from Simple ITK and ITK
@@ -280,18 +298,6 @@ foreach(_f IN LISTS ITK_DOC_FILES)
   list( APPEND SimpleITK_DOC_FILES "${_o}" )
 endforeach()
 
-# The fPIC flags is used to create position independent code. It is
-# required on some systems to produce shared libraries. On Apple
-# systems the flag has no effect as it is the default. On other
-# platforms, this flag may enable libraries to be better shared
-# between processes. Therefore, if the compiler supports it, we will
-# use it.
-check_cxx_compiler_flag( "-fPIC" CXX_HAS_fPIC )
-if( CXX_HAS_fPIC )
-  if(NOT "${CMAKE_CXX_FLAGS}" MATCHES "-fPIC")
-    set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC" )
-  endif()
-endif( )
 
 #------------------------------------------------------------------------------
 # Set up Documentation
