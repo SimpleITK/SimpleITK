@@ -81,10 +81,12 @@ if ( WRAP_PYTHON )
   SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${PYTHON_LIBRARIES})
   set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKPYTHON_wrap.cxx PROPERTIES COMPILE_FLAGS "-w")
 
+  set(SWIG_MODULE_SimpleITKPython_TARGET_NAME "${SWIG_MODULE_SimpleITK_TARGET_NAME}")
+
   # Installation
   set( SIMPLEITK_PYTHON_MODULE_DIR "${SimpleITK_BINARY_DIR}/Wrapping" )
   file(TO_NATIVE_PATH "${SIMPLEITK_PYTHON_MODULE_DIR}" SIMPLEITK_NATIVE_PYTHON_MODULE_DIR )
-  get_target_property( SIMPLEITK_BINARY_MODULE ${SWIG_MODULE_SimpleITK_TARGET_NAME} LOCATION )
+  get_target_property( SIMPLEITK_BINARY_MODULE ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} LOCATION )
   file(TO_NATIVE_PATH "${SIMPLEITK_BINARY_MODULE}" SIMPLEITK_NATIVE_BINARY_MODULE )
 
 
@@ -127,7 +129,7 @@ if ( WRAP_PYTHON )
     "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/distribute_setup.py"
     COPYONLY )
 
-  add_dependencies( ${SWIG_MODULE_SimpleITK_TARGET_NAME} ConfigureFileBuildtime )
+  add_dependencies( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} ConfigureFileBuildtime )
 
   if ( BUILD_TESTING )
 
@@ -151,7 +153,7 @@ if ( WRAP_PYTHON )
     @ONLY )
 
     # virtualenv creation
-    add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_TARGET_NAME}
+    add_custom_command( TARGET ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
       POST_BUILD
       COMMAND ${CMAKE_COMMAND} -P "${CMAKE_CURRENT_BINARY_DIR}/PythonVirtualEnvInstall.cmake"
       COMMAND ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/setup.py" install
