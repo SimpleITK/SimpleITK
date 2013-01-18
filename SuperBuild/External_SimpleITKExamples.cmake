@@ -3,6 +3,8 @@
 
 set(proj SimpleITKExamples)
 
+# Set dependency list
+set(SimpleITKExamples_DEPENDENCIES "SimpleITK")
 
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt" "${ep_common_cache}" )
 
@@ -21,5 +23,5 @@ ExternalProject_Add(${proj}
     -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
   BUILD_COMMAND ${BUILD_COMMAND_STRING}
   INSTALL_COMMAND ""
-  DEPENDS SimpleITK
+  DEPENDS "${SimpleITKExamples_DEPENDENCIES}"
   )
