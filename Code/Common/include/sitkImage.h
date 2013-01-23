@@ -229,6 +229,17 @@ namespace simple
     uint64_t GetPixelAsUInt64( const std::vector<uint32_t> &idx ) const;
     float    GetPixelAsFloat( const std::vector<uint32_t> &idx ) const;
     double   GetPixelAsDouble(  const std::vector<uint32_t> &idx ) const;
+
+    std::vector<int8_t>   GetPixelAsVectorInt8( const std::vector<uint32_t> &idx) const;
+    std::vector<uint8_t>  GetPixelAsVectorUInt8( const std::vector<uint32_t> &idx) const;
+    std::vector<int16_t> GetPixelAsVectorInt16( const std::vector<uint32_t> &idx ) const;
+    std::vector<uint16_t> GetPixelAsVectorUInt16( const std::vector<uint32_t> &idx ) const;
+    std::vector<int32_t>  GetPixelAsVectorInt32( const std::vector<uint32_t> &idx ) const;
+    std::vector<uint32_t> GetPixelAsVectorUInt32( const std::vector<uint32_t> &idx ) const;
+    std::vector<int64_t>  GetPixelAsVectorInt64( const std::vector<uint32_t> &idx ) const;
+    std::vector<uint64_t> GetPixelAsVectorUInt64( const std::vector<uint32_t> &idx ) const;
+    std::vector<float>    GetPixelAsVectorFloat32( const std::vector<uint32_t> &idx ) const;
+    std::vector<double>   GetPixelAsVectorFloat64( const std::vector<uint32_t> &idx ) const;
     /** @} */
 
     /** \brief Set the value of a pixel

@@ -478,6 +478,66 @@ namespace itk
       return this->m_PimpleImage->GetPixelAsDouble( idx );
     }
 
+    std::vector<int8_t>   Image::GetPixelAsVectorInt8( const std::vector<uint32_t> &idx) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetPixelAsVectorInt8( idx );
+    }
+
+    std::vector<uint8_t>  Image::GetPixelAsVectorUInt8( const std::vector<uint32_t> &idx) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetPixelAsVectorUInt8( idx );
+    }
+
+    std::vector<int16_t> Image::GetPixelAsVectorInt16( const std::vector<uint32_t> &idx ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetPixelAsVectorInt16( idx );
+    }
+
+    std::vector<uint16_t> Image::GetPixelAsVectorUInt16( const std::vector<uint32_t> &idx ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetPixelAsVectorUInt16( idx );
+    }
+
+    std::vector<int32_t>  Image::GetPixelAsVectorInt32( const std::vector<uint32_t> &idx ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetPixelAsVectorInt32( idx );
+    }
+
+    std::vector<uint32_t> Image::GetPixelAsVectorUInt32( const std::vector<uint32_t> &idx ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetPixelAsVectorUInt32( idx );
+    }
+
+    std::vector<int64_t>  Image::GetPixelAsVectorInt64( const std::vector<uint32_t> &idx ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetPixelAsVectorInt64( idx );
+    }
+
+    std::vector<uint64_t> Image::GetPixelAsVectorUInt64( const std::vector<uint32_t> &idx ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetPixelAsVectorUInt64( idx );
+    }
+
+    std::vector<float>    Image::GetPixelAsVectorFloat32( const std::vector<uint32_t> &idx ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetPixelAsVectorFloat32( idx );
+    }
+
+    std::vector<double>   Image::GetPixelAsVectorFloat64(  const std::vector<uint32_t> &idx ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetPixelAsVectorFloat64( idx );
+    }
+
     int8_t *Image::GetBufferAsInt8( )
     {
       assert( m_PimpleImage );
