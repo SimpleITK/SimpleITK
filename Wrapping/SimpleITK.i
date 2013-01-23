@@ -24,6 +24,7 @@
 %include <std_vector.i>
 %include <std_string.i>
 %include <std_map.i>
+%include <std_complex.i>
 
 // Use C99 int support
 %include <stdint.i>

@@ -36,6 +36,18 @@
 %rename( __GetPixelAsUInt64__ ) itk::simple::Image::GetPixelAsUInt64;
 %rename( __GetPixelAsFloat__ ) itk::simple::Image::GetPixelAsFloat;
 %rename( __GetPixelAsDouble__ ) itk::simple::Image::GetPixelAsDouble;
+%rename( __GetPixelAsVectorInt8__ ) itk::simple::Image::GetPixelAsVectorInt8;
+%rename( __GetPixelAsVectorUInt8__ ) itk::simple::Image::GetPixelAsVectorUInt8;
+%rename( __GetPixelAsVectorInt16__ ) itk::simple::Image::GetPixelAsVectorInt16;
+%rename( __GetPixelAsVectorUInt16__ ) itk::simple::Image::GetPixelAsVectorUInt16;
+%rename( __GetPixelAsVectorInt32__ ) itk::simple::Image::GetPixelAsVectorInt32;
+%rename( __GetPixelAsVectorUInt32__ ) itk::simple::Image::GetPixelAsVectorUInt32;
+%rename( __GetPixelAsVectorInt64__ ) itk::simple::Image::GetPixelAsVectorInt64;
+%rename( __GetPixelAsVectorUInt64__ ) itk::simple::Image::GetPixelAsVectorUInt64;
+%rename( __GetPixelAsVectorFloat32__ ) itk::simple::Image::GetPixelAsVectorFloat32;
+%rename( __GetPixelAsVectorFloat64__ ) itk::simple::Image::GetPixelAsVectorFloat64;
+%rename( __GetPixelAsComplexFloat32__ ) itk::simple::Image::GetPixelAsComplexFloat32;
+%rename( __GetPixelAsComplexFloat64__ ) itk::simple::Image::GetPixelAsComplextFloat64;
 
 %rename( __SetPixelAsInt8__ ) itk::simple::Image::SetPixelAsInt8;
 %rename( __SetPixelAsUInt8__ ) itk::simple::Image::SetPixelAsUInt8;
@@ -453,6 +465,33 @@
             return self.__GetPixelAsFloat__( idx )
           if pixelID == sitkFloat64:
             return self.__GetPixelAsDouble__( idx )
+
+          if pixelID == sitkVectorInt8:
+            return self.__GetPixelAsVectorInt8__( idx )
+          if pixelID == sitkVectorUInt8:
+            return self.__GetPixelAsVectorUInt8__( idx )
+          if pixelID == sitkVectorInt16:
+            return self.__GetPixelAsVectorInt16__( idx )
+          if pixelID == sitkVectorUInt16:
+            return self.__GetPixelAsVectorUInt16__( idx )
+          if pixelID == sitkVectorInt32:
+            return self.__GetPixelAsVectorInt32__( idx )
+          if pixelID == sitkVectorUInt32:
+            return self.__GetPixelAsVectorUInt32__( idx )
+          if pixelID == sitkVectorInt64:
+            return self.__GetPixelAsVectorInt64__( idx )
+          if pixelID == sitkVectorUInt64:
+            return self.__GetPixelAsVectorUInt64__( idx )
+          if pixelID == sitkVectorFloat32:
+            return self.__GetPixelAsVectorFloat32__( idx )
+          if pixelID == sitkVectorFloat64:
+            return self.__GetPixelAsVectorFloat64__( idx )
+
+          if pixelID == sitkComplexFloat32:
+            return self.__GetPixelAsComplexFloat32__( idx )
+          if pixelID == sitkComplexFloat64:
+            return self.__GetPixelAsComplexFloat64__( idx )
+
           raise Exception("unknown pixel type")
 
         def SetPixel(self, *args):
