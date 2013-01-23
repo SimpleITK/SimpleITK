@@ -96,6 +96,9 @@ namespace itk
     virtual std::vector<float>    GetPixelAsVectorFloat32( const std::vector<uint32_t> &idx ) const = 0;
     virtual std::vector<double>   GetPixelAsVectorFloat64(  const std::vector<uint32_t> &idx ) const = 0;
 
+    virtual std::complex<float>  GetPixelAsComplexFloat32( const std::vector<uint32_t> &idx ) const = 0;
+    virtual std::complex<double> GetPixelAsComplexFloat64( const std::vector<uint32_t> &idx ) const = 0;
+
     virtual void SetPixelAsInt8( const std::vector<uint32_t> &idx, int8_t v ) = 0;
     virtual void SetPixelAsUInt8( const std::vector<uint32_t> &idx, uint8_t v ) = 0;
     virtual void SetPixelAsInt16( const std::vector<uint32_t> &idx, int16_t v ) = 0;

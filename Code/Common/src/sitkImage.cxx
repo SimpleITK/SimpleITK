@@ -538,6 +538,18 @@ namespace itk
       return this->m_PimpleImage->GetPixelAsVectorFloat64( idx );
     }
 
+  std::complex<float>    Image::GetPixelAsComplexFloat32( const std::vector<uint32_t> &idx ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetPixelAsComplexFloat32( idx );
+    }
+
+    std::complex<double>   Image::GetPixelAsComplexFloat64(  const std::vector<uint32_t> &idx ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetPixelAsComplexFloat64( idx );
+    }
+
     int8_t *Image::GetBufferAsInt8( )
     {
       assert( m_PimpleImage );
