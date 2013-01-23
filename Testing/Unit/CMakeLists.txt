@@ -8,7 +8,7 @@ include(${ITK_USE_FILE})
 # added to ctest.
 set ( TestSource
   SimpleITKTestHarness.cxx
-  ImageTests.cxx
+  sitkImageTests.cxx
   CommonTests.cxx
   RegistrationTests.cxx
   sitkImageIOTests.cxx
