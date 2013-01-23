@@ -225,8 +225,8 @@ namespace simple
     uint16_t GetPixelAsUInt16( const std::vector<uint32_t> &idx ) const;
     int32_t  GetPixelAsInt32( const std::vector<uint32_t> &idx ) const;
     uint32_t GetPixelAsUInt32( const std::vector<uint32_t> &idx ) const;
-    int32_t  GetPixelAsInt64( const std::vector<uint32_t> &idx ) const;
-    uint32_t GetPixelAsUInt64( const std::vector<uint32_t> &idx ) const;
+    int64_t  GetPixelAsInt64( const std::vector<uint32_t> &idx ) const;
+    uint64_t GetPixelAsUInt64( const std::vector<uint32_t> &idx ) const;
     float    GetPixelAsFloat( const std::vector<uint32_t> &idx ) const;
     double   GetPixelAsDouble(  const std::vector<uint32_t> &idx ) const;
     /** @} */

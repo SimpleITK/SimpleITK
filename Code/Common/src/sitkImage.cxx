@@ -454,13 +454,13 @@ namespace itk
       return this->m_PimpleImage->GetPixelAsUInt32( idx );
     }
 
-    int32_t Image::GetPixelAsInt64( const std::vector<uint32_t> &idx ) const
+    int64_t Image::GetPixelAsInt64( const std::vector<uint32_t> &idx ) const
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetPixelAsInt64( idx );
     }
 
-    uint32_t Image::GetPixelAsUInt64( const std::vector<uint32_t> &idx ) const
+    uint64_t Image::GetPixelAsUInt64( const std::vector<uint32_t> &idx ) const
     {
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetPixelAsUInt64( idx );
