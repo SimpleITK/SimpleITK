@@ -684,7 +684,7 @@ namespace itk
     {
       assert( m_PimpleImage );
       this->MakeUniqueForWrite();
-      this->m_PimpleImage->SetPixelAsUInt8( idx, v );
+      this->m_PimpleImage->SetPixelAsInt8( idx, v );
     }
 
     void Image::SetPixelAsUInt8( const std::vector<uint32_t> &idx, uint8_t v )
