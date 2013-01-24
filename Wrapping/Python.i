@@ -17,6 +17,12 @@
 *=========================================================================*/
 #if SWIGPYTHON
 %include "PythonDocstrings.i"
+
+
+// ignore overload methods of int type when there is an enum
+%ignore itk::simple::CastImageFilter::SetOutputPixelType( PixelIDValueType pixelID );
+%ignore itk::simple::GetPixelIDValueAsString( PixelIDValueType type );
+
 // Make __str__ transparent by renaming ToString to __str__
 %rename(__str__) ToString;
 

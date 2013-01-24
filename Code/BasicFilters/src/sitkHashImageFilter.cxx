@@ -70,7 +70,7 @@ namespace itk {
 
     std::string HashImageFilter::Execute ( const Image& image ) {
 
-      PixelIDValueType type = image.GetPixelIDValue();
+      PixelIDValueEnum type = image.GetPixelID();
       unsigned int dimension = image.GetDimension();
 
       return this->m_MemberFactory->GetMemberFunction( type, dimension )( image );
@@ -84,7 +84,7 @@ namespace itk {
       typedef itk::Image< typename LabelImageType::PixelType, LabelImageType::ImageDimension > ScalarImageType;
 
       // The image id for a scalar image of the label map image
-      PixelIDValueType scalarID = PixelIDToPixelIDValue< typename ImageTypeToPixelID<ScalarImageType>::PixelIDType >::Result;
+      PixelIDValueEnum scalarID = static_cast<PixelIDValueEnum>(PixelIDToPixelIDValue< typename ImageTypeToPixelID<ScalarImageType>::PixelIDType >::Result);
 
       // convert the LabelMapImage to a scalar image
       Image img = Cast( inImage, scalarID );

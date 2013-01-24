@@ -55,7 +55,7 @@ $(include CustomMethods.cxx.in)
 Image ${name}::Execute ( $(include ImageParameters.in) )
 {
 
-  PixelIDValueType type = m_OutputPixelType;
+  PixelIDValueEnum type = m_OutputPixelType;
   unsigned int dimension = m_Size.size();
 
   $(for inum=2,number_of_inputs do

@@ -23,7 +23,12 @@ namespace simple
 {
 
 
-  const std::string GetPixelIDValueAsString( PixelIDValueType type )
+const std::string GetPixelIDValueAsString( PixelIDValueEnum type )
+{
+  return GetPixelIDValueAsString( static_cast<PixelIDValueType>(type) );
+}
+
+const std::string GetPixelIDValueAsString( PixelIDValueType type )
 {
 
   if ( type == sitkUnknown )

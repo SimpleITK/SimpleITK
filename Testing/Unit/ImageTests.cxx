@@ -168,43 +168,55 @@ TEST_F(Image,ImageDataType) {
 
   result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<short> >::Result;
   EXPECT_EQ( shortImage->GetPixelIDValue(), result);
+  EXPECT_EQ( shortImage->GetPixelID(), result);
 
   result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<float> >::Result;
   EXPECT_EQ( floatImage->GetPixelIDValue(), result );
+  EXPECT_EQ( floatImage->GetPixelID(), result );
 
   result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::VectorPixelID<float> >::Result;
   EXPECT_EQ( floatVectorImage->GetPixelIDValue(), result );
+  EXPECT_EQ( floatVectorImage->GetPixelID(), result );
 
   result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::VectorPixelID<float> >::Result;
   EXPECT_EQ( floatVector2DImage->GetPixelIDValue(), result );
+  EXPECT_EQ( floatVector2DImage->GetPixelID(), result );
 
 
   result = itk::simple::PixelIDToPixelIDValue< itk::simple::BasicPixelID<short> >::Result;
   EXPECT_EQ( shortImage->GetPixelIDValue(), result);
+  EXPECT_EQ( shortImage->GetPixelID(), result);
 
   result = itk::simple::PixelIDToPixelIDValue< itk::simple::BasicPixelID<float> >::Result;
   EXPECT_EQ( floatImage->GetPixelIDValue(), result );
+  EXPECT_EQ( floatImage->GetPixelID(), result );
 
   result = itk::simple::PixelIDToPixelIDValue< itk::simple::VectorPixelID<float> >::Result;
   EXPECT_EQ( floatVectorImage->GetPixelIDValue(), result );
+  EXPECT_EQ( floatVectorImage->GetPixelID(), result );
 
   result = itk::simple::PixelIDToPixelIDValue< itk::simple::VectorPixelID<float> >::Result;
   EXPECT_EQ( floatVector2DImage->GetPixelIDValue(), result );
+  EXPECT_EQ( floatVector2DImage->GetPixelID(), result );
 
 
 
   result = typelist::IndexOf< InstantiatedPixelIDTypeList,  itk::simple::ImageTypeToPixelID<ShortImageType>::PixelIDType >::Result;
   EXPECT_EQ( shortImage->GetPixelIDValue(), result );
+  EXPECT_EQ( shortImage->GetPixelID(), result );
 
   result = typelist::IndexOf< InstantiatedPixelIDTypeList,  itk::simple::ImageTypeToPixelID<FloatVectorImageType>::PixelIDType >::Result;
   EXPECT_EQ( floatVectorImage->GetPixelIDValue(), result );
+  EXPECT_EQ( floatVectorImage->GetPixelID(), result );
 
 
   result = itk::simple::ImageTypeToPixelIDValue<ShortImageType>::Result;
   EXPECT_EQ( shortImage->GetPixelIDValue(), result );
+  EXPECT_EQ( shortImage->GetPixelID(), result );
 
   result = itk::simple::ImageTypeToPixelIDValue<FloatVectorImageType>::Result;
   EXPECT_EQ( floatVectorImage->GetPixelIDValue(), result );
+  EXPECT_EQ( floatVectorImage->GetPixelID(), result );
 
 
 }

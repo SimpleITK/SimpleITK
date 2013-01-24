@@ -17,4 +17,9 @@
 *=========================================================================*/
 // Ruby specific swig components
 #if SWIGRUBY
+
+// ignore overload methods of int type when there is an enum
+%ignore itk::simple::CastImageFilter::SetOutputPixelType( PixelIDValueType pixelID );
+%ignore itk::simple::GetPixelIDValueAsString( PixelIDValueType type );
+
 #endif
