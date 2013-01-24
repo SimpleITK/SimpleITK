@@ -59,6 +59,18 @@
 %rename( __SetPixelAsUInt64__ ) itk::simple::Image::SetPixelAsUInt64;
 %rename( __SetPixelAsFloat__ ) itk::simple::Image::SetPixelAsFloat;
 %rename( __SetPixelAsDouble__ ) itk::simple::Image::SetPixelAsDouble;
+%rename( __SetPixelAsVectorInt8__ ) itk::simple::Image::SetPixelAsVectorInt8;
+%rename( __SetPixelAsVectorUInt8__ ) itk::simple::Image::SetPixelAsVectorUInt8;
+%rename( __SetPixelAsVectorInt16__ ) itk::simple::Image::SetPixelAsVectorInt16;
+%rename( __SetPixelAsVectorUInt16__ ) itk::simple::Image::SetPixelAsVectorUInt16;
+%rename( __SetPixelAsVectorInt32__ ) itk::simple::Image::SetPixelAsVectorInt32;
+%rename( __SetPixelAsVectorUInt32__ ) itk::simple::Image::SetPixelAsVectorUInt32;
+%rename( __SetPixelAsVectorInt64__ ) itk::simple::Image::SetPixelAsVectorInt64;
+%rename( __SetPixelAsVectorUInt64__ ) itk::simple::Image::SetPixelAsVectorUInt64;
+%rename( __SetPixelAsVectorFloat32__ ) itk::simple::Image::SetPixelAsVectorFloat32;
+%rename( __SetPixelAsVectorFloat64__ ) itk::simple::Image::SetPixelAsVectorFloat64;
+%rename( __SetPixelAsComplexFloat32__ ) itk::simple::Image::SetPixelAsComplexFloat32;
+%rename( __SetPixelAsComplexFloat64__ ) itk::simple::Image::SetPixelAsComplextFloat64;
 
 %pythoncode %{
    import operator
@@ -410,30 +422,26 @@
             """Sets the pixel value at index idx to value.
 
             The dimension of idx should match that of the image."""
-            pixelID = self.GetPixelIDValue()
-            if pixelID == sitkUnknown:
-               raise Exception("Logic Error: invalid pixel type")
-            if pixelID == sitkInt8:
-               return self.__SetPixelAsInt8__( idx )
-            if pixelID == sitkUInt8 or pixelID == sitkLabelUInt8:
-               return self.__SetPixelAsUInt8__( idx, value )
-            if pixelID == sitkInt16:
-               return self.__SetPixelAsInt16__( idx, value )
-            if pixelID == sitkUInt16 or pixelID == sitkLabelUInt16:
-               return self.__SetPixelAsUInt16__( idx, value )
-            if pixelID == sitkInt32:
-               return self.__SetPixelAsInt32__( idx, value )
-            if pixelID == sitkUInt32 or pixelID == sitkLabelUInt32:
-               return self.__SetPixelAsUInt32__( idx, value )
-            if pixelID == sitkInt64:
-               return self.__SetPixelAsInt64__( idx )
-            if pixelID == sitkUInt64 or pixelID == sitkLabelUInt64:
-               return self.__SetPixelAsUInt64__( idx )
-            if pixelID == sitkFloat32:
-               return self.__SetPixelAsFloat__( idx, value )
-            if pixelID == sitkFloat64:
-               return self.__SetPixelAsDouble__( idx, value )
-            raise Exception("Unknown pixel type")
+
+            dim = self.GetDimension()
+            size = self.GetSize()
+
+            if (len(idx) > dim):
+               raise IndexError("invalid index")
+
+            # All the indices are integers just return SetPixel value
+            if all( type(i) is int for i in idx ):
+              # if any of the arguments are negative integers subract them for the size
+              idx = [idx[i] if idx[i] >= 0 else (size[i] + idx[i]) for i in range(len(idx))]
+
+              if any( idx[i] < 0 or idx[i] >= size[i] for i in range(len(idx))):
+                raise IndexError("index out of bounds")
+
+              return self.SetPixel(*(tuple(idx)+(value,)))
+
+            # the index parameter was an invalid set of objects
+            raise IndexError("invalid index")
+
 
         def GetPixel(self, *idx):
           """Returns the value of a pixel.
@@ -495,15 +503,69 @@
           raise Exception("unknown pixel type")
 
         def SetPixel(self, *args):
-             """Sets the value of a pixel.
+          """Sets the value of a pixel.
 
-             This method takes 3 parameters in 2D: the x and y index then the value,
-             and 4 parameters in 3D: the x, y and z index then the value."""
-             if len(args) < 2:
-                raise Exception( "Wrong number of arguments, coordinates arguments then value" )
-             idx = args[:len(args)-1]
-             value = args[-1]
-             self[idx] = value
+           This method takes 3 parameters in 2D: the x and y index then the value,
+           and 4 parameters in 3D: the x, y and z index then the value."""
+
+
+          pixelID = self.GetPixelIDValue()
+          if pixelID == sitkUnknown:
+            raise Exception("invalid pixel type")
+
+          if len(args) < 2:
+            raise Exception( "Wrong number of arguments, coordinates arguments then value" )
+          idx = args[:len(args)-1]
+          value = args[-1]
+
+          if pixelID == sitkInt8:
+            return self.__SetPixelAsInt8__( idx, value )
+          if pixelID == sitkUInt8 or pixelID == sitkLabelUInt8:
+            return self.__SetPixelAsUInt8__( idx, value )
+          if pixelID == sitkInt16:
+            return self.__SetPixelAsInt16__( idx, value )
+          if pixelID == sitkUInt16 or pixelID == sitkLabelUInt16:
+            return self.__SetPixelAsUInt16__( idx, value )
+          if pixelID == sitkInt32:
+            return self.__SetPixelAsInt32__( idx, value )
+          if pixelID == sitkUInt32 or pixelID == sitkLabelUInt32:
+            return self.__SetPixelAsUInt32__( idx, value )
+          if pixelID == sitkInt64:
+            return self.__SetPixelAsInt64__( idx, value )
+          if pixelID == sitkUInt64 or pixelID == sitkLabelUInt64:
+            return self.__SetPixelAsUInt64__( idx, value )
+          if pixelID == sitkFloat32:
+            return self.__SetPixelAsFloat__( idx, value )
+          if pixelID == sitkFloat64:
+            return self.__SetPixelAsDouble__( idx, value )
+
+          if pixelID == sitkVectorInt8:
+            return self.__SetPixelAsVectorInt8__( idx, value )
+          if pixelID == sitkVectorUInt8:
+            return self.__SetPixelAsVectorUInt8__( idx, value )
+          if pixelID == sitkVectorInt16:
+            return self.__SetPixelAsVectorInt16__( idx, value )
+          if pixelID == sitkVectorUInt16:
+            return self.__SetPixelAsVectorUInt16__( idx, value )
+          if pixelID == sitkVectorInt32:
+            return self.__SetPixelAsVectorInt32__( idx, value )
+          if pixelID == sitkVectorUInt32:
+            return self.__SetPixelAsVectorUInt32__( idx, value )
+          if pixelID == sitkVectorInt64:
+            return self.__SetPixelAsVectorInt64__( idx, value )
+          if pixelID == sitkVectorUInt64:
+            return self.__SetPixelAsVectorUInt64__( idx, value )
+          if pixelID == sitkVectorFloat32:
+            return self.__SetPixelAsVectorFloat32__( idx, value )
+          if pixelID == sitkVectorFloat64:
+            return self.__SetPixelAsVectorFloat64__( idx, value )
+
+          if pixelID == sitkComplexFloat32:
+            return self.__SetPixelAsComplexFloat32__( idx, value )
+          if pixelID == sitkComplexFloat64:
+            return self.__SetPixelAsComplexFloat64__( idx, value )
+
+          raise Exception("unknown pixel type")
 
 
          %}
