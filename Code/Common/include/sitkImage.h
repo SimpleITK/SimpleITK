@@ -225,10 +225,24 @@ namespace simple
     uint16_t GetPixelAsUInt16( const std::vector<uint32_t> &idx ) const;
     int32_t  GetPixelAsInt32( const std::vector<uint32_t> &idx ) const;
     uint32_t GetPixelAsUInt32( const std::vector<uint32_t> &idx ) const;
-    int32_t  GetPixelAsInt64( const std::vector<uint32_t> &idx ) const;
-    uint32_t GetPixelAsUInt64( const std::vector<uint32_t> &idx ) const;
+    int64_t  GetPixelAsInt64( const std::vector<uint32_t> &idx ) const;
+    uint64_t GetPixelAsUInt64( const std::vector<uint32_t> &idx ) const;
     float    GetPixelAsFloat( const std::vector<uint32_t> &idx ) const;
     double   GetPixelAsDouble(  const std::vector<uint32_t> &idx ) const;
+
+    std::vector<int8_t>   GetPixelAsVectorInt8( const std::vector<uint32_t> &idx) const;
+    std::vector<uint8_t>  GetPixelAsVectorUInt8( const std::vector<uint32_t> &idx) const;
+    std::vector<int16_t> GetPixelAsVectorInt16( const std::vector<uint32_t> &idx ) const;
+    std::vector<uint16_t> GetPixelAsVectorUInt16( const std::vector<uint32_t> &idx ) const;
+    std::vector<int32_t>  GetPixelAsVectorInt32( const std::vector<uint32_t> &idx ) const;
+    std::vector<uint32_t> GetPixelAsVectorUInt32( const std::vector<uint32_t> &idx ) const;
+    std::vector<int64_t>  GetPixelAsVectorInt64( const std::vector<uint32_t> &idx ) const;
+    std::vector<uint64_t> GetPixelAsVectorUInt64( const std::vector<uint32_t> &idx ) const;
+    std::vector<float>    GetPixelAsVectorFloat32( const std::vector<uint32_t> &idx ) const;
+    std::vector<double>   GetPixelAsVectorFloat64( const std::vector<uint32_t> &idx ) const;
+
+    std::complex<float>  GetPixelAsComplexFloat32( const std::vector<uint32_t> &idx ) const;
+    std::complex<double> GetPixelAsComplexFloat64( const std::vector<uint32_t> &idx ) const;
     /** @} */
 
     /** \brief Set the value of a pixel
@@ -257,6 +271,21 @@ namespace simple
     void SetPixelAsUInt64( const std::vector<uint32_t> &idx, uint64_t v );
     void SetPixelAsFloat( const std::vector<uint32_t> &idx, float v );
     void SetPixelAsDouble( const std::vector<uint32_t> &idx, double v );
+
+    void SetPixelAsVectorInt8( const std::vector<uint32_t> &idx, const std::vector<int8_t> &v );
+    void SetPixelAsVectorUInt8( const std::vector<uint32_t> &idx, const std::vector<uint8_t> &v );
+    void SetPixelAsVectorInt16( const std::vector<uint32_t> &idx, const std::vector<int16_t> &v );
+    void SetPixelAsVectorUInt16( const std::vector<uint32_t> &idx, const std::vector<uint16_t> &v );
+    void SetPixelAsVectorInt32( const std::vector<uint32_t> &idx, const std::vector<int32_t> &v );
+    void SetPixelAsVectorUInt32( const std::vector<uint32_t> &idx, const std::vector<uint32_t> &v );
+    void SetPixelAsVectorInt64( const std::vector<uint32_t> &idx, const std::vector<int64_t> &v );
+    void SetPixelAsVectorUInt64( const std::vector<uint32_t> &idx, const std::vector<uint64_t> &v );
+    void SetPixelAsVectorFloat32( const std::vector<uint32_t> &idx, const std::vector<float> &v );
+    void SetPixelAsVectorFloat64( const std::vector<uint32_t> &idx, const std::vector<double> &v );
+
+    void SetPixelAsComplexFloat32( const std::vector<uint32_t> &idx, const std::complex<float> v );
+    void SetPixelAsComplexFloat64( const std::vector<uint32_t> &idx, const std::complex<double> v );
+
     /** @} */
 
    /** \brief Get a pointer to the image buffer
