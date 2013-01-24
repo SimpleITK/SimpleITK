@@ -260,46 +260,66 @@ namespace itk
 
     virtual int8_t  GetPixelAsInt8( const std::vector<uint32_t> &idx) const
       {
+        if ( IsLabel<ImageType>::Value )
+          return this->InternalGetPixel< LabelPixelID<int8_t> >( idx );
         return this->InternalGetPixel< BasicPixelID<int8_t> >( idx );
       }
     virtual uint8_t  GetPixelAsUInt8( const std::vector<uint32_t> &idx) const
       {
+        if ( IsLabel<ImageType>::Value )
+          return this->InternalGetPixel< LabelPixelID<uint8_t> >( idx );
         return this->InternalGetPixel< BasicPixelID<uint8_t> >( idx );
       }
     virtual int16_t  GetPixelAsInt16( const std::vector<uint32_t> &idx ) const
       {
+        if ( IsLabel<ImageType>::Value )
+          return this->InternalGetPixel< LabelPixelID<int16_t> >( idx );
         return this->InternalGetPixel< BasicPixelID<int16_t> >( idx );
       }
     virtual uint16_t GetPixelAsUInt16( const std::vector<uint32_t> &idx ) const
       {
+        if ( IsLabel<ImageType>::Value )
+          return this->InternalGetPixel< LabelPixelID<uint16_t> >( idx );
         return this->InternalGetPixel< BasicPixelID<uint16_t> >( idx );
       }
     virtual int32_t  GetPixelAsInt32( const std::vector<uint32_t> &idx ) const
       {
+        if ( IsLabel<ImageType>::Value )
+          return this->InternalGetPixel< LabelPixelID<int32_t> >( idx );
         return this->InternalGetPixel< BasicPixelID<int32_t> >( idx );
       }
     virtual uint32_t GetPixelAsUInt32( const std::vector<uint32_t> &idx ) const
       {
+        if ( IsLabel<ImageType>::Value )
+          return this->InternalGetPixel< LabelPixelID<uint32_t> >( idx );
         return this->InternalGetPixel< BasicPixelID<uint32_t> >( idx );
       }
     virtual int64_t  GetPixelAsInt64( const std::vector<uint32_t> &idx ) const
       {
+        if ( IsLabel<ImageType>::Value )
+          return this->InternalGetPixel< LabelPixelID<int64_t> >( idx );
         return this->InternalGetPixel< BasicPixelID<int64_t> >( idx );
       }
     virtual uint64_t GetPixelAsUInt64( const std::vector<uint32_t> &idx ) const
       {
+        if ( IsLabel<ImageType>::Value )
+          return this->InternalGetPixel< LabelPixelID<uint64_t> >( idx );
         return this->InternalGetPixel< BasicPixelID<uint64_t> >( idx );
       }
     virtual float    GetPixelAsFloat( const std::vector<uint32_t> &idx ) const
       {
+        if ( IsLabel<ImageType>::Value )
+          return this->InternalGetPixel< LabelPixelID<float> >( idx );
         return this->InternalGetPixel< BasicPixelID<float> >( idx );
       }
     virtual double   GetPixelAsDouble(  const std::vector<uint32_t> &idx ) const
       {
+        if ( IsLabel<ImageType>::Value )
+          return this->InternalGetPixel< LabelPixelID<double> >( idx );
         return this->InternalGetPixel< BasicPixelID<double> >( idx );
       }
     virtual std::vector<int8_t>  GetPixelAsVectorInt8( const std::vector<uint32_t> &idx) const
-      {
+    {
         return this->InternalGetPixel< VectorPixelID<int8_t> >( idx );
       }
     virtual std::vector<uint8_t>  GetPixelAsVectorUInt8( const std::vector<uint32_t> &idx) const
@@ -471,42 +491,62 @@ namespace itk
 
     virtual void SetPixelAsInt8( const std::vector<uint32_t> &idx, int8_t v )
       {
+        if ( IsLabel<ImageType>::Value )
+          return this->InternalSetPixel< LabelPixelID<int8_t> >( idx, v );
         this->InternalSetPixel<BasicPixelID<int8_t> >( idx, v );
       }
     virtual void SetPixelAsUInt8( const std::vector<uint32_t> &idx, uint8_t v )
       {
+        if ( IsLabel<ImageType>::Value )
+          return this->InternalSetPixel< LabelPixelID<uint8_t> >( idx, v );
         this->InternalSetPixel<BasicPixelID<uint8_t> >( idx, v );
       }
     virtual void SetPixelAsInt16( const std::vector<uint32_t> &idx, int16_t v )
       {
+        if ( IsLabel<ImageType>::Value )
+          return this->InternalSetPixel< LabelPixelID<int16_t> >( idx, v );
         this->InternalSetPixel<BasicPixelID<int16_t> >( idx, v );
       }
     virtual void SetPixelAsUInt16( const std::vector<uint32_t> &idx, uint16_t v )
       {
+        if ( IsLabel<ImageType>::Value )
+          return this->InternalSetPixel< LabelPixelID<uint16_t> >( idx, v );
         this->InternalSetPixel<BasicPixelID<uint16_t> >( idx, v );
       }
     virtual void SetPixelAsInt32( const std::vector<uint32_t> &idx, int32_t v )
       {
+        if ( IsLabel<ImageType>::Value )
+          return this->InternalSetPixel< LabelPixelID<int32_t> >( idx, v );
         this->InternalSetPixel<BasicPixelID<int32_t> >( idx, v );
       }
     virtual void SetPixelAsUInt32( const std::vector<uint32_t> &idx, uint32_t v )
       {
+        if ( IsLabel<ImageType>::Value )
+          return this->InternalSetPixel< LabelPixelID<uint32_t> >( idx, v );
         this->InternalSetPixel<BasicPixelID<uint32_t> >( idx, v );
       }
     virtual void SetPixelAsInt64( const std::vector<uint32_t> &idx, int64_t v )
       {
+        if ( IsLabel<ImageType>::Value )
+          return this->InternalSetPixel< LabelPixelID<int64_t> >( idx, v );
         this->InternalSetPixel<BasicPixelID<int64_t> >( idx, v );
       }
     virtual void SetPixelAsUInt64( const std::vector<uint32_t> &idx, uint64_t v )
       {
+        if ( IsLabel<ImageType>::Value )
+          return this->InternalSetPixel< LabelPixelID<uint64_t> >( idx, v );
         this->InternalSetPixel<BasicPixelID<uint64_t> >( idx, v );
       }
     virtual void SetPixelAsFloat( const std::vector<uint32_t> &idx, float v )
       {
+        if ( IsLabel<ImageType>::Value )
+          return this->InternalSetPixel< LabelPixelID<float> >( idx, v );
         this->InternalSetPixel<BasicPixelID<float> >( idx, v );
       }
     virtual void SetPixelAsDouble( const std::vector<uint32_t> &idx, double v )
       {
+        if ( IsLabel<ImageType>::Value )
+          return this->InternalSetPixel< LabelPixelID<double> >( idx, v );
         this->InternalSetPixel<BasicPixelID<double> >( idx, v );
       }
     virtual void SetPixelAsVectorInt8( const std::vector<uint32_t> &idx, const std::vector<int8_t> &v )
