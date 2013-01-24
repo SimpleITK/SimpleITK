@@ -360,10 +360,6 @@ namespace itk
 
   // Find the executable
   ExecutableName = itksys::SystemTools::FindFile ( ExecutableName.c_str(), paths );
-  if ( ExecutableName == "" )
-    {
-    sitkExceptionMacro ( << "Can not find location of " << name );
-    }
 
 #elif defined(__APPLE__)
 
