@@ -17,56 +17,66 @@
 #==========================================================================*/
 
 from __future__ import print_function
+import unittest
 
 import SimpleITK as sitk
 import sys
 
-# this test is suppose to test the python interface to the sitk::Image
+
+class ImageTests(unittest.TestCase):
+    """These tests are suppose to test the python interface to the sitk::Image"""
 
 
-image = sitk.Image( 10, 10, sitk.sitkInt32 )
 
-image + image
-image + 1
-1 + image
-image - image
-image - 1
-1 - image
-image * image
-image * 1
-1 * image
-image / image
-1.0 / image
-image / 1.0
-image // image
-image // 1
-1 // image
-image & image
-image | image
-image ^ image
-~image
+    def setUp(self):
+        pass
 
-image += image
-image -= image
-image *= image
-image /= image
-image //= image
+    def test_legacy(self):
+        """ This is old testing cruft before tehe unittest enlightenment """
 
-image = image * 0
+        image = sitk.Image( 10, 10, sitk.sitkInt32 )
 
-image.SetPixel( 0, 0, 1 )
-image[ [0,1] ]  = 2
-image[ 9,9 ]  = 3
+        image + image
+        image + 1
+        1 + image
+        image - image
+        image - 1
+        1 - image
+        image * image
+        image * 1
+        1 * image
+        image / image
+        1.0 / image
+        image / 1.0
+        image // image
+        image // 1
+        1 // image
+        image & image
+        image | image
+        image ^ image
+        ~image
 
-image.GetPixel( 1,1 )
-#image.GetPixel( [1,1] )
-image[1,1]
-image[ [ 1,1 ] ]
+        image += image
+        image -= image
+        image *= image
+        image /= image
+        image //= image
 
-if sum(image) != 6:
-    print( "image sum not 6" )
-    sys.exit( 1 )
+        image = image * 0
 
-if len( image ) != 100:
-    print( "len not 100!" )
-    sys.exit(1)
+        image.SetPixel( 0, 0, 1 )
+        image[ [0,1] ]  = 2
+        image[ 9,9 ]  = 3
+
+        image.GetPixel( 1,1 )
+        #image.GetPixel( [1,1] )
+        image[1,1]
+        image[ [ 1,1 ] ]
+
+        self.assertEqual(sum( image ), 6)
+
+        self.assertEqual(len( image ), 100)
+
+
+if __name__ == '__main__':
+    unittest.main()
