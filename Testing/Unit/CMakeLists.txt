@@ -8,7 +8,7 @@ include(${ITK_USE_FILE})
 # added to ctest.
 set ( TestSource
   SimpleITKTestHarness.cxx
-  ImageTests.cxx
+  sitkImageTests.cxx
   CommonTests.cxx
   RegistrationTests.cxx
   sitkImageIOTests.cxx
@@ -542,8 +542,8 @@ if ( WRAP_PYTHON )
   #
   # Python Tests
   #
-  add_python_test( Test.ImageTest
-    "${SimpleITK_SOURCE_DIR}/Testing/Unit/ImageTest.py" )
+  add_python_test( Test.ImageTests
+    "${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkImageTests.py" )
   add_python_test( Test.ImageIndexing
     "${SimpleITK_SOURCE_DIR}/Testing/Unit/ImageIndexingTest.py" )
 

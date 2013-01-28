@@ -24,7 +24,9 @@
 %include <std_vector.i>
 %include <std_string.i>
 %include <std_map.i>
-
+#if SWIGPYTHON || SWIGRUBY
+%include <std_complex.i>
+#endif
 // Use C99 int support
 %include <stdint.i>
 
