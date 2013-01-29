@@ -14,6 +14,16 @@
       "detaileddescriptionSet" : "Set the value in the image to consider as \"foreground\". Defaults to maximum value of InputPixelType.\n",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : "Get the value in the image considered as \"foreground\". Defaults to maximum value of InputPixelType.\n"
+    },
+    {
+      "name" : "SafeBorder",
+      "type" : "bool",
+      "default" : "true",
+      "doc" : "",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "A safe border is added to input image to avoid borders effects and remove it once the closing is done\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "A safe border is added to input image to avoid borders effects and remove it once the closing is done\n"
     }
   ],
   "custom_methods" : [],
@@ -42,6 +52,42 @@
       ],
       "inputs" : [
         "Input/STAPLE1.png"
+      ]
+    },
+    {
+      "tag" : "BinaryMorphologicalClosingWithBorder",
+      "description" : "Test binary morphological closing with unsafe boarder",
+      "md5hash" : "506d365dd92db16c2ade264fca46890c",
+      "settings" : [
+        {
+          "parameter" : "KernelRadius",
+          "no_get_method" : 1,
+          "value" : 5
+        },
+        {
+          "parameter" : "SafeBorder",
+          "value" : "false",
+          "python_value" : "False",
+          "R_value" : "FALSE"
+        },
+        {
+          "parameter" : "ForegroundValue",
+          "value" : "255"
+        },
+        {
+          "parameter" : "KernelType",
+          "value" : "itk::simple::${name}::Ball",
+          "lua_value" : "SimpleITK.${name}_Ball",
+          "python_value" : "SimpleITK.${name}.Ball",
+          "ruby_value" : "Simpleitk::${name}::Ball",
+          "java_value" : "${name}.KernelType.Ball",
+          "tcl_value" : "$$${name}_Ball",
+          "csharp_value" : "${name}.KernelType.Ball",
+          "R_value" : "'Ball'"
+        }
+      ],
+      "inputs" : [
+        "Input/WhiteDots.png"
       ]
     }
   ],
