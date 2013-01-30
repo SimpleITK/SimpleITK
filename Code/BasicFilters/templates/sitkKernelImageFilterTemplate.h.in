@@ -81,7 +81,7 @@ $(include ClassEnd.h.in)
      */
   Image SITKBasicFilters_EXPORT ${name:gsub("ImageFilter$", "")} ( const Image&$(if number_of_inputs == 2 then OUT=', const Image&' end),
                                           uint32_t radius = 1, ${name}::KernelType kernel =${name}::Ball
-                                          $(when members $(foreach members , ${type} in${name} = ${default})) );
+                                          $(when members $(foreach members , ${type} ${name:sub(1,1):lower()}${name:sub(2,-1)} = ${default})) );
 
    /**
      * itk::simple::${name} Functional Interface
