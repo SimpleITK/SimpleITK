@@ -53,7 +53,8 @@ if( WRAP_JAVA )
       else()
         set(SIMPLEITK_JAVA_ARCH "${SIMPLEITK_JAVA_ARCH}-unknown")
       endif()
-
+    else()
+      set(SIMPLEITK_JAVA_ARCH "unknown")
     endif()
   endif()
 
@@ -68,7 +69,7 @@ if( WRAP_JAVA )
     PRE_BUILD
     COMMAND ${CMAKE_COMMAND} -E remove_directory "${JAVA_PACKAGE_STAGE_DIR}"
     COMMAND ${CMAKE_COMMAND} -E make_directory "${JAVA_PACKAGE_STAGE_DIR}"
-    COMMENT "Creating package staging directory..."
+    COMMENT "Creating Java staging directory..."
     )
 
   foreach(_f ${_files})
