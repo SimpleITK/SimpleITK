@@ -58,6 +58,19 @@
 %ignore itk::simple::Image::GetITKBase( void );
 %ignore itk::simple::Image::GetITKBase( void ) const;
 
+#ifndef CSHARP
+%ignore itk::simple::Image::GetBufferAsInt8;
+%ignore itk::simple::Image::GetBufferAsUInt8;
+%ignore itk::simple::Image::GetBufferAsInt16;
+%ignore itk::simple::Image::GetBufferAsUInt16;
+%ignore itk::simple::Image::GetBufferAsInt32;
+%ignore itk::simple::Image::GetBufferAsUInt32;
+%ignore itk::simple::Image::GetBufferAsInt64;
+%ignore itk::simple::Image::GetBufferAsUInt64;
+%ignore itk::simple::Image::GetBufferAsFloat;
+%ignore itk::simple::Image::GetBufferAsDouble;
+#endif
+
 
 // This section is copied verbatim into the generated source code.
 // Any include files, definitions, etc. need to go here.
