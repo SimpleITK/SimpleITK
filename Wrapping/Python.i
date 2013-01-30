@@ -74,6 +74,7 @@
 
 %pythoncode %{
    import operator
+   import sys
 %}
 
 %extend itk::simple::Image {
@@ -334,6 +335,13 @@
             A 2D image can be extracted from a 3D image by providing
             one argument being an integer instead of a slice."""
 
+            if sys.version_info[0] < 3:
+              def isint( i ):
+                return type(i) == int or type(i) == long
+            else:
+              def isint( i ):
+                return type(i) == int
+
             dim = self.GetDimension()
             size = self.GetSize()
 
@@ -350,7 +358,7 @@
                raise IndexError("invalid index")
 
             # All the indices are integers just return GetPixel value
-            if all( type(i) is int for i in idx ):
+            if all( isint(i) for i in idx ):
               # if any of the arguments are negative integers subract them for the size
               idx = [idx[i] if idx[i] >= 0 else (size[i] + idx[i]) for i in range(len(idx))]
 
@@ -367,7 +375,7 @@
               for i in range(len(idx)):
                 if type(idx[i]) is slice:
                   continue
-                elif type(idx[i]) is int:
+                elif isint(idx[i]):
                   if(slice_dim == -1):
                     slice_dim = abs(i)
                   else:
@@ -423,6 +431,13 @@
 
             The dimension of idx should match that of the image."""
 
+            if sys.version_info[0] < 3:
+              def isint( i ):
+                return type(i) == int or type(i) == long
+            else:
+              def isint( i ):
+                return type(i) == int
+
             dim = self.GetDimension()
             size = self.GetSize()
 
@@ -430,7 +445,7 @@
                raise IndexError("invalid index")
 
             # All the indices are integers just return SetPixel value
-            if all( type(i) is int for i in idx ):
+            if all( isint(i) for i in idx ):
               # if any of the arguments are negative integers subract them for the size
               idx = [idx[i] if idx[i] >= 0 else (size[i] + idx[i]) for i in range(len(idx))]
 
