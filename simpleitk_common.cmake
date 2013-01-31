@@ -341,6 +341,10 @@ while(NOT dashboard_done)
     endif()
     ctest_build( BUILD "${CTEST_BINARY_DIRECTORY}" NUMBER_ERRORS
       build_number_errors )
+    ctest_build( BUILD "${CTEST_BINARY_DIRECTORY}/SimpleITK-build"
+      TARGET dist
+      APPEND )
+
 
     if(COMMAND dashboard_hook_test)
       dashboard_hook_test()
