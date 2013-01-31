@@ -170,6 +170,21 @@ endfunction()
 
 
 #------------------------------------------------------------------------------
+# Fetch testing data.
+include( SimpleITKExternalData )
+file( GLOB_RECURSE content_links
+  RELATIVE "${SimpleITK_SOURCE_DIR}" "Testing/Data/*.md5" )
+foreach(link ${content_links})
+  string( REGEX REPLACE "\\.md5$" "" link ${link} )
+  ExternalData_Expand_Arguments( SimpleITKData
+    link_location
+    DATA{${link}}
+  )
+endforeach()
+ExternalData_Add_Target( SimpleITKData )
+
+
+#------------------------------------------------------------------------------
 # These are some system specific compiler options needed to build SimpleITK
 
 if(MSVC)
