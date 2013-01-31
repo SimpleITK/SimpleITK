@@ -239,7 +239,7 @@ endif()
 #------------------------------------------------------------------------------
 
 set(ITK_WRAPPING OFF CACHE BOOL "Turn OFF wrapping ITK with WrapITK")
-if(ITK_WRAPNG)
+if(ITK_WRAPPING)
   list(APPEND ITK_DEPENDENCIES Swig)
 endif()
 include(External_ITK)
