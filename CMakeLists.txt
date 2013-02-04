@@ -1,7 +1,6 @@
 cmake_minimum_required ( VERSION 2.8.1 FATAL_ERROR )
 
-# Disable incremental linking because it makes libraries that are way
-# too big.
+# Explicitly add INCREMENTAL linking option to command lines.
 # http://www.cmake.org/pipermail/cmake/2010-February/035174.html
 SET(MSVC_INCREMENTAL_DEFAULT ON)
 
@@ -183,6 +182,15 @@ if(MSVC)
 
   # Avoid some warnings
   add_definitions ( -D_SCL_SECURE_NO_WARNINGS )
+
+
+  # force debug linking not to be incremental
+  foreach( _varName
+      CMAKE_EXE_LINKER_FLAGS_DEBUG
+      CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO )
+    STRING(REGEX REPLACE "INCREMENTAL(:YES)?" "INCREMENTAL:NO" ${_varName} ${${_varName}})
+  endforeach()
+
 endif()
 
 
