@@ -26,6 +26,8 @@ namespace itk {
 
     /** \class StatisticsImageFilter
      * \brief Compute min, max, variance, and mean of an image
+     *
+     * \sa itk::simple::Statistics for the procedual interface
      */
     class SITKBasicFilters0_EXPORT StatisticsImageFilter : public ImageFilter<1> {
     public:
