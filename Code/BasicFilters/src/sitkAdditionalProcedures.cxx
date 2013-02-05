@@ -15,43 +15,26 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __SimpleITK_h
-#define __SimpleITK_h
-
-#include <stdint.h>
-
-
-
-// Utility classes
-#include "sitkMacro.h"
-#include "sitkDetail.h"
-#include "sitkVersion.h"
-#include "sitkImage.h"
-#include "sitkTransform.h"
-#include "sitkShow.h"
-
-#include "sitkInterpolator.h"
-
-#include "sitkImageFilter.h"
-
-// IO classes
-#include "sitkImageFileReader.h"
-#include "sitkImageSeriesReader.h"
-#include "sitkImageFileWriter.h"
-#include "sitkImportImageFilter.h"
-
-
-#include "sitkHashImageFilter.h"
-#include "sitkJoinSeriesImageFilter.h"
-#include "sitkComposeImageFilter.h"
-#include "sitkPixelIDTypeLists.h"
-#include "sitkStatisticsImageFilter.h"
-#include "sitkLabelStatisticsImageFilter.h"
-
-#include "sitkCastImageFilter.h"
 
 #include "sitkAdditionalProcedures.h"
+#include "sitkResampleImageFilter.h"
 
-// These headers are auto-generated
-#include "SimpleITKBasicFiltersGeneratedHeaders.h"
-#endif
+namespace itk {
+namespace simple {
+
+//
+// Function to run the Execute method of this filter after custom
+// setting the parameters.
+//
+Image Resample ( const Image& image1, const Image& referenceImage, Transform transform, InterpolatorEnum interpolator, double defaultPixelValue )
+{
+  ResampleImageFilter filter;
+  filter.SetReferenceImage( referenceImage );
+  filter.SetTransform( transform );
+  filter.SetInterpolator( interpolator );
+  filter.SetDefaultPixelValue( defaultPixelValue );
+  return filter.Execute ( image1);
+}
+
+}
+}

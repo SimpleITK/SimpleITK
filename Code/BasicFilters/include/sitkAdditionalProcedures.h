@@ -15,43 +15,28 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __SimpleITK_h
-#define __SimpleITK_h
-
-#include <stdint.h>
+#ifndef __sitkAdditionalProcedures_h
+#define __sitkAdditionalProcedures_h
 
 
-
-// Utility classes
-#include "sitkMacro.h"
-#include "sitkDetail.h"
-#include "sitkVersion.h"
+#include "sitkBasicFilters.h"
 #include "sitkImage.h"
 #include "sitkTransform.h"
-#include "sitkShow.h"
-
 #include "sitkInterpolator.h"
 
-#include "sitkImageFilter.h"
+namespace itk {
+namespace simple {
 
-// IO classes
-#include "sitkImageFileReader.h"
-#include "sitkImageSeriesReader.h"
-#include "sitkImageFileWriter.h"
-#include "sitkImportImageFilter.h"
+/**
+ * \brief itk::simple::ResampleImageFilter Procedural Interface
+ *
+ * This function directly calls the execute method of ResampleImageFilter
+ * in order to support a procedual API
+ *
+ * \sa itk::simple::ResampleImageFilter for the object oriented interface
+ */
+SITKBasicFilters_EXPORT Image Resample ( const Image& image1, const Image& referenceImage, Transform transform = itk::simple::Transform(), InterpolatorEnum interpolator = itk::simple::sitkLinear, double defaultPixelValue = 0.0 );
 
-
-#include "sitkHashImageFilter.h"
-#include "sitkJoinSeriesImageFilter.h"
-#include "sitkComposeImageFilter.h"
-#include "sitkPixelIDTypeLists.h"
-#include "sitkStatisticsImageFilter.h"
-#include "sitkLabelStatisticsImageFilter.h"
-
-#include "sitkCastImageFilter.h"
-
-#include "sitkAdditionalProcedures.h"
-
-// These headers are auto-generated
-#include "SimpleITKBasicFiltersGeneratedHeaders.h"
+}
+}
 #endif

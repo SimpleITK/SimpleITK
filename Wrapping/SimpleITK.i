@@ -143,6 +143,7 @@ namespace std
 %include "sitkLabelStatisticsImageFilter.h"
 
 %include "sitkCastImageFilter.h"
+%include "sitkAdditionalProcedures.h"
 %include "sitkVersion.h"
 
 // Only C# can handle import filter
