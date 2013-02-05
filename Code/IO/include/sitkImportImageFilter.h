@@ -39,7 +39,7 @@ namespace itk {
      * itk::simple::ImportAsInt32, itk::simple::ImportAsUInt32,
      * itk::simple::ImportAsInt64, itk::simple::ImportAsUInt64,
      * itk::simple::ImportAsFloat,itk::simple::ImportAsDouble for the
-     * procedual interfaces.
+     * procedural interfaces.
      */
     class SITKIO_EXPORT ImportImageFilter
       : public ImageReaderBase {

@@ -306,7 +306,7 @@ All Examples
 Compute the absolute value of an image
 
 See:
- itk::simple::AbsImageFilter for the procedual interface
+ itk::simple::AbsImageFilter for the procedural interface
 
 
 C++ includes: sitkAbsImageFilter.h
@@ -378,7 +378,7 @@ Compute the absolute value of the difference of corresponding pixels
 in two images
 
 See:
- itk::simple::AbsoluteValueDifferenceImageFilter for the procedual interface
+ itk::simple::AbsoluteValueDifferenceImageFilter for the procedural interface
 
 
 C++ includes: sitkAbsoluteValueDifferenceImageFilter.h
@@ -453,7 +453,7 @@ images to have the same dimension (e.g. both 2D, or both 3D, or both
 ND).
 
 See:
- itk::simple::AcosImageFilter for the procedual interface
+ itk::simple::AcosImageFilter for the procedural interface
 
 
 C++ includes: sitkAcosImageFilter.h
@@ -522,7 +522,7 @@ All Examples
 Adaptive histogram equalization
 
 See:
- itk::simple::AdaptiveHistogramEqualizationImageFilter for the procedual interface
+ itk::simple::AdaptiveHistogramEqualizationImageFilter for the procedural interface
 
 
 C++ includes: sitkAdaptiveHistogramEqualizationImageFilter.h
@@ -673,7 +673,7 @@ the Insight Journal paper:http://hdl.handle.net/1926/510
 See:
  AddImageFilter
 
- itk::simple::AddConstantTo for the procedual interface
+ itk::simple::AddConstantTo for the procedural interface
 
 
 C++ includes: sitkAddConstantToImageFilter.h
@@ -760,7 +760,7 @@ Wiki Examples: {http://www.itk.org/Wiki/ITK/Examples}
 pixel in an image}
 
 See:
- itk::simple::AddImageFilter for the procedual interface
+ itk::simple::AddImageFilter for the procedural interface
 
 
 C++ includes: sitkAddImageFilter.h
@@ -831,7 +831,7 @@ All Examples
 Binary AND two images
 
 See:
- itk::simple::AndImageFilter for the procedual interface
+ itk::simple::AndImageFilter for the procedural interface
 
 
 C++ includes: sitkAndImageFilter.h
@@ -888,7 +888,7 @@ public ";
 
 
 See:
- itk::simple::AntiAliasBinaryImageFilter for the procedual interface
+ itk::simple::AntiAliasBinaryImageFilter for the procedural interface
 
 
 C++ includes: sitkAntiAliasBinaryImageFilter.h
@@ -1026,7 +1026,7 @@ All Examples
 Compute a distance map from objects in a binary image
 
 See:
- itk::simple::ApproximateSignedDistanceMapImageFilter for the procedual interface
+ itk::simple::ApproximateSignedDistanceMapImageFilter for the procedural interface
 
 
 C++ includes: sitkApproximateSignedDistanceMapImageFilter.h
@@ -1130,7 +1130,7 @@ images to have the same dimension (e.g. both 2D, or both 3D, or both
 ND)
 
 See:
- itk::simple::AsinImageFilter for the procedual interface
+ itk::simple::AsinImageFilter for the procedural interface
 
 
 C++ includes: sitkAsinImageFilter.h
@@ -1189,7 +1189,7 @@ All Examples
 Compute the arctangent of each pixel.
 
 See:
- itk::simple::Atan2ImageFilter for the procedual interface
+ itk::simple::Atan2ImageFilter for the procedural interface
 
 
 C++ includes: sitkAtan2ImageFilter.h
@@ -1262,7 +1262,7 @@ the output image,
 store the cast value into the output image.
 
 See:
- itk::simple::AtanImageFilter for the procedual interface
+ itk::simple::AtanImageFilter for the procedural interface
 
 
 C++ includes: sitkAtanImageFilter.h
@@ -1352,7 +1352,7 @@ All Examples
 Bilateral filter an image
 
 See:
- itk::simple::BilateralImageFilter for the procedual interface
+ itk::simple::BilateralImageFilter for the procedural interface
 
 
 C++ includes: sitkBilateralImageFilter.h
@@ -1479,7 +1479,7 @@ Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www
 See:
 MorphologyImageFilter, ClosingByReconstructionImageFilter, BinaryOpeningByReconstructionImageFilter
 
- itk::simple::BinaryClosingByReconstructionImageFilter for the procedual interface
+ itk::simple::BinaryClosingByReconstructionImageFilter for the procedural interface
 
 
 C++ includes: sitkBinaryClosingByReconstructionImageFilter.h
@@ -1641,7 +1641,7 @@ Extract the boundaries of connected regions in a binary image
 Extract the inner and outer boundaries of blobs in a binary image
 
 See:
- itk::simple::BinaryContourImageFilter for the procedual interface
+ itk::simple::BinaryContourImageFilter for the procedural interface
 
 
 C++ includes: sitkBinaryContourImageFilter.h
@@ -1794,7 +1794,7 @@ All Examples
 Dilate a binary image
 
 See:
- itk::simple::BinaryDilateImageFilter for the procedual interface
+ itk::simple::BinaryDilateImageFilter for the procedural interface
 
 
 C++ includes: sitkBinaryDilateImageFilter.h
@@ -1957,7 +1957,7 @@ All Examples
 Erode a binary image
 
 See:
- itk::simple::BinaryErodeImageFilter for the procedual interface
+ itk::simple::BinaryErodeImageFilter for the procedural interface
 
 
 C++ includes: sitkBinaryErodeImageFilter.h
@@ -2103,7 +2103,7 @@ Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www
 See:
  GrayscaleFillholeImageFilter
 
- itk::simple::BinaryFillholeImageFilter for the procedual interface
+ itk::simple::BinaryFillholeImageFilter for the procedural interface
 
 
 C++ includes: sitkBinaryFillholeImageFilter.h
@@ -2221,7 +2221,7 @@ Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www
 See:
  GrayscaleGrindPeakImageFilter
 
- itk::simple::BinaryGrindPeakImageFilter for the procedual interface
+ itk::simple::BinaryGrindPeakImageFilter for the procedural interface
 
 
 C++ includes: sitkBinaryGrindPeakImageFilter.h
@@ -2366,7 +2366,7 @@ store the cast value into the output image. The filter expects all
 images to have the same dimension (e.g. all 2D, or all 3D, or all ND)
 
 See:
- itk::simple::BinaryMagnitudeImageFilter for the procedual interface
+ itk::simple::BinaryMagnitudeImageFilter for the procedural interface
 
 
 C++ includes: sitkBinaryMagnitudeImageFilter.h
@@ -2431,7 +2431,7 @@ NeighborhoodOperator
 
 NeighborhoodIterator
 
- itk::simple::BinaryMedianImageFilter for the procedual interface
+ itk::simple::BinaryMedianImageFilter for the procedural interface
 
 
 C++ includes: sitkBinaryMedianImageFilter.h
@@ -2573,7 +2573,7 @@ BinaryMinMaxCurvatureFlowFunction
 
  MinMaxCurvatureFlowImageFilter
 
- itk::simple::BinaryMinMaxCurvatureFlowImageFilter for the procedual interface
+ itk::simple::BinaryMinMaxCurvatureFlowImageFilter for the procedural interface
 
 
 C++ includes: sitkBinaryMinMaxCurvatureFlowImageFilter.h
@@ -2689,7 +2689,7 @@ de Jouy-en-Josas, France.
 See:
 MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleErodeImageFilter
 
- itk::simple::BinaryMorphologicalClosingImageFilter for the procedual interface
+ itk::simple::BinaryMorphologicalClosingImageFilter for the procedural interface
 
 
 C++ includes: sitkBinaryMorphologicalClosingImageFilter.h
@@ -2813,7 +2813,7 @@ de Jouy-en-Josas, France.
 See:
 MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleErodeImageFilter
 
- itk::simple::BinaryMorphologicalOpeningImageFilter for the procedual interface
+ itk::simple::BinaryMorphologicalOpeningImageFilter for the procedural interface
 
 
 C++ includes: sitkBinaryMorphologicalOpeningImageFilter.h
@@ -2954,7 +2954,7 @@ All Examples
 Invert an image using the Binary Not operation
 
 See:
- itk::simple::BinaryNotImageFilter for the procedual interface
+ itk::simple::BinaryNotImageFilter for the procedural interface
 
 
 C++ includes: sitkBinaryNotImageFilter.h
@@ -3057,7 +3057,7 @@ Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www
 See:
 MorphologyImageFilter, OpeningByReconstructionImageFilter, BinaryClosingByReconstructionImageFilter
 
- itk::simple::BinaryOpeningByReconstructionImageFilter for the procedual interface
+ itk::simple::BinaryOpeningByReconstructionImageFilter for the procedural interface
 
 
 C++ includes: sitkBinaryOpeningByReconstructionImageFilter.h
@@ -3246,7 +3246,7 @@ ProjectionImageFilter
 
  SumProjectionImageFilter
 
- itk::simple::BinaryProjectionImageFilter for the procedual interface
+ itk::simple::BinaryProjectionImageFilter for the procedural interface
 
 
 C++ includes: sitkBinaryProjectionImageFilter.h
@@ -3365,7 +3365,7 @@ Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www
 See:
 MorphologyImageFilter, ReconstructionByDilationImageFilter, BinaryReconstructionByErosionImageFilter
 
- itk::simple::BinaryReconstructionByDilationImageFilter for the procedual interface
+ itk::simple::BinaryReconstructionByDilationImageFilter for the procedural interface
 
 
 C++ includes: sitkBinaryReconstructionByDilationImageFilter.h
@@ -3504,7 +3504,7 @@ Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www
 See:
 MorphologyImageFilter, ReconstructionByErosionImageFilter, BinaryReconstructionByDilationImageFilter
 
- itk::simple::BinaryReconstructionByErosionImageFilter for the procedual interface
+ itk::simple::BinaryReconstructionByErosionImageFilter for the procedural interface
 
 
 C++ includes: sitkBinaryReconstructionByErosionImageFilter.h
@@ -3649,7 +3649,7 @@ All Examples
 Skeletonize/thin an image
 
 See:
- itk::simple::BinaryThinningImageFilter for the procedual interface
+ itk::simple::BinaryThinningImageFilter for the procedural interface
 
 
 C++ includes: sitkBinaryThinningImageFilter.h
@@ -3713,7 +3713,7 @@ All Examples
 Threshold an image
 
 See:
- itk::simple::BinaryThresholdImageFilter for the procedual interface
+ itk::simple::BinaryThresholdImageFilter for the procedural interface
 
 
 C++ includes: sitkBinaryThresholdImageFilter.h
@@ -3859,7 +3859,7 @@ ProjectionImageFilter
 
  SumProjectionImageFilter
 
- itk::simple::BinaryThresholdProjectionImageFilter for the procedual interface
+ itk::simple::BinaryThresholdProjectionImageFilter for the procedural interface
 
 
 C++ includes: sitkBinaryThresholdProjectionImageFilter.h
@@ -3986,7 +3986,7 @@ All Examples
 Blur an image
 
 See:
- itk::simple::BinomialBlurImageFilter for the procedual interface
+ itk::simple::BinomialBlurImageFilter for the procedural interface
 
 
 C++ includes: sitkBinomialBlurImageFilter.h
@@ -4066,7 +4066,7 @@ Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
 
 See:
- itk::simple::BlackTopHatImageFilter for the procedual interface
+ itk::simple::BlackTopHatImageFilter for the procedural interface
 
 
 C++ includes: sitkBlackTopHatImageFilter.h
@@ -4192,7 +4192,7 @@ number of dimensions, and both of a scalar image type.
 
 
 See:
- itk::simple::BoundedReciprocalImageFilter for the procedual interface
+ itk::simple::BoundedReciprocalImageFilter for the procedural interface
 
 
 C++ includes: sitkBoundedReciprocalImageFilter.h
@@ -4245,7 +4245,7 @@ journal.org/browse/publication/160
 Richard Beare
 
 See:
- itk::simple::BoxMeanImageFilter for the procedual interface
+ itk::simple::BoxMeanImageFilter for the procedural interface
 
 
 C++ includes: sitkBoxMeanImageFilter.h
@@ -4324,7 +4324,7 @@ journal.org/browse/publication/160
 Gaetan Lehmann
 
 See:
- itk::simple::BoxSigmaImageFilter for the procedual interface
+ itk::simple::BoxSigmaImageFilter for the procedural interface
 
 
 C++ includes: sitkBoxSigmaImageFilter.h
@@ -4430,7 +4430,7 @@ See:
 
  ThresholdImageFilter
 
- itk::simple::CannyEdgeDetectionImageFilter for the procedual interface
+ itk::simple::CannyEdgeDetectionImageFilter for the procedural interface
 
 
 C++ includes: sitkCannyEdgeDetectionImageFilter.h
@@ -4610,7 +4610,7 @@ Army Medical Research and Materiel Command/TATRC Assistance Agreement,
 Contract::W81XWH-05-2-0059.
 
 See:
- itk::simple::ChangeLabelImageFilter for the procedual interface
+ itk::simple::ChangeLabelImageFilter for the procedural interface
 
 
 C++ includes: sitkChangeLabelImageFilter.h
@@ -4690,7 +4690,7 @@ All Examples
 Combine two images by alternating blocks of a checkerboard pattern
 
 See:
- itk::simple::CheckerBoardImageFilter for the procedual interface
+ itk::simple::CheckerBoardImageFilter for the procedural interface
 
 
 C++ includes: sitkCheckerBoardImageFilter.h
@@ -4778,7 +4778,7 @@ de Jouy-en-Josas, France.
 See:
  GrayscaleMorphologicalClosingImageFilter
 
- itk::simple::ClosingByReconstructionImageFilter for the procedual interface
+ itk::simple::ClosingByReconstructionImageFilter for the procedural interface
 
 
 C++ includes: sitkClosingByReconstructionImageFilter.h
@@ -4938,7 +4938,7 @@ Computes pixel-wise the imaginary part of a complex image.
 
 
 See:
- itk::simple::ComplexToImaginaryImageFilter for the procedual interface
+ itk::simple::ComplexToImaginaryImageFilter for the procedural interface
 
 
 C++ includes: sitkComplexToImaginaryImageFilter.h
@@ -4985,7 +4985,7 @@ Computes pixel-wise the Modulus of a complex image.
 
 
 See:
- itk::simple::ComplexToModulusImageFilter for the procedual interface
+ itk::simple::ComplexToModulusImageFilter for the procedural interface
 
 
 C++ includes: sitkComplexToModulusImageFilter.h
@@ -5032,7 +5032,7 @@ Computes pixel-wise the modulus of a complex image.
 
 
 See:
- itk::simple::ComplexToPhaseImageFilter for the procedual interface
+ itk::simple::ComplexToPhaseImageFilter for the procedural interface
 
 
 C++ includes: sitkComplexToPhaseImageFilter.h
@@ -5079,7 +5079,7 @@ Computes pixel-wise the real(x) part of a complex image.
 
 
 See:
- itk::simple::ComplexToRealImageFilter for the procedual interface
+ itk::simple::ComplexToRealImageFilter for the procedural interface
 
 
 C++ includes: sitkComplexToRealImageFilter.h
@@ -5146,7 +5146,7 @@ Compose a vector image (with 3 components) from three scalar images
 Convert a real image and an imaginary image to a complex image
 
 See:
- itk::simple::ComposeImageFilter for the procedual interface
+ itk::simple::ComposeImageFilter for the procedural interface
 
 
 C++ includes: sitkComposeImageFilter.h
@@ -5248,7 +5248,7 @@ All Examples
 Segment pixels with similar statistics using connectivity
 
 See:
- itk::simple::ConfidenceConnectedImageFilter for the procedual interface
+ itk::simple::ConfidenceConnectedImageFilter for the procedural interface
 
 
 C++ includes: sitkConfidenceConnectedImageFilter.h
@@ -5429,7 +5429,7 @@ All Examples
 Label connected components in a binary image
 
 See:
- itk::simple::ConnectedComponentImageFilter for the procedual interface
+ itk::simple::ConnectedComponentImageFilter for the procedural interface
 
 
 C++ includes: sitkConnectedComponentImageFilter.h
@@ -5526,7 +5526,7 @@ threshold range.
 
 
 See:
- itk::simple::ConnectedThresholdImageFilter for the procedual interface
+ itk::simple::ConnectedThresholdImageFilter for the procedural interface
 
 
 C++ includes: sitkConnectedThresholdImageFilter.h
@@ -5684,7 +5684,7 @@ All Examples
 Pad an image with a constant value
 
 See:
- itk::simple::ConstantPadImageFilter for the procedual interface
+ itk::simple::ConstantPadImageFilter for the procedural interface
 
 
 C++ includes: sitkConstantPadImageFilter.h
@@ -5800,7 +5800,7 @@ All Examples
 Convolve an image with a kernel
 
 See:
- itk::simple::ConvolutionImageFilter for the procedual interface
+ itk::simple::ConvolutionImageFilter for the procedural interface
 
 
 C++ includes: sitkConvolutionImageFilter.h
@@ -5918,7 +5918,7 @@ images to have the same dimension (e.g. both 2D, or both 3D, or both
 ND)
 
 See:
- itk::simple::CosImageFilter for the procedual interface
+ itk::simple::CosImageFilter for the procedural interface
 
 
 C++ includes: sitkCosImageFilter.h
@@ -5974,7 +5974,7 @@ All Examples
 Crop an image by specifying the region to throw away
 
 See:
- itk::simple::CropImageFilter for the procedual interface
+ itk::simple::CropImageFilter for the procedural interface
 
 
 C++ includes: sitkCropImageFilter.h
@@ -6089,7 +6089,7 @@ AnisotropicDiffusionFunction
 
 CurvatureNDAnisotropicDiffusionFunction
 
- itk::simple::CurvatureAnisotropicDiffusionImageFilter for the procedual interface
+ itk::simple::CurvatureAnisotropicDiffusionImageFilter for the procedural interface
 
 
 C++ includes: sitkCurvatureAnisotropicDiffusionImageFilter.h
@@ -6238,7 +6238,7 @@ CurvatureFlowFunction
  BinaryMinMaxCurvatureFlowImageFilter Input/Output Restrictions: TInputImage and TOutputImage must have the
 same dimension. TOutputImage's pixel type must be a real number type.
 
- itk::simple::CurvatureFlowImageFilter for the procedual interface
+ itk::simple::CurvatureFlowImageFilter for the procedural interface
 
 
 C++ includes: sitkCurvatureFlowImageFilter.h
@@ -6341,7 +6341,7 @@ Per-Erik. Euclidean Distance Mapping. Computer Graphics and
 ImageProcessing 14, 227-248 (1980).
 
 See:
- itk::simple::DanielssonDistanceMapImageFilter for the procedual interface
+ itk::simple::DanielssonDistanceMapImageFilter for the procedural interface
 
 
 C++ includes: sitkDanielssonDistanceMapImageFilter.h
@@ -6509,7 +6509,7 @@ All Examples
 Compute the derivative of an image in a particular direction
 
 See:
- itk::simple::DerivativeImageFilter for the procedual interface
+ itk::simple::DerivativeImageFilter for the procedural interface
 
 
 C++ includes: sitkDerivativeImageFilter.h
@@ -6644,7 +6644,7 @@ ObjectMorphologyImageFilter, ErodeObjectMorphologyImageFilter
 
  BinaryDilateImageFilter
 
- itk::simple::DilateObjectMorphologyImageFilter for the procedual interface
+ itk::simple::DilateObjectMorphologyImageFilter for the procedural interface
 
 
 C++ includes: sitkDilateObjectMorphologyImageFilter.h
@@ -6778,7 +6778,7 @@ All Examples
 Smooth an image with a discrete Gaussian filter
 
 See:
- itk::simple::DiscreteGaussianImageFilter for the procedual interface
+ itk::simple::DiscreteGaussianImageFilter for the procedural interface
 
 
 C++ includes: sitkDiscreteGaussianImageFilter.h
@@ -6920,7 +6920,7 @@ the Insight Journal paper:http://hdl.handle.net/1926/510
 See:
  DivideImageFilter
 
- itk::simple::DivideByConstant for the procedual interface
+ itk::simple::DivideByConstant for the procedural interface
 
 
 C++ includes: sitkDivideByConstantImageFilter.h
@@ -6986,7 +6986,7 @@ public ";
 
 
 See:
- itk::simple::DivideConstantBy for the procedual interface
+ itk::simple::DivideConstantBy for the procedural interface
 
 
 C++ includes: sitkDivideConstantByImageFilter.h
@@ -7052,7 +7052,7 @@ public ";
 
 
 See:
- itk::simple::DivideFloorImageFilter for the procedual interface
+ itk::simple::DivideFloorImageFilter for the procedural interface
 
 
 C++ includes: sitkDivideFloorImageFilter.h
@@ -7121,7 +7121,7 @@ All Examples
 Pixel-wise division of two images
 
 See:
- itk::simple::DivideImageFilter for the procedual interface
+ itk::simple::DivideImageFilter for the procedural interface
 
 
 C++ includes: sitkDivideImageFilter.h
@@ -7178,7 +7178,7 @@ public ";
 
 
 See:
- itk::simple::DivideRealImageFilter for the procedual interface
+ itk::simple::DivideRealImageFilter for the procedural interface
 
 
 C++ includes: sitkDivideRealImageFilter.h
@@ -7258,7 +7258,7 @@ See:
 
 MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter
 
- itk::simple::DoubleThresholdImageFilter for the procedual interface
+ itk::simple::DoubleThresholdImageFilter for the procedural interface
 
 
 C++ includes: sitkDoubleThresholdImageFilter.h
@@ -7465,7 +7465,7 @@ image type.
 
 
 See:
- itk::simple::EdgePotentialImageFilter for the procedual interface
+ itk::simple::EdgePotentialImageFilter for the procedural interface
 
 
 C++ includes: sitkEdgePotentialImageFilter.h
@@ -7509,7 +7509,7 @@ public ";
 
 
 See:
- itk::simple::EqualImageFilter for the procedual interface
+ itk::simple::EqualImageFilter for the procedural interface
 
 
 C++ includes: sitkEqualImageFilter.h
@@ -7643,7 +7643,7 @@ ObjectMorphologyImageFilter, BinaryFunctionErodeImageFilter
 
  BinaryErodeImageFilter
 
- itk::simple::ErodeObjectMorphologyImageFilter for the procedual interface
+ itk::simple::ErodeObjectMorphologyImageFilter for the procedural interface
 
 
 C++ includes: sitkErodeObjectMorphologyImageFilter.h
@@ -7763,7 +7763,7 @@ The computation is performed using vcl_exp(x).
 
 
 See:
- itk::simple::ExpImageFilter for the procedual interface
+ itk::simple::ExpImageFilter for the procedural interface
 
 
 C++ includes: sitkExpImageFilter.h
@@ -7814,7 +7814,7 @@ constant.
 
 
 See:
- itk::simple::ExpNegativeImageFilter for the procedual interface
+ itk::simple::ExpNegativeImageFilter for the procedural interface
 
 
 C++ includes: sitkExpNegativeImageFilter.h
@@ -7886,7 +7886,7 @@ LinearInterpolationImageFunction
 
 VectorExpandImageFilter
 
- itk::simple::ExpandImageFilter for the procedual interface
+ itk::simple::ExpandImageFilter for the procedural interface
 
 
 C++ includes: sitkExpandImageFilter.h
@@ -8030,7 +8030,7 @@ All Examples
 Crop an image by specifying the region to keep
 
 See:
- itk::simple::ExtractImageFilter for the procedual interface
+ itk::simple::ExtractImageFilter for the procedural interface
 
 
 C++ includes: sitkExtractImageFilter.h
@@ -8156,7 +8156,7 @@ Convolution\" by Gaetan Lehmannhttp://hdl.handle.net/10380/3154
 See:
  ConvolutionImageFilter
 
- itk::simple::FFTConvolutionImageFilter for the procedual interface
+ itk::simple::FFTConvolutionImageFilter for the procedural interface
 
 
 C++ includes: sitkFFTConvolutionImageFilter.h
@@ -8303,7 +8303,7 @@ and Pattern Recognition, 2010.
 : Dirk Padfield, GE Global Research,padfield@research.ge.com
 
 See:
- itk::simple::FFTNormalizedCorrelationImageFilter for the procedual interface
+ itk::simple::FFTNormalizedCorrelationImageFilter for the procedural interface
 
 
 C++ includes: sitkFFTNormalizedCorrelationImageFilter.h
@@ -8382,7 +8382,7 @@ de Jouy-en-Josas, France.
 See:
  ForwardFFTImageFilter, InverseFFTImageFilter
 
- itk::simple::FFTShiftImageFilter for the procedual interface
+ itk::simple::FFTShiftImageFilter for the procedural interface
 
 
 C++ includes: sitkFFTShiftImageFilter.h
@@ -8469,7 +8469,7 @@ public ";
 
 
 See:
- itk::simple::FastApproximateRankImageFilter for the procedual interface
+ itk::simple::FastApproximateRankImageFilter for the procedural interface
 
 
 C++ includes: sitkFastApproximateRankImageFilter.h
@@ -8603,7 +8603,7 @@ in order to locate the node which is to be updated.
 See:
 LevelSetTypeDefault
 
- itk::simple::FastMarchingImageFilter for the procedual interface
+ itk::simple::FastMarchingImageFilter for the procedural interface
 
 
 C++ includes: sitkFastMarchingImageFilter.h
@@ -8752,7 +8752,7 @@ All Examples
 Flip an image over specified axes
 
 See:
- itk::simple::FlipImageFilter for the procedual interface
+ itk::simple::FlipImageFilter for the procedural interface
 
 
 C++ includes: sitkFlipImageFilter.h
@@ -8870,7 +8870,7 @@ single-component input image types.
 See:
  InverseFFTImageFilter, FFTComplexToComplexImageFilter
 
- itk::simple::ForwardFFTImageFilter for the procedual interface
+ itk::simple::ForwardFFTImageFilter for the procedural interface
 
 
 C++ includes: sitkForwardFFTImageFilter.h
@@ -8914,7 +8914,7 @@ public ";
 
 
 See:
- itk::simple::GaborImageSource for the procedual interface
+ itk::simple::GaborImageSource for the procedural interface
 
 
 C++ includes: sitkGaborImageSource.h
@@ -9049,7 +9049,7 @@ public ";
 
 
 See:
- itk::simple::GaborSource for the procedual interface
+ itk::simple::GaborSource for the procedural interface
 
 
 C++ includes: sitkGaborSourceImageFilter.h
@@ -9184,7 +9184,7 @@ public ";
 
 
 See:
- itk::simple::GaussianImageSource for the procedual interface
+ itk::simple::GaussianImageSource for the procedural interface
 
 
 C++ includes: sitkGaussianImageSource.h
@@ -9319,7 +9319,7 @@ public ";
 
 
 See:
- itk::simple::GaussianSource for the procedual interface
+ itk::simple::GaussianSource for the procedural interface
 
 
 C++ includes: sitkGaussianSourceImageFilter.h
@@ -9615,7 +9615,7 @@ GeodesicActiveContourLevelSetFunction
 
 SparseFieldLevelSetImageFilter
 
- itk::simple::GeodesicActiveContourLevelSetImageFilter for the procedual interface
+ itk::simple::GeodesicActiveContourLevelSetImageFilter for the procedural interface
 
 
 C++ includes: sitkGeodesicActiveContourLevelSetImageFilter.h
@@ -9790,7 +9790,7 @@ AnisotropicDiffusionFunction
 
 GradientAnisotropicDiffusionFunction
 
- itk::simple::GradientAnisotropicDiffusionImageFilter for the procedual interface
+ itk::simple::GradientAnisotropicDiffusionImageFilter for the procedural interface
 
 
 C++ includes: sitkGradientAnisotropicDiffusionImageFilter.h
@@ -9914,7 +9914,7 @@ NeighborhoodOperator
 
 NeighborhoodIterator
 
- itk::simple::GradientImageFilter for the procedual interface
+ itk::simple::GradientImageFilter for the procedural interface
 
 
 C++ includes: sitkGradientImageFilter.h
@@ -10062,7 +10062,7 @@ All Examples
 Compute the gradient magnitude image
 
 See:
- itk::simple::GradientMagnitudeImageFilter for the procedual interface
+ itk::simple::GradientMagnitudeImageFilter for the procedural interface
 
 
 C++ includes: sitkGradientMagnitudeImageFilter.h
@@ -10155,7 +10155,7 @@ Find the gradient magnitude of the image first smoothed with a
 Gaussian kernel
 
 See:
- itk::simple::GradientMagnitudeRecursiveGaussianImageFilter for the procedual interface
+ itk::simple::GradientMagnitudeRecursiveGaussianImageFilter for the procedural interface
 
 
 C++ includes: sitkGradientMagnitudeRecursiveGaussianImageFilter.h
@@ -10274,7 +10274,7 @@ Compute the gradient of an image by convolution with the first
 derivative of a Gaussian
 
 See:
- itk::simple::GradientRecursiveGaussianImageFilter for the procedual interface
+ itk::simple::GradientRecursiveGaussianImageFilter for the procedural interface
 
 
 C++ includes: sitkGradientRecursiveGaussianImageFilter.h
@@ -10441,7 +10441,7 @@ See:
 
 MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter
 
- itk::simple::GrayscaleConnectedClosingImageFilter for the procedual interface
+ itk::simple::GrayscaleConnectedClosingImageFilter for the procedural interface
 
 
 C++ includes: sitkGrayscaleConnectedClosingImageFilter.h
@@ -10559,7 +10559,7 @@ See:
 
 MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter
 
- itk::simple::GrayscaleConnectedOpeningImageFilter for the procedual interface
+ itk::simple::GrayscaleConnectedOpeningImageFilter for the procedural interface
 
 
 C++ includes: sitkGrayscaleConnectedOpeningImageFilter.h
@@ -10680,7 +10680,7 @@ All Examples
 Dilate a grayscale image
 
 See:
- itk::simple::GrayscaleDilateImageFilter for the procedual interface
+ itk::simple::GrayscaleDilateImageFilter for the procedural interface
 
 
 C++ includes: sitkGrayscaleDilateImageFilter.h
@@ -10778,7 +10778,7 @@ All Examples
 Erode a grayscale image
 
 See:
- itk::simple::GrayscaleErodeImageFilter for the procedual interface
+ itk::simple::GrayscaleErodeImageFilter for the procedural interface
 
 
 C++ includes: sitkGrayscaleErodeImageFilter.h
@@ -10881,7 +10881,7 @@ See:
 
 MorphologyImageFilter, GrayscaleErodeImageFilter, GrayscaleFunctionErodeImageFilter, BinaryErodeImageFilter
 
- itk::simple::GrayscaleFillholeImageFilter for the procedual interface
+ itk::simple::GrayscaleFillholeImageFilter for the procedural interface
 
 
 C++ includes: sitkGrayscaleFillholeImageFilter.h
@@ -10992,7 +10992,7 @@ compatibility.
 See:
 MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter, ReconstructionByDilationImageFilter
 
- itk::simple::GrayscaleGeodesicDilateImageFilter for the procedual interface
+ itk::simple::GrayscaleGeodesicDilateImageFilter for the procedural interface
 
 
 C++ includes: sitkGrayscaleGeodesicDilateImageFilter.h
@@ -11137,7 +11137,7 @@ compatibility.
 See:
 MorphologyImageFilter, GrayscaleErodeImageFilter, GrayscaleFunctionErodeImageFilter, BinaryErodeImageFilter, ReconstructionByErosionImageFilter
 
- itk::simple::GrayscaleGeodesicErodeImageFilter for the procedual interface
+ itk::simple::GrayscaleGeodesicErodeImageFilter for the procedural interface
 
 
 C++ includes: sitkGrayscaleGeodesicErodeImageFilter.h
@@ -11283,7 +11283,7 @@ See:
 
 MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter
 
- itk::simple::GrayscaleGrindPeakImageFilter for the procedual interface
+ itk::simple::GrayscaleGrindPeakImageFilter for the procedural interface
 
 
 C++ includes: sitkGrayscaleGrindPeakImageFilter.h
@@ -11381,7 +11381,7 @@ are candidates for affecting the center pixel.
 See:
 MorphologyImageFilter, GrayscaleFunctionErodeImageFilter, BinaryErodeImageFilter
 
- itk::simple::GrayscaleMorphologicalClosingImageFilter for the procedual interface
+ itk::simple::GrayscaleMorphologicalClosingImageFilter for the procedural interface
 
 
 C++ includes: sitkGrayscaleMorphologicalClosingImageFilter.h
@@ -11473,7 +11473,7 @@ are candidates for affecting the center pixel.
 See:
 MorphologyImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter
 
- itk::simple::GrayscaleMorphologicalOpeningImageFilter for the procedual interface
+ itk::simple::GrayscaleMorphologicalOpeningImageFilter for the procedural interface
 
 
 C++ includes: sitkGrayscaleMorphologicalOpeningImageFilter.h
@@ -11554,7 +11554,7 @@ public ";
 
 
 See:
- itk::simple::GreaterEqualImageFilter for the procedual interface
+ itk::simple::GreaterEqualImageFilter for the procedural interface
 
 
 C++ includes: sitkGreaterEqualImageFilter.h
@@ -11668,7 +11668,7 @@ public ";
 
 
 See:
- itk::simple::GreaterImageFilter for the procedual interface
+ itk::simple::GreaterImageFilter for the procedural interface
 
 
 C++ includes: sitkGreaterImageFilter.h
@@ -11782,7 +11782,7 @@ public ";
 
 
 See:
- itk::simple::GridImageSource for the procedual interface
+ itk::simple::GridImageSource for the procedural interface
 
 
 C++ includes: sitkGridImageSource.h
@@ -11928,7 +11928,7 @@ public ";
 
 
 See:
- itk::simple::GridSource for the procedual interface
+ itk::simple::GridSource for the procedural interface
 
 
 C++ includes: sitkGridSourceImageFilter.h
@@ -12088,7 +12088,7 @@ See:
 
 MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter
 
- itk::simple::HConcaveImageFilter for the procedual interface
+ itk::simple::HConcaveImageFilter for the procedural interface
 
 
 C++ includes: sitkHConcaveImageFilter.h
@@ -12211,7 +12211,7 @@ See:
 
 MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter
 
- itk::simple::HConvexImageFilter for the procedual interface
+ itk::simple::HConvexImageFilter for the procedural interface
 
 
 C++ includes: sitkHConvexImageFilter.h
@@ -12341,7 +12341,7 @@ See:
 
 MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter
 
- itk::simple::HMaximaImageFilter for the procedual interface
+ itk::simple::HMaximaImageFilter for the procedural interface
 
 
 C++ includes: sitkHMaximaImageFilter.h
@@ -12435,7 +12435,7 @@ See:
 
 MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter
 
- itk::simple::HMinimaImageFilter for the procedual interface
+ itk::simple::HMinimaImageFilter for the procedural interface
 
 
 C++ includes: sitkHMinimaImageFilter.h
@@ -12561,7 +12561,7 @@ has an odd size in the X-dimension. Use SetActualXDimensionIsOdd()to set this fl
 See:
  ForwardFFTImageFilter, HalfHermitianToRealInverseFFTImageFilter
 
- itk::simple::HalfHermitianToRealInverseFFTImageFilter for the procedual interface
+ itk::simple::HalfHermitianToRealInverseFFTImageFilter for the procedural interface
 
 
 C++ includes: sitkHalfHermitianToRealInverseFFTImageFilter.h
@@ -12703,7 +12703,7 @@ both images have the same number of dimensions.
 See:
 DirectedHausdorffDistanceImageFilter
 
- itk::simple::HausdorffDistanceImageFilter for the procedual interface
+ itk::simple::HausdorffDistanceImageFilter for the procedural interface
 
 
 C++ includes: sitkHausdorffDistanceImageFilter.h
@@ -12792,7 +12792,7 @@ Method  of MRI Scale Standardization\", IEEE Transactions on Medical
 Imaging, 19(2):143-150, 2000.
 
 See:
- itk::simple::HistogramMatchingImageFilter for the procedual interface
+ itk::simple::HistogramMatchingImageFilter for the procedural interface
 
 
 C++ includes: sitkHistogramMatchingImageFilter.h
@@ -12929,7 +12929,7 @@ journal.org/browse/publication/811
 See:
 HistogramThresholdImageFitler
 
- itk::simple::HuangThresholdImageFilter for the procedual interface
+ itk::simple::HuangThresholdImageFilter for the procedural interface
 
 
 C++ includes: sitkHuangThresholdImageFilter.h
@@ -13459,7 +13459,7 @@ All Examples
 See:
  RescaleIntensityImageFilter
 
- itk::simple::IntensityWindowingImageFilter for the procedual interface
+ itk::simple::IntensityWindowingImageFilter for the procedural interface
 
 
 
@@ -13600,7 +13600,7 @@ journal.org/browse/publication/811
 See:
 HistogramThresholdImageFitler
 
- itk::simple::IntermodesThresholdImageFilter for the procedual interface
+ itk::simple::IntermodesThresholdImageFilter for the procedural interface
 
 
 C++ includes: sitkIntermodesThresholdImageFilter.h
@@ -13714,7 +13714,7 @@ de Jouy-en-Josas, France Cory Quammen, The University of North
 Carolina at Chapel Hill
 
 See:
- itk::simple::InverseDeconvolutionImageFilter for the procedual interface
+ itk::simple::InverseDeconvolutionImageFilter for the procedural interface
 
 
 C++ includes: sitkInverseDeconvolutionImageFilter.h
@@ -13850,7 +13850,7 @@ imaginary component is discarded.
 See:
  ForwardFFTImageFilter, InverseFFTImageFilter
 
- itk::simple::InverseFFTImageFilter for the procedual interface
+ itk::simple::InverseFFTImageFilter for the procedural interface
 
 
 C++ includes: sitkInverseFFTImageFilter.h
@@ -13912,7 +13912,7 @@ All Examples
 Invert an image
 
 See:
- itk::simple::InvertIntensityImageFilter for the procedual interface
+ itk::simple::InvertIntensityImageFilter for the procedural interface
 
 
 C++ includes: sitkInvertIntensityImageFilter.h
@@ -13993,7 +13993,7 @@ Systems Theory , pages 48-51, Feb 2003.
 
 
 See:
- itk::simple::IsoContourDistanceImageFilter for the procedual interface
+ itk::simple::IsoContourDistanceImageFilter for the procedural interface
 
 
 C++ includes: sitkIsoContourDistanceImageFilter.h
@@ -14096,7 +14096,7 @@ journal.org/browse/publication/811
 See:
 HistogramThresholdImageFitler
 
- itk::simple::IsoDataThresholdImageFilter for the procedual interface
+ itk::simple::IsoDataThresholdImageFilter for the procedural interface
 
 
 C++ includes: sitkIsoDataThresholdImageFilter.h
@@ -14225,7 +14225,7 @@ such threshold exists. The user can check for this by querying the GetThresholdi
 
 
 See:
- itk::simple::IsolatedConnectedImageFilter for the procedual interface
+ itk::simple::IsolatedConnectedImageFilter for the procedural interface
 
 
 C++ includes: sitkIsolatedConnectedImageFilter.h
@@ -14439,7 +14439,7 @@ UpperValueLimit. UpperValueLimit defaults to the 1.0.
 
 
 See:
- itk::simple::IsolatedWatershedImageFilter for the procedual interface
+ itk::simple::IsolatedWatershedImageFilter for the procedural interface
 
 
 C++ includes: sitkIsolatedWatershedImageFilter.h
@@ -14622,7 +14622,7 @@ listhttp://public.kitware.com/pipermail/insight-
 users/2004-February/006542.html
 
 See:
- itk::simple::JoinSeriesImageFilter for the procedual interface
+ itk::simple::JoinSeriesImageFilter for the procedural interface
 
 
 C++ includes: sitkJoinSeriesImageFilter.h
@@ -14777,7 +14777,7 @@ journal.org/browse/publication/811
 See:
 HistogramThresholdImageFitler
 
- itk::simple::KittlerIllingworthThresholdImageFilter for the procedual interface
+ itk::simple::KittlerIllingworthThresholdImageFilter for the procedural interface
 
 
 C++ includes: sitkKittlerIllingworthThresholdImageFilter.h
@@ -14896,7 +14896,7 @@ All Examples
 Label the contours of connected components
 
 See:
- itk::simple::LabelContourImageFilter for the procedual interface
+ itk::simple::LabelContourImageFilter for the procedural interface
 
 
 C++ includes: sitkLabelContourImageFilter.h
@@ -15032,7 +15032,7 @@ All Examples
 Color the boundaries of labeled regions in an image
 
 See:
- itk::simple::LabelMapContourOverlayImageFilter for the procedual interface
+ itk::simple::LabelMapContourOverlayImageFilter for the procedural interface
 
 
 C++ includes: sitkLabelMapContourOverlayImageFilter.h
@@ -15201,7 +15201,7 @@ Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www
 See:
  LabelMapToBinaryImageFilter, LabelMapToLabelImageFilter
 
- itk::simple::LabelMapMaskImageFilter for the procedual interface
+ itk::simple::LabelMapMaskImageFilter for the procedural interface
 
 
 C++ includes: sitkLabelMapMaskImageFilter.h
@@ -15335,7 +15335,7 @@ Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www
 See:
  LabelMapToBinaryImageFilter, LabelMapToLabelImageFilter
 
- itk::simple::LabelMapOverlayImageFilter for the procedual interface
+ itk::simple::LabelMapOverlayImageFilter for the procedural interface
 
 
 C++ includes: sitkLabelMapOverlayImageFilter.h
@@ -15418,7 +15418,7 @@ de Jouy-en-Josas, France.
 See:
  LabelMapToLabelImageFilter, LabelMapMaskImageFilter
 
- itk::simple::LabelMapToBinaryImageFilter for the procedual interface
+ itk::simple::LabelMapToBinaryImageFilter for the procedural interface
 
 
 C++ includes: sitkLabelMapToBinaryImageFilter.h
@@ -15523,7 +15523,7 @@ Convert a LabelMap to a normal image with different values
 representing each region
 
 See:
- itk::simple::LabelMapToLabelImageFilter for the procedual interface
+ itk::simple::LabelMapToLabelImageFilter for the procedural interface
 
 
 C++ includes: sitkLabelMapToLabelImageFilter.h
@@ -15577,7 +15577,7 @@ Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www
 See:
  LabelMapToBinaryImageFilter, LabelMapMaskImageFilter
 
- itk::simple::LabelMapToRGBImageFilter for the procedual interface
+ itk::simple::LabelMapToRGBImageFilter for the procedural interface
 
 
 C++ includes: sitkLabelMapToRGBImageFilter.h
@@ -15642,7 +15642,7 @@ All Examples
 Overlay a LabelMap on an image
 
 See:
- itk::simple::LabelOverlayImageFilter for the procedual interface
+ itk::simple::LabelOverlayImageFilter for the procedural interface
 
 
 C++ includes: sitkLabelOverlayImageFilter.h
@@ -15847,7 +15847,7 @@ Monash University, Melbourne, Australia.
 See:
 ScalarToRGBPixelFunctor LabelOverlayImageFilter
 
- itk::simple::LabelToRGBImageFilter for the procedual interface
+ itk::simple::LabelToRGBImageFilter for the procedural interface
 
 
 C++ includes: sitkLabelToRGBImageFilter.h
@@ -15941,7 +15941,7 @@ IterativeDeconvolutionImageFilter
 
  ProjectedLandweberDeconvolutionImageFilter
 
- itk::simple::LandweberDeconvolutionImageFilter for the procedual interface
+ itk::simple::LandweberDeconvolutionImageFilter for the procedural interface
 
 
 C++ includes: sitkLandweberDeconvolutionImageFilter.h
@@ -16117,7 +16117,7 @@ All Examples
 Compute the Laplacian of an image
 
 See:
- itk::simple::LaplacianImageFilter for the procedual interface
+ itk::simple::LaplacianImageFilter for the procedural interface
 
 
 C++ includes: sitkLaplacianImageFilter.h
@@ -16210,7 +16210,7 @@ All Examples
 Compute the Laplacian of Gaussian (LoG) of an image
 
 See:
- itk::simple::LaplacianRecursiveGaussianImageFilter for the procedual interface
+ itk::simple::LaplacianRecursiveGaussianImageFilter for the procedural interface
 
 
 C++ includes: sitkLaplacianRecursiveGaussianImageFilter.h
@@ -16379,7 +16379,7 @@ LaplacianSegmentationLevelSetFunction,
 
 SparseFieldLevelSetImageFilter
 
- itk::simple::LaplacianSegmentationLevelSetImageFilter for the procedual interface
+ itk::simple::LaplacianSegmentationLevelSetImageFilter for the procedural interface
 
 
 C++ includes: sitkLaplacianSegmentationLevelSetImageFilter.h
@@ -16552,7 +16552,7 @@ All Examples
 Sharpen an image
 
 See:
- itk::simple::LaplacianSharpeningImageFilter for the procedual interface
+ itk::simple::LaplacianSharpeningImageFilter for the procedural interface
 
 
 C++ includes: sitkLaplacianSharpeningImageFilter.h
@@ -16635,7 +16635,7 @@ public ";
 
 
 See:
- itk::simple::LessEqualImageFilter for the procedual interface
+ itk::simple::LessEqualImageFilter for the procedural interface
 
 
 C++ includes: sitkLessEqualImageFilter.h
@@ -16749,7 +16749,7 @@ public ";
 
 
 See:
- itk::simple::LessImageFilter for the procedual interface
+ itk::simple::LessImageFilter for the procedural interface
 
 
 C++ includes: sitkLessImageFilter.h
@@ -16878,7 +16878,7 @@ journal.org/browse/publication/811
 See:
 HistogramThresholdImageFitler
 
- itk::simple::LiThresholdImageFilter for the procedual interface
+ itk::simple::LiThresholdImageFilter for the procedural interface
 
 
 C++ includes: sitkLiThresholdImageFilter.h
@@ -16982,7 +16982,7 @@ The computation is performed using vcl_log10(x).
 
 
 See:
- itk::simple::Log10ImageFilter for the procedual interface
+ itk::simple::Log10ImageFilter for the procedural interface
 
 
 C++ includes: sitkLog10ImageFilter.h
@@ -17029,7 +17029,7 @@ Computes the log() of each pixel.
 
 
 See:
- itk::simple::LogImageFilter for the procedual interface
+ itk::simple::LogImageFilter for the procedural interface
 
 
 C++ includes: sitkLogImageFilter.h
@@ -17081,7 +17081,7 @@ same dimension (e.g. all 2D, or all 3D, or all ND)
 
 
 See:
- itk::simple::MagnitudeAndPhaseToComplexImageFilter for the procedual interface
+ itk::simple::MagnitudeAndPhaseToComplexImageFilter for the procedural interface
 
 
 C++ includes: sitkMagnitudeAndPhaseToComplexImageFilter.h
@@ -17164,7 +17164,7 @@ All Examples
 Apply a mask to an image
 
 See:
- itk::simple::MaskImageFilter for the procedual interface
+ itk::simple::MaskImageFilter for the procedural interface
 
 
 C++ includes: sitkMaskImageFilter.h
@@ -17251,7 +17251,7 @@ All Examples
 Apply the inverse of a mask to an image
 
 See:
- itk::simple::MaskNegatedImageFilter for the procedual interface
+ itk::simple::MaskNegatedImageFilter for the procedural interface
 
 
 C++ includes: sitkMaskNegatedImageFilter.h
@@ -17358,7 +17358,7 @@ and Pattern Recognition, 2010.
 : Dirk Padfield, GE Global Research,padfield@research.ge.com
 
 See:
- itk::simple::MaskedFFTNormalizedCorrelationImageFilter for the procedual interface
+ itk::simple::MaskedFFTNormalizedCorrelationImageFilter for the procedural interface
 
 
 C++ includes: sitkMaskedFFTNormalizedCorrelationImageFilter.h
@@ -17443,7 +17443,7 @@ journal.org/browse/publication/811
 See:
 HistogramThresholdImageFitler
 
- itk::simple::MaximumEntropyThresholdImageFilter for the procedual interface
+ itk::simple::MaximumEntropyThresholdImageFilter for the procedural interface
 
 
 C++ includes: sitkMaximumEntropyThresholdImageFilter.h
@@ -17554,7 +17554,7 @@ Pixel wise compare two input images and set the output pixel to their
 max
 
 See:
- itk::simple::MaximumImageFilter for the procedual interface
+ itk::simple::MaximumImageFilter for the procedural interface
 
 
 C++ includes: sitkMaximumImageFilter.h
@@ -17638,7 +17638,7 @@ ProjectionImageFilter
 
  BinaryProjectionImageFilter
 
- itk::simple::MaximumProjectionImageFilter for the procedual interface
+ itk::simple::MaximumProjectionImageFilter for the procedural interface
 
 
 C++ includes: sitkMaximumProjectionImageFilter.h
@@ -17722,7 +17722,7 @@ All Examples
 Mean filter an image
 
 See:
- itk::simple::MeanImageFilter for the procedual interface
+ itk::simple::MeanImageFilter for the procedural interface
 
 
 C++ includes: sitkMeanImageFilter.h
@@ -17819,7 +17819,7 @@ ProjectionImageFilter
 
  MaximumProjectionImageFilter
 
- itk::simple::MeanProjectionImageFilter for the procedual interface
+ itk::simple::MeanProjectionImageFilter for the procedural interface
 
 
 C++ includes: sitkMeanProjectionImageFilter.h
@@ -17948,7 +17948,7 @@ Median filter an image
 Median filter an RGB image
 
 See:
- itk::simple::MedianImageFilter for the procedual interface
+ itk::simple::MedianImageFilter for the procedural interface
 
 
 C++ includes: sitkMedianImageFilter.h
@@ -18045,7 +18045,7 @@ ProjectionImageFilter
 
  MeanProjectionImageFilter
 
- itk::simple::MedianProjectionImageFilter for the procedual interface
+ itk::simple::MedianProjectionImageFilter for the procedural interface
 
 
 C++ includes: sitkMedianProjectionImageFilter.h
@@ -18138,7 +18138,7 @@ MinMaxCurvatureFlowFunction
 
  BinaryMinMaxCurvatureFlowImageFilter
 
- itk::simple::MinMaxCurvatureFlowImageFilter for the procedual interface
+ itk::simple::MinMaxCurvatureFlowImageFilter for the procedural interface
 
 
 C++ includes: sitkMinMaxCurvatureFlowImageFilter.h
@@ -18239,7 +18239,7 @@ Pixel wise compare two input images and set the output pixel to their
 min
 
 See:
- itk::simple::MinimumImageFilter for the procedual interface
+ itk::simple::MinimumImageFilter for the procedural interface
 
 
 C++ includes: sitkMinimumImageFilter.h
@@ -18303,7 +18303,7 @@ pipeline. The implementation uses the StatisticsImageFilter.
 See:
  StatisticsImageFilter
 
- itk::simple::MinimumMaximumImageFilter for the procedual interface
+ itk::simple::MinimumMaximumImageFilter for the procedural interface
 
 
 C++ includes: sitkMinimumMaximumImageFilter.h
@@ -18395,7 +18395,7 @@ ProjectionImageFilter
 
  MeanProjectionImageFilter
 
- itk::simple::MinimumProjectionImageFilter for the procedual interface
+ itk::simple::MinimumProjectionImageFilter for the procedural interface
 
 
 C++ includes: sitkMinimumProjectionImageFilter.h
@@ -18477,7 +18477,7 @@ All Examples
 Pad an image using mirroring over the boundaries
 
 See:
- itk::simple::MirrorPadImageFilter for the procedual interface
+ itk::simple::MirrorPadImageFilter for the procedural interface
 
 
 C++ includes: sitkMirrorPadImageFilter.h
@@ -18556,7 +18556,7 @@ Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
 
 See:
- itk::simple::ModulusImageFilter for the procedual interface
+ itk::simple::ModulusImageFilter for the procedural interface
 
 
 C++ includes: sitkModulusImageFilter.h
@@ -18628,7 +18628,7 @@ journal.org/browse/publication/811
 See:
 HistogramThresholdImageFitler
 
- itk::simple::MomentsThresholdImageFilter for the procedual interface
+ itk::simple::MomentsThresholdImageFilter for the procedural interface
 
 
 C++ includes: sitkMomentsThresholdImageFilter.h
@@ -18736,7 +18736,7 @@ are candidates for affecting the center pixel.
 See:
 MorphologyImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter
 
- itk::simple::MorphologicalGradientImageFilter for the procedual interface
+ itk::simple::MorphologicalGradientImageFilter for the procedural interface
 
 
 C++ includes: sitkMorphologicalGradientImageFilter.h
@@ -18859,7 +18859,7 @@ Monash University, Melbourne, Australia.
 See:
 WatershedImageFilter, MorphologicalWatershedImageFilter
 
- itk::simple::MorphologicalWatershedFromMarkersImageFilter for the procedual interface
+ itk::simple::MorphologicalWatershedFromMarkersImageFilter for the procedural interface
 
 
 C++ includes: sitkMorphologicalWatershedFromMarkersImageFilter.h
@@ -18997,7 +18997,7 @@ de Jouy-en-Josas, France.
 See:
 WatershedImageFilter, MorphologicalWatershedFromMarkersImageFilter
 
- itk::simple::MorphologicalWatershedImageFilter for the procedual interface
+ itk::simple::MorphologicalWatershedImageFilter for the procedural interface
 
 
 C++ includes: sitkMorphologicalWatershedImageFilter.h
@@ -19137,7 +19137,7 @@ the Insight Journal paper:http://hdl.handle.net/1926/510
 See:
  MultiplyImageFilter
 
- itk::simple::MultiplyByConstant for the procedual interface
+ itk::simple::MultiplyByConstant for the procedural interface
 
 
 C++ includes: sitkMultiplyByConstantImageFilter.h
@@ -19214,7 +19214,7 @@ Multiply two images together
 Multiply every pixel in an image by a constant
 
 See:
- itk::simple::MultiplyImageFilter for the procedual interface
+ itk::simple::MultiplyImageFilter for the procedural interface
 
 
 C++ includes: sitkMultiplyImageFilter.h
@@ -19321,7 +19321,7 @@ and J.C. Gee. \"N4ITK:  Improved N3 Bias Correction\" IEEE
 Transactions on Medical Imaging, 29(6):1310-1320, June 2010.
 
 See:
- itk::simple::N4BiasFieldCorrectionImageFilter for the procedual interface
+ itk::simple::N4BiasFieldCorrectionImageFilter for the procedural interface
 
 
 C++ includes: sitkN4BiasFieldCorrectionImageFilter.h
@@ -19528,7 +19528,7 @@ WARNING:
 No numeric overflow checking is performed in this filter.
 
 See:
- itk::simple::NaryAddImageFilter for the procedual interface
+ itk::simple::NaryAddImageFilter for the procedural interface
 
 
 C++ includes: sitkNaryAddImageFilter.h
@@ -19616,7 +19616,7 @@ Department of Biochemistry and Program in Biomedical Informatics at
 Stanford University School of Medicine
 
 See:
- itk::simple::NaryMaximumImageFilter for the procedual interface
+ itk::simple::NaryMaximumImageFilter for the procedural interface
 
 
 C++ includes: sitkNaryMaximumImageFilter.h
@@ -19697,7 +19697,7 @@ Lower and Upper threshold range.
 
 
 See:
- itk::simple::NeighborhoodConnectedImageFilter for the procedual interface
+ itk::simple::NeighborhoodConnectedImageFilter for the procedural interface
 
 
 C++ includes: sitkNeighborhoodConnectedImageFilter.h
@@ -19887,7 +19887,7 @@ All Examples
 Compute the local noise in an image
 
 See:
- itk::simple::NoiseImageFilter for the procedual interface
+ itk::simple::NoiseImageFilter for the procedural interface
 
 
 C++ includes: sitkNoiseImageFilter.h
@@ -19996,7 +19996,7 @@ All Examples
 Normalize an image
 
 See:
- itk::simple::NormalizeImageFilter for the procedual interface
+ itk::simple::NormalizeImageFilter for the procedural interface
 
 
 C++ includes: sitkNormalizeImageFilter.h
@@ -20063,7 +20063,7 @@ All Examples
 Scale all pixels so that their sum is a specified constant
 
 See:
- itk::simple::NormalizeToConstantImageFilter for the procedual interface
+ itk::simple::NormalizeToConstantImageFilter for the procedural interface
 
 
 C++ includes: sitkNormalizeToConstantImageFilter.h
@@ -20156,7 +20156,7 @@ All Examples
 Normalized correlation
 
 See:
- itk::simple::NormalizedCorrelationImageFilter for the procedual interface
+ itk::simple::NormalizedCorrelationImageFilter for the procedural interface
 
 
 C++ includes: sitkNormalizedCorrelationImageFilter.h
@@ -20200,7 +20200,7 @@ public ";
 
 
 See:
- itk::simple::NotEqualImageFilter for the procedual interface
+ itk::simple::NotEqualImageFilter for the procedural interface
 
 
 C++ includes: sitkNotEqualImageFilter.h
@@ -20326,7 +20326,7 @@ the unary NOT operator in C++.
 
 
 See:
- itk::simple::NotImageFilter for the procedual interface
+ itk::simple::NotImageFilter for the procedural interface
 
 
 C++ includes: sitkNotImageFilter.h
@@ -20391,7 +20391,7 @@ de Jouy-en-Josas, France.
 See:
  GrayscaleMorphologicalOpeningImageFilter
 
- itk::simple::OpeningByReconstructionImageFilter for the procedual interface
+ itk::simple::OpeningByReconstructionImageFilter for the procedural interface
 
 
 C++ includes: sitkOpeningByReconstructionImageFilter.h
@@ -20563,7 +20563,7 @@ All Examples
 Binary OR two images
 
 See:
- itk::simple::OrImageFilter for the procedual interface
+ itk::simple::OrImageFilter for the procedural interface
 
 
 C++ includes: sitkOrImageFilter.h
@@ -20637,7 +20637,7 @@ OtsuMultipleThresholdsCalculator
 
 ThresholdLabelerImageFilter
 
- itk::simple::OtsuMultipleThresholdsImageFilter for the procedual interface
+ itk::simple::OtsuMultipleThresholdsImageFilter for the procedural interface
 
 
 C++ includes: sitkOtsuMultipleThresholdsImageFilter.h
@@ -20756,7 +20756,7 @@ Separate foreground and background using Otsu's method
 See:
 HistogramThresholdImageFitler
 
- itk::simple::OtsuThresholdImageFilter for the procedual interface
+ itk::simple::OtsuThresholdImageFilter for the procedural interface
 
 
 
@@ -20872,7 +20872,7 @@ All Examples
 Paste a part of one image into another image
 
 See:
- itk::simple::PasteImageFilter for the procedual interface
+ itk::simple::PasteImageFilter for the procedural interface
 
 
 C++ includes: sitkPasteImageFilter.h
@@ -20979,7 +20979,7 @@ All Examples
 Switch the axes of an image
 
 See:
- itk::simple::PermuteAxesImageFilter for the procedual interface
+ itk::simple::PermuteAxesImageFilter for the procedural interface
 
 
 C++ includes: sitkPermuteAxesImageFilter.h
@@ -21048,7 +21048,7 @@ public ";
 
 
 See:
- itk::simple::PhysicalPointImageSource for the procedual interface
+ itk::simple::PhysicalPointImageSource for the procedural interface
 
 
 C++ includes: sitkPhysicalPointImageSource.h
@@ -21161,7 +21161,7 @@ public ";
 
 
 See:
- itk::simple::PhysicalPointSource for the procedual interface
+ itk::simple::PhysicalPointSource for the procedural interface
 
 
 C++ includes: sitkPhysicalPointSourceImageFilter.h
@@ -21618,7 +21618,7 @@ SetConstant2(constant);
 
 
 See:
- itk::simple::PowImageFilter for the procedual interface
+ itk::simple::PowImageFilter for the procedural interface
 
 
 C++ includes: sitkPowImageFilter.h
@@ -21675,7 +21675,7 @@ public ";
 
 
 See:
- itk::simple::PowToConstant for the procedual interface
+ itk::simple::PowToConstant for the procedural interface
 
 
 C++ includes: sitkPowToConstantImageFilter.h
@@ -21762,7 +21762,7 @@ IterativeDeconvolutionImageFilter
 
  LandweberDeconvolutionImageFilter
 
- itk::simple::ProjectedLandweberDeconvolutionImageFilter for the procedual interface
+ itk::simple::ProjectedLandweberDeconvolutionImageFilter for the procedural interface
 
 
 C++ includes: sitkProjectedLandweberDeconvolutionImageFilter.h
@@ -21899,7 +21899,7 @@ public ";
 
 
 See:
- itk::simple::RankImageFilter for the procedual interface
+ itk::simple::RankImageFilter for the procedural interface
 
 
 C++ includes: sitkRankImageFilter.h
@@ -21987,7 +21987,7 @@ same dimension (e.g. all 2D, or all 3D, or all ND)
 
 
 See:
- itk::simple::RealAndImaginaryToComplexImageFilter for the procedual interface
+ itk::simple::RealAndImaginaryToComplexImageFilter for the procedural interface
 
 
 C++ includes: sitkRealAndImaginaryToComplexImageFilter.h
@@ -22050,7 +22050,7 @@ See:
 
  ForwardFFTImageFilter
 
- itk::simple::RealToHalfHermitianForwardFFTImageFilter for the procedual interface
+ itk::simple::RealToHalfHermitianForwardFFTImageFilter for the procedural interface
 
 
 C++ includes: sitkRealToHalfHermitianForwardFFTImageFilter.h
@@ -22116,7 +22116,7 @@ Australia.
 See:
 MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter, ReconstructionByErosionImageFilter, OpeningByReconstructionImageFilter, ClosingByReconstructionImageFilter, ReconstructionImageFilter
 
- itk::simple::ReconstructionByDilationImageFilter for the procedual interface
+ itk::simple::ReconstructionByDilationImageFilter for the procedural interface
 
 
 C++ includes: sitkReconstructionByDilationImageFilter.h
@@ -22237,7 +22237,7 @@ Australia.
 See:
 MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter, ReconstructionByErosionImageFilter, OpeningByReconstructionImageFilter, ClosingByReconstructionImageFilter, ReconstructionImageFilter
 
- itk::simple::ReconstructionByErosionImageFilter for the procedual interface
+ itk::simple::ReconstructionByErosionImageFilter for the procedural interface
 
 
 C++ includes: sitkReconstructionByErosionImageFilter.h
@@ -22361,7 +22361,7 @@ All Examples
 Find higher derivatives of an image
 
 See:
- itk::simple::RecursiveGaussianImageFilter for the procedual interface
+ itk::simple::RecursiveGaussianImageFilter for the procedural interface
 
 
 C++ includes: sitkRecursiveGaussianImageFilter.h
@@ -22547,7 +22547,7 @@ All Examples
 Extract a portion of an image (region of interest)
 
 See:
- itk::simple::RegionOfInterestImageFilter for the procedual interface
+ itk::simple::RegionOfInterestImageFilter for the procedural interface
 
 
 C++ includes: sitkRegionOfInterestImageFilter.h
@@ -22648,7 +22648,7 @@ All Examples
  RegionalMaximaImageFilter
 
 See:
- itk::simple::RegionalMaximaImageFilter for the procedual interface
+ itk::simple::RegionalMaximaImageFilter for the procedural interface
 
 
 C++ includes: sitkRegionalMaximaImageFilter.h
@@ -22825,7 +22825,7 @@ All Examples
  RegionalMinimaImageFilter
 
 See:
- itk::simple::RegionalMinimaImageFilter for the procedual interface
+ itk::simple::RegionalMinimaImageFilter for the procedural interface
 
 
 C++ includes: sitkRegionalMinimaImageFilter.h
@@ -23014,7 +23014,7 @@ All Examples
 Assign contiguous labels to connected regions of an image
 
 See:
- itk::simple::RelabelComponentImageFilter for the procedual interface
+ itk::simple::RelabelComponentImageFilter for the procedural interface
 
 
 C++ includes: sitkRelabelComponentImageFilter.h
@@ -23105,7 +23105,7 @@ journal.org/browse/publication/811
 See:
 HistogramThresholdImageFitler
 
- itk::simple::RenyiEntropyThresholdImageFilter for the procedual interface
+ itk::simple::RenyiEntropyThresholdImageFilter for the procedural interface
 
 
 C++ includes: sitkRenyiEntropyThresholdImageFilter.h
@@ -23247,7 +23247,7 @@ Upsampling an image
 Resample (stretch or compress) an image
 
 See:
- itk::simple::ResampleImageFilter for the procedual interface
+ itk::simple::ResampleImageFilter for the procedural interface
 
 
 C++ includes: sitkResampleImageFilter.h
@@ -23460,7 +23460,7 @@ All Examples
 Rescale the intensity values of an image to a specified range
 
 See:
- itk::simple::RescaleIntensityImageFilter for the procedual interface
+ itk::simple::RescaleIntensityImageFilter for the procedural interface
 
 
 C++ includes: sitkRescaleIntensityImageFilter.h
@@ -23556,7 +23556,7 @@ IterativeDeconvolutionImageFilter
 
  ProjectedLandweberDeconvolutionImageFilter
 
- itk::simple::RichardsonLucyDeconvolutionImageFilter for the procedual interface
+ itk::simple::RichardsonLucyDeconvolutionImageFilter for the procedural interface
 
 
 C++ includes: sitkRichardsonLucyDeconvolutionImageFilter.h
@@ -23759,7 +23759,7 @@ progress since the number of iterations needed cannot be known in
 advance.
 
 See:
- itk::simple::STAPLEImageFilter for the procedual interface
+ itk::simple::STAPLEImageFilter for the procedural interface
 
 
 C++ includes: sitkSTAPLEImageFilter.h
@@ -23985,7 +23985,7 @@ All Examples
 Label connected components in a grayscale image
 
 See:
- itk::simple::ScalarConnectedComponentImageFilter for the procedual interface
+ itk::simple::ScalarConnectedComponentImageFilter for the procedural interface
 
 
 C++ includes: sitkScalarConnectedComponentImageFilter.h
@@ -24099,7 +24099,7 @@ All Examples
 Cluster the pixels in a greyscale image
 
 See:
- itk::simple::ScalarImageKmeansImageFilter for the procedual interface
+ itk::simple::ScalarImageKmeansImageFilter for the procedural interface
 
 
 C++ includes: sitkScalarImageKmeansImageFilter.h
@@ -24243,7 +24243,7 @@ All Examples
 Apply a color map to an image
 
 See:
- itk::simple::ScalarToRGBColormapImageFilter for the procedual interface
+ itk::simple::ScalarToRGBColormapImageFilter for the procedural interface
 
 
 C++ includes: sitkScalarToRGBColormapImageFilter.h
@@ -24324,7 +24324,7 @@ journal.org/browse/publication/811
 See:
 HistogramThresholdImageFitler
 
- itk::simple::ShanbhagThresholdImageFilter for the procedual interface
+ itk::simple::ShanbhagThresholdImageFilter for the procedural interface
 
 
 C++ includes: sitkShanbhagThresholdImageFilter.h
@@ -24484,7 +24484,7 @@ ShapeDetectionLevelSetFunction
 
 SparseFieldLevelSetImageFilter
 
- itk::simple::ShapeDetectionLevelSetImageFilter for the procedual interface
+ itk::simple::ShapeDetectionLevelSetImageFilter for the procedural interface
 
 
 C++ includes: sitkShapeDetectionLevelSetImageFilter.h
@@ -24635,7 +24635,7 @@ at the NonpositiveMin and max of the pixel type.
 
 
 See:
- itk::simple::ShiftScaleImageFilter for the procedual interface
+ itk::simple::ShiftScaleImageFilter for the procedural interface
 
 
 C++ includes: sitkShiftScaleImageFilter.h
@@ -24744,7 +24744,7 @@ All Examples
 Shrink an image
 
 See:
- itk::simple::ShrinkImageFilter for the procedual interface
+ itk::simple::ShrinkImageFilter for the procedural interface
 
 
 C++ includes: sitkShrinkImageFilter.h
@@ -24833,7 +24833,7 @@ All Examples
 Pass image pixels through a sigmoid function
 
 See:
- itk::simple::SigmoidImageFilter for the procedual interface
+ itk::simple::SigmoidImageFilter for the procedural interface
 
 
 C++ includes: sitkSigmoidImageFilter.h
@@ -24952,7 +24952,7 @@ filter is N-dimensional.
 See:
 itkDanielssonDistanceMapImageFilter
 
- itk::simple::SignedDanielssonDistanceMapImageFilter for the procedual interface
+ itk::simple::SignedDanielssonDistanceMapImageFilter for the procedural interface
 
 
 C++ includes: sitkSignedDanielssonDistanceMapImageFilter.h
@@ -25121,7 +25121,7 @@ Transactions on Pattern Analysis and Machine Intelligence, 25(2):
 265-270, 2003.
 
 See:
- itk::simple::SignedMaurerDistanceMapImageFilter for the procedual interface
+ itk::simple::SignedMaurerDistanceMapImageFilter for the procedural interface
 
 
 C++ includes: sitkSignedMaurerDistanceMapImageFilter.h
@@ -25288,7 +25288,7 @@ image type. It assume both image have the same number of dimensions.
 
 
 See:
- itk::simple::SimilarityIndexImageFilter for the procedual interface
+ itk::simple::SimilarityIndexImageFilter for the procedural interface
 
 
 C++ includes: sitkSimilarityIndexImageFilter.h
@@ -25365,7 +25365,7 @@ NeighborhoodOperator
 
 NeighborhoodIterator
 
- itk::simple::SimpleContourExtractorImageFilter for the procedual interface
+ itk::simple::SimpleContourExtractorImageFilter for the procedural interface
 
 
 C++ includes: sitkSimpleContourExtractorImageFilter.h
@@ -25517,7 +25517,7 @@ All Examples
 Compute the sine of each pixel.
 
 See:
- itk::simple::SinImageFilter for the procedual interface
+ itk::simple::SinImageFilter for the procedural interface
 
 
 C++ includes: sitkSinImageFilter.h
@@ -25561,7 +25561,7 @@ public ";
 
 
 See:
- itk::simple::SliceImageFilter for the procedual interface
+ itk::simple::SliceImageFilter for the procedural interface
 
 
 C++ includes: sitkSliceImageFilter.h
@@ -25657,7 +25657,7 @@ All Examples
 Gaussian smoothing that works with image adaptors
 
 See:
- itk::simple::SmoothingRecursiveGaussianImageFilter for the procedual interface
+ itk::simple::SmoothingRecursiveGaussianImageFilter for the procedural interface
 
 
 C++ includes: sitkSmoothingRecursiveGaussianImageFilter.h
@@ -25792,7 +25792,7 @@ All Examples
  SobelEdgeDetectionImageFilter
 
 See:
- itk::simple::SobelEdgeDetectionImageFilter for the procedual interface
+ itk::simple::SobelEdgeDetectionImageFilter for the procedural interface
 
 
 C++ includes: sitkSobelEdgeDetectionImageFilter.h
@@ -25841,7 +25841,7 @@ The computations are performed using vcl_sqrt(x).
 
 
 See:
- itk::simple::SqrtImageFilter for the procedual interface
+ itk::simple::SqrtImageFilter for the procedural interface
 
 
 C++ includes: sitkSqrtImageFilter.h
@@ -25893,7 +25893,7 @@ All Examples
 Square every pixel in an image
 
 See:
- itk::simple::SquareImageFilter for the procedual interface
+ itk::simple::SquareImageFilter for the procedural interface
 
 
 C++ includes: sitkSquareImageFilter.h
@@ -25964,7 +25964,7 @@ All Examples
 Compute the squared difference of corresponding pixels in two images
 
 See:
- itk::simple::SquaredDifferenceImageFilter for the procedual interface
+ itk::simple::SquaredDifferenceImageFilter for the procedural interface
 
 
 C++ includes: sitkSquaredDifferenceImageFilter.h
@@ -26051,7 +26051,7 @@ ProjectionImageFilter
 
  BinaryProjectionImageFilter
 
- itk::simple::StandardDeviationProjectionImageFilter for the procedual interface
+ itk::simple::StandardDeviationProjectionImageFilter for the procedural interface
 
 
 C++ includes: sitkStandardDeviationProjectionImageFilter.h
@@ -26186,7 +26186,7 @@ Subract each pixel from a constant.
 
 
 See:
- itk::simple::SubtractConstantBy for the procedual interface
+ itk::simple::SubtractConstantBy for the procedural interface
 
 
 C++ includes: sitkSubtractConstantByImageFilter.h
@@ -26260,7 +26260,7 @@ the Insight Journal paper:http://hdl.handle.net/1926/510
 See:
  SubtractImageFilter
 
- itk::simple::SubtractConstantFrom for the procedual interface
+ itk::simple::SubtractConstantFrom for the procedural interface
 
 
 C++ includes: sitkSubtractConstantFromImageFilter.h
@@ -26344,7 +26344,7 @@ Subtract two images
 Subtract a constant from every pixel in an image
 
 See:
- itk::simple::SubtractImageFilter for the procedual interface
+ itk::simple::SubtractImageFilter for the procedural interface
 
 
 C++ includes: sitkSubtractImageFilter.h
@@ -26431,7 +26431,7 @@ ProjectionImageFilter
 
  StandardDeviationProjectionImageFilter
 
- itk::simple::SumProjectionImageFilter for the procedual interface
+ itk::simple::SumProjectionImageFilter for the procedural interface
 
 
 C++ includes: sitkSumProjectionImageFilter.h
@@ -26498,7 +26498,7 @@ The computations are performed using vcl_tan(x).
 
 
 See:
- itk::simple::TanImageFilter for the procedual interface
+ itk::simple::TanImageFilter for the procedural interface
 
 
 C++ includes: sitkTanImageFilter.h
@@ -26549,7 +26549,7 @@ by the C++ defaults.
 
 
 See:
- itk::simple::TernaryAddImageFilter for the procedual interface
+ itk::simple::TernaryAddImageFilter for the procedural interface
 
 
 C++ includes: sitkTernaryAddImageFilter.h
@@ -26600,7 +26600,7 @@ by the C++ defaults.
 
 
 See:
- itk::simple::TernaryMagnitudeImageFilter for the procedual interface
+ itk::simple::TernaryMagnitudeImageFilter for the procedural interface
 
 
 C++ includes: sitkTernaryMagnitudeImageFilter.h
@@ -26651,7 +26651,7 @@ by the C++ defaults.
 
 
 See:
- itk::simple::TernaryMagnitudeSquaredImageFilter for the procedual interface
+ itk::simple::TernaryMagnitudeSquaredImageFilter for the procedural interface
 
 
 C++ includes: sitkTernaryMagnitudeSquaredImageFilter.h
@@ -26706,7 +26706,7 @@ All Examples
 Threshold an image
 
 See:
- itk::simple::ThresholdImageFilter for the procedual interface
+ itk::simple::ThresholdImageFilter for the procedural interface
 
 
 C++ includes: sitkThresholdImageFilter.h
@@ -26842,7 +26842,7 @@ Questions: email Ken Urish at ken.urish(at)gmail.com Please cc the itk
 list serve for archival purposes.
 
 See:
- itk::simple::ThresholdMaximumConnectedComponentsImageFilter for the procedual interface
+ itk::simple::ThresholdMaximumConnectedComponentsImageFilter for the procedural interface
 
 
 C++ includes: sitkThresholdMaximumConnectedComponentsImageFilter.h
@@ -27059,7 +27059,7 @@ ThresholdSegmentationLevelSetFunction,
 
 SparseFieldLevelSetImageFilter
 
- itk::simple::ThresholdSegmentationLevelSetImageFilter for the procedual interface
+ itk::simple::ThresholdSegmentationLevelSetImageFilter for the procedural interface
 
 
 C++ includes: sitkThresholdSegmentationLevelSetImageFilter.h
@@ -27237,7 +27237,7 @@ de Jouy-en-Josas, France Cory Quammen, The University of North
 Carolina at Chapel Hill
 
 See:
- itk::simple::TikhonovDeconvolutionImageFilter for the procedual interface
+ itk::simple::TikhonovDeconvolutionImageFilter for the procedural interface
 
 
 C++ includes: sitkTikhonovDeconvolutionImageFilter.h
@@ -27387,7 +27387,7 @@ Stack multiple 2D images into a 3D image
 Tile multiple images side by side
 
 See:
- itk::simple::TileImageFilter for the procedual interface
+ itk::simple::TileImageFilter for the procedural interface
 
 
 C++ includes: sitkTileImageFilter.h
@@ -27596,7 +27596,7 @@ journal.org/browse/publication/811
 See:
 HistogramThresholdImageFitler
 
- itk::simple::TriangleThresholdImageFilter for the procedual interface
+ itk::simple::TriangleThresholdImageFilter for the procedural interface
 
 
 C++ includes: sitkTriangleThresholdImageFilter.h
@@ -27698,7 +27698,7 @@ Computes the negative of each pixel.
 
 
 See:
- itk::simple::UnaryMinusImageFilter for the procedual interface
+ itk::simple::UnaryMinusImageFilter for the procedural interface
 
 
 C++ includes: sitkUnaryMinusImageFilter.h
@@ -27769,7 +27769,7 @@ All Examples
  ValuedRegionalMaximaImageFilter
 
 See:
- itk::simple::ValuedRegionalMaximaImageFilter for the procedual interface
+ itk::simple::ValuedRegionalMaximaImageFilter for the procedural interface
 
 
 C++ includes: sitkValuedRegionalMaximaImageFilter.h
@@ -27877,7 +27877,7 @@ All Examples
  ValuedRegionalMinimaImageFilter
 
 See:
- itk::simple::ValuedRegionalMinimaImageFilter for the procedual interface
+ itk::simple::ValuedRegionalMinimaImageFilter for the procedural interface
 
 
 C++ includes: sitkValuedRegionalMinimaImageFilter.h
@@ -27989,7 +27989,7 @@ seed point's intensity.
 
 
 See:
- itk::simple::VectorConfidenceConnectedImageFilter for the procedual interface
+ itk::simple::VectorConfidenceConnectedImageFilter for the procedural interface
 
 
 C++ includes: sitkVectorConfidenceConnectedImageFilter.h
@@ -28181,7 +28181,7 @@ of phase are similar. Assumes that vectors are normalized.
 
 
 See:
- itk::simple::VectorConnectedComponentImageFilter for the procedual interface
+ itk::simple::VectorConnectedComponentImageFilter for the procedural interface
 
 
 C++ includes: sitkVectorConnectedComponentImageFilter.h
@@ -28279,7 +28279,7 @@ All Examples
 Extract a component/channel of a vector image
 
 See:
- itk::simple::VectorIndexSelectionCastImageFilter for the procedual interface
+ itk::simple::VectorIndexSelectionCastImageFilter for the procedural interface
 
 
 C++ includes: sitkVectorIndexSelectionCastImageFilter.h
@@ -28357,7 +28357,7 @@ Compute the magnitude of each pixel in a vector image to produce a
 magnitude image
 
 See:
- itk::simple::VectorMagnitudeImageFilter for the procedual interface
+ itk::simple::VectorMagnitudeImageFilter for the procedural interface
 
 
 C++ includes: sitkVectorMagnitudeImageFilter.h
@@ -28435,7 +28435,7 @@ NeighborhoodOperator
 
 NeighborhoodIterator
 
- itk::simple::VotingBinaryHoleFillingImageFilter for the procedual interface
+ itk::simple::VotingBinaryHoleFillingImageFilter for the procedural interface
 
 
 C++ includes: sitkVotingBinaryHoleFillingImageFilter.h
@@ -28568,7 +28568,7 @@ NeighborhoodOperator
 
 NeighborhoodIterator
 
- itk::simple::VotingBinaryImageFilter for the procedual interface
+ itk::simple::VotingBinaryImageFilter for the procedural interface
 
 
 C++ includes: sitkVotingBinaryImageFilter.h
@@ -28753,7 +28753,7 @@ NeighborhoodOperator
 
 NeighborhoodIterator
 
- itk::simple::VotingBinaryIterativeHoleFillingImageFilter for the procedual interface
+ itk::simple::VotingBinaryIterativeHoleFillingImageFilter for the procedural interface
 
 
 C++ includes: sitkVotingBinaryIterativeHoleFillingImageFilter.h
@@ -28922,7 +28922,7 @@ Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
 
 See:
- itk::simple::WhiteTopHatImageFilter for the procedual interface
+ itk::simple::WhiteTopHatImageFilter for the procedural interface
 
 
 C++ includes: sitkWhiteTopHatImageFilter.h
@@ -29070,7 +29070,7 @@ Carolina at Chapel Hill Cory Quammen, The University of North Carolina
 at Chapel Hill
 
 See:
- itk::simple::WienerDeconvolutionImageFilter for the procedual interface
+ itk::simple::WienerDeconvolutionImageFilter for the procedural interface
 
 
 C++ includes: sitkWienerDeconvolutionImageFilter.h
@@ -29211,7 +29211,7 @@ All Examples
 Pad an image by wrapping
 
 See:
- itk::simple::WrapPadImageFilter for the procedual interface
+ itk::simple::WrapPadImageFilter for the procedural interface
 
 
 C++ includes: sitkWrapPadImageFilter.h
@@ -29299,7 +29299,7 @@ All Examples
 Binary XOR (exclusive OR) two images
 
 See:
- itk::simple::XorImageFilter for the procedual interface
+ itk::simple::XorImageFilter for the procedural interface
 
 
 C++ includes: sitkXorImageFilter.h
@@ -29370,7 +29370,7 @@ journal.org/browse/publication/811
 See:
 HistogramThresholdImageFitler
 
- itk::simple::YenThresholdImageFilter for the procedual interface
+ itk::simple::YenThresholdImageFilter for the procedural interface
 
 
 C++ includes: sitkYenThresholdImageFilter.h
@@ -29506,7 +29506,7 @@ See:
 
  ZeroCrossingImageFilter
 
- itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter for the procedual interface
+ itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter for the procedural interface
 
 
 C++ includes: sitkZeroCrossingBasedEdgeDetectionImageFilter.h
@@ -29666,7 +29666,7 @@ All Examples
 Find zero crossings in a signed image
 
 See:
- itk::simple::ZeroCrossingImageFilter for the procedual interface
+ itk::simple::ZeroCrossingImageFilter for the procedural interface
 
 
 C++ includes: sitkZeroCrossingImageFilter.h
@@ -29767,7 +29767,7 @@ de Jouy-en-Josas, France.
 See:
  WrapPadImageFilter, MirrorPadImageFilter, ConstantPadImageFilter, ZeroFluxNeumannBoundaryCondition
 
- itk::simple::ZeroFluxNeumannPadImageFilter for the procedual interface
+ itk::simple::ZeroFluxNeumannPadImageFilter for the procedural interface
 
 
 C++ includes: sitkZeroFluxNeumannPadImageFilter.h
@@ -30826,7 +30826,7 @@ Image itk::simple::Abs(const Image &image1)
  itk::simple::AbsImageFilter Procedural Interface
 
 
-This function directly calls the execute method of AbsImageFilter in order to support a procedual API
+This function directly calls the execute method of AbsImageFilter in order to support a procedural API
 
 
 See:
@@ -30852,7 +30852,7 @@ Image itk::simple::AbsoluteValueDifference(const Image &image1, const Image &ima
  itk::simple::AbsoluteValueDifferenceImageFilter Procedural Interface
 
 
-This function directly calls the execute method of AbsoluteValueDifferenceImageFilter in order to support a procedual API
+This function directly calls the execute method of AbsoluteValueDifferenceImageFilter in order to support a procedural API
 
 
 See:
@@ -30868,7 +30868,7 @@ Image itk::simple::Acos(const Image &image1)
  itk::simple::AcosImageFilter Procedural Interface
 
 
-This function directly calls the execute method of AcosImageFilter in order to support a procedual API
+This function directly calls the execute method of AcosImageFilter in order to support a procedural API
 
 
 See:
@@ -30886,7 +30886,7 @@ useLookupTable=false)
  itk::simple::AdaptiveHistogramEqualizationImageFilter Procedural Interface
 
 
-This function directly calls the execute method of AdaptiveHistogramEqualizationImageFilter in order to support a procedual API
+This function directly calls the execute method of AdaptiveHistogramEqualizationImageFilter in order to support a procedural API
 
 
 See:
@@ -30912,7 +30912,7 @@ Image itk::simple::Add(const Image &image1, const Image &image2)
  itk::simple::AddImageFilter Procedural Interface
 
 
-This function directly calls the execute method of AddImageFilter in order to support a procedual API
+This function directly calls the execute method of AddImageFilter in order to support a procedural API
 
 
 See:
@@ -30928,7 +30928,7 @@ Image itk::simple::AddConstantTo(const Image &image1, double inConstant=1.0)
  itk::simple::AddConstantToImageFilter Procedural Interface
 
 
-This function directly calls the execute method of AddConstantToImageFilter in order to support a procedual API
+This function directly calls the execute method of AddConstantToImageFilter in order to support a procedural API
 
 
 See:
@@ -30954,7 +30954,7 @@ Image itk::simple::And(const Image &image1, const Image &image2)
  itk::simple::AndImageFilter Procedural Interface
 
 
-This function directly calls the execute method of AndImageFilter in order to support a procedual API
+This function directly calls the execute method of AndImageFilter in order to support a procedural API
 
 
 See:
@@ -30971,7 +30971,7 @@ numberOfIterations=1000u)
  itk::simple::AntiAliasBinaryImageFilter Procedural Interface
 
 
-This function directly calls the execute method of AntiAliasBinaryImageFilter in order to support a procedual API
+This function directly calls the execute method of AntiAliasBinaryImageFilter in order to support a procedural API
 
 
 See:
@@ -30987,7 +30987,7 @@ Image itk::simple::ApproximateSignedDistanceMap(const Image &image1, double insi
  itk::simple::ApproximateSignedDistanceMapImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ApproximateSignedDistanceMapImageFilter in order to support a procedual API
+This function directly calls the execute method of ApproximateSignedDistanceMapImageFilter in order to support a procedural API
 
 
 See:
@@ -31003,7 +31003,7 @@ Image itk::simple::Asin(const Image &image1)
  itk::simple::AsinImageFilter Procedural Interface
 
 
-This function directly calls the execute method of AsinImageFilter in order to support a procedual API
+This function directly calls the execute method of AsinImageFilter in order to support a procedural API
 
 
 See:
@@ -31019,7 +31019,7 @@ Image itk::simple::Atan(const Image &image1)
  itk::simple::AtanImageFilter Procedural Interface
 
 
-This function directly calls the execute method of AtanImageFilter in order to support a procedual API
+This function directly calls the execute method of AtanImageFilter in order to support a procedural API
 
 
 See:
@@ -31045,7 +31045,7 @@ Image itk::simple::Atan2(const Image &image1, const Image &image2)
  itk::simple::Atan2ImageFilter Procedural Interface
 
 
-This function directly calls the execute method of Atan2ImageFilter in order to support a procedual API
+This function directly calls the execute method of Atan2ImageFilter in order to support a procedural API
 
 
 See:
@@ -31062,7 +31062,7 @@ unsigned int numberOfRangeGaussianSamples=100u)
  itk::simple::BilateralImageFilter Procedural Interface
 
 
-This function directly calls the execute method of BilateralImageFilter in order to support a procedual API
+This function directly calls the execute method of BilateralImageFilter in order to support a procedural API
 
 
 See:
@@ -31105,7 +31105,7 @@ backgroundValue=0.0, double foregroundValue=1.0)
  itk::simple::BinaryContourImageFilter Procedural Interface
 
 
-This function directly calls the execute method of BinaryContourImageFilter in order to support a procedual API
+This function directly calls the execute method of BinaryContourImageFilter in order to support a procedural API
 
 
 See:
@@ -31172,7 +31172,7 @@ foregroundValue=1.0)
  itk::simple::BinaryFillholeImageFilter Procedural Interface
 
 
-This function directly calls the execute method of BinaryFillholeImageFilter in order to support a procedual API
+This function directly calls the execute method of BinaryFillholeImageFilter in order to support a procedural API
 
 
 See:
@@ -31189,7 +31189,7 @@ foregroundValue=1.0, double backgroundValue=0)
  itk::simple::BinaryGrindPeakImageFilter Procedural Interface
 
 
-This function directly calls the execute method of BinaryGrindPeakImageFilter in order to support a procedual API
+This function directly calls the execute method of BinaryGrindPeakImageFilter in order to support a procedural API
 
 
 See:
@@ -31205,7 +31205,7 @@ Image itk::simple::BinaryMagnitude(const Image &image1, const Image &image2)
  itk::simple::BinaryMagnitudeImageFilter Procedural Interface
 
 
-This function directly calls the execute method of BinaryMagnitudeImageFilter in order to support a procedual API
+This function directly calls the execute method of BinaryMagnitudeImageFilter in order to support a procedural API
 
 
 See:
@@ -31223,7 +31223,7 @@ backgroundValue=0.0)
  itk::simple::BinaryMedianImageFilter Procedural Interface
 
 
-This function directly calls the execute method of BinaryMedianImageFilter in order to support a procedual API
+This function directly calls the execute method of BinaryMedianImageFilter in order to support a procedural API
 
 
 See:
@@ -31240,7 +31240,7 @@ numberOfIterations=5u, int stencilRadius=2, double threshold=0)
  itk::simple::BinaryMinMaxCurvatureFlowImageFilter Procedural Interface
 
 
-This function directly calls the execute method of BinaryMinMaxCurvatureFlowImageFilter in order to support a procedual API
+This function directly calls the execute method of BinaryMinMaxCurvatureFlowImageFilter in order to support a procedural API
 
 
 See:
@@ -31309,7 +31309,7 @@ backgroundValue=0.0)
  itk::simple::BinaryNotImageFilter Procedural Interface
 
 
-This function directly calls the execute method of BinaryNotImageFilter in order to support a procedual API
+This function directly calls the execute method of BinaryNotImageFilter in order to support a procedural API
 
 
 See:
@@ -31354,7 +31354,7 @@ foregroundValue=1.0, double backgroundValue=0.0)
  itk::simple::BinaryProjectionImageFilter Procedural Interface
 
 
-This function directly calls the execute method of BinaryProjectionImageFilter in order to support a procedual API
+This function directly calls the execute method of BinaryProjectionImageFilter in order to support a procedural API
 
 
 See:
@@ -31371,7 +31371,7 @@ double foregroundValue=1.0, bool fullyConnected=false)
  itk::simple::BinaryReconstructionByDilationImageFilter Procedural Interface
 
 
-This function directly calls the execute method of BinaryReconstructionByDilationImageFilter in order to support a procedual API
+This function directly calls the execute method of BinaryReconstructionByDilationImageFilter in order to support a procedural API
 
 
 See:
@@ -31388,7 +31388,7 @@ double foregroundValue=1.0, bool fullyConnected=false)
  itk::simple::BinaryReconstructionByErosionImageFilter Procedural Interface
 
 
-This function directly calls the execute method of BinaryReconstructionByErosionImageFilter in order to support a procedual API
+This function directly calls the execute method of BinaryReconstructionByErosionImageFilter in order to support a procedural API
 
 
 See:
@@ -31404,7 +31404,7 @@ Image itk::simple::BinaryThinning(const Image &image1)
  itk::simple::BinaryThinningImageFilter Procedural Interface
 
 
-This function directly calls the execute method of BinaryThinningImageFilter in order to support a procedual API
+This function directly calls the execute method of BinaryThinningImageFilter in order to support a procedural API
 
 
 See:
@@ -31421,7 +31421,7 @@ upperThreshold=255.0, uint8_t insideValue=1u, uint8_t outsideValue=0u)
  itk::simple::BinaryThresholdImageFilter Procedural Interface
 
 
-This function directly calls the execute method of BinaryThresholdImageFilter in order to support a procedual API
+This function directly calls the execute method of BinaryThresholdImageFilter in order to support a procedural API
 
 
 See:
@@ -31439,7 +31439,7 @@ backgroundValue=0u)
  itk::simple::BinaryThresholdProjectionImageFilter Procedural Interface
 
 
-This function directly calls the execute method of BinaryThresholdProjectionImageFilter in order to support a procedual API
+This function directly calls the execute method of BinaryThresholdProjectionImageFilter in order to support a procedural API
 
 
 See:
@@ -31455,7 +31455,7 @@ Image itk::simple::BinomialBlur(const Image &image1, unsigned int repetitions=1u
  itk::simple::BinomialBlurImageFilter Procedural Interface
 
 
-This function directly calls the execute method of BinomialBlurImageFilter in order to support a procedual API
+This function directly calls the execute method of BinomialBlurImageFilter in order to support a procedural API
 
 
 See:
@@ -31494,7 +31494,7 @@ Image itk::simple::BoundedReciprocal(const Image &image1)
  itk::simple::BoundedReciprocalImageFilter Procedural Interface
 
 
-This function directly calls the execute method of BoundedReciprocalImageFilter in order to support a procedual API
+This function directly calls the execute method of BoundedReciprocalImageFilter in order to support a procedural API
 
 
 See:
@@ -31511,7 +31511,7 @@ unsigned int >(3, 1))
  itk::simple::BoxMeanImageFilter Procedural Interface
 
 
-This function directly calls the execute method of BoxMeanImageFilter in order to support a procedual API
+This function directly calls the execute method of BoxMeanImageFilter in order to support a procedural API
 
 
 See:
@@ -31528,7 +31528,7 @@ unsigned int >(3, 1))
  itk::simple::BoxSigmaImageFilter Procedural Interface
 
 
-This function directly calls the execute method of BoxSigmaImageFilter in order to support a procedual API
+This function directly calls the execute method of BoxSigmaImageFilter in order to support a procedural API
 
 
 See:
@@ -31547,7 +31547,7 @@ upperThreshold=0.0, std::vector< double > variance=std::vector< double
  itk::simple::CannyEdgeDetectionImageFilter Procedural Interface
 
 
-This function directly calls the execute method of CannyEdgeDetectionImageFilter in order to support a procedual API
+This function directly calls the execute method of CannyEdgeDetectionImageFilter in order to support a procedural API
 
 
 See:
@@ -31569,7 +31569,7 @@ double, double >())
  itk::simple::ChangeLabelImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ChangeLabelImageFilter in order to support a procedual API
+This function directly calls the execute method of ChangeLabelImageFilter in order to support a procedural API
 
 
 See:
@@ -31586,7 +31586,7 @@ checkerPattern=std::vector< uint32_t >(3, 4))
  itk::simple::CheckerBoardImageFilter Procedural Interface
 
 
-This function directly calls the execute method of CheckerBoardImageFilter in order to support a procedual API
+This function directly calls the execute method of CheckerBoardImageFilter in order to support a procedural API
 
 
 See:
@@ -31628,7 +31628,7 @@ Image itk::simple::ComplexToImaginary(const Image &image1)
  itk::simple::ComplexToImaginaryImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ComplexToImaginaryImageFilter in order to support a procedual API
+This function directly calls the execute method of ComplexToImaginaryImageFilter in order to support a procedural API
 
 
 See:
@@ -31644,7 +31644,7 @@ Image itk::simple::ComplexToModulus(const Image &image1)
  itk::simple::ComplexToModulusImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ComplexToModulusImageFilter in order to support a procedual API
+This function directly calls the execute method of ComplexToModulusImageFilter in order to support a procedural API
 
 
 See:
@@ -31660,7 +31660,7 @@ Image itk::simple::ComplexToPhase(const Image &image1)
  itk::simple::ComplexToPhaseImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ComplexToPhaseImageFilter in order to support a procedual API
+This function directly calls the execute method of ComplexToPhaseImageFilter in order to support a procedural API
 
 
 See:
@@ -31676,7 +31676,7 @@ Image itk::simple::ComplexToReal(const Image &image1)
  itk::simple::ComplexToRealImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ComplexToRealImageFilter in order to support a procedual API
+This function directly calls the execute method of ComplexToRealImageFilter in order to support a procedural API
 
 
 See:
@@ -31719,7 +31719,7 @@ Image itk::simple::Compose(const std::vector< Image > &images)
  itk::simple::ComposeImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ComposeImageFilter in order to support a procedual API
+This function directly calls the execute method of ComposeImageFilter in order to support a procedural API
 
 
 See:
@@ -31747,7 +31747,7 @@ Image itk::simple::ConnectedComponent(const Image &image1, bool fullyConnected=f
  itk::simple::ConnectedComponentImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ConnectedComponentImageFilter in order to support a procedual API
+This function directly calls the execute method of ConnectedComponentImageFilter in order to support a procedural API
 
 
 See:
@@ -31777,7 +31777,7 @@ constant=0.0)
  itk::simple::ConstantPadImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ConstantPadImageFilter in order to support a procedual API
+This function directly calls the execute method of ConstantPadImageFilter in order to support a procedural API
 
 
 See:
@@ -31797,7 +31797,7 @@ outputRegionMode=itk::simple::ConvolutionImageFilter::SAME)
  itk::simple::ConvolutionImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ConvolutionImageFilter in order to support a procedual API
+This function directly calls the execute method of ConvolutionImageFilter in order to support a procedural API
 
 
 See:
@@ -31813,7 +31813,7 @@ Image itk::simple::Cos(const Image &image1)
  itk::simple::CosImageFilter Procedural Interface
 
 
-This function directly calls the execute method of CosImageFilter in order to support a procedual API
+This function directly calls the execute method of CosImageFilter in order to support a procedural API
 
 
 See:
@@ -31832,7 +31832,7 @@ unsigned int > upperBoundaryCropSize=std::vector< unsigned int >(3,
  itk::simple::CropImageFilter Procedural Interface
 
 
-This function directly calls the execute method of CropImageFilter in order to support a procedual API
+This function directly calls the execute method of CropImageFilter in order to support a procedural API
 
 
 See:
@@ -31850,7 +31850,7 @@ conductanceScalingUpdateInterval=1u, uint32_t numberOfIterations=5u)
  itk::simple::CurvatureAnisotropicDiffusionImageFilter Procedural Interface
 
 
-This function directly calls the execute method of CurvatureAnisotropicDiffusionImageFilter in order to support a procedual API
+This function directly calls the execute method of CurvatureAnisotropicDiffusionImageFilter in order to support a procedural API
 
 
 See:
@@ -31867,7 +31867,7 @@ numberOfIterations=5u)
  itk::simple::CurvatureFlowImageFilter Procedural Interface
 
 
-This function directly calls the execute method of CurvatureFlowImageFilter in order to support a procedual API
+This function directly calls the execute method of CurvatureFlowImageFilter in order to support a procedural API
 
 
 See:
@@ -31884,7 +31884,7 @@ squaredDistance=false, bool useImageSpacing=false)
  itk::simple::DanielssonDistanceMapImageFilter Procedural Interface
 
 
-This function directly calls the execute method of DanielssonDistanceMapImageFilter in order to support a procedual API
+This function directly calls the execute method of DanielssonDistanceMapImageFilter in order to support a procedural API
 
 
 See:
@@ -31901,7 +31901,7 @@ order=1u, bool useImageSpacing=true)
  itk::simple::DerivativeImageFilter Procedural Interface
 
 
-This function directly calls the execute method of DerivativeImageFilter in order to support a procedual API
+This function directly calls the execute method of DerivativeImageFilter in order to support a procedural API
 
 
 See:
@@ -31944,7 +31944,7 @@ useImageSpacing=true)
  itk::simple::DiscreteGaussianImageFilter Procedural Interface
 
 
-This function directly calls the execute method of DiscreteGaussianImageFilter in order to support a procedual API
+This function directly calls the execute method of DiscreteGaussianImageFilter in order to support a procedural API
 
 
 See:
@@ -31970,7 +31970,7 @@ Image itk::simple::Divide(const Image &image1, const Image &image2)
  itk::simple::DivideImageFilter Procedural Interface
 
 
-This function directly calls the execute method of DivideImageFilter in order to support a procedual API
+This function directly calls the execute method of DivideImageFilter in order to support a procedural API
 
 
 See:
@@ -31986,7 +31986,7 @@ Image itk::simple::DivideByConstant(const Image &image1, double inConstant=1)
  itk::simple::DivideByConstantImageFilter Procedural Interface
 
 
-This function directly calls the execute method of DivideByConstantImageFilter in order to support a procedual API
+This function directly calls the execute method of DivideByConstantImageFilter in order to support a procedural API
 
 
 See:
@@ -32002,7 +32002,7 @@ Image itk::simple::DivideConstantBy(const Image &image1, double inConstant=1.0)
  itk::simple::DivideConstantByImageFilter Procedural Interface
 
 
-This function directly calls the execute method of DivideConstantByImageFilter in order to support a procedual API
+This function directly calls the execute method of DivideConstantByImageFilter in order to support a procedural API
 
 
 See:
@@ -32028,7 +32028,7 @@ Image itk::simple::DivideFloor(const Image &image1, const Image &image2)
  itk::simple::DivideFloorImageFilter Procedural Interface
 
 
-This function directly calls the execute method of DivideFloorImageFilter in order to support a procedual API
+This function directly calls the execute method of DivideFloorImageFilter in order to support a procedural API
 
 
 See:
@@ -32054,7 +32054,7 @@ Image itk::simple::DivideReal(const Image &image1, const Image &image2)
  itk::simple::DivideRealImageFilter Procedural Interface
 
 
-This function directly calls the execute method of DivideRealImageFilter in order to support a procedual API
+This function directly calls the execute method of DivideRealImageFilter in order to support a procedural API
 
 
 See:
@@ -32072,7 +32072,7 @@ insideValue=1u, uint8_t outsideValue=0u, bool fullyConnected=false)
  itk::simple::DoubleThresholdImageFilter Procedural Interface
 
 
-This function directly calls the execute method of DoubleThresholdImageFilter in order to support a procedual API
+This function directly calls the execute method of DoubleThresholdImageFilter in order to support a procedural API
 
 
 See:
@@ -32088,7 +32088,7 @@ Image itk::simple::EdgePotential(const Image &image1)
  itk::simple::EdgePotentialImageFilter Procedural Interface
 
 
-This function directly calls the execute method of EdgePotentialImageFilter in order to support a procedual API
+This function directly calls the execute method of EdgePotentialImageFilter in order to support a procedural API
 
 
 See:
@@ -32117,7 +32117,7 @@ uint8_t foregroundValue=1u)
  itk::simple::EqualImageFilter Procedural Interface
 
 
-This function directly calls the execute method of EqualImageFilter in order to support a procedual API
+This function directly calls the execute method of EqualImageFilter in order to support a procedural API
 
 
 See:
@@ -32159,7 +32159,7 @@ Image itk::simple::Exp(const Image &image1)
  itk::simple::ExpImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ExpImageFilter in order to support a procedual API
+This function directly calls the execute method of ExpImageFilter in order to support a procedural API
 
 
 See:
@@ -32177,7 +32177,7 @@ interpolator=itk::simple::sitkLinear)
  itk::simple::ExpandImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ExpandImageFilter in order to support a procedual API
+This function directly calls the execute method of ExpandImageFilter in order to support a procedural API
 
 
 See:
@@ -32193,7 +32193,7 @@ Image itk::simple::ExpNegative(const Image &image1)
  itk::simple::ExpNegativeImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ExpNegativeImageFilter in order to support a procedual API
+This function directly calls the execute method of ExpNegativeImageFilter in order to support a procedural API
 
 
 See:
@@ -32212,7 +32212,7 @@ eToStrategy=itk::simple::ExtractImageFilter::DIRECTIONCOLLAPSETOGUESS)
  itk::simple::ExtractImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ExtractImageFilter in order to support a procedual API
+This function directly calls the execute method of ExtractImageFilter in order to support a procedural API
 
 
 See:
@@ -32229,7 +32229,7 @@ radius=std::vector< unsigned int >(3, 1))
  itk::simple::FastApproximateRankImageFilter Procedural Interface
 
 
-This function directly calls the execute method of FastApproximateRankImageFilter in order to support a procedual API
+This function directly calls the execute method of FastApproximateRankImageFilter in order to support a procedural API
 
 
 See:
@@ -32263,7 +32263,7 @@ outputRegionMode=itk::simple::FFTConvolutionImageFilter::SAME)
  itk::simple::FFTConvolutionImageFilter Procedural Interface
 
 
-This function directly calls the execute method of FFTConvolutionImageFilter in order to support a procedual API
+This function directly calls the execute method of FFTConvolutionImageFilter in order to support a procedural API
 
 
 See:
@@ -32280,7 +32280,7 @@ requiredNumberOfOverlappingPixels=0u)
  itk::simple::FFTNormalizedCorrelationImageFilter Procedural Interface
 
 
-This function directly calls the execute method of FFTNormalizedCorrelationImageFilter in order to support a procedual API
+This function directly calls the execute method of FFTNormalizedCorrelationImageFilter in order to support a procedural API
 
 
 See:
@@ -32296,7 +32296,7 @@ Image itk::simple::FFTShift(const Image &image1, bool inverse=false)
  itk::simple::FFTShiftImageFilter Procedural Interface
 
 
-This function directly calls the execute method of FFTShiftImageFilter in order to support a procedual API
+This function directly calls the execute method of FFTShiftImageFilter in order to support a procedural API
 
 
 See:
@@ -32313,7 +32313,7 @@ Image itk::simple::Flip(const Image &image1, std::vector< bool > flipAxes=std::v
  itk::simple::FlipImageFilter Procedural Interface
 
 
-This function directly calls the execute method of FlipImageFilter in order to support a procedual API
+This function directly calls the execute method of FlipImageFilter in order to support a procedural API
 
 
 See:
@@ -32329,7 +32329,7 @@ Image itk::simple::ForwardFFT(const Image &image1)
  itk::simple::ForwardFFTImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ForwardFFTImageFilter in order to support a procedual API
+This function directly calls the execute method of ForwardFFTImageFilter in order to support a procedural API
 
 
 See:
@@ -32353,12 +32353,12 @@ std::vector< double > direction=std::vector< double >())
 
  itk::simple::GaborSourceImageFilter Procedural Interface
 
-This function directly calls the execute method of GaborImageSource in order to support a procedual API
+This function directly calls the execute method of GaborImageSource in order to support a procedural API
 
 
 See:
  itk::simple::GaborImageSource for the object oriented interface
- This function directly calls the execute method of GaborSourceImageFilter in order to support a procedual API
+ This function directly calls the execute method of GaborSourceImageFilter in order to support a procedural API
 
 
 See:
@@ -32382,12 +32382,12 @@ std::vector< double > direction=std::vector< double >())
 
  itk::simple::GaussianSourceImageFilter Procedural Interface
 
-This function directly calls the execute method of GaussianImageSource in order to support a procedual API
+This function directly calls the execute method of GaussianImageSource in order to support a procedural API
 
 
 See:
  itk::simple::GaussianImageSource for the object oriented interface
- This function directly calls the execute method of GaussianSourceImageFilter in order to support a procedual API
+ This function directly calls the execute method of GaussianSourceImageFilter in order to support a procedural API
 
 
 See:
@@ -32406,7 +32406,7 @@ numberOfIterations=1000u, bool reverseExpansionDirection=false)
  itk::simple::GeodesicActiveContourLevelSetImageFilter Procedural Interface
 
 
-This function directly calls the execute method of GeodesicActiveContourLevelSetImageFilter in order to support a procedual API
+This function directly calls the execute method of GeodesicActiveContourLevelSetImageFilter in order to support a procedural API
 
 
 See:
@@ -32428,7 +32428,7 @@ useImageDirection=false)
  itk::simple::GradientImageFilter Procedural Interface
 
 
-This function directly calls the execute method of GradientImageFilter in order to support a procedual API
+This function directly calls the execute method of GradientImageFilter in order to support a procedural API
 
 
 See:
@@ -32446,7 +32446,7 @@ conductanceScalingUpdateInterval=1u, uint32_t numberOfIterations=5u)
  itk::simple::GradientAnisotropicDiffusionImageFilter Procedural Interface
 
 
-This function directly calls the execute method of GradientAnisotropicDiffusionImageFilter in order to support a procedual API
+This function directly calls the execute method of GradientAnisotropicDiffusionImageFilter in order to support a procedural API
 
 
 See:
@@ -32462,7 +32462,7 @@ Image itk::simple::GradientMagnitude(const Image &image1, bool useImageSpacing=t
  itk::simple::GradientMagnitudeImageFilter Procedural Interface
 
 
-This function directly calls the execute method of GradientMagnitudeImageFilter in order to support a procedual API
+This function directly calls the execute method of GradientMagnitudeImageFilter in order to support a procedural API
 
 
 See:
@@ -32479,7 +32479,7 @@ normalizeAcrossScale=false)
  itk::simple::GradientMagnitudeRecursiveGaussianImageFilter Procedural Interface
 
 
-This function directly calls the execute method of GradientMagnitudeRecursiveGaussianImageFilter in order to support a procedual API
+This function directly calls the execute method of GradientMagnitudeRecursiveGaussianImageFilter in order to support a procedural API
 
 
 See:
@@ -32496,7 +32496,7 @@ normalizeAcrossScale=false, bool useImageDirection=false)
  itk::simple::GradientRecursiveGaussianImageFilter Procedural Interface
 
 
-This function directly calls the execute method of GradientRecursiveGaussianImageFilter in order to support a procedual API
+This function directly calls the execute method of GradientRecursiveGaussianImageFilter in order to support a procedural API
 
 
 See:
@@ -32513,7 +32513,7 @@ uint32_t >(3, 0), bool fullyConnected=false)
  itk::simple::GrayscaleConnectedClosingImageFilter Procedural Interface
 
 
-This function directly calls the execute method of GrayscaleConnectedClosingImageFilter in order to support a procedual API
+This function directly calls the execute method of GrayscaleConnectedClosingImageFilter in order to support a procedural API
 
 
 See:
@@ -32530,7 +32530,7 @@ unsigned int >(3, 0), bool fullyConnected=false)
  itk::simple::GrayscaleConnectedOpeningImageFilter Procedural Interface
 
 
-This function directly calls the execute method of GrayscaleConnectedOpeningImageFilter in order to support a procedual API
+This function directly calls the execute method of GrayscaleConnectedOpeningImageFilter in order to support a procedural API
 
 
 See:
@@ -32594,7 +32594,7 @@ Image itk::simple::GrayscaleFillhole(const Image &image1, bool fullyConnected=fa
  itk::simple::GrayscaleFillholeImageFilter Procedural Interface
 
 
-This function directly calls the execute method of GrayscaleFillholeImageFilter in order to support a procedual API
+This function directly calls the execute method of GrayscaleFillholeImageFilter in order to support a procedural API
 
 
 See:
@@ -32611,7 +32611,7 @@ bool fullyConnected=false)
  itk::simple::GrayscaleGeodesicDilateImageFilter Procedural Interface
 
 
-This function directly calls the execute method of GrayscaleGeodesicDilateImageFilter in order to support a procedual API
+This function directly calls the execute method of GrayscaleGeodesicDilateImageFilter in order to support a procedural API
 
 
 See:
@@ -32628,7 +32628,7 @@ bool fullyConnected=false)
  itk::simple::GrayscaleGeodesicErodeImageFilter Procedural Interface
 
 
-This function directly calls the execute method of GrayscaleGeodesicErodeImageFilter in order to support a procedual API
+This function directly calls the execute method of GrayscaleGeodesicErodeImageFilter in order to support a procedural API
 
 
 See:
@@ -32644,7 +32644,7 @@ Image itk::simple::GrayscaleGrindPeak(const Image &image1, bool fullyConnected=f
  itk::simple::GrayscaleGrindPeakImageFilter Procedural Interface
 
 
-This function directly calls the execute method of GrayscaleGrindPeakImageFilter in order to support a procedual API
+This function directly calls the execute method of GrayscaleGrindPeakImageFilter in order to support a procedural API
 
 
 See:
@@ -32721,7 +32721,7 @@ uint8_t foregroundValue=1u)
  itk::simple::GreaterImageFilter Procedural Interface
 
 
-This function directly calls the execute method of GreaterImageFilter in order to support a procedual API
+This function directly calls the execute method of GreaterImageFilter in order to support a procedural API
 
 
 See:
@@ -32750,7 +32750,7 @@ uint8_t foregroundValue=1u)
  itk::simple::GreaterEqualImageFilter Procedural Interface
 
 
-This function directly calls the execute method of GreaterEqualImageFilter in order to support a procedual API
+This function directly calls the execute method of GreaterEqualImageFilter in order to support a procedural API
 
 
 See:
@@ -32775,12 +32775,12 @@ std::vector< double > direction=std::vector< double >())
 
  itk::simple::GridSourceImageFilter Procedural Interface
 
-This function directly calls the execute method of GridImageSource in order to support a procedual API
+This function directly calls the execute method of GridImageSource in order to support a procedural API
 
 
 See:
  itk::simple::GridImageSource for the object oriented interface
- This function directly calls the execute method of GridSourceImageFilter in order to support a procedual API
+ This function directly calls the execute method of GridSourceImageFilter in order to support a procedural API
 
 
 See:
@@ -32796,7 +32796,7 @@ Image itk::simple::HalfHermitianToRealInverseFFT(const Image &image1, bool actua
  itk::simple::HalfHermitianToRealInverseFFTImageFilter Procedural Interface
 
 
-This function directly calls the execute method of HalfHermitianToRealInverseFFTImageFilter in order to support a procedual API
+This function directly calls the execute method of HalfHermitianToRealInverseFFTImageFilter in order to support a procedural API
 
 
 See:
@@ -32818,7 +32818,7 @@ Image itk::simple::HausdorffDistance(const Image &image1, const Image &image2)
  itk::simple::HausdorffDistanceImageFilter Procedural Interface
 
 
-This function directly calls the execute method of HausdorffDistanceImageFilter in order to support a procedual API
+This function directly calls the execute method of HausdorffDistanceImageFilter in order to support a procedural API
 
 
 See:
@@ -32834,7 +32834,7 @@ Image itk::simple::HConcave(const Image &image1, double height=2.0, bool fullyCo
  itk::simple::HConcaveImageFilter Procedural Interface
 
 
-This function directly calls the execute method of HConcaveImageFilter in order to support a procedual API
+This function directly calls the execute method of HConcaveImageFilter in order to support a procedural API
 
 
 See:
@@ -32850,7 +32850,7 @@ Image itk::simple::HConvex(const Image &image1, double height=2.0, bool fullyCon
  itk::simple::HConvexImageFilter Procedural Interface
 
 
-This function directly calls the execute method of HConvexImageFilter in order to support a procedual API
+This function directly calls the execute method of HConvexImageFilter in order to support a procedural API
 
 
 See:
@@ -32868,7 +32868,7 @@ thresholdAtMeanIntensity=true)
  itk::simple::HistogramMatchingImageFilter Procedural Interface
 
 
-This function directly calls the execute method of HistogramMatchingImageFilter in order to support a procedual API
+This function directly calls the execute method of HistogramMatchingImageFilter in order to support a procedural API
 
 
 See:
@@ -32884,7 +32884,7 @@ Image itk::simple::HMaxima(const Image &image1, double height=2.0)
  itk::simple::HMaximaImageFilter Procedural Interface
 
 
-This function directly calls the execute method of HMaximaImageFilter in order to support a procedual API
+This function directly calls the execute method of HMaximaImageFilter in order to support a procedural API
 
 
 See:
@@ -32900,7 +32900,7 @@ Image itk::simple::HMinima(const Image &image1, double height=2.0, bool fullyCon
  itk::simple::HMinimaImageFilter Procedural Interface
 
 
-This function directly calls the execute method of HMinimaImageFilter in order to support a procedual API
+This function directly calls the execute method of HMinimaImageFilter in order to support a procedural API
 
 
 See:
@@ -32917,7 +32917,7 @@ uint32_t numberOfHistogramBins=128u)
  itk::simple::HuangThresholdImageFilter Procedural Interface
 
 
-This function directly calls the execute method of HuangThresholdImageFilter in order to support a procedual API
+This function directly calls the execute method of HuangThresholdImageFilter in order to support a procedural API
 
 
 See:
@@ -33006,7 +33006,7 @@ windowMaximum=255, double outputMinimum=0, double outputMaximum=255)
  itk::simple::IntensityWindowingImageFilter Procedural Interface
 
 
-This function directly calls the execute method of IntensityWindowingImageFilter in order to support a procedual API
+This function directly calls the execute method of IntensityWindowingImageFilter in order to support a procedural API
 
 
 See:
@@ -33023,7 +33023,7 @@ uint32_t numberOfHistogramBins=256u)
  itk::simple::IntermodesThresholdImageFilter Procedural Interface
 
 
-This function directly calls the execute method of IntermodesThresholdImageFilter in order to support a procedual API
+This function directly calls the execute method of IntermodesThresholdImageFilter in order to support a procedural API
 
 
 See:
@@ -33044,7 +33044,7 @@ outputRegionMode=itk::simple::InverseDeconvolutionImageFilter::SAME)
  itk::simple::InverseDeconvolutionImageFilter Procedural Interface
 
 
-This function directly calls the execute method of InverseDeconvolutionImageFilter in order to support a procedual API
+This function directly calls the execute method of InverseDeconvolutionImageFilter in order to support a procedural API
 
 
 See:
@@ -33060,7 +33060,7 @@ Image itk::simple::InverseFFT(const Image &image1)
  itk::simple::InverseFFTImageFilter Procedural Interface
 
 
-This function directly calls the execute method of InverseFFTImageFilter in order to support a procedual API
+This function directly calls the execute method of InverseFFTImageFilter in order to support a procedural API
 
 
 See:
@@ -33076,7 +33076,7 @@ Image itk::simple::InvertIntensity(const Image &image1, double maximum=255)
  itk::simple::InvertIntensityImageFilter Procedural Interface
 
 
-This function directly calls the execute method of InvertIntensityImageFilter in order to support a procedual API
+This function directly calls the execute method of InvertIntensityImageFilter in order to support a procedural API
 
 
 See:
@@ -33092,7 +33092,7 @@ Image itk::simple::IsoContourDistance(const Image &image1, double levelSetValue=
  itk::simple::IsoContourDistanceImageFilter Procedural Interface
 
 
-This function directly calls the execute method of IsoContourDistanceImageFilter in order to support a procedual API
+This function directly calls the execute method of IsoContourDistanceImageFilter in order to support a procedural API
 
 
 See:
@@ -33109,7 +33109,7 @@ uint32_t numberOfHistogramBins=256u)
  itk::simple::IsoDataThresholdImageFilter Procedural Interface
 
 
-This function directly calls the execute method of IsoDataThresholdImageFilter in order to support a procedual API
+This function directly calls the execute method of IsoDataThresholdImageFilter in order to support a procedural API
 
 
 See:
@@ -33129,7 +33129,7 @@ findUpperThreshold=true)
  itk::simple::IsolatedConnectedImageFilter Procedural Interface
 
 
-This function directly calls the execute method of IsolatedConnectedImageFilter in order to support a procedual API
+This function directly calls the execute method of IsolatedConnectedImageFilter in order to support a procedural API
 
 
 See:
@@ -33149,7 +33149,7 @@ replaceValue2=2u)
  itk::simple::IsolatedWatershedImageFilter Procedural Interface
 
 
-This function directly calls the execute method of IsolatedWatershedImageFilter in order to support a procedual API
+This function directly calls the execute method of IsolatedWatershedImageFilter in order to support a procedural API
 
 
 See:
@@ -33196,7 +33196,7 @@ spacing=1.0)
  itk::simple::JoinSeriesImageFilter Procedural Interface
 
 
-This function directly calls the execute method of JoinSeriesImageFilter in order to support a procedual API
+This function directly calls the execute method of JoinSeriesImageFilter in order to support a procedural API
 
 
 See:
@@ -33213,7 +33213,7 @@ uint32_t numberOfHistogramBins=256u)
  itk::simple::KittlerIllingworthThresholdImageFilter Procedural Interface
 
 
-This function directly calls the execute method of KittlerIllingworthThresholdImageFilter in order to support a procedual API
+This function directly calls the execute method of KittlerIllingworthThresholdImageFilter in order to support a procedural API
 
 
 See:
@@ -33230,7 +33230,7 @@ backgroundValue=0)
  itk::simple::LabelContourImageFilter Procedural Interface
 
 
-This function directly calls the execute method of LabelContourImageFilter in order to support a procedual API
+This function directly calls the execute method of LabelContourImageFilter in order to support a procedural API
 
 
 See:
@@ -33253,7 +33253,7 @@ LabelMapContourOverlayImageFilter::HIGH_LABEL_ON_TOP)
  itk::simple::LabelMapContourOverlayImageFilter Procedural Interface
 
 
-This function directly calls the execute method of LabelMapContourOverlayImageFilter in order to support a procedual API
+This function directly calls the execute method of LabelMapContourOverlayImageFilter in order to support a procedural API
 
 
 See:
@@ -33270,7 +33270,7 @@ backgroundValue=0, bool negated=false)
  itk::simple::LabelMapMaskImageFilter Procedural Interface
 
 
-This function directly calls the execute method of LabelMapMaskImageFilter in order to support a procedual API
+This function directly calls the execute method of LabelMapMaskImageFilter in order to support a procedural API
 
 
 See:
@@ -33286,7 +33286,7 @@ Image itk::simple::LabelMapOverlay(const Image &image1, const Image &image2, dou
  itk::simple::LabelMapOverlayImageFilter Procedural Interface
 
 
-This function directly calls the execute method of LabelMapOverlayImageFilter in order to support a procedual API
+This function directly calls the execute method of LabelMapOverlayImageFilter in order to support a procedural API
 
 
 See:
@@ -33303,7 +33303,7 @@ foregroundValue=1.0)
  itk::simple::LabelMapToBinaryImageFilter Procedural Interface
 
 
-This function directly calls the execute method of LabelMapToBinaryImageFilter in order to support a procedual API
+This function directly calls the execute method of LabelMapToBinaryImageFilter in order to support a procedural API
 
 
 See:
@@ -33319,7 +33319,7 @@ Image itk::simple::LabelMapToLabel(const Image &image1)
  itk::simple::LabelMapToLabelImageFilter Procedural Interface
 
 
-This function directly calls the execute method of LabelMapToLabelImageFilter in order to support a procedual API
+This function directly calls the execute method of LabelMapToLabelImageFilter in order to support a procedural API
 
 
 See:
@@ -33335,7 +33335,7 @@ Image itk::simple::LabelMapToRGB(const Image &image1)
  itk::simple::LabelMapToRGBImageFilter Procedural Interface
 
 
-This function directly calls the execute method of LabelMapToRGBImageFilter in order to support a procedual API
+This function directly calls the execute method of LabelMapToRGBImageFilter in order to support a procedural API
 
 
 See:
@@ -33352,7 +33352,7 @@ backgroundValue=0.0)
  itk::simple::LabelOverlayImageFilter Procedural Interface
 
 
-This function directly calls the execute method of LabelOverlayImageFilter in order to support a procedual API
+This function directly calls the execute method of LabelOverlayImageFilter in order to support a procedural API
 
 
 See:
@@ -33373,7 +33373,7 @@ Image itk::simple::LabelToRGB(const Image &image1, double backgroundValue=0.0)
  itk::simple::LabelToRGBImageFilter Procedural Interface
 
 
-This function directly calls the execute method of LabelToRGBImageFilter in order to support a procedual API
+This function directly calls the execute method of LabelToRGBImageFilter in order to support a procedural API
 
 
 See:
@@ -33394,7 +33394,7 @@ outputRegionMode=itk::simple::LandweberDeconvolutionImageFilter::SAME)
  itk::simple::LandweberDeconvolutionImageFilter Procedural Interface
 
 
-This function directly calls the execute method of LandweberDeconvolutionImageFilter in order to support a procedual API
+This function directly calls the execute method of LandweberDeconvolutionImageFilter in order to support a procedural API
 
 
 See:
@@ -33410,7 +33410,7 @@ Image itk::simple::Laplacian(const Image &image1, bool useImageSpacing=true)
  itk::simple::LaplacianImageFilter Procedural Interface
 
 
-This function directly calls the execute method of LaplacianImageFilter in order to support a procedual API
+This function directly calls the execute method of LaplacianImageFilter in order to support a procedural API
 
 
 See:
@@ -33427,7 +33427,7 @@ normalizeAcrossScale=false)
  itk::simple::LaplacianRecursiveGaussianImageFilter Procedural Interface
 
 
-This function directly calls the execute method of LaplacianRecursiveGaussianImageFilter in order to support a procedual API
+This function directly calls the execute method of LaplacianRecursiveGaussianImageFilter in order to support a procedural API
 
 
 See:
@@ -33446,7 +33446,7 @@ reverseExpansionDirection=false)
  itk::simple::LaplacianSegmentationLevelSetImageFilter Procedural Interface
 
 
-This function directly calls the execute method of LaplacianSegmentationLevelSetImageFilter in order to support a procedual API
+This function directly calls the execute method of LaplacianSegmentationLevelSetImageFilter in order to support a procedural API
 
 
 See:
@@ -33462,7 +33462,7 @@ Image itk::simple::LaplacianSharpening(const Image &image1, bool useImageSpacing
  itk::simple::LaplacianSharpeningImageFilter Procedural Interface
 
 
-This function directly calls the execute method of LaplacianSharpeningImageFilter in order to support a procedual API
+This function directly calls the execute method of LaplacianSharpeningImageFilter in order to support a procedural API
 
 
 See:
@@ -33491,7 +33491,7 @@ uint8_t foregroundValue=1u)
  itk::simple::LessImageFilter Procedural Interface
 
 
-This function directly calls the execute method of LessImageFilter in order to support a procedual API
+This function directly calls the execute method of LessImageFilter in order to support a procedural API
 
 
 See:
@@ -33520,7 +33520,7 @@ uint8_t foregroundValue=1u)
  itk::simple::LessEqualImageFilter Procedural Interface
 
 
-This function directly calls the execute method of LessEqualImageFilter in order to support a procedual API
+This function directly calls the execute method of LessEqualImageFilter in order to support a procedural API
 
 
 See:
@@ -33537,7 +33537,7 @@ uint32_t numberOfHistogramBins=256u)
  itk::simple::LiThresholdImageFilter Procedural Interface
 
 
-This function directly calls the execute method of LiThresholdImageFilter in order to support a procedual API
+This function directly calls the execute method of LiThresholdImageFilter in order to support a procedural API
 
 
 See:
@@ -33553,7 +33553,7 @@ Image itk::simple::Log(const Image &image1)
  itk::simple::LogImageFilter Procedural Interface
 
 
-This function directly calls the execute method of LogImageFilter in order to support a procedual API
+This function directly calls the execute method of LogImageFilter in order to support a procedural API
 
 
 See:
@@ -33569,7 +33569,7 @@ Image itk::simple::Log10(const Image &image1)
  itk::simple::Log10ImageFilter Procedural Interface
 
 
-This function directly calls the execute method of Log10ImageFilter in order to support a procedual API
+This function directly calls the execute method of Log10ImageFilter in order to support a procedural API
 
 
 See:
@@ -33595,7 +33595,7 @@ Image itk::simple::MagnitudeAndPhaseToComplex(const Image &image1, const Image &
  itk::simple::MagnitudeAndPhaseToComplexImageFilter Procedural Interface
 
 
-This function directly calls the execute method of MagnitudeAndPhaseToComplexImageFilter in order to support a procedual API
+This function directly calls the execute method of MagnitudeAndPhaseToComplexImageFilter in order to support a procedural API
 
 
 See:
@@ -33611,7 +33611,7 @@ Image itk::simple::Mask(const Image &image1, const Image &image2, double outside
  itk::simple::MaskImageFilter Procedural Interface
 
 
-This function directly calls the execute method of MaskImageFilter in order to support a procedual API
+This function directly calls the execute method of MaskImageFilter in order to support a procedural API
 
 
 See:
@@ -33628,7 +33628,7 @@ Image &image4, uint64_t requiredNumberOfOverlappingPixels=0u)
  itk::simple::MaskedFFTNormalizedCorrelationImageFilter Procedural Interface
 
 
-This function directly calls the execute method of MaskedFFTNormalizedCorrelationImageFilter in order to support a procedual API
+This function directly calls the execute method of MaskedFFTNormalizedCorrelationImageFilter in order to support a procedural API
 
 
 See:
@@ -33644,7 +33644,7 @@ Image itk::simple::MaskNegated(const Image &image1, const Image &image2)
  itk::simple::MaskNegatedImageFilter Procedural Interface
 
 
-This function directly calls the execute method of MaskNegatedImageFilter in order to support a procedual API
+This function directly calls the execute method of MaskNegatedImageFilter in order to support a procedural API
 
 
 See:
@@ -33670,7 +33670,7 @@ Image itk::simple::Maximum(const Image &image1, const Image &image2)
  itk::simple::MaximumImageFilter Procedural Interface
 
 
-This function directly calls the execute method of MaximumImageFilter in order to support a procedual API
+This function directly calls the execute method of MaximumImageFilter in order to support a procedural API
 
 
 See:
@@ -33687,7 +33687,7 @@ uint32_t numberOfHistogramBins=256u)
  itk::simple::MaximumEntropyThresholdImageFilter Procedural Interface
 
 
-This function directly calls the execute method of MaximumEntropyThresholdImageFilter in order to support a procedual API
+This function directly calls the execute method of MaximumEntropyThresholdImageFilter in order to support a procedural API
 
 
 See:
@@ -33703,7 +33703,7 @@ Image itk::simple::MaximumProjection(const Image &image1, unsigned int projectio
  itk::simple::MaximumProjectionImageFilter Procedural Interface
 
 
-This function directly calls the execute method of MaximumProjectionImageFilter in order to support a procedual API
+This function directly calls the execute method of MaximumProjectionImageFilter in order to support a procedural API
 
 
 See:
@@ -33720,7 +33720,7 @@ unsigned int >(3, 1))
  itk::simple::MeanImageFilter Procedural Interface
 
 
-This function directly calls the execute method of MeanImageFilter in order to support a procedual API
+This function directly calls the execute method of MeanImageFilter in order to support a procedural API
 
 
 See:
@@ -33736,7 +33736,7 @@ Image itk::simple::MeanProjection(const Image &image1, unsigned int projectionDi
  itk::simple::MeanProjectionImageFilter Procedural Interface
 
 
-This function directly calls the execute method of MeanProjectionImageFilter in order to support a procedual API
+This function directly calls the execute method of MeanProjectionImageFilter in order to support a procedural API
 
 
 See:
@@ -33753,7 +33753,7 @@ unsigned int >(3, 1))
  itk::simple::MedianImageFilter Procedural Interface
 
 
-This function directly calls the execute method of MedianImageFilter in order to support a procedual API
+This function directly calls the execute method of MedianImageFilter in order to support a procedural API
 
 
 See:
@@ -33769,7 +33769,7 @@ Image itk::simple::MedianProjection(const Image &image1, unsigned int projection
  itk::simple::MedianProjectionImageFilter Procedural Interface
 
 
-This function directly calls the execute method of MedianProjectionImageFilter in order to support a procedual API
+This function directly calls the execute method of MedianProjectionImageFilter in order to support a procedural API
 
 
 See:
@@ -33795,7 +33795,7 @@ Image itk::simple::Minimum(const Image &image1, const Image &image2)
  itk::simple::MinimumImageFilter Procedural Interface
 
 
-This function directly calls the execute method of MinimumImageFilter in order to support a procedual API
+This function directly calls the execute method of MinimumImageFilter in order to support a procedural API
 
 
 See:
@@ -33811,7 +33811,7 @@ Image itk::simple::MinimumMaximum(const Image &image1)
  itk::simple::MinimumMaximumImageFilter Procedural Interface
 
 
-This function directly calls the execute method of MinimumMaximumImageFilter in order to support a procedual API
+This function directly calls the execute method of MinimumMaximumImageFilter in order to support a procedural API
 
 
 See:
@@ -33827,7 +33827,7 @@ Image itk::simple::MinimumProjection(const Image &image1, unsigned int projectio
  itk::simple::MinimumProjectionImageFilter Procedural Interface
 
 
-This function directly calls the execute method of MinimumProjectionImageFilter in order to support a procedual API
+This function directly calls the execute method of MinimumProjectionImageFilter in order to support a procedural API
 
 
 See:
@@ -33844,7 +33844,7 @@ numberOfIterations=5u, int stencilRadius=2)
  itk::simple::MinMaxCurvatureFlowImageFilter Procedural Interface
 
 
-This function directly calls the execute method of MinMaxCurvatureFlowImageFilter in order to support a procedual API
+This function directly calls the execute method of MinMaxCurvatureFlowImageFilter in order to support a procedural API
 
 
 See:
@@ -33862,7 +33862,7 @@ int > padUpperBound=std::vector< unsigned int >(3, 0))
  itk::simple::MirrorPadImageFilter Procedural Interface
 
 
-This function directly calls the execute method of MirrorPadImageFilter in order to support a procedual API
+This function directly calls the execute method of MirrorPadImageFilter in order to support a procedural API
 
 
 See:
@@ -33888,7 +33888,7 @@ Image itk::simple::Modulus(const Image &image1, const Image &image2)
  itk::simple::ModulusImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ModulusImageFilter in order to support a procedual API
+This function directly calls the execute method of ModulusImageFilter in order to support a procedural API
 
 
 See:
@@ -33905,7 +33905,7 @@ uint32_t numberOfHistogramBins=256u)
  itk::simple::MomentsThresholdImageFilter Procedural Interface
 
 
-This function directly calls the execute method of MomentsThresholdImageFilter in order to support a procedual API
+This function directly calls the execute method of MomentsThresholdImageFilter in order to support a procedural API
 
 
 See:
@@ -33946,7 +33946,7 @@ bool fullyConnected=false)
  itk::simple::MorphologicalWatershedImageFilter Procedural Interface
 
 
-This function directly calls the execute method of MorphologicalWatershedImageFilter in order to support a procedual API
+This function directly calls the execute method of MorphologicalWatershedImageFilter in order to support a procedural API
 
 
 See:
@@ -33963,7 +33963,7 @@ markWatershedLine=true, bool fullyConnected=false)
  itk::simple::MorphologicalWatershedFromMarkersImageFilter Procedural Interface
 
 
-This function directly calls the execute method of MorphologicalWatershedFromMarkersImageFilter in order to support a procedual API
+This function directly calls the execute method of MorphologicalWatershedFromMarkersImageFilter in order to support a procedural API
 
 
 See:
@@ -33989,7 +33989,7 @@ Image itk::simple::Multiply(const Image &image1, const Image &image2)
  itk::simple::MultiplyImageFilter Procedural Interface
 
 
-This function directly calls the execute method of MultiplyImageFilter in order to support a procedual API
+This function directly calls the execute method of MultiplyImageFilter in order to support a procedural API
 
 
 See:
@@ -34005,7 +34005,7 @@ Image itk::simple::MultiplyByConstant(const Image &image1, double inConstant=1)
  itk::simple::MultiplyByConstantImageFilter Procedural Interface
 
 
-This function directly calls the execute method of MultiplyByConstantImageFilter in order to support a procedual API
+This function directly calls the execute method of MultiplyByConstantImageFilter in order to support a procedural API
 
 
 See:
@@ -34027,7 +34027,7 @@ splineOrder=3u)
  itk::simple::N4BiasFieldCorrectionImageFilter Procedural Interface
 
 
-This function directly calls the execute method of N4BiasFieldCorrectionImageFilter in order to support a procedual API
+This function directly calls the execute method of N4BiasFieldCorrectionImageFilter in order to support a procedural API
 
 
 See:
@@ -34070,7 +34070,7 @@ Image itk::simple::NaryAdd(const std::vector< Image > &images)
  itk::simple::NaryAddImageFilter Procedural Interface
 
 
-This function directly calls the execute method of NaryAddImageFilter in order to support a procedual API
+This function directly calls the execute method of NaryAddImageFilter in order to support a procedural API
 
 
 See:
@@ -34113,7 +34113,7 @@ Image itk::simple::NaryMaximum(const std::vector< Image > &images)
  itk::simple::NaryMaximumImageFilter Procedural Interface
 
 
-This function directly calls the execute method of NaryMaximumImageFilter in order to support a procedual API
+This function directly calls the execute method of NaryMaximumImageFilter in order to support a procedural API
 
 
 See:
@@ -34142,7 +34142,7 @@ unsigned int >(3, 1))
  itk::simple::NoiseImageFilter Procedural Interface
 
 
-This function directly calls the execute method of NoiseImageFilter in order to support a procedual API
+This function directly calls the execute method of NoiseImageFilter in order to support a procedural API
 
 
 See:
@@ -34158,7 +34158,7 @@ Image itk::simple::Normalize(const Image &image1)
  itk::simple::NormalizeImageFilter Procedural Interface
 
 
-This function directly calls the execute method of NormalizeImageFilter in order to support a procedual API
+This function directly calls the execute method of NormalizeImageFilter in order to support a procedural API
 
 
 See:
@@ -34174,7 +34174,7 @@ Image itk::simple::NormalizedCorrelation(const Image &image1, const Image &image
  itk::simple::NormalizedCorrelationImageFilter Procedural Interface
 
 
-This function directly calls the execute method of NormalizedCorrelationImageFilter in order to support a procedual API
+This function directly calls the execute method of NormalizedCorrelationImageFilter in order to support a procedural API
 
 
 See:
@@ -34190,7 +34190,7 @@ Image itk::simple::NormalizeToConstant(const Image &image1, double constant=1.0)
  itk::simple::NormalizeToConstantImageFilter Procedural Interface
 
 
-This function directly calls the execute method of NormalizeToConstantImageFilter in order to support a procedual API
+This function directly calls the execute method of NormalizeToConstantImageFilter in order to support a procedural API
 
 
 See:
@@ -34206,7 +34206,7 @@ Image itk::simple::Not(const Image &image1)
  itk::simple::NotImageFilter Procedural Interface
 
 
-This function directly calls the execute method of NotImageFilter in order to support a procedual API
+This function directly calls the execute method of NotImageFilter in order to support a procedural API
 
 
 See:
@@ -34235,7 +34235,7 @@ uint8_t foregroundValue=1u)
  itk::simple::NotEqualImageFilter Procedural Interface
 
 
-This function directly calls the execute method of NotEqualImageFilter in order to support a procedual API
+This function directly calls the execute method of NotEqualImageFilter in order to support a procedural API
 
 
 See:
@@ -34287,7 +34287,7 @@ Image itk::simple::Or(const Image &image1, const Image &image2)
  itk::simple::OrImageFilter Procedural Interface
 
 
-This function directly calls the execute method of OrImageFilter in order to support a procedual API
+This function directly calls the execute method of OrImageFilter in order to support a procedural API
 
 
 See:
@@ -34304,7 +34304,7 @@ labelOffset=0u, uint32_t numberOfHistogramBins=128u)
  itk::simple::OtsuMultipleThresholdsImageFilter Procedural Interface
 
 
-This function directly calls the execute method of OtsuMultipleThresholdsImageFilter in order to support a procedual API
+This function directly calls the execute method of OtsuMultipleThresholdsImageFilter in order to support a procedural API
 
 
 See:
@@ -34321,7 +34321,7 @@ uint32_t numberOfHistogramBins=128u)
  itk::simple::OtsuThresholdImageFilter Procedural Interface
 
 
-This function directly calls the execute method of OtsuThresholdImageFilter in order to support a procedual API
+This function directly calls the execute method of OtsuThresholdImageFilter in order to support a procedural API
 
 
 See:
@@ -34340,7 +34340,7 @@ destinationIndex=std::vector< int >(3, 0))
  itk::simple::PasteImageFilter Procedural Interface
 
 
-This function directly calls the execute method of PasteImageFilter in order to support a procedual API
+This function directly calls the execute method of PasteImageFilter in order to support a procedural API
 
 
 See:
@@ -34358,7 +34358,7 @@ itk::simple::PermuteAxesImageFilter::DefaultOrder[3]))
  itk::simple::PermuteAxesImageFilter Procedural Interface
 
 
-This function directly calls the execute method of PermuteAxesImageFilter in order to support a procedual API
+This function directly calls the execute method of PermuteAxesImageFilter in order to support a procedural API
 
 
 See:
@@ -34380,12 +34380,12 @@ std::vector< double > direction=std::vector< double >())
 
  itk::simple::PhysicalPointSourceImageFilter Procedural Interface
 
-This function directly calls the execute method of PhysicalPointImageSource in order to support a procedual API
+This function directly calls the execute method of PhysicalPointImageSource in order to support a procedural API
 
 
 See:
  itk::simple::PhysicalPointImageSource for the object oriented interface
- This function directly calls the execute method of PhysicalPointSourceImageFilter in order to support a procedual API
+ This function directly calls the execute method of PhysicalPointSourceImageFilter in order to support a procedural API
 
 
 See:
@@ -34411,7 +34411,7 @@ Image itk::simple::Pow(const Image &image1, const Image &image2)
  itk::simple::PowImageFilter Procedural Interface
 
 
-This function directly calls the execute method of PowImageFilter in order to support a procedual API
+This function directly calls the execute method of PowImageFilter in order to support a procedural API
 
 
 See:
@@ -34427,7 +34427,7 @@ Image itk::simple::PowToConstant(const Image &image1, double inConstant=1.0)
  itk::simple::PowToConstantImageFilter Procedural Interface
 
 
-This function directly calls the execute method of PowToConstantImageFilter in order to support a procedual API
+This function directly calls the execute method of PowToConstantImageFilter in order to support a procedural API
 
 
 See:
@@ -34450,7 +34450,7 @@ AME)
  itk::simple::ProjectedLandweberDeconvolutionImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ProjectedLandweberDeconvolutionImageFilter in order to support a procedual API
+This function directly calls the execute method of ProjectedLandweberDeconvolutionImageFilter in order to support a procedural API
 
 
 See:
@@ -34467,7 +34467,7 @@ radius=std::vector< unsigned int >(3, 1))
  itk::simple::RankImageFilter Procedural Interface
 
 
-This function directly calls the execute method of RankImageFilter in order to support a procedual API
+This function directly calls the execute method of RankImageFilter in order to support a procedural API
 
 
 See:
@@ -34498,7 +34498,7 @@ Image itk::simple::RealAndImaginaryToComplex(const Image &image1, const Image &i
  itk::simple::RealAndImaginaryToComplexImageFilter Procedural Interface
 
 
-This function directly calls the execute method of RealAndImaginaryToComplexImageFilter in order to support a procedual API
+This function directly calls the execute method of RealAndImaginaryToComplexImageFilter in order to support a procedural API
 
 
 See:
@@ -34514,7 +34514,7 @@ Image itk::simple::RealToHalfHermitianForwardFFT(const Image &image1)
  itk::simple::RealToHalfHermitianForwardFFTImageFilter Procedural Interface
 
 
-This function directly calls the execute method of RealToHalfHermitianForwardFFTImageFilter in order to support a procedual API
+This function directly calls the execute method of RealToHalfHermitianForwardFFTImageFilter in order to support a procedural API
 
 
 See:
@@ -34531,7 +34531,7 @@ bool useInternalCopy=true)
  itk::simple::ReconstructionByDilationImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ReconstructionByDilationImageFilter in order to support a procedual API
+This function directly calls the execute method of ReconstructionByDilationImageFilter in order to support a procedural API
 
 
 See:
@@ -34548,7 +34548,7 @@ bool useInternalCopy=true)
  itk::simple::ReconstructionByErosionImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ReconstructionByErosionImageFilter in order to support a procedual API
+This function directly calls the execute method of ReconstructionByErosionImageFilter in order to support a procedural API
 
 
 See:
@@ -34568,7 +34568,7 @@ int direction=0u)
  itk::simple::RecursiveGaussianImageFilter Procedural Interface
 
 
-This function directly calls the execute method of RecursiveGaussianImageFilter in order to support a procedual API
+This function directly calls the execute method of RecursiveGaussianImageFilter in order to support a procedural API
 
 
 See:
@@ -34586,7 +34586,7 @@ flatIsMaxima=true)
  itk::simple::RegionalMaximaImageFilter Procedural Interface
 
 
-This function directly calls the execute method of RegionalMaximaImageFilter in order to support a procedual API
+This function directly calls the execute method of RegionalMaximaImageFilter in order to support a procedural API
 
 
 See:
@@ -34604,7 +34604,7 @@ flatIsMinima=true)
  itk::simple::RegionalMinimaImageFilter Procedural Interface
 
 
-This function directly calls the execute method of RegionalMinimaImageFilter in order to support a procedual API
+This function directly calls the execute method of RegionalMinimaImageFilter in order to support a procedural API
 
 
 See:
@@ -34622,7 +34622,7 @@ unsigned int >(3, 1), std::vector< int > index=std::vector< int >(3,
  itk::simple::RegionOfInterestImageFilter Procedural Interface
 
 
-This function directly calls the execute method of RegionOfInterestImageFilter in order to support a procedual API
+This function directly calls the execute method of RegionOfInterestImageFilter in order to support a procedural API
 
 
 See:
@@ -34638,7 +34638,7 @@ Image itk::simple::RelabelComponent(const Image &image1, uint64_t minimumObjectS
  itk::simple::RelabelComponentImageFilter Procedural Interface
 
 
-This function directly calls the execute method of RelabelComponentImageFilter in order to support a procedual API
+This function directly calls the execute method of RelabelComponentImageFilter in order to support a procedural API
 
 
 See:
@@ -34655,7 +34655,7 @@ uint32_t numberOfHistogramBins=256u)
  itk::simple::RenyiEntropyThresholdImageFilter Procedural Interface
 
 
-This function directly calls the execute method of RenyiEntropyThresholdImageFilter in order to support a procedual API
+This function directly calls the execute method of RenyiEntropyThresholdImageFilter in order to support a procedural API
 
 
 See:
@@ -34676,7 +34676,7 @@ outputDirection=std::vector< double >(), double defaultPixelValue=0.0)
  itk::simple::ResampleImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ResampleImageFilter in order to support a procedual API
+This function directly calls the execute method of ResampleImageFilter in order to support a procedural API
 
 
 See:
@@ -34693,7 +34693,7 @@ outputMaximum=255)
  itk::simple::RescaleIntensityImageFilter Procedural Interface
 
 
-This function directly calls the execute method of RescaleIntensityImageFilter in order to support a procedual API
+This function directly calls the execute method of RescaleIntensityImageFilter in order to support a procedural API
 
 
 See:
@@ -34715,7 +34715,7 @@ ionMode=itk::simple::RichardsonLucyDeconvolutionImageFilter::SAME)
  itk::simple::RichardsonLucyDeconvolutionImageFilter Procedural Interface
 
 
-This function directly calls the execute method of RichardsonLucyDeconvolutionImageFilter in order to support a procedual API
+This function directly calls the execute method of RichardsonLucyDeconvolutionImageFilter in order to support a procedural API
 
 
 See:
@@ -34732,7 +34732,7 @@ fullyConnected=false)
  itk::simple::ScalarConnectedComponentImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ScalarConnectedComponentImageFilter in order to support a procedual API
+This function directly calls the execute method of ScalarConnectedComponentImageFilter in order to support a procedural API
 
 
 See:
@@ -34750,7 +34750,7 @@ useNonContiguousLabels=false)
  itk::simple::ScalarImageKmeansImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ScalarImageKmeansImageFilter in order to support a procedual API
+This function directly calls the execute method of ScalarImageKmeansImageFilter in order to support a procedural API
 
 
 See:
@@ -34767,7 +34767,7 @@ colormap=itk::simple::ScalarToRGBColormapImageFilter::Grey)
  itk::simple::ScalarToRGBColormapImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ScalarToRGBColormapImageFilter in order to support a procedual API
+This function directly calls the execute method of ScalarToRGBColormapImageFilter in order to support a procedural API
 
 
 See:
@@ -34784,7 +34784,7 @@ uint32_t numberOfHistogramBins=256u)
  itk::simple::ShanbhagThresholdImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ShanbhagThresholdImageFilter in order to support a procedual API
+This function directly calls the execute method of ShanbhagThresholdImageFilter in order to support a procedural API
 
 
 See:
@@ -34803,7 +34803,7 @@ reverseExpansionDirection=false)
  itk::simple::ShapeDetectionLevelSetImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ShapeDetectionLevelSetImageFilter in order to support a procedual API
+This function directly calls the execute method of ShapeDetectionLevelSetImageFilter in order to support a procedural API
 
 
 See:
@@ -34819,7 +34819,7 @@ Image itk::simple::ShiftScale(const Image &image1, double shift=0, double scale=
  itk::simple::ShiftScaleImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ShiftScaleImageFilter in order to support a procedual API
+This function directly calls the execute method of ShiftScaleImageFilter in order to support a procedural API
 
 
 See:
@@ -34893,7 +34893,7 @@ shrinkFactors=std::vector< unsigned int >(3, 1))
  itk::simple::ShrinkImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ShrinkImageFilter in order to support a procedual API
+This function directly calls the execute method of ShrinkImageFilter in order to support a procedural API
 
 
 See:
@@ -34910,7 +34910,7 @@ outputMaximum=255, double outputMinimum=0)
  itk::simple::SigmoidImageFilter Procedural Interface
 
 
-This function directly calls the execute method of SigmoidImageFilter in order to support a procedual API
+This function directly calls the execute method of SigmoidImageFilter in order to support a procedural API
 
 
 See:
@@ -34927,7 +34927,7 @@ squaredDistance=false, bool useImageSpacing=false)
  itk::simple::SignedDanielssonDistanceMapImageFilter Procedural Interface
 
 
-This function directly calls the execute method of SignedDanielssonDistanceMapImageFilter in order to support a procedual API
+This function directly calls the execute method of SignedDanielssonDistanceMapImageFilter in order to support a procedural API
 
 
 See:
@@ -34944,7 +34944,7 @@ squaredDistance=true, bool useImageSpacing=false)
  itk::simple::SignedMaurerDistanceMapImageFilter Procedural Interface
 
 
-This function directly calls the execute method of SignedMaurerDistanceMapImageFilter in order to support a procedual API
+This function directly calls the execute method of SignedMaurerDistanceMapImageFilter in order to support a procedural API
 
 
 See:
@@ -34960,7 +34960,7 @@ Image itk::simple::SimilarityIndex(const Image &image1, const Image &image2)
  itk::simple::SimilarityIndexImageFilter Procedural Interface
 
 
-This function directly calls the execute method of SimilarityIndexImageFilter in order to support a procedual API
+This function directly calls the execute method of SimilarityIndexImageFilter in order to support a procedural API
 
 
 See:
@@ -34979,7 +34979,7 @@ outputForegroundValue=1.0, double outputBackgroundValue=0.0)
  itk::simple::SimpleContourExtractorImageFilter Procedural Interface
 
 
-This function directly calls the execute method of SimpleContourExtractorImageFilter in order to support a procedual API
+This function directly calls the execute method of SimpleContourExtractorImageFilter in order to support a procedural API
 
 
 See:
@@ -34995,7 +34995,7 @@ Image itk::simple::Sin(const Image &image1)
  itk::simple::SinImageFilter Procedural Interface
 
 
-This function directly calls the execute method of SinImageFilter in order to support a procedual API
+This function directly calls the execute method of SinImageFilter in order to support a procedural API
 
 
 See:
@@ -35035,7 +35035,7 @@ step=std::vector< int >(3, 1))
  itk::simple::SliceImageFilter Procedural Interface
 
 
-This function directly calls the execute method of SliceImageFilter in order to support a procedual API
+This function directly calls the execute method of SliceImageFilter in order to support a procedural API
 
 
 See:
@@ -35052,7 +35052,7 @@ normalizeAcrossScale=false)
  itk::simple::SmoothingRecursiveGaussianImageFilter Procedural Interface
 
 
-This function directly calls the execute method of SmoothingRecursiveGaussianImageFilter in order to support a procedual API
+This function directly calls the execute method of SmoothingRecursiveGaussianImageFilter in order to support a procedural API
 
 
 See:
@@ -35068,7 +35068,7 @@ Image itk::simple::SobelEdgeDetection(const Image &image1)
  itk::simple::SobelEdgeDetectionImageFilter Procedural Interface
 
 
-This function directly calls the execute method of SobelEdgeDetectionImageFilter in order to support a procedual API
+This function directly calls the execute method of SobelEdgeDetectionImageFilter in order to support a procedural API
 
 
 See:
@@ -35084,7 +35084,7 @@ Image itk::simple::Sqrt(const Image &image1)
  itk::simple::SqrtImageFilter Procedural Interface
 
 
-This function directly calls the execute method of SqrtImageFilter in order to support a procedual API
+This function directly calls the execute method of SqrtImageFilter in order to support a procedural API
 
 
 See:
@@ -35100,7 +35100,7 @@ Image itk::simple::Square(const Image &image1)
  itk::simple::SquareImageFilter Procedural Interface
 
 
-This function directly calls the execute method of SquareImageFilter in order to support a procedual API
+This function directly calls the execute method of SquareImageFilter in order to support a procedural API
 
 
 See:
@@ -35126,7 +35126,7 @@ Image itk::simple::SquaredDifference(const Image &image1, const Image &image2)
  itk::simple::SquaredDifferenceImageFilter Procedural Interface
 
 
-This function directly calls the execute method of SquaredDifferenceImageFilter in order to support a procedual API
+This function directly calls the execute method of SquaredDifferenceImageFilter in order to support a procedural API
 
 
 See:
@@ -35142,7 +35142,7 @@ Image itk::simple::StandardDeviationProjection(const Image &image1, unsigned int
  itk::simple::StandardDeviationProjectionImageFilter Procedural Interface
 
 
-This function directly calls the execute method of StandardDeviationProjectionImageFilter in order to support a procedual API
+This function directly calls the execute method of StandardDeviationProjectionImageFilter in order to support a procedural API
 
 
 See:
@@ -35197,7 +35197,7 @@ maximumIterations=std::numeric_limits< unsigned int >::max())
  itk::simple::STAPLEImageFilter Procedural Interface
 
 
-This function directly calls the execute method of STAPLEImageFilter in order to support a procedual API
+This function directly calls the execute method of STAPLEImageFilter in order to support a procedural API
 
 
 See:
@@ -35228,7 +35228,7 @@ Image itk::simple::Subtract(const Image &image1, const Image &image2)
  itk::simple::SubtractImageFilter Procedural Interface
 
 
-This function directly calls the execute method of SubtractImageFilter in order to support a procedual API
+This function directly calls the execute method of SubtractImageFilter in order to support a procedural API
 
 
 See:
@@ -35244,7 +35244,7 @@ Image itk::simple::SubtractConstantBy(const Image &image1, double inConstant=1.0
  itk::simple::SubtractConstantByImageFilter Procedural Interface
 
 
-This function directly calls the execute method of SubtractConstantByImageFilter in order to support a procedual API
+This function directly calls the execute method of SubtractConstantByImageFilter in order to support a procedural API
 
 
 See:
@@ -35260,7 +35260,7 @@ Image itk::simple::SubtractConstantFrom(const Image &image1, double inConstant=1
  itk::simple::SubtractConstantFromImageFilter Procedural Interface
 
 
-This function directly calls the execute method of SubtractConstantFromImageFilter in order to support a procedual API
+This function directly calls the execute method of SubtractConstantFromImageFilter in order to support a procedural API
 
 
 See:
@@ -35276,7 +35276,7 @@ Image itk::simple::SumProjection(const Image &image1, unsigned int projectionDim
  itk::simple::SumProjectionImageFilter Procedural Interface
 
 
-This function directly calls the execute method of SumProjectionImageFilter in order to support a procedual API
+This function directly calls the execute method of SumProjectionImageFilter in order to support a procedural API
 
 
 See:
@@ -35292,7 +35292,7 @@ Image itk::simple::Tan(const Image &image1)
  itk::simple::TanImageFilter Procedural Interface
 
 
-This function directly calls the execute method of TanImageFilter in order to support a procedual API
+This function directly calls the execute method of TanImageFilter in order to support a procedural API
 
 
 See:
@@ -35308,7 +35308,7 @@ Image itk::simple::TernaryAdd(const Image &image1, const Image &image2, const Im
  itk::simple::TernaryAddImageFilter Procedural Interface
 
 
-This function directly calls the execute method of TernaryAddImageFilter in order to support a procedual API
+This function directly calls the execute method of TernaryAddImageFilter in order to support a procedural API
 
 
 See:
@@ -35324,7 +35324,7 @@ Image itk::simple::TernaryMagnitude(const Image &image1, const Image &image2, co
  itk::simple::TernaryMagnitudeImageFilter Procedural Interface
 
 
-This function directly calls the execute method of TernaryMagnitudeImageFilter in order to support a procedual API
+This function directly calls the execute method of TernaryMagnitudeImageFilter in order to support a procedural API
 
 
 See:
@@ -35340,7 +35340,7 @@ Image itk::simple::TernaryMagnitudeSquared(const Image &image1, const Image &ima
  itk::simple::TernaryMagnitudeSquaredImageFilter Procedural Interface
 
 
-This function directly calls the execute method of TernaryMagnitudeSquaredImageFilter in order to support a procedual API
+This function directly calls the execute method of TernaryMagnitudeSquaredImageFilter in order to support a procedural API
 
 
 See:
@@ -35357,7 +35357,7 @@ outsideValue=0.0)
  itk::simple::ThresholdImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ThresholdImageFilter in order to support a procedual API
+This function directly calls the execute method of ThresholdImageFilter in order to support a procedural API
 
 
 See:
@@ -35375,7 +35375,7 @@ insideValue=1u, uint8_t outsideValue=0u)
  itk::simple::ThresholdMaximumConnectedComponentsImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ThresholdMaximumConnectedComponentsImageFilter in order to support a procedual API
+This function directly calls the execute method of ThresholdMaximumConnectedComponentsImageFilter in order to support a procedural API
 
 
 See:
@@ -35394,7 +35394,7 @@ numberOfIterations=1000u, bool reverseExpansionDirection=false)
  itk::simple::ThresholdSegmentationLevelSetImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ThresholdSegmentationLevelSetImageFilter in order to support a procedual API
+This function directly calls the execute method of ThresholdSegmentationLevelSetImageFilter in order to support a procedural API
 
 
 See:
@@ -35415,7 +35415,7 @@ outputRegionMode=itk::simple::TikhonovDeconvolutionImageFilter::SAME)
  itk::simple::TikhonovDeconvolutionImageFilter Procedural Interface
 
 
-This function directly calls the execute method of TikhonovDeconvolutionImageFilter in order to support a procedual API
+This function directly calls the execute method of TikhonovDeconvolutionImageFilter in order to support a procedural API
 
 
 See:
@@ -35465,7 +35465,7 @@ layout=std::vector< uint32_t >(3, 100), double defaultPixelValue=0.0)
  itk::simple::TileImageFilter Procedural Interface
 
 
-This function directly calls the execute method of TileImageFilter in order to support a procedual API
+This function directly calls the execute method of TileImageFilter in order to support a procedural API
 
 
 See:
@@ -35482,7 +35482,7 @@ uint32_t numberOfHistogramBins=256u)
  itk::simple::TriangleThresholdImageFilter Procedural Interface
 
 
-This function directly calls the execute method of TriangleThresholdImageFilter in order to support a procedual API
+This function directly calls the execute method of TriangleThresholdImageFilter in order to support a procedural API
 
 
 See:
@@ -35498,7 +35498,7 @@ Image itk::simple::UnaryMinus(const Image &image1)
  itk::simple::UnaryMinusImageFilter Procedural Interface
 
 
-This function directly calls the execute method of UnaryMinusImageFilter in order to support a procedual API
+This function directly calls the execute method of UnaryMinusImageFilter in order to support a procedural API
 
 
 See:
@@ -35526,7 +35526,7 @@ Image itk::simple::ValuedRegionalMaxima(const Image &image1, bool fullyConnected
  itk::simple::ValuedRegionalMaximaImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ValuedRegionalMaximaImageFilter in order to support a procedual API
+This function directly calls the execute method of ValuedRegionalMaximaImageFilter in order to support a procedural API
 
 
 See:
@@ -35542,7 +35542,7 @@ Image itk::simple::ValuedRegionalMinima(const Image &image1, bool fullyConnected
  itk::simple::ValuedRegionalMinimaImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ValuedRegionalMinimaImageFilter in order to support a procedual API
+This function directly calls the execute method of ValuedRegionalMinimaImageFilter in order to support a procedural API
 
 
 See:
@@ -35571,7 +35571,7 @@ fullyConnected=false)
  itk::simple::VectorConnectedComponentImageFilter Procedural Interface
 
 
-This function directly calls the execute method of VectorConnectedComponentImageFilter in order to support a procedual API
+This function directly calls the execute method of VectorConnectedComponentImageFilter in order to support a procedural API
 
 
 See:
@@ -35587,7 +35587,7 @@ Image itk::simple::VectorIndexSelectionCast(const Image &image1, unsigned int in
  itk::simple::VectorIndexSelectionCastImageFilter Procedural Interface
 
 
-This function directly calls the execute method of VectorIndexSelectionCastImageFilter in order to support a procedual API
+This function directly calls the execute method of VectorIndexSelectionCastImageFilter in order to support a procedural API
 
 
 See:
@@ -35603,7 +35603,7 @@ Image itk::simple::VectorMagnitude(const Image &image1)
  itk::simple::VectorMagnitudeImageFilter Procedural Interface
 
 
-This function directly calls the execute method of VectorMagnitudeImageFilter in order to support a procedual API
+This function directly calls the execute method of VectorMagnitudeImageFilter in order to support a procedural API
 
 
 See:
@@ -35622,7 +35622,7 @@ backgroundValue=0.0)
  itk::simple::VotingBinaryImageFilter Procedural Interface
 
 
-This function directly calls the execute method of VotingBinaryImageFilter in order to support a procedual API
+This function directly calls the execute method of VotingBinaryImageFilter in order to support a procedural API
 
 
 See:
@@ -35640,7 +35640,7 @@ foregroundValue=1.0, double backgroundValue=0.0)
  itk::simple::VotingBinaryHoleFillingImageFilter Procedural Interface
 
 
-This function directly calls the execute method of VotingBinaryHoleFillingImageFilter in order to support a procedual API
+This function directly calls the execute method of VotingBinaryHoleFillingImageFilter in order to support a procedural API
 
 
 See:
@@ -35659,7 +35659,7 @@ backgroundValue=0.0)
  itk::simple::VotingBinaryIterativeHoleFillingImageFilter Procedural Interface
 
 
-This function directly calls the execute method of VotingBinaryIterativeHoleFillingImageFilter in order to support a procedual API
+This function directly calls the execute method of VotingBinaryIterativeHoleFillingImageFilter in order to support a procedural API
 
 
 See:
@@ -35703,7 +35703,7 @@ outputRegionMode=itk::simple::WienerDeconvolutionImageFilter::SAME)
  itk::simple::WienerDeconvolutionImageFilter Procedural Interface
 
 
-This function directly calls the execute method of WienerDeconvolutionImageFilter in order to support a procedual API
+This function directly calls the execute method of WienerDeconvolutionImageFilter in order to support a procedural API
 
 
 See:
@@ -35721,7 +35721,7 @@ int > padUpperBound=std::vector< unsigned int >(3, 0))
  itk::simple::WrapPadImageFilter Procedural Interface
 
 
-This function directly calls the execute method of WrapPadImageFilter in order to support a procedual API
+This function directly calls the execute method of WrapPadImageFilter in order to support a procedural API
 
 
 See:
@@ -35758,7 +35758,7 @@ Image itk::simple::Xor(const Image &image1, const Image &image2)
  itk::simple::XorImageFilter Procedural Interface
 
 
-This function directly calls the execute method of XorImageFilter in order to support a procedual API
+This function directly calls the execute method of XorImageFilter in order to support a procedural API
 
 
 See:
@@ -35775,7 +35775,7 @@ uint32_t numberOfHistogramBins=256u)
  itk::simple::YenThresholdImageFilter Procedural Interface
 
 
-This function directly calls the execute method of YenThresholdImageFilter in order to support a procedual API
+This function directly calls the execute method of YenThresholdImageFilter in order to support a procedural API
 
 
 See:
@@ -35792,7 +35792,7 @@ backgroundValue=0u)
  itk::simple::ZeroCrossingImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ZeroCrossingImageFilter in order to support a procedual API
+This function directly calls the execute method of ZeroCrossingImageFilter in order to support a procedural API
 
 
 See:
@@ -35809,7 +35809,7 @@ uint8_t backgroundValue=0u, double maximumError=0.1)
  itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ZeroCrossingBasedEdgeDetectionImageFilter in order to support a procedual API
+This function directly calls the execute method of ZeroCrossingBasedEdgeDetectionImageFilter in order to support a procedural API
 
 
 See:
@@ -35827,7 +35827,7 @@ int > padUpperBound=std::vector< unsigned int >(3, 0))
  itk::simple::ZeroFluxNeumannPadImageFilter Procedural Interface
 
 
-This function directly calls the execute method of ZeroFluxNeumannPadImageFilter in order to support a procedual API
+This function directly calls the execute method of ZeroFluxNeumannPadImageFilter in order to support a procedural API
 
 
 See:

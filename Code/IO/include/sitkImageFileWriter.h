@@ -35,7 +35,7 @@ namespace itk {
      * location specified in FileName. If writing fails, an ITK exception is
      * thrown.
      *
-     * \sa itk::simple::WriteImage for the procedual interface
+     * \sa itk::simple::WriteImage for the procedural interface
      */
     class SITKIO_EXPORT ImageFileWriter {
     public:

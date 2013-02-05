@@ -28,7 +28,7 @@ namespace itk {
     /** \class LabelStatisticsImageFilter
      * \brief Compute min, max, variance, and mean of an image
      *
-     * \sa itk::simple::LabelStatistics for the procedual interface
+     * \sa itk::simple::LabelStatistics for the procedural interface
      */
     class SITKBasicFilters0_EXPORT  LabelStatisticsImageFilter
       : public ImageFilter<2> {

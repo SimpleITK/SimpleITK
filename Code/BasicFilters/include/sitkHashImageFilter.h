@@ -30,7 +30,7 @@ namespace itk {
     /** \class HashImageFilter
      * \brief Compute the sha1 or md5 hash of an image
      *
-     * \sa itk::simple::Hash for the procedual interface
+     * \sa itk::simple::Hash for the procedural interface
      */
     class SITKBasicFilters0_EXPORT HashImageFilter {
     public:

@@ -33,7 +33,7 @@ namespace itk {
      * This reader handles scalar and vector images and returns an image with
      * the same type as the file on disk.
      *
-     * \sa itk::simple::ReadImage for the procedual interface
+     * \sa itk::simple::ReadImage for the procedural interface
      */
     class SITKIO_EXPORT ImageFileReader
       : public ImageReaderBase
