@@ -35,6 +35,8 @@ namespace simple
  *
  * Several different ITK classes are implemented under the hood, to
  * convert between different image types.
+ *
+ * \sa itk::simple::Cast for the procedural interface
  */
 class SITKBasicFilters0_EXPORT CastImageFilter
   : public ImageFilter<1>

@@ -29,6 +29,7 @@ namespace itk {
     /** \class ImageSeriesReader
      * \brief Read series of image into a SimpleITK image
      *
+     * \sa itk::simple::ReadImage for the procedural interface
      **/
     class SITKIO_EXPORT ImageSeriesReader
       : public ImageReaderBase

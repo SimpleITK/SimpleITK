@@ -33,6 +33,13 @@ namespace itk {
      * This filter is intended to interface SimpleITK to other image processing
      * libraries and applications that may have their own representation of an
      * image class.
+     *
+     * \sa itk::simple::ImportAsInt8, itk::simple::ImportAsUInt8,
+     * itk::simple::ImportAsInt16, itk::simple::ImportAsUInt16,
+     * itk::simple::ImportAsInt32, itk::simple::ImportAsUInt32,
+     * itk::simple::ImportAsInt64, itk::simple::ImportAsUInt64,
+     * itk::simple::ImportAsFloat,itk::simple::ImportAsDouble for the
+     * procedural interfaces.
      */
     class SITKIO_EXPORT ImportImageFilter
       : public ImageReaderBase {

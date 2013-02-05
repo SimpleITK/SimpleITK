@@ -28,10 +28,6 @@ $(include DoNotEditWarning.h.in)
 namespace itk {
   namespace simple {
 
-    /** \class ${name}
-     *
-     * ${doc}
-     */
 $(include ClassDeclaration.h.in)
 $(include PublicDeclarations.h.in)
 $(include MemberGetSetDeclarations.h.in)
