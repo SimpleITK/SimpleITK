@@ -3,7 +3,7 @@
      * $(if briefdescription then OUT=[[\brief ${briefdescription}]] end)
      * $(if detaileddescription then OUT=[[${detaileddescription}]] end)
      *
-     * \sa itk::simple::${name} for the procedual interface
+     * \sa itk::simple::${name:gsub("ImageFilter$", "")} for the procedual interface
      */
     class SITKBasicFilters_EXPORT ${name} : public $(if number_of_inputs then OUT=[[ImageFilter<${number_of_inputs}>]] else OUT=[[ImageFilter<1>]] end) {
     public:
