@@ -126,7 +126,7 @@ if( WRAP_CSHARP )
   set( CSHARP_PACKAGE_STAGE_DIR "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK-${SimpleITK_VERSION}-CSharp-${SIMPLEITK_CSHARP_ARCH}")
 
   add_custom_target( dist.CSharp
-    COMMENT "Creating Java package ${CSHARP_PACKAGE_STAGE_DIR}.zip"
+    COMMENT "Creating CSharp package ${CSHARP_PACKAGE_STAGE_DIR}.zip"
     DEPENDS SimpleITKCSharpManaged
     )
 
