@@ -7,6 +7,7 @@
   "pixel_types" : "BasicPixelIDTypeList",
   "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
   "filter_type" : "itk::ResampleImageFilter<InputImageType, OutputImageType, double>",
+  "no_procedure" : "1",
   "include_files" : [
     "sitkCreateInterpolator.hxx",
     "sitkDirectionConvert.hxx",
