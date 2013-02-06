@@ -384,7 +384,7 @@ struct DualVisit
 
 /** \cond TYPELIST_IMPLEMENTATION
 *
-* The procedual algorithm for this code is:
+* The procedural algorithm for this code is:
 * \code
 *  foreach leftType in TLeftTypList
 *    foreach rightType in TRightTypeList

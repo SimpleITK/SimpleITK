@@ -33,7 +33,7 @@ namespace itk {
      * $(if briefdescription then OUT=[[\brief ${briefdescription}]] end)
      * $(if detaileddescription then OUT=[[${detaileddescription}]] end)
      *
-     * \sa itk::simple::${name} for the procedual interface
+     * \sa itk::simple::${name:gsub("ImageFilter$", "")} for the procedural interface
      */
     class SITKBasicFilters_EXPORT ${name}
       : public ImageFilter<3>
@@ -102,7 +102,7 @@ $(include PrivateMemberDeclarations.h.in)$(include ClassEnd.h.in)
      * \brief itk::simple::${name} Procedural Interface
      *
      * This function directly calls the execute method of ${name}
-     * in order to support a procedual API
+     * in order to support a procedural API
      *
      * \sa itk::simple::${name} for the object oriented interface
      */
