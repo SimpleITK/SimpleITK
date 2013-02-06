@@ -306,7 +306,7 @@ All Examples
 Compute the absolute value of an image
 
 See:
- itk::simple::AbsImageFilter for the procedural interface
+ itk::simple::Abs for the procedural interface
 
 
 C++ includes: sitkAbsImageFilter.h
@@ -378,7 +378,7 @@ Compute the absolute value of the difference of corresponding pixels
 in two images
 
 See:
- itk::simple::AbsoluteValueDifferenceImageFilter for the procedural interface
+ itk::simple::AbsoluteValueDifference for the procedural interface
 
 
 C++ includes: sitkAbsoluteValueDifferenceImageFilter.h
@@ -453,7 +453,7 @@ images to have the same dimension (e.g. both 2D, or both 3D, or both
 ND).
 
 See:
- itk::simple::AcosImageFilter for the procedural interface
+ itk::simple::Acos for the procedural interface
 
 
 C++ includes: sitkAcosImageFilter.h
@@ -522,7 +522,7 @@ All Examples
 Adaptive histogram equalization
 
 See:
- itk::simple::AdaptiveHistogramEqualizationImageFilter for the procedural interface
+ itk::simple::AdaptiveHistogramEqualization for the procedural interface
 
 
 C++ includes: sitkAdaptiveHistogramEqualizationImageFilter.h
@@ -660,80 +660,6 @@ Set the value of UseLookupTable to true or false respectfully.
 public ";
 
 
-%typemap(javaimports) itk::simple::AddConstantToImageFilter "/**
-
-Add a constant to all input pixels.
-
-
-This filter is templated over the input image type and the output
-image type.
-Tom Vercauteren, INRIA & Mauna Kea Technologies Based on filters from
-the Insight Journal paper:http://hdl.handle.net/1926/510
-
-See:
- AddImageFilter
-
- itk::simple::AddConstantTo for the procedural interface
-
-
-C++ includes: sitkAddConstantToImageFilter.h
-*/"
-
-%javamethodmodifiers  itk::simple::AddConstantToImageFilter::AddConstantToImageFilter "/**
-itk::simple::AddConstantToImageFilter::AddConstantToImageFilter()
-
-Default Constructor that takes no arguments and initializes default
-parameters
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::AddConstantToImageFilter::Execute "/**
-Image itk::simple::AddConstantToImageFilter::Execute(const Image &image1, double inConstant)
-
-Execute the filter on the input image with the given parameters
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::AddConstantToImageFilter::Execute "/**
-Image itk::simple::AddConstantToImageFilter::Execute(const Image &image1)
-
-Execute the filter on the input image
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::AddConstantToImageFilter::GetConstant "/**
-double itk::simple::AddConstantToImageFilter::GetConstant()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::AddConstantToImageFilter::GetName "/**
-std::string itk::simple::AddConstantToImageFilter::GetName() const
-
-Name of this class
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::AddConstantToImageFilter::SetConstant "/**
-Self& itk::simple::AddConstantToImageFilter::SetConstant(double Constant)
-
-Set the constant that will be used to multiply all the image pixels.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::AddConstantToImageFilter::ToString "/**
-std::string itk::simple::AddConstantToImageFilter::ToString() const
-
-Print ourselves out
-
-*/
-public ";
-
-
 %typemap(javaimports) itk::simple::AddImageFilter "/**
 
 Pixel-wise addition of two images.
@@ -760,7 +686,7 @@ Wiki Examples: {http://www.itk.org/Wiki/ITK/Examples}
 pixel in an image}
 
 See:
- itk::simple::AddImageFilter for the procedural interface
+ itk::simple::Add for the procedural interface
 
 
 C++ includes: sitkAddImageFilter.h
@@ -831,7 +757,7 @@ All Examples
 Binary AND two images
 
 See:
- itk::simple::AndImageFilter for the procedural interface
+ itk::simple::And for the procedural interface
 
 
 C++ includes: sitkAndImageFilter.h
@@ -888,7 +814,7 @@ public ";
 
 
 See:
- itk::simple::AntiAliasBinaryImageFilter for the procedural interface
+ itk::simple::AntiAliasBinary for the procedural interface
 
 
 C++ includes: sitkAntiAliasBinaryImageFilter.h
@@ -1026,7 +952,7 @@ All Examples
 Compute a distance map from objects in a binary image
 
 See:
- itk::simple::ApproximateSignedDistanceMapImageFilter for the procedural interface
+ itk::simple::ApproximateSignedDistanceMap for the procedural interface
 
 
 C++ includes: sitkApproximateSignedDistanceMapImageFilter.h
@@ -1130,7 +1056,7 @@ images to have the same dimension (e.g. both 2D, or both 3D, or both
 ND)
 
 See:
- itk::simple::AsinImageFilter for the procedural interface
+ itk::simple::Asin for the procedural interface
 
 
 C++ includes: sitkAsinImageFilter.h
@@ -1189,7 +1115,7 @@ All Examples
 Compute the arctangent of each pixel.
 
 See:
- itk::simple::Atan2ImageFilter for the procedural interface
+ itk::simple::Atan2 for the procedural interface
 
 
 C++ includes: sitkAtan2ImageFilter.h
@@ -1262,7 +1188,7 @@ the output image,
 store the cast value into the output image.
 
 See:
- itk::simple::AtanImageFilter for the procedural interface
+ itk::simple::Atan for the procedural interface
 
 
 C++ includes: sitkAtanImageFilter.h
@@ -1352,7 +1278,7 @@ All Examples
 Bilateral filter an image
 
 See:
- itk::simple::BilateralImageFilter for the procedural interface
+ itk::simple::Bilateral for the procedural interface
 
 
 C++ includes: sitkBilateralImageFilter.h
@@ -1479,7 +1405,7 @@ Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www
 See:
 MorphologyImageFilter, ClosingByReconstructionImageFilter, BinaryOpeningByReconstructionImageFilter
 
- itk::simple::BinaryClosingByReconstructionImageFilter for the procedural interface
+ itk::simple::BinaryClosingByReconstruction for the procedural interface
 
 
 C++ includes: sitkBinaryClosingByReconstructionImageFilter.h
@@ -1641,7 +1567,7 @@ Extract the boundaries of connected regions in a binary image
 Extract the inner and outer boundaries of blobs in a binary image
 
 See:
- itk::simple::BinaryContourImageFilter for the procedural interface
+ itk::simple::BinaryContour for the procedural interface
 
 
 C++ includes: sitkBinaryContourImageFilter.h
@@ -1766,8 +1692,6 @@ public ";
 Fast binary dilation.
 
 
-Performs Dilation in a binary image.
-
 BinaryDilateImageFilteris a binary dilation morphologic operation.
 This implementation is based on the papers: L.Vincent \"Morphological
 transformations of binary images with  arbitrary structuring
@@ -1794,7 +1718,7 @@ All Examples
 Dilate a binary image
 
 See:
- itk::simple::BinaryDilateImageFilter for the procedural interface
+ itk::simple::BinaryDilate for the procedural interface
 
 
 C++ includes: sitkBinaryDilateImageFilter.h
@@ -1928,8 +1852,6 @@ public ";
 Fast binary erosion.
 
 
-Performs Erosion in a binary image.
-
 BinaryErodeImageFilteris a binary erosion morphologic operation. This
 implementation is based on the papers: L.Vincent \"Morphological
 transformations of binary images with  arbitrary structuring
@@ -1957,7 +1879,7 @@ All Examples
 Erode a binary image
 
 See:
- itk::simple::BinaryErodeImageFilter for the procedural interface
+ itk::simple::BinaryErode for the procedural interface
 
 
 C++ includes: sitkBinaryErodeImageFilter.h
@@ -2103,7 +2025,7 @@ Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www
 See:
  GrayscaleFillholeImageFilter
 
- itk::simple::BinaryFillholeImageFilter for the procedural interface
+ itk::simple::BinaryFillhole for the procedural interface
 
 
 C++ includes: sitkBinaryFillholeImageFilter.h
@@ -2221,7 +2143,7 @@ Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www
 See:
  GrayscaleGrindPeakImageFilter
 
- itk::simple::BinaryGrindPeakImageFilter for the procedural interface
+ itk::simple::BinaryGrindPeak for the procedural interface
 
 
 C++ includes: sitkBinaryGrindPeakImageFilter.h
@@ -2366,7 +2288,7 @@ store the cast value into the output image. The filter expects all
 images to have the same dimension (e.g. all 2D, or all 3D, or all ND)
 
 See:
- itk::simple::BinaryMagnitudeImageFilter for the procedural interface
+ itk::simple::BinaryMagnitude for the procedural interface
 
 
 C++ includes: sitkBinaryMagnitudeImageFilter.h
@@ -2431,7 +2353,7 @@ NeighborhoodOperator
 
 NeighborhoodIterator
 
- itk::simple::BinaryMedianImageFilter for the procedural interface
+ itk::simple::BinaryMedian for the procedural interface
 
 
 C++ includes: sitkBinaryMedianImageFilter.h
@@ -2573,7 +2495,7 @@ BinaryMinMaxCurvatureFlowFunction
 
  MinMaxCurvatureFlowImageFilter
 
- itk::simple::BinaryMinMaxCurvatureFlowImageFilter for the procedural interface
+ itk::simple::BinaryMinMaxCurvatureFlow for the procedural interface
 
 
 C++ includes: sitkBinaryMinMaxCurvatureFlowImageFilter.h
@@ -2689,7 +2611,7 @@ de Jouy-en-Josas, France.
 See:
 MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleErodeImageFilter
 
- itk::simple::BinaryMorphologicalClosingImageFilter for the procedural interface
+ itk::simple::BinaryMorphologicalClosing for the procedural interface
 
 
 C++ includes: sitkBinaryMorphologicalClosingImageFilter.h
@@ -2705,7 +2627,7 @@ parameters
 public ";
 
 %javamethodmodifiers  itk::simple::BinaryMorphologicalClosingImageFilter::Execute "/**
-Image itk::simple::BinaryMorphologicalClosingImageFilter::Execute(const Image &image1, double foregroundValue)
+Image itk::simple::BinaryMorphologicalClosingImageFilter::Execute(const Image &image1, double foregroundValue, bool safeBorder)
 
 Execute the filter on the input image with the given parameters
 
@@ -2747,6 +2669,28 @@ Name of this class
 */
 public ";
 
+%javamethodmodifiers  itk::simple::BinaryMorphologicalClosingImageFilter::GetSafeBorder "/**
+bool itk::simple::BinaryMorphologicalClosingImageFilter::GetSafeBorder()
+
+A safe border is added to input image to avoid borders effects and
+remove it once the closing is done.
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::BinaryMorphologicalClosingImageFilter::SafeBorderOff "/**
+Self& itk::simple::BinaryMorphologicalClosingImageFilter::SafeBorderOff()
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::BinaryMorphologicalClosingImageFilter::SafeBorderOn "/**
+Self& itk::simple::BinaryMorphologicalClosingImageFilter::SafeBorderOn()
+
+Set the value of SafeBorder to true or false respectfully.
+
+*/
+public ";
+
 %javamethodmodifiers  itk::simple::BinaryMorphologicalClosingImageFilter::SetForegroundValue "/**
 Self& itk::simple::BinaryMorphologicalClosingImageFilter::SetForegroundValue(double ForegroundValue)
 
@@ -2783,6 +2727,15 @@ Set/Get the kernel or structuring elemenent used for the morphology
 */
 public ";
 
+%javamethodmodifiers  itk::simple::BinaryMorphologicalClosingImageFilter::SetSafeBorder "/**
+Self& itk::simple::BinaryMorphologicalClosingImageFilter::SetSafeBorder(bool SafeBorder)
+
+A safe border is added to input image to avoid borders effects and
+remove it once the closing is done.
+
+*/
+public ";
+
 %javamethodmodifiers  itk::simple::BinaryMorphologicalClosingImageFilter::ToString "/**
 std::string itk::simple::BinaryMorphologicalClosingImageFilter::ToString() const
 
@@ -2813,7 +2766,7 @@ de Jouy-en-Josas, France.
 See:
 MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleErodeImageFilter
 
- itk::simple::BinaryMorphologicalOpeningImageFilter for the procedural interface
+ itk::simple::BinaryMorphologicalOpening for the procedural interface
 
 
 C++ includes: sitkBinaryMorphologicalOpeningImageFilter.h
@@ -2954,7 +2907,7 @@ All Examples
 Invert an image using the Binary Not operation
 
 See:
- itk::simple::BinaryNotImageFilter for the procedural interface
+ itk::simple::BinaryNot for the procedural interface
 
 
 C++ includes: sitkBinaryNotImageFilter.h
@@ -3057,7 +3010,7 @@ Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www
 See:
 MorphologyImageFilter, OpeningByReconstructionImageFilter, BinaryClosingByReconstructionImageFilter
 
- itk::simple::BinaryOpeningByReconstructionImageFilter for the procedural interface
+ itk::simple::BinaryOpeningByReconstruction for the procedural interface
 
 
 C++ includes: sitkBinaryOpeningByReconstructionImageFilter.h
@@ -3246,7 +3199,7 @@ ProjectionImageFilter
 
  SumProjectionImageFilter
 
- itk::simple::BinaryProjectionImageFilter for the procedural interface
+ itk::simple::BinaryProjection for the procedural interface
 
 
 C++ includes: sitkBinaryProjectionImageFilter.h
@@ -3365,7 +3318,7 @@ Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www
 See:
 MorphologyImageFilter, ReconstructionByDilationImageFilter, BinaryReconstructionByErosionImageFilter
 
- itk::simple::BinaryReconstructionByDilationImageFilter for the procedural interface
+ itk::simple::BinaryReconstructionByDilation for the procedural interface
 
 
 C++ includes: sitkBinaryReconstructionByDilationImageFilter.h
@@ -3504,7 +3457,7 @@ Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www
 See:
 MorphologyImageFilter, ReconstructionByErosionImageFilter, BinaryReconstructionByDilationImageFilter
 
- itk::simple::BinaryReconstructionByErosionImageFilter for the procedural interface
+ itk::simple::BinaryReconstructionByErosion for the procedural interface
 
 
 C++ includes: sitkBinaryReconstructionByErosionImageFilter.h
@@ -3649,7 +3602,7 @@ All Examples
 Skeletonize/thin an image
 
 See:
- itk::simple::BinaryThinningImageFilter for the procedural interface
+ itk::simple::BinaryThinning for the procedural interface
 
 
 C++ includes: sitkBinaryThinningImageFilter.h
@@ -3713,7 +3666,7 @@ All Examples
 Threshold an image
 
 See:
- itk::simple::BinaryThresholdImageFilter for the procedural interface
+ itk::simple::BinaryThreshold for the procedural interface
 
 
 C++ includes: sitkBinaryThresholdImageFilter.h
@@ -3859,7 +3812,7 @@ ProjectionImageFilter
 
  SumProjectionImageFilter
 
- itk::simple::BinaryThresholdProjectionImageFilter for the procedural interface
+ itk::simple::BinaryThresholdProjection for the procedural interface
 
 
 C++ includes: sitkBinaryThresholdProjectionImageFilter.h
@@ -3986,7 +3939,7 @@ All Examples
 Blur an image
 
 See:
- itk::simple::BinomialBlurImageFilter for the procedural interface
+ itk::simple::BinomialBlur for the procedural interface
 
 
 C++ includes: sitkBinomialBlurImageFilter.h
@@ -4066,7 +4019,7 @@ Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
 
 See:
- itk::simple::BlackTopHatImageFilter for the procedural interface
+ itk::simple::BlackTopHat for the procedural interface
 
 
 C++ includes: sitkBlackTopHatImageFilter.h
@@ -4192,7 +4145,7 @@ number of dimensions, and both of a scalar image type.
 
 
 See:
- itk::simple::BoundedReciprocalImageFilter for the procedural interface
+ itk::simple::BoundedReciprocal for the procedural interface
 
 
 C++ includes: sitkBoundedReciprocalImageFilter.h
@@ -4245,7 +4198,7 @@ journal.org/browse/publication/160
 Richard Beare
 
 See:
- itk::simple::BoxMeanImageFilter for the procedural interface
+ itk::simple::BoxMean for the procedural interface
 
 
 C++ includes: sitkBoxMeanImageFilter.h
@@ -4324,7 +4277,7 @@ journal.org/browse/publication/160
 Gaetan Lehmann
 
 See:
- itk::simple::BoxSigmaImageFilter for the procedural interface
+ itk::simple::BoxSigma for the procedural interface
 
 
 C++ includes: sitkBoxSigmaImageFilter.h
@@ -4430,7 +4383,7 @@ See:
 
  ThresholdImageFilter
 
- itk::simple::CannyEdgeDetectionImageFilter for the procedural interface
+ itk::simple::CannyEdgeDetection for the procedural interface
 
 
 C++ includes: sitkCannyEdgeDetectionImageFilter.h
@@ -4549,6 +4502,11 @@ A hybrid cast image filter to convert images to other types of images.
 Several different ITK classes are implemented under the hood, to
 convert between different image types.
 
+
+See:
+ itk::simple::Cast for the procedural interface
+
+
 C++ includes: sitkCastImageFilter.h
 */"
 
@@ -4575,12 +4533,17 @@ Name of this class
 public ";
 
 %javamethodmodifiers  itk::simple::CastImageFilter::GetOutputPixelType "/**
-PixelIDValueType itk::simple::CastImageFilter::GetOutputPixelType(void) const
+PixelIDValueEnum itk::simple::CastImageFilter::GetOutputPixelType(void) const
 */
 public ";
 
 %javamethodmodifiers  itk::simple::CastImageFilter::SetOutputPixelType "/**
 Self& itk::simple::CastImageFilter::SetOutputPixelType(PixelIDValueType pixelID)
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::CastImageFilter::SetOutputPixelType "/**
+Self& itk::simple::CastImageFilter::SetOutputPixelType(PixelIDValueEnum pixelID)
 
 Set/Get the output pixel type
 
@@ -4610,7 +4573,7 @@ Army Medical Research and Materiel Command/TATRC Assistance Agreement,
 Contract::W81XWH-05-2-0059.
 
 See:
- itk::simple::ChangeLabelImageFilter for the procedural interface
+ itk::simple::ChangeLabel for the procedural interface
 
 
 C++ includes: sitkChangeLabelImageFilter.h
@@ -4690,7 +4653,7 @@ All Examples
 Combine two images by alternating blocks of a checkerboard pattern
 
 See:
- itk::simple::CheckerBoardImageFilter for the procedural interface
+ itk::simple::CheckerBoard for the procedural interface
 
 
 C++ includes: sitkCheckerBoardImageFilter.h
@@ -4778,7 +4741,7 @@ de Jouy-en-Josas, France.
 See:
  GrayscaleMorphologicalClosingImageFilter
 
- itk::simple::ClosingByReconstructionImageFilter for the procedural interface
+ itk::simple::ClosingByReconstruction for the procedural interface
 
 
 C++ includes: sitkClosingByReconstructionImageFilter.h
@@ -4938,7 +4901,7 @@ Computes pixel-wise the imaginary part of a complex image.
 
 
 See:
- itk::simple::ComplexToImaginaryImageFilter for the procedural interface
+ itk::simple::ComplexToImaginary for the procedural interface
 
 
 C++ includes: sitkComplexToImaginaryImageFilter.h
@@ -4985,7 +4948,7 @@ Computes pixel-wise the Modulus of a complex image.
 
 
 See:
- itk::simple::ComplexToModulusImageFilter for the procedural interface
+ itk::simple::ComplexToModulus for the procedural interface
 
 
 C++ includes: sitkComplexToModulusImageFilter.h
@@ -5032,7 +4995,7 @@ Computes pixel-wise the modulus of a complex image.
 
 
 See:
- itk::simple::ComplexToPhaseImageFilter for the procedural interface
+ itk::simple::ComplexToPhase for the procedural interface
 
 
 C++ includes: sitkComplexToPhaseImageFilter.h
@@ -5079,7 +5042,7 @@ Computes pixel-wise the real(x) part of a complex image.
 
 
 See:
- itk::simple::ComplexToRealImageFilter for the procedural interface
+ itk::simple::ComplexToReal for the procedural interface
 
 
 C++ includes: sitkComplexToRealImageFilter.h
@@ -5146,7 +5109,7 @@ Compose a vector image (with 3 components) from three scalar images
 Convert a real image and an imaginary image to a complex image
 
 See:
- itk::simple::ComposeImageFilter for the procedural interface
+ itk::simple::Compose for the procedural interface
 
 
 C++ includes: sitkComposeImageFilter.h
@@ -5218,8 +5181,6 @@ public ";
 Segment pixels with similar statistics using connectivity.
 
 
-Some global documentation
-
 This filter extracts a connected set of pixels whose pixel intensities
 are consistent with the pixel statistics of a seed point. The mean and
 variance across a neighborhood (8-connected, 26-connected, etc.) are
@@ -5248,7 +5209,7 @@ All Examples
 Segment pixels with similar statistics using connectivity
 
 See:
- itk::simple::ConfidenceConnectedImageFilter for the procedural interface
+ itk::simple::ConfidenceConnected for the procedural interface
 
 
 C++ includes: sitkConfidenceConnectedImageFilter.h
@@ -5429,7 +5390,7 @@ All Examples
 Label connected components in a binary image
 
 See:
- itk::simple::ConnectedComponentImageFilter for the procedural interface
+ itk::simple::ConnectedComponent for the procedural interface
 
 
 C++ includes: sitkConnectedComponentImageFilter.h
@@ -5518,15 +5479,13 @@ Label pixels that are connected to a seed and lie within a range of
 values.
 
 
-Some global documentation
-
 ConnectedThresholdImageFilterlabels pixels with ReplaceValue that are
 connected to an initial Seed AND lie within a Lower and Upper
 threshold range.
 
 
 See:
- itk::simple::ConnectedThresholdImageFilter for the procedural interface
+ itk::simple::ConnectedThreshold for the procedural interface
 
 
 C++ includes: sitkConnectedThresholdImageFilter.h
@@ -5684,7 +5643,7 @@ All Examples
 Pad an image with a constant value
 
 See:
- itk::simple::ConstantPadImageFilter for the procedural interface
+ itk::simple::ConstantPad for the procedural interface
 
 
 C++ includes: sitkConstantPadImageFilter.h
@@ -5800,7 +5759,7 @@ All Examples
 Convolve an image with a kernel
 
 See:
- itk::simple::ConvolutionImageFilter for the procedural interface
+ itk::simple::Convolution for the procedural interface
 
 
 C++ includes: sitkConvolutionImageFilter.h
@@ -5918,7 +5877,7 @@ images to have the same dimension (e.g. both 2D, or both 3D, or both
 ND)
 
 See:
- itk::simple::CosImageFilter for the procedural interface
+ itk::simple::Cos for the procedural interface
 
 
 C++ includes: sitkCosImageFilter.h
@@ -5974,7 +5933,7 @@ All Examples
 Crop an image by specifying the region to throw away
 
 See:
- itk::simple::CropImageFilter for the procedural interface
+ itk::simple::Crop for the procedural interface
 
 
 C++ includes: sitkCropImageFilter.h
@@ -6089,7 +6048,7 @@ AnisotropicDiffusionFunction
 
 CurvatureNDAnisotropicDiffusionFunction
 
- itk::simple::CurvatureAnisotropicDiffusionImageFilter for the procedural interface
+ itk::simple::CurvatureAnisotropicDiffusion for the procedural interface
 
 
 C++ includes: sitkCurvatureAnisotropicDiffusionImageFilter.h
@@ -6238,7 +6197,7 @@ CurvatureFlowFunction
  BinaryMinMaxCurvatureFlowImageFilter Input/Output Restrictions: TInputImage and TOutputImage must have the
 same dimension. TOutputImage's pixel type must be a real number type.
 
- itk::simple::CurvatureFlowImageFilter for the procedural interface
+ itk::simple::CurvatureFlow for the procedural interface
 
 
 C++ includes: sitkCurvatureFlowImageFilter.h
@@ -6341,7 +6300,7 @@ Per-Erik. Euclidean Distance Mapping. Computer Graphics and
 ImageProcessing 14, 227-248 (1980).
 
 See:
- itk::simple::DanielssonDistanceMapImageFilter for the procedural interface
+ itk::simple::DanielssonDistanceMap for the procedural interface
 
 
 C++ includes: sitkDanielssonDistanceMapImageFilter.h
@@ -6509,7 +6468,7 @@ All Examples
 Compute the derivative of an image in a particular direction
 
 See:
- itk::simple::DerivativeImageFilter for the procedural interface
+ itk::simple::Derivative for the procedural interface
 
 
 C++ includes: sitkDerivativeImageFilter.h
@@ -6626,10 +6585,6 @@ public ";
 dilation of an object in an image
 
 
-Performs Erosion of an object.Todo
-This filter is redundent with binary erode and fg/bg options
-
-
 Dilate an image using binary morphology. Pixel values matching the
 object value are considered the \"foreground\" and all other pixels
 are \"background\". This is useful in processing mask images
@@ -6644,7 +6599,7 @@ ObjectMorphologyImageFilter, ErodeObjectMorphologyImageFilter
 
  BinaryDilateImageFilter
 
- itk::simple::DilateObjectMorphologyImageFilter for the procedural interface
+ itk::simple::DilateObjectMorphology for the procedural interface
 
 
 C++ includes: sitkDilateObjectMorphologyImageFilter.h
@@ -6778,7 +6733,7 @@ All Examples
 Smooth an image with a discrete Gaussian filter
 
 See:
- itk::simple::DiscreteGaussianImageFilter for the procedural interface
+ itk::simple::DiscreteGaussian for the procedural interface
 
 
 C++ includes: sitkDiscreteGaussianImageFilter.h
@@ -6907,152 +6862,11 @@ Set the value of UseImageSpacing to true or false respectfully.
 public ";
 
 
-%typemap(javaimports) itk::simple::DivideByConstantImageFilter "/**
-
-Add a constant to all input pixels.
-
-
-This filter is templated over the input image type and the output
-image type.
-Tom Vercauteren, INRIA & Mauna Kea Technologies Based on filters from
-the Insight Journal paper:http://hdl.handle.net/1926/510
-
-See:
- DivideImageFilter
-
- itk::simple::DivideByConstant for the procedural interface
-
-
-C++ includes: sitkDivideByConstantImageFilter.h
-*/"
-
-%javamethodmodifiers  itk::simple::DivideByConstantImageFilter::DivideByConstantImageFilter "/**
-itk::simple::DivideByConstantImageFilter::DivideByConstantImageFilter()
-
-Default Constructor that takes no arguments and initializes default
-parameters
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::DivideByConstantImageFilter::Execute "/**
-Image itk::simple::DivideByConstantImageFilter::Execute(const Image &image1, double inConstant)
-
-Execute the filter on the input image with the given parameters
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::DivideByConstantImageFilter::Execute "/**
-Image itk::simple::DivideByConstantImageFilter::Execute(const Image &image1)
-
-Execute the filter on the input image
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::DivideByConstantImageFilter::GetConstant "/**
-double itk::simple::DivideByConstantImageFilter::GetConstant()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::DivideByConstantImageFilter::GetName "/**
-std::string itk::simple::DivideByConstantImageFilter::GetName() const
-
-Name of this class
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::DivideByConstantImageFilter::SetConstant "/**
-Self& itk::simple::DivideByConstantImageFilter::SetConstant(double Constant)
-
-Set the constant value that will be used for dividing all the image
-pixels.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::DivideByConstantImageFilter::ToString "/**
-std::string itk::simple::DivideByConstantImageFilter::ToString() const
-
-Print ourselves out
-
-*/
-public ";
-
-
-%typemap(javaimports) itk::simple::DivideConstantByImageFilter "/**
-
-
-See:
- itk::simple::DivideConstantBy for the procedural interface
-
-
-C++ includes: sitkDivideConstantByImageFilter.h
-*/"
-
-%javamethodmodifiers  itk::simple::DivideConstantByImageFilter::DivideConstantByImageFilter "/**
-itk::simple::DivideConstantByImageFilter::DivideConstantByImageFilter()
-
-Default Constructor that takes no arguments and initializes default
-parameters
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::DivideConstantByImageFilter::Execute "/**
-Image itk::simple::DivideConstantByImageFilter::Execute(const Image &image1, double inConstant)
-
-Execute the filter on the input image with the given parameters
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::DivideConstantByImageFilter::Execute "/**
-Image itk::simple::DivideConstantByImageFilter::Execute(const Image &image1)
-
-Execute the filter on the input image
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::DivideConstantByImageFilter::GetConstant "/**
-double itk::simple::DivideConstantByImageFilter::GetConstant()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::DivideConstantByImageFilter::GetName "/**
-std::string itk::simple::DivideConstantByImageFilter::GetName() const
-
-Name of this class
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::DivideConstantByImageFilter::SetConstant "/**
-Self& itk::simple::DivideConstantByImageFilter::SetConstant(double Constant)
-
-Set the constant value which will be used as the dividend and each
-pixel is used as the divisor.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::DivideConstantByImageFilter::ToString "/**
-std::string itk::simple::DivideConstantByImageFilter::ToString() const
-
-Print ourselves out
-
-*/
-public ";
-
-
 %typemap(javaimports) itk::simple::DivideFloorImageFilter "/**
 
 
 See:
- itk::simple::DivideFloorImageFilter for the procedural interface
+ itk::simple::DivideFloor for the procedural interface
 
 
 C++ includes: sitkDivideFloorImageFilter.h
@@ -7121,7 +6935,7 @@ All Examples
 Pixel-wise division of two images
 
 See:
- itk::simple::DivideImageFilter for the procedural interface
+ itk::simple::Divide for the procedural interface
 
 
 C++ includes: sitkDivideImageFilter.h
@@ -7178,7 +6992,7 @@ public ";
 
 
 See:
- itk::simple::DivideRealImageFilter for the procedural interface
+ itk::simple::DivideReal for the procedural interface
 
 
 C++ includes: sitkDivideRealImageFilter.h
@@ -7258,7 +7072,7 @@ See:
 
 MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter
 
- itk::simple::DoubleThresholdImageFilter for the procedural interface
+ itk::simple::DoubleThreshold for the procedural interface
 
 
 C++ includes: sitkDoubleThresholdImageFilter.h
@@ -7465,7 +7279,7 @@ image type.
 
 
 See:
- itk::simple::EdgePotentialImageFilter for the procedural interface
+ itk::simple::EdgePotential for the procedural interface
 
 
 C++ includes: sitkEdgePotentialImageFilter.h
@@ -7509,7 +7323,7 @@ public ";
 
 
 See:
- itk::simple::EqualImageFilter for the procedural interface
+ itk::simple::Equal for the procedural interface
 
 
 C++ includes: sitkEqualImageFilter.h
@@ -7624,10 +7438,6 @@ public ";
 Erosion of an object in an image.
 
 
-Performs Erosion of an object.Todo
-This filter is redundent with binary erode and fg/bg options
-
-
 Erosion of an image using binary morphology. Pixel values matching the
 object value are considered the \"object\" and all other pixels are
 \"background\". This is useful in processing mask images containing
@@ -7643,7 +7453,7 @@ ObjectMorphologyImageFilter, BinaryFunctionErodeImageFilter
 
  BinaryErodeImageFilter
 
- itk::simple::ErodeObjectMorphologyImageFilter for the procedural interface
+ itk::simple::ErodeObjectMorphology for the procedural interface
 
 
 C++ includes: sitkErodeObjectMorphologyImageFilter.h
@@ -7763,7 +7573,7 @@ The computation is performed using vcl_exp(x).
 
 
 See:
- itk::simple::ExpImageFilter for the procedural interface
+ itk::simple::Exp for the procedural interface
 
 
 C++ includes: sitkExpImageFilter.h
@@ -7814,7 +7624,7 @@ constant.
 
 
 See:
- itk::simple::ExpNegativeImageFilter for the procedural interface
+ itk::simple::ExpNegative for the procedural interface
 
 
 C++ includes: sitkExpNegativeImageFilter.h
@@ -7886,7 +7696,7 @@ LinearInterpolationImageFunction
 
 VectorExpandImageFilter
 
- itk::simple::ExpandImageFilter for the procedural interface
+ itk::simple::Expand for the procedural interface
 
 
 C++ includes: sitkExpandImageFilter.h
@@ -8030,7 +7840,7 @@ All Examples
 Crop an image by specifying the region to keep
 
 See:
- itk::simple::ExtractImageFilter for the procedural interface
+ itk::simple::Extract for the procedural interface
 
 
 C++ includes: sitkExtractImageFilter.h
@@ -8156,7 +7966,7 @@ Convolution\" by Gaetan Lehmannhttp://hdl.handle.net/10380/3154
 See:
  ConvolutionImageFilter
 
- itk::simple::FFTConvolutionImageFilter for the procedural interface
+ itk::simple::FFTConvolution for the procedural interface
 
 
 C++ includes: sitkFFTConvolutionImageFilter.h
@@ -8303,7 +8113,7 @@ and Pattern Recognition, 2010.
 : Dirk Padfield, GE Global Research,padfield@research.ge.com
 
 See:
- itk::simple::FFTNormalizedCorrelationImageFilter for the procedural interface
+ itk::simple::FFTNormalizedCorrelation for the procedural interface
 
 
 C++ includes: sitkFFTNormalizedCorrelationImageFilter.h
@@ -8382,7 +8192,7 @@ de Jouy-en-Josas, France.
 See:
  ForwardFFTImageFilter, InverseFFTImageFilter
 
- itk::simple::FFTShiftImageFilter for the procedural interface
+ itk::simple::FFTShift for the procedural interface
 
 
 C++ includes: sitkFFTShiftImageFilter.h
@@ -8469,7 +8279,7 @@ public ";
 
 
 See:
- itk::simple::FastApproximateRankImageFilter for the procedural interface
+ itk::simple::FastApproximateRank for the procedural interface
 
 
 C++ includes: sitkFastApproximateRankImageFilter.h
@@ -8550,8 +8360,6 @@ public ";
 Solve an Eikonal equation using Fast Marching.
 
 
-Docs
-
 Fast marching solves an Eikonal equation where the speed is always
 non-negative and depends on the position only. Starting from an
 initial position on the front, fast marching systematically moves the
@@ -8603,7 +8411,7 @@ in order to locate the node which is to be updated.
 See:
 LevelSetTypeDefault
 
- itk::simple::FastMarchingImageFilter for the procedural interface
+ itk::simple::FastMarching for the procedural interface
 
 
 C++ includes: sitkFastMarchingImageFilter.h
@@ -8752,7 +8560,7 @@ All Examples
 Flip an image over specified axes
 
 See:
- itk::simple::FlipImageFilter for the procedural interface
+ itk::simple::Flip for the procedural interface
 
 
 C++ includes: sitkFlipImageFilter.h
@@ -8870,7 +8678,7 @@ single-component input image types.
 See:
  InverseFFTImageFilter, FFTComplexToComplexImageFilter
 
- itk::simple::ForwardFFTImageFilter for the procedural interface
+ itk::simple::ForwardFFT for the procedural interface
 
 
 C++ includes: sitkForwardFFTImageFilter.h
@@ -8921,7 +8729,7 @@ C++ includes: sitkGaborImageSource.h
 */"
 
 %javamethodmodifiers  itk::simple::GaborImageSource::Execute "/**
-Image itk::simple::GaborImageSource::Execute(PixelIDValueType outputPixelType, std::vector< unsigned int > size,
+Image itk::simple::GaborImageSource::Execute(PixelIDValueEnum outputPixelType, std::vector< unsigned int > size,
 std::vector< double > sigma, std::vector< double > mean, double
 frequency, std::vector< double > origin, std::vector< double >
 spacing, std::vector< double > direction)
@@ -8977,7 +8785,7 @@ std::vector<double> itk::simple::GaborImageSource::GetOrigin()
 public ";
 
 %javamethodmodifiers  itk::simple::GaborImageSource::GetOutputPixelType "/**
-PixelIDValueType itk::simple::GaborImageSource::GetOutputPixelType()
+PixelIDValueEnum itk::simple::GaborImageSource::GetOutputPixelType()
 */
 public ";
 
@@ -9017,7 +8825,7 @@ Self& itk::simple::GaborImageSource::SetOrigin(std::vector< double > Origin)
 public ";
 
 %javamethodmodifiers  itk::simple::GaborImageSource::SetOutputPixelType "/**
-Self& itk::simple::GaborImageSource::SetOutputPixelType(PixelIDValueType OutputPixelType)
+Self& itk::simple::GaborImageSource::SetOutputPixelType(PixelIDValueEnum OutputPixelType)
 */
 public ";
 
@@ -9045,141 +8853,6 @@ Print ourselves out
 public ";
 
 
-%typemap(javaimports) itk::simple::GaborSourceImageFilter "/**
-
-
-See:
- itk::simple::GaborSource for the procedural interface
-
-
-C++ includes: sitkGaborSourceImageFilter.h
-*/"
-
-%javamethodmodifiers  itk::simple::GaborSourceImageFilter::Execute "/**
-Image itk::simple::GaborSourceImageFilter::Execute(PixelIDValueType inOutputPixelType, std::vector< unsigned int >
-inSize, std::vector< double > inSigma, std::vector< double > inMean,
-double inFrequency, std::vector< double > inOrigin, std::vector<
-double > inSpacing, std::vector< double > inDirection)
-
-Execute the filter on the input image with the given parameters
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaborSourceImageFilter::Execute "/**
-Image itk::simple::GaborSourceImageFilter::Execute()
-
-Execute the filter on the input image
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaborSourceImageFilter::GaborSourceImageFilter "/**
-itk::simple::GaborSourceImageFilter::GaborSourceImageFilter()
-
-Default Constructor that takes no arguments and initializes default
-parameters
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaborSourceImageFilter::GetDirection "/**
-std::vector<double> itk::simple::GaborSourceImageFilter::GetDirection()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaborSourceImageFilter::GetFrequency "/**
-double itk::simple::GaborSourceImageFilter::GetFrequency()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaborSourceImageFilter::GetMean "/**
-std::vector<double> itk::simple::GaborSourceImageFilter::GetMean()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaborSourceImageFilter::GetName "/**
-std::string itk::simple::GaborSourceImageFilter::GetName() const
-
-Name of this class
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaborSourceImageFilter::GetOrigin "/**
-std::vector<double> itk::simple::GaborSourceImageFilter::GetOrigin()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaborSourceImageFilter::GetOutputPixelType "/**
-PixelIDValueType itk::simple::GaborSourceImageFilter::GetOutputPixelType()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaborSourceImageFilter::GetSigma "/**
-std::vector<double> itk::simple::GaborSourceImageFilter::GetSigma()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaborSourceImageFilter::GetSize "/**
-std::vector<unsigned int> itk::simple::GaborSourceImageFilter::GetSize()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaborSourceImageFilter::GetSpacing "/**
-std::vector<double> itk::simple::GaborSourceImageFilter::GetSpacing()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaborSourceImageFilter::SetDirection "/**
-Self& itk::simple::GaborSourceImageFilter::SetDirection(std::vector< double > Direction)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaborSourceImageFilter::SetFrequency "/**
-Self& itk::simple::GaborSourceImageFilter::SetFrequency(double Frequency)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaborSourceImageFilter::SetMean "/**
-Self& itk::simple::GaborSourceImageFilter::SetMean(std::vector< double > Mean)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaborSourceImageFilter::SetOrigin "/**
-Self& itk::simple::GaborSourceImageFilter::SetOrigin(std::vector< double > Origin)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaborSourceImageFilter::SetOutputPixelType "/**
-Self& itk::simple::GaborSourceImageFilter::SetOutputPixelType(PixelIDValueType OutputPixelType)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaborSourceImageFilter::SetSigma "/**
-Self& itk::simple::GaborSourceImageFilter::SetSigma(std::vector< double > Sigma)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaborSourceImageFilter::SetSize "/**
-Self& itk::simple::GaborSourceImageFilter::SetSize(std::vector< unsigned int > Size)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaborSourceImageFilter::SetSpacing "/**
-Self& itk::simple::GaborSourceImageFilter::SetSpacing(std::vector< double > Spacing)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaborSourceImageFilter::ToString "/**
-std::string itk::simple::GaborSourceImageFilter::ToString() const
-
-Print ourselves out
-
-*/
-public ";
-
-
 %typemap(javaimports) itk::simple::GaussianImageSource "/**
 
 
@@ -9191,7 +8864,7 @@ C++ includes: sitkGaussianImageSource.h
 */"
 
 %javamethodmodifiers  itk::simple::GaussianImageSource::Execute "/**
-Image itk::simple::GaussianImageSource::Execute(PixelIDValueType outputPixelType, std::vector< unsigned int > size,
+Image itk::simple::GaussianImageSource::Execute(PixelIDValueEnum outputPixelType, std::vector< unsigned int > size,
 std::vector< double > sigma, std::vector< double > mean, double scale,
 std::vector< double > origin, std::vector< double > spacing,
 std::vector< double > direction)
@@ -9242,7 +8915,7 @@ std::vector<double> itk::simple::GaussianImageSource::GetOrigin()
 public ";
 
 %javamethodmodifiers  itk::simple::GaussianImageSource::GetOutputPixelType "/**
-PixelIDValueType itk::simple::GaussianImageSource::GetOutputPixelType()
+PixelIDValueEnum itk::simple::GaussianImageSource::GetOutputPixelType()
 */
 public ";
 
@@ -9282,7 +8955,7 @@ Self& itk::simple::GaussianImageSource::SetOrigin(std::vector< double > Origin)
 public ";
 
 %javamethodmodifiers  itk::simple::GaussianImageSource::SetOutputPixelType "/**
-Self& itk::simple::GaussianImageSource::SetOutputPixelType(PixelIDValueType OutputPixelType)
+Self& itk::simple::GaussianImageSource::SetOutputPixelType(PixelIDValueEnum OutputPixelType)
 */
 public ";
 
@@ -9308,141 +8981,6 @@ public ";
 
 %javamethodmodifiers  itk::simple::GaussianImageSource::ToString "/**
 std::string itk::simple::GaussianImageSource::ToString() const
-
-Print ourselves out
-
-*/
-public ";
-
-
-%typemap(javaimports) itk::simple::GaussianSourceImageFilter "/**
-
-
-See:
- itk::simple::GaussianSource for the procedural interface
-
-
-C++ includes: sitkGaussianSourceImageFilter.h
-*/"
-
-%javamethodmodifiers  itk::simple::GaussianSourceImageFilter::Execute "/**
-Image itk::simple::GaussianSourceImageFilter::Execute(PixelIDValueType inOutputPixelType, std::vector< unsigned int >
-inSize, std::vector< double > inSigma, std::vector< double > inMean,
-double inScale, std::vector< double > inOrigin, std::vector< double >
-inSpacing, std::vector< double > inDirection)
-
-Execute the filter on the input image with the given parameters
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaussianSourceImageFilter::Execute "/**
-Image itk::simple::GaussianSourceImageFilter::Execute()
-
-Execute the filter on the input image
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaussianSourceImageFilter::GaussianSourceImageFilter "/**
-itk::simple::GaussianSourceImageFilter::GaussianSourceImageFilter()
-
-Default Constructor that takes no arguments and initializes default
-parameters
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaussianSourceImageFilter::GetDirection "/**
-std::vector<double> itk::simple::GaussianSourceImageFilter::GetDirection()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaussianSourceImageFilter::GetMean "/**
-std::vector<double> itk::simple::GaussianSourceImageFilter::GetMean()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaussianSourceImageFilter::GetName "/**
-std::string itk::simple::GaussianSourceImageFilter::GetName() const
-
-Name of this class
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaussianSourceImageFilter::GetOrigin "/**
-std::vector<double> itk::simple::GaussianSourceImageFilter::GetOrigin()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaussianSourceImageFilter::GetOutputPixelType "/**
-PixelIDValueType itk::simple::GaussianSourceImageFilter::GetOutputPixelType()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaussianSourceImageFilter::GetScale "/**
-double itk::simple::GaussianSourceImageFilter::GetScale()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaussianSourceImageFilter::GetSigma "/**
-std::vector<double> itk::simple::GaussianSourceImageFilter::GetSigma()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaussianSourceImageFilter::GetSize "/**
-std::vector<unsigned int> itk::simple::GaussianSourceImageFilter::GetSize()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaussianSourceImageFilter::GetSpacing "/**
-std::vector<double> itk::simple::GaussianSourceImageFilter::GetSpacing()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaussianSourceImageFilter::SetDirection "/**
-Self& itk::simple::GaussianSourceImageFilter::SetDirection(std::vector< double > Direction)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaussianSourceImageFilter::SetMean "/**
-Self& itk::simple::GaussianSourceImageFilter::SetMean(std::vector< double > Mean)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaussianSourceImageFilter::SetOrigin "/**
-Self& itk::simple::GaussianSourceImageFilter::SetOrigin(std::vector< double > Origin)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaussianSourceImageFilter::SetOutputPixelType "/**
-Self& itk::simple::GaussianSourceImageFilter::SetOutputPixelType(PixelIDValueType OutputPixelType)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaussianSourceImageFilter::SetScale "/**
-Self& itk::simple::GaussianSourceImageFilter::SetScale(double Scale)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaussianSourceImageFilter::SetSigma "/**
-Self& itk::simple::GaussianSourceImageFilter::SetSigma(std::vector< double > Sigma)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaussianSourceImageFilter::SetSize "/**
-Self& itk::simple::GaussianSourceImageFilter::SetSize(std::vector< unsigned int > Size)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaussianSourceImageFilter::SetSpacing "/**
-Self& itk::simple::GaussianSourceImageFilter::SetSpacing(std::vector< double > Spacing)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GaussianSourceImageFilter::ToString "/**
-std::string itk::simple::GaussianSourceImageFilter::ToString() const
 
 Print ourselves out
 
@@ -9615,7 +9153,7 @@ GeodesicActiveContourLevelSetFunction
 
 SparseFieldLevelSetImageFilter
 
- itk::simple::GeodesicActiveContourLevelSetImageFilter for the procedural interface
+ itk::simple::GeodesicActiveContourLevelSet for the procedural interface
 
 
 C++ includes: sitkGeodesicActiveContourLevelSetImageFilter.h
@@ -9790,7 +9328,7 @@ AnisotropicDiffusionFunction
 
 GradientAnisotropicDiffusionFunction
 
- itk::simple::GradientAnisotropicDiffusionImageFilter for the procedural interface
+ itk::simple::GradientAnisotropicDiffusion for the procedural interface
 
 
 C++ includes: sitkGradientAnisotropicDiffusionImageFilter.h
@@ -9914,7 +9452,7 @@ NeighborhoodOperator
 
 NeighborhoodIterator
 
- itk::simple::GradientImageFilter for the procedural interface
+ itk::simple::Gradient for the procedural interface
 
 
 C++ includes: sitkGradientImageFilter.h
@@ -10062,7 +9600,7 @@ All Examples
 Compute the gradient magnitude image
 
 See:
- itk::simple::GradientMagnitudeImageFilter for the procedural interface
+ itk::simple::GradientMagnitude for the procedural interface
 
 
 C++ includes: sitkGradientMagnitudeImageFilter.h
@@ -10155,7 +9693,7 @@ Find the gradient magnitude of the image first smoothed with a
 Gaussian kernel
 
 See:
- itk::simple::GradientMagnitudeRecursiveGaussianImageFilter for the procedural interface
+ itk::simple::GradientMagnitudeRecursiveGaussian for the procedural interface
 
 
 C++ includes: sitkGradientMagnitudeRecursiveGaussianImageFilter.h
@@ -10274,7 +9812,7 @@ Compute the gradient of an image by convolution with the first
 derivative of a Gaussian
 
 See:
- itk::simple::GradientRecursiveGaussianImageFilter for the procedural interface
+ itk::simple::GradientRecursiveGaussian for the procedural interface
 
 
 C++ includes: sitkGradientRecursiveGaussianImageFilter.h
@@ -10441,7 +9979,7 @@ See:
 
 MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter
 
- itk::simple::GrayscaleConnectedClosingImageFilter for the procedural interface
+ itk::simple::GrayscaleConnectedClosing for the procedural interface
 
 
 C++ includes: sitkGrayscaleConnectedClosingImageFilter.h
@@ -10559,7 +10097,7 @@ See:
 
 MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter
 
- itk::simple::GrayscaleConnectedOpeningImageFilter for the procedural interface
+ itk::simple::GrayscaleConnectedOpening for the procedural interface
 
 
 C++ includes: sitkGrayscaleConnectedOpeningImageFilter.h
@@ -10664,8 +10202,6 @@ public ";
 gray scale dilation of an image
 
 
-Performs Dilation in a grayscale image.
-
 Dilate an image using grayscale morphology. Dilation takes the maximum
 of all the pixels identified by the structuring element. The
 structuring element is assumed to be composed of binary values (zero
@@ -10680,7 +10216,7 @@ All Examples
 Dilate a grayscale image
 
 See:
- itk::simple::GrayscaleDilateImageFilter for the procedural interface
+ itk::simple::GrayscaleDilate for the procedural interface
 
 
 C++ includes: sitkGrayscaleDilateImageFilter.h
@@ -10762,8 +10298,6 @@ public ";
 gray scale dilation of an image
 
 
-Performs Erode in a grayscale image.
-
 Erode an image using grayscale morphology. Dilation takes the maximum
 of all the pixels identified by the structuring element. The
 structuring element is assumed to be composed of binary values (zero
@@ -10778,7 +10312,7 @@ All Examples
 Erode a grayscale image
 
 See:
- itk::simple::GrayscaleErodeImageFilter for the procedural interface
+ itk::simple::GrayscaleErode for the procedural interface
 
 
 C++ includes: sitkGrayscaleErodeImageFilter.h
@@ -10881,7 +10415,7 @@ See:
 
 MorphologyImageFilter, GrayscaleErodeImageFilter, GrayscaleFunctionErodeImageFilter, BinaryErodeImageFilter
 
- itk::simple::GrayscaleFillholeImageFilter for the procedural interface
+ itk::simple::GrayscaleFillhole for the procedural interface
 
 
 C++ includes: sitkGrayscaleFillholeImageFilter.h
@@ -10992,7 +10526,7 @@ compatibility.
 See:
 MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter, ReconstructionByDilationImageFilter
 
- itk::simple::GrayscaleGeodesicDilateImageFilter for the procedural interface
+ itk::simple::GrayscaleGeodesicDilate for the procedural interface
 
 
 C++ includes: sitkGrayscaleGeodesicDilateImageFilter.h
@@ -11137,7 +10671,7 @@ compatibility.
 See:
 MorphologyImageFilter, GrayscaleErodeImageFilter, GrayscaleFunctionErodeImageFilter, BinaryErodeImageFilter, ReconstructionByErosionImageFilter
 
- itk::simple::GrayscaleGeodesicErodeImageFilter for the procedural interface
+ itk::simple::GrayscaleGeodesicErode for the procedural interface
 
 
 C++ includes: sitkGrayscaleGeodesicErodeImageFilter.h
@@ -11283,7 +10817,7 @@ See:
 
 MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter
 
- itk::simple::GrayscaleGrindPeakImageFilter for the procedural interface
+ itk::simple::GrayscaleGrindPeak for the procedural interface
 
 
 C++ includes: sitkGrayscaleGrindPeakImageFilter.h
@@ -11371,8 +10905,6 @@ public ";
 gray scale dilation of an image
 
 
-Performs morphological closing in a grayscale image.
-
 Erode an image using grayscale morphology. Dilation takes the maximum
 of all the pixels identified by the structuring element. The
 structuring element is assumed to be composed of binary values (zero
@@ -11381,11 +10913,19 @@ are candidates for affecting the center pixel.
 See:
 MorphologyImageFilter, GrayscaleFunctionErodeImageFilter, BinaryErodeImageFilter
 
- itk::simple::GrayscaleMorphologicalClosingImageFilter for the procedural interface
+ itk::simple::GrayscaleMorphologicalClosing for the procedural interface
 
 
 C++ includes: sitkGrayscaleMorphologicalClosingImageFilter.h
 */"
+
+%javamethodmodifiers  itk::simple::GrayscaleMorphologicalClosingImageFilter::Execute "/**
+Image itk::simple::GrayscaleMorphologicalClosingImageFilter::Execute(const Image &image1, bool safeBorder)
+
+Execute the filter on the input image with the given parameters
+
+*/
+public ";
 
 %javamethodmodifiers  itk::simple::GrayscaleMorphologicalClosingImageFilter::Execute "/**
 Image itk::simple::GrayscaleMorphologicalClosingImageFilter::Execute(const Image &image1)
@@ -11413,11 +10953,33 @@ Name of this class
 */
 public ";
 
+%javamethodmodifiers  itk::simple::GrayscaleMorphologicalClosingImageFilter::GetSafeBorder "/**
+bool itk::simple::GrayscaleMorphologicalClosingImageFilter::GetSafeBorder()
+
+A safe border is added to input image to avoid borders effects and
+remove it once the closing is done.
+
+*/
+public ";
+
 %javamethodmodifiers  itk::simple::GrayscaleMorphologicalClosingImageFilter::GrayscaleMorphologicalClosingImageFilter "/**
 itk::simple::GrayscaleMorphologicalClosingImageFilter::GrayscaleMorphologicalClosingImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::GrayscaleMorphologicalClosingImageFilter::SafeBorderOff "/**
+Self& itk::simple::GrayscaleMorphologicalClosingImageFilter::SafeBorderOff()
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::GrayscaleMorphologicalClosingImageFilter::SafeBorderOn "/**
+Self& itk::simple::GrayscaleMorphologicalClosingImageFilter::SafeBorderOn()
+
+Set the value of SafeBorder to true or false respectfully.
 
 */
 public ";
@@ -11449,6 +11011,15 @@ Set/Get the kernel or structuring elemenent used for the morphology
 */
 public ";
 
+%javamethodmodifiers  itk::simple::GrayscaleMorphologicalClosingImageFilter::SetSafeBorder "/**
+Self& itk::simple::GrayscaleMorphologicalClosingImageFilter::SetSafeBorder(bool SafeBorder)
+
+A safe border is added to input image to avoid borders effects and
+remove it once the closing is done.
+
+*/
+public ";
+
 %javamethodmodifiers  itk::simple::GrayscaleMorphologicalClosingImageFilter::ToString "/**
 std::string itk::simple::GrayscaleMorphologicalClosingImageFilter::ToString() const
 
@@ -11463,8 +11034,6 @@ public ";
 gray scale dilation of an image
 
 
-Performs morphological opening in a grayscale image.
-
 Dilate an image using grayscale morphology. Dilation takes the maximum
 of all the pixels identified by the structuring element. The
 structuring element is assumed to be composed of binary values (zero
@@ -11473,11 +11042,19 @@ are candidates for affecting the center pixel.
 See:
 MorphologyImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter
 
- itk::simple::GrayscaleMorphologicalOpeningImageFilter for the procedural interface
+ itk::simple::GrayscaleMorphologicalOpening for the procedural interface
 
 
 C++ includes: sitkGrayscaleMorphologicalOpeningImageFilter.h
 */"
+
+%javamethodmodifiers  itk::simple::GrayscaleMorphologicalOpeningImageFilter::Execute "/**
+Image itk::simple::GrayscaleMorphologicalOpeningImageFilter::Execute(const Image &image1, bool safeBorder)
+
+Execute the filter on the input image with the given parameters
+
+*/
+public ";
 
 %javamethodmodifiers  itk::simple::GrayscaleMorphologicalOpeningImageFilter::Execute "/**
 Image itk::simple::GrayscaleMorphologicalOpeningImageFilter::Execute(const Image &image1)
@@ -11505,11 +11082,33 @@ Name of this class
 */
 public ";
 
+%javamethodmodifiers  itk::simple::GrayscaleMorphologicalOpeningImageFilter::GetSafeBorder "/**
+bool itk::simple::GrayscaleMorphologicalOpeningImageFilter::GetSafeBorder()
+
+A safe border is added to input image to avoid borders effects and
+remove it once the closing is done.
+
+*/
+public ";
+
 %javamethodmodifiers  itk::simple::GrayscaleMorphologicalOpeningImageFilter::GrayscaleMorphologicalOpeningImageFilter "/**
 itk::simple::GrayscaleMorphologicalOpeningImageFilter::GrayscaleMorphologicalOpeningImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::GrayscaleMorphologicalOpeningImageFilter::SafeBorderOff "/**
+Self& itk::simple::GrayscaleMorphologicalOpeningImageFilter::SafeBorderOff()
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::GrayscaleMorphologicalOpeningImageFilter::SafeBorderOn "/**
+Self& itk::simple::GrayscaleMorphologicalOpeningImageFilter::SafeBorderOn()
+
+Set the value of SafeBorder to true or false respectfully.
 
 */
 public ";
@@ -11541,6 +11140,15 @@ Set/Get the kernel or structuring elemenent used for the morphology
 */
 public ";
 
+%javamethodmodifiers  itk::simple::GrayscaleMorphologicalOpeningImageFilter::SetSafeBorder "/**
+Self& itk::simple::GrayscaleMorphologicalOpeningImageFilter::SetSafeBorder(bool SafeBorder)
+
+A safe border is added to input image to avoid borders effects and
+remove it once the closing is done.
+
+*/
+public ";
+
 %javamethodmodifiers  itk::simple::GrayscaleMorphologicalOpeningImageFilter::ToString "/**
 std::string itk::simple::GrayscaleMorphologicalOpeningImageFilter::ToString() const
 
@@ -11554,7 +11162,7 @@ public ";
 
 
 See:
- itk::simple::GreaterEqualImageFilter for the procedural interface
+ itk::simple::GreaterEqual for the procedural interface
 
 
 C++ includes: sitkGreaterEqualImageFilter.h
@@ -11668,7 +11276,7 @@ public ";
 
 
 See:
- itk::simple::GreaterImageFilter for the procedural interface
+ itk::simple::Greater for the procedural interface
 
 
 C++ includes: sitkGreaterImageFilter.h
@@ -11789,7 +11397,7 @@ C++ includes: sitkGridImageSource.h
 */"
 
 %javamethodmodifiers  itk::simple::GridImageSource::Execute "/**
-Image itk::simple::GridImageSource::Execute(PixelIDValueType outputPixelType, std::vector< unsigned int > size,
+Image itk::simple::GridImageSource::Execute(PixelIDValueEnum outputPixelType, std::vector< unsigned int > size,
 std::vector< double > sigma, std::vector< double > gridSpacing,
 std::vector< double > gridOffset, double scale, std::vector< double >
 origin, std::vector< double > spacing, std::vector< double >
@@ -11837,7 +11445,7 @@ std::vector<double> itk::simple::GridImageSource::GetOrigin()
 public ";
 
 %javamethodmodifiers  itk::simple::GridImageSource::GetOutputPixelType "/**
-PixelIDValueType itk::simple::GridImageSource::GetOutputPixelType()
+PixelIDValueEnum itk::simple::GridImageSource::GetOutputPixelType()
 */
 public ";
 
@@ -11891,7 +11499,7 @@ Self& itk::simple::GridImageSource::SetOrigin(std::vector< double > Origin)
 public ";
 
 %javamethodmodifiers  itk::simple::GridImageSource::SetOutputPixelType "/**
-Self& itk::simple::GridImageSource::SetOutputPixelType(PixelIDValueType OutputPixelType)
+Self& itk::simple::GridImageSource::SetOutputPixelType(PixelIDValueEnum OutputPixelType)
 */
 public ";
 
@@ -11924,152 +11532,6 @@ Print ourselves out
 public ";
 
 
-%typemap(javaimports) itk::simple::GridSourceImageFilter "/**
-
-
-See:
- itk::simple::GridSource for the procedural interface
-
-
-C++ includes: sitkGridSourceImageFilter.h
-*/"
-
-%javamethodmodifiers  itk::simple::GridSourceImageFilter::Execute "/**
-Image itk::simple::GridSourceImageFilter::Execute(PixelIDValueType inOutputPixelType, std::vector< unsigned int >
-inSize, std::vector< double > inSigma, std::vector< double >
-inGridSpacing, std::vector< double > inGridOffset, double inScale,
-std::vector< double > inOrigin, std::vector< double > inSpacing,
-std::vector< double > inDirection)
-
-Execute the filter on the input image with the given parameters
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GridSourceImageFilter::Execute "/**
-Image itk::simple::GridSourceImageFilter::Execute()
-
-Execute the filter on the input image
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GridSourceImageFilter::GetDirection "/**
-std::vector<double> itk::simple::GridSourceImageFilter::GetDirection()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GridSourceImageFilter::GetGridOffset "/**
-std::vector<double> itk::simple::GridSourceImageFilter::GetGridOffset()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GridSourceImageFilter::GetGridSpacing "/**
-std::vector<double> itk::simple::GridSourceImageFilter::GetGridSpacing()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GridSourceImageFilter::GetName "/**
-std::string itk::simple::GridSourceImageFilter::GetName() const
-
-Name of this class
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GridSourceImageFilter::GetOrigin "/**
-std::vector<double> itk::simple::GridSourceImageFilter::GetOrigin()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GridSourceImageFilter::GetOutputPixelType "/**
-PixelIDValueType itk::simple::GridSourceImageFilter::GetOutputPixelType()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GridSourceImageFilter::GetScale "/**
-double itk::simple::GridSourceImageFilter::GetScale()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GridSourceImageFilter::GetSigma "/**
-std::vector<double> itk::simple::GridSourceImageFilter::GetSigma()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GridSourceImageFilter::GetSize "/**
-std::vector<unsigned int> itk::simple::GridSourceImageFilter::GetSize()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GridSourceImageFilter::GetSpacing "/**
-std::vector<double> itk::simple::GridSourceImageFilter::GetSpacing()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GridSourceImageFilter::GridSourceImageFilter "/**
-itk::simple::GridSourceImageFilter::GridSourceImageFilter()
-
-Default Constructor that takes no arguments and initializes default
-parameters
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GridSourceImageFilter::SetDirection "/**
-Self& itk::simple::GridSourceImageFilter::SetDirection(std::vector< double > Direction)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GridSourceImageFilter::SetGridOffset "/**
-Self& itk::simple::GridSourceImageFilter::SetGridOffset(std::vector< double > GridOffset)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GridSourceImageFilter::SetGridSpacing "/**
-Self& itk::simple::GridSourceImageFilter::SetGridSpacing(std::vector< double > GridSpacing)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GridSourceImageFilter::SetOrigin "/**
-Self& itk::simple::GridSourceImageFilter::SetOrigin(std::vector< double > Origin)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GridSourceImageFilter::SetOutputPixelType "/**
-Self& itk::simple::GridSourceImageFilter::SetOutputPixelType(PixelIDValueType OutputPixelType)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GridSourceImageFilter::SetScale "/**
-Self& itk::simple::GridSourceImageFilter::SetScale(double Scale)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GridSourceImageFilter::SetSigma "/**
-Self& itk::simple::GridSourceImageFilter::SetSigma(std::vector< double > Sigma)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GridSourceImageFilter::SetSize "/**
-Self& itk::simple::GridSourceImageFilter::SetSize(std::vector< unsigned int > Size)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GridSourceImageFilter::SetSpacing "/**
-Self& itk::simple::GridSourceImageFilter::SetSpacing(std::vector< double > Spacing)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::GridSourceImageFilter::ToString "/**
-std::string itk::simple::GridSourceImageFilter::ToString() const
-
-Print ourselves out
-
-*/
-public ";
-
-
 %typemap(javaimports) itk::simple::HConcaveImageFilter "/**
 
 Identify local minima whose depth below the baseline is greater than
@@ -12088,7 +11550,7 @@ See:
 
 MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter
 
- itk::simple::HConcaveImageFilter for the procedural interface
+ itk::simple::HConcave for the procedural interface
 
 
 C++ includes: sitkHConcaveImageFilter.h
@@ -12211,7 +11673,7 @@ See:
 
 MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter
 
- itk::simple::HConvexImageFilter for the procedural interface
+ itk::simple::HConvex for the procedural interface
 
 
 C++ includes: sitkHConvexImageFilter.h
@@ -12341,7 +11803,7 @@ See:
 
 MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter
 
- itk::simple::HMaximaImageFilter for the procedural interface
+ itk::simple::HMaxima for the procedural interface
 
 
 C++ includes: sitkHMaximaImageFilter.h
@@ -12435,7 +11897,7 @@ See:
 
 MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter
 
- itk::simple::HMinimaImageFilter for the procedural interface
+ itk::simple::HMinima for the procedural interface
 
 
 C++ includes: sitkHMinimaImageFilter.h
@@ -12561,7 +12023,7 @@ has an odd size in the X-dimension. Use SetActualXDimensionIsOdd()to set this fl
 See:
  ForwardFFTImageFilter, HalfHermitianToRealInverseFFTImageFilter
 
- itk::simple::HalfHermitianToRealInverseFFTImageFilter for the procedural interface
+ itk::simple::HalfHermitianToRealInverseFFT for the procedural interface
 
 
 C++ includes: sitkHalfHermitianToRealInverseFFTImageFilter.h
@@ -12642,6 +12104,12 @@ public ";
 
 Compute the sha1 or md5 hash of an image.
 
+
+
+See:
+ itk::simple::Hash for the procedural interface
+
+
 C++ includes: sitkHashImageFilter.h
 */"
 
@@ -12703,7 +12171,7 @@ both images have the same number of dimensions.
 See:
 DirectedHausdorffDistanceImageFilter
 
- itk::simple::HausdorffDistanceImageFilter for the procedural interface
+ itk::simple::HausdorffDistance for the procedural interface
 
 
 C++ includes: sitkHausdorffDistanceImageFilter.h
@@ -12792,7 +12260,7 @@ Method  of MRI Scale Standardization\", IEEE Transactions on Medical
 Imaging, 19(2):143-150, 2000.
 
 See:
- itk::simple::HistogramMatchingImageFilter for the procedural interface
+ itk::simple::HistogramMatching for the procedural interface
 
 
 C++ includes: sitkHistogramMatchingImageFilter.h
@@ -12929,7 +12397,7 @@ journal.org/browse/publication/811
 See:
 HistogramThresholdImageFitler
 
- itk::simple::HuangThresholdImageFilter for the procedural interface
+ itk::simple::HuangThreshold for the procedural interface
 
 
 C++ includes: sitkHuangThresholdImageFilter.h
@@ -13095,6 +12563,11 @@ Get/Set the Origin
 */
 public ";
 
+%javamethodmodifiers  itk::simple::Image::GetPixelID "/**
+PixelIDValueEnum itk::simple::Image::GetPixelID(void) const
+*/
+public ";
+
 %javamethodmodifiers  itk::simple::Image::GetPixelIDTypeAsString "/**
 std::string itk::simple::Image::GetPixelIDTypeAsString(void) const
 */
@@ -13186,6 +12659,11 @@ Read a 2D or 3D image and return a smart pointer to a SimpleITK image.
 This reader handles scalar and vector images and returns an image with
 the same type as the file on disk.
 
+
+See:
+ itk::simple::ReadImage for the procedural interface
+
+
 C++ includes: sitkImageFileReader.h
 */"
 
@@ -13218,6 +12696,11 @@ Write out a SimpleITK image to the specified file location.
 This writer tries to write the image out using the image's type to the
 location specified in FileName. If writing fails, an ITK exception is
 thrown.
+
+
+See:
+ itk::simple::WriteImage for the procedural interface
+
 
 C++ includes: sitkImageFileWriter.h
 */"
@@ -13302,6 +12785,12 @@ C++ includes: sitkImageReaderBase.h
 
 Read series of image into a SimpleITK image.
 
+
+
+See:
+ itk::simple::ReadImage for the procedural interface
+
+
 C++ includes: sitkImageSeriesReader.h
 */"
 
@@ -13335,6 +12824,11 @@ image.
 This filter is intended to interface SimpleITK to other image
 processing libraries and applications that may have their own
 representation of an image class.
+
+
+See:
+ itk::simple::ImportAsInt8, itk::simple::ImportAsUInt8, itk::simple::ImportAsInt16, itk::simple::ImportAsUInt16, itk::simple::ImportAsInt32, itk::simple::ImportAsUInt32, itk::simple::ImportAsInt64, itk::simple::ImportAsUInt64, itk::simple::ImportAsFloat, itk::simple::ImportAsDouble for the procedural interfaces.
+
 
 C++ includes: sitkImportImageFilter.h
 */"
@@ -13459,7 +12953,7 @@ All Examples
 See:
  RescaleIntensityImageFilter
 
- itk::simple::IntensityWindowingImageFilter for the procedural interface
+ itk::simple::IntensityWindowing for the procedural interface
 
 
 
@@ -13600,7 +13094,7 @@ journal.org/browse/publication/811
 See:
 HistogramThresholdImageFitler
 
- itk::simple::IntermodesThresholdImageFilter for the procedural interface
+ itk::simple::IntermodesThreshold for the procedural interface
 
 
 C++ includes: sitkIntermodesThresholdImageFilter.h
@@ -13714,7 +13208,7 @@ de Jouy-en-Josas, France Cory Quammen, The University of North
 Carolina at Chapel Hill
 
 See:
- itk::simple::InverseDeconvolutionImageFilter for the procedural interface
+ itk::simple::InverseDeconvolution for the procedural interface
 
 
 C++ includes: sitkInverseDeconvolutionImageFilter.h
@@ -13850,7 +13344,7 @@ imaginary component is discarded.
 See:
  ForwardFFTImageFilter, InverseFFTImageFilter
 
- itk::simple::InverseFFTImageFilter for the procedural interface
+ itk::simple::InverseFFT for the procedural interface
 
 
 C++ includes: sitkInverseFFTImageFilter.h
@@ -13912,7 +13406,7 @@ All Examples
 Invert an image
 
 See:
- itk::simple::InvertIntensityImageFilter for the procedural interface
+ itk::simple::InvertIntensity for the procedural interface
 
 
 C++ includes: sitkInvertIntensityImageFilter.h
@@ -13993,7 +13487,7 @@ Systems Theory , pages 48-51, Feb 2003.
 
 
 See:
- itk::simple::IsoContourDistanceImageFilter for the procedural interface
+ itk::simple::IsoContourDistance for the procedural interface
 
 
 C++ includes: sitkIsoContourDistanceImageFilter.h
@@ -14096,7 +13590,7 @@ journal.org/browse/publication/811
 See:
 HistogramThresholdImageFitler
 
- itk::simple::IsoDataThresholdImageFilter for the procedural interface
+ itk::simple::IsoDataThreshold for the procedural interface
 
 
 C++ includes: sitkIsoDataThresholdImageFilter.h
@@ -14225,7 +13719,7 @@ such threshold exists. The user can check for this by querying the GetThresholdi
 
 
 See:
- itk::simple::IsolatedConnectedImageFilter for the procedural interface
+ itk::simple::IsolatedConnected for the procedural interface
 
 
 C++ includes: sitkIsolatedConnectedImageFilter.h
@@ -14439,7 +13933,7 @@ UpperValueLimit. UpperValueLimit defaults to the 1.0.
 
 
 See:
- itk::simple::IsolatedWatershedImageFilter for the procedural interface
+ itk::simple::IsolatedWatershed for the procedural interface
 
 
 C++ includes: sitkIsolatedWatershedImageFilter.h
@@ -14622,7 +14116,7 @@ listhttp://public.kitware.com/pipermail/insight-
 users/2004-February/006542.html
 
 See:
- itk::simple::JoinSeriesImageFilter for the procedural interface
+ itk::simple::JoinSeries for the procedural interface
 
 
 C++ includes: sitkJoinSeriesImageFilter.h
@@ -14777,7 +14271,7 @@ journal.org/browse/publication/811
 See:
 HistogramThresholdImageFitler
 
- itk::simple::KittlerIllingworthThresholdImageFilter for the procedural interface
+ itk::simple::KittlerIllingworthThreshold for the procedural interface
 
 
 C++ includes: sitkKittlerIllingworthThresholdImageFilter.h
@@ -14896,7 +14390,7 @@ All Examples
 Label the contours of connected components
 
 See:
- itk::simple::LabelContourImageFilter for the procedural interface
+ itk::simple::LabelContour for the procedural interface
 
 
 C++ includes: sitkLabelContourImageFilter.h
@@ -15032,7 +14526,7 @@ All Examples
 Color the boundaries of labeled regions in an image
 
 See:
- itk::simple::LabelMapContourOverlayImageFilter for the procedural interface
+ itk::simple::LabelMapContourOverlay for the procedural interface
 
 
 C++ includes: sitkLabelMapContourOverlayImageFilter.h
@@ -15201,7 +14695,7 @@ Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www
 See:
  LabelMapToBinaryImageFilter, LabelMapToLabelImageFilter
 
- itk::simple::LabelMapMaskImageFilter for the procedural interface
+ itk::simple::LabelMapMask for the procedural interface
 
 
 C++ includes: sitkLabelMapMaskImageFilter.h
@@ -15335,7 +14829,7 @@ Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www
 See:
  LabelMapToBinaryImageFilter, LabelMapToLabelImageFilter
 
- itk::simple::LabelMapOverlayImageFilter for the procedural interface
+ itk::simple::LabelMapOverlay for the procedural interface
 
 
 C++ includes: sitkLabelMapOverlayImageFilter.h
@@ -15418,7 +14912,7 @@ de Jouy-en-Josas, France.
 See:
  LabelMapToLabelImageFilter, LabelMapMaskImageFilter
 
- itk::simple::LabelMapToBinaryImageFilter for the procedural interface
+ itk::simple::LabelMapToBinary for the procedural interface
 
 
 C++ includes: sitkLabelMapToBinaryImageFilter.h
@@ -15523,7 +15017,7 @@ Convert a LabelMap to a normal image with different values
 representing each region
 
 See:
- itk::simple::LabelMapToLabelImageFilter for the procedural interface
+ itk::simple::LabelMapToLabel for the procedural interface
 
 
 C++ includes: sitkLabelMapToLabelImageFilter.h
@@ -15577,7 +15071,7 @@ Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www
 See:
  LabelMapToBinaryImageFilter, LabelMapMaskImageFilter
 
- itk::simple::LabelMapToRGBImageFilter for the procedural interface
+ itk::simple::LabelMapToRGB for the procedural interface
 
 
 C++ includes: sitkLabelMapToRGBImageFilter.h
@@ -15642,7 +15136,7 @@ All Examples
 Overlay a LabelMap on an image
 
 See:
- itk::simple::LabelOverlayImageFilter for the procedural interface
+ itk::simple::LabelOverlay for the procedural interface
 
 
 C++ includes: sitkLabelOverlayImageFilter.h
@@ -15728,6 +15222,12 @@ public ";
 %typemap(javaimports) itk::simple::LabelStatisticsImageFilter "/**
 
 Compute min, max, variance, and mean of an image.
+
+
+
+See:
+ itk::simple::LabelStatistics for the procedural interface
+
 
 C++ includes: sitkLabelStatisticsImageFilter.h
 */"
@@ -15847,7 +15347,7 @@ Monash University, Melbourne, Australia.
 See:
 ScalarToRGBPixelFunctor LabelOverlayImageFilter
 
- itk::simple::LabelToRGBImageFilter for the procedural interface
+ itk::simple::LabelToRGB for the procedural interface
 
 
 C++ includes: sitkLabelToRGBImageFilter.h
@@ -15941,7 +15441,7 @@ IterativeDeconvolutionImageFilter
 
  ProjectedLandweberDeconvolutionImageFilter
 
- itk::simple::LandweberDeconvolutionImageFilter for the procedural interface
+ itk::simple::LandweberDeconvolution for the procedural interface
 
 
 C++ includes: sitkLandweberDeconvolutionImageFilter.h
@@ -16117,7 +15617,7 @@ All Examples
 Compute the Laplacian of an image
 
 See:
- itk::simple::LaplacianImageFilter for the procedural interface
+ itk::simple::Laplacian for the procedural interface
 
 
 C++ includes: sitkLaplacianImageFilter.h
@@ -16210,7 +15710,7 @@ All Examples
 Compute the Laplacian of Gaussian (LoG) of an image
 
 See:
- itk::simple::LaplacianRecursiveGaussianImageFilter for the procedural interface
+ itk::simple::LaplacianRecursiveGaussian for the procedural interface
 
 
 C++ includes: sitkLaplacianRecursiveGaussianImageFilter.h
@@ -16379,7 +15879,7 @@ LaplacianSegmentationLevelSetFunction,
 
 SparseFieldLevelSetImageFilter
 
- itk::simple::LaplacianSegmentationLevelSetImageFilter for the procedural interface
+ itk::simple::LaplacianSegmentationLevelSet for the procedural interface
 
 
 C++ includes: sitkLaplacianSegmentationLevelSetImageFilter.h
@@ -16552,7 +16052,7 @@ All Examples
 Sharpen an image
 
 See:
- itk::simple::LaplacianSharpeningImageFilter for the procedural interface
+ itk::simple::LaplacianSharpening for the procedural interface
 
 
 C++ includes: sitkLaplacianSharpeningImageFilter.h
@@ -16635,7 +16135,7 @@ public ";
 
 
 See:
- itk::simple::LessEqualImageFilter for the procedural interface
+ itk::simple::LessEqual for the procedural interface
 
 
 C++ includes: sitkLessEqualImageFilter.h
@@ -16749,7 +16249,7 @@ public ";
 
 
 See:
- itk::simple::LessImageFilter for the procedural interface
+ itk::simple::Less for the procedural interface
 
 
 C++ includes: sitkLessImageFilter.h
@@ -16878,7 +16378,7 @@ journal.org/browse/publication/811
 See:
 HistogramThresholdImageFitler
 
- itk::simple::LiThresholdImageFilter for the procedural interface
+ itk::simple::LiThreshold for the procedural interface
 
 
 C++ includes: sitkLiThresholdImageFilter.h
@@ -16982,7 +16482,7 @@ The computation is performed using vcl_log10(x).
 
 
 See:
- itk::simple::Log10ImageFilter for the procedural interface
+ itk::simple::Log10 for the procedural interface
 
 
 C++ includes: sitkLog10ImageFilter.h
@@ -17029,7 +16529,7 @@ Computes the log() of each pixel.
 
 
 See:
- itk::simple::LogImageFilter for the procedural interface
+ itk::simple::Log for the procedural interface
 
 
 C++ includes: sitkLogImageFilter.h
@@ -17081,7 +16581,7 @@ same dimension (e.g. all 2D, or all 3D, or all ND)
 
 
 See:
- itk::simple::MagnitudeAndPhaseToComplexImageFilter for the procedural interface
+ itk::simple::MagnitudeAndPhaseToComplex for the procedural interface
 
 
 C++ includes: sitkMagnitudeAndPhaseToComplexImageFilter.h
@@ -17139,10 +16639,6 @@ public ";
 Mask an image with a mask. image with the mask.
 
 
-Some global documentationTodo
- MaskImageFilter will support VectorImages shortly
-
-
 This class is templated over the types of the input image type, the
 mask image type and the type of the output image. Numeric conversions
 (castings) are done by the C++ defaults. The pixel type of the input 2
@@ -17164,7 +16660,7 @@ All Examples
 Apply a mask to an image
 
 See:
- itk::simple::MaskImageFilter for the procedural interface
+ itk::simple::Mask for the procedural interface
 
 
 C++ includes: sitkMaskImageFilter.h
@@ -17251,7 +16747,7 @@ All Examples
 Apply the inverse of a mask to an image
 
 See:
- itk::simple::MaskNegatedImageFilter for the procedural interface
+ itk::simple::MaskNegated for the procedural interface
 
 
 C++ includes: sitkMaskNegatedImageFilter.h
@@ -17358,7 +16854,7 @@ and Pattern Recognition, 2010.
 : Dirk Padfield, GE Global Research,padfield@research.ge.com
 
 See:
- itk::simple::MaskedFFTNormalizedCorrelationImageFilter for the procedural interface
+ itk::simple::MaskedFFTNormalizedCorrelation for the procedural interface
 
 
 C++ includes: sitkMaskedFFTNormalizedCorrelationImageFilter.h
@@ -17443,7 +16939,7 @@ journal.org/browse/publication/811
 See:
 HistogramThresholdImageFitler
 
- itk::simple::MaximumEntropyThresholdImageFilter for the procedural interface
+ itk::simple::MaximumEntropyThreshold for the procedural interface
 
 
 C++ includes: sitkMaximumEntropyThresholdImageFilter.h
@@ -17554,7 +17050,7 @@ Pixel wise compare two input images and set the output pixel to their
 max
 
 See:
- itk::simple::MaximumImageFilter for the procedural interface
+ itk::simple::Maximum for the procedural interface
 
 
 C++ includes: sitkMaximumImageFilter.h
@@ -17638,7 +17134,7 @@ ProjectionImageFilter
 
  BinaryProjectionImageFilter
 
- itk::simple::MaximumProjectionImageFilter for the procedural interface
+ itk::simple::MaximumProjection for the procedural interface
 
 
 C++ includes: sitkMaximumProjectionImageFilter.h
@@ -17722,7 +17218,7 @@ All Examples
 Mean filter an image
 
 See:
- itk::simple::MeanImageFilter for the procedural interface
+ itk::simple::Mean for the procedural interface
 
 
 C++ includes: sitkMeanImageFilter.h
@@ -17819,7 +17315,7 @@ ProjectionImageFilter
 
  MaximumProjectionImageFilter
 
- itk::simple::MeanProjectionImageFilter for the procedural interface
+ itk::simple::MeanProjection for the procedural interface
 
 
 C++ includes: sitkMeanProjectionImageFilter.h
@@ -17948,7 +17444,7 @@ Median filter an image
 Median filter an RGB image
 
 See:
- itk::simple::MedianImageFilter for the procedural interface
+ itk::simple::Median for the procedural interface
 
 
 C++ includes: sitkMedianImageFilter.h
@@ -18045,7 +17541,7 @@ ProjectionImageFilter
 
  MeanProjectionImageFilter
 
- itk::simple::MedianProjectionImageFilter for the procedural interface
+ itk::simple::MedianProjection for the procedural interface
 
 
 C++ includes: sitkMedianProjectionImageFilter.h
@@ -18138,7 +17634,7 @@ MinMaxCurvatureFlowFunction
 
  BinaryMinMaxCurvatureFlowImageFilter
 
- itk::simple::MinMaxCurvatureFlowImageFilter for the procedural interface
+ itk::simple::MinMaxCurvatureFlow for the procedural interface
 
 
 C++ includes: sitkMinMaxCurvatureFlowImageFilter.h
@@ -18239,7 +17735,7 @@ Pixel wise compare two input images and set the output pixel to their
 min
 
 See:
- itk::simple::MinimumImageFilter for the procedural interface
+ itk::simple::Minimum for the procedural interface
 
 
 C++ includes: sitkMinimumImageFilter.h
@@ -18303,7 +17799,7 @@ pipeline. The implementation uses the StatisticsImageFilter.
 See:
  StatisticsImageFilter
 
- itk::simple::MinimumMaximumImageFilter for the procedural interface
+ itk::simple::MinimumMaximum for the procedural interface
 
 
 C++ includes: sitkMinimumMaximumImageFilter.h
@@ -18395,7 +17891,7 @@ ProjectionImageFilter
 
  MeanProjectionImageFilter
 
- itk::simple::MinimumProjectionImageFilter for the procedural interface
+ itk::simple::MinimumProjection for the procedural interface
 
 
 C++ includes: sitkMinimumProjectionImageFilter.h
@@ -18477,7 +17973,7 @@ All Examples
 Pad an image using mirroring over the boundaries
 
 See:
- itk::simple::MirrorPadImageFilter for the procedural interface
+ itk::simple::MirrorPad for the procedural interface
 
 
 C++ includes: sitkMirrorPadImageFilter.h
@@ -18556,7 +18052,7 @@ Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
 
 See:
- itk::simple::ModulusImageFilter for the procedural interface
+ itk::simple::Modulus for the procedural interface
 
 
 C++ includes: sitkModulusImageFilter.h
@@ -18628,7 +18124,7 @@ journal.org/browse/publication/811
 See:
 HistogramThresholdImageFitler
 
- itk::simple::MomentsThresholdImageFilter for the procedural interface
+ itk::simple::MomentsThreshold for the procedural interface
 
 
 C++ includes: sitkMomentsThresholdImageFilter.h
@@ -18736,7 +18232,7 @@ are candidates for affecting the center pixel.
 See:
 MorphologyImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter
 
- itk::simple::MorphologicalGradientImageFilter for the procedural interface
+ itk::simple::MorphologicalGradient for the procedural interface
 
 
 C++ includes: sitkMorphologicalGradientImageFilter.h
@@ -18859,7 +18355,7 @@ Monash University, Melbourne, Australia.
 See:
 WatershedImageFilter, MorphologicalWatershedImageFilter
 
- itk::simple::MorphologicalWatershedFromMarkersImageFilter for the procedural interface
+ itk::simple::MorphologicalWatershedFromMarkers for the procedural interface
 
 
 C++ includes: sitkMorphologicalWatershedFromMarkersImageFilter.h
@@ -18997,7 +18493,7 @@ de Jouy-en-Josas, France.
 See:
 WatershedImageFilter, MorphologicalWatershedFromMarkersImageFilter
 
- itk::simple::MorphologicalWatershedImageFilter for the procedural interface
+ itk::simple::MorphologicalWatershed for the procedural interface
 
 
 C++ includes: sitkMorphologicalWatershedImageFilter.h
@@ -19124,80 +18620,6 @@ Print ourselves out
 public ";
 
 
-%typemap(javaimports) itk::simple::MultiplyByConstantImageFilter "/**
-
-Multiply all input pixels by a constant.
-
-
-This filter is templated over the input image type and the output
-image type.
-Tom Vercauteren, INRIA & Mauna Kea Technologies Based on filters from
-the Insight Journal paper:http://hdl.handle.net/1926/510
-
-See:
- MultiplyImageFilter
-
- itk::simple::MultiplyByConstant for the procedural interface
-
-
-C++ includes: sitkMultiplyByConstantImageFilter.h
-*/"
-
-%javamethodmodifiers  itk::simple::MultiplyByConstantImageFilter::Execute "/**
-Image itk::simple::MultiplyByConstantImageFilter::Execute(const Image &image1, double inConstant)
-
-Execute the filter on the input image with the given parameters
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::MultiplyByConstantImageFilter::Execute "/**
-Image itk::simple::MultiplyByConstantImageFilter::Execute(const Image &image1)
-
-Execute the filter on the input image
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::MultiplyByConstantImageFilter::GetConstant "/**
-double itk::simple::MultiplyByConstantImageFilter::GetConstant()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::MultiplyByConstantImageFilter::GetName "/**
-std::string itk::simple::MultiplyByConstantImageFilter::GetName() const
-
-Name of this class
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::MultiplyByConstantImageFilter::MultiplyByConstantImageFilter "/**
-itk::simple::MultiplyByConstantImageFilter::MultiplyByConstantImageFilter()
-
-Default Constructor that takes no arguments and initializes default
-parameters
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::MultiplyByConstantImageFilter::SetConstant "/**
-Self& itk::simple::MultiplyByConstantImageFilter::SetConstant(double Constant)
-
-Set the constant that will be used to multiply all the image pixels.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::MultiplyByConstantImageFilter::ToString "/**
-std::string itk::simple::MultiplyByConstantImageFilter::ToString() const
-
-Print ourselves out
-
-*/
-public ";
-
-
 %typemap(javaimports) itk::simple::MultiplyImageFilter "/**
 
 Pixel-wise multiplication of two images.
@@ -19214,7 +18636,7 @@ Multiply two images together
 Multiply every pixel in an image by a constant
 
 See:
- itk::simple::MultiplyImageFilter for the procedural interface
+ itk::simple::Multiply for the procedural interface
 
 
 C++ includes: sitkMultiplyImageFilter.h
@@ -19272,8 +18694,6 @@ public ";
 Implementation of the N4 bias field correction algorithm.
 
 
-Some global documentation
-
 The nonparametric nonuniform intensity normalization (N3) algorithm,
 as introduced by Sled et al. in 1998 is a method for correcting
 nonuniformity associated with MR images. The algorithm assumes a simple parametric model (Gaussian) for the bias field and does not require
@@ -19321,7 +18741,7 @@ and J.C. Gee. \"N4ITK:  Improved N3 Bias Correction\" IEEE
 Transactions on Medical Imaging, 29(6):1310-1320, June 2010.
 
 See:
- itk::simple::N4BiasFieldCorrectionImageFilter for the procedural interface
+ itk::simple::N4BiasFieldCorrection for the procedural interface
 
 
 C++ includes: sitkN4BiasFieldCorrectionImageFilter.h
@@ -19528,7 +18948,7 @@ WARNING:
 No numeric overflow checking is performed in this filter.
 
 See:
- itk::simple::NaryAddImageFilter for the procedural interface
+ itk::simple::NaryAdd for the procedural interface
 
 
 C++ includes: sitkNaryAddImageFilter.h
@@ -19616,7 +19036,7 @@ Department of Biochemistry and Program in Biomedical Informatics at
 Stanford University School of Medicine
 
 See:
- itk::simple::NaryMaximumImageFilter for the procedural interface
+ itk::simple::NaryMaximum for the procedural interface
 
 
 C++ includes: sitkNaryMaximumImageFilter.h
@@ -19689,15 +19109,13 @@ Label pixels that are connected to a seed and lie within a
 neighborhood.
 
 
-Some global documentation
-
 NeighborhoodConnectedImageFilterlabels pixels with ReplaceValue that
 are connected to an initial Seed AND whose neighbors all lie within a
 Lower and Upper threshold range.
 
 
 See:
- itk::simple::NeighborhoodConnectedImageFilter for the procedural interface
+ itk::simple::NeighborhoodConnected for the procedural interface
 
 
 C++ includes: sitkNeighborhoodConnectedImageFilter.h
@@ -19887,7 +19305,7 @@ All Examples
 Compute the local noise in an image
 
 See:
- itk::simple::NoiseImageFilter for the procedural interface
+ itk::simple::Noise for the procedural interface
 
 
 C++ includes: sitkNoiseImageFilter.h
@@ -19996,7 +19414,7 @@ All Examples
 Normalize an image
 
 See:
- itk::simple::NormalizeImageFilter for the procedural interface
+ itk::simple::Normalize for the procedural interface
 
 
 C++ includes: sitkNormalizeImageFilter.h
@@ -20063,7 +19481,7 @@ All Examples
 Scale all pixels so that their sum is a specified constant
 
 See:
- itk::simple::NormalizeToConstantImageFilter for the procedural interface
+ itk::simple::NormalizeToConstant for the procedural interface
 
 
 C++ includes: sitkNormalizeToConstantImageFilter.h
@@ -20156,7 +19574,7 @@ All Examples
 Normalized correlation
 
 See:
- itk::simple::NormalizedCorrelationImageFilter for the procedural interface
+ itk::simple::NormalizedCorrelation for the procedural interface
 
 
 C++ includes: sitkNormalizedCorrelationImageFilter.h
@@ -20200,7 +19618,7 @@ public ";
 
 
 See:
- itk::simple::NotEqualImageFilter for the procedural interface
+ itk::simple::NotEqual for the procedural interface
 
 
 C++ includes: sitkNotEqualImageFilter.h
@@ -20326,7 +19744,7 @@ the unary NOT operator in C++.
 
 
 See:
- itk::simple::NotImageFilter for the procedural interface
+ itk::simple::Not for the procedural interface
 
 
 C++ includes: sitkNotImageFilter.h
@@ -20391,7 +19809,7 @@ de Jouy-en-Josas, France.
 See:
  GrayscaleMorphologicalOpeningImageFilter
 
- itk::simple::OpeningByReconstructionImageFilter for the procedural interface
+ itk::simple::OpeningByReconstruction for the procedural interface
 
 
 C++ includes: sitkOpeningByReconstructionImageFilter.h
@@ -20563,7 +19981,7 @@ All Examples
 Binary OR two images
 
 See:
- itk::simple::OrImageFilter for the procedural interface
+ itk::simple::Or for the procedural interface
 
 
 C++ includes: sitkOrImageFilter.h
@@ -20637,7 +20055,7 @@ OtsuMultipleThresholdsCalculator
 
 ThresholdLabelerImageFilter
 
- itk::simple::OtsuMultipleThresholdsImageFilter for the procedural interface
+ itk::simple::OtsuMultipleThresholds for the procedural interface
 
 
 C++ includes: sitkOtsuMultipleThresholdsImageFilter.h
@@ -20756,7 +20174,7 @@ Separate foreground and background using Otsu's method
 See:
 HistogramThresholdImageFitler
 
- itk::simple::OtsuThresholdImageFilter for the procedural interface
+ itk::simple::OtsuThreshold for the procedural interface
 
 
 
@@ -20872,7 +20290,7 @@ All Examples
 Paste a part of one image into another image
 
 See:
- itk::simple::PasteImageFilter for the procedural interface
+ itk::simple::Paste for the procedural interface
 
 
 C++ includes: sitkPasteImageFilter.h
@@ -20979,7 +20397,7 @@ All Examples
 Switch the axes of an image
 
 See:
- itk::simple::PermuteAxesImageFilter for the procedural interface
+ itk::simple::PermuteAxes for the procedural interface
 
 
 C++ includes: sitkPermuteAxesImageFilter.h
@@ -21055,7 +20473,7 @@ C++ includes: sitkPhysicalPointImageSource.h
 */"
 
 %javamethodmodifiers  itk::simple::PhysicalPointImageSource::Execute "/**
-Image itk::simple::PhysicalPointImageSource::Execute(PixelIDValueType outputPixelType, std::vector< unsigned int > size,
+Image itk::simple::PhysicalPointImageSource::Execute(PixelIDValueEnum outputPixelType, std::vector< unsigned int > size,
 std::vector< double > origin, std::vector< double > spacing,
 std::vector< double > direction)
 
@@ -21091,7 +20509,7 @@ std::vector<double> itk::simple::PhysicalPointImageSource::GetOrigin()
 public ";
 
 %javamethodmodifiers  itk::simple::PhysicalPointImageSource::GetOutputPixelType "/**
-PixelIDValueType itk::simple::PhysicalPointImageSource::GetOutputPixelType()
+PixelIDValueEnum itk::simple::PhysicalPointImageSource::GetOutputPixelType()
 */
 public ";
 
@@ -21125,7 +20543,7 @@ Self& itk::simple::PhysicalPointImageSource::SetOrigin(std::vector< double > Ori
 public ";
 
 %javamethodmodifiers  itk::simple::PhysicalPointImageSource::SetOutputPixelType "/**
-Self& itk::simple::PhysicalPointImageSource::SetOutputPixelType(PixelIDValueType OutputPixelType)
+Self& itk::simple::PhysicalPointImageSource::SetOutputPixelType(PixelIDValueEnum OutputPixelType)
 */
 public ";
 
@@ -21150,119 +20568,6 @@ public ";
 
 %javamethodmodifiers  itk::simple::PhysicalPointImageSource::ToString "/**
 std::string itk::simple::PhysicalPointImageSource::ToString() const
-
-Print ourselves out
-
-*/
-public ";
-
-
-%typemap(javaimports) itk::simple::PhysicalPointSourceImageFilter "/**
-
-
-See:
- itk::simple::PhysicalPointSource for the procedural interface
-
-
-C++ includes: sitkPhysicalPointSourceImageFilter.h
-*/"
-
-%javamethodmodifiers  itk::simple::PhysicalPointSourceImageFilter::Execute "/**
-Image itk::simple::PhysicalPointSourceImageFilter::Execute(PixelIDValueType inOutputPixelType, std::vector< unsigned int >
-inSize, std::vector< double > inOrigin, std::vector< double >
-inSpacing, std::vector< double > inDirection)
-
-Execute the filter on the input image with the given parameters
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::PhysicalPointSourceImageFilter::Execute "/**
-Image itk::simple::PhysicalPointSourceImageFilter::Execute()
-
-Execute the filter on the input image
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::PhysicalPointSourceImageFilter::GetDirection "/**
-std::vector<double> itk::simple::PhysicalPointSourceImageFilter::GetDirection()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::PhysicalPointSourceImageFilter::GetName "/**
-std::string itk::simple::PhysicalPointSourceImageFilter::GetName() const
-
-Name of this class
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::PhysicalPointSourceImageFilter::GetOrigin "/**
-std::vector<double> itk::simple::PhysicalPointSourceImageFilter::GetOrigin()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::PhysicalPointSourceImageFilter::GetOutputPixelType "/**
-PixelIDValueType itk::simple::PhysicalPointSourceImageFilter::GetOutputPixelType()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::PhysicalPointSourceImageFilter::GetSize "/**
-std::vector<unsigned int> itk::simple::PhysicalPointSourceImageFilter::GetSize()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::PhysicalPointSourceImageFilter::GetSpacing "/**
-std::vector<double> itk::simple::PhysicalPointSourceImageFilter::GetSpacing()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::PhysicalPointSourceImageFilter::PhysicalPointSourceImageFilter "/**
-itk::simple::PhysicalPointSourceImageFilter::PhysicalPointSourceImageFilter()
-
-Default Constructor that takes no arguments and initializes default
-parameters
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::PhysicalPointSourceImageFilter::SetDirection "/**
-Self& itk::simple::PhysicalPointSourceImageFilter::SetDirection(std::vector< double > Direction)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::PhysicalPointSourceImageFilter::SetOrigin "/**
-Self& itk::simple::PhysicalPointSourceImageFilter::SetOrigin(std::vector< double > Origin)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::PhysicalPointSourceImageFilter::SetOutputPixelType "/**
-Self& itk::simple::PhysicalPointSourceImageFilter::SetOutputPixelType(PixelIDValueType OutputPixelType)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::PhysicalPointSourceImageFilter::SetReferenceImage "/**
-void itk::simple::PhysicalPointSourceImageFilter::SetReferenceImage(const Image &refImage)
-
-This methods sets the size, origin, spacing and direction to that of
-the provided image
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::PhysicalPointSourceImageFilter::SetSize "/**
-Self& itk::simple::PhysicalPointSourceImageFilter::SetSize(std::vector< unsigned int > Size)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::PhysicalPointSourceImageFilter::SetSpacing "/**
-Self& itk::simple::PhysicalPointSourceImageFilter::SetSpacing(std::vector< double > Spacing)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::PhysicalPointSourceImageFilter::ToString "/**
-std::string itk::simple::PhysicalPointSourceImageFilter::ToString() const
 
 Print ourselves out
 
@@ -21429,6 +20734,16 @@ virtual std::vector<double> itk::simple::PimpleImageBase::GetOrigin(void) const 
 */
 public ";
 
+%javamethodmodifiers  itk::simple::PimpleImageBase::GetPixelAsComplexFloat32 "/**
+virtual std::complex<float> itk::simple::PimpleImageBase::GetPixelAsComplexFloat32(const std::vector< uint32_t > &idx) const =0
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::PimpleImageBase::GetPixelAsComplexFloat64 "/**
+virtual std::complex<double> itk::simple::PimpleImageBase::GetPixelAsComplexFloat64(const std::vector< uint32_t > &idx) const =0
+*/
+public ";
+
 %javamethodmodifiers  itk::simple::PimpleImageBase::GetPixelAsDouble "/**
 virtual double itk::simple::PimpleImageBase::GetPixelAsDouble(const std::vector< uint32_t > &idx) const =0
 */
@@ -21479,8 +20794,58 @@ virtual uint8_t itk::simple::PimpleImageBase::GetPixelAsUInt8(const std::vector<
 */
 public ";
 
-%javamethodmodifiers  itk::simple::PimpleImageBase::GetPixelIDValue "/**
-virtual PixelIDValueType itk::simple::PimpleImageBase::GetPixelIDValue(void) const =0
+%javamethodmodifiers  itk::simple::PimpleImageBase::GetPixelAsVectorFloat32 "/**
+virtual std::vector<float> itk::simple::PimpleImageBase::GetPixelAsVectorFloat32(const std::vector< uint32_t > &idx) const =0
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::PimpleImageBase::GetPixelAsVectorFloat64 "/**
+virtual std::vector<double> itk::simple::PimpleImageBase::GetPixelAsVectorFloat64(const std::vector< uint32_t > &idx) const =0
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::PimpleImageBase::GetPixelAsVectorInt16 "/**
+virtual std::vector<int16_t> itk::simple::PimpleImageBase::GetPixelAsVectorInt16(const std::vector< uint32_t > &idx) const =0
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::PimpleImageBase::GetPixelAsVectorInt32 "/**
+virtual std::vector<int32_t> itk::simple::PimpleImageBase::GetPixelAsVectorInt32(const std::vector< uint32_t > &idx) const =0
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::PimpleImageBase::GetPixelAsVectorInt64 "/**
+virtual std::vector<int64_t> itk::simple::PimpleImageBase::GetPixelAsVectorInt64(const std::vector< uint32_t > &idx) const =0
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::PimpleImageBase::GetPixelAsVectorInt8 "/**
+virtual std::vector<int8_t> itk::simple::PimpleImageBase::GetPixelAsVectorInt8(const std::vector< uint32_t > &idx) const =0
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::PimpleImageBase::GetPixelAsVectorUInt16 "/**
+virtual std::vector<uint16_t> itk::simple::PimpleImageBase::GetPixelAsVectorUInt16(const std::vector< uint32_t > &idx) const =0
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::PimpleImageBase::GetPixelAsVectorUInt32 "/**
+virtual std::vector<uint32_t> itk::simple::PimpleImageBase::GetPixelAsVectorUInt32(const std::vector< uint32_t > &idx) const =0
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::PimpleImageBase::GetPixelAsVectorUInt64 "/**
+virtual std::vector<uint64_t> itk::simple::PimpleImageBase::GetPixelAsVectorUInt64(const std::vector< uint32_t > &idx) const =0
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::PimpleImageBase::GetPixelAsVectorUInt8 "/**
+virtual std::vector<uint8_t> itk::simple::PimpleImageBase::GetPixelAsVectorUInt8(const std::vector< uint32_t > &idx) const =0
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::PimpleImageBase::GetPixelID "/**
+virtual PixelIDValueEnum itk::simple::PimpleImageBase::GetPixelID(void) const =0
 */
 public ";
 
@@ -21516,6 +20881,16 @@ public ";
 
 %javamethodmodifiers  itk::simple::PimpleImageBase::SetOrigin "/**
 virtual void itk::simple::PimpleImageBase::SetOrigin(const std::vector< double > &orgn)=0
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::PimpleImageBase::SetPixelAsComplexFloat32 "/**
+virtual void itk::simple::PimpleImageBase::SetPixelAsComplexFloat32(const std::vector< uint32_t > &idx, const std::complex< float > v)=0
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::PimpleImageBase::SetPixelAsComplexFloat64 "/**
+virtual void itk::simple::PimpleImageBase::SetPixelAsComplexFloat64(const std::vector< uint32_t > &idx, const std::complex< double > v)=0
 */
 public ";
 
@@ -21569,6 +20944,63 @@ virtual void itk::simple::PimpleImageBase::SetPixelAsUInt8(const std::vector< ui
 */
 public ";
 
+%javamethodmodifiers  itk::simple::PimpleImageBase::SetPixelAsVectorFloat32 "/**
+virtual void itk::simple::PimpleImageBase::SetPixelAsVectorFloat32(const std::vector< uint32_t > &idx, const std::vector< float > &v)=0
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::PimpleImageBase::SetPixelAsVectorFloat64 "/**
+virtual void itk::simple::PimpleImageBase::SetPixelAsVectorFloat64(const std::vector< uint32_t > &idx, const std::vector< double > &v)=0
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::PimpleImageBase::SetPixelAsVectorInt16 "/**
+virtual void itk::simple::PimpleImageBase::SetPixelAsVectorInt16(const std::vector< uint32_t > &idx, const std::vector< int16_t >
+&v)=0
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::PimpleImageBase::SetPixelAsVectorInt32 "/**
+virtual void itk::simple::PimpleImageBase::SetPixelAsVectorInt32(const std::vector< uint32_t > &idx, const std::vector< int32_t >
+&v)=0
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::PimpleImageBase::SetPixelAsVectorInt64 "/**
+virtual void itk::simple::PimpleImageBase::SetPixelAsVectorInt64(const std::vector< uint32_t > &idx, const std::vector< int64_t >
+&v)=0
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::PimpleImageBase::SetPixelAsVectorInt8 "/**
+virtual void itk::simple::PimpleImageBase::SetPixelAsVectorInt8(const std::vector< uint32_t > &idx, const std::vector< int8_t > &v)=0
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::PimpleImageBase::SetPixelAsVectorUInt16 "/**
+virtual void itk::simple::PimpleImageBase::SetPixelAsVectorUInt16(const std::vector< uint32_t > &idx, const std::vector< uint16_t >
+&v)=0
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::PimpleImageBase::SetPixelAsVectorUInt32 "/**
+virtual void itk::simple::PimpleImageBase::SetPixelAsVectorUInt32(const std::vector< uint32_t > &idx, const std::vector< uint32_t >
+&v)=0
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::PimpleImageBase::SetPixelAsVectorUInt64 "/**
+virtual void itk::simple::PimpleImageBase::SetPixelAsVectorUInt64(const std::vector< uint32_t > &idx, const std::vector< uint64_t >
+&v)=0
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::PimpleImageBase::SetPixelAsVectorUInt8 "/**
+virtual void itk::simple::PimpleImageBase::SetPixelAsVectorUInt8(const std::vector< uint32_t > &idx, const std::vector< uint8_t >
+&v)=0
+*/
+public ";
+
 %javamethodmodifiers  itk::simple::PimpleImageBase::SetSpacing "/**
 virtual void itk::simple::PimpleImageBase::SetSpacing(const std::vector< double > &spc)=0
 */
@@ -21618,7 +21050,7 @@ SetConstant2(constant);
 
 
 See:
- itk::simple::PowImageFilter for the procedural interface
+ itk::simple::Pow for the procedural interface
 
 
 C++ includes: sitkPowImageFilter.h
@@ -21671,71 +21103,6 @@ Print ourselves out
 public ";
 
 
-%typemap(javaimports) itk::simple::PowToConstantImageFilter "/**
-
-
-See:
- itk::simple::PowToConstant for the procedural interface
-
-
-C++ includes: sitkPowToConstantImageFilter.h
-*/"
-
-%javamethodmodifiers  itk::simple::PowToConstantImageFilter::Execute "/**
-Image itk::simple::PowToConstantImageFilter::Execute(const Image &image1, double inConstant)
-
-Execute the filter on the input image with the given parameters
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::PowToConstantImageFilter::Execute "/**
-Image itk::simple::PowToConstantImageFilter::Execute(const Image &image1)
-
-Execute the filter on the input image
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::PowToConstantImageFilter::GetConstant "/**
-double itk::simple::PowToConstantImageFilter::GetConstant()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::PowToConstantImageFilter::GetName "/**
-std::string itk::simple::PowToConstantImageFilter::GetName() const
-
-Name of this class
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::PowToConstantImageFilter::PowToConstantImageFilter "/**
-itk::simple::PowToConstantImageFilter::PowToConstantImageFilter()
-
-Default Constructor that takes no arguments and initializes default
-parameters
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::PowToConstantImageFilter::SetConstant "/**
-Self& itk::simple::PowToConstantImageFilter::SetConstant(double Constant)
-
-Set the constant that each pixel will be raise to.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::PowToConstantImageFilter::ToString "/**
-std::string itk::simple::PowToConstantImageFilter::ToString() const
-
-Print ourselves out
-
-*/
-public ";
-
-
 %typemap(javaimports) itk::simple::ProjectedLandweberDeconvolutionImageFilter "/**
 
 Deconvolve an image using the projected Landweber deconvolution
@@ -21762,7 +21129,7 @@ IterativeDeconvolutionImageFilter
 
  LandweberDeconvolutionImageFilter
 
- itk::simple::ProjectedLandweberDeconvolutionImageFilter for the procedural interface
+ itk::simple::ProjectedLandweberDeconvolution for the procedural interface
 
 
 C++ includes: sitkProjectedLandweberDeconvolutionImageFilter.h
@@ -21899,7 +21266,7 @@ public ";
 
 
 See:
- itk::simple::RankImageFilter for the procedural interface
+ itk::simple::Rank for the procedural interface
 
 
 C++ includes: sitkRankImageFilter.h
@@ -21987,7 +21354,7 @@ same dimension (e.g. all 2D, or all 3D, or all ND)
 
 
 See:
- itk::simple::RealAndImaginaryToComplexImageFilter for the procedural interface
+ itk::simple::RealAndImaginaryToComplex for the procedural interface
 
 
 C++ includes: sitkRealAndImaginaryToComplexImageFilter.h
@@ -22050,7 +21417,7 @@ See:
 
  ForwardFFTImageFilter
 
- itk::simple::RealToHalfHermitianForwardFFTImageFilter for the procedural interface
+ itk::simple::RealToHalfHermitianForwardFFT for the procedural interface
 
 
 C++ includes: sitkRealToHalfHermitianForwardFFTImageFilter.h
@@ -22116,7 +21483,7 @@ Australia.
 See:
 MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter, ReconstructionByErosionImageFilter, OpeningByReconstructionImageFilter, ClosingByReconstructionImageFilter, ReconstructionImageFilter
 
- itk::simple::ReconstructionByDilationImageFilter for the procedural interface
+ itk::simple::ReconstructionByDilation for the procedural interface
 
 
 C++ includes: sitkReconstructionByDilationImageFilter.h
@@ -22237,7 +21604,7 @@ Australia.
 See:
 MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter, ReconstructionByErosionImageFilter, OpeningByReconstructionImageFilter, ClosingByReconstructionImageFilter, ReconstructionImageFilter
 
- itk::simple::ReconstructionByErosionImageFilter for the procedural interface
+ itk::simple::ReconstructionByErosion for the procedural interface
 
 
 C++ includes: sitkReconstructionByErosionImageFilter.h
@@ -22361,7 +21728,7 @@ All Examples
 Find higher derivatives of an image
 
 See:
- itk::simple::RecursiveGaussianImageFilter for the procedural interface
+ itk::simple::RecursiveGaussian for the procedural interface
 
 
 C++ includes: sitkRecursiveGaussianImageFilter.h
@@ -22547,7 +21914,7 @@ All Examples
 Extract a portion of an image (region of interest)
 
 See:
- itk::simple::RegionOfInterestImageFilter for the procedural interface
+ itk::simple::RegionOfInterest for the procedural interface
 
 
 C++ includes: sitkRegionOfInterestImageFilter.h
@@ -22648,7 +22015,7 @@ All Examples
  RegionalMaximaImageFilter
 
 See:
- itk::simple::RegionalMaximaImageFilter for the procedural interface
+ itk::simple::RegionalMaxima for the procedural interface
 
 
 C++ includes: sitkRegionalMaximaImageFilter.h
@@ -22825,7 +22192,7 @@ All Examples
  RegionalMinimaImageFilter
 
 See:
- itk::simple::RegionalMinimaImageFilter for the procedural interface
+ itk::simple::RegionalMinima for the procedural interface
 
 
 C++ includes: sitkRegionalMinimaImageFilter.h
@@ -23014,7 +22381,7 @@ All Examples
 Assign contiguous labels to connected regions of an image
 
 See:
- itk::simple::RelabelComponentImageFilter for the procedural interface
+ itk::simple::RelabelComponent for the procedural interface
 
 
 C++ includes: sitkRelabelComponentImageFilter.h
@@ -23105,7 +22472,7 @@ journal.org/browse/publication/811
 See:
 HistogramThresholdImageFitler
 
- itk::simple::RenyiEntropyThresholdImageFilter for the procedural interface
+ itk::simple::RenyiEntropyThreshold for the procedural interface
 
 
 C++ includes: sitkRenyiEntropyThresholdImageFilter.h
@@ -23247,7 +22614,7 @@ Upsampling an image
 Resample (stretch or compress) an image
 
 See:
- itk::simple::ResampleImageFilter for the procedural interface
+ itk::simple::Resample for the procedural interface
 
 
 C++ includes: sitkResampleImageFilter.h
@@ -23460,7 +22827,7 @@ All Examples
 Rescale the intensity values of an image to a specified range
 
 See:
- itk::simple::RescaleIntensityImageFilter for the procedural interface
+ itk::simple::RescaleIntensity for the procedural interface
 
 
 C++ includes: sitkRescaleIntensityImageFilter.h
@@ -23556,7 +22923,7 @@ IterativeDeconvolutionImageFilter
 
  ProjectedLandweberDeconvolutionImageFilter
 
- itk::simple::RichardsonLucyDeconvolutionImageFilter for the procedural interface
+ itk::simple::RichardsonLucyDeconvolution for the procedural interface
 
 
 C++ includes: sitkRichardsonLucyDeconvolutionImageFilter.h
@@ -23759,7 +23126,7 @@ progress since the number of iterations needed cannot be known in
 advance.
 
 See:
- itk::simple::STAPLEImageFilter for the procedural interface
+ itk::simple::STAPLE for the procedural interface
 
 
 C++ includes: sitkSTAPLEImageFilter.h
@@ -23985,7 +23352,7 @@ All Examples
 Label connected components in a grayscale image
 
 See:
- itk::simple::ScalarConnectedComponentImageFilter for the procedural interface
+ itk::simple::ScalarConnectedComponent for the procedural interface
 
 
 C++ includes: sitkScalarConnectedComponentImageFilter.h
@@ -24099,7 +23466,7 @@ All Examples
 Cluster the pixels in a greyscale image
 
 See:
- itk::simple::ScalarImageKmeansImageFilter for the procedural interface
+ itk::simple::ScalarImageKmeans for the procedural interface
 
 
 C++ includes: sitkScalarImageKmeansImageFilter.h
@@ -24243,7 +23610,7 @@ All Examples
 Apply a color map to an image
 
 See:
- itk::simple::ScalarToRGBColormapImageFilter for the procedural interface
+ itk::simple::ScalarToRGBColormap for the procedural interface
 
 
 C++ includes: sitkScalarToRGBColormapImageFilter.h
@@ -24324,7 +23691,7 @@ journal.org/browse/publication/811
 See:
 HistogramThresholdImageFitler
 
- itk::simple::ShanbhagThresholdImageFilter for the procedural interface
+ itk::simple::ShanbhagThreshold for the procedural interface
 
 
 C++ includes: sitkShanbhagThresholdImageFilter.h
@@ -24484,7 +23851,7 @@ ShapeDetectionLevelSetFunction
 
 SparseFieldLevelSetImageFilter
 
- itk::simple::ShapeDetectionLevelSetImageFilter for the procedural interface
+ itk::simple::ShapeDetectionLevelSet for the procedural interface
 
 
 C++ includes: sitkShapeDetectionLevelSetImageFilter.h
@@ -24635,7 +24002,7 @@ at the NonpositiveMin and max of the pixel type.
 
 
 See:
- itk::simple::ShiftScaleImageFilter for the procedural interface
+ itk::simple::ShiftScale for the procedural interface
 
 
 C++ includes: sitkShiftScaleImageFilter.h
@@ -24744,7 +24111,7 @@ All Examples
 Shrink an image
 
 See:
- itk::simple::ShrinkImageFilter for the procedural interface
+ itk::simple::Shrink for the procedural interface
 
 
 C++ includes: sitkShrinkImageFilter.h
@@ -24833,7 +24200,7 @@ All Examples
 Pass image pixels through a sigmoid function
 
 See:
- itk::simple::SigmoidImageFilter for the procedural interface
+ itk::simple::Sigmoid for the procedural interface
 
 
 C++ includes: sitkSigmoidImageFilter.h
@@ -24952,7 +24319,7 @@ filter is N-dimensional.
 See:
 itkDanielssonDistanceMapImageFilter
 
- itk::simple::SignedDanielssonDistanceMapImageFilter for the procedural interface
+ itk::simple::SignedDanielssonDistanceMap for the procedural interface
 
 
 C++ includes: sitkSignedDanielssonDistanceMapImageFilter.h
@@ -25121,7 +24488,7 @@ Transactions on Pattern Analysis and Machine Intelligence, 25(2):
 265-270, 2003.
 
 See:
- itk::simple::SignedMaurerDistanceMapImageFilter for the procedural interface
+ itk::simple::SignedMaurerDistanceMap for the procedural interface
 
 
 C++ includes: sitkSignedMaurerDistanceMapImageFilter.h
@@ -25288,7 +24655,7 @@ image type. It assume both image have the same number of dimensions.
 
 
 See:
- itk::simple::SimilarityIndexImageFilter for the procedural interface
+ itk::simple::SimilarityIndex for the procedural interface
 
 
 C++ includes: sitkSimilarityIndexImageFilter.h
@@ -25365,7 +24732,7 @@ NeighborhoodOperator
 
 NeighborhoodIterator
 
- itk::simple::SimpleContourExtractorImageFilter for the procedural interface
+ itk::simple::SimpleContourExtractor for the procedural interface
 
 
 C++ includes: sitkSimpleContourExtractorImageFilter.h
@@ -25517,7 +24884,7 @@ All Examples
 Compute the sine of each pixel.
 
 See:
- itk::simple::SinImageFilter for the procedural interface
+ itk::simple::Sin for the procedural interface
 
 
 C++ includes: sitkSinImageFilter.h
@@ -25561,7 +24928,7 @@ public ";
 
 
 See:
- itk::simple::SliceImageFilter for the procedural interface
+ itk::simple::Slice for the procedural interface
 
 
 C++ includes: sitkSliceImageFilter.h
@@ -25657,7 +25024,7 @@ All Examples
 Gaussian smoothing that works with image adaptors
 
 See:
- itk::simple::SmoothingRecursiveGaussianImageFilter for the procedural interface
+ itk::simple::SmoothingRecursiveGaussian for the procedural interface
 
 
 C++ includes: sitkSmoothingRecursiveGaussianImageFilter.h
@@ -25792,7 +25159,7 @@ All Examples
  SobelEdgeDetectionImageFilter
 
 See:
- itk::simple::SobelEdgeDetectionImageFilter for the procedural interface
+ itk::simple::SobelEdgeDetection for the procedural interface
 
 
 C++ includes: sitkSobelEdgeDetectionImageFilter.h
@@ -25841,7 +25208,7 @@ The computations are performed using vcl_sqrt(x).
 
 
 See:
- itk::simple::SqrtImageFilter for the procedural interface
+ itk::simple::Sqrt for the procedural interface
 
 
 C++ includes: sitkSqrtImageFilter.h
@@ -25893,7 +25260,7 @@ All Examples
 Square every pixel in an image
 
 See:
- itk::simple::SquareImageFilter for the procedural interface
+ itk::simple::Square for the procedural interface
 
 
 C++ includes: sitkSquareImageFilter.h
@@ -25964,7 +25331,7 @@ All Examples
 Compute the squared difference of corresponding pixels in two images
 
 See:
- itk::simple::SquaredDifferenceImageFilter for the procedural interface
+ itk::simple::SquaredDifference for the procedural interface
 
 
 C++ includes: sitkSquaredDifferenceImageFilter.h
@@ -26051,7 +25418,7 @@ ProjectionImageFilter
 
  BinaryProjectionImageFilter
 
- itk::simple::StandardDeviationProjectionImageFilter for the procedural interface
+ itk::simple::StandardDeviationProjection for the procedural interface
 
 
 C++ includes: sitkStandardDeviationProjectionImageFilter.h
@@ -26112,6 +25479,12 @@ public ";
 %typemap(javaimports) itk::simple::StatisticsImageFilter "/**
 
 Compute min, max, variance, and mean of an image.
+
+
+
+See:
+ itk::simple::Statistics for the procedural interface
+
 
 C++ includes: sitkStatisticsImageFilter.h
 */"
@@ -26179,148 +25552,6 @@ std::string itk::simple::StatisticsImageFilter::ToString() const
 public ";
 
 
-%typemap(javaimports) itk::simple::SubtractConstantByImageFilter "/**
-
-Subract each pixel from a constant.
-
-
-
-See:
- itk::simple::SubtractConstantBy for the procedural interface
-
-
-C++ includes: sitkSubtractConstantByImageFilter.h
-*/"
-
-%javamethodmodifiers  itk::simple::SubtractConstantByImageFilter::Execute "/**
-Image itk::simple::SubtractConstantByImageFilter::Execute(const Image &image1, double inConstant)
-
-Execute the filter on the input image with the given parameters
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::SubtractConstantByImageFilter::Execute "/**
-Image itk::simple::SubtractConstantByImageFilter::Execute(const Image &image1)
-
-Execute the filter on the input image
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::SubtractConstantByImageFilter::GetConstant "/**
-double itk::simple::SubtractConstantByImageFilter::GetConstant()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::SubtractConstantByImageFilter::GetName "/**
-std::string itk::simple::SubtractConstantByImageFilter::GetName() const
-
-Name of this class
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::SubtractConstantByImageFilter::SetConstant "/**
-Self& itk::simple::SubtractConstantByImageFilter::SetConstant(double Constant)
-
-Set the constant by which the image will be subtracted from.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::SubtractConstantByImageFilter::SubtractConstantByImageFilter "/**
-itk::simple::SubtractConstantByImageFilter::SubtractConstantByImageFilter()
-
-Default Constructor that takes no arguments and initializes default
-parameters
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::SubtractConstantByImageFilter::ToString "/**
-std::string itk::simple::SubtractConstantByImageFilter::ToString() const
-
-Print ourselves out
-
-*/
-public ";
-
-
-%typemap(javaimports) itk::simple::SubtractConstantFromImageFilter "/**
-
-Add a constant to all input pixels.
-
-
-This filter is templated over the input image type and the output
-image type.
-Tom Vercauteren, INRIA & Mauna Kea Technologies Based on filters from
-the Insight Journal paper:http://hdl.handle.net/1926/510
-
-See:
- SubtractImageFilter
-
- itk::simple::SubtractConstantFrom for the procedural interface
-
-
-C++ includes: sitkSubtractConstantFromImageFilter.h
-*/"
-
-%javamethodmodifiers  itk::simple::SubtractConstantFromImageFilter::Execute "/**
-Image itk::simple::SubtractConstantFromImageFilter::Execute(const Image &image1, double inConstant)
-
-Execute the filter on the input image with the given parameters
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::SubtractConstantFromImageFilter::Execute "/**
-Image itk::simple::SubtractConstantFromImageFilter::Execute(const Image &image1)
-
-Execute the filter on the input image
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::SubtractConstantFromImageFilter::GetConstant "/**
-double itk::simple::SubtractConstantFromImageFilter::GetConstant()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::SubtractConstantFromImageFilter::GetName "/**
-std::string itk::simple::SubtractConstantFromImageFilter::GetName() const
-
-Name of this class
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::SubtractConstantFromImageFilter::SetConstant "/**
-Self& itk::simple::SubtractConstantFromImageFilter::SetConstant(double Constant)
-
-Set the constant that will be used to multiply all the image pixels.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::SubtractConstantFromImageFilter::SubtractConstantFromImageFilter "/**
-itk::simple::SubtractConstantFromImageFilter::SubtractConstantFromImageFilter()
-
-Default Constructor that takes no arguments and initializes default
-parameters
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::SubtractConstantFromImageFilter::ToString "/**
-std::string itk::simple::SubtractConstantFromImageFilter::ToString() const
-
-Print ourselves out
-
-*/
-public ";
-
-
 %typemap(javaimports) itk::simple::SubtractImageFilter "/**
 
 Pixel-wise subtraction of two images.
@@ -26344,7 +25575,7 @@ Subtract two images
 Subtract a constant from every pixel in an image
 
 See:
- itk::simple::SubtractImageFilter for the procedural interface
+ itk::simple::Subtract for the procedural interface
 
 
 C++ includes: sitkSubtractImageFilter.h
@@ -26431,7 +25662,7 @@ ProjectionImageFilter
 
  StandardDeviationProjectionImageFilter
 
- itk::simple::SumProjectionImageFilter for the procedural interface
+ itk::simple::SumProjection for the procedural interface
 
 
 C++ includes: sitkSumProjectionImageFilter.h
@@ -26498,7 +25729,7 @@ The computations are performed using vcl_tan(x).
 
 
 See:
- itk::simple::TanImageFilter for the procedural interface
+ itk::simple::Tan for the procedural interface
 
 
 C++ includes: sitkTanImageFilter.h
@@ -26549,7 +25780,7 @@ by the C++ defaults.
 
 
 See:
- itk::simple::TernaryAddImageFilter for the procedural interface
+ itk::simple::TernaryAdd for the procedural interface
 
 
 C++ includes: sitkTernaryAddImageFilter.h
@@ -26600,7 +25831,7 @@ by the C++ defaults.
 
 
 See:
- itk::simple::TernaryMagnitudeImageFilter for the procedural interface
+ itk::simple::TernaryMagnitude for the procedural interface
 
 
 C++ includes: sitkTernaryMagnitudeImageFilter.h
@@ -26651,7 +25882,7 @@ by the C++ defaults.
 
 
 See:
- itk::simple::TernaryMagnitudeSquaredImageFilter for the procedural interface
+ itk::simple::TernaryMagnitudeSquared for the procedural interface
 
 
 C++ includes: sitkTernaryMagnitudeSquaredImageFilter.h
@@ -26706,7 +25937,7 @@ All Examples
 Threshold an image
 
 See:
- itk::simple::ThresholdImageFilter for the procedural interface
+ itk::simple::Threshold for the procedural interface
 
 
 C++ includes: sitkThresholdImageFilter.h
@@ -26842,7 +26073,7 @@ Questions: email Ken Urish at ken.urish(at)gmail.com Please cc the itk
 list serve for archival purposes.
 
 See:
- itk::simple::ThresholdMaximumConnectedComponentsImageFilter for the procedural interface
+ itk::simple::ThresholdMaximumConnectedComponents for the procedural interface
 
 
 C++ includes: sitkThresholdMaximumConnectedComponentsImageFilter.h
@@ -27059,7 +26290,7 @@ ThresholdSegmentationLevelSetFunction,
 
 SparseFieldLevelSetImageFilter
 
- itk::simple::ThresholdSegmentationLevelSetImageFilter for the procedural interface
+ itk::simple::ThresholdSegmentationLevelSet for the procedural interface
 
 
 C++ includes: sitkThresholdSegmentationLevelSetImageFilter.h
@@ -27237,7 +26468,7 @@ de Jouy-en-Josas, France Cory Quammen, The University of North
 Carolina at Chapel Hill
 
 See:
- itk::simple::TikhonovDeconvolutionImageFilter for the procedural interface
+ itk::simple::TikhonovDeconvolution for the procedural interface
 
 
 C++ includes: sitkTikhonovDeconvolutionImageFilter.h
@@ -27387,7 +26618,7 @@ Stack multiple 2D images into a 3D image
 Tile multiple images side by side
 
 See:
- itk::simple::TileImageFilter for the procedural interface
+ itk::simple::Tile for the procedural interface
 
 
 C++ includes: sitkTileImageFilter.h
@@ -27596,7 +26827,7 @@ journal.org/browse/publication/811
 See:
 HistogramThresholdImageFitler
 
- itk::simple::TriangleThresholdImageFilter for the procedural interface
+ itk::simple::TriangleThreshold for the procedural interface
 
 
 C++ includes: sitkTriangleThresholdImageFilter.h
@@ -27698,7 +26929,7 @@ Computes the negative of each pixel.
 
 
 See:
- itk::simple::UnaryMinusImageFilter for the procedural interface
+ itk::simple::UnaryMinus for the procedural interface
 
 
 C++ includes: sitkUnaryMinusImageFilter.h
@@ -27769,7 +27000,7 @@ All Examples
  ValuedRegionalMaximaImageFilter
 
 See:
- itk::simple::ValuedRegionalMaximaImageFilter for the procedural interface
+ itk::simple::ValuedRegionalMaxima for the procedural interface
 
 
 C++ includes: sitkValuedRegionalMaximaImageFilter.h
@@ -27877,7 +27108,7 @@ All Examples
  ValuedRegionalMinimaImageFilter
 
 See:
- itk::simple::ValuedRegionalMinimaImageFilter for the procedural interface
+ itk::simple::ValuedRegionalMinima for the procedural interface
 
 
 C++ includes: sitkValuedRegionalMinimaImageFilter.h
@@ -27962,8 +27193,6 @@ public ";
 Segment pixels with similar statistics using connectivity.
 
 
-Some global documentation
-
 This filter extracts a connected set of pixels whose pixel intensities
 are consistent with the pixel statistics of a seed point. The mean and
 variance across a neighborhood (8-connected, 26-connected, etc.) are
@@ -27989,7 +27218,7 @@ seed point's intensity.
 
 
 See:
- itk::simple::VectorConfidenceConnectedImageFilter for the procedural interface
+ itk::simple::VectorConfidenceConnected for the procedural interface
 
 
 C++ includes: sitkVectorConfidenceConnectedImageFilter.h
@@ -28181,7 +27410,7 @@ of phase are similar. Assumes that vectors are normalized.
 
 
 See:
- itk::simple::VectorConnectedComponentImageFilter for the procedural interface
+ itk::simple::VectorConnectedComponent for the procedural interface
 
 
 C++ includes: sitkVectorConnectedComponentImageFilter.h
@@ -28279,7 +27508,7 @@ All Examples
 Extract a component/channel of a vector image
 
 See:
- itk::simple::VectorIndexSelectionCastImageFilter for the procedural interface
+ itk::simple::VectorIndexSelectionCast for the procedural interface
 
 
 C++ includes: sitkVectorIndexSelectionCastImageFilter.h
@@ -28357,7 +27586,7 @@ Compute the magnitude of each pixel in a vector image to produce a
 magnitude image
 
 See:
- itk::simple::VectorMagnitudeImageFilter for the procedural interface
+ itk::simple::VectorMagnitude for the procedural interface
 
 
 C++ includes: sitkVectorMagnitudeImageFilter.h
@@ -28435,7 +27664,7 @@ NeighborhoodOperator
 
 NeighborhoodIterator
 
- itk::simple::VotingBinaryHoleFillingImageFilter for the procedural interface
+ itk::simple::VotingBinaryHoleFilling for the procedural interface
 
 
 C++ includes: sitkVotingBinaryHoleFillingImageFilter.h
@@ -28568,7 +27797,7 @@ NeighborhoodOperator
 
 NeighborhoodIterator
 
- itk::simple::VotingBinaryImageFilter for the procedural interface
+ itk::simple::VotingBinary for the procedural interface
 
 
 C++ includes: sitkVotingBinaryImageFilter.h
@@ -28753,7 +27982,7 @@ NeighborhoodOperator
 
 NeighborhoodIterator
 
- itk::simple::VotingBinaryIterativeHoleFillingImageFilter for the procedural interface
+ itk::simple::VotingBinaryIterativeHoleFilling for the procedural interface
 
 
 C++ includes: sitkVotingBinaryIterativeHoleFillingImageFilter.h
@@ -28922,7 +28151,7 @@ Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
 
 See:
- itk::simple::WhiteTopHatImageFilter for the procedural interface
+ itk::simple::WhiteTopHat for the procedural interface
 
 
 C++ includes: sitkWhiteTopHatImageFilter.h
@@ -29070,7 +28299,7 @@ Carolina at Chapel Hill Cory Quammen, The University of North Carolina
 at Chapel Hill
 
 See:
- itk::simple::WienerDeconvolutionImageFilter for the procedural interface
+ itk::simple::WienerDeconvolution for the procedural interface
 
 
 C++ includes: sitkWienerDeconvolutionImageFilter.h
@@ -29211,7 +28440,7 @@ All Examples
 Pad an image by wrapping
 
 See:
- itk::simple::WrapPadImageFilter for the procedural interface
+ itk::simple::WrapPad for the procedural interface
 
 
 C++ includes: sitkWrapPadImageFilter.h
@@ -29299,7 +28528,7 @@ All Examples
 Binary XOR (exclusive OR) two images
 
 See:
- itk::simple::XorImageFilter for the procedural interface
+ itk::simple::Xor for the procedural interface
 
 
 C++ includes: sitkXorImageFilter.h
@@ -29370,7 +28599,7 @@ journal.org/browse/publication/811
 See:
 HistogramThresholdImageFitler
 
- itk::simple::YenThresholdImageFilter for the procedural interface
+ itk::simple::YenThreshold for the procedural interface
 
 
 C++ includes: sitkYenThresholdImageFilter.h
@@ -29506,7 +28735,7 @@ See:
 
  ZeroCrossingImageFilter
 
- itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter for the procedural interface
+ itk::simple::ZeroCrossingBasedEdgeDetection for the procedural interface
 
 
 C++ includes: sitkZeroCrossingBasedEdgeDetectionImageFilter.h
@@ -29666,7 +28895,7 @@ All Examples
 Find zero crossings in a signed image
 
 See:
- itk::simple::ZeroCrossingImageFilter for the procedural interface
+ itk::simple::ZeroCrossing for the procedural interface
 
 
 C++ includes: sitkZeroCrossingImageFilter.h
@@ -29767,7 +28996,7 @@ de Jouy-en-Josas, France.
 See:
  WrapPadImageFilter, MirrorPadImageFilter, ConstantPadImageFilter, ZeroFluxNeumannBoundaryCondition
 
- itk::simple::ZeroFluxNeumannPadImageFilter for the procedural interface
+ itk::simple::ZeroFluxNeumannPad for the procedural interface
 
 
 C++ includes: sitkZeroFluxNeumannPadImageFilter.h
@@ -30770,6 +29999,11 @@ void itk::JPEGImageIOFactoryRegister__Private(void)
 */
 public ";
 
+%javamethodmodifiers  itk::Functor::LSMImageIOFactoryRegister__Private "/**
+void itk::LSMImageIOFactoryRegister__Private(void)
+*/
+public ";
+
 %javamethodmodifiers  itk::Functor::MatlabTransformIOFactoryRegister__Private "/**
 void itk::MatlabTransformIOFactoryRegister__Private(void)
 */
@@ -30917,22 +30151,6 @@ This function directly calls the execute method of AddImageFilter in order to su
 
 See:
  itk::simple::AddImageFilter for the object oriented interface
-
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::AddConstantTo "/**
-Image itk::simple::AddConstantTo(const Image &image1, double inConstant=1.0)
-
- itk::simple::AddConstantToImageFilter Procedural Interface
-
-
-This function directly calls the execute method of AddConstantToImageFilter in order to support a procedural API
-
-
-See:
- itk::simple::AddConstantToImageFilter for the object oriented interface
 
 
 */
@@ -31089,7 +30307,7 @@ public ";
 Image itk::simple::BinaryClosingByReconstruction(const Image &, uint32_t radius=1,
 BinaryClosingByReconstructionImageFilter::KernelType
 kernel=BinaryClosingByReconstructionImageFilter::Ball, double
-inForegroundValue=1.0, bool inFullyConnected=false)
+foregroundValue=1.0, bool fullyConnected=false)
 
  itk::simple::BinaryClosingByReconstructionImageFilter Functional Interface
 
@@ -31130,8 +30348,8 @@ public ";
 
 %javamethodmodifiers  itk::simple::BinaryDilate "/**
 Image itk::simple::BinaryDilate(const Image &, uint32_t radius=1, BinaryDilateImageFilter::KernelType
-kernel=BinaryDilateImageFilter::Ball, double inBackgroundValue=0.0,
-double inForegroundValue=1.0, bool inBoundaryToForeground=false)
+kernel=BinaryDilateImageFilter::Ball, double backgroundValue=0.0,
+double foregroundValue=1.0, bool boundaryToForeground=false)
 
  itk::simple::BinaryDilateImageFilter Functional Interface
 
@@ -31155,8 +30373,8 @@ public ";
 
 %javamethodmodifiers  itk::simple::BinaryErode "/**
 Image itk::simple::BinaryErode(const Image &, uint32_t radius=1, BinaryErodeImageFilter::KernelType
-kernel=BinaryErodeImageFilter::Ball, double inBackgroundValue=0.0,
-double inForegroundValue=1.0, bool inBoundaryToForeground=true)
+kernel=BinaryErodeImageFilter::Ball, double backgroundValue=0.0,
+double foregroundValue=1.0, bool boundaryToForeground=true)
 
  itk::simple::BinaryErodeImageFilter Functional Interface
 
@@ -31254,7 +30472,7 @@ public ";
 Image itk::simple::BinaryMorphologicalClosing(const Image &, const std::vector< uint32_t > vectorRadius,
 BinaryMorphologicalClosingImageFilter::KernelType
 kernel=BinaryMorphologicalClosingImageFilter::Ball, double
-foregroundValue=1.0)
+foregroundValue=1.0, bool safeBorder=true)
 
  itk::simple::BinaryMorphologicalClosingImageFilter Functional Interface
 
@@ -31267,7 +30485,7 @@ public ";
 Image itk::simple::BinaryMorphologicalClosing(const Image &, uint32_t radius=1,
 BinaryMorphologicalClosingImageFilter::KernelType
 kernel=BinaryMorphologicalClosingImageFilter::Ball, double
-inForegroundValue=1.0)
+foregroundValue=1.0, bool safeBorder=true)
 
  itk::simple::BinaryMorphologicalClosingImageFilter Functional Interface
 
@@ -31293,7 +30511,7 @@ public ";
 Image itk::simple::BinaryMorphologicalOpening(const Image &, uint32_t radius=1,
 BinaryMorphologicalOpeningImageFilter::KernelType
 kernel=BinaryMorphologicalOpeningImageFilter::Ball, double
-inBackgroundValue=0.0, double inForegroundValue=1.0)
+backgroundValue=0.0, double foregroundValue=1.0)
 
  itk::simple::BinaryMorphologicalOpeningImageFilter Functional Interface
 
@@ -31337,8 +30555,8 @@ public ";
 Image itk::simple::BinaryOpeningByReconstruction(const Image &, uint32_t radius=1,
 BinaryOpeningByReconstructionImageFilter::KernelType
 kernel=BinaryOpeningByReconstructionImageFilter::Ball, double
-inForegroundValue=1.0, double inBackgroundValue=0.0, bool
-inFullyConnected=false)
+foregroundValue=1.0, double backgroundValue=0.0, bool
+fullyConnected=false)
 
  itk::simple::BinaryOpeningByReconstructionImageFilter Functional Interface
 
@@ -31479,7 +30697,7 @@ public ";
 
 %javamethodmodifiers  itk::simple::BlackTopHat "/**
 Image itk::simple::BlackTopHat(const Image &, uint32_t radius=1, BlackTopHatImageFilter::KernelType
-kernel=BlackTopHatImageFilter::Ball, bool inSafeBorder=true)
+kernel=BlackTopHatImageFilter::Ball, bool safeBorder=true)
 
  itk::simple::BlackTopHatImageFilter Functional Interface
 
@@ -31558,7 +30776,7 @@ See:
 public ";
 
 %javamethodmodifiers  itk::simple::Cast "/**
-SITKBasicFilters0_EXPORT Image itk::simple::Cast(const Image &image, PixelIDValueType pixelID)
+SITKBasicFilters0_EXPORT Image itk::simple::Cast(const Image &image, PixelIDValueEnum pixelID)
 */
 public ";
 
@@ -31613,7 +30831,7 @@ public ";
 Image itk::simple::ClosingByReconstruction(const Image &, uint32_t radius=1,
 ClosingByReconstructionImageFilter::KernelType
 kernel=ClosingByReconstructionImageFilter::Ball, bool
-inFullyConnected=false, bool inPreserveIntensities=false)
+fullyConnected=false, bool preserveIntensities=false)
 
  itk::simple::ClosingByReconstructionImageFilter Functional Interface
 
@@ -31926,8 +31144,7 @@ public ";
 %javamethodmodifiers  itk::simple::DilateObjectMorphology "/**
 Image itk::simple::DilateObjectMorphology(const Image &, uint32_t radius=1,
 DilateObjectMorphologyImageFilter::KernelType
-kernel=DilateObjectMorphologyImageFilter::Ball, double
-inObjectValue=1)
+kernel=DilateObjectMorphologyImageFilter::Ball, double objectValue=1)
 
  itk::simple::DilateObjectMorphologyImageFilter Functional Interface
 
@@ -31975,38 +31192,6 @@ This function directly calls the execute method of DivideImageFilter in order to
 
 See:
  itk::simple::DivideImageFilter for the object oriented interface
-
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::DivideByConstant "/**
-Image itk::simple::DivideByConstant(const Image &image1, double inConstant=1)
-
- itk::simple::DivideByConstantImageFilter Procedural Interface
-
-
-This function directly calls the execute method of DivideByConstantImageFilter in order to support a procedural API
-
-
-See:
- itk::simple::DivideByConstantImageFilter for the object oriented interface
-
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::DivideConstantBy "/**
-Image itk::simple::DivideConstantBy(const Image &image1, double inConstant=1.0)
-
- itk::simple::DivideConstantByImageFilter Procedural Interface
-
-
-This function directly calls the execute method of DivideConstantByImageFilter in order to support a procedural API
-
-
-See:
- itk::simple::DivideConstantByImageFilter for the object oriented interface
 
 
 */
@@ -32143,8 +31328,8 @@ public ";
 %javamethodmodifiers  itk::simple::ErodeObjectMorphology "/**
 Image itk::simple::ErodeObjectMorphology(const Image &, uint32_t radius=1,
 ErodeObjectMorphologyImageFilter::KernelType
-kernel=ErodeObjectMorphologyImageFilter::Ball, double inObjectValue=1,
-double inBackgroundValue=0)
+kernel=ErodeObjectMorphologyImageFilter::Ball, double objectValue=1,
+double backgroundValue=0)
 
  itk::simple::ErodeObjectMorphologyImageFilter Functional Interface
 
@@ -32340,7 +31525,7 @@ See:
 public ";
 
 %javamethodmodifiers  itk::simple::GaborSource "/**
-Image itk::simple::GaborSource(PixelIDValueType outputPixelType=itk::simple::sitkFloat32,
+Image itk::simple::GaborSource(PixelIDValueEnum outputPixelType=itk::simple::sitkFloat32,
 std::vector< unsigned int > size=std::vector< unsigned int >(3, 64),
 std::vector< double > sigma=std::vector< double >(3, 16.0),
 std::vector< double > mean=std::vector< double >(3, 32.0), double
@@ -32351,25 +31536,18 @@ std::vector< double > direction=std::vector< double >())
  itk::simple::GaborImageSource Procedural Interface
 
 
- itk::simple::GaborSourceImageFilter Procedural Interface
-
 This function directly calls the execute method of GaborImageSource in order to support a procedural API
 
 
 See:
  itk::simple::GaborImageSource for the object oriented interface
- This function directly calls the execute method of GaborSourceImageFilter in order to support a procedural API
-
-
-See:
- itk::simple::GaborSourceImageFilter for the object oriented interface
 
 
 */
 public ";
 
 %javamethodmodifiers  itk::simple::GaussianSource "/**
-Image itk::simple::GaussianSource(PixelIDValueType outputPixelType=itk::simple::sitkFloat32,
+Image itk::simple::GaussianSource(PixelIDValueEnum outputPixelType=itk::simple::sitkFloat32,
 std::vector< unsigned int > size=std::vector< unsigned int >(3, 64),
 std::vector< double > sigma=std::vector< double >(3, 16.0),
 std::vector< double > mean=std::vector< double >(3, 32.0), double
@@ -32380,18 +31558,11 @@ std::vector< double > direction=std::vector< double >())
  itk::simple::GaussianImageSource Procedural Interface
 
 
- itk::simple::GaussianSourceImageFilter Procedural Interface
-
 This function directly calls the execute method of GaussianImageSource in order to support a procedural API
 
 
 See:
  itk::simple::GaussianImageSource for the object oriented interface
- This function directly calls the execute method of GaussianSourceImageFilter in order to support a procedural API
-
-
-See:
- itk::simple::GaussianSourceImageFilter for the object oriented interface
 
 
 */
@@ -32413,6 +31584,11 @@ See:
  itk::simple::GeodesicActiveContourLevelSetImageFilter for the object oriented interface
 
 
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::GetPixelIDValueAsString "/**
+const std::string SITKCommon_EXPORT itk::simple::GetPixelIDValueAsString(PixelIDValueEnum type)
 */
 public ";
 
@@ -32657,7 +31833,8 @@ public ";
 %javamethodmodifiers  itk::simple::GrayscaleMorphologicalClosing "/**
 Image itk::simple::GrayscaleMorphologicalClosing(const Image &, const std::vector< uint32_t > vectorRadius,
 GrayscaleMorphologicalClosingImageFilter::KernelType
-kernel=GrayscaleMorphologicalClosingImageFilter::Ball)
+kernel=GrayscaleMorphologicalClosingImageFilter::Ball, bool
+safeBorder=true)
 
  itk::simple::GrayscaleMorphologicalClosingImageFilter Functional Interface
 
@@ -32669,7 +31846,8 @@ public ";
 %javamethodmodifiers  itk::simple::GrayscaleMorphologicalClosing "/**
 Image itk::simple::GrayscaleMorphologicalClosing(const Image &, uint32_t radius=1,
 GrayscaleMorphologicalClosingImageFilter::KernelType
-kernel=GrayscaleMorphologicalClosingImageFilter::Ball)
+kernel=GrayscaleMorphologicalClosingImageFilter::Ball, bool
+safeBorder=true)
 
  itk::simple::GrayscaleMorphologicalClosingImageFilter Functional Interface
 
@@ -32681,7 +31859,8 @@ public ";
 %javamethodmodifiers  itk::simple::GrayscaleMorphologicalOpening "/**
 Image itk::simple::GrayscaleMorphologicalOpening(const Image &, const std::vector< uint32_t > vectorRadius,
 GrayscaleMorphologicalOpeningImageFilter::KernelType
-kernel=GrayscaleMorphologicalOpeningImageFilter::Ball)
+kernel=GrayscaleMorphologicalOpeningImageFilter::Ball, bool
+safeBorder=true)
 
  itk::simple::GrayscaleMorphologicalOpeningImageFilter Functional Interface
 
@@ -32693,7 +31872,8 @@ public ";
 %javamethodmodifiers  itk::simple::GrayscaleMorphologicalOpening "/**
 Image itk::simple::GrayscaleMorphologicalOpening(const Image &, uint32_t radius=1,
 GrayscaleMorphologicalOpeningImageFilter::KernelType
-kernel=GrayscaleMorphologicalOpeningImageFilter::Ball)
+kernel=GrayscaleMorphologicalOpeningImageFilter::Ball, bool
+safeBorder=true)
 
  itk::simple::GrayscaleMorphologicalOpeningImageFilter Functional Interface
 
@@ -32761,7 +31941,7 @@ See:
 public ";
 
 %javamethodmodifiers  itk::simple::GridSource "/**
-Image itk::simple::GridSource(PixelIDValueType outputPixelType=itk::simple::sitkFloat32,
+Image itk::simple::GridSource(PixelIDValueEnum outputPixelType=itk::simple::sitkFloat32,
 std::vector< unsigned int > size=std::vector< unsigned int >(3, 64),
 std::vector< double > sigma=std::vector< double >(3, 0.5),
 std::vector< double > gridSpacing=std::vector< double >(3, 4.0),
@@ -32773,18 +31953,11 @@ std::vector< double > direction=std::vector< double >())
  itk::simple::GridImageSource Procedural Interface
 
 
- itk::simple::GridSourceImageFilter Procedural Interface
-
 This function directly calls the execute method of GridImageSource in order to support a procedural API
 
 
 See:
  itk::simple::GridImageSource for the object oriented interface
- This function directly calls the execute method of GridSourceImageFilter in order to support a procedural API
-
-
-See:
- itk::simple::GridSourceImageFilter for the object oriented interface
 
 
 */
@@ -33999,22 +33172,6 @@ See:
 */
 public ";
 
-%javamethodmodifiers  itk::simple::MultiplyByConstant "/**
-Image itk::simple::MultiplyByConstant(const Image &image1, double inConstant=1)
-
- itk::simple::MultiplyByConstantImageFilter Procedural Interface
-
-
-This function directly calls the execute method of MultiplyByConstantImageFilter in order to support a procedural API
-
-
-See:
- itk::simple::MultiplyByConstantImageFilter for the object oriented interface
-
-
-*/
-public ";
-
 %javamethodmodifiers  itk::simple::N4BiasFieldCorrection "/**
 Image itk::simple::N4BiasFieldCorrection(const Image &image1, const Image &image2, double
 convergenceThreshold=0.001, std::vector< uint32_t >
@@ -34262,7 +33419,7 @@ public ";
 Image itk::simple::OpeningByReconstruction(const Image &, uint32_t radius=1,
 OpeningByReconstructionImageFilter::KernelType
 kernel=OpeningByReconstructionImageFilter::Ball, bool
-inFullyConnected=false, bool inPreserveIntensities=false)
+fullyConnected=false, bool preserveIntensities=false)
 
  itk::simple::OpeningByReconstructionImageFilter Functional Interface
 
@@ -34369,7 +33526,7 @@ See:
 public ";
 
 %javamethodmodifiers  itk::simple::PhysicalPointSource "/**
-Image itk::simple::PhysicalPointSource(PixelIDValueType outputPixelType=itk::simple::sitkVectorFloat32,
+Image itk::simple::PhysicalPointSource(PixelIDValueEnum outputPixelType=itk::simple::sitkVectorFloat32,
 std::vector< unsigned int > size=std::vector< unsigned int >(3, 64),
 std::vector< double > origin=std::vector< double >(3, 0.0),
 std::vector< double > spacing=std::vector< double >(3, 1.0),
@@ -34378,18 +33535,11 @@ std::vector< double > direction=std::vector< double >())
  itk::simple::PhysicalPointImageSource Procedural Interface
 
 
- itk::simple::PhysicalPointSourceImageFilter Procedural Interface
-
 This function directly calls the execute method of PhysicalPointImageSource in order to support a procedural API
 
 
 See:
  itk::simple::PhysicalPointImageSource for the object oriented interface
- This function directly calls the execute method of PhysicalPointSourceImageFilter in order to support a procedural API
-
-
-See:
- itk::simple::PhysicalPointSourceImageFilter for the object oriented interface
 
 
 */
@@ -34416,22 +33566,6 @@ This function directly calls the execute method of PowImageFilter in order to su
 
 See:
  itk::simple::PowImageFilter for the object oriented interface
-
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::PowToConstant "/**
-Image itk::simple::PowToConstant(const Image &image1, double inConstant=1.0)
-
- itk::simple::PowToConstantImageFilter Procedural Interface
-
-
-This function directly calls the execute method of PowToConstantImageFilter in order to support a procedural API
-
-
-See:
- itk::simple::PowToConstantImageFilter for the object oriented interface
 
 
 */
@@ -35238,38 +34372,6 @@ See:
 */
 public ";
 
-%javamethodmodifiers  itk::simple::SubtractConstantBy "/**
-Image itk::simple::SubtractConstantBy(const Image &image1, double inConstant=1.0)
-
- itk::simple::SubtractConstantByImageFilter Procedural Interface
-
-
-This function directly calls the execute method of SubtractConstantByImageFilter in order to support a procedural API
-
-
-See:
- itk::simple::SubtractConstantByImageFilter for the object oriented interface
-
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::SubtractConstantFrom "/**
-Image itk::simple::SubtractConstantFrom(const Image &image1, double inConstant=1.0)
-
- itk::simple::SubtractConstantFromImageFilter Procedural Interface
-
-
-This function directly calls the execute method of SubtractConstantFromImageFilter in order to support a procedural API
-
-
-See:
- itk::simple::SubtractConstantFromImageFilter for the object oriented interface
-
-
-*/
-public ";
-
 %javamethodmodifiers  itk::simple::SumProjection "/**
 Image itk::simple::SumProjection(const Image &image1, unsigned int projectionDimension=0u)
 
@@ -35683,7 +34785,7 @@ public ";
 
 %javamethodmodifiers  itk::simple::WhiteTopHat "/**
 Image itk::simple::WhiteTopHat(const Image &, uint32_t radius=1, WhiteTopHatImageFilter::KernelType
-kernel=WhiteTopHatImageFilter::Ball, bool inSafeBorder=true)
+kernel=WhiteTopHatImageFilter::Ball, bool safeBorder=true)
 
  itk::simple::WhiteTopHatImageFilter Functional Interface
 
