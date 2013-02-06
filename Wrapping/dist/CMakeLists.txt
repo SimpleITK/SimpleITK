@@ -88,7 +88,7 @@ if( WRAP_JAVA )
     POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE:${SWIG_MODULE_SimpleITKJava_TARGET_NAME}>" "${JAVA_PACKAGE_STAGE_DIR}"
     COMMENT "Copying $<TARGET_FILE:${SWIG_MODULE_SimpleITKJava_TARGET_NAME}> to Java stage..."
-    COMMAND ${Java_JAR_EXECUTABLE} cf "${JAVA_PACKAGE_STAGE_DIR}.zip" "${JAVA_PACKAGE_STAGE_DIR}"
+    COMMAND ${Java_JAR_EXECUTABLE} cfM "${JAVA_PACKAGE_STAGE_DIR}.zip" "${JAVA_PACKAGE_STAGE_DIR}"
     COMMENT "Packaging JAVA distribution..."
     )
 
@@ -99,7 +99,7 @@ endif()
 #
 # CSharp Packaging
 #
-if( WRAP_CSHARP )
+if( WRAP_CSHARP AND Java_JAR_EXECUTABLE )
 
   set(_files "")
   list( APPEND _files
@@ -154,7 +154,7 @@ if( WRAP_CSHARP )
 #    COMMENT "Copying $<TARGET_FILE:${SimpleITKCSharpManaged}> to CSharp stage..."
 
     SimpleITKCSharpManaged
-    COMMAND ${Java_JAR_EXECUTABLE} cf "${CSHARP_PACKAGE_STAGE_DIR}.zip" "${CSHARP_PACKAGE_STAGE_DIR}"
+    COMMAND ${Java_JAR_EXECUTABLE} cfM "${CSHARP_PACKAGE_STAGE_DIR}.zip" "${CSHARP_PACKAGE_STAGE_DIR}"
     COMMENT "Packaging CSHARP distribution..."
     )
 
