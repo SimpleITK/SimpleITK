@@ -15,6 +15,18 @@
   ],
   "members" : [
     {
+      "name" : "Size",
+      "type" : "std::vector<uint32_t>",
+      "default" : "std::vector<uint32_t>(3, 0)",
+      "dim_vec" : 1,
+      "doc" : "",
+      "itk_type" : "typename FilterType::SizeType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the size of the output image.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the size of the output image.\n"
+    },
+    {
       "name" : "Transform",
       "type" : "Transform",
       "default" : "itk::simple::Transform()",
@@ -35,18 +47,6 @@
       "detaileddescriptionSet" : "Set the interpolator function. The default is LinearInterpolateImageFunction<InputImageType, TInterpolatorPrecisionType>. Some other options are NearestNeighborInterpolateImageFunction(useful for binary masks and other images with a small number of possible pixel values), and BSplineInterpolateImageFunction(which provides a higher order of interpolation).\n",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : "Get a pointer to the interpolator function.\n"
-    },
-    {
-      "name" : "Size",
-      "type" : "std::vector<uint32_t>",
-      "default" : "std::vector<uint32_t>(3, 0)",
-      "dim_vec" : 1,
-      "doc" : "",
-      "itk_type" : "typename FilterType::SizeType",
-      "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set the size of the output image.\n",
-      "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Get the size of the output image.\n"
     },
     {
       "name" : "OutputOrigin",
