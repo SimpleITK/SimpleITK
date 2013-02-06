@@ -10,7 +10,7 @@
   "number_of_inputs" : 2,
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelIDTypeList",
-  "filter_type" : "itk::BinaryFunctorImageFilter< InputImageType, InputImageType2, InputImageType, Functor::DivFloor< typename InputImageType::PixelType, typename InputImageType2::PixelType, typename OutputImageType::PixelType> >"
+  "filter_type" : "itk::BinaryFunctorImageFilter< InputImageType, InputImageType2, InputImageType, Functor::DivFloor< typename InputImageType::PixelType, typename InputImageType2::PixelType, typename OutputImageType::PixelType> >",
   "members" : [],
   "tests" : [
     {
