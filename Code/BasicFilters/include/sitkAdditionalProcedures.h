@@ -27,15 +27,41 @@
 namespace itk {
 namespace simple {
 
+
 /**
  * \brief itk::simple::ResampleImageFilter Procedural Interface
  *
- * This function directly calls the execute method of ResampleImageFilter
- * in order to support a procedual API
+ * These functions call the execute method of ResampleImageFilter
+ * in order to support a procedual API.
+ *
+ * There three very by how the output image's domain parameters are
+ * specified. The first method used the input image, the second uses
+ * a reference image, while the last procedure has them manually
+ * specified.
  *
  * \sa itk::simple::ResampleImageFilter for the object oriented interface
+* @{
  */
-SITKBasicFilters_EXPORT Image Resample ( const Image& image1, const Image& referenceImage, Transform transform = itk::simple::Transform(), InterpolatorEnum interpolator = itk::simple::sitkLinear, double defaultPixelValue = 0.0 );
+SITKBasicFilters_EXPORT Image Resample ( const Image& image1,
+                                         Transform transform = itk::simple::Transform(),
+                                         InterpolatorEnum interpolator = itk::simple::sitkLinear,
+                                         double defaultPixelValue = 0.0 );
+
+SITKBasicFilters_EXPORT Image Resample ( const Image& image1,
+                                         const Image& referenceImage,
+                                         Transform transform = itk::simple::Transform(),
+                                         InterpolatorEnum interpolator = itk::simple::sitkLinear,
+                                         double defaultPixelValue = 0.0 );
+
+SITKBasicFilters_EXPORT Image Resample ( const Image& image1,
+                                         std::vector<uint32_t> size,
+                                         Transform transform = itk::simple::Transform(),
+                                         InterpolatorEnum interpolator = itk::simple::sitkLinear,
+                                         std::vector<double> outputOrigin = std::vector<double>(3, 0.0),
+                                         std::vector<double> outputSpacing = std::vector<double>(3, 1.0),
+                                         std::vector<double> outputDirection = std::vector<double>(),
+                                         double defaultPixelValue = 0.0 );
+    /**@}*/
 
 }
 }
