@@ -61,7 +61,7 @@ if( WRAP_JAVA )
     endif()
   endif()
 
-  set( JAVA_PACKAGE_STAGE_DIR "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK-${SimpleITK_VERSION}-Java-${SIMPLEITK_JAVA_ARCH}")
+  set( JAVA_PACKAGE_STAGE_DIR "SimpleITK-${SimpleITK_VERSION}-Java-${SIMPLEITK_JAVA_ARCH}")
 
   add_custom_target( dist.Java
     COMMENT "Creating Java package ${JAVA_PACKAGE_STAGE_DIR}.zip"
@@ -123,10 +123,10 @@ if( WRAP_CSHARP )
     endif()
   endif()
 
-  set( CSHARP_PACKAGE_STAGE_DIR "${CMAKE_CURRENT_BINARY_DIR}/SimpleITK-${SimpleITK_VERSION}-CSharp-${SIMPLEITK_CSHARP_ARCH}")
+  set( CSHARP_PACKAGE_STAGE_DIR "SimpleITK-${SimpleITK_VERSION}-CSharp-${SIMPLEITK_CSHARP_ARCH}")
 
   add_custom_target( dist.CSharp
-    COMMENT "Creating Java package ${CSHARP_PACKAGE_STAGE_DIR}.zip"
+    COMMENT "Creating CSharp package ${CSHARP_PACKAGE_STAGE_DIR}.zip"
     DEPENDS SimpleITKCSharpManaged
     )
 
