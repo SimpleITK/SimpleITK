@@ -99,7 +99,7 @@ endif()
 #
 # CSharp Packaging
 #
-if( WRAP_CSHARP )
+if( WRAP_CSHARP AND Java_JAR_EXECUTABLE )
 
   set(_files "")
   list( APPEND _files
