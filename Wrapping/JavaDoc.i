@@ -22621,8 +22621,8 @@ C++ includes: sitkResampleImageFilter.h
 */"
 
 %javamethodmodifiers  itk::simple::ResampleImageFilter::Execute "/**
-Image itk::simple::ResampleImageFilter::Execute(const Image &image1, Transform transform, InterpolatorEnum
-interpolator, std::vector< uint32_t > size, std::vector< double >
+Image itk::simple::ResampleImageFilter::Execute(const Image &image1, std::vector< uint32_t > size, Transform
+transform, InterpolatorEnum interpolator, std::vector< double >
 outputOrigin, std::vector< double > outputSpacing, std::vector< double
 > outputDirection, double defaultPixelValue)
 
@@ -33794,27 +33794,6 @@ This function directly calls the execute method of RenyiEntropyThresholdImageFil
 
 See:
  itk::simple::RenyiEntropyThresholdImageFilter for the object oriented interface
-
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::Resample "/**
-Image itk::simple::Resample(const Image &image1, Transform transform=itk::simple::Transform(),
-InterpolatorEnum interpolator=itk::simple::sitkLinear, std::vector<
-uint32_t > size=std::vector< uint32_t >(3, 0), std::vector< double >
-outputOrigin=std::vector< double >(3, 0.0), std::vector< double >
-outputSpacing=std::vector< double >(3, 1.0), std::vector< double >
-outputDirection=std::vector< double >(), double defaultPixelValue=0.0)
-
- itk::simple::ResampleImageFilter Procedural Interface
-
-
-This function directly calls the execute method of ResampleImageFilter in order to support a procedural API
-
-
-See:
- itk::simple::ResampleImageFilter for the object oriented interface
 
 
 */
