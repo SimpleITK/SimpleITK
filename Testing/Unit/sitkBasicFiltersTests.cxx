@@ -39,6 +39,7 @@
 #include <sitkGradientAnisotropicDiffusionImageFilter.h>
 #include <sitkCurvatureAnisotropicDiffusionImageFilter.h>
 #include <sitkLabelMapContourOverlayImageFilter.h>
+#include <sitkAdditionalProcedures.h>
 
 #include "itkVectorImage.h"
 #include "itkRecursiveGaussianImageFilter.h"
@@ -383,4 +384,37 @@ TEST(BasicFilters,LabelStatistics) {
   EXPECT_EQ( myBasicMeasurementMap.size(), 8u ); //4 measurements produced
 
   EXPECT_EQ ( myMeasurementMap.ToString(), "Count, Maximum, Mean, Minimum, Sigma, Sum, Variance, approxMedian, \n36172, 99, 13.0911, 0, 16.4065, 473533, 269.173, 12, \n" );
+}
+
+TEST(BasicFilters,ResampleImageFilter_AdditionalProcedures)
+{
+  namespace sitk = itk::simple;
+
+  sitk::Image img;
+  ASSERT_NO_THROW( img = sitk::ReadImage( dataFinder.GetFile ( "Input/RA-Float.nrrd" ) ) ) << "Reading input Image.";
+
+  sitk::Transform xf = sitk::Transform(); // identity transform
+
+  // self reference image
+   sitk::Image out = sitk::Resample( img,
+                                     xf,
+                                     sitk::sitkNearestNeighbor );
+  EXPECT_EQ( "b187541bdcc89843d0a25a3761f344c358f3518a", sitk::Hash( out )) << " Procedural Interface 1 identity transform.";
+
+  // additional parameter reference image
+   out = sitk::Resample( img,
+                         img,
+                         xf,
+                         sitk::sitkNearestNeighbor );
+  EXPECT_EQ( "b187541bdcc89843d0a25a3761f344c358f3518a", sitk::Hash( out )) << " Procedural Interface 2 identity transform.";
+
+  // manual specification of output domain
+ out = sitk::Resample( img,
+                       img.GetSize(),
+                       xf,
+                       sitk::sitkNearestNeighbor,
+                       img.GetOrigin(),
+                       img.GetSpacing(),
+                       img.GetDirection() );
+  EXPECT_EQ( "b187541bdcc89843d0a25a3761f344c358f3518a", sitk::Hash( out )) << " Procedural Interface 3 identity transform.";
 }
