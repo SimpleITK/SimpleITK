@@ -200,9 +200,17 @@ $(foreach settings
   else
     OUT='filter.Set${parameter} ( ${value} );'
       if (not no_get_method) then
-    OUT = OUT .. '\
-  ASSERT_EQ ( ${value}, filter.Get${parameter}() ) << "Failed to set ${parameter} to ${value}";'
-    end
+        if (value == "true") then
+          OUT = OUT .. '\
+  ASSERT_TRUE ( filter.Get${parameter}() ) << "Failed to set ${parameter} to ${value}";'
+        elseif (value == "false") then
+          OUT = OUT .. '\
+  ASSERT_FALSE ( filter.Get${parameter}() ) << "Failed to set ${parameter} to ${value}";'
+        else
+          OUT = OUT .. '\
+  ASSERT_EQ ( ${value}, filter.Get${parameter}() ) << "++Failed to set ${parameter} to ${value}";'
+        end
+      end
 end)
 )]]
 end)
