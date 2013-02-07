@@ -188,7 +188,7 @@ if(MSVC)
   foreach( _varName
       CMAKE_EXE_LINKER_FLAGS_DEBUG
       CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO )
-    STRING(REGEX REPLACE "INCREMENTAL(:YES)?" "INCREMENTAL:NO" ${_varName} ${${_varName}})
+    STRING(REGEX REPLACE "INCREMENTAL(:[a-zA-Z]+)?" "INCREMENTAL:NO" ${_varName} ${${_varName}})
   endforeach()
 
 endif()
