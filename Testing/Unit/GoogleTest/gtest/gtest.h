@@ -524,6 +524,14 @@
 # include <time.h>  // NOLINT
 #endif
 
+
+// !!!HACK!!!
+// Tuples are broken in VS11. The variadic templates are not deep enough.
+// We are not currently using the GTest features which require tuple,
+// so just disable them and hope that upstream premanetly addresses
+// the problem, with out required more CMake core for compiler issues.
+#define GTEST_HAS_TR1_TUPLE 0
+
 // Determines whether Google Test can use tr1/tuple.  You can define
 // this macro to 0 to prevent Google Test from using tuple (any
 // feature depending on tuple with be disabled in this mode).
