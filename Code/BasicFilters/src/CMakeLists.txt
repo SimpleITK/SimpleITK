@@ -78,16 +78,18 @@ foreach ( _start RANGE 0 ${_length} ${_stride} )
     list ( APPEND SRC ${_v} )
   endforeach()
 
-  add_library ( SimpleITKBasicFilters${_library_i} ${SRC} )
-  target_link_libraries ( SimpleITKBasicFilters${_library_i} SimpleITKCommon SimpleITKBasicFilters0 ${ITK_LIBRARIES} )
-  set_target_properties( SimpleITKBasicFilters${_library_i}  PROPERTIES SKIP_BUILD_RPATH TRUE )
-  add_dependencies ( SimpleITKBasicFilters${_library_i} BasicFiltersSourceCode )
 
-  sitk_install_exported_target( SimpleITKBasicFilters${_library_i} )
 
   # append this new library to the globaly cached list
   list ( APPEND SimpleITK_LIBRARIES SimpleITKBasicFilters${_library_i} )
   set ( SimpleITK_LIBRARIES ${SimpleITK_LIBRARIES} CACHE INTERNAL "" )
+
+  add_library ( SimpleITKBasicFilters${_library_i} ${SRC} )
+  target_link_libraries ( SimpleITKBasicFilters${_library_i} ${SimpleITK_LIBRARIES} ${ITK_LIBRARIES} )
+  set_target_properties( SimpleITKBasicFilters${_library_i}  PROPERTIES SKIP_BUILD_RPATH TRUE )
+  add_dependencies ( SimpleITKBasicFilters${_library_i} BasicFiltersSourceCode )
+
+  sitk_install_exported_target( SimpleITKBasicFilters${_library_i} )
 
   math( EXPR _library_i "${_library_i} + 1 " )
 
