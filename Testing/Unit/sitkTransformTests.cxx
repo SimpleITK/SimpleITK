@@ -17,6 +17,7 @@
 *=========================================================================*/
 
 #include "sitkTransform.h"
+#include "sitkAdditionalProcedures.h"
 #include "sitkResampleImageFilter.h"
 #include "sitkHashImageFilter.h"
 #include "SimpleITKTestHarness.h"
@@ -227,7 +228,7 @@ TEST(TransformTest, ReadTransformResample) {
 
     sitk::Image out = sitk::Resample( img, tx );
 
-    EXPECT_EQ( sitk::Hash( out ), "da39a3ee5e6b4b0d3255bfef95601890afd80709" ) << "Hash for resampling identity matrix.";
+    EXPECT_EQ( "ed046a55efafdda172e21f27240e47c729540653", sitk::Hash( out ) ) << "Hash for resampling identity matrix.";
 
     ++ptxFiles;
     }

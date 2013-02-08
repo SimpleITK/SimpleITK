@@ -50,6 +50,7 @@
 
 #include "sitkCastImageFilter.h"
 
+#include "sitkAdditionalProcedures.h"
 
 // These headers are auto-generated
 #include "SimpleITKBasicFiltersGeneratedHeaders.h"

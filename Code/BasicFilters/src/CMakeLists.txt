@@ -32,13 +32,17 @@ target_link_libraries ( SimpleITKBasicFilters0 SimpleITKCommon ${ITK_LIBRARIES} 
 set_target_properties( SimpleITKBasicFilters0  PROPERTIES SKIP_BUILD_RPATH TRUE )
 sitk_install_exported_target( SimpleITKBasicFilters0 )
 
-# append this new library to the globaly cached list
+# append this new library to the globally cached list
 list ( APPEND SimpleITK_LIBRARIES SimpleITKBasicFilters0 )
 set ( SimpleITK_LIBRARIES ${SimpleITK_LIBRARIES} CACHE INTERNAL "" )
 
 # sort the list to en-sure the same list across platforms
 list ( SORT SimpleITKBasicFiltersGeneratedSource )
+
+# add additional files which may depend on others
 set ( SimpleITKBasicFiltersSource ${SimpleITKBasicFiltersGeneratedSource} )
+list ( APPEND SimpleITKBasicFiltersSource sitkAdditionalProcedures.cxx )
+
 list ( LENGTH SimpleITKBasicFiltersSource _length )
 
 # The other filters an automatically split into files. They all
