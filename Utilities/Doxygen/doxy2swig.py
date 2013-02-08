@@ -278,12 +278,12 @@ class Doxy2SWIG:
                     if self.java:
                         self.add_text(' %s::%s "/**\n%s'%(ns, name, defn))
                     else:
-                        self.add_text(' %s::%s "\n%s'%(ns, name, defn))
+                        self.add_text(' %s::%s "\n'%(ns, name))
                 else:
                     if self.java:
                         self.add_text(' %s "/**\n%s'%(name, defn))
                     else:
-                        self.add_text(' %s "\n%s'%(name, defn))
+                        self.add_text(' %s "\n'%(name))
             elif cdef_kind in ('class', 'struct'):
                 # Get the full function name.
                 anc_node = anc.getElementsByTagName('compoundname')
@@ -291,7 +291,7 @@ class Doxy2SWIG:
                 if self.java:
                     self.add_text(' %s::%s "/**\n%s'%(cname, name, defn))
                 else:
-                    self.add_text(' %s::%s "\n%s'%(cname, name, defn))
+                    self.add_text(' %s::%s "\n'%(cname, name))
 
             for n in node.childNodes:
                 if n not in list(first.values()):
@@ -325,7 +325,8 @@ class Doxy2SWIG:
             self.generic_parse(node)
 
     def do_argsstring(self, node):
-        self.generic_parse(node, pad=1)
+        if self.java:
+            self.generic_parse(node, pad=1)
 
     def do_member(self, node):
         kind = node.attributes['kind'].value
