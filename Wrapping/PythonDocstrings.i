@@ -69,11 +69,9 @@ C++ includes: itkUnaryMinusImageFilter.h
 ";
 
 %feature("docstring")  itk::Functor::UnaryMinus::UnaryMinus "
-itk::Functor::UnaryMinus< TInput1, TOutput >::UnaryMinus()
 ";
 
 %feature("docstring")  itk::Functor::UnaryMinus::~UnaryMinus "
-itk::Functor::UnaryMinus< TInput1, TOutput >::~UnaryMinus()
 ";
 
 
@@ -82,47 +80,39 @@ C++ includes: itkHashImageFilter.h
 ";
 
 %feature("docstring")  itk::HashImageFilter::GetHash "
-std::string itk::HashImageFilter< TImageType >::GetHash() const
 
 Get the computed Hash values
 
 ";
 
 %feature("docstring")  itk::HashImageFilter::GetHashOutput "
-const HashObjectType* itk::HashImageFilter< TImageType >::GetHashOutput() const
 ";
 
 %feature("docstring")  itk::HashImageFilter::GetHashOutput "
-HashObjectType* itk::HashImageFilter< TImageType >::GetHashOutput()
 ";
 
 %feature("docstring")  itk::HashImageFilter::itkGetMacro "
-itk::HashImageFilter< TImageType >::itkGetMacro(HashFunction, HashFunction)
 ";
 
 %feature("docstring")  itk::HashImageFilter::itkNewMacro "
-itk::HashImageFilter< TImageType >::itkNewMacro(Self)
 
 Method for creation through the object factory.
 
 ";
 
 %feature("docstring")  itk::HashImageFilter::itkSetMacro "
-itk::HashImageFilter< TImageType >::itkSetMacro(HashFunction, HashFunction)
 
 Set/Get hashing function as enumerated type
 
 ";
 
 %feature("docstring")  itk::HashImageFilter::itkTypeMacro "
-itk::HashImageFilter< TImageType >::itkTypeMacro(HashImageFilter, CastImageFilter)
 
 Runtime information support.
 
 ";
 
 %feature("docstring")  itk::HashImageFilter::MakeOutput "
-virtual DataObjectPointer itk::HashImageFilter< TImageType >::MakeOutput(DataObjectPointerArraySizeType idx)
 ";
 
 
@@ -131,7 +121,6 @@ C++ includes: itkImageIOFactoryRegisterManager.h
 ";
 
 %feature("docstring")  itk::ImageIOFactoryRegisterManager::ImageIOFactoryRegisterManager "
-itk::ImageIOFactoryRegisterManager::ImageIOFactoryRegisterManager(void(*list[])(void))
 ";
 
 
@@ -171,11 +160,9 @@ C++ includes: itkSliceImageFilter.h
 ";
 
 %feature("docstring")  itk::SliceImageFilter::GenerateInputRequestedRegion "
-virtual void itk::SliceImageFilter< TInputImage, TOutputImage >::GenerateInputRequestedRegion()
 ";
 
 %feature("docstring")  itk::SliceImageFilter::GenerateOutputInformation "
-virtual void itk::SliceImageFilter< TInputImage, TOutputImage >::GenerateOutputInformation()
 
  SliceImageFilter produces an image which is a different resolution and with a
 different pixel spacing than its input image.
@@ -186,26 +173,21 @@ ProcessObject::GenerateOutputInformaton()
 ";
 
 %feature("docstring")  itk::SliceImageFilter::itkGetConstReferenceMacro "
-itk::SliceImageFilter< TInputImage, TOutputImage >::itkGetConstReferenceMacro(Step, ArrayType)
 ";
 
 %feature("docstring")  itk::SliceImageFilter::itkGetConstReferenceMacro "
-itk::SliceImageFilter< TInputImage, TOutputImage >::itkGetConstReferenceMacro(Stop, IndexType)
 ";
 
 %feature("docstring")  itk::SliceImageFilter::itkGetConstReferenceMacro "
-itk::SliceImageFilter< TInputImage, TOutputImage >::itkGetConstReferenceMacro(Start, IndexType)
 ";
 
 %feature("docstring")  itk::SliceImageFilter::itkNewMacro "
-itk::SliceImageFilter< TInputImage, TOutputImage >::itkNewMacro(Self)
 
 Method for creation through the object factory.
 
 ";
 
 %feature("docstring")  itk::SliceImageFilter::itkSetMacro "
-itk::SliceImageFilter< TInputImage, TOutputImage >::itkSetMacro(Step, ArrayType)
 
 Set/Get the stride of indexes extracted
 
@@ -214,47 +196,39 @@ An exception will be generated if 0.
 ";
 
 %feature("docstring")  itk::SliceImageFilter::itkSetMacro "
-itk::SliceImageFilter< TInputImage, TOutputImage >::itkSetMacro(Stop, IndexType)
 
 Set/Get the excluded end of the range
 
 ";
 
 %feature("docstring")  itk::SliceImageFilter::itkSetMacro "
-itk::SliceImageFilter< TInputImage, TOutputImage >::itkSetMacro(Start, IndexType)
 
 Set/Get the first index extracted from the input image
 
 ";
 
 %feature("docstring")  itk::SliceImageFilter::itkStaticConstMacro "
-itk::SliceImageFilter< TInputImage, TOutputImage >::itkStaticConstMacro(OutputImageDimension, unsigned int, TOutputImage::ImageDimension)
 ";
 
 %feature("docstring")  itk::SliceImageFilter::itkStaticConstMacro "
-itk::SliceImageFilter< TInputImage, TOutputImage >::itkStaticConstMacro(ImageDimension, unsigned int, TInputImage::ImageDimension)
 
 ImageDimension enumeration.
 
 ";
 
 %feature("docstring")  itk::SliceImageFilter::itkTypeMacro "
-itk::SliceImageFilter< TInputImage, TOutputImage >::itkTypeMacro(SliceImageFilter, ImageToImageFilter)
 
 Run-time type information (and related methods).
 
 ";
 
 %feature("docstring")  itk::SliceImageFilter::SetStart "
-void itk::SliceImageFilter< TInputImage, TOutputImage >::SetStart(IndexValueType start)
 ";
 
 %feature("docstring")  itk::SliceImageFilter::SetStep "
-void itk::SliceImageFilter< TInputImage, TOutputImage >::SetStep(int step)
 ";
 
 %feature("docstring")  itk::SliceImageFilter::SetStop "
-void itk::SliceImageFilter< TInputImage, TOutputImage >::SetStop(IndexValueType stop)
 ";
 
 
@@ -263,7 +237,6 @@ C++ includes: itkTransformIOFactoryRegisterManager.h
 ";
 
 %feature("docstring")  itk::TransformIOFactoryRegisterManager::TransformIOFactoryRegisterManager "
-itk::TransformIOFactoryRegisterManager::TransformIOFactoryRegisterManager(void(*list[])(void))
 ";
 
 
@@ -286,7 +259,6 @@ C++ includes: sitkAbsImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::AbsImageFilter::AbsImageFilter "
-itk::simple::AbsImageFilter::AbsImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -294,21 +266,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::AbsImageFilter::Execute "
-Image itk::simple::AbsImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::AbsImageFilter::GetName "
-std::string itk::simple::AbsImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::AbsImageFilter::ToString "
-std::string itk::simple::AbsImageFilter::ToString() const
 
 Print ourselves out
 
@@ -354,7 +323,6 @@ C++ includes: sitkAbsoluteValueDifferenceImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::AbsoluteValueDifferenceImageFilter::AbsoluteValueDifferenceImageFilter "
-itk::simple::AbsoluteValueDifferenceImageFilter::AbsoluteValueDifferenceImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -362,32 +330,27 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::AbsoluteValueDifferenceImageFilter::Execute "
-Image itk::simple::AbsoluteValueDifferenceImageFilter::Execute(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::AbsoluteValueDifferenceImageFilter::Execute "
-Image itk::simple::AbsoluteValueDifferenceImageFilter::Execute(const Image &image1, double constant)
 
 Execute the filter with an image and a constant
 
 ";
 
 %feature("docstring")  itk::simple::AbsoluteValueDifferenceImageFilter::Execute "
-Image itk::simple::AbsoluteValueDifferenceImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::AbsoluteValueDifferenceImageFilter::GetName "
-std::string itk::simple::AbsoluteValueDifferenceImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::AbsoluteValueDifferenceImageFilter::ToString "
-std::string itk::simple::AbsoluteValueDifferenceImageFilter::ToString() const
 
 Print ourselves out
 
@@ -423,7 +386,6 @@ C++ includes: sitkAcosImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::AcosImageFilter::AcosImageFilter "
-itk::simple::AcosImageFilter::AcosImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -431,21 +393,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::AcosImageFilter::Execute "
-Image itk::simple::AcosImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::AcosImageFilter::GetName "
-std::string itk::simple::AcosImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::AcosImageFilter::ToString "
-std::string itk::simple::AcosImageFilter::ToString() const
 
 Print ourselves out
 
@@ -488,7 +447,6 @@ C++ includes: sitkAdaptiveHistogramEqualizationImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::AdaptiveHistogramEqualizationImageFilter::AdaptiveHistogramEqualizationImageFilter "
-itk::simple::AdaptiveHistogramEqualizationImageFilter::AdaptiveHistogramEqualizationImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -496,22 +454,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::AdaptiveHistogramEqualizationImageFilter::Execute "
-Image itk::simple::AdaptiveHistogramEqualizationImageFilter::Execute(const Image &image1, std::vector< unsigned int > radius, float alpha,
-float beta, bool useLookupTable)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::AdaptiveHistogramEqualizationImageFilter::Execute "
-Image itk::simple::AdaptiveHistogramEqualizationImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::AdaptiveHistogramEqualizationImageFilter::GetAlpha "
-float itk::simple::AdaptiveHistogramEqualizationImageFilter::GetAlpha()
 
 Set/Get the value of alpha. Alpha=0 produces the adaptive histogram
 equalization (provided beta=0). Alpha=1 produces an unsharp mask.
@@ -520,7 +474,6 @@ Default is 0.3.
 ";
 
 %feature("docstring")  itk::simple::AdaptiveHistogramEqualizationImageFilter::GetBeta "
-float itk::simple::AdaptiveHistogramEqualizationImageFilter::GetBeta()
 
 Set/Get the value of beta. If beta=1 (and alpha=1), then the output
 image matches the input image. As beta approaches 0, the filter
@@ -529,18 +482,15 @@ behaves as an unsharp mask. Default is 0.3.
 ";
 
 %feature("docstring")  itk::simple::AdaptiveHistogramEqualizationImageFilter::GetName "
-std::string itk::simple::AdaptiveHistogramEqualizationImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::AdaptiveHistogramEqualizationImageFilter::GetRadius "
-std::vector<unsigned int> itk::simple::AdaptiveHistogramEqualizationImageFilter::GetRadius()
 ";
 
 %feature("docstring")  itk::simple::AdaptiveHistogramEqualizationImageFilter::GetUseLookupTable "
-bool itk::simple::AdaptiveHistogramEqualizationImageFilter::GetUseLookupTable()
 
 Set/Get whether an optimized lookup table for the intensity mapping
 function is used. Default is off.
@@ -548,7 +498,6 @@ function is used. Default is off.
 ";
 
 %feature("docstring")  itk::simple::AdaptiveHistogramEqualizationImageFilter::SetAlpha "
-Self& itk::simple::AdaptiveHistogramEqualizationImageFilter::SetAlpha(float Alpha)
 
 Set/Get the value of alpha. Alpha=0 produces the adaptive histogram
 equalization (provided beta=0). Alpha=1 produces an unsharp mask.
@@ -557,7 +506,6 @@ Default is 0.3.
 ";
 
 %feature("docstring")  itk::simple::AdaptiveHistogramEqualizationImageFilter::SetBeta "
-Self& itk::simple::AdaptiveHistogramEqualizationImageFilter::SetBeta(float Beta)
 
 Set/Get the value of beta. If beta=1 (and alpha=1), then the output
 image matches the input image. As beta approaches 0, the filter
@@ -566,18 +514,15 @@ behaves as an unsharp mask. Default is 0.3.
 ";
 
 %feature("docstring")  itk::simple::AdaptiveHistogramEqualizationImageFilter::SetRadius "
-Self& itk::simple::AdaptiveHistogramEqualizationImageFilter::SetRadius(std::vector< unsigned int > Radius)
 ";
 
 %feature("docstring")  itk::simple::AdaptiveHistogramEqualizationImageFilter::SetRadius "
-Self& itk::simple::AdaptiveHistogramEqualizationImageFilter::SetRadius(unsigned int r)
 
 Custom public declarations
 
 ";
 
 %feature("docstring")  itk::simple::AdaptiveHistogramEqualizationImageFilter::SetUseLookupTable "
-Self& itk::simple::AdaptiveHistogramEqualizationImageFilter::SetUseLookupTable(bool UseLookupTable)
 
 Set/Get whether an optimized lookup table for the intensity mapping
 function is used. Default is off.
@@ -585,18 +530,15 @@ function is used. Default is off.
 ";
 
 %feature("docstring")  itk::simple::AdaptiveHistogramEqualizationImageFilter::ToString "
-std::string itk::simple::AdaptiveHistogramEqualizationImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::AdaptiveHistogramEqualizationImageFilter::UseLookupTableOff "
-Self& itk::simple::AdaptiveHistogramEqualizationImageFilter::UseLookupTableOff()
 ";
 
 %feature("docstring")  itk::simple::AdaptiveHistogramEqualizationImageFilter::UseLookupTableOn "
-Self& itk::simple::AdaptiveHistogramEqualizationImageFilter::UseLookupTableOn()
 
 Set the value of UseLookupTable to true or false respectfully.
 
@@ -636,7 +578,6 @@ C++ includes: sitkAddImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::AddImageFilter::AddImageFilter "
-itk::simple::AddImageFilter::AddImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -644,32 +585,27 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::AddImageFilter::Execute "
-Image itk::simple::AddImageFilter::Execute(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::AddImageFilter::Execute "
-Image itk::simple::AddImageFilter::Execute(const Image &image1, double constant)
 
 Execute the filter with an image and a constant
 
 ";
 
 %feature("docstring")  itk::simple::AddImageFilter::Execute "
-Image itk::simple::AddImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::AddImageFilter::GetName "
-std::string itk::simple::AddImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::AddImageFilter::ToString "
-std::string itk::simple::AddImageFilter::ToString() const
 
 Print ourselves out
 
@@ -701,7 +637,6 @@ C++ includes: sitkAndImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::AndImageFilter::AndImageFilter "
-itk::simple::AndImageFilter::AndImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -709,32 +644,27 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::AndImageFilter::Execute "
-Image itk::simple::AndImageFilter::Execute(int constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::AndImageFilter::Execute "
-Image itk::simple::AndImageFilter::Execute(const Image &image1, int constant)
 
 Execute the filter with an image and a constant
 
 ";
 
 %feature("docstring")  itk::simple::AndImageFilter::Execute "
-Image itk::simple::AndImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::AndImageFilter::GetName "
-std::string itk::simple::AndImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::AndImageFilter::ToString "
-std::string itk::simple::AndImageFilter::ToString() const
 
 Print ourselves out
 
@@ -752,7 +682,6 @@ C++ includes: sitkAntiAliasBinaryImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::AntiAliasBinaryImageFilter::AntiAliasBinaryImageFilter "
-itk::simple::AntiAliasBinaryImageFilter::AntiAliasBinaryImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -760,22 +689,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::AntiAliasBinaryImageFilter::Execute "
-Image itk::simple::AntiAliasBinaryImageFilter::Execute(const Image &image1, double maximumRMSError, uint32_t
-numberOfIterations)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::AntiAliasBinaryImageFilter::Execute "
-Image itk::simple::AntiAliasBinaryImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::AntiAliasBinaryImageFilter::GetElapsedIterations "
-uint32_t itk::simple::AntiAliasBinaryImageFilter::GetElapsedIterations()
 
 Number of iterations run.
 
@@ -786,22 +711,18 @@ the value will only be valid after an execution.
 ";
 
 %feature("docstring")  itk::simple::AntiAliasBinaryImageFilter::GetMaximumRMSError "
-double itk::simple::AntiAliasBinaryImageFilter::GetMaximumRMSError()
 ";
 
 %feature("docstring")  itk::simple::AntiAliasBinaryImageFilter::GetName "
-std::string itk::simple::AntiAliasBinaryImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::AntiAliasBinaryImageFilter::GetNumberOfIterations "
-uint32_t itk::simple::AntiAliasBinaryImageFilter::GetNumberOfIterations()
 ";
 
 %feature("docstring")  itk::simple::AntiAliasBinaryImageFilter::GetRMSChange "
-double itk::simple::AntiAliasBinaryImageFilter::GetRMSChange()
 
 The Root Mean Square of the levelset upon termination.
 
@@ -812,15 +733,12 @@ the value will only be valid after an execution.
 ";
 
 %feature("docstring")  itk::simple::AntiAliasBinaryImageFilter::SetMaximumRMSError "
-Self& itk::simple::AntiAliasBinaryImageFilter::SetMaximumRMSError(double MaximumRMSError)
 ";
 
 %feature("docstring")  itk::simple::AntiAliasBinaryImageFilter::SetNumberOfIterations "
-Self& itk::simple::AntiAliasBinaryImageFilter::SetNumberOfIterations(uint32_t NumberOfIterations)
 ";
 
 %feature("docstring")  itk::simple::AntiAliasBinaryImageFilter::ToString "
-std::string itk::simple::AntiAliasBinaryImageFilter::ToString() const
 
 Print ourselves out
 
@@ -879,7 +797,6 @@ C++ includes: sitkApproximateSignedDistanceMapImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ApproximateSignedDistanceMapImageFilter::ApproximateSignedDistanceMapImageFilter "
-itk::simple::ApproximateSignedDistanceMapImageFilter::ApproximateSignedDistanceMapImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -887,21 +804,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ApproximateSignedDistanceMapImageFilter::Execute "
-Image itk::simple::ApproximateSignedDistanceMapImageFilter::Execute(const Image &image1, double insideValue, double outsideValue)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ApproximateSignedDistanceMapImageFilter::Execute "
-Image itk::simple::ApproximateSignedDistanceMapImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ApproximateSignedDistanceMapImageFilter::GetInsideValue "
-double itk::simple::ApproximateSignedDistanceMapImageFilter::GetInsideValue()
 
 Set/Get intensity value representing the interior of objects in the
 mask.
@@ -909,21 +823,18 @@ mask.
 ";
 
 %feature("docstring")  itk::simple::ApproximateSignedDistanceMapImageFilter::GetName "
-std::string itk::simple::ApproximateSignedDistanceMapImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ApproximateSignedDistanceMapImageFilter::GetOutsideValue "
-double itk::simple::ApproximateSignedDistanceMapImageFilter::GetOutsideValue()
 
 Set/Get intensity value representing non-objects in the mask.
 
 ";
 
 %feature("docstring")  itk::simple::ApproximateSignedDistanceMapImageFilter::SetInsideValue "
-Self& itk::simple::ApproximateSignedDistanceMapImageFilter::SetInsideValue(double InsideValue)
 
 Set/Get intensity value representing the interior of objects in the
 mask.
@@ -931,14 +842,12 @@ mask.
 ";
 
 %feature("docstring")  itk::simple::ApproximateSignedDistanceMapImageFilter::SetOutsideValue "
-Self& itk::simple::ApproximateSignedDistanceMapImageFilter::SetOutsideValue(double OutsideValue)
 
 Set/Get intensity value representing non-objects in the mask.
 
 ";
 
 %feature("docstring")  itk::simple::ApproximateSignedDistanceMapImageFilter::ToString "
-std::string itk::simple::ApproximateSignedDistanceMapImageFilter::ToString() const
 
 Print ourselves out
 
@@ -974,7 +883,6 @@ C++ includes: sitkAsinImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::AsinImageFilter::AsinImageFilter "
-itk::simple::AsinImageFilter::AsinImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -982,21 +890,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::AsinImageFilter::Execute "
-Image itk::simple::AsinImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::AsinImageFilter::GetName "
-std::string itk::simple::AsinImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::AsinImageFilter::ToString "
-std::string itk::simple::AsinImageFilter::ToString() const
 
 Print ourselves out
 
@@ -1029,7 +934,6 @@ C++ includes: sitkAtan2ImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::Atan2ImageFilter::Atan2ImageFilter "
-itk::simple::Atan2ImageFilter::Atan2ImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -1037,32 +941,27 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::Atan2ImageFilter::Execute "
-Image itk::simple::Atan2ImageFilter::Execute(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::Atan2ImageFilter::Execute "
-Image itk::simple::Atan2ImageFilter::Execute(const Image &image1, double constant)
 
 Execute the filter with an image and a constant
 
 ";
 
 %feature("docstring")  itk::simple::Atan2ImageFilter::Execute "
-Image itk::simple::Atan2ImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::Atan2ImageFilter::GetName "
-std::string itk::simple::Atan2ImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::Atan2ImageFilter::ToString "
-std::string itk::simple::Atan2ImageFilter::ToString() const
 
 Print ourselves out
 
@@ -1096,7 +995,6 @@ C++ includes: sitkAtanImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::AtanImageFilter::AtanImageFilter "
-itk::simple::AtanImageFilter::AtanImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -1104,21 +1002,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::AtanImageFilter::Execute "
-Image itk::simple::AtanImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::AtanImageFilter::GetName "
-std::string itk::simple::AtanImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::AtanImageFilter::ToString "
-std::string itk::simple::AtanImageFilter::ToString() const
 
 Print ourselves out
 
@@ -1182,7 +1077,6 @@ C++ includes: sitkBilateralImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::BilateralImageFilter::BilateralImageFilter "
-itk::simple::BilateralImageFilter::BilateralImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -1190,22 +1084,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::BilateralImageFilter::Execute "
-Image itk::simple::BilateralImageFilter::Execute(const Image &image1, double domainSigma, double rangeSigma, unsigned
-int numberOfRangeGaussianSamples)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::BilateralImageFilter::Execute "
-Image itk::simple::BilateralImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::BilateralImageFilter::GetDomainSigma "
-double itk::simple::BilateralImageFilter::GetDomainSigma()
 
 Standard get/set macros for filter parameters. DomainSigma is
 specified in the same units as the Imagespacing. RangeSigma is
@@ -1214,14 +1104,12 @@ specified in the units of intensity.
 ";
 
 %feature("docstring")  itk::simple::BilateralImageFilter::GetName "
-std::string itk::simple::BilateralImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::BilateralImageFilter::GetNumberOfRangeGaussianSamples "
-unsigned int itk::simple::BilateralImageFilter::GetNumberOfRangeGaussianSamples()
 
 Set/Get the number of samples in the approximation to the Gaussian
 used for the range smoothing. Samples are only generated in the range
@@ -1230,7 +1118,6 @@ of [0, 4*m_RangeSigma]. Default is 100.
 ";
 
 %feature("docstring")  itk::simple::BilateralImageFilter::GetRangeSigma "
-double itk::simple::BilateralImageFilter::GetRangeSigma()
 
 Standard get/set macros for filter parameters. DomainSigma is
 specified in the same units as the Imagespacing. RangeSigma is
@@ -1239,7 +1126,6 @@ specified in the units of intensity.
 ";
 
 %feature("docstring")  itk::simple::BilateralImageFilter::SetDomainSigma "
-Self& itk::simple::BilateralImageFilter::SetDomainSigma(double DomainSigma)
 
 Convenience get/set methods for setting all domain parameters to the
 same values.
@@ -1247,7 +1133,6 @@ same values.
 ";
 
 %feature("docstring")  itk::simple::BilateralImageFilter::SetNumberOfRangeGaussianSamples "
-Self& itk::simple::BilateralImageFilter::SetNumberOfRangeGaussianSamples(unsigned int NumberOfRangeGaussianSamples)
 
 Set/Get the number of samples in the approximation to the Gaussian
 used for the range smoothing. Samples are only generated in the range
@@ -1256,7 +1141,6 @@ of [0, 4*m_RangeSigma]. Default is 100.
 ";
 
 %feature("docstring")  itk::simple::BilateralImageFilter::SetRangeSigma "
-Self& itk::simple::BilateralImageFilter::SetRangeSigma(double RangeSigma)
 
 Standard get/set macros for filter parameters. DomainSigma is
 specified in the same units as the Imagespacing. RangeSigma is
@@ -1265,7 +1149,6 @@ specified in the units of intensity.
 ";
 
 %feature("docstring")  itk::simple::BilateralImageFilter::ToString "
-std::string itk::simple::BilateralImageFilter::ToString() const
 
 Print ourselves out
 
@@ -1298,7 +1181,6 @@ C++ includes: sitkBinaryClosingByReconstructionImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::BinaryClosingByReconstructionImageFilter::BinaryClosingByReconstructionImageFilter "
-itk::simple::BinaryClosingByReconstructionImageFilter::BinaryClosingByReconstructionImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -1306,32 +1188,27 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::BinaryClosingByReconstructionImageFilter::Execute "
-Image itk::simple::BinaryClosingByReconstructionImageFilter::Execute(const Image &image1, double foregroundValue, bool fullyConnected)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::BinaryClosingByReconstructionImageFilter::Execute "
-Image itk::simple::BinaryClosingByReconstructionImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::BinaryClosingByReconstructionImageFilter::FullyConnectedOff "
-Self& itk::simple::BinaryClosingByReconstructionImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::BinaryClosingByReconstructionImageFilter::FullyConnectedOn "
-Self& itk::simple::BinaryClosingByReconstructionImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::BinaryClosingByReconstructionImageFilter::GetForegroundValue "
-double itk::simple::BinaryClosingByReconstructionImageFilter::GetForegroundValue()
 
 Get the value in the image considered as \"foreground\". Defaults to
 maximum value of InputPixelType.
@@ -1339,7 +1216,6 @@ maximum value of InputPixelType.
 ";
 
 %feature("docstring")  itk::simple::BinaryClosingByReconstructionImageFilter::GetFullyConnected "
-bool itk::simple::BinaryClosingByReconstructionImageFilter::GetFullyConnected()
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -1349,22 +1225,18 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::BinaryClosingByReconstructionImageFilter::GetKernelRadius "
-std::vector<uint32_t> itk::simple::BinaryClosingByReconstructionImageFilter::GetKernelRadius() const
 ";
 
 %feature("docstring")  itk::simple::BinaryClosingByReconstructionImageFilter::GetKernelType "
-KernelType itk::simple::BinaryClosingByReconstructionImageFilter::GetKernelType() const
 ";
 
 %feature("docstring")  itk::simple::BinaryClosingByReconstructionImageFilter::GetName "
-std::string itk::simple::BinaryClosingByReconstructionImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::BinaryClosingByReconstructionImageFilter::SetForegroundValue "
-Self& itk::simple::BinaryClosingByReconstructionImageFilter::SetForegroundValue(double ForegroundValue)
 
 Set the value in the image to consider as \"foreground\". Defaults to
 maximum value of InputPixelType.
@@ -1372,7 +1244,6 @@ maximum value of InputPixelType.
 ";
 
 %feature("docstring")  itk::simple::BinaryClosingByReconstructionImageFilter::SetFullyConnected "
-Self& itk::simple::BinaryClosingByReconstructionImageFilter::SetFullyConnected(bool FullyConnected)
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -1382,7 +1253,6 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::BinaryClosingByReconstructionImageFilter::SetKernelRadius "
-Self& itk::simple::BinaryClosingByReconstructionImageFilter::SetKernelRadius(const std::vector< uint32_t > &r)
 
 Set/Get the radius of the kernel structuring element as a vector.
 
@@ -1392,21 +1262,18 @@ the radius will be padded. If it is less the r will be truncated.
 ";
 
 %feature("docstring")  itk::simple::BinaryClosingByReconstructionImageFilter::SetKernelRadius "
-Self& itk::simple::BinaryClosingByReconstructionImageFilter::SetKernelRadius(uint32_t r)
 
 Kernel radius as a scale for isotropic structures
 
 ";
 
 %feature("docstring")  itk::simple::BinaryClosingByReconstructionImageFilter::SetKernelType "
-Self& itk::simple::BinaryClosingByReconstructionImageFilter::SetKernelType(KernelType t)
 
 Set/Get the kernel or structuring elemenent used for the morphology
 
 ";
 
 %feature("docstring")  itk::simple::BinaryClosingByReconstructionImageFilter::ToString "
-std::string itk::simple::BinaryClosingByReconstructionImageFilter::ToString() const
 
 Print ourselves out
 
@@ -1444,7 +1311,6 @@ C++ includes: sitkBinaryContourImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::BinaryContourImageFilter::BinaryContourImageFilter "
-itk::simple::BinaryContourImageFilter::BinaryContourImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -1452,33 +1318,27 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::BinaryContourImageFilter::Execute "
-Image itk::simple::BinaryContourImageFilter::Execute(const Image &image1, bool fullyConnected, double backgroundValue,
-double foregroundValue)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::BinaryContourImageFilter::Execute "
-Image itk::simple::BinaryContourImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::BinaryContourImageFilter::FullyConnectedOff "
-Self& itk::simple::BinaryContourImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::BinaryContourImageFilter::FullyConnectedOn "
-Self& itk::simple::BinaryContourImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::BinaryContourImageFilter::GetBackgroundValue "
-double itk::simple::BinaryContourImageFilter::GetBackgroundValue()
 
 Set/Get the background value used to mark the pixels not on the border
 of the objects.
@@ -1486,7 +1346,6 @@ of the objects.
 ";
 
 %feature("docstring")  itk::simple::BinaryContourImageFilter::GetForegroundValue "
-double itk::simple::BinaryContourImageFilter::GetForegroundValue()
 
 Set/Get the foreground value used to identify the objects in the input
 and output images.
@@ -1494,7 +1353,6 @@ and output images.
 ";
 
 %feature("docstring")  itk::simple::BinaryContourImageFilter::GetFullyConnected "
-bool itk::simple::BinaryContourImageFilter::GetFullyConnected()
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -1504,14 +1362,12 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::BinaryContourImageFilter::GetName "
-std::string itk::simple::BinaryContourImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::BinaryContourImageFilter::SetBackgroundValue "
-Self& itk::simple::BinaryContourImageFilter::SetBackgroundValue(double BackgroundValue)
 
 Set/Get the background value used to mark the pixels not on the border
 of the objects.
@@ -1519,7 +1375,6 @@ of the objects.
 ";
 
 %feature("docstring")  itk::simple::BinaryContourImageFilter::SetForegroundValue "
-Self& itk::simple::BinaryContourImageFilter::SetForegroundValue(double ForegroundValue)
 
 Set/Get the foreground value used to identify the objects in the input
 and output images.
@@ -1527,7 +1382,6 @@ and output images.
 ";
 
 %feature("docstring")  itk::simple::BinaryContourImageFilter::SetFullyConnected "
-Self& itk::simple::BinaryContourImageFilter::SetFullyConnected(bool FullyConnected)
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -1537,7 +1391,6 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::BinaryContourImageFilter::ToString "
-std::string itk::simple::BinaryContourImageFilter::ToString() const
 
 Print ourselves out
 
@@ -1582,7 +1435,6 @@ C++ includes: sitkBinaryDilateImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::BinaryDilateImageFilter::BinaryDilateImageFilter "
-itk::simple::BinaryDilateImageFilter::BinaryDilateImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -1590,72 +1442,57 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::BinaryDilateImageFilter::BoundaryToForegroundOff "
-Self& itk::simple::BinaryDilateImageFilter::BoundaryToForegroundOff()
 ";
 
 %feature("docstring")  itk::simple::BinaryDilateImageFilter::BoundaryToForegroundOn "
-Self& itk::simple::BinaryDilateImageFilter::BoundaryToForegroundOn()
 
 Set the value of BoundaryToForeground to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::BinaryDilateImageFilter::Execute "
-Image itk::simple::BinaryDilateImageFilter::Execute(const Image &image1, double backgroundValue, double foregroundValue,
-bool boundaryToForeground)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::BinaryDilateImageFilter::Execute "
-Image itk::simple::BinaryDilateImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::BinaryDilateImageFilter::GetBackgroundValue "
-double itk::simple::BinaryDilateImageFilter::GetBackgroundValue()
 ";
 
 %feature("docstring")  itk::simple::BinaryDilateImageFilter::GetBoundaryToForeground "
-bool itk::simple::BinaryDilateImageFilter::GetBoundaryToForeground()
 ";
 
 %feature("docstring")  itk::simple::BinaryDilateImageFilter::GetForegroundValue "
-double itk::simple::BinaryDilateImageFilter::GetForegroundValue()
 ";
 
 %feature("docstring")  itk::simple::BinaryDilateImageFilter::GetKernelRadius "
-std::vector<uint32_t> itk::simple::BinaryDilateImageFilter::GetKernelRadius() const
 ";
 
 %feature("docstring")  itk::simple::BinaryDilateImageFilter::GetKernelType "
-KernelType itk::simple::BinaryDilateImageFilter::GetKernelType() const
 ";
 
 %feature("docstring")  itk::simple::BinaryDilateImageFilter::GetName "
-std::string itk::simple::BinaryDilateImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::BinaryDilateImageFilter::SetBackgroundValue "
-Self& itk::simple::BinaryDilateImageFilter::SetBackgroundValue(double BackgroundValue)
 ";
 
 %feature("docstring")  itk::simple::BinaryDilateImageFilter::SetBoundaryToForeground "
-Self& itk::simple::BinaryDilateImageFilter::SetBoundaryToForeground(bool BoundaryToForeground)
 ";
 
 %feature("docstring")  itk::simple::BinaryDilateImageFilter::SetForegroundValue "
-Self& itk::simple::BinaryDilateImageFilter::SetForegroundValue(double ForegroundValue)
 ";
 
 %feature("docstring")  itk::simple::BinaryDilateImageFilter::SetKernelRadius "
-Self& itk::simple::BinaryDilateImageFilter::SetKernelRadius(const std::vector< uint32_t > &r)
 
 Set/Get the radius of the kernel structuring element as a vector.
 
@@ -1665,21 +1502,18 @@ the radius will be padded. If it is less the r will be truncated.
 ";
 
 %feature("docstring")  itk::simple::BinaryDilateImageFilter::SetKernelRadius "
-Self& itk::simple::BinaryDilateImageFilter::SetKernelRadius(uint32_t r)
 
 Kernel radius as a scale for isotropic structures
 
 ";
 
 %feature("docstring")  itk::simple::BinaryDilateImageFilter::SetKernelType "
-Self& itk::simple::BinaryDilateImageFilter::SetKernelType(KernelType t)
 
 Set/Get the kernel or structuring elemenent used for the morphology
 
 ";
 
 %feature("docstring")  itk::simple::BinaryDilateImageFilter::ToString "
-std::string itk::simple::BinaryDilateImageFilter::ToString() const
 
 Print ourselves out
 
@@ -1725,7 +1559,6 @@ C++ includes: sitkBinaryErodeImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::BinaryErodeImageFilter::BinaryErodeImageFilter "
-itk::simple::BinaryErodeImageFilter::BinaryErodeImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -1733,72 +1566,57 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::BinaryErodeImageFilter::BoundaryToForegroundOff "
-Self& itk::simple::BinaryErodeImageFilter::BoundaryToForegroundOff()
 ";
 
 %feature("docstring")  itk::simple::BinaryErodeImageFilter::BoundaryToForegroundOn "
-Self& itk::simple::BinaryErodeImageFilter::BoundaryToForegroundOn()
 
 Set the value of BoundaryToForeground to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::BinaryErodeImageFilter::Execute "
-Image itk::simple::BinaryErodeImageFilter::Execute(const Image &image1, double backgroundValue, double foregroundValue,
-bool boundaryToForeground)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::BinaryErodeImageFilter::Execute "
-Image itk::simple::BinaryErodeImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::BinaryErodeImageFilter::GetBackgroundValue "
-double itk::simple::BinaryErodeImageFilter::GetBackgroundValue()
 ";
 
 %feature("docstring")  itk::simple::BinaryErodeImageFilter::GetBoundaryToForeground "
-bool itk::simple::BinaryErodeImageFilter::GetBoundaryToForeground()
 ";
 
 %feature("docstring")  itk::simple::BinaryErodeImageFilter::GetForegroundValue "
-double itk::simple::BinaryErodeImageFilter::GetForegroundValue()
 ";
 
 %feature("docstring")  itk::simple::BinaryErodeImageFilter::GetKernelRadius "
-std::vector<uint32_t> itk::simple::BinaryErodeImageFilter::GetKernelRadius() const
 ";
 
 %feature("docstring")  itk::simple::BinaryErodeImageFilter::GetKernelType "
-KernelType itk::simple::BinaryErodeImageFilter::GetKernelType() const
 ";
 
 %feature("docstring")  itk::simple::BinaryErodeImageFilter::GetName "
-std::string itk::simple::BinaryErodeImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::BinaryErodeImageFilter::SetBackgroundValue "
-Self& itk::simple::BinaryErodeImageFilter::SetBackgroundValue(double BackgroundValue)
 ";
 
 %feature("docstring")  itk::simple::BinaryErodeImageFilter::SetBoundaryToForeground "
-Self& itk::simple::BinaryErodeImageFilter::SetBoundaryToForeground(bool BoundaryToForeground)
 ";
 
 %feature("docstring")  itk::simple::BinaryErodeImageFilter::SetForegroundValue "
-Self& itk::simple::BinaryErodeImageFilter::SetForegroundValue(double ForegroundValue)
 ";
 
 %feature("docstring")  itk::simple::BinaryErodeImageFilter::SetKernelRadius "
-Self& itk::simple::BinaryErodeImageFilter::SetKernelRadius(const std::vector< uint32_t > &r)
 
 Set/Get the radius of the kernel structuring element as a vector.
 
@@ -1808,21 +1626,18 @@ the radius will be padded. If it is less the r will be truncated.
 ";
 
 %feature("docstring")  itk::simple::BinaryErodeImageFilter::SetKernelRadius "
-Self& itk::simple::BinaryErodeImageFilter::SetKernelRadius(uint32_t r)
 
 Kernel radius as a scale for isotropic structures
 
 ";
 
 %feature("docstring")  itk::simple::BinaryErodeImageFilter::SetKernelType "
-Self& itk::simple::BinaryErodeImageFilter::SetKernelType(KernelType t)
 
 Set/Get the kernel or structuring elemenent used for the morphology
 
 ";
 
 %feature("docstring")  itk::simple::BinaryErodeImageFilter::ToString "
-std::string itk::simple::BinaryErodeImageFilter::ToString() const
 
 Print ourselves out
 
@@ -1853,7 +1668,6 @@ C++ includes: sitkBinaryFillholeImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::BinaryFillholeImageFilter::BinaryFillholeImageFilter "
-itk::simple::BinaryFillholeImageFilter::BinaryFillholeImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -1861,32 +1675,27 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::BinaryFillholeImageFilter::Execute "
-Image itk::simple::BinaryFillholeImageFilter::Execute(const Image &image1, bool fullyConnected, double foregroundValue)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::BinaryFillholeImageFilter::Execute "
-Image itk::simple::BinaryFillholeImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::BinaryFillholeImageFilter::FullyConnectedOff "
-Self& itk::simple::BinaryFillholeImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::BinaryFillholeImageFilter::FullyConnectedOn "
-Self& itk::simple::BinaryFillholeImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::BinaryFillholeImageFilter::GetForegroundValue "
-double itk::simple::BinaryFillholeImageFilter::GetForegroundValue()
 
 Get the value in the image considered as \"foreground\". Defaults to
 maximum value of InputPixelType.
@@ -1894,7 +1703,6 @@ maximum value of InputPixelType.
 ";
 
 %feature("docstring")  itk::simple::BinaryFillholeImageFilter::GetFullyConnected "
-bool itk::simple::BinaryFillholeImageFilter::GetFullyConnected()
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -1904,14 +1712,12 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::BinaryFillholeImageFilter::GetName "
-std::string itk::simple::BinaryFillholeImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::BinaryFillholeImageFilter::SetForegroundValue "
-Self& itk::simple::BinaryFillholeImageFilter::SetForegroundValue(double ForegroundValue)
 
 End concept checking Set the value in the image to consider as
 \"foreground\". Defaults to maximum value of InputPixelType.
@@ -1919,7 +1725,6 @@ End concept checking Set the value in the image to consider as
 ";
 
 %feature("docstring")  itk::simple::BinaryFillholeImageFilter::SetFullyConnected "
-Self& itk::simple::BinaryFillholeImageFilter::SetFullyConnected(bool FullyConnected)
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -1929,7 +1734,6 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::BinaryFillholeImageFilter::ToString "
-std::string itk::simple::BinaryFillholeImageFilter::ToString() const
 
 Print ourselves out
 
@@ -1960,7 +1764,6 @@ C++ includes: sitkBinaryGrindPeakImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::BinaryGrindPeakImageFilter::BinaryGrindPeakImageFilter "
-itk::simple::BinaryGrindPeakImageFilter::BinaryGrindPeakImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -1968,40 +1771,33 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::BinaryGrindPeakImageFilter::Execute "
-Image itk::simple::BinaryGrindPeakImageFilter::Execute(const Image &image1, bool fullyConnected, double foregroundValue,
-double backgroundValue)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::BinaryGrindPeakImageFilter::Execute "
-Image itk::simple::BinaryGrindPeakImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::BinaryGrindPeakImageFilter::FullyConnectedOff "
-Self& itk::simple::BinaryGrindPeakImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::BinaryGrindPeakImageFilter::FullyConnectedOn "
-Self& itk::simple::BinaryGrindPeakImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::BinaryGrindPeakImageFilter::GetBackgroundValue "
-double itk::simple::BinaryGrindPeakImageFilter::GetBackgroundValue()
 
 Set the value in eroded part of the image. Defaults to zero.
 
 ";
 
 %feature("docstring")  itk::simple::BinaryGrindPeakImageFilter::GetForegroundValue "
-double itk::simple::BinaryGrindPeakImageFilter::GetForegroundValue()
 
 Get the value in the image considered as \"foreground\". Defaults to
 maximum value of InputPixelType.
@@ -2009,7 +1805,6 @@ maximum value of InputPixelType.
 ";
 
 %feature("docstring")  itk::simple::BinaryGrindPeakImageFilter::GetFullyConnected "
-bool itk::simple::BinaryGrindPeakImageFilter::GetFullyConnected()
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -2019,21 +1814,18 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::BinaryGrindPeakImageFilter::GetName "
-std::string itk::simple::BinaryGrindPeakImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::BinaryGrindPeakImageFilter::SetBackgroundValue "
-Self& itk::simple::BinaryGrindPeakImageFilter::SetBackgroundValue(double BackgroundValue)
 
 Set the value in eroded part of the image. Defaults to zero.
 
 ";
 
 %feature("docstring")  itk::simple::BinaryGrindPeakImageFilter::SetForegroundValue "
-Self& itk::simple::BinaryGrindPeakImageFilter::SetForegroundValue(double ForegroundValue)
 
 End concept checking Set the value in the image to consider as
 \"foreground\". Defaults to maximum value of InputPixelType.
@@ -2041,7 +1833,6 @@ End concept checking Set the value in the image to consider as
 ";
 
 %feature("docstring")  itk::simple::BinaryGrindPeakImageFilter::SetFullyConnected "
-Self& itk::simple::BinaryGrindPeakImageFilter::SetFullyConnected(bool FullyConnected)
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -2051,7 +1842,6 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::BinaryGrindPeakImageFilter::ToString "
-std::string itk::simple::BinaryGrindPeakImageFilter::ToString() const
 
 Print ourselves out
 
@@ -2092,7 +1882,6 @@ C++ includes: sitkBinaryMagnitudeImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::BinaryMagnitudeImageFilter::BinaryMagnitudeImageFilter "
-itk::simple::BinaryMagnitudeImageFilter::BinaryMagnitudeImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -2100,21 +1889,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::BinaryMagnitudeImageFilter::Execute "
-Image itk::simple::BinaryMagnitudeImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::BinaryMagnitudeImageFilter::GetName "
-std::string itk::simple::BinaryMagnitudeImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::BinaryMagnitudeImageFilter::ToString "
-std::string itk::simple::BinaryMagnitudeImageFilter::ToString() const
 
 Print ourselves out
 
@@ -2153,7 +1939,6 @@ C++ includes: sitkBinaryMedianImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::BinaryMedianImageFilter::BinaryMedianImageFilter "
-itk::simple::BinaryMedianImageFilter::BinaryMedianImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -2161,22 +1946,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::BinaryMedianImageFilter::Execute "
-Image itk::simple::BinaryMedianImageFilter::Execute(const Image &image1, std::vector< unsigned int > radius, double
-foregroundValue, double backgroundValue)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::BinaryMedianImageFilter::Execute "
-Image itk::simple::BinaryMedianImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::BinaryMedianImageFilter::GetBackgroundValue "
-double itk::simple::BinaryMedianImageFilter::GetBackgroundValue()
 
 Get the value associated with the Foreground (or the object) on the
 binary input image and the Background .
@@ -2184,7 +1965,6 @@ binary input image and the Background .
 ";
 
 %feature("docstring")  itk::simple::BinaryMedianImageFilter::GetForegroundValue "
-double itk::simple::BinaryMedianImageFilter::GetForegroundValue()
 
 Get the value associated with the Foreground (or the object) on the
 binary input image and the Background .
@@ -2192,21 +1972,18 @@ binary input image and the Background .
 ";
 
 %feature("docstring")  itk::simple::BinaryMedianImageFilter::GetName "
-std::string itk::simple::BinaryMedianImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::BinaryMedianImageFilter::GetRadius "
-std::vector<unsigned int> itk::simple::BinaryMedianImageFilter::GetRadius()
 
 Get the radius of the neighborhood used to compute the median.
 
 ";
 
 %feature("docstring")  itk::simple::BinaryMedianImageFilter::SetBackgroundValue "
-Self& itk::simple::BinaryMedianImageFilter::SetBackgroundValue(double BackgroundValue)
 
 Set the value associated with the Foreground (or the object) on the
 binary input image and the Background .
@@ -2214,7 +1991,6 @@ binary input image and the Background .
 ";
 
 %feature("docstring")  itk::simple::BinaryMedianImageFilter::SetForegroundValue "
-Self& itk::simple::BinaryMedianImageFilter::SetForegroundValue(double ForegroundValue)
 
 Set the value associated with the Foreground (or the object) on the
 binary input image and the Background .
@@ -2222,21 +1998,18 @@ binary input image and the Background .
 ";
 
 %feature("docstring")  itk::simple::BinaryMedianImageFilter::SetRadius "
-Self& itk::simple::BinaryMedianImageFilter::SetRadius(std::vector< unsigned int > Radius)
 
 Set the radius of the neighborhood used to compute the median.
 
 ";
 
 %feature("docstring")  itk::simple::BinaryMedianImageFilter::SetRadius "
-Self& itk::simple::BinaryMedianImageFilter::SetRadius(unsigned int r)
 
 Custom public declarations
 
 ";
 
 %feature("docstring")  itk::simple::BinaryMedianImageFilter::ToString "
-std::string itk::simple::BinaryMedianImageFilter::ToString() const
 
 Print ourselves out
 
@@ -2283,7 +2056,6 @@ C++ includes: sitkBinaryMinMaxCurvatureFlowImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::BinaryMinMaxCurvatureFlowImageFilter::BinaryMinMaxCurvatureFlowImageFilter "
-itk::simple::BinaryMinMaxCurvatureFlowImageFilter::BinaryMinMaxCurvatureFlowImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -2291,67 +2063,54 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::BinaryMinMaxCurvatureFlowImageFilter::Execute "
-Image itk::simple::BinaryMinMaxCurvatureFlowImageFilter::Execute(const Image &image1, double timeStep, uint32_t numberOfIterations,
-int stencilRadius, double threshold)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::BinaryMinMaxCurvatureFlowImageFilter::Execute "
-Image itk::simple::BinaryMinMaxCurvatureFlowImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::BinaryMinMaxCurvatureFlowImageFilter::GetName "
-std::string itk::simple::BinaryMinMaxCurvatureFlowImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::BinaryMinMaxCurvatureFlowImageFilter::GetNumberOfIterations "
-uint32_t itk::simple::BinaryMinMaxCurvatureFlowImageFilter::GetNumberOfIterations()
 ";
 
 %feature("docstring")  itk::simple::BinaryMinMaxCurvatureFlowImageFilter::GetStencilRadius "
-int itk::simple::BinaryMinMaxCurvatureFlowImageFilter::GetStencilRadius()
 ";
 
 %feature("docstring")  itk::simple::BinaryMinMaxCurvatureFlowImageFilter::GetThreshold "
-double itk::simple::BinaryMinMaxCurvatureFlowImageFilter::GetThreshold()
 
 Set/Get the threshold value.
 
 ";
 
 %feature("docstring")  itk::simple::BinaryMinMaxCurvatureFlowImageFilter::GetTimeStep "
-double itk::simple::BinaryMinMaxCurvatureFlowImageFilter::GetTimeStep()
 ";
 
 %feature("docstring")  itk::simple::BinaryMinMaxCurvatureFlowImageFilter::SetNumberOfIterations "
-Self& itk::simple::BinaryMinMaxCurvatureFlowImageFilter::SetNumberOfIterations(uint32_t NumberOfIterations)
 ";
 
 %feature("docstring")  itk::simple::BinaryMinMaxCurvatureFlowImageFilter::SetStencilRadius "
-Self& itk::simple::BinaryMinMaxCurvatureFlowImageFilter::SetStencilRadius(int StencilRadius)
 ";
 
 %feature("docstring")  itk::simple::BinaryMinMaxCurvatureFlowImageFilter::SetThreshold "
-Self& itk::simple::BinaryMinMaxCurvatureFlowImageFilter::SetThreshold(double Threshold)
 
 Set/Get the threshold value.
 
 ";
 
 %feature("docstring")  itk::simple::BinaryMinMaxCurvatureFlowImageFilter::SetTimeStep "
-Self& itk::simple::BinaryMinMaxCurvatureFlowImageFilter::SetTimeStep(double TimeStep)
 ";
 
 %feature("docstring")  itk::simple::BinaryMinMaxCurvatureFlowImageFilter::ToString "
-std::string itk::simple::BinaryMinMaxCurvatureFlowImageFilter::ToString() const
 
 Print ourselves out
 
@@ -2386,7 +2145,6 @@ C++ includes: sitkBinaryMorphologicalClosingImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalClosingImageFilter::BinaryMorphologicalClosingImageFilter "
-itk::simple::BinaryMorphologicalClosingImageFilter::BinaryMorphologicalClosingImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -2394,21 +2152,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalClosingImageFilter::Execute "
-Image itk::simple::BinaryMorphologicalClosingImageFilter::Execute(const Image &image1, double foregroundValue, bool safeBorder)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalClosingImageFilter::Execute "
-Image itk::simple::BinaryMorphologicalClosingImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalClosingImageFilter::GetForegroundValue "
-double itk::simple::BinaryMorphologicalClosingImageFilter::GetForegroundValue()
 
 Get the value in the image considered as \"foreground\". Defaults to
 maximum value of InputPixelType.
@@ -2416,22 +2171,18 @@ maximum value of InputPixelType.
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalClosingImageFilter::GetKernelRadius "
-std::vector<uint32_t> itk::simple::BinaryMorphologicalClosingImageFilter::GetKernelRadius() const
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalClosingImageFilter::GetKernelType "
-KernelType itk::simple::BinaryMorphologicalClosingImageFilter::GetKernelType() const
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalClosingImageFilter::GetName "
-std::string itk::simple::BinaryMorphologicalClosingImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalClosingImageFilter::GetSafeBorder "
-bool itk::simple::BinaryMorphologicalClosingImageFilter::GetSafeBorder()
 
 A safe border is added to input image to avoid borders effects and
 remove it once the closing is done.
@@ -2439,18 +2190,15 @@ remove it once the closing is done.
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalClosingImageFilter::SafeBorderOff "
-Self& itk::simple::BinaryMorphologicalClosingImageFilter::SafeBorderOff()
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalClosingImageFilter::SafeBorderOn "
-Self& itk::simple::BinaryMorphologicalClosingImageFilter::SafeBorderOn()
 
 Set the value of SafeBorder to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalClosingImageFilter::SetForegroundValue "
-Self& itk::simple::BinaryMorphologicalClosingImageFilter::SetForegroundValue(double ForegroundValue)
 
 Set the value in the image to consider as \"foreground\". Defaults to
 maximum value of InputPixelType.
@@ -2458,7 +2206,6 @@ maximum value of InputPixelType.
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalClosingImageFilter::SetKernelRadius "
-Self& itk::simple::BinaryMorphologicalClosingImageFilter::SetKernelRadius(const std::vector< uint32_t > &r)
 
 Set/Get the radius of the kernel structuring element as a vector.
 
@@ -2468,21 +2215,18 @@ the radius will be padded. If it is less the r will be truncated.
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalClosingImageFilter::SetKernelRadius "
-Self& itk::simple::BinaryMorphologicalClosingImageFilter::SetKernelRadius(uint32_t r)
 
 Kernel radius as a scale for isotropic structures
 
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalClosingImageFilter::SetKernelType "
-Self& itk::simple::BinaryMorphologicalClosingImageFilter::SetKernelType(KernelType t)
 
 Set/Get the kernel or structuring elemenent used for the morphology
 
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalClosingImageFilter::SetSafeBorder "
-Self& itk::simple::BinaryMorphologicalClosingImageFilter::SetSafeBorder(bool SafeBorder)
 
 A safe border is added to input image to avoid borders effects and
 remove it once the closing is done.
@@ -2490,7 +2234,6 @@ remove it once the closing is done.
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalClosingImageFilter::ToString "
-std::string itk::simple::BinaryMorphologicalClosingImageFilter::ToString() const
 
 Print ourselves out
 
@@ -2525,7 +2268,6 @@ C++ includes: sitkBinaryMorphologicalOpeningImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalOpeningImageFilter::BinaryMorphologicalOpeningImageFilter "
-itk::simple::BinaryMorphologicalOpeningImageFilter::BinaryMorphologicalOpeningImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -2533,28 +2275,24 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalOpeningImageFilter::Execute "
-Image itk::simple::BinaryMorphologicalOpeningImageFilter::Execute(const Image &image1, double backgroundValue, double foregroundValue)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalOpeningImageFilter::Execute "
-Image itk::simple::BinaryMorphologicalOpeningImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalOpeningImageFilter::GetBackgroundValue "
-double itk::simple::BinaryMorphologicalOpeningImageFilter::GetBackgroundValue()
 
 Set the value in eroded part of the image. Defaults to zero.
 
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalOpeningImageFilter::GetForegroundValue "
-double itk::simple::BinaryMorphologicalOpeningImageFilter::GetForegroundValue()
 
 Get the value in the image considered as \"foreground\". Defaults to
 maximum value of PixelType.
@@ -2562,29 +2300,24 @@ maximum value of PixelType.
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalOpeningImageFilter::GetKernelRadius "
-std::vector<uint32_t> itk::simple::BinaryMorphologicalOpeningImageFilter::GetKernelRadius() const
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalOpeningImageFilter::GetKernelType "
-KernelType itk::simple::BinaryMorphologicalOpeningImageFilter::GetKernelType() const
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalOpeningImageFilter::GetName "
-std::string itk::simple::BinaryMorphologicalOpeningImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalOpeningImageFilter::SetBackgroundValue "
-Self& itk::simple::BinaryMorphologicalOpeningImageFilter::SetBackgroundValue(double BackgroundValue)
 
 Set the value in eroded part of the image. Defaults to zero.
 
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalOpeningImageFilter::SetForegroundValue "
-Self& itk::simple::BinaryMorphologicalOpeningImageFilter::SetForegroundValue(double ForegroundValue)
 
 Set the value in the image to consider as \"foreground\". Defaults to
 maximum value of PixelType.
@@ -2592,7 +2325,6 @@ maximum value of PixelType.
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalOpeningImageFilter::SetKernelRadius "
-Self& itk::simple::BinaryMorphologicalOpeningImageFilter::SetKernelRadius(const std::vector< uint32_t > &r)
 
 Set/Get the radius of the kernel structuring element as a vector.
 
@@ -2602,21 +2334,18 @@ the radius will be padded. If it is less the r will be truncated.
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalOpeningImageFilter::SetKernelRadius "
-Self& itk::simple::BinaryMorphologicalOpeningImageFilter::SetKernelRadius(uint32_t r)
 
 Kernel radius as a scale for isotropic structures
 
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalOpeningImageFilter::SetKernelType "
-Self& itk::simple::BinaryMorphologicalOpeningImageFilter::SetKernelType(KernelType t)
 
 Set/Get the kernel or structuring elemenent used for the morphology
 
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalOpeningImageFilter::ToString "
-std::string itk::simple::BinaryMorphologicalOpeningImageFilter::ToString() const
 
 Print ourselves out
 
@@ -2652,7 +2381,6 @@ C++ includes: sitkBinaryNotImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::BinaryNotImageFilter::BinaryNotImageFilter "
-itk::simple::BinaryNotImageFilter::BinaryNotImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -2660,21 +2388,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::BinaryNotImageFilter::Execute "
-Image itk::simple::BinaryNotImageFilter::Execute(const Image &image1, double foregroundValue, double backgroundValue)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::BinaryNotImageFilter::Execute "
-Image itk::simple::BinaryNotImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::BinaryNotImageFilter::GetBackgroundValue "
-double itk::simple::BinaryNotImageFilter::GetBackgroundValue()
 
 Get the value used as \"background\". Defaults to
 NumericTraits<PixelType>::NonpositiveMin().
@@ -2682,7 +2407,6 @@ NumericTraits<PixelType>::NonpositiveMin().
 ";
 
 %feature("docstring")  itk::simple::BinaryNotImageFilter::GetForegroundValue "
-double itk::simple::BinaryNotImageFilter::GetForegroundValue()
 
 Set/Get the value in the image considered as \"foreground\". Defaults
 to maximum value of PixelType.
@@ -2690,14 +2414,12 @@ to maximum value of PixelType.
 ";
 
 %feature("docstring")  itk::simple::BinaryNotImageFilter::GetName "
-std::string itk::simple::BinaryNotImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::BinaryNotImageFilter::SetBackgroundValue "
-Self& itk::simple::BinaryNotImageFilter::SetBackgroundValue(double BackgroundValue)
 
 Set the value used as \"background\". Defaults to
 NumericTraits<PixelType>::NonpositiveMin().
@@ -2705,7 +2427,6 @@ NumericTraits<PixelType>::NonpositiveMin().
 ";
 
 %feature("docstring")  itk::simple::BinaryNotImageFilter::SetForegroundValue "
-Self& itk::simple::BinaryNotImageFilter::SetForegroundValue(double ForegroundValue)
 
 Set/Get the value in the image considered as \"foreground\". Defaults
 to maximum value of PixelType.
@@ -2713,7 +2434,6 @@ to maximum value of PixelType.
 ";
 
 %feature("docstring")  itk::simple::BinaryNotImageFilter::ToString "
-std::string itk::simple::BinaryNotImageFilter::ToString() const
 
 Print ourselves out
 
@@ -2746,7 +2466,6 @@ C++ includes: sitkBinaryOpeningByReconstructionImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::BinaryOpeningByReconstructionImageFilter::BinaryOpeningByReconstructionImageFilter "
-itk::simple::BinaryOpeningByReconstructionImageFilter::BinaryOpeningByReconstructionImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -2754,40 +2473,33 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::BinaryOpeningByReconstructionImageFilter::Execute "
-Image itk::simple::BinaryOpeningByReconstructionImageFilter::Execute(const Image &image1, double foregroundValue, double backgroundValue,
-bool fullyConnected)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::BinaryOpeningByReconstructionImageFilter::Execute "
-Image itk::simple::BinaryOpeningByReconstructionImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::BinaryOpeningByReconstructionImageFilter::FullyConnectedOff "
-Self& itk::simple::BinaryOpeningByReconstructionImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::BinaryOpeningByReconstructionImageFilter::FullyConnectedOn "
-Self& itk::simple::BinaryOpeningByReconstructionImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::BinaryOpeningByReconstructionImageFilter::GetBackgroundValue "
-double itk::simple::BinaryOpeningByReconstructionImageFilter::GetBackgroundValue()
 
 Set the value in eroded part of the image. Defaults to zero.
 
 ";
 
 %feature("docstring")  itk::simple::BinaryOpeningByReconstructionImageFilter::GetForegroundValue "
-double itk::simple::BinaryOpeningByReconstructionImageFilter::GetForegroundValue()
 
 Get the value in the image considered as \"foreground\". Defaults to
 maximum value of PixelType.
@@ -2795,7 +2507,6 @@ maximum value of PixelType.
 ";
 
 %feature("docstring")  itk::simple::BinaryOpeningByReconstructionImageFilter::GetFullyConnected "
-bool itk::simple::BinaryOpeningByReconstructionImageFilter::GetFullyConnected()
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -2805,29 +2516,24 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::BinaryOpeningByReconstructionImageFilter::GetKernelRadius "
-std::vector<uint32_t> itk::simple::BinaryOpeningByReconstructionImageFilter::GetKernelRadius() const
 ";
 
 %feature("docstring")  itk::simple::BinaryOpeningByReconstructionImageFilter::GetKernelType "
-KernelType itk::simple::BinaryOpeningByReconstructionImageFilter::GetKernelType() const
 ";
 
 %feature("docstring")  itk::simple::BinaryOpeningByReconstructionImageFilter::GetName "
-std::string itk::simple::BinaryOpeningByReconstructionImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::BinaryOpeningByReconstructionImageFilter::SetBackgroundValue "
-Self& itk::simple::BinaryOpeningByReconstructionImageFilter::SetBackgroundValue(double BackgroundValue)
 
 Set the value in eroded part of the image. Defaults to zero.
 
 ";
 
 %feature("docstring")  itk::simple::BinaryOpeningByReconstructionImageFilter::SetForegroundValue "
-Self& itk::simple::BinaryOpeningByReconstructionImageFilter::SetForegroundValue(double ForegroundValue)
 
 Set the value in the image to consider as \"foreground\". Defaults to
 maximum value of PixelType.
@@ -2835,7 +2541,6 @@ maximum value of PixelType.
 ";
 
 %feature("docstring")  itk::simple::BinaryOpeningByReconstructionImageFilter::SetFullyConnected "
-Self& itk::simple::BinaryOpeningByReconstructionImageFilter::SetFullyConnected(bool FullyConnected)
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -2845,7 +2550,6 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::BinaryOpeningByReconstructionImageFilter::SetKernelRadius "
-Self& itk::simple::BinaryOpeningByReconstructionImageFilter::SetKernelRadius(const std::vector< uint32_t > &r)
 
 Set/Get the radius of the kernel structuring element as a vector.
 
@@ -2855,21 +2559,18 @@ the radius will be padded. If it is less the r will be truncated.
 ";
 
 %feature("docstring")  itk::simple::BinaryOpeningByReconstructionImageFilter::SetKernelRadius "
-Self& itk::simple::BinaryOpeningByReconstructionImageFilter::SetKernelRadius(uint32_t r)
 
 Kernel radius as a scale for isotropic structures
 
 ";
 
 %feature("docstring")  itk::simple::BinaryOpeningByReconstructionImageFilter::SetKernelType "
-Self& itk::simple::BinaryOpeningByReconstructionImageFilter::SetKernelType(KernelType t)
 
 Set/Get the kernel or structuring elemenent used for the morphology
 
 ";
 
 %feature("docstring")  itk::simple::BinaryOpeningByReconstructionImageFilter::ToString "
-std::string itk::simple::BinaryOpeningByReconstructionImageFilter::ToString() const
 
 Print ourselves out
 
@@ -2917,7 +2618,6 @@ C++ includes: sitkBinaryProjectionImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::BinaryProjectionImageFilter::BinaryProjectionImageFilter "
-itk::simple::BinaryProjectionImageFilter::BinaryProjectionImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -2925,22 +2625,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::BinaryProjectionImageFilter::Execute "
-Image itk::simple::BinaryProjectionImageFilter::Execute(const Image &image1, unsigned int projectionDimension, double
-foregroundValue, double backgroundValue)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::BinaryProjectionImageFilter::Execute "
-Image itk::simple::BinaryProjectionImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::BinaryProjectionImageFilter::GetBackgroundValue "
-double itk::simple::BinaryProjectionImageFilter::GetBackgroundValue()
 
 Get the value used as \"background\". Any pixel value which is not
 DilateValue is considered background. BackgroundValue is used for
@@ -2950,7 +2646,6 @@ NumericTraits<PixelType>::NonpositiveMin().
 ";
 
 %feature("docstring")  itk::simple::BinaryProjectionImageFilter::GetForegroundValue "
-double itk::simple::BinaryProjectionImageFilter::GetForegroundValue()
 
 Get the value in the image considered as \"foreground\". Defaults to
 maximum value of PixelType.
@@ -2958,18 +2653,15 @@ maximum value of PixelType.
 ";
 
 %feature("docstring")  itk::simple::BinaryProjectionImageFilter::GetName "
-std::string itk::simple::BinaryProjectionImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::BinaryProjectionImageFilter::GetProjectionDimension "
-unsigned int itk::simple::BinaryProjectionImageFilter::GetProjectionDimension()
 ";
 
 %feature("docstring")  itk::simple::BinaryProjectionImageFilter::SetBackgroundValue "
-Self& itk::simple::BinaryProjectionImageFilter::SetBackgroundValue(double BackgroundValue)
 
 Set the value used as \"background\". Any pixel value which is not
 DilateValue is considered background. BackgroundValue is used for
@@ -2979,7 +2671,6 @@ NumericTraits<PixelType>::NonpositiveMin().
 ";
 
 %feature("docstring")  itk::simple::BinaryProjectionImageFilter::SetForegroundValue "
-Self& itk::simple::BinaryProjectionImageFilter::SetForegroundValue(double ForegroundValue)
 
 Set the value in the image to consider as \"foreground\". Defaults to
 maximum value of PixelType. Subclasses may alias this to DilateValue
@@ -2988,11 +2679,9 @@ or ErodeValue.
 ";
 
 %feature("docstring")  itk::simple::BinaryProjectionImageFilter::SetProjectionDimension "
-Self& itk::simple::BinaryProjectionImageFilter::SetProjectionDimension(unsigned int ProjectionDimension)
 ";
 
 %feature("docstring")  itk::simple::BinaryProjectionImageFilter::ToString "
-std::string itk::simple::BinaryProjectionImageFilter::ToString() const
 
 Print ourselves out
 
@@ -3025,7 +2714,6 @@ C++ includes: sitkBinaryReconstructionByDilationImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::BinaryReconstructionByDilationImageFilter::BinaryReconstructionByDilationImageFilter "
-itk::simple::BinaryReconstructionByDilationImageFilter::BinaryReconstructionByDilationImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -3033,33 +2721,27 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::BinaryReconstructionByDilationImageFilter::Execute "
-Image itk::simple::BinaryReconstructionByDilationImageFilter::Execute(const Image &image1, const Image &image2, double backgroundValue,
-double foregroundValue, bool fullyConnected)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::BinaryReconstructionByDilationImageFilter::Execute "
-Image itk::simple::BinaryReconstructionByDilationImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::BinaryReconstructionByDilationImageFilter::FullyConnectedOff "
-Self& itk::simple::BinaryReconstructionByDilationImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::BinaryReconstructionByDilationImageFilter::FullyConnectedOn "
-Self& itk::simple::BinaryReconstructionByDilationImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::BinaryReconstructionByDilationImageFilter::GetBackgroundValue "
-double itk::simple::BinaryReconstructionByDilationImageFilter::GetBackgroundValue()
 
 End concept checking Set/Get the value used as \"background\" in the
 output image. Defaults to NumericTraits<PixelType>::NonpositiveMin().
@@ -3067,7 +2749,6 @@ output image. Defaults to NumericTraits<PixelType>::NonpositiveMin().
 ";
 
 %feature("docstring")  itk::simple::BinaryReconstructionByDilationImageFilter::GetForegroundValue "
-double itk::simple::BinaryReconstructionByDilationImageFilter::GetForegroundValue()
 
 Set/Get the value used as \"foreground\" in the output image. Defaults
 to NumericTraits<PixelType>::max().
@@ -3075,7 +2756,6 @@ to NumericTraits<PixelType>::max().
 ";
 
 %feature("docstring")  itk::simple::BinaryReconstructionByDilationImageFilter::GetFullyConnected "
-bool itk::simple::BinaryReconstructionByDilationImageFilter::GetFullyConnected()
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -3085,14 +2765,12 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::BinaryReconstructionByDilationImageFilter::GetName "
-std::string itk::simple::BinaryReconstructionByDilationImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::BinaryReconstructionByDilationImageFilter::SetBackgroundValue "
-Self& itk::simple::BinaryReconstructionByDilationImageFilter::SetBackgroundValue(double BackgroundValue)
 
 End concept checking Set/Get the value used as \"background\" in the
 output image. Defaults to NumericTraits<PixelType>::NonpositiveMin().
@@ -3100,7 +2778,6 @@ output image. Defaults to NumericTraits<PixelType>::NonpositiveMin().
 ";
 
 %feature("docstring")  itk::simple::BinaryReconstructionByDilationImageFilter::SetForegroundValue "
-Self& itk::simple::BinaryReconstructionByDilationImageFilter::SetForegroundValue(double ForegroundValue)
 
 Set/Get the value used as \"foreground\" in the output image. Defaults
 to NumericTraits<PixelType>::max().
@@ -3108,7 +2785,6 @@ to NumericTraits<PixelType>::max().
 ";
 
 %feature("docstring")  itk::simple::BinaryReconstructionByDilationImageFilter::SetFullyConnected "
-Self& itk::simple::BinaryReconstructionByDilationImageFilter::SetFullyConnected(bool FullyConnected)
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -3118,7 +2794,6 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::BinaryReconstructionByDilationImageFilter::ToString "
-std::string itk::simple::BinaryReconstructionByDilationImageFilter::ToString() const
 
 Print ourselves out
 
@@ -3151,7 +2826,6 @@ C++ includes: sitkBinaryReconstructionByErosionImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::BinaryReconstructionByErosionImageFilter::BinaryReconstructionByErosionImageFilter "
-itk::simple::BinaryReconstructionByErosionImageFilter::BinaryReconstructionByErosionImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -3159,33 +2833,27 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::BinaryReconstructionByErosionImageFilter::Execute "
-Image itk::simple::BinaryReconstructionByErosionImageFilter::Execute(const Image &image1, const Image &image2, double backgroundValue,
-double foregroundValue, bool fullyConnected)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::BinaryReconstructionByErosionImageFilter::Execute "
-Image itk::simple::BinaryReconstructionByErosionImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::BinaryReconstructionByErosionImageFilter::FullyConnectedOff "
-Self& itk::simple::BinaryReconstructionByErosionImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::BinaryReconstructionByErosionImageFilter::FullyConnectedOn "
-Self& itk::simple::BinaryReconstructionByErosionImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::BinaryReconstructionByErosionImageFilter::GetBackgroundValue "
-double itk::simple::BinaryReconstructionByErosionImageFilter::GetBackgroundValue()
 
 End concept checking Set/Get the value used as \"background\" in the
 output image. Defaults to NumericTraits<PixelType>::NonpositiveMin().
@@ -3193,7 +2861,6 @@ output image. Defaults to NumericTraits<PixelType>::NonpositiveMin().
 ";
 
 %feature("docstring")  itk::simple::BinaryReconstructionByErosionImageFilter::GetForegroundValue "
-double itk::simple::BinaryReconstructionByErosionImageFilter::GetForegroundValue()
 
 Set/Get the value used as \"foreground\" in the output image. Defaults
 to NumericTraits<PixelType>::max().
@@ -3201,7 +2868,6 @@ to NumericTraits<PixelType>::max().
 ";
 
 %feature("docstring")  itk::simple::BinaryReconstructionByErosionImageFilter::GetFullyConnected "
-bool itk::simple::BinaryReconstructionByErosionImageFilter::GetFullyConnected()
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -3211,14 +2877,12 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::BinaryReconstructionByErosionImageFilter::GetName "
-std::string itk::simple::BinaryReconstructionByErosionImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::BinaryReconstructionByErosionImageFilter::SetBackgroundValue "
-Self& itk::simple::BinaryReconstructionByErosionImageFilter::SetBackgroundValue(double BackgroundValue)
 
 End concept checking Set/Get the value used as \"background\" in the
 output image. Defaults to NumericTraits<PixelType>::NonpositiveMin().
@@ -3226,7 +2890,6 @@ output image. Defaults to NumericTraits<PixelType>::NonpositiveMin().
 ";
 
 %feature("docstring")  itk::simple::BinaryReconstructionByErosionImageFilter::SetForegroundValue "
-Self& itk::simple::BinaryReconstructionByErosionImageFilter::SetForegroundValue(double ForegroundValue)
 
 Set/Get the value used as \"foreground\" in the output image. Defaults
 to NumericTraits<PixelType>::max().
@@ -3234,7 +2897,6 @@ to NumericTraits<PixelType>::max().
 ";
 
 %feature("docstring")  itk::simple::BinaryReconstructionByErosionImageFilter::SetFullyConnected "
-Self& itk::simple::BinaryReconstructionByErosionImageFilter::SetFullyConnected(bool FullyConnected)
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -3244,7 +2906,6 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::BinaryReconstructionByErosionImageFilter::ToString "
-std::string itk::simple::BinaryReconstructionByErosionImageFilter::ToString() const
 
 Print ourselves out
 
@@ -3283,7 +2944,6 @@ C++ includes: sitkBinaryThinningImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::BinaryThinningImageFilter::BinaryThinningImageFilter "
-itk::simple::BinaryThinningImageFilter::BinaryThinningImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -3291,21 +2951,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::BinaryThinningImageFilter::Execute "
-Image itk::simple::BinaryThinningImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::BinaryThinningImageFilter::GetName "
-std::string itk::simple::BinaryThinningImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::BinaryThinningImageFilter::ToString "
-std::string itk::simple::BinaryThinningImageFilter::ToString() const
 
 Print ourselves out
 
@@ -3343,7 +3000,6 @@ C++ includes: sitkBinaryThresholdImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::BinaryThresholdImageFilter::BinaryThresholdImageFilter "
-itk::simple::BinaryThresholdImageFilter::BinaryThresholdImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -3351,54 +3007,45 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::BinaryThresholdImageFilter::Execute "
-Image itk::simple::BinaryThresholdImageFilter::Execute(const Image &image1, double lowerThreshold, double upperThreshold,
-uint8_t insideValue, uint8_t outsideValue)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::BinaryThresholdImageFilter::Execute "
-Image itk::simple::BinaryThresholdImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::BinaryThresholdImageFilter::GetInsideValue "
-uint8_t itk::simple::BinaryThresholdImageFilter::GetInsideValue()
 
 Get the \"inside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::BinaryThresholdImageFilter::GetLowerThreshold "
-double itk::simple::BinaryThresholdImageFilter::GetLowerThreshold()
 ";
 
 %feature("docstring")  itk::simple::BinaryThresholdImageFilter::GetName "
-std::string itk::simple::BinaryThresholdImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::BinaryThresholdImageFilter::GetOutsideValue "
-uint8_t itk::simple::BinaryThresholdImageFilter::GetOutsideValue()
 
 Get the \"outside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::BinaryThresholdImageFilter::GetUpperThreshold "
-double itk::simple::BinaryThresholdImageFilter::GetUpperThreshold()
 
 Get the threshold values.
 
 ";
 
 %feature("docstring")  itk::simple::BinaryThresholdImageFilter::SetInsideValue "
-Self& itk::simple::BinaryThresholdImageFilter::SetInsideValue(uint8_t InsideValue)
 
 Set the \"inside\" pixel value. The default value
 NumericTraits<OutputPixelType>::max().
@@ -3406,11 +3053,9 @@ NumericTraits<OutputPixelType>::max().
 ";
 
 %feature("docstring")  itk::simple::BinaryThresholdImageFilter::SetLowerThreshold "
-Self& itk::simple::BinaryThresholdImageFilter::SetLowerThreshold(double LowerThreshold)
 ";
 
 %feature("docstring")  itk::simple::BinaryThresholdImageFilter::SetOutsideValue "
-Self& itk::simple::BinaryThresholdImageFilter::SetOutsideValue(uint8_t OutsideValue)
 
 Set the \"outside\" pixel value. The default value
 NumericTraits<OutputPixelType>::Zero.
@@ -3418,7 +3063,6 @@ NumericTraits<OutputPixelType>::Zero.
 ";
 
 %feature("docstring")  itk::simple::BinaryThresholdImageFilter::SetUpperThreshold "
-Self& itk::simple::BinaryThresholdImageFilter::SetUpperThreshold(double UpperThreshold)
 
 Set the thresholds. The default lower threshold is
 NumericTraits<InputPixelType>::NonpositiveMin(). The default upper
@@ -3428,7 +3072,6 @@ thrown if the lower threshold is greater than the upper threshold.
 ";
 
 %feature("docstring")  itk::simple::BinaryThresholdImageFilter::ToString "
-std::string itk::simple::BinaryThresholdImageFilter::ToString() const
 
 Print ourselves out
 
@@ -3476,7 +3119,6 @@ C++ includes: sitkBinaryThresholdProjectionImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::BinaryThresholdProjectionImageFilter::BinaryThresholdProjectionImageFilter "
-itk::simple::BinaryThresholdProjectionImageFilter::BinaryThresholdProjectionImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -3484,22 +3126,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::BinaryThresholdProjectionImageFilter::Execute "
-Image itk::simple::BinaryThresholdProjectionImageFilter::Execute(const Image &image1, unsigned int projectionDimension, double
-thresholdValue, uint8_t foregroundValue, uint8_t backgroundValue)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::BinaryThresholdProjectionImageFilter::Execute "
-Image itk::simple::BinaryThresholdProjectionImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::BinaryThresholdProjectionImageFilter::GetBackgroundValue "
-uint8_t itk::simple::BinaryThresholdProjectionImageFilter::GetBackgroundValue()
 
 Set/Get the output value used as \"background\". Defaults to
 NumericTraits<PixelType>::NonpositiveMin().
@@ -3507,7 +3145,6 @@ NumericTraits<PixelType>::NonpositiveMin().
 ";
 
 %feature("docstring")  itk::simple::BinaryThresholdProjectionImageFilter::GetForegroundValue "
-uint8_t itk::simple::BinaryThresholdProjectionImageFilter::GetForegroundValue()
 
 Set/Get the output value used as \"foreground\". Defaults to maximum
 value of PixelType.
@@ -3515,18 +3152,15 @@ value of PixelType.
 ";
 
 %feature("docstring")  itk::simple::BinaryThresholdProjectionImageFilter::GetName "
-std::string itk::simple::BinaryThresholdProjectionImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::BinaryThresholdProjectionImageFilter::GetProjectionDimension "
-unsigned int itk::simple::BinaryThresholdProjectionImageFilter::GetProjectionDimension()
 ";
 
 %feature("docstring")  itk::simple::BinaryThresholdProjectionImageFilter::GetThresholdValue "
-double itk::simple::BinaryThresholdProjectionImageFilter::GetThresholdValue()
 
 Set/Get the input value consider as \"threshold\". Defaults to
 NumericTraits<InputPixelType>::max().
@@ -3534,7 +3168,6 @@ NumericTraits<InputPixelType>::max().
 ";
 
 %feature("docstring")  itk::simple::BinaryThresholdProjectionImageFilter::SetBackgroundValue "
-Self& itk::simple::BinaryThresholdProjectionImageFilter::SetBackgroundValue(uint8_t BackgroundValue)
 
 Set/Get the output value used as \"background\". Defaults to
 NumericTraits<PixelType>::NonpositiveMin().
@@ -3542,7 +3175,6 @@ NumericTraits<PixelType>::NonpositiveMin().
 ";
 
 %feature("docstring")  itk::simple::BinaryThresholdProjectionImageFilter::SetForegroundValue "
-Self& itk::simple::BinaryThresholdProjectionImageFilter::SetForegroundValue(uint8_t ForegroundValue)
 
 Set/Get the output value used as \"foreground\". Defaults to maximum
 value of PixelType.
@@ -3550,11 +3182,9 @@ value of PixelType.
 ";
 
 %feature("docstring")  itk::simple::BinaryThresholdProjectionImageFilter::SetProjectionDimension "
-Self& itk::simple::BinaryThresholdProjectionImageFilter::SetProjectionDimension(unsigned int ProjectionDimension)
 ";
 
 %feature("docstring")  itk::simple::BinaryThresholdProjectionImageFilter::SetThresholdValue "
-Self& itk::simple::BinaryThresholdProjectionImageFilter::SetThresholdValue(double ThresholdValue)
 
 Set/Get the input value consider as \"threshold\". Defaults to
 NumericTraits<InputPixelType>::max().
@@ -3562,7 +3192,6 @@ NumericTraits<InputPixelType>::max().
 ";
 
 %feature("docstring")  itk::simple::BinaryThresholdProjectionImageFilter::ToString "
-std::string itk::simple::BinaryThresholdProjectionImageFilter::ToString() const
 
 Print ourselves out
 
@@ -3590,7 +3219,6 @@ C++ includes: sitkBinomialBlurImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::BinomialBlurImageFilter::BinomialBlurImageFilter "
-itk::simple::BinomialBlurImageFilter::BinomialBlurImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -3598,42 +3226,36 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::BinomialBlurImageFilter::Execute "
-Image itk::simple::BinomialBlurImageFilter::Execute(const Image &image1, unsigned int repetitions)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::BinomialBlurImageFilter::Execute "
-Image itk::simple::BinomialBlurImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::BinomialBlurImageFilter::GetName "
-std::string itk::simple::BinomialBlurImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::BinomialBlurImageFilter::GetRepetitions "
-unsigned int itk::simple::BinomialBlurImageFilter::GetRepetitions()
 
 Get and set the number of times to repeat the filter.
 
 ";
 
 %feature("docstring")  itk::simple::BinomialBlurImageFilter::SetRepetitions "
-Self& itk::simple::BinomialBlurImageFilter::SetRepetitions(unsigned int Repetitions)
 
 Get and set the number of times to repeat the filter.
 
 ";
 
 %feature("docstring")  itk::simple::BinomialBlurImageFilter::ToString "
-std::string itk::simple::BinomialBlurImageFilter::ToString() const
 
 Print ourselves out
 
@@ -3663,7 +3285,6 @@ C++ includes: sitkBlackTopHatImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::BlackTopHatImageFilter::BlackTopHatImageFilter "
-itk::simple::BlackTopHatImageFilter::BlackTopHatImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -3671,36 +3292,30 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::BlackTopHatImageFilter::Execute "
-Image itk::simple::BlackTopHatImageFilter::Execute(const Image &image1, bool safeBorder)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::BlackTopHatImageFilter::Execute "
-Image itk::simple::BlackTopHatImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::BlackTopHatImageFilter::GetKernelRadius "
-std::vector<uint32_t> itk::simple::BlackTopHatImageFilter::GetKernelRadius() const
 ";
 
 %feature("docstring")  itk::simple::BlackTopHatImageFilter::GetKernelType "
-KernelType itk::simple::BlackTopHatImageFilter::GetKernelType() const
 ";
 
 %feature("docstring")  itk::simple::BlackTopHatImageFilter::GetName "
-std::string itk::simple::BlackTopHatImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::BlackTopHatImageFilter::GetSafeBorder "
-bool itk::simple::BlackTopHatImageFilter::GetSafeBorder()
 
 A safe border is added to input image to avoid borders effects and
 remove it once the closing is done.
@@ -3708,18 +3323,15 @@ remove it once the closing is done.
 ";
 
 %feature("docstring")  itk::simple::BlackTopHatImageFilter::SafeBorderOff "
-Self& itk::simple::BlackTopHatImageFilter::SafeBorderOff()
 ";
 
 %feature("docstring")  itk::simple::BlackTopHatImageFilter::SafeBorderOn "
-Self& itk::simple::BlackTopHatImageFilter::SafeBorderOn()
 
 Set the value of SafeBorder to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::BlackTopHatImageFilter::SetKernelRadius "
-Self& itk::simple::BlackTopHatImageFilter::SetKernelRadius(const std::vector< uint32_t > &r)
 
 Set/Get the radius of the kernel structuring element as a vector.
 
@@ -3729,21 +3341,18 @@ the radius will be padded. If it is less the r will be truncated.
 ";
 
 %feature("docstring")  itk::simple::BlackTopHatImageFilter::SetKernelRadius "
-Self& itk::simple::BlackTopHatImageFilter::SetKernelRadius(uint32_t r)
 
 Kernel radius as a scale for isotropic structures
 
 ";
 
 %feature("docstring")  itk::simple::BlackTopHatImageFilter::SetKernelType "
-Self& itk::simple::BlackTopHatImageFilter::SetKernelType(KernelType t)
 
 Set/Get the kernel or structuring elemenent used for the morphology
 
 ";
 
 %feature("docstring")  itk::simple::BlackTopHatImageFilter::SetSafeBorder "
-Self& itk::simple::BlackTopHatImageFilter::SetSafeBorder(bool SafeBorder)
 
 A safe border is added to input image to avoid borders effects and
 remove it once the closing is done.
@@ -3751,7 +3360,6 @@ remove it once the closing is done.
 ";
 
 %feature("docstring")  itk::simple::BlackTopHatImageFilter::ToString "
-std::string itk::simple::BlackTopHatImageFilter::ToString() const
 
 Print ourselves out
 
@@ -3775,7 +3383,6 @@ C++ includes: sitkBoundedReciprocalImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::BoundedReciprocalImageFilter::BoundedReciprocalImageFilter "
-itk::simple::BoundedReciprocalImageFilter::BoundedReciprocalImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -3783,21 +3390,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::BoundedReciprocalImageFilter::Execute "
-Image itk::simple::BoundedReciprocalImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::BoundedReciprocalImageFilter::GetName "
-std::string itk::simple::BoundedReciprocalImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::BoundedReciprocalImageFilter::ToString "
-std::string itk::simple::BoundedReciprocalImageFilter::ToString() const
 
 Print ourselves out
 
@@ -3824,7 +3428,6 @@ C++ includes: sitkBoxMeanImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::BoxMeanImageFilter::BoxMeanImageFilter "
-itk::simple::BoxMeanImageFilter::BoxMeanImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -3832,43 +3435,36 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::BoxMeanImageFilter::Execute "
-Image itk::simple::BoxMeanImageFilter::Execute(const Image &image1, std::vector< unsigned int > radius)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::BoxMeanImageFilter::Execute "
-Image itk::simple::BoxMeanImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::BoxMeanImageFilter::GetName "
-std::string itk::simple::BoxMeanImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::BoxMeanImageFilter::GetRadius "
-std::vector<unsigned int> itk::simple::BoxMeanImageFilter::GetRadius()
 ";
 
 %feature("docstring")  itk::simple::BoxMeanImageFilter::SetRadius "
-Self& itk::simple::BoxMeanImageFilter::SetRadius(std::vector< unsigned int > Radius)
 ";
 
 %feature("docstring")  itk::simple::BoxMeanImageFilter::SetRadius "
-Self& itk::simple::BoxMeanImageFilter::SetRadius(unsigned int r)
 
 Custom public declarations
 
 ";
 
 %feature("docstring")  itk::simple::BoxMeanImageFilter::ToString "
-std::string itk::simple::BoxMeanImageFilter::ToString() const
 
 Print ourselves out
 
@@ -3895,7 +3491,6 @@ C++ includes: sitkBoxSigmaImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::BoxSigmaImageFilter::BoxSigmaImageFilter "
-itk::simple::BoxSigmaImageFilter::BoxSigmaImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -3903,43 +3498,36 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::BoxSigmaImageFilter::Execute "
-Image itk::simple::BoxSigmaImageFilter::Execute(const Image &image1, std::vector< unsigned int > radius)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::BoxSigmaImageFilter::Execute "
-Image itk::simple::BoxSigmaImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::BoxSigmaImageFilter::GetName "
-std::string itk::simple::BoxSigmaImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::BoxSigmaImageFilter::GetRadius "
-std::vector<unsigned int> itk::simple::BoxSigmaImageFilter::GetRadius()
 ";
 
 %feature("docstring")  itk::simple::BoxSigmaImageFilter::SetRadius "
-Self& itk::simple::BoxSigmaImageFilter::SetRadius(std::vector< unsigned int > Radius)
 ";
 
 %feature("docstring")  itk::simple::BoxSigmaImageFilter::SetRadius "
-Self& itk::simple::BoxSigmaImageFilter::SetRadius(unsigned int r)
 
 Custom public declarations
 
 ";
 
 %feature("docstring")  itk::simple::BoxSigmaImageFilter::ToString "
-std::string itk::simple::BoxSigmaImageFilter::ToString() const
 
 Print ourselves out
 
@@ -3993,7 +3581,6 @@ C++ includes: sitkCannyEdgeDetectionImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::CannyEdgeDetectionImageFilter::CannyEdgeDetectionImageFilter "
-itk::simple::CannyEdgeDetectionImageFilter::CannyEdgeDetectionImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -4001,55 +3588,45 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::CannyEdgeDetectionImageFilter::Execute "
-Image itk::simple::CannyEdgeDetectionImageFilter::Execute(const Image &image1, double lowerThreshold, double upperThreshold,
-std::vector< double > variance, std::vector< double > maximumError)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::CannyEdgeDetectionImageFilter::Execute "
-Image itk::simple::CannyEdgeDetectionImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::CannyEdgeDetectionImageFilter::GetLowerThreshold "
-double itk::simple::CannyEdgeDetectionImageFilter::GetLowerThreshold()
 ";
 
 %feature("docstring")  itk::simple::CannyEdgeDetectionImageFilter::GetMaximumError "
-std::vector<double> itk::simple::CannyEdgeDetectionImageFilter::GetMaximumError()
 
 Standard get/set macros for filter parameters.
 
 ";
 
 %feature("docstring")  itk::simple::CannyEdgeDetectionImageFilter::GetName "
-std::string itk::simple::CannyEdgeDetectionImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::CannyEdgeDetectionImageFilter::GetUpperThreshold "
-double itk::simple::CannyEdgeDetectionImageFilter::GetUpperThreshold()
 ";
 
 %feature("docstring")  itk::simple::CannyEdgeDetectionImageFilter::GetVariance "
-std::vector<double> itk::simple::CannyEdgeDetectionImageFilter::GetVariance()
 
 Standard get/set macros for filter parameters.
 
 ";
 
 %feature("docstring")  itk::simple::CannyEdgeDetectionImageFilter::SetLowerThreshold "
-Self& itk::simple::CannyEdgeDetectionImageFilter::SetLowerThreshold(double LowerThreshold)
 ";
 
 %feature("docstring")  itk::simple::CannyEdgeDetectionImageFilter::SetMaximumError "
-Self& itk::simple::CannyEdgeDetectionImageFilter::SetMaximumError(std::vector< double > MaximumError)
 
 Set/Get the MaximumError parameter used by the Gaussian smoothing
 filter in this algorithm.
@@ -4057,7 +3634,6 @@ filter in this algorithm.
 ";
 
 %feature("docstring")  itk::simple::CannyEdgeDetectionImageFilter::SetUpperThreshold "
-Self& itk::simple::CannyEdgeDetectionImageFilter::SetUpperThreshold(double UpperThreshold)
 
 TODO: Document in the ITKv4 migration guide that the SetThreshold
 member function was removed from the CannyEdgeDetectionImageFilter, and that both UpperThreshold and LowerThreshold need to be set. To
@@ -4069,7 +3645,6 @@ Threshold value for detected edges.
 ";
 
 %feature("docstring")  itk::simple::CannyEdgeDetectionImageFilter::SetVariance "
-Self& itk::simple::CannyEdgeDetectionImageFilter::SetVariance(std::vector< double > Variance)
 
 Set/Get the Variance parameter used by the Gaussian smoothing filter
 in this algorithm.
@@ -4077,7 +3652,6 @@ in this algorithm.
 ";
 
 %feature("docstring")  itk::simple::CannyEdgeDetectionImageFilter::ToString "
-std::string itk::simple::CannyEdgeDetectionImageFilter::ToString() const
 
 Print ourselves out
 
@@ -4101,7 +3675,6 @@ C++ includes: sitkCastImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::CastImageFilter::CastImageFilter "
-itk::simple::CastImageFilter::CastImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -4109,33 +3682,27 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::CastImageFilter::Execute "
-Image itk::simple::CastImageFilter::Execute(const Image &)
 ";
 
 %feature("docstring")  itk::simple::CastImageFilter::GetName "
-std::string itk::simple::CastImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::CastImageFilter::GetOutputPixelType "
-PixelIDValueEnum itk::simple::CastImageFilter::GetOutputPixelType(void) const
 ";
 
 %feature("docstring")  itk::simple::CastImageFilter::SetOutputPixelType "
-Self& itk::simple::CastImageFilter::SetOutputPixelType(PixelIDValueType pixelID)
 ";
 
 %feature("docstring")  itk::simple::CastImageFilter::SetOutputPixelType "
-Self& itk::simple::CastImageFilter::SetOutputPixelType(PixelIDValueEnum pixelID)
 
 Set/Get the output pixel type
 
 ";
 
 %feature("docstring")  itk::simple::CastImageFilter::ToString "
-std::string itk::simple::CastImageFilter::ToString() const
 ";
 
 
@@ -4163,7 +3730,6 @@ C++ includes: sitkChangeLabelImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ChangeLabelImageFilter::ChangeLabelImageFilter "
-itk::simple::ChangeLabelImageFilter::ChangeLabelImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -4171,39 +3737,33 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ChangeLabelImageFilter::Execute "
-Image itk::simple::ChangeLabelImageFilter::Execute(const Image &image1, std::map< double, double > changeMap)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ChangeLabelImageFilter::Execute "
-Image itk::simple::ChangeLabelImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ChangeLabelImageFilter::GetChangeMap "
-std::map<double,double> itk::simple::ChangeLabelImageFilter::GetChangeMap()
 ";
 
 %feature("docstring")  itk::simple::ChangeLabelImageFilter::GetName "
-std::string itk::simple::ChangeLabelImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ChangeLabelImageFilter::SetChangeMap "
-Self& itk::simple::ChangeLabelImageFilter::SetChangeMap(std::map< double, double > ChangeMap)
 
 Set the entire change map.
 
 ";
 
 %feature("docstring")  itk::simple::ChangeLabelImageFilter::ToString "
-std::string itk::simple::ChangeLabelImageFilter::ToString() const
 
 Print ourselves out
 
@@ -4236,7 +3796,6 @@ C++ includes: sitkCheckerBoardImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::CheckerBoardImageFilter::CheckerBoardImageFilter "
-itk::simple::CheckerBoardImageFilter::CheckerBoardImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -4244,43 +3803,36 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::CheckerBoardImageFilter::Execute "
-Image itk::simple::CheckerBoardImageFilter::Execute(const Image &image1, const Image &image2, std::vector< uint32_t >
-checkerPattern)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::CheckerBoardImageFilter::Execute "
-Image itk::simple::CheckerBoardImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::CheckerBoardImageFilter::GetCheckerPattern "
-std::vector<uint32_t> itk::simple::CheckerBoardImageFilter::GetCheckerPattern()
 
 Set array with number of checks to make per image dimension.
 
 ";
 
 %feature("docstring")  itk::simple::CheckerBoardImageFilter::GetName "
-std::string itk::simple::CheckerBoardImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::CheckerBoardImageFilter::SetCheckerPattern "
-Self& itk::simple::CheckerBoardImageFilter::SetCheckerPattern(std::vector< uint32_t > CheckerPattern)
 
 Set array with number of checks to make per image dimension.
 
 ";
 
 %feature("docstring")  itk::simple::CheckerBoardImageFilter::ToString "
-std::string itk::simple::CheckerBoardImageFilter::ToString() const
 
 Print ourselves out
 
@@ -4317,7 +3869,6 @@ C++ includes: sitkClosingByReconstructionImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ClosingByReconstructionImageFilter::ClosingByReconstructionImageFilter "
-itk::simple::ClosingByReconstructionImageFilter::ClosingByReconstructionImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -4325,32 +3876,27 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ClosingByReconstructionImageFilter::Execute "
-Image itk::simple::ClosingByReconstructionImageFilter::Execute(const Image &image1, bool fullyConnected, bool preserveIntensities)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ClosingByReconstructionImageFilter::Execute "
-Image itk::simple::ClosingByReconstructionImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ClosingByReconstructionImageFilter::FullyConnectedOff "
-Self& itk::simple::ClosingByReconstructionImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::ClosingByReconstructionImageFilter::FullyConnectedOn "
-Self& itk::simple::ClosingByReconstructionImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::ClosingByReconstructionImageFilter::GetFullyConnected "
-bool itk::simple::ClosingByReconstructionImageFilter::GetFullyConnected()
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -4360,22 +3906,18 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::ClosingByReconstructionImageFilter::GetKernelRadius "
-std::vector<uint32_t> itk::simple::ClosingByReconstructionImageFilter::GetKernelRadius() const
 ";
 
 %feature("docstring")  itk::simple::ClosingByReconstructionImageFilter::GetKernelType "
-KernelType itk::simple::ClosingByReconstructionImageFilter::GetKernelType() const
 ";
 
 %feature("docstring")  itk::simple::ClosingByReconstructionImageFilter::GetName "
-std::string itk::simple::ClosingByReconstructionImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ClosingByReconstructionImageFilter::GetPreserveIntensities "
-bool itk::simple::ClosingByReconstructionImageFilter::GetPreserveIntensities()
 
 Set/Get whether the original intensities of the image retained for
 those pixels unaffected by the opening by reconstrcution. If Off, the
@@ -4384,18 +3926,15 @@ output pixel contrast will be reduced.
 ";
 
 %feature("docstring")  itk::simple::ClosingByReconstructionImageFilter::PreserveIntensitiesOff "
-Self& itk::simple::ClosingByReconstructionImageFilter::PreserveIntensitiesOff()
 ";
 
 %feature("docstring")  itk::simple::ClosingByReconstructionImageFilter::PreserveIntensitiesOn "
-Self& itk::simple::ClosingByReconstructionImageFilter::PreserveIntensitiesOn()
 
 Set the value of PreserveIntensities to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::ClosingByReconstructionImageFilter::SetFullyConnected "
-Self& itk::simple::ClosingByReconstructionImageFilter::SetFullyConnected(bool FullyConnected)
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -4405,7 +3944,6 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::ClosingByReconstructionImageFilter::SetKernelRadius "
-Self& itk::simple::ClosingByReconstructionImageFilter::SetKernelRadius(const std::vector< uint32_t > &r)
 
 Set/Get the radius of the kernel structuring element as a vector.
 
@@ -4415,21 +3953,18 @@ the radius will be padded. If it is less the r will be truncated.
 ";
 
 %feature("docstring")  itk::simple::ClosingByReconstructionImageFilter::SetKernelRadius "
-Self& itk::simple::ClosingByReconstructionImageFilter::SetKernelRadius(uint32_t r)
 
 Kernel radius as a scale for isotropic structures
 
 ";
 
 %feature("docstring")  itk::simple::ClosingByReconstructionImageFilter::SetKernelType "
-Self& itk::simple::ClosingByReconstructionImageFilter::SetKernelType(KernelType t)
 
 Set/Get the kernel or structuring elemenent used for the morphology
 
 ";
 
 %feature("docstring")  itk::simple::ClosingByReconstructionImageFilter::SetPreserveIntensities "
-Self& itk::simple::ClosingByReconstructionImageFilter::SetPreserveIntensities(bool PreserveIntensities)
 
 Set/Get whether the original intensities of the image retained for
 those pixels unaffected by the opening by reconstrcution. If Off, the
@@ -4438,7 +3973,6 @@ output pixel contrast will be reduced.
 ";
 
 %feature("docstring")  itk::simple::ClosingByReconstructionImageFilter::ToString "
-std::string itk::simple::ClosingByReconstructionImageFilter::ToString() const
 
 Print ourselves out
 
@@ -4459,7 +3993,6 @@ C++ includes: sitkComplexToImaginaryImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ComplexToImaginaryImageFilter::ComplexToImaginaryImageFilter "
-itk::simple::ComplexToImaginaryImageFilter::ComplexToImaginaryImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -4467,21 +4000,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ComplexToImaginaryImageFilter::Execute "
-Image itk::simple::ComplexToImaginaryImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ComplexToImaginaryImageFilter::GetName "
-std::string itk::simple::ComplexToImaginaryImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ComplexToImaginaryImageFilter::ToString "
-std::string itk::simple::ComplexToImaginaryImageFilter::ToString() const
 
 Print ourselves out
 
@@ -4502,7 +4032,6 @@ C++ includes: sitkComplexToModulusImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ComplexToModulusImageFilter::ComplexToModulusImageFilter "
-itk::simple::ComplexToModulusImageFilter::ComplexToModulusImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -4510,21 +4039,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ComplexToModulusImageFilter::Execute "
-Image itk::simple::ComplexToModulusImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ComplexToModulusImageFilter::GetName "
-std::string itk::simple::ComplexToModulusImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ComplexToModulusImageFilter::ToString "
-std::string itk::simple::ComplexToModulusImageFilter::ToString() const
 
 Print ourselves out
 
@@ -4545,7 +4071,6 @@ C++ includes: sitkComplexToPhaseImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ComplexToPhaseImageFilter::ComplexToPhaseImageFilter "
-itk::simple::ComplexToPhaseImageFilter::ComplexToPhaseImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -4553,21 +4078,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ComplexToPhaseImageFilter::Execute "
-Image itk::simple::ComplexToPhaseImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ComplexToPhaseImageFilter::GetName "
-std::string itk::simple::ComplexToPhaseImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ComplexToPhaseImageFilter::ToString "
-std::string itk::simple::ComplexToPhaseImageFilter::ToString() const
 
 Print ourselves out
 
@@ -4588,7 +4110,6 @@ C++ includes: sitkComplexToRealImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ComplexToRealImageFilter::ComplexToRealImageFilter "
-itk::simple::ComplexToRealImageFilter::ComplexToRealImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -4596,21 +4117,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ComplexToRealImageFilter::Execute "
-Image itk::simple::ComplexToRealImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ComplexToRealImageFilter::GetName "
-std::string itk::simple::ComplexToRealImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ComplexToRealImageFilter::ToString "
-std::string itk::simple::ComplexToRealImageFilter::ToString() const
 
 Print ourselves out
 
@@ -4651,7 +4169,6 @@ C++ includes: sitkComposeImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ComposeImageFilter::ComposeImageFilter "
-itk::simple::ComposeImageFilter::ComposeImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -4659,43 +4176,33 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ComposeImageFilter::Execute "
-Image itk::simple::ComposeImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4, const Image &image5)
 ";
 
 %feature("docstring")  itk::simple::ComposeImageFilter::Execute "
-Image itk::simple::ComposeImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4)
 ";
 
 %feature("docstring")  itk::simple::ComposeImageFilter::Execute "
-Image itk::simple::ComposeImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3)
 ";
 
 %feature("docstring")  itk::simple::ComposeImageFilter::Execute "
-Image itk::simple::ComposeImageFilter::Execute(const Image &image1, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::ComposeImageFilter::Execute "
-Image itk::simple::ComposeImageFilter::Execute(const Image &image1)
 ";
 
 %feature("docstring")  itk::simple::ComposeImageFilter::Execute "
-Image itk::simple::ComposeImageFilter::Execute(const std::vector< Image > &images)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::ComposeImageFilter::GetName "
-std::string itk::simple::ComposeImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ComposeImageFilter::ToString "
-std::string itk::simple::ComposeImageFilter::ToString() const
 
 Print ourselves out
 
@@ -4742,21 +4249,18 @@ C++ includes: sitkConfidenceConnectedImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ConfidenceConnectedImageFilter::AddSeed "
-Self& itk::simple::ConfidenceConnectedImageFilter::AddSeed(std::vector< unsigned int > idx)
 
 AddSeed - Add a seed to the end of the list
 
 ";
 
 %feature("docstring")  itk::simple::ConfidenceConnectedImageFilter::ClearSeeds "
-Self& itk::simple::ConfidenceConnectedImageFilter::ClearSeeds()
 
 ClearSeeds - Clear out all seeds in the list
 
 ";
 
 %feature("docstring")  itk::simple::ConfidenceConnectedImageFilter::ConfidenceConnectedImageFilter "
-itk::simple::ConfidenceConnectedImageFilter::ConfidenceConnectedImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -4764,23 +4268,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ConfidenceConnectedImageFilter::Execute "
-Image itk::simple::ConfidenceConnectedImageFilter::Execute(const Image &, std::vector< std::vector< unsigned int > > seedList,
-unsigned int numberOfIterations, double multiplier, unsigned int
-initialNeighborhoodRadius, uint8_t replaceValue)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ConfidenceConnectedImageFilter::Execute "
-Image itk::simple::ConfidenceConnectedImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ConfidenceConnectedImageFilter::GetInitialNeighborhoodRadius "
-unsigned int itk::simple::ConfidenceConnectedImageFilter::GetInitialNeighborhoodRadius()
 
 Get/Set the radius of the neighborhood over which the statistics are
 evaluated.
@@ -4788,7 +4287,6 @@ evaluated.
 ";
 
 %feature("docstring")  itk::simple::ConfidenceConnectedImageFilter::GetMultiplier "
-double itk::simple::ConfidenceConnectedImageFilter::GetMultiplier()
 
 Set/Get the multiplier to define the confidence interval. Multiplier
 can be anything greater than zero. A typical value is 2.5.
@@ -4796,35 +4294,30 @@ can be anything greater than zero. A typical value is 2.5.
 ";
 
 %feature("docstring")  itk::simple::ConfidenceConnectedImageFilter::GetName "
-std::string itk::simple::ConfidenceConnectedImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ConfidenceConnectedImageFilter::GetNumberOfIterations "
-unsigned int itk::simple::ConfidenceConnectedImageFilter::GetNumberOfIterations()
 
 Set/Get the number of iterations.
 
 ";
 
 %feature("docstring")  itk::simple::ConfidenceConnectedImageFilter::GetReplaceValue "
-uint8_t itk::simple::ConfidenceConnectedImageFilter::GetReplaceValue()
 
 Set/Get value to replace thresholded pixels.
 
 ";
 
 %feature("docstring")  itk::simple::ConfidenceConnectedImageFilter::GetSeedList "
-std::vector< std::vector<unsigned int> > itk::simple::ConfidenceConnectedImageFilter::GetSeedList()
 
 Get SeedList
 
 ";
 
 %feature("docstring")  itk::simple::ConfidenceConnectedImageFilter::SetInitialNeighborhoodRadius "
-Self& itk::simple::ConfidenceConnectedImageFilter::SetInitialNeighborhoodRadius(unsigned int InitialNeighborhoodRadius)
 
 Get/Set the radius of the neighborhood over which the statistics are
 evaluated.
@@ -4832,7 +4325,6 @@ evaluated.
 ";
 
 %feature("docstring")  itk::simple::ConfidenceConnectedImageFilter::SetMultiplier "
-Self& itk::simple::ConfidenceConnectedImageFilter::SetMultiplier(double Multiplier)
 
 Set/Get the multiplier to define the confidence interval. Multiplier
 can be anything greater than zero. A typical value is 2.5.
@@ -4840,35 +4332,30 @@ can be anything greater than zero. A typical value is 2.5.
 ";
 
 %feature("docstring")  itk::simple::ConfidenceConnectedImageFilter::SetNumberOfIterations "
-Self& itk::simple::ConfidenceConnectedImageFilter::SetNumberOfIterations(unsigned int NumberOfIterations)
 
 Set/Get the number of iterations.
 
 ";
 
 %feature("docstring")  itk::simple::ConfidenceConnectedImageFilter::SetReplaceValue "
-Self& itk::simple::ConfidenceConnectedImageFilter::SetReplaceValue(uint8_t ReplaceValue)
 
 Set/Get value to replace thresholded pixels.
 
 ";
 
 %feature("docstring")  itk::simple::ConfidenceConnectedImageFilter::SetSeed "
-Self& itk::simple::ConfidenceConnectedImageFilter::SetSeed(std::vector< unsigned int > idx)
 
 SetSeed - Set list to a single seed
 
 ";
 
 %feature("docstring")  itk::simple::ConfidenceConnectedImageFilter::SetSeedList "
-Self& itk::simple::ConfidenceConnectedImageFilter::SetSeedList(std::vector< std::vector< unsigned int > > t)
 
 Set SeedList
 
 ";
 
 %feature("docstring")  itk::simple::ConfidenceConnectedImageFilter::ToString "
-std::string itk::simple::ConfidenceConnectedImageFilter::ToString() const
 
 Print ourselves out
 
@@ -4905,7 +4392,6 @@ C++ includes: sitkConnectedComponentImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ConnectedComponentImageFilter::ConnectedComponentImageFilter "
-itk::simple::ConnectedComponentImageFilter::ConnectedComponentImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -4913,32 +4399,27 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ConnectedComponentImageFilter::Execute "
-Image itk::simple::ConnectedComponentImageFilter::Execute(const Image &image1, bool fullyConnected)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ConnectedComponentImageFilter::Execute "
-Image itk::simple::ConnectedComponentImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ConnectedComponentImageFilter::FullyConnectedOff "
-Self& itk::simple::ConnectedComponentImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::ConnectedComponentImageFilter::FullyConnectedOn "
-Self& itk::simple::ConnectedComponentImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::ConnectedComponentImageFilter::GetFullyConnected "
-bool itk::simple::ConnectedComponentImageFilter::GetFullyConnected()
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -4948,14 +4429,12 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::ConnectedComponentImageFilter::GetName "
-std::string itk::simple::ConnectedComponentImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ConnectedComponentImageFilter::SetFullyConnected "
-Self& itk::simple::ConnectedComponentImageFilter::SetFullyConnected(bool FullyConnected)
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -4965,7 +4444,6 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::ConnectedComponentImageFilter::ToString "
-std::string itk::simple::ConnectedComponentImageFilter::ToString() const
 
 Print ourselves out
 
@@ -4991,21 +4469,18 @@ C++ includes: sitkConnectedThresholdImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ConnectedThresholdImageFilter::AddSeed "
-Self& itk::simple::ConnectedThresholdImageFilter::AddSeed(std::vector< unsigned int > idx)
 
 AddSeed - Add a seed to the end of the list
 
 ";
 
 %feature("docstring")  itk::simple::ConnectedThresholdImageFilter::ClearSeeds "
-Self& itk::simple::ConnectedThresholdImageFilter::ClearSeeds()
 
 ClearSeeds - Clear out all seeds in the list
 
 ";
 
 %feature("docstring")  itk::simple::ConnectedThresholdImageFilter::ConnectedThresholdImageFilter "
-itk::simple::ConnectedThresholdImageFilter::ConnectedThresholdImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -5013,33 +4488,27 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ConnectedThresholdImageFilter::Execute "
-Image itk::simple::ConnectedThresholdImageFilter::Execute(const Image &, std::vector< std::vector< unsigned int > > seedList,
-double lower, double upper, uint8_t replaceValue)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ConnectedThresholdImageFilter::Execute "
-Image itk::simple::ConnectedThresholdImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ConnectedThresholdImageFilter::GetLower "
-double itk::simple::ConnectedThresholdImageFilter::GetLower()
 ";
 
 %feature("docstring")  itk::simple::ConnectedThresholdImageFilter::GetName "
-std::string itk::simple::ConnectedThresholdImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ConnectedThresholdImageFilter::GetReplaceValue "
-uint8_t itk::simple::ConnectedThresholdImageFilter::GetReplaceValue()
 
 Set/Get value to replace thresholded pixels. Pixels that lie * within
 Lower and Upper (inclusive) will be replaced with this value. The
@@ -5048,28 +4517,24 @@ default is 1.
 ";
 
 %feature("docstring")  itk::simple::ConnectedThresholdImageFilter::GetSeedList "
-std::vector< std::vector<unsigned int> > itk::simple::ConnectedThresholdImageFilter::GetSeedList()
 
 Get SeedList
 
 ";
 
 %feature("docstring")  itk::simple::ConnectedThresholdImageFilter::GetUpper "
-double itk::simple::ConnectedThresholdImageFilter::GetUpper()
 
 Get Upper and Lower Threshold inputs as values.
 
 ";
 
 %feature("docstring")  itk::simple::ConnectedThresholdImageFilter::SetLower "
-Self& itk::simple::ConnectedThresholdImageFilter::SetLower(double Lower)
 
 Set Upper and Lower Threshold inputs as values.
 
 ";
 
 %feature("docstring")  itk::simple::ConnectedThresholdImageFilter::SetReplaceValue "
-Self& itk::simple::ConnectedThresholdImageFilter::SetReplaceValue(uint8_t ReplaceValue)
 
 Set/Get value to replace thresholded pixels. Pixels that lie * within
 Lower and Upper (inclusive) will be replaced with this value. The
@@ -5078,28 +4543,24 @@ default is 1.
 ";
 
 %feature("docstring")  itk::simple::ConnectedThresholdImageFilter::SetSeed "
-Self& itk::simple::ConnectedThresholdImageFilter::SetSeed(std::vector< unsigned int > idx)
 
 SetSeed - Set list to a single seed
 
 ";
 
 %feature("docstring")  itk::simple::ConnectedThresholdImageFilter::SetSeedList "
-Self& itk::simple::ConnectedThresholdImageFilter::SetSeedList(std::vector< std::vector< unsigned int > > t)
 
 Set SeedList
 
 ";
 
 %feature("docstring")  itk::simple::ConnectedThresholdImageFilter::SetUpper "
-Self& itk::simple::ConnectedThresholdImageFilter::SetUpper(double Upper)
 
 Set Upper and Lower Threshold inputs as values.
 
 ";
 
 %feature("docstring")  itk::simple::ConnectedThresholdImageFilter::ToString "
-std::string itk::simple::ConnectedThresholdImageFilter::ToString() const
 
 Print ourselves out
 
@@ -5133,7 +4594,6 @@ C++ includes: sitkConstantPadImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ConstantPadImageFilter::ConstantPadImageFilter "
-itk::simple::ConstantPadImageFilter::ConstantPadImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -5141,59 +4601,48 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ConstantPadImageFilter::Execute "
-Image itk::simple::ConstantPadImageFilter::Execute(const Image &image1, std::vector< unsigned int > padLowerBound,
-std::vector< unsigned int > padUpperBound, double constant)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ConstantPadImageFilter::Execute "
-Image itk::simple::ConstantPadImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ConstantPadImageFilter::GetConstant "
-double itk::simple::ConstantPadImageFilter::GetConstant()
 
 Set/Get the pad value. Default is Zero.
 
 ";
 
 %feature("docstring")  itk::simple::ConstantPadImageFilter::GetName "
-std::string itk::simple::ConstantPadImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ConstantPadImageFilter::GetPadLowerBound "
-std::vector<unsigned int> itk::simple::ConstantPadImageFilter::GetPadLowerBound()
 ";
 
 %feature("docstring")  itk::simple::ConstantPadImageFilter::GetPadUpperBound "
-std::vector<unsigned int> itk::simple::ConstantPadImageFilter::GetPadUpperBound()
 ";
 
 %feature("docstring")  itk::simple::ConstantPadImageFilter::SetConstant "
-Self& itk::simple::ConstantPadImageFilter::SetConstant(double Constant)
 
 Set/Get the pad value. Default is Zero.
 
 ";
 
 %feature("docstring")  itk::simple::ConstantPadImageFilter::SetPadLowerBound "
-Self& itk::simple::ConstantPadImageFilter::SetPadLowerBound(std::vector< unsigned int > PadLowerBound)
 ";
 
 %feature("docstring")  itk::simple::ConstantPadImageFilter::SetPadUpperBound "
-Self& itk::simple::ConstantPadImageFilter::SetPadUpperBound(std::vector< unsigned int > PadUpperBound)
 ";
 
 %feature("docstring")  itk::simple::ConstantPadImageFilter::ToString "
-std::string itk::simple::ConstantPadImageFilter::ToString() const
 
 Print ourselves out
 
@@ -5238,7 +4687,6 @@ C++ includes: sitkConvolutionImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ConvolutionImageFilter::ConvolutionImageFilter "
-itk::simple::ConvolutionImageFilter::ConvolutionImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -5246,68 +4694,54 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ConvolutionImageFilter::Execute "
-Image itk::simple::ConvolutionImageFilter::Execute(const Image &image1, const Image &image2, bool normalize,
-ConvolutionImageFilter::BoundaryConditionType boundaryCondition,
-ConvolutionImageFilter::OutputRegionModeType outputRegionMode)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ConvolutionImageFilter::Execute "
-Image itk::simple::ConvolutionImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::ConvolutionImageFilter::GetBoundaryCondition "
-ConvolutionImageFilter::BoundaryConditionType itk::simple::ConvolutionImageFilter::GetBoundaryCondition()
 ";
 
 %feature("docstring")  itk::simple::ConvolutionImageFilter::GetName "
-std::string itk::simple::ConvolutionImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ConvolutionImageFilter::GetNormalize "
-bool itk::simple::ConvolutionImageFilter::GetNormalize()
 ";
 
 %feature("docstring")  itk::simple::ConvolutionImageFilter::GetOutputRegionMode "
-ConvolutionImageFilter::OutputRegionModeType itk::simple::ConvolutionImageFilter::GetOutputRegionMode()
 ";
 
 %feature("docstring")  itk::simple::ConvolutionImageFilter::NormalizeOff "
-Self& itk::simple::ConvolutionImageFilter::NormalizeOff()
 ";
 
 %feature("docstring")  itk::simple::ConvolutionImageFilter::NormalizeOn "
-Self& itk::simple::ConvolutionImageFilter::NormalizeOn()
 
 Set the value of Normalize to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::ConvolutionImageFilter::SetBoundaryCondition "
-Self& itk::simple::ConvolutionImageFilter::SetBoundaryCondition(ConvolutionImageFilter::BoundaryConditionType BoundaryCondition)
 ";
 
 %feature("docstring")  itk::simple::ConvolutionImageFilter::SetNormalize "
-Self& itk::simple::ConvolutionImageFilter::SetNormalize(bool Normalize)
 
 Normalize the output image by the sum of the kernel components.
 
 ";
 
 %feature("docstring")  itk::simple::ConvolutionImageFilter::SetOutputRegionMode "
-Self& itk::simple::ConvolutionImageFilter::SetOutputRegionMode(ConvolutionImageFilter::OutputRegionModeType OutputRegionMode)
 ";
 
 %feature("docstring")  itk::simple::ConvolutionImageFilter::ToString "
-std::string itk::simple::ConvolutionImageFilter::ToString() const
 
 Print ourselves out
 
@@ -5343,7 +4777,6 @@ C++ includes: sitkCosImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::CosImageFilter::CosImageFilter "
-itk::simple::CosImageFilter::CosImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -5351,21 +4784,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::CosImageFilter::Execute "
-Image itk::simple::CosImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::CosImageFilter::GetName "
-std::string itk::simple::CosImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::CosImageFilter::ToString "
-std::string itk::simple::CosImageFilter::ToString() const
 
 Print ourselves out
 
@@ -5395,7 +4825,6 @@ C++ includes: sitkCropImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::CropImageFilter::CropImageFilter "
-itk::simple::CropImageFilter::CropImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -5403,58 +4832,48 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::CropImageFilter::Execute "
-Image itk::simple::CropImageFilter::Execute(const Image &image1, std::vector< unsigned int >
-lowerBoundaryCropSize, std::vector< unsigned int >
-upperBoundaryCropSize)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::CropImageFilter::Execute "
-Image itk::simple::CropImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::CropImageFilter::GetLowerBoundaryCropSize "
-std::vector<unsigned int> itk::simple::CropImageFilter::GetLowerBoundaryCropSize()
 
 Set/Get the cropping sizes for the upper and lower boundaries.
 
 ";
 
 %feature("docstring")  itk::simple::CropImageFilter::GetName "
-std::string itk::simple::CropImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::CropImageFilter::GetUpperBoundaryCropSize "
-std::vector<unsigned int> itk::simple::CropImageFilter::GetUpperBoundaryCropSize()
 
 Set/Get the cropping sizes for the upper and lower boundaries.
 
 ";
 
 %feature("docstring")  itk::simple::CropImageFilter::SetLowerBoundaryCropSize "
-Self& itk::simple::CropImageFilter::SetLowerBoundaryCropSize(std::vector< unsigned int > LowerBoundaryCropSize)
 
 Set/Get the cropping sizes for the upper and lower boundaries.
 
 ";
 
 %feature("docstring")  itk::simple::CropImageFilter::SetUpperBoundaryCropSize "
-Self& itk::simple::CropImageFilter::SetUpperBoundaryCropSize(std::vector< unsigned int > UpperBoundaryCropSize)
 
 Set/Get the cropping sizes for the upper and lower boundaries.
 
 ";
 
 %feature("docstring")  itk::simple::CropImageFilter::ToString "
-std::string itk::simple::CropImageFilter::ToString() const
 
 Print ourselves out
 
@@ -5501,7 +4920,6 @@ C++ includes: sitkCurvatureAnisotropicDiffusionImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::CurvatureAnisotropicDiffusionImageFilter::CurvatureAnisotropicDiffusionImageFilter "
-itk::simple::CurvatureAnisotropicDiffusionImageFilter::CurvatureAnisotropicDiffusionImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -5509,7 +4927,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::CurvatureAnisotropicDiffusionImageFilter::EstimateOptimalTimeStep "
-double itk::simple::CurvatureAnisotropicDiffusionImageFilter::EstimateOptimalTimeStep(Image &inImage)
 
 This method autmatically sets the optimal timestep for an image given
 its spacing.
@@ -5517,62 +4934,48 @@ its spacing.
 ";
 
 %feature("docstring")  itk::simple::CurvatureAnisotropicDiffusionImageFilter::Execute "
-Image itk::simple::CurvatureAnisotropicDiffusionImageFilter::Execute(const Image &image1, double timeStep, double conductanceParameter,
-unsigned int conductanceScalingUpdateInterval, uint32_t
-numberOfIterations)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::CurvatureAnisotropicDiffusionImageFilter::Execute "
-Image itk::simple::CurvatureAnisotropicDiffusionImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::CurvatureAnisotropicDiffusionImageFilter::GetConductanceParameter "
-double itk::simple::CurvatureAnisotropicDiffusionImageFilter::GetConductanceParameter()
 ";
 
 %feature("docstring")  itk::simple::CurvatureAnisotropicDiffusionImageFilter::GetConductanceScalingUpdateInterval "
-unsigned int itk::simple::CurvatureAnisotropicDiffusionImageFilter::GetConductanceScalingUpdateInterval()
 ";
 
 %feature("docstring")  itk::simple::CurvatureAnisotropicDiffusionImageFilter::GetName "
-std::string itk::simple::CurvatureAnisotropicDiffusionImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::CurvatureAnisotropicDiffusionImageFilter::GetNumberOfIterations "
-uint32_t itk::simple::CurvatureAnisotropicDiffusionImageFilter::GetNumberOfIterations()
 ";
 
 %feature("docstring")  itk::simple::CurvatureAnisotropicDiffusionImageFilter::GetTimeStep "
-double itk::simple::CurvatureAnisotropicDiffusionImageFilter::GetTimeStep()
 ";
 
 %feature("docstring")  itk::simple::CurvatureAnisotropicDiffusionImageFilter::SetConductanceParameter "
-Self& itk::simple::CurvatureAnisotropicDiffusionImageFilter::SetConductanceParameter(double ConductanceParameter)
 ";
 
 %feature("docstring")  itk::simple::CurvatureAnisotropicDiffusionImageFilter::SetConductanceScalingUpdateInterval "
-Self& itk::simple::CurvatureAnisotropicDiffusionImageFilter::SetConductanceScalingUpdateInterval(unsigned int ConductanceScalingUpdateInterval)
 ";
 
 %feature("docstring")  itk::simple::CurvatureAnisotropicDiffusionImageFilter::SetNumberOfIterations "
-Self& itk::simple::CurvatureAnisotropicDiffusionImageFilter::SetNumberOfIterations(uint32_t NumberOfIterations)
 ";
 
 %feature("docstring")  itk::simple::CurvatureAnisotropicDiffusionImageFilter::SetTimeStep "
-Self& itk::simple::CurvatureAnisotropicDiffusionImageFilter::SetTimeStep(double TimeStep)
 ";
 
 %feature("docstring")  itk::simple::CurvatureAnisotropicDiffusionImageFilter::ToString "
-std::string itk::simple::CurvatureAnisotropicDiffusionImageFilter::ToString() const
 
 Print ourselves out
 
@@ -5636,7 +5039,6 @@ C++ includes: sitkCurvatureFlowImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::CurvatureFlowImageFilter::CurvatureFlowImageFilter "
-itk::simple::CurvatureFlowImageFilter::CurvatureFlowImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -5644,50 +5046,42 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::CurvatureFlowImageFilter::Execute "
-Image itk::simple::CurvatureFlowImageFilter::Execute(const Image &image1, double timeStep, uint32_t numberOfIterations)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::CurvatureFlowImageFilter::Execute "
-Image itk::simple::CurvatureFlowImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::CurvatureFlowImageFilter::GetName "
-std::string itk::simple::CurvatureFlowImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::CurvatureFlowImageFilter::GetNumberOfIterations "
-uint32_t itk::simple::CurvatureFlowImageFilter::GetNumberOfIterations()
 ";
 
 %feature("docstring")  itk::simple::CurvatureFlowImageFilter::GetTimeStep "
-double itk::simple::CurvatureFlowImageFilter::GetTimeStep()
 
 Get the timestep parameter.
 
 ";
 
 %feature("docstring")  itk::simple::CurvatureFlowImageFilter::SetNumberOfIterations "
-Self& itk::simple::CurvatureFlowImageFilter::SetNumberOfIterations(uint32_t NumberOfIterations)
 ";
 
 %feature("docstring")  itk::simple::CurvatureFlowImageFilter::SetTimeStep "
-Self& itk::simple::CurvatureFlowImageFilter::SetTimeStep(double TimeStep)
 
 Set the timestep parameter.
 
 ";
 
 %feature("docstring")  itk::simple::CurvatureFlowImageFilter::ToString "
-std::string itk::simple::CurvatureFlowImageFilter::ToString() const
 
 Print ourselves out
 
@@ -5730,7 +5124,6 @@ C++ includes: sitkDanielssonDistanceMapImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::DanielssonDistanceMapImageFilter::DanielssonDistanceMapImageFilter "
-itk::simple::DanielssonDistanceMapImageFilter::DanielssonDistanceMapImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -5738,61 +5131,51 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::DanielssonDistanceMapImageFilter::Execute "
-Image itk::simple::DanielssonDistanceMapImageFilter::Execute(const Image &image1, bool inputIsBinary, bool squaredDistance, bool
-useImageSpacing)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::DanielssonDistanceMapImageFilter::Execute "
-Image itk::simple::DanielssonDistanceMapImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::DanielssonDistanceMapImageFilter::GetInputIsBinary "
-bool itk::simple::DanielssonDistanceMapImageFilter::GetInputIsBinary()
 
 Get if the input is binary. See SetInputIsBinary().
 
 ";
 
 %feature("docstring")  itk::simple::DanielssonDistanceMapImageFilter::GetName "
-std::string itk::simple::DanielssonDistanceMapImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::DanielssonDistanceMapImageFilter::GetSquaredDistance "
-bool itk::simple::DanielssonDistanceMapImageFilter::GetSquaredDistance()
 
 Get the distance squared.
 
 ";
 
 %feature("docstring")  itk::simple::DanielssonDistanceMapImageFilter::GetUseImageSpacing "
-bool itk::simple::DanielssonDistanceMapImageFilter::GetUseImageSpacing()
 
 Get whether spacing is used.
 
 ";
 
 %feature("docstring")  itk::simple::DanielssonDistanceMapImageFilter::InputIsBinaryOff "
-Self& itk::simple::DanielssonDistanceMapImageFilter::InputIsBinaryOff()
 ";
 
 %feature("docstring")  itk::simple::DanielssonDistanceMapImageFilter::InputIsBinaryOn "
-Self& itk::simple::DanielssonDistanceMapImageFilter::InputIsBinaryOn()
 
 Set the value of InputIsBinary to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::DanielssonDistanceMapImageFilter::SetInputIsBinary "
-Self& itk::simple::DanielssonDistanceMapImageFilter::SetInputIsBinary(bool InputIsBinary)
 
 Set if the input is binary. If this variable is set, each nonzero
 pixel in the input image will be given a unique numeric code to be
@@ -5803,43 +5186,36 @@ then you need not set this.
 ";
 
 %feature("docstring")  itk::simple::DanielssonDistanceMapImageFilter::SetSquaredDistance "
-Self& itk::simple::DanielssonDistanceMapImageFilter::SetSquaredDistance(bool SquaredDistance)
 
 Set if the distance should be squared.
 
 ";
 
 %feature("docstring")  itk::simple::DanielssonDistanceMapImageFilter::SetUseImageSpacing "
-Self& itk::simple::DanielssonDistanceMapImageFilter::SetUseImageSpacing(bool UseImageSpacing)
 
 Set if image spacing should be used in computing distances.
 
 ";
 
 %feature("docstring")  itk::simple::DanielssonDistanceMapImageFilter::SquaredDistanceOff "
-Self& itk::simple::DanielssonDistanceMapImageFilter::SquaredDistanceOff()
 ";
 
 %feature("docstring")  itk::simple::DanielssonDistanceMapImageFilter::SquaredDistanceOn "
-Self& itk::simple::DanielssonDistanceMapImageFilter::SquaredDistanceOn()
 
 Set the value of SquaredDistance to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::DanielssonDistanceMapImageFilter::ToString "
-std::string itk::simple::DanielssonDistanceMapImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::DanielssonDistanceMapImageFilter::UseImageSpacingOff "
-Self& itk::simple::DanielssonDistanceMapImageFilter::UseImageSpacingOff()
 ";
 
 %feature("docstring")  itk::simple::DanielssonDistanceMapImageFilter::UseImageSpacingOn "
-Self& itk::simple::DanielssonDistanceMapImageFilter::UseImageSpacingOn()
 
 Set the value of UseImageSpacing to true or false respectfully.
 
@@ -5881,7 +5257,6 @@ C++ includes: sitkDerivativeImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::DerivativeImageFilter::DerivativeImageFilter "
-itk::simple::DerivativeImageFilter::DerivativeImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -5889,43 +5264,36 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::DerivativeImageFilter::Execute "
-Image itk::simple::DerivativeImageFilter::Execute(const Image &image1, unsigned int direction, unsigned int order, bool
-useImageSpacing)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::DerivativeImageFilter::Execute "
-Image itk::simple::DerivativeImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::DerivativeImageFilter::GetDirection "
-unsigned int itk::simple::DerivativeImageFilter::GetDirection()
 
 End concept checking Standard get/set macros for filter parameters.
 
 ";
 
 %feature("docstring")  itk::simple::DerivativeImageFilter::GetName "
-std::string itk::simple::DerivativeImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::DerivativeImageFilter::GetOrder "
-unsigned int itk::simple::DerivativeImageFilter::GetOrder()
 
 End concept checking Standard get/set macros for filter parameters.
 
 ";
 
 %feature("docstring")  itk::simple::DerivativeImageFilter::GetUseImageSpacing "
-bool itk::simple::DerivativeImageFilter::GetUseImageSpacing()
 
 Set/Get whether or not the filter will use the spacing of the input
 image in its calculations.
@@ -5933,21 +5301,18 @@ image in its calculations.
 ";
 
 %feature("docstring")  itk::simple::DerivativeImageFilter::SetDirection "
-Self& itk::simple::DerivativeImageFilter::SetDirection(unsigned int Direction)
 
 End concept checking Standard get/set macros for filter parameters.
 
 ";
 
 %feature("docstring")  itk::simple::DerivativeImageFilter::SetOrder "
-Self& itk::simple::DerivativeImageFilter::SetOrder(unsigned int Order)
 
 End concept checking Standard get/set macros for filter parameters.
 
 ";
 
 %feature("docstring")  itk::simple::DerivativeImageFilter::SetUseImageSpacing "
-Self& itk::simple::DerivativeImageFilter::SetUseImageSpacing(bool UseImageSpacing)
 
 Set/Get whether or not the filter will use the spacing of the input
 image in its calculations.
@@ -5955,18 +5320,15 @@ image in its calculations.
 ";
 
 %feature("docstring")  itk::simple::DerivativeImageFilter::ToString "
-std::string itk::simple::DerivativeImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::DerivativeImageFilter::UseImageSpacingOff "
-Self& itk::simple::DerivativeImageFilter::UseImageSpacingOff()
 ";
 
 %feature("docstring")  itk::simple::DerivativeImageFilter::UseImageSpacingOn "
-Self& itk::simple::DerivativeImageFilter::UseImageSpacingOn()
 
 Set the value of UseImageSpacing to true or false respectfully.
 
@@ -5999,7 +5361,6 @@ C++ includes: sitkDilateObjectMorphologyImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::DilateObjectMorphologyImageFilter::DilateObjectMorphologyImageFilter "
-itk::simple::DilateObjectMorphologyImageFilter::DilateObjectMorphologyImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -6007,40 +5368,33 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::DilateObjectMorphologyImageFilter::Execute "
-Image itk::simple::DilateObjectMorphologyImageFilter::Execute(const Image &image1, double objectValue)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::DilateObjectMorphologyImageFilter::Execute "
-Image itk::simple::DilateObjectMorphologyImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::DilateObjectMorphologyImageFilter::GetKernelRadius "
-std::vector<uint32_t> itk::simple::DilateObjectMorphologyImageFilter::GetKernelRadius() const
 ";
 
 %feature("docstring")  itk::simple::DilateObjectMorphologyImageFilter::GetKernelType "
-KernelType itk::simple::DilateObjectMorphologyImageFilter::GetKernelType() const
 ";
 
 %feature("docstring")  itk::simple::DilateObjectMorphologyImageFilter::GetName "
-std::string itk::simple::DilateObjectMorphologyImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::DilateObjectMorphologyImageFilter::GetObjectValue "
-double itk::simple::DilateObjectMorphologyImageFilter::GetObjectValue()
 ";
 
 %feature("docstring")  itk::simple::DilateObjectMorphologyImageFilter::SetKernelRadius "
-Self& itk::simple::DilateObjectMorphologyImageFilter::SetKernelRadius(const std::vector< uint32_t > &r)
 
 Set/Get the radius of the kernel structuring element as a vector.
 
@@ -6050,25 +5404,21 @@ the radius will be padded. If it is less the r will be truncated.
 ";
 
 %feature("docstring")  itk::simple::DilateObjectMorphologyImageFilter::SetKernelRadius "
-Self& itk::simple::DilateObjectMorphologyImageFilter::SetKernelRadius(uint32_t r)
 
 Kernel radius as a scale for isotropic structures
 
 ";
 
 %feature("docstring")  itk::simple::DilateObjectMorphologyImageFilter::SetKernelType "
-Self& itk::simple::DilateObjectMorphologyImageFilter::SetKernelType(KernelType t)
 
 Set/Get the kernel or structuring elemenent used for the morphology
 
 ";
 
 %feature("docstring")  itk::simple::DilateObjectMorphologyImageFilter::SetObjectValue "
-Self& itk::simple::DilateObjectMorphologyImageFilter::SetObjectValue(double ObjectValue)
 ";
 
 %feature("docstring")  itk::simple::DilateObjectMorphologyImageFilter::ToString "
-std::string itk::simple::DilateObjectMorphologyImageFilter::ToString() const
 
 Print ourselves out
 
@@ -6121,7 +5471,6 @@ C++ includes: sitkDiscreteGaussianImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::DiscreteGaussianImageFilter::DiscreteGaussianImageFilter "
-itk::simple::DiscreteGaussianImageFilter::DiscreteGaussianImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -6129,22 +5478,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::DiscreteGaussianImageFilter::Execute "
-Image itk::simple::DiscreteGaussianImageFilter::Execute(const Image &image1, double variance, unsigned int
-maximumKernelWidth, double maximumError, bool useImageSpacing)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::DiscreteGaussianImageFilter::Execute "
-Image itk::simple::DiscreteGaussianImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::DiscreteGaussianImageFilter::GetMaximumError "
-double itk::simple::DiscreteGaussianImageFilter::GetMaximumError()
 
 The algorithm will size the discrete kernel so that the error
 resulting from truncation of the kernel is no greater than
@@ -6153,7 +5498,6 @@ MaximumError. The default is 0.01 in each dimension.
 ";
 
 %feature("docstring")  itk::simple::DiscreteGaussianImageFilter::GetMaximumKernelWidth "
-unsigned int itk::simple::DiscreteGaussianImageFilter::GetMaximumKernelWidth()
 
 Set the kernel to be no wider than MaximumKernelWidth pixels, even if
 MaximumError demands it. The default is 32 pixels.
@@ -6161,14 +5505,12 @@ MaximumError demands it. The default is 32 pixels.
 ";
 
 %feature("docstring")  itk::simple::DiscreteGaussianImageFilter::GetName "
-std::string itk::simple::DiscreteGaussianImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::DiscreteGaussianImageFilter::GetUseImageSpacing "
-bool itk::simple::DiscreteGaussianImageFilter::GetUseImageSpacing()
 
 Set/Get whether or not the filter will use the spacing of the input
 image in its calculations.
@@ -6176,7 +5518,6 @@ image in its calculations.
 ";
 
 %feature("docstring")  itk::simple::DiscreteGaussianImageFilter::GetVariance "
-double itk::simple::DiscreteGaussianImageFilter::GetVariance()
 
 The variance for the discrete Gaussian kernel. Sets the variance
 independently for each dimension, but see also SetVariance(const double v). The default is 0.0 in each dimension. If UseImageSpacing is true,
@@ -6186,11 +5527,9 @@ false then the units are pixels.
 ";
 
 %feature("docstring")  itk::simple::DiscreteGaussianImageFilter::SetMaximumError "
-Self& itk::simple::DiscreteGaussianImageFilter::SetMaximumError(double MaximumError)
 ";
 
 %feature("docstring")  itk::simple::DiscreteGaussianImageFilter::SetMaximumKernelWidth "
-Self& itk::simple::DiscreteGaussianImageFilter::SetMaximumKernelWidth(unsigned int MaximumKernelWidth)
 
 Set the kernel to be no wider than MaximumKernelWidth pixels, even if
 MaximumError demands it. The default is 32 pixels.
@@ -6198,7 +5537,6 @@ MaximumError demands it. The default is 32 pixels.
 ";
 
 %feature("docstring")  itk::simple::DiscreteGaussianImageFilter::SetUseImageSpacing "
-Self& itk::simple::DiscreteGaussianImageFilter::SetUseImageSpacing(bool UseImageSpacing)
 
 Set/Get whether or not the filter will use the spacing of the input
 image in its calculations.
@@ -6206,22 +5544,18 @@ image in its calculations.
 ";
 
 %feature("docstring")  itk::simple::DiscreteGaussianImageFilter::SetVariance "
-Self& itk::simple::DiscreteGaussianImageFilter::SetVariance(double Variance)
 ";
 
 %feature("docstring")  itk::simple::DiscreteGaussianImageFilter::ToString "
-std::string itk::simple::DiscreteGaussianImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::DiscreteGaussianImageFilter::UseImageSpacingOff "
-Self& itk::simple::DiscreteGaussianImageFilter::UseImageSpacingOff()
 ";
 
 %feature("docstring")  itk::simple::DiscreteGaussianImageFilter::UseImageSpacingOn "
-Self& itk::simple::DiscreteGaussianImageFilter::UseImageSpacingOn()
 
 Set the value of UseImageSpacing to true or false respectfully.
 
@@ -6239,7 +5573,6 @@ C++ includes: sitkDivideFloorImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::DivideFloorImageFilter::DivideFloorImageFilter "
-itk::simple::DivideFloorImageFilter::DivideFloorImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -6247,32 +5580,27 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::DivideFloorImageFilter::Execute "
-Image itk::simple::DivideFloorImageFilter::Execute(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::DivideFloorImageFilter::Execute "
-Image itk::simple::DivideFloorImageFilter::Execute(const Image &image1, double constant)
 
 Execute the filter with an image and a constant
 
 ";
 
 %feature("docstring")  itk::simple::DivideFloorImageFilter::Execute "
-Image itk::simple::DivideFloorImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::DivideFloorImageFilter::GetName "
-std::string itk::simple::DivideFloorImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::DivideFloorImageFilter::ToString "
-std::string itk::simple::DivideFloorImageFilter::ToString() const
 
 Print ourselves out
 
@@ -6302,7 +5630,6 @@ C++ includes: sitkDivideImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::DivideImageFilter::DivideImageFilter "
-itk::simple::DivideImageFilter::DivideImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -6310,32 +5637,27 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::DivideImageFilter::Execute "
-Image itk::simple::DivideImageFilter::Execute(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::DivideImageFilter::Execute "
-Image itk::simple::DivideImageFilter::Execute(const Image &image1, double constant)
 
 Execute the filter with an image and a constant
 
 ";
 
 %feature("docstring")  itk::simple::DivideImageFilter::Execute "
-Image itk::simple::DivideImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::DivideImageFilter::GetName "
-std::string itk::simple::DivideImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::DivideImageFilter::ToString "
-std::string itk::simple::DivideImageFilter::ToString() const
 
 Print ourselves out
 
@@ -6353,7 +5675,6 @@ C++ includes: sitkDivideRealImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::DivideRealImageFilter::DivideRealImageFilter "
-itk::simple::DivideRealImageFilter::DivideRealImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -6361,32 +5682,27 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::DivideRealImageFilter::Execute "
-Image itk::simple::DivideRealImageFilter::Execute(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::DivideRealImageFilter::Execute "
-Image itk::simple::DivideRealImageFilter::Execute(const Image &image1, double constant)
 
 Execute the filter with an image and a constant
 
 ";
 
 %feature("docstring")  itk::simple::DivideRealImageFilter::Execute "
-Image itk::simple::DivideRealImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::DivideRealImageFilter::GetName "
-std::string itk::simple::DivideRealImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::DivideRealImageFilter::ToString "
-std::string itk::simple::DivideRealImageFilter::ToString() const
 
 Print ourselves out
 
@@ -6427,7 +5743,6 @@ C++ includes: sitkDoubleThresholdImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::DoubleThresholdImageFilter::DoubleThresholdImageFilter "
-itk::simple::DoubleThresholdImageFilter::DoubleThresholdImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -6435,34 +5750,27 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::DoubleThresholdImageFilter::Execute "
-Image itk::simple::DoubleThresholdImageFilter::Execute(const Image &image1, double threshold1, double threshold2, double
-threshold3, double threshold4, uint8_t insideValue, uint8_t
-outsideValue, bool fullyConnected)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::DoubleThresholdImageFilter::Execute "
-Image itk::simple::DoubleThresholdImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::DoubleThresholdImageFilter::FullyConnectedOff "
-Self& itk::simple::DoubleThresholdImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::DoubleThresholdImageFilter::FullyConnectedOn "
-Self& itk::simple::DoubleThresholdImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::DoubleThresholdImageFilter::GetFullyConnected "
-bool itk::simple::DoubleThresholdImageFilter::GetFullyConnected()
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -6472,56 +5780,48 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::DoubleThresholdImageFilter::GetInsideValue "
-uint8_t itk::simple::DoubleThresholdImageFilter::GetInsideValue()
 
 Get the \"inside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::DoubleThresholdImageFilter::GetName "
-std::string itk::simple::DoubleThresholdImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::DoubleThresholdImageFilter::GetOutsideValue "
-uint8_t itk::simple::DoubleThresholdImageFilter::GetOutsideValue()
 
 Get the \"outside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::DoubleThresholdImageFilter::GetThreshold1 "
-double itk::simple::DoubleThresholdImageFilter::GetThreshold1()
 
 Get the threshold values.
 
 ";
 
 %feature("docstring")  itk::simple::DoubleThresholdImageFilter::GetThreshold2 "
-double itk::simple::DoubleThresholdImageFilter::GetThreshold2()
 
 Get the threshold values.
 
 ";
 
 %feature("docstring")  itk::simple::DoubleThresholdImageFilter::GetThreshold3 "
-double itk::simple::DoubleThresholdImageFilter::GetThreshold3()
 
 Get the threshold values.
 
 ";
 
 %feature("docstring")  itk::simple::DoubleThresholdImageFilter::GetThreshold4 "
-double itk::simple::DoubleThresholdImageFilter::GetThreshold4()
 
 Get the threshold values.
 
 ";
 
 %feature("docstring")  itk::simple::DoubleThresholdImageFilter::SetFullyConnected "
-Self& itk::simple::DoubleThresholdImageFilter::SetFullyConnected(bool FullyConnected)
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -6531,7 +5831,6 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::DoubleThresholdImageFilter::SetInsideValue "
-Self& itk::simple::DoubleThresholdImageFilter::SetInsideValue(uint8_t InsideValue)
 
 Set the \"inside\" pixel value. The default value
 NumericTraits<OutputPixelType>::max().
@@ -6539,7 +5838,6 @@ NumericTraits<OutputPixelType>::max().
 ";
 
 %feature("docstring")  itk::simple::DoubleThresholdImageFilter::SetOutsideValue "
-Self& itk::simple::DoubleThresholdImageFilter::SetOutsideValue(uint8_t OutsideValue)
 
 Set the \"outside\" pixel value. The default value
 NumericTraits<OutputPixelType>::Zero.
@@ -6547,7 +5845,6 @@ NumericTraits<OutputPixelType>::Zero.
 ";
 
 %feature("docstring")  itk::simple::DoubleThresholdImageFilter::SetThreshold1 "
-Self& itk::simple::DoubleThresholdImageFilter::SetThreshold1(double Threshold1)
 
 Set the thresholds. Four thresholds should be specified. The two lower
 thresholds default to NumericTraits<InputPixelType>::NonpositiveMin().
@@ -6557,7 +5854,6 @@ Threshold1 <= Threshold2 <= Threshold3 <= Threshold4.
 ";
 
 %feature("docstring")  itk::simple::DoubleThresholdImageFilter::SetThreshold2 "
-Self& itk::simple::DoubleThresholdImageFilter::SetThreshold2(double Threshold2)
 
 Set the thresholds. Four thresholds should be specified. The two lower
 thresholds default to NumericTraits<InputPixelType>::NonpositiveMin().
@@ -6567,7 +5863,6 @@ Threshold1 <= Threshold2 <= Threshold3 <= Threshold4.
 ";
 
 %feature("docstring")  itk::simple::DoubleThresholdImageFilter::SetThreshold3 "
-Self& itk::simple::DoubleThresholdImageFilter::SetThreshold3(double Threshold3)
 
 Set the thresholds. Four thresholds should be specified. The two lower
 thresholds default to NumericTraits<InputPixelType>::NonpositiveMin().
@@ -6577,7 +5872,6 @@ Threshold1 <= Threshold2 <= Threshold3 <= Threshold4.
 ";
 
 %feature("docstring")  itk::simple::DoubleThresholdImageFilter::SetThreshold4 "
-Self& itk::simple::DoubleThresholdImageFilter::SetThreshold4(double Threshold4)
 
 Set the thresholds. Four thresholds should be specified. The two lower
 thresholds default to NumericTraits<InputPixelType>::NonpositiveMin().
@@ -6587,7 +5881,6 @@ Threshold1 <= Threshold2 <= Threshold3 <= Threshold4.
 ";
 
 %feature("docstring")  itk::simple::DoubleThresholdImageFilter::ToString "
-std::string itk::simple::DoubleThresholdImageFilter::ToString() const
 
 Print ourselves out
 
@@ -6613,7 +5906,6 @@ C++ includes: sitkEdgePotentialImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::EdgePotentialImageFilter::EdgePotentialImageFilter "
-itk::simple::EdgePotentialImageFilter::EdgePotentialImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -6621,21 +5913,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::EdgePotentialImageFilter::Execute "
-Image itk::simple::EdgePotentialImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::EdgePotentialImageFilter::GetName "
-std::string itk::simple::EdgePotentialImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::EdgePotentialImageFilter::ToString "
-std::string itk::simple::EdgePotentialImageFilter::ToString() const
 
 Print ourselves out
 
@@ -6653,7 +5942,6 @@ C++ includes: sitkEqualImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::EqualImageFilter::EqualImageFilter "
-itk::simple::EqualImageFilter::EqualImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -6661,13 +5949,9 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::EqualImageFilter::Execute "
-Image itk::simple::EqualImageFilter::Execute(double constant, const Image &image2, uint8_t backgroundValue,
-uint8_t foregroundValue)
 ";
 
 %feature("docstring")  itk::simple::EqualImageFilter::Execute "
-Image itk::simple::EqualImageFilter::Execute(const Image &image1, double constant, uint8_t backgroundValue,
-uint8_t foregroundValue)
 
 Execute the filter on an image and a constant with the given
 parameters
@@ -6675,68 +5959,57 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::EqualImageFilter::Execute "
-Image itk::simple::EqualImageFilter::Execute(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::EqualImageFilter::Execute "
-Image itk::simple::EqualImageFilter::Execute(const Image &image1, double constant)
 
 Execute the filter with an image and a constant
 
 ";
 
 %feature("docstring")  itk::simple::EqualImageFilter::Execute "
-Image itk::simple::EqualImageFilter::Execute(const Image &image1, const Image &image2, uint8_t backgroundValue,
-uint8_t foregroundValue)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::EqualImageFilter::Execute "
-Image itk::simple::EqualImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::EqualImageFilter::GetBackgroundValue "
-uint8_t itk::simple::EqualImageFilter::GetBackgroundValue()
 
 Set/Get the value used to mark the false pixels of the operator.
 
 ";
 
 %feature("docstring")  itk::simple::EqualImageFilter::GetForegroundValue "
-uint8_t itk::simple::EqualImageFilter::GetForegroundValue()
 
 Set/Get the value used to mark the true pixels of the operator.
 
 ";
 
 %feature("docstring")  itk::simple::EqualImageFilter::GetName "
-std::string itk::simple::EqualImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::EqualImageFilter::SetBackgroundValue "
-Self& itk::simple::EqualImageFilter::SetBackgroundValue(uint8_t BackgroundValue)
 
 Set/Get the value used to mark the false pixels of the operator.
 
 ";
 
 %feature("docstring")  itk::simple::EqualImageFilter::SetForegroundValue "
-Self& itk::simple::EqualImageFilter::SetForegroundValue(uint8_t ForegroundValue)
 
 Set/Get the value used to mark the true pixels of the operator.
 
 ";
 
 %feature("docstring")  itk::simple::EqualImageFilter::ToString "
-std::string itk::simple::EqualImageFilter::ToString() const
 
 Print ourselves out
 
@@ -6770,7 +6043,6 @@ C++ includes: sitkErodeObjectMorphologyImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ErodeObjectMorphologyImageFilter::ErodeObjectMorphologyImageFilter "
-itk::simple::ErodeObjectMorphologyImageFilter::ErodeObjectMorphologyImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -6778,54 +6050,45 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ErodeObjectMorphologyImageFilter::Execute "
-Image itk::simple::ErodeObjectMorphologyImageFilter::Execute(const Image &image1, double objectValue, double backgroundValue)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ErodeObjectMorphologyImageFilter::Execute "
-Image itk::simple::ErodeObjectMorphologyImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ErodeObjectMorphologyImageFilter::GetBackgroundValue "
-double itk::simple::ErodeObjectMorphologyImageFilter::GetBackgroundValue()
 
 Get the value to be assigned to eroded pixels.
 
 ";
 
 %feature("docstring")  itk::simple::ErodeObjectMorphologyImageFilter::GetKernelRadius "
-std::vector<uint32_t> itk::simple::ErodeObjectMorphologyImageFilter::GetKernelRadius() const
 ";
 
 %feature("docstring")  itk::simple::ErodeObjectMorphologyImageFilter::GetKernelType "
-KernelType itk::simple::ErodeObjectMorphologyImageFilter::GetKernelType() const
 ";
 
 %feature("docstring")  itk::simple::ErodeObjectMorphologyImageFilter::GetName "
-std::string itk::simple::ErodeObjectMorphologyImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ErodeObjectMorphologyImageFilter::GetObjectValue "
-double itk::simple::ErodeObjectMorphologyImageFilter::GetObjectValue()
 ";
 
 %feature("docstring")  itk::simple::ErodeObjectMorphologyImageFilter::SetBackgroundValue "
-Self& itk::simple::ErodeObjectMorphologyImageFilter::SetBackgroundValue(double BackgroundValue)
 
 Set the value to be assigned to eroded pixels.
 
 ";
 
 %feature("docstring")  itk::simple::ErodeObjectMorphologyImageFilter::SetKernelRadius "
-Self& itk::simple::ErodeObjectMorphologyImageFilter::SetKernelRadius(const std::vector< uint32_t > &r)
 
 Set/Get the radius of the kernel structuring element as a vector.
 
@@ -6835,25 +6098,21 @@ the radius will be padded. If it is less the r will be truncated.
 ";
 
 %feature("docstring")  itk::simple::ErodeObjectMorphologyImageFilter::SetKernelRadius "
-Self& itk::simple::ErodeObjectMorphologyImageFilter::SetKernelRadius(uint32_t r)
 
 Kernel radius as a scale for isotropic structures
 
 ";
 
 %feature("docstring")  itk::simple::ErodeObjectMorphologyImageFilter::SetKernelType "
-Self& itk::simple::ErodeObjectMorphologyImageFilter::SetKernelType(KernelType t)
 
 Set/Get the kernel or structuring elemenent used for the morphology
 
 ";
 
 %feature("docstring")  itk::simple::ErodeObjectMorphologyImageFilter::SetObjectValue "
-Self& itk::simple::ErodeObjectMorphologyImageFilter::SetObjectValue(double ObjectValue)
 ";
 
 %feature("docstring")  itk::simple::ErodeObjectMorphologyImageFilter::ToString "
-std::string itk::simple::ErodeObjectMorphologyImageFilter::ToString() const
 
 Print ourselves out
 
@@ -6876,14 +6135,12 @@ C++ includes: sitkExpImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ExpImageFilter::Execute "
-Image itk::simple::ExpImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ExpImageFilter::ExpImageFilter "
-itk::simple::ExpImageFilter::ExpImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -6891,14 +6148,12 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ExpImageFilter::GetName "
-std::string itk::simple::ExpImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ExpImageFilter::ToString "
-std::string itk::simple::ExpImageFilter::ToString() const
 
 Print ourselves out
 
@@ -6923,14 +6178,12 @@ C++ includes: sitkExpNegativeImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ExpNegativeImageFilter::Execute "
-Image itk::simple::ExpNegativeImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ExpNegativeImageFilter::ExpNegativeImageFilter "
-itk::simple::ExpNegativeImageFilter::ExpNegativeImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -6938,14 +6191,12 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ExpNegativeImageFilter::GetName "
-std::string itk::simple::ExpNegativeImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ExpNegativeImageFilter::ToString "
-std::string itk::simple::ExpNegativeImageFilter::ToString() const
 
 Print ourselves out
 
@@ -6991,22 +6242,18 @@ C++ includes: sitkExpandImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ExpandImageFilter::Execute "
-Image itk::simple::ExpandImageFilter::Execute(const Image &image1, std::vector< unsigned int > expandFactors,
-InterpolatorEnum interpolator)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ExpandImageFilter::Execute "
-Image itk::simple::ExpandImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ExpandImageFilter::ExpandImageFilter "
-itk::simple::ExpandImageFilter::ExpandImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -7014,35 +6261,30 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ExpandImageFilter::GetExpandFactors "
-std::vector<unsigned int> itk::simple::ExpandImageFilter::GetExpandFactors()
 
 Get the expand factors.
 
 ";
 
 %feature("docstring")  itk::simple::ExpandImageFilter::GetInterpolator "
-InterpolatorEnum itk::simple::ExpandImageFilter::GetInterpolator()
 
 Get a pointer to the interpolator function.
 
 ";
 
 %feature("docstring")  itk::simple::ExpandImageFilter::GetName "
-std::string itk::simple::ExpandImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ExpandImageFilter::SetExpandFactor "
-Self& itk::simple::ExpandImageFilter::SetExpandFactor(unsigned int e)
 
 Custom public declarations
 
 ";
 
 %feature("docstring")  itk::simple::ExpandImageFilter::SetExpandFactors "
-Self& itk::simple::ExpandImageFilter::SetExpandFactors(std::vector< unsigned int > ExpandFactors)
 
 Set the expand factors. Values are clamped to a minimum value of 1.
 Default is 1 for all dimensions.
@@ -7050,14 +6292,12 @@ Default is 1 for all dimensions.
 ";
 
 %feature("docstring")  itk::simple::ExpandImageFilter::SetInterpolator "
-Self& itk::simple::ExpandImageFilter::SetInterpolator(InterpolatorEnum Interpolator)
 
 Set the interpolator function.
 
 ";
 
 %feature("docstring")  itk::simple::ExpandImageFilter::ToString "
-std::string itk::simple::ExpandImageFilter::ToString() const
 
 Print ourselves out
 
@@ -7125,23 +6365,18 @@ C++ includes: sitkExtractImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ExtractImageFilter::Execute "
-Image itk::simple::ExtractImageFilter::Execute(const Image &image1, std::vector< unsigned int > size, std::vector<
-int > index, ExtractImageFilter::DirectionCollapseStrategyType
-directionCollapseToStrategy)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ExtractImageFilter::Execute "
-Image itk::simple::ExtractImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ExtractImageFilter::ExtractImageFilter "
-itk::simple::ExtractImageFilter::ExtractImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -7149,7 +6384,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ExtractImageFilter::GetDirectionCollapseToStrategy "
-ExtractImageFilter::DirectionCollapseStrategyType itk::simple::ExtractImageFilter::GetDirectionCollapseToStrategy()
 
 NOTE: The SetDirectionCollapseToUknown is explicitly not defined. It
 is a state that a filter can be in only when it is first instantiate
@@ -7159,23 +6393,18 @@ collapsing directions of physical space.
 ";
 
 %feature("docstring")  itk::simple::ExtractImageFilter::GetIndex "
-std::vector<int> itk::simple::ExtractImageFilter::GetIndex()
 ";
 
 %feature("docstring")  itk::simple::ExtractImageFilter::GetName "
-std::string itk::simple::ExtractImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ExtractImageFilter::GetSize "
-std::vector<unsigned int> itk::simple::ExtractImageFilter::GetSize()
 ";
 
 %feature("docstring")  itk::simple::ExtractImageFilter::SetDirectionCollapseToStrategy "
-Self& itk::simple::ExtractImageFilter::SetDirectionCollapseToStrategy(ExtractImageFilter::DirectionCollapseStrategyType
-DirectionCollapseToStrategy)
 
 Set the strategy to be used to collapse pysical space dimensions.
 itk::itkExtractImageFilter::DIRECTIONCOLLAPSETOIDENTITY Set the
@@ -7198,18 +6427,15 @@ For example when the application programmer knows that a 4D image is
 ";
 
 %feature("docstring")  itk::simple::ExtractImageFilter::SetIndex "
-Self& itk::simple::ExtractImageFilter::SetIndex(std::vector< int > Index)
 
 odo the internal setting of the method needs work!!!
 
 ";
 
 %feature("docstring")  itk::simple::ExtractImageFilter::SetSize "
-Self& itk::simple::ExtractImageFilter::SetSize(std::vector< unsigned int > Size)
 ";
 
 %feature("docstring")  itk::simple::ExtractImageFilter::ToString "
-std::string itk::simple::ExtractImageFilter::ToString() const
 
 Print ourselves out
 
@@ -7240,23 +6466,18 @@ C++ includes: sitkFFTConvolutionImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::FFTConvolutionImageFilter::Execute "
-Image itk::simple::FFTConvolutionImageFilter::Execute(const Image &image1, const Image &image2, bool normalize,
-FFTConvolutionImageFilter::BoundaryConditionType boundaryCondition,
-FFTConvolutionImageFilter::OutputRegionModeType outputRegionMode)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::FFTConvolutionImageFilter::Execute "
-Image itk::simple::FFTConvolutionImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::FFTConvolutionImageFilter::FFTConvolutionImageFilter "
-itk::simple::FFTConvolutionImageFilter::FFTConvolutionImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -7264,52 +6485,42 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::FFTConvolutionImageFilter::GetBoundaryCondition "
-FFTConvolutionImageFilter::BoundaryConditionType itk::simple::FFTConvolutionImageFilter::GetBoundaryCondition()
 ";
 
 %feature("docstring")  itk::simple::FFTConvolutionImageFilter::GetName "
-std::string itk::simple::FFTConvolutionImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::FFTConvolutionImageFilter::GetNormalize "
-bool itk::simple::FFTConvolutionImageFilter::GetNormalize()
 ";
 
 %feature("docstring")  itk::simple::FFTConvolutionImageFilter::GetOutputRegionMode "
-FFTConvolutionImageFilter::OutputRegionModeType itk::simple::FFTConvolutionImageFilter::GetOutputRegionMode()
 ";
 
 %feature("docstring")  itk::simple::FFTConvolutionImageFilter::NormalizeOff "
-Self& itk::simple::FFTConvolutionImageFilter::NormalizeOff()
 ";
 
 %feature("docstring")  itk::simple::FFTConvolutionImageFilter::NormalizeOn "
-Self& itk::simple::FFTConvolutionImageFilter::NormalizeOn()
 
 Set the value of Normalize to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::FFTConvolutionImageFilter::SetBoundaryCondition "
-Self& itk::simple::FFTConvolutionImageFilter::SetBoundaryCondition(FFTConvolutionImageFilter::BoundaryConditionType BoundaryCondition)
 ";
 
 %feature("docstring")  itk::simple::FFTConvolutionImageFilter::SetNormalize "
-Self& itk::simple::FFTConvolutionImageFilter::SetNormalize(bool Normalize)
 
 Normalize the output image by the sum of the kernel components.
 
 ";
 
 %feature("docstring")  itk::simple::FFTConvolutionImageFilter::SetOutputRegionMode "
-Self& itk::simple::FFTConvolutionImageFilter::SetOutputRegionMode(FFTConvolutionImageFilter::OutputRegionModeType OutputRegionMode)
 ";
 
 %feature("docstring")  itk::simple::FFTConvolutionImageFilter::ToString "
-std::string itk::simple::FFTConvolutionImageFilter::ToString() const
 
 Print ourselves out
 
@@ -7374,22 +6585,18 @@ C++ includes: sitkFFTNormalizedCorrelationImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::FFTNormalizedCorrelationImageFilter::Execute "
-Image itk::simple::FFTNormalizedCorrelationImageFilter::Execute(const Image &image1, const Image &image2, uint64_t
-requiredNumberOfOverlappingPixels)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::FFTNormalizedCorrelationImageFilter::Execute "
-Image itk::simple::FFTNormalizedCorrelationImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::FFTNormalizedCorrelationImageFilter::FFTNormalizedCorrelationImageFilter "
-itk::simple::FFTNormalizedCorrelationImageFilter::FFTNormalizedCorrelationImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -7397,22 +6604,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::FFTNormalizedCorrelationImageFilter::GetName "
-std::string itk::simple::FFTNormalizedCorrelationImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::FFTNormalizedCorrelationImageFilter::GetRequiredNumberOfOverlappingPixels "
-uint64_t itk::simple::FFTNormalizedCorrelationImageFilter::GetRequiredNumberOfOverlappingPixels()
 ";
 
 %feature("docstring")  itk::simple::FFTNormalizedCorrelationImageFilter::SetRequiredNumberOfOverlappingPixels "
-Self& itk::simple::FFTNormalizedCorrelationImageFilter::SetRequiredNumberOfOverlappingPixels(uint64_t RequiredNumberOfOverlappingPixels)
 ";
 
 %feature("docstring")  itk::simple::FFTNormalizedCorrelationImageFilter::ToString "
-std::string itk::simple::FFTNormalizedCorrelationImageFilter::ToString() const
 
 Print ourselves out
 
@@ -7446,21 +6649,18 @@ C++ includes: sitkFFTShiftImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::FFTShiftImageFilter::Execute "
-Image itk::simple::FFTShiftImageFilter::Execute(const Image &image1, bool inverse)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::FFTShiftImageFilter::Execute "
-Image itk::simple::FFTShiftImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::FFTShiftImageFilter::FFTShiftImageFilter "
-itk::simple::FFTShiftImageFilter::FFTShiftImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -7468,7 +6668,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::FFTShiftImageFilter::GetInverse "
-bool itk::simple::FFTShiftImageFilter::GetInverse()
 
 Set/Get whether the filter must invert the transform or not. This
 option has no effect if none of the size of the input image is even,
@@ -7478,25 +6677,21 @@ dimensions has an odd size.
 ";
 
 %feature("docstring")  itk::simple::FFTShiftImageFilter::GetName "
-std::string itk::simple::FFTShiftImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::FFTShiftImageFilter::InverseOff "
-Self& itk::simple::FFTShiftImageFilter::InverseOff()
 ";
 
 %feature("docstring")  itk::simple::FFTShiftImageFilter::InverseOn "
-Self& itk::simple::FFTShiftImageFilter::InverseOn()
 
 Set the value of Inverse to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::FFTShiftImageFilter::SetInverse "
-Self& itk::simple::FFTShiftImageFilter::SetInverse(bool Inverse)
 
 Set/Get whether the filter must invert the transform or not. This
 option has no effect if none of the size of the input image is even,
@@ -7506,7 +6701,6 @@ dimensions has an odd size.
 ";
 
 %feature("docstring")  itk::simple::FFTShiftImageFilter::ToString "
-std::string itk::simple::FFTShiftImageFilter::ToString() const
 
 Print ourselves out
 
@@ -7524,21 +6718,18 @@ C++ includes: sitkFastApproximateRankImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::FastApproximateRankImageFilter::Execute "
-Image itk::simple::FastApproximateRankImageFilter::Execute(const Image &image1, double rank, std::vector< unsigned int > radius)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::FastApproximateRankImageFilter::Execute "
-Image itk::simple::FastApproximateRankImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::FastApproximateRankImageFilter::FastApproximateRankImageFilter "
-itk::simple::FastApproximateRankImageFilter::FastApproximateRankImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -7546,37 +6737,30 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::FastApproximateRankImageFilter::GetName "
-std::string itk::simple::FastApproximateRankImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::FastApproximateRankImageFilter::GetRadius "
-std::vector<unsigned int> itk::simple::FastApproximateRankImageFilter::GetRadius()
 ";
 
 %feature("docstring")  itk::simple::FastApproximateRankImageFilter::GetRank "
-double itk::simple::FastApproximateRankImageFilter::GetRank()
 ";
 
 %feature("docstring")  itk::simple::FastApproximateRankImageFilter::SetRadius "
-Self& itk::simple::FastApproximateRankImageFilter::SetRadius(std::vector< unsigned int > Radius)
 ";
 
 %feature("docstring")  itk::simple::FastApproximateRankImageFilter::SetRadius "
-Self& itk::simple::FastApproximateRankImageFilter::SetRadius(unsigned int r)
 
 Custom public declarations
 
 ";
 
 %feature("docstring")  itk::simple::FastApproximateRankImageFilter::SetRank "
-Self& itk::simple::FastApproximateRankImageFilter::SetRank(double Rank)
 ";
 
 %feature("docstring")  itk::simple::FastApproximateRankImageFilter::ToString "
-std::string itk::simple::FastApproximateRankImageFilter::ToString() const
 
 Print ourselves out
 
@@ -7646,37 +6830,30 @@ C++ includes: sitkFastMarchingImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::FastMarchingImageFilter::AddTrialPoint "
-Self& itk::simple::FastMarchingImageFilter::AddTrialPoint(std::vector< unsigned int > t)
 
 Add trial point
 
 ";
 
 %feature("docstring")  itk::simple::FastMarchingImageFilter::ClearTrialPoints "
-Self& itk::simple::FastMarchingImageFilter::ClearTrialPoints()
 
 Clear trial points
 
 ";
 
 %feature("docstring")  itk::simple::FastMarchingImageFilter::Execute "
-Image itk::simple::FastMarchingImageFilter::Execute(const Image &, std::vector< std::vector< unsigned int > >
-trialPoints, double normalizationFactor, double stoppingValue,
-itk::simple::FastMarchingImageFilter::TopologyCheckType topologyCheck)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::FastMarchingImageFilter::Execute "
-Image itk::simple::FastMarchingImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::FastMarchingImageFilter::FastMarchingImageFilter "
-itk::simple::FastMarchingImageFilter::FastMarchingImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -7684,14 +6861,12 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::FastMarchingImageFilter::GetName "
-std::string itk::simple::FastMarchingImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::FastMarchingImageFilter::GetNormalizationFactor "
-double itk::simple::FastMarchingImageFilter::GetNormalizationFactor()
 
 Set/Get the Normalization Factor for the Speed Image. The values in the Speed Imageis divided by this factor. This allows
 the use of images with integer pixel types to represent the speed.
@@ -7699,25 +6874,21 @@ the use of images with integer pixel types to represent the speed.
 ";
 
 %feature("docstring")  itk::simple::FastMarchingImageFilter::GetStoppingValue "
-double itk::simple::FastMarchingImageFilter::GetStoppingValue()
 
 Get the Fast Marching algorithm Stopping Value.
 
 ";
 
 %feature("docstring")  itk::simple::FastMarchingImageFilter::GetTopologyCheck "
-itk::simple::FastMarchingImageFilter::TopologyCheckType itk::simple::FastMarchingImageFilter::GetTopologyCheck()
 ";
 
 %feature("docstring")  itk::simple::FastMarchingImageFilter::GetTrialPoints "
-std::vector< std::vector<unsigned int> > itk::simple::FastMarchingImageFilter::GetTrialPoints()
 
 Get trial points
 
 ";
 
 %feature("docstring")  itk::simple::FastMarchingImageFilter::SetNormalizationFactor "
-Self& itk::simple::FastMarchingImageFilter::SetNormalizationFactor(double NormalizationFactor)
 
 Set/Get the Normalization Factor for the Speed Image. The values in the Speed Imageis divided by this factor. This allows
 the use of images with integer pixel types to represent the speed.
@@ -7725,7 +6896,6 @@ the use of images with integer pixel types to represent the speed.
 ";
 
 %feature("docstring")  itk::simple::FastMarchingImageFilter::SetStoppingValue "
-Self& itk::simple::FastMarchingImageFilter::SetStoppingValue(double StoppingValue)
 
 Set the Fast Marching algorithm Stopping Value. The Fast Marching
 algorithm is terminated when the value of the smallest trial point is
@@ -7734,12 +6904,9 @@ greater than the stopping value.
 ";
 
 %feature("docstring")  itk::simple::FastMarchingImageFilter::SetTopologyCheck "
-Self& itk::simple::FastMarchingImageFilter::SetTopologyCheck(itk::simple::FastMarchingImageFilter::TopologyCheckType
-TopologyCheck)
 ";
 
 %feature("docstring")  itk::simple::FastMarchingImageFilter::SetTrialPoints "
-Self& itk::simple::FastMarchingImageFilter::SetTrialPoints(std::vector< std::vector< unsigned int > > t)
 
 Set trial points. The default trial value (i.e. 0.0) is used for each
 index.
@@ -7747,7 +6914,6 @@ index.
 ";
 
 %feature("docstring")  itk::simple::FastMarchingImageFilter::ToString "
-std::string itk::simple::FastMarchingImageFilter::ToString() const
 
 Print ourselves out
 
@@ -7780,33 +6946,27 @@ C++ includes: sitkFlipImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::FlipImageFilter::Execute "
-Image itk::simple::FlipImageFilter::Execute(const Image &image1, std::vector< bool > flipAxes, bool
-flipAboutOrigin)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::FlipImageFilter::Execute "
-Image itk::simple::FlipImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::FlipImageFilter::FlipAboutOriginOff "
-Self& itk::simple::FlipImageFilter::FlipAboutOriginOff()
 ";
 
 %feature("docstring")  itk::simple::FlipImageFilter::FlipAboutOriginOn "
-Self& itk::simple::FlipImageFilter::FlipAboutOriginOn()
 
 Set the value of FlipAboutOrigin to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::FlipImageFilter::FlipImageFilter "
-itk::simple::FlipImageFilter::FlipImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -7814,7 +6974,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::FlipImageFilter::GetFlipAboutOrigin "
-bool itk::simple::FlipImageFilter::GetFlipAboutOrigin()
 
 Controls how the output origin is computed. If FlipAboutOrigin is
 \"on\", the flip will occur about the origin of the axis, otherwise,
@@ -7823,7 +6982,6 @@ the flip will occur about the center of the axis.
 ";
 
 %feature("docstring")  itk::simple::FlipImageFilter::GetFlipAxes "
-std::vector<bool> itk::simple::FlipImageFilter::GetFlipAxes()
 
 Set/Get the axis to be flipped. The image is flipped along axes for
 which array[i] is true.
@@ -7831,14 +6989,12 @@ which array[i] is true.
 ";
 
 %feature("docstring")  itk::simple::FlipImageFilter::GetName "
-std::string itk::simple::FlipImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::FlipImageFilter::SetFlipAboutOrigin "
-Self& itk::simple::FlipImageFilter::SetFlipAboutOrigin(bool FlipAboutOrigin)
 
 Controls how the output origin is computed. If FlipAboutOrigin is
 \"on\", the flip will occur about the origin of the axis, otherwise,
@@ -7847,7 +7003,6 @@ the flip will occur about the center of the axis.
 ";
 
 %feature("docstring")  itk::simple::FlipImageFilter::SetFlipAxes "
-Self& itk::simple::FlipImageFilter::SetFlipAxes(std::vector< bool > FlipAxes)
 
 Set/Get the axis to be flipped. The image is flipped along axes for
 which array[i] is true.
@@ -7855,7 +7010,6 @@ which array[i] is true.
 ";
 
 %feature("docstring")  itk::simple::FlipImageFilter::ToString "
-std::string itk::simple::FlipImageFilter::ToString() const
 
 Print ourselves out
 
@@ -7887,14 +7041,12 @@ C++ includes: sitkForwardFFTImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ForwardFFTImageFilter::Execute "
-Image itk::simple::ForwardFFTImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ForwardFFTImageFilter::ForwardFFTImageFilter "
-itk::simple::ForwardFFTImageFilter::ForwardFFTImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -7902,14 +7054,12 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ForwardFFTImageFilter::GetName "
-std::string itk::simple::ForwardFFTImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ForwardFFTImageFilter::ToString "
-std::string itk::simple::ForwardFFTImageFilter::ToString() const
 
 Print ourselves out
 
@@ -7927,24 +7077,18 @@ C++ includes: sitkGaborImageSource.h
 ";
 
 %feature("docstring")  itk::simple::GaborImageSource::Execute "
-Image itk::simple::GaborImageSource::Execute(PixelIDValueEnum outputPixelType, std::vector< unsigned int > size,
-std::vector< double > sigma, std::vector< double > mean, double
-frequency, std::vector< double > origin, std::vector< double >
-spacing, std::vector< double > direction)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::GaborImageSource::Execute "
-Image itk::simple::GaborImageSource::Execute()
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::GaborImageSource::GaborImageSource "
-itk::simple::GaborImageSource::GaborImageSource()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -7952,78 +7096,60 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::GaborImageSource::GetDirection "
-std::vector<double> itk::simple::GaborImageSource::GetDirection()
 ";
 
 %feature("docstring")  itk::simple::GaborImageSource::GetFrequency "
-double itk::simple::GaborImageSource::GetFrequency()
 ";
 
 %feature("docstring")  itk::simple::GaborImageSource::GetMean "
-std::vector<double> itk::simple::GaborImageSource::GetMean()
 ";
 
 %feature("docstring")  itk::simple::GaborImageSource::GetName "
-std::string itk::simple::GaborImageSource::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::GaborImageSource::GetOrigin "
-std::vector<double> itk::simple::GaborImageSource::GetOrigin()
 ";
 
 %feature("docstring")  itk::simple::GaborImageSource::GetOutputPixelType "
-PixelIDValueEnum itk::simple::GaborImageSource::GetOutputPixelType()
 ";
 
 %feature("docstring")  itk::simple::GaborImageSource::GetSigma "
-std::vector<double> itk::simple::GaborImageSource::GetSigma()
 ";
 
 %feature("docstring")  itk::simple::GaborImageSource::GetSize "
-std::vector<unsigned int> itk::simple::GaborImageSource::GetSize()
 ";
 
 %feature("docstring")  itk::simple::GaborImageSource::GetSpacing "
-std::vector<double> itk::simple::GaborImageSource::GetSpacing()
 ";
 
 %feature("docstring")  itk::simple::GaborImageSource::SetDirection "
-Self& itk::simple::GaborImageSource::SetDirection(std::vector< double > Direction)
 ";
 
 %feature("docstring")  itk::simple::GaborImageSource::SetFrequency "
-Self& itk::simple::GaborImageSource::SetFrequency(double Frequency)
 ";
 
 %feature("docstring")  itk::simple::GaborImageSource::SetMean "
-Self& itk::simple::GaborImageSource::SetMean(std::vector< double > Mean)
 ";
 
 %feature("docstring")  itk::simple::GaborImageSource::SetOrigin "
-Self& itk::simple::GaborImageSource::SetOrigin(std::vector< double > Origin)
 ";
 
 %feature("docstring")  itk::simple::GaborImageSource::SetOutputPixelType "
-Self& itk::simple::GaborImageSource::SetOutputPixelType(PixelIDValueEnum OutputPixelType)
 ";
 
 %feature("docstring")  itk::simple::GaborImageSource::SetSigma "
-Self& itk::simple::GaborImageSource::SetSigma(std::vector< double > Sigma)
 ";
 
 %feature("docstring")  itk::simple::GaborImageSource::SetSize "
-Self& itk::simple::GaborImageSource::SetSize(std::vector< unsigned int > Size)
 ";
 
 %feature("docstring")  itk::simple::GaborImageSource::SetSpacing "
-Self& itk::simple::GaborImageSource::SetSpacing(std::vector< double > Spacing)
 ";
 
 %feature("docstring")  itk::simple::GaborImageSource::ToString "
-std::string itk::simple::GaborImageSource::ToString() const
 
 Print ourselves out
 
@@ -8041,24 +7167,18 @@ C++ includes: sitkGaussianImageSource.h
 ";
 
 %feature("docstring")  itk::simple::GaussianImageSource::Execute "
-Image itk::simple::GaussianImageSource::Execute(PixelIDValueEnum outputPixelType, std::vector< unsigned int > size,
-std::vector< double > sigma, std::vector< double > mean, double scale,
-std::vector< double > origin, std::vector< double > spacing,
-std::vector< double > direction)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::GaussianImageSource::Execute "
-Image itk::simple::GaussianImageSource::Execute()
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::GaussianImageSource::GaussianImageSource "
-itk::simple::GaussianImageSource::GaussianImageSource()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -8066,78 +7186,60 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::GaussianImageSource::GetDirection "
-std::vector<double> itk::simple::GaussianImageSource::GetDirection()
 ";
 
 %feature("docstring")  itk::simple::GaussianImageSource::GetMean "
-std::vector<double> itk::simple::GaussianImageSource::GetMean()
 ";
 
 %feature("docstring")  itk::simple::GaussianImageSource::GetName "
-std::string itk::simple::GaussianImageSource::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::GaussianImageSource::GetOrigin "
-std::vector<double> itk::simple::GaussianImageSource::GetOrigin()
 ";
 
 %feature("docstring")  itk::simple::GaussianImageSource::GetOutputPixelType "
-PixelIDValueEnum itk::simple::GaussianImageSource::GetOutputPixelType()
 ";
 
 %feature("docstring")  itk::simple::GaussianImageSource::GetScale "
-double itk::simple::GaussianImageSource::GetScale()
 ";
 
 %feature("docstring")  itk::simple::GaussianImageSource::GetSigma "
-std::vector<double> itk::simple::GaussianImageSource::GetSigma()
 ";
 
 %feature("docstring")  itk::simple::GaussianImageSource::GetSize "
-std::vector<unsigned int> itk::simple::GaussianImageSource::GetSize()
 ";
 
 %feature("docstring")  itk::simple::GaussianImageSource::GetSpacing "
-std::vector<double> itk::simple::GaussianImageSource::GetSpacing()
 ";
 
 %feature("docstring")  itk::simple::GaussianImageSource::SetDirection "
-Self& itk::simple::GaussianImageSource::SetDirection(std::vector< double > Direction)
 ";
 
 %feature("docstring")  itk::simple::GaussianImageSource::SetMean "
-Self& itk::simple::GaussianImageSource::SetMean(std::vector< double > Mean)
 ";
 
 %feature("docstring")  itk::simple::GaussianImageSource::SetOrigin "
-Self& itk::simple::GaussianImageSource::SetOrigin(std::vector< double > Origin)
 ";
 
 %feature("docstring")  itk::simple::GaussianImageSource::SetOutputPixelType "
-Self& itk::simple::GaussianImageSource::SetOutputPixelType(PixelIDValueEnum OutputPixelType)
 ";
 
 %feature("docstring")  itk::simple::GaussianImageSource::SetScale "
-Self& itk::simple::GaussianImageSource::SetScale(double Scale)
 ";
 
 %feature("docstring")  itk::simple::GaussianImageSource::SetSigma "
-Self& itk::simple::GaussianImageSource::SetSigma(std::vector< double > Sigma)
 ";
 
 %feature("docstring")  itk::simple::GaussianImageSource::SetSize "
-Self& itk::simple::GaussianImageSource::SetSize(std::vector< unsigned int > Size)
 ";
 
 %feature("docstring")  itk::simple::GaussianImageSource::SetSpacing "
-Self& itk::simple::GaussianImageSource::SetSpacing(std::vector< double > Spacing)
 ";
 
 %feature("docstring")  itk::simple::GaussianImageSource::ToString "
-std::string itk::simple::GaussianImageSource::ToString() const
 
 Print ourselves out
 
@@ -8152,33 +7254,27 @@ C++ includes: sitkExceptionObject.h
 ";
 
 %feature("docstring")  itk::simple::GenericException::GenericException "
-itk::simple::GenericException::GenericException(const std::string &file, unsigned int lineNumber, const std::string
-&desc)
  throw ()
 Constructor. Needed to ensure the exception object can be copied.
 
 ";
 
 %feature("docstring")  itk::simple::GenericException::GenericException "
-itk::simple::GenericException::GenericException(const std::string &file, unsigned int lineNumber)
  throw ()
 Constructor. Needed to ensure the exception object can be copied.
 
 ";
 
 %feature("docstring")  itk::simple::GenericException::GenericException "
-itk::simple::GenericException::GenericException(const char *file, unsigned int lineNumber)
  throw ()
 Constructor. Needed to ensure the exception object can be copied.
 
 ";
 
 %feature("docstring")  itk::simple::GenericException::GenericException "
-itk::simple::GenericException::GenericException(const GenericException &e)
  throw ()";
 
 %feature("docstring")  itk::simple::GenericException::GenericException "
-itk::simple::GenericException::GenericException()
  throw ()
 Default constructor. Needed to ensure the exception object can be
 copied.
@@ -8186,44 +7282,36 @@ copied.
 ";
 
 %feature("docstring")  itk::simple::GenericException::GetDescription "
-virtual const char* itk::simple::GenericException::GetDescription() const
 ";
 
 %feature("docstring")  itk::simple::GenericException::GetFile "
-virtual const char* itk::simple::GenericException::GetFile() const
 
 What file did the exception occur in?
 
 ";
 
 %feature("docstring")  itk::simple::GenericException::GetLine "
-virtual unsigned int itk::simple::GenericException::GetLine() const
 
 What line did the exception occur in?
 
 ";
 
 %feature("docstring")  itk::simple::GenericException::GetLocation "
-virtual const char* itk::simple::GenericException::GetLocation() const
 ";
 
 %feature("docstring")  itk::simple::GenericException::GetNameOfClass "
-virtual const char* itk::simple::GenericException::GetNameOfClass() const
 ";
 
 %feature("docstring")  itk::simple::GenericException::ToString "
-std::string itk::simple::GenericException::ToString() const
 
 Return a description of the error
 
 ";
 
 %feature("docstring")  itk::simple::GenericException::what "
-const char* itk::simple::GenericException::what() const
  throw ()";
 
 %feature("docstring")  itk::simple::GenericException::~GenericException "
-virtual itk::simple::GenericException::~GenericException()
  throw ( )
 Virtual destructor needed for subclasses. Has to have empty throw().
 
@@ -8303,24 +7391,18 @@ C++ includes: sitkGeodesicActiveContourLevelSetImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::GeodesicActiveContourLevelSetImageFilter::Execute "
-Image itk::simple::GeodesicActiveContourLevelSetImageFilter::Execute(const Image &image1, const Image &image2, double maximumRMSError,
-double propagationScaling, double curvatureScaling, double
-advectionScaling, uint32_t numberOfIterations, bool
-reverseExpansionDirection)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::GeodesicActiveContourLevelSetImageFilter::Execute "
-Image itk::simple::GeodesicActiveContourLevelSetImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::GeodesicActiveContourLevelSetImageFilter::GeodesicActiveContourLevelSetImageFilter "
-itk::simple::GeodesicActiveContourLevelSetImageFilter::GeodesicActiveContourLevelSetImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -8328,15 +7410,12 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::GeodesicActiveContourLevelSetImageFilter::GetAdvectionScaling "
-double itk::simple::GeodesicActiveContourLevelSetImageFilter::GetAdvectionScaling()
 ";
 
 %feature("docstring")  itk::simple::GeodesicActiveContourLevelSetImageFilter::GetCurvatureScaling "
-double itk::simple::GeodesicActiveContourLevelSetImageFilter::GetCurvatureScaling()
 ";
 
 %feature("docstring")  itk::simple::GeodesicActiveContourLevelSetImageFilter::GetElapsedIterations "
-uint32_t itk::simple::GeodesicActiveContourLevelSetImageFilter::GetElapsedIterations()
 
 Number of iterations run.
 
@@ -8347,30 +7426,24 @@ the value will only be valid after an execution.
 ";
 
 %feature("docstring")  itk::simple::GeodesicActiveContourLevelSetImageFilter::GetMaximumRMSError "
-double itk::simple::GeodesicActiveContourLevelSetImageFilter::GetMaximumRMSError()
 ";
 
 %feature("docstring")  itk::simple::GeodesicActiveContourLevelSetImageFilter::GetName "
-std::string itk::simple::GeodesicActiveContourLevelSetImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::GeodesicActiveContourLevelSetImageFilter::GetNumberOfIterations "
-uint32_t itk::simple::GeodesicActiveContourLevelSetImageFilter::GetNumberOfIterations()
 ";
 
 %feature("docstring")  itk::simple::GeodesicActiveContourLevelSetImageFilter::GetPropagationScaling "
-double itk::simple::GeodesicActiveContourLevelSetImageFilter::GetPropagationScaling()
 ";
 
 %feature("docstring")  itk::simple::GeodesicActiveContourLevelSetImageFilter::GetReverseExpansionDirection "
-bool itk::simple::GeodesicActiveContourLevelSetImageFilter::GetReverseExpansionDirection()
 ";
 
 %feature("docstring")  itk::simple::GeodesicActiveContourLevelSetImageFilter::GetRMSChange "
-double itk::simple::GeodesicActiveContourLevelSetImageFilter::GetRMSChange()
 
 The Root Mean Square of the levelset upon termination.
 
@@ -8381,11 +7454,9 @@ the value will only be valid after an execution.
 ";
 
 %feature("docstring")  itk::simple::GeodesicActiveContourLevelSetImageFilter::ReverseExpansionDirectionOff "
-Self& itk::simple::GeodesicActiveContourLevelSetImageFilter::ReverseExpansionDirectionOff()
 ";
 
 %feature("docstring")  itk::simple::GeodesicActiveContourLevelSetImageFilter::ReverseExpansionDirectionOn "
-Self& itk::simple::GeodesicActiveContourLevelSetImageFilter::ReverseExpansionDirectionOn()
 
 Set the value of ReverseExpansionDirection to true or false
 respectfully.
@@ -8393,31 +7464,24 @@ respectfully.
 ";
 
 %feature("docstring")  itk::simple::GeodesicActiveContourLevelSetImageFilter::SetAdvectionScaling "
-Self& itk::simple::GeodesicActiveContourLevelSetImageFilter::SetAdvectionScaling(double AdvectionScaling)
 ";
 
 %feature("docstring")  itk::simple::GeodesicActiveContourLevelSetImageFilter::SetCurvatureScaling "
-Self& itk::simple::GeodesicActiveContourLevelSetImageFilter::SetCurvatureScaling(double CurvatureScaling)
 ";
 
 %feature("docstring")  itk::simple::GeodesicActiveContourLevelSetImageFilter::SetMaximumRMSError "
-Self& itk::simple::GeodesicActiveContourLevelSetImageFilter::SetMaximumRMSError(double MaximumRMSError)
 ";
 
 %feature("docstring")  itk::simple::GeodesicActiveContourLevelSetImageFilter::SetNumberOfIterations "
-Self& itk::simple::GeodesicActiveContourLevelSetImageFilter::SetNumberOfIterations(uint32_t NumberOfIterations)
 ";
 
 %feature("docstring")  itk::simple::GeodesicActiveContourLevelSetImageFilter::SetPropagationScaling "
-Self& itk::simple::GeodesicActiveContourLevelSetImageFilter::SetPropagationScaling(double PropagationScaling)
 ";
 
 %feature("docstring")  itk::simple::GeodesicActiveContourLevelSetImageFilter::SetReverseExpansionDirection "
-Self& itk::simple::GeodesicActiveContourLevelSetImageFilter::SetReverseExpansionDirection(bool ReverseExpansionDirection)
 ";
 
 %feature("docstring")  itk::simple::GeodesicActiveContourLevelSetImageFilter::ToString "
-std::string itk::simple::GeodesicActiveContourLevelSetImageFilter::ToString() const
 
 Print ourselves out
 
@@ -8457,7 +7521,6 @@ C++ includes: sitkGradientAnisotropicDiffusionImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::GradientAnisotropicDiffusionImageFilter::EstimateOptimalTimeStep "
-double itk::simple::GradientAnisotropicDiffusionImageFilter::EstimateOptimalTimeStep(Image &inImage)
 
 This method autmatically sets the optimal timestep for an image given
 its spacing.
@@ -8465,46 +7528,36 @@ its spacing.
 ";
 
 %feature("docstring")  itk::simple::GradientAnisotropicDiffusionImageFilter::Execute "
-Image itk::simple::GradientAnisotropicDiffusionImageFilter::Execute(const Image &image1, double timeStep, double conductanceParameter,
-unsigned int conductanceScalingUpdateInterval, uint32_t
-numberOfIterations)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::GradientAnisotropicDiffusionImageFilter::Execute "
-Image itk::simple::GradientAnisotropicDiffusionImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::GradientAnisotropicDiffusionImageFilter::GetConductanceParameter "
-double itk::simple::GradientAnisotropicDiffusionImageFilter::GetConductanceParameter()
 ";
 
 %feature("docstring")  itk::simple::GradientAnisotropicDiffusionImageFilter::GetConductanceScalingUpdateInterval "
-unsigned int itk::simple::GradientAnisotropicDiffusionImageFilter::GetConductanceScalingUpdateInterval()
 ";
 
 %feature("docstring")  itk::simple::GradientAnisotropicDiffusionImageFilter::GetName "
-std::string itk::simple::GradientAnisotropicDiffusionImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::GradientAnisotropicDiffusionImageFilter::GetNumberOfIterations "
-uint32_t itk::simple::GradientAnisotropicDiffusionImageFilter::GetNumberOfIterations()
 ";
 
 %feature("docstring")  itk::simple::GradientAnisotropicDiffusionImageFilter::GetTimeStep "
-double itk::simple::GradientAnisotropicDiffusionImageFilter::GetTimeStep()
 ";
 
 %feature("docstring")  itk::simple::GradientAnisotropicDiffusionImageFilter::GradientAnisotropicDiffusionImageFilter "
-itk::simple::GradientAnisotropicDiffusionImageFilter::GradientAnisotropicDiffusionImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -8512,23 +7565,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::GradientAnisotropicDiffusionImageFilter::SetConductanceParameter "
-Self& itk::simple::GradientAnisotropicDiffusionImageFilter::SetConductanceParameter(double ConductanceParameter)
 ";
 
 %feature("docstring")  itk::simple::GradientAnisotropicDiffusionImageFilter::SetConductanceScalingUpdateInterval "
-Self& itk::simple::GradientAnisotropicDiffusionImageFilter::SetConductanceScalingUpdateInterval(unsigned int ConductanceScalingUpdateInterval)
 ";
 
 %feature("docstring")  itk::simple::GradientAnisotropicDiffusionImageFilter::SetNumberOfIterations "
-Self& itk::simple::GradientAnisotropicDiffusionImageFilter::SetNumberOfIterations(uint32_t NumberOfIterations)
 ";
 
 %feature("docstring")  itk::simple::GradientAnisotropicDiffusionImageFilter::SetTimeStep "
-Self& itk::simple::GradientAnisotropicDiffusionImageFilter::SetTimeStep(double TimeStep)
 ";
 
 %feature("docstring")  itk::simple::GradientAnisotropicDiffusionImageFilter::ToString "
-std::string itk::simple::GradientAnisotropicDiffusionImageFilter::ToString() const
 
 Print ourselves out
 
@@ -8567,28 +7615,24 @@ C++ includes: sitkGradientImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::GradientImageFilter::Execute "
-Image itk::simple::GradientImageFilter::Execute(const Image &image1, bool useImageSpacing, bool useImageDirection)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::GradientImageFilter::Execute "
-Image itk::simple::GradientImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::GradientImageFilter::GetName "
-std::string itk::simple::GradientImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::GradientImageFilter::GetUseImageDirection "
-bool itk::simple::GradientImageFilter::GetUseImageDirection()
 
 End concept checking The UseImageDirection flag determines whether
 image derivatives are computed with respect to the image grid or with
@@ -8603,7 +7647,6 @@ flag is On.
 ";
 
 %feature("docstring")  itk::simple::GradientImageFilter::GetUseImageSpacing "
-bool itk::simple::GradientImageFilter::GetUseImageSpacing()
 
 Set/Get whether or not the filter will use the spacing of the input
 image in its calculations.
@@ -8611,7 +7654,6 @@ image in its calculations.
 ";
 
 %feature("docstring")  itk::simple::GradientImageFilter::GradientImageFilter "
-itk::simple::GradientImageFilter::GradientImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -8619,7 +7661,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::GradientImageFilter::SetUseImageDirection "
-Self& itk::simple::GradientImageFilter::SetUseImageDirection(bool UseImageDirection)
 
 End concept checking The UseImageDirection flag determines whether
 image derivatives are computed with respect to the image grid or with
@@ -8634,7 +7675,6 @@ flag is On.
 ";
 
 %feature("docstring")  itk::simple::GradientImageFilter::SetUseImageSpacing "
-Self& itk::simple::GradientImageFilter::SetUseImageSpacing(bool UseImageSpacing)
 
 Set/Get whether or not the filter will use the spacing of the input
 image in its calculations.
@@ -8642,29 +7682,24 @@ image in its calculations.
 ";
 
 %feature("docstring")  itk::simple::GradientImageFilter::ToString "
-std::string itk::simple::GradientImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::GradientImageFilter::UseImageDirectionOff "
-Self& itk::simple::GradientImageFilter::UseImageDirectionOff()
 ";
 
 %feature("docstring")  itk::simple::GradientImageFilter::UseImageDirectionOn "
-Self& itk::simple::GradientImageFilter::UseImageDirectionOn()
 
 Set the value of UseImageDirection to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::GradientImageFilter::UseImageSpacingOff "
-Self& itk::simple::GradientImageFilter::UseImageSpacingOff()
 ";
 
 %feature("docstring")  itk::simple::GradientImageFilter::UseImageSpacingOn "
-Self& itk::simple::GradientImageFilter::UseImageSpacingOn()
 
 Set the value of UseImageSpacing to true or false respectfully.
 
@@ -8702,28 +7737,24 @@ C++ includes: sitkGradientMagnitudeImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::GradientMagnitudeImageFilter::Execute "
-Image itk::simple::GradientMagnitudeImageFilter::Execute(const Image &image1, bool useImageSpacing)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::GradientMagnitudeImageFilter::Execute "
-Image itk::simple::GradientMagnitudeImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::GradientMagnitudeImageFilter::GetName "
-std::string itk::simple::GradientMagnitudeImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::GradientMagnitudeImageFilter::GetUseImageSpacing "
-bool itk::simple::GradientMagnitudeImageFilter::GetUseImageSpacing()
 
 Set/Get whether or not the filter will use the spacing of the input
 image in its calculations.
@@ -8731,7 +7762,6 @@ image in its calculations.
 ";
 
 %feature("docstring")  itk::simple::GradientMagnitudeImageFilter::GradientMagnitudeImageFilter "
-itk::simple::GradientMagnitudeImageFilter::GradientMagnitudeImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -8739,7 +7769,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::GradientMagnitudeImageFilter::SetUseImageSpacing "
-Self& itk::simple::GradientMagnitudeImageFilter::SetUseImageSpacing(bool UseImageSpacing)
 
 Set/Get whether or not the filter will use the spacing of the input
 image in its calculations.
@@ -8747,18 +7776,15 @@ image in its calculations.
 ";
 
 %feature("docstring")  itk::simple::GradientMagnitudeImageFilter::ToString "
-std::string itk::simple::GradientMagnitudeImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::GradientMagnitudeImageFilter::UseImageSpacingOff "
-Self& itk::simple::GradientMagnitudeImageFilter::UseImageSpacingOff()
 ";
 
 %feature("docstring")  itk::simple::GradientMagnitudeImageFilter::UseImageSpacingOn "
-Self& itk::simple::GradientMagnitudeImageFilter::UseImageSpacingOn()
 
 Set the value of UseImageSpacing to true or false respectfully.
 
@@ -8786,28 +7812,24 @@ C++ includes: sitkGradientMagnitudeRecursiveGaussianImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::GradientMagnitudeRecursiveGaussianImageFilter::Execute "
-Image itk::simple::GradientMagnitudeRecursiveGaussianImageFilter::Execute(const Image &image1, double sigma, bool normalizeAcrossScale)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::GradientMagnitudeRecursiveGaussianImageFilter::Execute "
-Image itk::simple::GradientMagnitudeRecursiveGaussianImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::GradientMagnitudeRecursiveGaussianImageFilter::GetName "
-std::string itk::simple::GradientMagnitudeRecursiveGaussianImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::GradientMagnitudeRecursiveGaussianImageFilter::GetNormalizeAcrossScale "
-bool itk::simple::GradientMagnitudeRecursiveGaussianImageFilter::GetNormalizeAcrossScale()
 
 Define which normalization factor will be used for the Gaussian.
 
@@ -8820,14 +7842,12 @@ See:
 ";
 
 %feature("docstring")  itk::simple::GradientMagnitudeRecursiveGaussianImageFilter::GetSigma "
-double itk::simple::GradientMagnitudeRecursiveGaussianImageFilter::GetSigma()
 
 Set Sigma value. Sigma is measured in the units of image spacing.
 
 ";
 
 %feature("docstring")  itk::simple::GradientMagnitudeRecursiveGaussianImageFilter::GradientMagnitudeRecursiveGaussianImageFilter "
-itk::simple::GradientMagnitudeRecursiveGaussianImageFilter::GradientMagnitudeRecursiveGaussianImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -8835,18 +7855,15 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::GradientMagnitudeRecursiveGaussianImageFilter::NormalizeAcrossScaleOff "
-Self& itk::simple::GradientMagnitudeRecursiveGaussianImageFilter::NormalizeAcrossScaleOff()
 ";
 
 %feature("docstring")  itk::simple::GradientMagnitudeRecursiveGaussianImageFilter::NormalizeAcrossScaleOn "
-Self& itk::simple::GradientMagnitudeRecursiveGaussianImageFilter::NormalizeAcrossScaleOn()
 
 Set the value of NormalizeAcrossScale to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::GradientMagnitudeRecursiveGaussianImageFilter::SetNormalizeAcrossScale "
-Self& itk::simple::GradientMagnitudeRecursiveGaussianImageFilter::SetNormalizeAcrossScale(bool NormalizeAcrossScale)
 
 Define which normalization factor will be used for the Gaussian.
 
@@ -8859,14 +7876,12 @@ See:
 ";
 
 %feature("docstring")  itk::simple::GradientMagnitudeRecursiveGaussianImageFilter::SetSigma "
-Self& itk::simple::GradientMagnitudeRecursiveGaussianImageFilter::SetSigma(double Sigma)
 
 Set Sigma value. Sigma is measured in the units of image spacing.
 
 ";
 
 %feature("docstring")  itk::simple::GradientMagnitudeRecursiveGaussianImageFilter::ToString "
-std::string itk::simple::GradientMagnitudeRecursiveGaussianImageFilter::ToString() const
 
 Print ourselves out
 
@@ -8894,29 +7909,24 @@ C++ includes: sitkGradientRecursiveGaussianImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::GradientRecursiveGaussianImageFilter::Execute "
-Image itk::simple::GradientRecursiveGaussianImageFilter::Execute(const Image &image1, double sigma, bool normalizeAcrossScale, bool
-useImageDirection)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::GradientRecursiveGaussianImageFilter::Execute "
-Image itk::simple::GradientRecursiveGaussianImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::GradientRecursiveGaussianImageFilter::GetName "
-std::string itk::simple::GradientRecursiveGaussianImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::GradientRecursiveGaussianImageFilter::GetNormalizeAcrossScale "
-bool itk::simple::GradientRecursiveGaussianImageFilter::GetNormalizeAcrossScale()
 
 Define which normalization factor will be used for the Gaussian.
 
@@ -8929,14 +7939,12 @@ See:
 ";
 
 %feature("docstring")  itk::simple::GradientRecursiveGaussianImageFilter::GetSigma "
-double itk::simple::GradientRecursiveGaussianImageFilter::GetSigma()
 
 Set Sigma value. Sigma is measured in the units of image spacing.
 
 ";
 
 %feature("docstring")  itk::simple::GradientRecursiveGaussianImageFilter::GetUseImageDirection "
-bool itk::simple::GradientRecursiveGaussianImageFilter::GetUseImageDirection()
 
 The UseImageDirection flag determines whether the gradients are
 computed with respect to the image grid or with respect to the
@@ -8950,7 +7958,6 @@ when the flag is OFF. The default value of this flag is On.
 ";
 
 %feature("docstring")  itk::simple::GradientRecursiveGaussianImageFilter::GradientRecursiveGaussianImageFilter "
-itk::simple::GradientRecursiveGaussianImageFilter::GradientRecursiveGaussianImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -8958,18 +7965,15 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::GradientRecursiveGaussianImageFilter::NormalizeAcrossScaleOff "
-Self& itk::simple::GradientRecursiveGaussianImageFilter::NormalizeAcrossScaleOff()
 ";
 
 %feature("docstring")  itk::simple::GradientRecursiveGaussianImageFilter::NormalizeAcrossScaleOn "
-Self& itk::simple::GradientRecursiveGaussianImageFilter::NormalizeAcrossScaleOn()
 
 Set the value of NormalizeAcrossScale to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::GradientRecursiveGaussianImageFilter::SetNormalizeAcrossScale "
-Self& itk::simple::GradientRecursiveGaussianImageFilter::SetNormalizeAcrossScale(bool NormalizeAcrossScale)
 
 Define which normalization factor will be used for the Gaussian.
 
@@ -8982,14 +7986,12 @@ See:
 ";
 
 %feature("docstring")  itk::simple::GradientRecursiveGaussianImageFilter::SetSigma "
-Self& itk::simple::GradientRecursiveGaussianImageFilter::SetSigma(double Sigma)
 
 Set Sigma value. Sigma is measured in the units of image spacing.
 
 ";
 
 %feature("docstring")  itk::simple::GradientRecursiveGaussianImageFilter::SetUseImageDirection "
-Self& itk::simple::GradientRecursiveGaussianImageFilter::SetUseImageDirection(bool UseImageDirection)
 
 The UseImageDirection flag determines whether the gradients are
 computed with respect to the image grid or with respect to the
@@ -9003,18 +8005,15 @@ when the flag is OFF. The default value of this flag is On.
 ";
 
 %feature("docstring")  itk::simple::GradientRecursiveGaussianImageFilter::ToString "
-std::string itk::simple::GradientRecursiveGaussianImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::GradientRecursiveGaussianImageFilter::UseImageDirectionOff "
-Self& itk::simple::GradientRecursiveGaussianImageFilter::UseImageDirectionOff()
 ";
 
 %feature("docstring")  itk::simple::GradientRecursiveGaussianImageFilter::UseImageDirectionOn "
-Self& itk::simple::GradientRecursiveGaussianImageFilter::UseImageDirectionOn()
 
 Set the value of UseImageDirection to true or false respectfully.
 
@@ -9046,33 +8045,27 @@ C++ includes: sitkGrayscaleConnectedClosingImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::GrayscaleConnectedClosingImageFilter::Execute "
-Image itk::simple::GrayscaleConnectedClosingImageFilter::Execute(const Image &image1, std::vector< uint32_t > seed, bool
-fullyConnected)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleConnectedClosingImageFilter::Execute "
-Image itk::simple::GrayscaleConnectedClosingImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleConnectedClosingImageFilter::FullyConnectedOff "
-Self& itk::simple::GrayscaleConnectedClosingImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::GrayscaleConnectedClosingImageFilter::FullyConnectedOn "
-Self& itk::simple::GrayscaleConnectedClosingImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleConnectedClosingImageFilter::GetFullyConnected "
-bool itk::simple::GrayscaleConnectedClosingImageFilter::GetFullyConnected()
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -9082,21 +8075,18 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::GrayscaleConnectedClosingImageFilter::GetName "
-std::string itk::simple::GrayscaleConnectedClosingImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleConnectedClosingImageFilter::GetSeed "
-std::vector<uint32_t> itk::simple::GrayscaleConnectedClosingImageFilter::GetSeed()
 
 Set/Get the seed pixel for the segmentation.
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleConnectedClosingImageFilter::GrayscaleConnectedClosingImageFilter "
-itk::simple::GrayscaleConnectedClosingImageFilter::GrayscaleConnectedClosingImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -9104,7 +8094,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::GrayscaleConnectedClosingImageFilter::SetFullyConnected "
-Self& itk::simple::GrayscaleConnectedClosingImageFilter::SetFullyConnected(bool FullyConnected)
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -9114,14 +8103,12 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::GrayscaleConnectedClosingImageFilter::SetSeed "
-Self& itk::simple::GrayscaleConnectedClosingImageFilter::SetSeed(std::vector< uint32_t > Seed)
 
 Set/Get the seed pixel for the segmentation.
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleConnectedClosingImageFilter::ToString "
-std::string itk::simple::GrayscaleConnectedClosingImageFilter::ToString() const
 
 Print ourselves out
 
@@ -9153,33 +8140,27 @@ C++ includes: sitkGrayscaleConnectedOpeningImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::GrayscaleConnectedOpeningImageFilter::Execute "
-Image itk::simple::GrayscaleConnectedOpeningImageFilter::Execute(const Image &image1, std::vector< unsigned int > seed, bool
-fullyConnected)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleConnectedOpeningImageFilter::Execute "
-Image itk::simple::GrayscaleConnectedOpeningImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleConnectedOpeningImageFilter::FullyConnectedOff "
-Self& itk::simple::GrayscaleConnectedOpeningImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::GrayscaleConnectedOpeningImageFilter::FullyConnectedOn "
-Self& itk::simple::GrayscaleConnectedOpeningImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleConnectedOpeningImageFilter::GetFullyConnected "
-bool itk::simple::GrayscaleConnectedOpeningImageFilter::GetFullyConnected()
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -9189,21 +8170,18 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::GrayscaleConnectedOpeningImageFilter::GetName "
-std::string itk::simple::GrayscaleConnectedOpeningImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleConnectedOpeningImageFilter::GetSeed "
-std::vector<unsigned int> itk::simple::GrayscaleConnectedOpeningImageFilter::GetSeed()
 
 Set/Get the seed pixel for the segmentation.
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleConnectedOpeningImageFilter::GrayscaleConnectedOpeningImageFilter "
-itk::simple::GrayscaleConnectedOpeningImageFilter::GrayscaleConnectedOpeningImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -9211,7 +8189,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::GrayscaleConnectedOpeningImageFilter::SetFullyConnected "
-Self& itk::simple::GrayscaleConnectedOpeningImageFilter::SetFullyConnected(bool FullyConnected)
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -9221,14 +8198,12 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::GrayscaleConnectedOpeningImageFilter::SetSeed "
-Self& itk::simple::GrayscaleConnectedOpeningImageFilter::SetSeed(std::vector< unsigned int > Seed)
 
 Set/Get the seed pixel for the segmentation.
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleConnectedOpeningImageFilter::ToString "
-std::string itk::simple::GrayscaleConnectedOpeningImageFilter::ToString() const
 
 Print ourselves out
 
@@ -9261,29 +8236,24 @@ C++ includes: sitkGrayscaleDilateImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::GrayscaleDilateImageFilter::Execute "
-Image itk::simple::GrayscaleDilateImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleDilateImageFilter::GetKernelRadius "
-std::vector<uint32_t> itk::simple::GrayscaleDilateImageFilter::GetKernelRadius() const
 ";
 
 %feature("docstring")  itk::simple::GrayscaleDilateImageFilter::GetKernelType "
-KernelType itk::simple::GrayscaleDilateImageFilter::GetKernelType() const
 ";
 
 %feature("docstring")  itk::simple::GrayscaleDilateImageFilter::GetName "
-std::string itk::simple::GrayscaleDilateImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleDilateImageFilter::GrayscaleDilateImageFilter "
-itk::simple::GrayscaleDilateImageFilter::GrayscaleDilateImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -9291,7 +8261,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::GrayscaleDilateImageFilter::SetKernelRadius "
-Self& itk::simple::GrayscaleDilateImageFilter::SetKernelRadius(const std::vector< uint32_t > &r)
 
 Set/Get the radius of the kernel structuring element as a vector.
 
@@ -9301,21 +8270,18 @@ the radius will be padded. If it is less the r will be truncated.
 ";
 
 %feature("docstring")  itk::simple::GrayscaleDilateImageFilter::SetKernelRadius "
-Self& itk::simple::GrayscaleDilateImageFilter::SetKernelRadius(uint32_t r)
 
 Kernel radius as a scale for isotropic structures
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleDilateImageFilter::SetKernelType "
-Self& itk::simple::GrayscaleDilateImageFilter::SetKernelType(KernelType t)
 
 Set/Get the kernel or structuring elemenent used for the morphology
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleDilateImageFilter::ToString "
-std::string itk::simple::GrayscaleDilateImageFilter::ToString() const
 
 Print ourselves out
 
@@ -9348,29 +8314,24 @@ C++ includes: sitkGrayscaleErodeImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::GrayscaleErodeImageFilter::Execute "
-Image itk::simple::GrayscaleErodeImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleErodeImageFilter::GetKernelRadius "
-std::vector<uint32_t> itk::simple::GrayscaleErodeImageFilter::GetKernelRadius() const
 ";
 
 %feature("docstring")  itk::simple::GrayscaleErodeImageFilter::GetKernelType "
-KernelType itk::simple::GrayscaleErodeImageFilter::GetKernelType() const
 ";
 
 %feature("docstring")  itk::simple::GrayscaleErodeImageFilter::GetName "
-std::string itk::simple::GrayscaleErodeImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleErodeImageFilter::GrayscaleErodeImageFilter "
-itk::simple::GrayscaleErodeImageFilter::GrayscaleErodeImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -9378,7 +8339,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::GrayscaleErodeImageFilter::SetKernelRadius "
-Self& itk::simple::GrayscaleErodeImageFilter::SetKernelRadius(const std::vector< uint32_t > &r)
 
 Set/Get the radius of the kernel structuring element as a vector.
 
@@ -9388,21 +8348,18 @@ the radius will be padded. If it is less the r will be truncated.
 ";
 
 %feature("docstring")  itk::simple::GrayscaleErodeImageFilter::SetKernelRadius "
-Self& itk::simple::GrayscaleErodeImageFilter::SetKernelRadius(uint32_t r)
 
 Kernel radius as a scale for isotropic structures
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleErodeImageFilter::SetKernelType "
-Self& itk::simple::GrayscaleErodeImageFilter::SetKernelType(KernelType t)
 
 Set/Get the kernel or structuring elemenent used for the morphology
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleErodeImageFilter::ToString "
-std::string itk::simple::GrayscaleErodeImageFilter::ToString() const
 
 Print ourselves out
 
@@ -9442,32 +8399,27 @@ C++ includes: sitkGrayscaleFillholeImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::GrayscaleFillholeImageFilter::Execute "
-Image itk::simple::GrayscaleFillholeImageFilter::Execute(const Image &image1, bool fullyConnected)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleFillholeImageFilter::Execute "
-Image itk::simple::GrayscaleFillholeImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleFillholeImageFilter::FullyConnectedOff "
-Self& itk::simple::GrayscaleFillholeImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::GrayscaleFillholeImageFilter::FullyConnectedOn "
-Self& itk::simple::GrayscaleFillholeImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleFillholeImageFilter::GetFullyConnected "
-bool itk::simple::GrayscaleFillholeImageFilter::GetFullyConnected()
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -9477,14 +8429,12 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::GrayscaleFillholeImageFilter::GetName "
-std::string itk::simple::GrayscaleFillholeImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleFillholeImageFilter::GrayscaleFillholeImageFilter "
-itk::simple::GrayscaleFillholeImageFilter::GrayscaleFillholeImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -9492,7 +8442,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::GrayscaleFillholeImageFilter::SetFullyConnected "
-Self& itk::simple::GrayscaleFillholeImageFilter::SetFullyConnected(bool FullyConnected)
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -9502,7 +8451,6 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::GrayscaleFillholeImageFilter::ToString "
-std::string itk::simple::GrayscaleFillholeImageFilter::ToString() const
 
 Print ourselves out
 
@@ -9544,33 +8492,27 @@ C++ includes: sitkGrayscaleGeodesicDilateImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGeodesicDilateImageFilter::Execute "
-Image itk::simple::GrayscaleGeodesicDilateImageFilter::Execute(const Image &image1, const Image &image2, bool runOneIteration, bool
-fullyConnected)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGeodesicDilateImageFilter::Execute "
-Image itk::simple::GrayscaleGeodesicDilateImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGeodesicDilateImageFilter::FullyConnectedOff "
-Self& itk::simple::GrayscaleGeodesicDilateImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGeodesicDilateImageFilter::FullyConnectedOn "
-Self& itk::simple::GrayscaleGeodesicDilateImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGeodesicDilateImageFilter::GetFullyConnected "
-bool itk::simple::GrayscaleGeodesicDilateImageFilter::GetFullyConnected()
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -9580,14 +8522,12 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGeodesicDilateImageFilter::GetName "
-std::string itk::simple::GrayscaleGeodesicDilateImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGeodesicDilateImageFilter::GetRunOneIteration "
-bool itk::simple::GrayscaleGeodesicDilateImageFilter::GetRunOneIteration()
 
 Set/Get whether the filter should run one iteration or until
 convergence. When run to convergence, this filter is equivalent to
@@ -9596,7 +8536,6 @@ convergence. When run to convergence, this filter is equivalent to
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGeodesicDilateImageFilter::GrayscaleGeodesicDilateImageFilter "
-itk::simple::GrayscaleGeodesicDilateImageFilter::GrayscaleGeodesicDilateImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -9604,18 +8543,15 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGeodesicDilateImageFilter::RunOneIterationOff "
-Self& itk::simple::GrayscaleGeodesicDilateImageFilter::RunOneIterationOff()
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGeodesicDilateImageFilter::RunOneIterationOn "
-Self& itk::simple::GrayscaleGeodesicDilateImageFilter::RunOneIterationOn()
 
 Set the value of RunOneIteration to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGeodesicDilateImageFilter::SetFullyConnected "
-Self& itk::simple::GrayscaleGeodesicDilateImageFilter::SetFullyConnected(bool FullyConnected)
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -9625,7 +8561,6 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGeodesicDilateImageFilter::SetRunOneIteration "
-Self& itk::simple::GrayscaleGeodesicDilateImageFilter::SetRunOneIteration(bool RunOneIteration)
 
 Set/Get whether the filter should run one iteration or until
 convergence. When run to convergence, this filter is equivalent to
@@ -9634,7 +8569,6 @@ convergence. When run to convergence, this filter is equivalent to
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGeodesicDilateImageFilter::ToString "
-std::string itk::simple::GrayscaleGeodesicDilateImageFilter::ToString() const
 
 Print ourselves out
 
@@ -9676,33 +8610,27 @@ C++ includes: sitkGrayscaleGeodesicErodeImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGeodesicErodeImageFilter::Execute "
-Image itk::simple::GrayscaleGeodesicErodeImageFilter::Execute(const Image &image1, const Image &image2, bool runOneIteration, bool
-fullyConnected)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGeodesicErodeImageFilter::Execute "
-Image itk::simple::GrayscaleGeodesicErodeImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGeodesicErodeImageFilter::FullyConnectedOff "
-Self& itk::simple::GrayscaleGeodesicErodeImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGeodesicErodeImageFilter::FullyConnectedOn "
-Self& itk::simple::GrayscaleGeodesicErodeImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGeodesicErodeImageFilter::GetFullyConnected "
-bool itk::simple::GrayscaleGeodesicErodeImageFilter::GetFullyConnected()
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -9712,14 +8640,12 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGeodesicErodeImageFilter::GetName "
-std::string itk::simple::GrayscaleGeodesicErodeImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGeodesicErodeImageFilter::GetRunOneIteration "
-bool itk::simple::GrayscaleGeodesicErodeImageFilter::GetRunOneIteration()
 
 Set/Get whether the filter should run one iteration or until
 convergence. When run to convergence, this filter is equivalent to
@@ -9728,7 +8654,6 @@ convergence. When run to convergence, this filter is equivalent to
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGeodesicErodeImageFilter::GrayscaleGeodesicErodeImageFilter "
-itk::simple::GrayscaleGeodesicErodeImageFilter::GrayscaleGeodesicErodeImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -9736,18 +8661,15 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGeodesicErodeImageFilter::RunOneIterationOff "
-Self& itk::simple::GrayscaleGeodesicErodeImageFilter::RunOneIterationOff()
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGeodesicErodeImageFilter::RunOneIterationOn "
-Self& itk::simple::GrayscaleGeodesicErodeImageFilter::RunOneIterationOn()
 
 Set the value of RunOneIteration to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGeodesicErodeImageFilter::SetFullyConnected "
-Self& itk::simple::GrayscaleGeodesicErodeImageFilter::SetFullyConnected(bool FullyConnected)
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -9757,7 +8679,6 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGeodesicErodeImageFilter::SetRunOneIteration "
-Self& itk::simple::GrayscaleGeodesicErodeImageFilter::SetRunOneIteration(bool RunOneIteration)
 
 Set/Get whether the filter should run one iteration or until
 convergence. When run to convergence, this filter is equivalent to
@@ -9766,7 +8687,6 @@ convergence. When run to convergence, this filter is equivalent to
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGeodesicErodeImageFilter::ToString "
-std::string itk::simple::GrayscaleGeodesicErodeImageFilter::ToString() const
 
 Print ourselves out
 
@@ -9809,32 +8729,27 @@ C++ includes: sitkGrayscaleGrindPeakImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGrindPeakImageFilter::Execute "
-Image itk::simple::GrayscaleGrindPeakImageFilter::Execute(const Image &image1, bool fullyConnected)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGrindPeakImageFilter::Execute "
-Image itk::simple::GrayscaleGrindPeakImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGrindPeakImageFilter::FullyConnectedOff "
-Self& itk::simple::GrayscaleGrindPeakImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGrindPeakImageFilter::FullyConnectedOn "
-Self& itk::simple::GrayscaleGrindPeakImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGrindPeakImageFilter::GetFullyConnected "
-bool itk::simple::GrayscaleGrindPeakImageFilter::GetFullyConnected()
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -9844,14 +8759,12 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGrindPeakImageFilter::GetName "
-std::string itk::simple::GrayscaleGrindPeakImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGrindPeakImageFilter::GrayscaleGrindPeakImageFilter "
-itk::simple::GrayscaleGrindPeakImageFilter::GrayscaleGrindPeakImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -9859,7 +8772,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGrindPeakImageFilter::SetFullyConnected "
-Self& itk::simple::GrayscaleGrindPeakImageFilter::SetFullyConnected(bool FullyConnected)
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -9869,7 +8781,6 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGrindPeakImageFilter::ToString "
-std::string itk::simple::GrayscaleGrindPeakImageFilter::ToString() const
 
 Print ourselves out
 
@@ -9896,36 +8807,30 @@ C++ includes: sitkGrayscaleMorphologicalClosingImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalClosingImageFilter::Execute "
-Image itk::simple::GrayscaleMorphologicalClosingImageFilter::Execute(const Image &image1, bool safeBorder)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalClosingImageFilter::Execute "
-Image itk::simple::GrayscaleMorphologicalClosingImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalClosingImageFilter::GetKernelRadius "
-std::vector<uint32_t> itk::simple::GrayscaleMorphologicalClosingImageFilter::GetKernelRadius() const
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalClosingImageFilter::GetKernelType "
-KernelType itk::simple::GrayscaleMorphologicalClosingImageFilter::GetKernelType() const
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalClosingImageFilter::GetName "
-std::string itk::simple::GrayscaleMorphologicalClosingImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalClosingImageFilter::GetSafeBorder "
-bool itk::simple::GrayscaleMorphologicalClosingImageFilter::GetSafeBorder()
 
 A safe border is added to input image to avoid borders effects and
 remove it once the closing is done.
@@ -9933,7 +8838,6 @@ remove it once the closing is done.
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalClosingImageFilter::GrayscaleMorphologicalClosingImageFilter "
-itk::simple::GrayscaleMorphologicalClosingImageFilter::GrayscaleMorphologicalClosingImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -9941,18 +8845,15 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalClosingImageFilter::SafeBorderOff "
-Self& itk::simple::GrayscaleMorphologicalClosingImageFilter::SafeBorderOff()
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalClosingImageFilter::SafeBorderOn "
-Self& itk::simple::GrayscaleMorphologicalClosingImageFilter::SafeBorderOn()
 
 Set the value of SafeBorder to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalClosingImageFilter::SetKernelRadius "
-Self& itk::simple::GrayscaleMorphologicalClosingImageFilter::SetKernelRadius(const std::vector< uint32_t > &r)
 
 Set/Get the radius of the kernel structuring element as a vector.
 
@@ -9962,21 +8863,18 @@ the radius will be padded. If it is less the r will be truncated.
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalClosingImageFilter::SetKernelRadius "
-Self& itk::simple::GrayscaleMorphologicalClosingImageFilter::SetKernelRadius(uint32_t r)
 
 Kernel radius as a scale for isotropic structures
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalClosingImageFilter::SetKernelType "
-Self& itk::simple::GrayscaleMorphologicalClosingImageFilter::SetKernelType(KernelType t)
 
 Set/Get the kernel or structuring elemenent used for the morphology
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalClosingImageFilter::SetSafeBorder "
-Self& itk::simple::GrayscaleMorphologicalClosingImageFilter::SetSafeBorder(bool SafeBorder)
 
 A safe border is added to input image to avoid borders effects and
 remove it once the closing is done.
@@ -9984,7 +8882,6 @@ remove it once the closing is done.
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalClosingImageFilter::ToString "
-std::string itk::simple::GrayscaleMorphologicalClosingImageFilter::ToString() const
 
 Print ourselves out
 
@@ -10011,36 +8908,30 @@ C++ includes: sitkGrayscaleMorphologicalOpeningImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalOpeningImageFilter::Execute "
-Image itk::simple::GrayscaleMorphologicalOpeningImageFilter::Execute(const Image &image1, bool safeBorder)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalOpeningImageFilter::Execute "
-Image itk::simple::GrayscaleMorphologicalOpeningImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalOpeningImageFilter::GetKernelRadius "
-std::vector<uint32_t> itk::simple::GrayscaleMorphologicalOpeningImageFilter::GetKernelRadius() const
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalOpeningImageFilter::GetKernelType "
-KernelType itk::simple::GrayscaleMorphologicalOpeningImageFilter::GetKernelType() const
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalOpeningImageFilter::GetName "
-std::string itk::simple::GrayscaleMorphologicalOpeningImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalOpeningImageFilter::GetSafeBorder "
-bool itk::simple::GrayscaleMorphologicalOpeningImageFilter::GetSafeBorder()
 
 A safe border is added to input image to avoid borders effects and
 remove it once the closing is done.
@@ -10048,7 +8939,6 @@ remove it once the closing is done.
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalOpeningImageFilter::GrayscaleMorphologicalOpeningImageFilter "
-itk::simple::GrayscaleMorphologicalOpeningImageFilter::GrayscaleMorphologicalOpeningImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -10056,18 +8946,15 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalOpeningImageFilter::SafeBorderOff "
-Self& itk::simple::GrayscaleMorphologicalOpeningImageFilter::SafeBorderOff()
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalOpeningImageFilter::SafeBorderOn "
-Self& itk::simple::GrayscaleMorphologicalOpeningImageFilter::SafeBorderOn()
 
 Set the value of SafeBorder to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalOpeningImageFilter::SetKernelRadius "
-Self& itk::simple::GrayscaleMorphologicalOpeningImageFilter::SetKernelRadius(const std::vector< uint32_t > &r)
 
 Set/Get the radius of the kernel structuring element as a vector.
 
@@ -10077,21 +8964,18 @@ the radius will be padded. If it is less the r will be truncated.
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalOpeningImageFilter::SetKernelRadius "
-Self& itk::simple::GrayscaleMorphologicalOpeningImageFilter::SetKernelRadius(uint32_t r)
 
 Kernel radius as a scale for isotropic structures
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalOpeningImageFilter::SetKernelType "
-Self& itk::simple::GrayscaleMorphologicalOpeningImageFilter::SetKernelType(KernelType t)
 
 Set/Get the kernel or structuring elemenent used for the morphology
 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalOpeningImageFilter::SetSafeBorder "
-Self& itk::simple::GrayscaleMorphologicalOpeningImageFilter::SetSafeBorder(bool SafeBorder)
 
 A safe border is added to input image to avoid borders effects and
 remove it once the closing is done.
@@ -10099,7 +8983,6 @@ remove it once the closing is done.
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalOpeningImageFilter::ToString "
-std::string itk::simple::GrayscaleMorphologicalOpeningImageFilter::ToString() const
 
 Print ourselves out
 
@@ -10117,13 +9000,9 @@ C++ includes: sitkGreaterEqualImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::GreaterEqualImageFilter::Execute "
-Image itk::simple::GreaterEqualImageFilter::Execute(double constant, const Image &image2, uint8_t backgroundValue,
-uint8_t foregroundValue)
 ";
 
 %feature("docstring")  itk::simple::GreaterEqualImageFilter::Execute "
-Image itk::simple::GreaterEqualImageFilter::Execute(const Image &image1, double constant, uint8_t backgroundValue,
-uint8_t foregroundValue)
 
 Execute the filter on an image and a constant with the given
 parameters
@@ -10131,54 +9010,45 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::GreaterEqualImageFilter::Execute "
-Image itk::simple::GreaterEqualImageFilter::Execute(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::GreaterEqualImageFilter::Execute "
-Image itk::simple::GreaterEqualImageFilter::Execute(const Image &image1, double constant)
 
 Execute the filter with an image and a constant
 
 ";
 
 %feature("docstring")  itk::simple::GreaterEqualImageFilter::Execute "
-Image itk::simple::GreaterEqualImageFilter::Execute(const Image &image1, const Image &image2, uint8_t backgroundValue,
-uint8_t foregroundValue)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::GreaterEqualImageFilter::Execute "
-Image itk::simple::GreaterEqualImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::GreaterEqualImageFilter::GetBackgroundValue "
-uint8_t itk::simple::GreaterEqualImageFilter::GetBackgroundValue()
 
 Set/Get the value used to mark the false pixels of the operator.
 
 ";
 
 %feature("docstring")  itk::simple::GreaterEqualImageFilter::GetForegroundValue "
-uint8_t itk::simple::GreaterEqualImageFilter::GetForegroundValue()
 
 Set/Get the value used to mark the true pixels of the operator.
 
 ";
 
 %feature("docstring")  itk::simple::GreaterEqualImageFilter::GetName "
-std::string itk::simple::GreaterEqualImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::GreaterEqualImageFilter::GreaterEqualImageFilter "
-itk::simple::GreaterEqualImageFilter::GreaterEqualImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -10186,21 +9056,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::GreaterEqualImageFilter::SetBackgroundValue "
-Self& itk::simple::GreaterEqualImageFilter::SetBackgroundValue(uint8_t BackgroundValue)
 
 Set/Get the value used to mark the false pixels of the operator.
 
 ";
 
 %feature("docstring")  itk::simple::GreaterEqualImageFilter::SetForegroundValue "
-Self& itk::simple::GreaterEqualImageFilter::SetForegroundValue(uint8_t ForegroundValue)
 
 Set/Get the value used to mark the true pixels of the operator.
 
 ";
 
 %feature("docstring")  itk::simple::GreaterEqualImageFilter::ToString "
-std::string itk::simple::GreaterEqualImageFilter::ToString() const
 
 Print ourselves out
 
@@ -10218,13 +9085,9 @@ C++ includes: sitkGreaterImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::GreaterImageFilter::Execute "
-Image itk::simple::GreaterImageFilter::Execute(double constant, const Image &image2, uint8_t backgroundValue,
-uint8_t foregroundValue)
 ";
 
 %feature("docstring")  itk::simple::GreaterImageFilter::Execute "
-Image itk::simple::GreaterImageFilter::Execute(const Image &image1, double constant, uint8_t backgroundValue,
-uint8_t foregroundValue)
 
 Execute the filter on an image and a constant with the given
 parameters
@@ -10232,54 +9095,45 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::GreaterImageFilter::Execute "
-Image itk::simple::GreaterImageFilter::Execute(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::GreaterImageFilter::Execute "
-Image itk::simple::GreaterImageFilter::Execute(const Image &image1, double constant)
 
 Execute the filter with an image and a constant
 
 ";
 
 %feature("docstring")  itk::simple::GreaterImageFilter::Execute "
-Image itk::simple::GreaterImageFilter::Execute(const Image &image1, const Image &image2, uint8_t backgroundValue,
-uint8_t foregroundValue)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::GreaterImageFilter::Execute "
-Image itk::simple::GreaterImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::GreaterImageFilter::GetBackgroundValue "
-uint8_t itk::simple::GreaterImageFilter::GetBackgroundValue()
 
 Set/Get the value used to mark the false pixels of the operator.
 
 ";
 
 %feature("docstring")  itk::simple::GreaterImageFilter::GetForegroundValue "
-uint8_t itk::simple::GreaterImageFilter::GetForegroundValue()
 
 Set/Get the value used to mark the true pixels of the operator.
 
 ";
 
 %feature("docstring")  itk::simple::GreaterImageFilter::GetName "
-std::string itk::simple::GreaterImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::GreaterImageFilter::GreaterImageFilter "
-itk::simple::GreaterImageFilter::GreaterImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -10287,21 +9141,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::GreaterImageFilter::SetBackgroundValue "
-Self& itk::simple::GreaterImageFilter::SetBackgroundValue(uint8_t BackgroundValue)
 
 Set/Get the value used to mark the false pixels of the operator.
 
 ";
 
 %feature("docstring")  itk::simple::GreaterImageFilter::SetForegroundValue "
-Self& itk::simple::GreaterImageFilter::SetForegroundValue(uint8_t ForegroundValue)
 
 Set/Get the value used to mark the true pixels of the operator.
 
 ";
 
 %feature("docstring")  itk::simple::GreaterImageFilter::ToString "
-std::string itk::simple::GreaterImageFilter::ToString() const
 
 Print ourselves out
 
@@ -10319,68 +9170,51 @@ C++ includes: sitkGridImageSource.h
 ";
 
 %feature("docstring")  itk::simple::GridImageSource::Execute "
-Image itk::simple::GridImageSource::Execute(PixelIDValueEnum outputPixelType, std::vector< unsigned int > size,
-std::vector< double > sigma, std::vector< double > gridSpacing,
-std::vector< double > gridOffset, double scale, std::vector< double >
-origin, std::vector< double > spacing, std::vector< double >
-direction)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::GridImageSource::Execute "
-Image itk::simple::GridImageSource::Execute()
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::GridImageSource::GetDirection "
-std::vector<double> itk::simple::GridImageSource::GetDirection()
 ";
 
 %feature("docstring")  itk::simple::GridImageSource::GetGridOffset "
-std::vector<double> itk::simple::GridImageSource::GetGridOffset()
 ";
 
 %feature("docstring")  itk::simple::GridImageSource::GetGridSpacing "
-std::vector<double> itk::simple::GridImageSource::GetGridSpacing()
 ";
 
 %feature("docstring")  itk::simple::GridImageSource::GetName "
-std::string itk::simple::GridImageSource::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::GridImageSource::GetOrigin "
-std::vector<double> itk::simple::GridImageSource::GetOrigin()
 ";
 
 %feature("docstring")  itk::simple::GridImageSource::GetOutputPixelType "
-PixelIDValueEnum itk::simple::GridImageSource::GetOutputPixelType()
 ";
 
 %feature("docstring")  itk::simple::GridImageSource::GetScale "
-double itk::simple::GridImageSource::GetScale()
 ";
 
 %feature("docstring")  itk::simple::GridImageSource::GetSigma "
-std::vector<double> itk::simple::GridImageSource::GetSigma()
 ";
 
 %feature("docstring")  itk::simple::GridImageSource::GetSize "
-std::vector<unsigned int> itk::simple::GridImageSource::GetSize()
 ";
 
 %feature("docstring")  itk::simple::GridImageSource::GetSpacing "
-std::vector<double> itk::simple::GridImageSource::GetSpacing()
 ";
 
 %feature("docstring")  itk::simple::GridImageSource::GridImageSource "
-itk::simple::GridImageSource::GridImageSource()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -10388,43 +9222,33 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::GridImageSource::SetDirection "
-Self& itk::simple::GridImageSource::SetDirection(std::vector< double > Direction)
 ";
 
 %feature("docstring")  itk::simple::GridImageSource::SetGridOffset "
-Self& itk::simple::GridImageSource::SetGridOffset(std::vector< double > GridOffset)
 ";
 
 %feature("docstring")  itk::simple::GridImageSource::SetGridSpacing "
-Self& itk::simple::GridImageSource::SetGridSpacing(std::vector< double > GridSpacing)
 ";
 
 %feature("docstring")  itk::simple::GridImageSource::SetOrigin "
-Self& itk::simple::GridImageSource::SetOrigin(std::vector< double > Origin)
 ";
 
 %feature("docstring")  itk::simple::GridImageSource::SetOutputPixelType "
-Self& itk::simple::GridImageSource::SetOutputPixelType(PixelIDValueEnum OutputPixelType)
 ";
 
 %feature("docstring")  itk::simple::GridImageSource::SetScale "
-Self& itk::simple::GridImageSource::SetScale(double Scale)
 ";
 
 %feature("docstring")  itk::simple::GridImageSource::SetSigma "
-Self& itk::simple::GridImageSource::SetSigma(std::vector< double > Sigma)
 ";
 
 %feature("docstring")  itk::simple::GridImageSource::SetSize "
-Self& itk::simple::GridImageSource::SetSize(std::vector< unsigned int > Size)
 ";
 
 %feature("docstring")  itk::simple::GridImageSource::SetSpacing "
-Self& itk::simple::GridImageSource::SetSpacing(std::vector< double > Spacing)
 ";
 
 %feature("docstring")  itk::simple::GridImageSource::ToString "
-std::string itk::simple::GridImageSource::ToString() const
 
 Print ourselves out
 
@@ -10456,32 +9280,27 @@ C++ includes: sitkHConcaveImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::HConcaveImageFilter::Execute "
-Image itk::simple::HConcaveImageFilter::Execute(const Image &image1, double height, bool fullyConnected)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::HConcaveImageFilter::Execute "
-Image itk::simple::HConcaveImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::HConcaveImageFilter::FullyConnectedOff "
-Self& itk::simple::HConcaveImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::HConcaveImageFilter::FullyConnectedOn "
-Self& itk::simple::HConcaveImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::HConcaveImageFilter::GetFullyConnected "
-bool itk::simple::HConcaveImageFilter::GetFullyConnected()
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -10491,7 +9310,6 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::HConcaveImageFilter::GetHeight "
-double itk::simple::HConcaveImageFilter::GetHeight()
 
 Set/Get the height that a local maximum must be above the local
 background (local contrast) in order to survive the processing. Local
@@ -10501,14 +9319,12 @@ background.
 ";
 
 %feature("docstring")  itk::simple::HConcaveImageFilter::GetName "
-std::string itk::simple::HConcaveImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::HConcaveImageFilter::HConcaveImageFilter "
-itk::simple::HConcaveImageFilter::HConcaveImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -10516,7 +9332,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::HConcaveImageFilter::SetFullyConnected "
-Self& itk::simple::HConcaveImageFilter::SetFullyConnected(bool FullyConnected)
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -10526,7 +9341,6 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::HConcaveImageFilter::SetHeight "
-Self& itk::simple::HConcaveImageFilter::SetHeight(double Height)
 
 Set/Get the height that a local maximum must be above the local
 background (local contrast) in order to survive the processing. Local
@@ -10536,7 +9350,6 @@ background.
 ";
 
 %feature("docstring")  itk::simple::HConcaveImageFilter::ToString "
-std::string itk::simple::HConcaveImageFilter::ToString() const
 
 Print ourselves out
 
@@ -10568,32 +9381,27 @@ C++ includes: sitkHConvexImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::HConvexImageFilter::Execute "
-Image itk::simple::HConvexImageFilter::Execute(const Image &image1, double height, bool fullyConnected)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::HConvexImageFilter::Execute "
-Image itk::simple::HConvexImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::HConvexImageFilter::FullyConnectedOff "
-Self& itk::simple::HConvexImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::HConvexImageFilter::FullyConnectedOn "
-Self& itk::simple::HConvexImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::HConvexImageFilter::GetFullyConnected "
-bool itk::simple::HConvexImageFilter::GetFullyConnected()
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -10603,7 +9411,6 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::HConvexImageFilter::GetHeight "
-double itk::simple::HConvexImageFilter::GetHeight()
 
 Set/Get the height that a local maximum must be above the local
 background (local contrast) in order to survive the processing. Local
@@ -10613,14 +9420,12 @@ background.
 ";
 
 %feature("docstring")  itk::simple::HConvexImageFilter::GetName "
-std::string itk::simple::HConvexImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::HConvexImageFilter::HConvexImageFilter "
-itk::simple::HConvexImageFilter::HConvexImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -10628,7 +9433,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::HConvexImageFilter::SetFullyConnected "
-Self& itk::simple::HConvexImageFilter::SetFullyConnected(bool FullyConnected)
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -10638,7 +9442,6 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::HConvexImageFilter::SetHeight "
-Self& itk::simple::HConvexImageFilter::SetHeight(double Height)
 
 Set/Get the height that a local maximum must be above the local
 background (local contrast) in order to survive the processing. Local
@@ -10648,7 +9451,6 @@ background.
 ";
 
 %feature("docstring")  itk::simple::HConvexImageFilter::ToString "
-std::string itk::simple::HConvexImageFilter::ToString() const
 
 Print ourselves out
 
@@ -10687,21 +9489,18 @@ C++ includes: sitkHMaximaImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::HMaximaImageFilter::Execute "
-Image itk::simple::HMaximaImageFilter::Execute(const Image &image1, double height)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::HMaximaImageFilter::Execute "
-Image itk::simple::HMaximaImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::HMaximaImageFilter::GetHeight "
-double itk::simple::HMaximaImageFilter::GetHeight()
 
 Set/Get the height that a local maximum must be above the local
 background (local contrast) in order to survive the processing. Local
@@ -10711,14 +9510,12 @@ background.
 ";
 
 %feature("docstring")  itk::simple::HMaximaImageFilter::GetName "
-std::string itk::simple::HMaximaImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::HMaximaImageFilter::HMaximaImageFilter "
-itk::simple::HMaximaImageFilter::HMaximaImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -10726,7 +9523,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::HMaximaImageFilter::SetHeight "
-Self& itk::simple::HMaximaImageFilter::SetHeight(double Height)
 
 Set/Get the height that a local maximum must be above the local
 background (local contrast) in order to survive the processing. Local
@@ -10736,7 +9532,6 @@ background.
 ";
 
 %feature("docstring")  itk::simple::HMaximaImageFilter::ToString "
-std::string itk::simple::HMaximaImageFilter::ToString() const
 
 Print ourselves out
 
@@ -10774,32 +9569,27 @@ C++ includes: sitkHMinimaImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::HMinimaImageFilter::Execute "
-Image itk::simple::HMinimaImageFilter::Execute(const Image &image1, double height, bool fullyConnected)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::HMinimaImageFilter::Execute "
-Image itk::simple::HMinimaImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::HMinimaImageFilter::FullyConnectedOff "
-Self& itk::simple::HMinimaImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::HMinimaImageFilter::FullyConnectedOn "
-Self& itk::simple::HMinimaImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::HMinimaImageFilter::GetFullyConnected "
-bool itk::simple::HMinimaImageFilter::GetFullyConnected()
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -10809,7 +9599,6 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::HMinimaImageFilter::GetHeight "
-double itk::simple::HMinimaImageFilter::GetHeight()
 
 Set/Get the height that a local maximum must be above the local
 background (local contrast) in order to survive the processing. Local
@@ -10819,14 +9608,12 @@ background.
 ";
 
 %feature("docstring")  itk::simple::HMinimaImageFilter::GetName "
-std::string itk::simple::HMinimaImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::HMinimaImageFilter::HMinimaImageFilter "
-itk::simple::HMinimaImageFilter::HMinimaImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -10834,7 +9621,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::HMinimaImageFilter::SetFullyConnected "
-Self& itk::simple::HMinimaImageFilter::SetFullyConnected(bool FullyConnected)
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -10844,7 +9630,6 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::HMinimaImageFilter::SetHeight "
-Self& itk::simple::HMinimaImageFilter::SetHeight(double Height)
 
 Set/Get the height that a local maximum must be above the local
 background (local contrast) in order to survive the processing. Local
@@ -10854,7 +9639,6 @@ background.
 ";
 
 %feature("docstring")  itk::simple::HMinimaImageFilter::ToString "
-std::string itk::simple::HMinimaImageFilter::ToString() const
 
 Print ourselves out
 
@@ -10889,46 +9673,39 @@ C++ includes: sitkHalfHermitianToRealInverseFFTImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::HalfHermitianToRealInverseFFTImageFilter::ActualXDimensionIsOddOff "
-Self& itk::simple::HalfHermitianToRealInverseFFTImageFilter::ActualXDimensionIsOddOff()
 ";
 
 %feature("docstring")  itk::simple::HalfHermitianToRealInverseFFTImageFilter::ActualXDimensionIsOddOn "
-Self& itk::simple::HalfHermitianToRealInverseFFTImageFilter::ActualXDimensionIsOddOn()
 
 Set the value of ActualXDimensionIsOdd to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::HalfHermitianToRealInverseFFTImageFilter::Execute "
-Image itk::simple::HalfHermitianToRealInverseFFTImageFilter::Execute(const Image &image1, bool actualXDimensionIsOdd)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::HalfHermitianToRealInverseFFTImageFilter::Execute "
-Image itk::simple::HalfHermitianToRealInverseFFTImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::HalfHermitianToRealInverseFFTImageFilter::GetActualXDimensionIsOdd "
-bool itk::simple::HalfHermitianToRealInverseFFTImageFilter::GetActualXDimensionIsOdd()
 
 Was the original truncated dimension size odd?
 
 ";
 
 %feature("docstring")  itk::simple::HalfHermitianToRealInverseFFTImageFilter::GetName "
-std::string itk::simple::HalfHermitianToRealInverseFFTImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::HalfHermitianToRealInverseFFTImageFilter::HalfHermitianToRealInverseFFTImageFilter "
-itk::simple::HalfHermitianToRealInverseFFTImageFilter::HalfHermitianToRealInverseFFTImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -10936,14 +9713,12 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::HalfHermitianToRealInverseFFTImageFilter::SetActualXDimensionIsOdd "
-Self& itk::simple::HalfHermitianToRealInverseFFTImageFilter::SetActualXDimensionIsOdd(bool ActualXDimensionIsOdd)
 
 Was the original truncated dimension size odd?
 
 ";
 
 %feature("docstring")  itk::simple::HalfHermitianToRealInverseFFTImageFilter::ToString "
-std::string itk::simple::HalfHermitianToRealInverseFFTImageFilter::ToString() const
 
 Print ourselves out
 
@@ -10964,30 +9739,24 @@ C++ includes: sitkHashImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::HashImageFilter::Execute "
-std::string itk::simple::HashImageFilter::Execute(const Image &)
 ";
 
 %feature("docstring")  itk::simple::HashImageFilter::GetHashFunction "
-HashFunction itk::simple::HashImageFilter::GetHashFunction()
 ";
 
 %feature("docstring")  itk::simple::HashImageFilter::GetName "
-std::string itk::simple::HashImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::HashImageFilter::HashImageFilter "
-itk::simple::HashImageFilter::HashImageFilter()
 ";
 
 %feature("docstring")  itk::simple::HashImageFilter::SetHashFunction "
-Self& itk::simple::HashImageFilter::SetHashFunction(HashFunction hashFunction)
 ";
 
 %feature("docstring")  itk::simple::HashImageFilter::ToString "
-std::string itk::simple::HashImageFilter::ToString() const
 ";
 
 
@@ -11022,14 +9791,12 @@ C++ includes: sitkHausdorffDistanceImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::HausdorffDistanceImageFilter::Execute "
-Image itk::simple::HausdorffDistanceImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::HausdorffDistanceImageFilter::GetAverageHausdorffDistance "
-double itk::simple::HausdorffDistanceImageFilter::GetAverageHausdorffDistance()
 
 *
 
@@ -11040,7 +9807,6 @@ the value will only be valid after an execution.
 ";
 
 %feature("docstring")  itk::simple::HausdorffDistanceImageFilter::GetHausdorffDistance "
-double itk::simple::HausdorffDistanceImageFilter::GetHausdorffDistance()
 
 *
 
@@ -11051,14 +9817,12 @@ the value will only be valid after an execution.
 ";
 
 %feature("docstring")  itk::simple::HausdorffDistanceImageFilter::GetName "
-std::string itk::simple::HausdorffDistanceImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::HausdorffDistanceImageFilter::HausdorffDistanceImageFilter "
-itk::simple::HausdorffDistanceImageFilter::HausdorffDistanceImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -11066,7 +9830,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::HausdorffDistanceImageFilter::ToString "
-std::string itk::simple::HausdorffDistanceImageFilter::ToString() const
 
 Print ourselves out
 
@@ -11105,44 +9868,36 @@ C++ includes: sitkHistogramMatchingImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::HistogramMatchingImageFilter::Execute "
-Image itk::simple::HistogramMatchingImageFilter::Execute(const Image &image1, const Image &image2, uint32_t
-numberOfHistogramLevels, uint32_t numberOfMatchPoints, bool
-thresholdAtMeanIntensity)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::HistogramMatchingImageFilter::Execute "
-Image itk::simple::HistogramMatchingImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::HistogramMatchingImageFilter::GetName "
-std::string itk::simple::HistogramMatchingImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::HistogramMatchingImageFilter::GetNumberOfHistogramLevels "
-uint32_t itk::simple::HistogramMatchingImageFilter::GetNumberOfHistogramLevels()
 
 Set/Get the number of histogram levels used.
 
 ";
 
 %feature("docstring")  itk::simple::HistogramMatchingImageFilter::GetNumberOfMatchPoints "
-uint32_t itk::simple::HistogramMatchingImageFilter::GetNumberOfMatchPoints()
 
 Set/Get the number of match points used.
 
 ";
 
 %feature("docstring")  itk::simple::HistogramMatchingImageFilter::GetThresholdAtMeanIntensity "
-bool itk::simple::HistogramMatchingImageFilter::GetThresholdAtMeanIntensity()
 
 Set/Get the threshold at mean intensity flag. If true, only source
 (reference) pixels which are greater than the mean source (reference)
@@ -11152,7 +9907,6 @@ used.
 ";
 
 %feature("docstring")  itk::simple::HistogramMatchingImageFilter::HistogramMatchingImageFilter "
-itk::simple::HistogramMatchingImageFilter::HistogramMatchingImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -11160,21 +9914,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::HistogramMatchingImageFilter::SetNumberOfHistogramLevels "
-Self& itk::simple::HistogramMatchingImageFilter::SetNumberOfHistogramLevels(uint32_t NumberOfHistogramLevels)
 
 Set/Get the number of histogram levels used.
 
 ";
 
 %feature("docstring")  itk::simple::HistogramMatchingImageFilter::SetNumberOfMatchPoints "
-Self& itk::simple::HistogramMatchingImageFilter::SetNumberOfMatchPoints(uint32_t NumberOfMatchPoints)
 
 Set/Get the number of match points used.
 
 ";
 
 %feature("docstring")  itk::simple::HistogramMatchingImageFilter::SetThresholdAtMeanIntensity "
-Self& itk::simple::HistogramMatchingImageFilter::SetThresholdAtMeanIntensity(bool ThresholdAtMeanIntensity)
 
 Set/Get the threshold at mean intensity flag. If true, only source
 (reference) pixels which are greater than the mean source (reference)
@@ -11184,11 +9935,9 @@ used.
 ";
 
 %feature("docstring")  itk::simple::HistogramMatchingImageFilter::ThresholdAtMeanIntensityOff "
-Self& itk::simple::HistogramMatchingImageFilter::ThresholdAtMeanIntensityOff()
 ";
 
 %feature("docstring")  itk::simple::HistogramMatchingImageFilter::ThresholdAtMeanIntensityOn "
-Self& itk::simple::HistogramMatchingImageFilter::ThresholdAtMeanIntensityOn()
 
 Set the value of ThresholdAtMeanIntensity to true or false
 respectfully.
@@ -11196,7 +9945,6 @@ respectfully.
 ";
 
 %feature("docstring")  itk::simple::HistogramMatchingImageFilter::ToString "
-std::string itk::simple::HistogramMatchingImageFilter::ToString() const
 
 Print ourselves out
 
@@ -11229,47 +9977,39 @@ C++ includes: sitkHuangThresholdImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::HuangThresholdImageFilter::Execute "
-Image itk::simple::HuangThresholdImageFilter::Execute(const Image &image1, uint8_t insideValue, uint8_t outsideValue,
-uint32_t numberOfHistogramBins)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::HuangThresholdImageFilter::Execute "
-Image itk::simple::HuangThresholdImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::HuangThresholdImageFilter::GetInsideValue "
-uint8_t itk::simple::HuangThresholdImageFilter::GetInsideValue()
 
 Get the \"inside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::HuangThresholdImageFilter::GetName "
-std::string itk::simple::HuangThresholdImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::HuangThresholdImageFilter::GetNumberOfHistogramBins "
-uint32_t itk::simple::HuangThresholdImageFilter::GetNumberOfHistogramBins()
 ";
 
 %feature("docstring")  itk::simple::HuangThresholdImageFilter::GetOutsideValue "
-uint8_t itk::simple::HuangThresholdImageFilter::GetOutsideValue()
 
 Get the \"outside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::HuangThresholdImageFilter::HuangThresholdImageFilter "
-itk::simple::HuangThresholdImageFilter::HuangThresholdImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -11277,7 +10017,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::HuangThresholdImageFilter::SetInsideValue "
-Self& itk::simple::HuangThresholdImageFilter::SetInsideValue(uint8_t InsideValue)
 
 Set the \"inside\" pixel value. The default value
 NumericTraits<OutputPixelType>::max().
@@ -11285,14 +10024,12 @@ NumericTraits<OutputPixelType>::max().
 ";
 
 %feature("docstring")  itk::simple::HuangThresholdImageFilter::SetNumberOfHistogramBins "
-Self& itk::simple::HuangThresholdImageFilter::SetNumberOfHistogramBins(uint32_t NumberOfHistogramBins)
 
 Set/Get the number of histogram bins. Defaults is 128.
 
 ";
 
 %feature("docstring")  itk::simple::HuangThresholdImageFilter::SetOutsideValue "
-Self& itk::simple::HuangThresholdImageFilter::SetOutsideValue(uint8_t OutsideValue)
 
 Set the \"outside\" pixel value. The default value
 NumericTraits<OutputPixelType>::Zero.
@@ -11300,7 +10037,6 @@ NumericTraits<OutputPixelType>::Zero.
 ";
 
 %feature("docstring")  itk::simple::HuangThresholdImageFilter::ToString "
-std::string itk::simple::HuangThresholdImageFilter::ToString() const
 
 Print ourselves out
 
@@ -11315,7 +10051,6 @@ C++ includes: sitkImage.h
 ";
 
 %feature("docstring")  itk::simple::Image::CopyInformation "
-void itk::simple::Image::CopyInformation(const Image &srcImage)
 
 Copy common meta-data from an image to this one.
 
@@ -11329,15 +10064,12 @@ this image's attributes, otherwise an exception will be generated.
 ";
 
 %feature("docstring")  itk::simple::Image::GetDepth "
-unsigned int itk::simple::Image::GetDepth(void) const
 ";
 
 %feature("docstring")  itk::simple::Image::GetDimension "
-unsigned int itk::simple::Image::GetDimension(void) const
 ";
 
 %feature("docstring")  itk::simple::Image::GetDirection "
-std::vector< double > itk::simple::Image::GetDirection() const
 
 Set/Get the Direction.
 
@@ -11349,11 +10081,9 @@ major form.
 ";
 
 %feature("docstring")  itk::simple::Image::GetHeight "
-unsigned int itk::simple::Image::GetHeight(void) const
 ";
 
 %feature("docstring")  itk::simple::Image::GetNumberOfComponentsPerPixel "
-unsigned int itk::simple::Image::GetNumberOfComponentsPerPixel(void) const
 
 Get the number of components for each pixel.
 
@@ -11364,82 +10094,66 @@ of components for each pixel is returned.
 ";
 
 %feature("docstring")  itk::simple::Image::GetOrigin "
-std::vector< double > itk::simple::Image::GetOrigin(void) const
 
 Get/Set the Origin
 
 ";
 
 %feature("docstring")  itk::simple::Image::GetPixelID "
-PixelIDValueEnum itk::simple::Image::GetPixelID(void) const
 ";
 
 %feature("docstring")  itk::simple::Image::GetPixelIDTypeAsString "
-std::string itk::simple::Image::GetPixelIDTypeAsString(void) const
 ";
 
 %feature("docstring")  itk::simple::Image::GetPixelIDValue "
-PixelIDValueType itk::simple::Image::GetPixelIDValue(void) const
 ";
 
 %feature("docstring")  itk::simple::Image::GetSize "
-std::vector< unsigned int > itk::simple::Image::GetSize(void) const
 ";
 
 %feature("docstring")  itk::simple::Image::GetSpacing "
-std::vector< double > itk::simple::Image::GetSpacing(void) const
 
 Get the Spacing
 
 ";
 
 %feature("docstring")  itk::simple::Image::GetWidth "
-unsigned int itk::simple::Image::GetWidth(void) const
 ";
 
 %feature("docstring")  itk::simple::Image::Image "
-itk::simple::Image::Image(const Image &img)
 ";
 
 %feature("docstring")  itk::simple::Image::Image "
-itk::simple::Image::Image(void)
 
 Default constructor, creates an image of size 0.
 
 ";
 
 %feature("docstring")  itk::simple::Image::SetDirection "
-void itk::simple::Image::SetDirection(const std::vector< double > &direction)
 ";
 
 %feature("docstring")  itk::simple::Image::SetOrigin "
-void itk::simple::Image::SetOrigin(const std::vector< double > &origin)
 ";
 
 %feature("docstring")  itk::simple::Image::SetSpacing "
-void itk::simple::Image::SetSpacing(const std::vector< double > &spacing)
 ";
 
 %feature("docstring")  itk::simple::Image::ToString "
-std::string itk::simple::Image::ToString(void) const
 ";
 
 %feature("docstring")  itk::simple::Image::TransformIndexToPhysicalPoint "
-std::vector< double > itk::simple::Image::TransformIndexToPhysicalPoint(const std::vector< int64_t > &index) const
 
  Transform index to physical point
 
 ";
 
 %feature("docstring")  itk::simple::Image::TransformPhysicalPointToIndex "
-std::vector< int64_t > itk::simple::Image::TransformPhysicalPointToIndex(const std::vector< double > &point) const
 
  Transform physical point to index
 
 ";
 
 %feature("docstring")  itk::simple::Image::~Image "
-virtual itk::simple::Image::~Image()
 ";
 
 
@@ -11460,19 +10174,15 @@ C++ includes: sitkImageFileReader.h
 ";
 
 %feature("docstring")  itk::simple::ImageFileReader::Execute "
-Image itk::simple::ImageFileReader::Execute()
 ";
 
 %feature("docstring")  itk::simple::ImageFileReader::GetFileName "
-std::string itk::simple::ImageFileReader::GetFileName()
 ";
 
 %feature("docstring")  itk::simple::ImageFileReader::ImageFileReader "
-itk::simple::ImageFileReader::ImageFileReader()
 ";
 
 %feature("docstring")  itk::simple::ImageFileReader::SetFileName "
-Self& itk::simple::ImageFileReader::SetFileName(std::string fn)
 ";
 
 
@@ -11494,23 +10204,18 @@ C++ includes: sitkImageFileWriter.h
 ";
 
 %feature("docstring")  itk::simple::ImageFileWriter::Execute "
-Self& itk::simple::ImageFileWriter::Execute(const Image &, const std::string &inFileName, bool inUseCompression)
 ";
 
 %feature("docstring")  itk::simple::ImageFileWriter::Execute "
-Self& itk::simple::ImageFileWriter::Execute(const Image &)
 ";
 
 %feature("docstring")  itk::simple::ImageFileWriter::GetFileName "
-std::string itk::simple::ImageFileWriter::GetFileName()
 ";
 
 %feature("docstring")  itk::simple::ImageFileWriter::ImageFileWriter "
-itk::simple::ImageFileWriter::ImageFileWriter(void)
 ";
 
 %feature("docstring")  itk::simple::ImageFileWriter::SetFileName "
-Self& itk::simple::ImageFileWriter::SetFileName(std::string fileName)
 ";
 
 
@@ -11526,14 +10231,12 @@ C++ includes: sitkImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ImageFilter::GetName "
-virtual std::string itk::simple::ImageFilter< N >::GetName() const =0
 
 return user readable name fo the filter
 
 ";
 
 %feature("docstring")  itk::simple::ImageFilter::ImageFilter "
-itk::simple::ImageFilter< N >::ImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -11541,11 +10244,9 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ImageFilter::ToString "
-virtual std::string itk::simple::ImageFilter< N >::ToString() const =0
 ";
 
 %feature("docstring")  itk::simple::ImageFilter::~ImageFilter "
-virtual itk::simple::ImageFilter< N >::~ImageFilter()
 
 Default Destructor
 
@@ -11574,19 +10275,15 @@ C++ includes: sitkImageSeriesReader.h
 ";
 
 %feature("docstring")  itk::simple::ImageSeriesReader::Execute "
-Image itk::simple::ImageSeriesReader::Execute()
 ";
 
 %feature("docstring")  itk::simple::ImageSeriesReader::GetFileNames "
-const std::vector<std::string>& itk::simple::ImageSeriesReader::GetFileNames() const
 ";
 
 %feature("docstring")  itk::simple::ImageSeriesReader::ImageSeriesReader "
-itk::simple::ImageSeriesReader::ImageSeriesReader()
 ";
 
 %feature("docstring")  itk::simple::ImageSeriesReader::SetFileNames "
-Self& itk::simple::ImageSeriesReader::SetFileNames(const std::vector< std::string > &fileNames)
 ";
 
 
@@ -11609,79 +10306,60 @@ C++ includes: sitkImportImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ImportImageFilter::Execute "
-Image itk::simple::ImportImageFilter::Execute()
 ";
 
 %feature("docstring")  itk::simple::ImportImageFilter::GetDirection "
-const std::vector< double >& itk::simple::ImportImageFilter::GetDirection() const
 ";
 
 %feature("docstring")  itk::simple::ImportImageFilter::GetOrigin "
-const std::vector< double >& itk::simple::ImportImageFilter::GetOrigin() const
 ";
 
 %feature("docstring")  itk::simple::ImportImageFilter::GetSize "
-const std::vector< unsigned int >& itk::simple::ImportImageFilter::GetSize() const
 ";
 
 %feature("docstring")  itk::simple::ImportImageFilter::GetSpacing "
-const std::vector< double >& itk::simple::ImportImageFilter::GetSpacing() const
 ";
 
 %feature("docstring")  itk::simple::ImportImageFilter::ImportImageFilter "
-itk::simple::ImportImageFilter::ImportImageFilter()
 ";
 
 %feature("docstring")  itk::simple::ImportImageFilter::SetBufferAsDouble "
-Self& itk::simple::ImportImageFilter::SetBufferAsDouble(double *buffer, unsigned int numberOfComponents=1)
 ";
 
 %feature("docstring")  itk::simple::ImportImageFilter::SetBufferAsFloat "
-Self& itk::simple::ImportImageFilter::SetBufferAsFloat(float *buffer, unsigned int numberOfComponents=1)
 ";
 
 %feature("docstring")  itk::simple::ImportImageFilter::SetBufferAsInt16 "
-Self& itk::simple::ImportImageFilter::SetBufferAsInt16(int16_t *buffer, unsigned int numberOfComponents=1)
 ";
 
 %feature("docstring")  itk::simple::ImportImageFilter::SetBufferAsInt32 "
-Self& itk::simple::ImportImageFilter::SetBufferAsInt32(int32_t *buffer, unsigned int numberOfComponents=1)
 ";
 
 %feature("docstring")  itk::simple::ImportImageFilter::SetBufferAsInt8 "
-Self& itk::simple::ImportImageFilter::SetBufferAsInt8(int8_t *buffer, unsigned int numberOfComponents=1)
 ";
 
 %feature("docstring")  itk::simple::ImportImageFilter::SetBufferAsUInt16 "
-Self& itk::simple::ImportImageFilter::SetBufferAsUInt16(uint16_t *buffer, unsigned int numberOfComponents=1)
 ";
 
 %feature("docstring")  itk::simple::ImportImageFilter::SetBufferAsUInt32 "
-Self& itk::simple::ImportImageFilter::SetBufferAsUInt32(uint32_t *buffer, unsigned int numberOfComponents=1)
 ";
 
 %feature("docstring")  itk::simple::ImportImageFilter::SetBufferAsUInt8 "
-Self& itk::simple::ImportImageFilter::SetBufferAsUInt8(uint8_t *buffer, unsigned int numberOfComponents=1)
 ";
 
 %feature("docstring")  itk::simple::ImportImageFilter::SetDirection "
-Self& itk::simple::ImportImageFilter::SetDirection(const std::vector< double > &direction)
 ";
 
 %feature("docstring")  itk::simple::ImportImageFilter::SetOrigin "
-Self& itk::simple::ImportImageFilter::SetOrigin(const std::vector< double > &origin)
 ";
 
 %feature("docstring")  itk::simple::ImportImageFilter::SetSize "
-Self& itk::simple::ImportImageFilter::SetSize(const std::vector< unsigned int > &size)
 ";
 
 %feature("docstring")  itk::simple::ImportImageFilter::SetSpacing "
-Self& itk::simple::ImportImageFilter::SetSpacing(const std::vector< double > &spacing)
 ";
 
 %feature("docstring")  itk::simple::ImportImageFilter::ToString "
-std::string itk::simple::ImportImageFilter::ToString() const
 ";
 
 
@@ -11717,29 +10395,24 @@ C++ includes: sitkIntensityWindowingImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::IntensityWindowingImageFilter::Execute "
-Image itk::simple::IntensityWindowingImageFilter::Execute(const Image &image1, double windowMinimum, double windowMaximum,
-double outputMinimum, double outputMaximum)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::IntensityWindowingImageFilter::Execute "
-Image itk::simple::IntensityWindowingImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::IntensityWindowingImageFilter::GetName "
-std::string itk::simple::IntensityWindowingImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::IntensityWindowingImageFilter::GetOutputMaximum "
-double itk::simple::IntensityWindowingImageFilter::GetOutputMaximum()
 
 Set/Get the values of the maximum and minimum intensities of the
 outputimage.
@@ -11747,7 +10420,6 @@ outputimage.
 ";
 
 %feature("docstring")  itk::simple::IntensityWindowingImageFilter::GetOutputMinimum "
-double itk::simple::IntensityWindowingImageFilter::GetOutputMinimum()
 
 Set/Get the values of the maximum and minimum intensities of the
 outputimage.
@@ -11755,7 +10427,6 @@ outputimage.
 ";
 
 %feature("docstring")  itk::simple::IntensityWindowingImageFilter::GetWindowMaximum "
-double itk::simple::IntensityWindowingImageFilter::GetWindowMaximum()
 
 Set/Get the values of the maximum and minimum intensities of the input
 intensity window.
@@ -11763,7 +10434,6 @@ intensity window.
 ";
 
 %feature("docstring")  itk::simple::IntensityWindowingImageFilter::GetWindowMinimum "
-double itk::simple::IntensityWindowingImageFilter::GetWindowMinimum()
 
 Set/Get the values of the maximum and minimum intensities of the input
 intensity window.
@@ -11771,7 +10441,6 @@ intensity window.
 ";
 
 %feature("docstring")  itk::simple::IntensityWindowingImageFilter::IntensityWindowingImageFilter "
-itk::simple::IntensityWindowingImageFilter::IntensityWindowingImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -11779,7 +10448,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::IntensityWindowingImageFilter::SetOutputMaximum "
-Self& itk::simple::IntensityWindowingImageFilter::SetOutputMaximum(double OutputMaximum)
 
 Set/Get the values of the maximum and minimum intensities of the
 outputimage.
@@ -11787,7 +10455,6 @@ outputimage.
 ";
 
 %feature("docstring")  itk::simple::IntensityWindowingImageFilter::SetOutputMinimum "
-Self& itk::simple::IntensityWindowingImageFilter::SetOutputMinimum(double OutputMinimum)
 
 Set/Get the values of the maximum and minimum intensities of the
 outputimage.
@@ -11795,7 +10462,6 @@ outputimage.
 ";
 
 %feature("docstring")  itk::simple::IntensityWindowingImageFilter::SetWindowMaximum "
-Self& itk::simple::IntensityWindowingImageFilter::SetWindowMaximum(double WindowMaximum)
 
 Set/Get the values of the maximum and minimum intensities of the input
 intensity window.
@@ -11803,7 +10469,6 @@ intensity window.
 ";
 
 %feature("docstring")  itk::simple::IntensityWindowingImageFilter::SetWindowMinimum "
-Self& itk::simple::IntensityWindowingImageFilter::SetWindowMinimum(double WindowMinimum)
 
 Set/Get the values of the maximum and minimum intensities of the input
 intensity window.
@@ -11811,7 +10476,6 @@ intensity window.
 ";
 
 %feature("docstring")  itk::simple::IntensityWindowingImageFilter::ToString "
-std::string itk::simple::IntensityWindowingImageFilter::ToString() const
 
 Print ourselves out
 
@@ -11844,47 +10508,39 @@ C++ includes: sitkIntermodesThresholdImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::IntermodesThresholdImageFilter::Execute "
-Image itk::simple::IntermodesThresholdImageFilter::Execute(const Image &image1, uint8_t insideValue, uint8_t outsideValue,
-uint32_t numberOfHistogramBins)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::IntermodesThresholdImageFilter::Execute "
-Image itk::simple::IntermodesThresholdImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::IntermodesThresholdImageFilter::GetInsideValue "
-uint8_t itk::simple::IntermodesThresholdImageFilter::GetInsideValue()
 
 Get the \"inside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::IntermodesThresholdImageFilter::GetName "
-std::string itk::simple::IntermodesThresholdImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::IntermodesThresholdImageFilter::GetNumberOfHistogramBins "
-uint32_t itk::simple::IntermodesThresholdImageFilter::GetNumberOfHistogramBins()
 ";
 
 %feature("docstring")  itk::simple::IntermodesThresholdImageFilter::GetOutsideValue "
-uint8_t itk::simple::IntermodesThresholdImageFilter::GetOutsideValue()
 
 Get the \"outside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::IntermodesThresholdImageFilter::IntermodesThresholdImageFilter "
-itk::simple::IntermodesThresholdImageFilter::IntermodesThresholdImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -11892,21 +10548,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::IntermodesThresholdImageFilter::SetInsideValue "
-Self& itk::simple::IntermodesThresholdImageFilter::SetInsideValue(uint8_t InsideValue)
 
 Set the \"inside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::IntermodesThresholdImageFilter::SetNumberOfHistogramBins "
-Self& itk::simple::IntermodesThresholdImageFilter::SetNumberOfHistogramBins(uint32_t NumberOfHistogramBins)
 
 Set/Get the number of histogram bins.
 
 ";
 
 %feature("docstring")  itk::simple::IntermodesThresholdImageFilter::SetOutsideValue "
-Self& itk::simple::IntermodesThresholdImageFilter::SetOutsideValue(uint8_t OutsideValue)
 
 Set the \"outside\" pixel value. The default value
 NumericTraits<OutputPixelType>::Zero.
@@ -11914,7 +10567,6 @@ NumericTraits<OutputPixelType>::Zero.
 ";
 
 %feature("docstring")  itk::simple::IntermodesThresholdImageFilter::ToString "
-std::string itk::simple::IntermodesThresholdImageFilter::ToString() const
 
 Print ourselves out
 
@@ -11947,30 +10599,21 @@ C++ includes: sitkInverseDeconvolutionImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::InverseDeconvolutionImageFilter::Execute "
-Image itk::simple::InverseDeconvolutionImageFilter::Execute(const Image &image1, const Image &image2, double
-kernelZeroMagnitudeThreshold, bool normalize,
-InverseDeconvolutionImageFilter::BoundaryConditionType
-boundaryCondition,
-InverseDeconvolutionImageFilter::OutputRegionModeType
-outputRegionMode)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::InverseDeconvolutionImageFilter::Execute "
-Image itk::simple::InverseDeconvolutionImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::InverseDeconvolutionImageFilter::GetBoundaryCondition "
-InverseDeconvolutionImageFilter::BoundaryConditionType itk::simple::InverseDeconvolutionImageFilter::GetBoundaryCondition()
 ";
 
 %feature("docstring")  itk::simple::InverseDeconvolutionImageFilter::GetKernelZeroMagnitudeThreshold "
-double itk::simple::InverseDeconvolutionImageFilter::GetKernelZeroMagnitudeThreshold()
 
 Set/get the threshold value uused to determine whether a frequency of
 the Fourier transform of the blurring kernel is considered to be zero.
@@ -11979,22 +10622,18 @@ Default value is 1.0e-4.
 ";
 
 %feature("docstring")  itk::simple::InverseDeconvolutionImageFilter::GetName "
-std::string itk::simple::InverseDeconvolutionImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::InverseDeconvolutionImageFilter::GetNormalize "
-bool itk::simple::InverseDeconvolutionImageFilter::GetNormalize()
 ";
 
 %feature("docstring")  itk::simple::InverseDeconvolutionImageFilter::GetOutputRegionMode "
-InverseDeconvolutionImageFilter::OutputRegionModeType itk::simple::InverseDeconvolutionImageFilter::GetOutputRegionMode()
 ";
 
 %feature("docstring")  itk::simple::InverseDeconvolutionImageFilter::InverseDeconvolutionImageFilter "
-itk::simple::InverseDeconvolutionImageFilter::InverseDeconvolutionImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -12002,23 +10641,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::InverseDeconvolutionImageFilter::NormalizeOff "
-Self& itk::simple::InverseDeconvolutionImageFilter::NormalizeOff()
 ";
 
 %feature("docstring")  itk::simple::InverseDeconvolutionImageFilter::NormalizeOn "
-Self& itk::simple::InverseDeconvolutionImageFilter::NormalizeOn()
 
 Set the value of Normalize to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::InverseDeconvolutionImageFilter::SetBoundaryCondition "
-Self& itk::simple::InverseDeconvolutionImageFilter::SetBoundaryCondition(InverseDeconvolutionImageFilter::BoundaryConditionType
-BoundaryCondition)
 ";
 
 %feature("docstring")  itk::simple::InverseDeconvolutionImageFilter::SetKernelZeroMagnitudeThreshold "
-Self& itk::simple::InverseDeconvolutionImageFilter::SetKernelZeroMagnitudeThreshold(double KernelZeroMagnitudeThreshold)
 
 Set/get the threshold value uused to determine whether a frequency of
 the Fourier transform of the blurring kernel is considered to be zero.
@@ -12027,19 +10661,15 @@ Default value is 1.0e-4.
 ";
 
 %feature("docstring")  itk::simple::InverseDeconvolutionImageFilter::SetNormalize "
-Self& itk::simple::InverseDeconvolutionImageFilter::SetNormalize(bool Normalize)
 
 Normalize the output image by the sum of the kernel components.
 
 ";
 
 %feature("docstring")  itk::simple::InverseDeconvolutionImageFilter::SetOutputRegionMode "
-Self& itk::simple::InverseDeconvolutionImageFilter::SetOutputRegionMode(InverseDeconvolutionImageFilter::OutputRegionModeType
-OutputRegionMode)
 ";
 
 %feature("docstring")  itk::simple::InverseDeconvolutionImageFilter::ToString "
-std::string itk::simple::InverseDeconvolutionImageFilter::ToString() const
 
 Print ourselves out
 
@@ -12068,21 +10698,18 @@ C++ includes: sitkInverseFFTImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::InverseFFTImageFilter::Execute "
-Image itk::simple::InverseFFTImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::InverseFFTImageFilter::GetName "
-std::string itk::simple::InverseFFTImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::InverseFFTImageFilter::InverseFFTImageFilter "
-itk::simple::InverseFFTImageFilter::InverseFFTImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -12090,7 +10717,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::InverseFFTImageFilter::ToString "
-std::string itk::simple::InverseFFTImageFilter::ToString() const
 
 Print ourselves out
 
@@ -12126,32 +10752,27 @@ C++ includes: sitkInvertIntensityImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::InvertIntensityImageFilter::Execute "
-Image itk::simple::InvertIntensityImageFilter::Execute(const Image &image1, double maximum)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::InvertIntensityImageFilter::Execute "
-Image itk::simple::InvertIntensityImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::InvertIntensityImageFilter::GetMaximum "
-double itk::simple::InvertIntensityImageFilter::GetMaximum()
 ";
 
 %feature("docstring")  itk::simple::InvertIntensityImageFilter::GetName "
-std::string itk::simple::InvertIntensityImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::InvertIntensityImageFilter::InvertIntensityImageFilter "
-itk::simple::InvertIntensityImageFilter::InvertIntensityImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -12159,11 +10780,9 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::InvertIntensityImageFilter::SetMaximum "
-Self& itk::simple::InvertIntensityImageFilter::SetMaximum(double Maximum)
 ";
 
 %feature("docstring")  itk::simple::InvertIntensityImageFilter::ToString "
-std::string itk::simple::InvertIntensityImageFilter::ToString() const
 
 Print ourselves out
 
@@ -12200,21 +10819,18 @@ C++ includes: sitkIsoContourDistanceImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::IsoContourDistanceImageFilter::Execute "
-Image itk::simple::IsoContourDistanceImageFilter::Execute(const Image &image1, double levelSetValue, double farValue)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::IsoContourDistanceImageFilter::Execute "
-Image itk::simple::IsoContourDistanceImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::IsoContourDistanceImageFilter::GetFarValue "
-double itk::simple::IsoContourDistanceImageFilter::GetFarValue()
 
 Set/Get the value of the level set to be located. The default value is
 0.
@@ -12222,7 +10838,6 @@ Set/Get the value of the level set to be located. The default value is
 ";
 
 %feature("docstring")  itk::simple::IsoContourDistanceImageFilter::GetLevelSetValue "
-double itk::simple::IsoContourDistanceImageFilter::GetLevelSetValue()
 
 Set/Get the value of the level set to be located. The default value is
 0.
@@ -12230,14 +10845,12 @@ Set/Get the value of the level set to be located. The default value is
 ";
 
 %feature("docstring")  itk::simple::IsoContourDistanceImageFilter::GetName "
-std::string itk::simple::IsoContourDistanceImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::IsoContourDistanceImageFilter::IsoContourDistanceImageFilter "
-itk::simple::IsoContourDistanceImageFilter::IsoContourDistanceImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -12245,7 +10858,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::IsoContourDistanceImageFilter::SetFarValue "
-Self& itk::simple::IsoContourDistanceImageFilter::SetFarValue(double FarValue)
 
 Set/Get the value of the level set to be located. The default value is
 0.
@@ -12253,7 +10865,6 @@ Set/Get the value of the level set to be located. The default value is
 ";
 
 %feature("docstring")  itk::simple::IsoContourDistanceImageFilter::SetLevelSetValue "
-Self& itk::simple::IsoContourDistanceImageFilter::SetLevelSetValue(double LevelSetValue)
 
 Set/Get the value of the level set to be located. The default value is
 0.
@@ -12261,7 +10872,6 @@ Set/Get the value of the level set to be located. The default value is
 ";
 
 %feature("docstring")  itk::simple::IsoContourDistanceImageFilter::ToString "
-std::string itk::simple::IsoContourDistanceImageFilter::ToString() const
 
 Print ourselves out
 
@@ -12294,47 +10904,39 @@ C++ includes: sitkIsoDataThresholdImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::IsoDataThresholdImageFilter::Execute "
-Image itk::simple::IsoDataThresholdImageFilter::Execute(const Image &image1, uint8_t insideValue, uint8_t outsideValue,
-uint32_t numberOfHistogramBins)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::IsoDataThresholdImageFilter::Execute "
-Image itk::simple::IsoDataThresholdImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::IsoDataThresholdImageFilter::GetInsideValue "
-uint8_t itk::simple::IsoDataThresholdImageFilter::GetInsideValue()
 
 Get the \"inside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::IsoDataThresholdImageFilter::GetName "
-std::string itk::simple::IsoDataThresholdImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::IsoDataThresholdImageFilter::GetNumberOfHistogramBins "
-uint32_t itk::simple::IsoDataThresholdImageFilter::GetNumberOfHistogramBins()
 ";
 
 %feature("docstring")  itk::simple::IsoDataThresholdImageFilter::GetOutsideValue "
-uint8_t itk::simple::IsoDataThresholdImageFilter::GetOutsideValue()
 
 Get the \"outside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::IsoDataThresholdImageFilter::IsoDataThresholdImageFilter "
-itk::simple::IsoDataThresholdImageFilter::IsoDataThresholdImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -12342,21 +10944,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::IsoDataThresholdImageFilter::SetInsideValue "
-Self& itk::simple::IsoDataThresholdImageFilter::SetInsideValue(uint8_t InsideValue)
 
 Set the \"inside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::IsoDataThresholdImageFilter::SetNumberOfHistogramBins "
-Self& itk::simple::IsoDataThresholdImageFilter::SetNumberOfHistogramBins(uint32_t NumberOfHistogramBins)
 
 Set/Get the number of histogram bins.
 
 ";
 
 %feature("docstring")  itk::simple::IsoDataThresholdImageFilter::SetOutsideValue "
-Self& itk::simple::IsoDataThresholdImageFilter::SetOutsideValue(uint8_t OutsideValue)
 
 Set the \"outside\" pixel value. The default value
 NumericTraits<OutputPixelType>::Zero.
@@ -12364,7 +10963,6 @@ NumericTraits<OutputPixelType>::Zero.
 ";
 
 %feature("docstring")  itk::simple::IsoDataThresholdImageFilter::ToString "
-std::string itk::simple::IsoDataThresholdImageFilter::ToString() const
 
 Print ourselves out
 
@@ -12412,34 +11010,27 @@ C++ includes: sitkIsolatedConnectedImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::IsolatedConnectedImageFilter::Execute "
-Image itk::simple::IsolatedConnectedImageFilter::Execute(const Image &image1, std::vector< unsigned int > seed1, std::vector<
-unsigned int > seed2, double lower, double upper, uint8_t
-replaceValue, double isolatedValueTolerance, bool findUpperThreshold)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::IsolatedConnectedImageFilter::Execute "
-Image itk::simple::IsolatedConnectedImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::IsolatedConnectedImageFilter::FindUpperThresholdOff "
-Self& itk::simple::IsolatedConnectedImageFilter::FindUpperThresholdOff()
 ";
 
 %feature("docstring")  itk::simple::IsolatedConnectedImageFilter::FindUpperThresholdOn "
-Self& itk::simple::IsolatedConnectedImageFilter::FindUpperThresholdOn()
 
 Set the value of FindUpperThreshold to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::IsolatedConnectedImageFilter::GetFindUpperThreshold "
-bool itk::simple::IsolatedConnectedImageFilter::GetFindUpperThreshold()
 
 Set/Get whether to find an upper threshold (separating two dark
 regions) or a lower threshold (separating two bright regions).
@@ -12447,7 +11038,6 @@ regions) or a lower threshold (separating two bright regions).
 ";
 
 %feature("docstring")  itk::simple::IsolatedConnectedImageFilter::GetIsolatedValue "
-double itk::simple::IsolatedConnectedImageFilter::GetIsolatedValue()
 
 This is a measurement. Its value is updated in the Execute methods, so
 the value will only be valid after an execution.
@@ -12455,7 +11045,6 @@ the value will only be valid after an execution.
 ";
 
 %feature("docstring")  itk::simple::IsolatedConnectedImageFilter::GetIsolatedValueTolerance "
-double itk::simple::IsolatedConnectedImageFilter::GetIsolatedValueTolerance()
 
 Set/Get the precision required for the intensity threshold value. The
 default is 1.
@@ -12463,7 +11052,6 @@ default is 1.
 ";
 
 %feature("docstring")  itk::simple::IsolatedConnectedImageFilter::GetLower "
-double itk::simple::IsolatedConnectedImageFilter::GetLower()
 
 Set/Get the limit on the lower threshold value. The default is the
 NonpositiveMin() for the InputPixelType.
@@ -12471,14 +11059,12 @@ NonpositiveMin() for the InputPixelType.
 ";
 
 %feature("docstring")  itk::simple::IsolatedConnectedImageFilter::GetName "
-std::string itk::simple::IsolatedConnectedImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::IsolatedConnectedImageFilter::GetReplaceValue "
-uint8_t itk::simple::IsolatedConnectedImageFilter::GetReplaceValue()
 
 Set/Get value to replace thresholded pixels. Pixels that lie within
 the thresholds will be replaced with this value. The default is 1.
@@ -12486,15 +11072,12 @@ the thresholds will be replaced with this value. The default is 1.
 ";
 
 %feature("docstring")  itk::simple::IsolatedConnectedImageFilter::GetSeed1 "
-std::vector<unsigned int> itk::simple::IsolatedConnectedImageFilter::GetSeed1()
 ";
 
 %feature("docstring")  itk::simple::IsolatedConnectedImageFilter::GetSeed2 "
-std::vector<unsigned int> itk::simple::IsolatedConnectedImageFilter::GetSeed2()
 ";
 
 %feature("docstring")  itk::simple::IsolatedConnectedImageFilter::GetThresholdingFailed "
-bool itk::simple::IsolatedConnectedImageFilter::GetThresholdingFailed()
 
 This is a measurement. Its value is updated in the Execute methods, so
 the value will only be valid after an execution.
@@ -12502,7 +11085,6 @@ the value will only be valid after an execution.
 ";
 
 %feature("docstring")  itk::simple::IsolatedConnectedImageFilter::GetUpper "
-double itk::simple::IsolatedConnectedImageFilter::GetUpper()
 
 Set/Get the limit on the upper threshold value. The default is the
 max() for the InputPixelType.
@@ -12510,7 +11092,6 @@ max() for the InputPixelType.
 ";
 
 %feature("docstring")  itk::simple::IsolatedConnectedImageFilter::IsolatedConnectedImageFilter "
-itk::simple::IsolatedConnectedImageFilter::IsolatedConnectedImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -12518,7 +11099,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::IsolatedConnectedImageFilter::SetFindUpperThreshold "
-Self& itk::simple::IsolatedConnectedImageFilter::SetFindUpperThreshold(bool FindUpperThreshold)
 
 Set/Get whether to find an upper threshold (separating two dark
 regions) or a lower threshold (separating two bright regions).
@@ -12526,7 +11106,6 @@ regions) or a lower threshold (separating two bright regions).
 ";
 
 %feature("docstring")  itk::simple::IsolatedConnectedImageFilter::SetIsolatedValueTolerance "
-Self& itk::simple::IsolatedConnectedImageFilter::SetIsolatedValueTolerance(double IsolatedValueTolerance)
 
 Set/Get the precision required for the intensity threshold value. The
 default is 1.
@@ -12534,7 +11113,6 @@ default is 1.
 ";
 
 %feature("docstring")  itk::simple::IsolatedConnectedImageFilter::SetLower "
-Self& itk::simple::IsolatedConnectedImageFilter::SetLower(double Lower)
 
 Set/Get the limit on the lower threshold value. The default is the
 NonpositiveMin() for the InputPixelType.
@@ -12542,7 +11120,6 @@ NonpositiveMin() for the InputPixelType.
 ";
 
 %feature("docstring")  itk::simple::IsolatedConnectedImageFilter::SetReplaceValue "
-Self& itk::simple::IsolatedConnectedImageFilter::SetReplaceValue(uint8_t ReplaceValue)
 
 Set/Get value to replace thresholded pixels. Pixels that lie within
 the thresholds will be replaced with this value. The default is 1.
@@ -12550,7 +11127,6 @@ the thresholds will be replaced with this value. The default is 1.
 ";
 
 %feature("docstring")  itk::simple::IsolatedConnectedImageFilter::SetSeed1 "
-Self& itk::simple::IsolatedConnectedImageFilter::SetSeed1(std::vector< unsigned int > Seed1)
 
 Set seed point 1. This seed will be isolated from Seed2 (if possible).
 All pixels connected to this seed will be replaced with ReplaceValue.
@@ -12559,7 +11135,6 @@ This method is deprecated, please use AddSeed().
 ";
 
 %feature("docstring")  itk::simple::IsolatedConnectedImageFilter::SetSeed2 "
-Self& itk::simple::IsolatedConnectedImageFilter::SetSeed2(std::vector< unsigned int > Seed2)
 
 Set seed point 2. This seed will be isolated from Seed1 (if possible).
 This method is deprecated, please use AddSeed().
@@ -12567,7 +11142,6 @@ This method is deprecated, please use AddSeed().
 ";
 
 %feature("docstring")  itk::simple::IsolatedConnectedImageFilter::SetUpper "
-Self& itk::simple::IsolatedConnectedImageFilter::SetUpper(double Upper)
 
 Set/Get the limit on the upper threshold value. The default is the
 max() for the InputPixelType.
@@ -12575,7 +11149,6 @@ max() for the InputPixelType.
 ";
 
 %feature("docstring")  itk::simple::IsolatedConnectedImageFilter::ToString "
-std::string itk::simple::IsolatedConnectedImageFilter::ToString() const
 
 Print ourselves out
 
@@ -12603,23 +11176,18 @@ C++ includes: sitkIsolatedWatershedImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::IsolatedWatershedImageFilter::Execute "
-Image itk::simple::IsolatedWatershedImageFilter::Execute(const Image &image1, std::vector< uint32_t > seed1, std::vector<
-uint32_t > seed2, double threshold, double upperValueLimit, double
-isolatedValueTolerance, uint8_t replaceValue1, uint8_t replaceValue2)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::IsolatedWatershedImageFilter::Execute "
-Image itk::simple::IsolatedWatershedImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::IsolatedWatershedImageFilter::GetIsolatedValueTolerance "
-double itk::simple::IsolatedWatershedImageFilter::GetIsolatedValueTolerance()
 
 Set/Get the precision required for the intensity threshold value. The
 default is .001.
@@ -12627,14 +11195,12 @@ default is .001.
 ";
 
 %feature("docstring")  itk::simple::IsolatedWatershedImageFilter::GetName "
-std::string itk::simple::IsolatedWatershedImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::IsolatedWatershedImageFilter::GetReplaceValue1 "
-uint8_t itk::simple::IsolatedWatershedImageFilter::GetReplaceValue1()
 
 Set/Get value to replace Seed1(Seed2) pixels, pixels that are within
 the basin that contains Seed1(Seed2) this value. The default is 1(0).
@@ -12642,7 +11208,6 @@ the basin that contains Seed1(Seed2) this value. The default is 1(0).
 ";
 
 %feature("docstring")  itk::simple::IsolatedWatershedImageFilter::GetReplaceValue2 "
-uint8_t itk::simple::IsolatedWatershedImageFilter::GetReplaceValue2()
 
 Set/Get value to replace Seed1(Seed2) pixels, pixels that are within
 the basin that contains Seed1(Seed2) this value. The default is 1(0).
@@ -12650,29 +11215,24 @@ the basin that contains Seed1(Seed2) this value. The default is 1(0).
 ";
 
 %feature("docstring")  itk::simple::IsolatedWatershedImageFilter::GetSeed1 "
-std::vector<uint32_t> itk::simple::IsolatedWatershedImageFilter::GetSeed1()
 ";
 
 %feature("docstring")  itk::simple::IsolatedWatershedImageFilter::GetSeed2 "
-std::vector<uint32_t> itk::simple::IsolatedWatershedImageFilter::GetSeed2()
 ";
 
 %feature("docstring")  itk::simple::IsolatedWatershedImageFilter::GetThreshold "
-double itk::simple::IsolatedWatershedImageFilter::GetThreshold()
 
 Set/Get the Watershed threshold. The default is 0.
 
 ";
 
 %feature("docstring")  itk::simple::IsolatedWatershedImageFilter::GetUpperValueLimit "
-double itk::simple::IsolatedWatershedImageFilter::GetUpperValueLimit()
 
 Set/Get the limit on the upper waterlevel value. The default is 1.0.
 
 ";
 
 %feature("docstring")  itk::simple::IsolatedWatershedImageFilter::IsolatedWatershedImageFilter "
-itk::simple::IsolatedWatershedImageFilter::IsolatedWatershedImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -12680,7 +11240,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::IsolatedWatershedImageFilter::SetIsolatedValueTolerance "
-Self& itk::simple::IsolatedWatershedImageFilter::SetIsolatedValueTolerance(double IsolatedValueTolerance)
 
 Set/Get the precision required for the intensity threshold value. The
 default is .001.
@@ -12688,7 +11247,6 @@ default is .001.
 ";
 
 %feature("docstring")  itk::simple::IsolatedWatershedImageFilter::SetReplaceValue1 "
-Self& itk::simple::IsolatedWatershedImageFilter::SetReplaceValue1(uint8_t ReplaceValue1)
 
 Set/Get value to replace Seed1(Seed2) pixels, pixels that are within
 the basin that contains Seed1(Seed2) this value. The default is 1(0).
@@ -12696,7 +11254,6 @@ the basin that contains Seed1(Seed2) this value. The default is 1(0).
 ";
 
 %feature("docstring")  itk::simple::IsolatedWatershedImageFilter::SetReplaceValue2 "
-Self& itk::simple::IsolatedWatershedImageFilter::SetReplaceValue2(uint8_t ReplaceValue2)
 
 Set/Get value to replace Seed1(Seed2) pixels, pixels that are within
 the basin that contains Seed1(Seed2) this value. The default is 1(0).
@@ -12704,7 +11261,6 @@ the basin that contains Seed1(Seed2) this value. The default is 1(0).
 ";
 
 %feature("docstring")  itk::simple::IsolatedWatershedImageFilter::SetSeed1 "
-Self& itk::simple::IsolatedWatershedImageFilter::SetSeed1(std::vector< uint32_t > Seed1)
 
 Set seed point 1. This seed will be isolated from Seed2 (if possible).
 All pixels connected to this seed will be replaced with ReplaceValue1.
@@ -12712,7 +11268,6 @@ All pixels connected to this seed will be replaced with ReplaceValue1.
 ";
 
 %feature("docstring")  itk::simple::IsolatedWatershedImageFilter::SetSeed2 "
-Self& itk::simple::IsolatedWatershedImageFilter::SetSeed2(std::vector< uint32_t > Seed2)
 
 Set seed point 2. This seed will be isolated from Seed1 (if possible).
 All pixels connected to this seed will be replaced with ReplaceValue2.
@@ -12720,21 +11275,18 @@ All pixels connected to this seed will be replaced with ReplaceValue2.
 ";
 
 %feature("docstring")  itk::simple::IsolatedWatershedImageFilter::SetThreshold "
-Self& itk::simple::IsolatedWatershedImageFilter::SetThreshold(double Threshold)
 
 Set/Get the Watershed threshold. The default is 0.
 
 ";
 
 %feature("docstring")  itk::simple::IsolatedWatershedImageFilter::SetUpperValueLimit "
-Self& itk::simple::IsolatedWatershedImageFilter::SetUpperValueLimit(double UpperValueLimit)
 
 Set/Get the limit on the upper waterlevel value. The default is 1.0.
 
 ";
 
 %feature("docstring")  itk::simple::IsolatedWatershedImageFilter::ToString "
-std::string itk::simple::IsolatedWatershedImageFilter::ToString() const
 
 Print ourselves out
 
@@ -12767,88 +11319,66 @@ C++ includes: sitkJoinSeriesImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::JoinSeriesImageFilter::Execute "
-Image itk::simple::JoinSeriesImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4, const Image &image5, double origin, double spacing)
 ";
 
 %feature("docstring")  itk::simple::JoinSeriesImageFilter::Execute "
-Image itk::simple::JoinSeriesImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4, double origin, double spacing)
 ";
 
 %feature("docstring")  itk::simple::JoinSeriesImageFilter::Execute "
-Image itk::simple::JoinSeriesImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3, double
-origin, double spacing)
 ";
 
 %feature("docstring")  itk::simple::JoinSeriesImageFilter::Execute "
-Image itk::simple::JoinSeriesImageFilter::Execute(const Image &image1, const Image &image2, double origin, double
-spacing)
 ";
 
 %feature("docstring")  itk::simple::JoinSeriesImageFilter::Execute "
-Image itk::simple::JoinSeriesImageFilter::Execute(const Image &image1, double origin, double spacing)
 ";
 
 %feature("docstring")  itk::simple::JoinSeriesImageFilter::Execute "
-Image itk::simple::JoinSeriesImageFilter::Execute(const std::vector< Image > &images, double origin, double spacing)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::JoinSeriesImageFilter::Execute "
-Image itk::simple::JoinSeriesImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4, const Image &image5)
 ";
 
 %feature("docstring")  itk::simple::JoinSeriesImageFilter::Execute "
-Image itk::simple::JoinSeriesImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4)
 ";
 
 %feature("docstring")  itk::simple::JoinSeriesImageFilter::Execute "
-Image itk::simple::JoinSeriesImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3)
 ";
 
 %feature("docstring")  itk::simple::JoinSeriesImageFilter::Execute "
-Image itk::simple::JoinSeriesImageFilter::Execute(const Image &image1, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::JoinSeriesImageFilter::Execute "
-Image itk::simple::JoinSeriesImageFilter::Execute(const Image &image1)
 ";
 
 %feature("docstring")  itk::simple::JoinSeriesImageFilter::Execute "
-Image itk::simple::JoinSeriesImageFilter::Execute(const std::vector< Image > &images)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::JoinSeriesImageFilter::GetName "
-std::string itk::simple::JoinSeriesImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::JoinSeriesImageFilter::GetOrigin "
-double itk::simple::JoinSeriesImageFilter::GetOrigin()
 
 Set/Get origin of the new dimension.
 
 ";
 
 %feature("docstring")  itk::simple::JoinSeriesImageFilter::GetSpacing "
-double itk::simple::JoinSeriesImageFilter::GetSpacing()
 
 Set/Get spacing of the new dimension.
 
 ";
 
 %feature("docstring")  itk::simple::JoinSeriesImageFilter::JoinSeriesImageFilter "
-itk::simple::JoinSeriesImageFilter::JoinSeriesImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -12856,21 +11386,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::JoinSeriesImageFilter::SetOrigin "
-Self& itk::simple::JoinSeriesImageFilter::SetOrigin(double Origin)
 
 Set/Get origin of the new dimension.
 
 ";
 
 %feature("docstring")  itk::simple::JoinSeriesImageFilter::SetSpacing "
-Self& itk::simple::JoinSeriesImageFilter::SetSpacing(double Spacing)
 
 Set/Get spacing of the new dimension.
 
 ";
 
 %feature("docstring")  itk::simple::JoinSeriesImageFilter::ToString "
-std::string itk::simple::JoinSeriesImageFilter::ToString() const
 
 Print ourselves out
 
@@ -12903,47 +11430,39 @@ C++ includes: sitkKittlerIllingworthThresholdImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::KittlerIllingworthThresholdImageFilter::Execute "
-Image itk::simple::KittlerIllingworthThresholdImageFilter::Execute(const Image &image1, uint8_t insideValue, uint8_t outsideValue,
-uint32_t numberOfHistogramBins)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::KittlerIllingworthThresholdImageFilter::Execute "
-Image itk::simple::KittlerIllingworthThresholdImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::KittlerIllingworthThresholdImageFilter::GetInsideValue "
-uint8_t itk::simple::KittlerIllingworthThresholdImageFilter::GetInsideValue()
 
 Get the \"inside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::KittlerIllingworthThresholdImageFilter::GetName "
-std::string itk::simple::KittlerIllingworthThresholdImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::KittlerIllingworthThresholdImageFilter::GetNumberOfHistogramBins "
-uint32_t itk::simple::KittlerIllingworthThresholdImageFilter::GetNumberOfHistogramBins()
 ";
 
 %feature("docstring")  itk::simple::KittlerIllingworthThresholdImageFilter::GetOutsideValue "
-uint8_t itk::simple::KittlerIllingworthThresholdImageFilter::GetOutsideValue()
 
 Get the \"outside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::KittlerIllingworthThresholdImageFilter::KittlerIllingworthThresholdImageFilter "
-itk::simple::KittlerIllingworthThresholdImageFilter::KittlerIllingworthThresholdImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -12951,21 +11470,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::KittlerIllingworthThresholdImageFilter::SetInsideValue "
-Self& itk::simple::KittlerIllingworthThresholdImageFilter::SetInsideValue(uint8_t InsideValue)
 
 Set the \"inside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::KittlerIllingworthThresholdImageFilter::SetNumberOfHistogramBins "
-Self& itk::simple::KittlerIllingworthThresholdImageFilter::SetNumberOfHistogramBins(uint32_t NumberOfHistogramBins)
 
 Set/Get the number of histogram bins.
 
 ";
 
 %feature("docstring")  itk::simple::KittlerIllingworthThresholdImageFilter::SetOutsideValue "
-Self& itk::simple::KittlerIllingworthThresholdImageFilter::SetOutsideValue(uint8_t OutsideValue)
 
 Set the \"outside\" pixel value. The default value
 NumericTraits<OutputPixelType>::Zero.
@@ -12973,7 +11489,6 @@ NumericTraits<OutputPixelType>::Zero.
 ";
 
 %feature("docstring")  itk::simple::KittlerIllingworthThresholdImageFilter::ToString "
-std::string itk::simple::KittlerIllingworthThresholdImageFilter::ToString() const
 
 Print ourselves out
 
@@ -13011,32 +11526,27 @@ C++ includes: sitkLabelContourImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::LabelContourImageFilter::Execute "
-Image itk::simple::LabelContourImageFilter::Execute(const Image &image1, bool fullyConnected, double backgroundValue)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::LabelContourImageFilter::Execute "
-Image itk::simple::LabelContourImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::LabelContourImageFilter::FullyConnectedOff "
-Self& itk::simple::LabelContourImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::LabelContourImageFilter::FullyConnectedOn "
-Self& itk::simple::LabelContourImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::LabelContourImageFilter::GetBackgroundValue "
-double itk::simple::LabelContourImageFilter::GetBackgroundValue()
 
 Set/Get the background value used to identify the objects and mark the
 pixels not on the border of the objects.
@@ -13044,7 +11554,6 @@ pixels not on the border of the objects.
 ";
 
 %feature("docstring")  itk::simple::LabelContourImageFilter::GetFullyConnected "
-bool itk::simple::LabelContourImageFilter::GetFullyConnected()
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -13058,14 +11567,12 @@ For objects that are 1 pixel wide, use FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::LabelContourImageFilter::GetName "
-std::string itk::simple::LabelContourImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::LabelContourImageFilter::LabelContourImageFilter "
-itk::simple::LabelContourImageFilter::LabelContourImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -13073,7 +11580,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::LabelContourImageFilter::SetBackgroundValue "
-Self& itk::simple::LabelContourImageFilter::SetBackgroundValue(double BackgroundValue)
 
 Set/Get the background value used to identify the objects and mark the
 pixels not on the border of the objects.
@@ -13081,7 +11587,6 @@ pixels not on the border of the objects.
 ";
 
 %feature("docstring")  itk::simple::LabelContourImageFilter::SetFullyConnected "
-Self& itk::simple::LabelContourImageFilter::SetFullyConnected(bool FullyConnected)
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -13095,7 +11600,6 @@ For objects that are 1 pixel wide, use FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::LabelContourImageFilter::ToString "
-std::string itk::simple::LabelContourImageFilter::ToString() const
 
 Print ourselves out
 
@@ -13136,53 +11640,42 @@ C++ includes: sitkLabelMapContourOverlayImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::LabelMapContourOverlayImageFilter::Execute "
-Image itk::simple::LabelMapContourOverlayImageFilter::Execute(const Image &image1, const Image &image2, double opacity,
-std::vector< unsigned int > dilationRadius, std::vector< unsigned int
-> contourThickness, unsigned int sliceDimension,
-LabelMapContourOverlayImageFilter::Type contourType,
-LabelMapContourOverlayImageFilter::PriorityType priority)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapContourOverlayImageFilter::Execute "
-Image itk::simple::LabelMapContourOverlayImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapContourOverlayImageFilter::GetContourThickness "
-std::vector<unsigned int> itk::simple::LabelMapContourOverlayImageFilter::GetContourThickness()
 
 Set/Get the contour thickness - 1 by default.
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapContourOverlayImageFilter::GetContourType "
-LabelMapContourOverlayImageFilter::Type itk::simple::LabelMapContourOverlayImageFilter::GetContourType()
 
 Set/Get the overlay type - CONTOUR is used by default.
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapContourOverlayImageFilter::GetDilationRadius "
-std::vector<unsigned int> itk::simple::LabelMapContourOverlayImageFilter::GetDilationRadius()
 
 Set/Get the object dilation radius - 0 by default.
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapContourOverlayImageFilter::GetName "
-std::string itk::simple::LabelMapContourOverlayImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapContourOverlayImageFilter::GetOpacity "
-double itk::simple::LabelMapContourOverlayImageFilter::GetOpacity()
 
 Set/Get the opacity of the colored label image. The value must be
 between 0 and 1.
@@ -13190,21 +11683,18 @@ between 0 and 1.
 ";
 
 %feature("docstring")  itk::simple::LabelMapContourOverlayImageFilter::GetPriority "
-LabelMapContourOverlayImageFilter::PriorityType itk::simple::LabelMapContourOverlayImageFilter::GetPriority()
 
 Set/Get the object priority - HIGH_LABEL_ON_TOP by default.
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapContourOverlayImageFilter::GetSliceDimension "
-unsigned int itk::simple::LabelMapContourOverlayImageFilter::GetSliceDimension()
 
 Set/Get the slice dimension - defaults to image dimension - 1.
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapContourOverlayImageFilter::LabelMapContourOverlayImageFilter "
-itk::simple::LabelMapContourOverlayImageFilter::LabelMapContourOverlayImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -13212,28 +11702,24 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::LabelMapContourOverlayImageFilter::SetContourThickness "
-Self& itk::simple::LabelMapContourOverlayImageFilter::SetContourThickness(std::vector< unsigned int > ContourThickness)
 
 Set/Get the contour thickness - 1 by default.
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapContourOverlayImageFilter::SetContourType "
-Self& itk::simple::LabelMapContourOverlayImageFilter::SetContourType(LabelMapContourOverlayImageFilter::Type ContourType)
 
 Set/Get the overlay type - CONTOUR is used by default.
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapContourOverlayImageFilter::SetDilationRadius "
-Self& itk::simple::LabelMapContourOverlayImageFilter::SetDilationRadius(std::vector< unsigned int > DilationRadius)
 
 Set/Get the object dilation radius - 0 by default.
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapContourOverlayImageFilter::SetOpacity "
-Self& itk::simple::LabelMapContourOverlayImageFilter::SetOpacity(double Opacity)
 
 Set/Get the opacity of the colored label image. The value must be
 between 0 and 1.
@@ -13241,21 +11727,18 @@ between 0 and 1.
 ";
 
 %feature("docstring")  itk::simple::LabelMapContourOverlayImageFilter::SetPriority "
-Self& itk::simple::LabelMapContourOverlayImageFilter::SetPriority(LabelMapContourOverlayImageFilter::PriorityType Priority)
 
 Set/Get the object priority - HIGH_LABEL_ON_TOP by default.
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapContourOverlayImageFilter::SetSliceDimension "
-Self& itk::simple::LabelMapContourOverlayImageFilter::SetSliceDimension(unsigned int SliceDimension)
 
 Set/Get the slice dimension - defaults to image dimension - 1.
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapContourOverlayImageFilter::ToString "
-std::string itk::simple::LabelMapContourOverlayImageFilter::ToString() const
 
 Print ourselves out
 
@@ -13288,22 +11771,18 @@ C++ includes: sitkLabelMapMaskImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::LabelMapMaskImageFilter::Execute "
-Image itk::simple::LabelMapMaskImageFilter::Execute(const Image &image1, const Image &image2, uint64_t label, double
-backgroundValue, bool negated)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapMaskImageFilter::Execute "
-Image itk::simple::LabelMapMaskImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapMaskImageFilter::GetBackgroundValue "
-double itk::simple::LabelMapMaskImageFilter::GetBackgroundValue()
 
 Set/Get the value used as \"background\" in the output image. Defaults
 to NumericTraits<PixelType>::Zero.
@@ -13311,7 +11790,6 @@ to NumericTraits<PixelType>::Zero.
 ";
 
 %feature("docstring")  itk::simple::LabelMapMaskImageFilter::GetLabel "
-uint64_t itk::simple::LabelMapMaskImageFilter::GetLabel()
 
 The label to mask or to not mask, depending on the value of the
 Negated ivar.
@@ -13319,21 +11797,18 @@ Negated ivar.
 ";
 
 %feature("docstring")  itk::simple::LabelMapMaskImageFilter::GetName "
-std::string itk::simple::LabelMapMaskImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapMaskImageFilter::GetNegated "
-bool itk::simple::LabelMapMaskImageFilter::GetNegated()
 
 Set/Get whether the Label should be masked or not.
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapMaskImageFilter::LabelMapMaskImageFilter "
-itk::simple::LabelMapMaskImageFilter::LabelMapMaskImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -13341,18 +11816,15 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::LabelMapMaskImageFilter::NegatedOff "
-Self& itk::simple::LabelMapMaskImageFilter::NegatedOff()
 ";
 
 %feature("docstring")  itk::simple::LabelMapMaskImageFilter::NegatedOn "
-Self& itk::simple::LabelMapMaskImageFilter::NegatedOn()
 
 Set the value of Negated to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapMaskImageFilter::SetBackgroundValue "
-Self& itk::simple::LabelMapMaskImageFilter::SetBackgroundValue(double BackgroundValue)
 
 Set/Get the value used as \"background\" in the output image. Defaults
 to NumericTraits<PixelType>::Zero.
@@ -13360,7 +11832,6 @@ to NumericTraits<PixelType>::Zero.
 ";
 
 %feature("docstring")  itk::simple::LabelMapMaskImageFilter::SetLabel "
-Self& itk::simple::LabelMapMaskImageFilter::SetLabel(uint64_t Label)
 
 The label to mask or to not mask, depending on the value of the
 Negated ivar.
@@ -13368,14 +11839,12 @@ Negated ivar.
 ";
 
 %feature("docstring")  itk::simple::LabelMapMaskImageFilter::SetNegated "
-Self& itk::simple::LabelMapMaskImageFilter::SetNegated(bool Negated)
 
 Set/Get whether the Label should be masked or not.
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapMaskImageFilter::ToString "
-std::string itk::simple::LabelMapMaskImageFilter::ToString() const
 
 Print ourselves out
 
@@ -13409,28 +11878,24 @@ C++ includes: sitkLabelMapOverlayImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::LabelMapOverlayImageFilter::Execute "
-Image itk::simple::LabelMapOverlayImageFilter::Execute(const Image &image1, const Image &image2, double opacity)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapOverlayImageFilter::Execute "
-Image itk::simple::LabelMapOverlayImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapOverlayImageFilter::GetName "
-std::string itk::simple::LabelMapOverlayImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapOverlayImageFilter::GetOpacity "
-double itk::simple::LabelMapOverlayImageFilter::GetOpacity()
 
 Set/Get the opacity of the colored label image. The value must be
 between 0 and 1.
@@ -13438,7 +11903,6 @@ between 0 and 1.
 ";
 
 %feature("docstring")  itk::simple::LabelMapOverlayImageFilter::LabelMapOverlayImageFilter "
-itk::simple::LabelMapOverlayImageFilter::LabelMapOverlayImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -13446,7 +11910,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::LabelMapOverlayImageFilter::SetOpacity "
-Self& itk::simple::LabelMapOverlayImageFilter::SetOpacity(double Opacity)
 
 Set/Get the opacity of the colored label image. The value must be
 between 0 and 1.
@@ -13454,7 +11917,6 @@ between 0 and 1.
 ";
 
 %feature("docstring")  itk::simple::LabelMapOverlayImageFilter::ToString "
-std::string itk::simple::LabelMapOverlayImageFilter::ToString() const
 
 Print ourselves out
 
@@ -13485,21 +11947,18 @@ C++ includes: sitkLabelMapToBinaryImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::LabelMapToBinaryImageFilter::Execute "
-Image itk::simple::LabelMapToBinaryImageFilter::Execute(const Image &image1, double backgroundValue, double foregroundValue)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapToBinaryImageFilter::Execute "
-Image itk::simple::LabelMapToBinaryImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapToBinaryImageFilter::GetBackgroundValue "
-double itk::simple::LabelMapToBinaryImageFilter::GetBackgroundValue()
 
 Set/Get the value used as \"background\" in the output image. Defaults
 to NumericTraits<PixelType>::NonpositiveMin().
@@ -13507,7 +11966,6 @@ to NumericTraits<PixelType>::NonpositiveMin().
 ";
 
 %feature("docstring")  itk::simple::LabelMapToBinaryImageFilter::GetForegroundValue "
-double itk::simple::LabelMapToBinaryImageFilter::GetForegroundValue()
 
 Set/Get the value used as \"foreground\" in the output image. Defaults
 to NumericTraits<PixelType>::max().
@@ -13515,14 +11973,12 @@ to NumericTraits<PixelType>::max().
 ";
 
 %feature("docstring")  itk::simple::LabelMapToBinaryImageFilter::GetName "
-std::string itk::simple::LabelMapToBinaryImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapToBinaryImageFilter::LabelMapToBinaryImageFilter "
-itk::simple::LabelMapToBinaryImageFilter::LabelMapToBinaryImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -13530,7 +11986,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::LabelMapToBinaryImageFilter::SetBackgroundValue "
-Self& itk::simple::LabelMapToBinaryImageFilter::SetBackgroundValue(double BackgroundValue)
 
 Set/Get the value used as \"background\" in the output image. Defaults
 to NumericTraits<PixelType>::NonpositiveMin().
@@ -13538,7 +11993,6 @@ to NumericTraits<PixelType>::NonpositiveMin().
 ";
 
 %feature("docstring")  itk::simple::LabelMapToBinaryImageFilter::SetForegroundValue "
-Self& itk::simple::LabelMapToBinaryImageFilter::SetForegroundValue(double ForegroundValue)
 
 Set/Get the value used as \"foreground\" in the output image. Defaults
 to NumericTraits<PixelType>::max().
@@ -13546,7 +12000,6 @@ to NumericTraits<PixelType>::max().
 ";
 
 %feature("docstring")  itk::simple::LabelMapToBinaryImageFilter::ToString "
-std::string itk::simple::LabelMapToBinaryImageFilter::ToString() const
 
 Print ourselves out
 
@@ -13581,21 +12034,18 @@ C++ includes: sitkLabelMapToLabelImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::LabelMapToLabelImageFilter::Execute "
-Image itk::simple::LabelMapToLabelImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapToLabelImageFilter::GetName "
-std::string itk::simple::LabelMapToLabelImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapToLabelImageFilter::LabelMapToLabelImageFilter "
-itk::simple::LabelMapToLabelImageFilter::LabelMapToLabelImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -13603,7 +12053,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::LabelMapToLabelImageFilter::ToString "
-std::string itk::simple::LabelMapToLabelImageFilter::ToString() const
 
 Print ourselves out
 
@@ -13631,21 +12080,18 @@ C++ includes: sitkLabelMapToRGBImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::LabelMapToRGBImageFilter::Execute "
-Image itk::simple::LabelMapToRGBImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapToRGBImageFilter::GetName "
-std::string itk::simple::LabelMapToRGBImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapToRGBImageFilter::LabelMapToRGBImageFilter "
-itk::simple::LabelMapToRGBImageFilter::LabelMapToRGBImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -13653,7 +12099,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::LabelMapToRGBImageFilter::ToString "
-std::string itk::simple::LabelMapToRGBImageFilter::ToString() const
 
 Print ourselves out
 
@@ -13692,36 +12137,30 @@ C++ includes: sitkLabelOverlayImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::LabelOverlayImageFilter::Execute "
-Image itk::simple::LabelOverlayImageFilter::Execute(const Image &image1, const Image &image2, double opacity, double
-backgroundValue)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::LabelOverlayImageFilter::Execute "
-Image itk::simple::LabelOverlayImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::LabelOverlayImageFilter::GetBackgroundValue "
-double itk::simple::LabelOverlayImageFilter::GetBackgroundValue()
 
 Set/Get the background value.
 
 ";
 
 %feature("docstring")  itk::simple::LabelOverlayImageFilter::GetName "
-std::string itk::simple::LabelOverlayImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::LabelOverlayImageFilter::GetOpacity "
-double itk::simple::LabelOverlayImageFilter::GetOpacity()
 
 Set/Get the opacity of the colored label image. The value must be
 between 0 and 1.
@@ -13729,7 +12168,6 @@ between 0 and 1.
 ";
 
 %feature("docstring")  itk::simple::LabelOverlayImageFilter::LabelOverlayImageFilter "
-itk::simple::LabelOverlayImageFilter::LabelOverlayImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -13737,14 +12175,12 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::LabelOverlayImageFilter::SetBackgroundValue "
-Self& itk::simple::LabelOverlayImageFilter::SetBackgroundValue(double BackgroundValue)
 
 Set/Get the background value.
 
 ";
 
 %feature("docstring")  itk::simple::LabelOverlayImageFilter::SetOpacity "
-Self& itk::simple::LabelOverlayImageFilter::SetOpacity(double Opacity)
 
 Set/Get the opacity of the colored label image. The value must be
 between 0 and 1.
@@ -13752,7 +12188,6 @@ between 0 and 1.
 ";
 
 %feature("docstring")  itk::simple::LabelOverlayImageFilter::ToString "
-std::string itk::simple::LabelOverlayImageFilter::ToString() const
 
 Print ourselves out
 
@@ -13773,57 +12208,45 @@ C++ includes: sitkLabelStatisticsImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::LabelStatisticsImageFilter::Execute "
-Image itk::simple::LabelStatisticsImageFilter::Execute(const Image &, const Image &)
 ";
 
 %feature("docstring")  itk::simple::LabelStatisticsImageFilter::GetCount "
-double itk::simple::LabelStatisticsImageFilter::GetCount(const LabelIdentifierType labelCode) const
 ";
 
 %feature("docstring")  itk::simple::LabelStatisticsImageFilter::GetLabelStatisticsMap "
-LabelStatisticsMap itk::simple::LabelStatisticsImageFilter::GetLabelStatisticsMap() const
 
 Return the entire statistics map
 
 ";
 
 %feature("docstring")  itk::simple::LabelStatisticsImageFilter::GetMaximum "
-double itk::simple::LabelStatisticsImageFilter::GetMaximum(const LabelIdentifierType labelCode) const
 ";
 
 %feature("docstring")  itk::simple::LabelStatisticsImageFilter::GetMean "
-double itk::simple::LabelStatisticsImageFilter::GetMean(const LabelIdentifierType labelCode) const
 ";
 
 %feature("docstring")  itk::simple::LabelStatisticsImageFilter::GetMeasurementMap "
-MeasurementMap itk::simple::LabelStatisticsImageFilter::GetMeasurementMap(const LabelIdentifierType labelCode) const
 ";
 
 %feature("docstring")  itk::simple::LabelStatisticsImageFilter::GetMedian "
-double itk::simple::LabelStatisticsImageFilter::GetMedian(const LabelIdentifierType labelCode) const
 ";
 
 %feature("docstring")  itk::simple::LabelStatisticsImageFilter::GetMinimum "
-double itk::simple::LabelStatisticsImageFilter::GetMinimum(const LabelIdentifierType labelCode) const
 ";
 
 %feature("docstring")  itk::simple::LabelStatisticsImageFilter::GetName "
-std::string itk::simple::LabelStatisticsImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::LabelStatisticsImageFilter::GetSigma "
-double itk::simple::LabelStatisticsImageFilter::GetSigma(const LabelIdentifierType labelCode) const
 ";
 
 %feature("docstring")  itk::simple::LabelStatisticsImageFilter::GetSum "
-double itk::simple::LabelStatisticsImageFilter::GetSum(const LabelIdentifierType labelCode) const
 ";
 
 %feature("docstring")  itk::simple::LabelStatisticsImageFilter::GetValidLabels "
-LabelListingType itk::simple::LabelStatisticsImageFilter::GetValidLabels() const
 
 A convenience function to return a dense list of valid labels found in
 the label image
@@ -13831,15 +12254,12 @@ the label image
 ";
 
 %feature("docstring")  itk::simple::LabelStatisticsImageFilter::GetVariance "
-double itk::simple::LabelStatisticsImageFilter::GetVariance(const LabelIdentifierType labelCode) const
 ";
 
 %feature("docstring")  itk::simple::LabelStatisticsImageFilter::HasLabel "
-bool itk::simple::LabelStatisticsImageFilter::HasLabel(const LabelIdentifierType labelCode) const
 ";
 
 %feature("docstring")  itk::simple::LabelStatisticsImageFilter::LabelStatisticsImageFilter "
-itk::simple::LabelStatisticsImageFilter::LabelStatisticsImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -13847,7 +12267,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::LabelStatisticsImageFilter::ToString "
-std::string itk::simple::LabelStatisticsImageFilter::ToString() const
 ";
 
 
@@ -13878,35 +12297,30 @@ C++ includes: sitkLabelToRGBImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::LabelToRGBImageFilter::Execute "
-Image itk::simple::LabelToRGBImageFilter::Execute(const Image &image1, double backgroundValue)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::LabelToRGBImageFilter::Execute "
-Image itk::simple::LabelToRGBImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::LabelToRGBImageFilter::GetBackgroundValue "
-double itk::simple::LabelToRGBImageFilter::GetBackgroundValue()
 
 Set/Get the background value.
 
 ";
 
 %feature("docstring")  itk::simple::LabelToRGBImageFilter::GetName "
-std::string itk::simple::LabelToRGBImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::LabelToRGBImageFilter::LabelToRGBImageFilter "
-itk::simple::LabelToRGBImageFilter::LabelToRGBImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -13914,14 +12328,12 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::LabelToRGBImageFilter::SetBackgroundValue "
-Self& itk::simple::LabelToRGBImageFilter::SetBackgroundValue(double BackgroundValue)
 
 Set/Get the background value.
 
 ";
 
 %feature("docstring")  itk::simple::LabelToRGBImageFilter::ToString "
-std::string itk::simple::LabelToRGBImageFilter::ToString() const
 
 Print ourselves out
 
@@ -13965,59 +12377,45 @@ C++ includes: sitkLandweberDeconvolutionImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::LandweberDeconvolutionImageFilter::Execute "
-Image itk::simple::LandweberDeconvolutionImageFilter::Execute(const Image &image1, const Image &image2, double alpha, int
-numberOfIterations, bool normalize,
-LandweberDeconvolutionImageFilter::BoundaryConditionType
-boundaryCondition,
-LandweberDeconvolutionImageFilter::OutputRegionModeType
-outputRegionMode)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::LandweberDeconvolutionImageFilter::Execute "
-Image itk::simple::LandweberDeconvolutionImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::LandweberDeconvolutionImageFilter::GetAlpha "
-double itk::simple::LandweberDeconvolutionImageFilter::GetAlpha()
 
 Set/get relaxation factor.
 
 ";
 
 %feature("docstring")  itk::simple::LandweberDeconvolutionImageFilter::GetBoundaryCondition "
-LandweberDeconvolutionImageFilter::BoundaryConditionType itk::simple::LandweberDeconvolutionImageFilter::GetBoundaryCondition()
 ";
 
 %feature("docstring")  itk::simple::LandweberDeconvolutionImageFilter::GetName "
-std::string itk::simple::LandweberDeconvolutionImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::LandweberDeconvolutionImageFilter::GetNormalize "
-bool itk::simple::LandweberDeconvolutionImageFilter::GetNormalize()
 ";
 
 %feature("docstring")  itk::simple::LandweberDeconvolutionImageFilter::GetNumberOfIterations "
-int itk::simple::LandweberDeconvolutionImageFilter::GetNumberOfIterations()
 
 Get the number of iterations.
 
 ";
 
 %feature("docstring")  itk::simple::LandweberDeconvolutionImageFilter::GetOutputRegionMode "
-LandweberDeconvolutionImageFilter::OutputRegionModeType itk::simple::LandweberDeconvolutionImageFilter::GetOutputRegionMode()
 ";
 
 %feature("docstring")  itk::simple::LandweberDeconvolutionImageFilter::LandweberDeconvolutionImageFilter "
-itk::simple::LandweberDeconvolutionImageFilter::LandweberDeconvolutionImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -14025,49 +12423,39 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::LandweberDeconvolutionImageFilter::NormalizeOff "
-Self& itk::simple::LandweberDeconvolutionImageFilter::NormalizeOff()
 ";
 
 %feature("docstring")  itk::simple::LandweberDeconvolutionImageFilter::NormalizeOn "
-Self& itk::simple::LandweberDeconvolutionImageFilter::NormalizeOn()
 
 Set the value of Normalize to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::LandweberDeconvolutionImageFilter::SetAlpha "
-Self& itk::simple::LandweberDeconvolutionImageFilter::SetAlpha(double Alpha)
 
 Set/get relaxation factor.
 
 ";
 
 %feature("docstring")  itk::simple::LandweberDeconvolutionImageFilter::SetBoundaryCondition "
-Self& itk::simple::LandweberDeconvolutionImageFilter::SetBoundaryCondition(LandweberDeconvolutionImageFilter::BoundaryConditionType
-BoundaryCondition)
 ";
 
 %feature("docstring")  itk::simple::LandweberDeconvolutionImageFilter::SetNormalize "
-Self& itk::simple::LandweberDeconvolutionImageFilter::SetNormalize(bool Normalize)
 
 Normalize the output image by the sum of the kernel components.
 
 ";
 
 %feature("docstring")  itk::simple::LandweberDeconvolutionImageFilter::SetNumberOfIterations "
-Self& itk::simple::LandweberDeconvolutionImageFilter::SetNumberOfIterations(int NumberOfIterations)
 
 Set the number of iterations.
 
 ";
 
 %feature("docstring")  itk::simple::LandweberDeconvolutionImageFilter::SetOutputRegionMode "
-Self& itk::simple::LandweberDeconvolutionImageFilter::SetOutputRegionMode(LandweberDeconvolutionImageFilter::OutputRegionModeType
-OutputRegionMode)
 ";
 
 %feature("docstring")  itk::simple::LandweberDeconvolutionImageFilter::ToString "
-std::string itk::simple::LandweberDeconvolutionImageFilter::ToString() const
 
 Print ourselves out
 
@@ -14124,28 +12512,24 @@ C++ includes: sitkLaplacianImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::LaplacianImageFilter::Execute "
-Image itk::simple::LaplacianImageFilter::Execute(const Image &image1, bool useImageSpacing)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::LaplacianImageFilter::Execute "
-Image itk::simple::LaplacianImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::LaplacianImageFilter::GetName "
-std::string itk::simple::LaplacianImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::LaplacianImageFilter::GetUseImageSpacing "
-bool itk::simple::LaplacianImageFilter::GetUseImageSpacing()
 
 Set/Get whether or not the filter will use the spacing of the input
 image in its calculations.
@@ -14153,7 +12537,6 @@ image in its calculations.
 ";
 
 %feature("docstring")  itk::simple::LaplacianImageFilter::LaplacianImageFilter "
-itk::simple::LaplacianImageFilter::LaplacianImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -14161,7 +12544,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::LaplacianImageFilter::SetUseImageSpacing "
-Self& itk::simple::LaplacianImageFilter::SetUseImageSpacing(bool UseImageSpacing)
 
 Set/Get whether or not the filter will use the spacing of the input
 image in its calculations.
@@ -14169,18 +12551,15 @@ image in its calculations.
 ";
 
 %feature("docstring")  itk::simple::LaplacianImageFilter::ToString "
-std::string itk::simple::LaplacianImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::LaplacianImageFilter::UseImageSpacingOff "
-Self& itk::simple::LaplacianImageFilter::UseImageSpacingOff()
 ";
 
 %feature("docstring")  itk::simple::LaplacianImageFilter::UseImageSpacingOn "
-Self& itk::simple::LaplacianImageFilter::UseImageSpacingOn()
 
 Set the value of UseImageSpacing to true or false respectfully.
 
@@ -14208,28 +12587,24 @@ C++ includes: sitkLaplacianRecursiveGaussianImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::LaplacianRecursiveGaussianImageFilter::Execute "
-Image itk::simple::LaplacianRecursiveGaussianImageFilter::Execute(const Image &image1, double sigma, bool normalizeAcrossScale)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::LaplacianRecursiveGaussianImageFilter::Execute "
-Image itk::simple::LaplacianRecursiveGaussianImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::LaplacianRecursiveGaussianImageFilter::GetName "
-std::string itk::simple::LaplacianRecursiveGaussianImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::LaplacianRecursiveGaussianImageFilter::GetNormalizeAcrossScale "
-bool itk::simple::LaplacianRecursiveGaussianImageFilter::GetNormalizeAcrossScale()
 
 Define which normalization factor will be used for the Gaussian.
 
@@ -14242,11 +12617,9 @@ See:
 ";
 
 %feature("docstring")  itk::simple::LaplacianRecursiveGaussianImageFilter::GetSigma "
-double itk::simple::LaplacianRecursiveGaussianImageFilter::GetSigma()
 ";
 
 %feature("docstring")  itk::simple::LaplacianRecursiveGaussianImageFilter::LaplacianRecursiveGaussianImageFilter "
-itk::simple::LaplacianRecursiveGaussianImageFilter::LaplacianRecursiveGaussianImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -14254,18 +12627,15 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::LaplacianRecursiveGaussianImageFilter::NormalizeAcrossScaleOff "
-Self& itk::simple::LaplacianRecursiveGaussianImageFilter::NormalizeAcrossScaleOff()
 ";
 
 %feature("docstring")  itk::simple::LaplacianRecursiveGaussianImageFilter::NormalizeAcrossScaleOn "
-Self& itk::simple::LaplacianRecursiveGaussianImageFilter::NormalizeAcrossScaleOn()
 
 Set the value of NormalizeAcrossScale to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::LaplacianRecursiveGaussianImageFilter::SetNormalizeAcrossScale "
-Self& itk::simple::LaplacianRecursiveGaussianImageFilter::SetNormalizeAcrossScale(bool NormalizeAcrossScale)
 
 Define which normalization factor will be used for the Gaussian.
 
@@ -14278,14 +12648,12 @@ See:
 ";
 
 %feature("docstring")  itk::simple::LaplacianRecursiveGaussianImageFilter::SetSigma "
-Self& itk::simple::LaplacianRecursiveGaussianImageFilter::SetSigma(double Sigma)
 
 Set Sigma value. Sigma is measured in the units of image spacing.
 
 ";
 
 %feature("docstring")  itk::simple::LaplacianRecursiveGaussianImageFilter::ToString "
-std::string itk::simple::LaplacianRecursiveGaussianImageFilter::ToString() const
 
 Print ourselves out
 
@@ -14366,27 +12734,21 @@ C++ includes: sitkLaplacianSegmentationLevelSetImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::LaplacianSegmentationLevelSetImageFilter::Execute "
-Image itk::simple::LaplacianSegmentationLevelSetImageFilter::Execute(const Image &image1, const Image &image2, double maximumRMSError,
-double propagationScaling, double curvatureScaling, uint32_t
-numberOfIterations, bool reverseExpansionDirection)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::LaplacianSegmentationLevelSetImageFilter::Execute "
-Image itk::simple::LaplacianSegmentationLevelSetImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::LaplacianSegmentationLevelSetImageFilter::GetCurvatureScaling "
-double itk::simple::LaplacianSegmentationLevelSetImageFilter::GetCurvatureScaling()
 ";
 
 %feature("docstring")  itk::simple::LaplacianSegmentationLevelSetImageFilter::GetElapsedIterations "
-uint32_t itk::simple::LaplacianSegmentationLevelSetImageFilter::GetElapsedIterations()
 
 Number of iterations run.
 
@@ -14397,30 +12759,24 @@ the value will only be valid after an execution.
 ";
 
 %feature("docstring")  itk::simple::LaplacianSegmentationLevelSetImageFilter::GetMaximumRMSError "
-double itk::simple::LaplacianSegmentationLevelSetImageFilter::GetMaximumRMSError()
 ";
 
 %feature("docstring")  itk::simple::LaplacianSegmentationLevelSetImageFilter::GetName "
-std::string itk::simple::LaplacianSegmentationLevelSetImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::LaplacianSegmentationLevelSetImageFilter::GetNumberOfIterations "
-uint32_t itk::simple::LaplacianSegmentationLevelSetImageFilter::GetNumberOfIterations()
 ";
 
 %feature("docstring")  itk::simple::LaplacianSegmentationLevelSetImageFilter::GetPropagationScaling "
-double itk::simple::LaplacianSegmentationLevelSetImageFilter::GetPropagationScaling()
 ";
 
 %feature("docstring")  itk::simple::LaplacianSegmentationLevelSetImageFilter::GetReverseExpansionDirection "
-bool itk::simple::LaplacianSegmentationLevelSetImageFilter::GetReverseExpansionDirection()
 ";
 
 %feature("docstring")  itk::simple::LaplacianSegmentationLevelSetImageFilter::GetRMSChange "
-double itk::simple::LaplacianSegmentationLevelSetImageFilter::GetRMSChange()
 
 The Root Mean Square of the levelset upon termination.
 
@@ -14431,7 +12787,6 @@ the value will only be valid after an execution.
 ";
 
 %feature("docstring")  itk::simple::LaplacianSegmentationLevelSetImageFilter::LaplacianSegmentationLevelSetImageFilter "
-itk::simple::LaplacianSegmentationLevelSetImageFilter::LaplacianSegmentationLevelSetImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -14439,11 +12794,9 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::LaplacianSegmentationLevelSetImageFilter::ReverseExpansionDirectionOff "
-Self& itk::simple::LaplacianSegmentationLevelSetImageFilter::ReverseExpansionDirectionOff()
 ";
 
 %feature("docstring")  itk::simple::LaplacianSegmentationLevelSetImageFilter::ReverseExpansionDirectionOn "
-Self& itk::simple::LaplacianSegmentationLevelSetImageFilter::ReverseExpansionDirectionOn()
 
 Set the value of ReverseExpansionDirection to true or false
 respectfully.
@@ -14451,27 +12804,21 @@ respectfully.
 ";
 
 %feature("docstring")  itk::simple::LaplacianSegmentationLevelSetImageFilter::SetCurvatureScaling "
-Self& itk::simple::LaplacianSegmentationLevelSetImageFilter::SetCurvatureScaling(double CurvatureScaling)
 ";
 
 %feature("docstring")  itk::simple::LaplacianSegmentationLevelSetImageFilter::SetMaximumRMSError "
-Self& itk::simple::LaplacianSegmentationLevelSetImageFilter::SetMaximumRMSError(double MaximumRMSError)
 ";
 
 %feature("docstring")  itk::simple::LaplacianSegmentationLevelSetImageFilter::SetNumberOfIterations "
-Self& itk::simple::LaplacianSegmentationLevelSetImageFilter::SetNumberOfIterations(uint32_t NumberOfIterations)
 ";
 
 %feature("docstring")  itk::simple::LaplacianSegmentationLevelSetImageFilter::SetPropagationScaling "
-Self& itk::simple::LaplacianSegmentationLevelSetImageFilter::SetPropagationScaling(double PropagationScaling)
 ";
 
 %feature("docstring")  itk::simple::LaplacianSegmentationLevelSetImageFilter::SetReverseExpansionDirection "
-Self& itk::simple::LaplacianSegmentationLevelSetImageFilter::SetReverseExpansionDirection(bool ReverseExpansionDirection)
 ";
 
 %feature("docstring")  itk::simple::LaplacianSegmentationLevelSetImageFilter::ToString "
-std::string itk::simple::LaplacianSegmentationLevelSetImageFilter::ToString() const
 
 Print ourselves out
 
@@ -14520,28 +12867,24 @@ C++ includes: sitkLaplacianSharpeningImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::LaplacianSharpeningImageFilter::Execute "
-Image itk::simple::LaplacianSharpeningImageFilter::Execute(const Image &image1, bool useImageSpacing)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::LaplacianSharpeningImageFilter::Execute "
-Image itk::simple::LaplacianSharpeningImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::LaplacianSharpeningImageFilter::GetName "
-std::string itk::simple::LaplacianSharpeningImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::LaplacianSharpeningImageFilter::GetUseImageSpacing "
-bool itk::simple::LaplacianSharpeningImageFilter::GetUseImageSpacing()
 
 Set/Get whether or not the filter will use the spacing of the input
 image in its calculations.
@@ -14549,7 +12892,6 @@ image in its calculations.
 ";
 
 %feature("docstring")  itk::simple::LaplacianSharpeningImageFilter::LaplacianSharpeningImageFilter "
-itk::simple::LaplacianSharpeningImageFilter::LaplacianSharpeningImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -14557,7 +12899,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::LaplacianSharpeningImageFilter::SetUseImageSpacing "
-Self& itk::simple::LaplacianSharpeningImageFilter::SetUseImageSpacing(bool UseImageSpacing)
 
 Set/Get whether or not the filter will use the spacing of the input
 image in its calculations.
@@ -14565,18 +12906,15 @@ image in its calculations.
 ";
 
 %feature("docstring")  itk::simple::LaplacianSharpeningImageFilter::ToString "
-std::string itk::simple::LaplacianSharpeningImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::LaplacianSharpeningImageFilter::UseImageSpacingOff "
-Self& itk::simple::LaplacianSharpeningImageFilter::UseImageSpacingOff()
 ";
 
 %feature("docstring")  itk::simple::LaplacianSharpeningImageFilter::UseImageSpacingOn "
-Self& itk::simple::LaplacianSharpeningImageFilter::UseImageSpacingOn()
 
 Set the value of UseImageSpacing to true or false respectfully.
 
@@ -14594,13 +12932,9 @@ C++ includes: sitkLessEqualImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::LessEqualImageFilter::Execute "
-Image itk::simple::LessEqualImageFilter::Execute(double constant, const Image &image2, uint8_t backgroundValue,
-uint8_t foregroundValue)
 ";
 
 %feature("docstring")  itk::simple::LessEqualImageFilter::Execute "
-Image itk::simple::LessEqualImageFilter::Execute(const Image &image1, double constant, uint8_t backgroundValue,
-uint8_t foregroundValue)
 
 Execute the filter on an image and a constant with the given
 parameters
@@ -14608,54 +12942,45 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::LessEqualImageFilter::Execute "
-Image itk::simple::LessEqualImageFilter::Execute(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::LessEqualImageFilter::Execute "
-Image itk::simple::LessEqualImageFilter::Execute(const Image &image1, double constant)
 
 Execute the filter with an image and a constant
 
 ";
 
 %feature("docstring")  itk::simple::LessEqualImageFilter::Execute "
-Image itk::simple::LessEqualImageFilter::Execute(const Image &image1, const Image &image2, uint8_t backgroundValue,
-uint8_t foregroundValue)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::LessEqualImageFilter::Execute "
-Image itk::simple::LessEqualImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::LessEqualImageFilter::GetBackgroundValue "
-uint8_t itk::simple::LessEqualImageFilter::GetBackgroundValue()
 
 Set/Get the value used to mark the false pixels of the operator.
 
 ";
 
 %feature("docstring")  itk::simple::LessEqualImageFilter::GetForegroundValue "
-uint8_t itk::simple::LessEqualImageFilter::GetForegroundValue()
 
 Set/Get the value used to mark the true pixels of the operator.
 
 ";
 
 %feature("docstring")  itk::simple::LessEqualImageFilter::GetName "
-std::string itk::simple::LessEqualImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::LessEqualImageFilter::LessEqualImageFilter "
-itk::simple::LessEqualImageFilter::LessEqualImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -14663,21 +12988,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::LessEqualImageFilter::SetBackgroundValue "
-Self& itk::simple::LessEqualImageFilter::SetBackgroundValue(uint8_t BackgroundValue)
 
 Set/Get the value used to mark the false pixels of the operator.
 
 ";
 
 %feature("docstring")  itk::simple::LessEqualImageFilter::SetForegroundValue "
-Self& itk::simple::LessEqualImageFilter::SetForegroundValue(uint8_t ForegroundValue)
 
 Set/Get the value used to mark the true pixels of the operator.
 
 ";
 
 %feature("docstring")  itk::simple::LessEqualImageFilter::ToString "
-std::string itk::simple::LessEqualImageFilter::ToString() const
 
 Print ourselves out
 
@@ -14695,13 +13017,9 @@ C++ includes: sitkLessImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::LessImageFilter::Execute "
-Image itk::simple::LessImageFilter::Execute(double constant, const Image &image2, uint8_t backgroundValue,
-uint8_t foregroundValue)
 ";
 
 %feature("docstring")  itk::simple::LessImageFilter::Execute "
-Image itk::simple::LessImageFilter::Execute(const Image &image1, double constant, uint8_t backgroundValue,
-uint8_t foregroundValue)
 
 Execute the filter on an image and a constant with the given
 parameters
@@ -14709,54 +13027,45 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::LessImageFilter::Execute "
-Image itk::simple::LessImageFilter::Execute(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::LessImageFilter::Execute "
-Image itk::simple::LessImageFilter::Execute(const Image &image1, double constant)
 
 Execute the filter with an image and a constant
 
 ";
 
 %feature("docstring")  itk::simple::LessImageFilter::Execute "
-Image itk::simple::LessImageFilter::Execute(const Image &image1, const Image &image2, uint8_t backgroundValue,
-uint8_t foregroundValue)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::LessImageFilter::Execute "
-Image itk::simple::LessImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::LessImageFilter::GetBackgroundValue "
-uint8_t itk::simple::LessImageFilter::GetBackgroundValue()
 
 Set/Get the value used to mark the false pixels of the operator.
 
 ";
 
 %feature("docstring")  itk::simple::LessImageFilter::GetForegroundValue "
-uint8_t itk::simple::LessImageFilter::GetForegroundValue()
 
 Set/Get the value used to mark the true pixels of the operator.
 
 ";
 
 %feature("docstring")  itk::simple::LessImageFilter::GetName "
-std::string itk::simple::LessImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::LessImageFilter::LessImageFilter "
-itk::simple::LessImageFilter::LessImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -14764,21 +13073,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::LessImageFilter::SetBackgroundValue "
-Self& itk::simple::LessImageFilter::SetBackgroundValue(uint8_t BackgroundValue)
 
 Set/Get the value used to mark the false pixels of the operator.
 
 ";
 
 %feature("docstring")  itk::simple::LessImageFilter::SetForegroundValue "
-Self& itk::simple::LessImageFilter::SetForegroundValue(uint8_t ForegroundValue)
 
 Set/Get the value used to mark the true pixels of the operator.
 
 ";
 
 %feature("docstring")  itk::simple::LessImageFilter::ToString "
-std::string itk::simple::LessImageFilter::ToString() const
 
 Print ourselves out
 
@@ -14811,47 +13117,39 @@ C++ includes: sitkLiThresholdImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::LiThresholdImageFilter::Execute "
-Image itk::simple::LiThresholdImageFilter::Execute(const Image &image1, uint8_t insideValue, uint8_t outsideValue,
-uint32_t numberOfHistogramBins)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::LiThresholdImageFilter::Execute "
-Image itk::simple::LiThresholdImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::LiThresholdImageFilter::GetInsideValue "
-uint8_t itk::simple::LiThresholdImageFilter::GetInsideValue()
 
 Get the \"inside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::LiThresholdImageFilter::GetName "
-std::string itk::simple::LiThresholdImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::LiThresholdImageFilter::GetNumberOfHistogramBins "
-uint32_t itk::simple::LiThresholdImageFilter::GetNumberOfHistogramBins()
 ";
 
 %feature("docstring")  itk::simple::LiThresholdImageFilter::GetOutsideValue "
-uint8_t itk::simple::LiThresholdImageFilter::GetOutsideValue()
 
 Get the \"outside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::LiThresholdImageFilter::LiThresholdImageFilter "
-itk::simple::LiThresholdImageFilter::LiThresholdImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -14859,21 +13157,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::LiThresholdImageFilter::SetInsideValue "
-Self& itk::simple::LiThresholdImageFilter::SetInsideValue(uint8_t InsideValue)
 
 Set the \"inside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::LiThresholdImageFilter::SetNumberOfHistogramBins "
-Self& itk::simple::LiThresholdImageFilter::SetNumberOfHistogramBins(uint32_t NumberOfHistogramBins)
 
 Set/Get the number of histogram bins.
 
 ";
 
 %feature("docstring")  itk::simple::LiThresholdImageFilter::SetOutsideValue "
-Self& itk::simple::LiThresholdImageFilter::SetOutsideValue(uint8_t OutsideValue)
 
 Set the \"outside\" pixel value. The default value
 NumericTraits<OutputPixelType>::Zero.
@@ -14881,7 +13176,6 @@ NumericTraits<OutputPixelType>::Zero.
 ";
 
 %feature("docstring")  itk::simple::LiThresholdImageFilter::ToString "
-std::string itk::simple::LiThresholdImageFilter::ToString() const
 
 Print ourselves out
 
@@ -14904,21 +13198,18 @@ C++ includes: sitkLog10ImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::Log10ImageFilter::Execute "
-Image itk::simple::Log10ImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::Log10ImageFilter::GetName "
-std::string itk::simple::Log10ImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::Log10ImageFilter::Log10ImageFilter "
-itk::simple::Log10ImageFilter::Log10ImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -14926,7 +13217,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::Log10ImageFilter::ToString "
-std::string itk::simple::Log10ImageFilter::ToString() const
 
 Print ourselves out
 
@@ -14947,21 +13237,18 @@ C++ includes: sitkLogImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::LogImageFilter::Execute "
-Image itk::simple::LogImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::LogImageFilter::GetName "
-std::string itk::simple::LogImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::LogImageFilter::LogImageFilter "
-itk::simple::LogImageFilter::LogImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -14969,7 +13256,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::LogImageFilter::ToString "
-std::string itk::simple::LogImageFilter::ToString() const
 
 Print ourselves out
 
@@ -14995,32 +13281,27 @@ C++ includes: sitkMagnitudeAndPhaseToComplexImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::MagnitudeAndPhaseToComplexImageFilter::Execute "
-Image itk::simple::MagnitudeAndPhaseToComplexImageFilter::Execute(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::MagnitudeAndPhaseToComplexImageFilter::Execute "
-Image itk::simple::MagnitudeAndPhaseToComplexImageFilter::Execute(const Image &image1, double constant)
 
 Execute the filter with an image and a constant
 
 ";
 
 %feature("docstring")  itk::simple::MagnitudeAndPhaseToComplexImageFilter::Execute "
-Image itk::simple::MagnitudeAndPhaseToComplexImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::MagnitudeAndPhaseToComplexImageFilter::GetName "
-std::string itk::simple::MagnitudeAndPhaseToComplexImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::MagnitudeAndPhaseToComplexImageFilter::MagnitudeAndPhaseToComplexImageFilter "
-itk::simple::MagnitudeAndPhaseToComplexImageFilter::MagnitudeAndPhaseToComplexImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -15028,7 +13309,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::MagnitudeAndPhaseToComplexImageFilter::ToString "
-std::string itk::simple::MagnitudeAndPhaseToComplexImageFilter::ToString() const
 
 Print ourselves out
 
@@ -15068,32 +13348,27 @@ C++ includes: sitkMaskImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::MaskImageFilter::Execute "
-Image itk::simple::MaskImageFilter::Execute(const Image &image1, const Image &image2, double outsideValue)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::MaskImageFilter::Execute "
-Image itk::simple::MaskImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::MaskImageFilter::GetName "
-std::string itk::simple::MaskImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::MaskImageFilter::GetOutsideValue "
-double itk::simple::MaskImageFilter::GetOutsideValue()
 ";
 
 %feature("docstring")  itk::simple::MaskImageFilter::MaskImageFilter "
-itk::simple::MaskImageFilter::MaskImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -15101,14 +13376,12 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::MaskImageFilter::SetOutsideValue "
-Self& itk::simple::MaskImageFilter::SetOutsideValue(double OutsideValue)
 
 Method to explicitly set the outside value of the mask. Defaults to 0.
 
 ";
 
 %feature("docstring")  itk::simple::MaskImageFilter::ToString "
-std::string itk::simple::MaskImageFilter::ToString() const
 
 Print ourselves out
 
@@ -15148,21 +13421,18 @@ C++ includes: sitkMaskNegatedImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::MaskNegatedImageFilter::Execute "
-Image itk::simple::MaskNegatedImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::MaskNegatedImageFilter::GetName "
-std::string itk::simple::MaskNegatedImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::MaskNegatedImageFilter::MaskNegatedImageFilter "
-itk::simple::MaskNegatedImageFilter::MaskNegatedImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -15170,7 +13440,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::MaskNegatedImageFilter::ToString "
-std::string itk::simple::MaskNegatedImageFilter::ToString() const
 
 Print ourselves out
 
@@ -15251,37 +13520,30 @@ C++ includes: sitkMaskedFFTNormalizedCorrelationImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::MaskedFFTNormalizedCorrelationImageFilter::Execute "
-Image itk::simple::MaskedFFTNormalizedCorrelationImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4, uint64_t requiredNumberOfOverlappingPixels)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::MaskedFFTNormalizedCorrelationImageFilter::Execute "
-Image itk::simple::MaskedFFTNormalizedCorrelationImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::MaskedFFTNormalizedCorrelationImageFilter::GetName "
-std::string itk::simple::MaskedFFTNormalizedCorrelationImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::MaskedFFTNormalizedCorrelationImageFilter::GetRequiredNumberOfOverlappingPixels "
-uint64_t itk::simple::MaskedFFTNormalizedCorrelationImageFilter::GetRequiredNumberOfOverlappingPixels()
 
 Set and get the required percentage of overlapping pixels.
 
 ";
 
 %feature("docstring")  itk::simple::MaskedFFTNormalizedCorrelationImageFilter::MaskedFFTNormalizedCorrelationImageFilter "
-itk::simple::MaskedFFTNormalizedCorrelationImageFilter::MaskedFFTNormalizedCorrelationImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -15289,14 +13551,12 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::MaskedFFTNormalizedCorrelationImageFilter::SetRequiredNumberOfOverlappingPixels "
-Self& itk::simple::MaskedFFTNormalizedCorrelationImageFilter::SetRequiredNumberOfOverlappingPixels(uint64_t RequiredNumberOfOverlappingPixels)
 
 Set and get the required percentage of overlapping pixels.
 
 ";
 
 %feature("docstring")  itk::simple::MaskedFFTNormalizedCorrelationImageFilter::ToString "
-std::string itk::simple::MaskedFFTNormalizedCorrelationImageFilter::ToString() const
 
 Print ourselves out
 
@@ -15329,47 +13589,39 @@ C++ includes: sitkMaximumEntropyThresholdImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::MaximumEntropyThresholdImageFilter::Execute "
-Image itk::simple::MaximumEntropyThresholdImageFilter::Execute(const Image &image1, uint8_t insideValue, uint8_t outsideValue,
-uint32_t numberOfHistogramBins)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::MaximumEntropyThresholdImageFilter::Execute "
-Image itk::simple::MaximumEntropyThresholdImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::MaximumEntropyThresholdImageFilter::GetInsideValue "
-uint8_t itk::simple::MaximumEntropyThresholdImageFilter::GetInsideValue()
 
 Get the \"inside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::MaximumEntropyThresholdImageFilter::GetName "
-std::string itk::simple::MaximumEntropyThresholdImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::MaximumEntropyThresholdImageFilter::GetNumberOfHistogramBins "
-uint32_t itk::simple::MaximumEntropyThresholdImageFilter::GetNumberOfHistogramBins()
 ";
 
 %feature("docstring")  itk::simple::MaximumEntropyThresholdImageFilter::GetOutsideValue "
-uint8_t itk::simple::MaximumEntropyThresholdImageFilter::GetOutsideValue()
 
 Get the \"outside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::MaximumEntropyThresholdImageFilter::MaximumEntropyThresholdImageFilter "
-itk::simple::MaximumEntropyThresholdImageFilter::MaximumEntropyThresholdImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -15377,21 +13629,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::MaximumEntropyThresholdImageFilter::SetInsideValue "
-Self& itk::simple::MaximumEntropyThresholdImageFilter::SetInsideValue(uint8_t InsideValue)
 
 Set the \"inside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::MaximumEntropyThresholdImageFilter::SetNumberOfHistogramBins "
-Self& itk::simple::MaximumEntropyThresholdImageFilter::SetNumberOfHistogramBins(uint32_t NumberOfHistogramBins)
 
 Set/Get the number of histogram bins.
 
 ";
 
 %feature("docstring")  itk::simple::MaximumEntropyThresholdImageFilter::SetOutsideValue "
-Self& itk::simple::MaximumEntropyThresholdImageFilter::SetOutsideValue(uint8_t OutsideValue)
 
 Set the \"outside\" pixel value. The default value
 NumericTraits<OutputPixelType>::Zero.
@@ -15399,7 +13648,6 @@ NumericTraits<OutputPixelType>::Zero.
 ";
 
 %feature("docstring")  itk::simple::MaximumEntropyThresholdImageFilter::ToString "
-std::string itk::simple::MaximumEntropyThresholdImageFilter::ToString() const
 
 Print ourselves out
 
@@ -15429,32 +13677,27 @@ C++ includes: sitkMaximumImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::MaximumImageFilter::Execute "
-Image itk::simple::MaximumImageFilter::Execute(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::MaximumImageFilter::Execute "
-Image itk::simple::MaximumImageFilter::Execute(const Image &image1, double constant)
 
 Execute the filter with an image and a constant
 
 ";
 
 %feature("docstring")  itk::simple::MaximumImageFilter::Execute "
-Image itk::simple::MaximumImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::MaximumImageFilter::GetName "
-std::string itk::simple::MaximumImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::MaximumImageFilter::MaximumImageFilter "
-itk::simple::MaximumImageFilter::MaximumImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -15462,7 +13705,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::MaximumImageFilter::ToString "
-std::string itk::simple::MaximumImageFilter::ToString() const
 
 Print ourselves out
 
@@ -15507,32 +13749,27 @@ C++ includes: sitkMaximumProjectionImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::MaximumProjectionImageFilter::Execute "
-Image itk::simple::MaximumProjectionImageFilter::Execute(const Image &image1, unsigned int projectionDimension)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::MaximumProjectionImageFilter::Execute "
-Image itk::simple::MaximumProjectionImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::MaximumProjectionImageFilter::GetName "
-std::string itk::simple::MaximumProjectionImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::MaximumProjectionImageFilter::GetProjectionDimension "
-unsigned int itk::simple::MaximumProjectionImageFilter::GetProjectionDimension()
 ";
 
 %feature("docstring")  itk::simple::MaximumProjectionImageFilter::MaximumProjectionImageFilter "
-itk::simple::MaximumProjectionImageFilter::MaximumProjectionImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -15540,11 +13777,9 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::MaximumProjectionImageFilter::SetProjectionDimension "
-Self& itk::simple::MaximumProjectionImageFilter::SetProjectionDimension(unsigned int ProjectionDimension)
 ";
 
 %feature("docstring")  itk::simple::MaximumProjectionImageFilter::ToString "
-std::string itk::simple::MaximumProjectionImageFilter::ToString() const
 
 Print ourselves out
 
@@ -15584,32 +13819,27 @@ C++ includes: sitkMeanImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::MeanImageFilter::Execute "
-Image itk::simple::MeanImageFilter::Execute(const Image &image1, std::vector< unsigned int > radius)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::MeanImageFilter::Execute "
-Image itk::simple::MeanImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::MeanImageFilter::GetName "
-std::string itk::simple::MeanImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::MeanImageFilter::GetRadius "
-std::vector<unsigned int> itk::simple::MeanImageFilter::GetRadius()
 ";
 
 %feature("docstring")  itk::simple::MeanImageFilter::MeanImageFilter "
-itk::simple::MeanImageFilter::MeanImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -15617,18 +13847,15 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::MeanImageFilter::SetRadius "
-Self& itk::simple::MeanImageFilter::SetRadius(std::vector< unsigned int > Radius)
 ";
 
 %feature("docstring")  itk::simple::MeanImageFilter::SetRadius "
-Self& itk::simple::MeanImageFilter::SetRadius(unsigned int r)
 
 Custom public declarations
 
 ";
 
 %feature("docstring")  itk::simple::MeanImageFilter::ToString "
-std::string itk::simple::MeanImageFilter::ToString() const
 
 Print ourselves out
 
@@ -15673,32 +13900,27 @@ C++ includes: sitkMeanProjectionImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::MeanProjectionImageFilter::Execute "
-Image itk::simple::MeanProjectionImageFilter::Execute(const Image &image1, unsigned int projectionDimension)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::MeanProjectionImageFilter::Execute "
-Image itk::simple::MeanProjectionImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::MeanProjectionImageFilter::GetName "
-std::string itk::simple::MeanProjectionImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::MeanProjectionImageFilter::GetProjectionDimension "
-unsigned int itk::simple::MeanProjectionImageFilter::GetProjectionDimension()
 ";
 
 %feature("docstring")  itk::simple::MeanProjectionImageFilter::MeanProjectionImageFilter "
-itk::simple::MeanProjectionImageFilter::MeanProjectionImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -15706,11 +13928,9 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::MeanProjectionImageFilter::SetProjectionDimension "
-Self& itk::simple::MeanProjectionImageFilter::SetProjectionDimension(unsigned int ProjectionDimension)
 ";
 
 %feature("docstring")  itk::simple::MeanProjectionImageFilter::ToString "
-std::string itk::simple::MeanProjectionImageFilter::ToString() const
 
 Print ourselves out
 
@@ -15727,27 +13947,21 @@ C++ includes: sitkMeasurementMap.h
 ";
 
 %feature("docstring")  itk::simple::MeasurementMap::GetBasicMeasurementMap "
-BasicMeasurementMap itk::simple::MeasurementMap::GetBasicMeasurementMap() const
 ";
 
 %feature("docstring")  itk::simple::MeasurementMap::GetVectorOfMeasurementNames "
-LabelListType itk::simple::MeasurementMap::GetVectorOfMeasurementNames() const
 ";
 
 %feature("docstring")  itk::simple::MeasurementMap::GetVectorOfMeasurementValues "
-ValueListType itk::simple::MeasurementMap::GetVectorOfMeasurementValues() const
 ";
 
 %feature("docstring")  itk::simple::MeasurementMap::MeasurementMap "
-itk::simple::MeasurementMap::MeasurementMap()
 ";
 
 %feature("docstring")  itk::simple::MeasurementMap::ToStream "
-void itk::simple::MeasurementMap::ToStream(std::ostream &) const
 ";
 
 %feature("docstring")  itk::simple::MeasurementMap::ToString "
-std::string itk::simple::MeasurementMap::ToString() const
 ";
 
 
@@ -15789,32 +14003,27 @@ C++ includes: sitkMedianImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::MedianImageFilter::Execute "
-Image itk::simple::MedianImageFilter::Execute(const Image &image1, std::vector< unsigned int > radius)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::MedianImageFilter::Execute "
-Image itk::simple::MedianImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::MedianImageFilter::GetName "
-std::string itk::simple::MedianImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::MedianImageFilter::GetRadius "
-std::vector<unsigned int> itk::simple::MedianImageFilter::GetRadius()
 ";
 
 %feature("docstring")  itk::simple::MedianImageFilter::MedianImageFilter "
-itk::simple::MedianImageFilter::MedianImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -15822,18 +14031,15 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::MedianImageFilter::SetRadius "
-Self& itk::simple::MedianImageFilter::SetRadius(std::vector< unsigned int > Radius)
 ";
 
 %feature("docstring")  itk::simple::MedianImageFilter::SetRadius "
-Self& itk::simple::MedianImageFilter::SetRadius(unsigned int r)
 
 Custom public declarations
 
 ";
 
 %feature("docstring")  itk::simple::MedianImageFilter::ToString "
-std::string itk::simple::MedianImageFilter::ToString() const
 
 Print ourselves out
 
@@ -15878,32 +14084,27 @@ C++ includes: sitkMedianProjectionImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::MedianProjectionImageFilter::Execute "
-Image itk::simple::MedianProjectionImageFilter::Execute(const Image &image1, unsigned int projectionDimension)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::MedianProjectionImageFilter::Execute "
-Image itk::simple::MedianProjectionImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::MedianProjectionImageFilter::GetName "
-std::string itk::simple::MedianProjectionImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::MedianProjectionImageFilter::GetProjectionDimension "
-unsigned int itk::simple::MedianProjectionImageFilter::GetProjectionDimension()
 ";
 
 %feature("docstring")  itk::simple::MedianProjectionImageFilter::MedianProjectionImageFilter "
-itk::simple::MedianProjectionImageFilter::MedianProjectionImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -15911,11 +14112,9 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::MedianProjectionImageFilter::SetProjectionDimension "
-Self& itk::simple::MedianProjectionImageFilter::SetProjectionDimension(unsigned int ProjectionDimension)
 ";
 
 %feature("docstring")  itk::simple::MedianProjectionImageFilter::ToString "
-std::string itk::simple::MedianProjectionImageFilter::ToString() const
 
 Print ourselves out
 
@@ -15964,44 +14163,36 @@ C++ includes: sitkMinMaxCurvatureFlowImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::MinMaxCurvatureFlowImageFilter::Execute "
-Image itk::simple::MinMaxCurvatureFlowImageFilter::Execute(const Image &image1, double timeStep, uint32_t numberOfIterations,
-int stencilRadius)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::MinMaxCurvatureFlowImageFilter::Execute "
-Image itk::simple::MinMaxCurvatureFlowImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::MinMaxCurvatureFlowImageFilter::GetName "
-std::string itk::simple::MinMaxCurvatureFlowImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::MinMaxCurvatureFlowImageFilter::GetNumberOfIterations "
-uint32_t itk::simple::MinMaxCurvatureFlowImageFilter::GetNumberOfIterations()
 ";
 
 %feature("docstring")  itk::simple::MinMaxCurvatureFlowImageFilter::GetStencilRadius "
-int itk::simple::MinMaxCurvatureFlowImageFilter::GetStencilRadius()
 
 Set/Get the stencil radius.
 
 ";
 
 %feature("docstring")  itk::simple::MinMaxCurvatureFlowImageFilter::GetTimeStep "
-double itk::simple::MinMaxCurvatureFlowImageFilter::GetTimeStep()
 ";
 
 %feature("docstring")  itk::simple::MinMaxCurvatureFlowImageFilter::MinMaxCurvatureFlowImageFilter "
-itk::simple::MinMaxCurvatureFlowImageFilter::MinMaxCurvatureFlowImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -16009,22 +14200,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::MinMaxCurvatureFlowImageFilter::SetNumberOfIterations "
-Self& itk::simple::MinMaxCurvatureFlowImageFilter::SetNumberOfIterations(uint32_t NumberOfIterations)
 ";
 
 %feature("docstring")  itk::simple::MinMaxCurvatureFlowImageFilter::SetStencilRadius "
-Self& itk::simple::MinMaxCurvatureFlowImageFilter::SetStencilRadius(int StencilRadius)
 
 Set/Get the stencil radius.
 
 ";
 
 %feature("docstring")  itk::simple::MinMaxCurvatureFlowImageFilter::SetTimeStep "
-Self& itk::simple::MinMaxCurvatureFlowImageFilter::SetTimeStep(double TimeStep)
 ";
 
 %feature("docstring")  itk::simple::MinMaxCurvatureFlowImageFilter::ToString "
-std::string itk::simple::MinMaxCurvatureFlowImageFilter::ToString() const
 
 Print ourselves out
 
@@ -16054,32 +14241,27 @@ C++ includes: sitkMinimumImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::MinimumImageFilter::Execute "
-Image itk::simple::MinimumImageFilter::Execute(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::MinimumImageFilter::Execute "
-Image itk::simple::MinimumImageFilter::Execute(const Image &image1, double constant)
 
 Execute the filter with an image and a constant
 
 ";
 
 %feature("docstring")  itk::simple::MinimumImageFilter::Execute "
-Image itk::simple::MinimumImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::MinimumImageFilter::GetName "
-std::string itk::simple::MinimumImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::MinimumImageFilter::MinimumImageFilter "
-itk::simple::MinimumImageFilter::MinimumImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -16087,7 +14269,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::MinimumImageFilter::ToString "
-std::string itk::simple::MinimumImageFilter::ToString() const
 
 Print ourselves out
 
@@ -16112,14 +14293,12 @@ C++ includes: sitkMinimumMaximumImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::MinimumMaximumImageFilter::Execute "
-Image itk::simple::MinimumMaximumImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::MinimumMaximumImageFilter::GetMaximum "
-double itk::simple::MinimumMaximumImageFilter::GetMaximum()
 
 The maximum value in the image.
 
@@ -16130,7 +14309,6 @@ the value will only be valid after an execution.
 ";
 
 %feature("docstring")  itk::simple::MinimumMaximumImageFilter::GetMinimum "
-double itk::simple::MinimumMaximumImageFilter::GetMinimum()
 
 The minimum value in the image.
 
@@ -16141,14 +14319,12 @@ the value will only be valid after an execution.
 ";
 
 %feature("docstring")  itk::simple::MinimumMaximumImageFilter::GetName "
-std::string itk::simple::MinimumMaximumImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::MinimumMaximumImageFilter::MinimumMaximumImageFilter "
-itk::simple::MinimumMaximumImageFilter::MinimumMaximumImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -16156,7 +14332,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::MinimumMaximumImageFilter::ToString "
-std::string itk::simple::MinimumMaximumImageFilter::ToString() const
 
 Print ourselves out
 
@@ -16198,32 +14373,27 @@ C++ includes: sitkMinimumProjectionImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::MinimumProjectionImageFilter::Execute "
-Image itk::simple::MinimumProjectionImageFilter::Execute(const Image &image1, unsigned int projectionDimension)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::MinimumProjectionImageFilter::Execute "
-Image itk::simple::MinimumProjectionImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::MinimumProjectionImageFilter::GetName "
-std::string itk::simple::MinimumProjectionImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::MinimumProjectionImageFilter::GetProjectionDimension "
-unsigned int itk::simple::MinimumProjectionImageFilter::GetProjectionDimension()
 ";
 
 %feature("docstring")  itk::simple::MinimumProjectionImageFilter::MinimumProjectionImageFilter "
-itk::simple::MinimumProjectionImageFilter::MinimumProjectionImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -16231,11 +14401,9 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::MinimumProjectionImageFilter::SetProjectionDimension "
-Self& itk::simple::MinimumProjectionImageFilter::SetProjectionDimension(unsigned int ProjectionDimension)
 ";
 
 %feature("docstring")  itk::simple::MinimumProjectionImageFilter::ToString "
-std::string itk::simple::MinimumProjectionImageFilter::ToString() const
 
 Print ourselves out
 
@@ -16273,37 +14441,30 @@ C++ includes: sitkMirrorPadImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::MirrorPadImageFilter::Execute "
-Image itk::simple::MirrorPadImageFilter::Execute(const Image &image1, std::vector< unsigned int > padLowerBound,
-std::vector< unsigned int > padUpperBound)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::MirrorPadImageFilter::Execute "
-Image itk::simple::MirrorPadImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::MirrorPadImageFilter::GetName "
-std::string itk::simple::MirrorPadImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::MirrorPadImageFilter::GetPadLowerBound "
-std::vector<unsigned int> itk::simple::MirrorPadImageFilter::GetPadLowerBound()
 ";
 
 %feature("docstring")  itk::simple::MirrorPadImageFilter::GetPadUpperBound "
-std::vector<unsigned int> itk::simple::MirrorPadImageFilter::GetPadUpperBound()
 ";
 
 %feature("docstring")  itk::simple::MirrorPadImageFilter::MirrorPadImageFilter "
-itk::simple::MirrorPadImageFilter::MirrorPadImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -16311,15 +14472,12 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::MirrorPadImageFilter::SetPadLowerBound "
-Self& itk::simple::MirrorPadImageFilter::SetPadLowerBound(std::vector< unsigned int > PadLowerBound)
 ";
 
 %feature("docstring")  itk::simple::MirrorPadImageFilter::SetPadUpperBound "
-Self& itk::simple::MirrorPadImageFilter::SetPadUpperBound(std::vector< unsigned int > PadUpperBound)
 ";
 
 %feature("docstring")  itk::simple::MirrorPadImageFilter::ToString "
-std::string itk::simple::MirrorPadImageFilter::ToString() const
 
 Print ourselves out
 
@@ -16343,32 +14501,27 @@ C++ includes: sitkModulusImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ModulusImageFilter::Execute "
-Image itk::simple::ModulusImageFilter::Execute(uint32_t constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::ModulusImageFilter::Execute "
-Image itk::simple::ModulusImageFilter::Execute(const Image &image1, uint32_t constant)
 
 Execute the filter with an image and a constant
 
 ";
 
 %feature("docstring")  itk::simple::ModulusImageFilter::Execute "
-Image itk::simple::ModulusImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::ModulusImageFilter::GetName "
-std::string itk::simple::ModulusImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ModulusImageFilter::ModulusImageFilter "
-itk::simple::ModulusImageFilter::ModulusImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -16376,7 +14529,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ModulusImageFilter::ToString "
-std::string itk::simple::ModulusImageFilter::ToString() const
 
 Print ourselves out
 
@@ -16409,47 +14561,39 @@ C++ includes: sitkMomentsThresholdImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::MomentsThresholdImageFilter::Execute "
-Image itk::simple::MomentsThresholdImageFilter::Execute(const Image &image1, uint8_t insideValue, uint8_t outsideValue,
-uint32_t numberOfHistogramBins)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::MomentsThresholdImageFilter::Execute "
-Image itk::simple::MomentsThresholdImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::MomentsThresholdImageFilter::GetInsideValue "
-uint8_t itk::simple::MomentsThresholdImageFilter::GetInsideValue()
 
 Get the \"inside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::MomentsThresholdImageFilter::GetName "
-std::string itk::simple::MomentsThresholdImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::MomentsThresholdImageFilter::GetNumberOfHistogramBins "
-uint32_t itk::simple::MomentsThresholdImageFilter::GetNumberOfHistogramBins()
 ";
 
 %feature("docstring")  itk::simple::MomentsThresholdImageFilter::GetOutsideValue "
-uint8_t itk::simple::MomentsThresholdImageFilter::GetOutsideValue()
 
 Get the \"outside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::MomentsThresholdImageFilter::MomentsThresholdImageFilter "
-itk::simple::MomentsThresholdImageFilter::MomentsThresholdImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -16457,21 +14601,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::MomentsThresholdImageFilter::SetInsideValue "
-Self& itk::simple::MomentsThresholdImageFilter::SetInsideValue(uint8_t InsideValue)
 
 Set the \"inside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::MomentsThresholdImageFilter::SetNumberOfHistogramBins "
-Self& itk::simple::MomentsThresholdImageFilter::SetNumberOfHistogramBins(uint32_t NumberOfHistogramBins)
 
 Set/Get the number of histogram bins.
 
 ";
 
 %feature("docstring")  itk::simple::MomentsThresholdImageFilter::SetOutsideValue "
-Self& itk::simple::MomentsThresholdImageFilter::SetOutsideValue(uint8_t OutsideValue)
 
 Set the \"outside\" pixel value. The default value
 NumericTraits<OutputPixelType>::Zero.
@@ -16479,7 +14620,6 @@ NumericTraits<OutputPixelType>::Zero.
 ";
 
 %feature("docstring")  itk::simple::MomentsThresholdImageFilter::ToString "
-std::string itk::simple::MomentsThresholdImageFilter::ToString() const
 
 Print ourselves out
 
@@ -16506,29 +14646,24 @@ C++ includes: sitkMorphologicalGradientImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::MorphologicalGradientImageFilter::Execute "
-Image itk::simple::MorphologicalGradientImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::MorphologicalGradientImageFilter::GetKernelRadius "
-std::vector<uint32_t> itk::simple::MorphologicalGradientImageFilter::GetKernelRadius() const
 ";
 
 %feature("docstring")  itk::simple::MorphologicalGradientImageFilter::GetKernelType "
-KernelType itk::simple::MorphologicalGradientImageFilter::GetKernelType() const
 ";
 
 %feature("docstring")  itk::simple::MorphologicalGradientImageFilter::GetName "
-std::string itk::simple::MorphologicalGradientImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::MorphologicalGradientImageFilter::MorphologicalGradientImageFilter "
-itk::simple::MorphologicalGradientImageFilter::MorphologicalGradientImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -16536,7 +14671,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::MorphologicalGradientImageFilter::SetKernelRadius "
-Self& itk::simple::MorphologicalGradientImageFilter::SetKernelRadius(const std::vector< uint32_t > &r)
 
 Set/Get the radius of the kernel structuring element as a vector.
 
@@ -16546,21 +14680,18 @@ the radius will be padded. If it is less the r will be truncated.
 ";
 
 %feature("docstring")  itk::simple::MorphologicalGradientImageFilter::SetKernelRadius "
-Self& itk::simple::MorphologicalGradientImageFilter::SetKernelRadius(uint32_t r)
 
 Kernel radius as a scale for isotropic structures
 
 ";
 
 %feature("docstring")  itk::simple::MorphologicalGradientImageFilter::SetKernelType "
-Self& itk::simple::MorphologicalGradientImageFilter::SetKernelType(KernelType t)
 
 Set/Get the kernel or structuring elemenent used for the morphology
 
 ";
 
 %feature("docstring")  itk::simple::MorphologicalGradientImageFilter::ToString "
-std::string itk::simple::MorphologicalGradientImageFilter::ToString() const
 
 Print ourselves out
 
@@ -16620,33 +14751,27 @@ C++ includes: sitkMorphologicalWatershedFromMarkersImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershedFromMarkersImageFilter::Execute "
-Image itk::simple::MorphologicalWatershedFromMarkersImageFilter::Execute(const Image &image1, const Image &image2, bool markWatershedLine,
-bool fullyConnected)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershedFromMarkersImageFilter::Execute "
-Image itk::simple::MorphologicalWatershedFromMarkersImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershedFromMarkersImageFilter::FullyConnectedOff "
-Self& itk::simple::MorphologicalWatershedFromMarkersImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershedFromMarkersImageFilter::FullyConnectedOn "
-Self& itk::simple::MorphologicalWatershedFromMarkersImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershedFromMarkersImageFilter::GetFullyConnected "
-bool itk::simple::MorphologicalWatershedFromMarkersImageFilter::GetFullyConnected()
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -16656,7 +14781,6 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershedFromMarkersImageFilter::GetMarkWatershedLine "
-bool itk::simple::MorphologicalWatershedFromMarkersImageFilter::GetMarkWatershedLine()
 
 Set/Get whether the watershed pixel must be marked or not. Default is
 true. Set it to false do not only avoid writing watershed pixels, it
@@ -16665,25 +14789,21 @@ also decrease algorithm complexity.
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershedFromMarkersImageFilter::GetName "
-std::string itk::simple::MorphologicalWatershedFromMarkersImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershedFromMarkersImageFilter::MarkWatershedLineOff "
-Self& itk::simple::MorphologicalWatershedFromMarkersImageFilter::MarkWatershedLineOff()
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershedFromMarkersImageFilter::MarkWatershedLineOn "
-Self& itk::simple::MorphologicalWatershedFromMarkersImageFilter::MarkWatershedLineOn()
 
 Set the value of MarkWatershedLine to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershedFromMarkersImageFilter::MorphologicalWatershedFromMarkersImageFilter "
-itk::simple::MorphologicalWatershedFromMarkersImageFilter::MorphologicalWatershedFromMarkersImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -16691,7 +14811,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershedFromMarkersImageFilter::SetFullyConnected "
-Self& itk::simple::MorphologicalWatershedFromMarkersImageFilter::SetFullyConnected(bool FullyConnected)
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -16701,7 +14820,6 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershedFromMarkersImageFilter::SetMarkWatershedLine "
-Self& itk::simple::MorphologicalWatershedFromMarkersImageFilter::SetMarkWatershedLine(bool MarkWatershedLine)
 
 Set/Get whether the watershed pixel must be marked or not. Default is
 true. Set it to false do not only avoid writing watershed pixels, it
@@ -16710,7 +14828,6 @@ also decrease algorithm complexity.
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershedFromMarkersImageFilter::ToString "
-std::string itk::simple::MorphologicalWatershedFromMarkersImageFilter::ToString() const
 
 Print ourselves out
 
@@ -16745,33 +14862,27 @@ C++ includes: sitkMorphologicalWatershedImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershedImageFilter::Execute "
-Image itk::simple::MorphologicalWatershedImageFilter::Execute(const Image &image1, double level, bool markWatershedLine, bool
-fullyConnected)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershedImageFilter::Execute "
-Image itk::simple::MorphologicalWatershedImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershedImageFilter::FullyConnectedOff "
-Self& itk::simple::MorphologicalWatershedImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershedImageFilter::FullyConnectedOn "
-Self& itk::simple::MorphologicalWatershedImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershedImageFilter::GetFullyConnected "
-bool itk::simple::MorphologicalWatershedImageFilter::GetFullyConnected()
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -16781,11 +14892,9 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershedImageFilter::GetLevel "
-double itk::simple::MorphologicalWatershedImageFilter::GetLevel()
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershedImageFilter::GetMarkWatershedLine "
-bool itk::simple::MorphologicalWatershedImageFilter::GetMarkWatershedLine()
 
 Set/Get whether the watershed pixel must be marked or not. Default is
 true. Set it to false do not only avoid writing watershed pixels, it
@@ -16794,25 +14903,21 @@ also decrease algorithm complexity.
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershedImageFilter::GetName "
-std::string itk::simple::MorphologicalWatershedImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershedImageFilter::MarkWatershedLineOff "
-Self& itk::simple::MorphologicalWatershedImageFilter::MarkWatershedLineOff()
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershedImageFilter::MarkWatershedLineOn "
-Self& itk::simple::MorphologicalWatershedImageFilter::MarkWatershedLineOn()
 
 Set the value of MarkWatershedLine to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershedImageFilter::MorphologicalWatershedImageFilter "
-itk::simple::MorphologicalWatershedImageFilter::MorphologicalWatershedImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -16820,7 +14925,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershedImageFilter::SetFullyConnected "
-Self& itk::simple::MorphologicalWatershedImageFilter::SetFullyConnected(bool FullyConnected)
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -16830,11 +14934,9 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershedImageFilter::SetLevel "
-Self& itk::simple::MorphologicalWatershedImageFilter::SetLevel(double Level)
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershedImageFilter::SetMarkWatershedLine "
-Self& itk::simple::MorphologicalWatershedImageFilter::SetMarkWatershedLine(bool MarkWatershedLine)
 
 Set/Get whether the watershed pixel must be marked or not. Default is
 true. Set it to false do not only avoid writing watershed pixels, it
@@ -16843,7 +14945,6 @@ also decrease algorithm complexity.
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershedImageFilter::ToString "
-std::string itk::simple::MorphologicalWatershedImageFilter::ToString() const
 
 Print ourselves out
 
@@ -16873,32 +14974,27 @@ C++ includes: sitkMultiplyImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::MultiplyImageFilter::Execute "
-Image itk::simple::MultiplyImageFilter::Execute(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::MultiplyImageFilter::Execute "
-Image itk::simple::MultiplyImageFilter::Execute(const Image &image1, double constant)
 
 Execute the filter with an image and a constant
 
 ";
 
 %feature("docstring")  itk::simple::MultiplyImageFilter::Execute "
-Image itk::simple::MultiplyImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::MultiplyImageFilter::GetName "
-std::string itk::simple::MultiplyImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::MultiplyImageFilter::MultiplyImageFilter "
-itk::simple::MultiplyImageFilter::MultiplyImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -16906,7 +15002,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::MultiplyImageFilter::ToString "
-std::string itk::simple::MultiplyImageFilter::ToString() const
 
 Print ourselves out
 
@@ -16972,25 +15067,18 @@ C++ includes: sitkN4BiasFieldCorrectionImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::N4BiasFieldCorrectionImageFilter::Execute "
-Image itk::simple::N4BiasFieldCorrectionImageFilter::Execute(const Image &image1, const Image &image2, double
-convergenceThreshold, std::vector< uint32_t >
-maximumNumberOfIterations, double biasFieldFullWidthAtHalfMaximum,
-double wienerFilterNoise, uint32_t numberOfHistogramBins, std::vector<
-uint32_t > numberOfControlPoints, uint32_t splineOrder)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::N4BiasFieldCorrectionImageFilter::Execute "
-Image itk::simple::N4BiasFieldCorrectionImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::N4BiasFieldCorrectionImageFilter::GetBiasFieldFullWidthAtHalfMaximum "
-double itk::simple::N4BiasFieldCorrectionImageFilter::GetBiasFieldFullWidthAtHalfMaximum()
 
 Get the full width at half maximum parameter characterizing the width
 of the Gaussian deconvolution. Default = 0.15.
@@ -16998,7 +15086,6 @@ of the Gaussian deconvolution. Default = 0.15.
 ";
 
 %feature("docstring")  itk::simple::N4BiasFieldCorrectionImageFilter::GetConvergenceThreshold "
-double itk::simple::N4BiasFieldCorrectionImageFilter::GetConvergenceThreshold()
 
 Get the convergence threshold. Convergence is determined by the
 coefficient of variation of the difference image between the current
@@ -17009,7 +15096,6 @@ fitting level or terminates if it is at the last level.
 ";
 
 %feature("docstring")  itk::simple::N4BiasFieldCorrectionImageFilter::GetMaximumNumberOfIterations "
-std::vector<uint32_t> itk::simple::N4BiasFieldCorrectionImageFilter::GetMaximumNumberOfIterations()
 
 Get the maximum number of iterations specified at each fitting level.
 Default = 50.
@@ -17017,14 +15103,12 @@ Default = 50.
 ";
 
 %feature("docstring")  itk::simple::N4BiasFieldCorrectionImageFilter::GetName "
-std::string itk::simple::N4BiasFieldCorrectionImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::N4BiasFieldCorrectionImageFilter::GetNumberOfControlPoints "
-std::vector<uint32_t> itk::simple::N4BiasFieldCorrectionImageFilter::GetNumberOfControlPoints()
 
 Get the control point grid size defining the B-spline estimate of the
 scalar bias field. In each dimension, the B-spline mesh size is equal
@@ -17035,7 +15119,6 @@ order. Default = 4 control points in each dimension for a mesh size of
 ";
 
 %feature("docstring")  itk::simple::N4BiasFieldCorrectionImageFilter::GetNumberOfHistogramBins "
-uint32_t itk::simple::N4BiasFieldCorrectionImageFilter::GetNumberOfHistogramBins()
 
 Get number of bins defining the log input intensity histogram. Default
 = 200.
@@ -17043,21 +15126,18 @@ Get number of bins defining the log input intensity histogram. Default
 ";
 
 %feature("docstring")  itk::simple::N4BiasFieldCorrectionImageFilter::GetSplineOrder "
-uint32_t itk::simple::N4BiasFieldCorrectionImageFilter::GetSplineOrder()
 
 Get the spline order defining the bias field estimate. Default = 3.
 
 ";
 
 %feature("docstring")  itk::simple::N4BiasFieldCorrectionImageFilter::GetWienerFilterNoise "
-double itk::simple::N4BiasFieldCorrectionImageFilter::GetWienerFilterNoise()
 
 Get the noise estimate defining the Wiener filter. Default = 0.01.
 
 ";
 
 %feature("docstring")  itk::simple::N4BiasFieldCorrectionImageFilter::N4BiasFieldCorrectionImageFilter "
-itk::simple::N4BiasFieldCorrectionImageFilter::N4BiasFieldCorrectionImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -17065,7 +15145,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::N4BiasFieldCorrectionImageFilter::SetBiasFieldFullWidthAtHalfMaximum "
-Self& itk::simple::N4BiasFieldCorrectionImageFilter::SetBiasFieldFullWidthAtHalfMaximum(double BiasFieldFullWidthAtHalfMaximum)
 
 Set the full width at half maximum parameter characterizing the width
 of the Gaussian deconvolution. Default = 0.15.
@@ -17073,7 +15152,6 @@ of the Gaussian deconvolution. Default = 0.15.
 ";
 
 %feature("docstring")  itk::simple::N4BiasFieldCorrectionImageFilter::SetConvergenceThreshold "
-Self& itk::simple::N4BiasFieldCorrectionImageFilter::SetConvergenceThreshold(double ConvergenceThreshold)
 
 Set the convergence threshold. Convergence is determined by the
 coefficient of variation of the difference image between the current
@@ -17084,7 +15162,6 @@ fitting level or terminates if it is at the last level.
 ";
 
 %feature("docstring")  itk::simple::N4BiasFieldCorrectionImageFilter::SetMaximumNumberOfIterations "
-Self& itk::simple::N4BiasFieldCorrectionImageFilter::SetMaximumNumberOfIterations(std::vector< uint32_t > MaximumNumberOfIterations)
 
 Set the maximum number of iterations specified at each fitting level.
 Default = 50.
@@ -17092,7 +15169,6 @@ Default = 50.
 ";
 
 %feature("docstring")  itk::simple::N4BiasFieldCorrectionImageFilter::SetNumberOfControlPoints "
-Self& itk::simple::N4BiasFieldCorrectionImageFilter::SetNumberOfControlPoints(std::vector< uint32_t > NumberOfControlPoints)
 
 Set the control point grid size defining the B-spline estimate of the
 scalar bias field. In each dimension, the B-spline mesh size is equal
@@ -17103,7 +15179,6 @@ order. Default = 4 control points in each dimension for a mesh size of
 ";
 
 %feature("docstring")  itk::simple::N4BiasFieldCorrectionImageFilter::SetNumberOfHistogramBins "
-Self& itk::simple::N4BiasFieldCorrectionImageFilter::SetNumberOfHistogramBins(uint32_t NumberOfHistogramBins)
 
 Set number of bins defining the log input intensity histogram. Default
 = 200.
@@ -17111,21 +15186,18 @@ Set number of bins defining the log input intensity histogram. Default
 ";
 
 %feature("docstring")  itk::simple::N4BiasFieldCorrectionImageFilter::SetSplineOrder "
-Self& itk::simple::N4BiasFieldCorrectionImageFilter::SetSplineOrder(uint32_t SplineOrder)
 
 Set the spline order defining the bias field estimate. Default = 3.
 
 ";
 
 %feature("docstring")  itk::simple::N4BiasFieldCorrectionImageFilter::SetWienerFilterNoise "
-Self& itk::simple::N4BiasFieldCorrectionImageFilter::SetWienerFilterNoise(double WienerFilterNoise)
 
 Set the noise estimate defining the Wiener filter. Default = 0.01.
 
 ";
 
 %feature("docstring")  itk::simple::N4BiasFieldCorrectionImageFilter::ToString "
-std::string itk::simple::N4BiasFieldCorrectionImageFilter::ToString() const
 
 Print ourselves out
 
@@ -17160,43 +15232,33 @@ C++ includes: sitkNaryAddImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::NaryAddImageFilter::Execute "
-Image itk::simple::NaryAddImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4, const Image &image5)
 ";
 
 %feature("docstring")  itk::simple::NaryAddImageFilter::Execute "
-Image itk::simple::NaryAddImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4)
 ";
 
 %feature("docstring")  itk::simple::NaryAddImageFilter::Execute "
-Image itk::simple::NaryAddImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3)
 ";
 
 %feature("docstring")  itk::simple::NaryAddImageFilter::Execute "
-Image itk::simple::NaryAddImageFilter::Execute(const Image &image1, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::NaryAddImageFilter::Execute "
-Image itk::simple::NaryAddImageFilter::Execute(const Image &image1)
 ";
 
 %feature("docstring")  itk::simple::NaryAddImageFilter::Execute "
-Image itk::simple::NaryAddImageFilter::Execute(const std::vector< Image > &images)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::NaryAddImageFilter::GetName "
-std::string itk::simple::NaryAddImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::NaryAddImageFilter::NaryAddImageFilter "
-itk::simple::NaryAddImageFilter::NaryAddImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -17204,7 +15266,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::NaryAddImageFilter::ToString "
-std::string itk::simple::NaryAddImageFilter::ToString() const
 
 Print ourselves out
 
@@ -17239,43 +15300,33 @@ C++ includes: sitkNaryMaximumImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::NaryMaximumImageFilter::Execute "
-Image itk::simple::NaryMaximumImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4, const Image &image5)
 ";
 
 %feature("docstring")  itk::simple::NaryMaximumImageFilter::Execute "
-Image itk::simple::NaryMaximumImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4)
 ";
 
 %feature("docstring")  itk::simple::NaryMaximumImageFilter::Execute "
-Image itk::simple::NaryMaximumImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3)
 ";
 
 %feature("docstring")  itk::simple::NaryMaximumImageFilter::Execute "
-Image itk::simple::NaryMaximumImageFilter::Execute(const Image &image1, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::NaryMaximumImageFilter::Execute "
-Image itk::simple::NaryMaximumImageFilter::Execute(const Image &image1)
 ";
 
 %feature("docstring")  itk::simple::NaryMaximumImageFilter::Execute "
-Image itk::simple::NaryMaximumImageFilter::Execute(const std::vector< Image > &images)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::NaryMaximumImageFilter::GetName "
-std::string itk::simple::NaryMaximumImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::NaryMaximumImageFilter::NaryMaximumImageFilter "
-itk::simple::NaryMaximumImageFilter::NaryMaximumImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -17283,7 +15334,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::NaryMaximumImageFilter::ToString "
-std::string itk::simple::NaryMaximumImageFilter::ToString() const
 
 Print ourselves out
 
@@ -17309,58 +15359,48 @@ C++ includes: sitkNeighborhoodConnectedImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::NeighborhoodConnectedImageFilter::AddSeed "
-Self& itk::simple::NeighborhoodConnectedImageFilter::AddSeed(std::vector< unsigned int > idx)
 
 AddSeed - Add a seed to the end of the list
 
 ";
 
 %feature("docstring")  itk::simple::NeighborhoodConnectedImageFilter::ClearSeeds "
-Self& itk::simple::NeighborhoodConnectedImageFilter::ClearSeeds()
 
 ClearSeeds - Clear out all seeds in the list
 
 ";
 
 %feature("docstring")  itk::simple::NeighborhoodConnectedImageFilter::Execute "
-Image itk::simple::NeighborhoodConnectedImageFilter::Execute(const Image &, std::vector< std::vector< unsigned int > > seedList,
-double lower, double upper, std::vector< unsigned int > radius, double
-replaceValue)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::NeighborhoodConnectedImageFilter::Execute "
-Image itk::simple::NeighborhoodConnectedImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::NeighborhoodConnectedImageFilter::GetLower "
-double itk::simple::NeighborhoodConnectedImageFilter::GetLower()
 
 Set/Get the lower threshold. The default is 0.
 
 ";
 
 %feature("docstring")  itk::simple::NeighborhoodConnectedImageFilter::GetName "
-std::string itk::simple::NeighborhoodConnectedImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::NeighborhoodConnectedImageFilter::GetRadius "
-std::vector<unsigned int> itk::simple::NeighborhoodConnectedImageFilter::GetRadius()
 
 Get the radius of the neighborhood used to compute the median.
 
 ";
 
 %feature("docstring")  itk::simple::NeighborhoodConnectedImageFilter::GetReplaceValue "
-double itk::simple::NeighborhoodConnectedImageFilter::GetReplaceValue()
 
 Set/Get value to replace thresholded pixels. Pixels that lie * within
 Lower and Upper (inclusive) will be replaced with this value. The
@@ -17369,14 +15409,12 @@ default is 1.
 ";
 
 %feature("docstring")  itk::simple::NeighborhoodConnectedImageFilter::GetSeedList "
-std::vector< std::vector<unsigned int> > itk::simple::NeighborhoodConnectedImageFilter::GetSeedList()
 
 Get SeedList
 
 ";
 
 %feature("docstring")  itk::simple::NeighborhoodConnectedImageFilter::GetUpper "
-double itk::simple::NeighborhoodConnectedImageFilter::GetUpper()
 
 Set/Get the upper threshold. The default is the largest possible value
 for the InputPixelType.
@@ -17384,7 +15422,6 @@ for the InputPixelType.
 ";
 
 %feature("docstring")  itk::simple::NeighborhoodConnectedImageFilter::NeighborhoodConnectedImageFilter "
-itk::simple::NeighborhoodConnectedImageFilter::NeighborhoodConnectedImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -17392,21 +15429,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::NeighborhoodConnectedImageFilter::SetLower "
-Self& itk::simple::NeighborhoodConnectedImageFilter::SetLower(double Lower)
 
 Set/Get the lower threshold. The default is 0.
 
 ";
 
 %feature("docstring")  itk::simple::NeighborhoodConnectedImageFilter::SetRadius "
-Self& itk::simple::NeighborhoodConnectedImageFilter::SetRadius(std::vector< unsigned int > Radius)
 
 Set the radius of the neighborhood used for a mask.
 
 ";
 
 %feature("docstring")  itk::simple::NeighborhoodConnectedImageFilter::SetReplaceValue "
-Self& itk::simple::NeighborhoodConnectedImageFilter::SetReplaceValue(double ReplaceValue)
 
 Set/Get value to replace thresholded pixels. Pixels that lie * within
 Lower and Upper (inclusive) will be replaced with this value. The
@@ -17415,21 +15449,18 @@ default is 1.
 ";
 
 %feature("docstring")  itk::simple::NeighborhoodConnectedImageFilter::SetSeed "
-Self& itk::simple::NeighborhoodConnectedImageFilter::SetSeed(std::vector< unsigned int > idx)
 
 SetSeed - Set list to a single seed
 
 ";
 
 %feature("docstring")  itk::simple::NeighborhoodConnectedImageFilter::SetSeedList "
-Self& itk::simple::NeighborhoodConnectedImageFilter::SetSeedList(std::vector< std::vector< unsigned int > > t)
 
 Set SeedList
 
 ";
 
 %feature("docstring")  itk::simple::NeighborhoodConnectedImageFilter::SetUpper "
-Self& itk::simple::NeighborhoodConnectedImageFilter::SetUpper(double Upper)
 
 Set/Get the upper threshold. The default is the largest possible value
 for the InputPixelType.
@@ -17437,7 +15468,6 @@ for the InputPixelType.
 ";
 
 %feature("docstring")  itk::simple::NeighborhoodConnectedImageFilter::ToString "
-std::string itk::simple::NeighborhoodConnectedImageFilter::ToString() const
 
 Print ourselves out
 
@@ -17481,32 +15511,27 @@ C++ includes: sitkNoiseImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::NoiseImageFilter::Execute "
-Image itk::simple::NoiseImageFilter::Execute(const Image &image1, std::vector< unsigned int > radius)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::NoiseImageFilter::Execute "
-Image itk::simple::NoiseImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::NoiseImageFilter::GetName "
-std::string itk::simple::NoiseImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::NoiseImageFilter::GetRadius "
-std::vector<unsigned int> itk::simple::NoiseImageFilter::GetRadius()
 ";
 
 %feature("docstring")  itk::simple::NoiseImageFilter::NoiseImageFilter "
-itk::simple::NoiseImageFilter::NoiseImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -17514,18 +15539,15 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::NoiseImageFilter::SetRadius "
-Self& itk::simple::NoiseImageFilter::SetRadius(std::vector< unsigned int > Radius)
 ";
 
 %feature("docstring")  itk::simple::NoiseImageFilter::SetRadius "
-Self& itk::simple::NoiseImageFilter::SetRadius(unsigned int r)
 
 Custom public declarations
 
 ";
 
 %feature("docstring")  itk::simple::NoiseImageFilter::ToString "
-std::string itk::simple::NoiseImageFilter::ToString() const
 
 Print ourselves out
 
@@ -17582,21 +15604,18 @@ C++ includes: sitkNormalizeImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::NormalizeImageFilter::Execute "
-Image itk::simple::NormalizeImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::NormalizeImageFilter::GetName "
-std::string itk::simple::NormalizeImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::NormalizeImageFilter::NormalizeImageFilter "
-itk::simple::NormalizeImageFilter::NormalizeImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -17604,7 +15623,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::NormalizeImageFilter::ToString "
-std::string itk::simple::NormalizeImageFilter::ToString() const
 
 Print ourselves out
 
@@ -17645,35 +15663,30 @@ C++ includes: sitkNormalizeToConstantImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::NormalizeToConstantImageFilter::Execute "
-Image itk::simple::NormalizeToConstantImageFilter::Execute(const Image &image1, double constant)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::NormalizeToConstantImageFilter::Execute "
-Image itk::simple::NormalizeToConstantImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::NormalizeToConstantImageFilter::GetConstant "
-double itk::simple::NormalizeToConstantImageFilter::GetConstant()
 
 Set/get the normalization constant.
 
 ";
 
 %feature("docstring")  itk::simple::NormalizeToConstantImageFilter::GetName "
-std::string itk::simple::NormalizeToConstantImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::NormalizeToConstantImageFilter::NormalizeToConstantImageFilter "
-itk::simple::NormalizeToConstantImageFilter::NormalizeToConstantImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -17681,14 +15694,12 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::NormalizeToConstantImageFilter::SetConstant "
-Self& itk::simple::NormalizeToConstantImageFilter::SetConstant(double Constant)
 
 Set/get the normalization constant.
 
 ";
 
 %feature("docstring")  itk::simple::NormalizeToConstantImageFilter::ToString "
-std::string itk::simple::NormalizeToConstantImageFilter::ToString() const
 
 Print ourselves out
 
@@ -17731,21 +15742,18 @@ C++ includes: sitkNormalizedCorrelationImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::NormalizedCorrelationImageFilter::Execute "
-Image itk::simple::NormalizedCorrelationImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::NormalizedCorrelationImageFilter::GetName "
-std::string itk::simple::NormalizedCorrelationImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::NormalizedCorrelationImageFilter::NormalizedCorrelationImageFilter "
-itk::simple::NormalizedCorrelationImageFilter::NormalizedCorrelationImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -17753,7 +15761,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::NormalizedCorrelationImageFilter::ToString "
-std::string itk::simple::NormalizedCorrelationImageFilter::ToString() const
 
 Print ourselves out
 
@@ -17771,13 +15778,9 @@ C++ includes: sitkNotEqualImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::NotEqualImageFilter::Execute "
-Image itk::simple::NotEqualImageFilter::Execute(double constant, const Image &image2, uint8_t backgroundValue,
-uint8_t foregroundValue)
 ";
 
 %feature("docstring")  itk::simple::NotEqualImageFilter::Execute "
-Image itk::simple::NotEqualImageFilter::Execute(const Image &image1, double constant, uint8_t backgroundValue,
-uint8_t foregroundValue)
 
 Execute the filter on an image and a constant with the given
 parameters
@@ -17785,54 +15788,45 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::NotEqualImageFilter::Execute "
-Image itk::simple::NotEqualImageFilter::Execute(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::NotEqualImageFilter::Execute "
-Image itk::simple::NotEqualImageFilter::Execute(const Image &image1, double constant)
 
 Execute the filter with an image and a constant
 
 ";
 
 %feature("docstring")  itk::simple::NotEqualImageFilter::Execute "
-Image itk::simple::NotEqualImageFilter::Execute(const Image &image1, const Image &image2, uint8_t backgroundValue,
-uint8_t foregroundValue)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::NotEqualImageFilter::Execute "
-Image itk::simple::NotEqualImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::NotEqualImageFilter::GetBackgroundValue "
-uint8_t itk::simple::NotEqualImageFilter::GetBackgroundValue()
 
 Set/Get the value used to mark the false pixels of the operator.
 
 ";
 
 %feature("docstring")  itk::simple::NotEqualImageFilter::GetForegroundValue "
-uint8_t itk::simple::NotEqualImageFilter::GetForegroundValue()
 
 Set/Get the value used to mark the true pixels of the operator.
 
 ";
 
 %feature("docstring")  itk::simple::NotEqualImageFilter::GetName "
-std::string itk::simple::NotEqualImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::NotEqualImageFilter::NotEqualImageFilter "
-itk::simple::NotEqualImageFilter::NotEqualImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -17840,21 +15834,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::NotEqualImageFilter::SetBackgroundValue "
-Self& itk::simple::NotEqualImageFilter::SetBackgroundValue(uint8_t BackgroundValue)
 
 Set/Get the value used to mark the false pixels of the operator.
 
 ";
 
 %feature("docstring")  itk::simple::NotEqualImageFilter::SetForegroundValue "
-Self& itk::simple::NotEqualImageFilter::SetForegroundValue(uint8_t ForegroundValue)
 
 Set/Get the value used to mark the true pixels of the operator.
 
 ";
 
 %feature("docstring")  itk::simple::NotEqualImageFilter::ToString "
-std::string itk::simple::NotEqualImageFilter::ToString() const
 
 Print ourselves out
 
@@ -17884,21 +15875,18 @@ C++ includes: sitkNotImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::NotImageFilter::Execute "
-Image itk::simple::NotImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::NotImageFilter::GetName "
-std::string itk::simple::NotImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::NotImageFilter::NotImageFilter "
-itk::simple::NotImageFilter::NotImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -17906,7 +15894,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::NotImageFilter::ToString "
-std::string itk::simple::NotImageFilter::ToString() const
 
 Print ourselves out
 
@@ -17945,32 +15932,27 @@ C++ includes: sitkOpeningByReconstructionImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::OpeningByReconstructionImageFilter::Execute "
-Image itk::simple::OpeningByReconstructionImageFilter::Execute(const Image &image1, bool fullyConnected, bool preserveIntensities)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::OpeningByReconstructionImageFilter::Execute "
-Image itk::simple::OpeningByReconstructionImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::OpeningByReconstructionImageFilter::FullyConnectedOff "
-Self& itk::simple::OpeningByReconstructionImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::OpeningByReconstructionImageFilter::FullyConnectedOn "
-Self& itk::simple::OpeningByReconstructionImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::OpeningByReconstructionImageFilter::GetFullyConnected "
-bool itk::simple::OpeningByReconstructionImageFilter::GetFullyConnected()
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -17980,22 +15962,18 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::OpeningByReconstructionImageFilter::GetKernelRadius "
-std::vector<uint32_t> itk::simple::OpeningByReconstructionImageFilter::GetKernelRadius() const
 ";
 
 %feature("docstring")  itk::simple::OpeningByReconstructionImageFilter::GetKernelType "
-KernelType itk::simple::OpeningByReconstructionImageFilter::GetKernelType() const
 ";
 
 %feature("docstring")  itk::simple::OpeningByReconstructionImageFilter::GetName "
-std::string itk::simple::OpeningByReconstructionImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::OpeningByReconstructionImageFilter::GetPreserveIntensities "
-bool itk::simple::OpeningByReconstructionImageFilter::GetPreserveIntensities()
 
 Set/Get whether the original intensities of the image retained for
 those pixels unaffected by the opening by reconstrcution. If Off, the
@@ -18004,7 +15982,6 @@ output pixel contrast will be reduced.
 ";
 
 %feature("docstring")  itk::simple::OpeningByReconstructionImageFilter::OpeningByReconstructionImageFilter "
-itk::simple::OpeningByReconstructionImageFilter::OpeningByReconstructionImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -18012,18 +15989,15 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::OpeningByReconstructionImageFilter::PreserveIntensitiesOff "
-Self& itk::simple::OpeningByReconstructionImageFilter::PreserveIntensitiesOff()
 ";
 
 %feature("docstring")  itk::simple::OpeningByReconstructionImageFilter::PreserveIntensitiesOn "
-Self& itk::simple::OpeningByReconstructionImageFilter::PreserveIntensitiesOn()
 
 Set the value of PreserveIntensities to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::OpeningByReconstructionImageFilter::SetFullyConnected "
-Self& itk::simple::OpeningByReconstructionImageFilter::SetFullyConnected(bool FullyConnected)
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -18033,7 +16007,6 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::OpeningByReconstructionImageFilter::SetKernelRadius "
-Self& itk::simple::OpeningByReconstructionImageFilter::SetKernelRadius(const std::vector< uint32_t > &r)
 
 Set/Get the radius of the kernel structuring element as a vector.
 
@@ -18043,21 +16016,18 @@ the radius will be padded. If it is less the r will be truncated.
 ";
 
 %feature("docstring")  itk::simple::OpeningByReconstructionImageFilter::SetKernelRadius "
-Self& itk::simple::OpeningByReconstructionImageFilter::SetKernelRadius(uint32_t r)
 
 Kernel radius as a scale for isotropic structures
 
 ";
 
 %feature("docstring")  itk::simple::OpeningByReconstructionImageFilter::SetKernelType "
-Self& itk::simple::OpeningByReconstructionImageFilter::SetKernelType(KernelType t)
 
 Set/Get the kernel or structuring elemenent used for the morphology
 
 ";
 
 %feature("docstring")  itk::simple::OpeningByReconstructionImageFilter::SetPreserveIntensities "
-Self& itk::simple::OpeningByReconstructionImageFilter::SetPreserveIntensities(bool PreserveIntensities)
 
 Set/Get whether the original intensities of the image retained for
 those pixels unaffected by the opening by reconstrcution. If Off, the
@@ -18066,7 +16036,6 @@ output pixel contrast will be reduced.
 ";
 
 %feature("docstring")  itk::simple::OpeningByReconstructionImageFilter::ToString "
-std::string itk::simple::OpeningByReconstructionImageFilter::ToString() const
 
 Print ourselves out
 
@@ -18099,32 +16068,27 @@ C++ includes: sitkOrImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::OrImageFilter::Execute "
-Image itk::simple::OrImageFilter::Execute(int constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::OrImageFilter::Execute "
-Image itk::simple::OrImageFilter::Execute(const Image &image1, int constant)
 
 Execute the filter with an image and a constant
 
 ";
 
 %feature("docstring")  itk::simple::OrImageFilter::Execute "
-Image itk::simple::OrImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::OrImageFilter::GetName "
-std::string itk::simple::OrImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::OrImageFilter::OrImageFilter "
-itk::simple::OrImageFilter::OrImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -18132,7 +16096,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::OrImageFilter::ToString "
-std::string itk::simple::OrImageFilter::ToString() const
 
 Print ourselves out
 
@@ -18167,50 +16130,42 @@ C++ includes: sitkOtsuMultipleThresholdsImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::OtsuMultipleThresholdsImageFilter::Execute "
-Image itk::simple::OtsuMultipleThresholdsImageFilter::Execute(const Image &image1, uint8_t numberOfThresholds, uint8_t labelOffset,
-uint32_t numberOfHistogramBins)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::OtsuMultipleThresholdsImageFilter::Execute "
-Image itk::simple::OtsuMultipleThresholdsImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::OtsuMultipleThresholdsImageFilter::GetLabelOffset "
-uint8_t itk::simple::OtsuMultipleThresholdsImageFilter::GetLabelOffset()
 
 Set/Get the offset which labels have to start from. Default is 0.
 
 ";
 
 %feature("docstring")  itk::simple::OtsuMultipleThresholdsImageFilter::GetName "
-std::string itk::simple::OtsuMultipleThresholdsImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::OtsuMultipleThresholdsImageFilter::GetNumberOfHistogramBins "
-uint32_t itk::simple::OtsuMultipleThresholdsImageFilter::GetNumberOfHistogramBins()
 
 Set/Get the number of histogram bins. Default is 128.
 
 ";
 
 %feature("docstring")  itk::simple::OtsuMultipleThresholdsImageFilter::GetNumberOfThresholds "
-uint8_t itk::simple::OtsuMultipleThresholdsImageFilter::GetNumberOfThresholds()
 
 Set/Get the number of thresholds. Default is 1.
 
 ";
 
 %feature("docstring")  itk::simple::OtsuMultipleThresholdsImageFilter::OtsuMultipleThresholdsImageFilter "
-itk::simple::OtsuMultipleThresholdsImageFilter::OtsuMultipleThresholdsImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -18218,28 +16173,24 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::OtsuMultipleThresholdsImageFilter::SetLabelOffset "
-Self& itk::simple::OtsuMultipleThresholdsImageFilter::SetLabelOffset(uint8_t LabelOffset)
 
 Set/Get the offset which labels have to start from. Default is 0.
 
 ";
 
 %feature("docstring")  itk::simple::OtsuMultipleThresholdsImageFilter::SetNumberOfHistogramBins "
-Self& itk::simple::OtsuMultipleThresholdsImageFilter::SetNumberOfHistogramBins(uint32_t NumberOfHistogramBins)
 
 Set/Get the number of histogram bins. Default is 128.
 
 ";
 
 %feature("docstring")  itk::simple::OtsuMultipleThresholdsImageFilter::SetNumberOfThresholds "
-Self& itk::simple::OtsuMultipleThresholdsImageFilter::SetNumberOfThresholds(uint8_t NumberOfThresholds)
 
 Set/Get the number of thresholds. Default is 1.
 
 ";
 
 %feature("docstring")  itk::simple::OtsuMultipleThresholdsImageFilter::ToString "
-std::string itk::simple::OtsuMultipleThresholdsImageFilter::ToString() const
 
 Print ourselves out
 
@@ -18276,47 +16227,39 @@ C++ includes: sitkOtsuThresholdImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::OtsuThresholdImageFilter::Execute "
-Image itk::simple::OtsuThresholdImageFilter::Execute(const Image &image1, uint8_t insideValue, uint8_t outsideValue,
-uint32_t numberOfHistogramBins)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::OtsuThresholdImageFilter::Execute "
-Image itk::simple::OtsuThresholdImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::OtsuThresholdImageFilter::GetInsideValue "
-uint8_t itk::simple::OtsuThresholdImageFilter::GetInsideValue()
 
 Get the \"inside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::OtsuThresholdImageFilter::GetName "
-std::string itk::simple::OtsuThresholdImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::OtsuThresholdImageFilter::GetNumberOfHistogramBins "
-uint32_t itk::simple::OtsuThresholdImageFilter::GetNumberOfHistogramBins()
 ";
 
 %feature("docstring")  itk::simple::OtsuThresholdImageFilter::GetOutsideValue "
-uint8_t itk::simple::OtsuThresholdImageFilter::GetOutsideValue()
 
 Get the \"outside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::OtsuThresholdImageFilter::OtsuThresholdImageFilter "
-itk::simple::OtsuThresholdImageFilter::OtsuThresholdImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -18324,7 +16267,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::OtsuThresholdImageFilter::SetInsideValue "
-Self& itk::simple::OtsuThresholdImageFilter::SetInsideValue(uint8_t InsideValue)
 
 Set the \"inside\" pixel value. The default value
 NumericTraits<OutputPixelType>::max().
@@ -18332,14 +16274,12 @@ NumericTraits<OutputPixelType>::max().
 ";
 
 %feature("docstring")  itk::simple::OtsuThresholdImageFilter::SetNumberOfHistogramBins "
-Self& itk::simple::OtsuThresholdImageFilter::SetNumberOfHistogramBins(uint32_t NumberOfHistogramBins)
 
 Set/Get the number of histogram bins. Defaults is 128.
 
 ";
 
 %feature("docstring")  itk::simple::OtsuThresholdImageFilter::SetOutsideValue "
-Self& itk::simple::OtsuThresholdImageFilter::SetOutsideValue(uint8_t OutsideValue)
 
 Set the \"outside\" pixel value. The default value
 NumericTraits<OutputPixelType>::Zero.
@@ -18347,7 +16287,6 @@ NumericTraits<OutputPixelType>::Zero.
 ";
 
 %feature("docstring")  itk::simple::OtsuThresholdImageFilter::ToString "
-std::string itk::simple::OtsuThresholdImageFilter::ToString() const
 
 Print ourselves out
 
@@ -18380,23 +16319,18 @@ C++ includes: sitkPasteImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::PasteImageFilter::Execute "
-Image itk::simple::PasteImageFilter::Execute(const Image &image1, const Image &image2, std::vector< unsigned int >
-sourceSize, std::vector< int > sourceIndex, std::vector< int >
-destinationIndex)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::PasteImageFilter::Execute "
-Image itk::simple::PasteImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::PasteImageFilter::GetDestinationIndex "
-std::vector<int> itk::simple::PasteImageFilter::GetDestinationIndex()
 
 Set/Get the destination index (where in the first input the second
 input will be pasted.
@@ -18404,22 +16338,18 @@ input will be pasted.
 ";
 
 %feature("docstring")  itk::simple::PasteImageFilter::GetName "
-std::string itk::simple::PasteImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::PasteImageFilter::GetSourceIndex "
-std::vector<int> itk::simple::PasteImageFilter::GetSourceIndex()
 ";
 
 %feature("docstring")  itk::simple::PasteImageFilter::GetSourceSize "
-std::vector<unsigned int> itk::simple::PasteImageFilter::GetSourceSize()
 ";
 
 %feature("docstring")  itk::simple::PasteImageFilter::PasteImageFilter "
-itk::simple::PasteImageFilter::PasteImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -18427,7 +16357,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::PasteImageFilter::SetDestinationIndex "
-Self& itk::simple::PasteImageFilter::SetDestinationIndex(std::vector< int > DestinationIndex)
 
 Set/Get the destination index (where in the first input the second
 input will be pasted.
@@ -18435,15 +16364,12 @@ input will be pasted.
 ";
 
 %feature("docstring")  itk::simple::PasteImageFilter::SetSourceIndex "
-Self& itk::simple::PasteImageFilter::SetSourceIndex(std::vector< int > SourceIndex)
 ";
 
 %feature("docstring")  itk::simple::PasteImageFilter::SetSourceSize "
-Self& itk::simple::PasteImageFilter::SetSourceSize(std::vector< unsigned int > SourceSize)
 ";
 
 %feature("docstring")  itk::simple::PasteImageFilter::ToString "
-std::string itk::simple::PasteImageFilter::ToString() const
 
 Print ourselves out
 
@@ -18476,35 +16402,30 @@ C++ includes: sitkPermuteAxesImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::PermuteAxesImageFilter::Execute "
-Image itk::simple::PermuteAxesImageFilter::Execute(const Image &image1, std::vector< unsigned int > order)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::PermuteAxesImageFilter::Execute "
-Image itk::simple::PermuteAxesImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::PermuteAxesImageFilter::GetName "
-std::string itk::simple::PermuteAxesImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::PermuteAxesImageFilter::GetOrder "
-std::vector<unsigned int> itk::simple::PermuteAxesImageFilter::GetOrder()
 
 Get the permutation order.
 
 ";
 
 %feature("docstring")  itk::simple::PermuteAxesImageFilter::PermuteAxesImageFilter "
-itk::simple::PermuteAxesImageFilter::PermuteAxesImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -18512,7 +16433,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::PermuteAxesImageFilter::SetOrder "
-Self& itk::simple::PermuteAxesImageFilter::SetOrder(std::vector< unsigned int > Order)
 
 Set the permutation order. The elements of order must be a
 rearrangement of the numbers from 0 to ImageDimension - 1.
@@ -18520,7 +16440,6 @@ rearrangement of the numbers from 0 to ImageDimension - 1.
 ";
 
 %feature("docstring")  itk::simple::PermuteAxesImageFilter::ToString "
-std::string itk::simple::PermuteAxesImageFilter::ToString() const
 
 Print ourselves out
 
@@ -18538,50 +16457,39 @@ C++ includes: sitkPhysicalPointImageSource.h
 ";
 
 %feature("docstring")  itk::simple::PhysicalPointImageSource::Execute "
-Image itk::simple::PhysicalPointImageSource::Execute(PixelIDValueEnum outputPixelType, std::vector< unsigned int > size,
-std::vector< double > origin, std::vector< double > spacing,
-std::vector< double > direction)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::PhysicalPointImageSource::Execute "
-Image itk::simple::PhysicalPointImageSource::Execute()
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::PhysicalPointImageSource::GetDirection "
-std::vector<double> itk::simple::PhysicalPointImageSource::GetDirection()
 ";
 
 %feature("docstring")  itk::simple::PhysicalPointImageSource::GetName "
-std::string itk::simple::PhysicalPointImageSource::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::PhysicalPointImageSource::GetOrigin "
-std::vector<double> itk::simple::PhysicalPointImageSource::GetOrigin()
 ";
 
 %feature("docstring")  itk::simple::PhysicalPointImageSource::GetOutputPixelType "
-PixelIDValueEnum itk::simple::PhysicalPointImageSource::GetOutputPixelType()
 ";
 
 %feature("docstring")  itk::simple::PhysicalPointImageSource::GetSize "
-std::vector<unsigned int> itk::simple::PhysicalPointImageSource::GetSize()
 ";
 
 %feature("docstring")  itk::simple::PhysicalPointImageSource::GetSpacing "
-std::vector<double> itk::simple::PhysicalPointImageSource::GetSpacing()
 ";
 
 %feature("docstring")  itk::simple::PhysicalPointImageSource::PhysicalPointImageSource "
-itk::simple::PhysicalPointImageSource::PhysicalPointImageSource()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -18589,19 +16497,15 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::PhysicalPointImageSource::SetDirection "
-Self& itk::simple::PhysicalPointImageSource::SetDirection(std::vector< double > Direction)
 ";
 
 %feature("docstring")  itk::simple::PhysicalPointImageSource::SetOrigin "
-Self& itk::simple::PhysicalPointImageSource::SetOrigin(std::vector< double > Origin)
 ";
 
 %feature("docstring")  itk::simple::PhysicalPointImageSource::SetOutputPixelType "
-Self& itk::simple::PhysicalPointImageSource::SetOutputPixelType(PixelIDValueEnum OutputPixelType)
 ";
 
 %feature("docstring")  itk::simple::PhysicalPointImageSource::SetReferenceImage "
-void itk::simple::PhysicalPointImageSource::SetReferenceImage(const Image &refImage)
 
 This methods sets the size, origin, spacing and direction to that of
 the provided image
@@ -18609,15 +16513,12 @@ the provided image
 ";
 
 %feature("docstring")  itk::simple::PhysicalPointImageSource::SetSize "
-Self& itk::simple::PhysicalPointImageSource::SetSize(std::vector< unsigned int > Size)
 ";
 
 %feature("docstring")  itk::simple::PhysicalPointImageSource::SetSpacing "
-Self& itk::simple::PhysicalPointImageSource::SetSpacing(std::vector< double > Spacing)
 ";
 
 %feature("docstring")  itk::simple::PhysicalPointImageSource::ToString "
-std::string itk::simple::PhysicalPointImageSource::ToString() const
 
 Print ourselves out
 
@@ -18639,358 +16540,264 @@ C++ includes: sitkPimpleImageBase.h
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::DeepCopy "
-virtual PimpleImageBase* itk::simple::PimpleImageBase::DeepCopy(void) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetBufferAsDouble "
-virtual const double* itk::simple::PimpleImageBase::GetBufferAsDouble() const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetBufferAsDouble "
-virtual double* itk::simple::PimpleImageBase::GetBufferAsDouble()=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetBufferAsFloat "
-virtual const float* itk::simple::PimpleImageBase::GetBufferAsFloat() const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetBufferAsFloat "
-virtual float* itk::simple::PimpleImageBase::GetBufferAsFloat()=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetBufferAsInt16 "
-virtual const int16_t* itk::simple::PimpleImageBase::GetBufferAsInt16() const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetBufferAsInt16 "
-virtual int16_t* itk::simple::PimpleImageBase::GetBufferAsInt16()=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetBufferAsInt32 "
-virtual const int32_t* itk::simple::PimpleImageBase::GetBufferAsInt32() const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetBufferAsInt32 "
-virtual int32_t* itk::simple::PimpleImageBase::GetBufferAsInt32()=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetBufferAsInt64 "
-virtual const int64_t* itk::simple::PimpleImageBase::GetBufferAsInt64() const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetBufferAsInt64 "
-virtual int64_t* itk::simple::PimpleImageBase::GetBufferAsInt64()=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetBufferAsInt8 "
-virtual const int8_t* itk::simple::PimpleImageBase::GetBufferAsInt8() const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetBufferAsInt8 "
-virtual int8_t* itk::simple::PimpleImageBase::GetBufferAsInt8()=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetBufferAsUInt16 "
-virtual const uint16_t* itk::simple::PimpleImageBase::GetBufferAsUInt16() const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetBufferAsUInt16 "
-virtual uint16_t* itk::simple::PimpleImageBase::GetBufferAsUInt16()=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetBufferAsUInt32 "
-virtual const uint32_t* itk::simple::PimpleImageBase::GetBufferAsUInt32() const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetBufferAsUInt32 "
-virtual uint32_t* itk::simple::PimpleImageBase::GetBufferAsUInt32()=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetBufferAsUInt64 "
-virtual const uint64_t* itk::simple::PimpleImageBase::GetBufferAsUInt64() const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetBufferAsUInt64 "
-virtual uint64_t* itk::simple::PimpleImageBase::GetBufferAsUInt64()=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetBufferAsUInt8 "
-virtual const uint8_t* itk::simple::PimpleImageBase::GetBufferAsUInt8() const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetBufferAsUInt8 "
-virtual uint8_t* itk::simple::PimpleImageBase::GetBufferAsUInt8()=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetDataBase "
-virtual const itk::DataObject* itk::simple::PimpleImageBase::GetDataBase(void) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetDataBase "
-virtual itk::DataObject* itk::simple::PimpleImageBase::GetDataBase(void)=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetDepth "
-virtual unsigned int itk::simple::PimpleImageBase::GetDepth(void) const
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetDimension "
-virtual unsigned int itk::simple::PimpleImageBase::GetDimension(void) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetDirection "
-virtual std::vector< double > itk::simple::PimpleImageBase::GetDirection(void) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetHeight "
-virtual unsigned int itk::simple::PimpleImageBase::GetHeight(void) const
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetNumberOfComponentsPerPixel "
-virtual unsigned int itk::simple::PimpleImageBase::GetNumberOfComponentsPerPixel(void) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetOrigin "
-virtual std::vector<double> itk::simple::PimpleImageBase::GetOrigin(void) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetPixelAsComplexFloat32 "
-virtual std::complex<float> itk::simple::PimpleImageBase::GetPixelAsComplexFloat32(const std::vector< uint32_t > &idx) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetPixelAsComplexFloat64 "
-virtual std::complex<double> itk::simple::PimpleImageBase::GetPixelAsComplexFloat64(const std::vector< uint32_t > &idx) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetPixelAsDouble "
-virtual double itk::simple::PimpleImageBase::GetPixelAsDouble(const std::vector< uint32_t > &idx) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetPixelAsFloat "
-virtual float itk::simple::PimpleImageBase::GetPixelAsFloat(const std::vector< uint32_t > &idx) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetPixelAsInt16 "
-virtual int16_t itk::simple::PimpleImageBase::GetPixelAsInt16(const std::vector< uint32_t > &idx) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetPixelAsInt32 "
-virtual int32_t itk::simple::PimpleImageBase::GetPixelAsInt32(const std::vector< uint32_t > &idx) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetPixelAsInt64 "
-virtual int64_t itk::simple::PimpleImageBase::GetPixelAsInt64(const std::vector< uint32_t > &idx) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetPixelAsInt8 "
-virtual int8_t itk::simple::PimpleImageBase::GetPixelAsInt8(const std::vector< uint32_t > &idx) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetPixelAsUInt16 "
-virtual uint16_t itk::simple::PimpleImageBase::GetPixelAsUInt16(const std::vector< uint32_t > &idx) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetPixelAsUInt32 "
-virtual uint32_t itk::simple::PimpleImageBase::GetPixelAsUInt32(const std::vector< uint32_t > &idx) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetPixelAsUInt64 "
-virtual uint64_t itk::simple::PimpleImageBase::GetPixelAsUInt64(const std::vector< uint32_t > &idx) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetPixelAsUInt8 "
-virtual uint8_t itk::simple::PimpleImageBase::GetPixelAsUInt8(const std::vector< uint32_t > &idx) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetPixelAsVectorFloat32 "
-virtual std::vector<float> itk::simple::PimpleImageBase::GetPixelAsVectorFloat32(const std::vector< uint32_t > &idx) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetPixelAsVectorFloat64 "
-virtual std::vector<double> itk::simple::PimpleImageBase::GetPixelAsVectorFloat64(const std::vector< uint32_t > &idx) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetPixelAsVectorInt16 "
-virtual std::vector<int16_t> itk::simple::PimpleImageBase::GetPixelAsVectorInt16(const std::vector< uint32_t > &idx) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetPixelAsVectorInt32 "
-virtual std::vector<int32_t> itk::simple::PimpleImageBase::GetPixelAsVectorInt32(const std::vector< uint32_t > &idx) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetPixelAsVectorInt64 "
-virtual std::vector<int64_t> itk::simple::PimpleImageBase::GetPixelAsVectorInt64(const std::vector< uint32_t > &idx) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetPixelAsVectorInt8 "
-virtual std::vector<int8_t> itk::simple::PimpleImageBase::GetPixelAsVectorInt8(const std::vector< uint32_t > &idx) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetPixelAsVectorUInt16 "
-virtual std::vector<uint16_t> itk::simple::PimpleImageBase::GetPixelAsVectorUInt16(const std::vector< uint32_t > &idx) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetPixelAsVectorUInt32 "
-virtual std::vector<uint32_t> itk::simple::PimpleImageBase::GetPixelAsVectorUInt32(const std::vector< uint32_t > &idx) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetPixelAsVectorUInt64 "
-virtual std::vector<uint64_t> itk::simple::PimpleImageBase::GetPixelAsVectorUInt64(const std::vector< uint32_t > &idx) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetPixelAsVectorUInt8 "
-virtual std::vector<uint8_t> itk::simple::PimpleImageBase::GetPixelAsVectorUInt8(const std::vector< uint32_t > &idx) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetPixelID "
-virtual PixelIDValueEnum itk::simple::PimpleImageBase::GetPixelID(void) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetReferenceCountOfImage "
-virtual int itk::simple::PimpleImageBase::GetReferenceCountOfImage() const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetSize "
-virtual unsigned int itk::simple::PimpleImageBase::GetSize(unsigned int dimension) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetSize "
-virtual std::vector< unsigned int > itk::simple::PimpleImageBase::GetSize(void) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetSpacing "
-virtual std::vector<double> itk::simple::PimpleImageBase::GetSpacing(void) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::GetWidth "
-virtual unsigned int itk::simple::PimpleImageBase::GetWidth(void) const
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::SetDirection "
-virtual void itk::simple::PimpleImageBase::SetDirection(const std::vector< double > &direction)=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::SetOrigin "
-virtual void itk::simple::PimpleImageBase::SetOrigin(const std::vector< double > &orgn)=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::SetPixelAsComplexFloat32 "
-virtual void itk::simple::PimpleImageBase::SetPixelAsComplexFloat32(const std::vector< uint32_t > &idx, const std::complex< float > v)=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::SetPixelAsComplexFloat64 "
-virtual void itk::simple::PimpleImageBase::SetPixelAsComplexFloat64(const std::vector< uint32_t > &idx, const std::complex< double > v)=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::SetPixelAsDouble "
-virtual void itk::simple::PimpleImageBase::SetPixelAsDouble(const std::vector< uint32_t > &idx, double v)=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::SetPixelAsFloat "
-virtual void itk::simple::PimpleImageBase::SetPixelAsFloat(const std::vector< uint32_t > &idx, float v)=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::SetPixelAsInt16 "
-virtual void itk::simple::PimpleImageBase::SetPixelAsInt16(const std::vector< uint32_t > &idx, int16_t v)=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::SetPixelAsInt32 "
-virtual void itk::simple::PimpleImageBase::SetPixelAsInt32(const std::vector< uint32_t > &idx, int32_t v)=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::SetPixelAsInt64 "
-virtual void itk::simple::PimpleImageBase::SetPixelAsInt64(const std::vector< uint32_t > &idx, int64_t v)=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::SetPixelAsInt8 "
-virtual void itk::simple::PimpleImageBase::SetPixelAsInt8(const std::vector< uint32_t > &idx, int8_t v)=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::SetPixelAsUInt16 "
-virtual void itk::simple::PimpleImageBase::SetPixelAsUInt16(const std::vector< uint32_t > &idx, uint16_t v)=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::SetPixelAsUInt32 "
-virtual void itk::simple::PimpleImageBase::SetPixelAsUInt32(const std::vector< uint32_t > &idx, uint32_t v)=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::SetPixelAsUInt64 "
-virtual void itk::simple::PimpleImageBase::SetPixelAsUInt64(const std::vector< uint32_t > &idx, uint64_t v)=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::SetPixelAsUInt8 "
-virtual void itk::simple::PimpleImageBase::SetPixelAsUInt8(const std::vector< uint32_t > &idx, uint8_t v)=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::SetPixelAsVectorFloat32 "
-virtual void itk::simple::PimpleImageBase::SetPixelAsVectorFloat32(const std::vector< uint32_t > &idx, const std::vector< float > &v)=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::SetPixelAsVectorFloat64 "
-virtual void itk::simple::PimpleImageBase::SetPixelAsVectorFloat64(const std::vector< uint32_t > &idx, const std::vector< double > &v)=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::SetPixelAsVectorInt16 "
-virtual void itk::simple::PimpleImageBase::SetPixelAsVectorInt16(const std::vector< uint32_t > &idx, const std::vector< int16_t >
-&v)=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::SetPixelAsVectorInt32 "
-virtual void itk::simple::PimpleImageBase::SetPixelAsVectorInt32(const std::vector< uint32_t > &idx, const std::vector< int32_t >
-&v)=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::SetPixelAsVectorInt64 "
-virtual void itk::simple::PimpleImageBase::SetPixelAsVectorInt64(const std::vector< uint32_t > &idx, const std::vector< int64_t >
-&v)=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::SetPixelAsVectorInt8 "
-virtual void itk::simple::PimpleImageBase::SetPixelAsVectorInt8(const std::vector< uint32_t > &idx, const std::vector< int8_t > &v)=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::SetPixelAsVectorUInt16 "
-virtual void itk::simple::PimpleImageBase::SetPixelAsVectorUInt16(const std::vector< uint32_t > &idx, const std::vector< uint16_t >
-&v)=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::SetPixelAsVectorUInt32 "
-virtual void itk::simple::PimpleImageBase::SetPixelAsVectorUInt32(const std::vector< uint32_t > &idx, const std::vector< uint32_t >
-&v)=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::SetPixelAsVectorUInt64 "
-virtual void itk::simple::PimpleImageBase::SetPixelAsVectorUInt64(const std::vector< uint32_t > &idx, const std::vector< uint64_t >
-&v)=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::SetPixelAsVectorUInt8 "
-virtual void itk::simple::PimpleImageBase::SetPixelAsVectorUInt8(const std::vector< uint32_t > &idx, const std::vector< uint8_t >
-&v)=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::SetSpacing "
-virtual void itk::simple::PimpleImageBase::SetSpacing(const std::vector< double > &spc)=0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::ShallowCopy "
-virtual PimpleImageBase* itk::simple::PimpleImageBase::ShallowCopy(void) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::ToString "
-virtual std::string itk::simple::PimpleImageBase::ToString() const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::TransformIndexToPhysicalPoint "
-virtual std::vector<double> itk::simple::PimpleImageBase::TransformIndexToPhysicalPoint(const std::vector< int64_t > &idx) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::TransformPhysicalPointToIndex "
-virtual std::vector<int64_t> itk::simple::PimpleImageBase::TransformPhysicalPointToIndex(const std::vector< double > &pt) const =0
 ";
 
 %feature("docstring")  itk::simple::PimpleImageBase::~PimpleImageBase "
-virtual itk::simple::PimpleImageBase::~PimpleImageBase(void)
 ";
 
 
@@ -19019,32 +16826,27 @@ C++ includes: sitkPowImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::PowImageFilter::Execute "
-Image itk::simple::PowImageFilter::Execute(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::PowImageFilter::Execute "
-Image itk::simple::PowImageFilter::Execute(const Image &image1, double constant)
 
 Execute the filter with an image and a constant
 
 ";
 
 %feature("docstring")  itk::simple::PowImageFilter::Execute "
-Image itk::simple::PowImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::PowImageFilter::GetName "
-std::string itk::simple::PowImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::PowImageFilter::PowImageFilter "
-itk::simple::PowImageFilter::PowImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -19052,7 +16854,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::PowImageFilter::ToString "
-std::string itk::simple::PowImageFilter::ToString() const
 
 Print ourselves out
 
@@ -19092,70 +16893,54 @@ C++ includes: sitkProjectedLandweberDeconvolutionImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ProjectedLandweberDeconvolutionImageFilter::Execute "
-Image itk::simple::ProjectedLandweberDeconvolutionImageFilter::Execute(const Image &image1, const Image &image2, double alpha, int
-numberOfIterations, bool normalize,
-ProjectedLandweberDeconvolutionImageFilter::BoundaryConditionType
-boundaryCondition,
-ProjectedLandweberDeconvolutionImageFilter::OutputRegionModeType
-outputRegionMode)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ProjectedLandweberDeconvolutionImageFilter::Execute "
-Image itk::simple::ProjectedLandweberDeconvolutionImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::ProjectedLandweberDeconvolutionImageFilter::GetAlpha "
-double itk::simple::ProjectedLandweberDeconvolutionImageFilter::GetAlpha()
 
 Get the relaxation factor.
 
 ";
 
 %feature("docstring")  itk::simple::ProjectedLandweberDeconvolutionImageFilter::GetBoundaryCondition "
-ProjectedLandweberDeconvolutionImageFilter::BoundaryConditionType itk::simple::ProjectedLandweberDeconvolutionImageFilter::GetBoundaryCondition()
 ";
 
 %feature("docstring")  itk::simple::ProjectedLandweberDeconvolutionImageFilter::GetName "
-std::string itk::simple::ProjectedLandweberDeconvolutionImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ProjectedLandweberDeconvolutionImageFilter::GetNormalize "
-bool itk::simple::ProjectedLandweberDeconvolutionImageFilter::GetNormalize()
 ";
 
 %feature("docstring")  itk::simple::ProjectedLandweberDeconvolutionImageFilter::GetNumberOfIterations "
-int itk::simple::ProjectedLandweberDeconvolutionImageFilter::GetNumberOfIterations()
 
 Get the number of iterations.
 
 ";
 
 %feature("docstring")  itk::simple::ProjectedLandweberDeconvolutionImageFilter::GetOutputRegionMode "
-ProjectedLandweberDeconvolutionImageFilter::OutputRegionModeType itk::simple::ProjectedLandweberDeconvolutionImageFilter::GetOutputRegionMode()
 ";
 
 %feature("docstring")  itk::simple::ProjectedLandweberDeconvolutionImageFilter::NormalizeOff "
-Self& itk::simple::ProjectedLandweberDeconvolutionImageFilter::NormalizeOff()
 ";
 
 %feature("docstring")  itk::simple::ProjectedLandweberDeconvolutionImageFilter::NormalizeOn "
-Self& itk::simple::ProjectedLandweberDeconvolutionImageFilter::NormalizeOn()
 
 Set the value of Normalize to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::ProjectedLandweberDeconvolutionImageFilter::ProjectedLandweberDeconvolutionImageFilter "
-itk::simple::ProjectedLandweberDeconvolutionImageFilter::ProjectedLandweberDeconvolutionImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -19163,38 +16948,30 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ProjectedLandweberDeconvolutionImageFilter::SetAlpha "
-Self& itk::simple::ProjectedLandweberDeconvolutionImageFilter::SetAlpha(double Alpha)
 
 Set the relaxation factor.
 
 ";
 
 %feature("docstring")  itk::simple::ProjectedLandweberDeconvolutionImageFilter::SetBoundaryCondition "
-Self& itk::simple::ProjectedLandweberDeconvolutionImageFilter::SetBoundaryCondition(ProjectedLandweberDeconvolutionImageFilter::BoundaryConditionType
-BoundaryCondition)
 ";
 
 %feature("docstring")  itk::simple::ProjectedLandweberDeconvolutionImageFilter::SetNormalize "
-Self& itk::simple::ProjectedLandweberDeconvolutionImageFilter::SetNormalize(bool Normalize)
 
 Normalize the output image by the sum of the kernel components.
 
 ";
 
 %feature("docstring")  itk::simple::ProjectedLandweberDeconvolutionImageFilter::SetNumberOfIterations "
-Self& itk::simple::ProjectedLandweberDeconvolutionImageFilter::SetNumberOfIterations(int NumberOfIterations)
 
 Set the number of iterations.
 
 ";
 
 %feature("docstring")  itk::simple::ProjectedLandweberDeconvolutionImageFilter::SetOutputRegionMode "
-Self& itk::simple::ProjectedLandweberDeconvolutionImageFilter::SetOutputRegionMode(ProjectedLandweberDeconvolutionImageFilter::OutputRegionModeType
-OutputRegionMode)
 ";
 
 %feature("docstring")  itk::simple::ProjectedLandweberDeconvolutionImageFilter::ToString "
-std::string itk::simple::ProjectedLandweberDeconvolutionImageFilter::ToString() const
 
 Print ourselves out
 
@@ -19212,36 +16989,30 @@ C++ includes: sitkRankImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::RankImageFilter::Execute "
-Image itk::simple::RankImageFilter::Execute(const Image &image1, double rank, std::vector< unsigned int > radius)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::RankImageFilter::Execute "
-Image itk::simple::RankImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::RankImageFilter::GetName "
-std::string itk::simple::RankImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::RankImageFilter::GetRadius "
-std::vector<unsigned int> itk::simple::RankImageFilter::GetRadius()
 ";
 
 %feature("docstring")  itk::simple::RankImageFilter::GetRank "
-double itk::simple::RankImageFilter::GetRank()
 ";
 
 %feature("docstring")  itk::simple::RankImageFilter::RankImageFilter "
-itk::simple::RankImageFilter::RankImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -19249,22 +17020,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::RankImageFilter::SetRadius "
-Self& itk::simple::RankImageFilter::SetRadius(std::vector< unsigned int > Radius)
 ";
 
 %feature("docstring")  itk::simple::RankImageFilter::SetRadius "
-Self& itk::simple::RankImageFilter::SetRadius(unsigned int r)
 
 Custom public declarations
 
 ";
 
 %feature("docstring")  itk::simple::RankImageFilter::SetRank "
-Self& itk::simple::RankImageFilter::SetRank(double Rank)
 ";
 
 %feature("docstring")  itk::simple::RankImageFilter::ToString "
-std::string itk::simple::RankImageFilter::ToString() const
 
 Print ourselves out
 
@@ -19290,21 +17057,18 @@ C++ includes: sitkRealAndImaginaryToComplexImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::RealAndImaginaryToComplexImageFilter::Execute "
-Image itk::simple::RealAndImaginaryToComplexImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::RealAndImaginaryToComplexImageFilter::GetName "
-std::string itk::simple::RealAndImaginaryToComplexImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::RealAndImaginaryToComplexImageFilter::RealAndImaginaryToComplexImageFilter "
-itk::simple::RealAndImaginaryToComplexImageFilter::RealAndImaginaryToComplexImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -19312,7 +17076,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::RealAndImaginaryToComplexImageFilter::ToString "
-std::string itk::simple::RealAndImaginaryToComplexImageFilter::ToString() const
 
 Print ourselves out
 
@@ -19349,21 +17112,18 @@ C++ includes: sitkRealToHalfHermitianForwardFFTImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::RealToHalfHermitianForwardFFTImageFilter::Execute "
-Image itk::simple::RealToHalfHermitianForwardFFTImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::RealToHalfHermitianForwardFFTImageFilter::GetName "
-std::string itk::simple::RealToHalfHermitianForwardFFTImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::RealToHalfHermitianForwardFFTImageFilter::RealToHalfHermitianForwardFFTImageFilter "
-itk::simple::RealToHalfHermitianForwardFFTImageFilter::RealToHalfHermitianForwardFFTImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -19371,7 +17131,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::RealToHalfHermitianForwardFFTImageFilter::ToString "
-std::string itk::simple::RealToHalfHermitianForwardFFTImageFilter::ToString() const
 
 Print ourselves out
 
@@ -19411,48 +17170,39 @@ C++ includes: sitkReconstructionByDilationImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ReconstructionByDilationImageFilter::Execute "
-Image itk::simple::ReconstructionByDilationImageFilter::Execute(const Image &image1, const Image &image2, bool fullyConnected, bool
-useInternalCopy)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ReconstructionByDilationImageFilter::Execute "
-Image itk::simple::ReconstructionByDilationImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::ReconstructionByDilationImageFilter::FullyConnectedOff "
-Self& itk::simple::ReconstructionByDilationImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::ReconstructionByDilationImageFilter::FullyConnectedOn "
-Self& itk::simple::ReconstructionByDilationImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::ReconstructionByDilationImageFilter::GetFullyConnected "
-bool itk::simple::ReconstructionByDilationImageFilter::GetFullyConnected()
 ";
 
 %feature("docstring")  itk::simple::ReconstructionByDilationImageFilter::GetName "
-std::string itk::simple::ReconstructionByDilationImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ReconstructionByDilationImageFilter::GetUseInternalCopy "
-bool itk::simple::ReconstructionByDilationImageFilter::GetUseInternalCopy()
 ";
 
 %feature("docstring")  itk::simple::ReconstructionByDilationImageFilter::ReconstructionByDilationImageFilter "
-itk::simple::ReconstructionByDilationImageFilter::ReconstructionByDilationImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -19460,26 +17210,21 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ReconstructionByDilationImageFilter::SetFullyConnected "
-Self& itk::simple::ReconstructionByDilationImageFilter::SetFullyConnected(bool FullyConnected)
 ";
 
 %feature("docstring")  itk::simple::ReconstructionByDilationImageFilter::SetUseInternalCopy "
-Self& itk::simple::ReconstructionByDilationImageFilter::SetUseInternalCopy(bool UseInternalCopy)
 ";
 
 %feature("docstring")  itk::simple::ReconstructionByDilationImageFilter::ToString "
-std::string itk::simple::ReconstructionByDilationImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::ReconstructionByDilationImageFilter::UseInternalCopyOff "
-Self& itk::simple::ReconstructionByDilationImageFilter::UseInternalCopyOff()
 ";
 
 %feature("docstring")  itk::simple::ReconstructionByDilationImageFilter::UseInternalCopyOn "
-Self& itk::simple::ReconstructionByDilationImageFilter::UseInternalCopyOn()
 
 Set the value of UseInternalCopy to true or false respectfully.
 
@@ -19519,48 +17264,39 @@ C++ includes: sitkReconstructionByErosionImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ReconstructionByErosionImageFilter::Execute "
-Image itk::simple::ReconstructionByErosionImageFilter::Execute(const Image &image1, const Image &image2, bool fullyConnected, bool
-useInternalCopy)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ReconstructionByErosionImageFilter::Execute "
-Image itk::simple::ReconstructionByErosionImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::ReconstructionByErosionImageFilter::FullyConnectedOff "
-Self& itk::simple::ReconstructionByErosionImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::ReconstructionByErosionImageFilter::FullyConnectedOn "
-Self& itk::simple::ReconstructionByErosionImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::ReconstructionByErosionImageFilter::GetFullyConnected "
-bool itk::simple::ReconstructionByErosionImageFilter::GetFullyConnected()
 ";
 
 %feature("docstring")  itk::simple::ReconstructionByErosionImageFilter::GetName "
-std::string itk::simple::ReconstructionByErosionImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ReconstructionByErosionImageFilter::GetUseInternalCopy "
-bool itk::simple::ReconstructionByErosionImageFilter::GetUseInternalCopy()
 ";
 
 %feature("docstring")  itk::simple::ReconstructionByErosionImageFilter::ReconstructionByErosionImageFilter "
-itk::simple::ReconstructionByErosionImageFilter::ReconstructionByErosionImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -19568,26 +17304,21 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ReconstructionByErosionImageFilter::SetFullyConnected "
-Self& itk::simple::ReconstructionByErosionImageFilter::SetFullyConnected(bool FullyConnected)
 ";
 
 %feature("docstring")  itk::simple::ReconstructionByErosionImageFilter::SetUseInternalCopy "
-Self& itk::simple::ReconstructionByErosionImageFilter::SetUseInternalCopy(bool UseInternalCopy)
 ";
 
 %feature("docstring")  itk::simple::ReconstructionByErosionImageFilter::ToString "
-std::string itk::simple::ReconstructionByErosionImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::ReconstructionByErosionImageFilter::UseInternalCopyOff "
-Self& itk::simple::ReconstructionByErosionImageFilter::UseInternalCopyOff()
 ";
 
 %feature("docstring")  itk::simple::ReconstructionByErosionImageFilter::UseInternalCopyOn "
-Self& itk::simple::ReconstructionByErosionImageFilter::UseInternalCopyOn()
 
 Set the value of UseInternalCopy to true or false respectfully.
 
@@ -19630,38 +17361,30 @@ C++ includes: sitkRecursiveGaussianImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::RecursiveGaussianImageFilter::Execute "
-Image itk::simple::RecursiveGaussianImageFilter::Execute(const Image &image1, double sigma, bool normalizeAcrossScale,
-itk::simple::RecursiveGaussianImageFilter::OrderEnumType order,
-unsigned int direction)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::RecursiveGaussianImageFilter::Execute "
-Image itk::simple::RecursiveGaussianImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::RecursiveGaussianImageFilter::GetDirection "
-unsigned int itk::simple::RecursiveGaussianImageFilter::GetDirection()
 ";
 
 %feature("docstring")  itk::simple::RecursiveGaussianImageFilter::GetName "
-std::string itk::simple::RecursiveGaussianImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::RecursiveGaussianImageFilter::GetNormalizeAcrossScale "
-bool itk::simple::RecursiveGaussianImageFilter::GetNormalizeAcrossScale()
 ";
 
 %feature("docstring")  itk::simple::RecursiveGaussianImageFilter::GetOrder "
-itk::simple::RecursiveGaussianImageFilter::OrderEnumType itk::simple::RecursiveGaussianImageFilter::GetOrder()
 
 Set/Get the Order of the Gaussian to convolve with.
 
@@ -19680,7 +17403,6 @@ a Gaussian.
 ";
 
 %feature("docstring")  itk::simple::RecursiveGaussianImageFilter::GetSigma "
-double itk::simple::RecursiveGaussianImageFilter::GetSigma()
 
 Set/Get the Sigma, measured in world coordinates, of the Gaussian
 kernel. The default is 1.0.
@@ -19688,18 +17410,15 @@ kernel. The default is 1.0.
 ";
 
 %feature("docstring")  itk::simple::RecursiveGaussianImageFilter::NormalizeAcrossScaleOff "
-Self& itk::simple::RecursiveGaussianImageFilter::NormalizeAcrossScaleOff()
 ";
 
 %feature("docstring")  itk::simple::RecursiveGaussianImageFilter::NormalizeAcrossScaleOn "
-Self& itk::simple::RecursiveGaussianImageFilter::NormalizeAcrossScaleOn()
 
 Set the value of NormalizeAcrossScale to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::RecursiveGaussianImageFilter::RecursiveGaussianImageFilter "
-itk::simple::RecursiveGaussianImageFilter::RecursiveGaussianImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -19707,11 +17426,9 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::RecursiveGaussianImageFilter::SetDirection "
-Self& itk::simple::RecursiveGaussianImageFilter::SetDirection(unsigned int Direction)
 ";
 
 %feature("docstring")  itk::simple::RecursiveGaussianImageFilter::SetNormalizeAcrossScale "
-Self& itk::simple::RecursiveGaussianImageFilter::SetNormalizeAcrossScale(bool NormalizeAcrossScale)
 
 Set/Get the flag for normalizing the gaussian over scale-space.This
 flag enables the analysis of the differential shape of features
@@ -19736,7 +17453,6 @@ other methods such as a discrete Gaussian kernel should be considered.
 ";
 
 %feature("docstring")  itk::simple::RecursiveGaussianImageFilter::SetOrder "
-Self& itk::simple::RecursiveGaussianImageFilter::SetOrder(itk::simple::RecursiveGaussianImageFilter::OrderEnumType Order)
 
 Set/Get the Order of the Gaussian to convolve with.
 
@@ -19755,7 +17471,6 @@ a Gaussian.
 ";
 
 %feature("docstring")  itk::simple::RecursiveGaussianImageFilter::SetSigma "
-Self& itk::simple::RecursiveGaussianImageFilter::SetSigma(double Sigma)
 
 Set/Get the Sigma, measured in world coordinates, of the Gaussian
 kernel. The default is 1.0.
@@ -19763,7 +17478,6 @@ kernel. The default is 1.0.
 ";
 
 %feature("docstring")  itk::simple::RecursiveGaussianImageFilter::ToString "
-std::string itk::simple::RecursiveGaussianImageFilter::ToString() const
 
 Print ourselves out
 
@@ -19801,37 +17515,30 @@ C++ includes: sitkRegionOfInterestImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::RegionOfInterestImageFilter::Execute "
-Image itk::simple::RegionOfInterestImageFilter::Execute(const Image &image1, std::vector< unsigned int > size, std::vector<
-int > index)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::RegionOfInterestImageFilter::Execute "
-Image itk::simple::RegionOfInterestImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::RegionOfInterestImageFilter::GetIndex "
-std::vector<int> itk::simple::RegionOfInterestImageFilter::GetIndex()
 ";
 
 %feature("docstring")  itk::simple::RegionOfInterestImageFilter::GetName "
-std::string itk::simple::RegionOfInterestImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::RegionOfInterestImageFilter::GetSize "
-std::vector<unsigned int> itk::simple::RegionOfInterestImageFilter::GetSize()
 ";
 
 %feature("docstring")  itk::simple::RegionOfInterestImageFilter::RegionOfInterestImageFilter "
-itk::simple::RegionOfInterestImageFilter::RegionOfInterestImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -19839,18 +17546,15 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::RegionOfInterestImageFilter::SetIndex "
-Self& itk::simple::RegionOfInterestImageFilter::SetIndex(std::vector< int > Index)
 
 odo the internal setting of the method need work!!!
 
 ";
 
 %feature("docstring")  itk::simple::RegionOfInterestImageFilter::SetSize "
-Self& itk::simple::RegionOfInterestImageFilter::SetSize(std::vector< unsigned int > Size)
 ";
 
 %feature("docstring")  itk::simple::RegionOfInterestImageFilter::ToString "
-std::string itk::simple::RegionOfInterestImageFilter::ToString() const
 
 Print ourselves out
 
@@ -19893,44 +17597,36 @@ C++ includes: sitkRegionalMaximaImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::RegionalMaximaImageFilter::Execute "
-Image itk::simple::RegionalMaximaImageFilter::Execute(const Image &image1, double backgroundValue, double foregroundValue,
-bool fullyConnected, bool flatIsMaxima)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::RegionalMaximaImageFilter::Execute "
-Image itk::simple::RegionalMaximaImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::RegionalMaximaImageFilter::FlatIsMaximaOff "
-Self& itk::simple::RegionalMaximaImageFilter::FlatIsMaximaOff()
 ";
 
 %feature("docstring")  itk::simple::RegionalMaximaImageFilter::FlatIsMaximaOn "
-Self& itk::simple::RegionalMaximaImageFilter::FlatIsMaximaOn()
 
 Set the value of FlatIsMaxima to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::RegionalMaximaImageFilter::FullyConnectedOff "
-Self& itk::simple::RegionalMaximaImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::RegionalMaximaImageFilter::FullyConnectedOn "
-Self& itk::simple::RegionalMaximaImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::RegionalMaximaImageFilter::GetBackgroundValue "
-double itk::simple::RegionalMaximaImageFilter::GetBackgroundValue()
 
 Set/Get the value used as \"background\" in the output image. Defaults
 to NumericTraits<PixelType>::NonpositiveMin().
@@ -19938,7 +17634,6 @@ to NumericTraits<PixelType>::NonpositiveMin().
 ";
 
 %feature("docstring")  itk::simple::RegionalMaximaImageFilter::GetFlatIsMaxima "
-bool itk::simple::RegionalMaximaImageFilter::GetFlatIsMaxima()
 
 Set/Get wether a flat image must be considered as a maxima or not.
 Defaults to true.
@@ -19946,7 +17641,6 @@ Defaults to true.
 ";
 
 %feature("docstring")  itk::simple::RegionalMaximaImageFilter::GetForegroundValue "
-double itk::simple::RegionalMaximaImageFilter::GetForegroundValue()
 
 Set/Get the value in the output image to consider as \"foreground\".
 Defaults to maximum value of PixelType.
@@ -19954,7 +17648,6 @@ Defaults to maximum value of PixelType.
 ";
 
 %feature("docstring")  itk::simple::RegionalMaximaImageFilter::GetFullyConnected "
-bool itk::simple::RegionalMaximaImageFilter::GetFullyConnected()
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -19964,14 +17657,12 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::RegionalMaximaImageFilter::GetName "
-std::string itk::simple::RegionalMaximaImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::RegionalMaximaImageFilter::RegionalMaximaImageFilter "
-itk::simple::RegionalMaximaImageFilter::RegionalMaximaImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -19979,7 +17670,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::RegionalMaximaImageFilter::SetBackgroundValue "
-Self& itk::simple::RegionalMaximaImageFilter::SetBackgroundValue(double BackgroundValue)
 
 Set/Get the value used as \"background\" in the output image. Defaults
 to NumericTraits<PixelType>::NonpositiveMin().
@@ -19987,7 +17677,6 @@ to NumericTraits<PixelType>::NonpositiveMin().
 ";
 
 %feature("docstring")  itk::simple::RegionalMaximaImageFilter::SetFlatIsMaxima "
-Self& itk::simple::RegionalMaximaImageFilter::SetFlatIsMaxima(bool FlatIsMaxima)
 
 Set/Get wether a flat image must be considered as a maxima or not.
 Defaults to true.
@@ -19995,7 +17684,6 @@ Defaults to true.
 ";
 
 %feature("docstring")  itk::simple::RegionalMaximaImageFilter::SetForegroundValue "
-Self& itk::simple::RegionalMaximaImageFilter::SetForegroundValue(double ForegroundValue)
 
 Set/Get the value in the output image to consider as \"foreground\".
 Defaults to maximum value of PixelType.
@@ -20003,7 +17691,6 @@ Defaults to maximum value of PixelType.
 ";
 
 %feature("docstring")  itk::simple::RegionalMaximaImageFilter::SetFullyConnected "
-Self& itk::simple::RegionalMaximaImageFilter::SetFullyConnected(bool FullyConnected)
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -20013,7 +17700,6 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::RegionalMaximaImageFilter::ToString "
-std::string itk::simple::RegionalMaximaImageFilter::ToString() const
 
 Print ourselves out
 
@@ -20053,44 +17739,36 @@ C++ includes: sitkRegionalMinimaImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::RegionalMinimaImageFilter::Execute "
-Image itk::simple::RegionalMinimaImageFilter::Execute(const Image &image1, double backgroundValue, double foregroundValue,
-bool fullyConnected, bool flatIsMinima)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::RegionalMinimaImageFilter::Execute "
-Image itk::simple::RegionalMinimaImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::RegionalMinimaImageFilter::FlatIsMinimaOff "
-Self& itk::simple::RegionalMinimaImageFilter::FlatIsMinimaOff()
 ";
 
 %feature("docstring")  itk::simple::RegionalMinimaImageFilter::FlatIsMinimaOn "
-Self& itk::simple::RegionalMinimaImageFilter::FlatIsMinimaOn()
 
 Set the value of FlatIsMinima to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::RegionalMinimaImageFilter::FullyConnectedOff "
-Self& itk::simple::RegionalMinimaImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::RegionalMinimaImageFilter::FullyConnectedOn "
-Self& itk::simple::RegionalMinimaImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::RegionalMinimaImageFilter::GetBackgroundValue "
-double itk::simple::RegionalMinimaImageFilter::GetBackgroundValue()
 
 Set/Get the value used as \"background\" in the output image. Defaults
 to NumericTraits<PixelType>::NonpositiveMin().
@@ -20098,7 +17776,6 @@ to NumericTraits<PixelType>::NonpositiveMin().
 ";
 
 %feature("docstring")  itk::simple::RegionalMinimaImageFilter::GetFlatIsMinima "
-bool itk::simple::RegionalMinimaImageFilter::GetFlatIsMinima()
 
 Set/Get wether a flat image must be considered as a minima or not.
 Defaults to true.
@@ -20106,7 +17783,6 @@ Defaults to true.
 ";
 
 %feature("docstring")  itk::simple::RegionalMinimaImageFilter::GetForegroundValue "
-double itk::simple::RegionalMinimaImageFilter::GetForegroundValue()
 
 Set/Get the value in the output image to consider as \"foreground\".
 Defaults to maximum value of PixelType.
@@ -20114,7 +17790,6 @@ Defaults to maximum value of PixelType.
 ";
 
 %feature("docstring")  itk::simple::RegionalMinimaImageFilter::GetFullyConnected "
-bool itk::simple::RegionalMinimaImageFilter::GetFullyConnected()
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -20124,14 +17799,12 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::RegionalMinimaImageFilter::GetName "
-std::string itk::simple::RegionalMinimaImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::RegionalMinimaImageFilter::RegionalMinimaImageFilter "
-itk::simple::RegionalMinimaImageFilter::RegionalMinimaImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -20139,7 +17812,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::RegionalMinimaImageFilter::SetBackgroundValue "
-Self& itk::simple::RegionalMinimaImageFilter::SetBackgroundValue(double BackgroundValue)
 
 Set/Get the value used as \"background\" in the output image. Defaults
 to NumericTraits<PixelType>::NonpositiveMin().
@@ -20147,7 +17819,6 @@ to NumericTraits<PixelType>::NonpositiveMin().
 ";
 
 %feature("docstring")  itk::simple::RegionalMinimaImageFilter::SetFlatIsMinima "
-Self& itk::simple::RegionalMinimaImageFilter::SetFlatIsMinima(bool FlatIsMinima)
 
 Set/Get wether a flat image must be considered as a minima or not.
 Defaults to true.
@@ -20155,7 +17826,6 @@ Defaults to true.
 ";
 
 %feature("docstring")  itk::simple::RegionalMinimaImageFilter::SetForegroundValue "
-Self& itk::simple::RegionalMinimaImageFilter::SetForegroundValue(double ForegroundValue)
 
 Set/Get the value in the output image to consider as \"foreground\".
 Defaults to maximum value of PixelType.
@@ -20163,7 +17833,6 @@ Defaults to maximum value of PixelType.
 ";
 
 %feature("docstring")  itk::simple::RegionalMinimaImageFilter::SetFullyConnected "
-Self& itk::simple::RegionalMinimaImageFilter::SetFullyConnected(bool FullyConnected)
 
 Set/Get whether the connected components are defined strictly by face
 connectivity or by face+edge+vertex connectivity. Default is
@@ -20173,7 +17842,6 @@ FullyConnectedOn.
 ";
 
 %feature("docstring")  itk::simple::RegionalMinimaImageFilter::ToString "
-std::string itk::simple::RegionalMinimaImageFilter::ToString() const
 
 Print ourselves out
 
@@ -20225,21 +17893,18 @@ C++ includes: sitkRelabelComponentImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::RelabelComponentImageFilter::Execute "
-Image itk::simple::RelabelComponentImageFilter::Execute(const Image &image1, uint64_t minimumObjectSize)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::RelabelComponentImageFilter::Execute "
-Image itk::simple::RelabelComponentImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::RelabelComponentImageFilter::GetMinimumObjectSize "
-uint64_t itk::simple::RelabelComponentImageFilter::GetMinimumObjectSize()
 
 Get the caller-defined minimum size of an object in pixels. If the
 caller has not set the minimum, 0 will be returned, which is to be
@@ -20249,14 +17914,12 @@ original label map will be passed through to the output.
 ";
 
 %feature("docstring")  itk::simple::RelabelComponentImageFilter::GetName "
-std::string itk::simple::RelabelComponentImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::RelabelComponentImageFilter::RelabelComponentImageFilter "
-itk::simple::RelabelComponentImageFilter::RelabelComponentImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -20264,7 +17927,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::RelabelComponentImageFilter::SetMinimumObjectSize "
-Self& itk::simple::RelabelComponentImageFilter::SetMinimumObjectSize(uint64_t MinimumObjectSize)
 
 Set the minimum size in pixels for an object. All objects smaller than
 this size will be discarded and will not appear in the output label
@@ -20276,7 +17938,6 @@ in the original label map.
 ";
 
 %feature("docstring")  itk::simple::RelabelComponentImageFilter::ToString "
-std::string itk::simple::RelabelComponentImageFilter::ToString() const
 
 Print ourselves out
 
@@ -20309,47 +17970,39 @@ C++ includes: sitkRenyiEntropyThresholdImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::RenyiEntropyThresholdImageFilter::Execute "
-Image itk::simple::RenyiEntropyThresholdImageFilter::Execute(const Image &image1, uint8_t insideValue, uint8_t outsideValue,
-uint32_t numberOfHistogramBins)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::RenyiEntropyThresholdImageFilter::Execute "
-Image itk::simple::RenyiEntropyThresholdImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::RenyiEntropyThresholdImageFilter::GetInsideValue "
-uint8_t itk::simple::RenyiEntropyThresholdImageFilter::GetInsideValue()
 
 Get the \"inside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::RenyiEntropyThresholdImageFilter::GetName "
-std::string itk::simple::RenyiEntropyThresholdImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::RenyiEntropyThresholdImageFilter::GetNumberOfHistogramBins "
-uint32_t itk::simple::RenyiEntropyThresholdImageFilter::GetNumberOfHistogramBins()
 ";
 
 %feature("docstring")  itk::simple::RenyiEntropyThresholdImageFilter::GetOutsideValue "
-uint8_t itk::simple::RenyiEntropyThresholdImageFilter::GetOutsideValue()
 
 Get the \"outside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::RenyiEntropyThresholdImageFilter::RenyiEntropyThresholdImageFilter "
-itk::simple::RenyiEntropyThresholdImageFilter::RenyiEntropyThresholdImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -20357,21 +18010,18 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::RenyiEntropyThresholdImageFilter::SetInsideValue "
-Self& itk::simple::RenyiEntropyThresholdImageFilter::SetInsideValue(uint8_t InsideValue)
 
 Set the \"inside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::RenyiEntropyThresholdImageFilter::SetNumberOfHistogramBins "
-Self& itk::simple::RenyiEntropyThresholdImageFilter::SetNumberOfHistogramBins(uint32_t NumberOfHistogramBins)
 
 Set/Get the number of histogram bins.
 
 ";
 
 %feature("docstring")  itk::simple::RenyiEntropyThresholdImageFilter::SetOutsideValue "
-Self& itk::simple::RenyiEntropyThresholdImageFilter::SetOutsideValue(uint8_t OutsideValue)
 
 Set the \"outside\" pixel value. The default value
 NumericTraits<OutputPixelType>::Zero.
@@ -20379,7 +18029,6 @@ NumericTraits<OutputPixelType>::Zero.
 ";
 
 %feature("docstring")  itk::simple::RenyiEntropyThresholdImageFilter::ToString "
-std::string itk::simple::RenyiEntropyThresholdImageFilter::ToString() const
 
 Print ourselves out
 
@@ -20440,80 +18089,66 @@ C++ includes: sitkResampleImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ResampleImageFilter::Execute "
-Image itk::simple::ResampleImageFilter::Execute(const Image &image1, std::vector< uint32_t > size, Transform
-transform, InterpolatorEnum interpolator, std::vector< double >
-outputOrigin, std::vector< double > outputSpacing, std::vector< double
-> outputDirection, double defaultPixelValue)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ResampleImageFilter::Execute "
-Image itk::simple::ResampleImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ResampleImageFilter::GetDefaultPixelValue "
-double itk::simple::ResampleImageFilter::GetDefaultPixelValue()
 
 Get the pixel value when a transformed pixel is outside of the image.
 
 ";
 
 %feature("docstring")  itk::simple::ResampleImageFilter::GetInterpolator "
-InterpolatorEnum itk::simple::ResampleImageFilter::GetInterpolator()
 
 Get a pointer to the interpolator function.
 
 ";
 
 %feature("docstring")  itk::simple::ResampleImageFilter::GetName "
-std::string itk::simple::ResampleImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ResampleImageFilter::GetOutputDirection "
-std::vector<double> itk::simple::ResampleImageFilter::GetOutputDirection()
 
 Set the output direciton cosine matrix.
 
 ";
 
 %feature("docstring")  itk::simple::ResampleImageFilter::GetOutputOrigin "
-std::vector<double> itk::simple::ResampleImageFilter::GetOutputOrigin()
 
 Get the output image origin.
 
 ";
 
 %feature("docstring")  itk::simple::ResampleImageFilter::GetOutputSpacing "
-std::vector<double> itk::simple::ResampleImageFilter::GetOutputSpacing()
 
 Get the output image spacing.
 
 ";
 
 %feature("docstring")  itk::simple::ResampleImageFilter::GetSize "
-std::vector<uint32_t> itk::simple::ResampleImageFilter::GetSize()
 
 Get the size of the output image.
 
 ";
 
 %feature("docstring")  itk::simple::ResampleImageFilter::GetTransform "
-Transform itk::simple::ResampleImageFilter::GetTransform()
 
 Get a pointer to the coordinate transform.
 
 ";
 
 %feature("docstring")  itk::simple::ResampleImageFilter::ResampleImageFilter "
-itk::simple::ResampleImageFilter::ResampleImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -20521,7 +18156,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ResampleImageFilter::SetDefaultPixelValue "
-Self& itk::simple::ResampleImageFilter::SetDefaultPixelValue(double DefaultPixelValue)
 
 Set the pixel value when a transformed pixel is outside of the image.
 The default default pixel value is 0.
@@ -20529,7 +18163,6 @@ The default default pixel value is 0.
 ";
 
 %feature("docstring")  itk::simple::ResampleImageFilter::SetInterpolator "
-Self& itk::simple::ResampleImageFilter::SetInterpolator(InterpolatorEnum Interpolator)
 
 Set the interpolator function. The default is
 LinearInterpolateImageFunction<InputImageType,
@@ -20542,28 +18175,24 @@ interpolation).
 ";
 
 %feature("docstring")  itk::simple::ResampleImageFilter::SetOutputDirection "
-Self& itk::simple::ResampleImageFilter::SetOutputDirection(std::vector< double > OutputDirection)
 
 Set the output direciton cosine matrix.
 
 ";
 
 %feature("docstring")  itk::simple::ResampleImageFilter::SetOutputOrigin "
-Self& itk::simple::ResampleImageFilter::SetOutputOrigin(std::vector< double > OutputOrigin)
 
 Set the output image origin.
 
 ";
 
 %feature("docstring")  itk::simple::ResampleImageFilter::SetOutputSpacing "
-Self& itk::simple::ResampleImageFilter::SetOutputSpacing(std::vector< double > OutputSpacing)
 
 Set the output image spacing.
 
 ";
 
 %feature("docstring")  itk::simple::ResampleImageFilter::SetReferenceImage "
-void itk::simple::ResampleImageFilter::SetReferenceImage(const Image &refImage)
 
 This methods sets the output size, origin, spacing and direction to
 that of the provided image
@@ -20571,14 +18200,12 @@ that of the provided image
 ";
 
 %feature("docstring")  itk::simple::ResampleImageFilter::SetSize "
-Self& itk::simple::ResampleImageFilter::SetSize(std::vector< uint32_t > Size)
 
 Set the size of the output image.
 
 ";
 
 %feature("docstring")  itk::simple::ResampleImageFilter::SetTransform "
-Self& itk::simple::ResampleImageFilter::SetTransform(Transform Transform)
 
 Set the coordinate transformation. Set the coordinate transform to use
 for resampling. Note that this must be in physical coordinates and it
@@ -20591,7 +18218,6 @@ Identity transform.
 ";
 
 %feature("docstring")  itk::simple::ResampleImageFilter::ToString "
-std::string itk::simple::ResampleImageFilter::ToString() const
 
 Print ourselves out
 
@@ -20633,36 +18259,30 @@ C++ includes: sitkRescaleIntensityImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::RescaleIntensityImageFilter::Execute "
-Image itk::simple::RescaleIntensityImageFilter::Execute(const Image &image1, double outputMinimum, double outputMaximum)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::RescaleIntensityImageFilter::Execute "
-Image itk::simple::RescaleIntensityImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::RescaleIntensityImageFilter::GetName "
-std::string itk::simple::RescaleIntensityImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::RescaleIntensityImageFilter::GetOutputMaximum "
-double itk::simple::RescaleIntensityImageFilter::GetOutputMaximum()
 ";
 
 %feature("docstring")  itk::simple::RescaleIntensityImageFilter::GetOutputMinimum "
-double itk::simple::RescaleIntensityImageFilter::GetOutputMinimum()
 ";
 
 %feature("docstring")  itk::simple::RescaleIntensityImageFilter::RescaleIntensityImageFilter "
-itk::simple::RescaleIntensityImageFilter::RescaleIntensityImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -20670,15 +18290,12 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::RescaleIntensityImageFilter::SetOutputMaximum "
-Self& itk::simple::RescaleIntensityImageFilter::SetOutputMaximum(double OutputMaximum)
 ";
 
 %feature("docstring")  itk::simple::RescaleIntensityImageFilter::SetOutputMinimum "
-Self& itk::simple::RescaleIntensityImageFilter::SetOutputMinimum(double OutputMinimum)
 ";
 
 %feature("docstring")  itk::simple::RescaleIntensityImageFilter::ToString "
-std::string itk::simple::RescaleIntensityImageFilter::ToString() const
 
 Print ourselves out
 
@@ -20720,63 +18337,48 @@ C++ includes: sitkRichardsonLucyDeconvolutionImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::RichardsonLucyDeconvolutionImageFilter::Execute "
-Image itk::simple::RichardsonLucyDeconvolutionImageFilter::Execute(const Image &image1, const Image &image2, int numberOfIterations,
-bool normalize,
-RichardsonLucyDeconvolutionImageFilter::BoundaryConditionType
-boundaryCondition,
-RichardsonLucyDeconvolutionImageFilter::OutputRegionModeType
-outputRegionMode)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::RichardsonLucyDeconvolutionImageFilter::Execute "
-Image itk::simple::RichardsonLucyDeconvolutionImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::RichardsonLucyDeconvolutionImageFilter::GetBoundaryCondition "
-RichardsonLucyDeconvolutionImageFilter::BoundaryConditionType itk::simple::RichardsonLucyDeconvolutionImageFilter::GetBoundaryCondition()
 ";
 
 %feature("docstring")  itk::simple::RichardsonLucyDeconvolutionImageFilter::GetName "
-std::string itk::simple::RichardsonLucyDeconvolutionImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::RichardsonLucyDeconvolutionImageFilter::GetNormalize "
-bool itk::simple::RichardsonLucyDeconvolutionImageFilter::GetNormalize()
 ";
 
 %feature("docstring")  itk::simple::RichardsonLucyDeconvolutionImageFilter::GetNumberOfIterations "
-int itk::simple::RichardsonLucyDeconvolutionImageFilter::GetNumberOfIterations()
 
 Get the number of iterations.
 
 ";
 
 %feature("docstring")  itk::simple::RichardsonLucyDeconvolutionImageFilter::GetOutputRegionMode "
-RichardsonLucyDeconvolutionImageFilter::OutputRegionModeType itk::simple::RichardsonLucyDeconvolutionImageFilter::GetOutputRegionMode()
 ";
 
 %feature("docstring")  itk::simple::RichardsonLucyDeconvolutionImageFilter::NormalizeOff "
-Self& itk::simple::RichardsonLucyDeconvolutionImageFilter::NormalizeOff()
 ";
 
 %feature("docstring")  itk::simple::RichardsonLucyDeconvolutionImageFilter::NormalizeOn "
-Self& itk::simple::RichardsonLucyDeconvolutionImageFilter::NormalizeOn()
 
 Set the value of Normalize to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::RichardsonLucyDeconvolutionImageFilter::RichardsonLucyDeconvolutionImageFilter "
-itk::simple::RichardsonLucyDeconvolutionImageFilter::RichardsonLucyDeconvolutionImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -20784,31 +18386,24 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::RichardsonLucyDeconvolutionImageFilter::SetBoundaryCondition "
-Self& itk::simple::RichardsonLucyDeconvolutionImageFilter::SetBoundaryCondition(RichardsonLucyDeconvolutionImageFilter::BoundaryConditionType
-BoundaryCondition)
 ";
 
 %feature("docstring")  itk::simple::RichardsonLucyDeconvolutionImageFilter::SetNormalize "
-Self& itk::simple::RichardsonLucyDeconvolutionImageFilter::SetNormalize(bool Normalize)
 
 Normalize the output image by the sum of the kernel components.
 
 ";
 
 %feature("docstring")  itk::simple::RichardsonLucyDeconvolutionImageFilter::SetNumberOfIterations "
-Self& itk::simple::RichardsonLucyDeconvolutionImageFilter::SetNumberOfIterations(int NumberOfIterations)
 
 Set the number of iterations.
 
 ";
 
 %feature("docstring")  itk::simple::RichardsonLucyDeconvolutionImageFilter::SetOutputRegionMode "
-Self& itk::simple::RichardsonLucyDeconvolutionImageFilter::SetOutputRegionMode(RichardsonLucyDeconvolutionImageFilter::OutputRegionModeType
-OutputRegionMode)
 ";
 
 %feature("docstring")  itk::simple::RichardsonLucyDeconvolutionImageFilter::ToString "
-std::string itk::simple::RichardsonLucyDeconvolutionImageFilter::ToString() const
 
 Print ourselves out
 
@@ -20908,72 +18503,48 @@ C++ includes: sitkSTAPLEImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::STAPLEImageFilter::Execute "
-Image itk::simple::STAPLEImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4, const Image &image5, double confidenceWeight, double
-foregroundValue, unsigned int maximumIterations)
 ";
 
 %feature("docstring")  itk::simple::STAPLEImageFilter::Execute "
-Image itk::simple::STAPLEImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4, double confidenceWeight, double foregroundValue,
-unsigned int maximumIterations)
 ";
 
 %feature("docstring")  itk::simple::STAPLEImageFilter::Execute "
-Image itk::simple::STAPLEImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3, double
-confidenceWeight, double foregroundValue, unsigned int
-maximumIterations)
 ";
 
 %feature("docstring")  itk::simple::STAPLEImageFilter::Execute "
-Image itk::simple::STAPLEImageFilter::Execute(const Image &image1, const Image &image2, double confidenceWeight,
-double foregroundValue, unsigned int maximumIterations)
 ";
 
 %feature("docstring")  itk::simple::STAPLEImageFilter::Execute "
-Image itk::simple::STAPLEImageFilter::Execute(const Image &image1, double confidenceWeight, double foregroundValue,
-unsigned int maximumIterations)
 ";
 
 %feature("docstring")  itk::simple::STAPLEImageFilter::Execute "
-Image itk::simple::STAPLEImageFilter::Execute(const std::vector< Image > &images, double confidenceWeight, double
-foregroundValue, unsigned int maximumIterations)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::STAPLEImageFilter::Execute "
-Image itk::simple::STAPLEImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4, const Image &image5)
 ";
 
 %feature("docstring")  itk::simple::STAPLEImageFilter::Execute "
-Image itk::simple::STAPLEImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4)
 ";
 
 %feature("docstring")  itk::simple::STAPLEImageFilter::Execute "
-Image itk::simple::STAPLEImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3)
 ";
 
 %feature("docstring")  itk::simple::STAPLEImageFilter::Execute "
-Image itk::simple::STAPLEImageFilter::Execute(const Image &image1, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::STAPLEImageFilter::Execute "
-Image itk::simple::STAPLEImageFilter::Execute(const Image &image1)
 ";
 
 %feature("docstring")  itk::simple::STAPLEImageFilter::Execute "
-Image itk::simple::STAPLEImageFilter::Execute(const std::vector< Image > &images)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::STAPLEImageFilter::GetConfidenceWeight "
-double itk::simple::STAPLEImageFilter::GetConfidenceWeight()
 
 Scales the estimated prior probability that a pixel will be inside the
 targeted object of segmentation. The default prior probability g_t is
@@ -20986,7 +18557,6 @@ default of 1.0.
 ";
 
 %feature("docstring")  itk::simple::STAPLEImageFilter::GetElapsedIterations "
-uint32_t itk::simple::STAPLEImageFilter::GetElapsedIterations()
 
 Number of iterations run.
 
@@ -20997,14 +18567,12 @@ the value will only be valid after an execution.
 ";
 
 %feature("docstring")  itk::simple::STAPLEImageFilter::GetForegroundValue "
-double itk::simple::STAPLEImageFilter::GetForegroundValue()
 
 Set get the binary ON value of the input image.
 
 ";
 
 %feature("docstring")  itk::simple::STAPLEImageFilter::GetMaximumIterations "
-unsigned int itk::simple::STAPLEImageFilter::GetMaximumIterations()
 
 Set/Get the maximum number of iterations after which the STAPLE
 algorithm will be considered to have converged. In general this SHOULD
@@ -21013,14 +18581,12 @@ NOT be set and the algorithm should be allowed to converge on its own.
 ";
 
 %feature("docstring")  itk::simple::STAPLEImageFilter::GetName "
-std::string itk::simple::STAPLEImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::STAPLEImageFilter::GetSensitivity "
-std::vector<double> itk::simple::STAPLEImageFilter::GetSensitivity()
 
 After the filter is updated, this method returns a std::vector<double>
 of all Sensitivity (true positive fraction, p) values for the expert
@@ -21033,7 +18599,6 @@ the value will only be valid after an execution.
 ";
 
 %feature("docstring")  itk::simple::STAPLEImageFilter::GetSpecificity "
-std::vector<double> itk::simple::STAPLEImageFilter::GetSpecificity()
 
 After the filter is updated, this method returns the Specificity (true
 negative fraction, q) value for the i-th expert input volume.
@@ -21045,7 +18610,6 @@ the value will only be valid after an execution.
 ";
 
 %feature("docstring")  itk::simple::STAPLEImageFilter::SetConfidenceWeight "
-Self& itk::simple::STAPLEImageFilter::SetConfidenceWeight(double ConfidenceWeight)
 
 Scales the estimated prior probability that a pixel will be inside the
 targeted object of segmentation. The default prior probability g_t is
@@ -21058,14 +18622,12 @@ default of 1.0.
 ";
 
 %feature("docstring")  itk::simple::STAPLEImageFilter::SetForegroundValue "
-Self& itk::simple::STAPLEImageFilter::SetForegroundValue(double ForegroundValue)
 
 Set get the binary ON value of the input image.
 
 ";
 
 %feature("docstring")  itk::simple::STAPLEImageFilter::SetMaximumIterations "
-Self& itk::simple::STAPLEImageFilter::SetMaximumIterations(unsigned int MaximumIterations)
 
 Set/Get the maximum number of iterations after which the STAPLE
 algorithm will be considered to have converged. In general this SHOULD
@@ -21074,7 +18636,6 @@ NOT be set and the algorithm should be allowed to converge on its own.
 ";
 
 %feature("docstring")  itk::simple::STAPLEImageFilter::STAPLEImageFilter "
-itk::simple::STAPLEImageFilter::STAPLEImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -21082,7 +18643,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::STAPLEImageFilter::ToString "
-std::string itk::simple::STAPLEImageFilter::ToString() const
 
 Print ourselves out
 
@@ -21110,47 +18670,39 @@ C++ includes: sitkScalarConnectedComponentImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ScalarConnectedComponentImageFilter::Execute "
-Image itk::simple::ScalarConnectedComponentImageFilter::Execute(const Image &image1, double distanceThreshold, bool fullyConnected)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ScalarConnectedComponentImageFilter::Execute "
-Image itk::simple::ScalarConnectedComponentImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ScalarConnectedComponentImageFilter::FullyConnectedOff "
-Self& itk::simple::ScalarConnectedComponentImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::ScalarConnectedComponentImageFilter::FullyConnectedOn "
-Self& itk::simple::ScalarConnectedComponentImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::ScalarConnectedComponentImageFilter::GetDistanceThreshold "
-double itk::simple::ScalarConnectedComponentImageFilter::GetDistanceThreshold()
 ";
 
 %feature("docstring")  itk::simple::ScalarConnectedComponentImageFilter::GetFullyConnected "
-bool itk::simple::ScalarConnectedComponentImageFilter::GetFullyConnected()
 ";
 
 %feature("docstring")  itk::simple::ScalarConnectedComponentImageFilter::GetName "
-std::string itk::simple::ScalarConnectedComponentImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ScalarConnectedComponentImageFilter::ScalarConnectedComponentImageFilter "
-itk::simple::ScalarConnectedComponentImageFilter::ScalarConnectedComponentImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -21158,15 +18710,12 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ScalarConnectedComponentImageFilter::SetDistanceThreshold "
-Self& itk::simple::ScalarConnectedComponentImageFilter::SetDistanceThreshold(double DistanceThreshold)
 ";
 
 %feature("docstring")  itk::simple::ScalarConnectedComponentImageFilter::SetFullyConnected "
-Self& itk::simple::ScalarConnectedComponentImageFilter::SetFullyConnected(bool FullyConnected)
 ";
 
 %feature("docstring")  itk::simple::ScalarConnectedComponentImageFilter::ToString "
-std::string itk::simple::ScalarConnectedComponentImageFilter::ToString() const
 
 Print ourselves out
 
@@ -21213,26 +18762,21 @@ C++ includes: sitkScalarImageKmeansImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ScalarImageKmeansImageFilter::Execute "
-Image itk::simple::ScalarImageKmeansImageFilter::Execute(const Image &image1, std::vector< double > classWithInitialMean, bool
-useNonContiguousLabels)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ScalarImageKmeansImageFilter::Execute "
-Image itk::simple::ScalarImageKmeansImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ScalarImageKmeansImageFilter::GetClassWithInitialMean "
-std::vector<double> itk::simple::ScalarImageKmeansImageFilter::GetClassWithInitialMean()
 ";
 
 %feature("docstring")  itk::simple::ScalarImageKmeansImageFilter::GetFinalMeans "
-std::vector<double> itk::simple::ScalarImageKmeansImageFilter::GetFinalMeans()
 
 *
 
@@ -21243,14 +18787,12 @@ the value will only be valid after an execution.
 ";
 
 %feature("docstring")  itk::simple::ScalarImageKmeansImageFilter::GetName "
-std::string itk::simple::ScalarImageKmeansImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ScalarImageKmeansImageFilter::GetUseNonContiguousLabels "
-bool itk::simple::ScalarImageKmeansImageFilter::GetUseNonContiguousLabels()
 
 Set/Get the UseNonContiguousLabels flag. When this is set to false the
 labels are numbered contiguously, like in {0,1,3..N}. When the flag is
@@ -21261,7 +18803,6 @@ image is intended only for display. The default value is false.
 ";
 
 %feature("docstring")  itk::simple::ScalarImageKmeansImageFilter::ScalarImageKmeansImageFilter "
-itk::simple::ScalarImageKmeansImageFilter::ScalarImageKmeansImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -21269,11 +18810,9 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ScalarImageKmeansImageFilter::SetClassWithInitialMean "
-Self& itk::simple::ScalarImageKmeansImageFilter::SetClassWithInitialMean(std::vector< double > ClassWithInitialMean)
 ";
 
 %feature("docstring")  itk::simple::ScalarImageKmeansImageFilter::SetUseNonContiguousLabels "
-Self& itk::simple::ScalarImageKmeansImageFilter::SetUseNonContiguousLabels(bool UseNonContiguousLabels)
 
 Set/Get the UseNonContiguousLabels flag. When this is set to false the
 labels are numbered contiguously, like in {0,1,3..N}. When the flag is
@@ -21284,18 +18823,15 @@ image is intended only for display. The default value is false.
 ";
 
 %feature("docstring")  itk::simple::ScalarImageKmeansImageFilter::ToString "
-std::string itk::simple::ScalarImageKmeansImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::ScalarImageKmeansImageFilter::UseNonContiguousLabelsOff "
-Self& itk::simple::ScalarImageKmeansImageFilter::UseNonContiguousLabelsOff()
 ";
 
 %feature("docstring")  itk::simple::ScalarImageKmeansImageFilter::UseNonContiguousLabelsOn "
-Self& itk::simple::ScalarImageKmeansImageFilter::UseNonContiguousLabelsOn()
 
 Set the value of UseNonContiguousLabels to true or false respectfully.
 
@@ -21345,36 +18881,30 @@ C++ includes: sitkScalarToRGBColormapImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ScalarToRGBColormapImageFilter::Execute "
-Image itk::simple::ScalarToRGBColormapImageFilter::Execute(const Image &image1, ScalarToRGBColormapImageFilter::ColormapType
-colormap)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ScalarToRGBColormapImageFilter::Execute "
-Image itk::simple::ScalarToRGBColormapImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ScalarToRGBColormapImageFilter::GetColormap "
-ScalarToRGBColormapImageFilter::ColormapType itk::simple::ScalarToRGBColormapImageFilter::GetColormap()
 
 Set/Get the colormap object.
 
 ";
 
 %feature("docstring")  itk::simple::ScalarToRGBColormapImageFilter::GetName "
-std::string itk::simple::ScalarToRGBColormapImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ScalarToRGBColormapImageFilter::ScalarToRGBColormapImageFilter "
-itk::simple::ScalarToRGBColormapImageFilter::ScalarToRGBColormapImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -21382,11 +18912,9 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ScalarToRGBColormapImageFilter::SetColormap "
-Self& itk::simple::ScalarToRGBColormapImageFilter::SetColormap(ScalarToRGBColormapImageFilter::ColormapType Colormap)
 ";
 
 %feature("docstring")  itk::simple::ScalarToRGBColormapImageFilter::ToString "
-std::string itk::simple::ScalarToRGBColormapImageFilter::ToString() const
 
 Print ourselves out
 
@@ -21419,61 +18947,51 @@ C++ includes: sitkShanbhagThresholdImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ShanbhagThresholdImageFilter::Execute "
-Image itk::simple::ShanbhagThresholdImageFilter::Execute(const Image &image1, uint8_t insideValue, uint8_t outsideValue,
-uint32_t numberOfHistogramBins)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ShanbhagThresholdImageFilter::Execute "
-Image itk::simple::ShanbhagThresholdImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ShanbhagThresholdImageFilter::GetInsideValue "
-uint8_t itk::simple::ShanbhagThresholdImageFilter::GetInsideValue()
 
 Get the \"inside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::ShanbhagThresholdImageFilter::GetName "
-std::string itk::simple::ShanbhagThresholdImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ShanbhagThresholdImageFilter::GetNumberOfHistogramBins "
-uint32_t itk::simple::ShanbhagThresholdImageFilter::GetNumberOfHistogramBins()
 ";
 
 %feature("docstring")  itk::simple::ShanbhagThresholdImageFilter::GetOutsideValue "
-uint8_t itk::simple::ShanbhagThresholdImageFilter::GetOutsideValue()
 
 Get the \"outside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::ShanbhagThresholdImageFilter::SetInsideValue "
-Self& itk::simple::ShanbhagThresholdImageFilter::SetInsideValue(uint8_t InsideValue)
 
 Set the \"inside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::ShanbhagThresholdImageFilter::SetNumberOfHistogramBins "
-Self& itk::simple::ShanbhagThresholdImageFilter::SetNumberOfHistogramBins(uint32_t NumberOfHistogramBins)
 
 Set/Get the number of histogram bins.
 
 ";
 
 %feature("docstring")  itk::simple::ShanbhagThresholdImageFilter::SetOutsideValue "
-Self& itk::simple::ShanbhagThresholdImageFilter::SetOutsideValue(uint8_t OutsideValue)
 
 Set the \"outside\" pixel value. The default value
 NumericTraits<OutputPixelType>::Zero.
@@ -21481,7 +18999,6 @@ NumericTraits<OutputPixelType>::Zero.
 ";
 
 %feature("docstring")  itk::simple::ShanbhagThresholdImageFilter::ShanbhagThresholdImageFilter "
-itk::simple::ShanbhagThresholdImageFilter::ShanbhagThresholdImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -21489,7 +19006,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ShanbhagThresholdImageFilter::ToString "
-std::string itk::simple::ShanbhagThresholdImageFilter::ToString() const
 
 Print ourselves out
 
@@ -21568,27 +19084,21 @@ C++ includes: sitkShapeDetectionLevelSetImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ShapeDetectionLevelSetImageFilter::Execute "
-Image itk::simple::ShapeDetectionLevelSetImageFilter::Execute(const Image &image1, const Image &image2, double maximumRMSError,
-double propagationScaling, double curvatureScaling, uint32_t
-numberOfIterations, bool reverseExpansionDirection)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ShapeDetectionLevelSetImageFilter::Execute "
-Image itk::simple::ShapeDetectionLevelSetImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::ShapeDetectionLevelSetImageFilter::GetCurvatureScaling "
-double itk::simple::ShapeDetectionLevelSetImageFilter::GetCurvatureScaling()
 ";
 
 %feature("docstring")  itk::simple::ShapeDetectionLevelSetImageFilter::GetElapsedIterations "
-uint32_t itk::simple::ShapeDetectionLevelSetImageFilter::GetElapsedIterations()
 
 Number of iterations run.
 
@@ -21599,30 +19109,24 @@ the value will only be valid after an execution.
 ";
 
 %feature("docstring")  itk::simple::ShapeDetectionLevelSetImageFilter::GetMaximumRMSError "
-double itk::simple::ShapeDetectionLevelSetImageFilter::GetMaximumRMSError()
 ";
 
 %feature("docstring")  itk::simple::ShapeDetectionLevelSetImageFilter::GetName "
-std::string itk::simple::ShapeDetectionLevelSetImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ShapeDetectionLevelSetImageFilter::GetNumberOfIterations "
-uint32_t itk::simple::ShapeDetectionLevelSetImageFilter::GetNumberOfIterations()
 ";
 
 %feature("docstring")  itk::simple::ShapeDetectionLevelSetImageFilter::GetPropagationScaling "
-double itk::simple::ShapeDetectionLevelSetImageFilter::GetPropagationScaling()
 ";
 
 %feature("docstring")  itk::simple::ShapeDetectionLevelSetImageFilter::GetReverseExpansionDirection "
-bool itk::simple::ShapeDetectionLevelSetImageFilter::GetReverseExpansionDirection()
 ";
 
 %feature("docstring")  itk::simple::ShapeDetectionLevelSetImageFilter::GetRMSChange "
-double itk::simple::ShapeDetectionLevelSetImageFilter::GetRMSChange()
 
 The Root Mean Square of the levelset upon termination.
 
@@ -21633,11 +19137,9 @@ the value will only be valid after an execution.
 ";
 
 %feature("docstring")  itk::simple::ShapeDetectionLevelSetImageFilter::ReverseExpansionDirectionOff "
-Self& itk::simple::ShapeDetectionLevelSetImageFilter::ReverseExpansionDirectionOff()
 ";
 
 %feature("docstring")  itk::simple::ShapeDetectionLevelSetImageFilter::ReverseExpansionDirectionOn "
-Self& itk::simple::ShapeDetectionLevelSetImageFilter::ReverseExpansionDirectionOn()
 
 Set the value of ReverseExpansionDirection to true or false
 respectfully.
@@ -21645,27 +19147,21 @@ respectfully.
 ";
 
 %feature("docstring")  itk::simple::ShapeDetectionLevelSetImageFilter::SetCurvatureScaling "
-Self& itk::simple::ShapeDetectionLevelSetImageFilter::SetCurvatureScaling(double CurvatureScaling)
 ";
 
 %feature("docstring")  itk::simple::ShapeDetectionLevelSetImageFilter::SetMaximumRMSError "
-Self& itk::simple::ShapeDetectionLevelSetImageFilter::SetMaximumRMSError(double MaximumRMSError)
 ";
 
 %feature("docstring")  itk::simple::ShapeDetectionLevelSetImageFilter::SetNumberOfIterations "
-Self& itk::simple::ShapeDetectionLevelSetImageFilter::SetNumberOfIterations(uint32_t NumberOfIterations)
 ";
 
 %feature("docstring")  itk::simple::ShapeDetectionLevelSetImageFilter::SetPropagationScaling "
-Self& itk::simple::ShapeDetectionLevelSetImageFilter::SetPropagationScaling(double PropagationScaling)
 ";
 
 %feature("docstring")  itk::simple::ShapeDetectionLevelSetImageFilter::SetReverseExpansionDirection "
-Self& itk::simple::ShapeDetectionLevelSetImageFilter::SetReverseExpansionDirection(bool ReverseExpansionDirection)
 ";
 
 %feature("docstring")  itk::simple::ShapeDetectionLevelSetImageFilter::ShapeDetectionLevelSetImageFilter "
-itk::simple::ShapeDetectionLevelSetImageFilter::ShapeDetectionLevelSetImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -21673,7 +19169,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ShapeDetectionLevelSetImageFilter::ToString "
-std::string itk::simple::ShapeDetectionLevelSetImageFilter::ToString() const
 
 Print ourselves out
 
@@ -21700,28 +19195,24 @@ C++ includes: sitkShiftScaleImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ShiftScaleImageFilter::Execute "
-Image itk::simple::ShiftScaleImageFilter::Execute(const Image &image1, double shift, double scale)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ShiftScaleImageFilter::Execute "
-Image itk::simple::ShiftScaleImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ShiftScaleImageFilter::GetName "
-std::string itk::simple::ShiftScaleImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ShiftScaleImageFilter::GetScale "
-double itk::simple::ShiftScaleImageFilter::GetScale()
 
 Set/Get the amount to Scale each Pixel. The Scale is applied after the
 Shift.
@@ -21729,7 +19220,6 @@ Shift.
 ";
 
 %feature("docstring")  itk::simple::ShiftScaleImageFilter::GetShift "
-double itk::simple::ShiftScaleImageFilter::GetShift()
 
 Set/Get the amount to Shift each Pixel. The shift is followed by a
 Scale.
@@ -21737,7 +19227,6 @@ Scale.
 ";
 
 %feature("docstring")  itk::simple::ShiftScaleImageFilter::SetScale "
-Self& itk::simple::ShiftScaleImageFilter::SetScale(double Scale)
 
 Set/Get the amount to Scale each Pixel. The Scale is applied after the
 Shift.
@@ -21745,7 +19234,6 @@ Shift.
 ";
 
 %feature("docstring")  itk::simple::ShiftScaleImageFilter::SetShift "
-Self& itk::simple::ShiftScaleImageFilter::SetShift(double Shift)
 
 Set/Get the amount to Shift each Pixel. The shift is followed by a
 Scale.
@@ -21753,7 +19241,6 @@ Scale.
 ";
 
 %feature("docstring")  itk::simple::ShiftScaleImageFilter::ShiftScaleImageFilter "
-itk::simple::ShiftScaleImageFilter::ShiftScaleImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -21761,7 +19248,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ShiftScaleImageFilter::ToString "
-std::string itk::simple::ShiftScaleImageFilter::ToString() const
 
 Print ourselves out
 
@@ -21800,42 +19286,36 @@ C++ includes: sitkShrinkImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ShrinkImageFilter::Execute "
-Image itk::simple::ShrinkImageFilter::Execute(const Image &image1, std::vector< unsigned int > shrinkFactors)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ShrinkImageFilter::Execute "
-Image itk::simple::ShrinkImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ShrinkImageFilter::GetName "
-std::string itk::simple::ShrinkImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ShrinkImageFilter::GetShrinkFactors "
-std::vector<unsigned int> itk::simple::ShrinkImageFilter::GetShrinkFactors()
 
 Get the shrink factors.
 
 ";
 
 %feature("docstring")  itk::simple::ShrinkImageFilter::SetShrinkFactor "
-Self& itk::simple::ShrinkImageFilter::SetShrinkFactor(unsigned int s)
 
 Custom public declarations
 
 ";
 
 %feature("docstring")  itk::simple::ShrinkImageFilter::SetShrinkFactors "
-Self& itk::simple::ShrinkImageFilter::SetShrinkFactors(std::vector< unsigned int > ShrinkFactors)
 
 Set the shrink factors. Values are clamped to a minimum value of 1.
 Default is 1 for all dimensions.
@@ -21843,7 +19323,6 @@ Default is 1 for all dimensions.
 ";
 
 %feature("docstring")  itk::simple::ShrinkImageFilter::ShrinkImageFilter "
-itk::simple::ShrinkImageFilter::ShrinkImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -21851,7 +19330,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ShrinkImageFilter::ToString "
-std::string itk::simple::ShrinkImageFilter::ToString() const
 
 Print ourselves out
 
@@ -21881,61 +19359,48 @@ C++ includes: sitkSigmoidImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::SigmoidImageFilter::Execute "
-Image itk::simple::SigmoidImageFilter::Execute(const Image &image1, double alpha, double beta, double outputMaximum,
-double outputMinimum)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::SigmoidImageFilter::Execute "
-Image itk::simple::SigmoidImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::SigmoidImageFilter::GetAlpha "
-double itk::simple::SigmoidImageFilter::GetAlpha()
 ";
 
 %feature("docstring")  itk::simple::SigmoidImageFilter::GetBeta "
-double itk::simple::SigmoidImageFilter::GetBeta()
 ";
 
 %feature("docstring")  itk::simple::SigmoidImageFilter::GetName "
-std::string itk::simple::SigmoidImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::SigmoidImageFilter::GetOutputMaximum "
-double itk::simple::SigmoidImageFilter::GetOutputMaximum()
 ";
 
 %feature("docstring")  itk::simple::SigmoidImageFilter::GetOutputMinimum "
-double itk::simple::SigmoidImageFilter::GetOutputMinimum()
 ";
 
 %feature("docstring")  itk::simple::SigmoidImageFilter::SetAlpha "
-Self& itk::simple::SigmoidImageFilter::SetAlpha(double Alpha)
 ";
 
 %feature("docstring")  itk::simple::SigmoidImageFilter::SetBeta "
-Self& itk::simple::SigmoidImageFilter::SetBeta(double Beta)
 ";
 
 %feature("docstring")  itk::simple::SigmoidImageFilter::SetOutputMaximum "
-Self& itk::simple::SigmoidImageFilter::SetOutputMaximum(double OutputMaximum)
 ";
 
 %feature("docstring")  itk::simple::SigmoidImageFilter::SetOutputMinimum "
-Self& itk::simple::SigmoidImageFilter::SetOutputMinimum(double OutputMinimum)
 ";
 
 %feature("docstring")  itk::simple::SigmoidImageFilter::SigmoidImageFilter "
-itk::simple::SigmoidImageFilter::SigmoidImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -21943,7 +19408,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::SigmoidImageFilter::ToString "
-std::string itk::simple::SigmoidImageFilter::ToString() const
 
 Print ourselves out
 
@@ -21987,22 +19451,18 @@ C++ includes: sitkSignedDanielssonDistanceMapImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::SignedDanielssonDistanceMapImageFilter::Execute "
-Image itk::simple::SignedDanielssonDistanceMapImageFilter::Execute(const Image &image1, bool insideIsPositive, bool squaredDistance,
-bool useImageSpacing)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::SignedDanielssonDistanceMapImageFilter::Execute "
-Image itk::simple::SignedDanielssonDistanceMapImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::SignedDanielssonDistanceMapImageFilter::GetInsideIsPositive "
-bool itk::simple::SignedDanielssonDistanceMapImageFilter::GetInsideIsPositive()
 
 Get if the inside represents positive values in the signed distance
 map. See GetInsideIsPositive().
@@ -22010,39 +19470,33 @@ map. See GetInsideIsPositive().
 ";
 
 %feature("docstring")  itk::simple::SignedDanielssonDistanceMapImageFilter::GetName "
-std::string itk::simple::SignedDanielssonDistanceMapImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::SignedDanielssonDistanceMapImageFilter::GetSquaredDistance "
-bool itk::simple::SignedDanielssonDistanceMapImageFilter::GetSquaredDistance()
 
 Get the distance squared.
 
 ";
 
 %feature("docstring")  itk::simple::SignedDanielssonDistanceMapImageFilter::GetUseImageSpacing "
-bool itk::simple::SignedDanielssonDistanceMapImageFilter::GetUseImageSpacing()
 
 Get whether spacing is used.
 
 ";
 
 %feature("docstring")  itk::simple::SignedDanielssonDistanceMapImageFilter::InsideIsPositiveOff "
-Self& itk::simple::SignedDanielssonDistanceMapImageFilter::InsideIsPositiveOff()
 ";
 
 %feature("docstring")  itk::simple::SignedDanielssonDistanceMapImageFilter::InsideIsPositiveOn "
-Self& itk::simple::SignedDanielssonDistanceMapImageFilter::InsideIsPositiveOn()
 
 Set the value of InsideIsPositive to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::SignedDanielssonDistanceMapImageFilter::SetInsideIsPositive "
-Self& itk::simple::SignedDanielssonDistanceMapImageFilter::SetInsideIsPositive(bool InsideIsPositive)
 
 Set if the inside represents positive values in the signed distance
 map. By convention ON pixels are treated as inside pixels.
@@ -22050,21 +19504,18 @@ map. By convention ON pixels are treated as inside pixels.
 ";
 
 %feature("docstring")  itk::simple::SignedDanielssonDistanceMapImageFilter::SetSquaredDistance "
-Self& itk::simple::SignedDanielssonDistanceMapImageFilter::SetSquaredDistance(bool SquaredDistance)
 
 Set if the distance should be squared.
 
 ";
 
 %feature("docstring")  itk::simple::SignedDanielssonDistanceMapImageFilter::SetUseImageSpacing "
-Self& itk::simple::SignedDanielssonDistanceMapImageFilter::SetUseImageSpacing(bool UseImageSpacing)
 
 Set if image spacing should be used in computing distances.
 
 ";
 
 %feature("docstring")  itk::simple::SignedDanielssonDistanceMapImageFilter::SignedDanielssonDistanceMapImageFilter "
-itk::simple::SignedDanielssonDistanceMapImageFilter::SignedDanielssonDistanceMapImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -22072,29 +19523,24 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::SignedDanielssonDistanceMapImageFilter::SquaredDistanceOff "
-Self& itk::simple::SignedDanielssonDistanceMapImageFilter::SquaredDistanceOff()
 ";
 
 %feature("docstring")  itk::simple::SignedDanielssonDistanceMapImageFilter::SquaredDistanceOn "
-Self& itk::simple::SignedDanielssonDistanceMapImageFilter::SquaredDistanceOn()
 
 Set the value of SquaredDistance to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::SignedDanielssonDistanceMapImageFilter::ToString "
-std::string itk::simple::SignedDanielssonDistanceMapImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::SignedDanielssonDistanceMapImageFilter::UseImageSpacingOff "
-Self& itk::simple::SignedDanielssonDistanceMapImageFilter::UseImageSpacingOff()
 ";
 
 %feature("docstring")  itk::simple::SignedDanielssonDistanceMapImageFilter::UseImageSpacingOn "
-Self& itk::simple::SignedDanielssonDistanceMapImageFilter::UseImageSpacingOn()
 
 Set the value of UseImageSpacing to true or false respectfully.
 
@@ -22139,22 +19585,18 @@ C++ includes: sitkSignedMaurerDistanceMapImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::SignedMaurerDistanceMapImageFilter::Execute "
-Image itk::simple::SignedMaurerDistanceMapImageFilter::Execute(const Image &image1, bool insideIsPositive, bool squaredDistance,
-bool useImageSpacing)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::SignedMaurerDistanceMapImageFilter::Execute "
-Image itk::simple::SignedMaurerDistanceMapImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::SignedMaurerDistanceMapImageFilter::GetInsideIsPositive "
-bool itk::simple::SignedMaurerDistanceMapImageFilter::GetInsideIsPositive()
 
 Get if the inside represents positive values in the signed distance
 map.
@@ -22168,39 +19610,33 @@ See:
 ";
 
 %feature("docstring")  itk::simple::SignedMaurerDistanceMapImageFilter::GetName "
-std::string itk::simple::SignedMaurerDistanceMapImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::SignedMaurerDistanceMapImageFilter::GetSquaredDistance "
-bool itk::simple::SignedMaurerDistanceMapImageFilter::GetSquaredDistance()
 
 Get the distance squared.
 
 ";
 
 %feature("docstring")  itk::simple::SignedMaurerDistanceMapImageFilter::GetUseImageSpacing "
-bool itk::simple::SignedMaurerDistanceMapImageFilter::GetUseImageSpacing()
 
 Get whether spacing is used.
 
 ";
 
 %feature("docstring")  itk::simple::SignedMaurerDistanceMapImageFilter::InsideIsPositiveOff "
-Self& itk::simple::SignedMaurerDistanceMapImageFilter::InsideIsPositiveOff()
 ";
 
 %feature("docstring")  itk::simple::SignedMaurerDistanceMapImageFilter::InsideIsPositiveOn "
-Self& itk::simple::SignedMaurerDistanceMapImageFilter::InsideIsPositiveOn()
 
 Set the value of InsideIsPositive to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::SignedMaurerDistanceMapImageFilter::SetInsideIsPositive "
-Self& itk::simple::SignedMaurerDistanceMapImageFilter::SetInsideIsPositive(bool InsideIsPositive)
 
 Set if the inside represents positive values in the signed distance
 map. By convention ON pixels are treated as inside pixels.
@@ -22208,21 +19644,18 @@ map. By convention ON pixels are treated as inside pixels.
 ";
 
 %feature("docstring")  itk::simple::SignedMaurerDistanceMapImageFilter::SetSquaredDistance "
-Self& itk::simple::SignedMaurerDistanceMapImageFilter::SetSquaredDistance(bool SquaredDistance)
 
 Set if the distance should be squared.
 
 ";
 
 %feature("docstring")  itk::simple::SignedMaurerDistanceMapImageFilter::SetUseImageSpacing "
-Self& itk::simple::SignedMaurerDistanceMapImageFilter::SetUseImageSpacing(bool UseImageSpacing)
 
 Set if image spacing should be used in computing distances.
 
 ";
 
 %feature("docstring")  itk::simple::SignedMaurerDistanceMapImageFilter::SignedMaurerDistanceMapImageFilter "
-itk::simple::SignedMaurerDistanceMapImageFilter::SignedMaurerDistanceMapImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -22230,29 +19663,24 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::SignedMaurerDistanceMapImageFilter::SquaredDistanceOff "
-Self& itk::simple::SignedMaurerDistanceMapImageFilter::SquaredDistanceOff()
 ";
 
 %feature("docstring")  itk::simple::SignedMaurerDistanceMapImageFilter::SquaredDistanceOn "
-Self& itk::simple::SignedMaurerDistanceMapImageFilter::SquaredDistanceOn()
 
 Set the value of SquaredDistance to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::SignedMaurerDistanceMapImageFilter::ToString "
-std::string itk::simple::SignedMaurerDistanceMapImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::SignedMaurerDistanceMapImageFilter::UseImageSpacingOff "
-Self& itk::simple::SignedMaurerDistanceMapImageFilter::UseImageSpacingOff()
 ";
 
 %feature("docstring")  itk::simple::SignedMaurerDistanceMapImageFilter::UseImageSpacingOn "
-Self& itk::simple::SignedMaurerDistanceMapImageFilter::UseImageSpacingOn()
 
 Set the value of UseImageSpacing to true or false respectfully.
 
@@ -22289,21 +19717,18 @@ C++ includes: sitkSimilarityIndexImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::SimilarityIndexImageFilter::Execute "
-Image itk::simple::SimilarityIndexImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::SimilarityIndexImageFilter::GetName "
-std::string itk::simple::SimilarityIndexImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::SimilarityIndexImageFilter::GetSimilarityIndex "
-double itk::simple::SimilarityIndexImageFilter::GetSimilarityIndex()
 
 *
 
@@ -22314,7 +19739,6 @@ the value will only be valid after an execution.
 ";
 
 %feature("docstring")  itk::simple::SimilarityIndexImageFilter::SimilarityIndexImageFilter "
-itk::simple::SimilarityIndexImageFilter::SimilarityIndexImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -22322,7 +19746,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::SimilarityIndexImageFilter::ToString "
-std::string itk::simple::SimilarityIndexImageFilter::ToString() const
 
 Print ourselves out
 
@@ -22361,23 +19784,18 @@ C++ includes: sitkSimpleContourExtractorImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::SimpleContourExtractorImageFilter::Execute "
-Image itk::simple::SimpleContourExtractorImageFilter::Execute(const Image &image1, double inputForegroundValue, double
-inputBackgroundValue, std::vector< unsigned int > radius, double
-outputForegroundValue, double outputBackgroundValue)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::SimpleContourExtractorImageFilter::Execute "
-Image itk::simple::SimpleContourExtractorImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::SimpleContourExtractorImageFilter::GetInputBackgroundValue "
-double itk::simple::SimpleContourExtractorImageFilter::GetInputBackgroundValue()
 
 Get the background value used in order to identify a background pixel
 in the input image.
@@ -22385,7 +19803,6 @@ in the input image.
 ";
 
 %feature("docstring")  itk::simple::SimpleContourExtractorImageFilter::GetInputForegroundValue "
-double itk::simple::SimpleContourExtractorImageFilter::GetInputForegroundValue()
 
 Get the foreground value used in order to identify a foreground pixel
 in the input image.
@@ -22393,14 +19810,12 @@ in the input image.
 ";
 
 %feature("docstring")  itk::simple::SimpleContourExtractorImageFilter::GetName "
-std::string itk::simple::SimpleContourExtractorImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::SimpleContourExtractorImageFilter::GetOutputBackgroundValue "
-double itk::simple::SimpleContourExtractorImageFilter::GetOutputBackgroundValue()
 
 Get the background value used in order to identify a background pixel
 in the output image.
@@ -22408,7 +19823,6 @@ in the output image.
 ";
 
 %feature("docstring")  itk::simple::SimpleContourExtractorImageFilter::GetOutputForegroundValue "
-double itk::simple::SimpleContourExtractorImageFilter::GetOutputForegroundValue()
 
 Get the foreground value used in order to identify a foreground pixel
 in the output image.
@@ -22416,11 +19830,9 @@ in the output image.
 ";
 
 %feature("docstring")  itk::simple::SimpleContourExtractorImageFilter::GetRadius "
-std::vector<unsigned int> itk::simple::SimpleContourExtractorImageFilter::GetRadius()
 ";
 
 %feature("docstring")  itk::simple::SimpleContourExtractorImageFilter::SetInputBackgroundValue "
-Self& itk::simple::SimpleContourExtractorImageFilter::SetInputBackgroundValue(double InputBackgroundValue)
 
 Set the background value used in order to identify a background pixel
 in the input image.
@@ -22428,7 +19840,6 @@ in the input image.
 ";
 
 %feature("docstring")  itk::simple::SimpleContourExtractorImageFilter::SetInputForegroundValue "
-Self& itk::simple::SimpleContourExtractorImageFilter::SetInputForegroundValue(double InputForegroundValue)
 
 Set the foreground value used in order to identify a foreground pixel
 in the input image.
@@ -22436,7 +19847,6 @@ in the input image.
 ";
 
 %feature("docstring")  itk::simple::SimpleContourExtractorImageFilter::SetOutputBackgroundValue "
-Self& itk::simple::SimpleContourExtractorImageFilter::SetOutputBackgroundValue(double OutputBackgroundValue)
 
 Set the background value used in order to identify a background pixel
 in the output image.
@@ -22444,7 +19854,6 @@ in the output image.
 ";
 
 %feature("docstring")  itk::simple::SimpleContourExtractorImageFilter::SetOutputForegroundValue "
-Self& itk::simple::SimpleContourExtractorImageFilter::SetOutputForegroundValue(double OutputForegroundValue)
 
 Set the foreground value used in order to identify a foreground pixel
 in the output image.
@@ -22452,18 +19861,15 @@ in the output image.
 ";
 
 %feature("docstring")  itk::simple::SimpleContourExtractorImageFilter::SetRadius "
-Self& itk::simple::SimpleContourExtractorImageFilter::SetRadius(std::vector< unsigned int > Radius)
 ";
 
 %feature("docstring")  itk::simple::SimpleContourExtractorImageFilter::SetRadius "
-Self& itk::simple::SimpleContourExtractorImageFilter::SetRadius(unsigned int r)
 
 Custom public declarations
 
 ";
 
 %feature("docstring")  itk::simple::SimpleContourExtractorImageFilter::SimpleContourExtractorImageFilter "
-itk::simple::SimpleContourExtractorImageFilter::SimpleContourExtractorImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -22471,7 +19877,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::SimpleContourExtractorImageFilter::ToString "
-std::string itk::simple::SimpleContourExtractorImageFilter::ToString() const
 
 Print ourselves out
 
@@ -22497,21 +19902,18 @@ C++ includes: sitkSinImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::SinImageFilter::Execute "
-Image itk::simple::SinImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::SinImageFilter::GetName "
-std::string itk::simple::SinImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::SinImageFilter::SinImageFilter "
-itk::simple::SinImageFilter::SinImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -22519,7 +19921,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::SinImageFilter::ToString "
-std::string itk::simple::SinImageFilter::ToString() const
 
 Print ourselves out
 
@@ -22537,53 +19938,42 @@ C++ includes: sitkSliceImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::SliceImageFilter::Execute "
-Image itk::simple::SliceImageFilter::Execute(const Image &image1, std::vector< int32_t > start, std::vector<
-int32_t > stop, std::vector< int > step)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::SliceImageFilter::Execute "
-Image itk::simple::SliceImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::SliceImageFilter::GetName "
-std::string itk::simple::SliceImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::SliceImageFilter::GetStart "
-std::vector<int32_t> itk::simple::SliceImageFilter::GetStart()
 ";
 
 %feature("docstring")  itk::simple::SliceImageFilter::GetStep "
-std::vector<int> itk::simple::SliceImageFilter::GetStep()
 ";
 
 %feature("docstring")  itk::simple::SliceImageFilter::GetStop "
-std::vector<int32_t> itk::simple::SliceImageFilter::GetStop()
 ";
 
 %feature("docstring")  itk::simple::SliceImageFilter::SetStart "
-Self& itk::simple::SliceImageFilter::SetStart(std::vector< int32_t > Start)
 ";
 
 %feature("docstring")  itk::simple::SliceImageFilter::SetStep "
-Self& itk::simple::SliceImageFilter::SetStep(std::vector< int > Step)
 ";
 
 %feature("docstring")  itk::simple::SliceImageFilter::SetStop "
-Self& itk::simple::SliceImageFilter::SetStop(std::vector< int32_t > Stop)
 ";
 
 %feature("docstring")  itk::simple::SliceImageFilter::SliceImageFilter "
-itk::simple::SliceImageFilter::SliceImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -22591,7 +19981,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::SliceImageFilter::ToString "
-std::string itk::simple::SliceImageFilter::ToString() const
 
 Print ourselves out
 
@@ -22622,28 +20011,24 @@ C++ includes: sitkSmoothingRecursiveGaussianImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::SmoothingRecursiveGaussianImageFilter::Execute "
-Image itk::simple::SmoothingRecursiveGaussianImageFilter::Execute(const Image &image1, double sigma, bool normalizeAcrossScale)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::SmoothingRecursiveGaussianImageFilter::Execute "
-Image itk::simple::SmoothingRecursiveGaussianImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::SmoothingRecursiveGaussianImageFilter::GetName "
-std::string itk::simple::SmoothingRecursiveGaussianImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::SmoothingRecursiveGaussianImageFilter::GetNormalizeAcrossScale "
-bool itk::simple::SmoothingRecursiveGaussianImageFilter::GetNormalizeAcrossScale()
 
 This method does not effect the output of this filter.
 
@@ -22656,22 +20041,18 @@ See:
 ";
 
 %feature("docstring")  itk::simple::SmoothingRecursiveGaussianImageFilter::GetSigma "
-double itk::simple::SmoothingRecursiveGaussianImageFilter::GetSigma()
 ";
 
 %feature("docstring")  itk::simple::SmoothingRecursiveGaussianImageFilter::NormalizeAcrossScaleOff "
-Self& itk::simple::SmoothingRecursiveGaussianImageFilter::NormalizeAcrossScaleOff()
 ";
 
 %feature("docstring")  itk::simple::SmoothingRecursiveGaussianImageFilter::NormalizeAcrossScaleOn "
-Self& itk::simple::SmoothingRecursiveGaussianImageFilter::NormalizeAcrossScaleOn()
 
 Set the value of NormalizeAcrossScale to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::SmoothingRecursiveGaussianImageFilter::SetNormalizeAcrossScale "
-Self& itk::simple::SmoothingRecursiveGaussianImageFilter::SetNormalizeAcrossScale(bool NormalizeAcrossScale)
 
 This method does not effect the output of this filter.
 
@@ -22684,7 +20065,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::SmoothingRecursiveGaussianImageFilter::SetSigma "
-Self& itk::simple::SmoothingRecursiveGaussianImageFilter::SetSigma(double Sigma)
 
 Set Sigma value. Sigma is measured in the units of image spacing. You
 may use the method SetSigma to set the same value across each axis or
@@ -22694,7 +20074,6 @@ axis.
 ";
 
 %feature("docstring")  itk::simple::SmoothingRecursiveGaussianImageFilter::SmoothingRecursiveGaussianImageFilter "
-itk::simple::SmoothingRecursiveGaussianImageFilter::SmoothingRecursiveGaussianImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -22702,7 +20081,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::SmoothingRecursiveGaussianImageFilter::ToString "
-std::string itk::simple::SmoothingRecursiveGaussianImageFilter::ToString() const
 
 Print ourselves out
 
@@ -22746,21 +20124,18 @@ C++ includes: sitkSobelEdgeDetectionImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::SobelEdgeDetectionImageFilter::Execute "
-Image itk::simple::SobelEdgeDetectionImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::SobelEdgeDetectionImageFilter::GetName "
-std::string itk::simple::SobelEdgeDetectionImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::SobelEdgeDetectionImageFilter::SobelEdgeDetectionImageFilter "
-itk::simple::SobelEdgeDetectionImageFilter::SobelEdgeDetectionImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -22768,7 +20143,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::SobelEdgeDetectionImageFilter::ToString "
-std::string itk::simple::SobelEdgeDetectionImageFilter::ToString() const
 
 Print ourselves out
 
@@ -22791,21 +20165,18 @@ C++ includes: sitkSqrtImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::SqrtImageFilter::Execute "
-Image itk::simple::SqrtImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::SqrtImageFilter::GetName "
-std::string itk::simple::SqrtImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::SqrtImageFilter::SqrtImageFilter "
-itk::simple::SqrtImageFilter::SqrtImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -22813,7 +20184,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::SqrtImageFilter::ToString "
-std::string itk::simple::SqrtImageFilter::ToString() const
 
 Print ourselves out
 
@@ -22839,21 +20209,18 @@ C++ includes: sitkSquareImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::SquareImageFilter::Execute "
-Image itk::simple::SquareImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::SquareImageFilter::GetName "
-std::string itk::simple::SquareImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::SquareImageFilter::SquareImageFilter "
-itk::simple::SquareImageFilter::SquareImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -22861,7 +20228,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::SquareImageFilter::ToString "
-std::string itk::simple::SquareImageFilter::ToString() const
 
 Print ourselves out
 
@@ -22906,32 +20272,27 @@ C++ includes: sitkSquaredDifferenceImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::SquaredDifferenceImageFilter::Execute "
-Image itk::simple::SquaredDifferenceImageFilter::Execute(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::SquaredDifferenceImageFilter::Execute "
-Image itk::simple::SquaredDifferenceImageFilter::Execute(const Image &image1, double constant)
 
 Execute the filter with an image and a constant
 
 ";
 
 %feature("docstring")  itk::simple::SquaredDifferenceImageFilter::Execute "
-Image itk::simple::SquaredDifferenceImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::SquaredDifferenceImageFilter::GetName "
-std::string itk::simple::SquaredDifferenceImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::SquaredDifferenceImageFilter::SquaredDifferenceImageFilter "
-itk::simple::SquaredDifferenceImageFilter::SquaredDifferenceImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -22939,7 +20300,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::SquaredDifferenceImageFilter::ToString "
-std::string itk::simple::SquaredDifferenceImageFilter::ToString() const
 
 Print ourselves out
 
@@ -22987,36 +20347,30 @@ C++ includes: sitkStandardDeviationProjectionImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::StandardDeviationProjectionImageFilter::Execute "
-Image itk::simple::StandardDeviationProjectionImageFilter::Execute(const Image &image1, unsigned int projectionDimension)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::StandardDeviationProjectionImageFilter::Execute "
-Image itk::simple::StandardDeviationProjectionImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::StandardDeviationProjectionImageFilter::GetName "
-std::string itk::simple::StandardDeviationProjectionImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::StandardDeviationProjectionImageFilter::GetProjectionDimension "
-unsigned int itk::simple::StandardDeviationProjectionImageFilter::GetProjectionDimension()
 ";
 
 %feature("docstring")  itk::simple::StandardDeviationProjectionImageFilter::SetProjectionDimension "
-Self& itk::simple::StandardDeviationProjectionImageFilter::SetProjectionDimension(unsigned int ProjectionDimension)
 ";
 
 %feature("docstring")  itk::simple::StandardDeviationProjectionImageFilter::StandardDeviationProjectionImageFilter "
-itk::simple::StandardDeviationProjectionImageFilter::StandardDeviationProjectionImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -23024,7 +20378,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::StandardDeviationProjectionImageFilter::ToString "
-std::string itk::simple::StandardDeviationProjectionImageFilter::ToString() const
 
 Print ourselves out
 
@@ -23045,46 +20398,36 @@ C++ includes: sitkStatisticsImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::StatisticsImageFilter::Execute "
-Image itk::simple::StatisticsImageFilter::Execute(const Image &)
 ";
 
 %feature("docstring")  itk::simple::StatisticsImageFilter::GetMaximum "
-double itk::simple::StatisticsImageFilter::GetMaximum() const
 ";
 
 %feature("docstring")  itk::simple::StatisticsImageFilter::GetMean "
-double itk::simple::StatisticsImageFilter::GetMean() const
 ";
 
 %feature("docstring")  itk::simple::StatisticsImageFilter::GetMeasurementMap "
-itk::simple::MeasurementMap itk::simple::StatisticsImageFilter::GetMeasurementMap() const
 ";
 
 %feature("docstring")  itk::simple::StatisticsImageFilter::GetMinimum "
-double itk::simple::StatisticsImageFilter::GetMinimum() const
 ";
 
 %feature("docstring")  itk::simple::StatisticsImageFilter::GetName "
-std::string itk::simple::StatisticsImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::StatisticsImageFilter::GetSigma "
-double itk::simple::StatisticsImageFilter::GetSigma() const
 ";
 
 %feature("docstring")  itk::simple::StatisticsImageFilter::GetSum "
-double itk::simple::StatisticsImageFilter::GetSum() const
 ";
 
 %feature("docstring")  itk::simple::StatisticsImageFilter::GetVariance "
-double itk::simple::StatisticsImageFilter::GetVariance() const
 ";
 
 %feature("docstring")  itk::simple::StatisticsImageFilter::StatisticsImageFilter "
-itk::simple::StatisticsImageFilter::StatisticsImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -23092,7 +20435,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::StatisticsImageFilter::ToString "
-std::string itk::simple::StatisticsImageFilter::ToString() const
 ";
 
 
@@ -23126,32 +20468,27 @@ C++ includes: sitkSubtractImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::SubtractImageFilter::Execute "
-Image itk::simple::SubtractImageFilter::Execute(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::SubtractImageFilter::Execute "
-Image itk::simple::SubtractImageFilter::Execute(const Image &image1, double constant)
 
 Execute the filter with an image and a constant
 
 ";
 
 %feature("docstring")  itk::simple::SubtractImageFilter::Execute "
-Image itk::simple::SubtractImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::SubtractImageFilter::GetName "
-std::string itk::simple::SubtractImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::SubtractImageFilter::SubtractImageFilter "
-itk::simple::SubtractImageFilter::SubtractImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -23159,7 +20496,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::SubtractImageFilter::ToString "
-std::string itk::simple::SubtractImageFilter::ToString() const
 
 Print ourselves out
 
@@ -23207,36 +20543,30 @@ C++ includes: sitkSumProjectionImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::SumProjectionImageFilter::Execute "
-Image itk::simple::SumProjectionImageFilter::Execute(const Image &image1, unsigned int projectionDimension)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::SumProjectionImageFilter::Execute "
-Image itk::simple::SumProjectionImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::SumProjectionImageFilter::GetName "
-std::string itk::simple::SumProjectionImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::SumProjectionImageFilter::GetProjectionDimension "
-unsigned int itk::simple::SumProjectionImageFilter::GetProjectionDimension()
 ";
 
 %feature("docstring")  itk::simple::SumProjectionImageFilter::SetProjectionDimension "
-Self& itk::simple::SumProjectionImageFilter::SetProjectionDimension(unsigned int ProjectionDimension)
 ";
 
 %feature("docstring")  itk::simple::SumProjectionImageFilter::SumProjectionImageFilter "
-itk::simple::SumProjectionImageFilter::SumProjectionImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -23244,7 +20574,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::SumProjectionImageFilter::ToString "
-std::string itk::simple::SumProjectionImageFilter::ToString() const
 
 Print ourselves out
 
@@ -23267,21 +20596,18 @@ C++ includes: sitkTanImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::TanImageFilter::Execute "
-Image itk::simple::TanImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::TanImageFilter::GetName "
-std::string itk::simple::TanImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::TanImageFilter::TanImageFilter "
-itk::simple::TanImageFilter::TanImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -23289,7 +20615,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::TanImageFilter::ToString "
-std::string itk::simple::TanImageFilter::ToString() const
 
 Print ourselves out
 
@@ -23314,21 +20639,18 @@ C++ includes: sitkTernaryAddImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::TernaryAddImageFilter::Execute "
-Image itk::simple::TernaryAddImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::TernaryAddImageFilter::GetName "
-std::string itk::simple::TernaryAddImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::TernaryAddImageFilter::TernaryAddImageFilter "
-itk::simple::TernaryAddImageFilter::TernaryAddImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -23336,7 +20658,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::TernaryAddImageFilter::ToString "
-std::string itk::simple::TernaryAddImageFilter::ToString() const
 
 Print ourselves out
 
@@ -23361,21 +20682,18 @@ C++ includes: sitkTernaryMagnitudeImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::TernaryMagnitudeImageFilter::Execute "
-Image itk::simple::TernaryMagnitudeImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::TernaryMagnitudeImageFilter::GetName "
-std::string itk::simple::TernaryMagnitudeImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::TernaryMagnitudeImageFilter::TernaryMagnitudeImageFilter "
-itk::simple::TernaryMagnitudeImageFilter::TernaryMagnitudeImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -23383,7 +20701,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::TernaryMagnitudeImageFilter::ToString "
-std::string itk::simple::TernaryMagnitudeImageFilter::ToString() const
 
 Print ourselves out
 
@@ -23408,21 +20725,18 @@ C++ includes: sitkTernaryMagnitudeSquaredImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::TernaryMagnitudeSquaredImageFilter::Execute "
-Image itk::simple::TernaryMagnitudeSquaredImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::TernaryMagnitudeSquaredImageFilter::GetName "
-std::string itk::simple::TernaryMagnitudeSquaredImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::TernaryMagnitudeSquaredImageFilter::TernaryMagnitudeSquaredImageFilter "
-itk::simple::TernaryMagnitudeSquaredImageFilter::TernaryMagnitudeSquaredImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -23430,7 +20744,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::TernaryMagnitudeSquaredImageFilter::ToString "
-std::string itk::simple::TernaryMagnitudeSquaredImageFilter::ToString() const
 
 Print ourselves out
 
@@ -23459,56 +20772,48 @@ C++ includes: sitkThresholdImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ThresholdImageFilter::Execute "
-Image itk::simple::ThresholdImageFilter::Execute(const Image &image1, double lower, double upper, double outsideValue)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ThresholdImageFilter::Execute "
-Image itk::simple::ThresholdImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ThresholdImageFilter::GetLower "
-double itk::simple::ThresholdImageFilter::GetLower()
 
 Set/Get methods to set the lower threshold.
 
 ";
 
 %feature("docstring")  itk::simple::ThresholdImageFilter::GetName "
-std::string itk::simple::ThresholdImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ThresholdImageFilter::GetOutsideValue "
-double itk::simple::ThresholdImageFilter::GetOutsideValue()
 
 Get the \"outside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::ThresholdImageFilter::GetUpper "
-double itk::simple::ThresholdImageFilter::GetUpper()
 
 Set/Get methods to set the upper threshold.
 
 ";
 
 %feature("docstring")  itk::simple::ThresholdImageFilter::SetLower "
-Self& itk::simple::ThresholdImageFilter::SetLower(double Lower)
 
 Set/Get methods to set the lower threshold.
 
 ";
 
 %feature("docstring")  itk::simple::ThresholdImageFilter::SetOutsideValue "
-Self& itk::simple::ThresholdImageFilter::SetOutsideValue(double OutsideValue)
 
 End concept checking Set the \"outside\" pixel value. The default
 value NumericTraits<PixelType>::Zero.
@@ -23516,14 +20821,12 @@ value NumericTraits<PixelType>::Zero.
 ";
 
 %feature("docstring")  itk::simple::ThresholdImageFilter::SetUpper "
-Self& itk::simple::ThresholdImageFilter::SetUpper(double Upper)
 
 Set/Get methods to set the upper threshold.
 
 ";
 
 %feature("docstring")  itk::simple::ThresholdImageFilter::ThresholdImageFilter "
-itk::simple::ThresholdImageFilter::ThresholdImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -23531,7 +20834,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ThresholdImageFilter::ToString "
-std::string itk::simple::ThresholdImageFilter::ToString() const
 
 Print ourselves out
 
@@ -23584,22 +20886,18 @@ C++ includes: sitkThresholdMaximumConnectedComponentsImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ThresholdMaximumConnectedComponentsImageFilter::Execute "
-Image itk::simple::ThresholdMaximumConnectedComponentsImageFilter::Execute(const Image &image1, uint32_t minimumObjectSizeInPixels, double
-upperBoundary, uint8_t insideValue, uint8_t outsideValue)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ThresholdMaximumConnectedComponentsImageFilter::Execute "
-Image itk::simple::ThresholdMaximumConnectedComponentsImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ThresholdMaximumConnectedComponentsImageFilter::GetInsideValue "
-uint8_t itk::simple::ThresholdMaximumConnectedComponentsImageFilter::GetInsideValue()
 
 The following Set/Get methods are for the binary threshold function.
 This class automatically calculates the lower threshold boundary. The
@@ -23613,7 +20911,6 @@ intensity.
 ";
 
 %feature("docstring")  itk::simple::ThresholdMaximumConnectedComponentsImageFilter::GetMinimumObjectSizeInPixels "
-uint32_t itk::simple::ThresholdMaximumConnectedComponentsImageFilter::GetMinimumObjectSizeInPixels()
 
 Set the minimum pixel area used to count objects on the image. Thus,
 only objects that have a pixel area greater than the minimum pixel
@@ -23624,14 +20921,12 @@ object. The default value is zero.
 ";
 
 %feature("docstring")  itk::simple::ThresholdMaximumConnectedComponentsImageFilter::GetName "
-std::string itk::simple::ThresholdMaximumConnectedComponentsImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ThresholdMaximumConnectedComponentsImageFilter::GetOutsideValue "
-uint8_t itk::simple::ThresholdMaximumConnectedComponentsImageFilter::GetOutsideValue()
 
 The following Set/Get methods are for the binary threshold function.
 This class automatically calculates the lower threshold boundary. The
@@ -23645,7 +20940,6 @@ intensity.
 ";
 
 %feature("docstring")  itk::simple::ThresholdMaximumConnectedComponentsImageFilter::GetUpperBoundary "
-double itk::simple::ThresholdMaximumConnectedComponentsImageFilter::GetUpperBoundary()
 
 The following Set/Get methods are for the binary threshold function.
 This class automatically calculates the lower threshold boundary. The
@@ -23659,7 +20953,6 @@ intensity.
 ";
 
 %feature("docstring")  itk::simple::ThresholdMaximumConnectedComponentsImageFilter::SetInsideValue "
-Self& itk::simple::ThresholdMaximumConnectedComponentsImageFilter::SetInsideValue(uint8_t InsideValue)
 
 The following Set/Get methods are for the binary threshold function.
 This class automatically calculates the lower threshold boundary. The
@@ -23673,7 +20966,6 @@ intensity.
 ";
 
 %feature("docstring")  itk::simple::ThresholdMaximumConnectedComponentsImageFilter::SetMinimumObjectSizeInPixels "
-Self& itk::simple::ThresholdMaximumConnectedComponentsImageFilter::SetMinimumObjectSizeInPixels(uint32_t MinimumObjectSizeInPixels)
 
 Set the minimum pixel area used to count objects on the image. Thus,
 only objects that have a pixel area greater than the minimum pixel
@@ -23684,7 +20976,6 @@ object. The default value is zero.
 ";
 
 %feature("docstring")  itk::simple::ThresholdMaximumConnectedComponentsImageFilter::SetOutsideValue "
-Self& itk::simple::ThresholdMaximumConnectedComponentsImageFilter::SetOutsideValue(uint8_t OutsideValue)
 
 The following Set/Get methods are for the binary threshold function.
 This class automatically calculates the lower threshold boundary. The
@@ -23698,7 +20989,6 @@ intensity.
 ";
 
 %feature("docstring")  itk::simple::ThresholdMaximumConnectedComponentsImageFilter::SetUpperBoundary "
-Self& itk::simple::ThresholdMaximumConnectedComponentsImageFilter::SetUpperBoundary(double UpperBoundary)
 
 The following Set/Get methods are for the binary threshold function.
 This class automatically calculates the lower threshold boundary. The
@@ -23712,7 +21002,6 @@ intensity.
 ";
 
 %feature("docstring")  itk::simple::ThresholdMaximumConnectedComponentsImageFilter::ThresholdMaximumConnectedComponentsImageFilter "
-itk::simple::ThresholdMaximumConnectedComponentsImageFilter::ThresholdMaximumConnectedComponentsImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -23720,7 +21009,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ThresholdMaximumConnectedComponentsImageFilter::ToString "
-std::string itk::simple::ThresholdMaximumConnectedComponentsImageFilter::ToString() const
 
 Print ourselves out
 
@@ -23788,28 +21076,21 @@ C++ includes: sitkThresholdSegmentationLevelSetImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ThresholdSegmentationLevelSetImageFilter::Execute "
-Image itk::simple::ThresholdSegmentationLevelSetImageFilter::Execute(const Image &image1, const Image &image2, double lowerThreshold,
-double upperThreshold, double maximumRMSError, double
-propagationScaling, double curvatureScaling, uint32_t
-numberOfIterations, bool reverseExpansionDirection)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ThresholdSegmentationLevelSetImageFilter::Execute "
-Image itk::simple::ThresholdSegmentationLevelSetImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::ThresholdSegmentationLevelSetImageFilter::GetCurvatureScaling "
-double itk::simple::ThresholdSegmentationLevelSetImageFilter::GetCurvatureScaling()
 ";
 
 %feature("docstring")  itk::simple::ThresholdSegmentationLevelSetImageFilter::GetElapsedIterations "
-uint32_t itk::simple::ThresholdSegmentationLevelSetImageFilter::GetElapsedIterations()
 
 Number of iterations run.
 
@@ -23820,34 +21101,27 @@ the value will only be valid after an execution.
 ";
 
 %feature("docstring")  itk::simple::ThresholdSegmentationLevelSetImageFilter::GetLowerThreshold "
-double itk::simple::ThresholdSegmentationLevelSetImageFilter::GetLowerThreshold()
 ";
 
 %feature("docstring")  itk::simple::ThresholdSegmentationLevelSetImageFilter::GetMaximumRMSError "
-double itk::simple::ThresholdSegmentationLevelSetImageFilter::GetMaximumRMSError()
 ";
 
 %feature("docstring")  itk::simple::ThresholdSegmentationLevelSetImageFilter::GetName "
-std::string itk::simple::ThresholdSegmentationLevelSetImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ThresholdSegmentationLevelSetImageFilter::GetNumberOfIterations "
-uint32_t itk::simple::ThresholdSegmentationLevelSetImageFilter::GetNumberOfIterations()
 ";
 
 %feature("docstring")  itk::simple::ThresholdSegmentationLevelSetImageFilter::GetPropagationScaling "
-double itk::simple::ThresholdSegmentationLevelSetImageFilter::GetPropagationScaling()
 ";
 
 %feature("docstring")  itk::simple::ThresholdSegmentationLevelSetImageFilter::GetReverseExpansionDirection "
-bool itk::simple::ThresholdSegmentationLevelSetImageFilter::GetReverseExpansionDirection()
 ";
 
 %feature("docstring")  itk::simple::ThresholdSegmentationLevelSetImageFilter::GetRMSChange "
-double itk::simple::ThresholdSegmentationLevelSetImageFilter::GetRMSChange()
 
 The Root Mean Square of the levelset upon termination.
 
@@ -23858,15 +21132,12 @@ the value will only be valid after an execution.
 ";
 
 %feature("docstring")  itk::simple::ThresholdSegmentationLevelSetImageFilter::GetUpperThreshold "
-double itk::simple::ThresholdSegmentationLevelSetImageFilter::GetUpperThreshold()
 ";
 
 %feature("docstring")  itk::simple::ThresholdSegmentationLevelSetImageFilter::ReverseExpansionDirectionOff "
-Self& itk::simple::ThresholdSegmentationLevelSetImageFilter::ReverseExpansionDirectionOff()
 ";
 
 %feature("docstring")  itk::simple::ThresholdSegmentationLevelSetImageFilter::ReverseExpansionDirectionOn "
-Self& itk::simple::ThresholdSegmentationLevelSetImageFilter::ReverseExpansionDirectionOn()
 
 Set the value of ReverseExpansionDirection to true or false
 respectfully.
@@ -23874,31 +21145,24 @@ respectfully.
 ";
 
 %feature("docstring")  itk::simple::ThresholdSegmentationLevelSetImageFilter::SetCurvatureScaling "
-Self& itk::simple::ThresholdSegmentationLevelSetImageFilter::SetCurvatureScaling(double CurvatureScaling)
 ";
 
 %feature("docstring")  itk::simple::ThresholdSegmentationLevelSetImageFilter::SetLowerThreshold "
-Self& itk::simple::ThresholdSegmentationLevelSetImageFilter::SetLowerThreshold(double LowerThreshold)
 ";
 
 %feature("docstring")  itk::simple::ThresholdSegmentationLevelSetImageFilter::SetMaximumRMSError "
-Self& itk::simple::ThresholdSegmentationLevelSetImageFilter::SetMaximumRMSError(double MaximumRMSError)
 ";
 
 %feature("docstring")  itk::simple::ThresholdSegmentationLevelSetImageFilter::SetNumberOfIterations "
-Self& itk::simple::ThresholdSegmentationLevelSetImageFilter::SetNumberOfIterations(uint32_t NumberOfIterations)
 ";
 
 %feature("docstring")  itk::simple::ThresholdSegmentationLevelSetImageFilter::SetPropagationScaling "
-Self& itk::simple::ThresholdSegmentationLevelSetImageFilter::SetPropagationScaling(double PropagationScaling)
 ";
 
 %feature("docstring")  itk::simple::ThresholdSegmentationLevelSetImageFilter::SetReverseExpansionDirection "
-Self& itk::simple::ThresholdSegmentationLevelSetImageFilter::SetReverseExpansionDirection(bool ReverseExpansionDirection)
 ";
 
 %feature("docstring")  itk::simple::ThresholdSegmentationLevelSetImageFilter::SetUpperThreshold "
-Self& itk::simple::ThresholdSegmentationLevelSetImageFilter::SetUpperThreshold(double UpperThreshold)
 
 Get/Set the threshold values that will be used to calculate the speed
 function.
@@ -23906,7 +21170,6 @@ function.
 ";
 
 %feature("docstring")  itk::simple::ThresholdSegmentationLevelSetImageFilter::ThresholdSegmentationLevelSetImageFilter "
-itk::simple::ThresholdSegmentationLevelSetImageFilter::ThresholdSegmentationLevelSetImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -23914,7 +21177,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::ThresholdSegmentationLevelSetImageFilter::ToString "
-std::string itk::simple::ThresholdSegmentationLevelSetImageFilter::ToString() const
 
 Print ourselves out
 
@@ -23943,45 +21205,33 @@ C++ includes: sitkTikhonovDeconvolutionImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::TikhonovDeconvolutionImageFilter::Execute "
-Image itk::simple::TikhonovDeconvolutionImageFilter::Execute(const Image &image1, const Image &image2, double
-regularizationConstant, bool normalize,
-TikhonovDeconvolutionImageFilter::BoundaryConditionType
-boundaryCondition,
-TikhonovDeconvolutionImageFilter::OutputRegionModeType
-outputRegionMode)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::TikhonovDeconvolutionImageFilter::Execute "
-Image itk::simple::TikhonovDeconvolutionImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::TikhonovDeconvolutionImageFilter::GetBoundaryCondition "
-TikhonovDeconvolutionImageFilter::BoundaryConditionType itk::simple::TikhonovDeconvolutionImageFilter::GetBoundaryCondition()
 ";
 
 %feature("docstring")  itk::simple::TikhonovDeconvolutionImageFilter::GetName "
-std::string itk::simple::TikhonovDeconvolutionImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::TikhonovDeconvolutionImageFilter::GetNormalize "
-bool itk::simple::TikhonovDeconvolutionImageFilter::GetNormalize()
 ";
 
 %feature("docstring")  itk::simple::TikhonovDeconvolutionImageFilter::GetOutputRegionMode "
-TikhonovDeconvolutionImageFilter::OutputRegionModeType itk::simple::TikhonovDeconvolutionImageFilter::GetOutputRegionMode()
 ";
 
 %feature("docstring")  itk::simple::TikhonovDeconvolutionImageFilter::GetRegularizationConstant "
-double itk::simple::TikhonovDeconvolutionImageFilter::GetRegularizationConstant()
 
 The regularization factor. Larger values reduce the dominance of noise
 in the solution, but results in higher approximation error in the
@@ -23991,35 +21241,27 @@ the InverseDeconvolutionImageFilter.
 ";
 
 %feature("docstring")  itk::simple::TikhonovDeconvolutionImageFilter::NormalizeOff "
-Self& itk::simple::TikhonovDeconvolutionImageFilter::NormalizeOff()
 ";
 
 %feature("docstring")  itk::simple::TikhonovDeconvolutionImageFilter::NormalizeOn "
-Self& itk::simple::TikhonovDeconvolutionImageFilter::NormalizeOn()
 
 Set the value of Normalize to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::TikhonovDeconvolutionImageFilter::SetBoundaryCondition "
-Self& itk::simple::TikhonovDeconvolutionImageFilter::SetBoundaryCondition(TikhonovDeconvolutionImageFilter::BoundaryConditionType
-BoundaryCondition)
 ";
 
 %feature("docstring")  itk::simple::TikhonovDeconvolutionImageFilter::SetNormalize "
-Self& itk::simple::TikhonovDeconvolutionImageFilter::SetNormalize(bool Normalize)
 
 Normalize the output image by the sum of the kernel components.
 
 ";
 
 %feature("docstring")  itk::simple::TikhonovDeconvolutionImageFilter::SetOutputRegionMode "
-Self& itk::simple::TikhonovDeconvolutionImageFilter::SetOutputRegionMode(TikhonovDeconvolutionImageFilter::OutputRegionModeType
-OutputRegionMode)
 ";
 
 %feature("docstring")  itk::simple::TikhonovDeconvolutionImageFilter::SetRegularizationConstant "
-Self& itk::simple::TikhonovDeconvolutionImageFilter::SetRegularizationConstant(double RegularizationConstant)
 
 The regularization factor. Larger values reduce the dominance of noise
 in the solution, but results in higher approximation error in the
@@ -24029,7 +21271,6 @@ the InverseDeconvolutionImageFilter.
 ";
 
 %feature("docstring")  itk::simple::TikhonovDeconvolutionImageFilter::TikhonovDeconvolutionImageFilter "
-itk::simple::TikhonovDeconvolutionImageFilter::TikhonovDeconvolutionImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -24037,7 +21278,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::TikhonovDeconvolutionImageFilter::ToString "
-std::string itk::simple::TikhonovDeconvolutionImageFilter::ToString() const
 
 Print ourselves out
 
@@ -24078,94 +21318,66 @@ C++ includes: sitkTileImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::TileImageFilter::Execute "
-Image itk::simple::TileImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4, const Image &image5, std::vector< uint32_t > layout,
-double defaultPixelValue)
 ";
 
 %feature("docstring")  itk::simple::TileImageFilter::Execute "
-Image itk::simple::TileImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4, std::vector< uint32_t > layout, double
-defaultPixelValue)
 ";
 
 %feature("docstring")  itk::simple::TileImageFilter::Execute "
-Image itk::simple::TileImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3,
-std::vector< uint32_t > layout, double defaultPixelValue)
 ";
 
 %feature("docstring")  itk::simple::TileImageFilter::Execute "
-Image itk::simple::TileImageFilter::Execute(const Image &image1, const Image &image2, std::vector< uint32_t >
-layout, double defaultPixelValue)
 ";
 
 %feature("docstring")  itk::simple::TileImageFilter::Execute "
-Image itk::simple::TileImageFilter::Execute(const Image &image1, std::vector< uint32_t > layout, double
-defaultPixelValue)
 ";
 
 %feature("docstring")  itk::simple::TileImageFilter::Execute "
-Image itk::simple::TileImageFilter::Execute(const std::vector< Image > &images, std::vector< uint32_t > layout,
-double defaultPixelValue)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::TileImageFilter::Execute "
-Image itk::simple::TileImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4, const Image &image5)
 ";
 
 %feature("docstring")  itk::simple::TileImageFilter::Execute "
-Image itk::simple::TileImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4)
 ";
 
 %feature("docstring")  itk::simple::TileImageFilter::Execute "
-Image itk::simple::TileImageFilter::Execute(const Image &image1, const Image &image2, const Image &image3)
 ";
 
 %feature("docstring")  itk::simple::TileImageFilter::Execute "
-Image itk::simple::TileImageFilter::Execute(const Image &image1, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::TileImageFilter::Execute "
-Image itk::simple::TileImageFilter::Execute(const Image &image1)
 ";
 
 %feature("docstring")  itk::simple::TileImageFilter::Execute "
-Image itk::simple::TileImageFilter::Execute(const std::vector< Image > &images)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::TileImageFilter::GetDefaultPixelValue "
-double itk::simple::TileImageFilter::GetDefaultPixelValue()
 ";
 
 %feature("docstring")  itk::simple::TileImageFilter::GetLayout "
-std::vector<uint32_t> itk::simple::TileImageFilter::GetLayout()
 ";
 
 %feature("docstring")  itk::simple::TileImageFilter::GetName "
-std::string itk::simple::TileImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::TileImageFilter::SetDefaultPixelValue "
-Self& itk::simple::TileImageFilter::SetDefaultPixelValue(double DefaultPixelValue)
 ";
 
 %feature("docstring")  itk::simple::TileImageFilter::SetLayout "
-Self& itk::simple::TileImageFilter::SetLayout(std::vector< uint32_t > Layout)
 ";
 
 %feature("docstring")  itk::simple::TileImageFilter::TileImageFilter "
-itk::simple::TileImageFilter::TileImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -24173,7 +21385,6 @@ parameters
 ";
 
 %feature("docstring")  itk::simple::TileImageFilter::ToString "
-std::string itk::simple::TileImageFilter::ToString() const
 
 Print ourselves out
 
@@ -24185,51 +21396,42 @@ C++ includes: sitkTransform.h
 ";
 
 %feature("docstring")  itk::simple::Transform::AddTransform "
-Transform& itk::simple::Transform::AddTransform(Transform t)
 ";
 
 %feature("docstring")  itk::simple::Transform::GetDimension "
-unsigned int itk::simple::Transform::GetDimension(void) const
 
 Return the dimension of the Transform ( 2D or 3D )
 
 ";
 
 %feature("docstring")  itk::simple::Transform::ToString "
-std::string itk::simple::Transform::ToString(void) const
 ";
 
 %feature("docstring")  itk::simple::Transform::Transform "
-itk::simple::Transform::Transform(unsigned int dimensions, TransformEnum type)
 
 Construct a specific transformation.
 
 ";
 
 %feature("docstring")  itk::simple::Transform::Transform "
-itk::simple::Transform::Transform(itk::CompositeTransform< double, NDimension > *compositeTransform)
 
 Construct a SimpleITK Transform from a pointer to an ITK composite transform.
 
 ";
 
 %feature("docstring")  itk::simple::Transform::Transform "
-itk::simple::Transform::Transform(void)
 
 By default a 3-d identity transform is constructed.
 
 ";
 
 %feature("docstring")  itk::simple::Transform::TransformPoint "
-std::vector< double > itk::simple::Transform::TransformPoint(const std::vector< double > &point) const
 ";
 
 %feature("docstring")  itk::simple::Transform::WriteTransform "
-void itk::simple::Transform::WriteTransform(const std::string &filename) const
 ";
 
 %feature("docstring")  itk::simple::Transform::~Transform "
-virtual itk::simple::Transform::~Transform(void)
 ";
 
 
@@ -24259,61 +21461,51 @@ C++ includes: sitkTriangleThresholdImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::TriangleThresholdImageFilter::Execute "
-Image itk::simple::TriangleThresholdImageFilter::Execute(const Image &image1, uint8_t insideValue, uint8_t outsideValue,
-uint32_t numberOfHistogramBins)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::TriangleThresholdImageFilter::Execute "
-Image itk::simple::TriangleThresholdImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::TriangleThresholdImageFilter::GetInsideValue "
-uint8_t itk::simple::TriangleThresholdImageFilter::GetInsideValue()
 
 Get the \"inside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::TriangleThresholdImageFilter::GetName "
-std::string itk::simple::TriangleThresholdImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::TriangleThresholdImageFilter::GetNumberOfHistogramBins "
-uint32_t itk::simple::TriangleThresholdImageFilter::GetNumberOfHistogramBins()
 ";
 
 %feature("docstring")  itk::simple::TriangleThresholdImageFilter::GetOutsideValue "
-uint8_t itk::simple::TriangleThresholdImageFilter::GetOutsideValue()
 
 Get the \"outside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::TriangleThresholdImageFilter::SetInsideValue "
-Self& itk::simple::TriangleThresholdImageFilter::SetInsideValue(uint8_t InsideValue)
 
 Set the \"inside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::TriangleThresholdImageFilter::SetNumberOfHistogramBins "
-Self& itk::simple::TriangleThresholdImageFilter::SetNumberOfHistogramBins(uint32_t NumberOfHistogramBins)
 
 Set/Get the number of histogram bins.
 
 ";
 
 %feature("docstring")  itk::simple::TriangleThresholdImageFilter::SetOutsideValue "
-Self& itk::simple::TriangleThresholdImageFilter::SetOutsideValue(uint8_t OutsideValue)
 
 Set the \"outside\" pixel value. The default value
 NumericTraits<OutputPixelType>::Zero.
@@ -24321,14 +21513,12 @@ NumericTraits<OutputPixelType>::Zero.
 ";
 
 %feature("docstring")  itk::simple::TriangleThresholdImageFilter::ToString "
-std::string itk::simple::TriangleThresholdImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::TriangleThresholdImageFilter::TriangleThresholdImageFilter "
-itk::simple::TriangleThresholdImageFilter::TriangleThresholdImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -24350,28 +21540,24 @@ C++ includes: sitkUnaryMinusImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::UnaryMinusImageFilter::Execute "
-Image itk::simple::UnaryMinusImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::UnaryMinusImageFilter::GetName "
-std::string itk::simple::UnaryMinusImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::UnaryMinusImageFilter::ToString "
-std::string itk::simple::UnaryMinusImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::UnaryMinusImageFilter::UnaryMinusImageFilter "
-itk::simple::UnaryMinusImageFilter::UnaryMinusImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -24417,32 +21603,27 @@ C++ includes: sitkValuedRegionalMaximaImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ValuedRegionalMaximaImageFilter::Execute "
-Image itk::simple::ValuedRegionalMaximaImageFilter::Execute(const Image &image1, bool fullyConnected)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ValuedRegionalMaximaImageFilter::Execute "
-Image itk::simple::ValuedRegionalMaximaImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ValuedRegionalMaximaImageFilter::FullyConnectedOff "
-Self& itk::simple::ValuedRegionalMaximaImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::ValuedRegionalMaximaImageFilter::FullyConnectedOn "
-Self& itk::simple::ValuedRegionalMaximaImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::ValuedRegionalMaximaImageFilter::GetFlat "
-bool itk::simple::ValuedRegionalMaximaImageFilter::GetFlat()
 
 This is a measurement. Its value is updated in the Execute methods, so
 the value will only be valid after an execution.
@@ -24450,29 +21631,24 @@ the value will only be valid after an execution.
 ";
 
 %feature("docstring")  itk::simple::ValuedRegionalMaximaImageFilter::GetFullyConnected "
-bool itk::simple::ValuedRegionalMaximaImageFilter::GetFullyConnected()
 ";
 
 %feature("docstring")  itk::simple::ValuedRegionalMaximaImageFilter::GetName "
-std::string itk::simple::ValuedRegionalMaximaImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ValuedRegionalMaximaImageFilter::SetFullyConnected "
-Self& itk::simple::ValuedRegionalMaximaImageFilter::SetFullyConnected(bool FullyConnected)
 ";
 
 %feature("docstring")  itk::simple::ValuedRegionalMaximaImageFilter::ToString "
-std::string itk::simple::ValuedRegionalMaximaImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::ValuedRegionalMaximaImageFilter::ValuedRegionalMaximaImageFilter "
-itk::simple::ValuedRegionalMaximaImageFilter::ValuedRegionalMaximaImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -24515,32 +21691,27 @@ C++ includes: sitkValuedRegionalMinimaImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ValuedRegionalMinimaImageFilter::Execute "
-Image itk::simple::ValuedRegionalMinimaImageFilter::Execute(const Image &image1, bool fullyConnected)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ValuedRegionalMinimaImageFilter::Execute "
-Image itk::simple::ValuedRegionalMinimaImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ValuedRegionalMinimaImageFilter::FullyConnectedOff "
-Self& itk::simple::ValuedRegionalMinimaImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::ValuedRegionalMinimaImageFilter::FullyConnectedOn "
-Self& itk::simple::ValuedRegionalMinimaImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::ValuedRegionalMinimaImageFilter::GetFlat "
-bool itk::simple::ValuedRegionalMinimaImageFilter::GetFlat()
 
 This is a measurement. Its value is updated in the Execute methods, so
 the value will only be valid after an execution.
@@ -24548,29 +21719,24 @@ the value will only be valid after an execution.
 ";
 
 %feature("docstring")  itk::simple::ValuedRegionalMinimaImageFilter::GetFullyConnected "
-bool itk::simple::ValuedRegionalMinimaImageFilter::GetFullyConnected()
 ";
 
 %feature("docstring")  itk::simple::ValuedRegionalMinimaImageFilter::GetName "
-std::string itk::simple::ValuedRegionalMinimaImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ValuedRegionalMinimaImageFilter::SetFullyConnected "
-Self& itk::simple::ValuedRegionalMinimaImageFilter::SetFullyConnected(bool FullyConnected)
 ";
 
 %feature("docstring")  itk::simple::ValuedRegionalMinimaImageFilter::ToString "
-std::string itk::simple::ValuedRegionalMinimaImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::ValuedRegionalMinimaImageFilter::ValuedRegionalMinimaImageFilter "
-itk::simple::ValuedRegionalMinimaImageFilter::ValuedRegionalMinimaImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -24615,37 +21781,30 @@ C++ includes: sitkVectorConfidenceConnectedImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::VectorConfidenceConnectedImageFilter::AddSeed "
-Self& itk::simple::VectorConfidenceConnectedImageFilter::AddSeed(std::vector< unsigned int > idx)
 
 AddSeed - Add a seed to the end of the list
 
 ";
 
 %feature("docstring")  itk::simple::VectorConfidenceConnectedImageFilter::ClearSeeds "
-Self& itk::simple::VectorConfidenceConnectedImageFilter::ClearSeeds()
 
 ClearSeeds - Clear out all seeds in the list
 
 ";
 
 %feature("docstring")  itk::simple::VectorConfidenceConnectedImageFilter::Execute "
-Image itk::simple::VectorConfidenceConnectedImageFilter::Execute(const Image &, std::vector< std::vector< unsigned int > > seedList,
-unsigned int numberOfIterations, double multiplier, unsigned int
-initialNeighborhoodRadius, uint8_t replaceValue)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::VectorConfidenceConnectedImageFilter::Execute "
-Image itk::simple::VectorConfidenceConnectedImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::VectorConfidenceConnectedImageFilter::GetCovariance "
-std::vector<double> itk::simple::VectorConfidenceConnectedImageFilter::GetCovariance()
 
 The Covariance matrix computed during segmentation.
 
@@ -24656,7 +21815,6 @@ the value will only be valid after an execution.
 ";
 
 %feature("docstring")  itk::simple::VectorConfidenceConnectedImageFilter::GetInitialNeighborhoodRadius "
-unsigned int itk::simple::VectorConfidenceConnectedImageFilter::GetInitialNeighborhoodRadius()
 
 Get/Set the radius of the neighborhood over which the statistics are
 evaluated.
@@ -24664,7 +21822,6 @@ evaluated.
 ";
 
 %feature("docstring")  itk::simple::VectorConfidenceConnectedImageFilter::GetMean "
-std::vector<double> itk::simple::VectorConfidenceConnectedImageFilter::GetMean()
 
 The Mean vector computed during segmentation.
 
@@ -24675,7 +21832,6 @@ the value will only be valid after an execution.
 ";
 
 %feature("docstring")  itk::simple::VectorConfidenceConnectedImageFilter::GetMultiplier "
-double itk::simple::VectorConfidenceConnectedImageFilter::GetMultiplier()
 
 Set/Get the multiplier to define the confidence interval. Multiplier
 can be anything greater than zero. A typical value is 2.5.
@@ -24683,35 +21839,30 @@ can be anything greater than zero. A typical value is 2.5.
 ";
 
 %feature("docstring")  itk::simple::VectorConfidenceConnectedImageFilter::GetName "
-std::string itk::simple::VectorConfidenceConnectedImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::VectorConfidenceConnectedImageFilter::GetNumberOfIterations "
-unsigned int itk::simple::VectorConfidenceConnectedImageFilter::GetNumberOfIterations()
 
 Set/Get the number of iterations.
 
 ";
 
 %feature("docstring")  itk::simple::VectorConfidenceConnectedImageFilter::GetReplaceValue "
-uint8_t itk::simple::VectorConfidenceConnectedImageFilter::GetReplaceValue()
 
 Set/Get value to replace thresholded pixels.
 
 ";
 
 %feature("docstring")  itk::simple::VectorConfidenceConnectedImageFilter::GetSeedList "
-std::vector< std::vector<unsigned int> > itk::simple::VectorConfidenceConnectedImageFilter::GetSeedList()
 
 Get SeedList
 
 ";
 
 %feature("docstring")  itk::simple::VectorConfidenceConnectedImageFilter::SetInitialNeighborhoodRadius "
-Self& itk::simple::VectorConfidenceConnectedImageFilter::SetInitialNeighborhoodRadius(unsigned int InitialNeighborhoodRadius)
 
 Get/Set the radius of the neighborhood over which the statistics are
 evaluated.
@@ -24719,7 +21870,6 @@ evaluated.
 ";
 
 %feature("docstring")  itk::simple::VectorConfidenceConnectedImageFilter::SetMultiplier "
-Self& itk::simple::VectorConfidenceConnectedImageFilter::SetMultiplier(double Multiplier)
 
 Set/Get the multiplier to define the confidence interval. Multiplier
 can be anything greater than zero. A typical value is 2.5.
@@ -24727,42 +21877,36 @@ can be anything greater than zero. A typical value is 2.5.
 ";
 
 %feature("docstring")  itk::simple::VectorConfidenceConnectedImageFilter::SetNumberOfIterations "
-Self& itk::simple::VectorConfidenceConnectedImageFilter::SetNumberOfIterations(unsigned int NumberOfIterations)
 
 Set/Get the number of iterations.
 
 ";
 
 %feature("docstring")  itk::simple::VectorConfidenceConnectedImageFilter::SetReplaceValue "
-Self& itk::simple::VectorConfidenceConnectedImageFilter::SetReplaceValue(uint8_t ReplaceValue)
 
 Set/Get value to replace thresholded pixels.
 
 ";
 
 %feature("docstring")  itk::simple::VectorConfidenceConnectedImageFilter::SetSeed "
-Self& itk::simple::VectorConfidenceConnectedImageFilter::SetSeed(std::vector< unsigned int > idx)
 
 SetSeed - Set list to a single seed
 
 ";
 
 %feature("docstring")  itk::simple::VectorConfidenceConnectedImageFilter::SetSeedList "
-Self& itk::simple::VectorConfidenceConnectedImageFilter::SetSeedList(std::vector< std::vector< unsigned int > > t)
 
 Set SeedList
 
 ";
 
 %feature("docstring")  itk::simple::VectorConfidenceConnectedImageFilter::ToString "
-std::string itk::simple::VectorConfidenceConnectedImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::VectorConfidenceConnectedImageFilter::VectorConfidenceConnectedImageFilter "
-itk::simple::VectorConfidenceConnectedImageFilter::VectorConfidenceConnectedImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -24787,62 +21931,51 @@ C++ includes: sitkVectorConnectedComponentImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::VectorConnectedComponentImageFilter::Execute "
-Image itk::simple::VectorConnectedComponentImageFilter::Execute(const Image &image1, double distanceThreshold, bool fullyConnected)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::VectorConnectedComponentImageFilter::Execute "
-Image itk::simple::VectorConnectedComponentImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::VectorConnectedComponentImageFilter::FullyConnectedOff "
-Self& itk::simple::VectorConnectedComponentImageFilter::FullyConnectedOff()
 ";
 
 %feature("docstring")  itk::simple::VectorConnectedComponentImageFilter::FullyConnectedOn "
-Self& itk::simple::VectorConnectedComponentImageFilter::FullyConnectedOn()
 
 Set the value of FullyConnected to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::VectorConnectedComponentImageFilter::GetDistanceThreshold "
-double itk::simple::VectorConnectedComponentImageFilter::GetDistanceThreshold()
 ";
 
 %feature("docstring")  itk::simple::VectorConnectedComponentImageFilter::GetFullyConnected "
-bool itk::simple::VectorConnectedComponentImageFilter::GetFullyConnected()
 ";
 
 %feature("docstring")  itk::simple::VectorConnectedComponentImageFilter::GetName "
-std::string itk::simple::VectorConnectedComponentImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::VectorConnectedComponentImageFilter::SetDistanceThreshold "
-Self& itk::simple::VectorConnectedComponentImageFilter::SetDistanceThreshold(double DistanceThreshold)
 ";
 
 %feature("docstring")  itk::simple::VectorConnectedComponentImageFilter::SetFullyConnected "
-Self& itk::simple::VectorConnectedComponentImageFilter::SetFullyConnected(bool FullyConnected)
 ";
 
 %feature("docstring")  itk::simple::VectorConnectedComponentImageFilter::ToString "
-std::string itk::simple::VectorConnectedComponentImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::VectorConnectedComponentImageFilter::VectorConnectedComponentImageFilter "
-itk::simple::VectorConnectedComponentImageFilter::VectorConnectedComponentImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -24874,46 +22007,39 @@ C++ includes: sitkVectorIndexSelectionCastImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::VectorIndexSelectionCastImageFilter::Execute "
-Image itk::simple::VectorIndexSelectionCastImageFilter::Execute(const Image &image1, unsigned int index)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::VectorIndexSelectionCastImageFilter::Execute "
-Image itk::simple::VectorIndexSelectionCastImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::VectorIndexSelectionCastImageFilter::GetIndex "
-unsigned int itk::simple::VectorIndexSelectionCastImageFilter::GetIndex()
 ";
 
 %feature("docstring")  itk::simple::VectorIndexSelectionCastImageFilter::GetName "
-std::string itk::simple::VectorIndexSelectionCastImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::VectorIndexSelectionCastImageFilter::SetIndex "
-Self& itk::simple::VectorIndexSelectionCastImageFilter::SetIndex(unsigned int Index)
 
 Get/Set methods for the index.
 
 ";
 
 %feature("docstring")  itk::simple::VectorIndexSelectionCastImageFilter::ToString "
-std::string itk::simple::VectorIndexSelectionCastImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::VectorIndexSelectionCastImageFilter::VectorIndexSelectionCastImageFilter "
-itk::simple::VectorIndexSelectionCastImageFilter::VectorIndexSelectionCastImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -24945,28 +22071,24 @@ C++ includes: sitkVectorMagnitudeImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::VectorMagnitudeImageFilter::Execute "
-Image itk::simple::VectorMagnitudeImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::VectorMagnitudeImageFilter::GetName "
-std::string itk::simple::VectorMagnitudeImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::VectorMagnitudeImageFilter::ToString "
-std::string itk::simple::VectorMagnitudeImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::VectorMagnitudeImageFilter::VectorMagnitudeImageFilter "
-itk::simple::VectorMagnitudeImageFilter::VectorMagnitudeImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -24982,7 +22104,6 @@ C++ includes: sitkVersion.h
 ";
 
 %feature("docstring")  itk::simple::Version::ToString "
-std::string itk::simple::Version::ToString()
 ";
 
 
@@ -25018,30 +22139,24 @@ C++ includes: sitkVotingBinaryHoleFillingImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryHoleFillingImageFilter::Execute "
-Image itk::simple::VotingBinaryHoleFillingImageFilter::Execute(const Image &image1, std::vector< unsigned int > radius, unsigned int
-majorityThreshold, double foregroundValue, double backgroundValue)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryHoleFillingImageFilter::Execute "
-Image itk::simple::VotingBinaryHoleFillingImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryHoleFillingImageFilter::GetBackgroundValue "
-double itk::simple::VotingBinaryHoleFillingImageFilter::GetBackgroundValue()
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryHoleFillingImageFilter::GetForegroundValue "
-double itk::simple::VotingBinaryHoleFillingImageFilter::GetForegroundValue()
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryHoleFillingImageFilter::GetMajorityThreshold "
-unsigned int itk::simple::VotingBinaryHoleFillingImageFilter::GetMajorityThreshold()
 
 Majority threshold. It is the number of pixels over 50% that will
 decide whether an OFF pixel will become ON or not. For example, if the
@@ -25053,26 +22168,21 @@ order to switch the current OFF pixel to ON. The default value is 1.
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryHoleFillingImageFilter::GetName "
-std::string itk::simple::VotingBinaryHoleFillingImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryHoleFillingImageFilter::GetRadius "
-std::vector<unsigned int> itk::simple::VotingBinaryHoleFillingImageFilter::GetRadius()
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryHoleFillingImageFilter::SetBackgroundValue "
-Self& itk::simple::VotingBinaryHoleFillingImageFilter::SetBackgroundValue(double BackgroundValue)
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryHoleFillingImageFilter::SetForegroundValue "
-Self& itk::simple::VotingBinaryHoleFillingImageFilter::SetForegroundValue(double ForegroundValue)
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryHoleFillingImageFilter::SetMajorityThreshold "
-Self& itk::simple::VotingBinaryHoleFillingImageFilter::SetMajorityThreshold(unsigned int MajorityThreshold)
 
 Majority threshold. It is the number of pixels over 50% that will
 decide whether an OFF pixel will become ON or not. For example, if the
@@ -25084,25 +22194,21 @@ order to switch the current OFF pixel to ON. The default value is 1.
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryHoleFillingImageFilter::SetRadius "
-Self& itk::simple::VotingBinaryHoleFillingImageFilter::SetRadius(std::vector< unsigned int > Radius)
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryHoleFillingImageFilter::SetRadius "
-Self& itk::simple::VotingBinaryHoleFillingImageFilter::SetRadius(unsigned int r)
 
 Custom public declarations
 
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryHoleFillingImageFilter::ToString "
-std::string itk::simple::VotingBinaryHoleFillingImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryHoleFillingImageFilter::VotingBinaryHoleFillingImageFilter "
-itk::simple::VotingBinaryHoleFillingImageFilter::VotingBinaryHoleFillingImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -25137,23 +22243,18 @@ C++ includes: sitkVotingBinaryImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryImageFilter::Execute "
-Image itk::simple::VotingBinaryImageFilter::Execute(const Image &image1, std::vector< unsigned int > radius, unsigned int
-birthThreshold, unsigned int survivalThreshold, double
-foregroundValue, double backgroundValue)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryImageFilter::Execute "
-Image itk::simple::VotingBinaryImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryImageFilter::GetBackgroundValue "
-double itk::simple::VotingBinaryImageFilter::GetBackgroundValue()
 
 Get the value associated with the Foreground (or the object) on the
 binary input image and the Background .
@@ -25161,7 +22262,6 @@ binary input image and the Background .
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryImageFilter::GetBirthThreshold "
-unsigned int itk::simple::VotingBinaryImageFilter::GetBirthThreshold()
 
 Birth threshold. Pixels that are OFF will turn ON when the number of
 neighbors ON is larger than the value defined in this threshold.
@@ -25169,7 +22269,6 @@ neighbors ON is larger than the value defined in this threshold.
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryImageFilter::GetForegroundValue "
-double itk::simple::VotingBinaryImageFilter::GetForegroundValue()
 
 Get the value associated with the Foreground (or the object) on the
 binary input image and the Background .
@@ -25177,21 +22276,18 @@ binary input image and the Background .
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryImageFilter::GetName "
-std::string itk::simple::VotingBinaryImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryImageFilter::GetRadius "
-std::vector<unsigned int> itk::simple::VotingBinaryImageFilter::GetRadius()
 
 Get the radius of the neighborhood used to compute the median.
 
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryImageFilter::GetSurvivalThreshold "
-unsigned int itk::simple::VotingBinaryImageFilter::GetSurvivalThreshold()
 
 Survival threshold. Pixels that are ON will turn OFF when the number
 of neighbors ON is smaller than the value defined in this survival
@@ -25200,7 +22296,6 @@ threshold.
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryImageFilter::SetBackgroundValue "
-Self& itk::simple::VotingBinaryImageFilter::SetBackgroundValue(double BackgroundValue)
 
 Set the value associated with the Foreground (or the object) on the
 binary input image and the Background .
@@ -25208,7 +22303,6 @@ binary input image and the Background .
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryImageFilter::SetBirthThreshold "
-Self& itk::simple::VotingBinaryImageFilter::SetBirthThreshold(unsigned int BirthThreshold)
 
 Birth threshold. Pixels that are OFF will turn ON when the number of
 neighbors ON is larger than the value defined in this threshold.
@@ -25216,7 +22310,6 @@ neighbors ON is larger than the value defined in this threshold.
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryImageFilter::SetForegroundValue "
-Self& itk::simple::VotingBinaryImageFilter::SetForegroundValue(double ForegroundValue)
 
 Set the value associated with the Foreground (or the object) on the
 binary input image and the Background .
@@ -25224,21 +22317,18 @@ binary input image and the Background .
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryImageFilter::SetRadius "
-Self& itk::simple::VotingBinaryImageFilter::SetRadius(std::vector< unsigned int > Radius)
 
 Set the radius of the neighborhood used to compute the median.
 
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryImageFilter::SetRadius "
-Self& itk::simple::VotingBinaryImageFilter::SetRadius(unsigned int r)
 
 Custom public declarations
 
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryImageFilter::SetSurvivalThreshold "
-Self& itk::simple::VotingBinaryImageFilter::SetSurvivalThreshold(unsigned int SurvivalThreshold)
 
 Survival threshold. Pixels that are ON will turn OFF when the number
 of neighbors ON is smaller than the value defined in this survival
@@ -25247,14 +22337,12 @@ threshold.
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryImageFilter::ToString "
-std::string itk::simple::VotingBinaryImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryImageFilter::VotingBinaryImageFilter "
-itk::simple::VotingBinaryImageFilter::VotingBinaryImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -25306,23 +22394,18 @@ C++ includes: sitkVotingBinaryIterativeHoleFillingImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryIterativeHoleFillingImageFilter::Execute "
-Image itk::simple::VotingBinaryIterativeHoleFillingImageFilter::Execute(const Image &image1, std::vector< unsigned int > radius, unsigned int
-maximumNumberOfIterations, unsigned int majorityThreshold, double
-foregroundValue, double backgroundValue)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryIterativeHoleFillingImageFilter::Execute "
-Image itk::simple::VotingBinaryIterativeHoleFillingImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryIterativeHoleFillingImageFilter::GetBackgroundValue "
-double itk::simple::VotingBinaryIterativeHoleFillingImageFilter::GetBackgroundValue()
 
 Get the value associated with the Foreground (or the object) on the
 binary input image and the Background .
@@ -25330,7 +22413,6 @@ binary input image and the Background .
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryIterativeHoleFillingImageFilter::GetForegroundValue "
-double itk::simple::VotingBinaryIterativeHoleFillingImageFilter::GetForegroundValue()
 
 Get the value associated with the Foreground (or the object) on the
 binary input image and the Background .
@@ -25338,7 +22420,6 @@ binary input image and the Background .
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryIterativeHoleFillingImageFilter::GetMajorityThreshold "
-unsigned int itk::simple::VotingBinaryIterativeHoleFillingImageFilter::GetMajorityThreshold()
 
 Majority threshold. It is the number of pixels over 50% that will
 decide whether an OFF pixel will become ON or not. For example, if the
@@ -25350,7 +22431,6 @@ order to switch the current OFF pixel to ON. The default value is 1.
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryIterativeHoleFillingImageFilter::GetMaximumNumberOfIterations "
-unsigned int itk::simple::VotingBinaryIterativeHoleFillingImageFilter::GetMaximumNumberOfIterations()
 
 Maximum number of iterations. This filter is executed iteratively as
 long as at least one pixel has changed in a previous iteration, or
@@ -25359,21 +22439,18 @@ until the maximum number of iterations has been reached.
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryIterativeHoleFillingImageFilter::GetName "
-std::string itk::simple::VotingBinaryIterativeHoleFillingImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryIterativeHoleFillingImageFilter::GetRadius "
-std::vector<unsigned int> itk::simple::VotingBinaryIterativeHoleFillingImageFilter::GetRadius()
 
 Get the radius of the neighborhood used to compute the median.
 
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryIterativeHoleFillingImageFilter::SetBackgroundValue "
-Self& itk::simple::VotingBinaryIterativeHoleFillingImageFilter::SetBackgroundValue(double BackgroundValue)
 
 Set the value associated with the Foreground (or the object) on the
 binary input image and the Background .
@@ -25381,7 +22458,6 @@ binary input image and the Background .
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryIterativeHoleFillingImageFilter::SetForegroundValue "
-Self& itk::simple::VotingBinaryIterativeHoleFillingImageFilter::SetForegroundValue(double ForegroundValue)
 
 Set the value associated with the Foreground (or the object) on the
 binary input image and the Background .
@@ -25389,7 +22465,6 @@ binary input image and the Background .
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryIterativeHoleFillingImageFilter::SetMajorityThreshold "
-Self& itk::simple::VotingBinaryIterativeHoleFillingImageFilter::SetMajorityThreshold(unsigned int MajorityThreshold)
 
 Majority threshold. It is the number of pixels over 50% that will
 decide whether an OFF pixel will become ON or not. For example, if the
@@ -25401,7 +22476,6 @@ order to switch the current OFF pixel to ON. The default value is 1.
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryIterativeHoleFillingImageFilter::SetMaximumNumberOfIterations "
-Self& itk::simple::VotingBinaryIterativeHoleFillingImageFilter::SetMaximumNumberOfIterations(unsigned int MaximumNumberOfIterations)
 
 Maximum number of iterations. This filter is executed iteratively as
 long as at least one pixel has changed in a previous iteration, or
@@ -25410,28 +22484,24 @@ until the maximum number of iterations has been reached.
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryIterativeHoleFillingImageFilter::SetRadius "
-Self& itk::simple::VotingBinaryIterativeHoleFillingImageFilter::SetRadius(std::vector< unsigned int > Radius)
 
 Set the radius of the neighborhood used to compute the median.
 
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryIterativeHoleFillingImageFilter::SetRadius "
-Self& itk::simple::VotingBinaryIterativeHoleFillingImageFilter::SetRadius(unsigned int r)
 
 Custom public declarations
 
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryIterativeHoleFillingImageFilter::ToString "
-std::string itk::simple::VotingBinaryIterativeHoleFillingImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryIterativeHoleFillingImageFilter::VotingBinaryIterativeHoleFillingImageFilter "
-itk::simple::VotingBinaryIterativeHoleFillingImageFilter::VotingBinaryIterativeHoleFillingImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -25459,36 +22529,30 @@ C++ includes: sitkWhiteTopHatImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::WhiteTopHatImageFilter::Execute "
-Image itk::simple::WhiteTopHatImageFilter::Execute(const Image &image1, bool safeBorder)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::WhiteTopHatImageFilter::Execute "
-Image itk::simple::WhiteTopHatImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::WhiteTopHatImageFilter::GetKernelRadius "
-std::vector<uint32_t> itk::simple::WhiteTopHatImageFilter::GetKernelRadius() const
 ";
 
 %feature("docstring")  itk::simple::WhiteTopHatImageFilter::GetKernelType "
-KernelType itk::simple::WhiteTopHatImageFilter::GetKernelType() const
 ";
 
 %feature("docstring")  itk::simple::WhiteTopHatImageFilter::GetName "
-std::string itk::simple::WhiteTopHatImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::WhiteTopHatImageFilter::GetSafeBorder "
-bool itk::simple::WhiteTopHatImageFilter::GetSafeBorder()
 
 A safe border is added to input image to avoid borders effects and
 remove it once the closing is done.
@@ -25496,18 +22560,15 @@ remove it once the closing is done.
 ";
 
 %feature("docstring")  itk::simple::WhiteTopHatImageFilter::SafeBorderOff "
-Self& itk::simple::WhiteTopHatImageFilter::SafeBorderOff()
 ";
 
 %feature("docstring")  itk::simple::WhiteTopHatImageFilter::SafeBorderOn "
-Self& itk::simple::WhiteTopHatImageFilter::SafeBorderOn()
 
 Set the value of SafeBorder to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::WhiteTopHatImageFilter::SetKernelRadius "
-Self& itk::simple::WhiteTopHatImageFilter::SetKernelRadius(const std::vector< uint32_t > &r)
 
 Set/Get the radius of the kernel structuring element as a vector.
 
@@ -25517,21 +22578,18 @@ the radius will be padded. If it is less the r will be truncated.
 ";
 
 %feature("docstring")  itk::simple::WhiteTopHatImageFilter::SetKernelRadius "
-Self& itk::simple::WhiteTopHatImageFilter::SetKernelRadius(uint32_t r)
 
 Kernel radius as a scale for isotropic structures
 
 ";
 
 %feature("docstring")  itk::simple::WhiteTopHatImageFilter::SetKernelType "
-Self& itk::simple::WhiteTopHatImageFilter::SetKernelType(KernelType t)
 
 Set/Get the kernel or structuring elemenent used for the morphology
 
 ";
 
 %feature("docstring")  itk::simple::WhiteTopHatImageFilter::SetSafeBorder "
-Self& itk::simple::WhiteTopHatImageFilter::SetSafeBorder(bool SafeBorder)
 
 A safe border is added to input image to avoid borders effects and
 remove it once the closing is done.
@@ -25539,14 +22597,12 @@ remove it once the closing is done.
 ";
 
 %feature("docstring")  itk::simple::WhiteTopHatImageFilter::ToString "
-std::string itk::simple::WhiteTopHatImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::WhiteTopHatImageFilter::WhiteTopHatImageFilter "
-itk::simple::WhiteTopHatImageFilter::WhiteTopHatImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -25593,35 +22649,27 @@ C++ includes: sitkWienerDeconvolutionImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::WienerDeconvolutionImageFilter::Execute "
-Image itk::simple::WienerDeconvolutionImageFilter::Execute(const Image &image1, const Image &image2, double noiseVariance, bool
-normalize, WienerDeconvolutionImageFilter::BoundaryConditionType
-boundaryCondition,
-WienerDeconvolutionImageFilter::OutputRegionModeType outputRegionMode)
 
 Execute the filter on the input images with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::WienerDeconvolutionImageFilter::Execute "
-Image itk::simple::WienerDeconvolutionImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::WienerDeconvolutionImageFilter::GetBoundaryCondition "
-WienerDeconvolutionImageFilter::BoundaryConditionType itk::simple::WienerDeconvolutionImageFilter::GetBoundaryCondition()
 ";
 
 %feature("docstring")  itk::simple::WienerDeconvolutionImageFilter::GetName "
-std::string itk::simple::WienerDeconvolutionImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::WienerDeconvolutionImageFilter::GetNoiseVariance "
-double itk::simple::WienerDeconvolutionImageFilter::GetNoiseVariance()
 
 Set/get the variance of the zero-mean Gaussian white noise assumed to
 be added to the input.
@@ -25629,31 +22677,24 @@ be added to the input.
 ";
 
 %feature("docstring")  itk::simple::WienerDeconvolutionImageFilter::GetNormalize "
-bool itk::simple::WienerDeconvolutionImageFilter::GetNormalize()
 ";
 
 %feature("docstring")  itk::simple::WienerDeconvolutionImageFilter::GetOutputRegionMode "
-WienerDeconvolutionImageFilter::OutputRegionModeType itk::simple::WienerDeconvolutionImageFilter::GetOutputRegionMode()
 ";
 
 %feature("docstring")  itk::simple::WienerDeconvolutionImageFilter::NormalizeOff "
-Self& itk::simple::WienerDeconvolutionImageFilter::NormalizeOff()
 ";
 
 %feature("docstring")  itk::simple::WienerDeconvolutionImageFilter::NormalizeOn "
-Self& itk::simple::WienerDeconvolutionImageFilter::NormalizeOn()
 
 Set the value of Normalize to true or false respectfully.
 
 ";
 
 %feature("docstring")  itk::simple::WienerDeconvolutionImageFilter::SetBoundaryCondition "
-Self& itk::simple::WienerDeconvolutionImageFilter::SetBoundaryCondition(WienerDeconvolutionImageFilter::BoundaryConditionType
-BoundaryCondition)
 ";
 
 %feature("docstring")  itk::simple::WienerDeconvolutionImageFilter::SetNoiseVariance "
-Self& itk::simple::WienerDeconvolutionImageFilter::SetNoiseVariance(double NoiseVariance)
 
 Set/get the variance of the zero-mean Gaussian white noise assumed to
 be added to the input.
@@ -25661,26 +22702,21 @@ be added to the input.
 ";
 
 %feature("docstring")  itk::simple::WienerDeconvolutionImageFilter::SetNormalize "
-Self& itk::simple::WienerDeconvolutionImageFilter::SetNormalize(bool Normalize)
 
 Normalize the output image by the sum of the kernel components.
 
 ";
 
 %feature("docstring")  itk::simple::WienerDeconvolutionImageFilter::SetOutputRegionMode "
-Self& itk::simple::WienerDeconvolutionImageFilter::SetOutputRegionMode(WienerDeconvolutionImageFilter::OutputRegionModeType
-OutputRegionMode)
 ";
 
 %feature("docstring")  itk::simple::WienerDeconvolutionImageFilter::ToString "
-std::string itk::simple::WienerDeconvolutionImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::WienerDeconvolutionImageFilter::WienerDeconvolutionImageFilter "
-itk::simple::WienerDeconvolutionImageFilter::WienerDeconvolutionImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -25719,52 +22755,42 @@ C++ includes: sitkWrapPadImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::WrapPadImageFilter::Execute "
-Image itk::simple::WrapPadImageFilter::Execute(const Image &image1, std::vector< unsigned int > padLowerBound,
-std::vector< unsigned int > padUpperBound)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::WrapPadImageFilter::Execute "
-Image itk::simple::WrapPadImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::WrapPadImageFilter::GetName "
-std::string itk::simple::WrapPadImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::WrapPadImageFilter::GetPadLowerBound "
-std::vector<unsigned int> itk::simple::WrapPadImageFilter::GetPadLowerBound()
 ";
 
 %feature("docstring")  itk::simple::WrapPadImageFilter::GetPadUpperBound "
-std::vector<unsigned int> itk::simple::WrapPadImageFilter::GetPadUpperBound()
 ";
 
 %feature("docstring")  itk::simple::WrapPadImageFilter::SetPadLowerBound "
-Self& itk::simple::WrapPadImageFilter::SetPadLowerBound(std::vector< unsigned int > PadLowerBound)
 ";
 
 %feature("docstring")  itk::simple::WrapPadImageFilter::SetPadUpperBound "
-Self& itk::simple::WrapPadImageFilter::SetPadUpperBound(std::vector< unsigned int > PadUpperBound)
 ";
 
 %feature("docstring")  itk::simple::WrapPadImageFilter::ToString "
-std::string itk::simple::WrapPadImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::WrapPadImageFilter::WrapPadImageFilter "
-itk::simple::WrapPadImageFilter::WrapPadImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -25798,39 +22824,33 @@ C++ includes: sitkXorImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::XorImageFilter::Execute "
-Image itk::simple::XorImageFilter::Execute(int constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::XorImageFilter::Execute "
-Image itk::simple::XorImageFilter::Execute(const Image &image1, int constant)
 
 Execute the filter with an image and a constant
 
 ";
 
 %feature("docstring")  itk::simple::XorImageFilter::Execute "
-Image itk::simple::XorImageFilter::Execute(const Image &image1, const Image &image2)
 
 Execute the filter on the input images
 
 ";
 
 %feature("docstring")  itk::simple::XorImageFilter::GetName "
-std::string itk::simple::XorImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::XorImageFilter::ToString "
-std::string itk::simple::XorImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::XorImageFilter::XorImageFilter "
-itk::simple::XorImageFilter::XorImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -25863,61 +22883,51 @@ C++ includes: sitkYenThresholdImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::YenThresholdImageFilter::Execute "
-Image itk::simple::YenThresholdImageFilter::Execute(const Image &image1, uint8_t insideValue, uint8_t outsideValue,
-uint32_t numberOfHistogramBins)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::YenThresholdImageFilter::Execute "
-Image itk::simple::YenThresholdImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::YenThresholdImageFilter::GetInsideValue "
-uint8_t itk::simple::YenThresholdImageFilter::GetInsideValue()
 
 Get the \"inside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::YenThresholdImageFilter::GetName "
-std::string itk::simple::YenThresholdImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::YenThresholdImageFilter::GetNumberOfHistogramBins "
-uint32_t itk::simple::YenThresholdImageFilter::GetNumberOfHistogramBins()
 ";
 
 %feature("docstring")  itk::simple::YenThresholdImageFilter::GetOutsideValue "
-uint8_t itk::simple::YenThresholdImageFilter::GetOutsideValue()
 
 Get the \"outside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::YenThresholdImageFilter::SetInsideValue "
-Self& itk::simple::YenThresholdImageFilter::SetInsideValue(uint8_t InsideValue)
 
 Set the \"inside\" pixel value.
 
 ";
 
 %feature("docstring")  itk::simple::YenThresholdImageFilter::SetNumberOfHistogramBins "
-Self& itk::simple::YenThresholdImageFilter::SetNumberOfHistogramBins(uint32_t NumberOfHistogramBins)
 
 Set/Get the number of histogram bins.
 
 ";
 
 %feature("docstring")  itk::simple::YenThresholdImageFilter::SetOutsideValue "
-Self& itk::simple::YenThresholdImageFilter::SetOutsideValue(uint8_t OutsideValue)
 
 Set the \"outside\" pixel value. The default value
 NumericTraits<OutputPixelType>::Zero.
@@ -25925,14 +22935,12 @@ NumericTraits<OutputPixelType>::Zero.
 ";
 
 %feature("docstring")  itk::simple::YenThresholdImageFilter::ToString "
-std::string itk::simple::YenThresholdImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::YenThresholdImageFilter::YenThresholdImageFilter "
-itk::simple::YenThresholdImageFilter::YenThresholdImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -25988,71 +22996,60 @@ C++ includes: sitkZeroCrossingBasedEdgeDetectionImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter::Execute "
-Image itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter::Execute(const Image &image1, double variance, uint8_t foregroundValue,
-uint8_t backgroundValue, double maximumError)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter::Execute "
-Image itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter::GetBackgroundValue "
-uint8_t itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter::GetBackgroundValue()
 
 Get/Set the label values for the ZeroCrossingImageFilter.
 
 ";
 
 %feature("docstring")  itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter::GetForegroundValue "
-uint8_t itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter::GetForegroundValue()
 
 Get/Set the label values for the ZeroCrossingImageFilter.
 
 ";
 
 %feature("docstring")  itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter::GetMaximumError "
-double itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter::GetMaximumError()
 
 Standard get/set macros for Gaussian filter parameters.
 
 ";
 
 %feature("docstring")  itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter::GetName "
-std::string itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter::GetVariance "
-double itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter::GetVariance()
 
 Standard get/set macros for Gaussian filter parameters.
 
 ";
 
 %feature("docstring")  itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter::SetBackgroundValue "
-Self& itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter::SetBackgroundValue(uint8_t BackgroundValue)
 
 Get/Set the label values for the ZeroCrossingImageFilter.
 
 ";
 
 %feature("docstring")  itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter::SetForegroundValue "
-Self& itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter::SetForegroundValue(uint8_t ForegroundValue)
 
 Get/Set the label values for the ZeroCrossingImageFilter.
 
 ";
 
 %feature("docstring")  itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter::SetMaximumError "
-Self& itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter::SetMaximumError(double MaximumError)
 
 Set the MaximumError parameter needed by the embedded gaussian filter
 This value is used to set the desired maximum error of the gaussian
@@ -26064,21 +23061,18 @@ must be between 0.0 and 1.0.
 ";
 
 %feature("docstring")  itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter::SetVariance "
-Self& itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter::SetVariance(double Variance)
 
 Set the variance parameter needed by the embedded gaussian filter.
 
 ";
 
 %feature("docstring")  itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter::ToString "
-std::string itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter::ZeroCrossingBasedEdgeDetectionImageFilter "
-itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter::ZeroCrossingBasedEdgeDetectionImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -26135,64 +23129,54 @@ C++ includes: sitkZeroCrossingImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ZeroCrossingImageFilter::Execute "
-Image itk::simple::ZeroCrossingImageFilter::Execute(const Image &image1, uint8_t foregroundValue, uint8_t
-backgroundValue)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ZeroCrossingImageFilter::Execute "
-Image itk::simple::ZeroCrossingImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ZeroCrossingImageFilter::GetBackgroundValue "
-uint8_t itk::simple::ZeroCrossingImageFilter::GetBackgroundValue()
 
 Set/Get the label value for non-zero-crossing pixels.
 
 ";
 
 %feature("docstring")  itk::simple::ZeroCrossingImageFilter::GetForegroundValue "
-uint8_t itk::simple::ZeroCrossingImageFilter::GetForegroundValue()
 
 Set/Get the label value for zero-crossing pixels.
 
 ";
 
 %feature("docstring")  itk::simple::ZeroCrossingImageFilter::GetName "
-std::string itk::simple::ZeroCrossingImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ZeroCrossingImageFilter::SetBackgroundValue "
-Self& itk::simple::ZeroCrossingImageFilter::SetBackgroundValue(uint8_t BackgroundValue)
 
 Set/Get the label value for non-zero-crossing pixels.
 
 ";
 
 %feature("docstring")  itk::simple::ZeroCrossingImageFilter::SetForegroundValue "
-Self& itk::simple::ZeroCrossingImageFilter::SetForegroundValue(uint8_t ForegroundValue)
 
 Set/Get the label value for zero-crossing pixels.
 
 ";
 
 %feature("docstring")  itk::simple::ZeroCrossingImageFilter::ToString "
-std::string itk::simple::ZeroCrossingImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::ZeroCrossingImageFilter::ZeroCrossingImageFilter "
-itk::simple::ZeroCrossingImageFilter::ZeroCrossingImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -26227,52 +23211,42 @@ C++ includes: sitkZeroFluxNeumannPadImageFilter.h
 ";
 
 %feature("docstring")  itk::simple::ZeroFluxNeumannPadImageFilter::Execute "
-Image itk::simple::ZeroFluxNeumannPadImageFilter::Execute(const Image &image1, std::vector< unsigned int > padLowerBound,
-std::vector< unsigned int > padUpperBound)
 
 Execute the filter on the input image with the given parameters
 
 ";
 
 %feature("docstring")  itk::simple::ZeroFluxNeumannPadImageFilter::Execute "
-Image itk::simple::ZeroFluxNeumannPadImageFilter::Execute(const Image &image1)
 
 Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::ZeroFluxNeumannPadImageFilter::GetName "
-std::string itk::simple::ZeroFluxNeumannPadImageFilter::GetName() const
 
 Name of this class
 
 ";
 
 %feature("docstring")  itk::simple::ZeroFluxNeumannPadImageFilter::GetPadLowerBound "
-std::vector<unsigned int> itk::simple::ZeroFluxNeumannPadImageFilter::GetPadLowerBound()
 ";
 
 %feature("docstring")  itk::simple::ZeroFluxNeumannPadImageFilter::GetPadUpperBound "
-std::vector<unsigned int> itk::simple::ZeroFluxNeumannPadImageFilter::GetPadUpperBound()
 ";
 
 %feature("docstring")  itk::simple::ZeroFluxNeumannPadImageFilter::SetPadLowerBound "
-Self& itk::simple::ZeroFluxNeumannPadImageFilter::SetPadLowerBound(std::vector< unsigned int > PadLowerBound)
 ";
 
 %feature("docstring")  itk::simple::ZeroFluxNeumannPadImageFilter::SetPadUpperBound "
-Self& itk::simple::ZeroFluxNeumannPadImageFilter::SetPadUpperBound(std::vector< unsigned int > PadUpperBound)
 ";
 
 %feature("docstring")  itk::simple::ZeroFluxNeumannPadImageFilter::ToString "
-std::string itk::simple::ZeroFluxNeumannPadImageFilter::ToString() const
 
 Print ourselves out
 
 ";
 
 %feature("docstring")  itk::simple::ZeroFluxNeumannPadImageFilter::ZeroFluxNeumannPadImageFilter "
-itk::simple::ZeroFluxNeumannPadImageFilter::ZeroFluxNeumannPadImageFilter()
 
 Default Constructor that takes no arguments and initializes default
 parameters
@@ -26317,15 +23291,12 @@ C++ includes: sitkDualMemberFunctionFactory.h
 ";
 
 %feature("docstring")  itk::simple::DualMemberFunctionFactory::DualMemberFunctionFactory "
-itk::simple::DualMemberFunctionFactory< TMemberFunctionPointer >::DualMemberFunctionFactory(ObjectType *pObject)
 
 Constructor which permanently binds the constructed object to pObject.
 
 ";
 
 %feature("docstring")  itk::simple::DualMemberFunctionFactory::GetMemberFunction "
-FunctionObjectType itk::simple::DualMemberFunctionFactory< TMemberFunctionPointer >::GetMemberFunction(PixelIDValueType pixelID1, PixelIDValueType pixelID2, unsigned int
-imageDimension)
 
 Returns a function object for the combination of PixelID1 and
 PixelID2, and image dimension.
@@ -26343,8 +23314,6 @@ is generated. The returned function object is guaranteed to be valid.
 ";
 
 %feature("docstring")  itk::simple::DualMemberFunctionFactory::HasMemberFunction "
-bool itk::simple::DualMemberFunctionFactory< TMemberFunctionPointer >::HasMemberFunction(PixelIDValueType pixelID1, PixelIDValueType pixelID2, unsigned int
-imageDimension) const
  throw ()
 Query to determine if an member function has been registered for
 pixelID1, pixelID2 and imageDimension.
@@ -26352,7 +23321,6 @@ pixelID1, pixelID2 and imageDimension.
 ";
 
 %feature("docstring")  itk::simple::DualMemberFunctionFactory::Register "
-void itk::simple::DualMemberFunctionFactory< TMemberFunctionPointer >::Register(MemberFunctionType pfunc, TImageType1 *, TImageType2 *)
 
 Registers a specific member function.
 
@@ -26390,7 +23358,6 @@ C++ includes: sitkMemberFunctionFactory.h
 ";
 
 %feature("docstring")  itk::simple::MemberFunctionFactory::GetMemberFunction "
-FunctionObjectType itk::simple::MemberFunctionFactory< TMemberFunctionPointer >::GetMemberFunction(PixelIDValueType pixelID, unsigned int imageDimension)
 
 Returns a function object for the PixelIndex, and image dimension.
 
@@ -26407,7 +23374,6 @@ is generated. The returned function object is guaranteed to be valid.
 ";
 
 %feature("docstring")  itk::simple::MemberFunctionFactory::HasMemberFunction "
-bool itk::simple::MemberFunctionFactory< TMemberFunctionPointer >::HasMemberFunction(PixelIDValueType pixelID, unsigned int imageDimension) const
  throw ()
 Query to determine if an member function has been registered for
 pixelID and imageDimension.
@@ -26415,14 +23381,12 @@ pixelID and imageDimension.
 ";
 
 %feature("docstring")  itk::simple::MemberFunctionFactory::MemberFunctionFactory "
-itk::simple::MemberFunctionFactory< TMemberFunctionPointer >::MemberFunctionFactory(ObjectType *pObject)
 
 Constructor which permanently binds the constructed object to pObject.
 
 ";
 
 %feature("docstring")  itk::simple::MemberFunctionFactory::Register "
-void itk::simple::MemberFunctionFactory< TMemberFunctionPointer >::Register(MemberFunctionType pfunc, TImageType *)
 
 Registers a specific member function.
 
@@ -27172,79 +24136,60 @@ STL class.
 ";
 
 %feature("docstring")  itk::Functor::BioRadImageIOFactoryRegister__Private "
-void itk::BioRadImageIOFactoryRegister__Private(void)
 ";
 
 %feature("docstring")  itk::Functor::BMPImageIOFactoryRegister__Private "
-void itk::BMPImageIOFactoryRegister__Private(void)
 ";
 
 %feature("docstring")  itk::Functor::GDCMImageIOFactoryRegister__Private "
-void itk::GDCMImageIOFactoryRegister__Private(void)
 ";
 
 %feature("docstring")  itk::Functor::GiplImageIOFactoryRegister__Private "
-void itk::GiplImageIOFactoryRegister__Private(void)
 ";
 
 %feature("docstring")  itk::Functor::HDF5ImageIOFactoryRegister__Private "
-void itk::HDF5ImageIOFactoryRegister__Private(void)
 ";
 
 %feature("docstring")  itk::Functor::HDF5TransformIOFactoryRegister__Private "
-void itk::HDF5TransformIOFactoryRegister__Private(void)
 ";
 
 %feature("docstring")  itk::Functor::JPEGImageIOFactoryRegister__Private "
-void itk::JPEGImageIOFactoryRegister__Private(void)
 ";
 
 %feature("docstring")  itk::Functor::LSMImageIOFactoryRegister__Private "
-void itk::LSMImageIOFactoryRegister__Private(void)
 ";
 
 %feature("docstring")  itk::Functor::MatlabTransformIOFactoryRegister__Private "
-void itk::MatlabTransformIOFactoryRegister__Private(void)
 ";
 
 %feature("docstring")  itk::Functor::MetaImageIOFactoryRegister__Private "
-void itk::MetaImageIOFactoryRegister__Private(void)
 ";
 
 %feature("docstring")  itk::Functor::MRCImageIOFactoryRegister__Private "
-void itk::MRCImageIOFactoryRegister__Private(void)
 ";
 
 %feature("docstring")  itk::Functor::NiftiImageIOFactoryRegister__Private "
-void itk::NiftiImageIOFactoryRegister__Private(void)
 ";
 
 %feature("docstring")  itk::Functor::NrrdImageIOFactoryRegister__Private "
-void itk::NrrdImageIOFactoryRegister__Private(void)
 ";
 
 %feature("docstring")  itk::Functor::PNGImageIOFactoryRegister__Private "
-void itk::PNGImageIOFactoryRegister__Private(void)
 ";
 
 %feature("docstring")  itk::Functor::StimulateImageIOFactoryRegister__Private "
-void itk::StimulateImageIOFactoryRegister__Private(void)
 ";
 
 %feature("docstring")  itk::Functor::TIFFImageIOFactoryRegister__Private "
-void itk::TIFFImageIOFactoryRegister__Private(void)
 ";
 
 %feature("docstring")  itk::Functor::TxtTransformIOFactoryRegister__Private "
-void itk::TxtTransformIOFactoryRegister__Private(void)
 ";
 
 %feature("docstring")  itk::Functor::VTKImageIOFactoryRegister__Private "
-void itk::VTKImageIOFactoryRegister__Private(void)
 ";
 
 %feature("docstring")  itk::simple::Abs "
-Image itk::simple::Abs(const Image &image1)
 
  itk::simple::AbsImageFilter Procedural Interface
 
@@ -27259,15 +24204,12 @@ See:
 ";
 
 %feature("docstring")  itk::simple::AbsoluteValueDifference "
-Image itk::simple::AbsoluteValueDifference(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::AbsoluteValueDifference "
-Image itk::simple::AbsoluteValueDifference(const Image &image1, double constant)
 ";
 
 %feature("docstring")  itk::simple::AbsoluteValueDifference "
-Image itk::simple::AbsoluteValueDifference(const Image &image1, const Image &image2)
 
  itk::simple::AbsoluteValueDifferenceImageFilter Procedural Interface
 
@@ -27282,7 +24224,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Acos "
-Image itk::simple::Acos(const Image &image1)
 
  itk::simple::AcosImageFilter Procedural Interface
 
@@ -27297,9 +24238,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::AdaptiveHistogramEqualization "
-Image itk::simple::AdaptiveHistogramEqualization(const Image &image1, std::vector< unsigned int > radius=std::vector<
-unsigned int >(3, 5), float alpha=0.3f, float beta=0.3f, bool
-useLookupTable=false)
 
  itk::simple::AdaptiveHistogramEqualizationImageFilter Procedural Interface
 
@@ -27314,15 +24252,12 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Add "
-Image itk::simple::Add(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::Add "
-Image itk::simple::Add(const Image &image1, double constant)
 ";
 
 %feature("docstring")  itk::simple::Add "
-Image itk::simple::Add(const Image &image1, const Image &image2)
 
  itk::simple::AddImageFilter Procedural Interface
 
@@ -27337,15 +24272,12 @@ See:
 ";
 
 %feature("docstring")  itk::simple::And "
-Image itk::simple::And(int constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::And "
-Image itk::simple::And(const Image &image1, int constant)
 ";
 
 %feature("docstring")  itk::simple::And "
-Image itk::simple::And(const Image &image1, const Image &image2)
 
  itk::simple::AndImageFilter Procedural Interface
 
@@ -27360,8 +24292,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::AntiAliasBinary "
-Image itk::simple::AntiAliasBinary(const Image &image1, double maximumRMSError=0.07, uint32_t
-numberOfIterations=1000u)
 
  itk::simple::AntiAliasBinaryImageFilter Procedural Interface
 
@@ -27376,7 +24306,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::ApproximateSignedDistanceMap "
-Image itk::simple::ApproximateSignedDistanceMap(const Image &image1, double insideValue=1u, double outsideValue=0u)
 
  itk::simple::ApproximateSignedDistanceMapImageFilter Procedural Interface
 
@@ -27391,7 +24320,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Asin "
-Image itk::simple::Asin(const Image &image1)
 
  itk::simple::AsinImageFilter Procedural Interface
 
@@ -27406,7 +24334,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Atan "
-Image itk::simple::Atan(const Image &image1)
 
  itk::simple::AtanImageFilter Procedural Interface
 
@@ -27421,15 +24348,12 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Atan2 "
-Image itk::simple::Atan2(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::Atan2 "
-Image itk::simple::Atan2(const Image &image1, double constant)
 ";
 
 %feature("docstring")  itk::simple::Atan2 "
-Image itk::simple::Atan2(const Image &image1, const Image &image2)
 
  itk::simple::Atan2ImageFilter Procedural Interface
 
@@ -27444,8 +24368,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Bilateral "
-Image itk::simple::Bilateral(const Image &image1, double domainSigma=4.0, double rangeSigma=50.0,
-unsigned int numberOfRangeGaussianSamples=100u)
 
  itk::simple::BilateralImageFilter Procedural Interface
 
@@ -27460,10 +24382,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::BinaryClosingByReconstruction "
-Image itk::simple::BinaryClosingByReconstruction(const Image &, const std::vector< uint32_t > vectorRadius,
-BinaryClosingByReconstructionImageFilter::KernelType
-kernel=BinaryClosingByReconstructionImageFilter::Ball, double
-foregroundValue=1.0, bool fullyConnected=false)
 
  itk::simple::BinaryClosingByReconstructionImageFilter Functional Interface
 
@@ -27472,10 +24390,6 @@ This function directly calls the execute method of BinaryClosingByReconstruction
 ";
 
 %feature("docstring")  itk::simple::BinaryClosingByReconstruction "
-Image itk::simple::BinaryClosingByReconstruction(const Image &, uint32_t radius=1,
-BinaryClosingByReconstructionImageFilter::KernelType
-kernel=BinaryClosingByReconstructionImageFilter::Ball, double
-foregroundValue=1.0, bool fullyConnected=false)
 
  itk::simple::BinaryClosingByReconstructionImageFilter Functional Interface
 
@@ -27484,8 +24398,6 @@ This function directly calls the execute method of BinaryClosingByReconstruction
 ";
 
 %feature("docstring")  itk::simple::BinaryContour "
-Image itk::simple::BinaryContour(const Image &image1, bool fullyConnected=false, double
-backgroundValue=0.0, double foregroundValue=1.0)
 
  itk::simple::BinaryContourImageFilter Procedural Interface
 
@@ -27500,10 +24412,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::BinaryDilate "
-Image itk::simple::BinaryDilate(const Image &, const std::vector< uint32_t > vectorRadius,
-BinaryDilateImageFilter::KernelType
-kernel=BinaryDilateImageFilter::Ball, double backgroundValue=0.0,
-double foregroundValue=1.0, bool boundaryToForeground=false)
 
  itk::simple::BinaryDilateImageFilter Functional Interface
 
@@ -27512,9 +24420,6 @@ This function directly calls the execute method of BinaryDilateImageFilter in or
 ";
 
 %feature("docstring")  itk::simple::BinaryDilate "
-Image itk::simple::BinaryDilate(const Image &, uint32_t radius=1, BinaryDilateImageFilter::KernelType
-kernel=BinaryDilateImageFilter::Ball, double backgroundValue=0.0,
-double foregroundValue=1.0, bool boundaryToForeground=false)
 
  itk::simple::BinaryDilateImageFilter Functional Interface
 
@@ -27523,10 +24428,6 @@ This function directly calls the execute method of BinaryDilateImageFilter in or
 ";
 
 %feature("docstring")  itk::simple::BinaryErode "
-Image itk::simple::BinaryErode(const Image &, const std::vector< uint32_t > vectorRadius,
-BinaryErodeImageFilter::KernelType
-kernel=BinaryErodeImageFilter::Ball, double backgroundValue=0.0,
-double foregroundValue=1.0, bool boundaryToForeground=true)
 
  itk::simple::BinaryErodeImageFilter Functional Interface
 
@@ -27535,9 +24436,6 @@ This function directly calls the execute method of BinaryErodeImageFilter in ord
 ";
 
 %feature("docstring")  itk::simple::BinaryErode "
-Image itk::simple::BinaryErode(const Image &, uint32_t radius=1, BinaryErodeImageFilter::KernelType
-kernel=BinaryErodeImageFilter::Ball, double backgroundValue=0.0,
-double foregroundValue=1.0, bool boundaryToForeground=true)
 
  itk::simple::BinaryErodeImageFilter Functional Interface
 
@@ -27546,8 +24444,6 @@ This function directly calls the execute method of BinaryErodeImageFilter in ord
 ";
 
 %feature("docstring")  itk::simple::BinaryFillhole "
-Image itk::simple::BinaryFillhole(const Image &image1, bool fullyConnected=false, double
-foregroundValue=1.0)
 
  itk::simple::BinaryFillholeImageFilter Procedural Interface
 
@@ -27562,8 +24458,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::BinaryGrindPeak "
-Image itk::simple::BinaryGrindPeak(const Image &image1, bool fullyConnected=false, double
-foregroundValue=1.0, double backgroundValue=0)
 
  itk::simple::BinaryGrindPeakImageFilter Procedural Interface
 
@@ -27578,7 +24472,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::BinaryMagnitude "
-Image itk::simple::BinaryMagnitude(const Image &image1, const Image &image2)
 
  itk::simple::BinaryMagnitudeImageFilter Procedural Interface
 
@@ -27593,9 +24486,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::BinaryMedian "
-Image itk::simple::BinaryMedian(const Image &image1, std::vector< unsigned int > radius=std::vector<
-unsigned int >(3, 1), double foregroundValue=1.0, double
-backgroundValue=0.0)
 
  itk::simple::BinaryMedianImageFilter Procedural Interface
 
@@ -27610,8 +24500,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::BinaryMinMaxCurvatureFlow "
-Image itk::simple::BinaryMinMaxCurvatureFlow(const Image &image1, double timeStep=0.05, uint32_t
-numberOfIterations=5u, int stencilRadius=2, double threshold=0)
 
  itk::simple::BinaryMinMaxCurvatureFlowImageFilter Procedural Interface
 
@@ -27626,10 +24514,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalClosing "
-Image itk::simple::BinaryMorphologicalClosing(const Image &, const std::vector< uint32_t > vectorRadius,
-BinaryMorphologicalClosingImageFilter::KernelType
-kernel=BinaryMorphologicalClosingImageFilter::Ball, double
-foregroundValue=1.0, bool safeBorder=true)
 
  itk::simple::BinaryMorphologicalClosingImageFilter Functional Interface
 
@@ -27638,10 +24522,6 @@ This function directly calls the execute method of BinaryMorphologicalClosingIma
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalClosing "
-Image itk::simple::BinaryMorphologicalClosing(const Image &, uint32_t radius=1,
-BinaryMorphologicalClosingImageFilter::KernelType
-kernel=BinaryMorphologicalClosingImageFilter::Ball, double
-foregroundValue=1.0, bool safeBorder=true)
 
  itk::simple::BinaryMorphologicalClosingImageFilter Functional Interface
 
@@ -27650,10 +24530,6 @@ This function directly calls the execute method of BinaryMorphologicalClosingIma
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalOpening "
-Image itk::simple::BinaryMorphologicalOpening(const Image &, const std::vector< uint32_t > vectorRadius,
-BinaryMorphologicalOpeningImageFilter::KernelType
-kernel=BinaryMorphologicalOpeningImageFilter::Ball, double
-backgroundValue=0.0, double foregroundValue=1.0)
 
  itk::simple::BinaryMorphologicalOpeningImageFilter Functional Interface
 
@@ -27662,10 +24538,6 @@ This function directly calls the execute method of BinaryMorphologicalOpeningIma
 ";
 
 %feature("docstring")  itk::simple::BinaryMorphologicalOpening "
-Image itk::simple::BinaryMorphologicalOpening(const Image &, uint32_t radius=1,
-BinaryMorphologicalOpeningImageFilter::KernelType
-kernel=BinaryMorphologicalOpeningImageFilter::Ball, double
-backgroundValue=0.0, double foregroundValue=1.0)
 
  itk::simple::BinaryMorphologicalOpeningImageFilter Functional Interface
 
@@ -27674,8 +24546,6 @@ This function directly calls the execute method of BinaryMorphologicalOpeningIma
 ";
 
 %feature("docstring")  itk::simple::BinaryNot "
-Image itk::simple::BinaryNot(const Image &image1, double foregroundValue=1.0, double
-backgroundValue=0.0)
 
  itk::simple::BinaryNotImageFilter Procedural Interface
 
@@ -27690,11 +24560,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::BinaryOpeningByReconstruction "
-Image itk::simple::BinaryOpeningByReconstruction(const Image &, const std::vector< uint32_t > vectorRadius,
-BinaryOpeningByReconstructionImageFilter::KernelType
-kernel=BinaryOpeningByReconstructionImageFilter::Ball, double
-foregroundValue=1.0, double backgroundValue=0.0, bool
-fullyConnected=false)
 
  itk::simple::BinaryOpeningByReconstructionImageFilter Functional Interface
 
@@ -27703,11 +24568,6 @@ This function directly calls the execute method of BinaryOpeningByReconstruction
 ";
 
 %feature("docstring")  itk::simple::BinaryOpeningByReconstruction "
-Image itk::simple::BinaryOpeningByReconstruction(const Image &, uint32_t radius=1,
-BinaryOpeningByReconstructionImageFilter::KernelType
-kernel=BinaryOpeningByReconstructionImageFilter::Ball, double
-foregroundValue=1.0, double backgroundValue=0.0, bool
-fullyConnected=false)
 
  itk::simple::BinaryOpeningByReconstructionImageFilter Functional Interface
 
@@ -27716,8 +24576,6 @@ This function directly calls the execute method of BinaryOpeningByReconstruction
 ";
 
 %feature("docstring")  itk::simple::BinaryProjection "
-Image itk::simple::BinaryProjection(const Image &image1, unsigned int projectionDimension=0u, double
-foregroundValue=1.0, double backgroundValue=0.0)
 
  itk::simple::BinaryProjectionImageFilter Procedural Interface
 
@@ -27732,8 +24590,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::BinaryReconstructionByDilation "
-Image itk::simple::BinaryReconstructionByDilation(const Image &image1, const Image &image2, double backgroundValue=0.0,
-double foregroundValue=1.0, bool fullyConnected=false)
 
  itk::simple::BinaryReconstructionByDilationImageFilter Procedural Interface
 
@@ -27748,8 +24604,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::BinaryReconstructionByErosion "
-Image itk::simple::BinaryReconstructionByErosion(const Image &image1, const Image &image2, double backgroundValue=0.0,
-double foregroundValue=1.0, bool fullyConnected=false)
 
  itk::simple::BinaryReconstructionByErosionImageFilter Procedural Interface
 
@@ -27764,7 +24618,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::BinaryThinning "
-Image itk::simple::BinaryThinning(const Image &image1)
 
  itk::simple::BinaryThinningImageFilter Procedural Interface
 
@@ -27779,8 +24632,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::BinaryThreshold "
-Image itk::simple::BinaryThreshold(const Image &image1, double lowerThreshold=0.0, double
-upperThreshold=255.0, uint8_t insideValue=1u, uint8_t outsideValue=0u)
 
  itk::simple::BinaryThresholdImageFilter Procedural Interface
 
@@ -27795,9 +24646,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::BinaryThresholdProjection "
-Image itk::simple::BinaryThresholdProjection(const Image &image1, unsigned int projectionDimension=0u, double
-thresholdValue=0.0, uint8_t foregroundValue=1u, uint8_t
-backgroundValue=0u)
 
  itk::simple::BinaryThresholdProjectionImageFilter Procedural Interface
 
@@ -27812,7 +24660,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::BinomialBlur "
-Image itk::simple::BinomialBlur(const Image &image1, unsigned int repetitions=1u)
 
  itk::simple::BinomialBlurImageFilter Procedural Interface
 
@@ -27827,9 +24674,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::BlackTopHat "
-Image itk::simple::BlackTopHat(const Image &, const std::vector< uint32_t > vectorRadius,
-BlackTopHatImageFilter::KernelType
-kernel=BlackTopHatImageFilter::Ball, bool safeBorder=true)
 
  itk::simple::BlackTopHatImageFilter Functional Interface
 
@@ -27838,8 +24682,6 @@ This function directly calls the execute method of BlackTopHatImageFilter in ord
 ";
 
 %feature("docstring")  itk::simple::BlackTopHat "
-Image itk::simple::BlackTopHat(const Image &, uint32_t radius=1, BlackTopHatImageFilter::KernelType
-kernel=BlackTopHatImageFilter::Ball, bool safeBorder=true)
 
  itk::simple::BlackTopHatImageFilter Functional Interface
 
@@ -27848,7 +24690,6 @@ This function directly calls the execute method of BlackTopHatImageFilter in ord
 ";
 
 %feature("docstring")  itk::simple::BoundedReciprocal "
-Image itk::simple::BoundedReciprocal(const Image &image1)
 
  itk::simple::BoundedReciprocalImageFilter Procedural Interface
 
@@ -27863,8 +24704,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::BoxMean "
-Image itk::simple::BoxMean(const Image &image1, std::vector< unsigned int > radius=std::vector<
-unsigned int >(3, 1))
 
  itk::simple::BoxMeanImageFilter Procedural Interface
 
@@ -27879,8 +24718,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::BoxSigma "
-Image itk::simple::BoxSigma(const Image &image1, std::vector< unsigned int > radius=std::vector<
-unsigned int >(3, 1))
 
  itk::simple::BoxSigmaImageFilter Procedural Interface
 
@@ -27895,10 +24732,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::CannyEdgeDetection "
-Image itk::simple::CannyEdgeDetection(const Image &image1, double lowerThreshold=0.0, double
-upperThreshold=0.0, std::vector< double > variance=std::vector< double
->(3, 0.0), std::vector< double > maximumError=std::vector< double >(3,
-0.01))
 
  itk::simple::CannyEdgeDetectionImageFilter Procedural Interface
 
@@ -27913,12 +24746,9 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Cast "
-SITKBasicFilters0_EXPORT Image itk::simple::Cast(const Image &image, PixelIDValueEnum pixelID)
 ";
 
 %feature("docstring")  itk::simple::ChangeLabel "
-Image itk::simple::ChangeLabel(const Image &image1, std::map< double, double > changeMap=std::map<
-double, double >())
 
  itk::simple::ChangeLabelImageFilter Procedural Interface
 
@@ -27933,8 +24763,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::CheckerBoard "
-Image itk::simple::CheckerBoard(const Image &image1, const Image &image2, std::vector< uint32_t >
-checkerPattern=std::vector< uint32_t >(3, 4))
 
  itk::simple::CheckerBoardImageFilter Procedural Interface
 
@@ -27949,10 +24777,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::ClosingByReconstruction "
-Image itk::simple::ClosingByReconstruction(const Image &, const std::vector< uint32_t > vectorRadius,
-ClosingByReconstructionImageFilter::KernelType
-kernel=ClosingByReconstructionImageFilter::Ball, bool
-fullyConnected=false, bool preserveIntensities=false)
 
  itk::simple::ClosingByReconstructionImageFilter Functional Interface
 
@@ -27961,10 +24785,6 @@ This function directly calls the execute method of ClosingByReconstructionImageF
 ";
 
 %feature("docstring")  itk::simple::ClosingByReconstruction "
-Image itk::simple::ClosingByReconstruction(const Image &, uint32_t radius=1,
-ClosingByReconstructionImageFilter::KernelType
-kernel=ClosingByReconstructionImageFilter::Ball, bool
-fullyConnected=false, bool preserveIntensities=false)
 
  itk::simple::ClosingByReconstructionImageFilter Functional Interface
 
@@ -27973,7 +24793,6 @@ This function directly calls the execute method of ClosingByReconstructionImageF
 ";
 
 %feature("docstring")  itk::simple::ComplexToImaginary "
-Image itk::simple::ComplexToImaginary(const Image &image1)
 
  itk::simple::ComplexToImaginaryImageFilter Procedural Interface
 
@@ -27988,7 +24807,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::ComplexToModulus "
-Image itk::simple::ComplexToModulus(const Image &image1)
 
  itk::simple::ComplexToModulusImageFilter Procedural Interface
 
@@ -28003,7 +24821,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::ComplexToPhase "
-Image itk::simple::ComplexToPhase(const Image &image1)
 
  itk::simple::ComplexToPhaseImageFilter Procedural Interface
 
@@ -28018,7 +24835,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::ComplexToReal "
-Image itk::simple::ComplexToReal(const Image &image1)
 
  itk::simple::ComplexToRealImageFilter Procedural Interface
 
@@ -28033,29 +24849,21 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Compose "
-Image itk::simple::Compose(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4, const Image &image5)
 ";
 
 %feature("docstring")  itk::simple::Compose "
-Image itk::simple::Compose(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4)
 ";
 
 %feature("docstring")  itk::simple::Compose "
-Image itk::simple::Compose(const Image &image1, const Image &image2, const Image &image3)
 ";
 
 %feature("docstring")  itk::simple::Compose "
-Image itk::simple::Compose(const Image &image1, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::Compose "
-Image itk::simple::Compose(const Image &image1)
 ";
 
 %feature("docstring")  itk::simple::Compose "
-Image itk::simple::Compose(const std::vector< Image > &images)
 
  itk::simple::ComposeImageFilter Procedural Interface
 
@@ -28070,9 +24878,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::ConfidenceConnected "
-Image itk::simple::ConfidenceConnected(const Image &imageA, std::vector< std::vector< unsigned int > >
-seedList, unsigned int numberOfIterations=4u, double multiplier=4.5,
-unsigned int initialNeighborhoodRadius=1u, uint8_t replaceValue=1u)
 
  itk::simple::ConfidenceConnectedImageFilter Functional Interface
 
@@ -28081,7 +24886,6 @@ This function directly calls the execute method of ConfidenceConnectedImageFilte
 ";
 
 %feature("docstring")  itk::simple::ConnectedComponent "
-Image itk::simple::ConnectedComponent(const Image &image1, bool fullyConnected=false)
 
  itk::simple::ConnectedComponentImageFilter Procedural Interface
 
@@ -28096,8 +24900,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::ConnectedThreshold "
-Image itk::simple::ConnectedThreshold(const Image &imageA, std::vector< std::vector< unsigned int > >
-seedList, double lower=0, double upper=1, uint8_t replaceValue=1u)
 
  itk::simple::ConnectedThresholdImageFilter Functional Interface
 
@@ -28106,10 +24908,6 @@ This function directly calls the execute method of ConnectedThresholdImageFilter
 ";
 
 %feature("docstring")  itk::simple::ConstantPad "
-Image itk::simple::ConstantPad(const Image &image1, std::vector< unsigned int >
-padLowerBound=std::vector< unsigned int >(3, 0), std::vector< unsigned
-int > padUpperBound=std::vector< unsigned int >(3, 0), double
-constant=0.0)
 
  itk::simple::ConstantPadImageFilter Procedural Interface
 
@@ -28124,11 +24922,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Convolution "
-Image itk::simple::Convolution(const Image &image1, const Image &image2, bool normalize=false,
-ConvolutionImageFilter::BoundaryConditionType boundaryCondition=itk::s
-imple::ConvolutionImageFilter::ZERO_FLUX_NEUMANN_PAD,
-ConvolutionImageFilter::OutputRegionModeType
-outputRegionMode=itk::simple::ConvolutionImageFilter::SAME)
 
  itk::simple::ConvolutionImageFilter Procedural Interface
 
@@ -28143,7 +24936,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Cos "
-Image itk::simple::Cos(const Image &image1)
 
  itk::simple::CosImageFilter Procedural Interface
 
@@ -28158,10 +24950,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Crop "
-Image itk::simple::Crop(const Image &image1, std::vector< unsigned int >
-lowerBoundaryCropSize=std::vector< unsigned int >(3, 0), std::vector<
-unsigned int > upperBoundaryCropSize=std::vector< unsigned int >(3,
-0))
 
  itk::simple::CropImageFilter Procedural Interface
 
@@ -28176,9 +24964,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::CurvatureAnisotropicDiffusion "
-Image itk::simple::CurvatureAnisotropicDiffusion(const Image &image1, double timeStep=0.0625, double
-conductanceParameter=3, unsigned int
-conductanceScalingUpdateInterval=1u, uint32_t numberOfIterations=5u)
 
  itk::simple::CurvatureAnisotropicDiffusionImageFilter Procedural Interface
 
@@ -28193,8 +24978,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::CurvatureFlow "
-Image itk::simple::CurvatureFlow(const Image &image1, double timeStep=0.05, uint32_t
-numberOfIterations=5u)
 
  itk::simple::CurvatureFlowImageFilter Procedural Interface
 
@@ -28209,8 +24992,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::DanielssonDistanceMap "
-Image itk::simple::DanielssonDistanceMap(const Image &image1, bool inputIsBinary=false, bool
-squaredDistance=false, bool useImageSpacing=false)
 
  itk::simple::DanielssonDistanceMapImageFilter Procedural Interface
 
@@ -28225,8 +25006,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Derivative "
-Image itk::simple::Derivative(const Image &image1, unsigned int direction=0u, unsigned int
-order=1u, bool useImageSpacing=true)
 
  itk::simple::DerivativeImageFilter Procedural Interface
 
@@ -28241,9 +25020,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::DilateObjectMorphology "
-Image itk::simple::DilateObjectMorphology(const Image &, const std::vector< uint32_t > vectorRadius,
-DilateObjectMorphologyImageFilter::KernelType
-kernel=DilateObjectMorphologyImageFilter::Ball, double objectValue=1)
 
  itk::simple::DilateObjectMorphologyImageFilter Functional Interface
 
@@ -28252,9 +25028,6 @@ This function directly calls the execute method of DilateObjectMorphologyImageFi
 ";
 
 %feature("docstring")  itk::simple::DilateObjectMorphology "
-Image itk::simple::DilateObjectMorphology(const Image &, uint32_t radius=1,
-DilateObjectMorphologyImageFilter::KernelType
-kernel=DilateObjectMorphologyImageFilter::Ball, double objectValue=1)
 
  itk::simple::DilateObjectMorphologyImageFilter Functional Interface
 
@@ -28263,9 +25036,6 @@ This function directly calls the execute method of DilateObjectMorphologyImageFi
 ";
 
 %feature("docstring")  itk::simple::DiscreteGaussian "
-Image itk::simple::DiscreteGaussian(const Image &image1, double variance=1.0, unsigned int
-maximumKernelWidth=32u, double maximumError=0.01, bool
-useImageSpacing=true)
 
  itk::simple::DiscreteGaussianImageFilter Procedural Interface
 
@@ -28280,15 +25050,12 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Divide "
-Image itk::simple::Divide(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::Divide "
-Image itk::simple::Divide(const Image &image1, double constant)
 ";
 
 %feature("docstring")  itk::simple::Divide "
-Image itk::simple::Divide(const Image &image1, const Image &image2)
 
  itk::simple::DivideImageFilter Procedural Interface
 
@@ -28303,15 +25070,12 @@ See:
 ";
 
 %feature("docstring")  itk::simple::DivideFloor "
-Image itk::simple::DivideFloor(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::DivideFloor "
-Image itk::simple::DivideFloor(const Image &image1, double constant)
 ";
 
 %feature("docstring")  itk::simple::DivideFloor "
-Image itk::simple::DivideFloor(const Image &image1, const Image &image2)
 
  itk::simple::DivideFloorImageFilter Procedural Interface
 
@@ -28326,15 +25090,12 @@ See:
 ";
 
 %feature("docstring")  itk::simple::DivideReal "
-Image itk::simple::DivideReal(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::DivideReal "
-Image itk::simple::DivideReal(const Image &image1, double constant)
 ";
 
 %feature("docstring")  itk::simple::DivideReal "
-Image itk::simple::DivideReal(const Image &image1, const Image &image2)
 
  itk::simple::DivideRealImageFilter Procedural Interface
 
@@ -28349,9 +25110,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::DoubleThreshold "
-Image itk::simple::DoubleThreshold(const Image &image1, double threshold1=0.0, double threshold2=1.0,
-double threshold3=254.0, double threshold4=255.0, uint8_t
-insideValue=1u, uint8_t outsideValue=0u, bool fullyConnected=false)
 
  itk::simple::DoubleThresholdImageFilter Procedural Interface
 
@@ -28366,7 +25124,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::EdgePotential "
-Image itk::simple::EdgePotential(const Image &image1)
 
  itk::simple::EdgePotentialImageFilter Procedural Interface
 
@@ -28381,18 +25138,12 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Equal "
-Image itk::simple::Equal(double constant, const Image &image2, uint8_t backgroundValue=0u,
-uint8_t foregroundValue=1u)
 ";
 
 %feature("docstring")  itk::simple::Equal "
-Image itk::simple::Equal(const Image &image1, double constant, uint8_t backgroundValue=0u,
-uint8_t foregroundValue=1u)
 ";
 
 %feature("docstring")  itk::simple::Equal "
-Image itk::simple::Equal(const Image &image1, const Image &image2, uint8_t backgroundValue=0u,
-uint8_t foregroundValue=1u)
 
  itk::simple::EqualImageFilter Procedural Interface
 
@@ -28407,10 +25158,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::ErodeObjectMorphology "
-Image itk::simple::ErodeObjectMorphology(const Image &, const std::vector< uint32_t > vectorRadius,
-ErodeObjectMorphologyImageFilter::KernelType
-kernel=ErodeObjectMorphologyImageFilter::Ball, double objectValue=1,
-double backgroundValue=0)
 
  itk::simple::ErodeObjectMorphologyImageFilter Functional Interface
 
@@ -28419,10 +25166,6 @@ This function directly calls the execute method of ErodeObjectMorphologyImageFil
 ";
 
 %feature("docstring")  itk::simple::ErodeObjectMorphology "
-Image itk::simple::ErodeObjectMorphology(const Image &, uint32_t radius=1,
-ErodeObjectMorphologyImageFilter::KernelType
-kernel=ErodeObjectMorphologyImageFilter::Ball, double objectValue=1,
-double backgroundValue=0)
 
  itk::simple::ErodeObjectMorphologyImageFilter Functional Interface
 
@@ -28431,7 +25174,6 @@ This function directly calls the execute method of ErodeObjectMorphologyImageFil
 ";
 
 %feature("docstring")  itk::simple::Exp "
-Image itk::simple::Exp(const Image &image1)
 
  itk::simple::ExpImageFilter Procedural Interface
 
@@ -28446,9 +25188,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Expand "
-Image itk::simple::Expand(const Image &image1, std::vector< unsigned int >
-expandFactors=std::vector< unsigned int >(3, 1), InterpolatorEnum
-interpolator=itk::simple::sitkLinear)
 
  itk::simple::ExpandImageFilter Procedural Interface
 
@@ -28463,7 +25202,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::ExpNegative "
-Image itk::simple::ExpNegative(const Image &image1)
 
  itk::simple::ExpNegativeImageFilter Procedural Interface
 
@@ -28478,10 +25216,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Extract "
-Image itk::simple::Extract(const Image &image1, std::vector< unsigned int > size=std::vector<
-unsigned int >(3, 1), std::vector< int > index=std::vector< int >(3,
-0), ExtractImageFilter::DirectionCollapseStrategyType directionCollaps
-eToStrategy=itk::simple::ExtractImageFilter::DIRECTIONCOLLAPSETOGUESS)
 
  itk::simple::ExtractImageFilter Procedural Interface
 
@@ -28496,8 +25230,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::FastApproximateRank "
-Image itk::simple::FastApproximateRank(const Image &image1, double rank=0.5, std::vector< unsigned int >
-radius=std::vector< unsigned int >(3, 1))
 
  itk::simple::FastApproximateRankImageFilter Procedural Interface
 
@@ -28512,11 +25244,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::FastMarching "
-Image itk::simple::FastMarching(const Image &imageA, std::vector< std::vector< unsigned int > >
-trialPoints, double normalizationFactor=1.0, double
-stoppingValue=100.0,
-itk::simple::FastMarchingImageFilter::TopologyCheckType
-topologyCheck=itk::simple::FastMarchingImageFilter::Nothing)
 
  itk::simple::FastMarchingImageFilter Functional Interface
 
@@ -28525,11 +25252,6 @@ This function directly calls the execute method of FastMarchingImageFilter in or
 ";
 
 %feature("docstring")  itk::simple::FFTConvolution "
-Image itk::simple::FFTConvolution(const Image &image1, const Image &image2, bool normalize=false,
-FFTConvolutionImageFilter::BoundaryConditionType boundaryCondition=itk
-::simple::FFTConvolutionImageFilter::ZERO_FLUX_NEUMANN_PAD,
-FFTConvolutionImageFilter::OutputRegionModeType
-outputRegionMode=itk::simple::FFTConvolutionImageFilter::SAME)
 
  itk::simple::FFTConvolutionImageFilter Procedural Interface
 
@@ -28544,8 +25266,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::FFTNormalizedCorrelation "
-Image itk::simple::FFTNormalizedCorrelation(const Image &image1, const Image &image2, uint64_t
-requiredNumberOfOverlappingPixels=0u)
 
  itk::simple::FFTNormalizedCorrelationImageFilter Procedural Interface
 
@@ -28560,7 +25280,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::FFTShift "
-Image itk::simple::FFTShift(const Image &image1, bool inverse=false)
 
  itk::simple::FFTShiftImageFilter Procedural Interface
 
@@ -28575,8 +25294,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Flip "
-Image itk::simple::Flip(const Image &image1, std::vector< bool > flipAxes=std::vector< bool
->(3, false), bool flipAboutOrigin=false)
 
  itk::simple::FlipImageFilter Procedural Interface
 
@@ -28591,7 +25308,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::ForwardFFT "
-Image itk::simple::ForwardFFT(const Image &image1)
 
  itk::simple::ForwardFFTImageFilter Procedural Interface
 
@@ -28606,13 +25322,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::GaborSource "
-Image itk::simple::GaborSource(PixelIDValueEnum outputPixelType=itk::simple::sitkFloat32,
-std::vector< unsigned int > size=std::vector< unsigned int >(3, 64),
-std::vector< double > sigma=std::vector< double >(3, 16.0),
-std::vector< double > mean=std::vector< double >(3, 32.0), double
-frequency=0.4, std::vector< double > origin=std::vector< double >(3,
-0.0), std::vector< double > spacing=std::vector< double >(3, 1.0),
-std::vector< double > direction=std::vector< double >())
 
  itk::simple::GaborImageSource Procedural Interface
 
@@ -28627,13 +25336,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::GaussianSource "
-Image itk::simple::GaussianSource(PixelIDValueEnum outputPixelType=itk::simple::sitkFloat32,
-std::vector< unsigned int > size=std::vector< unsigned int >(3, 64),
-std::vector< double > sigma=std::vector< double >(3, 16.0),
-std::vector< double > mean=std::vector< double >(3, 32.0), double
-scale=255, std::vector< double > origin=std::vector< double >(3, 0.0),
-std::vector< double > spacing=std::vector< double >(3, 1.0),
-std::vector< double > direction=std::vector< double >())
 
  itk::simple::GaussianImageSource Procedural Interface
 
@@ -28648,10 +25350,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::GeodesicActiveContourLevelSet "
-Image itk::simple::GeodesicActiveContourLevelSet(const Image &image1, const Image &image2, double
-maximumRMSError=0.01, double propagationScaling=1.0, double
-curvatureScaling=1.0, double advectionScaling=1.0, uint32_t
-numberOfIterations=1000u, bool reverseExpansionDirection=false)
 
  itk::simple::GeodesicActiveContourLevelSetImageFilter Procedural Interface
 
@@ -28666,16 +25364,12 @@ See:
 ";
 
 %feature("docstring")  itk::simple::GetPixelIDValueAsString "
-const std::string SITKCommon_EXPORT itk::simple::GetPixelIDValueAsString(PixelIDValueEnum type)
 ";
 
 %feature("docstring")  itk::simple::GetPixelIDValueAsString "
-const std::string SITKCommon_EXPORT itk::simple::GetPixelIDValueAsString(PixelIDValueType type)
 ";
 
 %feature("docstring")  itk::simple::Gradient "
-Image itk::simple::Gradient(const Image &image1, bool useImageSpacing=true, bool
-useImageDirection=false)
 
  itk::simple::GradientImageFilter Procedural Interface
 
@@ -28690,9 +25384,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::GradientAnisotropicDiffusion "
-Image itk::simple::GradientAnisotropicDiffusion(const Image &image1, double timeStep=0.125, double
-conductanceParameter=3, unsigned int
-conductanceScalingUpdateInterval=1u, uint32_t numberOfIterations=5u)
 
  itk::simple::GradientAnisotropicDiffusionImageFilter Procedural Interface
 
@@ -28707,7 +25398,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::GradientMagnitude "
-Image itk::simple::GradientMagnitude(const Image &image1, bool useImageSpacing=true)
 
  itk::simple::GradientMagnitudeImageFilter Procedural Interface
 
@@ -28722,8 +25412,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::GradientMagnitudeRecursiveGaussian "
-Image itk::simple::GradientMagnitudeRecursiveGaussian(const Image &image1, double sigma=1.0, bool
-normalizeAcrossScale=false)
 
  itk::simple::GradientMagnitudeRecursiveGaussianImageFilter Procedural Interface
 
@@ -28738,8 +25426,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::GradientRecursiveGaussian "
-Image itk::simple::GradientRecursiveGaussian(const Image &image1, double sigma=1.0, bool
-normalizeAcrossScale=false, bool useImageDirection=false)
 
  itk::simple::GradientRecursiveGaussianImageFilter Procedural Interface
 
@@ -28754,8 +25440,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::GrayscaleConnectedClosing "
-Image itk::simple::GrayscaleConnectedClosing(const Image &image1, std::vector< uint32_t > seed=std::vector<
-uint32_t >(3, 0), bool fullyConnected=false)
 
  itk::simple::GrayscaleConnectedClosingImageFilter Procedural Interface
 
@@ -28770,8 +25454,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::GrayscaleConnectedOpening "
-Image itk::simple::GrayscaleConnectedOpening(const Image &image1, std::vector< unsigned int > seed=std::vector<
-unsigned int >(3, 0), bool fullyConnected=false)
 
  itk::simple::GrayscaleConnectedOpeningImageFilter Procedural Interface
 
@@ -28786,9 +25468,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::GrayscaleDilate "
-Image itk::simple::GrayscaleDilate(const Image &, const std::vector< uint32_t > vectorRadius,
-GrayscaleDilateImageFilter::KernelType
-kernel=GrayscaleDilateImageFilter::Ball)
 
  itk::simple::GrayscaleDilateImageFilter Functional Interface
 
@@ -28797,9 +25476,6 @@ This function directly calls the execute method of GrayscaleDilateImageFilter in
 ";
 
 %feature("docstring")  itk::simple::GrayscaleDilate "
-Image itk::simple::GrayscaleDilate(const Image &, uint32_t radius=1,
-GrayscaleDilateImageFilter::KernelType
-kernel=GrayscaleDilateImageFilter::Ball)
 
  itk::simple::GrayscaleDilateImageFilter Functional Interface
 
@@ -28808,9 +25484,6 @@ This function directly calls the execute method of GrayscaleDilateImageFilter in
 ";
 
 %feature("docstring")  itk::simple::GrayscaleErode "
-Image itk::simple::GrayscaleErode(const Image &, const std::vector< uint32_t > vectorRadius,
-GrayscaleErodeImageFilter::KernelType
-kernel=GrayscaleErodeImageFilter::Ball)
 
  itk::simple::GrayscaleErodeImageFilter Functional Interface
 
@@ -28819,9 +25492,6 @@ This function directly calls the execute method of GrayscaleErodeImageFilter in 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleErode "
-Image itk::simple::GrayscaleErode(const Image &, uint32_t radius=1,
-GrayscaleErodeImageFilter::KernelType
-kernel=GrayscaleErodeImageFilter::Ball)
 
  itk::simple::GrayscaleErodeImageFilter Functional Interface
 
@@ -28830,7 +25500,6 @@ This function directly calls the execute method of GrayscaleErodeImageFilter in 
 ";
 
 %feature("docstring")  itk::simple::GrayscaleFillhole "
-Image itk::simple::GrayscaleFillhole(const Image &image1, bool fullyConnected=false)
 
  itk::simple::GrayscaleFillholeImageFilter Procedural Interface
 
@@ -28845,8 +25514,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGeodesicDilate "
-Image itk::simple::GrayscaleGeodesicDilate(const Image &image1, const Image &image2, bool runOneIteration=false,
-bool fullyConnected=false)
 
  itk::simple::GrayscaleGeodesicDilateImageFilter Procedural Interface
 
@@ -28861,8 +25528,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGeodesicErode "
-Image itk::simple::GrayscaleGeodesicErode(const Image &image1, const Image &image2, bool runOneIteration=false,
-bool fullyConnected=false)
 
  itk::simple::GrayscaleGeodesicErodeImageFilter Procedural Interface
 
@@ -28877,7 +25542,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::GrayscaleGrindPeak "
-Image itk::simple::GrayscaleGrindPeak(const Image &image1, bool fullyConnected=false)
 
  itk::simple::GrayscaleGrindPeakImageFilter Procedural Interface
 
@@ -28892,10 +25556,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalClosing "
-Image itk::simple::GrayscaleMorphologicalClosing(const Image &, const std::vector< uint32_t > vectorRadius,
-GrayscaleMorphologicalClosingImageFilter::KernelType
-kernel=GrayscaleMorphologicalClosingImageFilter::Ball, bool
-safeBorder=true)
 
  itk::simple::GrayscaleMorphologicalClosingImageFilter Functional Interface
 
@@ -28904,10 +25564,6 @@ This function directly calls the execute method of GrayscaleMorphologicalClosing
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalClosing "
-Image itk::simple::GrayscaleMorphologicalClosing(const Image &, uint32_t radius=1,
-GrayscaleMorphologicalClosingImageFilter::KernelType
-kernel=GrayscaleMorphologicalClosingImageFilter::Ball, bool
-safeBorder=true)
 
  itk::simple::GrayscaleMorphologicalClosingImageFilter Functional Interface
 
@@ -28916,10 +25572,6 @@ This function directly calls the execute method of GrayscaleMorphologicalClosing
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalOpening "
-Image itk::simple::GrayscaleMorphologicalOpening(const Image &, const std::vector< uint32_t > vectorRadius,
-GrayscaleMorphologicalOpeningImageFilter::KernelType
-kernel=GrayscaleMorphologicalOpeningImageFilter::Ball, bool
-safeBorder=true)
 
  itk::simple::GrayscaleMorphologicalOpeningImageFilter Functional Interface
 
@@ -28928,10 +25580,6 @@ This function directly calls the execute method of GrayscaleMorphologicalOpening
 ";
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalOpening "
-Image itk::simple::GrayscaleMorphologicalOpening(const Image &, uint32_t radius=1,
-GrayscaleMorphologicalOpeningImageFilter::KernelType
-kernel=GrayscaleMorphologicalOpeningImageFilter::Ball, bool
-safeBorder=true)
 
  itk::simple::GrayscaleMorphologicalOpeningImageFilter Functional Interface
 
@@ -28940,18 +25588,12 @@ This function directly calls the execute method of GrayscaleMorphologicalOpening
 ";
 
 %feature("docstring")  itk::simple::Greater "
-Image itk::simple::Greater(double constant, const Image &image2, uint8_t backgroundValue=0u,
-uint8_t foregroundValue=1u)
 ";
 
 %feature("docstring")  itk::simple::Greater "
-Image itk::simple::Greater(const Image &image1, double constant, uint8_t backgroundValue=0u,
-uint8_t foregroundValue=1u)
 ";
 
 %feature("docstring")  itk::simple::Greater "
-Image itk::simple::Greater(const Image &image1, const Image &image2, uint8_t backgroundValue=0u,
-uint8_t foregroundValue=1u)
 
  itk::simple::GreaterImageFilter Procedural Interface
 
@@ -28966,18 +25608,12 @@ See:
 ";
 
 %feature("docstring")  itk::simple::GreaterEqual "
-Image itk::simple::GreaterEqual(double constant, const Image &image2, uint8_t backgroundValue=0u,
-uint8_t foregroundValue=1u)
 ";
 
 %feature("docstring")  itk::simple::GreaterEqual "
-Image itk::simple::GreaterEqual(const Image &image1, double constant, uint8_t backgroundValue=0u,
-uint8_t foregroundValue=1u)
 ";
 
 %feature("docstring")  itk::simple::GreaterEqual "
-Image itk::simple::GreaterEqual(const Image &image1, const Image &image2, uint8_t backgroundValue=0u,
-uint8_t foregroundValue=1u)
 
  itk::simple::GreaterEqualImageFilter Procedural Interface
 
@@ -28992,14 +25628,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::GridSource "
-Image itk::simple::GridSource(PixelIDValueEnum outputPixelType=itk::simple::sitkFloat32,
-std::vector< unsigned int > size=std::vector< unsigned int >(3, 64),
-std::vector< double > sigma=std::vector< double >(3, 0.5),
-std::vector< double > gridSpacing=std::vector< double >(3, 4.0),
-std::vector< double > gridOffset=std::vector< double >(3, 0.0), double
-scale=255.0, std::vector< double > origin=std::vector< double >(3,
-0.0), std::vector< double > spacing=std::vector< double >(3, 1.0),
-std::vector< double > direction=std::vector< double >())
 
  itk::simple::GridImageSource Procedural Interface
 
@@ -29014,7 +25642,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::HalfHermitianToRealInverseFFT "
-Image itk::simple::HalfHermitianToRealInverseFFT(const Image &image1, bool actualXDimensionIsOdd=false)
 
  itk::simple::HalfHermitianToRealInverseFFTImageFilter Procedural Interface
 
@@ -29029,12 +25656,9 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Hash "
-SITKBasicFilters0_EXPORT std::string itk::simple::Hash(const Image &image, HashImageFilter::HashFunction
-function=HashImageFilter::SHA1)
 ";
 
 %feature("docstring")  itk::simple::HausdorffDistance "
-Image itk::simple::HausdorffDistance(const Image &image1, const Image &image2)
 
  itk::simple::HausdorffDistanceImageFilter Procedural Interface
 
@@ -29049,7 +25673,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::HConcave "
-Image itk::simple::HConcave(const Image &image1, double height=2.0, bool fullyConnected=false)
 
  itk::simple::HConcaveImageFilter Procedural Interface
 
@@ -29064,7 +25687,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::HConvex "
-Image itk::simple::HConvex(const Image &image1, double height=2.0, bool fullyConnected=false)
 
  itk::simple::HConvexImageFilter Procedural Interface
 
@@ -29079,9 +25701,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::HistogramMatching "
-Image itk::simple::HistogramMatching(const Image &image1, const Image &image2, uint32_t
-numberOfHistogramLevels=256u, uint32_t numberOfMatchPoints=1u, bool
-thresholdAtMeanIntensity=true)
 
  itk::simple::HistogramMatchingImageFilter Procedural Interface
 
@@ -29096,7 +25715,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::HMaxima "
-Image itk::simple::HMaxima(const Image &image1, double height=2.0)
 
  itk::simple::HMaximaImageFilter Procedural Interface
 
@@ -29111,7 +25729,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::HMinima "
-Image itk::simple::HMinima(const Image &image1, double height=2.0, bool fullyConnected=false)
 
  itk::simple::HMinimaImageFilter Procedural Interface
 
@@ -29126,8 +25743,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::HuangThreshold "
-Image itk::simple::HuangThreshold(const Image &image1, uint8_t insideValue=1u, uint8_t outsideValue=0u,
-uint32_t numberOfHistogramBins=128u)
 
  itk::simple::HuangThresholdImageFilter Procedural Interface
 
@@ -29142,72 +25757,30 @@ See:
 ";
 
 %feature("docstring")  itk::simple::ImportAsDouble "
-Image SITKIO_EXPORT itk::simple::ImportAsDouble(double *buffer, const std::vector< unsigned int > &size, const
-std::vector< double > &spacing=std::vector< double >(3, 1.0), const
-std::vector< double > &origin=std::vector< double >(3, 0.0), const
-std::vector< double > &direction=std::vector< double >(), unsigned int
-numberOfComponents=1)
 ";
 
 %feature("docstring")  itk::simple::ImportAsFloat "
-Image SITKIO_EXPORT itk::simple::ImportAsFloat(float *buffer, const std::vector< unsigned int > &size, const
-std::vector< double > &spacing=std::vector< double >(3, 1.0), const
-std::vector< double > &origin=std::vector< double >(3, 0.0), const
-std::vector< double > &direction=std::vector< double >(), unsigned int
-numberOfComponents=1)
 ";
 
 %feature("docstring")  itk::simple::ImportAsInt16 "
-Image SITKIO_EXPORT itk::simple::ImportAsInt16(int16_t *buffer, const std::vector< unsigned int > &size, const
-std::vector< double > &spacing=std::vector< double >(3, 1.0), const
-std::vector< double > &origin=std::vector< double >(3, 0.0), const
-std::vector< double > &direction=std::vector< double >(), unsigned int
-numberOfComponents=1)
 ";
 
 %feature("docstring")  itk::simple::ImportAsInt32 "
-Image SITKIO_EXPORT itk::simple::ImportAsInt32(int32_t *buffer, const std::vector< unsigned int > &size, const
-std::vector< double > &spacing=std::vector< double >(3, 1.0), const
-std::vector< double > &origin=std::vector< double >(3, 0.0), const
-std::vector< double > &direction=std::vector< double >(), unsigned int
-numberOfComponents=1)
 ";
 
 %feature("docstring")  itk::simple::ImportAsInt8 "
-Image SITKIO_EXPORT itk::simple::ImportAsInt8(int8_t *buffer, const std::vector< unsigned int > &size, const
-std::vector< double > &spacing=std::vector< double >(3, 1.0), const
-std::vector< double > &origin=std::vector< double >(3, 0.0), const
-std::vector< double > &direction=std::vector< double >(), unsigned int
-numberOfComponents=1)
 ";
 
 %feature("docstring")  itk::simple::ImportAsUInt16 "
-Image SITKIO_EXPORT itk::simple::ImportAsUInt16(uint16_t *buffer, const std::vector< unsigned int > &size, const
-std::vector< double > &spacing=std::vector< double >(3, 1.0), const
-std::vector< double > &origin=std::vector< double >(3, 0.0), const
-std::vector< double > &direction=std::vector< double >(), unsigned int
-numberOfComponents=1)
 ";
 
 %feature("docstring")  itk::simple::ImportAsUInt32 "
-Image SITKIO_EXPORT itk::simple::ImportAsUInt32(uint32_t *buffer, const std::vector< unsigned int > &size, const
-std::vector< double > &spacing=std::vector< double >(3, 1.0), const
-std::vector< double > &origin=std::vector< double >(3, 0.0), const
-std::vector< double > &direction=std::vector< double >(), unsigned int
-numberOfComponents=1)
 ";
 
 %feature("docstring")  itk::simple::ImportAsUInt8 "
-Image SITKIO_EXPORT itk::simple::ImportAsUInt8(uint8_t *buffer, const std::vector< unsigned int > &size, const
-std::vector< double > &spacing=std::vector< double >(3, 1.0), const
-std::vector< double > &origin=std::vector< double >(3, 0.0), const
-std::vector< double > &direction=std::vector< double >(), unsigned int
-numberOfComponents=1)
 ";
 
 %feature("docstring")  itk::simple::IntensityWindowing "
-Image itk::simple::IntensityWindowing(const Image &image1, double windowMinimum=0.0, double
-windowMaximum=255, double outputMinimum=0, double outputMaximum=255)
 
  itk::simple::IntensityWindowingImageFilter Procedural Interface
 
@@ -29222,8 +25795,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::IntermodesThreshold "
-Image itk::simple::IntermodesThreshold(const Image &image1, uint8_t insideValue=1u, uint8_t outsideValue=0u,
-uint32_t numberOfHistogramBins=256u)
 
  itk::simple::IntermodesThresholdImageFilter Procedural Interface
 
@@ -29238,12 +25809,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::InverseDeconvolution "
-Image itk::simple::InverseDeconvolution(const Image &image1, const Image &image2, double
-kernelZeroMagnitudeThreshold=1.0e-4, bool normalize=false,
-InverseDeconvolutionImageFilter::BoundaryConditionType boundaryConditi
-on=itk::simple::InverseDeconvolutionImageFilter::ZERO_FLUX_NEUMANN_PAD
-, InverseDeconvolutionImageFilter::OutputRegionModeType
-outputRegionMode=itk::simple::InverseDeconvolutionImageFilter::SAME)
 
  itk::simple::InverseDeconvolutionImageFilter Procedural Interface
 
@@ -29258,7 +25823,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::InverseFFT "
-Image itk::simple::InverseFFT(const Image &image1)
 
  itk::simple::InverseFFTImageFilter Procedural Interface
 
@@ -29273,7 +25837,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::InvertIntensity "
-Image itk::simple::InvertIntensity(const Image &image1, double maximum=255)
 
  itk::simple::InvertIntensityImageFilter Procedural Interface
 
@@ -29288,7 +25851,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::IsoContourDistance "
-Image itk::simple::IsoContourDistance(const Image &image1, double levelSetValue=0, double farValue=10)
 
  itk::simple::IsoContourDistanceImageFilter Procedural Interface
 
@@ -29303,8 +25865,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::IsoDataThreshold "
-Image itk::simple::IsoDataThreshold(const Image &image1, uint8_t insideValue=1u, uint8_t outsideValue=0u,
-uint32_t numberOfHistogramBins=256u)
 
  itk::simple::IsoDataThresholdImageFilter Procedural Interface
 
@@ -29319,11 +25879,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::IsolatedConnected "
-Image itk::simple::IsolatedConnected(const Image &image1, std::vector< unsigned int > seed1=std::vector<
-unsigned int >(3, 0), std::vector< unsigned int > seed2=std::vector<
-unsigned int >(3, 0), double lower=0, double upper=1, uint8_t
-replaceValue=1u, double isolatedValueTolerance=1.0, bool
-findUpperThreshold=true)
 
  itk::simple::IsolatedConnectedImageFilter Procedural Interface
 
@@ -29338,11 +25893,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::IsolatedWatershed "
-Image itk::simple::IsolatedWatershed(const Image &image1, std::vector< uint32_t > seed1=std::vector<
-uint32_t >(3, 0), std::vector< uint32_t > seed2=std::vector< uint32_t
->(3, 0), double threshold=0.0, double upperValueLimit=1.0, double
-isolatedValueTolerance=0.001, uint8_t replaceValue1=1u, uint8_t
-replaceValue2=2u)
 
  itk::simple::IsolatedWatershedImageFilter Procedural Interface
 
@@ -29357,33 +25907,21 @@ See:
 ";
 
 %feature("docstring")  itk::simple::JoinSeries "
-Image itk::simple::JoinSeries(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4, const Image &image5, double origin=0.0, double
-spacing=1.0)
 ";
 
 %feature("docstring")  itk::simple::JoinSeries "
-Image itk::simple::JoinSeries(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4, double origin=0.0, double spacing=1.0)
 ";
 
 %feature("docstring")  itk::simple::JoinSeries "
-Image itk::simple::JoinSeries(const Image &image1, const Image &image2, const Image &image3, double
-origin=0.0, double spacing=1.0)
 ";
 
 %feature("docstring")  itk::simple::JoinSeries "
-Image itk::simple::JoinSeries(const Image &image1, const Image &image2, double origin=0.0, double
-spacing=1.0)
 ";
 
 %feature("docstring")  itk::simple::JoinSeries "
-Image itk::simple::JoinSeries(const Image &image1, double origin=0.0, double spacing=1.0)
 ";
 
 %feature("docstring")  itk::simple::JoinSeries "
-Image itk::simple::JoinSeries(const std::vector< Image > &images, double origin=0.0, double
-spacing=1.0)
 
  itk::simple::JoinSeriesImageFilter Procedural Interface
 
@@ -29398,8 +25936,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::KittlerIllingworthThreshold "
-Image itk::simple::KittlerIllingworthThreshold(const Image &image1, uint8_t insideValue=1u, uint8_t outsideValue=0u,
-uint32_t numberOfHistogramBins=256u)
 
  itk::simple::KittlerIllingworthThresholdImageFilter Procedural Interface
 
@@ -29414,8 +25950,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::LabelContour "
-Image itk::simple::LabelContour(const Image &image1, bool fullyConnected=false, double
-backgroundValue=0)
 
  itk::simple::LabelContourImageFilter Procedural Interface
 
@@ -29430,14 +25964,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::LabelMapContourOverlay "
-Image itk::simple::LabelMapContourOverlay(const Image &image1, const Image &image2, double opacity=0.5,
-std::vector< unsigned int > dilationRadius=std::vector< unsigned int
->(3, 1), std::vector< unsigned int > contourThickness=std::vector<
-unsigned int >(3, 1), unsigned int sliceDimension=0u,
-LabelMapContourOverlayImageFilter::Type
-contourType=itk::simple::LabelMapContourOverlayImageFilter::CONTOUR,
-LabelMapContourOverlayImageFilter::PriorityType priority=itk::simple::
-LabelMapContourOverlayImageFilter::HIGH_LABEL_ON_TOP)
 
  itk::simple::LabelMapContourOverlayImageFilter Procedural Interface
 
@@ -29452,8 +25978,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::LabelMapMask "
-Image itk::simple::LabelMapMask(const Image &image1, const Image &image2, uint64_t label=1u, double
-backgroundValue=0, bool negated=false)
 
  itk::simple::LabelMapMaskImageFilter Procedural Interface
 
@@ -29468,7 +25992,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::LabelMapOverlay "
-Image itk::simple::LabelMapOverlay(const Image &image1, const Image &image2, double opacity=0.5)
 
  itk::simple::LabelMapOverlayImageFilter Procedural Interface
 
@@ -29483,8 +26006,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::LabelMapToBinary "
-Image itk::simple::LabelMapToBinary(const Image &image1, double backgroundValue=0, double
-foregroundValue=1.0)
 
  itk::simple::LabelMapToBinaryImageFilter Procedural Interface
 
@@ -29499,7 +26020,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::LabelMapToLabel "
-Image itk::simple::LabelMapToLabel(const Image &image1)
 
  itk::simple::LabelMapToLabelImageFilter Procedural Interface
 
@@ -29514,7 +26034,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::LabelMapToRGB "
-Image itk::simple::LabelMapToRGB(const Image &image1)
 
  itk::simple::LabelMapToRGBImageFilter Procedural Interface
 
@@ -29529,8 +26048,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::LabelOverlay "
-Image itk::simple::LabelOverlay(const Image &image1, const Image &image2, double opacity=0.5, double
-backgroundValue=0.0)
 
  itk::simple::LabelOverlayImageFilter Procedural Interface
 
@@ -29545,11 +26062,9 @@ See:
 ";
 
 %feature("docstring")  itk::simple::LabelStatistics "
-SITKBasicFilters0_EXPORT LabelStatisticsImageFilter::LabelStatisticsMap itk::simple::LabelStatistics(const Image &, const Image &)
 ";
 
 %feature("docstring")  itk::simple::LabelToRGB "
-Image itk::simple::LabelToRGB(const Image &image1, double backgroundValue=0.0)
 
  itk::simple::LabelToRGBImageFilter Procedural Interface
 
@@ -29564,12 +26079,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::LandweberDeconvolution "
-Image itk::simple::LandweberDeconvolution(const Image &image1, const Image &image2, double alpha=0.1, int
-numberOfIterations=1, bool normalize=false,
-LandweberDeconvolutionImageFilter::BoundaryConditionType boundaryCondi
-tion=itk::simple::LandweberDeconvolutionImageFilter::ZERO_FLUX_NEUMANN
-_PAD, LandweberDeconvolutionImageFilter::OutputRegionModeType
-outputRegionMode=itk::simple::LandweberDeconvolutionImageFilter::SAME)
 
  itk::simple::LandweberDeconvolutionImageFilter Procedural Interface
 
@@ -29584,7 +26093,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Laplacian "
-Image itk::simple::Laplacian(const Image &image1, bool useImageSpacing=true)
 
  itk::simple::LaplacianImageFilter Procedural Interface
 
@@ -29599,8 +26107,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::LaplacianRecursiveGaussian "
-Image itk::simple::LaplacianRecursiveGaussian(const Image &image1, double sigma=1.0, bool
-normalizeAcrossScale=false)
 
  itk::simple::LaplacianRecursiveGaussianImageFilter Procedural Interface
 
@@ -29615,10 +26121,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::LaplacianSegmentationLevelSet "
-Image itk::simple::LaplacianSegmentationLevelSet(const Image &image1, const Image &image2, double
-maximumRMSError=0.02, double propagationScaling=1.0, double
-curvatureScaling=1.0, uint32_t numberOfIterations=1000u, bool
-reverseExpansionDirection=false)
 
  itk::simple::LaplacianSegmentationLevelSetImageFilter Procedural Interface
 
@@ -29633,7 +26135,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::LaplacianSharpening "
-Image itk::simple::LaplacianSharpening(const Image &image1, bool useImageSpacing=true)
 
  itk::simple::LaplacianSharpeningImageFilter Procedural Interface
 
@@ -29648,18 +26149,12 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Less "
-Image itk::simple::Less(double constant, const Image &image2, uint8_t backgroundValue=0u,
-uint8_t foregroundValue=1u)
 ";
 
 %feature("docstring")  itk::simple::Less "
-Image itk::simple::Less(const Image &image1, double constant, uint8_t backgroundValue=0u,
-uint8_t foregroundValue=1u)
 ";
 
 %feature("docstring")  itk::simple::Less "
-Image itk::simple::Less(const Image &image1, const Image &image2, uint8_t backgroundValue=0u,
-uint8_t foregroundValue=1u)
 
  itk::simple::LessImageFilter Procedural Interface
 
@@ -29674,18 +26169,12 @@ See:
 ";
 
 %feature("docstring")  itk::simple::LessEqual "
-Image itk::simple::LessEqual(double constant, const Image &image2, uint8_t backgroundValue=0u,
-uint8_t foregroundValue=1u)
 ";
 
 %feature("docstring")  itk::simple::LessEqual "
-Image itk::simple::LessEqual(const Image &image1, double constant, uint8_t backgroundValue=0u,
-uint8_t foregroundValue=1u)
 ";
 
 %feature("docstring")  itk::simple::LessEqual "
-Image itk::simple::LessEqual(const Image &image1, const Image &image2, uint8_t backgroundValue=0u,
-uint8_t foregroundValue=1u)
 
  itk::simple::LessEqualImageFilter Procedural Interface
 
@@ -29700,8 +26189,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::LiThreshold "
-Image itk::simple::LiThreshold(const Image &image1, uint8_t insideValue=1u, uint8_t outsideValue=0u,
-uint32_t numberOfHistogramBins=256u)
 
  itk::simple::LiThresholdImageFilter Procedural Interface
 
@@ -29716,7 +26203,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Log "
-Image itk::simple::Log(const Image &image1)
 
  itk::simple::LogImageFilter Procedural Interface
 
@@ -29731,7 +26217,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Log10 "
-Image itk::simple::Log10(const Image &image1)
 
  itk::simple::Log10ImageFilter Procedural Interface
 
@@ -29746,15 +26231,12 @@ See:
 ";
 
 %feature("docstring")  itk::simple::MagnitudeAndPhaseToComplex "
-Image itk::simple::MagnitudeAndPhaseToComplex(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::MagnitudeAndPhaseToComplex "
-Image itk::simple::MagnitudeAndPhaseToComplex(const Image &image1, double constant)
 ";
 
 %feature("docstring")  itk::simple::MagnitudeAndPhaseToComplex "
-Image itk::simple::MagnitudeAndPhaseToComplex(const Image &image1, const Image &image2)
 
  itk::simple::MagnitudeAndPhaseToComplexImageFilter Procedural Interface
 
@@ -29769,7 +26251,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Mask "
-Image itk::simple::Mask(const Image &image1, const Image &image2, double outsideValue=0)
 
  itk::simple::MaskImageFilter Procedural Interface
 
@@ -29784,8 +26265,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::MaskedFFTNormalizedCorrelation "
-Image itk::simple::MaskedFFTNormalizedCorrelation(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4, uint64_t requiredNumberOfOverlappingPixels=0u)
 
  itk::simple::MaskedFFTNormalizedCorrelationImageFilter Procedural Interface
 
@@ -29800,7 +26279,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::MaskNegated "
-Image itk::simple::MaskNegated(const Image &image1, const Image &image2)
 
  itk::simple::MaskNegatedImageFilter Procedural Interface
 
@@ -29815,15 +26293,12 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Maximum "
-Image itk::simple::Maximum(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::Maximum "
-Image itk::simple::Maximum(const Image &image1, double constant)
 ";
 
 %feature("docstring")  itk::simple::Maximum "
-Image itk::simple::Maximum(const Image &image1, const Image &image2)
 
  itk::simple::MaximumImageFilter Procedural Interface
 
@@ -29838,8 +26313,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::MaximumEntropyThreshold "
-Image itk::simple::MaximumEntropyThreshold(const Image &image1, uint8_t insideValue=1u, uint8_t outsideValue=0u,
-uint32_t numberOfHistogramBins=256u)
 
  itk::simple::MaximumEntropyThresholdImageFilter Procedural Interface
 
@@ -29854,7 +26327,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::MaximumProjection "
-Image itk::simple::MaximumProjection(const Image &image1, unsigned int projectionDimension=0u)
 
  itk::simple::MaximumProjectionImageFilter Procedural Interface
 
@@ -29869,8 +26341,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Mean "
-Image itk::simple::Mean(const Image &image1, std::vector< unsigned int > radius=std::vector<
-unsigned int >(3, 1))
 
  itk::simple::MeanImageFilter Procedural Interface
 
@@ -29885,7 +26355,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::MeanProjection "
-Image itk::simple::MeanProjection(const Image &image1, unsigned int projectionDimension=0u)
 
  itk::simple::MeanProjectionImageFilter Procedural Interface
 
@@ -29900,8 +26369,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Median "
-Image itk::simple::Median(const Image &image1, std::vector< unsigned int > radius=std::vector<
-unsigned int >(3, 1))
 
  itk::simple::MedianImageFilter Procedural Interface
 
@@ -29916,7 +26383,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::MedianProjection "
-Image itk::simple::MedianProjection(const Image &image1, unsigned int projectionDimension=0u)
 
  itk::simple::MedianProjectionImageFilter Procedural Interface
 
@@ -29931,15 +26397,12 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Minimum "
-Image itk::simple::Minimum(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::Minimum "
-Image itk::simple::Minimum(const Image &image1, double constant)
 ";
 
 %feature("docstring")  itk::simple::Minimum "
-Image itk::simple::Minimum(const Image &image1, const Image &image2)
 
  itk::simple::MinimumImageFilter Procedural Interface
 
@@ -29954,7 +26417,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::MinimumMaximum "
-Image itk::simple::MinimumMaximum(const Image &image1)
 
  itk::simple::MinimumMaximumImageFilter Procedural Interface
 
@@ -29969,7 +26431,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::MinimumProjection "
-Image itk::simple::MinimumProjection(const Image &image1, unsigned int projectionDimension=0u)
 
  itk::simple::MinimumProjectionImageFilter Procedural Interface
 
@@ -29984,8 +26445,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::MinMaxCurvatureFlow "
-Image itk::simple::MinMaxCurvatureFlow(const Image &image1, double timeStep=0.05, uint32_t
-numberOfIterations=5u, int stencilRadius=2)
 
  itk::simple::MinMaxCurvatureFlowImageFilter Procedural Interface
 
@@ -30000,9 +26459,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::MirrorPad "
-Image itk::simple::MirrorPad(const Image &image1, std::vector< unsigned int >
-padLowerBound=std::vector< unsigned int >(3, 0), std::vector< unsigned
-int > padUpperBound=std::vector< unsigned int >(3, 0))
 
  itk::simple::MirrorPadImageFilter Procedural Interface
 
@@ -30017,15 +26473,12 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Modulus "
-Image itk::simple::Modulus(uint32_t constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::Modulus "
-Image itk::simple::Modulus(const Image &image1, uint32_t constant)
 ";
 
 %feature("docstring")  itk::simple::Modulus "
-Image itk::simple::Modulus(const Image &image1, const Image &image2)
 
  itk::simple::ModulusImageFilter Procedural Interface
 
@@ -30040,8 +26493,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::MomentsThreshold "
-Image itk::simple::MomentsThreshold(const Image &image1, uint8_t insideValue=1u, uint8_t outsideValue=0u,
-uint32_t numberOfHistogramBins=256u)
 
  itk::simple::MomentsThresholdImageFilter Procedural Interface
 
@@ -30056,9 +26507,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::MorphologicalGradient "
-Image itk::simple::MorphologicalGradient(const Image &, const std::vector< uint32_t > vectorRadius,
-MorphologicalGradientImageFilter::KernelType
-kernel=MorphologicalGradientImageFilter::Ball)
 
  itk::simple::MorphologicalGradientImageFilter Functional Interface
 
@@ -30067,9 +26515,6 @@ This function directly calls the execute method of MorphologicalGradientImageFil
 ";
 
 %feature("docstring")  itk::simple::MorphologicalGradient "
-Image itk::simple::MorphologicalGradient(const Image &, uint32_t radius=1,
-MorphologicalGradientImageFilter::KernelType
-kernel=MorphologicalGradientImageFilter::Ball)
 
  itk::simple::MorphologicalGradientImageFilter Functional Interface
 
@@ -30078,8 +26523,6 @@ This function directly calls the execute method of MorphologicalGradientImageFil
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershed "
-Image itk::simple::MorphologicalWatershed(const Image &image1, double level=0.0, bool markWatershedLine=true,
-bool fullyConnected=false)
 
  itk::simple::MorphologicalWatershedImageFilter Procedural Interface
 
@@ -30094,8 +26537,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::MorphologicalWatershedFromMarkers "
-Image itk::simple::MorphologicalWatershedFromMarkers(const Image &image1, const Image &image2, bool
-markWatershedLine=true, bool fullyConnected=false)
 
  itk::simple::MorphologicalWatershedFromMarkersImageFilter Procedural Interface
 
@@ -30110,15 +26551,12 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Multiply "
-Image itk::simple::Multiply(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::Multiply "
-Image itk::simple::Multiply(const Image &image1, double constant)
 ";
 
 %feature("docstring")  itk::simple::Multiply "
-Image itk::simple::Multiply(const Image &image1, const Image &image2)
 
  itk::simple::MultiplyImageFilter Procedural Interface
 
@@ -30133,13 +26571,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::N4BiasFieldCorrection "
-Image itk::simple::N4BiasFieldCorrection(const Image &image1, const Image &image2, double
-convergenceThreshold=0.001, std::vector< uint32_t >
-maximumNumberOfIterations=std::vector< uint32_t >(4, 50), double
-biasFieldFullWidthAtHalfMaximum=0.15, double wienerFilterNoise=0.01,
-uint32_t numberOfHistogramBins=200u, std::vector< uint32_t >
-numberOfControlPoints=std::vector< uint32_t >(3, 4), uint32_t
-splineOrder=3u)
 
  itk::simple::N4BiasFieldCorrectionImageFilter Procedural Interface
 
@@ -30154,29 +26585,21 @@ See:
 ";
 
 %feature("docstring")  itk::simple::NaryAdd "
-Image itk::simple::NaryAdd(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4, const Image &image5)
 ";
 
 %feature("docstring")  itk::simple::NaryAdd "
-Image itk::simple::NaryAdd(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4)
 ";
 
 %feature("docstring")  itk::simple::NaryAdd "
-Image itk::simple::NaryAdd(const Image &image1, const Image &image2, const Image &image3)
 ";
 
 %feature("docstring")  itk::simple::NaryAdd "
-Image itk::simple::NaryAdd(const Image &image1, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::NaryAdd "
-Image itk::simple::NaryAdd(const Image &image1)
 ";
 
 %feature("docstring")  itk::simple::NaryAdd "
-Image itk::simple::NaryAdd(const std::vector< Image > &images)
 
  itk::simple::NaryAddImageFilter Procedural Interface
 
@@ -30191,29 +26614,21 @@ See:
 ";
 
 %feature("docstring")  itk::simple::NaryMaximum "
-Image itk::simple::NaryMaximum(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4, const Image &image5)
 ";
 
 %feature("docstring")  itk::simple::NaryMaximum "
-Image itk::simple::NaryMaximum(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4)
 ";
 
 %feature("docstring")  itk::simple::NaryMaximum "
-Image itk::simple::NaryMaximum(const Image &image1, const Image &image2, const Image &image3)
 ";
 
 %feature("docstring")  itk::simple::NaryMaximum "
-Image itk::simple::NaryMaximum(const Image &image1, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::NaryMaximum "
-Image itk::simple::NaryMaximum(const Image &image1)
 ";
 
 %feature("docstring")  itk::simple::NaryMaximum "
-Image itk::simple::NaryMaximum(const std::vector< Image > &images)
 
  itk::simple::NaryMaximumImageFilter Procedural Interface
 
@@ -30228,9 +26643,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::NeighborhoodConnected "
-Image itk::simple::NeighborhoodConnected(const Image &imageA, std::vector< std::vector< unsigned int > >
-seedList, double lower=0, double upper=1, std::vector< unsigned int >
-radius=std::vector< unsigned int >(3, 1), double replaceValue=1)
 
  itk::simple::NeighborhoodConnectedImageFilter Functional Interface
 
@@ -30239,8 +26651,6 @@ This function directly calls the execute method of NeighborhoodConnectedImageFil
 ";
 
 %feature("docstring")  itk::simple::Noise "
-Image itk::simple::Noise(const Image &image1, std::vector< unsigned int > radius=std::vector<
-unsigned int >(3, 1))
 
  itk::simple::NoiseImageFilter Procedural Interface
 
@@ -30255,7 +26665,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Normalize "
-Image itk::simple::Normalize(const Image &image1)
 
  itk::simple::NormalizeImageFilter Procedural Interface
 
@@ -30270,7 +26679,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::NormalizedCorrelation "
-Image itk::simple::NormalizedCorrelation(const Image &image1, const Image &image2, const Image &image3)
 
  itk::simple::NormalizedCorrelationImageFilter Procedural Interface
 
@@ -30285,7 +26693,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::NormalizeToConstant "
-Image itk::simple::NormalizeToConstant(const Image &image1, double constant=1.0)
 
  itk::simple::NormalizeToConstantImageFilter Procedural Interface
 
@@ -30300,7 +26707,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Not "
-Image itk::simple::Not(const Image &image1)
 
  itk::simple::NotImageFilter Procedural Interface
 
@@ -30315,18 +26721,12 @@ See:
 ";
 
 %feature("docstring")  itk::simple::NotEqual "
-Image itk::simple::NotEqual(double constant, const Image &image2, uint8_t backgroundValue=0u,
-uint8_t foregroundValue=1u)
 ";
 
 %feature("docstring")  itk::simple::NotEqual "
-Image itk::simple::NotEqual(const Image &image1, double constant, uint8_t backgroundValue=0u,
-uint8_t foregroundValue=1u)
 ";
 
 %feature("docstring")  itk::simple::NotEqual "
-Image itk::simple::NotEqual(const Image &image1, const Image &image2, uint8_t backgroundValue=0u,
-uint8_t foregroundValue=1u)
 
  itk::simple::NotEqualImageFilter Procedural Interface
 
@@ -30341,10 +26741,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::OpeningByReconstruction "
-Image itk::simple::OpeningByReconstruction(const Image &, const std::vector< uint32_t > vectorRadius,
-OpeningByReconstructionImageFilter::KernelType
-kernel=OpeningByReconstructionImageFilter::Ball, bool
-fullyConnected=false, bool preserveIntensities=false)
 
  itk::simple::OpeningByReconstructionImageFilter Functional Interface
 
@@ -30353,10 +26749,6 @@ This function directly calls the execute method of OpeningByReconstructionImageF
 ";
 
 %feature("docstring")  itk::simple::OpeningByReconstruction "
-Image itk::simple::OpeningByReconstruction(const Image &, uint32_t radius=1,
-OpeningByReconstructionImageFilter::KernelType
-kernel=OpeningByReconstructionImageFilter::Ball, bool
-fullyConnected=false, bool preserveIntensities=false)
 
  itk::simple::OpeningByReconstructionImageFilter Functional Interface
 
@@ -30365,15 +26757,12 @@ This function directly calls the execute method of OpeningByReconstructionImageF
 ";
 
 %feature("docstring")  itk::simple::Or "
-Image itk::simple::Or(int constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::Or "
-Image itk::simple::Or(const Image &image1, int constant)
 ";
 
 %feature("docstring")  itk::simple::Or "
-Image itk::simple::Or(const Image &image1, const Image &image2)
 
  itk::simple::OrImageFilter Procedural Interface
 
@@ -30388,8 +26777,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::OtsuMultipleThresholds "
-Image itk::simple::OtsuMultipleThresholds(const Image &image1, uint8_t numberOfThresholds=1u, uint8_t
-labelOffset=0u, uint32_t numberOfHistogramBins=128u)
 
  itk::simple::OtsuMultipleThresholdsImageFilter Procedural Interface
 
@@ -30404,8 +26791,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::OtsuThreshold "
-Image itk::simple::OtsuThreshold(const Image &image1, uint8_t insideValue=1u, uint8_t outsideValue=0u,
-uint32_t numberOfHistogramBins=128u)
 
  itk::simple::OtsuThresholdImageFilter Procedural Interface
 
@@ -30420,10 +26805,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Paste "
-Image itk::simple::Paste(const Image &image1, const Image &image2, std::vector< unsigned int >
-sourceSize=std::vector< unsigned int >(3, 1), std::vector< int >
-sourceIndex=std::vector< int >(3, 0), std::vector< int >
-destinationIndex=std::vector< int >(3, 0))
 
  itk::simple::PasteImageFilter Procedural Interface
 
@@ -30438,9 +26819,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::PermuteAxes "
-Image itk::simple::PermuteAxes(const Image &image1, std::vector< unsigned int > order=std::vector<
-unsigned int >(&itk::simple::PermuteAxesImageFilter::DefaultOrder[0],&
-itk::simple::PermuteAxesImageFilter::DefaultOrder[3]))
 
  itk::simple::PermuteAxesImageFilter Procedural Interface
 
@@ -30455,11 +26833,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::PhysicalPointSource "
-Image itk::simple::PhysicalPointSource(PixelIDValueEnum outputPixelType=itk::simple::sitkVectorFloat32,
-std::vector< unsigned int > size=std::vector< unsigned int >(3, 64),
-std::vector< double > origin=std::vector< double >(3, 0.0),
-std::vector< double > spacing=std::vector< double >(3, 1.0),
-std::vector< double > direction=std::vector< double >())
 
  itk::simple::PhysicalPointImageSource Procedural Interface
 
@@ -30474,15 +26847,12 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Pow "
-Image itk::simple::Pow(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::Pow "
-Image itk::simple::Pow(const Image &image1, double constant)
 ";
 
 %feature("docstring")  itk::simple::Pow "
-Image itk::simple::Pow(const Image &image1, const Image &image2)
 
  itk::simple::PowImageFilter Procedural Interface
 
@@ -30497,14 +26867,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::ProjectedLandweberDeconvolution "
-Image itk::simple::ProjectedLandweberDeconvolution(const Image &image1, const Image &image2, double alpha=0.1, int
-numberOfIterations=1, bool normalize=false,
-ProjectedLandweberDeconvolutionImageFilter::BoundaryConditionType boun
-daryCondition=itk::simple::ProjectedLandweberDeconvolutionImageFilter:
-:ZERO_FLUX_NEUMANN_PAD,
-ProjectedLandweberDeconvolutionImageFilter::OutputRegionModeType outpu
-tRegionMode=itk::simple::ProjectedLandweberDeconvolutionImageFilter::S
-AME)
 
  itk::simple::ProjectedLandweberDeconvolutionImageFilter Procedural Interface
 
@@ -30519,8 +26881,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Rank "
-Image itk::simple::Rank(const Image &image1, double rank=0.5, std::vector< unsigned int >
-radius=std::vector< unsigned int >(3, 1))
 
  itk::simple::RankImageFilter Procedural Interface
 
@@ -30535,19 +26895,15 @@ See:
 ";
 
 %feature("docstring")  itk::simple::ReadImage "
-SITKIO_EXPORT Image itk::simple::ReadImage(const std::vector< std::string > &fileNames)
 ";
 
 %feature("docstring")  itk::simple::ReadImage "
-SITKIO_EXPORT Image itk::simple::ReadImage(std::string filename)
 ";
 
 %feature("docstring")  itk::simple::ReadTransform "
-Transform itk::simple::ReadTransform(const std::string &filename)
 ";
 
 %feature("docstring")  itk::simple::RealAndImaginaryToComplex "
-Image itk::simple::RealAndImaginaryToComplex(const Image &image1, const Image &image2)
 
  itk::simple::RealAndImaginaryToComplexImageFilter Procedural Interface
 
@@ -30562,7 +26918,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::RealToHalfHermitianForwardFFT "
-Image itk::simple::RealToHalfHermitianForwardFFT(const Image &image1)
 
  itk::simple::RealToHalfHermitianForwardFFTImageFilter Procedural Interface
 
@@ -30577,8 +26932,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::ReconstructionByDilation "
-Image itk::simple::ReconstructionByDilation(const Image &image1, const Image &image2, bool fullyConnected=false,
-bool useInternalCopy=true)
 
  itk::simple::ReconstructionByDilationImageFilter Procedural Interface
 
@@ -30593,8 +26946,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::ReconstructionByErosion "
-Image itk::simple::ReconstructionByErosion(const Image &image1, const Image &image2, bool fullyConnected=false,
-bool useInternalCopy=true)
 
  itk::simple::ReconstructionByErosionImageFilter Procedural Interface
 
@@ -30609,11 +26960,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::RecursiveGaussian "
-Image itk::simple::RecursiveGaussian(const Image &image1, double sigma=1.0, bool
-normalizeAcrossScale=false,
-itk::simple::RecursiveGaussianImageFilter::OrderEnumType
-order=itk::simple::RecursiveGaussianImageFilter::ZeroOrder, unsigned
-int direction=0u)
 
  itk::simple::RecursiveGaussianImageFilter Procedural Interface
 
@@ -30628,9 +26974,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::RegionalMaxima "
-Image itk::simple::RegionalMaxima(const Image &image1, double backgroundValue=0.0, double
-foregroundValue=1.0, bool fullyConnected=false, bool
-flatIsMaxima=true)
 
  itk::simple::RegionalMaximaImageFilter Procedural Interface
 
@@ -30645,9 +26988,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::RegionalMinima "
-Image itk::simple::RegionalMinima(const Image &image1, double backgroundValue=0.0, double
-foregroundValue=1.0, bool fullyConnected=false, bool
-flatIsMinima=true)
 
  itk::simple::RegionalMinimaImageFilter Procedural Interface
 
@@ -30662,9 +27002,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::RegionOfInterest "
-Image itk::simple::RegionOfInterest(const Image &image1, std::vector< unsigned int > size=std::vector<
-unsigned int >(3, 1), std::vector< int > index=std::vector< int >(3,
-0))
 
  itk::simple::RegionOfInterestImageFilter Procedural Interface
 
@@ -30679,7 +27016,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::RelabelComponent "
-Image itk::simple::RelabelComponent(const Image &image1, uint64_t minimumObjectSize=0u)
 
  itk::simple::RelabelComponentImageFilter Procedural Interface
 
@@ -30694,8 +27030,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::RenyiEntropyThreshold "
-Image itk::simple::RenyiEntropyThreshold(const Image &image1, uint8_t insideValue=1u, uint8_t outsideValue=0u,
-uint32_t numberOfHistogramBins=256u)
 
  itk::simple::RenyiEntropyThresholdImageFilter Procedural Interface
 
@@ -30710,8 +27044,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::RescaleIntensity "
-Image itk::simple::RescaleIntensity(const Image &image1, double outputMinimum=0, double
-outputMaximum=255)
 
  itk::simple::RescaleIntensityImageFilter Procedural Interface
 
@@ -30726,13 +27058,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::RichardsonLucyDeconvolution "
-Image itk::simple::RichardsonLucyDeconvolution(const Image &image1, const Image &image2, int numberOfIterations=1,
-bool normalize=false,
-RichardsonLucyDeconvolutionImageFilter::BoundaryConditionType boundary
-Condition=itk::simple::RichardsonLucyDeconvolutionImageFilter::ZERO_FL
-UX_NEUMANN_PAD,
-RichardsonLucyDeconvolutionImageFilter::OutputRegionModeType outputReg
-ionMode=itk::simple::RichardsonLucyDeconvolutionImageFilter::SAME)
 
  itk::simple::RichardsonLucyDeconvolutionImageFilter Procedural Interface
 
@@ -30747,8 +27072,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::ScalarConnectedComponent "
-Image itk::simple::ScalarConnectedComponent(const Image &image1, double distanceThreshold=0.0, bool
-fullyConnected=false)
 
  itk::simple::ScalarConnectedComponentImageFilter Procedural Interface
 
@@ -30763,9 +27086,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::ScalarImageKmeans "
-Image itk::simple::ScalarImageKmeans(const Image &image1, std::vector< double >
-classWithInitialMean=std::vector< double >(), bool
-useNonContiguousLabels=false)
 
  itk::simple::ScalarImageKmeansImageFilter Procedural Interface
 
@@ -30780,8 +27100,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::ScalarToRGBColormap "
-Image itk::simple::ScalarToRGBColormap(const Image &image1, ScalarToRGBColormapImageFilter::ColormapType
-colormap=itk::simple::ScalarToRGBColormapImageFilter::Grey)
 
  itk::simple::ScalarToRGBColormapImageFilter Procedural Interface
 
@@ -30796,8 +27114,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::ShanbhagThreshold "
-Image itk::simple::ShanbhagThreshold(const Image &image1, uint8_t insideValue=1u, uint8_t outsideValue=0u,
-uint32_t numberOfHistogramBins=256u)
 
  itk::simple::ShanbhagThresholdImageFilter Procedural Interface
 
@@ -30812,10 +27128,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::ShapeDetectionLevelSet "
-Image itk::simple::ShapeDetectionLevelSet(const Image &image1, const Image &image2, double
-maximumRMSError=0.02, double propagationScaling=1.0, double
-curvatureScaling=1.0, uint32_t numberOfIterations=1000u, bool
-reverseExpansionDirection=false)
 
  itk::simple::ShapeDetectionLevelSetImageFilter Procedural Interface
 
@@ -30830,7 +27142,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::ShiftScale "
-Image itk::simple::ShiftScale(const Image &image1, double shift=0, double scale=1.0)
 
  itk::simple::ShiftScaleImageFilter Procedural Interface
 
@@ -30845,7 +27156,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Show "
-void SITKIO_EXPORT itk::simple::Show(const Image &image, const std::string title=\"\")
 
 Display an image using ImageJ
 
@@ -30901,8 +27211,6 @@ SITK_SHOW_COMMAND environment variable.
 ";
 
 %feature("docstring")  itk::simple::Shrink "
-Image itk::simple::Shrink(const Image &image1, std::vector< unsigned int >
-shrinkFactors=std::vector< unsigned int >(3, 1))
 
  itk::simple::ShrinkImageFilter Procedural Interface
 
@@ -30917,8 +27225,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Sigmoid "
-Image itk::simple::Sigmoid(const Image &image1, double alpha=1, double beta=0, double
-outputMaximum=255, double outputMinimum=0)
 
  itk::simple::SigmoidImageFilter Procedural Interface
 
@@ -30933,8 +27239,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::SignedDanielssonDistanceMap "
-Image itk::simple::SignedDanielssonDistanceMap(const Image &image1, bool insideIsPositive=false, bool
-squaredDistance=false, bool useImageSpacing=false)
 
  itk::simple::SignedDanielssonDistanceMapImageFilter Procedural Interface
 
@@ -30949,8 +27253,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::SignedMaurerDistanceMap "
-Image itk::simple::SignedMaurerDistanceMap(const Image &image1, bool insideIsPositive=false, bool
-squaredDistance=true, bool useImageSpacing=false)
 
  itk::simple::SignedMaurerDistanceMapImageFilter Procedural Interface
 
@@ -30965,7 +27267,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::SimilarityIndex "
-Image itk::simple::SimilarityIndex(const Image &image1, const Image &image2)
 
  itk::simple::SimilarityIndexImageFilter Procedural Interface
 
@@ -30980,10 +27281,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::SimpleContourExtractor "
-Image itk::simple::SimpleContourExtractor(const Image &image1, double inputForegroundValue=1.0, double
-inputBackgroundValue=0.0, std::vector< unsigned int >
-radius=std::vector< unsigned int >(3, 1), double
-outputForegroundValue=1.0, double outputBackgroundValue=0.0)
 
  itk::simple::SimpleContourExtractorImageFilter Procedural Interface
 
@@ -30998,7 +27295,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Sin "
-Image itk::simple::Sin(const Image &image1)
 
  itk::simple::SinImageFilter Procedural Interface
 
@@ -31013,14 +27309,12 @@ See:
 ";
 
 %feature("docstring")  itk::simple::sitkITKVectorToSTL "
-std::vector<TType> SITKCommon_HIDDEN itk::simple::sitkITKVectorToSTL(const TITKVector &in)
 
 Convert an ITK fixed width vector to a std::vector.
 
 ";
 
 %feature("docstring")  itk::simple::sitkSTLVectorToITK "
-TITKVector SITKCommon_HIDDEN itk::simple::sitkSTLVectorToITK(const std::vector< TType > &in)
 
 Copy the elements of an std::vector into an ITK fixed width vector.
 
@@ -31032,10 +27326,6 @@ generated.
 ";
 
 %feature("docstring")  itk::simple::Slice "
-Image itk::simple::Slice(const Image &image1, std::vector< int32_t > start=std::vector<
-int32_t >(3, 0), std::vector< int32_t > stop=std::vector< int32_t >(3,
-std::numeric_limits< int32_t >::max()), std::vector< int >
-step=std::vector< int >(3, 1))
 
  itk::simple::SliceImageFilter Procedural Interface
 
@@ -31050,8 +27340,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::SmoothingRecursiveGaussian "
-Image itk::simple::SmoothingRecursiveGaussian(const Image &image1, double sigma=1.0, bool
-normalizeAcrossScale=false)
 
  itk::simple::SmoothingRecursiveGaussianImageFilter Procedural Interface
 
@@ -31066,7 +27354,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::SobelEdgeDetection "
-Image itk::simple::SobelEdgeDetection(const Image &image1)
 
  itk::simple::SobelEdgeDetectionImageFilter Procedural Interface
 
@@ -31081,7 +27368,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Sqrt "
-Image itk::simple::Sqrt(const Image &image1)
 
  itk::simple::SqrtImageFilter Procedural Interface
 
@@ -31096,7 +27382,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Square "
-Image itk::simple::Square(const Image &image1)
 
  itk::simple::SquareImageFilter Procedural Interface
 
@@ -31111,15 +27396,12 @@ See:
 ";
 
 %feature("docstring")  itk::simple::SquaredDifference "
-Image itk::simple::SquaredDifference(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::SquaredDifference "
-Image itk::simple::SquaredDifference(const Image &image1, double constant)
 ";
 
 %feature("docstring")  itk::simple::SquaredDifference "
-Image itk::simple::SquaredDifference(const Image &image1, const Image &image2)
 
  itk::simple::SquaredDifferenceImageFilter Procedural Interface
 
@@ -31134,7 +27416,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::StandardDeviationProjection "
-Image itk::simple::StandardDeviationProjection(const Image &image1, unsigned int projectionDimension=0u)
 
  itk::simple::StandardDeviationProjectionImageFilter Procedural Interface
 
@@ -31149,41 +27430,21 @@ See:
 ";
 
 %feature("docstring")  itk::simple::STAPLE "
-Image itk::simple::STAPLE(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4, const Image &image5, double confidenceWeight=1.0,
-double foregroundValue=1.0, unsigned int
-maximumIterations=std::numeric_limits< unsigned int >::max())
 ";
 
 %feature("docstring")  itk::simple::STAPLE "
-Image itk::simple::STAPLE(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4, double confidenceWeight=1.0, double
-foregroundValue=1.0, unsigned int
-maximumIterations=std::numeric_limits< unsigned int >::max())
 ";
 
 %feature("docstring")  itk::simple::STAPLE "
-Image itk::simple::STAPLE(const Image &image1, const Image &image2, const Image &image3, double
-confidenceWeight=1.0, double foregroundValue=1.0, unsigned int
-maximumIterations=std::numeric_limits< unsigned int >::max())
 ";
 
 %feature("docstring")  itk::simple::STAPLE "
-Image itk::simple::STAPLE(const Image &image1, const Image &image2, double
-confidenceWeight=1.0, double foregroundValue=1.0, unsigned int
-maximumIterations=std::numeric_limits< unsigned int >::max())
 ";
 
 %feature("docstring")  itk::simple::STAPLE "
-Image itk::simple::STAPLE(const Image &image1, double confidenceWeight=1.0, double
-foregroundValue=1.0, unsigned int
-maximumIterations=std::numeric_limits< unsigned int >::max())
 ";
 
 %feature("docstring")  itk::simple::STAPLE "
-Image itk::simple::STAPLE(const std::vector< Image > &images, double confidenceWeight=1.0,
-double foregroundValue=1.0, unsigned int
-maximumIterations=std::numeric_limits< unsigned int >::max())
 
  itk::simple::STAPLEImageFilter Procedural Interface
 
@@ -31198,19 +27459,15 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Statistics "
-SITKBasicFilters0_EXPORT itk::simple::MeasurementMap itk::simple::Statistics(const Image &)
 ";
 
 %feature("docstring")  itk::simple::Subtract "
-Image itk::simple::Subtract(double constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::Subtract "
-Image itk::simple::Subtract(const Image &image1, double constant)
 ";
 
 %feature("docstring")  itk::simple::Subtract "
-Image itk::simple::Subtract(const Image &image1, const Image &image2)
 
  itk::simple::SubtractImageFilter Procedural Interface
 
@@ -31225,7 +27482,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::SumProjection "
-Image itk::simple::SumProjection(const Image &image1, unsigned int projectionDimension=0u)
 
  itk::simple::SumProjectionImageFilter Procedural Interface
 
@@ -31240,7 +27496,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Tan "
-Image itk::simple::Tan(const Image &image1)
 
  itk::simple::TanImageFilter Procedural Interface
 
@@ -31255,7 +27510,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::TernaryAdd "
-Image itk::simple::TernaryAdd(const Image &image1, const Image &image2, const Image &image3)
 
  itk::simple::TernaryAddImageFilter Procedural Interface
 
@@ -31270,7 +27524,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::TernaryMagnitude "
-Image itk::simple::TernaryMagnitude(const Image &image1, const Image &image2, const Image &image3)
 
  itk::simple::TernaryMagnitudeImageFilter Procedural Interface
 
@@ -31285,7 +27538,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::TernaryMagnitudeSquared "
-Image itk::simple::TernaryMagnitudeSquared(const Image &image1, const Image &image2, const Image &image3)
 
  itk::simple::TernaryMagnitudeSquaredImageFilter Procedural Interface
 
@@ -31300,8 +27552,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Threshold "
-Image itk::simple::Threshold(const Image &image1, double lower=0.0, double upper=1.0, double
-outsideValue=0.0)
 
  itk::simple::ThresholdImageFilter Procedural Interface
 
@@ -31316,9 +27566,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::ThresholdMaximumConnectedComponents "
-Image itk::simple::ThresholdMaximumConnectedComponents(const Image &image1, uint32_t minimumObjectSizeInPixels=0u, double
-upperBoundary=std::numeric_limits< double >::max(), uint8_t
-insideValue=1u, uint8_t outsideValue=0u)
 
  itk::simple::ThresholdMaximumConnectedComponentsImageFilter Procedural Interface
 
@@ -31333,10 +27580,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::ThresholdSegmentationLevelSet "
-Image itk::simple::ThresholdSegmentationLevelSet(const Image &image1, const Image &image2, double lowerThreshold=0.0,
-double upperThreshold=255.0, double maximumRMSError=0.02, double
-propagationScaling=1.0, double curvatureScaling=1.0, uint32_t
-numberOfIterations=1000u, bool reverseExpansionDirection=false)
 
  itk::simple::ThresholdSegmentationLevelSetImageFilter Procedural Interface
 
@@ -31351,12 +27594,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::TikhonovDeconvolution "
-Image itk::simple::TikhonovDeconvolution(const Image &image1, const Image &image2, double
-regularizationConstant=0.0, bool normalize=false,
-TikhonovDeconvolutionImageFilter::BoundaryConditionType boundaryCondit
-ion=itk::simple::TikhonovDeconvolutionImageFilter::ZERO_FLUX_NEUMANN_P
-AD, TikhonovDeconvolutionImageFilter::OutputRegionModeType
-outputRegionMode=itk::simple::TikhonovDeconvolutionImageFilter::SAME)
 
  itk::simple::TikhonovDeconvolutionImageFilter Procedural Interface
 
@@ -31371,36 +27608,21 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Tile "
-Image itk::simple::Tile(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4, const Image &image5, std::vector< uint32_t >
-layout=std::vector< uint32_t >(3, 100), double defaultPixelValue=0.0)
 ";
 
 %feature("docstring")  itk::simple::Tile "
-Image itk::simple::Tile(const Image &image1, const Image &image2, const Image &image3, const
-Image &image4, std::vector< uint32_t > layout=std::vector< uint32_t
->(3, 100), double defaultPixelValue=0.0)
 ";
 
 %feature("docstring")  itk::simple::Tile "
-Image itk::simple::Tile(const Image &image1, const Image &image2, const Image &image3,
-std::vector< uint32_t > layout=std::vector< uint32_t >(3, 100), double
-defaultPixelValue=0.0)
 ";
 
 %feature("docstring")  itk::simple::Tile "
-Image itk::simple::Tile(const Image &image1, const Image &image2, std::vector< uint32_t >
-layout=std::vector< uint32_t >(3, 100), double defaultPixelValue=0.0)
 ";
 
 %feature("docstring")  itk::simple::Tile "
-Image itk::simple::Tile(const Image &image1, std::vector< uint32_t > layout=std::vector<
-uint32_t >(3, 100), double defaultPixelValue=0.0)
 ";
 
 %feature("docstring")  itk::simple::Tile "
-Image itk::simple::Tile(const std::vector< Image > &images, std::vector< uint32_t >
-layout=std::vector< uint32_t >(3, 100), double defaultPixelValue=0.0)
 
  itk::simple::TileImageFilter Procedural Interface
 
@@ -31415,8 +27637,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::TriangleThreshold "
-Image itk::simple::TriangleThreshold(const Image &image1, uint8_t insideValue=1u, uint8_t outsideValue=0u,
-uint32_t numberOfHistogramBins=256u)
 
  itk::simple::TriangleThresholdImageFilter Procedural Interface
 
@@ -31431,7 +27651,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::UnaryMinus "
-Image itk::simple::UnaryMinus(const Image &image1)
 
  itk::simple::UnaryMinusImageFilter Procedural Interface
 
@@ -31446,7 +27665,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Unused "
-void SITKCommon_HIDDEN itk::simple::Unused(const T &)
 
 A function which does nothing.
 
@@ -31457,7 +27675,6 @@ compiler warning.
 ";
 
 %feature("docstring")  itk::simple::ValuedRegionalMaxima "
-Image itk::simple::ValuedRegionalMaxima(const Image &image1, bool fullyConnected=false)
 
  itk::simple::ValuedRegionalMaximaImageFilter Procedural Interface
 
@@ -31472,7 +27689,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::ValuedRegionalMinima "
-Image itk::simple::ValuedRegionalMinima(const Image &image1, bool fullyConnected=false)
 
  itk::simple::ValuedRegionalMinimaImageFilter Procedural Interface
 
@@ -31487,9 +27703,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::VectorConfidenceConnected "
-Image itk::simple::VectorConfidenceConnected(const Image &imageA, std::vector< std::vector< unsigned int > >
-seedList, unsigned int numberOfIterations=4u, double multiplier=4.5,
-unsigned int initialNeighborhoodRadius=1u, uint8_t replaceValue=1u)
 
  itk::simple::VectorConfidenceConnectedImageFilter Functional Interface
 
@@ -31498,8 +27711,6 @@ This function directly calls the execute method of VectorConfidenceConnectedImag
 ";
 
 %feature("docstring")  itk::simple::VectorConnectedComponent "
-Image itk::simple::VectorConnectedComponent(const Image &image1, double distanceThreshold=1.0, bool
-fullyConnected=false)
 
  itk::simple::VectorConnectedComponentImageFilter Procedural Interface
 
@@ -31514,7 +27725,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::VectorIndexSelectionCast "
-Image itk::simple::VectorIndexSelectionCast(const Image &image1, unsigned int index=0u)
 
  itk::simple::VectorIndexSelectionCastImageFilter Procedural Interface
 
@@ -31529,7 +27739,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::VectorMagnitude "
-Image itk::simple::VectorMagnitude(const Image &image1)
 
  itk::simple::VectorMagnitudeImageFilter Procedural Interface
 
@@ -31544,10 +27753,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::VotingBinary "
-Image itk::simple::VotingBinary(const Image &image1, std::vector< unsigned int > radius=std::vector<
-unsigned int >(3, 1), unsigned int birthThreshold=1u, unsigned int
-survivalThreshold=1u, double foregroundValue=1.0, double
-backgroundValue=0.0)
 
  itk::simple::VotingBinaryImageFilter Procedural Interface
 
@@ -31562,9 +27767,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryHoleFilling "
-Image itk::simple::VotingBinaryHoleFilling(const Image &image1, std::vector< unsigned int > radius=std::vector<
-unsigned int >(3, 1), unsigned int majorityThreshold=1u, double
-foregroundValue=1.0, double backgroundValue=0.0)
 
  itk::simple::VotingBinaryHoleFillingImageFilter Procedural Interface
 
@@ -31579,10 +27781,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::VotingBinaryIterativeHoleFilling "
-Image itk::simple::VotingBinaryIterativeHoleFilling(const Image &image1, std::vector< unsigned int > radius=std::vector<
-unsigned int >(3, 1), unsigned int maximumNumberOfIterations=10u,
-unsigned int majorityThreshold=1u, double foregroundValue=1.0, double
-backgroundValue=0.0)
 
  itk::simple::VotingBinaryIterativeHoleFillingImageFilter Procedural Interface
 
@@ -31597,9 +27795,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::WhiteTopHat "
-Image itk::simple::WhiteTopHat(const Image &, const std::vector< uint32_t > vectorRadius,
-WhiteTopHatImageFilter::KernelType
-kernel=WhiteTopHatImageFilter::Ball, bool safeBorder=true)
 
  itk::simple::WhiteTopHatImageFilter Functional Interface
 
@@ -31608,8 +27803,6 @@ This function directly calls the execute method of WhiteTopHatImageFilter in ord
 ";
 
 %feature("docstring")  itk::simple::WhiteTopHat "
-Image itk::simple::WhiteTopHat(const Image &, uint32_t radius=1, WhiteTopHatImageFilter::KernelType
-kernel=WhiteTopHatImageFilter::Ball, bool safeBorder=true)
 
  itk::simple::WhiteTopHatImageFilter Functional Interface
 
@@ -31618,12 +27811,6 @@ This function directly calls the execute method of WhiteTopHatImageFilter in ord
 ";
 
 %feature("docstring")  itk::simple::WienerDeconvolution "
-Image itk::simple::WienerDeconvolution(const Image &image1, const Image &image2, double noiseVariance=0.0,
-bool normalize=false,
-WienerDeconvolutionImageFilter::BoundaryConditionType boundaryConditio
-n=itk::simple::WienerDeconvolutionImageFilter::ZERO_FLUX_NEUMANN_PAD,
-WienerDeconvolutionImageFilter::OutputRegionModeType
-outputRegionMode=itk::simple::WienerDeconvolutionImageFilter::SAME)
 
  itk::simple::WienerDeconvolutionImageFilter Procedural Interface
 
@@ -31638,9 +27825,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::WrapPad "
-Image itk::simple::WrapPad(const Image &image1, std::vector< unsigned int >
-padLowerBound=std::vector< unsigned int >(3, 0), std::vector< unsigned
-int > padUpperBound=std::vector< unsigned int >(3, 0))
 
  itk::simple::WrapPadImageFilter Procedural Interface
 
@@ -31655,24 +27839,18 @@ See:
 ";
 
 %feature("docstring")  itk::simple::WriteImage "
-SITKIO_EXPORT void itk::simple::WriteImage(const Image &image, const std::string &fileName, bool
-inUseCompression=false)
 ";
 
 %feature("docstring")  itk::simple::WriteTransform "
-void itk::simple::WriteTransform(const Transform &transform, const std::string &filename)
 ";
 
 %feature("docstring")  itk::simple::Xor "
-Image itk::simple::Xor(int constant, const Image &image2)
 ";
 
 %feature("docstring")  itk::simple::Xor "
-Image itk::simple::Xor(const Image &image1, int constant)
 ";
 
 %feature("docstring")  itk::simple::Xor "
-Image itk::simple::Xor(const Image &image1, const Image &image2)
 
  itk::simple::XorImageFilter Procedural Interface
 
@@ -31687,8 +27865,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::YenThreshold "
-Image itk::simple::YenThreshold(const Image &image1, uint8_t insideValue=1u, uint8_t outsideValue=0u,
-uint32_t numberOfHistogramBins=256u)
 
  itk::simple::YenThresholdImageFilter Procedural Interface
 
@@ -31703,8 +27879,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::ZeroCrossing "
-Image itk::simple::ZeroCrossing(const Image &image1, uint8_t foregroundValue=1u, uint8_t
-backgroundValue=0u)
 
  itk::simple::ZeroCrossingImageFilter Procedural Interface
 
@@ -31719,8 +27893,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::ZeroCrossingBasedEdgeDetection "
-Image itk::simple::ZeroCrossingBasedEdgeDetection(const Image &image1, double variance=1, uint8_t foregroundValue=1u,
-uint8_t backgroundValue=0u, double maximumError=0.1)
 
  itk::simple::ZeroCrossingBasedEdgeDetectionImageFilter Procedural Interface
 
@@ -31735,9 +27907,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::ZeroFluxNeumannPad "
-Image itk::simple::ZeroFluxNeumannPad(const Image &image1, std::vector< unsigned int >
-padLowerBound=std::vector< unsigned int >(3, 0), std::vector< unsigned
-int > padUpperBound=std::vector< unsigned int >(3, 0))
 
  itk::simple::ZeroFluxNeumannPadImageFilter Procedural Interface
 
