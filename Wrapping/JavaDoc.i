@@ -33622,7 +33622,7 @@ SITKIO_EXPORT Image itk::simple::ReadImage(std::string filename)
 public ";
 
 %javamethodmodifiers  itk::simple::ReadTransform "/**
-Transform itk::simple::ReadTransform(const std::string &filename)
+SITKCommon_EXPORT Transform itk::simple::ReadTransform(const std::string &filename)
 */
 public ";
 
@@ -34819,7 +34819,7 @@ inUseCompression=false)
 public ";
 
 %javamethodmodifiers  itk::simple::WriteTransform "/**
-void itk::simple::WriteTransform(const Transform &transform, const std::string &filename)
+SITKCommon_EXPORT void itk::simple::WriteTransform(const Transform &transform, const std::string &filename)
 */
 public ";
 
