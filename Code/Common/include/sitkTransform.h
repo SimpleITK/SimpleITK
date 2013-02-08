@@ -155,10 +155,10 @@ private:
 
 
 // read
-Transform ReadTransform( const std::string &filename );
+SITKCommon_EXPORT Transform ReadTransform( const std::string &filename );
 
 // write
-void WriteTransform( const Transform &transform, const std::string &filename);
+SITKCommon_EXPORT void WriteTransform( const Transform &transform, const std::string &filename);
 
 }
 }
