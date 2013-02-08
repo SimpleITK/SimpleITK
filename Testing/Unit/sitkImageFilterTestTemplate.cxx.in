@@ -153,10 +153,10 @@ $(if inputA_cast then
     ASSERT_TRUE ( inputs[i].GetITKBase() != NULL ) << "Could not read " << inputFileNames[i];
     }
 
-    $(if (not no_procedure) or (no_procedure == 1) then
-OUT=[=[
     if ( firstPassSoTestFunctional ) {
       firstPassSoTestFunctional = false;
+    $(if (not no_procedure) or (no_procedure == 1) then
+OUT=[=[
 
       // Do we get the same image back, if we use the functional interface?
       itk::simple::Image fromFunctional( 0, 0, itk::simple::sitkUInt8 );
@@ -175,8 +175,8 @@ OUT=[=[
                                                                       ) ) << "Functional interface to ${name}";
       hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
       EXPECT_EQ ( hasher.Execute ( fromProcedural ), hasher.Execute ( fromFunctional ) ) << "procedural and functional are not the same!";
-    }
 ]=] end)
+    }
 
 $(if settings then
 OUT=[[
