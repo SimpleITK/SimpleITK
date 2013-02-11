@@ -1,4 +1,9 @@
 cmake_minimum_required ( VERSION 2.8.1 FATAL_ERROR )
+
+# Explicitly add INCREMENTAL linking option to command lines.
+# http://www.cmake.org/pipermail/cmake/2010-February/035174.html
+SET(MSVC_INCREMENTAL_DEFAULT ON)
+
 project ( SimpleITK )
 
 cmake_policy( VERSION 2.8.1 )
@@ -177,6 +182,19 @@ if(MSVC)
 
   # Avoid some warnings
   add_definitions ( -D_SCL_SECURE_NO_WARNINGS )
+
+
+  # force debug linking not to be incremental
+  foreach( _varName
+      CMAKE_EXE_LINKER_FLAGS_DEBUG
+      CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO
+      CMAKE_MODULE_LINKER_FLAGS_DEBUG
+      CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO
+      CMAKE_SHARED_LINKER_FLAGS_DEBUG
+      CMAKE_SHARED_LINKER_FLAGS_RELWITHDEBINFO )
+    STRING(REGEX REPLACE "INCREMENTAL(:[a-zA-Z]+)?" "INCREMENTAL:NO" ${_varName} ${${_varName}})
+  endforeach()
+
 endif()
 
 
