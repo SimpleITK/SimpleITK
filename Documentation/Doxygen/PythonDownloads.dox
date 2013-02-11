@@ -9,6 +9,18 @@ It is also referenced from Python package index Pypi to facilitate automatic dow
 $ easy_install SimpleITK
 \endcode
 
+\section v060 SimpleITK 0.6.0
+
+         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.6.0/Python/SimpleITK-0.6.0-py2.6-linux-x86_64.egg#e212a37be1f1644fa04ee537f1035d03">SimpleITK-0.6.0-py2.6-linux-x86_64.egg</a>
+         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.6.0/Python/SimpleITK-0.6.0-py2.6-macosx-10.6-universal.egg#f1b124d0d532ed66a61311762bfd661c">SimpleITK-0.6.0-py2.6-macosx-10.6-universal.egg</a>
+         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.6.0/Python/SimpleITK-0.6.0-py2.7-linux-i686.egg#ccae63329c2067e91321856bc833de91">SimpleITK-0.6.0-py2.7-linux-i686.egg</a>
+         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.6.0/Python/SimpleITK-0.6.0-py2.7-linux-x86_64.egg#dc9003e63fd986bb34d8fd6b44803c34">SimpleITK-0.6.0-py2.7-linux-x86_64.egg</a>
+         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.6.0/Python/SimpleITK-0.6.0-py2.7-macosx-10.7-intel.egg#adc7fe84e1c88655821b226f55bba4c5">SimpleITK-0.6.0-py2.7-macosx-10.7-intel.egg</a>
+         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.6.0/Python/SimpleITK-0.6.0-py2.7-win32.egg#29b4a79d4cc04f77add6e0351a78d221">SimpleITK-0.6.0-py2.7-win32.egg</a>
+         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.6.0/Python/SimpleITK-0.6.0-py2.7-win-amd64.egg#bdcca61765c8fb8bc034a091afe9dc36">SimpleITK-0.6.0-py2.7-win-amd64.egg</a>
+         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.6.0/Python/SimpleITK-0.6.0-py3.2-linux-i686.egg#7add443a9ab3179b0680364ac57f197b">SimpleITK-0.6.0-py3.2-linux-i686.egg</a>
+         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.6.0/Python/SimpleITK-0.6.0-py3.2-linux-x86_64.egg#3fb2387f4834c02609bb888b66c27791">SimpleITK-0.6.0-py3.2-linux-x86_64.egg</a>
+
 \section v051 SimpleITK 0.5.1
 
          \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.5.1/Python/SimpleITK-0.5.1-py2.6-linux-x86_64.egg#34be03dd6ae00481f937a1fb359dee40">SimpleITK-0.5.1-py2.6-linux-x86_64.egg</a>
