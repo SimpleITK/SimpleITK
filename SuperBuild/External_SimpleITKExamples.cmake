@@ -18,7 +18,7 @@ ExternalProject_Add(${proj}
     --no-warn-unused-cli
     -C "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt"
     ${ep_common_args}
-    -DSimpleITK_DIR:PATH=${CMAKE_CURRENT_BINARY_DIR}/lib/cmake/SimpleITK-0.6/
+    -DSimpleITK_DIR:PATH=${CMAKE_CURRENT_BINARY_DIR}/lib/cmake/SimpleITK-0.7/
     -DCMAKE_SKIP_RPATH:BOOL=ON
     -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
   BUILD_COMMAND ${BUILD_COMMAND_STRING}
