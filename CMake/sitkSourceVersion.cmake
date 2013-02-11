@@ -1,7 +1,7 @@
 #
 # This CMake code extracts the information from the git repository,
 # and automatically causes a reconfigure if the git HEAD changes. The
-# following variable may defined after execution:
+# following variable may be defined after execution:
 #
 # _GIT_VERSION_HASH - the SHA1 hash of the current HEAD
 #
@@ -15,10 +15,10 @@
 # _GIT_VERSION_TWEAK
 # _GIT_VERSION_RC
 #
-# If the current projects version ( defiend by
+# If the current project's version ( defiend by
 # ${CMAKE_PROJECT_NAME}_VERSION_MAJOR and MINOR and PATCH and TWEAK
-# match that of the tag, then it'll be considered the project is in
-# post release mode otherwise it's considered underdevelopment.
+# match that of the tag, then it'll be considered that the project is
+# in post release mode otherwise it's considered underdevelopment.
 #
 # Only one of the following variables will be defined.
 # _GIT_VERSION_DEV is defined as number of commits
@@ -48,7 +48,7 @@ git_describe(_GIT_TAG "--match=v*")
 
 git_commits_since("${PROJECT_SOURCE_DIR}/Version.cmake" _GIT_VERSION_COUNT)
 
-set(VERSION_REGEX "^v([0-9]+)\\.([0-9]+)+(\\.([0-9]+))?(\\.([0-9]+))?((a|b|c|rc)[0-9]*)(-[0-9]+)?")
+set(VERSION_REGEX "^v([0-9]+)\\.([0-9]+)+(\\.([0-9]+))?(\\.([0-9]+))?((a|b|c|rc)[0-9]*)?(-[0-9]+)?")
 
 string(REGEX MATCH "${VERSION_REGEX}" _out "${_GIT_TAG}")
 
