@@ -247,22 +247,31 @@ if ( WRAP_CSHARP )
   find_package( CSharp REQUIRED )
   include( ${CSHARP_USE_FILE} )
 
-  # CSharp version requirements: http://msdn.microsoft.com/en-us/library/system.version.aspx
-  # major.minor[.build[.revision]] where all components are 32-bit integers
-   set(_build 0)
+  # CSharp version requirements: http://msdn.microsoft.com/en-us/library/system.reflection.assemblyversionattribute.aspx
+  # major.minor[.build[.revision]] where all components are 16-bit unsigned integers
+  set(_build 0)
   if(DEFINED SimpleITK_VERSION_POST)
     math(EXPR _build "${SimpleITK_VERSION_POST}")
   elseif(DEFINED SimpleITK_VERSION_DEV)
-    math(EXPR _build "${SimpleITK_VERSION_DEV}<<16")
+    math(EXPR _build "32768+${SimpleITK_VERSION_DEV}")
+  endif()
+  if(_build GREATER 65535)
+    message(WARNING "CSharp build component overflowed, setting to 65535 instead of ${_build}.")
+    set(_build 65535)
   endif()
 
   set(_revision 0)
   if(DEFINED SimpleITK_VERSION_PATCH)
-    math(EXPR _revision "${SimpleITK_VERSION_PATCH}<<16")
+    math(EXPR _revision "${SimpleITK_VERSION_PATCH}<<8")
     if(DEFINED SimpleITK_VERSION_TWEAK)
       math(EXPR _revision "_revision+${SimpleITK_VERSION_TWEAK}")
     endif()
   endif()
+  if(_revision GREATER 65535)
+    message(WARNING "CSharp revision component overflowed, setting to 65535 instead of ${_revision}.")
+    set(_revision 65535)
+  endif()
+
   set(SimpleITK_VERSION_CSHARP_AssemblyVersion "${SimpleITK_VERSION_MAJOR}.${SimpleITK_VERSION_MINOR}.${_build}.${_revision}")
 
   # Make sure the nested directory structure exists
