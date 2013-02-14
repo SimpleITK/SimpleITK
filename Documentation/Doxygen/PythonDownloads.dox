@@ -9,7 +9,7 @@ It is also referenced from Python package index Pypi to facilitate automatic dow
 $ easy_install SimpleITK
 \endcode
 
-\section v060 SimpleITK 0.6.1
+\section v061 SimpleITK 0.6.1
 
          \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.6.1/Python/SimpleITK-0.6.1-py2.6-linux-x86_64.egg#ccd68ccfd4015b34763ee329a7feda5b">SimpleITK-0.6.1-py2.6-linux-x86_64.egg</a>
          \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.6.1/Python/SimpleITK-0.6.1-py2.6-macosx-10.6-universal.egg#341a75c000bb7ec1f00bd3c3b6f4357e">SimpleITK-0.6.1-py2.6-macosx-10.6-universal.egg</a>
