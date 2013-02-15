@@ -11,6 +11,8 @@ $ easy_install SimpleITK
 
 \section v061 SimpleITK 0.6.1
 
+         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.6.1/Python/SimpleITK-0.6.1.post2-py3.2-win32.egg#34579983512983cbc2a68e9908a0170c">SimpleITK-0.6.1.post2-py3.2-win32.egg</a>
+         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.6.1/Python/SimpleITK-0.6.1.post2-py3.2-win-amd64.egg#f3fb7602891841fea7480f362b3bd91c">SimpleITK-0.6.1.post2-py3.2-win-amd64.egg</a>
          \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.6.1/Python/SimpleITK-0.6.1-py2.6-linux-x86_64.egg#ccd68ccfd4015b34763ee329a7feda5b">SimpleITK-0.6.1-py2.6-linux-x86_64.egg</a>
          \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.6.1/Python/SimpleITK-0.6.1-py2.6-macosx-10.6-universal.egg#341a75c000bb7ec1f00bd3c3b6f4357e">SimpleITK-0.6.1-py2.6-macosx-10.6-universal.egg</a>
          \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.6.1/Python/SimpleITK-0.6.1-py2.7-linux-i686.egg#5d9110f2b452b4412ef73c6d9b8816c3">SimpleITK-0.6.1-py2.7-linux-i686.egg</a>
@@ -20,7 +22,6 @@ $ easy_install SimpleITK
          \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.6.1/Python/SimpleITK-0.6.1-py2.7-win-amd64.egg#8852fd477a348ce46cfbadbd993bc271">SimpleITK-0.6.1-py2.7-win-amd64.egg</a>
          \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.6.1/Python/SimpleITK-0.6.1-py3.2-linux-i686.egg#1d539cdf8678b743510409c413468da6">SimpleITK-0.6.1-py3.2-linux-i686.egg</a>
          \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.6.1/Python/SimpleITK-0.6.1-py3.2-linux-x86_64.egg#c853592361537a42a2344b60c8f6866e">SimpleITK-0.6.1-py3.2-linux-x86_64.egg</a>
-
 
 \section v060 SimpleITK 0.6.0
 
