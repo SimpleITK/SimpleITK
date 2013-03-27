@@ -384,7 +384,7 @@ if ( WRAP_CSHARP )
   #
   # CSharp Tests
   #
-  add_csharp_test( Test.CSharpImageTest
+  add_csharp_test( Test.ImageTest
     "${SimpleITK_SOURCE_DIR}/Testing/Unit/CSharpImageTest.cs" )
 
 endif ( WRAP_CSHARP )
