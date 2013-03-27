@@ -369,7 +369,6 @@ if ( WRAP_CSHARP )
 
   endmacro()
 
-
   #
   # CSharp Examples
   #
@@ -381,6 +380,12 @@ if ( WRAP_CSHARP )
     "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
     "2.0"
     "${TEST_HARNESS_TEMP_DIRECTORY}/CSharp.SimpleGaussian.nrrd" )
+
+  #
+  # CSharp Tests
+  #
+  add_csharp_test( Test.ImageTest
+    "${SimpleITK_SOURCE_DIR}/Testing/Unit/CSharpImageTest.cs" )
 
 endif ( WRAP_CSHARP )
 
