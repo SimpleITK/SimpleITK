@@ -170,21 +170,6 @@ endfunction()
 
 
 #------------------------------------------------------------------------------
-# Fetch testing data.
-include( SimpleITKExternalData )
-file( GLOB_RECURSE content_links
-  RELATIVE "${SimpleITK_SOURCE_DIR}" "Testing/Data/*.md5" )
-foreach(link ${content_links})
-  string( REGEX REPLACE "\\.md5$" "" link ${link} )
-  ExternalData_Expand_Arguments( SimpleITKData
-    link_location
-    DATA{${link}}
-  )
-endforeach()
-ExternalData_Add_Target( SimpleITKData )
-
-
-#------------------------------------------------------------------------------
 # These are some system specific compiler options needed to build SimpleITK
 
 if(MSVC)
@@ -357,6 +342,7 @@ include(sitkCheckSourceTree)
 # we enter the sub-directories
 include(CTest)
 
+
 #------------------------------------------------------------------------------
 # Go to subdirectories
 add_subdirectory ( Utilities )
@@ -372,6 +358,25 @@ include(${SimpleITK_SOURCE_DIR}/Utilities/KWStyle/KWStyle.cmake)
 # set things up for testing, if enabled
 
 if ( BUILD_TESTING )
+
+  # Fetch testing data.
+  # 2.8.11 required for ExternalData.cmake.
+  if( ${CMAKE_VERSION} VERSION_LESS 2.8.10.2 )
+    message( FATAL_ERROR "BUILD_TESTING ON requires CMake 2.8.11 or newer." )
+  endif()
+
+  include( SimpleITKExternalData )
+  file( GLOB_RECURSE content_links
+    RELATIVE "${SimpleITK_SOURCE_DIR}" "Testing/Data/*.md5" )
+  foreach(link ${content_links})
+    string( REGEX REPLACE "\\.md5$" "" link ${link} )
+    ExternalData_Expand_Arguments( SimpleITKData
+      link_location
+      DATA{${link}}
+      )
+  endforeach()
+  ExternalData_Add_Target( SimpleITKData )
+
   enable_testing()
   add_subdirectory ( Testing )
   option ( RUN_LONG_TESTS "Run long tests.  Some tests have been identified as long running, should these be run?" OFF )
