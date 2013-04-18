@@ -138,6 +138,40 @@ Image ImportAsUInt32(
     return import.Execute();
 }
 
+Image ImportAsInt64(
+    int64_t * buffer,
+    const std::vector< unsigned int > &size,
+    const std::vector< double > &spacing,
+    const std::vector< double > &origin,
+    const std::vector< double > &direction,
+    unsigned int numberOfComponents
+) {
+    ImportImageFilter import;
+    import.SetSize( size );
+    import.SetSpacing( spacing );
+    import.SetOrigin( origin );
+    import.SetDirection( direction );
+    import.SetBufferAsInt64( buffer, numberOfComponents );
+    return import.Execute();
+}
+
+Image ImportAsUInt64(
+    uint64_t * buffer,
+    const std::vector< unsigned int > &size,
+    const std::vector< double > &spacing,
+    const std::vector< double > &origin,
+    const std::vector< double > &direction,
+    unsigned int numberOfComponents
+) {
+    ImportImageFilter import;
+    import.SetSize( size );
+    import.SetSpacing( spacing );
+    import.SetOrigin( origin );
+    import.SetDirection( direction );
+    import.SetBufferAsUInt64( buffer, numberOfComponents );
+    return import.Execute();
+}
+
 Image ImportAsFloat(
     float * buffer,
     const std::vector< unsigned int > &size,
@@ -314,6 +348,34 @@ ImportImageFilter::Self& ImportImageFilter::SetBufferAsUInt32( uint32_t * buffer
   else
     {
     this->m_PixelIDValue = ImageTypeToPixelIDValue< itk::VectorImage<uint32_t, UnusedDimension> >::Result;
+    }
+  return *this;
+}
+ImportImageFilter::Self& ImportImageFilter::SetBufferAsInt64( int64_t * buffer, unsigned int numberOfComponents )
+{
+  this->m_Buffer = buffer;
+  this->m_NumberOfComponentsPerPixel = numberOfComponents;
+  if ( this->m_NumberOfComponentsPerPixel == 1 )
+    {
+    this->m_PixelIDValue = ImageTypeToPixelIDValue< itk::Image<int64_t, UnusedDimension> >::Result;
+    }
+  else
+    {
+    this->m_PixelIDValue = ImageTypeToPixelIDValue< itk::VectorImage<int64_t, UnusedDimension> >::Result;
+    }
+  return *this;
+}
+ImportImageFilter::Self& ImportImageFilter::SetBufferAsUInt64( uint64_t * buffer, unsigned int numberOfComponents )
+{
+  this->m_Buffer = buffer;
+  this->m_NumberOfComponentsPerPixel = numberOfComponents;
+  if ( this->m_NumberOfComponentsPerPixel == 1 )
+    {
+    this->m_PixelIDValue = ImageTypeToPixelIDValue< itk::Image<uint64_t, UnusedDimension> >::Result;
+    }
+  else
+    {
+    this->m_PixelIDValue = ImageTypeToPixelIDValue< itk::VectorImage<uint64_t, UnusedDimension> >::Result;
     }
   return *this;
 }
