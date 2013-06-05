@@ -208,7 +208,7 @@ $(foreach settings
   ASSERT_FALSE ( filter.Get${parameter}() ) << "Failed to set ${parameter} to ${value}";'
         else
           OUT = OUT .. '\
-  ASSERT_EQ ( ${value}, filter.Get${parameter}() ) << "++Failed to set ${parameter} to ${value}";'
+  ASSERT_EQ ( ${value}, filter.Get${parameter}() ) << "Failed to set ${parameter} to ${value}";'
         end
       end
 end)
