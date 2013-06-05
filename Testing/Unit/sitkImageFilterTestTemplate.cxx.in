@@ -254,7 +254,13 @@ $(foreach measurements_results
 $(if tolerance then
         OUT=[[EXPECT_NEAR(${value}, filter.Get${name}(), ${tolerance} );]]
 else
-        OUT=[[EXPECT_EQ(${value}, filter.Get${name}() );]]
+  if (value == "true") then
+    OUT = [[EXPECT_TRUE ( filter.Get${name}() ) << "Measurement failure";]]
+  elseif (value == "false") then
+    OUT = [[EXPECT_FALSE ( filter.Get${name}() ) << "Measurement failure";]]
+  else
+    OUT = [[EXPECT_EQ ( ${value}, filter.Get${name}() ) << "Measurement failure";]]
+  end
 end)
 ))
 
