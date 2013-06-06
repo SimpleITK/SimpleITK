@@ -128,6 +128,9 @@ if ( ${R_FOUND} AND NOT WIN32 )
 else( )
   set ( WRAP_R_DEFAULT OFF )
 endif( )
+# SWIG 2.0.9-10 has bugs in enum types
+set ( WRAP_R_DEFAULT OFF )
+
 
 list( APPEND SITK_LANGUAGES_VARS
  R_INCLUDE_DIR
