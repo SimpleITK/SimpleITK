@@ -41,5 +41,8 @@ SET(CTEST_CUSTOM_WARNING_EXCEPTION
 
   # Ignore warning in lua about the use of `tmpnam' is dangerous
   "loslib"
+
+  # Ignore CSharp invalid version warning for dev
+  "warning CS1607.*The version number.*dev.*is invalid"
 )
 
