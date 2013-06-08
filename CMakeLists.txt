@@ -236,7 +236,7 @@ check_include_file_cxx( type_traits SITK_HAS_STLTR1_TYPE_TRAITS )
 
 if ( (NOT SITK_HAS_STLTR1_TR1_FUNCTIONAL OR NOT SITK_HAS_STLTR1_FUNCTIONAL)
     OR
-    (NOT SITK_HAS_STLTR1_TR1_TYPE_TRAITS OR NOT SITK_HAS_STLTR1_FUNCTIONAL
+    (NOT SITK_HAS_STLTR1_TR1_TYPE_TRAITS OR NOT SITK_HAS_STLTR1_FUNCTIONAL) )
   message( FATAL_ERROR
     "SimpleITK requires usage of parts C++ Technical Report 1 (TR1).\n"
     "It may be available as an optional download for your compiler. Please see the FAQ for details.\n"
