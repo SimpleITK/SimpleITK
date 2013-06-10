@@ -27,7 +27,7 @@ if(NOT SWIG_DIR)
     ExternalProject_Add(Swig
       URL http://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${SWIG_DOWNLOAD_WIN_HASH}&name=swigwin-${SWIG_TARGET_VERSION}.zip
       URL_MD5 ${SWIG_DOWNLOAD_WIN_HASH}
-      SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/swigwin-123${SWIG_TARGET_VERSION}
+      SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/swigwin-${SWIG_TARGET_VERSION}
       CONFIGURE_COMMAND ""
       BUILD_COMMAND ""
       INSTALL_COMMAND ""
