@@ -9,16 +9,14 @@
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
-#include <itkVersion.h>
-#include <sitkVersion.h>
-#include <itksys/SystemTools.hxx>
-#include <itkMultiThreader.h>
 
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <string>
+
+#include <sitkVersion.h>
 
 #define lua_c
 
@@ -122,7 +120,7 @@ static int docall (lua_State *L, int narg, int clear) {
 
 static void print_version (void) {
   fprintf ( stdout, LUA_VERSION "  " LUA_COPYRIGHT "\n" );
-  fprintf ( stdout, "Simple ITK:\n%s\nInsight Toolkit %s\n", itk::simple::Version::ExtendedVersionString().c_str(), itk::Version::GetITKVersion() );
+  fprintf ( stdout, "Simple ITK:\n%s\n", itk::simple::Version::ExtendedVersionString().c_str() );
 }
 
 
@@ -347,8 +345,6 @@ struct Smain {
 };
 
 
-#include <itkMultiThreader.h>
-
 extern "C" int luaopen_SimpleITK ( lua_State* L );
 
 static int pmain (lua_State *L) {
@@ -378,10 +374,10 @@ static int pmain (lua_State *L) {
   if (s->status != 0) return 0;
 
   // See if we have OMP_NUM_THREADS set, and if so, make ITK obey
-  std::string NumThreads;
-  if ( itksys::SystemTools::GetEnv ( "OMP_NUM_THREADS", NumThreads ) ) {
-    itk::MultiThreader::SetGlobalDefaultNumberOfThreads ( atoi ( NumThreads.c_str() ) );
-  }
+  // std::string NumThreads;
+  // if ( itksys::SystemTools::GetEnv ( "OMP_NUM_THREADS", NumThreads ) ) {
+  //   itk::MultiThreader::SetGlobalDefaultNumberOfThreads ( atoi ( NumThreads.c_str() ) );
+  // }
 
   if (script)
     s->status = handle_script(L, argv, script);
