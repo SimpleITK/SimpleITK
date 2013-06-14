@@ -55,13 +55,15 @@ endif()
 # Break all these source files into a bunch of libraries base on every
 # n files in the list.
 set ( _stride 50 )
-set ( _library_i 1 )
+set ( _library_i 0 )
 foreach ( _start RANGE 0 ${_length} ${_stride} )
 
   # the above foreach range in inclusive, which is not quite what is wanted
   if( _start EQUAL ${_length} )
     break()
   endif()
+
+  math( EXPR _library_i "${_library_i} + 1 " )
 
   # compute the end of the range ensuring that the inclusive range
   # [_start, _end] is all valid indicies
@@ -85,15 +87,18 @@ foreach ( _start RANGE 0 ${_length} ${_stride} )
   set ( SimpleITK_LIBRARIES ${SimpleITK_LIBRARIES} CACHE INTERNAL "" )
 
   add_library ( SimpleITKBasicFilters${_library_i} ${SRC} )
-  target_link_libraries ( SimpleITKBasicFilters${_library_i} ${SimpleITK_LIBRARIES} ${ITK_LIBRARIES} )
+  target_link_libraries ( SimpleITKBasicFilters${_library_i} SimpleITKCommon SimpleITKBasicFilters0 ${ITK_LIBRARIES} )
   set_target_properties( SimpleITKBasicFilters${_library_i}  PROPERTIES SKIP_BUILD_RPATH TRUE )
   add_dependencies ( SimpleITKBasicFilters${_library_i} BasicFiltersSourceCode )
 
   sitk_install_exported_target( SimpleITKBasicFilters${_library_i} )
 
-  math( EXPR _library_i "${_library_i} + 1 " )
 
 endforeach ()
+
+# the last library include additional cxx files which may depend on
+# other filter libraries
+target_link_libraries ( SimpleITKBasicFilters${_library_i} ${SimpleITK_LIBRARIES} ${ITK_LIBRARIES} )
 
 
 install( FILES ${CMAKE_CURRENT_BINARY_DIR}/../include/SimpleITKBasicFiltersGeneratedHeaders.h
