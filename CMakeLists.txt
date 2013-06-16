@@ -234,11 +234,13 @@ check_include_file_cxx( functional SITK_HAS_STLTR1_FUNCTIONAL )
 check_include_file_cxx( tr1/type_traits SITK_HAS_STLTR1_TR1_TYPE_TRAITS )
 check_include_file_cxx( type_traits SITK_HAS_STLTR1_TYPE_TRAITS )
 
-if ( NOT SITK_HAS_STLTR1_TR1_FUNCTIONAL AND NOT SITK_HAS_STLTR1_FUNCTIONAL )
+if ( (NOT SITK_HAS_STLTR1_TR1_FUNCTIONAL AND NOT SITK_HAS_STLTR1_FUNCTIONAL)
+    OR
+    (NOT SITK_HAS_STLTR1_TR1_TYPE_TRAITS AND NOT SITK_HAS_STLTR1_FUNCTIONAL) )
   message( FATAL_ERROR
     "SimpleITK requires usage of parts C++ Technical Report 1 (TR1).\n"
     "It may be available as an optional download for your compiler. Please see the FAQ for details.\n"
-    "http://www.itk.org/Wiki/ITK_Release_4/SimpleITK/FAQ#Do_I_need_to_download_an_option_package_for_TR1_support.3F")
+    "http://www.itk.org/Wiki/SimpleITK/FAQ#Do_I_need_to_download_an_option_package_for_TR1_support.3F" )
 endif ( )
 
 # check for the optional tr1/unordered_map header
