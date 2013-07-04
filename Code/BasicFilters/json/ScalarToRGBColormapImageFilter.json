@@ -5,12 +5,11 @@
   "number_of_inputs" : 1,
   "doc" : "",
   "pixel_types" : "BasicPixelIDTypeList",
-  "public_declarations" : "    typedef enum { Red, Green, Blue, Grey, Hot, Cool, Spring, Summer, Autumn, Winter, Copper, Jet, HSV, OverUnder } ColormapType;",
   "output_image_type" : "itk::VectorImage< unsigned char, InputImageType::ImageDimension>",
   "members" : [
     {
       "name" : "Colormap",
-      "type" : "ScalarToRGBColormapImageFilter::ColormapType",
+      "enum" : [ "Red", "Green", "Blue", "Grey", "Hot", "Cool", "Spring", "Summer", "Autumn", "Winter", "Copper", "Jet", "HSV", "OverUnder" ],
       "default" : "itk::simple::ScalarToRGBColormapImageFilter::Grey",
       "custom_itk_cast" : "filter->SetColormap( typename FilterType::ColormapEnumType( int( this->m_Colormap) ) );",
       "briefdescriptionSet" : "",

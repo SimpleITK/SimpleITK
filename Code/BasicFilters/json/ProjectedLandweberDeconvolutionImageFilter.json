@@ -8,7 +8,6 @@
   "include_files" : [
     "sitkBoundaryConditions.hxx"
   ],
-  "public_declarations" : "typedef enum { SAME = 0, VALID = 1} OutputRegionModeType;\n      typedef enum { ZERO_PAD = 0, ZERO_FLUX_NEUMANN_PAD = 1, PERIODIC_PAD = 2 } BoundaryConditionType;",
   "custom_set_input" : "filter->SetInput( image1 ); filter->SetKernelImage( image2 );",
   "members" : [
     {
@@ -41,13 +40,13 @@
     },
     {
       "name" : "BoundaryCondition",
-      "type" : "ProjectedLandweberDeconvolutionImageFilter::BoundaryConditionType",
+      "enum" : [ "ZERO_PAD", "ZERO_FLUX_NEUMANN_PAD", "PERIODIC_PAD" ],
       "default" : "itk::simple::ProjectedLandweberDeconvolutionImageFilter::ZERO_FLUX_NEUMANN_PAD",
       "custom_itk_cast" : "std::auto_ptr< ImageBoundaryCondition< InputImageType > > bc( CreateNewBoundaryConditionInstance< Self, FilterType >( m_BoundaryCondition ) ); filter->SetBoundaryCondition( bc.get() );\n"
     },
     {
       "name" : "OutputRegionMode",
-      "type" : "ProjectedLandweberDeconvolutionImageFilter::OutputRegionModeType",
+      "enum" : [ "SAME", "VALID" ],
       "default" : "itk::simple::ProjectedLandweberDeconvolutionImageFilter::SAME",
       "custom_itk_cast" : "filter->SetOutputRegionMode( typename FilterType::OutputRegionModeType( int( this->m_OutputRegionMode ) ) );"
     }

@@ -6,7 +6,6 @@
   "number_of_inputs" : 1,
   "pixel_types" : "typelist::Append<BasicPixelIDTypeList, VectorPixelIDTypeList>::Type",
   "output_image_type" : "typename InputImageType::template Rebind<float>::Type",
-  "public_declarations" : "typedef  enum { ZeroOrder, FirstOrder, SecondOrder } OrderEnumType;",
   "members" : [
     {
       "name" : "Sigma",
@@ -30,7 +29,7 @@
     },
     {
       "name" : "Order",
-      "type" : "itk::simple::RecursiveGaussianImageFilter::OrderEnumType",
+      "enum": [ "ZeroOrder", "FirstOrder", "SecondOrder" ],
       "default" : "itk::simple::RecursiveGaussianImageFilter::ZeroOrder",
       "doc" : "",
       "custom_itk_cast" : "filter->SetOrder( static_cast<typename FilterType::OrderEnumType>( this->GetOrder()) );",
