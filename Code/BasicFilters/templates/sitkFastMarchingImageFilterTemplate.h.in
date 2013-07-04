@@ -61,8 +61,7 @@ $(include ExecuteMethodNoParameters.h.in)$(if members and #members > 0 then
 OUT=[[
       /** Execute the filter on the input image with the given parameters */
       Image Execute ( const Image&,
-        std::vector< std::vector<unsigned int> > trialPoints$(foreach members ,
-        ${type} ${name:sub(1,1):lower()}${name:sub(2,-1)}) );]]end)
+        std::vector< std::vector<unsigned int> > trialPoints$(include MemberParameters.in) );]]end)
 
 $(include CustomMethods.h.in)
 
@@ -83,8 +82,15 @@ $(include ClassEnd.h.in)
      * in order to support a fully functional API
      */
     Image SITKBasicFilters_EXPORT ${name:gsub("ImageFilter$", "")} ( const Image& imageA,
-      std::vector< std::vector<unsigned int> > trialPoints$(when members $(foreach members ,
-      ${type} ${name:sub(1,1):lower()}${name:sub(2,-1)} = ${default})) );
+      std::vector< std::vector<unsigned int> > trialPoints$(for i = 1,#members do
+  OUT = OUT .. ", "
+  if members[i].enum then
+    OUT = OUT .. name .. '::' .. members[i].name .. 'Type'
+  else
+    OUT = OUT .. members[i].type
+  end
+  OUT= OUT .." ".. members[i].name:sub(1,1):lower() .. members[i].name:sub(2,-1) .. " = " .. members[i].default
+end) );
 
   } // end namespace simple
 } // end namespace itk
