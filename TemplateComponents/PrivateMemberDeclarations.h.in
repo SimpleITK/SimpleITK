@@ -1,10 +1,18 @@
-$(foreach members
-$(if doc then
-OUT=[[
-      /* ${doc} */]]end)
-      ${type} m_${name};
+$(for i = 1,#members do
+if members[i].doc then
+OUT=OUT..'\
+      /* '..members[i].doc..' */'
+end
+OUT=OUT..'\
+      '
+if not members[i].type and members[i].enum then
+  OUT=OUT..members[i].name..'Type'
+else
+  OUT=OUT..members[i].type
+end
+OUT=OUT..'  m_'..members[i].name..';'
 
-)$(when measurements $(foreach measurements
+end)$(when measurements $(foreach measurements
 $(if doc then
 OUT=[[
       /* ${doc} */]]end)

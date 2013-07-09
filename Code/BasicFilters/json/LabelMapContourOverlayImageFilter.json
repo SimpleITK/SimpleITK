@@ -9,7 +9,6 @@
   "output_image_type" : "itk::VectorImage< typename InputImageType2::PixelType, InputImageType::ImageDimension >",
   "filter_type" : "itk::LabelMapContourOverlayImageFilter<InputImageType, InputImageType2, OutputImageType>",
   "custom_set_input" : "filter->SetInput( image1 ); filter->SetInput2( const_cast<InputImageType2*>( image2.GetPointer() ) );",
-  "public_declarations" : "typedef enum { PLAIN = 0, CONTOUR = 1, SLICE_CONTOUR = 2} Type;\n      typedef enum { HIGH_LABEL_ON_TOP = 0, LOW_LABEL_ON_TOP = 1 } PriorityType;",
   "members" : [
     {
       "name" : "Opacity",
@@ -53,7 +52,7 @@
     },
     {
       "name" : "ContourType",
-      "type" : "LabelMapContourOverlayImageFilter::Type",
+      "enum" : [ "PLAIN", "CONTOUR", "SLICE_CONTOUR" ],
       "default" : "itk::simple::LabelMapContourOverlayImageFilter::CONTOUR",
       "custom_itk_cast" : "filter->SetType( int( m_ContourType ) );",
       "briefdescriptionSet" : "",
@@ -63,7 +62,7 @@
     },
     {
       "name" : "Priority",
-      "type" : "LabelMapContourOverlayImageFilter::PriorityType",
+      "enum": [ "HIGH_LABEL_ON_TOP", "LOW_LABEL_ON_TOP" ],
       "default" : "itk::simple::LabelMapContourOverlayImageFilter::HIGH_LABEL_ON_TOP",
       "custom_itk_cast" : "filter->SetPriority( int( m_Priority ) );",
       "briefdescriptionSet" : "",
