@@ -18,9 +18,11 @@
 #ifndef __sitkCastImageFilter_hxx
 #define __sitkCastImageFilter_hxx
 
+// include itk first to suppress std::copy conversion warning
+#include <itkCastImageFilter.h>
+
 #include "sitkCastImageFilter.h"
 
-#include <itkCastImageFilter.h>
 #include <itkComposeImageFilter.h>
 #include <itkLabelImageToLabelMapFilter.h>
 #include <itkLabelMapToLabelImageFilter.h>

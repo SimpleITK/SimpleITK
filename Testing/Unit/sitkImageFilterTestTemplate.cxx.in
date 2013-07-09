@@ -200,9 +200,17 @@ $(foreach settings
   else
     OUT='filter.Set${parameter} ( ${value} );'
       if (not no_get_method) then
-    OUT = OUT .. '\
+        if (value == "true") then
+          OUT = OUT .. '\
+  ASSERT_TRUE ( filter.Get${parameter}() ) << "Failed to set ${parameter} to ${value}";'
+        elseif (value == "false") then
+          OUT = OUT .. '\
+  ASSERT_FALSE ( filter.Get${parameter}() ) << "Failed to set ${parameter} to ${value}";'
+        else
+          OUT = OUT .. '\
   ASSERT_EQ ( ${value}, filter.Get${parameter}() ) << "Failed to set ${parameter} to ${value}";'
-    end
+        end
+      end
 end)
 )]]
 end)
@@ -246,7 +254,13 @@ $(foreach measurements_results
 $(if tolerance then
         OUT=[[EXPECT_NEAR(${value}, filter.Get${name}(), ${tolerance} );]]
 else
-        OUT=[[EXPECT_EQ(${value}, filter.Get${name}() );]]
+  if (value == "true") then
+    OUT = [[EXPECT_TRUE ( filter.Get${name}() ) << "Measurement failure";]]
+  elseif (value == "false") then
+    OUT = [[EXPECT_FALSE ( filter.Get${name}() ) << "Measurement failure";]]
+  else
+    OUT = [[EXPECT_EQ ( ${value}, filter.Get${name}() ) << "Measurement failure";]]
+  end
 end)
 ))
 
