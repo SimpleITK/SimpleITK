@@ -80,9 +80,9 @@
           "lua_value" : "SimpleITK.${name}_FirstOrder",
           "python_value" : "SimpleITK.${name}.FirstOrder",
           "ruby_value" : "Simpleitk::${name}::FirstOrder",
-          "java_value" : "${name}.OrderEnumType.FirstOrder",
+          "java_value" : "${name}.OrderType.FirstOrder",
           "tcl_value" : "$$${name}_FirstOrder",
-          "csharp_value" : "${name}.OrderEnumType.FirstOrder",
+          "csharp_value" : "${name}.OrderType.FirstOrder",
           "R_value" : "'FirstOrder'"
         }
       ],
