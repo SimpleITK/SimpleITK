@@ -54,9 +54,9 @@
           "lua_value" : "SimpleITK.${name}_DIRECTIONCOLLAPSETOIDENTITY",
           "python_value" : "SimpleITK.${name}.DIRECTIONCOLLAPSETOIDENTITY",
           "ruby_value" : "Simpleitk::${name}::DIRECTIONCOLLAPSETOIDENTITY",
-          "java_value" : "${name}.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
+          "java_value" : "${name}.DirectionCollapseToStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
           "tcl_value" : "$$${name}_DIRECTIONCOLLAPSETOIDENTITY",
-          "csharp_value" : "itk.simple.${name}.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
+          "csharp_value" : "itk.simple.${name}.DirectionCollapseToStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
           "R_value" : "'DIRECTIONCOLLAPSETOIDENTITY'"
         }
       ],
@@ -95,9 +95,9 @@
           "lua_value" : "SimpleITK.${name}_DIRECTIONCOLLAPSETOIDENTITY",
           "python_value" : "SimpleITK.${name}.DIRECTIONCOLLAPSETOIDENTITY",
           "ruby_value" : "Simpleitk::${name}::DIRECTIONCOLLAPSETOIDENTITY",
-          "java_value" : "${name}.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
+          "java_value" : "${name}.DirectionCollapseToStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
           "tcl_value" : "$$${name}_DIRECTIONCOLLAPSETOIDENTITY",
-          "csharp_value" : "itk.simple.${name}.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
+          "csharp_value" : "itk.simple.${name}.DirectionCollapseToStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
           "R_value" : "'DIRECTIONCOLLAPSETOIDENTITY'"
         }
       ],
