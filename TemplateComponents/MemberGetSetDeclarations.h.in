@@ -1,4 +1,20 @@
 $(foreach members
+$(if enum then
+    OUT=OUT..'\
+\
+      typedef enum {'
+    for i = 1,#enum do
+        if( i > 1) then
+            OUT=OUT..','
+        end
+        OUT=OUT..enum[i]
+    end
+    if type then
+      OUT=OUT..'} ${type};'
+    else
+      OUT=OUT..'} ${name}Type;'
+    end
+end)
 $(if (not no_set_method) or (no_set_method == 0) then
       OUT = '\
       /**'
@@ -8,11 +24,17 @@ $(if (not no_set_method) or (no_set_method == 0) then
       end
       if detaileddescriptionSet then
          OUT=OUT .. '\
-        * ${detaileddescriptionSet}'
+       * ${detaileddescriptionSet}'
       end
       OUT= OUT .. '\
-      */\
-      Self& Set${name} ( ${type} ${name} ) { this->m_${name} = ${name}; return *this; }'
+       */\
+      Self& Set${name} ('
+     if not type and enum then
+        OUT=OUT..' ${name}Type'
+      else
+        OUT=OUT..' ${type}'
+      end
+      OUT=OUT..' ${name} ) { this->m_${name} = ${name}; return *this; }'
   if type == "bool" then
       OUT = OUT .. '\
 \
@@ -30,11 +52,17 @@ $(if (not no_get_method) or (no_get_method == 0) then
       end
       if detaileddescriptionGet then
          OUT=OUT .. '\
-        * ${detaileddescriptionGet}'
+       * ${detaileddescriptionGet}'
       end
       OUT= OUT .. '\
-      */\
-      ${type} Get${name}() { return this->m_${name}; }'
+       */\
+       '
+      if not type and enum then
+        OUT=OUT..' ${name}Type'
+      else
+        OUT=OUT..' ${type}'
+      end
+      OUT=OUT..' Get${name}() { return this->m_${name}; }'
 end))$(when measurements $(foreach measurements
 
      /**$(if briefdescriptionGet then OUT=[[ \brief ${briefdescriptionGet}]]end)

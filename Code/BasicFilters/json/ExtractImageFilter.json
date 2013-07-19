@@ -5,7 +5,6 @@
   "number_of_inputs" : 1,
   "doc" : "Extract image filter extracts a 2D image from a 2D or 3D image. If the same dimension output is required then the RegionOfInterestFilter should be used.",
   "pixel_types" : "NonLabelPixelIDTypeList",
-  "public_declarations" : "    typedef enum { DIRECTIONCOLLAPSETOUNKOWN = 0, DIRECTIONCOLLAPSETOIDENTITY = 1, DIRECTIONCOLLAPSETOSUBMATRIX = 2, DIRECTIONCOLLAPSETOGUESS = 3} DirectionCollapseStrategyType;",
   "filter_type" : "itk::ExtractImageFilter<InputImageType, typename InputImageType::template Rebind<typename InputImageType::PixelType, 2>::Type >",
   "members" : [
     {
@@ -34,7 +33,7 @@
     },
     {
       "name" : "DirectionCollapseToStrategy",
-      "type" : "ExtractImageFilter::DirectionCollapseStrategyType",
+      "enum" : [ "DIRECTIONCOLLAPSETOUNKOWN", "DIRECTIONCOLLAPSETOIDENTITY", "DIRECTIONCOLLAPSETOSUBMATRIX", "DIRECTIONCOLLAPSETOGUESS" ],
       "default" : "itk::simple::ExtractImageFilter::DIRECTIONCOLLAPSETOGUESS",
       "custom_itk_cast" : "filter->SetDirectionCollapseToStrategy( typename FilterType::DirectionCollapseStrategyEnum( int( this->m_DirectionCollapseToStrategy ) ) );",
       "briefdescriptionSet" : "",
@@ -55,9 +54,9 @@
           "lua_value" : "SimpleITK.${name}_DIRECTIONCOLLAPSETOIDENTITY",
           "python_value" : "SimpleITK.${name}.DIRECTIONCOLLAPSETOIDENTITY",
           "ruby_value" : "Simpleitk::${name}::DIRECTIONCOLLAPSETOIDENTITY",
-          "java_value" : "${name}.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
+          "java_value" : "${name}.DirectionCollapseToStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
           "tcl_value" : "$$${name}_DIRECTIONCOLLAPSETOIDENTITY",
-          "csharp_value" : "itk.simple.${name}.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
+          "csharp_value" : "itk.simple.${name}.DirectionCollapseToStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
           "R_value" : "'DIRECTIONCOLLAPSETOIDENTITY'"
         }
       ],
@@ -96,9 +95,9 @@
           "lua_value" : "SimpleITK.${name}_DIRECTIONCOLLAPSETOIDENTITY",
           "python_value" : "SimpleITK.${name}.DIRECTIONCOLLAPSETOIDENTITY",
           "ruby_value" : "Simpleitk::${name}::DIRECTIONCOLLAPSETOIDENTITY",
-          "java_value" : "${name}.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
+          "java_value" : "${name}.DirectionCollapseToStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
           "tcl_value" : "$$${name}_DIRECTIONCOLLAPSETOIDENTITY",
-          "csharp_value" : "itk.simple.${name}.DirectionCollapseStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
+          "csharp_value" : "itk.simple.${name}.DirectionCollapseToStrategyType.DIRECTIONCOLLAPSETOIDENTITY",
           "R_value" : "'DIRECTIONCOLLAPSETOIDENTITY'"
         }
       ],

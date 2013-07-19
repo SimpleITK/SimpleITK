@@ -10,7 +10,6 @@
   "output_pixel_type" : "float",
   "doc" : "Docs",
   "pixel_types" : "BasicPixelIDTypeList",
-  "public_declarations" : "typedef  enum { Nothing, NoHandles, Strict } TopologyCheckType;",
   "members" : [
     {
       "name" : "NormalizationFactor",
@@ -33,7 +32,7 @@
     },
     {
       "name" : "TopologyCheck",
-      "type" : "itk::simple::FastMarchingImageFilter::TopologyCheckType",
+      "enum" : [ "Nothing", "NoHandles", "Strict" ],
       "default" : "itk::simple::FastMarchingImageFilter::Nothing",
       "doc" : "",
       "custom_itk_cast" : "filter->SetTopologyCheck( static_cast<typename FilterType::TopologyCheckType>( this->GetTopologyCheck() ) );"

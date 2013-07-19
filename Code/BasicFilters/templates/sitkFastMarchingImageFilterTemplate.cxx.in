@@ -59,14 +59,13 @@ $(include CustomMethods.cxx.in)
 OUT = [[
 
 Image ${name}::Execute ( const Image& image1,
-  std::vector< std::vector<unsigned int> > inTrialPoints$(foreach members ,
-  ${type} in${name}) )
+  std::vector< std::vector<unsigned int> > trialPoints$(include MemberParameters.in) )
 {
 $(foreach members
 $(if (not no_set_method) or (no_set_method == 0) then
-OUT = '  this->Set${name} ( in${name} );'
+OUT = '  this->Set${name} ( ${name:sub(1,1):lower() .. name:sub(2,-1)} );'
 end)
-)  this->SetTrialPoints ( inTrialPoints );
+)  this->SetTrialPoints ( trialPoints );
 
   return this->Execute ( image1 );
 }
@@ -122,11 +121,10 @@ $(include ExecuteInternalUpdateAndReturn.cxx.in)
 // Function to run the Execute method of this filter
 //
 Image ${name:gsub("ImageFilter$", "")} ( const Image& imageA,
-  std::vector< std::vector<unsigned int> > inTrialPoints$(when members $(foreach members ,
-  ${type} in${name} ) ) )
+  std::vector< std::vector<unsigned int> > trialPoints$(include MemberParameters.in) )
 {
   ${name} filter;
-  return filter.Execute ( imageA, inTrialPoints$(when members $(foreach members , in${name} ) ) );
+  return filter.Execute ( imageA, trialPoints$(foreach members ,  ${name:sub(1,1):lower()..name:sub(2,-1)} ));
 }
 
 } // end namespace simple

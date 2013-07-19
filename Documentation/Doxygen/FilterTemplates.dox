@@ -255,6 +255,12 @@ is a std::vector with size equal to the dimension of the input image. As such,
 it will be printed out correctly and cast to its corresponding ITK type
 correctly
 
+- [OPTIONAL] \b enum: [ "enum1", "enum2", ... ] Creates a member type
+  of the class with the array of strings with a type defined by the
+  name of this parameter. This field makes the "type" parameter
+  optional. It is recommended to add a test to ensure the SimpleITK
+  values correspond to the ITK values.
+
 - [OPTIONAL] \b custom_itk_cast: (\e string) Some non-basic types will require
 a custom cast before the corresponding ITK filter's member can be set. This
 field allows the developer to specify exactly how the ITK filter sets the

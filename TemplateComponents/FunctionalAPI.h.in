@@ -12,7 +12,12 @@ SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", "")} ( $(include Image
   if (number_of_inputs > 0 or i > 1) then
     OUT = OUT .. ", "
   end
-    OUT= OUT .. members[i].type .." ".. members[i].name:sub(1,1):lower() .. members[i].name:sub(2,-1) .. " = " .. members[i].default
+  if not type and members[i].enum then
+    OUT = OUT .. name .. '::' .. members[i].name .. 'Type'
+  else
+    OUT = OUT .. members[i].type
+  end
+  OUT= OUT .." ".. members[i].name:sub(1,1):lower() .. members[i].name:sub(2,-1) .. " = " .. members[i].default
 end) );
 ]]
 end)
