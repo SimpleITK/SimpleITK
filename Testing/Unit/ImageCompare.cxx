@@ -46,8 +46,6 @@ void ImageCompare::NormalizeAndSave ( const sitk::Image &input, const std::strin
 }
 
 
-
-
 ImageCompare::ImageCompare()
 {
   mTolerance = 0.0;
@@ -96,7 +94,7 @@ bool ImageCompare::compare ( const sitk::Image& image, std::string inTestCase, s
     centerSlice = image;
     }
 
-  std::string baselineFileName = dataFinder.GetSourceDirectory() + "/Testing/Data/Baseline/" + name + extension;
+  std::string baselineFileName = dataFinder.GetBuildDirectory() + "/ExternalData/Testing/Data/Baseline/" + name + extension;
 
   if ( !itksys::SystemTools::FileExists ( baselineFileName.c_str() ) )
     {
