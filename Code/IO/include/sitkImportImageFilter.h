@@ -66,6 +66,8 @@ namespace itk {
       Self& SetBufferAsUInt16( uint16_t * buffer, unsigned int numberOfComponents = 1 );
       Self& SetBufferAsInt32( int32_t * buffer, unsigned int numberOfComponents = 1 );
       Self& SetBufferAsUInt32( uint32_t * buffer, unsigned int numberOfComponents = 1 );
+      Self& SetBufferAsInt64( int64_t * buffer, unsigned int numberOfComponents = 1 );
+      Self& SetBufferAsUInt64( uint64_t * buffer, unsigned int numberOfComponents = 1 );
       Self& SetBufferAsFloat( float * buffer, unsigned int numberOfComponents = 1 );
       Self& SetBufferAsDouble( double * buffer, unsigned int numberOfComponents = 1 );
 
@@ -156,6 +158,24 @@ namespace itk {
 
   Image SITKIO_EXPORT ImportAsUInt32(
     uint32_t * buffer,
+    const std::vector< unsigned int > &size,
+    const std::vector< double > &spacing = std::vector< double >( 3, 1.0 ),
+    const std::vector< double > &origin = std::vector< double >( 3, 0.0 ),
+    const std::vector< double > &direction = std::vector< double >(),
+    unsigned int numberOfComponents = 1
+    );
+
+  Image SITKIO_EXPORT ImportAsInt64(
+    int64_t * buffer,
+    const std::vector< unsigned int > &size,
+    const std::vector< double > &spacing = std::vector< double >( 3, 1.0 ),
+    const std::vector< double > &origin = std::vector< double >( 3, 0.0 ),
+    const std::vector< double > &direction = std::vector< double >(),
+    unsigned int numberOfComponents = 1
+    );
+
+  Image SITKIO_EXPORT ImportAsUInt64(
+    uint64_t * buffer,
     const std::vector< unsigned int > &size,
     const std::vector< double > &spacing = std::vector< double >( 3, 1.0 ),
     const std::vector< double > &origin = std::vector< double >( 3, 0.0 ),
