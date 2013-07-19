@@ -15,7 +15,7 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#include "sitkCastImageFilter.h"
+
 #include "sitkCastImageFilter.hxx"
 
 
