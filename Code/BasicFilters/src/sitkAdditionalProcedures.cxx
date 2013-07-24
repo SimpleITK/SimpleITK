@@ -18,6 +18,7 @@
 
 #include "sitkAdditionalProcedures.h"
 #include "sitkResampleImageFilter.h"
+#include "sitkPatchBasedDenoisingImageFilter.h"
 
 namespace itk {
 namespace simple {
@@ -66,6 +67,66 @@ SITKBasicFilters_EXPORT Image Resample ( const Image& image1,
 {
   ResampleImageFilter filter;
   return filter.Execute ( image1, size, transform, interpolator, outputOrigin, outputSpacing, outputDirection, defaultPixelValue );
+}
+
+SITKBasicFilters_EXPORT Image PatchBasedDenoising (const Image& image1,
+                                                   double kernelBandwidthSigma,
+                                                   uint32_t patchRadius,
+                                                   uint32_t numberOfIterations,
+                                                   uint32_t numberOfSamplePatches,
+                                                   double sampleVariance )
+{
+  PatchBasedDenoisingImageFilter filter;
+
+  const PatchBasedDenoisingImageFilter::NoiseModelType noiseModel = itk::simple::PatchBasedDenoisingImageFilter::NOMODEL;
+  const double noiseSigma = 0.0;
+  const double noiseModelFidelityWeight = 0.0;
+  //const bool alwaysTreatComponentsAsEuclidean = false;
+
+
+  filter.KernelBandwidthEstimationOff();
+
+  filter.SetKernelBandwidthSigma(kernelBandwidthSigma);
+  filter.SetPatchRadius(patchRadius);
+  filter.SetNumberOfIterations(numberOfIterations);
+  filter.SetNumberOfSamplePatches(numberOfSamplePatches);
+  filter.SetSampleVariance(sampleVariance);
+  filter.SetNoiseModel(noiseModel);
+  filter.SetNoiseSigma(noiseSigma);
+  filter.SetNoiseModelFidelityWeight(noiseModelFidelityWeight);
+  //filter.SetAlwaysTreatComponentsAsEuclidean(alwaysTreatComponentsAsEuclidean);
+  return filter.Execute ( image1 );
+}
+
+
+
+SITKBasicFilters_EXPORT Image PatchBasedDenoising (const Image& image1,
+                                                   PatchBasedDenoisingImageFilter::NoiseModelType noiseModel,
+                                                   double kernelBandwidthSigma,
+                                                   uint32_t patchRadius,
+                                                   uint32_t numberOfIterations,
+                                                   uint32_t numberOfSamplePatches,
+                                                   double sampleVariance,
+                                                   double noiseSigma,
+                                                   double noiseModelFidelityWeight )
+{
+  PatchBasedDenoisingImageFilter filter;
+
+  //const bool alwaysTreatComponentsAsEuclidean = false;
+
+  filter.KernelBandwidthEstimationOff();
+
+  filter.SetKernelBandwidthSigma(kernelBandwidthSigma);
+  filter.SetPatchRadius(patchRadius);
+  filter.SetNumberOfIterations(numberOfIterations);
+  filter.SetNumberOfSamplePatches(numberOfSamplePatches);
+  filter.SetSampleVariance(sampleVariance);
+  filter.SetNoiseModel(noiseModel);
+  filter.SetNoiseSigma(noiseSigma);
+  filter.SetNoiseModelFidelityWeight(noiseModelFidelityWeight);
+  //filter.SetAlwaysTreatComponentsAsEuclidean(alwaysTreatComponentsAsEuclidean);
+
+  return filter.Execute ( image1 );
 }
 
 }
