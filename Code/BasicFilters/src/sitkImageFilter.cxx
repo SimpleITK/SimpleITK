@@ -39,6 +39,29 @@ ImageFilter< N >::~ImageFilter ()
   {
   }
 
+template< unsigned int N >
+std::ostream & ImageFilter< N >::ToStringHelper(std::ostream &os, const char &v)
+{
+  os << int(v);
+  return os;
+}
+
+template< unsigned int N >
+std::ostream & ImageFilter< N >::ToStringHelper(std::ostream &os, const signed char &v)
+{
+  os << int(v);
+  return os;
+}
+
+template< unsigned int N >
+std::ostream & ImageFilter< N >::ToStringHelper(std::ostream &os, const unsigned char &v)
+{
+  os << int(v);
+  return os;
+}
+
+
+
 template class ImageFilter<0>;
 template class ImageFilter<1>;
 template class ImageFilter<2>;
