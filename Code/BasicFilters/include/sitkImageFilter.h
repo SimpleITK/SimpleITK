@@ -67,6 +67,23 @@ namespace itk {
       virtual std::string GetName() const = 0;
     protected:
 
+
+      /**
+       * Output operator to os with conversion to a printable type.
+       *
+       * That is char types are presumed to be numbers, and converted
+       * to int.
+       */
+      template <typename T>
+      static std::ostream & ToStringHelper(std::ostream &os, const T &v)
+      {
+        os << v;
+        return os;
+      }
+      static std::ostream & ToStringHelper(std::ostream &os, const char &v);
+      static std::ostream & ToStringHelper(std::ostream &os, const signed char &v);
+      static std::ostream & ToStringHelper(std::ostream &os, const unsigned char &v);
+
       template< class TImageType >
       static typename TImageType::ConstPointer CastImageToITK( const Image &img )
       {

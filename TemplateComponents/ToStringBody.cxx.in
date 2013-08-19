@@ -2,7 +2,10 @@
   out << "itk::simple::${name}\n";
 $(foreach members
 $(if (not no_print) or (not no_print == 1) then
-OUT = '  out << "  ${name}: " << this->m_${name} << std::endl;'
+  OUT=[[
+  out << "  ${name}: ";
+  this->ToStringHelper(out, this->m_${name});
+  out << std::endl;]]
 end)
 )
 $(when measurements $(foreach measurements
