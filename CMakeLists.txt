@@ -68,6 +68,19 @@ set ( GENERATED_TEST_SOURCE_LIST "" CACHE INTERNAL "" )
 #----------------------------------------------------------
 # Place all options to go into sitkConfigure.h here
 
+set( SITK_INT64_PIXELIDS_DEFAULT ON )
+if( MSVC )
+  # See http://www.cmake.org/cmake/help/v2.8.10/cmake.html#variable:MSVC_VERSION
+  # and https://en.wikipedia.org/wiki/Microsoft_Visual_Studio#Version_history
+  #   1500 = VS  9.0 (Visual Studio 2008)
+  #   1600 = VS 10.0 (Visual Studio 2010)
+  #   1700 = VS 11.0 (Visual Studio 2012)
+  if(MSVC_VERSION VERSION_LESS 1600)
+    # with this option on the linker runs out of memory
+    set( SITK_INT64_PIXELIDS_DEFAULT OFF )
+  endif()
+endif()
+option( SITK_INT64_PIXELIDS "Instantiate 64-bit integer pixels, including unsigned, vector and label maps." ${SITK_INT64_PIXELIDS_DEFAULT} )
 # Setting this option will shorten compile times by reducing the
 # amount of pixel types and generated code.
 # NB: this option should _NOT_ be used for releases!
