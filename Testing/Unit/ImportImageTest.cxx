@@ -246,13 +246,20 @@ TEST_F(Import,ExhaustiveTypes) {
   importer.SetBufferAsInt32( &int32_buffer[0] );
   EXPECT_EQ ( "d5748f3800b837611dc94c089ac7926f2bbea973" , sitk::Hash( importer.Execute() ) ) << " hash value for int32";
 
-  uint64_buffer = std::vector< uint64_t >( 16*16, 8 );
-  importer.SetBufferAsUInt64( &uint64_buffer[0] );
-  EXPECT_EQ ( "95c3884597103a98cf6f1def52cab572c41f0eb5", sitk::Hash( importer.Execute() ) ) << " hash value for uint64";
+  if ( sitk::sitkUInt64 != sitk::sitkUnknown )
+    {
+    uint64_buffer = std::vector< uint64_t >( 16*16, 8 );
+    importer.SetBufferAsUInt64( &uint64_buffer[0] );
+    EXPECT_EQ ( "95c3884597103a98cf6f1def52cab572c41f0eb5", sitk::Hash( importer.Execute() ) ) << " hash value for uint64";
+    }
 
-  int64_buffer = std::vector< int64_t >( 16*16, -123 );
-  importer.SetBufferAsInt64( &int64_buffer[0] );
-  EXPECT_EQ ( "d0a23a11b2f39b46cfc09bd71fc4c9661b68a826" , sitk::Hash( importer.Execute() ) ) << " hash value for int64";
+  if ( sitk::sitkInt64 != sitk::sitkUnknown )
+    {
+
+    int64_buffer = std::vector< int64_t >( 16*16, -123 );
+    importer.SetBufferAsInt64( &int64_buffer[0] );
+    EXPECT_EQ ( "d0a23a11b2f39b46cfc09bd71fc4c9661b68a826" , sitk::Hash( importer.Execute() ) ) << " hash value for int64";
+    }
 
   float_buffer = std::vector< float >( 16*16, 1.123 );
   importer.SetBufferAsFloat( &float_buffer[0] );
@@ -287,13 +294,19 @@ TEST_F(Import,ExhaustiveTypes) {
   importer.SetBufferAsInt32( &int32_buffer[0], 7 );
   EXPECT_EQ ( "c65dc5820f3691fc4b6b3b9aaba1f506ca3f697e" , sitk::Hash( importer.Execute() ) ) << " hash value for vector of int32";
 
-  uint64_buffer = std::vector< uint64_t >( 16*16*6, 8 );
-  importer.SetBufferAsUInt64( &uint64_buffer[0], 6 );
-  EXPECT_EQ ( "cac37cb71f23cd41ed1e2b60d1e325ee8de4ca71", sitk::Hash( importer.Execute() ) ) << " hash value for vector of uint64";
+  if ( sitk::sitkVectorUInt64 != sitk::sitkUnknown )
+    {
+    uint64_buffer = std::vector< uint64_t >( 16*16*6, 8 );
+    importer.SetBufferAsUInt64( &uint64_buffer[0], 6 );
+    EXPECT_EQ ( "cac37cb71f23cd41ed1e2b60d1e325ee8de4ca71", sitk::Hash( importer.Execute() ) ) << " hash value for vector of uint64";
+    }
 
-  int64_buffer = std::vector< int64_t >( 16*16*7, -123 );
-  importer.SetBufferAsInt64( &int64_buffer[0], 7 );
-  EXPECT_EQ ( "91a61e519faf128747bf2d2bbd860d4f05d79ac6" , sitk::Hash( importer.Execute() ) ) << " hash value for vector of int64";
+  if ( sitk::sitkVectorInt64 != sitk::sitkUnknown )
+    {
+    int64_buffer = std::vector< int64_t >( 16*16*7, -123 );
+    importer.SetBufferAsInt64( &int64_buffer[0], 7 );
+    EXPECT_EQ ( "91a61e519faf128747bf2d2bbd860d4f05d79ac6" , sitk::Hash( importer.Execute() ) ) << " hash value for vector of int64";
+    }
 
   float_buffer = std::vector< float >( 16*16*8, 1.123 );
   importer.SetBufferAsFloat( &float_buffer[0], 8 );
