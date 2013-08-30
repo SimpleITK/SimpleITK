@@ -39,6 +39,7 @@
 #include <sitkGradientAnisotropicDiffusionImageFilter.h>
 #include <sitkCurvatureAnisotropicDiffusionImageFilter.h>
 #include <sitkLabelMapContourOverlayImageFilter.h>
+#include <sitkPatchBasedDenoisingImageFilter.h>
 #include <sitkAdditionalProcedures.h>
 
 #include "itkVectorImage.h"
@@ -53,6 +54,7 @@
 #include "itkProjectedLandweberDeconvolutionImageFilter.h"
 #include "itkRichardsonLucyDeconvolutionImageFilter.h"
 #include "itkLabelMapContourOverlayImageFilter.h"
+#include "itkPatchBasedDenoisingImageFilter.h"
 
 TEST(BasicFilters,ScalarToRGBColormap_ENUMCHECK) {
   typedef itk::ScalarToRGBColormapImageFilter< itk::Image<float,3>, itk::Image< itk::RGBPixel<float>,3> > ITKType;
@@ -140,6 +142,14 @@ TEST(BasicFilters,LabelMapContourOverlay_ENUMCHECK) {
   EXPECT_EQ( (int) ITKType::HIGH_LABEL_ON_TOP, (int) itk::simple::LabelMapContourOverlayImageFilter::HIGH_LABEL_ON_TOP );
   EXPECT_EQ( (int) ITKType::LOW_LABEL_ON_TOP, (int) itk::simple::LabelMapContourOverlayImageFilter::LOW_LABEL_ON_TOP );
 
+}
+
+TEST(BasicFilters,PatchBasedBaseDenoising_ENUMCHECK) {
+  typedef itk::PatchBasedDenoisingImageFilter< itk::Image<float,3>, itk::Image<float,3> > ITKType;
+  EXPECT_EQ( (int) ITKType::NOMODEL, (int) itk::simple::PatchBasedDenoisingImageFilter::NOMODEL );
+  EXPECT_EQ( (int) ITKType::GAUSSIAN, (int) itk::simple::PatchBasedDenoisingImageFilter::GAUSSIAN );
+  EXPECT_EQ( (int) ITKType::RICIAN, (int) itk::simple::PatchBasedDenoisingImageFilter::RICIAN );
+  EXPECT_EQ( (int) ITKType::POISSON, (int) itk::simple::PatchBasedDenoisingImageFilter::POISSON );
 }
 
 TEST(BasicFilter,GradientAnisotropicDiffusion_EstimateOptimalTimeStep) {
