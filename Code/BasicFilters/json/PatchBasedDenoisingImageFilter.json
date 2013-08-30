@@ -143,7 +143,7 @@
       "tag" : "default",
       "description" : "Simply run with default settings",
       "settings" : [],
-      "tolerance" : 0.0001,
+      "tolerance" : 0.9,
       "inputs" : [
         "Input/cthead1.png"
       ]
