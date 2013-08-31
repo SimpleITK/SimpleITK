@@ -370,6 +370,12 @@ TEST(BasicFilters,LabelStatistics) {
   EXPECT_NEAR ( stats.GetSum ( 0 ),  473533, 0.01 );
   EXPECT_NEAR ( stats.GetMedian ( 0 ), 12.0, 0.001 );
 
+  ASSERT_EQ( 4u, stats.GetBoundingBox(0).size() );
+  EXPECT_EQ( 0, stats.GetBoundingBox(0)[0] );
+  EXPECT_EQ( 255, stats.GetBoundingBox(0)[1] );
+  EXPECT_EQ( 0, stats.GetBoundingBox(0)[2] );
+  EXPECT_EQ( 255, stats.GetBoundingBox(0)[3] );
+
   const itk::simple::LabelStatisticsImageFilter::LabelListingType myLabels = stats.GetValidLabels();
   EXPECT_EQ ( myLabels.size() , 3u);
 
