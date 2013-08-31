@@ -99,6 +99,17 @@ std::string LabelStatisticsImageFilter::ToString() const
         measurmentContainerIt->second <<
         "\n";
       }
+
+    std::map<LabelIdentifierType, std::vector<int> >::const_iterator bbIt;
+    bbIt = this->m_BoundingBoxMeasurementMap.find(labelMeasurementMapIt->first);
+    if (bbIt != this->m_BoundingBoxMeasurementMap.end())
+      {
+      out << "\t Label("<<
+        labelMeasurementMapIt->first <<
+        ")[BoundingBox] = "  <<
+        bbIt->second <<
+      "\n";
+      }
     }
   return out.str();
   }
@@ -168,6 +179,17 @@ double LabelStatisticsImageFilter::GetCount( const LabelIdentifierType labelCode
     }
   return this->QueryValue(labelCode, "Count" );
   }
+std::vector<int> LabelStatisticsImageFilter::GetBoundingBox( const LabelIdentifierType labelCode ) const
+  {
+  std::map<LabelIdentifierType, std::vector<int> >::const_iterator bbIt;
+  bbIt = m_BoundingBoxMeasurementMap.find(labelCode);
+  if( ! this->HasLabel(labelCode) || bbIt == m_BoundingBoxMeasurementMap.end() )
+    {
+    sitkExceptionMacro( "Invalid label code requested " << labelCode );
+    }
+  return bbIt->second;
+  }
+
 
 LabelStatisticsImageFilter::LabelStatisticsMap LabelStatisticsImageFilter::GetLabelStatisticsMap( ) const
   {
@@ -253,6 +275,8 @@ Image LabelStatisticsImageFilter::DualExecuteInternal ( const Image& inImage1, c
 
   typedef typename FilterType::ValidLabelValuesContainerType ValidLabelValuesType;
 
+  this->m_BoundingBoxMeasurementMap.clear();
+
   for(typename ValidLabelValuesType::const_iterator vIt= filter->GetValidLabelValues().begin();
       vIt != filter->GetValidLabelValues().end();
       ++vIt)
@@ -268,6 +292,9 @@ Image LabelStatisticsImageFilter::DualExecuteInternal ( const Image& inImage1, c
     this->m_LabelMeasurementMap[*vIt]["Variance"] = filter->GetVariance(*vIt);
     this->m_LabelMeasurementMap[*vIt]["Sum"]      = filter->GetSum(*vIt);
     this->m_LabelMeasurementMap[*vIt]["Count"]    = filter->GetCount(*vIt);
+
+    typename FilterType::BoundingBoxType bb = filter->GetBoundingBox(*vIt);
+    this->m_BoundingBoxMeasurementMap.insert( std::make_pair(*vIt,std::vector<int>(bb.begin(),bb.end())));
     }
 
   //NOTE:  Input is passed through to output and is likely to get ignored!
