@@ -226,9 +226,9 @@ TEST(TransformTest, ReadTransformResample) {
 
     EXPECT_NO_THROW( tx = sitk::ReadTransform( fname ) );
 
-    sitk::Image out = sitk::Resample( img, tx );
+    sitk::Image out = sitk::Resample( img, tx, sitk::sitkNearestNeighbor );
 
-    EXPECT_EQ( "ed046a55efafdda172e21f27240e47c729540653", sitk::Hash( out ) ) << "Hash for resampling identity matrix.";
+    EXPECT_EQ( "126ea8c3ef5573ca1e4e0deece920c2c4a4f38b5", sitk::Hash( out ) ) << "Resampling with identity matrix:" << tx.ToString();
 
     ++ptxFiles;
     }
