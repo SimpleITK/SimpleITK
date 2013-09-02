@@ -18,6 +18,7 @@
 #=========================================================================
 
 from __future__ import print_function
+from __future__ import division
 
 import SimpleITK as sitk
 import sys
@@ -60,7 +61,7 @@ kernel = sitk.Flip( kernel, [1]*2 )
 # normalize the kernel to sum to ~1
 stats = sitk.StatisticsImageFilter();
 stats.Execute( kernel )
-kernel = sitk.Cast( kernel , sitk.sitkFloat32 ) / stats.GetSum()
+kernel = sitk.Cast( kernel / stats.GetSum(), sitk.sitkFloat32 )
 
 upadding = [0]*2
 upadding[0] = int( math.floor( (size[0] - kernel.GetSize()[0])/2.0 ) )
