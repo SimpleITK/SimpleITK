@@ -4,7 +4,6 @@ AbsoluteValueDifferenceImageFilter,True,True,,False
 AccumulateImageFilter,True,False,Duplicate of Projection filters,False
 AcosImageFilter,True,True,,False
 AdaptiveHistogramEqualizationImageFilter,True,True,,True
-AddConstantToImageFilter,False,True,,False
 AddImageFilter,True,True,,False
 AndImageFilter,True,True,,False
 AnisotropicDiffusionImageFilter,True,False,base class,False
@@ -22,6 +21,7 @@ BSplineUpsampleImageFilter,True,False,,True
 BayesianClassifierImageFilter,True,False,,True
 BayesianClassifierInitializationImageFilter,True,False,,True
 BilateralImageFilter,True,True,,False
+BinShrinkImageFilter,True,False,,False
 BinaryClosingByReconstructionImageFilter,True,True,,False
 BinaryContourImageFilter,True,True,,False
 BinaryDilateImageFilter,True,True,,False
@@ -33,7 +33,7 @@ BinaryMedianImageFilter,True,True,,False
 BinaryMinMaxCurvatureFlowImageFilter,True,True,,False
 BinaryMorphologicalClosingImageFilter,True,True,,False
 BinaryMorphologicalOpeningImageFilter,True,True,,False
-BinaryNotImageFilter,True,False,,True
+BinaryNotImageFilter,True,True,,True
 BinaryOpeningByReconstructionImageFilter,True,True,,False
 BinaryProjectionImageFilter,True,True,,False
 BinaryPruningImageFilter,True,False,Check functionality in 3D,True
@@ -45,9 +45,11 @@ BinaryStatisticsKeepNObjectsImageFilter,True,False,,True
 BinaryStatisticsOpeningImageFilter,True,False,,True
 BinaryThinningImageFilter,True,True,,False
 BinaryThresholdImageFilter,True,True,,False
-BinaryThresholdProjectionImageFilter,True,False,,True
+BinaryThresholdProjectionImageFilter,True,True,,True
 BinomialBlurImageFilter,True,True,,False
+BitwiseNotImageFilter,False,True,,False
 BlackTopHatImageFilter,True,True,,False
+BlockMatchingImageFilter,True,False,,False
 BoundedReciprocalImageFilter,True,True,,False
 BoxImageFilter,True,False,base class,False
 BoxMeanImageFilter,True,True,,False
@@ -56,7 +58,7 @@ CannyEdgeDetectionImageFilter,True,True,,False
 CannySegmentationLevelSetImageFilter,True,False,This filter has a large number of parameters,True
 CastImageFilter,True,True,,False
 ChangeInformationImageFilter,True,False,No need for a filter to do this in SimpleITK,False
-ChangeLabelImageFilter,True,False,,True
+ChangeLabelImageFilter,True,True,,True
 CheckerBoardImageFilter,True,True,,False
 ClampImageFilter,True,False,This might be implemented as an option to cast image filter,True
 ClosingByReconstructionImageFilter,True,True,,False
@@ -92,20 +94,27 @@ DirectFourierReconstructionImageToImageFilter,True,False,,True
 DirectedHausdorffDistanceImageFilter,True,False,,True
 DiscreteGaussianDerivativeImageFilter,True,False,,True
 DiscreteGaussianImageFilter,True,True,,False
-DivideByConstantImageFilter,False,True,,False
-DivideConstantByImageFilter,False,True,,False
+DivideFloorImageFilter,False,True,,False
 DivideImageFilter,True,True,,False
+DivideRealImageFilter,False,True,,False
 DoubleThresholdImageFilter,True,True,,False
 EdgePotentialImageFilter,True,True,,False
 EigenAnalysis2DImageFilter,True,False,,True
+EqualImageFilter,False,True,,False
 ErodeObjectMorphologyImageFilter,True,True,,False
 ExpImageFilter,True,True,,False
 ExpNegativeImageFilter,True,True,,False
-ExpandImageFilter,True,False,,True
+ExpandImageFilter,True,True,,True
 ExtractImageFilter,True,True,,False
 FFTComplexToComplexImageFilter,True,False,,True
 FFTConvolutionImageFilter,True,True,,False
+FFTNormalizedCorrelationImageFilter,False,True,,False
 FFTShiftImageFilter,True,True,,False
+FFTWComplexToComplexImageFilter,True,False,,False
+FFTWForwardFFTImageFilter,True,False,,False
+FFTWHalfHermitianToRealInverseFFTImageFilter,True,False,,False
+FFTWInverseFFTImageFilter,True,False,,False
+FFTWRealToHalfHermitianForwardFFTImageFilter,True,False,,False
 FastApproximateRankImageFilter,True,True,,True
 FastChamferDistanceImageFilter,True,False,,True
 FastMarchingExtensionImageFilter,True,False,,True
@@ -116,9 +125,7 @@ FlipImageFilter,True,True,,False
 ForwardFFTImageFilter,True,True,,False
 FullToHalfHermitianImageFilter,True,False,,True
 GaborImageSource,True,False,,False
-GaborSourceImageFilter,False,True,,False
 GaussianImageSource,True,False,,False
-GaussianSourceImageFilter,False,True,,False
 GenerateImageSource,True,False,,False
 GeodesicActiveContourLevelSetImageFilter,True,True,,False
 GeodesicActiveContourShapePriorLevelSetImageFilter,True,False,,False
@@ -126,10 +133,10 @@ GradientAnisotropicDiffusionImageFilter,True,True,,False
 GradientImageFilter,True,True,,False
 GradientMagnitudeImageFilter,True,True,,True
 GradientMagnitudeRecursiveGaussianImageFilter,True,True,,False
-GradientRecursiveGaussianImageFilter,True,False,,True
+GradientRecursiveGaussianImageFilter,True,True,,True
 GradientVectorFlowImageFilter,True,False,,True
-GrayscaleConnectedClosingImageFilter,True,False,,True
-GrayscaleConnectedOpeningImageFilter,True,False,,True
+GrayscaleConnectedClosingImageFilter,True,True,,True
+GrayscaleConnectedOpeningImageFilter,True,True,,True
 GrayscaleDilateImageFilter,True,True,,False
 GrayscaleErodeImageFilter,True,True,,False
 GrayscaleFillholeImageFilter,True,True,,False
@@ -140,14 +147,15 @@ GrayscaleGeodesicErodeImageFilter,True,True,,False
 GrayscaleGrindPeakImageFilter,True,True,,False
 GrayscaleMorphologicalClosingImageFilter,True,True,,False
 GrayscaleMorphologicalOpeningImageFilter,True,True,,False
+GreaterEqualImageFilter,False,True,,False
+GreaterImageFilter,False,True,,False
 GridForwardWarpImageFilter,True,False,,True
 GridImageSource,True,False,,False
-GridSourceImageFilter,False,True,,False
 HConcaveImageFilter,True,True,,False
 HConvexImageFilter,True,True,,False
 HMaximaImageFilter,True,True,,False
 HMinimaImageFilter,True,True,,False
-HalfHermitianToRealInverseFFTImageFilter,True,False,,True
+HalfHermitianToRealInverseFFTImageFilter,True,True,,True
 HalfToFullHermitianImageFilter,True,False,,True
 HardConnectedComponentImageFilter,True,False,,True
 HashImageFilter,False,True,,False
@@ -185,7 +193,7 @@ KernelImageFilter,True,False,base class?,False
 KittlerIllingworthThresholdImageFilter,True,True,,False
 LabelContourImageFilter,True,True,,False
 LabelGeometryImageFilter,True,False,Duplicate with LabelMaps?,False
-LabelMapContourOverlayImageFilter,True,False,,True
+LabelMapContourOverlayImageFilter,True,True,,True
 LabelMapMaskImageFilter,True,True,,False
 LabelMapOverlayImageFilter,True,True,,False
 LabelMapToBinaryImageFilter,True,True,,False
@@ -204,13 +212,15 @@ LaplacianImageFilter,True,True,,False
 LaplacianRecursiveGaussianImageFilter,True,True,,False
 LaplacianSegmentationLevelSetImageFilter,True,True,,False
 LaplacianSharpeningImageFilter,True,True,,False
+LessEqualImageFilter,False,True,,False
+LessImageFilter,False,True,,False
 LiThresholdImageFilter,True,True,,False
 Log10ImageFilter,True,True,,False
 LogImageFilter,True,True,,False
 MagnitudeAndPhaseToComplexImageFilter,True,True,,False
 MaskImageFilter,True,True,,False
 MaskNegatedImageFilter,True,True,,False
-MaskedFFTNormalizedCorrelationImageFilter,True,False,,False
+MaskedFFTNormalizedCorrelationImageFilter,True,True,,False
 MaskedRankImageFilter,True,False,,True
 MaximumEntropyThresholdImageFilter,True,True,,False
 MaximumImageFilter,True,True,,False
@@ -231,7 +241,6 @@ MorphologicalWatershedFromMarkersImageFilter,True,True,,True
 MorphologicalWatershedImageFilter,True,True,,True
 MultiResolutionPyramidImageFilter,True,False,How can the multiple output be delt with?,False
 MultiScaleHessianBasedMeasureImageFilter,True,False,,False
-MultiplyByConstantImageFilter,False,True,,False
 MultiplyImageFilter,True,True,,False
 N4BiasFieldCorrectionImageFilter,False,True,,False
 NarrowBandCurvesLevelSetImageFilter,True,False,,True
@@ -243,11 +252,13 @@ NeighborhoodConnectedImageFilter,True,True,,False
 NoiseImageFilter,True,True,,False
 NormalizeImageFilter,True,True,,False
 NormalizeToConstantImageFilter,True,True,,False
+NormalizedCorrelationImageFilter,False,True,,False
+NotEqualImageFilter,False,True,,False
 NotImageFilter,True,True,,False
 OpeningByReconstructionImageFilter,True,True,,False
 OrImageFilter,True,True,,False
 OrientImageFilter,True,False,,True
-OtsuMultipleThresholdsImageFilter,True,False,,True
+OtsuMultipleThresholdsImageFilter,True,True,,True
 OtsuThresholdImageFilter,True,True,,False
 PadImageFilter,True,False,,True
 ParallelSparseFieldLevelSetImageFilter,True,False,base class,False
@@ -255,18 +266,16 @@ ParametricImageSource,True,False,,False
 PasteImageFilter,True,True,,False
 PermuteAxesImageFilter,True,True,,False
 PhysicalPointImageSource,True,False,,False
-PhysicalPointSourceImageFilter,False,True,,False
 PowImageFilter,True,True,,False
-PowToConstantImageFilter,False,True,,False
 ProjectedLandweberDeconvolutionImageFilter,True,True,,False
 PyImageFilter,True,False,,False
 RGBToLuminanceImageFilter,True,False,,True
 RandomImageSource,True,False,in itk::Testing namespace,False
 RankImageFilter,True,True,,True
 RealAndImaginaryToComplexImageFilter,False,True,,False
-RealToHalfHermitianForwardFFTImageFilter,True,False,,True
-ReconstructionByDilationImageFilter,True,False,,True
-ReconstructionByErosionImageFilter,True,False,,True
+RealToHalfHermitianForwardFFTImageFilter,True,True,,True
+ReconstructionByDilationImageFilter,True,True,,True
+ReconstructionByErosionImageFilter,True,True,,True
 RecursiveGaussianImageFilter,True,True,,False
 RecursiveMultiResolutionPyramidImageFilter,True,False,How can the multiple output be delt with?,False
 RecursiveSeparableImageFilter,True,False,base class,False
@@ -297,10 +306,11 @@ ShrinkImageFilter,True,True,,False
 SigmoidImageFilter,True,True,,False
 SignedDanielssonDistanceMapImageFilter,True,True,,False
 SignedMaurerDistanceMapImageFilter,True,True,,False
-SimilarityIndexImageFilter,True,False,,True
+SimilarityIndexImageFilter,True,True,,True
 SimpleContourExtractorImageFilter,True,True,,False
 SinImageFilter,True,True,,False
 SliceBySliceImageFilter,True,False,This is for pipelines,False
+SliceImageFilter,False,True,,False
 SmoothingRecursiveGaussianImageFilter,True,True,,False
 SobelEdgeDetectionImageFilter,True,True,,False
 SparseFieldFourthOrderLevelSetImageFilter,True,False,,True
@@ -314,8 +324,6 @@ StatisticsImageFilter,True,True,,False
 StatisticsRelabelImageFilter,True,False,,True
 StochasticFractalDimensionImageFilter,True,False,,True
 StreamingImageFilter,True,False,This is for pipelines,False
-SubtractConstantByImageFilter,False,True,,False
-SubtractConstantFromImageFilter,False,True,,False
 SubtractImageFilter,True,True,,False
 SumProjectionImageFilter,True,True,,False
 TanImageFilter,True,True,,False
@@ -332,8 +340,8 @@ TobogganImageFilter,True,False,,True
 TriangleThresholdImageFilter,True,True,,False
 UnaryMinusImageFilter,False,True,,False
 UnsharpMaskLevelSetImageFilter,True,False,,True
-ValuedRegionalMaximaImageFilter,True,False,,True
-ValuedRegionalMinimaImageFilter,True,False,,True
+ValuedRegionalMaximaImageFilter,True,True,,True
+ValuedRegionalMinimaImageFilter,True,True,,True
 VectorCastImageFilter,True,False,Already integrated into the Cast image filter,False
 VectorConfidenceConnectedImageFilter,True,True,,True
 VectorConnectedComponentImageFilter,True,True,,False
