@@ -70,6 +70,16 @@ namespace itk {
       double GetSum     ( const LabelIdentifierType labelCode ) const;
       double GetCount   ( const LabelIdentifierType labelCode ) const;
 
+      /**
+       * \brief Get the bounding box of a label.
+       *
+       * Defined by the closed interval of indexes, with all the
+       * lower index components before the upper
+       * i.e. [0,0,255,255]. The bounding box always as a positive
+       * size.
+       */
+      std::vector<int> GetBoundingBox( const LabelIdentifierType labelCode ) const;
+
       //Return the MeasuremetMap for the given labelCode
       MeasurementMap GetMeasurementMap ( const LabelIdentifierType labelCode ) const;
 
@@ -91,6 +101,8 @@ namespace itk {
       std::auto_ptr<detail::DualMemberFunctionFactory<MemberFunctionType> > m_DualMemberFactory;
 
       LabelStatisticsMap  m_LabelMeasurementMap;
+
+      std::map<LabelIdentifierType, std::vector<int> > m_BoundingBoxMeasurementMap;
 
       //A helper to get values out of the m_LabelMeasurementMap;
       double QueryValue(const LabelIdentifierType, const std::string) const;
