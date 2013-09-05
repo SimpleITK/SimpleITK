@@ -56,23 +56,34 @@ $(include CustomMethods.cxx.in)
 //
 // Execute
 //$(include ExecuteWithParameters.cxx.in)
-Image ${name}::Execute ( const Image & image1, const Image& image2 )
+Image ${name}::Execute ( $(include ImageParameters.in) )
 {
-
   PixelIDValueEnum type1 = image1.GetPixelID();
-  PixelIDValueEnum type2 = image2.GetPixelID();
   unsigned int dimension = image1.GetDimension();
 
-  // todo need better error handling and potential type conversion
+$(if number_of_inputs == 2 then
+OUT=[[
+  PixelIDValueEnum type2 = image2.GetPixelID();
+ // todo need better error handling and potential type conversion
   if ( dimension != image2.GetDimension() ||
        image1.GetWidth() != image2.GetWidth() ||
        image1.GetHeight() != image2.GetHeight() ||
        image1.GetDepth() != image2.GetDepth() )
     {
       sitkExceptionMacro ( "Both images for ${name} don't match type or dimension!" );
-    }
+    }]]
+else
+  OUT=[[
+      PixelIDValueEnum type2 = m_OutputPixelType;
+]]
+end)
 
-  return this->m_DualMemberFactory->GetMemberFunction( type1, type2, dimension )( image1, image2 );
+  return this->m_DualMemberFactory->GetMemberFunction( type1, type2, dimension )( $(for inum=1,number_of_inputs do
+  if inum>1 then
+    OUT=OUT .. ', '
+  end
+  OUT= OUT .. 'image' .. inum
+                                                                          end) );
 }
 
 
@@ -82,7 +93,12 @@ Image ${name}::Execute ( const Image & image1, const Image& image2 )
 // ExecuteInternal
 //
 template <class TImageType, class TImageType2>
-Image ${name}::DualExecuteInternal ( const Image& inImage1, const Image& inImage2 )
+Image ${name}::DualExecuteInternal ( $(for inum=1,number_of_inputs do
+ if inum>1 then
+       OUT=OUT.. ', '
+  end
+  OUT= OUT .. 'const Image& inImage' .. inum
+  end ) )
 {
   // Define the input and output image types
   typedef TImageType     InputImageType;
