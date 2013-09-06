@@ -6,6 +6,7 @@
   "number_of_inputs" : 1,
   "pixel_types" : "BasicPixelIDTypeList",
   "pixel_types2" : "BasicPixelIDTypeList",
+  "custom_type2" : "const PixelIDValueEnum type2 = m_OutputPixelType;",
   "output_image_type" : "InputImageType2",
   "filter_type" : "itk::ClampImageFilter<InputImageType,OutputImageType>",
   "members" : [
