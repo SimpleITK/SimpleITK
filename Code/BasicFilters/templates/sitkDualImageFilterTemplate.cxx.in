@@ -40,6 +40,15 @@ $(include ConstructorInitializeMembers.cxx.in)
   this->m_DualMemberFactory->RegisterMemberFunctions< PixelIDTypeList, PixelIDTypeList2, 3 > ();
   this->m_DualMemberFactory->RegisterMemberFunctions< PixelIDTypeList, PixelIDTypeList2, 2 > ();
 
+$(if vector_pixel_types_by_component then
+  OUT=[[  typedef ${vector_pixel_types_by_component} VectorByComponentsPixelIDTypeList;
+  typedef ${vector_pixel_types_by_component2} VectorByComponentsPixelIDTypeList2;
+  typedef detail::DualExecuteInternalVectorAddressor<MemberFunctionType> VectorAddressorType;
+  this->m_DualMemberFactory->RegisterMemberFunctions< VectorByComponentsPixelIDTypeList, VectorByComponentsPixelIDTypeList2, 3, VectorAddressorType> ();
+  this->m_DualMemberFactory->RegisterMemberFunctions< VectorByComponentsPixelIDTypeList, VectorByComponentsPixelIDTypeList2, 2, VectorAddressorType> ();]]
+end)
+
+
 }
 
 //
@@ -102,7 +111,7 @@ Image ${name}::DualExecuteInternal ( $(for inum=1,number_of_inputs do
 {
   // Define the input and output image types
   typedef TImageType     InputImageType;
-  typedef TImageType2     InputImageType2;
+  typedef TImageType2    InputImageType2;
 
   $(if output_image_type then
   OUT=[[//Define output image type
@@ -121,6 +130,76 @@ $(include ExecuteInternalITKFilter.cxx.in)
 $(include ExecuteInternalSetITKFilterInputs.cxx.in)
 $(include ExecuteInternalUpdateAndReturn.cxx.in)
 }
+
+$(if vector_pixel_types_by_component then
+OUT=[[
+//
+// Dispatched methods to call DualExecuteInternal on each component of the VectorImage
+//
+template <class TImageType, class TImageType2> Image
+${name}::DualExecuteInternalVector ( const Image& inImage1 )
+{
+  typedef TImageType                                                               VectorInputImageType;
+  typedef typename VectorInputImageType::InternalPixelType                         ComponentType;
+  typedef typename itk::Image<ComponentType, VectorInputImageType::ImageDimension> ComponentImageType;
+
+  typedef TImageType2                                                                VectorInputImageType2;
+  typedef typename VectorInputImageType2::InternalPixelType                          ComponentType2;
+  typedef typename itk::Image<ComponentType2, VectorInputImageType2::ImageDimension> ComponentImageType2;
+
+  // we must define the input and output image types should be the
+  // same as the scalar execute internal method
+  typedef ComponentImageType   InputImageType;
+  typedef ComponentImageType2  InputImageType2;
+]]
+if output_image_type then
+OUT=OUT..[[
+  //Define output image type
+  typedef ${output_image_type} OutputImageType;]]
+elseif output_pixel_type then
+OUT=OUT..[[
+  // Define output image type
+  typedef itk::Image< ${output_pixel_type}, InputImageType::ImageDimension > OutputImageType;]]
+else
+  OUT=OUT..[[
+  // Define output image type
+  typedef InputImageType OutputImageType;]]
+end
+
+OUT=OUT..[[
+
+  // Get the pointer to the ITK image contained in image1
+  typename VectorInputImageType::ConstPointer image1 =
+    this->CastImageToITK<VectorInputImageType>( inImage1 );
+
+  typedef itk::VectorIndexSelectionCastImageFilter< VectorInputImageType, ComponentImageType > ComponentExtratorType;
+  typename ComponentExtratorType::Pointer extractor = ComponentExtratorType::New();
+  extractor->SetInput( image1 );
+
+  typedef itk::ComposeImageFilter<OutputImageType> ToVectorFilterType;
+  typename ToVectorFilterType::Pointer toVector = ToVectorFilterType::New();
+
+  unsigned int numComps = image1->GetNumberOfComponentsPerPixel();
+  for ( unsigned int i = 0; i < numComps; ++i )
+    {
+    extractor->SetIndex( i );
+    extractor->Update();
+
+    Image tmp = this->DualExecuteInternal<InputImageType,InputImageType2>( Image( extractor->GetOutput() ) );
+
+    typename OutputImageType::ConstPointer tempITKImage = this->CastImageToITK<OutputImageType>( tmp );
+
+    toVector->SetInput( i, tempITKImage );
+    }
+
+  toVector->Update();
+
+  return Image( toVector->GetOutput() );
+}
+
+//-----------------------------------------------------------------------------
+]]end)
+
 
 //-----------------------------------------------------------------------------
 
