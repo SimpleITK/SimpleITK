@@ -1,11 +1,15 @@
 {
   "name" : "ResampleImageFilter",
-  "template_code_filename" : "ImageFilter",
+  "template_code_filename" : "DualImageFilter",
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "doc" : "",
   "pixel_types" : "BasicPixelIDTypeList",
+  "pixel_types2" : "BasicPixelIDTypeList",
+  "custom_type2" : "PixelIDValueEnum type2 = (m_OutputPixelType != sitkUnknown) ? m_OutputPixelType : type1;",
+  "output_image_type" : "InputImageType2",
   "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "vector_pixel_types_by_component2" : "VectorPixelIDTypeList",
   "filter_type" : "itk::ResampleImageFilter<InputImageType, OutputImageType, double>",
   "no_procedure" : "1",
   "include_files" : [
@@ -92,6 +96,15 @@
       "detaileddescriptionSet" : "Set the pixel value when a transformed pixel is outside of the image. The default default pixel value is 0.\n",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : "Get the pixel value when a transformed pixel is outside of the image\n"
+    },
+    {
+      "name" : "OutputPixelType",
+      "type" : "PixelIDValueEnum",
+      "default" : "itk::simple::sitkUnknown",
+      "no_print" : "1",
+      "custom_itk_cast" : "",
+      "briefdescriptionSet" : "Set the output pixel type, if sitkUnknown then the input type is used.",
+      "briefdescriptionGet" : "Get the ouput pixel type."
     }
   ],
   "custom_methods" : [
@@ -129,6 +142,49 @@
         "Input/RA-Float.nrrd"
       ]
     },
+    {
+      "tag" : "wCastwInterpolator",
+      "description" : "Resample With Cast and Interpolator",
+      "settings" : [
+        {
+          "parameter" : "Size",
+          "type" : "uint32_t",
+          "dim_vec" : 1,
+          "value" : "{64,64,64}",
+          "tcl_value" : "[list 64 64 64]",
+          "python_value" : "[ 64, 64, 64]",
+          "ruby_value" : "[ 64, 64, 64]",
+          "R_value" : "c( 64, 64, 64)"
+        },
+        {
+          "parameter" : "OutputPixelType",
+          "value" : "itk::simple::sitkUInt16",
+          "lua_value" : "SimpleITK.sitkUInt16",
+          "python_value" : "SimpleITK.sitkUInt16",
+          "ruby_value" : "Simpleitk::SitkUInt16",
+          "java_value" : "PixelIDValueEnum.sitkUInt16",
+          "tcl_value" : "$$sitkUInt16",
+          "csharp_value" : "PixelIDValueEnum.sitkUInt16",
+          "R_value" : "'sitkUInt16'"
+        },
+        {
+          "parameter" : "Interpolator",
+          "value" : "itk::simple::sitkGaussian",
+          "lua_value" : "SimpleITK.sitkGaussian",
+          "python_value" : "SimpleITK.sitkGaussian",
+          "ruby_value" : "Simpleitk::SitkGaussian",
+          "java_value" : "InterpolatorEnum.sitkGaussian",
+          "tcl_value" : "$$sitkGaussian",
+          "csharp_value" : "InterpolatorEnum.sitkGaussian",
+          "R_value" : "'sitkGaussian'"
+        }
+      ],
+      "tolerance" : "0.001",
+      "inputs" : [
+        "Input/RA-Float.nrrd"
+      ]
+    },
+
     {
       "tag" : "vector",
       "description" : "resample a vector image",
