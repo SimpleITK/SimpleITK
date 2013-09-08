@@ -66,21 +66,14 @@ SITKBasicFilters_EXPORT Image Resample ( const Image& image1,
 
 
 
-    /**
-     * \brief itk::simple::PatchBasedDenoisingImageFilter Procedural Interface
-     *
-     * This function directly calls the execute method of PatchBasedDenoisingImageFilter
-     * in order to support a procedural API
-     *
-     * \sa itk::simple::PatchBasedDenoisingImageFilter for the object oriented interface
-     */
-SITKBasicFilters_EXPORT Image PatchBasedDenoising (const Image& image1,
-                                                   double kernelBandwidthSigma = 400.0,
-                                                   uint32_t patchRadius = 4u,
-                                                   uint32_t numberOfIterations = 1u,
-                                                   uint32_t numberOfSamplePatches = 200u,
-                                                   double sampleVariance = 400.0);
-
+/**
+ * \brief itk::simple::PatchBasedDenoisingImageFilter Procedural Interface
+ *
+ * This function directly calls the execute method of PatchBasedDenoisingImageFilter
+ * in order to support a procedural API
+ *
+ * \sa itk::simple::PatchBasedDenoisingImageFilter for the object oriented interface
+ */
 SITKBasicFilters_EXPORT Image PatchBasedDenoising (const Image& image1,
                                                    itk::simple::PatchBasedDenoisingImageFilter::NoiseModelType noiseModel,
                                                    double kernelBandwidthSigma = 400.0,
@@ -90,6 +83,18 @@ SITKBasicFilters_EXPORT Image PatchBasedDenoising (const Image& image1,
                                                    double sampleVariance = 400.0,
                                                    double noiseSigma = 0.0,
                                                    double noiseModelFidelityWeight = 0.0 );
+
+// Disable for certain wrapped languages due to overload shadowing
+#if !defined(SWIGLUA)
+
+SITKBasicFilters_EXPORT Image PatchBasedDenoising (const Image& image1,
+                                                   double kernelBandwidthSigma = 400.0,
+                                                   uint32_t patchRadius = 4u,
+                                                   uint32_t numberOfIterations = 1u,
+                                                   uint32_t numberOfSamplePatches = 200u,
+                                                   double sampleVariance = 400.0);
+#endif
+
 
 }
 }
