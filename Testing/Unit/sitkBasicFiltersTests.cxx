@@ -219,6 +219,39 @@ TEST(BasicFilter,CurvatureAnisotropicDiffusion_EstimateOptimalTimeStep) {
 
 }
 
+TEST(BasicFilters,ImageFilterBase) {
+  namespace sitk = itk::simple;
+
+  sitk::CastImageFilter caster;
+  sitk::ImageFilter<1> &filter = caster;
+
+  EXPECT_FALSE(filter.GetGlobalDefaultDebug());
+  EXPECT_FALSE(filter.GetDebug());
+
+  filter.DebugOff();
+  EXPECT_FALSE(filter.GetDebug());
+  EXPECT_FALSE(filter.GetGlobalDefaultDebug());
+
+  filter.DebugOn();
+  EXPECT_TRUE(filter.GetDebug());
+  EXPECT_FALSE(filter.GetGlobalDefaultDebug());
+
+  filter.GlobalDefaultDebugOn();
+  EXPECT_TRUE(filter.GetDebug());
+  EXPECT_TRUE(filter.GetGlobalDefaultDebug());
+
+  filter.GlobalDefaultDebugOff();
+  EXPECT_TRUE(filter.GetDebug());
+  EXPECT_FALSE(filter.GetGlobalDefaultDebug());
+
+  filter.GlobalDefaultDebugOn();
+
+  sitk::CastImageFilter caster2;
+  EXPECT_TRUE(caster2.GetDebug());
+  EXPECT_TRUE(caster2.GetGlobalDefaultDebug());
+
+}
+
 TEST(BasicFilters,Cast) {
   itk::simple::HashImageFilter hasher;
   itk::simple::ImageFileReader reader;
