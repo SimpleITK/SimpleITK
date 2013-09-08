@@ -146,6 +146,13 @@ namespace std
 %include "sitkAdditionalProcedures.h"
 %include "sitkVersion.h"
 
+%template(ImageFilter_0) itk::simple::ImageFilter<0>;
+%template(ImageFilter_1) itk::simple::ImageFilter<1>;
+%template(ImageFilter_2) itk::simple::ImageFilter<2>;
+%template(ImageFilter_3) itk::simple::ImageFilter<3>;
+%template(ImageFilter_4) itk::simple::ImageFilter<4>;
+%template(ImageFilter_5) itk::simple::ImageFilter<5>;
+
 // Only C# can handle import filter
 #if SWIGCSHARP
 %include "sitkImportImageFilter.h"

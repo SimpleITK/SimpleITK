@@ -49,6 +49,12 @@ CastImageFilter::ExecuteInternalCast( const Image& inImage )
   typename FilterType::Pointer filter = FilterType::New();
 
   filter->SetInput ( image );
+
+  if (this->GetDebug())
+     {
+     std::cout << "Executing ITK filter:" << std::endl;
+     std::cout << filter;
+     }
   filter->Update();
 
   return Image( filter->GetOutput() );
@@ -72,6 +78,13 @@ Image CastImageFilter::ExecuteInternalToVector( const Image& inImage )
   typename CastFilterType::Pointer caster = CastFilterType::New();
   caster->SetInput( filter->GetOutput() );
   caster->InPlaceOn();
+
+  if (this->GetDebug())
+     {
+     std::cout << "Executing ITK filter:" << std::endl;
+     std::cout << filter;
+     }
+
   caster->Update();
 
   return Image( caster->GetOutput() );
@@ -93,6 +106,13 @@ Image CastImageFilter::ExecuteInternalToLabel( const Image& inImage )
   typedef itk::LabelImageToLabelMapFilter<InputImageType, OutputImageType> FilterType;
   typename FilterType::Pointer filter = FilterType::New();
   filter->SetInput ( image );
+
+  if (this->GetDebug())
+     {
+     std::cout << "Executing ITK filter:" << std::endl;
+     std::cout << filter;
+     }
+
   filter->Update();
 
   return Image( filter->GetOutput() );
@@ -112,6 +132,14 @@ Image CastImageFilter::ExecuteInternalLabelToImage( const Image& inImage )
   typedef itk::LabelMapToLabelImageFilter<InputImageType, OutputImageType> FilterType;
   typename FilterType::Pointer filter = FilterType::New();
   filter->SetInput ( image );
+
+
+  if (this->GetDebug())
+     {
+     std::cout << "Executing ITK filter:" << std::endl;
+     std::cout << filter;
+     }
+
   filter->Update();
 
   return Image( filter->GetOutput() );
