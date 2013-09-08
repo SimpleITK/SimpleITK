@@ -224,6 +224,7 @@ end)
       {
       inputSHA1hash =  itk::simple::Hash( inputs[0] );
       }
+   filter.DebugOn();
    ASSERT_NO_THROW ( output =  filter.Execute ( $(if #inputs > 0 then OUT=[[inputs[0] ]] end)$(for inum=1,#inputs-1 do OUT=OUT..", inputs["..inum.."]" end) ) );
 
     if ( !inputs.empty() &&
