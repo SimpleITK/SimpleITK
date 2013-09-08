@@ -45,8 +45,10 @@ typedef typelist::MakeTypeList<BasicPixelID<int8_t>,
                                BasicPixelID<uint16_t>,
                                BasicPixelID<int32_t>,
                                BasicPixelID<uint32_t>,
-//                               BasicPixelID<int64_t>,
-//                               BasicPixelID<uint64_t>,
+#ifdef SITK_INT64_PIXELIDS
+                               BasicPixelID<int64_t>,
+                               BasicPixelID<uint64_t>,
+#endif
                                BasicPixelID<float>,
                                BasicPixelID<double> >::Type BasicPixelIDTypeList;
 
@@ -66,9 +68,11 @@ typedef typelist::MakeTypeList<BasicPixelID<int8_t>,
                                BasicPixelID<int16_t>,
                                BasicPixelID<uint16_t>,
                                BasicPixelID<int32_t>,
-                               BasicPixelID<uint32_t>//,
-//                               BasicPixelID<int64_t>,
-//                               BasicPixelID<uint64_t>
+                               BasicPixelID<uint32_t>
+#ifdef SITK_INT64_PIXELIDS
+                               , BasicPixelID<int64_t>,
+                               BasicPixelID<uint64_t>
+#endif
                                >::Type IntegerPixelIDTypeList;
 
 
@@ -93,7 +97,9 @@ typedef typelist::MakeTypeList< BasicPixelID<std::complex< float > >,
 typedef typelist::MakeTypeList<BasicPixelID<int8_t>,
                                BasicPixelID<int16_t>,
                                BasicPixelID<int32_t>,
-//                               BasicPixelID<int64_t>,
+#ifdef SITK_INT64_PIXELIDS
+                               BasicPixelID<int64_t>,
+#endif
                                BasicPixelID<float>,
                                BasicPixelID<double> >::Type SignedPixelIDTypeList;
 
@@ -109,6 +115,10 @@ typedef typelist::MakeTypeList<VectorPixelID<int8_t>,
                                VectorPixelID<uint16_t>,
                                VectorPixelID<int32_t>,
                                VectorPixelID<uint32_t>,
+#ifdef SITK_INT64_PIXELIDS
+                               VectorPixelID<int64_t>,
+                               VectorPixelID<uint64_t>,
+#endif
                                VectorPixelID<float>,
                                VectorPixelID<double> >::Type VectorPixelIDTypeList;
 
@@ -137,8 +147,10 @@ typedef typelist::MakeTypeList< VectorPixelID<int8_t>,
  */
 typedef typelist::MakeTypeList<LabelPixelID<uint8_t>,
                                LabelPixelID<uint16_t>,
-                               LabelPixelID<uint32_t>//,
-//                               LabelPixelID<uint64_t>
+                               LabelPixelID<uint32_t>
+#ifdef SITK_INT64_PIXELIDS
+                               ,LabelPixelID<uint64_t>
+#endif
                                >::Type LabelPixelIDTypeList;
 
 /** List of all pixel ids available, but itk::LabelMap this include image of itk::Image,

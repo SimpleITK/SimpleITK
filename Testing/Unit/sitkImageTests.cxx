@@ -647,6 +647,8 @@ TEST_F(Image,SetPixel)
   ASSERT_ANY_THROW( img.SetPixelAsUInt16( std::vector<uint32_t>( 2, 0 ), 99u ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.SetPixelAsInt32( std::vector<uint32_t>( 2, 0 ), 99 ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.SetPixelAsUInt32( std::vector<uint32_t>( 2, 0 ), 99u ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.SetPixelAsInt64( std::vector<uint32_t>( 2, 0 ), 99 ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.SetPixelAsUInt64( std::vector<uint32_t>( 2, 0 ), 99u ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.SetPixelAsFloat( std::vector<uint32_t>( 2, 0 ), 99.0 ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.SetPixelAsVectorInt8( std::vector<uint32_t>( 2, 0 ), std::vector<int8_t>(3,99) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.SetPixelAsVectorUInt8( std::vector<uint32_t>( 2, 0 ), std::vector<uint8_t>(3,99u) ) ) << " Get with wrong type";
@@ -678,6 +680,8 @@ TEST_F(Image,SetPixel)
   ASSERT_ANY_THROW( img.SetPixelAsUInt16( std::vector<uint32_t>( 2, 0 ), 99u ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.SetPixelAsInt32( std::vector<uint32_t>( 2, 0 ), 99 ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.SetPixelAsUInt32( std::vector<uint32_t>( 2, 0 ), 99u ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.SetPixelAsInt64( std::vector<uint32_t>( 2, 0 ), 99 ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.SetPixelAsUInt64( std::vector<uint32_t>( 2, 0 ), 99u ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.SetPixelAsFloat( std::vector<uint32_t>( 2, 0 ), 99.0 ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.SetPixelAsDouble( std::vector<uint32_t>( 2, 0 ), 99.0 ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.SetPixelAsVectorInt8( std::vector<uint32_t>( 2, 0 ), std::vector<int8_t>(3,99) ) ) << " Get with wrong type";
@@ -714,6 +718,8 @@ TEST_F(Image,SetPixel)
   ASSERT_ANY_THROW( img.SetPixelAsUInt16( std::vector<uint32_t>( 2, 0 ), 99u ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.SetPixelAsInt32( std::vector<uint32_t>( 2, 0 ), 99 ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.SetPixelAsUInt32( std::vector<uint32_t>( 2, 0 ), 99u ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.SetPixelAsInt64( std::vector<uint32_t>( 2, 0 ), 99 ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.SetPixelAsUInt64( std::vector<uint32_t>( 2, 0 ), 99u ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.SetPixelAsFloat( std::vector<uint32_t>( 2, 0 ), 99.0 ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.SetPixelAsDouble( std::vector<uint32_t>( 2, 0 ), 99.0 ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.SetPixelAsVectorInt8( std::vector<uint32_t>( 2, 0 ), std::vector<int8_t>(3,99) ) ) << " Get with wrong type";
@@ -757,6 +763,8 @@ TEST_F(Image,GetPixel)
   ASSERT_ANY_THROW( img.GetPixelAsUInt16( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsInt32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsUInt32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsInt64( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt64( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsFloat( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsDouble( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsVectorInt8( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
@@ -780,6 +788,8 @@ TEST_F(Image,GetPixel)
   ASSERT_ANY_THROW( img.GetPixelAsUInt16( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsInt32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsUInt32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsInt64( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt64( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsFloat( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsDouble( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsVectorInt8( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
@@ -803,6 +813,8 @@ TEST_F(Image,GetPixel)
   ASSERT_ANY_THROW( img.GetPixelAsUInt16( std::vector<uint32_t>( 3, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsInt32( std::vector<uint32_t>( 3, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsUInt32( std::vector<uint32_t>( 3, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsInt64( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt64( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsFloat( std::vector<uint32_t>( 3, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsDouble( std::vector<uint32_t>( 3, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsVectorInt8( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
@@ -850,6 +862,8 @@ TEST_F(Image,GetPixel)
   ASSERT_ANY_THROW( img.GetPixelAsInt16( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsInt32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsUInt32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsInt64( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt64( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsFloat( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsDouble( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsVectorInt8( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
@@ -896,6 +910,8 @@ TEST_F(Image,GetPixel)
   ASSERT_ANY_THROW( img.GetPixelAsInt16( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsUInt16( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsInt32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsInt64( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+  ASSERT_ANY_THROW( img.GetPixelAsUInt64( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsFloat( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsDouble( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsVectorInt8( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
@@ -911,9 +927,7 @@ TEST_F(Image,GetPixel)
   ASSERT_ANY_THROW( img.GetPixelAsComplexFloat32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsComplexFloat64( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
 
-  // currently Int64 pixel types are instantiated yet,
-  // so an exception will be thrown.
-  try
+  if ( sitk::sitkInt64 != sitk::sitkUnknown )
     {
     img = sitk::Image( 10, 10, sitk::sitkInt64 );
     EXPECT_EQ( img.GetPixelAsInt64( std::vector<uint32_t>( 2, 0 ) ), 0 ) << " Get 2D with 2D ";
@@ -936,7 +950,10 @@ TEST_F(Image,GetPixel)
     ASSERT_ANY_THROW( img.GetPixelAsVectorFloat64( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
     ASSERT_ANY_THROW( img.GetPixelAsComplexFloat32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
     ASSERT_ANY_THROW( img.GetPixelAsComplexFloat64( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+    }
 
+ if ( sitk::sitkUInt64 != sitk::sitkUnknown )
+    {
     img = sitk::Image( 10, 10, sitk::sitkUInt64 );
     EXPECT_EQ( img.GetPixelAsUInt64( std::vector<uint32_t>( 2, 0 ) ), 0u ) << " Get 2D with 2D ";
     EXPECT_EQ( img.GetPixelAsUInt64( std::vector<uint32_t>( 3, 0 ) ), 0u ) << " Get 2D with 3D ";
@@ -960,10 +977,6 @@ TEST_F(Image,GetPixel)
     ASSERT_ANY_THROW( img.GetPixelAsVectorFloat64( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
     ASSERT_ANY_THROW( img.GetPixelAsComplexFloat32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
     ASSERT_ANY_THROW( img.GetPixelAsComplexFloat64( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
-    }
-  catch ( std::exception &e)
-    {
-    std::cout << "Exception: " << e.what() << std::endl;
     }
 
   img = sitk::Image( 10, 10, sitk::sitkFloat32 );
@@ -1230,9 +1243,7 @@ TEST_F(Image,GetPixelVector)
   ASSERT_ANY_THROW( img.GetPixelAsComplexFloat32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetPixelAsComplexFloat64( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
 
-  // currently Int64 pixel types are instantiated yet,
-  // so an exception will be thrown.
-  try
+  if ( sitk::sitkVectorInt64 != sitk::sitkUnknown )
     {
     img = sitk::Image( 10, 10, sitk::sitkVectorInt64 );
     EXPECT_EQ( img.GetPixelAsVectorInt64( std::vector<uint32_t>( 2, 0 ) ), std::vector<int64_t>(zero.begin(),zero.end()) ) << " Get 2D with 2D ";
@@ -1256,7 +1267,10 @@ TEST_F(Image,GetPixelVector)
     ASSERT_ANY_THROW( img.GetPixelAsVectorFloat64( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
     ASSERT_ANY_THROW( img.GetPixelAsComplexFloat32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
     ASSERT_ANY_THROW( img.GetPixelAsComplexFloat64( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
+    }
 
+  if ( sitk::sitkVectorUInt64 != sitk::sitkUnknown )
+    {
     img = sitk::Image( 10, 10, sitk::sitkVectorUInt64 );
     EXPECT_EQ( img.GetPixelAsVectorUInt64( std::vector<uint32_t>( 2, 0 ) ), std::vector<uint64_t>(zero.begin(),zero.end()) ) << " Get 2D with 2D ";
     EXPECT_EQ( img.GetPixelAsVectorUInt64( std::vector<uint32_t>( 3, 0 ) ), std::vector<uint64_t>(zero.begin(),zero.end()) ) << " Get 2D with 3D ";
@@ -1279,10 +1293,6 @@ TEST_F(Image,GetPixelVector)
     ASSERT_ANY_THROW( img.GetPixelAsVectorFloat64( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
     ASSERT_ANY_THROW( img.GetPixelAsComplexFloat32( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
     ASSERT_ANY_THROW( img.GetPixelAsComplexFloat64( std::vector<uint32_t>( 2, 0 ) ) ) << " Get with wrong type";
-    }
-  catch ( std::exception &e)
-    {
-    std::cout << "Exception: " << e.what() << std::endl;
     }
 
   img = sitk::Image( 10, 10, sitk::sitkVectorFloat32 );
