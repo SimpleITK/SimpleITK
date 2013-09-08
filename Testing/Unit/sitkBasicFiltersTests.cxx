@@ -356,6 +356,7 @@ TEST(BasicFilters,Statistics) {
   itk::simple::Image image = itk::simple::ReadImage ( dataFinder.GetFile ( "Input/RA-Float.nrrd" ) );
 
   itk::simple::StatisticsImageFilter stats;
+  stats.DebugOn();
 
   EXPECT_EQ ( stats.GetName(), "Statistics" );
   EXPECT_NO_THROW ( stats.ToString() );
@@ -388,6 +389,7 @@ TEST(BasicFilters,LabelStatistics) {
   itk::simple::Image labels = itk::simple::ReadImage ( dataFinder.GetFile ( "Input/2th_cthead1.mha" ) );
 
   itk::simple::LabelStatisticsImageFilter stats;
+  stats.DebugOn();
   stats.Execute ( image, labels );
 
   EXPECT_EQ( stats.GetName(), "LabelStatistics" );
