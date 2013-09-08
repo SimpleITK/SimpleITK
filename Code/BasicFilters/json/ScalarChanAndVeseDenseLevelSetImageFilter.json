@@ -135,7 +135,7 @@
         {
           "name" : "RMSChange",
           "value" : 721.33,
-          "tolerance" : .1
+          "tolerance" : .5
         }
       ],
       "inputs" : [
