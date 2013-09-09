@@ -285,8 +285,28 @@ endmacro(write_cache)
 file(MAKE_DIRECTORY "${CTEST_BINARY_DIRECTORY}")
 if(NOT "${CTEST_SOURCE_DIRECTORY}" STREQUAL "${CTEST_BINARY_DIRECTORY}"
     AND NOT dashboard_no_clean)
-  message("Clearing build tree...")
+  message("Clearing build trees...")
+  
+  # rename to move it out of the way
+  foreach(t "" 1 2 3 4 5)      
+    set(TEMP_BINARY_DIRECTORY "${CTEST_BINARY_DIRECTORY}.tmp${t}")
+    if(EXISTS ${CTEST_BINARY_DIRECTORY} AND NOT EXISTS ${TEMP_BINARY_DIRECTORY})
+      message("Moving old binary to ${TEMP_BINARY_DIRECTORY}...")
+      file(RENAME "${CTEST_BINARY_DIRECTORY}" "${TEMP_BINARY_DIRECTORY}")
+    endif()
+  endforeach()
+
+  # try try to delete older ones
+  file(GLOB TEMP_BINARY_LIST "${CTEST_BINARY_DIRECTORY}.tmp*" )
+  foreach(TEMP_BINARY_DIRECTORY ${CTEST_BINARY_DIRECTORY}.tmp ${TEMP_BINARY_LIST})
+    if(EXISTS ${TEMP_BINARY_DIRECTORY})
+      message("Removing ${TEMP_BINARY_DIRECTORY}...")
+      ctest_empty_binary_directory(${TEMP_BINARY_DIRECTORY})
+      file(REMOVE_RECURSE "${TEMP_BINARY_DIRECTORY}")
+    endif()
+  endforeach()
   ctest_empty_binary_directory(${CTEST_BINARY_DIRECTORY})
+  message("Cleaned up!")
 endif()
 
 # set loop time to 0 if not Continuous
