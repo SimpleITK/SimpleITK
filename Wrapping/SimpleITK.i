@@ -58,7 +58,7 @@
 %ignore itk::simple::Image::GetITKBase( void );
 %ignore itk::simple::Image::GetITKBase( void ) const;
 
-#ifndef CSHARP
+#ifndef SWIGCSHARP
 %ignore itk::simple::Image::GetBufferAsInt8;
 %ignore itk::simple::Image::GetBufferAsUInt8;
 %ignore itk::simple::Image::GetBufferAsInt16;
