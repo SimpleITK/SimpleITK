@@ -122,7 +122,7 @@
     {
       "name" : "KernelBandwidthUpdateFrequency",
       "type" : "uint32_t",
-      "default" : "3",
+      "default" : "3u",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the update frequency for the kernel bandwidth estimation. An optimal bandwidth will be re-estimated based on the denoised image after every 'n' iterations. Must be a positive integer. Defaults to 3, i.e. bandwidth updated after every 3 denoising iteration.\n",
       "briefdescriptionGet" : "",
