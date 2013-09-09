@@ -30,6 +30,7 @@
 #   dashboard_source_name     = Name of source directory (SimpleITK)
 #   dashboard_binary_name     = Name of binary directory (SimpleITK-build)
 #   dashboard_cache           = Initial CMakeCache.txt file content
+#   dashboard_configure_options   = options pass to test
 #   dashboard_do_coverage     = True to enable coverage (ex: gcov)
 #   dashboard_do_memcheck     = True to enable memcheck (ex: valgrind)
 #   dashboard_no_clean        = True to skip build tree wipeout
@@ -332,7 +333,8 @@ while(NOT dashboard_done)
   message("Found ${count} changed files")
 
   if(dashboard_fresh OR NOT dashboard_continuous OR count GREATER 0)
-    ctest_configure( SOURCE "${CTEST_SOURCE_DIRECTORY}/SuperBuild" )
+    ctest_configure( SOURCE "${CTEST_SOURCE_DIRECTORY}/SuperBuild"
+                     OPTIONS "${dashboard_configure_options}")
     ctest_read_custom_files(${CTEST_BINARY_DIRECTORY})
     set(CTEST_PROJECT_NAME "SuperBuildSimpleITK")
 
