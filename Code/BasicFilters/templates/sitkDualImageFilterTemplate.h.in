@@ -37,10 +37,17 @@ $(include ClassNameAndPrint.h.in)
 $(include ExecuteMethodNoParameters.h.in)$(include ExecuteMethodWithParameters.h.in)$(include CustomMethods.h.in)
 
     private:
-      /** Setup for member function dispatching */      typedef Image (Self::*MemberFunctionType)( $(include ImageParameters.in) );
-      template <class TImageType1, class TImageType2> Image DualExecuteInternal ( $(include ImageParameters.in) );
+      /** Setup for member function dispatching */
+      typedef Image (Self::*MemberFunctionType)( $(include ImageParameters.in) );
 
       friend struct detail::DualExecuteInternalAddressor<MemberFunctionType>;
+      template <class TImageType1, class TImageType2> Image DualExecuteInternal ( $(include ImageParameters.in) );
+$(if vector_pixel_types_by_component then
+OUT=[[
+      friend struct detail::DualExecuteInternalVectorAddressor<MemberFunctionType>;
+      template <class TImageType1, class TImageType2> Image DualExecuteInternalVector ( $(include ImageParameters.in) );]]
+end)
+
       std::auto_ptr<detail::DualMemberFunctionFactory<MemberFunctionType> > m_DualMemberFactory;
 
 
