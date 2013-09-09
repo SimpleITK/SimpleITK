@@ -12,7 +12,7 @@ endif()
 option( BUILD_TESTING "Turn on Testing for SimpleITK" ${BUILD_TESTING_DEFAULT} )
 
 # 2.8.11 required for ExternalData.cmake.
-if( ${CMAKE_VERSION} VERSION_LESS 2.8.11 )
+if( BUILD_TESTING AND CMAKE_VERSION VERSION_LESS 2.8.11 )
   message( FATAL_ERROR "BUILD_TESTING ON requires CMake 2.8.11 or newer." )
 endif()
 
