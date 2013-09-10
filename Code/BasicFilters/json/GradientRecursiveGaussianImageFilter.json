@@ -63,5 +63,5 @@
     }
   ],
   "briefdescription" : "Computes the gradient of an image by convolution with the first derivative of a Gaussian.\n",
-  "detaileddescription" : "This filter is implemented using the recursive gaussian filters\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Compute the gradient of an image by convolution with the first derivative of a Gaussian\n\n"
+  "detaileddescription" : "This filter is implemented using the recursive gaussian filters.\nThis filter supports both scalar and vector pixel types within the input image, including VectorImagetype.\n\\par Wiki Examples:\n\n\\li All Examples\n\\li Compute the gradient of an image by convolution with the first derivative of a Gaussian\n\n"
 }

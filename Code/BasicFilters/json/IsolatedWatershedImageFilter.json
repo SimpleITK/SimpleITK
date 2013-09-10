@@ -15,7 +15,9 @@
       "doc" : "",
       "itk_type" : "typename FilterType::IndexType",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set seed point 1. This seed will be isolated from Seed2 (if possible). All pixels connected to this seed will be replaced with ReplaceValue1.\n"
+      "detaileddescriptionSet" : "Set seed point 1. This seed will be isolated from Seed2 (if possible). All pixels connected to this seed will be replaced with ReplaceValue1.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set seed point 1. This seed will be isolated from Seed2 (if possible). All pixels connected to this seed will be replaced with ReplaceValue1.\n"
     },
     {
       "name" : "Seed2",
@@ -25,7 +27,9 @@
       "doc" : "",
       "itk_type" : "typename FilterType::IndexType",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set seed point 2. This seed will be isolated from Seed1 (if possible). All pixels connected to this seed will be replaced with ReplaceValue2.\n"
+      "detaileddescriptionSet" : "Set seed point 2. This seed will be isolated from Seed1 (if possible). All pixels connected to this seed will be replaced with ReplaceValue2.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set seed point 2. This seed will be isolated from Seed1 (if possible). All pixels connected to this seed will be replaced with ReplaceValue2.\n"
     },
     {
       "name" : "Threshold",

@@ -30,26 +30,42 @@
       "type" : "std::vector<double>",
       "dim_vec" : 1,
       "default" : "std::vector<double>(3, 0.5)",
-      "itk_type" : "typename FilterType::ArrayType"
+      "itk_type" : "typename FilterType::ArrayType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
     },
     {
       "name" : "GridSpacing",
       "type" : "std::vector<double>",
       "dim_vec" : 1,
       "default" : "std::vector<double>(3, 4.0)",
-      "itk_type" : "typename FilterType::ArrayType"
+      "itk_type" : "typename FilterType::ArrayType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
     },
     {
       "name" : "GridOffset",
       "type" : "std::vector<double>",
       "dim_vec" : 1,
       "default" : "std::vector<double>(3, 0.0)",
-      "itk_type" : "typename FilterType::ArrayType"
+      "itk_type" : "typename FilterType::ArrayType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
     },
     {
       "name" : "Scale",
       "type" : "double",
-      "default" : "255.0"
+      "default" : "255.0",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
     },
     {
       "name" : "Origin",
@@ -81,5 +97,7 @@
       "tolerance" : 1e-05,
       "inputs" : []
     }
-  ]
+  ],
+  "briefdescription" : "Generate an n-dimensional image of a grid.\n",
+  "detaileddescription" : " GridImageSourcegenerates an image of a grid. From the abstract... \"Certain classes of images find disparate use amongst members of the ITK community for such purposes as visualization, simulation, testing, etc. Currently there exists two derived classes from the ImageSourceclass used for generating specific images for various applications, viz. RandomImageSourceand GaussianImageSource. We propose to add to this set with the class GridImageSourcewhich, obviously enough, produces a grid image. Such images are useful for visualizing deformation when used in conjunction with the WarpImageFilter, simulating magnetic resonance tagging images, or creating optical illusions with which to amaze your friends.\"\nThe output image may be of any dimension.\n\\author Tustison N., Avants B., Gee J. University of Pennsylvania\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/475\n"
 }

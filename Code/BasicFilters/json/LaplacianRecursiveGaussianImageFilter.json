@@ -13,7 +13,9 @@
       "default" : "1.0",
       "doc" : "",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set Sigma value. Sigma is measured in the units of image spacing.\n"
+      "detaileddescriptionSet" : "Set Sigma value. Sigma is measured in the units of image spacing.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set Sigma value. Sigma is measured in the units of image spacing.\n"
     },
     {
       "name" : "NormalizeAcrossScale",
@@ -38,5 +40,5 @@
     }
   ],
   "briefdescription" : "Computes the Laplacian of Gaussian (LoG) of an image.\n",
-  "detaileddescription" : "Computes the Laplacian of Gaussian (LoG) of an image by convolution with the second derivative of a Gaussian. This filter is implemented using the recursive gaussian filters.\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Compute the Laplacian of Gaussian (LoG) of an image\n\n"
+  "detaileddescription" : "Computes the Laplacian of Gaussian (LoG) of an image by convolution with the second derivative of a Gaussian. This filter is implemented using the recursive gaussian filters.\n\\par Wiki Examples:\n\n\\li All Examples\n\\li Compute the Laplacian of Gaussian (LoG) of an image\n\n"
 }
