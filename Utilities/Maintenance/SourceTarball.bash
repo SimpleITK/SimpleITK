@@ -200,8 +200,8 @@ trap "rm -rf '$GIT_INDEX_FILE'" EXIT &&
 info "Loading tree from $commit..." &&
 git read-tree -m -i $commit &&
 
-#info "Loading data for $commit..." &&
-#load_data_objects $commit &&
+info "Loading data for $commit..." &&
+load_data_objects $commit &&
 
 index_additional_object "${build_dir}/sitkSourceVersionVars.cmake" "CMake" &&
 
