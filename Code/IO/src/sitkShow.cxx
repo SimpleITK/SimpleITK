@@ -28,7 +28,7 @@
 #include <algorithm>
 #include <ctype.h>
 
-#ifdef WIN32
+#ifdef _WIN32
 #include <process.h>
 #else
 #include <unistd.h>
@@ -45,7 +45,7 @@ namespace itk
   const unsigned int ProcessDelay = 500;
 
 
-#if defined(WIN32)
+#if defined(_WIN32)
   static std::string ShowImageCommand = "%a -o %f -eval \"rename(\'%t\'); \"";
   static std::string ShowColorImageCommand = "%a -eval "
                                               "\"open(\'%f\'); run(\'Make Composite\', \'display=Composite\'); rename(\'%t\'); \"";
@@ -254,7 +254,7 @@ namespace itk
 
   itksys::SystemTools::GetEnv ( "SITK_SHOW_EXTENSION", Extension );
 
-#ifdef WIN32
+#ifdef _WIN32
   int pid = _getpid();
 #else
   int pid = getpid();
@@ -281,7 +281,7 @@ namespace itk
   return TempFile;
   }
 
-#if defined(WIN32)
+#if defined(_WIN32)
   //
   // Function that converts slashes or backslashes to double backslashes.  We need
   // to do this so the file name is properly parsed by ImageJ if it's used in a macro.
@@ -314,7 +314,7 @@ namespace itk
   {
   std::string TempDirectory;
 
-#ifdef WIN32
+#ifdef _WIN32
   if ( !itksys::SystemTools::GetEnv ( "TMP", TempDirectory )
     && !itksys::SystemTools::GetEnv ( "TEMP", TempDirectory )
     && !itksys::SystemTools::GetEnv ( "USERPROFILE", TempDirectory )
@@ -339,7 +339,7 @@ namespace itk
   std::vector<std::string> paths;
   std::string ExecutableName=name;
 
-#ifdef WIN32
+#ifdef _WIN32
 
   std::string ProgramFiles;
   if ( itksys::SystemTools::GetEnv ( "PROGRAMFILES", ProgramFiles ) )
@@ -540,7 +540,7 @@ namespace itk
   // Find the ImageJ executable
   //
 
-#if defined(WIN32)
+#if defined(_WIN32)
 
   // Windows
   ExecutableName = FindApplication("ImageJ.exe");
