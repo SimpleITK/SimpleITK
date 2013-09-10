@@ -1082,7 +1082,7 @@ TEST_F(Image,GetPixel)
 TEST_F(Image,GetPixelVector)
 {
 
-  std::vector<double> zero(2,0);
+  std::vector<unsigned char> zero(2,0);
 
 
   // this test is designed to run all GetPixel methods for Vector types
