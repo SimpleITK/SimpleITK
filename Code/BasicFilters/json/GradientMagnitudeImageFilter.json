@@ -29,5 +29,5 @@
     }
   ],
   "briefdescription" : "Computes the gradient magnitude of an image region at each pixel.\n",
-  "detaileddescription" : "\\see  Image\n\\see \n\\see  Neighborhood\n\\see \n\\see  NeighborhoodOperator\n\\see \n\\see  NeighborhoodIterator\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Compute the gradient magnitude image\n\n"
+  "detaileddescription" : "\\see  Image\n\\see \n\\see  Neighborhood\n\\see \n\\see  NeighborhoodOperator\n\\see \n\\see  NeighborhoodIterator\n\\par Wiki Examples:\n\n\\li All Examples\n\\li Compute the gradient magnitude image\n\n"
 }

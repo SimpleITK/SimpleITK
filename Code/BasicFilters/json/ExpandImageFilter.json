@@ -29,9 +29,9 @@
       "doc" : "",
       "custom_itk_cast" : "filter->SetInterpolator( CreateInterpolator( image1.GetPointer(), m_Interpolator ) );",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set the interpolator function.\n",
+      "detaileddescriptionSet" : "Get/Set the interpolator function.\n",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Get a pointer to the interpolator function.\n"
+      "detaileddescriptionGet" : "Get/Set the interpolator function.\n"
     }
   ],
   "tests" : [

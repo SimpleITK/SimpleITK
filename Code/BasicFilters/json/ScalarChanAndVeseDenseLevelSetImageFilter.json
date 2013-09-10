@@ -80,11 +80,15 @@
       "custom_itk_cast" : "filter->GetDifferenceFunction(0)->SetVolumeMatchingWeight(m_VolumeMatchingWeight);"
     },
     {
-    "name" : "HeavisideStepFunction",
-    "enum" : [ "AtanRegularizedHeaviside", "SinRegularizedHeaviside", "Heaviside" ],
-    "default" : "itk::simple::ScalarChanAndVeseDenseLevelSetImageFilter::AtanRegularizedHeaviside",
-    "doc" : "Step functions",
-    "custom_itk_cast" : "if (m_HeavisideStepFunction == AtanRegularizedHeaviside) {\n    typedef itk::AtanRegularizedHeavisideStepFunction< typename InputImageType::PixelType, typename InputImageType::PixelType >  DomainFunctionType;\n    typename DomainFunctionType::Pointer domainFunction = DomainFunctionType::New();\n    domainFunction->SetEpsilon(m_Epsilon);\n    filter->GetDifferenceFunction(0)->SetDomainFunction( domainFunction );\n  } else if ( m_HeavisideStepFunction == SinRegularizedHeaviside ) {\n    typedef itk::AtanRegularizedHeavisideStepFunction< typename InputImageType::PixelType, typename InputImageType::PixelType >  DomainFunctionType;\n    typename DomainFunctionType::Pointer domainFunction = DomainFunctionType::New();\n    domainFunction->SetEpsilon(m_Epsilon);\n    filter->GetDifferenceFunction(0)->SetDomainFunction( domainFunction );\n  } else {\n    typedef itk::HeavisideStepFunction< typename InputImageType::PixelType, typename InputImageType::PixelType >  DomainFunctionType;\n    typename DomainFunctionType::Pointer domainFunction = DomainFunctionType::New();\n    filter->GetDifferenceFunction(0)->SetDomainFunction( domainFunction );\n  }"
+      "name" : "HeavisideStepFunction",
+      "enum" : [
+        "AtanRegularizedHeaviside",
+        "SinRegularizedHeaviside",
+        "Heaviside"
+      ],
+      "default" : "itk::simple::ScalarChanAndVeseDenseLevelSetImageFilter::AtanRegularizedHeaviside",
+      "doc" : "Step functions",
+      "custom_itk_cast" : "if (m_HeavisideStepFunction == AtanRegularizedHeaviside) {\n    typedef itk::AtanRegularizedHeavisideStepFunction< typename InputImageType::PixelType, typename InputImageType::PixelType >  DomainFunctionType;\n    typename DomainFunctionType::Pointer domainFunction = DomainFunctionType::New();\n    domainFunction->SetEpsilon(m_Epsilon);\n    filter->GetDifferenceFunction(0)->SetDomainFunction( domainFunction );\n  } else if ( m_HeavisideStepFunction == SinRegularizedHeaviside ) {\n    typedef itk::AtanRegularizedHeavisideStepFunction< typename InputImageType::PixelType, typename InputImageType::PixelType >  DomainFunctionType;\n    typename DomainFunctionType::Pointer domainFunction = DomainFunctionType::New();\n    domainFunction->SetEpsilon(m_Epsilon);\n    filter->GetDifferenceFunction(0)->SetDomainFunction( domainFunction );\n  } else {\n    typedef itk::HeavisideStepFunction< typename InputImageType::PixelType, typename InputImageType::PixelType >  DomainFunctionType;\n    typename DomainFunctionType::Pointer domainFunction = DomainFunctionType::New();\n    filter->GetDifferenceFunction(0)->SetDomainFunction( domainFunction );\n  }"
     },
     {
       "name" : "UseImageSpacing",
@@ -135,7 +139,7 @@
         {
           "name" : "RMSChange",
           "value" : 721.33,
-          "tolerance" : .5
+          "tolerance" : 0.5
         }
       ],
       "inputs" : [
@@ -143,5 +147,7 @@
         "Input/cthead1-Float.mha"
       ]
     }
-  ]
+  ],
+  "briefdescription" : "Dense implementation of the Chan and Vese multiphase level set image filter.\n",
+  "detaileddescription" : "This code was adapted from the paper:\"An active contour model without edges\"\n    T. Chan and L. Vese.\n    In Scale-Space Theories in Computer Vision, pages 141-151, 1999.\n\\author Mosaliganti K., Smith B., Gelas A., Gouaillard A., Megason S.\nThis code was taken from the Insight Journal paper:\"Cell Tracking using Coupled Active Surfaces for Nuclei and Membranes\"\nhttp://www.insight-journal.org/browse/publication/642\nhttp://hdl.handle.net/10380/3055\nThat is based on the papers:\"Level Set Segmentation: Active Contours without edge\"\nhttp://www.insight-journal.org/browse/publication/322\nhttp://hdl.handle.net/1926/1532\n\nand\n\n\"Level set segmentation using coupled active surfaces\"\nhttp://www.insight-journal.org/browse/publication/323\nhttp://hdl.handle.net/1926/1533\n\\par Wiki Examples:\n\n\\li All Examples\n\\li Single-phase Chan And Vese Dense Field Level Set Segmentation\n\n"
 }

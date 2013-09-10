@@ -21,6 +21,6 @@
       ]
     }
   ],
-  "briefdescription" : "Implements pixel-wise conversion of real and imaginary data into complex voxels.\n",
-  "detaileddescription" : "This filter is parametrized over the types of the two input images and the type of the output image.\nThe filter expect all images to have the same dimension (e.g. all 2D, or all 3D, or all ND)\n"
+  "briefdescription" : " ComposeImageFiltercombine several scalar images into a multicomponent image.\n",
+  "detaileddescription" : " ComposeImageFiltercombine several scalar images into an itk::Imageof vector pixel ( itk::Vector, itk::RGBPixel, ...), of std::complex pixel, or in an itk::VectorImage.\n\\par Inputs and Usage\nfilter->SetInput(0,image0);filter->SetInput(1,image1);...filter->Update(); itk::VectorImage< PixelType, dimension >::Pointer=filter->GetOutput();All input images are expected to have the same template parameters and have the same size and origin.\n\\see  VectorImage\n\\see \n\\see  VectorIndexSelectionCastImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\\li Create a vector image from a collection of scalar images\n\\li Compose a vector image (with 3 components) from three scalar images\n\\li Convert a real image and an imaginary image to a complex image\n\n"
 }

@@ -18,6 +18,6 @@
       ]
     }
   ],
-  "briefdescription" : "Computes the modulus (x % y) pixel-wise.\n",
-  "detaileddescription" : "The input pixel type must support the c++ modulus operator (%).\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\n"
+  "briefdescription" : "Computes the modulus (x % dividend) pixel-wise.\n",
+  "detaileddescription" : "The input pixel type must support the c++ modulus operator (%).\nIf the dividend is zero, the maximum value will be returned.\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\n"
 }

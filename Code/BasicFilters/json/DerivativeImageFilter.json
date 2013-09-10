@@ -77,5 +77,5 @@
     }
   ],
   "briefdescription" : "Computes the directional derivative of an image. The directional derivative at each pixel location is computed by convolution with a derivative operator of user-specified order.\n",
-  "detaileddescription" : "SetOrder specifies the order of the derivative.\nSetDirection specifies the direction of the derivative with respect to the coordinate axes of the image.\n\\see  Image\n\\see \n\\see  Neighborhood\n\\see \n\\see  NeighborhoodOperator\n\\see \n\\see  NeighborhoodIterator\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Compute the derivative of an image in a particular direction\n\n"
+  "detaileddescription" : "SetOrder specifies the order of the derivative.\nSetDirection specifies the direction of the derivative with respect to the coordinate axes of the image.\n\\see  Image\n\\see \n\\see  Neighborhood\n\\see \n\\see  NeighborhoodOperator\n\\see \n\\see  NeighborhoodIterator\n\\par Wiki Examples:\n\n\\li All Examples\n\\li Compute the derivative of an image in a particular direction\n\n"
 }
