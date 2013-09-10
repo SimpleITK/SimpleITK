@@ -44,7 +44,7 @@ SET(CTEST_CUSTOM_WARNING_EXCEPTION
 
   # Ubuntu 10'd gcc 4.4.3 produces:
   # assuming signed overflow does not occur when assuming that (X + c) < X is always false
-  "itkImageRegionConstIteratorWithIndex.hxx:37: warning.*\(X + c\) < X is always false"
+  "itkImageRegionConstIteratorWithIndex.hxx:37: warning.*\is always false"
 
   # Ignore CSharp invalid version warning for dev
   "warning CS1607.*The version number.*dev.*is invalid"
