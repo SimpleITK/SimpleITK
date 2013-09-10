@@ -29,7 +29,11 @@
     },
     {
       "name" : "Order",
-      "enum": [ "ZeroOrder", "FirstOrder", "SecondOrder" ],
+      "enum" : [
+        "ZeroOrder",
+        "FirstOrder",
+        "SecondOrder"
+      ],
       "default" : "itk::simple::RecursiveGaussianImageFilter::ZeroOrder",
       "doc" : "",
       "custom_itk_cast" : "filter->SetOrder( static_cast<typename FilterType::OrderEnumType>( this->GetOrder()) );",

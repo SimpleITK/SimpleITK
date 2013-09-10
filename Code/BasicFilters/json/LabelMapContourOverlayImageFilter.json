@@ -52,7 +52,11 @@
     },
     {
       "name" : "ContourType",
-      "enum" : [ "PLAIN", "CONTOUR", "SLICE_CONTOUR" ],
+      "enum" : [
+        "PLAIN",
+        "CONTOUR",
+        "SLICE_CONTOUR"
+      ],
       "default" : "itk::simple::LabelMapContourOverlayImageFilter::CONTOUR",
       "custom_itk_cast" : "filter->SetType( int( m_ContourType ) );",
       "briefdescriptionSet" : "",
@@ -62,7 +66,10 @@
     },
     {
       "name" : "Priority",
-      "enum": [ "HIGH_LABEL_ON_TOP", "LOW_LABEL_ON_TOP" ],
+      "enum" : [
+        "HIGH_LABEL_ON_TOP",
+        "LOW_LABEL_ON_TOP"
+      ],
       "default" : "itk::simple::LabelMapContourOverlayImageFilter::HIGH_LABEL_ON_TOP",
       "custom_itk_cast" : "filter->SetPriority( int( m_Priority ) );",
       "briefdescriptionSet" : "",

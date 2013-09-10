@@ -6,7 +6,7 @@
   "pixel_types" : "VectorPixelIDTypeList",
   "pixel_types2" : "typelist::Append<BasicPixelIDTypeList,VectorPixelIDTypeList>::Type",
   "custom_type2" : "const PixelIDValueEnum type2 = (m_OutputPixelType != sitkUnknown) ? m_OutputPixelType : type1;",
-  "output_pixel_type" : "typename InputImageType2::InternalPixelType"
+  "output_pixel_type" : "typename InputImageType2::InternalPixelType",
   "members" : [
     {
       "name" : "Index",

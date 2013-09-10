@@ -22,13 +22,20 @@
     },
     {
       "name" : "BoundaryCondition",
-      "enum" : [ "ZERO_PAD", "ZERO_FLUX_NEUMANN_PAD", "PERIODIC_PAD" ],
+      "enum" : [
+        "ZERO_PAD",
+        "ZERO_FLUX_NEUMANN_PAD",
+        "PERIODIC_PAD"
+      ],
       "default" : "itk::simple::FFTConvolutionImageFilter::ZERO_FLUX_NEUMANN_PAD",
       "custom_itk_cast" : "std::auto_ptr< ImageBoundaryCondition< InputImageType > > bc( CreateNewBoundaryConditionInstance< Self, FilterType >( m_BoundaryCondition ) ); filter->SetBoundaryCondition( bc.get() );\n"
     },
     {
       "name" : "OutputRegionMode",
-      "enum" : [ "SAME", "VALID" ],
+      "enum" : [
+        "SAME",
+        "VALID"
+      ],
       "default" : "itk::simple::FFTConvolutionImageFilter::SAME",
       "custom_itk_cast" : "filter->SetOutputRegionMode( typename FilterType::OutputRegionModeType( int( this->m_OutputRegionMode ) ) );"
     }

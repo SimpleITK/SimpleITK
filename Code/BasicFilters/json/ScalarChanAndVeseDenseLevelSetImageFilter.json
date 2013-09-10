@@ -80,11 +80,15 @@
       "custom_itk_cast" : "filter->GetDifferenceFunction(0)->SetVolumeMatchingWeight(m_VolumeMatchingWeight);"
     },
     {
-    "name" : "HeavisideStepFunction",
-    "enum" : [ "AtanRegularizedHeaviside", "SinRegularizedHeaviside", "Heaviside" ],
-    "default" : "itk::simple::ScalarChanAndVeseDenseLevelSetImageFilter::AtanRegularizedHeaviside",
-    "doc" : "Step functions",
-    "custom_itk_cast" : "if (m_HeavisideStepFunction == AtanRegularizedHeaviside) {\n    typedef itk::AtanRegularizedHeavisideStepFunction< typename InputImageType::PixelType, typename InputImageType::PixelType >  DomainFunctionType;\n    typename DomainFunctionType::Pointer domainFunction = DomainFunctionType::New();\n    domainFunction->SetEpsilon(m_Epsilon);\n    filter->GetDifferenceFunction(0)->SetDomainFunction( domainFunction );\n  } else if ( m_HeavisideStepFunction == SinRegularizedHeaviside ) {\n    typedef itk::AtanRegularizedHeavisideStepFunction< typename InputImageType::PixelType, typename InputImageType::PixelType >  DomainFunctionType;\n    typename DomainFunctionType::Pointer domainFunction = DomainFunctionType::New();\n    domainFunction->SetEpsilon(m_Epsilon);\n    filter->GetDifferenceFunction(0)->SetDomainFunction( domainFunction );\n  } else {\n    typedef itk::HeavisideStepFunction< typename InputImageType::PixelType, typename InputImageType::PixelType >  DomainFunctionType;\n    typename DomainFunctionType::Pointer domainFunction = DomainFunctionType::New();\n    filter->GetDifferenceFunction(0)->SetDomainFunction( domainFunction );\n  }"
+      "name" : "HeavisideStepFunction",
+      "enum" : [
+        "AtanRegularizedHeaviside",
+        "SinRegularizedHeaviside",
+        "Heaviside"
+      ],
+      "default" : "itk::simple::ScalarChanAndVeseDenseLevelSetImageFilter::AtanRegularizedHeaviside",
+      "doc" : "Step functions",
+      "custom_itk_cast" : "if (m_HeavisideStepFunction == AtanRegularizedHeaviside) {\n    typedef itk::AtanRegularizedHeavisideStepFunction< typename InputImageType::PixelType, typename InputImageType::PixelType >  DomainFunctionType;\n    typename DomainFunctionType::Pointer domainFunction = DomainFunctionType::New();\n    domainFunction->SetEpsilon(m_Epsilon);\n    filter->GetDifferenceFunction(0)->SetDomainFunction( domainFunction );\n  } else if ( m_HeavisideStepFunction == SinRegularizedHeaviside ) {\n    typedef itk::AtanRegularizedHeavisideStepFunction< typename InputImageType::PixelType, typename InputImageType::PixelType >  DomainFunctionType;\n    typename DomainFunctionType::Pointer domainFunction = DomainFunctionType::New();\n    domainFunction->SetEpsilon(m_Epsilon);\n    filter->GetDifferenceFunction(0)->SetDomainFunction( domainFunction );\n  } else {\n    typedef itk::HeavisideStepFunction< typename InputImageType::PixelType, typename InputImageType::PixelType >  DomainFunctionType;\n    typename DomainFunctionType::Pointer domainFunction = DomainFunctionType::New();\n    filter->GetDifferenceFunction(0)->SetDomainFunction( domainFunction );\n  }"
     },
     {
       "name" : "UseImageSpacing",
@@ -135,7 +139,7 @@
         {
           "name" : "RMSChange",
           "value" : 721.33,
-          "tolerance" : .5
+          "tolerance" : 0.5
         }
       ],
       "inputs" : [

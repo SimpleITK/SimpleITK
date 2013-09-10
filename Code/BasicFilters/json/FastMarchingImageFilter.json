@@ -32,7 +32,11 @@
     },
     {
       "name" : "TopologyCheck",
-      "enum" : [ "Nothing", "NoHandles", "Strict" ],
+      "enum" : [
+        "Nothing",
+        "NoHandles",
+        "Strict"
+      ],
       "default" : "itk::simple::FastMarchingImageFilter::Nothing",
       "doc" : "",
       "custom_itk_cast" : "filter->SetTopologyCheck( static_cast<typename FilterType::TopologyCheckType>( this->GetTopologyCheck() ) );"

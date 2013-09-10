@@ -9,7 +9,22 @@
   "members" : [
     {
       "name" : "Colormap",
-      "enum" : [ "Red", "Green", "Blue", "Grey", "Hot", "Cool", "Spring", "Summer", "Autumn", "Winter", "Copper", "Jet", "HSV", "OverUnder" ],
+      "enum" : [
+        "Red",
+        "Green",
+        "Blue",
+        "Grey",
+        "Hot",
+        "Cool",
+        "Spring",
+        "Summer",
+        "Autumn",
+        "Winter",
+        "Copper",
+        "Jet",
+        "HSV",
+        "OverUnder"
+      ],
       "default" : "itk::simple::ScalarToRGBColormapImageFilter::Grey",
       "custom_itk_cast" : "filter->SetColormap( typename FilterType::ColormapEnumType( int( this->m_Colormap) ) );",
       "briefdescriptionSet" : "",

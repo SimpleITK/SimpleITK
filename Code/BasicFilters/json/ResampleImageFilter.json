@@ -184,7 +184,6 @@
         "Input/RA-Float.nrrd"
       ]
     },
-
     {
       "tag" : "vector",
       "description" : "resample a vector image",

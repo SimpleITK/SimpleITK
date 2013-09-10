@@ -33,7 +33,12 @@
     },
     {
       "name" : "DirectionCollapseToStrategy",
-      "enum" : [ "DIRECTIONCOLLAPSETOUNKOWN", "DIRECTIONCOLLAPSETOIDENTITY", "DIRECTIONCOLLAPSETOSUBMATRIX", "DIRECTIONCOLLAPSETOGUESS" ],
+      "enum" : [
+        "DIRECTIONCOLLAPSETOUNKOWN",
+        "DIRECTIONCOLLAPSETOIDENTITY",
+        "DIRECTIONCOLLAPSETOSUBMATRIX",
+        "DIRECTIONCOLLAPSETOGUESS"
+      ],
       "default" : "itk::simple::ExtractImageFilter::DIRECTIONCOLLAPSETOGUESS",
       "custom_itk_cast" : "filter->SetDirectionCollapseToStrategy( typename FilterType::DirectionCollapseStrategyEnum( int( this->m_DirectionCollapseToStrategy ) ) );",
       "briefdescriptionSet" : "",
