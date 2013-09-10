@@ -40,5 +40,5 @@
     }
   ],
   "briefdescription" : "Computes the Magnitude of the Gradient of an image by convolution with the first derivative of a Gaussian.\n",
-  "detaileddescription" : "This filter is implemented using the recursive gaussian filters\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Find the gradient magnitude of the image first smoothed with a Gaussian kernel\n\n"
+  "detaileddescription" : "This filter is implemented using the recursive gaussian filters\n\\par Wiki Examples:\n\n\\li All Examples\n\\li Find the gradient magnitude of the image first smoothed with a Gaussian kernel\n\n"
 }

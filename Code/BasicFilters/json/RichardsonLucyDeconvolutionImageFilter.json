@@ -31,13 +31,20 @@
     },
     {
       "name" : "BoundaryCondition",
-      "enum" : [ "ZERO_PAD", "ZERO_FLUX_NEUMANN_PAD", "PERIODIC_PAD" ],
+      "enum" : [
+        "ZERO_PAD",
+        "ZERO_FLUX_NEUMANN_PAD",
+        "PERIODIC_PAD"
+      ],
       "default" : "itk::simple::RichardsonLucyDeconvolutionImageFilter::ZERO_FLUX_NEUMANN_PAD",
       "custom_itk_cast" : "std::auto_ptr< ImageBoundaryCondition< InputImageType > > bc( CreateNewBoundaryConditionInstance< Self, FilterType >( m_BoundaryCondition ) ); filter->SetBoundaryCondition( bc.get() );\n"
     },
     {
       "name" : "OutputRegionMode",
-      "enum" : [ "SAME", "VALID" ],
+      "enum" : [
+        "SAME",
+        "VALID"
+      ],
       "default" : "itk::simple::RichardsonLucyDeconvolutionImageFilter::SAME",
       "custom_itk_cast" : "filter->SetOutputRegionMode( typename FilterType::OutputRegionModeType( int( this->m_OutputRegionMode ) ) );"
     }
@@ -62,5 +69,5 @@
     }
   ],
   "briefdescription" : "Deconvolve an image using the Richardson-Lucy deconvolution algorithm.\n",
-  "detaileddescription" : "This filter implements the Richardson-Lucy deconvolution algorithm as defined in Bertero M and Boccacci P, \"Introduction to Inverse\n Problems in Imaging\", 1998. The algorithm assumes that the input image has been formed by a linear shift-invariant system with a known kernel.\nThe Richardson-Lucy algorithm assumes that noise in the image follows a Poisson distribution and that the distribution for each pixel is independent of the other pixels.\nThis code was adapted from the Insight Journal contribution:\n\"Deconvolution: infrastructure and reference algorithms\" by Gaetan Lehmannhttp://hdl.handle.net/10380/3207\n\\author Gaetan Lehmann, Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France\nCory Quammen, The University of North Carolina at Chapel Hill\n\\see  IterativeDeconvolutionImageFilter\n\\see \n\\see  LandweberDeconvolutionImageFilter\n\\see \n\\see  ProjectedLandweberDeconvolutionImageFilter\n\n"
+  "detaileddescription" : "This filter implements the Richardson-Lucy deconvolution algorithm as defined in Bertero M and Boccacci P, \"Introduction to Inverse\nProblems in Imaging\", 1998. The algorithm assumes that the input image has been formed by a linear shift-invariant system with a known kernel.\nThe Richardson-Lucy algorithm assumes that noise in the image follows a Poisson distribution and that the distribution for each pixel is independent of the other pixels.\nThis code was adapted from the Insight Journal contribution:\n\"Deconvolution: infrastructure and reference algorithms\" by Gaetan Lehmannhttp://hdl.handle.net/10380/3207\n\\author Gaetan Lehmann, Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France\nCory Quammen, The University of North Carolina at Chapel Hill\n\\see  IterativeDeconvolutionImageFilter\n\\see \n\\see  LandweberDeconvolutionImageFilter\n\\see \n\\see  ProjectedLandweberDeconvolutionImageFilter\n\n"
 }

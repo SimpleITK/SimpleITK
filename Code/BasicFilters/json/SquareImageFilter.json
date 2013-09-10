@@ -19,5 +19,5 @@
     }
   ],
   "briefdescription" : "Computes the square of the intensity values pixel-wise.\n",
-  "detaileddescription" : "\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Square every pixel in an image\n\n"
+  "detaileddescription" : "\\par Wiki Examples:\n\n\\li All Examples\n\\li Square every pixel in an image\n\n"
 }

@@ -22,13 +22,20 @@
     },
     {
       "name" : "BoundaryCondition",
-      "enum" : [ "ZERO_PAD", "ZERO_FLUX_NEUMANN_PAD", "PERIODIC_PAD" ],
+      "enum" : [
+        "ZERO_PAD",
+        "ZERO_FLUX_NEUMANN_PAD",
+        "PERIODIC_PAD"
+      ],
       "default" : "itk::simple::ConvolutionImageFilter::ZERO_FLUX_NEUMANN_PAD",
       "custom_itk_cast" : "std::auto_ptr< ImageBoundaryCondition< InputImageType > > bc( CreateNewBoundaryConditionInstance< Self, FilterType >( m_BoundaryCondition ) ); filter->SetBoundaryCondition( bc.get() );\n"
     },
     {
       "name" : "OutputRegionMode",
-      "enum" : [ "SAME", "VALID" ],
+      "enum" : [
+        "SAME",
+        "VALID"
+      ],
       "default" : "itk::simple::ConvolutionImageFilter::SAME",
       "custom_itk_cast" : "filter->SetOutputRegionMode( typename FilterType::OutputRegionModeType( int( this->m_OutputRegionMode ) ) );"
     }
@@ -46,5 +53,5 @@
     }
   ],
   "briefdescription" : "Convolve a given image with an arbitrary image kernel.\n",
-  "detaileddescription" : "This filter operates by centering the flipped kernel at each pixel in the image and computing the inner product between pixel values in the image and pixel values in the kernel. The center of the kernel is defined as\\f$ \\lfloor (2*i+s-1)/2 \\rfloor \\f$ where\\f$i\\f$ is the index and\\f$s\\f$ is the size of the largest possible region of the kernel image. For kernels with odd sizes in all dimensions, this corresponds to the center pixel. If a dimension of the kernel image has an even size, then the center index of the kernel in that dimension will be the largest integral index that is less than the continuous index of the image center.\nThe kernel can optionally be normalized to sum to 1 using NormalizeOn(). Normalization is off by default.\n\\warning This filter ignores the spacing, origin, and orientation of the kernel image and treats them as identical to those in the input image.\nThis code was contributed in the Insight Journal paper:\n\"Image Kernel Convolution\" by Tustison N., Gee J.http://hdl.handle.net/1926/1323http://www.insight-journal.org/browse/publication/208\n\\author Nicholas J. Tustison\nJames C. Gee\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Convolve an image with a kernel\n\n"
+  "detaileddescription" : "This filter operates by centering the flipped kernel at each pixel in the image and computing the inner product between pixel values in the image and pixel values in the kernel. The center of the kernel is defined as\\f$ \\lfloor (2*i+s-1)/2 \\rfloor \\f$ where\\f$i\\f$ is the index and\\f$s\\f$ is the size of the largest possible region of the kernel image. For kernels with odd sizes in all dimensions, this corresponds to the center pixel. If a dimension of the kernel image has an even size, then the center index of the kernel in that dimension will be the largest integral index that is less than the continuous index of the image center.\nThe kernel can optionally be normalized to sum to 1 using NormalizeOn(). Normalization is off by default.\n\\warning This filter ignores the spacing, origin, and orientation of the kernel image and treats them as identical to those in the input image.\nThis code was contributed in the Insight Journal paper:\n\"Image Kernel Convolution\" by Tustison N., Gee J.http://hdl.handle.net/1926/1323http://www.insight-journal.org/browse/publication/208\n\\author Nicholas J. Tustison\nJames C. Gee\n\\par Wiki Examples:\n\n\\li All Examples\n\\li Convolve an image with a kernel\n\n"
 }

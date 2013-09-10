@@ -51,5 +51,5 @@
     }
   ],
   "briefdescription" : "A connected components filter that labels the objects in an arbitrary image. Two pixels are similar if they are within threshold of each other. Uses ConnectedComponentFunctorImageFilter.\n",
-  "detaileddescription" : "\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Label connected components in a grayscale image\n\n"
+  "detaileddescription" : "\\par Wiki Examples:\n\n\\li All Examples\n\\li Label connected components in a grayscale image\n\n"
 }

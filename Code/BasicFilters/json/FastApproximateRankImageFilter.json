@@ -11,7 +11,11 @@
       "name" : "Rank",
       "type" : "double",
       "default" : "0.5",
-      "doc" : ""
+      "doc" : "",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
     },
     {
       "name" : "Radius",
@@ -66,5 +70,7 @@
         "Input/VM1111Shrink-RGBFloat.nrrd"
       ]
     }
-  ]
+  ],
+  "briefdescription" : "A separable rank filter.\n",
+  "detaileddescription" : "Medians aren't separable, but if you want a large robust smoother to be relatively quick then it is worthwhile pretending that they are.\nThis code was contributed in the Insight Journal paper: \"Efficient implementation of kernel filtering\" by Beare R., Lehmann Ghttp://hdl.handle.net/1926/555http://www.insight-journal.org/browse/publication/160\n\\author Richard Beare\n\n"
 }

@@ -30,20 +30,32 @@
       "type" : "std::vector<double>",
       "dim_vec" : 1,
       "default" : "std::vector<double>(3, 16.0)",
-      "itk_type" : "typename FilterType::ArrayType"
+      "itk_type" : "typename FilterType::ArrayType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
     },
     {
       "name" : "Mean",
       "type" : "std::vector<double>",
       "dim_vec" : 1,
       "default" : "std::vector<double>(3, 32.0)",
-      "itk_type" : "typename FilterType::ArrayType"
+      "itk_type" : "typename FilterType::ArrayType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
     },
     {
       "name" : "Frequency",
       "type" : "double",
       "default" : "0.4",
-      "itk_type" : "typename FilterType::ArrayType"
+      "itk_type" : "typename FilterType::ArrayType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
     },
     {
       "name" : "Origin",
@@ -75,5 +87,7 @@
       "tolerance" : "1e-5",
       "inputs" : []
     }
-  ]
+  ],
+  "briefdescription" : "Generate an n-dimensional image of a Gabor filter.\n",
+  "detaileddescription" : " GaborImageSourcegenerates an image of either the real (i.e. symmetric) or complex (i.e. antisymmetric) part of the Gabor filter with the orientation directed along the x-axis. The GaborKernelFunctionis used to evaluate the contribution along the x-axis whereas a non-normalized 1-D Gaussian envelope provides the contribution in each of the remaining N dimensions. Orientation can be manipulated via the Transformclasses of the toolkit.\nThe output image may be of any dimension.\nThis implementation was contributed as a paper to the Insight Journalhttp://hdl.handle.net/1926/500\n"
 }

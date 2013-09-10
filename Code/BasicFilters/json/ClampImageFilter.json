@@ -113,5 +113,5 @@
     }
   ],
   "briefdescription" : "Casts input pixels to output pixel type and clamps the output pixel values to a specified range.\n",
-  "detaileddescription" : "Default range corresponds to the range supported by the pixel type of the output image.\nThis filter is templated over the input image type and the output image type.\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\\see  UnaryFunctorImageFilter\n\\see \n\\see  CastImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\\li Cast an image from one type to another but clamp to the output value range\n\n\n"
+  "detaileddescription" : "Default range corresponds to the range supported by the pixel type of the output image.\nThis filter is templated over the input image type and the output image type.\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\\see  UnaryFunctorImageFilter\n\\see \n\\see  CastImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\\li Cast an image from one type to another but clamp to the output value range\n\n"
 }

@@ -30,19 +30,31 @@
       "type" : "std::vector<double>",
       "dim_vec" : 1,
       "default" : "std::vector<double>(3, 16.0)",
-      "itk_type" : "typename FilterType::ArrayType"
+      "itk_type" : "typename FilterType::ArrayType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Gets and sets for Gaussian parameters\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Gets and sets for Gaussian parameters\n"
     },
     {
       "name" : "Mean",
       "type" : "std::vector<double>",
       "dim_vec" : 1,
       "default" : "std::vector<double>(3, 32.0)",
-      "itk_type" : "typename FilterType::ArrayType"
+      "itk_type" : "typename FilterType::ArrayType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Gets and sets for Gaussian parameters\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Gets and sets for Gaussian parameters\n"
     },
     {
       "name" : "Scale",
       "type" : "double",
-      "default" : "255"
+      "default" : "255",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Gets and sets for Gaussian parameters\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Gets and sets for Gaussian parameters\n"
     },
     {
       "name" : "Origin",
@@ -74,5 +86,7 @@
       "tolerance" : "1e-5",
       "inputs" : []
     }
-  ]
+  ],
+  "briefdescription" : "Generate an n-dimensional image of a Gaussian.\n",
+  "detaileddescription" : " GaussianImageSourcegenerates an image of a Gaussian. m_Normalized determines whether or not the Gaussian is normalized (whether or not the sum over infinite space is 1.0) When creating an image, it is preferable tonotnormalize the Gaussian m_Scale scales the output of the Gaussian to span a range larger than 0->1, and is typically set to the maximum value of the output data type (for instance, 255 for uchars)\nThe output image may be of any dimension.\n"
 }
