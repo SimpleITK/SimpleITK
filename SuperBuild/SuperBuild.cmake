@@ -5,7 +5,17 @@ find_package(Git REQUIRED)
 #-----------------------------------------------------------------------------
 set(BUILDNAME "NoBuldNameGiven")
 set(SITE      "NoSiteGiven")
-option( BUILD_TESTING "Turn on Testing for SimpleITK" ON )
+set(BUILD_TESTING_DEFAULT ON)
+if(CMAKE_VERSION VERSION_LESS 2.8.11)
+  set(BUILD_TESTING_DEFAULT OFF)
+endif()
+option( BUILD_TESTING "Turn on Testing for SimpleITK" ${BUILD_TESTING_DEFAULT} )
+
+# 2.8.11 required for ExternalData.cmake.
+if( BUILD_TESTING AND CMAKE_VERSION VERSION_LESS 2.8.11 )
+  message( FATAL_ERROR "BUILD_TESTING ON requires CMake 2.8.11 or newer." )
+endif()
+
 
 configure_file(../CMake/CTestCustom.cmake.in CTestCustom.cmake)
 
