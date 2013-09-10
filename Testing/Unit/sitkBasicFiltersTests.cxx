@@ -229,6 +229,39 @@ TEST(BasicFilter,CurvatureAnisotropicDiffusion_EstimateOptimalTimeStep) {
 
 }
 
+TEST(BasicFilters,ImageFilterBase) {
+  namespace sitk = itk::simple;
+
+  sitk::CastImageFilter caster;
+  sitk::ImageFilter<1> &filter = caster;
+
+  EXPECT_FALSE(filter.GetGlobalDefaultDebug());
+  EXPECT_FALSE(filter.GetDebug());
+
+  filter.DebugOff();
+  EXPECT_FALSE(filter.GetDebug());
+  EXPECT_FALSE(filter.GetGlobalDefaultDebug());
+
+  filter.DebugOn();
+  EXPECT_TRUE(filter.GetDebug());
+  EXPECT_FALSE(filter.GetGlobalDefaultDebug());
+
+  filter.GlobalDefaultDebugOn();
+  EXPECT_TRUE(filter.GetDebug());
+  EXPECT_TRUE(filter.GetGlobalDefaultDebug());
+
+  filter.GlobalDefaultDebugOff();
+  EXPECT_TRUE(filter.GetDebug());
+  EXPECT_FALSE(filter.GetGlobalDefaultDebug());
+
+  filter.GlobalDefaultDebugOn();
+
+  sitk::CastImageFilter caster2;
+  EXPECT_TRUE(caster2.GetDebug());
+  EXPECT_TRUE(caster2.GetGlobalDefaultDebug());
+
+}
+
 TEST(BasicFilters,Cast) {
   itk::simple::HashImageFilter hasher;
   itk::simple::ImageFileReader reader;
@@ -333,6 +366,7 @@ TEST(BasicFilters,Statistics) {
   itk::simple::Image image = itk::simple::ReadImage ( dataFinder.GetFile ( "Input/RA-Float.nrrd" ) );
 
   itk::simple::StatisticsImageFilter stats;
+  stats.DebugOn();
 
   EXPECT_EQ ( stats.GetName(), "Statistics" );
   EXPECT_NO_THROW ( stats.ToString() );
@@ -365,6 +399,7 @@ TEST(BasicFilters,LabelStatistics) {
   itk::simple::Image labels = itk::simple::ReadImage ( dataFinder.GetFile ( "Input/2th_cthead1.mha" ) );
 
   itk::simple::LabelStatisticsImageFilter stats;
+  stats.DebugOn();
   stats.Execute ( image, labels );
 
   EXPECT_EQ( stats.GetName(), "LabelStatistics" );

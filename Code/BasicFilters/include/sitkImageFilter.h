@@ -65,6 +65,31 @@ namespace itk {
 
       /** return user readable name fo the filter */
       virtual std::string GetName() const = 0;
+
+      /** Turn debugging output on/off.
+       *
+       * Enabling debugging prints additional information to stdout
+       * about the execution of the internal filters.
+       */
+      virtual void DebugOn();
+      virtual void DebugOff();
+
+      /** Get the value of the debug flag. */
+      virtual bool GetDebug() const;
+      virtual void SetDebug(bool debugFlag);
+
+      /** Turn default debugging output value on/off.
+       *
+       * This is the initial values used for new classes and
+       * procedural methods.
+       */
+      static void GlobalDefaultDebugOn();
+      static void GlobalDefaultDebugOff();
+
+      /** Get the value of the default debug flag.  */
+      static bool GetGlobalDefaultDebug();
+      static void SetGlobalDefaultDebug(bool debugFlag);
+
     protected:
 
 
@@ -131,6 +156,8 @@ namespace itk {
       }
 
     private:
+
+      bool m_Debug;
 
     };
 

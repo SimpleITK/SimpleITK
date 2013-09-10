@@ -21,6 +21,11 @@
 namespace itk {
 namespace simple {
 
+namespace
+{
+static bool GlobalDefaultDebug = false;
+}
+
 //----------------------------------------------------------------------------
 
 //
@@ -28,6 +33,7 @@ namespace simple {
 //
 template< unsigned int N >
 ImageFilter< N >::ImageFilter ()
+  : m_Debug(GlobalDefaultDebug)
   {
   }
 
@@ -58,6 +64,50 @@ std::ostream & ImageFilter< N >::ToStringHelper(std::ostream &os, const unsigned
 {
   os << int(v);
   return os;
+}
+
+
+template< unsigned int N > void ImageFilter< N >::DebugOn()
+{
+  this->m_Debug = true;
+}
+
+template< unsigned int N > void ImageFilter< N >::DebugOff()
+{
+  this->m_Debug = false;
+}
+
+template< unsigned int N > bool ImageFilter< N >::GetDebug() const
+{
+  return this->m_Debug;
+}
+
+
+template< unsigned int N > void ImageFilter< N >::SetDebug( bool debugFlag)
+{
+  this->m_Debug = debugFlag;
+}
+
+
+template< unsigned int N > void ImageFilter< N >::GlobalDefaultDebugOn()
+{
+  GlobalDefaultDebug = true;
+}
+
+template< unsigned int N > void ImageFilter< N >::GlobalDefaultDebugOff()
+
+{
+  GlobalDefaultDebug = false;
+}
+
+template< unsigned int N > bool ImageFilter< N >::GetGlobalDefaultDebug()
+{
+  return GlobalDefaultDebug;
+}
+
+template< unsigned int N > void ImageFilter< N >::SetGlobalDefaultDebug(bool debugFlag)
+{
+  GlobalDefaultDebug = debugFlag;
 }
 
 
