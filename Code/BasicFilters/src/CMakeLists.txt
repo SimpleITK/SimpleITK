@@ -54,7 +54,7 @@ endif()
 
 # Break all these source files into a bunch of libraries base on every
 # n files in the list.
-set ( _stride 50 )
+set ( _stride 25 )
 set ( _library_i 0 )
 foreach ( _start RANGE 0 ${_length} ${_stride} )
 
