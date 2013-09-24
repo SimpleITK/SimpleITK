@@ -37,7 +37,6 @@ namespace simple {
 //
 StatisticsImageFilter::StatisticsImageFilter ()
   {
-  this->m_MeasurementMap.clear();
   this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
@@ -146,6 +145,8 @@ Image StatisticsImageFilter::ExecuteInternal ( const Image& inImage1 )
      std::cout << "Executing ITK filter:" << std::endl;
      std::cout << filter;
      }
+
+  this->m_MeasurementMap.clear();
 
   filter->Update();
 
