@@ -9,18 +9,18 @@ include(${ITK_USE_FILE})
 set ( TestSource
   SimpleITKTestHarness.cxx
   sitkImageTests.cxx
-  CommonTests.cxx
-  RegistrationTests.cxx
+  sitkCommonTests.cxx
+  sitkRegistrationTests.cxx
   sitkImageIOTests.cxx
-  TypeListsTests.cxx
+  sitkTypeListsTests.cxx
   sitkBasicFiltersTests.cxx
-  LabelStatisticsTest.cxx
+  sitkLabelStatisticsTest.cxx
   sitkOperatorTests.cxx
   sitkExceptionsTests.cxx
   sitkTransformTests.cxx
+  sitkImportImageTest.cxx
   itkHashImageFilterTest.cxx
   itkSliceImageFilterTest.cxx
-  ImportImageTest.cxx
   CXXTests.cxx
   )
 
