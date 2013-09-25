@@ -41,7 +41,6 @@ namespace simple {
 //
 LabelStatisticsImageFilter::LabelStatisticsImageFilter ()
   {
-  this->m_LabelMeasurementMap.clear();
   this->m_DualMemberFactory.reset( new detail::DualMemberFunctionFactory<MemberFunctionType>( this ) );
 
   this->m_DualMemberFactory->RegisterMemberFunctions< PixelIDTypeList, MapPixelIDTypeList, 3 > ();
@@ -277,12 +276,13 @@ Image LabelStatisticsImageFilter::DualExecuteInternal ( const Image& inImage1, c
      std::cout << filter;
      }
 
+  this->m_BoundingBoxMeasurementMap.clear();
+  this->m_LabelMeasurementMap.clear();
+
   filter->Update();
 
 
   typedef typename FilterType::ValidLabelValuesContainerType ValidLabelValuesType;
-
-  this->m_BoundingBoxMeasurementMap.clear();
 
   for(typename ValidLabelValuesType::const_iterator vIt= filter->GetValidLabelValues().begin();
       vIt != filter->GetValidLabelValues().end();
