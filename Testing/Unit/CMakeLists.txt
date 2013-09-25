@@ -1,13 +1,18 @@
-
 # remove me
 set ( ITK_NO_IO_FACTORY_REGISTER_MANAGER 1 )
 include(${ITK_USE_FILE})
 
+set ( SimpleITKUnitTestSourceBase
+  SimpleITKTestHarness.cxx
+  ImageCompare.cxx
+)
+add_library ( SimpleITKUnitTestBase STATIC
+  ${SimpleITKUnitTestSourceBase} )
+
 # Find tests generated in the binary directory
 # To add a new file, just add it to this list.  Any GoogleTests inside will be automatically
 # added to ctest.
-set ( TestSource
-  SimpleITKTestHarness.cxx
+set ( SimpleITKUnitTestSource
   sitkImageTests.cxx
   sitkCommonTests.cxx
   sitkRegistrationTests.cxx
@@ -248,11 +253,11 @@ if( WRAP_CSHARP )
   add_dependencies(WrappedGeneratedTests SimpleITKCSharpManaged)
 endif()
 
-add_executable(SimpleITKUnitTestDriver
-  SimpleITKUnitTestDriver.cxx ${TestSource} ImageCompare.cxx
-  ${GENERATED_TEST_SOURCE}
-)
-target_link_libraries ( SimpleITKUnitTestDriver gtest ${SimpleITK_LIBRARIES} )
+add_executable(SimpleITKUnitTestDriver0 SimpleITKUnitTestDriver.cxx ${SimpleITKUnitTestSource})
+target_link_libraries ( SimpleITKUnitTestDriver0 gtest SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} )
+
+add_executable(SimpleITKUnitTestDriver SimpleITKUnitTestDriver.cxx ${GENERATED_TEST_SOURCE})
+target_link_libraries ( SimpleITKUnitTestDriver gtest SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} )
 
 add_executable(sitkShowTest
   sitkShowTest.cxx
@@ -270,8 +275,10 @@ add_test( NAME sitkSystemInformaionTest COMMAND sitkSystemInformationTest ${CMAK
 # This macro searches for GoogleTest macros and adds them as test automatically
 macro(ADD_GOOGLE_TESTS target)
   # Add the generated tests
-  set ( AllTestsHits ${GENERATED_TEST_LIST} )
+  set ( AllTestsHits "" )
   set ( LongTestsHits "" )
+
+  message( "target: ${target} ARGN: ${ARGN}" )
 
   foreach ( source ${ARGN} )
     file(READ "${source}" contents)
@@ -304,8 +311,19 @@ macro(ADD_GOOGLE_TESTS target)
   foreach(hit ${AllTestsHits})
     # Take the first item in gtest list as the name
     string( REGEX MATCH "[^:]+" name ${hit} )
-    #message ( STATUS "Adding test ${name} as ${target} --gtest_filter=${hit}" )
-    add_test(NAME ${name} COMMAND ${target} --gtest_filter=${hit})
+    set(skip 0)
+    foreach ( l Lua Python Tcl R Ruby CSharp )
+      string( TOUPPER ${l} upper_l )
+      if( NOT WRAP_${upper_l} )
+        if( hit MATCHES "^${l}\\." )
+          set(skip 1)
+        endif()
+      endif()
+    endforeach()
+    if(NOT skip)
+      message ( STATUS "${l} Adding test ${name} as ${target} --gtest_filter=${hit}" )
+      add_test(NAME ${name} COMMAND ${target} --gtest_filter=${hit})
+    endif()
   endforeach()
 endmacro()
 
