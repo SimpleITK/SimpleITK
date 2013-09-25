@@ -73,6 +73,7 @@
       "tag" : "more",
       "description" : "croping",
       "md5hash" : "01bae0803fe74512dbd9d00fc8da4879",
+      "no_procedure" : 1,
       "settings" : [
         {
           "parameter" : "Size",
