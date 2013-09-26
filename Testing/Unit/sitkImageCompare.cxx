@@ -18,7 +18,7 @@
 #include <SimpleITK.h>
 #include <memory>
 
-#include "ImageCompare.h"
+#include "sitkImageCompare.h"
 
 namespace sitk = itk::simple;
 

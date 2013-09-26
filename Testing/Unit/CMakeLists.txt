@@ -4,7 +4,7 @@ include(${ITK_USE_FILE})
 
 set ( SimpleITKUnitTestSourceBase
   SimpleITKTestHarness.cxx
-  ImageCompare.cxx
+  sitkImageCompare.cxx
 )
 add_library ( SimpleITKUnitTestBase STATIC
   ${SimpleITKUnitTestSourceBase} )
