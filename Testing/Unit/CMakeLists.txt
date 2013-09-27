@@ -58,34 +58,13 @@ endif()
 # the filters:
 #
 file ( GLOB CXX_TEMPLATE_FILES "*Template*.cxx.in" )
-
-if ( WRAP_LUA )
-  file ( GLOB LUA_TEMPLATE_FILES "*Template*.lua.in" )
-endif()
-
-if ( WRAP_PYTHON )
-  file ( GLOB PYTHON_TEMPLATE_FILES "*Template*py.in" )
-endif()
-
-if ( WRAP_TCL )
-  file ( GLOB TCL_TEMPLATE_FILES "*Template*.tcl.in" )
-endif()
-
-if ( WRAP_R )
-  file ( GLOB R_TEMPLATE_FILES "*Template*.R.in" )
-endif()
-
-if ( WRAP_RUBY )
-  file ( GLOB RUBY_TEMPLATE_FILES "*Template*rb.in" )
-endif()
-
-if ( WRAP_JAVA )
-  file ( GLOB JAVA_TEMPLATE_FILES "*Template*.java.in" )
-endif()
-
-if ( WRAP_CSHARP )
-  file( GLOB CSHARP_TEMPLATE_FILES "*Template*.cs.in" )
-endif()
+file ( GLOB LUA_TEMPLATE_FILES "*Template*.lua.in" )
+file ( GLOB PYTHON_TEMPLATE_FILES "*Template*py.in" )
+file ( GLOB TCL_TEMPLATE_FILES "*Template*.tcl.in" )
+file ( GLOB R_TEMPLATE_FILES "*Template*.R.in" )
+file ( GLOB RUBY_TEMPLATE_FILES "*Template*rb.in" )
+file ( GLOB JAVA_TEMPLATE_FILES "*Template*.java.in" )
+file ( GLOB CSHARP_TEMPLATE_FILES "*Template*.cs.in" )
 
 
 #
