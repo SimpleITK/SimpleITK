@@ -6,9 +6,8 @@ set ( SimpleITKUnitTestSourceBase
   SimpleITKTestHarness.cxx
   sitkImageCompare.cxx
 )
-add_library ( SimpleITKUnitTestBase STATIC
-  ${SimpleITKUnitTestSourceBase} )
-
+add_library ( SimpleITKUnitTestBase STATIC ${SimpleITKUnitTestSourceBase} )
+add_dependencies( SimpleITKUnitTestBase  BasicFiltersSourceCode )
 # Find tests generated in the binary directory
 # To add a new file, just add it to this list.  Any GoogleTests inside will be automatically
 # added to ctest.
@@ -290,24 +289,19 @@ macro(ADD_GOOGLE_TESTS target)
   foreach(hit ${AllTestsHits})
     # Take the first item in gtest list as the name
     string( REGEX MATCH "[^:]+" name ${hit} )
-    set(skip 0)
-    foreach ( l Lua Python Tcl R Ruby CSharp )
-      string( TOUPPER ${l} upper_l )
-      if( NOT WRAP_${upper_l} )
-        if( hit MATCHES "^${l}\\." )
-          set(skip 1)
-        endif()
-      endif()
-    endforeach()
-    if(NOT skip)
-      message ( STATUS "${l} Adding test ${name} as ${target} --gtest_filter=${hit}" )
-      add_test(NAME ${name} COMMAND ${target} --gtest_filter=${hit})
-    endif()
+    add_test( NAME ${name} COMMAND ${target} --gtest_filter=${hit} )
   endforeach()
 endmacro()
 
-# Here we add all the tests
-add_google_tests(SimpleITKUnitTestDriver ${TestSource})
+
+foreach(hit ${GENERATED_TEST_LIST} )
+  # Take the first item in gtest list as the name
+  string( REGEX MATCH "[^:]+" name ${hit} )
+  add_test( NAME ${name} COMMAND SimpleITKUnitTestDriver --gtest_filter=${hit} )
+endforeach()
+
+
+add_google_tests(SimpleITKUnitTestDriver0 ${SimpleITKUnitTestSource})
 
 
 #######################################################
