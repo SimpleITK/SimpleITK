@@ -237,15 +237,11 @@ target_link_libraries ( SimpleITKUnitTestDriver0 gtest SimpleITKUnitTestBase ${S
 add_executable(SimpleITKUnitTestDriver SimpleITKUnitTestDriver.cxx ${GENERATED_TEST_SOURCE})
 target_link_libraries ( SimpleITKUnitTestDriver gtest SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} )
 
-add_executable(sitkShowTest
-  sitkShowTest.cxx
-  )
+add_executable(sitkShowTest sitkShowTest.cxx )
 target_link_libraries ( sitkShowTest ${SimpleITK_LIBRARIES} )
 
-add_executable( sitkSystemInformationTest
-  sitkSystemInformationTest.cxx )
-target_link_libraries( sitkSystemInformationTest
-  ${SimpleITK_LIBRARIES} )
+add_executable( sitkSystemInformationTest sitkSystemInformationTest.cxx )
+target_link_libraries( sitkSystemInformationTest ${SimpleITK_LIBRARIES} )
 add_test( NAME sitkSystemInformaionTest COMMAND sitkSystemInformationTest ${CMAKE_BINARY_DIR} )
 
 
