@@ -4,11 +4,10 @@ include(${ITK_USE_FILE})
 
 set ( SimpleITKUnitTestSourceBase
   SimpleITKTestHarness.cxx
-  ImageCompare.cxx
+  sitkImageCompare.cxx
 )
-add_library ( SimpleITKUnitTestBase STATIC
-  ${SimpleITKUnitTestSourceBase} )
-
+add_library ( SimpleITKUnitTestBase STATIC ${SimpleITKUnitTestSourceBase} )
+add_dependencies( SimpleITKUnitTestBase  BasicFiltersSourceCode )
 # Find tests generated in the binary directory
 # To add a new file, just add it to this list.  Any GoogleTests inside will be automatically
 # added to ctest.
@@ -58,34 +57,13 @@ endif()
 # the filters:
 #
 file ( GLOB CXX_TEMPLATE_FILES "*Template*.cxx.in" )
-
-if ( WRAP_LUA )
-  file ( GLOB LUA_TEMPLATE_FILES "*Template*.lua.in" )
-endif()
-
-if ( WRAP_PYTHON )
-  file ( GLOB PYTHON_TEMPLATE_FILES "*Template*py.in" )
-endif()
-
-if ( WRAP_TCL )
-  file ( GLOB TCL_TEMPLATE_FILES "*Template*.tcl.in" )
-endif()
-
-if ( WRAP_R )
-  file ( GLOB R_TEMPLATE_FILES "*Template*.R.in" )
-endif()
-
-if ( WRAP_RUBY )
-  file ( GLOB RUBY_TEMPLATE_FILES "*Template*rb.in" )
-endif()
-
-if ( WRAP_JAVA )
-  file ( GLOB JAVA_TEMPLATE_FILES "*Template*.java.in" )
-endif()
-
-if ( WRAP_CSHARP )
-  file( GLOB CSHARP_TEMPLATE_FILES "*Template*.cs.in" )
-endif()
+file ( GLOB LUA_TEMPLATE_FILES "*Template*.lua.in" )
+file ( GLOB PYTHON_TEMPLATE_FILES "*Template*py.in" )
+file ( GLOB TCL_TEMPLATE_FILES "*Template*.tcl.in" )
+file ( GLOB R_TEMPLATE_FILES "*Template*.R.in" )
+file ( GLOB RUBY_TEMPLATE_FILES "*Template*rb.in" )
+file ( GLOB JAVA_TEMPLATE_FILES "*Template*.java.in" )
+file ( GLOB CSHARP_TEMPLATE_FILES "*Template*.cs.in" )
 
 
 #
@@ -259,15 +237,11 @@ target_link_libraries ( SimpleITKUnitTestDriver0 gtest SimpleITKUnitTestBase ${S
 add_executable(SimpleITKUnitTestDriver SimpleITKUnitTestDriver.cxx ${GENERATED_TEST_SOURCE})
 target_link_libraries ( SimpleITKUnitTestDriver gtest SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} )
 
-add_executable(sitkShowTest
-  sitkShowTest.cxx
-  )
+add_executable(sitkShowTest sitkShowTest.cxx )
 target_link_libraries ( sitkShowTest ${SimpleITK_LIBRARIES} )
 
-add_executable( sitkSystemInformationTest
-  sitkSystemInformationTest.cxx )
-target_link_libraries( sitkSystemInformationTest
-  ${SimpleITK_LIBRARIES} )
+add_executable( sitkSystemInformationTest sitkSystemInformationTest.cxx )
+target_link_libraries( sitkSystemInformationTest ${SimpleITK_LIBRARIES} )
 add_test( NAME sitkSystemInformaionTest COMMAND sitkSystemInformationTest ${CMAKE_BINARY_DIR} )
 
 
@@ -311,24 +285,19 @@ macro(ADD_GOOGLE_TESTS target)
   foreach(hit ${AllTestsHits})
     # Take the first item in gtest list as the name
     string( REGEX MATCH "[^:]+" name ${hit} )
-    set(skip 0)
-    foreach ( l Lua Python Tcl R Ruby CSharp )
-      string( TOUPPER ${l} upper_l )
-      if( NOT WRAP_${upper_l} )
-        if( hit MATCHES "^${l}\\." )
-          set(skip 1)
-        endif()
-      endif()
-    endforeach()
-    if(NOT skip)
-      message ( STATUS "${l} Adding test ${name} as ${target} --gtest_filter=${hit}" )
-      add_test(NAME ${name} COMMAND ${target} --gtest_filter=${hit})
-    endif()
+    add_test( NAME ${name} COMMAND ${target} --gtest_filter=${hit} )
   endforeach()
 endmacro()
 
-# Here we add all the tests
-add_google_tests(SimpleITKUnitTestDriver ${TestSource})
+
+foreach(hit ${GENERATED_TEST_LIST} )
+  # Take the first item in gtest list as the name
+  string( REGEX MATCH "[^:]+" name ${hit} )
+  add_test( NAME ${name} COMMAND SimpleITKUnitTestDriver --gtest_filter=${hit} )
+endforeach()
+
+
+add_google_tests(SimpleITKUnitTestDriver0 ${SimpleITKUnitTestSource})
 
 
 #######################################################
