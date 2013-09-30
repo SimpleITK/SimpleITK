@@ -1,26 +1,30 @@
-
 # remove me
 set ( ITK_NO_IO_FACTORY_REGISTER_MANAGER 1 )
 include(${ITK_USE_FILE})
 
+set ( SimpleITKUnitTestSourceBase
+  SimpleITKTestHarness.cxx
+  sitkImageCompare.cxx
+)
+add_library ( SimpleITKUnitTestBase STATIC ${SimpleITKUnitTestSourceBase} )
+add_dependencies( SimpleITKUnitTestBase  BasicFiltersSourceCode )
 # Find tests generated in the binary directory
 # To add a new file, just add it to this list.  Any GoogleTests inside will be automatically
 # added to ctest.
-set ( TestSource
-  SimpleITKTestHarness.cxx
+set ( SimpleITKUnitTestSource
   sitkImageTests.cxx
-  CommonTests.cxx
-  RegistrationTests.cxx
+  sitkCommonTests.cxx
+  sitkRegistrationTests.cxx
   sitkImageIOTests.cxx
-  TypeListsTests.cxx
+  sitkTypeListsTests.cxx
   sitkBasicFiltersTests.cxx
-  LabelStatisticsTest.cxx
+  sitkLabelStatisticsTest.cxx
   sitkOperatorTests.cxx
   sitkExceptionsTests.cxx
   sitkTransformTests.cxx
+  sitkImportImageTest.cxx
   itkHashImageFilterTest.cxx
   itkSliceImageFilterTest.cxx
-  ImportImageTest.cxx
   CXXTests.cxx
   )
 
@@ -46,47 +50,39 @@ else( )
   set( PYTHON_EXECUTABLE ${PythonVirtualenvHome}/bin/python )
 endif()
 
-
+add_executable(SimpleITKUnitTestDriver0 SimpleITKUnitTestDriver.cxx ${SimpleITKUnitTestSource})
+target_link_libraries ( SimpleITKUnitTestDriver0 gtest SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} )
 
 #
 # Glob for necessary template files up front, before the foreach loop over
 # the filters:
 #
 file ( GLOB CXX_TEMPLATE_FILES "*Template*.cxx.in" )
-
-if ( WRAP_LUA )
-  file ( GLOB LUA_TEMPLATE_FILES "*Template*.lua.in" )
-endif()
-
-if ( WRAP_PYTHON )
-  file ( GLOB PYTHON_TEMPLATE_FILES "*Template*py.in" )
-endif()
-
-if ( WRAP_TCL )
-  file ( GLOB TCL_TEMPLATE_FILES "*Template*.tcl.in" )
-endif()
-
-if ( WRAP_R )
-  file ( GLOB R_TEMPLATE_FILES "*Template*.R.in" )
-endif()
-
-if ( WRAP_RUBY )
-  file ( GLOB RUBY_TEMPLATE_FILES "*Template*rb.in" )
-endif()
-
-if ( WRAP_JAVA )
-  file ( GLOB JAVA_TEMPLATE_FILES "*Template*.java.in" )
-endif()
-
-if ( WRAP_CSHARP )
-  file( GLOB CSHARP_TEMPLATE_FILES "*Template*.cs.in" )
-endif()
+file ( GLOB LUA_TEMPLATE_FILES "*Template*.lua.in" )
+file ( GLOB PYTHON_TEMPLATE_FILES "*Template*py.in" )
+file ( GLOB TCL_TEMPLATE_FILES "*Template*.tcl.in" )
+file ( GLOB R_TEMPLATE_FILES "*Template*.R.in" )
+file ( GLOB RUBY_TEMPLATE_FILES "*Template*rb.in" )
+file ( GLOB JAVA_TEMPLATE_FILES "*Template*.java.in" )
+file ( GLOB CSHARP_TEMPLATE_FILES "*Template*.cs.in" )
 
 
 #
 # Generate code for the tests in different languages
 #
+# Break all these source files into a bunch of separate executables
+# base on every n files in the list.
+set ( _stride 50 )
+set ( _exec_i 1 ) # exec 0 is the manual tests
+set ( _i 0 )
 foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
+
+  if ( NOT _i LESS _stride )
+    add_executable(SimpleITKUnitTestDriver${_exec_i} SimpleITKUnitTestDriver.cxx ${GENERATED_TEST_SOURCE})
+    target_link_libraries ( SimpleITKUnitTestDriver${_exec_i} gtest SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} )
+    math(EXPR _exec_i "${_exec_i}+1")
+    set ( _i 0 )
+  endif ()
 
   # Set up some convenience variables
   set (filter_json_file ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/json/${FILTERNAME}.json)
@@ -100,7 +96,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
     COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitk ${template_include_dir} TestTemplate.cxx.in "${OUTPUT_TEST_FILENAME}"
     DEPENDS ${filter_json_file} ${CXX_TEMPLATE_FILES}
     )
-  set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "BasicFilters.${FILTERNAME}:BasicFilters.${FILTERNAME}_*" )
+  add_test( NAME BasicFilters.${FILTERNAME} COMMAND SimpleITKUnitTestDriver${_exec_i} --gtest_filter=BasicFilters.${FILTERNAME}:BasicFilters.${FILTERNAME}_* )
   set ( GENERATED_TEST_SOURCE ${GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
 
   if ( WRAP_LUA )
@@ -111,7 +107,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
       COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Lua ${template_include_dir} TestTemplate.lua.in "${OUTPUT_TEST_FILENAME}"
       DEPENDS ${filter_json_file} ${LUA_TEMPLATE_FILES}
       )
-    set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Lua.${FILTERNAME}")
+    add_test( NAME Lua.${FILTERNAME} COMMAND SimpleITKUnitTestDriver${_exec_i} --gtest_filter=Lua.${FILTERNAME} )
     set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
   endif()
 
@@ -123,7 +119,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
       COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Python ${template_include_dir} TestTemplate.py.in "${OUTPUT_TEST_FILENAME}"
       DEPENDS ${filter_json_file} ${PYTHON_TEMPLATE_FILES}
       )
-    set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Python.${FILTERNAME}")
+    add_test( NAME Python.${FILTERNAME} COMMAND SimpleITKUnitTestDriver${_exec_i} --gtest_filter=Python.${FILTERNAME} )
     set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
   endif()
 
@@ -135,7 +131,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
       COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Tcl ${template_include_dir} TestTemplate.tcl.in "${OUTPUT_TEST_FILENAME}"
       DEPENDS ${filter_json_file} ${TCL_TEMPLATE_FILES}
       )
-    set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Tcl.${FILTERNAME}")
+    add_test( NAME Tcl.${FILTERNAME} COMMAND SimpleITKUnitTestDriver${_exec_i} --gtest_filter=Tcl.${FILTERNAME} )
     set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
   endif()
 
@@ -147,7 +143,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
       COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/R ${template_include_dir} TestTemplate.R.in "${OUTPUT_TEST_FILENAME}"
       DEPENDS ${filter_json_file} ${R_TEMPLATE_FILES}
       )
-    set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "R.${FILTERNAME}")
+    add_test( NAME R.${FILTERNAME} COMMAND SimpleITKUnitTestDriver${_exec_i} --gtest_filter=R.${FILTERNAME} )
     set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
   endif()
 
@@ -159,7 +155,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
       COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Ruby ${template_include_dir} TestTemplate.rb.in "${OUTPUT_TEST_FILENAME}"
       DEPENDS ${filter_json_file} ${RUBY_TEMPLATE_FILES}
       )
-    set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Ruby.${FILTERNAME}")
+    add_test( NAME Ruby.${FILTERNAME} COMMAND SimpleITKUnitTestDriver${_exec_i} --gtest_filter=Ruby.${FILTERNAME} )
     set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
   endif()
 
@@ -173,7 +169,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
       COMMAND ${Java_JAVAC_EXECUTABLE} -classpath ${SimpleITK_BINARY_DIR}/Wrapping/${JAR_FILE} ${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/org/itk/simple/testing/${FILTERNAME}Test.java
       DEPENDS ${filter_json_file} ${JAVA_TEMPLATE_FILES} ${SWIG_MODULE_SimpleITKJava_TARGET_NAME}
       )
-    set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "Java.${FILTERNAME}")
+    add_test( NAME Java.${FILTERNAME} COMMAND SimpleITKUnitTestDriver${_exec_i} --gtest_filter=Java.${FILTERNAME} )
     set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
   endif()
 
@@ -195,11 +191,16 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
         /out:${CSHARP_BINARY_DIRECTORY}/Test${FILTERNAME}.exe ${OUTPUT_TEST_FILENAME_SAFE}
       DEPENDS ${filter_json_file} ${CSHARP_TEMPLATE_FILES}
       )
-    set ( GENERATED_TEST_LIST ${GENERATED_TEST_LIST} "CSharp.${FILTERNAME}")
+    add_test( NAME CSharp.${FILTERNAME} COMMAND SimpleITKUnitTestDriver${_exec_i} --gtest_filter=CSharp.${FILTERNAME} )
     set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
   endif()
 
+  math(EXPR _i "${_i}+1")
+
 endforeach()
+
+add_executable(SimpleITKUnitTestDriver${_exec_i} SimpleITKUnitTestDriver.cxx ${GENERATED_TEST_SOURCE})
+target_link_libraries ( SimpleITKUnitTestDriver${_exec_i} gtest SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} )
 
 # Build Google Test
 find_package(Threads)
@@ -248,21 +249,11 @@ if( WRAP_CSHARP )
   add_dependencies(WrappedGeneratedTests SimpleITKCSharpManaged)
 endif()
 
-add_executable(SimpleITKUnitTestDriver
-  SimpleITKUnitTestDriver.cxx ${TestSource} ImageCompare.cxx
-  ${GENERATED_TEST_SOURCE}
-)
-target_link_libraries ( SimpleITKUnitTestDriver gtest ${SimpleITK_LIBRARIES} )
-
-add_executable(sitkShowTest
-  sitkShowTest.cxx
-  )
+add_executable(sitkShowTest sitkShowTest.cxx )
 target_link_libraries ( sitkShowTest ${SimpleITK_LIBRARIES} )
 
-add_executable( sitkSystemInformationTest
-  sitkSystemInformationTest.cxx )
-target_link_libraries( sitkSystemInformationTest
-  ${SimpleITK_LIBRARIES} )
+add_executable( sitkSystemInformationTest sitkSystemInformationTest.cxx )
+target_link_libraries( sitkSystemInformationTest ${SimpleITK_LIBRARIES} )
 add_test( NAME sitkSystemInformaionTest COMMAND sitkSystemInformationTest ${CMAKE_BINARY_DIR} )
 
 
@@ -270,7 +261,7 @@ add_test( NAME sitkSystemInformaionTest COMMAND sitkSystemInformationTest ${CMAK
 # This macro searches for GoogleTest macros and adds them as test automatically
 macro(ADD_GOOGLE_TESTS target)
   # Add the generated tests
-  set ( AllTestsHits ${GENERATED_TEST_LIST} )
+  set ( AllTestsHits "" )
   set ( LongTestsHits "" )
 
   foreach ( source ${ARGN} )
@@ -304,13 +295,11 @@ macro(ADD_GOOGLE_TESTS target)
   foreach(hit ${AllTestsHits})
     # Take the first item in gtest list as the name
     string( REGEX MATCH "[^:]+" name ${hit} )
-    #message ( STATUS "Adding test ${name} as ${target} --gtest_filter=${hit}" )
-    add_test(NAME ${name} COMMAND ${target} --gtest_filter=${hit})
+    add_test( NAME ${name} COMMAND ${target} --gtest_filter=${hit} )
   endforeach()
 endmacro()
 
-# Here we add all the tests
-add_google_tests(SimpleITKUnitTestDriver ${TestSource})
+add_google_tests(SimpleITKUnitTestDriver0 ${SimpleITKUnitTestSource})
 
 
 #######################################################

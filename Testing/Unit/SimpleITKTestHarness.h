@@ -158,6 +158,6 @@ class R      : public ExternalProgramRunner { };
 class Ruby   : public ExternalProgramRunner { };
 class CSharp : public ExternalProgramRunner { };
 
-#include "ImageCompare.h"
+#include "sitkImageCompare.h"
 
 #endif
