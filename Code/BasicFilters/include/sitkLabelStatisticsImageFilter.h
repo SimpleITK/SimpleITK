@@ -73,9 +73,9 @@ namespace itk {
       /**
        * \brief Get the bounding box of a label.
        *
-       * Defined by the closed interval of indexes, with all the
-       * lower index components before the upper
-       * i.e. [0,0,255,255]. The bounding box always as a positive
+       * Defined by the closed interval of indexes, with a
+       * lower index followed by the upper for each dimension.
+       * i.e. [0,255,0,255]. The bounding box always has a positive
        * size.
        */
       std::vector<int> GetBoundingBox( const LabelIdentifierType labelCode ) const;
