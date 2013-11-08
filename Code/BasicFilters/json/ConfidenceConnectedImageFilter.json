@@ -75,7 +75,7 @@
       "settings" : [
         {
           "parameter" : "NumberOfIterations",
-          "value" : "1"
+          "value" : "1u"
         },
         {
           "parameter" : "SeedList",
