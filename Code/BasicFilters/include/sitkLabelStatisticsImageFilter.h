@@ -26,7 +26,15 @@ namespace itk {
   namespace simple {
 
     /** \class LabelStatisticsImageFilter
-     * \brief Compute min, max, variance, and mean of an image
+     * \brief Given an intensity image and a label map, compute min,
+     * max, variance and mean of the pixels associated with each label
+     * or segment.
+     *
+     * LabelStatisticsImageFilter computes the minimum, maximum, sum,
+     * mean, median, variance and sigma of regions of an intensity image, where
+     * the regions are defined via a label map (a second input).  The
+     * label image should be integral type. The filter needs all of its
+     * input image.
      *
      * \sa itk::simple::LabelStatistics for the procedural interface
      */
