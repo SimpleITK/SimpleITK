@@ -210,17 +210,17 @@ sitk_SetImageFromArray( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
       }
     buffer_len = _len;
     }
-    else
+  else
+    {
+    if ( PyBuffer_IsContiguous( &pyBuffer, 'C' ) != 1 )
       {
-      if ( PyBuffer_IsContiguous( &pyBuffer, 'C' ) != 1 )
-        {
-        PyBuffer_Release( &pyBuffer );
-        PyErr_SetString( PyExc_TypeError, "A C Contiguous buffer object is required." );
-        return NULL;
-        }
-      buffer_len = pyBuffer.len;
-      buffer = pyBuffer.buf;
+      PyBuffer_Release( &pyBuffer );
+      PyErr_SetString( PyExc_TypeError, "A C Contiguous buffer object is required." );
+      return NULL;
       }
+    buffer_len = pyBuffer.len;
+    buffer = pyBuffer.buf;
+    }
 
   /* Cast over to a sitk Image. */
   {
@@ -320,7 +320,7 @@ sitk_SetImageFromArray( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
     size.push_back( sitkImage->GetNumberOfComponentsPerPixel() );
     }
 
-  len = std::accumulate( size.begin(), size.end(), 1u, std::multiplies<size_t>() );
+  len = std::accumulate( size.begin(), size.end(), size_t(1), std::multiplies<size_t>() );
   len *= pixelSize;
 
   if ( buffer_len != len )
