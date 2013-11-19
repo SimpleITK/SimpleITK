@@ -45,6 +45,20 @@
       "detaileddescriptionGet" : "Set/Get value to replace thresholded pixels\n"
     }
   ],
+  "measurements" : [
+    {
+      "name" : "Mean",
+      "type" : "double",
+      "default" : "0.0",
+      "briefdescriptionGet" : "Method to get access to the mean of the pixels accepted in the output region."
+    },
+    {
+      "name" : "Variance",
+      "type" : "double",
+      "default" : "0.0",
+      "briefdescriptionGet" : "Method to get access to the variance of the pixels accepted in the output region."
+    }
+  ],
   "tests" : [
     {
       "tag" : "defaults",
@@ -56,11 +70,65 @@
       ]
     },
     {
-      "tag" : "2d",
+      "tag" : "3d",
       "description" : "Run with 2d sample settings",
-      "settings" : [],
+      "settings" : [
+        {
+          "parameter" : "NumberOfIterations",
+          "value" : "1u",
+          "lua_value" : "1",
+          "python_value" : "1",
+          "ruby_value" : "1",
+          "java_value" : "1",
+          "tcl_value" : "1",
+          "R_value" : "1"
+
+        },
+        {
+          "parameter" : "SeedList",
+          "dim" : 2,
+          "value" : [
+            "{10,10,10}"
+          ],
+          "tcl_value" : [
+            "10 10 10"
+          ],
+          "python_value" : [
+            "[10,10,10]"
+          ],
+          "ruby_value" : [
+            "[10,10,10]"
+          ],
+          "R_value" : [
+            "c(10,10,10)"
+          ]
+        },
+        {
+          "parameter" : "InitialNeighborhoodRadius",
+          "value" : "10u",
+          "lua_value" : "10",
+          "python_value" : "10",
+          "ruby_value" : "10",
+          "java_value" : "10",
+          "tcl_value" : "10",
+          "R_value" : "10"
+        }
+      ],
+      "measurements_results" : [
+        {
+          "name" : "Mean",
+          "value" : 25902,
+          "tolerance" : 1.0
+        },
+        {
+          "name" : "Variance",
+          "value" : 14123418.0,
+          "tolerance" : 10.0
+        }
+      ],
+      "md5hash" : "e849e1f4740387b3eeedb3a285bc7630",
       "inputs" : [
-        "Input/STAPLE1.png"
+        "Input/RA-Float.nrrd"
       ]
     }
   ],
