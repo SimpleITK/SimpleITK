@@ -81,6 +81,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
     add_executable(SimpleITKUnitTestDriver${_exec_i} SimpleITKUnitTestDriver.cxx ${GENERATED_TEST_SOURCE})
     target_link_libraries ( SimpleITKUnitTestDriver${_exec_i} gtest SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} )
     math(EXPR _exec_i "${_exec_i}+1")
+    set(GENERATED_TEST_SOURCE "")
     set ( _i 0 )
   endif ()
 
