@@ -24,6 +24,7 @@ $(include DoNotEditWarning.h.in)
 
 #include "sitkImageFilter.h"
 #include "sitkBasicFilters.h"
+#include "sitkKernel.h"
 
 namespace itk {
   namespace simple {
@@ -31,7 +32,7 @@ namespace itk {
 $(include ClassDeclaration.h.in)
 
     /** Kernel type enumeration */
-    typedef enum{Annulus, Ball, Box, Cross} KernelType;
+    typedef enum{Annulus=sitkAnnulus, Ball=sitkBall, Box=sitkBox, Cross=sitkCross} KernelType;
 $(include PublicDeclarations.h.in)
 $(include MemberGetSetDeclarations.h.in)
       /** Kernel radius as a scale for isotropic structures */
@@ -49,8 +50,11 @@ $(include MemberGetSetDeclarations.h.in)
 
       /** Set/Get the kernel or structuring elemenent used for the
        * morphology */
+      Self& SetKernelType(KernelEnum t);
+#ifndef SWIG
       Self& SetKernelType(KernelType t);
-      KernelType GetKernelType() const;
+#endif
+      KernelEnum GetKernelType() const;
 
 $(include ClassNameAndPrint.h.in)
 
@@ -65,7 +69,7 @@ $(include PrivateMemberDeclarations.h.in)
       std::vector<uint32_t> m_KernelRadius;
 
       /** KernelType */
-      KernelType m_KernelType;
+      KernelEnum m_KernelType;
 $(include ClassEnd.h.in)
 
 
@@ -76,7 +80,7 @@ $(include ClassEnd.h.in)
      * in order to support a fully functional API
      */
   Image SITKBasicFilters_EXPORT ${name:gsub("ImageFilter$", "")} ( const Image&$(if number_of_inputs == 2 then OUT=', const Image&' end),
-                                          uint32_t radius = 1, ${name}::KernelType kernel =${name}::Ball
+                                          uint32_t radius = 1, KernelEnum kernel = sitkBall
                                           $(when members $(foreach members , ${type} ${name:sub(1,1):lower()}${name:sub(2,-1)} = ${default})) );
 
    /**
@@ -86,7 +90,7 @@ $(include ClassEnd.h.in)
      * in order to support a fully functional API
      */
   Image SITKBasicFilters_EXPORT ${name:gsub("ImageFilter$", "")} ( const Image&$(if number_of_inputs == 2 then OUT=', const Image&' end),
-                                          const std::vector<uint32_t> vectorRadius, ${name}::KernelType kernel =${name}::Ball
+                                          const std::vector<uint32_t> vectorRadius, KernelEnum kernel = sitkBall
                                           $(when members $(foreach members , ${type} ${name:sub(1,1):lower()}${name:sub(2,-1)} = ${default})) );
   }
 }
