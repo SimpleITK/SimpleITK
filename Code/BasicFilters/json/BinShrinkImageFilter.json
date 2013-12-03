@@ -28,6 +28,22 @@
       "inputs" : [
         "Input/VM1111Shrink-RGBFloat.nrrd"
       ]
+    },
+    {
+      "tag" : "by4",
+      "description" : "Test BinShink by 4",
+      "md5hash" : "31e1303e610e4ab5393c173a91dcc77b",
+      "settings" : [
+        {
+          "parameter" : "ShrinkFactor",
+          "type" : "unsigned int",
+          "no_get_method" : 1,
+          "value" : "4"
+        }
+      ],
+      "inputs" : [
+        "Input/RA-Float.nrrd"
+      ]
     }
   ],
   "briefdescription" : "Reduce the size of an image by an integer factor in each dimension while performing averaging of an input neighborhood.\n",
