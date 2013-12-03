@@ -24,7 +24,7 @@
           "ruby_value" : "Simpleitk::SitkBall",
           "java_value" : "KernelEnum.sitkBall",
           "tcl_value" : "$$sitkBall",
-          "csharp_value" : "KernelEnum.KernelType.Ball",
+          "csharp_value" : "KernelEnum.sitkKernelType.Ball",
           "R_value" : "'sitkBall'"
         }
       ],
