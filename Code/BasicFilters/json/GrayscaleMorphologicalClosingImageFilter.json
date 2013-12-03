@@ -36,7 +36,7 @@
           "ruby_value" : "Simpleitk::SitkBall",
           "java_value" : "KernelEnum.sitkBall",
           "tcl_value" : "$$sitkBall",
-          "csharp_value" : "KernelEnum.Ball",
+          "csharp_value" : "KernelEnum.sitkBall",
           "R_value" : "'sitkBall'"
         }
       ],
