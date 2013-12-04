@@ -127,6 +127,38 @@
         "Input/cthead1-Float.mha",
         "Input/cthead1-dis1.nrrd"
       ]
+    },
+    {
+      "tag" : "vm",
+      "description" : "sin warp",
+      "settings" : [
+        {
+          "parameter" : "OutputSize",
+          "type" : "uint32_t",
+          "dim_vec" : 1,
+          "value" : "{297,371}",
+          "tcl_value" : "[list 297 371]",
+          "python_value" : "[ 297, 371]",
+          "ruby_value" : "[ 297, 371]",
+          "R_value" : "c( 297, 371)"
+        },
+        {
+          "parameter" : "Interpolator",
+          "value" : "itk::simple::sitkHammingWindowedSinc",
+          "lua_value" : "SimpleITK.sitkHammingWindowedSinc",
+          "python_value" : "SimpleITK.sitkHammingWindowedSinc",
+          "ruby_value" : "Simpleitk::SitkHammingWindowedSinc",
+          "java_value" : "InterpolatorEnum.sitkHammingWindowedSinc",
+          "tcl_value" : "$$sitkHammingWindowedSinc",
+          "csharp_value" : "InterpolatorEnum.sitkHammingWindowedSinc",
+          "R_value" : "'sitkHammingWindowedSinc'"
+        }
+      ],
+      "tolerance" : "0.001",
+      "inputs" : [
+        "Input/VM1111Shrink-RGBFloat.nrrd",
+        "Input/VM1111Shrink-dis1.nrrd"
+      ]
     }
   ],
   "briefdescription" : "Warps an image using an input displacement field.\n",
