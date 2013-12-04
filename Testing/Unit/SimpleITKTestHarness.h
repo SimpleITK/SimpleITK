@@ -106,10 +106,23 @@ public:
   std::string GetCSharpBinaryDirectory ()         { return std::string ( CSHARP_BINARY_DIRECTORY ); }
   std::string GetSourceDirectory ()               { return std::string ( SIMPLEITK_SOURCE_DIR ); }
 
-  bool FileExists ( std::string filename ) { return itksys::SystemTools::FileExists ( filename.c_str() ); }
-  std::string GetFile ( std::string filename )
+  bool FileExists ( const std::string &filename )
     {
-    return mDirectory + "/" + filename;
+      return itksys::SystemTools::FileExists ( filename.c_str() );
+    }
+
+  std::string GetFile ( const std::string &filename )
+    {
+      std::string name;
+
+      name = mDirectory + "/" + filename;
+      if (this->FileExists(name))
+        return name;
+
+      // fall back to source code path
+      name = std::string(SIMPLEITK_SOURCE_DIR) + "/Testing/Data/" + filename;
+
+      return name;
     };
 
 protected:

@@ -94,7 +94,7 @@ bool ImageCompare::compare ( const sitk::Image& image, std::string inTestCase, s
     centerSlice = image;
     }
 
-  std::string baselineFileName = dataFinder.GetBuildDirectory() + "/ExternalData/Testing/Data/Baseline/" + name + extension;
+  std::string baselineFileName = dataFinder.GetFile( "Baseline/" + name + extension );
 
   if ( !itksys::SystemTools::FileExists ( baselineFileName.c_str() ) )
     {
