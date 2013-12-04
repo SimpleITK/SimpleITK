@@ -41,7 +41,7 @@
       "tag" : "default",
       "description" : "Default parameter settings",
       "settings" : [],
-      "md5hash" : "a9c3b0c0971c5cbda12b29db916451c6",
+      "md5hash" : "94d62a813f969dadf22b7e3ae0b20178",
       "inputs" : [
         "Input/RA-Short.nrrd"
       ]
@@ -56,7 +56,7 @@
           "java_value" : "(short) 2"
         }
       ],
-      "md5hash" : "1fe9f00799c337af86a99d243dad6c43",
+      "md5hash" : "1ab20d3cd9a354b45ac07ec59c0413b3",
       "inputs" : [
         "Input/Ramp-Zero-One-Float.nrrd"
       ]
@@ -81,7 +81,7 @@
           "R_value" : "256"
         }
       ],
-      "md5hash" : "0a75ab53c840356b54e3db5138639a59",
+      "md5hash" : "b61c3f4e063fcdd24dba76227129ae34",
       "inputs" : [
         "Input/cthead1.png"
       ]
