@@ -7,6 +7,7 @@
   "pixel_types2" : "RealVectorPixelIDTypeList",
   "filter_type" : "itk::WarpImageFilter<InputImageType,  OutputImageType, InputImageType2 >",
   "custom_set_input" : "filter->SetInput( image1 ); filter->SetDisplacementField( image2 );",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
   "include_files" : [
     "sitkCreateInterpolator.hxx",
     "sitkDirectionConvert.hxx"
