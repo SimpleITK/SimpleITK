@@ -224,6 +224,36 @@ namespace itk
       this->SetDirection( srcImage.GetDirection() );
     }
 
+    std::vector<std::string> Image::GetMetaDataKeys( void ) const
+    {
+      assert( m_PimpleImage );
+      const itk::MetaDataDictionary &mdd = this->m_PimpleImage->GetDataBase()->GetMetaDataDictionary();
+      return mdd.GetKeys();
+    }
+
+    bool Image::HasMetaDataKey( const std::string &key ) const
+    {
+      assert( m_PimpleImage );
+      const itk::MetaDataDictionary &mdd = this->m_PimpleImage->GetDataBase()->GetMetaDataDictionary();
+      return mdd.HasKey(key);
+    }
+
+    std::string Image::GetMetaData( const std::string &key ) const
+    {
+      assert( m_PimpleImage );
+      const itk::MetaDataDictionary &mdd = this->m_PimpleImage->GetDataBase()->GetMetaDataDictionary();
+      std::string value;
+      if (ExposeMetaData(mdd, key, value))
+        {
+        return value;
+        }
+
+      std::ostringstream ss;
+      mdd.Get(key)->Print(ss);
+      return ss.str();
+    }
+
+
     // Index to Physical Point
     std::vector< double > Image::TransformIndexToPhysicalPoint( const std::vector< int64_t > &idx ) const
     {

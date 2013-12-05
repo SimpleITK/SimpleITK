@@ -200,6 +200,28 @@ namespace simple
      */
     void CopyInformation( const Image &srcImage );
 
+    /** \brief get a vector of keys in from the meta-data dictionary
+     *
+     * Returns a vector of keys to the key/value entries in the
+     * image's meta-data dictionary. Iterate through with these keys
+     * to get the values.
+     */
+    std::vector<std::string> GetMetaDataKeys( void ) const;
+
+    /** \brief Query the meta-data dictionary for the existence of a key.
+     */
+    bool HasMetaDataKey( const std::string &key ) const;
+
+    /** \brief Get the value of a meta-data dictionary entry as a string.
+     *
+     * If the key is not in the dictionary then an exception is
+     * thrown.
+     *
+     * string types in the dictionary are returned as their native
+     * strings. Other types are printed to string before returning.
+     */
+    std::string GetMetaData( const std::string &key ) const;
+
     std::string GetPixelIDTypeAsString( void ) const;
 
     std::string ToString( void ) const;
