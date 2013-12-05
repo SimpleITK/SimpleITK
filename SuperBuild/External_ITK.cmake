@@ -25,8 +25,9 @@ VariableListToArgs( ITK_VARS  ep_itk_args )
 set(proj ITK)  ## Use ITK convention of calling it ITK
 set(ITK_REPOSITORY git://itk.org/ITK.git)
 
-# NOTE: it is very important to update the ITK_DIR path with the
-set(ITK_TAG_COMMAND GIT_TAG v4.5rc02 )
+# NOTE: it is very important to update the ITK_DIR path with the ITK version
+# hash after 4.5rc2 with some additional fixes
+set(ITK_TAG_COMMAND GIT_TAG 851602208ae2d51979f135264c50d75ad08b5b48 )
 
 if( ${ITK_WRAPPING} OR ${BUILD_SHARED_LIBS} )
   set( ITK_BUILD_SHARED_LIBS ON )
