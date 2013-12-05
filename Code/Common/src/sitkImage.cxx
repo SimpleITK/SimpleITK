@@ -17,198 +17,18 @@
 *=========================================================================*/
 #include "sitkImage.h"
 
-#include "itkImage.h"
-#include "itkVectorImage.h"
-#include "itkLabelMap.h"
-#include "itkLabelObject.h"
-
-#include "itkImageDuplicator.h"
+#include "itkMetaDataObject.h"
+#include "itkDataObject.h"
 
 #include "sitkExceptionObject.h"
-#include "sitkPimpleImageBase.hxx"
+#include "sitkPimpleImageBase.h"
 #include "sitkPixelIDTypeLists.h"
-#include "sitkMemberFunctionFactory.h"
 
 
 namespace itk
 {
   namespace simple
   {
-
-  // this is a little specialization just to get the
-  // InternalInitialization method's PixelIDTpImageType lookup to get
-  // a valid void type, so it'll dispatch to the a specialized
-  // method. All this is just to instantiate something that will never
-  // be actually used.
-  template <unsigned int VImageDimension>
-  struct PixelIDToImageType< typelist::NullType , VImageDimension >
-  {
-    typedef void ImageType;
-  };
-
-  // This method is explicitly instantiated, and in-turn implicitly
-  // instantates the PipleImage for all used image types. This method
-  // just dispatces to nother method, to aid in instantiating only the
-  // images requested.
-  template <int VPixelIDValue, unsigned int VImageDimension>
-
-  void Image::InternalInitialization( typename PixelIDToImageType<typename typelist::TypeAt<InstantiatedPixelIDTypeList,
-                                                                                            VPixelIDValue>::Result,
-                                                                  VImageDimension>::ImageType *i )
-  {
-    this->ConditionalInternalInitialization<VPixelIDValue>( i );
-  }
-
-  template<int VPixelIDValue, typename TImageType>
-  typename DisableIf<std::tr1::is_same<TImageType, void>::value>::Type
-  Image::ConditionalInternalInitialization( TImageType *image )
-  {
-    // no need to check if null
-    delete this->m_PimpleImage;
-    this->m_PimpleImage = NULL;
-
-    this->m_PimpleImage = new PimpleImage<TImageType>( image );
-  }
-
-
-  template<class TImageType>
-  typename EnableIf<IsBasic<TImageType>::Value>::Type
-  Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int numberOfComponents )
-  {
-    if ( numberOfComponents != 1  && numberOfComponents != 0 )
-      {
-      sitkExceptionMacro( "Specified number of components as " << numberOfComponents
-                          << " but did not specify pixelID as a vector type!" );
-      }
-
-    typename TImageType::IndexType  index;
-    typename TImageType::SizeType   size;
-    typename TImageType::RegionType region;
-    index.Fill ( 0 );
-    size.Fill(1);
-    size[0] = Width;
-    size[1] = Height;
-    if ( TImageType::ImageDimension > 2 ) {
-    assert(Depth != 0 );
-    size[2] = Depth;
-    }
-    region.SetSize ( size );
-    region.SetIndex ( index );
-    typename TImageType::Pointer image = TImageType::New();
-    image->SetRegions ( region );
-    image->Allocate();
-    image->FillBuffer ( itk::NumericTraits<typename TImageType::PixelType>::Zero );
-
-    delete this->m_PimpleImage;
-    this->m_PimpleImage = NULL;
-    m_PimpleImage =  new PimpleImage<TImageType>( image );
-  }
-
-  template<class TImageType>
-  typename EnableIf<IsVector<TImageType>::Value>::Type
-  Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int numberOfComponents )
-  {
-    if ( numberOfComponents == 0 )
-      {
-      numberOfComponents = TImageType::ImageDimension;
-      }
-
-    typename TImageType::IndexType  index;
-    typename TImageType::SizeType   size;
-    typename TImageType::RegionType region;
-    typename TImageType::PixelType  zero;
-
-    index.Fill ( 0 );
-    size.Fill(1);
-    size[0] = Width;
-    size[1] = Height;
-    if ( TImageType::ImageDimension > 2 )
-      {
-      assert(Depth != 0 );
-      size[2] = Depth;
-      }
-    region.SetSize ( size );
-    region.SetIndex ( index );
-
-    zero.SetSize( numberOfComponents );
-    zero.Fill ( itk::NumericTraits<typename TImageType::PixelType::ValueType>::Zero );
-
-    typename TImageType::Pointer image = TImageType::New();
-    image->SetRegions ( region );
-    image->SetVectorLength( numberOfComponents );
-    image->Allocate();
-    image->FillBuffer ( zero );
-
-    delete this->m_PimpleImage;
-    this->m_PimpleImage = NULL;
-
-    m_PimpleImage = new PimpleImage<TImageType>( image );
-  }
-
-  template<class TImageType>
-  typename EnableIf<IsLabel<TImageType>::Value>::Type
-  Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int numberOfComponents )
-  {
-    if ( numberOfComponents != 1 && numberOfComponents != 0 )
-      {
-      sitkExceptionMacro( "Specified number of components as " << numberOfComponents
-                          << " but did not specify pixelID as a vector type!" );
-      }
-
-    typename TImageType::IndexType  index;
-    typename TImageType::SizeType   size;
-    typename TImageType::RegionType region;
-
-    index.Fill ( 0 );
-    size.Fill(1);
-    size[0] = Width;
-    size[1] = Height;
-    if ( TImageType::ImageDimension > 2 )
-      {
-      assert(Depth != 0 );
-      size[2] = Depth;
-      }
-    region.SetSize ( size );
-    region.SetIndex ( index );
-
-    typename TImageType::Pointer image = TImageType::New();
-    image->SetRegions ( region );
-    image->Allocate();
-    image->SetBackgroundValue( 0 );
-
-    delete this->m_PimpleImage;
-    this->m_PimpleImage = NULL;
-
-    m_PimpleImage = new PimpleImage<TImageType>( image );
-  }
-
-
-  void Image::Allocate ( unsigned int Width, unsigned int Height, unsigned int Depth, PixelIDValueEnum ValueEnum, unsigned int numberOfComponents )
-  {
-      // initialize member function factory for allocating images
-
-      // The pixel IDs supported
-      typedef AllPixelIDTypeList              PixelIDTypeList;
-
-      typedef void (Self::*MemberFunctionType)( unsigned int , unsigned int, unsigned int, unsigned int );
-
-      typedef AllocateMemberFunctionAddressor<MemberFunctionType> AllocateAddressor;
-
-      detail::MemberFunctionFactory<MemberFunctionType> allocateMemberFactory(this);
-      allocateMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 3,  AllocateAddressor > ();
-      allocateMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 2,  AllocateAddressor > ();
-
-      if ( ValueEnum == sitkUnknown )
-        {
-        sitkExceptionMacro( "Unable to construct image of unsupported pixel type" );
-        }
-
-      if ( Depth == 0 ) {
-      allocateMemberFactory.GetMemberFunction( ValueEnum, 2 )( Width, Height, Depth, numberOfComponents );
-      } else {
-      allocateMemberFactory.GetMemberFunction( ValueEnum, 3 )( Width, Height, Depth, numberOfComponents );
-      }
-    }
 
   Image::~Image( )
   {
@@ -403,6 +223,36 @@ namespace itk
       this->SetSpacing( srcImage.GetSpacing() );
       this->SetDirection( srcImage.GetDirection() );
     }
+
+    std::vector<std::string> Image::GetMetaDataKeys( void ) const
+    {
+      assert( m_PimpleImage );
+      const itk::MetaDataDictionary &mdd = this->m_PimpleImage->GetDataBase()->GetMetaDataDictionary();
+      return mdd.GetKeys();
+    }
+
+    bool Image::HasMetaDataKey( const std::string &key ) const
+    {
+      assert( m_PimpleImage );
+      const itk::MetaDataDictionary &mdd = this->m_PimpleImage->GetDataBase()->GetMetaDataDictionary();
+      return mdd.HasKey(key);
+    }
+
+    std::string Image::GetMetaData( const std::string &key ) const
+    {
+      assert( m_PimpleImage );
+      const itk::MetaDataDictionary &mdd = this->m_PimpleImage->GetDataBase()->GetMetaDataDictionary();
+      std::string value;
+      if (ExposeMetaData(mdd, key, value))
+        {
+        return value;
+        }
+
+      std::ostringstream ss;
+      mdd.Get(key)->Print(ss);
+      return ss.str();
+    }
+
 
     // Index to Physical Point
     std::vector< double > Image::TransformIndexToPhysicalPoint( const std::vector< int64_t > &idx ) const
@@ -848,59 +698,3 @@ namespace itk
     }
   } // end namespace simple
 } // end namespace itk
-
-
-//
-// There is only one templated function in the external interface
-// which need to be instantiated, so that the itk::Image and the
-// sitk::PimpleImage are completely encapsulated. That is the
-// InternalInitialization method. The following uses a macro to
-// explicitly instantiate for the expected image types.
-//
-
-#define SITK_TEMPLATE_InternalInitialization_D( _I, _D )                \
-  namespace itk { namespace simple {                                    \
-  template SITKCommon_EXPORT void Image::InternalInitialization<_I,_D>(  PixelIDToImageType< typelist::TypeAt<InstantiatedPixelIDTypeList, \
-                                                                                            _I>::Result, \
-                                                                           _D>::ImageType *i ); \
-  } }
-
-
-#define SITK_TEMPLATE_InternalInitialization( _I ) SITK_TEMPLATE_InternalInitialization_D( _I, 2 ) SITK_TEMPLATE_InternalInitialization_D( _I, 3 )
-
-
-
-// Instantiate for all types in the lists
-SITK_TEMPLATE_InternalInitialization( 0 );
-SITK_TEMPLATE_InternalInitialization( 1 );
-SITK_TEMPLATE_InternalInitialization( 2 );
-SITK_TEMPLATE_InternalInitialization( 3 );
-SITK_TEMPLATE_InternalInitialization( 4 );
-SITK_TEMPLATE_InternalInitialization( 5 );
-SITK_TEMPLATE_InternalInitialization( 6 );
-SITK_TEMPLATE_InternalInitialization( 7 );
-SITK_TEMPLATE_InternalInitialization( 8 );
-SITK_TEMPLATE_InternalInitialization( 9 );
-SITK_TEMPLATE_InternalInitialization( 10 );
-SITK_TEMPLATE_InternalInitialization( 11 );
-SITK_TEMPLATE_InternalInitialization( 12 );
-SITK_TEMPLATE_InternalInitialization( 13 );
-SITK_TEMPLATE_InternalInitialization( 14 );
-SITK_TEMPLATE_InternalInitialization( 15 );
-SITK_TEMPLATE_InternalInitialization( 16 );
-SITK_TEMPLATE_InternalInitialization( 17 );
-SITK_TEMPLATE_InternalInitialization( 18 );
-SITK_TEMPLATE_InternalInitialization( 19 );
-SITK_TEMPLATE_InternalInitialization( 20 );
-SITK_TEMPLATE_InternalInitialization( 21 );
-SITK_TEMPLATE_InternalInitialization( 22 );
-SITK_TEMPLATE_InternalInitialization( 23 );
-SITK_TEMPLATE_InternalInitialization( 24 );
-SITK_TEMPLATE_InternalInitialization( 25 );
-SITK_TEMPLATE_InternalInitialization( 26 );
-SITK_TEMPLATE_InternalInitialization( 27 );
-SITK_TEMPLATE_InternalInitialization( 28 );
-SITK_TEMPLATE_InternalInitialization( 29 );
-
-
-sitkStaticAssert( typelist::Length<itk::simple::InstantiatedPixelIDTypeList>::Result < 30, "Number of explicitly instantiated pixel types is more then expected!" );
