@@ -7,10 +7,10 @@
   "members" : [
     {
       "name" : "LabelForUndecidedPixels",
-      "type" : "double",
-      "default" : "std::numeric_limits<double>::max()",
+      "type" : "uint64_t",
+      "default" : "std::numeric_limits<uint64_t>::max()",
       "pixeltype" : "Output",
-      "custom_itk_cast" : "if (m_LabelForUndecidedPixels!=std::numeric_limits<double>::max()) filter->SetLabelForUndecidedPixels(this->m_LabelForUndecidedPixels);",
+      "custom_itk_cast" : "if (m_LabelForUndecidedPixels!=std::numeric_limits<uint64_t>::max()) filter->SetLabelForUndecidedPixels(this->m_LabelForUndecidedPixels);",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set label value for undecided pixels.\n",
       "briefdescriptionGet" : "",
