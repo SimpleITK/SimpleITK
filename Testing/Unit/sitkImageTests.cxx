@@ -36,6 +36,7 @@
 
 #include "itkImage.h"
 #include "itkVectorImage.h"
+#include "itkMetaDataObject.h"
 
 #include <stdint.h>
 
@@ -1563,6 +1564,42 @@ TEST_F(Image, GetBufferVector)
   ASSERT_ANY_THROW( img.GetBufferAsInt32() ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetBufferAsUInt32() ) << " Get with wrong type";
   ASSERT_ANY_THROW( img.GetBufferAsFloat() ) << " Get with wrong type";
+
+}
+
+TEST_F(Image,MetaDataDictionary)
+{
+  sitk::Image img = sitk::Image( 10,10, 10, sitk::sitkFloat32 );
+
+
+  EXPECT_EQ( 0u, img.GetMetaDataKeys().size() );
+  EXPECT_FALSE( img.HasMetaDataKey("nothing") );
+  EXPECT_ANY_THROW( img.GetMetaData("anything") );
+
+  {
+  itk::DataObject::Pointer dataObject = img.GetITKBase();
+
+  itk::MetaDataDictionary &mdd = dataObject->GetMetaDataDictionary();
+
+  itk::EncapsulateMetaData<float>(mdd,"Float",static_cast<float>(1.234560F));
+  itk::EncapsulateMetaData<std::string>(mdd,"String",std::string("std::string"));
+  }
+
+  EXPECT_EQ( 2u, img.GetMetaDataKeys().size() );
+  EXPECT_FALSE( img.HasMetaDataKey("nothing") );
+  EXPECT_TRUE( img.HasMetaDataKey("Float") );
+  EXPECT_TRUE( img.HasMetaDataKey("String") );
+
+  EXPECT_EQ( "std::string", img.GetMetaData("String") );
+
+  std::vector<std::string> keys = img.GetMetaDataKeys();
+  for ( size_t i = 0; i < keys.size(); ++i )
+    {
+    std::string value;
+
+    EXPECT_NO_THROW( value = img.GetMetaData( keys[i]) );
+    std::cout << "Key = \"" << keys[i] << "\" Value = \"" << value << "\"" << std::endl;
+    }
 
 }
 
