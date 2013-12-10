@@ -26,6 +26,7 @@
 #include "itkImage.h"
 #include "itkVectorImage.h"
 #include "itkLabelMap.h"
+#include "itkImageDuplicator.h"
 
 namespace itk
 {
