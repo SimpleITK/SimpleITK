@@ -134,7 +134,7 @@ end)
 
   for ( unsigned int i = 0; i < inputFileNames.size(); ++i )
     {
-    ASSERT_NO_THROW ( inputs.push_back( reader.SetFileName ( dataFinder.GetFile ( inputFileNames[i]  ) ).Execute() ) ) << "Failed to load " << inputFileNames[i];
+    ASSERT_NO_THROW ( inputs.push_back( reader.SetFileName ( dataFinder.GetFile ( inputFileNames[i]  ) ).Execute() ) ) << "Failed to load " << inputFileNames[i] << " from " << dataFinder.GetFile ( inputFileNames[i]  );
 
 $(if inputA_cast then
       OUT=[[

@@ -42,7 +42,15 @@ $(include ConstructorInitializeMembers.cxx.in)
 
 $(if vector_pixel_types_by_component then
   OUT=[[  typedef ${vector_pixel_types_by_component} VectorByComponentsPixelIDTypeList;
-  typedef ${vector_pixel_types_by_component2} VectorByComponentsPixelIDTypeList2;
+]]
+  if vector_pixel_types_by_component2 then
+  OUT = OUT..[[  typedef ${vector_pixel_types_by_component2} VectorByComponentsPixelIDTypeList2;
+]]
+  else
+  OUT = OUT..[[  typedef PixelIDTypeList2 VectorByComponentsPixelIDTypeList2;
+]]
+  end
+  OUT = OUT..[[
   typedef detail::DualExecuteInternalVectorAddressor<MemberFunctionType> VectorAddressorType;
   this->m_DualMemberFactory->RegisterMemberFunctions< VectorByComponentsPixelIDTypeList, VectorByComponentsPixelIDTypeList2, 3, VectorAddressorType> ();
   this->m_DualMemberFactory->RegisterMemberFunctions< VectorByComponentsPixelIDTypeList, VectorByComponentsPixelIDTypeList2, 2, VectorAddressorType> ();]]
@@ -137,21 +145,29 @@ OUT=[[
 // Dispatched methods to call DualExecuteInternal on each component of the VectorImage
 //
 template <class TImageType, class TImageType2> Image
-${name}::DualExecuteInternalVector ( const Image& inImage1 )
+${name}::DualExecuteInternalVector ( $(for inum=1,number_of_inputs do
+ if inum>1 then
+       OUT=OUT.. ', '
+  end
+  OUT= OUT .. 'const Image& inImage' .. inum
+  end ) )
 {
   typedef TImageType                                                               VectorInputImageType;
   typedef typename VectorInputImageType::InternalPixelType                         ComponentType;
   typedef typename itk::Image<ComponentType, VectorInputImageType::ImageDimension> ComponentImageType;
-
+  // we must define the input and output image types
+  // they should be the same as the scalar execute internal method
+  typedef ComponentImageType   InputImageType;
+]]
+if vector_pixel_types_by_component2 then OUT = OUT..[[
   typedef TImageType2                                                                VectorInputImageType2;
   typedef typename VectorInputImageType2::InternalPixelType                          ComponentType2;
   typedef typename itk::Image<ComponentType2, VectorInputImageType2::ImageDimension> ComponentImageType2;
-
-  // we must define the input and output image types should be the
-  // same as the scalar execute internal method
-  typedef ComponentImageType   InputImageType;
-  typedef ComponentImageType2  InputImageType2;
-]]
+  typedef ComponentImageType2  InputImageType2;]]
+else
+   OUT= OUT..[[
+  typedef TImageType2  InputImageType2;]]
+end
 if output_image_type then
 OUT=OUT..[[
   //Define output image type
@@ -185,7 +201,9 @@ OUT=OUT..[[
     extractor->SetIndex( i );
     extractor->Update();
 
-    Image tmp = this->DualExecuteInternal<InputImageType,InputImageType2>( Image( extractor->GetOutput() ) );
+    Image tmp = this->DualExecuteInternal<InputImageType,InputImageType2>( Image( extractor->GetOutput() )$(for inum=2,number_of_inputs do
+                                                                                                                         OUT=OUT .. ', inImage' .. inum
+                                                                                                                           end) );
 
     typename OutputImageType::ConstPointer tempITKImage = this->CastImageToITK<OutputImageType>( tmp );
 
