@@ -16,6 +16,7 @@
 *
 *=========================================================================*/
 #include "sitkImage.hxx"
+#include "sitkMemberFunctionFactory.h"
 
 
 namespace itk

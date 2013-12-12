@@ -4,7 +4,7 @@
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "doc" : "Some global documentation",
-  "pixel_types" : "typelist::MakeTypeList< BasicPixelID<int8_t>, BasicPixelID<int16_t>, BasicPixelID<int32_t>, BasicPixelID<float>, BasicPixelID<double> >::Type",
+  "pixel_types" : "SignedPixelIDTypeList",
   "output_pixel_type" : "uint8_t",
   "members" : [
     {
