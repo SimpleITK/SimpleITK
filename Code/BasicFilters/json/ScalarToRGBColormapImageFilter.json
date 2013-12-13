@@ -26,7 +26,7 @@
         "OverUnder"
       ],
       "default" : "itk::simple::ScalarToRGBColormapImageFilter::Grey",
-      "custom_itk_cast" : "filter->SetColormap( typename FilterType::ColormapEnumType( int( this->m_Colormap) ) );",
+      "itk_type" : "typename FilterType::ColormapEnumType",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "",
       "briefdescriptionGet" : "",

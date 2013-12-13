@@ -35,8 +35,8 @@
         "SecondOrder"
       ],
       "default" : "itk::simple::RecursiveGaussianImageFilter::ZeroOrder",
+      "itk_type" : "typename FilterType::OrderEnumType",
       "doc" : "",
-      "custom_itk_cast" : "filter->SetOrder( static_cast<typename FilterType::OrderEnumType>( this->GetOrder()) );",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the Order of the Gaussian to convolve with.\n\\li ZeroOrder is equivalent to convolving with a Gaussian. This is the default.\n\\li FirstOrder is equivalent to convolving with the first derivative of a Gaussian.\n\\li SecondOrder is equivalent to convolving with the second derivative of a Gaussian.\n\n",
       "briefdescriptionGet" : "",
