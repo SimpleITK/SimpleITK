@@ -37,6 +37,19 @@
       "detaileddescriptionSet" : "Set/Get value to replace thresholded pixels. Pixels that lie * within Lower and Upper (inclusive) will be replaced with this value. The default is 1.\n",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : "Set/Get value to replace thresholded pixels. Pixels that lie * within Lower and Upper (inclusive) will be replaced with this value. The default is 1.\n"
+    },
+    {
+      "name" : "Connectivity",
+      "enum" : [
+        "FaceConnectivity",
+        "FullConnectivity"
+      ],
+      "default" : "itk::simple::ConnectedThresholdImageFilter::FaceConnectivity",
+      "itk_type" : "typename FilterType::ConnectivityEnumType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Type of connectivity to use (fully connected OR 4(2D), 6(3D), 2*N(ND) connectivity)\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Type of connectivity to use (fully connected OR 4(2D), 6(3D), 2*N(ND) connectivity)\n"
     }
   ],
   "tests" : [
@@ -90,6 +103,65 @@
           "value" : "255",
           "java_value" : "(short) 255",
           "comment" : "/* JAVA does not implicitly cast ints to short */"
+        }
+      ],
+      "md5hash" : "5119a1fef13206c4a28fcfa0c55b5c13",
+      "inputs" : [
+        "Input/STAPLE1.png"
+      ]
+    }
+   {
+      "tag" : "2dwconnectivity",
+      "description" : "Run with 2d sample settings and connectivity",
+      "settings" : [
+        {
+          "parameter" : "SeedList",
+          "dim" : 2,
+          "value" : [
+            "{100,100}",
+            "{95,85}"
+          ],
+          "tcl_value" : [
+            "100 100",
+            "95 85"
+          ],
+          "python_value" : [
+            "[100,100]",
+            "[95,85]"
+          ],
+          "ruby_value" : [
+            "[100,100]",
+            "[95,85]"
+          ],
+          "R_value" : [
+            "c(100,100)",
+            "c(95,85)"
+          ]
+        },
+        {
+          "parameter" : "Upper",
+          "value" : 255
+        },
+        {
+          "parameter" : "Lower",
+          "value" : 150
+        },
+        {
+          "parameter" : "ReplaceValue",
+          "value" : "255",
+          "java_value" : "(short) 255",
+          "comment" : "/* JAVA does not implicitly cast ints to short */"
+        },
+        {
+          "parameter" : "Connectivity",
+          "value" : "itk::simple::${name}::FullConnectivity",
+          "lua_value" : "SimpleITK.${name}_FullConnectivity",
+          "python_value" : "SimpleITK.${name}.FullConnectivity",
+          "ruby_value" : "Simpleitk::${name}::FullConnectivity",
+          "java_value" : "${name}.KernelType.FullConnectivity",
+          "tcl_value" : "$$${name}_FullConnectivity",
+          "csharp_value" : "${name}.KernelType.FullConnectivity",
+          "R_value" : "'FullConnectivity'"
         }
       ],
       "md5hash" : "5119a1fef13206c4a28fcfa0c55b5c13",

@@ -40,6 +40,7 @@
 #include <sitkCurvatureAnisotropicDiffusionImageFilter.h>
 #include <sitkLabelMapContourOverlayImageFilter.h>
 #include <sitkPatchBasedDenoisingImageFilter.h>
+#include <sitkConnectedThresholdImageFilter.h>
 #include <sitkAdditionalProcedures.h>
 
 #include "itkVectorImage.h"
@@ -55,6 +56,7 @@
 #include "itkRichardsonLucyDeconvolutionImageFilter.h"
 #include "itkLabelMapContourOverlayImageFilter.h"
 #include "itkPatchBasedDenoisingImageFilter.h"
+#include "itkConnectedThresholdImageFilter.h"
 
 TEST(BasicFilters,ScalarToRGBColormap_ENUMCHECK) {
   typedef itk::ScalarToRGBColormapImageFilter< itk::Image<float,3>, itk::Image< itk::RGBPixel<float>,3> > ITKType;
@@ -150,6 +152,13 @@ TEST(BasicFilters,PatchBasedBaseDenoising_ENUMCHECK) {
   EXPECT_EQ( (int) ITKType::GAUSSIAN, (int) itk::simple::PatchBasedDenoisingImageFilter::GAUSSIAN );
   EXPECT_EQ( (int) ITKType::RICIAN, (int) itk::simple::PatchBasedDenoisingImageFilter::RICIAN );
   EXPECT_EQ( (int) ITKType::POISSON, (int) itk::simple::PatchBasedDenoisingImageFilter::POISSON );
+}
+
+
+TEST(BasicFilters,ConnectedThreshold_ENUMCHECK) {
+  typedef itk::ConnectedThresholdImageFilter< itk::Image<float,3>, itk::Image<float,3> > ITKType;
+  EXPECT_EQ( (int) ITKType::FaceConnectivity, (int) itk::simple::ConnectedThresholdImageFilter::FaceConnectivity );
+  EXPECT_EQ( (int) ITKType::FullConnectivity, (int) itk::simple::ConnectedThresholdImageFilter::FullConnectivity );
 }
 
 TEST(BasicFilter,GradientAnisotropicDiffusion_EstimateOptimalTimeStep) {

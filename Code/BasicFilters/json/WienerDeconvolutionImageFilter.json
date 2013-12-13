@@ -46,7 +46,7 @@
         "VALID"
       ],
       "default" : "itk::simple::WienerDeconvolutionImageFilter::SAME",
-      "custom_itk_cast" : "filter->SetOutputRegionMode( typename FilterType::OutputRegionModeType( int( this->m_OutputRegionMode ) ) );"
+      "itk_type" : "typename FilterType::OutputRegionModeType"
     }
   ],
   "tests" : [
