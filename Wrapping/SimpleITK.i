@@ -131,6 +131,7 @@ namespace std
 %include "sitkTransform.h"
 %include "sitkShow.h"
 %include "sitkInterpolator.h"
+%include "sitkKernel.h"
 %include "sitkImageFilter.h"
 %include "sitkImageFileWriter.h"
 %include "sitkImageSeriesReader.h"

@@ -20,6 +20,8 @@ $(include DoNotEditWarning.cxx.in)
 $(include StandardIncludes.cxx.in)
 $(include AddExtraIncludes.cxx.in)
 
+#include "sitkCreateKernel.h"
+
 #include "itkNthElementImageAdaptor.h"
 #include "itkCastImageFilter.h"
 #include "itkVectorImageToImageAdaptor.h"
@@ -39,7 +41,7 @@ namespace simple {
 $(include ConstructorSignature.cxx.in)
 {
   this->m_KernelRadius = std::vector<uint32_t>( 3, 1 );
-  this->m_KernelType = Ball;
+  this->m_KernelType = sitkBall;
 $(include ConstructorInitializeMembers.cxx.in)
 $(include ConstructorMemberFunctionSetup.cxx.in)
 
@@ -52,26 +54,13 @@ $(include ConstructorVectorPixels.cxx.in)
 $(include ToStringSignature.cxx.in)
 {
 $(include ToStringBody.cxx.in)
-  out << "  KernelRadius: " << this->GetKernelRadius() << std::endl;
+  out << "  KernelRadius: ";
+  this->ToStringHelper( out, this->GetKernelRadius() );
+  out << std::endl;
   out << "  KernelType: ";
-  switch ( this->m_KernelType )
-    {
-    case Self::Annulus:
-      std::cout << "Annulus";
-      break;
-    case Self::Ball:
-      std::cout << "Ball";
-      break;
-    case Self::Box:
-      std::cout << "Box";
-      break;
-    case Self::Cross:
-      std::cout << "Cross";
-      break;
-    default:
-      sitkExceptionMacro( "LogicError: invalid Kernel type" );
-    }
-  std::cout << std::endl;
+  this->ToStringHelper( out, this->GetKernelType() );
+  out << std::endl;
+
 $(include ToStringReturn.cxx.in)
 }
 
@@ -98,10 +87,14 @@ std::vector<uint32_t> ${name}::GetKernelRadius() const
 }
 ${name}::Self& ${name}::SetKernelType(KernelType t)
 {
+  return this->SetKernelType(KernelEnum(t));
+}
+${name}::Self& ${name}::SetKernelType(KernelEnum t)
+{
   this->m_KernelType = t;
   return *this;
 }
-${name}::KernelType ${name}::GetKernelType() const
+KernelEnum ${name}::GetKernelType() const
 {
   return this->m_KernelType;
 }
@@ -128,26 +121,7 @@ $(include ExecuteInternalGetImagePointers.cxx.in)
   typedef itk::FlatStructuringElement< InputImageType::ImageDimension > ITKKernelType;
   typedef itk::${name}<InputImageType,$(if number_of_inputs == 2 then OUT=[[ InputImageType,]] end)$(if additional_template_types then OUT=[[ $(foreach additional_template_types ${type},)]]end)$(if not no_output_type then OUT=[[ OutputImageType,]] end) ITKKernelType> FilterType;
 
-  ITKKernelType kernel;
-  typename ITKKernelType::SizeType radius = sitkSTLVectorToITK<typename ITKKernelType::SizeType>( this->m_KernelRadius );
-
-  switch (m_KernelType)
-    {
-    case Annulus:
-      kernel = ITKKernelType::Annulus( radius, 1, false );
-      break;
-    case Ball:
-      kernel = ITKKernelType::Ball( radius );
-      break;
-    case Box:
-      kernel = ITKKernelType::Box( radius );
-      break;
-    case Cross:
-      kernel = ITKKernelType::Cross( radius );
-      break;
-    default:
-      sitkExceptionMacro( "Logic Error: Unknown Kernel Type" );
-    }
+  ITKKernelType kernel = CreateKernel<InputImageType::ImageDimension>( m_KernelType, m_KernelRadius );
 
   typename FilterType::Pointer filter = FilterType::New();
 $(include ExecuteInternalSetITKFilterInputs.cxx.in)
@@ -163,7 +137,7 @@ $(include ExecuteInternalUpdateAndReturn.cxx.in)
 // Function to run the Execute method of this filter
 //
 Image ${name:gsub("ImageFilter$", "")} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end),
-                 uint32_t inRadius,  ${name}::KernelType inKernel
+                 uint32_t inRadius,  KernelEnum inKernel
                  $(when members $(foreach members , ${type} in${name})) )
 {
   ${name} filter;
@@ -175,7 +149,7 @@ Image ${name:gsub("ImageFilter$", "")} ( const Image& imageA$(if number_of_input
 // Function to run the Execute method of this filter
 //
 Image ${name:gsub("ImageFilter$", "")} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end),
-                 std::vector<uint32_t> inVectorRadius,  ${name}::KernelType inKernel
+                 std::vector<uint32_t> inVectorRadius,  KernelEnum inKernel
                  $(when members $(foreach members , ${type} in${name})) )
 {
   ${name} filter;

@@ -30,14 +30,14 @@
         },
         {
           "parameter" : "KernelType",
-          "value" : "itk::simple::${name}::Ball",
-          "lua_value" : "SimpleITK.${name}_Ball",
-          "python_value" : "SimpleITK.${name}.Ball",
-          "ruby_value" : "Simpleitk::${name}::Ball",
-          "java_value" : "${name}.KernelType.Ball",
-          "tcl_value" : "$$${name}_Ball",
-          "csharp_value" : "${name}.KernelType.Ball",
-          "R_value" : "'Box'"
+          "value" : "itk::simple::sitkBall",
+          "lua_value" : "SimpleITK.sitkBall",
+          "python_value" : "SimpleITK.sitkBall",
+          "ruby_value" : "Simpleitk::SitkBall",
+          "java_value" : "KernelEnum.sitkBall",
+          "tcl_value" : "$$sitkBall",
+          "csharp_value" : "KernelEnum.sitkBall",
+          "R_value" : "'sitkBall'"
         }
       ],
       "inputs" : [
@@ -61,14 +61,14 @@
         },
         {
           "parameter" : "KernelType",
-          "value" : "itk::simple::${name}::Cross",
-          "lua_value" : "SimpleITK.${name}_Cross",
-          "python_value" : "SimpleITK.${name}.Cross",
-          "ruby_value" : "Simpleitk::${name}::Cross",
-          "java_value" : "${name}.KernelType.Cross",
-          "tcl_value" : "$$${name}_Cross",
-          "csharp_value" : "itk.simple.${name}.KernelType.Cross",
-          "R_value" : "'Cross'"
+          "value" : "itk::simple::sitkCross",
+          "lua_value" : "SimpleITK.sitkCross",
+          "python_value" : "SimpleITK.sitkCross",
+          "ruby_value" : "Simpleitk::SitkCross",
+          "java_value" : "KernelEnum.sitkCross",
+          "tcl_value" : "$$sitkCross",
+          "csharp_value" : "KernelEnum.sitkCross",
+          "R_value" : "'sitkCross'"
         }
       ],
       "inputs" : [
@@ -92,14 +92,14 @@
         },
         {
           "parameter" : "KernelType",
-          "value" : "itk::simple::${name}::Box",
-          "lua_value" : "SimpleITK.${name}_Box",
-          "python_value" : "SimpleITK.${name}.Box",
-          "ruby_value" : "Simpleitk::${name}::Box",
-          "java_value" : "${name}.KernelType.Box",
-          "tcl_value" : "$$${name}_Box",
-          "csharp_value" : "itk.simple.${name}.KernelType.Box",
-          "R_value" : "'Box'"
+          "value" : "itk::simple::sitkBox",
+          "lua_value" : "SimpleITK.sitkBox",
+          "python_value" : "SimpleITK.sitkBox",
+          "ruby_value" : "Simpleitk::SitkBox",
+          "java_value" : "KernelEnum.sitkBox",
+          "tcl_value" : "$$sitkBox",
+          "csharp_value" : "KernelEnum.sitkBox",
+          "R_value" : "'sitkBox'"
         }
       ],
       "inputs" : [
