@@ -35,6 +35,13 @@ $(if (not no_set_method) or (no_set_method == 0) then
         OUT=OUT..' ${type}'
       end
       OUT=OUT..' ${name} ) { this->m_${name} = ${name}; return *this; }'
+  if dim_vec and  ( set_as_scalar == 1 ) then
+    OUT = OUT .. '\
+\
+      /** Set the values of the ${name} vector all to value */\
+      Self& Set${name}( ${type}::value_type value ) { this->m_${name} = ${type}(3, value); return *this; }\
+'
+  end
   if type == "bool" then
       OUT = OUT .. '\
 \
