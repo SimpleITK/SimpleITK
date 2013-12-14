@@ -158,9 +158,9 @@
           "lua_value" : "SimpleITK.${name}_FullConnectivity",
           "python_value" : "SimpleITK.${name}.FullConnectivity",
           "ruby_value" : "Simpleitk::${name}::FullConnectivity",
-          "java_value" : "${name}.KernelType.FullConnectivity",
+          "java_value" : "${name}.ConnectivityType.FullConnectivity",
           "tcl_value" : "$$${name}_FullConnectivity",
-          "csharp_value" : "${name}.KernelType.FullConnectivity",
+          "csharp_value" : "${name}.ConnectivityType.FullConnectivity",
           "R_value" : "'FullConnectivity'"
         }
       ],
