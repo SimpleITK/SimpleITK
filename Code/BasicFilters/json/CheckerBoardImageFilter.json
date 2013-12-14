@@ -12,6 +12,7 @@
       "type" : "std::vector<uint32_t>",
       "default" : "std::vector<uint32_t>(3, 4)",
       "dim_vec" : 1,
+      "set_as_scalar" : 1,
       "itk_type" : "typename FilterType::PatternArrayType",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set array with number of checks to make per image dimension\n",
