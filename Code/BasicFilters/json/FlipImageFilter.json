@@ -10,7 +10,7 @@
     {
       "dim_vec" : 1,
       "name" : "FlipAxes",
-      "type" : "std::vector<bool>",
+      "type" : "bool",
       "default" : "std::vector<bool>(3, false)",
       "doc" : "",
       "itk_type" : "typename FilterType::FlipAxesArrayType",

@@ -7,7 +7,7 @@
   "members" : [
     {
       "name" : "Seed",
-      "type" : "std::vector<unsigned int>",
+      "type" : "unsigned int",
       "default" : "std::vector<unsigned int>(3, 0)",
       "dim_vec" : 1,
       "itk_type" : "typename FilterType::InputImageIndexType",

@@ -7,7 +7,7 @@
   "members" : [
     {
       "name" : "Shift",
-      "type" : "std::vector<int>",
+      "type" : "int",
       "default" : "std::vector<int>(3, 0)",
       "dim_vec" : 1,
       "set_as_scalar" : 1,

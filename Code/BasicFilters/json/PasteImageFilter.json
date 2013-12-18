@@ -8,7 +8,7 @@
   "members" : [
     {
       "name" : "SourceSize",
-      "type" : "std::vector<unsigned int>",
+      "type" : "unsigned int",
       "default" : "std::vector<unsigned int>(3, 1)",
       "dim_vec" : 1,
       "itk_type" : "typename InputImageType::SizeType",
@@ -16,7 +16,7 @@
     },
     {
       "name" : "SourceIndex",
-      "type" : "std::vector<int>",
+      "type" : "int",
       "default" : "std::vector<int>(3, 0)",
       "dim_vec" : 1,
       "itk_type" : "typename InputImageType::IndexType",
@@ -24,7 +24,7 @@
     },
     {
       "name" : "DestinationIndex",
-      "type" : "std::vector<int>",
+      "type" : "int",
       "default" : "std::vector<int>(3, 0)",
       "dim_vec" : 1,
       "itk_type" : "typename InputImageType::IndexType",

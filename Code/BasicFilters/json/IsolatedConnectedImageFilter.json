@@ -8,7 +8,7 @@
   "members" : [
     {
       "name" : "Seed1",
-      "type" : "std::vector<unsigned int>",
+      "type" : "unsigned int",
       "default" : "std::vector<unsigned int>(3, 0)",
       "dim_vec" : 1,
       "itk_type" : "typename FilterType::IndexType",
@@ -17,7 +17,7 @@
     },
     {
       "name" : "Seed2",
-      "type" : "std::vector<unsigned int>",
+      "type" : "unsigned int",
       "default" : "std::vector<unsigned int>(3, 0)",
       "dim_vec" : 1,
       "itk_type" : "typename FilterType::IndexType",

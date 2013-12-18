@@ -28,7 +28,7 @@
     },
     {
       "name" : "Variance",
-      "type" : "std::vector<double>",
+      "type" : "double",
       "default" : "std::vector<double>(3, 0.0)",
       "doc" : "",
       "dim_vec" : 1,
@@ -41,7 +41,7 @@
     },
     {
       "name" : "MaximumError",
-      "type" : "std::vector<double>",
+      "type" : "double",
       "default" : "std::vector<double>(3, 0.01)",
       "doc" : "",
       "dim_vec" : 1,
