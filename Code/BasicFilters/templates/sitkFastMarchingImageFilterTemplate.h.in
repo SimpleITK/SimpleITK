@@ -82,15 +82,7 @@ $(include ClassEnd.h.in)
      * in order to support a fully functional API
      */
     Image SITKBasicFilters_EXPORT ${name:gsub("ImageFilter$", "")} ( const Image& imageA,
-      std::vector< std::vector<unsigned int> > trialPoints$(for i = 1,#members do
-  OUT = OUT .. ", "
-  if members[i].enum then
-    OUT = OUT .. name .. '::' .. members[i].name .. 'Type'
-  else
-    OUT = OUT .. members[i].type
-  end
-  OUT= OUT .." ".. members[i].name:sub(1,1):lower() .. members[i].name:sub(2,-1) .. " = " .. members[i].default
-end) );
+      std::vector< std::vector<unsigned int> > trialPoints$(include ImageParametersWithDefaults.in) );
 
   } // end namespace simple
 } // end namespace itk

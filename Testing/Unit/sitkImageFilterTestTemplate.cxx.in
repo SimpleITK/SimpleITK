@@ -162,7 +162,7 @@ OUT=[=[
       ASSERT_NO_THROW ( fromFunctional = itk::simple::${name:gsub("ImageFilter$", ""):gsub("ImageSource$", "Source")} ( $(if #inputs > 0 then OUT=[[inputs[0] ]] end)$(for inum=1,#inputs-1 do OUT=OUT..", inputs["..inum.."]" end)
                                                                        $(if template_type and template_type == "RegionGrowing" then OUT=", std::vector< std::vector<unsigned int> >()" end)
                                                                        $(if template_code_filename and template_code_filename == "FastMarchingImageFilter" then OUT=", std::vector< std::vector<unsigned int> >()" end)
-                                                                       $(if template_code_filename and template_code_filename == "KernelImageFilter" then OUT=[[, 1, itk::simple::${name}::Ball]] end)
+                                                                       $(if template_code_filename and template_code_filename == "KernelImageFilter" then OUT=[[, 1, itk::simple::sitkBall]] end)
                                                                        $(for i = 1,#members do
                                                                          if (number_of_inputs > 0 or i > 1) then OUT = OUT .. ", " end
                                                                          OUT= OUT .. members[i].default

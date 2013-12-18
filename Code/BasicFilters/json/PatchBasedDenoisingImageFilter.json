@@ -67,7 +67,7 @@
       ],
       "name" : "NoiseModel",
       "default" : "itk::simple::PatchBasedDenoisingImageFilter::NOMODEL",
-      "custom_itk_cast" : "filter->SetNoiseModel( typename FilterType::NoiseModelType( int( this->m_NoiseModel) ) );",
+      "itk_type" : "typename FilterType::NoiseModelType",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the noise model type. Defaults to GAUSSIAN. To use the noise model during denoising, FidelityWeight must be positive.\n",
       "briefdescriptionGet" : "",

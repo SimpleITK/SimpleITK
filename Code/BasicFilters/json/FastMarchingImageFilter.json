@@ -39,7 +39,7 @@
       ],
       "default" : "itk::simple::FastMarchingImageFilter::Nothing",
       "doc" : "",
-      "custom_itk_cast" : "filter->SetTopologyCheck( static_cast<typename FilterType::TopologyCheckType>( this->GetTopologyCheck() ) );"
+      "itk_type" : "typename FilterType::TopologyCheckType"
     }
   ],
   "tests" : [
