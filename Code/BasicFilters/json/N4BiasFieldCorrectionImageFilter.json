@@ -20,7 +20,7 @@
     },
     {
       "name" : "MaximumNumberOfIterations",
-      "type" : "uint32_t",
+      "type" : "std::vector<uint32_t>",
       "default" : "std::vector<uint32_t>(4,50)",
       "custom_itk_cast" : "typename FilterType::VariableSizeArrayType maximumNumberOfIterations( this->m_MaximumNumberOfIterations.size() );\n  for( unsigned int i = 0; i < this->m_MaximumNumberOfIterations.size(); ++i)\n    maximumNumberOfIterations[i] = this->m_MaximumNumberOfIterations[i];\n  filter->SetMaximumNumberOfIterations( maximumNumberOfIterations );\n  filter->SetNumberOfFittingLevels( this->m_MaximumNumberOfIterations.size() );",
       "doc" : "\todo this variable needs to be printed",

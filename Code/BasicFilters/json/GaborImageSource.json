@@ -27,7 +27,7 @@
     },
     {
       "name" : "Sigma",
-      "type" : "doubled>",
+      "type" : "double",
       "dim_vec" : 1,
       "set_as_scalar" : 1,
       "default" : "std::vector<double>(3, 16.0)",
