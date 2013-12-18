@@ -26,7 +26,7 @@
     },
     {
       "name" : "OutputSize",
-      "type" : "std::vector<uint32_t>",
+      "type" : "uint32_t",
       "default" : "std::vector<uint32_t>(3, 0)",
       "dim_vec" : 1,
       "doc" : "",
@@ -38,7 +38,7 @@
     },
     {
       "name" : "OutputOrigin",
-      "type" : "std::vector<double>",
+      "type" : "double",
       "default" : "std::vector<double>(3, 0.0)",
       "dim_vec" : 1,
       "doc" : "",
@@ -50,7 +50,7 @@
     },
     {
       "name" : "OutputSpacing",
-      "type" : "std::vector<double>",
+      "type" : "double",
       "default" : "std::vector<double>(3, 1.0)",
       "dim_vec" : 1,
       "doc" : "",

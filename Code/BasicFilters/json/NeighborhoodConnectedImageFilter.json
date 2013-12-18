@@ -28,7 +28,7 @@
     },
     {
       "name" : "Radius",
-      "type" : "std::vector<unsigned int>",
+      "type" : "unsigned int",
       "default" : "std::vector<unsigned int>(3, 1)",
       "doc" : "Radius of the neighborhood used to compute the median",
       "dim_vec" : 1,

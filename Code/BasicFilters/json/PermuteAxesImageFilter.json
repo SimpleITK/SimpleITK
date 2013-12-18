@@ -13,7 +13,7 @@
   "members" : [
     {
       "name" : "Order",
-      "type" : "std::vector<unsigned int>",
+      "type" : "unsigned int",
       "default" : "std::vector<unsigned int>(&itk::simple::PermuteAxesImageFilter::DefaultOrder[0], &itk::simple::PermuteAxesImageFilter::DefaultOrder[3])",
       "doc" : "",
       "dim_vec" : 1,

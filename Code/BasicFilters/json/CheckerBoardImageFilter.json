@@ -9,7 +9,7 @@
   "members" : [
     {
       "name" : "CheckerPattern",
-      "type" : "std::vector<uint32_t>",
+      "type" : "uint32_t",
       "default" : "std::vector<uint32_t>(3, 4)",
       "dim_vec" : 1,
       "set_as_scalar" : 1,

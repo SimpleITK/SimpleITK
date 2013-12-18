@@ -7,7 +7,7 @@
   "members" : [
     {
       "name" : "Layout",
-      "type" : "std::vector<uint32_t>",
+      "type" : "uint32_t",
       "default" : "std::vector<uint32_t>(3, 100)",
       "dim_vec" : 1,
       "itk_type" : "typename FilterType::LayoutArrayType"

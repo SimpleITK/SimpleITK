@@ -9,7 +9,7 @@
   "members" : [
     {
       "name" : "Radius",
-      "type" : "std::vector<unsigned int>",
+      "type" : "unsigned int",
       "default" : "std::vector<unsigned int>(3, 5)",
       "dim_vec" : 1,
       "set_as_scalar" : 1,

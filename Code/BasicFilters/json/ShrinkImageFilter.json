@@ -9,7 +9,7 @@
   "members" : [
     {
       "name" : "ShrinkFactors",
-      "type" : "std::vector<unsigned int>",
+      "type" : "unsigned int",
       "default" : "std::vector<unsigned int>(3, 1)",
       "dim_vec" : 1,
       "doc" : "",
