@@ -106,8 +106,7 @@ $(include PrivateMemberDeclarations.h.in)$(include ClassEnd.h.in)
      *
      * \sa itk::simple::${name} for the object oriented interface
      */
-     SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", "")} ( const std::vector<Image> &images$(when members $(foreach members ,
-      ${type} ${name:sub(1,1):lower()}${name:sub(2,-1)} = ${default})) );
+     SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", "")} ( const std::vector<Image> &images $(include ImageParametersWithDefaults.in) );
 
 $(for inum=1,5 do
   OUT=OUT..[[

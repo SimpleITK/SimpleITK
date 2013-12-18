@@ -56,12 +56,7 @@ $(include ClassEnd.h.in)
      *
      * \sa itk::simple::${name} for the object oriented interface
      */
-SITKBasicFilters_EXPORT Image ${name:gsub("ImageSource$", "Source")} ( $(include ImageParameters.in)$(for i = 1,#members do
-  if (number_of_inputs > 0 or i > 1) then
-    OUT = OUT .. ", "
-  end
-    OUT= OUT .. members[i].type .. " " .. members[i].name:sub(1,1):lower() .. members[i].name:sub(2,-1) .. " = " .. members[i].default
-end) );
+SITKBasicFilters_EXPORT Image ${name:gsub("ImageSource$", "Source")} ( $(include ImageParameters.in)$(include ImageParametersWithDefaults.in) );
   }
 }
 #endif

@@ -28,7 +28,6 @@
 #include "sitkExceptionObject.h"
 #include "sitkPimpleImageBase.hxx"
 #include "sitkPixelIDTypeLists.h"
-#include "sitkMemberFunctionFactory.h"
 
 
 namespace itk

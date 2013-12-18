@@ -40,7 +40,7 @@
         "DIRECTIONCOLLAPSETOGUESS"
       ],
       "default" : "itk::simple::ExtractImageFilter::DIRECTIONCOLLAPSETOGUESS",
-      "custom_itk_cast" : "filter->SetDirectionCollapseToStrategy( typename FilterType::DirectionCollapseStrategyEnum( int( this->m_DirectionCollapseToStrategy ) ) );",
+      "itk_type" : "typename FilterType::DirectionCollapseStrategyEnum",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set the strategy to be used to collapse pysical space dimensions.\nitk::itkExtractImageFilter::DIRECTIONCOLLAPSETOIDENTITY Set the strategy so that all collapsed images have an identity direction. Use this strategy when you know that retention of the physical space orientation of the collapsed image is not important.\nitk::itkExtractImageFilter::DIRECTIONCOLLAPSETOGUESS Set the strategy so that all collapsed images where output direction is the sub-matrix it it is positive definite, else return identity. This is backwards compatible with ITKv3, but is highly discouraged because the results are difficult to anticipate under differing data scenerios.\nitk::itkExtractImageFilter::DIRECTIONCOLLAPSETOSUBMATRIX Set the strategy so that all collapsed images where output direction is the sub-matrix it it is positive definite, else throw an exception. Use this strategy when it is known that properly identified physical space sub-volumes can be reliably extracted from a higher dimensional space. For example when the application programmer knows that a 4D image is 3D+time, and that the 3D sub-space is properly defined.\n",
       "briefdescriptionGet" : "",
