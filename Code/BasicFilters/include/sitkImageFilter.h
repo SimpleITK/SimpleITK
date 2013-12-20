@@ -19,12 +19,12 @@
 #define __sitkImageFilter_h
 
 #include "sitkMacro.h"
-#include "sitkImage.h"
 #include "sitkMemberFunctionFactory.h"
 #include "sitkBasicFilters.h"
 #include "sitkImageFilterExecuteBase.h"
 
 namespace itk {
+
   namespace simple {
 
   /** \class ImageFilter
@@ -35,8 +35,7 @@ namespace itk {
    */
   template < unsigned int N>
   class SITKBasicFilters0_EXPORT ImageFilter:
-      public ImageFilterExecuteBase<N>,
-      protected NonCopyable
+      public ImageFilterExecuteBase<N>
   {
     public:
       typedef ImageFilter Self;
@@ -58,56 +57,9 @@ namespace itk {
       /**
        * Default Destructor
        */
-      virtual ~ImageFilter();
-
-      // Print ourselves out
-      virtual std::string ToString() const = 0;
-
-      /** return user readable name fo the filter */
-      virtual std::string GetName() const = 0;
-
-      /** Turn debugging output on/off.
-       *
-       * Enabling debugging prints additional information to stdout
-       * about the execution of the internal filters.
-       */
-      virtual void DebugOn();
-      virtual void DebugOff();
-
-      /** Get the value of the debug flag. */
-      virtual bool GetDebug() const;
-      virtual void SetDebug(bool debugFlag);
-
-      /** Turn default debugging output value on/off.
-       *
-       * This is the initial values used for new classes and
-       * procedural methods.
-       */
-      static void GlobalDefaultDebugOn();
-      static void GlobalDefaultDebugOff();
-
-      /** Get the value of the default debug flag.  */
-      static bool GetGlobalDefaultDebug();
-      static void SetGlobalDefaultDebug(bool debugFlag);
+      virtual ~ImageFilter() = 0;
 
     protected:
-
-
-      /**
-       * Output operator to os with conversion to a printable type.
-       *
-       * That is char types are presumed to be numbers, and converted
-       * to int.
-       */
-      template <typename T>
-      static std::ostream & ToStringHelper(std::ostream &os, const T &v)
-      {
-        os << v;
-        return os;
-      }
-      static std::ostream & ToStringHelper(std::ostream &os, const char &v);
-      static std::ostream & ToStringHelper(std::ostream &os, const signed char &v);
-      static std::ostream & ToStringHelper(std::ostream &os, const unsigned char &v);
 
       template< class TImageType >
       static typename TImageType::ConstPointer CastImageToITK( const Image &img )
@@ -151,13 +103,7 @@ namespace itk {
             }
           }
 
-
-
       }
-
-    private:
-
-      bool m_Debug;
 
     };
 

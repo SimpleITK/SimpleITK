@@ -32,6 +32,7 @@
 
 #include "sitkInterpolator.h"
 
+#include "sitkProcessObject.h"
 #include "sitkImageFilter.h"
 
 // IO classes

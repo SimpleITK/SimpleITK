@@ -126,13 +126,16 @@ namespace std
 
 
 // Any new classes need to have an "%include" statement to be wrapped.
+%include "sitkProcessObject.h"
+%include "sitkImageFilterExecuteBase.h"
+%include "sitkImageFilter.h"
+
 %include "sitkPixelIDValues.h"
 %include "sitkImage.h"
 %include "sitkTransform.h"
 %include "sitkShow.h"
 %include "sitkInterpolator.h"
 %include "sitkKernel.h"
-%include "sitkImageFilter.h"
 %include "sitkImageFileWriter.h"
 %include "sitkImageSeriesReader.h"
 %include "sitkImageFileReader.h"
@@ -146,6 +149,14 @@ namespace std
 %include "sitkCastImageFilter.h"
 %include "sitkAdditionalProcedures.h"
 %include "sitkVersion.h"
+
+
+%template(ImageFilterExecuteBase_0) itk::simple::ImageFilterExecuteBase<0>;
+%template(ImageFilterExecuteBase_1) itk::simple::ImageFilterExecuteBase<1>;
+%template(ImageFilterExecuteBase_2) itk::simple::ImageFilterExecuteBase<2>;
+%template(ImageFilterExecuteBase_3) itk::simple::ImageFilterExecuteBase<3>;
+%template(ImageFilterExecuteBase_4) itk::simple::ImageFilterExecuteBase<4>;
+%template(ImageFilterExecuteBase_5) itk::simple::ImageFilterExecuteBase<5>;
 
 %template(ImageFilter_0) itk::simple::ImageFilter<0>;
 %template(ImageFilter_1) itk::simple::ImageFilter<1>;
