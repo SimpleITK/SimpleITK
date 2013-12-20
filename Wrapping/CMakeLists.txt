@@ -67,8 +67,9 @@ if ( WRAP_PYTHON )
   # Run swig
   set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS} -features autodoc=1
   -keyword )
+  option ( SimpleITK_PYTHON_THREADS "Enable threaded python usage by unlocking the GIL." OFF )
+  mark_as_advanced( SimpleITK_PYTHON_THREADS )
   if( SimpleITK_PYTHON_THREADS )
-    message( WARNING "Python threads has been turned on and is an experimental feature.")
     set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_FLAGS} -threads)
   endif()
   set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
