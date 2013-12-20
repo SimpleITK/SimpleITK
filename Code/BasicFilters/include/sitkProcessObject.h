@@ -82,6 +82,16 @@ namespace itk {
       static bool GetGlobalDefaultDebug();
       static void SetGlobalDefaultDebug(bool debugFlag);
 
+      /** Set the number of threads that all new process objects are
+       *  initialized with. */
+      static void SetGlobalDefaultNumberOfThreads(unsigned int n);
+      static unsigned int GetGlobalDefaultNumberOfThreads();
+
+      /** The number of threads used when executing a filter if the
+      * filter is multi-threaded */
+      void SetNumberOfThreads(unsigned int n);
+      unsigned int GetNumberOfThreads() const;
+
 
     protected:
 
@@ -108,6 +118,7 @@ namespace itk {
     private:
 
       bool m_Debug;
+      unsigned int m_NumberOfThreads;
 
     };
 

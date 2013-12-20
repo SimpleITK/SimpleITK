@@ -280,6 +280,30 @@ TEST(BasicFilters,ProcessObject_Debug) {
 
 }
 
+TEST(BasicFilters,ProcessObject_NumberOfThreads) {
+  namespace sitk = itk::simple;
+
+  sitk::CastImageFilter caster;
+  sitk::ProcessObject &filter = caster;
+
+  unsigned int gNum = filter.GetGlobalDefaultNumberOfThreads();
+  EXPECT_NE(filter.GetGlobalDefaultNumberOfThreads(), 0);
+  EXPECT_NE(filter.GetNumberOfThreads(), 0);
+  EXPECT_EQ(filter.GetNumberOfThreads(), filter.GetGlobalDefaultNumberOfThreads());
+
+  filter.SetNumberOfThreads(3);
+  EXPECT_EQ(3u, filter.GetNumberOfThreads());
+  EXPECT_EQ(gNum, filter.GetGlobalDefaultNumberOfThreads());
+
+  filter.SetGlobalDefaultNumberOfThreads(gNum+1);
+  EXPECT_EQ(gNum+1, filter.GetGlobalDefaultNumberOfThreads());
+  EXPECT_EQ(3u, filter.GetNumberOfThreads());
+
+  sitk::CastImageFilter caster2;
+  EXPECT_EQ(gNum+1, caster2.GetNumberOfThreads());
+  EXPECT_EQ(gNum+1, caster2.GetGlobalDefaultNumberOfThreads());
+}
+
 TEST(BasicFilters,Cast) {
   itk::simple::HashImageFilter hasher;
   itk::simple::ImageFileReader reader;

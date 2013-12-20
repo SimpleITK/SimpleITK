@@ -36,7 +36,8 @@ static bool GlobalDefaultDebug = false;
 // Default constructor that initializes parameters
 //
 ProcessObject::ProcessObject ()
-  : m_Debug(GlobalDefaultDebug)
+  : m_Debug(ProcessObject::GetGlobalDefaultDebug()),
+    m_NumberOfThreads(ProcessObject::GetGlobalDefaultNumberOfThreads())
 {
 }
 
@@ -109,14 +110,41 @@ void ProcessObject::SetGlobalDefaultDebug(bool debugFlag)
   GlobalDefaultDebug = debugFlag;
 }
 
+
+
+void ProcessObject::SetGlobalDefaultNumberOfThreads(unsigned int n)
+{
+  MultiThreader::SetGlobalDefaultNumberOfThreads(n);
+}
+
+unsigned int ProcessObject::GetGlobalDefaultNumberOfThreads()
+{
+  return MultiThreader::GetGlobalDefaultNumberOfThreads();
+}
+
+void ProcessObject::SetNumberOfThreads(unsigned int n)
+{
+  m_NumberOfThreads = n;
+}
+
+unsigned int ProcessObject::GetNumberOfThreads() const
+{
+  return m_NumberOfThreads;
+}
+
+
 void ProcessObject::PreUpdate( itk::ProcessObject *p )
 {
+  assert(p);
 
   if (this->GetDebug())
      {
      std::cout << "Executing ITK filter:" << std::endl;
      p->Print(std::cout);
      }
+
+  p->SetNumberOfThreads(this->GetNumberOfThreads());
+
 }
 
 } // end namespace simple
