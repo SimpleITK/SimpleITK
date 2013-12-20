@@ -238,11 +238,20 @@ TEST(BasicFilter,CurvatureAnisotropicDiffusion_EstimateOptimalTimeStep) {
 
 }
 
-TEST(BasicFilters,ImageFilterBase) {
+TEST(BasicFilters,ImageFilter) {
   namespace sitk = itk::simple;
 
   sitk::CastImageFilter caster;
   sitk::ImageFilter<1> &filter = caster;
+
+  filter.DebugOn();
+}
+
+TEST(BasicFilters,ProcessObject_Debug) {
+  namespace sitk = itk::simple;
+
+  sitk::CastImageFilter caster;
+  sitk::ProcessObject &filter = caster;
 
   EXPECT_FALSE(filter.GetGlobalDefaultDebug());
   EXPECT_FALSE(filter.GetDebug());

@@ -21,6 +21,7 @@ set ( SimpleITKBasicFiltersSource
   sitkCastImageFilter-3v.cxx
   sitkCastImageFilter.cxx
   sitkHashImageFilter.cxx
+  sitkProcessObject.cxx
   sitkImageFilter.cxx
   sitkLabelStatisticsImageFilter.cxx
   sitkMeasurementMap.cxx
