@@ -115,6 +115,8 @@ elseif(DEFINED SimpleITK_VERSION_DEV)
   set(SimpleITK_VERSION "${SimpleITK_VERSION}.dev${SimpleITK_VERSION_DEV}")
 endif()
 
+option( SimpleITK_BUILD_DISTRIBUTE "Remove '-g#####' from version. ( for official distribution only )" OFF )
+mark_as_advanced( SimpleITK_BUILD_DISTRIBUTE )
 if( NOT SimpleITK_BUILD_DISTRIBUTE )
   set(SimpleITK_VERSION "${SimpleITK_VERSION}-g${SimpleITK_VERSION_HASH}")
 endif()
