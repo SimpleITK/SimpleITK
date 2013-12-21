@@ -79,21 +79,13 @@
           "parameter" : "Size",
           "type" : "unsigned int",
           "dim_vec" : 1,
-          "value" : "{10, 0, 10}",
-          "tcl_value" : "[list 10 0 10]",
-          "python_value" : "[ 10, 0, 10 ]",
-          "ruby_value" : "[ 10, 0, 10 ]",
-          "R_value" : "c( 10, 0, 10 )"
+          "value" : [10, 0, 10]
         },
         {
           "parameter" : "Index",
           "type" : "int",
           "dim_vec" : 1,
-          "value" : "{16, 20, 51}",
-          "tcl_value" : "[list 16 20 51]",
-          "python_value" : "[ 16, 20, 51 ]",
-          "ruby_value" : "[ 16, 20, 51 ]",
-          "R_value" : "c( 16, 20, 51 )"
+          "value" : [16, 20, 51]
         },
         {
           "parameter" : "DirectionCollapseToStrategy",

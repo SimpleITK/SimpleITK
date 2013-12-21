@@ -105,45 +105,51 @@ $(for i=1,#value do OUT=OUT .. "\
                 }\
 " end)]]
 elseif dim_vec == 1 then
-                OUT=[[
-                {
-                $(if type == "bool" then
-                    OUT="VectorBool idx = new VectorBool( new bool[] $(if csharp_value then OUT='${csharp_value}' else OUT='${value}' end) );"
-                elseif type == "unsigned int" then
-                    OUT="VectorUInt32 idx = new VectorUInt32( new uint[] $(if csharp_value then OUT='${csharp_value}' else OUT='${value}' end) );"
-                elseif type == "int" then
-                    OUT="VectorInt32 idx = new VectorInt32( new int[] $(if csharp_value then OUT='${csharp_value}' else OUT='${value}' end) );"
-                elseif type == "unsigned long" then
-                    OUT="VectorULong idx = new VectorULong( new ulong[] $(if csharp_value then OUT='${csharp_value}' else OUT='${value}' end) );"
-                elseif type == "long" then
-                    OUT="VectorLong idx = new VectorLong( new long[] $(if csharp_value then OUT='${csharp_value}' else OUT='${value}' end) );"
-                elseif type == "unsigned short" then
-                    OUT="VectorUShort idx = new VectorUShort( new ushort[] $(if csharp_value then OUT='${csharp_value}' else OUT='${value}' end) );"
-                elseif type == "short" then
-                    OUT="VectorShort idx = new VectorShort( new short[] $(if csharp_value then OUT='${csharp_value}' else OUT='${value}' end) );"
-                elseif type == "float" then
-                    OUT="VectorFloat idx = new VectorFloat( new float[] $(if csharp_value then OUT='${csharp_value}' else OUT='${value}' end) );"
-                elseif type == "double" then
-                    OUT="VectorDouble idx = new VectorDouble( new double[] $(if csharp_value then OUT='${csharp_value}' else OUT='${value}' end) );"
-                elseif type == "uint8_t" then
-                    OUT="VectorUInt8 idx = new VectorUInt8( new byte[] $(if csharp_value then OUT='${csharp_value}' else OUT='${value}' end) );"
-                elseif type == "uint16_t" then
-                    OUT="VectorUInt16 idx = new VectorUInt16( new ushort[] $(if csharp_value then OUT='${csharp_value}' else OUT='${value}' end) );"
-                elseif type == "uint32_t" then
-                    OUT="VectorUInt32 idx = new VectorUInt32( new uint[] $(if csharp_value then OUT='${csharp_value}' else OUT='${value}' end) );"
-                elseif type == "uint64_t" then
-                    OUT="VectorUInt64 idx = new VectorUInt64( new ulong[] $(if csharp_value then OUT='${csharp_value}' else OUT='${value}' end) );"
-                elseif type == "int8_t" then
-                    OUT="VectorInt8 idx = new VectorInt8( new sbyte[] $(if csharp_value then OUT='${csharp_value}' else OUT='${value}' end) );"
-                elseif type == "int16_t" then
-                    OUT="VectorInt16 idx = new VectorInt16( new short[] $(if csharp_value then OUT='${csharp_value}' else OUT='${value}' end) );"
-                elseif type == "int32_t" then
-                    OUT="VectorInt32 idx = new VectorInt32( new int[] $(if csharp_value then OUT='${csharp_value}' else OUT='${value}' end) );"
-                elseif type == "int64_t" then
-                    OUT="VectorInt64 idx = new VectorInt64( new long[] $(if csharp_value then OUT='${csharp_value}' else OUT='${value}' end) );"
-                end)
-                filter.Set${parameter}( idx );
-                }]]
+  A='{'
+  for i=1,#value-1 do
+    A=A..value[i]..", "
+  end
+  A=A..value[#value]
+  A=A..'}'
+  OUT=[[
+    {
+  $(if type == "bool" then
+      OUT="VectorBool idx = new VectorBool( new bool[] "..A.." );"
+  elseif type == "unsigned int" then
+      OUT="VectorUInt32 idx = new VectorUInt32( new uint[] "..A.." );"
+  elseif type == "int" then
+      OUT="VectorInt32 idx = new VectorInt32( new int[] "..A.." );"
+  elseif type == "unsigned long" then
+      OUT="VectorULong idx = new VectorULong( new ulong[] "..A.." );"
+  elseif type == "long" then
+      OUT="VectorLong idx = new VectorLong( new long[] "..A.." );"
+  elseif type == "unsigned short" then
+      OUT="VectorUShort idx = new VectorUShort( new ushort[] "..A.." );"
+  elseif type == "short" then
+      OUT="VectorShort idx = new VectorShort( new short[] "..A.." );"
+  elseif type == "float" then
+      OUT="VectorFloat idx = new VectorFloat( new float[] "..A.." );"
+  elseif type == "double" then
+      OUT="VectorDouble idx = new VectorDouble( new double[] "..A.." );"
+  elseif type == "uint8_t" then
+      OUT="VectorUInt8 idx = new VectorUInt8( new byte[] "..A.." );"
+  elseif type == "uint16_t" then
+      OUT="VectorUInt16 idx = new VectorUInt16( new ushort[] "..A.." );"
+  elseif type == "uint32_t" then
+      OUT="VectorUInt32 idx = new VectorUInt32( new uint[] "..A.." );"
+  elseif type == "uint64_t" then
+      OUT="VectorUInt64 idx = new VectorUInt64( new ulong[] "..A.." );"
+  elseif type == "int8_t" then
+      OUT="VectorInt8 idx = new VectorInt8( new sbyte[] "..A.." );"
+  elseif type == "int16_t" then
+      OUT="VectorInt16 idx = new VectorInt16( new short[] "..A.." );"
+  elseif type == "int32_t" then
+      OUT="VectorInt32 idx = new VectorInt32( new int[] "..A.." );"
+  elseif type == "int64_t" then
+      OUT="VectorInt64 idx = new VectorInt64( new long[] "..A.." );"
+  end)
+  filter.Set${parameter}( idx );
+  }]]
 else
                 OUT=[[
                 filter.Set${parameter}( $(if csharp_value then OUT='${csharp_value}' else OUT='${value}' end) );]]

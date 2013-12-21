@@ -62,9 +62,15 @@ $(for i=1,#tcl_value do OUT=OUT .. "  filter AddTrialPoint [list ".. tcl_value[i
 elseif parameter == "TrialPoints" then
 OUT=[[  filter ClearTrialPoints
 $(for i=1,#value do OUT=OUT .. "  filter AddTrialPoint [list ".. value[i] .. "]\n" end)]]
+elseif tcl_value then
+OUT=[[
+  filter Set${parameter} ${tcl_value}]]
+elseif dim_vec and dim_vec==1 then
+OUT=[[
+  filter Set${parameter} [list $(for i=1,#value do OUT=OUT..value[i]..' ' end)] ]]
 else
 OUT=[[
-  filter Set${parameter} $(if tcl_value then OUT='${tcl_value}' else OUT='${value}'end)]]
+  filter Set${parameter} ${value}]]
 end)
 ))
 

@@ -83,7 +83,7 @@ elseif dim_vec and dim_vec == 1 then
      OUT="v = Simpleitk::VectorBool.new"
    elseif type == "int" then
      OUT="v = Simpleitk::VectorInt32.new"
- elseif type == "double" then
+   elseif type == "double" then
      OUT="v = Simpleitk::VectorDouble.new"
    else
      OUT="v = Simpleitk::VectorUInt32.new"
@@ -91,7 +91,17 @@ elseif dim_vec and dim_vec == 1 then
 
 OUT=OUT..[[
 
-  for i in $(if ruby_value then OUT='${ruby_value}' else OUT='${value}' end) do v << i end
+  for i in ]]
+if ruby_value then
+  OUT='${ruby_value}'
+else
+  OUT=OUT..'[ '
+  for i=1,#value-1 do
+    OUT=OUT..value[i]..", "
+  end
+  OUT=OUT..value[#value]..' ]'
+end
+OUT=OUT..[[do v << i end
   filter.set_${parameter:gsub ( "([a-z])([A-Z])", "%1_%2" ):lower()}(v)]]
 else
 OUT=[[

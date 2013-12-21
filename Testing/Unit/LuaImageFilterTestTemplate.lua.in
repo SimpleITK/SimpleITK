@@ -78,7 +78,7 @@ elseif dim_vec and dim_vec == 1 then
      OUT="idx = SimpleITK.VectorBool();"
    elseif type == "int" then
       OUT="idx = SimpleITK.VectorInt32();"
-elseif type == "double" then
+   elseif type == "double" then
       OUT="idx = SimpleITK.VectorDouble();"
    else
      OUT="idx = SimpleITK.VectorUInt32();"
@@ -86,7 +86,17 @@ elseif type == "double" then
    
    OUT=OUT.. [[
 
-    for _,v in ipairs($(if lua_value then OUT='${lua_value}' else OUT='${value}' end)) do idx:push_back(v) end
+    for _,v in ipairs(]]
+if lua_value then
+  OUT=OUT..'${lua_value}'
+else
+  OUT=OUT..'{'
+  for i=1,#value-1 do
+    OUT=OUT..value[i]..", "
+  end
+  OUT=OUT..value[#value]..'}'
+end
+OUT=OUT..[[) do idx:push_back(v) end
     filter:Set${parameter}( idx );]]
 else
 OUT=[[

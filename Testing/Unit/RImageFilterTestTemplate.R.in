@@ -68,9 +68,20 @@ $(if parameter == "SeedList" then
         OUT=OUT .. "filter <- filter$$AddSeed( " .. R_value[i] .. " )\n"
        end)
     ]]
+elseif R_value then
+OUT=[[
+   filter <- filter$$Set${parameter}( ${R_value} )
+  ]]
+elseif dim_vec and dim_vec==1 then
+OUT=[[
+    filter$$Set${parameter}( c( ]]
+  for i=1,#value-1 do
+    OUT=OUT..value[i]..", "
+  end
+  OUT=OUT..value[#value]..' ) )'
 else
 OUT=[[
-   filter <- filter$$Set${parameter}($(if R_value then OUT='${R_value}' else OUT='${value}' end) )
+   filter <- filter$$Set${parameter}( ${value} )
   ]]
 end)
 )
