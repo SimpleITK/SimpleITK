@@ -9,6 +9,7 @@
     {
       "name" : "Variance",
       "type" : "double",
+      "set_as_scalar" : 1,
       "default" : "std::vector<double>(3, 0.0)",
       "dim_vec" : 1,
       "itk_type" : "typename FilterType::ArrayType",
@@ -22,6 +23,7 @@
       "type" : "unsigned int",
       "default" : "std::vector<unsigned int>(3, 1)",
       "dim_vec" : 1,
+      "set_as_scalar" : 1,
       "itk_type" : "typename FilterType::OrderArrayType",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Convenience Set methods for setting all dimensional parameters to the same values.\n",
@@ -65,7 +67,83 @@
       "detaileddescriptionGet" : "Set/Get the flag for calculating scale-space normalized derivatives. Normalized derivatives are obtained multiplying by the scale parameter t.\n"
     }
   ],
-  "tests" : [],
+  "tests" : [
+    {
+      "tag" : "float1",
+      "description" : "Simply run with default settings",
+      "settings" : [],
+      "tolerance" : 0.0001,
+      "inputs" : [
+        "Input/RA-Float.nrrd"
+      ]
+    },
+    {
+      "tag" : "float_10",
+      "description" : "variance as scalar",
+      "settings" : [
+        {
+          "parameter" : "Variance",
+          "type" : "double",
+          "dim_vec" : 1,
+          "value" : [
+            10,
+            10,
+            10
+          ]
+        },
+        {
+          "parameter" : "UseImageSpacing",
+          "value" : "true",
+          "python_value" : "True",
+          "R_value" : "TRUE"
+        }
+      ],
+      "tolerance" : 0.0001,
+      "inputs" : [
+        "Input/cthead1-Float.mha"
+      ]
+    },
+    {
+      "tag" : "float_dx",
+      "description" : "derivative in x",
+      "settings" : [
+        {
+          "parameter" : "Order",
+          "type" : "unsigned int",
+          "dim_vec" : 1,
+          "value" : [
+            1,
+            0,
+            0
+          ]
+        }
+      ],
+      "tolerance" : 0.0001,
+      "inputs" : [
+        "Input/RA-Float.nrrd"
+      ]
+    },
+    {
+      "tag" : "float_dy2",
+      "description" : "2nd derivative",
+      "settings" : [
+        {
+          "parameter" : "Order",
+          "type" : "unsigned int",
+          "dim_vec" : 1,
+          "value" : [
+            0,
+            2,
+            0
+          ]
+        }
+      ],
+      "tolerance" : 0.0001,
+      "inputs" : [
+        "Input/RA-Float.nrrd"
+      ]
+    }
+  ],
   "briefdescription" : "Calculates image derivatives using discrete derivative gaussian kernels. This filter calculates Gaussian derivative by separable convolution of an image and a discrete Gaussian derivative operator (kernel).\n",
   "detaileddescription" : "The Gaussian operators used here were described by Tony Lindeberg (Discrete Scale-Space Theory and the Scale-Space Primal Sketch. Dissertation. Royal Institute of Technology, Stockholm, Sweden. May 1991.)\nThe variance or standard deviation (sigma) will be evaluated as pixel units if SetUseImageSpacing is off (false) or as physical units if SetUseImageSpacing is on (true, default). The variance can be set independently in each dimension.\nWhen the Gaussian kernel is small, this filter tends to run faster than itk::RecursiveGaussianImageFilter.\n\\author Ivan Macia, VICOMTech, Spain,http://www.vicomtech.es\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/1290\n\\see  GaussianDerivativeOperator\n\\see \n\\see  Image\n\\see \n\\see  Neighborhood\n\\see \n\\see  NeighborhoodOperator\n\n"
 }
