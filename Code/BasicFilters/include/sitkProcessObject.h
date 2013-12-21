@@ -21,7 +21,6 @@
 #include "sitkMacro.h"
 #include "sitkBasicFilters.h"
 #include "sitkNonCopyable.h"
-#include "sitkObserverBase.h"
 
 namespace itk {
 
