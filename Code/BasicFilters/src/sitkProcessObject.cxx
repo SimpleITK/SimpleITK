@@ -16,7 +16,6 @@
 *
 *=========================================================================*/
 #include "sitkProcessObject.h"
-#include "sitkBasicFilterWatcher.h"
 
 #include "itkProcessObject.h"
 
