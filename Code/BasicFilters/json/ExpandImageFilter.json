@@ -54,11 +54,7 @@
           "parameter" : "ExpandFactors",
           "type" : "unsigned int",
           "dim_vec" : 1,
-          "value" : "{2,3}",
-          "tcl_value" : "[list 2 3]",
-          "python_value" : "[ 2, 3 ]",
-          "ruby_value" : "[ 2, 3 ]",
-          "R_value" : "c( 2, 3 )"
+          "value" : [2,3]
         }
       ],
       "inputs" : [

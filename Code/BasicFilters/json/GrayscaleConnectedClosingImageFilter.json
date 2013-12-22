@@ -44,11 +44,7 @@
           "parameter" : "Seed",
           "type" : "uint32_t",
           "dim_vec" : 1,
-          "value" : "{142,170}",
-          "tcl_value" : "[list 142 170]",
-          "python_value" : "[ 142, 170 ]",
-          "ruby_value" : "[ 142, 170 ]",
-          "R_value" : "c( 142, 170 )"
+          "value" : [142,170]
         }
       ],
       "md5hash" : "86e55f748ca0719fda1ee360b823dd67",

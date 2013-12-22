@@ -39,11 +39,7 @@
           "parameter" : "Layout",
           "type" : "unsigned int",
           "dim_vec" : 1,
-          "value" : "{2,2}",
-          "tcl_value" : "[list 2 2]",
-          "python_value" : "[ 2, 2 ]",
-          "ruby_value" : "[ 2, 2 ]",
-          "R_value" : "c( 2, 2 )"
+          "value" : [2,2]
         }
       ],
       "md5hash" : "f3015eeed7d0370ba93bdf1bd6630ae0",

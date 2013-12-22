@@ -132,7 +132,15 @@ elseif dim_vec == 1 then
           OUT="long"
         else
           OUT="${type}"
-        end) v[] = $(if java_value then OUT='${java_value}' else OUT='${value}' end);
+        end) v[] = $(if java_value then
+          OUT=OUT..java_value
+          else
+            OUT=OUT..'{'
+            for i=1,#value-1 do
+              OUT=OUT..value[i]..", "
+            end
+          OUT=OUT..value[#value]..'}'
+          end);
         $(if type == "bool" then
           OUT="VectorBool idx = new VectorBool( v.length );"
         elseif type == "unsigned int" then
