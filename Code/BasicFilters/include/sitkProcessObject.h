@@ -22,6 +22,8 @@
 #include "sitkBasicFilters.h"
 #include "sitkNonCopyable.h"
 
+#include <iostream>
+
 namespace itk {
 
 #ifndef SWIG
