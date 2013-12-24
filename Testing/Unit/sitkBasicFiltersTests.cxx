@@ -287,8 +287,8 @@ TEST(BasicFilters,ProcessObject_NumberOfThreads) {
   sitk::ProcessObject &filter = caster;
 
   unsigned int gNum = filter.GetGlobalDefaultNumberOfThreads();
-  EXPECT_NE(filter.GetGlobalDefaultNumberOfThreads(), 0);
-  EXPECT_NE(filter.GetNumberOfThreads(), 0);
+  EXPECT_NE(filter.GetGlobalDefaultNumberOfThreads(), 0u);
+  EXPECT_NE(filter.GetNumberOfThreads(), 0u);
   EXPECT_EQ(filter.GetNumberOfThreads(), filter.GetGlobalDefaultNumberOfThreads());
 
   filter.SetNumberOfThreads(3);
