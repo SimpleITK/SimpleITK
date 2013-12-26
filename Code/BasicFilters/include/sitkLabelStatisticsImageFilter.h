@@ -102,6 +102,16 @@ namespace itk {
       LabelStatisticsMap GetLabelStatisticsMap( ) const;
     private:
 
+      /**
+       * These methods are used to instantiate and register member functions
+       * with the factory. Each function is split into a separate file to
+       * make the compilation units smaller, and take less time to compile.
+       * @{
+       */
+      void RegisterMemberFactory2();
+      void RegisterMemberFactory3();
+      /** @} */
+
       typedef Image (Self::*MemberFunctionType)( const Image&, const Image& );
       template <class TImageType, class TLabelImageType> Image DualExecuteInternal ( const Image& image, const Image& labels );
 

@@ -24,6 +24,8 @@ set ( SimpleITKBasicFiltersSource
   sitkProcessObject.cxx
   sitkImageFilter.cxx
   sitkLabelStatisticsImageFilter.cxx
+  sitkLabelStatisticsImageFilter-2.cxx
+  sitkLabelStatisticsImageFilter-3.cxx
   sitkMeasurementMap.cxx
   sitkStatisticsImageFilter.cxx
 )
