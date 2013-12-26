@@ -18,14 +18,14 @@
 #include "sitkImageFilter.h"
 #include "sitkImageFilterExecuteBase.hxx"
 
+#include "itkProcessObject.h"
+
+#include <iostream>
+
+
+
 namespace itk {
 namespace simple {
-
-namespace
-{
-static bool GlobalDefaultDebug = false;
-}
-
 //----------------------------------------------------------------------------
 
 //
@@ -33,84 +33,16 @@ static bool GlobalDefaultDebug = false;
 //
 template< unsigned int N >
 ImageFilter< N >::ImageFilter ()
-  : m_Debug(GlobalDefaultDebug)
-  {
-  }
+{
+}
 
 //
 // Default destructor
 //
 template< unsigned int N >
 ImageFilter< N >::~ImageFilter ()
-  {
-  }
-
-template< unsigned int N >
-std::ostream & ImageFilter< N >::ToStringHelper(std::ostream &os, const char &v)
 {
-  os << int(v);
-  return os;
 }
-
-template< unsigned int N >
-std::ostream & ImageFilter< N >::ToStringHelper(std::ostream &os, const signed char &v)
-{
-  os << int(v);
-  return os;
-}
-
-template< unsigned int N >
-std::ostream & ImageFilter< N >::ToStringHelper(std::ostream &os, const unsigned char &v)
-{
-  os << int(v);
-  return os;
-}
-
-
-template< unsigned int N > void ImageFilter< N >::DebugOn()
-{
-  this->m_Debug = true;
-}
-
-template< unsigned int N > void ImageFilter< N >::DebugOff()
-{
-  this->m_Debug = false;
-}
-
-template< unsigned int N > bool ImageFilter< N >::GetDebug() const
-{
-  return this->m_Debug;
-}
-
-
-template< unsigned int N > void ImageFilter< N >::SetDebug( bool debugFlag)
-{
-  this->m_Debug = debugFlag;
-}
-
-
-template< unsigned int N > void ImageFilter< N >::GlobalDefaultDebugOn()
-{
-  GlobalDefaultDebug = true;
-}
-
-template< unsigned int N > void ImageFilter< N >::GlobalDefaultDebugOff()
-
-{
-  GlobalDefaultDebug = false;
-}
-
-template< unsigned int N > bool ImageFilter< N >::GetGlobalDefaultDebug()
-{
-  return GlobalDefaultDebug;
-}
-
-template< unsigned int N > void ImageFilter< N >::SetGlobalDefaultDebug(bool debugFlag)
-{
-  GlobalDefaultDebug = debugFlag;
-}
-
-
 
 template class ImageFilter<0>;
 template class ImageFilter<1>;

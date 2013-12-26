@@ -18,6 +18,7 @@
 #ifndef __sitkImageFilterExecuteBase_h
 #define  __sitkImageFilterExecuteBase_h
 
+#include "sitkProcessObject.h"
 #include "sitkImage.h"
 
 namespace itk {
@@ -32,42 +33,42 @@ namespace itk {
 
   /** \cond SPECIALIZATION_IMPLEMENTATION */
   template <>
-  struct SITKBasicFilters0_EXPORT ImageFilterExecuteBase<0>
+  struct SITKBasicFilters0_EXPORT ImageFilterExecuteBase<0> : public itk::simple::ProcessObject
   {
     virtual ~ImageFilterExecuteBase();
     virtual Image Execute( void ) = 0;
   };
 
   template <>
-  struct SITKBasicFilters0_EXPORT ImageFilterExecuteBase<1>
+  struct SITKBasicFilters0_EXPORT ImageFilterExecuteBase<1> : public ProcessObject
   {
     virtual ~ImageFilterExecuteBase();
     virtual Image Execute( const Image & ) = 0;
   };
 
   template <>
-  struct SITKBasicFilters0_EXPORT ImageFilterExecuteBase<2>
+  struct SITKBasicFilters0_EXPORT ImageFilterExecuteBase<2> : public ProcessObject
   {
     virtual ~ImageFilterExecuteBase();
     virtual Image Execute( const Image &, const Image & ) = 0;
   };
 
   template <>
-  struct SITKBasicFilters0_EXPORT ImageFilterExecuteBase<3>
+  struct SITKBasicFilters0_EXPORT ImageFilterExecuteBase<3> : public ProcessObject
   {
     virtual ~ImageFilterExecuteBase();
     virtual Image Execute( const Image &, const Image &, const Image & ) = 0;
   };
 
   template <>
-  struct SITKBasicFilters0_EXPORT ImageFilterExecuteBase<4>
+  struct SITKBasicFilters0_EXPORT ImageFilterExecuteBase<4> : public ProcessObject
   {
     virtual ~ImageFilterExecuteBase();
     virtual Image Execute( const Image &, const Image &, const Image &, const Image & ) = 0;
   };
 
   template <>
-  struct SITKBasicFilters0_EXPORT ImageFilterExecuteBase<5>
+  struct SITKBasicFilters0_EXPORT ImageFilterExecuteBase<5> : public ProcessObject
   {
     virtual ~ImageFilterExecuteBase();
     virtual Image Execute( const Image &, const Image &, const Image &, const Image &, const Image & ) = 0;

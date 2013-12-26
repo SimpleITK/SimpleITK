@@ -238,11 +238,20 @@ TEST(BasicFilter,CurvatureAnisotropicDiffusion_EstimateOptimalTimeStep) {
 
 }
 
-TEST(BasicFilters,ImageFilterBase) {
+TEST(BasicFilters,ImageFilter) {
   namespace sitk = itk::simple;
 
   sitk::CastImageFilter caster;
   sitk::ImageFilter<1> &filter = caster;
+
+  filter.DebugOn();
+}
+
+TEST(BasicFilters,ProcessObject_Debug) {
+  namespace sitk = itk::simple;
+
+  sitk::CastImageFilter caster;
+  sitk::ProcessObject &filter = caster;
 
   EXPECT_FALSE(filter.GetGlobalDefaultDebug());
   EXPECT_FALSE(filter.GetDebug());
@@ -269,6 +278,30 @@ TEST(BasicFilters,ImageFilterBase) {
   EXPECT_TRUE(caster2.GetDebug());
   EXPECT_TRUE(caster2.GetGlobalDefaultDebug());
 
+}
+
+TEST(BasicFilters,ProcessObject_NumberOfThreads) {
+  namespace sitk = itk::simple;
+
+  sitk::CastImageFilter caster;
+  sitk::ProcessObject &filter = caster;
+
+  unsigned int gNum = filter.GetGlobalDefaultNumberOfThreads();
+  EXPECT_NE(filter.GetGlobalDefaultNumberOfThreads(), 0u);
+  EXPECT_NE(filter.GetNumberOfThreads(), 0u);
+  EXPECT_EQ(filter.GetNumberOfThreads(), filter.GetGlobalDefaultNumberOfThreads());
+
+  filter.SetNumberOfThreads(3);
+  EXPECT_EQ(3u, filter.GetNumberOfThreads());
+  EXPECT_EQ(gNum, filter.GetGlobalDefaultNumberOfThreads());
+
+  filter.SetGlobalDefaultNumberOfThreads(gNum+1);
+  EXPECT_EQ(gNum+1, filter.GetGlobalDefaultNumberOfThreads());
+  EXPECT_EQ(3u, filter.GetNumberOfThreads());
+
+  sitk::CastImageFilter caster2;
+  EXPECT_EQ(gNum+1, caster2.GetNumberOfThreads());
+  EXPECT_EQ(gNum+1, caster2.GetGlobalDefaultNumberOfThreads());
 }
 
 TEST(BasicFilters,Cast) {

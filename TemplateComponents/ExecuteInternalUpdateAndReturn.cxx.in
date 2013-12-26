@@ -1,9 +1,5 @@
 
-  if (this->GetDebug())
-     {
-     std::cout << "Executing ITK filter:" << std::endl;
-     std::cout << filter;
-     }
+  this->PreUpdate( filter.GetPointer() );
 
   // Run the ITK filter and return the output as a SimpleITK image
   filter->Update();
