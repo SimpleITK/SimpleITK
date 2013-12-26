@@ -11,6 +11,22 @@ set_source_files_properties ( ${SimpleITKBasicFiltersGeneratedSource} PROPERTIES
 set ( ITK_NO_IO_FACTORY_REGISTER_MANAGER 1 )
 include ( ${ITK_USE_FILE} )
 
+# common source which all basic filter libraries need to be linked against
+set ( SimpleITKBasicFilters0Source
+  sitkProcessObject.cxx
+  sitkImageFilter.cxx
+  sitkMeasurementMap.cxx
+)
+
+add_library ( SimpleITKBasicFilters0 ${SimpleITKBasicFilters0Source} )
+target_link_libraries ( SimpleITKBasicFilters0 SimpleITKCommon ${ITK_LIBRARIES} )
+set_target_properties( SimpleITKBasicFilters0  PROPERTIES SKIP_BUILD_RPATH TRUE )
+sitk_install_exported_target( SimpleITKBasicFilters0 )
+
+# append this new library to the globally cached list
+list ( APPEND SimpleITK_LIBRARIES SimpleITKBasicFilters0 )
+set ( SimpleITK_LIBRARIES ${SimpleITK_LIBRARIES} CACHE INTERNAL "" )
+
 
 set ( SimpleITKBasicFiltersSource
   sitkCastImageFilter-2.cxx
@@ -21,27 +37,17 @@ set ( SimpleITKBasicFiltersSource
   sitkCastImageFilter-3v.cxx
   sitkCastImageFilter.cxx
   sitkHashImageFilter.cxx
-  sitkProcessObject.cxx
-  sitkImageFilter.cxx
   sitkLabelStatisticsImageFilter.cxx
-  sitkMeasurementMap.cxx
+  sitkLabelStatisticsImageFilter-2.cxx
+  sitkLabelStatisticsImageFilter-3.cxx
+  sitkLabelStatisticsImageFilter.cxx
   sitkStatisticsImageFilter.cxx
 )
-
-add_library ( SimpleITKBasicFilters0 ${SimpleITKBasicFiltersSource} )
-target_link_libraries ( SimpleITKBasicFilters0 SimpleITKCommon ${ITK_LIBRARIES} )
-set_target_properties( SimpleITKBasicFilters0  PROPERTIES SKIP_BUILD_RPATH TRUE )
-sitk_install_exported_target( SimpleITKBasicFilters0 )
-
-# append this new library to the globally cached list
-list ( APPEND SimpleITK_LIBRARIES SimpleITKBasicFilters0 )
-set ( SimpleITK_LIBRARIES ${SimpleITK_LIBRARIES} CACHE INTERNAL "" )
-
 # sort the list to en-sure the same list across platforms
 list ( SORT SimpleITKBasicFiltersGeneratedSource )
 
-# add additional files which may depend on others
-set ( SimpleITKBasicFiltersSource ${SimpleITKBasicFiltersGeneratedSource} )
+# add additional files which may depend on Filters0
+list ( APPEND SimpleITKBasicFiltersSource ${SimpleITKBasicFiltersGeneratedSource} )
 list ( APPEND SimpleITKBasicFiltersSource sitkAdditionalProcedures.cxx )
 
 list ( LENGTH SimpleITKBasicFiltersSource _length )
