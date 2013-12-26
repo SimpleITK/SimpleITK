@@ -21,6 +21,7 @@
 #include "sitkMacro.h"
 #include "sitkBasicFilters.h"
 #include "sitkNonCopyable.h"
+#include "sitkTemplateFunctions.h"
 
 #include <iostream>
 
