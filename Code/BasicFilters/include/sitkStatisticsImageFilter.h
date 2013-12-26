@@ -29,7 +29,7 @@ namespace itk {
      *
      * \sa itk::simple::Statistics for the procedural interface
      */
-    class SITKBasicFilters0_EXPORT StatisticsImageFilter : public ImageFilter<1> {
+    class SITKBasicFilters_EXPORT StatisticsImageFilter : public ImageFilter<1> {
     public:
       typedef StatisticsImageFilter Self;
 

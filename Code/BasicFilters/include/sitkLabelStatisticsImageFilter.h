@@ -38,7 +38,7 @@ namespace itk {
      *
      * \sa itk::simple::LabelStatistics for the procedural interface
      */
-    class SITKBasicFilters0_EXPORT  LabelStatisticsImageFilter
+    class SITKBasicFilters_EXPORT  LabelStatisticsImageFilter
       : public ImageFilter<2> {
     public:
       typedef LabelStatisticsImageFilter       Self;
