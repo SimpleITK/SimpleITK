@@ -49,8 +49,11 @@ enum TransformEnum { sitkIdentity,
                      sitkTranslation,
                      sitkScale,
                      sitkScaleLogarithmic,
+                     sitkEuler,
+                     sitkSimularity,
                      sitkQuaternionRigid,
                      sitkVersor,
+                     sitkVersorRigid,
                      sitkAffine,
                      sitkComposite };
 

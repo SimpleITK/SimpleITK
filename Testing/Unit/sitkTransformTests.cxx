@@ -48,6 +48,16 @@ TEST(TransformTest, Construction) {
   sitk::Transform tx7( 3, sitk::sitkScaleLogarithmic);
   std::cout << tx7.ToString() << std::endl;
 
+  sitk::Transform tx_0( 2, sitk::sitkEuler);
+  std::cout << tx_0.ToString() << std::endl;
+  sitk::Transform tx_1( 3, sitk::sitkEuler);
+  std::cout << tx_1.ToString() << std::endl;
+
+  sitk::Transform tx_2( 2, sitk::sitkSimularity);
+  std::cout << tx_2.ToString() << std::endl;
+  sitk::Transform tx_3( 3, sitk::sitkSimularity);
+  std::cout << tx_3.ToString() << std::endl;
+
   EXPECT_ANY_THROW( sitk::Transform tx8( 2, sitk::sitkQuaternionRigid) );
   sitk::Transform tx9( 3, sitk::sitkQuaternionRigid);
   std::cout << tx9.ToString() << std::endl;
@@ -56,9 +66,8 @@ TEST(TransformTest, Construction) {
   sitk::Transform tx11( 3, sitk::sitkVersor);
   std::cout << tx11.ToString() << std::endl;
 
-  sitk::Transform tx12( 2, sitk::sitkAffine);
-  std::cout << tx12.ToString() << std::endl;
-  sitk::Transform tx13( 3, sitk::sitkAffine);
+  EXPECT_ANY_THROW( sitk::Transform tx12( 2, sitk::sitkVersorRigid) );
+  sitk::Transform tx13( 3, sitk::sitkVersorRigid);
   std::cout << tx13.ToString() << std::endl;
 
   sitk::Transform tx14( 2, sitk::sitkAffine);
@@ -66,10 +75,15 @@ TEST(TransformTest, Construction) {
   sitk::Transform tx15( 3, sitk::sitkAffine);
   std::cout << tx15.ToString() << std::endl;
 
+  sitk::Transform tx16( 2, sitk::sitkAffine);
+  std::cout << tx16.ToString() << std::endl;
+  sitk::Transform tx17( 3, sitk::sitkAffine);
+  std::cout << tx17.ToString() << std::endl;
+
 
   // default constructable
-  sitk::Transform tx16;
-  std::cout << tx0.ToString() << std::endl;
+  sitk::Transform tx18;
+  std::cout << tx18.ToString() << std::endl;
 }
 
 TEST(TransformTest, Copy) {
@@ -106,6 +120,22 @@ TEST(TransformTest, SetGetParameters) {
   EXPECT_EQ( tx.GetParameters().size(), 3u );
   EXPECT_TRUE( tx.GetFixedParameters().empty() );
 
+  tx = sitk::Transform( 2, sitk::sitkEuler );
+  EXPECT_EQ( tx.GetParameters().size(), 3u );
+  EXPECT_EQ( tx.GetFixedParameters().size(), 2u );
+
+  tx = sitk::Transform( 3, sitk::sitkEuler );
+  EXPECT_EQ( tx.GetParameters().size(), 6u );
+  EXPECT_EQ( tx.GetFixedParameters().size(), 3u );
+
+  tx = sitk::Transform( 2, sitk::sitkSimularity );
+  EXPECT_EQ( tx.GetParameters().size(), 4u );
+  EXPECT_EQ( tx.GetFixedParameters().size(), 2u );
+
+  tx = sitk::Transform( 3, sitk::sitkSimularity );
+  EXPECT_EQ( tx.GetParameters().size(), 7u );
+  EXPECT_EQ( tx.GetFixedParameters().size(), 3u );
+
   tx = sitk::Transform( 3, sitk::sitkQuaternionRigid );
   EXPECT_EQ( tx.GetParameters().size(), 7u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 3u );
@@ -114,10 +144,13 @@ TEST(TransformTest, SetGetParameters) {
   EXPECT_EQ( tx.GetParameters().size(), 3u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 3u );
 
+  tx = sitk::Transform( 3, sitk::sitkVersorRigid );
+  EXPECT_EQ( tx.GetParameters().size(), 6u );
+  EXPECT_EQ( tx.GetFixedParameters().size(), 3u );
+
   tx = sitk::Transform( 2, sitk::sitkAffine );
   EXPECT_EQ( tx.GetParameters().size(), 6u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 2u );
-
 
 
 }

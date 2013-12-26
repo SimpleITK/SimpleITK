@@ -25,8 +25,13 @@
 #include "itkTranslationTransform.h"
 #include "itkScaleTransform.h"
 #include "itkScaleLogarithmicTransform.h"
+#include "itkSimilarity2DTransform.h"
+#include "itkSimilarity3DTransform.h"
+#include "itkEuler2DTransform.h"
+#include "itkEuler3DTransform.h"
 #include "itkQuaternionRigidTransform.h"
 #include "itkVersorTransform.h"
+#include "itkVersorRigid3DTransform.h"
 #include "itkAffineTransform.h"
 #include "itkCompositeTransform.h"
 
@@ -44,6 +49,37 @@
 #error "No system tr1 type traits available"
 #endif
 #endif
+
+namespace
+{
+
+//
+// Transform trait class to map to correct special transform type.
+template<class T, unsigned int ImageDimension>
+class TransformTraits
+{
+public:
+  // undefined types for non-2D/3D
+};
+
+template<class T>
+class TransformTraits<T,2>
+{
+public:
+  typedef itk::Euler2DTransform<T>  EulerTransformType;
+  typedef itk::Similarity2DTransform<T>  SimilarityTransformType;
+};
+
+template<class T>
+class TransformTraits<T,3>
+{
+public:
+  typedef itk::Euler3DTransform<T>  EulerTransformType;
+  typedef itk::Similarity3DTransform<T>  SimilarityTransformType;
+};
+
+
+}
 
 namespace itk
 {
@@ -270,7 +306,7 @@ Transform::Transform( )
   {
     if ( dimensions == 2 )
       {
-      this->InternalInitialization<2 >(type);
+      this->InternalInitialization<2>(type);
       }
     else if ( dimensions == 3 )
       {
@@ -329,6 +365,12 @@ void Transform::MakeUniqueForWrite( void )
       case sitkScaleLogarithmic:
         m_PimpleTransform = new PimpleTransform<itk::ScaleLogarithmicTransform< double, VDimension > >();
         break;
+      case sitkEuler:
+        m_PimpleTransform = new PimpleTransform<typename TransformTraits<double,VDimension>::EulerTransformType>();
+        break;
+      case sitkSimularity:
+        m_PimpleTransform = new PimpleTransform<typename TransformTraits<double,VDimension>::SimilarityTransformType>();
+        break;
       case sitkQuaternionRigid:
         if( VDimension != 3)
           {
@@ -344,6 +386,14 @@ void Transform::MakeUniqueForWrite( void )
           }
 
         m_PimpleTransform = new PimpleTransform<itk::VersorTransform< double > >();
+        break;
+      case sitkVersorRigid:
+        if( VDimension != 3)
+          {
+          sitkExceptionMacro( "A sitkVersorRigid Transform only works for 3D!");
+          }
+
+        m_PimpleTransform = new PimpleTransform<itk::VersorRigid3DTransform< double > >();
         break;
       case sitkAffine:
         m_PimpleTransform = new PimpleTransform<itk::AffineTransform< double, VDimension > >();
