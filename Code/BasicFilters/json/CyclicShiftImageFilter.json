@@ -7,9 +7,10 @@
   "members" : [
     {
       "name" : "Shift",
-      "type" : "std::vector<int>",
+      "type" : "int",
       "default" : "std::vector<int>(3, 0)",
       "dim_vec" : 1,
+      "set_as_scalar" : 1,
       "itk_type" : "typename FilterType::OffsetType",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/get the shift. Shifts may be positive or negative.\n",
@@ -36,11 +37,7 @@
           "parameter" : "Shift",
           "type" : "int",
           "dim_vec" : 1,
-          "value" : "{5,-10,0}",
-          "tcl_value" : "[list 5 -10 0]",
-          "python_value" : "[ 5, -10, 0 ]",
-          "ruby_value" : "[ 5, -10, 0 ]",
-          "R_value" : "c( 5, -10, 0 )"
+          "value" : [5,-10,0]
         }
       ],
       "inputs" : [

@@ -20,15 +20,16 @@
     },
     {
       "name" : "Size",
-      "type" : "std::vector<unsigned int>",
+      "type" : "unsigned int",
       "dim_vec" : 1,
       "default" : "std::vector<unsigned int>(3, 64)",
       "itk_type" : "typename FilterType::SizeType"
     },
     {
       "name" : "Sigma",
-      "type" : "std::vector<double>",
+      "type" : "double",
       "dim_vec" : 1,
+      "set_as_scalar" : 1,
       "default" : "std::vector<double>(3, 16.0)",
       "itk_type" : "typename FilterType::ArrayType",
       "briefdescriptionSet" : "",
@@ -38,8 +39,9 @@
     },
     {
       "name" : "Mean",
-      "type" : "std::vector<double>",
+      "type" : "double",
       "dim_vec" : 1,
+      "set_as_scalar" : 1,
       "default" : "std::vector<double>(3, 32.0)",
       "itk_type" : "typename FilterType::ArrayType",
       "briefdescriptionSet" : "",
@@ -58,14 +60,14 @@
     },
     {
       "name" : "Origin",
-      "type" : "std::vector<double>",
+      "type" : "double",
       "dim_vec" : 1,
       "default" : "std::vector<double>(3, 0.0)",
       "itk_type" : "typename FilterType::PointType"
     },
     {
       "name" : "Spacing",
-      "type" : "std::vector<double>",
+      "type" : "double",
       "dim_vec" : 1,
       "default" : "std::vector<double>(3, 1.0)",
       "itk_type" : "typename FilterType::SpacingType"

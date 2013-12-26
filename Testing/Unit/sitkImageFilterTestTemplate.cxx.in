@@ -186,7 +186,12 @@ $(foreach settings
   $(for i=1,#value do OUT=OUT .. "{unsigned int __point[] = " .. value[i] .. "; filter.AddTrialPoint( std::vector<unsigned int>(__point, __point + inputs[0].GetDimension()) );}" end);'
   elseif dim_vec and dim_vec == 1 then
   OUT='{\
-  ${type} arr[] = ${value};\
+  ${type} arr[] = {'
+  for i=1,#value-1 do
+    OUT=OUT..value[i]..", "
+  end
+  OUT=OUT..value[#value]
+  OUT=OUT..'};\
   std::vector< ${type} > vec(arr, arr + sizeof(arr)/sizeof(${type}));\
   filter.Set${parameter} ( vec );\
   for(unsigned int i = 0; i < filter.Get${parameter}().size(); ++i)\

@@ -8,7 +8,7 @@
   "members" : [
     {
       "name" : "SourceSize",
-      "type" : "std::vector<unsigned int>",
+      "type" : "unsigned int",
       "default" : "std::vector<unsigned int>(3, 1)",
       "dim_vec" : 1,
       "itk_type" : "typename InputImageType::SizeType",
@@ -16,7 +16,7 @@
     },
     {
       "name" : "SourceIndex",
-      "type" : "std::vector<int>",
+      "type" : "int",
       "default" : "std::vector<int>(3, 0)",
       "dim_vec" : 1,
       "itk_type" : "typename InputImageType::IndexType",
@@ -24,7 +24,7 @@
     },
     {
       "name" : "DestinationIndex",
-      "type" : "std::vector<int>",
+      "type" : "int",
       "default" : "std::vector<int>(3, 0)",
       "dim_vec" : 1,
       "itk_type" : "typename InputImageType::IndexType",
@@ -44,11 +44,7 @@
           "parameter" : "SourceSize",
           "type" : "unsigned int",
           "dim_vec" : 1,
-          "value" : "{200, 150}",
-          "tcl_value" : "[list 200 150]",
-          "python_value" : "[ 200, 150 ]",
-          "ruby_value" : "[ 200, 150 ]",
-          "R_value" : "c( 200, 150 )"
+          "value" : [200, 150]
         }
       ],
       "inputs" : [
@@ -65,11 +61,7 @@
           "parameter" : "SourceSize",
           "type" : "unsigned int",
           "dim_vec" : 1,
-          "value" : "{179, 240}",
-          "tcl_value" : "[list 179 240]",
-          "python_value" : "[ 179, 240 ]",
-          "ruby_value" : "[ 179, 240 ]",
-          "R_value" : "c( 179, 240 )"
+          "value" : [179, 240]
         }
       ],
       "inputs" : [
@@ -86,31 +78,19 @@
           "parameter" : "SourceSize",
           "type" : "unsigned int",
           "dim_vec" : 1,
-          "value" : "{20, 15}",
-          "tcl_value" : "[list 20 15]",
-          "python_value" : "[ 20, 15 ]",
-          "ruby_value" : "[ 20, 15 ]",
-          "R_value" : "c( 20, 15 )"
+          "value" : [20, 15]
         },
         {
           "parameter" : "SourceIndex",
           "type" : "int",
           "dim_vec" : 1,
-          "value" : "{100, 100}",
-          "tcl_value" : "[list 100 100]",
-          "python_value" : "[ 100, 100 ]",
-          "ruby_value" : "[ 100, 100 ]",
-          "R_value" : "c( 100, 100 )"
+          "value" : [100, 100]
         },
         {
           "parameter" : "DestinationIndex",
           "type" : "int",
           "dim_vec" : 1,
-          "value" : "{100, 100}",
-          "tcl_value" : "[list 100 100]",
-          "python_value" : "[ 100, 100 ]",
-          "ruby_value" : "[ 100, 100 ]",
-          "R_value" : "c( 100, 100 )"
+          "value" : [100, 100]
         }
       ],
       "inputs" : [

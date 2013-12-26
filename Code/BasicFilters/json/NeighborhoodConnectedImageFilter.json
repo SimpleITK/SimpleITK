@@ -28,10 +28,11 @@
     },
     {
       "name" : "Radius",
-      "type" : "std::vector<unsigned int>",
+      "type" : "unsigned int",
       "default" : "std::vector<unsigned int>(3, 1)",
       "doc" : "Radius of the neighborhood used to compute the median",
       "dim_vec" : 1,
+      "set_as_scalar" : 1,
       "itk_type" : "typename InputImageType::SizeType",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set the radius of the neighborhood used for a mask.\n",
@@ -96,13 +97,7 @@
           "parameter" : "Radius",
           "dim_vec" : 1,
           "type" : "unsigned int",
-          "value" : "{5,5}",
-          "java_value" : "{5,5}",
-          "tcl_value" : "[list 5 5]",
-          "python_value" : "[5,5]",
-          "lua_value" : "{5,5}",
-          "ruby_value" : "[5,5]",
-          "R_value" : "c(5,5)"
+          "value" : [5,5]
         }
       ],
       "inputs" : [

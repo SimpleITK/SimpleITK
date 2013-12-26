@@ -29,13 +29,22 @@ $(if (not no_set_method) or (no_set_method == 0) then
       OUT= OUT .. '\
        */\
       Self& Set${name} ('
-     if not type and enum then
+      if not type and enum then
         OUT=OUT..' ${name}Type'
+      elseif dim_vec and (dim_vec == 1) then
+        OUT=OUT..' const std::vector<${type}> &'
       else
         OUT=OUT..' ${type}'
       end
       OUT=OUT..' ${name} ) { this->m_${name} = ${name}; return *this; }'
-  if type == "bool" then
+  if dim_vec and ( set_as_scalar == 1 ) then
+    OUT = OUT .. '\
+\
+      /** Set the values of the ${name} vector all to value */\
+      Self& Set${name}( ${type} value ) { this->m_${name} = std::vector<${type}>(3, value); return *this; }\
+'
+  end
+  if type == "bool" and ( not dim_vec or not dim_vec == 1 ) then
       OUT = OUT .. '\
 \
       /** Set the value of ${name} to true or false respectfully. */\
@@ -59,6 +68,8 @@ $(if (not no_get_method) or (no_get_method == 0) then
        '
       if not type and enum then
         OUT=OUT..' ${name}Type'
+      elseif dim_vec and (dim_vec == 1) then
+        OUT=OUT..' std::vector<${type}>'
       else
         OUT=OUT..' ${type}'
       end

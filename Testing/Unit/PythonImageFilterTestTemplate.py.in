@@ -66,9 +66,19 @@ elseif parameter == "TrialPoints" and python_value then
 elseif parameter == "TrialPoints" then
     OUT=[[  filter.ClearTrialPoints()
     filter$(for i=1,#value do OUT=OUT .. ".AddTrialPoint( " .. value[i] .. " )" end)]]
+elseif python_value then
+OUT=[[
+    filter.Set${parameter}( ${python_value} )]]
+elseif dim_vec and dim_vec==1 then
+OUT=[[
+    filter.Set${parameter}( ( ]]
+  for i=1,#value-1 do
+    OUT=OUT..value[i]..", "
+  end
+  OUT=OUT..value[#value]..' ) )'
 else
 OUT=[[
-    filter.Set${parameter}( $(if python_value then OUT='${python_value}' else OUT='${value}' end) )]]
+    filter.Set${parameter}( ${value} )]]
 end)
 )
 )

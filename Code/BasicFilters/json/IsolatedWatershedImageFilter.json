@@ -9,7 +9,7 @@
   "members" : [
     {
       "name" : "Seed1",
-      "type" : "std::vector<uint32_t>",
+      "type" : "uint32_t",
       "default" : "std::vector<uint32_t>(3, 0)",
       "dim_vec" : 1,
       "doc" : "",
@@ -21,7 +21,7 @@
     },
     {
       "name" : "Seed2",
-      "type" : "std::vector<uint32_t>",
+      "type" : "uint32_t",
       "default" : "std::vector<uint32_t>(3, 0)",
       "dim_vec" : 1,
       "doc" : "",
@@ -89,21 +89,13 @@
           "parameter" : "Seed1",
           "type" : "uint32_t",
           "dim_vec" : 1,
-          "value" : "{113,84}",
-          "tcl_value" : "[list 113 84]",
-          "python_value" : "[ 113, 84 ]",
-          "ruby_value" : "[ 113, 84 ]",
-          "R_value" : "c( 113, 84 )"
+          "value" : [113,84]
         },
         {
           "parameter" : "Seed2",
           "type" : "uint32_t",
           "dim_vec" : 1,
-          "value" : "{120,99}",
-          "tcl_value" : "[list 120 99]",
-          "python_value" : "[ 120, 99 ]",
-          "ruby_value" : "[ 120, 99 ]",
-          "R_value" : "c( 120, 99 )"
+          "value" : [120,99]
         },
         {
           "parameter" : "Threshold",
