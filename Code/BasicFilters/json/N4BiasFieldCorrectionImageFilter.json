@@ -61,10 +61,11 @@
     },
     {
       "name" : "NumberOfControlPoints",
-      "type" : "std::vector<uint32_t>",
+      "type" : "uint32_t",
       "default" : "std::vector<uint32_t>(3, 4)",
       "doc" : "",
       "dim_vec" : 1,
+      "set_as_scalar" : 1,
       "itk_type" : "typename FilterType::ArrayType",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set the control point grid size defining the B-spline estimate of the scalar bias field. In each dimension, the B-spline mesh size is equal to the number of control points in that dimension minus the spline order. Default = 4 control points in each dimension for a mesh size of 1 in each dimension.\n",

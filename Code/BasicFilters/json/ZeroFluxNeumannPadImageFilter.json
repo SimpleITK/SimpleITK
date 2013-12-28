@@ -7,14 +7,14 @@
   "members" : [
     {
       "name" : "PadLowerBound",
-      "type" : "std::vector<unsigned int>",
+      "type" : "unsigned int",
       "default" : "std::vector<unsigned int>(3, 0)",
       "dim_vec" : 1,
       "itk_type" : "typename InputImageType::SizeType"
     },
     {
       "name" : "PadUpperBound",
-      "type" : "std::vector<unsigned int>",
+      "type" : "unsigned int",
       "default" : "std::vector<unsigned int>(3, 0)",
       "dim_vec" : 1,
       "itk_type" : "typename InputImageType::SizeType"
@@ -39,21 +39,13 @@
           "parameter" : "PadLowerBound",
           "type" : "unsigned int",
           "dim_vec" : 1,
-          "value" : "{5,10,15}",
-          "tcl_value" : "[list 5 10 15]",
-          "python_value" : "[ 5, 10, 15 ]",
-          "ruby_value" : "[ 5, 10, 15 ]",
-          "R_value" : "c( 5, 10, 15 )"
+          "value" : [5,10,15]
         },
         {
           "parameter" : "PadUpperBound",
           "type" : "unsigned int",
           "dim_vec" : 1,
-          "value" : "{3,6,9}",
-          "tcl_value" : "[list 3 6 9]",
-          "python_value" : "[ 3, 6, 9 ]",
-          "ruby_value" : "[ 3, 6, 9 ]",
-          "R_value" : "c( 3, 6, 9 )"
+          "value" : [3,6,9]
         }
       ],
       "inputs" : [

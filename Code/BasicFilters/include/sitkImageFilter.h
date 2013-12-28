@@ -34,7 +34,7 @@ namespace itk {
    * class
    */
   template < unsigned int N>
-  class SITKBasicFilters0_EXPORT ImageFilter:
+  class SITKBasicFilters_EXPORT ImageFilter:
       public ImageFilterExecuteBase<N>
   {
     public:

@@ -32,7 +32,7 @@ namespace itk {
      *
      * \sa itk::simple::Hash for the procedural interface
      */
-    class SITKBasicFilters0_EXPORT HashImageFilter {
+    class SITKBasicFilters_EXPORT HashImageFilter {
     public:
       typedef HashImageFilter Self;
 

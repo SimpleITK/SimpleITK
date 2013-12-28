@@ -20,7 +20,7 @@
   "members" : [
     {
       "name" : "Size",
-      "type" : "std::vector<uint32_t>",
+      "type" : "uint32_t",
       "default" : "std::vector<uint32_t>(3, 0)",
       "dim_vec" : 1,
       "doc" : "",
@@ -54,7 +54,7 @@
     },
     {
       "name" : "OutputOrigin",
-      "type" : "std::vector<double>",
+      "type" : "double",
       "default" : "std::vector<double>(3, 0.0)",
       "dim_vec" : 1,
       "doc" : "",
@@ -66,7 +66,7 @@
     },
     {
       "name" : "OutputSpacing",
-      "type" : "std::vector<double>",
+      "type" : "double",
       "default" : "std::vector<double>(3, 1.0)",
       "dim_vec" : 1,
       "doc" : "",
@@ -130,11 +130,7 @@
           "parameter" : "Size",
           "type" : "uint32_t",
           "dim_vec" : 1,
-          "value" : "{64,64,64}",
-          "tcl_value" : "[list 64 64 64]",
-          "python_value" : "[ 64, 64, 64]",
-          "ruby_value" : "[ 64, 64, 64]",
-          "R_value" : "c( 64, 64, 64)"
+          "value" : [64,64,64]
         }
       ],
       "tolerance" : "0.001",
@@ -150,11 +146,7 @@
           "parameter" : "Size",
           "type" : "uint32_t",
           "dim_vec" : 1,
-          "value" : "{64,64,64}",
-          "tcl_value" : "[list 64 64 64]",
-          "python_value" : "[ 64, 64, 64]",
-          "ruby_value" : "[ 64, 64, 64]",
-          "R_value" : "c( 64, 64, 64)"
+          "value" : [64,64,64]
         },
         {
           "parameter" : "OutputPixelType",
@@ -192,21 +184,14 @@
           "parameter" : "Size",
           "type" : "uint32_t",
           "dim_vec" : 1,
-          "value" : "{512, 512}",
-          "tcl_value" : "[list 512 512 ]",
-          "python_value" : "[ 512, 512]",
-          "ruby_value" : "[ 512, 512]",
-          "R_value" : "c( 512, 512 )"
+          "value" : [512, 512],
+          "tcl_value" : "[list 512 512 ]"
         },
         {
           "parameter" : "OutputSpacing",
           "type" : "double",
           "dim_vec" : 1,
-          "value" : "{0.73, 0.73}",
-          "tcl_value" : "[list 0.73 0.73 ]",
-          "python_value" : "[ 0.73, 0.73]",
-          "ruby_value" : "[ 0.73, 0.73]",
-          "R_value" : "c( 0.73, 0.73 )"
+          "value" : [0.73, 0.73]
         }
       ],
       "tolerance" : "0.001",

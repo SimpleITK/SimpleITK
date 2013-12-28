@@ -10,7 +10,7 @@
     {
       "dim_vec" : 1,
       "name" : "FlipAxes",
-      "type" : "std::vector<bool>",
+      "type" : "bool",
       "default" : "std::vector<bool>(3, false)",
       "doc" : "",
       "itk_type" : "typename FilterType::FlipAxesArrayType",
@@ -49,10 +49,8 @@
           "parameter" : "FlipAxes",
           "type" : "bool",
           "dim_vec" : 1,
-          "value" : "{ true, false, true }",
-          "tcl_value" : "[list 1 0 1]",
-          "python_value" : "[ 1, 0, 1 ]",
-          "ruby_value" : "[ 1, 0, 1 ]",
+          "value" : [ "true", "false", "true" ],
+          "python_value" : "( True, False, True )",
           "R_value" : "c( TRUE, FALSE, TRUE )"
         }
       ],

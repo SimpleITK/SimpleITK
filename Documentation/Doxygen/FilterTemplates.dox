@@ -255,6 +255,11 @@ is a std::vector with size equal to the dimension of the input image. As such,
 it will be printed out correctly and cast to its corresponding ITK type
 correctly
 
+- [OPTIONAL] \b set_as_scalar: (0 or 1) If parameter is a dim_vec,
+  then this method adds an additional set member method to set the
+  variable as a scalar so that all components are the same
+
+
 - [OPTIONAL] \b enum: [ "enum1", "enum2", ... ] Creates a member type
   of the class with the array of strings with a type defined by the
   name of this parameter. This field makes the "type" parameter

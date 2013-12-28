@@ -6,13 +6,13 @@
   "doc" : "",
   "pixel_types" : "BasicPixelIDTypeList",
   "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
-  "public_declarations" : "Self &SetRadius( unsigned int r ) { this->m_Radius = std::vector<unsigned int>(3, r ); return *this; }",
   "members" : [
     {
       "name" : "Radius",
-      "type" : "std::vector<unsigned int>",
+      "type" : "unsigned int",
       "default" : "std::vector<unsigned int>(3, 1)",
       "dim_vec" : 1,
+      "set_as_scalar" : 1,
       "doc" : "",
       "itk_type" : "typename FilterType::RadiusType"
     }
@@ -36,11 +36,7 @@
           "parameter" : "Radius",
           "type" : "unsigned int",
           "dim_vec" : 1,
-          "value" : "{2,3}",
-          "tcl_value" : "[list 2 3]",
-          "python_value" : "[ 2, 3 ]",
-          "ruby_value" : "[ 2, 3 ]",
-          "R_value" : "c( 2, 3 )"
+          "value" : [2,3]
         }
       ],
       "inputs" : [

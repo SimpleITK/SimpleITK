@@ -26,7 +26,7 @@
     },
     {
       "name" : "OutputSize",
-      "type" : "std::vector<uint32_t>",
+      "type" : "uint32_t",
       "default" : "std::vector<uint32_t>(3, 0)",
       "dim_vec" : 1,
       "doc" : "",
@@ -38,7 +38,7 @@
     },
     {
       "name" : "OutputOrigin",
-      "type" : "std::vector<double>",
+      "type" : "double",
       "default" : "std::vector<double>(3, 0.0)",
       "dim_vec" : 1,
       "doc" : "",
@@ -50,7 +50,7 @@
     },
     {
       "name" : "OutputSpacing",
-      "type" : "std::vector<double>",
+      "type" : "double",
       "default" : "std::vector<double>(3, 1.0)",
       "dim_vec" : 1,
       "doc" : "",
@@ -105,21 +105,13 @@
           "parameter" : "OutputSize",
           "type" : "uint32_t",
           "dim_vec" : 1,
-          "value" : "{128,128,128}",
-          "tcl_value" : "[list 128 128 128]",
-          "python_value" : "[ 128, 128, 128]",
-          "ruby_value" : "[ 128, 128, 128]",
-          "R_value" : "c( 128, 128, 128)"
+          "value" : [128,128,128]
         },
         {
           "parameter" : "OutputSpacing",
           "type" : "double",
           "dim_vec" : 1,
-          "value" : "{0.73, 0.73}",
-          "tcl_value" : "[list 0.73 0.73 ]",
-          "python_value" : "[ 0.73, 0.73]",
-          "ruby_value" : "[ 0.73, 0.73]",
-          "R_value" : "c( 0.73, 0.73 )"
+          "value" : [0.73, 0.73]
         }
       ],
       "tolerance" : "0.001",
@@ -136,11 +128,7 @@
           "parameter" : "OutputSize",
           "type" : "uint32_t",
           "dim_vec" : 1,
-          "value" : "{297,371}",
-          "tcl_value" : "[list 297 371]",
-          "python_value" : "[ 297, 371]",
-          "ruby_value" : "[ 297, 371]",
-          "R_value" : "c( 297, 371)"
+          "value" : [297,371]
         },
         {
           "parameter" : "Interpolator",

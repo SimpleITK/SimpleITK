@@ -9,7 +9,7 @@
   "members" : [
     {
       "name" : "ShrinkFactors",
-      "type" : "std::vector<unsigned int>",
+      "type" : "unsigned int",
       "default" : "std::vector<unsigned int>(3, 1)",
       "dim_vec" : 1,
       "doc" : "",
@@ -39,11 +39,7 @@
           "parameter" : "ShrinkFactors",
           "type" : "unsigned int",
           "dim_vec" : 1,
-          "value" : "{2,3}",
-          "tcl_value" : "[list 2 3]",
-          "python_value" : "[ 2, 3 ]",
-          "ruby_value" : "[ 2, 3 ]",
-          "R_value" : "c( 2, 3 )"
+          "value" : [2,3]
         }
       ],
       "inputs" : [

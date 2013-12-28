@@ -7,6 +7,8 @@ OUT=OUT..'\
       '
 if not members[i].type and members[i].enum then
   OUT=OUT..members[i].name..'Type'
+elseif members[i].dim_vec and (members[i].dim_vec == 1) then
+  OUT=OUT..'std::vector<'..members[i].type..'>'
 else
   OUT=OUT..members[i].type
 end
