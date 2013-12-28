@@ -13,7 +13,6 @@ include ( ${ITK_USE_FILE} )
 
 # common source which all basic filter libraries need to be linked against
 set ( SimpleITKBasicFilters0Source
-  sitkProcessObject.cxx
   sitkImageFilter.cxx
   sitkMeasurementMap.cxx
 )
