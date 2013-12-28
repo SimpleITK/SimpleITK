@@ -368,7 +368,7 @@ void Transform::MakeUniqueForWrite( void )
       case sitkEuler:
         m_PimpleTransform = new PimpleTransform<typename TransformTraits<double,VDimension>::EulerTransformType>();
         break;
-      case sitkSimularity:
+      case sitkSimilarity:
         m_PimpleTransform = new PimpleTransform<typename TransformTraits<double,VDimension>::SimilarityTransformType>();
         break;
       case sitkQuaternionRigid:

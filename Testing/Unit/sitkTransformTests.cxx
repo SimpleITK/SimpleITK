@@ -53,9 +53,9 @@ TEST(TransformTest, Construction) {
   sitk::Transform tx_1( 3, sitk::sitkEuler);
   std::cout << tx_1.ToString() << std::endl;
 
-  sitk::Transform tx_2( 2, sitk::sitkSimularity);
+  sitk::Transform tx_2( 2, sitk::sitkSimilarity);
   std::cout << tx_2.ToString() << std::endl;
-  sitk::Transform tx_3( 3, sitk::sitkSimularity);
+  sitk::Transform tx_3( 3, sitk::sitkSimilarity);
   std::cout << tx_3.ToString() << std::endl;
 
   EXPECT_ANY_THROW( sitk::Transform tx8( 2, sitk::sitkQuaternionRigid) );
@@ -128,11 +128,11 @@ TEST(TransformTest, SetGetParameters) {
   EXPECT_EQ( tx.GetParameters().size(), 6u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 3u );
 
-  tx = sitk::Transform( 2, sitk::sitkSimularity );
+  tx = sitk::Transform( 2, sitk::sitkSimilarity );
   EXPECT_EQ( tx.GetParameters().size(), 4u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 2u );
 
-  tx = sitk::Transform( 3, sitk::sitkSimularity );
+  tx = sitk::Transform( 3, sitk::sitkSimilarity );
   EXPECT_EQ( tx.GetParameters().size(), 7u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 3u );
 
