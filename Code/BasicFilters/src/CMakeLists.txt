@@ -11,7 +11,6 @@ set_source_files_properties ( ${SimpleITKBasicFiltersGeneratedSource} PROPERTIES
 set ( ITK_NO_IO_FACTORY_REGISTER_MANAGER 1 )
 include ( ${ITK_USE_FILE} )
 
-
 set ( SimpleITKBasicFiltersSource
   sitkCastImageFilter-2.cxx
   sitkCastImageFilter-2l.cxx
@@ -21,7 +20,6 @@ set ( SimpleITKBasicFiltersSource
   sitkCastImageFilter-3v.cxx
   sitkCastImageFilter.cxx
   sitkHashImageFilter.cxx
-  sitkProcessObject.cxx
   sitkImageFilter.cxx
   sitkLabelStatisticsImageFilter.cxx
   sitkMeasurementMap.cxx
