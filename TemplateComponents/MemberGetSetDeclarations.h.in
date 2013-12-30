@@ -73,7 +73,7 @@ $(if (not no_get_method) or (no_get_method == 0) then
       else
         OUT=OUT..' ${type}'
       end
-      OUT=OUT..' Get${name}() { return this->m_${name}; }'
+      OUT=OUT..' Get${name}() const { return this->m_${name}; }'
 end))$(when measurements $(foreach measurements
 
      /**$(if briefdescriptionGet then OUT=[[ \brief ${briefdescriptionGet}]]end)
@@ -83,5 +83,5 @@ end))$(when measurements $(foreach measurements
       * This is a measurement. Its value is updated in the Execute
       * methods, so the value will only be valid after an execution.
       */
-      ${type} Get${name}() { return this->m_${name}; };
+      ${type} Get${name}() const { return this->m_${name}; };
 ))
