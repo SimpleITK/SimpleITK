@@ -320,6 +320,10 @@ if ( WRAP_CSHARP )
   #
   function(add_csharp_test name csharp_file)
 
+    if ( NOT ${BUILD_EXAMPLES} AND "${name}" MATCHES "^Example." )
+      return()
+    endif()
+
     # the root is with out extension or path
     get_filename_component( CSHARP_EXECUTABLE ${csharp_file} NAME_WE )
 
@@ -387,6 +391,10 @@ if ( WRAP_JAVA )
   #
   function(add_java_test name java_file)
 
+    if ( NOT ${BUILD_EXAMPLES} AND "${name}" MATCHES "^Example." )
+      return()
+    endif()
+
     # the root is with out extension or path, it is also assumed to the the name of the main class
     get_filename_component( _java_class ${java_file} NAME_WE )
     set( _java_file_class "${_java_class}.class" )
@@ -453,6 +461,10 @@ if ( WRAP_PYTHON )
   # This is a function which set up the enviroment for executing python examples and tests
   #
   function(add_python_test name)
+
+    if ( NOT ${BUILD_EXAMPLES} AND "${name}" MATCHES "^Example." )
+      return()
+    endif()
 
     set(command "${PYTHON_EXECUTABLE}")
 
@@ -563,6 +575,10 @@ if ( WRAP_LUA )
   #
   function(add_lua_test name)
 
+    if ( NOT ${BUILD_EXAMPLES} AND "${name}" MATCHES "^Example." )
+      return()
+    endif()
+
     set(command "$<TARGET_FILE:SimpleITKLua>")
 
     # add extra command which may be needed on some systems
@@ -599,6 +615,10 @@ if ( WRAP_RUBY )
   # This is a function which set up the enviroment for executing ruby examples and tests
   #
   function(add_ruby_test name)
+
+    if ( NOT ${BUILD_EXAMPLES} AND "${name}" MATCHES "^Example." )
+      return()
+    endif()
 
     set(command "${RUBY_EXECUTABLE}")
 
@@ -640,6 +660,10 @@ if ( WRAP_TCL )
   #
   function(add_tcl_test name)
 
+    if ( NOT ${BUILD_EXAMPLES} AND "${name}" MATCHES "^Example." )
+      return()
+    endif()
+
 
     set(command "$<TARGET_FILE:SimpleITKTclsh>")
 
@@ -677,6 +701,10 @@ if ( WRAP_R )
   # This is a function which set up the enviroment for executing R examples and tests
   #
   function(add_r_test name)
+
+    if ( NOT ${BUILD_EXAMPLES} AND "${name}" MATCHES "^Example." )
+      return()
+    endif()
 
     set(command "${R_COMMAND}")
 
