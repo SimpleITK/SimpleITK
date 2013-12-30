@@ -361,7 +361,13 @@ include(CTest)
 add_subdirectory ( Utilities )
 add_subdirectory ( Code )
 add_subdirectory ( Wrapping )
-add_subdirectory ( Examples )
+
+# optional examples directory
+option(BUILD_EXAMPLES "Build the Examples directory." ON)
+
+if(BUILD_EXAMPLES)
+  add_subdirectory ( Examples )
+endif()
 
 #------------------------------------------------------------------------------
 # ITK uses KWStyle for checking the coding style
