@@ -173,7 +173,7 @@ private:
 
 };
 
-  SITKBasicFilters0_EXPORT Image Cast ( const Image& image, PixelIDValueEnum pixelID );
+  SITKBasicFilters_EXPORT Image Cast ( const Image& image, PixelIDValueEnum pixelID );
 
 }
 }
