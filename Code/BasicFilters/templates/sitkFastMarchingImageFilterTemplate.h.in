@@ -50,7 +50,7 @@ $(include MemberGetSetDeclarations.h.in)
         }
 
       /** Get trial points */
-      std::vector< std::vector<unsigned int> > GetTrialPoints()
+      std::vector< std::vector<unsigned int> > GetTrialPoints() const
         {
         return this->m_TrialPoints;
         }
