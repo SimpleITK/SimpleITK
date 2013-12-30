@@ -47,7 +47,7 @@ namespace itk {
       return *this;
     }
 
-    std::string ImageFileReader::GetFileName() {
+    std::string ImageFileReader::GetFileName() const {
       return this->m_FileName;
     }
 

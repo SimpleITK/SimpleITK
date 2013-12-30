@@ -63,7 +63,7 @@ namespace itk {
       /** @} */
 
       Self& SetFileName ( std::string fileName );
-      std::string GetFileName();
+      std::string GetFileName() const;
 
       Self& Execute ( const Image& );
       Self& Execute ( const Image& , const std::string &inFileName, bool inUseCompression );

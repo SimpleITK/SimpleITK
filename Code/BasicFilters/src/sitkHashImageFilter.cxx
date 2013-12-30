@@ -57,7 +57,7 @@ namespace itk {
       return out.str();
     }
 
-    HashImageFilter::HashFunction HashImageFilter::GetHashFunction()
+    HashImageFilter::HashFunction HashImageFilter::GetHashFunction() const
     {
       return this->m_HashFunction;
     }

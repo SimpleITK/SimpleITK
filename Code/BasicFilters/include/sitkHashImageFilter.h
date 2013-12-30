@@ -48,7 +48,7 @@ namespace itk {
 
       enum HashFunction { SHA1, MD5 };
       Self& SetHashFunction ( HashFunction hashFunction );
-      HashFunction GetHashFunction ();
+      HashFunction GetHashFunction () const;
 
       /** Name of this class */
       std::string GetName() const { return std::string ( "Hash"); }

@@ -60,7 +60,7 @@ ImageFileWriter& ImageFileWriter::SetFileName ( std::string fn )
   return *this;
   }
 
-std::string ImageFileWriter::GetFileName()
+std::string ImageFileWriter::GetFileName() const
   {
   return this->m_FileName;
   }
