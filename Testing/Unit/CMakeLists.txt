@@ -315,10 +315,10 @@ set( ITK_TEST_DRIVER  "itkTestDriver" )
 if ( WRAP_CSHARP )
 
   #
-  # This is a macro which compiles the program and set up the
+  # This is a function which compiles the program and set up the
   # enviroment for executing CSharp examples and tests.
   #
-  macro(add_csharp_test name csharp_file)
+  function(add_csharp_test name csharp_file)
 
     # the root is with out extension or path
     get_filename_component( CSHARP_EXECUTABLE ${csharp_file} NAME_WE )
@@ -357,7 +357,7 @@ if ( WRAP_CSHARP )
         )
     endif()
 
-  endmacro()
+  endfunction()
 
   #
   # CSharp Examples
@@ -383,9 +383,9 @@ endif ( WRAP_CSHARP )
 if ( WRAP_JAVA )
 
   #
-  # This is a macro which set up the enviroment for executing JAVA examples and tests
+  # This is a function which set up the enviroment for executing JAVA examples and tests
   #
-  macro(add_java_test name java_file)
+  function(add_java_test name java_file)
 
     # the root is with out extension or path, it is also assumed to the the name of the main class
     get_filename_component( _java_class ${java_file} NAME_WE )
@@ -419,7 +419,7 @@ if ( WRAP_JAVA )
       "${_java_class}"
       ${ARGN}
       )
-  endmacro()
+  endfunction()
 
 
   #
@@ -450,9 +450,9 @@ endif ( WRAP_JAVA )
 if ( WRAP_PYTHON )
 
   #
-  # This is a macro which set up the enviroment for executing python examples and tests
+  # This is a function which set up the enviroment for executing python examples and tests
   #
-  macro(add_python_test name)
+  function(add_python_test name)
 
     set(command "${PYTHON_EXECUTABLE}")
 
@@ -468,7 +468,7 @@ if ( WRAP_PYTHON )
       ${command}
       ${ARGN}
       )
-  endmacro()
+  endfunction()
 
   #
   # Python Examples
@@ -559,9 +559,9 @@ endif( WRAP_PYTHON )
 if ( WRAP_LUA )
 
   #
-  # This is a macro which set up the enviroment for executing lua examples and tests
+  # This is a function which set up the enviroment for executing lua examples and tests
   #
-  macro(add_lua_test name)
+  function(add_lua_test name)
 
     set(command "$<TARGET_FILE:SimpleITKLua>")
 
@@ -576,7 +576,7 @@ if ( WRAP_LUA )
       ${command}
       ${ARGN}
       )
-  endmacro()
+  endfunction()
 
 
   #
@@ -596,9 +596,9 @@ endif ( WRAP_LUA )
 if ( WRAP_RUBY )
 
   #
-  # This is a macro which set up the enviroment for executing ruby examples and tests
+  # This is a function which set up the enviroment for executing ruby examples and tests
   #
-  macro(add_ruby_test name)
+  function(add_ruby_test name)
 
     set(command "${RUBY_EXECUTABLE}")
 
@@ -615,7 +615,7 @@ if ( WRAP_RUBY )
       ${command}
       ${ARGN}
       )
-  endmacro()
+  endfunction()
 
 
   #
@@ -636,9 +636,9 @@ endif ( WRAP_RUBY )
 if ( WRAP_TCL )
 
   #
-  # This is a macro which set up the enviroment for executing TCL examples and tests
+  # This is a function which set up the enviroment for executing TCL examples and tests
   #
-  macro(add_tcl_test name)
+  function(add_tcl_test name)
 
 
     set(command "$<TARGET_FILE:SimpleITKTclsh>")
@@ -654,7 +654,7 @@ if ( WRAP_TCL )
       ${command}
       ${ARGN}
       )
-  endmacro()
+  endfunction()
 
 
   #
@@ -674,9 +674,9 @@ endif ( WRAP_TCL )
 if ( WRAP_R )
 
   #
-  # This is a macro which set up the enviroment for executing R examples and tests
+  # This is a function which set up the enviroment for executing R examples and tests
   #
-  macro(add_r_test name)
+  function(add_r_test name)
 
     set(command "${R_COMMAND}")
 
@@ -695,7 +695,7 @@ if ( WRAP_R )
     set_property(TEST R.${name}
                  PROPERTY ENVIRONMENT R_LIBS=${SimpleITK_BINARY_DIR}/Wrapping/RLib/
                  )
-  endmacro()
+  endfunction()
 
 
   #
