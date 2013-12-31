@@ -25,7 +25,6 @@ set ( SimpleITKUnitTestSource
   sitkImportImageTest.cxx
   itkHashImageFilterTest.cxx
   itkSliceImageFilterTest.cxx
-  CXXTests.cxx
   )
 
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/PythonTests)
@@ -311,6 +310,32 @@ add_google_tests(SimpleITKUnitTestDriver0 ${SimpleITKUnitTestSource})
 
 set( ITK_TEST_DRIVER  "itkTestDriver" )
 
+#
+# CXX Examples
+#
+if ( ${BUILD_EXAMPLES} )
+  add_test(NAME CXX.Example.SimpleGaussian
+    COMMAND "${ITK_TEST_DRIVER}"
+    --compare-MD5
+    "${TEST_HARNESS_TEMP_DIRECTORY}/CXX.SimpleGaussian.nrrd"
+    5ef06ed0d5d8952c770348699b70f23e
+    $<TARGET_FILE:SimpleGaussian>
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
+    2.0
+    "${TEST_HARNESS_TEMP_DIRECTORY}/CXX.SimpleGaussian.nrrd"
+    )
+
+  add_test(NAME CXX.Example.SimpleGaussianFunctional
+    COMMAND "${ITK_TEST_DRIVER}"
+    --compare-MD5
+    "${TEST_HARNESS_TEMP_DIRECTORY}/CXX.SimpleGaussianFunctional.nrrd"
+    5ef06ed0d5d8952c770348699b70f23e
+    $<TARGET_FILE:SimpleGaussianFunctional>
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
+    2.0
+    "${TEST_HARNESS_TEMP_DIRECTORY}/CXX.SimpleGaussian.nrrd"
+    )
+endif()
 
 if ( WRAP_CSHARP )
 
