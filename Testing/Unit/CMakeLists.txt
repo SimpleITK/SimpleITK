@@ -335,6 +335,20 @@ if ( ${BUILD_EXAMPLES} )
     2.0
     "${TEST_HARNESS_TEMP_DIRECTORY}/CXX.SimpleGaussian.nrrd"
     )
+
+   add_test(NAME CXX.Example.FilterProgressReporting
+    COMMAND "${ITK_TEST_DRIVER}"
+    --compare-MD5
+    "${TEST_HARNESS_TEMP_DIRECTORY}/CXX.FilterProgressReporting.nrrd"
+    5ef06ed0d5d8952c770348699b70f23e
+    $<TARGET_FILE:FilterProgressReporting>
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
+    2.0
+    "${TEST_HARNESS_TEMP_DIRECTORY}/CXX.FilterProgressReporting.nrrd"
+    )
+  set_tests_properties( CXX.Example.FilterProgressReporting
+    PROPERTIES PASS_REGULAR_EXPRESSION "Progress" )
+
 endif()
 
 if ( WRAP_CSHARP )

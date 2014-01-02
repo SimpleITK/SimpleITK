@@ -13,9 +13,11 @@ target_link_libraries ( SimpleGaussian ${SimpleITK_LIBRARIES} )
 add_executable ( SimpleGaussianFunctional SimpleGaussianFunctional.cxx )
 target_link_libraries ( SimpleGaussianFunctional ${SimpleITK_LIBRARIES} )
 
-
 add_executable ( BufferImportExport BufferImportExport.cxx )
 target_link_libraries ( BufferImportExport ${SimpleITK_LIBRARIES} )
+
+add_executable ( FilterProgressReporting FilterProgressReporting.cxx )
+target_link_libraries ( FilterProgressReporting ${SimpleITK_LIBRARIES} )
 
 # Add subdirectories
 add_subdirectory(Segmentation)
