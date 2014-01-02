@@ -46,15 +46,12 @@ pixelID = image.GetPixelIDValue()
 gaussian = sitk.DiscreteGaussianImageFilter()
 gaussian.SetVariance( float ( sys.argv[2] ) )
 
+gaussian.AddCommand(sitk.sitkStartEvent, lambda: print("StartEvent"))
+gaussian.AddCommand(sitk.sitkEndEvent, lambda: print("EndEvent"))
 
-#cmd = sitk.PyCommand()
-#cmd.SetCommandCallable(lambda: terminal_progress_callback(gaussian.GetName(), gaussian.GetProgress()))
-#gaussian.AddCommand(sitk.sitkProgressEvent, lambda: terminal_progress_callback(gaussian.GetName(), gaussian.GetProgress()))
-#gaussian.AddCommand(sitk.sitkEndEvent, lambda: terminal_end_callback(gaussian.GetName()))
-#gaussian.AddCommand(sitk.sitkProgressEvent, lambda: abort_on(gaussian))
-#gaussian.AddCommand(sitk.sitkAbortEvent, lambda: abort())
 cmd = MyCommand(gaussian)
 gaussian.AddCommand(sitk.sitkProgressEvent, cmd)
+
 image = gaussian.Execute ( image )
 
 caster = sitk.CastImageFilter()
