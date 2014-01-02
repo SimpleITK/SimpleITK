@@ -72,7 +72,7 @@ namespace itk {
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
     };
 
-    SITKBasicFilters_EXPORT std::string Hash ( const Image& image, HashImageFilter::HashFunction function = HashImageFilter::SHA1 );
+    SITKBasicFilters0_EXPORT std::string Hash ( const Image& image, HashImageFilter::HashFunction function = HashImageFilter::SHA1 );
   }
 }
 #endif

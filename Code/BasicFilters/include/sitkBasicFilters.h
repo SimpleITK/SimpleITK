@@ -25,11 +25,11 @@
 #include "sitkTransform.h"
 
 #if defined( SITKDLL )
-  #ifdef SimpleITKBasicFilters0_EXPORT
+  #ifdef SimpleITKBasicFilters0_EXPORTS
     #define SITKBasicFilters0_EXPORT SITK_ABI_EXPORT
   #else
     #define SITKBasicFilters0_EXPORT SITK_ABI_IMPORT
-  #endif  /* SimpleITKBasicFilters0_EXPORT */
+  #endif  /* SimpleITKBasicFilters0_EXPORTS */
 #else
   // Don't hide symbols in the static SimpleITKBasicFilters library in case
   // -fvisibility=hidden is used
@@ -37,11 +37,11 @@
 #endif
 
 #if defined( SITKDLL )
-  #ifdef SimpleITKBasicFilters_EXPORT
+  #ifdef SimpleITKBasicFilters_EXPORTS
     #define SITKBasicFilters_EXPORT SITK_ABI_EXPORT
   #else
     #define SITKBasicFilters_EXPORT SITK_ABI_IMPORT
-  #endif  /* SimpleITKBasicFilters_EXPORT */
+  #endif  /* SimpleITKBasicFilters_EXPORTS */
 #else
   // Don't hide symbols in the static SimpleITKBasicFilters library in case
   // -fvisibility=hidden is used

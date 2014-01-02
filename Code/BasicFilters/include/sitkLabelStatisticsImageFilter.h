@@ -126,7 +126,7 @@ namespace itk {
       double QueryValue(const LabelIdentifierType, const std::string) const;
     };
 
-    SITKBasicFilters_EXPORT LabelStatisticsImageFilter::LabelStatisticsMap LabelStatistics ( const Image&, const Image& );
+    SITKBasicFilters0_EXPORT LabelStatisticsImageFilter::LabelStatisticsMap LabelStatistics ( const Image&, const Image& );
   }
 }
 #endif
