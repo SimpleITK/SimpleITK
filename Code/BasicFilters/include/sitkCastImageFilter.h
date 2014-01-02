@@ -38,7 +38,7 @@ namespace simple
  *
  * \sa itk::simple::Cast for the procedural interface
  */
-class SITKBasicFilters0_EXPORT CastImageFilter
+class SITKBasicFilters_EXPORT CastImageFilter
   : public ImageFilter<1>
 {
 public:
@@ -155,7 +155,7 @@ private:
 #endif
 
   /**
-  * The methods are used to instantiate and register member functions
+  * These methods are used to instantiate and register member functions
   * with the factory. Each function is split into a separate file to
   * make the compilation units smaller, and take less time to compile.
   * @{
@@ -173,7 +173,7 @@ private:
 
 };
 
-  SITKBasicFilters0_EXPORT Image Cast ( const Image& image, PixelIDValueEnum pixelID );
+  SITKBasicFilters_EXPORT Image Cast ( const Image& image, PixelIDValueEnum pixelID );
 
 }
 }

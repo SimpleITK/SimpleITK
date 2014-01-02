@@ -32,7 +32,7 @@ namespace itk {
      *
      * \sa itk::simple::Hash for the procedural interface
      */
-    class SITKBasicFilters0_EXPORT HashImageFilter {
+    class SITKBasicFilters_EXPORT HashImageFilter {
     public:
       typedef HashImageFilter Self;
 
@@ -72,7 +72,7 @@ namespace itk {
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
     };
 
-    SITKBasicFilters0_EXPORT std::string Hash ( const Image& image, HashImageFilter::HashFunction function = HashImageFilter::SHA1 );
+    SITKBasicFilters_EXPORT std::string Hash ( const Image& image, HashImageFilter::HashFunction function = HashImageFilter::SHA1 );
   }
 }
 #endif
