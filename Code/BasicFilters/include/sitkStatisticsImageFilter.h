@@ -72,7 +72,7 @@ namespace itk {
       double QueryValue( const std::string) const;
     };
 
-    SITKBasicFilters_EXPORT itk::simple::MeasurementMap Statistics ( const Image& );
+    SITKBasicFilters0_EXPORT itk::simple::MeasurementMap Statistics ( const Image& );
   }
 }
 #endif
