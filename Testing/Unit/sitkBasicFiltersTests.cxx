@@ -304,25 +304,6 @@ TEST(BasicFilters,ProcessObject_NumberOfThreads) {
   EXPECT_EQ(gNum+1, caster2.GetGlobalDefaultNumberOfThreads());
 }
 
-TEST(BasicFilters,ProcessObject_GlobalWarning) {
-  // Basic coverage test of setting and getting. Need separate
-  // specific check for propagation of warning to ITK.
-
-  namespace sitk = itk::simple;
-
-  EXPECT_TRUE( sitk::ProcessObject::GetGlobalWarningDisplay() );
-
-  sitk::ProcessObject::GlobalWarningDisplayOff();
-  EXPECT_FALSE( sitk::ProcessObject::GetGlobalWarningDisplay() );
-
-  sitk::ProcessObject::GlobalWarningDisplayOn();
-  EXPECT_TRUE( sitk::ProcessObject::GetGlobalWarningDisplay() );
-
-  sitk::ProcessObject::SetGlobalWarningDisplay(false);
-  EXPECT_FALSE( sitk::ProcessObject::GetGlobalWarningDisplay() );
-
-}
-
 TEST(BasicFilters,Cast) {
   itk::simple::HashImageFilter hasher;
   itk::simple::ImageFileReader reader;

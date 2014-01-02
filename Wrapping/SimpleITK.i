@@ -132,8 +132,11 @@ namespace std
 %include "sitkPixelIDValues.h"
 %include "sitkImage.h"
 %include "sitkTransform.h"
+%include "sitkCommand.h"
+
 %include "sitkInterpolator.h"
 %include "sitkKernel.h"
+%include "sitkEvent.h"
 
 // Basic Filter Base
 %include "sitkProcessObject.h"
