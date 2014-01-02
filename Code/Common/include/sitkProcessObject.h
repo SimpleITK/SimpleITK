@@ -18,8 +18,7 @@
 #ifndef __sitkProcessObject_h
 #define __sitkProcessObject_h
 
-#include "sitkMacro.h"
-#include "sitkBasicFilters.h"
+#include "sitkCommon.h"
 #include "sitkNonCopyable.h"
 #include "sitkTemplateFunctions.h"
 
@@ -37,7 +36,7 @@ namespace itk {
    * \brief Base class for SimpleITK classes based on ProcessObject
    *
    */
-  class SITKBasicFilters0_EXPORT ProcessObject:
+  class SITKCommon_EXPORT ProcessObject:
       protected NonCopyable
   {
     public:

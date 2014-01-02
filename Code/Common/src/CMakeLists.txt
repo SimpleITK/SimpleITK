@@ -1,6 +1,7 @@
 set ( SimpleITKCommonSource
   sitkImage.cxx
   sitkImageExplicit.cxx
+  sitkProcessObject.cxx
   sitkTransform.cxx
   sitkPixelIDValues.cxx
   sitkExceptionObject.cxx
