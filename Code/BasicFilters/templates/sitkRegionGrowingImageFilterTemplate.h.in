@@ -38,7 +38,7 @@ $(include MemberGetSetDeclarations.h.in)
         }
 
       /** Get SeedList */
-      std::vector< std::vector<unsigned int> > GetSeedList()
+      std::vector< std::vector<unsigned int> > GetSeedList() const
         {
         return this->m_SeedList;
         }

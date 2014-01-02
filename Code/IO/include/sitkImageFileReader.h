@@ -42,7 +42,7 @@ namespace itk {
       typedef ImageFileReader Self;
 
       Self& SetFileName ( std::string fn );
-      std::string GetFileName();
+      std::string GetFileName() const;
       Image Execute();
 
       ImageFileReader();
