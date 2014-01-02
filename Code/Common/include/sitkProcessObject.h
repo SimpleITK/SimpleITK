@@ -83,6 +83,18 @@ namespace itk {
       static bool GetGlobalDefaultDebug();
       static void SetGlobalDefaultDebug(bool debugFlag);
 
+      /** Manage warnings produced by ITK.
+       *
+       * Enabled by default, this parameter may enable printing
+       * of warnings indicating unstable state or parameters during
+       * execution. It is a global value set for all ITK filters and
+       * processes.
+       */
+      static void GlobalWarningDisplayOn();
+      static void GlobalWarningDisplayOff();
+      static void SetGlobalWarningDisplay(bool flag);
+      static bool GetGlobalWarningDisplay();
+
       /** Set the number of threads that all new process objects are
        *  initialized with. */
       static void SetGlobalDefaultNumberOfThreads(unsigned int n);

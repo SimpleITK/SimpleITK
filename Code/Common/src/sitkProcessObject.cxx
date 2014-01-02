@@ -109,6 +109,25 @@ void ProcessObject::SetGlobalDefaultDebug(bool debugFlag)
   GlobalDefaultDebug = debugFlag;
 }
 
+void ProcessObject::GlobalWarningDisplayOn()
+{
+  itk::Object::GlobalWarningDisplayOn();
+}
+
+void ProcessObject::GlobalWarningDisplayOff()
+{
+  itk::Object::GlobalWarningDisplayOff();
+}
+
+bool ProcessObject::GetGlobalWarningDisplay()
+{
+  return itk::Object::GetGlobalWarningDisplay();
+}
+
+void ProcessObject::SetGlobalWarningDisplay(bool flag)
+{
+  itk::Object::SetGlobalWarningDisplay(flag);
+}
 
 
 void ProcessObject::SetGlobalDefaultNumberOfThreads(unsigned int n)
