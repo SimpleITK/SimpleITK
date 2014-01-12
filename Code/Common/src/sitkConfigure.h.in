@@ -46,6 +46,13 @@
 // defined if the system has <type_traits> header
 #cmakedefine SITK_HAS_STLTR1_TYPE_TRAITS
 
+// define if new features added from TR1 c++11 are in TR1 namespace
+#cmakedefine SITK_HAS_TR1_NAMESPACE
+#if SITK_HAS_TR1_NAMESPACE
+namespace sitk_tr1 = std::tr1;
+#else
+namespace sitk_tr1 = std;
+#endif
 
 
 // defined if the system has <tr1/unordered_map> header

@@ -249,10 +249,10 @@ public:
       typename CompositeTransformType::TransformType* base =
         dynamic_cast< typename CompositeTransformType::TransformType*>( t.GetITKBase() );
 
-      return this->AddTransform( base, typename std::tr1::is_same<TTransformType, CompositeTransformType>::type() );
+      return this->AddTransform( base, typename sitk_tr1::is_same<TTransformType, CompositeTransformType>::type() );
     }
 
-  PimpleTransformBase* AddTransform( typename CompositeTransformType::TransformType* t, std::tr1::true_type isCompositeTransform )
+  PimpleTransformBase* AddTransform( typename CompositeTransformType::TransformType* t, sitk_tr1::true_type isCompositeTransform )
     {
       Unused( isCompositeTransform );
       assert( t->GetInputSpaceDimension() == TransformType::InputSpaceDimension );
@@ -261,7 +261,7 @@ public:
       return this;
     }
 
-  PimpleTransformBase* AddTransform( typename CompositeTransformType::TransformType* t, std::tr1::false_type isNotCompositeTransform )
+  PimpleTransformBase* AddTransform( typename CompositeTransformType::TransformType* t, sitk_tr1::false_type isNotCompositeTransform )
     {
       Unused( isNotCompositeTransform );
 

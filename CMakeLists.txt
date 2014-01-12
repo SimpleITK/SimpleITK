@@ -241,6 +241,11 @@ try_compile(SITK_SUPPORTS_STATIC_ASSERT
 
 include(CheckIncludeFileCXX)
 
+try_compile(SITK_HAS_TR1_NAMESPACE
+  ${SimpleITK_BINARY_DIR}/CMakeTmp
+  ${SimpleITK_SOURCE_DIR}/CMake/has_tr1_namespace.cxx
+  OUTPUT_VARIABLE out )
+
 # check for the required tr1/functional header
 check_include_file_cxx( tr1/functional SITK_HAS_STLTR1_TR1_FUNCTIONAL )
 check_include_file_cxx( functional SITK_HAS_STLTR1_FUNCTIONAL )
@@ -266,6 +271,7 @@ if ( ${SITK_HAS_STLTR1_UNORDERED_MAP} )
 elseif ( ${SITK_HAS_STLTR1_TR1_UNORDERED_MAP} )
   set( SITK_UNORDERED_MAP_FUNCTIONAL_DEFINITIONS "-DSITK_HAS_STLTR1_TR1_UNORDERED_MAP" )
 endif()
+
 try_compile(SITK_UNORDERED_MAP_FUNCTIONAL
   ${SimpleITK_BINARY_DIR}/CMakeTmp
   ${SimpleITK_SOURCE_DIR}/CMake/tr1_unordered_map.cxx

@@ -48,8 +48,8 @@ struct Conditional<false, TIfTrue, TIfFalse> { typedef TIfFalse Type; };
 template <bool VCond, int TIfTrue, int TIfFalse>
 struct ConditionalValue
   : public itk::simple::Conditional<VCond,
-                                    std::tr1::integral_constant<int, TIfTrue>,
-                                    std::tr1::integral_constant<int, TIfFalse> >::Type
+                                    sitk_tr1::integral_constant<int, TIfTrue>,
+                                    sitk_tr1::integral_constant<int, TIfFalse> >::Type
 {
 private:
   typedef ConditionalValue Self;
