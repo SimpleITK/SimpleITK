@@ -218,11 +218,6 @@ if( APPLE )
 endif()
 VariableListToCache( ep_common_list ep_common_cache )
 
-list( APPEND ep_common_args
-  -DBUILD_EXAMPLES:BOOL=OFF
-)
-
-
 #
 # Use CMake file which present options for wrapped languages, and finds languages as needed
 #
@@ -312,6 +307,7 @@ ExternalProject_Add(${proj}
     -DWRAP_TCL:BOOL=${WRAP_TCL}
     -DWRAP_CSHARP:BOOL=${WRAP_CSHARP}
     -DWRAP_R:BOOL=${WRAP_R}
+    -DBUILD_EXAMPLES:BOOL=${BUILD_TESTING}
   DEPENDS ${${CMAKE_PROJECT_NAME}_DEPENDENCIES}
 )
 
