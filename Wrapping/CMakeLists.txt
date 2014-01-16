@@ -8,6 +8,10 @@ if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA OR WRAP_CSHARP OR WRAP_TCL OR WRAP_R O
 
   set_source_files_properties ( SimpleITK.i PROPERTIES CPLUSPLUS ON )
 
+  file(GLOB SWIG_EXTRA_DEPS
+    "${SimpleITK_SOURCE_DIR}/Code/Common/include/*.h"
+    "${SimpleITK_SOURCE_DIR}/Code/IO/include/*.h")
+
   # make a manual list of dependencies for the Swig.i files
   list( APPEND SWIG_EXTRA_DEPS "${SimpleITK_BINARY_DIR}/Code/BasicFilters/include/SimpleITKBasicFiltersGeneratedHeaders.i"
     "${SimpleITK_BINARY_DIR}/Code/BasicFilters/include/SimpleITKBasicFiltersGeneratedHeaders.h"
