@@ -333,7 +333,7 @@ if ( ${BUILD_EXAMPLES} )
     $<TARGET_FILE:SimpleGaussianFunctional>
     "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
     2.0
-    "${TEST_HARNESS_TEMP_DIRECTORY}/CXX.SimpleGaussian.nrrd"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/CXX.SimpleGaussianFunctional.nrrd"
     )
 
    add_test(NAME CXX.Example.FilterProgressReporting
