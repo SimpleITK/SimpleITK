@@ -522,6 +522,50 @@ TEST(BasicFilters,Cast_Commands) {
   EXPECT_EQ ( 0, userCmd.m_Count );
 
 }
+
+TEST(BasicFilters,Statistics_Abort) {
+  // test Statistics filter with a bunch of commands
+
+  namespace sitk = itk::simple;
+  sitk::Image img = sitk::ReadImage( dataFinder.GetFile ( "Input/RA-Short.nrrd" ) );
+  EXPECT_EQ ( "a963bd6a755b853103a2d195e01a50d3", sitk::Hash(img, sitk::HashImageFilter::MD5));
+
+  sitk::StatisticsImageFilter stats;
+  stats.SetNumberOfThreads(1);
+
+  AbortAtCommand progressCmd(stats,.05);
+  stats.AddCommand(sitk::sitkProgressEvent, progressCmd);
+
+  CountCommand abortCmd(stats);
+  stats.AddCommand(sitk::sitkAbortEvent, abortCmd);
+
+  CountCommand deleteCmd(stats);
+  stats.AddCommand(sitk::sitkDeleteEvent, deleteCmd);
+
+  CountCommand endCmd(stats);
+  stats.AddCommand(sitk::sitkEndEvent, endCmd);
+
+  CountCommand iterCmd(stats);
+  stats.AddCommand(sitk::sitkIterationEvent, iterCmd);
+
+  CountCommand startCmd(stats);
+  stats.AddCommand(sitk::sitkStartEvent, startCmd);
+
+  CountCommand userCmd(stats);
+  stats.AddCommand(sitk::sitkUserEvent, userCmd);
+
+
+  ASSERT_NO_THROW ( stats.Execute(img) );
+
+  EXPECT_EQ ( 1, abortCmd.m_Count );
+  EXPECT_EQ ( 1, deleteCmd.m_Count );
+  EXPECT_EQ ( 1, endCmd.m_Count );
+  EXPECT_EQ ( 0, iterCmd.m_Count );
+  EXPECT_EQ ( 1, startCmd.m_Count );
+  EXPECT_EQ ( 0, userCmd.m_Count );
+
+}
+
 TEST(BasicFilters,Statistics) {
 
   itk::simple::Image image = itk::simple::ReadImage ( dataFinder.GetFile ( "Input/RA-Float.nrrd" ) );
