@@ -140,11 +140,7 @@ Image StatisticsImageFilter::ExecuteInternal ( const Image& inImage1 )
   typename FilterType::Pointer filter = FilterType::New();
   filter->SetInput( image1 );
 
-  if (this->GetDebug())
-     {
-     std::cout << "Executing ITK filter:" << std::endl;
-     std::cout << filter;
-     }
+  this->PreUpdate( filter.GetPointer() );
 
   this->m_MeasurementMap.clear();
 

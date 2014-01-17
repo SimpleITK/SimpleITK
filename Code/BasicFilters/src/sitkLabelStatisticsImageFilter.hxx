@@ -68,11 +68,7 @@ Image LabelStatisticsImageFilter::DualExecuteInternal ( const Image& inImage1, c
     filter->SetHistogramParameters(256,stats.GetMinimum(), stats.GetMaximum() );
     }
 
-  if (this->GetDebug())
-     {
-     std::cout << "Executing ITK filter:" << std::endl;
-     std::cout << filter;
-     }
+  this->PreUpdate( filter.GetPointer() );
 
   this->m_BoundingBoxMeasurementMap.clear();
   this->m_LabelMeasurementMap.clear();
