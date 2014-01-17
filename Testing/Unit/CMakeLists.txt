@@ -464,6 +464,9 @@ if ( WRAP_JAVA )
 
     list( APPEND compiled_java_tests "${CMAKE_CURRENT_BINARY_DIR}/${_java_file_class}")
 
+    # set in parent scope to accumulate list during function execution
+    set( compiled_java_tests ${compiled_java_tests} PARENT_SCOPE)
+
     add_test(NAME Java.${name}
       COMMAND "${ITK_TEST_DRIVER}"
       "${Java_JAVA_EXECUTABLE}"
