@@ -62,7 +62,7 @@ namespace itk {
       typedef IntegerPixelIDTypeList MapPixelIDTypeList;
 
       /** Name of this class */
-      std::string GetName() const { return std::string ( "LabelStatistics" ); }
+      std::string GetName() const { return std::string ("LabelStatisticsImageFilter" ); }
 
       // Print ourselves out
       std::string ToString() const;
