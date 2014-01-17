@@ -42,6 +42,7 @@
 #include <sitkPatchBasedDenoisingImageFilter.h>
 #include <sitkConnectedThresholdImageFilter.h>
 #include <sitkAdditionalProcedures.h>
+#include <sitkCommand.h>
 
 #include "itkVectorImage.h"
 #include "itkRecursiveGaussianImageFilter.h"
@@ -57,6 +58,80 @@
 #include "itkLabelMapContourOverlayImageFilter.h"
 #include "itkPatchBasedDenoisingImageFilter.h"
 #include "itkConnectedThresholdImageFilter.h"
+
+
+namespace
+{
+
+class ProcessObjectCommand
+  : public itk::simple::Command
+{
+public:
+ ProcessObjectCommand(itk::simple::ProcessObject &po)
+    : m_Process(po)
+    {}
+protected:
+  itk::simple::ProcessObject &m_Process;
+};
+
+class ProgressUpdate
+  : public ProcessObjectCommand
+{
+public:
+  ProgressUpdate(itk::simple::ProcessObject &po)
+    : ProcessObjectCommand(po),
+      m_Progress(0.0)
+    {}
+
+  virtual void Execute( )
+    {
+      m_Progress =  m_Process.GetProgress();
+    }
+
+  float m_Progress;
+};
+
+class AbortAtCommand
+  : public ProcessObjectCommand
+{
+public:
+  AbortAtCommand(itk::simple::ProcessObject &po, float abortAt)
+    : ProcessObjectCommand(po),
+      m_AbortAt(abortAt)
+    {}
+
+  virtual void Execute( )
+    {
+      std::cout << "p: " << m_Process.GetProgress() << std::endl;
+      if ( m_Process.GetProgress() >= m_AbortAt )
+        {
+        std::cout << "aborting..." << std::endl;
+        m_Process.Abort();
+        }
+    }
+
+  float m_AbortAt;
+};
+
+class CountCommand
+  : public ProcessObjectCommand
+{
+public:
+  CountCommand(itk::simple::ProcessObject &po)
+    : ProcessObjectCommand(po),
+      m_Count(0)
+    {}
+
+  virtual void Execute( )
+    {
+      ++m_Count;
+    }
+
+  int m_Count;
+};
+
+
+}
 
 TEST(BasicFilters,ScalarToRGBColormap_ENUMCHECK) {
   typedef itk::ScalarToRGBColormapImageFilter< itk::Image<float,3>, itk::Image< itk::RGBPixel<float>,3> > ITKType;
@@ -403,6 +478,50 @@ TEST(BasicFilters,HashImageFilter) {
   EXPECT_EQ ( itk::simple::HashImageFilter::MD5, hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).GetHashFunction() );
 }
 
+TEST(BasicFilters,Cast_Commands) {
+  // test cast filter with a bunch of commands
+
+  namespace sitk = itk::simple;
+  sitk::Image img = sitk::ReadImage( dataFinder.GetFile ( "Input/RA-Short.nrrd" ) );
+  EXPECT_EQ ( "a963bd6a755b853103a2d195e01a50d3", sitk::Hash(img, sitk::HashImageFilter::MD5));
+
+  sitk::CastImageFilter caster;
+  caster.SetOutputPixelType( sitk::sitkInt32 );
+
+  ProgressUpdate cmd1(caster);
+  caster.AddCommand(sitk::sitkProgressEvent, cmd1);
+
+  CountCommand abortCmd(caster);
+  caster.AddCommand(sitk::sitkAbortEvent, abortCmd);
+
+  CountCommand deleteCmd(caster);
+  caster.AddCommand(sitk::sitkDeleteEvent, deleteCmd);
+
+  CountCommand endCmd(caster);
+  caster.AddCommand(sitk::sitkEndEvent, endCmd);
+
+  CountCommand iterCmd(caster);
+  caster.AddCommand(sitk::sitkIterationEvent, iterCmd);
+
+  CountCommand startCmd(caster);
+  caster.AddCommand(sitk::sitkStartEvent, startCmd);
+
+  CountCommand userCmd(caster);
+  caster.AddCommand(sitk::sitkUserEvent, userCmd);
+
+
+  sitk::Image out = caster.Execute(img);
+  EXPECT_EQ ( "6ceea0011178a955b5be2d545d107199", sitk::Hash(out, sitk::HashImageFilter::MD5));
+
+  EXPECT_EQ ( 1.0f, cmd1.m_Progress );
+  EXPECT_EQ ( 0, abortCmd.m_Count );
+  EXPECT_EQ ( 1, deleteCmd.m_Count );
+  EXPECT_EQ ( 1, endCmd.m_Count );
+  EXPECT_EQ ( 0, iterCmd.m_Count );
+  EXPECT_EQ ( 1, startCmd.m_Count );
+  EXPECT_EQ ( 0, userCmd.m_Count );
+
+}
 TEST(BasicFilters,Statistics) {
 
   itk::simple::Image image = itk::simple::ReadImage ( dataFinder.GetFile ( "Input/RA-Float.nrrd" ) );
