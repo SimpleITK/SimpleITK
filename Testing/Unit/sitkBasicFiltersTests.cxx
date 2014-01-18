@@ -573,7 +573,7 @@ TEST(BasicFilters,Statistics) {
   itk::simple::StatisticsImageFilter stats;
   stats.DebugOn();
 
-  EXPECT_EQ ( stats.GetName(), "Statistics" );
+  EXPECT_EQ ( stats.GetName(), "StatisticsImageFilter" );
   EXPECT_NO_THROW ( stats.ToString() );
 
   stats.Execute( image );
@@ -607,7 +607,7 @@ TEST(BasicFilters,LabelStatistics) {
   stats.DebugOn();
   stats.Execute ( image, labels );
 
-  EXPECT_EQ( stats.GetName(), "LabelStatistics" );
+  EXPECT_EQ( stats.GetName(), "LabelStatisticsImageFilter" );
   EXPECT_NO_THROW( stats.ToString() );
 
   EXPECT_TRUE ( stats.HasLabel ( 0 ) );
