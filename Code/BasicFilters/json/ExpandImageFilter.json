@@ -178,7 +178,7 @@
           "java_value" : "InterpolatorEnum.sitkLabelGaussian",
           "tcl_value" : "$$sitkLabelGaussian",
           "csharp_value" : "InterpolatorEnum.sitkLabelGaussian",
-          "R_value" : "'sitkGaussianLabel'"
+          "R_value" : "'sitkLabelGaussian'"
         }
       ],
       "inputs" : [
