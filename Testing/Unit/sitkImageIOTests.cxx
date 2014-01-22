@@ -53,24 +53,103 @@ TEST(IO,ImageFileReader) {
     EXPECT_EQ ( it->second, hasher.Execute ( itk::simple::ReadImage ( dataFinder.GetFile ( it->first ) ) ) ) << "Functional interface";
   }
 
+  EXPECT_EQ ( "ImageFileReader", reader.GetName() );
+  EXPECT_NO_THROW ( reader.ToString() );
+}
+
+TEST(IO,ImageFileWriter) {
+  namespace sitk = itk::simple;
+
+  sitk::ImageFileWriter writer;
+
+  sitk::Image img = sitk::Image(10,10, sitk::sitkUInt16);
+
+  std::string filename = dataFinder.GetOutputFile ( "IO.ImageFileWriter1.mha" );
+  writer.SetFileName(filename);
+
+  ProgressUpdate progressCmd(writer);
+  writer.AddCommand(sitk::sitkProgressEvent, progressCmd);
+
+  CountCommand abortCmd(writer);
+  writer.AddCommand(sitk::sitkAbortEvent, abortCmd);
+
+  CountCommand deleteCmd(writer);
+  writer.AddCommand(sitk::sitkDeleteEvent, deleteCmd);
+
+  CountCommand endCmd(writer);
+  writer.AddCommand(sitk::sitkEndEvent, endCmd);
+
+  CountCommand iterCmd(writer);
+  writer.AddCommand(sitk::sitkIterationEvent, iterCmd);
+
+  CountCommand startCmd(writer);
+  writer.AddCommand(sitk::sitkStartEvent, startCmd);
+
+  CountCommand userCmd(writer);
+  writer.AddCommand(sitk::sitkUserEvent, userCmd);
+
+  EXPECT_NO_THROW ( writer.Execute(img) );
+
+  EXPECT_EQ ( 1.0, progressCmd.m_Progress );
+  EXPECT_EQ ( 0, abortCmd.m_Count );
+  EXPECT_EQ ( 1, deleteCmd.m_Count );
+  EXPECT_EQ ( 1, endCmd.m_Count );
+  EXPECT_EQ ( 0, iterCmd.m_Count );
+  EXPECT_EQ ( 1, startCmd.m_Count );
+  EXPECT_EQ ( 0, userCmd.m_Count );
+
+  EXPECT_EQ ( "ImageFileWriter", writer.GetName() );
+  EXPECT_NO_THROW ( writer.ToString() );
 }
 
 TEST(IO,ReadWrite) {
-  itk::simple::HashImageFilter hasher;
-  itk::simple::ImageFileReader reader;
-  itk::simple::ImageFileWriter writer;
+  namespace sitk = itk::simple;
+  sitk::HashImageFilter hasher;
+  sitk::ImageFileReader reader;
+  sitk::ImageFileWriter writer;
 
   // From the command line utility
   std::string md5 = "a963bd6a755b853103a2d195e01a50d3";
   std::string sha1 = "126ea8c3ef5573ca1e4e0deece920c2c4a4f38b5";
 
 
-  itk::simple::Image image = reader.SetFileName ( dataFinder.GetFile ( "Input/RA-Short.nrrd" ) ).Execute();
+  ProgressUpdate progressCmd(reader);
+  reader.AddCommand(sitk::sitkProgressEvent, progressCmd);
+
+  CountCommand abortCmd(reader);
+  reader.AddCommand(sitk::sitkAbortEvent, abortCmd);
+
+  CountCommand deleteCmd(reader);
+  reader.AddCommand(sitk::sitkDeleteEvent, deleteCmd);
+
+  CountCommand endCmd(reader);
+  reader.AddCommand(sitk::sitkEndEvent, endCmd);
+
+  CountCommand iterCmd(reader);
+  reader.AddCommand(sitk::sitkIterationEvent, iterCmd);
+
+  CountCommand startCmd(reader);
+  reader.AddCommand(sitk::sitkStartEvent, startCmd);
+
+  CountCommand userCmd(reader);
+  reader.AddCommand(sitk::sitkUserEvent, userCmd);
+
+
+  sitk::Image image = reader.SetFileName ( dataFinder.GetFile ( "Input/RA-Short.nrrd" ) ).Execute();
   ASSERT_TRUE ( image.GetITKBase() != NULL );
-  hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
+  hasher.SetHashFunction ( sitk::HashImageFilter::MD5 );
   EXPECT_EQ ( md5, hasher.Execute ( image ) );
-  hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 );
+  hasher.SetHashFunction ( sitk::HashImageFilter::SHA1 );
   EXPECT_EQ ( sha1, hasher.Execute ( image ) );
+  // JIRA SIMPLEITK-459 reader does not report any progress
+  //EXPECT_EQ ( 1.0, progressCmd.m_Progress );
+  EXPECT_EQ ( 0, abortCmd.m_Count );
+  EXPECT_EQ ( 1, deleteCmd.m_Count );
+  EXPECT_EQ ( 1, endCmd.m_Count );
+  EXPECT_EQ ( 0, iterCmd.m_Count );
+  EXPECT_EQ ( 1, startCmd.m_Count );
+  EXPECT_EQ ( 0, userCmd.m_Count );
+
 
   // Write it out
   std::string filename = dataFinder.GetOutputFile ( "IO.ReadWrite.nrrd" );
@@ -81,23 +160,23 @@ TEST(IO,ReadWrite) {
   ASSERT_TRUE ( image.GetITKBase() != NULL );
 
   // Make sure we wrote and read the file correctly
-  hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
+  hasher.SetHashFunction ( sitk::HashImageFilter::MD5 );
   EXPECT_EQ ( md5, hasher.Execute ( image ) );
-  hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 );
+  hasher.SetHashFunction ( sitk::HashImageFilter::SHA1 );
   EXPECT_EQ ( sha1, hasher.Execute ( image ) );
 
   // Again, with the functional interface
   filename = dataFinder.GetOutputFile ( "IO.ReadWrite-Functional.nrrd" );
-  itk::simple::WriteImage ( image, filename );
+  sitk::WriteImage ( image, filename );
   ASSERT_TRUE ( dataFinder.FileExists ( filename ) );
 
   image = reader.SetFileName ( filename ).Execute();
   ASSERT_TRUE ( image.GetITKBase() != NULL );
 
   // Make sure we wrote and read the file correctly
-  hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
+  hasher.SetHashFunction ( sitk::HashImageFilter::MD5 );
   EXPECT_EQ ( md5, hasher.Execute ( image ) );
-  hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 );
+  hasher.SetHashFunction ( sitk::HashImageFilter::SHA1 );
   EXPECT_EQ ( sha1, hasher.Execute ( image ) );
 
 }
@@ -128,12 +207,45 @@ TEST(IO, SeriesReader) {
   fileNames.push_back( dataFinder.GetFile ( "Input/BlackDots.png" ) );
 
   sitk::ImageSeriesReader reader;
+
+  EXPECT_EQ( 0u, reader.GetFileNames().size());
+
+  ProgressUpdate progressCmd(reader);
+  reader.AddCommand(sitk::sitkProgressEvent, progressCmd);
+
+  CountCommand abortCmd(reader);
+  reader.AddCommand(sitk::sitkAbortEvent, abortCmd);
+
+  CountCommand deleteCmd(reader);
+  reader.AddCommand(sitk::sitkDeleteEvent, deleteCmd);
+
+  CountCommand endCmd(reader);
+  reader.AddCommand(sitk::sitkEndEvent, endCmd);
+
+  CountCommand iterCmd(reader);
+  reader.AddCommand(sitk::sitkIterationEvent, iterCmd);
+
+  CountCommand startCmd(reader);
+  reader.AddCommand(sitk::sitkStartEvent, startCmd);
+
+  CountCommand userCmd(reader);
+  reader.AddCommand(sitk::sitkUserEvent, userCmd);
+
   sitk::Image image = reader.SetFileNames ( fileNames ).Execute();
   EXPECT_EQ ( "b13c0a17109e3a5058e8f225c9ef2dbcf79ac240", sitk::Hash( image ) );
+  EXPECT_EQ( 3u, reader.GetFileNames().size());
   EXPECT_EQ ( 3u, image.GetDimension() );
   EXPECT_EQ ( 256u, image.GetWidth() );
   EXPECT_EQ ( 256u, image.GetHeight() );
   EXPECT_EQ ( 3u, image.GetDepth() );
+  EXPECT_EQ ( 1.0, progressCmd.m_Progress );
+  EXPECT_EQ ( 0, abortCmd.m_Count );
+  EXPECT_EQ ( 1, deleteCmd.m_Count );
+  EXPECT_EQ ( 1, endCmd.m_Count );
+  EXPECT_EQ ( 0, iterCmd.m_Count );
+  EXPECT_EQ ( 1, startCmd.m_Count );
+  EXPECT_EQ ( 0, userCmd.m_Count );
+
 
   fileNames.push_back( dataFinder.GetFile ( "Input/WhiteDots.png" ));
   image = sitk::ReadImage( fileNames );
@@ -149,15 +261,18 @@ TEST(IO, SeriesReader) {
   EXPECT_EQ ( 3u, image.GetDepth() );
   EXPECT_EQ ( "bb42b8d3991132b4860adbc4b3f6c38313f52b4c", sitk::Hash( image ) );
 
+
+  EXPECT_EQ ( "ImageSeriesReader", reader.GetName() );
+  EXPECT_NO_THROW( reader.ToString() );
 }
 
 
-TEST(IO,Write) {
+TEST(IO,Write_BadName) {
 
   sitk::Image image = sitk::ReadImage( dataFinder.GetFile ( "Input/BlackDots.png" ) );
   EXPECT_EQ ( "0188164c9932359b3f33f176d0d73661c4dc04a8", sitk::Hash( image ) );
 
-  ASSERT_THROW(sitk::WriteImage( image, dataFinder.GetOutputFile ( "this.isafilenamewithnoimageio" ) ),  std::exception ) << "Chcking for assert on bad output image name.";
+  ASSERT_THROW(sitk::WriteImage( image, dataFinder.GetOutputFile ( "this.isafilenamewithnoimageio" ) ),  std::exception ) << "Checking for assert on bad output image name.";
 }
 
 
