@@ -18,7 +18,7 @@
 #ifndef __sitkImageReaderBase_h
 #define __sitkImageReaderBase_h
 
-#include "sitkNonCopyable.h"
+#include "sitkProcessObject.h"
 #include "sitkPixelIDValues.h"
 #include "sitkIO.h"
 
@@ -37,7 +37,7 @@ class SmartPointer;
      *
      */
     class SITKIO_EXPORT ImageReaderBase :
-      protected NonCopyable
+      public ProcessObject
     {
     public:
       // The default constructor and the destructor will be implicitly

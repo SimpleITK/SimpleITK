@@ -22,6 +22,7 @@
 #include "sitkImage.h"
 #include "sitkMemberFunctionFactory.h"
 #include "sitkIO.h"
+#include "sitkProcessObject.h"
 
 #include <memory>
 
@@ -37,7 +38,9 @@ namespace itk {
      *
      * \sa itk::simple::WriteImage for the procedural interface
      */
-    class SITKIO_EXPORT ImageFileWriter {
+    class SITKIO_EXPORT ImageFileWriter  :
+      public ProcessObject
+    {
     public:
       typedef ImageFileWriter Self;
 
@@ -48,6 +51,12 @@ namespace itk {
       typedef NonLabelPixelIDTypeList PixelIDTypeList;
 
       ImageFileWriter( void );
+
+      /** Print ourselves to string */
+      virtual std::string ToString() const;
+
+      /** return user readable name fo the filter */
+      virtual std::string GetName() const { return std::string("ImageFileWriter"); }
 
       /** \brief Enable compression if available for file type.
        *

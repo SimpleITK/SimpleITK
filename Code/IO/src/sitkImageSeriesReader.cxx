@@ -76,6 +76,23 @@ namespace itk {
     this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
     }
 
+  std::string ImageSeriesReader::ToString() const {
+
+      std::ostringstream out;
+      out << "itk::simple::ImageSeriesReader";
+      out << std::endl;
+
+      out << "  FileNames: " << std::endl;
+      std::vector<std::string>::const_iterator iter  = m_FileNames.begin();
+      while( iter != m_FileNames.end() )
+        {
+        std::cout << "    \"" << *iter << "\"" << std::endl;
+        ++iter;
+        }
+
+      return out.str();
+    }
+
   ImageSeriesReader& ImageSeriesReader::SetFileNames ( const std::vector<std::string> &filenames )
     {
     this->m_FileNames = filenames;
@@ -135,7 +152,11 @@ namespace itk {
     assert( ImageTypeToPixelIDValue<ImageType>::Result != (int)sitkUnknown );
     typename Reader::Pointer reader = Reader::New();
     reader->SetFileNames( this->m_FileNames );
+
+    this->PreUpdate( reader.GetPointer() );
+
     reader->Update();
+
     return Image( reader->GetOutput() );
     }
 
