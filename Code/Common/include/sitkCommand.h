@@ -67,12 +67,21 @@ protected:
   // operation.
   virtual size_t AddProcessObject(itk::simple::ProcessObject *o);
   virtual size_t RemoveProcessObject(const itk::simple::ProcessObject *o);
+
+  virtual void SetOwnedByProcessObjects(bool o) {this->m_OwnedByProcessObjects = o;}
+  virtual bool GetOwnedByProcessObjects() const {return this->m_OwnedByProcessObjects;}
+  virtual void OwnedByProcessObjectsOn() {this->SetOwnedByProcessObjects(true);}
+  virtual void OwnedByProcessObjectsOff() {this->SetOwnedByProcessObjects(false);}
   #endif
+
+
 
 private:
 
   // a set of objects who use us
   std::set<itk::simple::ProcessObject*> m_ReferencedObjects;
+
+  bool m_OwnedByProcessObjects;
 };
 
 } // end namespace simple

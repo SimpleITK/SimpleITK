@@ -24,12 +24,13 @@ namespace simple
 {
 
 Command::Command( )
+  : m_OwnedByProcessObjects(false)
 {
 }
 
 Command::~Command( )
 {
-  // tell the process object that we are being destroyed to that it
+  // tell the process object that we are being destroyed so that it
   // can remove this as an observer
   std::set<itk::simple::ProcessObject*>::iterator i = m_ReferencedObjects.begin();
   while( i !=  m_ReferencedObjects.end() )
@@ -53,7 +54,12 @@ size_t Command::RemoveProcessObject(const itk::simple::ProcessObject *co)
 {
   ProcessObject *o = const_cast<ProcessObject*>(co);
   m_ReferencedObjects.erase(o);
-  return m_ReferencedObjects.size();
+  const size_t ret = m_ReferencedObjects.size();
+  if (ret==0 && m_OwnedByProcessObjects)
+    {
+    delete this;
+    }
+  return ret;
 }
 
 
