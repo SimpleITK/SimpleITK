@@ -130,6 +130,18 @@ bool rm_pred(const itk::simple::Command *cmd, const std::pair<EventEnum, Command
   return cmd == i.second;
 }
 
+// less than comparison command pointers
+bool cmp_cmd_pred(const std::pair<EventEnum, Command*> &i, const std::pair<EventEnum, Command*> &j) throw()
+{
+  return i.second < j.second;
+}
+
+// is equal comparison of command pointers
+bool eq_cmd_pred(const std::pair<EventEnum, Command*> &i, const std::pair<EventEnum, Command*> &j) throw()
+{
+  return i.second == j.second;
+}
+
 } // end anonymous namespace
 
 //----------------------------------------------------------------------------
@@ -291,14 +303,15 @@ void ProcessObject::RemoveAllCommands()
   // set's the m_Commands to an empty list via a swap
   std::list<EventCommandPairType> oldCommands;
   swap(oldCommands, m_Commands);
-  // not needed?
-  //oldCommands.sort();
-  //oldCommands.unique();
+
+  // we must only call RemoveProcessObject once for each command
+  // so make a unique list of the Commands.
+  oldCommands.sort(cmp_cmd_pred);
+  oldCommands.unique(eq_cmd_pred);
 
   std::list<EventCommandPairType>::iterator i = oldCommands.begin();
   while( i != oldCommands.end() )
     {
-    // note: we may call remove multiple times on the same command
     i++->second->RemoveProcessObject(this);
     }
 }
