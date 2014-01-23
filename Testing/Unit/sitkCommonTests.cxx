@@ -258,6 +258,105 @@ TEST( Command, Test1 ) {
 
 }
 
+
+TEST( ProcessObject, Command_Ownership ) {
+  // Test the functionality of the ProcessObject Owning the Command
+  namespace sitk = itk::simple;
+
+  static int destroyedCount = 0;
+
+  class HeapCommand
+    : public sitk::Command
+  {
+  public:
+    HeapCommand() : v(false) {};
+    ~HeapCommand() {++destroyedCount;}
+    virtual void Execute() {v=true;}
+    using Command::SetOwnedByProcessObjects;
+    using Command::GetOwnedByProcessObjects;
+    using Command::OwnedByProcessObjectsOn;
+    using Command::OwnedByProcessObjectsOff;
+
+    bool v;
+  };
+
+  // test set/get/on/off
+  HeapCommand cmd;
+  EXPECT_FALSE(cmd.GetOwnedByProcessObjects());
+  cmd.SetOwnedByProcessObjects(true);
+  EXPECT_TRUE(cmd.GetOwnedByProcessObjects());
+  cmd.OwnedByProcessObjectsOff();
+  EXPECT_FALSE(cmd.GetOwnedByProcessObjects());
+  cmd.OwnedByProcessObjectsOn();
+  EXPECT_TRUE(cmd.GetOwnedByProcessObjects());
+
+  HeapCommand *cmd1 = new HeapCommand();
+  cmd1->OwnedByProcessObjectsOn();
+  EXPECT_EQ(0,destroyedCount);
+  delete cmd1;
+  EXPECT_EQ(1,destroyedCount);
+
+  // case 1
+  // single po, multiple cmds
+  {
+  sitk::CastImageFilter po;
+  sitk::Image img(5,5, sitk::sitkUInt16);
+
+  HeapCommand *cmd2 = new HeapCommand();
+  cmd2->OwnedByProcessObjectsOn();
+  po.AddCommand(sitk::sitkAnyEvent, *cmd2);
+
+  EXPECT_FALSE(cmd2->v);
+  EXPECT_NO_THROW( po.Execute(img) );
+  EXPECT_TRUE(cmd2->v);
+  cmd2->v = false;
+
+  HeapCommand *cmd3 = new HeapCommand();
+  cmd3->OwnedByProcessObjectsOn();
+  po.AddCommand(sitk::sitkAnyEvent, *cmd3);
+
+  EXPECT_FALSE(cmd2->v);
+  EXPECT_FALSE(cmd3->v);
+  EXPECT_NO_THROW( po.Execute(img) );
+  EXPECT_TRUE(cmd2->v);
+  EXPECT_TRUE(cmd3->v);
+  cmd2->v = false;
+
+  delete cmd3;
+  EXPECT_EQ(2,destroyedCount);
+  }
+  EXPECT_EQ(3,destroyedCount);
+
+  // case 2
+  // cmd registered to multiple PO
+  {
+  std::auto_ptr<sitk::CastImageFilter> po1(new sitk::CastImageFilter());
+  std::auto_ptr<sitk::CastImageFilter> po2(new sitk::CastImageFilter());
+
+  HeapCommand *cmd = new HeapCommand();
+  cmd->OwnedByProcessObjectsOn();
+
+  po1->AddCommand(sitk::sitkAnyEvent, *cmd);
+  po1->AddCommand(sitk::sitkStartEvent, *cmd);
+
+  EXPECT_TRUE(po1->HasCommand(sitk::sitkAnyEvent));
+  EXPECT_TRUE(po1->HasCommand(sitk::sitkStartEvent));
+
+  po2->AddCommand(sitk::sitkAnyEvent, *cmd);
+  EXPECT_TRUE(po2->HasCommand(sitk::sitkAnyEvent));
+
+
+  po2.reset();
+
+  EXPECT_TRUE(po1->HasCommand(sitk::sitkAnyEvent));
+  EXPECT_TRUE(po1->HasCommand(sitk::sitkStartEvent));
+  EXPECT_EQ(3,destroyedCount);
+  }
+  EXPECT_EQ(4,destroyedCount);
+
+
+}
+
 TEST( Command, Test2 ) {
   // Check basic name functionality
   namespace sitk = itk::simple;
