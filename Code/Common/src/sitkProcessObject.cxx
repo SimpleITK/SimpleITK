@@ -125,7 +125,7 @@ private:
 };
 
 // utility method to find commands in list of pairs
-bool rm_pred(const itk::simple::Command *cmd, const std::pair<EventEnum, Command*> &i)
+bool rm_pred(const itk::simple::Command *cmd, const std::pair<EventEnum, Command*> &i) throw()
 {
   return cmd == i.second;
 }
