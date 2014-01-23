@@ -313,6 +313,7 @@ bool ProcessObject::HasCommand( EventEnum event ) const
       {
       return true;
       }
+    ++i;
     }
   return false;
 }
