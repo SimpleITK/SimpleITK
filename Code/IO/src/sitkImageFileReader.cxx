@@ -42,6 +42,19 @@ namespace itk {
       this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
     }
 
+    std::string ImageFileReader::ToString() const {
+
+      std::ostringstream out;
+      out << "itk::simple::ImageFileReader";
+      out << std::endl;
+
+      out << "  FileName: \"";
+      this->ToStringHelper(out, this->m_FileName);
+      out << "\"" << std::endl;
+
+      return out.str();
+    }
+
     ImageFileReader& ImageFileReader::SetFileName ( std::string fn ) {
       this->m_FileName = fn;
       return *this;
@@ -88,6 +101,9 @@ namespace itk {
 
     typename Reader::Pointer reader = Reader::New();
     reader->SetFileName( this->m_FileName.c_str() );
+
+    this->PreUpdate( reader.GetPointer() );
+
     reader->Update();
 
     return Image( reader->GetOutput() );

@@ -28,6 +28,7 @@
 #include "sitkImage.h"
 #include "sitkImageFileReader.h"
 #include "sitkHashImageFilter.h"
+#include "sitkCommand.h"
 
 // Class to help us find test data
 //
@@ -170,6 +171,60 @@ class Tcl    : public ExternalProgramRunner { };
 class R      : public ExternalProgramRunner { };
 class Ruby   : public ExternalProgramRunner { };
 class CSharp : public ExternalProgramRunner { };
+
+
+/** Base Command Class which holds onto a process object
+ */
+class ProcessObjectCommand
+  : public itk::simple::Command
+{
+public:
+  ProcessObjectCommand(itk::simple::ProcessObject &po);
+
+protected:
+  itk::simple::ProcessObject &m_Process;
+};
+
+/** Print the progress to the std::cout
+ */
+class ProgressUpdate
+  : public ProcessObjectCommand
+{
+public:
+  ProgressUpdate(itk::simple::ProcessObject &po);
+
+  virtual void Execute( );
+
+  float m_Progress;
+};
+
+/** Command which will invoke ProcessObject::Abort when AbortAt
+ * progress is reached.
+ */
+class AbortAtCommand
+  : public ProcessObjectCommand
+{
+public:
+  AbortAtCommand(itk::simple::ProcessObject &po, float abortAt);
+
+  virtual void Execute( );
+
+  float m_AbortAt;
+};
+
+/** Command which counts the number of time the command has been
+ * invoked.
+ */
+class CountCommand
+  : public ProcessObjectCommand
+{
+public:
+  CountCommand(itk::simple::ProcessObject &po);
+
+  virtual void Execute( );
+
+  int m_Count;
+};
 
 #include "sitkImageCompare.h"
 

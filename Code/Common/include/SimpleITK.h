@@ -36,6 +36,7 @@
 #include "sitkProcessObject.h"
 #include "sitkImageFilter.h"
 #include "sitkCommand.h"
+#include "sitkFunctionCommand.h"
 
 // IO classes
 #include "sitkImageFileReader.h"

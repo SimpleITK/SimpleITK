@@ -4,6 +4,7 @@ set ( SimpleITKCommonSource
   sitkProcessObject.cxx
   sitkTransform.cxx
   sitkCommand.cxx
+  sitkFunctionCommand.cxx
   sitkPixelIDValues.cxx
   sitkExceptionObject.cxx
   sitkVersion.cxx

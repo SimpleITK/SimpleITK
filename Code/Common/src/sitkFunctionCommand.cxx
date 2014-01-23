@@ -15,7 +15,7 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#include "sitkCommand.h"
+#include "sitkFunctionCommand.h"
 #include "sitkProcessObject.h"
 
 namespace itk
@@ -23,45 +23,27 @@ namespace itk
 namespace simple
 {
 
-Command::Command( )
-  : m_OwnedByProcessObjects(false),
-    m_Name("Command")
+FunctionCommand::FunctionCommand( )
 {
+  Command::SetName("FunctionCommand");
 }
 
-Command::~Command( )
+void FunctionCommand::Execute(void)
 {
-  // tell the process object that we are being destroyed so that it
-  // can remove this as an observer
-  std::set<itk::simple::ProcessObject*>::iterator i = m_ReferencedObjects.begin();
-  while( i !=  m_ReferencedObjects.end() )
+  if (bool(this->m_Function))
     {
-    (*i++)->onCommandDelete(this);
+    return m_Function();
     }
 }
 
+void FunctionCommand::SetCallbackFunction ( void(* pFunction )() )
+  {
+    m_Function = pFunction;
+  }
 
-void Command::Execute(void)
+void FunctionCommand::SetCallbackFunction( void(* pFunction )(void *), void *clientData )
 {
-}
-
-size_t Command::AddProcessObject(itk::simple::ProcessObject *o)
-{
-  // unique add process object to set
-  m_ReferencedObjects.insert(o);
-  return m_ReferencedObjects.size();
-}
-
-size_t Command::RemoveProcessObject(const itk::simple::ProcessObject *co)
-{
-  ProcessObject *o = const_cast<ProcessObject*>(co);
-  m_ReferencedObjects.erase(o);
-  const size_t ret = m_ReferencedObjects.size();
-  if (ret==0 && m_OwnedByProcessObjects)
-    {
-    delete this;
-    }
-  return ret;
+  m_Function = std::tr1::bind(pFunction, clientData);
 }
 
 

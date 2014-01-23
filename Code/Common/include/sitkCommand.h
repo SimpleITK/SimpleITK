@@ -52,6 +52,10 @@ public:
   /** Destructor. */
   virtual ~Command(void);
 
+  /** Set/Get Command Name */
+  virtual std::string GetName() const { return this->m_Name; }
+  virtual void SetName(const std::string &name) { this->m_Name = name; }
+
   /** The method that defines action to be taken by the command */
   virtual void Execute(void);
 
@@ -67,12 +71,22 @@ protected:
   // operation.
   virtual size_t AddProcessObject(itk::simple::ProcessObject *o);
   virtual size_t RemoveProcessObject(const itk::simple::ProcessObject *o);
+
+  virtual void SetOwnedByProcessObjects(bool o) {this->m_OwnedByProcessObjects = o;}
+  virtual bool GetOwnedByProcessObjects() const {return this->m_OwnedByProcessObjects;}
+  virtual void OwnedByProcessObjectsOn() {this->SetOwnedByProcessObjects(true);}
+  virtual void OwnedByProcessObjectsOff() {this->SetOwnedByProcessObjects(false);}
   #endif
+
+
 
 private:
 
   // a set of objects who use us
   std::set<itk::simple::ProcessObject*> m_ReferencedObjects;
+
+  bool m_OwnedByProcessObjects;
+  std::string m_Name;
 };
 
 } // end namespace simple
