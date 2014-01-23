@@ -363,7 +363,7 @@ void ProcessObject::PreUpdate(itk::ProcessObject *p)
     // adapt sitk command to itk command
     SimpleAdaptorCommand::Pointer itkCommand = SimpleAdaptorCommand::New();
     itkCommand->SetSimpleCommand(cmd);
-    itkCommand->SetObjectName(itkCommand->GetObjectName()+" "+itkEvent.GetEventName());
+    itkCommand->SetObjectName(cmd->GetName()+" "+itkEvent.GetEventName());
 
     // allow derived classes to customize there observer is added.
     this->PreUpdateAddObserver(p, itkEvent, itkCommand );

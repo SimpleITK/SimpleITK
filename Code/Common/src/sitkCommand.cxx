@@ -24,7 +24,8 @@ namespace simple
 {
 
 Command::Command( )
-  : m_OwnedByProcessObjects(false)
+  : m_OwnedByProcessObjects(false),
+    m_Name("Command")
 {
 }
 
@@ -38,6 +39,7 @@ Command::~Command( )
     (*i++)->onCommandDelete(this);
     }
 }
+
 
 void Command::Execute(void)
 {

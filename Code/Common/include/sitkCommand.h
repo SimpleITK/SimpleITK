@@ -52,6 +52,10 @@ public:
   /** Destructor. */
   virtual ~Command(void);
 
+  /** Set/Get Command Name */
+  virtual std::string GetName() const { return this->m_Name; }
+  virtual void SetName(const std::string &name) { this->m_Name = name; }
+
   /** The method that defines action to be taken by the command */
   virtual void Execute(void);
 
@@ -82,6 +86,7 @@ private:
   std::set<itk::simple::ProcessObject*> m_ReferencedObjects;
 
   bool m_OwnedByProcessObjects;
+  std::string m_Name;
 };
 
 } // end namespace simple

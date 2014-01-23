@@ -251,6 +251,20 @@ TEST( Command, Test1 ) {
 
   // Does nothing
   cmd1.Execute();
+
+  EXPECT_EQ( "Command", cmd1.GetName() );
+  cmd1.SetName("SomeName");
+  EXPECT_EQ( "SomeName", cmd1.GetName() );
+
+}
+
+TEST( Command, Test2 ) {
+  // Check basic name functionality
+  namespace sitk = itk::simple;
+
+  sitk::Command cmd1;
+
+
 }
 
 TEST( FunctionCommand, Test1 ) {
@@ -266,6 +280,10 @@ TEST( FunctionCommand, Test1 ) {
 
   // Does nothing
   cmd1.Execute();
+
+  EXPECT_EQ( "FunctionCommand", cmd1.GetName() );
+  cmd1.SetName("AnotherName");
+  EXPECT_EQ( "AnotherName", cmd1.GetName() );
 }
 
 namespace

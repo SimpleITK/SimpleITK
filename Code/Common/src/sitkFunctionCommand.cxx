@@ -25,6 +25,7 @@ namespace simple
 
 FunctionCommand::FunctionCommand( )
 {
+  Command::SetName("FunctionCommand");
 }
 
 void FunctionCommand::Execute(void)
