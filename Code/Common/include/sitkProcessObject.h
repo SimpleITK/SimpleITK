@@ -63,20 +63,25 @@ namespace itk {
       // Print ourselves out
       virtual std::string ToString() const = 0;
 
-      /** return user readable name fo the filter */
+      /** return user readable name for the filter */
       virtual std::string GetName() const = 0;
 
       /** Turn debugging output on/off.
        *
        * Enabling debugging prints additional information to stdout
        * about the execution of the internal filters.
+       * @{
        */
       virtual void DebugOn();
       virtual void DebugOff();
+      /**@}*/
 
-      /** Get the value of the debug flag. */
+      /** Get the value of the debug flag.
+       * @{
+       */
       virtual bool GetDebug() const;
       virtual void SetDebug(bool debugFlag);
+      /**@}*/
 
       /** Turn default debugging output value on/off.
        *
@@ -85,10 +90,12 @@ namespace itk {
        */
       static void GlobalDefaultDebugOn();
       static void GlobalDefaultDebugOff();
+      /**@}*/
 
       /** Get the value of the default debug flag.  */
       static bool GetGlobalDefaultDebug();
       static void SetGlobalDefaultDebug(bool debugFlag);
+      /**@}*/
 
       /** Manage warnings produced by ITK.
        *
@@ -96,21 +103,29 @@ namespace itk {
        * of warnings indicating unstable state or parameters during
        * execution. It is a global value set for all ITK filters and
        * processes.
+       * @{
        */
       static void GlobalWarningDisplayOn();
       static void GlobalWarningDisplayOff();
       static void SetGlobalWarningDisplay(bool flag);
       static bool GetGlobalWarningDisplay();
+      /**@}*/
 
       /** Set the number of threads that all new process objects are
-       *  initialized with. */
+       *  initialized with.
+       * @{
+       */
       static void SetGlobalDefaultNumberOfThreads(unsigned int n);
       static unsigned int GetGlobalDefaultNumberOfThreads();
+      /**@}*/
 
       /** The number of threads used when executing a filter if the
-      * filter is multi-threaded */
+       * filter is multi-threaded
+       * @{
+       */
       virtual void SetNumberOfThreads(unsigned int n);
       virtual unsigned int GetNumberOfThreads() const;
+      /**@}*/
 
       /** \brief Add a Command Object to observer the event.
        *
@@ -198,6 +213,7 @@ namespace itk {
        *
        * That is char types are presumed to be numbers, and converted
        * to int.
+       * @{
        */
       template <typename T>
       static std::ostream & ToStringHelper(std::ostream &os, const T &v)
@@ -208,6 +224,7 @@ namespace itk {
       static std::ostream & ToStringHelper(std::ostream &os, const char &v);
       static std::ostream & ToStringHelper(std::ostream &os, const signed char &v);
       static std::ostream & ToStringHelper(std::ostream &os, const unsigned char &v);
+      /**@}*/
 
     private:
 
