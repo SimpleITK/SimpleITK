@@ -415,8 +415,8 @@ TEST(BasicFilters,Cast_Commands) {
   sitk::CastImageFilter caster;
   caster.SetOutputPixelType( sitk::sitkInt32 );
 
-  ProgressUpdate cmd1(caster);
-  caster.AddCommand(sitk::sitkProgressEvent, cmd1);
+  ProgressUpdate progressCmd(caster);
+  caster.AddCommand(sitk::sitkProgressEvent, progressCmd);
 
   CountCommand abortCmd(caster);
   caster.AddCommand(sitk::sitkAbortEvent, abortCmd);
@@ -440,7 +440,7 @@ TEST(BasicFilters,Cast_Commands) {
   sitk::Image out = caster.Execute(img);
   EXPECT_EQ ( "6ceea0011178a955b5be2d545d107199", sitk::Hash(out, sitk::HashImageFilter::MD5));
 
-  EXPECT_EQ ( 1.0f, cmd1.m_Progress );
+  EXPECT_EQ ( 1.0f, progressCmd.m_Progress );
   EXPECT_EQ ( 0, abortCmd.m_Count );
   EXPECT_EQ ( 1, deleteCmd.m_Count );
   EXPECT_EQ ( 1, endCmd.m_Count );
@@ -527,11 +527,37 @@ TEST(BasicFilters,Statistics) {
 }
 
 TEST(BasicFilters,LabelStatistics) {
-  itk::simple::Image image = itk::simple::ReadImage ( dataFinder.GetFile ( "Input/cthead1.png" ) );
-  itk::simple::Image labels = itk::simple::ReadImage ( dataFinder.GetFile ( "Input/2th_cthead1.mha" ) );
+  namespace sitk = itk::simple;
 
-  itk::simple::LabelStatisticsImageFilter stats;
+  sitk::Image image = sitk::ReadImage ( dataFinder.GetFile ( "Input/cthead1.png" ) );
+  sitk::Image labels = sitk::ReadImage ( dataFinder.GetFile ( "Input/2th_cthead1.mha" ) );
+
+  sitk::LabelStatisticsImageFilter stats;
+
+
+  ProgressUpdate progressCmd(stats);
+  stats.AddCommand(sitk::sitkProgressEvent, progressCmd);
+
+  CountCommand abortCmd(stats);
+  stats.AddCommand(sitk::sitkAbortEvent, abortCmd);
+
+  CountCommand deleteCmd(stats);
+  stats.AddCommand(sitk::sitkDeleteEvent, deleteCmd);
+
+  CountCommand endCmd(stats);
+  stats.AddCommand(sitk::sitkEndEvent, endCmd);
+
+  CountCommand iterCmd(stats);
+  stats.AddCommand(sitk::sitkIterationEvent, iterCmd);
+
+  CountCommand startCmd(stats);
+  stats.AddCommand(sitk::sitkStartEvent, startCmd);
+
+  CountCommand userCmd(stats);
+  stats.AddCommand(sitk::sitkUserEvent, userCmd);
+
   stats.DebugOn();
+
   stats.Execute ( image, labels );
 
   EXPECT_EQ( stats.GetName(), "LabelStatisticsImageFilter" );
@@ -553,16 +579,24 @@ TEST(BasicFilters,LabelStatistics) {
   EXPECT_EQ( 0, stats.GetBoundingBox(0)[2] );
   EXPECT_EQ( 255, stats.GetBoundingBox(0)[3] );
 
-  const itk::simple::LabelStatisticsImageFilter::LabelListingType myLabels = stats.GetValidLabels();
+  EXPECT_EQ ( 1.0f, progressCmd.m_Progress );
+  EXPECT_EQ ( 0, abortCmd.m_Count );
+  EXPECT_EQ ( 1, deleteCmd.m_Count );
+  EXPECT_EQ ( 1, endCmd.m_Count );
+  EXPECT_EQ ( 0, iterCmd.m_Count );
+  EXPECT_EQ ( 1, startCmd.m_Count );
+  EXPECT_EQ ( 0, userCmd.m_Count );
+
+  const sitk::LabelStatisticsImageFilter::LabelListingType myLabels = stats.GetValidLabels();
   EXPECT_EQ ( myLabels.size() , 3u);
 
-  const itk::simple::LabelStatisticsImageFilter::LabelStatisticsMap myMap = stats.GetLabelStatisticsMap();
+  const sitk::LabelStatisticsImageFilter::LabelStatisticsMap myMap = stats.GetLabelStatisticsMap();
   EXPECT_EQ( myLabels.size() , myMap.size() );
 
-  const itk::simple::MeasurementMap myMeasurementMap = stats.GetMeasurementMap(0);
+  const sitk::MeasurementMap myMeasurementMap = stats.GetMeasurementMap(0);
   EXPECT_EQ( myMeasurementMap.size(), 8u ); //4 measurements produced
 
-  const itk::simple::BasicMeasurementMap myBasicMeasurementMap =
+  const sitk::BasicMeasurementMap myBasicMeasurementMap =
     myMeasurementMap.GetBasicMeasurementMap();
   EXPECT_EQ( myBasicMeasurementMap.size(), 8u ); //4 measurements produced
 
