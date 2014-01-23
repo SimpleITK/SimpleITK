@@ -32,13 +32,13 @@ namespace itk.simple.examples {
       }
 
       // Read input image
-      var input = SimpleITK.ReadImage(args[0]);
+      itk.simple.Image input = SimpleITK.ReadImage(args[0]);
 
       // Cast to we know the the pixel type
       input = SimpleITK.Cast(input, PixelId.sitkFloat32);
 
       // calculate the nubmer of pixels
-      var size = input.GetSize();
+      VectorUInt32 size = input.GetSize();
       int len = 1;
       for (int dim = 0; dim < input.GetDimension(); dim++) {
         len *= (int)size[dim];
@@ -69,9 +69,8 @@ namespace itk.simple.examples {
 
       // (2) Copy the buffer to a "safe" array (i.e. a fully typed array)
       // (note that this means memory is duplicated)
-      var bufferAsArray = new float[len]; // Allocates new memory the size of input
-        Marshal.Copy(source: buffer, destination: bufferAsArray,
-                     startIndex: 0, length: len);
+      float[] bufferAsArray = new float[len]; // Allocates new memory the size of input
+      Marshal.Copy(buffer, bufferAsArray, 0, len);
       double total = 0.0;
       for (int j = 0; j < size[1]; j++) {
         for (int i = 0; i < size[0]; i++) {
