@@ -273,7 +273,7 @@ macro(ADD_GOOGLE_TESTS target)
 
     # Convert the C++ code into a short test name
     foreach(hit ${AllTests})
-      string(REGEX REPLACE ".*\\(( *[A-Za-z_0-9]+)[, ]*([A-Za-z_0-9]+) *\\).*" "\\1.\\2" test_name ${hit})
+      string(REGEX REPLACE ".*\\( *( *[A-Za-z_0-9]+)[, ]*([A-Za-z_0-9]+) *\\).*" "\\1.\\2" test_name ${hit})
       set ( AllTestsHits ${AllTestsHits} ${test_name} )
     endforeach()
     foreach(hit ${LongTests})
