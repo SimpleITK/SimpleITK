@@ -160,7 +160,7 @@ TEST( ProcessObject, Command_Register ) {
   po1.reset();
   }
 
-  // Case 3b: multiple commands, process object deleted first
+  // Case 3b: multiple commands, command deleted first
   {
   std::auto_ptr<sitk::CastImageFilter> po1(new sitk::CastImageFilter());
   std::auto_ptr<sitk::Command> cmd1(new sitk::Command());
@@ -171,6 +171,9 @@ TEST( ProcessObject, Command_Register ) {
   po1->AddCommand(sitk::sitkEndEvent, *cmd3);
   po1.reset();
 
+  EXPECT_TRUE(po1->HasCommand(sitk::sitkAnyEvent));
+  EXPECT_TRUE(po1->HasCommand(sitk::sitkStartEvent));
+  EXPECT_TRUE(po1->HasCommand(sitk::sitkEndEvent));
   }
 
 
