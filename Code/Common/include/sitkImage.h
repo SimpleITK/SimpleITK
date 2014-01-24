@@ -318,7 +318,7 @@ namespace simple
      * a 1-D array. For example a 3D image buffer should be accessed:
      * \code
      * uint8_t *buffer = img->GetBufferAsUInt8();
-     * buffer[c + numComponents*(x+ xSize* (y*+ySize*z))]
+     * buffer[c + numComponents*(x+xSize*(y+ySize*z))]
      * \endcode
      *
      * The pointer to the buffer is not referenced
