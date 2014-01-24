@@ -146,6 +146,9 @@ namespace itk {
        * have valid values during events, and access the underlying
        * ITK object.
        *
+       * Deleting a registered command during execution causes
+       * program termination.
+       *
        * \note: the return value is reserved for latter usage
        */
       virtual int AddCommand(itk::simple::EventEnum event, itk::simple::Command &cmd);

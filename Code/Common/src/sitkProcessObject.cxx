@@ -436,6 +436,17 @@ void ProcessObject::OnActiveProcessDelete( )
 
 void ProcessObject::onCommandDelete(const itk::simple::Command *cmd) throw()
 {
+  if (this->m_ActiveProcess)
+    {
+    // no current way to delete the command from the ITK object, fatal
+    // due to the ITK process object having an invalid call-back
+    std::cerr << "sitk::Fatal: Cannot delete Command during execution!" << std::endl;
+    std::terminate();
+    // It would be possible to iterate through the registered
+    // commands with the active process, and delete the ones referring
+    // to cmd, but that doesn't seem work the code.
+    }
+
   // remove all uses of command
   using namespace std::tr1::placeholders;
   m_Commands.remove_if(std::tr1::bind(rm_pred,cmd,_1));
