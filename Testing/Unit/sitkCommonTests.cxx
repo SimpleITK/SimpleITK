@@ -294,6 +294,7 @@ TEST( ProcessObject, Command_Ownership ) {
   delete cmd1;
   EXPECT_EQ(1,destroyedCount);
   }
+  EXPECT_EQ(2,destroyedCount);
 
   // case 1
   // single po, multiple cmds
@@ -322,9 +323,9 @@ TEST( ProcessObject, Command_Ownership ) {
   cmd2->v = false;
 
   delete cmd3;
-  EXPECT_EQ(2,destroyedCount);
-  }
   EXPECT_EQ(3,destroyedCount);
+  }
+  EXPECT_EQ(4,destroyedCount);
 
   // case 2
   // cmd registered to multiple PO
@@ -349,9 +350,9 @@ TEST( ProcessObject, Command_Ownership ) {
 
   EXPECT_TRUE(po1->HasCommand(sitk::sitkAnyEvent));
   EXPECT_TRUE(po1->HasCommand(sitk::sitkStartEvent));
-  EXPECT_EQ(3,destroyedCount);
-  }
   EXPECT_EQ(4,destroyedCount);
+  }
+  EXPECT_EQ(5,destroyedCount);
 
 
 }
