@@ -333,7 +333,7 @@ if ( ${BUILD_EXAMPLES} )
     $<TARGET_FILE:SimpleGaussianFunctional>
     "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
     2.0
-    "${TEST_HARNESS_TEMP_DIRECTORY}/CXX.SimpleGaussian.nrrd"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/CXX.SimpleGaussianFunctional.nrrd"
     )
 endif()
 
@@ -449,6 +449,9 @@ if ( WRAP_JAVA )
       )
 
     list( APPEND compiled_java_tests "${CMAKE_CURRENT_BINARY_DIR}/${_java_file_class}")
+
+    # set in parent scope to accumulate list during function execution
+    set( compiled_java_tests ${compiled_java_tests} PARENT_SCOPE)
 
     add_test(NAME Java.${name}
       COMMAND "${ITK_TEST_DRIVER}"
