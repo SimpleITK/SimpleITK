@@ -440,6 +440,7 @@ TEST(BasicFilters,Cast_Commands) {
   sitk::Image out = caster.Execute(img);
   EXPECT_EQ ( "6ceea0011178a955b5be2d545d107199", sitk::Hash(out, sitk::HashImageFilter::MD5));
 
+  EXPECT_EQ ( 1.0f, caster.GetProgress() );
   EXPECT_EQ ( 1.0f, progressCmd.m_Progress );
   EXPECT_EQ ( 0, abortCmd.m_Count );
   EXPECT_EQ ( 1, deleteCmd.m_Count );
@@ -579,6 +580,7 @@ TEST(BasicFilters,LabelStatistics) {
   EXPECT_EQ( 0, stats.GetBoundingBox(0)[2] );
   EXPECT_EQ( 255, stats.GetBoundingBox(0)[3] );
 
+  EXPECT_EQ ( 1.0f, stats.GetProgress() );
   EXPECT_EQ ( 1.0f, progressCmd.m_Progress );
   EXPECT_EQ ( 0, abortCmd.m_Count );
   EXPECT_EQ ( 1, deleteCmd.m_Count );
