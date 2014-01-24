@@ -233,7 +233,49 @@ TEST( ProcessObject, Command_Add ) {
   EXPECT_TRUE(po1.HasCommand(sitk::sitkUserEvent));
 }
 
+TEST( ProcessObjectDeathTest, DeleteCommandActiveProcess )
+{
+  // if a command is deleted while the process is active, it is
+  // expected for the program to terminate.
+  namespace sitk = itk::simple;
 
+  class DeleteCommandAtCommand
+  : public ProcessObjectCommand
+  {
+  public:
+    DeleteCommandAtCommand(itk::simple::ProcessObject &po, float abortAt, Command *cmd)
+      : ProcessObjectCommand(po),
+        m_AbortAt(abortAt),
+        m_Cmd(cmd)
+      {
+      }
+
+    virtual void Execute( )
+      {
+        if ( m_Process.GetProgress() >= m_AbortAt )
+          delete m_Cmd;
+      }
+
+    float m_AbortAt;
+    Command *m_Cmd;
+};
+
+  sitk::CastImageFilter po;
+  sitk::Image img(100,100,100, sitk::sitkUInt16);
+
+  sitk::Command *cmd1 = new sitk::Command();
+  DeleteCommandAtCommand cmd2(po, .01, cmd1);
+
+  po.AddCommand(sitk::sitkAnyEvent, *cmd1);
+  po.AddCommand(sitk::sitkProgressEvent, cmd2);
+
+
+  po.SetNumberOfThreads(1);
+  ::testing::FLAGS_gtest_death_test_style = "fast";
+
+  ASSERT_DEATH(po.Execute(img), "Cannot delete Command during execution");
+
+}
 
 TEST( Command, Test1 ) {
   // Basic test.
