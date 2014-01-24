@@ -355,33 +355,44 @@ void ProcessObject::PreUpdate(itk::ProcessObject *p)
 {
   assert(p);
 
-  // add command on active process deletion
-  itk::SimpleMemberCommand<Self>::Pointer onDelete = itk::SimpleMemberCommand<Self>::New();
-  onDelete->SetCallbackFunction(this, &Self::OnActiveProcessDelete );
-  p->AddObserver(itk::DeleteEvent(), onDelete);
-
-  this->m_ActiveProcess = p;
-
   // propagate number of threads
   p->SetNumberOfThreads(this->GetNumberOfThreads());
 
-  // register commands
-  for (std::list<EventCommandPairType>::iterator i = m_Commands.begin();
-       i != m_Commands.end();
-       ++i)
+  try
     {
-    const itk::EventObject &itkEvent = GetITKEventObject(i->first);
+    this->m_ActiveProcess = p;
 
-    Command *cmd = i->second;
+    // register commands
+    for (std::list<EventCommandPairType>::iterator i = m_Commands.begin();
+         i != m_Commands.end();
+         ++i)
+      {
+      const itk::EventObject &itkEvent = GetITKEventObject(i->first);
 
-    // adapt sitk command to itk command
-    SimpleAdaptorCommand::Pointer itkCommand = SimpleAdaptorCommand::New();
-    itkCommand->SetSimpleCommand(cmd);
-    itkCommand->SetObjectName(cmd->GetName()+" "+itkEvent.GetEventName());
+      Command *cmd = i->second;
 
-    // allow derived classes to customize there observer is added.
-    this->PreUpdateAddObserver(p, itkEvent, itkCommand );
+      // adapt sitk command to itk command
+      SimpleAdaptorCommand::Pointer itkCommand = SimpleAdaptorCommand::New();
+      itkCommand->SetSimpleCommand(cmd);
+      itkCommand->SetObjectName(cmd->GetName()+" "+itkEvent.GetEventName());
+
+      // allow derived classes to customize there observer is added.
+      this->PreUpdateAddObserver(p, itkEvent, itkCommand);
+      }
+
+    // add command on active process deletion
+    itk::SimpleMemberCommand<Self>::Pointer onDelete = itk::SimpleMemberCommand<Self>::New();
+    onDelete->SetCallbackFunction(this, &Self::OnActiveProcessDelete);
+    p->AddObserver(itk::DeleteEvent(), onDelete);
+
     }
+  catch (...)
+    {
+    this->m_ActiveProcess = NULL;
+    throw;
+    }
+
+
 
   if (this->GetDebug())
      {
@@ -411,13 +422,31 @@ itk::ProcessObject *ProcessObject::GetActiveProcess( )
 
 void ProcessObject::OnActiveProcessDelete( )
 {
-  this->m_ProgressMeasurement = this->m_ActiveProcess->GetProgress();
+  if (this->m_ActiveProcess)
+    {
+    this->m_ProgressMeasurement = this->m_ActiveProcess->GetProgress();
+    }
+  else
+    {
+    this->m_ProgressMeasurement = 0.0f;
+    }
   this->m_ActiveProcess = NULL;
 }
 
 
 void ProcessObject::onCommandDelete(const itk::simple::Command *cmd) throw()
 {
+  if (this->m_ActiveProcess)
+    {
+    // no current way to delete the command from the ITK object, fatal
+    // due to the ITK process object having an invalid call-back
+    std::cerr << "sitk::Fatal: Cannot delete Command during execution!" << std::endl;
+    std::terminate();
+    // It would be possible to iterate through the registered
+    // commands with the active process, and delete the ones referring
+    // to cmd, but that doesn't seem work the code.
+    }
+
   // remove all uses of command
   using namespace std::tr1::placeholders;
   m_Commands.remove_if(std::tr1::bind(rm_pred,cmd,_1));
