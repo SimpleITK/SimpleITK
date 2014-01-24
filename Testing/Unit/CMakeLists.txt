@@ -400,6 +400,12 @@ if ( WRAP_CSHARP )
     "2.0"
     "${TEST_HARNESS_TEMP_DIRECTORY}/CSharp.SimpleGaussian.nrrd" )
 
+  add_csharp_test( Example.ImageGetBuffer
+    "${SimpleITK_SOURCE_DIR}/Examples/ImageGetBuffer.cs"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd")
+  set_tests_properties( CSharp.Example.ImageGetBuffer
+    PROPERTIES PASS_REGULAR_EXPRESSION "total: 1009713" )
+
   #
   # CSharp Tests
   #
