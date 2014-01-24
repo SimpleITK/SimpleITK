@@ -277,6 +277,7 @@ TEST( ProcessObject, Command_Ownership ) {
     bool v;
   };
 
+  {
   // test set/get/on/off
   HeapCommand cmd;
   EXPECT_FALSE(cmd.GetOwnedByProcessObjects());
@@ -292,6 +293,7 @@ TEST( ProcessObject, Command_Ownership ) {
   EXPECT_EQ(0,destroyedCount);
   delete cmd1;
   EXPECT_EQ(1,destroyedCount);
+  }
 
   // case 1
   // single po, multiple cmds
