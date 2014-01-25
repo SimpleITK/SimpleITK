@@ -18,6 +18,8 @@
 
 #include "sitkInterpolator.h"
 
+#define sitkInterpolatorToStringCaseMacro(n) case sitk##n: return ( os << #n )
+
 namespace itk
 {
 namespace simple
@@ -27,16 +29,16 @@ std::ostream& operator<<(std::ostream& os, const InterpolatorEnum i)
 {
   switch (i)
     {
-    case sitkNearestNeighbor: return ( os << "NearestNeighbor" );
-    case sitkLinear: return ( os << "Linear" );
-    case sitkBSpline: return ( os << "BSpline" );
-    case sitkGaussian: return ( os << "Gaussian" );
-    case sitkLabelGaussian: return ( os << "LabelGaussian" );
-    case sitkHammingWindowedSinc: return ( os << "HammingWindowedSinc" );
-    case sitkCosineWindowedSinc: return ( os << "CosineWindowedSinc" );
-    case sitkWelchWindowedSinc: return ( os << "WelchWindowedSinc" );
-    case sitkLanczosWindowedSinc: return ( os << "LanczosWindowedSinc" );
-    case sitkBlackmanWindowedSinc: return ( os << "BlackmanWindowedSinc" );
+    sitkInterpolatorToStringCaseMacro(NearestNeighbor);
+    sitkInterpolatorToStringCaseMacro(Linear);
+    sitkInterpolatorToStringCaseMacro(BSpline);
+    sitkInterpolatorToStringCaseMacro(Gaussian);
+    sitkInterpolatorToStringCaseMacro(LabelGaussian);
+    sitkInterpolatorToStringCaseMacro(HammingWindowedSinc);
+    sitkInterpolatorToStringCaseMacro(CosineWindowedSinc);
+    sitkInterpolatorToStringCaseMacro(WelchWindowedSinc);
+    sitkInterpolatorToStringCaseMacro(LanczosWindowedSinc);
+    sitkInterpolatorToStringCaseMacro(BlackmanWindowedSinc);
     }
   return os;
 }
