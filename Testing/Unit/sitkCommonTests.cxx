@@ -277,6 +277,39 @@ TEST( ProcessObjectDeathTest, DeleteCommandActiveProcess )
 
 }
 
+
+TEST( Event, Test1 )
+{
+  // Test print of EventEnum with output operator
+  namespace sitk = itk::simple;
+
+  std::stringstream ss;
+  ss << sitk::sitkAnyEvent;
+  EXPECT_EQ("AnyEvent", ss.str());
+  ss.str("");
+  ss << sitk::sitkAbortEvent;
+  EXPECT_EQ("AbortEvent", ss.str());
+  ss.str("");
+  ss << sitk::sitkDeleteEvent;
+  EXPECT_EQ("DeleteEvent", ss.str());
+  ss.str("");
+  ss << sitk::sitkEndEvent;
+  EXPECT_EQ("EndEvent", ss.str());
+  ss.str("");
+  ss << sitk::sitkIterationEvent;
+  EXPECT_EQ("IterationEvent", ss.str());
+  ss.str("");
+  ss << sitk::sitkProgressEvent;
+  EXPECT_EQ("ProgressEvent", ss.str());
+  ss.str("");
+  ss << sitk::sitkStartEvent;
+  EXPECT_EQ("StartEvent", ss.str());
+  ss.str("");
+  ss << sitk::sitkUserEvent;
+  EXPECT_EQ("UserEvent", ss.str());
+}
+
+
 TEST( Command, Test1 ) {
   // Basic test.
   namespace sitk = itk::simple;
