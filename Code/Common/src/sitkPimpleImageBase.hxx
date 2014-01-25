@@ -201,20 +201,21 @@ namespace itk
         sitkExceptionMacro("vector dimension mismatch");
         }
 
-      typename ImageType::IndexType index;
-      this->m_Image->TransformPhysicalPointToIndex( sitkSTLVectorToITK< typename ImageType::PointType> ( pt ), index);
 
-      return sitkITKVectorToSTL<int64_t>( index );
+        typename ImageType::IndexType index;
+        this->m_Image->TransformPhysicalPointToIndex( sitkSTLVectorToITK< typename ImageType::PointType> ( pt ), index);
+
+        return sitkITKVectorToSTL<int64_t>( index );
       }
 
     // Index to Physical Point
     virtual std::vector<double> TransformIndexToPhysicalPoint( const std::vector<int64_t> &idx ) const
       {
-        if (idx.size() != ImageType::ImageDimension)
-        {
-        sitkExceptionMacro("vector dimension mismatch");
-        }
 
+        if (idx.size() != ImageType::ImageDimension)
+          {
+          sitkExceptionMacro("vector dimension mismatch");
+          }
 
         typename ImageType::IndexType index;
         for ( unsigned int i = 0; i < ImageType::ImageDimension; ++i )
@@ -222,8 +223,43 @@ namespace itk
           index[i] = idx[i];
           }
 
+
+        typename ImageType::PointType point;
+        this->m_Image->TransformIndexToPhysicalPoint( index, point );
+        return sitkITKVectorToSTL<double>( point );
+      }
+
+    //  Physical Point To Continuous Index
+    virtual std::vector<double> TransformPhysicalPointToContinuousIndex( const std::vector<double> &pt ) const
+      {
+        if (pt.size() != ImageType::ImageDimension)
+        {
+        sitkExceptionMacro("vector dimension mismatch");
+        }
+
+        typename itk::ContinuousIndex<double, ImageType::ImageDimension> index;
+        this->m_Image->TransformPhysicalPointToContinuousIndex(sitkSTLVectorToITK< typename ImageType::PointType> ( pt ), index);
+
+        return sitkITKVectorToSTL<double>( index );
+      }
+
+    // Continuous Index to Physical Point
+    virtual std::vector<double> TransformContinuousIndexToPhysicalPoint( const std::vector<double> &idx ) const
+      {
+        if (idx.size() != ImageType::ImageDimension)
+        {
+        sitkExceptionMacro("vector dimension mismatch");
+        }
+
+
+        typename itk::ContinuousIndex<double, ImageType::ImageDimension> index;
+        for ( unsigned int i = 0; i < ImageType::ImageDimension; ++i )
+          {
+          index[i] = idx[i];
+          }
+
       typename ImageType::PointType point;
-      this->m_Image->TransformIndexToPhysicalPoint( index, point);
+      this->m_Image->TransformContinuousIndexToPhysicalPoint(index, point);
 
       return sitkITKVectorToSTL<double>( point );
       }
