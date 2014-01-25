@@ -254,6 +254,13 @@ namespace itk
     }
 
 
+    // Physical Point to Continuous Index
+    std::vector< int64_t > Image::TransformPhysicalPointToIndex( const std::vector< double > &pt ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->TransformPhysicalPointToIndex( pt );
+    }
+
     // Index to Physical Point
     std::vector< double > Image::TransformIndexToPhysicalPoint( const std::vector< int64_t > &idx ) const
     {
@@ -261,11 +268,17 @@ namespace itk
       return this->m_PimpleImage->TransformIndexToPhysicalPoint( idx );
     }
 
-    // Physical Point to Index
-    std::vector< int64_t > Image::TransformPhysicalPointToIndex( const std::vector< double > &pt ) const
+    // Physical Point to Continuous Index
+    std::vector< double > Image::TransformPhysicalPointToContinuousIndex( const std::vector< double > &pt ) const
     {
       assert( m_PimpleImage );
-      return this->m_PimpleImage->TransformPhysicalPointToIndex( pt );
+      return this->m_PimpleImage->TransformPhysicalPointToContinuousIndex( pt );
+    }
+    // Continuous Index to Physical Point
+    std::vector< double > Image::TransformContinuousIndexToPhysicalPoint( const std::vector< double > &idx ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->TransformContinuousIndexToPhysicalPoint( idx );
     }
 
     int8_t Image::GetPixelAsInt8( const std::vector<uint32_t> &idx) const

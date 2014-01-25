@@ -189,6 +189,12 @@ namespace simple
     /** Transform physical point to index */
     std::vector< int64_t > TransformPhysicalPointToIndex( const std::vector< double >& point ) const;
 
+    /** Transform physical point to continuous index */
+    std::vector< double > TransformPhysicalPointToContinuousIndex( const std::vector< double >& point ) const;
+
+    /** Transform continuous index to physical point */
+    std::vector< double > TransformContinuousIndexToPhysicalPoint( const std::vector< double > &index) const;
+
     std::vector< unsigned int > GetSize( void ) const;
 
     unsigned int GetHeight( void ) const;
