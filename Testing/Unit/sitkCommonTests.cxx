@@ -477,3 +477,41 @@ TEST( FunctionCommand, Test2 ) {
   EXPECT_EQ(97,gValue);
   EXPECT_EQ(0,mfct.v);
 }
+
+TEST( Interpolator, Test1 )
+{
+  // Test print of InterpolatorEnum with output operator
+  namespace sitk = itk::simple;
+
+  std::stringstream ss;
+  ss << sitk::sitkNearestNeighbor;
+  EXPECT_EQ("NearestNeighbor", ss.str());
+  ss.str("");
+  ss << sitk::sitkLinear;
+  EXPECT_EQ("Linear", ss.str());
+  ss.str("");
+  ss << sitk::sitkBSpline;
+  EXPECT_EQ("BSpline", ss.str());
+  ss.str("");
+  ss << sitk::sitkGaussian;
+  EXPECT_EQ("Gaussian", ss.str());
+  ss.str("");
+  ss << sitk::sitkLabelGaussian;
+  EXPECT_EQ("LabelGaussian", ss.str());
+  ss.str("");
+  ss << sitk::sitkHammingWindowedSinc;
+  EXPECT_EQ("HammingWindowedSinc", ss.str());
+  ss.str("");
+  ss << sitk::sitkCosineWindowedSinc;
+  EXPECT_EQ("CosineWindowedSinc", ss.str());
+  ss.str("");
+  ss << sitk::sitkWelchWindowedSinc;
+  EXPECT_EQ("WelchWindowedSinc", ss.str());
+  ss.str("");
+  ss << sitk::sitkLanczosWindowedSinc;
+  EXPECT_EQ("LanczosWindowedSinc", ss.str());
+  ss.str("");
+  ss << sitk::sitkBlackmanWindowedSinc;
+  EXPECT_EQ("BlackmanWindowedSinc", ss.str());
+
+}
