@@ -50,13 +50,6 @@ std::ostream& operator<< (std::ostream& os, const std::vector<T>& v)
   return os << "]";
 }
 
-
-template <typename T, typename U>
-bool operator==( const std::vector<T>& v, const std::vector<U> &u)
-{
-  return v.size() != u.size() && std::equal( v.begin(), v.end(), u.begin() );
-}
-
 }
 
 
