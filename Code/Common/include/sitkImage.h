@@ -158,22 +158,30 @@ namespace simple
      */
     unsigned int GetNumberOfComponentsPerPixel( void ) const;
 
-    /** Get/Set the Origin */
+    /** Get/Set the Origin
+     * @{
+     */
     std::vector< double > GetOrigin( void ) const;
     void SetOrigin( const std::vector< double > &origin );
+    /** @} */
 
-    /** Get the Spacing */
+    /** Get/Set the Spacing
+     * @{
+     */
     std::vector< double > GetSpacing( void ) const;
     void SetSpacing( const std::vector< double > &spacing );
+    /** @} */
 
     /** \brief Set/Get the Direction
      *
      * Internally, the Direction is represented by a matrix 2x2 for a
      * 2D and and 3x3 for a 3D image. The matrix is passed as a 1D
      * array in row-major form.
+     * @{
      */
     std::vector< double > GetDirection() const;
     void SetDirection ( const std::vector< double > &direction );
+    /** @} */
 
     /** Transform index to physical point */
     std::vector< double > TransformIndexToPhysicalPoint( const std::vector< int64_t > &index ) const;
