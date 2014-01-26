@@ -68,6 +68,8 @@ namespace itk
 
     virtual std::vector<int64_t> TransformPhysicalPointToIndex( const std::vector<double> &pt) const = 0;
     virtual std::vector<double> TransformIndexToPhysicalPoint( const std::vector<int64_t> &idx) const = 0;
+    virtual std::vector<double> TransformPhysicalPointToContinuousIndex( const std::vector<double> &pt) const = 0;
+    virtual std::vector<double> TransformContinuousIndexToPhysicalPoint( const std::vector<double> &idx) const = 0;
 
     virtual std::string ToString() const = 0;
 

@@ -50,13 +50,6 @@ std::ostream& operator<< (std::ostream& os, const std::vector<T>& v)
   return os << "]";
 }
 
-
-template <typename T, typename U>
-bool operator==( const std::vector<T>& v, const std::vector<U> &u)
-{
-  return v.size() != u.size() && std::equal( v.begin(), v.end(), u.begin() );
-}
-
 }
 
 
@@ -349,21 +342,34 @@ TEST_F(Image,Transforms) {
   // Origin is [1.1, 2.2, 3.3]
   // Spacing is [0.5, 0.5, 1.5]
 
+  {
   // Index to Physical Point
-  std::vector<int64_t> idx;
-  idx.push_back(1);
-  idx.push_back(1);
-  idx.push_back(1);
+  std::vector<int64_t> idx(3,1u);
   std::vector<double> pt = shortImage->TransformIndexToPhysicalPoint(idx);
-  EXPECT_EQ(pt[0], 1.6) << " Pt to Idx [0]";
-  EXPECT_EQ(pt[1], 2.7) << " Pt to Idx [1]";
-  EXPECT_EQ(pt[2], 4.8) << " Pt to Idx [2]";
+  EXPECT_EQ(1.6, pt[0]) << " Pt to Idx [0]";
+  EXPECT_EQ(2.7, pt[1]) << " Pt to Idx [1]";
+  EXPECT_EQ(4.8, pt[2]) << " Pt to Idx [2]";
+
 
   // Physical Point to Index
   idx = shortImage->TransformPhysicalPointToIndex(pt);
-  EXPECT_EQ(idx[0], 1u) << " Idx to Pt [0]";
-  EXPECT_EQ(idx[1], 1u) << " Idx to Pt [1]";
-  EXPECT_EQ(idx[2], 1u) << " Idx to Pt [2]";
+  EXPECT_EQ(1u, idx[0]) << " Idx to Pt [0]";
+  EXPECT_EQ(1u, idx[1]) << " Idx to Pt [1]";
+  EXPECT_EQ(1u, idx[2]) << " Idx to Pt [2]";
+  }
+
+  {
+  std::vector<double> idx(3,0.5);
+  std::vector<double> pt = shortImage->TransformContinuousIndexToPhysicalPoint(idx);
+  EXPECT_EQ(1.35, pt[0]) << " Pt to Idx [0]";
+  EXPECT_EQ(2.45, pt[1]) << " Pt to Idx [1]";
+  EXPECT_EQ(4.05, pt[2]) << " Pt to Idx [2]";
+
+  idx = shortImage->TransformPhysicalPointToContinuousIndex(pt);
+  EXPECT_EQ(.5, idx[0]) << " Idx to Pt [0]";
+  EXPECT_EQ(.5, idx[1]) << " Idx to Pt [1]";
+  EXPECT_EQ(.5, idx[2]) << " Idx to Pt [2]";
+  }
 }
 
 TEST_F(Image,Properties) {
