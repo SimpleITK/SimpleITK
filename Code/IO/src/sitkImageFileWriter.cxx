@@ -24,6 +24,7 @@
 
 namespace itk {
 namespace simple {
+
 void WriteImage ( const Image& image, const std::string &inFileName, bool inUseCompression )
   {
     ImageFileWriter writer;
@@ -41,6 +42,23 @@ ImageFileWriter::ImageFileWriter()
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
   }
 
+
+std::string ImageFileWriter::ToString() const
+  {
+  std::ostringstream out;
+  out << "itk::simple::ImageFileWriter";
+  out << std::endl;
+
+  out << "  UseCompression: ";
+  this->ToStringHelper(out, this->m_UseCompression);
+  out << std::endl;
+
+  out << "  FileName: \"";
+  this->ToStringHelper(out, this->m_FileName);
+  out << "\"" << std::endl;
+
+  return out.str();
+  }
 
   ImageFileWriter::Self&
   ImageFileWriter::SetUseCompression( bool UseCompression )
@@ -92,6 +110,9 @@ ImageFileWriter& ImageFileWriter::ExecuteInternal( const Image& inImage )
     writer->SetUseCompression( this->m_UseCompression );
     writer->SetFileName ( this->m_FileName.c_str() );
     writer->SetInput ( image );
+
+    this->PreUpdate( writer.GetPointer() );
+
     writer->Update();
 
     return *this;

@@ -3,8 +3,11 @@ set ( SimpleITKCommonSource
   sitkImageExplicit.cxx
   sitkProcessObject.cxx
   sitkTransform.cxx
+  sitkCommand.cxx
+  sitkFunctionCommand.cxx
   sitkPixelIDValues.cxx
   sitkExceptionObject.cxx
+  sitkInterpolator.cxx
   sitkVersion.cxx
   ../include/Ancillary/hl_md5.cxx
   ../include/Ancillary/hl_sha1.cxx

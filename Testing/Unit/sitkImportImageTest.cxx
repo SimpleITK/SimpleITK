@@ -87,6 +87,8 @@ TEST_F(Import,Required) {
 
   // has ToString method
   std::cout << importer.ToString() << std::endl;
+
+  EXPECT_EQ( "ImportImageFilter", importer.GetName() );
 }
 
 TEST_F(Import,BasicUsage) {

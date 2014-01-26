@@ -48,6 +48,12 @@ namespace itk {
 
       ImportImageFilter();
 
+      /** Print ourselves to string */
+      virtual std::string ToString() const;
+
+      /** return user readable name fo the filter */
+      virtual std::string GetName() const { return std::string("ImportImageFilter"); }
+
       Self& SetSize( const std::vector< unsigned int > &size );
       const std::vector< unsigned int > &GetSize( ) const;
 
@@ -70,8 +76,6 @@ namespace itk {
       Self& SetBufferAsUInt64( uint64_t * buffer, unsigned int numberOfComponents = 1 );
       Self& SetBufferAsFloat( float * buffer, unsigned int numberOfComponents = 1 );
       Self& SetBufferAsDouble( double * buffer, unsigned int numberOfComponents = 1 );
-
-      std::string ToString() const;
 
       Image Execute();
 
