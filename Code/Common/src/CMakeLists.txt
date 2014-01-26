@@ -7,6 +7,7 @@ set ( SimpleITKCommonSource
   sitkFunctionCommand.cxx
   sitkPixelIDValues.cxx
   sitkExceptionObject.cxx
+  sitkKernel.cxx
   sitkEvent.cxx
   sitkInterpolator.cxx
   sitkVersion.cxx
