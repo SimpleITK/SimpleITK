@@ -15,31 +15,31 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkEvent_h
-#define __sitkEvent_h
 
-#include "sitkCommon.h"
-#include <ostream>
+#include "sitkEvent.h"
 
-namespace itk {
-namespace simple {
+#define sitkEventToStringCaseMacro(n) case sitk##n##Event: return ( os << #n << "Event" )
 
-enum EventEnum {
-  sitkAnyEvent = 0,
-  sitkAbortEvent = 1,
-  sitkDeleteEvent = 2,
-  sitkEndEvent = 3,
-  sitkIterationEvent = 4,
-  sitkProgressEvent = 5,
-  sitkStartEvent = 6,
-  sitkUserEvent = 7
-};
+namespace itk
+{
+namespace simple
+{
 
-#ifndef SWIG
-SITKCommon_EXPORT std::ostream& operator<<(std::ostream& os, const EventEnum k);
-#endif
+std::ostream& operator<<(std::ostream& os, const EventEnum k)
+{
+  switch (k)
+    {
+    sitkEventToStringCaseMacro(Any);
+    sitkEventToStringCaseMacro(Abort);
+    sitkEventToStringCaseMacro(Delete);
+    sitkEventToStringCaseMacro(End);
+    sitkEventToStringCaseMacro(Iteration);
+    sitkEventToStringCaseMacro(Progress);
+    sitkEventToStringCaseMacro(Start);
+    sitkEventToStringCaseMacro(User);
+    }
+  return os;
+}
 
 } // end namespace simple
 } // end namespace itk
-
-#endif
