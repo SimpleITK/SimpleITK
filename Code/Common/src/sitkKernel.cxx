@@ -15,37 +15,34 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkKernel_h
-#define __sitkKernel_h
 
-#include "sitkCommon.h"
-#include <ostream>
+#include "sitkKernel.h"
+
+#define sitkKernelToStringCaseMacro(n) case sitk##n: return ( os << #n )
 
 namespace itk
 {
 namespace simple
 {
 
-enum KernelEnum {
-  sitkAnnulus,
-  sitkBall,
-  sitkBox,
-  sitkCross,
-  sitkPolygon3,
-  sitkPolygon4,
-  sitkPolygon5,
-  sitkPolygon6,
-  sitkPolygon7,
-  sitkPolygon8,
-  sitkPolygon9
-};
-
-#ifndef SWIG
-SITKCommon_EXPORT std::ostream& operator<<(std::ostream& os, const KernelEnum k);
-#endif
+std::ostream& operator<<(std::ostream& os, const KernelEnum k)
+{
+  switch (k)
+    {
+    sitkKernelToStringCaseMacro(Annulus);
+    sitkKernelToStringCaseMacro(Ball);
+    sitkKernelToStringCaseMacro(Box);
+    sitkKernelToStringCaseMacro(Cross);
+    sitkKernelToStringCaseMacro(Polygon3);
+    sitkKernelToStringCaseMacro(Polygon4);
+    sitkKernelToStringCaseMacro(Polygon5);
+    sitkKernelToStringCaseMacro(Polygon6);
+    sitkKernelToStringCaseMacro(Polygon7);
+    sitkKernelToStringCaseMacro(Polygon8);
+    sitkKernelToStringCaseMacro(Polygon9);
+    }
+  return os;
+}
 
 } // end namespace simple
 } // end namespace itk
-
-
-#endif //__sitkKernel_h

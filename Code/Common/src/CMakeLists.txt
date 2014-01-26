@@ -5,6 +5,7 @@ set ( SimpleITKCommonSource
   sitkTransform.cxx
   sitkPixelIDValues.cxx
   sitkExceptionObject.cxx
+  sitkKernel.cxx
   sitkVersion.cxx
   ../include/Ancillary/hl_md5.cxx
   ../include/Ancillary/hl_sha1.cxx

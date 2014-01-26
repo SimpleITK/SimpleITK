@@ -19,6 +19,7 @@
 
 #include <sitkConditional.h>
 
+#include <sitkKernel.h>
 
 TEST( ConditionalTest, ConditionalTest1 ) {
 
@@ -31,5 +32,49 @@ TEST( ConditionalTest, ConditionalTest1 ) {
   EXPECT_EQ ( typeid( FloatType ).name(), typeid( float ).name() );
 
   return;
+
+}
+
+TEST( Kernel, Test1 )
+{
+  // Test print of KernelEnum with output operator
+  namespace sitk = itk::simple;
+
+  std::stringstream ss;
+  ss << sitk::sitkAnnulus;
+  EXPECT_EQ("Annulus", ss.str());
+  ss.str("");
+  ss << sitk::sitkBall;
+  EXPECT_EQ("Ball", ss.str());
+  ss.str("");
+  ss << sitk::sitkBox;
+  EXPECT_EQ("Box", ss.str());
+  ss.str("");
+  ss << sitk::sitkCross;
+  EXPECT_EQ("Cross", ss.str());
+  ss.str("");
+  ss << sitk::sitkPolygon3;
+  EXPECT_EQ("Polygon3", ss.str());
+  ss.str("");
+  ss << sitk::sitkPolygon4;
+  EXPECT_EQ("Polygon4", ss.str());
+  ss.str("");
+  ss << sitk::sitkPolygon4;
+  EXPECT_EQ("Polygon4", ss.str());
+  ss.str("");
+  ss << sitk::sitkPolygon5;
+  EXPECT_EQ("Polygon5", ss.str());
+  ss.str("");
+  ss << sitk::sitkPolygon6;
+  EXPECT_EQ("Polygon6", ss.str());
+  ss.str("");
+  ss << sitk::sitkPolygon7;
+  EXPECT_EQ("Polygon7", ss.str());
+  ss.str("");
+  ss << sitk::sitkPolygon8;
+  EXPECT_EQ("Polygon8", ss.str());
+  ss.str("");
+  ss << sitk::sitkPolygon9;
+  EXPECT_EQ("Polygon9", ss.str());
 
 }
