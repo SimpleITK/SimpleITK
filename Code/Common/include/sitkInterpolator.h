@@ -18,6 +18,9 @@
 #ifndef __sitkInterpolator_h
 #define __sitkInterpolator_h
 
+#include "sitkCommon.h"
+#include <ostream>
+
 
 namespace itk
 {
@@ -102,6 +105,12 @@ enum InterpolatorEnum {
   sitkBlackmanWindowedSinc = 10
 };
 
+#ifndef SWIG
+/**
+ * Convert Interpolator enum to a string for printing etc..
+ */
+SITKCommon_EXPORT std::ostream& operator<<(std::ostream& os, const InterpolatorEnum i);
+#endif
 
 } // end namespace simple
 } // end namespace itk

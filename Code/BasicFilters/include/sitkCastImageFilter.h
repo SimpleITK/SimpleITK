@@ -56,7 +56,7 @@ public:
   CastImageFilter();
 
   /** Name of this class */
-  std::string GetName() const { return std::string ( "Cast"); }
+  std::string GetName() const { return std::string ("CastImageFilter"); }
 
   // See super class for doxygen
   std::string ToString() const;

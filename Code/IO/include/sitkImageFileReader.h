@@ -41,6 +41,12 @@ namespace itk {
     public:
       typedef ImageFileReader Self;
 
+      /** Print ourselves to string */
+      virtual std::string ToString() const;
+
+      /** return user readable name fo the filter */
+      virtual std::string GetName() const { return std::string("ImageFileReader"); }
+
       Self& SetFileName ( std::string fn );
       std::string GetFileName() const;
       Image Execute();

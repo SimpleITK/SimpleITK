@@ -126,31 +126,24 @@ namespace std
 
 
 // Any new classes need to have an "%include" statement to be wrapped.
+
+// Core
+%include "sitkVersion.h"
+%include "sitkPixelIDValues.h"
+%include "sitkImage.h"
+%include "sitkTransform.h"
+%include "sitkCommand.h"
+
+%include "sitkInterpolator.h"
+%include "sitkKernel.h"
+%include "sitkEvent.h"
+
+// Basic Filter Base
 %include "sitkProcessObject.h"
 %include "sitkImageFilterExecuteBase.h"
 %include "sitkImageFilter.h"
 
-%include "sitkPixelIDValues.h"
-%include "sitkImage.h"
-%include "sitkTransform.h"
-%include "sitkShow.h"
-%include "sitkInterpolator.h"
-%include "sitkKernel.h"
-%include "sitkImageFileWriter.h"
-%include "sitkImageSeriesReader.h"
-%include "sitkImageFileReader.h"
-%include "sitkHashImageFilter.h"
-%include "sitkStatisticsImageFilter.h"
-%include "sitkJoinSeriesImageFilter.h"
-%include "sitkComposeImageFilter.h"
-%include "sitkMeasurementMap.h"
-%include "sitkLabelStatisticsImageFilter.h"
-
-%include "sitkCastImageFilter.h"
-%include "sitkAdditionalProcedures.h"
-%include "sitkVersion.h"
-
-
+// describe instantiated  templates
 %template(ImageFilterExecuteBase_0) itk::simple::ImageFilterExecuteBase<0>;
 %template(ImageFilterExecuteBase_1) itk::simple::ImageFilterExecuteBase<1>;
 %template(ImageFilterExecuteBase_2) itk::simple::ImageFilterExecuteBase<2>;
@@ -164,6 +157,21 @@ namespace std
 %template(ImageFilter_3) itk::simple::ImageFilter<3>;
 %template(ImageFilter_4) itk::simple::ImageFilter<4>;
 %template(ImageFilter_5) itk::simple::ImageFilter<5>;
+
+// IO 
+%include "sitkShow.h"
+%include "sitkImageFileWriter.h"
+%include "sitkImageReaderBase.h"
+%include "sitkImageSeriesReader.h"
+%include "sitkImageFileReader.h"
+
+ // Basic Filters
+%include "sitkHashImageFilter.h"
+%include "sitkStatisticsImageFilter.h"
+%include "sitkMeasurementMap.h"
+%include "sitkLabelStatisticsImageFilter.h"
+%include "sitkCastImageFilter.h"
+%include "sitkAdditionalProcedures.h"
 
 // Only C# can handle import filter
 #if SWIGCSHARP

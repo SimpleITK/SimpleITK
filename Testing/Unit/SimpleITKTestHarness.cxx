@@ -241,3 +241,47 @@ void ExternalProgramRunner::SetEnvironment ( std::string key, std::string value 
   std::cout << "SetEnvironment: " << key << "=" << value << std::endl;
 #endif
   }
+
+ProcessObjectCommand::ProcessObjectCommand(itk::simple::ProcessObject &po)
+  : m_Process(po)
+{
+}
+
+ProgressUpdate::ProgressUpdate(itk::simple::ProcessObject &po)
+  : ProcessObjectCommand(po),
+    m_Progress(0.0)
+{
+}
+
+void ProgressUpdate::Execute( )
+{
+  std::cout << "Progress: " << m_Process.GetProgress() << std::endl;
+  m_Progress =  m_Process.GetProgress();
+}
+
+AbortAtCommand::AbortAtCommand(itk::simple::ProcessObject &po, float abortAt)
+  : ProcessObjectCommand(po),
+    m_AbortAt(abortAt)
+{
+}
+
+void AbortAtCommand::Execute( )
+{
+  std::cout << "p: " << m_Process.GetProgress() << std::endl;
+  if ( m_Process.GetProgress() >= m_AbortAt )
+    {
+    std::cout << "aborting..." << std::endl;
+    m_Process.Abort();
+    }
+}
+
+CountCommand::CountCommand(itk::simple::ProcessObject &po)
+  : ProcessObjectCommand(po),
+    m_Count(0)
+{
+}
+
+void CountCommand::Execute( )
+{
+  ++m_Count;
+}
