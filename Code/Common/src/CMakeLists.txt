@@ -8,6 +8,7 @@ set ( SimpleITKCommonSource
   sitkPixelIDValues.cxx
   sitkExceptionObject.cxx
   sitkEvent.cxx
+  sitkInterpolator.cxx
   sitkVersion.cxx
   ../include/Ancillary/hl_md5.cxx
   ../include/Ancillary/hl_sha1.cxx
