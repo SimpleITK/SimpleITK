@@ -15,7 +15,6 @@
       "name" : "OutputPixelType",
       "type" : "PixelIDValueEnum",
       "default" : "itk::simple::sitkVectorFloat32",
-      "no_print" : "1",
       "custom_itk_cast" : ""
     },
     {

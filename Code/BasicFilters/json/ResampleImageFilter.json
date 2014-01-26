@@ -101,7 +101,6 @@
       "name" : "OutputPixelType",
       "type" : "PixelIDValueEnum",
       "default" : "itk::simple::sitkUnknown",
-      "no_print" : "1",
       "custom_itk_cast" : "",
       "briefdescriptionSet" : "Set the output pixel type, if sitkUnknown then the input type is used.",
       "briefdescriptionGet" : "Get the ouput pixel type."

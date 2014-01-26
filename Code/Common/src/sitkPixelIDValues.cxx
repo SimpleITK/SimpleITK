@@ -34,7 +34,7 @@ const std::string GetPixelIDValueAsString( PixelIDValueType type )
   if ( type == sitkUnknown )
     {
     // Unknow must be first because other enums may be -1 if they are
-    // not instantiated 
+    // not instantiated
     return "Unknown pixel id";
     }
   else if ( type == sitkUInt8 )
@@ -145,6 +145,11 @@ const std::string GetPixelIDValueAsString( PixelIDValueType type )
     {
     return "ERRONEOUS PIXEL ID!";
     }
+}
+
+std::ostream& operator<<(std::ostream& os, const PixelIDValueEnum id)
+{
+  return (os << GetPixelIDValueAsString(id));
 }
 
 

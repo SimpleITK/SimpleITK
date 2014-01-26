@@ -21,6 +21,9 @@
 #include "sitkCommon.h"
 #include "sitkPixelIDTypeLists.h"
 
+#include <string>
+#include <ostream>
+
 namespace itk
 {
 namespace simple
@@ -110,6 +113,11 @@ enum PixelIDValueEnum {
 
 const std::string SITKCommon_EXPORT GetPixelIDValueAsString( PixelIDValueType type );
 const std::string SITKCommon_EXPORT GetPixelIDValueAsString( PixelIDValueEnum type );
+
+#ifndef SWIG
+SITKCommon_EXPORT std::ostream& operator<<(std::ostream& os, const PixelIDValueEnum id);
+#endif
+
 
 
 }
