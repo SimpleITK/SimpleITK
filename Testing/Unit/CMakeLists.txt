@@ -347,7 +347,7 @@ if ( ${BUILD_EXAMPLES} )
     "${TEST_HARNESS_TEMP_DIRECTORY}/CXX.FilterProgressReporting.nrrd"
     )
   set_tests_properties( CXX.Example.FilterProgressReporting
-    PROPERTIES PASS_REGULAR_EXPRESSION "Progress" )
+    PROPERTIES PASS_REGULAR_EXPRESSION "DiscreteGaussianImageFilter Progress" )
 
 endif()
 

@@ -43,7 +43,7 @@ public:
   virtual void Execute( )
     {
       // Print the Progress "Active Measurement"
-      std::cout << "Progress: " << m_Process.GetProgress() << std::endl;
+      std::cout << m_Process.GetName()<< " Progress: " << m_Process.GetProgress() << std::endl;
     }
 private:
   const sitk::ProcessObject &m_Process;
@@ -53,7 +53,7 @@ private:
 int main ( int argc, char* argv[] ) {
 
   if ( argc < 4 ) {
-    std::cerr << "Usage: " << argv[0] << " <input> <sigma> <output>\n";
+    std::cerr << "Usage: " << argv[0] << " <input> <variance> <output>\n";
     return 1;
   }
 
