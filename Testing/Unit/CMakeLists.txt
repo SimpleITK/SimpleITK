@@ -592,7 +592,22 @@ if ( WRAP_PYTHON )
     "${SimpleITK_SOURCE_DIR}/Examples/FFTConvolution.py"
     "${TEST_HARNESS_DATA_DIRECTORY}/Input/cthead1-Float.mha"
     "${TEST_HARNESS_DATA_DIRECTORY}/Input/Gaussian_1.5.nrrd"
-    "${TEST_HARNESS_TEMP_DIRECTORY}/Python.Examples.FFTConvolution.nrrd" )
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Python.Examples.FFTConvolution.nrrd"
+    )
+
+  add_python_test( Example.FilterProgressReporting
+    "${SimpleITK_SOURCE_DIR}/Examples/FilterProgressReporting.py"
+    --compare-MD5
+      "${TEST_HARNESS_TEMP_DIRECTORY}/CXX.FilterProgressReporting.nrrd"
+      5ef06ed0d5d8952c770348699b70f23e
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
+    "2.0"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/PythonFilterProgressReporting.nrrd"
+    )
+  set_tests_properties( Python.Example.FilterProgressReporting
+    PROPERTIES PASS_REGULAR_EXPRESSION "DiscreteGaussianImageFilter Progress" )
+
+
 
   #
   # Python Tests
