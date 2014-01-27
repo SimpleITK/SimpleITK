@@ -15,7 +15,7 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-%module SimpleITK
+%module(directors="1") SimpleITK
 
 // Remove some warnings
 #pragma SWIG nowarn=362,503,401,389,516,511
@@ -127,13 +127,12 @@ namespace std
 
 // Any new classes need to have an "%include" statement to be wrapped.
 
-// Core
+// Common
 %include "sitkVersion.h"
 %include "sitkPixelIDValues.h"
 %include "sitkImage.h"
 %include "sitkTransform.h"
 %include "sitkCommand.h"
-
 %include "sitkInterpolator.h"
 %include "sitkKernel.h"
 %include "sitkEvent.h"
@@ -158,7 +157,7 @@ namespace std
 %template(ImageFilter_4) itk::simple::ImageFilter<4>;
 %template(ImageFilter_5) itk::simple::ImageFilter<5>;
 
-// IO 
+// IO
 %include "sitkShow.h"
 %include "sitkImageFileWriter.h"
 %include "sitkImageReaderBase.h"
