@@ -21,6 +21,7 @@
 #include <SimpleITK.h>
 #include <iostream>
 #include <stdlib.h>
+#include <iomanip>
 
 // create convenient namespace alias
 namespace sitk = itk::simple;
@@ -42,8 +43,15 @@ public:
 
   virtual void Execute( )
     {
+      // stash the stream state
+      std::ios  state(NULL);
+      state.copyfmt(std::cout);
+      std::cout << std::fixed << std::setw( 3 ) << std::setprecision( 2 );
+
       // Print the Progress "Active Measurement"
       std::cout << m_Process.GetName()<< " Progress: " << m_Process.GetProgress() << std::endl;
+
+      std::cout.copyfmt(state);
     }
 private:
   const sitk::ProcessObject &m_Process;
