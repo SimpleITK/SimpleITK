@@ -338,9 +338,6 @@ if ( ${BUILD_EXAMPLES} )
 
    add_test(NAME CXX.Example.FilterProgressReporting
     COMMAND "${ITK_TEST_DRIVER}"
-    --compare-MD5
-    "${TEST_HARNESS_TEMP_DIRECTORY}/CXX.FilterProgressReporting.nrrd"
-    5ef06ed0d5d8952c770348699b70f23e
     $<TARGET_FILE:FilterProgressReporting>
     "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
     2.0
@@ -606,9 +603,6 @@ if ( WRAP_PYTHON )
 
   add_python_test( Example.FilterProgressReporting
     "${SimpleITK_SOURCE_DIR}/Examples/FilterProgressReporting.py"
-    --compare-MD5
-      "${TEST_HARNESS_TEMP_DIRECTORY}/CXX.FilterProgressReporting.nrrd"
-      5ef06ed0d5d8952c770348699b70f23e
     "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
     "2.0"
     "${TEST_HARNESS_TEMP_DIRECTORY}/PythonFilterProgressReporting.nrrd"
