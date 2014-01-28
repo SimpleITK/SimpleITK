@@ -420,6 +420,15 @@ if ( WRAP_CSHARP )
   set_tests_properties( CSharp.Example.ImageGetBuffer
     PROPERTIES PASS_REGULAR_EXPRESSION "total: 1009713" )
 
+  add_csharp_test( Example.FilterProgressReporting
+    "${SimpleITK_SOURCE_DIR}/Examples/FilterProgressReporting.cs"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
+    "2.0"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/CSharp.FilterProgressReporting.nrrd"
+    )
+  set_tests_properties( CSharp.Example.FilterProgressReporting
+    PROPERTIES PASS_REGULAR_EXPRESSION "DiscreteGaussianImageFilter Progress" )
+
   #
   # CSharp Tests
   #
