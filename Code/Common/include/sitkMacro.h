@@ -64,8 +64,8 @@ class GenericException;
   }
 
 
-#ifdef SITK_SUPPORTS_STATIC_ASSERT
-// utilize the c++0x static_assert if available
+#ifdef SITK_HAS_CXX11_STATIC_ASSERT
+// utilize the c++11 static_assert if available
 #define sitkStaticAssert( expr, str) static_assert( expr, str )
 #else
 

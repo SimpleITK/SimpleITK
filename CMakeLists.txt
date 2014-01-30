@@ -235,6 +235,10 @@ endif( )
 
 include(sitkCheckCXX11)
 
+
+include(CheckIncludeFileCXX)
+
+
 # check for stdint
 # This generates a configuration error if the compiler is not supported
 check_include_file_cxx( stdint.h SITK_HAS_STDINT_H )

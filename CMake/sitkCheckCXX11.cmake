@@ -1,12 +1,33 @@
 #
 # CMake Module to check for TR1 and C++11 features
 #
-# SITK_HAS_CXX11_STATIC_ASSERT    - True if "static_assert" is supported
+# SITK_HAS_CXX11_STATIC_ASSERT    - True if "static_assert" keyword is supported
 
-# check for C++0x static_assert
-try_compile(SITK_SUPPORTS_STATIC_ASSERT
-  ${SimpleITK_BINARY_DIR}/CMakeTmp
-  ${SimpleITK_SOURCE_DIR}/CMake/static_assert.cxx )
+
+function(sitkCXX11Test VARIABLE)
+  if("${VARIABLE}" MATCHES "^${VARIABLE}$")
+    message(STATUS "Performing Test ${VARIABLE}")
+    try_compile(SITK_HAS_CXX11_STATIC_ASSERT
+      ${SimpleITK_BINARY_DIR}/CMakeTmp
+      ${SimpleITK_SOURCE_DIR}/CMake/sitk_check_cxx11.cxx
+      CMAKE_FLAGS
+      -DCOMPILE_DEFINITIONS:STRING=-D${VARIABLE}
+      OUTPUT_VARIABLE OUTPUT)
+    if(${VARIABLE})
+      set(${VARIABLE} 1 CACHE INTERNAL "VXL test ${FUNCTION}")
+      message(STATUS "Performing Test ${VARIABLE} - Success")
+    else()
+      message(STATUS "Performing Test ${VARIABLE} - Failed")
+      set(${VARIABLE} 0 CACHE INTERNAL "Test ${FUNCTION}")
+      file(APPEND ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeError.log
+                 "Performing Test ${VARIABLE} failed with the following output:\n"
+                 "${OUTPUT}\n")
+    endif()
+  endif()
+endfunction()
+
+
+sitkCXX11Test(SITK_HAS_CXX11_STATIC_ASSERT)
 
 
 include(CheckIncludeFileCXX)

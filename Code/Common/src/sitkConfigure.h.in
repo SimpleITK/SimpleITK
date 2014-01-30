@@ -28,7 +28,7 @@
 
 
 // defined if the system has C++0x "static_assert" keyword
-#cmakedefine SITK_SUPPORTS_STATIC_ASSERT
+#cmakedefine  SITK_HAS_CXX11_STATIC_ASSERT
 
 #cmakedefine SITK_INT64_PIXELIDS
 
