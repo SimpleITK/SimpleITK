@@ -21,14 +21,7 @@
 
 #include "sitkCommand.h"
 
-
-#if defined SITK_HAS_STLTR1_TR1_FUNCTIONAL
-#include <tr1/functional>
-#elif defined SITK_HAS_STLTR1_FUNCTIONAL
-#include <functional>
-#else
-#error "No system tr1 functional available"
-#endif
+#include "util/functional.h"
 
 namespace itk {
 namespace simple {
@@ -54,7 +47,7 @@ public:
   template <class T>
     void SetCallbackFunction ( T *object, void(T::* pMemberFunction )() )
   {
-    m_Function = std::tr1::bind(pMemberFunction, object);
+    m_Function = util::bind(pMemberFunction, object);
   }
 
   /** Set a C-Style function to be called in the Execute method */
@@ -69,7 +62,7 @@ public:
 
 private:
 
-  typedef std::tr1::function<void()> FunctionObjectType;
+  typedef util::function<void()> FunctionObjectType;
   FunctionObjectType m_Function;
 
 };

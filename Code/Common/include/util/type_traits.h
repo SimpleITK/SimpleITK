@@ -15,37 +15,41 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#include "sitkFunctionCommand.h"
-#include "sitkProcessObject.h"
+#ifndef __sitk_util_type_traits_h
+#define __sitk_util_type_traits_h
+
+#include "sitkConfigure.h"
+
+#if defined SITK_HAS_TR1_TYPE_TRAITS || defined SITK_HAS_CXX11_TYPE_TRAITS
+#if defined SITK_HAS_TR1_SUB_INCLUDE
+#include <tr1/type_traits>
+#else
+#include <type_traits>
+#endif
+#else
+#error "No system (tr1) type_traits header available!"
+#endif
+
 
 namespace itk
 {
 namespace simple
 {
-
-FunctionCommand::FunctionCommand( )
+namespace util
 {
-  Command::SetName("FunctionCommand");
+#if defined SITK_HAS_TR1_TYPE_TRAITS
+using std::tr1::is_same;
+using std::tr1::true_type;
+using std::tr1::false_type;
+using std::tr1::integral_constant;
+#else
+using std::is_same;
+using std::true_type;
+using std::false_type;
+using std::integral_constant;
+#endif
+}
+}
 }
 
-void FunctionCommand::Execute(void)
-{
-  if (bool(this->m_Function))
-    {
-    return m_Function();
-    }
-}
-
-void FunctionCommand::SetCallbackFunction ( void(* pFunction )() )
-  {
-    m_Function = pFunction;
-  }
-
-void FunctionCommand::SetCallbackFunction( void(* pFunction )(void *), void *clientData )
-{
-  m_Function = util::bind(pFunction, clientData);
-}
-
-
-} // end namespace simple
-} // end namespace itk
+#endif //__sitk_util_type_traits_h

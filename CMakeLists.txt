@@ -452,13 +452,14 @@ install(FILES ${__files}
   DESTINATION ${SimpleITK_INSTALL_INCLUDE_DIR}
   COMPONENT Development)
 
-file( GLOB __files
-  ${CMAKE_SOURCE_DIR}/Code/Common/include/Ancillary/*.h
-  )
-
-install(FILES ${__files}
-  DESTINATION ${SimpleITK_INSTALL_INCLUDE_DIR}/Ancillary
-  COMPONENT Development)
+install(
+  DIRECTORY
+    ${CMAKE_SOURCE_DIR}/Code/Common/include/Ancillary
+    ${CMAKE_SOURCE_DIR}/Code/Common/include/util
+  DESTINATION
+    ${SimpleITK_INSTALL_INCLUDE_DIR}/
+  FILES_MATCHING PATTERN "*.h"
+)
 
 install(FILES ${SimpleITK_DOC_FILES} DESTINATION "${SimpleITK_INSTALL_DOC_DIR}" COMPONENT Runtime)
 
