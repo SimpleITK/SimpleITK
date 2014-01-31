@@ -620,6 +620,10 @@ if ( WRAP_PYTHON )
     "${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkNumpyArrayConversionTest.py"
   )
 
+ add_python_test( Test.ProcessObject
+    "${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkProcessObjectTest.py"
+  )
+
 
 
 endif( WRAP_PYTHON )
