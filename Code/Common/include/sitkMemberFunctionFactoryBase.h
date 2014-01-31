@@ -20,13 +20,7 @@
 
 #include "sitkConfigure.h"
 
-#if defined SITK_HAS_STLTR1_TR1_FUNCTIONAL
-#include <tr1/functional>
-#elif defined SITK_HAS_STLTR1_FUNCTIONAL
-#include <functional>
-#else
-#error "No system tr1 functional available"
-#endif
+#include "util/functional.h"
 
 #include "sitkPixelIDTypes.h"
 #include "sitkPixelIDTypeLists.h"
@@ -36,10 +30,8 @@
 #include "Ancillary/TypeList.h"
 #include "Ancillary/FunctionTraits.h"
 
-#if defined SITK_HAS_STLTR1_TR1_UNORDERED_MAP && defined SITK_UNORDERED_MAP_FUNCTIONAL
-#include <tr1/unordered_map>
-#elif defined SITK_HAS_STLTR1_UNORDERED_MAP && defined SITK_UNORDERED_MAP_FUNCTIONAL
-#include <unordered_map>
+#if defined SITK_HAS_UNORDERED_MAP
+#include "util/unordered_map.h"
 #else
 #include <map>
 #endif
@@ -55,7 +47,7 @@ namespace detail {
 
 #if defined SITK_HAS_UNORDERED_MAP
 
-template <typename T> struct hash : public std::tr1::hash<T>{};
+template <typename T> struct hash : public util::hash<T>{};
 
 /** \brief A specialization of the hash function.
  */
@@ -63,7 +55,7 @@ template <>
 struct hash< std::pair<int, int> >
   : public std::unary_function<std::pair<int,int>, std::size_t> {
   std::size_t operator()( const std::pair<int, int > &p ) const
-    { return std::tr1::hash<size_t>()( size_t(p.first) * prime + p.second ); }
+    { return util::hash<size_t>()( size_t(p.first) * prime + p.second ); }
 private:
   static const std::size_t prime = 16777619u;
 };
@@ -103,7 +95,7 @@ public:
 
   /**  the pointer MemberFunctionType redefined ad a tr1::function
    * object */
-  typedef std::tr1::function< MemberFunctionResultType ( ) > FunctionObjectType;
+  typedef util::function< MemberFunctionResultType ( ) > FunctionObjectType;
 
 
 protected:
@@ -120,13 +112,13 @@ protected:
       // this is really only needed because std::bind1st does not work
       // with tr1::function... that is with tr1::bind, we need to
       // specify the other arguments, and can't just bind the first
-      return std::tr1::bind( pfunc,objectPointer );
+      return util::bind( pfunc,objectPointer );
     }
 
   // maps of Keys to pointers to member functions
 #if defined SITK_HAS_UNORDERED_MAP
-  std::tr1::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
-  std::tr1::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
+  util::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
+  util::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
 #else
   std::map<TKey, FunctionObjectType> m_PFunction3;
   std::map<TKey, FunctionObjectType> m_PFunction2;
@@ -164,7 +156,7 @@ public:
 
   /**  the pointer MemberFunctionType redefined ad a tr1::function
    * object */
-  typedef std::tr1::function< MemberFunctionResultType ( MemberFunctionArgumentType ) > FunctionObjectType;
+  typedef util::function< MemberFunctionResultType ( MemberFunctionArgumentType ) > FunctionObjectType;
 
 
 protected:
@@ -178,19 +170,19 @@ protected:
   static FunctionObjectType  BindObject( MemberFunctionType pfunc, ObjectType *objectPointer)
     {
       // needed for _1 place holder
-      using namespace std::tr1::placeholders;
+      using namespace util::placeholders;
 
       // this is really only needed because std::bind1st does not work
       // with tr1::function... that is with tr1::bind, we need to
       // specify the other arguments, and can't just bind the first
-      return std::tr1::bind( pfunc,objectPointer, _1 );
+      return util::bind( pfunc,objectPointer, _1 );
     }
 
 
   // maps of Keys to pointers to member functions
 #if defined SITK_HAS_UNORDERED_MAP
-  std::tr1::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
-  std::tr1::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
+  util::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
+  util::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
 #else
   std::map<TKey, FunctionObjectType> m_PFunction3;
   std::map<TKey, FunctionObjectType> m_PFunction2;
@@ -224,7 +216,7 @@ public:
   /**  the pointer MemberFunctionType redefined ad a tr1::function
    * object
    */
-  typedef std::tr1::function< MemberFunctionResultType ( MemberFunctionArgument0Type,  MemberFunctionArgument1Type) > FunctionObjectType;
+  typedef util::function< MemberFunctionResultType ( MemberFunctionArgument0Type,  MemberFunctionArgument1Type) > FunctionObjectType;
 
 
 protected:
@@ -238,19 +230,19 @@ protected:
   static FunctionObjectType  BindObject( MemberFunctionType pfunc, ObjectType *objectPointer)
     {
       // needed for _1 place holder
-      using namespace std::tr1::placeholders;
+      using namespace util::placeholders;
 
       // this is really only needed because std::bind1st does not work
       // with tr1::function... that is with tr1::bind, we need to
       // specify the other arguments, and can't just bind the first
-      return std::tr1::bind( pfunc, objectPointer, _1, _2 );
+      return util::bind( pfunc, objectPointer, _1, _2 );
     }
 
 
   // maps of Keys to pointers to member functions
 #if defined SITK_HAS_UNORDERED_MAP
-  std::tr1::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
-  std::tr1::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
+  util::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
+  util::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
 #else
   std::map<TKey, FunctionObjectType> m_PFunction3;
   std::map<TKey, FunctionObjectType> m_PFunction2;
@@ -284,7 +276,7 @@ public:
 
   /**  the pointer MemberFunctionType redefined ad a tr1::function
    * object */
-  typedef std::tr1::function< MemberFunctionResultType ( MemberFunctionArgument0Type, MemberFunctionArgument1Type,  MemberFunctionArgument1Type) > FunctionObjectType;
+  typedef util::function< MemberFunctionResultType ( MemberFunctionArgument0Type, MemberFunctionArgument1Type,  MemberFunctionArgument1Type) > FunctionObjectType;
 
 
 protected:
@@ -298,19 +290,19 @@ protected:
   static FunctionObjectType  BindObject( MemberFunctionType pfunc, ObjectType *objectPointer)
     {
       // needed for _1 place holder
-      using namespace std::tr1::placeholders;
+      using namespace util::placeholders;
 
       // this is really only needed because std::bind1st does not work
       // with tr1::function... that is with tr1::bind, we need to
       // specify the other arguments, and can't just bind the first
-      return std::tr1::bind( pfunc, objectPointer, _1, _2, _3 );
+      return util::bind( pfunc, objectPointer, _1, _2, _3 );
     }
 
 
   // maps of Keys to pointers to member functions
 #if defined SITK_HAS_UNORDERED_MAP
-  std::tr1::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
-  std::tr1::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
+  util::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
+  util::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
 #else
   std::map<TKey, FunctionObjectType> m_PFunction3;
   std::map<TKey, FunctionObjectType> m_PFunction2;
@@ -345,7 +337,7 @@ public:
 
   /**  the pointer MemberFunctionType redefined ad a tr1::function
    * object */
-  typedef std::tr1::function< MemberFunctionResultType ( MemberFunctionArgument0Type, MemberFunctionArgument1Type, MemberFunctionArgument2Type,  MemberFunctionArgument3Type) > FunctionObjectType;
+  typedef util::function< MemberFunctionResultType ( MemberFunctionArgument0Type, MemberFunctionArgument1Type, MemberFunctionArgument2Type,  MemberFunctionArgument3Type) > FunctionObjectType;
 
 
 protected:
@@ -359,19 +351,19 @@ protected:
   static FunctionObjectType  BindObject( MemberFunctionType pfunc, ObjectType *objectPointer)
     {
       // needed for _1 place holder
-      using namespace std::tr1::placeholders;
+      using namespace util::placeholders;
 
       // this is really only needed because std::bind1st does not work
       // with tr1::function... that is with tr1::bind, we need to
       // specify the other arguments, and can't just bind the first
-      return std::tr1::bind( pfunc, objectPointer, _1, _2, _3, _4 );
+      return util::bind( pfunc, objectPointer, _1, _2, _3, _4 );
     }
 
 
   // maps of Keys to pointers to member functions
 #if defined SITK_HAS_UNORDERED_MAP
-  std::tr1::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
-  std::tr1::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
+  util::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
+  util::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
 #else
   std::map<TKey, FunctionObjectType> m_PFunction3;
   std::map<TKey, FunctionObjectType> m_PFunction2;

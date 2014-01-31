@@ -25,15 +25,7 @@
 #include "sitkEnableIf.h"
 
 
-#ifndef SWIG
-#ifdef SITK_HAS_STLTR1_TR1_TYPE_TRAITS
-#include <tr1/type_traits>
-#elif defined SITK_HAS_STLTR1_TYPE_TRAITS
-#include <type_traits>
-#else
-#error "No system tr1 type traits available"
-#endif
-#endif
+#include "util/type_traits.h"
 
 #include <vector>
 #include <memory>
@@ -426,11 +418,11 @@ namespace simple
      * @{
      */
     template<int VPixelIDValue, typename TImageType>
-    typename DisableIf<std::tr1::is_same<TImageType, void>::value>::Type
+    typename DisableIf<util::is_same<TImageType, void>::value>::Type
     ConditionalInternalInitialization( TImageType *i);
 
     template<int VPixelIDValue, typename TImageType>
-    typename EnableIf<std::tr1::is_same<TImageType, void>::value>::Type
+    typename EnableIf<util::is_same<TImageType, void>::value>::Type
     ConditionalInternalInitialization( TImageType *) { assert( false ); }
      /**@}*/
 
