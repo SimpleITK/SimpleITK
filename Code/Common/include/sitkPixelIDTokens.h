@@ -36,8 +36,8 @@ namespace itk
 namespace simple
 {
 
-typedef std::tr1::true_type  TrueType;
-typedef std::tr1::false_type FalseType;
+typedef sitk_tr1::true_type  TrueType;
+typedef sitk_tr1::false_type FalseType;
 
 template <typename TPixelIDType>
 struct IsBasic
@@ -103,8 +103,8 @@ template <typename TPixelIDType>
 struct IsInstantiated
 {
   static const bool Value = ((int)PixelIDToPixelIDValue<TPixelIDType>::Result != (int)sitkUnknown);
-  typedef typename std::tr1::integral_constant<bool, Value>::value_type ValueType;
-  typedef typename std::tr1::integral_constant<bool, Value>::type       Type;
+  typedef typename sitk_tr1::integral_constant<bool, Value>::value_type ValueType;
+  typedef typename sitk_tr1::integral_constant<bool, Value>::type       Type;
 };
 template <typename TPixelType, unsigned int VImageDimension>
 struct IsInstantiated< itk::Image< TPixelType, VImageDimension> >
