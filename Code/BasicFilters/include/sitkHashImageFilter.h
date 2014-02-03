@@ -23,6 +23,7 @@
 #include "sitkImage.h"
 #include "sitkBasicFilters.h"
 #include "sitkImageFilter.h"
+#include "sitkProcessObject.h"
 
 namespace itk {
   namespace simple {
@@ -32,7 +33,8 @@ namespace itk {
      *
      * \sa itk::simple::Hash for the procedural interface
      */
-    class SITKBasicFilters_EXPORT HashImageFilter {
+    class SITKBasicFilters_EXPORT HashImageFilter
+      : public ProcessObject {
     public:
       typedef HashImageFilter Self;
 

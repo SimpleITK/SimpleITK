@@ -177,5 +177,11 @@ namespace std
 %include "sitkImportImageFilter.h"
 #endif
 
+
+#if SWIGPYTHON
+%include "sitkPyCommand.h"
+#endif
+
+
 // Auto-generated headers
 %include "SimpleITKBasicFiltersGeneratedHeaders.i"

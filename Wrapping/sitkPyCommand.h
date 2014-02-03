@@ -66,6 +66,7 @@ public:
   virtual void Execute(void);
 
   #ifndef SWIG
+  // export for access in the custom ProcessObject method for callables
   using Super::SetOwnedByProcessObjects;
   using Super::GetOwnedByProcessObjects;
   using Super::OwnedByProcessObjectsOn;
