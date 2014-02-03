@@ -34,6 +34,12 @@
       "detaileddescriptionSet" : "Set/Get the number of histogram bins. Default is 128.\n",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : "Set/Get the number of histogram bins. Default is 128.\n"
+    },
+    {
+      "name" : "ValleyEmphasis",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : ""
     }
   ],
   "tests" : [
@@ -82,6 +88,28 @@
         }
       ],
       "md5hash" : "b61c3f4e063fcdd24dba76227129ae34",
+      "inputs" : [
+        "Input/cthead1.png"
+      ]
+    },
+    {
+      "tag" : "valley_emphasis",
+      "description" : "Default parameter settings",
+      "settings" : [
+        {
+          "parameter" : "NumberOfThresholds",
+          "value" : "3",
+          "java_value" : "(short) 3"
+        },
+         {
+          "parameter" : "ValleyEmphasis",
+          "value" : "true",
+          "value" : "true",
+          "python_value" : "True",
+          "R_value" : "TRUE"
+        }
+      ],
+      "md5hash" : "fb65e730472c8001185f355fb626ca3f",
       "inputs" : [
         "Input/cthead1.png"
       ]
