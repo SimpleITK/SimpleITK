@@ -22,4 +22,9 @@
 %ignore itk::simple::CastImageFilter::SetOutputPixelType( PixelIDValueType pixelID );
 %ignore itk::simple::GetPixelIDValueAsString( PixelIDValueType type );
 
+
+// Enable Ruby classes derived from Command Execute method to be
+// called from C++
+%feature("director") itk::simple::Command;
+
 #endif
