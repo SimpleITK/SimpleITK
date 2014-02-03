@@ -43,7 +43,7 @@ void FunctionCommand::SetCallbackFunction ( void(* pFunction )() )
 
 void FunctionCommand::SetCallbackFunction( void(* pFunction )(void *), void *clientData )
 {
-  m_Function = util::bind(pFunction, clientData);
+  m_Function = nsstd::bind(pFunction, clientData);
 }
 
 
