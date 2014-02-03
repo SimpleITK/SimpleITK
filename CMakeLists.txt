@@ -455,7 +455,7 @@ install(FILES ${__files}
 install(
   DIRECTORY
     ${CMAKE_SOURCE_DIR}/Code/Common/include/Ancillary
-    ${CMAKE_SOURCE_DIR}/Code/Common/include/util
+    ${CMAKE_SOURCE_DIR}/Code/Common/include/nsstd
   DESTINATION
     ${SimpleITK_INSTALL_INCLUDE_DIR}/
   FILES_MATCHING PATTERN "*.h"
