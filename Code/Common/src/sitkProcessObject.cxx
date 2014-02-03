@@ -24,7 +24,7 @@
 #include <iostream>
 #include <algorithm>
 
-#include "util/functional.h"
+#include "nsstd/functional.h"
 
 namespace itk {
 namespace simple {
@@ -441,8 +441,8 @@ void ProcessObject::onCommandDelete(const itk::simple::Command *cmd) throw()
     }
 
   // remove all uses of command
-  using namespace util::placeholders;
-  m_Commands.remove_if(util::bind(rm_pred,cmd,_1));
+  using namespace nsstd::placeholders;
+  m_Commands.remove_if(nsstd::bind(rm_pred,cmd,_1));
 }
 
 } // end namespace simple

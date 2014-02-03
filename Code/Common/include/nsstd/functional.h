@@ -15,41 +15,39 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitk_util_type_traits_h
-#define __sitk_util_type_traits_h
+#ifndef __sitk_nsstd_functional_h
+#define __sitk_nsstd_functional_h
 
 #include "sitkConfigure.h"
 
-#if defined SITK_HAS_TR1_TYPE_TRAITS || defined SITK_HAS_CXX11_TYPE_TRAITS
-#if defined SITK_HAS_TR1_SUB_INCLUDE
-#include <tr1/type_traits>
-#else
-#include <type_traits>
-#endif
-#else
-#error "No system (tr1) type_traits header available!"
-#endif
 
+#if defined SITK_HAS_TR1_FUNCTIONAL || defined SITK_HAS_CXX11_FUNCTIONAL
+#if defined SITK_HAS_TR1_SUB_INCLUDE
+#include <tr1/functional>
+#else
+#include <functional>
+#endif
+#else
+#error "No system (tr1) functional header available!"
+#endif
 
 namespace itk
 {
 namespace simple
 {
-namespace util
+namespace nsstd
 {
-#if defined SITK_HAS_TR1_TYPE_TRAITS
-using std::tr1::is_same;
-using std::tr1::true_type;
-using std::tr1::false_type;
-using std::tr1::integral_constant;
+#if defined SITK_HAS_TR1_FUNCTIONAL
+using std::tr1::function;
+using std::tr1::bind;
+namespace placeholders =  std::tr1::placeholders;
 #else
-using std::is_same;
-using std::true_type;
-using std::false_type;
-using std::integral_constant;
+using std::function;
+using std::bind;
+namespace placeholders =  std::placeholders;
 #endif
 }
 }
 }
 
-#endif //__sitk_util_type_traits_h
+#endif //__sitk_nsstd_functional_h

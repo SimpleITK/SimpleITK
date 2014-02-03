@@ -40,7 +40,7 @@
 
 #include <memory>
 
-#include "util/type_traits.h"
+#include "nsstd/type_traits.h"
 
 namespace
 {
@@ -241,10 +241,10 @@ public:
       typename CompositeTransformType::TransformType* base =
         dynamic_cast< typename CompositeTransformType::TransformType*>( t.GetITKBase() );
 
-      return this->AddTransform( base, typename util::is_same<TTransformType, CompositeTransformType>::type() );
+      return this->AddTransform( base, typename nsstd::is_same<TTransformType, CompositeTransformType>::type() );
     }
 
-  PimpleTransformBase* AddTransform( typename CompositeTransformType::TransformType* t, util::true_type isCompositeTransform )
+  PimpleTransformBase* AddTransform( typename CompositeTransformType::TransformType* t, nsstd::true_type isCompositeTransform )
     {
       Unused( isCompositeTransform );
       assert( t->GetInputSpaceDimension() == TransformType::InputSpaceDimension );
@@ -253,7 +253,7 @@ public:
       return this;
     }
 
-  PimpleTransformBase* AddTransform( typename CompositeTransformType::TransformType* t, util::false_type isNotCompositeTransform )
+  PimpleTransformBase* AddTransform( typename CompositeTransformType::TransformType* t, nsstd::false_type isNotCompositeTransform )
     {
       Unused( isNotCompositeTransform );
 

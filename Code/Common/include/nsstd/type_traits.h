@@ -15,36 +15,41 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitk_util_unordered_map_h
-#define __sitk_util_unordered_map_h
+#ifndef __sitk_nsstd_type_traits_h
+#define __sitk_nsstd_type_traits_h
 
 #include "sitkConfigure.h"
 
-
-#if defined SITK_HAS_TR1_UNORDERED_MAP || defined SITK_HAS_CXX11_UNORDERED_MAP
+#if defined SITK_HAS_TR1_TYPE_TRAITS || defined SITK_HAS_CXX11_TYPE_TRAITS
 #if defined SITK_HAS_TR1_SUB_INCLUDE
-#include <tr1/unordered_map>
-#elif
-#include <unordered_map>
+#include <tr1/type_traits>
+#else
+#include <type_traits>
 #endif
 #else
-#error "No system (tr1) unordered_map header available!"
+#error "No system (tr1) type_traits header available!"
 #endif
+
 
 namespace itk
 {
 namespace simple
 {
-namespace util
+namespace nsstd
 {
-#if defined SITK_HAS_TR1_SUB_INCLUDE
-using std::tr1::unordered_map;
+#if defined SITK_HAS_TR1_TYPE_TRAITS
+using std::tr1::is_same;
+using std::tr1::true_type;
+using std::tr1::false_type;
+using std::tr1::integral_constant;
 #else
-using std::unordered_map;
+using std::is_same;
+using std::true_type;
+using std::false_type;
+using std::integral_constant;
 #endif
 }
 }
 }
 
-
-#endif //__sitk_util_unordered_map_h
+#endif //__sitk_nsstd_type_traits_h

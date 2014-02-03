@@ -25,7 +25,7 @@
 #include "sitkEnableIf.h"
 
 
-#include "util/type_traits.h"
+#include "nsstd/type_traits.h"
 
 #include <vector>
 #include <memory>
@@ -418,11 +418,11 @@ namespace simple
      * @{
      */
     template<int VPixelIDValue, typename TImageType>
-    typename DisableIf<util::is_same<TImageType, void>::value>::Type
+    typename DisableIf<nsstd::is_same<TImageType, void>::value>::Type
     ConditionalInternalInitialization( TImageType *i);
 
     template<int VPixelIDValue, typename TImageType>
-    typename EnableIf<util::is_same<TImageType, void>::value>::Type
+    typename EnableIf<nsstd::is_same<TImageType, void>::value>::Type
     ConditionalInternalInitialization( TImageType *) { assert( false ); }
      /**@}*/
 

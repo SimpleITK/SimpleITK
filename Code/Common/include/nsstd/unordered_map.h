@@ -15,39 +15,36 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitk_util_functional_h
-#define __sitk_util_functional_h
+#ifndef __sitk_nsstd_unordered_map_h
+#define __sitk_nsstd_unordered_map_h
 
 #include "sitkConfigure.h"
 
 
-#if defined SITK_HAS_TR1_FUNCTIONAL || defined SITK_HAS_CXX11_FUNCTIONAL
+#if defined SITK_HAS_TR1_UNORDERED_MAP || defined SITK_HAS_CXX11_UNORDERED_MAP
 #if defined SITK_HAS_TR1_SUB_INCLUDE
-#include <tr1/functional>
-#else
-#include <functional>
+#include <tr1/unordered_map>
+#elif
+#include <unordered_map>
 #endif
 #else
-#error "No system (tr1) functional header available!"
+#error "No system (tr1) unordered_map header available!"
 #endif
 
 namespace itk
 {
 namespace simple
 {
-namespace util
+namespace nsstd
 {
-#if defined SITK_HAS_TR1_FUNCTIONAL
-using std::tr1::function;
-using std::tr1::bind;
-namespace placeholders =  std::tr1::placeholders;
+#if defined SITK_HAS_TR1_SUB_INCLUDE
+using std::tr1::unordered_map;
 #else
-using std::function;
-using std::bind;
-namespace placeholders =  std::placeholders;
+using std::unordered_map;
 #endif
 }
 }
 }
 
-#endif //__sitk_util_functional_h
+
+#endif //__sitk_nsstd_unordered_map_h
