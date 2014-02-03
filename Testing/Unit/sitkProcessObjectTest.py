@@ -46,6 +46,53 @@ class ProcessObjectTest(unittest.TestCase):
         self.assertTrue(issubclass(sitk.JoinSeriesImageFilter,sitk.ProcessObject))
 
 
+    def test_ProcessObject_lambda_Command(self):
+        """Check that the lambda Command on event works"""
+
+        f = sitk.CastImageFilter();
+
+        def s(var,value):
+            var[0] = value
+
+        # int/floats are passed by value, use lists to be passed by reference
+        start = [0]
+        stop = [0]
+        p = [0.0]
+        f.AddCommand(sitk.sitkStartEvent, lambda start=start: s(start,start[0]+1) )
+        f.AddCommand(sitk.sitkStartEvent, lambda stop=stop: s(stop, stop[0]+1) )
+        f.AddCommand(sitk.sitkProgressEvent, lambda p=p: s(p, f.GetProgress()) );
+        f.Execute(sitk.Image(10,10,sitk.sitkFloat32))
+
+        print( "start: {0} stop: {1} p: {2}".format(start,stop,p))
+        self.assertEqual(start,[1])
+        self.assertEqual(stop,[1])
+        self.assertEqual(p,[1.0])
+
+
+    def test_ProcessObject_PyCommand(self):
+        """Testing PyCommand Class"""
+
+        f = sitk.CastImageFilter();
+
+        p = [0.0]
+        def prog():
+            p[0] = f.GetProgress();
+
+        cmd = sitk.PyCommand()
+        cmd.SetCallbackPyCallable(prog)
+
+
+        f.AddCommand(sitk.sitkProgressEvent, cmd );
+        f.Execute(sitk.Image(10,10,sitk.sitkFloat32))
+        self.assertEqual(p,[1.0])
+
+        p = [0.0]
+        del cmd
+
+
+        f.Execute(sitk.Image(10,10,sitk.sitkFloat32))
+        self.assertEqual(p,[0.0])
+
 
 if __name__ == '__main__':
     unittest.main()
