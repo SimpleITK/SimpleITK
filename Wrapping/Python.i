@@ -761,8 +761,6 @@ def GetImageFromArray( arr, isVector=False):
 // called from C++
 %feature("director") itk::simple::Command;
 
-%include "sitkPyCommand.h"
-
 %extend itk::simple::ProcessObject {
  int AddCommand( itk::simple::EventEnum e, PyObject *obj )
  {
