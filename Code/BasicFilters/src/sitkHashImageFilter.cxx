@@ -115,6 +115,8 @@ namespace itk {
           break;
         }
 
+      this->PreUpdate( hasher.GetPointer() );
+
       hasher->Update();
 
       return hasher->GetHash();

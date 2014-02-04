@@ -16,11 +16,12 @@
 *
 *=========================================================================*/
 #if SWIGPYTHON
-%include "PythonDocstrings.i"
 
-// Enable Java classes derived from Command Execute method to be
-// called from C++
-%feature("director") itk::simple::Command;
+%{
+#include "sitkPyCommand.h"
+%}
+
+%include "PythonDocstrings.i"
 
 // ignore overload methods of int type when there is an enum
 %ignore itk::simple::CastImageFilter::SetOutputPixelType( PixelIDValueType pixelID );
@@ -753,5 +754,35 @@ def GetImageFromArray( arr, isVector=False):
 
     return img
 %}
+
+
+
+// Enable Java classes derived from Command Execute method to be
+// called from C++
+%feature("director") itk::simple::Command;
+
+%extend itk::simple::ProcessObject {
+ int AddCommand( itk::simple::EventEnum e, PyObject *obj )
+ {
+   if (!PyCallable_Check(obj))
+     {
+     return 0;
+     }
+   itk::simple::PyCommand *cmd = NULL;
+   try
+     {
+       cmd = new itk::simple::PyCommand();
+       cmd->SetCallbackPyCallable(obj);
+       int ret = self->AddCommand(e,*cmd);
+       cmd->OwnedByProcessObjectsOn();
+       return ret;
+     }
+   catch(...)
+     {
+       delete cmd;
+       throw;
+     }
+ }
+};
 
 #endif
