@@ -28,6 +28,9 @@ namespace itk
 namespace simple
 {
 
+#define sitkKernelPolygonCreateMacro(n) \
+  case sitkPolygon##n: return ITKKernelType::Polygon( radius, n )
+
 template< unsigned int VImageDimension >
 itk::FlatStructuringElement< VImageDimension >
 CreateKernel( KernelEnum kernelType, const std::vector<uint32_t> &size )
@@ -46,23 +49,18 @@ CreateKernel( KernelEnum kernelType, const std::vector<uint32_t> &size )
       return ITKKernelType::Box( radius );
     case sitkCross:
       return ITKKernelType::Cross( radius );
-    case sitkPolygon3:
-      return ITKKernelType::Polygon( radius, 3 );
-    case sitkPolygon4:
-      return ITKKernelType::Polygon( radius, 4 );
-    case sitkPolygon5:
-      return ITKKernelType::Polygon( radius, 5 );
-    case sitkPolygon6:
-      return ITKKernelType::Polygon( radius, 6 );
-    case sitkPolygon7:
-      return ITKKernelType::Polygon( radius, 7 );
-    case sitkPolygon8:
-      return ITKKernelType::Polygon( radius, 8 );
-    case sitkPolygon9:
-      return ITKKernelType::Polygon( radius, 9 );
+    sitkKernelPolygonCreateMacro(3);
+    sitkKernelPolygonCreateMacro(4);
+    sitkKernelPolygonCreateMacro(5);
+    sitkKernelPolygonCreateMacro(6);
+    sitkKernelPolygonCreateMacro(7);
+    sitkKernelPolygonCreateMacro(8);
+    sitkKernelPolygonCreateMacro(9);
     default:
       sitkExceptionMacro( "Logic Error: Unknown Kernel Type" );
     }
+
+#undef sitkKernelPolygonCreateMacro
 
 
 }
