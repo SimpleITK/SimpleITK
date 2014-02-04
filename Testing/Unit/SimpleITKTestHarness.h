@@ -18,6 +18,9 @@
 #ifndef __SimpleITKTestHarness_h
 #define __SimpleITKTestHarness_h
 
+// include ITK before STL to prevent warning in std::copy
+#include <itkMacro.h>
+
 #include <string>
 #include <vector>
 #include <gtest/gtest.h>
