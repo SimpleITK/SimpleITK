@@ -19,16 +19,8 @@
 #define __sitkPixelIDTokens_h
 
 #include "sitkConfigure.h"
-
-#ifdef SITK_HAS_STLTR1_TR1_TYPE_TRAITS
-#include <tr1/type_traits>
-#elif defined SITK_HAS_STLTR1_TYPE_TRAITS
-#include <type_traits>
-#else
-#error "No system tr1 type traits available"
-#endif
-
 #include "sitkPixelIDValues.h"
+#include "nsstd/type_traits.h"
 
 
 namespace itk
@@ -36,8 +28,8 @@ namespace itk
 namespace simple
 {
 
-typedef std::tr1::true_type  TrueType;
-typedef std::tr1::false_type FalseType;
+typedef nsstd::true_type  TrueType;
+typedef nsstd::false_type FalseType;
 
 template <typename TPixelIDType>
 struct IsBasic
@@ -103,8 +95,8 @@ template <typename TPixelIDType>
 struct IsInstantiated
 {
   static const bool Value = ((int)PixelIDToPixelIDValue<TPixelIDType>::Result != (int)sitkUnknown);
-  typedef typename std::tr1::integral_constant<bool, Value>::value_type ValueType;
-  typedef typename std::tr1::integral_constant<bool, Value>::type       Type;
+  typedef typename nsstd::integral_constant<bool, Value>::value_type ValueType;
+  typedef typename nsstd::integral_constant<bool, Value>::type       Type;
 };
 template <typename TPixelType, unsigned int VImageDimension>
 struct IsInstantiated< itk::Image< TPixelType, VImageDimension> >

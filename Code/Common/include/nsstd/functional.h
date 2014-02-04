@@ -15,37 +15,39 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#include "sitkFunctionCommand.h"
-#include "sitkProcessObject.h"
+#ifndef __sitk_nsstd_functional_h
+#define __sitk_nsstd_functional_h
+
+#include "sitkConfigure.h"
+
+
+#if defined SITK_HAS_TR1_FUNCTIONAL || defined SITK_HAS_CXX11_FUNCTIONAL
+#if defined SITK_HAS_TR1_SUB_INCLUDE
+#include <tr1/functional>
+#else
+#include <functional>
+#endif
+#else
+#error "No system (tr1) functional header available!"
+#endif
 
 namespace itk
 {
 namespace simple
 {
-
-FunctionCommand::FunctionCommand( )
+namespace nsstd
 {
-  Command::SetName("FunctionCommand");
+#if defined SITK_HAS_TR1_FUNCTIONAL
+using std::tr1::function;
+using std::tr1::bind;
+namespace placeholders =  std::tr1::placeholders;
+#else
+using std::function;
+using std::bind;
+namespace placeholders =  std::placeholders;
+#endif
+}
+}
 }
 
-void FunctionCommand::Execute(void)
-{
-  if (bool(this->m_Function))
-    {
-    return m_Function();
-    }
-}
-
-void FunctionCommand::SetCallbackFunction ( void(* pFunction )() )
-  {
-    m_Function = pFunction;
-  }
-
-void FunctionCommand::SetCallbackFunction( void(* pFunction )(void *), void *clientData )
-{
-  m_Function = nsstd::bind(pFunction, clientData);
-}
-
-
-} // end namespace simple
-} // end namespace itk
+#endif //__sitk_nsstd_functional_h

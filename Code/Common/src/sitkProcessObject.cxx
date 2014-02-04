@@ -24,14 +24,7 @@
 #include <iostream>
 #include <algorithm>
 
-
-#if defined SITK_HAS_STLTR1_TR1_FUNCTIONAL
-#include <tr1/functional>
-#elif defined SITK_HAS_STLTR1_FUNCTIONAL
-#include <functional>
-#else
-#error "No system tr1 functional available"
-#endif
+#include "nsstd/functional.h"
 
 namespace itk {
 namespace simple {
@@ -448,8 +441,8 @@ void ProcessObject::onCommandDelete(const itk::simple::Command *cmd) throw()
     }
 
   // remove all uses of command
-  using namespace std::tr1::placeholders;
-  m_Commands.remove_if(std::tr1::bind(rm_pred,cmd,_1));
+  using namespace nsstd::placeholders;
+  m_Commands.remove_if(nsstd::bind(rm_pred,cmd,_1));
 }
 
 } // end namespace simple

@@ -53,8 +53,8 @@ Image LabelStatisticsImageFilter::DualExecuteInternal ( const Image& inImage1, c
   filter->UseHistogramsOn(); //Needed to get Median value
 
   typedef typename TImageType::PixelType PixelType;
-  if( std::tr1::is_same< PixelType, uint8_t >::value ||
-      std::tr1::is_same< PixelType, int8_t >::value )
+  if( nsstd::is_same< PixelType, uint8_t >::value ||
+      nsstd::is_same< PixelType, int8_t >::value )
     {
     //NOTE:  This is a heuristic that works exact median only for
     //(unsigned) char images.

@@ -15,37 +15,36 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#include "sitkFunctionCommand.h"
-#include "sitkProcessObject.h"
+#ifndef __sitk_nsstd_unordered_map_h
+#define __sitk_nsstd_unordered_map_h
+
+#include "sitkConfigure.h"
+
+
+#if defined SITK_HAS_TR1_UNORDERED_MAP || defined SITK_HAS_CXX11_UNORDERED_MAP
+#if defined SITK_HAS_TR1_SUB_INCLUDE
+#include <tr1/unordered_map>
+#elif
+#include <unordered_map>
+#endif
+#else
+#error "No system (tr1) unordered_map header available!"
+#endif
 
 namespace itk
 {
 namespace simple
 {
-
-FunctionCommand::FunctionCommand( )
+namespace nsstd
 {
-  Command::SetName("FunctionCommand");
+#if defined SITK_HAS_TR1_SUB_INCLUDE
+using std::tr1::unordered_map;
+#else
+using std::unordered_map;
+#endif
 }
-
-void FunctionCommand::Execute(void)
-{
-  if (bool(this->m_Function))
-    {
-    return m_Function();
-    }
 }
-
-void FunctionCommand::SetCallbackFunction ( void(* pFunction )() )
-  {
-    m_Function = pFunction;
-  }
-
-void FunctionCommand::SetCallbackFunction( void(* pFunction )(void *), void *clientData )
-{
-  m_Function = nsstd::bind(pFunction, clientData);
 }
 
 
-} // end namespace simple
-} // end namespace itk
+#endif //__sitk_nsstd_unordered_map_h
