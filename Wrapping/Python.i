@@ -18,6 +18,9 @@
 #if SWIGPYTHON
 %include "PythonDocstrings.i"
 
+// Enable Java classes derived from Command Execute method to be
+// called from C++
+%feature("director") itk::simple::Command;
 
 // ignore overload methods of int type when there is an enum
 %ignore itk::simple::CastImageFilter::SetOutputPixelType( PixelIDValueType pixelID );

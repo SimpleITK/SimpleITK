@@ -23,6 +23,11 @@
 %include "std_string.i"
 %include "CSharpTypemapHelper.i"
 
+
+// Enable CSharp classes derived from Command Execute method to be
+// called from C++
+%feature("director") itk::simple::Command;
+
 %CSharpPointerTypemapHelper( itk::DataObject*, IntPtr )
 %CSharpPointerTypemapHelper( itk::Object::Pointer, IntPtr )
 %CSharpPointerTypemapHelper( itk::Optimizer::Pointer, IntPtr )
