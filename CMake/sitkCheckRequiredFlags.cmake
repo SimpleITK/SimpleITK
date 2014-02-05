@@ -4,7 +4,31 @@
 
 include(CheckCXXCompilerFlag)
 
+#
+# Search CMAKE_CXX_FLAGS for flags that should be considered required,
+# and propagated to other projects, via the
+# SimpleITK_REQUIRED_CXX_FLAGS variable.
+#
 
+string(REPLACE " " ";" cmake_cxx_flags_list ${CMAKE_CXX_FLAGS})
+
+# list of regular expressions flags that are to be required flags for SimpleITK
+set(required_flags_regex_to_test
+  "^-std="
+  "^-stdlib="
+)
+
+foreach(f ${cmake_cxx_flags_list})
+  foreach( r ${required_flags_regex_to_test} )
+    string(REGEX MATCH  ${r} _HAS_FLAG ${f} )
+    if (_HAS_FLAG )
+      string(FIND "${SimpleITK_REQUIRED_CXX_FLAGS}" "${f}" required)
+      if(required LESS 0)
+        set(SimpleITK_REQUIRED_CXX_FLAGS "${SimpleITK_REQUIRED_CXX_FLAGS} ${f}")
+      endif()
+    endif()
+  endforeach()
+endforeach()
 
 #
 # Check if we need to enable C++11 with a compiler flag
