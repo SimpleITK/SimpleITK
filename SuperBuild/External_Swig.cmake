@@ -1,4 +1,3 @@
-
 # Make sure this file is included only once
 get_filename_component(CMAKE_CURRENT_LIST_FILENAME ${CMAKE_CURRENT_LIST_FILE} NAME_WE)
 if(${CMAKE_CURRENT_LIST_FILENAME}_FILE_INCLUDED)
@@ -13,8 +12,8 @@ endif()
 
 if(NOT SWIG_DIR)
 
-  set(SWIG_TARGET_VERSION 2.0.11)
-  set(SWIG_DOWNLOAD_SOURCE_HASH "291ba57c0acd218da0b0916c280dcbae")
+  set(SWIG_TARGET_VERSION 2.0.11-1)
+  set(SWIG_DOWNLOAD_SOURCE_HASH "baa47646134350d5e0dbb9aa7346b94e")
   set(SWIG_DOWNLOAD_WIN_HASH "b902bac6500eb3ea8c6e62c4e6b3832c" )
 
 
@@ -81,18 +80,11 @@ if(NOT SWIG_DIR)
       @ONLY)
     set(swig_CONFIGURE_COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/swig_configure_step.cmake)
 
-    # patch step
-    configure_file(
-      swig_patch_step.cmake.in
-      ${CMAKE_CURRENT_BINARY_DIR}/swig_patch_step.cmake
-      @ONLY)
-    set(swig_PATCH_COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/swig_patch_step.cmake)
 
     ExternalProject_add(Swig
       URL http://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${SWIG_DOWNLOAD_SOURCE_HASH}&name=swig-${SWIG_TARGET_VERSION}.tar.gz
       URL_MD5 ${SWIG_DOWNLOAD_SOURCE_HASH}
       CONFIGURE_COMMAND ${swig_CONFIGURE_COMMAND}
-      PATCH_COMMAND ${swig_PATCH_COMMAND}
       DEPENDS "${Swig_DEPENDENCIES}"
 
       )
