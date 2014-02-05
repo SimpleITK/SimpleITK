@@ -118,18 +118,12 @@ list( APPEND SITK_LANGUAGES_VARS
 )
 option ( WRAP_CSHARP "Wrap C#" ${WRAP_CSHARP_DEFAULT} )
 
-#
-# Below here are the 2nd tier languages they are not enabled automatically if detected
-#
-
 find_package(R QUIET)
 if ( ${R_FOUND} AND NOT WIN32 )
   set ( WRAP_R_DEFAULT ON )
 else( )
   set ( WRAP_R_DEFAULT OFF )
 endif( )
-# SWIG 2.0.9-10 has bugs in enum types
-set ( WRAP_R_DEFAULT OFF )
 
 
 list( APPEND SITK_LANGUAGES_VARS
@@ -143,3 +137,7 @@ option ( WRAP_R "Wrap R" ${WRAP_R_DEFAULT} )
 if( WIN32 )
   mark_as_advanced( WRAP_R )
 endif()
+
+#
+# Below here are the 2nd tier languages they are not enabled automatically if detected
+#
