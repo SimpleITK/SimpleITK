@@ -14,7 +14,7 @@ if(NOT SWIG_DIR)
 
   set(SWIG_TARGET_VERSION 2.0.11-1)
   set(SWIG_DOWNLOAD_SOURCE_HASH "baa47646134350d5e0dbb9aa7346b94e")
-  set(SWIG_DOWNLOAD_WIN_HASH "b902bac6500eb3ea8c6e62c4e6b3832c" )
+  set(SWIG_DOWNLOAD_WIN_HASH "084d171dd2155782c0c9de0fd289c7e3" )
 
 
   if(WIN32)
@@ -24,19 +24,11 @@ if(NOT SWIG_DIR)
 
     set(swig_source_dir ${CMAKE_CURRENT_BINARY_DIR}/swigwin-${SWIG_TARGET_VERSION})
 
-    # patch step
-    configure_file(
-      swig_patch_step.cmake.in
-      ${CMAKE_CURRENT_BINARY_DIR}/swig_patch_step.cmake
-      @ONLY)
-    set(swig_PATCH_COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/swig_patch_step.cmake)
-
     # swig.exe available as pre-built binary on Windows:
     ExternalProject_Add(Swig
       URL http://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${SWIG_DOWNLOAD_WIN_HASH}&name=swigwin-${SWIG_TARGET_VERSION}.zip
       URL_MD5 ${SWIG_DOWNLOAD_WIN_HASH}
       SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/swigwin-${SWIG_TARGET_VERSION}
-      PATCH_COMMAND ${swig_PATCH_COMMAND}
       CONFIGURE_COMMAND ""
       BUILD_COMMAND ""
       INSTALL_COMMAND ""
