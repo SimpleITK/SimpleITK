@@ -8,8 +8,15 @@ project ( SimpleITK )
 
 cmake_policy( VERSION 2.8.1 )
 
+
 # Include extra CMake files
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake")
+
+
+
+#-----------------------------------------------------------
+# Check and set required flags for compilation
+include(sitkCheckRequiredFlags)
 
 
 find_package(ITK REQUIRED ) # the modules needed can be listed here as required components
