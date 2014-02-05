@@ -221,7 +221,7 @@ VariableListToCache( ep_common_list ep_common_cache )
 #
 # Use CMake file which present options for wrapped languages, and finds languages as needed
 #
-include(SITKLanguageOptions)
+include(sitkLanguageOptions)
 
 
 #$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
