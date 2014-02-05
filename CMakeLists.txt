@@ -12,10 +12,40 @@ cmake_policy( VERSION 2.8.1 )
 # Include extra CMake files
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake")
 
+#-----------------------------------------------------------------------------
+# Version information
+include(Version.cmake)
+
+set(SimpleITK_VERSION "${SimpleITK_VERSION_MAJOR}.${SimpleITK_VERSION_MINOR}")
+if(DEFINED SimpleITK_VERSION_PATCH)
+  set(SimpleITK_VERSION "${SimpleITK_VERSION}.${SimpleITK_VERSION_PATCH}")
+  if(DEFINED SimpleITK_VERSION_TWEAK)
+    set(SimpleITK_VERSION "${SimpleITK_VERSION}.${SimpleITK_VERSION_TWEAK}")
+  endif()
+endif()
+
+if(DEFINED SimpleITK_VERSION_RC)
+  set(SimpleITK_VERSION "${SimpleITK_VERSION}${SimpleITK_VERSION_RC}")
+endif()
+if(DEFINED SimpleITK_VERSION_POST)
+  set(SimpleITK_VERSION "${SimpleITK_VERSION}.post${SimpleITK_VERSION_POST}")
+elseif(DEFINED SimpleITK_VERSION_DEV)
+  set(SimpleITK_VERSION "${SimpleITK_VERSION}.dev${SimpleITK_VERSION_DEV}")
+endif()
+
+option( SimpleITK_BUILD_DISTRIBUTE "Remove '-g#####' from version. ( for official distribution only )" OFF )
+mark_as_advanced( SimpleITK_BUILD_DISTRIBUTE )
+if( NOT SimpleITK_BUILD_DISTRIBUTE )
+  set(SimpleITK_VERSION "${SimpleITK_VERSION}-g${SimpleITK_VERSION_HASH}")
+endif()
+
+message(STATUS "Building SimpleITK version \"${SimpleITK_VERSION}\"")
 
 
 #-----------------------------------------------------------
 # Check and set required flags for compilation
+# This must be done before any other try compiles based tests are
+# done.
 include(sitkCheckRequiredFlags)
 
 
@@ -109,34 +139,6 @@ option(BUILD_SHARED_LIBS "Build SimpleITK ITK with shared libraries. This does n
 set(SITK_BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS})
 
 
-#-----------------------------------------------------------------------------
-# Version information
-include(Version.cmake)
-
-set(SimpleITK_VERSION "${SimpleITK_VERSION_MAJOR}.${SimpleITK_VERSION_MINOR}")
-if(DEFINED SimpleITK_VERSION_PATCH)
-  set(SimpleITK_VERSION "${SimpleITK_VERSION}.${SimpleITK_VERSION_PATCH}")
-  if(DEFINED SimpleITK_VERSION_TWEAK)
-    set(SimpleITK_VERSION "${SimpleITK_VERSION}.${SimpleITK_VERSION_TWEAK}")
-  endif()
-endif()
-
-if(DEFINED SimpleITK_VERSION_RC)
-  set(SimpleITK_VERSION "${SimpleITK_VERSION}${SimpleITK_VERSION_RC}")
-endif()
-if(DEFINED SimpleITK_VERSION_POST)
-  set(SimpleITK_VERSION "${SimpleITK_VERSION}.post${SimpleITK_VERSION_POST}")
-elseif(DEFINED SimpleITK_VERSION_DEV)
-  set(SimpleITK_VERSION "${SimpleITK_VERSION}.dev${SimpleITK_VERSION_DEV}")
-endif()
-
-option( SimpleITK_BUILD_DISTRIBUTE "Remove '-g#####' from version. ( for official distribution only )" OFF )
-mark_as_advanced( SimpleITK_BUILD_DISTRIBUTE )
-if( NOT SimpleITK_BUILD_DISTRIBUTE )
-  set(SimpleITK_VERSION "${SimpleITK_VERSION}-g${SimpleITK_VERSION_HASH}")
-endif()
-
-message(STATUS "Building SimpleITK version \"${SimpleITK_VERSION}\"")
 
 set(JAR_FILE "simpleitk-${SimpleITK_VERSION}.jar")
 set(JAVADOC_FILE "simpleitk-javadoc-${SimpleITK_VERSION}.jar")
