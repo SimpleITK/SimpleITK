@@ -1,4 +1,0 @@
-# Copy files into Swig source directory with patches.
-
-file(COPY "@CMAKE_CURRENT_SOURCE_DIR@/Swig-patch/"
-     DESTINATION "@swig_source_dir@/")
