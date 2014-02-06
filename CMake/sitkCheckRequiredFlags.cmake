@@ -10,7 +10,7 @@ include(CheckCXXCompilerFlag)
 # SimpleITK_REQUIRED_CXX_FLAGS variable.
 #
 
-string(REPLACE " " ";" cmake_cxx_flags_list ${CMAKE_CXX_FLAGS})
+string(REPLACE " " ";" cmake_cxx_flags_list "${CMAKE_CXX_FLAGS}")
 
 # list of regular expressions flags that are to be required flags for SimpleITK
 set(required_flags_regex_to_test
