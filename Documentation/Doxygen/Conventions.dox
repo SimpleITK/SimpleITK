@@ -1,4 +1,6 @@
-/** \page Conventions Common Conventions for SimpleITK
+namespace itk {
+namespace simple {
+/** \page ConventionsPage Common Conventions for SimpleITK
 
 This document contains common conventions that SimpleITK filters, and
 objects follow. It is intended to describe the interfaces that users
@@ -51,3 +53,4 @@ same default values as those in ITK proper.
 
 
 */
+}}

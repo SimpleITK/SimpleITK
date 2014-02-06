@@ -43,7 +43,7 @@ struct ImageTypeToPixelIDValue
   enum { Result = PixelIDToPixelIDValue< typename ImageTypeToPixelID<TImageType>::PixelIDType>::Result };
 };
 
-/* \brief Enumerated values of pixelIDs
+/** \brief Enumerated values of pixelIDs
  *
  * Each PixelID's value correspondes to the index of the PixelID type,
  * in the type list "InstantiatedPixelIDTypeList". It is possible that

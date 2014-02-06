@@ -1,6 +1,7 @@
+namespace itk {
+namespace simple {
 /**
-
-\page FilterTemplates Image Filter Templates ReadMe
+\page FilterTemplatesPage Image Filter Templates ReadMe
 
 This ReadMe outlines the system used to generate SimpleITK files using json
 data files in conjunction with the template .h and .cxx files
@@ -414,3 +415,4 @@ kernel to use. See sitkErodeObjectMorphologyImageFilter.h for details.
 should be avoided because it instantiates the combination of two pixel
 type lists.
 */
+}}

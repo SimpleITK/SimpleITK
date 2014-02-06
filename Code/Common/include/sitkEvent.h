@@ -24,14 +24,34 @@
 namespace itk {
 namespace simple {
 
+/** \brief Events which can be observed from ProcessObject.
+ *
+ * For more information see the page \ref CommandPage.
+ */
 enum EventEnum {
+  /** \brief Occurs for all event types.
+   */
   sitkAnyEvent = 0,
+  /** \brief Occurs after the process has been aborted, but before exiting the Execute method.
+   */
   sitkAbortEvent = 1,
+  /** \brief Occurs when the underlying itk::ProcessObject is deleted.
+   */
   sitkDeleteEvent = 2,
+  /** \brief Occurs at then end of normal processing.
+   */
   sitkEndEvent = 3,
+  /** \brief Occurs with some algorithms that run for a fixed or undetermined number of iterations.
+   */
   sitkIterationEvent = 4,
+  /** \brief Occurs when the progress changes in most process objects.
+   */
   sitkProgressEvent = 5,
+  /** \brief Occurs when then itk::ProcessObject is starting.
+   */
   sitkStartEvent = 6,
+  /** \brief Other events may fall into this enumeration.
+   */
   sitkUserEvent = 7
 };
 

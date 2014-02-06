@@ -1,5 +1,7 @@
+namespace itk {
+namespace simple {
 /**
-\page Git Git philosophy
+\page GitPage Git philosophy
 This document records the standard operating procedure and philosopy
 of SimpleITK's use of Git.
 
@@ -57,3 +59,4 @@ the failed merge.
  our designated QA space (the role that next currently plays).
  Thoughts?  Competing theories?
 */
+}}

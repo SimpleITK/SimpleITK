@@ -22,6 +22,7 @@ if ARGV.length != 3 then
   exit( 1 )
 end
 
+## [ruby director command]
 # Derive a class from SimpleITK Command class to be used to observe
 # events and report progress.
 class MyCommand < Simpleitk::Command
@@ -37,6 +38,7 @@ class MyCommand < Simpleitk::Command
     puts "%s Progress: %0.2f" % [@po.get_name, @po.get_progress]
   end
 end
+## [ruby director command]
 
 reader = Simpleitk::ImageFileReader.new
 reader.set_file_name( ARGV[0] )
