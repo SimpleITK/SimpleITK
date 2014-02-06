@@ -77,7 +77,6 @@ foreach ( _start RANGE 0 ${_length} ${_stride} )
   if ( ${_end} VERSION_GREATER ${_length} OR
       ${_end} VERSION_EQUAL ${_length} )
     math( EXPR _end "${_length} - 1" )
-    set(_last 1)
   endif()
 
   # extract out the range into SRC
@@ -87,23 +86,25 @@ foreach ( _start RANGE 0 ${_length} ${_stride} )
     list ( APPEND SRC ${_v} )
   endforeach()
 
-  add_library ( SimpleITKBasicFilters${_library_i} ${SRC} )
-  target_link_libraries ( SimpleITKBasicFilters${_library_i} SimpleITKCommon SimpleITKBasicFilters0 ${ITK_LIBRARIES} )
-  if(_last)
-    # the last library include additional cxx files which may depend on
-    # other filter libraries
-    target_link_libraries ( SimpleITKBasicFilters${_library_i} ${SimpleITK_LIBRARIES} )
-  endif()
-  set_target_properties( SimpleITKBasicFilters${_library_i}  PROPERTIES SKIP_BUILD_RPATH TRUE )
-  add_dependencies ( SimpleITKBasicFilters${_library_i} BasicFiltersSourceCode )
+
 
   # append this new library to the globaly cached list
   list ( APPEND SimpleITK_LIBRARIES SimpleITKBasicFilters${_library_i} )
   set ( SimpleITK_LIBRARIES ${SimpleITK_LIBRARIES} CACHE INTERNAL "" )
 
+  add_library ( SimpleITKBasicFilters${_library_i} ${SRC} )
+  target_link_libraries ( SimpleITKBasicFilters${_library_i} SimpleITKCommon SimpleITKBasicFilters0 ${ITK_LIBRARIES} )
+  set_target_properties( SimpleITKBasicFilters${_library_i}  PROPERTIES SKIP_BUILD_RPATH TRUE )
+  add_dependencies ( SimpleITKBasicFilters${_library_i} BasicFiltersSourceCode )
+
   sitk_install_exported_target( SimpleITKBasicFilters${_library_i} )
 
+
 endforeach ()
+
+# the last library include additional cxx files which may depend on
+# other filter libraries
+target_link_libraries ( SimpleITKBasicFilters${_library_i} ${SimpleITK_LIBRARIES} ${ITK_LIBRARIES} )
 
 
 install( FILES ${CMAKE_CURRENT_BINARY_DIR}/../include/SimpleITKBasicFiltersGeneratedHeaders.h
