@@ -21,6 +21,7 @@ using itk.simple;
 
 namespace itk.simple.examples {
 
+//! [csharp director command]
   class MyCommand : Command {
 
     private ProcessObject m_ProcessObject;
@@ -33,7 +34,7 @@ namespace itk.simple.examples {
       Console.WriteLine("{0} Progress: {1:0.00}", m_ProcessObject.GetName(), m_ProcessObject.GetProgress() );
     }
   }
-
+//! [csharp director command]
 
   class FilterProgressReporting {
 
