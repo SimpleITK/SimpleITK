@@ -76,8 +76,8 @@ TEST(OperatorTests,BinaryLogic)
   img1 += 1;
   img2 += 2;
 
-  EXPECT_EQ( "ed4a77d1b56a118938788fc53037759b6c501e3d", sitk::Hash( ~img1 ) );
-  EXPECT_EQ( "ed4a77d1b56a118938788fc53037759b6c501e3d", sitk::Hash( ~img2 ) );
+  EXPECT_EQ( "f7463d12320e59d6f359abde8e957a7f3babf6e2", sitk::Hash( ~img1 ) );
+  EXPECT_EQ( "5c74df2a1c141d6aaa817464c4db000c944d0068", sitk::Hash( ~img2 ) );
 
   EXPECT_EQ( "ed4a77d1b56a118938788fc53037759b6c501e3d", sitk::Hash( img1&2 ) );
   EXPECT_EQ( "ed4a77d1b56a118938788fc53037759b6c501e3d", sitk::Hash( 1&img2 ) );
