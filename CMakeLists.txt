@@ -313,7 +313,7 @@ include(${SimpleITK_SOURCE_DIR}/Utilities/Doxygen/Doxygen.cmake)
 #
 # Use CMake file which present options for wrapped languages, and finds languages as needed
 #
-include(SITKLanguageOptions)
+include(sitkLanguageOptions)
 
 #------------------------------------------------------------------------------
 # Ensure that development strips have been setup
