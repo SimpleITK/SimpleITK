@@ -24,7 +24,7 @@
 #include "sitkDivideImageFilter.h"
 #include "sitkModulusImageFilter.h"
 #include "sitkUnaryMinusImageFilter.h"
-#include "sitkNotImageFilter.h"
+#include "sitkBitwiseNotImageFilter.h"
 #include "sitkAndImageFilter.h"
 #include "sitkOrImageFilter.h"
 #include "sitkXorImageFilter.h"
@@ -64,7 +64,7 @@ inline Image operator%( uint32_t s,  const Image &img  ) { return Modulus(s, img
 
 inline Image operator-( const Image &img ) { return UnaryMinus( img ); }
 
-inline Image operator~( const Image &img ) { return Not( img ); }
+inline Image operator~( const Image &img ) { return BitwiseNot( img ); }
 inline Image operator&( const Image &img1, const Image &img2 ) { return And(img1, img2 ); }
 inline Image operator&( const Image &img,  int s ) { return And(img, s ); }
 inline Image operator&( int s, const Image &img ) { return And(s, img ); }

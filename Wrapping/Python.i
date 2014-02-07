@@ -219,7 +219,7 @@
                return Xor( int(other), self )
             except ValueError:
                return NotImplemented
-        def __invert__( self ): return Not( self )
+        def __invert__( self ): return BitwiseNot( self )
 
         # Relational and Equality operators
 
