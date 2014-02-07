@@ -11,9 +11,9 @@ $ easy_install SimpleITK
 
 \section v070 SimpleITK 0.7.1
 
-         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.7.1/Python/SimpleITK-0.7.1.post1-1-py2.7-win-amd64.egg#015d52706b9f13c1f5540a20ed4ce77f">SimpleITK-0.7.1.post1-1-py2.7-win-amd64.egg</a>
-         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.7.1/Python/SimpleITK-0.7.1.post1-1-py3.2-win-amd64.egg#b6f36286090eb154f5c7435b8186c351">SimpleITK-0.7.1.post1-1-py3.2-win-amd64.egg</a>
-         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.7.1/Python/SimpleITK-0.7.1.post1-1-py3.3-win-amd64.egg#5a26c120ec1b9a181299dd65b1e186cf">SimpleITK-0.7.1.post1-1-py3.3-win-amd64.egg</a>
+         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.7.1/Python/SimpleITK-0.7.1.post1.1-py2.7-win-amd64.egg#015d52706b9f13c1f5540a20ed4ce77f">SimpleITK-0.7.1.post1.1-py2.7-win-amd64.egg</a>
+         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.7.1/Python/SimpleITK-0.7.1.post1.1-py3.2-win-amd64.egg#b6f36286090eb154f5c7435b8186c351">SimpleITK-0.7.1.post1.1-py3.2-win-amd64.egg</a>
+         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.7.1/Python/SimpleITK-0.7.1.post1.1-py3.3-win-amd64.egg#5a26c120ec1b9a181299dd65b1e186cf">SimpleITK-0.7.1.post1.1-py3.3-win-amd64.egg</a>
          \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.7.1/Python/SimpleITK-0.7.1.post1-py2.6-linux-x86_64.egg#b710a74b531f49a4c1ecb74759202162">SimpleITK-0.7.1.post1-py2.6-linux-x86_64.egg</a>
          \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.7.1/Python/SimpleITK-0.7.1.post1-py2.6-macosx-10.6-universal.egg#21b577ad28f306727d39c09af2f5ca5f">SimpleITK-0.7.1.post1-py2.6-macosx-10.6-universal.egg</a>
          \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.7.1/Python/SimpleITK-0.7.1.post1-py2.7-linux-i686.egg#0242855cae7b145f385d5a6fdf2739b7">SimpleITK-0.7.1.post1-py2.7-linux-i686.egg</a>
