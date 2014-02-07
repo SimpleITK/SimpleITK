@@ -2,10 +2,8 @@
 #-----------------------------------------------------------------------------
 # Get and build itk
 
-get_cmake_property( _varNames VARIABLES )
-
+# Determine if we need to set to use 64BITS_IDS for windows64
 include(CheckTypeSize)
-
 check_type_size(size_t SITK_SIZEOF_SIZE_T)
 check_type_size(long SITK_SIZEOF_LONG)
 
@@ -21,6 +19,8 @@ option(ITK_USE_64BITS_IDS "When ON, ITK will use 64 bits integers to
   ${ITK_USE_64BITS_IDS_DEFAULT})
 mark_as_advanced(ITK_USE_64BITS_IDS)
 
+
+get_cmake_property( _varNames VARIABLES )
 
 foreach (_varName ${_varNames})
   if(_varName MATCHES "^ITK_" OR _varName MATCHES "FFTW")
