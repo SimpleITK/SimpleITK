@@ -149,7 +149,9 @@ namespace itk {
        * Deleting a registered command during execution causes
        * program termination.
        *
-       * \note: the return value is reserved for latter usage
+       * For more information see the page \ref CommandPage.
+       *
+       * \note The return value is reserved for latter usage.
        */
       virtual int AddCommand(itk::simple::EventEnum event, itk::simple::Command &cmd);
 

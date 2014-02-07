@@ -38,6 +38,8 @@ class ProcessObject;
  *
  * The Command can be created on the stack, and will automatically
  * unregistered it's self when destroyed.
+ *
+ * For more information see the page \ref CommandPage.
  */
 class SITKCommon_EXPORT Command:
     protected NonCopyable
