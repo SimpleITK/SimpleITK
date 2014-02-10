@@ -42,11 +42,12 @@ SET(CTEST_CUSTOM_WARNING_EXCEPTION
   # Ignore warning in lua about the use of `tmpnam' is dangerous
   "loslib"
 
-  # Ubuntu 10'd gcc 4.4.3 produces:
+  # Ubuntu 10's gcc 4.4.3 produces, Debians gcc 4.7.2:
   # assuming signed overflow does not occur when assuming that (X + c) < X is always false
-  "itkImageRegionConstIteratorWithIndex.hxx:37: warning.*is always false"
+  "itkImageRegionConstIteratorWithIndex.hxx:.*warning: assuming signed overflow.*is always false"
 
   # Ignore CSharp invalid version warning for dev
   "warning CS1607.*The version number.*dev.*is invalid"
+  "warning CS1607.*The version number.*dev.*is not in the normal"
 )
 
