@@ -19,20 +19,9 @@
 #if SWIGTCL
 // Code to rebuild tclsh
 %include "tclsh.i"
-%include "tclinterp.i"
+
 
 // ignore overload methods of int type when there is an enum
 %ignore itk::simple::CastImageFilter::SetOutputPixelType( PixelIDValueType pixelID );
 %ignore itk::simple::GetPixelIDValueAsString( PixelIDValueType type );
-
-%extend itk::simple::ProcessObject {
-  int AddCommand( itk::simple::EventEnum e, Tcl_Obj *obj, Tcl_Interp *interp )
- {
-   std::cout << "AddCommand called with an obj.\n";
-   Tcl_GlobalEvalObj(interp, obj);
-   return 0;
- }
-
- }
-
 #endif

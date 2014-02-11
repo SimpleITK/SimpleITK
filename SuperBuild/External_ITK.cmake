@@ -7,16 +7,16 @@ include(CheckTypeSize)
 check_type_size(size_t SITK_SIZEOF_SIZE_T)
 check_type_size(long SITK_SIZEOF_LONG)
 
-set(_ITK_USE_64BITS_IDS_DEFAULT OFF)
+set(ITK_USE_64BITS_IDS_DEFAULT OFF)
 if(SITK_SIZEOF_SIZE_T EQUAL 8
     AND NOT SITK_SIZEOF_LONG EQUAL 8 )
-  set(_ITK_USE_64BITS_IDS_DEFAULT ON)
+  set(ITK_USE_64BITS_IDS_DEFAULT ON)
 endif()
 
 option(ITK_USE_64BITS_IDS "When ON, ITK will use 64 bits integers to
  index pixels. This is needed for managing images larger than 4Gb in
  some platforms."
-  ${_ITK_USE_64BITS_IDS_DEFAULT})
+  ${ITK_USE_64BITS_IDS_DEFAULT})
 mark_as_advanced(ITK_USE_64BITS_IDS)
 
 
