@@ -190,10 +190,6 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
         /lib:${CSHARP_BINARY_DIRECTORY} /reference:System.dll /reference:SimpleITKCSharpManaged.dll
         /out:${CSHARP_BINARY_DIRECTORY}/Test${FILTERNAME}.exe ${OUTPUT_TEST_FILENAME_SAFE}
       DEPENDS ${filter_json_file} ${CSHARP_TEMPLATE_FILES}
-      COMMENT "CSHARP: ${CSHARP_COMPILER}
-        /t:exe /platform:${CSHARP_PLATFORM}
-        /lib:${CSHARP_BINARY_DIRECTORY} /reference:System.dll /reference:SimpleITKCSharpManaged.dll
-        /out:${CSHARP_BINARY_DIRECTORY}/Test${FILTERNAME}.exe ${OUTPUT_TEST_FILENAME_SAFE}"
       )
     add_test( NAME CSharp.${FILTERNAME} COMMAND SimpleITKUnitTestDriver${_exec_i} --gtest_filter=CSharp.${FILTERNAME} )
     set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
@@ -499,16 +495,6 @@ if ( WRAP_JAVA )
     "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
     "2.0"
     "${TEST_HARNESS_TEMP_DIRECTORY}/Java.SimpleGaussian.nrrd" )
-
-  add_java_test( Example.FilterProgressReporting
-    "${SimpleITK_SOURCE_DIR}/Examples/FilterProgressReporting.java"
-    --compare
-      "${TEST_HARNESS_TEMP_DIRECTORY}/Java.FilterProgressReporting.nrrd"
-      "${TEST_HARNESS_DATA_DIRECTORY}/Baseline/Example_SimpleGaussian_2.0.nrrd"
-    "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
-    "2.0"
-    "${TEST_HARNESS_TEMP_DIRECTORY}/Java.FilterProgressReporting.nrrd" )
-
 
 # This test currently does not compile or work
 #
