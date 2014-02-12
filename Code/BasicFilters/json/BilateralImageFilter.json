@@ -48,6 +48,7 @@
     {
       "tag" : "3d",
       "description" : "small kernel in 3d",
+      "no_procedure" : 1,
       "settings" : [
         {
           "parameter" : "DomainSigma",
