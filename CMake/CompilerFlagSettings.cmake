@@ -59,8 +59,9 @@ endif()
 
 set(warning_flags_to_test
   ${VerboseWarningsFlag}
-  -Wno-long-double        #Needed on APPLE
-  -Wno-long-long          # needed on gcc 4.5.2
+  -Wno-long-double           # needed on APPLE
+  -Wno-long-long             # needed on gcc 4.5.2
+  -Wno-strict-overflow       # needed with gcc 4.8
   -Wextra
   -Wformat=2
   -Wno-format-nonliteral
