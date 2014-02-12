@@ -118,6 +118,7 @@
     {
       "tag" : "cthead",
       "description" : "Segmentation of head in CT",
+      "no_procedure" : 1,
       "settings" : [
         {
           "parameter" : "NumberOfIterations",
