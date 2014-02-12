@@ -483,6 +483,8 @@ if ( WRAP_JAVA )
       )
   endfunction()
 
+  add_java_test( ProcessObjectTest
+    "${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkProcessObjectTest.java" )
 
   #
   # JAVA Examples
