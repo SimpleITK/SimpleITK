@@ -61,6 +61,7 @@ set(warning_flags_to_test
   ${VerboseWarningsFlag}
   -Wno-long-double           # needed on APPLE
   -Wno-long-long             # needed on gcc 4.5.2
+  -Wno-unused-local-typedefs # needed with gcc 4.8
   -Wno-strict-overflow       # needed with gcc 4.8
   -Wextra
   -Wformat=2
