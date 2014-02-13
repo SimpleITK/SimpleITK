@@ -13,7 +13,7 @@
       "dim_vec" : 1,
       "itk_type" : "typename FilterType::IndexType",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set seed point 1. This seed will be isolated from Seed2 (if possible). All pixels connected to this seed will be replaced with ReplaceValue. This method is deprecated, please use AddSeed()\n"
+      "detaileddescriptionSet" : "Set seed point 1. This seed will be isolated from Seed2 (if possible). All pixels connected to this seed will be replaced with ReplaceValue. This method is deprecated, please use AddSeed()"
     },
     {
       "name" : "Seed2",
@@ -22,7 +22,7 @@
       "dim_vec" : 1,
       "itk_type" : "typename FilterType::IndexType",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set seed point 2. This seed will be isolated from Seed1 (if possible). This method is deprecated, please use AddSeed()\n"
+      "detaileddescriptionSet" : "Set seed point 2. This seed will be isolated from Seed1 (if possible). This method is deprecated, please use AddSeed()"
     },
     {
       "name" : "Lower",
@@ -30,9 +30,9 @@
       "default" : 0,
       "pixeltype" : "Input",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the limit on the lower threshold value. The default is the NonpositiveMin() for the InputPixelType.\n",
+      "detaileddescriptionSet" : "Set/Get the limit on the lower threshold value. The default is the NonpositiveMin() for the InputPixelType.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the limit on the lower threshold value. The default is the NonpositiveMin() for the InputPixelType.\n"
+      "detaileddescriptionGet" : "Set/Get the limit on the lower threshold value. The default is the NonpositiveMin() for the InputPixelType."
     },
     {
       "name" : "Upper",
@@ -40,9 +40,9 @@
       "default" : 1,
       "pixeltype" : "Input",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the limit on the upper threshold value. The default is the max() for the InputPixelType.\n",
+      "detaileddescriptionSet" : "Set/Get the limit on the upper threshold value. The default is the max() for the InputPixelType.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the limit on the upper threshold value. The default is the max() for the InputPixelType.\n"
+      "detaileddescriptionGet" : "Set/Get the limit on the upper threshold value. The default is the max() for the InputPixelType."
     },
     {
       "name" : "ReplaceValue",
@@ -50,9 +50,9 @@
       "default" : "1u",
       "pixeltype" : "Output",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get value to replace thresholded pixels. Pixels that lie within the thresholds will be replaced with this value. The default is 1.\n",
+      "detaileddescriptionSet" : "Set/Get value to replace thresholded pixels. Pixels that lie within the thresholds will be replaced with this value. The default is 1.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get value to replace thresholded pixels. Pixels that lie within the thresholds will be replaced with this value. The default is 1.\n"
+      "detaileddescriptionGet" : "Set/Get value to replace thresholded pixels. Pixels that lie within the thresholds will be replaced with this value. The default is 1."
     },
     {
       "name" : "IsolatedValueTolerance",
@@ -60,9 +60,9 @@
       "default" : "1.0",
       "pixeltype" : "Input",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the precision required for the intensity threshold value. The default is 1.\n",
+      "detaileddescriptionSet" : "Set/Get the precision required for the intensity threshold value. The default is 1.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the precision required for the intensity threshold value. The default is 1.\n"
+      "detaileddescriptionGet" : "Set/Get the precision required for the intensity threshold value. The default is 1."
     },
     {
       "name" : "FindUpperThreshold",
@@ -70,9 +70,9 @@
       "default" : "true",
       "doc" : "",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get whether to find an upper threshold (separating two dark regions) or a lower threshold (separating two bright regions).\n",
+      "detaileddescriptionSet" : "Set/Get whether to find an upper threshold (separating two dark regions) or a lower threshold (separating two bright regions).",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get whether to find an upper threshold (separating two dark regions) or a lower threshold (separating two bright regions).\n"
+      "detaileddescriptionGet" : "Set/Get whether to find an upper threshold (separating two dark regions) or a lower threshold (separating two bright regions)."
     }
   ],
   "measurements" : [
@@ -135,6 +135,6 @@
       ]
     }
   ],
-  "briefdescription" : "Label pixels that are connected to one set of seeds but not another.\n",
-  "detaileddescription" : " IsolatedConnectedImageFilterfinds the optimal threshold to separate two regions. It has two modes, one to separate dark regions surrounded by bright regions by automatically finding a minimum isolating upper threshold, and another to separate bright regions surrounded by dark regions by automatically finding a maximum lower isolating threshold. The mode can be chosen by setting FindUpperThresholdOn()/Off(). In both cases, the isolating threshold is retrieved with GetIsolatedValue().\nThe algorithm labels pixels with ReplaceValue that are connected to Seeds1 AND NOT connected to Seeds2. When finding the threshold to separate two dark regions surrounded by bright regions, given a fixed lower threshold, the filter adjusts the upper threshold until the two sets of seeds are not connected. The algorithm uses a binary search to adjust the upper threshold, starting at Upper. The reverse is true for finding the threshold to separate two bright regions. Lower defaults to the smallest possible value for the InputImagePixelType, and Upper defaults to the largest possible value for the InputImagePixelType.\nThe user can also supply the Lower and Upper values to restrict the search. However, if the range is too restrictive, it could happen that no isolating threshold can be found between the user specified Lower and Upper values. Therefore, unless the user is sure of the bounds to set, it is recommended that the user set these values to the lowest and highest intensity values in the image, respectively.\nThe user can specify more than one seed for both regions to separate. The algorithm will try find the threshold that ensures that all of the first seeds are contained in the resulting segmentation and all of the second seeds are not contained in the segmentation.\nIt is possible that the algorithm may not be able to find the isolating threshold because no such threshold exists. The user can check for this by querying the GetThresholdingFailed()flag.\n"
+  "briefdescription" : "Label pixels that are connected to one set of seeds but not another.",
+  "detaileddescription" : "IsolatedConnectedImageFilterfinds the optimal threshold to separate two regions. It has two modes, one to separate dark regions surrounded by bright regions by automatically finding a minimum isolating upper threshold, and another to separate bright regions surrounded by dark regions by automatically finding a maximum lower isolating threshold. The mode can be chosen by setting FindUpperThresholdOn()/Off(). In both cases, the isolating threshold is retrieved with GetIsolatedValue().\n\nThe algorithm labels pixels with ReplaceValue that are connected to Seeds1 AND NOT connected to Seeds2. When finding the threshold to separate two dark regions surrounded by bright regions, given a fixed lower threshold, the filter adjusts the upper threshold until the two sets of seeds are not connected. The algorithm uses a binary search to adjust the upper threshold, starting at Upper. The reverse is true for finding the threshold to separate two bright regions. Lower defaults to the smallest possible value for the InputImagePixelType, and Upper defaults to the largest possible value for the InputImagePixelType.\n\nThe user can also supply the Lower and Upper values to restrict the search. However, if the range is too restrictive, it could happen that no isolating threshold can be found between the user specified Lower and Upper values. Therefore, unless the user is sure of the bounds to set, it is recommended that the user set these values to the lowest and highest intensity values in the image, respectively.\n\nThe user can specify more than one seed for both regions to separate. The algorithm will try find the threshold that ensures that all of the first seeds are contained in the resulting segmentation and all of the second seeds are not contained in the segmentation.\n\nIt is possible that the algorithm may not be able to find the isolating threshold because no such threshold exists. The user can check for this by querying the GetThresholdingFailed()flag."
 }

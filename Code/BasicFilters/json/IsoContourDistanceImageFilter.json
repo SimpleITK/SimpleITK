@@ -13,9 +13,9 @@
       "default" : "0",
       "pixeltype" : "Input",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the value of the level set to be located. The default value is 0.\n",
+      "detaileddescriptionSet" : "Set/Get the value of the level set to be located. The default value is 0.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the value of the level set to be located. The default value is 0.\n"
+      "detaileddescriptionGet" : "Set/Get the value of the level set to be located. The default value is 0."
     },
     {
       "name" : "FarValue",
@@ -23,9 +23,9 @@
       "default" : "10",
       "pixeltype" : "Output",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the value of the level set to be located. The default value is 0.\n",
+      "detaileddescriptionSet" : "Set/Get the value of the level set to be located. The default value is 0.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the value of the level set to be located. The default value is 0.\n"
+      "detaileddescriptionGet" : "Set/Get the value of the level set to be located. The default value is 0."
     }
   ],
   "tests" : [
@@ -44,6 +44,6 @@
       ]
     }
   ],
-  "briefdescription" : "Compute an approximate distance from an interpolated isocontour to the close grid points.\n",
-  "detaileddescription" : "For standard level set algorithms, it is useful to periodically reinitialize the evolving image to prevent numerical accuracy problems in computing derivatives. This reinitialization is done by computing a signed distance map to the current level set. This class provides the first step in this reinitialization by computing an estimate of the distance from the interpolated isocontour to the pixels (or voxels) that are close to it, i.e. for which the isocontour crosses a segment between them and one of their direct neighbors. This class supports narrowbanding. If the input narrowband is provided, the algorithm will only locate the level set within the input narrowband.\nImplementation of this class is based on Fast and Accurate Redistancing for Level Set Methods `Krissian K. and Westin C.F.', EUROCAST NeuroImaging Workshop Las Palmas Spain, Ninth International Conference on Computer Aided Systems Theory , pages 48-51, Feb 2003.\n"
+  "briefdescription" : "Compute an approximate distance from an interpolated isocontour to the close grid points.",
+  "detaileddescription" : "For standard level set algorithms, it is useful to periodically reinitialize the evolving image to prevent numerical accuracy problems in computing derivatives. This reinitialization is done by computing a signed distance map to the current level set. This class provides the first step in this reinitialization by computing an estimate of the distance from the interpolated isocontour to the pixels (or voxels) that are close to it, i.e. for which the isocontour crosses a segment between them and one of their direct neighbors. This class supports narrowbanding. If the input narrowband is provided, the algorithm will only locate the level set within the input narrowband.\n\nImplementation of this class is based on Fast and Accurate Redistancing for Level Set Methods `Krissian K. and Westin C.F.', EUROCAST NeuroImaging Workshop Las Palmas Spain, Ninth International Conference on Computer Aided Systems Theory , pages 48-51, Feb 2003."
 }

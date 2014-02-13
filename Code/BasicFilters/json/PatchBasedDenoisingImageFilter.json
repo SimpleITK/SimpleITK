@@ -18,9 +18,9 @@
       "doc" : "KernelBandwidthSigma",
       "custom_itk_cast" : "typename FilterType::RealArrayType a(image1->GetNumberOfComponentsPerPixel());\n  a.Fill(m_KernelBandwidthSigma);\n  filter->SetKernelBandwidthSigma(a);",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get initial kernel bandwidth estimate. To prevent the class from automatically modifying this estimate, set KernelBandwidthEstimation to false in the base class.\n",
+      "detaileddescriptionSet" : "Set/Get initial kernel bandwidth estimate. To prevent the class from automatically modifying this estimate, set KernelBandwidthEstimation to false in the base class.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get initial kernel bandwidth estimate. To prevent the class from automatically modifying this estimate, set KernelBandwidthEstimation to false in the base class.\n"
+      "detaileddescriptionGet" : "Set/Get initial kernel bandwidth estimate. To prevent the class from automatically modifying this estimate, set KernelBandwidthEstimation to false in the base class."
     },
     {
       "name" : "PatchRadius",
@@ -79,7 +79,7 @@
       "default" : "0.0",
       "custom_itk_cast" : "if (this->m_NoiseSigma != 0.0) filter->SetNoiseSigma(this->m_NoiseSigma);",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the noise sigma. Used by the noise model where appropriate, defaults to 5% of the image intensity range\n",
+      "detaileddescriptionSet" : "Set/Get the noise sigma. Used by the noise model where appropriate, defaults to 5% of the image intensity range",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : ""
     },
@@ -115,9 +115,9 @@
       "type" : "double",
       "default" : "1.0",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the kernel bandwidth sigma multiplication factor used to modify the automatically-estimated kernel bandwidth sigma. At times, it may be desirable to modify the value of the automatically-estimated sigma. Typically, this number isn't very far from 1. Note: This is used only when KernelBandwidthEstimation is True/On.\n",
+      "detaileddescriptionSet" : "Set/Get the kernel bandwidth sigma multiplication factor used to modify the automatically-estimated kernel bandwidth sigma. At times, it may be desirable to modify the value of the automatically-estimated sigma. Typically, this number isn't very far from 1. Note: This is used only when KernelBandwidthEstimation is True/On.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the kernel bandwidth sigma multiplication factor used to modify the automatically-estimated kernel bandwidth sigma. At times, it may be desirable to modify the value of the automatically-estimated sigma. Typically, this number isn't very far from 1. Note: This is used only when KernelBandwidthEstimation is True/On.\n"
+      "detaileddescriptionGet" : "Set/Get the kernel bandwidth sigma multiplication factor used to modify the automatically-estimated kernel bandwidth sigma. At times, it may be desirable to modify the value of the automatically-estimated sigma. Typically, this number isn't very far from 1. Note: This is used only when KernelBandwidthEstimation is True/On."
     },
     {
       "name" : "KernelBandwidthUpdateFrequency",
@@ -133,9 +133,9 @@
       "type" : "double",
       "default" : "0.2",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the fraction of the image to use for kernel bandwidth sigma estimation. To reduce the computational burden for computing sigma, a small random fraction of the image pixels can be used.\n",
+      "detaileddescriptionSet" : "Set/Get the fraction of the image to use for kernel bandwidth sigma estimation. To reduce the computational burden for computing sigma, a small random fraction of the image pixels can be used.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the fraction of the image to use for kernel bandwidth sigma estimation. To reduce the computational burden for computing sigma, a small random fraction of the image pixels can be used.\n"
+      "detaileddescriptionGet" : "Set/Get the fraction of the image to use for kernel bandwidth sigma estimation. To reduce the computational burden for computing sigma, a small random fraction of the image pixels can be used."
     }
   ],
   "tests" : [
@@ -149,6 +149,6 @@
       ]
     }
   ],
-  "briefdescription" : "Derived class implementing a specific patch-based denoising algorithm, as detailed below.\n",
-  "detaileddescription" : "This class is derived from the base class PatchBasedDenoisingBaseImageFilter; please refer to the documentation of the base class first. This class implements a denoising filter that uses iterative non-local, or semi-local, weighted averaging of image patches for image denoising. The intensity at each pixel 'p' gets updated as a weighted average of intensities of a chosen subset of pixels from the image.\nThis class implements the denoising algorithm using a Gaussian kernel function for nonparametric density estimation. The class implements a scheme to automatically estimated the kernel bandwidth parameter (namely, sigma) using leave-one-out cross validation. It implements schemes for random sampling of patches non-locally (from the entire image) as well as semi-locally (from the spatial proximity of the pixel being denoised at the specific point in time). It implements a specific scheme for defining patch weights (mask) as described in Awate and Whitaker 2005 IEEE CVPR and 2006 IEEE TPAMI.\n\\see  PatchBasedDenoisingBaseImageFilter\n\n"
+  "briefdescription" : "Derived class implementing a specific patch-based denoising algorithm, as detailed below.",
+  "detaileddescription" : "This class is derived from the base class PatchBasedDenoisingBaseImageFilter; please refer to the documentation of the base class first. This class implements a denoising filter that uses iterative non-local, or semi-local, weighted averaging of image patches for image denoising. The intensity at each pixel 'p' gets updated as a weighted average of intensities of a chosen subset of pixels from the image.\n\nThis class implements the denoising algorithm using a Gaussian kernel function for nonparametric density estimation. The class implements a scheme to automatically estimated the kernel bandwidth parameter (namely, sigma) using leave-one-out cross validation. It implements schemes for random sampling of patches non-locally (from the entire image) as well as semi-locally (from the spatial proximity of the pixel being denoised at the specific point in time). It implements a specific scheme for defining patch weights (mask) as described in Awate and Whitaker 2005 IEEE CVPR and 2006 IEEE TPAMI.\n\n\\see  PatchBasedDenoisingBaseImageFilter"
 }

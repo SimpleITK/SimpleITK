@@ -18,6 +18,6 @@
       ]
     }
   ],
-  "briefdescription" : "Computes the one-argument inverse tangent of each pixel.\n",
-  "detaileddescription" : "This filter is templated over the pixel type of the input image and the pixel type of the output image.\nThe filter walks over all the pixels in the input image, and for each pixel does the following:\n\n\\li cast the pixel value to double ,\n\\li apply the vcl_atan() function to the double value,\n\\li cast the double value resulting from vcl_atan() to the pixel type of the output image,\n\\li store the cast value into the output image.\n\n"
+  "briefdescription" : "Computes the one-argument inverse tangent of each pixel.",
+  "detaileddescription" : "This filter is templated over the pixel type of the input image and the pixel type of the output image.\n\nThe filter walks over all the pixels in the input image, and for each pixel does the following:\n\n\n\\li cast the pixel value to double ,\n\n\\li apply the vcl_atan() function to the double value,\n\n\\li cast the double value resulting from vcl_atan() to the pixel type of the output image,\n\n\\li store the cast value into the output image."
 }

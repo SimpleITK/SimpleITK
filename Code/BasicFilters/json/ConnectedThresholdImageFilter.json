@@ -13,7 +13,7 @@
       "default" : 0,
       "pixeltype" : "Input",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set Upper and Lower Threshold inputs as values\n",
+      "detaileddescriptionSet" : "Set Upper and Lower Threshold inputs as values",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : ""
     },
@@ -23,9 +23,9 @@
       "default" : 1,
       "pixeltype" : "Input",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set Upper and Lower Threshold inputs as values\n",
+      "detaileddescriptionSet" : "Set Upper and Lower Threshold inputs as values",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Get Upper and Lower Threshold inputs as values\n"
+      "detaileddescriptionGet" : "Get Upper and Lower Threshold inputs as values"
     },
     {
       "name" : "ReplaceValue",
@@ -34,9 +34,9 @@
       "pixeltype" : "Output",
       "doc" : "Pixels that lie within Lower and Upper (inclusive)\nwill be replaced with this value. The default is 1.",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get value to replace thresholded pixels. Pixels that lie * within Lower and Upper (inclusive) will be replaced with this value. The default is 1.\n",
+      "detaileddescriptionSet" : "Set/Get value to replace thresholded pixels. Pixels that lie * within Lower and Upper (inclusive) will be replaced with this value. The default is 1.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get value to replace thresholded pixels. Pixels that lie * within Lower and Upper (inclusive) will be replaced with this value. The default is 1.\n"
+      "detaileddescriptionGet" : "Set/Get value to replace thresholded pixels. Pixels that lie * within Lower and Upper (inclusive) will be replaced with this value. The default is 1."
     },
     {
       "name" : "Connectivity",
@@ -47,9 +47,9 @@
       "default" : "itk::simple::ConnectedThresholdImageFilter::FaceConnectivity",
       "itk_type" : "typename FilterType::ConnectivityEnumType",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Type of connectivity to use (fully connected OR 4(2D), 6(3D), 2*N(ND) connectivity)\n",
+      "detaileddescriptionSet" : "Type of connectivity to use (fully connected OR 4(2D), 6(3D), 2*N(ND) connectivity)",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Type of connectivity to use (fully connected OR 4(2D), 6(3D), 2*N(ND) connectivity)\n"
+      "detaileddescriptionGet" : "Type of connectivity to use (fully connected OR 4(2D), 6(3D), 2*N(ND) connectivity)"
     }
   ],
   "tests" : [
@@ -170,6 +170,6 @@
       ]
     }
   ],
-  "briefdescription" : "Label pixels that are connected to a seed and lie within a range of values.\n",
-  "detaileddescription" : " ConnectedThresholdImageFilterlabels pixels with ReplaceValue that are connected to an initial Seed AND lie within a Lower and Upper threshold range.\n"
+  "briefdescription" : "Label pixels that are connected to a seed and lie within a range of values.",
+  "detaileddescription" : "ConnectedThresholdImageFilterlabels pixels with ReplaceValue that are connected to an initial Seed AND lie within a Lower and Upper threshold range."
 }

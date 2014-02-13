@@ -12,27 +12,27 @@
       "type" : "uint32_t",
       "default" : "256u",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the number of histogram levels used.\n",
+      "detaileddescriptionSet" : "Set/Get the number of histogram levels used.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the number of histogram levels used.\n"
+      "detaileddescriptionGet" : "Set/Get the number of histogram levels used."
     },
     {
       "name" : "NumberOfMatchPoints",
       "type" : "uint32_t",
       "default" : "1u",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the number of match points used.\n",
+      "detaileddescriptionSet" : "Set/Get the number of match points used.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the number of match points used.\n"
+      "detaileddescriptionGet" : "Set/Get the number of match points used."
     },
     {
       "name" : "ThresholdAtMeanIntensity",
       "type" : "bool",
       "default" : "true",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the threshold at mean intensity flag. If true, only source (reference) pixels which are greater than the mean source (reference) intensity is used in the histogram matching. If false, all pixels are used.\n",
+      "detaileddescriptionSet" : "Set/Get the threshold at mean intensity flag. If true, only source (reference) pixels which are greater than the mean source (reference) intensity is used in the histogram matching. If false, all pixels are used.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the threshold at mean intensity flag. If true, only source (reference) pixels which are greater than the mean source (reference) intensity is used in the histogram matching. If false, all pixels are used.\n"
+      "detaileddescriptionGet" : "Set/Get the threshold at mean intensity flag. If true, only source (reference) pixels which are greater than the mean source (reference) intensity is used in the histogram matching. If false, all pixels are used."
     }
   ],
   "tests" : [
@@ -74,6 +74,6 @@
       ]
     }
   ],
-  "briefdescription" : "Normalize the grayscale values between two images by histogram matching.\n",
-  "detaileddescription" : " HistogramMatchingImageFilternormalizes the grayscale values of a source image based on the grayscale values of a reference image. This filter uses a histogram matching technique where the histograms of the two images are matched only at a specified number of quantile values.\nThis filter was originally designed to normalize MR images of the same MR protocol and same body part. The algorithm works best if background pixels are excluded from both the source and reference histograms. A simple background exclusion method is to exclude all pixels whose grayscale values are smaller than the mean grayscale value. ThresholdAtMeanIntensityOn()switches on this simple background exclusion method.\nThe source image can be set via either SetInput()or SetSourceImage(). The reference image can be set via SetReferenceImage().\n SetNumberOfHistogramLevels()sets the number of bins used when creating histograms of the source and reference images. SetNumberOfMatchPoints()governs the number of quantile values to be matched.\nThis filter assumes that both the source and reference are of the same type and that the input and output image type have the same number of dimension and have scalar pixel types.\n\\par REFERENCE\nLaszlo G. Nyul, Jayaram K. Udupa, and Xuan Zhang, \"New Variants of a Method\nof MRI Scale Standardization\", IEEE Transactions on Medical Imaging, 19(2):143-150, 2000.\n\n"
+  "briefdescription" : "Normalize the grayscale values between two images by histogram matching.",
+  "detaileddescription" : "HistogramMatchingImageFilternormalizes the grayscale values of a source image based on the grayscale values of a reference image. This filter uses a histogram matching technique where the histograms of the two images are matched only at a specified number of quantile values.\n\nThis filter was originally designed to normalize MR images of the same MR protocol and same body part. The algorithm works best if background pixels are excluded from both the source and reference histograms. A simple background exclusion method is to exclude all pixels whose grayscale values are smaller than the mean grayscale value. ThresholdAtMeanIntensityOn()switches on this simple background exclusion method.\n\nThe source image can be set via either SetInput()or SetSourceImage(). The reference image can be set via SetReferenceImage().\n\n SetNumberOfHistogramLevels()sets the number of bins used when creating histograms of the source and reference images. SetNumberOfMatchPoints()governs the number of quantile values to be matched.\n\nThis filter assumes that both the source and reference are of the same type and that the input and output image type have the same number of dimension and have scalar pixel types.\n\n\\par REFERENCE\nLaszlo G. Nyul, Jayaram K. Udupa, and Xuan Zhang, \"New Variants of a Method\nof MRI Scale Standardization\", IEEE Transactions on Medical Imaging, 19(2):143-150, 2000."
 }

@@ -12,9 +12,9 @@
       "default" : "1u",
       "pixeltype" : "Output",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the number of thresholds. Default is 1.\n",
+      "detaileddescriptionSet" : "Set/Get the number of thresholds. Default is 1.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the number of thresholds. Default is 1.\n"
+      "detaileddescriptionGet" : "Set/Get the number of thresholds. Default is 1."
     },
     {
       "name" : "LabelOffset",
@@ -22,24 +22,28 @@
       "default" : "0u",
       "pixeltype" : "Output",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the offset which labels have to start from. Default is 0.\n",
+      "detaileddescriptionSet" : "Set/Get the offset which labels have to start from. Default is 0.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the offset which labels have to start from. Default is 0.\n"
+      "detaileddescriptionGet" : "Set/Get the offset which labels have to start from. Default is 0."
     },
     {
       "name" : "NumberOfHistogramBins",
       "type" : "uint32_t",
       "default" : "128u",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the number of histogram bins. Default is 128.\n",
+      "detaileddescriptionSet" : "Set/Get the number of histogram bins. Default is 128.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the number of histogram bins. Default is 128.\n"
+      "detaileddescriptionGet" : "Set/Get the number of histogram bins. Default is 128."
     },
     {
       "name" : "ValleyEmphasis",
       "type" : "bool",
       "default" : "false",
-      "doc" : ""
+      "doc" : "",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the use of valley emphasis. Default is false.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the use of valley emphasis. Default is false."
     }
   ],
   "tests" : [
@@ -114,6 +118,6 @@
       ]
     }
   ],
-  "briefdescription" : "Threshold an image using multiple Otsu Thresholds.\n",
-  "detaileddescription" : "This filter creates a labeled image that separates the input image into various classes. The filter computes the thresholds using the OtsuMultipleThresholdsCalculatorand applies those thesholds to the input image using the ThresholdLabelerImageFilter. The NumberOfHistogramBins and NumberOfThresholds can be set for the Calculator. The LabelOffset can be set for the ThresholdLabelerImageFilter.\n\\see ScalarImageToHistogramGenerator\n\\see \n\\see  OtsuMultipleThresholdsCalculator\n\\see \n\\see  ThresholdLabelerImageFilter\n\n"
+  "briefdescription" : "Threshold an image using multiple Otsu Thresholds.",
+  "detaileddescription" : "This filter creates a labeled image that separates the input image into various classes. The filter computes the thresholds using the OtsuMultipleThresholdsCalculatorand applies those thesholds to the input image using the ThresholdLabelerImageFilter. The NumberOfHistogramBins and NumberOfThresholds can be set for the Calculator. The LabelOffset can be set for the ThresholdLabelerImageFilter.\n\nThis filter also includes an option to use the valley emphasis algorithm from H.F. Ng, \"Automatic thresholding for defect detection\", Pattern Recognition Letters, (27): 1644-1649, 2006. The valley emphasis algorithm is particularly effective when the object to be thresholded is small. See the following tests for examples: itkOtsuMultipleThresholdsImageFilterTest3 and itkOtsuMultipleThresholdsImageFilterTest4 To use this algorithm, simple call the setter: SetValleyEmphasis(true) It is turned off by default.\n\n\\see ScalarImageToHistogramGenerator\n\\see \n\\see  OtsuMultipleThresholdsCalculator\n\\see \n\\see  ThresholdLabelerImageFilter"
 }

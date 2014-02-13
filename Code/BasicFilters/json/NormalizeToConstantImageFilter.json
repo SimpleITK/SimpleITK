@@ -13,9 +13,9 @@
       "type" : "double",
       "default" : "1.0",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/get the normalization constant.\n",
+      "detaileddescriptionSet" : "Set/get the normalization constant.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/get the normalization constant.\n"
+      "detaileddescriptionGet" : "Set/get the normalization constant."
     }
   ],
   "tests" : [
@@ -43,6 +43,6 @@
       ]
     }
   ],
-  "briefdescription" : "Scales image pixel intensities to make the sum of all pixels equal a user-defined constant.\n",
-  "detaileddescription" : "The default value of the constant is 1. It can be changed with SetConstant().\nThis transform is especially useful for normalizing a convolution kernel.\nThis code was contributed in the Insight Journal paper: \"FFT based\nconvolution\" by Lehmann G.http://hdl.handle.net/10380/3154\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\\see  NormalizeImageFilter\n\\see \n\\see  StatisticsImageFilter\n\\see \n\\see  DivideImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\\li Scale all pixels so that their sum is a specified constant\n\n"
+  "briefdescription" : "Scales image pixel intensities to make the sum of all pixels equal a user-defined constant.",
+  "detaileddescription" : "The default value of the constant is 1. It can be changed with SetConstant().\n\nThis transform is especially useful for normalizing a convolution kernel.\n\nThis code was contributed in the Insight Journal paper: \"FFT based\nconvolution\" by Lehmann G.http://hdl.handle.net/10380/3154\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\n\\see  NormalizeImageFilter\n\\see \n\\see  StatisticsImageFilter\n\\see \n\\see  DivideImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Scale all pixels so that their sum is a specified constant"
 }

@@ -30,6 +30,6 @@
       ]
     }
   ],
-  "briefdescription" : "Invert the intensity of an image.\n",
-  "detaileddescription" : " InvertIntensityImageFilterinverts intensity of pixels by subtracting pixel value to a maximum value. The maximum value can be set with SetMaximum and defaults the maximum of input pixel type. This filter can be used to invert, for example, a binary image, a distance map, etc.\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\\see  IntensityWindowingImageFilter ShiftScaleImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\\li Invert an image\n\n"
+  "briefdescription" : "Invert the intensity of an image.",
+  "detaileddescription" : "InvertIntensityImageFilterinverts intensity of pixels by subtracting pixel value to a maximum value. The maximum value can be set with SetMaximum and defaults the maximum of input pixel type. This filter can be used to invert, for example, a binary image, a distance map, etc.\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\n\\see  IntensityWindowingImageFilter ShiftScaleImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Invert an image"
 }

@@ -16,9 +16,9 @@
       "doc" : "",
       "pixeltype" : "Input",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "The label to mask or to not mask, depending on the value of the Negated ivar.\n",
+      "detaileddescriptionSet" : "The label to mask or to not mask, depending on the value of the Negated ivar.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "The label to mask or to not mask, depending on the value of the Negated ivar.\n"
+      "detaileddescriptionGet" : "The label to mask or to not mask, depending on the value of the Negated ivar."
     },
     {
       "name" : "BackgroundValue",
@@ -27,9 +27,9 @@
       "doc" : "",
       "pixeltype" : "Output",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::Zero.\n",
+      "detaileddescriptionSet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::Zero.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::Zero.\n"
+      "detaileddescriptionGet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::Zero."
     },
     {
       "name" : "Negated",
@@ -37,9 +37,9 @@
       "default" : "false",
       "doc" : "",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get whether the Label should be masked or not.\n",
+      "detaileddescriptionSet" : "Set/Get whether the Label should be masked or not.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get whether the Label should be masked or not.\n"
+      "detaileddescriptionGet" : "Set/Get whether the Label should be masked or not."
     }
   ],
   "tests" : [
@@ -55,6 +55,6 @@
       ]
     }
   ],
-  "briefdescription" : "Mask and image with a LabelMap.\n",
-  "detaileddescription" : " LabelMapMaskImageFiltermask the content of an input image according to the content of the input LabelMap. The masked pixel of the input image are set to the BackgroundValue. LabelMapMaskImageFiltercan keep the input image for one label only, with Negated = false (the default) or it can mask the input image for a single label, when Negated equals true. In Both cases, the label is set with SetLabel().\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\\see  LabelMapToBinaryImageFilter, LabelMapToLabelImageFilter\n\n"
+  "briefdescription" : "Mask and image with a LabelMap.",
+  "detaileddescription" : "LabelMapMaskImageFiltermask the content of an input image according to the content of the input LabelMap. The masked pixel of the input image are set to the BackgroundValue. LabelMapMaskImageFiltercan keep the input image for one label only, with Negated = false (the default) or it can mask the input image for a single label, when Negated equals true. In Both cases, the label is set with SetLabel().\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\n\\see  LabelMapToBinaryImageFilter, LabelMapToLabelImageFilter"
 }
