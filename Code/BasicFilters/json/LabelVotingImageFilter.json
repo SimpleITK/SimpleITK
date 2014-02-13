@@ -30,8 +30,8 @@
     {
       "tag" : "basic",
       "description" : "Basic usage with required parameters",
-      "inputA_cast" : "sitkUInt16"
-      "inputB_cast" : "sitkUInt16"
+      "inputA_cast" : "sitkUInt16",
+      "inputB_cast" : "sitkUInt16",
       "inputs" : [
         "Input/STAPLE1.png",
         "Input/STAPLE2.png"

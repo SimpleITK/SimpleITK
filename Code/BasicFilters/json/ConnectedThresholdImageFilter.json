@@ -109,8 +109,8 @@
       "inputs" : [
         "Input/STAPLE1.png"
       ]
-    }
-   {
+    },
+    {
       "tag" : "2dwconnectivity",
       "description" : "Run with 2d sample settings and connectivity",
       "settings" : [

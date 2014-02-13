@@ -101,9 +101,8 @@
           "value" : "3",
           "java_value" : "(short) 3"
         },
-         {
+        {
           "parameter" : "ValleyEmphasis",
-          "value" : "true",
           "value" : "true",
           "python_value" : "True",
           "R_value" : "TRUE"
