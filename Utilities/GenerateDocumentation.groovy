@@ -68,8 +68,16 @@ if ( !XMLFile ) {
 
 def formatDescription ( parent ) {
   StringBuilder result = new StringBuilder()
-  def prefix = [ "listitem" : "\\li ", "itemizedlist" : "\n", "ref" : " ", "computeroutput" : " "]
-  def postfix = [ "para" : "\n", "title" : "\n", "computeroutput" : " "]
+  def prefix = [ "listitem" : "\\li ",
+                 "itemizedlist" : "\n",
+                 "ref" : " ",
+                 "computeroutput" : " ",
+                 "programlisting" : "\\code\n"]
+  def postfix = [ "para" : "\n\n",
+                  "title" : "\n",
+                  "computeroutput" : " ",
+                  "codeline" : "\n",
+                  "programlisting" : "\\endcode\n"]
 
   // Go depth first
   parent.each {
