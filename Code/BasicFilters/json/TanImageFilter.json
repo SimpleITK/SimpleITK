@@ -18,6 +18,6 @@
       ]
     }
   ],
-  "briefdescription" : "Computes the tangent of each input pixel.\n",
-  "detaileddescription" : "The computations are performed using vcl_tan(x).\n"
+  "briefdescription" : "Computes the tangent of each input pixel.",
+  "detaileddescription" : "The computations are performed using vcl_tan(x)."
 }

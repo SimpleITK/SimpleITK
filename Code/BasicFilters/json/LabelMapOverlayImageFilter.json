@@ -16,9 +16,9 @@
       "default" : 0.5,
       "doc" : "Value assigned to pixels outside of the mask",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the opacity of the colored label image. The value must be between 0 and 1\n",
+      "detaileddescriptionSet" : "Set/Get the opacity of the colored label image. The value must be between 0 and 1",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the opacity of the colored label image. The value must be between 0 and 1\n"
+      "detaileddescriptionGet" : "Set/Get the opacity of the colored label image. The value must be between 0 and 1"
     }
   ],
   "tests" : [
@@ -34,6 +34,6 @@
       ]
     }
   ],
-  "briefdescription" : "Apply a colormap to a label map and superimpose it on an image.\n",
-  "detaileddescription" : "Apply a colormap to a label map and put it on top of the feature image. The feature image is typically the image from which the labeling was produced. Use the SetInput function to set the LabelMap, and the SetFeatureImage function to set the feature image.\nThe set of colors is a good selection of distinct colors. The opacity of the label map can be defined by the user. A background label produce a gray pixel with the same intensity than the input one.\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\\see  LabelMapToBinaryImageFilter, LabelMapToLabelImageFilter\n\n"
+  "briefdescription" : "Apply a colormap to a label map and superimpose it on an image.",
+  "detaileddescription" : "Apply a colormap to a label map and put it on top of the feature image. The feature image is typically the image from which the labeling was produced. Use the SetInput function to set the LabelMap, and the SetFeatureImage function to set the feature image.\n\nThe set of colors is a good selection of distinct colors. The opacity of the label map can be defined by the user. A background label produce a gray pixel with the same intensity than the input one.\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\n\\see  LabelMapToBinaryImageFilter, LabelMapToLabelImageFilter"
 }

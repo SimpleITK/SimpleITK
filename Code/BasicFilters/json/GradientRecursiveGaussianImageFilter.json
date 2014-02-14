@@ -13,9 +13,9 @@
       "default" : "1.0",
       "doc" : "",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set Sigma value. Sigma is measured in the units of image spacing.\n",
+      "detaileddescriptionSet" : "Set Sigma value. Sigma is measured in the units of image spacing.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set Sigma value. Sigma is measured in the units of image spacing.\n"
+      "detaileddescriptionGet" : "Set Sigma value. Sigma is measured in the units of image spacing."
     },
     {
       "name" : "NormalizeAcrossScale",
@@ -23,18 +23,18 @@
       "default" : "false",
       "doc" : "",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Define which normalization factor will be used for the Gaussian\\see  RecursiveGaussianImageFilter::SetNormalizeAcrossScale\n\n",
+      "detaileddescriptionSet" : "Define which normalization factor will be used for the Gaussian\\see  RecursiveGaussianImageFilter::SetNormalizeAcrossScale",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Define which normalization factor will be used for the Gaussian\\see  RecursiveGaussianImageFilter::SetNormalizeAcrossScale\n\n"
+      "detaileddescriptionGet" : "Define which normalization factor will be used for the Gaussian\\see  RecursiveGaussianImageFilter::SetNormalizeAcrossScale"
     },
     {
       "name" : "UseImageDirection",
       "type" : "bool",
       "default" : "false",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "The UseImageDirection flag determines whether the gradients are computed with respect to the image grid or with respect to the physical space. When this flag is ON the gradients are computed with respect to the coodinate system of physical space. The difference is whether we take into account the image Direction or not. The flag ON will take into account the image direction and will result in an extra matrix multiplication compared to the amount of computation performed when the flag is OFF. The default value of this flag is On.\n",
+      "detaileddescriptionSet" : "The UseImageDirection flag determines whether the gradients are computed with respect to the image grid or with respect to the physical space. When this flag is ON the gradients are computed with respect to the coodinate system of physical space. The difference is whether we take into account the image Direction or not. The flag ON will take into account the image direction and will result in an extra matrix multiplication compared to the amount of computation performed when the flag is OFF. The default value of this flag is On.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "The UseImageDirection flag determines whether the gradients are computed with respect to the image grid or with respect to the physical space. When this flag is ON the gradients are computed with respect to the coodinate system of physical space. The difference is whether we take into account the image Direction or not. The flag ON will take into account the image direction and will result in an extra matrix multiplication compared to the amount of computation performed when the flag is OFF. The default value of this flag is On.\n"
+      "detaileddescriptionGet" : "The UseImageDirection flag determines whether the gradients are computed with respect to the image grid or with respect to the physical space. When this flag is ON the gradients are computed with respect to the coodinate system of physical space. The difference is whether we take into account the image Direction or not. The flag ON will take into account the image direction and will result in an extra matrix multiplication compared to the amount of computation performed when the flag is OFF. The default value of this flag is On."
     }
   ],
   "tests" : [
@@ -62,6 +62,6 @@
       ]
     }
   ],
-  "briefdescription" : "Computes the gradient of an image by convolution with the first derivative of a Gaussian.\n",
-  "detaileddescription" : "This filter is implemented using the recursive gaussian filters.\nThis filter supports both scalar and vector pixel types within the input image, including VectorImagetype.\n\\par Wiki Examples:\n\n\\li All Examples\n\\li Compute the gradient of an image by convolution with the first derivative of a Gaussian\n\n"
+  "briefdescription" : "Computes the gradient of an image by convolution with the first derivative of a Gaussian.",
+  "detaileddescription" : "This filter is implemented using the recursive gaussian filters.\n\nThis filter supports both scalar and vector pixel types within the input image, including VectorImagetype.\n\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Compute the gradient of an image by convolution with the first derivative of a Gaussian"
 }

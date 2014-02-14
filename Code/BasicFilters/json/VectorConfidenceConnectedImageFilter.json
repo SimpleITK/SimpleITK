@@ -12,27 +12,27 @@
       "type" : "unsigned int",
       "default" : "4u",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the number of iterations\n",
+      "detaileddescriptionSet" : "Set/Get the number of iterations",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the number of iterations\n"
+      "detaileddescriptionGet" : "Set/Get the number of iterations"
     },
     {
       "name" : "Multiplier",
       "type" : "double",
       "default" : "4.5",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the multiplier to define the confidence interval. Multiplier can be anything greater than zero. A typical value is 2.5\n",
+      "detaileddescriptionSet" : "Set/Get the multiplier to define the confidence interval. Multiplier can be anything greater than zero. A typical value is 2.5",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the multiplier to define the confidence interval. Multiplier can be anything greater than zero. A typical value is 2.5\n"
+      "detaileddescriptionGet" : "Set/Get the multiplier to define the confidence interval. Multiplier can be anything greater than zero. A typical value is 2.5"
     },
     {
       "name" : "InitialNeighborhoodRadius",
       "type" : "unsigned int",
       "default" : "1u",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Get/Set the radius of the neighborhood over which the statistics are evaluated\n",
+      "detaileddescriptionSet" : "Get/Set the radius of the neighborhood over which the statistics are evaluated",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Get/Set the radius of the neighborhood over which the statistics are evaluated\n"
+      "detaileddescriptionGet" : "Get/Set the radius of the neighborhood over which the statistics are evaluated"
     },
     {
       "name" : "ReplaceValue",
@@ -40,9 +40,9 @@
       "default" : "1u",
       "pixeltype" : "Output",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get value to replace thresholded pixels\n",
+      "detaileddescriptionSet" : "Set/Get value to replace thresholded pixels",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get value to replace thresholded pixels\n"
+      "detaileddescriptionGet" : "Set/Get value to replace thresholded pixels"
     }
   ],
   "measurements" : [
@@ -51,14 +51,16 @@
       "type" : "std::vector<double>",
       "default" : "std::vector<double>()",
       "custom_itk_cast" : "this->m_Mean = std::vector<double>( filter->GetMean().begin(), filter->GetMean().end() );",
-      "briefdescriptionGet" : "The Mean vector computed during segmentation"
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the Mean Vectorcomputed during the segmentation"
     },
     {
       "name" : "Covariance",
       "type" : "std::vector<double>",
       "default" : "std::vector<double>()",
       "custom_itk_cast" : "this->m_Covariance = std::vector<double>( filter->GetCovariance().begin(), filter->GetCovariance().end() );",
-      "briefdescriptionGet" : "The Covariance matrix computed during segmentation"
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the Covariance matrix computed during the segmentation"
     }
   ],
   "tests" : [
@@ -102,6 +104,6 @@
       ]
     }
   ],
-  "briefdescription" : "Segment pixels with similar statistics using connectivity.\n",
-  "detaileddescription" : "This filter extracts a connected set of pixels whose pixel intensities are consistent with the pixel statistics of a seed point. The mean and variance across a neighborhood (8-connected, 26-connected, etc.) are calculated for a seed point. Then pixels connected to this seed point whose values are within the confidence interval for the seed point are grouped. The width of the confidence interval is controlled by the \"Multiplier\" variable (the confidence interval is the mean plus or minus the \"Multiplier\" times the standard deviation). If the intensity variations across a segment were gaussian, a \"Multiplier\" setting of 2.5 would define a confidence interval wide enough to capture 99% of samples in the segment.\nAfter this initial segmentation is calculated, the mean and variance are re-calculated. All the pixels in the previous segmentation are used to calculate the mean the standard deviation (as opposed to using the pixels in the neighborhood of the seed point). The segmentation is then recalculted using these refined estimates for the mean and variance of the pixel values. This process is repeated for the specified number of iterations. Setting the \"NumberOfIterations\" to zero stops the algorithm after the initial segmentation from the seed point.\nNOTE: the lower and upper threshold are restricted to lie within the valid numeric limits of the input data pixel type. Also, the limits may be adjusted to contain the seed point's intensity.\n"
+  "briefdescription" : "Segment pixels with similar statistics using connectivity.",
+  "detaileddescription" : "This filter extracts a connected set of pixels whose pixel intensities are consistent with the pixel statistics of a seed point. The mean and variance across a neighborhood (8-connected, 26-connected, etc.) are calculated for a seed point. Then pixels connected to this seed point whose values are within the confidence interval for the seed point are grouped. The width of the confidence interval is controlled by the \"Multiplier\" variable (the confidence interval is the mean plus or minus the \"Multiplier\" times the standard deviation). If the intensity variations across a segment were gaussian, a \"Multiplier\" setting of 2.5 would define a confidence interval wide enough to capture 99% of samples in the segment.\n\nAfter this initial segmentation is calculated, the mean and variance are re-calculated. All the pixels in the previous segmentation are used to calculate the mean the standard deviation (as opposed to using the pixels in the neighborhood of the seed point). The segmentation is then recalculted using these refined estimates for the mean and variance of the pixel values. This process is repeated for the specified number of iterations. Setting the \"NumberOfIterations\" to zero stops the algorithm after the initial segmentation from the seed point.\n\nNOTE: the lower and upper threshold are restricted to lie within the valid numeric limits of the input data pixel type. Also, the limits may be adjusted to contain the seed point's intensity."
 }

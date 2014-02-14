@@ -18,9 +18,9 @@
       "default" : "0.0",
       "pixeltype" : "Input",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the input value consider as \"threshold\". Defaults to NumericTraits<InputPixelType>::max()\n",
+      "detaileddescriptionSet" : "Set/Get the input value consider as \"threshold\". Defaults to NumericTraits<InputPixelType>::max()",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the input value consider as \"threshold\". Defaults to NumericTraits<InputPixelType>::max()\n"
+      "detaileddescriptionGet" : "Set/Get the input value consider as \"threshold\". Defaults to NumericTraits<InputPixelType>::max()"
     },
     {
       "name" : "ForegroundValue",
@@ -28,9 +28,9 @@
       "default" : "1u",
       "pixeltype" : "Output",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the output value used as \"foreground\". Defaults to maximum value of PixelType.\n",
+      "detaileddescriptionSet" : "Set/Get the output value used as \"foreground\". Defaults to maximum value of PixelType.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the output value used as \"foreground\". Defaults to maximum value of PixelType.\n"
+      "detaileddescriptionGet" : "Set/Get the output value used as \"foreground\". Defaults to maximum value of PixelType."
     },
     {
       "name" : "BackgroundValue",
@@ -38,9 +38,9 @@
       "default" : "0u",
       "pixeltype" : "Output",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the output value used as \"background\". Defaults to NumericTraits<PixelType>::NonpositiveMin().\n",
+      "detaileddescriptionSet" : "Set/Get the output value used as \"background\". Defaults to NumericTraits<PixelType>::NonpositiveMin().",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the output value used as \"background\". Defaults to NumericTraits<PixelType>::NonpositiveMin().\n"
+      "detaileddescriptionGet" : "Set/Get the output value used as \"background\". Defaults to NumericTraits<PixelType>::NonpositiveMin()."
     }
   ],
   "tests" : [
@@ -82,6 +82,6 @@
       ]
     }
   ],
-  "briefdescription" : "BinaryThreshold projection.\n",
-  "detaileddescription" : "This class was contributed to the Insight Journal by Gaetan Lehmann. the original paper can be found athttp://hdl.handle.net/1926/164\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\\see  ProjectionImageFilter\n\\see \n\\see  MedianProjectionImageFilter\n\\see \n\\see  MeanProjectionImageFilter\n\\see \n\\see  MeanProjectionImageFilter\n\\see \n\\see  MaximumProjectionImageFilter\n\\see \n\\see  MinimumProjectionImageFilter\n\\see \n\\see  StandardDeviationProjectionImageFilter\n\\see \n\\see  SumProjectionImageFilter\n\n"
+  "briefdescription" : "BinaryThreshold projection.",
+  "detaileddescription" : "This class was contributed to the Insight Journal by Gaetan Lehmann. the original paper can be found athttp://hdl.handle.net/1926/164\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\n\\see  ProjectionImageFilter\n\\see \n\\see  MedianProjectionImageFilter\n\\see \n\\see  MeanProjectionImageFilter\n\\see \n\\see  MeanProjectionImageFilter\n\\see \n\\see  MaximumProjectionImageFilter\n\\see \n\\see  MinimumProjectionImageFilter\n\\see \n\\see  StandardDeviationProjectionImageFilter\n\\see \n\\see  SumProjectionImageFilter"
 }

@@ -57,6 +57,6 @@
       ]
     }
   ],
-  "briefdescription" : "Threshold an image using the Shanbhag Threshold.\n",
-  "detaileddescription" : "This filter creates a binary thresholded image that separates an image into foreground and background components. The filter computes the threshold using the ShanbhagThresholdCalculatorand applies that theshold to the input image using the BinaryThresholdImageFilter.\n\\author Richard Beare. Department of Medicine, Monash University, Melbourne, Australia.\nGaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/10380/3279orhttp://www.insight-journal.org/browse/publication/811\n\\see HistogramThresholdImageFitler\n\n"
+  "briefdescription" : "Threshold an image using the Shanbhag Threshold.",
+  "detaileddescription" : "This filter creates a binary thresholded image that separates an image into foreground and background components. The filter computes the threshold using the ShanbhagThresholdCalculatorand applies that theshold to the input image using the BinaryThresholdImageFilter.\n\n\\author Richard Beare. Department of Medicine, Monash University, Melbourne, Australia.\n\nGaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/10380/3279orhttp://www.insight-journal.org/browse/publication/811\n\n\\see HistogramThresholdImageFitler"
 }

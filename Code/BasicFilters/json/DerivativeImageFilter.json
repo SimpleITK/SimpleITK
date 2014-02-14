@@ -12,27 +12,27 @@
       "type" : "unsigned int",
       "default" : "0u",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "End concept checking Standard get/set macros for filter parameters.\n",
+      "detaileddescriptionSet" : "Standard get/set macros for filter parameters.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "End concept checking Standard get/set macros for filter parameters.\n"
+      "detaileddescriptionGet" : "Standard get/set macros for filter parameters."
     },
     {
       "name" : "Order",
       "type" : "unsigned int",
       "default" : "1u",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "End concept checking Standard get/set macros for filter parameters.\n",
+      "detaileddescriptionSet" : "Standard get/set macros for filter parameters.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "End concept checking Standard get/set macros for filter parameters.\n"
+      "detaileddescriptionGet" : "Standard get/set macros for filter parameters."
     },
     {
       "name" : "UseImageSpacing",
       "type" : "bool",
       "default" : "true",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations\n",
+      "detaileddescriptionSet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations\n"
+      "detaileddescriptionGet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations"
     }
   ],
   "tests" : [
@@ -76,6 +76,6 @@
       ]
     }
   ],
-  "briefdescription" : "Computes the directional derivative of an image. The directional derivative at each pixel location is computed by convolution with a derivative operator of user-specified order.\n",
-  "detaileddescription" : "SetOrder specifies the order of the derivative.\nSetDirection specifies the direction of the derivative with respect to the coordinate axes of the image.\n\\see  Image\n\\see \n\\see  Neighborhood\n\\see \n\\see  NeighborhoodOperator\n\\see \n\\see  NeighborhoodIterator\n\\par Wiki Examples:\n\n\\li All Examples\n\\li Compute the derivative of an image in a particular direction\n\n"
+  "briefdescription" : "Computes the directional derivative of an image. The directional derivative at each pixel location is computed by convolution with a derivative operator of user-specified order.",
+  "detaileddescription" : "SetOrder specifies the order of the derivative.\n\nSetDirection specifies the direction of the derivative with respect to the coordinate axes of the image.\n\n\\see  Image\n\\see \n\\see  Neighborhood\n\\see \n\\see  NeighborhoodOperator\n\\see \n\\see  NeighborhoodIterator\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Compute the derivative of an image in a particular direction"
 }

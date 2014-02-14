@@ -12,9 +12,9 @@
       "default" : "true",
       "doc" : "",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "A safe border is added to input image to avoid borders effects and remove it once the closing is done\n",
+      "detaileddescriptionSet" : "A safe border is added to input image to avoid borders effects and remove it once the closing is done",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "A safe border is added to input image to avoid borders effects and remove it once the closing is done\n"
+      "detaileddescriptionGet" : "A safe border is added to input image to avoid borders effects and remove it once the closing is done"
     }
   ],
   "custom_methods" : [],
@@ -46,6 +46,6 @@
       ]
     }
   ],
-  "briefdescription" : "White top hat extract local maxima that are larger than the structuring element.\n",
-  "detaileddescription" : "Top-hats are described in Chapter 4.5 of Pierre Soille's book \"Morphological Image Analysis: Principles and Applications\", Second Edition, Springer, 2003.\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\n"
+  "briefdescription" : "White top hat extract local maxima that are larger than the structuring element.",
+  "detaileddescription" : "Top-hats are described in Chapter 4.5 of Pierre Soille's book \"Morphological Image Analysis: Principles and Applications\", Second Edition, Springer, 2003.\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France."
 }

@@ -69,6 +69,6 @@
       "inputs" : []
     }
   ],
-  "briefdescription" : "Generate an image of the physical locations of each pixel.\n",
-  "detaileddescription" : "This image source supports image which have a multi-component pixel equal to the image dimension, and variable length VectorImages. It is recommented that the component type be a real valued type.\n"
+  "briefdescription" : "Generate an image of the physical locations of each pixel.",
+  "detaileddescription" : "This image source supports image which have a multi-component pixel equal to the image dimension, and variable length VectorImages. It is recommented that the component type be a real valued type."
 }

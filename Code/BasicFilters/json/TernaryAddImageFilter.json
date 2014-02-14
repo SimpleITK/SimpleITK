@@ -20,6 +20,6 @@
       "md5hash" : "dbe269ea2abf0fbe16e9e5d633afea51"
     }
   ],
-  "briefdescription" : "Pixel-wise addition of three images.\n",
-  "detaileddescription" : "This class is templated over the types of the three input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\n"
+  "briefdescription" : "Pixel-wise addition of three images.",
+  "detaileddescription" : "This class is templated over the types of the three input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults."
 }

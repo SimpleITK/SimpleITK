@@ -68,8 +68,16 @@ if ( !XMLFile ) {
 
 def formatDescription ( parent ) {
   StringBuilder result = new StringBuilder()
-  def prefix = [ "listitem" : "\\li ", "itemizedlist" : "\n", "ref" : " ", "computeroutput" : " "]
-  def postfix = [ "para" : "\n", "title" : "\n", "computeroutput" : " "]
+  def prefix = [ "listitem" : "\\li ",
+                 "itemizedlist" : "\n",
+                 "ref" : " ",
+                 "computeroutput" : " ",
+                 "programlisting" : "\\code\n"]
+  def postfix = [ "para" : "\n\n",
+                  "title" : "\n",
+                  "computeroutput" : " ",
+                  "codeline" : "\n",
+                  "programlisting" : "\\endcode\n"]
 
   // Go depth first
   parent.each {
@@ -127,8 +135,8 @@ doc.compounddef.sectiondef.memberdef.each { it ->
 
 
 // Now, go through the JSON members and fill in doc strings
-definition.briefdescription = formatDescription ( Map.Class.briefdescription )
-definition.detaileddescription = formatDescription ( Map.Class.detaileddescription )
+definition.briefdescription = formatDescription ( Map.Class.briefdescription ).trim()
+definition.detaileddescription = formatDescription ( Map.Class.detaileddescription ).trim()
 
 
 definition.members.each { member ->
@@ -139,12 +147,28 @@ definition.members.each { member ->
     // println ( "\tHandling prefix: " + prefix )
     if ( ( tmp = Map[prefix + member.name] ) ) {
       // println ( "\tFound info: " + tmp )
-      member["briefdescription"+prefix]    = formatDescription ( tmp.briefdescription )
-      member["detaileddescription"+prefix] = formatDescription ( tmp.detaileddescription )
+      member["briefdescription"+prefix]    = formatDescription ( tmp.briefdescription ).trim()
+      member["detaileddescription"+prefix] = formatDescription ( tmp.detaileddescription ).trim()
 
     }
   }
 }
+
+definition.measurements.each { measurement ->
+  // Lookup the name...
+    //println ( "Processing definition for measurement " + measurement + " of class " + measurement.getClass() )
+  // Only Get methods
+  ["", "Get"].each { prefix ->
+      //println ( "\tHandling prefix: " + prefix +"->"+prefix + measurement.name )
+    if ( ( tmp = Map[prefix + measurement.name] ) ) {
+      //println ( "\tFound info: " + tmp )
+      measurement["briefdescription"+prefix]    = formatDescription ( tmp.briefdescription ).trim()
+      measurement["detaileddescription"+prefix] = formatDescription ( tmp.detaileddescription ).trim()
+
+    }
+  }
+}
+
 
 // Print our new JSON
 mapper.configure(SerializationConfig.Feature.INDENT_OUTPUT, true);

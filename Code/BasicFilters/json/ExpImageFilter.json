@@ -18,6 +18,6 @@
       ]
     }
   ],
-  "briefdescription" : "Computes the exponential function of each pixel.\n",
-  "detaileddescription" : "The computation is performed using vcl_exp(x).\n"
+  "briefdescription" : "Computes the exponential function of each pixel.",
+  "detaileddescription" : "The computation is performed using vcl_exp(x)."
 }

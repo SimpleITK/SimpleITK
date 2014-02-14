@@ -11,13 +11,15 @@
       "name" : "Minimum",
       "type" : "double",
       "default" : 0.0,
-      "briefdescriptionGet" : "The minimum value in the image."
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Return the computed Minimum."
     },
     {
       "name" : "Maximum",
       "type" : "double",
       "default" : 0.0,
-      "briefdescriptionGet" : "The maximum value in the image."
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Return the computed Maximum."
     }
   ],
   "tests" : [
@@ -62,6 +64,6 @@
       ]
     }
   ],
-  "briefdescription" : "Computes the minimum and the maximum intensity values of an image.\n",
-  "detaileddescription" : "It is templated over input image type only. This filter just copies the input image through this output to be included within the pipeline. The implementation uses the StatisticsImageFilter.\n\\see  StatisticsImageFilter\n\n"
+  "briefdescription" : "Computes the minimum and the maximum intensity values of an image.",
+  "detaileddescription" : "It is templated over input image type only. This filter just copies the input image through this output to be included within the pipeline. The implementation uses the StatisticsImageFilter.\n\n\\see  StatisticsImageFilter"
 }

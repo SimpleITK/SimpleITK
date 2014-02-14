@@ -19,6 +19,6 @@
       ]
     }
   ],
-  "briefdescription" : "Implements a pixel-wise operator Max(a,b) between two images.\n",
-  "detaileddescription" : "The pixel values of the output image are the maximum between the corresponding pixels of the two input images.\nThis class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\n\\par Wiki Examples:\n\n\\li All Examples\n\\li Pixel wise compare two input images and set the output pixel to their max\n\n"
+  "briefdescription" : "Implements a pixel-wise operator Max(a,b) between two images.",
+  "detaileddescription" : "The pixel values of the output image are the maximum between the corresponding pixels of the two input images.\n\nThis class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\n\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Pixel wise compare two input images and set the output pixel to their max"
 }

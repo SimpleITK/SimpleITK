@@ -12,9 +12,9 @@
       "default" : "false",
       "doc" : "",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.\n",
+      "detaileddescriptionSet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.\n"
+      "detaileddescriptionGet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn."
     }
   ],
   "custom_methods" : [],
@@ -45,6 +45,6 @@
       ]
     }
   ],
-  "briefdescription" : "Label the objects in a binary image.\n",
-  "detaileddescription" : " ConnectedComponentImageFilterlabels the objects in a binary image. Each distinct object is assigned a unique label. The filter experiments with some improvements to the existing implementation, and is based on run length encoding along raster lines. The final object labels start with 1 and are consecutive. Objects that are reached earlier by a raster order scan have a lower label. This is different to the behaviour of the original connected component image filter which did not produce consecutive labels or impose any particular ordering.\n\\see  ImageToImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\\li Label connected components in a binary image\n\n"
+  "briefdescription" : "Label the objects in a binary image.",
+  "detaileddescription" : "ConnectedComponentImageFilterlabels the objects in a binary image (non-zero pixels are considered to be objects, zero-valued pixels are considered to be background). Each distinct object is assigned a unique label. The filter experiments with some improvements to the existing implementation, and is based on run length encoding along raster lines. The final object labels start with 1 and are consecutive. Objects that are reached earlier by a raster order scan have a lower label. This is different to the behaviour of the original connected component image filter which did not produce consecutive labels or impose any particular ordering.\n\n\\see  ImageToImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Label connected components in a binary image"
 }

@@ -13,9 +13,9 @@
       "pixeltype" : "Input",
       "doc" : "",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "End concept checking Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin().\n",
+      "detaileddescriptionSet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin().",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "End concept checking Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin().\n"
+      "detaileddescriptionGet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin()."
     },
     {
       "name" : "ForegroundValue",
@@ -24,9 +24,9 @@
       "pixeltype" : "Input",
       "doc" : "",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the value used as \"foreground\" in the output image. Defaults to NumericTraits<PixelType>::max().\n",
+      "detaileddescriptionSet" : "Set/Get the value used as \"foreground\" in the output image. Defaults to NumericTraits<PixelType>::max().",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the value used as \"foreground\" in the output image. Defaults to NumericTraits<PixelType>::max().\n"
+      "detaileddescriptionGet" : "Set/Get the value used as \"foreground\" in the output image. Defaults to NumericTraits<PixelType>::max()."
     },
     {
       "name" : "FullyConnected",
@@ -34,9 +34,9 @@
       "default" : "false",
       "doc" : "",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.\n",
+      "detaileddescriptionSet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.\n"
+      "detaileddescriptionGet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn."
     }
   ],
   "custom_methods" : [],
@@ -57,6 +57,6 @@
       ]
     }
   ],
-  "briefdescription" : "binary reconstruction by dilation of an image\n",
-  "detaileddescription" : "Reconstruction by dilation operates on a \"marker\" image and a \"mask\" image, and is defined as the dilation of the marker image with respect to the mask image iterated until stability.\nGeodesic morphology is described in Chapter 6.2 of Pierre Soille's book \"Morphological Image Analysis: Principles and Applications\", Second Edition, Springer, 2003.\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\\see  MorphologyImageFilter, ReconstructionByDilationImageFilter, BinaryReconstructionByErosionImageFilter\n\n"
+  "briefdescription" : "binary reconstruction by dilation of an image",
+  "detaileddescription" : "Reconstruction by dilation operates on a \"marker\" image and a \"mask\" image, and is defined as the dilation of the marker image with respect to the mask image iterated until stability.\n\nGeodesic morphology is described in Chapter 6.2 of Pierre Soille's book \"Morphological Image Analysis: Principles and Applications\", Second Edition, Springer, 2003.\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\n\\see  MorphologyImageFilter, ReconstructionByDilationImageFilter, BinaryReconstructionByErosionImageFilter"
 }

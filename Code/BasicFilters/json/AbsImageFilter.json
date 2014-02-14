@@ -26,6 +26,6 @@
       ]
     }
   ],
-  "briefdescription" : "Computes the absolute value of each pixel.\n",
-  "detaileddescription" : "vnl_math_abs() is used to perform the computation.\n\\par Wiki Examples:\n\n\\li All Examples\n\\li Compute the absolute value of an image\n\n"
+  "briefdescription" : "Computes the absolute value of each pixel.",
+  "detaileddescription" : "vnl_math_abs() is used to perform the computation.\n\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Compute the absolute value of an image"
 }

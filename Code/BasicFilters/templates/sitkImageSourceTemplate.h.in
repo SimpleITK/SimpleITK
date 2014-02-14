@@ -49,7 +49,11 @@ $(include ClassEnd.h.in)
 
 
    /**
-     * \brief itk::simple::${name} Procedural Interface
+$(if briefdescription and (briefdescription:len() > 0) then
+  OUT=OUT..'     * \\brief ${briefdescription}'
+else
+  OUT=OUT..'     * \\brief itk::simple::${name} Procedural Interface'
+end)
      *
      * This function directly calls the execute method of ${name}
      * in order to support a procedural API

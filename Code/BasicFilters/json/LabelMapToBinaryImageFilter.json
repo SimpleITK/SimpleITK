@@ -14,9 +14,9 @@
       "doc" : "",
       "pixeltype" : "Output",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin().\n",
+      "detaileddescriptionSet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin().",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin().\n"
+      "detaileddescriptionGet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin()."
     },
     {
       "name" : "ForegroundValue",
@@ -25,9 +25,9 @@
       "doc" : "",
       "pixeltype" : "Output",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the value used as \"foreground\" in the output image. Defaults to NumericTraits<PixelType>::max().\n",
+      "detaileddescriptionSet" : "Set/Get the value used as \"foreground\" in the output image. Defaults to NumericTraits<PixelType>::max().",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the value used as \"foreground\" in the output image. Defaults to NumericTraits<PixelType>::max().\n"
+      "detaileddescriptionGet" : "Set/Get the value used as \"foreground\" in the output image. Defaults to NumericTraits<PixelType>::max()."
     }
   ],
   "tests" : [
@@ -42,6 +42,6 @@
       ]
     }
   ],
-  "briefdescription" : "Convert a LabelMapto a binary image.\n",
-  "detaileddescription" : " LabelMapToBinaryImageFilterto a binary image. All the objects in the image are used as foreground. The background values of the original binary image can be restored by passing this image to the filter with the SetBackgroundImage()method.\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\\see  LabelMapToLabelImageFilter, LabelMapMaskImageFilter\n\n"
+  "briefdescription" : "Convert a LabelMapto a binary image.",
+  "detaileddescription" : "LabelMapToBinaryImageFilterto a binary image. All the objects in the image are used as foreground. The background values of the original binary image can be restored by passing this image to the filter with the SetBackgroundImage()method.\n\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\n\\see  LabelMapToLabelImageFilter, LabelMapMaskImageFilter"
 }

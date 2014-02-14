@@ -19,6 +19,6 @@
       ]
     }
   ],
-  "briefdescription" : "Computes the XOR bitwise operator pixel-wise between two images.\n",
-  "detaileddescription" : "This class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\nSince the bitwise XOR operation is only defined in C++ for integer types, the images passed to this filter must comply with the requirement of using integer pixel type.\nThe total operation over one pixel will be\noutput_pixel=static_cast<OutputPixelType>(input1_pixel^input2_pixel)\nWhere \"^\" is the boolean XOR operator in C++.\n\\par Wiki Examples:\n\n\\li All Examples\n\\li Binary XOR (exclusive OR) two images\n\n"
+  "briefdescription" : "Computes the XOR bitwise operator pixel-wise between two images.",
+  "detaileddescription" : "This class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\n\nSince the bitwise XOR operation is only defined in C++ for integer types, the images passed to this filter must comply with the requirement of using integer pixel type.\n\nThe total operation over one pixel will be\n\n\\code\n*output_pixel=static_cast<OutputPixelType>(input1_pixel^input2_pixel)\n*\n\\endcode\n\n\nWhere \"^\" is the boolean XOR operator in C++.\n\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Binary XOR (exclusive OR) two images"
 }

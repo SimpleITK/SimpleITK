@@ -17,6 +17,6 @@
       ]
     }
   ],
-  "briefdescription" : "Implements the NOT logical operator pixel-wise on an image.\n",
-  "detaileddescription" : "This class is templated over the types of an input image and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\nSince the logical NOT operation is operates only on boolean types, the input type must be implicitly convertible to bool, which is only defined in C++ for integer types, the images passed to this filter must comply with the requirement of using integer pixel type.\nThe total operation over one pixel will be\noutput_pixel=static_cast<OutputPixelType>(!input_pixel)\nWhere \"!\" is the unary Logical NOT operator in C++.\n"
+  "briefdescription" : "Implements the NOT logical operator pixel-wise on an image.",
+  "detaileddescription" : "This class is templated over the types of an input image and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\n\nSince the logical NOT operation is operates only on boolean types, the input type must be implicitly convertible to bool, which is only defined in C++ for integer types, the images passed to this filter must comply with the requirement of using integer pixel type.\n\nThe total operation over one pixel will be\n\n\\code\n*output_pixel=static_cast<OutputPixelType>(!input_pixel)\n*\n\\endcode\n\n\nWhere \"!\" is the unary Logical NOT operator in C++."
 }
