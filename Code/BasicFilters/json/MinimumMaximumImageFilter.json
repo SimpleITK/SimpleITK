@@ -11,13 +11,15 @@
       "name" : "Minimum",
       "type" : "double",
       "default" : 0.0,
-      "briefdescriptionGet" : "The minimum value in the image."
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Return the computed Minimum."
     },
     {
       "name" : "Maximum",
       "type" : "double",
       "default" : 0.0,
-      "briefdescriptionGet" : "The maximum value in the image."
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Return the computed Maximum."
     }
   ],
   "tests" : [

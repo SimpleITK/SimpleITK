@@ -41,13 +41,15 @@
       "name" : "ElapsedIterations",
       "type" : "uint32_t",
       "default" : 0,
-      "briefdescriptionGet" : "Number of iterations run."
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the number of elapsed iterations of the iterative E-M algorithm."
     },
     {
       "name" : "Sensitivity",
       "type" : "std::vector<double>",
       "default" : "std::vector<double>()",
-      "briefdescriptionGet" : "After the filter is updated, this method returns a std::vector<double> of all Sensitivity (true positive fraction, p) values for the expert input volumes."
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "After the filter is updated, this method returns a std::vector<double> of all Sensitivity (true positive fraction, p) values for the expert input volumes."
     },
     {
       "name" : "Specificity ",

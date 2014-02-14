@@ -50,13 +50,15 @@
       "name" : "Mean",
       "type" : "double",
       "default" : "0.0",
-      "briefdescriptionGet" : "Method to get access to the mean of the pixels accepted in the output region."
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Method to get access to the mean of the pixels accepted in the output region. This method should only be invoked after the filter has been executed using the Update()method."
     },
     {
       "name" : "Variance",
       "type" : "double",
       "default" : "0.0",
-      "briefdescriptionGet" : "Method to get access to the variance of the pixels accepted in the output region."
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Method to get access to the variance of the pixels accepted in the output region. This method should only be invoked after the filter has been executed using the Update()method."
     }
   ],
   "tests" : [

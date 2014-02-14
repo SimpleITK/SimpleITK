@@ -14,14 +14,14 @@
       "type" : "double",
       "default" : 0.0,
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Return the computed Hausdorff distance."
     },
     {
       "name" : "AverageHausdorffDistance",
       "type" : "double",
       "default" : 0.0,
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Return the computed Hausdorff distance."
     }
   ],
   "tests" : [

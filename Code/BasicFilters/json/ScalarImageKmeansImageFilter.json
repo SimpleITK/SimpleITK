@@ -31,7 +31,7 @@
       "default" : "std::vector<double>()",
       "custom_itk_cast" : "this->m_FinalMeans = std::vector<double>( filter->GetFinalMeans().begin(), filter->GetFinalMeans().end() );",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Return the array of Means found after the classification"
     }
   ],
   "tests" : [

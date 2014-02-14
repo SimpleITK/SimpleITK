@@ -80,13 +80,15 @@
       "name" : "ThresholdingFailed",
       "type" : "bool",
       "default" : "false",
-      "briefdescriptionGet" : ""
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the flag that tells whether the algorithm failed to find a threshold."
     },
     {
       "name" : "IsolatedValue",
       "type" : "double",
       "default" : "0.0",
-      "briefdescriptionGet" : ""
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get value that isolates the two seeds."
     }
   ],
   "tests" : [

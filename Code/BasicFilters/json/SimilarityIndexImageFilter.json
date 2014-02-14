@@ -13,7 +13,7 @@
       "type" : "double",
       "default" : 0.0,
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Return the computed similarity index."
     }
   ],
   "tests" : [
