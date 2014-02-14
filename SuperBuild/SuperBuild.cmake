@@ -244,6 +244,7 @@ endif()
 #------------------------------------------------------------------------------
 
 set(ITK_WRAPPING OFF CACHE BOOL "Turn OFF wrapping ITK with WrapITK")
+mark_as_advanced( FORCE ITK_WRAPPING )
 if(ITK_WRAPPING)
   list(APPEND ITK_DEPENDENCIES Swig)
 endif()
