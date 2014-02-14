@@ -154,6 +154,22 @@ definition.members.each { member ->
   }
 }
 
+definition.measurements.each { measurement ->
+  // Lookup the name...
+    //println ( "Processing definition for measurement " + measurement + " of class " + measurement.getClass() )
+  // Only Get methods
+  ["", "Get"].each { prefix ->
+      //println ( "\tHandling prefix: " + prefix +"->"+prefix + measurement.name )
+    if ( ( tmp = Map[prefix + measurement.name] ) ) {
+      //println ( "\tFound info: " + tmp )
+      measurement["briefdescription"+prefix]    = formatDescription ( tmp.briefdescription ).trim()
+      measurement["detaileddescription"+prefix] = formatDescription ( tmp.detaileddescription ).trim()
+
+    }
+  }
+}
+
+
 // Print our new JSON
 mapper.configure(SerializationConfig.Feature.INDENT_OUTPUT, true);
 mapper.writeValue(new File(JSONFile), definition);
