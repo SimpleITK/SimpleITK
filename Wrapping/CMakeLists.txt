@@ -64,8 +64,8 @@ endif()
 # python SWIG configuration
 #
 if ( WRAP_PYTHON )
-  find_package ( PythonLibs 2.6 REQUIRED )
-  find_package ( PythonInterp 2.6 REQUIRED )
+  find_package ( PythonLibs REQUIRED )
+  find_package ( PythonInterp REQUIRED )
   include_directories ( ${PYTHON_INCLUDE_DIR} ${SimpleITK_SOURCE_DIR}/Wrapping )
 
   # Run swig

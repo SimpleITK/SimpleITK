@@ -25,13 +25,25 @@ endmacro()
 #
 option ( WRAP_LUA "Wrap Lua" ON )
 
-find_package ( PythonInterp 2.6 QUIET)
-find_package ( PythonLibs 2.6 QUIET )
-if ( ${PYTHONLIBS_FOUND} AND ${PYTHONINTERP_FOUND} )
+find_package ( PythonInterp QUIET)
+
+# If you're not using python or it's the first time, be quiet
+if (NOT WRAP_PYTHON)
+  set(_QUIET "QUIET")
+endif()
+
+find_package ( PythonLibs ${PYTHON_VERSION_STRING} EXACT ${_QUIET} )
+
+if (${PYTHON_VERSION_STRING} VERSION_LESS 2.6)
+  MESSAGE( WARNING "Python version less that 2.6. " ${PYTHON_VERSION_STRING} )
+endif()
+
+if ( ${PYTHONLIBS_FOUND} AND ${PYTHONINTERP_FOUND}
+    AND (${PYTHON_VERSION_STRING} VERSION_EQUAL ${PYTHONLIBS_VERSION_STRING}) )
   set( WRAP_PYTHON_DEFAULT ON )
-else ( ${PYTHONLIBS_FOUND} AND ${PYTHONINTERP_FOUND} )
+else()
   set( WRAP_PYTHON_DEFAULT OFF )
-endif ( ${PYTHONLIBS_FOUND} AND ${PYTHONINTERP_FOUND} )
+endif()
 list( APPEND SITK_LANGUAGES_VARS
   PYTHON_DEBUG_LIBRARY
   PYTHON_EXECUTABLE
