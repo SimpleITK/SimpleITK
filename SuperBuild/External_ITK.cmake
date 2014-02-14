@@ -27,7 +27,7 @@ set(ITK_REPOSITORY git://itk.org/ITK.git)
 
 # NOTE: it is very important to update the ITK_DIR path with the ITK version
 # After ITKv4.5.0 on release branch: Feb  12 2014
-set(ITK_TAG_COMMAND GIT_TAG a5fa8d81cf7476ff6a095384478d89f00dcd94bb)
+set(ITK_TAG_COMMAND GIT_TAG v4.5.1)
 
 if( ${ITK_WRAPPING} OR ${BUILD_SHARED_LIBS} )
   set( ITK_BUILD_SHARED_LIBS ON )
