@@ -41,12 +41,55 @@ $ git gerrit-push
 The goal of this workflow here is just have one or two commits in the
 topic, so that it will be easy to review. If longer topics are needed,
 that is OK to, but please try to reach out to the SimpleITK
-development community first.
+development community first. Please upload any new testing data as described
+below.
 
 If you are not too familiar with these tools, this aspect of submitting
 patch to gerrit is the same as for ITK development. So the overview of
 ITK development process may be a better starting point:
 <a href="http://www.itk.org/Wiki/ITK/Git/Develop">http://www.itk.org/Wiki/ITK/Git/Develop</a>
+
+\subsection Add Binary Data to a Commit
+
+Since every local Git repository contains a copy of the entire project history,
+it is important to avoid adding large binary files directly to the repository.
+Large binary files added and removed through the history of a project will cause
+the repository to become bloated, take up too much disk space, require excessive
+time and bandwidth to download, etc.
+
+The solution to this problem adopted by this project is to store binary files,
+such as images, in a separate location outside the repository, then download the
+files at build time with CMake.
+
+A <em>content link</em> file containing an identifying MD5 checksum is stored in the
+Git repository at the path where the file would exist with the <em>.md5</em> extension
+added to the file.  CMake will find these content link files at build time,
+download them from a list of server resources, and create symlinks or copies of
+the original files at the corresponding location in the build tree.
+
+The <a href="http://midas3.kitware.com/midas/">Midas server</a> is an ITK
+community resource where any community member can upload binary data files.
+This script automates the upload of data to the server and generation of the
+content link file.  Before using this script, please go to the Midas website,
+register, and join the ITK community.
+
+This script requires the Python module <a
+href="https://github.com/midasplatform/pydas">pydas</a>: which can be
+installed with:
+
+\code
+$ pip install pydas
+\endcode
+
+Please use the content link system for all new test images and other binary
+data.  An example:
+
+\code
+cd ~/src/SimpleITK
+cp /path/to/NewInput.png ./Testing/Input/
+python ./Utilities/UploadBinaryData.py ./Testing/Input/NewInput.png
+git add -- ./Testing/Input/NewInput.png.md5
+\endcode
 
 \subsection Dashboards Setup a Dashboard
 
