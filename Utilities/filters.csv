@@ -21,7 +21,7 @@ BSplineUpsampleImageFilter,True,False,,True
 BayesianClassifierImageFilter,True,False,,True
 BayesianClassifierInitializationImageFilter,True,False,,True
 BilateralImageFilter,True,True,,False
-BinShrinkImageFilter,True,False,,False
+BinShrinkImageFilter,True,True,,False
 BinaryClosingByReconstructionImageFilter,True,True,,False
 BinaryContourImageFilter,True,True,,False
 BinaryDilateImageFilter,True,True,,False
@@ -60,7 +60,7 @@ CastImageFilter,True,True,,False
 ChangeInformationImageFilter,True,False,No need for a filter to do this in SimpleITK,False
 ChangeLabelImageFilter,True,True,,True
 CheckerBoardImageFilter,True,True,,False
-ClampImageFilter,True,False,This might be implemented as an option to cast image filter,True
+ClampImageFilter,True,True,,True
 ClosingByReconstructionImageFilter,True,True,,False
 CollidingFrontsImageFilter,True,False,,True
 ComparisonImageFilter,True,False,,False
@@ -84,7 +84,7 @@ CropImageFilter,True,True,,False
 CurvatureAnisotropicDiffusionImageFilter,True,True,,False
 CurvatureFlowImageFilter,True,True,,False
 CurvesLevelSetImageFilter,True,False,,True
-CyclicShiftImageFilter,True,False,,True
+CyclicShiftImageFilter,True,True,,True
 DanielssonDistanceMapImageFilter,True,True,,False
 DenseFiniteDifferenceImageFilter,True,False,base class,False
 DerivativeImageFilter,True,True,,False
@@ -92,7 +92,7 @@ DifferenceOfGaussiansGradientImageFilter,True,False,,True
 DilateObjectMorphologyImageFilter,True,True,,False
 DirectFourierReconstructionImageToImageFilter,True,False,,True
 DirectedHausdorffDistanceImageFilter,True,False,,True
-DiscreteGaussianDerivativeImageFilter,True,False,,True
+DiscreteGaussianDerivativeImageFilter,True,True,,True
 DiscreteGaussianImageFilter,True,True,,False
 DivideFloorImageFilter,False,True,,False
 DivideImageFilter,True,True,,False
@@ -110,11 +110,6 @@ FFTComplexToComplexImageFilter,True,False,,True
 FFTConvolutionImageFilter,True,True,,False
 FFTNormalizedCorrelationImageFilter,False,True,,False
 FFTShiftImageFilter,True,True,,False
-FFTWComplexToComplexImageFilter,True,False,,False
-FFTWForwardFFTImageFilter,True,False,,False
-FFTWHalfHermitianToRealInverseFFTImageFilter,True,False,,False
-FFTWInverseFFTImageFilter,True,False,,False
-FFTWRealToHalfHermitianForwardFFTImageFilter,True,False,,False
 FastApproximateRankImageFilter,True,True,,True
 FastChamferDistanceImageFilter,True,False,,True
 FastMarchingExtensionImageFilter,True,False,,True
@@ -199,6 +194,7 @@ LabelMapOverlayImageFilter,True,True,,False
 LabelMapToBinaryImageFilter,True,True,,False
 LabelMapToLabelImageFilter,True,True,,False
 LabelMapToRGBImageFilter,True,True,,False
+LabelOverlapMeasuresImageFilter,False,True,,False
 LabelOverlayImageFilter,True,True,,False
 LabelShapeKeepNObjectsImageFilter,True,False,,True
 LabelShapeOpeningImageFilter,True,False,,True
@@ -206,7 +202,7 @@ LabelStatisticsImageFilter,True,True,,False
 LabelStatisticsKeepNObjectsImageFilter,True,False,,True
 LabelStatisticsOpeningImageFilter,True,False,,True
 LabelToRGBImageFilter,True,True,,False
-LabelVotingImageFilter,True,False,,True
+LabelVotingImageFilter,True,True,,True
 LandweberDeconvolutionImageFilter,True,True,,False
 LaplacianImageFilter,True,True,,False
 LaplacianRecursiveGaussianImageFilter,True,True,,False
@@ -264,6 +260,7 @@ PadImageFilter,True,False,,True
 ParallelSparseFieldLevelSetImageFilter,True,False,base class,False
 ParametricImageSource,True,False,,False
 PasteImageFilter,True,True,,False
+PatchBasedDenoisingImageFilter,False,True,,False
 PermuteAxesImageFilter,True,True,,False
 PhysicalPointImageSource,True,False,,False
 PowImageFilter,True,True,,False
@@ -291,7 +288,7 @@ RichardsonLucyDeconvolutionImageFilter,True,True,,False
 RobustAutomaticThresholdImageFilter,True,False,,True
 RoundImageFilter,True,False,,False
 STAPLEImageFilter,True,True,,True
-ScalarChanAndVeseDenseLevelSetImageFilter,True,False,,True
+ScalarChanAndVeseDenseLevelSetImageFilter,True,True,,True
 ScalarChanAndVeseSparseLevelSetImageFilter,True,False,,True
 ScalarConnectedComponentImageFilter,True,True,,False
 ScalarImageKmeansImageFilter,True,True,,False
@@ -362,7 +359,7 @@ VoronoiSegmentationImageFilter,True,False,`,True
 VotingBinaryHoleFillingImageFilter,True,True,,False
 VotingBinaryImageFilter,True,True,,False
 VotingBinaryIterativeHoleFillingImageFilter,True,True,,False
-WarpImageFilter,True,False,,True
+WarpImageFilter,True,True,,True
 WatershedImageFilter,True,False,,True
 WeightedAddImageFilter,True,False,,True
 WhiteTopHatImageFilter,True,True,,False
