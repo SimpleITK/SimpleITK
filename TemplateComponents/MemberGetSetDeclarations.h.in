@@ -18,11 +18,11 @@ end)
 $(if (not no_set_method) or (no_set_method == 0) then
       OUT = '\
       /**'
-      if briefdescriptionSet then
+      if briefdescriptionSet and (briefdescriptionSet:len() > 0) then
          OUT=OUT .. '\
        * \\brief ${briefdescriptionSet}'
       end
-      if detaileddescriptionSet then
+      if detaileddescriptionSet and (detaileddescriptionSet:len() > 0) then
          OUT=OUT .. '\
        * ${detaileddescriptionSet}'
       end
@@ -55,11 +55,11 @@ end)
 $(if (not no_get_method) or (no_get_method == 0) then
        OUT = '\
       /**'
-      if briefdescriptionGet then
+      if briefdescriptionGet and (briefdescriptionGet:len() > 0)  then
          OUT=OUT .. '\
        * \\brief ${briefdescriptionGet}'
       end
-      if detaileddescriptionGet then
+      if detaileddescriptionGet and (detaileddescriptionGet:len() > 0) then
          OUT=OUT .. '\
        * ${detaileddescriptionGet}'
       end
@@ -76,8 +76,8 @@ $(if (not no_get_method) or (no_get_method == 0) then
       OUT=OUT..' Get${name}() const { return this->m_${name}; }'
 end))$(when measurements $(foreach measurements
 
-     /**$(if briefdescriptionGet then OUT=[[ \brief ${briefdescriptionGet}]]end)
-      *$(if detaileddescriptionGet then OUT =[[
+     /**$(if briefdescriptionGet and (briefdescriptionGet:len() > 0) then OUT=[[ \brief ${briefdescriptionGet}]]end)
+      *$(if detaileddescriptionGet and (detaileddescriptionGet:len() > 0) then OUT =[[
       *  ${detaileddescriptionGet}
       *]]end)
       * This is a measurement. Its value is updated in the Execute

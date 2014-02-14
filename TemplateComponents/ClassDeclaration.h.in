@@ -1,6 +1,7 @@
     /**\class ${name}
-$(if briefdescription then OUT=[[\brief ${briefdescription}]] end)
-$(if detaileddescription then OUT=[[${detaileddescription}]] end)
+$(if briefdescription and (briefdescription:len() > 0) then OUT=[[\brief ${briefdescription}]] end)
+
+$(if detaileddescription and (detaileddescription:len() >0) then OUT=[[${detaileddescription}]] end)
 \sa itk::simple::${name:gsub("ImageFilter$", "")} for the procedural interface
      */
     class SITKBasicFilters_EXPORT ${name} : public $(if number_of_inputs then OUT=[[ImageFilter<${number_of_inputs}>]] else OUT=[[ImageFilter<1>]] end) {
