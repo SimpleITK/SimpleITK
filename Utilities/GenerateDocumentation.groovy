@@ -135,8 +135,8 @@ doc.compounddef.sectiondef.memberdef.each { it ->
 
 
 // Now, go through the JSON members and fill in doc strings
-definition.briefdescription = formatDescription ( Map.Class.briefdescription )
-definition.detaileddescription = formatDescription ( Map.Class.detaileddescription )
+definition.briefdescription = formatDescription ( Map.Class.briefdescription ).trim()
+definition.detaileddescription = formatDescription ( Map.Class.detaileddescription ).trim()
 
 
 definition.members.each { member ->
@@ -147,8 +147,8 @@ definition.members.each { member ->
     // println ( "\tHandling prefix: " + prefix )
     if ( ( tmp = Map[prefix + member.name] ) ) {
       // println ( "\tFound info: " + tmp )
-      member["briefdescription"+prefix]    = formatDescription ( tmp.briefdescription )
-      member["detaileddescription"+prefix] = formatDescription ( tmp.detaileddescription )
+      member["briefdescription"+prefix]    = formatDescription ( tmp.briefdescription ).trim()
+      member["detaileddescription"+prefix] = formatDescription ( tmp.detaileddescription ).trim()
 
     }
   }
