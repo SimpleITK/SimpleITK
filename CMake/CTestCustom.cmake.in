@@ -49,5 +49,8 @@ SET(CTEST_CUSTOM_WARNING_EXCEPTION
 
   # Warning when building R, issue related to make file
   "warning: jobserver unavailable:"
+
+  # Warning when compiling ITK v4.5.1 with clang
+  "clang: warning: argument unused during.*-fno-ipa-cp-clone"
 )
 
