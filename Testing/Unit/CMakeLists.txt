@@ -498,6 +498,15 @@ if ( WRAP_JAVA )
     "2.0"
     "${TEST_HARNESS_TEMP_DIRECTORY}/Java.SimpleGaussian.nrrd" )
 
+  add_java_test( Example.FilterProgressReporting
+    "${SimpleITK_SOURCE_DIR}/Examples/FilterProgressReporting.java"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/RA-Short.nrrd"
+    "2.0"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Java.FilterProgressReporting.nrrd"
+    )
+  set_tests_properties( Java.Example.FilterProgressReporting
+    PROPERTIES PASS_REGULAR_EXPRESSION "DiscreteGaussianImageFilter Progress" )
+
 # This test currently does not compile or work
 #
 #  add_java_test( Example.ImageConnection
