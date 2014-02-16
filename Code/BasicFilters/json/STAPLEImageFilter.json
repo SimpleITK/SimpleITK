@@ -59,17 +59,11 @@
   "tests" : [
     {
       "tag" : "basic",
-      "description" : "Basic usage with required parameters",
-      "settings" : [
-        {
-          "parameter" : "ForegroundValue",
-          "value" : "255.0"
-        }
-      ],
+      "description" : "Basic usage",
       "tolerance" : "1e-5",
       "inputs" : [
-        "Input/STAPLE1.png",
-        "Input/STAPLE2.png"
+        "Input/STAPLE1-binary.png",
+        "Input/STAPLE2-binary.png"
       ]
     }
   ],
