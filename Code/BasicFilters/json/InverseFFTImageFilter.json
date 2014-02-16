@@ -18,6 +18,6 @@
       ]
     }
   ],
-  "briefdescription" : "Base class for inverse Fast Fourier Transform.\n",
-  "detaileddescription" : "This is a base class for the \"inverse\" or \"reverse\" Discrete Fourier Transform. This is an abstract base class: the actual implementation is provided by the best child available on the system when the object is created via the object factory system.\nThis class transforms a full complex image with Hermitian symmetry into its real spatial domain representation. If the input does not have Hermitian symmetry, the imaginary component is discarded.\n\\see  ForwardFFTImageFilter, InverseFFTImageFilter\n\n"
+  "briefdescription" : "Base class for inverse Fast Fourier Transform.",
+  "detaileddescription" : "This is a base class for the \"inverse\" or \"reverse\" Discrete Fourier Transform. This is an abstract base class: the actual implementation is provided by the best child available on the system when the object is created via the object factory system.\n\nThis class transforms a full complex image with Hermitian symmetry into its real spatial domain representation. If the input does not have Hermitian symmetry, the imaginary component is discarded.\n\n\\see  ForwardFFTImageFilter, InverseFFTImageFilter"
 }

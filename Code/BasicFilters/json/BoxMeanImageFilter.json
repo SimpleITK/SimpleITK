@@ -60,6 +60,6 @@
       ]
     }
   ],
-  "briefdescription" : "Implements a fast rectangular mean filter using the accumulator approach.\n",
-  "detaileddescription" : "This code was contributed in the Insight Journal paper: \"Efficient implementation of kernel filtering\" by Beare R., Lehmann Ghttp://hdl.handle.net/1926/555http://www.insight-journal.org/browse/publication/160\n\\author Richard Beare\n\n"
+  "briefdescription" : "Implements a fast rectangular mean filter using the accumulator approach.",
+  "detaileddescription" : "This code was contributed in the Insight Journal paper: \"Efficient implementation of kernel filtering\" by Beare R., Lehmann Ghttp://hdl.handle.net/1926/555http://www.insight-journal.org/browse/publication/160\n\n\\author Richard Beare"
 }

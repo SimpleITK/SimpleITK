@@ -29,9 +29,9 @@
       "pixeltype" : "Output",
       "doc" : "",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the pad value. Default is Zero.\n",
+      "detaileddescriptionSet" : "Set/Get the pad value. Default is Zero.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the pad value. Default is Zero.\n"
+      "detaileddescriptionGet" : "Set/Get the pad value. Default is Zero."
     }
   ],
   "tests" : [
@@ -67,6 +67,6 @@
       ]
     }
   ],
-  "briefdescription" : "Increase the image size by padding with a constant value.\n",
-  "detaileddescription" : " ConstantPadImageFilterchanges the output image region. If the output image region is larger than the input image region, the extra pixels are filled in by a constant value. The output image region must be specified.\nVisual explanation of padding regions.This filter is implemented as a multithreaded filter. It provides a ThreadedGenerateData()method for its implementation.\n\\see  WrapPadImageFilter, MirrorPadImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\\li Pad an image with a constant value\n\n"
+  "briefdescription" : "Increase the image size by padding with a constant value.",
+  "detaileddescription" : "ConstantPadImageFilterchanges the output image region. If the output image region is larger than the input image region, the extra pixels are filled in by a constant value. The output image region must be specified.\n\nVisual explanation of padding regions.This filter is implemented as a multithreaded filter. It provides a ThreadedGenerateData()method for its implementation.\n\n\\see  WrapPadImageFilter, MirrorPadImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Pad an image with a constant value"
 }

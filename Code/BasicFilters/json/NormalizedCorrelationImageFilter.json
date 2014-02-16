@@ -35,6 +35,6 @@
       ]
     }
   ],
-  "briefdescription" : "Computes the normalized correlation of an image and a template.\n",
-  "detaileddescription" : "This filter calculates the normalized correlation between an image and the template. Normalized correlation is frequently use in feature detection because it is invariant to local changes in contrast.\nThe filter can be given a mask. When presented with an input image and a mask, the normalized correlation is only calculated at those pixels under the mask.\n\\see  Image\n\\see \n\\see  Neighborhood\n\\see \n\\see  NeighborhoodOperator\n\\see \n\\see  NeighborhoodIterator\n\\par Wiki Examples:\n\n\\li All Examples\n\\li Normalized correlation\n\n"
+  "briefdescription" : "Computes the normalized correlation of an image and a template.",
+  "detaileddescription" : "This filter calculates the normalized correlation between an image and the template. Normalized correlation is frequently use in feature detection because it is invariant to local changes in contrast.\n\nThe filter can be given a mask. When presented with an input image and a mask, the normalized correlation is only calculated at those pixels under the mask.\n\n\\see  Image\n\\see \n\\see  Neighborhood\n\\see \n\\see  NeighborhoodOperator\n\\see \n\\see  NeighborhoodIterator\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Normalized correlation"
 }

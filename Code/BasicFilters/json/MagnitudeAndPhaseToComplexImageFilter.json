@@ -20,6 +20,6 @@
       ]
     }
   ],
-  "briefdescription" : "Implements pixel-wise conversion of magnitude and phase data into complex voxels.\n",
-  "detaileddescription" : "This filter is parametrized over the types of the two input images and the type of the output image.\nThe filter expect all images to have the same dimension (e.g. all 2D, or all 3D, or all ND)\n"
+  "briefdescription" : "Implements pixel-wise conversion of magnitude and phase data into complex voxels.",
+  "detaileddescription" : "This filter is parametrized over the types of the two input images and the type of the output image.\n\nThe filter expect all images to have the same dimension (e.g. all 2D, or all 3D, or all ND)"
 }

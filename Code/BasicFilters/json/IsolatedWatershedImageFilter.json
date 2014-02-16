@@ -15,9 +15,9 @@
       "doc" : "",
       "itk_type" : "typename FilterType::IndexType",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set seed point 1. This seed will be isolated from Seed2 (if possible). All pixels connected to this seed will be replaced with ReplaceValue1.\n",
+      "detaileddescriptionSet" : "Set seed point 1. This seed will be isolated from Seed2 (if possible). All pixels connected to this seed will be replaced with ReplaceValue1.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set seed point 1. This seed will be isolated from Seed2 (if possible). All pixels connected to this seed will be replaced with ReplaceValue1.\n"
+      "detaileddescriptionGet" : "Set seed point 1. This seed will be isolated from Seed2 (if possible). All pixels connected to this seed will be replaced with ReplaceValue1."
     },
     {
       "name" : "Seed2",
@@ -27,36 +27,36 @@
       "doc" : "",
       "itk_type" : "typename FilterType::IndexType",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set seed point 2. This seed will be isolated from Seed1 (if possible). All pixels connected to this seed will be replaced with ReplaceValue2.\n",
+      "detaileddescriptionSet" : "Set seed point 2. This seed will be isolated from Seed1 (if possible). All pixels connected to this seed will be replaced with ReplaceValue2.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set seed point 2. This seed will be isolated from Seed1 (if possible). All pixels connected to this seed will be replaced with ReplaceValue2.\n"
+      "detaileddescriptionGet" : "Set seed point 2. This seed will be isolated from Seed1 (if possible). All pixels connected to this seed will be replaced with ReplaceValue2."
     },
     {
       "name" : "Threshold",
       "type" : "double",
       "default" : "0.0",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the Watershed threshold. The default is 0.\n",
+      "detaileddescriptionSet" : "Set/Get the Watershed threshold. The default is 0.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the Watershed threshold. The default is 0.\n"
+      "detaileddescriptionGet" : "Set/Get the Watershed threshold. The default is 0."
     },
     {
       "name" : "UpperValueLimit",
       "type" : "double",
       "default" : "1.0",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the limit on the upper waterlevel value. The default is 1.0.\n",
+      "detaileddescriptionSet" : "Set/Get the limit on the upper waterlevel value. The default is 1.0.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the limit on the upper waterlevel value. The default is 1.0.\n"
+      "detaileddescriptionGet" : "Set/Get the limit on the upper waterlevel value. The default is 1.0."
     },
     {
       "name" : "IsolatedValueTolerance",
       "type" : "double",
       "default" : "0.001",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the precision required for the intensity threshold value. The default is .001.\n",
+      "detaileddescriptionSet" : "Set/Get the precision required for the intensity threshold value. The default is .001.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the precision required for the intensity threshold value. The default is .001.\n"
+      "detaileddescriptionGet" : "Set/Get the precision required for the intensity threshold value. The default is .001."
     },
     {
       "name" : "ReplaceValue1",
@@ -64,9 +64,9 @@
       "default" : "1u",
       "pixeltype" : "Output",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get value to replace Seed1(Seed2) pixels, pixels that are within the basin that contains Seed1(Seed2) this value. The default is 1(0).\n",
+      "detaileddescriptionSet" : "Set/Get value to replace Seed1(Seed2) pixels, pixels that are within the basin that contains Seed1(Seed2) this value. The default is 1(0).",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get value to replace Seed1(Seed2) pixels, pixels that are within the basin that contains Seed1(Seed2) this value. The default is 1(0).\n"
+      "detaileddescriptionGet" : "Set/Get value to replace Seed1(Seed2) pixels, pixels that are within the basin that contains Seed1(Seed2) this value. The default is 1(0)."
     },
     {
       "name" : "ReplaceValue2",
@@ -74,9 +74,9 @@
       "default" : "2u",
       "pixeltype" : "Output",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get value to replace Seed1(Seed2) pixels, pixels that are within the basin that contains Seed1(Seed2) this value. The default is 1(0).\n",
+      "detaileddescriptionSet" : "Set/Get value to replace Seed1(Seed2) pixels, pixels that are within the basin that contains Seed1(Seed2) this value. The default is 1(0).",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get value to replace Seed1(Seed2) pixels, pixels that are within the basin that contains Seed1(Seed2) this value. The default is 1(0).\n"
+      "detaileddescriptionGet" : "Set/Get value to replace Seed1(Seed2) pixels, pixels that are within the basin that contains Seed1(Seed2) this value. The default is 1(0)."
     }
   ],
   "tests" : [
@@ -121,6 +121,6 @@
       ]
     }
   ],
-  "briefdescription" : "Isolate watershed basins using two seeds.\n",
-  "detaileddescription" : " IsolatedWatershedImageFilterlabels pixels with ReplaceValue1 that are in the same watershed basin as Seed1 AND NOT the same as Seed2. The filter adjusts the waterlevel until the two seeds are not in different basins. The user supplies a Watershed threshold. The algorithm uses a binary search to adjust the upper waterlevel, starting at UpperValueLimit. UpperValueLimit defaults to the 1.0.\n"
+  "briefdescription" : "Isolate watershed basins using two seeds.",
+  "detaileddescription" : "IsolatedWatershedImageFilterlabels pixels with ReplaceValue1 that are in the same watershed basin as Seed1 AND NOT the same as Seed2. The filter adjusts the waterlevel until the two seeds are not in different basins. The user supplies a Watershed threshold. The algorithm uses a binary search to adjust the upper waterlevel, starting at UpperValueLimit. UpperValueLimit defaults to the 1.0."
 }

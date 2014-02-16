@@ -18,6 +18,6 @@
       ]
     }
   ],
-  "briefdescription" : "Computes the function exp(-K.x) for each input pixel.\n",
-  "detaileddescription" : "Every output pixel is equal to vcl_exp(-K.x ). where x is the intensity of the homologous input pixel, and K is a user-provided constant.\n"
+  "briefdescription" : "Computes the function exp(-K.x) for each input pixel.",
+  "detaileddescription" : "Every output pixel is equal to vcl_exp(-K.x ). where x is the intensity of the homologous input pixel, and K is a user-provided constant."
 }

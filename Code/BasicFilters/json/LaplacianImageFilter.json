@@ -11,9 +11,9 @@
       "type" : "bool",
       "default" : "true",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations\n",
+      "detaileddescriptionSet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations\n"
+      "detaileddescriptionGet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations"
     }
   ],
   "tests" : [
@@ -28,5 +28,5 @@
     }
   ],
   "briefdescription" : "",
-  "detaileddescription" : "This filter computes the Laplacian of a scalar-valued image. The Laplacian is an isotropic measure of the 2nd spatial derivative of an image. The Laplacian of an image highlights regions of rapid intensity change and is therefore often used for edge detection. Often, the Laplacian is applied to an image that has first been smoothed with a Gaussian filter in order to reduce its sensitivity to noise.\n\\par The Laplacian at each pixel location is computed by convolution with the itk::LaplacianOperator.\n\\par Inputs and Outputs\nThe input to this filter is a scalar-valued itk::Imageof arbitrary dimension. The output is a scalar-valued itk::Image.\n\\warning The pixel type of the input and output images must be of real type (float or double). ConceptChecking is used here to enforce the input pixel type. You will get a compilation error if the pixel type of the input and output images is not float or double.\n\\see  Image\n\\see \n\\see  Neighborhood\n\\see \n\\see  NeighborhoodOperator\n\\see \n\\see  NeighborhoodIterator\n\\see \n\\see  LaplacianOperator\n\\par Wiki Examples:\n\n\\li All Examples\n\\li Compute the Laplacian of an image\n\n"
+  "detaileddescription" : "This filter computes the Laplacian of a scalar-valued image. The Laplacian is an isotropic measure of the 2nd spatial derivative of an image. The Laplacian of an image highlights regions of rapid intensity change and is therefore often used for edge detection. Often, the Laplacian is applied to an image that has first been smoothed with a Gaussian filter in order to reduce its sensitivity to noise.\n\n\\par The Laplacian at each pixel location is computed by convolution with the itk::LaplacianOperator.\n\n\\par Inputs and Outputs\nThe input to this filter is a scalar-valued itk::Imageof arbitrary dimension. The output is a scalar-valued itk::Image.\n\n\\warning The pixel type of the input and output images must be of real type (float or double). ConceptChecking is used here to enforce the input pixel type. You will get a compilation error if the pixel type of the input and output images is not float or double.\n\n\\see  Image\n\\see \n\\see  Neighborhood\n\\see \n\\see  NeighborhoodOperator\n\\see \n\\see  NeighborhoodIterator\n\\see \n\\see  LaplacianOperator\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Compute the Laplacian of an image"
 }

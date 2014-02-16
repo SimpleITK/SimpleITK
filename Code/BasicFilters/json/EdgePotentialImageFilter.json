@@ -18,6 +18,6 @@
       ]
     }
   ],
-  "briefdescription" : "Computes the edge potential of an image from the image gradient.\n",
-  "detaileddescription" : "Input to this filter should be a CovariantVectorimage representing the image gradient.\nThe filter expect both the input and output images to have the same number of dimensions, and the output to be of a scalar image type.\n"
+  "briefdescription" : "Computes the edge potential of an image from the image gradient.",
+  "detaileddescription" : "Input to this filter should be a CovariantVectorimage representing the image gradient.\n\nThe filter expect both the input and output images to have the same number of dimensions, and the output to be of a scalar image type."
 }

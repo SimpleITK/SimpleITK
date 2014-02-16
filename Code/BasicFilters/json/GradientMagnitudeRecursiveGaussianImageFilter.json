@@ -13,9 +13,9 @@
       "default" : "1.0",
       "doc" : "",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set Sigma value. Sigma is measured in the units of image spacing.\n",
+      "detaileddescriptionSet" : "Set Sigma value. Sigma is measured in the units of image spacing.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set Sigma value. Sigma is measured in the units of image spacing.\n"
+      "detaileddescriptionGet" : "Set Sigma value. Sigma is measured in the units of image spacing."
     },
     {
       "name" : "NormalizeAcrossScale",
@@ -23,9 +23,9 @@
       "default" : "false",
       "doc" : "",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Define which normalization factor will be used for the Gaussian\\see  RecursiveGaussianImageFilter::SetNormalizeAcrossScale\n\n",
+      "detaileddescriptionSet" : "Define which normalization factor will be used for the Gaussian\\see  RecursiveGaussianImageFilter::SetNormalizeAcrossScale",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Define which normalization factor will be used for the Gaussian\\see  RecursiveGaussianImageFilter::SetNormalizeAcrossScale\n\n"
+      "detaileddescriptionGet" : "Define which normalization factor will be used for the Gaussian\\see  RecursiveGaussianImageFilter::SetNormalizeAcrossScale"
     }
   ],
   "tests" : [
@@ -39,6 +39,6 @@
       ]
     }
   ],
-  "briefdescription" : "Computes the Magnitude of the Gradient of an image by convolution with the first derivative of a Gaussian.\n",
-  "detaileddescription" : "This filter is implemented using the recursive gaussian filters\n\\par Wiki Examples:\n\n\\li All Examples\n\\li Find the gradient magnitude of the image first smoothed with a Gaussian kernel\n\n"
+  "briefdescription" : "Computes the Magnitude of the Gradient of an image by convolution with the first derivative of a Gaussian.",
+  "detaileddescription" : "This filter is implemented using the recursive gaussian filters\n\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Find the gradient magnitude of the image first smoothed with a Gaussian kernel"
 }

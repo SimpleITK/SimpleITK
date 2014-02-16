@@ -13,9 +13,9 @@
       "default" : "false",
       "doc" : "",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.\n",
+      "detaileddescriptionSet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.\n"
+      "detaileddescriptionGet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn."
     },
     {
       "name" : "ForegroundValue",
@@ -23,9 +23,9 @@
       "default" : "1.0",
       "pixeltype" : "Input",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "End concept checking Set the value in the image to consider as \"foreground\". Defaults to maximum value of InputPixelType.\n",
+      "detaileddescriptionSet" : "Set the value in the image to consider as \"foreground\". Defaults to maximum value of InputPixelType.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Get the value in the image considered as \"foreground\". Defaults to maximum value of InputPixelType.\n"
+      "detaileddescriptionGet" : "Get the value in the image considered as \"foreground\". Defaults to maximum value of InputPixelType."
     }
   ],
   "custom_methods" : [],
@@ -65,6 +65,6 @@
       ]
     }
   ],
-  "briefdescription" : "Remove holes not connected to the boundary of the image.\n",
-  "detaileddescription" : " BinaryFillholeImageFilterfills holes in a binary image.\nGeodesic morphology and the Fillhole algorithm is described in Chapter 6 of Pierre Soille's book \"Morphological Image Analysis:\nPrinciples and Applications\", Second Edition, Springer, 2003.\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\\see  GrayscaleFillholeImageFilter\n\n"
+  "briefdescription" : "Remove holes not connected to the boundary of the image.",
+  "detaileddescription" : "BinaryFillholeImageFilterfills holes in a binary image.\n\nGeodesic morphology and the Fillhole algorithm is described in Chapter 6 of Pierre Soille's book \"Morphological Image Analysis:\nPrinciples and Applications\", Second Edition, Springer, 2003.\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\n\\see  GrayscaleFillholeImageFilter"
 }

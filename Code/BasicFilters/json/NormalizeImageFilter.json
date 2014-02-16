@@ -28,6 +28,6 @@
       ]
     }
   ],
-  "briefdescription" : "Normalize an image by setting its mean to zero and variance to one.\n",
-  "detaileddescription" : " NormalizeImageFiltershifts and scales an image so that the pixels in the image have a zero mean and unit variance. This filter uses StatisticsImageFilterto compute the mean and variance of the input and then applies ShiftScaleImageFilterto shift and scale the pixels.\nNB: since this filter normalizes the data to lie within -1 to 1, integral types will produce an image that DOES NOT HAVE a unit variance.\n\\see  NormalizeToConstantImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\\li Normalize an image\n\n"
+  "briefdescription" : "Normalize an image by setting its mean to zero and variance to one.",
+  "detaileddescription" : "NormalizeImageFiltershifts and scales an image so that the pixels in the image have a zero mean and unit variance. This filter uses StatisticsImageFilterto compute the mean and variance of the input and then applies ShiftScaleImageFilterto shift and scale the pixels.\n\nNB: since this filter normalizes the data to lie within -1 to 1, integral types will produce an image that DOES NOT HAVE a unit variance.\n\n\\see  NormalizeToConstantImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Normalize an image"
 }

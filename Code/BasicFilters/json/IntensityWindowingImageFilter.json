@@ -12,9 +12,9 @@
       "default" : "0.0",
       "pixeltype" : "Input",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the values of the maximum and minimum intensities of the input intensity window\n",
+      "detaileddescriptionSet" : "Set/Get the values of the maximum and minimum intensities of the input intensity window",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the values of the maximum and minimum intensities of the input intensity window\n"
+      "detaileddescriptionGet" : "Set/Get the values of the maximum and minimum intensities of the input intensity window"
     },
     {
       "name" : "WindowMaximum",
@@ -22,9 +22,9 @@
       "default" : 255.0,
       "pixeltype" : "Input",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the values of the maximum and minimum intensities of the input intensity window\n",
+      "detaileddescriptionSet" : "Set/Get the values of the maximum and minimum intensities of the input intensity window",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the values of the maximum and minimum intensities of the input intensity window\n"
+      "detaileddescriptionGet" : "Set/Get the values of the maximum and minimum intensities of the input intensity window"
     },
     {
       "name" : "OutputMinimum",
@@ -32,9 +32,9 @@
       "default" : 0.0,
       "pixeltype" : "Output",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the values of the maximum and minimum intensities of the outputimage\n",
+      "detaileddescriptionSet" : "Set/Get the values of the maximum and minimum intensities of the outputimage",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the values of the maximum and minimum intensities of the outputimage\n"
+      "detaileddescriptionGet" : "Set/Get the values of the maximum and minimum intensities of the outputimage"
     },
     {
       "name" : "OutputMaximum",
@@ -42,9 +42,9 @@
       "default" : 255.0,
       "pixeltype" : "Output",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the values of the maximum and minimum intensities of the outputimage\n",
+      "detaileddescriptionSet" : "Set/Get the values of the maximum and minimum intensities of the outputimage",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the values of the maximum and minimum intensities of the outputimage\n"
+      "detaileddescriptionGet" : "Set/Get the values of the maximum and minimum intensities of the outputimage"
     }
   ],
   "tests" : [
@@ -76,6 +76,6 @@
       ]
     }
   ],
-  "briefdescription" : "Applies a linear transformation to the intensity levels of the input Imagethat are inside a user-defined interval. Values below this interval are mapped to a constant. Values over the interval are mapped to another constant.\n",
-  "detaileddescription" : " IntensityWindowingImageFilterapplies pixel-wise a linear transformation to the intensity values of input image pixels. The linear transformation is defined by the user in terms of the minimum and maximum values that the output image should have and the lower and upper limits of the intensity window of the input image. This operation is very common in visualization, and can also be applied as a convenient preprocessing operation for image segmentation.\nAll computations are performed in the precison of the input pixel's RealType. Before assigning the computed value to the output pixel.\n\\par Wiki Examples:\n\n\\li All Examples\n\\li IntensityWindowingImageFilter\n\n\\see  RescaleIntensityImageFilter\n\n"
+  "briefdescription" : "Applies a linear transformation to the intensity levels of the input Imagethat are inside a user-defined interval. Values below this interval are mapped to a constant. Values over the interval are mapped to another constant.",
+  "detaileddescription" : "IntensityWindowingImageFilterapplies pixel-wise a linear transformation to the intensity values of input image pixels. The linear transformation is defined by the user in terms of the minimum and maximum values that the output image should have and the lower and upper limits of the intensity window of the input image. This operation is very common in visualization, and can also be applied as a convenient preprocessing operation for image segmentation.\n\nAll computations are performed in the precison of the input pixel's RealType. Before assigning the computed value to the output pixel.\n\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li IntensityWindowingImageFilter\n\n\n\n\\see  RescaleIntensityImageFilter"
 }

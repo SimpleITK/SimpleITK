@@ -12,9 +12,9 @@
       "default" : "2.0",
       "pixeltype" : "Input",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the height that a local maximum must be above the local background (local contrast) in order to survive the processing. Local maxima below this value are replaced with an estimate of the local background.\n",
+      "detaileddescriptionSet" : "Set/Get the height that a local maximum must be above the local background (local contrast) in order to survive the processing. Local maxima below this value are replaced with an estimate of the local background.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the height that a local maximum must be above the local background (local contrast) in order to survive the processing. Local maxima below this value are replaced with an estimate of the local background.\n"
+      "detaileddescriptionGet" : "Set/Get the height that a local maximum must be above the local background (local contrast) in order to survive the processing. Local maxima below this value are replaced with an estimate of the local background."
     },
     {
       "name" : "FullyConnected",
@@ -22,9 +22,9 @@
       "default" : "false",
       "doc" : "",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.\n",
+      "detaileddescriptionSet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.\n"
+      "detaileddescriptionGet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn."
     }
   ],
   "custom_methods" : [],
@@ -44,6 +44,6 @@
       ]
     }
   ],
-  "briefdescription" : "Identify local maxima whose height above the baseline is greater than h.\n",
-  "detaileddescription" : " HConvexImageFilterextract local maxima that are more than h intensity units above the (local) background. This has the effect of extracting objects that are brighter than background by at least h intensity units.\nThis filter uses the HMaximaImageFilter.\nGeodesic morphology and the H-Convex algorithm is described in Chapter 6 of Pierre Soille's book \"Morphological Image Analysis:\nPrinciples and Applications\", Second Edition, Springer, 2003.\n\\see  GrayscaleGeodesicDilateImageFilter, HMinimaImageFilter\n\\see \n\\see  MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter\n\n"
+  "briefdescription" : "Identify local maxima whose height above the baseline is greater than h.",
+  "detaileddescription" : "HConvexImageFilterextract local maxima that are more than h intensity units above the (local) background. This has the effect of extracting objects that are brighter than background by at least h intensity units.\n\nThis filter uses the HMaximaImageFilter.\n\nGeodesic morphology and the H-Convex algorithm is described in Chapter 6 of Pierre Soille's book \"Morphological Image Analysis:\nPrinciples and Applications\", Second Edition, Springer, 2003.\n\n\\see  GrayscaleGeodesicDilateImageFilter, HMinimaImageFilter\n\\see \n\\see  MorphologyImageFilter, GrayscaleDilateImageFilter, GrayscaleFunctionDilateImageFilter, BinaryDilateImageFilter"
 }

@@ -18,6 +18,6 @@
       ]
     }
   ],
-  "briefdescription" : "Computes pixel-wise the modulus of a complex image.\n",
+  "briefdescription" : "Computes pixel-wise the modulus of a complex image.",
   "detaileddescription" : ""
 }

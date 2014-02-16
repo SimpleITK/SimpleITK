@@ -18,6 +18,6 @@
       ]
     }
   ],
-  "briefdescription" : "Computes the sine of each pixel.\n",
-  "detaileddescription" : "The computations are performed using vcl_sin(x).\n\\par Wiki Examples:\n\n\\li All Examples\n\\li Compute the sine of each pixel.\n\n"
+  "briefdescription" : "Computes the sine of each pixel.",
+  "detaileddescription" : "The computations are performed using vcl_sin(x).\n\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Compute the sine of each pixel."
 }

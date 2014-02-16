@@ -14,7 +14,7 @@
       "default" : 0,
       "pixeltype" : "Output",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Method to explicitly set the outside value of the mask. Defaults to 0\n",
+      "detaileddescriptionSet" : "Method to explicitly set the outside value of the mask. Defaults to 0",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : ""
     }
@@ -31,6 +31,6 @@
       ]
     }
   ],
-  "briefdescription" : "Mask an image with a mask.\n",
-  "detaileddescription" : "This class is templated over the types of the input image type, the mask image type and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\nThe pixel type of the input 2 image must have a valid definition of the operator != with zero. This condition is required because internally this filter will perform the operation\nifpixel_from_mask_image!=masking_valuepixel_output_image=pixel_input_imageelsepixel_output_image=outside_value\nThe pixel from the input 1 is cast to the pixel type of the output image.\nNote that the input and the mask images must be of the same size.\n\\warning Any pixel value other than masking value (0 by default) will not be masked out.\n\\see  MaskNegatedImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\\li Apply a mask to an image\n\n"
+  "briefdescription" : "Mask an image with a mask.",
+  "detaileddescription" : "This class is templated over the types of the input image type, the mask image type and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\n\nThe pixel type of the input 2 image must have a valid definition of the operator != with zero. This condition is required because internally this filter will perform the operation\n\n\\code\n*ifpixel_from_mask_image!=masking_value\n*pixel_output_image=pixel_input_image\n*else\n*pixel_output_image=outside_value\n*\n\\endcode\n\n\nThe pixel from the input 1 is cast to the pixel type of the output image.\n\nNote that the input and the mask images must be of the same size.\n\n\\warning Any pixel value other than masking value (0 by default) will not be masked out.\n\n\\see  MaskNegatedImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Apply a mask to an image"
 }

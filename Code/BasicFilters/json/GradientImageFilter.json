@@ -13,18 +13,18 @@
       "type" : "bool",
       "default" : "true",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations\n",
+      "detaileddescriptionSet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations\n"
+      "detaileddescriptionGet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations"
     },
     {
       "name" : "UseImageDirection",
       "type" : "bool",
       "default" : "false",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "End concept checking The UseImageDirection flag determines whether image derivatives are computed with respect to the image grid or with respect to the physical space. When this flag is ON the derivatives are computed with respect to the coodinate system of physical space. The difference is whether we take into account the image Direction or not. The flag ON will take into account the image direction and will result in an extra matrix multiplication compared to the amount of computation performed when the flag is OFF. The default value of this flag is On.\n",
+      "detaileddescriptionSet" : "The UseImageDirection flag determines whether image derivatives are computed with respect to the image grid or with respect to the physical space. When this flag is ON the derivatives are computed with respect to the coodinate system of physical space. The difference is whether we take into account the image Direction or not. The flag ON will take into account the image direction and will result in an extra matrix multiplication compared to the amount of computation performed when the flag is OFF. The default value of this flag is On.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "End concept checking The UseImageDirection flag determines whether image derivatives are computed with respect to the image grid or with respect to the physical space. When this flag is ON the derivatives are computed with respect to the coodinate system of physical space. The difference is whether we take into account the image Direction or not. The flag ON will take into account the image direction and will result in an extra matrix multiplication compared to the amount of computation performed when the flag is OFF. The default value of this flag is On.\n"
+      "detaileddescriptionGet" : "The UseImageDirection flag determines whether image derivatives are computed with respect to the image grid or with respect to the physical space. When this flag is ON the derivatives are computed with respect to the coodinate system of physical space. The difference is whether we take into account the image Direction or not. The flag ON will take into account the image direction and will result in an extra matrix multiplication compared to the amount of computation performed when the flag is OFF. The default value of this flag is On."
     }
   ],
   "tests" : [
@@ -47,6 +47,6 @@
       ]
     }
   ],
-  "briefdescription" : "Computes the gradient of an image using directional derivatives.\n",
-  "detaileddescription" : "Computes the gradient of an image using directional derivatives. The directional derivative at each pixel location is computed by convolution with a first-order derivative operator.\nThe second template parameter defines the value type used in the derivative operator (defaults to float). The third template parameter defines the value type used for output image (defaults to float). The output image is defined as a covariant vector image whose value type is specified as this third template parameter.\n\\see  Image\n\\see \n\\see  Neighborhood\n\\see \n\\see  NeighborhoodOperator\n\\see \n\\see  NeighborhoodIterator\n\n"
+  "briefdescription" : "Computes the gradient of an image using directional derivatives.",
+  "detaileddescription" : "Computes the gradient of an image using directional derivatives. The directional derivative at each pixel location is computed by convolution with a first-order derivative operator.\n\nThe second template parameter defines the value type used in the derivative operator (defaults to float). The third template parameter defines the value type used for output image (defaults to float). The output image is defined as a covariant vector image whose value type is specified as this third template parameter.\n\n\\see  Image\n\\see \n\\see  Neighborhood\n\\see \n\\see  NeighborhoodOperator\n\\see \n\\see  NeighborhoodIterator"
 }

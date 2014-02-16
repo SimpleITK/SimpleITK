@@ -12,18 +12,18 @@
       "type" : "double",
       "default" : 0,
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the amount to Shift each Pixel. The shift is followed by a Scale.\n",
+      "detaileddescriptionSet" : "Set/Get the amount to Shift each Pixel. The shift is followed by a Scale.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the amount to Shift each Pixel. The shift is followed by a Scale.\n"
+      "detaileddescriptionGet" : "Set/Get the amount to Shift each Pixel. The shift is followed by a Scale."
     },
     {
       "name" : "Scale",
       "type" : "double",
       "default" : "1.0",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the amount to Scale each Pixel. The Scale is applied after the Shift.\n",
+      "detaileddescriptionSet" : "Set/Get the amount to Scale each Pixel. The Scale is applied after the Shift.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the amount to Scale each Pixel. The Scale is applied after the Shift.\n"
+      "detaileddescriptionGet" : "Set/Get the amount to Scale each Pixel. The Scale is applied after the Shift."
     }
   ],
   "tests" : [
@@ -57,6 +57,6 @@
       ]
     }
   ],
-  "briefdescription" : "Shift and scale the pixels in an image.\n",
-  "detaileddescription" : " ShiftScaleImageFiltershifts the input pixel by Shift (default 0.0) and then scales the pixel by Scale (default 1.0). All computattions are performed in the precison of the input pixel's RealType. Before assigning the computed value to the output pixel, the value is clamped at the NonpositiveMin and max of the pixel type.\n"
+  "briefdescription" : "Shift and scale the pixels in an image.",
+  "detaileddescription" : "ShiftScaleImageFiltershifts the input pixel by Shift (default 0.0) and then scales the pixel by Scale (default 1.0). All computattions are performed in the precison of the input pixel's RealType. Before assigning the computed value to the output pixel, the value is clamped at the NonpositiveMin and max of the pixel type."
 }
