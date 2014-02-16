@@ -89,7 +89,7 @@ std::vector<TType> SITKCommon_HIDDEN sitkITKVectorToSTL( const TITKVector & in )
   std::vector<TType> out( TITKVector::Dimension );
   for( unsigned int i = 0; i < TITKVector::Dimension; ++i )
     {
-    out[i] = in[i];
+    out[i] = static_cast<TType>(in[i]);
     }
   return out;
 }
