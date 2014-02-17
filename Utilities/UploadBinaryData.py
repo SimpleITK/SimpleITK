@@ -54,7 +54,12 @@ import pydas
 
 def connect_to_midas(email=None, api_key=None):
     midas_url = 'http://midas3.kitware.com/midas/'
-    pydas.login(url=midas_url, email=email, api_key=api_key)
+    #pydas.login(url=midas_url, email=email, api_key=api_key)
+    try:
+        pydas.login(url=midas_url, email=email, api_key=api_key)
+    except:
+        print('Error occurred while logging in to ' + midas_url)
+        sys.exit(1)
     session = pydas.session
     communicator = session.communicator
     return session, communicator
