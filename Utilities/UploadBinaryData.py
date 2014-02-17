@@ -168,7 +168,7 @@ def run(input_files, output_files,
                         session, communicator)
 
         if not no_delete:
-            os.remove(input_files[ii].name)
+            os.remove(input_files[ii])
 
 
 if __name__ == '__main__':
