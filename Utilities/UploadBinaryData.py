@@ -47,18 +47,14 @@ commit with "git add -- path/to/file.md5".
 import optparse
 import hashlib
 import os
+import subprocess
 import sys
-
 import pydas
 
 
 def connect_to_midas(email=None, api_key=None):
     midas_url = 'http://midas3.kitware.com/midas/'
-    if not api_key:
-        print('Please enter your login information for ' + midas_url)
-        pydas.login(url=midas_url, email=email)
-    else:
-        pydas.login(url=midas_url, email=email, api_key=api_key)
+    pydas.login(url=midas_url, email=email, api_key=api_key)
     session = pydas.session
     communicator = session.communicator
     return session, communicator
@@ -150,9 +146,21 @@ def find_git_dir(filepath):
 def run(input_files, output_files,
         email=None, api_key=None,
         no_delete=False):
+    git_dir = find_git_dir(input_files[0])
+
+    git_email_cmd = subprocess.Popen(['git', 'config', 'user.email'],
+                                     cwd=git_dir,
+                                     stdout=subprocess.PIPE)
+    if git_email_cmd.wait() is 0:
+        git_email = git_email_cmd.stdout.readline().strip()
+        email_input = raw_input('Email [' + git_email + ']: ')
+        if email_input == '':
+            email = git_email
+        else:
+            email = email_input
+
     session, communicator = connect_to_midas(email, api_key)
 
-    git_dir = find_git_dir(input_files[0])
     for ii in range(len(input_files)):
         input_abspath = os.path.abspath(input_files[ii])
         folders = input_abspath[len(git_dir)+1:].split(os.path.sep)[:-1]
