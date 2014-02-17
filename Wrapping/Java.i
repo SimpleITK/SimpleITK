@@ -39,4 +39,9 @@
 // Documented in: http://www.swig.org/Doc2.0/SWIG.html#SWIG_advanced_renaming
 %rename("%(firstlowercase)s", %$isfunction ) "";
 
+// Enable Java classes derived from Command Execute method to be
+// called from C++
+%feature("director") itk::simple::Command;
+
+
 #endif // End of Java specific sections
