@@ -1,4 +1,4 @@
-from distribute_setup import use_setuptools
+from ez_setup import use_setuptools
 use_setuptools()
 
 from setuptools import setup
@@ -60,7 +60,7 @@ setup(
     name = 'SimpleITK',
     version = get_pep386version(),
     author = 'Insight Software Consortium',
-    author_email = 'insight-users@itk.cd org',
+    author_email = 'insight-users@itk.org',
     py_modules = ['SimpleITK',],
     data_files = [(get_python_lib(), [r'@SIMPLEITK_NATIVE_BINARY_MODULE@'])],
     download_url = r'http://www.itk.org/SimpleITKDoxygen/html/PyDownload.html',
