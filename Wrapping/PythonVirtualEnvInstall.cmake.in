@@ -2,7 +2,8 @@
 execute_process( COMMAND "@ORIGINAL_PYTHON_EXECUTABLE@"
         "@SimpleITK_SOURCE_DIR@/Utilities/virtualenv/virtualenv.py"
         "--python=@ORIGINAL_PYTHON_EXECUTABLE@"
-        --distribute
+        --no-pip
+        --no-setuptools
         --clear
         "@PythonVirtualenvHome@" )
 
