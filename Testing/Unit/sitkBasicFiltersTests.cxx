@@ -482,11 +482,11 @@ TEST(BasicFilters,Statistics_Abort) {
   CountCommand userCmd(stats);
   stats.AddCommand(sitk::sitkUserEvent, userCmd);
 
-  ASSERT_THROW( stats.Execute(img), sitk::GenericException );
+  EXPECT_ANY_THROW( stats.Execute(img) );
 
   EXPECT_EQ ( 1, abortCmd.m_Count );
   EXPECT_EQ ( 1, deleteCmd.m_Count );
-  EXPECT_EQ ( 1, endCmd.m_Count );
+  EXPECT_EQ ( 0, endCmd.m_Count );
   EXPECT_EQ ( 0, iterCmd.m_Count );
   EXPECT_EQ ( 1, startCmd.m_Count );
   EXPECT_EQ ( 0, userCmd.m_Count );
