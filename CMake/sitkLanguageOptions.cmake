@@ -35,7 +35,7 @@ endif()
 find_package ( PythonLibs ${PYTHON_VERSION_STRING} EXACT ${_QUIET} )
 
 if (PYTHON_VERSION_STRING VERSION_LESS 2.6)
-  message( WARNING "Python version less that 2.6. " ${PYTHON_VERSION_STRING} )
+  message( WARNING "Python version less that 2.6: \"${PYTHON_VERSION_STRING}\"." )
 endif()
 
 if ( PYTHONLIBS_FOUND AND PYTHONINTERP_FOUND
