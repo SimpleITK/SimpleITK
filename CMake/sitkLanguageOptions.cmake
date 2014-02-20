@@ -49,8 +49,15 @@ list( APPEND SITK_LANGUAGES_VARS
   PYTHON_EXECUTABLE
   PYTHON_LIBRARY
   PYTHON_INCLUDE_DIR
-#  PYTHON_INCLUDE_PATH ( depricated )
+#  PYTHON_INCLUDE_PATH ( deprecated )
    )
+# Debian "jessie" has this additional variable required to match
+# python versions.
+if(PYTHON_INCLUDE_DIR2)
+  list( APPEND SITK_LANGUAGES_VARS
+    PYTHON_INCLUDE_DIR2
+    )
+endif()
 option( WRAP_PYTHON "Wrap Python" ${WRAP_PYTHON_DEFAULT} )
 check_PIC_flag ( Python )
 
