@@ -374,6 +374,10 @@ while(NOT dashboard_done)
       if(COMMAND dashboard_hook_coverage)
         dashboard_hook_coverage()
       endif()
+
+      # HACK Unfortunately ctest_coverage ignores the BUILD argument, try to force it...
+      file(READ ${CTEST_BINARY_DIRECTORY}/SimpleITK-build/CMakeFiles/TargetDirectories.txt build_coverage_dirs)
+      file(APPEND "${CTEST_BINARY_DIRECTORY}/CMakeFiles/TargetDirectories.txt" "${build_coverage_dirs}")
       ctest_coverage( BUILD "${CTEST_BINARY_DIRECTORY}/SimpleITK-build" )
     endif()
     if(dashboard_do_memcheck)
