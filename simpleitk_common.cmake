@@ -223,12 +223,6 @@ endif()
 
 #-----------------------------------------------------------------------------
 
-# Send the main script as a note.
-list(APPEND CTEST_NOTES_FILES
-  "${CTEST_SCRIPT_DIRECTORY}/${CTEST_SCRIPT_NAME}"
-  "${CMAKE_CURRENT_LIST_FILE}"
-  )
-
 # Check for required variables.
 foreach(req
     CTEST_CMAKE_GENERATOR
@@ -286,9 +280,9 @@ file(MAKE_DIRECTORY "${CTEST_BINARY_DIRECTORY}")
 if(NOT "${CTEST_SOURCE_DIRECTORY}" STREQUAL "${CTEST_BINARY_DIRECTORY}"
     AND NOT dashboard_no_clean)
   message("Clearing build trees...")
-  
+
   # rename to move it out of the way
-  foreach(t "" 1 2 3 4 5)      
+  foreach(t "" 1 2 3 4 5)
     set(TEMP_BINARY_DIRECTORY "${CTEST_BINARY_DIRECTORY}.tmp${t}")
     if(EXISTS ${CTEST_BINARY_DIRECTORY} AND NOT EXISTS ${TEMP_BINARY_DIRECTORY})
       message("Moving old binary to ${TEMP_BINARY_DIRECTORY}...")
@@ -349,48 +343,73 @@ while(NOT dashboard_done)
 
   # Look for updates.
   ctest_update(RETURN_VALUE count)
+  if(NOT dashboard_no_submit)
+    ctest_submit(PARTS Start Update)
+  endif()
   set(CTEST_CHECKOUT_COMMAND) # checkout on first iteration only
   message("Found ${count} changed files")
 
   if(dashboard_fresh OR NOT dashboard_continuous OR count GREATER 0)
     ctest_configure( SOURCE "${CTEST_SOURCE_DIRECTORY}/SuperBuild"
-                     OPTIONS "${dashboard_configure_options}")
+                     OPTIONS "${dashboard_configure_options}"
+		      )
+    if(NOT dashboard_no_submit)
+      ctest_submit(PARTS Configure)
+    endif()
     ctest_read_custom_files(${CTEST_BINARY_DIRECTORY})
     set(CTEST_PROJECT_NAME "SuperBuildSimpleITK")
 
     if(COMMAND dashboard_hook_build)
       dashboard_hook_build()
     endif()
-    ctest_build( BUILD "${CTEST_BINARY_DIRECTORY}" NUMBER_ERRORS
-      build_number_errors )
-
-
-    if(COMMAND dashboard_hook_test)
-      dashboard_hook_test()
+    ctest_build( BUILD "${CTEST_BINARY_DIRECTORY}" APPEND NUMBER_ERRORS build_number_errors )
+    if(NOT dashboard_no_submit)
+      ctest_submit(PARTS Build)
     endif()
-    ctest_test( BUILD "${CTEST_BINARY_DIRECTORY}/SimpleITK-build" ${CTEST_TEST_ARGS})
+
+    if(NOT dashboard_no_test)
+      if(COMMAND dashboard_hook_test)
+	dashboard_hook_test()
+      endif()
+      ctest_test( BUILD "${CTEST_BINARY_DIRECTORY}/SimpleITK-build" ${CTEST_TEST_ARGS} )
+      if(NOT dashboard_no_submit)
+	ctest_submit(PARTS Test)
+      endif()
+    endif()
 
     if(dashboard_do_coverage)
       if(COMMAND dashboard_hook_coverage)
-        dashboard_hook_coverage()
+	dashboard_hook_coverage()
       endif()
 
       # HACK Unfortunately ctest_coverage ignores the BUILD argument, try to force it...
       file(READ ${CTEST_BINARY_DIRECTORY}/SimpleITK-build/CMakeFiles/TargetDirectories.txt build_coverage_dirs)
       file(APPEND "${CTEST_BINARY_DIRECTORY}/CMakeFiles/TargetDirectories.txt" "${build_coverage_dirs}")
       ctest_coverage( BUILD "${CTEST_BINARY_DIRECTORY}/SimpleITK-build" )
+      if(NOT dashboard_no_submit)
+	ctest_submit(PARTS Coverage)
+      endif()
     endif()
     if(dashboard_do_memcheck)
       if(COMMAND dashboard_hook_memcheck)
-        dashboard_hook_memcheck()
+	dashboard_hook_memcheck()
       endif()
       ctest_memcheck( BUILD "${CTEST_BINARY_DIRECTORY}/SimpleITK-build" )
+      if(NOT dashboard_no_submit)
+	ctest_submit(PARTS Build MemCheck)
+      endif()
+
     endif()
     if(COMMAND dashboard_hook_submit)
       dashboard_hook_submit()
     endif()
     if(NOT dashboard_no_submit)
-      ctest_submit()
+      # Send the main script as a note.
+      list(APPEND CTEST_NOTES_FILES
+	"${CTEST_SCRIPT_DIRECTORY}/${CTEST_SCRIPT_NAME}"
+	"${CMAKE_CURRENT_LIST_FILE}"
+       )
+      ctest_submit(PARTS Notes ExtraFiles Submit)
     endif()
     if(COMMAND dashboard_hook_end)
       dashboard_hook_end()
