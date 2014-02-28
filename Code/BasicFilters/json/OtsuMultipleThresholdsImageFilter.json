@@ -46,6 +46,15 @@
       "detaileddescriptionGet" : "Set/Get the use of valley emphasis. Default is false."
     }
   ],
+  "measurements" : [
+    {
+      "name" : "Thresholds",
+      "type" : "std::vector<double>",
+      "default" : "std::vector<double>()",
+      "custom_itk_cast" : "this->m_Thresholds = std::vector<double>( filter->GetThresholds().begin(), filter->GetThresholds().end() );",
+      "briefdescriptionGet" : "Get the computed threshold."
+    }
+  ],
   "tests" : [
     {
       "tag" : "default",
