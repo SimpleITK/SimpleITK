@@ -37,6 +37,14 @@
       "detaileddescriptionGet" : ""
     }
   ],
+  "measurements" : [
+    {
+      "name" : "Threshold",
+      "type" : "double",
+      "default" : 0.0,
+      "briefdescriptionGet" : "Get the computed threshold."
+    }
+  ],
   "tests" : [
     {
       "tag" : "default",
@@ -45,6 +53,12 @@
       "md5hash" : "ddf5ed860d650763c54f36628bd9fa35",
       "inputs" : [
         "Input/RA-Short.nrrd"
+      ],
+      "measurements_results" : [
+        {
+          "name" : "Threshold",
+          "value" : 27602.0
+        }
       ]
     },
     {
@@ -54,6 +68,13 @@
       "md5hash" : "fcd8ca1be3f4d7561f81e06b3c570af0",
       "inputs" : [
         "Input/Ramp-Zero-One-Float.nrrd"
+      ],
+      "measurements_results" : [
+        {
+          "name" : "Threshold",
+          "value" : 0.496117,
+          "tolerance" : 0.00001
+        }
       ]
     }
   ],
