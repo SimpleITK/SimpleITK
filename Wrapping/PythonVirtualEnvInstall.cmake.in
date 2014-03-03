@@ -1,7 +1,7 @@
 
-execute_process( COMMAND "@ORIGINAL_PYTHON_EXECUTABLE@"
+execute_process( COMMAND "@PYTHON_EXECUTABLE@"
         "@SimpleITK_SOURCE_DIR@/Utilities/virtualenv/virtualenv.py"
-        "--python=@ORIGINAL_PYTHON_EXECUTABLE@"
+        "--python=@PYTHON_EXECUTABLE@"
         --no-pip
         --no-setuptools
         --clear
@@ -16,7 +16,7 @@ execute_process( COMMAND ${CMAKE_COMMAND} -E touch "@CMAKE_CURRENT_BINARY_DIR@/_
 
 
 execute_process(
-  COMMAND "@PYTHON_EXECUTABLE@" -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())"
+  COMMAND "@VIRTUAL_PYTHON_EXECUTABLE@" -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())"
   OUTPUT_VARIABLE PythonVirtualenvLib
   ERROR_VARIABLE error
   RESULT_VARIABLE failed
@@ -30,7 +30,7 @@ endif()
 
 # Manual numpy installation
 execute_process(
-  COMMAND "@ORIGINAL_PYTHON_EXECUTABLE@" -c "import numpy; import os; print(os.path.dirname(numpy.__file__))"
+  COMMAND "@PYTHON_EXECUTABLE@" -c "import numpy; import os; print(os.path.dirname(numpy.__file__))"
   OUTPUT_VARIABLE numpy_dir
   ERROR_VARIABLE error
   RESULT_VARIABLE failed

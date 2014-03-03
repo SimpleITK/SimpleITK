@@ -145,9 +145,9 @@ if ( WRAP_PYTHON )
     # locations. Also note than on windows installations where python is
     # installed only for a single user the may be a missing dll issue.
     if( WIN32 )
-      set( PYTHON_EXECUTABLE "${PythonVirtualenvHome}/Scripts/python" )
+      set( VIRTUAL_PYTHON_EXECUTABLE "${PythonVirtualenvHome}/Scripts/python" CACHE INTERNAL "Python executable in virtual enviroment" FORCE )
     else( )
-      set( PYTHON_EXECUTABLE "${PythonVirtualenvHome}/bin/python" )
+      set( VIRTUAL_PYTHON_EXECUTABLE "${PythonVirtualenvHome}/bin/python" CACHE INTERNAL "Python executable in virtual enviroment" FORCE )
     endif()
 
     # configure a scripts which creates the virtualenv and installs numpy
@@ -160,7 +160,7 @@ if ( WRAP_PYTHON )
     add_custom_command( TARGET ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
       POST_BUILD
       COMMAND ${CMAKE_COMMAND} -P "${CMAKE_CURRENT_BINARY_DIR}/PythonVirtualEnvInstall.cmake"
-      COMMAND ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/setup.py" install
+      COMMAND ${VIRTUAL_PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/setup.py" install
       COMMENT "Installing python module to the virtualenv" )
 
   endif()
