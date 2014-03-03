@@ -37,6 +37,14 @@
       "detaileddescriptionGet" : ""
     }
   ],
+  "measurements" : [
+    {
+      "name" : "Threshold",
+      "type" : "double",
+      "default" : 0.0,
+      "briefdescriptionGet" : "Get the computed threshold."
+    }
+  ],
   "tests" : [
     {
       "tag" : "default",
