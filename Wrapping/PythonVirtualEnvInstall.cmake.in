@@ -1,17 +1,28 @@
 
-execute_process( COMMAND "@PYTHON_EXECUTABLE@"
-        "@SimpleITK_SOURCE_DIR@/Utilities/virtualenv/virtualenv.py"
-        "--python=@PYTHON_EXECUTABLE@"
-        --no-pip
-        --no-setuptools
-        --clear
-        "@PythonVirtualenvHome@" )
+execute_process(
+  COMMAND "@PYTHON_EXECUTABLE@"
+    "@SimpleITK_SOURCE_DIR@/Utilities/virtualenv/virtualenv.py"
+    "--python=@PYTHON_EXECUTABLE@"
+    --no-pip
+    --no-setuptools
+    --clear
+    "@PythonVirtualenvHome@"
+  RESULT_VARIABLE failed
+  ERROR_VARIABLE error
+  )
 
 if ( failed )
-  message( ERROR ${error} )
+  message( FATAL_ERROR "Creation of Python virtual enviroment failed.\n${error}" )
 endif()
 
-
+execute_process(
+  COMMAND "@VIRTUAL_PYTHON_EXECUTABLE@" "@CMAKE_CURRENT_BINARY_DIR@/PythonPackage/setup.py" install
+  RESULT_VARIABLE failed
+  ERROR_VARIABLE error
+  )
+if ( failed )
+  message( FATAL_ERROR "Installation of SimpleITK into Python virutal enviroment failed.\n${error}" )
+endif()
 
 execute_process(
   COMMAND "@VIRTUAL_PYTHON_EXECUTABLE@" -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())"
@@ -22,7 +33,7 @@ execute_process(
   )
 
 if ( failed )
-  message( ERROR ${error} )
+  message( SEND_ERROR "Determining python library patch failed.\n${error}" )
 endif()
 
 
@@ -46,14 +57,14 @@ else()
       RESULT_VARIABLE failed
       ERROR_VARIABLE error )
     if ( failed )
-      message( ERROR ${error} )
+      message( SEND_ERROR ${error} )
     endif()
   else ()
     execute_process( COMMAND ${CMAKE_COMMAND} -E copy_directory "${numpy_dir}" "${PythonVirtualenvLib}/numpy"
       RESULT_VARIABLE failed
       ERROR_VARIABLE error )
     if ( failed )
-      message( ERROR ${error} )
+      message( SEND_ERROR ${error} )
     endif()
   endif ()
 endif()
