@@ -13,6 +13,7 @@ if( WRAP_PYTHON )
     DEPENDS ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
     COMMENT "Creating Python egg for distribution" )
 
+  add_dependencies( dist.Python PythonVirtualEnv)
   add_dependencies( dist dist.Python )
 
 endif()
