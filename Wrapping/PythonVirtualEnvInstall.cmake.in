@@ -11,8 +11,6 @@ if ( failed )
   message( ERROR ${error} )
 endif()
 
-execute_process( COMMAND ${CMAKE_COMMAND} -E touch "@CMAKE_CURRENT_BINARY_DIR@/__init__.py" )
-
 
 
 execute_process(
