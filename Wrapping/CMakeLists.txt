@@ -139,8 +139,6 @@ if ( WRAP_PYTHON )
 
     set( PythonVirtualenvHome "${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVirtualenv" )
 
-    set( ORIGINAL_PYTHON_EXECUTABLE ${PYTHON_EXECUTABLE} )
-
     # virtualenv places the python executable in different
     # locations. Also note than on windows installations where python is
     # installed only for a single user the may be a missing dll issue.
