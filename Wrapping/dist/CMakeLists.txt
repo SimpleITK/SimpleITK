@@ -9,6 +9,7 @@ add_custom_target( dist cmake -E echo "Finished generating wrapped packages for 
 if( WRAP_PYTHON )
   add_custom_target( dist.Python
     ${VIRTUAL_PYTHON_EXECUTABLE} ${SimpleITK_BINARY_DIR}/Wrapping/PythonPackage/setup.py bdist_egg
+    COMMAND  ${VIRTUAL_PYTHON_EXECUTABLE} ${SimpleITK_BINARY_DIR}/Wrapping/PythonPackage/setup.py bdist_wheel
     WORKING_DIRECTORY ${SimpleITK_BINARY_DIR}/Wrapping
     DEPENDS ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
     COMMENT "Creating Python egg for distribution" )
