@@ -133,8 +133,6 @@ if ( WRAP_PYTHON )
     "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/ez_setup.py"
     COPYONLY )
 
-  add_dependencies( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} ConfigureFileBuildtime )
-
   #
   # Setup Python Virtual Enviroment for testing and packaging
   #
@@ -169,7 +167,7 @@ if ( WRAP_PYTHON )
     DEPENDS
       "${SWIG_MODULE_SimpleITKPython_TARGET_NAME}"
       "${CMAKE_CURRENT_BINARY_DIR}/PythonVirtualEnvInstall.cmake"
-      "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/setup.py"
+      ConfigureFileBuildtime
       "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/ez_setup.py"
     COMMENT "Creating python virtual enviroment..."
     )
