@@ -90,8 +90,9 @@ if ( WRAP_PYTHON )
   # Installation
   set( SIMPLEITK_PYTHON_MODULE_DIR "${SimpleITK_BINARY_DIR}/Wrapping" )
   file(TO_NATIVE_PATH "${SIMPLEITK_PYTHON_MODULE_DIR}" SIMPLEITK_NATIVE_PYTHON_MODULE_DIR )
+  set_target_properties( ${SWIG_MODULE_SimpleITK_TARGET_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}")
   get_target_property( SIMPLEITK_BINARY_MODULE ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} LOCATION )
-  file(TO_NATIVE_PATH "${SIMPLEITK_BINARY_MODULE}" SIMPLEITK_NATIVE_BINARY_MODULE )
+  file( RELATIVE_PATH  SIMPLEITK_RELATIVE_BINARY_MODULE "${CMAKE_CURRENT_BINARY_DIR}" "${SIMPLEITK_BINARY_MODULE}" )
 
 
   if ( SimpleITK_DOC_FILES )
@@ -132,6 +133,12 @@ if ( WRAP_PYTHON )
     "${CMAKE_CURRENT_SOURCE_DIR}/PythonPackage/ez_setup.py"
     "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/ez_setup.py"
     COPYONLY )
+
+  configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/PythonPackage/__init__.py"
+    "${CMAKE_CURRENT_BINARY_DIR}/__init__.py"
+    COPYONLY )
+
 
   #
   # Setup Python Virtual Enviroment for testing and packaging
