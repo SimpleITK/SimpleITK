@@ -68,11 +68,14 @@ if ( WRAP_PYTHON )
   find_package ( PythonInterp REQUIRED )
   include_directories ( ${PYTHON_INCLUDE_DIR} ${SimpleITK_SOURCE_DIR}/Wrapping )
 
-  # Run swig
-  set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS} -features autodoc=1
-  -keyword )
   option ( SimpleITK_PYTHON_THREADS "Enable threaded python usage by unlocking the GIL." OFF )
   mark_as_advanced( SimpleITK_PYTHON_THREADS )
+  option ( SimpleITK_PYTHON_WHEEL "Add building of python wheels to the dist target." OFF )
+  mark_as_advanced( SimpleITK_PYTHON_WHEEL )
+
+
+  # Run swig
+  set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS} -features autodoc=1 -keyword )
   if( SimpleITK_PYTHON_THREADS )
     set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_FLAGS} -threads)
   endif()

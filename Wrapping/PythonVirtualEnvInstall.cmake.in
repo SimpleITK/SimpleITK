@@ -1,4 +1,8 @@
 
+if(POLICY CMP0012)
+  cmake_policy(SET CMP0012 NEW)
+endif()
+
 execute_process(
   COMMAND "@PYTHON_EXECUTABLE@"
     "@SimpleITK_SOURCE_DIR@/Utilities/virtualenv/virtualenv.py"
@@ -25,7 +29,8 @@ if ( failed )
 endif()
 
 
-set(install_wheel_script "
+if ( "@SimpleITK_PYTHON_WHEEL@" )
+  set(install_wheel_script "
 import sys
 
 if not(sys.modules.get(\"wheel\")):
@@ -33,13 +38,14 @@ if not(sys.modules.get(\"wheel\")):
     easy_install.main([\"wheel\"])
 ")
 
-execute_process(
-  COMMAND @VIRTUAL_PYTHON_EXECUTABLE@ -c "${install_wheel_script}"
-  RESULT_VARIABLE failed
-  )
+  execute_process(
+    COMMAND @VIRTUAL_PYTHON_EXECUTABLE@ -c "${install_wheel_script}"
+    RESULT_VARIABLE failed
+    )
 
-if ( failed )
-  message( WARNING ${error} )
+  if ( failed )
+    message( WARNING ${error} )
+  endif()
 endif()
 
 
