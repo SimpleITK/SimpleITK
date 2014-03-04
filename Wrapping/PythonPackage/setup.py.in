@@ -63,7 +63,7 @@ setup(
     author_email = 'insight-users@itk.org',
     packages= ['SimpleITK'],
     package_dir = {'SimpleITK':r'@SimpleITK_BINARY_DIR@/Wrapping'},
-    package_data = {'SimpleITK':[r'@SIMPLEITK_RELATIVE_BINARY_MODULE@']+doc_files},
+    package_data = {'SimpleITK':[r'@SIMPLEITK_RELATIVE_BINARY_MODULE@']},
     download_url = r'http://www.itk.org/SimpleITKDoxygen/html/PyDownload.html',
     platforms = [],
     zip_safe = False,
