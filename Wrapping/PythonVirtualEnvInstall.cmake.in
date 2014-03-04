@@ -1,4 +1,8 @@
 
+if(POLICY CMP0012)
+  cmake_policy(SET CMP0012 NEW)
+endif()
+
 execute_process(
   COMMAND "@PYTHON_EXECUTABLE@"
     "@SimpleITK_SOURCE_DIR@/Utilities/virtualenv/virtualenv.py"
@@ -23,6 +27,27 @@ execute_process(
 if ( failed )
   message( FATAL_ERROR "Installation of SimpleITK into Python virutal enviroment failed.\n${error}" )
 endif()
+
+
+if ( "@SimpleITK_PYTHON_WHEEL@" )
+  set(install_wheel_script "
+import sys
+
+if not(sys.modules.get(\"wheel\")):
+    from setuptools.command import easy_install
+    easy_install.main([\"wheel\"])
+")
+
+  execute_process(
+    COMMAND @VIRTUAL_PYTHON_EXECUTABLE@ -c "${install_wheel_script}"
+    RESULT_VARIABLE failed
+    )
+
+  if ( failed )
+    message( WARNING ${error} )
+  endif()
+endif()
+
 
 execute_process(
   COMMAND "@VIRTUAL_PYTHON_EXECUTABLE@" -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())"
