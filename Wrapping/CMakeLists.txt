@@ -68,11 +68,14 @@ if ( WRAP_PYTHON )
   find_package ( PythonInterp REQUIRED )
   include_directories ( ${PYTHON_INCLUDE_DIR} ${SimpleITK_SOURCE_DIR}/Wrapping )
 
-  # Run swig
-  set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS} -features autodoc=1
-  -keyword )
   option ( SimpleITK_PYTHON_THREADS "Enable threaded python usage by unlocking the GIL." OFF )
   mark_as_advanced( SimpleITK_PYTHON_THREADS )
+  option ( SimpleITK_PYTHON_WHEEL "Add building of python wheels to the dist target." OFF )
+  mark_as_advanced( SimpleITK_PYTHON_WHEEL )
+
+
+  # Run swig
+  set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS} -features autodoc=1 -keyword )
   if( SimpleITK_PYTHON_THREADS )
     set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_FLAGS} -threads)
   endif()
@@ -88,10 +91,16 @@ if ( WRAP_PYTHON )
   set(SWIG_MODULE_SimpleITKPython_TARGET_NAME "${SWIG_MODULE_SimpleITK_TARGET_NAME}")
 
   # Installation
-  set( SIMPLEITK_PYTHON_MODULE_DIR "${SimpleITK_BINARY_DIR}/Wrapping" )
-  file(TO_NATIVE_PATH "${SIMPLEITK_PYTHON_MODULE_DIR}" SIMPLEITK_NATIVE_PYTHON_MODULE_DIR )
-  get_target_property( SIMPLEITK_BINARY_MODULE ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} LOCATION )
-  file(TO_NATIVE_PATH "${SIMPLEITK_BINARY_MODULE}" SIMPLEITK_NATIVE_BINARY_MODULE )
+  set( SIMPLEITK_PYTHON_PACKAGE_DIR "${SimpleITK_BINARY_DIR}/Wrapping" )
+  file( TO_NATIVE_PATH "${SIMPLEITK_PYTHON_PACKAGE_DIR}" SIMPLEITK_PYTHON_PACKAGE_DIR )
+  get_target_property( SWIG_MODULE_SimpleITKPython_TARGET_LOCATION ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} OUTPUT_NAME )
+  add_custom_command(
+    TARGET ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE:${SWIG_MODULE_SimpleITKPython_TARGET_NAME}>" "${CMAKE_CURRENT_BINARY_DIR}"
+  )
+  get_target_property( SIMPLEITK_RELATIVE_BINARY_MODULE ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} LOCATION )
+  get_filename_component( SIMPLEITK_RELATIVE_BINARY_MODULE "${SIMPLEITK_RELATIVE_BINARY_MODULE}" NAME )
 
 
   if ( SimpleITK_DOC_FILES )
@@ -132,6 +141,12 @@ if ( WRAP_PYTHON )
     "${CMAKE_CURRENT_SOURCE_DIR}/PythonPackage/ez_setup.py"
     "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/ez_setup.py"
     COPYONLY )
+
+  configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/PythonPackage/__init__.py"
+    "${CMAKE_CURRENT_BINARY_DIR}/__init__.py"
+    COPYONLY )
+
 
   #
   # Setup Python Virtual Enviroment for testing and packaging
