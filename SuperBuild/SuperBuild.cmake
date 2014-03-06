@@ -197,6 +197,8 @@ list( APPEND ep_common_list
   CMAKE_SHARED_LINKER_FLAGS_RELEASE
   CMAKE_SHARED_LINKER_FLAGS_RELWITHDEBINFO
 
+  CMAKE_STRIP
+
   CMAKE_GENERATOR
   CMAKE_EXTRA_GENERATOR
   MEMORYCHECK_COMMAND_OPTIONS
@@ -209,6 +211,11 @@ if( APPLE )
   list( APPEND ep_common_list
     CMAKE_OSX_SYSROOT
     CMAKE_OSX_DEPLOYMENT_TARGET )
+endif()
+
+if( DEFINED CMAKE_STRIP_FLAGS )
+  list( APPEND ep_common_list
+    CMAKE_STRIP_FLAGS )
 endif()
 
 VariableListToArgs( ep_common_list ep_common_args )
