@@ -621,6 +621,27 @@ if ( WRAP_PYTHON )
   set_tests_properties( Python.Example.FilterProgressReporting
     PROPERTIES PASS_REGULAR_EXPRESSION "DiscreteGaussianImageFilter Progress" )
 
+  add_python_test( Example.Segmentation.ConnectedThresholdImageFilter1
+    "${SimpleITK_SOURCE_DIR}/Examples/Segmentation/ConnectedThresholdImageFilter.py"
+    --compare-MD5
+      "${TEST_HARNESS_TEMP_DIRECTORY}/PythonSegmentationConnectedThreshold1.png"
+      "d4ff9c512f9c18a84729677de800db0d"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySlice.png"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/PythonSegmentationConnectedThreshold1.png"
+    150 180
+    60 116
+    )
+
+  add_python_test( Example.Segmentation.ConnectedThresholdImageFilter2
+    "${SimpleITK_SOURCE_DIR}/Examples/Segmentation/ConnectedThresholdImageFilter.py"
+    --compare-MD5
+      "${TEST_HARNESS_TEMP_DIRECTORY}/PythonSegmentationConnectedThreshold2.png"
+      "a9695df04cde5b9c5481d8c253a5b3aa"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySlice.png"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/PythonSegmentationConnectedThreshold2.png"
+    210 250
+    81 112
+    )
 
 
   #
