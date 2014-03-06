@@ -169,6 +169,11 @@ if(EXISTS ${CTEST_SOURCE_DIRECTORY})
   endif()
 endif()
 
+# make sure build end in branch name
+if( NOT CTEST_BUILD_NAME MATCHES "${dashboard_git_branch}$" )
+  set(CTEST_BUILD_NAME "${CTEST_BUILD_NAME}-${dashboard_git_branch}")
+endif()
+
 # Support initial checkout if necessary.
 if(NOT EXISTS "${CTEST_SOURCE_DIRECTORY}"
     AND NOT DEFINED CTEST_CHECKOUT_COMMAND)
