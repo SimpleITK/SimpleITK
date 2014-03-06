@@ -346,6 +346,31 @@ if ( ${BUILD_EXAMPLES} )
   set_tests_properties( CXX.Example.FilterProgressReporting
     PROPERTIES PASS_REGULAR_EXPRESSION "DiscreteGaussianImageFilter Progress" )
 
+
+  add_test(NAME  CXX.Example.Segmentation.ConnectedThresholdImageFilter1
+    COMMAND "${ITK_TEST_DRIVER}"
+    --compare-MD5
+      "${TEST_HARNESS_TEMP_DIRECTORY}/CXXSegmentationConnectedThreshold1.png"
+      "d4ff9c512f9c18a84729677de800db0d"
+    $<TARGET_FILE:ConnectedThresholdImageFilter>
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySlice.png"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/CXXSegmentationConnectedThreshold1.png"
+    150 180
+    60 116
+    )
+
+  add_test(NAME  CXX.Example.Segmentation.ConnectedThresholdImageFilter2
+    COMMAND "${ITK_TEST_DRIVER}"
+    --compare-MD5
+      "${TEST_HARNESS_TEMP_DIRECTORY}/CXXSegmentationConnectedThreshold2.png"
+      "a9695df04cde5b9c5481d8c253a5b3aa"
+    $<TARGET_FILE:ConnectedThresholdImageFilter>
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySlice.png"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/CXXSegmentationConnectedThreshold2.png"
+    210 250
+    81 112
+    )
+
 endif()
 
 if ( WRAP_CSHARP )
