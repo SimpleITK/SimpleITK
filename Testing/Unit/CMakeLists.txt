@@ -38,16 +38,6 @@ file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/CSharpTests)
 # Adjust Python to run in the virtualenv
 set( PythonVirtualenvHome ${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVirtualenv )
 
-# HACK This needs to be set commonly between here and Wrapping.
-
-# virtualenv places the python executable in different
-# locations. Also note than on windows installations where python is
-# installed only for a single user the may be a missing dll issue.
-if( WIN32 )
-  set( PYTHON_EXECUTABLE ${PythonVirtualenvHome}/Scripts/python )
-else( )
-  set( PYTHON_EXECUTABLE ${PythonVirtualenvHome}/bin/python )
-endif()
 
 add_executable(SimpleITKUnitTestDriver0 SimpleITKUnitTestDriver.cxx ${SimpleITKUnitTestSource})
 target_link_libraries ( SimpleITKUnitTestDriver0 gtest SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} )
@@ -531,7 +521,7 @@ if ( WRAP_PYTHON )
       return()
     endif()
 
-    set(command "${PYTHON_EXECUTABLE}")
+    set(command "${VIRTUAL_PYTHON_EXECUTABLE}")
 
     # add extra command which may be needed on some systems
     if(CMAKE_OSX_ARCHITECTURES)
