@@ -56,7 +56,7 @@ if ( WRAP_LUA )
 
   add_executable ( SimpleITKLua SimpleITKLuaMain.cxx SimpleITKLUA_wrap.cxx )
   target_link_libraries ( SimpleITKLua ${SimpleITK_LIBRARIES} ${LUA_LIB} )
-
+  sitk_strip_target( SimpleITKLua )
 
 endif()
 
@@ -87,6 +87,7 @@ if ( WRAP_PYTHON )
     sitkPyCommand.cxx )
   SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${PYTHON_LIBRARIES})
   set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKPYTHON_wrap.cxx PROPERTIES COMPILE_FLAGS "-w")
+  sitk_strip_target( ${SWIG_MODULE_SimpleITK_TARGET_NAME} )
 
   set(SWIG_MODULE_SimpleITKPython_TARGET_NAME "${SWIG_MODULE_SimpleITK_TARGET_NAME}")
 
@@ -205,6 +206,7 @@ if ( WRAP_RUBY )
   SWIG_add_module ( simpleitk ruby SimpleITK.i SimpleITKRUBY_wrap.cxx )
   SWIG_link_libraries ( simpleitk ${SimpleITK_LIBRARIES} ${RUBY_LIBRARY})
   set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKRUBY_wrap.cxx  PROPERTIES COMPILE_FLAGS "-w")
+  sitk_strip_target( ${SWIG_MODULE_simpleitk_TARGET_NAME} )
 
 endif()
 
@@ -236,6 +238,7 @@ if ( WRAP_JAVA )
   SWIG_add_module ( SimpleITKJava java SimpleITK.i SimpleITKJAVA_wrap.cxx)
   SWIG_link_libraries(SimpleITKJava ${SimpleITK_LIBRARIES})
   set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKJAVA_wrap.cxx  PROPERTIES COMPILE_FLAGS "-w")
+  sitk_strip_target( {SWIG_MODULE_SimpleITKJava_TARGET_NAME} )
 
   # Add target for org.itk.simple.jar
   add_custom_target(org_itk_simple_jar ALL DEPENDS ${JAR_FILE})
@@ -333,6 +336,7 @@ if ( WRAP_CSHARP )
         PROPERTIES RUNTIME_OUTPUT_DIRECTORY_${CMAKE_CONFIGURATION_TYPE} "${CSHARP_BINARY_DIRECTORY}")
     endforeach( )
   endif( UNIX )
+  sitk_strip_target( ${SWIG_MODULE_SimpleITKCSharpNative_TARGET_NAME} )
 
   # Configure AssemblyInfo.cs
   configure_file(
@@ -373,7 +377,7 @@ if ( WRAP_TCL )
   set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKTCL_wrap.cxx PROPERTIES COMPILE_FLAGS "-w" )
   add_executable ( SimpleITKTclsh SimpleITKTCL_wrap.cxx )
   target_link_libraries ( SimpleITKTclsh ${SimpleITK_LIBRARIES} ${TCL_LIBRARY} )
-
+  sitk_strip_target( SimpleITKTclsh )
 
 endif()
 
@@ -407,6 +411,8 @@ if ( WRAP_R )
 
   # set the output directory for the R library to the binary packaging location
   set_target_properties( ${SWIG_MODULE_SimpleITK_TARGET_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Rpackaging/SimpleITK/src/)
+
+  sitk_strip_target( ${SWIG_MODULE_SimpleITK_TARGET_NAME} )
 
   # copy the R files a binary package
   add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_TARGET_NAME}
