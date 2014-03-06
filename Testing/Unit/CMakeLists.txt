@@ -371,6 +371,18 @@ if ( ${BUILD_EXAMPLES} )
     81 112
     )
 
+  add_test( NAME CXX.Example.Segmentation.NeighborhoodConnectedImageFilter1
+    COMMAND "${ITK_TEST_DRIVER}"
+    --compare-MD5
+      "${TEST_HARNESS_TEMP_DIRECTORY}/CXXSegmentationNeighborhoodConnected1.png"
+      "311d9d4b492e1ea625e3b0b295814dce"
+    $<TARGET_FILE:NeighborhoodConnectedImageFilter>
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySlice.png"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/CXXSegmentationNeighborhoodConnected1.png"
+    150 180
+    60 116
+    )
+
 endif()
 
 if ( WRAP_CSHARP )
