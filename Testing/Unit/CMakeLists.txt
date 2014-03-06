@@ -680,6 +680,17 @@ if ( WRAP_PYTHON )
     81 112
     )
 
+  add_python_test( Example.Segmentation.NeighborhoodConnectedImageFilter1
+    "${SimpleITK_SOURCE_DIR}/Examples/Segmentation/NeighborhoodConnectedImageFilter.py"
+    --compare-MD5
+      "${TEST_HARNESS_TEMP_DIRECTORY}/PythonSegmentationNeighborhoodConnected1.png"
+      "311d9d4b492e1ea625e3b0b295814dce"
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySlice.png"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/PythonSegmentationNeighborhoodConnected1.png"
+    150 180
+    60 116
+    )
+
 
   #
   # Python Tests
