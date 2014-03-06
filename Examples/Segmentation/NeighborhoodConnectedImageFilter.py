@@ -16,66 +16,64 @@
  '
  '========================================================================='''
 
-import SimpleITK
-import sys
+from __future__ import print_function
 
-if __name__ == '__main__':
-  
-  #
-  # Check Command Line
-  #
-  if len( sys.argv ) < 7:
-    print "Usage: NeighborhoodConnectedImageFilter inputImage outputImage lowerThreshold upperThreshold seedX seedY [seed2X seed2Y ... ]";
-    sys.exit( 1 )
-  
-  
-  #
-  # Read the image
-  #
-  reader = SimpleITK.ImageFileReader()
-  reader.SetFileName( sys.argv[1] )
-  image = reader.Execute();
-  
-  #
-  # Set up the writer
-  #
-  writer = SimpleITK.ImageFileWriter()
-  writer.SetFileName( sys.argv[2] )
-  
-  #
-  # Blur using CurvatureFlowImageFilter
-  #
-  blurFilter = SimpleITK.CurvatureFlowImageFilter()
-  blurFilter.SetNumberOfIterations( 5 )
-  blurFilter.SetTimeStep( 0.125 )
-  image = blurFilter.Execute( image )
-  
-  #
-  # Set up NeighborhoodConnectedImageFilter for segmentation
-  #
-  segmentationFilter = SimpleITK.NeighborhoodConnectedImageFilter()
-  segmentationFilter.SetLower( float(sys.argv[3]) )
-  segmentationFilter.SetUpper( float(sys.argv[4]) )
-  segmentationFilter.SetReplaceValue( 255 )
-  
-  radius = [2,2]
-  segmentationFilter.SetRadius( radius )
-  
-  for i in range( 5, len(sys.argv)-1, 2 ):
-    seed = [int(sys.argv[i]), int(sys.argv[i+1])]
-    segmentationFilter.AddSeed( seed )
-    print "Adding seed at " + str(seed)
-  
-  # Run the segmentation filter
-  image = segmentationFilter.Execute( image )
-  
-  #
-  # Write out the result
-  #
-  writer.Execute( image )
-  
-  sys.exit(0)
-  
-  
-  
-  
+import SimpleITK as sitk
+import sys
+import os
+
+
+#
+# Check Command Line
+#
+if len( sys.argv ) < 7:
+  print( "Usage: NeighborhoodConnectedImageFilter inputImage outputImage lowerThreshold upperThreshold seedX seedY [seed2X seed2Y ... ]")
+  sys.exit( 1 )
+
+
+#
+# Read the image
+#
+reader = sitk.ImageFileReader()
+reader.SetFileName( sys.argv[1] )
+image = reader.Execute();
+
+
+#
+# Blur using CurvatureFlowImageFilter
+#
+blurFilter = sitk.CurvatureFlowImageFilter()
+blurFilter.SetNumberOfIterations( 5 )
+blurFilter.SetTimeStep( 0.125 )
+image = blurFilter.Execute( image )
+
+#
+# Set up NeighborhoodConnectedImageFilter for segmentation
+#
+segmentationFilter = sitk.NeighborhoodConnectedImageFilter()
+segmentationFilter.SetLower( float(sys.argv[3]) )
+segmentationFilter.SetUpper( float(sys.argv[4]) )
+segmentationFilter.SetReplaceValue( 255 )
+
+radius = [2,2]
+segmentationFilter.SetRadius( radius )
+
+for i in range( 5, len(sys.argv)-1, 2 ):
+  seed = [int(sys.argv[i]), int(sys.argv[i+1])]
+  segmentationFilter.AddSeed( seed )
+  print( "Adding seed at: ", seed, " with intensity: ", image.GetPixel(*seed) )
+
+# Run the segmentation filter
+image = segmentationFilter.Execute( image )
+
+#
+# Write out the result
+#
+writer = sitk.ImageFileWriter()
+writer.SetFileName( sys.argv[2] )
+writer.Execute( image )
+
+
+
+if ( not "SITK_NOSHOW" in os.environ ):
+  sitk.Show( image, "NeighborhoodConnectedThreshold" )
