@@ -338,6 +338,26 @@ while(NOT dashboard_done)
   endif()
   ctest_start(${dashboard_model})
 
+  # make sure correct branch is checked out
+  execute_process(COMMAND ${CTEST_GIT_COMMAND}  rev-parse --abbrev-ref HEAD
+    OUTPUT_VARIABLE current_dashboard_git_branch
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    WORKING_DIRECTORY ${CTEST_SOURCE_DIRECTORY})
+  if(NOT current_dashboard_git_branch STREQUAL dashboard_git_branch)
+    message("Checking out branch \"${dashboard_git_branch}\"...")
+     execute_process(COMMAND ${CTEST_GIT_COMMAND} git show-ref --verify --quiet "refs/heads/${dashboard_git_branch}"
+       WORKING_DIRECTORY ${CTEST_SOURCE_DIRECTORY}
+       RESULT_VARIABLE ret)
+     if (ret)
+       # new checkout of branch
+       execute_process(COMMAND ${CTEST_GIT_COMMAND} checkout -b ${dashboard_git_branch} origin/${dashboard_git_branch}
+         WORKING_DIRECTORY ${CTEST_SOURCE_DIRECTORY})
+     else()
+       execute_process(COMMAND ${CTEST_GIT_COMMAND} checkout ${dashboard_git_branch}
+         WORKING_DIRECTORY ${CTEST_SOURCE_DIRECTORY})
+     endif()
+  endif()
+
   # Always build if the tree is fresh.
   set(dashboard_fresh 0)
   if(NOT EXISTS "${CTEST_BINARY_DIRECTORY}/CMakeCache.txt")
