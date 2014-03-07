@@ -30,7 +30,7 @@ def get_pep386version():
             version += "."+sitkTWEAK
 
     if  sitkRC:
-        version += "."+sitkRC
+        version += sitkRC
 
     if sitkPOST:
         version += ".post"+sitkPOST
