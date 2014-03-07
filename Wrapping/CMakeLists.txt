@@ -238,7 +238,7 @@ if ( WRAP_JAVA )
   SWIG_add_module ( SimpleITKJava java SimpleITK.i SimpleITKJAVA_wrap.cxx)
   SWIG_link_libraries(SimpleITKJava ${SimpleITK_LIBRARIES})
   set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKJAVA_wrap.cxx  PROPERTIES COMPILE_FLAGS "-w")
-  sitk_strip_target( {SWIG_MODULE_SimpleITKJava_TARGET_NAME} )
+  sitk_strip_target( ${SWIG_MODULE_SimpleITKJava_TARGET_NAME} )
 
   # Add target for org.itk.simple.jar
   add_custom_target(org_itk_simple_jar ALL DEPENDS ${JAR_FILE})
