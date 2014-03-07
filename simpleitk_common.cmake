@@ -345,7 +345,7 @@ while(NOT dashboard_done)
     WORKING_DIRECTORY ${CTEST_SOURCE_DIRECTORY})
   if(NOT current_dashboard_git_branch STREQUAL dashboard_git_branch)
     message("Checking out branch \"${dashboard_git_branch}\"...")
-     execute_process(COMMAND ${CTEST_GIT_COMMAND} git show-ref --verify --quiet "refs/heads/${dashboard_git_branch}"
+     execute_process(COMMAND ${CTEST_GIT_COMMAND} show-ref --verify --quiet "refs/heads/${dashboard_git_branch}"
        WORKING_DIRECTORY ${CTEST_SOURCE_DIRECTORY}
        RESULT_VARIABLE ret)
      if (ret)
