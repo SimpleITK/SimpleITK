@@ -29,6 +29,8 @@
 #include <stdlib.h>
 #include <iostream>
 
+namespace sitk = itk::simple;
+
 int main( int argc, char *argv[])
 {
 
@@ -48,22 +50,22 @@ int main( int argc, char *argv[])
   // Read the image
   //
 
-  itk::simple::ImageFileReader reader;
+  sitk::ImageFileReader reader;
   reader.SetFileName( std::string( argv[1] ) );
-  itk::simple::Image image = reader.Execute();
+  sitk::Image image = reader.Execute();
 
 
   //
   // Set up writer
   //
-  itk::simple::ImageFileWriter writer;
+  sitk::ImageFileWriter writer;
   writer.SetFileName( std::string( argv[2] ) );
 
 
   //
   // Blur using CurvatureFlowImageFilter
   //
-  itk::simple::CurvatureFlowImageFilter blurFilter;
+  sitk::CurvatureFlowImageFilter blurFilter;
   blurFilter.SetNumberOfIterations( 5 );
   blurFilter.SetTimeStep( 0.125 );
   image = blurFilter.Execute( image );
@@ -72,7 +74,7 @@ int main( int argc, char *argv[])
   //
   // Set up NeighborhoodConnectedImageFilter for segmentation
   //
-  itk::simple::NeighborhoodConnectedImageFilter segmentationFilter;
+  sitk::NeighborhoodConnectedImageFilter segmentationFilter;
   segmentationFilter.SetLower( atof( argv[3] ) );
   segmentationFilter.SetUpper( atof( argv[4] ) );
   segmentationFilter.SetReplaceValue( 255 );
@@ -96,7 +98,7 @@ int main( int argc, char *argv[])
     std::cout << std::endl;
     }
 
-  itk::simple::Image outImage = segmentationFilter.Execute(image);
+  sitk::Image outImage = segmentationFilter.Execute(image);
 
 
   //

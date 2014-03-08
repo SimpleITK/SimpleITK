@@ -5,6 +5,7 @@
   "number_of_inputs" : 1,
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelIDTypeList",
+  "output_pixel_type" : "uint8_t",
   "members" : [
     {
       "name" : "Lower",

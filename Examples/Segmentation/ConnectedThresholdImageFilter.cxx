@@ -29,6 +29,8 @@
 #include <stdlib.h>
 #include <iostream>
 
+namespace sitk = itk::simple;
+
 int main( int argc, char *argv[])
 {
 
@@ -48,22 +50,15 @@ int main( int argc, char *argv[])
   // Read the image
   //
 
-  itk::simple::ImageFileReader reader;
+  sitk::ImageFileReader reader;
   reader.SetFileName( std::string( argv[1] ) );
-  itk::simple::Image image = reader.Execute();
-
-
-  //
-  // Set up writer
-  //
-  itk::simple::ImageFileWriter writer;
-  writer.SetFileName( std::string( argv[2] ) );
+  sitk::Image image = reader.Execute();
 
 
   //
   // Blur using CurvatureFlowImageFilter
   //
-  itk::simple::CurvatureFlowImageFilter blurFilter;
+  sitk::CurvatureFlowImageFilter blurFilter;
   blurFilter.SetNumberOfIterations( 5 );
   blurFilter.SetTimeStep( 0.125 );
   image = blurFilter.Execute( image );
@@ -72,7 +67,7 @@ int main( int argc, char *argv[])
   //
   // Set up ConnectedThresholdImageFilter for segmentation
   //
-  itk::simple::ConnectedThresholdImageFilter segmentationFilter;
+  sitk::ConnectedThresholdImageFilter segmentationFilter;
   segmentationFilter.SetLower( atof( argv[3] ) );
   segmentationFilter.SetUpper( atof( argv[4] ) );
   segmentationFilter.SetReplaceValue( 255 );
@@ -83,21 +78,22 @@ int main( int argc, char *argv[])
     seed.push_back(atoi(argv[i]));
     seed.push_back(atoi(argv[i+1]));
     segmentationFilter.AddSeed(seed);
-    std::cout << "Adding a seed at ";
+    std::cout << "Adding a seed at: ";
     for( unsigned int j = 0; j < seed.size(); ++j )
       {
       std::cout << seed[j] << " ";
       }
-
     std::cout << std::endl;
     }
 
-  itk::simple::Image outImage = segmentationFilter.Execute(image);
+  sitk::Image outImage = segmentationFilter.Execute(image);
 
 
   //
   // Write out the resulting file
   //
+  sitk::ImageFileWriter writer;
+  writer.SetFileName( std::string( argv[2] ) );
   writer.Execute(outImage);
 
   return 0;
