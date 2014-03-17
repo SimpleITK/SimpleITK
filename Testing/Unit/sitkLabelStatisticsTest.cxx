@@ -32,6 +32,16 @@ TEST(LabelStatistics,Simple) {
 
   itk::simple::LabelStatisticsImageFilter lsFilter;
 
+  EXPECT_TRUE(lsFilter.GetUseHistograms());
+  lsFilter.UseHistogramsOff();
+  EXPECT_FALSE(lsFilter.GetUseHistograms());
+  lsFilter.UseHistogramsOn();
+  EXPECT_TRUE(lsFilter.GetUseHistograms());
+  lsFilter.SetUseHistograms(false);
+  EXPECT_FALSE(lsFilter.GetUseHistograms());
+  lsFilter.SetUseHistograms(true);
+  EXPECT_TRUE(lsFilter.GetUseHistograms());
+
   try {
     lsFilter.Execute ( intensityImage, labelImage );
   } catch ( itk::ExceptionObject e ) {
