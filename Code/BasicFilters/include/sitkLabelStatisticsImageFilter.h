@@ -67,6 +67,16 @@ namespace itk {
       // Print ourselves out
       std::string ToString() const;
 
+      /** \brief Compute histogram with statistics
+       *
+       * Enable the computation of the approximate median value, at
+       * the cost of additional computation.
+       */
+      bool GetUseHistograms() const {return this->m_UseHistograms;}
+      void SetUseHistograms(bool v) {this->m_UseHistograms=v;}
+      void UseHistogramsOn() {this->SetUseHistograms(true);}
+      void UseHistogramsOff() {this->SetUseHistograms(false);}
+
       Image Execute ( const Image & , const Image & );
 
       double GetMinimum ( const LabelIdentifierType labelCode ) const;
@@ -117,6 +127,8 @@ namespace itk {
 
       friend struct detail::DualExecuteInternalAddressor<MemberFunctionType>;
       std::auto_ptr<detail::DualMemberFunctionFactory<MemberFunctionType> > m_DualMemberFactory;
+
+      bool m_UseHistograms;
 
       LabelStatisticsMap  m_LabelMeasurementMap;
 
