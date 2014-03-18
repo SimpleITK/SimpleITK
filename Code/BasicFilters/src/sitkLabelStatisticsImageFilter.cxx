@@ -45,6 +45,8 @@ LabelStatisticsImageFilter::LabelStatisticsImageFilter ()
 
   this->RegisterMemberFactory2();
   this->RegisterMemberFactory3();
+
+  this->m_UseHistograms = true;
   }
 
 LabelStatisticsImageFilter::LabelListingType LabelStatisticsImageFilter::GetValidLabels () const
