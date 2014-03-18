@@ -77,7 +77,9 @@ namespace itk {
       void UseHistogramsOn() {this->SetUseHistograms(true);}
       void UseHistogramsOff() {this->SetUseHistograms(false);}
 
-      Image Execute ( const Image & , const Image & );
+      Image Execute ( const Image & image1, const Image & labelImage );
+
+      Image Execute ( const Image & image1, const Image & labelImage, bool useHistograms );
 
       double GetMinimum ( const LabelIdentifierType labelCode ) const;
       double GetMaximum ( const LabelIdentifierType labelCode ) const;
@@ -138,7 +140,7 @@ namespace itk {
       double QueryValue(const LabelIdentifierType, const std::string) const;
     };
 
-    SITKBasicFilters_EXPORT LabelStatisticsImageFilter::LabelStatisticsMap LabelStatistics ( const Image&, const Image& );
+  SITKBasicFilters_EXPORT LabelStatisticsImageFilter::LabelStatisticsMap LabelStatistics ( const Image& image1, const Image& labelImage, bool useHistograms = true );
   }
 }
 #endif
