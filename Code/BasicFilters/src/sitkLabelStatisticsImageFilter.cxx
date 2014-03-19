@@ -29,7 +29,7 @@ namespace simple {
 //----------------------------------------------------------------------------
 
 // Functional interface
-  LabelStatisticsImageFilter::LabelStatisticsMap LabelStatistics ( const Image& image1, const Image& labelImage, bool useHistograms );
+  LabelStatisticsImageFilter::LabelStatisticsMap LabelStatistics ( const Image& image1, const Image& labelImage, bool useHistograms )
   {
     LabelStatisticsImageFilter filter;
     filter.Execute ( image1, labelImage, useHistograms );
@@ -217,7 +217,7 @@ itk::simple::MeasurementMap LabelStatisticsImageFilter::GetMeasurementMap( const
 // Execute
 //
 
-Image LabelStatisticsImageFilter::LabelStatistics ( const Image& image1, const Image& labelImage, bool useHistograms );
+Image LabelStatisticsImageFilter::Execute ( const Image& image1, const Image& labelImage, bool useHistograms )
   {
     this->SetUseHistograms(useHistograms);
     return this->Execute( image1, labelImage );
