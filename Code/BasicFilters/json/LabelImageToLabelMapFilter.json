@@ -1,0 +1,23 @@
+{
+  "name" : "LabelImageToLabelMapFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Docs",
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "filter_type" : "itk::LabelImageToLabelMapFilter<InputImageType, itk::LabelMap<  itk::LabelObject< uint32_t, InputImageType::ImageDimension > > >",
+  "members" : [],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "Simply run with default settings",
+      "md5hash" : "24c31961a81c4881379e031d98205c0f",
+      "settings" : [],
+      "inputs" : [
+        "Input/2th_cthead1.mha"
+      ]
+    }
+  ],
+  "briefdescription" : "convert a labeled image to a label collection image\n",
+  "detaileddescription" : " LabelImageToLabelMapFilterconverts a label image to a label collection image. The labels are the same in the input and the output image.\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\\see  BinaryImageToLabelMapFilter, LabelMapToLabelImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Convert an itk::Image consisting of labeled regions to a LabelMap\n\n"
+}

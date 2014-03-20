@@ -1,0 +1,58 @@
+{
+  "name" : "BinaryImageToLabelMapFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Docs",
+  "pixel_types" : "IntegerPixelIDTypeList",
+  "filter_type" : "itk::BinaryImageToLabelMapFilter<InputImageType, itk::LabelMap<  itk::LabelObject< uint32_t, InputImageType::ImageDimension > > >",
+  "members" : [
+    {
+      "name" : "FullyConnected",
+      "type" : "bool",
+      "default" : "false",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get whether the connected components are defined strictly by face connectivity or by face+edge+vertex connectivity. Default is FullyConnectedOff. For objects that are 1 pixel wide, use FullyConnectedOn.\n"
+    },
+    {
+      "name" : "OutputBackgroundValue",
+      "type" : "double",
+      "default" : "0.0",
+      "pixeltype" : "Output",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<OutputPixelType>::NonpositiveMin().\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<OutputPixelType>::NonpositiveMin().\n"
+    },
+    {
+      "name" : "InputForegroundValue",
+      "type" : "double",
+      "default" : "1.0",
+      "pixeltype" : "Input",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the value to be consider \"foreground\" in the input image. Defaults to NumericTraits<InputPixelType>::max().\n",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the value to be consider \"foreground\" in the input image. Defaults to NumericTraits<InputPixelType>::max().\n"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "white_dots",
+      "description" : "with foreground some white dots",
+      "md5hash" : "548f5184428db10d93e3bf377dee5253",
+      "settings" : [
+        {
+          "parameter" : "InputForegroundValue",
+          "value" : "255"
+        }
+      ],
+      "inputs" : [
+        "Input/WhiteDots.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Label the connected components in a binary image and produce a collection of label objects.\n",
+  "detaileddescription" : " BinaryImageToLabelMapFilterlabels the objects in a binary image. Each distinct object is assigned a unique label. The final object labels start with 1 and are consecutive. Objects that are reached earlier by a raster order scan have a lower label.\nThe GetOutput()function of this class returns an itk::LabelMap.\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\\see  ConnectedComponentImageFilter, LabelImageToLabelMapFilter, LabelMap, LabelObject\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Label binary regions in an image\n\n"
+}
