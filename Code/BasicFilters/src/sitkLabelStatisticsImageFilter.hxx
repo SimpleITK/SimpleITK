@@ -50,22 +50,25 @@ Image LabelStatisticsImageFilter::DualExecuteInternal ( const Image& inImage1, c
   typename FilterType::Pointer filter = FilterType::New();
   filter->SetInput( image1 );
   filter->SetLabelInput( labelImage );
-  filter->UseHistogramsOn(); //Needed to get Median value
+  filter->SetUseHistograms(m_UseHistograms);
 
-  typedef typename TImageType::PixelType PixelType;
-  if( nsstd::is_same< PixelType, uint8_t >::value ||
-      nsstd::is_same< PixelType, int8_t >::value )
+  if( m_UseHistograms)
     {
-    //NOTE:  This is a heuristic that works exact median only for
-    //(unsigned) char images.
-    filter->SetHistogramParameters(256,std::numeric_limits<PixelType>::min()-0.5,std::numeric_limits<PixelType>::max()+0.5 );
-    }
-  else
-    {
-    itk::simple::StatisticsImageFilter stats;
-    stats.Execute( inImage1 );
+    typedef typename TImageType::PixelType PixelType;
+    if( nsstd::is_same< PixelType, uint8_t >::value ||
+        nsstd::is_same< PixelType, int8_t >::value )
+      {
+      //NOTE:  This is a heuristic that works exact median only for
+      //(unsigned) char images.
+      filter->SetHistogramParameters(256,std::numeric_limits<PixelType>::min()-0.5,std::numeric_limits<PixelType>::max()+0.5 );
+      }
+    else
+      {
+      itk::simple::StatisticsImageFilter stats;
+      stats.Execute( inImage1 );
 
-    filter->SetHistogramParameters(256,stats.GetMinimum(), stats.GetMaximum() );
+      filter->SetHistogramParameters(256,stats.GetMinimum(), stats.GetMaximum() );
+      }
     }
 
   this->PreUpdate( filter.GetPointer() );
