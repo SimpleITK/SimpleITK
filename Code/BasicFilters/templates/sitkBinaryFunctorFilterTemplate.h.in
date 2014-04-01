@@ -62,8 +62,8 @@ $(include MemberFunctionDispatch.h.in)
 $(include PrivateMemberDeclarations.h.in)$(include ClassEnd.h.in)
 
 $(include FunctionalAPI.h.in)
-    SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", "")} ( const Image& image1, ${constant_type} constant$(include MemberParametersWithDefaults.in) );
-    SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", "")} ( ${constant_type} constant, const Image& image2$(include MemberParametersWithDefaults.in) );
+    SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( const Image& image1, ${constant_type} constant$(include MemberParametersWithDefaults.in) );
+    SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( ${constant_type} constant, const Image& image2$(include MemberParametersWithDefaults.in) );
   }
 }
 #endif

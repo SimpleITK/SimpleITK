@@ -94,6 +94,11 @@ end)
 
   set output [eval filter Execute $$inputs ]
 
+  set labelIDs [ list [set sitkLabelUInt8] [set sitkLabelUInt16] [set sitkLabelUInt32] [set sitkLabelUInt64] ]
+  if { [lsearch $labelIDs [$$output GetPixelIDValue] ] >= 0 } {
+      set output [ LabelMapToLabel $$output ]
+  }
+
   [writer SetFileName [lindex $$argv end] ] Execute $$output
   exit
 }

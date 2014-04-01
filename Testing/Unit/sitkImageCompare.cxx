@@ -26,6 +26,22 @@ void ImageCompare::NormalizeAndSave ( const sitk::Image &input, const std::strin
 {
   sitk::Image image = input;
 
+  if (image.GetPixelIDValue() == sitk::sitkLabelUInt8)
+    {
+    image = sitk::Cast( image, sitk::sitkUInt8);
+    }
+  else if (image.GetPixelIDValue() == sitk::sitkLabelUInt16)
+    {
+    image = sitk::Cast( image, sitk::sitkUInt16);
+    }
+  else if (image.GetPixelIDValue() == sitk::sitkLabelUInt32)
+    {
+    image = sitk::Cast( image, sitk::sitkUInt32);
+    }
+  else if (image.GetPixelIDValue() == sitk::sitkLabelUInt64)
+    {
+    image = sitk::Cast( image, sitk::sitkUInt64);
+    }
   // Extract the center slice of our image
   if ( input.GetDimension() == 3 )
     {

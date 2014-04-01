@@ -152,6 +152,11 @@ $(if inputA_cast then
     ASSERT_TRUE ( inputs[i].GetITKBase() != NULL ) << "Could not read " << inputFileNames[i];
     }
 
+    if ( !inputs.empty() )
+      {
+      inputSHA1hash =  itk::simple::Hash( inputs[0] );
+      }
+
   $(if (not no_procedure) or (no_procedure ==0) then
 OUT=[=[
 
@@ -159,7 +164,7 @@ OUT=[=[
       itk::simple::Image fromFunctional( 0, 0, itk::simple::sitkUInt8 );
       itk::simple::Image fromProcedural( 0, 0, itk::simple::sitkUInt8 );
       ASSERT_NO_THROW ( fromProcedural = filter.Execute ( $(if #inputs > 0 then OUT=[[inputs[0] ]] end)$(for inum=1,#inputs-1 do OUT=OUT..", inputs["..inum.."]" end) ) ) << "Procedural interface to ${name}";
-      ASSERT_NO_THROW ( fromFunctional = itk::simple::${name:gsub("ImageFilter$", ""):gsub("ImageSource$", "Source")} ( $(if #inputs > 0 then OUT=[[inputs[0] ]] end)$(for inum=1,#inputs-1 do OUT=OUT..", inputs["..inum.."]" end)
+      ASSERT_NO_THROW ( fromFunctional = itk::simple::${name:gsub("ImageFilter$", ""):gsub("Filter$", ""):gsub("ImageSource$", "Source")} ( $(if #inputs > 0 then OUT=[[inputs[0] ]] end)$(for inum=1,#inputs-1 do OUT=OUT..", inputs["..inum.."]" end)
                                                                        $(if template_type and template_type == "RegionGrowing" then OUT=", std::vector< std::vector<unsigned int> >()" end)
                                                                        $(if template_code_filename and template_code_filename == "FastMarchingImageFilter" then OUT=", std::vector< std::vector<unsigned int> >()" end)
                                                                        $(if template_code_filename and template_code_filename == "KernelImageFilter" then OUT=[[, 1, itk::simple::sitkBall]] end)
@@ -218,22 +223,10 @@ end)
 end)
 
 
-    if ( !inputs.empty() &&
-         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt8 &&
-         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt16 &&
-         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt32 &&
-         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt64 )
-      {
-      inputSHA1hash =  itk::simple::Hash( inputs[0] );
-      }
    filter.DebugOn();
    ASSERT_NO_THROW ( output =  filter.Execute ( $(if #inputs > 0 then OUT=[[inputs[0] ]] end)$(for inum=1,#inputs-1 do OUT=OUT..", inputs["..inum.."]" end) ) );
 
-    if ( !inputs.empty() &&
-         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt8 &&
-         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt16 &&
-         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt32 &&
-         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt64 )
+  if ( !inputs.empty() )
       {
       // Check that the input is not modified
       // This will fail if the filter is being run in-place
