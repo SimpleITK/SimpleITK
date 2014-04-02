@@ -6,7 +6,19 @@
   "doc" : "Docs",
   "pixel_types" : "IntegerPixelIDTypeList",
   "filter_type" : "itk::LabelImageToLabelMapFilter<InputImageType, itk::LabelMap<  itk::LabelObject< uint32_t, InputImageType::ImageDimension > > >",
-  "members" : [],
+  "members" : [
+    {
+      "name" : "BackgroundValue",
+      "type" : "double",
+      "default" : "0",
+      "doc" : "",
+      "pixeltype" : "Output",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin().",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin()."
+    }
+  ],
   "tests" : [
     {
       "tag" : "default",
@@ -16,7 +28,22 @@
       "inputs" : [
         "Input/2th_cthead1.mha"
       ]
+    },
+    {
+      "tag" : "black_dots",
+      "description" : "background is white",
+      "md5hash" : "24c31961a81c4881379e031d98205c0f",
+      "settings" : [
+        {
+          "parameter" : "BackgroundValue",
+          "value" : "255.0"
+        }
+      ],
+      "inputs" : [
+        "Input/2th_cthead1.mha"
+      ]
     }
+
   ],
   "briefdescription" : "convert a labeled image to a label collection image",
   "detaileddescription" : "LabelImageToLabelMapFilterconverts a label image to a label collection image. The labels are the same in the input and the output image.\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\n\\see  BinaryImageToLabelMapFilter, LabelMapToLabelImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Convert an itk::Image consisting of labeled regions to a LabelMap"
