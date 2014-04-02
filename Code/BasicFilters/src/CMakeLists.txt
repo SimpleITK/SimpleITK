@@ -50,6 +50,7 @@ list ( APPEND SimpleITKBasicFiltersSource ${SimpleITKBasicFiltersGeneratedSource
 list ( APPEND SimpleITKBasicFiltersSource sitkAdditionalProcedures.cxx )
 
 list ( LENGTH SimpleITKBasicFiltersSource _length )
+math( EXPR _end_range "${_length} - 1 " )
 
 # The other filters an automatically split into files. They all
 # use the following for export their interface. There must not be and
@@ -62,21 +63,16 @@ endif()
 # n files in the list.
 set ( _stride 25 )
 set ( _library_i 0 )
-foreach ( _start RANGE 0 ${_length} ${_stride} )
-
-  # the above foreach range in inclusive, which is not quite what is wanted
-  if( _start EQUAL ${_length} )
-    break()
-  endif()
+foreach ( _start RANGE 0 ${_end_range} ${_stride} )
 
   math( EXPR _library_i "${_library_i} + 1 " )
 
   # compute the end of the range ensuring that the inclusive range
-  # [_start, _end] is all valid indicies
+  # [_start, _end] is all valid indexes
   math( EXPR _end "${_start} + ${_stride} - 1" )
-  if ( ${_end} VERSION_GREATER ${_length} OR
-      ${_end} VERSION_EQUAL ${_length} )
-    math( EXPR _end "${_length} - 1" )
+  if ( ${_end} VERSION_GREATER ${_end_range} OR
+      ${_end} VERSION_EQUAL ${_end_range} )
+    math( EXPR _end "${_end_range}" )
     set(_last 1)
   endif()
 
