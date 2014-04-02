@@ -166,7 +166,6 @@ namespace std
 
  // Basic Filters
 %include "sitkHashImageFilter.h"
-%include "sitkStatisticsImageFilter.h"
 %include "sitkMeasurementMap.h"
 %include "sitkLabelStatisticsImageFilter.h"
 %include "sitkCastImageFilter.h"
