@@ -9,13 +9,13 @@
     {
       "name" : "Method",
       "enum" : [
-        "KEEP",
-        "AGGREGATE",
-        "PACK",
-        "STRICT"
+        "Keep",
+        "Aggregate",
+        "Pack",
+        "Strict"
       ],
       "itk_type" : "typename FilterType::MethodChoice",
-      "default" : "itk::simple::MergeLabelMapFilter::KEEP",
+      "default" : "itk::simple::MergeLabelMapFilter::Keep",
       "custom_itk_cast" : "filter->SetMethod ( typename FilterType::MethodChoice ( int( this->m_Method ) ) );\n  filter->InPlaceOff();",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the method used to merge the label maps",
@@ -42,14 +42,14 @@
       "settings" : [
         {
           "parameter" : "Method",
-          "value" : "itk::simple::${name}::KEEP",
-          "lua_value" : "SimpleITK.${name}_KEEP",
-          "python_value" : "SimpleITK.${name}.KEEP",
-          "ruby_value" : "Simpleitk::${name}::KEEP",
-          "java_value" : "${name}.MethodType.KEEP",
-          "tcl_value" : "$$${name}_KEEP",
-          "csharp_value" : "itk.simple.${name}.MethodType.KEEP",
-          "R_value" : "'KEEP'"
+          "value" : "itk::simple::${name}::Keep",
+          "lua_value" : "SimpleITK.${name}_Keep",
+          "python_value" : "SimpleITK.${name}.Keep",
+          "ruby_value" : "Simpleitk::${name}::Keep",
+          "java_value" : "${name}.MethodType.Keep",
+          "tcl_value" : "$$${name}_Keep",
+          "csharp_value" : "itk.simple.${name}.MethodType.Keep",
+          "R_value" : "'Keep'"
         }
       ],
       "md5hash" : "b187de2f27b849a2dffdf8259ccf2e1d",
@@ -66,14 +66,14 @@
       "settings" : [
         {
           "parameter" : "Method",
-          "value" : "itk::simple::${name}::AGGREGATE",
-          "lua_value" : "SimpleITK.${name}_AGGREGATE",
-          "python_value" : "SimpleITK.${name}.AGGREGATE",
-          "ruby_value" : "Simpleitk::${name}::AGGREGATE",
-          "java_value" : "${name}.MethodType.AGGREGATE",
-          "tcl_value" : "$$${name}_AGGREGATE",
-          "csharp_value" : "itk.simple.${name}.MethodType.AGGREGATE",
-          "R_value" : "'AGGREGATE'"
+          "value" : "itk::simple::${name}::Aggregate",
+          "lua_value" : "SimpleITK.${name}_Aggregate",
+          "python_value" : "SimpleITK.${name}.Aggregate",
+          "ruby_value" : "Simpleitk::${name}::Aggregate",
+          "java_value" : "${name}.MethodType.Aggregate",
+          "tcl_value" : "$$${name}_Aggregate",
+          "csharp_value" : "itk.simple.${name}.MethodType.Aggregate",
+          "R_value" : "'Aggregate'"
         }
       ],
       "md5hash" : "5cc14523f8ec8e7fc33c23937cbd5839",
@@ -90,14 +90,14 @@
       "settings" : [
         {
           "parameter" : "Method",
-          "value" : "itk::simple::${name}::PACK",
-          "lua_value" : "SimpleITK.${name}_PACK",
-          "python_value" : "SimpleITK.${name}.PACK",
-          "ruby_value" : "Simpleitk::${name}::PACK",
-          "java_value" : "${name}.MethodType.PACK",
-          "tcl_value" : "$$${name}_PACK",
-          "csharp_value" : "itk.simple.${name}.MethodType.PACK",
-          "R_value" : "'PACK'"
+          "value" : "itk::simple::${name}::Pack",
+          "lua_value" : "SimpleITK.${name}_Pack",
+          "python_value" : "SimpleITK.${name}.Pack",
+          "ruby_value" : "Simpleitk::${name}::Pack",
+          "java_value" : "${name}.MethodType.Pack",
+          "tcl_value" : "$$${name}_Pack",
+          "csharp_value" : "itk.simple.${name}.MethodType.Pack",
+          "R_value" : "'Pack'"
         }
       ],
       "md5hash" : "0ca936ce321e43884053c8464197cdda",
@@ -114,14 +114,14 @@
       "settings" : [
         {
           "parameter" : "Method",
-          "value" : "itk::simple::${name}::STRICT",
-          "lua_value" : "SimpleITK.${name}_STRICT",
-          "python_value" : "SimpleITK.${name}.STRICT",
-          "ruby_value" : "Simpleitk::${name}::STRICT",
-          "java_value" : "${name}.MethodType.STRICT",
-          "tcl_value" : "$$${name}_STRICT",
-          "csharp_value" : "itk.simple.${name}.MethodType.STRICT",
-          "R_value" : "'STRICT'"
+          "value" : "itk::simple::${name}::Strict",
+          "lua_value" : "SimpleITK.${name}_Strict",
+          "python_value" : "SimpleITK.${name}.Strict",
+          "ruby_value" : "Simpleitk::${name}::Strict",
+          "java_value" : "${name}.MethodType.Strict",
+          "tcl_value" : "$$${name}_Strict",
+          "csharp_value" : "itk.simple.${name}.MethodType.Strict",
+          "R_value" : "'Strict'"
         }
       ],
       "md5hash" : "15c6ff2f5157a31b5d9ccf94996c3300",
