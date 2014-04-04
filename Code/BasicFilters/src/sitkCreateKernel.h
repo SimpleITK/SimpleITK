@@ -16,7 +16,7 @@
 *
 *=========================================================================*/
 #ifndef __sitkCreateKernel_h
-#define __sitkCrateKernel_h
+#define __sitkCreateKernel_h
 
 
 #include "sitkKernel.h"
@@ -70,4 +70,4 @@ CreateKernel( KernelEnum kernelType, const std::vector<uint32_t> &size )
 } // end namespace itk
 
 
-#endif //__sitkCreateInterpolator_h
+#endif //__sitkCreateKernel_h
