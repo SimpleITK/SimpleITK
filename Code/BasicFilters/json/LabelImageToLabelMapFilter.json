@@ -4,8 +4,8 @@
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "doc" : "Docs",
-  "pixel_types" : "IntegerPixelIDTypeList",
-  "filter_type" : "itk::LabelImageToLabelMapFilter<InputImageType, itk::LabelMap<  itk::LabelObject< uint32_t, InputImageType::ImageDimension > > >",
+  "pixel_types" : "UnsignedIntegerPixelIDTypeList",
+  "filter_type" : "itk::LabelImageToLabelMapFilter<InputImageType, itk::LabelMap< itk::LabelObject< typename InputImageType::PixelType, InputImageType::ImageDimension > > >",
   "members" : [
     {
       "name" : "BackgroundValue",
@@ -23,7 +23,7 @@
     {
       "tag" : "default",
       "description" : "Simply run with default settings",
-      "md5hash" : "24c31961a81c4881379e031d98205c0f",
+      "md5hash" : "12d50e2d291cf91b0384bd1eb123b0f0",
       "settings" : [],
       "inputs" : [
         "Input/2th_cthead1.mha"
