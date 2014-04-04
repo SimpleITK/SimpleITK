@@ -41,6 +41,7 @@
 #include <sitkLabelMapContourOverlayImageFilter.h>
 #include <sitkPatchBasedDenoisingImageFilter.h>
 #include <sitkConnectedThresholdImageFilter.h>
+#include <sitkMergeLabelMapFilter.h>
 #include <sitkAdditionalProcedures.h>
 #include <sitkCommand.h>
 
@@ -58,7 +59,15 @@
 #include "itkLabelMapContourOverlayImageFilter.h"
 #include "itkPatchBasedDenoisingImageFilter.h"
 #include "itkConnectedThresholdImageFilter.h"
+#include "itkMergeLabelMapFilter.h"
 
+TEST(BasicFilters,MergeLabelMap_ENUMCHECK) {
+  typedef itk::MergeLabelMapFilter< itk::LabelMap< itk::LabelObject<int, 3> > >  ITKType;
+  EXPECT_EQ( (int)ITKType::KEEP, (int)itk::simple::MergeLabelMapFilter::Keep);
+  EXPECT_EQ( (int)ITKType::AGGREGATE, (int)itk::simple::MergeLabelMapFilter::Aggregate);
+  EXPECT_EQ( (int)ITKType::PACK, (int)itk::simple::MergeLabelMapFilter::Pack);
+  EXPECT_EQ( (int)ITKType::STRICT, (int)itk::simple::MergeLabelMapFilter::Strict);
+}
 
 TEST(BasicFilters,ScalarToRGBColormap_ENUMCHECK) {
   typedef itk::ScalarToRGBColormapImageFilter< itk::Image<float,3>, itk::Image< itk::RGBPixel<float>,3> > ITKType;
