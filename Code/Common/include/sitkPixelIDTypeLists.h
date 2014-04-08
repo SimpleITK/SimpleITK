@@ -81,9 +81,9 @@ typedef typelist::MakeTypeList<BasicPixelID<int8_t>,
  */
 typedef typelist::MakeTypeList<BasicPixelID<uint8_t>,
                                BasicPixelID<uint16_t>,
-                               BasicPixelID<uint32_t>,
+                               BasicPixelID<uint32_t>
 #ifdef SITK_INT64_PIXELIDS
-                               BasicPixelID<uint64_t>
+                               , BasicPixelID<uint64_t>
 #endif
                                >::Type UnsignedIntegerPixelIDTypeList;
 
