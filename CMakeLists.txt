@@ -504,6 +504,7 @@ install(
     ${CMAKE_SOURCE_DIR}/Code/Common/include/nsstd
   DESTINATION
     ${SimpleITK_INSTALL_INCLUDE_DIR}/
+  COMPONENT Development
   FILES_MATCHING PATTERN "*.h"
 )
 
