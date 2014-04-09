@@ -111,11 +111,11 @@ end)
      *
      * \sa itk::simple::${name} for the object oriented interface
      */
-     SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", "")} ( const std::vector<Image> &images $(include MemberParametersWithDefaults.in) );
+     SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( const std::vector<Image> &images $(include MemberParametersWithDefaults.in) );
 
 $(for inum=1,5 do
   OUT=OUT..[[
-     SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", "")} ( const Image& image1]]
+     SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( const Image& image1]]
 
   for jnum=2,inum do
     OUT=OUT .. ', const Image& image' .. jnum

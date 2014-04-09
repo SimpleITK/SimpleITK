@@ -1,0 +1,49 @@
+{
+  "name" : "RelabelLabelMapFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Docs",
+  "pixel_types" : "LabelPixelIDTypeList",
+  "filter_type" : "itk::RelabelLabelMapFilter<InputImageType>",
+  "custom_set_input" : "filter->SetInput(image1);\n  filter->InPlaceOff();",
+  "members" : [
+    {
+      "name" : "ReverseOrdering",
+      "type" : "bool",
+      "default" : "true",
+      "doc" : ""
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "Simply run with default settings",
+      "inputA_cast" : "sitkLabelUInt8",
+      "md5hash" : "12d50e2d291cf91b0384bd1eb123b0f0",
+      "settings" : [],
+      "inputs" : [
+        "Input/2th_cthead1.mha"
+      ]
+    },
+    {
+      "tag" : "reverse",
+      "description" : "with background reverse setting",
+      "inputA_cast" : "sitkLabelUInt8",
+      "md5hash" : "99c078cadf61455fb5bf17771e36ae0c",
+      "settings" : [
+        {
+          "parameter" : "ReverseOrdering",
+          "value" : "false",
+          "python_value" : "False",
+          "R_value" : "FALSE"
+        }
+      ],
+      "inputs" : [
+        "Input/2th_cthead1.mha"
+      ]
+    }
+  ],
+  "briefdescription" : "This filter relabels the LabelObjects; the new labels are arranged consecutively with consideration for the background value.",
+  "detaileddescription" : "This filter takes the LabelObjects from the input and reassigns them to the output by calling the PushLabelObject method, which by default, attempts to reorganize the labels consecutively. The user can assign an arbitrary value to the background; the filter will assign the labels consecutively by skipping the background value.\n\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\n\\see  ShapeLabelObject, RelabelComponentImageFilter"
+}

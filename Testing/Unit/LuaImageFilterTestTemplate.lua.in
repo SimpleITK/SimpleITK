@@ -83,7 +83,7 @@ elseif dim_vec and dim_vec == 1 then
    else
      OUT="idx = SimpleITK.VectorUInt32();"
    end
-   
+
    OUT=OUT.. [[
 
     for _,v in ipairs(]]
@@ -126,7 +126,13 @@ end)
 
     output = filter:Execute ( unpack( inputs ) )
 
+    labelIDs = { SimpleITK.sitkLabelUInt8, SimpleITK.sitkLabelUInt16, SimpleITK.sitkLabelUInt32, SimpleITK.sitkLabelUInt64 }
+    for _,v in pairs( labelIDs ) do
+        if v == output:GetPixelID()  then
+          output = SimpleITK.LabelMapToLabel(output)
+        end
+    end
+
     writer:SetFileName ( arg[#arg] ):Execute ( output )
   end
 )
-

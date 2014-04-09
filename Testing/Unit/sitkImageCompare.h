@@ -64,11 +64,30 @@ ImageCompare imageCompare;  \
                                                                         \
       std::cout << "<DartMeasurementFile name=\"TestImage\" type=\"image/png\">"; \
       std::cout << TestImageFilename << "</DartMeasurementFile>" << std::endl; \
-    } catch (... ) {                                                    \
+    } catch (std::exception &e) {                                       \
+      std::cerr << "Unexpected error while writing image:" << e.what() << std::endl; \
+    } catch (...) {                                                     \
       std::cerr << "Unknow Error while writing image for measurement" << std::endl; \
     }                                                                   \
                                                                         \
-    itk::simple::WriteImage ( image, dataFinder.GetOutputFile ( actualHashValue + ".nrrd" ) ); \
+    itk::simple::Image timage = image;                                  \
+    if (timage.GetPixelIDValue() == itk::simple::sitkLabelUInt8) \
+      {                                                                 \
+      timage = itk::simple::Cast( timage, itk::simple::sitkUInt8); \
+      }                                                                 \
+    else if (timage.GetPixelIDValue() == itk::simple::sitkLabelUInt16) \
+      {                                                                 \
+      timage = itk::simple::Cast( timage, itk::simple::sitkUInt16); \
+      }                                                                 \
+    else if (timage.GetPixelIDValue() == itk::simple::sitkLabelUInt32) \
+      {                                                                 \
+      timage = itk::simple::Cast( timage, itk::simple::sitkUInt32); \
+      }                                                                 \
+    else if (timage.GetPixelIDValue() == itk::simple::sitkLabelUInt64) \
+      {                                                                 \
+      timage = itk::simple::Cast( timage, itk::simple::sitkUInt64); \
+      }                                                                 \
+    itk::simple::WriteImage ( timage, dataFinder.GetOutputFile ( actualHashValue + ".nrrd" ) ); \
     std::cout << "Saved actual image as " << dataFinder.GetOutputFile ( actualHashValue + ".nrrd" ) << std::endl; \
     }                                                                   \
   }
