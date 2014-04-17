@@ -59,6 +59,8 @@ end)
 
 }
 
+$(include DesctuctorDefinition.cxx.in)
+
 //
 // ToString
 //
