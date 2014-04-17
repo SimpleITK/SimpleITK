@@ -1,6 +1,29 @@
 
   this->PreUpdate( filter.GetPointer() );
 
+$(if measurements then
+temp=false
+for i = 1,#measurements do
+  if measurements[i].active then
+    temp=true
+  end
+end
+if temp then
+OUT=OUT..[[
+
+  // release the old filter ( and output data )
+  if ( this->m_Filter != NULL)
+    {
+      this->m_Filter->UnRegister();
+      this->m_Filter = NULL;
+    }
+
+  this->m_Filter = filter;
+  this->m_Filter->Register();
+]]
+end
+end)
+
   // Run the ITK filter and return the output as a SimpleITK image
   filter->Update();
 
