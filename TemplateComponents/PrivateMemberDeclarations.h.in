@@ -18,7 +18,15 @@ end)$(when measurements $(foreach measurements
 $(if doc then
 OUT=[[
       /* ${doc} */]]end)
+$(if active then
+OUT=[[
+      nsstd::function<${type}()> m_pfGet${name};
+]]
+    else
+OUT=[[
       ${type} m_${name};
+]]
+end)
 ))
 $(if measurements then
 temp=false
