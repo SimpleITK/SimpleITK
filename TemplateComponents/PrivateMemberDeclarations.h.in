@@ -20,7 +20,13 @@ OUT=[[
       /* ${doc} */]]end)
 $(if active then
 OUT=[[
-      nsstd::function<${type}()> m_pfGet${name};
+      nsstd::function<${type}($(if parameters then
+for inum=1,#parameters do
+  if inum>1 then
+    OUT = OUT .. ', '
+  end
+  OUT = OUT .. parameters[inum].type
+end end))> m_pfGet${name};
 ]]
     else
 OUT=[[

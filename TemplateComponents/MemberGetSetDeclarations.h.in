@@ -84,7 +84,19 @@ end))$(when measurements $(foreach measurements
       */
 $(if active then
 OUT=[[
-     ${type} Get${name}() const { return this->m_pfGet${name}(); };
+     ${type} Get${name}($(if parameters then
+for inum=1,#parameters do
+  if inum>1 then
+    OUT = OUT .. ', '
+  end
+  OUT = OUT .. parameters[inum].type .. ' ' .. parameters[inum].name
+end end)) const { return this->m_pfGet${name}($(if parameters then
+for inum=1,#parameters do
+  if inum>1 then
+    OUT = OUT .. ', '
+  end
+  OUT = OUT .. parameters[inum].name
+end end)); };
 ]]
 else
 OUT=[[
