@@ -502,39 +502,6 @@ TEST(BasicFilters,Statistics_Abort) {
 
 }
 
-TEST(BasicFilters,Statistics) {
-
-  itk::simple::Image image = itk::simple::ReadImage ( dataFinder.GetFile ( "Input/RA-Float.nrrd" ) );
-
-  itk::simple::StatisticsImageFilter stats;
-  stats.DebugOn();
-
-  EXPECT_EQ ( stats.GetName(), "StatisticsImageFilter" );
-  EXPECT_NO_THROW ( stats.ToString() );
-
-  stats.Execute( image );
-
-
-  EXPECT_EQ ( stats.GetMinimum(), -1146 );
-  EXPECT_EQ ( stats.GetMaximum(), 32767 );
-  EXPECT_NEAR ( stats.GetMean(), 25887.390, 0.001 );
-  EXPECT_NEAR ( stats.GetSigma(),  3800.565, 0.01 );
-  EXPECT_NEAR ( stats.GetVariance(), 14444296.271, 10 );
-  EXPECT_EQ ( stats.GetSum(), 6786223965.0 );
-
-  image = itk::simple::ReadImage ( dataFinder.GetFile ( "Input/cthead1.png" ) );
-
-  const itk::simple::MeasurementMap measurements = itk::simple::Statistics( image );
-
-  EXPECT_EQ ( measurements.find("Minimum")->second, 0 );
-  EXPECT_EQ ( measurements.find("Maximum")->second, 255 );
-  EXPECT_NEAR ( measurements.find("Mean")->second, 77.7415, 0.001 );
-  EXPECT_NEAR ( measurements.find("Sigma")->second, 78.2619, 0.01 );
-  EXPECT_NEAR ( measurements.find("Variance")->second,  6124.9260064656282, 1 );
-  EXPECT_EQ ( measurements.find("Sum")->second, 5094871 );
-
-}
-
 TEST(BasicFilters,LabelStatistics) {
   namespace sitk = itk::simple;
 
