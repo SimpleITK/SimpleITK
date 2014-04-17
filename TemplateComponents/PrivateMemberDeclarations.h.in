@@ -20,3 +20,18 @@ OUT=[[
       /* ${doc} */]]end)
       ${type} m_${name};
 ))
+$(if measurements then
+temp=false
+for i = 1,#measurements do
+  if measurements[i].active then
+    temp=true
+  end
+end
+if temp then
+OUT=[[
+
+      // Holder of process object for active measurements
+      itk::ProcessObject *m_Filter;
+]]
+end
+end)
