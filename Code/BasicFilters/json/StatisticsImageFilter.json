@@ -6,6 +6,8 @@
   "doc" : "Docs",
   "pixel_types" : "BasicPixelIDTypeList",
   "filter_type" : "itk::StatisticsImageFilter<InputImageType>",
+  "no_procedure" : true,
+  "no_return_image" : true,
   "members" : [],
   "measurements" : [
     {
