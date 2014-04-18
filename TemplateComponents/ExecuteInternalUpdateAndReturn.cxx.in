@@ -4,9 +4,15 @@
 $(if measurements then
 temp=false
 for i = 1,#measurements do
-  if measurements[i].active and not measurements[i].custom_cast then
+  if measurements[i].active then
     temp=true
-    OUT=OUT..'  this->m_pfGet'..measurements[i].name..' = nsstd::bind(&FilterType::Get'..measurements[i].name..', filter.GetPointer()'
+    OUT=OUT..'  this->m_pfGet'..measurements[i].name..' = nsstd::bind('
+    if measurements[i].custom_cast or measurements[i].label_map then
+      OUT=OUT..'&'..measurements[i].name..'CustomCast<FilterType>::CustomCast'
+    else
+      OUT=OUT..'&FilterType::Get'..measurements[i].name
+    end
+    OUT=OUT..', filter.GetPointer()'
     if measurements[i].parameters then
       for inum=1,#measurements[i].parameters do
         OUT=OUT..", nsstd::placeholders::_"..inum
