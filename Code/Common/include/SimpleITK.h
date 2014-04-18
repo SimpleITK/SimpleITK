@@ -49,7 +49,6 @@
 #include "sitkJoinSeriesImageFilter.h"
 #include "sitkComposeImageFilter.h"
 #include "sitkPixelIDTypeLists.h"
-#include "sitkLabelStatisticsImageFilter.h"
 
 #include "sitkCastImageFilter.h"
 

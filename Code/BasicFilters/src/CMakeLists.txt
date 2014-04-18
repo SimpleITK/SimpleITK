@@ -36,10 +36,6 @@ set ( SimpleITKBasicFiltersSource
   sitkCastImageFilter-3v.cxx
   sitkCastImageFilter.cxx
   sitkHashImageFilter.cxx
-  sitkLabelStatisticsImageFilter.cxx
-  sitkLabelStatisticsImageFilter-2.cxx
-  sitkLabelStatisticsImageFilter-3.cxx
-  sitkLabelStatisticsImageFilter.cxx
 )
 # sort the list to en-sure the same list across platforms
 list ( SORT SimpleITKBasicFiltersGeneratedSource )
