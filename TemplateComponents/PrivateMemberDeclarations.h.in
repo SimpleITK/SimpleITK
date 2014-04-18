@@ -14,7 +14,9 @@ else
 end
 OUT=OUT..'  m_'..members[i].name..';'
 
-end)$(when measurements $(foreach measurements
+end)$(when measurements
+
+$(foreach measurements
 $(if doc then
 OUT=[[
       /* ${doc} */]]end)
@@ -32,8 +34,7 @@ end end))> m_pfGet${name};
 OUT=[[
       ${type} m_${name};
 ]]
-end)
-))
+end)))
 $(if measurements then
 temp=false
 for i = 1,#measurements do
@@ -43,7 +44,6 @@ for i = 1,#measurements do
 end
 if temp then
 OUT=[[
-
       // Holder of process object for active measurements
       itk::ProcessObject *m_Filter;
 ]]
