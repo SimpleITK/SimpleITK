@@ -48,6 +48,14 @@ elseif not active then
   OUT=[[  this->m_${name} = filter->Get${name}();]]
 end)))
 
+$(if no_return_image then
+OUT=[[
+  return Image();
+]]
+else
+OUT=[[
   typename FilterType::OutputImageType *itkOutImage = filter->GetOutput();
   this->FixNonZeroIndex( itkOutImage );
   return Image( itkOutImage );
+]]
+end)
