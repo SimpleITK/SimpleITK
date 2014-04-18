@@ -292,6 +292,9 @@ $(for inum=1,#inputs do
 ]] end)
     CommandLine.push_back ( outputFileName );
     EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
+
+  $(if not no_return_image then
+  OUT=[[
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::HashImageFilter hasher;
@@ -299,6 +302,8 @@ $(for inum=1,#inputs do
 
     output = reader.SetFileName ( outputFileName ).Execute();
     ASSERT_TRUE ( output.GetITKBase() != NULL ) << "Loaded output image";
+  ]]
+  end)
 
     $(if md5hash then
       OUT = [[
@@ -350,6 +355,9 @@ $(for inum=1,#inputs do
 ]] end)
     CommandLine.push_back ( outputFileName );
     EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
+
+  $(if not no_return_image then
+   OUT=[[
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::HashImageFilter hasher;
@@ -357,6 +365,8 @@ $(for inum=1,#inputs do
 
     output = reader.SetFileName ( outputFileName ).Execute();
     ASSERT_TRUE ( output.GetITKBase() != NULL ) << "Loaded output image";
+]]
+  end)
 
     $(if md5hash then
       OUT = [[
@@ -408,6 +418,9 @@ $(for inum=1,#inputs do
 ]] end)
     CommandLine.push_back ( outputFileName );
     EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
+
+  $(if not no_return_image then
+   OUT=[[
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::HashImageFilter hasher;
@@ -415,6 +428,8 @@ $(for inum=1,#inputs do
 
     output = reader.SetFileName ( outputFileName ).Execute();
     ASSERT_TRUE ( output.GetITKBase() != NULL ) << "Loaded output image";
+  ]]
+  end)
 
     $(if md5hash then
       OUT = [[
@@ -475,13 +490,17 @@ $(for inum=1,#inputs do
 ]] end)
     CommandLine.push_back ( outputFileName );
     EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
+
+  $(if not no_return_image then
+   OUT=[[
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::HashImageFilter hasher;
     itk::simple::Image output( 0, 0, itk::simple::sitkUInt8 );
-
     output = reader.SetFileName ( outputFileName ).Execute();
     ASSERT_TRUE ( output.GetITKBase() != NULL ) << "Loaded output image";
+]]
+  end)
 
     $(if md5hash then
       OUT = [[
@@ -542,13 +561,17 @@ $(for inum=1,#inputs do
 ]] end)
     CommandLine.push_back ( outputFileName );
     EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
+
+  $(if not no_return_image then
+   OUT=[[
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::HashImageFilter hasher;
     itk::simple::Image output( 0, 0, itk::simple::sitkUInt8 );
-
     output = reader.SetFileName ( outputFileName ).Execute();
     ASSERT_TRUE ( output.GetITKBase() != NULL ) << "Loaded output image";
+]]
+  end)
 
     $(if md5hash then
       OUT = [[
@@ -603,13 +626,17 @@ $(for inum=1,#inputs do
 ]] end)
     CommandLine.push_back ( outputFileName );
     EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
+
+  $(if not no_return_image then
+   OUT=[[
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::HashImageFilter hasher;
     itk::simple::Image output( 0, 0, itk::simple::sitkUInt8 );
-
     output = reader.SetFileName ( outputFileName ).Execute();
     ASSERT_TRUE ( output.GetITKBase() != NULL ) << "Loaded output image";
+]]
+    end)
 
     $(if md5hash then
       OUT = [[
@@ -677,13 +704,17 @@ $(for inum=1,#inputs do
 ]] end)
     CommandLine.push_back ( outputFileName );
     EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
+
+  $(if not no_return_image then
+   OUT=[[
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::HashImageFilter hasher;
     itk::simple::Image output( 0, 0, itk::simple::sitkUInt8 );
-
     output = reader.SetFileName ( outputFileName ).Execute();
     ASSERT_TRUE ( output.GetITKBase() != NULL ) << "Loaded output image";
+]]
+  end)
 
     $(if md5hash then
       OUT = [[

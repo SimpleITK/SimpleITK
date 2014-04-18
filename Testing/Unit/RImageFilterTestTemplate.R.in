@@ -105,6 +105,8 @@ end)
 
   output <- filter$$Execute ( $(if #inputs > 0 then OUT="inputs[[1]] " end)$(for inum=2,#inputs do OUT=OUT..", inputs[["..inum.."]]" end) )
 
+$(if not no_return_image then
+OUT=[[
   pixelID <- output$$GetPixelID()
 
   if ( pixelID == 'sitkLabelUInt8' | pixelID == 'sitkLabelUInt16' | pixelID == 'sitkLabelUInt32' | pixelID == 'sitkLabelUInt64' )
@@ -114,6 +116,8 @@ end)
 
   writer <- writer$$SetFileName( lastargument )
   writer <- writer$$Execute( output )
+]]
+end)
 
   }
 )
