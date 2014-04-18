@@ -161,7 +161,8 @@ end)
 
                 PixelIDValueEnum[] labelIDs = { PixelIDValueEnum.sitkLabelUInt8, PixelIDValueEnum.sitkLabelUInt16, PixelIDValueEnum.sitkLabelUInt32, PixelIDValueEnum.sitkLabelUInt64 };
 
-
+$(if not no_return_image then
+OUT=[[
                 if (Array.IndexOf(labelIDs, output.GetPixelID()) != -1 )
                 {
                   LabelMapToLabelImageFilter toImage = new LabelMapToLabelImageFilter();
@@ -170,6 +171,9 @@ end)
 
                 // Write output
                 writer.SetFileName( args[args.Length-1] ).Execute( output );
+]]
+end)
+
             }
 )
         } catch (Exception ex) {

@@ -15,7 +15,7 @@
     {
       "name" : "Flat",
       "type" : "bool",
-      "default" : false
+      "default" : "false"
     }
   ],
   "tests" : [

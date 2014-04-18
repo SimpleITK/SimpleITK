@@ -14,7 +14,6 @@ include ( ${ITK_USE_FILE} )
 # common source which all basic filter libraries need to be linked against
 set ( SimpleITKBasicFilters0Source
   sitkImageFilter.cxx
-  sitkMeasurementMap.cxx
 )
 
 add_library ( SimpleITKBasicFilters0 ${SimpleITKBasicFilters0Source} )
@@ -36,11 +35,6 @@ set ( SimpleITKBasicFiltersSource
   sitkCastImageFilter-3v.cxx
   sitkCastImageFilter.cxx
   sitkHashImageFilter.cxx
-  sitkLabelStatisticsImageFilter.cxx
-  sitkLabelStatisticsImageFilter-2.cxx
-  sitkLabelStatisticsImageFilter-3.cxx
-  sitkLabelStatisticsImageFilter.cxx
-  sitkStatisticsImageFilter.cxx
 )
 # sort the list to en-sure the same list across platforms
 list ( SORT SimpleITKBasicFiltersGeneratedSource )

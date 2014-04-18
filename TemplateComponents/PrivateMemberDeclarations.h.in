@@ -14,9 +14,38 @@ else
 end
 OUT=OUT..'  m_'..members[i].name..';'
 
-end)$(when measurements $(foreach measurements
+end)$(when measurements
+
+$(foreach measurements
 $(if doc then
 OUT=[[
       /* ${doc} */]]end)
+$(if active then
+OUT=[[
+      nsstd::function<${type}($(if parameters then
+for inum=1,#parameters do
+  if inum>1 then
+    OUT = OUT .. ', '
+  end
+  OUT = OUT .. parameters[inum].type
+end end))> m_pfGet${name};
+]]
+    else
+OUT=[[
       ${type} m_${name};
-))
+]]
+end)))
+$(if measurements then
+temp=false
+for i = 1,#measurements do
+  if measurements[i].active then
+    temp=true
+  end
+end
+if temp then
+OUT=[[
+      // Holder of process object for active measurements
+      itk::ProcessObject *m_Filter;
+]]
+end
+end)
