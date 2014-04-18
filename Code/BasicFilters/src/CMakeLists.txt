@@ -14,7 +14,6 @@ include ( ${ITK_USE_FILE} )
 # common source which all basic filter libraries need to be linked against
 set ( SimpleITKBasicFilters0Source
   sitkImageFilter.cxx
-  sitkMeasurementMap.cxx
 )
 
 add_library ( SimpleITKBasicFilters0 ${SimpleITKBasicFilters0Source} )
