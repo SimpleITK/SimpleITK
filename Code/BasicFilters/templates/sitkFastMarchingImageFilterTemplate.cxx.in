@@ -76,6 +76,10 @@ end)
 end)
 $(include ExecuteNoParameters.cxx.in)
 
+//-----------------------------------------------------------------------------
+
+$(include CustomCasts.cxx)
+
 //----------------------------------------------------------------------------
 
 $(include ExecuteInternalVectorImages.cxx.in)

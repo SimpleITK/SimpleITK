@@ -106,6 +106,9 @@ KernelEnum ${name}::GetKernelType() const
 //$(include ExecuteWithParameters.cxx.in)
 $(include ExecuteNoParameters.cxx.in)
 
+//-----------------------------------------------------------------------------
+
+$(include CustomCasts.cxx)
 
 //----------------------------------------------------------------------------
 
