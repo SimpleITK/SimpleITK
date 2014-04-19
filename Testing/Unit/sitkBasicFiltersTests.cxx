@@ -539,7 +539,7 @@ TEST(BasicFilters,LabelStatistics) {
   EXPECT_EQ( stats.GetName(), "LabelStatisticsImageFilter" );
   EXPECT_NO_THROW( stats.ToString() );
 
-  EXPECT_TRUE ( stats.HasLabel ( 0 ) );
+//  EXPECT_TRUE ( stats.HasLabel ( 0 ) );
   EXPECT_NEAR ( stats.GetMinimum ( 0 ), 0, 0.01 );
   EXPECT_NEAR ( stats.GetMaximum ( 0 ), 99, 0.01 );
   EXPECT_NEAR ( stats.GetMean ( 0 ), 13.0911, 0.001 );
@@ -564,20 +564,20 @@ TEST(BasicFilters,LabelStatistics) {
   EXPECT_EQ ( 1, startCmd.m_Count );
   EXPECT_EQ ( 0, userCmd.m_Count );
 
-  const sitk::LabelStatisticsImageFilter::LabelListingType myLabels = stats.GetValidLabels();
+  const std::vector<int64_t> myLabels = stats.GetLabels();
   EXPECT_EQ ( myLabels.size() , 3u);
 
-  const sitk::LabelStatisticsImageFilter::LabelStatisticsMap myMap = stats.GetLabelStatisticsMap();
-  EXPECT_EQ( myLabels.size() , myMap.size() );
+  // const sitk::LabelStatisticsImageFilter::LabelStatisticsMap myMap = stats.GetLabelStatisticsMap();
+  // EXPECT_EQ( myLabels.size() , myMap.size() );
 
-  const sitk::MeasurementMap myMeasurementMap = stats.GetMeasurementMap(0);
-  EXPECT_EQ( myMeasurementMap.size(), 8u ); //4 measurements produced
+  // const sitk::MeasurementMap myMeasurementMap = stats.GetMeasurementMap(0);
+  // EXPECT_EQ( myMeasurementMap.size(), 8u ); //4 measurements produced
 
-  const sitk::BasicMeasurementMap myBasicMeasurementMap =
-    myMeasurementMap.GetBasicMeasurementMap();
-  EXPECT_EQ( myBasicMeasurementMap.size(), 8u ); //4 measurements produced
+  // const sitk::BasicMeasurementMap myBasicMeasurementMap =
+  //   myMeasurementMap.GetBasicMeasurementMap();
+  // EXPECT_EQ( myBasicMeasurementMap.size(), 8u ); //4 measurements produced
 
-  EXPECT_EQ ( myMeasurementMap.ToString(), "Count, Maximum, Mean, Minimum, Sigma, Sum, Variance, approxMedian, \n36172, 99, 13.0911, 0, 16.4065, 473533, 269.173, 12, \n" );
+  // EXPECT_EQ ( myMeasurementMap.ToString(), "Count, Maximum, Mean, Minimum, Sigma, Sum, Variance, approxMedian, \n36172, 99, 13.0911, 0, 16.4065, 473533, 269.173, 12, \n" );
 }
 
 TEST(BasicFilters,ResampleImageFilter_AdditionalProcedures)

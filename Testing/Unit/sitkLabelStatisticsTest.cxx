@@ -48,19 +48,19 @@ TEST(LabelStatistics,Simple) {
     std::cout << "LabelStatistics failed: " << e.what() << std::endl;
   }
 
-  for(uint64_t testLabelValue=0; testLabelValue < 256; testLabelValue++) {
-      if( lsFilter.HasLabel(testLabelValue) )
-        {
-        //By using the same image, the label min/max/mean values should equal the label itself.
-        ASSERT_EQ(lsFilter.GetMinimum (testLabelValue) , testLabelValue);
-        ASSERT_EQ(lsFilter.GetMaximum (testLabelValue) , testLabelValue);
-        ASSERT_EQ(lsFilter.GetMean    (testLabelValue) , testLabelValue);
-        ASSERT_EQ(lsFilter.GetMedian  (testLabelValue) , testLabelValue);
-        //By using the same image, the label variance values should equal to Zero.
-        ASSERT_EQ(lsFilter.GetSigma   (testLabelValue) , 0.0      );
-        ASSERT_EQ(lsFilter.GetVariance(testLabelValue) , 0.0      );
-        }
-  }
+  std::vector<int64_t> labels = lsFilter.GetLabels();
+  for(std::vector<int64_t>::const_iterator i = labels.begin(); i != labels.end(); ++i)
+    {
+    //By using the same image, the label min/max/mean values should equal the label itself.
+    ASSERT_EQ(lsFilter.GetMinimum (*i) , *i);
+    ASSERT_EQ(lsFilter.GetMaximum (*i) , *i);
+    ASSERT_EQ(lsFilter.GetMean    (*i) , *i);
+    ASSERT_EQ(lsFilter.GetMedian  (*i) , *i);
+    //By using the same image, the label variance values should equal to Zero.
+    ASSERT_EQ(lsFilter.GetSigma   (*i) , 0.0      );
+    ASSERT_EQ(lsFilter.GetVariance(*i) , 0.0      );
+    }
+
   ASSERT_EQ(lsFilter.GetSum  (0) , 0     );
   ASSERT_EQ(lsFilter.GetCount(0) , 33390 );
 }
