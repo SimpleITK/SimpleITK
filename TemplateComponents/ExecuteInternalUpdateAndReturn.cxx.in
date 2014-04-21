@@ -1,25 +1,9 @@
 
-  this->PreUpdate( filter.GetPointer() );
-
 $(if measurements then
 temp=false
 for i = 1,#measurements do
   if measurements[i].active then
     temp=true
-    OUT=OUT..'  this->m_pfGet'..measurements[i].name..' = nsstd::bind('
-    if measurements[i].custom_cast or measurements[i].label_map then
-      OUT=OUT..'&'..measurements[i].name..'CustomCast<FilterType>::CustomCast'
-    else
-      OUT=OUT..'&FilterType::Get'..measurements[i].name
-    end
-    OUT=OUT..', filter.GetPointer()'
-    if measurements[i].parameters then
-      for inum=1,#measurements[i].parameters do
-        OUT=OUT..", nsstd::placeholders::_"..inum
-      end
-    end
-    OUT=OUT..' );\
-'
   end
 end
 if temp then
@@ -35,6 +19,29 @@ OUT=OUT..[[
   this->m_Filter = filter;
   this->m_Filter->Register();
 ]]
+end
+  end)
+
+  this->PreUpdate( filter.GetPointer() );
+
+$(if measurements then
+for i = 1,#measurements do
+  if measurements[i].active then
+    OUT=OUT..'  this->m_pfGet'..measurements[i].name..' = nsstd::bind('
+    if measurements[i].custom_cast or measurements[i].label_map then
+      OUT=OUT..'&'..measurements[i].name..'CustomCast<FilterType>::CustomCast'
+    else
+      OUT=OUT..'&FilterType::Get'..measurements[i].name
+    end
+    OUT=OUT..', filter.GetPointer()'
+    if measurements[i].parameters then
+      for inum=1,#measurements[i].parameters do
+        OUT=OUT..", nsstd::placeholders::_"..inum
+      end
+    end
+    OUT=OUT..' );\
+'
+  end
 end
 end)
 
