@@ -539,7 +539,7 @@ TEST(BasicFilters,LabelStatistics) {
   EXPECT_EQ( stats.GetName(), "LabelStatisticsImageFilter" );
   EXPECT_NO_THROW( stats.ToString() );
 
-//  EXPECT_TRUE ( stats.HasLabel ( 0 ) );
+  EXPECT_TRUE ( stats.HasLabel ( 0 ) );
   EXPECT_NEAR ( stats.GetMinimum ( 0 ), 0, 0.01 );
   EXPECT_NEAR ( stats.GetMaximum ( 0 ), 99, 0.01 );
   EXPECT_NEAR ( stats.GetMean ( 0 ), 13.0911, 0.001 );
