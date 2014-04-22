@@ -102,8 +102,12 @@ TEST(LabelStatistics,Commands) {
 
   EXPECT_EQ( stats.GetName(), "LabelStatisticsImageFilter" );
   EXPECT_NO_THROW( stats.ToString() );
-
   EXPECT_TRUE ( stats.HasLabel ( 0 ) );
+  EXPECT_TRUE ( stats.HasLabel ( 1 ) );
+  EXPECT_TRUE ( stats.HasLabel ( 2 ) );
+  EXPECT_FALSE ( stats.HasLabel ( 99 ) );
+  EXPECT_FALSE ( stats.HasLabel ( 1024 ) );
+
   EXPECT_NEAR ( stats.GetMinimum ( 0 ), 0, 0.01 );
   EXPECT_NEAR ( stats.GetMaximum ( 0 ), 99, 0.01 );
   EXPECT_NEAR ( stats.GetMean ( 0 ), 13.0911, 0.001 );
@@ -122,11 +126,13 @@ TEST(LabelStatistics,Commands) {
   EXPECT_EQ ( 1.0f, stats.GetProgress() );
   EXPECT_EQ ( 1.0f, progressCmd.m_Progress );
   EXPECT_EQ ( 0, abortCmd.m_Count );
-  EXPECT_EQ ( 1, deleteCmd.m_Count );
   EXPECT_EQ ( 1, endCmd.m_Count );
   EXPECT_EQ ( 0, iterCmd.m_Count );
   EXPECT_EQ ( 1, startCmd.m_Count );
   EXPECT_EQ ( 0, userCmd.m_Count );
+
+ // internal filter does not get deleted since there are active measurements
+  EXPECT_EQ ( 0, deleteCmd.m_Count );
 
   const std::vector<int64_t> myLabels = stats.GetLabels();
   EXPECT_EQ ( myLabels.size() , 3u);
