@@ -133,9 +133,10 @@ OUT=[[
           output = SimpleITK.LabelMapToLabel(output)
         end
     end
+
+    writer:SetFileName ( arg[#arg] ):Execute ( output )
 ]]
 end)
 
-    writer:SetFileName ( arg[#arg] ):Execute ( output )
   end
 )
