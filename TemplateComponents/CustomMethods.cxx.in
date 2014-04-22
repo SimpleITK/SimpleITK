@@ -14,5 +14,5 @@ ${return_type} ${filter_name}::${name}( $(for inum=1,#parameters do
                       end) )
 {
   ${body}
-};
+}
 )]]end)

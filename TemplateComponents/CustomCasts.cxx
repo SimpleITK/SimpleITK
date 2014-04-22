@@ -16,7 +16,7 @@ OUT=OUT..[[
 ]]
 else
 OUT=OUT..[[
-  static const ${type} &Helper( const T & value ) { return value; }
+  static const ${type} Helper( const T & value ) { return value; }
 ]]
 end
 OUT=OUT..[[
