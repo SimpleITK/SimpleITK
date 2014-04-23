@@ -14,10 +14,6 @@ if custom_cast then
 OUT=OUT..[[
   static ${type} Helper( const T & value ) { return ${custom_cast}; }
 ]]
-else
-OUT=OUT..[[
-  static const ${type} Helper( const T & value ) { return value; }
-]]
 end
 OUT=OUT..[[
 
@@ -29,14 +25,19 @@ if parameters then
 end
 OUT=OUT..[[ )
   {
-    return ${name}CustomCast::Helper(f]]
-
-if label_map then
-  OUT=OUT..[[->GetOutput()->GetLabelObject(label)->Get${name}()]]
-else
-  OUT=OUT..[[->Get${name}(label)]]
+    return ]]
+if custom_cast then
+  OUT=OUT..[[${name}CustomCast::Helper(]]
 end
-OUT=OUT..');'..[[
+if label_map then
+  OUT=OUT..[[f->GetOutput()->GetLabelObject(label)->Get${name}()]]
+else
+  OUT=OUT..[[f->Get${name}(label)]]
+end
+if custom_cast then
+  OUT=OUT..')'
+end
+OUT=OUT..';'..[[
 
   }
 };
