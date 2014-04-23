@@ -183,6 +183,47 @@
         "Input/cthead1.png",
         "Input/2th_cthead1.mha"
       ]
+      "measurements_results" : [
+        {
+          "name" : "Minimum",
+          "value" : 100,
+          "parameters" : [ 1 ]
+        },
+        {
+          "name" : "Maximum",
+          "value" : 199,
+          "parameters" : [ 1 ]
+        },
+        {
+          "name" : "Mean",
+          "value" : 138.56282364638136,
+          "tolerance" : 1e-8,
+          "parameters" : [ 1 ]
+        },
+        {
+          "name" : "Median",
+          "value" : 137,
+          "parameters" : [ 1 ]
+        },
+        {
+          "name" : "Sigma",
+          "value" : 14.051474145970603,
+          "tolerance" : 1e-8,
+          "parameters" : [ 1 ]
+        },
+        {
+          "name" : "Sum",
+          "value" : 3344768,
+          "parameters" : [ 1 ]
+        },
+
+        {
+          "name" : "Variance",
+          "value" : 197.44392567488032,
+          "tolerance" : 1e-6,
+          "parameters" : [ 1 ]
+        }
+      ]
     }
   ],
   "briefdescription" : "Given an intensity image and a label map, compute min, max, variance and mean of the pixels associated with each label or segment.",
