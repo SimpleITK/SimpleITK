@@ -62,7 +62,7 @@ TEST(LabelStatistics,Simple) {
     }
 
   ASSERT_EQ(lsFilter.GetSum  (0) , 0     );
-  ASSERT_EQ(lsFilter.GetCount(0) , 33390 );
+  ASSERT_EQ(lsFilter.GetCount(0) , 33390u );
 }
 
 
