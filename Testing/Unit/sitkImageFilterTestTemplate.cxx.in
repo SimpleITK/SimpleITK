@@ -245,20 +245,32 @@ end)
   end) $(if tolerance then
   OUT = [[
  IMAGECOMPAREWITHTOLERANCE ( output, "", ${tolerance} );
-  ]]end) $(when measurements_results
-$(foreach measurements_results
-$(if tolerance then
-        OUT=[[EXPECT_NEAR(${value}, filter.Get${name}(), ${tolerance} );]]
-else
-  if (value == "true") then
-    OUT = [[EXPECT_TRUE ( filter.Get${name}() ) << "Measurement failure";]]
-  elseif (value == "false") then
-    OUT = [[EXPECT_FALSE ( filter.Get${name}() ) << "Measurement failure";]]
-  else
-    OUT = [[EXPECT_EQ ( ${value}, filter.Get${name}() ) << "Measurement failure";]]
+  ]]end)
+$(when measurements_results
+$(for i = 1,#measurements_results do
+  PARAMS=''
+  if measurements_results[i].parameters then
+    for pnum=1,#measurements_results[i].parameters do
+    if not pnum == 1 then
+        PARAMS=PARAM..','
+      end
+       PARAMS=PARAMS..' '..measurements_results[i].parameters[pnum]
+    end
+    PARAMS=PARAMS..' '
   end
-end)
-))
+  if measurements_results[i].tolerance then
+    OUT=OUT..'  EXPECT_NEAR( '..measurements_results[i].value..', filter.Get'..measurements_results[i].name..'('..PARAMS..'), '..measurements_results[i].tolerance..' ) << "Measurement failure";'
+  else
+    if (measurements_results[i].value == "true") then
+      OUT=OUT..'  EXPECT_TRUE( filter.Get'..measurements_results[i].name..'('..PARAMS..') ) << "Measurement failure";'
+    elseif (measurements_results[i].value == "false") then
+      OUT=OUT..'  EXPECT_FALSE( filter.Get'..measurements_results[i].name..'('..PARAMS..') ) << "Measurement failure"; '
+    else
+      OUT=OUT..'  EXPECT_EQ( '..measurements_results[i].value..', filter.Get'..measurements_results[i].name..'('..PARAMS..') ) << "Measurement failure";'
+    end
+  end
+  OUT=OUT..'\n'
+end))
 
 } // END FOR EACH TEST
 )
