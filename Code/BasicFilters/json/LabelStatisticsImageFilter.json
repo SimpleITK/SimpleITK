@@ -37,6 +37,12 @@
         }
       ],
       "body" : "return std::find(m_Labels.begin(),m_Labels.end(), label) != m_Labels.end();"
+    },
+    {
+      "name" : "GetNumberOfLabels",
+      "doc" : "Return the number of labels after execution ."
+      "return_type" : "uint64_t",
+      "body" : "return m_Labels.size();"
     }
   ],
   "measurements" : [
