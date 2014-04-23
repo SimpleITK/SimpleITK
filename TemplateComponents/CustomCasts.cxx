@@ -8,10 +8,10 @@ OUT=[[
 template<typename FilterType>
 struct ${name}CustomCast
 {
-  template <typename T>
 ]]
 if custom_cast then
 OUT=OUT..[[
+  template <typename T>
   static ${type} Helper( const T & value ) { return ${custom_cast}; }
 ]]
 end
