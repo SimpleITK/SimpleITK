@@ -10,7 +10,7 @@
   "no_procedure" : true,
   "no_return_image" : true,
   "include_files" : [
-    "sitkStatisticsImageFilter.h",
+    "sitkMinimumMaximumImageFilter.h",
     "algorithm"
   ],
   "members" : [
@@ -18,7 +18,7 @@
       "name" : "UseHistograms",
       "type" : "bool",
       "default" : "true",
-      "custom_itk_cast" : "if( m_UseHistograms)\n    {\n    typedef typename TImageType::PixelType PixelType;\n    if( nsstd::is_same< PixelType, uint8_t >::value || nsstd::is_same< PixelType, int8_t >::value )\n      {\n      //NOTE:  This is a heuristic that works exact median only for\n      //(unsigned) char images.\n      filter->SetHistogramParameters(256,std::numeric_limits<PixelType>::min()-0.5,std::numeric_limits<PixelType>::max()+0.5 );\n      }\n    else\n      {\n      itk::simple::StatisticsImageFilter stats;\n      stats.Execute( inImage1 );\n      filter->SetHistogramParameters(256,stats.GetMinimum(), stats.GetMaximum() );\n      }\n    }\n",
+      "custom_itk_cast" : "if( m_UseHistograms)\n    {\n    typedef typename TImageType::PixelType PixelType;\n    if( nsstd::is_same< PixelType, uint8_t >::value || nsstd::is_same< PixelType, int8_t >::value )\n      {\n      //NOTE:  This is a heuristic that works exact median only for\n      //(unsigned) char images.\n      filter->SetHistogramParameters(256,std::numeric_limits<PixelType>::min()-0.5,std::numeric_limits<PixelType>::max()+0.5 );\n      }\n    else\n      {\n      itk::simple::MinimumMaximumImageFilter stats;\n      stats.Execute( inImage1 );\n      filter->SetHistogramParameters(256,stats.GetMinimum(), stats.GetMaximum() );\n      }\n    }\n",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "",
       "briefdescriptionGet" : "",
@@ -182,6 +182,47 @@
       "inputs" : [
         "Input/cthead1.png",
         "Input/2th_cthead1.mha"
+      ]
+      "measurements_results" : [
+        {
+          "name" : "Minimum",
+          "value" : 100,
+          "parameters" : [ 1 ]
+        },
+        {
+          "name" : "Maximum",
+          "value" : 199,
+          "parameters" : [ 1 ]
+        },
+        {
+          "name" : "Mean",
+          "value" : 138.56282364638136,
+          "tolerance" : 1e-8,
+          "parameters" : [ 1 ]
+        },
+        {
+          "name" : "Median",
+          "value" : 137,
+          "parameters" : [ 1 ]
+        },
+        {
+          "name" : "Sigma",
+          "value" : 14.051474145970603,
+          "tolerance" : 1e-8,
+          "parameters" : [ 1 ]
+        },
+        {
+          "name" : "Sum",
+          "value" : 3344768,
+          "parameters" : [ 1 ]
+        },
+
+        {
+          "name" : "Variance",
+          "value" : 197.44392567488032,
+          "tolerance" : 1e-6,
+          "parameters" : [ 1 ]
+        }
       ]
     }
   ],
