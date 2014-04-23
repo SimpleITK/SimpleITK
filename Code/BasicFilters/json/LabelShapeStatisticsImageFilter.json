@@ -278,11 +278,80 @@
   ],
   "tests" : [
     {
-      "tag" : "cthead1",
-      "description" : "cthead1 with defaults",
+      "tag" : "SimpleLabelB",
+      "description" : "with defaults ",
       "settings" : [],
       "inputs" : [
         "Input/cthead1.png"
+      ],
+      "measurements_results" : [
+        {
+          "name" : "Elongation",
+          "value" : 1.8257418583505538,
+          "tolerance" : 1e-8,
+          "parameters" : [ "50" ]
+        },
+        {
+          "name" : "EquivalentSphericalPerimeter",
+          "value" : 81.378604766654036,
+          "tolerance" : 1e-8,
+          "parameters" : [ "50" ]
+        },
+        {
+          "name" : "FeretDiameter",
+          "value" : 0,
+          "parameters" : [ "50" ]
+        },
+        {
+          "name" : "Flatness",
+          "value" : 1.8257418583505538,
+          "tolerance" : 1e-8,
+          "parameters" : [ "50" ]
+        },
+        {
+          "name" : "NumberOfLabels",
+          "value" : 2
+        },
+        {
+          "name" : "NumberOfPixels",
+          "value" : 527,
+          "parameters" : [ "50" ]
+        },
+        {
+          "name" : "NumberOfPixelsOnBorder",
+          "value" : 0,
+          "parameters" : [ "50" ]
+        },
+        {
+          "name" : "Perimeter",
+          "value" : 89.902986366438313,
+          "tolerance" : 1e-8,
+          "parameters" : [ "50" ]
+        },
+        {
+          "name" : "PerimeterOnBorder",
+          "value" : 0,
+          "parameters" : [ "50" ]
+        },
+        {
+          "name" : "PerimeterOnBorderRatio",
+          "value" : 0,
+          "parameters" : [ "50" ]
+        },
+        {
+          "name" : "PhysicalSize",
+          "value" : 527,
+          "parameters" : [ "50" ]
+        },
+        {
+          "name" : "Roundness",
+          "value" : 0.90518244227127798,
+          "tolerance" : 1e-8,
+          "parameters" : [ "50" ]
+        }
+      ],
+      "inputs" : [
+        "Input/simple-label-b.png"
       ]
     }
   ]
