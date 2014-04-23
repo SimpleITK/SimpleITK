@@ -12,7 +12,6 @@
   "include_files" : [
     "itkShapeLabelObject.h"
   ],
-  "public_declarations" : "uint64_t GetNumberOfLabels( ) { return this->m_Labels.size(); }",
   "members" : [
     {
       "name" : "BackgroundValue",
@@ -34,6 +33,26 @@
       "name" : "ComputePerimeter",
       "type" : "bool",
       "default" : "true"
+    }
+  ],
+  "custom_methods" : [
+    {
+      "name" : "HasLabel",
+      "doc" : "Does the specified label exist? Can only be called after a call a call to Update()."
+      "return_type" : "double",
+      "parameters" : [
+        {
+          "type" : "int64_t",
+          "var_name" : "label"
+        }
+      ],
+      "body" : "return std::find(m_Labels.begin(),m_Labels.end(), label) != m_Labels.end();"
+    },
+    {
+      "name" : "GetNumberOfLabels",
+      "doc" : "Return the number of labels after execution."
+      "return_type" : "uint64_t",
+      "body" : "return m_Labels.size();"
     }
   ],
   "measurements" : [
