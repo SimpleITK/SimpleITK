@@ -124,11 +124,11 @@
           "R_value" : "'Strict'"
         }
       ],
-      "md5hash" : "15c6ff2f5157a31b5d9ccf94996c3300",
+      "md5hash" : "678ac95f8379073e4c747952dc7abf7c",
       "inputA_cast" : "sitkLabelUInt16",
       "inputB_cast" : "sitkLabelUInt16",
       "inputs" : [
-        "Input/simple-label-b.png",
+        "Input/simple-label-d.png",
         "Input/simple-label-e.png"
       ]
     }
