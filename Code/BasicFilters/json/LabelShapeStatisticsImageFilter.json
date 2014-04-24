@@ -281,9 +281,6 @@
       "tag" : "SimpleLabelB",
       "description" : "with defaults ",
       "settings" : [],
-      "inputs" : [
-        "Input/cthead1.png"
-      ],
       "measurements_results" : [
         {
           "name" : "Elongation",
