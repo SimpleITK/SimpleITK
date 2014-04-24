@@ -375,7 +375,7 @@
     },
     {
       "name" : "Volume",
-      "type" : "double",
+      "type" : "uint64_t",
       "no_print" : true,
       "active" : true,
       "parameters" : [
