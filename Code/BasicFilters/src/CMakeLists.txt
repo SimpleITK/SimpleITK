@@ -27,6 +27,10 @@ set ( SimpleITK_LIBRARIES ${SimpleITK_LIBRARIES} CACHE INTERNAL "" )
 
 
 set ( SimpleITKBasicFiltersSource
+  #
+  sitkMinimumMaximumImageFilter.cxx
+  sitkLabelStatisticsImageFilter.cxx
+
   sitkCastImageFilter-2.cxx
   sitkCastImageFilter-2l.cxx
   sitkCastImageFilter-2v.cxx
@@ -38,6 +42,8 @@ set ( SimpleITKBasicFiltersSource
 )
 # sort the list to en-sure the same list across platforms
 list ( SORT SimpleITKBasicFiltersGeneratedSource )
+
+list ( REMOVE_ITEM SimpleITKBasicFiltersGeneratedSource ${SimpleITKBasicFiltersSource} )
 
 # add additional files which may depend on Filters0
 list ( APPEND SimpleITKBasicFiltersSource ${SimpleITKBasicFiltersGeneratedSource} )
