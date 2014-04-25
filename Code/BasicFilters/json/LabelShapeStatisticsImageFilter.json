@@ -125,6 +125,19 @@
       "label_map" : true
     },
     {
+      "name" : "EquivalentSphericalRadius",
+      "type" : "double",
+      "no_print" : true,
+      "active" : true,
+      "parameters" : [
+        {
+          "name" : "label",
+          "type" : "int64_t"
+        }
+      ],
+      "label_map" : true
+    },
+    {
       "name" : "FeretDiameter",
       "type" : "double",
       "no_print" : true,
