@@ -281,9 +281,6 @@
       "tag" : "SimpleLabelB",
       "description" : "with defaults ",
       "settings" : [],
-      "inputs" : [
-        "Input/cthead1.png"
-      ],
       "measurements_results" : [
         {
           "name" : "Elongation",
@@ -310,16 +307,16 @@
         },
         {
           "name" : "NumberOfLabels",
-          "value" : 2
+          "value" : "2u"
         },
         {
           "name" : "NumberOfPixels",
-          "value" : 527,
+          "value" : "527u",
           "parameters" : [ "50" ]
         },
         {
           "name" : "NumberOfPixelsOnBorder",
-          "value" : 0,
+          "value" : "0u",
           "parameters" : [ "50" ]
         },
         {
