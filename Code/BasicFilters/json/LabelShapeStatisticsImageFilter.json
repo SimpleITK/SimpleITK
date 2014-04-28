@@ -22,23 +22,31 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin().",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : " Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin()."
+      "detaileddescriptionGet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin()."
     },
     {
       "name" : "ComputeFeretDiameter",
       "type" : "bool",
-      "default" : "false"
+      "default" : "false",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get whether the maximum Feret diameter should be computed or not. Default value is false, because of the high computation time required.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get whether the maximum Feret diameter should be computed or not. Default value is false, because of the high computation time required."
     },
     {
       "name" : "ComputePerimeter",
       "type" : "bool",
-      "default" : "true"
+      "default" : "true",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get whether the perimeter should be computed or not. Default value is false, because of the high computation time required.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get whether the perimeter should be computed or not. Default value is false, because of the high computation time required."
     }
   ],
   "custom_methods" : [
     {
       "name" : "HasLabel",
-      "doc" : "Does the specified label exist? Can only be called after a call a call to Update()."
+      "doc" : "Does the specified label exist? Can only be called after a call a call to Update().",
       "return_type" : "double",
       "parameters" : [
         {
@@ -50,7 +58,7 @@
     },
     {
       "name" : "GetNumberOfLabels",
-      "doc" : "Return the number of labels after execution."
+      "doc" : "Return the number of labels after execution.",
       "return_type" : "uint64_t",
       "body" : "return m_Labels.size();"
     }
@@ -298,25 +306,41 @@
         {
           "name" : "Elongation",
           "value" : 1.8257418583505538,
-          "tolerance" : 1e-8,
-          "parameters" : [ "50" ]
+          "tolerance" : 1e-08,
+          "parameters" : [
+            "50"
+          ]
         },
         {
           "name" : "EquivalentSphericalPerimeter",
-          "value" : 81.378604766654036,
-          "tolerance" : 1e-8,
-          "parameters" : [ "50" ]
+          "value" : 81.37860476665404,
+          "tolerance" : 1e-08,
+          "parameters" : [
+            "50"
+          ]
+        },
+        {
+          "name" : "EquivalentSphericalRadius",
+          "value" : 12.951807210534664,
+          "tolerance" : 1e-08,
+          "parameters" : [
+            "50"
+          ]
         },
         {
           "name" : "FeretDiameter",
           "value" : 0,
-          "parameters" : [ "50" ]
+          "parameters" : [
+            "50"
+          ]
         },
         {
           "name" : "Flatness",
           "value" : 1.8257418583505538,
-          "tolerance" : 1e-8,
-          "parameters" : [ "50" ]
+          "tolerance" : 1e-08,
+          "parameters" : [
+            "50"
+          ]
         },
         {
           "name" : "NumberOfLabels",
@@ -325,44 +349,60 @@
         {
           "name" : "NumberOfPixels",
           "value" : "527u",
-          "parameters" : [ "50" ]
+          "parameters" : [
+            "50"
+          ]
         },
         {
           "name" : "NumberOfPixelsOnBorder",
           "value" : "0u",
-          "parameters" : [ "50" ]
+          "parameters" : [
+            "50"
+          ]
         },
         {
           "name" : "Perimeter",
-          "value" : 89.902986366438313,
-          "tolerance" : 1e-8,
-          "parameters" : [ "50" ]
+          "value" : 89.90298636643831,
+          "tolerance" : 1e-08,
+          "parameters" : [
+            "50"
+          ]
         },
         {
           "name" : "PerimeterOnBorder",
           "value" : 0,
-          "parameters" : [ "50" ]
+          "parameters" : [
+            "50"
+          ]
         },
         {
           "name" : "PerimeterOnBorderRatio",
           "value" : 0,
-          "parameters" : [ "50" ]
+          "parameters" : [
+            "50"
+          ]
         },
         {
           "name" : "PhysicalSize",
           "value" : 527,
-          "parameters" : [ "50" ]
+          "parameters" : [
+            "50"
+          ]
         },
         {
           "name" : "Roundness",
-          "value" : 0.90518244227127798,
-          "tolerance" : 1e-8,
-          "parameters" : [ "50" ]
+          "value" : 0.905182442271278,
+          "tolerance" : 1e-08,
+          "parameters" : [
+            "50"
+          ]
         }
       ],
       "inputs" : [
         "Input/simple-label-b.png"
       ]
     }
-  ]
+  ],
+  "briefdescription" : "Converts a label image to a label map and valuates the shape attributes.",
+  "detaileddescription" : "A convenient class that converts a label image to a label map and valuates the shape attribute at once.\n\nThis implementation was taken from the Insight Journal paper:\n\nhttp://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\n\\see  ShapeLabelObject, LabelShapeOpeningImageFilter, LabelStatisticsOpeningImageFilter\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Convert an itk::Image consisting of labeled regions to a ShapeLabelMap"
 }
