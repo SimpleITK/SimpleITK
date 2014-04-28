@@ -4,7 +4,7 @@
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 2,
   "pixel_types" : "IntegerPixelIDTypeList",
-  "pixel_types2" : "BasicPixelIDTypeList",
+  "pixel_types2" : "RealPixelIDTypeList",
   "filter_type" : "itk::LabelGeometryImageFilter<InputImageType,InputImageType2>",
   "custom_set_input" : "filter->SetInput( image1 ); filter->SetIntensityInput( image2 );",
   "no_procedure" : true,
