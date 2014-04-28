@@ -308,6 +308,12 @@
           "parameters" : [ "50" ]
         },
         {
+          "name" : "EquivalentSphericalRadius",
+          "value" : 12.951807210534664,
+          "tolerance" : 1e-8,
+          "parameters" : [ "50" ]
+        },
+        {
           "name" : "FeretDiameter",
           "value" : 0,
           "parameters" : [ "50" ]
