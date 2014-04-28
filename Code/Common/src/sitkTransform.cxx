@@ -422,7 +422,12 @@ void Transform::MakeUniqueForWrite( void )
 
           compositeTransform->AddTransform( identityTransform );
           }
+
+        compositeTransform->SetAllTransformsToOptimizeOff();
+        compositeTransform->SetOnlyMostRecentTransformToOptimizeOn();
+
         m_PimpleTransform = new PimpleTransform<itk::CompositeTransform<double, VDimension> >( compositeTransform );
+
         }
         break;
       case sitkIdentity:
