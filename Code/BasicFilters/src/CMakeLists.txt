@@ -49,8 +49,6 @@ list ( REMOVE_ITEM SimpleITKBasicFiltersGeneratedSource
                    "${CMAKE_CURRENT_BINARY_DIR}/sitkMinimumMaximumImageFilter.cxx"
                    "${CMAKE_CURRENT_BINARY_DIR}/sitkLabelStatisticsImageFilter.cxx" )
 
-message( STATUS ${SimpleITKBasicFiltersGeneratedSource} )
-
 # add additional files which may depend on Filters0
 list ( APPEND SimpleITKBasicFiltersSource ${SimpleITKBasicFiltersGeneratedSource} )
 list ( APPEND SimpleITKBasicFiltersSource sitkAdditionalProcedures.cxx )
