@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkCreateInterpolator_h
-#define __sitkCrateInterpolator_h
+#ifndef __sitkCreateInterpolator_hxx
+#define __sitkCreateInterpolator_hxx
 
 
 #include "sitkInterpolator.h"
@@ -150,4 +150,4 @@ CreateInterpolator( const TImageType *image, InterpolatorEnum itype )
 } // end namespace itk
 
 
-#endif //__sitkCreateInterpolator_h
+#endif //__sitkCreateInterpolator_hxx
