@@ -10,6 +10,20 @@ end)
 )
 $(when measurements $(foreach measurements
 $(if (not no_print) or (not no_print == 1) then
+if active then
+  OUT=[[
+  out << "  ${name}: ";
+  if (bool(this->m_pfGet${name}))
+  {
+    this->ToStringHelper(out, this->m_pfGet${name}());
+  }
+  else
+  {
+    out << "(null)";
+  }
+  out << std::endl;
+]]
+else
 OUT=[[  out << "  ${name}: " << this->m_${name} << std::endl;]]
-end)
-))
+end
+end)))

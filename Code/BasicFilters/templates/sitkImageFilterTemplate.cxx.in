@@ -36,6 +36,7 @@ $(include ConstructorMemberFunctionSetup.cxx.in)
 $(include ConstructorVectorPixels.cxx.in)
 }
 
+$(include DesctuctorDefinition.cxx.in)
 
 $(include CustomMethods.cxx.in)
 
@@ -52,6 +53,10 @@ $(include ToStringReturn.cxx.in)
 // Execute
 //$(include ExecuteWithParameters.cxx.in)
 $(include ExecuteNoParameters.cxx.in)
+
+//-----------------------------------------------------------------------------
+
+$(include CustomCasts.cxx)
 
 //-----------------------------------------------------------------------------
 

@@ -36,6 +36,8 @@ $(include ConstructorMemberFunctionSetup.cxx.in)
 $(include ConstructorVectorPixels.cxx.in)
 }
 
+$(include DesctuctorDefinition.cxx.in)
+
 //
 // ToString
 //
@@ -136,6 +138,10 @@ Image ${name}::Execute ( const std::vector<Image> &images )
 
     return this->m_MemberFactory->GetMemberFunction( type, dimension )( images );
 }
+
+//-----------------------------------------------------------------------------
+
+$(include CustomCasts.cxx)
 
 //-----------------------------------------------------------------------------
 

@@ -196,6 +196,8 @@ end)
 
       PixelIDValueEnum[] labelIDs = { PixelIDValueEnum.sitkLabelUInt8, PixelIDValueEnum.sitkLabelUInt16, PixelIDValueEnum.sitkLabelUInt32, PixelIDValueEnum.sitkLabelUInt64 };
 
+$(if not no_return_image then
+OUT=[[
       if (Arrays.asList(labelIDs).contains(output.getPixelID()))
         {
           LabelMapToLabelImageFilter toImage = new LabelMapToLabelImageFilter();
@@ -204,6 +206,8 @@ end)
 
       // Write output
       writer.setFileName( argv[argv.length - 1] ).execute( output );
+]]
+end)
     }
 )
   }

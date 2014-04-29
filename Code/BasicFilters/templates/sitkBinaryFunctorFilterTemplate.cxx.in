@@ -60,7 +60,10 @@ $(include ConstructorVectorPixels.cxx.in)
 }
 
 
+$(include DesctuctorDefinition.cxx.in)
+
 $(include CustomMethods.cxx.in)
+
 
 //
 // ToString
@@ -122,6 +125,10 @@ Image ${name}::Execute ( const Image& image1, ${constant_type} constant )
 
   return this->m_MemberFactory2->GetMemberFunction( type, dimension )( image1, constant );
 }
+
+//-----------------------------------------------------------------------------
+
+$(include CustomCasts.cxx)
 
 //-----------------------------------------------------------------------------
 

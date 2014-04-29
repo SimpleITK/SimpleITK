@@ -125,7 +125,8 @@ end)
 
 
     output = filter:Execute ( unpack( inputs ) )
-
+$(if not no_return_image then
+OUT=[[
     labelIDs = { SimpleITK.sitkLabelUInt8, SimpleITK.sitkLabelUInt16, SimpleITK.sitkLabelUInt32, SimpleITK.sitkLabelUInt64 }
     for _,v in pairs( labelIDs ) do
         if v == output:GetPixelID()  then
@@ -134,5 +135,8 @@ end)
     end
 
     writer:SetFileName ( arg[#arg] ):Execute ( output )
+]]
+end)
+
   end
 )

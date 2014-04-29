@@ -46,6 +46,9 @@ $(if detaileddescription and (detaileddescription:len() >0) then OUT=[[${detaile
        * default parameters */
       ${name}();
 
+      /** Destructor */
+      ~${name}();
+
       /** Define the pixels types supported by this filter */
       typedef ${pixel_types}  PixelIDTypeList;
 

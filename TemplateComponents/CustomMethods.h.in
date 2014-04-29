@@ -1,13 +1,19 @@
 $(if custom_methods and #custom_methods > 0 then
-OUT = [[
-
-
-$(foreach custom_methods
-      /** ${doc} */
-      ${return_type} ${name}( $(for inum=1,#parameters do
-                                if inum>1 then
-                                   OUT = OUT .. ', '
-                                end
-                                OUT = OUT .. parameters[inum].type .. ' ' .. parameters[inum].var_name
-                               end) );
-)]]end)
+OUT=OUT..'\n'
+for i=1,#custom_methods do
+  OUT=OUT..'\n'
+  if custom_methods[i].doc then
+    OUT=OUT..'      /** '..custom_methods[i].doc..' */\n'
+  end
+  OUT=OUT..'      '..custom_methods[i].return_type..' '..custom_methods[i].name..'('
+  if custom_methods[i].parameters then
+    for pnum=1,#custom_methods[i].parameters do
+      if not pnum == 1 then
+        OUT=OUT..', '
+      end
+      OUT=OUT..custom_methods[i].parameters[pnum].type ..' '.. custom_methods[i].parameters[pnum].var_name
+    end
+  end
+  OUT=OUT..[[ );
+]]
+end end)

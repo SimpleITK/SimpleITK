@@ -48,6 +48,8 @@ $(include ConstructorMemberFunctionSetup.cxx.in)
 $(include ConstructorVectorPixels.cxx.in)
 }
 
+$(include DesctuctorDefinition.cxx.in)
+
 //
 // ToString
 //
@@ -104,6 +106,9 @@ KernelEnum ${name}::GetKernelType() const
 //$(include ExecuteWithParameters.cxx.in)
 $(include ExecuteNoParameters.cxx.in)
 
+//-----------------------------------------------------------------------------
+
+$(include CustomCasts.cxx)
 
 //----------------------------------------------------------------------------
 

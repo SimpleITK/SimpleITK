@@ -48,19 +48,104 @@ TEST(LabelStatistics,Simple) {
     std::cout << "LabelStatistics failed: " << e.what() << std::endl;
   }
 
-  for(uint64_t testLabelValue=0; testLabelValue < 256; testLabelValue++) {
-      if( lsFilter.HasLabel(testLabelValue) )
-        {
-        //By using the same image, the label min/max/mean values should equal the label itself.
-        ASSERT_EQ(lsFilter.GetMinimum (testLabelValue) , testLabelValue);
-        ASSERT_EQ(lsFilter.GetMaximum (testLabelValue) , testLabelValue);
-        ASSERT_EQ(lsFilter.GetMean    (testLabelValue) , testLabelValue);
-        ASSERT_EQ(lsFilter.GetMedian  (testLabelValue) , testLabelValue);
-        //By using the same image, the label variance values should equal to Zero.
-        ASSERT_EQ(lsFilter.GetSigma   (testLabelValue) , 0.0      );
-        ASSERT_EQ(lsFilter.GetVariance(testLabelValue) , 0.0      );
-        }
-  }
+  std::vector<int64_t> labels = lsFilter.GetLabels();
+  for(std::vector<int64_t>::const_iterator i = labels.begin(); i != labels.end(); ++i)
+    {
+    //By using the same image, the label min/max/mean values should equal the label itself.
+    ASSERT_EQ(lsFilter.GetMinimum (*i) , *i);
+    ASSERT_EQ(lsFilter.GetMaximum (*i) , *i);
+    ASSERT_EQ(lsFilter.GetMean    (*i) , *i);
+    ASSERT_EQ(lsFilter.GetMedian  (*i) , *i);
+    //By using the same image, the label variance values should equal to Zero.
+    ASSERT_EQ(lsFilter.GetSigma   (*i) , 0.0      );
+    ASSERT_EQ(lsFilter.GetVariance(*i) , 0.0      );
+    }
+
   ASSERT_EQ(lsFilter.GetSum  (0) , 0     );
-  ASSERT_EQ(lsFilter.GetCount(0) , 33390 );
+  ASSERT_EQ(lsFilter.GetCount(0) , 33390u );
+}
+
+
+TEST(LabelStatistics,Commands) {
+  namespace sitk = itk::simple;
+
+  sitk::Image image = sitk::ReadImage ( dataFinder.GetFile ( "Input/cthead1.png" ) );
+  sitk::Image labels = sitk::ReadImage ( dataFinder.GetFile ( "Input/2th_cthead1.mha" ) );
+
+  sitk::LabelStatisticsImageFilter stats;
+
+
+  ProgressUpdate progressCmd(stats);
+  stats.AddCommand(sitk::sitkProgressEvent, progressCmd);
+
+  CountCommand abortCmd(stats);
+  stats.AddCommand(sitk::sitkAbortEvent, abortCmd);
+
+  CountCommand deleteCmd(stats);
+  stats.AddCommand(sitk::sitkDeleteEvent, deleteCmd);
+
+  CountCommand endCmd(stats);
+  stats.AddCommand(sitk::sitkEndEvent, endCmd);
+
+  CountCommand iterCmd(stats);
+  stats.AddCommand(sitk::sitkIterationEvent, iterCmd);
+
+  CountCommand startCmd(stats);
+  stats.AddCommand(sitk::sitkStartEvent, startCmd);
+
+  CountCommand userCmd(stats);
+  stats.AddCommand(sitk::sitkUserEvent, userCmd);
+
+  stats.DebugOn();
+
+  stats.Execute ( image, labels );
+
+  EXPECT_EQ( stats.GetName(), "LabelStatisticsImageFilter" );
+  EXPECT_NO_THROW( stats.ToString() );
+  EXPECT_TRUE ( stats.HasLabel ( 0 ) );
+  EXPECT_TRUE ( stats.HasLabel ( 1 ) );
+  EXPECT_TRUE ( stats.HasLabel ( 2 ) );
+  EXPECT_FALSE ( stats.HasLabel ( 99 ) );
+  EXPECT_FALSE ( stats.HasLabel ( 1024 ) );
+
+  EXPECT_NEAR ( stats.GetMinimum ( 0 ), 0, 0.01 );
+  EXPECT_NEAR ( stats.GetMaximum ( 0 ), 99, 0.01 );
+  EXPECT_NEAR ( stats.GetMean ( 0 ), 13.0911, 0.001 );
+  EXPECT_NEAR ( stats.GetSigma ( 0 ),  16.4065, 0.01 );
+  EXPECT_NEAR ( stats.GetVariance ( 0 ),  269.173, 0.01 );
+  EXPECT_NEAR ( stats.GetCount ( 0 ),  36172, 0.01 );
+  EXPECT_NEAR ( stats.GetSum ( 0 ),  473533, 0.01 );
+  EXPECT_NEAR ( stats.GetMedian ( 0 ), 12.0, 0.001 );
+
+  ASSERT_EQ( 4u, stats.GetBoundingBox(0).size() );
+  EXPECT_EQ( 0, stats.GetBoundingBox(0)[0] );
+  EXPECT_EQ( 255, stats.GetBoundingBox(0)[1] );
+  EXPECT_EQ( 0, stats.GetBoundingBox(0)[2] );
+  EXPECT_EQ( 255, stats.GetBoundingBox(0)[3] );
+
+  EXPECT_EQ ( 1.0f, stats.GetProgress() );
+  EXPECT_EQ ( 1.0f, progressCmd.m_Progress );
+  EXPECT_EQ ( 0, abortCmd.m_Count );
+  EXPECT_EQ ( 1, endCmd.m_Count );
+  EXPECT_EQ ( 0, iterCmd.m_Count );
+  EXPECT_EQ ( 1, startCmd.m_Count );
+  EXPECT_EQ ( 0, userCmd.m_Count );
+
+ // internal filter does not get deleted since there are active measurements
+  EXPECT_EQ ( 0, deleteCmd.m_Count );
+
+  const std::vector<int64_t> myLabels = stats.GetLabels();
+  EXPECT_EQ ( myLabels.size() , 3u);
+
+  // const sitk::LabelStatisticsImageFilter::LabelStatisticsMap myMap = stats.GetLabelStatisticsMap();
+  // EXPECT_EQ( myLabels.size() , myMap.size() );
+
+  // const sitk::MeasurementMap myMeasurementMap = stats.GetMeasurementMap(0);
+  // EXPECT_EQ( myMeasurementMap.size(), 8u ); //4 measurements produced
+
+  // const sitk::BasicMeasurementMap myBasicMeasurementMap =
+  //   myMeasurementMap.GetBasicMeasurementMap();
+  // EXPECT_EQ( myBasicMeasurementMap.size(), 8u ); //4 measurements produced
+
+  // EXPECT_EQ ( myMeasurementMap.ToString(), "Count, Maximum, Mean, Minimum, Sigma, Sum, Variance, approxMedian, \n36172, 99, 13.0911, 0, 16.4065, 473533, 269.173, 12, \n" );
 }
