@@ -404,6 +404,7 @@
         "Input/2th_cthead1.mha",
         "Input/cthead1.png"
       ],
+      "inputB_cast" : "sitkFloat32"
       "measurements_results" : [
         {
           "name" : "BoundingBoxVolume",
