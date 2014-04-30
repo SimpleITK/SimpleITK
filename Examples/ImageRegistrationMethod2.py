@@ -56,7 +56,8 @@ moving = sitk.DiscreteGaussian( moving, 2.0)
 
 
 R = sitk.ImageRegistrationMethod()
-R.SetMetricAsMutualInformation(0.4, 0.4, 0)
+numberOfPixels = reduce(lambda x, y: x*y, fixed.GetSize());
+R.SetMetricAsMutualInformation(0.4, 0.4, int(numberOfPixels*0.01))
 R.SetOptimizerAsGradientDescent(15, 200)
 R.SetTransform(sitk.Transform(fixed.GetDimension(), sitk.sitkTranslation))
 R.SetInterpolator(sitk.sitkLinear)

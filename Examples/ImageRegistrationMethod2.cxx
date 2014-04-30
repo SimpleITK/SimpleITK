@@ -19,9 +19,11 @@
 // This one header will include all SimpleITK filters and external
 // objects.
 #include <SimpleITK.h>
+
 #include <iostream>
 #include <stdlib.h>
 #include <iomanip>
+#include <numeric>
 
 namespace sitk = itk::simple;
 
@@ -97,9 +99,12 @@ int main(int argc, char *argv[])
 
   sitk::ImageRegistrationMethod R;
 
+  const std::vector< unsigned int > size = fixed.GetSize();
+  const uint64_t numberOfPixels =  std::accumulate( size.begin(), size.end(), uint64_t(1), std::multiplies<uint64_t>() );
+
   const double fixedImageStandardDeviation = 0.4;
   const double movingImageStandardDeviation = 0.4;
-  const uint64_t numberOfSpatialSamples = 0; // set to use all spacial samples
+  const uint64_t numberOfSpatialSamples = numberOfPixels*0.01;
   R.SetMetricAsMutualInformation( fixedImageStandardDeviation,
                                   movingImageStandardDeviation,
                                   numberOfSpatialSamples );
