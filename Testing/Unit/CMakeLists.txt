@@ -682,6 +682,13 @@ if ( WRAP_PYTHON )
     60 116
     )
 
+  add_python_test( Example.ImageRegistrationMethod1
+    "${SimpleITK_SOURCE_DIR}/Examples/ImageRegistrationMethod1.py"
+    ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceBorder20.png
+    ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceShifted13x17y.png
+    ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethod11Test.hdf5
+    )
+
 
   #
   # Python Tests
