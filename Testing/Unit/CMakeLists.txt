@@ -18,6 +18,7 @@ set ( SimpleITKUnitTestSource
   sitkImageIOTests.cxx
   sitkTypeListsTests.cxx
   sitkBasicFiltersTests.cxx
+  sitkRegistrationTests.cxx
   sitkLabelStatisticsTest.cxx
   sitkOperatorTests.cxx
   sitkExceptionsTests.cxx
@@ -373,6 +374,14 @@ if ( ${BUILD_EXAMPLES} )
     60 116
     )
 
+  add_test(NAME CXX.Example.ImageRegistrationMethod1
+    COMMAND
+      $<TARGET_FILE:ImageRegistrationMethod1>
+      ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceBorder20.png
+      ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceShifted13x17y.png
+      ${TEST_HARNESS_TEMP_DIRECTORY}/CXXImageRegistrationMethod11Test.hdf5
+    )
+
 endif()
 
 if ( WRAP_CSHARP )
@@ -679,6 +688,13 @@ if ( WRAP_PYTHON )
     "${TEST_HARNESS_TEMP_DIRECTORY}/PythonSegmentationNeighborhoodConnected1.png"
     150 180
     60 116
+    )
+
+  add_python_test( Example.ImageRegistrationMethod1
+    "${SimpleITK_SOURCE_DIR}/Examples/ImageRegistrationMethod1.py"
+    ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceBorder20.png
+    ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceShifted13x17y.png
+    ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethod11Test.hdf5
     )
 
 

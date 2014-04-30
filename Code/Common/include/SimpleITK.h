@@ -54,6 +54,8 @@
 
 #include "sitkAdditionalProcedures.h"
 
+#include "sitkImageRegistrationMethod.h"
+
 // These headers are auto-generated
 #include "SimpleITKBasicFiltersGeneratedHeaders.h"
 #endif

@@ -96,14 +96,15 @@ endif()
 
 set ( SimpleITK_INCLUDE_DIRS
       ${CMAKE_SOURCE_DIR}/Code/Common/include
-      ${CMAKE_SOURCE_DIR}/Code/Registration
+      ${CMAKE_SOURCE_DIR}/Code/Registration/include
       ${CMAKE_SOURCE_DIR}/Code/BasicFilters/include
       ${CMAKE_SOURCE_DIR}/Code/IO/include
       ${CMAKE_BINARY_DIR}/Code/BasicFilters/include
       ${CMAKE_BINARY_DIR}/Code/Common/include
+
       )
 
-set ( SimpleITK_LIBRARIES SimpleITKCommon SimpleITKIO CACHE INTERNAL "" )
+set ( SimpleITK_LIBRARIES SimpleITKCommon SimpleITKIO SimpleITKRegistration CACHE INTERNAL "" )
 
 # Be sure to clear these each time
 set ( GENERATED_TEST_LIST "" CACHE INTERNAL "" )

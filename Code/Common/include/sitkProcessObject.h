@@ -22,6 +22,7 @@
 #include "sitkNonCopyable.h"
 #include "sitkTemplateFunctions.h"
 #include "sitkEvent.h"
+#include "sitkImage.h"
 
 #include <iostream>
 #include <list>
@@ -212,6 +213,20 @@ namespace itk {
       // references between command and process objects.
       virtual void onCommandDelete(const itk::simple::Command *cmd) throw();
       #endif
+
+
+      template< class TImageType >
+      static typename TImageType::ConstPointer CastImageToITK( const Image &img )
+      {
+        typename TImageType::ConstPointer itkImage =
+          dynamic_cast < const TImageType* > ( img.GetITKBase() );
+
+        if ( itkImage.IsNull() )
+          {
+          sitkExceptionMacro( "Unexpected template dispatch error!" );
+          }
+        return itkImage;
+      }
 
       /**
        * Output operator to os with conversion to a printable type.
