@@ -1,6 +1,7 @@
 #include "sitkImageRegistrationMethod.h"
 
 #include "itkRegularStepGradientDescentOptimizer.h"
+#include "itkGradientDescentOptimizer.h"
 
 
 namespace {
@@ -33,7 +34,24 @@ namespace simple
     itk::SingleValuedNonLinearOptimizer::ScalesType scales(m_OptimizerScales.size());
     std::copy( m_OptimizerScales.begin(), m_OptimizerScales.end(), scales.begin() );
 
-    if ( m_OptimizerType == RegularStepGradientDescent )
+
+    if ( m_OptimizerType == GradientDescent )
+      {
+      typedef itk::GradientDescentOptimizer _OptimizerType;
+      _OptimizerType::Pointer      optimizer     = _OptimizerType::New();
+      optimizer->SetLearningRate( this->m_OptimizerLearningRate );
+      optimizer->SetNumberOfIterations( this->m_OptimizerNumberOfIterations  );
+      optimizer->SetMinimize( this->m_OptimizerMinimize );
+      if (scales.GetSize()) optimizer->SetScales(scales);
+
+      this->m_pfGetMetricValue = std::tr1::bind(&_OptimizerType::GetValue,optimizer);
+      this->m_pfGetOptimizerIteration = std::tr1::bind(&_OptimizerType::GetCurrentIteration,optimizer);
+      this->m_pfGetOptimizerPosition = std::tr1::bind(&PositionOptimizerCustomCast::CustomCast,optimizer);
+
+      optimizer->Register();
+      return optimizer.GetPointer();
+      }
+    else if ( m_OptimizerType == RegularStepGradientDescent )
       {
       typedef itk::RegularStepGradientDescentBaseOptimizer _OptimizerType;
       _OptimizerType::Pointer      optimizer;

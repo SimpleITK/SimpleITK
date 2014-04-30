@@ -67,6 +67,8 @@ namespace simple
                                                     double minStep,
                                                     unsigned int numberOfIterations,
                                                     double relaxationFactor=0.5);
+    Self& SetOptimizerAsGradientDescent( double learningRate,
+                                         unsigned int numberOfIterations );
     Self& SetOptimizerScales( const std::vector<double> &scales);
 
 
@@ -116,7 +118,8 @@ namespace simple
     Transform  m_Transform;
 
     // optimizer
-    enum OptimizerType { RegularStepGradientDescent
+    enum OptimizerType { RegularStepGradientDescent,
+                         GradientDescent
     };
     OptimizerType m_OptimizerType;
     double m_OptimizerMaximumStepLength;
@@ -125,6 +128,7 @@ namespace simple
     double m_OptimizerRelaxationFactor;
     bool m_OptimizerMinimize;
     std::vector<double> m_OptimizerScales;
+    double m_OptimizerLearningRate;
 
     // metric
     enum MetricType { MeanSquares

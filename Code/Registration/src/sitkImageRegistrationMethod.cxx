@@ -118,6 +118,15 @@ namespace simple
     return *this;
   }
 
+  ImageRegistrationMethod::Self&
+  ImageRegistrationMethod::SetOptimizerAsGradientDescent( double learningRate, unsigned int numberOfIteratons )
+  {
+    m_OptimizerType = GradientDescent;
+    m_OptimizerLearningRate = learningRate;
+    m_OptimizerNumberOfIterations = numberOfIteratons;
+
+    return *this;
+  }
 
   ImageRegistrationMethod::Self&
   ImageRegistrationMethod::SetOptimizerScales( const std::vector<double> &scales)
