@@ -6,6 +6,7 @@
 
 
 #include "itkMeanSquaresImageToImageMetric.h"
+#include "itkMutualInformationImageToImageMetric.h"
 
 template< typename TValue, typename TType>
 itk::Array<TValue> sitkSTLVectorToITKArray( const std::vector< TType > & in )
@@ -74,6 +75,18 @@ namespace simple
     return *this;
   }
 
+  ImageRegistrationMethod::Self&
+  ImageRegistrationMethod::SetMetricAsMutualInformation( double fixedImageStandardDeviation,
+                                                          double movingImageStandardDeviation,
+                                                          uint64_t numberOfSpatialSamples)
+  {
+   m_MetricType = MutualInformation;
+   m_MetricFixedImageStandardDeviation = fixedImageStandardDeviation;
+   m_MetricMovingImageStandardDeviation = movingImageStandardDeviation;
+   m_MetricNumberOfSpatialSamples = numberOfSpatialSamples;
+   this->m_OptimizerMinimize = false;
+   return *this;
+  }
 
   template <class TImageType>
   itk::ImageToImageMetric<TImageType,TImageType>*
@@ -97,6 +110,21 @@ namespace simple
 
         metric->Register();
         return metric.GetPointer();
+      }
+      case MutualInformation:
+      {
+        typedef itk::MutualInformationImageToImageMetric< FixedImageType, MovingImageType >    _MetricType;
+        typename _MetricType::Pointer         metric        = _MetricType::New();
+        metric->SetFixedImageStandardDeviation( this->m_MetricFixedImageStandardDeviation );
+        metric->SetMovingImageStandardDeviation( this->m_MetricMovingImageStandardDeviation );
+        if ( this->m_MetricNumberOfSpatialSamples )
+          {
+          metric->SetNumberOfSpatialSamples( this->m_MetricNumberOfSpatialSamples );
+          }
+
+        metric->Register();
+        return metric.GetPointer();
+        break;
       }
       default:
         sitkExceptionMacro("LogicError: Unexpected case!");

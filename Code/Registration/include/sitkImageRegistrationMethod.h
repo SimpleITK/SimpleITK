@@ -61,6 +61,9 @@ namespace simple
       { return this->m_Transform; }
 
     Self& SetMetricAsMeanSquares( uint64_t numberOfSpatialSamples = 0 );
+    Self& SetMetricAsMutualInformation( double fixedImageStandardDeviation=0.4,
+                                        double movingImageStandardDeviation=0.4,
+                                        uint64_t numberOfSpatialSamples = 50 );
 
 
     Self& SetOptimizerAsRegularStepGradientDescent( double maxStep,
@@ -131,11 +134,14 @@ namespace simple
     double m_OptimizerLearningRate;
 
     // metric
-    enum MetricType { MeanSquares
+    enum MetricType { MeanSquares,
+                      MutualInformation
     };
 
     MetricType m_MetricType;
     uint64_t  m_MetricNumberOfSpatialSamples;
+    double m_MetricFixedImageStandardDeviation;
+    double m_MetricMovingImageStandardDeviation;
 
     std::vector<unsigned int> m_FixedImageRegionSize;
     std::vector<unsigned int> m_FixedImageRegionIndex;
