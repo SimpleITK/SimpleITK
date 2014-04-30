@@ -29,5 +29,8 @@ target_link_libraries ( FilterProgressReporting ${SimpleITK_LIBRARIES} )
 add_executable ( ImageRegistrationMethod1 ImageRegistrationMethod1.cxx )
 target_link_libraries ( ImageRegistrationMethod1 ${SimpleITK_LIBRARIES} )
 
+add_executable ( ImageRegistrationMethod2 ImageRegistrationMethod2.cxx )
+target_link_libraries ( ImageRegistrationMethod2 ${SimpleITK_LIBRARIES} )
+
 # Add subdirectories
 add_subdirectory(Segmentation)

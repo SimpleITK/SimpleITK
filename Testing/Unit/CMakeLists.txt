@@ -379,7 +379,15 @@ if ( ${BUILD_EXAMPLES} )
       $<TARGET_FILE:ImageRegistrationMethod1>
       ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceBorder20.png
       ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceShifted13x17y.png
-      ${TEST_HARNESS_TEMP_DIRECTORY}/CXXImageRegistrationMethod11Test.hdf5
+      ${TEST_HARNESS_TEMP_DIRECTORY}/CXXImageRegistrationMethod1Test.hdf5
+    )
+
+  add_test(NAME CXX.Example.ImageRegistrationMethod2
+    COMMAND
+      $<TARGET_FILE:ImageRegistrationMethod2>
+      ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceBorder20.png
+      ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceShifted13x17y.png
+      ${TEST_HARNESS_TEMP_DIRECTORY}/CXXImageRegistrationMethod2Test.hdf5
     )
 
 endif()
@@ -697,6 +705,12 @@ if ( WRAP_PYTHON )
     ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethod11Test.hdf5
     )
 
+  add_python_test( Example.ImageRegistrationMethod2
+    "${SimpleITK_SOURCE_DIR}/Examples/ImageRegistrationMethod2.py"
+    ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceBorder20.png
+    ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceShifted13x17y.png
+    ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethod2Test.hdf5
+    )
 
   #
   # Python Tests
