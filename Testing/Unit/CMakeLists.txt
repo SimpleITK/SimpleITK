@@ -374,6 +374,14 @@ if ( ${BUILD_EXAMPLES} )
     60 116
     )
 
+  add_test(NAME CXX.Example.ImageRegistrationMethod1
+    COMMAND
+      $<TARGET_FILE:ImageRegistrationMethod1>
+      ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceBorder20.png
+      ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceShifted13x17y.png
+      ${TEST_HARNESS_TEMP_DIRECTORY}/CXXImageRegistrationMethod11Test.hdf5
+    )
+
 endif()
 
 if ( WRAP_CSHARP )
