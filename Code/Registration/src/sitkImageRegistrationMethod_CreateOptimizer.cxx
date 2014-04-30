@@ -44,9 +44,9 @@ namespace simple
       optimizer->SetMinimize( this->m_OptimizerMinimize );
       if (scales.GetSize()) optimizer->SetScales(scales);
 
-      this->m_pfGetMetricValue = std::tr1::bind(&_OptimizerType::GetValue,optimizer);
-      this->m_pfGetOptimizerIteration = std::tr1::bind(&_OptimizerType::GetCurrentIteration,optimizer);
-      this->m_pfGetOptimizerPosition = std::tr1::bind(&PositionOptimizerCustomCast::CustomCast,optimizer);
+      this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetValue,optimizer);
+      this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer);
+      this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer);
 
       optimizer->Register();
       return optimizer.GetPointer();
@@ -65,9 +65,9 @@ namespace simple
       if (scales.GetSize()) optimizer->SetScales(scales);
       optimizer->Register();
 
-      this->m_pfGetMetricValue = std::tr1::bind(&_OptimizerType::GetValue,optimizer);
-      this->m_pfGetOptimizerIteration = std::tr1::bind(&_OptimizerType::GetCurrentIteration,optimizer);
-      this->m_pfGetOptimizerPosition = std::tr1::bind(&PositionOptimizerCustomCast::CustomCast,optimizer);
+      this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetValue,optimizer);
+      this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer);
+      this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer);
 
       return optimizer.GetPointer();
       }
