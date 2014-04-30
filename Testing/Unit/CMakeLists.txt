@@ -18,6 +18,7 @@ set ( SimpleITKUnitTestSource
   sitkImageIOTests.cxx
   sitkTypeListsTests.cxx
   sitkBasicFiltersTests.cxx
+  sitkRegistrationTests.cxx
   sitkLabelStatisticsTest.cxx
   sitkOperatorTests.cxx
   sitkExceptionsTests.cxx

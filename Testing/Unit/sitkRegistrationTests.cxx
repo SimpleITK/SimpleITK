@@ -17,9 +17,15 @@
 *=========================================================================*/
 #include <SimpleITKTestHarness.h>
 #include <SimpleITK.h>
-#include "itkImage.h"
-#include "itkVectorImage.h"
 
 #include <stdint.h>
 #include <memory>
 
+TEST(Registration,ImageRegistrationMethod_Basic) {
+  // This test is to perform some basic coverage of methods.
+
+  namespace sitk = itk::simple;
+
+  sitk::ImageRegistrationMethod registration;
+  std::cout << registration.ToString();
+}
