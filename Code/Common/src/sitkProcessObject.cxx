@@ -342,6 +342,10 @@ void ProcessObject::PreUpdate(itk::ProcessObject *p)
          i != m_Commands.end();
          ++i)
       {
+      if (i->m_ITKTag != std::numeric_limits<unsigned long>::max())
+        {
+        sitkExceptionMacro("Commands already registered to another process object!");
+        }
       const itk::EventObject &itkEvent = GetITKEventObject(i->m_Event);
 
       Command *cmd = i->m_Command;
@@ -405,6 +409,15 @@ void ProcessObject::OnActiveProcessDelete( )
     {
     this->m_ProgressMeasurement = 0.0f;
     }
+
+  // clear registered command IDs
+  for (std::list<EventCommand>::iterator i = m_Commands.begin();
+         i != m_Commands.end();
+         ++i)
+      {
+      i->m_ITKTag = std::numeric_limits<unsigned long>::max();
+      }
+
   this->m_ActiveProcess = NULL;
 }
 
