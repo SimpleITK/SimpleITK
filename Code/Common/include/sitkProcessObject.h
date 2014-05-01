@@ -233,9 +233,6 @@ namespace itk {
 
     private:
 
-      bool m_Debug;
-      unsigned int m_NumberOfThreads;
-
       struct EventCommand
       {
         EventCommand(EventEnum e, Command *c)
@@ -251,8 +248,6 @@ namespace itk {
           { return m_Command == o.m_Command; }
         inline bool operator<(const EventCommand &o)
           { return m_Command < o.m_Command; }
-
-
       };
 
       // Add command to active process object, the EventCommand's
@@ -263,6 +258,8 @@ namespace itk {
       // occurs.
       unsigned long AddObserverToActiveProcessObject( EventCommand &e );
 
+      bool m_Debug;
+      unsigned int m_NumberOfThreads;
 
       std::list<EventCommand> m_Commands;
 
