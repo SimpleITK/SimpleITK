@@ -236,8 +236,35 @@ namespace itk {
       bool m_Debug;
       unsigned int m_NumberOfThreads;
 
-      typedef std::pair<EventEnum, Command*> EventCommandPairType;
-      std::list<EventCommandPairType> m_Commands;
+      struct EventCommand
+      {
+        EventCommand(EventEnum e, Command *c)
+          : m_Event(e), m_Command(c)
+          {}
+        EventEnum     m_Event;
+        Command *     m_Command;
+
+      };
+
+      // utility method to find commands in list of pairs
+      static bool rm_pred(const Command *cmd, const EventCommand &i) throw()
+      {
+        return cmd == i.m_Command;
+      }
+
+      // less than comparison command pointers
+      static bool cmp_cmd_pred(const EventCommand &i, const EventCommand &j) throw()
+      {
+        return i.m_Command < j.m_Command;
+      }
+
+      // is equal comparison of command pointers
+      static bool eq_cmd_pred(const EventCommand &i, const EventCommand &j) throw()
+      {
+        return i.m_Command == j.m_Command;
+      }
+
+      std::list<EventCommand> m_Commands;
 
       itk::ProcessObject *m_ActiveProcess;
 
