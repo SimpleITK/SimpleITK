@@ -255,12 +255,6 @@ namespace itk {
 
       };
 
-      // utility method to find commands in list of pairs
-      static bool rm_pred(const Command *cmd, const EventCommand &i) throw()
-      {
-        return cmd == i.m_Command;
-      }
-
       std::list<EventCommand> m_Commands;
 
       itk::ProcessObject *m_ActiveProcess;
