@@ -339,6 +339,11 @@ void ProcessObject::PreUpdate(itk::ProcessObject *p)
     {
     this->m_ActiveProcess = p;
 
+    // add command on active process deletion
+    itk::SimpleMemberCommand<Self>::Pointer onDelete = itk::SimpleMemberCommand<Self>::New();
+    onDelete->SetCallbackFunction(this, &Self::OnActiveProcessDelete);
+    p->AddObserver(itk::DeleteEvent(), onDelete);
+
     // register commands
     for (std::list<EventCommand>::iterator i = m_Commands.begin();
          i != m_Commands.end();
@@ -347,11 +352,6 @@ void ProcessObject::PreUpdate(itk::ProcessObject *p)
       this->AddObserverToActiveProcessObject(*i);
       }
 
-    // add command on active process deletion
-    itk::SimpleMemberCommand<Self>::Pointer onDelete = itk::SimpleMemberCommand<Self>::New();
-    onDelete->SetCallbackFunction(this, &Self::OnActiveProcessDelete);
-    p->AddObserver(itk::DeleteEvent(), onDelete);
-
     }
   catch (...)
     {
@@ -359,14 +359,11 @@ void ProcessObject::PreUpdate(itk::ProcessObject *p)
     throw;
     }
 
-
-
   if (this->GetDebug())
      {
      std::cout << "Executing ITK filter:" << std::endl;
      p->Print(std::cout);
      }
-
 }
 
 
