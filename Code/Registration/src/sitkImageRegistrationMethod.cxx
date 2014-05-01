@@ -126,6 +126,7 @@ namespace simple
         return metric.GetPointer();
       }
       default:
+        break; // fall through to exception
       }
     sitkExceptionMacro("LogicError: Unexpected case!");
 
