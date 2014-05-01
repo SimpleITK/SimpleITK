@@ -104,7 +104,7 @@ int main(int argc, char *argv[])
 
   const double fixedImageStandardDeviation = 0.4;
   const double movingImageStandardDeviation = 0.4;
-  const uint64_t numberOfSpatialSamples = numberOfPixels*0.01;
+  const uint64_t numberOfSpatialSamples = uint64_t(numberOfPixels*0.01);
   R.SetMetricAsMutualInformation( fixedImageStandardDeviation,
                                   movingImageStandardDeviation,
                                   numberOfSpatialSamples );
