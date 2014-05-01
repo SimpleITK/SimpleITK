@@ -269,17 +269,7 @@ int ProcessObject::AddCommand(EventEnum event, Command &cmd)
   // register ourselves with the command
   cmd.AddProcessObject(this);
 
-  if (this->m_ActiveProcess)
-    {
-    const itk::EventObject &itkEvent = GetITKEventObject(event);
-
-    // adapt sitk command to itk command
-    SimpleAdaptorCommand::Pointer itkCommand = SimpleAdaptorCommand::New();
-    itkCommand->SetSimpleCommand(&cmd);
-    itkCommand->SetObjectName(cmd.GetName()+" "+itkEvent.GetEventName());
-
-    m_Commands.back().m_ITKTag = this->PreUpdateAddObserver(this->m_ActiveProcess, itkEvent, itkCommand);
-    }
+  this->AddObserverToActiveProcessObject( m_Commands.back() );
 
   return 0;
 }
@@ -354,21 +344,7 @@ void ProcessObject::PreUpdate(itk::ProcessObject *p)
          i != m_Commands.end();
          ++i)
       {
-      if (i->m_ITKTag != std::numeric_limits<unsigned long>::max())
-        {
-        sitkExceptionMacro("Commands already registered to another process object!");
-        }
-      const itk::EventObject &itkEvent = GetITKEventObject(i->m_Event);
-
-      Command *cmd = i->m_Command;
-
-      // adapt sitk command to itk command
-      SimpleAdaptorCommand::Pointer itkCommand = SimpleAdaptorCommand::New();
-      itkCommand->SetSimpleCommand(cmd);
-      itkCommand->SetObjectName(cmd->GetName()+" "+itkEvent.GetEventName());
-
-      // allow derived classes to customize when observer is added.
-      i->m_ITKTag = this->PreUpdateAddObserver(p, itkEvent, itkCommand);
+      this->AddObserverToActiveProcessObject(*i);
       }
 
     // add command on active process deletion
@@ -456,6 +432,28 @@ void ProcessObject::onCommandDelete(const itk::simple::Command *cmd) throw()
       }
 
     }
+}
+
+unsigned long ProcessObject::AddObserverToActiveProcessObject( EventCommand &eventCommand )
+{
+   if (this->m_ActiveProcess)
+    {
+    if (eventCommand.m_ITKTag != std::numeric_limits<unsigned long>::max())
+      {
+      sitkExceptionMacro("Commands already registered to another process object!");
+      }
+
+    const itk::EventObject &itkEvent = GetITKEventObject(eventCommand.m_Event);
+
+    // adapt sitk command to itk command
+    SimpleAdaptorCommand::Pointer itkCommand = SimpleAdaptorCommand::New();
+    itkCommand->SetSimpleCommand(eventCommand.m_Command);
+    itkCommand->SetObjectName(eventCommand.m_Command->GetName()+" "+itkEvent.GetEventName());
+
+    return eventCommand.m_ITKTag = this->PreUpdateAddObserver(this->m_ActiveProcess, itkEvent, itkCommand);
+    }
+
+   return std::numeric_limits<unsigned long>::max();
 }
 
 } // end namespace simple

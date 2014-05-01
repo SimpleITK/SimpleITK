@@ -255,6 +255,15 @@ namespace itk {
 
       };
 
+      // Add command to active process object, the EventCommand's
+      // ITKTag must be unset as max or else an exception is
+      // thrown. The EventCommand's ITKTag is updated to the command
+      // registered to ITK's ProcessObject. If there is not an active
+      // process object then max is returned, and no other action
+      // occurs.
+      unsigned long AddObserverToActiveProcessObject( EventCommand &e );
+
+
       std::list<EventCommand> m_Commands;
 
       itk::ProcessObject *m_ActiveProcess;
