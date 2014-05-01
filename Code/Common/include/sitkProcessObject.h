@@ -146,8 +146,8 @@ namespace itk {
        * have valid values during events, and access the underlying
        * ITK object.
        *
-       * Deleting a registered command during execution causes
-       * program termination.
+       * Deleting a command this object has during a command call-back
+       * will produce undefined behavior.
        *
        * For more information see the page \ref CommandPage.
        *
@@ -155,7 +155,11 @@ namespace itk {
        */
       virtual int AddCommand(itk::simple::EventEnum event, itk::simple::Command &cmd);
 
-      /** \brief Remove all registered commands. */
+      /** \brief Remove all registered commands.
+       *
+       * Calling when this object is invoking anther command will
+       * produce undefined behavior.
+       */
       virtual void RemoveAllCommands();
 
       /** \brief Query of this object has any registered commands for event. */
