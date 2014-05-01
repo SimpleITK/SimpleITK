@@ -124,11 +124,10 @@ namespace simple
 
         metric->Register();
         return metric.GetPointer();
-        break;
       }
       default:
-        sitkExceptionMacro("LogicError: Unexpected case!");
       }
+    sitkExceptionMacro("LogicError: Unexpected case!");
 
  }
 
