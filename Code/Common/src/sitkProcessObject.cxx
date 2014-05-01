@@ -269,6 +269,18 @@ int ProcessObject::AddCommand(EventEnum event, Command &cmd)
   // register ourselves with the command
   cmd.AddProcessObject(this);
 
+  if (this->m_ActiveProcess)
+    {
+    const itk::EventObject &itkEvent = GetITKEventObject(event);
+
+    // adapt sitk command to itk command
+    SimpleAdaptorCommand::Pointer itkCommand = SimpleAdaptorCommand::New();
+    itkCommand->SetSimpleCommand(&cmd);
+    itkCommand->SetObjectName(cmd.GetName()+" "+itkEvent.GetEventName());
+
+    m_Commands.back().m_ITKTag = this->PreUpdateAddObserver(this->m_ActiveProcess, itkEvent, itkCommand);
+    }
+
   return 0;
 }
 
