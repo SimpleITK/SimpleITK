@@ -243,6 +243,11 @@ namespace itk {
           {}
         EventEnum     m_Event;
         Command *     m_Command;
+        inline bool operator==(const EventCommand &o)
+          { return m_Command == o.m_Command; }
+        inline bool operator<(const EventCommand &o)
+          { return m_Command < o.m_Command; }
+
 
       };
 
@@ -250,18 +255,6 @@ namespace itk {
       static bool rm_pred(const Command *cmd, const EventCommand &i) throw()
       {
         return cmd == i.m_Command;
-      }
-
-      // less than comparison command pointers
-      static bool cmp_cmd_pred(const EventCommand &i, const EventCommand &j) throw()
-      {
-        return i.m_Command < j.m_Command;
-      }
-
-      // is equal comparison of command pointers
-      static bool eq_cmd_pred(const EventCommand &i, const EventCommand &j) throw()
-      {
-        return i.m_Command == j.m_Command;
       }
 
       std::list<EventCommand> m_Commands;

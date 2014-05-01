@@ -281,8 +281,8 @@ void ProcessObject::RemoveAllCommands()
 
   // we must only call RemoveProcessObject once for each command
   // so make a unique list of the Commands.
-  oldCommands.sort(Self::cmp_cmd_pred);
-  oldCommands.unique(Self::eq_cmd_pred);
+  oldCommands.sort();
+  oldCommands.unique();
 
   std::list<EventCommand>::iterator i = oldCommands.begin();
   while( i != oldCommands.end() )
