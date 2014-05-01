@@ -352,7 +352,7 @@ void ProcessObject::PreUpdate(itk::ProcessObject *p)
       itkCommand->SetObjectName(cmd->GetName()+" "+itkEvent.GetEventName());
 
       // allow derived classes to customize when observer is added.
-      this->PreUpdateAddObserver(p, itkEvent, itkCommand);
+      i->m_ITKTag = this->PreUpdateAddObserver(p, itkEvent, itkCommand);
       }
 
     // add command on active process deletion
@@ -378,11 +378,11 @@ void ProcessObject::PreUpdate(itk::ProcessObject *p)
 }
 
 
-void ProcessObject::PreUpdateAddObserver( itk::ProcessObject *p,
+unsigned long ProcessObject::PreUpdateAddObserver( itk::ProcessObject *p,
                                           const itk::EventObject &e,
                                           itk::Command *c)
 {
-  p->AddObserver(e,c);
+  return p->AddObserver(e,c);
 }
 
 itk::ProcessObject *ProcessObject::GetActiveProcess( )

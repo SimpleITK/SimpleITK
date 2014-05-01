@@ -198,7 +198,7 @@ namespace itk {
       virtual void PreUpdate( itk::ProcessObject *p );
 
       // overidable method to add a command.
-      virtual void PreUpdateAddObserver( itk::ProcessObject *p, const itk::EventObject &, itk::Command *);
+      virtual unsigned long PreUpdateAddObserver( itk::ProcessObject *p, const itk::EventObject &, itk::Command *);
 
       // returns the current active process, if no active process then
       // an exception is throw.
@@ -239,10 +239,14 @@ namespace itk {
       struct EventCommand
       {
         EventCommand(EventEnum e, Command *c)
-          : m_Event(e), m_Command(c)
+          : m_Event(e), m_Command(c), m_ITKTag(std::numeric_limits<unsigned long>::max())
           {}
         EventEnum     m_Event;
         Command *     m_Command;
+
+        // set to max if currently not registered
+        unsigned long m_ITKTag;
+
         inline bool operator==(const EventCommand &o)
           { return m_Command == o.m_Command; }
         inline bool operator<(const EventCommand &o)
