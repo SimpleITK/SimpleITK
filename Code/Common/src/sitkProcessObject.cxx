@@ -281,14 +281,26 @@ void ProcessObject::RemoveAllCommands()
   std::list<EventCommand> oldCommands;
   swap(oldCommands, m_Commands);
 
+  // remove commands from active process object
+  std::list<EventCommand>::iterator i = oldCommands.begin();
+  while( i != oldCommands.end() && this->m_ActiveProcess )
+    {
+    if (i->m_ITKTag != std::numeric_limits<unsigned long>::max() )
+      {
+      this->m_ActiveProcess->RemoveObserver(i->m_ITKTag);
+      }
+    ++i;
+    }
+
   // we must only call RemoveProcessObject once for each command
   // so make a unique list of the Commands.
   oldCommands.sort();
   oldCommands.unique();
-
-  std::list<EventCommand>::iterator i = oldCommands.begin();
+  i = oldCommands.begin();
   while( i != oldCommands.end() )
     {
+    // note: this may call onCommandDelete, but we have already copied
+    // this->m_Command will be empty
     i++->m_Command->RemoveProcessObject(this);
     }
 }
