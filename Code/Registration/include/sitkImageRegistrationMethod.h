@@ -105,7 +105,7 @@ namespace simple
 
     virtual void PreUpdate( itk::ProcessObject *p );
     virtual void OnActiveProcessDelete( ) throw();
-    virtual void PreUpdateAddObserver( itk::ProcessObject *, const itk::EventObject &, itk::Command *);
+    virtual unsigned long PreUpdateAddObserver( itk::ProcessObject *, const itk::EventObject &, itk::Command *);
 
   private:
 
