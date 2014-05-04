@@ -278,6 +278,50 @@ TEST( ProcessObject, DeleteCommandActiveProcess )
   EXPECT_TRUE(po.HasCommand(sitk::sitkProgressEvent));
 }
 
+TEST( ProcessObject, RemoveAllCommandsActiveProcess )
+{
+  // Test the case of deleting the command while the process is active.
+  namespace sitk = itk::simple;
+
+  class RemoveAllCommandsAtCommand
+  : public ProcessObjectCommand
+  {
+  public:
+    RemoveAllCommandsAtCommand(itk::simple::ProcessObject &po, float abortAt )
+      : ProcessObjectCommand(po),
+        m_AbortAt(abortAt)
+      {
+      }
+
+    virtual void Execute( )
+      {
+        if ( m_Process.GetProgress() >= m_AbortAt )
+          {
+          std::cout << "Removing All Commands" << std::endl;
+          m_Process.RemoveAllCommands();
+          std::cout << "Done" << std::endl;
+          }
+      }
+
+    float m_AbortAt;
+  };
+
+  sitk::CastImageFilter po;
+  sitk::Image img(100,100,100, sitk::sitkUInt16);
+
+  sitk::Command *cmd1 = new sitk::Command();
+  RemoveAllCommandsAtCommand cmd2(po, .01);
+
+  po.AddCommand(sitk::sitkAnyEvent, *cmd1);
+  po.AddCommand(sitk::sitkProgressEvent, cmd2);
+
+
+  ASSERT_NO_THROW(po.Execute(img)) << "Exception with remove all commands";
+
+  EXPECT_FALSE(po.HasCommand(sitk::sitkAnyEvent));
+  EXPECT_FALSE(po.HasCommand(sitk::sitkProgressEvent));
+}
+
 
 TEST( Event, Test1 )
 {
