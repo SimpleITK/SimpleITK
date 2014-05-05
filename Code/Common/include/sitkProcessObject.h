@@ -219,8 +219,11 @@ namespace itk {
       // connect commands.
       virtual void PreUpdate( itk::ProcessObject *p );
 
-      // overidable method to add a command.
+      // overridable method to add a command, the return value is
+      // placed in the m_ITKTag of the EventCommand object.
       virtual unsigned long AddITKObserver(const itk::EventObject &, itk::Command *);
+
+      // overridable method to remove a command
       virtual void RemoveITKObserver( EventCommand &e );
 
       // returns the current active process, if no active process then
@@ -259,11 +262,13 @@ namespace itk {
       // Add command to active process object, the EventCommand's
       // ITKTag must be unset as max or else an exception is
       // thrown. The EventCommand's ITKTag is updated to the command
-      // registered to ITK's ProcessObject. If there is not an active
-      // process object then max is returned, and no other action
-      // occurs.
+      // registered to ITK's ProcessObject. It's assumed that there is
+      // an current active process
       unsigned long AddObserverToActiveProcessObject( EventCommand &e );
 
+      // Remove the command from the active processes. Its is assumed
+      // that an active process exists. The tag is set to max after it
+      // is removed.
       void RemoveObserverFromActiveProcessObject( EventCommand &e );
 
       bool m_Debug;
