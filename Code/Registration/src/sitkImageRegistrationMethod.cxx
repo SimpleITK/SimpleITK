@@ -311,9 +311,11 @@ void ImageRegistrationMethod::PreUpdate( itk::ProcessObject *p )
 }
 
 
-unsigned long ImageRegistrationMethod::PreUpdateAddObserver( itk::ProcessObject *p, const itk::EventObject &e, itk::Command *c)
+
+unsigned long ImageRegistrationMethod::AddITKObserver(const itk::EventObject &e, itk::Command *c)
 {
   assert(this->m_ActiveOptimizer);
+
   // todo switch to generator function
   itk::IterationEvent iterationEvent;
   if (e.CheckEvent(&iterationEvent))
@@ -321,7 +323,7 @@ unsigned long ImageRegistrationMethod::PreUpdateAddObserver( itk::ProcessObject 
     this->m_ActiveOptimizer->AddObserver(e,c);
     return 0;
     }
-  return Superclass::PreUpdateAddObserver(p,e,c);
+  return Superclass::AddITKObserver(e,c);
 }
 
 void ImageRegistrationMethod::OnActiveProcessDelete( ) throw()
