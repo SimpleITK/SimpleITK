@@ -156,7 +156,7 @@ end)
 )
 )
                 // Run the filter
-                Image output = filter.Execute ( $(if #inputs > 0 then OUT=[[inputs[0] ]] end)$(for inum=1,#inputs-1 do OUT=OUT..", inputs["..inum.."]" end) );
+                $(if not no_return_image then OUT=[[Image output = ]] end)filter.Execute ( $(if #inputs > 0 then OUT=[[inputs[0] ]] end)$(for inum=1,#inputs-1 do OUT=OUT..", inputs["..inum.."]" end) );
 
 $(if not no_return_image then
 OUT=[[
