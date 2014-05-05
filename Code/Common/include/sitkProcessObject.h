@@ -198,12 +198,31 @@ namespace itk {
     protected:
 
       #ifndef SWIG
+
+      struct EventCommand
+      {
+        EventCommand(EventEnum e, Command *c)
+          : m_Event(e), m_Command(c), m_ITKTag(std::numeric_limits<unsigned long>::max())
+          {}
+        EventEnum     m_Event;
+        Command *     m_Command;
+
+        // set to max if currently not registered
+        unsigned long m_ITKTag;
+
+        inline bool operator==(const EventCommand &o)
+          { return m_Command == o.m_Command; }
+        inline bool operator<(const EventCommand &o)
+          { return m_Command < o.m_Command; }
+      };
+
       // method called before filter update to set parameters and
       // connect commands.
       virtual void PreUpdate( itk::ProcessObject *p );
 
       // overidable method to add a command.
-      virtual unsigned long PreUpdateAddObserver( itk::ProcessObject *p, const itk::EventObject &, itk::Command *);
+      virtual unsigned long AddITKObserver(const itk::EventObject &, itk::Command *);
+      virtual void RemoveITKObserver( EventCommand &e );
 
       // returns the current active process, if no active process then
       // an exception is throw.
@@ -252,23 +271,6 @@ namespace itk {
 
     private:
 
-      struct EventCommand
-      {
-        EventCommand(EventEnum e, Command *c)
-          : m_Event(e), m_Command(c), m_ITKTag(std::numeric_limits<unsigned long>::max())
-          {}
-        EventEnum     m_Event;
-        Command *     m_Command;
-
-        // set to max if currently not registered
-        unsigned long m_ITKTag;
-
-        inline bool operator==(const EventCommand &o)
-          { return m_Command == o.m_Command; }
-        inline bool operator<(const EventCommand &o)
-          { return m_Command < o.m_Command; }
-      };
-
       // Add command to active process object, the EventCommand's
       // ITKTag must be unset as max or else an exception is
       // thrown. The EventCommand's ITKTag is updated to the command
@@ -276,6 +278,8 @@ namespace itk {
       // process object then max is returned, and no other action
       // occurs.
       unsigned long AddObserverToActiveProcessObject( EventCommand &e );
+
+      void RemoveObserverFromActiveProcessObject( EventCommand &e );
 
       bool m_Debug;
       unsigned int m_NumberOfThreads;

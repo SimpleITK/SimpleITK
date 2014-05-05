@@ -269,7 +269,14 @@ int ProcessObject::AddCommand(EventEnum event, Command &cmd)
   // register ourselves with the command
   cmd.AddProcessObject(this);
 
-  this->AddObserverToActiveProcessObject( m_Commands.back() );
+  if (this->m_ActiveProcess)
+    {
+    this->AddObserverToActiveProcessObject( m_Commands.back() );
+    }
+  else
+    {
+    m_Commands.back().m_ITKTag = std::numeric_limits<unsigned long>::max();
+    }
 
   return 0;
 }
@@ -285,10 +292,7 @@ void ProcessObject::RemoveAllCommands()
   std::list<EventCommand>::iterator i = oldCommands.begin();
   while( i != oldCommands.end() && this->m_ActiveProcess )
     {
-    if (i->m_ITKTag != std::numeric_limits<unsigned long>::max() )
-      {
-      this->m_ActiveProcess->RemoveObserver(i->m_ITKTag);
-      }
+    this->RemoveObserverFromActiveProcessObject(*i);
     ++i;
     }
 
@@ -379,11 +383,17 @@ void ProcessObject::PreUpdate(itk::ProcessObject *p)
 }
 
 
-unsigned long ProcessObject::PreUpdateAddObserver( itk::ProcessObject *p,
-                                          const itk::EventObject &e,
-                                          itk::Command *c)
+unsigned long ProcessObject::AddITKObserver( const itk::EventObject &e,
+                                             itk::Command *c)
 {
-  return p->AddObserver(e,c);
+  assert(this->m_ActiveProcess);
+  return this->m_ActiveProcess->AddObserver(e,c);
+}
+
+void ProcessObject::RemoveITKObserver( EventCommand &e )
+{
+  assert(this->m_ActiveProcess);
+  this->m_ActiveProcess->RemoveObserver(e.m_ITKTag);
 }
 
 itk::ProcessObject *ProcessObject::GetActiveProcess( )
@@ -428,12 +438,11 @@ void ProcessObject::onCommandDelete(const itk::simple::Command *cmd) throw()
     {
     if ( cmd == i->m_Command )
       {
-      if (i->m_ITKTag != std::numeric_limits<unsigned long>::max()
-          && this->m_ActiveProcess)
+      if ( this->m_ActiveProcess )
         {
-        this->m_ActiveProcess->RemoveObserver(i->m_ITKTag);
+        this->RemoveObserverFromActiveProcessObject( *i );
         }
-       this->m_Commands.erase(i++);
+      this->m_Commands.erase(i++);
       }
     else
       {
@@ -445,25 +454,34 @@ void ProcessObject::onCommandDelete(const itk::simple::Command *cmd) throw()
 
 unsigned long ProcessObject::AddObserverToActiveProcessObject( EventCommand &eventCommand )
 {
-   if (this->m_ActiveProcess)
+  assert( this->m_ActiveProcess );
+
+  if (eventCommand.m_ITKTag != std::numeric_limits<unsigned long>::max())
     {
-    if (eventCommand.m_ITKTag != std::numeric_limits<unsigned long>::max())
-      {
-      sitkExceptionMacro("Commands already registered to another process object!");
-      }
-
-    const itk::EventObject &itkEvent = GetITKEventObject(eventCommand.m_Event);
-
-    // adapt sitk command to itk command
-    SimpleAdaptorCommand::Pointer itkCommand = SimpleAdaptorCommand::New();
-    itkCommand->SetSimpleCommand(eventCommand.m_Command);
-    itkCommand->SetObjectName(eventCommand.m_Command->GetName()+" "+itkEvent.GetEventName());
-
-    return eventCommand.m_ITKTag = this->PreUpdateAddObserver(this->m_ActiveProcess, itkEvent, itkCommand);
+    sitkExceptionMacro("Commands already registered to another process object!");
     }
 
-   return std::numeric_limits<unsigned long>::max();
+  const itk::EventObject &itkEvent = GetITKEventObject(eventCommand.m_Event);
+
+  // adapt sitk command to itk command
+  SimpleAdaptorCommand::Pointer itkCommand = SimpleAdaptorCommand::New();
+  itkCommand->SetSimpleCommand(eventCommand.m_Command);
+  itkCommand->SetObjectName(eventCommand.m_Command->GetName()+" "+itkEvent.GetEventName());
+
+  return eventCommand.m_ITKTag = this->AddITKObserver( itkEvent, itkCommand );
 }
+
+void ProcessObject::RemoveObserverFromActiveProcessObject( EventCommand &e )
+ {
+   assert( this->m_ActiveProcess );
+
+   if (e.m_ITKTag != std::numeric_limits<unsigned long>::max() )
+     {
+     this->RemoveITKObserver(e);
+     e.m_ITKTag = std::numeric_limits<unsigned long>::max();
+     }
+
+ }
 
 } // end namespace simple
 } // end namespace itk
