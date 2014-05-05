@@ -202,7 +202,7 @@ namespace itk {
       virtual void PreUpdate( itk::ProcessObject *p );
 
       // overidable method to add a command.
-      virtual unsigned long PreUpdateAddObserver( itk::ProcessObject *p, const itk::EventObject &, itk::Command *);
+      virtual unsigned long AddITKObserver(const itk::EventObject &, itk::Command *);
 
       // returns the current active process, if no active process then
       // an exception is throw.

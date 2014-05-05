@@ -376,11 +376,11 @@ void ProcessObject::PreUpdate(itk::ProcessObject *p)
 }
 
 
-unsigned long ProcessObject::PreUpdateAddObserver( itk::ProcessObject *p,
-                                          const itk::EventObject &e,
-                                          itk::Command *c)
+unsigned long ProcessObject::AddITKObserver( const itk::EventObject &e,
+                                             itk::Command *c)
 {
-  return p->AddObserver(e,c);
+  assert(this->m_ActiveProcess);
+  return this->m_ActiveProcess->AddObserver(e,c);
 }
 
 itk::ProcessObject *ProcessObject::GetActiveProcess( )
