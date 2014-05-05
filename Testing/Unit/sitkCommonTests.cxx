@@ -309,10 +309,10 @@ TEST( ProcessObject, RemoveAllCommandsActiveProcess )
   sitk::CastImageFilter po;
   sitk::Image img(100,100,100, sitk::sitkUInt16);
 
-  sitk::Command *cmd1 = new sitk::Command();
+  sitk::Command cmd1 = sitk::Command();
   RemoveAllCommandsAtCommand cmd2(po, .01);
 
-  po.AddCommand(sitk::sitkAnyEvent, *cmd1);
+  po.AddCommand(sitk::sitkAnyEvent, cmd1);
   po.AddCommand(sitk::sitkProgressEvent, cmd2);
 
 
