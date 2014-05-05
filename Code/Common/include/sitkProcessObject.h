@@ -262,6 +262,8 @@ namespace itk {
       // occurs.
       unsigned long AddObserverToActiveProcessObject( EventCommand &e );
 
+      void RemoveObserverFromActiveProcessObject( EventCommand &e );
+
       bool m_Debug;
       unsigned int m_NumberOfThreads;
 

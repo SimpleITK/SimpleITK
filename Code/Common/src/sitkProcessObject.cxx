@@ -285,10 +285,7 @@ void ProcessObject::RemoveAllCommands()
   std::list<EventCommand>::iterator i = oldCommands.begin();
   while( i != oldCommands.end() && this->m_ActiveProcess )
     {
-    if (i->m_ITKTag != std::numeric_limits<unsigned long>::max() )
-      {
-      this->m_ActiveProcess->RemoveObserver(i->m_ITKTag);
-      }
+    this->RemoveObserverFromActiveProcessObject(*i);
     ++i;
     }
 
@@ -428,12 +425,11 @@ void ProcessObject::onCommandDelete(const itk::simple::Command *cmd) throw()
     {
     if ( cmd == i->m_Command )
       {
-      if (i->m_ITKTag != std::numeric_limits<unsigned long>::max()
-          && this->m_ActiveProcess)
+      if ( this->m_ActiveProcess )
         {
-        this->m_ActiveProcess->RemoveObserver(i->m_ITKTag);
+        this->RemoveObserverFromActiveProcessObject( *i );
         }
-       this->m_Commands.erase(i++);
+      this->m_Commands.erase(i++);
       }
     else
       {
@@ -464,6 +460,18 @@ unsigned long ProcessObject::AddObserverToActiveProcessObject( EventCommand &eve
 
    return std::numeric_limits<unsigned long>::max();
 }
+
+void ProcessObject::RemoveObserverFromActiveProcessObject( EventCommand &e )
+ {
+   assert( this->m_ActiveProcess );
+
+   if (e.m_ITKTag != std::numeric_limits<unsigned long>::max() )
+     {
+     this->m_ActiveProcess->RemoveObserver(e.m_ITKTag);
+     e.m_ITKTag = std::numeric_limits<unsigned long>::max();
+     }
+
+ }
 
 } // end namespace simple
 } // end namespace itk
