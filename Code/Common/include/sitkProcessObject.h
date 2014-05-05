@@ -224,6 +224,9 @@ namespace itk {
       virtual unsigned long AddITKObserver(const itk::EventObject &, itk::Command *);
       virtual void RemoveITKObserver( EventCommand &e );
 
+      // Create an ITK EventObject from the SimpleITK enumerated type.
+      static const itk::EventObject &GetITKEventObject(EventEnum e);
+
       // returns the current active process, if no active process then
       // an exception is throw.
       virtual itk::ProcessObject *GetActiveProcess( );
