@@ -221,6 +221,7 @@ namespace itk {
 
       // overidable method to add a command.
       virtual unsigned long AddITKObserver(const itk::EventObject &, itk::Command *);
+      virtual void RemoveITKObserver( EventCommand &e );
 
       // returns the current active process, if no active process then
       // an exception is throw.

@@ -390,6 +390,12 @@ unsigned long ProcessObject::AddITKObserver( const itk::EventObject &e,
   return this->m_ActiveProcess->AddObserver(e,c);
 }
 
+void ProcessObject::RemoveITKObserver( EventCommand &e )
+{
+  assert(this->m_ActiveProcess);
+  this->m_ActiveProcess->RemoveObserver(e.m_ITKTag);
+}
+
 itk::ProcessObject *ProcessObject::GetActiveProcess( )
 {
   if (this->m_ActiveProcess)
@@ -471,7 +477,7 @@ void ProcessObject::RemoveObserverFromActiveProcessObject( EventCommand &e )
 
    if (e.m_ITKTag != std::numeric_limits<unsigned long>::max() )
      {
-     this->m_ActiveProcess->RemoveObserver(e.m_ITKTag);
+     this->RemoveITKObserver(e);
      e.m_ITKTag = std::numeric_limits<unsigned long>::max();
      }
 
