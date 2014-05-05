@@ -106,6 +106,7 @@ namespace simple
     virtual void PreUpdate( itk::ProcessObject *p );
     virtual void OnActiveProcessDelete( ) throw();
     virtual unsigned long AddITKObserver(const itk::EventObject &, itk::Command *);
+    virtual void RemoveITKObserver( EventCommand &e );
 
   private:
 
