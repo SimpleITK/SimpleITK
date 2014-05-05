@@ -311,17 +311,28 @@ void ImageRegistrationMethod::PreUpdate( itk::ProcessObject *p )
 }
 
 
-unsigned long ImageRegistrationMethod::PreUpdateAddObserver( itk::ProcessObject *p, const itk::EventObject &e, itk::Command *c)
+
+unsigned long ImageRegistrationMethod::AddITKObserver(const itk::EventObject &e, itk::Command *c)
 {
   assert(this->m_ActiveOptimizer);
-  // todo switch to generator function
-  itk::IterationEvent iterationEvent;
-  if (e.CheckEvent(&iterationEvent))
+
+  if (e.CheckEvent(&GetITKEventObject(sitkIterationEvent)))
     {
-    this->m_ActiveOptimizer->AddObserver(e,c);
-    return 0;
+    return this->m_ActiveOptimizer->AddObserver(e,c);
     }
-  return Superclass::PreUpdateAddObserver(p,e,c);
+  return Superclass::AddITKObserver(e,c);
+}
+
+void ImageRegistrationMethod::RemoveITKObserver( EventCommand &e )
+{
+  assert(this->m_ActiveOptimizer);
+
+  if (e.m_Event == sitkIterationEvent)
+    {
+    this->m_ActiveOptimizer->RemoveObserver(e.m_ITKTag);
+    return;
+    }
+  return Superclass::RemoveITKObserver(e);
 }
 
 void ImageRegistrationMethod::OnActiveProcessDelete( ) throw()

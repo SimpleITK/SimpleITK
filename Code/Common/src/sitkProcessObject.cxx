@@ -43,32 +43,6 @@ static itk::StartEvent eventStartEvent;
 static itk::UserEvent eventUserEvent;
 
 
-// Create an ITK EventObject from the SimpleITK enumerated type.
-const itk::EventObject &GetITKEventObject(EventEnum e)
-{
-  switch (e)
-    {
-    case sitkAnyEvent:
-      return eventAnyEvent;
-    case sitkAbortEvent:
-      return eventAbortEvent;
-    case sitkDeleteEvent:
-      return eventDeleteEvent;
-    case sitkEndEvent:
-      return eventEndEvent;
-    case sitkIterationEvent:
-      return eventIterationEvent;
-    case sitkProgressEvent:
-      return eventProgressEvent;
-    case sitkStartEvent:
-      return eventStartEvent;
-    case sitkUserEvent:
-      return eventUserEvent;
-    default:
-      sitkExceptionMacro("LogicError: Unexpected event case!");
-    }
-}
-
 // Local class to adapt a sitk::Command to ITK's command.
 // It utilizes a raw pointer, and relies on the sitk
 // ProcessObject<->Command reference to automatically remove it.
@@ -390,11 +364,40 @@ unsigned long ProcessObject::AddITKObserver( const itk::EventObject &e,
   return this->m_ActiveProcess->AddObserver(e,c);
 }
 
+
 void ProcessObject::RemoveITKObserver( EventCommand &e )
 {
   assert(this->m_ActiveProcess);
   this->m_ActiveProcess->RemoveObserver(e.m_ITKTag);
 }
+
+
+
+const itk::EventObject &ProcessObject::GetITKEventObject(EventEnum e)
+{
+  switch (e)
+    {
+    case sitkAnyEvent:
+      return eventAnyEvent;
+    case sitkAbortEvent:
+      return eventAbortEvent;
+    case sitkDeleteEvent:
+      return eventDeleteEvent;
+    case sitkEndEvent:
+      return eventEndEvent;
+    case sitkIterationEvent:
+      return eventIterationEvent;
+    case sitkProgressEvent:
+      return eventProgressEvent;
+    case sitkStartEvent:
+      return eventStartEvent;
+    case sitkUserEvent:
+      return eventUserEvent;
+    default:
+      sitkExceptionMacro("LogicError: Unexpected event case!");
+    }
+}
+
 
 itk::ProcessObject *ProcessObject::GetActiveProcess( )
 {
