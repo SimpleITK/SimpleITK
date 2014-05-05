@@ -316,9 +316,7 @@ unsigned long ImageRegistrationMethod::AddITKObserver(const itk::EventObject &e,
 {
   assert(this->m_ActiveOptimizer);
 
-  // todo switch to generator function
-  itk::IterationEvent iterationEvent;
-  if (e.CheckEvent(&iterationEvent))
+  if (e.CheckEvent(&GetITKEventObject(sitkIterationEvent)))
     {
     this->m_ActiveOptimizer->AddObserver(e,c);
     return 0;
