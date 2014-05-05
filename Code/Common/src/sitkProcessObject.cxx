@@ -269,7 +269,14 @@ int ProcessObject::AddCommand(EventEnum event, Command &cmd)
   // register ourselves with the command
   cmd.AddProcessObject(this);
 
-  this->AddObserverToActiveProcessObject( m_Commands.back() );
+  if (this->m_ActiveProcess)
+    {
+    this->AddObserverToActiveProcessObject( m_Commands.back() );
+    }
+  else
+    {
+    m_Commands.back().m_ITKTag = std::numeric_limits<unsigned long>::max();
+    }
 
   return 0;
 }
@@ -441,24 +448,21 @@ void ProcessObject::onCommandDelete(const itk::simple::Command *cmd) throw()
 
 unsigned long ProcessObject::AddObserverToActiveProcessObject( EventCommand &eventCommand )
 {
-   if (this->m_ActiveProcess)
+  assert( this->m_ActiveProcess );
+
+  if (eventCommand.m_ITKTag != std::numeric_limits<unsigned long>::max())
     {
-    if (eventCommand.m_ITKTag != std::numeric_limits<unsigned long>::max())
-      {
-      sitkExceptionMacro("Commands already registered to another process object!");
-      }
-
-    const itk::EventObject &itkEvent = GetITKEventObject(eventCommand.m_Event);
-
-    // adapt sitk command to itk command
-    SimpleAdaptorCommand::Pointer itkCommand = SimpleAdaptorCommand::New();
-    itkCommand->SetSimpleCommand(eventCommand.m_Command);
-    itkCommand->SetObjectName(eventCommand.m_Command->GetName()+" "+itkEvent.GetEventName());
-
-    return eventCommand.m_ITKTag = this->PreUpdateAddObserver(this->m_ActiveProcess, itkEvent, itkCommand);
+    sitkExceptionMacro("Commands already registered to another process object!");
     }
 
-   return std::numeric_limits<unsigned long>::max();
+  const itk::EventObject &itkEvent = GetITKEventObject(eventCommand.m_Event);
+
+  // adapt sitk command to itk command
+  SimpleAdaptorCommand::Pointer itkCommand = SimpleAdaptorCommand::New();
+  itkCommand->SetSimpleCommand(eventCommand.m_Command);
+  itkCommand->SetObjectName(eventCommand.m_Command->GetName()+" "+itkEvent.GetEventName());
+
+  return eventCommand.m_ITKTag = this->AddITKObserver( itkEvent, itkCommand );
 }
 
 void ProcessObject::RemoveObserverFromActiveProcessObject( EventCommand &e )
