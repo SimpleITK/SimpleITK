@@ -250,6 +250,9 @@ public:
       assert( t->GetInputSpaceDimension() == TransformType::InputSpaceDimension );
 
       m_Transform->AddTransform( t );
+      m_Transform->SetAllTransformsToOptimizeOff();
+      m_Transform->SetOnlyMostRecentTransformToOptimizeOn();
+
       return this;
     }
 
@@ -260,6 +263,9 @@ public:
       typename CompositeTransformType::Pointer composite = CompositeTransformType::New();
       composite->AddTransform( this->m_Transform );
       composite->AddTransform( t );
+      composite->SetAllTransformsToOptimizeOff();
+      composite->SetOnlyMostRecentTransformToOptimizeOn();
+
       return new PimpleTransform<CompositeTransformType>( composite );
     }
 
@@ -416,7 +422,12 @@ void Transform::MakeUniqueForWrite( void )
 
           compositeTransform->AddTransform( identityTransform );
           }
+
+        compositeTransform->SetAllTransformsToOptimizeOff();
+        compositeTransform->SetOnlyMostRecentTransformToOptimizeOn();
+
         m_PimpleTransform = new PimpleTransform<itk::CompositeTransform<double, VDimension> >( compositeTransform );
+
         }
         break;
       case sitkIdentity:
