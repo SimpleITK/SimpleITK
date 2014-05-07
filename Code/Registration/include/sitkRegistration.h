@@ -15,17 +15,23 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#include <SimpleITKTestHarness.h>
-#include <SimpleITK.h>
+#ifndef __sitkRegistration_h
+#define __sitkRegistration_h
 
-#include <stdint.h>
-#include <memory>
+#include "sitkMacro.h"
 
-TEST(Registration,ImageRegistrationMethod_Basic) {
-  // This test is to perform some basic coverage of methods.
+#if defined( SITKDLL )
+  #ifdef SimpleITKRegistration_EXPORTS
+    #define SITKRegistration_EXPORT SITK_ABI_EXPORT
+  #else
+    #define SITKRegistration_EXPORT SITK_ABI_IMPORT
+  #endif  /* SimpleITKRegistration_EXPORTS */
+#else
+  // Don't hide symbols in the static SimpleITKRegistration library in case
+  // -fvisibility=hidden is used
+  #define SITKRegistration_EXPORT
+#endif
 
-  namespace sitk = itk::simple;
+#define SITKRegistration_HIDDEN SITK_ABI_HIDDEN
 
-  sitk::ImageRegistrationMethod registration;
-  std::cout << registration.ToString();
-}
+#endif // __sitkRegistration_h

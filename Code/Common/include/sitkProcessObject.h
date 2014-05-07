@@ -22,6 +22,7 @@
 #include "sitkNonCopyable.h"
 #include "sitkTemplateFunctions.h"
 #include "sitkEvent.h"
+#include "sitkImage.h"
 
 #include <iostream>
 #include <list>
@@ -226,6 +227,9 @@ namespace itk {
       // overridable method to remove a command
       virtual void RemoveITKObserver( EventCommand &e );
 
+      // Create an ITK EventObject from the SimpleITK enumerated type.
+      static const itk::EventObject &GetITKEventObject(EventEnum e);
+
       // returns the current active process, if no active process then
       // an exception is throw.
       virtual itk::ProcessObject *GetActiveProcess( );
@@ -238,6 +242,20 @@ namespace itk {
       // references between command and process objects.
       virtual void onCommandDelete(const itk::simple::Command *cmd) throw();
       #endif
+
+
+      template< class TImageType >
+      static typename TImageType::ConstPointer CastImageToITK( const Image &img )
+      {
+        typename TImageType::ConstPointer itkImage =
+          dynamic_cast < const TImageType* > ( img.GetITKBase() );
+
+        if ( itkImage.IsNull() )
+          {
+          sitkExceptionMacro( "Unexpected template dispatch error!" );
+          }
+        return itkImage;
+      }
 
       /**
        * Output operator to os with conversion to a printable type.

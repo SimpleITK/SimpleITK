@@ -61,19 +61,6 @@ namespace itk {
 
     protected:
 
-      template< class TImageType >
-      static typename TImageType::ConstPointer CastImageToITK( const Image &img )
-      {
-        typename TImageType::ConstPointer itkImage =
-          dynamic_cast < const TImageType* > ( img.GetITKBase() );
-
-        if ( itkImage.IsNull() )
-          {
-          sitkExceptionMacro( "Unexpected template dispatch error!" );
-          }
-        return itkImage;
-      }
-
       // Simple ITK must use a zero based index
       template< class TImageType>
       static void FixNonZeroIndex( TImageType * img )
