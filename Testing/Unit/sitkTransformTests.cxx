@@ -24,7 +24,6 @@
 
 namespace sitk = itk::simple;
 
-
 TEST(TransformTest, Construction) {
 
 
@@ -84,6 +83,17 @@ TEST(TransformTest, Construction) {
   // default constructable
   sitk::Transform tx18;
   std::cout << tx18.ToString() << std::endl;
+
+  // displacement fields
+  sitk::Image displacement = sitk::Image( 100, 100, sitk::sitkVectorFloat64 );
+
+  sitk::Transform tx19( displacement );
+  std::cout <<  tx19.ToString() << std::endl;
+
+  displacement = sitk::Image( 100,100, 100, sitk::sitkVectorFloat64 );
+  sitk::Transform tx20( displacement );
+  std::cout << tx20.ToString() << std::endl;
+
 }
 
 TEST(TransformTest, Copy) {
@@ -152,7 +162,17 @@ TEST(TransformTest, SetGetParameters) {
   EXPECT_EQ( tx.GetParameters().size(), 6u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 2u );
 
+  sitk::Image displacement = sitk::Image( 10, 10, sitk::sitkVectorFloat64 );
 
+  tx =  sitk::Transform ( displacement );
+  EXPECT_EQ( tx.GetParameters().size(), 200u );
+  EXPECT_EQ( tx.GetFixedParameters().size(), 10u );
+
+  displacement = sitk::Image( 10, 10, 10, sitk::sitkVectorFloat64 );
+
+  tx =  sitk::Transform ( displacement );
+  EXPECT_EQ( tx.GetParameters().size(), 3000u );
+  EXPECT_EQ( tx.GetFixedParameters().size(), 18u );
 }
 
 TEST(TransformTest, CopyOnWrite) {
