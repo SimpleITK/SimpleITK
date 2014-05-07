@@ -146,8 +146,8 @@ namespace itk {
        * have valid values during events, and access the underlying
        * ITK object.
        *
-       * Deleting a registered command during execution causes
-       * program termination.
+       * Deleting a command this object has during a command call-back
+       * will produce undefined behavior.
        *
        * For more information see the page \ref CommandPage.
        *
@@ -155,7 +155,11 @@ namespace itk {
        */
       virtual int AddCommand(itk::simple::EventEnum event, itk::simple::Command &cmd);
 
-      /** \brief Remove all registered commands. */
+      /** \brief Remove all registered commands.
+       *
+       * Calling when this object is invoking anther command will
+       * produce undefined behavior.
+       */
       virtual void RemoveAllCommands();
 
       /** \brief Query of this object has any registered commands for event. */
@@ -193,12 +197,34 @@ namespace itk {
     protected:
 
       #ifndef SWIG
+
+      struct EventCommand
+      {
+        EventCommand(EventEnum e, Command *c)
+          : m_Event(e), m_Command(c), m_ITKTag(std::numeric_limits<unsigned long>::max())
+          {}
+        EventEnum     m_Event;
+        Command *     m_Command;
+
+        // set to max if currently not registered
+        unsigned long m_ITKTag;
+
+        inline bool operator==(const EventCommand &o)
+          { return m_Command == o.m_Command; }
+        inline bool operator<(const EventCommand &o)
+          { return m_Command < o.m_Command; }
+      };
+
       // method called before filter update to set parameters and
       // connect commands.
       virtual void PreUpdate( itk::ProcessObject *p );
 
-      // overidable method to add a command.
-      virtual void PreUpdateAddObserver( itk::ProcessObject *p, const itk::EventObject &, itk::Command *);
+      // overridable method to add a command, the return value is
+      // placed in the m_ITKTag of the EventCommand object.
+      virtual unsigned long AddITKObserver(const itk::EventObject &, itk::Command *);
+
+      // overridable method to remove a command
+      virtual void RemoveITKObserver( EventCommand &e );
 
       // returns the current active process, if no active process then
       // an exception is throw.
@@ -233,11 +259,22 @@ namespace itk {
 
     private:
 
+      // Add command to active process object, the EventCommand's
+      // ITKTag must be unset as max or else an exception is
+      // thrown. The EventCommand's ITKTag is updated to the command
+      // registered to ITK's ProcessObject. It's assumed that there is
+      // an current active process
+      unsigned long AddObserverToActiveProcessObject( EventCommand &e );
+
+      // Remove the command from the active processes. Its is assumed
+      // that an active process exists. The tag is set to max after it
+      // is removed.
+      void RemoveObserverFromActiveProcessObject( EventCommand &e );
+
       bool m_Debug;
       unsigned int m_NumberOfThreads;
 
-      typedef std::pair<EventEnum, Command*> EventCommandPairType;
-      std::list<EventCommandPairType> m_Commands;
+      std::list<EventCommand> m_Commands;
 
       itk::ProcessObject *m_ActiveProcess;
 

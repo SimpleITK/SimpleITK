@@ -117,24 +117,6 @@ private:
   void operator=(const Self &);        //purposely not implemented
 };
 
-// utility method to find commands in list of pairs
-bool rm_pred(const itk::simple::Command *cmd, const std::pair<EventEnum, Command*> &i) throw()
-{
-  return cmd == i.second;
-}
-
-// less than comparison command pointers
-bool cmp_cmd_pred(const std::pair<EventEnum, Command*> &i, const std::pair<EventEnum, Command*> &j) throw()
-{
-  return i.second < j.second;
-}
-
-// is equal comparison of command pointers
-bool eq_cmd_pred(const std::pair<EventEnum, Command*> &i, const std::pair<EventEnum, Command*> &j) throw()
-{
-  return i.second == j.second;
-}
-
 } // end anonymous namespace
 
 //----------------------------------------------------------------------------
@@ -282,10 +264,19 @@ unsigned int ProcessObject::GetNumberOfThreads() const
 int ProcessObject::AddCommand(EventEnum event, Command &cmd)
 {
   // add to our list of event, command pairs
-  m_Commands.push_back(EventCommandPairType(event,&cmd));
+  m_Commands.push_back(EventCommand(event,&cmd));
 
   // register ourselves with the command
   cmd.AddProcessObject(this);
+
+  if (this->m_ActiveProcess)
+    {
+    this->AddObserverToActiveProcessObject( m_Commands.back() );
+    }
+  else
+    {
+    m_Commands.back().m_ITKTag = std::numeric_limits<unsigned long>::max();
+    }
 
   return 0;
 }
@@ -294,28 +285,37 @@ int ProcessObject::AddCommand(EventEnum event, Command &cmd)
 void ProcessObject::RemoveAllCommands()
 {
   // set's the m_Commands to an empty list via a swap
-  std::list<EventCommandPairType> oldCommands;
+  std::list<EventCommand> oldCommands;
   swap(oldCommands, m_Commands);
+
+  // remove commands from active process object
+  std::list<EventCommand>::iterator i = oldCommands.begin();
+  while( i != oldCommands.end() && this->m_ActiveProcess )
+    {
+    this->RemoveObserverFromActiveProcessObject(*i);
+    ++i;
+    }
 
   // we must only call RemoveProcessObject once for each command
   // so make a unique list of the Commands.
-  oldCommands.sort(cmp_cmd_pred);
-  oldCommands.unique(eq_cmd_pred);
-
-  std::list<EventCommandPairType>::iterator i = oldCommands.begin();
+  oldCommands.sort();
+  oldCommands.unique();
+  i = oldCommands.begin();
   while( i != oldCommands.end() )
     {
-    i++->second->RemoveProcessObject(this);
+    // note: this may call onCommandDelete, but we have already copied
+    // this->m_Command will be empty
+    i++->m_Command->RemoveProcessObject(this);
     }
 }
 
 
 bool ProcessObject::HasCommand( EventEnum event ) const
 {
-  std::list<EventCommandPairType>::const_iterator i = m_Commands.begin();
+  std::list<EventCommand>::const_iterator i = m_Commands.begin();
   while( i != m_Commands.end() )
     {
-    if (i->first == event)
+    if (i->m_Event == event)
       {
       return true;
       }
@@ -355,28 +355,18 @@ void ProcessObject::PreUpdate(itk::ProcessObject *p)
     {
     this->m_ActiveProcess = p;
 
-    // register commands
-    for (std::list<EventCommandPairType>::iterator i = m_Commands.begin();
-         i != m_Commands.end();
-         ++i)
-      {
-      const itk::EventObject &itkEvent = GetITKEventObject(i->first);
-
-      Command *cmd = i->second;
-
-      // adapt sitk command to itk command
-      SimpleAdaptorCommand::Pointer itkCommand = SimpleAdaptorCommand::New();
-      itkCommand->SetSimpleCommand(cmd);
-      itkCommand->SetObjectName(cmd->GetName()+" "+itkEvent.GetEventName());
-
-      // allow derived classes to customize there observer is added.
-      this->PreUpdateAddObserver(p, itkEvent, itkCommand);
-      }
-
     // add command on active process deletion
     itk::SimpleMemberCommand<Self>::Pointer onDelete = itk::SimpleMemberCommand<Self>::New();
     onDelete->SetCallbackFunction(this, &Self::OnActiveProcessDelete);
     p->AddObserver(itk::DeleteEvent(), onDelete);
+
+    // register commands
+    for (std::list<EventCommand>::iterator i = m_Commands.begin();
+         i != m_Commands.end();
+         ++i)
+      {
+      this->AddObserverToActiveProcessObject(*i);
+      }
 
     }
   catch (...)
@@ -385,22 +375,25 @@ void ProcessObject::PreUpdate(itk::ProcessObject *p)
     throw;
     }
 
-
-
   if (this->GetDebug())
      {
      std::cout << "Executing ITK filter:" << std::endl;
      p->Print(std::cout);
      }
-
 }
 
 
-void ProcessObject::PreUpdateAddObserver( itk::ProcessObject *p,
-                                          const itk::EventObject &e,
-                                          itk::Command *c)
+unsigned long ProcessObject::AddITKObserver( const itk::EventObject &e,
+                                             itk::Command *c)
 {
-  p->AddObserver(e,c);
+  assert(this->m_ActiveProcess);
+  return this->m_ActiveProcess->AddObserver(e,c);
+}
+
+void ProcessObject::RemoveITKObserver( EventCommand &e )
+{
+  assert(this->m_ActiveProcess);
+  this->m_ActiveProcess->RemoveObserver(e.m_ITKTag);
 }
 
 itk::ProcessObject *ProcessObject::GetActiveProcess( )
@@ -423,27 +416,72 @@ void ProcessObject::OnActiveProcessDelete( )
     {
     this->m_ProgressMeasurement = 0.0f;
     }
+
+  // clear registered command IDs
+  for (std::list<EventCommand>::iterator i = m_Commands.begin();
+         i != m_Commands.end();
+         ++i)
+      {
+      i->m_ITKTag = std::numeric_limits<unsigned long>::max();
+      }
+
   this->m_ActiveProcess = NULL;
 }
 
 
 void ProcessObject::onCommandDelete(const itk::simple::Command *cmd) throw()
 {
-  if (this->m_ActiveProcess)
+  // remove command from m_Command book keeping list, and remove it
+  // from the  ITK ProcessObject
+  std::list<EventCommand>::iterator i =  this->m_Commands.begin();
+  while ( i !=  this->m_Commands.end() )
     {
-    // no current way to delete the command from the ITK object, fatal
-    // due to the ITK process object having an invalid call-back
-    std::cerr << "sitk::Fatal: Cannot delete Command during execution!" << std::endl;
-    std::terminate();
-    // It would be possible to iterate through the registered
-    // commands with the active process, and delete the ones referring
-    // to cmd, but that doesn't seem work the code.
+    if ( cmd == i->m_Command )
+      {
+      if ( this->m_ActiveProcess )
+        {
+        this->RemoveObserverFromActiveProcessObject( *i );
+        }
+      this->m_Commands.erase(i++);
+      }
+    else
+      {
+      ++i;
+      }
+
+    }
+}
+
+unsigned long ProcessObject::AddObserverToActiveProcessObject( EventCommand &eventCommand )
+{
+  assert( this->m_ActiveProcess );
+
+  if (eventCommand.m_ITKTag != std::numeric_limits<unsigned long>::max())
+    {
+    sitkExceptionMacro("Commands already registered to another process object!");
     }
 
-  // remove all uses of command
-  using namespace nsstd::placeholders;
-  m_Commands.remove_if(nsstd::bind(rm_pred,cmd,_1));
+  const itk::EventObject &itkEvent = GetITKEventObject(eventCommand.m_Event);
+
+  // adapt sitk command to itk command
+  SimpleAdaptorCommand::Pointer itkCommand = SimpleAdaptorCommand::New();
+  itkCommand->SetSimpleCommand(eventCommand.m_Command);
+  itkCommand->SetObjectName(eventCommand.m_Command->GetName()+" "+itkEvent.GetEventName());
+
+  return eventCommand.m_ITKTag = this->AddITKObserver( itkEvent, itkCommand );
 }
+
+void ProcessObject::RemoveObserverFromActiveProcessObject( EventCommand &e )
+ {
+   assert( this->m_ActiveProcess );
+
+   if (e.m_ITKTag != std::numeric_limits<unsigned long>::max() )
+     {
+     this->RemoveITKObserver(e);
+     e.m_ITKTag = std::numeric_limits<unsigned long>::max();
+     }
+
+ }
 
 } // end namespace simple
 } // end namespace itk
