@@ -337,6 +337,15 @@ if ( ${BUILD_EXAMPLES} )
   set_tests_properties( CXX.Example.FilterProgressReporting
     PROPERTIES PASS_REGULAR_EXPRESSION "DiscreteGaussianImageFilter Progress" )
 
+  add_test(NAME CXX.Example.DicomSeriesReader
+    COMMAND "${ITK_TEST_DRIVER}"
+    --compare-MD5
+    "${TEST_HARNESS_TEMP_DIRECTORY}/CXX.DicomSeriesReader.nrrd"
+    "8e65f711d450b6b466c6d76a667ecb72"
+    $<TARGET_FILE:DicomSeriesReader>
+    "${TEST_HARNESS_DATA_DIRECTORY}/Input/DicomSeries"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/CXX.DicomSeriesReader.nrrd"
+    )
 
   add_test(NAME  CXX.Example.Segmentation.ConnectedThresholdImageFilter1
     COMMAND "${ITK_TEST_DRIVER}"
@@ -662,6 +671,16 @@ if ( WRAP_PYTHON )
     "2.0"
     "${TEST_HARNESS_TEMP_DIRECTORY}/PythonFilterProgressReporting.nrrd"
     )
+
+  add_python_test( Example.DicomSeriesReader
+    "${SimpleITK_SOURCE_DIR}/Examples/DicomSeriesReader.py"
+    --compare-MD5
+    "${TEST_HARNESS_TEMP_DIRECTORY}/DicomSeriesReader.nrrd"
+    "8e65f711d450b6b466c6d76a667ecb72"
+      "${TEST_HARNESS_DATA_DIRECTORY}/Input/DicomSeries"
+      "${TEST_HARNESS_TEMP_DIRECTORY}/DicomSeriesReader.nrrd"
+    )
+
   set_tests_properties( Python.Example.FilterProgressReporting
     PROPERTIES PASS_REGULAR_EXPRESSION "DiscreteGaussianImageFilter Progress" )
 
@@ -777,6 +796,14 @@ if ( WRAP_LUA )
     "2.0"
     "${TEST_HARNESS_TEMP_DIRECTORY}/Lua.SimpleGaussian.nrrd" )
 
+  add_lua_test( Example.DicomSeriesReader
+    "${SimpleITK_SOURCE_DIR}/Examples/DicomSeriesReader.lua"
+    --compare-MD5
+    "${TEST_HARNESS_TEMP_DIRECTORY}/DicomSeriesReader.nrrd"
+    "8e65f711d450b6b466c6d76a667ecb72"
+      "${TEST_HARNESS_DATA_DIRECTORY}/Input/DicomSeries"
+      "${TEST_HARNESS_TEMP_DIRECTORY}/DicomSeriesReader.nrrd"
+    )
 endif ( WRAP_LUA )
 
 if ( WRAP_RUBY )
