@@ -20,6 +20,7 @@
 
 #include "sitkCommon.h"
 #include "sitkExceptionObject.h"
+#include "sitkImage.h"
 #include <vector>
 
 
@@ -55,7 +56,9 @@ enum TransformEnum { sitkIdentity,
                      sitkVersor,
                      sitkVersorRigid,
                      sitkAffine,
-                     sitkComposite };
+                     sitkComposite,
+                     sitkDisplacementField
+};
 
 
 /** \class Tranform
@@ -89,6 +92,14 @@ public:
   /** \brief Construct a specific transformation
    */
   Transform( unsigned int dimensions, TransformEnum type);
+
+  /** \brief Use an image to construct a transform.
+   *
+   * Only the sitkDisplacementField transformation type can currently
+   * be constructed this way. Image must be of sitkVectorFloat64 pixel
+   * type with the number of components equal to the image dimension.
+   */
+  Transform( Image &displacement, TransformEnum type = sitkDisplacementField );
 
   virtual ~Transform( void );
 
@@ -158,6 +169,22 @@ private:
 
   template< unsigned int VDimension>
   void InternalInitialization(  TransformEnum type, itk::TransformBase *base = NULL );
+
+
+  template< typename TDisplacementType >
+    void InternalDisplacementInitialization( Image & img );
+
+  template < class TMemberFunctionPointer >
+    struct DisplacementInitializationMemberFunctionAddressor
+  {
+    typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
+
+    template< typename TImageType >
+    TMemberFunctionPointer operator() ( void ) const
+      {
+        return &ObjectType::template InternalDisplacementInitialization< TImageType >;
+      }
+  };
 
   // As is the architecture of all SimpleITK pimples,
   // this pointer should never be null and should always point to a
