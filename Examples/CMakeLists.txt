@@ -26,6 +26,9 @@ target_link_libraries ( BufferImportExport ${SimpleITK_LIBRARIES} )
 add_executable ( FilterProgressReporting FilterProgressReporting.cxx )
 target_link_libraries ( FilterProgressReporting ${SimpleITK_LIBRARIES} )
 
+add_executable ( DicomSeriesReader DicomSeriesReader.cxx )
+target_link_libraries ( DicomSeriesReader ${SimpleITK_LIBRARIES} )
+
 add_executable ( ImageRegistrationMethod1 ImageRegistrationMethod1.cxx )
 target_link_libraries ( ImageRegistrationMethod1 ${SimpleITK_LIBRARIES} )
 
