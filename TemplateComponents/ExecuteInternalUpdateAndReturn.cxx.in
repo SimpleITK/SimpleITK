@@ -63,6 +63,6 @@ else
 OUT=[[
   typename FilterType::OutputImageType *itkOutImage = filter->GetOutput();
   this->FixNonZeroIndex( itkOutImage );
-  return Image( itkOutImage );
+  return Image( this->CastITKToImage(itkOutImage) );
 ]]
 end)
