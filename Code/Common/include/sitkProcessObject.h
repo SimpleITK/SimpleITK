@@ -209,9 +209,9 @@ namespace itk {
         // set to max if currently not registered
         unsigned long m_ITKTag;
 
-        inline bool operator==(const EventCommand &o)
+        inline bool operator==(const EventCommand &o) const
           { return m_Command == o.m_Command; }
-        inline bool operator<(const EventCommand &o)
+        inline bool operator<(const EventCommand &o) const
           { return m_Command < o.m_Command; }
       };
 
