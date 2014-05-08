@@ -97,8 +97,6 @@ TEST(TransformTest, Construction) {
   std::cout << tx20.ToString() << std::endl;
   EXPECT_EQ( displacement.GetSize()[0], 0u );
   EXPECT_EQ( displacement.GetSize()[1], 0u );
-  EXPECT_EQ( displacement.GetSize()[2], 0u );
-
 
 }
 
