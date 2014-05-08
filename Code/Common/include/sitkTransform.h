@@ -95,6 +95,10 @@ public:
 
   /** \brief Use an image to construct a transform.
    *
+   * The input displacement image is transferred to the constructed
+   * transform object. The input image is modified to be a default
+   * constructed Image object.
+   *
    * Only the sitkDisplacementField transformation type can currently
    * be constructed this way. Image must be of sitkVectorFloat64 pixel
    * type with the number of components equal to the image dimension.

@@ -89,10 +89,16 @@ TEST(TransformTest, Construction) {
 
   sitk::Transform tx19( displacement );
   std::cout <<  tx19.ToString() << std::endl;
+  EXPECT_EQ( displacement.GetSize()[0], 0u );
+  EXPECT_EQ( displacement.GetSize()[1], 0u );
 
   displacement = sitk::Image( 100,100, 100, sitk::sitkVectorFloat64 );
   sitk::Transform tx20( displacement );
   std::cout << tx20.ToString() << std::endl;
+  EXPECT_EQ( displacement.GetSize()[0], 0u );
+  EXPECT_EQ( displacement.GetSize()[1], 0u );
+  EXPECT_EQ( displacement.GetSize()[2], 0u );
+
 
 }
 
