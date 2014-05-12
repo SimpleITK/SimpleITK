@@ -17,6 +17,8 @@
 *=========================================================================*/
 #include "sitkTransform.h"
 #include "sitkTemplateFunctions.h"
+#include "sitkMemberFunctionFactory.h"
+#include "sitkImageConvert.h"
 
 #include "itkTransformBase.h"
 #include "itkTransformFactory.h"
@@ -35,8 +37,12 @@
 #include "itkAffineTransform.h"
 #include "itkCompositeTransform.h"
 
+#include "itkDisplacementFieldTransform.h"
+
 #include "itkTransformFileReader.h"
 #include "itkTransformFileWriter.h"
+
+#include "itkVectorImage.h"
 
 #include <memory>
 
@@ -188,6 +194,14 @@ public:
   static const unsigned int InputDimension = TTransformType::InputSpaceDimension;
   static const unsigned int OutputDimension = TTransformType::OutputSpaceDimension;
 
+  template<typename TScalar>
+  PimpleTransform( itk::Image<itk::Vector<TScalar, InputDimension>, InputDimension> *displacement )
+    {
+      this->m_Transform = TransformType::New();
+      this->m_Transform->SetDisplacementField( displacement );
+    }
+
+
   PimpleTransform( TransformType * p)
     {
       this->m_Transform = p;
@@ -316,6 +330,7 @@ Transform::Transform( )
       }
   }
 
+
   Transform::~Transform()
   {
     delete m_PimpleTransform;
@@ -337,6 +352,61 @@ Transform::Transform( )
     this->m_PimpleTransform = temp.release();
     return *this;
   }
+
+
+Transform::Transform( Image &displacement, TransformEnum txType )
+  {
+
+    if (txType != sitkDisplacementField)
+      {
+      sitkExceptionMacro("Expected sitkDisplacementField for the Transformation type!")
+      }
+
+    const PixelIDValueEnum type = displacement.GetPixelID();
+    const unsigned int dimension = displacement.GetDimension();
+
+    // The pixel IDs supported
+    typedef typelist::MakeTypeList<VectorPixelID<double> >::Type PixelIDTypeList;
+
+    typedef void (Self::*MemberFunctionType)( Image & );
+
+    typedef DisplacementInitializationMemberFunctionAddressor<MemberFunctionType> Addressor;
+
+    detail::MemberFunctionFactory<MemberFunctionType> initializationMemberFactory(this);
+    initializationMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 3,  Addressor > ();
+    initializationMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 2,  Addressor > ();
+
+
+    initializationMemberFactory.GetMemberFunction( type, dimension )( displacement );
+
+  }
+
+  template< typename TDisplacementType >
+  void Transform::InternalDisplacementInitialization( Image & inImage )
+  {
+    typedef TDisplacementType VectorImageType;
+
+    typedef typename VectorImageType::PixelType PixelType;
+    typedef typename VectorImageType::InternalPixelType ComponentType;
+    const unsigned int ImageDimension = VectorImageType::ImageDimension;
+
+    typedef itk::Image< itk::Vector<ComponentType, ImageDimension>, ImageDimension > ITKDisplacementType;
+    typedef itk::DisplacementFieldTransform< ComponentType, ImageDimension > DisplacementTransformType;
+
+    typename VectorImageType::Pointer image = dynamic_cast < VectorImageType* > ( inImage.GetITKBase() );
+
+    if ( image.IsNull() )
+      {
+      sitkExceptionMacro( "Unexpected template dispatch error!" );
+      }
+
+    typename ITKDisplacementType::Pointer itkDisplacement = GetImageFromVectorImage(image.GetPointer(), true );
+    inImage = Image();
+
+    this->m_PimpleTransform = new PimpleTransform< DisplacementTransformType >(itkDisplacement.GetPointer());
+  }
+
+
 
 void Transform::MakeUniqueForWrite( void )
 {
