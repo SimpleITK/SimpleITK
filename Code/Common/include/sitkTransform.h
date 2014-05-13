@@ -57,7 +57,8 @@ enum TransformEnum { sitkIdentity,
                      sitkVersorRigid,
                      sitkAffine,
                      sitkComposite,
-                     sitkDisplacementField
+                     sitkDisplacementField,
+                     sitkBSplineTransform
 };
 
 
@@ -174,6 +175,9 @@ private:
   template< unsigned int VDimension>
   void InternalInitialization(  TransformEnum type, itk::TransformBase *base = NULL );
 
+
+  template< unsigned int >
+    void InternalBSplineInitialization( Image & img );
 
   template< typename TDisplacementType >
     void InternalDisplacementInitialization( Image & img );

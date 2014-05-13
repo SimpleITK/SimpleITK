@@ -42,6 +42,7 @@
 #include "itkCompositeTransform.h"
 
 #include "itkDisplacementFieldTransform.h"
+#include "itkBSplineTransform.h"
 
 #include "itkTransformFileReader.h"
 #include "itkTransformFileWriter.h"
@@ -235,32 +236,96 @@ Transform::Transform( )
   }
 
 
-Transform::Transform( Image &displacement, TransformEnum txType )
+Transform::Transform( Image &image, TransformEnum txType )
   {
 
-    if (txType != sitkDisplacementField)
+
+    if (txType == sitkDisplacementField)
       {
-      sitkExceptionMacro("Expected sitkDisplacementField for the Transformation type!")
+      const PixelIDValueEnum type = image.GetPixelID();
+      const unsigned int dimension = image.GetDimension();
+
+      // The pixel IDs supported
+      typedef typelist::MakeTypeList<VectorPixelID<double> >::Type PixelIDTypeList;
+
+      typedef void (Self::*MemberFunctionType)( Image & );
+
+      typedef DisplacementInitializationMemberFunctionAddressor<MemberFunctionType> Addressor;
+
+      detail::MemberFunctionFactory<MemberFunctionType> initializationMemberFactory(this);
+      initializationMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 3,  Addressor > ();
+      initializationMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 2,  Addressor > ();
+
+
+      initializationMemberFactory.GetMemberFunction( type, dimension )( image );
+      }
+    else if ( txType == sitkBSplineTransform )
+      {
+      const unsigned int dimension = image.GetDimension();
+
+      switch (dimension)
+        {
+        case 2:
+          this->InternalBSplineInitialization<2>(image);
+          break;
+        case 3:
+          this->InternalBSplineInitialization<3>(image);
+          break;
+        default:
+          sitkExceptionMacro("LogicError: Unexplected case!");
+        }
+      }
+    else
+      {
+      sitkExceptionMacro("Expected sitkDisplacementField or sitkBSplineTransform for the Transformation type!")
       }
 
-    const PixelIDValueEnum type = displacement.GetPixelID();
-    const unsigned int dimension = displacement.GetDimension();
-
-    // The pixel IDs supported
-    typedef typelist::MakeTypeList<VectorPixelID<double> >::Type PixelIDTypeList;
-
-    typedef void (Self::*MemberFunctionType)( Image & );
-
-    typedef DisplacementInitializationMemberFunctionAddressor<MemberFunctionType> Addressor;
-
-    detail::MemberFunctionFactory<MemberFunctionType> initializationMemberFactory(this);
-    initializationMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 3,  Addressor > ();
-    initializationMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 2,  Addressor > ();
-
-
-    initializationMemberFactory.GetMemberFunction( type, dimension )( displacement );
 
   }
+
+template< unsigned int ImageDimension>
+void Transform::InternalBSplineInitialization( Image & inImage )
+{
+  typedef itk::ImageBase<ImageDimension> ImageType;
+  typename ImageType::Pointer image = dynamic_cast<ImageType *>( inImage.GetITKBase() );
+
+  if ( !image )
+    {
+    sitkExceptionMacro( "Unexpected template dispatch error!" );
+    }
+
+  typedef itk::BSplineTransform<double,ImageDimension,3> BSplineTransformType;
+  typename BSplineTransformType::Pointer itkBSpline = BSplineTransformType::New();
+
+  itkBSpline->SetTransformDomainOrigin( image->GetOrigin() );
+  itkBSpline->SetTransformDomainDirection( image->GetDirection() );
+
+  const typename BSplineTransformType::MeshSizeType  meshSize( image->GetLargestPossibleRegion().GetSize() );
+
+  typename BSplineTransformType::PhysicalDimensionsType fixedPhysicalDimensions;
+
+  for( unsigned int i=0; i< ImageDimension; i++ )
+    {
+    fixedPhysicalDimensions[i] = image->GetSpacing()[i] * static_cast<double>( meshSize[i] - 1 );
+    }
+
+  itkBSpline->SetTransformDomainMeshSize( meshSize );
+  itkBSpline->SetTransformDomainPhysicalDimensions( fixedPhysicalDimensions );
+
+
+
+  typedef typename BSplineTransformType::ParametersType ParametersType;;
+
+  typename HolderCommand<ParametersType *>::Pointer holder = HolderCommand<ParametersType *>::New();
+  itkBSpline->AddObserver( itk::DeleteEvent(), holder);
+  holder->Set( new ParametersType( itkBSpline->GetNumberOfParameters() ) );
+
+  itkBSpline->SetParameters( *holder->Get() );
+  itkBSpline->SetIdentity();
+
+
+  this->m_PimpleTransform = new PimpleTransform< BSplineTransformType >( itkBSpline.GetPointer() );
+}
 
   template< typename TDisplacementType >
   void Transform::InternalDisplacementInitialization( Image & inImage )
@@ -382,6 +447,7 @@ void Transform::MakeUniqueForWrite( void )
         }
         break;
       case sitkDisplacementField:
+      case sitkBSplineTransform:
         // todo print transform type..
         sitkExceptionMacro("Incorrect constructor for transform type.");
       case sitkIdentity:
