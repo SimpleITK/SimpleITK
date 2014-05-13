@@ -101,6 +101,9 @@ TEST(TransformTest, Construction) {
   ASSERT_THROW( sitk::Transform( 3, sitk::sitkDisplacementField ), sitk::GenericException );
   ASSERT_THROW( sitk::Transform( 2, sitk::sitkDisplacementField ), sitk::GenericException );
 
+  ASSERT_THROW( sitk::Transform( 3, sitk::sitkBSplineTransform ), sitk::GenericException );
+  ASSERT_THROW( sitk::Transform( 2, sitk::sitkBSplineTransform ), sitk::GenericException );
+
 }
 
 TEST(TransformTest, Copy) {
