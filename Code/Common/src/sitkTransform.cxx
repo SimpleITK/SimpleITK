@@ -302,6 +302,9 @@ void Transform::MakeUniqueForWrite( void )
 
         }
         break;
+      case sitkDisplacementField:
+        // todo print transform type..
+        sitkExceptionMacro("Incorrect constructor for transform type.");
       case sitkIdentity:
       default:
         m_PimpleTransform = new PimpleTransform<itk::IdentityTransform< double, VDimension > >();

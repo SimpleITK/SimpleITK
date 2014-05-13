@@ -98,6 +98,9 @@ TEST(TransformTest, Construction) {
   EXPECT_EQ( displacement.GetSize()[0], 0u );
   EXPECT_EQ( displacement.GetSize()[1], 0u );
 
+  ASSERT_THROW( sitk::Transform( 3, sitk::sitkDisplacementField ), sitk::GenericException );
+  ASSERT_THROW( sitk::Transform( 2, sitk::sitkDisplacementField ), sitk::GenericException );
+
 }
 
 TEST(TransformTest, Copy) {
