@@ -101,6 +101,13 @@ TEST(TransformTest, Construction) {
   ASSERT_THROW( sitk::Transform( 3, sitk::sitkDisplacementField ), sitk::GenericException );
   ASSERT_THROW( sitk::Transform( 2, sitk::sitkDisplacementField ), sitk::GenericException );
 
+
+  sitk::Image bsplineReference = sitk::Image(10,10, sitk::sitkUInt8);
+  std::Transform tx21( bsplineReference, sitk::sitkBSplineTransform );
+
+  bsplineReference = sitk::Image(10,10, 10, sitk::sitkUInt8);
+  std::Transform tx22( bsplineReference, sitk::sitkBSplineTransform );
+
   ASSERT_THROW( sitk::Transform( 3, sitk::sitkBSplineTransform ), sitk::GenericException );
   ASSERT_THROW( sitk::Transform( 2, sitk::sitkBSplineTransform ), sitk::GenericException );
 
