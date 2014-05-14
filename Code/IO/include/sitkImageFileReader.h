@@ -49,6 +49,7 @@ namespace itk {
 
       Self& SetFileName ( std::string fn );
       std::string GetFileName() const;
+
       Image Execute();
 
       ImageFileReader();
