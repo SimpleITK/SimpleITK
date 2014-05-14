@@ -4,8 +4,8 @@
   "template_test_filename" : "ImageFilter",
   "no_procedure" : "1",
   "number_of_inputs" : 2,
-  "pixel_types" : "RealPixelIDTypeList",
-  "filter_type" : "itk::DemonsRegistrationFilter<InputImageType, InputImageType, itk::Image< Vector<float, InputImageType::ImageDimension>, InputImageType::ImageDimension > >",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "filter_type" : "itk::DemonsRegistrationFilter<InputImageType, InputImageType, itk::Image< Vector<double, InputImageType::ImageDimension>, InputImageType::ImageDimension > >",
   "custom_set_input" : "filter->SetFixedImage( image1 ); filter->SetMovingImage( image2 );",
   "members" : [
     {
