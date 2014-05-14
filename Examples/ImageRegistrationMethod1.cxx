@@ -66,30 +66,9 @@ int main(int argc, char *argv[])
     return 1;
     }
 
-  sitk::PixelIDValueEnum pixelType = sitk::sitkFloat32;
+  sitk::Image fixed = sitk::ReadImage( argv[1], sitk::sitkFloat32 );
 
-  sitk::Image fixed = sitk::ReadImage( argv[1] );
-
-  if ( fixed.GetNumberOfComponentsPerPixel() > 1 )
-    {
-    fixed = sitk::VectorIndexSelectionCast( fixed, 0, pixelType );
-    }
-  else
-    {
-    fixed = sitk::Cast( fixed, pixelType );
-    }
-
-  sitk::Image moving = sitk::ReadImage( argv[2] );
-
-  if ( moving.GetNumberOfComponentsPerPixel() > 1 )
-    {
-    moving = sitk::VectorIndexSelectionCast( moving, 0, pixelType );
-    }
-  else
-    {
-    moving = sitk::Cast( moving, pixelType );
-    }
-
+  sitk::Image moving = sitk::ReadImage( argv[2], sitk::sitkFloat32 );
 
   sitk::ImageRegistrationMethod R;
   R.SetMetricAsMeanSquares();
