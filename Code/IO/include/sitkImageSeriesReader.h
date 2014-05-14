@@ -122,7 +122,7 @@ namespace itk {
 
       std::vector<std::string> m_FileNames;
     };
-  SITKIO_EXPORT Image ReadImage ( const std::vector<std::string> &fileNames );
+  SITKIO_EXPORT Image ReadImage ( const std::vector<std::string> &fileNames, PixelIDValueEnum outputPixelType=sitkUnknown );
   }
 }
 
