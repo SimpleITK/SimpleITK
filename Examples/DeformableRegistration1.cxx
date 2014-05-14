@@ -76,6 +76,8 @@ int main(int argc, char *argv[])
   matcher.SetNumberOfMatchPoints( 7 );
   matcher.ThresholdAtMeanIntensityOn();
 
+  moving = matcher.Execute(moving, fixed);
+
   sitk::DemonsRegistrationFilter filter;
 
   IterationUpdate cmd(filter);
@@ -83,14 +85,13 @@ int main(int argc, char *argv[])
 
   filter.SetNumberOfIterations( 50 );
   filter.SetStandardDeviations( 1.0 );
-  filter.DebugOn();
 
   sitk::Image displacementField = filter.Execute( fixed, moving );
 
-  std::cout << "Number Of Iterations: " << filter.GetElapsedIterations() << " RMS: " << filter.GetRMSChange() << std::endl;
+  std::cout << "-------" << std::endl;
+  std::cout << "Number Of Iterations: " << filter.GetElapsedIterations() << std::endl;
+  std::cout << " RMS: " << filter.GetRMSChange() << std::endl;
 
-  // only Float64 based fields are supported as transforms? fixme
-  displacementField = sitk::Cast(displacementField, sitk::sitkVectorFloat64);
   sitk::Transform outTx( displacementField, sitk::sitkDisplacementField );
 
   sitk::WriteTransform(outTx, argv[3]);
