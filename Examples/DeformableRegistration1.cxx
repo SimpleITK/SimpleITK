@@ -67,28 +67,16 @@ int main(int argc, char *argv[])
     return 1;
     }
 
-  sitk::Image fixed = sitk::ReadImage( argv[1] );
+  sitk::Image fixed = sitk::ReadImage( argv[1], sitk::sitkFloat32 );
 
-  if ( fixed.GetNumberOfComponentsPerPixel() > 1 )
-    {
-    fixed = sitk::VectorIndexSelectionCast( fixed, 0 );
-    }
-
-  sitk::Image moving = sitk::ReadImage( argv[2] );
-  sitk::PixelIDValueEnum pixelType = fixed.GetPixelID();
-  if ( moving.GetNumberOfComponentsPerPixel() > 1 )
-    {
-    moving = sitk::VectorIndexSelectionCast( moving, 0, pixelType );
-    }
-  else
-    {
-    moving = sitk::Cast( moving, pixelType );
-    }
+  sitk::Image moving = sitk::ReadImage( argv[2], sitk::sitkFloat32 );
 
   sitk::HistogramMatchingImageFilter matcher;
   matcher.SetNumberOfHistogramLevels( 1024 );
   matcher.SetNumberOfMatchPoints( 7 );
   matcher.ThresholdAtMeanIntensityOn();
+
+  moving = matcher.Execute(moving, fixed);
 
   sitk::DemonsRegistrationFilter filter;
 
@@ -97,14 +85,13 @@ int main(int argc, char *argv[])
 
   filter.SetNumberOfIterations( 50 );
   filter.SetStandardDeviations( 1.0 );
-  filter.DebugOn();
 
   sitk::Image displacementField = filter.Execute( fixed, moving );
 
-  std::cout << "Number Of Iterations: " << filter.GetElapsedIterations() << " RMS: " << filter.GetRMSChange() << std::endl;
+  std::cout << "-------" << std::endl;
+  std::cout << "Number Of Iterations: " << filter.GetElapsedIterations() << std::endl;
+  std::cout << " RMS: " << filter.GetRMSChange() << std::endl;
 
-  // only Float64 based fields are supported as transforms? fixme
-  displacementField = sitk::Cast(displacementField, sitk::sitkVectorFloat64);
   sitk::Transform outTx( displacementField, sitk::sitkDisplacementField );
 
   sitk::WriteTransform(outTx, argv[3]);
