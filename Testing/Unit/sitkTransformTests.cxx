@@ -103,10 +103,10 @@ TEST(TransformTest, Construction) {
 
 
   sitk::Image bsplineReference = sitk::Image(10,10, sitk::sitkUInt8);
-  std::Transform tx21( bsplineReference, sitk::sitkBSplineTransform );
+  sitk::Transform tx21( bsplineReference, sitk::sitkBSplineTransform );
 
   bsplineReference = sitk::Image(10,10, 10, sitk::sitkUInt8);
-  std::Transform tx22( bsplineReference, sitk::sitkBSplineTransform );
+  sitk::Transform tx22( bsplineReference, sitk::sitkBSplineTransform );
 
   ASSERT_THROW( sitk::Transform( 3, sitk::sitkBSplineTransform ), sitk::GenericException );
   ASSERT_THROW( sitk::Transform( 2, sitk::sitkBSplineTransform ), sitk::GenericException );
