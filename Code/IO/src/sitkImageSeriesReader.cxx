@@ -121,7 +121,9 @@ namespace itk {
       {
       unsigned int size = this->GetDimensionFromImageIO( this->m_FileNames.front(), 2);
       if (size == 1)
-      --dimension;
+        {
+        --dimension;
+        }
       }
 
     if ( dimension != 2 && dimension != 3 )
