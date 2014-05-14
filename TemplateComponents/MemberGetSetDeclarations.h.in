@@ -79,9 +79,18 @@ end))$(when measurements $(foreach measurements
      /**$(if briefdescriptionGet and (briefdescriptionGet:len() > 0) then OUT=[[ \brief ${briefdescriptionGet}]]end)
       *$(if detaileddescriptionGet and (detaileddescriptionGet:len() > 0) then OUT =[[ ${detaileddescriptionGet}]]end)
       *
+$(if active then
+OUT=[[
+      * This is an active measurement. It may be accessed while the
+      * filter is being executing in command call-backs and can be
+      * accessed after execution.
+]]
+else
+OUT=[[
       * This is a measurement. Its value is updated in the Execute
       * methods, so the value will only be valid after an execution.
-      */
+]]
+end)      */
 $(if active then
 OUT=[[
      ${type} Get${name}($(if parameters then
