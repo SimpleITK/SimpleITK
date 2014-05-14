@@ -33,20 +33,10 @@ if len ( sys.argv ) < 4:
     print( "Usage: {0} <fixedImageFilter> <movingImageFile> <outputTransformFile>".format(sys.argv[0]))
     sys.exit ( 1 )
 
-pixelType = sitk.sitkFloat32
 
-fixedInput = sitk.ReadImage(sys.argv[1])
-if fixedInput.GetNumberOfComponentsPerPixel() > 1:
-    fixed = sitk.VectorIndexSelectionCast(fixedInput,0,pixelType)
-else:
-    fixed = sitk.Cast(fixedInput,pixelType)
+fixedInput = sitk.ReadImage(sys.argv[1], sitk.sitkFloat32)
 
-movingInput = sitk.ReadImage(sys.argv[2])
-if movingInput.GetNumberOfComponentsPerPixel() > 1:
-    moving = sitk.VectorIndexSelectionCast(movingInput,0,pixelType)
-else:
-    moving = sitk.Cast(movingInput,pixelType)
-
+movingInput = sitk.ReadImage(sys.argv[2], sitk.sitkFloat32)
 
 R = sitk.ImageRegistrationMethod()
 R.SetMetricAsMeanSquares()

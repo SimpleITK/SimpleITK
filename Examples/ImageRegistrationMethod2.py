@@ -39,20 +39,12 @@ if len ( sys.argv ) < 4:
 
 pixelType = sitk.sitkFloat32
 
-fixedInput = sitk.ReadImage(sys.argv[1])
-if fixedInput.GetNumberOfComponentsPerPixel() > 1:
-    fixed = sitk.VectorIndexSelectionCast(fixedInput, 0, pixelType)
-else:
-    fixed = sitk.Cast(fixedInput,pixelType)
+fixed = sitk.ReadImage(sys.argv[1], sitk.sitkFloat32)
 fixed = sitk.Normalize(fixed)
 fixed = sitk.DiscreteGaussian(fixed, 2.0)
 
 
-movingInput = sitk.ReadImage(sys.argv[2])
-if movingInput.GetNumberOfComponentsPerPixel() > 1:
-    moving = sitk.VectorIndexSelectionCast(movingInput,0,pixelType)
-else:
-    moving = sitk.Cast(movingInput,pixelType)
+moving = sitk.ReadImage(sys.argv[2], sitk.sitkFloat32)
 moving = sitk.Normalize(moving)
 moving = sitk.DiscreteGaussian( moving, 2.0)
 
