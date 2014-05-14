@@ -40,8 +40,12 @@ class SmartPointer;
       public ProcessObject
     {
     public:
+      typedef ImageReaderBase Self;
       // The default constructor and the destructor will be implicitly
       // declared as public.
+
+
+      virtual Image Execute() = 0;
 
     protected:
 
