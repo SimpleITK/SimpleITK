@@ -230,6 +230,7 @@ TEST(IO, SeriesReader) {
 
   sitk::ImageSeriesReader reader;
 
+  EXPECT_EQ( reader.GetOutputPixelType(), sitk::sitkUnknown );
   EXPECT_EQ( 0u, reader.GetFileNames().size());
 
   ProgressUpdate progressCmd(reader);
@@ -283,9 +284,15 @@ TEST(IO, SeriesReader) {
   EXPECT_EQ ( 3u, image.GetDepth() );
   EXPECT_EQ ( "bb42b8d3991132b4860adbc4b3f6c38313f52b4c", sitk::Hash( image ) );
 
-
   EXPECT_EQ ( "ImageSeriesReader", reader.GetName() );
   EXPECT_NO_THROW( reader.ToString() );
+
+  reader.SetOutputPixelType(sitk::sitkUInt8);
+  EXPECT_EQ(reader.GetOutputPixelType(), sitk::sitkUInt8);
+  image = reader.Execute();
+  EXPECT_EQ ( 3u, image.GetDepth() );
+  EXPECT_EQ ( "a51361940fdf6c33cf700e1002e5f5ca5b88cc42", sitk::Hash( image ) );
+
 }
 
 
