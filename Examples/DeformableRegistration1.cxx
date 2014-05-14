@@ -67,23 +67,9 @@ int main(int argc, char *argv[])
     return 1;
     }
 
-  sitk::Image fixed = sitk::ReadImage( argv[1] );
+  sitk::Image fixed = sitk::ReadImage( argv[1], sitk::sitkFloat32 );
 
-  if ( fixed.GetNumberOfComponentsPerPixel() > 1 )
-    {
-    fixed = sitk::VectorIndexSelectionCast( fixed, 0 );
-    }
-
-  sitk::Image moving = sitk::ReadImage( argv[2] );
-  sitk::PixelIDValueEnum pixelType = fixed.GetPixelID();
-  if ( moving.GetNumberOfComponentsPerPixel() > 1 )
-    {
-    moving = sitk::VectorIndexSelectionCast( moving, 0, pixelType );
-    }
-  else
-    {
-    moving = sitk::Cast( moving, pixelType );
-    }
+  sitk::Image moving = sitk::ReadImage( argv[2], sitk::sitkFloat32 );
 
   sitk::HistogramMatchingImageFilter matcher;
   matcher.SetNumberOfHistogramLevels( 1024 );
