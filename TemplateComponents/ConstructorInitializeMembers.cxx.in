@@ -15,7 +15,7 @@ OUT=OUT..[[
 end
 end)
 $(foreach members
-$(if (not default == nil) then
+  $(if (default ~= nil) then
 OUT = [[
   this->m_${name} = ${default};
 ]]
