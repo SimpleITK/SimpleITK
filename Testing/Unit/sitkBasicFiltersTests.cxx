@@ -43,6 +43,7 @@
 #include <sitkConnectedThresholdImageFilter.h>
 #include <sitkMergeLabelMapFilter.h>
 #include <sitkDiffeomorphicDemonsRegistrationFilter.h>
+#include <sitkFastSymmetricForcesDemonsRegistrationFilter.h>
 #include <sitkAdditionalProcedures.h>
 #include <sitkCommand.h>
 
@@ -63,6 +64,19 @@
 #include "itkConnectedThresholdImageFilter.h"
 #include "itkMergeLabelMapFilter.h"
 #include "itkDiffeomorphicDemonsRegistrationFilter.h"
+#include "itkFastSymmetricForcesDemonsRegistrationFilter.h"
+
+
+TEST(BasicFilter,FastSymmetricForcesDemonsRegistrationFilter_ENUMCHECK) {
+  typedef itk::Image<float,3> ImageType;
+  typedef itk::Image<itk::Vector<float,3>,3> DisplacementType;
+  typedef itk::FastSymmetricForcesDemonsRegistrationFilter<ImageType,ImageType,DisplacementType>::DemonsRegistrationFunctionType ITKType;
+
+  EXPECT_EQ( (int)ITKType::Symmetric, (int)itk::simple::FastSymmetricForcesDemonsRegistrationFilter::Symmetric);
+  EXPECT_EQ( (int)ITKType::Fixed, (int)itk::simple::FastSymmetricForcesDemonsRegistrationFilter::Fixed);
+  EXPECT_EQ( (int)ITKType::WarpedMoving, (int)itk::simple::FastSymmetricForcesDemonsRegistrationFilter::WarpedMoving);
+  EXPECT_EQ( (int)ITKType::MappedMoving, (int)itk::simple::FastSymmetricForcesDemonsRegistrationFilter::MappedMoving);
+}
 
 
 TEST(BasicFilter,DiffeomorphicDemonsRegistrationFilter_ENUMCHECK) {
