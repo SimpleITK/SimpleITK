@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
   fixed = sitk::Normalize( fixed );
   fixed = sitk::DiscreteGaussian( fixed, 2.0 );
 
-  sitk::Image moving = sitk::ReadImage( argv[2] );
+  sitk::Image moving = sitk::ReadImage( argv[2], sitk::sitkFloat32 );
   moving = sitk::Normalize( moving );
   moving = sitk::DiscreteGaussian( moving, 2.0);
 
