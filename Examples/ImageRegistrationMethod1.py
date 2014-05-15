@@ -34,9 +34,9 @@ if len ( sys.argv ) < 4:
     sys.exit ( 1 )
 
 
-fixedInput = sitk.ReadImage(sys.argv[1], sitk.sitkFloat32)
+fixed = sitk.ReadImage(sys.argv[1], sitk.sitkFloat32)
 
-movingInput = sitk.ReadImage(sys.argv[2], sitk.sitkFloat32)
+moving = sitk.ReadImage(sys.argv[2], sitk.sitkFloat32)
 
 R = sitk.ImageRegistrationMethod()
 R.SetMetricAsMeanSquares()
