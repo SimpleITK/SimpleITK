@@ -128,16 +128,16 @@
       "measurements_results" : [
         {
           "name" : "ElapsedIterations",
-          "value" : "50u"
+          "value" : "10u"
         },
         {
           "name" : "RMSChange",
-          "value" : 0.28302900676126319,
+          "value" : 0.28376284179066474,
           "tolerance" : 1e-06
         },
         {
           "name" : "Metric",
-          "value" : 998.54198361473016,
+          "value" : 771.75286591059262,
           "tolerance" : 0.0001
         }
       ]
