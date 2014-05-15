@@ -77,7 +77,7 @@
     {
       "name" : "NumberOfIterations",
       "type" : "uint32_t",
-      "default" : "5u",
+      "default" : "10u",
       "doc" : "Number of iterations to run"
     },
     {
