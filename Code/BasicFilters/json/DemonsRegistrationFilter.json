@@ -9,9 +9,31 @@
   "custom_set_input" : "filter->SetFixedImage( image1 ); filter->SetMovingImage( image2 );",
   "members" : [
     {
+      "name" : "StandardDeviations",
+      "type" : "double",
+      "dim_vec" : 1,
+      "set_as_scalar" : 1,
+      "default" : "std::vector<double>(3, 1.0)",
+      "itk_type" : "typename FilterType::StandardDeviationsType",
+      "detaileddescriptionSet" : "Set/Get the Gaussian smoothing standard deviations for the displacement field. The values are set with respect to pixel coordinates.",
+      "detaileddescriptionGet" : "Set/Get the Gaussian smoothing standard deviations for the displacement field. The values are set with respect to pixel coordinates."
+    },
+    {
+      "name" : "NumberOfIterations",
+      "type" : "uint32_t",
+      "default" : "10u",
+      "doc" : "Number of iterations to run"
+    },
+    {
+      "name" : "MaximumRMSError",
+      "type" : "double",
+      "default" : 0.02,
+      "doc" : "Value of RMS change below which the filter should stop. This is a convergence criterion."
+    },
+    {
       "name" : "UseMovingImageGradient",
       "type" : "bool",
-      "default" : 0,
+      "default" : false,
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Switch between using the fixed image and moving image gradient for computing the displacement field updates.",
       "briefdescriptionGet" : "",
@@ -20,15 +42,16 @@
     {
       "name" : "SmoothDisplacementField",
       "type" : "bool",
-      "default" : 1
+      "default" : true,
+      "detaileddescriptionSet" : "Set/Get whether the displacement field is smoothed (regularized). Smoothing the displacement yields a solution elastic in nature. If SmoothDisplacementField is on, then the displacement field is smoothed with a Gaussian whose standard deviations are specified with SetStandardDeviations()",
+      "detaileddescriptionGet" : "Set/Get whether the displacement field is smoothed (regularized). Smoothing the displacement yields a solution elastic in nature. If SmoothDisplacementField is on, then the displacement field is smoothed with a Gaussian whose standard deviations are specified with SetStandardDeviations()"
     },
     {
-      "name" : "StandardDeviations",
-      "type" : "double",
-      "dim_vec" : 1,
-      "set_as_scalar" : 1,
-      "default" : "std::vector<double>(3, 1.0)",
-      "itk_type" : "typename FilterType::StandardDeviationsType"
+      "name" : "SmoothUpdateField",
+      "type" : "bool",
+      "default" : false,
+      "detaileddescriptionSet" : "Set/Get whether the update field is smoothed (regularized). Smoothing the update field yields a solution viscous in nature. If SmoothUpdateField is on, then the update field is smoothed with a Gaussian whose standard deviations are specified with SetUpdateFieldStandardDeviations()",
+      "detaileddescriptionGet" : "Set/Get whether the update field is smoothed (regularized). Smoothing the update field yields a solution viscous in nature. If SmoothUpdateField is on, then the update field is smoothed with a Gaussian whose standard deviations are specified with SetUpdateFieldStandardDeviations()"
     },
     {
       "name" : "UpdateFieldStandardDeviations",
@@ -36,22 +59,23 @@
       "dim_vec" : 1,
       "set_as_scalar" : 1,
       "default" : "std::vector<double>(3, 1.0)",
-      "itk_type" : "typename FilterType::StandardDeviationsType"
+      "itk_type" : "typename FilterType::StandardDeviationsType",
+      "detaileddescriptionSet" : "Set the Gaussian smoothing standard deviations for the update field. The values are set with respect to pixel coordinates.",
+      "detaileddescriptionGet" : "Set the Gaussian smoothing standard deviations for the update field. The values are set with respect to pixel coordinates."
     },
     {
       "name" : "MaximumKernelWidth",
       "type" : "unsigned int",
-      "default" : "30u"
+      "default" : "30u",
+      "detaileddescriptionSet" : "Set/Get the desired limits of the Gaussian kernel width.",
+      "detaileddescriptionGet" : "Set/Get the desired limits of the Gaussian kernel width."
     },
     {
       "name" : "MaximumError",
       "type" : "double",
-      "default" : "0.1"
-    },
-    {
-      "name" : "SmoothUpdateField",
-      "type" : "bool",
-      "default" : 0
+      "default" : "0.1",
+      "detaileddescriptionSet" : "Set/Get the desired maximum error of the Guassian kernel approximate.",
+      "detaileddescriptionGet" : "Set/Get the desired maximum error of the Guassian kernel approximate."
     },
     {
       "name" : "IntensityDifferenceThreshold",
@@ -61,18 +85,6 @@
       "detaileddescriptionSet" : "Set/Get the threshold below which the absolute difference of intensity yields a match. When the intensities match between a moving and fixed image pixel, the update vector (for that iteration) will be the zero vector. Default is 0.001.",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : ""
-    },
-    {
-      "name" : "NumberOfIterations",
-      "type" : "uint32_t",
-      "default" : "5u",
-      "doc" : "Number of iterations to run"
-    },
-    {
-      "name" : "MaximumRMSError",
-      "type" : "double",
-      "default" : 0.02,
-      "doc" : "Value of RMS change below which the filter should stop. This is a convergence criterion."
     },
     {
       "name" : "UseImageSpacing",
@@ -116,16 +128,16 @@
       "measurements_results" : [
         {
           "name" : "ElapsedIterations",
-          "value" : "50u"
+          "value" : "10u"
         },
         {
           "name" : "RMSChange",
-          "value" : 0.28302900676126319,
+          "value" : 0.28376284179066474,
           "tolerance" : 1e-06
         },
         {
           "name" : "Metric",
-          "value" : 998.54198361473016,
+          "value" : 771.75286591059262,
           "tolerance" : 0.0001
         }
       ]
