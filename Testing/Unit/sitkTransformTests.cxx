@@ -98,6 +98,19 @@ TEST(TransformTest, Construction) {
   EXPECT_EQ( displacement.GetSize()[0], 0u );
   EXPECT_EQ( displacement.GetSize()[1], 0u );
 
+  ASSERT_THROW( sitk::Transform( 3, sitk::sitkDisplacementField ), sitk::GenericException );
+  ASSERT_THROW( sitk::Transform( 2, sitk::sitkDisplacementField ), sitk::GenericException );
+
+
+  sitk::Image bsplineReference = sitk::Image(10,10, sitk::sitkUInt8);
+  sitk::Transform tx21( bsplineReference, sitk::sitkBSplineTransform );
+
+  bsplineReference = sitk::Image(10,10, 10, sitk::sitkUInt8);
+  sitk::Transform tx22( bsplineReference, sitk::sitkBSplineTransform );
+
+  ASSERT_THROW( sitk::Transform( 3, sitk::sitkBSplineTransform ), sitk::GenericException );
+  ASSERT_THROW( sitk::Transform( 2, sitk::sitkBSplineTransform ), sitk::GenericException );
+
 }
 
 TEST(TransformTest, Copy) {
