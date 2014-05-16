@@ -42,10 +42,13 @@
 #include <sitkPatchBasedDenoisingImageFilter.h>
 #include <sitkConnectedThresholdImageFilter.h>
 #include <sitkMergeLabelMapFilter.h>
+#include <sitkDiffeomorphicDemonsRegistrationFilter.h>
+#include <sitkFastSymmetricForcesDemonsRegistrationFilter.h>
 #include <sitkAdditionalProcedures.h>
 #include <sitkCommand.h>
 
 #include "itkVectorImage.h"
+#include "itkVector.h"
 #include "itkRecursiveGaussianImageFilter.h"
 #include "itkExtractImageFilter.h"
 #include "itkFastMarchingImageFilterBase.h"
@@ -60,6 +63,32 @@
 #include "itkPatchBasedDenoisingImageFilter.h"
 #include "itkConnectedThresholdImageFilter.h"
 #include "itkMergeLabelMapFilter.h"
+#include "itkDiffeomorphicDemonsRegistrationFilter.h"
+#include "itkFastSymmetricForcesDemonsRegistrationFilter.h"
+
+
+TEST(BasicFilter,FastSymmetricForcesDemonsRegistrationFilter_ENUMCHECK) {
+  typedef itk::Image<float,3> ImageType;
+  typedef itk::Image<itk::Vector<float,3>,3> DisplacementType;
+  typedef itk::FastSymmetricForcesDemonsRegistrationFilter<ImageType,ImageType,DisplacementType>::DemonsRegistrationFunctionType ITKType;
+
+  EXPECT_EQ( (int)ITKType::Symmetric, (int)itk::simple::FastSymmetricForcesDemonsRegistrationFilter::Symmetric);
+  EXPECT_EQ( (int)ITKType::Fixed, (int)itk::simple::FastSymmetricForcesDemonsRegistrationFilter::Fixed);
+  EXPECT_EQ( (int)ITKType::WarpedMoving, (int)itk::simple::FastSymmetricForcesDemonsRegistrationFilter::WarpedMoving);
+  EXPECT_EQ( (int)ITKType::MappedMoving, (int)itk::simple::FastSymmetricForcesDemonsRegistrationFilter::MappedMoving);
+}
+
+
+TEST(BasicFilter,DiffeomorphicDemonsRegistrationFilter_ENUMCHECK) {
+  typedef itk::Image<float,3> ImageType;
+  typedef itk::Image<itk::Vector<float,3>,3> DisplacementType;
+  typedef itk::DiffeomorphicDemonsRegistrationFilter<ImageType,ImageType,DisplacementType>::DemonsRegistrationFunctionType ITKType;
+
+  EXPECT_EQ( (int)ITKType::Symmetric, (int)itk::simple::DiffeomorphicDemonsRegistrationFilter::Symmetric);
+  EXPECT_EQ( (int)ITKType::Fixed, (int)itk::simple::DiffeomorphicDemonsRegistrationFilter::Fixed);
+  EXPECT_EQ( (int)ITKType::WarpedMoving, (int)itk::simple::DiffeomorphicDemonsRegistrationFilter::WarpedMoving);
+  EXPECT_EQ( (int)ITKType::MappedMoving, (int)itk::simple::DiffeomorphicDemonsRegistrationFilter::MappedMoving);
+}
 
 TEST(BasicFilters,MergeLabelMap_ENUMCHECK) {
   typedef itk::MergeLabelMapFilter< itk::LabelMap< itk::LabelObject<int, 3> > >  ITKType;

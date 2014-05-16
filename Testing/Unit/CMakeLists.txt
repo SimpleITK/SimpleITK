@@ -399,6 +399,15 @@ if ( ${BUILD_EXAMPLES} )
       ${TEST_HARNESS_TEMP_DIRECTORY}/CXXImageRegistrationMethod2Test.hdf5
     )
 
+   add_test(NAME CXX.Example.DeformableRegistration1
+    COMMAND
+      $<TARGET_FILE:DeformableRegistration1>
+      ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceBorder20.png
+      ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceBSplined10.png
+      ${TEST_HARNESS_TEMP_DIRECTORY}/CXXDeformableRegistration1Test.hdf5
+    )
+
+
 endif()
 
 if ( WRAP_CSHARP )
@@ -730,6 +739,15 @@ if ( WRAP_PYTHON )
     ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceShifted13x17y.png
     ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethod2Test.hdf5
     )
+
+
+  add_python_test(Example.DeformableRegistration1
+      "${SimpleITK_SOURCE_DIR}/Examples/DeformableRegistration1.py"
+      ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceBorder20.png
+      ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceBSplined10.png
+      ${TEST_HARNESS_TEMP_DIRECTORY}/PythonDeformableRegistration1Test.hdf5
+    )
+
 
   #
   # Python Tests
