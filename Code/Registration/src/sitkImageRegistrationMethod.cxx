@@ -7,6 +7,7 @@
 
 #include "itkMeanSquaresImageToImageMetric.h"
 #include "itkMutualInformationImageToImageMetric.h"
+#include "itkMattesMutualInformationImageToImageMetric.h"
 
 template< typename TValue, typename TType>
 itk::Array<TValue> sitkSTLVectorToITKArray( const std::vector< TType > & in )
@@ -88,6 +89,19 @@ namespace simple
    return *this;
   }
 
+  ImageRegistrationMethod::Self&
+  ImageRegistrationMethod::SetMetricAsMattesMutualInformation( unsigned int numberOfHistogramBins,
+                                                               bool useExplicitPDFDerivatives,
+                                                               uint64_t numberOfSpatialSamples  )
+  {
+    m_MetricType = MattesMutualInformation;
+    m_MetricNumberOfHistogramBins = numberOfHistogramBins;
+    m_MetricUseExplicitPDFDerivatives = useExplicitPDFDerivatives;
+    m_MetricNumberOfSpatialSamples = numberOfSpatialSamples;
+    this->m_OptimizerMinimize = true;
+    return *this;
+  }
+
   template <class TImageType>
   itk::ImageToImageMetric<TImageType,TImageType>*
   ImageRegistrationMethod::CreateMetric( )
@@ -117,6 +131,21 @@ namespace simple
         typename _MetricType::Pointer         metric        = _MetricType::New();
         metric->SetFixedImageStandardDeviation( this->m_MetricFixedImageStandardDeviation );
         metric->SetMovingImageStandardDeviation( this->m_MetricMovingImageStandardDeviation );
+        if ( this->m_MetricNumberOfSpatialSamples )
+          {
+          metric->SetNumberOfSpatialSamples( this->m_MetricNumberOfSpatialSamples );
+          }
+
+        metric->Register();
+        return metric.GetPointer();
+      }
+      case MattesMutualInformation:
+      {
+        typedef itk::MattesMutualInformationImageToImageMetric< FixedImageType, MovingImageType >    _MetricType;
+        typename _MetricType::Pointer         metric        = _MetricType::New();
+        metric->SetNumberOfHistogramBins( this->m_MetricNumberOfHistogramBins );
+        metric->SetUseExplicitPDFDerivatives( this->m_MetricUseExplicitPDFDerivatives );
+        metric->UseAllPixelsOn();
         if ( this->m_MetricNumberOfSpatialSamples )
           {
           metric->SetNumberOfSpatialSamples( this->m_MetricNumberOfSpatialSamples );
