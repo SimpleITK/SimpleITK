@@ -35,21 +35,18 @@ typedef Transform Superclass;
 
 // construct identity
 Euler3DTransform();
-Euler3DTransform(const std::vector<double> &fixedOffset, double angleX = 0, double angleY=0, double angleZ=0);
 
-/** \brief Copy constructor and assignment operator
-   *
-   * Performs a shallow copy of the internal ITK transform. A deep
-   * copy will be done if the transform in modified.
-   * @{
-   */
-Euler3DTransform &operator=( const Euler3DTransform & );
+explicit Euler3DTransform(const std::vector<double> &fixedCenter,
+                          double angleX = 0, double angleY=0, double angleZ=0,
+                          const std::vector<double> &translation = std::vector<double>(3,0.0) );
+
 Euler3DTransform( const Euler3DTransform & );
-/**@}*/
+
+Euler3DTransform &operator=( const Euler3DTransform & );
 
 /** fixed parameter */
-Self &SetOffset(const std::vector<double> &params);
-std::vector<double> GetOffset( ) const;
+Self &SetCenter(const std::vector<double> &params);
+std::vector<double> GetCenter( ) const;
 
 double GetAngleX () const;
 double GetAngleY () const;
@@ -58,8 +55,18 @@ double GetAngleZ () const;
 /** parameter */
 Self &SetRotation (double angleX, double angleY, double angleZ);
 
+std::vector<double> GetTranslation( ) const;
+Self &SetTranslation( const std::vector<double>& translation);
+
 Self &SetComputeZYX (bool _arg);
 bool GetComputeZYX () const;
+Self &ComputeZYXOn () {return this->SetComputeZYX(true);}
+Self &ComputeZYXOff () {return this->SetComputeZYX(false);}
+
+
+protected:
+
+virtual void SetPimpleTransform( PimpleTransformBase *pimpleTransform );
 
 private:
 
@@ -69,12 +76,14 @@ template <typename TransformType>
 void InternalInitialization(TransformType *transform);
 
 
-nsstd::function<void(std::vector<double>)> m_pfSetOffset;
-nsstd::function<std::vector<double>()> m_pfGetOffset;
+nsstd::function<void(std::vector<double>)> m_pfSetCenter;
+nsstd::function<std::vector<double>()> m_pfGetCenter;
 nsstd::function<void(double,double,double)> m_pfSetRotation;
 nsstd::function<double()> m_pfGetAngleX;
 nsstd::function<double()> m_pfGetAngleY;
 nsstd::function<double()> m_pfGetAngleZ;
+nsstd::function<void(std::vector<double>)> m_pfSetTranslation;
+nsstd::function<std::vector<double>()> m_pfGetTranslation;
 nsstd::function<void(bool)> m_pfSetComputeZYX;
 nsstd::function<bool()> m_pfGetComputeZYX;
 
