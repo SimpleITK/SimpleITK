@@ -1,6 +1,7 @@
 #include "sitkImageRegistrationMethod.h"
 
 #include "sitkCreateInterpolator.hxx"
+#include "itkImageMaskSpatialObject.h"
 #include "itkImage.h"
 #include "itkImageRegistrationMethodv4.h"
 
@@ -322,6 +323,24 @@ ImageRegistrationMethod::SetOptimizerScales( const std::vector<double> &scales)
   return *this;
 }
 
+
+ImageRegistrationMethod::Self&
+ImageRegistrationMethod::SetMetricFixedMask( const Image &binaryMask )
+{
+  // todo
+  m_MetricFixedMaskImage = binaryMask;
+  //m_MetricFixedMaskRegion.clear();
+  return *this;
+ }
+
+ImageRegistrationMethod::Self&
+ImageRegistrationMethod::SetMetricMovingMask( const Image &binaryMask )
+{
+  m_MetricMovingMaskImage = binaryMask;
+  //m_MetricMovingMaskRegion.clear();
+  return *this;
+}
+
 ImageRegistrationMethod::Self&
 ImageRegistrationMethod::SetOptimizerScalesFromJacobian( unsigned int centralRegionRadius )
 {
@@ -417,6 +436,7 @@ std::vector<double> ImageRegistrationMethod::GetOptimizerPosition() const
   return std::vector<double>();
 }
 
+
 double ImageRegistrationMethod::GetMetricValue() const
 {
   if(bool(this->m_pfGetMetricValue))
@@ -467,6 +487,20 @@ ImageRegistrationMethod::CreateScalesEstimator()
 
 }
 
+
+template<unsigned int VDimension>
+itk::SpatialObject<VDimension> *
+ImageRegistrationMethod::CreateSpatialObjectMask(const Image &imageMask)
+{
+  // todo add the image to the spatial object, the spatial object only
+  // seems to support unsigned char image types.
+  typedef itk::ImageMaskSpatialObject<VDimension> SpatialObjectMaskType;
+  typename SpatialObjectMaskType::Pointer mask = SpatialObjectMaskType::New();
+  mask->Register();
+  return mask;
+}
+
+
 Transform ImageRegistrationMethod::Execute ( const Image &fixed, const Image & moving )
 {
   const PixelIDValueType fixedType = fixed.GetPixelIDValue();
@@ -497,6 +531,8 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
 {
   typedef TImageType     FixedImageType;
   typedef TImageType     MovingImageType;
+  const unsigned int ImageDimension = FixedImageType::ImageDimension;
+  typedef itk::SpatialObject<ImageDimension> SpatialObjectMaskType;
 
 
   typedef itk::ImageRegistrationMethodv4<FixedImageType, MovingImageType>  RegistrationType;
@@ -532,6 +568,27 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
   typedef itk::InterpolateImageFunction< MovingImageType, double > MovingInterpolatorType;
   typename MovingInterpolatorType::Pointer   movingInterpolator  = CreateInterpolator(moving.GetPointer(), m_Interpolator);
   metric->SetMovingInterpolator( movingInterpolator );
+
+  const std::vector<unsigned int> zeroSize(FixedImageType::ImageDimension,0);
+
+  // todo implement ImageRegionSpatialObject
+  if ( m_MetricFixedMaskImage.GetSize() != zeroSize
+       && m_MetricFixedMaskImage.GetDimension() == FixedImageType::ImageDimension )
+    {
+    std::cout << "m_MetricFixedMaskImage.GetSize(): " << m_MetricFixedMaskImage.GetSize() << std::endl;
+    // const or non const?
+    typename SpatialObjectMaskType::Pointer fixedMask = this->CreateSpatialObjectMask<ImageDimension>(m_MetricFixedMaskImage);
+    fixedMask->UnRegister();
+    metric->SetFixedImageMask(fixedMask);
+    }
+
+  if ( m_MetricMovingMaskImage.GetSize() != zeroSize
+       && m_MetricMovingMaskImage.GetDimension() == MovingImageType::ImageDimension  )
+    {
+    typename SpatialObjectMaskType::Pointer movingMask = this->CreateSpatialObjectMask<ImageDimension>(m_MetricMovingMaskImage);
+    movingMask->UnRegister();
+    metric->SetMovingImageMask(movingMask);
+    }
 
   registration->SetFixedImage( fixed );
   registration->SetMovingImage( moving );
