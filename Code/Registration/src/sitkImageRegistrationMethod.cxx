@@ -25,8 +25,18 @@ namespace itk
 namespace simple
 {
 
+
+static const unsigned int defaultShrinkFactors[] = {2, 1, 1};
+static const double defaultSigmas[] = {2.0,1.0,0.0};
+
 ImageRegistrationMethod::ImageRegistrationMethod()
-  : m_ActiveOptimizer(NULL)
+  : m_Interpolator(sitkLinear),
+    m_MetricSamplingPercentage(1,1.0),
+    m_MetricSamplingStrategy(NONE),
+    m_ShrinkFactorsPerLevel(defaultShrinkFactors, defaultShrinkFactors+3),
+    m_SmoothingSigmasPerLevel(defaultSigmas, defaultSigmas+3),
+    m_SmoothingSigmasAreSpecifiedInPhysicalUnits(true),
+    m_ActiveOptimizer(NULL)
 {
   m_MemberFactory.reset( new  detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
@@ -36,8 +46,6 @@ ImageRegistrationMethod::ImageRegistrationMethod()
   m_MemberFactory->RegisterMemberFunctions< RealPixelIDTypeList, 3 > ();
   m_MemberFactory->RegisterMemberFunctions< RealPixelIDTypeList, 2 > ();
 
-
-  m_Interpolator = sitkLinear;
 }
 
 
@@ -56,14 +64,6 @@ std::string  ImageRegistrationMethod::ToString() const
 
   out << "  Transform: ";
   this->ToStringHelper(out, this->m_Transform.ToString());
-  out << std::endl;
-
-  out << "  FixedImageRegionSize: ";
-  this->ToStringHelper(out, this->m_FixedImageRegionSize);
-  out << std::endl;
-
-  out << "  FixedImageRegionIndex: ";
-  this->ToStringHelper(out, this->m_FixedImageRegionIndex);
   out << std::endl;
 
   return out.str();
@@ -194,14 +194,47 @@ ImageRegistrationMethod::SetOptimizerScales( const std::vector<double> &scales)
 }
 
 ImageRegistrationMethod::Self&
-ImageRegistrationMethod::SetFixedImageRegion( const std::vector<unsigned int> &size,
-                                              const std::vector<unsigned int> &index)
+ImageRegistrationMethod::SetMetricSamplingPercentage(double percentage)
 {
-  this->m_FixedImageRegionSize = size;
-  this->m_FixedImageRegionIndex = index;
+  m_MetricSamplingPercentage.resize(1);
+  m_MetricSamplingPercentage[0] = percentage;
   return *this;
 }
 
+ImageRegistrationMethod::Self&
+ImageRegistrationMethod::SetMetricSamplingPercentagePerLevel(const std::vector<double> &percentage)
+{
+  m_MetricSamplingPercentage = percentage;
+  return *this;
+}
+
+ImageRegistrationMethod::Self&
+ImageRegistrationMethod::SetMetricSamplingStrategy( MetricSamplingStrategyType strategy)
+{
+  m_MetricSamplingStrategy = strategy;
+  return *this;
+}
+
+ImageRegistrationMethod::Self&
+ImageRegistrationMethod::SetShrinkFactorsPerLevel( const std::vector<unsigned int> &shrinkFactors )
+{
+  this->m_ShrinkFactorsPerLevel = shrinkFactors;
+  return *this;
+}
+
+ImageRegistrationMethod::Self&
+ImageRegistrationMethod::SetSmoothingSigmasPerLevel( const std::vector<double> &smoothingSigmas )
+{
+  this->m_SmoothingSigmasPerLevel = smoothingSigmas;
+  return *this;
+}
+
+ImageRegistrationMethod::Self&
+ImageRegistrationMethod::SetSmoothingSigmasAreSpecifiedInPhysicalUnits(bool arg)
+{
+  m_SmoothingSigmasAreSpecifiedInPhysicalUnits = arg;
+  return *this;
+}
 
 const std::string &ImageRegistrationMethod::GetOptimizerStopConditionDescription() const
 {
@@ -276,11 +309,9 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
   typename FixedImageType::ConstPointer fixed = this->CastImageToITK<FixedImageType>( inFixed );
   typename MovingImageType::ConstPointer moving = this->CastImageToITK<MovingImageType>( inMoving );
 
-  // order mater?
   typename itk::ImageToImageMetricv4<FixedImageType, MovingImageType>::Pointer metric = this->CreateMetric<FixedImageType>();
   registration->SetMetric( metric );
   metric->UnRegister();
-
 
   typedef itk::InterpolateImageFunction< FixedImageType, double > FixedInterpolatorType;
   typename FixedInterpolatorType::Pointer   fixedInterpolator  = CreateInterpolator(fixed.GetPointer(), m_Interpolator);
@@ -293,19 +324,41 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
   registration->SetFixedImage( fixed );
   registration->SetMovingImage( moving );
 
-  registration->SetMetricSamplingPercentage(1.0);
-
-  const unsigned int numberOfLevels = 1;
+  // determine number of levels
+  const unsigned int numberOfLevels = m_ShrinkFactorsPerLevel.size();
+  if (m_ShrinkFactorsPerLevel.size() != m_SmoothingSigmasPerLevel.size())
+    {
+    sitkExceptionMacro( "Number of per level parameters for shrink factors and smoothing sigmas don't match!");
+    }
   registration->SetNumberOfLevels(numberOfLevels);
 
-  itk::Array<double> smoothingSigmasPerLevel(numberOfLevels);
-  smoothingSigmasPerLevel.Fill(0);
+  // set fixed/moving masks
+  // todo
 
-  itk::Array<double> shrinkFactorsPerLevel(numberOfLevels);
-  shrinkFactorsPerLevel.Fill(1);
+  // set sampling
+  if (m_MetricSamplingPercentage.size()==1)
+    {
+    registration->SetMetricSamplingPercentage(this->m_MetricSamplingPercentage[0]);
+    }
+  else
+    {
+    if (m_ShrinkFactorsPerLevel.size() != m_MetricSamplingPercentage.size())
+      {
+      sitkExceptionMacro("Number of per level sampling percentage does not match!");
+      }
+    typename RegistrationType::MetricSamplingPercentageArrayType param(m_MetricSamplingPercentage.size());
+    std::copy(m_MetricSamplingPercentage.begin(), m_MetricSamplingPercentage.end(), param.begin());
+    registration->SetMetricSamplingPercentagePerLevel(param);
+    }
 
-  registration->SetSmoothingSigmasPerLevel( smoothingSigmasPerLevel );
+  typename RegistrationType::ShrinkFactorsArrayType shrinkFactorsPerLevel( m_ShrinkFactorsPerLevel.size() );
+  std::copy(m_ShrinkFactorsPerLevel.begin(), m_ShrinkFactorsPerLevel.end(), shrinkFactorsPerLevel.begin());
   registration->SetShrinkFactorsPerLevel( shrinkFactorsPerLevel );
+
+  typename RegistrationType::SmoothingSigmasArrayType smoothingSigmasPerLevel( m_SmoothingSigmasPerLevel.size() );
+  std::copy(m_SmoothingSigmasPerLevel.begin(), m_SmoothingSigmasPerLevel.end(), smoothingSigmasPerLevel.begin());
+  registration->SetSmoothingSigmasPerLevel( smoothingSigmasPerLevel );
+  registration->SetSmoothingSigmasAreSpecifiedInPhysicalUnits(m_SmoothingSigmasAreSpecifiedInPhysicalUnits);
 
   typename  itk::ObjectToObjectOptimizerBaseTemplate<double>::Pointer optimizer = this->CreateOptimizer();
   optimizer->UnRegister();
@@ -336,6 +389,7 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
 
   if (this->GetDebug())
     {
+    registration->Print(std::cout);
     registration->GetOptimizer()->Print(std::cout);
     registration->GetMetric()->Print(std::cout);
     }

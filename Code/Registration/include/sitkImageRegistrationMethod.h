@@ -89,7 +89,25 @@ namespace simple
     Self& SetOptimizerScales( const std::vector<double> &scales);
 
 
-    Self& SetFixedImageRegion( const std::vector<unsigned int> &size, const std::vector<unsigned int> &index);
+
+    Self &SetMetricSamplingPercentage(double percentage);
+    Self &SetMetricSamplingPercentagePerLevel(const std::vector<double> &percentage);
+
+    enum MetricSamplingStrategyType {
+      NONE,
+      REGULAR,
+      RANDOM
+    };
+
+    Self &SetMetricSamplingStrategy( MetricSamplingStrategyType strategy);
+
+    Self &SetShrinkFactorsPerLevel( const std::vector<unsigned int> &shrinkFactors );
+    Self &SetSmoothingSigmasPerLevel( const std::vector<double> &smoothingSigmas );
+
+    Self &SetSmoothingSigmasAreSpecifiedInPhysicalUnits(bool arg);
+    Self &SmoothingSigmasAreSpecifiedInPhysicalUnitsOn() { this->SetSmoothingSigmasAreSpecifiedInPhysicalUnits(true); return *this;}
+    Self &SmoothingSigmasAreSpecifiedInPhysicalUnitsOff()  { this->SetSmoothingSigmasAreSpecifiedInPhysicalUnits(false); return *this;}
+
 
     Transform Execute ( const Image &fixed, const Image & moving );
 
@@ -160,9 +178,13 @@ namespace simple
     };
     MetricType m_MetricType;
 
-    std::vector<unsigned int> m_FixedImageRegionSize;
-    std::vector<unsigned int> m_FixedImageRegionIndex;
 
+    std::vector<double> m_MetricSamplingPercentage;
+    MetricSamplingStrategyType m_MetricSamplingStrategy;
+
+    std::vector<unsigned int> m_ShrinkFactorsPerLevel;
+    std::vector<double> m_SmoothingSigmasPerLevel;
+    bool m_SmoothingSigmasAreSpecifiedInPhysicalUnits;
 
     std::string m_StopConditionDescription;
     double m_MetricValue;
