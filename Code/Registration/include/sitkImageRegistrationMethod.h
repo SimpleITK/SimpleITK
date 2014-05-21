@@ -38,6 +38,7 @@ template<typename TFixedImageType,
          typename TCoordRep>
 class DefaultImageToImageMetricTraitsv4;
 
+template<typename TMetric> class RegistrationParameterScalesEstimator;
 
 class Command;
 class EventObject;
@@ -86,7 +87,11 @@ namespace simple
                                                     double relaxationFactor=0.5);
     Self& SetOptimizerAsGradientDescent( double learningRate,
                                          unsigned int numberOfIterations );
+
     Self& SetOptimizerScales( const std::vector<double> &scales);
+    Self& SetOptimizerScalesFromJacobian();
+    Self& SetOptimizerScalesFromIndexShift();
+    Self& SetOptimizerScalesFromPhysicalShift();
 
 
 
@@ -140,6 +145,9 @@ namespace simple
       DefaultImageToImageMetricTraitsv4< TImageType, TImageType, TImageType, double >
       >* CreateMetric( );
 
+    template <typename TMetric>
+      itk::RegistrationParameterScalesEstimator< TMetric >*CreateScalesEstimator();
+
     virtual void PreUpdate( itk::ProcessObject *p );
     virtual void OnActiveProcessDelete( ) throw();
     virtual unsigned long AddITKObserver(const itk::EventObject &, itk::Command *);
@@ -167,6 +175,14 @@ namespace simple
     double m_OptimizerMinimumStepLength;
     unsigned int m_OptimizerNumberOfIterations;
     double m_OptimizerRelaxationFactor;
+
+    enum OptimizerScalesType {
+      Manual,
+      Jacobian,
+      IndexShift,
+      PhysicalShift
+    };
+    OptimizerScalesType m_OptimizerScalesType;
     std::vector<double> m_OptimizerScales;
 
     // metric

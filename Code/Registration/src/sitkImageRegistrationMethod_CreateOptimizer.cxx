@@ -32,17 +32,12 @@ namespace simple
   {
     typedef double InternalComputationValueType;
 
-    itk::ObjectToObjectOptimizerBaseTemplate<double>::ScalesType scales(m_OptimizerScales.size());
-    std::copy( m_OptimizerScales.begin(), m_OptimizerScales.end(), scales.begin() );
-
-
     if ( m_OptimizerType == GradientDescent )
       {
       typedef itk::GradientDescentOptimizerv4Template<InternalComputationValueType> _OptimizerType;
       _OptimizerType::Pointer      optimizer     = _OptimizerType::New();
       optimizer->SetLearningRate( this->m_OptimizerLearningRate );
       optimizer->SetNumberOfIterations( this->m_OptimizerNumberOfIterations  );
-      if (scales.GetSize()) optimizer->SetScales(scales);
 
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetCurrentMetricValue,optimizer);
       this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer);
@@ -60,7 +55,6 @@ namespace simple
       optimizer->SetMinimumStepLength( this->m_OptimizerMinimumStepLength );
       optimizer->SetNumberOfIterations( this->m_OptimizerNumberOfIterations  );
       optimizer->SetRelaxationFactor( this->m_OptimizerRelaxationFactor );
-      if (scales.GetSize()) optimizer->SetScales(scales);
       optimizer->Register();
 
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetValue,optimizer);
