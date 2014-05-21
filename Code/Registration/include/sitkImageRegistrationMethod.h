@@ -73,13 +73,11 @@ namespace simple
     Transform GetTransform()
       { return this->m_Transform; }
 
-    Self& SetMetricAsMeanSquares( uint64_t numberOfSpatialSamples = 0 );
-    Self& SetMetricAsMutualInformation( double fixedImageStandardDeviation=0.4,
-                                        double movingImageStandardDeviation=0.4,
-                                        uint64_t numberOfSpatialSamples = 50 );
-    Self& SetMetricAsMattesMutualInformation( unsigned int numberOfHistogramBins = 50,
-                                              bool useExplicitPDFDerivatives=true,
-                                              uint64_t numberOfSpatialSamples = 0 );
+    Self& SetMetricAsCorrelation( );
+    Self& SetMetricAsDemons( );
+    Self& SetMetricAsJointHistogramMutualInformation( );
+    Self& SetMetricAsMeanSquares( );
+    Self& SetMetricAsMattesMutualInformation( );
 
 
     Self& SetOptimizerAsRegularStepGradientDescent( double maxStep,
@@ -151,22 +149,17 @@ namespace simple
     double m_OptimizerMinimumStepLength;
     unsigned int m_OptimizerNumberOfIterations;
     double m_OptimizerRelaxationFactor;
-    bool m_OptimizerMinimize;
     std::vector<double> m_OptimizerScales;
     double m_OptimizerLearningRate;
 
     // metric
-    enum MetricType { MeanSquares,
-                      MattesMutualInformation,
-                      MutualInformation
+    enum MetricType { Correlation,
+                      Demons,
+                      JointHistogramMutualInformation,
+                      MeanSquares,
+                      MattesMutualInformation
     };
-
     MetricType m_MetricType;
-    uint64_t  m_MetricNumberOfSpatialSamples;
-    double m_MetricFixedImageStandardDeviation;
-    double m_MetricMovingImageStandardDeviation;
-    unsigned int m_MetricNumberOfHistogramBins;
-    bool m_MetricUseExplicitPDFDerivatives;
 
     std::vector<unsigned int> m_FixedImageRegionSize;
     std::vector<unsigned int> m_FixedImageRegionIndex;
