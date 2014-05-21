@@ -166,13 +166,13 @@ ImageRegistrationMethod::CreateMetric( )
 }
 
 ImageRegistrationMethod::Self&
-ImageRegistrationMethod::SetOptimizerAsRegularStepGradientDescent( double maxStep,
+ImageRegistrationMethod::SetOptimizerAsRegularStepGradientDescent( double learningRate,
                                                                    double minStep,
                                                                    unsigned int numberOfIteratons,
                                                                    double relaxationFactor )
 {
   m_OptimizerType = RegularStepGradientDescent;
-  m_OptimizerMaximumStepLength = maxStep;
+  m_OptimizerLearningRate = learningRate;
   m_OptimizerMinimumStepLength = minStep;
   m_OptimizerNumberOfIterations = numberOfIteratons;
   m_OptimizerRelaxationFactor = relaxationFactor;

@@ -80,7 +80,7 @@ namespace simple
     Self& SetMetricAsMattesMutualInformation( );
 
 
-    Self& SetOptimizerAsRegularStepGradientDescent( double maxStep,
+    Self& SetOptimizerAsRegularStepGradientDescent( double learningRate,
                                                     double minStep,
                                                     unsigned int numberOfIterations,
                                                     double relaxationFactor=0.5);
@@ -145,12 +145,11 @@ namespace simple
                          GradientDescent
     };
     OptimizerType m_OptimizerType;
-    double m_OptimizerMaximumStepLength;
+    double m_OptimizerLearningRate;
     double m_OptimizerMinimumStepLength;
     unsigned int m_OptimizerNumberOfIterations;
     double m_OptimizerRelaxationFactor;
     std::vector<double> m_OptimizerScales;
-    double m_OptimizerLearningRate;
 
     // metric
     enum MetricType { Correlation,

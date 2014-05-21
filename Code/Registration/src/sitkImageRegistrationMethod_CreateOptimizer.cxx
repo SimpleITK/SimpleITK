@@ -1,9 +1,7 @@
 #include "sitkImageRegistrationMethod.h"
 
-#include "itkRegularStepGradientDescentOptimizer.h"
-#include "itkGradientDescentOptimizer.h"
-
-#include <itkGradientDescentOptimizerv4.h>
+#include "itkGradientDescentOptimizerv4.h"
+#include "itkRegularStepGradientDescentOptimizerv4.h"
 
 
 namespace {
@@ -32,13 +30,15 @@ namespace simple
   itk::ObjectToObjectOptimizerBaseTemplate<double>*
   ImageRegistrationMethod::CreateOptimizer( )
   {
+    typedef double InternalComputationValueType;
+
     itk::ObjectToObjectOptimizerBaseTemplate<double>::ScalesType scales(m_OptimizerScales.size());
     std::copy( m_OptimizerScales.begin(), m_OptimizerScales.end(), scales.begin() );
 
 
     if ( m_OptimizerType == GradientDescent )
       {
-      typedef itk::GradientDescentOptimizerv4Template<double> _OptimizerType;
+      typedef itk::GradientDescentOptimizerv4Template<InternalComputationValueType> _OptimizerType;
       _OptimizerType::Pointer      optimizer     = _OptimizerType::New();
       optimizer->SetLearningRate( this->m_OptimizerLearningRate );
       optimizer->SetNumberOfIterations( this->m_OptimizerNumberOfIterations  );
@@ -51,17 +51,14 @@ namespace simple
       optimizer->Register();
       return optimizer.GetPointer();
       }
-#if 0
     else if ( m_OptimizerType == RegularStepGradientDescent )
       {
-      typedef itk::RegularStepGradientDescentBaseOptimizer _OptimizerType;
-      _OptimizerType::Pointer      optimizer;
-      optimizer = itk::RegularStepGradientDescentOptimizer::New();
+      typedef itk::RegularStepGradientDescentOptimizerv4<InternalComputationValueType> _OptimizerType;
+      _OptimizerType::Pointer      optimizer =  _OptimizerType::New();
 
-      optimizer->SetMaximumStepLength( this->m_OptimizerMaximumStepLength );
+      optimizer->SetLearningRate( this->m_OptimizerLearningRate );
       optimizer->SetMinimumStepLength( this->m_OptimizerMinimumStepLength );
       optimizer->SetNumberOfIterations( this->m_OptimizerNumberOfIterations  );
-      optimizer->SetMinimize( this->m_OptimizerMinimize );
       optimizer->SetRelaxationFactor( this->m_OptimizerRelaxationFactor );
       if (scales.GetSize()) optimizer->SetScales(scales);
       optimizer->Register();
@@ -72,7 +69,6 @@ namespace simple
 
       return optimizer.GetPointer();
       }
-#endif
     else
       {
       sitkExceptionMacro("LogicError: Unexpected case!");
