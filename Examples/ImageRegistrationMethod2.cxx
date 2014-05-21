@@ -79,16 +79,7 @@ int main(int argc, char *argv[])
 
 
   sitk::ImageRegistrationMethod R;
-
-  const std::vector< unsigned int > size = fixed.GetSize();
-  const uint64_t numberOfPixels =  std::accumulate( size.begin(), size.end(), uint64_t(1), std::multiplies<uint64_t>() );
-
-  const double fixedImageStandardDeviation = 0.4;
-  const double movingImageStandardDeviation = 0.4;
-  const uint64_t numberOfSpatialSamples = uint64_t(numberOfPixels*0.01);
-  R.SetMetricAsMutualInformation( fixedImageStandardDeviation,
-                                  movingImageStandardDeviation,
-                                  numberOfSpatialSamples );
+  R.SetMetricAsMattesMutualInformation( );
 
   const double learningRate = 15;
   const unsigned int numberOfIterations = 200;
