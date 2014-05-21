@@ -3,6 +3,8 @@
 #include "itkRegularStepGradientDescentOptimizer.h"
 #include "itkGradientDescentOptimizer.h"
 
+#include <itkGradientDescentOptimizerv4.h>
+
 
 namespace {
 
@@ -12,7 +14,7 @@ struct PositionOptimizerCustomCast
   static std::vector<double> Helper(const T &value)
     { return std::vector<double>(value.begin(),value.end()); }
 
-  static std::vector<double> CustomCast(const itk::SingleValuedNonLinearOptimizer *opt)
+  static std::vector<double> CustomCast(const itk::ObjectToObjectOptimizerBaseTemplate<double> *opt)
     {
       return Helper(opt->GetCurrentPosition());
     }
@@ -27,30 +29,29 @@ namespace simple
 
 
 
-  itk::SingleValuedNonLinearOptimizer*
+  itk::ObjectToObjectOptimizerBaseTemplate<double>*
   ImageRegistrationMethod::CreateOptimizer( )
   {
-
-    itk::SingleValuedNonLinearOptimizer::ScalesType scales(m_OptimizerScales.size());
+    itk::ObjectToObjectOptimizerBaseTemplate<double>::ScalesType scales(m_OptimizerScales.size());
     std::copy( m_OptimizerScales.begin(), m_OptimizerScales.end(), scales.begin() );
 
 
     if ( m_OptimizerType == GradientDescent )
       {
-      typedef itk::GradientDescentOptimizer _OptimizerType;
+      typedef itk::GradientDescentOptimizerv4Template<double> _OptimizerType;
       _OptimizerType::Pointer      optimizer     = _OptimizerType::New();
       optimizer->SetLearningRate( this->m_OptimizerLearningRate );
       optimizer->SetNumberOfIterations( this->m_OptimizerNumberOfIterations  );
-      optimizer->SetMinimize( this->m_OptimizerMinimize );
       if (scales.GetSize()) optimizer->SetScales(scales);
 
-      this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetValue,optimizer);
+      this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetCurrentMetricValue,optimizer);
       this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer);
       this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer);
 
       optimizer->Register();
       return optimizer.GetPointer();
       }
+#if 0
     else if ( m_OptimizerType == RegularStepGradientDescent )
       {
       typedef itk::RegularStepGradientDescentBaseOptimizer _OptimizerType;
@@ -71,6 +72,7 @@ namespace simple
 
       return optimizer.GetPointer();
       }
+#endif
     else
       {
       sitkExceptionMacro("LogicError: Unexpected case!");

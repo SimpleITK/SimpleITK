@@ -24,8 +24,21 @@ namespace itk
 {
 
 #ifndef SWIG
-class SingleValuedNonLinearOptimizer;
-template<class T, class U> class ImageToImageMetric;
+template< typename TInternalComputationValueType> class ObjectToObjectOptimizerBaseTemplate;
+template<typename TFixedImage,
+         typename TMovingImage,
+         typename TVirtualImage,
+         typename TInternalComputationValueType,
+         typename TMetricTraits >
+class ImageToImageMetricv4;
+
+template<typename TFixedImageType,
+         typename TMovingImageType,
+         typename TVirtualImageType,
+         typename TCoordRep>
+class DefaultImageToImageMetricTraitsv4;
+
+
 class Command;
 class EventObject;
 #endif
@@ -101,10 +114,15 @@ namespace simple
     template<class TImage>
     Transform ExecuteInternal ( const Image &fixed, const Image &moving );
 
-    itk::SingleValuedNonLinearOptimizer* CreateOptimizer( );
+    itk::ObjectToObjectOptimizerBaseTemplate<double> *CreateOptimizer( );
 
     template <class TImageType>
-      itk::ImageToImageMetric<TImageType,TImageType>* CreateMetric( );
+      itk::ImageToImageMetricv4<TImageType,
+      TImageType,
+      TImageType,
+      double,
+      DefaultImageToImageMetricTraitsv4< TImageType, TImageType, TImageType, double >
+      >* CreateMetric( );
 
     virtual void PreUpdate( itk::ProcessObject *p );
     virtual void OnActiveProcessDelete( ) throw();
@@ -158,7 +176,7 @@ namespace simple
     double m_MetricValue;
     unsigned int m_Iteration;
 
-    itk::SingleValuedNonLinearOptimizer *m_ActiveOptimizer;
+    itk::ObjectToObjectOptimizerBaseTemplate<double> *m_ActiveOptimizer;
   };
 
 }

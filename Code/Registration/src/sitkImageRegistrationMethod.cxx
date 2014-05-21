@@ -2,12 +2,14 @@
 
 #include "sitkCreateInterpolator.hxx"
 #include "itkImage.h"
-#include "itkImageRegistrationMethod.h"
+#include "itkImageRegistrationMethodv4.h"
 
 
 #include "itkMeanSquaresImageToImageMetric.h"
 #include "itkMutualInformationImageToImageMetric.h"
 #include "itkMattesMutualInformationImageToImageMetric.h"
+
+#include "itkMeanSquaresImageToImageMetricv4.h"
 
 template< typename TValue, typename TType>
 itk::Array<TValue> sitkSTLVectorToITKArray( const std::vector< TType > & in )
@@ -30,8 +32,12 @@ namespace simple
   {
     m_MemberFactory.reset( new  detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
-    m_MemberFactory->RegisterMemberFunctions< BasicPixelIDTypeList, 3 > ();
-    m_MemberFactory->RegisterMemberFunctions< BasicPixelIDTypeList, 2 > ();
+    // m_MemberFactory->RegisterMemberFunctions< BasicPixelIDTypeList, 3 > ();
+    // m_MemberFactory->RegisterMemberFunctions< BasicPixelIDTypeList, 2 > ();
+
+    m_MemberFactory->RegisterMemberFunctions< RealPixelIDTypeList, 3 > ();
+    m_MemberFactory->RegisterMemberFunctions< RealPixelIDTypeList, 2 > ();
+
 
     m_Interpolator = sitkLinear;
     m_OptimizerMinimize = true;
@@ -103,7 +109,12 @@ namespace simple
   }
 
   template <class TImageType>
-  itk::ImageToImageMetric<TImageType,TImageType>*
+  itk::ImageToImageMetricv4<TImageType,
+      TImageType,
+      TImageType,
+      double,
+      DefaultImageToImageMetricTraitsv4< TImageType, TImageType, TImageType, double >
+      >*
   ImageRegistrationMethod::CreateMetric( )
   {
     typedef TImageType     FixedImageType;
@@ -114,17 +125,19 @@ namespace simple
       {
       case MeanSquares:
       {
-        typedef itk::MeanSquaresImageToImageMetric< FixedImageType, MovingImageType >    _MetricType;
+        typedef itk::MeanSquaresImageToImageMetricv4< FixedImageType, MovingImageType >    _MetricType;
         typename _MetricType::Pointer         metric        = _MetricType::New();
+#if 0
         metric->UseAllPixelsOn();
         if ( this->m_MetricNumberOfSpatialSamples )
           {
           metric->SetNumberOfSpatialSamples( this->m_MetricNumberOfSpatialSamples );
           }
-
+#endif
         metric->Register();
         return metric.GetPointer();
       }
+#if 0
       case MutualInformation:
       {
         typedef itk::MutualInformationImageToImageMetric< FixedImageType, MovingImageType >    _MetricType;
@@ -154,6 +167,7 @@ namespace simple
         metric->Register();
         return metric.GetPointer();
       }
+#endif
       default:
         break; // fall through to exception
       }
@@ -268,39 +282,59 @@ namespace simple
       typedef TImageType     MovingImageType;
 
 
-      typedef itk::ImageRegistrationMethod<FixedImageType, MovingImageType>  RegistrationType;
+      typedef itk::ImageRegistrationMethodv4<FixedImageType, MovingImageType>  RegistrationType;
       typename RegistrationType::Pointer   registration  = RegistrationType::New();
 
       // Get the pointer to the ITK image contained in image1
       typename FixedImageType::ConstPointer fixed = this->CastImageToITK<FixedImageType>( inFixed );
       typename MovingImageType::ConstPointer moving = this->CastImageToITK<MovingImageType>( inMoving );
 
-      registration->SetFixedImage( fixed );
-      registration->SetMovingImage( moving );
-
-      typedef itk::InterpolateImageFunction< MovingImageType, double > InterpolatorType;
-      typename InterpolatorType::Pointer   interpolator  = CreateInterpolator(moving.GetPointer(), m_Interpolator);
-      registration->SetInterpolator( interpolator );
-
-      typename itk::ImageToImageMetric<FixedImageType, MovingImageType>::Pointer metric = this->CreateMetric<FixedImageType>();
+      // order mater?
+      typename itk::ImageToImageMetricv4<FixedImageType, MovingImageType>::Pointer metric = this->CreateMetric<FixedImageType>();
       registration->SetMetric( metric );
       metric->UnRegister();
 
-      typename itk::SingleValuedNonLinearOptimizer::Pointer optimizer = this->CreateOptimizer();
+
+      typedef itk::InterpolateImageFunction< FixedImageType, double > FixedInterpolatorType;
+      typename FixedInterpolatorType::Pointer   fixedInterpolator  = CreateInterpolator(fixed.GetPointer(), m_Interpolator);
+      metric->SetFixedInterpolator( fixedInterpolator );
+
+      typedef itk::InterpolateImageFunction< MovingImageType, double > MovingInterpolatorType;
+      typename MovingInterpolatorType::Pointer   movingInterpolator  = CreateInterpolator(moving.GetPointer(), m_Interpolator);
+      metric->SetMovingInterpolator( movingInterpolator );
+
+      registration->SetFixedImage( fixed );
+      registration->SetMovingImage( moving );
+
+      registration->SetMetricSamplingPercentage(1.0);
+
+      const unsigned int numberOfLevels = 1;
+      registration->SetNumberOfLevels(numberOfLevels);
+
+      itk::Array<double> smoothingSigmasPerLevel(numberOfLevels);
+      smoothingSigmasPerLevel.Fill(0);
+
+      itk::Array<double> shrinkFactorsPerLevel(numberOfLevels);
+      shrinkFactorsPerLevel.Fill(1);
+
+      registration->SetSmoothingSigmasPerLevel( smoothingSigmasPerLevel );
+      registration->SetShrinkFactorsPerLevel( shrinkFactorsPerLevel );
+
+      typename  itk::ObjectToObjectOptimizerBaseTemplate<double>::Pointer optimizer = this->CreateOptimizer();
       optimizer->UnRegister();
 
       registration->SetOptimizer( optimizer );
 
-      typename RegistrationType::TransformType *itkTx;
-      if ( !(itkTx = dynamic_cast<typename RegistrationType::TransformType *>(this->m_Transform.GetITKBase())) )
+      typename RegistrationType::InitialTransformType *itkTx;
+      if ( !(itkTx = dynamic_cast<typename RegistrationType::InitialTransformType *>(this->m_Transform.GetITKBase())) )
         {
         sitkExceptionMacro( "Unexpected error converting transform! Possible miss matching dimensions!" );
         }
 
-      registration->SetTransform( itkTx );
+      registration->SetInitialTransform( itkTx );
+      registration->InPlaceOn();
 
-      registration->SetInitialTransformParameters(itkTx->GetParameters());
-
+#if 0 //todo extra parameters
       if (m_FixedImageRegionSize.size() && m_FixedImageRegionIndex.size())
         {
         typedef typename FixedImageType::RegionType RegionType;
@@ -308,20 +342,25 @@ namespace simple
                       sitkSTLVectorToITK<typename RegionType::SizeType>(m_FixedImageRegionSize) );
         registration->SetFixedImageRegion( r );
         }
+#endif
 
       this->m_ActiveOptimizer = optimizer;
       this->PreUpdate( registration.GetPointer() );
 
       if (this->GetDebug())
         {
-        std::cout << optimizer;
-        std::cout << metric;
+        registration->GetOptimizer()->Print(std::cout);
+        registration->GetMetric()->Print(std::cout);
         }
 
       registration->Update();
 
+      registration->GetMetric()->Print(std::cout);
+
+#if 0 // todo feature
       // update measurements
       this->m_StopConditionDescription = registration->GetOptimizer()->GetStopConditionDescription();
+#endif
 
       m_MetricValue = this->GetMetricValue();
       m_Iteration = this->GetOptimizerIteration();
