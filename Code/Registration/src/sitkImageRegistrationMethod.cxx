@@ -50,6 +50,8 @@ ImageRegistrationMethod::ImageRegistrationMethod()
   m_MemberFactory->RegisterMemberFunctions< RealPixelIDTypeList, 3 > ();
   m_MemberFactory->RegisterMemberFunctions< RealPixelIDTypeList, 2 > ();
 
+  this->SetMetricAsMattesMutualInformation();
+
 }
 
 
@@ -81,16 +83,20 @@ ImageRegistrationMethod::SetMetricAsCorrelation( )
 }
 
 ImageRegistrationMethod::Self&
-ImageRegistrationMethod::SetMetricAsDemons( )
+ImageRegistrationMethod::SetMetricAsDemons( double intensityDifferenceThreshold )
 {
   m_MetricType = Demons;
+  m_MetricIntensityDifferenceThreshold = intensityDifferenceThreshold;
   return *this;
 }
 
 ImageRegistrationMethod::Self&
-ImageRegistrationMethod::SetMetricAsJointHistogramMutualInformation( )
+ImageRegistrationMethod::SetMetricAsJointHistogramMutualInformation( unsigned int numberOfHistogramBins,
+                                                                     double varianceForJointPDFSmoothing )
 {
   m_MetricType = JointHistogramMutualInformation;
+  m_MetricNumberOfHistogramBins = numberOfHistogramBins;
+  m_MetricVarianceForJointPDFSmoothing = varianceForJointPDFSmoothing;
   return *this;
 }
 
@@ -102,9 +108,10 @@ ImageRegistrationMethod::SetMetricAsMeanSquares( )
 }
 
 ImageRegistrationMethod::Self&
-ImageRegistrationMethod::SetMetricAsMattesMutualInformation(  )
+ImageRegistrationMethod::SetMetricAsMattesMutualInformation( unsigned int numberOfHistogramBins )
 {
   m_MetricType = MattesMutualInformation;
+  m_MetricNumberOfHistogramBins = numberOfHistogramBins;
   return *this;
 }
 
@@ -135,6 +142,7 @@ ImageRegistrationMethod::CreateMetric( )
     {
       typedef itk::DemonsImageToImageMetricv4< FixedImageType, MovingImageType > _MetricType;
       typename _MetricType::Pointer metric = _MetricType::New();
+      metric->SetIntensityDifferenceThreshold(m_MetricIntensityDifferenceThreshold);
       metric->Register();
       return metric.GetPointer();
     }
@@ -142,6 +150,8 @@ ImageRegistrationMethod::CreateMetric( )
     {
       typedef itk::JointHistogramMutualInformationImageToImageMetricv4< FixedImageType, MovingImageType > _MetricType;
       typename _MetricType::Pointer metric = _MetricType::New();
+      metric->SetNumberOfHistogramBins(m_MetricNumberOfHistogramBins);
+      metric->SetVarianceForJointPDFSmoothing(m_MetricVarianceForJointPDFSmoothing);
       metric->Register();
       return metric.GetPointer();
     }
@@ -156,6 +166,7 @@ ImageRegistrationMethod::CreateMetric( )
     {
       typedef itk::MattesMutualInformationImageToImageMetricv4< FixedImageType, MovingImageType > _MetricType;
       typename _MetricType::Pointer metric = _MetricType::New();
+      metric->SetNumberOfHistogramBins(m_MetricNumberOfHistogramBins);
       metric->Register();
       return metric.GetPointer();
     }
@@ -410,6 +421,9 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
   // todo
 
   // set sampling
+
+  registration->SetMetricSamplingStrategy(m_MetricSamplingStrategy);
+
   if (m_MetricSamplingPercentage.size()==1)
     {
     registration->SetMetricSamplingPercentage(this->m_MetricSamplingPercentage[0]);
