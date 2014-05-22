@@ -37,7 +37,9 @@ namespace simple
       typedef itk::GradientDescentOptimizerv4Template<InternalComputationValueType> _OptimizerType;
       _OptimizerType::Pointer      optimizer     = _OptimizerType::New();
       optimizer->SetLearningRate( this->m_OptimizerLearningRate );
-      optimizer->SetNumberOfIterations( this->m_OptimizerNumberOfIterations  );
+      optimizer->SetNumberOfIterations( this->m_OptimizerNumberOfIterations );
+      optimizer->SetMinimumConvergenceValue( this->m_OptimizerMinimumConvergenceValue );
+      optimizer->SetConvergenceWindowSize( this->m_OptimizerConvergenceWindowSize );
 
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetCurrentMetricValue,optimizer);
       this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer);

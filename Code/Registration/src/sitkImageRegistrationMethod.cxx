@@ -196,12 +196,16 @@ ImageRegistrationMethod::SetOptimizerAsRegularStepGradientDescent( double learni
 }
 
 ImageRegistrationMethod::Self&
-ImageRegistrationMethod::SetOptimizerAsGradientDescent( double learningRate, unsigned int numberOfIteratons )
+ImageRegistrationMethod::SetOptimizerAsGradientDescent( double learningRate,
+                                                        unsigned int numberOfIteratons,
+                                                        double minimumConvergenceValue,
+                                                        unsigned int convergenceWindowSize )
 {
   m_OptimizerType = GradientDescent;
   m_OptimizerLearningRate = learningRate;
   m_OptimizerNumberOfIterations = numberOfIteratons;
-
+  m_OptimizerMinimumConvergenceValue = minimumConvergenceValue;
+  m_OptimizerConvergenceWindowSize = convergenceWindowSize;
   return *this;
 }
 

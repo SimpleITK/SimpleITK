@@ -87,7 +87,9 @@ namespace simple
                                                     unsigned int numberOfIterations,
                                                     double relaxationFactor=0.5);
     Self& SetOptimizerAsGradientDescent( double learningRate,
-                                         unsigned int numberOfIterations );
+                                         unsigned int numberOfIterations,
+                                         double minimumConvergenceValue = 1e-6,
+                                         unsigned int convergenceWindowSize = 10);
 
     Self& SetOptimizerScales( const std::vector<double> &scales );
     Self& SetOptimizerScalesFromJacobian( unsigned int centralRegionRadius = 5 );
@@ -178,6 +180,8 @@ namespace simple
     double m_OptimizerMinimumStepLength;
     unsigned int m_OptimizerNumberOfIterations;
     double m_OptimizerRelaxationFactor;
+    double m_OptimizerMinimumConvergenceValue;
+    unsigned int m_OptimizerConvergenceWindowSize;
 
     enum OptimizerScalesType {
       Manual,
