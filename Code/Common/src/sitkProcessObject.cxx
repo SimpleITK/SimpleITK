@@ -116,6 +116,18 @@ ProcessObject::~ProcessObject ()
   Self::RemoveAllCommands();
 }
 
+std::string ProcessObject::ToString() const
+{
+  std::ostringstream out;
+
+  if( this->m_ActiveProcess)
+    {
+    out << "ActiveProcess:" << std::endl;
+    this->m_ActiveProcess->Print(out, 1);
+    }
+  return out.str();
+}
+
 
 std::ostream & ProcessObject::ToStringHelper(std::ostream &os, const char &v)
 {

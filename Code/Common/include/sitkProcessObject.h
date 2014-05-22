@@ -65,7 +65,7 @@ namespace itk {
       virtual ~ProcessObject();
 
       // Print ourselves out
-      virtual std::string ToString() const = 0;
+      virtual std::string ToString() const;
 
       /** return user readable name for the filter */
       virtual std::string GetName() const = 0;
