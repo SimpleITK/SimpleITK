@@ -404,6 +404,9 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
 
   metric->SetMaximumNumberOfThreads(this->GetNumberOfThreads());
 
+  metric->SetUseMovingImageGradientFilter(true);
+  metric->SetUseFixedImageGradientFilter(true);
+
   typedef itk::InterpolateImageFunction< FixedImageType, double > FixedInterpolatorType;
   typename FixedInterpolatorType::Pointer   fixedInterpolator  = CreateInterpolator(fixed.GetPointer(), m_Interpolator);
   metric->SetFixedInterpolator( fixedInterpolator );
