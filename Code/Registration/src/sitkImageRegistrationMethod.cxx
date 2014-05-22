@@ -28,17 +28,13 @@ namespace itk
 namespace simple
 {
 
-
-static const unsigned int defaultShrinkFactors[] = {2, 1, 1};
-static const double defaultSigmas[] = {2.0,1.0,0.0};
-
 ImageRegistrationMethod::ImageRegistrationMethod()
   : m_Interpolator(sitkLinear),
     m_OptimizerScalesType(Manual),
     m_MetricSamplingPercentage(1,1.0),
     m_MetricSamplingStrategy(NONE),
-    m_ShrinkFactorsPerLevel(defaultShrinkFactors, defaultShrinkFactors+3),
-    m_SmoothingSigmasPerLevel(defaultSigmas, defaultSigmas+3),
+    m_ShrinkFactorsPerLevel(1, 1),
+    m_SmoothingSigmasPerLevel(1,0.0),
     m_SmoothingSigmasAreSpecifiedInPhysicalUnits(true),
     m_ActiveOptimizer(NULL)
 {
