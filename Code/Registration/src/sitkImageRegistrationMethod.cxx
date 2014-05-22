@@ -64,6 +64,8 @@ std::string  ImageRegistrationMethod::ToString() const
   std::ostringstream out;
   out << "itk::simple" << this->GetName() << std::endl;
 
+  out << Superclass::ToString();
+
   out << "  Interpolator: ";
   this->ToStringHelper(out, this->m_Interpolator);
   out << std::endl;
