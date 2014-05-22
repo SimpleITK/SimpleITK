@@ -38,7 +38,7 @@ namespace simple
       _OptimizerType::Pointer      optimizer     = _OptimizerType::New();
       optimizer->SetLearningRate( this->m_OptimizerLearningRate );
       optimizer->SetNumberOfIterations( this->m_OptimizerNumberOfIterations );
-      optimizer->SetMinimumConvergenceValue( this->m_OptimizerMinimumConvergenceValue );
+      optimizer->SetMinimumConvergenceValue( this->m_OptimizerConvergenceMinimumValue );
       optimizer->SetConvergenceWindowSize( this->m_OptimizerConvergenceWindowSize );
 
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetCurrentMetricValue,optimizer);
