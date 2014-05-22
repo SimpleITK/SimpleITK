@@ -1,5 +1,6 @@
 #include "sitkImageRegistrationMethod.h"
 
+#include "itkConjugateGradientLineSearchOptimizerv4.h"
 #include "itkGradientDescentOptimizerv4.h"
 #include "itkRegularStepGradientDescentOptimizerv4.h"
 #include "itkLBFGSBOptimizerv4.h"
@@ -33,7 +34,27 @@ namespace simple
   {
     typedef double InternalComputationValueType;
 
-    if ( m_OptimizerType == GradientDescent )
+    if ( m_OptimizerType == ConjugateGradientLineSearch )
+      {
+      typedef itk::ConjugateGradientLineSearchOptimizerv4Template<InternalComputationValueType> _OptimizerType;
+      _OptimizerType::Pointer      optimizer     = _OptimizerType::New();
+      optimizer->SetLearningRate( this->m_OptimizerLearningRate );
+      optimizer->SetNumberOfIterations( this->m_OptimizerNumberOfIterations );
+      optimizer->SetMinimumConvergenceValue( this->m_OptimizerConvergenceMinimumValue );
+      optimizer->SetConvergenceWindowSize( this->m_OptimizerConvergenceWindowSize );
+      optimizer->SetLowerLimit( this->m_OptimizerLineSearchLowerLimit);
+      optimizer->SetUpperLimit( this->m_OptimizerLineSearchUpperLimit);
+      optimizer->SetEpsilon( this->m_OptimizerLineSearchEpsilon);
+      optimizer->SetMaximumLineSearchIterations( this->m_OptimizerLineSearchMaximumIterations);
+
+      this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetCurrentMetricValue,optimizer);
+      this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer);
+      this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer);
+
+      optimizer->Register();
+      return optimizer.GetPointer();
+      }
+    else if ( m_OptimizerType == GradientDescent )
       {
       typedef itk::GradientDescentOptimizerv4Template<InternalComputationValueType> _OptimizerType;
       _OptimizerType::Pointer      optimizer     = _OptimizerType::New();

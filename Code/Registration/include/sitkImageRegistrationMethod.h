@@ -82,6 +82,14 @@ namespace simple
     Self& SetMetricAsMattesMutualInformation( unsigned int numberOfHistogramBins = 50 );
 
 
+    Self& SetOptimizerAsConjugateGradientLineSearch( double learningRate,
+                                                     unsigned int numberOfIterations,
+                                                     double convergenceMinimumValue = 1e-6,
+                                                     unsigned int convergenceWindowSize = 10,
+                                                     double lineSearchLowerLimit = 0,
+                                                     double lineSearchUpperLimit = 5.0,
+                                                     double lineSearchEpsilon = 0.01,
+                                                     unsigned int lineSearchMaximumIterations = 20 );
     Self& SetOptimizerAsRegularStepGradientDescent( double learningRate,
                                                     double minStep,
                                                     unsigned int numberOfIterations,
@@ -179,7 +187,8 @@ namespace simple
     Transform  m_Transform;
 
     // optimizer
-    enum OptimizerType { RegularStepGradientDescent,
+    enum OptimizerType { ConjugateGradientLineSearch,
+                         RegularStepGradientDescent,
                          GradientDescent,
                          LBFGSB
     };
@@ -187,6 +196,10 @@ namespace simple
     double m_OptimizerLearningRate;
     double m_OptimizerMinimumStepLength;
     unsigned int m_OptimizerNumberOfIterations;
+    double m_OptimizerLineSearchLowerLimit;
+    double m_OptimizerLineSearchUpperLimit;
+    double m_OptimizerLineSearchEpsilon;
+    unsigned int m_OptimizerLineSearchMaximumIterations;
     double m_OptimizerRelaxationFactor;
     double m_OptimizerConvergenceMinimumValue;
     unsigned int m_OptimizerConvergenceWindowSize;

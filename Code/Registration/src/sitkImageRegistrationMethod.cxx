@@ -182,6 +182,28 @@ ImageRegistrationMethod::CreateMetric( )
 }
 
 ImageRegistrationMethod::Self&
+ImageRegistrationMethod::SetOptimizerAsConjugateGradientLineSearch( double learningRate,
+                                                                    unsigned int numberOfIterations,
+                                                                    double convergenceMinimumValue,
+                                                                    unsigned int convergenceWindowSize,
+                                                                    double lineSearchLowerLimit,
+                                                                    double lineSearchUpperLimit,
+                                                                    double lineSearchEpsilon,
+                                                                    unsigned int lineSearchMaximumIterations )
+{
+  m_OptimizerType = ConjugateGradientLineSearch;
+  m_OptimizerLearningRate = learningRate;
+  m_OptimizerNumberOfIterations = numberOfIterations;
+  m_OptimizerConvergenceMinimumValue = convergenceMinimumValue;
+  m_OptimizerConvergenceWindowSize = convergenceWindowSize;
+  m_OptimizerLineSearchLowerLimit = lineSearchLowerLimit;
+  m_OptimizerLineSearchUpperLimit = lineSearchUpperLimit;
+  m_OptimizerLineSearchEpsilon = lineSearchEpsilon;
+  m_OptimizerLineSearchMaximumIterations = lineSearchMaximumIterations;
+  return *this;
+}
+
+ImageRegistrationMethod::Self&
 ImageRegistrationMethod::SetOptimizerAsRegularStepGradientDescent( double learningRate,
                                                                    double minStep,
                                                                    unsigned int numberOfIteratons,
