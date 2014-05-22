@@ -88,10 +88,12 @@ namespace simple
     Self& SetOptimizerAsGradientDescent( double learningRate,
                                          unsigned int numberOfIterations );
 
-    Self& SetOptimizerScales( const std::vector<double> &scales);
-    Self& SetOptimizerScalesFromJacobian();
-    Self& SetOptimizerScalesFromIndexShift();
-    Self& SetOptimizerScalesFromPhysicalShift();
+    Self& SetOptimizerScales( const std::vector<double> &scales );
+    Self& SetOptimizerScalesFromJacobian( unsigned int centralRegionRadius = 5 );
+    Self& SetOptimizerScalesFromIndexShift( unsigned int centralRegionRadius = 5,
+                                           double smallParameterVariation =  0.01 );
+    Self& SetOptimizerScalesFromPhysicalShift( unsigned int centralRegionRadius = 5,
+                                              double smallParameterVariation =  0.01 );
 
 
 
@@ -184,6 +186,8 @@ namespace simple
     };
     OptimizerScalesType m_OptimizerScalesType;
     std::vector<double> m_OptimizerScales;
+    unsigned int m_OptimizerScalesCentralRegionRadius;
+    double m_OptimizerScalesSmallParameterVariation;
 
     // metric
     enum MetricType { Correlation,

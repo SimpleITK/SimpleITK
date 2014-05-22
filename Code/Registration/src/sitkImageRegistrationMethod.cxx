@@ -199,23 +199,30 @@ ImageRegistrationMethod::SetOptimizerScales( const std::vector<double> &scales)
 }
 
 ImageRegistrationMethod::Self&
-ImageRegistrationMethod::SetOptimizerScalesFromJacobian()
+ImageRegistrationMethod::SetOptimizerScalesFromJacobian( unsigned int centralRegionRadius )
 {
   this->m_OptimizerScalesType = Jacobian;
+  this->m_OptimizerScalesCentralRegionRadius = centralRegionRadius;
   return *this;
 }
 
 ImageRegistrationMethod::Self&
-ImageRegistrationMethod::SetOptimizerScalesFromIndexShift()
+ImageRegistrationMethod::SetOptimizerScalesFromIndexShift( unsigned int centralRegionRadius,
+                                                           double smallParameterVariation )
 {
   this->m_OptimizerScalesType = IndexShift;
+  this->m_OptimizerScalesCentralRegionRadius = centralRegionRadius;
+  this->m_OptimizerScalesSmallParameterVariation = smallParameterVariation;
   return *this;
 }
 
 ImageRegistrationMethod::Self&
-ImageRegistrationMethod::SetOptimizerScalesFromPhysicalShift()
+ImageRegistrationMethod::SetOptimizerScalesFromPhysicalShift( unsigned int centralRegionRadius,
+                                                              double smallParameterVariation )
 {
   this->m_OptimizerScalesType = PhysicalShift;
+  this->m_OptimizerScalesCentralRegionRadius = centralRegionRadius;
+  this->m_OptimizerScalesSmallParameterVariation = smallParameterVariation;
   return *this;
 }
 
@@ -305,6 +312,7 @@ ImageRegistrationMethod::CreateScalesEstimator()
     {
       typedef RegistrationParameterScalesFromJacobian<TMetric> ScalesEstimatorType;
       typename ScalesEstimatorType::Pointer scalesEstimator = ScalesEstimatorType::New();
+      scalesEstimator->SetCentralRegionRadius(this->m_OptimizerScalesCentralRegionRadius);
       scalesEstimator->Register();
       return scalesEstimator;
     }
@@ -312,6 +320,8 @@ ImageRegistrationMethod::CreateScalesEstimator()
     {
       typedef RegistrationParameterScalesFromIndexShift<TMetric> ScalesEstimatorType;
       typename ScalesEstimatorType::Pointer scalesEstimator = ScalesEstimatorType::New();
+      scalesEstimator->SetCentralRegionRadius(this->m_OptimizerScalesCentralRegionRadius);
+      scalesEstimator->SetSmallParameterVariation(this->m_OptimizerScalesSmallParameterVariation);
       scalesEstimator->Register();
       return scalesEstimator;
     }
@@ -319,6 +329,8 @@ ImageRegistrationMethod::CreateScalesEstimator()
     {
       typedef RegistrationParameterScalesFromPhysicalShift<TMetric> ScalesEstimatorType;
       typename ScalesEstimatorType::Pointer scalesEstimator = ScalesEstimatorType::New();
+      scalesEstimator->SetCentralRegionRadius(this->m_OptimizerScalesCentralRegionRadius);
+      scalesEstimator->SetSmallParameterVariation(this->m_OptimizerScalesSmallParameterVariation);
       scalesEstimator->Register();
       return scalesEstimator;
     }
@@ -430,6 +442,7 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
   typename itk::RegistrationParameterScalesEstimator< MetricType >::Pointer scalesEstimator = this->CreateScalesEstimator<MetricType>();
   if (scalesEstimator)
     {
+    scalesEstimator->UnRegister();
     scalesEstimator->SetMetric( metric );
     scalesEstimator->SetTransformForward( true );
     optimizer->SetScalesEstimator( scalesEstimator );
