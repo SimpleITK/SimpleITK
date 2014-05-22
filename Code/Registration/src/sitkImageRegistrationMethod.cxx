@@ -417,12 +417,11 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
     }
   registration->SetNumberOfLevels(numberOfLevels);
 
-  // set fixed/moving masks
-  // todo
-
   // set sampling
 
-  registration->SetMetricSamplingStrategy(m_MetricSamplingStrategy);
+  // todo test enum match
+  typename RegistrationType::MetricSamplingStrategyType itkSamplingStrategy = static_cast<typename RegistrationType::MetricSamplingStrategyType>(int(m_MetricSamplingStrategy));
+  registration->SetMetricSamplingStrategy(itkSamplingStrategy);
 
   if (m_MetricSamplingPercentage.size()==1)
     {
