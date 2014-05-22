@@ -210,6 +210,26 @@ ImageRegistrationMethod::SetOptimizerAsGradientDescent( double learningRate,
 }
 
 ImageRegistrationMethod::Self&
+  ImageRegistrationMethod::SetOptimizerAsLBFGSB( double gradientConvergenceTolerance,
+                                                 unsigned int maximumNumberOfIterations,
+                                                 unsigned int maximumNumberOfCorrections,
+                                                 unsigned int maximumNumberOfFunctionEvaluations,
+                                                 double costFunctionConvergenceFactor,
+                                                 double lowerBound,
+                                                 double upperBound)
+{
+  m_OptimizerType = LBFGSB;
+  m_OptimizerGradientConvergenceTolerance = gradientConvergenceTolerance;
+  m_OptimizerNumberOfIterations = maximumNumberOfIterations;
+  m_OptimizerMaximumNumberOfCorrections = maximumNumberOfCorrections;
+  m_OptimizerMaximumNumberOfFunctionEvaluations = maximumNumberOfFunctionEvaluations;
+  m_OptimizerCostFunctionConvergenceFactor = costFunctionConvergenceFactor;
+  m_OptimizerLowerBound = lowerBound;
+  m_OptimizerUpperBound = upperBound;
+  return *this;
+}
+
+ImageRegistrationMethod::Self&
 ImageRegistrationMethod::SetOptimizerScales( const std::vector<double> &scales)
 {
   this->m_OptimizerScalesType = Manual;
@@ -397,6 +417,15 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
   typedef itk::ImageRegistrationMethodv4<FixedImageType, MovingImageType>  RegistrationType;
   typename RegistrationType::Pointer   registration  = RegistrationType::New();
 
+    typename RegistrationType::InitialTransformType *itkTx;
+  if ( !(itkTx = dynamic_cast<typename RegistrationType::InitialTransformType *>(this->m_Transform.GetITKBase())) )
+    {
+    sitkExceptionMacro( "Unexpected error converting transform! Possible miss matching dimensions!" );
+    }
+
+  registration->SetInitialTransform( itkTx );
+  registration->InPlaceOn();
+
   // Get the pointer to the ITK image contained in image1
   typename FixedImageType::ConstPointer fixed = this->CastImageToITK<FixedImageType>( inFixed );
   typename MovingImageType::ConstPointer moving = this->CastImageToITK<MovingImageType>( inMoving );
@@ -460,7 +489,7 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
   registration->SetSmoothingSigmasPerLevel( smoothingSigmasPerLevel );
   registration->SetSmoothingSigmasAreSpecifiedInPhysicalUnits(m_SmoothingSigmasAreSpecifiedInPhysicalUnits);
 
-  typename  itk::ObjectToObjectOptimizerBaseTemplate<double>::Pointer optimizer = this->CreateOptimizer();
+  typename  itk::ObjectToObjectOptimizerBaseTemplate<double>::Pointer optimizer = this->CreateOptimizer( itkTx->GetNumberOfParameters() );
   optimizer->UnRegister();
 
   optimizer->SetNumberOfThreads(this->GetNumberOfThreads());
@@ -481,25 +510,6 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
     std::copy( m_OptimizerScales.begin(), m_OptimizerScales.end(), scales.begin() );
     optimizer->SetScales(scales);
     }
-
-  typename RegistrationType::InitialTransformType *itkTx;
-  if ( !(itkTx = dynamic_cast<typename RegistrationType::InitialTransformType *>(this->m_Transform.GetITKBase())) )
-    {
-    sitkExceptionMacro( "Unexpected error converting transform! Possible miss matching dimensions!" );
-    }
-
-  registration->SetInitialTransform( itkTx );
-  registration->InPlaceOn();
-
-#if 0 //todo extra parameters
-  if (m_FixedImageRegionSize.size() && m_FixedImageRegionIndex.size())
-    {
-    typedef typename FixedImageType::RegionType RegionType;
-    RegionType r( sitkSTLVectorToITK<typename RegionType::IndexType>(m_FixedImageRegionIndex),
-                  sitkSTLVectorToITK<typename RegionType::SizeType>(m_FixedImageRegionSize) );
-    registration->SetFixedImageRegion( r );
-    }
-#endif
 
   this->m_ActiveOptimizer = optimizer;
   this->PreUpdate( registration.GetPointer() );
