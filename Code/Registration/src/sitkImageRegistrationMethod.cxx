@@ -400,6 +400,8 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
   registration->SetMetric( metric );
   metric->UnRegister();
 
+  metric->SetMaximumNumberOfThreads(this->GetNumberOfThreads());
+
   typedef itk::InterpolateImageFunction< FixedImageType, double > FixedInterpolatorType;
   typename FixedInterpolatorType::Pointer   fixedInterpolator  = CreateInterpolator(fixed.GetPointer(), m_Interpolator);
   metric->SetFixedInterpolator( fixedInterpolator );
@@ -451,6 +453,8 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
 
   typename  itk::ObjectToObjectOptimizerBaseTemplate<double>::Pointer optimizer = this->CreateOptimizer();
   optimizer->UnRegister();
+
+  optimizer->SetNumberOfThreads(this->GetNumberOfThreads());
 
   registration->SetOptimizer( optimizer );
 
