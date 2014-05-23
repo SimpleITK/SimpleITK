@@ -41,18 +41,16 @@ pixelType = sitk.sitkFloat32
 
 fixed = sitk.ReadImage(sys.argv[1], sitk.sitkFloat32)
 fixed = sitk.Normalize(fixed)
-fixed = sitk.DiscreteGaussian(fixed, 2.0)
 
 
 moving = sitk.ReadImage(sys.argv[2], sitk.sitkFloat32)
 moving = sitk.Normalize(moving)
-moving = sitk.DiscreteGaussian( moving, 2.0)
 
 
 R = sitk.ImageRegistrationMethod()
-numberOfPixels = reduce(lambda x, y: x*y, fixed.GetSize());
-R.SetMetricAsMutualInformation(0.4, 0.4, int(numberOfPixels*0.01))
-R.SetOptimizerAsGradientDescent(15, 200)
+R.SetSmoothingSigmasPerLevel( [4.0] )
+R.SetMetricAsJointHistogramMutualInformation()
+R.SetOptimizerAsGradientDescent(1000, 200)
 R.SetTransform(sitk.Transform(fixed.GetDimension(), sitk.sitkTranslation))
 R.SetInterpolator(sitk.sitkLinear)
 
@@ -74,7 +72,7 @@ if ( not "SITK_NOSHOW" in os.environ ):
     resampler = sitk.ResampleImageFilter()
     resampler.SetReferenceImage(fixed);
     resampler.SetInterpolator(sitk.sitkLinear)
-    resampler.SetDefaultPixelValue(100)
+    resampler.SetDefaultPixelValue(1)
     resampler.SetTransform(outTx)
 
     out = resampler.Execute(moving)
