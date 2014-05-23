@@ -79,6 +79,7 @@ namespace simple
       optimizer->SetMinimumStepLength( this->m_OptimizerMinimumStepLength );
       optimizer->SetNumberOfIterations( this->m_OptimizerNumberOfIterations  );
       optimizer->SetRelaxationFactor( this->m_OptimizerRelaxationFactor );
+      optimizer->SetGradientMagnitudeTolerance( this->m_OptimizerGradientMagnitudeTolerance );
       optimizer->Register();
 
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetValue,optimizer);
