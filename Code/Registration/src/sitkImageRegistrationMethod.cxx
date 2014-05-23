@@ -571,10 +571,8 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
   registration->Update();
 
 
-#if 0 // todo feature
-      // update measurements
+  // update measurements
   this->m_StopConditionDescription = registration->GetOptimizer()->GetStopConditionDescription();
-#endif
 
   m_MetricValue = this->GetMetricValue();
   m_Iteration = this->GetOptimizerIteration();
