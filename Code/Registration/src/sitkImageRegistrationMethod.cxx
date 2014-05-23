@@ -189,7 +189,9 @@ ImageRegistrationMethod::SetOptimizerAsConjugateGradientLineSearch( double learn
                                                                     double lineSearchLowerLimit,
                                                                     double lineSearchUpperLimit,
                                                                     double lineSearchEpsilon,
-                                                                    unsigned int lineSearchMaximumIterations )
+                                                                    unsigned int lineSearchMaximumIterations,
+                                                                    EstimateLearningRateType estimateLearningRate,
+                                                                    double maximumStepSizeInPhysicalUnits )
 {
   m_OptimizerType = ConjugateGradientLineSearch;
   m_OptimizerLearningRate = learningRate;
@@ -200,6 +202,8 @@ ImageRegistrationMethod::SetOptimizerAsConjugateGradientLineSearch( double learn
   m_OptimizerLineSearchUpperLimit = lineSearchUpperLimit;
   m_OptimizerLineSearchEpsilon = lineSearchEpsilon;
   m_OptimizerLineSearchMaximumIterations = lineSearchMaximumIterations;
+  m_OptimizerEstimateLearningRate = estimateLearningRate;
+  m_OptimizerMaximumStepSizeInPhysicalUnits = maximumStepSizeInPhysicalUnits;
   return *this;
 }
 
@@ -223,13 +227,17 @@ ImageRegistrationMethod::Self&
 ImageRegistrationMethod::SetOptimizerAsGradientDescent( double learningRate,
                                                         unsigned int numberOfIteratons,
                                                         double convergenceMinimumValue,
-                                                        unsigned int convergenceWindowSize )
+                                                        unsigned int convergenceWindowSize,
+                                                        EstimateLearningRateType estimateLearningRate,
+                                                        double maximumStepSizeInPhysicalUnits )
 {
   m_OptimizerType = GradientDescent;
   m_OptimizerLearningRate = learningRate;
   m_OptimizerNumberOfIterations = numberOfIteratons;
   m_OptimizerConvergenceMinimumValue = convergenceMinimumValue;
   m_OptimizerConvergenceWindowSize = convergenceWindowSize;
+  m_OptimizerEstimateLearningRate = estimateLearningRate;
+  m_OptimizerMaximumStepSizeInPhysicalUnits = maximumStepSizeInPhysicalUnits;
   return *this;
 }
 
@@ -241,7 +249,9 @@ ImageRegistrationMethod::SetOptimizerAsGradientDescentLineSearch( double learnin
                                                                   double lineSearchLowerLimit,
                                                                   double lineSearchUpperLimit,
                                                                   double lineSearchEpsilon,
-                                                                  unsigned int lineSearchMaximumIterations )
+                                                                  unsigned int lineSearchMaximumIterations,
+                                                                  EstimateLearningRateType estimateLearningRate,
+                                                                  double maximumStepSizeInPhysicalUnits )
 {
   m_OptimizerType = GradientDescentLineSearch;
   m_OptimizerLearningRate = learningRate;
@@ -252,6 +262,8 @@ ImageRegistrationMethod::SetOptimizerAsGradientDescentLineSearch( double learnin
   m_OptimizerLineSearchUpperLimit = lineSearchUpperLimit;
   m_OptimizerLineSearchEpsilon = lineSearchEpsilon;
   m_OptimizerLineSearchMaximumIterations = lineSearchMaximumIterations;
+  m_OptimizerEstimateLearningRate = estimateLearningRate;
+  m_OptimizerMaximumStepSizeInPhysicalUnits = maximumStepSizeInPhysicalUnits;
   return *this;
 }
 

@@ -82,6 +82,7 @@ namespace simple
     Self& SetMetricAsMattesMutualInformation( unsigned int numberOfHistogramBins = 50 );
 
 
+    enum EstimateLearningRateType { Never, Once, EachIteration };
     Self& SetOptimizerAsConjugateGradientLineSearch( double learningRate,
                                                      unsigned int numberOfIterations,
                                                      double convergenceMinimumValue = 1e-6,
@@ -89,7 +90,9 @@ namespace simple
                                                      double lineSearchLowerLimit = 0,
                                                      double lineSearchUpperLimit = 5.0,
                                                      double lineSearchEpsilon = 0.01,
-                                                     unsigned int lineSearchMaximumIterations = 20 );
+                                                     unsigned int lineSearchMaximumIterations = 20,
+                                                     EstimateLearningRateType estimateLearningRate = Once,
+                                                     double maximumStepSizeInPhysicalUnits = 0.0 );
     Self& SetOptimizerAsRegularStepGradientDescent( double learningRate,
                                                     double minStep,
                                                     unsigned int numberOfIterations,
@@ -98,7 +101,9 @@ namespace simple
     Self& SetOptimizerAsGradientDescent( double learningRate,
                                          unsigned int numberOfIterations,
                                          double convergenceMinimumValue = 1e-6,
-                                         unsigned int convergenceWindowSize = 10);
+                                         unsigned int convergenceWindowSize = 10,
+                                         EstimateLearningRateType estimateLearningRate = Once,
+                                         double maximumStepSizeInPhysicalUnits = 0.0);
     Self& SetOptimizerAsGradientDescentLineSearch( double learningRate,
                                                    unsigned int numberOfIterations,
                                                    double convergenceMinimumValue = 1e-6,
@@ -106,7 +111,9 @@ namespace simple
                                                    double lineSearchLowerLimit = 0,
                                                    double lineSearchUpperLimit = 5.0,
                                                    double lineSearchEpsilon = 0.01,
-                                                   unsigned int lineSearchMaximumIterations = 20 );
+                                                   unsigned int lineSearchMaximumIterations = 20,
+                                                   EstimateLearningRateType estimateLearningRate = Once,
+                                                   double maximumStepSizeInPhysicalUnits = 0.0 );
 
 
     Self& SetOptimizerAsLBFGSB(double gradientConvergenceTolerance = 1e-5,
@@ -211,6 +218,8 @@ namespace simple
     double m_OptimizerLineSearchUpperLimit;
     double m_OptimizerLineSearchEpsilon;
     unsigned int m_OptimizerLineSearchMaximumIterations;
+    EstimateLearningRateType m_OptimizerEstimateLearningRate;
+    double  m_OptimizerMaximumStepSizeInPhysicalUnits;
     double m_OptimizerRelaxationFactor;
     double m_OptimizerGradientMagnitudeTolerance;
     double m_OptimizerConvergenceMinimumValue;

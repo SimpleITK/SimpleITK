@@ -46,6 +46,9 @@ namespace simple
       optimizer->SetUpperLimit( this->m_OptimizerLineSearchUpperLimit);
       optimizer->SetEpsilon( this->m_OptimizerLineSearchEpsilon);
       optimizer->SetMaximumLineSearchIterations( this->m_OptimizerLineSearchMaximumIterations);
+      optimizer->SetDoEstimateLearningRateAtEachIteration( this->m_OptimizerEstimateLearningRate==EachIteration );
+      optimizer->SetDoEstimateLearningRateOnce( this->m_OptimizerEstimateLearningRate==Once );
+      optimizer->SetMaximumStepSizeInPhysicalUnits( this->m_OptimizerMaximumStepSizeInPhysicalUnits );
 
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetCurrentMetricValue,optimizer);
       this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer);
@@ -62,6 +65,9 @@ namespace simple
       optimizer->SetNumberOfIterations( this->m_OptimizerNumberOfIterations );
       optimizer->SetMinimumConvergenceValue( this->m_OptimizerConvergenceMinimumValue );
       optimizer->SetConvergenceWindowSize( this->m_OptimizerConvergenceWindowSize );
+      optimizer->SetDoEstimateLearningRateAtEachIteration( this->m_OptimizerEstimateLearningRate==EachIteration );
+      optimizer->SetDoEstimateLearningRateOnce( this->m_OptimizerEstimateLearningRate==Once );
+      optimizer->SetMaximumStepSizeInPhysicalUnits( this->m_OptimizerMaximumStepSizeInPhysicalUnits );
 
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetCurrentMetricValue,optimizer);
       this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer);
@@ -82,6 +88,9 @@ namespace simple
       optimizer->SetUpperLimit( this->m_OptimizerLineSearchUpperLimit);
       optimizer->SetEpsilon( this->m_OptimizerLineSearchEpsilon);
       optimizer->SetMaximumLineSearchIterations( this->m_OptimizerLineSearchMaximumIterations);
+      optimizer->SetDoEstimateLearningRateAtEachIteration( this->m_OptimizerEstimateLearningRate==EachIteration );
+      optimizer->SetDoEstimateLearningRateOnce( this->m_OptimizerEstimateLearningRate==Once );
+      optimizer->SetMaximumStepSizeInPhysicalUnits( this->m_OptimizerMaximumStepSizeInPhysicalUnits );
 
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetCurrentMetricValue,optimizer);
       this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer);
