@@ -70,6 +70,26 @@ namespace simple
       optimizer->Register();
       return optimizer.GetPointer();
       }
+    else if ( m_OptimizerType == GradientDescentLineSearch )
+      {
+      typedef itk::GradientDescentLineSearchOptimizerv4Template<InternalComputationValueType> _OptimizerType;
+      _OptimizerType::Pointer      optimizer     = _OptimizerType::New();
+      optimizer->SetLearningRate( this->m_OptimizerLearningRate );
+      optimizer->SetNumberOfIterations( this->m_OptimizerNumberOfIterations );
+      optimizer->SetMinimumConvergenceValue( this->m_OptimizerConvergenceMinimumValue );
+      optimizer->SetConvergenceWindowSize( this->m_OptimizerConvergenceWindowSize );
+      optimizer->SetLowerLimit( this->m_OptimizerLineSearchLowerLimit);
+      optimizer->SetUpperLimit( this->m_OptimizerLineSearchUpperLimit);
+      optimizer->SetEpsilon( this->m_OptimizerLineSearchEpsilon);
+      optimizer->SetMaximumLineSearchIterations( this->m_OptimizerLineSearchMaximumIterations);
+
+      this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetCurrentMetricValue,optimizer);
+      this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer);
+      this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer);
+
+      optimizer->Register();
+      return optimizer.GetPointer();
+      }
     else if ( m_OptimizerType == RegularStepGradientDescent )
       {
       typedef itk::RegularStepGradientDescentOptimizerv4<InternalComputationValueType> _OptimizerType;

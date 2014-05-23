@@ -99,6 +99,15 @@ namespace simple
                                          unsigned int numberOfIterations,
                                          double convergenceMinimumValue = 1e-6,
                                          unsigned int convergenceWindowSize = 10);
+    Self& SetOptimizerAsGradientDescentLineSearch( double learningRate,
+                                                   unsigned int numberOfIterations,
+                                                   double convergenceMinimumValue = 1e-6,
+                                                   unsigned int convergenceWindowSize = 10,
+                                                   double lineSearchLowerLimit = 0,
+                                                   double lineSearchUpperLimit = 5.0,
+                                                   double lineSearchEpsilon = 0.01,
+                                                   unsigned int lineSearchMaximumIterations = 20 );
+
 
     Self& SetOptimizerAsLBFGSB(double gradientConvergenceTolerance = 1e-5,
                                unsigned int maximumNumberOfIterations = 500,
@@ -191,6 +200,7 @@ namespace simple
     enum OptimizerType { ConjugateGradientLineSearch,
                          RegularStepGradientDescent,
                          GradientDescent,
+                         GradientDescentLineSearch,
                          LBFGSB
     };
     OptimizerType m_OptimizerType;
