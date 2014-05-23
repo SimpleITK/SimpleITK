@@ -273,13 +273,13 @@ ImageRegistrationMethod::SetOptimizerAsGradientDescentLineSearch( double learnin
 
 
 ImageRegistrationMethod::Self&
-  ImageRegistrationMethod::SetOptimizerAsLBFGSB( double gradientConvergenceTolerance,
-                                                 unsigned int maximumNumberOfIterations,
-                                                 unsigned int maximumNumberOfCorrections,
-                                                 unsigned int maximumNumberOfFunctionEvaluations,
-                                                 double costFunctionConvergenceFactor,
-                                                 double lowerBound,
-                                                 double upperBound)
+ImageRegistrationMethod::SetOptimizerAsLBFGSB( double gradientConvergenceTolerance,
+                                               unsigned int maximumNumberOfIterations,
+                                               unsigned int maximumNumberOfCorrections,
+                                               unsigned int maximumNumberOfFunctionEvaluations,
+                                               double costFunctionConvergenceFactor,
+                                               double lowerBound,
+                                               double upperBound)
 {
   m_OptimizerType = LBFGSB;
   m_OptimizerGradientConvergenceTolerance = gradientConvergenceTolerance;
@@ -313,6 +313,20 @@ ImageRegistrationMethod::SetOptimizerAsExhaustive(const std::vector<unsigned int
   m_OptimizerType = Exhaustive;
   m_OptimizerStepLength = stepLength;
   m_OptimizerNumberOfSteps = numberOfSteps;
+  return *this;
+}
+
+ImageRegistrationMethod::Self&
+ImageRegistrationMethod::SetOptimizerAsAmoeba( double simplexDelta,
+                                               double parametersConvergenceTolerance,
+                                               double functionConvergenceTolerance,
+                                               unsigned int numberOfIterations)
+{
+  m_OptimizerType = Amoeba;
+  m_OptimizerSimplexDelta = simplexDelta;
+  m_OptimizerParametersConvergenceTolerance = parametersConvergenceTolerance;
+  m_OptimizerFunctionConvergenceTolerance = functionConvergenceTolerance;
+  m_OptimizerNumberOfIterations = numberOfIterations;
   return *this;
 }
 
