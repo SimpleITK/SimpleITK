@@ -1,0 +1,98 @@
+{
+  "name" : "AdditiveGaussianNoiseImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "pixel_types" : "BasicPixelIDTypeList",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "StandardDeviation",
+      "type" : "double",
+      "default" : "1.0",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
+    },
+    {
+      "name" : "Mean",
+      "type" : "double",
+      "default" : "0.0",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
+    },
+    {
+      "name" : "Seed",
+      "type" : "uint32_t",
+      "default" : "0u",
+      "custom_itk_cast" : "if (m_Seed) filter->SetSeed(m_Seed);"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "2d",
+      "description" : "2D - baseline as zero noise",
+      "no_procedure" : 1,
+      "settings" : [
+        {
+          "parameter" : "Seed",
+          "cxx_value" : "123u",
+          "value" : "123"
+        },
+        {
+          "parameter" : "StandardDeviation",
+          "value" : 10.0
+        }
+      ],
+      "tolerance" : 20,
+      "inputs" : [
+        "Input/cthead1.png"
+      ]
+    },
+    {
+      "tag" : "3d",
+      "description" : "3D - baseline as zero noise",
+      "no_procedure" : 1,
+      "settings" : [
+        {
+          "parameter" : "Seed",
+          "cxx_value" : "123u",
+          "value" : "123"
+        },
+        {
+          "parameter" : "StandardDeviation",
+          "value" : 10.0
+        }
+      ],
+      "tolerance" : 20,
+      "inputs" : [
+        "Input/RA-Short.nrrd"
+      ]
+    },
+    {
+      "tag" : "rgb",
+      "description" : "vector image - baseline as zero noise",
+      "no_procedure" : 1,
+      "settings" : [
+        {
+          "parameter" : "Seed",
+          "cxx_value" : "123u",
+          "value" : "123"
+        },
+        {
+          "parameter" : "StandardDeviation",
+          "value" : 10.0
+        }
+      ],
+      "tolerance" : 20,
+      "inputs" : [
+        "Input/VM1111Shrink-RGB.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Alter an image with additive gaussian white noise.",
+  "detaileddescription" : "\\author Gaetan Lehmann\n\nThis code was contributed in the Insight Journal paper \"Noise\nSimulation\".http://hdl.handle.net/10380/3158"
+}
