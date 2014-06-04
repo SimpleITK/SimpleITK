@@ -64,13 +64,8 @@
       "settings" : [
         {
           "parameter" : "MinimumObjectSizeInPixels",
-          "value" : "40u",
-          "lua_value" : "40",
-          "python_value" : "40",
-          "ruby_value" : "40",
-          "java_value" : "40",
-          "tcl_value" : "40",
-          "R_value" : "40"
+          "cxx_value" : "40u",
+          "value" : "40"
         },
         {
           "parameter" : "UpperBoundary",

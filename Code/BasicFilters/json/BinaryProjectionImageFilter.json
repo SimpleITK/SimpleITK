@@ -47,13 +47,8 @@
       "settings" : [
         {
           "parameter" : "ProjectionDimension",
-          "value" : "1u",
-          "lua_value" : "1",
-          "python_value" : "1",
-          "ruby_value" : "1",
-          "java_value" : "1",
-          "tcl_value" : "1",
-          "R_value" : "1"
+          "cxx_value" : "1u",
+          "value" : "1"
         },
         {
           "parameter" : "ForegroundValue",
