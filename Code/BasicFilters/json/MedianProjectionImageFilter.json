@@ -28,13 +28,8 @@
       "settings" : [
         {
           "parameter" : "ProjectionDimension",
-          "value" : "2u",
-          "lua_value" : "2",
-          "python_value" : "2",
-          "ruby_value" : "2",
-          "java_value" : "2",
-          "tcl_value" : "2",
-          "R_value" : "2"
+          "cxx_value" : "2u",
+          "value" : "2"
         }
       ],
       "md5hash" : "0990f0f6c63ea9d63b701ed7c2467de7",
@@ -48,13 +43,8 @@
       "settings" : [
         {
           "parameter" : "ProjectionDimension",
-          "value" : "1u",
-          "lua_value" : "1",
-          "python_value" : "1",
-          "ruby_value" : "1",
-          "java_value" : "1",
-          "tcl_value" : "1",
-          "R_value" : "1"
+          "cxx_value" : "1u",
+          "value" : "1"
         }
       ],
       "md5hash" : "9fcc7164f3294811cbf2d875b0e494d1",
