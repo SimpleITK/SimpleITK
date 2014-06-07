@@ -72,13 +72,8 @@
         },
         {
           "parameter" : "MaximumKernelWidth",
-          "value" : "64u",
-          "lua_value" : "64",
-          "python_value" : "64",
-          "ruby_value" : "64",
-          "java_value" : "64",
-          "tcl_value" : "64",
-          "R_value" : "64"
+          "cxx_value" : "64u",
+          "value" : "64"
         }
       ],
       "md5hash" : "f2f002ec76313284a4cff24c3e5eb577",

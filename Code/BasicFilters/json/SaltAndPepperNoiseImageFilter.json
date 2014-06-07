@@ -1,0 +1,77 @@
+{
+  "name" : "SaltAndPepperNoiseImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "pixel_types" : "BasicPixelIDTypeList",
+  "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "Probability",
+      "type" : "double",
+      "default" : "0.01",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
+    },
+    {
+      "name" : "Seed",
+      "type" : "uint32_t",
+      "default" : "0u",
+      "custom_itk_cast" : "if (m_Seed) filter->SetSeed(m_Seed);"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "2d",
+      "description" : "2D - baseline as zero noise",
+      "no_procedure" : 1,
+      "settings" : [
+        {
+          "parameter" : "Seed",
+          "cxx_value" : "123u",
+          "value" : "123"
+        }
+      ],
+      "tolerance" : 20,
+      "inputs" : [
+        "Input/cthead1.png"
+      ]
+    },
+    {
+      "tag" : "3d",
+      "description" : "3D - baseline as zero noise",
+      "no_procedure" : 1,
+      "settings" : [
+        {
+          "parameter" : "Seed",
+          "cxx_value" : "123u",
+          "value" : "123"
+        }
+      ],
+      "tolerance" : 1e4,
+      "inputs" : [
+        "Input/RA-Short.nrrd"
+      ]
+    },
+    {
+      "tag" : "rgb",
+      "description" : "vector image - baseline as zero noise",
+      "no_procedure" : 1,
+      "settings" : [
+        {
+          "parameter" : "Seed",
+          "cxx_value" : "123u",
+          "value" : "123"
+        }
+      ],
+      "tolerance" : 20,
+      "inputs" : [
+        "Input/VM1111Shrink-RGB.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Alter an image with fixed value impulse noise, often called salt and pepper noise.",
+  "detaileddescription" : "Pixel alteration occurs at a user defined probability. Salt and pepper pixel are equally distributed.\n\n\\author Gaetan Lehmann\n\nThis code was contributed in the Insight Journal paper \"Noise\nSimulation\".http://hdl.handle.net/10380/3158"
+}

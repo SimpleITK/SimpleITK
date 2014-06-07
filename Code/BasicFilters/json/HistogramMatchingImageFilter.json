@@ -52,13 +52,8 @@
       "settings" : [
         {
           "parameter" : "NumberOfHistogramLevels",
-          "value" : "65536u",
-          "lua_value" : "65536",
-          "python_value" : "65536",
-          "ruby_value" : "65536",
-          "java_value" : "65536",
-          "tcl_value" : "65536",
-          "R_value" : "65536"
+          "cxx_value" : "65536u",
+          "value" : "65536"
         },
         {
           "parameter" : "ThresholdAtMeanIntensity",

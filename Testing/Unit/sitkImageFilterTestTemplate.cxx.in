@@ -205,17 +205,22 @@ $(foreach settings
     }\
   }'
   else
-    OUT='filter.Set${parameter} ( ${value} );'
+    if cxx_value then
+      temp = cxx_value
+    else
+      temp = value
+    end
+    OUT='filter.Set${parameter} ( ${temp} );'
       if (not no_get_method) then
-        if (value == "true") then
+        if (temp == "true") then
           OUT = OUT .. '\
-  ASSERT_TRUE ( filter.Get${parameter}() ) << "Failed to set ${parameter} to ${value}";'
-        elseif (value == "false") then
+  ASSERT_TRUE ( filter.Get${parameter}() ) << "Failed to set ${parameter} to ${temp}";'
+        elseif (temp == "false") then
           OUT = OUT .. '\
-  ASSERT_FALSE ( filter.Get${parameter}() ) << "Failed to set ${parameter} to ${value}";'
+  ASSERT_FALSE ( filter.Get${parameter}() ) << "Failed to set ${parameter} to ${temp}";'
         else
           OUT = OUT .. '\
-  ASSERT_EQ ( ${value}, filter.Get${parameter}() ) << "Failed to set ${parameter} to ${value}";'
+  ASSERT_EQ ( ${temp}, filter.Get${parameter}() ) << "Failed to set ${parameter} to ${temp}";'
         end
       end
 end)
