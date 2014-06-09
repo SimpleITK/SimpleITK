@@ -28,20 +28,20 @@
 // called from C++
 %feature("director") itk::simple::Command;
 
-%CSharpPointerTypemapHelper( itk::DataObject*, IntPtr )
-%CSharpPointerTypemapHelper( itk::Object::Pointer, IntPtr )
-%CSharpPointerTypemapHelper( itk::Optimizer::Pointer, IntPtr )
-%CSharpPointerTypemapHelper( itk::SingleValuedCostFunction::Pointer, IntPtr )
-%CSharpPointerTypemapHelper( itk::TransformBase::Pointer, IntPtr )
+%CSharpPointerTypemapHelper( itk::DataObject*, System.IntPtr )
+%CSharpPointerTypemapHelper( itk::Object::Pointer, System.IntPtr )
+%CSharpPointerTypemapHelper( itk::Optimizer::Pointer, System.IntPtr )
+%CSharpPointerTypemapHelper( itk::SingleValuedCostFunction::Pointer, System.IntPtr )
+%CSharpPointerTypemapHelper( itk::TransformBase::Pointer, System.IntPtr )
 
-%CSharpTypemapHelper( int8_t*, IntPtr )
-%CSharpTypemapHelper( uint8_t*, IntPtr )
-%CSharpTypemapHelper( int16_t*, IntPtr )
-%CSharpTypemapHelper( uint16_t*, IntPtr )
-%CSharpTypemapHelper( int32_t*, IntPtr )
-%CSharpTypemapHelper( uint32_t*, IntPtr )
-%CSharpTypemapHelper( float*, IntPtr )
-%CSharpTypemapHelper( double*, IntPtr )
+%CSharpTypemapHelper( int8_t*, System.IntPtr )
+%CSharpTypemapHelper( uint8_t*, System.IntPtr )
+%CSharpTypemapHelper( int16_t*, System.IntPtr )
+%CSharpTypemapHelper( uint16_t*, System.IntPtr )
+%CSharpTypemapHelper( int32_t*, System.IntPtr )
+%CSharpTypemapHelper( uint32_t*, System.IntPtr )
+%CSharpTypemapHelper( float*, System.IntPtr )
+%CSharpTypemapHelper( double*, System.IntPtr )
 
 // Add override to ToString method
 %csmethodmodifiers ToString "public override";
