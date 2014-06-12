@@ -59,6 +59,8 @@ class SmartPointer;
 
       virtual Image Execute() = 0;
 
+      virtual std::string ToString() const;
+
     protected:
 
 

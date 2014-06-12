@@ -43,6 +43,17 @@ ImageReaderBase
 {
 }
 
+std::string
+ImageReaderBase
+::ToString() const
+{
+  std::ostringstream out;
+  out << "  OutputPixelType: ";
+  this->ToStringHelper(out, this->m_OutputPixelType) << std::endl;
+
+  out << ProcessObject::ToString();
+  return out.str();
+}
 
 itk::SmartPointer<ImageIOBase>
 ImageReaderBase

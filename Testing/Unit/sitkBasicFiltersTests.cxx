@@ -438,7 +438,11 @@ TEST(BasicFilters,Cast) {
 
 TEST(BasicFilters,HashImageFilter) {
   itk::simple::HashImageFilter hasher;
-  EXPECT_EQ ( "itk::simple::HashImageFilter\nHashFunction: SHA1\n", hasher.ToString() );
+  std::string out = hasher.ToString();
+  EXPECT_TRUE ( out.find("itk::simple::HashImageFilter") != std::string::npos );
+  EXPECT_TRUE ( out.find("HashFunction: SHA1") != std::string::npos );
+  EXPECT_TRUE ( out.find("Debug:") != std::string::npos );
+  EXPECT_TRUE ( out.find("NumberOfThreads:") != std::string::npos );
   EXPECT_EQ ( itk::simple::HashImageFilter::SHA1, hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).GetHashFunction() );
   EXPECT_EQ ( itk::simple::HashImageFilter::MD5, hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).GetHashFunction() );
 }

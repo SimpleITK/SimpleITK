@@ -57,6 +57,7 @@ std::string ImageFileWriter::ToString() const
   this->ToStringHelper(out, this->m_FileName);
   out << "\"" << std::endl;
 
+  out << ProcessObject::ToString();
   return out.str();
   }
 
