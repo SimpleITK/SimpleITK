@@ -120,11 +120,30 @@ std::string ProcessObject::ToString() const
 {
   std::ostringstream out;
 
-  if( this->m_ActiveProcess)
+  out << "  Debug: ";
+  this->ToStringHelper(out, this->m_Debug) << std::endl;
+
+  out << "  NumberOfThreads: ";
+  this->ToStringHelper(out, this->m_NumberOfThreads) << std::endl;
+
+  out << "  Commands:" << (m_Commands.empty()?" (none)":"") << std::endl;
+  for( std::list<EventCommand>::const_iterator i = m_Commands.begin();
+       i != m_Commands.end();
+       ++i)
     {
-    out << "ActiveProcess:" << std::endl;
-    this->m_ActiveProcess->Print(out, 1);
+    assert( i->m_Command );
+    out << "    Event: " << i->m_Event << " Command: " << i->m_Command->GetName() << std::endl;
     }
+
+  out << "  ProgressMeasurement: ";
+  this->ToStringHelper(out, this->m_ProgressMeasurement) << std::endl;
+
+  out << "  ActiveProcess:" << (this->m_ActiveProcess?"":" (none)") <<std::endl;
+  if( this->m_ActiveProcess )
+    {
+    this->m_ActiveProcess->Print(out, itk::Indent(4));
+    }
+
   return out.str();
 }
 
