@@ -49,11 +49,10 @@ namespace itk {
       std::ostringstream out;
       out << "itk::simple::ImageFileReader";
       out << std::endl;
-      out << "  OutputPixelType: " << this->GetOutputPixelType() << std::endl;
       out << "  FileName: \"";
-      this->ToStringHelper(out, this->m_FileName);
-      out << "\"" << std::endl;
+      this->ToStringHelper(out, this->m_FileName) << "\"" << std::endl;
 
+      out << ImageReaderBase::ToString();
       return out.str();
     }
 
