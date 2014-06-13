@@ -5,4 +5,14 @@ OUT='  ${custom_set_input}'
 OUT= OUT .. 'filter->SetInput( ' .. nimg-1 .. ', image' .. nimg ..' );\n'
 end
 end)
+$(if inputs then
+for i = 1,#inputs do
+  OUT = OUT .. '  '
+  if inputs[i].custom_itk_cast then
+    OUT = OUT..inputs[i].custom_itk_cast
+  else
+    OUT = OUT..'filter->Set'..inputs[i].name..'( '..inputs[i].name:sub(1,1):lower() .. inputs[i].name:sub(2,-1)..' );\n'
+  end
+end
+end)
 $(include ExecuteInternalSetITKFilterParameters.cxx.in)
