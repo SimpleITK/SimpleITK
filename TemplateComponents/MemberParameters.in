@@ -1,5 +1,9 @@
 $(for i = 1,#members do
-  if (number_of_inputs > 0 or i > 1) then
+  temp = number_of_inputs
+  if inputs then
+    temp = temp + #inputs
+  end
+  if (temp > 0 or i > 1) then
     OUT = OUT .. ", "
   end
   if not members[i].type and members[i].enum then

@@ -3,7 +3,7 @@ OUT=[[
 //
 // Function to run the Execute method of this filter
 //
-Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( $(include ImageParameters.in)$(include MemberParameters.in) )
+Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( $(include ImageParameters.in)$(include InputParameters.in)$(include MemberParameters.in) )
 {
   ${name} filter;
   return filter.Execute ( $(for inum=1,number_of_inputs do
@@ -11,10 +11,23 @@ Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( $(include ImagePara
                                 OUT=OUT..', '
                               end
                               OUT=OUT .. 'image' .. inum
-                            end)$(for i = 1,#members do
-                            if (number_of_inputs > 0 or i > 1) then
-                              OUT = OUT .. ", "
                             end
+                            if inputs then
+                              for inum=1,#inputs do
+                                if number_of_inputs>0 or inum>1 then
+                                  OUT = OUT .. ", "
+                                end
+                                OUT=OUT..inputs[inum].name:sub(1,1):lower() .. inputs[inum].name:sub(2,-1)
+                              end
+                            end
+                            temp = number_of_inputs
+                            if inputs then
+                              temp = temp + #inputs
+                            end
+                            for i = 1,#members do
+                                        if (temp > 0 or i > 1) then
+                                OUT = OUT .. ", "
+                              end
                             OUT= OUT .. members[i].name:sub(1,1):lower() .. members[i].name:sub(2,-1)
                             end) );
 }

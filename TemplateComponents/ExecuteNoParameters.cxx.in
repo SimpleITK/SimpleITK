@@ -1,4 +1,4 @@
-Image ${name}::Execute ( $(include ImageParameters.in) )
+Image ${name}::Execute ( $(include ImageParameters.in)$(include InputParameters.in) )
 {
 
   PixelIDValueType type = image1.GetPixelIDValue();
