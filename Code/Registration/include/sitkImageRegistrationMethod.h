@@ -12,20 +12,27 @@
 #include "sitkInterpolator.h"
 #include "sitkTransform.h"
 
-#ifndef SWIGPYTHON
-#define LAMBDA lambda
-#else
-#define LAMBDA _lambda
-#endif
-
-
 
 namespace itk
 {
 
 #ifndef SWIG
-class SingleValuedNonLinearOptimizer;
-template<class T, class U> class ImageToImageMetric;
+template< typename TInternalComputationValueType> class ObjectToObjectOptimizerBaseTemplate;
+template<typename TFixedImage,
+         typename TMovingImage,
+         typename TVirtualImage,
+         typename TInternalComputationValueType,
+         typename TMetricTraits >
+class ImageToImageMetricv4;
+
+template<typename TFixedImageType,
+         typename TMovingImageType,
+         typename TVirtualImageType,
+         typename TCoordRep>
+class DefaultImageToImageMetricTraitsv4;
+
+template<typename TMetric> class RegistrationParameterScalesEstimator;
+
 class Command;
 class EventObject;
 #endif
@@ -60,25 +67,82 @@ namespace simple
     Transform GetTransform()
       { return this->m_Transform; }
 
-    Self& SetMetricAsMeanSquares( uint64_t numberOfSpatialSamples = 0 );
-    Self& SetMetricAsMutualInformation( double fixedImageStandardDeviation=0.4,
-                                        double movingImageStandardDeviation=0.4,
-                                        uint64_t numberOfSpatialSamples = 50 );
-    Self& SetMetricAsMattesMutualInformation( unsigned int numberOfHistogramBins = 50,
-                                              bool useExplicitPDFDerivatives=true,
-                                              uint64_t numberOfSpatialSamples = 0 );
+    Self& SetMetricAsCorrelation( );
+    Self& SetMetricAsDemons( double intensityDifferenceThreshold = 0.001 );
+    Self& SetMetricAsJointHistogramMutualInformation( unsigned int numberOfHistogramBins = 20,
+                                                      double varianceForJointPDFSmoothing = 1.5);
+    Self& SetMetricAsMeanSquares( );
+    Self& SetMetricAsMattesMutualInformation( unsigned int numberOfHistogramBins = 50 );
 
 
-    Self& SetOptimizerAsRegularStepGradientDescent( double maxStep,
+    enum EstimateLearningRateType { Never, Once, EachIteration };
+    Self& SetOptimizerAsConjugateGradientLineSearch( double learningRate,
+                                                     unsigned int numberOfIterations,
+                                                     double convergenceMinimumValue = 1e-6,
+                                                     unsigned int convergenceWindowSize = 10,
+                                                     double lineSearchLowerLimit = 0,
+                                                     double lineSearchUpperLimit = 5.0,
+                                                     double lineSearchEpsilon = 0.01,
+                                                     unsigned int lineSearchMaximumIterations = 20,
+                                                     EstimateLearningRateType estimateLearningRate = Once,
+                                                     double maximumStepSizeInPhysicalUnits = 0.0 );
+    Self& SetOptimizerAsRegularStepGradientDescent( double learningRate,
                                                     double minStep,
                                                     unsigned int numberOfIterations,
-                                                    double relaxationFactor=0.5);
+                                                    double relaxationFactor=0.5,
+                                                    double gradientMagnitudeTolerance = 1e-4);
     Self& SetOptimizerAsGradientDescent( double learningRate,
-                                         unsigned int numberOfIterations );
-    Self& SetOptimizerScales( const std::vector<double> &scales);
+                                         unsigned int numberOfIterations,
+                                         double convergenceMinimumValue = 1e-6,
+                                         unsigned int convergenceWindowSize = 10,
+                                         EstimateLearningRateType estimateLearningRate = Once,
+                                         double maximumStepSizeInPhysicalUnits = 0.0);
+    Self& SetOptimizerAsGradientDescentLineSearch( double learningRate,
+                                                   unsigned int numberOfIterations,
+                                                   double convergenceMinimumValue = 1e-6,
+                                                   unsigned int convergenceWindowSize = 10,
+                                                   double lineSearchLowerLimit = 0,
+                                                   double lineSearchUpperLimit = 5.0,
+                                                   double lineSearchEpsilon = 0.01,
+                                                   unsigned int lineSearchMaximumIterations = 20,
+                                                   EstimateLearningRateType estimateLearningRate = Once,
+                                                   double maximumStepSizeInPhysicalUnits = 0.0 );
 
 
-    Self& SetFixedImageRegion( const std::vector<unsigned int> &size, const std::vector<unsigned int> &index);
+    Self& SetOptimizerAsLBFGSB(double gradientConvergenceTolerance = 1e-5,
+                               unsigned int maximumNumberOfIterations = 500,
+                               unsigned int maximumNumberOfCorrections = 5,
+                               unsigned int maximumNumberOfFunctionEvaluations = 2000,
+                               double costFunctionConvergenceFactor = 1e+7,
+                               double lowerBound = std::numeric_limits<double>::min(),
+                               double upperBound = std::numeric_limits<double>::max());
+
+    Self& SetOptimizerScales( const std::vector<double> &scales );
+    Self& SetOptimizerScalesFromJacobian( unsigned int centralRegionRadius = 5 );
+    Self& SetOptimizerScalesFromIndexShift( unsigned int centralRegionRadius = 5,
+                                           double smallParameterVariation =  0.01 );
+    Self& SetOptimizerScalesFromPhysicalShift( unsigned int centralRegionRadius = 5,
+                                              double smallParameterVariation =  0.01 );
+
+
+    Self &SetMetricSamplingPercentage(double percentage);
+    Self &SetMetricSamplingPercentagePerLevel(const std::vector<double> &percentage);
+
+    enum MetricSamplingStrategyType {
+      NONE,
+      REGULAR,
+      RANDOM
+    };
+
+    Self &SetMetricSamplingStrategy( MetricSamplingStrategyType strategy);
+
+    Self &SetShrinkFactorsPerLevel( const std::vector<unsigned int> &shrinkFactors );
+    Self &SetSmoothingSigmasPerLevel( const std::vector<double> &smoothingSigmas );
+
+    Self &SetSmoothingSigmasAreSpecifiedInPhysicalUnits(bool arg);
+    Self &SmoothingSigmasAreSpecifiedInPhysicalUnitsOn() { this->SetSmoothingSigmasAreSpecifiedInPhysicalUnits(true); return *this;}
+    Self &SmoothingSigmasAreSpecifiedInPhysicalUnitsOff()  { this->SetSmoothingSigmasAreSpecifiedInPhysicalUnits(false); return *this;}
+
 
     Transform Execute ( const Image &fixed, const Image & moving );
 
@@ -101,10 +165,18 @@ namespace simple
     template<class TImage>
     Transform ExecuteInternal ( const Image &fixed, const Image &moving );
 
-    itk::SingleValuedNonLinearOptimizer* CreateOptimizer( );
+    itk::ObjectToObjectOptimizerBaseTemplate<double> *CreateOptimizer( unsigned int numberOfTransformParameters );
 
     template <class TImageType>
-      itk::ImageToImageMetric<TImageType,TImageType>* CreateMetric( );
+      itk::ImageToImageMetricv4<TImageType,
+      TImageType,
+      TImageType,
+      double,
+      DefaultImageToImageMetricTraitsv4< TImageType, TImageType, TImageType, double >
+      >* CreateMetric( );
+
+    template <typename TMetric>
+      itk::RegistrationParameterScalesEstimator< TMetric >*CreateScalesEstimator();
 
     virtual void PreUpdate( itk::ProcessObject *p );
     virtual void OnActiveProcessDelete( ) throw();
@@ -125,40 +197,69 @@ namespace simple
     Transform  m_Transform;
 
     // optimizer
-    enum OptimizerType { RegularStepGradientDescent,
-                         GradientDescent
+    enum OptimizerType { ConjugateGradientLineSearch,
+                         RegularStepGradientDescent,
+                         GradientDescent,
+                         GradientDescentLineSearch,
+                         LBFGSB
     };
     OptimizerType m_OptimizerType;
-    double m_OptimizerMaximumStepLength;
+    double m_OptimizerLearningRate;
     double m_OptimizerMinimumStepLength;
     unsigned int m_OptimizerNumberOfIterations;
+    double m_OptimizerLineSearchLowerLimit;
+    double m_OptimizerLineSearchUpperLimit;
+    double m_OptimizerLineSearchEpsilon;
+    unsigned int m_OptimizerLineSearchMaximumIterations;
+    EstimateLearningRateType m_OptimizerEstimateLearningRate;
+    double  m_OptimizerMaximumStepSizeInPhysicalUnits;
     double m_OptimizerRelaxationFactor;
-    bool m_OptimizerMinimize;
+    double m_OptimizerGradientMagnitudeTolerance;
+    double m_OptimizerConvergenceMinimumValue;
+    unsigned int m_OptimizerConvergenceWindowSize;
+    double m_OptimizerGradientConvergenceTolerance;
+    unsigned int m_OptimizerMaximumNumberOfCorrections;
+    unsigned int m_OptimizerMaximumNumberOfFunctionEvaluations;
+    double m_OptimizerCostFunctionConvergenceFactor;
+    double m_OptimizerLowerBound;
+    double m_OptimizerUpperBound;
+
+    enum OptimizerScalesType {
+      Manual,
+      Jacobian,
+      IndexShift,
+      PhysicalShift
+    };
+    OptimizerScalesType m_OptimizerScalesType;
     std::vector<double> m_OptimizerScales;
-    double m_OptimizerLearningRate;
+    unsigned int m_OptimizerScalesCentralRegionRadius;
+    double m_OptimizerScalesSmallParameterVariation;
 
     // metric
-    enum MetricType { MeanSquares,
-                      MattesMutualInformation,
-                      MutualInformation
+    enum MetricType { Correlation,
+                      Demons,
+                      JointHistogramMutualInformation,
+                      MeanSquares,
+                      MattesMutualInformation
     };
-
     MetricType m_MetricType;
-    uint64_t  m_MetricNumberOfSpatialSamples;
-    double m_MetricFixedImageStandardDeviation;
-    double m_MetricMovingImageStandardDeviation;
+    double m_MetricIntensityDifferenceThreshold;
     unsigned int m_MetricNumberOfHistogramBins;
-    bool m_MetricUseExplicitPDFDerivatives;
+    double m_MetricVarianceForJointPDFSmoothing;
 
-    std::vector<unsigned int> m_FixedImageRegionSize;
-    std::vector<unsigned int> m_FixedImageRegionIndex;
 
+    std::vector<double> m_MetricSamplingPercentage;
+    MetricSamplingStrategyType m_MetricSamplingStrategy;
+
+    std::vector<unsigned int> m_ShrinkFactorsPerLevel;
+    std::vector<double> m_SmoothingSigmasPerLevel;
+    bool m_SmoothingSigmasAreSpecifiedInPhysicalUnits;
 
     std::string m_StopConditionDescription;
     double m_MetricValue;
     unsigned int m_Iteration;
 
-    itk::SingleValuedNonLinearOptimizer *m_ActiveOptimizer;
+    itk::ObjectToObjectOptimizerBaseTemplate<double> *m_ActiveOptimizer;
   };
 
 }
