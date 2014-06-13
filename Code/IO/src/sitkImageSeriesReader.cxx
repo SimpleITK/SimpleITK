@@ -82,8 +82,7 @@ namespace itk {
       out << "itk::simple::ImageSeriesReader";
       out << std::endl;
 
-      out << "  OutputPixelType: " << this->GetOutputPixelType() << std::endl;
-      out << "  FileNames: " << std::endl;
+      out << "  FileNames:" << std::endl;
       std::vector<std::string>::const_iterator iter  = m_FileNames.begin();
       while( iter != m_FileNames.end() )
         {
@@ -91,6 +90,7 @@ namespace itk {
         ++iter;
         }
 
+      out << ImageReaderBase::ToString();
       return out.str();
     }
 
