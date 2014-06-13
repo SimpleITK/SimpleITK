@@ -12,13 +12,6 @@
 #include "sitkInterpolator.h"
 #include "sitkTransform.h"
 
-#ifndef SWIGPYTHON
-#define LAMBDA lambda
-#else
-#define LAMBDA _lambda
-#endif
-
-
 
 namespace itk
 {
