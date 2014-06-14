@@ -212,7 +212,9 @@ ImageRegistrationMethod::SetOptimizerAsRegularStepGradientDescent( double learni
                                                                    double minStep,
                                                                    unsigned int numberOfIteratons,
                                                                    double relaxationFactor,
-                                                                   double gradientMagnitudeTolerance )
+                                                                   double gradientMagnitudeTolerance,
+                                                                   EstimateLearningRateType estimateLearningRate,
+                                                                   double maximumStepSizeInPhysicalUnits )
 {
   m_OptimizerType = RegularStepGradientDescent;
   m_OptimizerLearningRate = learningRate;
@@ -220,6 +222,8 @@ ImageRegistrationMethod::SetOptimizerAsRegularStepGradientDescent( double learni
   m_OptimizerNumberOfIterations = numberOfIteratons;
   m_OptimizerRelaxationFactor = relaxationFactor;
   m_OptimizerGradientMagnitudeTolerance = gradientMagnitudeTolerance;
+  m_OptimizerEstimateLearningRate = estimateLearningRate;
+  m_OptimizerMaximumStepSizeInPhysicalUnits = maximumStepSizeInPhysicalUnits;
   return *this;
 }
 

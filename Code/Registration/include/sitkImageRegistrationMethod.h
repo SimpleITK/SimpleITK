@@ -90,7 +90,9 @@ namespace simple
                                                     double minStep,
                                                     unsigned int numberOfIterations,
                                                     double relaxationFactor=0.5,
-                                                    double gradientMagnitudeTolerance = 1e-4);
+                                                    double gradientMagnitudeTolerance = 1e-4,
+                                                    EstimateLearningRateType estimateLearningRate = Never,
+                                                    double maximumStepSizeInPhysicalUnits = 0.0);
     Self& SetOptimizerAsGradientDescent( double learningRate,
                                          unsigned int numberOfIterations,
                                          double convergenceMinimumValue = 1e-6,
