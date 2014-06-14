@@ -489,8 +489,8 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
   typename FixedImageType::ConstPointer fixed = this->CastImageToITK<FixedImageType>( inFixed );
   typename MovingImageType::ConstPointer moving = this->CastImageToITK<MovingImageType>( inMoving );
 
-  typedef itk::ImageToImageMetricv4<FixedImageType, MovingImageType> MetricType;
-  typename MetricType::Pointer metric = this->CreateMetric<FixedImageType>();
+  typedef itk::ImageToImageMetricv4<FixedImageType, MovingImageType> _MetricType;
+  typename _MetricType::Pointer metric = this->CreateMetric<FixedImageType>();
   registration->SetMetric( metric );
   metric->UnRegister();
 
@@ -555,7 +555,7 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
 
   registration->SetOptimizer( optimizer );
 
-  typename itk::RegistrationParameterScalesEstimator< MetricType >::Pointer scalesEstimator = this->CreateScalesEstimator<MetricType>();
+  typename itk::RegistrationParameterScalesEstimator< _MetricType >::Pointer scalesEstimator = this->CreateScalesEstimator<_MetricType>();
   if (scalesEstimator)
     {
     scalesEstimator->UnRegister();
