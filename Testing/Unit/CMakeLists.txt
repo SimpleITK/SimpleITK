@@ -20,6 +20,7 @@ set ( SimpleITKUnitTestSource
   sitkBasicFiltersTests.cxx
   sitkRegistrationTests.cxx
   sitkLabelStatisticsTest.cxx
+  sitkTransformToDisplacementFieldFilterTest.cxx
   sitkOperatorTests.cxx
   sitkExceptionsTests.cxx
   sitkTransformTests.cxx
