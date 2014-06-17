@@ -1,2 +1,2 @@
       /** Execute the filter on the input image$(if number_of_inputs == 2 then OUT=[[s]]end) */
-      Image Execute ( $(include ImageParameters.in) );
+Image Execute ( $(include ImageParameters.in)$(include InputParameters.in) );

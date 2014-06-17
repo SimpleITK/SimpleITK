@@ -21,7 +21,7 @@
 #include "sitkMacro.h"
 #include "sitkMemberFunctionFactory.h"
 #include "sitkBasicFilters.h"
-#include "sitkImageFilterExecuteBase.h"
+#include "sitkProcessObject.h"
 
 namespace itk {
 
@@ -35,7 +35,7 @@ namespace itk {
    */
   template < unsigned int N>
   class SITKBasicFilters0_EXPORT ImageFilter:
-      public ImageFilterExecuteBase<N>
+      public ProcessObject
   {
     public:
       typedef ImageFilter Self;

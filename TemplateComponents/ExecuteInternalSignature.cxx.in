@@ -4,5 +4,4 @@ Image ${name}::ExecuteInternal ( $(for inum=1,number_of_inputs do
        OUT=OUT.. ', '
   end
   OUT= OUT .. 'const Image& inImage' .. inum
-  end )
-                                            )
+end )$(include InputParameters.in) )

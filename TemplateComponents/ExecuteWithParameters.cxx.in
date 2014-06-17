@@ -1,7 +1,7 @@
 $(if members and #members > 0 then
 OUT = [[
 
-Image ${name}::Execute ( $(include ImageParameters.in)$(include MemberParameters.in) )
+Image ${name}::Execute ( $(include ImageParameters.in)$(include InputParameters.in)$(include MemberParameters.in) )
 {
 $(foreach members
 $(if (not no_set_method) or (no_set_method == 0) then
@@ -9,11 +9,20 @@ OUT = '  this->Set${name} ( ${name:sub(1,1):lower() .. name:sub(2,-1)} );'
 end)
 )
   return this->Execute ( $(for inum=1,number_of_inputs do
- if inum>1 then
+   if inum>1 then
        OUT=OUT.. ', '
   end
   OUT= OUT .. 'image' .. inum
-  end) );
+  end
+  if inputs then
+    for inum=1,#inputs do
+      if number_of_inputs>0 or inum>1 then
+        OUT = OUT .. ", "
+      end
+      OUT=OUT..inputs[inum].name:sub(1,1):lower() .. inputs[inum].name:sub(2,-1)
+    end
+  end
+) );
 }
 ]]
 end)
