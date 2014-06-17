@@ -78,114 +78,128 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
   # Set up some convenience variables
   set (filter_json_file ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/json/${FILTERNAME}.json)
   set (template_expansion_script ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua)
-  set (template_include_dir ${SimpleITK_SOURCE_DIR}/TemplateComponents)
+  set (template_include_dir
+  ${SimpleITK_SOURCE_DIR}/TemplateComponents)
 
-  set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILTERNAME}Test.cxx")
-  add_custom_command (
-    OUTPUT  ${OUTPUT_TEST_FILENAME}
-    COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
-    COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitk ${template_include_dir} TestTemplate.cxx.in "${OUTPUT_TEST_FILENAME}"
-    DEPENDS ${filter_json_file} ${CXX_TEMPLATE_FILES}
-    )
-  add_test( NAME BasicFilters.${FILTERNAME} COMMAND SimpleITKUnitTestDriver${_exec_i} --gtest_filter=BasicFilters.${FILTERNAME}:BasicFilters.${FILTERNAME}_* )
-  set ( GENERATED_TEST_SOURCE ${GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
 
-  if ( WRAP_LUA )
-    set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/LuaTests/${FILTERNAME}Test.lua")
+  ######
+  # Figure out which template file gets used
+  ######
+
+  # Get the line from the json file that indicates the correct template
+  file(STRINGS ${filter_json_file} template_line REGEX ".*template_test_filename.*")
+
+  # strip down to what in between the "" after the :
+  string(REGEX MATCH ":.*\"([^\"]+)\"" _out "${template_line}")
+  set(template_name "${CMAKE_MATCH_1}" )
+
+  if (template_name)
+    set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILTERNAME}Test.cxx")
     add_custom_command (
-      OUTPUT "${OUTPUT_TEST_FILENAME}"
+      OUTPUT  ${OUTPUT_TEST_FILENAME}
       COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
-      COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Lua ${template_include_dir} TestTemplate.lua.in "${OUTPUT_TEST_FILENAME}"
-      DEPENDS ${filter_json_file} ${LUA_TEMPLATE_FILES}
+      COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitk ${template_include_dir} TestTemplate.cxx.in "${OUTPUT_TEST_FILENAME}"
+      DEPENDS ${filter_json_file} ${CXX_TEMPLATE_FILES}
       )
-    add_test( NAME Lua.${FILTERNAME} COMMAND SimpleITKUnitTestDriver${_exec_i} --gtest_filter=Lua.${FILTERNAME} )
-    set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
-  endif()
+    add_test( NAME BasicFilters.${FILTERNAME} COMMAND SimpleITKUnitTestDriver${_exec_i} --gtest_filter=BasicFilters.${FILTERNAME}:BasicFilters.${FILTERNAME}_* )
+    set ( GENERATED_TEST_SOURCE ${GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
 
-  if ( WRAP_PYTHON )
-    set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/${FILTERNAME}Test.py")
-    add_custom_command (
-      OUTPUT  "${OUTPUT_TEST_FILENAME}"
-      COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
-      COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Python ${template_include_dir} TestTemplate.py.in "${OUTPUT_TEST_FILENAME}"
-      DEPENDS ${filter_json_file} ${PYTHON_TEMPLATE_FILES}
-      )
-    add_test( NAME Python.${FILTERNAME} COMMAND SimpleITKUnitTestDriver${_exec_i} --gtest_filter=Python.${FILTERNAME} )
-    set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
-  endif()
+    if ( WRAP_LUA )
+      set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/LuaTests/${FILTERNAME}Test.lua")
+      add_custom_command (
+        OUTPUT "${OUTPUT_TEST_FILENAME}"
+        COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
+        COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Lua ${template_include_dir} TestTemplate.lua.in "${OUTPUT_TEST_FILENAME}"
+        DEPENDS ${filter_json_file} ${LUA_TEMPLATE_FILES}
+        )
+      add_test( NAME Lua.${FILTERNAME} COMMAND SimpleITKUnitTestDriver${_exec_i} --gtest_filter=Lua.${FILTERNAME} )
+      set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
+    endif()
 
-  if ( WRAP_TCL )
-    set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/TclTests/${FILTERNAME}Test.tcl")
-    add_custom_command (
-      OUTPUT  "${OUTPUT_TEST_FILENAME}"
-      COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
-      COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Tcl ${template_include_dir} TestTemplate.tcl.in "${OUTPUT_TEST_FILENAME}"
-      DEPENDS ${filter_json_file} ${TCL_TEMPLATE_FILES}
-      )
-    add_test( NAME Tcl.${FILTERNAME} COMMAND SimpleITKUnitTestDriver${_exec_i} --gtest_filter=Tcl.${FILTERNAME} )
-    set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
-  endif()
+    if ( WRAP_PYTHON )
+      set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/${FILTERNAME}Test.py")
+      add_custom_command (
+        OUTPUT  "${OUTPUT_TEST_FILENAME}"
+        COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
+        COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Python ${template_include_dir} TestTemplate.py.in "${OUTPUT_TEST_FILENAME}"
+        DEPENDS ${filter_json_file} ${PYTHON_TEMPLATE_FILES}
+        )
+      add_test( NAME Python.${FILTERNAME} COMMAND SimpleITKUnitTestDriver${_exec_i} --gtest_filter=Python.${FILTERNAME} )
+      set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
+    endif()
 
-  if ( WRAP_R )
-    set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/RTests/${FILTERNAME}Test.R")
-    add_custom_command (
-      OUTPUT  "${OUTPUT_TEST_FILENAME}"
-      COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
-      COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/R ${template_include_dir} TestTemplate.R.in "${OUTPUT_TEST_FILENAME}"
-      DEPENDS ${filter_json_file} ${R_TEMPLATE_FILES}
-      )
-    add_test( NAME R.${FILTERNAME} COMMAND SimpleITKUnitTestDriver${_exec_i} --gtest_filter=R.${FILTERNAME} )
-    set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
-  endif()
+    if ( WRAP_TCL )
+      set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/TclTests/${FILTERNAME}Test.tcl")
+      add_custom_command (
+        OUTPUT  "${OUTPUT_TEST_FILENAME}"
+        COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
+        COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Tcl ${template_include_dir} TestTemplate.tcl.in "${OUTPUT_TEST_FILENAME}"
+        DEPENDS ${filter_json_file} ${TCL_TEMPLATE_FILES}
+        )
+      add_test( NAME Tcl.${FILTERNAME} COMMAND SimpleITKUnitTestDriver${_exec_i} --gtest_filter=Tcl.${FILTERNAME} )
+      set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
+    endif()
 
-  if ( WRAP_RUBY )
-    set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/RubyTests/${FILTERNAME}Test.rb")
-    add_custom_command (
-      OUTPUT  "${OUTPUT_TEST_FILENAME}"
-      COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
-      COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Ruby ${template_include_dir} TestTemplate.rb.in "${OUTPUT_TEST_FILENAME}"
-      DEPENDS ${filter_json_file} ${RUBY_TEMPLATE_FILES}
-      )
-    add_test( NAME Ruby.${FILTERNAME} COMMAND SimpleITKUnitTestDriver${_exec_i} --gtest_filter=Ruby.${FILTERNAME} )
-    set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
-  endif()
+    if ( WRAP_R )
+      set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/RTests/${FILTERNAME}Test.R")
+      add_custom_command (
+        OUTPUT  "${OUTPUT_TEST_FILENAME}"
+        COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
+        COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/R ${template_include_dir} TestTemplate.R.in "${OUTPUT_TEST_FILENAME}"
+        DEPENDS ${filter_json_file} ${R_TEMPLATE_FILES}
+        )
+      add_test( NAME R.${FILTERNAME} COMMAND SimpleITKUnitTestDriver${_exec_i} --gtest_filter=R.${FILTERNAME} )
+      set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
+    endif()
 
-  # Java Tests
-  if ( WRAP_JAVA )
-    set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/org/itk/simple/testing/${FILTERNAME}Test.java")
-    add_custom_command (
-      OUTPUT  "${OUTPUT_TEST_FILENAME}"
-      COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
-      COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Java ${template_include_dir} TestTemplate.java.in "${OUTPUT_TEST_FILENAME}"
-      COMMAND ${Java_JAVAC_EXECUTABLE} -classpath ${SimpleITK_BINARY_DIR}/Wrapping/${JAR_FILE} ${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/org/itk/simple/testing/${FILTERNAME}Test.java
-      DEPENDS ${filter_json_file} ${JAVA_TEMPLATE_FILES} ${SWIG_MODULE_SimpleITKJava_TARGET_NAME}
-      )
-    add_test( NAME Java.${FILTERNAME} COMMAND SimpleITKUnitTestDriver${_exec_i} --gtest_filter=Java.${FILTERNAME} )
-    set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
-  endif()
+    if ( WRAP_RUBY )
+      set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/RubyTests/${FILTERNAME}Test.rb")
+      add_custom_command (
+        OUTPUT  "${OUTPUT_TEST_FILENAME}"
+        COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
+        COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Ruby ${template_include_dir} TestTemplate.rb.in "${OUTPUT_TEST_FILENAME}"
+        DEPENDS ${filter_json_file} ${RUBY_TEMPLATE_FILES}
+        )
+      add_test( NAME Ruby.${FILTERNAME} COMMAND SimpleITKUnitTestDriver${_exec_i} --gtest_filter=Ruby.${FILTERNAME} )
+      set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
+    endif()
 
-  # C# Tests
-  if ( WRAP_CSHARP )
-    set( OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/CSharpTests/Test${FILTERNAME}.cs" )
-    if ( WIN32 )
-      string( REPLACE "/" "\\" OUTPUT_TEST_FILENAME_SAFE ${OUTPUT_TEST_FILENAME} )
-    else ( UNIX )
-      string( REPLACE "\\" "/" OUTPUT_TEST_FILENAME_SAFE ${OUTPUT_TEST_FILENAME} )
-    endif ( WIN32 )
-    add_custom_command (
-      OUTPUT "${OUTPUT_TEST_FILENAME}"
-      COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
-      COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/CSharp ${template_include_dir} TestTemplate.cs.in "${OUTPUT_TEST_FILENAME}"
-      COMMAND ${CSHARP_COMPILER}
-        /t:exe /platform:${CSHARP_PLATFORM}
-        /lib:${CSHARP_BINARY_DIRECTORY} /reference:System.dll /reference:SimpleITKCSharpManaged.dll
-        /out:${CSHARP_BINARY_DIRECTORY}/Test${FILTERNAME}.exe ${OUTPUT_TEST_FILENAME_SAFE}
-      DEPENDS ${filter_json_file} ${CSHARP_TEMPLATE_FILES}
-      )
-    add_test( NAME CSharp.${FILTERNAME} COMMAND SimpleITKUnitTestDriver${_exec_i} --gtest_filter=CSharp.${FILTERNAME} )
-    set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
-  endif()
+    # Java Tests
+    if ( WRAP_JAVA )
+      set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/org/itk/simple/testing/${FILTERNAME}Test.java")
+      add_custom_command (
+        OUTPUT  "${OUTPUT_TEST_FILENAME}"
+        COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
+        COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Java ${template_include_dir} TestTemplate.java.in "${OUTPUT_TEST_FILENAME}"
+        COMMAND ${Java_JAVAC_EXECUTABLE} -classpath ${SimpleITK_BINARY_DIR}/Wrapping/${JAR_FILE} ${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/org/itk/simple/testing/${FILTERNAME}Test.java
+        DEPENDS ${filter_json_file} ${JAVA_TEMPLATE_FILES} ${SWIG_MODULE_SimpleITKJava_TARGET_NAME}
+        )
+      add_test( NAME Java.${FILTERNAME} COMMAND SimpleITKUnitTestDriver${_exec_i} --gtest_filter=Java.${FILTERNAME} )
+      set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
+    endif()
 
+    # C# Tests
+    if ( WRAP_CSHARP )
+      set( OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/CSharpTests/Test${FILTERNAME}.cs" )
+      if ( WIN32 )
+        string( REPLACE "/" "\\" OUTPUT_TEST_FILENAME_SAFE ${OUTPUT_TEST_FILENAME} )
+      else ( UNIX )
+        string( REPLACE "\\" "/" OUTPUT_TEST_FILENAME_SAFE ${OUTPUT_TEST_FILENAME} )
+      endif ( WIN32 )
+      add_custom_command (
+        OUTPUT "${OUTPUT_TEST_FILENAME}"
+        COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
+        COMMAND lua ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/CSharp ${template_include_dir} TestTemplate.cs.in "${OUTPUT_TEST_FILENAME}"
+        COMMAND ${CSHARP_COMPILER}
+          /t:exe /platform:${CSHARP_PLATFORM}
+          /lib:${CSHARP_BINARY_DIRECTORY} /reference:System.dll /reference:SimpleITKCSharpManaged.dll
+          /out:${CSHARP_BINARY_DIRECTORY}/Test${FILTERNAME}.exe ${OUTPUT_TEST_FILENAME_SAFE}
+        DEPENDS ${filter_json_file} ${CSHARP_TEMPLATE_FILES}
+        )
+      add_test( NAME CSharp.${FILTERNAME} COMMAND SimpleITKUnitTestDriver${_exec_i} --gtest_filter=CSharp.${FILTERNAME} )
+      set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
+    endif()
+  endif() # if template_name
   math(EXPR _i "${_i}+1")
 
 endforeach()

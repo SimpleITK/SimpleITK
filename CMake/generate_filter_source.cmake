@@ -14,7 +14,7 @@ macro( get_dependent_template_components out_var_name json_file input_dir )
   file(STRINGS ${json_file} template_line REGEX ".*template_code_filename.*")
 
   # strip down to what in between the "" after the :
-  string(REGEX MATCH ":.*\"([^\"]+)\"" _out ${template_line})
+  string(REGEX MATCH ":.*\"([^\"]+)\"" _out "${template_line}")
   set(template_name "${CMAKE_MATCH_1}" )
 
   if(_out)
