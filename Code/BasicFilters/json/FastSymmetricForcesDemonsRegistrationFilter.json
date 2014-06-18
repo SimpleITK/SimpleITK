@@ -136,7 +136,7 @@
       "tag" : "2d",
       "description" : "2D",
       "settings" : [],
-      "tolerance" : "1e-8",
+      "tolerance" : "1e-3",
       "inputs" : [
         "Input/BrainProtonDensitySliceBorder20.png",
         "Input/BrainProtonDensitySliceBSplined10.png"
