@@ -745,7 +745,7 @@ if ( WRAP_PYTHON )
     ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceBorder20.png
     ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceShifted13x17y.png
     ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethod4Test1.hdf5
-    24 10000 1
+    24 1.0
     )
 
   add_python_test( Example.ImageRegistrationMethod4Test2
@@ -753,7 +753,7 @@ if ( WRAP_PYTHON )
     ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainT1SliceBorder20.png
     ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceShifted13x17y.png
     ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethod4Test2.hdf5
-    24 10000 0
+    24 0.1
     )
 
   add_python_test( Example.ImageRegistrationMethod4Test3
@@ -761,7 +761,7 @@ if ( WRAP_PYTHON )
     ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceBorder20Mask.png
     ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceBorder20Mask.png
     ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethod4Test3.hdf5
-    5 10000 0
+    5 0.4
     )
 
 

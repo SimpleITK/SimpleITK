@@ -1,7 +1,9 @@
 #include "sitkImageRegistrationMethod.h"
 
-#include "itkRegularStepGradientDescentOptimizer.h"
-#include "itkGradientDescentOptimizer.h"
+#include "itkConjugateGradientLineSearchOptimizerv4.h"
+#include "itkGradientDescentOptimizerv4.h"
+#include "itkRegularStepGradientDescentOptimizerv4.h"
+#include "itkLBFGSBOptimizerv4.h"
 
 
 namespace {
@@ -12,7 +14,7 @@ struct PositionOptimizerCustomCast
   static std::vector<double> Helper(const T &value)
     { return std::vector<double>(value.begin(),value.end()); }
 
-  static std::vector<double> CustomCast(const itk::SingleValuedNonLinearOptimizer *opt)
+  static std::vector<double> CustomCast(const itk::ObjectToObjectOptimizerBaseTemplate<double> *opt)
     {
       return Helper(opt->GetCurrentPosition());
     }
@@ -27,24 +29,70 @@ namespace simple
 
 
 
-  itk::SingleValuedNonLinearOptimizer*
-  ImageRegistrationMethod::CreateOptimizer( )
+  itk::ObjectToObjectOptimizerBaseTemplate<double>*
+  ImageRegistrationMethod::CreateOptimizer( unsigned int numberOfTransformParameters )
   {
+    typedef double InternalComputationValueType;
 
-    itk::SingleValuedNonLinearOptimizer::ScalesType scales(m_OptimizerScales.size());
-    std::copy( m_OptimizerScales.begin(), m_OptimizerScales.end(), scales.begin() );
-
-
-    if ( m_OptimizerType == GradientDescent )
+    if ( m_OptimizerType == ConjugateGradientLineSearch )
       {
-      typedef itk::GradientDescentOptimizer _OptimizerType;
+      typedef itk::ConjugateGradientLineSearchOptimizerv4Template<InternalComputationValueType> _OptimizerType;
       _OptimizerType::Pointer      optimizer     = _OptimizerType::New();
       optimizer->SetLearningRate( this->m_OptimizerLearningRate );
-      optimizer->SetNumberOfIterations( this->m_OptimizerNumberOfIterations  );
-      optimizer->SetMinimize( this->m_OptimizerMinimize );
-      if (scales.GetSize()) optimizer->SetScales(scales);
+      optimizer->SetNumberOfIterations( this->m_OptimizerNumberOfIterations );
+      optimizer->SetMinimumConvergenceValue( this->m_OptimizerConvergenceMinimumValue );
+      optimizer->SetConvergenceWindowSize( this->m_OptimizerConvergenceWindowSize );
+      optimizer->SetLowerLimit( this->m_OptimizerLineSearchLowerLimit);
+      optimizer->SetUpperLimit( this->m_OptimizerLineSearchUpperLimit);
+      optimizer->SetEpsilon( this->m_OptimizerLineSearchEpsilon);
+      optimizer->SetMaximumLineSearchIterations( this->m_OptimizerLineSearchMaximumIterations);
+      optimizer->SetDoEstimateLearningRateAtEachIteration( this->m_OptimizerEstimateLearningRate==EachIteration );
+      optimizer->SetDoEstimateLearningRateOnce( this->m_OptimizerEstimateLearningRate==Once );
+      optimizer->SetMaximumStepSizeInPhysicalUnits( this->m_OptimizerMaximumStepSizeInPhysicalUnits );
 
-      this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetValue,optimizer);
+      this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetCurrentMetricValue,optimizer);
+      this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer);
+      this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer);
+
+      optimizer->Register();
+      return optimizer.GetPointer();
+      }
+    else if ( m_OptimizerType == GradientDescent )
+      {
+      typedef itk::GradientDescentOptimizerv4Template<InternalComputationValueType> _OptimizerType;
+      _OptimizerType::Pointer      optimizer     = _OptimizerType::New();
+      optimizer->SetLearningRate( this->m_OptimizerLearningRate );
+      optimizer->SetNumberOfIterations( this->m_OptimizerNumberOfIterations );
+      optimizer->SetMinimumConvergenceValue( this->m_OptimizerConvergenceMinimumValue );
+      optimizer->SetConvergenceWindowSize( this->m_OptimizerConvergenceWindowSize );
+      optimizer->SetDoEstimateLearningRateAtEachIteration( this->m_OptimizerEstimateLearningRate==EachIteration );
+      optimizer->SetDoEstimateLearningRateOnce( this->m_OptimizerEstimateLearningRate==Once );
+      optimizer->SetMaximumStepSizeInPhysicalUnits( this->m_OptimizerMaximumStepSizeInPhysicalUnits );
+
+      this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetCurrentMetricValue,optimizer);
+      this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer);
+      this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer);
+
+      optimizer->Register();
+      return optimizer.GetPointer();
+      }
+    else if ( m_OptimizerType == GradientDescentLineSearch )
+      {
+      typedef itk::GradientDescentLineSearchOptimizerv4Template<InternalComputationValueType> _OptimizerType;
+      _OptimizerType::Pointer      optimizer     = _OptimizerType::New();
+      optimizer->SetLearningRate( this->m_OptimizerLearningRate );
+      optimizer->SetNumberOfIterations( this->m_OptimizerNumberOfIterations );
+      optimizer->SetMinimumConvergenceValue( this->m_OptimizerConvergenceMinimumValue );
+      optimizer->SetConvergenceWindowSize( this->m_OptimizerConvergenceWindowSize );
+      optimizer->SetLowerLimit( this->m_OptimizerLineSearchLowerLimit);
+      optimizer->SetUpperLimit( this->m_OptimizerLineSearchUpperLimit);
+      optimizer->SetEpsilon( this->m_OptimizerLineSearchEpsilon);
+      optimizer->SetMaximumLineSearchIterations( this->m_OptimizerLineSearchMaximumIterations);
+      optimizer->SetDoEstimateLearningRateAtEachIteration( this->m_OptimizerEstimateLearningRate==EachIteration );
+      optimizer->SetDoEstimateLearningRateOnce( this->m_OptimizerEstimateLearningRate==Once );
+      optimizer->SetMaximumStepSizeInPhysicalUnits( this->m_OptimizerMaximumStepSizeInPhysicalUnits );
+
+      this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetCurrentMetricValue,optimizer);
       this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer);
       this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer);
 
@@ -53,16 +101,63 @@ namespace simple
       }
     else if ( m_OptimizerType == RegularStepGradientDescent )
       {
-      typedef itk::RegularStepGradientDescentBaseOptimizer _OptimizerType;
-      _OptimizerType::Pointer      optimizer;
-      optimizer = itk::RegularStepGradientDescentOptimizer::New();
+      typedef itk::RegularStepGradientDescentOptimizerv4<InternalComputationValueType> _OptimizerType;
+      _OptimizerType::Pointer      optimizer =  _OptimizerType::New();
 
-      optimizer->SetMaximumStepLength( this->m_OptimizerMaximumStepLength );
+      optimizer->SetLearningRate( this->m_OptimizerLearningRate );
       optimizer->SetMinimumStepLength( this->m_OptimizerMinimumStepLength );
       optimizer->SetNumberOfIterations( this->m_OptimizerNumberOfIterations  );
-      optimizer->SetMinimize( this->m_OptimizerMinimize );
       optimizer->SetRelaxationFactor( this->m_OptimizerRelaxationFactor );
-      if (scales.GetSize()) optimizer->SetScales(scales);
+      optimizer->SetGradientMagnitudeTolerance( this->m_OptimizerGradientMagnitudeTolerance );
+      optimizer->SetDoEstimateLearningRateAtEachIteration( this->m_OptimizerEstimateLearningRate==EachIteration );
+      optimizer->SetDoEstimateLearningRateOnce( this->m_OptimizerEstimateLearningRate==Once );
+      optimizer->SetMaximumStepSizeInPhysicalUnits( this->m_OptimizerMaximumStepSizeInPhysicalUnits );
+      optimizer->Register();
+
+      this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetValue,optimizer);
+      this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer);
+      this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer);
+
+      return optimizer.GetPointer();
+      }
+    else if ( m_OptimizerType == LBFGSB )
+      {
+      typedef itk::LBFGSBOptimizerv4 _OptimizerType;
+      _OptimizerType::Pointer      optimizer =  _OptimizerType::New();
+
+      optimizer->SetGradientConvergenceTolerance( this->m_OptimizerGradientConvergenceTolerance );
+      optimizer->SetNumberOfIterations( this->m_OptimizerNumberOfIterations );
+      optimizer->SetMaximumNumberOfCorrections( this->m_OptimizerMaximumNumberOfCorrections  );
+      optimizer->SetMaximumNumberOfFunctionEvaluations( this->m_OptimizerMaximumNumberOfFunctionEvaluations );
+      optimizer->SetCostFunctionConvergenceFactor( this->m_OptimizerCostFunctionConvergenceFactor );
+
+      #define NOBOUND     0 // 00
+      #define LOWERBOUND  1 // 01
+      #define UPPERBOUND  2 // 10
+      #define BOTHBOUND   3 // 11
+
+      unsigned char flag = NOBOUND;
+      const unsigned int sitkToITK[] = {0,1,3,2};
+      if ( this->m_OptimizerLowerBound != std::numeric_limits<double>::min() )
+        {
+        flag |= LOWERBOUND;
+        }
+      if ( this->m_OptimizerUpperBound != std::numeric_limits<double>::max() )
+        {
+        flag |= UPPERBOUND;
+        }
+
+      _OptimizerType::BoundSelectionType boundSelection( numberOfTransformParameters );
+      _OptimizerType::BoundValueType lowerBound( numberOfTransformParameters );
+      _OptimizerType::BoundValueType upperBound( numberOfTransformParameters );
+
+      boundSelection.Fill( sitkToITK[flag] );
+      lowerBound.Fill( this->m_OptimizerUpperBound );
+      upperBound.Fill( this->m_OptimizerUpperBound );
+
+      optimizer->SetBoundSelection( boundSelection );
+      optimizer->SetLowerBound( lowerBound  );
+      optimizer->SetUpperBound( upperBound  );
       optimizer->Register();
 
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetValue,optimizer);

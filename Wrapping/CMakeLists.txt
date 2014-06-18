@@ -10,6 +10,7 @@ if ( WRAP_LUA OR WRAP_PYTHON OR WRAP_JAVA OR WRAP_CSHARP OR WRAP_TCL OR WRAP_R O
 
   file(GLOB SWIG_EXTRA_DEPS
     "${SimpleITK_SOURCE_DIR}/Code/Common/include/*.h"
+    "${SimpleITK_SOURCE_DIR}/Code/Registration/include/*.h"
     "${SimpleITK_SOURCE_DIR}/Code/IO/include/*.h")
 
   # make a manual list of dependencies for the Swig.i files

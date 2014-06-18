@@ -25,35 +25,34 @@ import os
 
 
 if len ( sys.argv ) < 4:
-    print( "Usage: {0} <fixedImageFilter> <movingImageFile> <outputTransformFile> <numberOfBins> <numberOfSamples> <useExplicitPDFderivatives>".format(sys.argv[0]))
+    print( "Usage: {0} <fixedImageFilter> <movingImageFile> <outputTransformFile> <numberOfBins> <samplingPercentage>".format(sys.argv[0]))
     sys.exit ( 1 )
 
-
 def command_iteration(method) :
-    print("{0} = {1} : {2}".format(method.GetOptimizerIteration(),
-                                   method.GetMetricValue(),
-                                   method.GetOptimizerPosition()))
+    print("{0:3} = {1:10.5f} : {2}".format(method.GetOptimizerIteration(),
+                                           method.GetMetricValue(),
+                                           method.GetOptimizerPosition()))
+
 
 fixed = sitk.ReadImage(sys.argv[1], sitk.sitkFloat32)
 moving = sitk.ReadImage(sys.argv[2], sitk.sitkFloat32)
 
+
 numberOfBins = 24
-numberOfSamples = 10000
-useExplicitPDFDerivatives = True
+samplingPercentage = 0.10
 
 if len ( sys.argv ) > 4:
     numberOfBins = int(sys.argv[4])
 if len ( sys.argv ) > 5:
-    numberOfSamples = int(sys.argv[5])
-if len ( sys.argv ) > 6:
-    useExplicitPDFDerivatives = bool(sys.argv[6])
+    samplingPercentage = float(sys.argv[5])
 
 R = sitk.ImageRegistrationMethod()
-R.SetMetricAsMattesMutualInformation(numberOfBins,useExplicitPDFDerivatives,numberOfSpatialSamples=numberOfSamples,)
+R.SetMetricAsMattesMutualInformation(numberOfBins)
+R.SetMetricSamplingPercentage(samplingPercentage)
+R.SetMetricSamplingStrategy(R.RANDOM)
 R.SetOptimizerAsRegularStepGradientDescent(1.0,.001,200)
 R.SetTransform(sitk.Transform(fixed.GetDimension(), sitk.sitkTranslation))
 R.SetInterpolator(sitk.sitkLinear)
-#R.DebugOn()
 
 R.AddCommand( sitk.sitkIterationEvent, lambda: command_iteration(R) )
 
