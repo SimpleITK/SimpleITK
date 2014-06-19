@@ -15,10 +15,10 @@ end)
   OUT= OUT .. 'image' .. inum
   end
   if inputs then
-    count = 1
+    local count = number_of_inputs
     for inum=1,#inputs do
       if  not (inputs[inum].optional and no_optional) then
-        if number_of_inputs>0 or count>1 then
+        if count>0 then
           OUT = OUT .. ", "
         end
         count = count + 1
