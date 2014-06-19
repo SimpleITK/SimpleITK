@@ -1,14 +1,20 @@
 Image ${name}::Execute ( $(include ImageParameters.in)$(include InputParameters.in) )
 {
+$(if true then
+local inputName = "image1"
+if not (number_of_inputs >  0) and (#inputs > 0) then
+  inputName = inputs[1].name:sub(1,1):lower() .. inputs[1].name:sub(2,-1)
+end
+OUT=[[
+  PixelIDValueType type = ]]..inputName..[[.GetPixelIDValue();
+  unsigned int dimension = ]]..inputName..[[.GetDimension();
+]]
+end
+for inum=2,number_of_inputs do
+  OUT= OUT .. '\n    if ( type != image' .. inum .. '.GetPixelIDValue() || dimension != image' .. inum .. '.GetDimension() ) { sitkExceptionMacro ( "Image' .. inum .. ' for ${name} doesnt match type or dimension!" ); }'
+end)
 
-  PixelIDValueType type = image1.GetPixelIDValue();
-  unsigned int dimension = image1.GetDimension();
-
-$(for inum=2,number_of_inputs do
-           OUT= OUT .. '\n    if ( type != image' .. inum .. '.GetPixelIDValue() || dimension != image' .. inum .. '.GetDimension() ) { sitkExceptionMacro ( "Image' .. inum .. ' for ${name} doesnt match type or dimension!" ); }'
-             end)
-
-    return this->m_MemberFactory->GetMemberFunction( type, dimension )( $(for inum=1,number_of_inputs do
+  return this->m_MemberFactory->GetMemberFunction( type, dimension )( $(for inum=1,number_of_inputs do
   if inum>1 then
     OUT=OUT .. ', '
   end
@@ -37,6 +43,7 @@ $(if inputs then
     if has_optional_inputs and not no_optional then
       no_optional=1
 -- we recusively include this same template file but with the no_optional variable defined
-      OUT=[[$(include ExecuteNoParameters.cxx.in)]]
+      OUT=[[
+$(include ExecuteNoParameters.cxx.in)]]
     end
 end)$(if inputs then no_optional=nil end)
