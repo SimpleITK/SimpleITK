@@ -6,7 +6,7 @@ if not (number_of_inputs >  0) and (#inputs > 0) then
   inputName = inputs[1].name:sub(1,1):lower() .. inputs[1].name:sub(2,-1)
 end
 OUT=[[
-  PixelIDValueType type = ]]..inputName..[[.GetPixelIDValue();
+  PixelIDValueEnum type = ]]..inputName..[[.GetPixelID();
   unsigned int dimension = ]]..inputName..[[.GetDimension();
 ]]
 end
