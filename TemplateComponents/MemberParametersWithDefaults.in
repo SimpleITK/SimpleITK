@@ -1,9 +1,13 @@
 $(for i = 1,#members do
-  temp = number_of_inputs
+  local count = number_of_inputs
   if inputs then
-    temp = temp + #inputs
+    for j = 1,#inputs do
+      if not (inputs[j].optional and no_optional) then
+        count = count + 1
+      end
+    end
   end
-  if (temp > 0 or i > 1) then
+  if (count > 0 or i > 1) then
     OUT = OUT .. ", "
   end
   if not type and members[i].enum then

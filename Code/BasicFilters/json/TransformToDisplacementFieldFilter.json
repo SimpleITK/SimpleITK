@@ -14,7 +14,7 @@
     {
       "name" : "Transform",
       "type" : "Transform",
-      "custom_itk_cast" : "const typename FilterType::TransformType *itkTx = dynamic_cast<const typename FilterType::TransformType *>(transform.GetITKBase() );\n  if ( !itkTx )\n    {\n    sitkExceptionMacro( \"Unexpected error converting transform! Possible miss matching dimensions!\" );\n    }\n  else { filter->SetTransform( itkTx ); }"
+      "custom_itk_cast" : "const typename FilterType::TransformType *itkTx = dynamic_cast<const typename FilterType::TransformType *>(inTransform->GetITKBase() );\n  if ( !itkTx )\n    {\n    sitkExceptionMacro( \"Unexpected error converting transform! Possible miss matching dimensions!\" );\n    }\n  else { filter->SetTransform( itkTx ); }"
     }
   ],
   "members" : [

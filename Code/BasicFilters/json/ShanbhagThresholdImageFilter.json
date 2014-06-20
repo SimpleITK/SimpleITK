@@ -3,9 +3,23 @@
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
   "doc" : "Docs",
-  "number_of_inputs" : 1,
+  "number_of_inputs" : 0,
   "pixel_types" : "BasicPixelIDTypeList",
-  "output_pixel_type" : "uint8_t",
+  "output_image_type" : "itk::Image< uint8_t, TImageType::ImageDimension>",
+  "filter_type" : "itk::ShanbhagThresholdImageFilter< TImageType, OutputImageType >",
+  "inputs" : [
+    {
+      "name" : "Image1",
+      "type" : "Image",
+      "custom_itk_cast" : "filter->SetInput( this->CastImageToITK<typename FilterType::InputImageType>(*inImage1) );"
+    },
+    {
+      "name" : "Mask",
+      "type" : "Image",
+      "optional" : true,
+      "custom_itk_cast" : "filter->SetMaskImage( this->CastImageToITK<typename FilterType::MaskImageType>(*inMask) );"
+    }
+  ],
   "members" : [
     {
       "name" : "InsideValue",
@@ -35,6 +49,25 @@
       "detaileddescriptionSet" : "Set/Get the number of histogram bins.\n",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : ""
+    },
+    {
+      "name" : "MaskOutput",
+      "type" : "bool",
+      "default" : "true",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Do you want the output to be masked by the mask used in histogram construction. Only relevant if masking is in use.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
+    },
+    {
+      "name" : "MaskValue",
+      "type" : "uint8_t",
+      "default" : "255u",
+      "pixeltype" : "Output",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "The value in the mask image, if used, indicating voxels that should be included. Default is the max of pixel type, as in the MaskedImageToHistogramFilter",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
     }
   ],
   "measurements" : [
@@ -58,6 +91,22 @@
         {
           "name" : "Threshold",
           "value" : 26210
+        }
+      ]
+    },
+    {
+      "tag" : "cthead1_with_mask",
+      "description" : "CT Head with mask",
+      "settings" : [],
+      "md5hash" : "4a06d3dedb1b423f7775ca01c1ca4f31",
+      "inputs" : [
+        "Input/cthead1.png",
+        "Input/cthead1-mask.png"
+      ],
+      "measurements_results" : [
+        {
+          "name" : "Threshold",
+          "value" : 106.0
         }
       ]
     },

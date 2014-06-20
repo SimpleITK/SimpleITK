@@ -7,11 +7,19 @@ end
 end)
 $(if inputs then
 for i = 1,#inputs do
+  if inputs[i].optional then
+    OUT = OUT .. '  if ( in'..inputs[i].name..' != NULL ) {\n  '
+  else
+    OUT = OUT .. '  assert( '..'in' .. inputs[i].name ..' != NULL );\n'
+  end
   OUT = OUT .. '  '
   if inputs[i].custom_itk_cast then
-    OUT = OUT..inputs[i].custom_itk_cast
+    OUT = OUT..inputs[i].custom_itk_cast..'\n'
   else
-    OUT = OUT..'filter->Set'..inputs[i].name..'( '..inputs[i].name:sub(1,1):lower() .. inputs[i].name:sub(2,-1)..' );\n'
+    OUT = OUT..'filter->Set'..inputs[i].name..'( '..'in' .. inputs[i].name ..' );\n'
+  end
+  if inputs[i].optional then
+    OUT = OUT .. '  }\n'
   end
 end
 end)

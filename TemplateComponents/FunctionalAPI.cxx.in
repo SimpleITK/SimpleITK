@@ -12,24 +12,38 @@ Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( $(include ImagePara
                               end
                               OUT=OUT .. 'image' .. inum
                             end
+                            local count = number_of_inputs
                             if inputs then
                               for inum=1,#inputs do
-                                if number_of_inputs>0 or inum>1 then
-                                  OUT = OUT .. ", "
+                                if  not (inputs[inum].optional and no_optional) then
+                                  if count>0 then
+                                    OUT = OUT .. ", "
+                                  end
+                                  count = count + 1
+                                  OUT=OUT..inputs[inum].name:sub(1,1):lower() .. inputs[inum].name:sub(2,-1)
                                 end
-                                OUT=OUT..inputs[inum].name:sub(1,1):lower() .. inputs[inum].name:sub(2,-1)
                               end
-                            end
-                            temp = number_of_inputs
-                            if inputs then
-                              temp = temp + #inputs
                             end
                             for i = 1,#members do
-                                        if (temp > 0 or i > 1) then
+                              if count > 0 then
                                 OUT = OUT .. ", "
                               end
+                              count = count + 1
                             OUT= OUT .. members[i].name:sub(1,1):lower() .. members[i].name:sub(2,-1)
                             end) );
 }
 ]]
-end)
+end)$(if inputs and ((not no_procedure) or (no_procedure == 1))then
+    local has_optional_inputs = false
+    for i =1,#inputs do
+      if inputs[i].optional then
+        has_optional_inputs=inputs[i].optional
+      end
+    end
+    if has_optional_inputs and not no_optional then
+      no_optional=1
+-- we recusively include this same template file but with the no_optional variable defined
+      OUT=[[
+$(include FunctionalAPI.cxx.in)]]
+    end
+end)$(if inputs then no_optional=nil end)

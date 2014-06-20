@@ -2,23 +2,34 @@
   "name" : "LabelStatisticsImageFilter",
   "template_code_filename" : "DualImageFilter",
   "template_test_filename" : "ImageFilter",
-  "number_of_inputs" : 2,
+  "number_of_inputs" : 0,
   "pixel_types" : "BasicPixelIDTypeList",
   "pixel_types2" : "IntegerPixelIDTypeList",
   "filter_type" : "itk::LabelStatisticsImageFilter<InputImageType,InputImageType2>",
-  "custom_set_input" : "filter->SetInput( image1 ); filter->SetLabelInput( image2 );",
   "no_procedure" : true,
   "no_return_image" : true,
   "include_files" : [
     "sitkMinimumMaximumImageFilter.h",
     "algorithm"
   ],
+  "inputs" : [
+    {
+      "name" : "Image",
+      "type" : "Image",
+      "custom_itk_cast" : "filter->SetInput( this->CastImageToITK<typename FilterType::InputImageType>(*inImage) );"
+    },
+    {
+      "name" : "LabelImage",
+      "type" : "Image",
+      "custom_itk_cast" : "filter->SetLabelInput( this->CastImageToITK<typename FilterType::LabelImageType>(*inLabelImage) );"
+    }
+  ],
   "members" : [
     {
       "name" : "UseHistograms",
       "type" : "bool",
       "default" : "true",
-      "custom_itk_cast" : "if( m_UseHistograms)\n    {\n    typedef typename TImageType::PixelType PixelType;\n    if( nsstd::is_same< PixelType, uint8_t >::value || nsstd::is_same< PixelType, int8_t >::value )\n      {\n      //NOTE:  This is a heuristic that works exact median only for\n      //(unsigned) char images.\n      filter->SetHistogramParameters(256,std::numeric_limits<PixelType>::min()-0.5,std::numeric_limits<PixelType>::max()+0.5 );\n      }\n    else\n      {\n      itk::simple::MinimumMaximumImageFilter stats;\n      stats.Execute( inImage1 );\n      filter->SetHistogramParameters(256,stats.GetMinimum(), stats.GetMaximum() );\n      }\n    }\n",
+      "custom_itk_cast" : "if( m_UseHistograms)\n    {\n    typedef typename TImageType::PixelType PixelType;\n    if( nsstd::is_same< PixelType, uint8_t >::value || nsstd::is_same< PixelType, int8_t >::value )\n      {\n      //NOTE:  This is a heuristic that works exact median only for\n      //(unsigned) char images.\n      filter->SetHistogramParameters(256,std::numeric_limits<PixelType>::min()-0.5,std::numeric_limits<PixelType>::max()+0.5 );\n      }\n    else\n      {\n      itk::simple::MinimumMaximumImageFilter stats;\n      stats.Execute( *inImage );\n      filter->SetHistogramParameters(256,stats.GetMinimum(), stats.GetMaximum() );\n      }\n    }\n",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "",
       "briefdescriptionGet" : "",
