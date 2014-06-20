@@ -9,13 +9,11 @@
   "inputs" : [
     {
       "name" : "Image",
-      "type" : "Image",
-      "custom_itk_cast" : "filter->SetInput( this->CastImageToITK<typename FilterType::InputImageType>(*inImage) );"
+      "type" : "Image"
     },
     {
       "name" : "MaskImage",
-      "type" : "Image",
-      "custom_itk_cast" : "filter->SetMaskImage( this->CastImageToITK<typename FilterType::MaskImageType>(*inMaskImage) );"
+      "type" : "Image"
     }
   ],
   "members" : [

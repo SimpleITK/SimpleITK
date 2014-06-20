@@ -9,15 +9,13 @@
   "filter_type" : "itk::OtsuThresholdImageFilter< TImageType, OutputImageType, OutputImageType >",
   "inputs" : [
     {
-      "name" : "Image1",
-      "type" : "Image",
-      "custom_itk_cast" : "filter->SetInput( this->CastImageToITK<typename FilterType::InputImageType>(*inImage1) );"
+      "name" : "Image",
+      "type" : "Image"
     },
     {
-      "name" : "Mask",
+      "name" : "MaskImage",
       "type" : "Image",
-      "optional" : true,
-      "custom_itk_cast" : "filter->SetMaskImage( this->CastImageToITK<typename FilterType::MaskImageType>(*inMask) );"
+      "optional" : true
     }
   ],
   "members" : [
