@@ -3,13 +3,14 @@
 #
 
 option( BUILD_DOXYGEN "Build SimpleITK Doxygen" OFF )
- 
+
 if (BUILD_DOXYGEN)
 
   find_package( Doxygen )
 
   #
-  # Configure the script and the doxyfile, then add target
+  # Add option to use ITK tags, will download during configuration
+  # time if needed.
   #
 
   option(USE_ITK_DOXYGEN_TAGS "Download ITK's Doxygen tags" ON)
@@ -17,35 +18,38 @@ if (BUILD_DOXYGEN)
   if (USE_ITK_DOXYGEN_TAGS)
 
     # Information on how to retrieve the ITK documentation tag file
-    SET(ITK_DOXYGEN_TAG_LOCATION "http://public.kitware.com/pub/itk/NightlyDoxygen/InsightDoxygenDocTag")
-    SET(ITK_DOXYGEN_COMPRESSED_TAG_FILE ${PROJECT_BINARY_DIR}/Doxygen/InsightDoxygen.tag.gz)
-    SET(ITK_DOXYGEN_TAG_FILE ${PROJECT_BINARY_DIR}/Doxygen/InsightDoxygen.tag)
+    set(ITK_DOXYGEN_TAG_LOCATION "http://public.kitware.com/pub/itk/NightlyDoxygen/InsightDoxygenDocTag")
+    set(ITK_DOXYGEN_COMPRESSED_TAG_FILE ${PROJECT_BINARY_DIR}/Doxygen/InsightDoxygen.tag.gz)
+    set(ITK_DOXYGEN_TAG_FILE ${PROJECT_BINARY_DIR}/Doxygen/InsightDoxygen.tag)
+
 
     # Get the ITK documentation tag file
-    IF(NOT EXISTS ${ITK_DOXYGEN_COMPRESSED_TAG_FILE})
-      FILE( DOWNLOAD
+    if(NOT EXISTS ${ITK_DOXYGEN_COMPRESSED_TAG_FILE})
+      file( DOWNLOAD
             ${ITK_DOXYGEN_TAG_LOCATION}
             ${ITK_DOXYGEN_COMPRESSED_TAG_FILE}
             TIMEOUT 60
             STATUS statusITKDoxygenTagFile
             SHOW_PROGRESS )
-      LIST(GET statusITKDoxygenTagFile 0 statusITKDoxygenTagFile)
-      IF(statusITKDoxygenTagFile)
-        FILE(REMOVE ${ITK_DOXYGEN_COMPRESSED_TAG_FILE})
-      ENDIF()
-    ENDIF(NOT EXISTS ${ITK_DOXYGEN_COMPRESSED_TAG_FILE})
-      IF(EXISTS ${ITK_DOXYGEN_COMPRESSED_TAG_FILE})
-      FIND_PROGRAM(GZIP_TOOL NAMES gzip)
-      IF(GZIP_TOOL)
-        EXECUTE_PROCESS(COMMAND ${GZIP_TOOL} -df ${ITK_DOXYGEN_COMPRESSED_TAG_FILE})
-        SET(DOXYGEN_TAGFILES_PARAMETER "${ITK_DOXYGEN_TAG_FILE}=http://www.itk.org/Doxygen/html/")
-      ENDIF()
-    ELSE()
-      SET(DOXYGEN_TAGFILES_PARAMETER "")
-    ENDIF()
+      list(GET statusITKDoxygenTagFile 0 statusITKDoxygenTagFile)
+      if(statusITKDoxygenTagFile)
+        file(REMOVE ${ITK_DOXYGEN_COMPRESSED_TAG_FILE})
+      endif()
+    endif(NOT EXISTS ${ITK_DOXYGEN_COMPRESSED_TAG_FILE})
+    if(EXISTS ${ITK_DOXYGEN_COMPRESSED_TAG_FILE})
+      find_program(GZIP_TOOL NAMES gzip)
+      if(GZIP_TOOL)
+        execute_process(COMMAND ${GZIP_TOOL} -df ${ITK_DOXYGEN_COMPRESSED_TAG_FILE})
+        set(DOXYGEN_TAGFILES_PARAMETER "${ITK_DOXYGEN_TAG_FILE}=http://www.itk.org/Doxygen/html/")
+      endif()
+    else()
+      set(DOXYGEN_TAGFILES_PARAMETER "")
+    endif()
   endif()
 
-
+  #
+  # Configure the script and the doxyfile, then add target
+  #
   configure_file(${PROJECT_SOURCE_DIR}/Utilities/Doxygen/doxygen.config.in
     ${PROJECT_BINARY_DIR}/Utilities/Doxygen/doxygen.config)
 
@@ -74,5 +78,5 @@ if (BUILD_DOXYGEN)
   message( STATUS
     "To generate Doxygen's documentation, you need to build the Documentation target"
     )
-  
+
 endif (BUILD_DOXYGEN)
