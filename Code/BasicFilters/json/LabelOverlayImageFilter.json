@@ -11,13 +11,11 @@
   "inputs" : [
     {
       "name" : "Image",
-      "type" : "Image",
-      "custom_itk_cast" : "filter->SetInput( this->CastImageToITK<typename FilterType::InputImageType>(*inImage) );"
+      "type" : "Image"
     },
     {
       "name" : "LabelImage",
-      "type" : "Image",
-      "custom_itk_cast" : "filter->SetLabelImage( this->CastImageToITK<typename FilterType::LabelImageType>(*inLabelImage) );"
+      "type" : "Image"
     }
   ],
   "members" : [

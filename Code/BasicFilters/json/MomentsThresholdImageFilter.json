@@ -6,18 +6,16 @@
   "number_of_inputs" : 0,
   "pixel_types" : "BasicPixelIDTypeList",
   "output_image_type" : "itk::Image< uint8_t, TImageType::ImageDimension>",
-  "filter_type" : "itk::MomentsThresholdImageFilter< TImageType, OutputImageType >",
+  "filter_type" : "itk::MomentsThresholdImageFilter< TImageType, OutputImageType, OutputImageType >",
   "inputs" : [
     {
-      "name" : "Image1",
-      "type" : "Image",
-      "custom_itk_cast" : "filter->SetInput( this->CastImageToITK<typename FilterType::InputImageType>(*inImage1) );"
+      "name" : "Image",
+      "type" : "Image"
     },
     {
-      "name" : "Mask",
+      "name" : "MaskImage",
       "type" : "Image",
-      "optional" : true,
-      "custom_itk_cast" : "filter->SetMaskImage( this->CastImageToITK<typename FilterType::MaskImageType>(*inMask) );"
+      "optional" : true
     }
   ],
   "members" : [

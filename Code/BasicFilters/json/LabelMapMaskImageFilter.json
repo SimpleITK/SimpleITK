@@ -10,8 +10,7 @@
   "inputs" : [
     {
       "name" : "LabelMapImage",
-      "type" : "Image",
-      "custom_itk_cast" : "filter->SetInput( this->CastImageToITK<typename FilterType::InputImageType>(*inLabelMapImage) );"
+      "type" : "Image"
     },
     {
       "name" : "FeatureImage",
