@@ -40,6 +40,16 @@
         "Input/STAPLE1.png",
         "Input/STAPLE2.png"
       ]
+    },
+    {
+      "tag" : "cthead1",
+      "description" : "cthead with different types",
+      "settings" : [],
+      "md5hash" : "65b36b85ce17ca4458c30a51eada3d47",
+      "inputs" : [
+        "Input/cthead1-Float.mha",
+        "Input/cthead1-mask.png"
+      ]
     }
   ],
   "briefdescription" : "Mask an image with a mask.",
