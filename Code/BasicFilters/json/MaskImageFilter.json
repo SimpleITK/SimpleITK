@@ -45,7 +45,7 @@
       "tag" : "cthead1",
       "description" : "cthead with different types",
       "settings" : [],
-      "md5hash" : "65b36b85ce17ca4458c30a51eada3d47",
+      "md5hash" : "0ef8943803bb4a21b2015b53f0164f1c",
       "inputs" : [
         "Input/cthead1-Float.mha",
         "Input/cthead1-mask.png"
