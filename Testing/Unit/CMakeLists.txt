@@ -788,6 +788,14 @@ if ( WRAP_PYTHON )
       ${TEST_HARNESS_TEMP_DIRECTORY}/PythonDemonsRegistration1Test.hdf5
     )
 
+  add_python_test(Example.DemonsRegistration2
+      "${SimpleITK_SOURCE_DIR}/Examples/DemonsRegistration2.py"
+      ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceShifted13x17y.png
+      ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceBSplined10.png
+      ${TEST_HARNESS_DATA_DIRECTORY}/Input/xforms/translation_-13x-17y.txt
+      ${TEST_HARNESS_TEMP_DIRECTORY}/PythonDemonsRegistration2Test.hdf5
+    )
+
 
   #
   # Python Tests
