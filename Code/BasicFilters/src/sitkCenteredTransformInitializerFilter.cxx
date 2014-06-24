@@ -148,7 +148,13 @@ Transform CenteredTransformInitializerFilter::ExecuteInternal ( const Image * in
   typename FilterType::MovingImageType::ConstPointer image2 = this->CastImageToITK<typename FilterType::MovingImageType>( *inMovingImage );
   filter->SetMovingImage( image2 );
   assert( inTransform != NULL );
-  const typename FilterType::TransformType *itkTx = dynamic_cast<const typename FilterType::TransformType *>(inTransform->GetITKBase() );
+
+  // This initializers modifies the input, we copy the transform to
+  // prevent this change
+  Transform copyTransform(*inTransform);
+  copyTransform.SetFixedParameters(copyTransform.GetFixedParameters());
+
+  const typename FilterType::TransformType *itkTx = dynamic_cast<const typename FilterType::TransformType *>(copyTransform.GetITKBase() );
   if ( !itkTx )
     {
     sitkExceptionMacro( "Unexpected error converting transform! Possible miss matching dimensions!" );
@@ -167,7 +173,7 @@ Transform CenteredTransformInitializerFilter::ExecuteInternal ( const Image * in
 
   filter->InitializeTransform();
 
-  return *inTransform;
+  return copyTransform;
 }
 
 //-----------------------------------------------------------------------------
