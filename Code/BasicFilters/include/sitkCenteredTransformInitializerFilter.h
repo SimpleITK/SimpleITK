@@ -77,7 +77,7 @@ In the second mode, the moments of gray level values are computed for both image
        */
         OperationModeType GetOperationMode() const { return this->m_OperationMode; }
       /** Name of this class */
-      std::string GetName() const { return std::string (" CenteredTransformInitializerFilter"); }
+      std::string GetName() const { return std::string ("CenteredTransformInitializerFilter"); }
 
       /** Print ourselves out */
       std::string ToString() const;
