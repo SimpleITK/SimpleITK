@@ -3,10 +3,30 @@
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
   "no_procedure" : "1",
-  "number_of_inputs" : 2,
+  "number_of_inputs" : 0,
   "pixel_types" : "BasicPixelIDTypeList",
-  "filter_type" : "itk::SymmetricForcesDemonsRegistrationFilter<InputImageType, InputImageType, itk::Image< Vector<double, InputImageType::ImageDimension>, InputImageType::ImageDimension > >",
-  "custom_set_input" : "filter->SetFixedImage( image1 ); filter->SetMovingImage( image2 );",
+  "output_image_type" : "itk::Image< Vector<double, TImageType::ImageDimension>, TImageType::ImageDimension >"
+  "filter_type" : "itk::SymmetricForcesDemonsRegistrationFilter<TImageType, TImageType, OutputImageType>",
+  "include_files"  : [
+    "sitkImageConvert.h"
+  ],
+  "inputs" : [
+    {
+      "name" : "FixedImage",
+      "type" : "Image",
+      "custom_itk_cast" : "filter->SetFixedImage( this->CastImageToITK<typename FilterType::FixedImageType>(*inFixedImage) );"
+    },
+    {
+      "name" : "MovingImage",
+      "type" : "Image"
+    },
+    {
+      "name" : "InitialDisplacementField",
+      "type" : "Image",
+      "optional" : true,
+      "custom_itk_cast" : "  typedef itk::VectorImage<double, FilterType::DisplacementFieldType::ImageDimension> VectorImageType;\n      filter->SetInitialDisplacementField( GetImageFromVectorImage(const_cast<VectorImageType*>(CastImageToITK<VectorImageType>(*inInitialDisplacementField).GetPointer()) ) );"
+    }
+  ],
   "members" : [
     {
       "name" : "StandardDeviations",
