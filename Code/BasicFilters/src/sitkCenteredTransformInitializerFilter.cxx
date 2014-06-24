@@ -30,7 +30,7 @@
 #include "itkVectorIndexSelectionCastImageFilter.h"
 #include "itkComposeImageFilter.h"
 
-#include "sitkCenteredTransformInitializer.h"
+#include "sitkCenteredTransformInitializerFilter.h"
 #include "itkCenteredTransformInitializer.h"
 
 // Additional include files
@@ -45,24 +45,22 @@ namespace simple {
 //
 // Default constructor that initializes parameters
 //
-CenteredTransformInitializer::CenteredTransformInitializer ()
+CenteredTransformInitializerFilter::CenteredTransformInitializerFilter ()
 {
 
-    this->m_OperationMode = itk::simple::CenteredTransformInitializer::MOMENTS;
+    this->m_OperationMode = itk::simple::CenteredTransformInitializerFilter::MOMENTS;
 
   this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
 
-
-  
 }
 
 //
 // Destructor
 //
-CenteredTransformInitializer::~CenteredTransformInitializer ()
+CenteredTransformInitializerFilter::~CenteredTransformInitializerFilter ()
 {
 
 }
@@ -72,12 +70,12 @@ CenteredTransformInitializer::~CenteredTransformInitializer ()
 // Custom Methods
 //
 
-void CenteredTransformInitializer::MonentsOn( )
+void CenteredTransformInitializerFilter::MonentsOn( )
 {
   this->SetOperationMode( MOMENTS );
 }
 
-void CenteredTransformInitializer::GeometryOn( )
+void CenteredTransformInitializerFilter::GeometryOn( )
 {
   this->SetOperationMode( GEOMETRY );
 }
@@ -86,10 +84,10 @@ void CenteredTransformInitializer::GeometryOn( )
 //
 // ToString
 //
-std::string CenteredTransformInitializer::ToString() const
+std::string CenteredTransformInitializerFilter::ToString() const
 {
   std::ostringstream out;
-  out << "itk::simple::CenteredTransformInitializer\n";
+  out << "itk::simple::CenteredTransformInitializerFilter\n";
   out << "  OperationMode: ";
   this->ToStringHelper(out, this->m_OperationMode);
   out << std::endl;
@@ -101,7 +99,8 @@ std::string CenteredTransformInitializer::ToString() const
 //
 // Execute
 //
-Image CenteredTransformInitializer::Execute ( const Image & fixedImage, const Image & movingImage, const Transform & transform, CenteredTransformInitializer::OperationModeType operationMode )
+
+Transform CenteredTransformInitializerFilter::Execute ( const Image & fixedImage, const Image & movingImage, const Transform & transform, CenteredTransformInitializerFilter::OperationModeType operationMode )
 {
   this->SetOperationMode ( operationMode );
 
@@ -109,7 +108,7 @@ Image CenteredTransformInitializer::Execute ( const Image & fixedImage, const Im
 }
 
 
-Image CenteredTransformInitializer::Execute ( const Image & fixedImage, const Image & movingImage, const Transform & transform )
+Transform CenteredTransformInitializerFilter::Execute ( const Image & fixedImage, const Image & movingImage, const Transform & transform )
 {
   PixelIDValueEnum type = fixedImage.GetPixelID();
   unsigned int dimension = fixedImage.GetDimension();
@@ -134,16 +133,11 @@ namespace {
 // ExecuteInternal
 //
 template <class TImageType>
-Image CenteredTransformInitializer::ExecuteInternal ( const Image * inFixedImage, const Image * inMovingImage, const Transform * inTransform )
+Transform CenteredTransformInitializerFilter::ExecuteInternal ( const Image * inFixedImage, const Image * inMovingImage, const Transform * inTransform )
 {
 
-
-  //Define output image type
-  typedef float OutputImageType;
-
-
-
-  typedef itk::CenteredTransformInitializer< itk::AffineTransform< double, TImageType::ImageDimension  >, TImageType, TImageType> FilterType;
+  typedef itk::MatrixOffsetTransformBase< double, TImageType::ImageDimension, TImageType::ImageDimension > TransformType;
+  typedef itk::CenteredTransformInitializer< TransformType, TImageType, TImageType> FilterType;
   // Set up the ITK filter
   typename FilterType::Pointer filter = FilterType::New();
 
@@ -162,30 +156,27 @@ Image CenteredTransformInitializer::ExecuteInternal ( const Image * inFixedImage
   else { filter->SetTransform( const_cast<typename FilterType::TransformType*>(itkTx) ); }
 
 
-  if (m_OperationMode == MOMENTS) { filter->MomentsOn(); } else { filter->GeometryOn(); }
+  if (m_OperationMode == MOMENTS)
+    {
+    filter->MomentsOn();
+    }
+  else
+    {
+    filter->GeometryOn();
+    }
 
+  filter->InitializeTransform();
 
-
-
-  this->PreUpdate( filter.GetPointer() );
-
-
-
-  // Run the ITK filter and return the output as a SimpleITK image
-  filter->Update();
-
-
-
-  typename FilterType::OutputImageType *itkOutImage = filter->GetOutput();
-  this->FixNonZeroIndex( itkOutImage );
-  return Image( this->CastITKToImage(itkOutImage) );
-
+  return *inTransform;
 }
 
 //-----------------------------------------------------------------------------
 
-
-
+Transform CenteredTransformInitializer ( const Image & fixedImage, const Image & movingImage, const Transform & transform, CenteredTransformInitializerFilter::OperationModeType operationMode )
+{
+  CenteredTransformInitializerFilter filter;
+  return filter.Execute( fixedImage, movingImage, transform, operationMode );
+}
 
 } // end namespace simple
 } // end namespace itk

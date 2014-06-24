@@ -27,13 +27,14 @@
 #include <memory>
 
 #include "sitkBasicFilters.h"
-#include "sitkImageFilter.h"
+#include "sitkProcessObject.h"
+#include "sitkMemberFunctionFactory.h"
 
 namespace itk {
   namespace simple {
 
-    /**\class CenteredTransformInitializer
-\brief CenteredTransformInitializer is a helper class intended to initialize the center of rotation and the translation of Transforms having the center of rotation among their parameters.
+    /**\class  CenteredTransformInitializerFilter
+\brief  CenteredTransformInitializerFilter is a helper class intended to initialize the center of rotation and the translation of Transforms having the center of rotation among their parameters.
 
 This class is connected to the fixed image, moving image and transform involved in the registration. Two modes of operation are possible:
 
@@ -48,20 +49,21 @@ In the first mode, the geometrical center of the moving image is passed as initi
 
 In the second mode, the moments of gray level values are computed for both images. The center of mass of the moving image is then used as center of rotation. The vector between the two centers of mass is passes as the initial translation to the transform. This second approach assumes that the moments of the anatomical objects are similar for both images and hence the best initial guess for registration is to superimpose both mass centers. Note that this assumption will probably not hold in multi-modality registration.
 
+     * \sa itk::CenteredTransformInitializer
      */
-    class SITKBasicFilters_EXPORT CenteredTransformInitializer : public ImageFilter<0> {
+    class SITKBasicFilters_EXPORT  CenteredTransformInitializerFilter : public ProcessObject {
     public:
-      typedef CenteredTransformInitializer Self;
+      typedef  CenteredTransformInitializerFilter Self;
 
       /** Default Constructor that takes no arguments and initializes
        * default parameters */
-      CenteredTransformInitializer();
+       CenteredTransformInitializerFilter();
 
       /** Destructor */
-      ~CenteredTransformInitializer();
+      ~ CenteredTransformInitializerFilter();
 
       /** Define the pixels types supported by this filter */
-      typedef BasicPixelIDTypeList  PixelIDTypeList;
+      typedef RealPixelIDTypeList  PixelIDTypeList;
 
 
 
@@ -75,18 +77,18 @@ In the second mode, the moments of gray level values are computed for both image
        */
         OperationModeType GetOperationMode() const { return this->m_OperationMode; }
       /** Name of this class */
-      std::string GetName() const { return std::string ("CenteredTransformInitializer"); }
+      std::string GetName() const { return std::string (" CenteredTransformInitializerFilter"); }
 
       /** Print ourselves out */
       std::string ToString() const;
 
 
       /** Execute the filter on the input image */
-      Image Execute ( const Image & fixedImage, const Image & movingImage, const Transform & transform );
+      Transform Execute ( const Image & fixedImage, const Image & movingImage, const Transform & transform );
 
 
       /** Execute the filter on the input image with the given parameters */
-      Image Execute ( const Image & fixedImage, const Image & movingImage, const Transform & transform, CenteredTransformInitializer::OperationModeType operationMode );
+      Transform Execute ( const Image & fixedImage, const Image & movingImage, const Transform & transform,  CenteredTransformInitializerFilter::OperationModeType operationMode );
 
 
       /**  */
@@ -100,8 +102,8 @@ In the second mode, the moments of gray level values are computed for both image
 
       /** Setup for member function dispatching */
 
-      typedef Image (Self::*MemberFunctionType)( const Image * fixedImage, const Image * movingImage, const Transform * transform );
-      template <class TImageType> Image ExecuteInternal ( const Image * fixedImage, const Image * movingImage, const Transform * transform );
+      typedef Transform (Self::*MemberFunctionType)( const Image * fixedImage, const Image * movingImage, const itk::simple::Transform * transform );
+      template <class TImageType> Transform ExecuteInternal ( const Image * fixedImage, const Image * movingImage, const itk::simple::Transform * transform );
 
 
 
@@ -113,7 +115,15 @@ In the second mode, the moments of gray level values are computed for both image
       OperationModeType  m_OperationMode;
     };
 
-
+    /**
+     * \brief CenteredTransformInitializer is a helper class intended to initialize the center of rotation and the translation of Transforms having the center of rotation among their parameters.
+     *
+     * This function directly calls the execute method of CenteredTransformInitializer
+     * in order to support a procedural API
+     *
+     * \sa itk::simple::CenteredTransformInitializer for the object oriented interface
+     */
+     SITKBasicFilters_EXPORT Transform CenteredTransformInitializer ( const Image & fixedImage, const Image & movingImage, const Transform & transform, CenteredTransformInitializerFilter::OperationModeType operationMode = itk::simple::CenteredTransformInitializerFilter::MOMENTS );
 
   }
 }
