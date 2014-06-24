@@ -63,7 +63,7 @@ In the second mode, the moments of gray level values are computed for both image
       ~ CenteredTransformInitializerFilter();
 
       /** Define the pixels types supported by this filter */
-      typedef RealPixelIDTypeList  PixelIDTypeList;
+      typedef BasicPixelIDTypeList  PixelIDTypeList;
 
 
 
@@ -92,7 +92,7 @@ In the second mode, the moments of gray level values are computed for both image
 
 
       /**  */
-      void MonentsOn( );
+      void MomentsOn( );
 
       /**  */
       void GeometryOn( );

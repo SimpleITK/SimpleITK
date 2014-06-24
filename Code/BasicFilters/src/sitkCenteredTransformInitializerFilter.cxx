@@ -70,7 +70,7 @@ CenteredTransformInitializerFilter::~CenteredTransformInitializerFilter ()
 // Custom Methods
 //
 
-void CenteredTransformInitializerFilter::MonentsOn( )
+void CenteredTransformInitializerFilter::MomentsOn( )
 {
   this->SetOperationMode( MOMENTS );
 }
