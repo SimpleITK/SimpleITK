@@ -1,0 +1,58 @@
+{
+  "name" : "CenteredTransformInitializer",
+  "template_code_filename" : "ImageFilter",
+  "doc" : "",
+  "number_of_inputs" : 0,
+  "output_image_type" : "float",
+  "no_procedure" : true,
+  "pixel_types" : "BasicPixelIDTypeList",
+  "filter_type" : "itk::CenteredTransformInitializer< itk::AffineTransform< double, TImageType::ImageDimension  >, TImageType, TImageType>",
+  "include_files" : [
+    "sitkTransform.h"
+  ],
+  "inputs" : [
+    {
+      "name" : "FixedImage",
+      "type" : "Image",
+      "custom_itk_cast" : "filter->SetFixedImage( this->CastImageToITK<typename FilterType::FixedImageType>(*inFixedImage) );"
+    },
+    {
+      "name" : "MovingImage",
+      "type" : "Image"
+    },
+    {
+      "name" : "Transform",
+      "type" : "Transform",
+      "custom_itk_cast" : "const typename FilterType::TransformType *itkTx = dynamic_cast<const typename FilterType::TransformType *>(inTransform->GetITKBase() );\n  if ( !itkTx )\n    {\n    sitkExceptionMacro( \"Unexpected error converting transform! Possible miss matching dimensions!\" );\n    }\n  else { filter->SetTransform( const_cast<typename FilterType::TransformType*>(itkTx) ); }"
+    }
+  ],
+  "members" : [
+    {
+      "name" : "OperationMode",
+      "enum" : [
+        "GEOMETRY",
+        "MOMENTS"
+      ],
+      "default" : "itk::simple::CenteredTransformInitializer::MOMENTS",
+      "custom_itk_cast" : "if (m_OperationMode == MOMENTS) { filter->MomentsOn(); } else { filter->GeometryOn(); }"
+    }
+  ],
+  "custom_methods" : [
+    {
+      "name" : "MonentsOn",
+      "doc" : "",
+      "return_type" : "void",
+      "parameters" : [],
+      "body" : "this->SetOperationMode( MOMENTS );"
+    },
+    {
+      "name" : "GeometryOn",
+      "doc" : "",
+      "return_type" : "void",
+      "parameters" : [],
+      "body" : "this->SetOperationMode( GEOMETRY );"
+    }
+  ],
+  "briefdescription" : "CenteredTransformInitializer is a helper class intended to initialize the center of rotation and the translation of Transforms having the center of rotation among their parameters.",
+  "detaileddescription" : "This class is connected to the fixed image, moving image and transform involved in the registration. Two modes of operation are possible:\n\n\n\\li Geometrical,\n\n\\li Center of mass\n\n\n\nIn the first mode, the geometrical center of the moving image is passed as initial center of rotation to the transform and the vector from the center of the fixed image to the center of the moving image is passed as the initial translation. This mode basically assumes that the anatomical objects to be registered are centered in their respective images. Hence the best initial guess for the registration is the one that superimposes those two centers.\n\nIn the second mode, the moments of gray level values are computed for both images. The center of mass of the moving image is then used as center of rotation. The vector between the two centers of mass is passes as the initial translation to the transform. This second approach assumes that the moments of the anatomical objects are similar for both images and hence the best initial guess for registration is to superimpose both mass centers. Note that this assumption will probably not hold in multi-modality registration."
+}
