@@ -422,6 +422,15 @@ if ( ${BUILD_EXAMPLES} )
       ${TEST_HARNESS_TEMP_DIRECTORY}/CXXDemonsRegistration1Test.hdf5
     )
 
+  add_test(NAME CXX.Example.DemonsRegistration2
+    COMMAND
+      $<TARGET_FILE:DemonsRegistration2>
+      ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceShifted13x17y.png
+      ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceBSplined10.png
+      ${TEST_HARNESS_DATA_DIRECTORY}/Input/xforms/translation_-13x-17y.txt
+      ${TEST_HARNESS_TEMP_DIRECTORY}/CXXDemonsRegistration2Test.hdf5
+    )
+
 
 endif()
 

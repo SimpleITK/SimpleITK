@@ -39,5 +39,8 @@ target_link_libraries ( ImageRegistrationMethod2 ${SimpleITK_LIBRARIES} )
 add_executable ( DemonsRegistration1 DemonsRegistration1.cxx )
 target_link_libraries ( DemonsRegistration1 ${SimpleITK_LIBRARIES} )
 
+add_executable ( DemonsRegistration2 DemonsRegistration2.cxx )
+target_link_libraries ( DemonsRegistration2 ${SimpleITK_LIBRARIES} )
+
 # Add subdirectories
 add_subdirectory(Segmentation)
