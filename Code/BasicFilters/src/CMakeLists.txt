@@ -40,6 +40,7 @@ set ( SimpleITKBasicFiltersSource
   sitkCastImageFilter-3v.cxx
   sitkCastImageFilter.cxx
   sitkHashImageFilter.cxx
+  sitkCenteredTransformInitializerFilter.cxx
 )
 # sort the list to en-sure the same list across platforms
 list ( SORT SimpleITKBasicFiltersGeneratedSource )
