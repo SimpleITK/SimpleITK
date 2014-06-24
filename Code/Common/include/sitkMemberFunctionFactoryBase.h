@@ -276,7 +276,7 @@ public:
 
   /**  the pointer MemberFunctionType redefined ad a tr1::function
    * object */
-  typedef nsstd::function< MemberFunctionResultType ( MemberFunctionArgument0Type, MemberFunctionArgument1Type,  MemberFunctionArgument1Type) > FunctionObjectType;
+  typedef nsstd::function< MemberFunctionResultType ( MemberFunctionArgument0Type, MemberFunctionArgument1Type,  MemberFunctionArgument2Type) > FunctionObjectType;
 
 
 protected:
