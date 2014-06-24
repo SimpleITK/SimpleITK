@@ -45,7 +45,7 @@ matcher.ThresholdAtMeanIntensityOn()
 moving = matcher.Execute(moving,fixed)
 
 demons = sitk.DemonsRegistrationFilter()
-demons.SetNumberOfIterations( 50 )
+demons.SetNumberOfIterations( 200 )
 demons.SetStandardDeviations( 1.0 )
 
 demons.AddCommand( sitk.sitkIterationEvent, lambda: command_iteration(demons) )

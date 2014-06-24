@@ -36,8 +36,8 @@ add_executable ( ImageRegistrationMethod2 ImageRegistrationMethod2.cxx )
 target_link_libraries ( ImageRegistrationMethod2 ${SimpleITK_LIBRARIES} )
 
 
-add_executable ( DeformableRegistration1 DeformableRegistration1.cxx )
-target_link_libraries ( DeformableRegistration1 ${SimpleITK_LIBRARIES} )
+add_executable ( DemonsRegistration1 DemonsRegistration1.cxx )
+target_link_libraries ( DemonsRegistration1 ${SimpleITK_LIBRARIES} )
 
 # Add subdirectories
 add_subdirectory(Segmentation)
