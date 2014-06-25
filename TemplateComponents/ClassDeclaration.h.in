@@ -3,6 +3,7 @@ $(if briefdescription and (briefdescription:len() > 0) then OUT=[[\brief ${brief
 
 $(if detaileddescription and (detaileddescription:len() >0) then OUT=[[${detaileddescription}]] end)
 $(if (not no_procedure) or (no_procedure == 1) then OUT=[[\sa itk::simple::${name:gsub("ImageFilter$", "")} for the procedural interface]] end)
+$(if filter_type and (filter_type:len() >0) then OUT=[[\sa ${filter_type:gsub("%b<>", "")}]] end)
      */
     class SITKBasicFilters_EXPORT ${name} : public $(if number_of_inputs then OUT=[[ImageFilter<${number_of_inputs}>]] else OUT=[[ImageFilter<1>]] end) {
     public:
