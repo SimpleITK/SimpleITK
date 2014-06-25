@@ -29,14 +29,13 @@ def command_iteration(filter) :
                                     filter.GetMetric()))
 
 if len ( sys.argv ) < 4:
-    print( "Usage: {0} <fixedImageFilter> <movingImageFile> <outputTransformFile>".format(sys.argv[0]))
+    print( "Usage: {0} <fixedImageFilter> <movingImageFile> [initialTransformFile] <outputTransformFile>".format(sys.argv[0]))
     sys.exit ( 1 )
 
 
-fixed = sitk.ReadImage(sys.argv[1], sitk.sitkFloat32)
+fixed = sitk.ReadImage(sys.argv[1])
 
-moving = sitk.ReadImage(sys.argv[2], sitk.sitkFloat32)
-
+moving = sitk.ReadImage(sys.argv[2])
 
 matcher = sitk.HistogramMatchingImageFilter()
 matcher.SetNumberOfHistogramLevels(1024)
@@ -44,13 +43,26 @@ matcher.SetNumberOfMatchPoints(7)
 matcher.ThresholdAtMeanIntensityOn()
 moving = matcher.Execute(moving,fixed)
 
-demons = sitk.DemonsRegistrationFilter()
-demons.SetNumberOfIterations( 50 )
-demons.SetStandardDeviations( 1.0 )
+demons = sitk.FastSymmetricForcesDemonsRegistrationFilter()
+demons.SetNumberOfIterations(200)
+demons.SetStandardDeviations(1.0)
 
 demons.AddCommand( sitk.sitkIterationEvent, lambda: command_iteration(demons) )
 
-displacementField = demons.Execute( fixed, moving )
+if len( sys.argv ) > 4:
+    initialTransform = sitk.ReadTransform(sys.argv[3])
+    sys.argv[-1] = sys.argv.pop()
+
+    toDisplacementFilter = sitk.TransformToDisplacementFieldFilter()
+    toDisplacementFilter.SetReferenceImage(fixed)
+
+    displacementField = toDisplacementFilter.Execute(initialTransform)
+
+    displacementField = demons.Execute(fixed, moving, displacementField)
+
+else:
+
+    displacementField = demons.Execute(fixed, moving)
 
 
 print("-------")
@@ -61,7 +73,7 @@ outTx = sitk.Transform(displacementField, sitk.sitkDisplacementField)
 
 sitk.WriteTransform(outTx, sys.argv[3])
 
-if ( not "SITK_NOSHOW" in os.environ ):
+if (not "SITK_NOSHOW" in os.environ):
 
     resampler = sitk.ResampleImageFilter()
     resampler.SetReferenceImage(fixed);

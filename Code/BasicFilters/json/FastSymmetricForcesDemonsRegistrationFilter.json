@@ -3,10 +3,30 @@
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
   "no_procedure" : "1",
-  "number_of_inputs" : 2,
+  "number_of_inputs" : 0,
   "pixel_types" : "BasicPixelIDTypeList",
-  "filter_type" : "itk::FastSymmetricForcesDemonsRegistrationFilter<InputImageType, InputImageType, itk::Image< Vector<double, InputImageType::ImageDimension>, InputImageType::ImageDimension > >",
-  "custom_set_input" : "filter->SetFixedImage( image1 ); filter->SetMovingImage( image2 );",
+  "output_image_type" : "itk::Image< Vector<double, TImageType::ImageDimension>, TImageType::ImageDimension >"
+  "filter_type" : "itk::FastSymmetricForcesDemonsRegistrationFilter<TImageType, TImageType, OutputImageType>",
+  "include_files"  : [
+    "sitkImageConvert.h"
+  ],
+  "inputs" : [
+    {
+      "name" : "FixedImage",
+      "type" : "Image",
+      "custom_itk_cast" : "filter->SetFixedImage( this->CastImageToITK<typename FilterType::FixedImageType>(*inFixedImage) );"
+    },
+    {
+      "name" : "MovingImage",
+      "type" : "Image"
+    },
+    {
+      "name" : "InitialDisplacementField",
+      "type" : "Image",
+      "optional" : true,
+      "custom_itk_cast" : "  typedef itk::VectorImage<double, FilterType::DisplacementFieldType::ImageDimension> VectorImageType;\n      filter->SetInitialDisplacementField( GetImageFromVectorImage(const_cast<VectorImageType*>(CastImageToITK<VectorImageType>(*inInitialDisplacementField).GetPointer()) ) );"
+    }
+  ],
   "members" : [
     {
       "name" : "StandardDeviations",
@@ -154,6 +174,33 @@
         {
           "name" : "Metric",
           "value" : 492.46166170748455,
+          "tolerance" : 0.0001
+        }
+      ]
+    },
+    {
+      "tag" : "2d_with_initial",
+      "description" : "2D With Initial Displacement",
+      "settings" : [],
+      "tolerance" : "1e-8",
+      "inputs" : [
+        "Input/BrainProtonDensitySliceBorder20.png",
+        "Input/BrainProtonDensitySliceBSplined10.png",
+        "Input/BrainProtonDensitySlice20InitialDisplacement.mha"
+      ],
+      "measurements_results" : [
+        {
+          "name" : "ElapsedIterations",
+          "value" : "10u"
+        },
+        {
+          "name" : "RMSChange",
+          "value" :  0.2879341,
+          "tolerance" : 1e-06
+        },
+        {
+          "name" : "Metric",
+          "value" : 365.72938,
           "tolerance" : 0.0001
         }
       ]

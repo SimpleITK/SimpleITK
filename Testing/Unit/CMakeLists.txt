@@ -414,12 +414,21 @@ if ( ${BUILD_EXAMPLES} )
       ${TEST_HARNESS_TEMP_DIRECTORY}/CXXImageRegistrationMethod2Test.hdf5
     )
 
-   add_test(NAME CXX.Example.DeformableRegistration1
+   add_test(NAME CXX.Example.DemonsRegistration1
     COMMAND
-      $<TARGET_FILE:DeformableRegistration1>
+      $<TARGET_FILE:DemonsRegistration1>
       ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceBorder20.png
       ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceBSplined10.png
-      ${TEST_HARNESS_TEMP_DIRECTORY}/CXXDeformableRegistration1Test.hdf5
+      ${TEST_HARNESS_TEMP_DIRECTORY}/CXXDemonsRegistration1Test.hdf5
+    )
+
+  add_test(NAME CXX.Example.DemonsRegistration2
+    COMMAND
+      $<TARGET_FILE:DemonsRegistration2>
+      ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceShifted13x17y.png
+      ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceBSplined10.png
+      ${TEST_HARNESS_DATA_DIRECTORY}/Input/xforms/translation_-13x-17y.txt
+      ${TEST_HARNESS_TEMP_DIRECTORY}/CXXDemonsRegistration2Test.hdf5
     )
 
 
@@ -781,11 +790,19 @@ if ( WRAP_PYTHON )
 
 
 
-  add_python_test(Example.DeformableRegistration1
-      "${SimpleITK_SOURCE_DIR}/Examples/DeformableRegistration1.py"
+  add_python_test(Example.DemonsRegistration1
+      "${SimpleITK_SOURCE_DIR}/Examples/DemonsRegistration1.py"
       ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceBorder20.png
       ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceBSplined10.png
-      ${TEST_HARNESS_TEMP_DIRECTORY}/PythonDeformableRegistration1Test.hdf5
+      ${TEST_HARNESS_TEMP_DIRECTORY}/PythonDemonsRegistration1Test.hdf5
+    )
+
+  add_python_test(Example.DemonsRegistration2
+      "${SimpleITK_SOURCE_DIR}/Examples/DemonsRegistration2.py"
+      ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceShifted13x17y.png
+      ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceBSplined10.png
+      ${TEST_HARNESS_DATA_DIRECTORY}/Input/xforms/translation_-13x-17y.txt
+      ${TEST_HARNESS_TEMP_DIRECTORY}/PythonDemonsRegistration2Test.hdf5
     )
 
 
