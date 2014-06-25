@@ -44,6 +44,7 @@
 #include <sitkMergeLabelMapFilter.h>
 #include <sitkDiffeomorphicDemonsRegistrationFilter.h>
 #include <sitkFastSymmetricForcesDemonsRegistrationFilter.h>
+#include <sitkCenteredTransformInitializerFilter.h>
 #include <sitkAdditionalProcedures.h>
 #include <sitkCommand.h>
 
@@ -446,6 +447,49 @@ TEST(BasicFilters,HashImageFilter) {
   EXPECT_EQ ( itk::simple::HashImageFilter::SHA1, hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).GetHashFunction() );
   EXPECT_EQ ( itk::simple::HashImageFilter::MD5, hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).GetHashFunction() );
 }
+
+TEST(BasicFilters,CenteredTransformInitializer) {
+  namespace sitk = itk::simple;
+
+  sitk::CenteredTransformInitializerFilter filter;
+
+  EXPECT_EQ ( "CenteredTransformInitializerFilter", filter.GetName() );
+  EXPECT_EQ ( sitk::CenteredTransformInitializerFilter::MOMENTS, filter.GetOperationMode() );
+  filter.GeometryOn();
+  EXPECT_EQ ( sitk::CenteredTransformInitializerFilter::GEOMETRY, filter.GetOperationMode() );
+  filter.MomentsOn();
+  EXPECT_EQ ( sitk::CenteredTransformInitializerFilter::MOMENTS, filter.GetOperationMode() );
+
+  sitk::Image fixed = sitk::ReadImage( dataFinder.GetFile( "Input/BrainProtonDensitySliceBorder20.png") );
+  sitk::Image moving = sitk::ReadImage( dataFinder.GetFile( "Input/BrainProtonDensitySliceShifted13x17y.png" ) );
+
+  sitk::Transform tx = sitk::Transform(2, sitk::sitkAffine);
+
+  sitk::Transform outTx = filter.Execute( fixed, moving , tx );
+
+  std::vector<double> params = outTx.GetFixedParameters();
+
+  ASSERT_EQ( 2u, params.size() );
+  EXPECT_EQ( 0.0, tx.GetFixedParameters()[0] );
+  EXPECT_EQ( 0.0, tx.GetFixedParameters()[1] );
+  EXPECT_FLOAT_EQ ( 111.20356, params[0] );
+  EXPECT_FLOAT_EQ ( 131.59097, params[1] );
+
+
+  tx = sitk::Transform(2, sitk::sitkEuler);
+
+  outTx = sitk::CenteredTransformInitializer( fixed, moving, tx );
+
+  params = outTx.GetFixedParameters();
+
+  ASSERT_EQ( 2u, params.size() );
+  EXPECT_EQ( 0.0, tx.GetFixedParameters()[0] );
+  EXPECT_EQ( 0.0, tx.GetFixedParameters()[1] );
+  EXPECT_FLOAT_EQ ( 111.20356, params[0] );
+  EXPECT_FLOAT_EQ ( 131.59097, params[1] );
+
+}
+
 
 TEST(BasicFilters,Cast_Commands) {
   // test cast filter with a bunch of commands
