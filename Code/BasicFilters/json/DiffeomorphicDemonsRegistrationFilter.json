@@ -186,6 +186,33 @@
           "tolerance" : 0.0001
         }
       ]
+    },
+    {
+      "tag" : "2d_with_initial",
+      "description" : "2D With Initial Displacement",
+      "settings" : [],
+      "tolerance" : "1e-8",
+      "inputs" : [
+        "Input/BrainProtonDensitySliceBorder20.png",
+        "Input/BrainProtonDensitySliceBSplined10.png",
+        "Input/BrainProtonDensitySlice20InitialDisplacement.mha"
+      ],
+      "measurements_results" : [
+        {
+          "name" : "ElapsedIterations",
+          "value" : "10u"
+        },
+        {
+          "name" : "RMSChange",
+          "value" : 0.2895611,
+          "tolerance" : 1e-06
+        },
+        {
+          "name" : "Metric",
+          "value" :  378.38936,
+          "tolerance" : 0.0001
+        }
+      ]
     }
   ],
   "briefdescription" : "Deformably register two images using a diffeomorphic demons algorithm.",
