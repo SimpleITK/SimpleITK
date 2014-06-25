@@ -2,13 +2,22 @@
   "name" : "LabelOverlayImageFilter",
   "template_code_filename" : "DualImageFilter",
   "template_test_filename" : "ImageFilter",
-  "number_of_inputs" : 2,
+  "number_of_inputs" : 0,
   "doc" : "",
   "pixel_types" : "BasicPixelIDTypeList",
   "pixel_types2" : "IntegerPixelIDTypeList",
   "output_image_type" : "itk::VectorImage< typename InputImageType::PixelType, InputImageType::ImageDimension >",
   "filter_type" : "itk::LabelOverlayImageFilter<InputImageType, InputImageType2, OutputImageType>",
-  "custom_set_input" : "filter->SetInput1( image1 ); filter->SetInput2( image2 );",
+  "inputs" : [
+    {
+      "name" : "Image",
+      "type" : "Image"
+    },
+    {
+      "name" : "LabelImage",
+      "type" : "Image"
+    }
+  ],
   "members" : [
     {
       "name" : "Opacity",

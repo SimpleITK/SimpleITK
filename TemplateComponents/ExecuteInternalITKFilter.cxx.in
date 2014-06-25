@@ -6,7 +6,7 @@
     else
       OUT=[[typedef itk::${name}<InputImageType,]]
     end
-         if number_of_inputs == 2 then
+        if number_of_inputs == 2 or (inputs and #inputs == 2 )then
            OUT=OUT .. ' InputImageType2,'
            end
          if additional_template_types then

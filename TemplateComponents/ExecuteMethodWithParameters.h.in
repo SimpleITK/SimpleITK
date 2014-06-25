@@ -3,5 +3,13 @@ OUT=[[
 
 
       /** Execute the filter on the input image$(if number_of_inputs == 2 then OUT='s'end) with the given parameters */
-      Image Execute ( $(include ImageParameters.in)$(include MemberParameters.in) );]]
+      Image Execute ( $(include ImageParameters.in)$(include InputParameters.in)$(include MemberParameters.in) );]]
+end)$(if members and #members > 0 then
+    if has_optional_inputs then
+      no_optional=1
+      OUT=OUT..[[
+
+      Image Execute ( $(include ImageParameters.in)$(include InputParameters.in)$(include MemberParameters.in) );]]
+  end
 end)
+$(if inputs then no_optional=nil end)

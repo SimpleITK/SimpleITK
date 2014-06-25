@@ -60,7 +60,7 @@ end)
      *
      * \sa itk::simple::${name} for the object oriented interface
      */
-SITKBasicFilters_EXPORT Image ${name:gsub("ImageSource$", "Source")} ( $(include ImageParameters.in)$(include MemberParametersWithDefaults.in) );
+SITKBasicFilters_EXPORT Image ${name:gsub("ImageSource$", "Source"):gsub("Filter$", "")} ( $(include ImageParameters.in)$(include InputParameters.in)$(include MemberParametersWithDefaults.in) );
   }
 }
 #endif

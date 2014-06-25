@@ -5,4 +5,33 @@ OUT='  ${custom_set_input}'
 OUT= OUT .. 'filter->SetInput( ' .. nimg-1 .. ', image' .. nimg ..' );\n'
 end
 end)
+$(if inputs then
+for i = 1,#inputs do
+  if inputs[i].optional then
+    OUT = OUT .. '  if ( in'..inputs[i].name..' != NULL )\  {\n  '
+  else
+    OUT = OUT .. '  assert( '..'in' .. inputs[i].name ..' != NULL );\n'
+  end
+  OUT = OUT .. '  '
+  if inputs[i].custom_itk_cast then
+    OUT = OUT..inputs[i].custom_itk_cast..'\n'
+  elseif inputs[i].type == "Image" then
+    local input_type = 'typename FilterType::InputImageType'
+    if i ~= 1 then
+      input_type = 'typename FilterType::'..inputs[i].name..'Type'
+    end
+    OUT = OUT .. input_type .. '::ConstPointer image'..i..' = this->CastImageToITK<'..input_type..'>( *in' .. inputs[i].name ..' );\n'
+    if i == 1 then
+      OUT = OUT .. '  filter->SetInput( image1 );\n'
+    else
+      OUT = OUT .. '  filter->Set'..inputs[i].name..'( '..'image' .. i .. ' );\n'
+    end
+  else
+    OUT = OUT..'filter->Set'..inputs[i].name..'( '..'in' .. inputs[i].name ..' );\n'
+  end
+  if inputs[i].optional then
+    OUT = OUT .. '  }\n'
+  end
+end
+end)
 $(include ExecuteInternalSetITKFilterParameters.cxx.in)

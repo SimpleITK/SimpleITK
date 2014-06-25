@@ -1,6 +1,7 @@
 {
   "name" : "VectorConnectedComponentImageFilter",
   "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "doc" : "\todo Add suport for mask image input",
   "pixel_types" : "RealVectorPixelIDTypeList",

@@ -1,7 +1,7 @@
 $(if members and #members > 0 then
 OUT = [[
 
-Image ${name}::Execute ( $(include ImageParameters.in)$(include MemberParameters.in) )
+Image ${name}::Execute ( $(include ImageParameters.in)$(include InputParameters.in)$(include MemberParameters.in) )
 {
 $(foreach members
 $(if (not no_set_method) or (no_set_method == 0) then
@@ -9,11 +9,37 @@ OUT = '  this->Set${name} ( ${name:sub(1,1):lower() .. name:sub(2,-1)} );'
 end)
 )
   return this->Execute ( $(for inum=1,number_of_inputs do
- if inum>1 then
+   if inum>1 then
        OUT=OUT.. ', '
   end
   OUT= OUT .. 'image' .. inum
-  end) );
+  end
+  if inputs then
+    local count = number_of_inputs
+    for inum=1,#inputs do
+      if  not (inputs[inum].optional and no_optional) then
+        if count>0 then
+          OUT = OUT .. ", "
+        end
+        count = count + 1
+        OUT=OUT..inputs[inum].name:sub(1,1):lower() .. inputs[inum].name:sub(2,-1)
+      end
+    end
+  end
+) );
 }
 ]]
 end)
+$(if inputs then
+    local has_optional_inputs = false
+    for i =1,#inputs do
+      if inputs[i].optional then
+        has_optional_inputs=inputs[i].optional
+      end
+    end
+    if has_optional_inputs and not no_optional then
+      no_optional=1
+-- we recusively include this same template file but with the no_optional variable defined
+      OUT=[[$(include ExecuteWithParameters.cxx.in)]]
+    end
+end)$(if inputs then no_optional=nil end)

@@ -38,10 +38,10 @@ $(include ExecuteMethodNoParameters.h.in)$(include ExecuteMethodWithParameters.h
 
     private:
       /** Setup for member function dispatching */
-      typedef Image (Self::*MemberFunctionType)( $(include ImageParameters.in) );
+      typedef Image (Self::*MemberFunctionType)( $(include ImageParameters.in)$(include InputParametersInternal.in) );
 
       friend struct detail::DualExecuteInternalAddressor<MemberFunctionType>;
-      template <class TImageType1, class TImageType2> Image DualExecuteInternal ( $(include ImageParameters.in) );
+      template <class TImageType1, class TImageType2> Image DualExecuteInternal ( $(include ImageParameters.in)$(include InputParametersInternal.in) );
 $(if vector_pixel_types_by_component then
 OUT=[[
       friend struct detail::DualExecuteInternalVectorAddressor<MemberFunctionType>;

@@ -1,10 +1,4 @@
-template <class TImageType>
-Image ${name}::ExecuteInternal ( $(for inum=1,number_of_inputs do
- if inum>1 then
-       OUT=OUT.. ', '
-  end
-  OUT= OUT .. 'const Image& inImage' .. inum
-end )$(if inputs then
+$(if inputs then
 for i = 1,#inputs do
   if (number_of_inputs > 0 or i > 1) then
     OUT = OUT .. ", "
@@ -16,6 +10,6 @@ for i = 1,#inputs do
   else
     OUT = OUT .. 'const ' .. inputs[i].type .. ' *'
   end
-  OUT = OUT .. ' in' .. inputs[i].name
+  OUT = OUT .. ' ' .. inputs[i].name:sub(1,1):lower() .. inputs[i].name:sub(2,-1)
 end
-end) )
+end)

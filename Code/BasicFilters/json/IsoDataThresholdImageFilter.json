@@ -3,9 +3,21 @@
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
   "doc" : "Docs",
-  "number_of_inputs" : 1,
+  "number_of_inputs" : 0,
   "pixel_types" : "BasicPixelIDTypeList",
-  "output_pixel_type" : "uint8_t",
+  "output_image_type" : "itk::Image< uint8_t, TImageType::ImageDimension>",
+  "filter_type" : "itk::IsoDataThresholdImageFilter< TImageType, OutputImageType, OutputImageType >",
+  "inputs" : [
+    {
+      "name" : "Image",
+      "type" : "Image"
+    },
+    {
+      "name" : "MaskImage",
+      "type" : "Image",
+      "optional" : true
+    }
+  ],
   "members" : [
     {
       "name" : "InsideValue",
@@ -35,6 +47,25 @@
       "detaileddescriptionSet" : "Set/Get the number of histogram bins.\n",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : ""
+    },
+    {
+      "name" : "MaskOutput",
+      "type" : "bool",
+      "default" : "true",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Do you want the output to be masked by the mask used in histogram construction. Only relevant if masking is in use.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
+    },
+    {
+      "name" : "MaskValue",
+      "type" : "uint8_t",
+      "default" : "255u",
+      "pixeltype" : "Output",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "The value in the mask image, if used, indicating voxels that should be included. Default is the max of pixel type, as in the MaskedImageToHistogramFilter",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
     }
   ],
   "measurements" : [
@@ -53,6 +84,22 @@
       "md5hash" : "4625f98dba6ef667a9010ad1a2ad7b60",
       "inputs" : [
         "Input/RA-Short.nrrd"
+      ]
+    },
+    {
+      "tag" : "cthead1_with_mask",
+      "description" : "CT Head with mask",
+      "settings" : [],
+      "md5hash" : "f3454cb70331d2ea8ea9420d41f018bc",
+      "inputs" : [
+        "Input/cthead1.png",
+        "Input/cthead1-mask.png"
+      ],
+      "measurements_results" : [
+        {
+          "name" : "Threshold",
+          "value" : 189.0
+        }
       ]
     },
     {

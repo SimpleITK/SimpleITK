@@ -75,24 +75,36 @@ $(include CustomMethods.cxx.in)
 //
 // Execute
 //$(include ExecuteWithParameters.cxx.in)
-Image ${name}::Execute ( $(include ImageParameters.in) )
+Image ${name}::Execute ( $(include ImageParameters.in)$(include InputParameters.in) )
 {
-  PixelIDValueEnum type1 = image1.GetPixelID();
-  unsigned int dimension = image1.GetDimension();
-
-$(if number_of_inputs == 2 then
+$(if true then
+inputName1 = "image1"
+if not (number_of_inputs >  0) and (#inputs > 0) then
+  inputName1 = inputs[1].name:sub(1,1):lower() .. inputs[1].name:sub(2,-1)
+end
 OUT=[[
-  PixelIDValueEnum type2 = image2.GetPixelID();
+  PixelIDValueEnum type1 = ]]..inputName1..[[.GetPixelID();
+  unsigned int dimension = ]]..inputName1..[[.GetDimension();
+]]
+end
+local inputName2 = "image2"
+if not (number_of_inputs >  1) and (inputs and (#inputs > 1)) then
+  inputName2 = inputs[2].name:sub(1,1):lower() .. inputs[2].name:sub(2,-1)
+end
+if number_of_inputs >= 2 or (inputs and (#inputs >= 2)) then
+  OUT=OUT..[[
+  PixelIDValueType type2 = ]]..inputName2..[[.GetPixelIDValue();
+
   // todo need better error handling and potential type conversion
-  if ( dimension != image2.GetDimension() ||
-       image1.GetWidth() != image2.GetWidth() ||
-       image1.GetHeight() != image2.GetHeight() ||
-       image1.GetDepth() != image2.GetDepth() )
+  if ( ]]..inputName1..[[.GetDimension() != ]]..inputName2..[[.GetDimension() ||
+       ]]..inputName1..[[.GetWidth() != ]]..inputName2..[[.GetWidth() ||
+       ]]..inputName1..[[.GetHeight() != ]]..inputName2..[[.GetHeight() ||
+       ]]..inputName1..[[.GetDepth() != ]]..inputName2..[[.GetDepth() )
     {
       sitkExceptionMacro ( "Both images for ${name} don't match type or dimension!" );
     }]]
 else
-OUT=[[
+OUT=OUT..[[
   ${custom_type2}]]
 
 end)
@@ -102,7 +114,19 @@ end)
     OUT=OUT .. ', '
   end
   OUT= OUT .. 'image' .. inum
-                                                                          end) );
+end
+if inputs then
+  for inum=1,#inputs do
+    if number_of_inputs>0 or inum>1 then
+      OUT = OUT .. ", "
+    end
+    if  inputs[inum].optional and no_optional then
+      OUT=OUT.."NULL"
+    else
+      OUT=OUT.."&"..inputs[inum].name:sub(1,1):lower() .. inputs[inum].name:sub(2,-1)
+    end
+  end
+end) );
 }
 
 
@@ -117,11 +141,19 @@ $(include CustomCasts.cxx)
 //
 template <class TImageType, class TImageType2>
 Image ${name}::DualExecuteInternal ( $(for inum=1,number_of_inputs do
- if inum>1 then
-       OUT=OUT.. ', '
+  if inum>1 then
+    OUT=OUT.. ', '
   end
   OUT= OUT .. 'const Image& inImage' .. inum
-  end ) )
+end
+if inputs then
+  for i = 1,#inputs do
+    if (number_of_inputs > 0 or i > 1) then
+      OUT = OUT .. ", "
+    end
+    OUT = OUT .. 'const ' .. inputs[i].type .. ' * in' .. inputs[i].name
+  end
+end ) )
 {
   // Define the input and output image types
   typedef TImageType     InputImageType;
@@ -152,11 +184,11 @@ OUT=[[
 //
 template <class TImageType, class TImageType2> Image
 ${name}::DualExecuteInternalVector ( $(for inum=1,number_of_inputs do
- if inum>1 then
+  if inum>1 then
        OUT=OUT.. ', '
   end
-  OUT= OUT .. 'const Image& inImage' .. inum
-  end ) )
+OUT= OUT .. 'const Image& inImage' .. inum
+end ) )
 {
   typedef TImageType                                                               VectorInputImageType;
   typedef typename VectorInputImageType::InternalPixelType                         ComponentType;

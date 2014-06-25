@@ -2,12 +2,22 @@
   "name" : "LabelMapMaskImageFilter",
   "template_code_filename" : "DualImageFilter",
   "template_test_filename" : "ImageFilter",
-  "number_of_inputs" : 2,
+  "number_of_inputs" : 0,
   "doc" : "",
   "pixel_types" : "LabelPixelIDTypeList",
   "pixel_types2" : "typelist::Append<BasicPixelIDTypeList, ComplexPixelIDTypeList>::Type",
   "filter_type" : "itk::LabelMapMaskImageFilter<InputImageType, InputImageType2>",
-  "custom_set_input" : "filter->SetInput1( image1 ); filter->SetInput2( image2 );",
+  "inputs" : [
+    {
+      "name" : "LabelMapImage",
+      "type" : "Image"
+    },
+    {
+      "name" : "FeatureImage",
+      "type" : "Image",
+      "custom_itk_cast" : "filter->SetFeatureImage( this->CastImageToITK<typename FilterType::OutputImageType>(*inFeatureImage) );"
+    }
+  ],
   "members" : [
     {
       "name" : "Label",
@@ -40,6 +50,28 @@
       "detaileddescriptionSet" : "Set/Get whether the Label should be masked or not.",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : "Set/Get whether the Label should be masked or not."
+    },
+    {
+      "name" : "Crop",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : "",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get whether the image size should be adjusted to the masked image or not.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get whether the image size should be adjusted to the masked image or not."
+    },
+    {
+      "name" : "CropBorder",
+      "type" : "unsigned int",
+      "default" : "std::vector<unsigned int>(3, 0)",
+      "dim_vec" : 1,
+      "set_as_scalar" : 1,
+      "itk_type" : "typename FilterType::SizeType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the boder added to the mask before the crop. The default is 0 on all the axes.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the boder added to the mask before the crop. The default is 0 on all the axes."
     }
   ],
   "tests" : [
@@ -51,6 +83,30 @@
       "settings" : [],
       "inputs" : [
         "Input/2th_cthead1.mha",
+        "Input/cthead1.png"
+      ]
+    },
+    {
+      "tag" : "withCrop",
+      "description" : "Adding in a crop",
+      "inputA_cast" : "sitkLabelUInt8",
+      "md5hash" : "484d72f9485b51792a3da338973da7d1",
+      "no_procedure" : true,
+      "settings" : [
+        {
+          "parameter" : "Label",
+          "value" : 255,
+          "cxx_value" : "255u"
+        },
+        {
+          "parameter" : "Crop",
+          "value" : "true",
+          "python_value" : "True",
+          "R_value" : "TRUE"
+        }
+      ],
+      "inputs" : [
+        "Input/cthead1-mask.png",
         "Input/cthead1.png"
       ]
     }
