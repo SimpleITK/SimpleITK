@@ -67,6 +67,7 @@ namespace simple
     Transform GetTransform()
       { return this->m_Transform; }
 
+    Self& SetMetricAsANTSNeighborhoodCorrelation( unsigned int radius );
     Self& SetMetricAsCorrelation( );
     Self& SetMetricAsDemons( double intensityDifferenceThreshold = 0.001 );
     Self& SetMetricAsJointHistogramMutualInformation( unsigned int numberOfHistogramBins = 20,
@@ -123,6 +124,7 @@ namespace simple
     Self& SetOptimizerScalesFromJacobian( unsigned int centralRegionRadius = 5 );
     Self& SetOptimizerScalesFromIndexShift( unsigned int centralRegionRadius = 5,
                                            double smallParameterVariation =  0.01 );
+
     Self& SetOptimizerScalesFromPhysicalShift( unsigned int centralRegionRadius = 5,
                                               double smallParameterVariation =  0.01 );
 
@@ -140,6 +142,7 @@ namespace simple
 
     Self &SetShrinkFactorsPerLevel( const std::vector<unsigned int> &shrinkFactors );
     Self &SetSmoothingSigmasPerLevel( const std::vector<double> &smoothingSigmas );
+
 
     Self &SetSmoothingSigmasAreSpecifiedInPhysicalUnits(bool arg);
     Self &SmoothingSigmasAreSpecifiedInPhysicalUnitsOn() { this->SetSmoothingSigmasAreSpecifiedInPhysicalUnits(true); return *this;}
@@ -238,13 +241,15 @@ namespace simple
     double m_OptimizerScalesSmallParameterVariation;
 
     // metric
-    enum MetricType { Correlation,
+    enum MetricType { ANTSNeighborhoodCorrelation,
+                      Correlation,
                       Demons,
                       JointHistogramMutualInformation,
                       MeanSquares,
                       MattesMutualInformation
     };
     MetricType m_MetricType;
+    unsigned int m_MetricRadius;
     double m_MetricIntensityDifferenceThreshold;
     unsigned int m_MetricNumberOfHistogramBins;
     double m_MetricVarianceForJointPDFSmoothing;

@@ -8,6 +8,7 @@
 #include "itkRegistrationParameterScalesFromIndexShift.h"
 #include "itkRegistrationParameterScalesFromPhysicalShift.h"
 
+#include "itkANTSNeighborhoodCorrelationImageToImageMetricv4.h"
 #include "itkCorrelationImageToImageMetricv4.h"
 #include "itkDemonsImageToImageMetricv4.h"
 #include "itkJointHistogramMutualInformationImageToImageMetricv4.h"
@@ -79,6 +80,16 @@ std::string  ImageRegistrationMethod::ToString() const
   return out.str();
 }
 
+
+ImageRegistrationMethod::Self&
+ImageRegistrationMethod::SetMetricAsANTSNeighborhoodCorrelation(  unsigned int radius )
+{
+  m_MetricRadius = radius;
+  m_MetricType = ANTSNeighborhoodCorrelation;
+  return *this;
+}
+
+
 ImageRegistrationMethod::Self&
 ImageRegistrationMethod::SetMetricAsCorrelation( )
 {
@@ -134,6 +145,17 @@ ImageRegistrationMethod::CreateMetric( )
 
   switch (m_MetricType)
     {
+    case ANTSNeighborhoodCorrelation:
+    {
+    typedef itk::ANTSNeighborhoodCorrelationImageToImageMetricv4<FixedImageType, MovingImageType > _MetricType;
+
+      typename _MetricType::Pointer metric = _MetricType::New();
+      typename _MetricType::RadiusType radius;
+      radius.Fill( m_MetricRadius );
+      metric->SetRadius( radius );
+      metric->Register();
+      return metric.GetPointer();
+    }
     case Correlation:
     {
       typedef itk::CorrelationImageToImageMetricv4< FixedImageType, MovingImageType > _MetricType;
