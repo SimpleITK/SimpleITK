@@ -91,11 +91,11 @@ In the second mode, the moments of gray level values are computed for both image
       Transform Execute ( const Image & fixedImage, const Image & movingImage, const Transform & transform,  CenteredTransformInitializerFilter::OperationModeType operationMode );
 
 
-      /**  */
-      void MomentsOn( );
+      /** Select between using the geometrical center of the images or using the center of mass given by the image intensities. */
+      Self& MomentsOn( ) { this->SetOperationMode( MOMENTS ); return *this; }
 
-      /**  */
-      void GeometryOn( );
+      /** Select between using the geometrical center of the images or using the center of mass given by the image intensities. */
+      Self& GeometryOn( ) { this->SetOperationMode( GEOMETRY ); return *this; }
 
 
     private:
