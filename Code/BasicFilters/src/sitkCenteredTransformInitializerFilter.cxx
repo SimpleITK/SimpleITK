@@ -65,22 +65,6 @@ CenteredTransformInitializerFilter::~CenteredTransformInitializerFilter ()
 
 }
 
-
-//
-// Custom Methods
-//
-
-void CenteredTransformInitializerFilter::MomentsOn( )
-{
-  this->SetOperationMode( MOMENTS );
-}
-
-void CenteredTransformInitializerFilter::GeometryOn( )
-{
-  this->SetOperationMode( GEOMETRY );
-}
-
-
 //
 // ToString
 //
