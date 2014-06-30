@@ -19,9 +19,9 @@
     {
       "name" : "LowerBound",
       "type" : "double",
-      "default" : "std::numeric_limits<double>::max()",
+      "default" : "-std::numeric_limits<double>::max()",
       "pixeltype" : "Output",
-      "custom_itk_cast" : "typename OutputImageType::PixelType lower = itk::NumericTraits<typename OutputImageType::PixelType>::NonpositiveMin();\n  if ( lower >  this->m_LowerBound ) lower = static_cast<typename OutputImageType::PixelType>(this->m_LowerBound);",
+      "custom_itk_cast" : "typename OutputImageType::PixelType lower = itk::NumericTraits<typename OutputImageType::PixelType>::NonpositiveMin();\n  if ( lower <  this->m_LowerBound ) lower = static_cast<typename OutputImageType::PixelType>(this->m_LowerBound);",
       "briefdescriptionSet" : "",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : ""
@@ -29,9 +29,9 @@
     {
       "name" : "UpperBound",
       "type" : "double",
-      "default" : "-std::numeric_limits<double>::max()",
+      "default" : "std::numeric_limits<double>::max()",
       "pixeltype" : "Output",
-      "custom_itk_cast" : "typename OutputImageType::PixelType upper = itk::NumericTraits<typename OutputImageType::PixelType>::max();\n  if ( lower >  this->m_LowerBound ) lower = static_cast<typename OutputImageType::PixelType>(this->m_LowerBound);\n  filter->SetBounds(lower,upper);",
+      "custom_itk_cast" : "typename OutputImageType::PixelType upper = itk::NumericTraits<typename OutputImageType::PixelType>::max();\n  if ( upper >  this->m_UpperBound ) upper = static_cast<typename OutputImageType::PixelType>(this->m_UpperBound);\n  filter->SetBounds(lower,upper);",
       "briefdescriptionSet" : "",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : ""
