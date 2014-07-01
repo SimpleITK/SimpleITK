@@ -96,7 +96,8 @@
         {
           "parameter" : "Label",
           "value" : 255,
-          "cxx_value" : "255u"
+          "cxx_value" : "255u",
+          "java_value" : "BigInteger.valueOf(255)"
         },
         {
           "parameter" : "Crop",
