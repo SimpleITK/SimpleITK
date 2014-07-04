@@ -3,7 +3,17 @@ $(if briefdescription and (briefdescription:len() > 0) then OUT=[[\brief ${brief
 
 $(if detaileddescription and (detaileddescription:len() >0) then OUT=[[${detaileddescription}]] end)
 $(if (not no_procedure) or (no_procedure == 1) then OUT=[[\sa itk::simple::${name:gsub("ImageFilter$", "")} for the procedural interface]] end)
-$(if filter_type and (filter_type:len() >0) then OUT=[[\sa ${filter_type:gsub("%b<>", "")}]] end)
+$(if true then
+  OUT=[[\sa ]]
+  if itk_name and (itk_name:len() > 0) then
+    OUT=OUT..[[itk::${itk_name}]]
+  elseif filter_type and (filter_type:len() >0) then
+    OUT=OUT..[[${filter_type:gsub("%b<>", "")}]]
+  else
+    OUT=OUT..[[itk::${name}]]
+  end
+OUT=OUT..[[ for the Doxygen on the original ITK class.]]
+end)
      */
     class SITKBasicFilters_EXPORT ${name} : public $(if number_of_inputs then OUT=[[ImageFilter<${number_of_inputs}>]] else OUT=[[ImageFilter<1>]] end) {
     public:
