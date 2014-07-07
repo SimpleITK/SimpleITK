@@ -1,3 +1,12 @@
+
+if(POLICY CMP0026)
+  # Allow use of the LOCATION target property.
+  #
+  # These locations are use in a convoluted fashion with the runtime
+  # configuration. This system should be refactored to support
+  # generator expression. This would allow the use of the new policy.
+  cmake_policy(SET CMP0026 OLD)
+endif()
 #
 # General SWIG configuration
 #
