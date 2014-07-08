@@ -40,10 +40,7 @@ file( WRITE "${CMAKE_BINARY_DIR}/CMake/configure_file_buildtime.cmake"
 
 set( cmd ${CMAKE_COMMAND} "${configure_vars}"  -P "${CMAKE_BINARY_DIR}/CMake/configure_file_buildtime.cmake")
 
-# use the type target property to check to see if our target already exists
-get_target_property(target_type ConfigureFileBuildtime TYPE)
-
-if( target_type )
+if( TARGET ConfigureFileBuildtime )
   add_custom_command( TARGET ConfigureFileBuildtime
     PRE_BUILD
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
