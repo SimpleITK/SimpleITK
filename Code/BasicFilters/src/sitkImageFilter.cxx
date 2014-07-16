@@ -16,7 +16,6 @@
 *
 *=========================================================================*/
 #include "sitkImageFilter.h"
-#include "sitkImageFilterExecuteBase.hxx"
 
 #include "itkProcessObject.h"
 

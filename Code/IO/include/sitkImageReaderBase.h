@@ -40,8 +40,26 @@ class SmartPointer;
       public ProcessObject
     {
     public:
-      // The default constructor and the destructor will be implicitly
-      // declared as public.
+      typedef ImageReaderBase Self;
+
+      ImageReaderBase();
+      // The destructor will be implicitly declared as public.
+
+      /** \brief Set/Get The output PixelType of the image.
+       *
+       * By default the value is sitkUnknown, which enable the output
+       * pixel type to be same as the file. If the pixel type is
+       * specified then the itk::ConvertPixelBuffer will be used to
+       * convert the pixels.
+       * @{
+       */
+      Self& SetOutputPixelType( PixelIDValueEnum pixelID );
+      PixelIDValueEnum GetOutputPixelType( void ) const;
+      /* @} */
+
+      virtual Image Execute() = 0;
+
+      virtual std::string ToString() const;
 
     protected:
 
@@ -61,6 +79,8 @@ class SmartPointer;
       PixelIDValueType ExecuteInternalReadComplex( int componentType );
 
       itk::SmartPointer<ImageIOBase> GetImageIOBase(const std::string &fileName);
+
+      PixelIDValueEnum m_OutputPixelType;
 
     };
   }

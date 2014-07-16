@@ -1,0 +1,22 @@
+//
+// Destructor
+//
+${name}::~${name} ()
+{
+$(if measurements then
+temp=false
+for i = 1,#measurements do
+  if measurements[i].active then
+    temp=true
+  end
+end
+if temp then
+OUT=[[
+  if (this->m_Filter != NULL)
+    {
+      m_Filter->UnRegister();
+    }
+]]
+end
+end)
+}

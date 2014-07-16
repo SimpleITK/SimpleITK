@@ -22,6 +22,7 @@
 #include "sitkNonCopyable.h"
 #include "sitkTemplateFunctions.h"
 #include "sitkEvent.h"
+#include "sitkImage.h"
 
 #include <iostream>
 #include <list>
@@ -29,6 +30,9 @@
 namespace itk {
 
 #ifndef SWIG
+
+  template< typename T, unsigned int NVectorDimension > class Vector;
+
   class ProcessObject;
   class Command;
   class EventObject;
@@ -61,7 +65,7 @@ namespace itk {
       virtual ~ProcessObject();
 
       // Print ourselves out
-      virtual std::string ToString() const = 0;
+      virtual std::string ToString() const;
 
       /** return user readable name for the filter */
       virtual std::string GetName() const = 0;
@@ -146,8 +150,8 @@ namespace itk {
        * have valid values during events, and access the underlying
        * ITK object.
        *
-       * Deleting a registered command during execution causes
-       * program termination.
+       * Deleting a command this object has during a command call-back
+       * will produce undefined behavior.
        *
        * For more information see the page \ref CommandPage.
        *
@@ -155,7 +159,11 @@ namespace itk {
        */
       virtual int AddCommand(itk::simple::EventEnum event, itk::simple::Command &cmd);
 
-      /** \brief Remove all registered commands. */
+      /** \brief Remove all registered commands.
+       *
+       * Calling when this object is invoking anther command will
+       * produce undefined behavior.
+       */
       virtual void RemoveAllCommands();
 
       /** \brief Query of this object has any registered commands for event. */
@@ -193,12 +201,37 @@ namespace itk {
     protected:
 
       #ifndef SWIG
+
+      struct EventCommand
+      {
+        EventCommand(EventEnum e, Command *c)
+          : m_Event(e), m_Command(c), m_ITKTag(std::numeric_limits<unsigned long>::max())
+          {}
+        EventEnum     m_Event;
+        Command *     m_Command;
+
+        // set to max if currently not registered
+        unsigned long m_ITKTag;
+
+        inline bool operator==(const EventCommand &o) const
+          { return m_Command == o.m_Command; }
+        inline bool operator<(const EventCommand &o) const
+          { return m_Command < o.m_Command; }
+      };
+
       // method called before filter update to set parameters and
       // connect commands.
       virtual void PreUpdate( itk::ProcessObject *p );
 
-      // overidable method to add a command.
-      virtual void PreUpdateAddObserver( itk::ProcessObject *p, const itk::EventObject &, itk::Command *);
+      // overridable method to add a command, the return value is
+      // placed in the m_ITKTag of the EventCommand object.
+      virtual unsigned long AddITKObserver(const itk::EventObject &, itk::Command *);
+
+      // overridable method to remove a command
+      virtual void RemoveITKObserver( EventCommand &e );
+
+      // Create an ITK EventObject from the SimpleITK enumerated type.
+      static const itk::EventObject &GetITKEventObject(EventEnum e);
 
       // returns the current active process, if no active process then
       // an exception is throw.
@@ -212,6 +245,51 @@ namespace itk {
       // references between command and process objects.
       virtual void onCommandDelete(const itk::simple::Command *cmd) throw();
       #endif
+
+
+      template< class TImageType >
+        static typename TImageType::ConstPointer CastImageToITK( const Image &img )
+      {
+        typename TImageType::ConstPointer itkImage =
+          dynamic_cast < const TImageType* > ( img.GetITKBase() );
+
+        if ( itkImage.IsNull() )
+          {
+          sitkExceptionMacro( "Unexpected template dispatch error!" );
+          }
+        return itkImage;
+      }
+
+      template< class TImageType >
+        static Image CastITKToImage( TImageType *img )
+      {
+        return Image(img);
+      }
+
+      template< class TPixelType, unsigned int VImageDimension, unsigned int  VLength>
+        static Image CastITKToImage( itk::Image< itk::Vector< TPixelType, VLength >, VImageDimension> *img )
+      {
+        typedef itk::Image< itk::Vector< TPixelType, VLength >, VImageDimension> ImageType;
+        typedef itk::VectorImage< TPixelType, VImageDimension > VectorImageType;
+
+        size_t numberOfElements = img->GetBufferedRegion().GetNumberOfPixels();
+        typename VectorImageType::InternalPixelType* buffer = reinterpret_cast<typename VectorImageType::InternalPixelType*>( img->GetPixelContainer()->GetBufferPointer() );
+
+        // Unlike an image of Vectors a VectorImage's container is a
+        // container of TPixelType, whos size is the image's number of
+        // pixels * number of pixels per component
+        numberOfElements *= VImageDimension;
+
+        typename VectorImageType::Pointer out = VectorImageType::New();
+
+        // Set the image's pixel container to import the pointer provided.
+        out->GetPixelContainer()->SetImportPointer(buffer, numberOfElements, true );
+        img->GetPixelContainer()->ContainerManageMemoryOff();
+        out->CopyInformation( img );
+        out->SetRegions( img->GetBufferedRegion() );
+
+        return Image(out.GetPointer());
+      }
 
       /**
        * Output operator to os with conversion to a printable type.
@@ -233,11 +311,22 @@ namespace itk {
 
     private:
 
+      // Add command to active process object, the EventCommand's
+      // ITKTag must be unset as max or else an exception is
+      // thrown. The EventCommand's ITKTag is updated to the command
+      // registered to ITK's ProcessObject. It's assumed that there is
+      // an current active process
+      unsigned long AddObserverToActiveProcessObject( EventCommand &e );
+
+      // Remove the command from the active processes. Its is assumed
+      // that an active process exists. The tag is set to max after it
+      // is removed.
+      void RemoveObserverFromActiveProcessObject( EventCommand &e );
+
       bool m_Debug;
       unsigned int m_NumberOfThreads;
 
-      typedef std::pair<EventEnum, Command*> EventCommandPairType;
-      std::list<EventCommandPairType> m_Commands;
+      std::list<EventCommand> m_Commands;
 
       itk::ProcessObject *m_ActiveProcess;
 

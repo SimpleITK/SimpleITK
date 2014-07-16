@@ -1,17 +1,68 @@
 
+$(if measurements then
+temp=false
+for i = 1,#measurements do
+  if measurements[i].active then
+    temp=true
+  end
+end
+if temp then
+OUT=OUT..[[
+
+  // release the old filter ( and output data )
+  if ( this->m_Filter != NULL)
+    {
+      this->m_Filter->UnRegister();
+      this->m_Filter = NULL;
+    }
+
+  this->m_Filter = filter;
+  this->m_Filter->Register();
+]]
+end
+  end)
+
   this->PreUpdate( filter.GetPointer() );
+
+$(if measurements then
+for i = 1,#measurements do
+  if measurements[i].active then
+    OUT=OUT..'  this->m_pfGet'..measurements[i].name..' = nsstd::bind('
+    if measurements[i].custom_cast or measurements[i].label_map then
+      OUT=OUT..'&'..measurements[i].name..'CustomCast<FilterType>::CustomCast'
+    else
+      OUT=OUT..'&FilterType::Get'..measurements[i].name
+    end
+    OUT=OUT..', filter.GetPointer()'
+    if measurements[i].parameters then
+      for inum=1,#measurements[i].parameters do
+        OUT=OUT..", nsstd::placeholders::_"..inum
+      end
+    end
+    OUT=OUT..' );\
+'
+  end
+end
+end)
 
   // Run the ITK filter and return the output as a SimpleITK image
   filter->Update();
 
 $(when measurements $(foreach measurements
-$(if custom_itk_cast then
-OUT=[[  ${custom_itk_cast}]]
-else
-OUT=[[  this->m_${name} = filter->Get${name}();]]
-end)
-))
+$(if not active and custom_itk_cast then
+  OUT=[[  ${custom_itk_cast}]]
+elseif not active then
+  OUT=[[  this->m_${name} = filter->Get${name}();]]
+end)))
 
+$(if no_return_image then
+OUT=[[
+  return Image();
+]]
+else
+OUT=[[
   typename FilterType::OutputImageType *itkOutImage = filter->GetOutput();
   this->FixNonZeroIndex( itkOutImage );
-  return Image( itkOutImage );
+  return Image( this->CastITKToImage(itkOutImage) );
+]]
+end)

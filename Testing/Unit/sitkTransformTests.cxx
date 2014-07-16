@@ -24,7 +24,6 @@
 
 namespace sitk = itk::simple;
 
-
 TEST(TransformTest, Construction) {
 
 
@@ -84,6 +83,34 @@ TEST(TransformTest, Construction) {
   // default constructable
   sitk::Transform tx18;
   std::cout << tx18.ToString() << std::endl;
+
+  // displacement fields
+  sitk::Image displacement = sitk::Image( 100, 100, sitk::sitkVectorFloat64 );
+
+  sitk::Transform tx19( displacement );
+  std::cout <<  tx19.ToString() << std::endl;
+  EXPECT_EQ( displacement.GetSize()[0], 0u );
+  EXPECT_EQ( displacement.GetSize()[1], 0u );
+
+  displacement = sitk::Image( 100,100, 100, sitk::sitkVectorFloat64 );
+  sitk::Transform tx20( displacement );
+  std::cout << tx20.ToString() << std::endl;
+  EXPECT_EQ( displacement.GetSize()[0], 0u );
+  EXPECT_EQ( displacement.GetSize()[1], 0u );
+
+  ASSERT_THROW( sitk::Transform( 3, sitk::sitkDisplacementField ), sitk::GenericException );
+  ASSERT_THROW( sitk::Transform( 2, sitk::sitkDisplacementField ), sitk::GenericException );
+
+
+  sitk::Image bsplineReference = sitk::Image(10,10, sitk::sitkUInt8);
+  sitk::Transform tx21( bsplineReference, sitk::sitkBSplineTransform );
+
+  bsplineReference = sitk::Image(10,10, 10, sitk::sitkUInt8);
+  sitk::Transform tx22( bsplineReference, sitk::sitkBSplineTransform );
+
+  ASSERT_THROW( sitk::Transform( 3, sitk::sitkBSplineTransform ), sitk::GenericException );
+  ASSERT_THROW( sitk::Transform( 2, sitk::sitkBSplineTransform ), sitk::GenericException );
+
 }
 
 TEST(TransformTest, Copy) {
@@ -152,7 +179,17 @@ TEST(TransformTest, SetGetParameters) {
   EXPECT_EQ( tx.GetParameters().size(), 6u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 2u );
 
+  sitk::Image displacement = sitk::Image( 10, 10, sitk::sitkVectorFloat64 );
 
+  tx =  sitk::Transform ( displacement );
+  EXPECT_EQ( tx.GetParameters().size(), 200u );
+  EXPECT_EQ( tx.GetFixedParameters().size(), 10u );
+
+  displacement = sitk::Image( 10, 10, 10, sitk::sitkVectorFloat64 );
+
+  tx =  sitk::Transform ( displacement );
+  EXPECT_EQ( tx.GetParameters().size(), 3000u );
+  EXPECT_EQ( tx.GetFixedParameters().size(), 18u );
 }
 
 TEST(TransformTest, CopyOnWrite) {

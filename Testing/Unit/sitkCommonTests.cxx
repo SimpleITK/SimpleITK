@@ -38,6 +38,7 @@ TEST( ConditionalTest, ConditionalTest1 ) {
 
 }
 
+
 TEST( ProcessObject, GlobalWarning ) {
   // Basic coverage test of setting and getting. Need separate
   // specific check for propagation of warning to ITK.
@@ -235,10 +236,9 @@ TEST( ProcessObject, Command_Add ) {
   EXPECT_TRUE(po1.HasCommand(sitk::sitkUserEvent));
 }
 
-TEST( ProcessObjectDeathTest, DeleteCommandActiveProcess )
+TEST( ProcessObject, DeleteCommandActiveProcess )
 {
-  // if a command is deleted while the process is active, it is
-  // expected for the program to terminate.
+  // Test the case of deleting the command while the process is active.
   namespace sitk = itk::simple;
 
   class DeleteCommandAtCommand
@@ -260,7 +260,7 @@ TEST( ProcessObjectDeathTest, DeleteCommandActiveProcess )
 
     float m_AbortAt;
     Command *m_Cmd;
-};
+  };
 
   sitk::CastImageFilter po;
   sitk::Image img(100,100,100, sitk::sitkUInt16);
@@ -272,11 +272,54 @@ TEST( ProcessObjectDeathTest, DeleteCommandActiveProcess )
   po.AddCommand(sitk::sitkProgressEvent, cmd2);
 
 
-  po.SetNumberOfThreads(1);
-  ::testing::FLAGS_gtest_death_test_style = "fast";
+  ASSERT_NO_THROW(po.Execute(img)) << "Exception with deleting command";
 
-  ASSERT_DEATH(po.Execute(img), "Cannot delete Command during execution");
+  EXPECT_FALSE(po.HasCommand(sitk::sitkAnyEvent));
+  EXPECT_TRUE(po.HasCommand(sitk::sitkProgressEvent));
+}
 
+TEST( ProcessObject, RemoveAllCommandsActiveProcess )
+{
+  // Test the case of deleting the command while the process is active.
+  namespace sitk = itk::simple;
+
+  class RemoveAllCommandsAtCommand
+  : public ProcessObjectCommand
+  {
+  public:
+    RemoveAllCommandsAtCommand(itk::simple::ProcessObject &po, float abortAt )
+      : ProcessObjectCommand(po),
+        m_AbortAt(abortAt)
+      {
+      }
+
+    virtual void Execute( )
+      {
+        if ( m_Process.GetProgress() >= m_AbortAt )
+          {
+          std::cout << "Removing All Commands" << std::endl;
+          m_Process.RemoveAllCommands();
+          std::cout << "Done" << std::endl;
+          }
+      }
+
+    float m_AbortAt;
+  };
+
+  sitk::CastImageFilter po;
+  sitk::Image img(100,100,100, sitk::sitkUInt16);
+
+  sitk::Command cmd1;
+  RemoveAllCommandsAtCommand cmd2(po, .01);
+
+  po.AddCommand(sitk::sitkAnyEvent, cmd1);
+  po.AddCommand(sitk::sitkProgressEvent, cmd2);
+
+
+  ASSERT_NO_THROW(po.Execute(img)) << "Exception with remove all commands";
+
+  EXPECT_FALSE(po.HasCommand(sitk::sitkAnyEvent));
+  EXPECT_FALSE(po.HasCommand(sitk::sitkProgressEvent));
 }
 
 

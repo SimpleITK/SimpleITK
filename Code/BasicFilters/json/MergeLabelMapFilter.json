@@ -1,0 +1,138 @@
+{
+  "name" : "MergeLabelMapFilter",
+  "template_code_filename" : "MultiInputImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "pixel_types" : "LabelPixelIDTypeList",
+  "filter_type" : "itk::MergeLabelMapFilter<InputImageType>",
+  "members" : [
+    {
+      "name" : "Method",
+      "enum" : [
+        "Keep",
+        "Aggregate",
+        "Pack",
+        "Strict"
+      ],
+      "itk_type" : "typename FilterType::MethodChoice",
+      "default" : "itk::simple::MergeLabelMapFilter::Keep",
+      "custom_itk_cast" : "filter->SetMethod ( typename FilterType::MethodChoice ( int( this->m_Method ) ) );\n  filter->InPlaceOff();",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the method used to merge the label maps",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get the method used to merge the label maps"
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : " default parameters",
+      "settings" : [],
+      "md5hash" : "76cff1a87fc608eb7de7de3dfa450371",
+      "inputA_cast" : "sitkLabelUInt32",
+      "inputB_cast" : "sitkLabelUInt32",
+      "inputs" : [
+        "Input/simple-label-c.png",
+        "Input/simple-label-d.png"
+      ]
+    },
+    {
+      "tag" : "keep",
+      "description" : "keep choice",
+      "settings" : [
+        {
+          "parameter" : "Method",
+          "value" : "itk::simple::${name}::Keep",
+          "lua_value" : "SimpleITK.${name}_Keep",
+          "python_value" : "SimpleITK.${name}.Keep",
+          "ruby_value" : "Simpleitk::${name}::Keep",
+          "java_value" : "${name}.MethodType.Keep",
+          "tcl_value" : "$$${name}_Keep",
+          "csharp_value" : "itk.simple.${name}.MethodType.Keep",
+          "R_value" : "'Keep'"
+        }
+      ],
+      "md5hash" : "b187de2f27b849a2dffdf8259ccf2e1d",
+      "inputA_cast" : "sitkLabelUInt16",
+      "inputB_cast" : "sitkLabelUInt16",
+      "inputs" : [
+        "Input/simple-label-c.png",
+        "Input/simple-label-d.png"
+      ]
+    },
+    {
+      "tag" : "aggregate",
+      "description" : "aggregate choice",
+      "settings" : [
+        {
+          "parameter" : "Method",
+          "value" : "itk::simple::${name}::Aggregate",
+          "lua_value" : "SimpleITK.${name}_Aggregate",
+          "python_value" : "SimpleITK.${name}.Aggregate",
+          "ruby_value" : "Simpleitk::${name}::Aggregate",
+          "java_value" : "${name}.MethodType.Aggregate",
+          "tcl_value" : "$$${name}_Aggregate",
+          "csharp_value" : "itk.simple.${name}.MethodType.Aggregate",
+          "R_value" : "'Aggregate'"
+        }
+      ],
+      "md5hash" : "5cc14523f8ec8e7fc33c23937cbd5839",
+      "inputA_cast" : "sitkLabelUInt16",
+      "inputB_cast" : "sitkLabelUInt16",
+      "inputs" : [
+        "Input/simple-label-c.png",
+        "Input/simple-label-d.png"
+      ]
+    },
+    {
+      "tag" : "pack",
+      "description" : " default parameters",
+      "settings" : [
+        {
+          "parameter" : "Method",
+          "value" : "itk::simple::${name}::Pack",
+          "lua_value" : "SimpleITK.${name}_Pack",
+          "python_value" : "SimpleITK.${name}.Pack",
+          "ruby_value" : "Simpleitk::${name}::Pack",
+          "java_value" : "${name}.MethodType.Pack",
+          "tcl_value" : "$$${name}_Pack",
+          "csharp_value" : "itk.simple.${name}.MethodType.Pack",
+          "R_value" : "'Pack'"
+        }
+      ],
+      "md5hash" : "0ca936ce321e43884053c8464197cdda",
+      "inputA_cast" : "sitkLabelUInt8",
+      "inputB_cast" : "sitkLabelUInt8",
+      "inputs" : [
+        "Input/simple-label-c.png",
+        "Input/simple-label-d.png"
+      ]
+    },
+    {
+      "tag" : "strict",
+      "description" : "with strict choice",
+      "settings" : [
+        {
+          "parameter" : "Method",
+          "value" : "itk::simple::${name}::Strict",
+          "lua_value" : "SimpleITK.${name}_Strict",
+          "python_value" : "SimpleITK.${name}.Strict",
+          "ruby_value" : "Simpleitk::${name}::Strict",
+          "java_value" : "${name}.MethodType.Strict",
+          "tcl_value" : "$$${name}_Strict",
+          "csharp_value" : "itk.simple.${name}.MethodType.Strict",
+          "R_value" : "'Strict'"
+        }
+      ],
+      "md5hash" : "678ac95f8379073e4c747952dc7abf7c",
+      "inputA_cast" : "sitkLabelUInt16",
+      "inputB_cast" : "sitkLabelUInt16",
+      "inputs" : [
+        "Input/simple-label-d.png",
+        "Input/simple-label-e.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Merges several Label Maps.",
+  "detaileddescription" : "This filter takes one or more input Label Map and merges them.\n\n SetMethod()can be used to change how the filter manage the labels from the different label maps. KEEP (0): MergeLabelMapFilterdo its best to keep the label unchanged, but if a label is already used in a previous label map, a new label is assigned. AGGREGATE (1): If the same label is found several times in the label maps, the label objects with the same label are merged. PACK (2): MergeLabelMapFilterrelabel all the label objects by order of processing. No conflict can occur. STRICT (3): MergeLabelMapFilterkeeps the labels unchanged and raises an exception if the same label is found in several images.\n\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\n\\see  ShapeLabelObject, RelabelComponentImageFilter"
+}

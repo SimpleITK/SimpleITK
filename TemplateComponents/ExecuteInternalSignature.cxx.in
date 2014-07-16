@@ -4,5 +4,18 @@ Image ${name}::ExecuteInternal ( $(for inum=1,number_of_inputs do
        OUT=OUT.. ', '
   end
   OUT= OUT .. 'const Image& inImage' .. inum
-  end )
-                                            )
+end )$(if inputs then
+for i = 1,#inputs do
+  if (number_of_inputs > 0 or i > 1) then
+    OUT = OUT .. ", "
+  end
+  if not inputs[i].type and inputs[i].enum then
+    OUT = OUT .. name .. '::' .. inputs[i].name .. 'Type'
+  elseif inputs[i].dim_vec and (inputs[i].dim_vec == 1) then
+    OUT = OUT..'const std::vector<'..inputs[i].type..'> *'
+  else
+    OUT = OUT .. 'const ' .. inputs[i].type .. ' *'
+  end
+  OUT = OUT .. ' in' .. inputs[i].name
+end
+end) )

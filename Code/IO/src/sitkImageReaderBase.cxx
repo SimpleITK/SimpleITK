@@ -37,6 +37,23 @@
 namespace itk {
 namespace simple {
 
+ImageReaderBase
+::ImageReaderBase()
+  : m_OutputPixelType(sitkUnknown)
+{
+}
+
+std::string
+ImageReaderBase
+::ToString() const
+{
+  std::ostringstream out;
+  out << "  OutputPixelType: ";
+  this->ToStringHelper(out, this->m_OutputPixelType) << std::endl;
+
+  out << ProcessObject::ToString();
+  return out.str();
+}
 
 itk::SmartPointer<ImageIOBase>
 ImageReaderBase
@@ -55,6 +72,21 @@ ImageReaderBase
   iobase->ReadImageInformation();
 
   return iobase;
+}
+
+ImageReaderBase::Self&
+ImageReaderBase
+::SetOutputPixelType( PixelIDValueEnum pixelID )
+{
+  this->m_OutputPixelType = pixelID;
+  return *this;
+}
+
+PixelIDValueEnum
+ImageReaderBase
+::GetOutputPixelType( void ) const
+{
+  return this->m_OutputPixelType;
 }
 
 void

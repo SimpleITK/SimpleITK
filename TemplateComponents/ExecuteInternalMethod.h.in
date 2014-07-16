@@ -2,8 +2,8 @@
 
       /** Setup for member function dispatching */
 
-      typedef Image (Self::*MemberFunctionType)( $(include ImageParameters.in) );
-      template <class TImageType> Image ExecuteInternal ( $(include ImageParameters.in) );
+      typedef Image (Self::*MemberFunctionType)( $(include ImageParameters.in)$(include InputParametersInternal.in) );
+      template <class TImageType> Image ExecuteInternal ( $(include ImageParameters.in)$(include InputParametersInternal.in) );
 
 $(if vector_pixel_types_by_component then
    if number_of_inputs > 1 then

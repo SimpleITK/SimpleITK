@@ -81,7 +81,7 @@ $(include ClassEnd.h.in)
      * This function directly calls the execute method of ${name}
      * in order to support a fully functional API
      */
-    Image SITKBasicFilters_EXPORT ${name:gsub("ImageFilter$", "")} ( const Image& imageA,
+    Image SITKBasicFilters_EXPORT ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( const Image& imageA,
       std::vector< std::vector<unsigned int> > trialPoints$(include MemberParametersWithDefaults.in) );
 
   } // end namespace simple

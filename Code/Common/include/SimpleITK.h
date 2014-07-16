@@ -49,12 +49,13 @@
 #include "sitkJoinSeriesImageFilter.h"
 #include "sitkComposeImageFilter.h"
 #include "sitkPixelIDTypeLists.h"
-#include "sitkStatisticsImageFilter.h"
-#include "sitkLabelStatisticsImageFilter.h"
 
+#include "sitkCenteredTransformInitializerFilter.h"
 #include "sitkCastImageFilter.h"
 
 #include "sitkAdditionalProcedures.h"
+
+#include "sitkImageRegistrationMethod.h"
 
 // These headers are auto-generated
 #include "SimpleITKBasicFiltersGeneratedHeaders.h"

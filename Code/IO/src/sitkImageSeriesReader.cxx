@@ -29,10 +29,10 @@
 namespace itk {
   namespace simple {
 
-  Image ReadImage ( const std::vector<std::string> &filenames )
+  Image ReadImage ( const std::vector<std::string> &filenames, PixelIDValueEnum outputPixelType )
     {
     ImageSeriesReader reader;
-    return reader.SetFileNames ( filenames ).Execute();
+    return reader.SetFileNames ( filenames ).SetOutputPixelType(outputPixelType).Execute();
     }
 
 
@@ -82,7 +82,7 @@ namespace itk {
       out << "itk::simple::ImageSeriesReader";
       out << std::endl;
 
-      out << "  FileNames: " << std::endl;
+      out << "  FileNames:" << std::endl;
       std::vector<std::string>::const_iterator iter  = m_FileNames.begin();
       while( iter != m_FileNames.end() )
         {
@@ -90,6 +90,7 @@ namespace itk {
         ++iter;
         }
 
+      out << ImageReaderBase::ToString();
       return out.str();
     }
 
@@ -109,10 +110,18 @@ namespace itk {
     // todo check if filename does not exits for robust error handling
     assert( !this->m_FileNames.empty() );
 
-    PixelIDValueType type = sitkUnknown;
+    PixelIDValueType type =  this->GetOutputPixelType();
     unsigned int dimension = 0;
 
-    this->GetPixelIDFromImageIO( this->m_FileNames.front(), type, dimension );
+    if (type == sitkUnknown)
+      {
+      this->GetPixelIDFromImageIO( this->m_FileNames.front(), type, dimension );
+      }
+    else
+      {
+      PixelIDValueType unused;
+      this->GetPixelIDFromImageIO( this->m_FileNames.front(), unused, dimension );
+      }
 
     // increment for series
     ++dimension;
@@ -121,7 +130,9 @@ namespace itk {
       {
       unsigned int size = this->GetDimensionFromImageIO( this->m_FileNames.front(), 2);
       if (size == 1)
-      --dimension;
+        {
+        --dimension;
+        }
       }
 
     if ( dimension != 2 && dimension != 3 )

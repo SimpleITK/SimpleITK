@@ -21,7 +21,7 @@
 #include "sitkMacro.h"
 #include "sitkMemberFunctionFactory.h"
 #include "sitkBasicFilters.h"
-#include "sitkImageFilterExecuteBase.h"
+#include "sitkProcessObject.h"
 
 namespace itk {
 
@@ -35,7 +35,7 @@ namespace itk {
    */
   template < unsigned int N>
   class SITKBasicFilters0_EXPORT ImageFilter:
-      public ImageFilterExecuteBase<N>
+      public ProcessObject
   {
     public:
       typedef ImageFilter Self;
@@ -60,19 +60,6 @@ namespace itk {
       virtual ~ImageFilter() = 0;
 
     protected:
-
-      template< class TImageType >
-      static typename TImageType::ConstPointer CastImageToITK( const Image &img )
-      {
-        typename TImageType::ConstPointer itkImage =
-          dynamic_cast < const TImageType* > ( img.GetITKBase() );
-
-        if ( itkImage.IsNull() )
-          {
-          sitkExceptionMacro( "Unexpected template dispatch error!" );
-          }
-        return itkImage;
-      }
 
       // Simple ITK must use a zero based index
       template< class TImageType>

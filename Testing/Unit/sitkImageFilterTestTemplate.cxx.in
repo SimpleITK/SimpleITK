@@ -152,6 +152,11 @@ $(if inputA_cast then
     ASSERT_TRUE ( inputs[i].GetITKBase() != NULL ) << "Could not read " << inputFileNames[i];
     }
 
+    if ( !inputs.empty() )
+      {
+      inputSHA1hash =  itk::simple::Hash( inputs[0] );
+      }
+
   $(if (not no_procedure) or (no_procedure ==0) then
 OUT=[=[
 
@@ -159,17 +164,36 @@ OUT=[=[
       itk::simple::Image fromFunctional( 0, 0, itk::simple::sitkUInt8 );
       itk::simple::Image fromProcedural( 0, 0, itk::simple::sitkUInt8 );
       ASSERT_NO_THROW ( fromProcedural = filter.Execute ( $(if #inputs > 0 then OUT=[[inputs[0] ]] end)$(for inum=1,#inputs-1 do OUT=OUT..", inputs["..inum.."]" end) ) ) << "Procedural interface to ${name}";
-      ASSERT_NO_THROW ( fromFunctional = itk::simple::${name:gsub("ImageFilter$", ""):gsub("ImageSource$", "Source")} ( $(if #inputs > 0 then OUT=[[inputs[0] ]] end)$(for inum=1,#inputs-1 do OUT=OUT..", inputs["..inum.."]" end)
-                                                                       $(if template_type and template_type == "RegionGrowing" then OUT=", std::vector< std::vector<unsigned int> >()" end)
-                                                                       $(if template_code_filename and template_code_filename == "FastMarchingImageFilter" then OUT=", std::vector< std::vector<unsigned int> >()" end)
-                                                                       $(if template_code_filename and template_code_filename == "KernelImageFilter" then OUT=[[, 1, itk::simple::sitkBall]] end)
-                                                                       $(for i = 1,#members do
-                                                                         if (number_of_inputs > 0 or i > 1) then OUT = OUT .. ", " end
-                                                                         OUT= OUT .. members[i].default
-                                                                        end)
-
-
-                                                                      ) ) << "Functional interface to ${name}";
+      ASSERT_NO_THROW ( fromFunctional = itk::simple::${name:gsub("ImageFilter$", ""):gsub("Filter$", ""):gsub("ImageSource$", "Source")} ( $(if true then
+local count = 0
+if #inputs > 0 then
+  OUT=[[inputs[0] ]]
+  count = count + 1
+end
+for inum=1,#inputs-1 do
+  OUT=OUT..", inputs["..inum.."]"
+  count = count + 1
+end
+if template_type and template_type == "RegionGrowing" then
+  OUT=OUT..", std::vector< std::vector<unsigned int> >()"
+  count = count + 1
+end
+if template_code_filename and template_code_filename == "FastMarchingImageFilter" then
+  OUT=OUT..", std::vector< std::vector<unsigned int> >()"
+  count = count + 1
+end
+if template_code_filename and template_code_filename == "KernelImageFilter" then
+  OUT=OUT..[[, 1, itk::simple::sitkBall]]
+  count = count + 1
+end
+for i = 1,#members do
+  if count > 0 then
+    OUT = OUT .. ", "
+  end
+  count = count + 1
+  OUT= OUT .. members[i].default
+end
+end)) ) << "Functional interface to ${name}";
       hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
       EXPECT_EQ ( hasher.Execute ( fromProcedural ), hasher.Execute ( fromFunctional ) ) << "procedural and functional are not the same!";
 ]=] end)
@@ -200,17 +224,22 @@ $(foreach settings
     }\
   }'
   else
-    OUT='filter.Set${parameter} ( ${value} );'
+    if cxx_value then
+      temp = cxx_value
+    else
+      temp = value
+    end
+    OUT='filter.Set${parameter} ( ${temp} );'
       if (not no_get_method) then
-        if (value == "true") then
+        if (temp == "true") then
           OUT = OUT .. '\
-  ASSERT_TRUE ( filter.Get${parameter}() ) << "Failed to set ${parameter} to ${value}";'
-        elseif (value == "false") then
+  ASSERT_TRUE ( filter.Get${parameter}() ) << "Failed to set ${parameter} to ${temp}";'
+        elseif (temp == "false") then
           OUT = OUT .. '\
-  ASSERT_FALSE ( filter.Get${parameter}() ) << "Failed to set ${parameter} to ${value}";'
+  ASSERT_FALSE ( filter.Get${parameter}() ) << "Failed to set ${parameter} to ${temp}";'
         else
           OUT = OUT .. '\
-  ASSERT_EQ ( ${value}, filter.Get${parameter}() ) << "Failed to set ${parameter} to ${value}";'
+  ASSERT_EQ ( ${temp}, filter.Get${parameter}() ) << "Failed to set ${parameter} to ${temp}";'
         end
       end
 end)
@@ -218,22 +247,10 @@ end)
 end)
 
 
-    if ( !inputs.empty() &&
-         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt8 &&
-         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt16 &&
-         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt32 &&
-         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt64 )
-      {
-      inputSHA1hash =  itk::simple::Hash( inputs[0] );
-      }
    filter.DebugOn();
    ASSERT_NO_THROW ( output =  filter.Execute ( $(if #inputs > 0 then OUT=[[inputs[0] ]] end)$(for inum=1,#inputs-1 do OUT=OUT..", inputs["..inum.."]" end) ) );
 
-    if ( !inputs.empty() &&
-         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt8 &&
-         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt16 &&
-         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt32 &&
-         inputs[0].GetPixelID() != itk::simple::sitkLabelUInt64 )
+  if ( !inputs.empty() )
       {
       // Check that the input is not modified
       // This will fail if the filter is being run in-place
@@ -252,20 +269,32 @@ end)
   end) $(if tolerance then
   OUT = [[
  IMAGECOMPAREWITHTOLERANCE ( output, "", ${tolerance} );
-  ]]end) $(when measurements_results
-$(foreach measurements_results
-$(if tolerance then
-        OUT=[[EXPECT_NEAR(${value}, filter.Get${name}(), ${tolerance} );]]
-else
-  if (value == "true") then
-    OUT = [[EXPECT_TRUE ( filter.Get${name}() ) << "Measurement failure";]]
-  elseif (value == "false") then
-    OUT = [[EXPECT_FALSE ( filter.Get${name}() ) << "Measurement failure";]]
-  else
-    OUT = [[EXPECT_EQ ( ${value}, filter.Get${name}() ) << "Measurement failure";]]
+  ]]end)
+$(when measurements_results
+$(for i = 1,#measurements_results do
+  PARAMS=''
+  if measurements_results[i].parameters then
+    for pnum=1,#measurements_results[i].parameters do
+    if not pnum == 1 then
+        PARAMS=PARAM..','
+      end
+       PARAMS=PARAMS..' '..measurements_results[i].parameters[pnum]
+    end
+    PARAMS=PARAMS..' '
   end
-end)
-))
+  if measurements_results[i].tolerance then
+    OUT=OUT..'  EXPECT_NEAR( '..measurements_results[i].value..', filter.Get'..measurements_results[i].name..'('..PARAMS..'), '..measurements_results[i].tolerance..' ) << "Measurement failure";'
+  else
+    if (measurements_results[i].value == "true") then
+      OUT=OUT..'  EXPECT_TRUE( filter.Get'..measurements_results[i].name..'('..PARAMS..') ) << "Measurement failure";'
+    elseif (measurements_results[i].value == "false") then
+      OUT=OUT..'  EXPECT_FALSE( filter.Get'..measurements_results[i].name..'('..PARAMS..') ) << "Measurement failure"; '
+    else
+      OUT=OUT..'  EXPECT_EQ( '..measurements_results[i].value..', filter.Get'..measurements_results[i].name..'('..PARAMS..') ) << "Measurement failure";'
+    end
+  end
+  OUT=OUT..'\n'
+end))
 
 } // END FOR EACH TEST
 )
@@ -299,6 +328,9 @@ $(for inum=1,#inputs do
 ]] end)
     CommandLine.push_back ( outputFileName );
     EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
+
+  $(if not no_return_image then
+  OUT=[[
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::HashImageFilter hasher;
@@ -306,6 +338,8 @@ $(for inum=1,#inputs do
 
     output = reader.SetFileName ( outputFileName ).Execute();
     ASSERT_TRUE ( output.GetITKBase() != NULL ) << "Loaded output image";
+  ]]
+  end)
 
     $(if md5hash then
       OUT = [[
@@ -357,6 +391,9 @@ $(for inum=1,#inputs do
 ]] end)
     CommandLine.push_back ( outputFileName );
     EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
+
+  $(if not no_return_image then
+   OUT=[[
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::HashImageFilter hasher;
@@ -364,6 +401,8 @@ $(for inum=1,#inputs do
 
     output = reader.SetFileName ( outputFileName ).Execute();
     ASSERT_TRUE ( output.GetITKBase() != NULL ) << "Loaded output image";
+]]
+  end)
 
     $(if md5hash then
       OUT = [[
@@ -415,6 +454,9 @@ $(for inum=1,#inputs do
 ]] end)
     CommandLine.push_back ( outputFileName );
     EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
+
+  $(if not no_return_image then
+   OUT=[[
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::HashImageFilter hasher;
@@ -422,6 +464,8 @@ $(for inum=1,#inputs do
 
     output = reader.SetFileName ( outputFileName ).Execute();
     ASSERT_TRUE ( output.GetITKBase() != NULL ) << "Loaded output image";
+  ]]
+  end)
 
     $(if md5hash then
       OUT = [[
@@ -482,13 +526,17 @@ $(for inum=1,#inputs do
 ]] end)
     CommandLine.push_back ( outputFileName );
     EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
+
+  $(if not no_return_image then
+   OUT=[[
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::HashImageFilter hasher;
     itk::simple::Image output( 0, 0, itk::simple::sitkUInt8 );
-
     output = reader.SetFileName ( outputFileName ).Execute();
     ASSERT_TRUE ( output.GetITKBase() != NULL ) << "Loaded output image";
+]]
+  end)
 
     $(if md5hash then
       OUT = [[
@@ -549,13 +597,17 @@ $(for inum=1,#inputs do
 ]] end)
     CommandLine.push_back ( outputFileName );
     EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
+
+  $(if not no_return_image then
+   OUT=[[
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::HashImageFilter hasher;
     itk::simple::Image output( 0, 0, itk::simple::sitkUInt8 );
-
     output = reader.SetFileName ( outputFileName ).Execute();
     ASSERT_TRUE ( output.GetITKBase() != NULL ) << "Loaded output image";
+]]
+  end)
 
     $(if md5hash then
       OUT = [[
@@ -610,13 +662,17 @@ $(for inum=1,#inputs do
 ]] end)
     CommandLine.push_back ( outputFileName );
     EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
+
+  $(if not no_return_image then
+   OUT=[[
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::HashImageFilter hasher;
     itk::simple::Image output( 0, 0, itk::simple::sitkUInt8 );
-
     output = reader.SetFileName ( outputFileName ).Execute();
     ASSERT_TRUE ( output.GetITKBase() != NULL ) << "Loaded output image";
+]]
+    end)
 
     $(if md5hash then
       OUT = [[
@@ -684,13 +740,17 @@ $(for inum=1,#inputs do
 ]] end)
     CommandLine.push_back ( outputFileName );
     EXPECT_EQ( 0, RunExecutable ( CommandLine, true ) ) << "non-zero returned from process";
+
+  $(if not no_return_image then
+   OUT=[[
     ASSERT_TRUE ( dataFinder.FileExists ( outputFileName ) );
     itk::simple::ImageFileReader reader;
     itk::simple::HashImageFilter hasher;
     itk::simple::Image output( 0, 0, itk::simple::sitkUInt8 );
-
     output = reader.SetFileName ( outputFileName ).Execute();
     ASSERT_TRUE ( output.GetITKBase() != NULL ) << "Loaded output image";
+]]
+  end)
 
     $(if md5hash then
       OUT = [[

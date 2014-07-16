@@ -14,7 +14,6 @@ include ( ${ITK_USE_FILE} )
 # common source which all basic filter libraries need to be linked against
 set ( SimpleITKBasicFilters0Source
   sitkImageFilter.cxx
-  sitkMeasurementMap.cxx
 )
 
 add_library ( SimpleITKBasicFilters0 ${SimpleITKBasicFilters0Source} )
@@ -28,6 +27,11 @@ set ( SimpleITK_LIBRARIES ${SimpleITK_LIBRARIES} CACHE INTERNAL "" )
 
 
 set ( SimpleITKBasicFiltersSource
+  # These generate files have dependecies which required them to be in
+  # the same library
+  sitkMinimumMaximumImageFilter.cxx
+  sitkLabelStatisticsImageFilter.cxx
+  # Manually written
   sitkCastImageFilter-2.cxx
   sitkCastImageFilter-2l.cxx
   sitkCastImageFilter-2v.cxx
@@ -36,14 +40,15 @@ set ( SimpleITKBasicFiltersSource
   sitkCastImageFilter-3v.cxx
   sitkCastImageFilter.cxx
   sitkHashImageFilter.cxx
-  sitkLabelStatisticsImageFilter.cxx
-  sitkLabelStatisticsImageFilter-2.cxx
-  sitkLabelStatisticsImageFilter-3.cxx
-  sitkLabelStatisticsImageFilter.cxx
-  sitkStatisticsImageFilter.cxx
+  sitkCenteredTransformInitializerFilter.cxx
 )
 # sort the list to en-sure the same list across platforms
 list ( SORT SimpleITKBasicFiltersGeneratedSource )
+
+# Manually remove dependent files explicitly added first
+list ( REMOVE_ITEM SimpleITKBasicFiltersGeneratedSource
+                   "${CMAKE_CURRENT_BINARY_DIR}/sitkMinimumMaximumImageFilter.cxx"
+                   "${CMAKE_CURRENT_BINARY_DIR}/sitkLabelStatisticsImageFilter.cxx" )
 
 # add additional files which may depend on Filters0
 list ( APPEND SimpleITKBasicFiltersSource ${SimpleITKBasicFiltersGeneratedSource} )

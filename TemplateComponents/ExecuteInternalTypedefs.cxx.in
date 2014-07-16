@@ -1,4 +1,4 @@
-$(if number_of_inputs > 0 then
+$(if (number_of_inputs) > 0 or (inputs and #inputs > 0 ) then
 OUT=[[
   // Define the input and output image types
   typedef TImageType     InputImageType;

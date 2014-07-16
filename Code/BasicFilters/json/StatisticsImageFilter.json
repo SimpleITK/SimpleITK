@@ -1,0 +1,97 @@
+{
+  "name" : "StatisticsImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Docs",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "filter_type" : "itk::StatisticsImageFilter<InputImageType>",
+  "no_procedure" : true,
+  "no_return_image" : true,
+  "members" : [],
+  "measurements" : [
+    {
+      "name" : "Minimum",
+      "type" : "double",
+      "default" : "0.0",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Return the computed Minimum."
+    },
+    {
+      "name" : "Maximum",
+      "type" : "double",
+      "default" : "0.0",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Return the computed Maximum."
+    },
+    {
+      "name" : "Mean",
+      "type" : "double",
+      "default" : "0.0",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Return the computed Mean."
+    },
+    {
+      "name" : "Sigma",
+      "type" : "double",
+      "default" : "0.0",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Return the computed Standard Deviation."
+    },
+    {
+      "name" : "Variance",
+      "type" : "double",
+      "default" : "0.0",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Return the computed Variance."
+    },
+    {
+      "name" : "Sum",
+      "type" : "double",
+      "default" : "0.0",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Return the compute Sum."
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "2d",
+      "description" : "statistics on cthead1",
+      "settings" : [],
+      "measurements_results" : [
+        {
+          "name" : "Minimum",
+          "value" : 0
+        },
+        {
+          "name" : "Maximum",
+          "value" : 255
+        },
+        {
+          "name" : "Mean",
+          "value" : "77.7415618"
+          "tolerance" : 1e-6
+        },
+        {
+          "name" : "Sigma",
+          "value" : "78.2619",
+          "tolerance" : 1e3
+        },
+        {
+          "name" : "Variance",
+          "value" : "6124.9260064656282",
+          "tolerance" : 1e-6
+        },
+        {
+          "name" : "Sum",
+          "value" : "5094871"
+        }
+      ],
+      "inputs" : [
+        "Input/cthead1.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Compute min. max, variance and mean of an Image.",
+  "detaileddescription" : "StatisticsImageFiltercomputes the minimum, maximum, sum, mean, variance sigma of an image. The filter needs all of its input image. It behaves as a filter with an input and output. Thus it can be inserted in a pipline with other filters and the statistics will only be recomputed if a downstream filter changes.\n\nThe filter passes its input through unmodified. The filter is threaded. It computes statistics in each thread then combines them in its AfterThreadedGenerate method.\n\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Compute min, max, variance and mean of an Image."
+}

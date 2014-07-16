@@ -1,18 +1,25 @@
 $(if custom_methods and #custom_methods > 0 then
-filter_name = name
 OUT = [[
 
 //
 // Custom Methods
 //
-$(foreach custom_methods
-${return_type} ${filter_name}::${name}( $(for inum=1,#parameters do
-                        if inum>1 then
-                            OUT = OUT .. ', '
-                        end
-                        OUT = OUT .. parameters[inum].type .. ' ' .. parameters[inum].var_name
-                      end) )
+]]
+for i=1,#custom_methods do
+  OUT=OUT..'\n'
+  OUT=OUT..custom_methods[i].return_type..[[ ${name}::]]..custom_methods[i].name..'('
+  if custom_methods[i].parameters then
+    for pnum=1,#custom_methods[i].parameters do
+      if not pnum == 1 then
+        OUT=OUT..', '
+      end
+      OUT=OUT..custom_methods[i].parameters[pnum].type ..' '.. custom_methods[i].parameters[pnum].var_name
+    end
+  end
+  OUT=OUT..[[ )
 {
-  ${body}
-};
-)]]end)
+  ]]..custom_methods[i].body..[[
+
+}
+]]
+end end)

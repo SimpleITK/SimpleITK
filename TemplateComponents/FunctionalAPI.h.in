@@ -15,6 +15,10 @@ OUT=OUT..[[
      *
      * \sa itk::simple::${name} for the object oriented interface
      */
-        SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", "")} ( $(include ImageParameters.in)$(include MemberParametersWithDefaults.in) );
+     SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( $(include ImageParameters.in)$(include InputParameters.in)$(include MemberParametersWithDefaults.in) );
 ]]
-end)
+end)$(if has_optional_inputs  and ((not no_procedure) or (no_procedure == 1)) then
+  no_optional=1
+  OUT=OUT..[[
+     SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( $(include ImageParameters.in)$(include InputParameters.in)$(include MemberParametersWithDefaults.in) );]]
+end)$(if inputs then no_optional=nil end)

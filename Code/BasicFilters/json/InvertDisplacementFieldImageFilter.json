@@ -1,0 +1,81 @@
+{
+  "name" : "InvertDisplacementFieldImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "pixel_types" : "RealVectorPixelIDTypeList",
+  "filter_type" : "itk::InvertDisplacementFieldImageFilter< itk::Image< itk::Vector< typename InputImageType::InternalPixelType, InputImageType::ImageDimension>, InputImageType::ImageDimension > >",
+  "custom_set_input" : "filter->SetDisplacementField( GetImageFromVectorImage(const_cast< InputImageType * >(image1.GetPointer())) );",
+  "include_files" : [
+    "itkVector.h",
+    "sitkImageConvert.h"
+  ],
+  "members" : [
+    {
+      "name" : "MaximumNumberOfIterations",
+      "type" : "uint32_t",
+      "default" : "10u",
+      "doc" : "Number of iterations to run",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
+    },
+    {
+      "name" : "MaxErrorToleranceThreshold",
+      "type" : "double",
+      "default" : "0.1",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
+    },
+    {
+      "name" : "MeanErrorToleranceThreshold",
+      "type" : "double",
+      "default" : "0.001",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
+    },
+    {
+      "name" : "EnforceBoundaryCondition",
+      "type" : "bool",
+      "default" : "true",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
+    }
+  ],
+  "measurements" : [
+    {
+      "name" : "MaxErrorNorm",
+      "type" : "double",
+      "default" : 0.0,
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
+    },
+    {
+      "name" : "MeanErrorNorm",
+      "type" : "double",
+      "default" : 0.0,
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "2d",
+      "description" : "2D",
+      "settings" : [],
+      "tolerance" : "0.001",
+      "inputs" : [
+        "Input/displacement.mha"
+      ]
+    }
+  ],
+  "briefdescription" : "Iteratively estimate the inverse field of a displacement field.",
+  "detaileddescription" : "\\author Nick Tustison\n\nBrian Avants"
+}

@@ -55,7 +55,7 @@ fftimg = sitk.ForwardFFT( sitk.Cast( img, sitk.sitkFloat32 ) )
 kernel = sitk.ReadImage( kernelFileName )
 
 # flip kernel about all axis
-kernel = sitk.Flip( kernel, [1]*2 )
+kernel = sitk.Flip( kernel, [True]*2 )
 
 
 # normalize the kernel to sum to ~1

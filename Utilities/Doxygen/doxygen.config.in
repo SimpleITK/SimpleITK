@@ -680,7 +680,7 @@ IMAGE_PATH             = "@PROJECT_SOURCE_DIR@/Documentation/Images"
 # to standard output.  If FILTER_PATTERNS is specified, this tag will be
 # ignored.
 
-#INPUT_FILTER           = "$@PERL_EXECUTABLE@ @PROJECT_BINARY_DIR@/Utilities/Doxygen/itkdoxygen.pl"
+INPUT_FILTER           =
 
 # The FILTER_PATTERNS tag can be used to specify filters on a per file pattern
 # basis.  Doxygen will compare the file name with each pattern and apply the
@@ -1415,7 +1415,8 @@ SKIP_FUNCTION_MACROS   = YES
 # If a tag file is not located in the directory in which doxygen
 # is run, you must also specify the path to the tagfile here.
 
-TAGFILES               =
+TAGFILES               = @DOXYGEN_TAGFILES_PARAMETER@
+
 
 # When a file name is specified after GENERATE_TAGFILE, doxygen will create
 # a tag file that is based on the input files it reads.

@@ -53,6 +53,7 @@ std::string CastImageFilter::ToString() const
   std::ostringstream out;
   out << "itk::simple::CastImageFilter\n"
       << "\tOutputPixelType: " << this->m_OutputPixelType << std::endl;
+  out << ProcessObject::ToString();
   return out.str();
 }
 

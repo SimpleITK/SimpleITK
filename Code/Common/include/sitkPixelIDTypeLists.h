@@ -75,6 +75,18 @@ typedef typelist::MakeTypeList<BasicPixelID<int8_t>,
 #endif
                                >::Type IntegerPixelIDTypeList;
 
+/** List of pixel ids which are unsigned integer types for the itk::Image class.
+ *
+ * \sa BasicPixelID
+ */
+typedef typelist::MakeTypeList<BasicPixelID<uint8_t>,
+                               BasicPixelID<uint16_t>,
+                               BasicPixelID<uint32_t>
+#ifdef SITK_INT64_PIXELIDS
+                               , BasicPixelID<uint64_t>
+#endif
+                               >::Type UnsignedIntegerPixelIDTypeList;
+
 
 /** List of pixel ids which are real types for the itk::Image class.
  *
@@ -152,6 +164,8 @@ typedef typelist::MakeTypeList<LabelPixelID<uint8_t>,
                                ,LabelPixelID<uint64_t>
 #endif
                                >::Type LabelPixelIDTypeList;
+
+typedef UnsignedIntegerPixelIDTypeList IntergerLabelPixelIDTypeList;
 
 /** List of all pixel ids available, but itk::LabelMap this include image of itk::Image,
  * itk::VectorImage

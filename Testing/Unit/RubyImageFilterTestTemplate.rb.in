@@ -133,7 +133,17 @@ OUT=[[
 end)
 
   output = filter.execute( *inputs )
+
+$(if not no_return_image then
+OUT=[[
+  labelIDs = [ Simpleitk::SitkLabelUInt8, Simpleitk::SitkLabelUInt16, Simpleitk::SitkLabelUInt32, Simpleitk::SitkLabelUInt64 ]
+  if labelIDs.include?(output.get_pixel_id()) then
+    caster = Simpleitk::LabelMapToLabelImageFilter.new
+    output = caster.execute( output )
+  end
   writer.set_file_name( ARGV[ARGV.length-1] ).execute( output )
+]]
+end)
 end
 )
 

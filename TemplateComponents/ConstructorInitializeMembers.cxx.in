@@ -1,8 +1,21 @@
-$(when measurements $(foreach measurements
-  this->m_${name} = ${default};
-))
+$(if measurements then
+temp=false
+for i = 1,#measurements do
+  if measurements[i].active then
+    temp=true
+  else
+OUT=OUT..'\
+  this->m_'..measurements[i].name..' = '..measurements[i].default..';\
+'
+  end
+end
+if temp then
+OUT=OUT..[[
+    this->m_Filter = NULL;]]
+end
+end)
 $(foreach members
-$(if default then
+  $(if (default ~= nil) then
 OUT = [[
   this->m_${name} = ${default};
 ]]

@@ -48,6 +48,8 @@ $(include ConstructorMemberFunctionSetup.cxx.in)
 $(include ConstructorVectorPixels.cxx.in)
 }
 
+$(include DesctuctorDefinition.cxx.in)
+
 //
 // ToString
 //
@@ -104,6 +106,9 @@ KernelEnum ${name}::GetKernelType() const
 //$(include ExecuteWithParameters.cxx.in)
 $(include ExecuteNoParameters.cxx.in)
 
+//-----------------------------------------------------------------------------
+
+$(include CustomCasts.cxx)
 
 //----------------------------------------------------------------------------
 
@@ -136,7 +141,7 @@ $(include ExecuteInternalUpdateAndReturn.cxx.in)
 //
 // Function to run the Execute method of this filter
 //
-Image ${name:gsub("ImageFilter$", "")} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end),
+Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end),
                  uint32_t inRadius,  KernelEnum inKernel
                  $(when members $(foreach members , ${type} in${name})) )
 {
@@ -148,7 +153,7 @@ Image ${name:gsub("ImageFilter$", "")} ( const Image& imageA$(if number_of_input
 //
 // Function to run the Execute method of this filter
 //
-Image ${name:gsub("ImageFilter$", "")} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end),
+Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end),
                  std::vector<uint32_t> inVectorRadius,  KernelEnum inKernel
                  $(when members $(foreach members , ${type} in${name})) )
 {

@@ -36,6 +36,8 @@ $(include ConstructorMemberFunctionSetup.cxx.in)
 $(include ConstructorVectorPixels.cxx.in)
 }
 
+$(include DesctuctorDefinition.cxx.in)
+
 //
 // ToString
 //
@@ -139,6 +141,10 @@ Image ${name}::Execute ( const std::vector<Image> &images )
 
 //-----------------------------------------------------------------------------
 
+$(include CustomCasts.cxx)
+
+//-----------------------------------------------------------------------------
+
 //
 // ExecuteInternal
 //
@@ -166,7 +172,7 @@ $(include ExecuteInternalUpdateAndReturn.cxx.in)
 //
 // Function to run the Execute method of this filter
 //
-Image ${name:gsub("ImageFilter$", "")} ( const std::vector<Image> & images$(include MemberParameters.in) )
+Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( const std::vector<Image> & images$(include MemberParameters.in) )
 {
   ${name} filter;
   return filter.Execute ( images$(for i = 1,#members do
@@ -175,7 +181,7 @@ Image ${name:gsub("ImageFilter$", "")} ( const std::vector<Image> & images$(incl
 }
 $(for inum=1,5 do
   OUT=OUT .. [[
-Image ${name:gsub("ImageFilter$", "")} ( const Image& image1]]
+Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( const Image& image1]]
   for jnum=2,inum do
     OUT=OUT .. ', const Image& image' .. jnum
   end

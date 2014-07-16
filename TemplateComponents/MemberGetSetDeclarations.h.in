@@ -77,11 +77,38 @@ $(if (not no_get_method) or (no_get_method == 0) then
 end))$(when measurements $(foreach measurements
 
      /**$(if briefdescriptionGet and (briefdescriptionGet:len() > 0) then OUT=[[ \brief ${briefdescriptionGet}]]end)
-      *$(if detaileddescriptionGet and (detaileddescriptionGet:len() > 0) then OUT =[[
-      *  ${detaileddescriptionGet}
-      *]]end)
+      *$(if detaileddescriptionGet and (detaileddescriptionGet:len() > 0) then OUT =[[ ${detaileddescriptionGet}]]end)
+      *
+$(if active then
+OUT=[[
+      * This is an active measurement. It may be accessed while the
+      * filter is being executing in command call-backs and can be
+      * accessed after execution.
+]]
+else
+OUT=[[
       * This is a measurement. Its value is updated in the Execute
       * methods, so the value will only be valid after an execution.
-      */
-      ${type} Get${name}() const { return this->m_${name}; };
-))
+]]
+end)      */
+$(if active then
+OUT=[[
+     ${type} Get${name}($(if parameters then
+for inum=1,#parameters do
+  if inum>1 then
+    OUT = OUT .. ', '
+  end
+  OUT = OUT .. parameters[inum].type .. ' ' .. parameters[inum].name
+end end)) const { return this->m_pfGet${name}($(if parameters then
+for inum=1,#parameters do
+  if inum>1 then
+    OUT = OUT .. ', '
+  end
+  OUT = OUT .. parameters[inum].name
+end end)); };
+]]
+else
+OUT=[[
+     ${type} Get${name}() const { return this->m_${name}; };
+]]
+end)))

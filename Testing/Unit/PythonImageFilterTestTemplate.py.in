@@ -104,5 +104,12 @@ end)
 
     output = filter.Execute( *tuple(inputs) )
 
+    labelIDs = [SimpleITK.sitkLabelUInt8, SimpleITK.sitkLabelUInt16, SimpleITK.sitkLabelUInt32, SimpleITK.sitkLabelUInt64]
+    if output.GetPixelIDValue() in labelIDs:
+       output = SimpleITK.LabelMapToLabel(output)
+$(if not no_return_image then
+OUT=[[
     writer.SetFileName ( sys.argv[-1] ).Execute ( output )
+]]
+end)
 )

@@ -26,5 +26,21 @@ target_link_libraries ( BufferImportExport ${SimpleITK_LIBRARIES} )
 add_executable ( FilterProgressReporting FilterProgressReporting.cxx )
 target_link_libraries ( FilterProgressReporting ${SimpleITK_LIBRARIES} )
 
+add_executable ( DicomSeriesReader DicomSeriesReader.cxx )
+target_link_libraries ( DicomSeriesReader ${SimpleITK_LIBRARIES} )
+
+add_executable ( ImageRegistrationMethod1 ImageRegistrationMethod1.cxx )
+target_link_libraries ( ImageRegistrationMethod1 ${SimpleITK_LIBRARIES} )
+
+add_executable ( ImageRegistrationMethod2 ImageRegistrationMethod2.cxx )
+target_link_libraries ( ImageRegistrationMethod2 ${SimpleITK_LIBRARIES} )
+
+
+add_executable ( DemonsRegistration1 DemonsRegistration1.cxx )
+target_link_libraries ( DemonsRegistration1 ${SimpleITK_LIBRARIES} )
+
+add_executable ( DemonsRegistration2 DemonsRegistration2.cxx )
+target_link_libraries ( DemonsRegistration2 ${SimpleITK_LIBRARIES} )
+
 # Add subdirectories
 add_subdirectory(Segmentation)

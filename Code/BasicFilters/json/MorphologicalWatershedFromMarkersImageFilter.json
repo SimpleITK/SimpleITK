@@ -1,12 +1,23 @@
 {
   "name" : "MorphologicalWatershedFromMarkersImageFilter",
   "template_code_filename" : "DualImageFilter",
-  "number_of_inputs" : 2,
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 0,
   "pixel_types" : "ScalarPixelIDTypeList",
   "pixel_types2" : "IntegerPixelIDTypeList",
   "filter_type" : "itk::MorphologicalWatershedFromMarkersImageFilter<InputImageType, InputImageType2>",
-  "custom_set_input" : "filter->SetInput1( image1 ); filter->SetInput2( image2 );",
   "doc" : "",
+  "inputs" : [
+    {
+      "name" : "Image",
+      "type" : "Image"
+    },
+    {
+      "name" : "MarkerImage",
+      "type" : "Image",
+      "custom_itk_cast" : "filter->SetMarkerImage( this->CastImageToITK<typename FilterType::LabelImageType>(*inMarkerImage) );"
+    }
+  ],
   "members" : [
     {
       "name" : "MarkWatershedLine",

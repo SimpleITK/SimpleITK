@@ -42,13 +42,9 @@
         {
           "parameter" : "RequiredNumberOfOverlappingPixels",
           "type" : "uint64_t",
-          "value" : "15000u",
-          "lua_value" : "15000",
-          "python_value" : "15000",
-          "ruby_value" : "15000",
-          "java_value" : "15000",
-          "tcl_value" : "15000",
-          "R_value" : "15000"
+          "cxx_value" : "15000u",
+          "value" : "15000",
+          "java_value" : "15000"
         }
       ],
       "tolerance" : "0.0001",

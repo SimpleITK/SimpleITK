@@ -241,7 +241,7 @@ struct Append<TypeList<Head, Tail>, NullType>
  * int index = typelist::IndexOf<MyTypeList, int>::Result;
  * \endcode
  *
- * IndexOf<TTypeList, T>::value
+ * IndexOf<TTypeList, T>::Result
  * returns the position of T in TList, or NullType if T is not found in TList
  */
 template <class TTypeList, class TType> struct IndexOf;
@@ -274,8 +274,8 @@ public:
  * bool query = typelist::HasType<MyTypeList, short>::Result;
  * \endcode
  *
- * IndexOf<TList, T>::value
- * returns the position of T in TList, or NullType if T is not found in TList
+ * HasType<TList, T>::Result
+ * evaluates to true if TList contains T, false otherwise.
  */
 template <class TTypeList, class TType> struct HasType;
 template <class TType>

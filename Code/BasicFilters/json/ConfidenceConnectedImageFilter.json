@@ -1,6 +1,7 @@
 {
   "name" : "ConfidenceConnectedImageFilter",
   "template_code_filename" : "RegionGrowingImageFilter",
+  "template_test_filename" : "ImageFilter",
   "template_type" : "RegionGrowing",
   "number_of_inputs" : 1,
   "doc" : "Some global documentation",
@@ -77,13 +78,8 @@
       "settings" : [
         {
           "parameter" : "NumberOfIterations",
-          "value" : "1u",
-          "lua_value" : "1",
-          "python_value" : "1",
-          "ruby_value" : "1",
-          "java_value" : "1",
-          "tcl_value" : "1",
-          "R_value" : "1"
+          "cxx_value" : "1u",
+          "value" : "1"
         },
         {
           "parameter" : "SeedList",
@@ -106,13 +102,8 @@
         },
         {
           "parameter" : "InitialNeighborhoodRadius",
-          "value" : "10u",
-          "lua_value" : "10",
-          "python_value" : "10",
-          "ruby_value" : "10",
-          "java_value" : "10",
-          "tcl_value" : "10",
-          "R_value" : "10"
+          "cxx_value" : "10u",
+          "value" : "10"
         }
       ],
       "measurements_results" : [

@@ -1,6 +1,7 @@
 {
   "name" : "VectorIndexSelectionCastImageFilter",
   "template_code_filename" : "DualImageFilter",
+  "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "doc" : "",
   "pixel_types" : "VectorPixelIDTypeList",
@@ -34,13 +35,8 @@
       "settings" : [
         {
           "parameter" : "Index",
-          "value" : "2u",
-          "lua_value" : "2",
-          "python_value" : "2",
-          "ruby_value" : "2",
-          "java_value" : "2",
-          "tcl_value" : "2",
-          "R_value" : "2"
+          "cxx_value" : "2u",
+          "value" : "2"
         }
       ],
       "md5hash" : "da3f74fce21be8b788da331377f7f361",

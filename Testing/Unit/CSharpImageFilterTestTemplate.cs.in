@@ -49,7 +49,6 @@ end)
 
             // Instantiate objects
             ImageFileReader reader = new ImageFileReader();
-            ImageFileWriter writer = new ImageFileWriter();
             ${name} filter = new ${name}();
 			List<Image> inputs = new List<Image>();
 $(if #tests == 0 then
@@ -157,10 +156,23 @@ end)
 )
 )
                 // Run the filter
-                Image output = filter.Execute ( $(if #inputs > 0 then OUT=[[inputs[0] ]] end)$(for inum=1,#inputs-1 do OUT=OUT..", inputs["..inum.."]" end) );
+                $(if not no_return_image then OUT=[[Image output = ]] end)filter.Execute ( $(if #inputs > 0 then OUT=[[inputs[0] ]] end)$(for inum=1,#inputs-1 do OUT=OUT..", inputs["..inum.."]" end) );
+
+$(if not no_return_image then
+OUT=[[
+                PixelIDValueEnum[] labelIDs = { PixelIDValueEnum.sitkLabelUInt8, PixelIDValueEnum.sitkLabelUInt16, PixelIDValueEnum.sitkLabelUInt32, PixelIDValueEnum.sitkLabelUInt64 };
+                if (Array.IndexOf(labelIDs, output.GetPixelID()) != -1 )
+                {
+                  LabelMapToLabelImageFilter toImage = new LabelMapToLabelImageFilter();
+                  output = toImage.Execute(output);
+                }
 
                 // Write output
+                ImageFileWriter writer = new ImageFileWriter();
                 writer.SetFileName( args[args.Length-1] ).Execute( output );
+]]
+end)
+
             }
 )
         } catch (Exception ex) {

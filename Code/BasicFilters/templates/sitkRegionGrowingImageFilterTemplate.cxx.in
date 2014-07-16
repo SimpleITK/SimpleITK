@@ -37,6 +37,8 @@ $(include ConstructorMemberFunctionSetup.cxx.in)
 $(include ConstructorVectorPixels.cxx.in)
 }
 
+$(include DesctuctorDefinition.cxx.in)
+
 //
 // ToString
 //
@@ -74,6 +76,10 @@ end)
 end)
 $(include ExecuteNoParameters.cxx.in)
 
+//-----------------------------------------------------------------------------
+
+$(include CustomCasts.cxx)
+
 //----------------------------------------------------------------------------
 
 $(include ExecuteInternalVectorImages.cxx.in)
@@ -108,7 +114,7 @@ $(include ExecuteInternalUpdateAndReturn.cxx.in)
 //
 // Function to run the Execute method of this filter
 //
-Image ${name:gsub("ImageFilter$", "")} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end),
+Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end),
   std::vector< std::vector<unsigned int> > inSeedList$(include MemberParameters.in) )
 {
   ${name} filter;

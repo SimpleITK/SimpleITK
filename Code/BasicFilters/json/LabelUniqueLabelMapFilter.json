@@ -1,0 +1,49 @@
+{
+  "name" : "LabelUniqueLabelMapFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "doc" : "Docs",
+  "pixel_types" : "LabelPixelIDTypeList",
+  "filter_type" : "itk::LabelUniqueLabelMapFilter<InputImageType>",
+  "custom_set_input" : "filter->SetInput(image1);\n  filter->InPlaceOff();",
+  "members" : [
+    {
+      "name" : "ReverseOrdering",
+      "type" : "bool",
+      "default" : "false",
+      "doc" : ""
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "Simply run with default settings",
+      "inputA_cast" : "sitkLabelUInt8",
+      "md5hash" : "ce4de7d926155a70b234bd05181a5c3e",
+      "settings" : [],
+      "inputs" : [
+        "Input/2th_cthead1.png"
+      ]
+    },
+    {
+      "tag" : "reverse",
+      "description" : "with background reverse setting",
+      "inputA_cast" : "sitkLabelUInt8",
+      "md5hash" : "ce4de7d926155a70b234bd05181a5c3e",
+      "settings" : [
+        {
+          "parameter" : "ReverseOrdering",
+          "value" : "true",
+          "python_value" : "True",
+          "R_value" : "TRUE"
+        }
+      ],
+      "inputs" : [
+        "Input/2th_cthead1.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Make sure that the objects are not overlapping.",
+  "detaileddescription" : "AttributeUniqueLabelMapFiltersearch the overlapping zones in the overlapping objects and keeps only a single object on all the pixels of the image. The object to keep is selected according to their label.\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\n\\see  AttributeLabelObject"
+}

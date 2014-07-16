@@ -26,6 +26,33 @@ void ImageCompare::NormalizeAndSave ( const sitk::Image &input, const std::strin
 {
   sitk::Image image = input;
 
+  if (image.GetPixelIDValue() == sitk::sitkLabelUInt8)
+    {
+    image = sitk::Cast( image, sitk::sitkUInt8);
+    }
+  else if (image.GetPixelIDValue() == sitk::sitkLabelUInt16)
+    {
+    image = sitk::Cast( image, sitk::sitkUInt16);
+    }
+  else if (image.GetPixelIDValue() == sitk::sitkLabelUInt32)
+    {
+    image = sitk::Cast( image, sitk::sitkUInt32);
+    }
+  else if (image.GetPixelIDValue() == sitk::sitkLabelUInt64)
+    {
+    image = sitk::Cast( image, sitk::sitkUInt64);
+    }
+  else if (image.GetPixelIDValue() == sitk::sitkComplexFloat64
+           || image.GetPixelIDValue() == sitk::sitkComplexFloat32)
+    {
+    image = sitk::ComplexToModulus(image);
+    }
+  else if (image.GetNumberOfComponentsPerPixel() != 1)
+    {
+    // just use the magnitude for vector images
+    image = sitk::VectorMagnitude(image);
+    }
+
   // Extract the center slice of our image
   if ( input.GetDimension() == 3 )
     {
@@ -38,9 +65,8 @@ void ImageCompare::NormalizeAndSave ( const sitk::Image &input, const std::strin
     image = sitk::Extract( input, sz, idx );
     }
 
-  sitk::StatisticsImageFilter stats;
-  stats.Execute ( image );
-  sitk::Image out = sitk::IntensityWindowing ( image, stats.GetMinimum(), stats.GetMaximum(), 0, 255 );
+  sitk::Image out = sitk::RescaleIntensity( image, 0, 255 );
+
   out = sitk::Cast ( out, sitk::sitkUInt8 );
   sitk::WriteImage ( out, filename );
 }

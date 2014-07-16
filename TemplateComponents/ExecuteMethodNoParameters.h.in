@@ -1,2 +1,15 @@
+$(if inputs then
+    for i =1,#inputs do
+      if inputs[i].optional then
+        has_optional_inputs=inputs[i].optional
+      end
+    end
+  end
+)
       /** Execute the filter on the input image$(if number_of_inputs == 2 then OUT=[[s]]end) */
-      Image Execute ( $(include ImageParameters.in) );
+      Image Execute ( $(include ImageParameters.in)$(include InputParameters.in) );
+$(if has_optional_inputs then
+  no_optional=1
+  OUT=[[      Image Execute ( $(include ImageParameters.in)$(include InputParameters.in) );
+]]
+end)$(if inputs then no_optional=nil end)

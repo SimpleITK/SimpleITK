@@ -42,7 +42,7 @@ namespace itk {
 
     std::string HashImageFilter::ToString() const {
       std::ostringstream out;
-      out << "itk::simple::HashImageFilter\n";
+      out << "itk::simple::HashImageFilter" << std::endl;
       out << "HashFunction: ";
       switch ( this->m_HashFunction )
         {
@@ -53,7 +53,8 @@ namespace itk {
           out << "MD5";
           break;
         }
-      out << "\n";
+      out << std::endl;
+      out << ProcessObject::ToString();
       return out.str();
     }
 
