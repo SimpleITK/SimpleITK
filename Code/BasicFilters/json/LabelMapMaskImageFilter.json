@@ -95,9 +95,9 @@
       "settings" : [
         {
           "parameter" : "Label",
+          "type" : "uint64_t",
           "value" : 255,
-          "cxx_value" : "255u",
-          "java_value" : "BigInteger.valueOf(255)"
+          "cxx_value" : "255u"
         },
         {
           "parameter" : "Crop",

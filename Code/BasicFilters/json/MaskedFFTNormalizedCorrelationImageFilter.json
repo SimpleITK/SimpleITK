@@ -48,8 +48,7 @@
           "parameter" : "RequiredNumberOfOverlappingPixels",
           "type" : "uint64_t",
           "cxx_value" : "75000u",
-          "value" : "75000",
-          "java_value" : "75000"
+          "value" : "75000"
         }
       ],
       "tolerance" : "0.0001",
