@@ -29,6 +29,17 @@ import org.itk.simple.*;
 import java.util.Arrays;
 
 
+class BigIntergerFix {
+  public static long Convert( long referenceType, long value) {
+    return value;
+  }
+
+  public static BigInteger Convert(BigInteger referenceType, long value)
+  {
+    return BigInteger.valueOf(value);
+  }
+}
+
 class ${name}Test {
 
   public static void main( String argv[] ) {
@@ -178,15 +189,20 @@ elseif dim_vec == 1 then
         elseif type == "int64_t" then
           OUT="VectorInt64 idx = new VectorInt64( v.length );"
         end)
-       
+
         for (int i = 0; i < v.length; i++) {
           idx.set( i, v[i] );
         }
         filter.set${parameter}(idx);
       }]]
+elseif type == "uint64_t" then
+OUT=[[
+  filter.set${parameter}( BigIntergerFix.Convert( filter.get${parameter}(), $(if java_value then OUT='${java_value}' else OUT='${value}' end) ) );
+]]
 else
 OUT=[[
-      filter.set${parameter}( $(if java_value then OUT='${java_value}' else OUT='${value}' end) );]]
+      filter.set${parameter}( $(if java_value then OUT='${java_value}' else OUT='${value}' end) );
+]]
 end)
 )
 )
