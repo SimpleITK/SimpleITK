@@ -592,9 +592,10 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
 
   m_MetricValue = this->GetMetricValue();
   m_Iteration = this->GetOptimizerIteration();
-  m_pfGetOptimizerIteration = NULL;
-  m_pfGetOptimizerPosition = NULL;
-  m_pfGetMetricValue = NULL;
+
+  m_pfGetOptimizerIteration = nsstd::function<unsigned int()>();
+  m_pfGetOptimizerPosition =  nsstd::function<std::vector<double>()>();
+  m_pfGetMetricValue = nsstd::function<double()>();
 
 
   return this->m_Transform;
