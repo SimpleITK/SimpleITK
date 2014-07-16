@@ -91,7 +91,7 @@
       "name" : "DefaultPixelValue",
       "type" : "double",
       "default" : "0.0",
-      "pixeltype" : "Input",
+      "pixeltype" : "Output",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Get/Set the pixel value when a transformed pixel is outside of the image. The default default pixel value is 0.",
       "briefdescriptionGet" : "",
