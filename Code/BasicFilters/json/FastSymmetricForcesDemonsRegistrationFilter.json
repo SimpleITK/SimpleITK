@@ -168,8 +168,8 @@
         },
         {
           "name" : "RMSChange",
-          "value" : 0.28832565060167165,
-          "tolerance" : 1e-06
+          "value" : 0.288325,
+          "tolerance" : 1e-05
         },
         {
           "name" : "Metric",
