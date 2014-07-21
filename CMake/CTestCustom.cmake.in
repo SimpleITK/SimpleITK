@@ -57,5 +57,8 @@ SET(CTEST_CUSTOM_WARNING_EXCEPTION
 
   # Warning when compiling ITK v4.5.1 with clang
   "clang: warning: argument unused during.*-fno-ipa-cp-clone"
+
+  # Warning from RHEL5 GCC 4.1 about visibility change
+  "warning: lowering visibility of .* to match its type"
 )
 
