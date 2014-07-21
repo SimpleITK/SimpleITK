@@ -70,6 +70,10 @@ Image LabelStatisticsImageFilter::DualExecuteInternal ( const Image& inImage1, c
       filter->SetHistogramParameters(256,stats.GetMinimum(), stats.GetMaximum() );
       }
     }
+  else
+    {
+    filter->UseHistogramsOff();
+    }
 
   this->PreUpdate( filter.GetPointer() );
 

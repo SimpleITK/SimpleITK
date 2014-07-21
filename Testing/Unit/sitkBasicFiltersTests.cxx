@@ -558,6 +558,11 @@ TEST(BasicFilters,LabelStatistics) {
 
   stats.DebugOn();
 
+  EXPECT_TRUE ( stats.GetUseHistograms() );
+  stats.UseHistogramsOff();
+  EXPECT_FALSE ( stats.GetUseHistograms() );
+  stats.UseHistogramsOn();
+
   stats.Execute ( image, labels );
 
   EXPECT_EQ( stats.GetName(), "LabelStatisticsImageFilter" );
@@ -602,6 +607,11 @@ TEST(BasicFilters,LabelStatistics) {
   EXPECT_EQ( myBasicMeasurementMap.size(), 8u ); //4 measurements produced
 
   EXPECT_EQ ( myMeasurementMap.ToString(), "Count, Maximum, Mean, Minimum, Sigma, Sum, Variance, approxMedian, \n36172, 99, 13.0911, 0, 16.4065, 473533, 269.173, 12, \n" );
+
+  stats.SetUseHistograms(false);
+  EXPECT_FALSE ( stats.GetUseHistograms() );
+  stats.Execute ( image, labels );
+  EXPECT_EQ ( stats.GetMedian ( 0 ), 0 );
 }
 
 TEST(BasicFilters,ResampleImageFilter_AdditionalProcedures)
