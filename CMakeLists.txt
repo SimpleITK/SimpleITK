@@ -410,10 +410,12 @@ if ( BUILD_TESTING )
       DATA{${link}}
       )
   endforeach()
-  ExternalData_Add_Target( SimpleITKData )
 
   enable_testing()
   add_subdirectory ( Testing )
+
+  ExternalData_Add_Target( SimpleITKData )
+
   option ( RUN_LONG_TESTS "Run long tests.  Some tests have been identified as long running, should these be run?" OFF )
   mark_as_advanced(RUN_LONG_TESTS)
   set(BUILDNAME "${BUILDNAME}" CACHE STRING "Name of build on the dashboard")
