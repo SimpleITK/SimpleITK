@@ -1011,3 +1011,5 @@ if ( WRAP_R )
      )
 
 endif ( WRAP_R )
+
+include(${CMAKE_CURRENT_SOURCE_DIR}/AdditionalTests.cmake)

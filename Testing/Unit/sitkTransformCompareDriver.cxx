@@ -41,8 +41,13 @@ int main(int argc, char *argv[])
     if (argc > 4)
       tolerance = atof(argv[4]);
 
+    std::cout << "Reading test transform: \"" << transformFileName << "\"..." << std::endl;
     sitk::Transform transform = sitk::ReadTransform(transformFileName);
+
+    std::cout << "Reading baseline displacement: \"" << baselineFileName << "\"..." << std::endl;
     sitk::Image baseline = sitk::ReadImage(baselineFileName);
+
+    std::cout << "Reading reference moving image \"" << sourceFileName << "\"..." << std::endl;
     sitk::Image source = sitk::ReadImage(sourceFileName);
 
     TransformCompare compare;

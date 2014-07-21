@@ -32,7 +32,7 @@ bool TransformCompare::Compare( const itk::simple::Transform& transform,
   namespace sitk = itk::simple;
 
   sitk::TransformToDisplacementFieldFilter toDisplacementField;
-  toDisplacementField.SetOutputPixelType( sitk::sitkVectorFloat32 );
+  toDisplacementField.SetOutputPixelType( baselineDisplacement.GetPixelID() );
   toDisplacementField.SetReferenceImage( fixedImage );
   sitk::Image displacement = toDisplacementField.Execute( transform );
 
