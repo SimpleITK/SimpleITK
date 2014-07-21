@@ -5,9 +5,12 @@ include(${ITK_USE_FILE})
 set ( SimpleITKUnitTestSourceBase
   SimpleITKTestHarness.cxx
   sitkImageCompare.cxx
+  sitkTransformCompare.cxx
 )
 add_library ( SimpleITKUnitTestBase STATIC ${SimpleITKUnitTestSourceBase} )
-add_dependencies( SimpleITKUnitTestBase  BasicFiltersSourceCode )
+add_dependencies( SimpleITKUnitTestBase BasicFiltersSourceCode )
+target_link_libraries( SimpleITKUnitTestBase gtest ${SimpleITK_LIBRARIES} )
+
 # Find tests generated in the binary directory
 # To add a new file, just add it to this list.  Any GoogleTests inside will be automatically
 # added to ctest.
