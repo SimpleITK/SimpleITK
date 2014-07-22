@@ -39,3 +39,32 @@ function(sitk_add_test)
   endif()
 endfunction()
 
+
+
+if ( WRAP_PYTHON )
+
+  #
+  # This is a function which set up the environment for executing python examples and tests
+  #
+  function(sitk_add_python_test name)
+
+    if ( NOT ${BUILD_EXAMPLES} AND "${name}" MATCHES "^Example." )
+      return()
+    endif()
+
+    set(command "${VIRTUAL_PYTHON_EXECUTABLE}")
+
+    # add extra command which may be needed on some systems
+    if(CMAKE_OSX_ARCHITECTURES)
+      list(GET CMAKE_OSX_ARCHITECTURES 0 test_arch)
+      set(command arch -${test_arch} ${command})
+    endif()
+
+    sitk_add_test(NAME Python.${name}
+      COMMAND "${ITK_TEST_DRIVER}"
+      --add-before-env SITK_NOSHOW "YES"
+      ${command}
+      ${ARGN}
+      )
+  endfunction()
+endif()
