@@ -48,10 +48,6 @@ if ( WRAP_PYTHON )
   #
   function(sitk_add_python_test name)
 
-    if ( NOT ${BUILD_EXAMPLES} AND "${name}" MATCHES "^Example." )
-      return()
-    endif()
-
     set(command "${VIRTUAL_PYTHON_EXECUTABLE}")
 
     # add extra command which may be needed on some systems
@@ -77,10 +73,6 @@ if ( WRAP_LUA )
   #
   function(sitk_add_lua_test name)
 
-    if ( NOT ${BUILD_EXAMPLES} AND "${name}" MATCHES "^Example." )
-      return()
-    endif()
-
     set(command "$<TARGET_FILE:SimpleITKLua>")
 
     # add extra command which may be needed on some systems
@@ -104,10 +96,6 @@ if ( WRAP_RUBY )
   # This is a function which set up the enviroment for executing ruby examples and tests
   #
   function(sitk_add_ruby_test name)
-
-    if ( NOT ${BUILD_EXAMPLES} AND "${name}" MATCHES "^Example." )
-      return()
-    endif()
 
     set(command "${RUBY_EXECUTABLE}")
 
@@ -134,11 +122,6 @@ if ( WRAP_TCL )
   # This is a function which set up the enviroment for executing TCL examples and tests
   #
   function(sitk_add_tcl_test name)
-
-    if ( NOT ${BUILD_EXAMPLES} AND "${name}" MATCHES "^Example." )
-      return()
-    endif()
-
 
     set(command "$<TARGET_FILE:SimpleITKTclsh>")
 
