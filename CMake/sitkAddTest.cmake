@@ -215,3 +215,52 @@ if ( WRAP_R )
   endfunction()
 
 endif ( WRAP_R )
+
+
+if ( WRAP_CSHARP )
+  #
+  # This is a function which compiles the program and set up the
+  # enviroment for executing CSharp examples and tests.
+  #
+  function(sitk_add_csharp_test name csharp_file)
+
+    # the root is with out extension or path
+    get_filename_component( CSHARP_EXECUTABLE ${csharp_file} NAME_WE )
+
+    # make sure the executable has CSharp in it
+    if ( NOT CSHARP_EXECUTABLE MATCHES "CSharp" )
+      set( CSHARP_EXECUTABLE "CSharp${CSHARP_EXECUTABLE}" )
+    endif()
+
+    # add the target to compile the test
+    csharp_add_executable(
+        "${CSHARP_EXECUTABLE}"
+        SimpleITKCSharpManaged.dll
+        ${csharp_file}
+    )
+
+    # because each executable is it's own target we actually don't
+    # need to make a target depend on this list
+    list( APPEND compiled_csharp_tests "${CSHARP_BINARY_DIRECTORY}/${CSHARP_EXECUTABLE}.exe")
+
+    add_dependencies("${CSHARP_EXECUTABLE}" SimpleITKCSharpManaged)
+
+    # the interpreter is set to "" when none is needed
+    if( CSHARP_INTERPRETER )
+      sitk_add_test(NAME CSharp.${name}
+        COMMAND "${ITK_TEST_DRIVER}"
+        "${CSHARP_INTERPRETER}"
+        "${CSHARP_BINARY_DIRECTORY}/${CSHARP_EXECUTABLE}.exe"
+        ${ARGN}
+        )
+    else ()
+      sitk_add_test(NAME CSharp.${name}
+        COMMAND "${ITK_TEST_DRIVER}"
+        "${CSHARP_BINARY_DIRECTORY}/${CSHARP_EXECUTABLE}.exe"
+        ${ARGN}
+        )
+    endif()
+
+  endfunction()
+
+endif ( WRAP_CSHARP )

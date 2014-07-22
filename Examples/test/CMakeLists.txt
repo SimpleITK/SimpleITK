@@ -398,3 +398,34 @@ if ( WRAP_R )
     )
 
 endif ( WRAP_R )
+
+
+#
+# CSharp Examples
+#
+if ( WRAP_CSHARP )
+  sitk_add_csharp_test( Example.SimpleGaussian
+    "${SimpleITKExamples_SOURCE_DIR}/SimpleGaussian.cs"
+    --compare
+      "${TEST_HARNESS_TEMP_DIRECTORY}/CSharp.SimpleGaussian.nrrd"
+      DATA{${SimpleITK_DATA_ROOT}/Baseline/Example_SimpleGaussian_2.0.nrrd}
+    DATA{${SimpleITK_DATA_ROOT}/Input/RA-Short.nrrd}
+    "2.0"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/CSharp.SimpleGaussian.nrrd" )
+
+  sitk_add_csharp_test( Example.ImageGetBuffer
+    "${SimpleITKExamples_SOURCE_DIR}/ImageGetBuffer.cs"
+    DATA{${SimpleITK_DATA_ROOT}/Input/RA-Short.nrrd})
+  set_tests_properties( CSharp.Example.ImageGetBuffer
+    PROPERTIES PASS_REGULAR_EXPRESSION "total: 1009713" )
+
+  sitk_add_csharp_test( Example.FilterProgressReporting
+    "${SimpleITKExamples_SOURCE_DIR}/FilterProgressReporting.cs"
+    DATA{${SimpleITK_DATA_ROOT}/Input/RA-Short.nrrd}
+    "2.0"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/CSharp.FilterProgressReporting.nrrd"
+    )
+  set_tests_properties( CSharp.Example.FilterProgressReporting
+    PROPERTIES PASS_REGULAR_EXPRESSION "DiscreteGaussianImageFilter Progress" )
+
+endif ( WRAP_CSHARP )
