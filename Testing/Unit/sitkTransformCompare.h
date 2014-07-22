@@ -30,9 +30,12 @@ class TransformCompare
 public:
   TransformCompare();
 
-  bool Compare( const itk::simple::Transform& transform,
-                const itk::simple::Image &baselineDisplacement,
-                const itk::simple::Image &fixedImage );
+   bool Compare( const itk::simple::Transform &transform,
+                 const itk::simple::Transform &baselineTransform,
+                 const itk::simple::Image &fixedImage );
+
+  bool Compare( const itk::simple::Transform &transform,
+                const itk::simple::Image &baselineDisplacement );
 
   // Return the message from the previous image comparison.
   const std::string &GetMessage() const { return m_Message; }

@@ -24,9 +24,9 @@ namespace sitk = itk::simple;
 int main(int argc, char *argv[])
 {
 
-  if (argc < 4)
+  if (argc < 3)
     {
-    std::cerr << "Usage: " << argv[0] << "transform baselineDisplacement fixedImage [tolerance]" << std::endl;
+    std::cerr << "Usage: " << argv[0] << "transform baselineDisplacement [tolerance]" << std::endl;
 
     std::cerr << std::endl;
     std::cerr << "This program is used to compare an input transformation file to a baseline displacement field file." << std::endl;
@@ -36,10 +36,9 @@ int main(int argc, char *argv[])
     {
     std::string transformFileName = argv[1];
     std::string baselineFileName = argv[2];
-    std::string sourceFileName = argv[3];
     double tolerance = 0.0;
-    if (argc > 4)
-      tolerance = atof(argv[4]);
+    if (argc > 3)
+      tolerance = atof(argv[3]);
 
     std::cout << "Reading test transform: \"" << transformFileName << "\"..." << std::endl;
     sitk::Transform transform = sitk::ReadTransform(transformFileName);
@@ -47,12 +46,9 @@ int main(int argc, char *argv[])
     std::cout << "Reading baseline displacement: \"" << baselineFileName << "\"..." << std::endl;
     sitk::Image baseline = sitk::ReadImage(baselineFileName);
 
-    std::cout << "Reading reference moving image \"" << sourceFileName << "\"..." << std::endl;
-    sitk::Image source = sitk::ReadImage(sourceFileName);
-
     TransformCompare compare;
     compare.SetTolerance(tolerance);
-    if (compare.Compare(transform, baseline, source))
+    if (compare.Compare(transform, baseline))
       {
       return EXIT_SUCCESS;
       }

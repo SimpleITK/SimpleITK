@@ -25,15 +25,31 @@ TransformCompare::TransformCompare()
 {
 }
 
-bool TransformCompare::Compare( const itk::simple::Transform& transform,
-                                const itk::simple::Image &baselineDisplacement,
+
+
+bool TransformCompare::Compare( const itk::simple::Transform &transform,
+                                const itk::simple::Transform &baselineTransform,
                                 const itk::simple::Image &fixedImage )
 {
   namespace sitk = itk::simple;
 
   sitk::TransformToDisplacementFieldFilter toDisplacementField;
-  toDisplacementField.SetOutputPixelType( baselineDisplacement.GetPixelID() );
+  toDisplacementField.SetOutputPixelType( sitk::sitkVectorFloat64 );
   toDisplacementField.SetReferenceImage( fixedImage );
+  sitk::Image baselineDisplacement = toDisplacementField.Execute( baselineTransform );
+
+  return this->Compare( transform, baselineDisplacement );
+}
+
+
+bool TransformCompare::Compare( const itk::simple::Transform &transform,
+                                const itk::simple::Image &baselineDisplacement )
+{
+  namespace sitk = itk::simple;
+
+  sitk::TransformToDisplacementFieldFilter toDisplacementField;
+  toDisplacementField.SetOutputPixelType( baselineDisplacement.GetPixelID() );
+  toDisplacementField.SetReferenceImage( baselineDisplacement );
   sitk::Image displacement = toDisplacementField.Execute( transform );
 
   sitk::Image diff =  sitk::Subtract( displacement, baselineDisplacement );

@@ -378,13 +378,6 @@ add_subdirectory ( Utilities )
 add_subdirectory ( Code )
 add_subdirectory ( Wrapping )
 
-# optional examples directory
-option(BUILD_EXAMPLES "Build the Examples directory." ON)
-
-if(BUILD_EXAMPLES)
-  add_subdirectory ( Examples )
-endif()
-
 #------------------------------------------------------------------------------
 # ITK uses KWStyle for checking the coding style
 include(${SimpleITK_SOURCE_DIR}/Utilities/KWStyle/KWStyle.cmake)
@@ -394,13 +387,8 @@ include(${SimpleITK_SOURCE_DIR}/Utilities/KWStyle/KWStyle.cmake)
 
 if ( BUILD_TESTING )
 
-  # Fetch testing data.
-  # 2.8.11 required for ExternalData.cmake.
-  if( CMAKE_VERSION VERSION_LESS 2.8.11 )
-    message( FATAL_ERROR "BUILD_TESTING ON requires CMake 2.8.11 or newer." )
-  endif()
+  include( sitkAddTest )
 
-  include( SimpleITKExternalData )
   file( GLOB_RECURSE content_links
     RELATIVE "${SimpleITK_SOURCE_DIR}" "Testing/Data/*.md5" )
   foreach(link ${content_links})
@@ -414,13 +402,19 @@ if ( BUILD_TESTING )
   enable_testing()
   add_subdirectory ( Testing )
 
-  ExternalData_Add_Target( SimpleITKData )
-
   option ( RUN_LONG_TESTS "Run long tests.  Some tests have been identified as long running, should these be run?" OFF )
   mark_as_advanced(RUN_LONG_TESTS)
   set(BUILDNAME "${BUILDNAME}" CACHE STRING "Name of build on the dashboard")
   configure_file(CMake/CTestCustom.cmake.in CTestCustom.cmake)
 endif()
+
+# optional examples directory with testing
+option(BUILD_EXAMPLES "Build the Examples directory." ON)
+
+if(BUILD_EXAMPLES)
+  add_subdirectory ( Examples )
+endif()
+
 
 #------------------------------------------------------------------------------
 # Options for documentation
@@ -524,3 +518,7 @@ set(CPACK_PACKAGE_VERSION_PATCH "${SimpleITK_Patch}")
 
 
 include( CPack )
+
+if(DEFINED ExternalData_Add_Target )
+  ExternalData_Add_Target( SimpleITKData )
+endif()
