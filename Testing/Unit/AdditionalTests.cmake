@@ -18,46 +18,46 @@ sitk_add_test(NAME TransformCompareDriver2
   )
 
 
+#
+# Python Tests
+#
+sitk_add_python_test( Test.ImageTests
+  "${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkImageTests.py" )
 
-if ( WRAP_PYTHON )
-  #
-  # Python Tests
-  #
-  sitk_add_python_test( Test.ImageTests
-    "${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkImageTests.py" )
-  sitk_add_python_test( Test.ImageIndexing
-    "${SimpleITK_SOURCE_DIR}/Testing/Unit/ImageIndexingTest.py" )
+sitk_add_python_test( Test.ImageIndexing
+  "${SimpleITK_SOURCE_DIR}/Testing/Unit/ImageIndexingTest.py" )
 
-  sitk_add_python_test( Test.IOTest
-    "${SimpleITK_SOURCE_DIR}/Testing/Unit/IOTest.py"
-    "${TEST_HARNESS_TEMP_DIRECTORY}")
+sitk_add_python_test( Test.IOTest
+  "${SimpleITK_SOURCE_DIR}/Testing/Unit/IOTest.py"
+  "${TEST_HARNESS_TEMP_DIRECTORY}")
 
-  # Numpy test.
-  sitk_add_python_test( Test.Numpy
-    "${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkNumpyArrayConversionTest.py"
+# Numpy test.
+sitk_add_python_test( Test.Numpy
+  "${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkNumpyArrayConversionTest.py"
   )
 
- sitk_add_python_test( Test.ProcessObject
-    "${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkProcessObjectTest.py"
+sitk_add_python_test( Test.ProcessObject
+  "${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkProcessObjectTest.py"
   )
 
-endif( WRAP_PYTHON )
+
+#
+# Java Tests
+#
+sitk_add_java_test( ProcessObjectTest
+  "${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkProcessObjectTest.java" )
 
 
-if ( WRAP_JAVA )
-  sitk_add_java_test( ProcessObjectTest
-    "${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkProcessObjectTest.java" )
-endif( WRAP_JAVA )
+#
+# R Tests
+#
+sitk_add_r_test( Arithmetic
+  "--file=${SimpleITK_SOURCE_DIR}/Testing/Unit/RArithmeticTest.R"
+  )
 
 
-if ( WRAP_R )
-  sitk_add_r_test( Arithmetic
-    "--file=${SimpleITK_SOURCE_DIR}/Testing/Unit/RArithmeticTest.R"
-    )
-endif ( WRAP_R )
-
-
-if ( WRAP_CSHARP )
-  sitk_add_csharp_test( Test.ImageTest
-    "${SimpleITK_SOURCE_DIR}/Testing/Unit/CSharpImageTest.cs" )
-endif ( WRAP_CSHARP )
+#
+# CSharp Tests
+#
+sitk_add_csharp_test( Test.ImageTest
+  "${SimpleITK_SOURCE_DIR}/Testing/Unit/CSharpImageTest.cs" )
