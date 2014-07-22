@@ -408,44 +408,4 @@ if ( WRAP_CSHARP )
 
 endif ( WRAP_CSHARP )
 
-if ( WRAP_R )
-
-  #
-  # This is a function which set up the enviroment for executing R examples and tests
-  #
-  function(add_r_test name)
-
-    if ( NOT ${BUILD_EXAMPLES} AND "${name}" MATCHES "^Example." )
-      return()
-    endif()
-
-    set(command "${R_COMMAND}")
-
-    # add extra command which may be needed on some systems
-    if(CMAKE_OSX_ARCHITECTURES)
-      list(GET CMAKE_OSX_ARCHITECTURES 0 test_arch)
-      set(command arch -${test_arch} ${command})
-    endif()
-
-    add_test(NAME R.${name}
-      COMMAND
-      ${command}
-      ${ARGN}
-      )
-
-    set_property(TEST R.${name}
-                 PROPERTY ENVIRONMENT R_LIBS=${SimpleITK_BINARY_DIR}/Wrapping/RLib/
-                 )
-  endfunction()
-
-
-  #
-  # R tests and Examples
-  #
-  add_r_test( Arithmetic
-    "--file=${SimpleITK_SOURCE_DIR}/Testing/Unit/RArithmeticTest.R"
-     )
-
-endif ( WRAP_R )
-
 include(${CMAKE_CURRENT_SOURCE_DIR}/AdditionalTests.cmake)

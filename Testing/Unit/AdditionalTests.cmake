@@ -48,3 +48,10 @@ if ( WRAP_JAVA )
   sitk_add_java_test( ProcessObjectTest
     "${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkProcessObjectTest.java" )
 endif( WRAP_JAVA )
+
+
+if ( WRAP_R )
+  sitk_add_r_test( Arithmetic
+    "--file=${SimpleITK_SOURCE_DIR}/Testing/Unit/RArithmeticTest.R"
+    )
+endif ( WRAP_R )
