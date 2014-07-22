@@ -400,7 +400,7 @@ if ( BUILD_TESTING )
     message( FATAL_ERROR "BUILD_TESTING ON requires CMake 2.8.11 or newer." )
   endif()
 
-  include( SimpleITKExternalData )
+  include( sitkExternalData )
   file( GLOB_RECURSE content_links
     RELATIVE "${SimpleITK_SOURCE_DIR}" "Testing/Data/*.md5" )
   foreach(link ${content_links})
