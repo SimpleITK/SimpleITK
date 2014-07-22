@@ -317,6 +317,7 @@ TEST(IO, DicomSeriesReader) {
 
   seriesIDs = reader.GetGDCMSeriesIDs( dicomDir );
 
+  ASSERT_FALSE ( seriesIDs.empty() );
   EXPECT_EQ( "1.2.840.113619.2.133.1762890640.1886.1055165015.999", seriesIDs[0] );
 
   fileNames = reader.GetGDCMSeriesFileNames( dicomDir );
