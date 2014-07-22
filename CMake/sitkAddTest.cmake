@@ -1,6 +1,8 @@
 include(sitkExternalData)
 include(CMakeParseArguments)
 
+set(SimpleITK_DATA_ROOT ${SimpleITK_SOURCE_DIR}/Testing/Data)
+
 #-----------------------------------------------------------------------------
 # SimpleITK wrapper for add_test that adds support for external data,
 # and post comparison processes.
@@ -36,3 +38,4 @@ function(sitk_add_test)
     set_property(TEST "${_iat_testname}Compare" APPEND PROPERTY DEPENDS ${_iat_testname})
   endif()
 endfunction()
+
