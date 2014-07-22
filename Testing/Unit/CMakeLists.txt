@@ -321,11 +321,6 @@ add_google_tests(SimpleITKUnitTestDriver0 ${SimpleITKUnitTestSource})
 
 set( ITK_TEST_DRIVER  "itkTestDriver" )
 
-#
-# CXX Examples
-#
-if ( ${BUILD_EXAMPLES} )
-endif()
 
 if ( WRAP_CSHARP )
 
