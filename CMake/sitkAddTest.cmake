@@ -68,3 +68,90 @@ if ( WRAP_PYTHON )
       )
   endfunction()
 endif()
+
+
+if ( WRAP_LUA )
+
+  #
+  # This is a function which set up the enviroment for executing lua examples and tests
+  #
+  function(sitk_add_lua_test name)
+
+    if ( NOT ${BUILD_EXAMPLES} AND "${name}" MATCHES "^Example." )
+      return()
+    endif()
+
+    set(command "$<TARGET_FILE:SimpleITKLua>")
+
+    # add extra command which may be needed on some systems
+    if(CMAKE_OSX_ARCHITECTURES)
+      list(GET CMAKE_OSX_ARCHITECTURES 0 test_arch)
+      set(command arch -${test_arch} ${command})
+    endif()
+
+    sitk_add_test(NAME Lua.${name}
+      COMMAND "${ITK_TEST_DRIVER}"
+      ${command}
+      ${ARGN}
+      )
+  endfunction()
+endif ( WRAP_LUA )
+
+
+if ( WRAP_RUBY )
+
+  #
+  # This is a function which set up the enviroment for executing ruby examples and tests
+  #
+  function(sitk_add_ruby_test name)
+
+    if ( NOT ${BUILD_EXAMPLES} AND "${name}" MATCHES "^Example." )
+      return()
+    endif()
+
+    set(command "${RUBY_EXECUTABLE}")
+
+    # add extra command which may be needed on some systems
+    if(CMAKE_OSX_ARCHITECTURES)
+      list(GET CMAKE_OSX_ARCHITECTURES 0 test_arch)
+      set(command arch -${test_arch} ${command})
+    endif()
+
+    sitk_add_test(NAME Ruby.${name}
+      COMMAND "${ITK_TEST_DRIVER}"
+      --add-before-env RUBYLIB "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/$<CONFIGURATION>"
+      --add-before-env RUBYLIB "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}"
+      ${command}
+      ${ARGN}
+      )
+  endfunction()
+endif ( WRAP_RUBY )
+
+
+if ( WRAP_TCL )
+
+  #
+  # This is a function which set up the enviroment for executing TCL examples and tests
+  #
+  function(sitk_add_tcl_test name)
+
+    if ( NOT ${BUILD_EXAMPLES} AND "${name}" MATCHES "^Example." )
+      return()
+    endif()
+
+
+    set(command "$<TARGET_FILE:SimpleITKTclsh>")
+
+    # add extra command which may be needed on some systems
+    if(CMAKE_OSX_ARCHITECTURES)
+      list(GET CMAKE_OSX_ARCHITECTURES 0 test_arch)
+      set(command arch -${test_arch} ${command})
+    endif()
+
+    sitk_add_test(NAME Tcl.${name}
+      COMMAND "${ITK_TEST_DRIVER}"
+      ${command}
+      ${ARGN}
+      )
+  endfunction()
+endif ( WRAP_TCL )

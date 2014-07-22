@@ -292,4 +292,61 @@ if ( WRAP_PYTHON )
       ${TEST_HARNESS_TEMP_DIRECTORY}/PythonDemonsRegistration2Test.hdf5
     )
 
-endif( WRAP_PYTHON )
+endif ( WRAP_PYTHON )
+
+
+#
+# Lua Examples
+#
+if ( WRAP_LUA )
+  sitk_add_lua_test( Example.SimpleGaussian
+    "${SimpleITKExamples_SOURCE_DIR}/SimpleGaussian.lua"
+    --compare
+      "${TEST_HARNESS_TEMP_DIRECTORY}/Lua.SimpleGaussian.nrrd"
+      DATA{${SimpleITK_DATA_ROOT}/Baseline/Example_SimpleGaussian_2.0.nrrd}
+    DATA{${SimpleITK_DATA_ROOT}/Input/RA-Short.nrrd}
+    "2.0"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Lua.SimpleGaussian.nrrd" )
+
+  sitk_add_lua_test( Example.DicomSeriesReader
+    "${SimpleITKExamples_SOURCE_DIR}/DicomSeriesReader.lua"
+    --compare-MD5
+    "${TEST_HARNESS_TEMP_DIRECTORY}/DicomSeriesReader.nrrd"
+    "8e65f711d450b6b466c6d76a667ecb72"
+      DATA{${SimpleITK_DATA_ROOT}/Input/DicomSeries/,REGEX:Image[0-9]+.dcm}
+      "${TEST_HARNESS_TEMP_DIRECTORY}/DicomSeriesReader.nrrd"
+    )
+endif ( WRAP_LUA )
+
+
+#
+# Ruby Examples
+#
+if ( WRAP_RUBY )
+  sitk_add_ruby_test( Example.SimpleGaussian
+    "${SimpleITKExamples_SOURCE_DIR}/SimpleGaussian.rb"
+    --compare
+      "${TEST_HARNESS_TEMP_DIRECTORY}/Ruby.SimpleGaussian.nrrd"
+      DATA{${SimpleITK_DATA_ROOT}/Baseline/Example_SimpleGaussian_2.0.nrrd}
+    DATA{${SimpleITK_DATA_ROOT}/Input/RA-Short.nrrd}
+    "2.0"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Ruby.SimpleGaussian.nrrd" )
+
+endif ( WRAP_RUBY )
+
+
+#
+# TCL Examples
+#
+if ( WRAP_TCL )
+
+  sitk_add_tcl_test( Example.SimpleGaussian
+    "${SimpleITKExamples_SOURCE_DIR}/SimpleGaussian.tcl"
+    --compare
+      "${TEST_HARNESS_TEMP_DIRECTORY}/Tcl.SimpleGaussian.nrrd"
+      DATA{${SimpleITK_DATA_ROOT}/Baseline/Example_SimpleGaussian_2.0.nrrd}
+    DATA{${SimpleITK_DATA_ROOT}/Input/RA-Short.nrrd}
+    "2.0"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Tcl.SimpleGaussian.nrrd" )
+
+endif ( WRAP_TCL )
