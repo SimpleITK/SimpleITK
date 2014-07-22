@@ -25,7 +25,6 @@ sitk_add_test(NAME TransformCompareDriver1
     $<TARGET_FILE:sitkTransformCompareDriver>
     DATA{${SITK_DATA_ROOT}/Input/xforms/translation_-13x-17y.txt}
     DATA{${SITK_DATA_ROOT}/Baseline/displacement_-13x-17y.mha}
-    DATA{${SITK_DATA_ROOT}/Input/cthead1-Float.mha}
     )
 
 
