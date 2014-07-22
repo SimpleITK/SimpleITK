@@ -81,9 +81,14 @@ int main(int argc, char *argv[])
   sitk::ImageRegistrationMethod R;
   R.SetMetricAsMattesMutualInformation( );
 
-  const double learningRate = 15;
+  const double learningRate = 6;
   const unsigned int numberOfIterations = 200;
-  R.SetOptimizerAsGradientDescent( learningRate,  numberOfIterations );
+  const double convergenceMinimumValue = 1e-4;
+  const unsigned int convergenceWindowSize=5;
+  R.SetOptimizerAsGradientDescentLineSearch ( learningRate,
+                                              numberOfIterations,
+                                              convergenceMinimumValue,
+                                              convergenceWindowSize);
 
   R.SetTransform( sitk::Transform( fixed.GetDimension(), sitk::sitkTranslation) );
   R.SetInterpolator( sitk::sitkLinear );
