@@ -41,6 +41,10 @@ if ( WRAP_PYTHON )
     "${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkProcessObjectTest.py"
   )
 
-
-
 endif( WRAP_PYTHON )
+
+
+if ( WRAP_JAVA )
+  sitk_add_java_test( ProcessObjectTest
+    "${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkProcessObjectTest.java" )
+endif( WRAP_JAVA )

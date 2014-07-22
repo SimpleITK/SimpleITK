@@ -350,3 +350,33 @@ if ( WRAP_TCL )
     "${TEST_HARNESS_TEMP_DIRECTORY}/Tcl.SimpleGaussian.nrrd" )
 
 endif ( WRAP_TCL )
+
+
+#
+# JAVA Examples
+#
+if ( WRAP_JAVA )
+  sitk_add_java_test( Example.SimpleGaussian
+    "${SimpleITKExamples_SOURCE_DIR}/SimpleGaussian.java"
+    --compare
+      "${TEST_HARNESS_TEMP_DIRECTORY}/Java.SimpleGaussian.nrrd"
+      DATA{${SimpleITK_DATA_ROOT}/Baseline/Example_SimpleGaussian_2.0.nrrd}
+    DATA{${SimpleITK_DATA_ROOT}/Input/RA-Short.nrrd}
+    "2.0"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Java.SimpleGaussian.nrrd" )
+
+  sitk_add_java_test( Example.FilterProgressReporting
+    "${SimpleITKExamples_SOURCE_DIR}/FilterProgressReporting.java"
+    DATA{${SimpleITK_DATA_ROOT}/Input/RA-Short.nrrd}
+    "2.0"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Java.FilterProgressReporting.nrrd"
+    )
+  set_tests_properties( Java.Example.FilterProgressReporting
+    PROPERTIES PASS_REGULAR_EXPRESSION "DiscreteGaussianImageFilter Progress" )
+
+# This test currently does not compile or work
+#
+#  add_java_test( Example.ImageConnection
+#    "${SimpleITK_SOURCE_DIR}/Examples/ImageConnection.java" )
+
+endif ( WRAP_JAVA )

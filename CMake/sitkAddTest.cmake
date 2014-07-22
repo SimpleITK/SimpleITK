@@ -138,3 +138,50 @@ if ( WRAP_TCL )
       )
   endfunction()
 endif ( WRAP_TCL )
+
+
+
+if ( WRAP_JAVA )
+
+  #
+  # This is a function which set up the enviroment for executing JAVA examples and tests
+  #
+  function(sitk_add_java_test name java_file)
+
+    # the root is with out extension or path, it is also assumed to the the name of the main class
+    get_filename_component( _java_class ${java_file} NAME_WE )
+    set( _java_file_class "${_java_class}.class" )
+
+    if(WIN32)
+      set( _JAVA_LIBRARY_PATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/$<CONFIGURATION>" )
+      # Note: on windows this is a semi-colon separated list
+      set( _JAVA_CLASSPATH "${SimpleITK_BINARY_DIR}/Wrapping/${JAR_FILE};${CMAKE_CURRENT_BINARY_DIR}" )
+    else(WIN32)
+      set( _JAVA_LIBRARY_PATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}" )
+      set( _JAVA_CLASSPATH "${SimpleITK_BINARY_DIR}/Wrapping/${JAR_FILE}:${CMAKE_CURRENT_BINARY_DIR}" )
+    endif(WIN32)
+
+    add_custom_command(
+      OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/${_java_file_class}"
+      COMMAND "${Java_JAVAC_EXECUTABLE}"
+      ARGS -classpath "${_JAVA_CLASSPATH}"
+      -d "${CMAKE_CURRENT_BINARY_DIR}"
+      "${java_file}"
+      DEPENDS ${java_file} ${SWIG_MODULE_SimpleITKJava_TARGET_NAME} org_itk_simple_jar
+      COMMENT "Building ${CMAKE_CURRENT_BINARY_DIR}/${_java_file_class}"
+      )
+    add_custom_target( ${_java_class}Java ALL
+      DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/${_java_file_class}"
+      SOURCES ${java_file})
+
+    sitk_add_test(NAME Java.${name}
+      COMMAND "${ITK_TEST_DRIVER}"
+      "${Java_JAVA_EXECUTABLE}"
+      "-Djava.library.path=${_JAVA_LIBRARY_PATH}"
+      "-classpath" "${_JAVA_CLASSPATH}"
+      "${_java_class}"
+      ${ARGN}
+      )
+  endfunction()
+
+endif ( WRAP_JAVA )
