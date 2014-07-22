@@ -44,3 +44,7 @@ target_link_libraries ( DemonsRegistration2 ${SimpleITK_LIBRARIES} )
 
 # Add subdirectories
 add_subdirectory(Segmentation)
+
+if ( BUILD_TESTING )
+  add_subdirectory( test )
+endif()

@@ -378,13 +378,6 @@ add_subdirectory ( Utilities )
 add_subdirectory ( Code )
 add_subdirectory ( Wrapping )
 
-# optional examples directory
-option(BUILD_EXAMPLES "Build the Examples directory." ON)
-
-if(BUILD_EXAMPLES)
-  add_subdirectory ( Examples )
-endif()
-
 #------------------------------------------------------------------------------
 # ITK uses KWStyle for checking the coding style
 include(${SimpleITK_SOURCE_DIR}/Utilities/KWStyle/KWStyle.cmake)
@@ -414,6 +407,14 @@ if ( BUILD_TESTING )
   set(BUILDNAME "${BUILDNAME}" CACHE STRING "Name of build on the dashboard")
   configure_file(CMake/CTestCustom.cmake.in CTestCustom.cmake)
 endif()
+
+# optional examples directory with testing
+option(BUILD_EXAMPLES "Build the Examples directory." ON)
+
+if(BUILD_EXAMPLES)
+  add_subdirectory ( Examples )
+endif()
+
 
 #------------------------------------------------------------------------------
 # Options for documentation
