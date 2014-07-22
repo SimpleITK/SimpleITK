@@ -380,3 +380,21 @@ if ( WRAP_JAVA )
 #    "${SimpleITK_SOURCE_DIR}/Examples/ImageConnection.java" )
 
 endif ( WRAP_JAVA )
+
+
+#
+# R Examples
+#
+if ( WRAP_R )
+  sitk_add_r_test( Example.SimpleGaussian
+    "--file=${SimpleITKExamples_SOURCE_DIR}/SimpleGaussian.R"
+    --compare
+      "${TEST_HARNESS_TEMP_DIRECTORY}/Python.SimpleGaussian.nrrd"
+      DATA{${SimpleITK_DATA_ROOT}/Baseline/Example_SimpleGaussian_2.0.nrrd}
+    --args
+    DATA{${SimpleITK_DATA_ROOT}/Input/RA-Short.nrrd}
+    "2.0"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/Python.SimpleGaussian.nrrd"
+    )
+
+endif ( WRAP_R )
