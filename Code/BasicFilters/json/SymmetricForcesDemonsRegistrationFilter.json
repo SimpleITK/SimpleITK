@@ -100,7 +100,7 @@
     {
       "name" : "UseImageSpacing",
       "type" : "bool",
-      "default" : 1
+      "default" : true
     }
   ],
   "measurements" : [
