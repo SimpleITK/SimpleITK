@@ -79,9 +79,9 @@ int main(int argc, char *argv[])
 
 
   sitk::ImageRegistrationMethod R;
-  R.SetMetricAsMattesMutualInformation( );
+  R.SetMetricAsJointHistogramMutualInformation( );
 
-  const double learningRate = 6;
+  const double learningRate = 1;
   const unsigned int numberOfIterations = 200;
   const double convergenceMinimumValue = 1e-4;
   const unsigned int convergenceWindowSize=5;
