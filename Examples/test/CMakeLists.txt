@@ -106,7 +106,7 @@ sitk_add_test(NAME CXX.Example.ImageRegistrationMethod2
   TRANSFORM_COMPARE
     ${TEST_HARNESS_TEMP_DIRECTORY}/CXXImageRegistrationMethod2Test.hdf5
     DATA{${SimpleITK_DATA_ROOT}/Baseline/displacement_13x17y.mha}
-    0.005
+    0.02
   )
 
 sitk_add_test(NAME CXX.Example.DemonsRegistration1
@@ -264,6 +264,10 @@ sitk_add_python_test( Example.ImageRegistrationMethod2
   DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20.png}
   DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceShifted13x17y.png}
   ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethod2Test.hdf5
+  TRANSFORM_COMPARE
+    ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethod2Test.hdf5
+    DATA{${SimpleITK_DATA_ROOT}/Baseline/displacement_13x17y.mha}
+    0.02
   )
 
 sitk_add_python_test( Example.ImageRegistrationMethod4Test1
