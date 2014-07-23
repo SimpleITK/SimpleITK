@@ -28,6 +28,7 @@
 #include "sitkVersion.h"
 #include "sitkImage.h"
 #include "sitkTransform.h"
+#include "sitkTranslationTransform.h"
 #include "sitkEuler3DTransform.h"
 #include "sitkShow.h"
 

@@ -131,6 +131,7 @@ namespace std
 %include "sitkPixelIDValues.h"
 %include "sitkImage.h"
 %include "sitkTransform.h"
+%include "sitkTranslationTransform.h"
 %include "sitkEuler3DTransform.h"
 %include "sitkCommand.h"
 %include "sitkInterpolator.h"
