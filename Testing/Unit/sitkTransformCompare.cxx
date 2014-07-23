@@ -61,7 +61,7 @@ bool TransformCompare::Compare( const itk::simple::Transform &transform,
   stats.Execute ( diff );
   double rms = std::sqrt ( stats.GetMean() );
 
-  std::cout << "ImageTransform RMS: " << rms << std::endl;
+  std::cout << "<DartMeasurement name=\"RMSDifference\" type=\"numeric/float\">" << rms << "</DartMeasurement>" << std::endl;
 
   if ( rms > m_Tolerance )
     {
@@ -70,10 +70,10 @@ bool TransformCompare::Compare( const itk::simple::Transform &transform,
     msg << "\n";
     m_Message = msg.str();
 
-    std::cout << "<DartMeasurement name=\"RMSDifference\" type=\"numeric/float\">" << rms << "</DartMeasurement>" << std::endl;
     std::cout << "<DartMeasurement name=\"Tolerance\" type=\"numeric/float\">" << m_Tolerance << "</DartMeasurement>" << std::endl;
 
     return false;
     }
+
   return true;
 }
