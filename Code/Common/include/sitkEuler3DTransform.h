@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkEuler3DTTransform_h
-#define __sitkEuler3DTTransform_h
+#ifndef __sitkEuler3DTransform_h
+#define __sitkEuler3DTransform_h
 
 #include "sitkCommon.h"
 #include "sitkTransform.h"
@@ -37,7 +37,9 @@ typedef Transform Superclass;
 Euler3DTransform();
 
 explicit Euler3DTransform(const std::vector<double> &fixedCenter,
-                          double angleX = 0, double angleY=0, double angleZ=0,
+                          double angleX=0.0,
+                          double angleY=0.0,
+                          double angleZ=0.0,
                           const std::vector<double> &translation = std::vector<double>(3,0.0) );
 
 Euler3DTransform( const Euler3DTransform & );
@@ -69,6 +71,8 @@ protected:
 virtual void SetPimpleTransform( PimpleTransformBase *pimpleTransform );
 
 private:
+
+using Superclass::AddTransform;
 
 void InternalInitialization(itk::TransformBase *transform);
 
