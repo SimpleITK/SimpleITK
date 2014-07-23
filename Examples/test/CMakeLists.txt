@@ -106,7 +106,7 @@ sitk_add_test(NAME CXX.Example.ImageRegistrationMethod2
   TRANSFORM_COMPARE
     ${TEST_HARNESS_TEMP_DIRECTORY}/CXXImageRegistrationMethod2Test.hdf5
     DATA{${SimpleITK_DATA_ROOT}/Baseline/displacement_13x17y.mha}
-    0.005
+    0.02
   )
 
 sitk_add_test(NAME CXX.Example.DemonsRegistration1
@@ -115,6 +115,10 @@ sitk_add_test(NAME CXX.Example.DemonsRegistration1
     DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20.png}
     DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBSplined10.png}
     ${TEST_HARNESS_TEMP_DIRECTORY}/CXXDemonsRegistration1Test.hdf5
+  TRANSFORM_COMPARE
+    ${TEST_HARNESS_TEMP_DIRECTORY}/CXXDemonsRegistration1Test.hdf5
+    DATA{${SimpleITK_DATA_ROOT}/Baseline/DemonsRegistration1Test_displacement.mha}
+    0.01
   )
 
 sitk_add_test(NAME CXX.Example.DemonsRegistration2
@@ -124,6 +128,10 @@ sitk_add_test(NAME CXX.Example.DemonsRegistration2
    DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBSplined10.png}
    DATA{${SimpleITK_DATA_ROOT}/Input/xforms/translation_-13x-17y.txt}
    ${TEST_HARNESS_TEMP_DIRECTORY}/CXXDemonsRegistration2Test.hdf5
+  TRANSFORM_COMPARE
+    ${TEST_HARNESS_TEMP_DIRECTORY}/CXXDemonsRegistration2Test.hdf5
+    DATA{${SimpleITK_DATA_ROOT}/Baseline/DemonsRegistration2Test_displacement.mha}
+    0.01
   )
 
 
@@ -264,6 +272,10 @@ sitk_add_python_test( Example.ImageRegistrationMethod2
   DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20.png}
   DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceShifted13x17y.png}
   ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethod2Test.hdf5
+  TRANSFORM_COMPARE
+    ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethod2Test.hdf5
+    DATA{${SimpleITK_DATA_ROOT}/Baseline/displacement_13x17y.mha}
+    0.02
   )
 
 sitk_add_python_test( Example.ImageRegistrationMethod4Test1
@@ -291,18 +303,26 @@ sitk_add_python_test( Example.ImageRegistrationMethod4Test3
   )
 
 sitk_add_python_test(Example.DemonsRegistration1
-    "${SimpleITKExamples_SOURCE_DIR}/DemonsRegistration1.py"
+  "${SimpleITKExamples_SOURCE_DIR}/DemonsRegistration1.py"
     DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20.png}
     DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBSplined10.png}
     ${TEST_HARNESS_TEMP_DIRECTORY}/PythonDemonsRegistration1Test.hdf5
+  TRANSFORM_COMPARE
+    ${TEST_HARNESS_TEMP_DIRECTORY}/PythonDemonsRegistration1Test.hdf5
+    DATA{${SimpleITK_DATA_ROOT}/Baseline/DemonsRegistration1Test_displacement.mha}
+    0.005
   )
 
 sitk_add_python_test(Example.DemonsRegistration2
-    "${SimpleITKExamples_SOURCE_DIR}/DemonsRegistration2.py"
+  "${SimpleITKExamples_SOURCE_DIR}/DemonsRegistration2.py"
     DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceShifted13x17y.png}
     DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBSplined10.png}
     DATA{${SimpleITK_DATA_ROOT}/Input/xforms/translation_-13x-17y.txt}
     ${TEST_HARNESS_TEMP_DIRECTORY}/PythonDemonsRegistration2Test.hdf5
+  TRANSFORM_COMPARE
+    ${TEST_HARNESS_TEMP_DIRECTORY}/PythonDemonsRegistration2Test.hdf5
+    DATA{${SimpleITK_DATA_ROOT}/Baseline/DemonsRegistration2Test_displacement.mha}
+    0.01
   )
 
 #
