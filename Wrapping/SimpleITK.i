@@ -133,6 +133,7 @@ namespace std
 %include "sitkTransform.h"
 %include "sitkAffineTransform.h"
 %include "sitkEuler3DTransform.h"
+%include "sitkEuler2DTransform.h"
 %include "sitkTranslationTransform.h"
 %include "sitkCommand.h"
 %include "sitkInterpolator.h"

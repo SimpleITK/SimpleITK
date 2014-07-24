@@ -4,6 +4,7 @@ set ( SimpleITKCommonSource
   sitkProcessObject.cxx
   sitkTransform.cxx
   sitkAffineTransform.cxx
+  sitkEuler2DTransform.cxx
   sitkEuler3DTransform.cxx
   sitkTranslationTransform.cxx
   sitkCommand.cxx

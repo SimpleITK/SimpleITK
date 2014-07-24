@@ -29,6 +29,7 @@
 #include "sitkImage.h"
 #include "sitkTransform.h"
 #include "sitkAffineTransform.h"
+#include "sitkEuler2DTransform.h"
 #include "sitkEuler3DTransform.h"
 #include "sitkTranslationTransform.h"
 #include "sitkShow.h"
