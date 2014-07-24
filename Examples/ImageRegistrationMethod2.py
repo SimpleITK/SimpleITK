@@ -41,17 +41,25 @@ pixelType = sitk.sitkFloat32
 
 fixed = sitk.ReadImage(sys.argv[1], sitk.sitkFloat32)
 fixed = sitk.Normalize(fixed)
+fixed = sitk.DiscreteGaussian(fixed, 2.0)
 
 
 moving = sitk.ReadImage(sys.argv[2], sitk.sitkFloat32)
 moving = sitk.Normalize(moving)
+moving = sitk.DiscreteGaussian(moving, 2.0)
 
 
 R = sitk.ImageRegistrationMethod()
-R.SetSmoothingSigmasPerLevel( [4.0] )
+
 R.SetMetricAsJointHistogramMutualInformation()
-R.SetOptimizerAsGradientDescent(1000, 200)
+
+R.SetOptimizerAsGradientDescentLineSearch(learningRate=1.0,
+                                          numberOfIterations=200,
+                                          convergenceMinimumValue=1e-5,
+                                          convergenceWindowSize=5)
+
 R.SetTransform(sitk.Transform(fixed.GetDimension(), sitk.sitkTranslation))
+
 R.SetInterpolator(sitk.sitkLinear)
 
 R.AddCommand( sitk.sitkIterationEvent, lambda: command_iteration(R) )

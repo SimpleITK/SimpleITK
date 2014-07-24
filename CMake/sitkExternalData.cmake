@@ -1,4 +1,10 @@
 get_filename_component(_SimpleITKExternalData_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+# Fetch testing data.
+# 2.8.11 required for ExternalData.cmake.
+if( CMAKE_VERSION VERSION_LESS 2.8.11 )
+  message( FATAL_ERROR "BUILD_TESTING ON requires CMake 2.8.11 or newer." )
+endif()
+
 include(ExternalData)
 
 if(NOT ExternalData_OBJECT_STORES)
@@ -35,9 +41,8 @@ list(APPEND ExternalData_URL_TEMPLATES
   "http://www.itk.org/files/ExternalData/%(algo)/%(hash)"
   )
 
-# Tell ExternalData commands to transform raw files to content links.
-# TODO: Condition this feature on presence of our pre-commit hook.
-set(ExternalData_LINK_CONTENT MD5)
+# Tell ExternalData commands not to transform raw files to content links.
+#set(ExternalData_LINK_CONTENT MD5)
 
 # Match series of the form <base>.<ext>, <base>.<n>.<ext> such that <base> may
 # end in a (test) number that is not part of any series numbering.

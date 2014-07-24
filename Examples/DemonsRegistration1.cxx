@@ -75,7 +75,6 @@ int main(int argc, char *argv[])
   matcher.SetNumberOfHistogramLevels( 1024 );
   matcher.SetNumberOfMatchPoints( 7 );
   matcher.ThresholdAtMeanIntensityOn();
-
   moving = matcher.Execute(moving, fixed);
 
   sitk::DemonsRegistrationFilter filter;
