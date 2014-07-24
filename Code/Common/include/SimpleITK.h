@@ -32,6 +32,7 @@
 #include "sitkEuler2DTransform.h"
 #include "sitkEuler3DTransform.h"
 #include "sitkTranslationTransform.h"
+#include "sitkVersorTransform.h"
 #include "sitkShow.h"
 
 #include "sitkInterpolator.h"

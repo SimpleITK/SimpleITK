@@ -7,6 +7,7 @@ set ( SimpleITKCommonSource
   sitkEuler2DTransform.cxx
   sitkEuler3DTransform.cxx
   sitkTranslationTransform.cxx
+  sitkVersorTransform.cxx
   sitkCommand.cxx
   sitkFunctionCommand.cxx
   sitkPixelIDValues.cxx
