@@ -170,6 +170,11 @@ protected:
 
   void MakeUniqueForWrite( void );
 
+  // this method is called to set the private pimpleTransfrom outside
+  // of the constructor, derived classes can override it of update the
+  // state.
+  virtual void SetPimpleTransform( PimpleTransformBase *pimpleTransform );
+
 private:
 
   template< unsigned int VDimension>
