@@ -3,6 +3,7 @@ set ( SimpleITKCommonSource
   sitkImageExplicit.cxx
   sitkProcessObject.cxx
   sitkTransform.cxx
+  sitkAffineTransform.cxx
   sitkEuler3DTransform.cxx
   sitkTranslationTransform.cxx
   sitkCommand.cxx
