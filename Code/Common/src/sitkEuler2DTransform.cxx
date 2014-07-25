@@ -114,12 +114,12 @@ void Euler2DTransform::InternalInitialization(itk::TransformBase *transform)
     return;
     }
 
-  this->m_pfSetCenter = ITK_NULLPTR;
-  this->m_pfGetCenter = ITK_NULLPTR;
-  this->m_pfSetTranslation = ITK_NULLPTR;
-  this->m_pfGetTranslation = ITK_NULLPTR;
-  this->m_pfSetAngle = ITK_NULLPTR;
-  this->m_pfGetAngle = ITK_NULLPTR;
+  this->m_pfSetCenter = SITK_NULLPTR;
+  this->m_pfGetCenter = SITK_NULLPTR;
+  this->m_pfSetTranslation = SITK_NULLPTR;
+  this->m_pfGetTranslation = SITK_NULLPTR;
+  this->m_pfSetAngle = SITK_NULLPTR;
+  this->m_pfGetAngle = SITK_NULLPTR;
 
 }
 

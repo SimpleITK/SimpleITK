@@ -137,16 +137,16 @@ void Euler3DTransform::InternalInitialization(itk::TransformBase *transform)
     return;
     }
 
-  this->m_pfSetCenter = ITK_NULLPTR;
-  this->m_pfGetCenter = ITK_NULLPTR;
-  this->m_pfSetTranslation = ITK_NULLPTR;
-  this->m_pfGetTranslation = ITK_NULLPTR;
-  this->m_pfSetRotation = ITK_NULLPTR;
-  this->m_pfGetAngleX = ITK_NULLPTR;
-  this->m_pfGetAngleY = ITK_NULLPTR;
-  this->m_pfGetAngleZ = ITK_NULLPTR;
-  this->m_pfSetComputeZYX = ITK_NULLPTR;
-  this->m_pfGetComputeZYX = ITK_NULLPTR;
+  this->m_pfSetCenter = SITK_NULLPTR;
+  this->m_pfGetCenter = SITK_NULLPTR;
+  this->m_pfSetTranslation = SITK_NULLPTR;
+  this->m_pfGetTranslation = SITK_NULLPTR;
+  this->m_pfSetRotation = SITK_NULLPTR;
+  this->m_pfGetAngleX = SITK_NULLPTR;
+  this->m_pfGetAngleY = SITK_NULLPTR;
+  this->m_pfGetAngleZ = SITK_NULLPTR;
+  this->m_pfSetComputeZYX = SITK_NULLPTR;
+  this->m_pfGetComputeZYX = SITK_NULLPTR;
 }
 
 

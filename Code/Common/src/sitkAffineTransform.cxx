@@ -122,15 +122,15 @@ void AffineTransform::InternalInitialization(itk::TransformBase *transform)
 
   typelist::Visit<TransformTypeList> callInternalInitialization;
 
-  this->m_pfSetCenter = ITK_NULLPTR;
-  this->m_pfGetCenter = ITK_NULLPTR;
-  this->m_pfSetTranslation = ITK_NULLPTR;
-  this->m_pfGetTranslation = ITK_NULLPTR;
-  this->m_pfScale1 = ITK_NULLPTR;
-  this->m_pfScale2 = ITK_NULLPTR;
-  this->m_pfShear = ITK_NULLPTR;
-  this->m_pfTranslate = ITK_NULLPTR;
-  this->m_pfRotate = ITK_NULLPTR;
+  this->m_pfSetCenter = SITK_NULLPTR;
+  this->m_pfGetCenter = SITK_NULLPTR;
+  this->m_pfSetTranslation = SITK_NULLPTR;
+  this->m_pfGetTranslation = SITK_NULLPTR;
+  this->m_pfScale1 = SITK_NULLPTR;
+  this->m_pfScale2 = SITK_NULLPTR;
+  this->m_pfShear = SITK_NULLPTR;
+  this->m_pfTranslate = SITK_NULLPTR;
+  this->m_pfRotate = SITK_NULLPTR;
 
   callInternalInitialization(visitor);
 
