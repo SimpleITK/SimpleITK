@@ -78,8 +78,8 @@ void TranslationTransform::InternalInitialization(itk::TransformBase *transform)
 
   typelist::Visit<TransformTypeList> callInternalInitialization;
 
-  this->m_pfSetOffset = NULL;
-  this->m_pfGetOffset = NULL;
+  this->m_pfSetOffset = ITK_NULLPTR;
+  this->m_pfGetOffset = ITK_NULLPTR;
 
   callInternalInitialization(visitor);
 

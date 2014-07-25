@@ -126,14 +126,14 @@ void Similarity2DTransform::InternalInitialization(itk::TransformBase *transform
     return;
     }
 
-  this->m_pfSetCenter = NULL;
-  this->m_pfGetCenter = NULL;
-  this->m_pfSetTranslation = NULL;
-  this->m_pfGetTranslation = NULL;
-  this->m_pfSetAngle = NULL;
-  this->m_pfGetAngle = NULL;
-  this->m_pfSetScale = NULL;
-  this->m_pfGetScale = NULL;
+  this->m_pfSetCenter = ITK_NULLPTR;
+  this->m_pfGetCenter = ITK_NULLPTR;
+  this->m_pfSetTranslation = ITK_NULLPTR;
+  this->m_pfGetTranslation = ITK_NULLPTR;
+  this->m_pfSetAngle = ITK_NULLPTR;
+  this->m_pfGetAngle = ITK_NULLPTR;
+  this->m_pfSetScale = ITK_NULLPTR;
+  this->m_pfGetScale = ITK_NULLPTR;
 
 }
 

@@ -136,12 +136,12 @@ void VersorTransform::InternalInitialization(itk::TransformBase *transform)
     return;
     }
 
-  this->m_pfSetCenter = NULL;
-  this->m_pfGetCenter = NULL;
-  this->m_pfSetRotation1 = NULL;
-  this->m_pfSetRotation2 = NULL;
-  this->m_pfGetVersor = NULL;
-  this->m_pfTranslate = NULL;
+  this->m_pfSetCenter = ITK_NULLPTR;
+  this->m_pfGetCenter = ITK_NULLPTR;
+  this->m_pfSetRotation1 = ITK_NULLPTR;
+  this->m_pfSetRotation2 = ITK_NULLPTR;
+  this->m_pfGetVersor = ITK_NULLPTR;
+  this->m_pfTranslate = ITK_NULLPTR;
 }
 
 
