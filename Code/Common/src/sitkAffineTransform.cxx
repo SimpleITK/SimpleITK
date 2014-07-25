@@ -54,7 +54,7 @@ AffineTransform::Self &AffineTransform::SetTranslation(const std::vector<double>
 
 std::vector<double> AffineTransform::GetTranslation( ) const
 {
-  return this->m_pfGetCenter();
+  return this->m_pfGetTranslation();
 }
 
 /** fixed parameter */
