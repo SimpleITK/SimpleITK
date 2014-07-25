@@ -153,6 +153,8 @@ void Similarity3DTransform::InternalInitialization(itk::TransformBase *transform
   this->m_pfSetRotation1 = NULL;
   this->m_pfSetRotation2 = NULL;
   this->m_pfGetVersor = NULL;
+  this->m_pfSetScale = NULL;
+  this->m_pfGetScale = NULL;
   this->m_pfTranslate = NULL;
 }
 

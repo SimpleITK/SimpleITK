@@ -132,6 +132,8 @@ void Similarity2DTransform::InternalInitialization(itk::TransformBase *transform
   this->m_pfGetTranslation = NULL;
   this->m_pfSetAngle = NULL;
   this->m_pfGetAngle = NULL;
+  this->m_pfSetScale = NULL;
+  this->m_pfGetScale = NULL;
 
 }
 
