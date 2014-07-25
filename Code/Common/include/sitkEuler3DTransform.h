@@ -80,13 +80,13 @@ template <typename TransformType>
 void InternalInitialization(TransformType *transform);
 
 
-nsstd::function<void(std::vector<double>)> m_pfSetCenter;
+nsstd::function<void(const std::vector<double>&)> m_pfSetCenter;
 nsstd::function<std::vector<double>()> m_pfGetCenter;
 nsstd::function<void(double,double,double)> m_pfSetRotation;
 nsstd::function<double()> m_pfGetAngleX;
 nsstd::function<double()> m_pfGetAngleY;
 nsstd::function<double()> m_pfGetAngleZ;
-nsstd::function<void(std::vector<double>)> m_pfSetTranslation;
+nsstd::function<void(const std::vector<double>&)> m_pfSetTranslation;
 nsstd::function<std::vector<double>()> m_pfGetTranslation;
 nsstd::function<void(bool)> m_pfSetComputeZYX;
 nsstd::function<bool()> m_pfGetComputeZYX;

@@ -136,12 +136,12 @@ void VersorTransform::InternalInitialization(itk::TransformBase *transform)
     return;
     }
 
-  this->m_pfSetCenter = NULL;
-  this->m_pfGetCenter = NULL;
-  this->m_pfSetRotation1 = NULL;
-  this->m_pfSetRotation2 = NULL;
-  this->m_pfGetVersor = NULL;
-  this->m_pfTranslate = NULL;
+  this->m_pfSetCenter = ITK_NULLPTR;
+  this->m_pfGetCenter = ITK_NULLPTR;
+  this->m_pfSetRotation1 = ITK_NULLPTR;
+  this->m_pfSetRotation2 = ITK_NULLPTR;
+  this->m_pfGetVersor = ITK_NULLPTR;
+  this->m_pfTranslate = ITK_NULLPTR;
 }
 
 
@@ -157,7 +157,6 @@ void VersorTransform::InternalInitialization(TransformType *t)
   }
 
   typename TransformType::OutputVectorType (*pfSTLVectorToITK)(const std::vector<double> &) = &sitkSTLVectorToITK<typename TransformType::OutputVectorType, double>;
-  std::vector<double> (*pfITKVectorToSTL)( const typename TransformType::OutputVectorType &) = &sitkITKVectorToSTL<double,typename TransformType::OutputVectorType>;
 
   void 	(TransformType::*pfSetRotation1) (const typename TransformType::VersorType &) = &TransformType::SetRotation;
   this->m_pfSetRotation1 = nsstd::bind(pfSetRotation1,t,nsstd::bind(&sitkSTLVectorToITKVersor<double, double>,nsstd::placeholders::_1));

@@ -39,13 +39,9 @@ Euler3DTransform::Euler3DTransform(const std::vector<double> &fixedCenter,
 {
   Self::InternalInitialization(Self::GetITKBase());
 
-  this->SetFixedParameters(fixedCenter);
-  std::vector<double> params(6);
-  params[0] = angleX;
-  params[1] = angleY;
-  params[2] = angleZ;
-  std::copy( translation.begin(), translation.end(), params.begin()+3 );
-  this->SetParameters(params);
+  this->SetCenter(fixedCenter);
+  this->SetRotation(angleX, angleY, angleZ);
+  this->SetTranslation(translation);
 }
 
 Euler3DTransform::Euler3DTransform( const Euler3DTransform &arg )
@@ -141,16 +137,16 @@ void Euler3DTransform::InternalInitialization(itk::TransformBase *transform)
     return;
     }
 
-  this->m_pfSetCenter = NULL;
-  this->m_pfGetCenter = NULL;
-  this->m_pfSetTranslation = NULL;
-  this->m_pfGetTranslation = NULL;
-  this->m_pfSetRotation = NULL;
-  this->m_pfGetAngleX = NULL;
-  this->m_pfGetAngleY = NULL;
-  this->m_pfGetAngleZ = NULL;
-  this->m_pfSetComputeZYX = NULL;
-  this->m_pfGetComputeZYX = NULL;
+  this->m_pfSetCenter = ITK_NULLPTR;
+  this->m_pfGetCenter = ITK_NULLPTR;
+  this->m_pfSetTranslation = ITK_NULLPTR;
+  this->m_pfGetTranslation = ITK_NULLPTR;
+  this->m_pfSetRotation = ITK_NULLPTR;
+  this->m_pfGetAngleX = ITK_NULLPTR;
+  this->m_pfGetAngleY = ITK_NULLPTR;
+  this->m_pfGetAngleZ = ITK_NULLPTR;
+  this->m_pfSetComputeZYX = ITK_NULLPTR;
+  this->m_pfGetComputeZYX = ITK_NULLPTR;
 }
 
 

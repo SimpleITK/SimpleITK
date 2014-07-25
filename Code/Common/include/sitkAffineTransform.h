@@ -85,9 +85,9 @@ private:
     void InternalInitialization(TransformType *transform);
 
 
-  nsstd::function<void(std::vector<double>)> m_pfSetCenter;
+  nsstd::function<void(const std::vector<double>&)> m_pfSetCenter;
   nsstd::function<std::vector<double>()> m_pfGetCenter;
-  nsstd::function<void(std::vector<double>)> m_pfSetTranslation;
+  nsstd::function<void(const std::vector<double>&)> m_pfSetTranslation;
   nsstd::function<std::vector<double>()> m_pfGetTranslation;
 
   nsstd::function<void(const std::vector<double> &, bool)> m_pfScale1;

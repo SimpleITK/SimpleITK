@@ -54,7 +54,7 @@ AffineTransform::Self &AffineTransform::SetTranslation(const std::vector<double>
 
 std::vector<double> AffineTransform::GetTranslation( ) const
 {
-  return this->m_pfGetCenter();
+  return this->m_pfGetTranslation();
 }
 
 /** fixed parameter */
@@ -122,15 +122,15 @@ void AffineTransform::InternalInitialization(itk::TransformBase *transform)
 
   typelist::Visit<TransformTypeList> callInternalInitialization;
 
-  this->m_pfSetCenter = NULL;
-  this->m_pfGetCenter = NULL;
-  this->m_pfSetTranslation = NULL;
-  this->m_pfGetTranslation = NULL;
-  this->m_pfScale1 = NULL;
-  this->m_pfScale2 = NULL;
-  this->m_pfShear = NULL;
-  this->m_pfTranslate = NULL;
-  this->m_pfRotate = NULL;
+  this->m_pfSetCenter = ITK_NULLPTR;
+  this->m_pfGetCenter = ITK_NULLPTR;
+  this->m_pfSetTranslation = ITK_NULLPTR;
+  this->m_pfGetTranslation = ITK_NULLPTR;
+  this->m_pfScale1 = ITK_NULLPTR;
+  this->m_pfScale2 = ITK_NULLPTR;
+  this->m_pfShear = ITK_NULLPTR;
+  this->m_pfTranslate = ITK_NULLPTR;
+  this->m_pfRotate = ITK_NULLPTR;
 
   callInternalInitialization(visitor);
 
