@@ -39,13 +39,9 @@ Euler3DTransform::Euler3DTransform(const std::vector<double> &fixedCenter,
 {
   Self::InternalInitialization(Self::GetITKBase());
 
-  this->SetFixedParameters(fixedCenter);
-  std::vector<double> params(6);
-  params[0] = angleX;
-  params[1] = angleY;
-  params[2] = angleZ;
-  std::copy( translation.begin(), translation.end(), params.begin()+3 );
-  this->SetParameters(params);
+  this->SetCenter(fixedCenter);
+  this->SetRotation(angleX, angleY, angleZ);
+  this->SetTranslation(translation);
 }
 
 Euler3DTransform::Euler3DTransform( const Euler3DTransform &arg )
