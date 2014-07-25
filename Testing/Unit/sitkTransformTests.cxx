@@ -341,65 +341,14 @@ TEST(TransformTest, TransformPoint) {
 }
 
 
-TEST(TransformTest,TranslationTransform)
+TEST(TransformTest,AffineTransform)
 {
-  // test TranslationTransform
-
-  const std::vector<double> zeros(3,0.0);
-  const std::vector<double> trans2d(2, 2.2);
-  const std::vector<double> trans3d(3, 3.3);
-
-  std::auto_ptr<sitk::TranslationTransform> tx;
-
-  EXPECT_NO_THROW( tx.reset( new sitk::TranslationTransform(2) ) );
-  EXPECT_EQ( tx->GetParameters().size(), 2u );
-  EXPECT_EQ( tx->GetParameters()[0], 0.0 );
-  EXPECT_EQ( tx->GetParameters()[1], 0.0 );
-  EXPECT_EQ( tx->GetFixedParameters().size(), 0u );
-  EXPECT_EQ( tx->GetOffset(), std::vector<double>(2,0.0));
-
-  EXPECT_NO_THROW( tx.reset( new sitk::TranslationTransform(3) ) );
-  EXPECT_EQ( tx->GetParameters().size(), 3u );
-  EXPECT_EQ( tx->GetParameters()[0], 0.0 );
-  EXPECT_EQ( tx->GetParameters()[1], 0.0 );
-  EXPECT_EQ( tx->GetParameters()[2], 0.0 );
-  EXPECT_EQ( tx->GetFixedParameters().size(), 0u );
-  EXPECT_EQ( tx->GetOffset(), std::vector<double>(3,0.0));
-
-  EXPECT_NO_THROW( tx.reset( new sitk::TranslationTransform(2, trans2d) ) );
-  EXPECT_EQ( tx->GetParameters().size(), 2u );
-  EXPECT_EQ( tx->GetParameters()[0], 2.2 );
-  EXPECT_EQ( tx->GetParameters()[1], 2.2 );
-  EXPECT_EQ( tx->GetFixedParameters().size(), 0u );
-  EXPECT_EQ( tx->GetOffset(), trans2d);
-
-  // copy constructor
-  sitk::TranslationTransform tx1(*(tx.get()));
-  EXPECT_EQ( tx1.GetParameters().size(), 2u );
-  EXPECT_EQ( tx1.GetParameters()[0], 2.2 );
-  EXPECT_EQ( tx1.GetParameters()[1], 2.2 );
-  EXPECT_EQ( tx1.GetFixedParameters().size(), 0u );;
-  EXPECT_EQ( tx->GetOffset(), trans2d);
-
-  // shallow assignment
-  sitk::TranslationTransform tx2(3);
-  tx1 = tx2;
-  EXPECT_EQ( tx1.GetDimension(), 3u );
-  EXPECT_EQ( tx->GetDimension(), 2u );
-  EXPECT_EQ( tx1.GetOffset(), std::vector<double>(3,0.0));
-  EXPECT_EQ( tx->GetOffset(), trans2d);
-
-  // copy on write
-  tx1.SetParameters(std::vector<double>(3, 9.9));
-  EXPECT_EQ( tx2.GetOffset(), std::vector<double>(3,0.0) );
-
-  tx2.SetOffset( trans3d );
-  EXPECT_EQ(tx2.GetOffset(), trans3d);
-
-  EXPECT_THROW( tx.reset( new sitk::TranslationTransform(3, trans2d) ), sitk::GenericException );
-  EXPECT_THROW( tx1.SetOffset(trans2d), sitk::GenericException );
-
 }
+
+TEST(TransformTest,Euler2DTransform)
+{
+}
+
 
 TEST(TransformTest,Euler3DTransform)
 {
@@ -520,4 +469,81 @@ TEST(TransformTest,Euler3DTransform)
   EXPECT_FALSE(tx->GetComputeZYX());
   tx->ComputeZYXOn();
   EXPECT_TRUE(tx->GetComputeZYX());
+
+}
+
+
+TEST(TransformTest,Similarity2DTransform)
+{
+}
+
+
+TEST(TransformTest,Similarity3DTransform)
+{
+}
+
+
+TEST(TransformTest,TranslationTransform)
+{
+  // test TranslationTransform
+
+  const std::vector<double> zeros(3,0.0);
+  const std::vector<double> trans2d(2, 2.2);
+  const std::vector<double> trans3d(3, 3.3);
+
+  std::auto_ptr<sitk::TranslationTransform> tx;
+
+  EXPECT_NO_THROW( tx.reset( new sitk::TranslationTransform(2) ) );
+  EXPECT_EQ( tx->GetParameters().size(), 2u );
+  EXPECT_EQ( tx->GetParameters()[0], 0.0 );
+  EXPECT_EQ( tx->GetParameters()[1], 0.0 );
+  EXPECT_EQ( tx->GetFixedParameters().size(), 0u );
+  EXPECT_EQ( tx->GetOffset(), std::vector<double>(2,0.0));
+
+  EXPECT_NO_THROW( tx.reset( new sitk::TranslationTransform(3) ) );
+  EXPECT_EQ( tx->GetParameters().size(), 3u );
+  EXPECT_EQ( tx->GetParameters()[0], 0.0 );
+  EXPECT_EQ( tx->GetParameters()[1], 0.0 );
+  EXPECT_EQ( tx->GetParameters()[2], 0.0 );
+  EXPECT_EQ( tx->GetFixedParameters().size(), 0u );
+  EXPECT_EQ( tx->GetOffset(), std::vector<double>(3,0.0));
+
+  EXPECT_NO_THROW( tx.reset( new sitk::TranslationTransform(2, trans2d) ) );
+  EXPECT_EQ( tx->GetParameters().size(), 2u );
+  EXPECT_EQ( tx->GetParameters()[0], 2.2 );
+  EXPECT_EQ( tx->GetParameters()[1], 2.2 );
+  EXPECT_EQ( tx->GetFixedParameters().size(), 0u );
+  EXPECT_EQ( tx->GetOffset(), trans2d);
+
+  // copy constructor
+  sitk::TranslationTransform tx1(*(tx.get()));
+  EXPECT_EQ( tx1.GetParameters().size(), 2u );
+  EXPECT_EQ( tx1.GetParameters()[0], 2.2 );
+  EXPECT_EQ( tx1.GetParameters()[1], 2.2 );
+  EXPECT_EQ( tx1.GetFixedParameters().size(), 0u );;
+  EXPECT_EQ( tx->GetOffset(), trans2d);
+
+  // shallow assignment
+  sitk::TranslationTransform tx2(3);
+  tx1 = tx2;
+  EXPECT_EQ( tx1.GetDimension(), 3u );
+  EXPECT_EQ( tx->GetDimension(), 2u );
+  EXPECT_EQ( tx1.GetOffset(), std::vector<double>(3,0.0));
+  EXPECT_EQ( tx->GetOffset(), trans2d);
+
+  // copy on write
+  tx1.SetParameters(std::vector<double>(3, 9.9));
+  EXPECT_EQ( tx2.GetOffset(), std::vector<double>(3,0.0) );
+
+  tx2.SetOffset( trans3d );
+  EXPECT_EQ(tx2.GetOffset(), trans3d);
+
+  EXPECT_THROW( tx.reset( new sitk::TranslationTransform(3, trans2d) ), sitk::GenericException );
+  EXPECT_THROW( tx1.SetOffset(trans2d), sitk::GenericException );
+
+}
+
+
+TEST(TransformTest,VersorTransform)
+{
 }
