@@ -69,11 +69,11 @@ private:
   template <typename TransformType>
     void InternalInitialization(TransformType *transform);
 
-  nsstd::function<void(std::vector<double>)> m_pfSetCenter;
+  nsstd::function<void(const std::vector<double>&)> m_pfSetCenter;
   nsstd::function<std::vector<double>()> m_pfGetCenter;
   nsstd::function<void(double)> m_pfSetAngle;
   nsstd::function<double()> m_pfGetAngle;
-  nsstd::function<void(std::vector<double>)> m_pfSetTranslation;
+  nsstd::function<void(const std::vector<double>&)> m_pfSetTranslation;
   nsstd::function<std::vector<double>()> m_pfGetTranslation;
 
 };

@@ -69,10 +69,10 @@ void InternalInitialization(itk::TransformBase *transform);
 template <typename TransformType>
 void InternalInitialization(TransformType *transform);
 
-nsstd::function<void(std::vector<double>)> m_pfSetCenter;
+nsstd::function<void(const std::vector<double>&)> m_pfSetCenter;
 nsstd::function<std::vector<double>()> m_pfGetCenter;
-nsstd::function<void(std::vector<double>)> m_pfSetRotation1;
-nsstd::function<void(std::vector<double>,double)> m_pfSetRotation2;
+nsstd::function<void(const std::vector<double>&)> m_pfSetRotation1;
+nsstd::function<void(const std::vector<double>,double&)> m_pfSetRotation2;
 nsstd::function<std::vector<double>()> m_pfGetVersor;
 nsstd::function<void(double)> m_pfSetScale;
 nsstd::function<double()> m_pfGetScale;
