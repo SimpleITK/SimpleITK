@@ -11,6 +11,27 @@ int main(void)
 
 #endif
 
+
+//-------------------------------------
+
+#ifdef SITK_HAS_CXX11_NULLPTR
+
+struct C {
+  void func();
+};
+
+int main(void)
+{
+  int *x = nullptr;
+  char *c = nullptr;
+  void (C::*pmf)() = nullptr;
+  if (nullptr==c) {}
+  if (nullptr==pmf) {}
+  return 0;
+}
+
+#endif
+
 //-------------------------------------
 
 #ifdef SITK_HAS_CXX11_FUNCTIONAL

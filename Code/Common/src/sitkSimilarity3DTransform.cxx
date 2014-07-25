@@ -148,14 +148,14 @@ void Similarity3DTransform::InternalInitialization(itk::TransformBase *transform
     return;
     }
 
-  this->m_pfSetCenter = ITK_NULLPTR;
-  this->m_pfGetCenter = ITK_NULLPTR;
-  this->m_pfSetRotation1 = ITK_NULLPTR;
-  this->m_pfSetRotation2 = ITK_NULLPTR;
-  this->m_pfGetVersor = ITK_NULLPTR;
-  this->m_pfSetScale = ITK_NULLPTR;
-  this->m_pfGetScale = ITK_NULLPTR;
-  this->m_pfTranslate = ITK_NULLPTR;
+  this->m_pfSetCenter = SITK_NULLPTR;
+  this->m_pfGetCenter = SITK_NULLPTR;
+  this->m_pfSetRotation1 = SITK_NULLPTR;
+  this->m_pfSetRotation2 = SITK_NULLPTR;
+  this->m_pfGetVersor = SITK_NULLPTR;
+  this->m_pfSetScale = SITK_NULLPTR;
+  this->m_pfGetScale = SITK_NULLPTR;
+  this->m_pfTranslate = SITK_NULLPTR;
 }
 
 
