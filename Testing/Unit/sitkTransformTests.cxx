@@ -17,6 +17,7 @@
 *=========================================================================*/
 
 #include "sitkTransform.h"
+#include "sitkAffineTransform.h"
 #include "sitkTranslationTransform.h"
 #include "sitkEuler3DTransform.h"
 #include "sitkAdditionalProcedures.h"
@@ -24,7 +25,26 @@
 #include "sitkHashImageFilter.h"
 #include "SimpleITKTestHarness.h"
 
+#include "itkMath.h"
+
 namespace sitk = itk::simple;
+
+namespace
+{
+std::vector<double> v2(double v1, double v2)
+{
+  std::vector<double> temp(2);
+  temp[0]=v1;temp[1]=v2;
+  return temp;
+}
+
+std::vector<double> v3(double v1, double v2, double v3)
+{
+  std::vector<double> temp(3);
+  temp[0]=v1;temp[1]=v2;temp[2]=v3;
+  return temp;
+}
+}
 
 TEST(TransformTest, Construction) {
 
@@ -343,6 +363,63 @@ TEST(TransformTest, TransformPoint) {
 
 TEST(TransformTest,AffineTransform)
 {
+  // test AffineTransform
+
+  const std::vector<double> zeros(3,0.0);
+  const std::vector<double> trans2d = v2(2.2,2.2);
+  const std::vector<double> trans3d = v3(3.3,3.3,3.3);
+
+  const std::vector<double> center2d(2, 10);
+  const std::vector<double> center3d(3, 20);
+
+  const std::vector<double> scale2d = v2(1,2);
+  const std::vector<double> scale3d = v3(1,1.2,1.3);
+
+  std::auto_ptr<sitk::AffineTransform> tx;
+
+  // 2d
+  EXPECT_NO_THROW( tx.reset( new sitk::AffineTransform(2) ) );
+  EXPECT_EQ( tx->GetParameters().size(), 6u );
+  EXPECT_EQ( tx->GetFixedParameters().size(), 2u );
+
+  EXPECT_EQ( tx->SetTranslation( trans2d ).GetTranslation(), trans2d );
+  EXPECT_EQ( tx->SetCenter( center2d ).GetCenter(), center2d );
+
+  tx.reset( new sitk::AffineTransform(2) );
+  tx->Scale( v2(1,2));
+  EXPECT_EQ( tx->TransformPoint( v2(0,0) ), v2(0,0));
+  EXPECT_EQ( tx->TransformPoint( v2(1,1) ), v2(1,2));
+  tx->Scale( 2 );
+  EXPECT_EQ( tx->TransformPoint( v2(0,0) ), v2(0,0));
+  EXPECT_EQ( tx->TransformPoint( v2(1,1) ), v2(2,4));
+
+  tx.reset( new sitk::AffineTransform(2) );
+  tx->Shear(0,1, 2.0);
+  EXPECT_EQ( tx->TransformPoint( v2(0,0) ), v2(0,0));
+  EXPECT_EQ( tx->TransformPoint( v2(1,2) ), v2(5,2));
+
+  tx.reset( new sitk::AffineTransform(2) );
+  tx->Translate(v2(10.0,-10.0));
+  EXPECT_EQ( tx->TransformPoint( v2(0,0) ), v2(10.0,-10.0));
+  EXPECT_EQ( tx->TransformPoint( v2(1,2) ), v2(11.0,-8.0));
+
+  tx.reset( new sitk::AffineTransform(2) );
+  tx->Rotate(0,1,itk::Math::pi_over_2);
+  EXPECT_EQ( tx->TransformPoint( v2(0,0) ), v2(0,0));
+  EXPECT_EQ( tx->TransformPoint( v2(1,2) ), v2(2,-1));
+
+  // 3d
+  EXPECT_NO_THROW( tx.reset( new sitk::AffineTransform(3) ) );
+  EXPECT_EQ( tx->GetParameters().size(), 12u );
+  EXPECT_EQ( tx->GetFixedParameters().size(), 3u );
+
+  EXPECT_EQ( tx->SetTranslation( trans3d ).GetTranslation(), trans3d );
+  EXPECT_EQ( tx->SetCenter( center3d ).GetCenter(), center3d );
+
+  // exceptions
+  EXPECT_THROW( tx.reset( new sitk::AffineTransform(1) ), sitk::GenericException );
+  EXPECT_THROW( tx.reset( new sitk::AffineTransform(4) ), sitk::GenericException );
+
 }
 
 TEST(TransformTest,Euler2DTransform)
