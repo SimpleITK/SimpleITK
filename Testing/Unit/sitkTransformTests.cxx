@@ -29,8 +29,64 @@
 
 namespace sitk = itk::simple;
 
+
 namespace
 {
+
+template < class T >
+std::ostream& operator<< (std::ostream& os, const std::vector<T>& v)
+{
+  if ( v.empty() )
+    {
+    return os << "[ ]";
+    }
+
+  os << "[ ";
+  std::copy( v.begin(), v.end()-1, std::ostream_iterator<T>(os, ", ") );
+  return os << v.back() << " ]";
+}
+
+
+::testing::AssertionResult VectorDoubleRMSPredFormat(const char* expr1,
+                                          const char* expr2,
+                                          const char* rms_error_expr,
+                                          const std::vector<double> &val1,
+                                          const std::vector<double> &val2,
+                                          double rms_error) {
+
+  if (val1.size() != val2.size())
+    {
+    return testing::AssertionFailure()
+      << "The size of " << expr1 << " and " << expr2
+      << " different, where\n"
+      << expr1 << " evaluates to " << val1 << ",\n"
+      << expr2 << " evaluates to " << val2 << ".";
+
+    }
+  double total = 0.0;
+  for ( unsigned int i = 0; i < val1.size(); ++i )
+    {
+    double temp = (val1[i]-val2[i]);
+    total += temp*temp;
+    }
+  const double rms = sqrt(total);
+  if (rms <= rms_error) return ::testing::AssertionSuccess();
+
+  return ::testing::AssertionFailure()
+      << "The RMS difference between " << expr1 << " and " << expr2
+      << " is " << rms << ",\n  which exceeds " << rms_error_expr << ", where\n"
+      << expr1 << " evaluates to " << val1 << ",\n"
+      << expr2 << " evaluates to " << val2 << ", and\n"
+      << rms_error_expr << " evaluates to " << rms_error << ".";
+}
+
+
+
+#define EXPECT_VECTOR_DOUBLE_NEAR(val1, val2, rms_error)                \
+  EXPECT_PRED_FORMAT3(VectorDoubleRMSPredFormat,                        \
+                      val1, val2, rms_error)
+
+
 std::vector<double> v2(double v1, double v2)
 {
   std::vector<double> temp(2);
@@ -387,26 +443,26 @@ TEST(TransformTest,AffineTransform)
 
   tx.reset( new sitk::AffineTransform(2) );
   tx->Scale( v2(1,2));
-  EXPECT_EQ( tx->TransformPoint( v2(0,0) ), v2(0,0));
-  EXPECT_EQ( tx->TransformPoint( v2(1,1) ), v2(1,2));
+  EXPECT_VECTOR_DOUBLE_NEAR( tx->TransformPoint( v2(0,0) ), v2(0,0),1e-15);
+  EXPECT_VECTOR_DOUBLE_NEAR( tx->TransformPoint( v2(1,1) ), v2(1,2),1e-15);
   tx->Scale( 2 );
-  EXPECT_EQ( tx->TransformPoint( v2(0,0) ), v2(0,0));
-  EXPECT_EQ( tx->TransformPoint( v2(1,1) ), v2(2,4));
+  EXPECT_VECTOR_DOUBLE_NEAR( tx->TransformPoint( v2(0,0) ), v2(0,0),1e-15);
+  EXPECT_VECTOR_DOUBLE_NEAR( tx->TransformPoint( v2(1,1) ), v2(2,4),1e-15);
 
   tx.reset( new sitk::AffineTransform(2) );
   tx->Shear(0,1, 2.0);
-  EXPECT_EQ( tx->TransformPoint( v2(0,0) ), v2(0,0));
-  EXPECT_EQ( tx->TransformPoint( v2(1,2) ), v2(5,2));
+  EXPECT_VECTOR_DOUBLE_NEAR( tx->TransformPoint( v2(0,0) ), v2(0,0),1e-15);
+  EXPECT_VECTOR_DOUBLE_NEAR( tx->TransformPoint( v2(1,2) ), v2(5,2),1e-15);
 
   tx.reset( new sitk::AffineTransform(2) );
   tx->Translate(v2(10.0,-10.0));
-  EXPECT_EQ( tx->TransformPoint( v2(0,0) ), v2(10.0,-10.0));
-  EXPECT_EQ( tx->TransformPoint( v2(1,2) ), v2(11.0,-8.0));
+  EXPECT_VECTOR_DOUBLE_NEAR( tx->TransformPoint( v2(0,0) ), v2(10.0,-10.0),1e-15);
+  EXPECT_VECTOR_DOUBLE_NEAR( tx->TransformPoint( v2(1,2) ), v2(11.0,-8.0),1e-15);
 
   tx.reset( new sitk::AffineTransform(2) );
   tx->Rotate(0,1,itk::Math::pi_over_2);
-  EXPECT_EQ( tx->TransformPoint( v2(0,0) ), v2(0,0));
-  EXPECT_EQ( tx->TransformPoint( v2(1,2) ), v2(2,-1));
+  EXPECT_VECTOR_DOUBLE_NEAR( tx->TransformPoint( v2(0,0) ), v2(0,0),1e-15);
+  EXPECT_VECTOR_DOUBLE_NEAR( tx->TransformPoint( v2(1,2) ), v2(2,-1),1e-14);
 
   // 3d
   EXPECT_NO_THROW( tx.reset( new sitk::AffineTransform(3) ) );
