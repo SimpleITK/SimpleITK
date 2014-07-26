@@ -135,10 +135,10 @@ double Similarity3DTransform::GetScale() const
   return this->m_pfGetScale();
 }
 
-Similarity3DTransform::Self &Similarity3DTransform::Translate(const std::vector<double> &offset, bool pre)
+Similarity3DTransform::Self &Similarity3DTransform::Translate(const std::vector<double> &offset)
 {
   this->MakeUniqueForWrite();
-  this->m_pfTranslate(offset, pre);
+  this->m_pfTranslate(offset);
   return *this;
 }
 
@@ -203,7 +203,8 @@ void Similarity3DTransform::InternalInitialization(TransformType *t)
   this->m_pfSetScale = nsstd::bind(&TransformType::SetScale,t,nsstd::placeholders::_1);
   this->m_pfGetScale = nsstd::bind(&TransformType::GetScale,t);
 
-  this->m_pfTranslate = nsstd::bind(&TransformType::Translate,t,nsstd::bind(pfSTLVectorToITK,nsstd::placeholders::_1),nsstd::placeholders::_2);
+  // pre argument has no effect
+  this->m_pfTranslate = nsstd::bind(&TransformType::Translate,t,nsstd::bind(pfSTLVectorToITK,nsstd::placeholders::_1), false);
 
 }
 

@@ -58,7 +58,7 @@ Self &SetTranslation(const std::vector<double>& translation);
 
 
 /** additional methods */
-Self &Translate(const std::vector<double> &offset, bool pre=false);
+Self &Translate(const std::vector<double> &offset);
 
 protected:
 
@@ -82,7 +82,7 @@ nsstd::function<void(double)> m_pfSetScale;
 nsstd::function<double()> m_pfGetScale;
 nsstd::function<void(const std::vector<double>&)> m_pfSetTranslation;
 nsstd::function<std::vector<double>()> m_pfGetTranslation;
-nsstd::function<void(const std::vector<double> &, bool)> m_pfTranslate;
+nsstd::function<void(const std::vector<double> &)> m_pfTranslate;
 
 };
 

@@ -123,10 +123,10 @@ std::vector<double> VersorRigid3DTransform::GetTranslation( ) const
   return this->m_pfGetTranslation();
 }
 
-VersorRigid3DTransform::Self &VersorRigid3DTransform::Translate(const std::vector<double> &offset, bool pre)
+VersorRigid3DTransform::Self &VersorRigid3DTransform::Translate(const std::vector<double> &offset)
 {
   this->MakeUniqueForWrite();
-  this->m_pfTranslate(offset, pre);
+  this->m_pfTranslate(offset);
   return *this;
 }
 
@@ -184,7 +184,8 @@ void VersorRigid3DTransform::InternalInitialization(TransformType *t)
 
   this->m_pfGetVersor  = nsstd::bind(&sitkITKVersorToSTL<double, double>,nsstd::bind(&TransformType::GetVersor,t));
 
-  this->m_pfTranslate = nsstd::bind(&TransformType::Translate,t,nsstd::bind(pfSTLVectorToITK,nsstd::placeholders::_1),nsstd::placeholders::_2);
+  // pre argument has no effect
+  this->m_pfTranslate = nsstd::bind(&TransformType::Translate,t,nsstd::bind(pfSTLVectorToITK,nsstd::placeholders::_1), false);
 }
 
 }
