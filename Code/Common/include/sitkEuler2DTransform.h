@@ -38,7 +38,7 @@ public:
 
   explicit Euler2DTransform(const std::vector<double> &fixedCenter,
                             double angle=0.0,
-                            const std::vector<double> &translation = std::vector<double>(3,0.0) );
+                            const std::vector<double> &translation = std::vector<double>(2,0.0) );
 
   Euler2DTransform( const Euler2DTransform & );
 
@@ -48,10 +48,9 @@ public:
   Self &SetCenter(const std::vector<double> &params);
   std::vector<double> GetCenter( ) const;
 
-  double GetAngle () const;
-
 /** parameter */
   Self &SetAngle (double angle);
+  double GetAngle () const;
 
   std::vector<double> GetTranslation( ) const;
   Self &SetTranslation(const std::vector<double>& translation);
