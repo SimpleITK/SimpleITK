@@ -512,6 +512,39 @@ TEST(TransformTest,AffineTransform)
 
 }
 
+
+TEST(TransformTest,AffineTransform_3DPoints)
+{
+  // Test Affine by transforming some points
+  sitk::AffineTransform tx(3);
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(0.0,0.0,0.0) ), v3(0.0,0.0,0.0),1e-15 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(1.0,1.0,1.0) ), v3(1.0,1.0,1.0),1e-15 );
+
+  tx.Translate(v3(1.0,2.0,3.0));
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(0.0,0.0,0.0) ), v3(1.0,2.0,3.0),1e-15 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(1.0,1.0,1.0) ), v3(2.0,3.0,4.0),1e-15 );
+
+  // apply transform after and inverse before
+  tx.Scale(v3(2.0,2.0,2.0),false).Scale(.5,true);
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(0.0,0.0,0.0) ), v3(2.0,4.0,6.0),1e-15 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(1.0,1.0,1.0) ), v3(3.0,5.0,7.0),1e-15 );
+
+  tx = sitk::AffineTransform(3);
+  tx.Translate(v3(1.0,2.0,3.0));
+  tx.Shear(0,1,1.0, false).Shear(0,1,-1.0,true);
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(0.0,0.0,0.0) ), v3(3.0,2.0,3.0),1e-15 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(1.0,1.0,1.0) ), v3(4.0,3.0,4.0),1e-15 );
+
+  tx = sitk::AffineTransform(3);
+  tx.Translate(v3(1.0,2.0,3.0));
+  tx.Rotate(0,1,1.0, false).Rotate(0,1,-1.0);
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(0.0,0.0,0.0) ), v3(1.0,2.0,3.0),1e-15 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(1.0,0.0,1.0) ), v3(2.0,2.0,4.0),1e-15 );
+
+}
+
+
+
 TEST(TransformTest,Euler2DTransform)
 {
   // test Euler2DTransform
@@ -939,6 +972,29 @@ TEST(TransformTest,Similarity3DTransform)
   EXPECT_EQ(tx->GetTranslation(), zeros);
   tx->SetTranslation(trans);
   EXPECT_EQ(tx->GetTranslation(),trans);
+
+}
+
+
+TEST(TransformTest,Similarity3DTransform_Points)
+{
+  // Test Similarity3D by transforming some points
+  sitk::Similarity3DTransform tx;
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(0.0,0.0,0.0) ), v3(0.0,0.0,0.0),1e-15 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(1.0,1.0,1.0) ), v3(1.0,1.0,1.0),1e-15 );
+
+  EXPECT_EQ( tx.Translate(v3(1.0,2.0,3.0)).GetTranslation(), v3(1.0,2.0,3.0) );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(0.0,0.0,0.0) ), v3(1.0,2.0,3.0),1e-15);
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(1.0,1.0,1.0) ), v3(2.0,3.0,4.0),1e-15);
+
+  tx = sitk::Similarity3DTransform();
+  EXPECT_EQ( tx.SetRotation(v4(0.0,1.0,0.0,0.0)).GetVersor(), v4(0.0,1.0,0.0,0.0) );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(0.0,0.0,0.0) ), v3(0.0,0.0,0.0),1e-15 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(1.0,0.0,0.0) ), v3(-1.0,0.0,0.0),1e-15 );
+
+  EXPECT_EQ( tx.Translate(v3(1.0,2.0,3.0)).GetTranslation(), v3(1.0,2.0,3.0) );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(0.0,0.0,0.0) ), v3(1.0,2.0,3.0),1e-15);
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(1.0,0.0,0.0) ), v3(0.0,2.0,3.0),1e-15);
 
 }
 
