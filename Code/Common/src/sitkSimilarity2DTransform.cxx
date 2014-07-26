@@ -96,7 +96,7 @@ std::vector<double> Similarity2DTransform::GetTranslation( ) const
   return this->m_pfGetTranslation();
 }
 
-Similarity2DTransform::Self &Similarity2DTransform::SetScale(double &scale)
+Similarity2DTransform::Self &Similarity2DTransform::SetScale(double scale)
 {
   this->MakeUniqueForWrite();
   this->m_pfSetScale(scale);
