@@ -21,6 +21,7 @@
 #include "sitkTranslationTransform.h"
 #include "sitkEuler2DTransform.h"
 #include "sitkEuler3DTransform.h"
+#include "sitkSimilarity2DTransform.h"
 #include "sitkSimilarity3DTransform.h"
 #include "sitkAdditionalProcedures.h"
 #include "sitkResampleImageFilter.h"
@@ -742,6 +743,94 @@ TEST(TransformTest,Euler3DTransform)
 
 TEST(TransformTest,Similarity2DTransform)
 {
+  // test Similarity2DTransform
+  const std::vector<double> center(2,1.1);
+  const std::vector<double> zeros(2,0.0);
+  const std::vector<double> trans(2, 2.2);
+
+  std::auto_ptr<sitk::Similarity2DTransform> tx(new sitk::Similarity2DTransform());
+  EXPECT_EQ( tx->GetParameters().size(), 4u );
+  EXPECT_EQ( tx->GetFixedParameters().size(), 2u );
+  EXPECT_EQ( tx->GetTranslation(), v2(0.0,0.0) );
+  EXPECT_EQ( tx->GetScale(), 1.0);
+  EXPECT_EQ( tx->GetAngle(), 0.0 );
+
+  EXPECT_EQ( tx->SetScale(2.0).GetScale(), 2.0 );
+  EXPECT_EQ( tx->SetTranslation(trans).GetTranslation(), trans );
+  EXPECT_EQ( tx->SetCenter(center).GetCenter(), center );
+  EXPECT_EQ( tx->SetAngle(1.0).GetAngle(), 1.0 );
+
+  // copy constructor
+  sitk::Similarity2DTransform tx1( *(tx.get()) );
+  EXPECT_EQ( tx->GetParameters().size(), 4u );
+  EXPECT_EQ( tx->GetFixedParameters().size(), 2u );
+  EXPECT_EQ( tx1.GetFixedParameters()[0], 1.1 );
+  EXPECT_EQ( tx1.GetFixedParameters()[1], 1.1 );
+  EXPECT_EQ( tx1.GetParameters()[0], 2.0 ); // scale
+  EXPECT_EQ( tx1.GetParameters()[1], 1.0 ); // angle
+  EXPECT_EQ( tx1.GetCenter(), center );
+  EXPECT_EQ( tx1.GetTranslation(), trans );
+
+  sitk::Similarity2DTransform tx2;
+
+  // assignment operator
+  tx1 = tx2;
+  EXPECT_EQ( tx1.GetCenter(), zeros );
+  EXPECT_EQ( tx1.GetParameters().size(), 4u );
+  EXPECT_EQ( tx1.GetFixedParameters().size(), 2u );
+  EXPECT_EQ( tx1.GetTranslation(), zeros );
+  EXPECT_EQ( tx1.GetScale(), 1.0);
+  EXPECT_EQ( tx1.GetAngle(), 0.0);
+
+
+  // copy on write
+  tx1.SetFixedParameters(center);
+  EXPECT_EQ( tx1.GetCenter(), center);
+  EXPECT_EQ( tx1.GetFixedParameters(), center );
+  EXPECT_EQ( tx2.GetFixedParameters(), zeros );
+  EXPECT_EQ( tx1.GetCenter(), center );
+  EXPECT_EQ( tx2.GetCenter(), zeros );
+
+  tx1 = tx2;
+  EXPECT_EQ( tx1.GetCenter(), zeros );
+  EXPECT_EQ( tx2.GetCenter(), zeros );
+  tx1.SetCenter(center);
+  EXPECT_EQ( tx1.GetCenter(), center );
+  EXPECT_EQ( tx2.GetCenter(), zeros );
+
+  tx1 = tx2;
+  EXPECT_EQ( tx1.GetTranslation(), zeros );
+  EXPECT_EQ( tx2.GetTranslation(), zeros );
+  tx1.SetTranslation(trans);
+  EXPECT_EQ( tx1.GetTranslation(), trans );
+  EXPECT_EQ( tx2.GetTranslation(), zeros );
+
+  tx1 = tx2;
+  EXPECT_EQ( tx1.GetScale(), 1.0 );
+  EXPECT_EQ( tx2.GetScale(), 1.0 );
+  tx1.SetScale(2.0);
+  EXPECT_EQ( tx1.GetScale(), 2.0 );
+  EXPECT_EQ( tx2.GetScale(), 1.0 );
+
+  tx1 = tx2;
+  EXPECT_EQ( tx1.GetAngle(), 0.0 );
+  EXPECT_EQ( tx2.GetAngle(), 0.0 );
+  tx1.SetAngle( itk::Math::pi );
+  EXPECT_NEAR( tx1.GetAngle(),  itk::Math::pi, 1e-15 );
+  EXPECT_EQ( tx2.GetAngle(), 0.0 );
+
+  sitk::Transform tx3( *tx );
+  tx.reset();
+
+  EXPECT_EQ( tx3.GetParameters().size(), 4u );
+  EXPECT_EQ( tx3.GetFixedParameters().size(), 2u );
+  EXPECT_EQ( tx3.GetFixedParameters()[0], 1.1 );
+  EXPECT_EQ( tx3.GetFixedParameters()[1], 1.1 );
+  EXPECT_EQ( tx3.GetParameters()[0], 2.0 );
+  EXPECT_EQ( tx3.GetParameters()[1], 1.0 );
+  EXPECT_EQ( tx3.GetParameters()[2], 2.2 );
+  EXPECT_EQ( tx3.GetParameters()[3], 2.2 );
+
 }
 
 
