@@ -10,6 +10,7 @@ set ( SimpleITKCommonSource
   sitkSimilarity3DTransform.cxx
   sitkTranslationTransform.cxx
   sitkVersorTransform.cxx
+  sitkVersorRigid3DTransform.cxx
   sitkCommand.cxx
   sitkFunctionCommand.cxx
   sitkPixelIDValues.cxx
