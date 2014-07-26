@@ -130,18 +130,19 @@ void VersorTransform::InternalInitialization(itk::TransformBase *transform)
   typedef itk::VersorTransform<double> TransformType;
   TransformType *t = dynamic_cast<TransformType*>(transform);
 
-  if (t)
-    {
-    this->InternalInitialization(t);
-    return;
-    }
-
+  // explicitly remove all function pointer with reference to prior transform
   this->m_pfSetCenter = SITK_NULLPTR;
   this->m_pfGetCenter = SITK_NULLPTR;
   this->m_pfSetRotation1 = SITK_NULLPTR;
   this->m_pfSetRotation2 = SITK_NULLPTR;
   this->m_pfGetVersor = SITK_NULLPTR;
   this->m_pfTranslate = SITK_NULLPTR;
+
+  if (t)
+    {
+    this->InternalInitialization(t);
+    return;
+    }
 }
 
 

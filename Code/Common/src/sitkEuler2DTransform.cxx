@@ -108,18 +108,18 @@ void Euler2DTransform::InternalInitialization(itk::TransformBase *transform)
   typedef itk::Euler2DTransform<double> TransformType;
   TransformType *t = dynamic_cast<TransformType*>(transform);
 
-  if (t)
-    {
-    this->InternalInitialization(t);
-    return;
-    }
-
   this->m_pfSetCenter = SITK_NULLPTR;
   this->m_pfGetCenter = SITK_NULLPTR;
   this->m_pfSetTranslation = SITK_NULLPTR;
   this->m_pfGetTranslation = SITK_NULLPTR;
   this->m_pfSetAngle = SITK_NULLPTR;
   this->m_pfGetAngle = SITK_NULLPTR;
+
+  if (t)
+    {
+    this->InternalInitialization(t);
+    return;
+    }
 
 }
 

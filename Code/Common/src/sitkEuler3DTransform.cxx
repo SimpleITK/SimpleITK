@@ -131,12 +131,7 @@ void Euler3DTransform::InternalInitialization(itk::TransformBase *transform)
   typedef itk::Euler3DTransform<double> TransformType;
   TransformType *t = dynamic_cast<TransformType*>(transform);
 
-  if (t)
-    {
-    this->InternalInitialization(t);
-    return;
-    }
-
+  // explicitly remove all function pointer with reference to prior transform
   this->m_pfSetCenter = SITK_NULLPTR;
   this->m_pfGetCenter = SITK_NULLPTR;
   this->m_pfSetTranslation = SITK_NULLPTR;
@@ -147,6 +142,13 @@ void Euler3DTransform::InternalInitialization(itk::TransformBase *transform)
   this->m_pfGetAngleZ = SITK_NULLPTR;
   this->m_pfSetComputeZYX = SITK_NULLPTR;
   this->m_pfGetComputeZYX = SITK_NULLPTR;
+
+  if (t)
+    {
+    this->InternalInitialization(t);
+    return;
+    }
+
 }
 
 
