@@ -111,7 +111,19 @@ std::vector<double>  Similarity3DTransform::GetVersor() const
   return this->m_pfGetVersor();
 }
 
-Similarity3DTransform::Self &Similarity3DTransform::SetScale(double &scale)
+Similarity3DTransform::Self &Similarity3DTransform::SetTranslation(const std::vector<double> &params)
+{
+  this->MakeUniqueForWrite();
+  this->m_pfSetTranslation(params);
+  return *this;
+}
+
+std::vector<double> Similarity3DTransform::GetTranslation( ) const
+{
+  return this->m_pfGetTranslation();
+}
+
+Similarity3DTransform::Self &Similarity3DTransform::SetScale(double scale)
 {
   this->MakeUniqueForWrite();
   this->m_pfSetScale(scale);
@@ -145,6 +157,8 @@ void Similarity3DTransform::InternalInitialization(itk::TransformBase *transform
   // explicitly remove all function pointer with reference to prior transform
   this->m_pfSetCenter = SITK_NULLPTR;
   this->m_pfGetCenter = SITK_NULLPTR;
+  this->m_pfSetTranslation = SITK_NULLPTR;
+  this->m_pfGetTranslation = SITK_NULLPTR;
   this->m_pfSetRotation1 = SITK_NULLPTR;
   this->m_pfSetRotation2 = SITK_NULLPTR;
   this->m_pfGetVersor = SITK_NULLPTR;
@@ -172,6 +186,11 @@ void Similarity3DTransform::InternalInitialization(TransformType *t)
   }
 
   typename TransformType::OutputVectorType (*pfSTLVectorToITK)(const std::vector<double> &) = &sitkSTLVectorToITK<typename TransformType::OutputVectorType, double>;
+  this->m_pfSetTranslation = nsstd::bind(&TransformType::SetTranslation,t,nsstd::bind(pfSTLVectorToITK,nsstd::placeholders::_1));
+
+  std::vector<double> (*pfITKVectorToSTL)( const typename TransformType::OutputVectorType &) = &sitkITKVectorToSTL<double,typename TransformType::OutputVectorType>;
+  this->m_pfGetTranslation = nsstd::bind(pfITKVectorToSTL,nsstd::bind(&TransformType::GetTranslation,t));
+
 
   void 	(TransformType::*pfSetRotation1) (const typename TransformType::VersorType &) = &TransformType::SetRotation;
   this->m_pfSetRotation1 = nsstd::bind(pfSetRotation1,t,nsstd::bind(&sitkSTLVectorToITKVersor<double, double>,nsstd::placeholders::_1));
