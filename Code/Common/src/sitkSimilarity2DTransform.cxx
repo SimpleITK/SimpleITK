@@ -96,7 +96,7 @@ std::vector<double> Similarity2DTransform::GetTranslation( ) const
   return this->m_pfGetTranslation();
 }
 
-Similarity2DTransform::Self &Similarity2DTransform::SetScale(double &scale)
+Similarity2DTransform::Self &Similarity2DTransform::SetScale(double scale)
 {
   this->MakeUniqueForWrite();
   this->m_pfSetScale(scale);
@@ -120,12 +120,7 @@ void Similarity2DTransform::InternalInitialization(itk::TransformBase *transform
   typedef itk::Similarity2DTransform<double> TransformType;
   TransformType *t = dynamic_cast<TransformType*>(transform);
 
-  if (t)
-    {
-    this->InternalInitialization(t);
-    return;
-    }
-
+  // explicitly remove all function pointer with reference to prior transform
   this->m_pfSetCenter = SITK_NULLPTR;
   this->m_pfGetCenter = SITK_NULLPTR;
   this->m_pfSetTranslation = SITK_NULLPTR;
@@ -134,6 +129,13 @@ void Similarity2DTransform::InternalInitialization(itk::TransformBase *transform
   this->m_pfGetAngle = SITK_NULLPTR;
   this->m_pfSetScale = SITK_NULLPTR;
   this->m_pfGetScale = SITK_NULLPTR;
+
+  if (t)
+    {
+    this->InternalInitialization(t);
+    return;
+    }
+
 
 }
 

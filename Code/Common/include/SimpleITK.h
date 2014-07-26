@@ -35,6 +35,7 @@
 #include "sitkSimilarity3DTransform.h"
 #include "sitkTranslationTransform.h"
 #include "sitkVersorTransform.h"
+#include "sitkVersorRigid3DTransform.h"
 #include "sitkShow.h"
 
 #include "sitkInterpolator.h"

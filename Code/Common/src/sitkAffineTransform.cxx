@@ -122,6 +122,7 @@ void AffineTransform::InternalInitialization(itk::TransformBase *transform)
 
   typelist::Visit<TransformTypeList> callInternalInitialization;
 
+  // explicitly remove all function pointer with reference to prior transform
   this->m_pfSetCenter = SITK_NULLPTR;
   this->m_pfGetCenter = SITK_NULLPTR;
   this->m_pfSetTranslation = SITK_NULLPTR;

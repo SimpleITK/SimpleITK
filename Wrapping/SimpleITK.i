@@ -130,6 +130,12 @@ namespace std
 %include "sitkVersion.h"
 %include "sitkPixelIDValues.h"
 %include "sitkImage.h"
+%include "sitkCommand.h"
+%include "sitkInterpolator.h"
+%include "sitkKernel.h"
+%include "sitkEvent.h"
+
+// Transforms
 %include "sitkTransform.h"
 %include "sitkAffineTransform.h"
 %include "sitkEuler3DTransform.h"
@@ -138,10 +144,8 @@ namespace std
 %include "sitkSimilarity3DTransform.h"
 %include "sitkTranslationTransform.h"
 %include "sitkVersorTransform.h"
-%include "sitkCommand.h"
-%include "sitkInterpolator.h"
-%include "sitkKernel.h"
-%include "sitkEvent.h"
+%include "sitkVersorRigid3DTransform.h"
+
 
 // Basic Filter Base
 %include "sitkProcessObject.h"

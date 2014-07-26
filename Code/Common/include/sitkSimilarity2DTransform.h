@@ -48,15 +48,14 @@ public:
   Self &SetCenter(const std::vector<double> &params);
   std::vector<double> GetCenter( ) const;
 
-  double GetAngle () const;
-
 /** parameter */
   Self &SetAngle (double angle);
+  double GetAngle () const;
 
   std::vector<double> GetTranslation( ) const;
   Self &SetTranslation(const std::vector<double>& translation);
 
-  Self &SetScale(double &scale);
+  Self &SetScale(double scale);
   double GetScale() const;
 
 protected:

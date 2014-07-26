@@ -50,11 +50,15 @@ Self &SetRotation(const std::vector<double> &versor);
 Self &SetRotation(const std::vector<double> &axis,  double angle);
 std::vector<double> GetVersor() const;
 
-Self &SetScale(double &scale);
+Self &SetScale(double scale);
 double GetScale() const;
 
+std::vector<double> GetTranslation( ) const;
+Self &SetTranslation(const std::vector<double>& translation);
+
+
 /** additional methods */
-Self &Translate(const std::vector<double> &offset, bool pre=false);
+Self &Translate(const std::vector<double> &offset);
 
 protected:
 
@@ -76,7 +80,9 @@ nsstd::function<void(const std::vector<double>,double&)> m_pfSetRotation2;
 nsstd::function<std::vector<double>()> m_pfGetVersor;
 nsstd::function<void(double)> m_pfSetScale;
 nsstd::function<double()> m_pfGetScale;
-nsstd::function<void(const std::vector<double> &, bool)> m_pfTranslate;
+nsstd::function<void(const std::vector<double>&)> m_pfSetTranslation;
+nsstd::function<std::vector<double>()> m_pfGetTranslation;
+nsstd::function<void(const std::vector<double> &)> m_pfTranslate;
 
 };
 

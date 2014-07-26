@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkVersorTransform_h
-#define __sitkVersorTransform_h
+#ifndef __sitkVersorRigid3DTransform_h
+#define __sitkVersorRigid3DTransform_h
 
 #include "sitkCommon.h"
 #include "sitkTransform.h"
@@ -26,19 +26,19 @@ namespace itk
 namespace simple
 {
 
-class SITKCommon_EXPORT VersorTransform
+class SITKCommon_EXPORT VersorRigid3DTransform
   : public Transform
 {
 public:
-  typedef VersorTransform Self;
+  typedef VersorRigid3DTransform Self;
   typedef Transform Superclass;
 
 // construct identity
-  VersorTransform();
+  VersorRigid3DTransform();
 
-  VersorTransform( const VersorTransform & );
+  VersorRigid3DTransform( const VersorRigid3DTransform & );
 
-  VersorTransform &operator=( const VersorTransform & );
+  VersorRigid3DTransform &operator=( const VersorRigid3DTransform & );
 
 /** fixed parameter */
   Self &SetCenter(const std::vector<double> &params);
@@ -49,6 +49,12 @@ public:
   Self &SetRotation(const std::vector<double> &versor);
   Self &SetRotation(const std::vector<double> &axis,  double angle);
   std::vector<double> GetVersor() const;
+
+  std::vector<double> GetTranslation( ) const;
+  Self &SetTranslation(const std::vector<double>& translation);
+
+/** additional methods */
+  Self &Translate(const std::vector<double> &offset);
 
 protected:
 
@@ -69,7 +75,9 @@ private:
   nsstd::function<void(const std::vector<double>&)> m_pfSetRotation1;
   nsstd::function<void(const std::vector<double>&,double)> m_pfSetRotation2;
   nsstd::function<std::vector<double>()> m_pfGetVersor;
-
+  nsstd::function<void(const std::vector<double>&)> m_pfSetTranslation;
+  nsstd::function<std::vector<double>()> m_pfGetTranslation;
+  nsstd::function<void(const std::vector<double> &)> m_pfTranslate;
 };
 
 }
