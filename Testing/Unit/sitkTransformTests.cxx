@@ -472,9 +472,30 @@ TEST(TransformTest,AffineTransform)
   EXPECT_EQ( tx->SetTranslation( trans3d ).GetTranslation(), trans3d );
   EXPECT_EQ( tx->SetCenter( center3d ).GetCenter(), center3d );
 
+  // copy and assignment
+  sitk::AffineTransform tx1(*tx);
+  EXPECT_EQ( tx1.GetDimension(), 3u );
+  EXPECT_EQ( tx1.GetCenter(), center3d );
+  EXPECT_EQ( tx1.GetParameters(), tx->GetParameters() );
+  EXPECT_EQ( tx1.GetFixedParameters(), tx->GetFixedParameters() );
+
+
+  tx1 = sitk::AffineTransform(2);
+  EXPECT_EQ( tx1.GetDimension(), 2u );
+  EXPECT_EQ( tx1.GetParameters().size(), 6u );
+  EXPECT_EQ( tx1.GetFixedParameters().size(), 2u );
+  EXPECT_EQ( tx1.GetCenter(), std::vector<double>(2, 0.0) );
+  EXPECT_EQ( tx1.GetTranslation(), std::vector<double>(2, 0.0) );
+
+  // copy on write
+
   // exceptions
-  EXPECT_THROW( tx.reset( new sitk::AffineTransform(1) ), sitk::GenericException );
-  EXPECT_THROW( tx.reset( new sitk::AffineTransform(4) ), sitk::GenericException );
+  EXPECT_THROW( sitk::AffineTransform(1), sitk::GenericException );
+  EXPECT_THROW( sitk::AffineTransform(4), sitk::GenericException );
+  EXPECT_THROW( tx->SetParameters( std::vector<double>(11) ), sitk::GenericException );
+  EXPECT_THROW( tx->SetParameters( std::vector<double>(13) ), sitk::GenericException );
+  EXPECT_THROW( tx->SetFixedParameters( std::vector<double>(2) ), sitk::GenericException );
+  EXPECT_THROW( tx->SetFixedParameters( std::vector<double>(4) ), sitk::GenericException );
 
 }
 
