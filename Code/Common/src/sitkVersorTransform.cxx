@@ -111,13 +111,6 @@ std::vector<double>  VersorTransform::GetVersor() const
   return this->m_pfGetVersor();
 }
 
-VersorTransform::Self &VersorTransform::Translate(const std::vector<double> &offset, bool pre)
-{
-  this->MakeUniqueForWrite();
-  this->m_pfTranslate(offset, pre);
-  return *this;
-}
-
 void VersorTransform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
 {
   Superclass::SetPimpleTransform(pimpleTransform);
@@ -136,7 +129,6 @@ void VersorTransform::InternalInitialization(itk::TransformBase *transform)
   this->m_pfSetRotation1 = SITK_NULLPTR;
   this->m_pfSetRotation2 = SITK_NULLPTR;
   this->m_pfGetVersor = SITK_NULLPTR;
-  this->m_pfTranslate = SITK_NULLPTR;
 
   if (t)
     {
@@ -166,8 +158,6 @@ void VersorTransform::InternalInitialization(TransformType *t)
   this->m_pfSetRotation2 = nsstd::bind(pfSetRotation2,t,nsstd::bind(pfSTLVectorToITK,nsstd::placeholders::_1),nsstd::placeholders::_2);
 
   this->m_pfGetVersor  = nsstd::bind(&sitkITKVersorToSTL<double, double>,nsstd::bind(&TransformType::GetVersor,t));
-
-  this->m_pfTranslate = nsstd::bind(&TransformType::Translate,t,nsstd::bind(pfSTLVectorToITK,nsstd::placeholders::_1),nsstd::placeholders::_2);
 
 }
 

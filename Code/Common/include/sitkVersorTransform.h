@@ -50,10 +50,6 @@ public:
   Self &SetRotation(const std::vector<double> &axis,  double angle);
   std::vector<double> GetVersor() const;
 
-
-/** additional methods */
-  Self &Translate(const std::vector<double> &offset, bool pre=false);
-
 protected:
 
   virtual void SetPimpleTransform( PimpleTransformBase *pimpleTransform );
@@ -73,8 +69,6 @@ private:
   nsstd::function<void(const std::vector<double>&)> m_pfSetRotation1;
   nsstd::function<void(const std::vector<double>&,double)> m_pfSetRotation2;
   nsstd::function<std::vector<double>()> m_pfGetVersor;
-  nsstd::function<void(const std::vector<double> &, bool)> m_pfTranslate;
-
 
 };
 
