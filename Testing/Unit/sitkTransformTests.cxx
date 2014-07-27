@@ -16,6 +16,27 @@
 *
 *=========================================================================*/
 
+#include <ostream>
+#include <vector>
+
+// This is needed before the gtest include for lookup of the operator
+// to work with clang 5.1
+namespace {
+ std::ostream& operator<< (std::ostream& os, const std::vector<double>& v)
+ {
+   if ( v.empty() )
+     {
+     return os << "[ ]";
+     }
+
+   os << "[ ";
+   std::copy( v.begin(), v.end()-1, std::ostream_iterator<double>(os, ", ") );
+   return os << v.back() << " ]";
+ }
+}
+
+
+#include "SimpleITKTestHarness.h"
 #include "sitkTransform.h"
 #include "sitkAffineTransform.h"
 #include "sitkTranslationTransform.h"
@@ -28,37 +49,20 @@
 #include "sitkAdditionalProcedures.h"
 #include "sitkResampleImageFilter.h"
 #include "sitkHashImageFilter.h"
-#include "SimpleITKTestHarness.h"
+
 
 #include "itkMath.h"
 
 namespace sitk = itk::simple;
 
-
-namespace
-{
-
-template < class T >
-std::ostream& operator<< (std::ostream& os, const std::vector<T>& v)
-{
-  if ( v.empty() )
-    {
-    return os << "[ ]";
-    }
-
-  os << "[ ";
-  std::copy( v.begin(), v.end()-1, std::ostream_iterator<T>(os, ", ") );
-  return os << v.back() << " ]";
-}
-
+namespace {
 
 ::testing::AssertionResult VectorDoubleRMSPredFormat(const char* expr1,
-                                          const char* expr2,
-                                          const char* rms_error_expr,
-                                          const std::vector<double> &val1,
-                                          const std::vector<double> &val2,
-                                          double rms_error) {
-
+                                                     const char* expr2,
+                                                     const char* rms_error_expr,
+                                                     const std::vector<double> &val1,
+                                                     const std::vector<double> &val2,
+                                                     double rms_error) {
   if (val1.size() != val2.size())
     {
     return testing::AssertionFailure()
