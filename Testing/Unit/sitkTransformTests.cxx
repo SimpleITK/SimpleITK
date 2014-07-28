@@ -796,10 +796,20 @@ TEST(TransformTest,Similarity2DTransform)
   EXPECT_EQ( tx->GetScale(), 1.0);
   EXPECT_EQ( tx->GetAngle(), 0.0 );
 
+  EXPECT_NO_THROW( tx.reset( new sitk::Similarity2DTransform(center, -1.0, v2(1.1,1.1) ) ) );
+  EXPECT_EQ( tx->GetCenter(), center );
+  EXPECT_EQ( tx->GetAngle(), -1.0 );
+  EXPECT_EQ( tx->GetTranslation(), v2(1.1,1.1) );
+
+  EXPECT_THROW( sitk::Similarity2DTransform( std::vector<double>(1, 0.0), -1.0, v2(1.1,1.1) ), sitk::GenericException );
+  EXPECT_THROW( sitk::Similarity2DTransform( center, -1.0, std::vector<double>(1, 0.0) ), sitk::GenericException );
+
+
   EXPECT_EQ( tx->SetScale(2.0).GetScale(), 2.0 );
   EXPECT_EQ( tx->SetTranslation(trans).GetTranslation(), trans );
   EXPECT_EQ( tx->SetCenter(center).GetCenter(), center );
   EXPECT_EQ( tx->SetAngle(1.0).GetAngle(), 1.0 );
+
 
   // copy constructor
   sitk::Similarity2DTransform tx1( *(tx.get()) );
