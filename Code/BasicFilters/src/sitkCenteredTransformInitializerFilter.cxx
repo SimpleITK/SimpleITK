@@ -76,7 +76,7 @@ std::string CenteredTransformInitializerFilter::ToString() const
   this->ToStringHelper(out, this->m_OperationMode);
   out << std::endl;
 
-
+  out << ProcessObject::ToString();
   return out.str();
 }
 
