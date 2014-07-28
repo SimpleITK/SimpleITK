@@ -30,7 +30,8 @@
 #include "itkVectorIndexSelectionCastImageFilter.h"
 #include "itkComposeImageFilter.h"
 
-#include "sitkCenteredVersorTransformInitializer.h"
+#include "itkVersorRigid3DTransform.h"
+#include "sitkCenteredVersorTransformInitializerFilter.h"
 #include "itkCenteredVersorTransformInitializer.h"
 
 // Additional include files
@@ -45,37 +46,33 @@ namespace simple {
 //
 // Default constructor that initializes parameters
 //
-CenteredVersorTransformInitializer::CenteredVersorTransformInitializer ()
+CenteredVersorTransformInitializerFilter::CenteredVersorTransformInitializerFilter ()
 {
 
-    this->m_ComputeRotation = false;
+  this->m_ComputeRotation = false;
 
   this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
-  this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
 
-
-  
 }
 
 //
 // Destructor
 //
-CenteredVersorTransformInitializer::~CenteredVersorTransformInitializer ()
+CenteredVersorTransformInitializerFilter::~CenteredVersorTransformInitializerFilter ()
 {
 
 }
 
 
-
 //
 // ToString
 //
-std::string CenteredVersorTransformInitializer::ToString() const
+std::string CenteredVersorTransformInitializerFilter::ToString() const
 {
   std::ostringstream out;
-  out << "itk::simple::CenteredVersorTransformInitializer\n";
+  out << "itk::simple::CenteredVersorTransformInitializerFilter\n";
   out << "  ComputeRotation: ";
   this->ToStringHelper(out, this->m_ComputeRotation);
   out << std::endl;
@@ -87,7 +84,7 @@ std::string CenteredVersorTransformInitializer::ToString() const
 //
 // Execute
 //
-Image CenteredVersorTransformInitializer::Execute ( const Image & fixedImage, const Image & movingImage, const Transform & transform, bool computeRotation )
+Transform CenteredVersorTransformInitializerFilter::Execute ( const Image & fixedImage, const Image & movingImage, const Transform & transform,  bool computeRotation )
 {
   this->SetComputeRotation ( computeRotation );
 
@@ -95,7 +92,7 @@ Image CenteredVersorTransformInitializer::Execute ( const Image & fixedImage, co
 }
 
 
-Image CenteredVersorTransformInitializer::Execute ( const Image & fixedImage, const Image & movingImage, const Transform & transform )
+Transform CenteredVersorTransformInitializerFilter::Execute ( const Image & fixedImage, const Image & movingImage, const Transform & transform )
 {
   PixelIDValueEnum type = fixedImage.GetPixelID();
   unsigned int dimension = fixedImage.GetDimension();
@@ -120,18 +117,10 @@ namespace {
 // ExecuteInternal
 //
 template <class TImageType>
-Image CenteredVersorTransformInitializer::ExecuteInternal ( const Image * inFixedImage, const Image * inMovingImage, const Transform * inTransform )
+Transform CenteredVersorTransformInitializerFilter::ExecuteInternal ( const Image * inFixedImage, const Image * inMovingImage, const Transform * inTransform )
 {
-  // Define the input and output image types
-  typedef TImageType     InputImageType;
-        
 
-  //Define output image type
-  typedef float OutputImageType;
-
-
-
-  typedef itk::CenteredVersorTransformInitializer< itk::AffineTransform< double, TImageType::ImageDimension  >, TImageType, TImageType> FilterType;
+  typedef itk::CenteredVersorTransformInitializer< TImageType, TImageType> FilterType;
   // Set up the ITK filter
   typename FilterType::Pointer filter = FilterType::New();
 
@@ -142,7 +131,13 @@ Image CenteredVersorTransformInitializer::ExecuteInternal ( const Image * inFixe
   typename FilterType::MovingImageType::ConstPointer image2 = this->CastImageToITK<typename FilterType::MovingImageType>( *inMovingImage );
   filter->SetMovingImage( image2 );
   assert( inTransform != NULL );
-  const typename FilterType::TransformType *itkTx = dynamic_cast<const typename FilterType::TransformType *>(inTransform->GetITKBase() );
+
+  // This initializers modifies the input, we copy the transform to
+  // prevent this change
+  Transform copyTransform(*inTransform);
+  copyTransform.SetFixedParameters(copyTransform.GetFixedParameters());
+
+  const typename FilterType::TransformType *itkTx = dynamic_cast<const typename FilterType::TransformType *>(copyTransform.GetITKBase() );
   if ( !itkTx )
     {
     sitkExceptionMacro( "Unexpected error converting transform! Possible miss matching dimensions!" );
@@ -152,28 +147,18 @@ Image CenteredVersorTransformInitializer::ExecuteInternal ( const Image * inFixe
 
   filter->SetComputeRotation ( this->m_ComputeRotation );
 
+  filter->InitializeTransform();
 
-
-
-  this->PreUpdate( filter.GetPointer() );
-
-
-
-  // Run the ITK filter and return the output as a SimpleITK image
-  filter->Update();
-
-
-
-  typename FilterType::OutputImageType *itkOutImage = filter->GetOutput();
-  this->FixNonZeroIndex( itkOutImage );
-  return Image( this->CastITKToImage(itkOutImage) );
-
+  return copyTransform;
 }
 
 //-----------------------------------------------------------------------------
 
-
-
+Transform CenteredVersorTransformInitializer ( const Image & fixedImage, const Image & movingImage, const Transform & transform, bool computeRotation )
+{
+  CenteredVersorTransformInitializerFilter filter;
+  return filter.Execute( fixedImage, movingImage, transform, computeRotation );
+}
 
 } // end namespace simple
 } // end namespace itk

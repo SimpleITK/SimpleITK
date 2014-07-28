@@ -51,6 +51,7 @@
 #include "sitkPixelIDTypeLists.h"
 
 #include "sitkCenteredTransformInitializerFilter.h"
+#include "sitkCenteredVersorTransformInitializerFilter.h"
 #include "sitkCastImageFilter.h"
 
 #include "sitkAdditionalProcedures.h"
