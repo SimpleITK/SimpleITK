@@ -1,0 +1,44 @@
+{
+  "name" : "CenteredVersorTransformInitializer",
+  "template_code_filename" : "ImageFilter",
+  "doc" : "",
+  "number_of_inputs" : 0,
+  "output_image_type" : "float",
+  "no_procedure" : true,
+  "pixel_types" : "BasicPixelIDTypeList",
+  "filter_type" : "itk::CenteredVersorTransformInitializer< itk::AffineTransform< double, TImageType::ImageDimension  >, TImageType, TImageType>",
+  "include_files" : [
+    "sitkTransform.h"
+  ],
+  "inputs" : [
+    {
+      "name" : "FixedImage",
+      "type" : "Image",
+      "custom_itk_cast" : "filter->SetFixedImage( this->CastImageToITK<typename FilterType::FixedImageType>(*inFixedImage) );"
+    },
+    {
+      "name" : "MovingImage",
+      "type" : "Image"
+    },
+    {
+      "name" : "Transform",
+      "type" : "Transform",
+      "custom_itk_cast" : "const typename FilterType::TransformType *itkTx = dynamic_cast<const typename FilterType::TransformType *>(inTransform->GetITKBase() );\n  if ( !itkTx )\n    {\n    sitkExceptionMacro( \"Unexpected error converting transform! Possible miss matching dimensions!\" );\n    }\n  else { filter->SetTransform( const_cast<typename FilterType::TransformType*>(itkTx) ); }"
+    }
+  ],
+  "members" : [
+    {
+      "name" : "ComputeRotation",
+      "type" : "bool",
+      "default" : "false",
+      "detaileddescriptionSet" : "Enable the use of the principal axes of each image to compute an initial rotation that will align them.",
+      "briefdescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Enable the use of the principal axes of each image to compute an initial rotation that will align them."
+    }
+  ],
+  "custom_methods" : [
+  ],
+  "briefdescription" : "CenteredVersorTransformInitializeris a helper class intended to initialize the center of rotation, versor, and translation of the VersorRigid3DTransform.",
+  "detaileddescription" : "This class derived from the CenteredTransformInitializerand uses it in a more constrained context. It always uses the Moments mode, and also takes advantage of the second order moments in order to initialize the Versorrepresenting rotation."
+}
