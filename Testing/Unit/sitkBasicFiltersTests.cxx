@@ -45,6 +45,7 @@
 #include <sitkDiffeomorphicDemonsRegistrationFilter.h>
 #include <sitkFastSymmetricForcesDemonsRegistrationFilter.h>
 #include <sitkCenteredTransformInitializerFilter.h>
+#include <sitkCenteredVersorTransformInitializerFilter.h>
 #include <sitkAdditionalProcedures.h>
 #include <sitkCommand.h>
 
@@ -489,6 +490,20 @@ TEST(BasicFilters,CenteredTransformInitializer) {
   EXPECT_FLOAT_EQ ( 131.59097, params[1] );
 
 }
+
+
+TEST(BasicFilters,CenteredVersorTranformInitializer) {
+  namespace sitk = itk::simple;
+
+  sitk::CenteredVersorTransformInitializerFilter filter;
+
+  EXPECT_EQ ( "CenteredVersorTranformInitializerFilter", filter.GetName() );
+  EXPECT_EQ ( filter.GetComputeRotation(), false );
+  EXPECT_EQ ( filter.ComputeRotationOn().GetComputeRotation(), true );
+  EXPECT_EQ ( filter.ComputeRotationOff().GetComputeRotation(), false );
+
+}
+
 
 
 TEST(BasicFilters,Cast_Commands) {
