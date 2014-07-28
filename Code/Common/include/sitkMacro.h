@@ -64,7 +64,7 @@ class GenericException;
     throw ::itk::simple::GenericException(__FILE__, __LINE__, message.str().c_str()); \
   }
 
-#if defined(SITK_HAS_CXX11_NULLPTR) && !defined(SITK_HAS_TR1_FUNCTIONAL)
+#if defined(SITK_HAS_CXX11_NULLPTR) && !defined(SITK_HAS_TR1_SUB_INCLUDE)
 #define SITK_NULLPTR nullptr
 #else
 #define SITK_NULLPTR NULL
