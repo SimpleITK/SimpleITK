@@ -9,7 +9,7 @@
   "include_files" : [
     "itkGaussianRandomSpatialNeighborSubsampler.h"
   ],
-  "custom_set_input" : "filter->SetInput( image1 );\n  typedef itk::Statistics::GaussianRandomSpatialNeighborSubsampler< typename FilterType::PatchSampleType, typename InputImageType::RegionType> SamplerType;\n  typename SamplerType::Pointer sampler = SamplerType::New();\n  sampler->SetVariance(m_SampleVariance);\n  sampler->SetRadius(std::floor(std::sqrt(m_SampleVariance)*2.5));\n  sampler->SetNumberOfResultsRequested(m_NumberOfSamplePatches);\n  filter->SetSampler(sampler);",
+  "custom_set_input" : "filter->SetInput( image1 );\n  typedef itk::Statistics::GaussianRandomSpatialNeighborSubsampler< typename FilterType::PatchSampleType, typename InputImageType::RegionType> SamplerType;\n  typename SamplerType::Pointer sampler = SamplerType::New();\n  sampler->SetVariance(m_SampleVariance);\n  sampler->SetRadius(itk::Math::Floor<unsigned int>(std::sqrt(m_SampleVariance)*2.5));\n  sampler->SetNumberOfResultsRequested(m_NumberOfSamplePatches);\n  filter->SetSampler(sampler);",
   "members" : [
     {
       "name" : "KernelBandwidthSigma",
