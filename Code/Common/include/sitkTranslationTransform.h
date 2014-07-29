@@ -38,6 +38,8 @@ explicit TranslationTransform(unsigned int dimensions,
 
 TranslationTransform( const TranslationTransform & );
 
+TranslationTransform( const Transform & );
+
 TranslationTransform &operator=( const TranslationTransform & );
 
 Self &SetOffset(const std::vector<double> &params);

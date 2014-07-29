@@ -44,6 +44,13 @@ Similarity2DTransform::Similarity2DTransform(const std::vector<double> &fixedCen
   this->SetTranslation(translation);
 }
 
+Similarity2DTransform::Similarity2DTransform( const Transform &arg )
+  : Transform(arg)
+{
+  Self::InternalInitialization(Self::GetITKBase());
+}
+
+
 Similarity2DTransform::Similarity2DTransform( const Similarity2DTransform &arg )
   : Transform(arg)
 {
