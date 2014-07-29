@@ -222,7 +222,7 @@ Transform::Transform( )
   Transform::Transform( const Transform &txf )
     : m_PimpleTransform( NULL )
   {
-    m_PimpleTransform = txf.m_PimpleTransform->ShallowCopy();
+    this->SetPimpleTransform( txf.m_PimpleTransform->ShallowCopy() );
   }
 
   Transform& Transform::operator=( const Transform & txf )
@@ -231,7 +231,7 @@ Transform::Transform( )
     // will be safe. It's also exception safe.
     std::auto_ptr<PimpleTransformBase> temp( txf.m_PimpleTransform->ShallowCopy() );
     delete this->m_PimpleTransform;
-    this->m_PimpleTransform = temp.release();
+    this->SetPimpleTransform( temp.release() );
     return *this;
   }
 
@@ -324,7 +324,7 @@ void Transform::InternalBSplineInitialization( Image & inImage )
   itkBSpline->SetIdentity();
 
 
-  this->m_PimpleTransform = new PimpleTransform< BSplineTransformType >( itkBSpline.GetPointer() );
+  this->SetPimpleTransform( new PimpleTransform< BSplineTransformType >( itkBSpline.GetPointer() ) );
 }
 
   template< typename TDisplacementType >
@@ -349,7 +349,7 @@ void Transform::InternalBSplineInitialization( Image & inImage )
     typename ITKDisplacementType::Pointer itkDisplacement = GetImageFromVectorImage(image.GetPointer(), true );
     inImage = Image();
 
-    this->m_PimpleTransform = new PimpleTransform< DisplacementTransformType >(itkDisplacement.GetPointer());
+    this->SetPimpleTransform( new PimpleTransform< DisplacementTransformType >(itkDisplacement.GetPointer()) );
   }
 
 
@@ -358,32 +358,40 @@ void Transform::MakeUniqueForWrite( void )
 {
   if ( this->m_PimpleTransform->GetReferenceCount() > 1 )
     {
+    std::cout << "Making Unique For Writing!!!" << std::endl;
     std::auto_ptr<PimpleTransformBase> temp( this->m_PimpleTransform->DeepCopy() );
     delete this->m_PimpleTransform;
-    this->m_PimpleTransform = temp.release();
+    this->SetPimpleTransform( temp.release() );
     }
 }
+
+void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
+{
+  this->m_PimpleTransform = pimpleTransform;
+}
+
 
   template< unsigned int VDimension>
   void  Transform::InternalInitialization(  TransformEnum type, itk::TransformBase *base )
   {
+    PimpleTransformBase* temp;
     switch( type )
       {
 
       case sitkTranslation:
-        m_PimpleTransform = new PimpleTransform<itk::TranslationTransform< double, VDimension > >();
+        temp = new PimpleTransform<itk::TranslationTransform< double, VDimension > >();
         break;
       case sitkScale:
-        m_PimpleTransform = new PimpleTransform<itk::ScaleTransform< double, VDimension > >();
+        temp = new PimpleTransform<itk::ScaleTransform< double, VDimension > >();
         break;
       case sitkScaleLogarithmic:
-        m_PimpleTransform = new PimpleTransform<itk::ScaleLogarithmicTransform< double, VDimension > >();
+        temp = new PimpleTransform<itk::ScaleLogarithmicTransform< double, VDimension > >();
         break;
       case sitkEuler:
-        m_PimpleTransform = new PimpleTransform<typename TransformTraits<double,VDimension>::EulerTransformType>();
+        temp = new PimpleTransform<typename TransformTraits<double,VDimension>::EulerTransformType>();
         break;
       case sitkSimilarity:
-        m_PimpleTransform = new PimpleTransform<typename TransformTraits<double,VDimension>::SimilarityTransformType>();
+        temp = new PimpleTransform<typename TransformTraits<double,VDimension>::SimilarityTransformType>();
         break;
       case sitkQuaternionRigid:
         if( VDimension != 3)
@@ -391,7 +399,7 @@ void Transform::MakeUniqueForWrite( void )
           sitkExceptionMacro( "A sitkQuaternionRigid Transform only works for 3D!");
           }
 
-        m_PimpleTransform = new PimpleTransform<itk::QuaternionRigidTransform< double > >();
+        temp = new PimpleTransform<itk::QuaternionRigidTransform< double > >();
         break;
       case sitkVersor:
         if( VDimension != 3)
@@ -399,7 +407,7 @@ void Transform::MakeUniqueForWrite( void )
           sitkExceptionMacro( "A sitkVersor Transform only works for 3D!");
           }
 
-        m_PimpleTransform = new PimpleTransform<itk::VersorTransform< double > >();
+        temp = new PimpleTransform<itk::VersorTransform< double > >();
         break;
       case sitkVersorRigid:
         if( VDimension != 3)
@@ -407,10 +415,10 @@ void Transform::MakeUniqueForWrite( void )
           sitkExceptionMacro( "A sitkVersorRigid Transform only works for 3D!");
           }
 
-        m_PimpleTransform = new PimpleTransform<itk::VersorRigid3DTransform< double > >();
+        temp = new PimpleTransform<itk::VersorRigid3DTransform< double > >();
         break;
       case sitkAffine:
-        m_PimpleTransform = new PimpleTransform<itk::AffineTransform< double, VDimension > >();
+        temp = new PimpleTransform<itk::AffineTransform< double, VDimension > >();
         break;
       case sitkComposite:
         {
@@ -442,7 +450,7 @@ void Transform::MakeUniqueForWrite( void )
         compositeTransform->SetAllTransformsToOptimizeOff();
         compositeTransform->SetOnlyMostRecentTransformToOptimizeOn();
 
-        m_PimpleTransform = new PimpleTransform<itk::CompositeTransform<double, VDimension> >( compositeTransform );
+        temp = new PimpleTransform<itk::CompositeTransform<double, VDimension> >( compositeTransform );
 
         }
         break;
@@ -452,9 +460,10 @@ void Transform::MakeUniqueForWrite( void )
         sitkExceptionMacro("Incorrect constructor for transform type.");
       case sitkIdentity:
       default:
-        m_PimpleTransform = new PimpleTransform<itk::IdentityTransform< double, VDimension > >();
+        temp = new PimpleTransform<itk::IdentityTransform< double, VDimension > >();
 
       }
+    this->SetPimpleTransform(temp);
   }
 
 
@@ -511,7 +520,7 @@ void Transform::MakeUniqueForWrite( void )
     if ( temp != this->m_PimpleTransform )
       {
       delete this->m_PimpleTransform;
-      this->m_PimpleTransform = temp;
+      this->SetPimpleTransform(temp);
       }
     return *this;
   }
