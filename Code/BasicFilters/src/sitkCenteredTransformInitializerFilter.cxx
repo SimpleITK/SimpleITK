@@ -97,6 +97,8 @@ Transform CenteredTransformInitializerFilter::Execute ( const Image & fixedImage
   PixelIDValueEnum type = fixedImage.GetPixelID();
   unsigned int dimension = fixedImage.GetDimension();
 
+  if ( type != movingImage.GetPixelIDValue() || dimension != movingImage.GetDimension() ) { sitkExceptionMacro ( "Moving Image parameter for " << this->GetName() << " doesn't match type or dimension!" ); }
+  if ( dimension != transform.GetDimension() ) { sitkExceptionMacro( "Transform parameter for " << this->GetName() << " doesn't match dimension!" ); }
 
   return this->m_MemberFactory->GetMemberFunction( type, dimension )( &fixedImage, &movingImage, &transform );
 }
@@ -141,7 +143,8 @@ Transform CenteredTransformInitializerFilter::ExecuteInternal ( const Image * in
   const typename FilterType::TransformType *itkTx = dynamic_cast<const typename FilterType::TransformType *>(copyTransform.GetITKBase() );
   if ( !itkTx )
     {
-    sitkExceptionMacro( "Unexpected error converting transform! Possible miss matching dimensions!" );
+    sitkExceptionMacro( "Error converting input transform to required transform type with center.\n" );
+
     }
   else { filter->SetTransform( const_cast<typename FilterType::TransformType*>(itkTx) ); }
 

@@ -70,6 +70,11 @@ VersorRigid3DTransform::VersorRigid3DTransform( const VersorRigid3DTransform &ar
   Self::InternalInitialization(Self::GetITKBase());
 }
 
+VersorRigid3DTransform::VersorRigid3DTransform( const Transform & arg )
+  : Transform(arg)
+{
+  Self::InternalInitialization(Self::GetITKBase());
+}
 
 VersorRigid3DTransform &VersorRigid3DTransform::operator=( const VersorRigid3DTransform &arg )
 {

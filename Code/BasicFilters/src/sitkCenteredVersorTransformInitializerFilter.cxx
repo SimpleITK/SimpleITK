@@ -97,6 +97,8 @@ Transform CenteredVersorTransformInitializerFilter::Execute ( const Image & fixe
   PixelIDValueEnum type = fixedImage.GetPixelID();
   unsigned int dimension = fixedImage.GetDimension();
 
+  if ( type != movingImage.GetPixelIDValue() || dimension != movingImage.GetDimension() ) { sitkExceptionMacro ( "Moving Image parameter for " << this->GetName() << " doesn't match type or dimension!" ); }
+  if ( dimension != transform.GetDimension() ) { sitkExceptionMacro( "Transform parameter for " << this->GetName() << " doesn't match dimension!" ); }
 
   return this->m_MemberFactory->GetMemberFunction( type, dimension )( &fixedImage, &movingImage, &transform );
 }
@@ -140,7 +142,7 @@ Transform CenteredVersorTransformInitializerFilter::ExecuteInternal ( const Imag
   const typename FilterType::TransformType *itkTx = dynamic_cast<const typename FilterType::TransformType *>(copyTransform.GetITKBase() );
   if ( !itkTx )
     {
-    sitkExceptionMacro( "Unexpected error converting transform! Possible miss matching dimensions!" );
+    sitkExceptionMacro( "Error converting input transform to required versor transform type.\n" );
     }
   else { filter->SetTransform( const_cast<typename FilterType::TransformType*>(itkTx) ); }
 
