@@ -2,9 +2,10 @@
 # CMake Module to check for TR1 and C++11 features
 #
 # SITK_HAS_CXX11_STATIC_ASSERT    - True if "static_assert" keyword is supported
-# SITK_HAS_CXX11_FUNCTIONAL        - True if functional header has C++11 features
+# SITK_HAS_CXX11_FUNCTIONAL       - True if functional header has C++11 features
 # SITK_HAS_CXX11_TYPE_TRAITS
 # SITK_HAS_CXX11_UNORDERED_MAP
+# SITK_HAS_CXX11_NULLPTR          - True if "nullptr" keyword is supported
 #
 # SITK_HAS_TR1_SUB_INCLUDE
 #
@@ -13,10 +14,10 @@
 # SITK_HAS_TR1_UNORDERED_MAP
 
 #
-# Function to do wrap try compiles on the aggregate cxx test file1
+# Function to wrap try compiles on the aggregate cxx test file1
 #
 function(sitkCXX11Test VARIABLE)
-  # use the hash of the depended cxx flags in the variable name to
+  # use the hash of the dependent cxx flags in the variable name to
   # cache the results.
   string(MD5 cmake_cxx_flags_hash "${CMAKE_CXX_FLAGS}")
   set(cache_var "${VARIABLE}_${hash_cmake_cxx_flags_hash}")
@@ -51,6 +52,7 @@ sitkCXX11Test(SITK_HAS_CXX11_STATIC_ASSERT)
 sitkCXX11Test(SITK_HAS_CXX11_FUNCTIONAL)
 sitkCXX11Test(SITK_HAS_CXX11_TYPE_TRAITS)
 sitkCXX11Test(SITK_HAS_CXX11_UNORDERED_MAP)
+sitkCXX11Test(SITK_HAS_CXX11_NULLPTR)
 
 # Microsoft Visual Studio 2008sp1,2010,2012 don't need tr1 as a path
 # prefix to tr1 headers, while libc++

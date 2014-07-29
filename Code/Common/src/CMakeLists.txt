@@ -3,6 +3,14 @@ set ( SimpleITKCommonSource
   sitkImageExplicit.cxx
   sitkProcessObject.cxx
   sitkTransform.cxx
+  sitkAffineTransform.cxx
+  sitkEuler2DTransform.cxx
+  sitkEuler3DTransform.cxx
+  sitkSimilarity2DTransform.cxx
+  sitkSimilarity3DTransform.cxx
+  sitkTranslationTransform.cxx
+  sitkVersorTransform.cxx
+  sitkVersorRigid3DTransform.cxx
   sitkCommand.cxx
   sitkFunctionCommand.cxx
   sitkPixelIDValues.cxx

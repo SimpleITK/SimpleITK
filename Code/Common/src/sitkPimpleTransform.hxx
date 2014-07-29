@@ -68,10 +68,16 @@ public:
   // simpleITK std::vector to the ITK's array.
   void SetFixedParameters( const std::vector< double > &inParams )
     {
-      itk::TransformBase::ParametersType p( inParams.size() );
+      size_t numberOfFixedParameters = this->GetTransformBase()->GetFixedParameters().Size();
 
-      // todo check expected number of Fixed parameters
-      std::copy( inParams.begin(), inParams.end(), p.begin() );
+      if (numberOfFixedParameters > inParams.size())
+        {
+        sitkExceptionMacro("Transform expected " << numberOfFixedParameters << " fixed parameters but only " << inParams.size() << " are provided!");
+        }
+
+      // let the itk::Array class hold a reference to the input vector
+      itk::TransformBase::ParametersType p;
+      p.SetData( const_cast<double*>(&inParams[0]), numberOfFixedParameters, false );;
       this->GetTransformBase()->SetFixedParameters( p );
     }
 
@@ -88,10 +94,15 @@ public:
 
   void SetParameters( const std::vector< double > &inParams )
     {
-      itk::TransformBase::ParametersType p( inParams.size() );
+      unsigned int numberOfParameters = this->GetTransformBase()->GetNumberOfParameters();
+      if ( numberOfParameters > inParams.size())
+        {
+        sitkExceptionMacro("Transform expected " << numberOfParameters << " parameters but only " << inParams.size() << " are provided!");
+        }
 
-      // todo check expected number of Parameters
-      std::copy( inParams.begin(), inParams.end(), p.begin() );
+      // let the itk::Array class hold a reference to the input vector
+      itk::TransformBase::ParametersType p;
+      p.SetData( const_cast<double*>(&inParams[0]), numberOfParameters, false );
       this->GetTransformBase()->SetParameters( p );
     }
   std::vector< double > GetParameters( void ) const

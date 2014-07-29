@@ -19,6 +19,7 @@
 #define __sitkMacro_h
 
 #include <stdint.h>
+#include <stddef.h>
 #include <cassert>
 #include <sstream>
 #include <limits>
@@ -62,6 +63,12 @@ class GenericException;
     message << "sitk::ERROR: " x;                                       \
     throw ::itk::simple::GenericException(__FILE__, __LINE__, message.str().c_str()); \
   }
+
+#if defined(SITK_HAS_CXX11_NULLPTR) && !defined(SITK_HAS_TR1_SUB_INCLUDE)
+#define SITK_NULLPTR nullptr
+#else
+#define SITK_NULLPTR NULL
+#endif
 
 
 #ifdef SITK_HAS_CXX11_STATIC_ASSERT
