@@ -18,18 +18,6 @@
 #include <sitkImportImageFilter.h>
 #include <SimpleITKTestHarness.h>
 
-namespace
-{
-template < class T >
-std::ostream& operator<< (std::ostream& os, const std::vector<T>& v)
-{
-  os << "[";
-  std::copy( v.begin(), v.end(), std::ostream_iterator<T>(os, ", " ) );
-  return os << "]";
-}
-}
-
-
 // Common fixture for Import tests
 class Import
   : public ::testing::Test {
