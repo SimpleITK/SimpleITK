@@ -222,7 +222,7 @@ Transform::Transform( )
   Transform::Transform( const Transform &txf )
     : m_PimpleTransform( NULL )
   {
-    this->SetPimpleTransform( txf.m_PimpleTransform->ShallowCopy() );
+    Self::SetPimpleTransform( txf.m_PimpleTransform->ShallowCopy() );
   }
 
   Transform& Transform::operator=( const Transform & txf )
@@ -324,7 +324,7 @@ void Transform::InternalBSplineInitialization( Image & inImage )
   itkBSpline->SetIdentity();
 
 
-  this->SetPimpleTransform( new PimpleTransform< BSplineTransformType >( itkBSpline.GetPointer() ) );
+  Self::SetPimpleTransform( new PimpleTransform< BSplineTransformType >( itkBSpline.GetPointer() ) );
 }
 
   template< typename TDisplacementType >
@@ -349,7 +349,7 @@ void Transform::InternalBSplineInitialization( Image & inImage )
     typename ITKDisplacementType::Pointer itkDisplacement = GetImageFromVectorImage(image.GetPointer(), true );
     inImage = Image();
 
-    this->SetPimpleTransform( new PimpleTransform< DisplacementTransformType >(itkDisplacement.GetPointer()) );
+    Self::SetPimpleTransform( new PimpleTransform< DisplacementTransformType >(itkDisplacement.GetPointer()) );
   }
 
 
