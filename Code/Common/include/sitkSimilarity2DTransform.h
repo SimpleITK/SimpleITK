@@ -42,6 +42,8 @@ public:
 
   Similarity2DTransform( const Similarity2DTransform & );
 
+  explicit Similarity2DTransform( const Transform & );
+
   Similarity2DTransform &operator=( const Similarity2DTransform & );
 
 /** fixed parameter */

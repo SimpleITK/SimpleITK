@@ -50,6 +50,12 @@ Euler3DTransform::Euler3DTransform( const Euler3DTransform &arg )
   Self::InternalInitialization(Self::GetITKBase());
 }
 
+Euler3DTransform::Euler3DTransform( const Transform &arg )
+  : Transform(arg)
+{
+  Self::InternalInitialization(Self::GetITKBase());
+}
+
 
 Euler3DTransform &Euler3DTransform::operator=( const Euler3DTransform &arg )
 {

@@ -37,6 +37,12 @@ AffineTransform::AffineTransform( const AffineTransform &arg )
   Self::InternalInitialization(Self::GetITKBase());
 }
 
+AffineTransform::AffineTransform( const Transform &arg )
+  : Transform(arg)
+{
+  Self::InternalInitialization(Self::GetITKBase());
+}
+
 
 AffineTransform &AffineTransform::operator=( const AffineTransform &arg )
 {

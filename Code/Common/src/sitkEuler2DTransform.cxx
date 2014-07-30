@@ -44,7 +44,15 @@ Euler2DTransform::Euler2DTransform(const std::vector<double> &fixedCenter,
   this->SetTranslation(translation);
 }
 
+
 Euler2DTransform::Euler2DTransform( const Euler2DTransform &arg )
+  : Transform(arg)
+{
+  Self::InternalInitialization(Self::GetITKBase());
+}
+
+
+Euler2DTransform::Euler2DTransform( const Transform &arg )
   : Transform(arg)
 {
   Self::InternalInitialization(Self::GetITKBase());

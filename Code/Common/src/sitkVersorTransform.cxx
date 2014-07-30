@@ -70,6 +70,12 @@ VersorTransform::VersorTransform( const VersorTransform &arg )
   Self::InternalInitialization(Self::GetITKBase());
 }
 
+VersorTransform::VersorTransform( const Transform &arg )
+  : Transform(arg)
+{
+  Self::InternalInitialization(Self::GetITKBase());
+}
+
 
 VersorTransform &VersorTransform::operator=( const VersorTransform &arg )
 {
