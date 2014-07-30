@@ -27,7 +27,7 @@
 // This is needed before the gtest include for lookup of the operator
 // to work with clang 5.1
 namespace {
- std::ostream& operator<< (std::ostream& os, const std::vector<double>& v)
+inline std::ostream& operator<< (std::ostream& os, const std::vector<double>& v)
  {
    if ( v.empty() )
      {
@@ -253,21 +253,21 @@ namespace
 {
 
 
-std::vector<double> v2(double v1, double v2)
+inline std::vector<double> v2(double v1, double v2)
 {
   std::vector<double> temp(2);
   temp[0]=v1;temp[1]=v2;
   return temp;
 }
 
-std::vector<double> v3(double v1, double v2, double v3)
+inline std::vector<double> v3(double v1, double v2, double v3)
 {
   std::vector<double> temp(3);
   temp[0]=v1;temp[1]=v2;temp[2]=v3;
   return temp;
 }
 
-std::vector<double> v4(double v1, double v2, double v3, double v4)
+inline std::vector<double> v4(double v1, double v2, double v3, double v4)
 {
   std::vector<double> temp(4);
   temp[0]=v1;temp[1]=v2;temp[2]=v3;temp[3]=v4;
