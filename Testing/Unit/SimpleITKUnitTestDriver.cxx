@@ -17,9 +17,8 @@
 *=========================================================================*/
 #include <iostream>
 
-#include <gtest/gtest.h>
-#include <itksys/SystemTools.hxx>
 #include "SimpleITKTestHarness.h"
+#include <itksys/SystemTools.hxx>
 
 DataFinder dataFinder;
 int main(int argc, char* argv[])
