@@ -70,7 +70,11 @@ public:
     {
       size_t numberOfFixedParameters = this->GetTransformBase()->GetFixedParameters().Size();
 
-      if (numberOfFixedParameters > inParams.size())
+      if ( numberOfFixedParameters == 0 )
+        {
+        return;
+        }
+      else if (numberOfFixedParameters > inParams.size())
         {
         sitkExceptionMacro("Transform expected " << numberOfFixedParameters << " fixed parameters but only " << inParams.size() << " are provided!");
         }
@@ -95,7 +99,12 @@ public:
   void SetParameters( const std::vector< double > &inParams )
     {
       unsigned int numberOfParameters = this->GetTransformBase()->GetNumberOfParameters();
-      if ( numberOfParameters > inParams.size())
+
+      if ( numberOfParameters == 0 )
+        {
+        return;
+        }
+      else if ( numberOfParameters > inParams.size())
         {
         sitkExceptionMacro("Transform expected " << numberOfParameters << " parameters but only " << inParams.size() << " are provided!");
         }
