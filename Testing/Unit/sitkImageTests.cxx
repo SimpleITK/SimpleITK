@@ -714,16 +714,16 @@ TEST_F(Image,SetPixel)
 
   try
     {
-    img.SetPixelAsUInt8( std::vector<uint32_t>( 2, 0 ), 99.0 );
+    img.SetPixelAsUInt8( std::vector<uint32_t>( 2, 0 ), 99u );
     }
   catch( std::exception &e)
     {
     std::cerr << e.what() << std::endl;
     }
   EXPECT_EQ( img.GetPixelAsUInt8( std::vector<uint32_t>( 2, 0 ) ), 99.0 ) << "Set value check";
-  ASSERT_NO_THROW( img.SetPixelAsUInt8( std::vector<uint32_t>( 3, 0 ), 99.0 ) ) << " correct setting, with extra size index";
+  ASSERT_NO_THROW( img.SetPixelAsUInt8( std::vector<uint32_t>( 3, 0 ), 99u ) ) << " correct setting, with extra size index";
   EXPECT_EQ( img.GetPixelAsUInt8( std::vector<uint32_t>( 2, 0 ) ), 99.0 ) << "Set value check";
-  ASSERT_ANY_THROW( img.SetPixelAsUInt8( std::vector<uint32_t>( 1, 0 ), 99.0 ) ) << " too short index";
+  ASSERT_ANY_THROW( img.SetPixelAsUInt8( std::vector<uint32_t>( 1, 0 ), 99u ) ) << " too short index";
 
   std::cout << "check\n";
   ASSERT_ANY_THROW( img.SetPixelAsInt8( std::vector<uint32_t>( 2, 0 ), 99 ) ) <<  " Get with wrong type";
