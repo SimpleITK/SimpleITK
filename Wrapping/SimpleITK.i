@@ -140,6 +140,7 @@ namespace std
 %include "sitkAffineTransform.h"
 %include "sitkEuler3DTransform.h"
 %include "sitkEuler2DTransform.h"
+%include "sitkScaleSkewVersor3DTransform.h"
 %include "sitkSimilarity2DTransform.h"
 %include "sitkSimilarity3DTransform.h"
 %include "sitkTranslationTransform.h"
