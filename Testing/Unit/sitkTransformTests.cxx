@@ -190,10 +190,6 @@ TEST(TransformTest, SetGetParameters) {
   tx =  sitk::Transform ( displacement );
   EXPECT_EQ( tx.GetParameters().size(), 3000u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 18u );
-
-  tx = sitk::Transform(3,sitk::sitkIdentity);
-  tx.SetFixedParameters(std::vector<double>());
-  tx.SetParameters(std::vector<double>());
 }
 
 TEST(TransformTest, CopyOnWrite) {
