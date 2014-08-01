@@ -19,6 +19,7 @@
 #include "SimpleITKTestHarness.h"
 #include "sitkTransform.h"
 #include "sitkAffineTransform.h"
+#include "sitkBSplineTransform.h"
 #include "sitkTranslationTransform.h"
 #include "sitkEuler2DTransform.h"
 #include "sitkEuler3DTransform.h"
@@ -467,6 +468,62 @@ TEST(TransformTest,AffineTransform_3DPoints)
 
 }
 
+TEST(TransformTest,BSplineTransform)
+{ // test BSplineTransform
+
+
+  std::auto_ptr<sitk::BSplineTransform> tx(new sitk::BSplineTransform(2));
+  EXPECT_EQ( tx->GetParameters().size(), 32u );
+  EXPECT_EQ( tx->GetFixedParameters().size(), 10u );
+  EXPECT_EQ( tx->GetTransformDomainDirection(), v4(1.0,0.0,0.0,1.0) );
+  EXPECT_EQ( tx->GetTransformDomainMeshSize(), std::vector<unsigned int>(2,1u) );
+  EXPECT_EQ( tx->GetTransformDomainOrigin(), v2(0.0,0.0) );
+  EXPECT_EQ( tx->GetTransformDomainPhysicalDimensions(), v2(1.0,1.0) );
+
+  tx.reset(new sitk::BSplineTransform(3));
+  EXPECT_EQ( tx->GetParameters().size(), 192u );
+  EXPECT_EQ( tx->GetFixedParameters().size(), 18u );
+
+  tx.reset(new sitk::BSplineTransform(2));
+  EXPECT_EQ( tx->SetTransformDomainDirection(v4(-1.0,0.0,0.0,-1.0)).GetTransformDomainDirection(), v4(-1.0,0.0,0.0,-1.0) );
+  EXPECT_EQ( tx->SetTransformDomainOrigin( v2(1.1,1.2) ).GetTransformDomainOrigin(), v2(1.1,1.2) );
+
+  // copy constructor
+  sitk::BSplineTransform tx1( *(tx.get()) );
+  EXPECT_EQ( tx1.GetParameters().size(), 32u );
+  EXPECT_EQ( tx1.GetFixedParameters().size(), 10u );
+  EXPECT_EQ( tx1.GetTransformDomainDirection(), v4(-1.0,0.0,0.0,-1.0) );
+  EXPECT_EQ( tx1.GetTransformDomainMeshSize(), std::vector<unsigned int>(2,1u) );
+  EXPECT_EQ( tx1.GetTransformDomainOrigin(), v2(1.1,1.2) );
+  EXPECT_EQ( tx1.GetTransformDomainPhysicalDimensions(), v2(1.0,1.0) );
+
+  sitk::BSplineTransform tx2(2);
+
+  // assignment operator
+  tx1 = tx2;
+  EXPECT_EQ( tx1.GetDimension(), 2u );
+  EXPECT_EQ( tx1.GetTransformDomainOrigin(), v2(0.0,0.0) );
+
+  // copy on write
+  tx1.SetTransformDomainOrigin( v2(1.3,1.4) );
+  EXPECT_EQ( tx1.GetTransformDomainOrigin(), v2(1.3,1.4) );
+  EXPECT_EQ( tx2.GetTransformDomainOrigin(), v2(0.0,0.0) );
+
+  // todo test other attributes...
+
+  sitk::Transform tx3( *tx );
+  tx.reset();
+  EXPECT_EQ( tx3.GetParameters().size(), 32u );
+  EXPECT_EQ( tx3.GetFixedParameters().size(), 10u );
+
+  tx.reset( new sitk::BSplineTransform(2));
+
+  // test member setters/getters
+  EXPECT_EQ( tx->SetTransformDomainDirection(v4(0.0,1.0,1.0,0.0)).GetTransformDomainDirection(), v4(0.0,1.0,1.0,0.0) );
+  EXPECT_EQ( tx->SetTransformDomainMeshSize(std::vector<unsigned int>(2,4u)).GetTransformDomainMeshSize(), std::vector<unsigned int>(2,4u) );
+  EXPECT_EQ( tx->SetTransformDomainOrigin( v2(2.0,2.0) ).GetTransformDomainOrigin(), v2(2.0,2.0) );
+  EXPECT_EQ( tx->SetTransformDomainPhysicalDimensions(v2(4.0,4.0)).GetTransformDomainPhysicalDimensions(), v2(4.0,4.0) );
+}
 
 
 TEST(TransformTest,Euler2DTransform)
