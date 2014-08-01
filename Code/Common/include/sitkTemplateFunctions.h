@@ -131,6 +131,40 @@ std::vector<unsigned int> SITKCommon_HIDDEN sitkITKImageRegionToSTL( const Image
   return out;
 }
 
+
+/* \brief Convert to an itk::Matrix type, where the vector is in row
+ * major form. If the vector is of 0-size then an identity matrix will
+ * be constructed.
+ */
+template< typename TDirectionType >
+TDirectionType SITKCommon_HIDDEN  sitkSTLToITKDirection( const std::vector<double> &direction )
+{
+  TDirectionType itkDirection;
+
+  if ( direction.size() == 0 )
+    {
+    itkDirection.SetIdentity();
+    }
+  else if( direction.size() == TDirectionType::RowDimensions*TDirectionType::ColumnDimensions )
+    {
+    std::copy( direction.begin(), direction.end(), itkDirection.GetVnlMatrix().begin() );
+    }
+  else
+    {
+    }
+
+  return itkDirection;
+}
+
+
+template< typename TDirectionType >
+std::vector<double> SITKCommon_HIDDEN  sitkITKDirectionToSTL( const TDirectionType & d)
+{
+  return std::vector<double>(  d.GetVnlMatrix().begin(), d.GetVnlMatrix().end() );
+}
+
+
+
 }
 }
 
