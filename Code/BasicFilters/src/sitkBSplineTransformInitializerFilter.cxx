@@ -30,7 +30,8 @@
 #include "itkVectorIndexSelectionCastImageFilter.h"
 #include "itkComposeImageFilter.h"
 
-#include "sitkBSplineTransformInitializer.h"
+#include "sitkBSplineTransformInitializerFilter.h"
+#include "itkBSplineTransform.h"
 #include "itkBSplineTransformInitializer.h"
 
 // Additional include files
@@ -45,7 +46,7 @@ namespace simple {
 //
 // Default constructor that initializes parameters
 //
-BSplineTransformInitializer::BSplineTransformInitializer ()
+BSplineTransformInitializerFilter::BSplineTransformInitializerFilter ()
 {
 
     this->m_TransformDomainMeshSize = std::vector<uint32_t>(3, 1u);
@@ -56,13 +57,13 @@ BSplineTransformInitializer::BSplineTransformInitializer ()
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
 
 
-  
+
 }
 
 //
 // Destructor
 //
-BSplineTransformInitializer::~BSplineTransformInitializer ()
+BSplineTransformInitializerFilter::~BSplineTransformInitializerFilter ()
 {
 
 }
@@ -72,10 +73,10 @@ BSplineTransformInitializer::~BSplineTransformInitializer ()
 //
 // ToString
 //
-std::string BSplineTransformInitializer::ToString() const
+std::string BSplineTransformInitializerFilter::ToString() const
 {
   std::ostringstream out;
-  out << "itk::simple::BSplineTransformInitializer\n";
+  out << "itk::simple::BSplineTransformInitializerFilter\n";
   out << "  TransformDomainMeshSize: ";
   this->ToStringHelper(out, this->m_TransformDomainMeshSize);
   out << std::endl;
@@ -87,7 +88,7 @@ std::string BSplineTransformInitializer::ToString() const
 //
 // Execute
 //
-Image BSplineTransformInitializer::Execute ( const Image& image1, const std::vector<uint32_t> & transformDomainMeshSize )
+BSplineTransform BSplineTransformInitializerFilter::Execute ( const Image& image1, const std::vector<uint32_t> & transformDomainMeshSize )
 {
   this->SetTransformDomainMeshSize ( transformDomainMeshSize );
 
@@ -95,7 +96,7 @@ Image BSplineTransformInitializer::Execute ( const Image& image1, const std::vec
 }
 
 
-Image BSplineTransformInitializer::Execute ( const Image& image1 )
+BSplineTransform BSplineTransformInitializerFilter::Execute ( const Image& image1 )
 {
   PixelIDValueEnum type = image1.GetPixelID();
   unsigned int dimension = image1.GetDimension();
@@ -120,11 +121,10 @@ namespace {
 // ExecuteInternal
 //
 template <class TImageType>
-Image BSplineTransformInitializer::ExecuteInternal ( const Image& inImage1 )
+BSplineTransform  BSplineTransformInitializerFilter::ExecuteInternal ( const Image& inImage1 )
 {
   // Define the input and output image types
   typedef TImageType     InputImageType;
-        
 
   //Define output image type
   typedef float OutputImageType;
@@ -137,29 +137,28 @@ Image BSplineTransformInitializer::ExecuteInternal ( const Image& inImage1 )
   // Set up the ITK filter
   typename FilterType::Pointer filter = FilterType::New();
 
-filter->SetInput( 0, image1 );
+  filter->SetImage( image1 );
+
+  BSplineTransform sitkTransform(TImageType::ImageDimension);
+
+  const typename FilterType::TransformType *itkTx = dynamic_cast<const typename FilterType::TransformType *>(sitkTransform.GetITKBase() );
+  if ( !itkTx )
+    {
+    sitkExceptionMacro( "Unexpected error conversion to a BSplineTransform!" );
+    }
+  else
+    {
+    filter->SetTransform( const_cast<typename FilterType::TransformType*>(itkTx) );
+    }
 
 
 
-  nil itkVecTransformDomainMeshSize = sitkSTLVectorToITK<nil>( this->GetTransformDomainMeshSize() );
+  typename FilterType::MeshSizeType itkVecTransformDomainMeshSize = sitkSTLVectorToITK<typename FilterType::MeshSizeType>( this->GetTransformDomainMeshSize() );
   filter->SetTransformDomainMeshSize( itkVecTransformDomainMeshSize );
 
+  filter->InitializeTransform();
 
-
-
-  this->PreUpdate( filter.GetPointer() );
-
-
-
-  // Run the ITK filter and return the output as a SimpleITK image
-  filter->Update();
-
-
-
-  typename FilterType::OutputImageType *itkOutImage = filter->GetOutput();
-  this->FixNonZeroIndex( itkOutImage );
-  return Image( this->CastITKToImage(itkOutImage) );
-
+  return sitkTransform;
 }
 
 //-----------------------------------------------------------------------------
@@ -168,9 +167,9 @@ filter->SetInput( 0, image1 );
 //
 // Function to run the Execute method of this filter
 //
-Image BSplineTransformInitializer ( const Image& image1, const std::vector<uint32_t> & transformDomainMeshSize )
+BSplineTransform BSplineTransformInitializer ( const Image& image1, const std::vector<uint32_t> & transformDomainMeshSize )
 {
-  BSplineTransformInitializer filter;
+  BSplineTransformInitializerFilter filter;
   return filter.Execute ( image1, transformDomainMeshSize );
 }
 
