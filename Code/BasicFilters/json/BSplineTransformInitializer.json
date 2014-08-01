@@ -1,0 +1,25 @@
+{
+  "name" : "BSplineTransformInitializer",
+  "template_code_filename" : "ImageFilter",
+  "doc" : "",
+  "number_of_inputs" : 1,
+  "output_image_type" : "float",
+  "pixel_types" : "AllPixelIDTypeList",
+  "filter_type" : "itk::BSplineTransformInitializer< itk::BSplineTransform< double, TImageType::ImageDimension, 3 >, TImageType>",
+  "include_files" : [
+    "sitkTransform.h"
+  ],
+  "members" : [
+    {
+      "name" : "TransformDomainMeshSize",
+      "type" : "uint32_t",
+      "default" : "std::vector<uint32_t>(3, 1u)",
+      "dim_vec" : 1,
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Allow the user to set the mesh size of the transform via the initializer even though the initializer does not do anything with that information. Defeault = 1^ImageDimension."
+    }
+  ],
+  "custom_methods" : [],
+  "briefdescription" : "BSplineTransformInitializeris a helper class intended to initialize the control point grid such that it has a physically consistent definition. It sets the transform domain origin, physical dimensions and direction from information obtained from the image. It also sets the mesh size if asked to do so by calling SetTransformDomainMeshSize()before calling InitializeTransform().",
+  "detaileddescription" : "\\author Luis Ibanez\n\nNick Tustison"
+}
