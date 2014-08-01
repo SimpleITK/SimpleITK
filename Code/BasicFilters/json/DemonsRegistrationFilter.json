@@ -5,7 +5,7 @@
   "no_procedure" : "1",
   "number_of_inputs" : 0,
   "pixel_types" : "BasicPixelIDTypeList",
-  "output_image_type" : "itk::Image< Vector<double, TImageType::ImageDimension>, TImageType::ImageDimension >"
+  "output_image_type" : "itk::Image< Vector<double, TImageType::ImageDimension>, TImageType::ImageDimension >",
   "filter_type" : "itk::DemonsRegistrationFilter<TImageType, TImageType, OutputImageType>",
   "include_files"  : [
     "sitkImageConvert.h"
