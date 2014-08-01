@@ -171,6 +171,8 @@ protected:
 
   void MakeUniqueForWrite( void );
 
+  explicit Transform( PimpleTransformBase *pimpleTransform );
+
   // this method is called to set the private pimpleTransfrom outside
   // of the constructor, derived classes can override it of update the
   // state.

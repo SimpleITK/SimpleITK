@@ -366,6 +366,16 @@ void Transform::MakeUniqueForWrite( void )
     }
 }
 
+Transform::Transform( PimpleTransformBase *pimpleTransform )
+    : m_PimpleTransform( pimpleTransform )
+  {
+    if ( pimpleTransform == NULL )
+      {
+      sitkExceptionMacro("Invalid NULL PimpleTransform!");
+      }
+  }
+
+
 void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
 {
   this->m_PimpleTransform = pimpleTransform;

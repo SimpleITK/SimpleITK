@@ -7,7 +7,6 @@
   "output_image_type" : " itk::Image< Vector<double, TImageType::ImageDimension>, TImageType::ImageDimension >",
   "filter_type" : "itk::TransformToDisplacementFieldFilter<OutputImageType>",
   "include_files" : [
-    "sitkDirectionConvert.hxx",
     "sitkTransform.h"
   ],
   "inputs" : [
@@ -64,7 +63,7 @@
       "type" : "std::vector<double>",
       "default" : "std::vector<double>()",
       "doc" : "Passing a zero sized array, defaults to identiy matrix. The size of the array must exactly match the direction matrix for the dimension of the image.",
-      "custom_itk_cast" : "filter->SetOutputDirection( VectorToITKDirection<typename FilterType::DirectionType>( this->m_OutputDirection ) );",
+      "custom_itk_cast" : "filter->SetOutputDirection( sitkSTLToITKDirection<typename FilterType::DirectionType>( this->m_OutputDirection ) );",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set the output direction cosine matrix.",
       "briefdescriptionGet" : "",

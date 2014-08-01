@@ -173,8 +173,7 @@ namespace itk
     // Get Direction
     virtual std::vector< double > GetDirection( void ) const
       {
-      const typename ImageType::DirectionType &d = this->m_Image->GetDirection();
-      return std::vector< double >( d.GetVnlMatrix().begin(), d.GetVnlMatrix().end() );
+      return sitkITKDirectionToSTL( this->m_Image->GetDirection() );
       }
 
     // Set Direction
@@ -185,11 +184,7 @@ namespace itk
         sitkExceptionMacro("direction size mismatch");
         }
 
-      typename ImageType::DirectionType d;
-
-      std::copy( in.begin(), in.end(), d.GetVnlMatrix().begin() );
-
-      this->m_Image->SetDirection( d );
+      this->m_Image->SetDirection( sitkSTLToITKDirection<typename ImageType::DirectionType>( in ) );
       }
 
 

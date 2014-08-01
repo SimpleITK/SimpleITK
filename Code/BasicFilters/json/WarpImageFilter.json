@@ -9,8 +9,7 @@
   "custom_set_input" : "filter->SetInput( image1 ); filter->SetDisplacementField( image2 );",
   "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
   "include_files" : [
-    "sitkCreateInterpolator.hxx",
-    "sitkDirectionConvert.hxx"
+    "sitkCreateInterpolator.hxx"
   ],
   "members" : [
     {
@@ -65,7 +64,7 @@
       "type" : "std::vector<double>",
       "default" : "std::vector<double>()",
       "doc" : "Passing a zero sized array, defaults to identiy matrix. The size of the array must exactly match the direction matrix for the dimension of the image.",
-      "custom_itk_cast" : "filter->SetOutputDirection( VectorToITKDirection<typename FilterType::DirectionType>( this->m_OutputDirection ) );",
+      "custom_itk_cast" : "filter->SetOutputDirection( sitkSTLToITKDirection<typename FilterType::DirectionType>( this->m_OutputDirection ) );",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the direction (orientation) of the output image",
       "briefdescriptionGet" : "",
