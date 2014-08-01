@@ -60,6 +60,7 @@
 #include "sitkComposeImageFilter.h"
 #include "sitkPixelIDTypeLists.h"
 
+#include "sitkBSplineTransformInitializerFilter.h"
 #include "sitkCenteredTransformInitializerFilter.h"
 #include "sitkCenteredVersorTransformInitializerFilter.h"
 #include "sitkCastImageFilter.h"
