@@ -40,19 +40,6 @@
 
 #include <stdint.h>
 
-namespace
-{
-template < class T >
-std::ostream& operator<< (std::ostream& os, const std::vector<T>& v)
-{
-  os << "[";
-  std::copy( v.begin(), v.end(), std::ostream_iterator<T>(os, ", " ) );
-  return os << "]";
-}
-
-}
-
-
 const double adir[] = {0.0, 0.0, 1.0,
                        -1.0, 0.0, 0.0,
                        0.0, -1.0, 0.0};

@@ -38,6 +38,8 @@ Similarity3DTransform();
 
 Similarity3DTransform( const Similarity3DTransform & );
 
+explicit Similarity3DTransform( const Transform & );
+
 Similarity3DTransform &operator=( const Similarity3DTransform & );
 
 /** fixed parameter */

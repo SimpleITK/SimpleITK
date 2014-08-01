@@ -34,7 +34,15 @@ TranslationTransform::TranslationTransform(unsigned int dimensions,
   this->SetParameters(translation);
 }
 
+
 TranslationTransform::TranslationTransform( const TranslationTransform &arg )
+  : Transform(arg)
+{
+  Self::InternalInitialization(Self::GetITKBase());
+}
+
+
+TranslationTransform::TranslationTransform( const Transform &arg )
   : Transform(arg)
 {
   Self::InternalInitialization(Self::GetITKBase());

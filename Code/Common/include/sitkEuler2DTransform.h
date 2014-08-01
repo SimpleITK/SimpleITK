@@ -42,6 +42,8 @@ public:
 
   Euler2DTransform( const Euler2DTransform & );
 
+  explicit Euler2DTransform( const Transform & );
+
   Euler2DTransform &operator=( const Euler2DTransform & );
 
 /** fixed parameter */

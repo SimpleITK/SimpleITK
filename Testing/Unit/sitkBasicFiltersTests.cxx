@@ -21,6 +21,7 @@
 #include <sitkImageFileReader.h>
 #include <sitkImageFileWriter.h>
 #include <sitkHashImageFilter.h>
+#include <sitkGaussianImageSource.h>
 #include <sitkRecursiveGaussianImageFilter.h>
 #include <sitkCastImageFilter.h>
 #include <sitkPixelIDValues.h>
@@ -45,6 +46,7 @@
 #include <sitkDiffeomorphicDemonsRegistrationFilter.h>
 #include <sitkFastSymmetricForcesDemonsRegistrationFilter.h>
 #include <sitkCenteredTransformInitializerFilter.h>
+#include <sitkCenteredVersorTransformInitializerFilter.h>
 #include <sitkAdditionalProcedures.h>
 #include <sitkCommand.h>
 
@@ -67,6 +69,10 @@
 #include "itkDiffeomorphicDemonsRegistrationFilter.h"
 #include "itkFastSymmetricForcesDemonsRegistrationFilter.h"
 
+#include "sitkShow.h"
+
+#include "sitkVersorRigid3DTransform.h"
+#include "sitkSimilarity3DTransform.h"
 
 TEST(BasicFilter,FastSymmetricForcesDemonsRegistrationFilter_ENUMCHECK) {
   typedef itk::Image<float,3> ImageType;
@@ -489,6 +495,92 @@ TEST(BasicFilters,CenteredTransformInitializer) {
   EXPECT_FLOAT_EQ ( 131.59097, params[1] );
 
 }
+
+
+TEST(BasicFilters,CenteredVersorTranformInitializer) {
+  namespace sitk = itk::simple;
+
+  sitk::CenteredVersorTransformInitializerFilter filter;
+
+  EXPECT_EQ ( "CenteredVersorTransformInitializerFilter", filter.GetName() );
+  EXPECT_EQ ( filter.GetComputeRotation(), false );
+  EXPECT_EQ ( filter.ComputeRotationOn().GetComputeRotation(), true );
+  EXPECT_EQ ( filter.ComputeRotationOff().GetComputeRotation(), false );
+
+  // generate a few basic test images from gaussian blobs
+
+  sitk::GaussianImageSource source;
+  source.SetOutputPixelType( sitk::sitkFloat32 );
+  source.SetSize( std::vector< unsigned int >(3, 128) );
+  source.SetMean( v3(64.0, 64.0, 64.0) );
+  source.SetSigma( v3( 10.0, 15.0, 20.0) );
+
+  const sitk::Image g1 = source.Execute();
+
+  source.SetMean( v3(63.0, 62.0, 61.0) );
+  const sitk::Image g2 = source.Execute();
+
+  source.SetMean( v3(63.0, 62.0, 61.0) );
+  source.SetSigma( v3( 15.0, 20.0, 10) );
+  const sitk::Image g3 = source.Execute();
+
+  {
+  sitk::VersorRigid3DTransform tx;
+
+  filter.ComputeRotationOff();
+  tx = sitk::VersorRigid3DTransform( filter.Execute(g1, g2, sitk::VersorRigid3DTransform() ) );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.GetTranslation(), v3(-1.0,-2.0,-3.0), 0.1 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.GetCenter(), v3(64.0,64.0,64.0), 0.1 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.GetVersor(), v4(0.0, 0.0,0.0,1.0), 1e-15 );
+  tx = sitk::VersorRigid3DTransform( filter.Execute(g1, g3, sitk::VersorRigid3DTransform() ) );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.GetTranslation(), v3(-1.0,-2.0,-3.0), 0.1 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.GetCenter(), v3(64.0,64.0,64.0), 0.1 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.GetVersor(), v4(0.0, 0.0,0.0,1.0), 1e-15 );
+
+  filter.ComputeRotationOn();
+  tx = sitk::VersorRigid3DTransform( filter.Execute(g1, g2, sitk::VersorRigid3DTransform() ) );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.GetTranslation(), v3(-1.0,-2.0,-3.0), 0.1 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.GetCenter(), v3(64.0,64.0,64.0), 0.1 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.GetVersor(), v4(0.0, 0.0,0.0,1.0), 1e-5 );
+  tx = sitk::VersorRigid3DTransform( filter.Execute(g1, g3, sitk::VersorRigid3DTransform() ) );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.GetTranslation(), v3(-1.0,-2.0,-3.0), 0.1 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.GetCenter(), v3(64.0,64.0,64.0), 0.1 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.GetVersor(), v4(-0.5, -0.5,0.5,0.5), 1e-5 );
+  }
+
+  {
+  sitk::Similarity3DTransform tx;
+
+  filter.ComputeRotationOff();
+  tx = sitk::Similarity3DTransform( filter.Execute(g1, g2, sitk::Similarity3DTransform() ) );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.GetTranslation(), v3(-1.0,-2.0,-3.0), 0.1 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.GetCenter(), v3(64.0,64.0,64.0), 0.1 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.GetVersor(), v4(0.0, 0.0,0.0,1.0), 1e-15 );
+  tx = sitk::Similarity3DTransform( filter.Execute(g1, g3, sitk::Similarity3DTransform() ) );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.GetTranslation(), v3(-1.0,-2.0,-3.0), 0.1 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.GetCenter(), v3(64.0,64.0,64.0), 0.1 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.GetVersor(), v4(0.0, 0.0,0.0,1.0), 1e-15 );
+
+  filter.ComputeRotationOn();
+  tx = sitk::Similarity3DTransform( filter.Execute(g1, g2, sitk::Similarity3DTransform() ) );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.GetTranslation(), v3(-1.0,-2.0,-3.0), 0.1 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.GetCenter(), v3(64.0,64.0,64.0), 0.1 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.GetVersor(), v4(0.0, 0.0,0.0,1.0), 1e-5 );
+  tx = sitk::Similarity3DTransform( filter.Execute(g1, g3, sitk::Similarity3DTransform() ) );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.GetTranslation(), v3(-1.0,-2.0,-3.0), 0.1 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.GetCenter(), v3(64.0,64.0,64.0), 0.1 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.GetVersor(), v4(-0.5, -0.5,0.5,0.5), 1e-5 );
+  }
+
+  EXPECT_THROW( sitk::CenteredVersorTransformInitializer(g1, g2, sitk::Transform(2,sitk::sitkSimilarity)), sitk::GenericException );
+  EXPECT_THROW( sitk::CenteredVersorTransformInitializer(g1, g2, sitk::Transform(3,sitk::sitkVersor)), sitk::GenericException );
+  EXPECT_THROW( sitk::CenteredVersorTransformInitializer(g1, g2, sitk::Transform(3,sitk::sitkAffine)), sitk::GenericException );
+  EXPECT_THROW( sitk::CenteredVersorTransformInitializer(g1, g2, sitk::Transform(3,sitk::sitkQuaternionRigid)), sitk::GenericException );
+  EXPECT_THROW( sitk::CenteredVersorTransformInitializer(g1, g2, sitk::Transform(3,sitk::sitkTranslation)), sitk::GenericException );
+
+
+}
+
 
 
 TEST(BasicFilters,Cast_Commands) {

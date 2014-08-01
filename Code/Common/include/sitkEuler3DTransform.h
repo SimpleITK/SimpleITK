@@ -44,6 +44,8 @@ explicit Euler3DTransform(const std::vector<double> &fixedCenter,
 
 Euler3DTransform( const Euler3DTransform & );
 
+explicit Euler3DTransform( const Transform & );
+
 Euler3DTransform &operator=( const Euler3DTransform & );
 
 /** fixed parameter */

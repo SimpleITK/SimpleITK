@@ -38,6 +38,8 @@ public:
 
   VersorRigid3DTransform( const VersorRigid3DTransform & );
 
+  explicit VersorRigid3DTransform( const Transform & );
+
   VersorRigid3DTransform &operator=( const VersorRigid3DTransform & );
 
 /** fixed parameter */

@@ -16,28 +16,6 @@
 *
 *=========================================================================*/
 
-#include <ostream>
-#include <vector>
-#include <iterator>
-#include <algorithm>
-
-// This is needed before the gtest include for lookup of the operator
-// to work with clang 5.1
-namespace {
- std::ostream& operator<< (std::ostream& os, const std::vector<double>& v)
- {
-   if ( v.empty() )
-     {
-     return os << "[ ]";
-     }
-
-   os << "[ ";
-   std::copy( v.begin(), v.end()-1, std::ostream_iterator<double>(os, ", ") );
-   return os << v.back() << " ]";
- }
-}
-
-
 #include "SimpleITKTestHarness.h"
 #include "sitkTransform.h"
 #include "sitkAffineTransform.h"
@@ -56,70 +34,6 @@ namespace {
 #include "itkMath.h"
 
 namespace sitk = itk::simple;
-
-namespace {
-
-::testing::AssertionResult VectorDoubleRMSPredFormat(const char* expr1,
-                                                     const char* expr2,
-                                                     const char* rms_error_expr,
-                                                     const std::vector<double> &val1,
-                                                     const std::vector<double> &val2,
-                                                     double rms_error) {
-  if (val1.size() != val2.size())
-    {
-    return testing::AssertionFailure()
-      << "The size of " << expr1 << " and " << expr2
-      << " different, where\n"
-      << expr1 << " evaluates to " << val1 << ",\n"
-      << expr2 << " evaluates to " << val2 << ".";
-
-    }
-  double total = 0.0;
-  for ( unsigned int i = 0; i < val1.size(); ++i )
-    {
-    double temp = (val1[i]-val2[i]);
-    total += temp*temp;
-    }
-  const double rms = sqrt(total);
-  if (rms <= rms_error) return ::testing::AssertionSuccess();
-
-  return ::testing::AssertionFailure()
-      << "The RMS difference between " << expr1 << " and " << expr2
-      << " is " << rms << ",\n  which exceeds " << rms_error_expr << ", where\n"
-      << expr1 << " evaluates to " << val1 << ",\n"
-      << expr2 << " evaluates to " << val2 << ", and\n"
-      << rms_error_expr << " evaluates to " << rms_error << ".";
-}
-
-
-
-#define EXPECT_VECTOR_DOUBLE_NEAR(val1, val2, rms_error)                \
-  EXPECT_PRED_FORMAT3(VectorDoubleRMSPredFormat,                        \
-                      val1, val2, rms_error)
-
-
-std::vector<double> v2(double v1, double v2)
-{
-  std::vector<double> temp(2);
-  temp[0]=v1;temp[1]=v2;
-  return temp;
-}
-
-std::vector<double> v3(double v1, double v2, double v3)
-{
-  std::vector<double> temp(3);
-  temp[0]=v1;temp[1]=v2;temp[2]=v3;
-  return temp;
-}
-
-std::vector<double> v4(double v1, double v2, double v3, double v4)
-{
-  std::vector<double> temp(4);
-  temp[0]=v1;temp[1]=v2;temp[2]=v3;temp[3]=v4;
-  return temp;
-}
-
-}
 
 TEST(TransformTest, Construction) {
 

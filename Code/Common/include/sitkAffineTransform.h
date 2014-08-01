@@ -36,6 +36,8 @@ public:
 
   AffineTransform( const AffineTransform & );
 
+  explicit AffineTransform( const Transform & );
+
   AffineTransform &operator=( const AffineTransform & );
 
   /** parameters */

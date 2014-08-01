@@ -38,6 +38,8 @@ public:
 
   VersorTransform( const VersorTransform & );
 
+  explicit VersorTransform( const Transform & );
+
   VersorTransform &operator=( const VersorTransform & );
 
 /** fixed parameter */

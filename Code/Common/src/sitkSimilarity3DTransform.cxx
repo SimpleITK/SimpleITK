@@ -71,6 +71,13 @@ Similarity3DTransform::Similarity3DTransform( const Similarity3DTransform &arg )
 }
 
 
+Similarity3DTransform::Similarity3DTransform( const Transform &arg )
+  : Transform(arg)
+{
+  Self::InternalInitialization(Self::GetITKBase());
+}
+
+
 Similarity3DTransform &Similarity3DTransform::operator=( const Similarity3DTransform &arg )
 {
   Superclass::operator=(arg);
