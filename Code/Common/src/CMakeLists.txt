@@ -6,6 +6,7 @@ set ( SimpleITKCommonSource
   sitkAffineTransform.cxx
   sitkEuler2DTransform.cxx
   sitkEuler3DTransform.cxx
+  sitkScaleSkewVersor3DTransform.cxx
   sitkSimilarity2DTransform.cxx
   sitkSimilarity3DTransform.cxx
   sitkTranslationTransform.cxx
