@@ -89,5 +89,5 @@
     }
   ],
   "briefdescription" : "Applies a voting operation in a neighborhood of each pixel.",
-  "detaileddescription" : "\\note Pixels which are not Foreground or Background will remain unchanged.\n\n\\see  Image\n\\see \n\\see  Neighborhood\n\\see \n\\see  NeighborhoodOperator\n\\see \n\\see  NeighborhoodIterator"
+  "detaileddescription" : "\\note Pixels which are not Foreground or Background will remain unchanged.\n\n\\see Image \n\\see \n\\see Neighborhood \n\\see \n\\see NeighborhoodOperator \n\\see \n\\see NeighborhoodIterator"
 }

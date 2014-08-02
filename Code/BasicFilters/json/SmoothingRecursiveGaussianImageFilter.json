@@ -54,5 +54,5 @@
     }
   ],
   "briefdescription" : "Computes the smoothing of an image by convolution with the Gaussian kernels implemented as IIR filters.",
-  "detaileddescription" : "This filter is implemented using the recursive gaussian filters. For multi-component images, the filter works on each component independently.\n\nFor this filter to be able to run in-place the input and output image types need to be the same and/or the same type as the RealImageType.\n\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Gaussian smoothing that works with image adaptors"
+  "detaileddescription" : "This filter is implemented using the recursive gaussian filters. For multi-component images, the filter works on each component independently.\n\nFor this filter to be able to run in-place the input and output image types need to be the same and/or the same type as the RealImageType.\n\n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Gaussian smoothing that works with image adaptors"
 }

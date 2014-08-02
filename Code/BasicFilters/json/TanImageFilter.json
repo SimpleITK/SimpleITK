@@ -19,5 +19,5 @@
     }
   ],
   "briefdescription" : "Computes the tangent of each input pixel.",
-  "detaileddescription" : "The computations are performed using vcl_tan(x)."
+  "detaileddescription" : "The computations are performed using std::tan(x)."
 }

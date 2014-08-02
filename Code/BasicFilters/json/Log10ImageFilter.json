@@ -19,5 +19,5 @@
     }
   ],
   "briefdescription" : "Computes the log10 of each pixel.",
-  "detaileddescription" : "The computation is performed using vcl_log10(x)."
+  "detaileddescription" : "The computation is performed using std::log10(x)."
 }

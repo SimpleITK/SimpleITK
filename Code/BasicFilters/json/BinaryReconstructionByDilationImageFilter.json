@@ -13,9 +13,9 @@
       "pixeltype" : "Input",
       "doc" : "",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin().",
+      "detaileddescriptionSet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin() .",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin()."
+      "detaileddescriptionGet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin() ."
     },
     {
       "name" : "ForegroundValue",
@@ -24,9 +24,9 @@
       "pixeltype" : "Input",
       "doc" : "",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the value used as \"foreground\" in the output image. Defaults to NumericTraits<PixelType>::max().",
+      "detaileddescriptionSet" : "Set/Get the value used as \"foreground\" in the output image. Defaults to NumericTraits<PixelType>::max() .",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the value used as \"foreground\" in the output image. Defaults to NumericTraits<PixelType>::max()."
+      "detaileddescriptionGet" : "Set/Get the value used as \"foreground\" in the output image. Defaults to NumericTraits<PixelType>::max() ."
     },
     {
       "name" : "FullyConnected",
@@ -58,5 +58,5 @@
     }
   ],
   "briefdescription" : "binary reconstruction by dilation of an image",
-  "detaileddescription" : "Reconstruction by dilation operates on a \"marker\" image and a \"mask\" image, and is defined as the dilation of the marker image with respect to the mask image iterated until stability.\n\nGeodesic morphology is described in Chapter 6.2 of Pierre Soille's book \"Morphological Image Analysis: Principles and Applications\", Second Edition, Springer, 2003.\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\n\\see  MorphologyImageFilter, ReconstructionByDilationImageFilter, BinaryReconstructionByErosionImageFilter"
+  "detaileddescription" : "Reconstruction by dilation operates on a \"marker\" image and a \"mask\" image, and is defined as the dilation of the marker image with respect to the mask image iterated until stability.\n\nGeodesic morphology is described in Chapter 6.2 of Pierre Soille's book \"Morphological Image Analysis: Principles and Applications\", Second Edition, Springer, 2003.\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\nThis implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176 \n\n\\see MorphologyImageFilter , ReconstructionByDilationImageFilter , BinaryReconstructionByErosionImageFilter"
 }
