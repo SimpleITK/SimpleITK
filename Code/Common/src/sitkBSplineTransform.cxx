@@ -24,6 +24,21 @@ namespace itk
 {
 namespace simple
 {
+namespace
+{
+// convert an itk::Array of images to a stl vector of sitk images
+template<typename TImageArrayType>
+std::vector<Image> sitkImageArrayConvert(const TImageArrayType &a)
+{
+  std::vector<Image> ret(a.Size());
+
+  for( unsigned int i = 0; i < a.Size(); ++i )
+    {
+    ret[i] = Image(a[i]);
+    }
+  return ret;
+}
+}
 
 
 // construct identity
@@ -103,6 +118,12 @@ std::vector<double> BSplineTransform::GetTransformDomainPhysicalDimensions() con
 }
 
 
+std::vector<Image> BSplineTransform::GetCoefficientImages () const
+{
+  return this->m_pfGetCoefficientImages();
+}
+
+
 void BSplineTransform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
 {
   Superclass::SetPimpleTransform(pimpleTransform);
@@ -159,6 +180,9 @@ void BSplineTransform::InternalInitialization(TransformType *t)
   // TransformDomainPhysicalDimensions
   SITK_SET_MPF( TransformDomainPhysicalDimensions, typename TransformType::PhysicalDimensionsType, double );
 
+
+  std::vector<Image> (*pfImageArrayConvert)(const typename TransformType::CoefficientImageArray &) = &sitkImageArrayConvert<typename TransformType::CoefficientImageArray>;
+  this->m_pfGetCoefficientImages = nsstd::bind(pfImageArrayConvert, nsstd::bind(&TransformType::GetCoefficientImages,t) );
 }
 
 PimpleTransformBase *BSplineTransform::CreateBSplinePimpleTransform(unsigned int dimension)

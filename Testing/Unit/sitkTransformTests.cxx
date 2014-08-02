@@ -523,6 +523,11 @@ TEST(TransformTest,BSplineTransform)
   EXPECT_EQ( tx->SetTransformDomainMeshSize(std::vector<unsigned int>(2,4u)).GetTransformDomainMeshSize(), std::vector<unsigned int>(2,4u) );
   EXPECT_EQ( tx->SetTransformDomainOrigin( v2(2.0,2.0) ).GetTransformDomainOrigin(), v2(2.0,2.0) );
   EXPECT_EQ( tx->SetTransformDomainPhysicalDimensions(v2(4.0,4.0)).GetTransformDomainPhysicalDimensions(), v2(4.0,4.0) );
+
+  std::vector<sitk::Image> coefficientImages = tx->GetCoefficientImages();
+  ASSERT_EQ( 2u, coefficientImages );
+  EXPECT_EQ( v2(5, 5), coefficuentImages[0].GetSize() );
+  EXPECT_EQ( v2(5, 5), coefficuentImages[1].GetSize() );
 }
 
 
