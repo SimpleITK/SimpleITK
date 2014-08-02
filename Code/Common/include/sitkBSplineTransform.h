@@ -50,8 +50,16 @@ public:
   Self &SetTransformDomainPhysicalDimensions(const std::vector<double> &);
   std::vector<double> GetTransformDomainPhysicalDimensions() const;
 
-  /** additional methods */
+  /* additional methods */
 
+  /** \brief Get a vector of the coefficient images representing the BSpline
+   *
+   * A lazy shallow copy of the images from ITK are performed. If they
+   * are modified in SimpleITK a deep copy will occur. However, if
+   * the coefficients are modified in ITK, then no copy will occur and
+   * the images help by SimpleITK may change.
+   */
+  std::vector<Image> GetCoefficientImages () const;
 
 protected:
 
@@ -91,6 +99,8 @@ private:
   nsstd::function<void (const std::vector<double>&)> m_pfSetTransformDomainOrigin;
   nsstd::function<std::vector<double> ()> m_pfGetTransformDomainPhysicalDimensions;
   nsstd::function<void (const std::vector<double> &)> m_pfSetTransformDomainPhysicalDimensions;
+
+  nsstd::function<std::vector<Image> ()> m_pfGetCoefficientImages;
 
 };
 
