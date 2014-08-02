@@ -23,9 +23,9 @@
       "default" : "0.0",
       "pixeltype" : "Input",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set the value used as \"background\". Defaults to NumericTraits<PixelType>::NonpositiveMin().",
+      "detaileddescriptionSet" : "Set the value used as \"background\". Defaults to NumericTraits<PixelType>::NonpositiveMin() .",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Get the value used as \"background\". Defaults to NumericTraits<PixelType>::NonpositiveMin()."
+      "detaileddescriptionGet" : "Get the value used as \"background\". Defaults to NumericTraits<PixelType>::NonpositiveMin() ."
     }
   ],
   "tests" : [
@@ -54,5 +54,5 @@
     }
   ],
   "briefdescription" : "Implements the BinaryNot logical operator pixel-wise between two images.",
-  "detaileddescription" : "This class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\n\nThe total operation over one pixel will be\n\noutput_pixel = static_cast<PixelType>( input1_pixel != input2_pixel )\n\nWhere \"!=\" is the equality operator in C++.\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Invert an image using the Binary Not operation"
+  "detaileddescription" : "This class is parametrized over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\n\nThe total operation over one pixel will be\n\noutput_pixel = static_cast<PixelType>( input1_pixel != input2_pixel )\n\nWhere \"!=\" is the equality operator in C++.\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\nThis implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176 \n\n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Invert an image using the Binary Not operation"
 }

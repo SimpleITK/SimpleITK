@@ -61,5 +61,5 @@
     }
   ],
   "briefdescription" : "Implements a fast rectangular sigma filter using the accumulator approach.",
-  "detaileddescription" : "This code was contributed in the Insight Journal paper: \"Efficient implementation of kernel filtering\" by Beare R., Lehmann Ghttp://hdl.handle.net/1926/555http://www.insight-journal.org/browse/publication/160\n\n\\author Gaetan Lehmann"
+  "detaileddescription" : "This code was contributed in the Insight Journal paper: \"Efficient implementation of kernel filtering\" by Beare R., Lehmann G http://hdl.handle.net/1926/555 http://www.insight-journal.org/browse/publication/160 \n\n\\author Gaetan Lehmann"
 }

@@ -122,5 +122,5 @@
     }
   ],
   "briefdescription" : "Isolate watershed basins using two seeds.",
-  "detaileddescription" : "IsolatedWatershedImageFilterlabels pixels with ReplaceValue1 that are in the same watershed basin as Seed1 AND NOT the same as Seed2. The filter adjusts the waterlevel until the two seeds are not in different basins. The user supplies a Watershed threshold. The algorithm uses a binary search to adjust the upper waterlevel, starting at UpperValueLimit. UpperValueLimit defaults to the 1.0."
+  "detaileddescription" : "IsolatedWatershedImageFilter labels pixels with ReplaceValue1 that are in the same watershed basin as Seed1 AND NOT the same as Seed2. The filter adjusts the waterlevel until the two seeds are not in different basins. The user supplies a Watershed threshold. The algorithm uses a binary search to adjust the upper waterlevel, starting at UpperValueLimit. UpperValueLimit defaults to the 1.0."
 }

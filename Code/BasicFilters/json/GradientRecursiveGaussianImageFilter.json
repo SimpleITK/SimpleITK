@@ -23,9 +23,9 @@
       "default" : "false",
       "doc" : "",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Define which normalization factor will be used for the Gaussian\\see  RecursiveGaussianImageFilter::SetNormalizeAcrossScale",
+      "detaileddescriptionSet" : "Define which normalization factor will be used for the Gaussian\\see RecursiveGaussianImageFilter::SetNormalizeAcrossScale",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Define which normalization factor will be used for the Gaussian\\see  RecursiveGaussianImageFilter::SetNormalizeAcrossScale"
+      "detaileddescriptionGet" : "Define which normalization factor will be used for the Gaussian\\see RecursiveGaussianImageFilter::SetNormalizeAcrossScale"
     },
     {
       "name" : "UseImageDirection",
@@ -63,5 +63,5 @@
     }
   ],
   "briefdescription" : "Computes the gradient of an image by convolution with the first derivative of a Gaussian.",
-  "detaileddescription" : "This filter is implemented using the recursive gaussian filters.\n\nThis filter supports both scalar and vector pixel types within the input image, including VectorImagetype.\n\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Compute the gradient of an image by convolution with the first derivative of a Gaussian"
+  "detaileddescription" : "This filter is implemented using the recursive gaussian filters.\n\nThis filter supports both scalar and vector pixel types within the input image, including VectorImage type.\n\n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Compute the gradient of an image by convolution with the first derivative of a Gaussian"
 }

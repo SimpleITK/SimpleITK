@@ -19,5 +19,5 @@
     }
   ],
   "briefdescription" : "Computes the exponential function of each pixel.",
-  "detaileddescription" : "The computation is performed using vcl_exp(x)."
+  "detaileddescription" : "The computation is performed using std::exp(x)."
 }

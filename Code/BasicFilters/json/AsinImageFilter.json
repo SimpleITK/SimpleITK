@@ -19,5 +19,5 @@
     }
   ],
   "briefdescription" : "Computes the sine of each pixel.",
-  "detaileddescription" : "This filter is templated over the pixel type of the input image and the pixel type of the output image.\n\nThe filter walks over all the pixels in the input image, and for each pixel does the following:\n\n\n\\li cast the pixel value to double ,\n\n\\li apply the vcl_asin() function to the double value,\n\n\\li cast the double value resulting from vcl_asin() to the pixel type of the output image,\n\n\\li store the casted value into the output image.\n\nThe filter expects both images to have the same dimension (e.g. both 2D, or both 3D, or both ND)"
+  "detaileddescription" : "This filter is templated over the pixel type of the input image and the pixel type of the output image.\n\nThe filter walks over all the pixels in the input image, and for each pixel does the following:\n\n\n\\li cast the pixel value to double ,\n\n\\li apply the std::asin() function to the double value,\n\n\\li cast the double value resulting from std::asin() to the pixel type of the output image,\n\n\\li store the casted value into the output image.\n\nThe filter expects both images to have the same dimension (e.g. both 2D, or both 3D, or both ND)"
 }
