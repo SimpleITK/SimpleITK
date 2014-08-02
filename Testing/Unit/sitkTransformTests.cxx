@@ -525,9 +525,9 @@ TEST(TransformTest,BSplineTransform)
   EXPECT_EQ( tx->SetTransformDomainPhysicalDimensions(v2(4.0,4.0)).GetTransformDomainPhysicalDimensions(), v2(4.0,4.0) );
 
   std::vector<sitk::Image> coefficientImages = tx->GetCoefficientImages();
-  ASSERT_EQ( 2u, coefficientImages );
-  EXPECT_EQ( v2(5, 5), coefficuentImages[0].GetSize() );
-  EXPECT_EQ( v2(5, 5), coefficuentImages[1].GetSize() );
+  ASSERT_EQ( 2u, coefficientImages.size() );
+  EXPECT_EQ( std::vector<unsigned int>(2, 7u), coefficientImages[0].GetSize() );
+  EXPECT_EQ( std::vector<unsigned int>(2, 7u), coefficientImages[1].GetSize() );
 }
 
 
