@@ -45,6 +45,7 @@
 #include <sitkMergeLabelMapFilter.h>
 #include <sitkDiffeomorphicDemonsRegistrationFilter.h>
 #include <sitkFastSymmetricForcesDemonsRegistrationFilter.h>
+#include <sitkBSplineTransformInitializerFilter.h>
 #include <sitkCenteredTransformInitializerFilter.h>
 #include <sitkCenteredVersorTransformInitializerFilter.h>
 #include <sitkAdditionalProcedures.h>
@@ -453,6 +454,43 @@ TEST(BasicFilters,HashImageFilter) {
   EXPECT_EQ ( itk::simple::HashImageFilter::SHA1, hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).GetHashFunction() );
   EXPECT_EQ ( itk::simple::HashImageFilter::MD5, hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 ).GetHashFunction() );
 }
+
+
+TEST(BasicFilters,BSplineTransformInitializer) {
+  namespace sitk = itk::simple;
+
+  sitk::BSplineTransformInitializerFilter filter;
+
+  EXPECT_EQ ( "BSplineTransformInitializerFilter", filter.GetName() );
+  EXPECT_EQ ( std::vector<uint32_t>(3,1u), filter.GetTransformDomainMeshSize() );
+  EXPECT_EQ ( std::vector<uint32_t>(3,10u), filter.SetTransformDomainMeshSize(std::vector<uint32_t>(3,10u)).GetTransformDomainMeshSize() );
+
+  const double cs = 0.5*itk::Math::sqrt2; // cos(pi/4) = sin(pi/4)
+  sitk::Image img( 100, 100, sitk::sitkUInt32 );
+  img.SetDirection(v4(cs,-cs,cs,cs) );
+  img.SetSpacing( v2(2,2) );
+
+
+  sitk::BSplineTransform outTx = filter.Execute( img );
+  EXPECT_EQ ( std::vector<uint32_t>(2,10u), outTx.GetTransformDomainMeshSize() );
+  EXPECT_VECTOR_DOUBLE_NEAR ( v4(cs,-cs,cs,cs), outTx.GetTransformDomainDirection(), 1e-6 );
+   EXPECT_VECTOR_DOUBLE_NEAR ( v2(0, -1.7677669525146484 ), outTx.GetTransformDomainOrigin(), 1e-6 );
+  EXPECT_VECTOR_DOUBLE_NEAR ( v2(10.025, 20.05), outTx.GetTransformDomainPhysicalDimensions(), 1e6);
+  EXPECT_EQ ( 10u, outTx.GetFixedParameters().size() );
+
+  // 3D
+  img = sitk::Image(10,10,10,  sitk::sitkUInt32 );
+
+  outTx = sitk::BSplineTransformInitializer( img, std::vector<uint32_t>(3,5u) );
+  EXPECT_EQ( std::vector<uint32_t>(3,5u), outTx.GetTransformDomainMeshSize() );
+
+  // check that it's identity
+  EXPECT_VECTOR_DOUBLE_NEAR( outTx.TransformPoint( v3(0.0,0.0,0.0) ), v3(0.0,0.0,0.0), 1e-17);
+  EXPECT_VECTOR_DOUBLE_NEAR( outTx.TransformPoint( v3(1.123,0.0,2.0) ), v3(1.123,0.0,2.0), 1e-17);
+  EXPECT_VECTOR_DOUBLE_NEAR( outTx.TransformPoint( v3(0.0,0.0,5.0) ), v3(0.0,0.0,5.0), 1e-17);
+  EXPECT_VECTOR_DOUBLE_NEAR( outTx.TransformPoint( v3(5.0,7.0,9.0) ), v3(5.0,7.0,9.0), 1e-17);
+}
+
 
 TEST(BasicFilters,CenteredTransformInitializer) {
   namespace sitk = itk::simple;

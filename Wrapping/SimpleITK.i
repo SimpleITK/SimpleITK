@@ -137,6 +137,7 @@ namespace std
 
 // Transforms
 %include "sitkTransform.h"
+%include "sitkBSplineTransform.h"
 %include "sitkAffineTransform.h"
 %include "sitkEuler3DTransform.h"
 %include "sitkEuler2DTransform.h"
@@ -168,6 +169,7 @@ namespace std
 
  // Basic Filters
 %include "sitkHashImageFilter.h"
+%include "sitkBSplineTransformInitializerFilter.h"
 %include "sitkCenteredTransformInitializerFilter.h"
 %include "sitkCenteredVersorTransformInitializerFilter.h"
 %include "sitkCastImageFilter.h"

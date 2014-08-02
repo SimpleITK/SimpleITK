@@ -7,9 +7,6 @@
   "pixel_types" : "VectorPixelIDTypeList",
   "output_image_type" : "TImageType",
   "filter_type" : "itk::PhysicalPointImageSource<OutputImageType>",
-  "include_files" : [
-    "sitkDirectionConvert.hxx"
-  ],
   "members" : [
     {
       "name" : "OutputPixelType",
@@ -43,7 +40,7 @@
       "type" : "std::vector<double>",
       "default" : "std::vector<double>()",
       "doc" : "Passing a zero sized array, defaults to identiy matrix. The size of the array must exactly match the direction matrix for the dimension of the image.",
-      "custom_itk_cast" : "filter->SetDirection( VectorToITKDirection<typename FilterType::DirectionType>( this->m_Direction ) );"
+      "custom_itk_cast" : "filter->SetDirection( sitkSTLToITKDirection<typename FilterType::DirectionType>( this->m_Direction ) );"
     }
   ],
   "custom_methods" : [
