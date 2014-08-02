@@ -1023,7 +1023,7 @@ TEST(TransformTest,ScaleSkewVersor3DTransform_Points)
   EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(0.0,0.0,0.0) ), v3(0.0,0.0,0.0), 1e-17);
   EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(1.0,0.0,0.0) ), v3(1.0,0.0,0.0), 1e-17);
   EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(1.0,1.0,0.0) ), v3(2.0,1.0,0.0), 1e-17);
-  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(0.0,1.0,1.0) ), v3(0.0,1.0,1.0), 1e-17);
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(0.0,1.0,1.0) ), v3(1.0,1.0,1.0), 1e-17);
 
   skew = zeroSkew;
   skew[3] = 1.0;
