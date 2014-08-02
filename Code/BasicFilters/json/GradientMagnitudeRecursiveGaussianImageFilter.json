@@ -23,9 +23,9 @@
       "default" : "false",
       "doc" : "",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Define which normalization factor will be used for the Gaussian\\see  RecursiveGaussianImageFilter::SetNormalizeAcrossScale",
+      "detaileddescriptionSet" : "Define which normalization factor will be used for the Gaussian\\see RecursiveGaussianImageFilter::SetNormalizeAcrossScale",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Define which normalization factor will be used for the Gaussian\\see  RecursiveGaussianImageFilter::SetNormalizeAcrossScale"
+      "detaileddescriptionGet" : "Define which normalization factor will be used for the Gaussian\\see RecursiveGaussianImageFilter::SetNormalizeAcrossScale"
     }
   ],
   "tests" : [
@@ -40,5 +40,5 @@
     }
   ],
   "briefdescription" : "Computes the Magnitude of the Gradient of an image by convolution with the first derivative of a Gaussian.",
-  "detaileddescription" : "This filter is implemented using the recursive gaussian filters\n\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Find the gradient magnitude of the image first smoothed with a Gaussian kernel"
+  "detaileddescription" : "This filter is implemented using the recursive gaussian filters\n\n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Find the gradient magnitude of the image first smoothed with a Gaussian kernel"
 }

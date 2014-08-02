@@ -53,5 +53,5 @@
     }
   ],
   "briefdescription" : "Convolve a given image with an arbitrary image kernel using multiplication in the Fourier domain.",
-  "detaileddescription" : "This filter produces output equivalent to the output of the ConvolutionImageFilter. However, it takes advantage of the convolution theorem to accelerate the convolution computation when the kernel is large.\n\n\\warning This filter ignores the spacing, origin, and orientation of the kernel image and treats them as identical to those in the input image.\n\nThis code was adapted from the Insight Journal contribution:\n\n\"FFT Based Convolution\" by Gaetan Lehmannhttp://hdl.handle.net/10380/3154\n\n\\see  ConvolutionImageFilter"
+  "detaileddescription" : "This filter produces output equivalent to the output of the ConvolutionImageFilter . However, it takes advantage of the convolution theorem to accelerate the convolution computation when the kernel is large.\n\n\\warning This filter ignores the spacing, origin, and orientation of the kernel image and treats them as identical to those in the input image.\n\nThis code was adapted from the Insight Journal contribution:\n\n\"FFT Based Convolution\" by Gaetan Lehmann http://hdl.handle.net/10380/3154 \n\n\\see ConvolutionImageFilter"
 }

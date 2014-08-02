@@ -78,11 +78,11 @@ def formatDescription ( parent ) {
                   "ref" : " ",
                   "ulink" : " ",
                   "codeline" : "\n",
-                  "programlisting" : "\\endcode\n"]
+                  "programlisting" : "\\endcode\n",
+                  "sp" : " "]
 
   // Go depth first
   parent.each {
-
     switch ( it.getClass() ) {
     case groovy.util.Node:
       if ( it.name() == "simplesect" ) {
@@ -104,21 +104,21 @@ def formatDescription ( parent ) {
         sub = sub.replaceFirst ( "\\\\\\[", " \\\\f[" ).replaceAll ( "\\]", "\\f] " )
         sub = sub.replaceAll ( "\\\$", "\\\\\\f\\\$" ) + " "
       }
-      // Don't write anything out, if there is no content
-      if ( sub.length() > 0 ) {
 
-        // add a leading spacing for "ulink" or "ref" nodes
-        if ( ((it.name() == "ulink") || (it.name() == "ref")) && result.length()) {
-          // check that there isn't a space already
-          if (result.charAt(result.length()-1) != ' ') {
-            result.append( " " )
-          }
+      // add a leading spacing for "ulink" or "ref" nodes
+      if ( ((it.name() == "ulink") || (it.name() == "ref")) && result.length()) {
+        // check that there isn't a space already
+        if (result.charAt(result.length()-1) != ' ') {
+          result.append( " " )
         }
-        result.append ( prefix.get(it.name(), '') )
-        result.append ( sub )
-        result.append ( postfix.get(it.name(), '') )
-
       }
+      result.append ( prefix.get(it.name(), '') )
+      result.append ( sub )
+      result.append ( postfix.get(it.name(), '') )
+
+      break
+    case String:
+      result.append ( it )
       break
     default:
       result.append ( it )

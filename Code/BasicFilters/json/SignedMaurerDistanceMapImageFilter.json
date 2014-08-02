@@ -14,7 +14,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set if the inside represents positive values in the signed distance map. By convention ON pixels are treated as inside pixels.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Get if the inside represents positive values in the signed distance map.\\see  GetInsideIsPositive()"
+      "detaileddescriptionGet" : "Get if the inside represents positive values in the signed distance map.\\see GetInsideIsPositive()"
     },
     {
       "name" : "SquaredDistance",
