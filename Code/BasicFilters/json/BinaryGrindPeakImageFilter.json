@@ -76,5 +76,5 @@
     }
   ],
   "briefdescription" : "Remove the objects not connected to the boundary of the image.",
-  "detaileddescription" : "BinaryGrindPeakImageFilterginds peaks in a grayscale image.\n\nGeodesic morphology and the grind peak algorithm is described in Chapter 6 of Pierre Soille's book \"Morphological Image Analysis:\nPrinciples and Applications\", Second Edition, Springer, 2003.\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\n\\see  GrayscaleGrindPeakImageFilter"
+  "detaileddescription" : "BinaryGrindPeakImageFilter ginds peaks in a grayscale image.\n\nGeodesic morphology and the grind peak algorithm is described in Chapter 6 of Pierre Soille's book \"Morphological Image Analysis:\nPrinciples and Applications\", Second Edition, Springer, 2003.\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\nThis implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176 \n\n\\see GrayscaleGrindPeakImageFilter"
 }

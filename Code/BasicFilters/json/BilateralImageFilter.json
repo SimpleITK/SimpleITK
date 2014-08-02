@@ -14,16 +14,16 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Convenience get/set methods for setting all domain parameters to the same values.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Standard get/set macros for filter parameters. DomainSigma is specified in the same units as the Imagespacing. RangeSigma is specified in the units of intensity."
+      "detaileddescriptionGet" : "Standard get/set macros for filter parameters. DomainSigma is specified in the same units as the Image spacing. RangeSigma is specified in the units of intensity."
     },
     {
       "name" : "RangeSigma",
       "type" : "double",
       "default" : "50.0",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Standard get/set macros for filter parameters. DomainSigma is specified in the same units as the Imagespacing. RangeSigma is specified in the units of intensity.",
+      "detaileddescriptionSet" : "Standard get/set macros for filter parameters. DomainSigma is specified in the same units as the Image spacing. RangeSigma is specified in the units of intensity.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Standard get/set macros for filter parameters. DomainSigma is specified in the same units as the Imagespacing. RangeSigma is specified in the units of intensity."
+      "detaileddescriptionGet" : "Standard get/set macros for filter parameters. DomainSigma is specified in the same units as the Image spacing. RangeSigma is specified in the units of intensity."
     },
     {
       "name" : "NumberOfRangeGaussianSamples",
@@ -66,5 +66,5 @@
     }
   ],
   "briefdescription" : "Blurs an image while preserving edges.",
-  "detaileddescription" : "This filter uses bilateral filtering to blur an image using both domain and range \"neighborhoods\". Pixels that are close to a pixel in the image domain and similar to a pixel in the image range are used to calculate the filtered value. Two gaussian kernels (one in the image domain and one in the image range) are used to smooth the image. The result is an image that is smoothed in homogeneous regions yet has edges preserved. The result is similar to anisotropic diffusion but the implementation in non-iterative. Another benefit to bilateral filtering is that any distance metric can be used for kernel smoothing the image range. Hence, color images can be smoothed as vector images, using the CIE distances between intensity values as the similarity metric (the Gaussian kernel for the image domain is evaluated using CIE distances). A separate version of this filter will be designed for color and vector images.\n\nBilateral filtering is capable of reducing the noise in an image by an order of magnitude while maintaining edges.\n\nThe bilateral operator used here was described by Tomasi and Manduchi (Bilateral Filtering for Gray and ColorImages. IEEE ICCV. 1998.)\n\n\\see  GaussianOperator\n\\see \n\\see  RecursiveGaussianImageFilter\n\\see \n\\see  DiscreteGaussianImageFilter\n\\see \n\\see  AnisotropicDiffusionImageFilter\n\\see \n\\see  Image\n\\see \n\\see  Neighborhood\n\\see \n\\see  NeighborhoodOperator\nTodoSupport color images\n\nSupport vector images\n\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Bilateral filter an image"
+  "detaileddescription" : "This filter uses bilateral filtering to blur an image using both domain and range \"neighborhoods\". Pixels that are close to a pixel in the image domain and similar to a pixel in the image range are used to calculate the filtered value. Two gaussian kernels (one in the image domain and one in the image range) are used to smooth the image. The result is an image that is smoothed in homogeneous regions yet has edges preserved. The result is similar to anisotropic diffusion but the implementation in non-iterative. Another benefit to bilateral filtering is that any distance metric can be used for kernel smoothing the image range. Hence, color images can be smoothed as vector images, using the CIE distances between intensity values as the similarity metric (the Gaussian kernel for the image domain is evaluated using CIE distances). A separate version of this filter will be designed for color and vector images.\n\nBilateral filtering is capable of reducing the noise in an image by an order of magnitude while maintaining edges.\n\nThe bilateral operator used here was described by Tomasi and Manduchi (Bilateral Filtering for Gray and ColorImages. IEEE ICCV. 1998.)\n\n\\see GaussianOperator \n\\see \n\\see RecursiveGaussianImageFilter \n\\see \n\\see DiscreteGaussianImageFilter \n\\see \n\\see AnisotropicDiffusionImageFilter \n\\see \n\\see Image \n\\see \n\\see Neighborhood \n\\see \n\\see NeighborhoodOperator \nTodoSupport color images\n\nSupport vector images\n\n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Bilateral filter an image"
 }

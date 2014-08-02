@@ -14,7 +14,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set if the input is binary. If this variable is set, each nonzero pixel in the input image will be given a unique numeric code to be used by the Voronoi partition. If the image is binary but you are not interested in the Voronoi regions of the different nonzero pixels, then you need not set this.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Get if the input is binary. See SetInputIsBinary()."
+      "detaileddescriptionGet" : "Get if the input is binary. See SetInputIsBinary() ."
     },
     {
       "name" : "SquaredDistance",
@@ -47,5 +47,5 @@
     }
   ],
   "briefdescription" : "This filter computes the distance map of the input image as an approximation with pixel accuracy to the Euclidean distance.",
-  "detaileddescription" : "TInputImageInput ImageType\n\nTOutputImageOutput ImageType\n\nTVoronoiImageVoronoi ImageType. Note the default value is TInputImage.\n\nThe input is assumed to contain numeric codes defining objects. The filter will produce as output the following images:\n\n\n\\li AVoronoi partitionusing the same numeric codes as the input.\n\n\\li Adistance mapwith the approximation to the euclidean distance. from a particular pixel to the nearest object to this pixel in the input image.\n\n\\li Avector mapcontaining the component of the vector relating the current pixel with the closest point of the closest object to this pixel. Given that the components of the distance are computed in \"pixels\", the vector is represented by an itk::Offset. That is, physical coordinates are not used.\n\nThis filter is N-dimensional and known to be efficient in computational time. The algorithm is the N-dimensional version of the 4SED algorithm given for two dimensions in:\n\nDanielsson, Per-Erik. Euclidean Distance Mapping. Computer Graphics and ImageProcessing 14, 227-248 (1980)."
+  "detaileddescription" : "TInputImageInput Image Type\n\nTOutputImageOutput Image Type\n\nTVoronoiImageVoronoi Image Type. Note the default value is TInputImage.\n\nThe input is assumed to contain numeric codes defining objects. The filter will produce as output the following images:\n\n\n\\li AVoronoi partitionusing the same numeric codes as the input.\n\n\\li Adistance mapwith the approximation to the euclidean distance. from a particular pixel to the nearest object to this pixel in the input image.\n\n\\li Avector mapcontaining the component of the vector relating the current pixel with the closest point of the closest object to this pixel. Given that the components of the distance are computed in \"pixels\", the vector is represented by an itk::Offset . That is, physical coordinates are not used.\n\nThis filter is N-dimensional and known to be efficient in computational time. The algorithm is the N-dimensional version of the 4SED algorithm given for two dimensions in:\n\nDanielsson, Per-Erik. Euclidean Distance Mapping. Computer Graphics and Image Processing 14, 227-248 (1980)."
 }
