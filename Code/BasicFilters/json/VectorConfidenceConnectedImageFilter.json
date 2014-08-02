@@ -52,7 +52,7 @@
       "default" : "std::vector<double>()",
       "custom_itk_cast" : "this->m_Mean = std::vector<double>( filter->GetMean().begin(), filter->GetMean().end() );",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Get the Mean Vector computed during the segmentation"
+      "detaileddescriptionGet" : "Get the Mean Vectorcomputed during the segmentation"
     },
     {
       "name" : "Covariance",
