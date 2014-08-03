@@ -19,6 +19,6 @@
       ]
     }
   ],
-  "briefdescription" : "Convert a LabelMapto a colored image.",
-  "detaileddescription" : "\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\nThis implementation was taken from the Insight Journal paper:http://hdl.handle.net/1926/584orhttp://www.insight-journal.org/browse/publication/176\n\n\\see  LabelMapToBinaryImageFilter, LabelMapMaskImageFilter"
+  "briefdescription" : "Convert a LabelMap to a colored image.",
+  "detaileddescription" : "\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\nThis implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176 \n\n\\see LabelMapToBinaryImageFilter , LabelMapMaskImageFilter"
 }

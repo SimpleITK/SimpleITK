@@ -15,9 +15,9 @@
       "type" : "double",
       "default" : "0.0",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "The regularization factor. Larger values reduce the dominance of noise in the solution, but results in higher approximation error in the deblurred image. Default value is 0.0, yielding the same results as the InverseDeconvolutionImageFilter.",
+      "detaileddescriptionSet" : "The regularization factor. Larger values reduce the dominance of noise in the solution, but results in higher approximation error in the deblurred image. Default value is 0.0, yielding the same results as the InverseDeconvolutionImageFilter .",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "The regularization factor. Larger values reduce the dominance of noise in the solution, but results in higher approximation error in the deblurred image. Default value is 0.0, yielding the same results as the InverseDeconvolutionImageFilter."
+      "detaileddescriptionGet" : "The regularization factor. Larger values reduce the dominance of noise in the solution, but results in higher approximation error in the deblurred image. Default value is 0.0, yielding the same results as the InverseDeconvolutionImageFilter ."
     },
     {
       "name" : "Normalize",
@@ -69,5 +69,5 @@
     }
   ],
   "briefdescription" : "An inverse deconvolution filter regularized in the Tikhonov sense.",
-  "detaileddescription" : "The Tikhonov deconvolution filter is the inverse deconvolution filter with a regularization term added to the denominator. The filter minimizes the equation \\f[ ||\\hat{f} \\otimes h - g||_{L_2}^2 + \\mu||\\hat{f}||^2 \\f]  where\\f$\\hat{f}\\f$ is the estimate of the unblurred image,\\f$h\\f$ is the blurring kernel,\\f$g\\f$ is the blurred image, and\\f$\\mu\\f$ is a non-negative real regularization function.\n\nThe filter applies a kernel described in the Fourier domain as\\f$H^*(\\omega) / (|H(\\omega)|^2 + \\mu)\\f$ where\\f$H(\\omega)\\f$ is the Fourier transform of\\f$h\\f$ . The term\\f$\\mu\\f$ is called RegularizationConstant in this filter. If\\f$\\mu\\f$ is set to zero, this filter is equivalent to the InverseDeconvolutionImageFilter.\n\n\\author Gaetan Lehmann, Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France\n\nCory Quammen, The University of North Carolina at Chapel Hill"
+  "detaileddescription" : "The Tikhonov deconvolution filter is the inverse deconvolution filter with a regularization term added to the denominator. The filter minimizes the equation \\f[ ||\\hat{f} \\otimes h - g||_{L_2}^2 + \\mu||\\hat{f}||^2 \\f]  where\\f$\\hat{f}\\f$ is the estimate of the unblurred image,\\f$h\\f$ is the blurring kernel,\\f$g\\f$ is the blurred image, and\\f$\\mu\\f$ is a non-negative real regularization function.\n\nThe filter applies a kernel described in the Fourier domain as\\f$H^*(\\omega) / (|H(\\omega)|^2 + \\mu)\\f$ where\\f$H(\\omega)\\f$ is the Fourier transform of\\f$h\\f$ . The term\\f$\\mu\\f$ is called RegularizationConstant in this filter. If\\f$\\mu\\f$ is set to zero, this filter is equivalent to the InverseDeconvolutionImageFilter .\n\n\\author Gaetan Lehmann, Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France\n\nCory Quammen, The University of North Carolina at Chapel Hill"
 }

@@ -70,14 +70,16 @@ def formatDescription ( parent ) {
   StringBuilder result = new StringBuilder()
   def prefix = [ "listitem" : "\\li ",
                  "itemizedlist" : "\n",
-                 "ref" : " ",
                  "computeroutput" : " ",
                  "programlisting" : "\\code\n"]
   def postfix = [ "para" : "\n\n",
                   "title" : "\n",
                   "computeroutput" : " ",
+                  "ref" : " ",
+                  "ulink" : " ",
                   "codeline" : "\n",
-                  "programlisting" : "\\endcode\n"]
+                  "programlisting" : "\\endcode\n",
+                  "sp" : " "]
 
   // Go depth first
   parent.each {
@@ -102,12 +104,21 @@ def formatDescription ( parent ) {
         sub = sub.replaceFirst ( "\\\\\\[", " \\\\f[" ).replaceAll ( "\\]", "\\f] " )
         sub = sub.replaceAll ( "\\\$", "\\\\\\f\\\$" ) + " "
       }
-      // Don't write anything out, if there is no content
-      if ( sub.length() > 0 ) {
-        result.append ( prefix.get(it.name(), '') )
-        result.append ( sub )
-        result.append ( postfix.get(it.name(), '') )
+
+      // add a leading spacing for "ulink" or "ref" nodes
+      if ( ((it.name() == "ulink") || (it.name() == "ref")) && result.length()) {
+        // check that there isn't a space already
+        if (result.charAt(result.length()-1) != ' ') {
+          result.append( " " )
+        }
       }
+      result.append ( prefix.get(it.name(), '') )
+      result.append ( sub )
+      result.append ( postfix.get(it.name(), '') )
+
+      break
+    case String:
+      result.append ( it )
       break
     default:
       result.append ( it )

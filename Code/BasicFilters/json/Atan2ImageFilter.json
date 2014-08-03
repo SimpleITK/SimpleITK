@@ -20,5 +20,5 @@
     }
   ],
   "briefdescription" : "Computes two argument inverse tangent.",
-  "detaileddescription" : "The first argument to the atan function is provided by a pixel in the first input image ( SetInput1()) and the corresponding pixel in the second input image ( SetInput2()) is used as the second argument.\n\nThis class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\n\nBoth pixel input types are cast to double in order to be used as parameters of vcl_atan2() . The resulting double value is cast to the output pixel type.\n\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Compute the arctangent of each pixel."
+  "detaileddescription" : "The first argument to the atan function is provided by a pixel in the first input image ( SetInput1() ) and the corresponding pixel in the second input image ( SetInput2() ) is used as the second argument.\n\nThis class is templated over the types of the two input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.\n\nBoth pixel input types are cast to double in order to be used as parameters of std::atan2() . The resulting double value is cast to the output pixel type.\n\n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Compute the arctangent of each pixel."
 }
