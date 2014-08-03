@@ -64,6 +64,6 @@
       ]
     }
   ],
-  "briefdescription" : "Decrease the image size by cropping the image by an itk::Sizeat both the upper and lower bounds of the largest possible region.",
-  "detaileddescription" : "CropImageFilterchanges the image boundary of an image by removing pixels outside the target region. The target region is not specified in advance, but calculated in BeforeThreadedGenerateData().\n\nThis filter uses ExtractImageFilterto perform the cropping.\n\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Crop an image by specifying the region to throw away"
+  "briefdescription" : "Decrease the image size by cropping the image by an itk::Size at both the upper and lower bounds of the largest possible region.",
+  "detaileddescription" : "CropImageFilter changes the image boundary of an image by removing pixels outside the target region. The target region is not specified in advance, but calculated in BeforeThreadedGenerateData() .\n\nThis filter uses ExtractImageFilter to perform the cropping.\n\n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Crop an image by specifying the region to throw away"
 }

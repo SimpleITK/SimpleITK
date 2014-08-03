@@ -50,5 +50,5 @@
     }
   ],
   "briefdescription" : "Combines two images in a checkerboard pattern.",
-  "detaileddescription" : "CheckerBoardImageFiltertakes two input images that must have the same dimension, size, origin and spacing and produces an output image of the same size by combinining the pixels from the two input images in a checkerboard pattern. This filter is commonly used for visually comparing two images, in particular for evaluating the results of an image registration process.\n\nThis filter is implemented as a multithreaded filter. It provides a ThreadedGenerateData()method for its implementation.\n\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Combine two images by alternating blocks of a checkerboard pattern"
+  "detaileddescription" : "CheckerBoardImageFilter takes two input images that must have the same dimension, size, origin and spacing and produces an output image of the same size by combinining the pixels from the two input images in a checkerboard pattern. This filter is commonly used for visually comparing two images, in particular for evaluating the results of an image registration process.\n\nThis filter is implemented as a multithreaded filter. It provides a ThreadedGenerateData() method for its implementation.\n\n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Combine two images by alternating blocks of a checkerboard pattern"
 }
