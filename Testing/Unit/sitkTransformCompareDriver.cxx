@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
 
     std::cerr << std::endl;
     std::cerr << "This program is used to compare an input transformation file to a baseline displacement field file." << std::endl;
+    return EXIT_FAILURE;
     }
 
   try
