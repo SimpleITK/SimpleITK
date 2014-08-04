@@ -302,6 +302,19 @@ sitk_add_python_test( Example.ImageRegistrationMethod4Test3
   5 0.4
   )
 
+
+sitk_add_python_test(Example.ImageRegistrationMethodBSpline1
+  "${SimpleITKExamples_SOURCE_DIR}/ImageRegistrationMethodBSpline1.py"
+    DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20.png}
+    DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBSplined10.png}
+    ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethodBSpline1.hdf5
+  TRANSFORM_COMPARE
+    ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethodBSpline1.hdf5
+    DATA{${SimpleITK_DATA_ROOT}/Baseline/ImageRegistrationMethodBSpline1.mha}
+    0.02
+  )
+
+
 sitk_add_python_test(Example.DemonsRegistration1
   "${SimpleITKExamples_SOURCE_DIR}/DemonsRegistration1.py"
     DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20.png}
