@@ -495,7 +495,7 @@ itk::SpatialObject<VDimension> *
 ImageRegistrationMethod::CreateSpatialObjectMask(const Image &imageMask)
 {
   // this should be checked before this function
-  assert(imageMask.GetDimension() != VDimension));
+  assert(imageMask.GetDimension() != VDimension);
 
   // todo add the image to the spatial object, the spatial object only
   // seems to support unsigned char image types.
