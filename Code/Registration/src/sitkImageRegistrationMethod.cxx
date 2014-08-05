@@ -1,6 +1,8 @@
 #include "sitkImageRegistrationMethod.h"
 
 #include "sitkCreateInterpolator.hxx"
+#include "sitkCastImageFilter.h"
+
 #include "itkImageMaskSpatialObject.h"
 #include "itkImage.h"
 #include "itkImageRegistrationMethodv4.h"
@@ -494,10 +496,27 @@ ImageRegistrationMethod::CreateSpatialObjectMask(const Image &imageMask)
 {
   // todo add the image to the spatial object, the spatial object only
   // seems to support unsigned char image types.
+
+  Image mask = imageMask;
+  if (mask.GetDimension() != VDimension)
+    {
+    sitkExceptionMacro("Expected image mask to be of dimension " << VDimension << " not " << mask.GetDimension() << "!");
+    }
+
+  if (mask.GetPixelID() != sitkUInt8)
+    {
+    mask = Cast(mask, sitkUInt8);
+    }
+
+  // ick assuming uint8 == uchar
+  typedef itk::Image<unsigned char, VDimension> ITKImageType;
+  typename ITKImageType::ConstPointer itkImage = this->CastImageToITK<ITKImageType>(mask);
+
   typedef itk::ImageMaskSpatialObject<VDimension> SpatialObjectMaskType;
-  typename SpatialObjectMaskType::Pointer mask = SpatialObjectMaskType::New();
-  mask->Register();
-  return mask;
+  typename SpatialObjectMaskType::Pointer spatialMask = SpatialObjectMaskType::New();
+  spatialMask->SetImage(itkImage);
+  spatialMask->Register();
+  return spatialMask;
 }
 
 
@@ -615,7 +634,7 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
     {
     if (m_ShrinkFactorsPerLevel.size() != m_MetricSamplingPercentage.size())
       {
-      sitkExceptionMacro("Number of per level sampling percentage does not match!");
+
       }
     typename RegistrationType::MetricSamplingPercentageArrayType param(m_MetricSamplingPercentage.size());
     std::copy(m_MetricSamplingPercentage.begin(), m_MetricSamplingPercentage.end(), param.begin());
