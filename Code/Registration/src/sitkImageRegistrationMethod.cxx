@@ -494,14 +494,13 @@ template<unsigned int VDimension>
 itk::SpatialObject<VDimension> *
 ImageRegistrationMethod::CreateSpatialObjectMask(const Image &imageMask)
 {
+  // this should be checked before this function
+  assert(imageMask.GetDimension() != VDimension));
+
   // todo add the image to the spatial object, the spatial object only
   // seems to support unsigned char image types.
 
   Image mask = imageMask;
-  if (mask.GetDimension() != VDimension)
-    {
-    sitkExceptionMacro("Expected image mask to be of dimension " << VDimension << " not " << mask.GetDimension() << "!");
-    }
 
   if (mask.GetPixelID() != sitkUInt8)
     {
@@ -588,23 +587,25 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
   typename MovingInterpolatorType::Pointer   movingInterpolator  = CreateInterpolator(moving.GetPointer(), m_Interpolator);
   metric->SetMovingInterpolator( movingInterpolator );
 
-  const std::vector<unsigned int> zeroSize(FixedImageType::ImageDimension,0);
-
   // todo implement ImageRegionSpatialObject
-  if ( m_MetricFixedMaskImage.GetSize() != zeroSize
-       && m_MetricFixedMaskImage.GetDimension() == FixedImageType::ImageDimension )
+  if ( m_MetricFixedMaskImage.GetSize() != std::vector<unsigned int>(m_MetricFixedMaskImage.GetDimension(), 0u) )
     {
-    std::cout << "m_MetricFixedMaskImage.GetSize(): " << m_MetricFixedMaskImage.GetSize() << std::endl;
-    // const or non const?
-    typename SpatialObjectMaskType::Pointer fixedMask = this->CreateSpatialObjectMask<ImageDimension>(m_MetricFixedMaskImage);
+    if ( m_MetricFixedMaskImage.GetDimension() != FixedImageType::ImageDimension )
+      {
+      sitkExceptionMacro("FixedMaskImage does not match dimension of then fixed image!");
+      }
+    typename SpatialObjectMaskType::ConstPointer fixedMask = this->CreateSpatialObjectMask<ImageDimension>(m_MetricFixedMaskImage);
     fixedMask->UnRegister();
     metric->SetFixedImageMask(fixedMask);
     }
 
-  if ( m_MetricMovingMaskImage.GetSize() != zeroSize
-       && m_MetricMovingMaskImage.GetDimension() == MovingImageType::ImageDimension  )
+  if ( m_MetricMovingMaskImage.GetSize() != std::vector<unsigned int>(m_MetricMovingMaskImage.GetDimension(), 0u) )
     {
-    typename SpatialObjectMaskType::Pointer movingMask = this->CreateSpatialObjectMask<ImageDimension>(m_MetricMovingMaskImage);
+    if ( m_MetricMovingMaskImage.GetDimension() != MovingImageType::ImageDimension )
+      {
+      sitkExceptionMacro("MovingMaskImage does not match dimension of the moving image!");
+      }
+    typename SpatialObjectMaskType::ConstPointer movingMask = this->CreateSpatialObjectMask<ImageDimension>(m_MetricMovingMaskImage);
     movingMask->UnRegister();
     metric->SetMovingImageMask(movingMask);
     }
