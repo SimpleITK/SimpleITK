@@ -196,6 +196,7 @@ TEST( ProcessObject, Command_Add ) {
   EXPECT_FALSE(po1.HasCommand(sitk::sitkProgressEvent));
   EXPECT_FALSE(po1.HasCommand(sitk::sitkStartEvent));
   EXPECT_FALSE(po1.HasCommand(sitk::sitkUserEvent));
+  EXPECT_FALSE(po1.HasCommand(sitk::sitkMultiResolutionIterationEvent));
 
   po1.AddCommand(sitk::sitkAnyEvent, cmd);
   EXPECT_TRUE(po1.HasCommand(sitk::sitkAnyEvent));
@@ -206,6 +207,7 @@ TEST( ProcessObject, Command_Add ) {
   EXPECT_FALSE(po1.HasCommand(sitk::sitkProgressEvent));
   EXPECT_FALSE(po1.HasCommand(sitk::sitkStartEvent));
   EXPECT_FALSE(po1.HasCommand(sitk::sitkUserEvent));
+  EXPECT_FALSE(po1.HasCommand(sitk::sitkMultiResolutionIterationEvent));
 
   po1.RemoveAllCommands();
   EXPECT_FALSE(po1.HasCommand(sitk::sitkAnyEvent));
@@ -216,6 +218,7 @@ TEST( ProcessObject, Command_Add ) {
   EXPECT_FALSE(po1.HasCommand(sitk::sitkProgressEvent));
   EXPECT_FALSE(po1.HasCommand(sitk::sitkStartEvent));
   EXPECT_FALSE(po1.HasCommand(sitk::sitkUserEvent));
+  EXPECT_FALSE(po1.HasCommand(sitk::sitkMultiResolutionIterationEvent));
 
   po1.AddCommand(sitk::sitkAnyEvent, cmd);
   po1.AddCommand(sitk::sitkAbortEvent, cmd);
@@ -225,6 +228,7 @@ TEST( ProcessObject, Command_Add ) {
   po1.AddCommand(sitk::sitkProgressEvent, cmd);
   po1.AddCommand(sitk::sitkStartEvent, cmd);
   po1.AddCommand(sitk::sitkUserEvent, cmd);
+  po1.AddCommand(sitk::sitkMultiResolutionIterationEvent, cmd);
 
   EXPECT_TRUE(po1.HasCommand(sitk::sitkAnyEvent));
   EXPECT_TRUE(po1.HasCommand(sitk::sitkAbortEvent));
@@ -234,6 +238,7 @@ TEST( ProcessObject, Command_Add ) {
   EXPECT_TRUE(po1.HasCommand(sitk::sitkProgressEvent));
   EXPECT_TRUE(po1.HasCommand(sitk::sitkStartEvent));
   EXPECT_TRUE(po1.HasCommand(sitk::sitkUserEvent));
+  EXPECT_TRUE(po1.HasCommand(sitk::sitkMultiResolutionIterationEvent));
 }
 
 TEST( ProcessObject, DeleteCommandActiveProcess )
@@ -352,6 +357,8 @@ TEST( Event, Test1 )
   ss.str("");
   ss << sitk::sitkUserEvent;
   EXPECT_EQ("UserEvent", ss.str());
+  ss << sitk::sitkMultiResolutionIterationEvent;
+  EXPECT_EQ("MultiResolutionIterationEvent", ss.str());
 }
 
 
