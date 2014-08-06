@@ -37,6 +37,7 @@ std::ostream& operator<<(std::ostream& os, const EventEnum k)
     sitkEventToStringCaseMacro(Progress);
     sitkEventToStringCaseMacro(Start);
     sitkEventToStringCaseMacro(User);
+    sitkEventToStringCaseMacro(MultiResolutionIteration);
     }
   return os;
 }

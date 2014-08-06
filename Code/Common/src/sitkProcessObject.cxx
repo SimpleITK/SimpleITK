@@ -41,6 +41,7 @@ static itk::IterationEvent eventIterationEvent;
 static itk::ProgressEvent eventProgressEvent;
 static itk::StartEvent eventStartEvent;
 static itk::UserEvent eventUserEvent;
+static itk::MultiResolutionIterationEvent eventMultiResolutionIterationEvent;
 
 
 // Local class to adapt a sitk::Command to ITK's command.
@@ -424,6 +425,8 @@ const itk::EventObject &ProcessObject::GetITKEventObject(EventEnum e)
       return eventStartEvent;
     case sitkUserEvent:
       return eventUserEvent;
+    case sitkMultiResolutionIterationEvent:
+      return eventMultiResolutionIterationEvent;
     default:
       sitkExceptionMacro("LogicError: Unexpected event case!");
     }
