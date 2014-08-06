@@ -143,6 +143,16 @@ void BSplineTransform::InternalInitialization(itk::TransformBase *transform)
 
   typelist::Visit<TransformTypeList> callInternalInitialization;
 
+  // explicitly remove all function pointer with reference to prior transform
+  this->m_pfGetTransformDomainDirection = SITK_NULLPTR;
+  this->m_pfSetTransformDomainDirection = SITK_NULLPTR;
+  this->m_pfGetTransformDomainMeshSize = SITK_NULLPTR;
+  this->m_pfSetTransformDomainMeshSize = SITK_NULLPTR;
+  this->m_pfGetTransformDomainOrigin = SITK_NULLPTR;
+  this->m_pfSetTransformDomainOrigin = SITK_NULLPTR;
+  this->m_pfGetTransformDomainPhysicalDimensions = SITK_NULLPTR;
+  this->m_pfSetTransformDomainPhysicalDimensions = SITK_NULLPTR;
+  this->m_pfGetCoefficientImages = SITK_NULLPTR;
 
   callInternalInitialization(visitor);
 
