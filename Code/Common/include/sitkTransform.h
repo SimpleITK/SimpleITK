@@ -164,6 +164,8 @@ public:
 
   // todo set identity
 
+  virtual void SetIdentity();
+
   std::string ToString( void ) const;
 
 

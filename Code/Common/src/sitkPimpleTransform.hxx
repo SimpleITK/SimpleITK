@@ -126,6 +126,8 @@ public:
 
   virtual int GetReferenceCount( ) const = 0;
 
+  virtual void SetIdentity() = 0;
+
   std::string ToString( void ) const
     {
       std::ostringstream out;
@@ -208,6 +210,42 @@ public:
     {
       return this->m_Transform->GetReferenceCount();
     }
+
+  virtual void SetIdentity()
+    {
+      this->SetIdentity(this->m_Transform.GetPointer());
+    }
+
+  template <typename UTransform>
+  void SetIdentity( UTransform *self)
+    {
+      self->SetIdentity();
+    }
+
+  template <typename UScalar, unsigned int UDimension>
+  void SetIdentity( itk::CompositeTransform<UScalar, UDimension> *self)
+    {
+      sitkExceptionMacro( "SetIdentity does is not implemented for transforms of type " << self->GetNameOfClass() );
+    }
+
+  template <typename UScalar, unsigned int UDimension>
+  void SetIdentity( itk::DisplacementFieldTransform<UScalar, UDimension> *self)
+      {
+        // TODO:: add SetIdentity method to upstream ITK.
+        typedef itk::DisplacementFieldTransform<UScalar, UDimension> DFTType;
+        typename DFTType::DisplacementFieldType *displacementField;
+
+        displacementField = self->GetModifiableDisplacementField();
+        if (displacementField)
+          {
+          displacementField->FillBuffer(typename DFTType::OutputVectorType(0.0));
+          }
+        displacementField = self->GetModifiableInverseDisplacementField();;
+        if (displacementField)
+          {
+          displacementField->FillBuffer(typename DFTType::OutputVectorType(0.0));
+          }
+      }
 
   virtual PimpleTransformBase* AddTransform( Transform &t )
     {
