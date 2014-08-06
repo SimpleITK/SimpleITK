@@ -550,6 +550,14 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
     return this->m_PimpleTransform->TransformPoint( point );
   }
 
+
+  void Transform::SetIdentity()
+  {
+    assert( m_PimpleTransform );
+    this->MakeUniqueForWrite();
+    return this->m_PimpleTransform->SetIdentity();
+  }
+
   std::string Transform::ToString( void ) const
   {
     assert( m_PimpleTransform );

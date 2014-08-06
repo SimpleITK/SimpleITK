@@ -207,6 +207,7 @@ TEST(TransformTest, SetGetParameters) {
   tx = sitk::Transform(3,sitk::sitkIdentity);
   tx.SetFixedParameters(std::vector<double>());
   tx.SetParameters(std::vector<double>());
+  tx.SetIdentity();
 }
 
 TEST(TransformTest, CopyOnWrite) {
@@ -467,6 +468,9 @@ TEST(TransformTest,AffineTransform_3DPoints)
   EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(0.0,0.0,0.0) ), v3(1.0,2.0,3.0),1e-15 );
   EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(1.0,0.0,1.0) ), v3(2.0,2.0,4.0),1e-15 );
 
+  tx.SetIdentity();
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(0.0,0.0,0.0) ), v3(0.0,0.0,0.0),1e-15 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(1.0,1.0,1.0) ), v3(1.0,1.0,1.0),1e-15 );
 }
 
 TEST(TransformTest,BSplineTransform)
@@ -529,6 +533,11 @@ TEST(TransformTest,BSplineTransform)
   ASSERT_EQ( 2u, coefficientImages.size() );
   EXPECT_EQ( std::vector<unsigned int>(2, 7u), coefficientImages[0].GetSize() );
   EXPECT_EQ( std::vector<unsigned int>(2, 7u), coefficientImages[1].GetSize() );
+
+  EXPECT_NO_THROW(tx->SetIdentity());
+  EXPECT_EQ( tx3.GetParameters(), std::vector<double>(32,0.0));
+  tx.reset( new sitk::BSplineTransform(2));
+  EXPECT_NO_THROW(tx->SetIdentity());
 }
 
 
@@ -637,6 +646,11 @@ TEST(TransformTest,Euler2DTransform)
 
   EXPECT_VECTOR_DOUBLE_NEAR( etx.TransformPoint( v2(1,1) ), v2(0,-1),1e-15);
   EXPECT_VECTOR_DOUBLE_NEAR( etx.TransformPoint( v2(0,0) ), v2(1,0),1e-15);
+
+  etx.SetIdentity();
+  EXPECT_VECTOR_DOUBLE_NEAR( etx.TransformPoint( v2(1,1) ), v2(1,1),1e-15);
+  EXPECT_VECTOR_DOUBLE_NEAR( etx.TransformPoint( v2(0,0) ), v2(0,0),1e-15);
+
 }
 
 
@@ -1013,6 +1027,9 @@ TEST(TransformTest,ScaleSkewVersor3DTransform_Points)
   EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(1.0,1.0,0.0) ), v3(1.0,1.0,0.0), 1e-17);
   EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(0.0,1.0,1.0) ), v3(0.0,2.0,1.0), 1e-17);
 
+  tx.SetIdentity();
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(1.0,1.0,0.0) ), v3(1.0,1.0,0.0), 1e-17);
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(0.0,1.0,1.0) ), v3(0.0,1.0,1.0), 1e-17);
 }
 
 
@@ -1142,6 +1159,10 @@ TEST(TransformTest,Similarity3DTransform_Points)
   EXPECT_EQ( tx.Translate(v3(1.0,2.0,3.0)).GetTranslation(), v3(1.0,2.0,3.0) );
   EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(0.0,0.0,0.0) ), v3(1.0,2.0,3.0),1e-15);
   EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(1.0,0.0,0.0) ), v3(0.0,2.0,3.0),1e-15);
+
+  tx.SetIdentity();
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(0.0,0.0,0.0) ), v3(0.0,0.0,0.0),1e-15);
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(1.0,0.0,0.0) ), v3(1.0,0.0,0.0),1e-15);
 
 }
 
@@ -1297,6 +1318,8 @@ TEST(TransformTest,VersorRigid3DTransform)
   tx->SetTranslation(trans);
   EXPECT_EQ(tx->GetTranslation(),trans);
 
+  tx->SetIdentity();
+  EXPECT_EQ(tx->GetTranslation(), zeros);
 }
 
 TEST(TransformTest,VersorRigid3DTransform_Points)
@@ -1400,6 +1423,6 @@ TEST(TransformTest,VersorTransform)
 
   EXPECT_EQ( tx->SetRotation(v4(0.0,1.0,0.0,0.0)).GetVersor(), v4(0.0,1.0,0.0,0.0) );
   EXPECT_THROW( tx->SetRotation(v3(1.0,0.0,0.0)).GetVersor(), sitk::GenericException );
-
+  EXPECT_NO_THROW(tx->SetIdentity());
 
 }
