@@ -50,6 +50,7 @@ BSplineTransformInitializerFilter::BSplineTransformInitializerFilter ()
 {
 
     this->m_TransformDomainMeshSize = std::vector<uint32_t>(3, 1u);
+    this->m_Order = 3u;
 
   this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
@@ -79,6 +80,8 @@ std::string BSplineTransformInitializerFilter::ToString() const
   out << "itk::simple::BSplineTransformInitializerFilter\n";
   out << "  TransformDomainMeshSize: ";
   this->ToStringHelper(out, this->m_TransformDomainMeshSize);
+  out << "  Order:";
+  this->ToStringHelper(out, this->m_Order);
   out << std::endl;
 
   out << ProcessObject::ToString();
@@ -88,9 +91,10 @@ std::string BSplineTransformInitializerFilter::ToString() const
 //
 // Execute
 //
-BSplineTransform BSplineTransformInitializerFilter::Execute ( const Image& image1, const std::vector<uint32_t> & transformDomainMeshSize )
+BSplineTransform BSplineTransformInitializerFilter::Execute ( const Image& image1, const std::vector<uint32_t> & transformDomainMeshSize, unsigned int order )
 {
   this->SetTransformDomainMeshSize ( transformDomainMeshSize );
+  this->SetOrder(order);
 
   return this->Execute ( image1 );
 }
@@ -120,11 +124,31 @@ namespace {
 //
 // ExecuteInternal
 //
+
 template <class TImageType>
 BSplineTransform  BSplineTransformInitializerFilter::ExecuteInternal ( const Image& inImage1 )
 {
+  const unsigned int D = TImageType::ImageDimension;
+  switch( this->m_Order )
+    {
+    case 0:
+      return this->ExecuteInternalWithOrder<D, 0>(inImage1);
+    case 1:
+      return this->ExecuteInternalWithOrder<D, 1>(inImage1);
+    case 2:
+      return this->ExecuteInternalWithOrder<D, 2>(inImage1);
+    case 3:
+      return this->ExecuteInternalWithOrder<D, 3>(inImage1);
+    default:
+      sitkExceptionMacro("Invalid Order: " << this->m_Order << " only orders 0, 1, 2, and 3 supported!");
+    }
+}
+
+template <unsigned int NDimension, unsigned int NOrder>
+BSplineTransform  BSplineTransformInitializerFilter::ExecuteInternalWithOrder ( const Image& inImage1 )
+{
   // Define the input and output image types
-  typedef TImageType     InputImageType;
+  typedef itk::ImageBase<NDimension> InputImageType;
 
   //Define output image type
   typedef float OutputImageType;
@@ -133,13 +157,13 @@ BSplineTransform  BSplineTransformInitializerFilter::ExecuteInternal ( const Ima
   typename InputImageType::ConstPointer image1 = this->CastImageToITK<InputImageType>( inImage1 );
 
 
-  typedef itk::BSplineTransformInitializer< itk::BSplineTransform< double, TImageType::ImageDimension, 3 >, TImageType> FilterType;
+  typedef itk::BSplineTransformInitializer< itk::BSplineTransform< double, NDimension, NOrder >, InputImageType> FilterType;
   // Set up the ITK filter
   typename FilterType::Pointer filter = FilterType::New();
 
   filter->SetImage( image1 );
 
-  BSplineTransform sitkTransform(TImageType::ImageDimension);
+  BSplineTransform sitkTransform(NDimension, NOrder);
 
   const typename FilterType::TransformType *itkTx = dynamic_cast<const typename FilterType::TransformType *>(sitkTransform.GetITKBase() );
   if ( !itkTx )
@@ -167,10 +191,10 @@ BSplineTransform  BSplineTransformInitializerFilter::ExecuteInternal ( const Ima
 //
 // Function to run the Execute method of this filter
 //
-BSplineTransform BSplineTransformInitializer ( const Image& image1, const std::vector<uint32_t> & transformDomainMeshSize )
+BSplineTransform BSplineTransformInitializer ( const Image& image1, const std::vector<uint32_t> & transformDomainMeshSize, unsigned int order )
 {
   BSplineTransformInitializerFilter filter;
-  return filter.Execute ( image1, transformDomainMeshSize );
+  return filter.Execute ( image1, transformDomainMeshSize, order );
 }
 
 
