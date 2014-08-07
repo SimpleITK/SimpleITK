@@ -41,7 +41,7 @@ std::vector<Image> sitkImageArrayConvert(const TImageArrayType &a)
 
 
 template<typename TBSplineTransform>
-unsigned char sitkGetOrder(void)
+unsigned int sitkGetOrder(void)
 {
   return TBSplineTransform::SplineOrder;
 }
@@ -50,7 +50,7 @@ unsigned char sitkGetOrder(void)
 
 
 // construct identity
-BSplineTransform::BSplineTransform(unsigned int dimensions, unsigned char order)
+BSplineTransform::BSplineTransform(unsigned int dimensions, unsigned int order)
   : Transform( CreateBSplinePimpleTransform(dimensions, order) )
 {
   Self::InternalInitialization(Self::GetITKBase());
@@ -131,7 +131,7 @@ std::vector<Image> BSplineTransform::GetCoefficientImages () const
   return this->m_pfGetCoefficientImages();
 }
 
-unsigned char BSplineTransform::GetOrder() const
+unsigned int BSplineTransform::GetOrder() const
 {
   return this->m_pfGetOrder();
 }
@@ -216,7 +216,7 @@ void BSplineTransform::InternalInitialization(TransformType *t)
   this->m_pfGetOrder =  &sitkGetOrder<TransformType>;
 }
 
-PimpleTransformBase *BSplineTransform::CreateBSplinePimpleTransform(unsigned int dimension, unsigned char order)
+PimpleTransformBase *BSplineTransform::CreateBSplinePimpleTransform(unsigned int dimension, unsigned int order)
 {
   switch (dimension)
     {
@@ -230,7 +230,7 @@ PimpleTransformBase *BSplineTransform::CreateBSplinePimpleTransform(unsigned int
 }
 
 template <unsigned int ND>
-PimpleTransformBase *BSplineTransform::CreateBSplinePimpleTransform(unsigned char order)
+PimpleTransformBase *BSplineTransform::CreateBSplinePimpleTransform(unsigned int order)
 {
   switch(order)
     {
