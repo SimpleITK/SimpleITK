@@ -544,38 +544,38 @@ TEST(TransformTest,BSplineTransform_order)
 {
   // test features with bspline order
   EXPECT_THROW(sitk::BSplineTransform(4), sitk::GenericException);
-  EXPECT_THROW(sitk::BSplineTransform(2,0), sitk::GenericException);
-  EXPECT_THROW(sitk::BSplineTransform(3,0), sitk::GenericException);
-  EXPECT_THROW(sitk::BSplineTransform(2,5), sitk::GenericException);
+  EXPECT_THROW(sitk::BSplineTransform(2,4), sitk::GenericException);
   EXPECT_THROW(sitk::BSplineTransform(2,20), sitk::GenericException);
-  EXPECT_THROW(sitk::BSplineTransform(3,5), sitk::GenericException);
+  EXPECT_THROW(sitk::BSplineTransform(3,4), sitk::GenericException);
   EXPECT_THROW(sitk::BSplineTransform(3,99), sitk::GenericException);
 
   std::auto_ptr<sitk::BSplineTransform> tx;
   EXPECT_NO_THROW(tx.reset(new sitk::BSplineTransform(3)));
-  EXPECT_EQ(3, tx->GetOrder());
+  EXPECT_EQ(3u, tx->GetOrder());
+  EXPECT_NO_THROW( tx.reset(new sitk::BSplineTransform(3,0)));
+  EXPECT_EQ(0u, tx->GetOrder());
+  EXPECT_EQ(v3(0,0,0), tx->TransformPoint(v3(0,0,0)));
   EXPECT_NO_THROW(tx.reset(new sitk::BSplineTransform(3,1)));
-  std::cout << "check\n";
-  EXPECT_EQ(1, tx->GetOrder());
-  std::cout << "check\n";
+  EXPECT_EQ(1u, tx->GetOrder());
+  EXPECT_EQ(v3(0,0,0), tx->TransformPoint(v3(0,0,0)));
   EXPECT_NO_THROW(tx.reset(new sitk::BSplineTransform(3,2)));
-  EXPECT_EQ(2, tx->GetOrder());
+  EXPECT_EQ(2u, tx->GetOrder());
+  EXPECT_EQ(v3(0,0,0), tx->TransformPoint(v3(0,0,0)));
   EXPECT_NO_THROW(tx.reset(new sitk::BSplineTransform(3,3)));
-  EXPECT_EQ(3, tx->GetOrder());
-  EXPECT_NO_THROW( tx.reset(new sitk::BSplineTransform(3,4)));
-  EXPECT_EQ(4, tx->GetOrder());
+  EXPECT_EQ(3u, tx->GetOrder());
+  EXPECT_EQ(v3(0,0,0), tx->TransformPoint(v3(0,0,0)));
 
   sitk::BSplineTransform tx1(*tx);
-  EXPECT_EQ(4, tx1.GetOrder());
+  EXPECT_EQ(3u, tx1.GetOrder());
 
   tx.reset(new sitk::BSplineTransform(3,1));
-  EXPECT_EQ(4, tx1.GetOrder());
+  EXPECT_EQ(3u, tx1.GetOrder());
   tx1 = *tx;
-  EXPECT_EQ(1, tx1.GetOrder());
+  EXPECT_EQ(1u, tx1.GetOrder());
 
   // deep copy
   tx1.SetParameters(tx1.GetParameters());
-  EXPECT_EQ(1, tx1.GetOrder());
+  EXPECT_EQ(1u, tx1.GetOrder());
 }
 
 

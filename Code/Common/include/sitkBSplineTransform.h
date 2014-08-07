@@ -32,7 +32,7 @@ class SITKCommon_EXPORT BSplineTransform
 public:
   typedef BSplineTransform Self;
   typedef Transform Superclass;
-  BSplineTransform(unsigned int dimensions, unsigned char order=3);
+  BSplineTransform(unsigned int dimensions, unsigned int order=3);
 
   BSplineTransform( const BSplineTransform & );
 
@@ -61,7 +61,7 @@ public:
    */
   std::vector<Image> GetCoefficientImages () const;
 
-  unsigned char GetOrder() const;
+  unsigned int GetOrder() const;
 
 protected:
 
@@ -91,10 +91,10 @@ private:
   template <typename TransformType>
     void InternalInitialization(TransformType *transform);
 
-  static PimpleTransformBase *CreateBSplinePimpleTransform(unsigned int dimension, unsigned char order);
+  static PimpleTransformBase *CreateBSplinePimpleTransform(unsigned int dimension, unsigned int order);
 
   template <unsigned int ND>
-    static PimpleTransformBase *CreateBSplinePimpleTransform(unsigned char order);
+    static PimpleTransformBase *CreateBSplinePimpleTransform(unsigned int order);
 
   nsstd::function<std::vector<double> ()> m_pfGetTransformDomainDirection;
   nsstd::function<void (const std::vector<double> &)> m_pfSetTransformDomainDirection;
@@ -106,7 +106,7 @@ private:
   nsstd::function<void (const std::vector<double> &)> m_pfSetTransformDomainPhysicalDimensions;
 
   nsstd::function<std::vector<Image> ()> m_pfGetCoefficientImages;
-  nsstd::function< unsigned char()> m_pfGetOrder;
+  nsstd::function< unsigned int()> m_pfGetOrder;
 
 };
 

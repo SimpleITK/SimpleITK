@@ -41,7 +41,7 @@ std::vector<Image> sitkImageArrayConvert(const TImageArrayType &a)
 
 
 template<typename TBSplineTransform>
-unsigned char sitkGetOrder(void)
+unsigned int sitkGetOrder(void)
 {
   return TBSplineTransform::SplineOrder;
 }
@@ -50,7 +50,7 @@ unsigned char sitkGetOrder(void)
 
 
 // construct identity
-BSplineTransform::BSplineTransform(unsigned int dimensions, unsigned char order)
+BSplineTransform::BSplineTransform(unsigned int dimensions, unsigned int order)
   : Transform( CreateBSplinePimpleTransform(dimensions, order) )
 {
   Self::InternalInitialization(Self::GetITKBase());
@@ -131,7 +131,7 @@ std::vector<Image> BSplineTransform::GetCoefficientImages () const
   return this->m_pfGetCoefficientImages();
 }
 
-unsigned char BSplineTransform::GetOrder() const
+unsigned int BSplineTransform::GetOrder() const
 {
   return this->m_pfGetOrder();
 }
@@ -150,14 +150,14 @@ void BSplineTransform::InternalInitialization(itk::TransformBase *transform)
   visitor.that = this;
 
   typedef typelist::MakeTypeList<
+  itk::BSplineTransform<double, 3, 0>,
+    itk::BSplineTransform<double, 2, 0>,
   itk::BSplineTransform<double, 3, 1>,
     itk::BSplineTransform<double, 2, 1>,
   itk::BSplineTransform<double, 3, 2>,
     itk::BSplineTransform<double, 2, 2>,
   itk::BSplineTransform<double, 3, 3>,
-    itk::BSplineTransform<double, 2, 3>,
-  itk::BSplineTransform<double, 3, 4>,
-    itk::BSplineTransform<double, 2, 4> >::Type TransformTypeList;
+    itk::BSplineTransform<double, 2, 3> >::Type TransformTypeList;
 
   typelist::Visit<TransformTypeList> callInternalInitialization;
 
@@ -216,7 +216,7 @@ void BSplineTransform::InternalInitialization(TransformType *t)
   this->m_pfGetOrder =  &sitkGetOrder<TransformType>;
 }
 
-PimpleTransformBase *BSplineTransform::CreateBSplinePimpleTransform(unsigned int dimension, unsigned char order)
+PimpleTransformBase *BSplineTransform::CreateBSplinePimpleTransform(unsigned int dimension, unsigned int order)
 {
   switch (dimension)
     {
@@ -230,18 +230,18 @@ PimpleTransformBase *BSplineTransform::CreateBSplinePimpleTransform(unsigned int
 }
 
 template <unsigned int ND>
-PimpleTransformBase *BSplineTransform::CreateBSplinePimpleTransform(unsigned char order)
+PimpleTransformBase *BSplineTransform::CreateBSplinePimpleTransform(unsigned int order)
 {
   switch(order)
     {
+    case 0:
+      return new PimpleTransform<itk::BSplineTransform<double,ND,0> >();
     case 1:
       return new PimpleTransform<itk::BSplineTransform<double,ND,1> >();
     case 2:
       return new PimpleTransform<itk::BSplineTransform<double,ND,2> >();
     case 3:
       return new PimpleTransform<itk::BSplineTransform<double,ND,3> >();
-    case 4:
-      return new PimpleTransform<itk::BSplineTransform<double,ND,4> >();
     default:
       sitkExceptionMacro("Spline order " << static_cast<int>(order) << " is not supported!");
     }
