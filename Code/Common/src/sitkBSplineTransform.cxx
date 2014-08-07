@@ -50,8 +50,8 @@ unsigned char sitkGetOrder(void)
 
 
 // construct identity
-BSplineTransform::BSplineTransform(unsigned int dimensions)
-  : Transform( CreateBSplinePimpleTransform(dimensions) )
+BSplineTransform::BSplineTransform(unsigned int dimensions, unsigned char order)
+  : Transform( CreateBSplinePimpleTransform(dimensions, order) )
 {
   Self::InternalInitialization(Self::GetITKBase());
 }
@@ -149,10 +149,15 @@ void BSplineTransform::InternalInitialization(itk::TransformBase *transform)
   visitor.transform = transform;
   visitor.that = this;
 
-  const unsigned int order = 3;
-
-  typedef typelist::MakeTypeList<itk::BSplineTransform<double, 3, order>,
-    itk::BSplineTransform<double, 2, order> >::Type TransformTypeList;
+  typedef typelist::MakeTypeList<
+  itk::BSplineTransform<double, 3, 1>,
+    itk::BSplineTransform<double, 2, 1>,
+  itk::BSplineTransform<double, 3, 2>,
+    itk::BSplineTransform<double, 2, 2>,
+  itk::BSplineTransform<double, 3, 3>,
+    itk::BSplineTransform<double, 2, 3>,
+  itk::BSplineTransform<double, 3, 4>,
+    itk::BSplineTransform<double, 2, 4> >::Type TransformTypeList;
 
   typelist::Visit<TransformTypeList> callInternalInitialization;
 
@@ -211,22 +216,35 @@ void BSplineTransform::InternalInitialization(TransformType *t)
   this->m_pfGetOrder =  &sitkGetOrder<TransformType>;
 }
 
-PimpleTransformBase *BSplineTransform::CreateBSplinePimpleTransform(unsigned int dimension)
+PimpleTransformBase *BSplineTransform::CreateBSplinePimpleTransform(unsigned int dimension, unsigned char order)
 {
-  PimpleTransformBase* temp = NULL;
-  const unsigned int order = 3;
   switch (dimension)
     {
     case 2:
-      temp = new PimpleTransform<itk::BSplineTransform<double,2,order> >();
-      break;
+      return Self::CreateBSplinePimpleTransform<2>(order);
     case 3:
-      temp = new PimpleTransform<itk::BSplineTransform<double,3,order> >();
-      break;
+      return Self::CreateBSplinePimpleTransform<3>(order);
     default:
       sitkExceptionMacro("Invalid dimension for transform");
     }
-  return temp;
+}
+
+template <unsigned int ND>
+PimpleTransformBase *BSplineTransform::CreateBSplinePimpleTransform(unsigned char order)
+{
+  switch(order)
+    {
+    case 1:
+      return new PimpleTransform<itk::BSplineTransform<double,ND,1> >();
+    case 2:
+      return new PimpleTransform<itk::BSplineTransform<double,ND,2> >();
+    case 3:
+      return new PimpleTransform<itk::BSplineTransform<double,ND,3> >();
+    case 4:
+      return new PimpleTransform<itk::BSplineTransform<double,ND,4> >();
+    default:
+      sitkExceptionMacro("Spline order " << static_cast<int>(order) << " is not supported!");
+    }
 }
 
 }

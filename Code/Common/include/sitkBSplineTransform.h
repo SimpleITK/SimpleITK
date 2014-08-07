@@ -32,7 +32,7 @@ class SITKCommon_EXPORT BSplineTransform
 public:
   typedef BSplineTransform Self;
   typedef Transform Superclass;
-  explicit BSplineTransform(unsigned int dimensions);
+  BSplineTransform(unsigned int dimensions, unsigned char order=3);
 
   BSplineTransform( const BSplineTransform & );
 
@@ -91,7 +91,10 @@ private:
   template <typename TransformType>
     void InternalInitialization(TransformType *transform);
 
-  static PimpleTransformBase *CreateBSplinePimpleTransform(unsigned int dimension);
+  static PimpleTransformBase *CreateBSplinePimpleTransform(unsigned int dimension, unsigned char order);
+
+  template <unsigned int ND>
+    static PimpleTransformBase *CreateBSplinePimpleTransform(unsigned char order);
 
   nsstd::function<std::vector<double> ()> m_pfGetTransformDomainDirection;
   nsstd::function<void (const std::vector<double> &)> m_pfSetTransformDomainDirection;
