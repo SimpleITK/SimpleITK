@@ -357,6 +357,7 @@ TEST( Event, Test1 )
   ss.str("");
   ss << sitk::sitkUserEvent;
   EXPECT_EQ("UserEvent", ss.str());
+  ss.str("");
   ss << sitk::sitkMultiResolutionIterationEvent;
   EXPECT_EQ("MultiResolutionIterationEvent", ss.str());
 }
