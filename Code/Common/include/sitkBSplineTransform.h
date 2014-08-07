@@ -61,6 +61,8 @@ public:
    */
   std::vector<Image> GetCoefficientImages () const;
 
+  unsigned char GetOrder() const;
+
 protected:
 
   virtual void SetPimpleTransform( PimpleTransformBase *pimpleTransform );
@@ -101,6 +103,7 @@ private:
   nsstd::function<void (const std::vector<double> &)> m_pfSetTransformDomainPhysicalDimensions;
 
   nsstd::function<std::vector<Image> ()> m_pfGetCoefficientImages;
+  nsstd::function< unsigned char()> m_pfGetOrder;
 
 };
 

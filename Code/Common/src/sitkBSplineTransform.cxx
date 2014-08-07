@@ -38,6 +38,14 @@ std::vector<Image> sitkImageArrayConvert(const TImageArrayType &a)
     }
   return ret;
 }
+
+
+template<typename TBSplineTransform>
+unsigned char sitkGetOrder(void)
+{
+  return TBSplineTransform::SplineOrder;
+}
+
 }
 
 
@@ -123,6 +131,11 @@ std::vector<Image> BSplineTransform::GetCoefficientImages () const
   return this->m_pfGetCoefficientImages();
 }
 
+unsigned char BSplineTransform::GetOrder() const
+{
+  return this->m_pfGetOrder();
+}
+
 
 void BSplineTransform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
 {
@@ -153,6 +166,7 @@ void BSplineTransform::InternalInitialization(itk::TransformBase *transform)
   this->m_pfGetTransformDomainPhysicalDimensions = SITK_NULLPTR;
   this->m_pfSetTransformDomainPhysicalDimensions = SITK_NULLPTR;
   this->m_pfGetCoefficientImages = SITK_NULLPTR;
+  this->m_pfGetOrder = SITK_NULLPTR;
 
   callInternalInitialization(visitor);
 
@@ -193,6 +207,8 @@ void BSplineTransform::InternalInitialization(TransformType *t)
 
   std::vector<Image> (*pfImageArrayConvert)(const typename TransformType::CoefficientImageArray &) = &sitkImageArrayConvert<typename TransformType::CoefficientImageArray>;
   this->m_pfGetCoefficientImages = nsstd::bind(pfImageArrayConvert, nsstd::bind(&TransformType::GetCoefficientImages,t) );
+
+  this->m_pfGetOrder =  &sitkGetOrder<TransformType>;
 }
 
 PimpleTransformBase *BSplineTransform::CreateBSplinePimpleTransform(unsigned int dimension)
