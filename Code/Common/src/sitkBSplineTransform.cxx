@@ -150,14 +150,14 @@ void BSplineTransform::InternalInitialization(itk::TransformBase *transform)
   visitor.that = this;
 
   typedef typelist::MakeTypeList<
+  itk::BSplineTransform<double, 3, 0>,
+    itk::BSplineTransform<double, 2, 0>,
   itk::BSplineTransform<double, 3, 1>,
     itk::BSplineTransform<double, 2, 1>,
   itk::BSplineTransform<double, 3, 2>,
     itk::BSplineTransform<double, 2, 2>,
   itk::BSplineTransform<double, 3, 3>,
-    itk::BSplineTransform<double, 2, 3>,
-  itk::BSplineTransform<double, 3, 4>,
-    itk::BSplineTransform<double, 2, 4> >::Type TransformTypeList;
+    itk::BSplineTransform<double, 2, 3> >::Type TransformTypeList;
 
   typelist::Visit<TransformTypeList> callInternalInitialization;
 
@@ -234,14 +234,14 @@ PimpleTransformBase *BSplineTransform::CreateBSplinePimpleTransform(unsigned cha
 {
   switch(order)
     {
+    case 0:
+      return new PimpleTransform<itk::BSplineTransform<double,ND,0> >();
     case 1:
       return new PimpleTransform<itk::BSplineTransform<double,ND,1> >();
     case 2:
       return new PimpleTransform<itk::BSplineTransform<double,ND,2> >();
     case 3:
       return new PimpleTransform<itk::BSplineTransform<double,ND,3> >();
-    case 4:
-      return new PimpleTransform<itk::BSplineTransform<double,ND,4> >();
     default:
       sitkExceptionMacro("Spline order " << static_cast<int>(order) << " is not supported!");
     }
