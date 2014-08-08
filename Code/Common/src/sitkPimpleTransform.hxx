@@ -128,6 +128,12 @@ public:
 
   virtual void SetIdentity() = 0;
 
+  // Tries to construct an inverse of the transform, if true is returned
+  // the inverse was successful, and outputTransform is modified to
+  // the new class and ownership it passed to the caller.  Otherwise
+  // outputTranform is not changed.
+  virtual bool GetInverse( PimpleTransformBase * &outputTransform ) const = 0;
+
   std::string ToString( void ) const
     {
       std::ostringstream out;
