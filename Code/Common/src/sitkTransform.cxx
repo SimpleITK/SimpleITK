@@ -560,6 +560,12 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
   }
 
 
+  bool Transform::IsLinear() const
+  {
+    assert( m_PimpleTransform );
+    return this->m_PimpleTransform->IsLinear();
+  }
+
   void Transform::SetIdentity()
   {
     assert( m_PimpleTransform );
