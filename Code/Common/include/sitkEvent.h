@@ -50,6 +50,13 @@ enum EventEnum {
   /** \brief Occurs when then itk::ProcessObject is starting.
    */
   sitkStartEvent = 6,
+  /** \brief Occurs when some filters change processing to a different
+   * scale
+   *
+   * \note This event is a sub-event of the more general
+   * IterationEvent. The general iteration event will also be invoked.
+   */
+  sitkMultiResolutionIterationEvent = 9,
   /** \brief Other events may fall into this enumeration.
    */
   sitkUserEvent = 7
