@@ -134,6 +134,12 @@ public:
   // outputTranform is not changed.
   virtual bool GetInverse( PimpleTransformBase * &outputTransform ) const = 0;
 
+  virtual bool IsLinear() const
+    {
+      return (this->GetTransformBase()->GetTransformCategory() == TransformBase::Linear);
+    }
+
+
   std::string ToString( void ) const
     {
       std::ostringstream out;

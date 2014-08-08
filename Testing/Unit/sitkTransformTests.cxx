@@ -151,52 +151,64 @@ TEST(TransformTest, SetGetParameters) {
   tx = sitk::Transform( 3, sitk::sitkTranslation );
   EXPECT_EQ( tx.GetParameters().size(), 3u );
   EXPECT_TRUE( tx.GetFixedParameters().empty() );
+  EXPECT_TRUE(tx.IsLinear());
 
   tx = sitk::Transform( 2, sitk::sitkScale );
   EXPECT_EQ( tx.GetParameters().size(), 2u );
   EXPECT_TRUE( tx.GetFixedParameters().empty() );
+  EXPECT_TRUE(tx.IsLinear());
 
   tx = sitk::Transform( 3, sitk::sitkScaleLogarithmic );
   EXPECT_EQ( tx.GetParameters().size(), 3u );
   EXPECT_TRUE( tx.GetFixedParameters().empty() );
+  EXPECT_TRUE(tx.IsLinear());
 
   tx = sitk::Transform( 2, sitk::sitkEuler );
   EXPECT_EQ( tx.GetParameters().size(), 3u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 2u );
+  EXPECT_TRUE(tx.IsLinear());
 
   tx = sitk::Transform( 3, sitk::sitkEuler );
   EXPECT_EQ( tx.GetParameters().size(), 6u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 3u );
+  EXPECT_TRUE(tx.IsLinear());
 
   tx = sitk::Transform( 2, sitk::sitkSimilarity );
   EXPECT_EQ( tx.GetParameters().size(), 4u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 2u );
+  EXPECT_TRUE(tx.IsLinear());
 
   tx = sitk::Transform( 3, sitk::sitkSimilarity );
   EXPECT_EQ( tx.GetParameters().size(), 7u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 3u );
+  EXPECT_TRUE(tx.IsLinear());
 
   tx = sitk::Transform( 3, sitk::sitkQuaternionRigid );
   EXPECT_EQ( tx.GetParameters().size(), 7u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 3u );
+  EXPECT_TRUE(tx.IsLinear());
 
   tx = sitk::Transform( 3, sitk::sitkVersor );
   EXPECT_EQ( tx.GetParameters().size(), 3u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 3u );
+  EXPECT_TRUE(tx.IsLinear());
 
   tx = sitk::Transform( 3, sitk::sitkVersorRigid );
   EXPECT_EQ( tx.GetParameters().size(), 6u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 3u );
+  EXPECT_TRUE(tx.IsLinear());
 
   tx = sitk::Transform( 2, sitk::sitkAffine );
   EXPECT_EQ( tx.GetParameters().size(), 6u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 2u );
+  EXPECT_TRUE(tx.IsLinear());
 
   sitk::Image displacement = sitk::Image( 10, 10, sitk::sitkVectorFloat64 );
 
   tx =  sitk::Transform ( displacement );
   EXPECT_EQ( tx.GetParameters().size(), 200u );
   EXPECT_EQ( tx.GetFixedParameters().size(), 10u );
+  EXPECT_TRUE(!tx.IsLinear());
 
   displacement = sitk::Image( 10, 10, 10, sitk::sitkVectorFloat64 );
 

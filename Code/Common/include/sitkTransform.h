@@ -162,7 +162,7 @@ public:
   // write
   void WriteTransform( const std::string &filename ) const;
 
-  // todo set identity
+  virtual bool IsLinear() const;
 
   virtual void SetIdentity();
 
