@@ -67,6 +67,13 @@ Nick Tustison
        */
       std::vector<uint32_t> GetTransformDomainMeshSize() const { return this->m_TransformDomainMeshSize; }
 
+      /**
+       * The order of the bspline in the output BSplineTransform. This
+       * value effects the number of control points.
+       */
+      Self &SetOrder(unsigned int order) { this->m_Order = order; return *this; }
+      unsigned int GetOrder() const {return this->m_Order;}
+
       /** Name of this class */
       std::string GetName() const { return std::string ("BSplineTransformInitializerFilter"); }
 
@@ -79,7 +86,7 @@ Nick Tustison
 
 
       /** Execute the filter on the input image with the given parameters */
-      BSplineTransform Execute ( const Image& image1, const std::vector<uint32_t> & transformDomainMeshSize );
+      BSplineTransform Execute ( const Image& image1, const std::vector<uint32_t> & transformDomainMeshSize, unsigned int order );
 
 
     private:
@@ -88,6 +95,8 @@ Nick Tustison
 
       typedef BSplineTransform (Self::*MemberFunctionType)( const Image& image1 );
       template <class TImageType> BSplineTransform ExecuteInternal ( const Image& image1 );
+      template <unsigned int NDimension,unsigned int NOrder>
+        BSplineTransform ExecuteInternalWithOrder ( const Image& image1 );
 
 
 
@@ -97,6 +106,7 @@ Nick Tustison
 
 
       std::vector<uint32_t>  m_TransformDomainMeshSize;
+      unsigned int m_Order;
     };
 
 
@@ -109,7 +119,7 @@ Nick Tustison
      *
      * \sa itk::simple::BSplineTransformInitializerFilter for the object oriented interface
      */
-     SITKBasicFilters_EXPORT BSplineTransform BSplineTransformInitializer ( const Image& image1, const std::vector<uint32_t> & transformDomainMeshSize = std::vector<uint32_t>(3, 1u) );
+     SITKBasicFilters_EXPORT BSplineTransform BSplineTransformInitializer ( const Image& image1, const std::vector<uint32_t> & transformDomainMeshSize = std::vector<uint32_t>(3, 1u), unsigned int order=3u );
 
   }
 }

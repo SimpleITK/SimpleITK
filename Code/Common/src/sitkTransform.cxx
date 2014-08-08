@@ -100,6 +100,15 @@ bool RegisterMoreTransforms(void)
   itk::TransformFactory<MatrixOffsetTransformType>::RegisterTransform();
   typedef itk::MatrixOffsetTransformBase<double, Dimension, Dimension> MatrixOffsetTransformType;
   itk::TransformFactory<MatrixOffsetTransformType>::RegisterTransform();
+
+  // Only BSpline transforms of order 3 are registered in ITK
+  typedef itk::BSplineTransform<double, Dimension, 0> BSplineTransformO0Type;
+  itk::TransformFactory<BSplineTransformO0Type>::RegisterTransform();
+  typedef itk::BSplineTransform<double, Dimension, 1> BSplineTransformO1Type;
+  itk::TransformFactory<BSplineTransformO1Type>::RegisterTransform();
+  typedef itk::BSplineTransform<double, Dimension, 2> BSplineTransformO2Type;
+  itk::TransformFactory<BSplineTransformO2Type>::RegisterTransform();
+
   return true;
 }
 
@@ -548,6 +557,14 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
   {
     assert( m_PimpleTransform );
     return this->m_PimpleTransform->TransformPoint( point );
+  }
+
+
+  void Transform::SetIdentity()
+  {
+    assert( m_PimpleTransform );
+    this->MakeUniqueForWrite();
+    return this->m_PimpleTransform->SetIdentity();
   }
 
   std::string Transform::ToString( void ) const
