@@ -19,11 +19,10 @@ target_link_libraries( sitkTransformCompareDriver gtest SimpleITKUnitTestBase ${
 set ( SimpleITKUnitTestSource
   sitkImageTests.cxx
   sitkCommonTests.cxx
-  sitkRegistrationTests.cxx
+  sitkImageRegistrationMethodTests.cxx
   sitkImageIOTests.cxx
   sitkTypeListsTests.cxx
   sitkBasicFiltersTests.cxx
-  sitkRegistrationTests.cxx
   sitkLabelStatisticsTest.cxx
   sitkTransformToDisplacementFieldFilterTest.cxx
   sitkOperatorTests.cxx

@@ -33,6 +33,8 @@ class DefaultImageToImageMetricTraitsv4;
 
 template<typename TMetric> class RegistrationParameterScalesEstimator;
 
+template<unsigned int VDimension> class SpatialObject;
+
 class Command;
 class EventObject;
 #endif
@@ -129,6 +131,10 @@ namespace simple
                                               double smallParameterVariation =  0.01 );
 
 
+    Self& SetMetricFixedMask( const Image &binaryMask );
+
+    Self& SetMetricMovingMask( const Image &binaryMask );
+
     Self &SetMetricSamplingPercentage(double percentage);
     Self &SetMetricSamplingPercentagePerLevel(const std::vector<double> &percentage);
 
@@ -171,6 +177,9 @@ namespace simple
     Transform ExecuteInternal ( const Image &fixed, const Image &moving );
 
     itk::ObjectToObjectOptimizerBaseTemplate<double> *CreateOptimizer( unsigned int numberOfTransformParameters );
+
+    template<unsigned int VDimension>
+      itk::SpatialObject<VDimension> *CreateSpatialObjectMask(const Image &mask);
 
     template <class TImageType>
       itk::ImageToImageMetricv4<TImageType,
@@ -254,6 +263,8 @@ namespace simple
     unsigned int m_MetricNumberOfHistogramBins;
     double m_MetricVarianceForJointPDFSmoothing;
 
+    Image m_MetricFixedMaskImage;
+    Image m_MetricMovingMaskImage;
 
     std::vector<double> m_MetricSamplingPercentage;
     MetricSamplingStrategyType m_MetricSamplingStrategy;
