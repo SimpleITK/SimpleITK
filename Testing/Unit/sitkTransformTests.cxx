@@ -468,6 +468,12 @@ TEST(TransformTest,AffineTransform_3DPoints)
   EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(0.0,0.0,0.0) ), v3(1.0,2.0,3.0),1e-15 );
   EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(1.0,0.0,1.0) ), v3(2.0,2.0,4.0),1e-15 );
 
+  // inverse
+  tx.SetInverse();
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(1.0,2.0,3.0) ), v3(0.0,0.0,0.0),1e-15 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(2.0,2.0,4.0) ), v3(1.0,0.0,1.0),1e-15 );
+  EXPECT_NO_THROW(tx.GetCenter());
+
   tx.SetIdentity();
   EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(0.0,0.0,0.0) ), v3(0.0,0.0,0.0),1e-15 );
   EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(1.0,1.0,1.0) ), v3(1.0,1.0,1.0),1e-15 );
@@ -538,6 +544,10 @@ TEST(TransformTest,BSplineTransform)
   EXPECT_EQ( tx3.GetParameters(), std::vector<double>(32,0.0));
   tx.reset( new sitk::BSplineTransform(2));
   EXPECT_NO_THROW(tx->SetIdentity());
+
+  // no inverse
+  EXPECT_TRUE(!tx->SetInverse());
+  EXPECT_NO_THROW(tx->GetOrder());
 }
 
 TEST(TransformTest,BSplineTransform_order)
@@ -689,6 +699,9 @@ TEST(TransformTest,Euler2DTransform)
   EXPECT_VECTOR_DOUBLE_NEAR( etx.TransformPoint( v2(1,1) ), v2(1,1),1e-15);
   EXPECT_VECTOR_DOUBLE_NEAR( etx.TransformPoint( v2(0,0) ), v2(0,0),1e-15);
 
+  // inverse
+  EXPECT_TRUE(etx.SetInverse());
+  EXPECT_NO_THROW(etx.GetAngle());
 }
 
 
@@ -812,6 +825,9 @@ TEST(TransformTest,Euler3DTransform)
   tx->ComputeZYXOn();
   EXPECT_TRUE(tx->GetComputeZYX());
 
+  // inverse
+  EXPECT_TRUE(tx->SetInverse());
+  EXPECT_NO_THROW(tx->GetCenter());
 }
 
 
@@ -915,6 +931,9 @@ TEST(TransformTest,Similarity2DTransform)
   EXPECT_EQ( tx3.GetParameters()[2], 2.2 );
   EXPECT_EQ( tx3.GetParameters()[3], 2.2 );
 
+  // inverse
+  EXPECT_TRUE(tx1.SetInverse());
+  EXPECT_NO_THROW(tx1.GetAngle());
 }
 
 TEST(TransformTest,ScaleSkewVersor3DTransform)
@@ -1021,6 +1040,9 @@ TEST(TransformTest,ScaleSkewVersor3DTransform)
   EXPECT_EQ(tx->GetTranslation(), zeros);
   tx->SetTranslation(trans);
   EXPECT_EQ(tx->GetTranslation(),trans);
+
+  // BUG: inverse does not work!!!!
+  //EXPECT_NO_THROW(tx->SetInverse());
 
 }
 
@@ -1175,6 +1197,9 @@ TEST(TransformTest,Similarity3DTransform)
   tx->SetTranslation(trans);
   EXPECT_EQ(tx->GetTranslation(),trans);
 
+  // inverse
+  EXPECT_TRUE(tx->SetInverse());
+  EXPECT_NO_THROW(tx->GetVersor());
 }
 
 
@@ -1262,6 +1287,10 @@ TEST(TransformTest,TranslationTransform)
 
   EXPECT_THROW( tx.reset( new sitk::TranslationTransform(3, trans2d) ), sitk::GenericException );
   EXPECT_THROW( tx1.SetOffset(trans2d), sitk::GenericException );
+
+  // inverse
+  EXPECT_TRUE(tx1.SetInverse());
+  EXPECT_NO_THROW(tx1.GetOffset());
 
 }
 
@@ -1356,6 +1385,10 @@ TEST(TransformTest,VersorRigid3DTransform)
   tx->SetTranslation(trans);
   EXPECT_EQ(tx->GetTranslation(),trans);
 
+  // inverse
+  EXPECT_TRUE(tx->SetInverse());
+  EXPECT_NO_THROW(tx->GetTranslation());
+
   tx->SetIdentity();
   EXPECT_EQ(tx->GetTranslation(), zeros);
 }
@@ -1379,6 +1412,12 @@ TEST(TransformTest,VersorRigid3DTransform_Points)
   EXPECT_EQ( tx.Translate(v3(1.0,2.0,3.0)).GetTranslation(), v3(1.0,2.0,3.0) );
   EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(0.0,0.0,0.0) ), v3(1.0,2.0,3.0),1e-15);
   EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(1.0,0.0,0.0) ), v3(0.0,2.0,3.0),1e-15);
+
+  // inverse
+  EXPECT_TRUE(tx.SetInverse());
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(1.0,2.0,3.0) ), v3(0.0,0.0,0.0),1e-15);
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint(  v3(0.0,2.0,3.0) ), v3(1.0,0.0,0.0),1e-15);
+  EXPECT_NO_THROW(tx.GetCenter());
 
 }
 
@@ -1463,4 +1502,7 @@ TEST(TransformTest,VersorTransform)
   EXPECT_THROW( tx->SetRotation(v3(1.0,0.0,0.0)).GetVersor(), sitk::GenericException );
   EXPECT_NO_THROW(tx->SetIdentity());
 
+  // inverse
+  EXPECT_TRUE(tx->SetInverse());
+  EXPECT_NO_THROW(tx->GetVersor());
 }

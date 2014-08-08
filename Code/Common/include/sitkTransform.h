@@ -166,6 +166,18 @@ public:
 
   virtual void SetIdentity();
 
+  /** \brief Try to change the current transform to it's inverse.
+   *
+   * If the transform has an inverse, i.e. non-singular linear
+   * transforms, then a new ITK transform is created of the same type
+   * and this object is set to it.
+   *
+   * However not all transform have a direct inverse, if the inverse
+   * does not exist or fails false will be returned and this transform
+   * will not be modified.
+   */
+  virtual bool SetInverse();
+
   std::string ToString( void ) const;
 
 

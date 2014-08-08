@@ -567,6 +567,24 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
     return this->m_PimpleTransform->SetIdentity();
   }
 
+  bool Transform::SetInverse()
+  {
+    assert( m_PimpleTransform );
+    std::auto_ptr<PimpleTransformBase> temp;
+    {
+    // See if a new pimple transform can be created
+    PimpleTransformBase *p = NULL;
+    if (!this->m_PimpleTransform->GetInverse(p))
+      {
+      return false;
+      }
+    temp.reset(p);
+    }
+    // take ownership of the new pimple transform
+    this->SetPimpleTransform( temp.release() );
+    return true;
+  }
+
   std::string Transform::ToString( void ) const
   {
     assert( m_PimpleTransform );

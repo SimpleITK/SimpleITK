@@ -247,6 +247,24 @@ public:
           }
       }
 
+  virtual bool GetInverse(PimpleTransformBase * &outputTransform) const
+    {
+      typename itk::LightObject::Pointer light = this->m_Transform->CreateAnother();
+      typename TransformType::Pointer another = dynamic_cast<TransformType*>(light.GetPointer());
+
+      if (another.IsNull())
+        {
+        sitkExceptionMacro("Unexpected error creating another " << this->m_Transform->GetNameOfClass() << ".")
+        }
+      if (!this->m_Transform->GetInverse(another))
+        {
+        return false;
+        }
+      outputTransform = new Self( another.GetPointer() );
+      return true;
+    }
+
+
   virtual PimpleTransformBase* AddTransform( Transform &t )
     {
       if ( t.GetDimension() != TransformType::InputSpaceDimension )
