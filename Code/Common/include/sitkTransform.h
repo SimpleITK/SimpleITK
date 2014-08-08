@@ -166,6 +166,8 @@ public:
 
   virtual void SetIdentity();
 
+  virtual bool SetInverse();
+
   std::string ToString( void ) const;
 
 
