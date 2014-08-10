@@ -128,6 +128,18 @@ public:
 
   virtual void SetIdentity() = 0;
 
+  // Tries to construct an inverse of the transform, if true is returned
+  // the inverse was successful, and outputTransform is modified to
+  // the new class and ownership it passed to the caller.  Otherwise
+  // outputTranform is not changed.
+  virtual bool GetInverse( PimpleTransformBase * &outputTransform ) const = 0;
+
+  virtual bool IsLinear() const
+    {
+      return (this->GetTransformBase()->GetTransformCategory() == TransformBase::Linear);
+    }
+
+
   std::string ToString( void ) const
     {
       std::ostringstream out;
@@ -246,6 +258,24 @@ public:
           displacementField->FillBuffer(typename DFTType::OutputVectorType(0.0));
           }
       }
+
+  virtual bool GetInverse(PimpleTransformBase * &outputTransform) const
+    {
+      typename itk::LightObject::Pointer light = this->m_Transform->CreateAnother();
+      typename TransformType::Pointer another = dynamic_cast<TransformType*>(light.GetPointer());
+
+      if (another.IsNull())
+        {
+        sitkExceptionMacro("Unexpected error creating another " << this->m_Transform->GetNameOfClass() << ".")
+        }
+      if (!this->m_Transform->GetInverse(another))
+        {
+        return false;
+        }
+      outputTransform = new Self( another.GetPointer() );
+      return true;
+    }
+
 
   virtual PimpleTransformBase* AddTransform( Transform &t )
     {
