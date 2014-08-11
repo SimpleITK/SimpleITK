@@ -557,14 +557,41 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
   typedef itk::ImageRegistrationMethodv4<FixedImageType, MovingImageType>  RegistrationType;
   typename RegistrationType::Pointer   registration  = RegistrationType::New();
 
+  // this variable will hold the initial moving then fixed, then the
+  // initial to optimize.
+  const std::string strIdentityTransform = "IdentityTransform";
+
+  // Set initial moving transform
+  if ( strIdentityTransform != this->m_MovingInitialTransform.GetITKBase()->GetNameOfClass())
+    {
+    typename RegistrationType::InitialTransformType *itkTx;
+    if ( !(itkTx = dynamic_cast<typename RegistrationType::InitialTransformType *>(this->m_MovingInitialTransform.GetITKBase())) )
+      {
+      sitkExceptionMacro( "Unexpected error converting initial moving transform! Possible miss matching dimensions!" );
+      }
+    registration->SetMovingInitialTransform(itkTx);
+    }
+
+  // Set initial fixed transform
+  if ( strIdentityTransform != this->m_FixedInitialTransform.GetITKBase()->GetNameOfClass())
+    {
+    typename RegistrationType::InitialTransformType *itkTx;
+    if ( !(itkTx = dynamic_cast<typename RegistrationType::InitialTransformType *>(this->m_FixedInitialTransform.GetITKBase())) )
+      {
+      sitkExceptionMacro( "Unexpected error converting initial moving transform! Possible miss matching dimensions!" );
+      }
+    registration->SetFixedInitialTransform(itkTx);
+    }
+
   typename RegistrationType::InitialTransformType *itkTx;
   if ( !(itkTx = dynamic_cast<typename RegistrationType::InitialTransformType *>(this->m_InitialTransform.GetITKBase())) )
     {
-    sitkExceptionMacro( "Unexpected error converting transform! Possible miss matching dimensions!" );
+    sitkExceptionMacro( "Unexpected error converting initial transform! Possible miss matching dimensions!" );
     }
 
   registration->SetInitialTransform( itkTx );
   registration->SetInPlace(this->m_InitialTransformInPlace);
+
 
   // Get the pointer to the ITK image contained in image1
   typename FixedImageType::ConstPointer fixed = this->CastImageToITK<FixedImageType>( inFixed );

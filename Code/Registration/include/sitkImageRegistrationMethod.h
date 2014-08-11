@@ -66,7 +66,7 @@ namespace simple
 
     /** \brief Set the initial transform and parameters to optimize.
      *
-     * This transform is a applied before the InitialMovingTransform,
+     * This transform is a applied before the MovingInitialTransform,
      * to map from the virtual image domain to the moving image
      * domain.
      *
@@ -83,6 +83,17 @@ namespace simple
       { return this->m_InitialTransform; }
     bool GetInitialTransformInPlace() const
     { return this->m_InitialTransformInPlace;}
+
+
+    Self& SetMovingInitialTransform( const Transform &transform )
+    { this->m_MovingInitialTransform = transform; return *this; }
+    Transform GetMovingInitialTransform( ) const
+    { return this->m_MovingInitialTransform; }
+
+    Self& SetFixedInitialTransform( const Transform &transform )
+    { this->m_FixedInitialTransform = transform; return *this; }
+    Transform GetFixedInitialTransform( ) const
+    { return this->m_FixedInitialTransform; }
 
     Self& SetMetricAsANTSNeighborhoodCorrelation( unsigned int radius );
     Self& SetMetricAsCorrelation( );
@@ -225,6 +236,8 @@ namespace simple
     InterpolatorEnum  m_Interpolator;
     Transform  m_InitialTransform;
     bool m_InitialTransformInPlace;
+    Transform m_MovingInitialTransform;
+    Transform m_FixedInitialTransform;
 
     // optimizer
     enum OptimizerType { ConjugateGradientLineSearch,
