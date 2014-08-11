@@ -54,7 +54,7 @@ R.SetOptimizerAsLBFGSB(gradientConvergenceTolerance=1e-5,
                        maximumNumberOfCorrections=5,
                        maximumNumberOfFunctionEvaluations=1000,
                        costFunctionConvergenceFactor=1e+7)
-R.SetTransform(tx)
+R.SetInitialTransform(tx)
 R.SetInterpolator(sitk.sitkLinear)
 
 R.AddCommand( sitk.sitkIterationEvent, lambda: command_iteration(R) )

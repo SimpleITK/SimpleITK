@@ -56,7 +56,7 @@ R.SetOptimizerAsGradientDescentLineSearch(5.0, 100,
                                           convergenceMinimumValue=1e-4,
                                           convergenceWindowSize=5)
 R.SetOptimizerScalesFromPhysicalShift( )
-R.SetTransform(tx)
+R.SetInitialTransform(tx)
 R.SetInterpolator(sitk.sitkLinear)
 
 R.SetShrinkFactorsPerLevel([6,2,1])

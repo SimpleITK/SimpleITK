@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
                                               convergenceMinimumValue,
                                               convergenceWindowSize);
 
-  R.SetTransform( sitk::Transform( fixed.GetDimension(), sitk::sitkTranslation) );
+  R.SetInitialTransform( sitk::Transform( fixed.GetDimension(), sitk::sitkTranslation) );
   R.SetInterpolator( sitk::sitkLinear );
 
   IterationUpdate cmd(R);

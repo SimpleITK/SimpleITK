@@ -135,7 +135,7 @@ TEST_F(sitkRegistrationMethodTest, Mask_Test0)
 
 
   sitk::TranslationTransform tx(fixedBlobs.GetDimension());
-  R.SetTransform(tx);
+  R.SetInitialTransform(tx);
 
   // wrong dimension should produce error
   R.SetMetricFixedMask(sitk::Image(100,100,100,sitk::sitkUInt8));
@@ -171,7 +171,7 @@ TEST_F(sitkRegistrationMethodTest, Mask_Test1)
 
 
   sitk::TranslationTransform tx(fixedBlobs.GetDimension());
-  R.SetTransform(tx);
+  R.SetInitialTransform(tx);
 
   R.SetMetricAsCorrelation();
   R.SetMetricFixedMask(sitk::Cast(sitk::Greater(fixedBlobs,0),sitk::sitkFloat32));
@@ -207,7 +207,7 @@ TEST_F(sitkRegistrationMethodTest, Mask_Test2)
 
   sitk::TranslationTransform tx(fixedBlobs.GetDimension());
   tx.SetOffset(v2(120,99));
-  R.SetTransform(tx);
+  R.SetInitialTransform(tx);
 
   R.SetMetricAsCorrelation();
   R.SetMetricFixedMask(sitk::Greater(fixedBlobs,0));
