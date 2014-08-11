@@ -72,6 +72,8 @@ namespace simple
     }
     Transform GetInitialTransform()
       { return this->m_InitialTransform; }
+    bool GetInitialTransformInPlace() const
+    { return this->m_InitialTransformInPlace;}
 
     Self& SetMetricAsANTSNeighborhoodCorrelation( unsigned int radius );
     Self& SetMetricAsCorrelation( );

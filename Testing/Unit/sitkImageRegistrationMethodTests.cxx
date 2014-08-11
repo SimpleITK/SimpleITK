@@ -124,6 +124,57 @@ protected:
 };
 
 
+TEST_F(sitkRegistrationMethodTest, Transform_InPlaceOn)
+{
+  // This test is to check some excpetional cases for using masks
+  sitk::ImageRegistrationMethod R;
+  EXPECT_TRUE(R.GetInitialTransformInPlace());
+
+  sitk::Image fixed = fixedBlobs;
+  sitk::Image moving = fixedBlobs;
+
+  double minStep=1e-4;
+  unsigned int numberOfIterations=100;
+  double relaxationFactor=0.5;
+  double gradientMagnitudeTolerance = 1e-10;
+  R.SetOptimizerAsRegularStepGradientDescent(1.0,
+                                             minStep,
+                                             numberOfIterations,
+                                             relaxationFactor,
+                                             gradientMagnitudeTolerance);
+
+  R.SetInterpolator(sitk::sitkLinear);
+
+  sitk::TranslationTransform tx(fixed.GetDimension());
+  tx.SetOffset(v2(1.1,-2.2));
+  R.SetInitialTransform(tx,false);
+  EXPECT_TRUE(!R.GetInitialTransformInPlace());
+
+  R.SetMetricAsMeanSquares();
+
+  IterationUpdate cmd(R);
+  R.AddCommand(sitk::sitkIterationEvent, cmd);
+
+  sitk::Transform outTx = R.Execute(fixed,moving);
+
+  EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,0.0), outTx.GetParameters(), 1e-4);
+  // expect input not to be modified
+  EXPECT_EQ(v2(1.1,-2.2), tx.GetParameters());
+
+  // optimize in place this time
+  R.SetInitialTransform(tx,true);
+  EXPECT_TRUE(R.GetInitialTransformInPlace());
+  outTx = R.Execute(fixed,moving);
+
+  EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,0.0), outTx.GetParameters(), 1e-4);
+  // expect input to have been modified
+  EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,0.0), tx.GetParameters(), 1e-4);
+
+
+}
+
+
+
 TEST_F(sitkRegistrationMethodTest, Mask_Test0)
 {
   // This test is to check some excpetional cases for using masks
