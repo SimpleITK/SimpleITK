@@ -64,6 +64,15 @@ namespace simple
     Self& SetInterpolator ( InterpolatorEnum Interpolator )
       { this->m_Interpolator = Interpolator; return *this; }
 
+    /** \brief Set the initial transform and parameters to optimize.
+     *
+     * This transform is a applied before the InitialMovingTransform,
+     * to map from the virtual image domain to the moving image
+     * domain.
+     *
+     * If the inPlace flag is true, then the transform will be
+     * modified during Execute, otherwise a copy will be made.
+     */
     Self& SetInitialTransform ( const Transform &transform, bool inPlace = true )
     {
       this->m_InitialTransform = transform;
