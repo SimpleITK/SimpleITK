@@ -81,6 +81,26 @@ class sitkRegistrationMethodTest
 {
 public:
 
+  sitk::Image MakeGaussianBlob( const std::vector<double> &pt,
+                               const std::vector<unsigned int> &size)
+    {
+      sitk::GaussianImageSource source;
+      source.SetMean(pt);
+      source.SetScale(1.0);
+
+      std::vector<double> sigma;
+      for(unsigned int i = 0; i < size.size(); ++i)
+        {
+        sigma.push_back(size[i]/10.0);
+        }
+      source.SetSigma(sigma);
+      source.SetSize(size);
+      source.SetOutputPixelType(sitk::sitkFloat32);
+
+
+      return source.Execute();
+    }
+
   sitk::Image MakeDualGaussianBlobs(const std::vector<double> &pt0,
                                     const std::vector<double> &pt1,
                                     const std::vector<unsigned int> &size)
@@ -450,4 +470,56 @@ TEST_F(sitkRegistrationMethodTest, OptimizerWeights_Test)
   sitk::Transform outTx = R.Execute(fixedImage, movingImage);
 
   EXPECT_VECTOR_DOUBLE_NEAR(v2(12.0,0.0031), outTx.GetParameters(), 1e-3);
+}
+
+
+TEST_F(sitkRegistrationMethodTest, Optimizer_Exhaustive)
+{
+  sitk::Image image = MakeGaussianBlob( v2(64, 64), std::vector<unsigned int>(2,256) );
+
+
+  sitk::ImageRegistrationMethod R;
+  R.SetInterpolator(sitk::sitkLinear);
+
+  sitk::TranslationTransform tx(image.GetDimension());
+  tx.SetOffset(v2(-1,-2));
+  R.SetInitialTransform(tx, false);
+
+  R.SetMetricAsMeanSquares();
+
+  R.SetOptimizerAsExhaustive(std::vector<unsigned int>(2,5), 0.5);
+
+  IterationUpdate cmd(R);
+  R.AddCommand(sitk::sitkIterationEvent, cmd);
+
+  sitk::Transform outTx = R.Execute(image, image);
+
+
+  std::cout << "-------" << std::endl;
+  std::cout << outTx.ToString() << std::endl;
+  std::cout << "Optimizer stop condition: " << R.GetOptimizerStopConditionDescription() << std::endl;
+  std::cout << " Iteration: " << R.GetOptimizerIteration() << std::endl;
+  std::cout << " Metric value: " << R.GetMetricValue() << std::endl;
+
+  EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,0.0), outTx.GetParameters(), 1e-3);
+
+
+  // Execute in place
+
+  tx.SetOffset(v2(-1,-2));
+  R.SetInitialTransform(tx, true);
+
+  R.SetOptimizerAsExhaustive( std::vector<unsigned int>(2,5), 0.5);
+
+  outTx = R.Execute(image, image);
+
+
+  std::cout << "-------" << std::endl;
+  std::cout << outTx.ToString() << std::endl;
+  std::cout << "Optimizer stop condition: " << R.GetOptimizerStopConditionDescription() << std::endl;
+  std::cout << " Iteration: " << R.GetOptimizerIteration() << std::endl;
+  std::cout << " Metric value: " << R.GetMetricValue() << std::endl;
+
+  EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,0.0), outTx.GetParameters(), 1e-3);
+
 }
