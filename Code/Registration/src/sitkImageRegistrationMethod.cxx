@@ -34,6 +34,7 @@ namespace simple
 
 ImageRegistrationMethod::ImageRegistrationMethod()
   : m_Interpolator(sitkLinear),
+    m_InitialTransformInPlace(true),
     m_OptimizerScalesType(Manual),
     m_MetricSamplingPercentage(1,1.0),
     m_MetricSamplingStrategy(NONE),
@@ -77,7 +78,7 @@ std::string  ImageRegistrationMethod::ToString() const
   out << std::endl;
 
   out << "  Transform: ";
-  this->ToStringHelper(out, this->m_Transform.ToString());
+  this->ToStringHelper(out, this->m_InitialTransform.ToString());
   out << std::endl;
 
   return out.str();
@@ -556,14 +557,14 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
   typedef itk::ImageRegistrationMethodv4<FixedImageType, MovingImageType>  RegistrationType;
   typename RegistrationType::Pointer   registration  = RegistrationType::New();
 
-    typename RegistrationType::InitialTransformType *itkTx;
-  if ( !(itkTx = dynamic_cast<typename RegistrationType::InitialTransformType *>(this->m_Transform.GetITKBase())) )
+  typename RegistrationType::InitialTransformType *itkTx;
+  if ( !(itkTx = dynamic_cast<typename RegistrationType::InitialTransformType *>(this->m_InitialTransform.GetITKBase())) )
     {
     sitkExceptionMacro( "Unexpected error converting transform! Possible miss matching dimensions!" );
     }
 
   registration->SetInitialTransform( itkTx );
-  registration->InPlaceOn();
+  registration->SetInPlace(this->m_InitialTransformInPlace);
 
   // Get the pointer to the ITK image contained in image1
   typename FixedImageType::ConstPointer fixed = this->CastImageToITK<FixedImageType>( inFixed );
@@ -696,8 +697,24 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
   m_pfGetOptimizerPosition =  nsstd::function<std::vector<double>()>();
   m_pfGetMetricValue = nsstd::function<double()>();
 
+  if (this->m_InitialTransformInPlace)
+    {
+    return this->m_InitialTransform;
+    }
+  else
+    {
+    // TOOD: It should not be necessary to return a composite
+    // transform the sitk::Transform class is missing a constructor
+    // which accepts an arbitrary ITK transform.
+    typename RegistrationType::OutputTransformType* itkOutTx = registration->GetModifiableTransform();
 
-  return this->m_Transform;
+    typedef itk::CompositeTransform<double, ImageDimension> CompositeTransformType;
+
+    typename CompositeTransformType::Pointer comp = CompositeTransformType::New();
+    comp->ClearTransformQueue();
+    comp->AddTransform( itkOutTx );
+    return Transform(comp.GetPointer());
+    }
 }
 
 

@@ -41,7 +41,7 @@ moving = sitk.ReadImage(sys.argv[2], sitk.sitkFloat32)
 R = sitk.ImageRegistrationMethod()
 R.SetMetricAsMeanSquares()
 R.SetOptimizerAsRegularStepGradientDescent(4.0, .01, 200 )
-R.SetTransform(sitk.Transform(fixed.GetDimension(), sitk.sitkTranslation))
+R.SetInitialTransform(sitk.Transform(fixed.GetDimension(), sitk.sitkTranslation))
 R.SetInterpolator(sitk.sitkLinear)
 
 R.AddCommand( sitk.sitkIterationEvent, lambda: command_iteration(R) )

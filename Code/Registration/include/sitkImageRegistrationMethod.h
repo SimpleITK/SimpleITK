@@ -64,10 +64,16 @@ namespace simple
     Self& SetInterpolator ( InterpolatorEnum Interpolator )
       { this->m_Interpolator = Interpolator; return *this; }
 
-    Self& SetTransform ( const Transform &Transform )
-      { this->m_Transform = Transform; return *this; }
-    Transform GetTransform()
-      { return this->m_Transform; }
+    Self& SetInitialTransform ( const Transform &transform, bool inPlace = true )
+    {
+      this->m_InitialTransform = transform;
+      this->m_InitialTransformInPlace = inPlace;
+      return *this;
+    }
+    Transform GetInitialTransform()
+      { return this->m_InitialTransform; }
+    bool GetInitialTransformInPlace() const
+    { return this->m_InitialTransformInPlace;}
 
     Self& SetMetricAsANTSNeighborhoodCorrelation( unsigned int radius );
     Self& SetMetricAsCorrelation( );
@@ -208,7 +214,8 @@ namespace simple
     std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 
     InterpolatorEnum  m_Interpolator;
-    Transform  m_Transform;
+    Transform  m_InitialTransform;
+    bool m_InitialTransformInPlace;
 
     // optimizer
     enum OptimizerType { ConjugateGradientLineSearch,
