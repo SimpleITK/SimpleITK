@@ -274,6 +274,18 @@ inline std::vector<double> v4(double v1, double v2, double v3, double v4)
   return temp;
 }
 
+inline std::vector<double> v9(double v1, double v2, double v3,
+                              double v4, double v5, double v6,
+                              double v7, double v8, double v9)
+{
+  std::vector<double> temp(9);
+  temp[0]=v1;temp[1]=v2;temp[2]=v3;
+  temp[3]=v4;temp[4]=v5;temp[5]=v6;
+  temp[6]=v7;temp[7]=v8;temp[8]=v9;
+  return temp;
+}
+
+
 }
 
 ::testing::AssertionResult VectorDoubleRMSPredFormat(const char* expr1,
