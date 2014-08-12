@@ -349,6 +349,7 @@ ImageRegistrationMethod::SetOptimizerScalesFromJacobian( unsigned int centralReg
 {
   this->m_OptimizerScalesType = Jacobian;
   this->m_OptimizerScalesCentralRegionRadius = centralRegionRadius;
+  this->m_OptimizerScales = std::vector<double>();
   return *this;
 }
 
@@ -359,6 +360,7 @@ ImageRegistrationMethod::SetOptimizerScalesFromIndexShift( unsigned int centralR
   this->m_OptimizerScalesType = IndexShift;
   this->m_OptimizerScalesCentralRegionRadius = centralRegionRadius;
   this->m_OptimizerScalesSmallParameterVariation = smallParameterVariation;
+  this->m_OptimizerScales = std::vector<double>();
   return *this;
 }
 
@@ -369,6 +371,7 @@ ImageRegistrationMethod::SetOptimizerScalesFromPhysicalShift( unsigned int centr
   this->m_OptimizerScalesType = PhysicalShift;
   this->m_OptimizerScalesCentralRegionRadius = centralRegionRadius;
   this->m_OptimizerScalesSmallParameterVariation = smallParameterVariation;
+  this->m_OptimizerScales = std::vector<double>();
   return *this;
 }
 
@@ -447,6 +450,19 @@ double ImageRegistrationMethod::GetMetricValue() const
     return this->m_pfGetMetricValue();
     }
   return m_MetricValue;
+}
+
+std::vector<double> ImageRegistrationMethod::GetOptimizerScales() const
+{
+  if(this->m_OptimizerScalesType==Manual)
+    {
+    return m_OptimizerScales;
+    }
+  else if(bool(this->m_pfGetOptimizerScales))
+    {
+    return this->m_pfGetOptimizerScales();
+    }
+  return std::vector<double>();
 }
 
 template <typename TMetric>
@@ -720,9 +736,10 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
   m_MetricValue = this->GetMetricValue();
   m_Iteration = this->GetOptimizerIteration();
 
-  m_pfGetOptimizerIteration = nsstd::function<unsigned int()>();
-  m_pfGetOptimizerPosition =  nsstd::function<std::vector<double>()>();
-  m_pfGetMetricValue = nsstd::function<double()>();
+  m_pfGetOptimizerIteration = SITK_NULLPTR;
+  m_pfGetOptimizerPosition = SITK_NULLPTR;
+  m_pfGetMetricValue = SITK_NULLPTR;
+  m_pfGetOptimizerScales = SITK_NULLPTR;
 
   if (this->m_InitialTransformInPlace)
     {

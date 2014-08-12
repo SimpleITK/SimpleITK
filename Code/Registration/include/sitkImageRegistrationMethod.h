@@ -219,6 +219,7 @@ namespace simple
     unsigned int GetOptimizerIteration() const;
     std::vector<double> GetOptimizerPosition() const;
     double GetMetricValue() const;
+    std::vector<double> GetOptimizerScales() const;
 
     /** Measurement updated at the end of execution.
       */
@@ -255,6 +256,7 @@ namespace simple
     nsstd::function<unsigned int()> m_pfGetOptimizerIteration;
     nsstd::function<std::vector<double>()> m_pfGetOptimizerPosition;
     nsstd::function<double()> m_pfGetMetricValue;
+    nsstd::function<std::vector<double>()> m_pfGetOptimizerScales;
 
     typedef Transform (ImageRegistrationMethod::*MemberFunctionType)( const Image &fixed, const Image &moving );
     friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
