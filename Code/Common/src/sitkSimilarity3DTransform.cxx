@@ -16,6 +16,7 @@
 *
 *=========================================================================*/
 #include "sitkSimilarity3DTransform.h"
+#include "sitkTransformHelper.hxx"
 
 #include "itkSimilarity3DTransform.h"
 
@@ -149,6 +150,11 @@ Similarity3DTransform::Self &Similarity3DTransform::Translate(const std::vector<
   return *this;
 }
 
+std::vector<double> Similarity3DTransform::GetMatrix( ) const
+{
+  return this->m_pfGetMatrix();
+}
+
 void Similarity3DTransform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
 {
   Superclass::SetPimpleTransform(pimpleTransform);
@@ -172,6 +178,7 @@ void Similarity3DTransform::InternalInitialization(itk::TransformBase *transform
   this->m_pfSetScale = SITK_NULLPTR;
   this->m_pfGetScale = SITK_NULLPTR;
   this->m_pfTranslate = SITK_NULLPTR;
+  this->m_pfGetMatrix = SITK_NULLPTR;
 
   if (t)
     {
@@ -184,24 +191,14 @@ void Similarity3DTransform::InternalInitialization(itk::TransformBase *transform
 template<class TransformType>
 void Similarity3DTransform::InternalInitialization(TransformType *t)
 {
-  {
-  typename TransformType::InputPointType (*pfSTLVectorToITKPoint)(const std::vector<double> &) = &sitkSTLVectorToITK<typename TransformType::InputPointType, double>;
-  this->m_pfSetCenter = nsstd::bind(&TransformType::SetCenter,t,nsstd::bind(pfSTLVectorToITKPoint,nsstd::placeholders::_1));
-
-  std::vector<double> (*pfITKPointToSTL)( const typename TransformType::InputPointType &) = &sitkITKVectorToSTL<double,typename TransformType::InputPointType>;
-  this->m_pfGetCenter = nsstd::bind(pfITKPointToSTL,nsstd::bind(&TransformType::GetCenter,t));
-  }
-
-  typename TransformType::OutputVectorType (*pfSTLVectorToITK)(const std::vector<double> &) = &sitkSTLVectorToITK<typename TransformType::OutputVectorType, double>;
-  this->m_pfSetTranslation = nsstd::bind(&TransformType::SetTranslation,t,nsstd::bind(pfSTLVectorToITK,nsstd::placeholders::_1));
-
-  std::vector<double> (*pfITKVectorToSTL)( const typename TransformType::OutputVectorType &) = &sitkITKVectorToSTL<double,typename TransformType::OutputVectorType>;
-  this->m_pfGetTranslation = nsstd::bind(pfITKVectorToSTL,nsstd::bind(&TransformType::GetTranslation,t));
-
+  SITK_TRANSFORM_SET_MPF(Center, typename TransformType::InputPointType, double);
+  SITK_TRANSFORM_SET_MPF(Translation, typename TransformType::OutputVectorType, double);
+  SITK_TRANSFORM_SET_MPF_GetMatrix();
 
   void 	(TransformType::*pfSetRotation1) (const typename TransformType::VersorType &) = &TransformType::SetRotation;
   this->m_pfSetRotation1 = nsstd::bind(pfSetRotation1,t,nsstd::bind(&sitkSTLVectorToITKVersor<double, double>,nsstd::placeholders::_1));
 
+  typename TransformType::OutputVectorType (*pfSTLVectorToITK)(const std::vector<double> &) = &sitkSTLVectorToITK<typename TransformType::OutputVectorType, double>;
   void 	(TransformType::*pfSetRotation2) (const typename TransformType::AxisType &, double) = &TransformType::SetRotation;
   this->m_pfSetRotation2 = nsstd::bind(pfSetRotation2,t,nsstd::bind(pfSTLVectorToITK,nsstd::placeholders::_1),nsstd::placeholders::_2);
 

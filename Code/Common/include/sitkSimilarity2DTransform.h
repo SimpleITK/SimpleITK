@@ -60,6 +60,9 @@ public:
   Self &SetScale(double scale);
   double GetScale() const;
 
+  /** additional methods */
+  std::vector<double> GetMatrix() const;
+
 protected:
 
   virtual void SetPimpleTransform( PimpleTransformBase *pimpleTransform );
@@ -81,7 +84,7 @@ private:
   nsstd::function<std::vector<double>()> m_pfGetTranslation;
   nsstd::function<void(double)> m_pfSetScale;
   nsstd::function<double()> m_pfGetScale;
-
+  nsstd::function<std::vector<double>()> m_pfGetMatrix;
 };
 
 }

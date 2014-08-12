@@ -15,10 +15,11 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#include "sitkVersorRigid3DTransform.h"
+#include "sitkScaleVersor3DTransform.h"
+#include "sitkPimpleTransform.hxx"
 #include "sitkTransformHelper.hxx"
 
-#include "itkVersorRigid3DTransform.h"
+#include "itkScaleVersor3DTransform.h"
 
 namespace itk
 {
@@ -59,25 +60,25 @@ std::vector<TType> sitkITKVersorToSTL( const itk::Versor<T> & in )
 }
 
 // construct identity
-VersorRigid3DTransform::VersorRigid3DTransform()
-  : Transform(3, sitkVersorRigid)
+ScaleVersor3DTransform::ScaleVersor3DTransform()
+  : Transform(new PimpleTransform<itk::ScaleVersor3DTransform<double> >() )
 {
   Self::InternalInitialization(Self::GetITKBase());
 }
 
-VersorRigid3DTransform::VersorRigid3DTransform( const VersorRigid3DTransform &arg )
+ScaleVersor3DTransform::ScaleVersor3DTransform( const ScaleVersor3DTransform &arg )
   : Transform(arg)
 {
   Self::InternalInitialization(Self::GetITKBase());
 }
 
-VersorRigid3DTransform::VersorRigid3DTransform( const Transform & arg )
+ScaleVersor3DTransform::ScaleVersor3DTransform( const Transform & arg )
   : Transform(arg)
 {
   Self::InternalInitialization(Self::GetITKBase());
 }
 
-VersorRigid3DTransform &VersorRigid3DTransform::operator=( const VersorRigid3DTransform &arg )
+ScaleVersor3DTransform &ScaleVersor3DTransform::operator=( const ScaleVersor3DTransform &arg )
 {
   Superclass::operator=(arg);
   return *this;
@@ -85,72 +86,84 @@ VersorRigid3DTransform &VersorRigid3DTransform::operator=( const VersorRigid3DTr
 
 
 /** fixed parameter */
-VersorRigid3DTransform::Self &VersorRigid3DTransform::SetCenter(const std::vector<double> &params)
+ScaleVersor3DTransform::Self &ScaleVersor3DTransform::SetCenter(const std::vector<double> &params)
 {
   this->MakeUniqueForWrite();
   this->m_pfSetCenter(params);
   return *this;
 }
 
-std::vector<double> VersorRigid3DTransform::GetCenter( ) const
+std::vector<double> ScaleVersor3DTransform::GetCenter( ) const
 {
   return this->m_pfGetCenter();
 }
 
 
-VersorRigid3DTransform::Self &VersorRigid3DTransform::SetRotation(const std::vector<double> &versor)
+ScaleVersor3DTransform::Self &ScaleVersor3DTransform::SetRotation(const std::vector<double> &versor)
 {
   this->MakeUniqueForWrite();
   this->m_pfSetRotation1(versor);
   return *this;
 }
 
-VersorRigid3DTransform::Self &VersorRigid3DTransform::SetRotation(const std::vector<double> &axis,  double angle)
+ScaleVersor3DTransform::Self &ScaleVersor3DTransform::SetRotation(const std::vector<double> &axis,  double angle)
 {
   this->MakeUniqueForWrite();
   this->m_pfSetRotation2(axis, angle);
   return *this;
 }
 
-std::vector<double>  VersorRigid3DTransform::GetVersor() const
+std::vector<double>  ScaleVersor3DTransform::GetVersor() const
 {
   return this->m_pfGetVersor();
 }
 
-VersorRigid3DTransform::Self &VersorRigid3DTransform::SetTranslation(const std::vector<double> &params)
+ScaleVersor3DTransform::Self &ScaleVersor3DTransform::SetTranslation(const std::vector<double> &params)
 {
   this->MakeUniqueForWrite();
   this->m_pfSetTranslation(params);
   return *this;
 }
 
-std::vector<double> VersorRigid3DTransform::GetTranslation( ) const
+std::vector<double> ScaleVersor3DTransform::GetTranslation( ) const
 {
   return this->m_pfGetTranslation();
 }
 
-VersorRigid3DTransform::Self &VersorRigid3DTransform::Translate(const std::vector<double> &offset)
+ScaleVersor3DTransform::Self &ScaleVersor3DTransform::Translate(const std::vector<double> &offset)
 {
   this->MakeUniqueForWrite();
   this->m_pfTranslate(offset);
   return *this;
 }
 
-std::vector<double> VersorRigid3DTransform::GetMatrix( ) const
+ScaleVersor3DTransform::Self &ScaleVersor3DTransform::SetScale(const std::vector<double> &params)
+{
+  this->MakeUniqueForWrite();
+  this->m_pfSetScale(params);
+  return *this;
+}
+
+std::vector<double> ScaleVersor3DTransform::GetScale( ) const
+{
+  return this->m_pfGetScale();
+}
+
+std::vector<double> ScaleVersor3DTransform::GetMatrix( ) const
 {
   return this->m_pfGetMatrix();
 }
 
-void VersorRigid3DTransform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
+void ScaleVersor3DTransform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
 {
   Superclass::SetPimpleTransform(pimpleTransform);
   Self::InternalInitialization(this->GetITKBase());
 }
 
-void VersorRigid3DTransform::InternalInitialization(itk::TransformBase *transform)
+void ScaleVersor3DTransform::InternalInitialization(itk::TransformBase *transform)
 {
 
-  typedef itk::VersorRigid3DTransform<double> TransformType;
+  typedef itk::ScaleVersor3DTransform<double> TransformType;
   TransformType *t = dynamic_cast<TransformType*>(transform);
 
   // explicitly remove all function pointer with reference to prior transform
@@ -173,11 +186,12 @@ void VersorRigid3DTransform::InternalInitialization(itk::TransformBase *transfor
 
 
 template<class TransformType>
-void VersorRigid3DTransform::InternalInitialization(TransformType *t)
+void ScaleVersor3DTransform::InternalInitialization(TransformType *t)
 {
 
   SITK_TRANSFORM_SET_MPF(Center, typename TransformType::InputPointType, double);
   SITK_TRANSFORM_SET_MPF(Translation, typename TransformType::OutputVectorType, double);
+  SITK_TRANSFORM_SET_MPF(Scale, typename TransformType::ScaleVectorType, double);
   SITK_TRANSFORM_SET_MPF_GetMatrix();
 
   void 	(TransformType::*pfSetRotation1) (const typename TransformType::VersorType &) = &TransformType::SetRotation;
@@ -188,6 +202,7 @@ void VersorRigid3DTransform::InternalInitialization(TransformType *t)
   this->m_pfSetRotation2 = nsstd::bind(pfSetRotation2,t,nsstd::bind(pfSTLVectorToITK,nsstd::placeholders::_1),nsstd::placeholders::_2);
 
   this->m_pfGetVersor  = nsstd::bind(&sitkITKVersorToSTL<double, double>,nsstd::bind(&TransformType::GetVersor,t));
+
 
   // pre argument has no effect
   this->m_pfTranslate = nsstd::bind(&TransformType::Translate,t,nsstd::bind(pfSTLVectorToITK,nsstd::placeholders::_1), false);

@@ -16,6 +16,7 @@
 *
 *=========================================================================*/
 #include "sitkTranslationTransform.h"
+#include "sitkTransformHelper.hxx"
 
 #include "itkTranslationTransform.h"
 
@@ -98,13 +99,7 @@ void TranslationTransform::InternalInitialization(itk::TransformBase *transform)
 template<class TransformType>
 void TranslationTransform::InternalInitialization(TransformType *t)
 {
-
-  typename TransformType::OutputVectorType (*pfSTLVectorToITK)(const std::vector<double> &) = &sitkSTLVectorToITK<typename TransformType::OutputVectorType, double>;
-  this->m_pfSetOffset = nsstd::bind(&TransformType::SetOffset,t,nsstd::bind(pfSTLVectorToITK,nsstd::placeholders::_1));
-
-  std::vector<double> (*pfITKVectorToSTL)( const typename TransformType::OutputVectorType &) = &sitkITKVectorToSTL<double,typename TransformType::OutputVectorType>;
-  this->m_pfGetOffset = nsstd::bind(pfITKVectorToSTL,nsstd::bind(&TransformType::GetOffset,t));
-
+  SITK_TRANSFORM_SET_MPF(Offset, typename TransformType::OutputVectorType, double);
 
 }
 

@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkVersorTransform_h
-#define __sitkVersorTransform_h
+#ifndef __sitkScaleTransform_h
+#define __sitkScaleTransform_h
 
 #include "sitkCommon.h"
 #include "sitkTransform.h"
@@ -26,31 +26,29 @@ namespace itk
 namespace simple
 {
 
-class SITKCommon_EXPORT VersorTransform
+class SITKCommon_EXPORT ScaleTransform
   : public Transform
 {
 public:
-  typedef VersorTransform Self;
+  typedef ScaleTransform Self;
   typedef Transform Superclass;
 
-// construct identity
-  VersorTransform();
+  explicit ScaleTransform(unsigned int dimensions,
+                          const std::vector<double> &scales = std::vector<double>(3,1.0) );
 
-  VersorTransform( const VersorTransform & );
+  ScaleTransform( const ScaleTransform & );
 
-  explicit VersorTransform( const Transform & );
+  explicit ScaleTransform( const Transform & );
 
-  VersorTransform &operator=( const VersorTransform & );
+  ScaleTransform &operator=( const ScaleTransform & );
+
+
+  Self &SetScale(const std::vector<double> &params);
+  std::vector<double> GetScale( ) const;
 
 /** fixed parameter */
   Self &SetCenter(const std::vector<double> &params);
   std::vector<double> GetCenter( ) const;
-
-
-/** parameter */
-  Self &SetRotation(const std::vector<double> &versor);
-  Self &SetRotation(const std::vector<double> &axis,  double angle);
-  std::vector<double> GetVersor() const;
 
   /** additional methods */
   std::vector<double> GetMatrix() const;
@@ -63,20 +61,37 @@ private:
 
   using Superclass::AddTransform;
 
+  struct MyVisitor
+  {
+    itk::TransformBase *transform;
+    ScaleTransform *that;
+    template< typename TransformType >
+    void operator() ( void ) const
+      {
+        TransformType *t = dynamic_cast<TransformType*>(transform);
+        if (t)
+          {
+          that->InternalInitialization<TransformType>(t);
+          }
+      }
+  };
+
   void InternalInitialization(itk::TransformBase *transform);
 
   template <typename TransformType>
     void InternalInitialization(TransformType *transform);
 
 
-  nsstd::function<void(const std::vector<double>&)> m_pfSetCenter;
+  nsstd::function<void(std::vector<double>)> m_pfSetCenter;
   nsstd::function<std::vector<double>()> m_pfGetCenter;
-  nsstd::function<void(const std::vector<double>&)> m_pfSetRotation1;
-  nsstd::function<void(const std::vector<double>&,double)> m_pfSetRotation2;
-  nsstd::function<std::vector<double>()> m_pfGetVersor;
+  nsstd::function<void(std::vector<double>)> m_pfSetScale;
+  nsstd::function<std::vector<double>()> m_pfGetScale;
   nsstd::function<std::vector<double>()> m_pfGetMatrix;
+
+
 };
+
 }
 }
 
-#endif // __sitkVersorTransform_h
+#endif // __sitkScaleTransform_h
