@@ -16,6 +16,7 @@
 *
 *=========================================================================*/
 #include "sitkVersorTransform.h"
+#include "sitkTransformHelper.hxx"
 
 #include "itkVersorTransform.h"
 
@@ -147,13 +148,7 @@ void VersorTransform::InternalInitialization(itk::TransformBase *transform)
 template<class TransformType>
 void VersorTransform::InternalInitialization(TransformType *t)
 {
-  {
-  typename TransformType::InputPointType (*pfSTLVectorToITKPoint)(const std::vector<double> &) = &sitkSTLVectorToITK<typename TransformType::InputPointType, double>;
-  this->m_pfSetCenter = nsstd::bind(&TransformType::SetCenter,t,nsstd::bind(pfSTLVectorToITKPoint,nsstd::placeholders::_1));
-
-  std::vector<double> (*pfITKPointToSTL)( const typename TransformType::InputPointType &) = &sitkITKVectorToSTL<double,typename TransformType::InputPointType>;
-  this->m_pfGetCenter = nsstd::bind(pfITKPointToSTL,nsstd::bind(&TransformType::GetCenter,t));
-  }
+  SITK_TRANSFORM_SET_MPF(Center, typename TransformType::InputPointType, double);
 
   typename TransformType::OutputVectorType (*pfSTLVectorToITK)(const std::vector<double> &) = &sitkSTLVectorToITK<typename TransformType::OutputVectorType, double>;
 
