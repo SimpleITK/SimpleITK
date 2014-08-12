@@ -587,6 +587,7 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
     temp.reset(p);
     }
     // take ownership of the new pimple transform
+    delete this->m_PimpleTransform;
     this->SetPimpleTransform( temp.release() );
     return true;
   }
