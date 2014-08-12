@@ -16,6 +16,7 @@
 *
 *=========================================================================*/
 #include "sitkScaleSkewVersor3DTransform.h"
+#include "sitkTransformHelper.hxx"
 
 #include "itkScaleSkewVersor3DTransform.h"
 
@@ -193,36 +194,10 @@ template<class TransformType>
 void ScaleSkewVersor3DTransform::InternalInitialization(TransformType *t)
 {
 
-  typename TransformType::InputPointType (*pfSTLVectorToITKPoint)(const std::vector<double> &) = &sitkSTLVectorToITK<typename TransformType::InputPointType, double>;
-  this->m_pfSetCenter = nsstd::bind(&TransformType::SetCenter,t,nsstd::bind(pfSTLVectorToITKPoint,nsstd::placeholders::_1));
-
-  std::vector<double> (*pfITKPointToSTL)( const typename TransformType::InputPointType &) = &sitkITKVectorToSTL<double,typename TransformType::InputPointType>;
-  this->m_pfGetCenter = nsstd::bind(pfITKPointToSTL,nsstd::bind(&TransformType::GetCenter,t));
-
-  {
-  typename TransformType::OutputVectorType (*pfSTLVectorToITK)(const std::vector<double> &) = &sitkSTLVectorToITK<typename TransformType::OutputVectorType, double>;
-  this->m_pfSetTranslation = nsstd::bind(&TransformType::SetTranslation,t,nsstd::bind(pfSTLVectorToITK,nsstd::placeholders::_1));
-
-  std::vector<double> (*pfITKVectorToSTL)( const typename TransformType::OutputVectorType &) = &sitkITKVectorToSTL<double,typename TransformType::OutputVectorType>;
-  this->m_pfGetTranslation = nsstd::bind(pfITKVectorToSTL,nsstd::bind(&TransformType::GetTranslation,t));
-  }
-
-  {
-   typename TransformType::ScaleVectorType (*pfSTLVectorToITK)(const std::vector<double> &) = &sitkSTLVectorToITK<typename TransformType::ScaleVectorType, double>;
-   this->m_pfSetScale = nsstd::bind(&TransformType::SetScale,t,nsstd::bind(pfSTLVectorToITK,nsstd::placeholders::_1));
-
-   std::vector<double> (*pfITKVectorToSTL)(  const typename TransformType::ScaleVectorType &) = &sitkITKVectorToSTL<double,typename TransformType::ScaleVectorType>;
-   this->m_pfGetScale = nsstd::bind(pfITKVectorToSTL,nsstd::bind(&TransformType::GetScale,t));
-  }
-
-  {
-  typename TransformType::SkewVectorType (*pfSTLVectorToITK)(const std::vector<double> &) = &sitkSTLVectorToITK<typename TransformType::SkewVectorType, double>;
-  this->m_pfSetSkew = nsstd::bind(&TransformType::SetSkew,t,nsstd::bind(pfSTLVectorToITK,nsstd::placeholders::_1));
-
-  std::vector<double> (*pfITKVectorToSTL)( const typename TransformType::SkewVectorType &) = &sitkITKVectorToSTL<double,typename TransformType::SkewVectorType>;
-  this->m_pfGetSkew = nsstd::bind(pfITKVectorToSTL,nsstd::bind(&TransformType::GetSkew,t));
-  }
-
+  SITK_TRANSFORM_SET_MPF(Center, typename TransformType::InputPointType, double);
+  SITK_TRANSFORM_SET_MPF(Translation, typename TransformType::OutputVectorType, double);
+  SITK_TRANSFORM_SET_MPF(Scale, typename TransformType::ScaleVectorType, double);
+  SITK_TRANSFORM_SET_MPF(Skew, typename TransformType::SkewVectorType, double);
 
   void 	(TransformType::*pfSetRotation1) (const typename TransformType::VersorType &) = &TransformType::SetRotation;
   this->m_pfSetRotation1 = nsstd::bind(pfSetRotation1,t,nsstd::bind(&sitkSTLVectorToITKVersor<double, double>,nsstd::placeholders::_1));

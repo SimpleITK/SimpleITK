@@ -16,6 +16,7 @@
 *
 *=========================================================================*/
 #include "sitkEuler3DTransform.h"
+#include "sitkTransformHelper.hxx"
 
 #include "itkEuler3DTransform.h"
 
@@ -161,17 +162,8 @@ void Euler3DTransform::InternalInitialization(itk::TransformBase *transform)
 template<class TransformType>
 void Euler3DTransform::InternalInitialization(TransformType *t)
 {
-  typename TransformType::InputPointType (*pfSTLVectorToITKPoint)(const std::vector<double> &) = &sitkSTLVectorToITK<typename TransformType::InputPointType, double>;
-  this->m_pfSetCenter = nsstd::bind(&TransformType::SetCenter,t,nsstd::bind(pfSTLVectorToITKPoint,nsstd::placeholders::_1));
-
-  std::vector<double> (*pfITKPointToSTL)( const typename TransformType::InputPointType &) = &sitkITKVectorToSTL<double,typename TransformType::InputPointType>;
-  this->m_pfGetCenter = nsstd::bind(pfITKPointToSTL,nsstd::bind(&TransformType::GetCenter,t));
-
-  typename TransformType::OutputVectorType (*pfSTLVectorToITK)(const std::vector<double> &) = &sitkSTLVectorToITK<typename TransformType::OutputVectorType, double>;
-  this->m_pfSetTranslation = nsstd::bind(&TransformType::SetTranslation,t,nsstd::bind(pfSTLVectorToITK,nsstd::placeholders::_1));
-
-  std::vector<double> (*pfITKVectorToSTL)( const typename TransformType::OutputVectorType &) = &sitkITKVectorToSTL<double,typename TransformType::OutputVectorType>;
-  this->m_pfGetTranslation = nsstd::bind(pfITKVectorToSTL,nsstd::bind(&TransformType::GetTranslation,t));
+  SITK_TRANSFORM_SET_MPF(Center, typename TransformType::InputPointType, double);
+  SITK_TRANSFORM_SET_MPF(Translation, typename TransformType::OutputVectorType, double);
 
   this->m_pfSetRotation = nsstd::bind(&TransformType::SetRotation,t,nsstd::placeholders::_1,nsstd::placeholders::_2,nsstd::placeholders::_3);
   this->m_pfGetAngleX = nsstd::bind(&TransformType::GetAngleX,t);
