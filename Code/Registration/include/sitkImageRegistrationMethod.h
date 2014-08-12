@@ -64,10 +64,63 @@ namespace simple
     Self& SetInterpolator ( InterpolatorEnum Interpolator )
       { this->m_Interpolator = Interpolator; return *this; }
 
-    Self& SetTransform ( const Transform &Transform )
-      { this->m_Transform = Transform; return *this; }
-    Transform GetTransform()
-      { return this->m_Transform; }
+    /** \brief Set the initial transform and parameters to optimize.
+     *
+     * This transform is a applied before the MovingInitialTransform,
+     * to map from the virtual image domain to the moving image
+     * domain.
+     *
+     * If the inPlace flag is true, then the transform will be
+     * modified during Execute, otherwise a copy will be made.
+     *
+     * \sa itk::ImageRegistrationv4::SetInitialTransform
+     * @{
+     */
+    Self& SetInitialTransform ( const Transform &transform, bool inPlace = true )
+    {
+      this->m_InitialTransform = transform;
+      this->m_InitialTransformInPlace = inPlace;
+      return *this;
+    }
+    Transform GetInitialTransform()
+      { return this->m_InitialTransform; }
+    bool GetInitialTransformInPlace() const
+    { return this->m_InitialTransformInPlace;}
+    /** @} */
+
+    /** \brief Set a fixed transform component towards moving domain.
+     *
+     * The InitialTransform is added to this transform to form the
+     * composite transform which maps from the virtual domain to the
+     * moving image's domain. The parameters of this transform are not
+     * optimized.
+     *
+     * By default this transform is an identity, and not used.
+     *
+     * \sa itk::ImageRegistrationMethodv4::SetMovingInitialTransform
+     * @{
+     */
+    Self& SetMovingInitialTransform( const Transform &transform )
+    { this->m_MovingInitialTransform = transform; return *this; }
+    Transform GetMovingInitialTransform( ) const
+    { return this->m_MovingInitialTransform; }
+    /**@}*/
+
+    /** \brief Set transform mapping to the fixed domain.
+     *
+     * This transform is used to map from the virtual domain to the
+     * fixed image domain.
+     *
+     * By default this transform is an identity, and not used.
+     *
+     * \sa itk::ImageRegistrationMethodv4::SetFixedInitialTransform
+     * @{
+     */
+    Self& SetFixedInitialTransform( const Transform &transform )
+    { this->m_FixedInitialTransform = transform; return *this; }
+    Transform GetFixedInitialTransform( ) const
+    { return this->m_FixedInitialTransform; }
+    /**@}*/
 
     Self& SetMetricAsANTSNeighborhoodCorrelation( unsigned int radius );
     Self& SetMetricAsCorrelation( );
@@ -208,7 +261,10 @@ namespace simple
     std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 
     InterpolatorEnum  m_Interpolator;
-    Transform  m_Transform;
+    Transform  m_InitialTransform;
+    bool m_InitialTransformInPlace;
+    Transform m_MovingInitialTransform;
+    Transform m_FixedInitialTransform;
 
     // optimizer
     enum OptimizerType { ConjugateGradientLineSearch,

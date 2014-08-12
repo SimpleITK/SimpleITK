@@ -124,6 +124,131 @@ protected:
 };
 
 
+TEST_F(sitkRegistrationMethodTest, Transform_InPlaceOn)
+{
+  // This test is to check the inplace operation of the initial
+  // transform
+  sitk::ImageRegistrationMethod R;
+  EXPECT_TRUE(R.GetInitialTransformInPlace());
+
+  sitk::Image fixed = fixedBlobs;
+  sitk::Image moving = fixedBlobs;
+
+  double minStep=1e-4;
+  unsigned int numberOfIterations=100;
+  double relaxationFactor=0.5;
+  double gradientMagnitudeTolerance = 1e-10;
+  R.SetOptimizerAsRegularStepGradientDescent(1.0,
+                                             minStep,
+                                             numberOfIterations,
+                                             relaxationFactor,
+                                             gradientMagnitudeTolerance);
+
+  R.SetInterpolator(sitk::sitkLinear);
+
+  sitk::TranslationTransform tx(fixed.GetDimension());
+  tx.SetOffset(v2(1.1,-2.2));
+  R.SetInitialTransform(tx,false);
+  EXPECT_TRUE(!R.GetInitialTransformInPlace());
+
+  R.SetMetricAsMeanSquares();
+
+  IterationUpdate cmd(R);
+  R.AddCommand(sitk::sitkIterationEvent, cmd);
+
+  sitk::Transform outTx = R.Execute(fixed,moving);
+
+  EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,0.0), outTx.GetParameters(), 1e-4);
+  // expect input not to be modified
+  EXPECT_EQ(v2(1.1,-2.2), tx.GetParameters());
+
+  // optimize in place this time
+  R.SetInitialTransform(tx,true);
+  EXPECT_TRUE(R.GetInitialTransformInPlace());
+  outTx = R.Execute(fixed,moving);
+
+  EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,0.0), outTx.GetParameters(), 1e-4);
+  // expect input to have been modified
+  EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,0.0), tx.GetParameters(), 1e-4);
+
+}
+
+TEST_F(sitkRegistrationMethodTest, Transform_Initial)
+{
+  // This test is to check some excpetional cases for using masks
+  sitk::ImageRegistrationMethod R;
+
+  sitk::Image fixed = fixedBlobs;
+  sitk::Image moving = fixedBlobs;
+
+  double minStep=1e-4;
+  unsigned int numberOfIterations=100;
+  double relaxationFactor=0.5;
+  double gradientMagnitudeTolerance = 1e-10;
+  R.SetOptimizerAsRegularStepGradientDescent(1.0,
+                                             minStep,
+                                             numberOfIterations,
+                                             relaxationFactor,
+                                             gradientMagnitudeTolerance);
+
+  R.SetInterpolator(sitk::sitkLinear);
+
+  sitk::TranslationTransform tx(fixed.GetDimension());
+  sitk::TranslationTransform txMoving(fixed.GetDimension());
+  sitk::TranslationTransform txFixed(fixed.GetDimension());
+  R.SetInitialTransform(tx,false);
+  R.SetMovingInitialTransform(txMoving);
+  R.SetFixedInitialTransform(txFixed);
+
+  R.SetMetricAsMeanSquares();
+
+  IterationUpdate cmd(R);
+  R.AddCommand(sitk::sitkIterationEvent, cmd);
+
+  sitk::Transform outTx = R.Execute(fixed,moving);
+
+  EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,0.0), outTx.GetParameters(), 1e-4);
+
+  txMoving.SetOffset(v2(0.0,3.0));
+  R.SetInitialTransform(tx,false);
+  R.SetMovingInitialTransform(txMoving);
+  R.SetFixedInitialTransform(txFixed);
+
+  outTx = R.Execute(fixed,moving);
+
+  EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,-3.0), outTx.GetParameters(), 1e-4);
+
+  txMoving.SetOffset(v2(0.0,3.0));
+  txFixed.SetOffset(v2(0.0,2.0));
+  R.SetInitialTransform(tx,false);
+  R.SetMovingInitialTransform(txMoving);
+  R.SetFixedInitialTransform(txFixed);
+
+  outTx = R.Execute(fixed,moving);
+
+  EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,-1.0), outTx.GetParameters(), 1e-4);
+
+  EXPECT_EQ(R.GetMovingInitialTransform().GetParameters(), v2(0.0,3.0));
+  EXPECT_EQ(R.GetFixedInitialTransform().GetParameters(), v2(0.0,2.0));
+
+  // test some expected exception cases
+
+  R.SetInitialTransform(tx,false);
+  R.SetMovingInitialTransform(sitk::TranslationTransform(3));
+  R.SetFixedInitialTransform(txFixed);
+
+  EXPECT_THROW(R.Execute(fixed,moving), sitk::GenericException);
+
+  R.SetInitialTransform(tx,false);
+  R.SetMovingInitialTransform(txMoving);
+  R.SetFixedInitialTransform(sitk::TranslationTransform(3));
+
+  EXPECT_THROW(R.Execute(fixed,moving), sitk::GenericException);
+
+}
+
+
+
 TEST_F(sitkRegistrationMethodTest, Mask_Test0)
 {
   // This test is to check some excpetional cases for using masks
@@ -135,7 +260,7 @@ TEST_F(sitkRegistrationMethodTest, Mask_Test0)
 
 
   sitk::TranslationTransform tx(fixedBlobs.GetDimension());
-  R.SetTransform(tx);
+  R.SetInitialTransform(tx);
 
   // wrong dimension should produce error
   R.SetMetricFixedMask(sitk::Image(100,100,100,sitk::sitkUInt8));
@@ -171,7 +296,7 @@ TEST_F(sitkRegistrationMethodTest, Mask_Test1)
 
 
   sitk::TranslationTransform tx(fixedBlobs.GetDimension());
-  R.SetTransform(tx);
+  R.SetInitialTransform(tx);
 
   R.SetMetricAsCorrelation();
   R.SetMetricFixedMask(sitk::Cast(sitk::Greater(fixedBlobs,0),sitk::sitkFloat32));
@@ -207,7 +332,7 @@ TEST_F(sitkRegistrationMethodTest, Mask_Test2)
 
   sitk::TranslationTransform tx(fixedBlobs.GetDimension());
   tx.SetOffset(v2(120,99));
-  R.SetTransform(tx);
+  R.SetInitialTransform(tx);
 
   R.SetMetricAsCorrelation();
   R.SetMetricFixedMask(sitk::Greater(fixedBlobs,0));
