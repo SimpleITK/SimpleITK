@@ -64,6 +64,20 @@ std::vector<double> AffineTransform::GetTranslation( ) const
   return this->m_pfGetTranslation();
 }
 
+
+AffineTransform::Self &AffineTransform::SetMatrix(const std::vector<double> &params)
+{
+  this->MakeUniqueForWrite();
+  this->m_pfSetMatrix(params);
+  return *this;
+}
+
+std::vector<double> AffineTransform::GetMatrix( ) const
+{
+  return this->m_pfGetMatrix();
+}
+
+
 /** fixed parameter */
 AffineTransform::Self &AffineTransform::SetCenter(const std::vector<double> &params)
 {
@@ -134,6 +148,8 @@ void AffineTransform::InternalInitialization(itk::TransformBase *transform)
   this->m_pfGetCenter = SITK_NULLPTR;
   this->m_pfSetTranslation = SITK_NULLPTR;
   this->m_pfGetTranslation = SITK_NULLPTR;
+  this->m_pfSetMatrix = SITK_NULLPTR;
+  this->m_pfGetMatrix = SITK_NULLPTR;
   this->m_pfScale1 = SITK_NULLPTR;
   this->m_pfScale2 = SITK_NULLPTR;
   this->m_pfShear = SITK_NULLPTR;
@@ -150,6 +166,12 @@ void AffineTransform::InternalInitialization(TransformType *t)
 {
   SITK_TRANSFORM_SET_MPF(Center, typename TransformType::InputPointType, double);
   SITK_TRANSFORM_SET_MPF(Translation, typename TransformType::OutputVectorType, double);
+
+  typename TransformType::MatrixType (*pfSTLToITKDirection)(const std::vector<double> &) = &sitkSTLToITKDirection<typename TransformType::MatrixType>;
+  this->m_pfSetMatrix = nsstd::bind(&TransformType::SetMatrix, t, nsstd::bind(pfSTLToITKDirection, nsstd::placeholders::_1));
+
+  std::vector<double>  (*pfITKDirectionToSTL)(const typename TransformType::MatrixType &) = &sitkITKDirectionToSTL<typename TransformType::MatrixType>;
+  this->m_pfGetMatrix = nsstd::bind(pfITKDirectionToSTL,nsstd::bind(&TransformType::GetMatrix,t));
 
   typename TransformType::OutputVectorType (*pfSTLVectorToITK)(const std::vector<double> &) = &sitkSTLVectorToITK<typename TransformType::OutputVectorType, double>;
   void 	(TransformType::*pfScale1) (const typename TransformType::OutputVectorType &, bool) = &TransformType::Scale;
