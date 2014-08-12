@@ -589,6 +589,17 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
     return true;
   }
 
+  Transform Transform::GetInverse() const
+  {
+    // create a shallow copy
+    Transform tx(*this);
+    if (!tx.SetInverse())
+      {
+      sitkExceptionMacro("Unable to create inverse!");
+      }
+    return tx;
+  }
+
   std::string Transform::ToString( void ) const
   {
     assert( m_PimpleTransform );

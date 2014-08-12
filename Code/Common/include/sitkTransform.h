@@ -178,6 +178,8 @@ public:
    */
   virtual bool SetInverse();
 
+  Transform GetInverse() const;
+
   std::string ToString( void ) const;
 
 
