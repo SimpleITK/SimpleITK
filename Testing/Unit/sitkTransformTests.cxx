@@ -497,6 +497,21 @@ TEST(TransformTest,AffineTransform_3DPoints)
 
 }
 
+TEST(TransformTest,AffineTransform_Matrix)
+{
+  // Test the Set/Get Matrix
+  sitk::AffineTransform tx(3);
+  EXPECT_EQ( v9(1.0,0.0,0.0, 0.0,1.0,0.0, 0.0,0.0,1.0), tx.GetMatrix() );
+  tx.SetMatrix( v9(1.0,1.0,0.0, 0.0,2.0,0.0, 0.0,0.0,3.0) );
+  EXPECT_EQ( v9(1.0,1.0,0.0, 0.0,2.0,0.0, 0.0,0.0,3.0), tx.GetMatrix() );
+
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(1.0,1.0,0.0) ), v3(2.0,2.0,0.0),1e-15 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(0.0,1.0,1.0) ), v3(1.0,2.0,3.0),1e-15 );
+
+  tx.SetMatrix( v9(1.0,0.0,0.0, 0.0,0.0,0.0, 0.0,0.0,1.0) );
+  EXPECT_THROW(tx.GetInverse(), sitk::GenericException);
+  EXPECT_TRUE( !tx.SetInverse() );
+}
 TEST(TransformTest,BSplineTransform)
 { // test BSplineTransform
 
