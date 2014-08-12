@@ -489,6 +489,11 @@ TEST(TransformTest,AffineTransform_3DPoints)
   tx.SetIdentity();
   EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(0.0,0.0,0.0) ), v3(0.0,0.0,0.0),1e-15 );
   EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(1.0,1.0,1.0) ), v3(1.0,1.0,1.0),1e-15 );
+
+  sitk::AffineTransform tx3(tx.GetInverse());
+  EXPECT_VECTOR_DOUBLE_NEAR( tx3.TransformPoint( v3(0.0,0.0,0.0) ), v3(0.0,0.0,0.0),1e-15 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx3.TransformPoint( v3(1.0,1.0,1.0) ), v3(1.0,1.0,1.0),1e-15 );
+
 }
 
 TEST(TransformTest,BSplineTransform)
@@ -560,6 +565,7 @@ TEST(TransformTest,BSplineTransform)
   // no inverse
   EXPECT_TRUE(!tx->SetInverse());
   EXPECT_NO_THROW(tx->GetOrder());
+  EXPECT_THROW(tx->GetInverse(),sitk::GenericException);
 }
 
 TEST(TransformTest,BSplineTransform_order)
@@ -714,6 +720,9 @@ TEST(TransformTest,Euler2DTransform)
   // inverse
   EXPECT_TRUE(etx.SetInverse());
   EXPECT_NO_THROW(etx.GetAngle());
+
+  sitk::Euler2DTransform etx2(etx.GetInverse());
+  EXPECT_NO_THROW(etx2.GetAngle());
 }
 
 
