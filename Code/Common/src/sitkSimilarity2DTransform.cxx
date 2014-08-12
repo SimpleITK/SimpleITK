@@ -116,6 +116,11 @@ double Similarity2DTransform::GetScale() const
   return this->m_pfGetScale();
 }
 
+std::vector<double> Similarity2DTransform::GetMatrix( ) const
+{
+  return this->m_pfGetMatrix();
+}
+
 void Similarity2DTransform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
 {
   Superclass::SetPimpleTransform(pimpleTransform);
@@ -137,6 +142,7 @@ void Similarity2DTransform::InternalInitialization(itk::TransformBase *transform
   this->m_pfGetAngle = SITK_NULLPTR;
   this->m_pfSetScale = SITK_NULLPTR;
   this->m_pfGetScale = SITK_NULLPTR;
+  this->m_pfGetMatrix = SITK_NULLPTR;
 
   if (t)
     {
@@ -153,6 +159,7 @@ void Similarity2DTransform::InternalInitialization(TransformType *t)
 {
   SITK_TRANSFORM_SET_MPF(Center, typename TransformType::InputPointType, double);
   SITK_TRANSFORM_SET_MPF(Translation, typename TransformType::OutputVectorType, double);
+  SITK_TRANSFORM_SET_MPF_GetMatrix();
 
   this->m_pfSetAngle = nsstd::bind(&TransformType::SetAngle,t,nsstd::placeholders::_1);
   this->m_pfGetAngle = nsstd::bind(&TransformType::GetAngle,t);

@@ -136,6 +136,11 @@ VersorRigid3DTransform::Self &VersorRigid3DTransform::Translate(const std::vecto
   return *this;
 }
 
+std::vector<double> VersorRigid3DTransform::GetMatrix( ) const
+{
+  return this->m_pfGetMatrix();
+}
+
 void VersorRigid3DTransform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
 {
   Superclass::SetPimpleTransform(pimpleTransform);
@@ -157,6 +162,7 @@ void VersorRigid3DTransform::InternalInitialization(itk::TransformBase *transfor
   this->m_pfSetRotation2 = SITK_NULLPTR;
   this->m_pfGetVersor = SITK_NULLPTR;
   this->m_pfTranslate = SITK_NULLPTR;
+  this->m_pfGetMatrix = SITK_NULLPTR;
 
   if (t)
     {
@@ -172,6 +178,7 @@ void VersorRigid3DTransform::InternalInitialization(TransformType *t)
 
   SITK_TRANSFORM_SET_MPF(Center, typename TransformType::InputPointType, double);
   SITK_TRANSFORM_SET_MPF(Translation, typename TransformType::OutputVectorType, double);
+  SITK_TRANSFORM_SET_MPF_GetMatrix();
 
   void 	(TransformType::*pfSetRotation1) (const typename TransformType::VersorType &) = &TransformType::SetRotation;
   this->m_pfSetRotation1 = nsstd::bind(pfSetRotation1,t,nsstd::bind(&sitkSTLVectorToITKVersor<double, double>,nsstd::placeholders::_1));

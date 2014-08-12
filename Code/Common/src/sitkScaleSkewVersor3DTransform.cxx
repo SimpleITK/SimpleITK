@@ -160,6 +160,11 @@ std::vector<double> ScaleSkewVersor3DTransform::GetSkew( ) const
   return this->m_pfGetSkew();
 }
 
+std::vector<double> ScaleSkewVersor3DTransform::GetMatrix( ) const
+{
+  return this->m_pfGetMatrix();
+}
+
 void ScaleSkewVersor3DTransform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
 {
   Superclass::SetPimpleTransform(pimpleTransform);
@@ -181,6 +186,7 @@ void ScaleSkewVersor3DTransform::InternalInitialization(itk::TransformBase *tran
   this->m_pfSetRotation2 = SITK_NULLPTR;
   this->m_pfGetVersor = SITK_NULLPTR;
   this->m_pfTranslate = SITK_NULLPTR;
+  this->m_pfGetMatrix = SITK_NULLPTR;
 
   if (t)
     {
@@ -198,6 +204,7 @@ void ScaleSkewVersor3DTransform::InternalInitialization(TransformType *t)
   SITK_TRANSFORM_SET_MPF(Translation, typename TransformType::OutputVectorType, double);
   SITK_TRANSFORM_SET_MPF(Scale, typename TransformType::ScaleVectorType, double);
   SITK_TRANSFORM_SET_MPF(Skew, typename TransformType::SkewVectorType, double);
+  SITK_TRANSFORM_SET_MPF_GetMatrix();
 
   void 	(TransformType::*pfSetRotation1) (const typename TransformType::VersorType &) = &TransformType::SetRotation;
   this->m_pfSetRotation1 = nsstd::bind(pfSetRotation1,t,nsstd::bind(&sitkSTLVectorToITKVersor<double, double>,nsstd::placeholders::_1));
