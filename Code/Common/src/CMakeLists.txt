@@ -5,6 +5,7 @@ set ( SimpleITKCommonSource
   sitkTransform.cxx
   sitkAffineTransform.cxx
   sitkBSplineTransform.cxx
+  sitkDisplacementFieldTransform.cxx
   sitkEuler2DTransform.cxx
   sitkEuler3DTransform.cxx
   sitkScaleSkewVersor3DTransform.cxx
