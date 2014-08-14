@@ -24,6 +24,7 @@
 #include "itkGaussianSmoothingOnUpdateDisplacementFieldTransform.h"
 #include "itkVectorImage.h"
 #include "itkImage.h"
+#include "itkVectorNearestNeighborInterpolateImageFunction.h"
 
 namespace itk
 {
@@ -57,12 +58,13 @@ typename itk::Image<itk::Vector<double,NDimension>,NDimension>::Pointer
     sitkExceptionMacro( "Unexpected casting error!")
     }
 
-  // make inImage Unique
+  // TODO: the input image needs to be made unique before we take the buffer
 
   typedef typename itk::Image<itk::Vector<double,NDimension>,NDimension> ImageVectorType;
   typename ImageVectorType::Pointer out = GetImageFromVectorImage(image.GetPointer(), true );
 
-  // make in Image unique so no other object reference, then take ownership.
+  // With the above the itk::Image has taken ownership, so the input
+  // image is set to a new empty image.
   inImage = Image();
 
   return out;
@@ -76,6 +78,44 @@ void InternalSetDisplacementField( TDisplacementFieldTransform *itkDisplacementT
   itkDisplacementTx->SetDisplacementField(itkDisplacement);
 }
 
+
+template< typename TDisplacementFieldTransform >
+void InternalSetInverseDisplacementField( TDisplacementFieldTransform *itkDisplacementTx, Image & inImage )
+{
+  typedef typename TDisplacementFieldTransform::DisplacementFieldType ITKDisplacementFieldType;
+  typename ITKDisplacementFieldType::Pointer itkDisplacement = GetITKImageFormSITKVectorImage<TDisplacementFieldTransform::Dimension>(inImage);
+  itkDisplacementTx->SetInverseDisplacementField(itkDisplacement);
+}
+
+
+template< typename TDisplacementFieldTransform >
+void InternalSetInterpolator( TDisplacementFieldTransform *itkDisplacementTx, InterpolatorEnum interp )
+{
+  typedef typename TDisplacementFieldTransform::InterpolatorType ITKInterpoaltorType;
+  typedef typename TDisplacementFieldTransform::DisplacementFieldType ImageType;
+  typedef typename TDisplacementFieldTransform::ScalarType ScalarType;
+  typename ITKInterpoaltorType::Pointer itkInterp;
+  switch (interp)
+    {
+    case sitkNearestNeighbor:
+      {
+      typedef itk::VectorNearestNeighborInterpolateImageFunction<ImageType, ScalarType> InterpolatorType;
+      itkInterp = InterpolatorType::New();
+      break;
+      }
+    case sitkLinear:
+      {
+      typedef itk::VectorLinearInterpolateImageFunction<ImageType, ScalarType> InterpolatorType;
+      itkInterp =  InterpolatorType::New();
+      break;
+      }
+    default:
+      sitkExceptionMacro("Interpolator type " << interp << " is not supported!");
+    }
+  itkDisplacementTx->SetInterpolator(itkInterp);
+}
+
+
 }
 
 // construct identity
@@ -86,10 +126,11 @@ DisplacementFieldTransform::DisplacementFieldTransform(unsigned int dimensions)
 }
 
 
-DisplacementFieldTransform::DisplacementFieldTransform( Image &img)
-  : Transform( img )
+DisplacementFieldTransform::DisplacementFieldTransform( Image &img )
+  : Transform( CreateDisplacementFieldPimpleTransform(img.GetDimension() ) )
 {
   Self::InternalInitialization(Self::GetITKBase());
+  Self::SetDisplacementField(img);
 }
 
 DisplacementFieldTransform::DisplacementFieldTransform( const DisplacementFieldTransform &arg )
@@ -146,20 +187,26 @@ InterpolatorEnum DisplacementFieldTransform::GetInterpolator() const
 
 DisplacementFieldTransform::Self &DisplacementFieldTransform::SetSmoothingOff()
 {
+  this->MakeUniqueForWrite();
+  this->m_pfSetSmoothingOff();
   return *this;
 }
 
 DisplacementFieldTransform::Self &DisplacementFieldTransform::SetSmoothingGaussianOnUpdate( double varianceForUpdateField, double varianceForTotalField )
 {
+  this->MakeUniqueForWrite();
+  this->m_pfSetSmoothingGaussianOnUpdate(varianceForUpdateField, varianceForTotalField );
   return *this;
 }
 
 DisplacementFieldTransform::Self &
-DisplacementFieldTransform::SetSmoothingBSplineOnUpdate( std::vector<unsigned int> numberOfControlPointsForUpdateField,
-                                                           std::vector<unsigned int> meshSizeForTotalField,
-                                                           bool enforceStationaryBoundary,
-                                                           unsigned int order )
+DisplacementFieldTransform::SetSmoothingBSplineOnUpdate( const std::vector<unsigned int> &numberOfControlPointsForUpdateField,
+                                                         const std::vector<unsigned int> &numberOfControlPointsForTotalField,
+                                                         bool enforceStationaryBoundary,
+                                                         unsigned int order )
 {
+  this->MakeUniqueForWrite();
+  this->m_pfSetSmoothingBSplineOnUpdate(numberOfControlPointsForUpdateField, numberOfControlPointsForTotalField, enforceStationaryBoundary, order);
   return *this;
 }
 
@@ -193,6 +240,9 @@ void DisplacementFieldTransform::InternalInitialization(itk::TransformBase *tran
   m_pfGetInverseDisplacementField = SITK_NULLPTR;
   m_pfSetInterpolator = SITK_NULLPTR;
   m_pfGetInterpolator = SITK_NULLPTR;
+  m_pfSetSmoothingOff = SITK_NULLPTR;
+  m_pfSetSmoothingGaussianOnUpdate = SITK_NULLPTR;
+  m_pfSetSmoothingBSplineOnUpdate = SITK_NULLPTR;
 
   callInternalInitialization(visitor);
 
@@ -205,8 +255,14 @@ void DisplacementFieldTransform::InternalInitialization(TransformType *t)
   this->m_pfSetDisplacementField = nsstd::bind(&InternalSetDisplacementField<TransformType>, t, nsstd::placeholders::_1);
   this->m_pfGetDisplacementField = nsstd::bind(&DisplacementFieldTransform::InternalGetDisplacementField<TransformType>, t);
 
+  this->m_pfSetInverseDisplacementField = nsstd::bind(&InternalSetInverseDisplacementField<TransformType>, t, nsstd::placeholders::_1);
   this->m_pfGetInverseDisplacementField = nsstd::bind(&DisplacementFieldTransform::InternalGetInverseDisplacementField<TransformType>, t);
 
+  this->m_pfSetInterpolator = nsstd::bind(&InternalSetInterpolator<TransformType>, t, nsstd::placeholders::_1);
+
+  m_pfSetSmoothingOff = nsstd::bind(&Self::InternalSetSmoothingOff<TransformType>, this, t);
+  m_pfSetSmoothingGaussianOnUpdate = nsstd::bind(&Self::InternalSetSmoothingGaussianOnUpdate<TransformType>, this, t, nsstd::placeholders::_1, nsstd::placeholders::_2 );
+  m_pfSetSmoothingBSplineOnUpdate = nsstd::bind(&Self::InternalSetSmoothingBSplineOnUpdate<TransformType>, this, t, nsstd::placeholders::_1, nsstd::placeholders::_2, nsstd::placeholders::_3, nsstd::placeholders::_3 );
 }
 
 PimpleTransformBase *DisplacementFieldTransform::CreateDisplacementFieldPimpleTransform(unsigned int dimension)
@@ -247,6 +303,103 @@ Image DisplacementFieldTransform::InternalGetInverseDisplacementField( const TDi
   return Image(std::vector<unsigned int>(TDisplacementFieldTransform::Dimension,0), sitkVectorFloat64);
 }
 
+template< typename TDisplacementFieldTransform >
+void DisplacementFieldTransform::InternalSetSmoothingOff( TDisplacementFieldTransform *itkDisplacement )
+{
+  // To set smoothing off we make sure that the displacement type is
+  // not of a derived type.
+  const unsigned int Dimension = TDisplacementFieldTransform::Dimension;
+  typedef typename TDisplacementFieldTransform::ScalarType ScalarType;
+  typedef itk::DisplacementFieldTransform<ScalarType,Dimension> NewTransformType;
+
+  // already off don't need to create a new transform
+  if (!nsstd::is_same<TDisplacementFieldTransform, NewTransformType>::value)
+    {
+    typename NewTransformType::Pointer itkNewDisplacement = NewTransformType::New();
+
+    itkNewDisplacement->SetDisplacementField( itkDisplacement->GetDisplacementField() );
+    itkNewDisplacement->SetInverseDisplacementField( itkDisplacement->GetInverseDisplacementField() );
+    itkNewDisplacement->SetInterpolator( itkDisplacement->GetInterpolator() );
+    itkNewDisplacement->SetInverseInterpolator( itkDisplacement->GetInverseInterpolator() );
+
+    this->SetPimpleTransform( new PimpleTransform<NewTransformType>(itkNewDisplacement));
+    }
+}
+
+template< typename TDisplacementFieldTransform >
+void DisplacementFieldTransform::InternalSetSmoothingGaussianOnUpdate( TDisplacementFieldTransform *itkDisplacement,
+                                                                       double varianceForUpdateField,
+                                                                       double varianceForTotalField )
+{
+ // To set the smoothing to the Gaussian, we change the type of
+  // displacement field transform if need, copying the fields.
+  const unsigned int Dimension = TDisplacementFieldTransform::Dimension;
+  typedef typename TDisplacementFieldTransform::ScalarType ScalarType;
+  typedef itk::GaussianSmoothingOnUpdateDisplacementFieldTransform<ScalarType,Dimension> NewTransformType;
+
+  typename NewTransformType::Pointer itkNewDisplacement;
+
+  // change the type of the current displace field for the correct update
+  if (!nsstd::is_same<TDisplacementFieldTransform, NewTransformType>::value)
+    {
+    itkNewDisplacement = NewTransformType::New();
+
+    itkNewDisplacement->SetDisplacementField( itkDisplacement->GetDisplacementField() );
+    itkNewDisplacement->SetInverseDisplacementField( itkDisplacement->GetInverseDisplacementField() );
+    itkNewDisplacement->SetInterpolator( itkDisplacement->GetInterpolator() );
+    itkNewDisplacement->SetInverseInterpolator( itkDisplacement->GetInverseInterpolator() );
+
+    this->SetPimpleTransform( new PimpleTransform<NewTransformType>(itkNewDisplacement));
+    }
+  else
+    {
+    itkNewDisplacement = dynamic_cast<NewTransformType*>(itkDisplacement);
+    }
+
+  itkNewDisplacement->SetGaussianSmoothingVarianceForTheUpdateField(varianceForUpdateField);
+  itkNewDisplacement->SetGaussianSmoothingVarianceForTheTotalField(varianceForTotalField);
+}
+
+
+template< typename TDisplacementFieldTransform >
+void DisplacementFieldTransform::InternalSetSmoothingBSplineOnUpdate( TDisplacementFieldTransform *itkDisplacement,
+                                                                      const std::vector<unsigned int> &numberOfControlPointsForUpdateField,
+                                                                      const std::vector<unsigned int> &numberOfControlPointsForTotalField,
+                                                                      bool enforceStationaryBoundary,
+                                                                      unsigned int order )
+{
+
+  // To set the smoothing to the Gaussian, we change the type of
+  // displacement field transform if need, copying the fields.
+  const unsigned int Dimension = TDisplacementFieldTransform::Dimension;
+  typedef typename TDisplacementFieldTransform::ScalarType ScalarType;
+  typedef itk::BSplineSmoothingOnUpdateDisplacementFieldTransform<ScalarType,Dimension> NewTransformType;
+
+  typename NewTransformType::Pointer itkNewDisplacement;
+
+  // change the type of the current displace field for the correct update
+  if (!nsstd::is_same<TDisplacementFieldTransform, NewTransformType>::value)
+    {
+    itkNewDisplacement = NewTransformType::New();
+
+    itkNewDisplacement->SetDisplacementField( itkDisplacement->GetDisplacementField() );
+    itkNewDisplacement->SetInverseDisplacementField( itkDisplacement->GetInverseDisplacementField() );
+    itkNewDisplacement->SetInterpolator( itkDisplacement->GetInterpolator() );
+    itkNewDisplacement->SetInverseInterpolator( itkDisplacement->GetInverseInterpolator() );
+
+    this->SetPimpleTransform( new PimpleTransform<NewTransformType>(itkNewDisplacement));
+    }
+  else
+    {
+    itkNewDisplacement = dynamic_cast<NewTransformType*>(itkDisplacement);
+    }
+  typedef typename NewTransformType::ArrayType ArrayType;
+  itkNewDisplacement->SetNumberOfControlPointsForTheUpdateField(sitkSTLVectorToITK<ArrayType>(numberOfControlPointsForUpdateField));
+  itkNewDisplacement->SetNumberOfControlPointsForTheTotalField(sitkSTLVectorToITK<ArrayType>(numberOfControlPointsForTotalField));
+  itkNewDisplacement->SetEnforceStationaryBoundary(enforceStationaryBoundary);
+  itkNewDisplacement->SetSplineOrder(order);
+
+}
 
 
 }
