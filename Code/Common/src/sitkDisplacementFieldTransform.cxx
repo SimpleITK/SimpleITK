@@ -108,6 +108,7 @@ DisplacementFieldTransform &DisplacementFieldTransform::operator=( const Displac
 
 DisplacementFieldTransform::Self &DisplacementFieldTransform::SetDisplacementField(Image &img)
 {
+  this->MakeUniqueForWrite();
   this->m_pfSetDisplacementField(img);
   return *this;
 }
@@ -120,6 +121,7 @@ Image DisplacementFieldTransform::GetDisplacementField() const
 
 DisplacementFieldTransform::Self &DisplacementFieldTransform::SetInverseDisplacementField(Image &img)
 {
+  this->MakeUniqueForWrite();
   this->m_pfSetInverseDisplacementField(img);
   return *this;
 }
@@ -132,6 +134,7 @@ Image DisplacementFieldTransform::GetInverseDisplacementField() const
 
 DisplacementFieldTransform::Self &DisplacementFieldTransform::SetInterpolator(InterpolatorEnum interp)
 {
+  this->MakeUniqueForWrite();
   this->m_pfSetInterpolator(interp);
   return *this;
 }

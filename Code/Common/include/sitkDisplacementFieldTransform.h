@@ -41,6 +41,7 @@ public:
   DisplacementFieldTransform &operator=( const DisplacementFieldTransform & );
 
   /** parameters */
+  // set displacement methods take ownership for the image and remove it
   Self &SetDisplacementField(Image &);
   Image GetDisplacementField() const;
 
@@ -51,12 +52,12 @@ public:
   Image GetInverseDisplacementField() const;
 
   Self &SetInterpolator(InterpolatorEnum interp);
-  InterpolatorEnum GetInterpolator() const;
+  InterpolatorEnum GetInterpolator() const; //How to do this??
 
   Self &SetSmoothingOff();
   Self &SetSmoothingGaussianOnUpdate( double varianceForUpdateField=1.75, double varianceForTotalField=0.5 );
-  Self &SetSmoothingBSplineOnUpdate( std::vector<unsigned int> numberOfControlPointsForUpdateField = std::vector<unsigned int>(3,4),
-                                     std::vector<unsigned int> meshSizeForTotalField = std::vector<unsigned int>(0,4),
+  Self &SetSmoothingBSplineOnUpdate( const std::vector<unsigned int> &numberOfControlPointsForUpdateField = std::vector<unsigned int>(3,4),
+                                     const std::vector<unsigned int> &numberOfControlPointsForTotalField = std::vector<unsigned int>(3,4),
                                      bool enforceStationaryBoundary=true,
                                      unsigned int order=3 );
 
@@ -94,6 +95,18 @@ private:
   template< typename TDisplacementFieldTransform >
     static Image InternalGetInverseDisplacementField( const TDisplacementFieldTransform *itkDisplacementTx );
 
+  template< typename TDisplacementFieldTransform >
+    void InternalSetSmoothingOff(TDisplacementFieldTransform *itkDisplacement);
+  template< typename TDisplacementFieldTransform >
+    void InternalSetSmoothingGaussianOnUpdate( TDisplacementFieldTransform *itkDisplacement,
+                                               double varianceForUpdateField,
+                                               double varianceForTotalField );
+  template< typename TDisplacementFieldTransform >
+    void InternalSetSmoothingBSplineOnUpdate( TDisplacementFieldTransform *itkDisplacement,
+                                              const std::vector<unsigned int> &numberOfControlPointsForUpdateField,
+                                              const std::vector<unsigned int> &numberOfControlPointsForTotalField,
+                                              bool enforceStationaryBoundary,
+                                              unsigned int order );
 
 
   static PimpleTransformBase *CreateDisplacementFieldPimpleTransform(unsigned int dimension);
@@ -106,6 +119,10 @@ private:
 
   nsstd::function<void (InterpolatorEnum &)> m_pfSetInterpolator;
   nsstd::function<InterpolatorEnum ()> m_pfGetInterpolator;
+
+  nsstd::function<void ()> m_pfSetSmoothingOff;
+  nsstd::function<void (double, double)> m_pfSetSmoothingGaussianOnUpdate;
+  nsstd::function<void (const std::vector<unsigned int> &,const std::vector<unsigned int>&, bool, unsigned int)> m_pfSetSmoothingBSplineOnUpdate;
 
 };
 
