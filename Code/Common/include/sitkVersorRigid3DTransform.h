@@ -57,6 +57,7 @@ public:
 
 /** additional methods */
   Self &Translate(const std::vector<double> &offset);
+  std::vector<double> GetMatrix() const;
 
 protected:
 
@@ -80,6 +81,7 @@ private:
   nsstd::function<void(const std::vector<double>&)> m_pfSetTranslation;
   nsstd::function<std::vector<double>()> m_pfGetTranslation;
   nsstd::function<void(const std::vector<double> &)> m_pfTranslate;
+  nsstd::function<std::vector<double>()> m_pfGetMatrix;
 };
 
 }

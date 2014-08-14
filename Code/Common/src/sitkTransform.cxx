@@ -237,11 +237,9 @@ Transform::Transform( )
 
   Transform& Transform::operator=( const Transform & txf )
   {
-    // note: if txf and this are the same,the following statements
-    // will be safe. It's also exception safe.
-    std::auto_ptr<PimpleTransformBase> temp( txf.m_PimpleTransform->ShallowCopy() );
+    PimpleTransformBase *temp = txf.m_PimpleTransform->ShallowCopy();
     delete this->m_PimpleTransform;
-    this->SetPimpleTransform( temp.release() );
+    this->SetPimpleTransform( temp );
     return *this;
   }
 
@@ -368,10 +366,9 @@ void Transform::MakeUniqueForWrite( void )
 {
   if ( this->m_PimpleTransform->GetReferenceCount() > 1 )
     {
-    std::cout << "Making Unique For Writing!!!" << std::endl;
-    std::auto_ptr<PimpleTransformBase> temp( this->m_PimpleTransform->DeepCopy() );
+    PimpleTransformBase *temp = this->m_PimpleTransform->DeepCopy();
     delete this->m_PimpleTransform;
-    this->SetPimpleTransform( temp.release() );
+    this->SetPimpleTransform( temp );
     }
 }
 
@@ -587,8 +584,20 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
     temp.reset(p);
     }
     // take ownership of the new pimple transform
+    delete this->m_PimpleTransform;
     this->SetPimpleTransform( temp.release() );
     return true;
+  }
+
+  Transform Transform::GetInverse() const
+  {
+    // create a shallow copy
+    Transform tx(*this);
+    if (!tx.SetInverse())
+      {
+      sitkExceptionMacro("Unable to create inverse!");
+      }
+    return tx;
   }
 
   std::string Transform::ToString( void ) const

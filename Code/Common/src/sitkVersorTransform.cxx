@@ -16,6 +16,7 @@
 *
 *=========================================================================*/
 #include "sitkVersorTransform.h"
+#include "sitkTransformHelper.hxx"
 
 #include "itkVersorTransform.h"
 
@@ -117,6 +118,11 @@ std::vector<double>  VersorTransform::GetVersor() const
   return this->m_pfGetVersor();
 }
 
+std::vector<double> VersorTransform::GetMatrix( ) const
+{
+  return this->m_pfGetMatrix();
+}
+
 void VersorTransform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
 {
   Superclass::SetPimpleTransform(pimpleTransform);
@@ -135,6 +141,7 @@ void VersorTransform::InternalInitialization(itk::TransformBase *transform)
   this->m_pfSetRotation1 = SITK_NULLPTR;
   this->m_pfSetRotation2 = SITK_NULLPTR;
   this->m_pfGetVersor = SITK_NULLPTR;
+  this->m_pfGetMatrix = SITK_NULLPTR;
 
   if (t)
     {
@@ -147,13 +154,8 @@ void VersorTransform::InternalInitialization(itk::TransformBase *transform)
 template<class TransformType>
 void VersorTransform::InternalInitialization(TransformType *t)
 {
-  {
-  typename TransformType::InputPointType (*pfSTLVectorToITKPoint)(const std::vector<double> &) = &sitkSTLVectorToITK<typename TransformType::InputPointType, double>;
-  this->m_pfSetCenter = nsstd::bind(&TransformType::SetCenter,t,nsstd::bind(pfSTLVectorToITKPoint,nsstd::placeholders::_1));
-
-  std::vector<double> (*pfITKPointToSTL)( const typename TransformType::InputPointType &) = &sitkITKVectorToSTL<double,typename TransformType::InputPointType>;
-  this->m_pfGetCenter = nsstd::bind(pfITKPointToSTL,nsstd::bind(&TransformType::GetCenter,t));
-  }
+  SITK_TRANSFORM_SET_MPF(Center, typename TransformType::InputPointType, double);
+  SITK_TRANSFORM_SET_MPF_GetMatrix();
 
   typename TransformType::OutputVectorType (*pfSTLVectorToITK)(const std::vector<double> &) = &sitkSTLVectorToITK<typename TransformType::OutputVectorType, double>;
 
