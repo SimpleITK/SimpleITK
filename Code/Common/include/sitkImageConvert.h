@@ -66,6 +66,41 @@ GetImageFromVectorImage( itk::VectorImage< TPixelType, ImageDimension > *img, bo
 
 }
 
+template< class TPixelType, unsigned int NImageDimension, unsigned int NLength = NImageDimension >
+SITKCommon_HIDDEN
+typename itk::VectorImage< TPixelType, NImageDimension >::Pointer
+GetVectorImageFromImage( itk::Image< itk::Vector< TPixelType, NLength >, NImageDimension> *img, bool transferOwnership = false )
+{
+  typedef itk::Image< itk::Vector< TPixelType, NLength >, NImageDimension> ImageType;
+  typedef itk::VectorImage< TPixelType, NImageDimension > VectorImageType;
+
+  size_t numberOfElements = img->GetBufferedRegion().GetNumberOfPixels();
+  typename VectorImageType::InternalPixelType* buffer = reinterpret_cast<typename VectorImageType::InternalPixelType*>( img->GetPixelContainer()->GetBufferPointer() );
+
+  // Unlike an image of Vectors a VectorImage's container is a
+  // container of TPixelType, whos size is the image's number of
+  // pixels * number of pixels per component
+  numberOfElements *= NImageDimension;
+
+
+  if (!img->GetPixelContainer()->GetContainerManageMemory())
+    {
+    transferOwnership=false;
+    }
+
+
+  typename VectorImageType::Pointer out = VectorImageType::New();
+
+  // Set the image's pixel container to import the pointer provided.
+  out->GetPixelContainer()->SetImportPointer(buffer, numberOfElements, transferOwnership );
+  img->GetPixelContainer()->SetContainerManageMemory(!transferOwnership);
+  out->CopyInformation( img );
+  out->SetRegions( img->GetBufferedRegion() );
+
+  return out;
+}
+
+
 }
 }
 
