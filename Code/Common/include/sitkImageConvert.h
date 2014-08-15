@@ -66,7 +66,8 @@ GetImageFromVectorImage( itk::VectorImage< TPixelType, ImageDimension > *img, bo
 
 }
 
-template< class TPixelType, unsigned int NImageDimension, unsigned int NLength = NImageDimension >
+
+template< class TPixelType, unsigned int NImageDimension, unsigned int NLength >
 SITKCommon_HIDDEN
 typename itk::VectorImage< TPixelType, NImageDimension >::Pointer
 GetVectorImageFromImage( itk::Image< itk::Vector< TPixelType, NLength >, NImageDimension> *img, bool transferOwnership = false )
@@ -100,6 +101,14 @@ GetVectorImageFromImage( itk::Image< itk::Vector< TPixelType, NLength >, NImageD
   return out;
 }
 
+
+template< class TPixelType, unsigned int NImageDimension >
+SITKCommon_HIDDEN
+typename itk::VectorImage< TPixelType, NImageDimension >::Pointer
+GetVectorImageFromImage( itk::Image< itk::Vector< TPixelType, NImageDimension >, NImageDimension> *img, bool transferOwnership = false )
+{
+  return GetVectorImageFromImage<TPixelType,NImageDimension,NImageDimension>(img, transferOwnership);
+}
 
 }
 }
