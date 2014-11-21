@@ -222,6 +222,14 @@ sitk_add_python_test( Example.DicomSeriesReader
     "${TEST_HARNESS_TEMP_DIRECTORY}/DicomSeriesReader.nrrd"
   )
 
+sitk_add_python_test( Example.DicomSeriesReader2
+  "${SimpleITKExamples_SOURCE_DIR}/DicomSeriesReader2.py"
+  --compare-MD5
+  "${TEST_HARNESS_TEMP_DIRECTORY}/DicomSeriesReader2.nrrd"
+  "8e65f711d450b6b466c6d76a667ecb72"
+    DATA{${SimpleITK_DATA_ROOT}/Input/DicomSeries/,REGEX:Image[0-9]+.dcm}
+    "${TEST_HARNESS_TEMP_DIRECTORY}/DicomSeriesReader2.nrrd"
+  )
 
 sitk_add_python_test( Example.Segmentation.ConnectedThresholdImageFilter1
   "${SimpleITKExamples_SOURCE_DIR}/Segmentation/ConnectedThresholdImageFilter.py"
