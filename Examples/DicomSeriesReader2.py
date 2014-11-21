@@ -35,12 +35,12 @@ target_series = ""
 output_image = ""
 
 def usage():
-    print "\nUsage: ", sys.argv[0], " [-s series_name] input_directory [output_image]\n"
+    print (  "\nUsage: %s [-s series_name] input_directory [output_image]\n" % (sys.argv[0]) )
 
 # Parse command line options
 try:
     opts, args = getopt.getopt(sys.argv[1:], "s:", [ "series" ] )
-except getopt.GetoptError, err:
+except getopt.GetoptError as err:
     usage()
     sys.exit(1)
 
@@ -53,7 +53,7 @@ for o, a in opts:
 
 # Get input/output names
 if len(args) < 1:
-    print args
+    print( args )
     usage()
     sys.exit(1)
 
@@ -72,25 +72,25 @@ if len(series_found):
 
     for serie in series_found:
 
-        print "\nSeries:", serie
+        print( "\nSeries:", serie )
 
         # Get the Dicom filename corresponding to the current series
         dicom_names = reader.GetGDCMSeriesFileNames(input_directory, serie)
 
-        print "\nFiles in series: ", dicom_names
+        print( "\nFiles in series: ", dicom_names )
 
         if len(dicom_names):
             reader.SetFileNames(dicom_names)
             image = reader.Execute()
-            print "\nImage size: ", image.GetSize()
+            print( "\nImage size: ", image.GetSize() )
 
             if (output_image != "") and not written:
                 if (target_series == "" or target_series == serie):
 
-                    print "\nWriting", output_image
+                    print( "\nWriting", output_image )
                     sitk.WriteImage(image, output_image)
                     written = True
 else:
     sys.exit(1)
 
-print
+print ()
