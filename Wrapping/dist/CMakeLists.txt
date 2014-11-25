@@ -14,7 +14,7 @@ if( WRAP_PYTHON )
   endif()
 
   add_custom_target( dist.Python
-    ${VIRTUAL_PYTHON_EXECUTABLE} ${SimpleITK_BINARY_DIR}/Wrapping/PythonPackage/setup.py ${bdist_commands}
+    ${VIRTUAL_PYTHON_EXECUTABLE} ${SimpleITK_BINARY_DIR}/Wrapping/PythonPackage/setupegg.py ${bdist_commands}
     WORKING_DIRECTORY ${SimpleITK_BINARY_DIR}/Wrapping
     DEPENDS ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
     COMMENT "Creating Python binary distribution" )
