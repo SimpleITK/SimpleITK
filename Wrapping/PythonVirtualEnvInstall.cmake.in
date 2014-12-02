@@ -44,6 +44,7 @@ if not(sys.modules.get(\"wheel\")):
   execute_process(
     COMMAND @VIRTUAL_PYTHON_EXECUTABLE@ -c "${install_wheel_script}"
     WORKING_DIRECTORY "PythonPackage"
+    ERROR_VARIABLE error
     RESULT_VARIABLE failed
     )
 
