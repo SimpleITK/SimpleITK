@@ -1,5 +1,5 @@
 Package: SimpleITK
-Version: 0.5-1
+Version: 0.8.1
 Date: 2012-04-05
 Title: Bindings to SimpleITK Image segmentation and registration toolkit.
 Authors@R: c(person("Richard", "Beare", role = c("aut", "cre"),
@@ -13,5 +13,5 @@ Description: This package is an interface to SimpleITK, which is a simplified
      and registration.
 License: Apache 2.0
 URL: http://www.simpleitk.org, http://www.itk.org
-BugReports: http://pkgname.bugtracker.url
+BugReports: http://issues.itk.org
 Maintainer: Richard Beare <Richard.Beare@ieee.org>
