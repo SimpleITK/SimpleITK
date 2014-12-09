@@ -262,7 +262,7 @@ void DisplacementFieldTransform::InternalInitialization(TransformType *t)
 
   m_pfSetSmoothingOff = nsstd::bind(&Self::InternalSetSmoothingOff<TransformType>, this, t);
   m_pfSetSmoothingGaussianOnUpdate = nsstd::bind(&Self::InternalSetSmoothingGaussianOnUpdate<TransformType>, this, t, nsstd::placeholders::_1, nsstd::placeholders::_2 );
-  m_pfSetSmoothingBSplineOnUpdate = nsstd::bind(&Self::InternalSetSmoothingBSplineOnUpdate<TransformType>, this, t, nsstd::placeholders::_1, nsstd::placeholders::_2, nsstd::placeholders::_3, nsstd::placeholders::_3 );
+  m_pfSetSmoothingBSplineOnUpdate = nsstd::bind(&Self::InternalSetSmoothingBSplineOnUpdate<TransformType>, this, t, nsstd::placeholders::_1, nsstd::placeholders::_2, nsstd::placeholders::_3, nsstd::placeholders::_4 );
 }
 
 PimpleTransformBase *DisplacementFieldTransform::CreateDisplacementFieldPimpleTransform(unsigned int dimension)
