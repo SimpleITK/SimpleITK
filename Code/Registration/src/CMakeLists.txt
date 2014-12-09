@@ -12,7 +12,8 @@ set ( ITK_NO_IO_FACTORY_REGISTER_MANAGER 1 )
 include(${ITK_USE_FILE})
 
 add_library ( SimpleITKRegistration ${SimpleITKRegistration} )
-target_link_libraries ( SimpleITKRegistration ${ITK_LIBRARIES} SimpleITKCommon SimpleITKBasicFilters0 )
+# The BasicFiltersLibrary is needed of the Cast filter
+target_link_libraries ( SimpleITKRegistration ${ITK_LIBRARIES} SimpleITKCommon SimpleITKBasicFilters1 )
 set_target_properties( SimpleITKRegistration PROPERTIES SKIP_BUILD_RPATH TRUE )
 
 sitk_install_exported_target( SimpleITKRegistration )
