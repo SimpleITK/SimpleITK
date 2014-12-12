@@ -389,7 +389,7 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
 
 
   template< unsigned int VDimension>
-  void  Transform::InternalInitialization(  TransformEnum type, itk::TransformBase *base )
+  void Transform::InternalInitialization(  TransformEnum type, itk::TransformBase *base )
   {
     PimpleTransformBase* temp;
     switch( type )
@@ -491,6 +491,8 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
     this->SetPimpleTransform(temp);
   }
 
+  template void SITKCommon_EXPORT Transform::InternalInitialization<2>( TransformEnum, itk::TransformBase * );
+  template void SITKCommon_EXPORT Transform::InternalInitialization<3>( TransformEnum, itk::TransformBase * );
 
   itk::TransformBase* Transform::GetITKBase ( void )
   {
