@@ -402,6 +402,17 @@ sitk_add_lua_test( Example.DicomSeriesReader
     "${TEST_HARNESS_TEMP_DIRECTORY}/DicomSeriesReader.nrrd"
   )
 
+sitk_add_lua_test( Example.ImageRegistrationMethod1
+  "${SimpleITKExamples_SOURCE_DIR}/ImageRegistrationMethod1.lua"
+    ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceBorder20.png
+    ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceShifted13x17y.png
+    ${TEST_HARNESS_TEMP_DIRECTORY}/LuaImageRegistrationMethod1Test.hdf5
+  TRANSFORM_COMPARE
+    ${TEST_HARNESS_TEMP_DIRECTORY}/LuaImageRegistrationMethod1Test.hdf5
+    DATA{${SimpleITK_DATA_ROOT}/Baseline/displacement_13x17y.mha}
+    0.02
+    )
+
 
 #
 # Ruby Examples
