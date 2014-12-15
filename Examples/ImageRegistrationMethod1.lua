@@ -29,29 +29,15 @@ if #arg < 3 then
     os.exit ( 1 )
 end
 
-pixelType = SimpleITK.sitkFloat32
+fixed = SimpleITK.ReadImage( arg[1], SimpleITK.sitkFloat32 )
 
-print(pixelType)
-
-fixedInput = SimpleITK.ReadImage( arg[1] )
-if fixedInput:GetNumberOfComponentsPerPixel() > 1 then
-    fixed = SimpleITK.VectorIndexSelectionCast( fixedInput, 0, pixelType )
-else
-    fixed = SimpleITK.Cast( fixedInput, 0, pixelType )
-end
-
-movingInput = SimpleITK.ReadImage( arg[2] )
-if movingInput:GetNumberOfComponentsPerPixel() > 1 then
-    moving = SimpleITK.VectorIndexSelectionCast( movingInput, 0, pixelType )
-else
-    moving = SimpleITK.Cast( movingInput, 0, pixelType )
-end
+moving = SimpleITK.ReadImage( arg[2], SimpleITK.sitkFloat32 )
 
 
 R = SimpleITK.ImageRegistrationMethod()
 R:SetMetricAsMeanSquares()
 R:SetOptimizerAsRegularStepGradientDescent( 4.0, .01, 200 )
-R:SetTransform( SimpleITK.Transform( fixed:GetDimension(), SimpleITK.sitkTranslation ) )
+R:SetInitialTransform( SimpleITK.Transform( fixed:GetDimension(), SimpleITK.sitkTranslation ) )
 R:SetInterpolator( SimpleITK.sitkLinear )
 
 -- callback for progress reporting doesn't work yet in Lua
