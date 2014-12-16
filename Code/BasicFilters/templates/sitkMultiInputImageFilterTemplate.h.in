@@ -110,6 +110,7 @@ end)
      * in order to support a procedural API
      *
      * \sa itk::simple::${name} for the object oriented interface
+     * @{
      */
      SITKBasicFilters_EXPORT Image ${name:gsub("ImageFilter$", "")} ( const std::vector<Image> &images $(include MemberParametersWithDefaults.in) );
 
@@ -125,6 +126,7 @@ $(for inum=1,5 do
   OUT=OUT..[[ );
 ]]
 end)
+     /** @{ */
 
 }
 }
