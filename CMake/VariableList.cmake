@@ -11,8 +11,8 @@ function( VariableListToCache var_list cache )
       get_property( type CACHE ${var} PROPERTY TYPE )
       get_property( advanced CACHE ${var} PROPERTY ADVANCED )
       get_property( helpstring CACHE ${var} PROPERTY HELPSTRING )
-      if ( NOT "${type}" )
 
+      if ( "${type}" STREQUAL "" )
         set( type STRING )
       endif()
       set( _cache "${_cache}
