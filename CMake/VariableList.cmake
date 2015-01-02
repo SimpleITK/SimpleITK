@@ -13,6 +13,11 @@ function( VariableListToCache var_list cache )
       get_property( advanced CACHE ${var} PROPERTY ADVANCED )
       get_property( helpstring CACHE ${var} PROPERTY HELPSTRING )
 
+      # apply escape sequences
+      foreach( e "\\" "(" ")" "#" "$" "^" "@" )
+        STRING( REPLACE "${e}" "\\${e}" value "${value}" )
+      endforeach()
+
       if ( "${type}" STREQUAL "" )
         set( type STRING )
       endif()
