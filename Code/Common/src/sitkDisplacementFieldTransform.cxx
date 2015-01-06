@@ -282,6 +282,8 @@ PimpleTransformBase *DisplacementFieldTransform::CreateDisplacementFieldPimpleTr
 template< typename TDisplacementFieldTransform >
 Image DisplacementFieldTransform::InternalGetDisplacementField( const TDisplacementFieldTransform *itkDisplacementTx )
 {
+  // The returned image references the buffer for the displacement
+  // field, but it does not have the correct reference count.
   typedef typename TDisplacementFieldTransform::DisplacementFieldType DisplacementFieldType;
   DisplacementFieldType *itkDisplacement = const_cast<DisplacementFieldType*>(itkDisplacementTx->GetDisplacementField());
   if (itkDisplacement != NULL)

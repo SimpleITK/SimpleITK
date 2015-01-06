@@ -43,12 +43,18 @@ public:
   /** parameters */
   // set displacement methods take ownership for the image and remove it
   Self &SetDisplacementField(Image &);
+  /** \todo The returned image is should not directly modify the
+   * internal displacement field.
+   */
   Image GetDisplacementField() const;
 
   /** fixed parameter */
 
   /* additional methods */
   Self &SetInverseDisplacementField(Image &);
+  /** \todo The returned image is should not directly modify the
+   * internal displacement field.
+   */
   Image GetInverseDisplacementField() const;
 
   Self &SetInterpolator(InterpolatorEnum interp);
