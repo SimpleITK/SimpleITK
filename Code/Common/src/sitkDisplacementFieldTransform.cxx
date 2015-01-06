@@ -36,7 +36,7 @@ namespace
 
 template<unsigned int NDimension>
 typename itk::Image<itk::Vector<double,NDimension>,NDimension>::Pointer
- GetITKImageFormSITKVectorImage(Image &inImage)
+ GetITKImageFromSITKVectorImage(Image &inImage)
 {
   typedef itk::VectorImage<double,NDimension> VectorImageType;
 
@@ -74,7 +74,7 @@ template< typename TDisplacementFieldTransform >
 void InternalSetDisplacementField( TDisplacementFieldTransform *itkDisplacementTx, Image & inImage )
 {
   typedef typename TDisplacementFieldTransform::DisplacementFieldType ITKDisplacementFieldType;
-  typename ITKDisplacementFieldType::Pointer itkDisplacement = GetITKImageFormSITKVectorImage<TDisplacementFieldTransform::Dimension>(inImage);
+  typename ITKDisplacementFieldType::Pointer itkDisplacement = GetITKImageFromSITKVectorImage<TDisplacementFieldTransform::Dimension>(inImage);
   itkDisplacementTx->SetDisplacementField(itkDisplacement);
 }
 
@@ -83,7 +83,7 @@ template< typename TDisplacementFieldTransform >
 void InternalSetInverseDisplacementField( TDisplacementFieldTransform *itkDisplacementTx, Image & inImage )
 {
   typedef typename TDisplacementFieldTransform::DisplacementFieldType ITKDisplacementFieldType;
-  typename ITKDisplacementFieldType::Pointer itkDisplacement = GetITKImageFormSITKVectorImage<TDisplacementFieldTransform::Dimension>(inImage);
+  typename ITKDisplacementFieldType::Pointer itkDisplacement = GetITKImageFromSITKVectorImage<TDisplacementFieldTransform::Dimension>(inImage);
   itkDisplacementTx->SetInverseDisplacementField(itkDisplacement);
 }
 
