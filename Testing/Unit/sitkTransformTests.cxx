@@ -705,6 +705,38 @@ TEST(TransformTest,DisplacementFieldTransform_CopyOnWrite)
 
 }
 
+TEST(TransformTest,DisplacementFieldTransform_Points)
+{
+  const std::vector<unsigned int> size(3,5u);
+  sitk::Image disImage(size, sitk::sitkVectorFloat64);
+
+  // Test displacement field transform by transforming some points
+  sitk::DisplacementFieldTransform tx(disImage);
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(0.0,0.0,0.0) ), v3(0.0,0.0,0.0), 1e-15 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(1.0,1.0,1.0) ), v3(1.0,1.0,1.0),1e-15 );
+
+  const std::vector<unsigned int> idx(2,0u);
+
+  disImage = sitk::Image( std::vector<unsigned int>(2,5u), sitk::sitkVectorFloat64 );
+  disImage.SetPixelAsVectorFloat64( idx, v2(0.5,0.5) );
+  tx = sitk::DisplacementFieldTransform(disImage);
+
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v2(0.0,0.0) ), v2(0.5,0.5), 1e-15 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v2(0.5, 0.0) ), v2(0.75,0.25), 1e-15 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v2(0.5, 0.5) ), v2(0.625,0.625), 1e-15 );
+
+
+  tx.SetInterpolator( sitk::sitkNearestNeighbor );
+
+
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v2(0.0,0.0) ), v2(0.5,0.5), 1e-15 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v2(0.4, 0.4) ), v2(0.9,0.9), 1e-15 );
+
+  // 0.5 is a difficult case to nearest neighbor does it, it rounds up
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v2(0.5, 0.5) ), v2(0.5,0.5), 1e-15 );
+
+}
+
 TEST(TransformTest,Euler2DTransform)
 {
   // test Euler2DTransform
