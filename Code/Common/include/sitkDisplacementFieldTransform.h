@@ -58,7 +58,7 @@ public:
   Image GetInverseDisplacementField() const;
 
   Self &SetInterpolator(InterpolatorEnum interp);
-  InterpolatorEnum GetInterpolator() const; //How to do this??
+  // InterpolatorEnum GetInterpolator() const; How to do this?
 
   Self &SetSmoothingOff();
   Self &SetSmoothingGaussianOnUpdate( double varianceForUpdateField=1.75, double varianceForTotalField=0.5 );

@@ -668,6 +668,13 @@ TEST(TransformTest,DisplacementFieldTransform)
   EXPECT_EQ( disImage2.GetOrigin()[1], 0.2);
   EXPECT_EQ( disImage2.GetSpacing()[1], 1.0);
 
+  // EXPECT_EQ( tx1.GetInterpolator(), sitk::Linear );
+  tx1.SetInterpolator( sitk::sitkNearestNeighbor );
+  // EXPECT_EQ( tx1.GetInterpolator(), sitk::NearestNeighbor );
+  tx1.SetInterpolator( sitk::sitkLinear );
+  // EXPECT_EQ( tx1.GetInterpolator(), sitk::Linear );
+  EXPECT_THROW( tx1.SetInterpolator( sitk::sitkBSpline ), sitk::GenericException );
+
 }
 
 TEST(TransformTest,DisplacementFieldTransform_CopyOnWrite)

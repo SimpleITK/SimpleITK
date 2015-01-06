@@ -180,10 +180,10 @@ DisplacementFieldTransform::Self &DisplacementFieldTransform::SetInterpolator(In
   return *this;
 }
 
-InterpolatorEnum DisplacementFieldTransform::GetInterpolator() const
-{
-  return this->m_pfGetInterpolator();
-}
+// InterpolatorEnum DisplacementFieldTransform::GetInterpolator() const
+// {
+//   return this->m_pfGetInterpolator();
+// }
 
 DisplacementFieldTransform::Self &DisplacementFieldTransform::SetSmoothingOff()
 {
