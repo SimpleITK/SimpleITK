@@ -164,6 +164,7 @@ namespace std
 // IO
 %include "sitkShow.h"
 %include "sitkImageFileWriter.h"
+%include "sitkImageSeriesWriter.h"
 %include "sitkImageReaderBase.h"
 %include "sitkImageSeriesReader.h"
 %include "sitkImageFileReader.h"

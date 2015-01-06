@@ -15,45 +15,36 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkImageFileWriter_h
-#define __sitkImageFileWriter_h
+#ifndef __sitkImageSeriesWriter_h
+#define __sitkImageSeriesWriter_h
 
 #include "sitkMacro.h"
 #include "sitkImage.h"
-#include "sitkMemberFunctionFactory.h"
-#include "sitkIO.h"
 #include "sitkProcessObject.h"
-
-#include <memory>
+#include "sitkIO.h"
+#include "sitkMemberFunctionFactory.h"
 
 namespace itk {
   namespace simple {
 
-    /** \class ImageFileWriter
-     * \brief Write out a SimpleITK image to the specified file location
+    /** \class ImageSeriesWriter
+     * \brief Writer series of image from a SimpleITK image
      *
-     * This writer tries to write the image out using the image's type to the
-     * location specified in FileName. If writing fails, an ITK exception is
-     * thrown.
-     *
-     * \sa itk::simple::WriteImage for the procedural interface
-     */
-    class SITKIO_EXPORT ImageFileWriter  :
-      public ProcessObject
+     * \sa itk::simple::WriterImage for the procedural interface
+     **/
+    class SITKIO_EXPORT ImageSeriesWriter
+      : public ProcessObject
     {
     public:
-      typedef ImageFileWriter Self;
+      typedef ImageSeriesWriter Self;
 
-      // list of pixel types supported
-      typedef NonLabelPixelIDTypeList PixelIDTypeList;
-
-      ImageFileWriter( void );
+      ImageSeriesWriter();
 
       /** Print ourselves to string */
       virtual std::string ToString() const;
 
       /** return user readable name fo the filter */
-      virtual std::string GetName() const { return std::string("ImageFileWriter"); }
+      virtual std::string GetName() const { return std::string("ImageSeriesWriter"); }
 
       /** \brief Enable compression if available for file type.
        *
@@ -68,30 +59,31 @@ namespace itk {
       Self & UseCompressionOff( void ) { return this->SetUseCompression(false); }
       /** @} */
 
-      Self& SetFileName ( std::string fileName );
-      std::string GetFileName() const;
+      Self & SetFileNames ( const std::vector<std::string> &fileNames );
+      const std::vector<std::string> &GetFileNames() const;
 
-      Self& Execute ( const Image& );
-      Self& Execute ( const Image& , const std::string &inFileName, bool inUseCompression );
+
+      Self & Execute( const Image& );
+      Self & Execute( const Image &image, const std::vector<std::string> &inFileNames, bool inUseCompression );
+
+    protected:
+
+      template <class TImageType> Self &ExecuteInternal ( const Image& inImage );
 
     private:
-
-      template <class T> Self& ExecuteInternal ( const Image& );
-
-      bool m_UseCompression;
-      std::string m_FileName;
 
       // function pointer type
       typedef Self& (Self::*MemberFunctionType)( const Image& );
 
       // friend to get access to executeInternal member
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
-
       std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 
+      bool m_UseCompression;
+      std::vector<std::string> m_FileNames;
     };
 
-  SITKIO_EXPORT void WriteImage ( const Image& image, const std::string &fileName, bool useCompression=false );
+  SITKIO_EXPORT void WriteImage ( const Image & image, const std::vector<std::string> &fileNames, bool inUseCompression  );
   }
 }
 
