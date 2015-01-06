@@ -36,7 +36,7 @@ namespace
 
 template<unsigned int NDimension>
 typename itk::Image<itk::Vector<double,NDimension>,NDimension>::Pointer
- GetITKImageFormSITKVectorImage(Image &inImage)
+ GetITKImageFromSITKVectorImage(Image &inImage)
 {
   typedef itk::VectorImage<double,NDimension> VectorImageType;
 
@@ -74,7 +74,7 @@ template< typename TDisplacementFieldTransform >
 void InternalSetDisplacementField( TDisplacementFieldTransform *itkDisplacementTx, Image & inImage )
 {
   typedef typename TDisplacementFieldTransform::DisplacementFieldType ITKDisplacementFieldType;
-  typename ITKDisplacementFieldType::Pointer itkDisplacement = GetITKImageFormSITKVectorImage<TDisplacementFieldTransform::Dimension>(inImage);
+  typename ITKDisplacementFieldType::Pointer itkDisplacement = GetITKImageFromSITKVectorImage<TDisplacementFieldTransform::Dimension>(inImage);
   itkDisplacementTx->SetDisplacementField(itkDisplacement);
 }
 
@@ -83,7 +83,7 @@ template< typename TDisplacementFieldTransform >
 void InternalSetInverseDisplacementField( TDisplacementFieldTransform *itkDisplacementTx, Image & inImage )
 {
   typedef typename TDisplacementFieldTransform::DisplacementFieldType ITKDisplacementFieldType;
-  typename ITKDisplacementFieldType::Pointer itkDisplacement = GetITKImageFormSITKVectorImage<TDisplacementFieldTransform::Dimension>(inImage);
+  typename ITKDisplacementFieldType::Pointer itkDisplacement = GetITKImageFromSITKVectorImage<TDisplacementFieldTransform::Dimension>(inImage);
   itkDisplacementTx->SetInverseDisplacementField(itkDisplacement);
 }
 
@@ -180,10 +180,10 @@ DisplacementFieldTransform::Self &DisplacementFieldTransform::SetInterpolator(In
   return *this;
 }
 
-InterpolatorEnum DisplacementFieldTransform::GetInterpolator() const
-{
-  return this->m_pfGetInterpolator();
-}
+// InterpolatorEnum DisplacementFieldTransform::GetInterpolator() const
+// {
+//   return this->m_pfGetInterpolator();
+// }
 
 DisplacementFieldTransform::Self &DisplacementFieldTransform::SetSmoothingOff()
 {
@@ -282,6 +282,8 @@ PimpleTransformBase *DisplacementFieldTransform::CreateDisplacementFieldPimpleTr
 template< typename TDisplacementFieldTransform >
 Image DisplacementFieldTransform::InternalGetDisplacementField( const TDisplacementFieldTransform *itkDisplacementTx )
 {
+  // The returned image references the buffer for the displacement
+  // field, but it does not have the correct reference count.
   typedef typename TDisplacementFieldTransform::DisplacementFieldType DisplacementFieldType;
   DisplacementFieldType *itkDisplacement = const_cast<DisplacementFieldType*>(itkDisplacementTx->GetDisplacementField());
   if (itkDisplacement != NULL)

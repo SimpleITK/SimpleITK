@@ -20,6 +20,7 @@
 #include "sitkTransform.h"
 #include "sitkAffineTransform.h"
 #include "sitkBSplineTransform.h"
+#include "sitkDisplacementFieldTransform.h"
 #include "sitkTranslationTransform.h"
 #include "sitkEuler2DTransform.h"
 #include "sitkEuler3DTransform.h"
@@ -622,6 +623,141 @@ TEST(TransformTest,BSplineTransform_order)
   EXPECT_EQ(1u, tx1.GetOrder());
 }
 
+
+
+TEST(TransformTest,DisplacementFieldTransform)
+{
+  // test DisplacementFieldTransform
+  const std::vector<double> center(3,1.1);
+  const std::vector<double> zeros(3,0.0);
+  const std::vector<double> trans(3, 2.2);
+
+  const std::vector<unsigned int> size(2,10u);
+  const std::vector<unsigned int> idx(2,1u);
+
+  std::auto_ptr<sitk::DisplacementFieldTransform> tx(new sitk::DisplacementFieldTransform(2));
+  EXPECT_EQ( tx->GetParameters().size(), 0u );
+  EXPECT_EQ( tx->GetFixedParameters().size(), 10u );
+  EXPECT_EQ( tx->GetDimension(), 2u );
+
+  // copy constructor
+  sitk::DisplacementFieldTransform tx1( *tx );
+  EXPECT_EQ( tx1.GetParameters().size(), 0u );
+  EXPECT_EQ( tx1.GetFixedParameters().size(), 10u );
+  EXPECT_EQ( tx1.GetDimension(), 2u );
+
+  sitk::DisplacementFieldTransform tx2(3);
+
+
+
+  // assignment operator
+  tx1 = tx2;
+  EXPECT_EQ( tx1.GetParameters().size(), 0u );
+  EXPECT_EQ( tx1.GetFixedParameters().size(), 18u );
+  EXPECT_EQ( tx1.GetDimension(), 3u );
+
+
+  sitk::Image disImage(size, sitk::sitkVectorFloat64);
+
+  sitk::DisplacementFieldTransform tx3(disImage);
+  EXPECT_EQ( tx3.GetDimension(), 2u );
+  EXPECT_EQ( tx3.GetParameters().size(), 200u );
+  EXPECT_EQ( tx3.GetFixedParameters().size(), 10u );
+  EXPECT_EQ( tx3.GetFixedParameters()[0], 10.0 );
+
+  EXPECT_EQ( disImage.GetSize()[0], 0u);
+  EXPECT_EQ( disImage.GetSize()[1], 0u);
+
+  tx3.SetSmoothingGaussianOnUpdate();
+  tx3.SetSmoothingBSplineOnUpdate();
+  tx3.SetSmoothingOff();
+
+
+  // test conversion methods with initial values
+  tx1 = sitk::DisplacementFieldTransform(2);
+  tx1.SetSmoothingGaussianOnUpdate();
+  tx1.SetSmoothingBSplineOnUpdate();
+  tx1.SetSmoothingOff();
+
+  const double fixedParametersArray[] = {5.0, 5.0, 0.1, 0.2, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0};
+  std::vector<double> fixedParameters(fixedParametersArray, fixedParametersArray+10);
+
+  tx1.SetFixedParameters(fixedParameters);
+  EXPECT_EQ( tx1.GetFixedParameters()[0], 5.0 );
+
+  sitk::Image disImage2 = tx1.GetDisplacementField();
+  EXPECT_EQ( disImage2.GetSize()[0], 5u);
+  EXPECT_EQ( disImage2.GetOrigin()[1], 0.2);
+  EXPECT_EQ( disImage2.GetSpacing()[1], 1.0);
+
+  // EXPECT_EQ( tx1.GetInterpolator(), sitk::Linear );
+  tx1.SetInterpolator( sitk::sitkNearestNeighbor );
+  // EXPECT_EQ( tx1.GetInterpolator(), sitk::NearestNeighbor );
+  tx1.SetInterpolator( sitk::sitkLinear );
+  // EXPECT_EQ( tx1.GetInterpolator(), sitk::Linear );
+  EXPECT_THROW( tx1.SetInterpolator( sitk::sitkBSpline ), sitk::GenericException );
+
+}
+
+TEST(TransformTest,DisplacementFieldTransform_CopyOnWrite)
+{
+  const std::vector<unsigned int> size(2,10u);
+
+  sitk::DisplacementFieldTransform tx(2);
+  sitk::DisplacementFieldTransform copy_tx = tx;
+
+  sitk::Image disImage(size, sitk::sitkVectorFloat64);
+
+  // check copy with initial state
+  EXPECT_EQ( tx.GetFixedParameters()[0], 0.0 );
+  tx.SetSmoothingOff();
+  EXPECT_EQ( tx.GetFixedParameters()[0], 0.0 );
+  EXPECT_EQ( copy_tx.GetFixedParameters()[0], 0.0 );
+
+
+  // check make unique with set displacement
+  tx = sitk::DisplacementFieldTransform(2);
+  copy_tx = tx;
+
+  EXPECT_EQ( tx.GetFixedParameters()[0], 0.0 );
+  EXPECT_EQ( copy_tx.GetFixedParameters()[0], 0.0 );
+  tx.SetDisplacementField( disImage );
+  EXPECT_EQ( tx.GetFixedParameters()[0], 10.0 );
+  EXPECT_EQ( copy_tx.GetFixedParameters()[0], 0.0 );
+
+}
+
+TEST(TransformTest,DisplacementFieldTransform_Points)
+{
+  const std::vector<unsigned int> size(3,5u);
+  sitk::Image disImage(size, sitk::sitkVectorFloat64);
+
+  // Test displacement field transform by transforming some points
+  sitk::DisplacementFieldTransform tx(disImage);
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(0.0,0.0,0.0) ), v3(0.0,0.0,0.0), 1e-15 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(1.0,1.0,1.0) ), v3(1.0,1.0,1.0),1e-15 );
+
+  const std::vector<unsigned int> idx(2,0u);
+
+  disImage = sitk::Image( std::vector<unsigned int>(2,5u), sitk::sitkVectorFloat64 );
+  disImage.SetPixelAsVectorFloat64( idx, v2(0.5,0.5) );
+  tx = sitk::DisplacementFieldTransform(disImage);
+
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v2(0.0,0.0) ), v2(0.5,0.5), 1e-15 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v2(0.5, 0.0) ), v2(0.75,0.25), 1e-15 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v2(0.5, 0.5) ), v2(0.625,0.625), 1e-15 );
+
+
+  tx.SetInterpolator( sitk::sitkNearestNeighbor );
+
+
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v2(0.0,0.0) ), v2(0.5,0.5), 1e-15 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v2(0.4, 0.4) ), v2(0.9,0.9), 1e-15 );
+
+  // 0.5 is a difficult case to nearest neighbor does it, it rounds up
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v2(0.5, 0.5) ), v2(0.5,0.5), 1e-15 );
+
+}
 
 TEST(TransformTest,Euler2DTransform)
 {
