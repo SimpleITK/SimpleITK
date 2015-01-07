@@ -54,6 +54,7 @@
 #include "sitkImageFileReader.h"
 #include "sitkImageSeriesReader.h"
 #include "sitkImageFileWriter.h"
+#include "sitkImageSeriesWriter.h"
 #include "sitkImportImageFilter.h"
 
 
