@@ -28,7 +28,8 @@ namespace itk {
   namespace simple {
 
     /** \class ImageSeriesWriter
-     * \brief Writer series of image from a SimpleITK image
+     * \brief Writer series of image from a SimpleITK image.
+     *
      *
      * \sa itk::simple::WriterImage for the procedural interface
      **/
@@ -59,8 +60,14 @@ namespace itk {
       Self & UseCompressionOff( void ) { return this->SetUseCompression(false); }
       /** @} */
 
+      /** The filenames to where the image slices are written.
+        *
+        * The number of filenames must match the number of slices in
+        * the image.
+        * @{ */
       Self & SetFileNames ( const std::vector<std::string> &fileNames );
       const std::vector<std::string> &GetFileNames() const;
+      /** @} */
 
 
       Self & Execute( const Image& );
@@ -83,7 +90,7 @@ namespace itk {
       std::vector<std::string> m_FileNames;
     };
 
-  SITKIO_EXPORT void WriteImage ( const Image & image, const std::vector<std::string> &fileNames, bool inUseCompression  );
+  SITKIO_EXPORT void WriteImage ( const Image & image, const std::vector<std::string> &fileNames, bool inUseCompression=false );
   }
 }
 
