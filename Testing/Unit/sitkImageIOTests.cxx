@@ -19,6 +19,7 @@
 #include <sitkImageFileReader.h>
 #include <sitkImageSeriesReader.h>
 #include <sitkImageFileWriter.h>
+#include <sitkImageSeriesWriter.h>
 #include <sitkHashImageFilter.h>
 
 TEST(IO,ImageFileReader) {
@@ -327,4 +328,48 @@ TEST(IO, DicomSeriesReader) {
 
   fileNames = reader.GetGDCMSeriesFileNames( dicomDir, "1.2.840.113619.2.133.1762890640.1886.1055165015.999" );
   EXPECT_EQ( 3u, fileNames.size() );
+}
+
+
+TEST(IO, ImageSeriesWriter )
+{
+
+  sitk::ImageSeriesWriter writer;
+
+  EXPECT_FALSE(writer.GetUseCompression());
+  writer.UseCompressionOn();
+  EXPECT_TRUE(writer.GetUseCompression());
+  writer.UseCompressionOff();
+  EXPECT_FALSE(writer.GetUseCompression());
+
+  EXPECT_NO_THROW ( writer.ToString() );
+
+
+
+  std::vector< std::string > fileNames;
+  fileNames.push_back( dataFinder.GetOutputDirectory()+"/ImageSeriesWriter_1.png" );
+  fileNames.push_back( dataFinder.GetOutputDirectory()+"/ImageSeriesWriter_2.png" );
+  fileNames.push_back( dataFinder.GetOutputDirectory()+"/ImageSeriesWriter_3.png" );
+
+  std::vector<unsigned int> size;
+  size.push_back(10);
+  size.push_back(10);
+  size.push_back(3);
+
+  sitk::Image image( size, sitk::sitkUInt8 );
+
+  writer.SetFileNames( fileNames );
+
+  EXPECT_EQ( writer.GetFileNames().size(), 3u );
+
+  EXPECT_NO_THROW( writer.Execute( image ) );
+
+  fileNames.push_back( dataFinder.GetOutputDirectory()+"/ImageSeriesWriter_4.png" );
+  EXPECT_ANY_THROW( sitk::WriteImage( image, fileNames ) );
+
+  fileNames.pop_back();
+  fileNames.pop_back();
+
+  EXPECT_ANY_THROW( sitk::WriteImage( image, fileNames ) );
+
 }
