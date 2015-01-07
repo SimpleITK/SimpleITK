@@ -97,9 +97,6 @@ R.SetOptimizerAsGradientDescent(learningRate=1,
 outTx.AddTransform( R.Execute(fixed, moving) )
 
 
-
-sitk.Show(displacementTx.GetDisplacementField())
-
 print("-------")
 print(outTx)
 print("Optimizer stop condition: {0}".format(R.GetOptimizerStopConditionDescription()))
@@ -110,6 +107,8 @@ print(" Metric value: {0}".format(R.GetMetricValue()))
 sitk.WriteTransform(outTx,  sys.argv[3])
 
 if ( True or not "SITK_NOSHOW" in os.environ ):
+
+    sitk.Show(displacementTx.GetDisplacementField(), "Displacement Field")
 
     resampler = sitk.ResampleImageFilter()
     resampler.SetReferenceImage(fixed);
