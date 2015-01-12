@@ -57,6 +57,9 @@ public:
   std::vector<double> GetTranslation( ) const;
   Self &SetTranslation(const std::vector<double>& translation);
 
+  /** additional methods */
+  std::vector<double> GetMatrix() const;
+
 protected:
 
   virtual void SetPimpleTransform( PimpleTransformBase *pimpleTransform );
@@ -76,6 +79,7 @@ private:
   nsstd::function<double()> m_pfGetAngle;
   nsstd::function<void(const std::vector<double>&)> m_pfSetTranslation;
   nsstd::function<std::vector<double>()> m_pfGetTranslation;
+  nsstd::function<std::vector<double>()> m_pfGetMatrix;
 
 };
 

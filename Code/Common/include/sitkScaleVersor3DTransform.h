@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkVersorTransform_h
-#define __sitkVersorTransform_h
+#ifndef __sitkScaleVersor3DTransform_h
+#define __sitkScaleVersor3DTransform_h
 
 #include "sitkCommon.h"
 #include "sitkTransform.h"
@@ -26,21 +26,21 @@ namespace itk
 namespace simple
 {
 
-class SITKCommon_EXPORT VersorTransform
+class SITKCommon_EXPORT ScaleVersor3DTransform
   : public Transform
 {
 public:
-  typedef VersorTransform Self;
+  typedef ScaleVersor3DTransform Self;
   typedef Transform Superclass;
 
 // construct identity
-  VersorTransform();
+  ScaleVersor3DTransform();
 
-  VersorTransform( const VersorTransform & );
+  ScaleVersor3DTransform( const ScaleVersor3DTransform & );
 
-  explicit VersorTransform( const Transform & );
+  explicit ScaleVersor3DTransform( const Transform & );
 
-  VersorTransform &operator=( const VersorTransform & );
+  ScaleVersor3DTransform &operator=( const ScaleVersor3DTransform & );
 
 /** fixed parameter */
   Self &SetCenter(const std::vector<double> &params);
@@ -52,7 +52,14 @@ public:
   Self &SetRotation(const std::vector<double> &axis,  double angle);
   std::vector<double> GetVersor() const;
 
-  /** additional methods */
+  std::vector<double> GetTranslation( ) const;
+  Self &SetTranslation(const std::vector<double>& translation);
+
+  std::vector<double> GetScale( ) const;
+  Self &SetScale( const std::vector<double> & scale );
+
+/** additional methods */
+  Self &Translate(const std::vector<double> &offset);
   std::vector<double> GetMatrix() const;
 
 protected:
@@ -74,8 +81,14 @@ private:
   nsstd::function<void(const std::vector<double>&)> m_pfSetRotation1;
   nsstd::function<void(const std::vector<double>&,double)> m_pfSetRotation2;
   nsstd::function<std::vector<double>()> m_pfGetVersor;
+  nsstd::function<void(const std::vector<double>&)> m_pfSetTranslation;
+  nsstd::function<std::vector<double>()> m_pfGetTranslation;
+  nsstd::function<void(const std::vector<double>&)> m_pfSetScale;
+  nsstd::function<std::vector<double>()> m_pfGetScale;
+  nsstd::function<void(const std::vector<double> &)> m_pfTranslate;
   nsstd::function<std::vector<double>()> m_pfGetMatrix;
 };
+
 }
 }
 

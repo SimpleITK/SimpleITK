@@ -49,7 +49,10 @@ message(STATUS "Building SimpleITK version \"${SimpleITK_VERSION}\"")
 include(sitkCheckRequiredFlags)
 
 
-find_package(ITK REQUIRED ) # the modules needed can be listed here as required components
+find_package(ITK REQUIRED )
+#we require certain packages be turned on in ITK
+include("sitkCheckForITKModuleDependencies.cmake")
+
 if(ITK_FOUND)
 
   # NOTE: We are purposely not calling UseITK yet. However, we must make

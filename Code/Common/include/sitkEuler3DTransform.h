@@ -68,6 +68,9 @@ Self &ComputeZYXOn () {return this->SetComputeZYX(true);}
 Self &ComputeZYXOff () {return this->SetComputeZYX(false);}
 
 
+  /** additional methods */
+  std::vector<double> GetMatrix() const;
+
 protected:
 
 virtual void SetPimpleTransform( PimpleTransformBase *pimpleTransform );
@@ -92,7 +95,7 @@ nsstd::function<void(const std::vector<double>&)> m_pfSetTranslation;
 nsstd::function<std::vector<double>()> m_pfGetTranslation;
 nsstd::function<void(bool)> m_pfSetComputeZYX;
 nsstd::function<bool()> m_pfGetComputeZYX;
-
+nsstd::function<std::vector<double>()> m_pfGetMatrix;
 
 
 };

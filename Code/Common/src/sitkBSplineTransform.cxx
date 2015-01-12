@@ -17,6 +17,7 @@
 *=========================================================================*/
 #include "sitkBSplineTransform.h"
 #include "sitkPimpleTransform.hxx"
+#include "sitkTransformHelper.hxx"
 
 #include "itkBSplineTransform.h"
 
@@ -189,25 +190,12 @@ void BSplineTransform::InternalInitialization(TransformType *t)
   this->m_pfGetTransformDomainDirection = nsstd::bind(pfITKDirectionToSTL,nsstd::bind(&TransformType::GetTransformDomainDirection,t));
   }
 
-
-#define SITK_SET_MPF(NAME,ITK_TYPENAME, COMPONENT)                      \
-  {                                                                     \
-  typedef ITK_TYPENAME itkType;                                         \
-  itkType (*pfSTLToITK)(const std::vector<COMPONENT> &) = &sitkSTLVectorToITK<itkType, COMPONENT>; \
-  this->m_pfSet##NAME = nsstd::bind(&TransformType::Set##NAME,t,nsstd::bind(pfSTLToITK,nsstd::placeholders::_1)); \
-                                                                        \
-  std::vector<COMPONENT> (*pfITKToSTL)( const itkType &) = &sitkITKVectorToSTL<COMPONENT,itkType>; \
-  this->m_pfGet##NAME = nsstd::bind(pfITKToSTL,nsstd::bind(&TransformType::Get##NAME,t)); \
-  }
-
-
-
    // TransformDomainMeshSize
-  SITK_SET_MPF( TransformDomainMeshSize, typename TransformType::MeshSizeType, unsigned int );
+  SITK_TRANSFORM_SET_MPF( TransformDomainMeshSize, typename TransformType::MeshSizeType, unsigned int );
   // TransformDomainOrigin
-  SITK_SET_MPF( TransformDomainOrigin, typename TransformType::OriginType, double );
+  SITK_TRANSFORM_SET_MPF( TransformDomainOrigin, typename TransformType::OriginType, double );
   // TransformDomainPhysicalDimensions
-  SITK_SET_MPF( TransformDomainPhysicalDimensions, typename TransformType::PhysicalDimensionsType, double );
+  SITK_TRANSFORM_SET_MPF( TransformDomainPhysicalDimensions, typename TransformType::PhysicalDimensionsType, double );
 
 
   std::vector<Image> (*pfImageArrayConvert)(const typename TransformType::CoefficientImageArray &) = &sitkImageArrayConvert<typename TransformType::CoefficientImageArray>;

@@ -222,6 +222,14 @@ sitk_add_python_test( Example.DicomSeriesReader
     "${TEST_HARNESS_TEMP_DIRECTORY}/DicomSeriesReader.nrrd"
   )
 
+sitk_add_python_test( Example.DicomSeriesReader2
+  "${SimpleITKExamples_SOURCE_DIR}/DicomSeriesReader2.py"
+  --compare-MD5
+  "${TEST_HARNESS_TEMP_DIRECTORY}/DicomSeriesReader2.nrrd"
+  "8e65f711d450b6b466c6d76a667ecb72"
+    DATA{${SimpleITK_DATA_ROOT}/Input/DicomSeries/,REGEX:Image[0-9]+.dcm}
+    "${TEST_HARNESS_TEMP_DIRECTORY}/DicomSeriesReader2.nrrd"
+  )
 
 sitk_add_python_test( Example.Segmentation.ConnectedThresholdImageFilter1
   "${SimpleITKExamples_SOURCE_DIR}/Segmentation/ConnectedThresholdImageFilter.py"
@@ -277,6 +285,29 @@ sitk_add_python_test( Example.ImageRegistrationMethod2
     DATA{${SimpleITK_DATA_ROOT}/Baseline/displacement_13x17y.mha}
     0.02
   )
+
+sitk_add_python_test( Example.ImageRegistrationMethod3Test1
+  "${SimpleITKExamples_SOURCE_DIR}/ImageRegistrationMethod3.py"
+  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20.png}
+  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceR10X13Y17.png}
+  ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethod3Test1.hdf5
+  TRANSFORM_COMPARE
+    ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethod3Test1.hdf5
+    DATA{${SimpleITK_DATA_ROOT}/Baseline/ImageRegistrationMethod3Test1.mha}
+    0.02
+  )
+
+sitk_add_python_test( Example.ImageRegistrationMethod3Test2
+  "${SimpleITKExamples_SOURCE_DIR}/ImageRegistrationMethod3.py"
+  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20.png}
+  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceR10X13Y17S12.png}
+  ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethod3Test2.hdf5
+  TRANSFORM_COMPARE
+    ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethod3Test2.hdf5
+    DATA{${SimpleITK_DATA_ROOT}/Baseline/ImageRegistrationMethod3Test2.mha}
+    0.03
+  )
+
 
 sitk_add_python_test( Example.ImageRegistrationMethod4Test1
   "${SimpleITKExamples_SOURCE_DIR}/ImageRegistrationMethod4.py"
@@ -385,6 +416,17 @@ sitk_add_lua_test( Example.DicomSeriesReader
     DATA{${SimpleITK_DATA_ROOT}/Input/DicomSeries/,REGEX:Image[0-9]+.dcm}
     "${TEST_HARNESS_TEMP_DIRECTORY}/DicomSeriesReader.nrrd"
   )
+
+sitk_add_lua_test( Example.ImageRegistrationMethod1
+  "${SimpleITKExamples_SOURCE_DIR}/ImageRegistrationMethod1.lua"
+    ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceBorder20.png
+    ${TEST_HARNESS_DATA_DIRECTORY}/Input/BrainProtonDensitySliceShifted13x17y.png
+    ${TEST_HARNESS_TEMP_DIRECTORY}/LuaImageRegistrationMethod1Test.hdf5
+  TRANSFORM_COMPARE
+    ${TEST_HARNESS_TEMP_DIRECTORY}/LuaImageRegistrationMethod1Test.hdf5
+    DATA{${SimpleITK_DATA_ROOT}/Baseline/displacement_13x17y.mha}
+    0.02
+    )
 
 
 #

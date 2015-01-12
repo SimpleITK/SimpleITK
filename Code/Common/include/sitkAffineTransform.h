@@ -44,6 +44,9 @@ public:
   std::vector<double> GetTranslation( ) const;
   Self &SetTranslation( const std::vector<double>& translation);
 
+  Self &SetMatrix( const std::vector<double> &matrix);
+  std::vector<double> GetMatrix() const;
+
   /** fixed parameter */
   Self &SetCenter(const std::vector<double> &params);
   std::vector<double> GetCenter( ) const;
@@ -89,6 +92,8 @@ private:
 
   nsstd::function<void(const std::vector<double>&)> m_pfSetCenter;
   nsstd::function<std::vector<double>()> m_pfGetCenter;
+  nsstd::function<void(const std::vector<double>&)> m_pfSetMatrix;
+  nsstd::function<std::vector<double>()> m_pfGetMatrix;
   nsstd::function<void(const std::vector<double>&)> m_pfSetTranslation;
   nsstd::function<std::vector<double>()> m_pfGetTranslation;
 

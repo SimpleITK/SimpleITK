@@ -178,6 +178,15 @@ public:
    */
   virtual bool SetInverse();
 
+  /** \brief Return a new inverse transform of the same type as this.
+   *
+   * Creates a new transform object and tries to set the value to the
+   * inverse. As not all transform types have inverse and some
+   * transforms are not invertable, an exception will be throw is
+   * there is no inverse.
+   */
+  Transform GetInverse() const;
+
   std::string ToString( void ) const;
 
 

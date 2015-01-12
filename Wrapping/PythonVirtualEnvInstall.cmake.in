@@ -19,6 +19,7 @@ if ( failed )
   message( FATAL_ERROR "Creation of Python virtual enviroment failed.\n${error}" )
 endif()
 
+message(STATUS "Installing Python Package: SimpleITK")
 execute_process(
   COMMAND "@VIRTUAL_PYTHON_EXECUTABLE@" "@CMAKE_CURRENT_BINARY_DIR@/PythonPackage/setup.py" install
   RESULT_VARIABLE failed
@@ -30,9 +31,11 @@ endif()
 
 
 if ( "@SimpleITK_PYTHON_WHEEL@" )
+  message(STATUS "Installing Python Package: wheel")
   set(install_wheel_script "
 import sys
-
+from ez_setup import use_setuptools
+use_setuptools()
 if not(sys.modules.get(\"wheel\")):
     from setuptools.command import easy_install
     easy_install.main([\"wheel\"])
@@ -40,6 +43,8 @@ if not(sys.modules.get(\"wheel\")):
 
   execute_process(
     COMMAND @VIRTUAL_PYTHON_EXECUTABLE@ -c "${install_wheel_script}"
+    WORKING_DIRECTORY "PythonPackage"
+    ERROR_VARIABLE error
     RESULT_VARIABLE failed
     )
 

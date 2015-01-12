@@ -390,6 +390,7 @@ TEST(TransformTest,AffineTransform)
   EXPECT_NO_THROW( tx.reset( new sitk::AffineTransform(2) ) );
   EXPECT_EQ( tx->GetParameters().size(), 6u );
   EXPECT_EQ( tx->GetFixedParameters().size(), 2u );
+  EXPECT_EQ( tx->GetMatrix(), v4(1.0,0.0, 0.0,1.0) );
 
   EXPECT_EQ( tx->SetTranslation( trans2d ).GetTranslation(), trans2d );
   EXPECT_EQ( tx->SetCenter( center2d ).GetCenter(), center2d );
@@ -490,8 +491,28 @@ TEST(TransformTest,AffineTransform_3DPoints)
   tx.SetIdentity();
   EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(0.0,0.0,0.0) ), v3(0.0,0.0,0.0),1e-15 );
   EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(1.0,1.0,1.0) ), v3(1.0,1.0,1.0),1e-15 );
+
+  sitk::AffineTransform tx3(tx.GetInverse());
+  EXPECT_VECTOR_DOUBLE_NEAR( tx3.TransformPoint( v3(0.0,0.0,0.0) ), v3(0.0,0.0,0.0),1e-15 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx3.TransformPoint( v3(1.0,1.0,1.0) ), v3(1.0,1.0,1.0),1e-15 );
+
 }
 
+TEST(TransformTest,AffineTransform_Matrix)
+{
+  // Test the Set/Get Matrix
+  sitk::AffineTransform tx(3);
+  EXPECT_EQ( v9(1.0,0.0,0.0, 0.0,1.0,0.0, 0.0,0.0,1.0), tx.GetMatrix() );
+  tx.SetMatrix( v9(1.0,1.0,0.0, 0.0,2.0,0.0, 0.0,0.0,3.0) );
+  EXPECT_EQ( v9(1.0,1.0,0.0, 0.0,2.0,0.0, 0.0,0.0,3.0), tx.GetMatrix() );
+
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(1.0,1.0,0.0) ), v3(2.0,2.0,0.0),1e-15 );
+  EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(0.0,1.0,1.0) ), v3(1.0,2.0,3.0),1e-15 );
+
+  tx.SetMatrix( v9(1.0,0.0,0.0, 0.0,0.0,0.0, 0.0,0.0,1.0) );
+  EXPECT_THROW(tx.GetInverse(), sitk::GenericException);
+  EXPECT_TRUE( !tx.SetInverse() );
+}
 TEST(TransformTest,BSplineTransform)
 { // test BSplineTransform
 
@@ -561,6 +582,7 @@ TEST(TransformTest,BSplineTransform)
   // no inverse
   EXPECT_TRUE(!tx->SetInverse());
   EXPECT_NO_THROW(tx->GetOrder());
+  EXPECT_THROW(tx->GetInverse(),sitk::GenericException);
 }
 
 TEST(TransformTest,BSplineTransform_order)
@@ -748,6 +770,7 @@ TEST(TransformTest,Euler2DTransform)
   std::auto_ptr<sitk::Euler2DTransform> tx(new sitk::Euler2DTransform());
   EXPECT_EQ( tx->GetParameters().size(), 3u );
   EXPECT_EQ( tx->GetFixedParameters().size(), 2u );
+  EXPECT_EQ( tx->GetMatrix(), v4(1.0,0.0, 0.0,1.0) );
 
 
   tx.reset( new sitk::Euler2DTransform(center));
@@ -850,6 +873,9 @@ TEST(TransformTest,Euler2DTransform)
   // inverse
   EXPECT_TRUE(etx.SetInverse());
   EXPECT_NO_THROW(etx.GetAngle());
+
+  sitk::Euler2DTransform etx2(etx.GetInverse());
+  EXPECT_NO_THROW(etx2.GetAngle());
 }
 
 
@@ -864,6 +890,7 @@ TEST(TransformTest,Euler3DTransform)
   std::auto_ptr<sitk::Euler3DTransform> tx(new sitk::Euler3DTransform());
   EXPECT_EQ( tx->GetParameters().size(), 6u );
   EXPECT_EQ( tx->GetFixedParameters().size(), 3u );
+  EXPECT_EQ( tx->GetMatrix(), v9(1.0,0.0,0.0, 0.0,1.0,0.0, 0.0,0.0,1.0) );
 
 
   tx.reset( new sitk::Euler3DTransform(center));
@@ -992,6 +1019,7 @@ TEST(TransformTest,Similarity2DTransform)
   EXPECT_EQ( tx->GetTranslation(), v2(0.0,0.0) );
   EXPECT_EQ( tx->GetScale(), 1.0);
   EXPECT_EQ( tx->GetAngle(), 0.0 );
+  EXPECT_EQ( tx->GetMatrix(), v4(1.0,0.0, 0.0,1.0) );
 
   EXPECT_NO_THROW( tx.reset( new sitk::Similarity2DTransform(center, -1.0, v2(1.1,1.1) ) ) );
   EXPECT_EQ( tx->GetCenter(), center );
@@ -1097,6 +1125,7 @@ TEST(TransformTest,ScaleSkewVersor3DTransform)
   EXPECT_EQ( tx->GetTranslation(), v3(0.0,0.0,0.0) );
   EXPECT_EQ( tx->GetScale(), v3(1.0,1.0,1.0) );
   EXPECT_EQ( tx->GetVersor(), v4(0.0,0.0,0.0,1.0) );
+  EXPECT_EQ( tx->GetMatrix(), v9(1.0,0.0,0.0, 0.0,1.0,0.0, 0.0,0.0,1.0) );
 
   EXPECT_EQ( tx->SetScale(v3(1.0,2.0,3.0)).GetScale(), v3(1.0,2.0,3.0) );
   EXPECT_EQ( tx->SetTranslation(trans).GetTranslation(), trans );
@@ -1254,6 +1283,7 @@ TEST(TransformTest,Similarity3DTransform)
   EXPECT_EQ( tx->GetTranslation(), v3(0.0,0.0,0.0) );
   EXPECT_EQ( tx->GetScale(), 1.0);
   EXPECT_EQ( tx->GetVersor(), v4(0.0,0.0,0.0,1.0) );
+  EXPECT_EQ( tx->GetMatrix(), v9(1.0,0.0,0.0, 0.0,1.0,0.0, 0.0,0.0,1.0) );
 
   EXPECT_EQ( tx->SetScale(2.0).GetScale(), 2.0 );
   EXPECT_EQ( tx->SetTranslation(trans).GetTranslation(), trans );
@@ -1454,6 +1484,7 @@ TEST(TransformTest,VersorRigid3DTransform)
   EXPECT_EQ( tx->GetFixedParameters().size(), 3u );
   EXPECT_EQ( tx->GetTranslation(), v3(0.0,0.0,0.0) );
   EXPECT_EQ( tx->GetVersor(), v4(0.0,0.0,0.0,1.0) );
+  EXPECT_EQ( tx->GetMatrix(), v9(1.0,0.0,0.0, 0.0,1.0,0.0, 0.0,0.0,1.0) );
 
   EXPECT_EQ( tx->SetTranslation(trans).GetTranslation(), trans );
   EXPECT_EQ( tx->SetCenter(center).GetCenter(), center );
@@ -1582,6 +1613,7 @@ TEST(TransformTest,VersorTransform)
   EXPECT_EQ( tx->GetFixedParameters().size(), 3u );
   EXPECT_EQ( tx->GetVersor(), v4(0.0,0.0,0.0,1.0) );
   EXPECT_EQ( tx->GetCenter(), zeros );
+  EXPECT_EQ( tx->GetMatrix(), v9(1.0,0.0,0.0, 0.0,1.0,0.0, 0.0,0.0,1.0) );
 
   EXPECT_EQ( tx->SetCenter(center).GetCenter(), center );
 

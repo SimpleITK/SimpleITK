@@ -185,6 +185,7 @@ class Doxy2SWIG:
         self.generic_parse(node)
 
     do_ref = space_parse
+    do_ulink = space_parse
     do_emphasis = space_parse
     do_bold = space_parse
     do_computeroutput = space_parse

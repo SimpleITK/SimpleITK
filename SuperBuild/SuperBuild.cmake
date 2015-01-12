@@ -199,6 +199,15 @@ list( APPEND ep_common_list
 
   CMAKE_STRIP
 
+  CMAKE_PREFIX_PATH
+  CMAKE_FRAMEWORK_PATH
+  CMAKE_SYSTEM_PREFIX_PATH
+  CMAKE_SYSTEM_INCLUDE_PATH
+  CMAKE_SYSTEM_LIBRARY_PATH
+  CMAKE_SYSTEM_PROGRAM_PATH
+  CMAKE_SYSTEM_IGNORE_PATH
+
+
   CMAKE_GENERATOR
   CMAKE_EXTRA_GENERATOR
   MEMORYCHECK_COMMAND_OPTIONS
@@ -259,10 +268,13 @@ option(USE_SYSTEM_ITK "Use a pre-built version of ITK" OFF)
 mark_as_advanced(USE_SYSTEM_ITK)
 if(USE_SYSTEM_ITK)
   find_package(ITK REQUIRED)
+  #we require certain packages be turned on in ITK
+  include("${CMAKE_CURRENT_SOURCE_DIR}/../sitkCheckForITKModuleDependencies.cmake")
 else()
   include(External_ITK)
   list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES ITK)
 endif()
+
 
 
 get_cmake_property( _varNames VARIABLES )

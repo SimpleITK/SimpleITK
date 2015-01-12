@@ -149,6 +149,11 @@ if ( WRAP_PYTHON )
     "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/setup.py" )
 
   configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/PythonPackage/setupegg.py"
+    "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/setupegg.py"
+    COPYONLY )
+
+  configure_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/PythonPackage/ez_setup.py"
     "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/ez_setup.py"
     COPYONLY )

@@ -61,7 +61,7 @@ namespace itk {
        * \sa itk::GDCMSeriesFileNames
        **/
       static std::vector<std::string> GetGDCMSeriesFileNames( const std::string &directory,
-                                                              bool useSeriesDetails= true,
+                                                              bool useSeriesDetails = false,
                                                               bool recursive = false,
                                                               bool loadSequences = false,
                                                               bool loadPrivateTags = false )
@@ -90,7 +90,7 @@ namespace itk {
        **/
       static std::vector<std::string> GetGDCMSeriesFileNames( const std::string &directory,
                                                               const std::string &seriesID,
-                                                              bool useSeriesDetails= true,
+                                                              bool useSeriesDetails = false,
                                                               bool recursive = false,
                                                               bool loadSequences = false,
                                                               bool loadPrivateTags = false );
