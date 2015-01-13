@@ -106,7 +106,7 @@ print(" Metric value: {0}".format(R.GetMetricValue()))
 
 sitk.WriteTransform(outTx,  sys.argv[3])
 
-if ( True or not "SITK_NOSHOW" in os.environ ):
+if ( not "SITK_NOSHOW" in os.environ ):
 
     sitk.Show(displacementTx.GetDisplacementField(), "Displacement Field")
 
