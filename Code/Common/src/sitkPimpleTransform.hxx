@@ -38,6 +38,8 @@
 #include "itkCompositeTransform.h"
 
 #include "itkDisplacementFieldTransform.h"
+#include "itkBSplineSmoothingOnUpdateDisplacementFieldTransform.h"
+#include "itkGaussianSmoothingOnUpdateDisplacementFieldTransform.h"
 #include "itkBSplineTransform.h"
 
 namespace itk
@@ -240,10 +242,10 @@ public:
       sitkExceptionMacro( "SetIdentity does is not implemented for transforms of type " << self->GetNameOfClass() );
     }
 
+#if ( ( SITK_ITK_VERSION_MAJOR == 4 ) && ( SITK_ITK_VERSION_MINOR < 7 ) )
   template <typename UScalar, unsigned int UDimension>
   void SetIdentity( itk::DisplacementFieldTransform<UScalar, UDimension> *self)
       {
-        // TODO:: add SetIdentity method to upstream ITK.
         typedef itk::DisplacementFieldTransform<UScalar, UDimension> DFTType;
         typename DFTType::DisplacementFieldType *displacementField;
 
@@ -258,6 +260,45 @@ public:
           displacementField->FillBuffer(typename DFTType::OutputVectorType(0.0));
           }
       }
+
+  template <typename UScalar, unsigned int UDimension>
+  void SetIdentity( itk::BSplineSmoothingOnUpdateDisplacementFieldTransform<UScalar, UDimension> *self)
+      {
+        typedef itk::DisplacementFieldTransform<UScalar, UDimension> DFTType;
+        typename DFTType::DisplacementFieldType *displacementField;
+
+        displacementField = self->GetModifiableDisplacementField();
+        if (displacementField)
+          {
+          displacementField->FillBuffer(typename DFTType::OutputVectorType(0.0));
+          }
+        displacementField = self->GetModifiableInverseDisplacementField();;
+        if (displacementField)
+          {
+          displacementField->FillBuffer(typename DFTType::OutputVectorType(0.0));
+          }
+      }
+
+  template <typename UScalar, unsigned int UDimension>
+  void SetIdentity( itk::GaussianSmoothingOnUpdateDisplacementFieldTransform<UScalar, UDimension> *self)
+      {
+        typedef itk::DisplacementFieldTransform<UScalar, UDimension> DFTType;
+        typename DFTType::DisplacementFieldType *displacementField;
+
+        displacementField = self->GetModifiableDisplacementField();
+        if (displacementField)
+          {
+          displacementField->FillBuffer(typename DFTType::OutputVectorType(0.0));
+          }
+        displacementField = self->GetModifiableInverseDisplacementField();;
+        if (displacementField)
+          {
+          displacementField->FillBuffer(typename DFTType::OutputVectorType(0.0));
+          }
+      }
+
+
+#endif
 
   virtual bool GetInverse(PimpleTransformBase * &outputTransform) const
     {

@@ -117,9 +117,9 @@ bool initialized = RegisterMoreTransforms<2>() && RegisterMoreTransforms<3>();
 
 /** \brief An ITK Command class to hold a object until destruction
  *
- * This command is to add is resource management, by utilizing that
+ * This command is to add resource management, by utilizing
  * the lifetime of a Command added to an object is about the same as
- * that object. So this command holds onto a resource or object for
+ * that managed object. So this command holds onto a resource or object for
  * lifetime of itself. By adding as a command to an ITK object it will
  * be released on destruction of the ITK object ( subject to the
  * reference counting on the Command ).
