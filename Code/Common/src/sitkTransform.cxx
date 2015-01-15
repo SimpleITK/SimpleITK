@@ -238,13 +238,13 @@ Transform::Transform( )
   Transform& Transform::operator=( const Transform & txf )
   {
     PimpleTransformBase *temp = txf.m_PimpleTransform->ShallowCopy();
-    delete this->m_PimpleTransform;
     this->SetPimpleTransform( temp );
     return *this;
   }
 
 
 Transform::Transform( Image &image, TransformEnum txType )
+    : m_PimpleTransform( NULL )
   {
 
 
@@ -367,7 +367,6 @@ void Transform::MakeUniqueForWrite( void )
   if ( this->m_PimpleTransform->GetReferenceCount() > 1 )
     {
     PimpleTransformBase *temp = this->m_PimpleTransform->DeepCopy();
-    delete this->m_PimpleTransform;
     this->SetPimpleTransform( temp );
     }
 }
@@ -384,6 +383,7 @@ Transform::Transform( PimpleTransformBase *pimpleTransform )
 
 void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
 {
+  delete this->m_PimpleTransform;
   this->m_PimpleTransform = pimpleTransform;
 }
 
@@ -488,7 +488,7 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
         temp = new PimpleTransform<itk::IdentityTransform< double, VDimension > >();
 
       }
-    this->SetPimpleTransform(temp);
+    Self::SetPimpleTransform(temp);
   }
 
   template void SITKCommon_EXPORT Transform::InternalInitialization<2>( TransformEnum, itk::TransformBase * );
@@ -546,7 +546,6 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
     PimpleTransformBase *temp = this->m_PimpleTransform->AddTransform( t );
     if ( temp != this->m_PimpleTransform )
       {
-      delete this->m_PimpleTransform;
       this->SetPimpleTransform(temp);
       }
     return *this;
@@ -586,7 +585,6 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
     temp.reset(p);
     }
     // take ownership of the new pimple transform
-    delete this->m_PimpleTransform;
     this->SetPimpleTransform( temp.release() );
     return true;
   }
