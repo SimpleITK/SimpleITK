@@ -39,6 +39,24 @@ TEST( ConditionalTest, ConditionalTest1 ) {
 }
 
 
+TEST( ProcessObject, GlobalTolerance ) {
+  // basic coverage test of setting and getting
+
+  namespace sitk = itk::simple;
+
+  EXPECT_EQ( sitk::ProcessObject::GetGlobalDefaultCoordinateTolerance(), 1e-6 );
+  EXPECT_EQ( sitk::ProcessObject::GetGlobalDefaultDirectionTolerance(), 1e-6 );
+
+  sitk::ProcessObject::SetGlobalDefaultCoordinateTolerance( 1e-5 );
+  EXPECT_EQ( sitk::ProcessObject::GetGlobalDefaultCoordinateTolerance(), 1e-5 );
+  EXPECT_EQ( sitk::ProcessObject::GetGlobalDefaultDirectionTolerance(), 1e-6 );
+
+  sitk::ProcessObject::SetGlobalDefaultDirectionTolerance( 1e-4);
+  EXPECT_EQ( sitk::ProcessObject::GetGlobalDefaultCoordinateTolerance(), 1e-5 );
+  EXPECT_EQ( sitk::ProcessObject::GetGlobalDefaultDirectionTolerance(), 1e-4 );
+
+}
+
 TEST( ProcessObject, GlobalWarning ) {
   // Basic coverage test of setting and getting. Need separate
   // specific check for propagation of warning to ITK.

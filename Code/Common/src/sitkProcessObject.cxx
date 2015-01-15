@@ -20,6 +20,7 @@
 
 #include "itkProcessObject.h"
 #include "itkCommand.h"
+#include "itkImageToImageFilter.h"
 
 #include <iostream>
 #include <algorithm>
@@ -240,6 +241,27 @@ bool ProcessObject::GetGlobalWarningDisplay()
 void ProcessObject::SetGlobalWarningDisplay(bool flag)
 {
   itk::Object::SetGlobalWarningDisplay(flag);
+}
+
+
+double ProcessObject::GetGlobalDefaultCoordinateTolerance()
+{
+  return itk::ImageToImageFilterCommon::GetGlobalDefaultCoordinateTolerance();
+}
+
+void ProcessObject::SetGlobalDefaultCoordinateTolerance(double tolerance)
+{
+  return itk::ImageToImageFilterCommon::SetGlobalDefaultCoordinateTolerance(tolerance);
+}
+
+double ProcessObject::GetGlobalDefaultDirectionTolerance()
+{
+  return itk::ImageToImageFilterCommon::GetGlobalDefaultDirectionTolerance();
+}
+
+void ProcessObject::SetGlobalDefaultDirectionTolerance(double tolerance)
+{
+  return itk::ImageToImageFilterCommon::SetGlobalDefaultDirectionTolerance(tolerance);
 }
 
 
