@@ -123,6 +123,25 @@ namespace itk {
       static unsigned int GetGlobalDefaultNumberOfThreads();
       /**@}*/
 
+      /** \brief Access the global tolerance to determine congruent spaces.
+       *
+       * The default tolerance is governed by the
+       * GlobalDefaultCoordinateTolerance and the
+       * GlobalDefaultDirectionTolerance properties, defaulting to
+       * 1.0e-6. The default tolerance for spatial comparison is then
+       * scaled by the voxelSpacing for coordinates (i.e. the
+       * coordinates must be the same to within one part per
+       * million). For the direction cosines the values must be within
+       * the current absolute tolerance.
+       * @{
+       */
+      static double GetGlobalDefaultCoordinateTolerance();
+      static void SetGlobalDefaultCoordinateTolerance(double );
+
+      static double GetGlobalDefaultDirectionTolerance();
+      static void SetGlobalDefaultDirectionTolerance(double);
+      /**@}*/
+
       /** The number of threads used when executing a filter if the
        * filter is multi-threaded
        * @{
