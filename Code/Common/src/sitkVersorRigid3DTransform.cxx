@@ -87,7 +87,7 @@ VersorRigid3DTransform &VersorRigid3DTransform::operator=( const VersorRigid3DTr
 /** fixed parameter */
 VersorRigid3DTransform::Self &VersorRigid3DTransform::SetCenter(const std::vector<double> &params)
 {
-  this->MakeUniqueForWrite();
+  this->MakeUnique();
   this->m_pfSetCenter(params);
   return *this;
 }
@@ -100,14 +100,14 @@ std::vector<double> VersorRigid3DTransform::GetCenter( ) const
 
 VersorRigid3DTransform::Self &VersorRigid3DTransform::SetRotation(const std::vector<double> &versor)
 {
-  this->MakeUniqueForWrite();
+  this->MakeUnique();
   this->m_pfSetRotation1(versor);
   return *this;
 }
 
 VersorRigid3DTransform::Self &VersorRigid3DTransform::SetRotation(const std::vector<double> &axis,  double angle)
 {
-  this->MakeUniqueForWrite();
+  this->MakeUnique();
   this->m_pfSetRotation2(axis, angle);
   return *this;
 }
@@ -119,7 +119,7 @@ std::vector<double>  VersorRigid3DTransform::GetVersor() const
 
 VersorRigid3DTransform::Self &VersorRigid3DTransform::SetTranslation(const std::vector<double> &params)
 {
-  this->MakeUniqueForWrite();
+  this->MakeUnique();
   this->m_pfSetTranslation(params);
   return *this;
 }
@@ -131,7 +131,7 @@ std::vector<double> VersorRigid3DTransform::GetTranslation( ) const
 
 VersorRigid3DTransform::Self &VersorRigid3DTransform::Translate(const std::vector<double> &offset)
 {
-  this->MakeUniqueForWrite();
+  this->MakeUnique();
   this->m_pfTranslate(offset);
   return *this;
 }

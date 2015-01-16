@@ -149,7 +149,7 @@ DisplacementFieldTransform &DisplacementFieldTransform::operator=( const Displac
 
 DisplacementFieldTransform::Self &DisplacementFieldTransform::SetDisplacementField(Image &img)
 {
-  this->MakeUniqueForWrite();
+  this->MakeUnique();
   this->m_pfSetDisplacementField(img);
   return *this;
 }
@@ -162,7 +162,7 @@ Image DisplacementFieldTransform::GetDisplacementField() const
 
 DisplacementFieldTransform::Self &DisplacementFieldTransform::SetInverseDisplacementField(Image &img)
 {
-  this->MakeUniqueForWrite();
+  this->MakeUnique();
   this->m_pfSetInverseDisplacementField(img);
   return *this;
 }
@@ -175,7 +175,7 @@ Image DisplacementFieldTransform::GetInverseDisplacementField() const
 
 DisplacementFieldTransform::Self &DisplacementFieldTransform::SetInterpolator(InterpolatorEnum interp)
 {
-  this->MakeUniqueForWrite();
+  this->MakeUnique();
   this->m_pfSetInterpolator(interp);
   return *this;
 }
@@ -187,14 +187,14 @@ DisplacementFieldTransform::Self &DisplacementFieldTransform::SetInterpolator(In
 
 DisplacementFieldTransform::Self &DisplacementFieldTransform::SetSmoothingOff()
 {
-  this->MakeUniqueForWrite();
+  this->MakeUnique();
   this->m_pfSetSmoothingOff();
   return *this;
 }
 
 DisplacementFieldTransform::Self &DisplacementFieldTransform::SetSmoothingGaussianOnUpdate( double varianceForUpdateField, double varianceForTotalField )
 {
-  this->MakeUniqueForWrite();
+  this->MakeUnique();
   this->m_pfSetSmoothingGaussianOnUpdate(varianceForUpdateField, varianceForTotalField );
   return *this;
 }
@@ -205,7 +205,7 @@ DisplacementFieldTransform::SetSmoothingBSplineOnUpdate( const std::vector<unsig
                                                          bool enforceStationaryBoundary,
                                                          unsigned int order )
 {
-  this->MakeUniqueForWrite();
+  this->MakeUnique();
   this->m_pfSetSmoothingBSplineOnUpdate(numberOfControlPointsForUpdateField, numberOfControlPointsForTotalField, enforceStationaryBoundary, order);
   return *this;
 }
