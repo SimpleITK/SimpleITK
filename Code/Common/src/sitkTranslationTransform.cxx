@@ -26,13 +26,13 @@ namespace simple
 {
 
 TranslationTransform::TranslationTransform(unsigned int dimensions,
-                                           const std::vector<double> &translation)
+                                           const std::vector<double> &offset)
   : Transform(dimensions, sitkTranslation)
 
 {
   Self::InternalInitialization(Self::GetITKBase());
 
-  this->SetParameters(translation);
+  this->SetOffset(offset);
 }
 
 

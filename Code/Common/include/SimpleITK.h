@@ -33,6 +33,7 @@
 #include "sitkAffineTransform.h"
 #include "sitkEuler2DTransform.h"
 #include "sitkEuler3DTransform.h"
+#include "sitkScaleTransform.h"
 #include "sitkScaleSkewVersor3DTransform.h"
 #include "sitkScaleVersor3DTransform.h"
 #include "sitkSimilarity2DTransform.h"
