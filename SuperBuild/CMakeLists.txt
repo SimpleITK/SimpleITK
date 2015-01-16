@@ -5,7 +5,7 @@ project ( SuperBuildSimpleITK )
 # Superbuild script
 #-----------------------------------------------------------------------------
 
-# 
+#
 # Global configuration
 #
 
