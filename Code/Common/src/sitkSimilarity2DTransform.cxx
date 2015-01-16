@@ -69,7 +69,7 @@ Similarity2DTransform &Similarity2DTransform::operator=( const Similarity2DTrans
 /** fixed parameter */
 Similarity2DTransform::Self &Similarity2DTransform::SetCenter(const std::vector<double> &params)
 {
-  this->MakeUniqueForWrite();
+  this->MakeUnique();
   this->m_pfSetCenter(params);
   return *this;
 }
@@ -87,14 +87,14 @@ double Similarity2DTransform::GetAngle() const
 /** parameter */
 Similarity2DTransform::Self &Similarity2DTransform::SetAngle(double angle)
 {
-  this->MakeUniqueForWrite();
+  this->MakeUnique();
   this->m_pfSetAngle(angle);
   return *this;
 }
 
 Similarity2DTransform::Self &Similarity2DTransform::SetTranslation(const std::vector<double> &params)
 {
-  this->MakeUniqueForWrite();
+  this->MakeUnique();
   this->m_pfSetTranslation(params);
   return *this;
 }
@@ -106,7 +106,7 @@ std::vector<double> Similarity2DTransform::GetTranslation( ) const
 
 Similarity2DTransform::Self &Similarity2DTransform::SetScale(double scale)
 {
-  this->MakeUniqueForWrite();
+  this->MakeUnique();
   this->m_pfSetScale(scale);
   return *this;
 }
