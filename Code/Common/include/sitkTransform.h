@@ -189,10 +189,17 @@ public:
 
   std::string ToString( void ) const;
 
+  /** \brief Performs actually coping if needed to make object unique.
+   *
+   * The Transform class by default performs lazy coping and
+   * assignment. This method make sure that coping actually happens
+   * to the itk::Transform pointed to is only pointed to by this
+   * object.
+   */
+  void MakeUnique( void );
 
 protected:
 
-  void MakeUniqueForWrite( void );
 
   explicit Transform( PimpleTransformBase *pimpleTransform );
 
