@@ -70,14 +70,36 @@ namespace simple
      * to map from the virtual image domain to the moving image
      * domain.
      *
-     * If the inPlace flag is true, then the transform will be
-     * modified during Execute, otherwise a copy will be made.
+     * If the inPlace flag is explicitly false, then the transform
+     * will be the ITK registration will internally make a copy, and
+     * the transform will not be accessible during
+     * registration. Otherwise, the accessible InitialTransform value
+     * will be the same object used during registration, and will have
+     * a modified value upon completion.
      *
      * \sa itk::ImageRegistrationv4::SetInitialTransform
      * @{
      */
-    Self& SetInitialTransform ( const Transform &transform, bool inPlace = true )
+#if !defined(SWIG) || defined(JAVASWIG) || defined(CSHARPSWIG)
+    // Only wrap this method if the wrapping language is strongly typed
+    Self& SetInitialTransform ( const Transform &transform )
     {
+      this->m_InitialTransform = transform;
+      this->m_InitialTransform.MakeUnique();
+      this->m_InitialTransformInPlace = true;
+      return *this;
+    }
+#endif
+    Self& SetInitialTransform ( Transform &transform, bool inPlace=true )
+    {
+      if (inPlace)
+        {
+        // The registration framework will modify this transform. We
+        // need to make it unique so that it can be written to.
+        transform.MakeUnique();
+        }
+
+
       this->m_InitialTransform = transform;
       this->m_InitialTransformInPlace = inPlace;
       return *this;
