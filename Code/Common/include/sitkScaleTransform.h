@@ -34,7 +34,7 @@ public:
   typedef Transform Superclass;
 
   explicit ScaleTransform(unsigned int dimensions,
-                          const std::vector<double> &scales = std::vector<double>(3,1.0) );
+                          const std::vector<double> &scale = std::vector<double>(3,1.0) );
 
   ScaleTransform( const ScaleTransform & );
 
@@ -46,7 +46,7 @@ public:
   Self &SetScale(const std::vector<double> &params);
   std::vector<double> GetScale( ) const;
 
-/** fixed parameter */
+  /** fixed parameter */
   Self &SetCenter(const std::vector<double> &params);
   std::vector<double> GetCenter( ) const;
 
