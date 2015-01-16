@@ -192,7 +192,7 @@ public:
 
 protected:
 
-  void MakeUniqueForWrite( void );
+  void MakeUnique( void );
 
   explicit Transform( PimpleTransformBase *pimpleTransform );
 

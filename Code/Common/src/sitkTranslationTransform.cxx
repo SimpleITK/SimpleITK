@@ -60,7 +60,7 @@ TranslationTransform &TranslationTransform::operator=( const TranslationTransfor
 /** fixed parameter */
 TranslationTransform::Self &TranslationTransform::SetOffset(const std::vector<double> &params)
 {
-  this->MakeUniqueForWrite();
+  this->MakeUnique();
   this->m_pfSetOffset(params);
   return *this;
 }

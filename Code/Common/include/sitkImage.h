@@ -393,7 +393,7 @@ namespace simple
     AllocateInternal ( unsigned int width, unsigned int height, unsigned int depth, unsigned int numberOfComponents );
     /**@}*/
 
-    void MakeUniqueForWrite( void );
+    void MakeUnique( void );
 
   private:
 

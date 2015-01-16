@@ -87,7 +87,7 @@ ScaleSkewVersor3DTransform &ScaleSkewVersor3DTransform::operator=( const ScaleSk
 /** fixed parameter */
 ScaleSkewVersor3DTransform::Self &ScaleSkewVersor3DTransform::SetCenter(const std::vector<double> &params)
 {
-  this->MakeUniqueForWrite();
+  this->MakeUnique();
   this->m_pfSetCenter(params);
   return *this;
 }
@@ -100,14 +100,14 @@ std::vector<double> ScaleSkewVersor3DTransform::GetCenter( ) const
 
 ScaleSkewVersor3DTransform::Self &ScaleSkewVersor3DTransform::SetRotation(const std::vector<double> &versor)
 {
-  this->MakeUniqueForWrite();
+  this->MakeUnique();
   this->m_pfSetRotation1(versor);
   return *this;
 }
 
 ScaleSkewVersor3DTransform::Self &ScaleSkewVersor3DTransform::SetRotation(const std::vector<double> &axis,  double angle)
 {
-  this->MakeUniqueForWrite();
+  this->MakeUnique();
   this->m_pfSetRotation2(axis, angle);
   return *this;
 }
@@ -119,7 +119,7 @@ std::vector<double>  ScaleSkewVersor3DTransform::GetVersor() const
 
 ScaleSkewVersor3DTransform::Self &ScaleSkewVersor3DTransform::SetTranslation(const std::vector<double> &params)
 {
-  this->MakeUniqueForWrite();
+  this->MakeUnique();
   this->m_pfSetTranslation(params);
   return *this;
 }
@@ -131,14 +131,14 @@ std::vector<double> ScaleSkewVersor3DTransform::GetTranslation( ) const
 
 ScaleSkewVersor3DTransform::Self &ScaleSkewVersor3DTransform::Translate(const std::vector<double> &offset)
 {
-  this->MakeUniqueForWrite();
+  this->MakeUnique();
   this->m_pfTranslate(offset);
   return *this;
 }
 
 ScaleSkewVersor3DTransform::Self &ScaleSkewVersor3DTransform::SetScale(const std::vector<double> &params)
 {
-  this->MakeUniqueForWrite();
+  this->MakeUnique();
   this->m_pfSetScale(params);
   return *this;
 }
@@ -150,7 +150,7 @@ std::vector<double> ScaleSkewVersor3DTransform::GetScale( ) const
 
 ScaleSkewVersor3DTransform::Self &ScaleSkewVersor3DTransform::SetSkew(const std::vector<double> &params)
 {
-  this->MakeUniqueForWrite();
+  this->MakeUnique();
   this->m_pfSetSkew(params);
   return *this;
 }

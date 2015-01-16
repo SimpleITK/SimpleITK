@@ -73,7 +73,7 @@ BSplineTransform &BSplineTransform::operator=( const BSplineTransform &arg )
 
 BSplineTransform::Self &BSplineTransform::SetTransformDomainDirection(const std::vector<double> &params)
 {
-  this->MakeUniqueForWrite();
+  this->MakeUnique();
   this->m_pfSetTransformDomainDirection(params);
   return *this;
 }
@@ -87,7 +87,7 @@ std::vector<double> BSplineTransform::GetTransformDomainDirection() const
 
 BSplineTransform::Self &BSplineTransform::SetTransformDomainMeshSize(const std::vector<unsigned int>&params)
 {
-  this->MakeUniqueForWrite();
+  this->MakeUnique();
   this->m_pfSetTransformDomainMeshSize(params);
   return *this;
 }
@@ -101,7 +101,7 @@ std::vector<unsigned int> BSplineTransform::GetTransformDomainMeshSize() const
 
 BSplineTransform::Self &BSplineTransform::SetTransformDomainOrigin(const std::vector<double>&params)
 {
-  this->MakeUniqueForWrite();
+  this->MakeUnique();
   this->m_pfSetTransformDomainOrigin(params);
   return *this;
 }
@@ -115,7 +115,7 @@ std::vector<double> BSplineTransform::GetTransformDomainOrigin() const
 
 BSplineTransform::Self &BSplineTransform::SetTransformDomainPhysicalDimensions(const std::vector<double> &params)
 {
-  this->MakeUniqueForWrite();
+  this->MakeUnique();
   this->m_pfSetTransformDomainPhysicalDimensions(params);
   return *this;
 }
