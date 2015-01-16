@@ -363,6 +363,14 @@ namespace simple
     /** @} */
 
 
+    /** \brief Performs actually coping if needed to make object unique.
+     *
+     * The Image class by default performs lazy coping and
+     * assignment. This method make sure that coping actually happens
+     * to the itk::Image pointed to is only pointed to by this object.
+     */
+    void MakeUnique( void );
+
   protected:
 
     /** \brief Methods called by the constructor to allocate and initialize
@@ -393,7 +401,6 @@ namespace simple
     AllocateInternal ( unsigned int width, unsigned int height, unsigned int depth, unsigned int numberOfComponents );
     /**@}*/
 
-    void MakeUnique( void );
 
   private:
 
