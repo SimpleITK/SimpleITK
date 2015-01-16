@@ -36,13 +36,13 @@ derive classes from the Command class.  Thus a user may  override the
 Command class's Execute method for custom call-backs. The following
 languages support deriving classes from the Command class:
 
-\subsubsection Python
+\subsubsection CommandPython
 \snippet  FilterProgressReporting.py python director command
 
-\subsubsection CSharp
+\subsubsection CommandCSharp
 \snippet  FilterProgressReporting.cs csharp director command
 
-\subsubsection Ruby
+\subsubsection CommandRuby
 \snippet  FilterProgressReporting.rb ruby director command
 
 
@@ -53,7 +53,7 @@ often easier to simply define a callback inline with a lambda
 function. The following language supports inline function definitions
 for functions for the ProcessObject::AddCommand method:
 
-\subsubsection Python
+\subsubsection CommandFunctionPython
 \snippet FilterProgressReporting.py python lambda command
 
 */
