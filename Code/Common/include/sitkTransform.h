@@ -82,6 +82,7 @@ public:
    */
   template<unsigned int NDimension>
   explicit Transform( itk::CompositeTransform< double, NDimension >* compositeTransform )
+    : m_PimpleTransform( NULL )
     {
       sitkStaticAssert( NDimension == 2 || NDimension == 3, "Only 2D and 3D transforms are supported" );
       if ( compositeTransform == NULL )
