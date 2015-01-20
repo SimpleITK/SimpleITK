@@ -86,6 +86,32 @@ std::string  ImageRegistrationMethod::ToString() const
 
 
 ImageRegistrationMethod::Self&
+ImageRegistrationMethod::SetInitialTransform ( const Transform &transform )
+{
+  this->m_InitialTransform = transform;
+  this->m_InitialTransform.MakeUnique();
+  this->m_InitialTransformInPlace = true;
+  return *this;
+    }
+
+
+ImageRegistrationMethod::Self&
+ImageRegistrationMethod::SetInitialTransform ( Transform &transform, bool inPlace )
+{
+  if (inPlace)
+    {
+    // The registration framework will modify this transform. We
+    // need to make it unique so that it can be written to.
+    transform.MakeUnique();
+    }
+
+
+  this->m_InitialTransform = transform;
+  this->m_InitialTransformInPlace = inPlace;
+  return *this;
+}
+
+ImageRegistrationMethod::Self&
 ImageRegistrationMethod::SetMetricAsANTSNeighborhoodCorrelation(  unsigned int radius )
 {
   m_MetricRadius = radius;
