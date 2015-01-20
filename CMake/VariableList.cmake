@@ -7,16 +7,23 @@
 #
 function( VariableListToCache var_list cache )
   foreach( var IN LISTS ${var_list} )
-    if( NOT ${var} STREQUAL "" ) # if variable has been set
+    if( DEFINED var )
+      set( value "${${var}}" )
       get_property( type CACHE ${var} PROPERTY TYPE )
       get_property( advanced CACHE ${var} PROPERTY ADVANCED )
       get_property( helpstring CACHE ${var} PROPERTY HELPSTRING )
-      if ( NOT "${type}" )
 
+      # apply escape sequences
+      foreach( e "\\" "(" ")" "#" "$" "^" "@" )
+        STRING( REPLACE "${e}" "\\${e}" value "${value}" )
+      endforeach()
+
+      if ( "${type}" STREQUAL "" )
         set( type STRING )
       endif()
+
       set( _cache "${_cache}
-set( ${var} \"${${var}}\" CACHE \"${type}\" \"${helpstring}\" FORCE )
+set( ${var} \"${value}\" CACHE \"${type}\" \"${helpstring}\" FORCE )
 if( ${advanced} )
   mark_as_advanced( ${var} )
 endif()" )
