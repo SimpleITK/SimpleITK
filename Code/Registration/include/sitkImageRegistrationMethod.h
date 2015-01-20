@@ -82,28 +82,9 @@ namespace simple
      */
 #if !defined(SWIG) || defined(JAVASWIG) || defined(CSHARPSWIG)
     // Only wrap this method if the wrapping language is strongly typed
-    Self& SetInitialTransform ( const Transform &transform )
-    {
-      this->m_InitialTransform = transform;
-      this->m_InitialTransform.MakeUnique();
-      this->m_InitialTransformInPlace = true;
-      return *this;
-    }
+    Self& SetInitialTransform ( const Transform &transform );
 #endif
-    Self& SetInitialTransform ( Transform &transform, bool inPlace=true )
-    {
-      if (inPlace)
-        {
-        // The registration framework will modify this transform. We
-        // need to make it unique so that it can be written to.
-        transform.MakeUnique();
-        }
-
-
-      this->m_InitialTransform = transform;
-      this->m_InitialTransformInPlace = inPlace;
-      return *this;
-    }
+    Self& SetInitialTransform ( Transform &transform, bool inPlace=true );
     Transform GetInitialTransform()
       { return this->m_InitialTransform; }
     bool GetInitialTransformInPlace() const
