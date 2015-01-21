@@ -171,6 +171,17 @@ TEST_F(sitkRegistrationMethodTest, Transform_InPlaceOn)
   // expect input to have been modified
   EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,0.0), tx.GetParameters(), 1e-4);
 
+
+  // set with const method, with inplace constant
+  const sitk::Transform &ctx =  sitk::TranslationTransform(fixed.GetDimension(),v2(0.1,-0.2));
+  R.SetInitialTransform(ctx);
+  EXPECT_TRUE(R.GetInitialTransformInPlace());
+  outTx = R.Execute(fixed,moving);
+
+  EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,0.0), outTx.GetParameters(), 1e-4);
+  // expect input not to be modified
+  EXPECT_EQ(v2(0.1,-0.2), ctx.GetParameters());
+
 }
 
 TEST_F(sitkRegistrationMethodTest, Transform_Initial)
