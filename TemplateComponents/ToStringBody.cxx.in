@@ -4,7 +4,23 @@ $(foreach members
 $(if (not no_print) or (not no_print == 1) then
   OUT=[[
   out << "  ${name}: ";
+]]
+  if point_vec and (point_vec == 1) then
+  OUT=OUT..[[
+  out << "[ ";
+  for (unsigned int i = 0; i + 1 < m_${name}.size(); ++i)
+    {
+    this->ToStringHelper(out, this->m_${name}[i]);
+    out << ", ";
+    }
+  if ( !this->m_${name}.empty() ) out << this->m_${name}.back() << ' ';
+  out << "]";]]
+  else
+  OUT=OUT..[[
   this->ToStringHelper(out, this->m_${name});
+]]
+  end
+  OUT=OUT..[[
   out << std::endl;]]
 end)
 )$(when measurements $(foreach measurements
