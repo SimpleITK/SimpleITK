@@ -82,7 +82,7 @@ end)$(if point_vec and (point_vec == 1) then
       OUT=[[
 
       /** \brief Add ${name} point */
-      Self& Add${name:gsub("s$","")}( const std::vector< ${type} > &point ) { this->m_${name}.push_back(point); return *this;}
+      Self& Add${name:gsub("s([0-9]?)$","%1")}( const std::vector< ${type} > &point ) { this->m_${name}.push_back(point); return *this;}
       /** \brief Remove all ${name} points */
       Self& Clear${name}( ) { this->m_${name}.clear(); return *this;}
 ]]
