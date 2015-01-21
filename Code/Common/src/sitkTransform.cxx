@@ -362,7 +362,7 @@ void Transform::InternalBSplineInitialization( Image & inImage )
 
 
 
-void Transform::MakeUniqueForWrite( void )
+void Transform::MakeUnique( void )
 {
   if ( this->m_PimpleTransform->GetReferenceCount() > 1 )
     {
@@ -515,7 +515,7 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
   void Transform::SetParameters ( const std::vector<double>& parameters )
   {
     assert( m_PimpleTransform );
-    this->MakeUniqueForWrite();
+    this->MakeUnique();
     this->m_PimpleTransform->SetParameters( parameters );
   }
 
@@ -528,7 +528,7 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
   void Transform::SetFixedParameters ( const std::vector<double>& parameters )
   {
     assert( m_PimpleTransform );
-    this->MakeUniqueForWrite();
+    this->MakeUnique();
     this->m_PimpleTransform->SetFixedParameters( parameters );
   }
 
@@ -541,7 +541,7 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
   Transform &Transform::AddTransform( Transform t )
   {
     assert( m_PimpleTransform );
-    this->MakeUniqueForWrite();
+    this->MakeUnique();
     // this returns a pointer which may be the same or a new object
     PimpleTransformBase *temp = this->m_PimpleTransform->AddTransform( t );
     if ( temp != this->m_PimpleTransform )
@@ -567,7 +567,7 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
   void Transform::SetIdentity()
   {
     assert( m_PimpleTransform );
-    this->MakeUniqueForWrite();
+    this->MakeUnique();
     return this->m_PimpleTransform->SetIdentity();
   }
 
