@@ -392,76 +392,10 @@
     {
       "tag" : "cthead1",
       "description" : "cthead1 with defaults",
-      "settings" : [
-        {
-          "parameter" : "CalculateOrientedIntensityRegions",
-          "value" : "true",
-          "python_value" : "True",
-          "R_value" : "TRUE"
-        }
-      ],
+      "settings" : [],
       "inputs" : [
-        "Input/2th_cthead1.mha",
-        "Input/cthead1.png"
-      ],
-      "measurements_results" : [
-        {
-          "name" : "BoundingBoxVolume",
-          "value" : 43054,
-          "parameters" : [ "1" ]
-        },
-        {
-          "name" : "Eccentricity",
-          "value" : 0.48334174056320822,
-          "tolerance" : 1e-8,
-          "parameters" : [ "1" ]
-        },
-        {
-          "name" : "Elongation",
-          "value" : 1.1422934532165527,
-          "tolerance" : 1e-8,
-          "parameters" : [ "1" ]
-        },
-        {
-          "name" : "IntegratedIntensity",
-          "value" : 3344768,
-          "tolerance" : 1e-8,
-          "parameters" : [ "1" ]
-        },
-        {
-          "name" : "MajorAxisLength",
-          "value" : 214.81234741210938,
-          "tolerance" : 1e-8,
-          "parameters" : [ "1" ]
-        },
-        {
-          "name" : "MinorAxisLength",
-          "value" :  188.05355834960938,
-          "tolerance" : 1e-8,
-          "parameters" : [ "1" ]
-        },
-        {
-          "name" : "NumberOfLabels",
-          "value" : "3u"
-        },
-        {
-          "name" : "Orientation",
-          "value" : 0.99885450634117123,
-          "tolerance" : 1e-8,
-          "parameters" : [ "1" ]
-        },
-        {
-          "name" : "OrientedBoundingBoxVolume",
-          "value" : 50909.549910642207,
-          "tolerance" : 1e-8,
-          "parameters" : [ "1" ]
-        },
-        {
-          "name" : "Volume",
-          "value" : 24139,
-          "tolerance" : 1e-8,
-          "parameters" : [ "1" ]
-        }
+        "Input/cthead1.png",
+        "Input/2th_cthead1.mha"
       ]
     }
   ],
