@@ -208,6 +208,12 @@ $(foreach settings
   elseif parameter == "TrialPoints" then
   OUT='filter.ClearTrialPoints();\
   $(for i=1,#value do OUT=OUT .. "{unsigned int __point[] = " .. value[i] .. "; filter.AddTrialPoint( std::vector<unsigned int>(__point, __point + inputs[0].GetDimension()) );}" end);'
+  elseif point_vec and point_vec == 1 then
+    OUT="filter.Clear${parameter}();"
+    for i=1,#value do
+      OUT=OUT.. "{unsigned int __point[] = " .. value[i].. ";"
+      OUT=OUT.."filter.Add${parameter:gsub('s([0-9]?)$','%1')}( std::vector<unsigned int>(__point, __point + inputs[0].GetDimension()) );}"
+     end
   elseif dim_vec and dim_vec == 1 then
   OUT='{\
   ${type} arr[] = {'
