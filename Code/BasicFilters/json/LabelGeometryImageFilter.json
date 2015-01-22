@@ -467,8 +467,8 @@
         },
         {
           "name" : "OrientedBoundingBoxVolume",
-          "value" : 50909.54991064,
-          "tolerance" : 1e-07,
+          "value" : 50909.54991064221,
+          "tolerance" : 1e-08,
           "parameters" : [
             "1"
           ]
