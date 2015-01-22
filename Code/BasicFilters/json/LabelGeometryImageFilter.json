@@ -41,7 +41,7 @@
   "custom_methods" : [
     {
       "name" : "HasLabel",
-      "doc" : "Does the specified label exist? Can only be called after a call a call to Update().",
+      "doc" : "Does the specified label exist? Can only be called after a call a call to Update()."
       "return_type" : "double",
       "parameters" : [
         {
@@ -53,7 +53,7 @@
     },
     {
       "name" : "GetNumberOfLabels",
-      "doc" : "Return the number of labels after execution .",
+      "doc" : "Return the number of labels after execution ."
       "return_type" : "uint64_t",
       "body" : "return m_Labels.size();"
     }
@@ -408,49 +408,37 @@
         {
           "name" : "BoundingBoxVolume",
           "value" : 43054,
-          "parameters" : [
-            "1"
-          ]
+          "parameters" : [ "1" ]
         },
         {
           "name" : "Eccentricity",
-          "value" : 0.4833417405632082,
-          "tolerance" : 1e-08,
-          "parameters" : [
-            "1"
-          ]
+          "value" : 0.48334174056320822,
+          "tolerance" : 1e-8,
+          "parameters" : [ "1" ]
         },
         {
           "name" : "Elongation",
           "value" : 1.1422934532165527,
-          "tolerance" : 1e-08,
-          "parameters" : [
-            "1"
-          ]
+          "tolerance" : 1e-8,
+          "parameters" : [ "1" ]
         },
         {
           "name" : "IntegratedIntensity",
           "value" : 3344768,
-          "tolerance" : 1e-08,
-          "parameters" : [
-            "1"
-          ]
+          "tolerance" : 1e-8,
+          "parameters" : [ "1" ]
         },
         {
           "name" : "MajorAxisLength",
           "value" : 214.81234741210938,
-          "tolerance" : 1e-08,
-          "parameters" : [
-            "1"
-          ]
+          "tolerance" : 1e-8,
+          "parameters" : [ "1" ]
         },
         {
           "name" : "MinorAxisLength",
-          "value" : 188.05355834960938,
-          "tolerance" : 1e-08,
-          "parameters" : [
-            "1"
-          ]
+          "value" :  188.05355834960938,
+          "tolerance" : 1e-8,
+          "parameters" : [ "1" ]
         },
         {
           "name" : "NumberOfLabels",
@@ -458,27 +446,21 @@
         },
         {
           "name" : "Orientation",
-          "value" : 0.9988545063411712,
-          "tolerance" : 1e-08,
-          "parameters" : [
-            "1"
-          ]
+          "value" : 0.99885450634117123,
+          "tolerance" : 1e-8,
+          "parameters" : [ "1" ]
         },
         {
           "name" : "OrientedBoundingBoxVolume",
-          "value" : 50909.54991064221,
-          "tolerance" : 1e-08,
-          "parameters" : [
-            "1"
-          ]
+          "value" : 50909.549910642207,
+          "tolerance" : 1e-8,
+          "parameters" : [ "1" ]
         },
         {
           "name" : "Volume",
           "value" : 24139,
-          "tolerance" : 1e-08,
-          "parameters" : [
-            "1"
-          ]
+          "tolerance" : 1e-8,
+          "parameters" : [ "1" ]
         }
       ]
     }
