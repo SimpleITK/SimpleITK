@@ -19,8 +19,8 @@ set(required_flags_regex_to_test
 )
 
 foreach(f ${cmake_cxx_flags_list})
-  foreach( r ${required_flags_regex_to_test} )
-    string(REGEX MATCH  ${r} _HAS_FLAG ${f} )
+  foreach( _r ${required_flags_regex_to_test} )
+    string(REGEX MATCH  ${_r} _HAS_FLAG ${f} )
     if (_HAS_FLAG )
       string(FIND "${SimpleITK_REQUIRED_CXX_FLAGS}" "${f}" required)
       if(required LESS 0)
