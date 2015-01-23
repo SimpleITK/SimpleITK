@@ -124,6 +124,22 @@ elseif parameter == "TrialPoints" then
         filter.addTrialPoint(idx);\
       }\
       " end)]]
+elseif point_vec and point_vec == 1 then
+    OUT=[[
+                filter.clear${parameter}();
+]]
+    for i=1,#value do
+      OUT=OUT.. [[
+                {
+                  int v[] = ]] .. value[i] .. [[;
+                  VectorUInt32 pts = new VectorUInt32( );
+                  for (int i = 0; i < inputs[0].getDimension(); i++) {
+                    pts.push_back(v[i]);
+                  }
+                  filter.add${parameter:gsub('s([0-9]?)$','%1')}(pts);
+                }
+]]
+     end
 elseif dim_vec == 1 then
       OUT=[[
       {
