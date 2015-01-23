@@ -40,9 +40,7 @@ function(sitkCXX11Test VARIABLE)
                  "Performing Test ${VARIABLE} failed with the following output:\n"
                  "${OUTPUT}\n")
     endif()
-  else()
-    set("${VARIABLE}" "${cache_var}")
-  endif()
+   endif()
 endfunction()
 
 #
