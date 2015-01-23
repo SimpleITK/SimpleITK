@@ -1,16 +1,50 @@
 {
   "name" : "FastMarchingUpwindGradientImageFilter",
-  "itk_name" : "FastMarchingUpwindGradientImageFilterBase",
-  "include_files" : [
-    "itkFastMarchingThresholdStoppingCriterion.h"
-  ],
-  "template_code_filename" : "FastMarchingImageFilter",
-  "number_of_inputs" : 1,
+  "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
-  "output_pixel_type" : "float",
+  "number_of_inputs" : 1,
+  "output_pixel_type" : "typename itk::NumericTraits<typename InputImageType::PixelType>::RealType",
+  "filter_type" : "itk::FastMarchingUpwindGradientImageFilter<OutputImageType,InputImageType>",
   "doc" : "Docs",
   "pixel_types" : "BasicPixelIDTypeList",
   "members" : [
+    {
+      "name" : "TrialPoints",
+      "type" : "unsigned int",
+      "point_vec" : 1,
+      "default" : "std::vector< std::vector<unsigned int > >()",
+      "custom_itk_cast" : "  typedef typename FilterType::NodeType      NodeType;\n  typedef typename FilterType::NodeContainer NodeContainerType;\n\n  typename NodeContainerType::Pointer trialPoints = NodeContainerType::New();\n  trialPoints->reserve( m_TrialPoints.size() );\n\n  for (unsigned int i = 0; i < m_TrialPoints.size(); ++i)\n    {\n    NodeType node;\n\n    typename NodeType::IndexType index = sitkSTLVectorToITK<typename NodeType::IndexType>( m_TrialPoints[i] );\n    node.SetIndex( index );\n    node.SetValue( 0.0 );\n\n    trialPoints->push_back( node );\n    }\n  filter->SetTrialPoints( trialPoints );"
+    },
+    {
+      "name" : "NumberOfTargets",
+      "type" : "unsigned int",
+      "default" : 0,
+      "custom_itk_cast" : "if (this->m_NumberOfTargets==0) {filter->SetTargetReachedModeToNoTargets();}\n    else if (this->m_NumberOfTargets==1) {filter->SetTargetReachedModeToOneTarget();} else {filter->SetTargetReachedModeToSomeTargets(std::min<size_t>(this->m_TargetPoints.size(), this->m_NumberOfTargets));}",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the number of targets."
+    },
+    {
+      "name" : "TargetPoints",
+      "type" : "unsigned int",
+      "point_vec" : 1,
+      "default" : "std::vector< std::vector<unsigned int > >()",
+      "custom_itk_cast" : "  typedef typename FilterType::NodeType      NodeType;\n  typedef typename FilterType::NodeContainer NodeContainerType;\n\n  typename NodeContainerType::Pointer targetPoints = NodeContainerType::New();\n  targetPoints->reserve( m_TargetPoints.size() );\n\n  for (unsigned int i = 0; i < m_TargetPoints.size(); ++i)\n    {\n    NodeType node;\n\n    typename NodeType::IndexType index = sitkSTLVectorToITK<typename NodeType::IndexType>( m_TargetPoints[i] );\n    node.SetIndex( index );\n    node.SetValue( 0.0 );\n\n    targetPoints->push_back( node );\n    }\n  filter->SetTargetPoints( targetPoints );",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the container of Target Points. If a target point is reached, the propagation stops. Trial points are represented as a VectorContainer of LevelSetNodes.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the container of Target Points."
+    },
+    {
+      "name" : "TargetOffset",
+      "type" : "double",
+      "default" : 1.0,
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set how long (in terms of arrival times) after targets are reached the front must stop. This is useful to ensure that the level set of target arrival time is smooth.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the TargetOffset ivar."
+    },
     {
       "name" : "NormalizationFactor",
       "type" : "double",
@@ -19,27 +53,6 @@
       "detaileddescriptionSet" : "Set/Get the Normalization Factor for the Speed Image . The values in the Speed Image is divided by this factor. This allows the use of images with integer pixel types to represent the speed.",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : "Set/Get the Normalization Factor for the Speed Image . The values in the Speed Image is divided by this factor. This allows the use of images with integer pixel types to represent the speed."
-    },
-    {
-      "name" : "StoppingValue",
-      "type" : "double",
-      "default" : "100.0",
-      "custom_itk_cast" : "typedef itk::FastMarchingThresholdStoppingCriterion< InputImageType, OutputImageType > CriterionType;\ntypename CriterionType::Pointer criterion = CriterionType::New();\ncriterion->SetThreshold( m_StoppingValue );\nfilter->SetStoppingCriterion( criterion );",
-      "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set the Fast Marching algorithm Stopping Value. The Fast Marching algorithm is terminated when the value of the smallest trial point is greater than the stopping value.",
-      "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Get the Fast Marching algorithm Stopping Value."
-    },
-    {
-      "name" : "TopologyCheck",
-      "enum" : [
-        "Nothing",
-        "NoHandles",
-        "Strict"
-      ],
-      "default" : "itk::simple::FastMarchingUpwindGradientImageFilter::Nothing",
-      "doc" : "",
-      "itk_type" : "typename FilterType::TopologyCheckType"
     }
   ],
   "measurements" : [
@@ -47,10 +60,17 @@
       "name" : "GradientImage",
       "type" : "Image",
       "default" : "Image()",
-      "custom_itk_cast" : "this->CastITKToImage(filter->GetGradientImage());",
+      "custom_itk_cast" : "this->CastITKToImage(filter->GetGradientImage().GetPointer());",
       "briefdescriptionGet" : "",
       "no_print" : true,
       "detaileddescriptionGet" : "Get the gradient image."
+    },
+    {
+      "name" : "TargetValue",
+      "type" : "double",
+      "default" : 0.0,
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the arrival time corresponding to the last reached target. If TargetReachedMode is set to NoTargets, TargetValue contains the last (aka largest) Eikonal solution value generated."
     }
   ],
   "tests" : [
@@ -83,10 +103,6 @@
         {
           "parameter" : "NormalizationFactor",
           "value" : 255.0
-        },
-        {
-          "parameter" : "StoppingValue",
-          "value" : 50.0
         }
       ],
       "inputs" : [
