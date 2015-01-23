@@ -21,7 +21,7 @@ function(sitkCXX11Test VARIABLE)
   # cache the results.
   string(MD5 cmake_cxx_flags_hash "${CMAKE_CXX_FLAGS}")
   set(cache_var "${VARIABLE}_${hash_cmake_cxx_flags_hash}")
-  if("${cache_var}" MATCHES "^${cache_var}$")
+  if(NOT DEFINED "${cache_var}")
     message(STATUS "Performing Test ${VARIABLE}")
     set(requred_definitions "${CMAKE_REQUIRED_DEFINITIONS} -D${VARIABLE}")
     try_compile(${VARIABLE}
