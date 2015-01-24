@@ -157,12 +157,12 @@ TEST(TransformTest, SetGetParameters) {
 
   tx = sitk::Transform( 2, sitk::sitkScale );
   EXPECT_EQ( tx.GetParameters().size(), 2u );
-  EXPECT_TRUE( tx.GetFixedParameters().empty() );
+  EXPECT_EQ( tx.GetFixedParameters().size(), 2u );
   EXPECT_TRUE(tx.IsLinear());
 
   tx = sitk::Transform( 3, sitk::sitkScaleLogarithmic );
   EXPECT_EQ( tx.GetParameters().size(), 3u );
-  EXPECT_TRUE( tx.GetFixedParameters().empty() );
+  EXPECT_EQ( tx.GetFixedParameters().size(), 3u );
   EXPECT_TRUE(tx.IsLinear());
 
   tx = sitk::Transform( 2, sitk::sitkEuler );
