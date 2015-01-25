@@ -8,6 +8,7 @@ set ( SimpleITKCommonSource
   sitkDisplacementFieldTransform.cxx
   sitkEuler2DTransform.cxx
   sitkEuler3DTransform.cxx
+  sitkScaleTransform.cxx
   sitkScaleSkewVersor3DTransform.cxx
   sitkScaleVersor3DTransform.cxx
   sitkSimilarity2DTransform.cxx

@@ -34,7 +34,7 @@ typedef TranslationTransform Self;
 typedef Transform Superclass;
 
 explicit TranslationTransform(unsigned int dimensions,
-                              const std::vector<double> &translation = std::vector<double>(3,0.0) );
+                              const std::vector<double> &offset = std::vector<double>(3,0.0) );
 
 TranslationTransform( const TranslationTransform & );
 
