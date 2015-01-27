@@ -59,6 +59,7 @@ public:
 
   /** additional methods */
   std::vector<double> GetMatrix() const;
+  Self &SetMatrix(const std::vector<double> &matrix, double tolerance = 1e-10);
 
 protected:
 
@@ -80,6 +81,7 @@ private:
   nsstd::function<void(const std::vector<double>&)> m_pfSetTranslation;
   nsstd::function<std::vector<double>()> m_pfGetTranslation;
   nsstd::function<std::vector<double>()> m_pfGetMatrix;
+  nsstd::function<void(const std::vector<double>&, double)> m_pfSetMatrix;
 
 };
 

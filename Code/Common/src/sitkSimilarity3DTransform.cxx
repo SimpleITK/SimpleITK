@@ -155,6 +155,13 @@ std::vector<double> Similarity3DTransform::GetMatrix( ) const
   return this->m_pfGetMatrix();
 }
 
+Similarity3DTransform::Self &Similarity3DTransform::SetMatrix(const std::vector<double> &params, double tolerance)
+{
+  this->MakeUnique();
+  this->m_pfSetMatrix(params,tolerance);
+  return *this;
+}
+
 void Similarity3DTransform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
 {
   Superclass::SetPimpleTransform(pimpleTransform);
@@ -179,6 +186,7 @@ void Similarity3DTransform::InternalInitialization(itk::TransformBase *transform
   this->m_pfGetScale = SITK_NULLPTR;
   this->m_pfTranslate = SITK_NULLPTR;
   this->m_pfGetMatrix = SITK_NULLPTR;
+  this->m_pfSetMatrix = SITK_NULLPTR;
 
   if (t)
     {
@@ -194,6 +202,7 @@ void Similarity3DTransform::InternalInitialization(TransformType *t)
   SITK_TRANSFORM_SET_MPF(Center, typename TransformType::InputPointType, double);
   SITK_TRANSFORM_SET_MPF(Translation, typename TransformType::OutputVectorType, double);
   SITK_TRANSFORM_SET_MPF_GetMatrix();
+  SITK_TRANSFORM_SET_MPF_SetMatrix();
 
   void 	(TransformType::*pfSetRotation1) (const typename TransformType::VersorType &) = &TransformType::SetRotation;
   this->m_pfSetRotation1 = nsstd::bind(pfSetRotation1,t,nsstd::bind(&sitkSTLVectorToITKVersor<double, double>,nsstd::placeholders::_1));

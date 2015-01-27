@@ -131,6 +131,13 @@ std::vector<double> Euler3DTransform::GetMatrix( ) const
   return this->m_pfGetMatrix();
 }
 
+Euler3DTransform::Self &Euler3DTransform::SetMatrix(const std::vector<double> &params, double tolerance)
+{
+  this->MakeUnique();
+  this->m_pfSetMatrix(params,tolerance);
+  return *this;
+}
+
 void Euler3DTransform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
 {
   Superclass::SetPimpleTransform(pimpleTransform);
@@ -155,6 +162,7 @@ void Euler3DTransform::InternalInitialization(itk::TransformBase *transform)
   this->m_pfSetComputeZYX = SITK_NULLPTR;
   this->m_pfGetComputeZYX = SITK_NULLPTR;
   this->m_pfGetMatrix = SITK_NULLPTR;
+  this->m_pfSetMatrix = SITK_NULLPTR;
 
   if (t)
     {
@@ -171,6 +179,7 @@ void Euler3DTransform::InternalInitialization(TransformType *t)
   SITK_TRANSFORM_SET_MPF(Center, typename TransformType::InputPointType, double);
   SITK_TRANSFORM_SET_MPF(Translation, typename TransformType::OutputVectorType, double);
   SITK_TRANSFORM_SET_MPF_GetMatrix();
+  SITK_TRANSFORM_SET_MPF_SetMatrix();
 
   this->m_pfSetRotation = nsstd::bind(&TransformType::SetRotation,t,nsstd::placeholders::_1,nsstd::placeholders::_2,nsstd::placeholders::_3);
   this->m_pfGetAngleX = nsstd::bind(&TransformType::GetAngleX,t);

@@ -62,6 +62,7 @@ Self &SetTranslation(const std::vector<double>& translation);
 /** additional methods */
 Self &Translate(const std::vector<double> &offset);
 std::vector<double> GetMatrix() const;
+Self &SetMatrix(const std::vector<double> &matrix, double tolerance = 1e-10);
 
 protected:
 
@@ -87,6 +88,7 @@ nsstd::function<void(const std::vector<double>&)> m_pfSetTranslation;
 nsstd::function<std::vector<double>()> m_pfGetTranslation;
 nsstd::function<void(const std::vector<double> &)> m_pfTranslate;
 nsstd::function<std::vector<double>()> m_pfGetMatrix;
+nsstd::function<void(const std::vector<double>&, double)> m_pfSetMatrix;
 };
 
 }
