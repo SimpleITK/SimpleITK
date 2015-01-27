@@ -123,6 +123,13 @@ std::vector<double> VersorTransform::GetMatrix( ) const
   return this->m_pfGetMatrix();
 }
 
+VersorTransform::Self &VersorTransform::SetMatrix(const std::vector<double> &params, double tolerance)
+{
+  this->MakeUnique();
+  this->m_pfSetMatrix(params,tolerance);
+  return *this;
+}
+
 void VersorTransform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
 {
   Superclass::SetPimpleTransform(pimpleTransform);
@@ -142,6 +149,7 @@ void VersorTransform::InternalInitialization(itk::TransformBase *transform)
   this->m_pfSetRotation2 = SITK_NULLPTR;
   this->m_pfGetVersor = SITK_NULLPTR;
   this->m_pfGetMatrix = SITK_NULLPTR;
+  this->m_pfSetMatrix = SITK_NULLPTR;
 
   if (t)
     {
@@ -156,6 +164,7 @@ void VersorTransform::InternalInitialization(TransformType *t)
 {
   SITK_TRANSFORM_SET_MPF(Center, typename TransformType::InputPointType, double);
   SITK_TRANSFORM_SET_MPF_GetMatrix();
+  SITK_TRANSFORM_SET_MPF_SetMatrix();
 
   typename TransformType::OutputVectorType (*pfSTLVectorToITK)(const std::vector<double> &) = &sitkSTLVectorToITK<typename TransformType::OutputVectorType, double>;
 
