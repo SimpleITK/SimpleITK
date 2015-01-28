@@ -1134,9 +1134,9 @@ TEST(TransformTest,Similarity2DTransform)
   EXPECT_EQ( tx1.GetMatrix(), v4(1.0,0.0, 0.0,1.0) );
   EXPECT_EQ( tx1.GetAngle(), 0.0 );
 
-  tx1.SetMatrix(v4(-1.0,0.0, 0.0,-1.0));
-  EXPECT_EQ( tx1.GetMatrix(), v4(-1.0,0.0, 0.0,-1.0) );
-  EXPECT_DOUBLE_EQ(tx1.GetAngle(), itk::Math::pi);
+  tx1.SetMatrix(v4(0.0,-1.0, 1.0,0.0));
+  EXPECT_EQ( tx1.GetMatrix(), v4(0.0,-1.0, 1.0,0.0) );
+  EXPECT_DOUBLE_EQ(tx1.GetAngle(), itk::Math::pi/2.0);
 }
 
 
