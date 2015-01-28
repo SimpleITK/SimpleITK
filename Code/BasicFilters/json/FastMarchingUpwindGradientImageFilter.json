@@ -77,7 +77,7 @@
     {
       "tag" : "default",
       "description" : "Default parameter settings",
-      "md5hash" : "b4b628f078fdfd7c14c55b1aed24e72a",
+      "tolerance" : 1e-06,
       "settings" : [
         {
           "parameter" : "TrialPoints",
