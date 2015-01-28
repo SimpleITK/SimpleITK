@@ -18,7 +18,7 @@
     {
       "name" : "NumberOfTargets",
       "type" : "unsigned int",
-      "default" : 0,
+      "default" : "0u",
       "custom_itk_cast" : "if (this->m_NumberOfTargets==0) {filter->SetTargetReachedModeToNoTargets();}\n    else if (this->m_NumberOfTargets==1) {filter->SetTargetReachedModeToOneTarget();} else {filter->SetTargetReachedModeToSomeTargets(std::min<size_t>(this->m_TargetPoints.size(), this->m_NumberOfTargets));}",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "",
