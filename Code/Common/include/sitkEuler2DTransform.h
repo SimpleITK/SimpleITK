@@ -46,6 +46,9 @@ public:
 
   Euler2DTransform &operator=( const Euler2DTransform & );
 
+  /** Name of this class */
+  std::string GetName() const { return std::string ("Euler2DTransform"); }
+
 /** fixed parameter */
   Self &SetCenter(const std::vector<double> &params);
   std::vector<double> GetCenter( ) const;

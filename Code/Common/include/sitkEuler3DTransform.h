@@ -48,6 +48,9 @@ explicit Euler3DTransform( const Transform & );
 
 Euler3DTransform &operator=( const Euler3DTransform & );
 
+/** Name of this class */
+std::string GetName() const { return std::string ("Euler3DTransform"); }
+
 /** fixed parameter */
 Self &SetCenter(const std::vector<double> &params);
 std::vector<double> GetCenter( ) const;

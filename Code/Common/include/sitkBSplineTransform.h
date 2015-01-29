@@ -38,6 +38,9 @@ public:
 
   BSplineTransform &operator=( const BSplineTransform & );
 
+  /** Name of this class */
+  std::string GetName() const { return std::string ("BSplineTransform"); }
+
   /** parameters */
 
   /** fixed parameter */

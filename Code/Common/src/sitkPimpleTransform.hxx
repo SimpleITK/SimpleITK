@@ -145,7 +145,7 @@ public:
   std::string ToString( void ) const
     {
       std::ostringstream out;
-      this->GetTransformBase()->Print ( out );
+      this->GetTransformBase()->Print ( out, 1 );
       return out.str();
     }
 

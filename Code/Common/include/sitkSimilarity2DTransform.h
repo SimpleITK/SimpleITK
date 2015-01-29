@@ -46,6 +46,9 @@ public:
 
   Similarity2DTransform &operator=( const Similarity2DTransform & );
 
+  /** Name of this class */
+  std::string GetName() const { return std::string ("Similarity2DTransform"); }
+
 /** fixed parameter */
   Self &SetCenter(const std::vector<double> &params);
   std::vector<double> GetCenter( ) const;

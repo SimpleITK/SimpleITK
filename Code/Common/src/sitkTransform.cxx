@@ -603,8 +603,14 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
   std::string Transform::ToString( void ) const
   {
     assert( m_PimpleTransform );
-    return this->m_PimpleTransform->ToString();
+    return std::string("itk::simple::")+this->GetName() + '\n'+this->m_PimpleTransform->ToString();
   }
+
+  std::string Transform::GetName( void ) const
+  {
+    return "Transform";
+  }
+
 
   Transform ReadTransform( const std::string &filename )
   {
