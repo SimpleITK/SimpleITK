@@ -40,6 +40,9 @@ public:
 
   AffineTransform &operator=( const AffineTransform & );
 
+  /** Name of this class */
+  std::string GetName() const { return std::string ("AffineTransform"); }
+
   /** parameters */
   std::vector<double> GetTranslation( ) const;
   Self &SetTranslation( const std::vector<double>& translation);

@@ -190,6 +190,10 @@ public:
 
   std::string ToString( void ) const;
 
+
+  /** return user readable name for the SimpleITK transform */
+  virtual std::string GetName() const;
+
   /** \brief Performs actually coping if needed to make object unique.
    *
    * The Transform class by default performs lazy coping and

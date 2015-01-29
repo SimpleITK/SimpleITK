@@ -40,6 +40,9 @@ public:
 
   DisplacementFieldTransform &operator=( const DisplacementFieldTransform & );
 
+  /** Name of this class */
+  std::string GetName() const { return std::string ("DisplacementFieldTransform"); }
+
   /** parameters */
   // set displacement methods take ownership for the image and remove it
   Self &SetDisplacementField(Image &);

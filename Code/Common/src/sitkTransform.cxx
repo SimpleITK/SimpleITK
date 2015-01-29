@@ -606,6 +606,12 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
     return this->m_PimpleTransform->ToString();
   }
 
+  std::string Transform::GetName( void ) const
+  {
+    return "Transform";
+  }
+
+
   Transform ReadTransform( const std::string &filename )
   {
     TransformFileReader::Pointer reader = TransformFileReader::New();

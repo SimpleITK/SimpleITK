@@ -42,6 +42,9 @@ explicit Similarity3DTransform( const Transform & );
 
 Similarity3DTransform &operator=( const Similarity3DTransform & );
 
+/** Name of this class */
+std::string GetName() const { return std::string ("Similarity3DTransform"); }
+
 /** fixed parameter */
 Self &SetCenter(const std::vector<double> &params);
 std::vector<double> GetCenter( ) const;
