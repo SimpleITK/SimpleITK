@@ -246,6 +246,10 @@ void DisplacementFieldTransform::InternalInitialization(itk::TransformBase *tran
 
   callInternalInitialization(visitor);
 
+  if ( this->m_pfSetDisplacementField == SITK_NULLPTR )
+    {
+    sitkExceptionMacro("Transform is not of type " << this->GetName() << "!" );
+    }
 }
 
 

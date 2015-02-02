@@ -80,7 +80,7 @@ private:
     void operator() ( void ) const
       {
         TransformType *t = dynamic_cast<TransformType*>(transform);
-        if (t)
+        if (t && (typeid(*t)==typeid(TransformType)))
           {
           that->InternalInitialization<TransformType>(t);
           }
