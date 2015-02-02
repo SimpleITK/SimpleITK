@@ -1749,6 +1749,18 @@ TEST(TransformTest,VersorRigid3DTransform_Points)
 }
 
 
+TEST(TransformTest,VersorRigid3DTransform_NoPolymorphicCast)
+{
+  sitk::ScaleSkewVersor3DTransform ssv3dt;
+//  sitk::ScaleVersor3DTransform sv3dt;
+  sitk::Similarity3DTransform s3dt;
+  sitk::VersorRigid3DTransform tx;
+
+  EXPECT_THROW( tx = sitk::VersorRigid3DTransform(ssv3dt), sitk::GenericException );
+//  EXPECT_THROW( sitk::VersorRigid3DTransform( sv3dt), sitk::GenericException );
+  EXPECT_THROW(  tx = sitk::VersorRigid3DTransform( s3dt), sitk::GenericException );
+}
+
 TEST(TransformTest,VersorTransform)
 {
   // test VersorTransform
@@ -1839,4 +1851,21 @@ TEST(TransformTest,VersorTransform)
   tx->SetMatrix(v9(-1.0,0.0,0.0, 0.0,-1.0,0.0, 0.0,0.0,1.0));
   EXPECT_EQ( tx->GetMatrix(), v9(-1.0,0.0,0.0, 0.0,-1.0,0.0, 0.0,0.0,1.0) );
   EXPECT_VECTOR_DOUBLE_NEAR(tx->GetVersor(),  v4(0.0,0.0,1.0,0.0), 1e-15);
+}
+
+
+
+TEST(TransformTest,VersorTransform_NoPolymorphicCast)
+{
+  sitk::ScaleSkewVersor3DTransform ssv3dt;
+//  sitk::ScaleVersor3DTransform sv3dt;
+  sitk::Similarity3DTransform s3dt;
+  sitk::VersorRigid3DTransform vr3dt;
+
+  sitk::VersorTransform tx;
+
+  EXPECT_THROW( tx = sitk::VersorTransform( ssv3dt), sitk::GenericException );
+//  EXPECT_THROW( sitk::VersorTransform( sv3dt), sitk::GenericException );
+  EXPECT_THROW( tx = sitk::VersorTransform( s3dt), sitk::GenericException );
+  EXPECT_THROW( tx = sitk::VersorTransform( vr3dt), sitk::GenericException );
 }
