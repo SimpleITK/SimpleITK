@@ -151,8 +151,8 @@ TDirectionType SITKCommon_HIDDEN  sitkSTLToITKDirection( const std::vector<doubl
     }
   else
     {
+    // to do handle miss match dimension
     }
-
   return itkDirection;
 }
 

@@ -33,7 +33,14 @@
   {                                                                     \
   std::vector<double>  (*pfITKDirectionToSTL)(const typename TransformType::MatrixType &) = &sitkITKDirectionToSTL<typename TransformType::MatrixType>; \
   this->m_pfGetMatrix = nsstd::bind(pfITKDirectionToSTL,nsstd::bind(&TransformType::GetMatrix,t)); \
-}
+  }
+
+#define SITK_TRANSFORM_SET_MPF_SetMatrix()                              \
+  {                                                                     \
+  void (TransformType::*pfSetMatrix) (const typename TransformType::MatrixType &, double) = &TransformType::SetMatrix; \
+  typename TransformType::MatrixType (*pfSTLToITKDirection)(const std::vector<double> &) = &sitkSTLToITKDirection<typename TransformType::MatrixType>; \
+  this->m_pfSetMatrix = nsstd::bind(pfSetMatrix, t, nsstd::bind(pfSTLToITKDirection, nsstd::placeholders::_1), nsstd::placeholders::_2); \
+  }
 
 
 #endif // __sitkTransformHelper_hxx

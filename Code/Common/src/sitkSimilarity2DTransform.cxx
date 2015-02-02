@@ -121,6 +121,13 @@ std::vector<double> Similarity2DTransform::GetMatrix( ) const
   return this->m_pfGetMatrix();
 }
 
+Similarity2DTransform::Self &Similarity2DTransform::SetMatrix(const std::vector<double> &params, double tolerance)
+{
+  this->MakeUnique();
+  this->m_pfSetMatrix(params,tolerance);
+  return *this;
+}
+
 void Similarity2DTransform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
 {
   Superclass::SetPimpleTransform(pimpleTransform);
@@ -143,6 +150,7 @@ void Similarity2DTransform::InternalInitialization(itk::TransformBase *transform
   this->m_pfSetScale = SITK_NULLPTR;
   this->m_pfGetScale = SITK_NULLPTR;
   this->m_pfGetMatrix = SITK_NULLPTR;
+  this->m_pfSetMatrix = SITK_NULLPTR;
 
   if (t)
     {
@@ -160,6 +168,7 @@ void Similarity2DTransform::InternalInitialization(TransformType *t)
   SITK_TRANSFORM_SET_MPF(Center, typename TransformType::InputPointType, double);
   SITK_TRANSFORM_SET_MPF(Translation, typename TransformType::OutputVectorType, double);
   SITK_TRANSFORM_SET_MPF_GetMatrix();
+  SITK_TRANSFORM_SET_MPF_SetMatrix();
 
   this->m_pfSetAngle = nsstd::bind(&TransformType::SetAngle,t,nsstd::placeholders::_1);
   this->m_pfGetAngle = nsstd::bind(&TransformType::GetAngle,t);

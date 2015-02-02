@@ -42,6 +42,9 @@ explicit Similarity3DTransform( const Transform & );
 
 Similarity3DTransform &operator=( const Similarity3DTransform & );
 
+/** Name of this class */
+std::string GetName() const { return std::string ("Similarity3DTransform"); }
+
 /** fixed parameter */
 Self &SetCenter(const std::vector<double> &params);
 std::vector<double> GetCenter( ) const;
@@ -62,6 +65,7 @@ Self &SetTranslation(const std::vector<double>& translation);
 /** additional methods */
 Self &Translate(const std::vector<double> &offset);
 std::vector<double> GetMatrix() const;
+Self &SetMatrix(const std::vector<double> &matrix, double tolerance = 1e-10);
 
 protected:
 
@@ -87,6 +91,7 @@ nsstd::function<void(const std::vector<double>&)> m_pfSetTranslation;
 nsstd::function<std::vector<double>()> m_pfGetTranslation;
 nsstd::function<void(const std::vector<double> &)> m_pfTranslate;
 nsstd::function<std::vector<double>()> m_pfGetMatrix;
+nsstd::function<void(const std::vector<double>&, double)> m_pfSetMatrix;
 };
 
 }

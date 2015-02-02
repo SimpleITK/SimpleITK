@@ -48,6 +48,9 @@ explicit Euler3DTransform( const Transform & );
 
 Euler3DTransform &operator=( const Euler3DTransform & );
 
+/** Name of this class */
+std::string GetName() const { return std::string ("Euler3DTransform"); }
+
 /** fixed parameter */
 Self &SetCenter(const std::vector<double> &params);
 std::vector<double> GetCenter( ) const;
@@ -70,6 +73,7 @@ Self &ComputeZYXOff () {return this->SetComputeZYX(false);}
 
   /** additional methods */
   std::vector<double> GetMatrix() const;
+  Self &SetMatrix(const std::vector<double> &matrix, double tolerance = 1e-10);
 
 protected:
 
@@ -96,6 +100,7 @@ nsstd::function<std::vector<double>()> m_pfGetTranslation;
 nsstd::function<void(bool)> m_pfSetComputeZYX;
 nsstd::function<bool()> m_pfGetComputeZYX;
 nsstd::function<std::vector<double>()> m_pfGetMatrix;
+nsstd::function<void(const std::vector<double>&, double)> m_pfSetMatrix;
 
 
 };

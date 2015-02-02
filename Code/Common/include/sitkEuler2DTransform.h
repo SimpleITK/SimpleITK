@@ -46,6 +46,9 @@ public:
 
   Euler2DTransform &operator=( const Euler2DTransform & );
 
+  /** Name of this class */
+  std::string GetName() const { return std::string ("Euler2DTransform"); }
+
 /** fixed parameter */
   Self &SetCenter(const std::vector<double> &params);
   std::vector<double> GetCenter( ) const;
@@ -59,6 +62,7 @@ public:
 
   /** additional methods */
   std::vector<double> GetMatrix() const;
+  Self &SetMatrix(const std::vector<double> &matrix, double tolerance = 1e-10);
 
 protected:
 
@@ -80,6 +84,7 @@ private:
   nsstd::function<void(const std::vector<double>&)> m_pfSetTranslation;
   nsstd::function<std::vector<double>()> m_pfGetTranslation;
   nsstd::function<std::vector<double>()> m_pfGetMatrix;
+  nsstd::function<void(const std::vector<double>&, double)> m_pfSetMatrix;
 
 };
 

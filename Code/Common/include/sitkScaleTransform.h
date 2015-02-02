@@ -40,6 +40,9 @@ public:
 
   explicit ScaleTransform( const Transform & );
 
+  /** Name of this class */
+  std::string GetName() const { return std::string ("ScaleTransform"); }
+
   ScaleTransform &operator=( const ScaleTransform & );
 
 

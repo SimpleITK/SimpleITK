@@ -42,6 +42,9 @@ public:
 
   ScaleVersor3DTransform &operator=( const ScaleVersor3DTransform & );
 
+  /** Name of this class */
+  std::string GetName() const { return std::string ("ScaleVersor3DTransform"); }
+
 /** fixed parameter */
   Self &SetCenter(const std::vector<double> &params);
   std::vector<double> GetCenter( ) const;

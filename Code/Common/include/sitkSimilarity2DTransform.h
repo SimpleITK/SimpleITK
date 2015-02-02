@@ -46,6 +46,9 @@ public:
 
   Similarity2DTransform &operator=( const Similarity2DTransform & );
 
+  /** Name of this class */
+  std::string GetName() const { return std::string ("Similarity2DTransform"); }
+
 /** fixed parameter */
   Self &SetCenter(const std::vector<double> &params);
   std::vector<double> GetCenter( ) const;
@@ -62,6 +65,7 @@ public:
 
   /** additional methods */
   std::vector<double> GetMatrix() const;
+  Self &SetMatrix(const std::vector<double> &matrix, double tolerance = 1e-10);
 
 protected:
 
@@ -85,6 +89,7 @@ private:
   nsstd::function<void(double)> m_pfSetScale;
   nsstd::function<double()> m_pfGetScale;
   nsstd::function<std::vector<double>()> m_pfGetMatrix;
+  nsstd::function<void(const std::vector<double>&, double)> m_pfSetMatrix;
 };
 
 }
