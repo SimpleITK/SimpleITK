@@ -38,6 +38,8 @@ ImageRegistrationMethod::ImageRegistrationMethod()
     m_OptimizerScalesType(Manual),
     m_MetricSamplingPercentage(1,1.0),
     m_MetricSamplingStrategy(NONE),
+    m_MetricUseFixedImageGradientFilter(true),
+    m_MetricUseMovingImageGradientFilter(true),
     m_ShrinkFactorsPerLevel(1, 1),
     m_SmoothingSigmasPerLevel(1,0.0),
     m_SmoothingSigmasAreSpecifiedInPhysicalUnits(true),
@@ -423,6 +425,19 @@ ImageRegistrationMethod::SetMetricSamplingStrategy( MetricSamplingStrategyType s
   return *this;
 }
 
+ImageRegistrationMethod::Self& ImageRegistrationMethod::SetMetricUseFixedImageGradientFilter(bool arg)
+{
+  m_MetricUseFixedImageGradientFilter = arg;
+  return *this;
+}
+
+ImageRegistrationMethod::Self& ImageRegistrationMethod::SetMetricUseMovingImageGradientFilter(bool arg)
+{
+  m_MetricUseMovingImageGradientFilter = arg;
+  return *this;
+}
+
+
 ImageRegistrationMethod::Self&
 ImageRegistrationMethod::SetShrinkFactorsPerLevel( const std::vector<unsigned int> &shrinkFactors )
 {
@@ -646,8 +661,9 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
 
   metric->SetMaximumNumberOfThreads(this->GetNumberOfThreads());
 
-  metric->SetUseMovingImageGradientFilter(true);
-  metric->SetUseFixedImageGradientFilter(true);
+  metric->SetUseFixedImageGradientFilter( m_MetricUseFixedImageGradientFilter );
+  metric->SetUseMovingImageGradientFilter( m_MetricUseMovingImageGradientFilter );
+
 
   typedef itk::InterpolateImageFunction< FixedImageType, double > FixedInterpolatorType;
   typename FixedInterpolatorType::Pointer   fixedInterpolator  = CreateInterpolator(fixed.GetPointer(), m_Interpolator);
