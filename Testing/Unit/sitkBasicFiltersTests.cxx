@@ -535,7 +535,7 @@ TEST(BasicFilters,CenteredTransformInitializer) {
 }
 
 
-TEST(BasicFilters,CenteredVersorTranformInitializer) {
+TEST(BasicFilters,CenteredVersorTransformInitializer) {
   namespace sitk = itk::simple;
 
   sitk::CenteredVersorTransformInitializerFilter filter;
