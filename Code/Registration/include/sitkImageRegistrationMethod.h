@@ -277,7 +277,7 @@ namespace simple
       TImageType,
       TImageType,
       double,
-      DefaultImageToImageMetricTraitsv4< TImageType, TImageType, TImageType, double >
+      itk::DefaultImageToImageMetricTraitsv4< TImageType, TImageType, TImageType, double >
       >* CreateMetric( );
 
     template <typename TMetric>
