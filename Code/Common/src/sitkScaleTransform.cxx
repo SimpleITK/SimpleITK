@@ -112,6 +112,10 @@ void ScaleTransform::InternalInitialization(itk::TransformBase *transform)
 
   callInternalInitialization(visitor);
 
+  if ( this->m_pfSetCenter == SITK_NULLPTR )
+    {
+    sitkExceptionMacro("Transform is not of type " << this->GetName() << "!" );
+    }
 }
 
 

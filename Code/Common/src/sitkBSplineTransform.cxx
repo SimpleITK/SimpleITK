@@ -176,6 +176,10 @@ void BSplineTransform::InternalInitialization(itk::TransformBase *transform)
 
   callInternalInitialization(visitor);
 
+  if ( this->m_pfGetOrder == SITK_NULLPTR )
+    {
+    sitkExceptionMacro("Transform is not of type " << this->GetName() << "!" );
+    }
 }
 
 

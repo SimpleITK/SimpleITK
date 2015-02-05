@@ -188,10 +188,14 @@ void ScaleSkewVersor3DTransform::InternalInitialization(itk::TransformBase *tran
   this->m_pfTranslate = SITK_NULLPTR;
   this->m_pfGetMatrix = SITK_NULLPTR;
 
-  if (t)
+  if (t && (typeid(*t)==typeid(TransformType)))
     {
     this->InternalInitialization(t);
     return;
+    }
+  else
+    {
+    sitkExceptionMacro("Transform is not of type " << this->GetName() << "!" );
     }
 }
 
