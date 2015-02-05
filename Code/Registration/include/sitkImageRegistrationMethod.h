@@ -283,6 +283,11 @@ namespace simple
     template <typename TMetric>
       itk::RegistrationParameterScalesEstimator< TMetric >*CreateScalesEstimator();
 
+    template <typename TTransformAdaptorPointer, typename TRegistrationMethod >
+    std::vector< TTransformAdaptorPointer >
+      CreateTransformParametersAdaptor(
+        TRegistrationMethod* method);
+
     virtual void PreUpdate( itk::ProcessObject *p );
     virtual void OnActiveProcessDelete( ) throw();
     virtual unsigned long AddITKObserver(const itk::EventObject &, itk::Command *);

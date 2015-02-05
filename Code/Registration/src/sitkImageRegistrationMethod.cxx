@@ -28,6 +28,7 @@
 #include "itkRegistrationParameterScalesFromIndexShift.h"
 #include "itkRegistrationParameterScalesFromPhysicalShift.h"
 
+#include "sitkImageRegistrationMethod_CreateParametersAdaptor.hxx"
 
 
 template< typename TValue, typename TType>
@@ -675,6 +676,12 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
   std::copy(m_SmoothingSigmasPerLevel.begin(), m_SmoothingSigmasPerLevel.end(), smoothingSigmasPerLevel.begin());
   registration->SetSmoothingSigmasPerLevel( smoothingSigmasPerLevel );
   registration->SetSmoothingSigmasAreSpecifiedInPhysicalUnits(m_SmoothingSigmasAreSpecifiedInPhysicalUnits);
+
+
+  // setup transform parameters adaptor
+  std::vector<typename RegistrationType::TransformParametersAdaptorPointer> adaptors =
+    this->CreateTransformParametersAdaptor<typename RegistrationType::TransformParametersAdaptorPointer>(registration.GetPointer());
+  registration->SetTransformParametersAdaptorsPerLevel(adaptors);
 
   typename  itk::ObjectToObjectOptimizerBaseTemplate<double>::Pointer optimizer = this->CreateOptimizer( itkTx->GetNumberOfParameters() );
   optimizer->UnRegister();
