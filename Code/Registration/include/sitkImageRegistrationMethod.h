@@ -202,6 +202,15 @@ namespace simple
 
     Self &SetMetricSamplingStrategy( MetricSamplingStrategyType strategy);
 
+    Self& SetMetricUseFixedImageGradientFilter(bool);
+    Self& MetricUseFixedImageGradientFilterOn() {return this->SetMetricUseFixedImageGradientFilter(true);}
+    Self& MetricUseFixedImageGradientFilterOff() {return this->SetMetricUseFixedImageGradientFilter(false);}
+
+    Self& SetMetricUseMovingImageGradientFilter(bool);
+    Self& MetricUseMovingImageGradientFilterOn() {return this->SetMetricUseMovingImageGradientFilter(true);}
+    Self& MetricUseMovingImageGradientFilterOff() {return this->SetMetricUseMovingImageGradientFilter(false);}
+
+
     Self &SetShrinkFactorsPerLevel( const std::vector<unsigned int> &shrinkFactors );
     Self &SetSmoothingSigmasPerLevel( const std::vector<double> &smoothingSigmas );
 
@@ -337,6 +346,9 @@ namespace simple
 
     std::vector<double> m_MetricSamplingPercentage;
     MetricSamplingStrategyType m_MetricSamplingStrategy;
+
+    bool m_MetricUseFixedImageGradientFilter;
+    bool m_MetricUseMovingImageGradientFilter;
 
     std::vector<unsigned int> m_ShrinkFactorsPerLevel;
     std::vector<double> m_SmoothingSigmasPerLevel;
