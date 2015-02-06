@@ -45,8 +45,9 @@ class SITKCommon_EXPORT Command:
     protected NonCopyable
 {
 public:
-
+#ifndef SWIG
   typedef Command Self;
+#endif
 
   /** \brief Default Constructor */
   Command();
