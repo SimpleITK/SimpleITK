@@ -38,6 +38,11 @@ public:
 
   explicit AffineTransform( const Transform & );
 
+  AffineTransform( const std::vector< double> &A,
+                   const std::vector< double> &b,
+                   const std::vector< double> &fixedCenter=std::vector< double >(3, 0.0));
+
+
   AffineTransform &operator=( const AffineTransform & );
 
   /** Name of this class */

@@ -77,6 +77,30 @@ VersorRigid3DTransform::VersorRigid3DTransform( const Transform & arg )
   Self::InternalInitialization(Self::GetITKBase());
 }
 
+VersorRigid3DTransform::VersorRigid3DTransform( const std::vector< double > &versor,
+                                                const std::vector< double > &translation,
+                                                const std::vector< double> &fixedCenter )
+  : Transform(3, sitkVersorRigid)
+{
+  Self::InternalInitialization(Self::GetITKBase());
+
+  this->SetCenter(fixedCenter);
+  this->SetRotation(versor);
+  this->SetTranslation(translation);
+}
+
+VersorRigid3DTransform::VersorRigid3DTransform( const std::vector< double > &axis, double angle,
+                                                const std::vector< double > &translation,
+                                                const std::vector< double> &fixedCenter )
+  : Transform(3, sitkVersorRigid)
+{
+  Self::InternalInitialization(Self::GetITKBase());
+
+  this->SetCenter(fixedCenter);
+  this->SetRotation(axis, angle);
+  this->SetTranslation(translation);
+}
+
 VersorRigid3DTransform &VersorRigid3DTransform::operator=( const VersorRigid3DTransform &arg )
 {
   Superclass::operator=(arg);

@@ -44,6 +44,17 @@ AffineTransform::AffineTransform( const Transform &arg )
   Self::InternalInitialization(Self::GetITKBase());
 }
 
+AffineTransform::AffineTransform( const std::vector< double> &A,
+                                  const std::vector< double> &b,
+                                  const std::vector< double> &fixedCenter )
+  : Transform(b.size(), sitkAffine)
+{
+  Self::InternalInitialization(Self::GetITKBase());
+
+  this->SetMatrix(A);
+  this->SetTranslation(b);
+  this->SetCenter(fixedCenter);
+}
 
 AffineTransform &AffineTransform::operator=( const AffineTransform &arg )
 {

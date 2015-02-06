@@ -25,6 +25,7 @@
 #include "sitkEuler2DTransform.h"
 #include "sitkEuler3DTransform.h"
 #include "sitkScaleTransform.h"
+#include "sitkScaleVersor3DTransform.h"
 #include "sitkScaleSkewVersor3DTransform.h"
 #include "sitkSimilarity2DTransform.h"
 #include "sitkSimilarity3DTransform.h"
@@ -420,6 +421,10 @@ TEST(TransformTest,AffineTransform)
   EXPECT_VECTOR_DOUBLE_NEAR( tx->TransformPoint( v2(0,0) ), v2(0,0),1e-15);
   EXPECT_VECTOR_DOUBLE_NEAR( tx->TransformPoint( v2(1,2) ), v2(2,-1),1e-14);
 
+  sitk::AffineTransform tx0(v4(1.0,2.0,3.0,4.0), v2(5.0,6.0));
+  EXPECT_EQ( tx0.GetMatrix(), v4(1.0,2.0,3.0,4.0) );
+  EXPECT_EQ( tx0.GetTranslation(), v2(5.0,6.0) );
+
   // 3d
   EXPECT_NO_THROW( tx.reset( new sitk::AffineTransform(3) ) );
   EXPECT_EQ( tx->GetParameters().size(), 12u );
@@ -427,6 +432,10 @@ TEST(TransformTest,AffineTransform)
 
   EXPECT_EQ( tx->SetTranslation( trans3d ).GetTranslation(), trans3d );
   EXPECT_EQ( tx->SetCenter( center3d ).GetCenter(), center3d );
+
+  sitk::AffineTransform tx00(v9(1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0), v3(10.0,11.0,12.0));
+  EXPECT_EQ( tx00.GetMatrix(), v9(1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0) );
+  EXPECT_EQ( tx00.GetTranslation(), v3(10.0,11.0,12.0) );
 
   // copy and assignment
   sitk::AffineTransform tx1(*tx);
@@ -1045,13 +1054,14 @@ TEST(TransformTest,Similarity2DTransform)
   EXPECT_EQ( tx->GetAngle(), 0.0 );
   EXPECT_EQ( tx->GetMatrix(), v4(1.0,0.0, 0.0,1.0) );
 
-  EXPECT_NO_THROW( tx.reset( new sitk::Similarity2DTransform(center, -1.0, v2(1.1,1.1) ) ) );
+  EXPECT_NO_THROW( tx.reset( new sitk::Similarity2DTransform(0.5, -1.0, v2(1.1,1.1), center) ) );
   EXPECT_EQ( tx->GetCenter(), center );
   EXPECT_EQ( tx->GetAngle(), -1.0 );
   EXPECT_EQ( tx->GetTranslation(), v2(1.1,1.1) );
+  EXPECT_EQ( tx->GetScale(), 0.5 );
 
-  EXPECT_THROW( sitk::Similarity2DTransform( std::vector<double>(1, 0.0), -1.0, v2(1.1,1.1) ), sitk::GenericException );
-  EXPECT_THROW( sitk::Similarity2DTransform( center, -1.0, std::vector<double>(1, 0.0) ), sitk::GenericException );
+  EXPECT_THROW( sitk::Similarity2DTransform( 1.0, -1.0, v2(1.1,1.1), std::vector<double>(1, 0.0) ), sitk::GenericException );
+  EXPECT_THROW( sitk::Similarity2DTransform( 1.0, -1.0, std::vector<double>(1, 0.0), center ), sitk::GenericException );
 
 
   EXPECT_EQ( tx->SetScale(2.0).GetScale(), 2.0 );
@@ -1245,12 +1255,14 @@ TEST(TransformTest,ScaleTransform_Points)
   EXPECT_VECTOR_DOUBLE_NEAR( tx.TransformPoint( v3(2.0,2.0,2.0) ), v3(2.0,3.0,4.0),1e-15 );
 }
 
+
 TEST(TransformTest,ScaleSkewVersor3DTransform)
 {
   // test ScaleSkewVersor3DTransform
   const std::vector<double> center(3,1.1);
   const std::vector<double> zeros(3,0.0);
   const std::vector<double> trans(3, 2.2);
+  const std::vector<double> skew(6,2.7);
 
   std::auto_ptr<sitk::ScaleSkewVersor3DTransform> tx(new sitk::ScaleSkewVersor3DTransform());
   std::cout << tx->ToString() << std::endl;
@@ -1265,6 +1277,21 @@ TEST(TransformTest,ScaleSkewVersor3DTransform)
   EXPECT_EQ( tx->SetTranslation(trans).GetTranslation(), trans );
 
   EXPECT_EQ( tx->SetCenter(center).GetCenter(), center );
+
+  sitk::ScaleSkewVersor3DTransform tx0(v3(0.4,0.5,0.6), skew, v4(0.0,0.0,0.0,1.0), trans );
+  EXPECT_EQ( tx0.GetCenter(), v3(0.0,0.0,0.0) );
+  EXPECT_EQ( tx0.GetTranslation(), trans );
+  EXPECT_EQ( tx0.GetScale(), v3(0.4,0.5,0.6) );
+  EXPECT_EQ( tx0.GetSkew(), skew );
+  EXPECT_EQ( tx0.GetVersor(),  v4(0.0,0.0,0.0,1.0) );
+
+  //constructor using axis-angle (rotation of 90 degrees around z)
+  sitk::ScaleSkewVersor3DTransform tx00(v3(0.4,0.5,0.6), skew, v3(0.0,0.0,1.0),1.5707963267948966, trans );
+  EXPECT_EQ( tx00.GetCenter(), v3(0.0,0.0,0.0) );
+  EXPECT_EQ( tx00.GetTranslation(), trans );
+  EXPECT_EQ( tx00.GetScale(), v3(0.4,0.5,0.6) );
+  EXPECT_EQ( tx00.GetSkew(), skew );
+  EXPECT_VECTOR_DOUBLE_NEAR(tx00.GetVersor(), v4(0.0,0.0,0.70710678118654757,0.70710678118654757), 1e-15);
 
   // copy constructor
   sitk::ScaleSkewVersor3DTransform tx1( *(tx.get()) );
@@ -1358,6 +1385,129 @@ TEST(TransformTest,ScaleSkewVersor3DTransform)
 }
 
 
+TEST(TransformTest,ScaleVersor3DTransform)
+{
+  // test ScaleVersor3DTransform
+  const std::vector<double> center(3,1.1);
+  const std::vector<double> zeros(3,0.0);
+  const std::vector<double> trans(3, 2.2);
+
+  std::auto_ptr<sitk::ScaleVersor3DTransform> tx(new sitk::ScaleVersor3DTransform());
+  EXPECT_EQ( tx->GetParameters().size(), 9u );
+  EXPECT_EQ( tx->GetFixedParameters().size(), 3u );
+  EXPECT_EQ( tx->GetTranslation(), v3(0.0,0.0,0.0) );
+  EXPECT_EQ( tx->GetScale(), v3(1.0,1.0,1.0) );
+  EXPECT_EQ( tx->GetVersor(), v4(0.0,0.0,0.0,1.0) );
+  EXPECT_EQ( tx->GetMatrix(), v9(1.0,0.0,0.0, 0.0,1.0,0.0, 0.0,0.0,1.0) );
+
+  EXPECT_EQ( tx->SetScale(v3(1.0,2.0,3.0)).GetScale(), v3(1.0,2.0,3.0) );
+  EXPECT_EQ( tx->SetTranslation(trans).GetTranslation(), trans );
+  EXPECT_EQ( tx->SetCenter(center).GetCenter(), center );
+
+  sitk::ScaleVersor3DTransform tx0(v3(0.4,0.5,0.6), v4(0.0,0.0,0.0,1.0), trans );
+  EXPECT_EQ( tx0.GetCenter(), v3(0.0,0.0,0.0) );
+  EXPECT_EQ( tx0.GetTranslation(), trans );
+  EXPECT_EQ( tx0.GetScale(), v3(0.4,0.5,0.6) );
+  EXPECT_EQ( tx0.GetVersor(),  v4(0.0,0.0,0.0,1.0) );
+
+  //constructor using axis-angle (rotation of 90 degrees around z)
+  sitk::ScaleVersor3DTransform tx00(v3(0.4,0.5,0.6), v3(0.0,0.0,1.0),1.5707963267948966, trans );
+  EXPECT_EQ( tx00.GetCenter(), v3(0.0,0.0,0.0) );
+  EXPECT_EQ( tx00.GetTranslation(), trans );
+  EXPECT_EQ( tx00.GetScale(), v3(0.4,0.5,0.6) );
+   EXPECT_VECTOR_DOUBLE_NEAR(tx00.GetVersor(), v4(0.0,0.0,0.70710678118654757,0.70710678118654757), 1e-15);
+
+  // copy constructor
+  sitk::ScaleVersor3DTransform tx1( *(tx.get()) );
+  EXPECT_EQ( tx1.GetFixedParameters()[0], 1.1 );
+  EXPECT_EQ( tx1.GetFixedParameters()[1], 1.1 );
+  EXPECT_EQ( tx1.GetFixedParameters()[2], 1.1 );
+  EXPECT_EQ( tx1.GetParameters()[7], 2.0 ); // scale y
+  EXPECT_EQ( tx1.GetParameters(), tx->GetParameters() );
+  EXPECT_EQ( tx1.GetCenter(), center );
+
+  sitk::ScaleVersor3DTransform tx2;
+
+  // assignment operator
+  tx1 = tx2;
+  EXPECT_EQ( tx1.GetCenter(), zeros );
+  EXPECT_EQ( tx1.GetParameters().size(), 9u );
+  EXPECT_EQ( tx1.GetFixedParameters().size(), 3u );
+  EXPECT_EQ( tx1.GetTranslation(), v3(0.0,0.0,0.0) );
+  EXPECT_EQ( tx1.GetScale(), v3(1.0,1.0,1.0) );
+  EXPECT_EQ( tx1.GetVersor(), v4(0.0,0.0,0.0,1.0) );
+
+
+  // copy on write
+  tx1.SetFixedParameters(center);
+  EXPECT_EQ( tx1.GetCenter(), center);
+  EXPECT_EQ( tx1.GetFixedParameters(), center );
+  EXPECT_EQ( tx2.GetFixedParameters(), zeros );
+  EXPECT_EQ( tx1.GetCenter(), center );
+  EXPECT_EQ( tx2.GetCenter(), zeros );
+
+  tx1 = tx2;
+  EXPECT_EQ( tx1.GetCenter(), zeros );
+  EXPECT_EQ( tx2.GetCenter(), zeros );
+  tx1.SetCenter(center);
+  EXPECT_EQ( tx1.GetCenter(), center );
+  EXPECT_EQ( tx2.GetCenter(), zeros );
+
+  tx1 = tx2;
+  EXPECT_EQ( tx1.GetTranslation(), zeros );
+  EXPECT_EQ( tx2.GetTranslation(), zeros );
+  tx1.SetTranslation(trans);
+  EXPECT_EQ( tx1.GetTranslation(), trans );
+  EXPECT_EQ( tx2.GetTranslation(), zeros );
+
+  tx1 = tx2;
+  EXPECT_EQ( tx1.GetScale(), v3(1.0,1.0,1.0) );
+  EXPECT_EQ( tx2.GetScale(), v3(1.0,1.0,1.0) );
+  tx1.SetScale(v3(3.0,2.0,1.0));
+  EXPECT_EQ( tx1.GetScale(), v3(3.0,2.0,1.0) );
+  EXPECT_EQ( tx2.GetScale(), v3(1.0,1.0,1.0) );
+
+  tx1 = tx2;
+  EXPECT_EQ( tx1.GetVersor(), v4(0.0,0.0,0.0,1.0) );
+  EXPECT_EQ( tx2.GetVersor(), v4(0.0,0.0,0.0,1.0) );
+  tx1.SetRotation(v3(1.0,0.0,0.0), itk::Math::pi);
+  EXPECT_VECTOR_DOUBLE_NEAR( tx1.GetVersor(), v4(1.0,0.0,0.0,0.0), 1e-15 );
+  EXPECT_EQ( tx2.GetVersor(), v4(0.0,0.0,0.0,1.0) );
+
+
+  sitk::Transform tx3( *tx );
+  tx.reset();
+
+  EXPECT_EQ( tx3.GetParameters().size(), 9u );
+  EXPECT_EQ( tx3.GetFixedParameters().size(), 3u );
+  EXPECT_EQ( tx3.GetFixedParameters()[0], 1.1 );
+  EXPECT_EQ( tx3.GetFixedParameters()[1], 1.1 );
+  EXPECT_EQ( tx3.GetFixedParameters()[2], 1.1 );
+  EXPECT_EQ( tx3.GetParameters()[0], 0.0 );
+  EXPECT_EQ( tx3.GetParameters()[1], 0.0 );
+  EXPECT_EQ( tx3.GetParameters()[2], 0.0 );
+  EXPECT_EQ( tx3.GetParameters()[7], 2.0 );
+
+
+  tx.reset( new sitk::ScaleVersor3DTransform());
+
+  // test member setters/getters
+  EXPECT_EQ(tx->GetCenter(), zeros);
+  tx->SetCenter(center);
+  EXPECT_EQ(tx->GetCenter(), center);
+
+  EXPECT_EQ( tx->SetRotation(v4(0.0,1.0,0.0,0.0)).GetVersor(), v4(0.0,1.0,0.0,0.0) );
+  EXPECT_THROW( tx->SetRotation(v3(1.0,0.0,0.0)).GetVersor(), sitk::GenericException );
+
+  EXPECT_EQ(tx->GetTranslation(), zeros);
+  tx->SetTranslation(trans);
+  EXPECT_EQ(tx->GetTranslation(),trans);
+
+  // BUG: inverse does not work!!!!
+  //EXPECT_NO_THROW(tx->SetInverse());
+}
+
+
 TEST(TransformTest,ScaleSkewVersor3DTransform_Points)
 {
   // Test ScaleSkewVersor3D by transforming some points
@@ -1424,6 +1574,12 @@ TEST(TransformTest,Similarity3DTransform)
   EXPECT_EQ( tx->SetTranslation(trans).GetTranslation(), trans );
 
   EXPECT_EQ( tx->SetCenter(center).GetCenter(), center );
+
+  sitk::Similarity3DTransform tx0(0.5, v4(1.0,0.0,0.0,0.0), trans );
+  EXPECT_EQ( tx0.GetCenter(), v3(0.0,0.0,0.0) );
+  EXPECT_EQ( tx0.GetTranslation(), trans );
+  EXPECT_EQ( tx0.GetScale(), 0.5 );
+  EXPECT_EQ( tx0.GetVersor(), v4(1.0,0.0,0.0,0.0));
 
   // copy constructor
   sitk::Similarity3DTransform tx1( *(tx.get()) );
@@ -1631,6 +1787,16 @@ TEST(TransformTest,VersorRigid3DTransform)
   EXPECT_EQ( tx->SetTranslation(trans).GetTranslation(), trans );
   EXPECT_EQ( tx->SetCenter(center).GetCenter(), center );
 
+  //constructor using versor
+  sitk::VersorRigid3DTransform tx0(v4(1.0,0.0,0.0,0.0), trans);
+  EXPECT_EQ( tx0.GetVersor(), v4(1.0,0.0,0.0,0.0) );
+  EXPECT_EQ( tx0.GetTranslation(), trans );
+  EXPECT_EQ( tx0.GetCenter(), v3(0.0,0.0,0.0) );
+
+  //constructor using axis-angle (rotation of 90 degrees around z)
+  sitk::VersorRigid3DTransform tx00(v3(0.0,0.0,1.0),1.5707963267948966);
+  EXPECT_VECTOR_DOUBLE_NEAR(tx00.GetVersor(), v4(0.0,0.0,0.70710678118654757,0.70710678118654757), 1e-15);
+
   // copy constructor
   sitk::VersorRigid3DTransform tx1( *(tx.get()) );
   EXPECT_EQ( tx1.GetFixedParameters()[0], 1.1 );
@@ -1777,6 +1943,15 @@ TEST(TransformTest,VersorTransform)
   EXPECT_EQ( tx->GetMatrix(), v9(1.0,0.0,0.0, 0.0,1.0,0.0, 0.0,0.0,1.0) );
 
   EXPECT_EQ( tx->SetCenter(center).GetCenter(), center );
+
+  //constructor using versor
+  sitk::VersorTransform tx0(v4(1.0,0.0,0.0,0.0));
+  EXPECT_EQ( tx0.GetVersor(), v4(1.0,0.0,0.0,0.0) );
+  EXPECT_EQ( tx0.GetCenter(), v3(0.0,0.0,0.0) );
+
+  //constructor using axis-angle (rotation of 90 degrees around z)
+  sitk::VersorTransform tx00(v3(0.0,0.0,1.0),1.5707963267948966);
+  EXPECT_VECTOR_DOUBLE_NEAR(tx00.GetVersor(), v4(0.0,0.0,0.70710678118654757,0.70710678118654757), 1e-15);
 
   // copy constructor
   sitk::VersorTransform tx1( *(tx.get()) );

@@ -40,6 +40,14 @@ Similarity3DTransform( const Similarity3DTransform & );
 
 explicit Similarity3DTransform( const Transform & );
 
+Similarity3DTransform( double scaleFactor, const std::vector< double > &versor,
+                       const std::vector< double > &translation=std::vector< double >(3, 0.0),
+                       const std::vector< double > &fixedCenter=std::vector< double >(3, 0.0) );
+
+Similarity3DTransform( double scaleFactor, const std::vector< double > &axis, double angle,
+                       const std::vector< double > &translation=std::vector< double >(3, 0.0),
+                       const std::vector< double > &fixedCenter=std::vector< double >(3, 0.0) );
+
 Similarity3DTransform &operator=( const Similarity3DTransform & );
 
 /** Name of this class */

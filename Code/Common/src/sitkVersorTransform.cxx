@@ -77,6 +77,26 @@ VersorTransform::VersorTransform( const Transform &arg )
   Self::InternalInitialization(Self::GetITKBase());
 }
 
+VersorTransform::VersorTransform( const std::vector< double > &versor,
+                                  const std::vector< double> &fixedCenter )
+  : Transform(3, sitkVersor)
+{
+  Self::InternalInitialization(Self::GetITKBase());
+
+  this->SetCenter(fixedCenter);
+  this->SetRotation(versor);
+}
+
+VersorTransform::VersorTransform( const std::vector< double > &axis,
+                                  double angle,
+                                  const std::vector< double> &fixedCenter )
+  : Transform(3, sitkVersor)
+{
+  Self::InternalInitialization(Self::GetITKBase());
+
+  this->SetCenter(fixedCenter);
+  this->SetRotation(axis, angle);
+}
 
 VersorTransform &VersorTransform::operator=( const VersorTransform &arg )
 {
