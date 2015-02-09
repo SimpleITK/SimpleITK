@@ -424,6 +424,16 @@ std::vector<double> ImageRegistrationMethod::GetOptimizerPosition() const
 }
 
 
+double ImageRegistrationMethod::GetOptimizerLearningRate() const
+{
+  if(bool(this->m_pfGetOptimizerLearningRate))
+    {
+    return this->m_pfGetOptimizerLearningRate();
+    }
+  return 0.0;
+}
+
+
 double ImageRegistrationMethod::GetMetricValue() const
 {
   if(bool(this->m_pfGetMetricValue))
@@ -726,6 +736,7 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
 
   m_pfGetOptimizerIteration = SITK_NULLPTR;
   m_pfGetOptimizerPosition = SITK_NULLPTR;
+  m_pfGetOptimizerLearningRate = SITK_NULLPTR;
   m_pfGetMetricValue = SITK_NULLPTR;
   m_pfGetOptimizerScales = SITK_NULLPTR;
 

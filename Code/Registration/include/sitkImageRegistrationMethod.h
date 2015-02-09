@@ -247,6 +247,7 @@ namespace simple
       */
     unsigned int GetOptimizerIteration() const;
     std::vector<double> GetOptimizerPosition() const;
+    double GetOptimizerLearningRate() const;
     double GetMetricValue() const;
 
     /** \brief Get the OptimizerScales
@@ -297,6 +298,7 @@ namespace simple
 
     nsstd::function<unsigned int()> m_pfGetOptimizerIteration;
     nsstd::function<std::vector<double>()> m_pfGetOptimizerPosition;
+    nsstd::function<double()> m_pfGetOptimizerLearningRate;
     nsstd::function<double()> m_pfGetMetricValue;
     nsstd::function<std::vector<double>()> m_pfGetOptimizerScales;
 
