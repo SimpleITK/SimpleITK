@@ -40,6 +40,18 @@ public:
 
   explicit ScaleSkewVersor3DTransform( const Transform & );
 
+  ScaleSkewVersor3DTransform( const std::vector< double > &scale,
+                              const std::vector< double> &skew,
+                              const std::vector< double > &versor,
+                              const std::vector< double > &translation=std::vector< double >(3, 0.0),
+                              const std::vector< double> &fixedCenter=std::vector< double >(3, 0.0) );
+
+  ScaleSkewVersor3DTransform( const std::vector< double > &scale,
+                              const std::vector< double> &skew,
+                              const std::vector< double > &axis, double angle,
+                              const std::vector< double > &translation=std::vector< double >(3, 0.0),
+                              const std::vector< double> &fixedCenter=std::vector< double >(3, 0.0) );
+
   ScaleSkewVersor3DTransform &operator=( const ScaleSkewVersor3DTransform & );
 
   /** Name of this class */

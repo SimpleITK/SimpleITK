@@ -36,9 +36,10 @@ public:
 // construct identity
   Similarity2DTransform();
 
-  explicit Similarity2DTransform(const std::vector<double> &fixedCenter,
-                            double angle=0.0,
-                            const std::vector<double> &translation = std::vector<double>(2,0.0) );
+  explicit Similarity2DTransform( double scaleFactor,
+                                  double angle=0.0,
+                                  const std::vector<double> &translation = std::vector<double>(2,0.0),
+                                  const std::vector< double > &fixedCenter = std::vector<double>(2,0.0) );
 
   Similarity2DTransform( const Similarity2DTransform & );
 

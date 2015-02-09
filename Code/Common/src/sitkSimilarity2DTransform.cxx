@@ -32,9 +32,10 @@ Similarity2DTransform::Similarity2DTransform()
   Self::InternalInitialization(Self::GetITKBase());
 }
 
-Similarity2DTransform::Similarity2DTransform(const std::vector<double> &fixedCenter,
-                                   double angle,
-                                   const std::vector<double> &translation)
+Similarity2DTransform::Similarity2DTransform( double scaleFactor,
+                                              double angle,
+                                              const std::vector<double> &translation,
+                                              const std::vector<double> &fixedCenter )
   : Transform(2,sitkSimilarity)
 
 {
@@ -43,6 +44,7 @@ Similarity2DTransform::Similarity2DTransform(const std::vector<double> &fixedCen
   this->SetCenter(fixedCenter);
   this->SetAngle(angle);
   this->SetTranslation(translation);
+  this->SetScale(scaleFactor);
 }
 
 Similarity2DTransform::Similarity2DTransform( const Transform &arg )
