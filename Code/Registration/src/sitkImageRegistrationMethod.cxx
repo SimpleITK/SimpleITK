@@ -456,6 +456,17 @@ std::vector<double> ImageRegistrationMethod::GetOptimizerScales() const
   return std::vector<double>();
 }
 
+
+unsigned int ImageRegistrationMethod::GetCurrentLevel() const
+{
+  if (bool(this->m_pfGetCurrentLevel))
+    {
+    return this->m_pfGetCurrentLevel();
+    }
+  return 0;
+}
+
+
 template <typename TMetric>
  itk::RegistrationParameterScalesEstimator< TMetric >*
 ImageRegistrationMethod::CreateScalesEstimator()
@@ -725,6 +736,9 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
     registration->GetMetric()->Print(std::cout);
     }
 
+  m_pfGetCurrentLevel = nsstd::bind(&RegistrationType::GetCurrentLevel,registration);
+
+
   registration->Update();
 
 
@@ -739,6 +753,9 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
   m_pfGetOptimizerLearningRate = SITK_NULLPTR;
   m_pfGetMetricValue = SITK_NULLPTR;
   m_pfGetOptimizerScales = SITK_NULLPTR;
+
+  m_pfGetCurrentLevel = SITK_NULLPTR;
+
 
   if (this->m_InitialTransformInPlace)
     {

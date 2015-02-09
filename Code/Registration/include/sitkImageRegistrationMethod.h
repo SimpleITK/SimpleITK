@@ -250,6 +250,9 @@ namespace simple
     double GetOptimizerLearningRate() const;
     double GetMetricValue() const;
 
+
+    unsigned int GetCurrentLevel() const;
+
     /** \brief Get the OptimizerScales
       *
       * If the scales are explicitly set then this method returns
@@ -301,6 +304,9 @@ namespace simple
     nsstd::function<double()> m_pfGetOptimizerLearningRate;
     nsstd::function<double()> m_pfGetMetricValue;
     nsstd::function<std::vector<double>()> m_pfGetOptimizerScales;
+
+
+    nsstd::function<unsigned int()> m_pfGetCurrentLevel;
 
     typedef Transform (ImageRegistrationMethod::*MemberFunctionType)( const Image &fixed, const Image &moving );
     friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
