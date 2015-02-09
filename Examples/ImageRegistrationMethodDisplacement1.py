@@ -28,6 +28,10 @@ def command_iteration(method) :
     print("{0:3} = {1:10.5f}".format(method.GetOptimizerIteration(),
                                      method.GetMetricValue()))
 
+def command_multiresolution_iteration(method):
+    print("============= Resolution Change =============")
+
+
 if len ( sys.argv ) < 4:
     print( "Usage: {0} <fixedImageFilter> <movingImageFile> <outputTransformFile>".format(sys.argv[0]))
     sys.exit ( 1 )
@@ -45,16 +49,13 @@ R.SetShrinkFactorsPerLevel([3,2,1])
 R.SetSmoothingSigmasPerLevel([2,1,1])
 
 R.SetMetricAsJointHistogramMutualInformation(20)
-R.SetMetricSamplingPercentagePerLevel([0.05, 0.2, 0.5])
-R.SetMetricSamplingStrategy(R.RANDOM)
+R.MetricUseFixedImageGradientFilterOff()
+R.MetricUseFixedImageGradientFilterOff()
 
 
 R.SetOptimizerAsGradientDescent(learningRate=1.0,
                                 numberOfIterations=100,
-                                convergenceMinimumValue = 1e-6,
-                                convergenceWindowSize = 10,
-                                estimateLearningRate = R.EachIteration,
-                                maximumStepSizeInPhysicalUnits = 1.0)
+                                estimateLearningRate = R.EachIteration)
 R.SetOptimizerScalesFromPhysicalShift()
 
 R.SetInitialTransform(initialTx,inPlace=True)
@@ -62,8 +63,10 @@ R.SetInitialTransform(initialTx,inPlace=True)
 R.SetInterpolator(sitk.sitkLinear)
 
 R.AddCommand( sitk.sitkIterationEvent, lambda: command_iteration(R) )
+R.AddCommand( sitk.sitkMultiResolutionIterationEvent, lambda: command_multiresolution_iteration(R) )
 
 outTx = R.Execute(fixed, moving)
+
 
 print("-------")
 print(outTx)
@@ -76,23 +79,26 @@ displacementField = sitk.Image(fixed.GetSize(), sitk.sitkVectorFloat64)
 displacementField.CopyInformation(fixed)
 displacementTx = sitk.DisplacementFieldTransform(displacementField)
 del displacementField
-displacementTx.SetSmoothingGaussianOnUpdate(varianceForUpdateField=0.5,
-                                            varianceForTotalField=1.0)
+displacementTx.SetSmoothingGaussianOnUpdate(varianceForUpdateField=0.0,
+                                            varianceForTotalField=1.5)
+
 
 
 R.SetMovingInitialTransform(outTx)
 R.SetInitialTransform(displacementTx, inPlace=True)
 
-R.SetMetricAsANTSNeighborhoodCorrelation(2)
+R.SetMetricAsANTSNeighborhoodCorrelation(4)
+R.MetricUseFixedImageGradientFilterOff()
+R.MetricUseFixedImageGradientFilterOff()
 
-R.SetShrinkFactorsPerLevel([1]) # TODO get adaptors working!!!
-R.SetSmoothingSigmasPerLevel([2])
 
-R.SetOptimizerScalesFromIndexShift()
+R.SetShrinkFactorsPerLevel([3,2,1])
+R.SetSmoothingSigmasPerLevel([2,1,1])
+
+R.SetOptimizerScalesFromPhysicalShift()
 R.SetOptimizerAsGradientDescent(learningRate=1,
                                 numberOfIterations=300,
                                 estimateLearningRate=R.EachIteration)
-
 
 outTx.AddTransform( R.Execute(fixed, moving) )
 

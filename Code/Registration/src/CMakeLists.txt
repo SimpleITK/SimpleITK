@@ -2,6 +2,7 @@
 set( SimpleITKRegistration
   sitkImageRegistrationMethod.cxx
   sitkImageRegistrationMethod_CreateOptimizer.cxx
+  sitkImageRegistrationMethod_CreateMetric.cxx
   )
 
 include_directories( ${CMAKE_CURRENT_SOURCE_DIR} )
