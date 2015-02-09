@@ -264,7 +264,7 @@ namespace simple
 
     /** Measurement updated at the end of execution.
       */
-    const std::string &GetOptimizerStopConditionDescription() const;
+    std::string GetOptimizerStopConditionDescription() const;
 
   protected:
 
@@ -304,6 +304,7 @@ namespace simple
     nsstd::function<double()> m_pfGetOptimizerLearningRate;
     nsstd::function<double()> m_pfGetMetricValue;
     nsstd::function<std::vector<double>()> m_pfGetOptimizerScales;
+    nsstd::function<std::string()> m_pfGetOptimizerStopConditionDescription;
 
 
     nsstd::function<unsigned int()> m_pfGetCurrentLevel;
