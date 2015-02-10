@@ -438,6 +438,16 @@ double ImageRegistrationMethod::GetOptimizerLearningRate() const
 }
 
 
+double ImageRegistrationMethod::GetOptimizerConvergenceValue() const
+{
+  if(bool(this->m_pfGetOptimizerConvergenceValue))
+    {
+    return this->m_pfGetOptimizerConvergenceValue();
+    }
+  return 0.0;
+}
+
+
 double ImageRegistrationMethod::GetMetricValue() const
 {
   if(bool(this->m_pfGetMetricValue))
@@ -758,6 +768,7 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
   m_pfGetOptimizerIteration = SITK_NULLPTR;
   m_pfGetOptimizerPosition = SITK_NULLPTR;
   m_pfGetOptimizerLearningRate = SITK_NULLPTR;
+  m_pfGetOptimizerConvergenceValue = SITK_NULLPTR;
   m_pfGetMetricValue = SITK_NULLPTR;
   m_pfGetOptimizerScales = SITK_NULLPTR;
   m_pfGetOptimizerStopConditionDescription = SITK_NULLPTR;

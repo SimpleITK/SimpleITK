@@ -44,9 +44,45 @@ public:
       std::ios  state(NULL);
       state.copyfmt(std::cout);
       std::cout << std::fixed << std::setfill(' ') << std::setprecision( 5 );
-      std::cout << std::setw(3) << m_Method.GetOptimizerIteration();
-      std::cout << " = " << std::setw(10) << m_Method.GetMetricValue();
-      std::cout << std::endl;
+      if ( m_Method.GetOptimizerIteration() == 0 )
+        {
+        std::cout << "\tLevel: " << std::setw(3) << m_Method.GetCurrentLevel() << std::endl;
+        std::cout << "\tScales: " << m_Method.GetOptimizerScales() << std::endl;
+        }
+      std::cout << '#' << m_Method.GetOptimizerIteration() << std::endl;
+      std::cout << "\tMetric Value: " <<  m_Method.GetMetricValue() << std::endl;
+      std::cout << "\tLearning Rate: " << m_Method.GetOptimizerLearningRate() << std::endl;
+      if (m_Method.GetOptimizerConvergenceValue() != std::numeric_limits<double>::max())
+        {
+        std::cout << "\tConvergence Value: " << std::scientific << m_Method.GetOptimizerConvergenceValue() << std::endl;
+        }
+      std::cout.copyfmt(state);
+    }
+
+private:
+  const sitk::ImageRegistrationMethod &m_Method;
+
+};
+
+class MultiResolutionIterationUpdate
+  : public sitk::Command
+{
+public:
+  MultiResolutionIterationUpdate( const sitk::ImageRegistrationMethod &m)
+    : m_Method(m)
+    {}
+
+  virtual void Execute( )
+    {
+      // use sitk's output operator for std::vector etc..
+      using sitk::operator<<;
+
+      // stash the stream state
+      std::ios  state(NULL);
+      state.copyfmt(std::cout);
+      std::cout << std::fixed << std::setfill(' ') << std::setprecision( 5 );
+      std::cout << "\tStop Condition: " << m_Method.GetOptimizerStopConditionDescription() << std::endl;
+      std::cout << "============= Resolution Change =============" << std::endl;
       std::cout.copyfmt(state);
     }
 
@@ -113,6 +149,9 @@ int main(int argc, char *argv[])
 
   IterationUpdate cmd(R);
   R.AddCommand( sitk::sitkIterationEvent, cmd);
+
+  MultiResolutionIterationUpdate cmd2(R);
+  R.AddCommand( sitk::sitkMultiResolutionIterationEvent, cmd2);
 
   sitk::Transform outTx = R.Execute( fixed, moving );
 

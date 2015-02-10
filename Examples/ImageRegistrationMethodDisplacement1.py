@@ -25,10 +25,18 @@ import os
 
 
 def command_iteration(method) :
-    print("{0:3} = {1:10.5f}".format(method.GetOptimizerIteration(),
-                                     method.GetMetricValue()))
+    if (method.GetOptimizerIteration() == 0):
+        print("\tLevel: {0}".format(method.GetCurrentLevel()))
+        print("\tScales: {0}".format(method.GetOptimizerScales()))
+    print("#{0}".format(method.GetOptimizerIteration()))
+    print("\tMetric Value: {0:10.5f}".format( method.GetMetricValue()))
+    print("\tLearningRate: {0:10.5f}".format(method.GetOptimizerLearningRate()))
+    if (method.GetOptimizerConvergenceValue() != sys.float_info.max):
+        print("\tConvergence Value: {0:.5e}".format(method.GetOptimizerConvergenceValue()))
+
 
 def command_multiresolution_iteration(method):
+    print("\tStop Condition: {0}".format(method.GetOptimizerStopConditionDescription()))
     print("============= Resolution Change =============")
 
 
