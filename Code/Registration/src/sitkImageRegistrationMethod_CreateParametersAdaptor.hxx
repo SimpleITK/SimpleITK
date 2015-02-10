@@ -37,9 +37,12 @@ template<typename TTransformBase, typename TFixedImageType>
   typename TransformParametersAdaptorBase<TTransformBase>::Pointer
   CreateTransformParametersAdaptorDisplacementField(TTransformBase *transform,
                                                     const FixedArray<unsigned int, TTransformBase::InputSpaceDimension> &shrinkFactors,
-                                                    const TFixedImageType* ,
+                                                    const TFixedImageType* fixedImage,
                                                     unsigned int level  )
 {
+  Unused(level);
+  Unused(fixedImage);
+
   typedef TFixedImageType FixedImageType;
   const unsigned int Dimension = FixedImageType::ImageDimension;
   typedef itk::DisplacementFieldTransform<double, Dimension> DisplacementFieldTransformType;
