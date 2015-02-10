@@ -59,11 +59,17 @@ ImageRegistrationMethod::ImageRegistrationMethod()
 {
   m_MemberFactory.reset( new  detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
+  m_EvaluateMemberFactory.reset( new detail::MemberFunctionFactory<EvaluateMemberFunctionType>(this) );
+
   // m_MemberFactory->RegisterMemberFunctions< BasicPixelIDTypeList, 3 > ();
   // m_MemberFactory->RegisterMemberFunctions< BasicPixelIDTypeList, 2 > ();
 
   m_MemberFactory->RegisterMemberFunctions< RealPixelIDTypeList, 3 > ();
   m_MemberFactory->RegisterMemberFunctions< RealPixelIDTypeList, 2 > ();
+
+  typedef EvaluateMemberFunctionAddressor<EvaluateMemberFunctionType> EvaluateMemberFunctionAddressorType;
+  m_EvaluateMemberFactory->RegisterMemberFunctions< RealPixelIDTypeList, 3, EvaluateMemberFunctionAddressorType > ();
+  m_EvaluateMemberFactory->RegisterMemberFunctions< RealPixelIDTypeList, 2, EvaluateMemberFunctionAddressorType > ();
 
   this->SetMetricAsMattesMutualInformation();
 
@@ -711,6 +717,152 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
     comp->ClearTransformQueue();
     comp->AddTransform( itkOutTx );
     return Transform(comp.GetPointer());
+    }
+}
+
+
+double ImageRegistrationMethod::Evaluate ( const Image &fixed, const Image & moving )
+{
+  const PixelIDValueType fixedType = fixed.GetPixelIDValue();
+  const unsigned int fixedDim = fixed.GetDimension();
+  if ( fixed.GetPixelIDValue() != moving.GetPixelIDValue() )
+    {
+    sitkExceptionMacro ( << "Fixed and moving images must be the same datatype! Got "
+                         << fixed.GetPixelIDValue() << " and " << moving.GetPixelIDValue() );
+    }
+
+  if ( fixed.GetDimension() != moving.GetDimension() )
+    {
+    sitkExceptionMacro ( << "Fixed and moving images must be the same dimensionality! Got "
+                         << fixed.GetDimension() << " and " << moving.GetDimension() );
+    }
+
+  if (this->m_MemberFactory->HasMemberFunction( fixedType, fixedDim ) )
+    {
+    return this->m_EvaluateMemberFactory->GetMemberFunction( fixedType, fixedDim )( fixed, moving );
+    }
+
+  sitkExceptionMacro( << "Filter does not support fixed image type: " << itk::simple::GetPixelIDValueAsString (fixedType) );
+
+}
+
+
+
+template<class TImageType>
+double ImageRegistrationMethod::EvaluateInternal ( const Image &inFixed, const Image &inMoving )
+{
+  typedef TImageType     FixedImageType;
+  typedef TImageType     MovingImageType;
+  const unsigned int ImageDimension = FixedImageType::ImageDimension;
+  typedef itk::SpatialObject<ImageDimension> SpatialObjectMaskType;
+
+ typedef itk::ImageRegistrationMethodv4<FixedImageType, MovingImageType>  RegistrationType;
+
+  // this variable will hold the initial moving then fixed, then the
+  // initial to optimize.
+  const std::string strIdentityTransform = "IdentityTransform";
+
+  // Get the pointer to the ITK image contained in image1
+  typename FixedImageType::ConstPointer fixed = this->CastImageToITK<FixedImageType>( inFixed );
+  typename MovingImageType::ConstPointer moving = this->CastImageToITK<MovingImageType>( inMoving );
+
+  typedef itk::ImageToImageMetricv4<FixedImageType, MovingImageType> _MetricType;
+  typename _MetricType::Pointer metric = this->CreateMetric<FixedImageType>();
+  metric->UnRegister();
+
+  this->SetupMetric(metric.GetPointer(), fixed.GetPointer(), moving.GetPointer());
+
+  metric->SetFixedImage(fixed);
+  metric->SetMovingImage(moving);
+
+  typedef itk::CompositeTransform<double, ImageDimension> CompositeTransformType;
+  typename CompositeTransformType::Pointer movingInitialCompositeTransform = CompositeTransformType::New();
+  // Set initial moving transform
+  if ( strIdentityTransform != this->m_MovingInitialTransform.GetITKBase()->GetNameOfClass())
+    {
+    typename RegistrationType::InitialTransformType *itkTx;
+    if ( !(itkTx = dynamic_cast<typename RegistrationType::InitialTransformType *>(this->m_MovingInitialTransform.GetITKBase())) )
+      {
+      sitkExceptionMacro( "Unexpected error converting initial moving transform! Possible miss matching dimensions!" );
+      }
+    movingInitialCompositeTransform->AddTransform(itkTx);
+    }
+
+  // Set initial fixed transform
+  if ( strIdentityTransform != this->m_FixedInitialTransform.GetITKBase()->GetNameOfClass())
+    {
+    typename RegistrationType::InitialTransformType *itkTx;
+    if ( !(itkTx = dynamic_cast<typename RegistrationType::InitialTransformType *>(this->m_FixedInitialTransform.GetITKBase())) )
+      {
+      sitkExceptionMacro( "Unexpected error converting initial moving transform! Possible miss matching dimensions!" );
+      }
+    metric->SetFixedTransform(itkTx);
+    }
+
+  typename RegistrationType::InitialTransformType *itkTx;
+  if ( !(itkTx = dynamic_cast<typename RegistrationType::InitialTransformType *>(this->m_InitialTransform.GetITKBase())) )
+    {
+    sitkExceptionMacro( "Unexpected error converting initial transform! Possible miss matching dimensions!" );
+    }
+  movingInitialCompositeTransform->AddTransform(itkTx);
+  metric->SetMovingTransform(itkTx);
+
+
+  return metric->GetValue();
+}
+
+
+template <class TImageType>
+void
+ImageRegistrationMethod::SetupMetric(
+  itk::ImageToImageMetricv4<TImageType,
+  TImageType,
+  TImageType,
+  double,
+  itk::DefaultImageToImageMetricTraitsv4< TImageType, TImageType, TImageType, double >
+  >*metric, const TImageType *fixed, const TImageType *moving)
+{
+
+  typedef TImageType     FixedImageType;
+  typedef TImageType     MovingImageType;
+  const unsigned int ImageDimension = FixedImageType::ImageDimension;
+  typedef itk::SpatialObject<ImageDimension> SpatialObjectMaskType;
+
+  metric->SetMaximumNumberOfThreads(this->GetNumberOfThreads());
+
+  metric->SetUseFixedImageGradientFilter( m_MetricUseFixedImageGradientFilter );
+  metric->SetUseMovingImageGradientFilter( m_MetricUseMovingImageGradientFilter );
+
+
+  typedef itk::InterpolateImageFunction< FixedImageType, double > FixedInterpolatorType;
+  typename FixedInterpolatorType::Pointer   fixedInterpolator  = CreateInterpolator(fixed, m_Interpolator);
+  metric->SetFixedInterpolator( fixedInterpolator );
+
+  typedef itk::InterpolateImageFunction< MovingImageType, double > MovingInterpolatorType;
+  typename MovingInterpolatorType::Pointer   movingInterpolator  = CreateInterpolator(moving, m_Interpolator);
+  metric->SetMovingInterpolator( movingInterpolator );
+
+  // todo implement ImageRegionSpatialObject
+  if ( m_MetricFixedMaskImage.GetSize() != std::vector<unsigned int>(m_MetricFixedMaskImage.GetDimension(), 0u) )
+    {
+    if ( m_MetricFixedMaskImage.GetDimension() != FixedImageType::ImageDimension )
+      {
+      sitkExceptionMacro("FixedMaskImage does not match dimension of then fixed image!");
+      }
+    typename SpatialObjectMaskType::ConstPointer fixedMask = this->CreateSpatialObjectMask<ImageDimension>(m_MetricFixedMaskImage);
+    fixedMask->UnRegister();
+    metric->SetFixedImageMask(fixedMask);
+    }
+
+  if ( m_MetricMovingMaskImage.GetSize() != std::vector<unsigned int>(m_MetricMovingMaskImage.GetDimension(), 0u) )
+    {
+    if ( m_MetricMovingMaskImage.GetDimension() != MovingImageType::ImageDimension )
+      {
+      sitkExceptionMacro("MovingMaskImage does not match dimension of the moving image!");
+      }
+    typename SpatialObjectMaskType::ConstPointer movingMask = this->CreateSpatialObjectMask<ImageDimension>(m_MetricMovingMaskImage);
+    movingMask->UnRegister();
+    metric->SetMovingImageMask(movingMask);
     }
 }
 

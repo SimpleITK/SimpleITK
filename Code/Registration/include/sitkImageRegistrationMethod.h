@@ -239,6 +239,9 @@ namespace simple
 
     Transform Execute ( const Image &fixed, const Image & moving );
 
+    double Evaluate( const Image &fixed, const Image & moving );
+
+
     /**
       * Active measurements which can be obtained during call backs.
       *
@@ -266,6 +269,10 @@ namespace simple
 
     template<class TImage>
     Transform ExecuteInternal ( const Image &fixed, const Image &moving );
+
+    template<class TImage>
+    double EvaluateInternal ( const Image &fixed, const Image &moving );
+
 
     itk::ObjectToObjectOptimizerBaseTemplate<double> *CreateOptimizer( unsigned int numberOfTransformParameters );
 
@@ -309,9 +316,24 @@ namespace simple
     nsstd::function<double()> m_pfGetMetricValue;
     nsstd::function<std::vector<double>()> m_pfGetOptimizerScales;
 
+
+    template < class TMemberFunctionPointer >
+      struct EvaluateMemberFunctionAddressor
+    {
+      typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
+
+      template< typename TImageType >
+      TMemberFunctionPointer operator() ( void ) const
+        {
+          return &ObjectType::template EvaluateInternal< TImageType >;
+        }
+    };
+
     typedef Transform (ImageRegistrationMethod::*MemberFunctionType)( const Image &fixed, const Image &moving );
+    typedef double (ImageRegistrationMethod::*EvaluateMemberFunctionType)( const Image &fixed, const Image &moving );
     friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
     std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
+    std::auto_ptr<detail::MemberFunctionFactory<EvaluateMemberFunctionType> > m_EvaluateMemberFactory;
 
     InterpolatorEnum  m_Interpolator;
     Transform  m_InitialTransform;
