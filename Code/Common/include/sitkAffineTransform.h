@@ -38,8 +38,8 @@ public:
 
   explicit AffineTransform( const Transform & );
 
-  AffineTransform( const std::vector< double> &A,
-                   const std::vector< double> &b,
+  AffineTransform( const std::vector< double> &matrix,
+                   const std::vector< double> &translation,
                    const std::vector< double> &fixedCenter=std::vector< double >(3, 0.0));
 
 
