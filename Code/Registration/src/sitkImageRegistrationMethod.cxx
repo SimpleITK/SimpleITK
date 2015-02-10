@@ -596,45 +596,10 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
 
   typedef itk::ImageToImageMetricv4<FixedImageType, MovingImageType> _MetricType;
   typename _MetricType::Pointer metric = this->CreateMetric<FixedImageType>();
-  registration->SetMetric( metric );
   metric->UnRegister();
+  this->SetupMetric(metric.GetPointer(), fixed.GetPointer(), moving.GetPointer());
 
-  metric->SetMaximumNumberOfThreads(this->GetNumberOfThreads());
-
-  metric->SetUseFixedImageGradientFilter( m_MetricUseFixedImageGradientFilter );
-  metric->SetUseMovingImageGradientFilter( m_MetricUseMovingImageGradientFilter );
-
-
-  typedef itk::InterpolateImageFunction< FixedImageType, double > FixedInterpolatorType;
-  typename FixedInterpolatorType::Pointer   fixedInterpolator  = CreateInterpolator(fixed.GetPointer(), m_Interpolator);
-  metric->SetFixedInterpolator( fixedInterpolator );
-
-  typedef itk::InterpolateImageFunction< MovingImageType, double > MovingInterpolatorType;
-  typename MovingInterpolatorType::Pointer   movingInterpolator  = CreateInterpolator(moving.GetPointer(), m_Interpolator);
-  metric->SetMovingInterpolator( movingInterpolator );
-
-  // todo implement ImageRegionSpatialObject
-  if ( m_MetricFixedMaskImage.GetSize() != std::vector<unsigned int>(m_MetricFixedMaskImage.GetDimension(), 0u) )
-    {
-    if ( m_MetricFixedMaskImage.GetDimension() != FixedImageType::ImageDimension )
-      {
-      sitkExceptionMacro("FixedMaskImage does not match dimension of then fixed image!");
-      }
-    typename SpatialObjectMaskType::ConstPointer fixedMask = this->CreateSpatialObjectMask<ImageDimension>(m_MetricFixedMaskImage);
-    fixedMask->UnRegister();
-    metric->SetFixedImageMask(fixedMask);
-    }
-
-  if ( m_MetricMovingMaskImage.GetSize() != std::vector<unsigned int>(m_MetricMovingMaskImage.GetDimension(), 0u) )
-    {
-    if ( m_MetricMovingMaskImage.GetDimension() != MovingImageType::ImageDimension )
-      {
-      sitkExceptionMacro("MovingMaskImage does not match dimension of the moving image!");
-      }
-    typename SpatialObjectMaskType::ConstPointer movingMask = this->CreateSpatialObjectMask<ImageDimension>(m_MetricMovingMaskImage);
-    movingMask->UnRegister();
-    metric->SetMovingImageMask(movingMask);
-    }
+  registration->SetMetric( metric );
 
   registration->SetFixedImage( fixed );
   registration->SetMovingImage( moving );

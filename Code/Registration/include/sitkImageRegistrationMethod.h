@@ -280,6 +280,15 @@ namespace simple
       itk::DefaultImageToImageMetricTraitsv4< TImageType, TImageType, TImageType, double >
       >* CreateMetric( );
 
+    template <class TImageType>
+      void SetupMetric(
+      itk::ImageToImageMetricv4<TImageType,
+      TImageType,
+      TImageType,
+      double,
+      itk::DefaultImageToImageMetricTraitsv4< TImageType, TImageType, TImageType, double >
+      >*, const TImageType*, const TImageType* );
+
     template <typename TMetric>
       itk::RegistrationParameterScalesEstimator< TMetric >*CreateScalesEstimator();
 
