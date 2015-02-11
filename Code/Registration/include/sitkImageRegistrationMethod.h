@@ -247,7 +247,12 @@ namespace simple
       */
     unsigned int GetOptimizerIteration() const;
     std::vector<double> GetOptimizerPosition() const;
+    double GetOptimizerLearningRate() const;
+    double GetOptimizerConvergenceValue() const;
     double GetMetricValue() const;
+
+
+    unsigned int GetCurrentLevel() const;
 
     /** \brief Get the OptimizerScales
       *
@@ -260,7 +265,7 @@ namespace simple
 
     /** Measurement updated at the end of execution.
       */
-    const std::string &GetOptimizerStopConditionDescription() const;
+    std::string GetOptimizerStopConditionDescription() const;
 
   protected:
 
@@ -297,8 +302,14 @@ namespace simple
 
     nsstd::function<unsigned int()> m_pfGetOptimizerIteration;
     nsstd::function<std::vector<double>()> m_pfGetOptimizerPosition;
+    nsstd::function<double()> m_pfGetOptimizerLearningRate;
+    nsstd::function<double()> m_pfGetOptimizerConvergenceValue;
     nsstd::function<double()> m_pfGetMetricValue;
     nsstd::function<std::vector<double>()> m_pfGetOptimizerScales;
+    nsstd::function<std::string()> m_pfGetOptimizerStopConditionDescription;
+
+
+    nsstd::function<unsigned int()> m_pfGetCurrentLevel;
 
     typedef Transform (ImageRegistrationMethod::*MemberFunctionType)( const Image &fixed, const Image &moving );
     friend struct detail::MemberFunctionAddressor<MemberFunctionType>;

@@ -399,8 +399,12 @@ ImageRegistrationMethod::SetSmoothingSigmasAreSpecifiedInPhysicalUnits(bool arg)
   return *this;
 }
 
-const std::string &ImageRegistrationMethod::GetOptimizerStopConditionDescription() const
+std::string ImageRegistrationMethod::GetOptimizerStopConditionDescription() const
 {
+  if (bool(this->m_pfGetOptimizerStopConditionDescription))
+    {
+    return this->m_pfGetOptimizerStopConditionDescription();
+    }
   return this->m_StopConditionDescription;
 }
 
@@ -421,6 +425,26 @@ std::vector<double> ImageRegistrationMethod::GetOptimizerPosition() const
     return this->m_pfGetOptimizerPosition();
     }
   return std::vector<double>();
+}
+
+
+double ImageRegistrationMethod::GetOptimizerLearningRate() const
+{
+  if(bool(this->m_pfGetOptimizerLearningRate))
+    {
+    return this->m_pfGetOptimizerLearningRate();
+    }
+  return 0.0;
+}
+
+
+double ImageRegistrationMethod::GetOptimizerConvergenceValue() const
+{
+  if(bool(this->m_pfGetOptimizerConvergenceValue))
+    {
+    return this->m_pfGetOptimizerConvergenceValue();
+    }
+  return 0.0;
 }
 
 
@@ -445,6 +469,17 @@ std::vector<double> ImageRegistrationMethod::GetOptimizerScales() const
     }
   return std::vector<double>();
 }
+
+
+unsigned int ImageRegistrationMethod::GetCurrentLevel() const
+{
+  if (bool(this->m_pfGetCurrentLevel))
+    {
+    return this->m_pfGetCurrentLevel();
+    }
+  return 0;
+}
+
 
 template <typename TMetric>
  itk::RegistrationParameterScalesEstimator< TMetric >*
@@ -683,7 +718,8 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
     this->CreateTransformParametersAdaptor<typename RegistrationType::TransformParametersAdaptorPointer>(registration.GetPointer());
   registration->SetTransformParametersAdaptorsPerLevel(adaptors);
 
-  typename  itk::ObjectToObjectOptimizerBaseTemplate<double>::Pointer optimizer = this->CreateOptimizer( itkTx->GetNumberOfParameters() );
+  typedef itk::ObjectToObjectOptimizerBaseTemplate<double> OptimizerType;
+  typename  OptimizerType::Pointer optimizer = this->CreateOptimizer( itkTx->GetNumberOfParameters() );
   optimizer->UnRegister();
 
   optimizer->SetNumberOfThreads(this->GetNumberOfThreads());
@@ -715,6 +751,11 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
     registration->GetMetric()->Print(std::cout);
     }
 
+  m_pfGetOptimizerStopConditionDescription =  nsstd::bind(&OptimizerType::GetStopConditionDescription, optimizer);
+
+  m_pfGetCurrentLevel = nsstd::bind(&RegistrationType::GetCurrentLevel,registration);
+
+
   registration->Update();
 
 
@@ -726,8 +767,14 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
 
   m_pfGetOptimizerIteration = SITK_NULLPTR;
   m_pfGetOptimizerPosition = SITK_NULLPTR;
+  m_pfGetOptimizerLearningRate = SITK_NULLPTR;
+  m_pfGetOptimizerConvergenceValue = SITK_NULLPTR;
   m_pfGetMetricValue = SITK_NULLPTR;
   m_pfGetOptimizerScales = SITK_NULLPTR;
+  m_pfGetOptimizerStopConditionDescription = SITK_NULLPTR;
+
+  m_pfGetCurrentLevel = SITK_NULLPTR;
+
 
   if (this->m_InitialTransformInPlace)
     {

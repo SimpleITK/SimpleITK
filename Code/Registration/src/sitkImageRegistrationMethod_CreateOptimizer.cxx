@@ -70,6 +70,8 @@ namespace simple
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetCurrentMetricValue,optimizer);
       this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer);
       this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer);
+      this->m_pfGetOptimizerLearningRate = nsstd::bind(&_OptimizerType::GetLearningRate,optimizer);
+      this->m_pfGetOptimizerConvergenceValue = nsstd::bind(&_OptimizerType::GetConvergenceValue,optimizer);
       this->m_pfGetOptimizerScales = nsstd::bind(&PositionOptimizerCustomCast::Helper<_OptimizerType::ScalesType>, nsstd::bind(&_OptimizerType::GetScales, optimizer));
 
       optimizer->Register();
@@ -90,6 +92,8 @@ namespace simple
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetCurrentMetricValue,optimizer);
       this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer);
       this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer);
+      this->m_pfGetOptimizerLearningRate = nsstd::bind(&_OptimizerType::GetLearningRate,optimizer);
+      this->m_pfGetOptimizerConvergenceValue = nsstd::bind(&_OptimizerType::GetConvergenceValue,optimizer);
       this->m_pfGetOptimizerScales = nsstd::bind(&PositionOptimizerCustomCast::Helper<_OptimizerType::ScalesType>, nsstd::bind(&_OptimizerType::GetScales, optimizer));
 
       optimizer->Register();
@@ -114,6 +118,8 @@ namespace simple
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetCurrentMetricValue,optimizer);
       this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer);
       this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer);
+      this->m_pfGetOptimizerLearningRate = nsstd::bind(&_OptimizerType::GetLearningRate,optimizer);
+      this->m_pfGetOptimizerConvergenceValue = nsstd::bind(&_OptimizerType::GetConvergenceValue,optimizer);
       this->m_pfGetOptimizerScales = nsstd::bind(&PositionOptimizerCustomCast::Helper<_OptimizerType::ScalesType>, nsstd::bind(&_OptimizerType::GetScales, optimizer));
 
       optimizer->Register();
@@ -137,6 +143,8 @@ namespace simple
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetValue,optimizer);
       this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer);
       this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer);
+      this->m_pfGetOptimizerLearningRate = nsstd::bind(&_OptimizerType::GetLearningRate,optimizer);
+      this->m_pfGetOptimizerConvergenceValue = nsstd::bind(&_OptimizerType::GetConvergenceValue,optimizer);
       this->m_pfGetOptimizerScales = nsstd::bind(&PositionOptimizerCustomCast::Helper<_OptimizerType::ScalesType>, nsstd::bind(&_OptimizerType::GetScales, optimizer));
 
       return optimizer.GetPointer();
