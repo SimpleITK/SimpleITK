@@ -807,6 +807,7 @@ double ImageRegistrationMethod::EvaluateInternal ( const Image &inFixed, const I
   movingInitialCompositeTransform->AddTransform(itkTx);
   metric->SetMovingTransform(itkTx);
 
+  metric->Initialize();
 
   return metric->GetValue();
 }
