@@ -239,6 +239,16 @@ namespace simple
 
     Transform Execute ( const Image &fixed, const Image & moving );
 
+
+    /** \brief Get the value of the metric given the state of the method
+     *
+     * Passing a fixed and moving image, this method constructs and
+     * configures a metric object to obtain the value. This will take
+     * into consideration the current transforms, metric,
+     * interpolator, and image masks. It does not take into
+     * consideration the sampling strategy, smoothing sigmas, or the
+     * shrink factors.
+     */
     double MetricEvaluate( const Image &fixed, const Image & moving );
 
 
