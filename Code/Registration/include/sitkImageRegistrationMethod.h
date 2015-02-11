@@ -239,7 +239,7 @@ namespace simple
 
     Transform Execute ( const Image &fixed, const Image & moving );
 
-    double Evaluate( const Image &fixed, const Image & moving );
+    double MetricEvaluate( const Image &fixed, const Image & moving );
 
 
     /**

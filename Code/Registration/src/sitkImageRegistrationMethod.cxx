@@ -721,7 +721,7 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
 }
 
 
-double ImageRegistrationMethod::Evaluate ( const Image &fixed, const Image & moving )
+double ImageRegistrationMethod::MetricEvaluate ( const Image &fixed, const Image & moving )
 {
   const PixelIDValueType fixedType = fixed.GetPixelIDValue();
   const unsigned int fixedDim = fixed.GetDimension();
