@@ -805,7 +805,7 @@ double ImageRegistrationMethod::EvaluateInternal ( const Image &inFixed, const I
     sitkExceptionMacro( "Unexpected error converting initial transform! Possible miss matching dimensions!" );
     }
   movingInitialCompositeTransform->AddTransform(itkTx);
-  metric->SetMovingTransform(itkTx);
+  metric->SetMovingTransform(movingInitialCompositeTransform);
 
   metric->Initialize();
 
