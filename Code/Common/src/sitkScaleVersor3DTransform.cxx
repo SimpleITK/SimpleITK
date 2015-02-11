@@ -78,6 +78,34 @@ ScaleVersor3DTransform::ScaleVersor3DTransform( const Transform & arg )
   Self::InternalInitialization(Self::GetITKBase());
 }
 
+ScaleVersor3DTransform::ScaleVersor3DTransform( const std::vector< double > &scale,
+                                                const std::vector< double > &versor,
+                                                const std::vector< double > &translation,
+                                                const std::vector< double> &fixedCenter )
+  : Transform(new PimpleTransform<itk::ScaleVersor3DTransform<double> >() )
+{
+  Self::InternalInitialization(Self::GetITKBase());
+
+  this->SetScale(scale);
+  this->SetCenter(fixedCenter);
+  this->SetRotation(versor);
+  this->SetTranslation(translation);
+}
+
+ScaleVersor3DTransform::ScaleVersor3DTransform( const std::vector< double > &scale,
+                                                const std::vector< double > &axis, double angle,
+                                                const std::vector< double > &translation,
+                                                const std::vector< double> &fixedCenter )
+  : Transform(new PimpleTransform<itk::ScaleVersor3DTransform<double> >() )
+{
+  Self::InternalInitialization(Self::GetITKBase());
+
+  this->SetScale(scale);
+  this->SetCenter(fixedCenter);
+  this->SetRotation(axis, angle);
+  this->SetTranslation(translation);
+}
+
 ScaleVersor3DTransform &ScaleVersor3DTransform::operator=( const ScaleVersor3DTransform &arg )
 {
   Superclass::operator=(arg);

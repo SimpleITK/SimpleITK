@@ -78,6 +78,32 @@ Similarity3DTransform::Similarity3DTransform( const Transform &arg )
   Self::InternalInitialization(Self::GetITKBase());
 }
 
+Similarity3DTransform::Similarity3DTransform( double scaleFactor, const std::vector< double > &versor,
+                                              const std::vector< double > &translation,
+                                              const std::vector< double > &fixedCenter )
+  : Transform(3, sitkSimilarity)
+{
+  Self::InternalInitialization(Self::GetITKBase());
+
+  this->SetScale(scaleFactor);
+  this->SetCenter(fixedCenter);
+  this->SetRotation(versor);
+  this->SetTranslation(translation);
+}
+
+Similarity3DTransform::Similarity3DTransform( double scaleFactor, const std::vector< double > &axis,
+                                              double angle,
+                                              const std::vector< double > &translation,
+                                              const std::vector< double > &fixedCenter )
+  : Transform(3, sitkSimilarity)
+{
+  Self::InternalInitialization(Self::GetITKBase());
+
+  this->SetScale(scaleFactor);
+  this->SetCenter(fixedCenter);
+  this->SetRotation(axis, angle);
+  this->SetTranslation(translation);
+}
 
 Similarity3DTransform &Similarity3DTransform::operator=( const Similarity3DTransform &arg )
 {

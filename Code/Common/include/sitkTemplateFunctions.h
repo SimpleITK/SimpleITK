@@ -151,7 +151,8 @@ TDirectionType SITKCommon_HIDDEN  sitkSTLToITKDirection( const std::vector<doubl
     }
   else
     {
-    // to do handle miss match dimension
+    sitkExceptionMacro(<<"Length of input ("<<direction.size()<<") does not match matrix dimensions ("
+                       <<TDirectionType::RowDimensions<<", "<<TDirectionType::ColumnDimensions<<").\n");
     }
   return itkDirection;
 }

@@ -77,6 +77,39 @@ ScaleSkewVersor3DTransform::ScaleSkewVersor3DTransform( const Transform & arg )
   Self::InternalInitialization(Self::GetITKBase());
 }
 
+ScaleSkewVersor3DTransform::ScaleSkewVersor3DTransform( const std::vector< double > &scale,
+                                                        const std::vector< double> &skew,
+                                                        const std::vector< double > &versor,
+                                                        const std::vector< double > &translation,
+                                                        const std::vector< double> &fixedCenter )
+  : Transform(3, sitkScaleSkewVersor)
+{
+  Self::InternalInitialization(Self::GetITKBase());
+
+  this->SetScale(scale);
+  this->SetSkew(skew);
+  this->SetCenter(fixedCenter);
+  this->SetRotation(versor);
+  this->SetTranslation(translation);
+}
+
+ScaleSkewVersor3DTransform::ScaleSkewVersor3DTransform( const std::vector< double > &scale,
+                                                        const std::vector< double> &skew,
+                                                        const std::vector< double > &axis, double angle,
+                                                        const std::vector< double > &translation,
+                                                        const std::vector< double> &fixedCenter )
+  : Transform(3, sitkScaleSkewVersor)
+{
+  Self::InternalInitialization(Self::GetITKBase());
+
+  this->SetScale(scale);
+  this->SetSkew(skew);
+  this->SetCenter(fixedCenter);
+  this->SetRotation(axis, angle);
+  this->SetTranslation(translation);
+}
+
+
 ScaleSkewVersor3DTransform &ScaleSkewVersor3DTransform::operator=( const ScaleSkewVersor3DTransform &arg )
 {
   Superclass::operator=(arg);
