@@ -124,6 +124,55 @@ protected:
 };
 
 
+TEST_F(sitkRegistrationMethodTest, Metric_Evaluate)
+{
+  sitk::Image fixed = fixedBlobs;
+  sitk::Image moving = fixedBlobs;
+
+
+  sitk::ImageRegistrationMethod R;
+  R.SetInitialTransform(sitk::Transform(fixed.GetDimension(),sitk::sitkIdentity));
+
+  EXPECT_NEAR(-1.5299437083119216, R.MetricEvaluate(fixed,moving), 1e-10 );
+
+  R.SetMetricAsCorrelation();
+  EXPECT_NEAR(-1.0, R.MetricEvaluate(fixed,moving), 1e-10 );
+
+  R.SetMetricAsJointHistogramMutualInformation( 20, 1.5);
+  EXPECT_NEAR(-0.52624100016564002, R.MetricEvaluate(fixed,moving), 1e-10 );
+
+  R.SetMetricAsMeanSquares();
+  EXPECT_NEAR(0.0, R.MetricEvaluate(fixed,moving), 1e-10 );
+
+  R.SetMetricAsMattesMutualInformation();
+  EXPECT_NEAR(-1.5299437083119216, R.MetricEvaluate(fixed,moving), 1e-10 );
+
+  R.SetMetricAsMeanSquares();
+
+  // test that the transforms are used
+
+  R.SetInitialTransform(sitk::TranslationTransform(fixed.GetDimension(),v2(5,-7)));
+  EXPECT_NEAR(0.0036468516797954148, R.MetricEvaluate(fixed,moving), 1e-10 );
+
+  R.SetMovingInitialTransform(sitk::TranslationTransform(fixed.GetDimension(),v2(-5,7)));
+  EXPECT_NEAR(0.0, R.MetricEvaluate(fixed,moving), 1e-10 );
+
+  R.SetFixedInitialTransform(sitk::TranslationTransform(fixed.GetDimension(),v2(-5,7)));
+  EXPECT_NEAR(0.0036468516797954148, R.MetricEvaluate(fixed,moving), 1e-10 );
+
+  sitk::ImageRegistrationMethod R2;
+  R2.SetInitialTransform(sitk::Transform(fixed.GetDimension(),sitk::sitkIdentity));
+  R2.SetMetricAsMeanSquares();
+  R2.SetMetricFixedMask(sitk::Greater(fixedBlobs,0));
+  EXPECT_NEAR(0.0091550861657971119,R2.MetricEvaluate(fixedBlobs,movingBlobs), 1e-10);
+
+  sitk::ImageRegistrationMethod R3;
+  R3.SetInitialTransform(sitk::Transform(fixed.GetDimension(),sitk::sitkIdentity));
+  R3.SetMetricAsMeanSquares();
+  R3.SetMetricMovingMask(sitk::Less(movingBlobs,0));
+  EXPECT_NEAR(3.34e-09 ,R3.MetricEvaluate(fixedBlobs,movingBlobs), 1e-10);
+}
+
 TEST_F(sitkRegistrationMethodTest, Transform_InPlaceOn)
 {
   // This test is to check the inplace operation of the initial
@@ -186,7 +235,7 @@ TEST_F(sitkRegistrationMethodTest, Transform_InPlaceOn)
 
 TEST_F(sitkRegistrationMethodTest, Transform_Initial)
 {
-  // This test is to check some excpetional cases for using masks
+  // This test is to check the initial transforms
   sitk::ImageRegistrationMethod R;
 
   sitk::Image fixed = fixedBlobs;

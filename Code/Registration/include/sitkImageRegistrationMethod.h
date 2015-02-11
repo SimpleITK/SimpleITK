@@ -239,6 +239,19 @@ namespace simple
 
     Transform Execute ( const Image &fixed, const Image & moving );
 
+
+    /** \brief Get the value of the metric given the state of the method
+     *
+     * Passing a fixed and moving image, this method constructs and
+     * configures a metric object to obtain the value. This will take
+     * into consideration the current transforms, metric,
+     * interpolator, and image masks. It does not take into
+     * consideration the sampling strategy, smoothing sigmas, or the
+     * shrink factors.
+     */
+    double MetricEvaluate( const Image &fixed, const Image & moving );
+
+
     /**
       * Active measurements which can be obtained during call backs.
       *
@@ -272,6 +285,10 @@ namespace simple
     template<class TImage>
     Transform ExecuteInternal ( const Image &fixed, const Image &moving );
 
+    template<class TImage>
+    double EvaluateInternal ( const Image &fixed, const Image &moving );
+
+
     itk::ObjectToObjectOptimizerBaseTemplate<double> *CreateOptimizer( unsigned int numberOfTransformParameters );
 
     template<unsigned int VDimension>
@@ -284,6 +301,15 @@ namespace simple
       double,
       itk::DefaultImageToImageMetricTraitsv4< TImageType, TImageType, TImageType, double >
       >* CreateMetric( );
+
+    template <class TImageType>
+      void SetupMetric(
+      itk::ImageToImageMetricv4<TImageType,
+      TImageType,
+      TImageType,
+      double,
+      itk::DefaultImageToImageMetricTraitsv4< TImageType, TImageType, TImageType, double >
+      >*, const TImageType*, const TImageType* );
 
     template <typename TMetric>
       itk::RegistrationParameterScalesEstimator< TMetric >*CreateScalesEstimator();
@@ -311,9 +337,24 @@ namespace simple
 
     nsstd::function<unsigned int()> m_pfGetCurrentLevel;
 
+
+    template < class TMemberFunctionPointer >
+      struct EvaluateMemberFunctionAddressor
+    {
+      typedef typename ::detail::FunctionTraits<TMemberFunctionPointer>::ClassType ObjectType;
+
+      template< typename TImageType >
+      TMemberFunctionPointer operator() ( void ) const
+        {
+          return &ObjectType::template EvaluateInternal< TImageType >;
+        }
+    };
+
     typedef Transform (ImageRegistrationMethod::*MemberFunctionType)( const Image &fixed, const Image &moving );
+    typedef double (ImageRegistrationMethod::*EvaluateMemberFunctionType)( const Image &fixed, const Image &moving );
     friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
     std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
+    std::auto_ptr<detail::MemberFunctionFactory<EvaluateMemberFunctionType> > m_EvaluateMemberFactory;
 
     InterpolatorEnum  m_Interpolator;
     Transform  m_InitialTransform;
