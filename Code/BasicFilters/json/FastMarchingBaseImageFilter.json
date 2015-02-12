@@ -23,7 +23,7 @@
     {
       "name" : "StoppingValue",
       "type" : "double",
-      "default" : "100.0",
+      "default" : "std::numeric_limits<float>::max()/2.0",
       "custom_itk_cast" : "typedef itk::FastMarchingThresholdStoppingCriterion< InputImageType, OutputImageType > CriterionType;\ntypename CriterionType::Pointer criterion = CriterionType::New();\ncriterion->SetThreshold( m_StoppingValue );\nfilter->SetStoppingCriterion( criterion );",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set the Fast Marching algorithm Stopping Value. The Fast Marching algorithm is terminated when the value of the smallest trial point is greater than the stopping value.",
