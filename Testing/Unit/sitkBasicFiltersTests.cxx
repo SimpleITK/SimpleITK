@@ -28,7 +28,7 @@
 #include <sitkStatisticsImageFilter.h>
 #include <sitkLabelStatisticsImageFilter.h>
 #include <sitkExtractImageFilter.h>
-#include <sitkFastMarchingImageFilter.h>
+#include <sitkFastMarchingBaseImageFilter.h>
 #include <sitkInverseDeconvolutionImageFilter.h>
 #include <sitkTikhonovDeconvolutionImageFilter.h>
 #include <sitkWienerDeconvolutionImageFilter.h>
@@ -141,9 +141,9 @@ TEST(BasicFilters,Extract_ENUMCHECK) {
 
 TEST(BasicFilters,FastMarching_ENUMCHECK) {
   typedef itk::FastMarchingImageFilterBase< itk::Image<float,3>, itk::Image<float,3> > ITKType;
-  EXPECT_EQ( (int) ITKType::Nothing, (int) itk::simple::FastMarchingImageFilter::Nothing );
-  EXPECT_EQ( (int) ITKType::NoHandles, (int) itk::simple::FastMarchingImageFilter::NoHandles );
-  EXPECT_EQ( (int) ITKType::Strict, (int) itk::simple::FastMarchingImageFilter::Strict );
+  EXPECT_EQ( (int) ITKType::Nothing, (int) itk::simple::FastMarchingBaseImageFilter::Nothing );
+  EXPECT_EQ( (int) ITKType::NoHandles, (int) itk::simple::FastMarchingBaseImageFilter::NoHandles );
+  EXPECT_EQ( (int) ITKType::Strict, (int) itk::simple::FastMarchingBaseImageFilter::Strict );
 }
 
 TEST(BasicFilters,InverseDeconvolution_ENUMCHECK) {

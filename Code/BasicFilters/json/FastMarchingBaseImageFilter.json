@@ -1,5 +1,5 @@
 {
-  "name" : "FastMarchingImageFilter",
+  "name" : "FastMarchingBaseImageFilter",
   "itk_name" : "FastMarchingImageFilterBase",
   "include_files" : [
     "itkFastMarchingThresholdStoppingCriterion.h"
@@ -37,7 +37,7 @@
         "NoHandles",
         "Strict"
       ],
-      "default" : "itk::simple::FastMarchingImageFilter::Nothing",
+      "default" : "itk::simple::FastMarchingBaseImageFilter::Nothing",
       "doc" : "",
       "itk_type" : "typename FilterType::TopologyCheckType"
     }
