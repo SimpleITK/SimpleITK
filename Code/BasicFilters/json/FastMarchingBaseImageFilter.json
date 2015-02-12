@@ -1,24 +1,16 @@
 {
-  "name" : "FastMarchingImageFilter",
-  "template_code_filename" : "ImageFilter",
-  "template_test_filename" : "ImageFilter",
+  "name" : "FastMarchingBaseImageFilter",
+  "itk_name" : "FastMarchingImageFilterBase",
+  "include_files" : [
+    "itkFastMarchingThresholdStoppingCriterion.h"
+  ],
+  "template_code_filename" : "FastMarchingImageFilter",
   "number_of_inputs" : 1,
-  "output_pixel_type" : "typename itk::NumericTraits<typename InputImageType::PixelType>::RealType",
-  "filter_type" : "itk::FastMarchingImageFilter<OutputImageType,InputImageType>",
+  "template_test_filename" : "ImageFilter",
+  "output_pixel_type" : "float",
   "doc" : "Docs",
   "pixel_types" : "BasicPixelIDTypeList",
   "members" : [
-    {
-      "name" : "TrialPoints",
-      "type" : "unsigned int",
-      "point_vec" : 1,
-      "default" : "std::vector< std::vector<unsigned int > >()",
-      "custom_itk_cast" : "  typedef typename FilterType::NodeType      NodeType;\n  typedef typename FilterType::NodeContainer NodeContainerType;\n\n  typename NodeContainerType::Pointer trialPoints = NodeContainerType::New();\n  trialPoints->reserve( m_TrialPoints.size() );\n\n  for (unsigned int i = 0; i < m_TrialPoints.size(); ++i)\n    {\n    NodeType node;\n\n    typename NodeType::IndexType index = sitkSTLVectorToITK<typename NodeType::IndexType>( m_TrialPoints[i] );\n    node.SetIndex( index );\n    node.SetValue( 0.0 );\n    if (m_TrialPoints[i].size() > NodeType::SetDimension)\n      node.SetValue(m_TrialPoints[i][NodeType::SetDimension]);\n\n    trialPoints->push_back( node );\n    }\n  filter->SetTrialPoints( trialPoints );",
-      "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set the container of Trial Points representing the initial front. Trial points are represented as a VectorContainer of LevelSetNodes.",
-      "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Get the container of Trial Points representing the initial front."
-    },
     {
       "name" : "NormalizationFactor",
       "type" : "double",
@@ -31,18 +23,30 @@
     {
       "name" : "StoppingValue",
       "type" : "double",
-      "default" : "std::numeric_limits<double>::max()/2.0",
+      "default" : "std::numeric_limits<float>::max()/2.0",
+      "custom_itk_cast" : "typedef itk::FastMarchingThresholdStoppingCriterion< InputImageType, OutputImageType > CriterionType;\ntypename CriterionType::Pointer criterion = CriterionType::New();\ncriterion->SetThreshold( m_StoppingValue );\nfilter->SetStoppingCriterion( criterion );",
+      "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set the Fast Marching algorithm Stopping Value. The Fast Marching algorithm is terminated when the value of the smallest trial point is greater than the stopping value.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Get the Fast Marching algorithm Stopping Value.",
-      "briefdescriptionSet" : ""
+      "detaileddescriptionGet" : "Get the Fast Marching algorithm Stopping Value."
+    },
+    {
+      "name" : "TopologyCheck",
+      "enum" : [
+        "Nothing",
+        "NoHandles",
+        "Strict"
+      ],
+      "default" : "itk::simple::FastMarchingBaseImageFilter::Nothing",
+      "doc" : "",
+      "itk_type" : "typename FilterType::TopologyCheckType"
     }
   ],
   "tests" : [
     {
       "tag" : "default",
       "description" : "Default parameter settings",
-      "tolerance" : 1e-10,
+      "md5hash" : "b4b628f078fdfd7c14c55b1aed24e72a",
       "settings" : [
         {
           "parameter" : "TrialPoints",
