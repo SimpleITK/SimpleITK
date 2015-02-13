@@ -47,7 +47,7 @@ print(tx.GetParameters())
 R = sitk.ImageRegistrationMethod()
 R.SetMetricAsCorrelation()
 
-R.SetOptimizerAsLBFGSB(gradientConvergenceTolerance=1e-5,i
+R.SetOptimizerAsLBFGSB(gradientConvergenceTolerance=1e-5,
                        maximumNumberOfIterations=1,
                        maximumNumberOfCorrections=5,
                        maximumNumberOfFunctionEvaluations=1000,
