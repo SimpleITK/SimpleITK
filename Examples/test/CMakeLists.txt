@@ -109,6 +109,18 @@ sitk_add_test(NAME CXX.Example.ImageRegistrationMethod2
     0.02
   )
 
+sitk_add_test(NAME CXX.Example.ImageRegistrationMethodBSpline1
+  COMMAND
+    $<TARGET_FILE:ImageRegistrationMethodBSpline1>
+    DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20.png}
+    DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBSplined10.png}
+    ${TEST_HARNESS_TEMP_DIRECTORY}/CXXImageRegistrationMethodBSpline1.hdf5
+  TRANSFORM_COMPARE
+    ${TEST_HARNESS_TEMP_DIRECTORY}/CXXImageRegistrationMethodBSpline1.hdf5
+    DATA{${SimpleITK_DATA_ROOT}/Baseline/ImageRegistrationMethodBSpline1.mha}
+    0.02
+  )
+
 
 sitk_add_test(NAME CXX.Example.ImageRegistrationMethodDisplacement1
   COMMAND
