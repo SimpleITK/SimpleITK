@@ -103,6 +103,18 @@ $(for i=1,#value do OUT=OUT .. "\
                 filter.AddTrialPoint( idx );\
                 }\
 " end)]]
+elseif point_vec and point_vec == 1 then
+    OUT=[[
+                filter.Clear${parameter}();
+]]
+    for i=1,#value do
+      OUT=OUT.. [[
+                {
+                  VectorUInt32 pt = new VectorUInt32( new uint[] ]] .. value[i] .. [[ );
+                  filter.Add${parameter:gsub('s([0-9]?)$','%1')}(pt);
+                }
+]]
+    end
 elseif dim_vec == 1 then
   A='{'
   for i=1,#value-1 do

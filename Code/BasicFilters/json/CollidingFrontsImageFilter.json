@@ -1,0 +1,100 @@
+{
+  "name" : "CollidingFrontsImageFilter",
+  "itk_name" : "CollidingFrontsImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 1,
+  "output_pixel_type" : "float",
+  "doc" : "Docs",
+  "pixel_types" : "BasicPixelIDTypeList",
+  "members" : [
+    {
+      "name" : "SeedPoints1",
+      "type" : "unsigned int",
+      "point_vec" : 1,
+      "default" : "std::vector< std::vector<unsigned int > >()",
+      "custom_itk_cast" : "  typedef typename FilterType::NodeType      NodeType;\n  typedef typename FilterType::NodeContainer NodeContainerType;\n\n  typename NodeContainerType::Pointer seed1Nodes = NodeContainerType::New();\n  seed1Nodes->reserve( m_SeedPoints1.size() );\n\n  for (unsigned int i = 0; i < m_SeedPoints1.size(); ++i)\n    {\n    NodeType node;\n\n    typename NodeType::IndexType index = sitkSTLVectorToITK<typename NodeType::IndexType>( m_SeedPoints1[i] );\n    node.SetIndex( index );\n    node.SetValue( 0.0 );\n    if (m_SeedPoints1[i].size() > NodeType::SetDimension)\n      node.SetValue(m_SeedPoints1[i][NodeType::SetDimension]);\n\n    seed1Nodes->push_back( node );\n    }\n  filter->SetSeedPoints1( seed1Nodes );",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the container of Seed Points representing the first initial front. Seed points are represented as a VectorContainer of LevelSetNodes.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the container of Seed Points representing the first initial front."
+    },
+    {
+      "name" : "SeedPoints2",
+      "type" : "unsigned int",
+      "point_vec" : 1,
+      "default" : "std::vector< std::vector<unsigned int > >()",
+      "custom_itk_cast" : "  typedef typename FilterType::NodeType      NodeType;\n  typedef typename FilterType::NodeContainer NodeContainerType;\n\n  typename NodeContainerType::Pointer seed2Nodes = NodeContainerType::New();\n  seed2Nodes->reserve( m_SeedPoints2.size() );\n\n  for (unsigned int i = 0; i < m_SeedPoints2.size(); ++i)\n    {\n    NodeType node;\n\n    typename NodeType::IndexType index = sitkSTLVectorToITK<typename NodeType::IndexType>( m_SeedPoints2[i] );\n    node.SetIndex( index );\n    node.SetValue( 0.0 );\n    if (m_SeedPoints2[i].size() > NodeType::SetDimension)\n      node.SetValue(m_SeedPoints2[i][NodeType::SetDimension]);\n\n    seed2Nodes->push_back( node );\n    }\n  filter->SetSeedPoints2( seed2Nodes );",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set the container of Seed Points representing the second initial front. Seed points are represented as a VectorContainer of LevelSetNodes.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get the container of Seed Points representing the second initial front."
+    },
+    {
+      "name" : "ApplyConnectivity",
+      "type" : "bool",
+      "default" : "true",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
+    },
+    {
+      "name" : "NegativeEpsilon",
+      "type" : "double",
+      "default" : "-1e-6",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
+    },
+    {
+      "name" : "StopOnTargets",
+      "type" : "bool",
+      "default" : "false",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "around_dots",
+      "description" : "just a couple points",
+      "tolerance" : 1e-06,
+      "settings" : [
+        {
+          "parameter" : "SeedPoints1",
+          "point_vec" : 1,
+          "type" : "unsigned int",
+          "value" : [
+            "{30,30}"
+          ],
+          "tcl_value" : [ "30 30" ],
+          "lua_value" : "{ {30,30} }",
+          "python_value" : "[ [30,30] ]",
+          "ruby_value" : "[ [30,30] ]",
+          "R_value" : "list(c(30,30))"
+        },
+        {
+          "parameter" : "SeedPoints2",
+          "point_vec" : 1,
+          "type" : "unsigned int",
+          "value" : [
+            "{255,105}"
+          ],
+          "tcl_value" : [ "255 105" ],
+          "python_value" : "[ [255,105] ]",
+          "ruby_value" : "[ [255,105] ]",
+          "R_value" : "list(c(255,105))"
+        }
+      ],
+      "inputs" : [
+        "Input/BlackDots.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Selects a region of space where two independent fronts run towards each other.",
+  "detaileddescription" : "The filter can be used to quickly segment anatomical structures (e.g. for level set initialization).\n\nThe filter uses two instances of FastMarchingUpwindGradientImageFilter to compute the gradients of arrival times of two wavefronts propagating from two sets of seeds. The input of the filter is used as the speed of the two wavefronts. The output is the dot product between the two gradient vector fields.\n\nThe filter works on the following basic idea. In the regions where the dot product between the two gradient fields is negative, the two fronts propagate in opposite directions. In the regions where the dot product is positive, the two fronts propagate in the same direction. This can be used to extract the region of space between two sets of points.\n\nIf StopOnTargets is On, then each front will stop as soon as all seeds of the other front have been reached. This can markedly speed up the execution of the filter, since wave propagation does not take place on the complete image.\n\nOptionally, a connectivity criterion can be applied to the resulting dot product image. In this case, the only negative region in the output image is the one connected to the seeds.\n\n\\author Luca Antiga Ph.D. Biomedical Technologies Laboratory, Bioengineering Department, Mario Negri Institute, Italy."
+}

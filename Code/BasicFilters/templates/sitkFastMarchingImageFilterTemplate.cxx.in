@@ -113,7 +113,8 @@ $(include ExecuteInternalSetITKFilterInputs.cxx.in)
     NodeType index = sitkSTLVectorToITK<NodeType>( m_TrialPoints[i] );
     node.SetNode( index );
     node.SetValue( 0.0 );
-
+    if (m_TrialPoints[i].size() > NodeType::Dimension)
+      node.SetValue(m_TrialPoints[i][NodeType::Dimension]);
     trialNodes->push_back( node );
     }
   filter->SetTrialPoints( trialNodes );

@@ -73,6 +73,15 @@ elseif parameter == "TrialPoints" then
     idx = SimpleITK.VectorUInt32();\
     for _,v in ipairs(".. value[i] ..") do idx:push_back(v) end\
     filter:AddTrialPoint( idx );"end)]]
+elseif point_vec and point_vec == 1 then
+    OUT=[[filter:Clear${parameter}();
+]]
+    for i=1,#value do
+      OUT=OUT .. [[
+      pts = SimpleITK.VectorUInt32();
+      for _,v in ipairs(]].. value[i] ..[[) do pts:push_back(v) end
+      filter:Add${parameter:gsub('s([0-9]?)$','%1')}( pts );]]
+    end
 elseif dim_vec and dim_vec == 1 then
    if type == "bool" then
      OUT="idx = SimpleITK.VectorBool();"

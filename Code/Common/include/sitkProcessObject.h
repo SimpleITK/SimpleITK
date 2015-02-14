@@ -285,10 +285,12 @@ namespace itk {
         return Image(img);
       }
 
-      template< class TPixelType, unsigned int VImageDimension, unsigned int  VLength>
-        static Image CastITKToImage( itk::Image< itk::Vector< TPixelType, VLength >, VImageDimension> *img )
+#ifndef SWIG
+      template< class TPixelType, unsigned int VImageDimension, unsigned int  VLength,
+                template<typename, unsigned int> class TVector >
+        static Image CastITKToImage( itk::Image< TVector< TPixelType, VLength >, VImageDimension> *img )
       {
-        typedef itk::Image< itk::Vector< TPixelType, VLength >, VImageDimension> ImageType;
+        typedef itk::Image< TVector< TPixelType, VLength >, VImageDimension> ImageType;
         typedef itk::VectorImage< TPixelType, VImageDimension > VectorImageType;
 
         size_t numberOfElements = img->GetBufferedRegion().GetNumberOfPixels();
@@ -309,6 +311,7 @@ namespace itk {
 
         return Image(out.GetPointer());
       }
+#endif
 
       /**
        * Output operator to os with conversion to a printable type.

@@ -62,7 +62,7 @@ $(include CustomMethods.cxx.in)
 OUT = [[
 
 Image ${name}::Execute ( const Image& image1$(if number_of_inputs==2 then OUT=', const Image& image2' end),
-  std::vector< std::vector<unsigned int> > inSeedList$(include MemberParameters.in) )
+  const std::vector< std::vector<unsigned int> > &inSeedList$(include MemberParameters.in) )
 {
 $(foreach members
 $(if (not no_set_method) or (no_set_method == 0) then
@@ -115,7 +115,7 @@ $(include ExecuteInternalUpdateAndReturn.cxx.in)
 // Function to run the Execute method of this filter
 //
 Image ${name:gsub("ImageFilter$", ""):gsub("Filter$", "")} ( const Image& imageA$(if number_of_inputs == 2 then OUT=', const Image& imageB' end),
-  std::vector< std::vector<unsigned int> > inSeedList$(include MemberParameters.in) )
+  const std::vector< std::vector<unsigned int> > &inSeedList$(include MemberParameters.in) )
 {
   ${name} filter;
   return filter.Execute ( imageA$(if number_of_inputs == 2 then OUT=', imageB' end), inSeedList$(for i = 1,#members do
