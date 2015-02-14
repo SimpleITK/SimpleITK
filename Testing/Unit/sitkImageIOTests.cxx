@@ -21,6 +21,7 @@
 #include <sitkImageFileWriter.h>
 #include <sitkImageSeriesWriter.h>
 #include <sitkHashImageFilter.h>
+#include <sitkPhysicalPointImageSource.h>
 
 TEST(IO,ImageFileReader) {
 
@@ -372,4 +373,32 @@ TEST(IO, ImageSeriesWriter )
 
   EXPECT_ANY_THROW( sitk::WriteImage( image, fileNames ) );
 
+}
+
+
+TEST(IO, VectorImageSeriesWriter )
+{
+
+
+  std::vector< std::string > fileNames;
+  fileNames.push_back( dataFinder.GetOutputDirectory()+"/VectorImageSeriesWriter_1.png" );
+  fileNames.push_back( dataFinder.GetOutputDirectory()+"/VectorImageSeriesWriter_2.png" );
+  fileNames.push_back( dataFinder.GetOutputDirectory()+"/VectorImageSeriesWriter_3.png" );
+
+  std::vector<unsigned int> size;
+  size.push_back(10);
+  size.push_back(10);
+  size.push_back(3);
+
+  sitk::Image image = sitk::PhysicalPointSource(sitk::sitkVectorUInt8, size);
+
+  sitk::ImageSeriesWriter writer;
+  writer.SetFileNames( fileNames );
+
+  EXPECT_NO_THROW( writer.Execute( image ) );
+
+
+  sitk::Image result = sitk::ReadImage(fileNames[0]);
+
+  EXPECT_EQ ( "1729319806705e94181c9b9f4bd5e0ac854935db", sitk::Hash( result ) );
 }
