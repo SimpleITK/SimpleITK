@@ -689,8 +689,8 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
     this->CreateTransformParametersAdaptor<typename RegistrationType::TransformParametersAdaptorPointer>(registration.GetPointer());
   registration->SetTransformParametersAdaptorsPerLevel(adaptors);
 
-  typedef itk::ObjectToObjectOptimizerBaseTemplate<double> OptimizerType;
-  typename  OptimizerType::Pointer optimizer = this->CreateOptimizer( itkTx->GetNumberOfParameters() );
+  typedef itk::ObjectToObjectOptimizerBaseTemplate<double> _OptimizerType;
+  typename  _OptimizerType::Pointer optimizer = this->CreateOptimizer( itkTx->GetNumberOfParameters() );
   optimizer->UnRegister();
 
   optimizer->SetNumberOfThreads(this->GetNumberOfThreads());
@@ -722,7 +722,7 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
     registration->GetMetric()->Print(std::cout);
     }
 
-  m_pfGetOptimizerStopConditionDescription =  nsstd::bind(&OptimizerType::GetStopConditionDescription, optimizer);
+  m_pfGetOptimizerStopConditionDescription =  nsstd::bind(&_OptimizerType::GetStopConditionDescription, optimizer);
 
   m_pfGetCurrentLevel = nsstd::bind(&RegistrationType::GetCurrentLevel,registration);
 
