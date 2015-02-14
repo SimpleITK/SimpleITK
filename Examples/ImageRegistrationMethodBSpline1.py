@@ -47,14 +47,12 @@ print(tx.GetParameters())
 R = sitk.ImageRegistrationMethod()
 R.SetMetricAsCorrelation()
 
-# todo review available LBFGSB optmizer parameter, match those in ITK
-# Example DeformableRegistration6.py
 R.SetOptimizerAsLBFGSB(gradientConvergenceTolerance=1e-5,
                        maximumNumberOfIterations=1,
                        maximumNumberOfCorrections=5,
                        maximumNumberOfFunctionEvaluations=1000,
                        costFunctionConvergenceFactor=1e+7)
-R.SetInitialTransform(tx)
+R.SetInitialTransform(tx, True)
 R.SetInterpolator(sitk.sitkLinear)
 
 R.AddCommand( sitk.sitkIterationEvent, lambda: command_iteration(R) )
