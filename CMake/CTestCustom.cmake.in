@@ -48,6 +48,9 @@ SET(CTEST_CUSTOM_WARNING_EXCEPTION
   # Ignore warning in lua about the use of `tmpnam' is dangerous
   "loslib"
 
+  # RH5 GCC 4.1 is producing warnings internally for functional headers
+  "mu_iterate.h.*warning? unused parameter '__tuple'"
+
   # Ignore CSharp invalid version warning for dev
   "warning CS1607.*The version number.*dev.*is invalid"
   "warning CS1607.*The version.*dev.*is not in the normal"
