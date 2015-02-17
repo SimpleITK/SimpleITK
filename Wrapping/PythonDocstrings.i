@@ -737,10 +737,19 @@ C++ includes: sitkAffineTransform.h
 %feature("docstring")  itk::simple::AffineTransform::AffineTransform "
 ";
 
+%feature("docstring")  itk::simple::AffineTransform::AffineTransform "
+";
+
 %feature("docstring")  itk::simple::AffineTransform::GetCenter "
 ";
 
 %feature("docstring")  itk::simple::AffineTransform::GetMatrix "
+";
+
+%feature("docstring")  itk::simple::AffineTransform::GetName "
+
+Name of this class
+
 ";
 
 %feature("docstring")  itk::simple::AffineTransform::GetTranslation "
@@ -1409,6 +1418,12 @@ A lazy shallow copy of the images from ITK are performed. If they are
 modified in SimpleITK a deep copy will occur. However, if the
 coefficients are modified in ITK, then no copy will occur and the
 images help by SimpleITK may change.
+
+";
+
+%feature("docstring")  itk::simple::BSplineTransform::GetName "
+
+Name of this class
 
 ";
 
@@ -8628,6 +8643,12 @@ displacement field.
 
 ";
 
+%feature("docstring")  itk::simple::DisplacementFieldTransform::GetName "
+
+Name of this class
+
+";
+
 %feature("docstring")  itk::simple::DisplacementFieldTransform::SetDisplacementField "
 
 parameters
@@ -9363,6 +9384,12 @@ additional methods
 
 ";
 
+%feature("docstring")  itk::simple::Euler2DTransform::GetName "
+
+Name of this class
+
+";
+
 %feature("docstring")  itk::simple::Euler2DTransform::GetTranslation "
 ";
 
@@ -9376,6 +9403,9 @@ parameter
 
 fixed parameter
 
+";
+
+%feature("docstring")  itk::simple::Euler2DTransform::SetMatrix "
 ";
 
 %feature("docstring")  itk::simple::Euler2DTransform::SetTranslation "
@@ -9425,6 +9455,12 @@ additional methods
 
 ";
 
+%feature("docstring")  itk::simple::Euler3DTransform::GetName "
+
+Name of this class
+
+";
+
 %feature("docstring")  itk::simple::Euler3DTransform::GetTranslation "
 ";
 
@@ -9435,6 +9471,9 @@ fixed parameter
 ";
 
 %feature("docstring")  itk::simple::Euler3DTransform::SetComputeZYX "
+";
+
+%feature("docstring")  itk::simple::Euler3DTransform::SetMatrix "
 ";
 
 %feature("docstring")  itk::simple::Euler3DTransform::SetRotation "
@@ -10206,6 +10245,183 @@ Destructor
 ";
 
 
+%feature("docstring") itk::simple::FastMarchingBaseImageFilter "
+
+Solve an Eikonal equation using Fast Marching.
+
+
+Fast marching solves an Eikonal equation where the speed is always
+non-negative and depends on the position only. Starting from an
+initial position on the front, fast marching systematically moves the
+front forward one grid point at a time.
+
+Updates are preformed using an entropy satisfy scheme where only
+\"upwind\" neighborhoods are used. This implementation of Fast
+Marching uses a std::priority_queue to locate the next proper grid
+position to update.
+
+Fast Marching sweeps through N grid points in (N log N) steps to
+obtain the arrival time value as the front propagates through the
+grid.
+
+Implementation of this class is based on Chapter 8 of \"Level Set
+Methods and Fast Marching Methods\", J.A. Sethian, Cambridge Press,
+Second edition, 1999.
+
+This class is templated over the level set image type and the speed
+image type. The initial front is specified by two containers: one
+containing the known points and one containing the trial points. Alive
+points are those that are already part of the object, and trial points
+are considered for inclusion. In order for the filter to evolve, at
+least some trial points must be specified. These can for instance be
+specified as the layer of pixels around the alive points.
+
+The speed function can be specified as a speed image or a speed
+constant. The speed image is set using the method SetInput() . If the
+speed image is NULL, a constant speed function is used and is
+specified using method the SetSpeedConstant() .
+
+If the speed function is constant and of value one, fast marching
+results in an approximate distance function from the initial alive
+points. FastMarchingImageFilter is used in the ReinitializeLevelSetImageFilter object to create a signed distance function from the zero level set.
+
+The algorithm can be terminated early by setting an appropriate
+stopping value. The algorithm terminates when the current arrival time
+being processed is greater than the stopping value.
+
+There are two ways to specify the output image information (
+LargestPossibleRegion, Spacing, Origin): (a) it is copied directly
+from the input speed image or (b) it is specified by the user. Default
+values are used if the user does not specify all the information.
+
+The output information is computed as follows. If the speed image is
+NULL or if the OverrideOutputInformation is set to true, the output
+information is set from user specified parameters. These parameters
+can be specified using methods SetOutputRegion() , SetOutputSpacing()
+, SetOutputDirection() , and SetOutputOrigin() . Else if the speed
+image is not NULL, the output information is copied from the input
+speed image.
+
+Possible Improvements: In the current implemenation,
+std::priority_queue only allows taking nodes out from the front and
+putting nodes in from the back. To update a value already on the heap,
+a new node is added to the heap. The defunct old node is left on the
+heap. When it is removed from the top, it will be recognized as
+invalid and not used. Future implementations can implement the heap in
+a different way allowing the values to be updated. This will generally
+require some sift-up and sift-down functions and an image of back-
+pointers going from the image to heap in order to locate the node
+which is to be updated.
+
+
+See:
+ LevelSetTypeDefault
+
+ itk::simple::FastMarchingBase for the procedural interface
+
+ itk::FastMarchingImageFilterBase for the Doxygen on the original ITK class.
+
+
+C++ includes: sitkFastMarchingBaseImageFilter.h
+";
+
+%feature("docstring")  itk::simple::FastMarchingBaseImageFilter::AddTrialPoint "
+
+Add trial point
+
+";
+
+%feature("docstring")  itk::simple::FastMarchingBaseImageFilter::ClearTrialPoints "
+
+Clear trial points
+
+";
+
+%feature("docstring")  itk::simple::FastMarchingBaseImageFilter::Execute "
+
+Execute the filter on the input image
+
+";
+
+%feature("docstring")  itk::simple::FastMarchingBaseImageFilter::Execute "
+
+Execute the filter on the input image with the given parameters
+
+";
+
+%feature("docstring")  itk::simple::FastMarchingBaseImageFilter::FastMarchingBaseImageFilter "
+
+Default Constructor that takes no arguments and initializes default
+parameters
+
+";
+
+%feature("docstring")  itk::simple::FastMarchingBaseImageFilter::GetName "
+
+Name of this class
+
+";
+
+%feature("docstring")  itk::simple::FastMarchingBaseImageFilter::GetNormalizationFactor "
+
+Set/Get the Normalization Factor for the Speed Image . The values in the Speed Image is divided by this factor. This allows the use of images with integer
+pixel types to represent the speed.
+
+";
+
+%feature("docstring")  itk::simple::FastMarchingBaseImageFilter::GetStoppingValue "
+
+Get the Fast Marching algorithm Stopping Value.
+
+";
+
+%feature("docstring")  itk::simple::FastMarchingBaseImageFilter::GetTopologyCheck "
+";
+
+%feature("docstring")  itk::simple::FastMarchingBaseImageFilter::GetTrialPoints "
+
+Get trial points
+
+";
+
+%feature("docstring")  itk::simple::FastMarchingBaseImageFilter::SetNormalizationFactor "
+
+Set/Get the Normalization Factor for the Speed Image . The values in the Speed Image is divided by this factor. This allows the use of images with integer
+pixel types to represent the speed.
+
+";
+
+%feature("docstring")  itk::simple::FastMarchingBaseImageFilter::SetStoppingValue "
+
+Set the Fast Marching algorithm Stopping Value. The Fast Marching
+algorithm is terminated when the value of the smallest trial point is
+greater than the stopping value.
+
+";
+
+%feature("docstring")  itk::simple::FastMarchingBaseImageFilter::SetTopologyCheck "
+";
+
+%feature("docstring")  itk::simple::FastMarchingBaseImageFilter::SetTrialPoints "
+
+Set trial points. The default trial value (i.e. 0.0) is used for each
+index.
+
+";
+
+%feature("docstring")  itk::simple::FastMarchingBaseImageFilter::ToString "
+
+Print ourselves out
+
+";
+
+%feature("docstring")  itk::simple::FastMarchingBaseImageFilter::~FastMarchingBaseImageFilter "
+
+Destructor
+
+";
+
+
 %feature("docstring") itk::simple::FastMarchingImageFilter "
 
 Solve an Eikonal equation using Fast Marching.
@@ -10280,7 +10496,7 @@ See:
 
  itk::simple::FastMarching for the procedural interface
 
- itk::FastMarchingImageFilterBase for the Doxygen on the original ITK class.
+ itk::FastMarchingImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkFastMarchingImageFilter.h
@@ -10288,13 +10504,13 @@ C++ includes: sitkFastMarchingImageFilter.h
 
 %feature("docstring")  itk::simple::FastMarchingImageFilter::AddTrialPoint "
 
-Add trial point
+Add TrialPoints point.
 
 ";
 
 %feature("docstring")  itk::simple::FastMarchingImageFilter::ClearTrialPoints "
 
-Clear trial points
+Remove all TrialPoints points.
 
 ";
 
@@ -10336,12 +10552,9 @@ Get the Fast Marching algorithm Stopping Value.
 
 ";
 
-%feature("docstring")  itk::simple::FastMarchingImageFilter::GetTopologyCheck "
-";
-
 %feature("docstring")  itk::simple::FastMarchingImageFilter::GetTrialPoints "
 
-Get trial points
+Get the container of Trial Points representing the initial front.
 
 ";
 
@@ -10360,13 +10573,10 @@ greater than the stopping value.
 
 ";
 
-%feature("docstring")  itk::simple::FastMarchingImageFilter::SetTopologyCheck "
-";
-
 %feature("docstring")  itk::simple::FastMarchingImageFilter::SetTrialPoints "
 
-Set trial points. The default trial value (i.e. 0.0) is used for each
-index.
+Set the container of Trial Points representing the initial front.
+Trial points are represented as a VectorContainer of LevelSetNodes.
 
 ";
 
@@ -10419,21 +10629,33 @@ Department, Mario Negri Institute, Italy.
 See:
  itk::simple::FastMarchingUpwindGradient for the procedural interface
 
- itk::FastMarchingUpwindGradientImageFilterBase for the Doxygen on the original ITK class.
+ itk::FastMarchingUpwindGradientImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkFastMarchingUpwindGradientImageFilter.h
 ";
 
+%feature("docstring")  itk::simple::FastMarchingUpwindGradientImageFilter::AddTargetPoint "
+
+Add TargetPoints point.
+
+";
+
 %feature("docstring")  itk::simple::FastMarchingUpwindGradientImageFilter::AddTrialPoint "
 
-Add trial point
+Add TrialPoints point.
+
+";
+
+%feature("docstring")  itk::simple::FastMarchingUpwindGradientImageFilter::ClearTargetPoints "
+
+Remove all TargetPoints points.
 
 ";
 
 %feature("docstring")  itk::simple::FastMarchingUpwindGradientImageFilter::ClearTrialPoints "
 
-Clear trial points
+Remove all TrialPoints points.
 
 ";
 
@@ -10478,19 +10700,36 @@ pixel types to represent the speed.
 
 ";
 
-%feature("docstring")  itk::simple::FastMarchingUpwindGradientImageFilter::GetStoppingValue "
+%feature("docstring")  itk::simple::FastMarchingUpwindGradientImageFilter::GetNumberOfTargets "
 
-Get the Fast Marching algorithm Stopping Value.
+Get the number of targets.
 
 ";
 
-%feature("docstring")  itk::simple::FastMarchingUpwindGradientImageFilter::GetTopologyCheck "
+%feature("docstring")  itk::simple::FastMarchingUpwindGradientImageFilter::GetTargetOffset "
+
+Get the TargetOffset ivar.
+
+";
+
+%feature("docstring")  itk::simple::FastMarchingUpwindGradientImageFilter::GetTargetPoints "
+
+Get the container of Target Points.
+
+";
+
+%feature("docstring")  itk::simple::FastMarchingUpwindGradientImageFilter::GetTargetValue "
+
+Get the arrival time corresponding to the last reached target. If
+TargetReachedMode is set to NoTargets, TargetValue contains the last
+(aka largest) Eikonal solution value generated.
+
+This is a measurement. Its value is updated in the Execute methods, so
+the value will only be valid after an execution.
+
 ";
 
 %feature("docstring")  itk::simple::FastMarchingUpwindGradientImageFilter::GetTrialPoints "
-
-Get trial points
-
 ";
 
 %feature("docstring")  itk::simple::FastMarchingUpwindGradientImageFilter::SetNormalizationFactor "
@@ -10500,22 +10739,25 @@ pixel types to represent the speed.
 
 ";
 
-%feature("docstring")  itk::simple::FastMarchingUpwindGradientImageFilter::SetStoppingValue "
+%feature("docstring")  itk::simple::FastMarchingUpwindGradientImageFilter::SetNumberOfTargets "
+";
 
-Set the Fast Marching algorithm Stopping Value. The Fast Marching
-algorithm is terminated when the value of the smallest trial point is
-greater than the stopping value.
+%feature("docstring")  itk::simple::FastMarchingUpwindGradientImageFilter::SetTargetOffset "
+
+Set how long (in terms of arrival times) after targets are reached the
+front must stop. This is useful to ensure that the level set of target
+arrival time is smooth.
 
 ";
 
-%feature("docstring")  itk::simple::FastMarchingUpwindGradientImageFilter::SetTopologyCheck "
+%feature("docstring")  itk::simple::FastMarchingUpwindGradientImageFilter::SetTargetPoints "
+
+Set the container of Target Points. If a target point is reached, the
+propagation stops. Trial points are represented as a VectorContainer of LevelSetNodes.
+
 ";
 
 %feature("docstring")  itk::simple::FastMarchingUpwindGradientImageFilter::SetTrialPoints "
-
-Set trial points. The default trial value (i.e. 0.0) is used for each
-index.
-
 ";
 
 %feature("docstring")  itk::simple::FastMarchingUpwindGradientImageFilter::ToString "
@@ -14795,6 +15037,9 @@ C++ includes: sitkImageRegistrationMethod.h
 %feature("docstring")  itk::simple::ImageRegistrationMethod::Execute "
 ";
 
+%feature("docstring")  itk::simple::ImageRegistrationMethod::GetCurrentLevel "
+";
+
 %feature("docstring")  itk::simple::ImageRegistrationMethod::GetInterpolator "
 ";
 
@@ -14807,6 +15052,9 @@ return user readable name for the filter
 
 ";
 
+%feature("docstring")  itk::simple::ImageRegistrationMethod::GetOptimizerConvergenceValue "
+";
+
 %feature("docstring")  itk::simple::ImageRegistrationMethod::GetOptimizerIteration "
 
 Active measurements which can be obtained during call backs.
@@ -14814,6 +15062,9 @@ Active measurements which can be obtained during call backs.
 This is a measurement. Its value is updated in the Execute methods, so
 the value will only be valid after an execution.
 
+";
+
+%feature("docstring")  itk::simple::ImageRegistrationMethod::GetOptimizerLearningRate "
 ";
 
 %feature("docstring")  itk::simple::ImageRegistrationMethod::GetOptimizerPosition "
@@ -14838,6 +15089,31 @@ Measurement updated at the end of execution.
 ";
 
 %feature("docstring")  itk::simple::ImageRegistrationMethod::ImageRegistrationMethod "
+";
+
+%feature("docstring")  itk::simple::ImageRegistrationMethod::MetricEvaluate "
+
+Get the value of the metric given the state of the method.
+
+
+Passing a fixed and moving image, this method constructs and
+configures a metric object to obtain the value. This will take into
+consideration the current transforms, metric, interpolator, and image
+masks. It does not take into consideration the sampling strategy,
+smoothing sigmas, or the shrink factors.
+
+";
+
+%feature("docstring")  itk::simple::ImageRegistrationMethod::MetricUseFixedImageGradientFilterOff "
+";
+
+%feature("docstring")  itk::simple::ImageRegistrationMethod::MetricUseFixedImageGradientFilterOn "
+";
+
+%feature("docstring")  itk::simple::ImageRegistrationMethod::MetricUseMovingImageGradientFilterOff "
+";
+
+%feature("docstring")  itk::simple::ImageRegistrationMethod::MetricUseMovingImageGradientFilterOn "
 ";
 
 %feature("docstring")  itk::simple::ImageRegistrationMethod::SetInterpolator "
@@ -14874,6 +15150,12 @@ Measurement updated at the end of execution.
 ";
 
 %feature("docstring")  itk::simple::ImageRegistrationMethod::SetMetricSamplingStrategy "
+";
+
+%feature("docstring")  itk::simple::ImageRegistrationMethod::SetMetricUseFixedImageGradientFilter "
+";
+
+%feature("docstring")  itk::simple::ImageRegistrationMethod::SetMetricUseMovingImageGradientFilter "
 ";
 
 %feature("docstring")  itk::simple::ImageRegistrationMethod::SetOptimizerAsConjugateGradientLineSearch "
@@ -16836,397 +17118,6 @@ Print ourselves out
 ";
 
 %feature("docstring")  itk::simple::LabelContourImageFilter::~LabelContourImageFilter "
-
-Destructor
-
-";
-
-
-%feature("docstring") itk::simple::LabelGeometryImageFilter "
-
-Given a label map and an optional intensity image, compute geometric
-features.
-
-
-This filter enables the measurement of geometric features of all
-objects in a labeled ND volume. This labeled volume can represent, for
-instance, a medical image segmented into different anatomical
-structures or a microscope image segmented into individual cells. This
-filter is closely related to the itkLabelStatisticsImageFilter, which
-measures statistics of image regions defined by a labeled mask such as
-min, max, and mean intensity, intensity standard deviation, and
-bounding boxes. This filter, however, measures the geometry of the
-labeled regions themselves.
-
-It calculates features similar to the regionprops command of Matlab.
-The set of measurements that it enables include: volume, centroid,
-eigenvalues, eigenvectors, axes lenghts, eccentricity, elongation,
-orientation, bounding box, oriented bounding box, and rotation matrix.
-These features are based solely on the labeled mask itself. It also
-calculates integrated intensity and weighted centroid, which are
-measured on an intensity image under the labeled mask. These features
-represent the set of currently calculated features, but the framework
-of the filter is designed so that it can be easily expanded to measure
-a wide variety of other features.
-
-
-Dirk Padfield and James Miller.
- This work is part of the National Alliance for Medical ImageComputing
-(NAMIC), funded by the National Institutes of Health through the NIH
-Roadmap for Medical Research, Grant U54 EB005149. Information on the
-National Centers for Biomedical Computing can be obtained
-fromhttp://commonfund.nih.gov/bioinformatics.
-
-This filter was contributed in the Insight Journal paper: \"A Label
-Geometry Image Filter for Multiple Object Measurement\" by Padfield
-D., Miller Jhttp://www.insight-
-journal.org/browse/publication/301http://hdl.handle.net/1926/1493
-
-Wiki Examples:
-
-All Examples
-
-Get geometric properties of labeled regions in an image
-
-See:
- itk::LabelGeometryImageFilter for the Doxygen on the original ITK class.
-
-
-C++ includes: sitkLabelGeometryImageFilter.h
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::CalculateOrientedBoundingBoxOff "
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::CalculateOrientedBoundingBoxOn "
-
-Set the value of CalculateOrientedBoundingBox to true or false
-respectfully.
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::CalculateOrientedIntensityRegionsOff "
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::CalculateOrientedIntensityRegionsOn "
-
-Set the value of CalculateOrientedIntensityRegions to true or false
-respectfully.
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::CalculateOrientedLabelRegionsOff "
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::CalculateOrientedLabelRegionsOn "
-
-Set the value of CalculateOrientedLabelRegions to true or false
-respectfully.
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::Execute "
-
-Execute the filter on the input images
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::Execute "
-
-Execute the filter on the input images with the given parameters
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::GetAxesLength "
-
-Return the axes length for a label.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::GetBoundingBox "
-
-Return the computed bounding box for a label. This is organized in
-min/max pairs as [min(X), max(X), min(Y), max(Y), min(Z), max(Z),...]
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::GetBoundingBoxSize "
-
-Return the size of the bounding box.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::GetBoundingBoxVolume "
-
-Return the volume of the bounding box.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::GetCalculateOrientedBoundingBox "
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::GetCalculateOrientedIntensityRegions "
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::GetCalculateOrientedLabelRegions "
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::GetCentroid "
-
-Return the unweighted centroid for a label.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::GetEccentricity "
-
-Return the eccentricity for a label.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::GetEigenvalues "
-
-Return the eigenvalues as a vector.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::GetEigenvectors "
-
-Return the eigenvectors as a matrix.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::GetElongation "
-
-Return the elongation for a label. This is defined as the length of
-the major axis divided by the length of the minor axis.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::GetIntegratedIntensity "
-
-Return the number of pixels for all labels. Return the computed
-integrated pixel intensity for a label.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::GetLabels "
-
-Get the labels that are in the image.
-
-This is a measurement. Its value is updated in the Execute methods, so
-the value will only be valid after an execution.
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::GetMajorAxisLength "
-
-Return the major axis length for a label. This is a convenience class
-that returns the longest length from GetAxesLength.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::GetMinorAxisLength "
-
-Return the minor axis length for a label. This is a convenience class
-that returns the shortest length from GetAxesLength.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::GetName "
-
-Name of this class
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::GetNumberOfLabels "
-
-Return the number of labels after execution .
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::GetOrientation "
-
-Return the orientation for a label defined in radians.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::GetOrientedBoundingBoxOrigin "
-
-Return the origin of the oriented bounding box.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::GetOrientedBoundingBoxSize "
-
-Return the size of the oriented bounding box.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::GetOrientedBoundingBoxVertices "
-
-Return the oriented bounding box vertices. The order of the vertices
-corresponds with binary counting, where min is zero and max is one.
-For example, in 2D, binary counting will give [0,0],[0,1],[1,0],[1,1],
-which corresponds to [minX,minY],[minX,maxY],[maxX,minY],[maxX,maxY].
-Each vertex is defined as an ND point.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::GetOrientedBoundingBoxVolume "
-
-Return the volume of the oriented bounding box.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::GetOrientedIntensityImage "
-
-Return the intensity region defined by the oriented bounding box.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::GetOrientedLabelImage "
-
-Return the label region defined by the oriented bounding box.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::GetRegion "
-
-Return the region defined by the bounding box.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::GetRotationMatrix "
-
-Return the rotation matrix defined by the eigenvalues/eigenvectors.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::GetVolume "
-
-Return the number of pixels for a label. This is the same as the
-volume and the zero order moment
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::HasLabel "
-
-Does the specified label exist? Can only be called after a call a call
-to Update().
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::LabelGeometryImageFilter "
-
-Default Constructor that takes no arguments and initializes default
-parameters
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::SetCalculateOrientedBoundingBox "
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::SetCalculateOrientedIntensityRegions "
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::SetCalculateOrientedLabelRegions "
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::ToString "
-
-Print ourselves out
-
-";
-
-%feature("docstring")  itk::simple::LabelGeometryImageFilter::~LabelGeometryImageFilter "
 
 Destructor
 
@@ -20002,13 +19893,14 @@ the zero vector. Default is 1e-9.
 Set/Get the standard deviation used for smoothing the moving image
 prior to calculating gradients. The standard deviation is measured in
 physical units (for instance mm). Note that this smoothing value is
-not to be confused with the PDEDeformableRegistrationFilter::SetStandardDeviations()method. The method in PDEDeformableRegistrationFilteris for setting
-the smoothing parameters for regularizing the deformation field
-between interations. Those smoothing parameters are set in pixel units
-not physical units. Deformation field smoothing is not done by default
-in LevelSetMotionRegistration. This smoothing parameter is to
-condition the gradient calculation and parameter is specified in
-physical units.
+not to be confused with the
+PDEDeformableRegistrationFilter::SetStandardDeviations()method. The
+method in PDEDeformableRegistrationFilteris for setting the smoothing
+parameters for regularizing the deformation field between interations.
+Those smoothing parameters are set in pixel units not physical units.
+Deformation field smoothing is not done by default in
+LevelSetMotionRegistration. This smoothing parameter is to condition
+the gradient calculation and parameter is specified in physical units.
 
 ";
 
@@ -26358,7 +26250,8 @@ small ones were discarded.
  RelabelComponentImageFilter can be run as an \"in place\" filter, where it will overwrite its
 output. The default is run out of place (or generate a separate
 output). \"In place\" operation can be controlled via methods in the
-superclass, InPlaceImageFilter::InPlaceOn() and InPlaceImageFilter::InPlaceOff() .
+superclass, InPlaceImageFilter::InPlaceOn() and
+InPlaceImageFilter::InPlaceOff() .
 
 
 See:
@@ -26694,7 +26587,9 @@ origin and direction of the reference image will be used.
 
 Since this filter produces an image which is a different size than its
 input, it needs to override several of the methods defined in ProcessObject in order to properly manage the pipeline execution model. In
-particular, this filter overrides ProcessObject::GenerateInputRequestedRegion() and ProcessObject::GenerateOutputInformation() .
+particular, this filter overrides
+ProcessObject::GenerateInputRequestedRegion() and
+ProcessObject::GenerateOutputInformation() .
 
 This filter is implemented as a multithreaded filter. It provides a
 ThreadedGenerateData() method for its implementation.
@@ -27907,6 +27802,12 @@ C++ includes: sitkScaleSkewVersor3DTransform.h
 %feature("docstring")  itk::simple::ScaleSkewVersor3DTransform::GetMatrix "
 ";
 
+%feature("docstring")  itk::simple::ScaleSkewVersor3DTransform::GetName "
+
+Name of this class
+
+";
+
 %feature("docstring")  itk::simple::ScaleSkewVersor3DTransform::GetScale "
 ";
 
@@ -27917,6 +27818,12 @@ C++ includes: sitkScaleSkewVersor3DTransform.h
 ";
 
 %feature("docstring")  itk::simple::ScaleSkewVersor3DTransform::GetVersor "
+";
+
+%feature("docstring")  itk::simple::ScaleSkewVersor3DTransform::ScaleSkewVersor3DTransform "
+";
+
+%feature("docstring")  itk::simple::ScaleSkewVersor3DTransform::ScaleSkewVersor3DTransform "
 ";
 
 %feature("docstring")  itk::simple::ScaleSkewVersor3DTransform::ScaleSkewVersor3DTransform "
@@ -27972,6 +27879,12 @@ additional methods
 
 ";
 
+%feature("docstring")  itk::simple::ScaleTransform::GetName "
+
+Name of this class
+
+";
+
 %feature("docstring")  itk::simple::ScaleTransform::GetScale "
 ";
 
@@ -28004,6 +27917,12 @@ C++ includes: sitkScaleVersor3DTransform.h
 %feature("docstring")  itk::simple::ScaleVersor3DTransform::GetMatrix "
 ";
 
+%feature("docstring")  itk::simple::ScaleVersor3DTransform::GetName "
+
+Name of this class
+
+";
+
 %feature("docstring")  itk::simple::ScaleVersor3DTransform::GetScale "
 ";
 
@@ -28011,6 +27930,12 @@ C++ includes: sitkScaleVersor3DTransform.h
 ";
 
 %feature("docstring")  itk::simple::ScaleVersor3DTransform::GetVersor "
+";
+
+%feature("docstring")  itk::simple::ScaleVersor3DTransform::ScaleVersor3DTransform "
+";
+
+%feature("docstring")  itk::simple::ScaleVersor3DTransform::ScaleVersor3DTransform "
 ";
 
 %feature("docstring")  itk::simple::ScaleVersor3DTransform::ScaleVersor3DTransform "
@@ -28551,7 +28476,9 @@ Because of this, the Origin of the output may not be the same as the
 Origin of the input. Since this filter produces an image which is a
 different resolution, origin and with different pixel spacing than its
 input image, it needs to override several of the methods defined in ProcessObject in order to properly manage the pipeline execution model. In
-particular, this filter overrides ProcessObject::GenerateInputRequestedRegion() and ProcessObject::GenerateOutputInformation() .
+particular, this filter overrides
+ProcessObject::GenerateInputRequestedRegion() and
+ProcessObject::GenerateOutputInformation() .
 
 This filter is implemented as a multithreaded filter. It provides a
 ThreadedGenerateData() method for its implementation.
@@ -29028,6 +28955,12 @@ additional methods
 
 ";
 
+%feature("docstring")  itk::simple::Similarity2DTransform::GetName "
+
+Name of this class
+
+";
+
 %feature("docstring")  itk::simple::Similarity2DTransform::GetScale "
 ";
 
@@ -29044,6 +28977,9 @@ parameter
 
 fixed parameter
 
+";
+
+%feature("docstring")  itk::simple::Similarity2DTransform::SetMatrix "
 ";
 
 %feature("docstring")  itk::simple::Similarity2DTransform::SetScale "
@@ -29075,6 +29011,12 @@ C++ includes: sitkSimilarity3DTransform.h
 %feature("docstring")  itk::simple::Similarity3DTransform::GetMatrix "
 ";
 
+%feature("docstring")  itk::simple::Similarity3DTransform::GetName "
+
+Name of this class
+
+";
+
 %feature("docstring")  itk::simple::Similarity3DTransform::GetScale "
 ";
 
@@ -29090,6 +29032,9 @@ fixed parameter
 
 ";
 
+%feature("docstring")  itk::simple::Similarity3DTransform::SetMatrix "
+";
+
 %feature("docstring")  itk::simple::Similarity3DTransform::SetRotation "
 
 parameter
@@ -29103,6 +29048,12 @@ parameter
 ";
 
 %feature("docstring")  itk::simple::Similarity3DTransform::SetTranslation "
+";
+
+%feature("docstring")  itk::simple::Similarity3DTransform::Similarity3DTransform "
+";
+
+%feature("docstring")  itk::simple::Similarity3DTransform::Similarity3DTransform "
 ";
 
 %feature("docstring")  itk::simple::Similarity3DTransform::Similarity3DTransform "
@@ -31480,6 +31431,12 @@ are not invertable, an exception will be throw is there is no inverse.
 
 ";
 
+%feature("docstring")  itk::simple::Transform::GetName "
+
+return user readable name for the SimpleITK transform
+
+";
+
 %feature("docstring")  itk::simple::Transform::IsLinear "
 ";
 
@@ -31572,7 +31529,8 @@ origin and direction of the reference image will be used.
 Since this filter produces an image which is a different size than its
 input, it needs to override several of the methods defined in
 ProcessObjectin order to properly manage the pipeline execution model.
-In particular, this filter overrides ProcessObject::GenerateOutputInformation().
+In particular, this filter overrides
+ProcessObject::GenerateOutputInformation().
 
 This filter is implemented as a multithreaded filter. It provides a
 ThreadedGenerateData()method for its implementation.
@@ -32546,6 +32504,9 @@ fixed parameter
 
 ";
 
+%feature("docstring")  itk::simple::VersorRigid3DTransform::SetMatrix "
+";
+
 %feature("docstring")  itk::simple::VersorRigid3DTransform::SetRotation "
 
 parameter
@@ -32562,6 +32523,12 @@ parameter
 
 additional methods
 
+";
+
+%feature("docstring")  itk::simple::VersorRigid3DTransform::VersorRigid3DTransform "
+";
+
+%feature("docstring")  itk::simple::VersorRigid3DTransform::VersorRigid3DTransform "
 ";
 
 %feature("docstring")  itk::simple::VersorRigid3DTransform::VersorRigid3DTransform "
@@ -32596,6 +32563,9 @@ fixed parameter
 
 ";
 
+%feature("docstring")  itk::simple::VersorTransform::SetMatrix "
+";
+
 %feature("docstring")  itk::simple::VersorTransform::SetRotation "
 
 parameter
@@ -32603,6 +32573,12 @@ parameter
 ";
 
 %feature("docstring")  itk::simple::VersorTransform::SetRotation "
+";
+
+%feature("docstring")  itk::simple::VersorTransform::VersorTransform "
+";
+
+%feature("docstring")  itk::simple::VersorTransform::VersorTransform "
 ";
 
 %feature("docstring")  itk::simple::VersorTransform::VersorTransform "
@@ -35546,17 +35522,37 @@ See:
 
 %feature("docstring")  itk::simple::FastMarching "
 
- itk::simple::FastMarchingImageFilter Functional Interface
+Solve an Eikonal equation using Fast Marching.
 
-This function directly calls the execute method of FastMarchingImageFilter in order to support a fully functional API
+
+This function directly calls the execute method of FastMarchingImageFilter in order to support a procedural API
+
+
+See:
+ itk::simple::FastMarchingImageFilter for the object oriented interface
+
+
+";
+
+%feature("docstring")  itk::simple::FastMarchingBase "
+
+ itk::simple::FastMarchingBaseImageFilter Functional Interface
+
+This function directly calls the execute method of FastMarchingBaseImageFilter in order to support a fully functional API
 
 ";
 
 %feature("docstring")  itk::simple::FastMarchingUpwindGradient "
 
- itk::simple::FastMarchingUpwindGradientImageFilter Functional Interface
+Generates the upwind gradient field of fast marching arrival times.
 
-This function directly calls the execute method of FastMarchingUpwindGradientImageFilter in order to support a fully functional API
+
+This function directly calls the execute method of FastMarchingUpwindGradientImageFilter in order to support a procedural API
+
+
+See:
+ itk::simple::FastMarchingUpwindGradientImageFilter for the object oriented interface
+
 
 ";
 

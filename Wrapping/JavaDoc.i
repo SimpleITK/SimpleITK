@@ -905,6 +905,13 @@ itk::simple::AffineTransform::AffineTransform(const Transform &)
 */
 public ";
 
+%javamethodmodifiers  itk::simple::AffineTransform::AffineTransform "/**
+itk::simple::AffineTransform::AffineTransform(const std::vector< double > &matrix, const std::vector< double >
+&translation, const std::vector< double > &fixedCenter=std::vector<
+double >(3, 0.0))
+*/
+public ";
+
 %javamethodmodifiers  itk::simple::AffineTransform::GetCenter "/**
 std::vector<double> itk::simple::AffineTransform::GetCenter() const
 */
@@ -912,6 +919,14 @@ public ";
 
 %javamethodmodifiers  itk::simple::AffineTransform::GetMatrix "/**
 std::vector<double> itk::simple::AffineTransform::GetMatrix() const
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::AffineTransform::GetName "/**
+std::string itk::simple::AffineTransform::GetName() const
+
+Name of this class
+
 */
 public ";
 
@@ -1707,6 +1722,14 @@ A lazy shallow copy of the images from ITK are performed. If they are
 modified in SimpleITK a deep copy will occur. However, if the
 coefficients are modified in ITK, then no copy will occur and the
 images help by SimpleITK may change.
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::BSplineTransform::GetName "/**
+std::string itk::simple::BSplineTransform::GetName() const
+
+Name of this class
 
 */
 public ";
@@ -7400,7 +7423,7 @@ C++ includes: sitkConfidenceConnectedImageFilter.h
 */"
 
 %javamethodmodifiers  itk::simple::ConfidenceConnectedImageFilter::AddSeed "/**
-Self& itk::simple::ConfidenceConnectedImageFilter::AddSeed(std::vector< unsigned int > idx)
+Self& itk::simple::ConfidenceConnectedImageFilter::AddSeed(const std::vector< unsigned int > &idx)
 
 AddSeed - Add a seed to the end of the list
 
@@ -7433,9 +7456,9 @@ Execute the filter on the input image
 public ";
 
 %javamethodmodifiers  itk::simple::ConfidenceConnectedImageFilter::Execute "/**
-Image itk::simple::ConfidenceConnectedImageFilter::Execute(const Image &image1, std::vector< std::vector< unsigned int > >
-seedList, unsigned int numberOfIterations, double multiplier, unsigned
-int initialNeighborhoodRadius, uint8_t replaceValue)
+Image itk::simple::ConfidenceConnectedImageFilter::Execute(const Image &image1, const std::vector< std::vector< unsigned int > >
+&seedList, unsigned int numberOfIterations, double multiplier,
+unsigned int initialNeighborhoodRadius, uint8_t replaceValue)
 
 Execute the filter on the input image with the given parameters
 
@@ -7553,7 +7576,7 @@ Set/Get value to replace thresholded pixels
 public ";
 
 %javamethodmodifiers  itk::simple::ConfidenceConnectedImageFilter::SetSeed "/**
-Self& itk::simple::ConfidenceConnectedImageFilter::SetSeed(std::vector< unsigned int > idx)
+Self& itk::simple::ConfidenceConnectedImageFilter::SetSeed(const std::vector< unsigned int > &idx)
 
 SetSeed - Set list to a single seed
 
@@ -7561,7 +7584,7 @@ SetSeed - Set list to a single seed
 public ";
 
 %javamethodmodifiers  itk::simple::ConfidenceConnectedImageFilter::SetSeedList "/**
-Self& itk::simple::ConfidenceConnectedImageFilter::SetSeedList(std::vector< std::vector< unsigned int > > t)
+Self& itk::simple::ConfidenceConnectedImageFilter::SetSeedList(const std::vector< std::vector< unsigned int > > &t)
 
 Set SeedList
 
@@ -7722,7 +7745,7 @@ C++ includes: sitkConnectedThresholdImageFilter.h
 */"
 
 %javamethodmodifiers  itk::simple::ConnectedThresholdImageFilter::AddSeed "/**
-Self& itk::simple::ConnectedThresholdImageFilter::AddSeed(std::vector< unsigned int > idx)
+Self& itk::simple::ConnectedThresholdImageFilter::AddSeed(const std::vector< unsigned int > &idx)
 
 AddSeed - Add a seed to the end of the list
 
@@ -7755,8 +7778,8 @@ Execute the filter on the input image
 public ";
 
 %javamethodmodifiers  itk::simple::ConnectedThresholdImageFilter::Execute "/**
-Image itk::simple::ConnectedThresholdImageFilter::Execute(const Image &image1, std::vector< std::vector< unsigned int > >
-seedList, double lower, double upper, uint8_t replaceValue,
+Image itk::simple::ConnectedThresholdImageFilter::Execute(const Image &image1, const std::vector< std::vector< unsigned int > >
+&seedList, double lower, double upper, uint8_t replaceValue,
 ConnectedThresholdImageFilter::ConnectivityType connectivity)
 
 Execute the filter on the input image with the given parameters
@@ -7840,7 +7863,7 @@ default is 1.
 public ";
 
 %javamethodmodifiers  itk::simple::ConnectedThresholdImageFilter::SetSeed "/**
-Self& itk::simple::ConnectedThresholdImageFilter::SetSeed(std::vector< unsigned int > idx)
+Self& itk::simple::ConnectedThresholdImageFilter::SetSeed(const std::vector< unsigned int > &idx)
 
 SetSeed - Set list to a single seed
 
@@ -7848,7 +7871,7 @@ SetSeed - Set list to a single seed
 public ";
 
 %javamethodmodifiers  itk::simple::ConnectedThresholdImageFilter::SetSeedList "/**
-Self& itk::simple::ConnectedThresholdImageFilter::SetSeedList(std::vector< std::vector< unsigned int > > t)
+Self& itk::simple::ConnectedThresholdImageFilter::SetSeedList(const std::vector< std::vector< unsigned int > > &t)
 
 Set SeedList
 
@@ -10709,6 +10732,14 @@ displacement field.
 */
 public ";
 
+%javamethodmodifiers  itk::simple::DisplacementFieldTransform::GetName "/**
+std::string itk::simple::DisplacementFieldTransform::GetName() const
+
+Name of this class
+
+*/
+public ";
+
 %javamethodmodifiers  itk::simple::DisplacementFieldTransform::SetDisplacementField "/**
 Self& itk::simple::DisplacementFieldTransform::SetDisplacementField(Image &)
 
@@ -11636,6 +11667,14 @@ additional methods
 */
 public ";
 
+%javamethodmodifiers  itk::simple::Euler2DTransform::GetName "/**
+std::string itk::simple::Euler2DTransform::GetName() const
+
+Name of this class
+
+*/
+public ";
+
 %javamethodmodifiers  itk::simple::Euler2DTransform::GetTranslation "/**
 std::vector<double> itk::simple::Euler2DTransform::GetTranslation() const
 */
@@ -11654,6 +11693,11 @@ Self& itk::simple::Euler2DTransform::SetCenter(const std::vector< double > &para
 
 fixed parameter
 
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::Euler2DTransform::SetMatrix "/**
+Self& itk::simple::Euler2DTransform::SetMatrix(const std::vector< double > &matrix, double tolerance=1e-10)
 */
 public ";
 
@@ -11732,6 +11776,14 @@ additional methods
 */
 public ";
 
+%javamethodmodifiers  itk::simple::Euler3DTransform::GetName "/**
+std::string itk::simple::Euler3DTransform::GetName() const
+
+Name of this class
+
+*/
+public ";
+
 %javamethodmodifiers  itk::simple::Euler3DTransform::GetTranslation "/**
 std::vector<double> itk::simple::Euler3DTransform::GetTranslation() const
 */
@@ -11747,6 +11799,11 @@ public ";
 
 %javamethodmodifiers  itk::simple::Euler3DTransform::SetComputeZYX "/**
 Self& itk::simple::Euler3DTransform::SetComputeZYX(bool _arg)
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::Euler3DTransform::SetMatrix "/**
+Self& itk::simple::Euler3DTransform::SetMatrix(const std::vector< double > &matrix, double tolerance=1e-10)
 */
 public ";
 
@@ -12685,6 +12742,217 @@ Destructor
 public ";
 
 
+%typemap(javaimports) itk::simple::FastMarchingBaseImageFilter "/**
+
+Solve an Eikonal equation using Fast Marching.
+
+
+Fast marching solves an Eikonal equation where the speed is always
+non-negative and depends on the position only. Starting from an
+initial position on the front, fast marching systematically moves the
+front forward one grid point at a time.
+
+Updates are preformed using an entropy satisfy scheme where only
+\"upwind\" neighborhoods are used. This implementation of Fast
+Marching uses a std::priority_queue to locate the next proper grid
+position to update.
+
+Fast Marching sweeps through N grid points in (N log N) steps to
+obtain the arrival time value as the front propagates through the
+grid.
+
+Implementation of this class is based on Chapter 8 of \"Level Set
+Methods and Fast Marching Methods\", J.A. Sethian, Cambridge Press,
+Second edition, 1999.
+
+This class is templated over the level set image type and the speed
+image type. The initial front is specified by two containers: one
+containing the known points and one containing the trial points. Alive
+points are those that are already part of the object, and trial points
+are considered for inclusion. In order for the filter to evolve, at
+least some trial points must be specified. These can for instance be
+specified as the layer of pixels around the alive points.
+
+The speed function can be specified as a speed image or a speed
+constant. The speed image is set using the method SetInput() . If the
+speed image is NULL, a constant speed function is used and is
+specified using method the SetSpeedConstant() .
+
+If the speed function is constant and of value one, fast marching
+results in an approximate distance function from the initial alive
+points. FastMarchingImageFilter is used in the ReinitializeLevelSetImageFilter object to create a signed distance function from the zero level set.
+
+The algorithm can be terminated early by setting an appropriate
+stopping value. The algorithm terminates when the current arrival time
+being processed is greater than the stopping value.
+
+There are two ways to specify the output image information (
+LargestPossibleRegion, Spacing, Origin): (a) it is copied directly
+from the input speed image or (b) it is specified by the user. Default
+values are used if the user does not specify all the information.
+
+The output information is computed as follows. If the speed image is
+NULL or if the OverrideOutputInformation is set to true, the output
+information is set from user specified parameters. These parameters
+can be specified using methods SetOutputRegion() , SetOutputSpacing()
+, SetOutputDirection() , and SetOutputOrigin() . Else if the speed
+image is not NULL, the output information is copied from the input
+speed image.
+
+Possible Improvements: In the current implemenation,
+std::priority_queue only allows taking nodes out from the front and
+putting nodes in from the back. To update a value already on the heap,
+a new node is added to the heap. The defunct old node is left on the
+heap. When it is removed from the top, it will be recognized as
+invalid and not used. Future implementations can implement the heap in
+a different way allowing the values to be updated. This will generally
+require some sift-up and sift-down functions and an image of back-
+pointers going from the image to heap in order to locate the node
+which is to be updated.
+
+
+See:
+ LevelSetTypeDefault
+
+ itk::simple::FastMarchingBase for the procedural interface
+
+ itk::FastMarchingImageFilterBase for the Doxygen on the original ITK class.
+
+
+C++ includes: sitkFastMarchingBaseImageFilter.h
+*/"
+
+%javamethodmodifiers  itk::simple::FastMarchingBaseImageFilter::AddTrialPoint "/**
+Self& itk::simple::FastMarchingBaseImageFilter::AddTrialPoint(std::vector< unsigned int > t)
+
+Add trial point
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::FastMarchingBaseImageFilter::ClearTrialPoints "/**
+Self& itk::simple::FastMarchingBaseImageFilter::ClearTrialPoints()
+
+Clear trial points
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::FastMarchingBaseImageFilter::Execute "/**
+Image itk::simple::FastMarchingBaseImageFilter::Execute(const Image &image1)
+
+Execute the filter on the input image
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::FastMarchingBaseImageFilter::Execute "/**
+Image itk::simple::FastMarchingBaseImageFilter::Execute(const Image &, std::vector< std::vector< unsigned int > >
+trialPoints, double normalizationFactor, double stoppingValue,
+FastMarchingBaseImageFilter::TopologyCheckType topologyCheck)
+
+Execute the filter on the input image with the given parameters
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::FastMarchingBaseImageFilter::FastMarchingBaseImageFilter "/**
+itk::simple::FastMarchingBaseImageFilter::FastMarchingBaseImageFilter()
+
+Default Constructor that takes no arguments and initializes default
+parameters
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::FastMarchingBaseImageFilter::GetName "/**
+std::string itk::simple::FastMarchingBaseImageFilter::GetName() const
+
+Name of this class
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::FastMarchingBaseImageFilter::GetNormalizationFactor "/**
+double itk::simple::FastMarchingBaseImageFilter::GetNormalizationFactor() const
+
+Set/Get the Normalization Factor for the Speed Image . The values in the Speed Image is divided by this factor. This allows the use of images with integer
+pixel types to represent the speed.
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::FastMarchingBaseImageFilter::GetStoppingValue "/**
+double itk::simple::FastMarchingBaseImageFilter::GetStoppingValue() const
+
+Get the Fast Marching algorithm Stopping Value.
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::FastMarchingBaseImageFilter::GetTopologyCheck "/**
+TopologyCheckType itk::simple::FastMarchingBaseImageFilter::GetTopologyCheck() const
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::FastMarchingBaseImageFilter::GetTrialPoints "/**
+std::vector< std::vector<unsigned int> > itk::simple::FastMarchingBaseImageFilter::GetTrialPoints() const
+
+Get trial points
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::FastMarchingBaseImageFilter::SetNormalizationFactor "/**
+Self& itk::simple::FastMarchingBaseImageFilter::SetNormalizationFactor(double NormalizationFactor)
+
+Set/Get the Normalization Factor for the Speed Image . The values in the Speed Image is divided by this factor. This allows the use of images with integer
+pixel types to represent the speed.
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::FastMarchingBaseImageFilter::SetStoppingValue "/**
+Self& itk::simple::FastMarchingBaseImageFilter::SetStoppingValue(double StoppingValue)
+
+Set the Fast Marching algorithm Stopping Value. The Fast Marching
+algorithm is terminated when the value of the smallest trial point is
+greater than the stopping value.
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::FastMarchingBaseImageFilter::SetTopologyCheck "/**
+Self& itk::simple::FastMarchingBaseImageFilter::SetTopologyCheck(TopologyCheckType TopologyCheck)
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::FastMarchingBaseImageFilter::SetTrialPoints "/**
+Self& itk::simple::FastMarchingBaseImageFilter::SetTrialPoints(std::vector< std::vector< unsigned int > > t)
+
+Set trial points. The default trial value (i.e. 0.0) is used for each
+index.
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::FastMarchingBaseImageFilter::ToString "/**
+std::string itk::simple::FastMarchingBaseImageFilter::ToString() const
+
+Print ourselves out
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::FastMarchingBaseImageFilter::~FastMarchingBaseImageFilter "/**
+itk::simple::FastMarchingBaseImageFilter::~FastMarchingBaseImageFilter()
+
+Destructor
+
+*/
+public ";
+
+
 %typemap(javaimports) itk::simple::FastMarchingImageFilter "/**
 
 Solve an Eikonal equation using Fast Marching.
@@ -12759,16 +13027,16 @@ See:
 
  itk::simple::FastMarching for the procedural interface
 
- itk::FastMarchingImageFilterBase for the Doxygen on the original ITK class.
+ itk::FastMarchingImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkFastMarchingImageFilter.h
 */"
 
 %javamethodmodifiers  itk::simple::FastMarchingImageFilter::AddTrialPoint "/**
-Self& itk::simple::FastMarchingImageFilter::AddTrialPoint(std::vector< unsigned int > t)
+Self& itk::simple::FastMarchingImageFilter::AddTrialPoint(const std::vector< unsigned int > &point)
 
-Add trial point
+Add TrialPoints point.
 
 */
 public ";
@@ -12776,7 +13044,7 @@ public ";
 %javamethodmodifiers  itk::simple::FastMarchingImageFilter::ClearTrialPoints "/**
 Self& itk::simple::FastMarchingImageFilter::ClearTrialPoints()
 
-Clear trial points
+Remove all TrialPoints points.
 
 */
 public ";
@@ -12790,9 +13058,8 @@ Execute the filter on the input image
 public ";
 
 %javamethodmodifiers  itk::simple::FastMarchingImageFilter::Execute "/**
-Image itk::simple::FastMarchingImageFilter::Execute(const Image &, std::vector< std::vector< unsigned int > >
-trialPoints, double normalizationFactor, double stoppingValue,
-FastMarchingImageFilter::TopologyCheckType topologyCheck)
+Image itk::simple::FastMarchingImageFilter::Execute(const Image &image1, const std::vector< std::vector< unsigned int > >
+&trialPoints, double normalizationFactor, double stoppingValue)
 
 Execute the filter on the input image with the given parameters
 
@@ -12833,15 +13100,10 @@ Get the Fast Marching algorithm Stopping Value.
 */
 public ";
 
-%javamethodmodifiers  itk::simple::FastMarchingImageFilter::GetTopologyCheck "/**
-TopologyCheckType itk::simple::FastMarchingImageFilter::GetTopologyCheck() const
-*/
-public ";
-
 %javamethodmodifiers  itk::simple::FastMarchingImageFilter::GetTrialPoints "/**
 std::vector< std::vector<unsigned int> > itk::simple::FastMarchingImageFilter::GetTrialPoints() const
 
-Get trial points
+Get the container of Trial Points representing the initial front.
 
 */
 public ";
@@ -12865,16 +13127,11 @@ greater than the stopping value.
 */
 public ";
 
-%javamethodmodifiers  itk::simple::FastMarchingImageFilter::SetTopologyCheck "/**
-Self& itk::simple::FastMarchingImageFilter::SetTopologyCheck(TopologyCheckType TopologyCheck)
-*/
-public ";
-
 %javamethodmodifiers  itk::simple::FastMarchingImageFilter::SetTrialPoints "/**
-Self& itk::simple::FastMarchingImageFilter::SetTrialPoints(std::vector< std::vector< unsigned int > > t)
+Self& itk::simple::FastMarchingImageFilter::SetTrialPoints(const std::vector< std::vector< unsigned int > > &TrialPoints)
 
-Set trial points. The default trial value (i.e. 0.0) is used for each
-index.
+Set the container of Trial Points representing the initial front.
+Trial points are represented as a VectorContainer of LevelSetNodes.
 
 */
 public ";
@@ -12932,16 +13189,32 @@ Department, Mario Negri Institute, Italy.
 See:
  itk::simple::FastMarchingUpwindGradient for the procedural interface
 
- itk::FastMarchingUpwindGradientImageFilterBase for the Doxygen on the original ITK class.
+ itk::FastMarchingUpwindGradientImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkFastMarchingUpwindGradientImageFilter.h
 */"
 
-%javamethodmodifiers  itk::simple::FastMarchingUpwindGradientImageFilter::AddTrialPoint "/**
-Self& itk::simple::FastMarchingUpwindGradientImageFilter::AddTrialPoint(std::vector< unsigned int > t)
+%javamethodmodifiers  itk::simple::FastMarchingUpwindGradientImageFilter::AddTargetPoint "/**
+Self& itk::simple::FastMarchingUpwindGradientImageFilter::AddTargetPoint(const std::vector< unsigned int > &point)
 
-Add trial point
+Add TargetPoints point.
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::FastMarchingUpwindGradientImageFilter::AddTrialPoint "/**
+Self& itk::simple::FastMarchingUpwindGradientImageFilter::AddTrialPoint(const std::vector< unsigned int > &point)
+
+Add TrialPoints point.
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::FastMarchingUpwindGradientImageFilter::ClearTargetPoints "/**
+Self& itk::simple::FastMarchingUpwindGradientImageFilter::ClearTargetPoints()
+
+Remove all TargetPoints points.
 
 */
 public ";
@@ -12949,7 +13222,7 @@ public ";
 %javamethodmodifiers  itk::simple::FastMarchingUpwindGradientImageFilter::ClearTrialPoints "/**
 Self& itk::simple::FastMarchingUpwindGradientImageFilter::ClearTrialPoints()
 
-Clear trial points
+Remove all TrialPoints points.
 
 */
 public ";
@@ -12963,10 +13236,10 @@ Execute the filter on the input image
 public ";
 
 %javamethodmodifiers  itk::simple::FastMarchingUpwindGradientImageFilter::Execute "/**
-Image itk::simple::FastMarchingUpwindGradientImageFilter::Execute(const Image &, std::vector< std::vector< unsigned int > >
-trialPoints, double normalizationFactor, double stoppingValue,
-FastMarchingUpwindGradientImageFilter::TopologyCheckType
-topologyCheck)
+Image itk::simple::FastMarchingUpwindGradientImageFilter::Execute(const Image &image1, const std::vector< std::vector< unsigned int > >
+&trialPoints, unsigned int numberOfTargets, const std::vector<
+std::vector< unsigned int > > &targetPoints, double targetOffset,
+double normalizationFactor)
 
 Execute the filter on the input image with the given parameters
 
@@ -13010,24 +13283,45 @@ pixel types to represent the speed.
 */
 public ";
 
-%javamethodmodifiers  itk::simple::FastMarchingUpwindGradientImageFilter::GetStoppingValue "/**
-double itk::simple::FastMarchingUpwindGradientImageFilter::GetStoppingValue() const
+%javamethodmodifiers  itk::simple::FastMarchingUpwindGradientImageFilter::GetNumberOfTargets "/**
+unsigned int itk::simple::FastMarchingUpwindGradientImageFilter::GetNumberOfTargets() const
 
-Get the Fast Marching algorithm Stopping Value.
+Get the number of targets.
 
 */
 public ";
 
-%javamethodmodifiers  itk::simple::FastMarchingUpwindGradientImageFilter::GetTopologyCheck "/**
-TopologyCheckType itk::simple::FastMarchingUpwindGradientImageFilter::GetTopologyCheck() const
+%javamethodmodifiers  itk::simple::FastMarchingUpwindGradientImageFilter::GetTargetOffset "/**
+double itk::simple::FastMarchingUpwindGradientImageFilter::GetTargetOffset() const
+
+Get the TargetOffset ivar.
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::FastMarchingUpwindGradientImageFilter::GetTargetPoints "/**
+std::vector< std::vector<unsigned int> > itk::simple::FastMarchingUpwindGradientImageFilter::GetTargetPoints() const
+
+Get the container of Target Points.
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::FastMarchingUpwindGradientImageFilter::GetTargetValue "/**
+double itk::simple::FastMarchingUpwindGradientImageFilter::GetTargetValue() const
+
+Get the arrival time corresponding to the last reached target. If
+TargetReachedMode is set to NoTargets, TargetValue contains the last
+(aka largest) Eikonal solution value generated.
+
+This is a measurement. Its value is updated in the Execute methods, so
+the value will only be valid after an execution.
+
 */
 public ";
 
 %javamethodmodifiers  itk::simple::FastMarchingUpwindGradientImageFilter::GetTrialPoints "/**
 std::vector< std::vector<unsigned int> > itk::simple::FastMarchingUpwindGradientImageFilter::GetTrialPoints() const
-
-Get trial points
-
 */
 public ";
 
@@ -13040,27 +13334,32 @@ pixel types to represent the speed.
 */
 public ";
 
-%javamethodmodifiers  itk::simple::FastMarchingUpwindGradientImageFilter::SetStoppingValue "/**
-Self& itk::simple::FastMarchingUpwindGradientImageFilter::SetStoppingValue(double StoppingValue)
+%javamethodmodifiers  itk::simple::FastMarchingUpwindGradientImageFilter::SetNumberOfTargets "/**
+Self& itk::simple::FastMarchingUpwindGradientImageFilter::SetNumberOfTargets(unsigned int NumberOfTargets)
+*/
+public ";
 
-Set the Fast Marching algorithm Stopping Value. The Fast Marching
-algorithm is terminated when the value of the smallest trial point is
-greater than the stopping value.
+%javamethodmodifiers  itk::simple::FastMarchingUpwindGradientImageFilter::SetTargetOffset "/**
+Self& itk::simple::FastMarchingUpwindGradientImageFilter::SetTargetOffset(double TargetOffset)
+
+Set how long (in terms of arrival times) after targets are reached the
+front must stop. This is useful to ensure that the level set of target
+arrival time is smooth.
 
 */
 public ";
 
-%javamethodmodifiers  itk::simple::FastMarchingUpwindGradientImageFilter::SetTopologyCheck "/**
-Self& itk::simple::FastMarchingUpwindGradientImageFilter::SetTopologyCheck(TopologyCheckType TopologyCheck)
+%javamethodmodifiers  itk::simple::FastMarchingUpwindGradientImageFilter::SetTargetPoints "/**
+Self& itk::simple::FastMarchingUpwindGradientImageFilter::SetTargetPoints(const std::vector< std::vector< unsigned int > > &TargetPoints)
+
+Set the container of Target Points. If a target point is reached, the
+propagation stops. Trial points are represented as a VectorContainer of LevelSetNodes.
+
 */
 public ";
 
 %javamethodmodifiers  itk::simple::FastMarchingUpwindGradientImageFilter::SetTrialPoints "/**
-Self& itk::simple::FastMarchingUpwindGradientImageFilter::SetTrialPoints(std::vector< std::vector< unsigned int > > t)
-
-Set trial points. The default trial value (i.e. 0.0) is used for each
-index.
-
+Self& itk::simple::FastMarchingUpwindGradientImageFilter::SetTrialPoints(const std::vector< std::vector< unsigned int > > &TrialPoints)
 */
 public ";
 
@@ -18470,6 +18769,11 @@ Transform itk::simple::ImageRegistrationMethod::Execute(const Image &fixed, cons
 */
 public ";
 
+%javamethodmodifiers  itk::simple::ImageRegistrationMethod::GetCurrentLevel "/**
+unsigned int itk::simple::ImageRegistrationMethod::GetCurrentLevel() const
+*/
+public ";
+
 %javamethodmodifiers  itk::simple::ImageRegistrationMethod::GetInterpolator "/**
 InterpolatorEnum itk::simple::ImageRegistrationMethod::GetInterpolator()
 */
@@ -18488,6 +18792,11 @@ return user readable name for the filter
 */
 public ";
 
+%javamethodmodifiers  itk::simple::ImageRegistrationMethod::GetOptimizerConvergenceValue "/**
+double itk::simple::ImageRegistrationMethod::GetOptimizerConvergenceValue() const
+*/
+public ";
+
 %javamethodmodifiers  itk::simple::ImageRegistrationMethod::GetOptimizerIteration "/**
 unsigned int itk::simple::ImageRegistrationMethod::GetOptimizerIteration() const
 
@@ -18496,6 +18805,11 @@ Active measurements which can be obtained during call backs.
 This is a measurement. Its value is updated in the Execute methods, so
 the value will only be valid after an execution.
 
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::ImageRegistrationMethod::GetOptimizerLearningRate "/**
+double itk::simple::ImageRegistrationMethod::GetOptimizerLearningRate() const
 */
 public ";
 
@@ -18519,7 +18833,7 @@ during execution.
 public ";
 
 %javamethodmodifiers  itk::simple::ImageRegistrationMethod::GetOptimizerStopConditionDescription "/**
-const std::string& itk::simple::ImageRegistrationMethod::GetOptimizerStopConditionDescription() const
+std::string itk::simple::ImageRegistrationMethod::GetOptimizerStopConditionDescription() const
 
 Measurement updated at the end of execution.
 
@@ -18528,6 +18842,41 @@ public ";
 
 %javamethodmodifiers  itk::simple::ImageRegistrationMethod::ImageRegistrationMethod "/**
 itk::simple::ImageRegistrationMethod::ImageRegistrationMethod()
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::ImageRegistrationMethod::MetricEvaluate "/**
+double itk::simple::ImageRegistrationMethod::MetricEvaluate(const Image &fixed, const Image &moving)
+
+Get the value of the metric given the state of the method.
+
+
+Passing a fixed and moving image, this method constructs and
+configures a metric object to obtain the value. This will take into
+consideration the current transforms, metric, interpolator, and image
+masks. It does not take into consideration the sampling strategy,
+smoothing sigmas, or the shrink factors.
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::ImageRegistrationMethod::MetricUseFixedImageGradientFilterOff "/**
+Self& itk::simple::ImageRegistrationMethod::MetricUseFixedImageGradientFilterOff()
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::ImageRegistrationMethod::MetricUseFixedImageGradientFilterOn "/**
+Self& itk::simple::ImageRegistrationMethod::MetricUseFixedImageGradientFilterOn()
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::ImageRegistrationMethod::MetricUseMovingImageGradientFilterOff "/**
+Self& itk::simple::ImageRegistrationMethod::MetricUseMovingImageGradientFilterOff()
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::ImageRegistrationMethod::MetricUseMovingImageGradientFilterOn "/**
+Self& itk::simple::ImageRegistrationMethod::MetricUseMovingImageGradientFilterOn()
 */
 public ";
 
@@ -18589,6 +18938,16 @@ public ";
 
 %javamethodmodifiers  itk::simple::ImageRegistrationMethod::SetMetricSamplingStrategy "/**
 Self& itk::simple::ImageRegistrationMethod::SetMetricSamplingStrategy(MetricSamplingStrategyType strategy)
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::ImageRegistrationMethod::SetMetricUseFixedImageGradientFilter "/**
+Self& itk::simple::ImageRegistrationMethod::SetMetricUseFixedImageGradientFilter(bool)
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::ImageRegistrationMethod::SetMetricUseMovingImageGradientFilter "/**
+Self& itk::simple::ImageRegistrationMethod::SetMetricUseMovingImageGradientFilter(bool)
 */
 public ";
 
@@ -21155,485 +21514,6 @@ public ";
 
 %javamethodmodifiers  itk::simple::LabelContourImageFilter::~LabelContourImageFilter "/**
 itk::simple::LabelContourImageFilter::~LabelContourImageFilter()
-
-Destructor
-
-*/
-public ";
-
-
-%typemap(javaimports) itk::simple::LabelGeometryImageFilter "/**
-
-Given a label map and an optional intensity image, compute geometric
-features.
-
-
-This filter enables the measurement of geometric features of all
-objects in a labeled ND volume. This labeled volume can represent, for
-instance, a medical image segmented into different anatomical
-structures or a microscope image segmented into individual cells. This
-filter is closely related to the itkLabelStatisticsImageFilter, which
-measures statistics of image regions defined by a labeled mask such as
-min, max, and mean intensity, intensity standard deviation, and
-bounding boxes. This filter, however, measures the geometry of the
-labeled regions themselves.
-
-It calculates features similar to the regionprops command of Matlab.
-The set of measurements that it enables include: volume, centroid,
-eigenvalues, eigenvectors, axes lenghts, eccentricity, elongation,
-orientation, bounding box, oriented bounding box, and rotation matrix.
-These features are based solely on the labeled mask itself. It also
-calculates integrated intensity and weighted centroid, which are
-measured on an intensity image under the labeled mask. These features
-represent the set of currently calculated features, but the framework
-of the filter is designed so that it can be easily expanded to measure
-a wide variety of other features.
-
-
-Dirk Padfield and James Miller.
- This work is part of the National Alliance for Medical ImageComputing
-(NAMIC), funded by the National Institutes of Health through the NIH
-Roadmap for Medical Research, Grant U54 EB005149. Information on the
-National Centers for Biomedical Computing can be obtained
-fromhttp://commonfund.nih.gov/bioinformatics.
-
-This filter was contributed in the Insight Journal paper: \"A Label
-Geometry Image Filter for Multiple Object Measurement\" by Padfield
-D., Miller Jhttp://www.insight-
-journal.org/browse/publication/301http://hdl.handle.net/1926/1493
-
-Wiki Examples:
-
-All Examples
-
-Get geometric properties of labeled regions in an image
-
-See:
- itk::LabelGeometryImageFilter for the Doxygen on the original ITK class.
-
-
-C++ includes: sitkLabelGeometryImageFilter.h
-*/"
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::CalculateOrientedBoundingBoxOff "/**
-Self& itk::simple::LabelGeometryImageFilter::CalculateOrientedBoundingBoxOff()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::CalculateOrientedBoundingBoxOn "/**
-Self& itk::simple::LabelGeometryImageFilter::CalculateOrientedBoundingBoxOn()
-
-Set the value of CalculateOrientedBoundingBox to true or false
-respectfully.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::CalculateOrientedIntensityRegionsOff "/**
-Self& itk::simple::LabelGeometryImageFilter::CalculateOrientedIntensityRegionsOff()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::CalculateOrientedIntensityRegionsOn "/**
-Self& itk::simple::LabelGeometryImageFilter::CalculateOrientedIntensityRegionsOn()
-
-Set the value of CalculateOrientedIntensityRegions to true or false
-respectfully.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::CalculateOrientedLabelRegionsOff "/**
-Self& itk::simple::LabelGeometryImageFilter::CalculateOrientedLabelRegionsOff()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::CalculateOrientedLabelRegionsOn "/**
-Self& itk::simple::LabelGeometryImageFilter::CalculateOrientedLabelRegionsOn()
-
-Set the value of CalculateOrientedLabelRegions to true or false
-respectfully.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::Execute "/**
-Image itk::simple::LabelGeometryImageFilter::Execute(const Image &image1, const Image &image2)
-
-Execute the filter on the input images
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::Execute "/**
-Image itk::simple::LabelGeometryImageFilter::Execute(const Image &image1, const Image &image2, bool
-calculateOrientedBoundingBox, bool calculateOrientedLabelRegions, bool
-calculateOrientedIntensityRegions)
-
-Execute the filter on the input images with the given parameters
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::GetAxesLength "/**
-std::vector<double> itk::simple::LabelGeometryImageFilter::GetAxesLength(int64_t label) const
-
-Return the axes length for a label.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::GetBoundingBox "/**
-std::vector<double> itk::simple::LabelGeometryImageFilter::GetBoundingBox(int64_t label) const
-
-Return the computed bounding box for a label. This is organized in
-min/max pairs as [min(X), max(X), min(Y), max(Y), min(Z), max(Z),...]
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::GetBoundingBoxSize "/**
-std::vector<uint32_t> itk::simple::LabelGeometryImageFilter::GetBoundingBoxSize(int64_t label) const
-
-Return the size of the bounding box.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::GetBoundingBoxVolume "/**
-double itk::simple::LabelGeometryImageFilter::GetBoundingBoxVolume(int64_t label) const
-
-Return the volume of the bounding box.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::GetCalculateOrientedBoundingBox "/**
-bool itk::simple::LabelGeometryImageFilter::GetCalculateOrientedBoundingBox() const
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::GetCalculateOrientedIntensityRegions "/**
-bool itk::simple::LabelGeometryImageFilter::GetCalculateOrientedIntensityRegions() const
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::GetCalculateOrientedLabelRegions "/**
-bool itk::simple::LabelGeometryImageFilter::GetCalculateOrientedLabelRegions() const
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::GetCentroid "/**
-std::vector<double> itk::simple::LabelGeometryImageFilter::GetCentroid(int64_t label) const
-
-Return the unweighted centroid for a label.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::GetEccentricity "/**
-double itk::simple::LabelGeometryImageFilter::GetEccentricity(int64_t label) const
-
-Return the eccentricity for a label.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::GetEigenvalues "/**
-std::vector<double> itk::simple::LabelGeometryImageFilter::GetEigenvalues(int64_t label) const
-
-Return the eigenvalues as a vector.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::GetEigenvectors "/**
-std::vector<double> itk::simple::LabelGeometryImageFilter::GetEigenvectors(int64_t label) const
-
-Return the eigenvectors as a matrix.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::GetElongation "/**
-double itk::simple::LabelGeometryImageFilter::GetElongation(int64_t label) const
-
-Return the elongation for a label. This is defined as the length of
-the major axis divided by the length of the minor axis.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::GetIntegratedIntensity "/**
-double itk::simple::LabelGeometryImageFilter::GetIntegratedIntensity(int64_t label) const
-
-Return the number of pixels for all labels. Return the computed
-integrated pixel intensity for a label.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::GetLabels "/**
-std::vector<int64_t> itk::simple::LabelGeometryImageFilter::GetLabels() const
-
-Get the labels that are in the image.
-
-This is a measurement. Its value is updated in the Execute methods, so
-the value will only be valid after an execution.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::GetMajorAxisLength "/**
-double itk::simple::LabelGeometryImageFilter::GetMajorAxisLength(int64_t label) const
-
-Return the major axis length for a label. This is a convenience class
-that returns the longest length from GetAxesLength.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::GetMinorAxisLength "/**
-double itk::simple::LabelGeometryImageFilter::GetMinorAxisLength(int64_t label) const
-
-Return the minor axis length for a label. This is a convenience class
-that returns the shortest length from GetAxesLength.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::GetName "/**
-std::string itk::simple::LabelGeometryImageFilter::GetName() const
-
-Name of this class
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::GetNumberOfLabels "/**
-uint64_t itk::simple::LabelGeometryImageFilter::GetNumberOfLabels()
-
-Return the number of labels after execution .
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::GetOrientation "/**
-double itk::simple::LabelGeometryImageFilter::GetOrientation(int64_t label) const
-
-Return the orientation for a label defined in radians.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::GetOrientedBoundingBoxOrigin "/**
-std::vector<double> itk::simple::LabelGeometryImageFilter::GetOrientedBoundingBoxOrigin(int64_t label) const
-
-Return the origin of the oriented bounding box.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::GetOrientedBoundingBoxSize "/**
-std::vector<uint32_t> itk::simple::LabelGeometryImageFilter::GetOrientedBoundingBoxSize(int64_t label) const
-
-Return the size of the oriented bounding box.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::GetOrientedBoundingBoxVertices "/**
-std::vector<double> itk::simple::LabelGeometryImageFilter::GetOrientedBoundingBoxVertices(int64_t label) const
-
-Return the oriented bounding box vertices. The order of the vertices
-corresponds with binary counting, where min is zero and max is one.
-For example, in 2D, binary counting will give [0,0],[0,1],[1,0],[1,1],
-which corresponds to [minX,minY],[minX,maxY],[maxX,minY],[maxX,maxY].
-Each vertex is defined as an ND point.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::GetOrientedBoundingBoxVolume "/**
-double itk::simple::LabelGeometryImageFilter::GetOrientedBoundingBoxVolume(int64_t label) const
-
-Return the volume of the oriented bounding box.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::GetOrientedIntensityImage "/**
-Image itk::simple::LabelGeometryImageFilter::GetOrientedIntensityImage(int64_t label) const
-
-Return the intensity region defined by the oriented bounding box.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::GetOrientedLabelImage "/**
-Image itk::simple::LabelGeometryImageFilter::GetOrientedLabelImage(int64_t label) const
-
-Return the label region defined by the oriented bounding box.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::GetRegion "/**
-std::vector<unsigned int> itk::simple::LabelGeometryImageFilter::GetRegion(int64_t label) const
-
-Return the region defined by the bounding box.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::GetRotationMatrix "/**
-std::vector<double> itk::simple::LabelGeometryImageFilter::GetRotationMatrix(int64_t label) const
-
-Return the rotation matrix defined by the eigenvalues/eigenvectors.
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::GetVolume "/**
-uint64_t itk::simple::LabelGeometryImageFilter::GetVolume(int64_t label) const
-
-Return the number of pixels for a label. This is the same as the
-volume and the zero order moment
-
-This is an active measurement. It may be accessed while the filter is
-being executing in command call-backs and can be accessed after
-execution.
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::HasLabel "/**
-double itk::simple::LabelGeometryImageFilter::HasLabel(int64_t label)
-
-Does the specified label exist? Can only be called after a call a call
-to Update().
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::LabelGeometryImageFilter "/**
-itk::simple::LabelGeometryImageFilter::LabelGeometryImageFilter()
-
-Default Constructor that takes no arguments and initializes default
-parameters
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::SetCalculateOrientedBoundingBox "/**
-Self& itk::simple::LabelGeometryImageFilter::SetCalculateOrientedBoundingBox(bool CalculateOrientedBoundingBox)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::SetCalculateOrientedIntensityRegions "/**
-Self& itk::simple::LabelGeometryImageFilter::SetCalculateOrientedIntensityRegions(bool CalculateOrientedIntensityRegions)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::SetCalculateOrientedLabelRegions "/**
-Self& itk::simple::LabelGeometryImageFilter::SetCalculateOrientedLabelRegions(bool CalculateOrientedLabelRegions)
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::ToString "/**
-std::string itk::simple::LabelGeometryImageFilter::ToString() const
-
-Print ourselves out
-
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::LabelGeometryImageFilter::~LabelGeometryImageFilter "/**
-itk::simple::LabelGeometryImageFilter::~LabelGeometryImageFilter()
 
 Destructor
 
@@ -25069,13 +24949,14 @@ Self& itk::simple::LevelSetMotionRegistrationFilter::SetGradientSmoothingStandar
 Set/Get the standard deviation used for smoothing the moving image
 prior to calculating gradients. The standard deviation is measured in
 physical units (for instance mm). Note that this smoothing value is
-not to be confused with the PDEDeformableRegistrationFilter::SetStandardDeviations()method. The method in PDEDeformableRegistrationFilteris for setting
-the smoothing parameters for regularizing the deformation field
-between interations. Those smoothing parameters are set in pixel units
-not physical units. Deformation field smoothing is not done by default
-in LevelSetMotionRegistration. This smoothing parameter is to
-condition the gradient calculation and parameter is specified in
-physical units.
+not to be confused with the
+PDEDeformableRegistrationFilter::SetStandardDeviations()method. The
+method in PDEDeformableRegistrationFilteris for setting the smoothing
+parameters for regularizing the deformation field between interations.
+Those smoothing parameters are set in pixel units not physical units.
+Deformation field smoothing is not done by default in
+LevelSetMotionRegistration. This smoothing parameter is to condition
+the gradient calculation and parameter is specified in physical units.
 
 */
 public ";
@@ -28750,7 +28631,7 @@ C++ includes: sitkNeighborhoodConnectedImageFilter.h
 */"
 
 %javamethodmodifiers  itk::simple::NeighborhoodConnectedImageFilter::AddSeed "/**
-Self& itk::simple::NeighborhoodConnectedImageFilter::AddSeed(std::vector< unsigned int > idx)
+Self& itk::simple::NeighborhoodConnectedImageFilter::AddSeed(const std::vector< unsigned int > &idx)
 
 AddSeed - Add a seed to the end of the list
 
@@ -28774,8 +28655,8 @@ Execute the filter on the input image
 public ";
 
 %javamethodmodifiers  itk::simple::NeighborhoodConnectedImageFilter::Execute "/**
-Image itk::simple::NeighborhoodConnectedImageFilter::Execute(const Image &image1, std::vector< std::vector< unsigned int > >
-seedList, double lower, double upper, const std::vector< unsigned int
+Image itk::simple::NeighborhoodConnectedImageFilter::Execute(const Image &image1, const std::vector< std::vector< unsigned int > >
+&seedList, double lower, double upper, const std::vector< unsigned int
 > &radius, double replaceValue)
 
 Execute the filter on the input image with the given parameters
@@ -28878,7 +28759,7 @@ default is 1.
 public ";
 
 %javamethodmodifiers  itk::simple::NeighborhoodConnectedImageFilter::SetSeed "/**
-Self& itk::simple::NeighborhoodConnectedImageFilter::SetSeed(std::vector< unsigned int > idx)
+Self& itk::simple::NeighborhoodConnectedImageFilter::SetSeed(const std::vector< unsigned int > &idx)
 
 SetSeed - Set list to a single seed
 
@@ -28886,7 +28767,7 @@ SetSeed - Set list to a single seed
 public ";
 
 %javamethodmodifiers  itk::simple::NeighborhoodConnectedImageFilter::SetSeedList "/**
-Self& itk::simple::NeighborhoodConnectedImageFilter::SetSeedList(std::vector< std::vector< unsigned int > > t)
+Self& itk::simple::NeighborhoodConnectedImageFilter::SetSeedList(const std::vector< std::vector< unsigned int > > &t)
 
 Set SeedList
 
@@ -33034,7 +32915,8 @@ small ones were discarded.
  RelabelComponentImageFilter can be run as an \"in place\" filter, where it will overwrite its
 output. The default is run out of place (or generate a separate
 output). \"In place\" operation can be controlled via methods in the
-superclass, InPlaceImageFilter::InPlaceOn() and InPlaceImageFilter::InPlaceOff() .
+superclass, InPlaceImageFilter::InPlaceOn() and
+InPlaceImageFilter::InPlaceOff() .
 
 
 See:
@@ -33451,7 +33333,9 @@ origin and direction of the reference image will be used.
 
 Since this filter produces an image which is a different size than its
 input, it needs to override several of the methods defined in ProcessObject in order to properly manage the pipeline execution model. In
-particular, this filter overrides ProcessObject::GenerateInputRequestedRegion() and ProcessObject::GenerateOutputInformation() .
+particular, this filter overrides
+ProcessObject::GenerateInputRequestedRegion() and
+ProcessObject::GenerateOutputInformation() .
 
 This filter is implemented as a multithreaded filter. It provides a
 ThreadedGenerateData() method for its implementation.
@@ -34998,6 +34882,14 @@ std::vector<double> itk::simple::ScaleSkewVersor3DTransform::GetMatrix() const
 */
 public ";
 
+%javamethodmodifiers  itk::simple::ScaleSkewVersor3DTransform::GetName "/**
+std::string itk::simple::ScaleSkewVersor3DTransform::GetName() const
+
+Name of this class
+
+*/
+public ";
+
 %javamethodmodifiers  itk::simple::ScaleSkewVersor3DTransform::GetScale "/**
 std::vector<double> itk::simple::ScaleSkewVersor3DTransform::GetScale() const
 */
@@ -35030,6 +34922,23 @@ public ";
 
 %javamethodmodifiers  itk::simple::ScaleSkewVersor3DTransform::ScaleSkewVersor3DTransform "/**
 itk::simple::ScaleSkewVersor3DTransform::ScaleSkewVersor3DTransform(const Transform &)
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::ScaleSkewVersor3DTransform::ScaleSkewVersor3DTransform "/**
+itk::simple::ScaleSkewVersor3DTransform::ScaleSkewVersor3DTransform(const std::vector< double > &scale, const std::vector< double >
+&skew, const std::vector< double > &versor, const std::vector< double
+> &translation=std::vector< double >(3, 0.0), const std::vector<
+double > &fixedCenter=std::vector< double >(3, 0.0))
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::ScaleSkewVersor3DTransform::ScaleSkewVersor3DTransform "/**
+itk::simple::ScaleSkewVersor3DTransform::ScaleSkewVersor3DTransform(const std::vector< double > &scale, const std::vector< double >
+&skew, const std::vector< double > &axis, double angle, const
+std::vector< double > &translation=std::vector< double >(3, 0.0),
+const std::vector< double > &fixedCenter=std::vector< double >(3,
+0.0))
 */
 public ";
 
@@ -35095,6 +35004,14 @@ additional methods
 */
 public ";
 
+%javamethodmodifiers  itk::simple::ScaleTransform::GetName "/**
+std::string itk::simple::ScaleTransform::GetName() const
+
+Name of this class
+
+*/
+public ";
+
 %javamethodmodifiers  itk::simple::ScaleTransform::GetScale "/**
 std::vector<double> itk::simple::ScaleTransform::GetScale() const
 */
@@ -35102,7 +35019,7 @@ public ";
 
 %javamethodmodifiers  itk::simple::ScaleTransform::ScaleTransform "/**
 itk::simple::ScaleTransform::ScaleTransform(unsigned int dimensions, const std::vector< double >
-&scales=std::vector< double >(3, 1.0))
+&scale=std::vector< double >(3, 1.0))
 */
 public ";
 
@@ -35144,6 +35061,14 @@ std::vector<double> itk::simple::ScaleVersor3DTransform::GetMatrix() const
 */
 public ";
 
+%javamethodmodifiers  itk::simple::ScaleVersor3DTransform::GetName "/**
+std::string itk::simple::ScaleVersor3DTransform::GetName() const
+
+Name of this class
+
+*/
+public ";
+
 %javamethodmodifiers  itk::simple::ScaleVersor3DTransform::GetScale "/**
 std::vector<double> itk::simple::ScaleVersor3DTransform::GetScale() const
 */
@@ -35171,6 +35096,22 @@ public ";
 
 %javamethodmodifiers  itk::simple::ScaleVersor3DTransform::ScaleVersor3DTransform "/**
 itk::simple::ScaleVersor3DTransform::ScaleVersor3DTransform(const Transform &)
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::ScaleVersor3DTransform::ScaleVersor3DTransform "/**
+itk::simple::ScaleVersor3DTransform::ScaleVersor3DTransform(const std::vector< double > &scale, const std::vector< double >
+&versor, const std::vector< double > &translation=std::vector< double
+>(3, 0.0), const std::vector< double > &fixedCenter=std::vector<
+double >(3, 0.0))
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::ScaleVersor3DTransform::ScaleVersor3DTransform "/**
+itk::simple::ScaleVersor3DTransform::ScaleVersor3DTransform(const std::vector< double > &scale, const std::vector< double >
+&axis, double angle, const std::vector< double >
+&translation=std::vector< double >(3, 0.0), const std::vector< double
+> &fixedCenter=std::vector< double >(3, 0.0))
 */
 public ";
 
@@ -35842,7 +35783,9 @@ Because of this, the Origin of the output may not be the same as the
 Origin of the input. Since this filter produces an image which is a
 different resolution, origin and with different pixel spacing than its
 input image, it needs to override several of the methods defined in ProcessObject in order to properly manage the pipeline execution model. In
-particular, this filter overrides ProcessObject::GenerateInputRequestedRegion() and ProcessObject::GenerateOutputInformation() .
+particular, this filter overrides
+ProcessObject::GenerateInputRequestedRegion() and
+ProcessObject::GenerateOutputInformation() .
 
 This filter is implemented as a multithreaded filter. It provides a
 ThreadedGenerateData() method for its implementation.
@@ -36447,6 +36390,14 @@ additional methods
 */
 public ";
 
+%javamethodmodifiers  itk::simple::Similarity2DTransform::GetName "/**
+std::string itk::simple::Similarity2DTransform::GetName() const
+
+Name of this class
+
+*/
+public ";
+
 %javamethodmodifiers  itk::simple::Similarity2DTransform::GetScale "/**
 double itk::simple::Similarity2DTransform::GetScale() const
 */
@@ -36473,6 +36424,11 @@ fixed parameter
 */
 public ";
 
+%javamethodmodifiers  itk::simple::Similarity2DTransform::SetMatrix "/**
+Self& itk::simple::Similarity2DTransform::SetMatrix(const std::vector< double > &matrix, double tolerance=1e-10)
+*/
+public ";
+
 %javamethodmodifiers  itk::simple::Similarity2DTransform::SetScale "/**
 Self& itk::simple::Similarity2DTransform::SetScale(double scale)
 */
@@ -36489,8 +36445,9 @@ itk::simple::Similarity2DTransform::Similarity2DTransform()
 public ";
 
 %javamethodmodifiers  itk::simple::Similarity2DTransform::Similarity2DTransform "/**
-itk::simple::Similarity2DTransform::Similarity2DTransform(const std::vector< double > &fixedCenter, double angle=0.0, const
-std::vector< double > &translation=std::vector< double >(3, 0.0))
+itk::simple::Similarity2DTransform::Similarity2DTransform(double scaleFactor, double angle=0.0, const std::vector< double >
+&translation=std::vector< double >(2, 0.0), const std::vector< double
+> &fixedCenter=std::vector< double >(2, 0.0))
 */
 public ";
 
@@ -36519,6 +36476,14 @@ std::vector<double> itk::simple::Similarity3DTransform::GetMatrix() const
 */
 public ";
 
+%javamethodmodifiers  itk::simple::Similarity3DTransform::GetName "/**
+std::string itk::simple::Similarity3DTransform::GetName() const
+
+Name of this class
+
+*/
+public ";
+
 %javamethodmodifiers  itk::simple::Similarity3DTransform::GetScale "/**
 double itk::simple::Similarity3DTransform::GetScale() const
 */
@@ -36539,6 +36504,11 @@ Self& itk::simple::Similarity3DTransform::SetCenter(const std::vector< double > 
 
 fixed parameter
 
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::Similarity3DTransform::SetMatrix "/**
+Self& itk::simple::Similarity3DTransform::SetMatrix(const std::vector< double > &matrix, double tolerance=1e-10)
 */
 public ";
 
@@ -36577,6 +36547,22 @@ public ";
 
 %javamethodmodifiers  itk::simple::Similarity3DTransform::Similarity3DTransform "/**
 itk::simple::Similarity3DTransform::Similarity3DTransform(const Transform &)
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::Similarity3DTransform::Similarity3DTransform "/**
+itk::simple::Similarity3DTransform::Similarity3DTransform(double scaleFactor, const std::vector< double > &versor, const
+std::vector< double > &translation=std::vector< double >(3, 0.0),
+const std::vector< double > &fixedCenter=std::vector< double >(3,
+0.0))
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::Similarity3DTransform::Similarity3DTransform "/**
+itk::simple::Similarity3DTransform::Similarity3DTransform(double scaleFactor, const std::vector< double > &axis, double angle,
+const std::vector< double > &translation=std::vector< double >(3,
+0.0), const std::vector< double > &fixedCenter=std::vector< double
+>(3, 0.0))
 */
 public ";
 
@@ -39516,6 +39502,14 @@ are not invertable, an exception will be throw is there is no inverse.
 */
 public ";
 
+%javamethodmodifiers  itk::simple::Transform::GetName "/**
+virtual std::string itk::simple::Transform::GetName() const
+
+return user readable name for the SimpleITK transform
+
+*/
+public ";
+
 %javamethodmodifiers  itk::simple::Transform::IsLinear "/**
 virtual bool itk::simple::Transform::IsLinear() const
 */
@@ -39632,7 +39626,8 @@ origin and direction of the reference image will be used.
 Since this filter produces an image which is a different size than its
 input, it needs to override several of the methods defined in
 ProcessObjectin order to properly manage the pipeline execution model.
-In particular, this filter overrides ProcessObject::GenerateOutputInformation().
+In particular, this filter overrides
+ProcessObject::GenerateOutputInformation().
 
 This filter is implemented as a multithreaded filter. It provides a
 ThreadedGenerateData()method for its implementation.
@@ -39809,7 +39804,7 @@ public ";
 
 %javamethodmodifiers  itk::simple::TranslationTransform::TranslationTransform "/**
 itk::simple::TranslationTransform::TranslationTransform(unsigned int dimensions, const std::vector< double >
-&translation=std::vector< double >(3, 0.0))
+&offset=std::vector< double >(3, 0.0))
 */
 public ";
 
@@ -40355,7 +40350,7 @@ C++ includes: sitkVectorConfidenceConnectedImageFilter.h
 */"
 
 %javamethodmodifiers  itk::simple::VectorConfidenceConnectedImageFilter::AddSeed "/**
-Self& itk::simple::VectorConfidenceConnectedImageFilter::AddSeed(std::vector< unsigned int > idx)
+Self& itk::simple::VectorConfidenceConnectedImageFilter::AddSeed(const std::vector< unsigned int > &idx)
 
 AddSeed - Add a seed to the end of the list
 
@@ -40379,9 +40374,9 @@ Execute the filter on the input image
 public ";
 
 %javamethodmodifiers  itk::simple::VectorConfidenceConnectedImageFilter::Execute "/**
-Image itk::simple::VectorConfidenceConnectedImageFilter::Execute(const Image &image1, std::vector< std::vector< unsigned int > >
-seedList, unsigned int numberOfIterations, double multiplier, unsigned
-int initialNeighborhoodRadius, uint8_t replaceValue)
+Image itk::simple::VectorConfidenceConnectedImageFilter::Execute(const Image &image1, const std::vector< std::vector< unsigned int > >
+&seedList, unsigned int numberOfIterations, double multiplier,
+unsigned int initialNeighborhoodRadius, uint8_t replaceValue)
 
 Execute the filter on the input image with the given parameters
 
@@ -40495,7 +40490,7 @@ Set/Get value to replace thresholded pixels
 public ";
 
 %javamethodmodifiers  itk::simple::VectorConfidenceConnectedImageFilter::SetSeed "/**
-Self& itk::simple::VectorConfidenceConnectedImageFilter::SetSeed(std::vector< unsigned int > idx)
+Self& itk::simple::VectorConfidenceConnectedImageFilter::SetSeed(const std::vector< unsigned int > &idx)
 
 SetSeed - Set list to a single seed
 
@@ -40503,7 +40498,7 @@ SetSeed - Set list to a single seed
 public ";
 
 %javamethodmodifiers  itk::simple::VectorConfidenceConnectedImageFilter::SetSeedList "/**
-Self& itk::simple::VectorConfidenceConnectedImageFilter::SetSeedList(std::vector< std::vector< unsigned int > > t)
+Self& itk::simple::VectorConfidenceConnectedImageFilter::SetSeedList(const std::vector< std::vector< unsigned int > > &t)
 
 Set SeedList
 
@@ -40864,6 +40859,11 @@ fixed parameter
 */
 public ";
 
+%javamethodmodifiers  itk::simple::VersorRigid3DTransform::SetMatrix "/**
+Self& itk::simple::VersorRigid3DTransform::SetMatrix(const std::vector< double > &matrix, double tolerance=1e-10)
+*/
+public ";
+
 %javamethodmodifiers  itk::simple::VersorRigid3DTransform::SetRotation "/**
 Self& itk::simple::VersorRigid3DTransform::SetRotation(const std::vector< double > &versor)
 
@@ -40905,6 +40905,20 @@ itk::simple::VersorRigid3DTransform::VersorRigid3DTransform(const Transform &)
 */
 public ";
 
+%javamethodmodifiers  itk::simple::VersorRigid3DTransform::VersorRigid3DTransform "/**
+itk::simple::VersorRigid3DTransform::VersorRigid3DTransform(const std::vector< double > &versor, const std::vector< double >
+&translation=std::vector< double >(3, 0.0), const std::vector< double
+> &fixedCenter=std::vector< double >(3, 0.0))
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::VersorRigid3DTransform::VersorRigid3DTransform "/**
+itk::simple::VersorRigid3DTransform::VersorRigid3DTransform(const std::vector< double > &axis, double angle, const std::vector<
+double > &translation=std::vector< double >(3, 0.0), const
+std::vector< double > &fixedCenter=std::vector< double >(3, 0.0))
+*/
+public ";
+
 
 %typemap(javaimports) itk::simple::VersorTransform "/**
 C++ includes: sitkVersorTransform.h
@@ -40936,6 +40950,11 @@ fixed parameter
 */
 public ";
 
+%javamethodmodifiers  itk::simple::VersorTransform::SetMatrix "/**
+Self& itk::simple::VersorTransform::SetMatrix(const std::vector< double > &matrix, double tolerance=1e-10)
+*/
+public ";
+
 %javamethodmodifiers  itk::simple::VersorTransform::SetRotation "/**
 Self& itk::simple::VersorTransform::SetRotation(const std::vector< double > &versor)
 
@@ -40961,6 +40980,18 @@ public ";
 
 %javamethodmodifiers  itk::simple::VersorTransform::VersorTransform "/**
 itk::simple::VersorTransform::VersorTransform(const Transform &)
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::VersorTransform::VersorTransform "/**
+itk::simple::VersorTransform::VersorTransform(const std::vector< double > &versor, const std::vector< double >
+&fixedCenter=std::vector< double >(3, 0.0))
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::VersorTransform::VersorTransform "/**
+itk::simple::VersorTransform::VersorTransform(const std::vector< double > &axis, double angle, const std::vector<
+double > &fixedCenter=std::vector< double >(3, 0.0))
 */
 public ";
 
@@ -44058,8 +44089,8 @@ See:
 public ";
 
 %javamethodmodifiers  itk::simple::ConfidenceConnected "/**
-Image itk::simple::ConfidenceConnected(const Image &image1, std::vector< std::vector< unsigned int > >
-seedList, unsigned int numberOfIterations=4u, double multiplier=4.5,
+Image itk::simple::ConfidenceConnected(const Image &image1, const std::vector< std::vector< unsigned int > >
+&seedList, unsigned int numberOfIterations=4u, double multiplier=4.5,
 unsigned int initialNeighborhoodRadius=1u, uint8_t replaceValue=1u)
 
  itk::simple::ConfidenceConnectedImageFilter Functional Interface
@@ -44086,8 +44117,8 @@ See:
 public ";
 
 %javamethodmodifiers  itk::simple::ConnectedThreshold "/**
-Image itk::simple::ConnectedThreshold(const Image &image1, std::vector< std::vector< unsigned int > >
-seedList, double lower=0, double upper=1, uint8_t replaceValue=1u,
+Image itk::simple::ConnectedThreshold(const Image &image1, const std::vector< std::vector< unsigned int > >
+&seedList, double lower=0, double upper=1, uint8_t replaceValue=1u,
 ConnectedThresholdImageFilter::ConnectivityType connectivity=itk::simp
 le::ConnectedThresholdImageFilter::FaceConnectivity)
 
@@ -44608,28 +44639,54 @@ See:
 public ";
 
 %javamethodmodifiers  itk::simple::FastMarching "/**
-Image itk::simple::FastMarching(const Image &imageA, std::vector< std::vector< unsigned int > >
+Image itk::simple::FastMarching(const Image &image1, const std::vector< std::vector< unsigned int > >
+&trialPoints=std::vector< std::vector< unsigned int > >(), double
+normalizationFactor=1.0, double stoppingValue=std::numeric_limits<
+double >::max()/2.0)
+
+Solve an Eikonal equation using Fast Marching.
+
+
+This function directly calls the execute method of FastMarchingImageFilter in order to support a procedural API
+
+
+See:
+ itk::simple::FastMarchingImageFilter for the object oriented interface
+
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::FastMarchingBase "/**
+Image itk::simple::FastMarchingBase(const Image &imageA, std::vector< std::vector< unsigned int > >
 trialPoints, double normalizationFactor=1.0, double
-stoppingValue=100.0, FastMarchingImageFilter::TopologyCheckType
-topologyCheck=itk::simple::FastMarchingImageFilter::Nothing)
+stoppingValue=std::numeric_limits< float >::max()/2.0,
+FastMarchingBaseImageFilter::TopologyCheckType
+topologyCheck=itk::simple::FastMarchingBaseImageFilter::Nothing)
 
- itk::simple::FastMarchingImageFilter Functional Interface
+ itk::simple::FastMarchingBaseImageFilter Functional Interface
 
-This function directly calls the execute method of FastMarchingImageFilter in order to support a fully functional API
+This function directly calls the execute method of FastMarchingBaseImageFilter in order to support a fully functional API
 
 */
 public ";
 
 %javamethodmodifiers  itk::simple::FastMarchingUpwindGradient "/**
-Image itk::simple::FastMarchingUpwindGradient(const Image &imageA, std::vector< std::vector< unsigned int > >
-trialPoints, double normalizationFactor=1.0, double
-stoppingValue=100.0,
-FastMarchingUpwindGradientImageFilter::TopologyCheckType topologyCheck
-=itk::simple::FastMarchingUpwindGradientImageFilter::Nothing)
+Image itk::simple::FastMarchingUpwindGradient(const Image &image1, const std::vector< std::vector< unsigned int > >
+&trialPoints=std::vector< std::vector< unsigned int > >(), unsigned
+int numberOfTargets=0u, const std::vector< std::vector< unsigned int >
+> &targetPoints=std::vector< std::vector< unsigned int > >(), double
+targetOffset=1, double normalizationFactor=1.0)
 
- itk::simple::FastMarchingUpwindGradientImageFilter Functional Interface
+Generates the upwind gradient field of fast marching arrival times.
 
-This function directly calls the execute method of FastMarchingUpwindGradientImageFilter in order to support a fully functional API
+
+This function directly calls the execute method of FastMarchingUpwindGradientImageFilter in order to support a procedural API
+
+
+See:
+ itk::simple::FastMarchingUpwindGradientImageFilter for the object oriented interface
+
 
 */
 public ";
@@ -46537,8 +46594,8 @@ See:
 public ";
 
 %javamethodmodifiers  itk::simple::NeighborhoodConnected "/**
-Image itk::simple::NeighborhoodConnected(const Image &image1, std::vector< std::vector< unsigned int > >
-seedList, double lower=0, double upper=1, const std::vector< unsigned
+Image itk::simple::NeighborhoodConnected(const Image &image1, const std::vector< std::vector< unsigned int > >
+&seedList, double lower=0, double upper=1, const std::vector< unsigned
 int > &radius=std::vector< unsigned int >(3, 1), double
 replaceValue=1)
 
@@ -47997,8 +48054,8 @@ See:
 public ";
 
 %javamethodmodifiers  itk::simple::VectorConfidenceConnected "/**
-Image itk::simple::VectorConfidenceConnected(const Image &image1, std::vector< std::vector< unsigned int > >
-seedList, unsigned int numberOfIterations=4u, double multiplier=4.5,
+Image itk::simple::VectorConfidenceConnected(const Image &image1, const std::vector< std::vector< unsigned int > >
+&seedList, unsigned int numberOfIterations=4u, double multiplier=4.5,
 unsigned int initialNeighborhoodRadius=1u, uint8_t replaceValue=1u)
 
  itk::simple::VectorConfidenceConnectedImageFilter Functional Interface
