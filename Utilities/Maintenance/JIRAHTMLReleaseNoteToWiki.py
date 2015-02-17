@@ -46,7 +46,7 @@ def do_li(node):
 def do_a(node):
     """Render a hyperlink node, into a wiki link"""
     if node.hasAttribute("href"):
-        return "[["+node.attributes["href"].value+parse(node)+"]]"
+        return "[["+node.attributes["href"].value+' '+parse(node)+"]]"
 
 def do_h(node, level=1):
     """Render a header title"""
