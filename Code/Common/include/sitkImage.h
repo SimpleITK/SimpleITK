@@ -379,7 +379,7 @@ namespace simple
      * This method internally utlizes the member function factory to
      * dispatch to methods instantiated on the image of the pixel ID
      */
-    void Allocate ( unsigned int width, unsigned int height, unsigned int depth, PixelIDValueEnum valueEnum, unsigned int numberOfComponents );
+    void Allocate ( unsigned int width, unsigned int height, unsigned int depth, unsigned int length, PixelIDValueEnum valueEnum, unsigned int numberOfComponents );
 
     /** \brief Dispatched methods for allocating images
      *
