@@ -72,7 +72,7 @@ namespace itk
 
   template<class TImageType>
   typename EnableIf<IsBasic<TImageType>::Value>::Type
-  Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int numberOfComponents )
+  Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int Length, unsigned int numberOfComponents )
   {
     if ( numberOfComponents != 1  && numberOfComponents != 0 )
       {
@@ -105,7 +105,7 @@ namespace itk
 
   template<class TImageType>
   typename EnableIf<IsVector<TImageType>::Value>::Type
-  Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int numberOfComponents )
+  Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int Length, unsigned int numberOfComponents )
   {
     if ( numberOfComponents == 0 )
       {
@@ -146,7 +146,7 @@ namespace itk
 
   template<class TImageType>
   typename EnableIf<IsLabel<TImageType>::Value>::Type
-  Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int numberOfComponents )
+  Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int Length, unsigned int numberOfComponents )
   {
     if ( numberOfComponents != 1 && numberOfComponents != 0 )
       {

@@ -31,7 +31,7 @@ namespace itk
       // The pixel IDs supported
       typedef AllPixelIDTypeList              PixelIDTypeList;
 
-      typedef void (Self::*MemberFunctionType)( unsigned int, unsigned int, unsigned int, unsigned int );
+      typedef void (Self::*MemberFunctionType)( unsigned int, unsigned int, unsigned int, unsigned int, unsigned int );
 
       typedef AllocateMemberFunctionAddressor<MemberFunctionType> AllocateAddressor;
 
@@ -45,9 +45,9 @@ namespace itk
         }
 
       if ( Depth == 0 ) {
-      allocateMemberFactory.GetMemberFunction( ValueEnum, 2 )( Width, Height, Depth, numberOfComponents );
+      allocateMemberFactory.GetMemberFunction( ValueEnum, 2 )( Width, Height, Depth, Length, numberOfComponents );
       } else {
-      allocateMemberFactory.GetMemberFunction( ValueEnum, 3 )( Width, Height, Depth, numberOfComponents );
+      allocateMemberFactory.GetMemberFunction( ValueEnum, 3 )( Width, Height, Depth, Length, numberOfComponents );
       }
     }
 

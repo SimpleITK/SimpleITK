@@ -390,15 +390,15 @@ namespace simple
      */
     template<class TImageType>
     typename EnableIf<IsBasic<TImageType>::Value>::Type
-    AllocateInternal ( unsigned int width, unsigned int height, unsigned int depth, unsigned int numberOfComponents );
+    AllocateInternal ( unsigned int width, unsigned int height, unsigned int depth, unsigned int length, unsigned int numberOfComponents );
 
     template<class TImageType>
     typename EnableIf<IsVector<TImageType>::Value>::Type
-    AllocateInternal ( unsigned int width, unsigned int height, unsigned int depth, unsigned int numberOfComponents );
+    AllocateInternal ( unsigned int width, unsigned int height, unsigned int depth, unsigned int length, unsigned int numberOfComponents );
 
     template<class TImageType>
     typename EnableIf<IsLabel<TImageType>::Value>::Type
-    AllocateInternal ( unsigned int width, unsigned int height, unsigned int depth, unsigned int numberOfComponents );
+    AllocateInternal ( unsigned int width, unsigned int height, unsigned int depth, unsigned int length, unsigned int numberOfComponents );
     /**@}*/
 
 
