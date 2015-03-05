@@ -83,16 +83,27 @@ namespace itk
     typename TImageType::IndexType  index;
     typename TImageType::SizeType   size;
     typename TImageType::RegionType region;
+
     index.Fill ( 0 );
     size.Fill(1);
     size[0] = Width;
     size[1] = Height;
-    if ( TImageType::ImageDimension > 2 ) {
-    assert(Depth != 0 );
-    size[2] = Depth;
-    }
+
+    if ( TImageType::ImageDimension > 2 )
+      {
+      assert(Depth != 0 );
+      size[2] = Depth;
+      }
+
+    if ( TImageType::ImageDimension > 3 )
+      {
+      assert(Length != 0 );
+      size[3] = Length;
+      }
+
     region.SetSize ( size );
     region.SetIndex ( index );
+
     typename TImageType::Pointer image = TImageType::New();
     image->SetRegions ( region );
     image->Allocate();
@@ -121,11 +132,19 @@ namespace itk
     size.Fill(1);
     size[0] = Width;
     size[1] = Height;
+
     if ( TImageType::ImageDimension > 2 )
       {
       assert(Depth != 0 );
       size[2] = Depth;
       }
+
+    if ( TImageType::ImageDimension > 3 )
+      {
+      assert(Length != 0 );
+      size[3] = Length;
+      }
+
     region.SetSize ( size );
     region.SetIndex ( index );
 
@@ -162,11 +181,19 @@ namespace itk
     size.Fill(1);
     size[0] = Width;
     size[1] = Height;
+
     if ( TImageType::ImageDimension > 2 )
       {
       assert(Depth != 0 );
       size[2] = Depth;
       }
+
+    if ( TImageType::ImageDimension > 3 )
+      {
+      assert(Length != 0 );
+      size[3] = Length;
+      }
+
     region.SetSize ( size );
     region.SetIndex ( index );
 
