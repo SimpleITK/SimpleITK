@@ -23,34 +23,39 @@ namespace itk
 {
   namespace simple
   {
+    void Image::Allocate ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int Length, PixelIDValueEnum ValueEnum, unsigned int numberOfComponents )
+    {
+        // initialize member function factory for allocating images
 
-  void Image::Allocate ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int Length, PixelIDValueEnum ValueEnum, unsigned int numberOfComponents )
-  {
-      // initialize member function factory for allocating images
+        // The pixel IDs supported
+        typedef AllPixelIDTypeList              PixelIDTypeList;
 
-      // The pixel IDs supported
-      typedef AllPixelIDTypeList              PixelIDTypeList;
+        typedef void (Self::*MemberFunctionType)( unsigned int, unsigned int, unsigned int, unsigned int, unsigned int );
 
-      typedef void (Self::*MemberFunctionType)( unsigned int, unsigned int, unsigned int, unsigned int, unsigned int );
+        typedef AllocateMemberFunctionAddressor<MemberFunctionType> AllocateAddressor;
 
-      typedef AllocateMemberFunctionAddressor<MemberFunctionType> AllocateAddressor;
+        detail::MemberFunctionFactory<MemberFunctionType> allocateMemberFactory(this);
+        allocateMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 3,  AllocateAddressor > ();
+        allocateMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 2,  AllocateAddressor > ();
 
-      detail::MemberFunctionFactory<MemberFunctionType> allocateMemberFactory(this);
-      allocateMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 3,  AllocateAddressor > ();
-      allocateMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 2,  AllocateAddressor > ();
+        if ( ValueEnum == sitkUnknown )
+          {
+          sitkExceptionMacro( "Unable to construct image of unsupported pixel type" );
+          }
 
-      if ( ValueEnum == sitkUnknown )
-        {
-        sitkExceptionMacro( "Unable to construct image of unsupported pixel type" );
-        }
-
-      if ( Depth == 0 ) {
-      allocateMemberFactory.GetMemberFunction( ValueEnum, 2 )( Width, Height, Depth, Length, numberOfComponents );
-      } else {
-      allocateMemberFactory.GetMemberFunction( ValueEnum, 3 )( Width, Height, Depth, Length, numberOfComponents );
-      }
+        if ( Depth == 0 )
+          {
+          allocateMemberFactory.GetMemberFunction( ValueEnum, 2 )( Width, Height, Depth, Length, numberOfComponents );
+          } 
+        else if ( Length == 0)
+          {
+          allocateMemberFactory.GetMemberFunction( ValueEnum, 3 )( Width, Height, Depth, Length, numberOfComponents );
+          }
+        else
+          {
+          allocateMemberFactory.GetMemberFunction( ValueEnum, 3 )( Width, Height, Depth, Length, numberOfComponents );
+          }
     }
-
   }
 }
 

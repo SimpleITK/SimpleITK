@@ -69,6 +69,14 @@ namespace itk
       Allocate ( Width, Height, Depth, 0, ValueEnum, 0 );
     }
 
+#ifdef SITK_4D_IMAGES
+    Image::Image( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int Length, PixelIDValueEnum ValueEnum )
+      : m_PimpleImage( NULL )
+    {
+      Allocate ( Width, Height, Depth, Length, ValueEnum, 0 );
+    }
+#endif // #ifdef SITK_4D_IMAGES
+
     Image::Image( const std::vector< unsigned int > &size, PixelIDValueEnum ValueEnum, unsigned int numberOfComponents )
       : m_PimpleImage( NULL )
     {
@@ -80,6 +88,12 @@ namespace itk
         {
         Allocate ( size[0], size[1], size[2], 0, ValueEnum, numberOfComponents );
         }
+#ifdef SITK_4D_IMAGES
+      else if ( size.size() == 4 )
+        {
+        Allocate ( size[0], size[1], size[2], size[3], ValueEnum, numberOfComponents );
+        }
+#endif // #ifdef SITK_4D_IMAGES
       else
         {
         sitkExceptionMacro("Unsuported number of dimesions specified!");
@@ -122,7 +136,6 @@ namespace itk
       return this->m_PimpleImage->GetNumberOfComponentsPerPixel();
     }
 
-
     std::string Image::GetPixelIDTypeAsString( void ) const
     {
       return std::string( GetPixelIDValueAsString( this->GetPixelIDValue() ) );
@@ -157,6 +170,14 @@ namespace itk
       assert( m_PimpleImage );
       return this->m_PimpleImage->GetDepth();
     }
+
+#ifdef SITK_4D_IMAGES
+    unsigned int Image::GetLength( void ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetLength();
+    }
+#endif // #ifdef SITK_4D_IMAGES
 
     // Get Origin
     std::vector< double > Image::GetOrigin( void ) const
