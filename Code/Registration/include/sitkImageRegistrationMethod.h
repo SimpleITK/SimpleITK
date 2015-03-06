@@ -195,6 +195,21 @@ namespace simple
                                double lowerBound = std::numeric_limits<double>::min(),
                                double upperBound = std::numeric_limits<double>::max());
 
+    /** \brief A per parameter weighting array for the optimizer.
+     *
+     * Allows setting of a per-local-parameter weighting array. If
+     * unset, the weights are treated as identity. Weights are
+     * multiplied by the gradient at the same time scaling is
+     * applied. Weights are similar to the scales but not estimated,
+     * and may be used, for example, to easily mask out a particular
+     * parameter during optimization to hold it constant. Or they may
+     * be used to apply another kind of prior knowledge.
+     * @{
+     */
+    Self& SetOptimizerWeights(const std::vector<double> &weights);
+    std::vector<double> GetOptimizerWeights( ) const;
+    /**@}*/
+
     Self& SetOptimizerScales( const std::vector<double> &scales );
     Self& SetOptimizerScalesFromJacobian( unsigned int centralRegionRadius = 5 );
     Self& SetOptimizerScalesFromIndexShift( unsigned int centralRegionRadius = 5,
@@ -389,6 +404,8 @@ namespace simple
     double m_OptimizerCostFunctionConvergenceFactor;
     double m_OptimizerLowerBound;
     double m_OptimizerUpperBound;
+
+    std::vector<double> m_OptimizerWeights;
 
     enum OptimizerScalesType {
       Manual,

@@ -292,6 +292,21 @@ ImageRegistrationMethod::Self&
   return *this;
 }
 
+
+ImageRegistrationMethod::Self&
+ImageRegistrationMethod::SetOptimizerWeights( const std::vector<double> &weights)
+{
+  this->m_OptimizerWeights = weights;
+  return *this;
+}
+
+std::vector<double>
+ImageRegistrationMethod::GetOptimizerWeights( ) const
+{
+  return this->m_OptimizerWeights;
+}
+
+
 ImageRegistrationMethod::Self&
 ImageRegistrationMethod::SetOptimizerScales( const std::vector<double> &scales)
 {
@@ -696,6 +711,13 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
   optimizer->SetNumberOfThreads(this->GetNumberOfThreads());
 
   registration->SetOptimizer( optimizer );
+
+  if ( m_OptimizerWeights.size( ) )
+    {
+    itk::ObjectToObjectOptimizerBaseTemplate<double>::ScalesType weights(m_OptimizerWeights.size());
+    std::copy( m_OptimizerWeights.begin(), m_OptimizerWeights.end(), weights.begin() );
+    optimizer->SetWeights(weights);
+    }
 
   typename itk::RegistrationParameterScalesEstimator< _MetricType >::Pointer scalesEstimator = this->CreateScalesEstimator<_MetricType>();
   if (scalesEstimator)
