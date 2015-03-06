@@ -744,9 +744,9 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
     registration->GetMetric()->Print(std::cout);
     }
 
-  m_pfGetOptimizerStopConditionDescription =  nsstd::bind(&_OptimizerType::GetStopConditionDescription, optimizer);
+  m_pfGetOptimizerStopConditionDescription =  nsstd::bind(&_OptimizerType::GetStopConditionDescription, optimizer.GetPointer());
 
-  m_pfGetCurrentLevel = nsstd::bind(&RegistrationType::GetCurrentLevel,registration);
+  m_pfGetCurrentLevel = nsstd::bind(&RegistrationType::GetCurrentLevel,registration.GetPointer());
 
 
   registration->Update();
