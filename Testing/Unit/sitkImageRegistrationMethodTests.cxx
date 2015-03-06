@@ -406,3 +406,48 @@ TEST_F(sitkRegistrationMethodTest, Mask_Test2)
 
   EXPECT_VECTOR_DOUBLE_NEAR(v2(128.0,128.0), outTx.GetParameters(), 1e-3);
 }
+
+
+TEST_F(sitkRegistrationMethodTest, OptimizerWeights_Test)
+{
+  // Test the usage of optimizer weights
+
+  sitk::ImageRegistrationMethod R;
+
+  double learningRate=1.0;
+  double minStep=1e-7;
+  unsigned int numberOfIterations=100;
+  double relaxationFactor=0.5;
+  double gradientMagnitudeTolerance=1e-8;
+  R.SetOptimizerAsRegularStepGradientDescent(learningRate,
+                                             minStep,
+                                             numberOfIterations,
+                                             relaxationFactor,
+                                             gradientMagnitudeTolerance );
+  R.SetInterpolator(sitk::sitkLinear);
+
+  sitk::Image &fixedImage = fixedBlobs;
+  sitk::Image &movingImage = fixedBlobs;
+
+  sitk::TranslationTransform tx(fixedImage.GetDimension());
+  tx.SetOffset(v2(12,9));
+  R.SetInitialTransform(tx);
+
+  R.SetMetricAsCorrelation();
+
+
+
+  IterationUpdate cmd(R);
+  R.AddCommand(sitk::sitkIterationEvent, cmd);
+
+  std::cout << "check1\n";
+  R.SetOptimizerWeights(v3(1.0,2.0,3.0));
+  std::cout << "check2\n";
+  EXPECT_ANY_THROW(R.Execute(fixedImage, movingImage));
+
+  std::cout << "check3\n";
+  R.SetOptimizerWeights(v2(1.0,1e10));
+  sitk::Transform outTx = R.Execute(fixedImage, movingImage);
+
+  EXPECT_VECTOR_DOUBLE_NEAR(v2(12.0,0.0031), outTx.GetParameters(), 1e-3);
+}
