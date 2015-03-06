@@ -758,25 +758,26 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
   m_pfGetCurrentLevel = nsstd::bind(&RegistrationType::GetCurrentLevel,registration.GetPointer());
 
 
-  registration->Update();
+  try
+    {
+    registration->Update();
+    }
+  catch(std::exception &e)
+    {
+    m_StopConditionDescription = e.what();
+
+    m_MetricValue = this->GetMetricValue();
+    m_Iteration = this->GetOptimizerIteration();
+
+    throw;
+    }
 
 
   // update measurements
-  this->m_StopConditionDescription = registration->GetOptimizer()->GetStopConditionDescription();
+  m_StopConditionDescription = registration->GetOptimizer()->GetStopConditionDescription();
 
   m_MetricValue = this->GetMetricValue();
   m_Iteration = this->GetOptimizerIteration();
-
-  m_pfGetOptimizerIteration = SITK_NULLPTR;
-  m_pfGetOptimizerPosition = SITK_NULLPTR;
-  m_pfGetOptimizerLearningRate = SITK_NULLPTR;
-  m_pfGetOptimizerConvergenceValue = SITK_NULLPTR;
-  m_pfGetMetricValue = SITK_NULLPTR;
-  m_pfGetOptimizerScales = SITK_NULLPTR;
-  m_pfGetOptimizerStopConditionDescription = SITK_NULLPTR;
-
-  m_pfGetCurrentLevel = SITK_NULLPTR;
-
 
   if (this->m_InitialTransformInPlace)
     {
@@ -979,7 +980,19 @@ void ImageRegistrationMethod::RemoveITKObserver( EventCommand &e )
 void ImageRegistrationMethod::OnActiveProcessDelete( ) throw()
 {
   Superclass::OnActiveProcessDelete( );
-  this->m_ActiveOptimizer = NULL;
+
+  // clean up all pointer functions here
+  this->m_pfGetOptimizerIteration = SITK_NULLPTR;
+  this->m_pfGetOptimizerPosition = SITK_NULLPTR;
+  this->m_pfGetOptimizerLearningRate = SITK_NULLPTR;
+  this->m_pfGetOptimizerConvergenceValue = SITK_NULLPTR;
+  this->m_pfGetMetricValue = SITK_NULLPTR;
+  this->m_pfGetOptimizerScales = SITK_NULLPTR;
+  this->m_pfGetOptimizerStopConditionDescription = SITK_NULLPTR;
+
+  this->m_pfGetCurrentLevel = SITK_NULLPTR;
+
+  this->m_ActiveOptimizer = SITK_NULLPTR;
 }
 
 
