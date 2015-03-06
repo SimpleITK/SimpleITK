@@ -646,6 +646,19 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
   registration->SetInPlace(this->m_InitialTransformInPlace);
 
 
+  typedef itk::ObjectToObjectOptimizerBaseTemplate<double> _OptimizerType;
+  typename  _OptimizerType::Pointer optimizer = this->CreateOptimizer( itkTx->GetNumberOfParameters() );
+  optimizer->UnRegister();
+
+  // allocate optimizer early, to register the registration process
+  // object's onDelete callback
+  this->m_ActiveOptimizer = optimizer;
+  const bool stashedDebug = this->GetDebug();
+  this->DebugOff();
+  this->PreUpdate( registration.GetPointer() );
+  this->SetDebug(stashedDebug);
+
+
   // Get the pointer to the ITK image contained in image1
   typename FixedImageType::ConstPointer fixed = this->CastImageToITK<FixedImageType>( inFixed );
   typename MovingImageType::ConstPointer moving = this->CastImageToITK<MovingImageType>( inMoving );
@@ -704,10 +717,9 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
     this->CreateTransformParametersAdaptor<typename RegistrationType::TransformParametersAdaptorPointer>(registration.GetPointer());
   registration->SetTransformParametersAdaptorsPerLevel(adaptors);
 
-  typedef itk::ObjectToObjectOptimizerBaseTemplate<double> _OptimizerType;
-  typename  _OptimizerType::Pointer optimizer = this->CreateOptimizer( itkTx->GetNumberOfParameters() );
-  optimizer->UnRegister();
-
+  //
+  // Configure Optimizer
+  //
   optimizer->SetNumberOfThreads(this->GetNumberOfThreads());
 
   registration->SetOptimizer( optimizer );
@@ -733,9 +745,6 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
     std::copy( m_OptimizerScales.begin(), m_OptimizerScales.end(), scales.begin() );
     optimizer->SetScales(scales);
     }
-
-  this->m_ActiveOptimizer = optimizer;
-  this->PreUpdate( registration.GetPointer() );
 
   if (this->GetDebug())
     {
