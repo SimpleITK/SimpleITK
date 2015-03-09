@@ -21,6 +21,7 @@
 #include <vector>
 #include "sitkPixelIDTokens.h"
 #include "sitkTemplateFunctions.h"
+#include "sitkConfigure.h"
 
 namespace itk
 {

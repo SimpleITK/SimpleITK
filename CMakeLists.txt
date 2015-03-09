@@ -136,6 +136,8 @@ option( SITK_INT64_PIXELIDS "Instantiate 64-bit integer pixels, including unsign
 option ( SITK_EXPRESS_INSTANTIATEDPIXELS "Instantiate very few pixel types ( for use for development only )" OFF )
 mark_as_advanced ( SITK_EXPRESS_INSTANTIATEDPIXELS )
 
+option( SITK_4D_IMAGES "Add Image and I/O support for four spatial dimensions." OFF )
+mark_as_advanced( SITK_4D_IMAGES )
 
 #-----------------------------------------------------------------------------
 # SimpleITK build configuration options.
@@ -146,20 +148,12 @@ set(JAR_FILE "simpleitk-${SimpleITK_VERSION}.jar")
 set(JAVADOC_FILE "simpleitk-javadoc-${SimpleITK_VERSION}.jar")
 set(JAVA_SOURCE_FILE "simpleitk-source-${SimpleITK_VERSION}.jar")
 
-option( SITK_4D_IMAGES "Add Image and I/O support for four spatial dimensions." OFF )
-mark_as_advanced( SITK_4D_IMAGES )
-
-if( SITK_4D_IMAGES )
-  add_definitions( -DSITK_4D_IMAGES )
-endif()
-
 # Create cached list of all template components
 file( GLOB template_components
       ${SimpleITK_SOURCE_DIR}/TemplateComponents/*.h.in
       ${SimpleITK_SOURCE_DIR}/TemplateComponents/*.cxx.in
     )
 set ( template_components ${template_components} CACHE INTERNAL "" )
-
 
 #------------------------------------------------------------------------------
 # Variables for use in install rules:
