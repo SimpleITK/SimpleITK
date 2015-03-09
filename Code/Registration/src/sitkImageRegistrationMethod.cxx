@@ -292,6 +292,21 @@ ImageRegistrationMethod::Self&
   return *this;
 }
 
+
+ImageRegistrationMethod::Self&
+ImageRegistrationMethod::SetOptimizerWeights( const std::vector<double> &weights)
+{
+  this->m_OptimizerWeights = weights;
+  return *this;
+}
+
+std::vector<double>
+ImageRegistrationMethod::GetOptimizerWeights( ) const
+{
+  return this->m_OptimizerWeights;
+}
+
+
 ImageRegistrationMethod::Self&
 ImageRegistrationMethod::SetOptimizerScales( const std::vector<double> &scales)
 {
@@ -631,6 +646,19 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
   registration->SetInPlace(this->m_InitialTransformInPlace);
 
 
+  typedef itk::ObjectToObjectOptimizerBaseTemplate<double> _OptimizerType;
+  typename  _OptimizerType::Pointer optimizer = this->CreateOptimizer( itkTx->GetNumberOfParameters() );
+  optimizer->UnRegister();
+
+  // allocate optimizer early, to register the registration process
+  // object's onDelete callback
+  this->m_ActiveOptimizer = optimizer;
+  const bool stashedDebug = this->GetDebug();
+  this->DebugOff();
+  this->PreUpdate( registration.GetPointer() );
+  this->SetDebug(stashedDebug);
+
+
   // Get the pointer to the ITK image contained in image1
   typename FixedImageType::ConstPointer fixed = this->CastImageToITK<FixedImageType>( inFixed );
   typename MovingImageType::ConstPointer moving = this->CastImageToITK<MovingImageType>( inMoving );
@@ -689,13 +717,19 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
     this->CreateTransformParametersAdaptor<typename RegistrationType::TransformParametersAdaptorPointer>(registration.GetPointer());
   registration->SetTransformParametersAdaptorsPerLevel(adaptors);
 
-  typedef itk::ObjectToObjectOptimizerBaseTemplate<double> _OptimizerType;
-  typename  _OptimizerType::Pointer optimizer = this->CreateOptimizer( itkTx->GetNumberOfParameters() );
-  optimizer->UnRegister();
-
+  //
+  // Configure Optimizer
+  //
   optimizer->SetNumberOfThreads(this->GetNumberOfThreads());
 
   registration->SetOptimizer( optimizer );
+
+  if ( m_OptimizerWeights.size( ) )
+    {
+    itk::ObjectToObjectOptimizerBaseTemplate<double>::ScalesType weights(m_OptimizerWeights.size());
+    std::copy( m_OptimizerWeights.begin(), m_OptimizerWeights.end(), weights.begin() );
+    optimizer->SetWeights(weights);
+    }
 
   typename itk::RegistrationParameterScalesEstimator< _MetricType >::Pointer scalesEstimator = this->CreateScalesEstimator<_MetricType>();
   if (scalesEstimator)
@@ -712,9 +746,6 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
     optimizer->SetScales(scales);
     }
 
-  this->m_ActiveOptimizer = optimizer;
-  this->PreUpdate( registration.GetPointer() );
-
   if (this->GetDebug())
     {
     registration->Print(std::cout);
@@ -722,30 +753,31 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
     registration->GetMetric()->Print(std::cout);
     }
 
-  m_pfGetOptimizerStopConditionDescription =  nsstd::bind(&_OptimizerType::GetStopConditionDescription, optimizer);
+  m_pfGetOptimizerStopConditionDescription =  nsstd::bind(&_OptimizerType::GetStopConditionDescription, optimizer.GetPointer());
 
-  m_pfGetCurrentLevel = nsstd::bind(&RegistrationType::GetCurrentLevel,registration);
+  m_pfGetCurrentLevel = nsstd::bind(&RegistrationType::GetCurrentLevel,registration.GetPointer());
 
 
-  registration->Update();
+  try
+    {
+    registration->Update();
+    }
+  catch(std::exception &e)
+    {
+    m_StopConditionDescription = e.what();
+
+    m_MetricValue = this->GetMetricValue();
+    m_Iteration = this->GetOptimizerIteration();
+
+    throw;
+    }
 
 
   // update measurements
-  this->m_StopConditionDescription = registration->GetOptimizer()->GetStopConditionDescription();
+  m_StopConditionDescription = registration->GetOptimizer()->GetStopConditionDescription();
 
   m_MetricValue = this->GetMetricValue();
   m_Iteration = this->GetOptimizerIteration();
-
-  m_pfGetOptimizerIteration = SITK_NULLPTR;
-  m_pfGetOptimizerPosition = SITK_NULLPTR;
-  m_pfGetOptimizerLearningRate = SITK_NULLPTR;
-  m_pfGetOptimizerConvergenceValue = SITK_NULLPTR;
-  m_pfGetMetricValue = SITK_NULLPTR;
-  m_pfGetOptimizerScales = SITK_NULLPTR;
-  m_pfGetOptimizerStopConditionDescription = SITK_NULLPTR;
-
-  m_pfGetCurrentLevel = SITK_NULLPTR;
-
 
   if (this->m_InitialTransformInPlace)
     {
@@ -948,7 +980,19 @@ void ImageRegistrationMethod::RemoveITKObserver( EventCommand &e )
 void ImageRegistrationMethod::OnActiveProcessDelete( ) throw()
 {
   Superclass::OnActiveProcessDelete( );
-  this->m_ActiveOptimizer = NULL;
+
+  // clean up all pointer functions here
+  this->m_pfGetOptimizerIteration = SITK_NULLPTR;
+  this->m_pfGetOptimizerPosition = SITK_NULLPTR;
+  this->m_pfGetOptimizerLearningRate = SITK_NULLPTR;
+  this->m_pfGetOptimizerConvergenceValue = SITK_NULLPTR;
+  this->m_pfGetMetricValue = SITK_NULLPTR;
+  this->m_pfGetOptimizerScales = SITK_NULLPTR;
+  this->m_pfGetOptimizerStopConditionDescription = SITK_NULLPTR;
+
+  this->m_pfGetCurrentLevel = SITK_NULLPTR;
+
+  this->m_ActiveOptimizer = SITK_NULLPTR;
 }
 
 
