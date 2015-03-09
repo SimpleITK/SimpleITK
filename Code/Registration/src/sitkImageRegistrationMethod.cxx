@@ -306,6 +306,15 @@ ImageRegistrationMethod::GetOptimizerWeights( ) const
   return this->m_OptimizerWeights;
 }
 
+ImageRegistrationMethod::Self&
+ImageRegistrationMethod::SetOptimizerAsExhaustive( double stepLength,
+                                                   const std::vector<unsigned int> &numberOfSteps )
+{
+  m_OptimizerType = Exhaustive;
+  m_OptimizerStepLength = stepLength;
+  m_OptimizerNumberOfSteps = numberOfSteps;
+  return *this;
+}
 
 ImageRegistrationMethod::Self&
 ImageRegistrationMethod::SetOptimizerScales( const std::vector<double> &scales)

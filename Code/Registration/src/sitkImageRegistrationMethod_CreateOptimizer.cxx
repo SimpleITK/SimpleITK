@@ -21,6 +21,7 @@
 #include "itkGradientDescentOptimizerv4.h"
 #include "itkRegularStepGradientDescentOptimizerv4.h"
 #include "itkLBFGSBOptimizerv4.h"
+#include "itkExhaustiveOptimizerv4.h"
 
 
 namespace {
@@ -44,7 +45,13 @@ namespace itk
 namespace simple
 {
 
-
+  template< typename TValue, typename TType>
+  itk::Array<TValue> sitkSTLVectorToITKArray( const std::vector< TType > & in )
+  {
+    itk::Array<TValue> out(in.size());
+    std::copy(in.begin(), in.end(), out.begin());
+    return out;
+  }
 
   itk::ObjectToObjectOptimizerBaseTemplate<double>*
   ImageRegistrationMethod::CreateOptimizer( unsigned int numberOfTransformParameters )
@@ -193,6 +200,21 @@ namespace simple
       this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer.GetPointer());
       this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer.GetPointer());
 
+      return optimizer.GetPointer();
+      }
+    else if ( m_OptimizerType == Exhaustive )
+      {
+      typedef itk::ExhaustiveOptimizerv4<double> _OptimizerType;
+      _OptimizerType::Pointer      optimizer     = _OptimizerType::New();
+
+      optimizer->SetStepLength( this->m_OptimizerStepLength );
+      optimizer->SetNumberOfSteps( sitkSTLVectorToITKArray<_OptimizerType::StepsType::ValueType>(this->m_OptimizerNumberOfSteps));
+
+      this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetCurrentValue,optimizer);
+      //this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer); // It will come to ITK
+      this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer);
+
+      optimizer->Register();
       return optimizer.GetPointer();
       }
     else

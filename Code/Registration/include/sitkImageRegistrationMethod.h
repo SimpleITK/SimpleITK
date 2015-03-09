@@ -195,6 +195,10 @@ namespace simple
                                double lowerBound = std::numeric_limits<double>::min(),
                                double upperBound = std::numeric_limits<double>::max());
 
+    Self& SetOptimizerAsExhaustive( double stepLength,
+                                    const std::vector<unsigned int> &numberOfSteps );
+
+
     /** \brief A per parameter weighting array for the optimizer.
      *
      * Allows setting of a per-local-parameter weighting array. If
@@ -382,7 +386,8 @@ namespace simple
                          RegularStepGradientDescent,
                          GradientDescent,
                          GradientDescentLineSearch,
-                         LBFGSB
+                         LBFGSB,
+                         Exhaustive
     };
     OptimizerType m_OptimizerType;
     double m_OptimizerLearningRate;
@@ -404,6 +409,8 @@ namespace simple
     double m_OptimizerCostFunctionConvergenceFactor;
     double m_OptimizerLowerBound;
     double m_OptimizerUpperBound;
+    std::vector<unsigned int> m_OptimizerNumberOfSteps;
+    double m_OptimizerStepLength;
 
     std::vector<double> m_OptimizerWeights;
 
