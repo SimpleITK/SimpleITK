@@ -30,16 +30,16 @@ namespace itk
       // The pixel IDs supported
       typedef AllPixelIDTypeList              PixelIDTypeList;
 
-      typedef void (Self::*MemberFunctionType)( unsigned int, unsigned int, unsigned int, unsigned int, unsigned int );
+      typedef void ( Self::*MemberFunctionType )( unsigned int, unsigned int, unsigned int, unsigned int, unsigned int );
 
-      typedef AllocateMemberFunctionAddressor<MemberFunctionType> AllocateAddressor;
+      typedef AllocateMemberFunctionAddressor< MemberFunctionType > AllocateAddressor;
 
-      detail::MemberFunctionFactory<MemberFunctionType> allocateMemberFactory(this);
+      detail::MemberFunctionFactory< MemberFunctionType > allocateMemberFactory( this );
       allocateMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 3, AllocateAddressor > ();
       allocateMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 2, AllocateAddressor > ();
 
 #ifdef SITK_4D_IMAGES
-        allocateMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 4, AllocateAddressor > ();
+      allocateMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 4, AllocateAddressor > ();
 #endif // #ifdef SITK_4D_IMAGES
 
       if ( ValueEnum == sitkUnknown )
@@ -47,19 +47,21 @@ namespace itk
         sitkExceptionMacro( "Unable to construct image of unsupported pixel type" );
         }
 
+      std::cout << "Length: " << Length << std::endl;
+
       if ( Depth == 0 )
         {
         allocateMemberFactory.GetMemberFunction( ValueEnum, 2 )( Width, Height, Depth, Length, numberOfComponents );
         }
 #ifdef SITK_4D_IMAGES
-      else if ( Length == 0)
+      else if ( Length == 0 )
         {
         allocateMemberFactory.GetMemberFunction( ValueEnum, 3 )( Width, Height, Depth, Length, numberOfComponents );
         }
       else
         {
         allocateMemberFactory.GetMemberFunction( ValueEnum, 4 )( Width, Height, Depth, Length, numberOfComponents );
-        }
+        } 
 #else
       else
         {

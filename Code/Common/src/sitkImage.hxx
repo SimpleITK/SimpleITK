@@ -91,13 +91,13 @@ namespace itk
 
     if ( TImageType::ImageDimension > 2 )
       {
-      assert(Depth != 0 );
+      assert( Depth != 0 );
       size[2] = Depth;
       }
 
     if ( TImageType::ImageDimension > 3 )
       {
-      assert(Length != 0 );
+      assert( Length != 0 );
       size[3] = Length;
       }
 
@@ -135,13 +135,13 @@ namespace itk
 
     if ( TImageType::ImageDimension > 2 )
       {
-      assert(Depth != 0 );
+      assert( Depth != 0 );
       size[2] = Depth;
       }
 
     if ( TImageType::ImageDimension > 3 )
       {
-      assert(Length != 0 );
+      assert( Length != 0 );
       size[3] = Length;
       }
 
@@ -184,13 +184,13 @@ namespace itk
 
     if ( TImageType::ImageDimension > 2 )
       {
-      assert(Depth != 0 );
+      assert( Depth != 0 );
       size[2] = Depth;
       }
 
     if ( TImageType::ImageDimension > 3 )
       {
-      assert(Length != 0 );
+      assert( Length != 0 );
       size[3] = Length;
       }
 
