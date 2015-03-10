@@ -790,6 +790,11 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
 
   if (this->m_InitialTransformInPlace)
     {
+    if (m_pfUpdateWithBestValue)
+      {
+      m_pfUpdateWithBestValue(this->m_InitialTransform.GetITKBase());
+      }
+
     return this->m_InitialTransform;
     }
   else
@@ -804,6 +809,12 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
     typename CompositeTransformType::Pointer comp = CompositeTransformType::New();
     comp->ClearTransformQueue();
     comp->AddTransform( itkOutTx );
+
+    if (m_pfUpdateWithBestValue)
+      {
+      m_pfUpdateWithBestValue(comp);
+      }
+
     return Transform(comp.GetPointer());
     }
 }
@@ -998,6 +1009,8 @@ void ImageRegistrationMethod::OnActiveProcessDelete( ) throw()
   this->m_pfGetMetricValue = SITK_NULLPTR;
   this->m_pfGetOptimizerScales = SITK_NULLPTR;
   this->m_pfGetOptimizerStopConditionDescription = SITK_NULLPTR;
+
+  this->m_pfUpdateWithBestValue = SITK_NULLPTR;
 
   this->m_pfGetCurrentLevel = SITK_NULLPTR;
 

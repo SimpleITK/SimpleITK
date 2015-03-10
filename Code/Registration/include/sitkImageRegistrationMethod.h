@@ -356,6 +356,7 @@ namespace simple
 
     nsstd::function<unsigned int()> m_pfGetCurrentLevel;
 
+    nsstd::function<void (itk::TransformBase *outTransform)> m_pfUpdateWithBestValue;
 
     template < class TMemberFunctionPointer >
       struct EvaluateMemberFunctionAddressor

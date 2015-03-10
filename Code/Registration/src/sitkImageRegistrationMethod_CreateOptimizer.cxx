@@ -26,6 +26,18 @@
 
 namespace {
 
+template <typename T>
+void UpdateWithBestValueExhaustive(itk::ExhaustiveOptimizerv4<T> *exhaustiveOptimizer,
+                                   double &outValue,
+                                   itk::TransformBase *outTransform)
+{
+  outValue = exhaustiveOptimizer->GetMinimumMetricValue();
+  if (outTransform)
+    {
+    outTransform->SetParameters(exhaustiveOptimizer->GetMinimumMetricValuePosition());
+    }
+}
+
 struct PositionOptimizerCustomCast
 {
   template <typename T>
@@ -213,6 +225,14 @@ namespace simple
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetCurrentValue,optimizer);
       //this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer); // It will come to ITK
       this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer);
+
+      this->m_pfGetOptimizerScales = nsstd::bind(&PositionOptimizerCustomCast::Helper<_OptimizerType::ScalesType>, nsstd::bind(&_OptimizerType::GetScales, optimizer.GetPointer()));
+
+      this->m_pfUpdateWithBestValue = nsstd::bind(&UpdateWithBestValueExhaustive<double>,
+                                                  optimizer,
+                                                  this->m_MetricValue,
+                                                  nsstd::placeholders::_1);
+
 
       optimizer->Register();
       return optimizer.GetPointer();
