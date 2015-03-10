@@ -195,8 +195,21 @@ namespace simple
                                double lowerBound = std::numeric_limits<double>::min(),
                                double upperBound = std::numeric_limits<double>::max());
 
-    Self& SetOptimizerAsExhaustive( double stepLength,
-                                    const std::vector<unsigned int> &numberOfSteps );
+    /** \brief Set the optimizer to sample the metric at regular steps.
+     *
+     * At each iteration the GetOptimizerIteration, can be used to
+     * index into the sampling grid along with the
+     * GetCurrentMetricValue.
+     *
+     * The resulting transform and value at the end of execution is
+     * the best location.
+     *
+     * The OptimizerScales can be used to perform anisotropic sampling.
+     *
+     * \note This optimizer is not suited to using at multiple scales.
+     */
+    Self& SetOptimizerAsExhaustive( const std::vector<unsigned int> &numberOfSteps,
+                                    double stepLength = 1.0 );
 
 
     /** \brief A per parameter weighting array for the optimizer.
