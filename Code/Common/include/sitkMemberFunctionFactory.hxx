@@ -109,7 +109,7 @@ void MemberFunctionFactory<TMemberFunctionPointer>
       {
 #ifdef SITK_4D_IMAGES
       case 4:
-        Superclass::m_PFunction3[ pixelID ] = Superclass::BindObject( pfunc, m_ObjectPointer );
+        Superclass::m_PFunction4[ pixelID ] = Superclass::BindObject( pfunc, m_ObjectPointer );
         break;
 #endif // #ifdef SITK_4D_IMAGES
       case 3:
