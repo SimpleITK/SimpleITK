@@ -17,6 +17,22 @@
 #
 #=========================================================================
 
+"""
+This script demonstrates the use of the Exhaustive optimizer in the
+ImageRegistrationMethod to estimate a good initial rotation position.
+
+Because gradient descent base optimization can get stuck in local
+minima, a good initial transform is critical for reasonable
+results. Search a reasonable space on a grid with brute force may be a
+reliable way to get a starting location for further optimization.
+
+The initial translation and center of rotation for the transform is
+initialized based on the first principle moments of the intensities of
+the image. Then in either 2D or 3D a Euler transform is used to
+exhaustively search a grid of the rotation space at a certain step
+size. The resulting transform is a reasonable guess where to start
+further registration.
+"""
 from __future__ import print_function
 
 
@@ -50,17 +66,19 @@ R.SetMetricAsMattesMutualInformation(numberOfHistogramBins = 50)
 sample_per_axis=12
 if fixed.GetDimension() == 2:
     tx = sitk.Euler2DTransform()
+    # Set the number of samples (radius) in each dimension, with a
+    # default step size of 1.0
     R.SetOptimizerAsExhaustive([sample_per_axis/2,0,0])
+    # Utilize the scale to set the step size for each dimension
     R.SetOptimizerScales([2.0*pi/sample_per_axis, 1.0,1.0])
 elif fixed.GetDimension() == 3:
     tx = sitk.Euler3DTransform()
-    ## ERROR Validate array size!
     R.SetOptimizerAsExhaustive([sample_per_axis/2,sample_per_axis/2,sample_per_axis/4,0,0,0])
     R.SetOptimizerScales([2.0*pi/sample_per_axis,2.0*pi/sample_per_axis,2.0*pi/sample_per_axis,1.0,1.0,1.0])
 
-
+# Initialize the transform with a translation and the center of
+# rotation from the moments of intensity.
 tx = sitk.CenteredTransformInitializer(fixed, moving, tx)
-print(tx)
 
 R.SetInitialTransform(tx)
 
