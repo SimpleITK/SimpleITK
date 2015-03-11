@@ -21,9 +21,22 @@
 #include "itkGradientDescentOptimizerv4.h"
 #include "itkRegularStepGradientDescentOptimizerv4.h"
 #include "itkLBFGSBOptimizerv4.h"
+#include "itkExhaustiveOptimizerv4.h"
 
 
 namespace {
+
+template <typename T>
+void UpdateWithBestValueExhaustive(itk::ExhaustiveOptimizerv4<T> *exhaustiveOptimizer,
+                                   double &outValue,
+                                   itk::TransformBase *outTransform)
+{
+  outValue = exhaustiveOptimizer->GetMinimumMetricValue();
+  if (outTransform)
+    {
+    outTransform->SetParameters(exhaustiveOptimizer->GetMinimumMetricValuePosition());
+    }
+}
 
 struct PositionOptimizerCustomCast
 {
@@ -44,7 +57,13 @@ namespace itk
 namespace simple
 {
 
-
+  template< typename TValue, typename TType>
+  itk::Array<TValue> sitkSTLVectorToITKArray( const std::vector< TType > & in )
+  {
+    itk::Array<TValue> out(in.size());
+    std::copy(in.begin(), in.end(), out.begin());
+    return out;
+  }
 
   itk::ObjectToObjectOptimizerBaseTemplate<double>*
   ImageRegistrationMethod::CreateOptimizer( unsigned int numberOfTransformParameters )
@@ -193,6 +212,29 @@ namespace simple
       this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer.GetPointer());
       this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer.GetPointer());
 
+      return optimizer.GetPointer();
+      }
+    else if ( m_OptimizerType == Exhaustive )
+      {
+      typedef itk::ExhaustiveOptimizerv4<double> _OptimizerType;
+      _OptimizerType::Pointer      optimizer     = _OptimizerType::New();
+
+      optimizer->SetStepLength( this->m_OptimizerStepLength );
+      optimizer->SetNumberOfSteps( sitkSTLVectorToITKArray<_OptimizerType::StepsType::ValueType>(this->m_OptimizerNumberOfSteps));
+
+      this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetCurrentValue,optimizer);
+      this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer);
+      this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer);
+
+      this->m_pfGetOptimizerScales = nsstd::bind(&PositionOptimizerCustomCast::Helper<_OptimizerType::ScalesType>, nsstd::bind(&_OptimizerType::GetScales, optimizer.GetPointer()));
+
+      this->m_pfUpdateWithBestValue = nsstd::bind(&UpdateWithBestValueExhaustive<double>,
+                                                  optimizer,
+                                                  this->m_MetricValue,
+                                                  nsstd::placeholders::_1);
+
+
+      optimizer->Register();
       return optimizer.GetPointer();
       }
     else

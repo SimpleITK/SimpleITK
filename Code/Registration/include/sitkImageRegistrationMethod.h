@@ -195,6 +195,23 @@ namespace simple
                                double lowerBound = std::numeric_limits<double>::min(),
                                double upperBound = std::numeric_limits<double>::max());
 
+    /** \brief Set the optimizer to sample the metric at regular steps.
+     *
+     * At each iteration the GetOptimizerIteration, can be used to
+     * index into the sampling grid along with the
+     * GetCurrentMetricValue.
+     *
+     * The resulting transform and value at the end of execution is
+     * the best location.
+     *
+     * The OptimizerScales can be used to perform anisotropic sampling.
+     *
+     * \note This optimizer is not suited to using at multiple scales.
+     */
+    Self& SetOptimizerAsExhaustive( const std::vector<unsigned int> &numberOfSteps,
+                                    double stepLength = 1.0 );
+
+
     /** \brief A per parameter weighting array for the optimizer.
      *
      * Allows setting of a per-local-parameter weighting array. If
@@ -352,6 +369,7 @@ namespace simple
 
     nsstd::function<unsigned int()> m_pfGetCurrentLevel;
 
+    nsstd::function<void (itk::TransformBase *outTransform)> m_pfUpdateWithBestValue;
 
     template < class TMemberFunctionPointer >
       struct EvaluateMemberFunctionAddressor
@@ -382,7 +400,8 @@ namespace simple
                          RegularStepGradientDescent,
                          GradientDescent,
                          GradientDescentLineSearch,
-                         LBFGSB
+                         LBFGSB,
+                         Exhaustive
     };
     OptimizerType m_OptimizerType;
     double m_OptimizerLearningRate;
@@ -404,6 +423,8 @@ namespace simple
     double m_OptimizerCostFunctionConvergenceFactor;
     double m_OptimizerLowerBound;
     double m_OptimizerUpperBound;
+    std::vector<unsigned int> m_OptimizerNumberOfSteps;
+    double m_OptimizerStepLength;
 
     std::vector<double> m_OptimizerWeights;
 
