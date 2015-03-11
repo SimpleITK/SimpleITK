@@ -33,6 +33,10 @@ set ( SimpleITKUnitTestSource
   itkSliceImageFilterTest.cxx
   )
 
+if ( SITK_4D_IMAGES )
+  list(APPEND SimpleITKUnitTestSource sitkImage4DTests.cxx )
+endif()
+
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/PythonTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/LuaTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/TclTests)
