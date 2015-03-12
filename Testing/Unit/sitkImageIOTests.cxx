@@ -402,3 +402,52 @@ TEST(IO, VectorImageSeriesWriter )
 
   EXPECT_EQ ( "1729319806705e94181c9b9f4bd5e0ac854935db", sitk::Hash( result ) );
 }
+
+#ifdef SITK_4D_IMAGES
+
+TEST( IO, Image4D )
+{
+  /* TODO: 
+   * - Use 4D image from data repository (i.e. not generated from library itself)
+   * - Extend HashImageFilter to 4D and use hash to compare read/write image
+   */
+
+  // Image
+  sitk::Image image = sitk::Image( 10, 11, 12, 13, sitk::sitkUInt8 );
+  sitk::Image imageRead;
+
+  EXPECT_EQ( 10u, image.GetWidth() );
+  EXPECT_EQ( 11u, image.GetHeight() );
+  EXPECT_EQ( 12u, image.GetDepth() );
+  EXPECT_EQ( 13u, image.GetLength() );
+  EXPECT_EQ( 1u, image.GetNumberOfComponentsPerPixel() );
+
+  sitk::ImageFileWriter imageWriter;
+  imageWriter.SetFileName( "image4d.nii" );
+  ASSERT_NO_THROW( imageWriter.Execute( image ) );
+
+  sitk::ImageFileReader imageReader;
+  imageReader.SetFileName( "image4d.nii" );
+  ASSERT_NO_THROW( imageRead = imageReader.Execute() );
+
+  // VectorImage
+  sitk::Image vectorImage = sitk::Image( 10, 11, 12, 13, sitk::sitkVectorUInt8 );
+  sitk::Image vectorImageRead;
+
+  EXPECT_EQ( 10u, vectorImage.GetWidth() );
+  EXPECT_EQ( 11u, vectorImage.GetHeight() );
+  EXPECT_EQ( 12u, vectorImage.GetDepth() );
+  EXPECT_EQ( 13u, vectorImage.GetLength() );
+  EXPECT_EQ( 4u, vectorImage.GetNumberOfComponentsPerPixel() );
+
+  sitk::ImageFileWriter vectorImageWriter;
+  vectorImageWriter.SetFileName( "image4d.nii" );
+  ASSERT_NO_THROW( vectorImageWriter.Execute( vectorImage ) );
+
+  sitk::ImageFileReader vectorImageReader;
+  vectorImageReader.SetFileName( "image4d.nii" );
+  ASSERT_NO_THROW( vectorImageRead = vectorImageReader.Execute() );
+
+}
+
+#endif // #ifdef SITK_4D_IMAGES
