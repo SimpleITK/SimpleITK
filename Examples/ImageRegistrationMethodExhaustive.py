@@ -33,7 +33,9 @@ exhaustively search a grid of the rotation space at a certain step
 size. The resulting transform is a reasonable guess where to start
 further registration.
 """
+
 from __future__ import print_function
+from __future__ import division
 
 
 import SimpleITK as sitk
@@ -68,12 +70,12 @@ if fixed.GetDimension() == 2:
     tx = sitk.Euler2DTransform()
     # Set the number of samples (radius) in each dimension, with a
     # default step size of 1.0
-    R.SetOptimizerAsExhaustive([sample_per_axis/2,0,0])
+    R.SetOptimizerAsExhaustive([sample_per_axis//2,0,0])
     # Utilize the scale to set the step size for each dimension
     R.SetOptimizerScales([2.0*pi/sample_per_axis, 1.0,1.0])
 elif fixed.GetDimension() == 3:
     tx = sitk.Euler3DTransform()
-    R.SetOptimizerAsExhaustive([sample_per_axis/2,sample_per_axis/2,sample_per_axis/4,0,0,0])
+    R.SetOptimizerAsExhaustive([sample_per_axis//2,sample_per_axis//2,sample_per_axis//4,0,0,0])
     R.SetOptimizerScales([2.0*pi/sample_per_axis,2.0*pi/sample_per_axis,2.0*pi/sample_per_axis,1.0,1.0,1.0])
 
 # Initialize the transform with a translation and the center of
