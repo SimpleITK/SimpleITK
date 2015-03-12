@@ -42,6 +42,11 @@ namespace itk {
 
       this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
       this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
+
+#ifdef SITK_4D_IMAGES
+      this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 4 > ();
+#endif // #ifdef SITK_4D_IMAGES
+
     }
 
     std::string ImageFileReader::ToString() const {
@@ -80,7 +85,11 @@ namespace itk {
         this->GetPixelIDFromImageIO( this->m_FileName, unused, dimension );
         }
 
+#ifdef SITK_4D_IMAGES
+      if ( dimension != 2 && dimension != 3  && dimension != 4 )
+#else
       if ( dimension != 2 && dimension != 3 )
+#endif
         {
         sitkExceptionMacro( "The file in the series have unsupported " << dimension - 1 << " dimensions." );
         }
