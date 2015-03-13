@@ -419,7 +419,7 @@ TEST( IO, Image4D )
   EXPECT_EQ( 10u, image.GetWidth() );
   EXPECT_EQ( 11u, image.GetHeight() );
   EXPECT_EQ( 12u, image.GetDepth() );
-  EXPECT_EQ( 13u, image.GetLength() );
+  EXPECT_EQ( 13u, image.GetSize()[3] );
   EXPECT_EQ( 1u, image.GetNumberOfComponentsPerPixel() );
 
   sitk::ImageFileWriter imageWriter;
@@ -437,7 +437,7 @@ TEST( IO, Image4D )
   EXPECT_EQ( 10u, vectorImage.GetWidth() );
   EXPECT_EQ( 11u, vectorImage.GetHeight() );
   EXPECT_EQ( 12u, vectorImage.GetDepth() );
-  EXPECT_EQ( 13u, vectorImage.GetLength() );
+  EXPECT_EQ( 13u, vectorImage.GetSize()[3] );
   EXPECT_EQ( 4u, vectorImage.GetNumberOfComponentsPerPixel() );
 
   sitk::ImageFileWriter vectorImageWriter;

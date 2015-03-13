@@ -22,7 +22,7 @@ namespace itk
 {
   namespace simple
   {
-    void Image::Allocate ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int Length, PixelIDValueEnum ValueEnum, unsigned int numberOfComponents )
+    void Image::Allocate ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int dim4, PixelIDValueEnum ValueEnum, unsigned int numberOfComponents )
     {
       // initialize member function factory for allocating images
 
@@ -34,39 +34,27 @@ namespace itk
       typedef AllocateMemberFunctionAddressor< MemberFunctionType > AllocateAddressor;
 
       detail::MemberFunctionFactory< MemberFunctionType > allocateMemberFactory( this );
-      allocateMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 3, AllocateAddressor > ();
       allocateMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 2, AllocateAddressor > ();
-
-#ifdef SITK_4D_IMAGES
+      allocateMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 3, AllocateAddressor > ();
       allocateMemberFactory.RegisterMemberFunctions< PixelIDTypeList, 4, AllocateAddressor > ();
-#endif // #ifdef SITK_4D_IMAGES
 
       if ( ValueEnum == sitkUnknown )
         {
         sitkExceptionMacro( "Unable to construct image of unsupported pixel type" );
         }
 
-      std::cout << "Length: " << Length << std::endl;
-
       if ( Depth == 0 )
         {
-        allocateMemberFactory.GetMemberFunction( ValueEnum, 2 )( Width, Height, Depth, Length, numberOfComponents );
+        allocateMemberFactory.GetMemberFunction( ValueEnum, 2 )( Width, Height, Depth, dim4, numberOfComponents );
         }
-#ifdef SITK_4D_IMAGES
-      else if ( Length == 0 )
+      else if ( dim4 == 0 )
         {
-        allocateMemberFactory.GetMemberFunction( ValueEnum, 3 )( Width, Height, Depth, Length, numberOfComponents );
+        allocateMemberFactory.GetMemberFunction( ValueEnum, 3 )( Width, Height, Depth, dim4, numberOfComponents );
         }
       else
         {
-        allocateMemberFactory.GetMemberFunction( ValueEnum, 4 )( Width, Height, Depth, Length, numberOfComponents );
+        allocateMemberFactory.GetMemberFunction( ValueEnum, 4 )( Width, Height, Depth, dim4, numberOfComponents );
         } 
-#else
-      else
-        {
-        allocateMemberFactory.GetMemberFunction( ValueEnum, 3 )( Width, Height, Depth, Length, numberOfComponents );
-        }
-#endif // #ifdef SITK_4D_IMAGES
     }
   }
 }

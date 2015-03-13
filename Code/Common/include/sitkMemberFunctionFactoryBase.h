@@ -86,11 +86,9 @@ protected:
 
   MemberFunctionFactoryBase( void )
 #if defined SITK_HAS_UNORDERED_MAP
-    :  m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
+    :  m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
+       m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction2( typelist::Length<InstantiatedPixelIDTypeList>::Result )
-#ifdef SITK_4D_IMAGES
-       , m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result )
-#endif // #ifdef SITK_4D_IMAGES
 #endif
     { }
 
@@ -120,15 +118,11 @@ protected:
 
   // maps of Keys to pointers to member functions
 #if defined SITK_HAS_UNORDERED_MAP
-#ifdef SITK_4D_IMAGES
   nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction4;
-#endif // #ifdef SITK_4D_IMAGES
   nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
   nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
 #else
-#ifdef SITK_4D_IMAGES
   std::map<TKey, FunctionObjectType> m_PFunction4;
-#endif // #ifdef SITK_4D_IMAGES
   std::map<TKey, FunctionObjectType> m_PFunction3;
   std::map<TKey, FunctionObjectType> m_PFunction2;
 #endif
@@ -156,11 +150,9 @@ protected:
 
   MemberFunctionFactoryBase( void )
 #if defined SITK_HAS_UNORDERED_MAP
-    :  m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
+    :  m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
+       m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction2( typelist::Length<InstantiatedPixelIDTypeList>::Result )
-#ifdef SITK_4D_IMAGES
-       , m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result )
-#endif // #ifdef SITK_4D_IMAGES
 #endif
     { }
 
@@ -193,15 +185,11 @@ protected:
 
   // maps of Keys to pointers to member functions
 #if defined SITK_HAS_UNORDERED_MAP
-#ifdef SITK_4D_IMAGES
   nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction4;
-#endif // #ifdef SITK_4D_IMAGES
   nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
   nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
 #else
-#ifdef SITK_4D_IMAGES
   std::map<TKey, FunctionObjectType> m_PFunction4;
-#endif // #ifdef SITK_4D_IMAGES
   std::map<TKey, FunctionObjectType> m_PFunction3;
   std::map<TKey, FunctionObjectType> m_PFunction2;
 #endif
@@ -225,11 +213,9 @@ protected:
 
   MemberFunctionFactoryBase( void )
 #if defined SITK_HAS_UNORDERED_MAP
-    :  m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
+    :  m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
+       m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction2( typelist::Length<InstantiatedPixelIDTypeList>::Result )
-#ifdef SITK_4D_IMAGES
-       , m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result )
-#endif // #ifdef SITK_4D_IMAGES
 #endif
     { }
 
@@ -263,15 +249,11 @@ protected:
 
   // maps of Keys to pointers to member functions
 #if defined SITK_HAS_UNORDERED_MAP
-#ifdef SITK_4D_IMAGES
   nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction4;
-#endif // #ifdef SITK_4D_IMAGES
   nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
   nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
 #else
-#ifdef SITK_4D_IMAGES
   std::map<TKey, FunctionObjectType> m_PFunction4;
-#endif // #ifdef SITK_4D_IMAGES
   std::map<TKey, FunctionObjectType> m_PFunction3;
   std::map<TKey, FunctionObjectType> m_PFunction2;
 #endif
@@ -296,11 +278,9 @@ protected:
 
   MemberFunctionFactoryBase( void )
 #if defined SITK_HAS_UNORDERED_MAP
-    :  m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
+    :  m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
+       m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction2( typelist::Length<InstantiatedPixelIDTypeList>::Result )
-#ifdef SITK_4D_IMAGES
-       , m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result )
-#endif // #ifdef SITK_4D_IMAGES
 #endif
     { }
 
@@ -333,15 +313,11 @@ protected:
 
   // maps of Keys to pointers to member functions
 #if defined SITK_HAS_UNORDERED_MAP
-#ifdef SITK_4D_IMAGES
   nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction4;
-#endif // #ifdef SITK_4D_IMAGES
   nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
   nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
 #else
-#ifdef SITK_4D_IMAGES
   std::map<TKey, FunctionObjectType> m_PFunction4;
-#endif // #ifdef SITK_4D_IMAGES
   std::map<TKey, FunctionObjectType> m_PFunction3;
   std::map<TKey, FunctionObjectType> m_PFunction2;
 #endif
@@ -366,11 +342,9 @@ protected:
 
   MemberFunctionFactoryBase( void )
 #if defined SITK_HAS_UNORDERED_MAP
-    :  m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
+    :  m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
+       m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction2( typelist::Length<InstantiatedPixelIDTypeList>::Result )
-#ifdef SITK_4D_IMAGES
-       , m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result )
-#endif // #ifdef SITK_4D_IMAGES
 #endif
     { }
 
@@ -403,15 +377,11 @@ protected:
 
   // maps of Keys to pointers to member functions
 #if defined SITK_HAS_UNORDERED_MAP
-#ifdef SITK_4D_IMAGES
   nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction4;
-#endif // #ifdef SITK_4D_IMAGES
   nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
   nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
 #else
-#ifdef SITK_4D_IMAGES
   std::map<TKey, FunctionObjectType> m_PFunction4;
-#endif // #ifdef SITK_4D_IMAGES
   std::map<TKey, FunctionObjectType> m_PFunction3;
   std::map<TKey, FunctionObjectType> m_PFunction2;
 #endif
@@ -436,11 +406,9 @@ protected:
 
   MemberFunctionFactoryBase( void )
 #if defined SITK_HAS_UNORDERED_MAP
-    :  m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
+    :  m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
+       m_PFunction3( typelist::Length<InstantiatedPixelIDTypeList>::Result ),
        m_PFunction2( typelist::Length<InstantiatedPixelIDTypeList>::Result )
-#ifdef SITK_4D_IMAGES
-       , m_PFunction4( typelist::Length<InstantiatedPixelIDTypeList>::Result )
-#endif // #ifdef SITK_4D_IMAGES
 #endif
     { }
 
@@ -473,15 +441,11 @@ protected:
 
   // maps of Keys to pointers to member functions
 #if defined SITK_HAS_UNORDERED_MAP
-#ifdef SITK_4D_IMAGES
   nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction4;
-#endif // #ifdef SITK_4D_IMAGES
   nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction3;
   nsstd::unordered_map< TKey, FunctionObjectType, hash<TKey> > m_PFunction2;
 #else
-#ifdef SITK_4D_IMAGES
   std::map<TKey, FunctionObjectType> m_PFunction4;
-#endif // #ifdef SITK_4D_IMAGES
   std::map<TKey, FunctionObjectType> m_PFunction3;
   std::map<TKey, FunctionObjectType> m_PFunction2;
 #endif

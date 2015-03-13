@@ -72,7 +72,7 @@ namespace itk
 
   template<class TImageType>
   typename EnableIf<IsBasic<TImageType>::Value>::Type
-  Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int Length, unsigned int numberOfComponents )
+  Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int dim4, unsigned int numberOfComponents )
   {
     if ( numberOfComponents != 1  && numberOfComponents != 0 )
       {
@@ -97,8 +97,8 @@ namespace itk
 
     if ( TImageType::ImageDimension > 3 )
       {
-      assert( Length != 0 );
-      size[3] = Length;
+      assert(  dim4 != 0 );
+      size[3] =  dim4;
       }
 
     region.SetSize ( size );
@@ -116,7 +116,7 @@ namespace itk
 
   template<class TImageType>
   typename EnableIf<IsVector<TImageType>::Value>::Type
-  Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int Length, unsigned int numberOfComponents )
+  Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int dim4, unsigned int numberOfComponents )
   {
     if ( numberOfComponents == 0 )
       {
@@ -141,8 +141,8 @@ namespace itk
 
     if ( TImageType::ImageDimension > 3 )
       {
-      assert( Length != 0 );
-      size[3] = Length;
+      assert(  dim4 != 0 );
+      size[3] =  dim4;
       }
 
     region.SetSize ( size );
@@ -165,7 +165,7 @@ namespace itk
 
   template<class TImageType>
   typename EnableIf<IsLabel<TImageType>::Value>::Type
-  Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int Length, unsigned int numberOfComponents )
+  Image::AllocateInternal ( unsigned int Width, unsigned int Height, unsigned int Depth, unsigned int dim4, unsigned int numberOfComponents )
   {
     if ( numberOfComponents != 1 && numberOfComponents != 0 )
       {
@@ -190,8 +190,8 @@ namespace itk
 
     if ( TImageType::ImageDimension > 3 )
       {
-      assert( Length != 0 );
-      size[3] = Length;
+      assert(  dim4 != 0 );
+      size[3] =  dim4;
       }
 
     region.SetSize ( size );

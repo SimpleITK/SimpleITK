@@ -56,10 +56,6 @@ namespace itk
     virtual unsigned int GetHeight( void ) const { return this->GetSize( 1 ); }
     virtual unsigned int GetDepth( void ) const { return this->GetSize( 2 ); }
 
-#ifdef SITK_4D_IMAGES
-    virtual unsigned int GetLength( void ) const { return this->GetSize( 3 ); }
-#endif // #ifdef SITK_4D_IMAGES
-
     virtual std::vector< unsigned int > GetSize( void ) const = 0;
     virtual unsigned int GetSize( unsigned int dimension ) const = 0;
 

@@ -128,19 +128,7 @@ TEST_F(Image4D,Create) {
   EXPECT_EQ ( shortImage->GetWidth(), itkShortImage->GetLargestPossibleRegion().GetSize()[0] ) << " Checking image width";
   EXPECT_EQ ( shortImage->GetHeight(), itkShortImage->GetLargestPossibleRegion().GetSize()[1] ) << " Checking image height";
   EXPECT_EQ ( shortImage->GetDepth(), itkShortImage->GetLargestPossibleRegion().GetSize()[2] ) << " Checking image depth";
-  EXPECT_EQ ( shortImage->GetLength(), itkShortImage->GetLargestPossibleRegion().GetSize()[3] ) << " Checking image depth";
-
-  EXPECT_EQ ( shortImage->GetSize()[0], shortImage->GetWidth() );
-  EXPECT_EQ ( shortImage->GetSize()[1], shortImage->GetHeight() );
-  EXPECT_EQ ( shortImage->GetSize()[2], shortImage->GetDepth() );
-  EXPECT_EQ ( shortImage->GetSize()[3], shortImage->GetLength() );
-
-  std::vector< unsigned int > size = shortImage->GetSize();
-
-  EXPECT_EQ ( size[0], shortImage->GetWidth() );
-  EXPECT_EQ ( size[1], shortImage->GetHeight() );
-  EXPECT_EQ ( size[2], shortImage->GetDepth() );
-  EXPECT_EQ ( size[3], shortImage->GetLength() );
+  EXPECT_EQ ( shortImage->GetSize()[3], itkShortImage->GetLargestPossibleRegion().GetSize()[3] ) << " Checking dim4";
 
 }
 
@@ -206,7 +194,7 @@ TEST_F(Image4D,Constructors) {
   EXPECT_EQ ( 0u, image.GetWidth() );
   EXPECT_EQ ( 0u, image.GetHeight() );
   EXPECT_EQ ( 0u, image.GetDepth() );
-  EXPECT_EQ ( 0u, image.GetLength() );
+  EXPECT_EQ ( 0u, image.GetSize()[3] );
   }
 
   itk::simple::Image image ( 64, 65, 66, 67, itk::simple::sitkUInt8 );
@@ -218,7 +206,7 @@ TEST_F(Image4D,Constructors) {
   EXPECT_EQ ( 64u, image.GetWidth() );
   EXPECT_EQ ( 65u, image.GetHeight() );
   EXPECT_EQ ( 66u, image.GetDepth() );
-  EXPECT_EQ ( 67u, image.GetLength() );
+  EXPECT_EQ ( 67u, image.GetSize()[3]  );
   EXPECT_EQ( image.GetDirection(), directionI4D );
 
   image = itk::simple::Image ( 64, 65, 66, 67, itk::simple::sitkInt16 );
@@ -230,7 +218,7 @@ TEST_F(Image4D,Constructors) {
   EXPECT_EQ ( 64u, image.GetWidth() );
   EXPECT_EQ ( 65u, image.GetHeight() );
   EXPECT_EQ ( 66u, image.GetDepth() );
-  EXPECT_EQ ( 67u, image.GetLength() );
+  EXPECT_EQ ( 67u, image.GetSize()[3] );
   EXPECT_EQ( image.GetDirection(), directionI4D );
 
   // Test the constructors for vector images
@@ -273,7 +261,7 @@ TEST_F(Image4D,Constructors) {
   EXPECT_EQ ( 64u, image.GetWidth() );
   EXPECT_EQ ( 65u, image.GetHeight() );
   EXPECT_EQ ( 66u, image.GetDepth() );
-  EXPECT_EQ ( 67u, image.GetLength() );
+  EXPECT_EQ ( 67u, image.GetSize()[3] );
   EXPECT_EQ ( 1u, image.GetNumberOfComponentsPerPixel() );
   EXPECT_EQ( image.GetDirection(), directionI4D );
 
@@ -286,7 +274,7 @@ TEST_F(Image4D,Constructors) {
   EXPECT_EQ ( 64u, image.GetWidth() );
   EXPECT_EQ ( 65u, image.GetHeight() );
   EXPECT_EQ ( 66u, image.GetDepth() );
-  EXPECT_EQ ( 67u, image.GetLength() );
+  EXPECT_EQ ( 67u, image.GetSize()[3] );
   EXPECT_EQ ( 4u, image.GetNumberOfComponentsPerPixel() );
 
   image = itk::simple::Image ( 64, 65, 66, 67, itk::simple::sitkVectorUInt16 );

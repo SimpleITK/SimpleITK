@@ -66,7 +66,7 @@ namespace simple
     Image( const Image &img );
     Image& operator=( const Image &img );
 
-    /** \brief Constructors for 2D, 3D images where pixel type and
+    /** \brief Constructors for 2D, 3D and 4D images where pixel type and
      * number of components can be specified.
      *
      * If the pixel type is a scalar or a label pixel type, then the
@@ -78,33 +78,14 @@ namespace simple
      *
      * Unlike the standard convention for Dimensional Vectors the size
      * parameter must be the exact dimension requesting. That is it must be of
-     * length 2 of a 2D image and of length 3 for a 3D image.
+     * length 2 of a 2D image, 3 for a 3D image and 4 four a 4D image.
      * @{
      */
     Image( unsigned int width, unsigned int height, PixelIDValueEnum valueEnum  );
     Image( unsigned int width, unsigned int height, unsigned int depth, PixelIDValueEnum valueEnum );
+    Image( unsigned int width, unsigned int height, unsigned int depth, unsigned int dim4, PixelIDValueEnum valueEnum );
     Image( const std::vector< unsigned int > &size, PixelIDValueEnum valueEnum, unsigned int numberOfComponents = 0 );
     /**@}*/
-
-#ifdef SITK_4D_IMAGES
-    /** \brief Constructor for 4D images where pixel type can be specified.
-     *
-     * If the pixel type is a scalar or a label pixel type, then the
-     * number of components must be specified as 0 or 1.
-     *
-     * If the pixel type is a vector pixel type, then the number of
-     * components defaults to 4 (the image dimension), unless the
-     * numberOfComponents is explicitly specified.
-     *
-     * Unlike the standard convention for Dimensional Vectors the size
-     * parameter must be the exact dimension requesting. That is it must be of
-     * length 4 for a 4D image.
-     * @{
-     */
-    Image( unsigned int width, unsigned int height, unsigned int depth, unsigned int length, PixelIDValueEnum valueEnum );
-    /**@}*/
-#endif // #ifdef SITK_4D_IMAGES
-
 
     /** \brief Construct an SimpleITK Image from an pointer to an ITK
      * image
