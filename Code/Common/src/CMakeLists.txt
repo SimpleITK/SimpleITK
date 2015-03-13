@@ -33,6 +33,9 @@ include(${ITK_USE_FILE})
 
 add_library ( SimpleITKCommon ${SimpleITKCommonSource} ${SimpleITKAncillarySource} )
 target_link_libraries ( SimpleITKCommon ${ITK_LIBRARIES} )
+if (SITK_EXPLICIT_INSTANTIATION)
+  target_link_libraries ( SimpleITKCommon SimpleITKExplicit )
+endif()
 set_target_properties( SimpleITKCommon PROPERTIES SKIP_BUILD_RPATH TRUE )
 
 sitk_install_exported_target( SimpleITKCommon )
