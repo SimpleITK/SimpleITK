@@ -86,36 +86,15 @@ if( NOT ITK_USE_REVIEW )
 #  message(FATAL_ERROR "Please reconfigure ITK by turning ITK_USE_REVIEW ON")
 endif()
 
-# Setup build locations.
-if(NOT CMAKE_RUNTIME_OUTPUT_DIRECTORY)
-  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
-endif()
-if(NOT CMAKE_LIBRARY_OUTPUT_DIRECTORY)
-  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)
-endif()
-if(NOT CMAKE_ARCHIVE_OUTPUT_DIRECTORY)
-  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)
-endif()
-
-set ( SimpleITK_INCLUDE_DIRS
-      ${CMAKE_SOURCE_DIR}/Code/Common/include
-      ${CMAKE_SOURCE_DIR}/Code/Registration/include
-      ${CMAKE_SOURCE_DIR}/Code/BasicFilters/include
-      ${CMAKE_SOURCE_DIR}/Code/IO/include
-      ${CMAKE_BINARY_DIR}/Code/BasicFilters/include
-      ${CMAKE_BINARY_DIR}/Code/Common/include
-
-      )
-
-set ( SimpleITK_LIBRARIES SimpleITKCommon SimpleITKIO SimpleITKRegistration CACHE INTERNAL "" )
-
-# Be sure to clear these each time
-set ( GENERATED_TEST_LIST "" CACHE INTERNAL "" )
-set ( GENERATED_FILTER_LIST "" CACHE INTERNAL "" )
-set ( GENERATED_TEST_SOURCE_LIST "" CACHE INTERNAL "" )
 
 #----------------------------------------------------------
 # Place all options to go into sitkConfigure.h here
+option(BUILD_SHARED_LIBS "Build SimpleITK ITK with shared libraries. This does not effect wrapped languages." OFF)
+set(SITK_BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS})
+
+option(SITK_EXPLICIT_INSTANTIATION "Enable ITK library of explicitly instantiated template." ON)
+
+
 
 set( SITK_INT64_PIXELIDS_DEFAULT ON )
 if( MSVC )
@@ -137,10 +116,39 @@ option ( SITK_EXPRESS_INSTANTIATEDPIXELS "Instantiate very few pixel types ( for
 mark_as_advanced ( SITK_EXPRESS_INSTANTIATEDPIXELS )
 
 
-#-----------------------------------------------------------------------------
-# SimpleITK build configuration options.
-option(BUILD_SHARED_LIBS "Build SimpleITK ITK with shared libraries. This does not effect wrapped languages." OFF)
-set(SITK_BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS})
+# Setup build locations.
+if(NOT CMAKE_RUNTIME_OUTPUT_DIRECTORY)
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
+endif()
+if(NOT CMAKE_LIBRARY_OUTPUT_DIRECTORY)
+  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)
+endif()
+if(NOT CMAKE_ARCHIVE_OUTPUT_DIRECTORY)
+  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)
+endif()
+
+set ( SimpleITK_INCLUDE_DIRS
+      ${CMAKE_SOURCE_DIR}/Code/Common/include
+      ${CMAKE_SOURCE_DIR}/Code/Registration/include
+      ${CMAKE_SOURCE_DIR}/Code/BasicFilters/include
+      ${CMAKE_SOURCE_DIR}/Code/IO/include
+      ${CMAKE_BINARY_DIR}/Code/BasicFilters/include
+      ${CMAKE_BINARY_DIR}/Code/Common/include
+      )
+
+set ( SimpleITK_LIBRARIES SimpleITKCommon SimpleITKIO SimpleITKRegistration )
+
+if (SITK_EXPLICIT_INSTANTIATION)
+  list ( APPEND SimpleITK_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/Code/Explicit/include )
+  list ( APPEND SimpleITK_LIBRARIES  SimpleITKExplicit )
+endif()
+
+set( SimpleITK_LIBRARIES ${SimpleITK_LIBRARIES}  CACHE INTERNAL "" )
+
+# Be sure to clear these each time
+set ( GENERATED_TEST_LIST "" CACHE INTERNAL "" )
+set ( GENERATED_FILTER_LIST "" CACHE INTERNAL "" )
+set ( GENERATED_TEST_SOURCE_LIST "" CACHE INTERNAL "" )
 
 
 
