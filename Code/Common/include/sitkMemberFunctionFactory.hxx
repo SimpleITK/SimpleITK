@@ -185,8 +185,9 @@ MemberFunctionFactory<TMemberFunctionPointer>
 
       sitkExceptionMacro ( << "Pixel type: "
                            << GetPixelIDValueAsString(pixelID)
-                           << " is not supported in 4D by or SimpleITK compiled with SITK_4D_IMAGES set to OFF."
-                           << typeid(ObjectType).name() );
+                           << " is not supported in 4D by " 
+                           << typeid(ObjectType).name()
+                           << " or SimpleITK compiled with SITK_4D_IMAGES set to OFF." );
     case 3:
       // check if tr1::function has been set
       if ( Superclass::m_PFunction3.find( pixelID ) != Superclass::m_PFunction3.end() )
