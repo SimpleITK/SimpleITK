@@ -91,13 +91,8 @@ void MemberFunctionFactory<TMemberFunctionPointer>
   // this shouldn't occour, just may be useful for debugging
   assert( pixelID >= 0 && pixelID < typelist::Length< InstantiatedPixelIDTypeList >::Result );
   
-#ifdef SITK_4D_IMAGES
   sitkStaticAssert( TImageType::ImageDimension == 2 || TImageType::ImageDimension == 3 || TImageType::ImageDimension == 4,
                     "Image Dimension out of range" );
-#else
-  sitkStaticAssert( TImageType::ImageDimension == 2 || TImageType::ImageDimension == 3,
-                    "Image Dimension out of range" );
-#endif // #ifdef SITK_4D_IMAGES
 
   sitkStaticAssert( IsInstantiated<TImageType>::Value,
                     "invalid pixel type");
@@ -190,7 +185,7 @@ MemberFunctionFactory<TMemberFunctionPointer>
 
       sitkExceptionMacro ( << "Pixel type: "
                            << GetPixelIDValueAsString(pixelID)
-                           << " is not supported in 4D by or SimpleITK compiled without 4D support."
+                           << " is not supported in 4D by or SimpleITK compiled with SITK_4D_IMAGES set to OFF."
                            << typeid(ObjectType).name() );
     case 3:
       // check if tr1::function has been set
