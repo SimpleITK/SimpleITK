@@ -38,13 +38,10 @@ ImageFileWriter::ImageFileWriter()
 
   this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
+  this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 4 > ();
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
-
-#ifdef SITK_4D_IMAGES
-  this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 4 > ();
-#endif // #ifdef SITK_4D_IMAGES
-      
+  
   }
 
 
