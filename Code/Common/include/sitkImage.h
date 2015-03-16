@@ -193,10 +193,6 @@ namespace simple
     unsigned int GetWidth( void ) const;
     unsigned int GetDepth( void ) const;
 
-#ifdef SITK_4D_IMAGES
-    unsigned int GetLength( void ) const;
-#endif // #ifdef SITK_4D_IMAGES
-
     /** \brief Copy common meta-data from an image to this one.
      *
      * Copies the Origin, Spacing, and Direction from the source image
