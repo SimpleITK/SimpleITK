@@ -97,17 +97,17 @@ extern template class SITKExplicit_EXPORT_EXPLICIT itk::DefaultPixelAccessor<uns
 extern template class SITKExplicit_EXPORT_EXPLICIT itk::DefaultPixelAccessor<bool>;
 extern template class SITKExplicit_EXPORT_EXPLICIT itk::DefaultPixelAccessor<itk::Vector<double, 2u> >;
 
-extern template class itk::DefaultVectorPixelAccessor<int>;
-extern template class itk::DefaultVectorPixelAccessor<signed char>;
-extern template class itk::DefaultVectorPixelAccessor<unsigned char>;
-extern template class itk::DefaultVectorPixelAccessor<unsigned long>;
-extern template class itk::DefaultVectorPixelAccessor<unsigned long long>;
-extern template class itk::DefaultVectorPixelAccessor<float>;
-extern template class itk::DefaultVectorPixelAccessor<unsigned short>;
-extern template class itk::DefaultVectorPixelAccessor<unsigned int>;
-extern template class itk::DefaultVectorPixelAccessor<short>;
-extern template class itk::DefaultVectorPixelAccessor<long long>;
-extern template class itk::DefaultVectorPixelAccessor<double>;
+extern template class SITKExplicit_EXPORT_EXPLICIT itk::DefaultVectorPixelAccessor<int>;
+extern template class SITKExplicit_EXPORT_EXPLICIT itk::DefaultVectorPixelAccessor<signed char>;
+extern template class SITKExplicit_EXPORT_EXPLICIT itk::DefaultVectorPixelAccessor<unsigned char>;
+extern template class SITKExplicit_EXPORT_EXPLICIT itk::DefaultVectorPixelAccessor<unsigned long>;
+extern template class SITKExplicit_EXPORT_EXPLICIT itk::DefaultVectorPixelAccessor<unsigned long long>;
+extern template class SITKExplicit_EXPORT_EXPLICIT itk::DefaultVectorPixelAccessor<float>;
+extern template class SITKExplicit_EXPORT_EXPLICIT itk::DefaultVectorPixelAccessor<unsigned short>;
+extern template class SITKExplicit_EXPORT_EXPLICIT itk::DefaultVectorPixelAccessor<unsigned int>;
+extern template class SITKExplicit_EXPORT_EXPLICIT itk::DefaultVectorPixelAccessor<short>;
+extern template class SITKExplicit_EXPORT_EXPLICIT itk::DefaultVectorPixelAccessor<long long>;
+extern template class SITKExplicit_EXPORT_EXPLICIT itk::DefaultVectorPixelAccessor<double>;
 
 extern template class SITKExplicit_EXPORT_EXPLICIT itk::Image<float, 3u>;
 extern template class SITKExplicit_EXPORT_EXPLICIT itk::Image<itk::Vector<double, 3u>, 3u>;

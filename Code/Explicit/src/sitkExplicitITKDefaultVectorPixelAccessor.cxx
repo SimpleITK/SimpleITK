@@ -18,15 +18,15 @@
 #define  SITK_TEMPLATE_EXPLICIT_EXPLICITITK
 #include "sitkExplicitITK.h"
 
-template class itk::DefaultVectorPixelAccessor<int>; //Instantiated 75 times
-template class itk::DefaultVectorPixelAccessor<signed char>; //Instantiated 75 times
-template class itk::DefaultVectorPixelAccessor<unsigned char>; //Instantiated 76 times
-template class itk::DefaultVectorPixelAccessor<unsigned long>; //Instantiated 74 times
-template class itk::DefaultVectorPixelAccessor<unsigned long long>; //Instantiated 74 times
-template class itk::DefaultVectorPixelAccessor<float>; //Instantiated 78 times
-template class itk::DefaultVectorPixelAccessor<unsigned short>; //Instantiated 74 times
-template class itk::DefaultVectorPixelAccessor<unsigned int>; //Instantiated 74 times
-template class itk::DefaultVectorPixelAccessor<short>; //Instantiated 75 times
-template class itk::DefaultVectorPixelAccessor<long>; //Instantiated 74 times
-template class itk::DefaultVectorPixelAccessor<long long>; //Instantiated 74 times
-template class itk::DefaultVectorPixelAccessor<double>; //Instantiated 77 times
+template class SITKExplicit_EXPORT itk::DefaultVectorPixelAccessor<int>; //Instantiated 75 times
+template class SITKExplicit_EXPORT itk::DefaultVectorPixelAccessor<signed char>; //Instantiated 75 times
+template class SITKExplicit_EXPORT itk::DefaultVectorPixelAccessor<unsigned char>; //Instantiated 76 times
+template class SITKExplicit_EXPORT itk::DefaultVectorPixelAccessor<unsigned long>; //Instantiated 74 times
+template class SITKExplicit_EXPORT itk::DefaultVectorPixelAccessor<unsigned long long>; //Instantiated 74 times
+template class SITKExplicit_EXPORT itk::DefaultVectorPixelAccessor<float>; //Instantiated 78 times
+template class SITKExplicit_EXPORT itk::DefaultVectorPixelAccessor<unsigned short>; //Instantiated 74 times
+template class SITKExplicit_EXPORT itk::DefaultVectorPixelAccessor<unsigned int>; //Instantiated 74 times
+template class SITKExplicit_EXPORT itk::DefaultVectorPixelAccessor<short>; //Instantiated 75 times
+template class SITKExplicit_EXPORT itk::DefaultVectorPixelAccessor<long>; //Instantiated 74 times
+template class SITKExplicit_EXPORT itk::DefaultVectorPixelAccessor<long long>; //Instantiated 74 times
+template class SITKExplicit_EXPORT itk::DefaultVectorPixelAccessor<double>; //Instantiated 77 times
