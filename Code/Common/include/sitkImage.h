@@ -23,7 +23,7 @@
 #include "sitkDetail.h"
 #include "sitkPixelIDTokens.h"
 #include "sitkEnableIf.h"
-
+#include "sitkConfigure.h"
 
 #include "nsstd/type_traits.h"
 
@@ -66,7 +66,7 @@ namespace simple
     Image( const Image &img );
     Image& operator=( const Image &img );
 
-    /** \brief Constructors for 2D, 3D images where pixel type and
+    /** \brief Constructors for 2D, 3D and 4D images where pixel type and
      * number of components can be specified.
      *
      * If the pixel type is a scalar or a label pixel type, then the
@@ -78,14 +78,14 @@ namespace simple
      *
      * Unlike the standard convention for Dimensional Vectors the size
      * parameter must be the exact dimension requesting. That is it must be of
-     * length 2 of a 2D image and of length 3 for a 3D image.
+     * length 2 of a 2D image, 3 for a 3D image and 4 four a 4D image.
      * @{
      */
     Image( unsigned int width, unsigned int height, PixelIDValueEnum valueEnum  );
     Image( unsigned int width, unsigned int height, unsigned int depth, PixelIDValueEnum valueEnum );
+    Image( unsigned int width, unsigned int height, unsigned int depth, unsigned int dim4, PixelIDValueEnum valueEnum );
     Image( const std::vector< unsigned int > &size, PixelIDValueEnum valueEnum, unsigned int numberOfComponents = 0 );
     /**@}*/
-
 
     /** \brief Construct an SimpleITK Image from an pointer to an ITK
      * image
@@ -192,7 +192,6 @@ namespace simple
     unsigned int GetHeight( void ) const;
     unsigned int GetWidth( void ) const;
     unsigned int GetDepth( void ) const;
-
 
     /** \brief Copy common meta-data from an image to this one.
      *
@@ -379,7 +378,7 @@ namespace simple
      * This method internally utlizes the member function factory to
      * dispatch to methods instantiated on the image of the pixel ID
      */
-    void Allocate ( unsigned int width, unsigned int height, unsigned int depth, PixelIDValueEnum valueEnum, unsigned int numberOfComponents );
+    void Allocate ( unsigned int width, unsigned int height, unsigned int depth, unsigned int length, PixelIDValueEnum valueEnum, unsigned int numberOfComponents );
 
     /** \brief Dispatched methods for allocating images
      *
@@ -390,15 +389,15 @@ namespace simple
      */
     template<class TImageType>
     typename EnableIf<IsBasic<TImageType>::Value>::Type
-    AllocateInternal ( unsigned int width, unsigned int height, unsigned int depth, unsigned int numberOfComponents );
+    AllocateInternal ( unsigned int width, unsigned int height, unsigned int depth, unsigned int length, unsigned int numberOfComponents );
 
     template<class TImageType>
     typename EnableIf<IsVector<TImageType>::Value>::Type
-    AllocateInternal ( unsigned int width, unsigned int height, unsigned int depth, unsigned int numberOfComponents );
+    AllocateInternal ( unsigned int width, unsigned int height, unsigned int depth, unsigned int length, unsigned int numberOfComponents );
 
     template<class TImageType>
     typename EnableIf<IsLabel<TImageType>::Value>::Type
-    AllocateInternal ( unsigned int width, unsigned int height, unsigned int depth, unsigned int numberOfComponents );
+    AllocateInternal ( unsigned int width, unsigned int height, unsigned int depth, unsigned int length, unsigned int numberOfComponents );
     /**@}*/
 
 

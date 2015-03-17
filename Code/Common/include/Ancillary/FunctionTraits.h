@@ -85,6 +85,24 @@ struct FunctionTraits<R (C::*)(A0, A1, A2, A3)> {
   typedef A3 Argument3Type;
 };
 
+template<typename R,
+         typename C,
+         typename A0,
+         typename A1,
+         typename A2,
+         typename A3,
+         typename A4>
+struct FunctionTraits<R (C::*)(A0, A1, A2, A3, A4)> {
+  static const unsigned int arity = 5;
+  typedef C ClassType;
+  typedef R ResultType;
+  typedef A0 Argument0Type;
+  typedef A1 Argument1Type;
+  typedef A2 Argument2Type;
+  typedef A3 Argument3Type;
+  typedef A4 Argument4Type;
+};
+
 }
 
 #endif
