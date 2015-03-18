@@ -14,27 +14,19 @@ Options:
 """
 
 """
-#~/src/Slicer-03 ~/Dashboard/src/ITK-ccache/ ; do
 
+# The following was run to generate a list of symbols used by SimpleITK, without the Explicit library
 
-for test_dir in ~/src/NEP-11/ITKv4-build; do
-  for i in $(find ${test_dir} -name "*.o") ; do
-    nm $i | c++filt |fgrep -v " U "|grep " S " |fgrep -v "(.eh)" | grep "itk::" |grep "::~";
-  done ;
-done |tee /tmp/Symbols.list
+test_dir=/dev/shm/SimpleITK/SimpleITK-build/Code
+for i in $(find ${test_dir} -name "*.o") ; do     nm $i |c++filt |fgrep -v " U " |fgrep -v "(.eh)"  |fgrep -v "itk::simple::" |grep " W " |grep " itk::" |grep "::~"; done |tee /tmp/Symbols.list
 
-###for SRC_DIR in $(find  /Users/johnsonhj/Dashboard/src/ITK/Modules -name src -type d |fgrep -v ThirdParty |fgrep "/Common/"); do
+# By counting the symbols the following classes were most frequently used and code was generated
 
-WHAT_TO_DO=QuadEdgeMesh
+classes="ComposeImageFilter Image ImageSource  VectorImage DefaultPixelAccessor ImageRegionConstIterator ImageToImageFilter  VectorIndexSelectionCastImageFilter DefaultVectorPixelAccessor ImageRegion ImportImageContainer ImageBase ImageScanlineConstIterator InPlaceImageFilter ImageConstIterator ImageScanlineIterator LabelMap"
 
-for SRC_DIR in $(find  /Users/johnsonhj/Dashboard/src/ITK/Modules -name src -type d |fgrep -v ThirdParty|fgrep "/${WHAT_TO_DO}/"); do
-  INCLUDE_DIR=$(dirname $SRC_DIR)/include
-  cd ${INCLUDE_DIR}
-  echo ${INCLUDE_DIR}
-
-  for i in $(ls *.h|fgrep -v "Explicit.h") ; do
-    python /Users/johnsonhj/PycharmProjects/ParseReports/ParseForExplicitInstantiation.py --classFile $i --minRepeats=3 ;
-  done
+for i in $classes; do
+  echo "Proccessing $i..."
+  python ~/src/SimpleITK/Utilities/ParseForExplicitInstantiation.py --classFile $i --minRepeats=5 ;
 done
 
 """
@@ -45,6 +37,8 @@ import sys
 
 import collections
 import re
+
+
 
 
 class ProcessClassFromFile:
@@ -59,8 +53,8 @@ class ProcessClassFromFile:
         print "basePath: ",self.basePath
         print "BaseClassName: ",self.BaseClassName
 
-        self.ExplicitHeaderFileName = os.path.join(self.basePath,"include","itk{0}Explicit.h".format(self.BaseClassName))
-        self.CodeFileName = os.path.join(self.basePath,"src","itk{0}Explicit.cxx".format(self.BaseClassName))
+        self.ExplicitHeaderFileName = os.path.join(self.basePath,"include","sitkExplicitITK{0}.h".format(self.BaseClassName))
+        self.CodeFileName = os.path.join(self.basePath,"src","sitkExplicitITK{0}.cxx".format(self.BaseClassName))
         self._ParseForExtraDirectives()
         self.HeaderString = ""
         self.CodeString = ""
@@ -106,6 +100,25 @@ so that build times are minimized."""
     author = "Hans J. Johnson"
     std_substitution = ('std::__1::', 'std::')
 
+    header = """/*=========================================================================
+*
+*  Copyright Insight Software Consortium
+*
+*  Licensed under the Apache License, Version 2.0 (the "License");
+*  you may not use this file except in compliance with the License.
+*  You may obtain a copy of the License at
+*
+*         http://www.apache.org/licenses/LICENSE-2.0.txt
+*
+*  Unless required by applicable law or agreed to in writing, software
+*  distributed under the License is distributed on an "AS IS" BASIS,
+*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+*  See the License for the specific language governing permissions and
+*  limitations under the License.
+*
+*=========================================================================*/
+"""
+
     def _ParseForExtraDirectives(self):
         exclude_line_re = re.compile("//exclude *([^ ]*) *")
         subs_line_re = re.compile("//subs  *([^ ]*) *([^ ]*)")
@@ -118,8 +131,8 @@ so that build times are minimized."""
             all_lines = [ thisline.rstrip() for thisline in all_lines ]
 
             for thisline in all_lines:
-                if thisline.find("#include") != -1:
-                    self.extraIncludes.append(thisline)
+                #if thisline.find("#include") != -1:
+                #    self.extraIncludes.append(thisline)
                 exclude_search_match = exclude_line_re.search(thisline)
                 if exclude_search_match:
                     self.excludePatterns.append(exclude_search_match.groups()[0])
@@ -127,9 +140,9 @@ so that build times are minimized."""
                 if subs_search_match:
                     self.subsPatterns.append( (subs_search_match.groups()[0],subs_search_match.groups()[1]) )
             print("#"*80)
-            print(self.extraIncludes)
-            print(self.excludePatterns)
-            print(self.subsPatterns)
+            print("Extra Includes: {0}".format(self.extraIncludes))
+            print("Exclude Pattern: {0}".format(self.excludePatterns))
+            print("Sub Patterns: {0}".format(self.subsPatterns))
 
     def _NoWorkToDo(self):
         print(len(self.SymbolsMapping.keys()))
@@ -144,9 +157,15 @@ so that build times are minimized."""
         if self._NoWorkToDo():
             print("No matching expansions!")
             return
-        HeaderString="""#ifndef __ExplicitInstantiation_itk{0}_h__
-#define __ExplicitInstantiation_itk{0}_h__
+
+        HeaderString=self.header
+        HeaderString+="""#ifndef sitkExplicitITK{0}_h__
+#define sitkExplicitITK{0}_h__
 """.format(self.BaseClassName)
+
+        HeaderString+="""#include "sitkExplicit.h"\n"""
+        HeaderString+="""#include "itk{0}.h"\n""".format(self.BaseClassName)
+        HeaderString+="\n"
 
         for extraInclude in self.extraIncludes:
             HeaderString += "{0}\n".format(extraInclude)
@@ -154,22 +173,31 @@ so that build times are minimized."""
             HeaderString += "//exclude {0}\n".format(excludePat)
         for subsPat in self.subsPatterns:
             HeaderString += "//subs {0} {1}\n".format(subsPat[0],subsPat[1])
-        for key in self.SymbolsMapping.keys():
-            HeaderString += "extern template class {0};\n".format(key)
-        HeaderString += "#endif //__ExplicitInstantiation_itk{0}_h__".format(self.BaseClassName)
+
+        HeaderString+="""#ifndef SITK_TEMPLATE_EXPLICIT_EXPLICITITK\n"""
+
+        for key in  sorted(self.SymbolsMapping.keys()):
+            HeaderString += "extern template class SITKExplicit_EXPORT_EXPLICIT {0};\n".format(key)
+        HeaderString+="""#endif // SITK_TEMPLATE_EXPLICIT_EXPLICITITK\n"""
+        HeaderString += "#endif // sitkExplicitITK{0}_h__\n".format(self.BaseClassName)
 
         CodeString=""
         if len(self.SymbolsMapping.keys()) >= 1:
-            CodeString="""#include "itk{0}.h"\n""".format(self.BaseClassName)
-            for key in self.SymbolsMapping.keys():
-                CodeString += "\ntemplate class {0}; //Instantiated {1} times".format(key,self.SymbolsMapping[key])
+            CodeString=self.header
+            CodeString+="""#define  SITK_TEMPLATE_EXPLICIT_EXPLICITITK\n"""
+            CodeString+="""#include "sitkExplicitITK{0}.h"\n""".format(self.BaseClassName)
+            CodeString+="""#undef SITK_TEMPLATE_EXPLICIT_EXPLICITITK\n"""
+            CodeString+="""#include "sitkExplicitITK.h"\n""".format(self.BaseClassName)
+            CodeString+="""\n"""
+            for key in sorted(self.SymbolsMapping.keys()):
+                CodeString += "template class SITKExplicit_EXPORT {0};\n".format(key)
 
         self.CodeString = CodeString
         self.HeaderString = HeaderString
-        print "==CodeString"+"="*90
-        print self.CodeString
-        print "==HeaderString"+"="*90
-        print self.HeaderString
+        print "="*90
+        for key in  sorted(self.SymbolsMapping.keys()):
+            print("Found {0:4} instantiations of {1}.".format(self.SymbolsMapping[key],key))
+
 
     def _GenerateFiles(self):
         if not self._NoWorkToDo():
@@ -181,7 +209,7 @@ so that build times are minimized."""
             if len(self.HeaderString) > 1:
                 with open(self.ExplicitHeaderFileName,'w') as hf:
                     hf.write(self.HeaderString)
-                self._FixupHeader()
+                #self._FixupHeader()
             else:
                 print("HeaderString empty for {0}".format(self.inputHeaderFullPath))
         else:
