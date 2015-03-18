@@ -16,23 +16,35 @@
 *
 *=========================================================================*/
 #define  SITK_TEMPLATE_EXPLICIT_EXPLICITITK
+#include "sitkExplicitITKDefaultPixelAccessor.h"
+#undef SITK_TEMPLATE_EXPLICIT_EXPLICITITK
 #include "sitkExplicitITK.h"
 
-
-template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<unsigned short>; //Instantiated 232 times
-template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<unsigned long>; //Instantiated 234 times
-template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<unsigned long long>; //Instantiated 234 times
-template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<std::complex<double> >; //Instantiated 50 times
-template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<unsigned char>; //Instantiated 241 times
-template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<float>; //Instantiated 226 times
-template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<short>; //Instantiated 231 times
-template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<signed char>; //Instantiated 235 times
-template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<double>; //Instantiated 227 times
-template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<itk::Vector<double, 3u> >; //Instantiated 11 times
-template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<std::complex<float> >; //Instantiated 41 times
-template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<long>; //Instantiated 231 times
-template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<long long>; //Instantiated 231 times
-template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<int>; //Instantiated 231 times
-template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<unsigned int>; //Instantiated 234 times
-template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<bool>; //Instantiated 21 times
-template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<itk::Vector<double, 2u> >; //Instantiated 12 times
+template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<bool>;
+template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<char>;
+template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<double>;
+template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<float>;
+template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<int>;
+template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<itk::CovariantVector<double, 2u> >;
+template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<itk::CovariantVector<double, 3u> >;
+template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<itk::CovariantVector<float, 2u> >;
+template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<itk::CovariantVector<float, 3u> >;
+template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<itk::Offset<2u> >;
+template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<itk::Offset<3u> >;
+template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<itk::Vector<double, 1u> >;
+template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<itk::Vector<double, 2u> >;
+template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<itk::Vector<double, 3u> >;
+template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<itk::Vector<float, 1u> >;
+template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<itk::Vector<float, 2u> >;
+template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<itk::Vector<float, 3u> >;
+template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<long>;
+template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<long long>;
+template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<short>;
+template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<signed char>;
+template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<std::complex<double> >;
+template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<std::complex<float> >;
+template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<unsigned char>;
+template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<unsigned int>;
+template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<unsigned long>;
+template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<unsigned long long>;
+template class SITKExplicit_EXPORT itk::DefaultPixelAccessor<unsigned short>;

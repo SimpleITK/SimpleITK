@@ -16,6 +16,8 @@
 *
 *=========================================================================*/
 #define  SITK_TEMPLATE_EXPLICIT_EXPLICITITK
+#include "sitkExplicitITKImageBase.h"
+#undef SITK_TEMPLATE_EXPLICIT_EXPLICITITK
 #include "sitkExplicitITK.h"
 
 template class SITKExplicit_EXPORT itk::ImageBase<1u>;

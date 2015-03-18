@@ -33,4 +33,13 @@
 
 #define SITKExplicit_HIDDEN SITK_ABI_HIDDEN
 
+
+#if defined( SITKExplicit_EXPORTS )
+// don't use export
+#define SITKExplicit_EXPORT_EXPLICIT
+#else
+// only import/hidden
+#define SITKExplicit_EXPORT_EXPLICIT SITKExplicit_EXPORT
+#endif
+
 #endif // __sitkExplicit_h

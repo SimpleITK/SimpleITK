@@ -3,12 +3,8 @@ set ( SimpleITKExplicitSource
   sitkExplicitITKDefaultPixelAccessor.cxx
   sitkExplicitITKDefaultVectorPixelAccessor.cxx
   sitkExplicitITKImageBase.cxx
-  sitkExplicitITKImageConstIterator.cxx
   sitkExplicitITKImage.cxx
-  sitkExplicitITKImageRegionConstIterator.cxx
   sitkExplicitITKImageRegion.cxx
-  sitkExplicitITKImageScanelineConstIterator.cxx
-  sitkExplicitITKImageScanlineIterator.cxx
   sitkExplicitITKImageSource.cxx
   sitkExplicitITKImageToImageFilter.cxx
   sitkExplicitITKImportImageContainer.cxx
@@ -16,6 +12,11 @@ set ( SimpleITKExplicitSource
   sitkExplicitITKLabelMap.cxx
   sitkExplicitITKVectorImage.cxx
   sitkExplicitITKVectorIndexSelectionCastImageFilter.cxx
+  sitkExplicitITKImageConstIterator.cxx
+  sitkExplicitITKImageRegionConstIterator.cxx
+  sitkExplicitITKImageScanlineConstIterator.cxx
+  sitkExplicitITKImageScanlineIterator.cxx
+
   )
 
 
