@@ -15,11 +15,14 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#define  SITK_TEMPLATE_EXPLICIT_EXPLICITITK
-#include "sitkExplicitITKImageRegion.h"
-#undef SITK_TEMPLATE_EXPLICIT_EXPLICITITK
-#include "sitkExplicitITK.h"
+#ifndef sitkExplicitITKImageRegion_h__
+#define sitkExplicitITKImageRegion_h__
+#include "sitkExplicit.h"
+#include "itkImageRegion.h"
 
-template class SITKExplicit_EXPORT itk::ImageRegion<1u>;
-template class SITKExplicit_EXPORT itk::ImageRegion<2u>;
-template class SITKExplicit_EXPORT itk::ImageRegion<3u>;
+#ifndef SITK_TEMPLATE_EXPLICIT_EXPLICITITK
+extern template class SITKExplicit_EXPORT_EXPLICIT itk::ImageRegion<1u>;
+extern template class SITKExplicit_EXPORT_EXPLICIT itk::ImageRegion<2u>;
+extern template class SITKExplicit_EXPORT_EXPLICIT itk::ImageRegion<3u>;
+#endif // SITK_TEMPLATE_EXPLICIT_EXPLICITITK
+#endif // sitkExplicitITKImageRegion_h__

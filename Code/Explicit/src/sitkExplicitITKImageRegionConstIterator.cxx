@@ -16,33 +16,48 @@
 *
 *=========================================================================*/
 #define  SITK_TEMPLATE_EXPLICIT_EXPLICITITK
+#include "sitkExplicitITKImageRegionConstIterator.h"
+#undef SITK_TEMPLATE_EXPLICIT_EXPLICITITK
 #include "sitkExplicitITK.h"
 
-template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<long, 2u> >; //Instantiated 144 times
-template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<double, 3u> >; //Instantiated 149 times
-template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<short, 2u> >; //Instantiated 145 times
-template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<signed char, 3u> >; //Instantiated 149 times
-template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<std::complex<double>, 2u> >; //Instantiated 16 times
-template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<std::complex<float>, 3u> >; //Instantiated 16 times
-template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<unsigned short, 3u> >; //Instantiated 145 times
-template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<float, 3u> >; //Instantiated 150 times
-template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<unsigned char, 3u> >; //Instantiated 155 times
-template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<bool, 2u> >; //Instantiated 19 times
-template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<itk::Vector<double, 3u>, 3u> >; //Instantiated 7 times
-template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<float, 2u> >; //Instantiated 150 times
-template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<short, 3u> >; //Instantiated 145 times
-template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<unsigned char, 2u> >; //Instantiated 155 times
-template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<long, 3u> >; //Instantiated 144 times
-template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<unsigned long, 3u> >; //Instantiated 146 times
-template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<unsigned int, 2u> >; //Instantiated 149 times
-template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<int, 3u> >; //Instantiated 145 times
-template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<double, 2u> >; //Instantiated 150 times
-template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<unsigned int, 3u> >; //Instantiated 149 times
-template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<unsigned long, 2u> >; //Instantiated 147 times
-template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<unsigned short, 2u> >; //Instantiated 145 times
-template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<signed char, 2u> >; //Instantiated 149 times
-template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<itk::Vector<double, 2u>, 2u> >; //Instantiated 8 times
-template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<std::complex<float>, 2u> >; //Instantiated 16 times
-template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<bool, 3u> >; //Instantiated 19 times
-template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<std::complex<double>, 3u> >; //Instantiated 16 times
-template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<int, 2u> >; //Instantiated 145 times
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<bool, 2u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<bool, 3u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<double, 2u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<double, 3u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<float, 1u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<float, 2u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<float, 3u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<int, 2u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<int, 3u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<itk::CovariantVector<double, 2u>, 2u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<itk::CovariantVector<double, 3u>, 3u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<itk::CovariantVector<float, 2u>, 2u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<itk::CovariantVector<float, 3u>, 3u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<itk::Vector<double, 1u>, 1u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<itk::Vector<double, 2u>, 2u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<itk::Vector<double, 3u>, 3u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<itk::Vector<float, 1u>, 3u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<long, 2u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<long, 3u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<long long, 2u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<long long, 3u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<short, 2u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<short, 3u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<signed char, 2u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<signed char, 3u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<std::complex<double>, 2u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<std::complex<double>, 3u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<std::complex<float>, 2u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<std::complex<float>, 3u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<unsigned char, 1u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<unsigned char, 2u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<unsigned char, 3u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<unsigned int, 2u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<unsigned int, 3u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<unsigned long, 2u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<unsigned long, 3u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<unsigned long long, 2u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<unsigned long long, 3u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<unsigned short, 2u> >;
+template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::Image<unsigned short, 3u> >;
+//template class SITKExplicit_EXPORT itk::ImageRegionConstIterator<itk::VectorImage<unsigned short, 3u> >;
