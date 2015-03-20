@@ -19,36 +19,30 @@
 #define sitkExplicitITK_h
 
 #include <complex>
-
 #include "itkAttributeLabelObject.h"
 #include "itkShapeLabelObject.h"
 #include "itkVectorImage.h"
 
 #include "sitkExplicitITKImageRegion.h"
 
-
+#include "sitkExplicitITKImageBase.h"
+#include "sitkExplicitITKLabelMap.h"
+#include "sitkExplicitITKComposeImageFilter.h"
+#include "sitkExplicitITKImageSource.h"
+#include "sitkExplicitITKVectorImage.h"
 #include "sitkExplicitITKDefaultPixelAccessor.h"
+#include "sitkExplicitITKImage.h"
+#include "sitkExplicitITKImageToImageFilter.h"
+#include "sitkExplicitITKVectorIndexSelectionCastImageFilter.h"
 #include "sitkExplicitITKDefaultVectorPixelAccessor.h"
 #include "sitkExplicitITKImportImageContainer.h"
-#include "sitkExplicitITKImageBase.h"
-#include "sitkExplicitITKImage.h"
-#include "sitkExplicitITKLabelMap.h"
-#include "sitkExplicitITKVectorImage.h"
-
-
-#include "sitkExplicitITKImageConstIterator.h"
-#include "sitkExplicitITKImageRegionConstIterator.h"
-#include "sitkExplicitITKImageScanlineConstIterator.h"
-#include "sitkExplicitITKImageScanlineIterator.h"
-
-#include "sitkExplicitITKImageSource.h"
-#include "sitkExplicitITKImageToImageFilter.h"
 #include "sitkExplicitITKInPlaceImageFilter.h"
 
-#include "sitkExplicitITKComposeImageFilter.h"
-#include "sitkExplicitITKVectorIndexSelectionCastImageFilter.h"
 
-
+#include "sitkExplicitITKImageScanlineIterator.h"
+#include "sitkExplicitITKImageScanlineConstIterator.h"
+#include "sitkExplicitITKImageRegionConstIterator.h"
+#include "sitkExplicitITKImageConstIterator.h"
 
 
 

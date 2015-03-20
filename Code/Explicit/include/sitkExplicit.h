@@ -19,7 +19,8 @@
 #define __sitkExplicit_h
 
 #include "sitkMacro.h"
-#if defined( SITKDLL )
+#if defined( SITKDLL ) && 0 // The explicit library is always static,
+                            // disable export specification
   #ifdef SimpleITKExplicit_EXPORTS
     #define SITKExplicit_EXPORT SITK_ABI_EXPORT
   #else
@@ -34,7 +35,7 @@
 #define SITKExplicit_HIDDEN SITK_ABI_HIDDEN
 
 
-#if defined( SimpleITKExplicit_EXPORTS )
+#if defined( SITKExplicit_EXPORTS )
 // don't use export
 #define SITKExplicit_EXPORT_EXPLICIT
 #else
