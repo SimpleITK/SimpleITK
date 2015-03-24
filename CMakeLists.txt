@@ -92,7 +92,16 @@ endif()
 option(BUILD_SHARED_LIBS "Build SimpleITK ITK with shared libraries. This does not effect wrapped languages." OFF)
 set(SITK_BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS})
 
-option(SITK_EXPLICIT_INSTANTIATION "Enable an ITK static library of explicitly instantiated templates." ON)
+
+set( SITK_EXPLICIT_INSTANTIATION_DEFAULT 1 )
+if(SITK_BUILD_SHARED_LIBS)
+  set( SITK_EXPLICIT_INSTANTIATION_DEFAULT 0 )
+endif()
+option(SITK_EXPLICIT_INSTANTIATION "Enable an ITK library of explicitly instantiated templates." ${SITK_EXPLICIT_INSTANTIATION_DEFAULT})
+if(${SITK_EXPLICIT_INSTANTIATION} AND ${BUILD_SHARED_LIBS})
+  message(WARNING "Enabling explicit instantiated library (SITK_EXPLICIT_INSTANTIATION) with share libraries may result in linking errors!")
+endif()
+
 
 set( SITK_INT64_PIXELIDS_DEFAULT ON )
 if( MSVC )
