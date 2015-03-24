@@ -19,7 +19,7 @@
 #define __sitkExplicit_h
 
 #include "sitkMacro.h"
-#if defined( SITKDLL )
+#if defined( SITKDLL ) && !defined( SITK_SimpleITKExplit_STATIC )
   #ifdef SimpleITKExplicit_EXPORTS
     #define SITKExplicit_EXPORT SITK_ABI_EXPORT
   #else
