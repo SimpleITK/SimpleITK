@@ -10,7 +10,7 @@ project ( SuperBuildSimpleITK )
 #
 
 # Add needed flag for gnu on linux like enviroments
-if(NOT APPLE AND "${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
+if(NOT APPLE AND "x${CMAKE_CXX_COMPILER_ID}x" MATCHES "xGNUx")
   if(NOT "${CMAKE_CXX_FLAGS}" MATCHES "-fPIC")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
   endif()
