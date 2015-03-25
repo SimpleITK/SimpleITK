@@ -59,8 +59,8 @@ public:
   virtual ~PimpleTransformBase( void ) {};
 
   // Get Access to the internal ITK transform class
-  virtual TransformBase::Pointer GetTransformBase( void ) = 0;
-  virtual TransformBase::ConstPointer GetTransformBase( void ) const = 0;
+  virtual TransformBase * GetTransformBase( void ) = 0;
+  virtual const TransformBase * GetTransformBase( void ) const = 0;
 
   // general methods to get information about the internal class
   virtual unsigned int GetInputDimension( void ) const = 0;
@@ -202,8 +202,8 @@ public:
       m_Transform = s.m_Transform;
     }
 
-  virtual TransformBase::Pointer GetTransformBase( void ) { return this->m_Transform.GetPointer(); }
-  virtual TransformBase::ConstPointer GetTransformBase( void ) const { return this->m_Transform.GetPointer(); }
+  virtual TransformBase * GetTransformBase( void ) { return this->m_Transform.GetPointer(); }
+  virtual const TransformBase * GetTransformBase( void ) const { return this->m_Transform.GetPointer(); }
 
   virtual unsigned int GetInputDimension( void ) const { return InputDimension; }
   virtual unsigned int GetOutputDimension( void ) const { return OutputDimension; }
