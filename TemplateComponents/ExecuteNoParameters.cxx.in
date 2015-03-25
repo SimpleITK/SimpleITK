@@ -9,11 +9,24 @@ OUT=[[
   PixelIDValueEnum type = ]]..inputName..[[.GetPixelID();
   unsigned int dimension = ]]..inputName..[[.GetDimension();
 ]]
-end
 for inum=2,number_of_inputs do
   OUT= OUT .. '\n    if ( type != image' .. inum .. '.GetPixelIDValue() || dimension != image' .. inum .. '.GetDimension() ) { sitkExceptionMacro ( "Image' .. inum .. ' for ${name} doesnt match type or dimension!" ); }'
+end
+if inputs then
+  for inum=1,#inputs do
+    if  inputs[inum].optional and not no_optional then
+      local currentInputName = inputs[inum].name:sub(1,1):lower()..inputs[inum].name:sub(2,-1)
+      OUT=OUT..[[
+  // todo need better error handling and potential type conversion
+  if ( ]]..inputName..[[.GetDimension() != ]]..currentInputName..[[.GetDimension() ||
+       ]]..inputName..[[.GetSize() != ]]..currentInputName..[[.GetSize() )
+    {
+      sitkExceptionMacro ( "Input image ]]..currentInputName..[[ does not match type or dimension of first image!" );
+    }]]
+    end
+  end
+end
 end)
-
   return this->m_MemberFactory->GetMemberFunction( type, dimension )( $(for inum=1,number_of_inputs do
   if inum>1 then
     OUT=OUT .. ', '
