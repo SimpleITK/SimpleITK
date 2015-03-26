@@ -45,6 +45,7 @@
 #include <sitkMergeLabelMapFilter.h>
 #include <sitkDiffeomorphicDemonsRegistrationFilter.h>
 #include <sitkFastSymmetricForcesDemonsRegistrationFilter.h>
+#include <sitkOtsuThresholdImageFilter.h>
 #include <sitkBSplineTransformInitializerFilter.h>
 #include <sitkCenteredTransformInitializerFilter.h>
 #include <sitkCenteredVersorTransformInitializerFilter.h>
@@ -740,4 +741,19 @@ TEST(BasicFilters,ResampleImageFilter_AdditionalProcedures)
                        img.GetSpacing(),
                        img.GetDirection() );
   EXPECT_EQ( "b187541bdcc89843d0a25a3761f344c358f3518a", sitk::Hash( out )) << " Procedural Interface 3 identity transform.";
+}
+
+
+TEST(BasicFilters,OtsuThreshold_CheckNamesInputCompatibility)
+{
+  namespace sitk = itk::simple;
+
+  sitk::Image input(10,10,sitk::sitkFloat32);
+  sitk::Image mask1(10,10,10,sitk::sitkUInt8);
+  sitk::Image mask2(11,10,sitk::sitkUInt8);
+
+  // check that if the dimension or size does not match an exception
+  // is thrown.
+  EXPECT_THROW( sitk::OtsuThreshold(input, mask1), sitk::GenericException );
+  EXPECT_THROW( sitk::OtsuThreshold(input, mask2), sitk::GenericException );
 }
