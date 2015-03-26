@@ -16,25 +16,31 @@
 *
 *=========================================================================*/
 #define  SITK_TEMPLATE_EXPLICIT_EXPLICITITK
+#include "sitkExplicitITKVectorIndexSelectionCastImageFilter.h"
+#undef SITK_TEMPLATE_EXPLICIT_EXPLICITITK
 #include "sitkExplicitITK.h"
 
-template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<float, 3u>, itk::Image<float, 3u> >; //Instantiated 42 times
-template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<unsigned int, 2u>, itk::Image<unsigned int, 2u> >; //Instantiated 40 times
-template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<float, 2u>, itk::Image<float, 2u> >; //Instantiated 42 times
-template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<unsigned char, 2u>, itk::Image<unsigned char, 2u> >; //Instantiated 40 times
-template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<unsigned char, 3u>, itk::Image<unsigned char, 3u> >; //Instantiated 40 times
-template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<short, 2u>, itk::Image<short, 2u> >; //Instantiated 41 times
-template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<unsigned long, 2u>, itk::Image<unsigned long, 2u> >; //Instantiated 40 times
-template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<int, 3u>, itk::Image<int, 3u> >; //Instantiated 41 times
-template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<long, 2u>, itk::Image<long, 2u> >; //Instantiated 40 times
-template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<unsigned int, 3u>, itk::Image<unsigned int, 3u> >; //Instantiated 40 times
-template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<long, 3u>, itk::Image<long, 3u> >; //Instantiated 40 times
-template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<unsigned long, 3u>, itk::Image<unsigned long, 3u> >; //Instantiated 40 times
-template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<signed char, 3u>, itk::Image<signed char, 3u> >; //Instantiated 41 times
-template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<short, 3u>, itk::Image<short, 3u> >; //Instantiated 41 times
-template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<unsigned short, 3u>, itk::Image<unsigned short, 3u> >; //Instantiated 40 times
-template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<double, 2u>, itk::Image<double, 2u> >; //Instantiated 42 times
-template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<signed char, 2u>, itk::Image<signed char, 2u> >; //Instantiated 41 times
-template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<int, 2u>, itk::Image<int, 2u> >; //Instantiated 41 times
-template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<double, 3u>, itk::Image<double, 3u> >; //Instantiated 42 times
-template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<unsigned short, 2u>, itk::Image<unsigned short, 2u> >; //Instantiated 40 times
+template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<double, 2u>, itk::Image<double, 2u> >;
+template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<double, 3u>, itk::Image<double, 3u> >;
+template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<float, 2u>, itk::Image<float, 2u> >;
+template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<float, 3u>, itk::Image<float, 3u> >;
+template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<int, 2u>, itk::Image<int, 2u> >;
+template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<int, 3u>, itk::Image<int, 3u> >;
+template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<long, 2u>, itk::Image<long, 2u> >;
+template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<long, 3u>, itk::Image<long, 3u> >;
+template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<long long, 2u>, itk::Image<long long, 2u> >;
+template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<long long, 3u>, itk::Image<long long, 3u> >;
+template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<short, 2u>, itk::Image<short, 2u> >;
+template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<short, 3u>, itk::Image<short, 3u> >;
+template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<signed char, 2u>, itk::Image<signed char, 2u> >;
+template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<signed char, 3u>, itk::Image<signed char, 3u> >;
+template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<unsigned char, 2u>, itk::Image<unsigned char, 2u> >;
+template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<unsigned char, 3u>, itk::Image<unsigned char, 3u> >;
+template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<unsigned int, 2u>, itk::Image<unsigned int, 2u> >;
+template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<unsigned int, 3u>, itk::Image<unsigned int, 3u> >;
+template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<unsigned long, 2u>, itk::Image<unsigned long, 2u> >;
+template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<unsigned long, 3u>, itk::Image<unsigned long, 3u> >;
+template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<unsigned long long, 2u>, itk::Image<unsigned long long, 2u> >;
+template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<unsigned long long, 3u>, itk::Image<unsigned long long, 3u> >;
+template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<unsigned short, 2u>, itk::Image<unsigned short, 2u> >;
+template class SITKExplicit_EXPORT itk::VectorIndexSelectionCastImageFilter<itk::VectorImage<unsigned short, 3u>, itk::Image<unsigned short, 3u> >;

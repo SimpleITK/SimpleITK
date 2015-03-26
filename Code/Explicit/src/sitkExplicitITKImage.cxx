@@ -16,39 +16,60 @@
 *
 *=========================================================================*/
 #define  SITK_TEMPLATE_EXPLICIT_EXPLICITITK
+#include "sitkExplicitITKImage.h"
+#undef SITK_TEMPLATE_EXPLICIT_EXPLICITITK
 #include "sitkExplicitITK.h"
 
-template class SITKExplicit_EXPORT itk::Image<float, 3u>; //Instantiated 188 times
-template class SITKExplicit_EXPORT itk::Image<itk::Vector<double, 3u>, 3u>; //Instantiated 12 times
-template class SITKExplicit_EXPORT itk::Image<double, 3u>; //Instantiated 184 times
-template class SITKExplicit_EXPORT itk::Image<std::complex<float>, 2u>; //Instantiated 37 times
-template class SITKExplicit_EXPORT itk::Image<long, 3u>; //Instantiated 183 times
-template class SITKExplicit_EXPORT itk::Image<long long, 3u>; //Instantiated 183 times
-template class SITKExplicit_EXPORT itk::Image<long, 2u>; //Instantiated 190 times
-template class SITKExplicit_EXPORT itk::Image<long long, 2u>; //Instantiated 190 times
-template class SITKExplicit_EXPORT itk::Image<unsigned long, 2u>; //Instantiated 187 times
-template class SITKExplicit_EXPORT itk::Image<unsigned long long, 2u>; //Instantiated 187 times
-template class SITKExplicit_EXPORT itk::Image<double, 2u>; //Instantiated 185 times
-template class SITKExplicit_EXPORT itk::Image<unsigned char, 2u>; //Instantiated 222 times
-template class SITKExplicit_EXPORT itk::Image<unsigned char, 3u>; //Instantiated 221 times
-template class SITKExplicit_EXPORT itk::Image<long, 1u>; //Instantiated 19 times
-template class SITKExplicit_EXPORT itk::Image<long long, 1u>; //Instantiated 19 times
-template class SITKExplicit_EXPORT itk::Image<unsigned short, 3u>; //Instantiated 184 times
-template class SITKExplicit_EXPORT itk::Image<std::complex<float>, 3u>; //Instantiated 36 times
-template class SITKExplicit_EXPORT itk::Image<unsigned short, 2u>; //Instantiated 185 times
-template class SITKExplicit_EXPORT itk::Image<std::complex<double>, 3u>; //Instantiated 45 times
-template class SITKExplicit_EXPORT itk::Image<signed char, 3u>; //Instantiated 187 times
-template class SITKExplicit_EXPORT itk::Image<short, 2u>; //Instantiated 184 times
-template class SITKExplicit_EXPORT itk::Image<bool, 2u>; //Instantiated 23 times
-template class SITKExplicit_EXPORT itk::Image<signed char, 2u>; //Instantiated 188 times
-template class SITKExplicit_EXPORT itk::Image<int, 3u>; //Instantiated 183 times
-template class SITKExplicit_EXPORT itk::Image<unsigned int, 3u>; //Instantiated 186 times
-template class SITKExplicit_EXPORT itk::Image<short, 3u>; //Instantiated 183 times
-template class SITKExplicit_EXPORT itk::Image<unsigned int, 2u>; //Instantiated 187 times
-template class SITKExplicit_EXPORT itk::Image<bool, 3u>; //Instantiated 23 times
-template class SITKExplicit_EXPORT itk::Image<float, 2u>; //Instantiated 189 times
-template class SITKExplicit_EXPORT itk::Image<int, 2u>; //Instantiated 184 times
-template class SITKExplicit_EXPORT itk::Image<unsigned long, 3u>; //Instantiated 185 times
-template class SITKExplicit_EXPORT itk::Image<unsigned long long, 3u>; //Instantiated 185 times
-template class SITKExplicit_EXPORT itk::Image<std::complex<double>, 2u>; //Instantiated 46 times
-template class SITKExplicit_EXPORT itk::Image<itk::Vector<double, 2u>, 2u>; //Instantiated 13 times
+template class SITKExplicit_EXPORT itk::Image<bool, 2u>;
+template class SITKExplicit_EXPORT itk::Image<bool, 3u>;
+template class SITKExplicit_EXPORT itk::Image<char, 2u>;
+template class SITKExplicit_EXPORT itk::Image<char, 3u>;
+template class SITKExplicit_EXPORT itk::Image<double, 1u>;
+template class SITKExplicit_EXPORT itk::Image<double, 2u>;
+template class SITKExplicit_EXPORT itk::Image<double, 3u>;
+template class SITKExplicit_EXPORT itk::Image<float, 1u>;
+template class SITKExplicit_EXPORT itk::Image<float, 2u>;
+template class SITKExplicit_EXPORT itk::Image<float, 3u>;
+template class SITKExplicit_EXPORT itk::Image<int, 2u>;
+template class SITKExplicit_EXPORT itk::Image<int, 3u>;
+template class SITKExplicit_EXPORT itk::Image<itk::CovariantVector<double, 2u>, 2u>;
+template class SITKExplicit_EXPORT itk::Image<itk::CovariantVector<double, 3u>, 3u>;
+template class SITKExplicit_EXPORT itk::Image<itk::CovariantVector<float, 2u>, 2u>;
+template class SITKExplicit_EXPORT itk::Image<itk::CovariantVector<float, 3u>, 3u>;
+template class SITKExplicit_EXPORT itk::Image<itk::FixedArray<float, 2u>, 2u>;
+template class SITKExplicit_EXPORT itk::Image<itk::FixedArray<float, 3u>, 3u>;
+template class SITKExplicit_EXPORT itk::Image<itk::Offset<2u>, 2u>;
+template class SITKExplicit_EXPORT itk::Image<itk::Offset<3u>, 3u>;
+template class SITKExplicit_EXPORT itk::Image<itk::Vector<double, 1u>, 1u>;
+template class SITKExplicit_EXPORT itk::Image<itk::Vector<double, 2u>, 2u>;
+template class SITKExplicit_EXPORT itk::Image<itk::Vector<double, 3u>, 3u>;
+template class SITKExplicit_EXPORT itk::Image<itk::Vector<float, 1u>, 3u>;
+template class SITKExplicit_EXPORT itk::Image<itk::Vector<float, 2u>, 2u>;
+template class SITKExplicit_EXPORT itk::Image<itk::Vector<float, 3u>, 3u>;
+template class SITKExplicit_EXPORT itk::Image<long, 1u>;
+template class SITKExplicit_EXPORT itk::Image<long, 2u>;
+template class SITKExplicit_EXPORT itk::Image<long, 3u>;
+template class SITKExplicit_EXPORT itk::Image<long long, 1u>;
+template class SITKExplicit_EXPORT itk::Image<long long, 2u>;
+template class SITKExplicit_EXPORT itk::Image<long long, 3u>;
+template class SITKExplicit_EXPORT itk::Image<short, 2u>;
+template class SITKExplicit_EXPORT itk::Image<short, 3u>;
+template class SITKExplicit_EXPORT itk::Image<signed char, 2u>;
+template class SITKExplicit_EXPORT itk::Image<signed char, 3u>;
+template class SITKExplicit_EXPORT itk::Image<std::complex<double>, 2u>;
+template class SITKExplicit_EXPORT itk::Image<std::complex<double>, 3u>;
+template class SITKExplicit_EXPORT itk::Image<std::complex<float>, 2u>;
+template class SITKExplicit_EXPORT itk::Image<std::complex<float>, 3u>;
+template class SITKExplicit_EXPORT itk::Image<std::deque<itk::LabelObjectLine<2u>, std::allocator<itk::LabelObjectLine<2u> > >, 1u>;
+template class SITKExplicit_EXPORT itk::Image<std::deque<itk::LabelObjectLine<3u>, std::allocator<itk::LabelObjectLine<3u> > >, 2u>;
+template class SITKExplicit_EXPORT itk::Image<unsigned char, 1u>;
+template class SITKExplicit_EXPORT itk::Image<unsigned char, 2u>;
+template class SITKExplicit_EXPORT itk::Image<unsigned char, 3u>;
+template class SITKExplicit_EXPORT itk::Image<unsigned int, 2u>;
+template class SITKExplicit_EXPORT itk::Image<unsigned int, 3u>;
+template class SITKExplicit_EXPORT itk::Image<unsigned long, 2u>;
+template class SITKExplicit_EXPORT itk::Image<unsigned long, 3u>;
+template class SITKExplicit_EXPORT itk::Image<unsigned long long, 2u>;
+template class SITKExplicit_EXPORT itk::Image<unsigned long long, 3u>;
+template class SITKExplicit_EXPORT itk::Image<unsigned short, 2u>;
+template class SITKExplicit_EXPORT itk::Image<unsigned short, 3u>;

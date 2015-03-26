@@ -16,15 +16,25 @@
 *
 *=========================================================================*/
 #define  SITK_TEMPLATE_EXPLICIT_EXPLICITITK
+#include "sitkExplicitITKLabelMap.h"
+#undef SITK_TEMPLATE_EXPLICIT_EXPLICITITK
 #include "sitkExplicitITK.h"
 
-template class SITKExplicit_EXPORT itk::LabelMap<itk::LabelObject<unsigned long, 3u> >; //Instantiated 9 times
-template class SITKExplicit_EXPORT itk::LabelMap<itk::LabelObject<unsigned long long, 3u> >; //Instantiated 9 times
-template class SITKExplicit_EXPORT itk::LabelMap<itk::LabelObject<unsigned char, 2u> >; //Instantiated 9 times
-template class SITKExplicit_EXPORT itk::LabelMap<itk::LabelObject<unsigned int, 2u> >; //Instantiated 10 times
-template class SITKExplicit_EXPORT itk::LabelMap<itk::LabelObject<unsigned int, 3u> >; //Instantiated 10 times
-template class SITKExplicit_EXPORT itk::LabelMap<itk::LabelObject<unsigned short, 3u> >; //Instantiated 9 times
-template class SITKExplicit_EXPORT itk::LabelMap<itk::LabelObject<unsigned long, 2u> >; //Instantiated 9 times
-template class SITKExplicit_EXPORT itk::LabelMap<itk::LabelObject<unsigned long long, 2u> >; //Instantiated 9 times
-template class SITKExplicit_EXPORT itk::LabelMap<itk::LabelObject<unsigned char, 3u> >; //Instantiated 9 times
-template class SITKExplicit_EXPORT itk::LabelMap<itk::LabelObject<unsigned short, 2u> >; //Instantiated 9 times
+template class SITKExplicit_EXPORT itk::LabelMap<itk::AttributeLabelObject<unsigned long, 2u, bool> >;
+template class SITKExplicit_EXPORT itk::LabelMap<itk::AttributeLabelObject<unsigned long, 3u, bool> >;
+template class SITKExplicit_EXPORT itk::LabelMap<itk::AttributeLabelObject<unsigned long long, 2u, bool> >;
+template class SITKExplicit_EXPORT itk::LabelMap<itk::AttributeLabelObject<unsigned long long, 3u, bool> >;
+template class SITKExplicit_EXPORT itk::LabelMap<itk::LabelObject<unsigned char, 2u> >;
+template class SITKExplicit_EXPORT itk::LabelMap<itk::LabelObject<unsigned char, 3u> >;
+template class SITKExplicit_EXPORT itk::LabelMap<itk::LabelObject<unsigned int, 2u> >;
+template class SITKExplicit_EXPORT itk::LabelMap<itk::LabelObject<unsigned int, 3u> >;
+template class SITKExplicit_EXPORT itk::LabelMap<itk::LabelObject<unsigned long, 2u> >;
+template class SITKExplicit_EXPORT itk::LabelMap<itk::LabelObject<unsigned long, 3u> >;
+template class SITKExplicit_EXPORT itk::LabelMap<itk::LabelObject<unsigned long long, 2u> >;
+template class SITKExplicit_EXPORT itk::LabelMap<itk::LabelObject<unsigned long long, 3u> >;
+template class SITKExplicit_EXPORT itk::LabelMap<itk::LabelObject<unsigned short, 2u> >;
+template class SITKExplicit_EXPORT itk::LabelMap<itk::LabelObject<unsigned short, 3u> >;
+template class SITKExplicit_EXPORT itk::LabelMap<itk::ShapeLabelObject<unsigned long, 2u> >;
+template class SITKExplicit_EXPORT itk::LabelMap<itk::ShapeLabelObject<unsigned long, 3u> >;
+template class SITKExplicit_EXPORT itk::LabelMap<itk::ShapeLabelObject<unsigned long long, 2u> >;
+template class SITKExplicit_EXPORT itk::LabelMap<itk::ShapeLabelObject<unsigned long long, 3u> >;

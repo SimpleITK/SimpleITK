@@ -3,12 +3,8 @@ set ( SimpleITKExplicitSource
   sitkExplicitITKDefaultPixelAccessor.cxx
   sitkExplicitITKDefaultVectorPixelAccessor.cxx
   sitkExplicitITKImageBase.cxx
-  sitkExplicitITKImageConstIterator.cxx
   sitkExplicitITKImage.cxx
-  sitkExplicitITKImageRegionConstIterator.cxx
   sitkExplicitITKImageRegion.cxx
-  sitkExplicitITKImageScanelineConstIterator.cxx
-  sitkExplicitITKImageScanlineIterator.cxx
   sitkExplicitITKImageSource.cxx
   sitkExplicitITKImageToImageFilter.cxx
   sitkExplicitITKImportImageContainer.cxx
@@ -16,6 +12,11 @@ set ( SimpleITKExplicitSource
   sitkExplicitITKLabelMap.cxx
   sitkExplicitITKVectorImage.cxx
   sitkExplicitITKVectorIndexSelectionCastImageFilter.cxx
+  sitkExplicitITKImageConstIterator.cxx
+  sitkExplicitITKImageRegionConstIterator.cxx
+  sitkExplicitITKImageScanlineConstIterator.cxx
+  sitkExplicitITKImageScanlineIterator.cxx
+
   )
 
 
@@ -24,8 +25,11 @@ set ( SimpleITKExplicitSource
 set ( ITK_NO_IO_FACTORY_REGISTER_MANAGER 1 )
 include(${ITK_USE_FILE})
 
+if ( MSVC AND SITK_BUILD_SHARED_LIBS )
+  set( SimpleITKExplicit_FORCE_LIBRARY_TYPE "STATIC" )
+endif()
 
-add_library ( SimpleITKExplicit STATIC ${SimpleITKExplicitSource} )
+add_library ( SimpleITKExplicit ${SimpleITKExplicit_FORCE_LIBRARY_TYPE} ${SimpleITKExplicitSource} )
 target_link_libraries ( SimpleITKExplicit ${ITK_LIBRARIES} )
 set_target_properties( SimpleITKExplicit PROPERTIES SKIP_BUILD_RPATH TRUE )
 sitk_install_exported_target( SimpleITKExplicit )
