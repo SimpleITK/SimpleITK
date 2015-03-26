@@ -97,9 +97,7 @@ if number_of_inputs >= 2 or (inputs and (#inputs >= 2)) then
 
   // todo need better error handling and potential type conversion
   if ( ]]..inputName1..[[.GetDimension() != ]]..inputName2..[[.GetDimension() ||
-       ]]..inputName1..[[.GetWidth() != ]]..inputName2..[[.GetWidth() ||
-       ]]..inputName1..[[.GetHeight() != ]]..inputName2..[[.GetHeight() ||
-       ]]..inputName1..[[.GetDepth() != ]]..inputName2..[[.GetDepth() )
+       ]]..inputName1..[[.GetSize() != ]]..inputName2..[[.GetSize() )
     {
       sitkExceptionMacro ( "Both images for ${name} don't match type or dimension!" );
     }]]
