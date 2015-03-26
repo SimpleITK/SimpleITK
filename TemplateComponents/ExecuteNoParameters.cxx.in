@@ -21,7 +21,7 @@ if inputs then
   if ( ]]..inputName..[[.GetDimension() != ]]..currentInputName..[[.GetDimension() ||
        ]]..inputName..[[.GetSize() != ]]..currentInputName..[[.GetSize() )
     {
-      sitkExceptionMacro ( "Input image ]]..currentInputName..[[ does not match type or dimension of first image!" );
+      sitkExceptionMacro ( "Input image ]]..currentInputName..[[ does not match dimension or size of first image!" );
     }]]
     end
   end
