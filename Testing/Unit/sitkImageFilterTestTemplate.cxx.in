@@ -82,7 +82,7 @@ $(if template_code_filename and template_code_filename == "FastMarchingImageFilt
   EXPECT_EQ ( filter.GetTrialPoints().size(), (unsigned int)0 ) << "Testing empty trial points as default";]]
 end)
 
- $(if number_of_inputs == 2 then
+$(if number_of_inputs == 2 then
    OUT=[[ {
   itk::simple::Image smallImage( 1,1,1,itk::simple::sitkUInt8 );
   itk::simple::Image largeImage( 10,10,10,itk::simple::sitkUInt8 );
@@ -110,6 +110,30 @@ end)
   OUT = OUT .. [[
   }]]
    end)
+  // This block is to verify that the input images for named inputs are
+  // check if the sizes match for computation.
+$(if inputs then
+OUT = OUT .. [[
+  itk::simple::Image smallImage( 1,1,1,itk::simple::sitkUInt8 );
+  itk::simple::Image largeImage( 10,10,10,itk::simple::sitkUInt8 );
+]]
+    for inum=2,#inputs do
+      if  not inputs[inum].optional then
+        OUT = OUT .. [[
+  EXPECT_THROW ( filter.Execute ( largeImage]]
+        for jnum=2,#inputs do
+         if jnum == inum then
+           OUT = OUT .. [[, smallImage]]
+         elseif not inputs[jnum].optional then
+           OUT = OUT .. [[, largeImage]]
+         end
+        end
+        OUT = OUT .. [[ ), itk::simple::GenericException);
+]]
+      end
+     end
+
+  end)
 }
 
 $(foreach tests
