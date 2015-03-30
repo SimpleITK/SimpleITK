@@ -703,73 +703,44 @@ void Transform::InternalInitialization(TransformType *t)
       sitkExceptionMacro( "Read transform file: \"" << filename << "\", but there appears to be not transform in the file!" );
       }
 
+    if( list->size() != 1 )
+      {
+      std::cerr << "Warning: There is more than one tranform in the file! Only using the first transform.\n";
+      }
+
     if( list->front()->GetInputSpaceDimension() == 3
         && list->front()->GetOutputSpaceDimension() == 3 )
       {
-      typedef itk::CompositeTransform<double, 3> CompositeTransformType;
-      typedef CompositeTransformType::TransformType TransformType;
-
-      CompositeTransformType::Pointer comp;
-
-      // check if transform is a composite
-      comp = dynamic_cast<CompositeTransformType*>(list->front().GetPointer());
-      if ( comp )
+      typedef itk::Transform<double, 3, 3> TransformType3D;
+      TransformType3D* itktx3d = dynamic_cast<TransformType3D*>(list->front().GetPointer());
+      if (!itktx3d)
         {
-        return Transform( comp.GetPointer() );
+        sitkExceptionMacro( "Unexpected type conversion error for 3D Transform!");
         }
-
-      if( list->size() != 1 )
-        {
-        std::cerr << "Warning: There is more than one tranform in the file! Only using the first transform.\n";
-        }
-
-
-      typedef itk::Transform<double, 3, 3> TransformType;
-      TransformType* itktx = dynamic_cast<TransformType*>(list->front().GetPointer());
-      if (itktx)
-        {
-        comp = CompositeTransformType::New();
-        comp->ClearTransformQueue();
-        comp->AddTransform( itktx );
-        return Transform( comp.GetPointer() );
-        }
+      return Transform(itktx3d);
 
       }
+
+
 
     if( list->front()->GetInputSpaceDimension() == 2
         && list->front()->GetOutputSpaceDimension() == 2)
       {
-      typedef itk::CompositeTransform<double, 2> CompositeTransformType;
 
-      CompositeTransformType::Pointer comp;
-
-      // check if transform is a composite
-      comp = dynamic_cast<CompositeTransformType*>(list->front().GetPointer());
-      if ( comp )
+      typedef itk::Transform<double, 2, 2> TransformType2D;
+      TransformType2D* itktx2d = dynamic_cast<TransformType2D*>(list->front().GetPointer());
+      if (!itktx2d)
         {
-        return Transform( comp.GetPointer() );
+        sitkExceptionMacro( "Unexpected type conversion error for 2D Transform!");
         }
+      return Transform(itktx2d);
 
-      if( list->size() != 1 )
-        {
-        std::cerr << "Warning: There is more than one tranform in the file! Only using the first transform.\n";
-        }
-
-      typedef itk::Transform<double, 2, 2> TransformType;
-      TransformType* itktx = dynamic_cast<TransformType*>(list->front().GetPointer());
-
-      if (itktx)
-        {
-        comp = CompositeTransformType::New();
-        comp->ClearTransformQueue();
-        comp->AddTransform( itktx );
-        return Transform( comp.GetPointer() );
-        }
 
       }
 
+
     sitkExceptionMacro( "Unable to transform with InputSpaceDimension: " <<  list->front()->GetInputSpaceDimension()
-                        << " and OutputSpaceDimension: " << list->front()->GetOutputSpaceDimension() << "."
+                        << " and OutputSpaceDimension: " << list->front()->GetOutputSpaceDimension() << ". "
                         << "Transform of type " << list->front()->GetNameOfClass() << "is not supported." );
 
   }
