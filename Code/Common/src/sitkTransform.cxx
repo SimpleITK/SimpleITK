@@ -205,6 +205,12 @@ Transform::Transform( )
     m_PimpleTransform = new PimpleTransform<itk::IdentityTransform< double, 3 > >();
   }
 
+Transform::Transform( itk::TransformBase *transformBase )
+  : m_PimpleTransform( NULL )
+{
+  this->InternalInitialization( transformBase );
+}
+
   Transform::Transform( unsigned int dimensions, TransformEnum type)
     : m_PimpleTransform( NULL )
   {
@@ -237,6 +243,7 @@ Transform::Transform( )
 
   Transform& Transform::operator=( const Transform & txf )
   {
+    assert( m_PimpleTransform );
     PimpleTransformBase *temp = txf.m_PimpleTransform->ShallowCopy();
     this->SetPimpleTransform( temp );
     return *this;
@@ -611,6 +618,77 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
     return "Transform";
   }
 
+
+void Transform::InternalInitialization(itk::TransformBase *transform)
+{
+
+  TransformTryCastVisitor visitor;
+  visitor.transform = transform;
+  visitor.that = this;
+
+  typedef typelist::MakeTypeList<itk::IdentityTransform<double, 2>,
+                                 itk::IdentityTransform<double, 3>,
+                                 itk::TranslationTransform<double, 2>,
+                                 itk::TranslationTransform<double, 3>,
+                                 itk::ScaleTransform< double, 2>,
+                                 itk::ScaleTransform< double, 3>,
+                                 itk::ScaleLogarithmicTransform< double, 2 >,
+                                 itk::ScaleLogarithmicTransform< double, 3 >,
+                                 typename TransformTraits< double, 2>::EulerTransformType,
+                                 typename TransformTraits< double, 3>::EulerTransformType,
+                                 typename TransformTraits< double, 2>::SimilarityTransformType,
+                                 typename TransformTraits< double, 3>::SimilarityTransformType,
+                                 itk::QuaternionRigidTransform< double >,
+                                 itk::VersorTransform< double >,
+                                 itk::VersorRigid3DTransform< double > ,
+                                 itk::ScaleSkewVersor3DTransform< double >,
+                                 itk::AffineTransform<double,3>,
+                                 itk::AffineTransform<double,2>,
+                                 itk::DisplacementFieldTransform<double, 3>,
+                                 itk::DisplacementFieldTransform<double, 2>,
+                                 itk::BSplineTransform<double, 3, 0>,
+                                 itk::BSplineTransform<double, 2, 0>,
+                                 itk::BSplineTransform<double, 3, 1>,
+                                 itk::BSplineTransform<double, 2, 1>,
+                                 itk::BSplineTransform<double, 3, 2>,
+                                 itk::BSplineTransform<double, 2, 2>,
+                                 itk::BSplineTransform<double, 3, 3>,
+                                 itk::BSplineTransform<double, 2, 3>
+                                 >::Type TransformTypeList;
+
+  typelist::Visit<TransformTypeList> callInternalInitialization;
+
+  callInternalInitialization(visitor);
+
+  // The transform didn't match a known type, place it into a Composite.
+  if ( !m_PimpleTransform )
+    {
+    if ( transform->GetInputSpaceDimension() == 2 &&
+         transform->GetInputSpaceDimension() == 2 )
+      {
+      this->InternalInitialization<2>( sitkComposite, transform );
+      }
+    else if ( transform->GetInputSpaceDimension() == 3 &&
+              transform->GetInputSpaceDimension() == 3 )
+      {
+      this->InternalInitialization<3>( sitkComposite, transform );
+      }
+    else
+      {
+      sitkExceptionMacro( "Unable to create transform with InputSpaceDimension: " <<  transform->GetInputSpaceDimension()
+                        << " and OutputSpaceDimension: " << transform->GetOutputSpaceDimension() << ". "
+                        << "Transform of type " << transform->GetNameOfClass() << "is not supported." );
+      }
+    }
+}
+
+
+template<class TransformType>
+void Transform::InternalInitialization(TransformType *t)
+{
+  PimpleTransformBase* temp = new PimpleTransform<TransformType>(t);
+  Self::SetPimpleTransform(temp);
+}
 
   Transform ReadTransform( const std::string &filename )
   {
