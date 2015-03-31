@@ -140,6 +140,13 @@ DisplacementFieldTransform::DisplacementFieldTransform( const DisplacementFieldT
 }
 
 
+DisplacementFieldTransform::DisplacementFieldTransform( const Transform &arg )
+  : Transform(arg)
+{
+  Self::InternalInitialization(Self::GetITKBase());
+}
+
+
 DisplacementFieldTransform &DisplacementFieldTransform::operator=( const DisplacementFieldTransform &arg )
 {
   Superclass::operator=(arg);
