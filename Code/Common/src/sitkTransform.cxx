@@ -457,18 +457,24 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
         {
         typename itk::CompositeTransform<double, VDimension>::Pointer compositeTransform;
 
-        if ( !base )
+        // if null it'll be converted, no null check needed
+        compositeTransform = dynamic_cast<itk::CompositeTransform<double, VDimension>*>( base );
+
+        if ( !compositeTransform )
           {
           compositeTransform = itk::CompositeTransform<double, VDimension>::New();
-          }
-        else
-          {
-          compositeTransform = dynamic_cast<itk::CompositeTransform<double, VDimension>*>( base );
-          if ( !compositeTransform )
+
+          // base argument was non-composite place into composite
+          if ( base )
             {
-            sitkExceptionMacro("Unexpectedly unable to convert to CompositeTransform" );
+            typedef itk::Transform<double,  VDimension,  VDimension> TransformType;
+            TransformType* itktx = dynamic_cast<TransformType*>(base);
+
+            compositeTransform->ClearTransformQueue();
+            compositeTransform->AddTransform( itktx );
             }
           }
+
 
         if ( compositeTransform->IsTransformQueueEmpty() )
           {
