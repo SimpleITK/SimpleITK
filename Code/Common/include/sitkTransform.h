@@ -228,7 +228,7 @@ private:
     void operator() ( void ) const
       {
         TransformType *t = dynamic_cast<TransformType*>(transform);
-        if (t && (typeid(*t)==typeid(TransformType)))
+        if (t)
           {
           that->InternalInitialization<TransformType>(t);
           }

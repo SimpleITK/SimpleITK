@@ -39,6 +39,7 @@
 #include "itkVersorTransform.h"
 #include "itkVersorRigid3DTransform.h"
 #include "itkScaleSkewVersor3DTransform.h"
+#include "itkScaleVersor3DTransform.h"
 #include "itkAffineTransform.h"
 #include "itkCompositeTransform.h"
 
@@ -626,26 +627,38 @@ void Transform::InternalInitialization(itk::TransformBase *transform)
   visitor.transform = transform;
   visitor.that = this;
 
+  // The following list must have the children before their parents to
+  // cast to the most derived classes
   typedef typelist::MakeTypeList<itk::IdentityTransform<double, 2>,
                                  itk::IdentityTransform<double, 3>,
                                  itk::TranslationTransform<double, 2>,
                                  itk::TranslationTransform<double, 3>,
-                                 itk::ScaleTransform< double, 2>,
-                                 itk::ScaleTransform< double, 3>,
+
                                  itk::ScaleLogarithmicTransform< double, 2 >,
                                  itk::ScaleLogarithmicTransform< double, 3 >,
+                                 itk::ScaleTransform< double, 2>,
+                                 itk::ScaleTransform< double, 3>,
+
                                  TransformTraits< double, 2>::EulerTransformType,
+
                                  TransformTraits< double, 3>::EulerTransformType,
+
                                  TransformTraits< double, 2>::SimilarityTransformType,
+
                                  TransformTraits< double, 3>::SimilarityTransformType,
-                                 itk::QuaternionRigidTransform< double >,
-                                 itk::VersorTransform< double >,
-                                 itk::VersorRigid3DTransform< double > ,
                                  itk::ScaleSkewVersor3DTransform< double >,
+                                 itk::ScaleVersor3DTransform< double >,
+                                 itk::VersorRigid3DTransform< double >,
+                                 itk::VersorTransform< double >,
+
+                                 itk::QuaternionRigidTransform< double >,
+
                                  itk::AffineTransform<double,3>,
                                  itk::AffineTransform<double,2>,
+
                                  itk::DisplacementFieldTransform<double, 3>,
                                  itk::DisplacementFieldTransform<double, 2>,
+
                                  itk::BSplineTransform<double, 3, 0>,
                                  itk::BSplineTransform<double, 2, 0>,
                                  itk::BSplineTransform<double, 3, 1>,
