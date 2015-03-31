@@ -127,6 +127,7 @@ namespace std
 // Any new classes need to have an "%include" statement to be wrapped.
 
 // Common
+%include "sitkConfigure.h"
 %include "sitkVersion.h"
 %include "sitkPixelIDValues.h"
 %include "sitkImage.h"

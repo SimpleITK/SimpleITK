@@ -58,7 +58,7 @@ namespace itk
     PimpleImage ( ImageType* image )
       : m_Image( image )
       {
-        sitkStaticAssert( ImageType::ImageDimension == 3 || ImageType::ImageDimension == 2,
+        sitkStaticAssert( ImageType::ImageDimension == 4 || ImageType::ImageDimension == 3 || ImageType::ImageDimension == 2,
                           "Image Dimension out of range" );
         sitkStaticAssert( ImageTypeToPixelIDValue<ImageType>::Result != (int)sitkUnknown,
                           "invalid pixel type" );
