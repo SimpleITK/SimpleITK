@@ -95,6 +95,9 @@ option(BUILD_SHARED_LIBS "Build SimpleITK ITK with shared libraries. This does n
 # as this option does not robustly work across platforms it will be marked as advanced
 mark_as_advanced( FORCE BUILD_SHARED_LIBS )
 
+option( SITK_4D_IMAGES "Add Image and I/O support for four spatial dimensions." OFF )
+mark_as_advanced( SITK_4D_IMAGES )
+
 #-----------------------------------------------------------------------------
 # Setup build type
 #------------------------------------------------------------------------------
@@ -313,6 +316,7 @@ ExternalProject_Add(${proj}
     -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY:PATH=<BINARY_DIR>/lib
     -DCMAKE_RUNTIME_OUTPUT_DIRECTORY:PATH=<BINARY_DIR>/bin
     -DCMAKE_BUNDLE_OUTPUT_DIRECTORY:PATH=<BINARY_DIR>/bin
+    -DSITK_4D_IMAGES:BOOL=${SITK_4D_IMAGES}
     ${ep_languages_args}
     # ITK
     -DITK_DIR:PATH=${ITK_DIR}
