@@ -33,9 +33,11 @@ namespace itk {
 
       this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
+      this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 4 > ();
       this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
       this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
 
+      this->m_MemberFactory->RegisterMemberFunctions < LabelPixelIDTypeList, 4, detail::ExecuteInternalLabelImageAddressor<MemberFunctionType> > ();
       this->m_MemberFactory->RegisterMemberFunctions < LabelPixelIDTypeList, 3, detail::ExecuteInternalLabelImageAddressor<MemberFunctionType> > ();
       this->m_MemberFactory->RegisterMemberFunctions < LabelPixelIDTypeList, 2, detail::ExecuteInternalLabelImageAddressor<MemberFunctionType> > ();
     }
