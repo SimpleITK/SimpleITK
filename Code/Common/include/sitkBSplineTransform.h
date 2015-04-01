@@ -36,6 +36,8 @@ public:
 
   BSplineTransform( const BSplineTransform & );
 
+  explicit BSplineTransform( const Transform &);
+
   BSplineTransform &operator=( const BSplineTransform & );
 
   /** Name of this class */

@@ -339,6 +339,93 @@ TEST(TransformTest, ReadTransformResample) {
 
 }
 
+
+TEST(TransformTest, ReadTransformConvert) {
+
+  EXPECT_NO_THROW(sitk::AffineTransform(sitk::ReadTransform( dataFinder.GetFile( "Input/xforms/affine_i_3.txt" ) ) ) );
+  EXPECT_NO_THROW(sitk::Transform(sitk::ReadTransform( dataFinder.GetFile( "Input/xforms/composite_i_3.txt" ) ) ) );
+  EXPECT_NO_THROW(sitk::Transform(sitk::ReadTransform( dataFinder.GetFile( "Input/xforms/i_3.txt" ) ) ) );
+  EXPECT_NO_THROW(sitk::ScaleTransform(sitk::ReadTransform( dataFinder.GetFile( "Input/xforms/scale_i_3.txt" ) ) ) );
+  EXPECT_NO_THROW(sitk::TranslationTransform(sitk::ReadTransform( dataFinder.GetFile( "Input/xforms/translation_i_3.txt" ) ) ) );
+  EXPECT_NO_THROW(sitk::Transform(sitk::ReadTransform( dataFinder.GetFile( "Input/xforms/quaternion_rigid_i_3.txt" ) ) ) );
+  EXPECT_NO_THROW(sitk::Transform(sitk::ReadTransform( dataFinder.GetFile( "Input/xforms/scale_logarithmic_i_3.txt" ) ) ) );
+  EXPECT_NO_THROW(sitk::VersorTransform(sitk::ReadTransform( dataFinder.GetFile( "Input/xforms/versor_i_3.txt" ) ) ) );
+
+  std::string filename = dataFinder.GetOutputFile ( "TransformTest.ReadTransformConvert.txt" );
+  {
+  sitk::AffineTransform tx(2);
+  sitk::WriteTransform(tx, filename);
+  EXPECT_NO_THROW(tx = sitk::AffineTransform( sitk::ReadTransform(filename) ) );
+  }
+  {
+  sitk::Euler2DTransform tx;
+  sitk::WriteTransform(tx, filename);
+  EXPECT_NO_THROW(tx = sitk::Euler2DTransform( sitk::ReadTransform(filename) ) );
+  }
+  {
+  sitk::Euler3DTransform tx;
+  sitk::WriteTransform(tx, filename);
+  EXPECT_NO_THROW(tx = sitk::Euler3DTransform( sitk::ReadTransform(filename) ) );
+  }
+  {
+  sitk::ScaleSkewVersor3DTransform tx;
+  sitk::WriteTransform(tx, filename);
+  EXPECT_NO_THROW(tx = sitk::ScaleSkewVersor3DTransform( sitk::ReadTransform(filename) ) );
+  }
+  {
+  sitk::ScaleTransform tx(2);
+  sitk::WriteTransform(tx, filename);
+  EXPECT_NO_THROW( tx = sitk::ScaleTransform( sitk::ReadTransform(filename) ) );
+  }
+  {
+  sitk::ScaleVersor3DTransform tx;
+  sitk::WriteTransform(tx, filename);
+  EXPECT_NO_THROW(tx = sitk::ScaleVersor3DTransform( sitk::ReadTransform(filename) ) );
+  }
+  {
+  sitk::Similarity2DTransform tx;
+  sitk::WriteTransform(tx, filename);
+  EXPECT_NO_THROW(tx = sitk::Similarity2DTransform( sitk::ReadTransform(filename) ) );
+  }
+  {
+  sitk::Similarity3DTransform tx;
+  sitk::WriteTransform(tx, filename);
+  EXPECT_NO_THROW(tx = sitk::Similarity3DTransform( sitk::ReadTransform(filename) ) );
+  }
+  {
+  sitk::TranslationTransform tx(3);
+  sitk::WriteTransform(tx, filename);
+  EXPECT_NO_THROW(tx = sitk::TranslationTransform( sitk::ReadTransform(filename) ) );
+  }
+  {
+  sitk::VersorRigid3DTransform tx;
+  sitk::WriteTransform(tx, filename);
+  EXPECT_NO_THROW(tx = sitk::VersorRigid3DTransform( sitk::ReadTransform(filename) ) );
+  }
+  {
+  sitk::VersorTransform tx;
+  sitk::WriteTransform(tx, filename);
+  EXPECT_NO_THROW(tx = sitk::VersorTransform( sitk::ReadTransform(filename) ) );
+  }
+  {
+  sitk::DisplacementFieldTransform tx(2);
+  sitk::WriteTransform(tx, filename);
+  EXPECT_NO_THROW( tx = sitk::DisplacementFieldTransform( sitk::ReadTransform(filename) ) );
+  }
+  {
+  sitk::DisplacementFieldTransform tx(2);
+  tx.SetSmoothingGaussianOnUpdate();
+  sitk::WriteTransform(tx, filename);
+  EXPECT_NO_THROW( tx = sitk::DisplacementFieldTransform( sitk::ReadTransform(filename) ) );
+  }
+  {
+  sitk::BSplineTransform tx(2);
+  sitk::WriteTransform(tx, filename);
+  EXPECT_NO_THROW( tx = sitk::BSplineTransform( sitk::ReadTransform(filename) ) );
+  }
+
+}
+
 TEST(TransformTest, TransformPoint) {
   sitk::Transform tx2 = sitk::Transform( 2, sitk::sitkIdentity );
   sitk::Transform tx3 = sitk::Transform( 3, sitk::sitkIdentity );

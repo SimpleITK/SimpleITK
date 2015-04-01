@@ -92,6 +92,8 @@ public:
       this->InternalInitialization<NDimension>( sitkComposite, compositeTransform );
     }
 
+  explicit Transform( itk::TransformBase *transform );
+
   /** \brief Construct a specific transformation
    */
   Transform( unsigned int dimensions, TransformEnum type);
@@ -216,7 +218,27 @@ protected:
 private:
 
   template< unsigned int VDimension>
-  void InternalInitialization(  TransformEnum type, itk::TransformBase *base = NULL );
+  void InternalInitialization( TransformEnum type, itk::TransformBase *base = NULL );
+
+  struct TransformTryCastVisitor
+  {
+    itk::TransformBase *transform;
+    Transform *that;
+    template< typename TransformType >
+    void operator() ( void ) const
+      {
+        TransformType *t = dynamic_cast<TransformType*>(transform);
+        if (t)
+          {
+          that->InternalInitialization<TransformType>(t);
+          }
+      }
+  };
+
+
+  template< class TransformType>
+  void InternalInitialization( TransformType *t );
+  void InternalInitialization( itk::TransformBase *base );
 
 
   template< unsigned int >

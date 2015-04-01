@@ -38,6 +38,9 @@ public:
 
   DisplacementFieldTransform( const DisplacementFieldTransform & );
 
+
+  explicit DisplacementFieldTransform( const Transform & );
+
   DisplacementFieldTransform &operator=( const DisplacementFieldTransform & );
 
   /** Name of this class */
