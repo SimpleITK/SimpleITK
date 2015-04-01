@@ -31,7 +31,6 @@ set ( SimpleITKUnitTestSource
   sitkImportImageTest.cxx
   itkHashImageFilterTest.cxx
   itkSliceImageFilterTest.cxx
-  sitkDicomMetaDataTest.cxx
   )
 
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/PythonTests)
