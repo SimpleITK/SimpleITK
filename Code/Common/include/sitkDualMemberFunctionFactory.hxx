@@ -46,8 +46,8 @@ struct DualMemberFunctionInstantiater
     : m_Factory( factory )
     {}
   template <class TPixelIDType1, class TPixelIDType2>
-  typename EnableIf< IsInstantiated<TPixelIDType1>::Value &&
-                     IsInstantiated<TPixelIDType2>::Value >::Type
+  typename EnableIf< IsInstantiated<TPixelIDType1,VImageDimension>::Value &&
+                     IsInstantiated<TPixelIDType2,VImageDimension>::Value >::Type
   operator()( TPixelIDType1* t1=NULL, TPixelIDType2*t2=NULL ) const
     {
       (void)t1;
@@ -63,8 +63,8 @@ struct DualMemberFunctionInstantiater
 
   // this methods is conditionally enabled when the PixelID is not instantiated
   template <class TPixelIDType1, class TPixelIDType2>
-  typename DisableIf< IsInstantiated<TPixelIDType1>::Value &&
-                     IsInstantiated<TPixelIDType2>::Value >::Type
+  typename DisableIf< IsInstantiated<TPixelIDType1,VImageDimension>::Value &&
+                     IsInstantiated<TPixelIDType2,VImageDimension>::Value >::Type
   operator()( TPixelIDType1*t1=NULL, TPixelIDType2*t2=NULL ) const
     {
       (void)t1;

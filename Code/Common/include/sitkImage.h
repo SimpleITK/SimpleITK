@@ -24,7 +24,6 @@
 #include "sitkPixelIDTokens.h"
 #include "sitkEnableIf.h"
 
-
 #include "nsstd/type_traits.h"
 
 #include <vector>
@@ -66,8 +65,8 @@ namespace simple
     Image( const Image &img );
     Image& operator=( const Image &img );
 
-    /** \brief Constructors for 2D, 3D images where pixel type and
-     * number of components can be specified.
+    /** \brief Constructors for 2D, 3D an optionally 4D images where
+     * pixel type and number of components can be specified.
      *
      * If the pixel type is a scalar or a label pixel type, then the
      * number of components must be specified as 0 or 1.
@@ -77,8 +76,8 @@ namespace simple
      * numberOfComponents is explicitly specified.
      *
      * Unlike the standard convention for Dimensional Vectors the size
-     * parameter must be the exact dimension requesting. That is it must be of
-     * length 2 of a 2D image and of length 3 for a 3D image.
+     * parameter must be the exact dimension requesting. That is, it must be of
+     * length 2 of a 2D image, 3 for a 3D image and 4 for a 4D image.
      * @{
      */
     Image( unsigned int width, unsigned int height, PixelIDValueEnum valueEnum  );
@@ -379,7 +378,7 @@ namespace simple
      * This method internally utlizes the member function factory to
      * dispatch to methods instantiated on the image of the pixel ID
      */
-    void Allocate ( unsigned int width, unsigned int height, unsigned int depth, PixelIDValueEnum valueEnum, unsigned int numberOfComponents );
+    void Allocate ( unsigned int width, unsigned int height, unsigned int depth, unsigned int dim4, PixelIDValueEnum valueEnum, unsigned int numberOfComponents );
 
     /** \brief Dispatched methods for allocating images
      *
@@ -390,15 +389,15 @@ namespace simple
      */
     template<class TImageType>
     typename EnableIf<IsBasic<TImageType>::Value>::Type
-    AllocateInternal ( unsigned int width, unsigned int height, unsigned int depth, unsigned int numberOfComponents );
+    AllocateInternal ( unsigned int width, unsigned int height, unsigned int depth, unsigned int dim4, unsigned int numberOfComponents );
 
     template<class TImageType>
     typename EnableIf<IsVector<TImageType>::Value>::Type
-    AllocateInternal ( unsigned int width, unsigned int height, unsigned int depth, unsigned int numberOfComponents );
+    AllocateInternal ( unsigned int width, unsigned int height, unsigned int depth, unsigned int dim4, unsigned int numberOfComponents );
 
     template<class TImageType>
     typename EnableIf<IsLabel<TImageType>::Value>::Type
-    AllocateInternal ( unsigned int width, unsigned int height, unsigned int depth, unsigned int numberOfComponents );
+    AllocateInternal ( unsigned int width, unsigned int height, unsigned int depth, unsigned int dim4, unsigned int numberOfComponents );
     /**@}*/
 
 

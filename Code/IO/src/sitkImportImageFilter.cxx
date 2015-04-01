@@ -219,8 +219,10 @@ ImportImageFilter::ImportImageFilter()
 
   this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
+  this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 4 > ();
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
+      
 }
 
 ImportImageFilter::Self& ImportImageFilter::SetSpacing( const std::vector< double > &spacing )
