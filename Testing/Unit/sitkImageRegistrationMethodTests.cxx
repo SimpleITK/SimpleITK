@@ -33,6 +33,9 @@ public:
     : m_Method(m)
     {}
 
+  std::vector<double> scales;
+  std::string toString;
+
   virtual void Execute( )
     {
       // use sitk's output operator for std::vector etc..
@@ -41,6 +44,15 @@ public:
       // stash the stream state
       std::ios  state(NULL);
       state.copyfmt(std::cout);
+
+      if ( m_Method.GetOptimizerIteration() == 0 )
+        {
+        std::cout << "\tLevel: " << std::setw(3) << m_Method.GetCurrentLevel() << std::endl;
+        std::cout << "\tScales: " << m_Method.GetOptimizerScales() << std::endl;
+        this->scales = m_Method.GetOptimizerScales();
+        this->toString = m_Method.ToString();
+        }
+
       std::cout << std::fixed << std::setfill(' ') << std::setprecision( 5 );
       std::cout << std::setw(3) << m_Method.GetOptimizerIteration();
       std::cout << " = " << std::setw(10) << m_Method.GetMetricValue();
@@ -521,5 +533,64 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_Exhaustive)
   std::cout << " Metric value: " << R.GetMetricValue() << std::endl;
 
   EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,0.0), outTx.GetParameters(), 1e-3);
+
+}
+
+
+TEST_F(sitkRegistrationMethodTest, Optimizer_ScalesEstimator)
+{
+  sitk::Image fixedImage = MakeDualGaussianBlobs( v2(64, 64), v2(54, 74), std::vector<unsigned int>(2,256) );
+  sitk::Image movingImage = MakeDualGaussianBlobs( v2(61.2, 73.5), v2(51.2, 83.5), std::vector<unsigned int>(2,256) );
+
+
+  sitk::ImageRegistrationMethod R;
+  R.SetInterpolator(sitk::sitkLinear);
+
+  sitk::Euler2DTransform tx;
+  R.SetInitialTransform(tx, false);
+
+  R.SetMetricAsMeanSquares();
+
+  unsigned int numberOfIterations=100;
+  double convergenceMinimumValue = 1e-5;
+  unsigned int convergenceWindowSize = 2;
+  R.SetOptimizerAsConjugateGradientLineSearch( 1.0,
+                                               numberOfIterations,
+                                               convergenceMinimumValue,
+                                               convergenceWindowSize );
+
+
+  IterationUpdate cmd(R);
+  R.AddCommand(sitk::sitkIterationEvent, cmd);
+
+  R.SetOptimizerScalesFromIndexShift();
+  sitk::Transform outTx = R.Execute(fixedImage, movingImage);
+
+  EXPECT_VECTOR_DOUBLE_NEAR(v3(0.0,-2.8,9.5), outTx.GetParameters(), 0.6);
+  EXPECT_VECTOR_DOUBLE_NEAR(v3(127025,1.0,1.0), cmd.scales, 1e-1);\
+  EXPECT_TRUE( cmd.toString.find("ScalesFromIndexShift") != std::string::npos );
+
+
+  R.SetOptimizerScalesFromJacobian();
+  outTx = R.Execute(fixedImage, movingImage);
+
+  EXPECT_VECTOR_DOUBLE_NEAR(v3(0.0,-2.8,9.5), outTx.GetParameters(), 0.6);
+  EXPECT_VECTOR_DOUBLE_NEAR(v3(44198,1.0,1.0), cmd.scales, 1e-1);
+  EXPECT_TRUE( cmd.toString.find("ScalesFromJacobian") != std::string::npos );
+
+
+  R.SetOptimizerScalesFromPhysicalShift();
+  outTx = R.Execute(fixedImage, movingImage);
+
+  EXPECT_VECTOR_DOUBLE_NEAR(v3(0.0,-2.8,9.5), outTx.GetParameters(), 0.6);
+  EXPECT_VECTOR_DOUBLE_NEAR(v3(119572,1.0,1.0), cmd.scales, 1e-1);
+  EXPECT_TRUE( cmd.toString.find("ScalesFromPhysicalShift") != std::string::npos );
+
+  R.SetOptimizerScales(v3(200000,1.0,1.0));
+  outTx = R.Execute(fixedImage, movingImage);
+
+  EXPECT_VECTOR_DOUBLE_NEAR(v3(0.0,-2.8,9.5), outTx.GetParameters(), 0.4);
+  EXPECT_VECTOR_DOUBLE_NEAR(v3(200000,1.0,1.0), cmd.scales, 1e-10);
+
 
 }
