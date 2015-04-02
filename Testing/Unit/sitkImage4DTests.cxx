@@ -203,7 +203,7 @@ TEST_F(Image4D,Constructors) {
   s4d6[2] = 66;
   s4d6[3] = 67;
   itk::simple::Image image ( s4d6, itk::simple::sitkUInt8 );
-  // EXPECT_EQ ( "08183e1b0c50fd2cf6f070b58e218443fb7d5317", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt8";
+  EXPECT_EQ ( "d2ed3a9bceae811402dcb5223fb16990cd89537d", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt8";
   result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<unsigned char> >::Result;
   EXPECT_EQ ( image.GetPixelIDValue(), result );
   EXPECT_EQ ( image.GetPixelIDTypeAsString(), "8-bit unsigned integer" );
@@ -215,7 +215,7 @@ TEST_F(Image4D,Constructors) {
   EXPECT_EQ( image.GetDirection(), directionI4D );
 
   image = itk::simple::Image ( s4d6, itk::simple::sitkInt16 );
-  // EXPECT_EQ ( "645b71695b94923c868e16b943d8acf8f6788617", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt16";
+  EXPECT_EQ ( "0e444ec26123b59643b58f84dd8f685a991dfb4b", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt16";
   result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<short> >::Result;
   EXPECT_EQ ( image.GetPixelIDValue(), result );
   EXPECT_EQ ( image.GetPixelIDTypeAsString(), "16-bit signed integer" );
@@ -464,6 +464,75 @@ TEST_F(Image4D, CopyOnWrite)
   EXPECT_EQ(static_cast<const sitk::Image *>(&img0)->GetITKBase()->GetReferenceCount(), 3 )
     << " Reference Count for shared after set spacing";
 
-  // Requires 4D hash image filter
-  // EXPECT_EQ( sitk::Hash( imgCopy ), sitk::Hash( img0 ) ) << "Hash for shared and copy after set spacing";
+  // Requires 4D hash image filter, we have that
+  EXPECT_EQ( sitk::Hash( imgCopy ), sitk::Hash( img0 ) ) << "Hash for shared and copy after set spacing";
+}
+
+
+TEST( IO, Image4D )
+{
+  // Image
+
+  std::vector<unsigned int> size(4);
+  size[0] = 10;
+  size[1] = 11;
+  size[2] = 12;
+  size[3] = 13;
+  sitk::Image image = sitk::Image( size, sitk::sitkUInt8 );
+  sitk::Image imageRead;
+
+  EXPECT_EQ( 10u, image.GetWidth() );
+  EXPECT_EQ( 11u, image.GetHeight() );
+  EXPECT_EQ( 12u, image.GetDepth() );
+  EXPECT_EQ( 13u, image.GetSize()[3] );
+  EXPECT_EQ( 1u, image.GetNumberOfComponentsPerPixel() );
+
+  sitk::ImageFileWriter imageWriter;
+  imageWriter.SetFileName( dataFinder.GetOutputDirectory()+"image4d.nii" );
+  ASSERT_NO_THROW( imageWriter.Execute( image ) );
+
+  sitk::ImageFileReader imageReader;
+  imageReader.SetFileName( dataFinder.GetOutputDirectory()+"image4d.nii" );
+  ASSERT_NO_THROW( imageRead = imageReader.Execute() );
+  EXPECT_EQ ( sitk::Hash( image ), sitk::Hash( imageRead ) );
+
+  sitk::Image imageRead2;
+  imageReader.SetFileName( dataFinder.GetFile( "Input/4D.nii.gz" ) );
+  ASSERT_NO_THROW( imageRead2 = imageReader.Execute() );
+  EXPECT_EQ ( "9e81d4b3cdf10a4da5d54c8cd7c4954449d76d5d", sitk::Hash( imageRead2 ) );
+
+  EXPECT_EQ( 36u, imageRead2.GetWidth() );
+  EXPECT_EQ( 48u, imageRead2.GetHeight() );
+  EXPECT_EQ( 21u, imageRead2.GetDepth() );
+  EXPECT_EQ( 4u, imageRead2.GetSize()[3] );
+
+  imageWriter.SetFileName( dataFinder.GetOutputDirectory()+"image4d2.nii" );
+  ASSERT_NO_THROW( imageWriter.Execute( imageRead2 ) );
+
+  sitk::Image imageRead3;
+  ASSERT_NO_THROW( imageRead3 = imageReader.Execute() );
+  imageReader.SetFileName( dataFinder.GetOutputDirectory()+"image4d2.nii" );
+  EXPECT_EQ ( "9e81d4b3cdf10a4da5d54c8cd7c4954449d76d5d", sitk::Hash( imageRead3 ) );
+
+  // VectorImage
+  sitk::Image vectorImage = sitk::Image( size, sitk::sitkVectorUInt8 );
+  sitk::Image vectorImageRead;
+
+  EXPECT_EQ( 10u, vectorImage.GetWidth() );
+  EXPECT_EQ( 11u, vectorImage.GetHeight() );
+  EXPECT_EQ( 12u, vectorImage.GetDepth() );
+  ASSERT_EQ( 4u, vectorImage.GetSize().size() );
+  EXPECT_EQ( 13u, vectorImage.GetSize()[3] );
+  EXPECT_EQ( 4u, vectorImage.GetNumberOfComponentsPerPixel() );
+
+  sitk::ImageFileWriter vectorImageWriter;
+  vectorImageWriter.SetFileName( "image4d.nii" );
+  ASSERT_NO_THROW( vectorImageWriter.Execute( vectorImage ) );
+
+  sitk::ImageFileReader vectorImageReader;
+  vectorImageReader.SetFileName( "image4d.nii" );
+  ASSERT_NO_THROW( vectorImageRead = vectorImageReader.Execute() );
+
+  EXPECT_EQ ( sitk::Hash( vectorImage ), sitk::Hash( vectorImageRead ) );
+
 }
