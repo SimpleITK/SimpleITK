@@ -203,7 +203,7 @@ TEST_F(Image4D,Constructors) {
   s4d6[2] = 66;
   s4d6[3] = 67;
   itk::simple::Image image ( s4d6, itk::simple::sitkUInt8 );
-  // EXPECT_EQ ( "08183e1b0c50fd2cf6f070b58e218443fb7d5317", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt8";
+  EXPECT_EQ ( "d2ed3a9bceae811402dcb5223fb16990cd89537d", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt8";
   result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<unsigned char> >::Result;
   EXPECT_EQ ( image.GetPixelIDValue(), result );
   EXPECT_EQ ( image.GetPixelIDTypeAsString(), "8-bit unsigned integer" );
@@ -215,7 +215,7 @@ TEST_F(Image4D,Constructors) {
   EXPECT_EQ( image.GetDirection(), directionI4D );
 
   image = itk::simple::Image ( s4d6, itk::simple::sitkInt16 );
-  // EXPECT_EQ ( "645b71695b94923c868e16b943d8acf8f6788617", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt16";
+  EXPECT_EQ ( "0e444ec26123b59643b58f84dd8f685a991dfb4b", hasher.SetHashFunction ( itk::simple::HashImageFilter::SHA1 ).Execute ( image ) ) << " SHA1 hash value sitkUInt16";
   result = typelist::IndexOf< InstantiatedPixelIDTypeList, itk::simple::BasicPixelID<short> >::Result;
   EXPECT_EQ ( image.GetPixelIDValue(), result );
   EXPECT_EQ ( image.GetPixelIDTypeAsString(), "16-bit signed integer" );
@@ -464,6 +464,6 @@ TEST_F(Image4D, CopyOnWrite)
   EXPECT_EQ(static_cast<const sitk::Image *>(&img0)->GetITKBase()->GetReferenceCount(), 3 )
     << " Reference Count for shared after set spacing";
 
-  // Requires 4D hash image filter
-  // EXPECT_EQ( sitk::Hash( imgCopy ), sitk::Hash( img0 ) ) << "Hash for shared and copy after set spacing";
+  // Requires 4D hash image filter, we have that
+  EXPECT_EQ( sitk::Hash( imgCopy ), sitk::Hash( img0 ) ) << "Hash for shared and copy after set spacing";
 }
