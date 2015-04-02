@@ -64,6 +64,13 @@ BSplineTransform::BSplineTransform( const BSplineTransform &arg )
 }
 
 
+BSplineTransform::BSplineTransform( const Transform &arg )
+  : Transform( arg )
+{
+  Self::InternalInitialization(Self::GetITKBase());
+}
+
+
 BSplineTransform &BSplineTransform::operator=( const BSplineTransform &arg )
 {
   Superclass::operator=(arg);
