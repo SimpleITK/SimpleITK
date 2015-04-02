@@ -15,6 +15,21 @@
 *  limitations under the License.
 *
 *=========================================================================*/
+
+
+#if defined(_MSC_VER) && _MSC_VER == 1700
+// VS11 (Visual Studio 2012) has limited variadic argument support for
+// std::bind, the following increases the number of supported
+// arguments.
+// https://connect.microsoft.com/VisualStudio/feedback/details/723448/very-few-function-arguments-for-std-bind
+
+ #if defined(_VARIADIC_MAX) && _VARIADIC_MAX < 10
+  #error "_VARIADIC_MAX already defined. Some STL classes may have insufficient number of template parameters."
+ #else
+  #define _VARIADIC_MAX 10
+ #endif
+#endif
+
 #include "sitkDisplacementFieldTransform.h"
 #include "sitkPimpleTransform.hxx"
 #include "sitkImageConvert.h"
