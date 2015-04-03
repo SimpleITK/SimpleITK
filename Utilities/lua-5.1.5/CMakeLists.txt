@@ -1,6 +1,10 @@
 if( MSVC )
   # suppress warning in Visual Studio about the securtiy of methods
   add_definitions (-D_CRT_SECURE_NO_WARNINGS)
+
+  # suppress warning:
+  # '<<' : result of 32-bit shift implicitly converted to 64 bits (was 64-bit shift intended?)
+  SET( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} /wd4334" )
 endif()
 
 file ( GLOB LUA_LIB_SOURCE src/*.c )
@@ -14,4 +18,3 @@ target_link_libraries ( lua lua5 )
 if ( UNIX )
   target_link_libraries ( lua m )
 endif()
- 
