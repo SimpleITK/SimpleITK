@@ -91,24 +91,29 @@ struct IsLabel< itk::LabelMap<  itk::LabelObject< TLabelType, VImageDimension > 
 {};
 
 
-template <typename TPixelIDType>
+template <typename TPixelIDType, unsigned int VImageDimension =0>
 struct IsInstantiated
 {
-  static const bool Value = ((int)PixelIDToPixelIDValue<TPixelIDType>::Result != (int)sitkUnknown);
+  static const bool Value = ((int)PixelIDToPixelIDValue<TPixelIDType>::Result != (int)sitkUnknown)
+    &&  ( (VImageDimension == 0)||(VImageDimension == 2) || (VImageDimension == 3)
+#ifdef SITK_4D_IMAGES
+          || (VImageDimension == 4)
+#endif
+      );
   typedef typename nsstd::integral_constant<bool, Value>::value_type ValueType;
   typedef typename nsstd::integral_constant<bool, Value>::type       Type;
 };
-template <typename TPixelType, unsigned int VImageDimension>
-struct IsInstantiated< itk::Image< TPixelType, VImageDimension> >
-  : public IsInstantiated< typename ImageTypeToPixelID< itk::Image<TPixelType, VImageDimension> >::PixelIDType >
+          template <typename TPixelType, unsigned int VImageDimension >
+struct IsInstantiated< itk::Image< TPixelType, VImageDimension>, 0 >
+  : public IsInstantiated< typename ImageTypeToPixelID< itk::Image<TPixelType, VImageDimension> >::PixelIDType, VImageDimension >
 {};
 template <typename TPixelType, unsigned int VImageDimension>
-struct IsInstantiated< itk::VectorImage< TPixelType, VImageDimension> >
-  : public IsInstantiated< typename ImageTypeToPixelID< itk::VectorImage<TPixelType, VImageDimension> >::PixelIDType >
+struct IsInstantiated< itk::VectorImage< TPixelType, VImageDimension>, 0 >
+  : public IsInstantiated< typename ImageTypeToPixelID< itk::VectorImage<TPixelType, VImageDimension> >::PixelIDType, VImageDimension >
 {};
 template <typename TLabelType, unsigned int VImageDimension>
-struct IsInstantiated< itk::LabelMap<  itk::LabelObject< TLabelType, VImageDimension > > >
-  : public IsInstantiated< typename ImageTypeToPixelID< itk::LabelMap< itk::LabelObject< TLabelType, VImageDimension > > >::PixelIDType >
+struct IsInstantiated< itk::LabelMap<  itk::LabelObject< TLabelType, VImageDimension > >, 0 >
+  : public IsInstantiated< typename ImageTypeToPixelID< itk::LabelMap< itk::LabelObject< TLabelType, VImageDimension > > >::PixelIDType, VImageDimension >
 {};
 
 }

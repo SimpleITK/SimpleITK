@@ -43,6 +43,7 @@
 #cmakedefine SITK_HAS_TR1_UNORDERED_MAP
 
 #cmakedefine SITK_INT64_PIXELIDS
+#cmakedefine SITK_4D_IMAGES
 
 #cmakedefine SITK_EXPLICIT_INSTANTIATION
 

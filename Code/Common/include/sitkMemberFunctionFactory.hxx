@@ -48,7 +48,7 @@ struct MemberFunctionInstantiater
     {}
 
   template <class TPixelIDType>
-  typename EnableIf< IsInstantiated< typename PixelIDToImageType<TPixelIDType, VImageDimension>::ImageType >::Value >::Type
+  typename EnableIf< IsInstantiated<TPixelIDType, VImageDimension >::Value >::Type
   operator()( TPixelIDType*id=NULL ) const
     {
       Unused( id );
@@ -62,7 +62,7 @@ struct MemberFunctionInstantiater
 
   // this methods is conditionally enabled when the PixelID is not instantiated
   template <class TPixelIDType>
-  typename DisableIf< IsInstantiated< typename PixelIDToImageType<TPixelIDType, VImageDimension>::ImageType >::Value >::Type
+  typename DisableIf< IsInstantiated<TPixelIDType, VImageDimension>::Value >::Type
   operator()( TPixelIDType*id=NULL ) const
   {
     Unused( id );
@@ -91,15 +91,16 @@ void MemberFunctionFactory<TMemberFunctionPointer>
   // this shouldn't occour, just may be useful for debugging
   assert( pixelID >= 0 && pixelID < typelist::Length< InstantiatedPixelIDTypeList >::Result );
 
-  sitkStaticAssert( TImageType::ImageDimension == 2 || TImageType::ImageDimension == 3,
-                    "Image Dimension out of range" );
   sitkStaticAssert( IsInstantiated<TImageType>::Value,
-                    "invalid pixel type");
+                    "UnInstantiated ImageType or dimension");
 
   if ( pixelID >= 0 && pixelID < typelist::Length< InstantiatedPixelIDTypeList >::Result )
     {
     switch( int(TImageType::ImageDimension) )
       {
+      case 4:
+        Superclass::m_PFunction4[ pixelID ] = Superclass::BindObject( pfunc, m_ObjectPointer );
+        break;
       case 3:
         Superclass::m_PFunction3[ pixelID ] = Superclass::BindObject( pfunc, m_ObjectPointer );
         break;
@@ -137,6 +138,9 @@ MemberFunctionFactory< TMemberFunctionPointer >
     {
     switch ( imageDimension )
       {
+      case 4:
+        // check if tr1::function has been set in map
+        return Superclass::m_PFunction4.find( pixelID ) != Superclass::m_PFunction4.end();
       case 3:
         // check if tr1::function has been set in map
         return Superclass::m_PFunction3.find( pixelID ) != Superclass::m_PFunction3.end();
@@ -167,6 +171,18 @@ MemberFunctionFactory<TMemberFunctionPointer>
 
   switch ( imageDimension )
     {
+    case 4:
+      // check if tr1::function has been set
+      if ( Superclass::m_PFunction4.find( pixelID ) != Superclass::m_PFunction4.end() )
+        {
+        return Superclass::m_PFunction4[ pixelID ];
+        }
+
+      sitkExceptionMacro ( << "Pixel type: "
+                           << GetPixelIDValueAsString(pixelID)
+                           << " is not supported in 4D by "
+                           << typeid(ObjectType).name()
+                           << " or SimpleITK compiled with SITK_4D_IMAGES set to OFF." );
     case 3:
       // check if tr1::function has been set
       if ( Superclass::m_PFunction3.find( pixelID ) != Superclass::m_PFunction3.end() )
