@@ -232,6 +232,8 @@ TEST(IO, SeriesReader) {
 
   sitk::ImageSeriesReader reader;
 
+  EXPECT_THROW( reader.Execute(), sitk::GenericException );
+
   EXPECT_EQ( reader.GetOutputPixelType(), sitk::sitkUnknown );
   EXPECT_EQ( 0u, reader.GetFileNames().size());
 
@@ -295,6 +297,9 @@ TEST(IO, SeriesReader) {
   EXPECT_EQ ( 3u, image.GetDepth() );
   EXPECT_EQ ( "a51361940fdf6c33cf700e1002e5f5ca5b88cc42", sitk::Hash( image ) );
 
+  fileNames.resize(0);
+  reader.SetFileNames ( fileNames );
+  EXPECT_THROW( reader.Execute(), sitk::GenericException );
 }
 
 

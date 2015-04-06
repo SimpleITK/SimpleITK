@@ -107,8 +107,11 @@ namespace itk {
 
   Image ImageSeriesReader::Execute ()
     {
-    // todo check if filename does not exits for robust error handling
-    assert( !this->m_FileNames.empty() );
+    if( this->m_FileNames.empty() )
+      {
+      sitkExceptionMacro( "No file names set. Cannot write series." );
+      }
+
 
     PixelIDValueType type =  this->GetOutputPixelType();
     unsigned int dimension = 0;
