@@ -537,6 +537,40 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_Exhaustive)
 }
 
 
+TEST_F(sitkRegistrationMethodTest, Optimizer_Amoeba)
+{
+  sitk::Image image = MakeGaussianBlob( v2(64, 64), std::vector<unsigned int>(2,256) );
+
+
+  sitk::ImageRegistrationMethod R;
+  R.SetInterpolator(sitk::sitkLinear);
+
+  sitk::TranslationTransform tx(image.GetDimension());
+  tx.SetOffset(v2(-1,-2));
+  R.SetInitialTransform(tx, false);
+
+  R.SetMetricAsMeanSquares();
+
+  R.SetOptimizerAsAmoeba(2.0);
+
+  IterationUpdate cmd(R);
+  R.AddCommand(sitk::sitkIterationEvent, cmd);
+
+  sitk::Transform outTx = R.Execute(image, image);
+
+
+  std::cout << "-------" << std::endl;
+  std::cout << outTx.ToString() << std::endl;
+  std::cout << "Optimizer stop condition: " << R.GetOptimizerStopConditionDescription() << std::endl;
+  std::cout << " Iteration: " << R.GetOptimizerIteration() << std::endl;
+  std::cout << " Metric value: " << R.GetMetricValue() << std::endl;
+
+  EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,0.0), outTx.GetParameters(), 1e-3);
+
+
+}
+
+
 TEST_F(sitkRegistrationMethodTest, Optimizer_ScalesEstimator)
 {
   sitk::Image fixedImage = MakeDualGaussianBlobs( v2(64, 64), v2(54, 74), std::vector<unsigned int>(2,256) );
