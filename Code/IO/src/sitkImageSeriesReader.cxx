@@ -109,7 +109,7 @@ namespace itk {
     {
     if( this->m_FileNames.empty() )
       {
-      sitkExceptionMacro( "No file names set. Cannot write series." );
+      sitkExceptionMacro( "File names information is empty. Cannot read series." );
       }
 
 
