@@ -364,6 +364,8 @@ TEST(IO, ImageSeriesWriter )
 
   sitk::Image image( size, sitk::sitkUInt8 );
 
+  EXPECT_ANY_THROW(writer.Execute(image));
+
   writer.SetFileNames( fileNames );
 
   EXPECT_EQ( writer.GetFileNames().size(), 3u );
@@ -378,6 +380,9 @@ TEST(IO, ImageSeriesWriter )
 
   EXPECT_ANY_THROW( sitk::WriteImage( image, fileNames ) );
 
+  fileNames.resize(0);
+  writer.SetFileNames( fileNames );
+  EXPECT_ANY_THROW(writer.Execute(image));
 }
 
 
