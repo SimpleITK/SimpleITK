@@ -551,7 +551,7 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_Amoeba)
 
   R.SetMetricAsMeanSquares();
 
-  R.SetOptimizerAsAmoeba(2.0);
+  R.SetOptimizerAsAmoeba(2.0, 200);
 
   IterationUpdate cmd(R);
   R.AddCommand(sitk::sitkIterationEvent, cmd);

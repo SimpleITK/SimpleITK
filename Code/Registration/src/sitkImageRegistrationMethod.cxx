@@ -318,15 +318,17 @@ ImageRegistrationMethod::SetOptimizerAsExhaustive(const std::vector<unsigned int
 
 ImageRegistrationMethod::Self&
 ImageRegistrationMethod::SetOptimizerAsAmoeba( double simplexDelta,
+                                               unsigned int numberOfIterations,
                                                double parametersConvergenceTolerance,
                                                double functionConvergenceTolerance,
-                                               unsigned int numberOfIterations)
+                                               bool withRestarts )
 {
   m_OptimizerType = Amoeba;
   m_OptimizerSimplexDelta = simplexDelta;
+  m_OptimizerNumberOfIterations = numberOfIterations;
   m_OptimizerParametersConvergenceTolerance = parametersConvergenceTolerance;
   m_OptimizerFunctionConvergenceTolerance = functionConvergenceTolerance;
-  m_OptimizerNumberOfIterations = numberOfIterations;
+  m_OptimizerWithRestarts = withRestarts;
   return *this;
 }
 

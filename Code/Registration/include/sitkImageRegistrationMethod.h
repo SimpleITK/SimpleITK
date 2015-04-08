@@ -212,9 +212,10 @@ namespace simple
                                     double stepLength = 1.0 );
 
     Self& SetOptimizerAsAmoeba(double simplexDelta,
+                               unsigned int numberOfIterations,
                                double parametersConvergenceTolerance=1e-8,
                                double functionConvergenceTolerance=1e-4,
-                               unsigned int numberOfIterations=100);
+                               bool withRestarts = false );
 
     /** \brief A per parameter weighting array for the optimizer.
      *
@@ -433,6 +434,7 @@ namespace simple
     double m_OptimizerSimplexDelta;
     double m_OptimizerParametersConvergenceTolerance;
     double m_OptimizerFunctionConvergenceTolerance;
+    bool m_OptimizerWithRestarts;
 
     std::vector<double> m_OptimizerWeights;
 
