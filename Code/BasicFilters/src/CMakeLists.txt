@@ -49,6 +49,7 @@ set ( SimpleITKBasicFilters1Source
 add_library ( SimpleITKBasicFilters1 ${SimpleITKBasicFilters1Source} )
 target_link_libraries ( SimpleITKBasicFilters1 SimpleITKCommon SimpleITKBasicFilters0 ${ITK_LIBRARIES} )
 set_target_properties( SimpleITKBasicFilters1  PROPERTIES SKIP_BUILD_RPATH TRUE )
+add_dependencies ( SimpleITKBasicFilters1 BasicFiltersSourceCode )
 sitk_install_exported_target( SimpleITKBasicFilters1 )
 list ( APPEND SimpleITK_LIBRARIES SimpleITKBasicFilters1 )
 
