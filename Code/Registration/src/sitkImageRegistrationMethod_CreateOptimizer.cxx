@@ -243,15 +243,18 @@ namespace simple
       typedef itk::AmoebaOptimizerv4 _OptimizerType;
       _OptimizerType::Pointer      optimizer     = _OptimizerType::New();
 
-      optimizer->SetNumberOfIterations( this->m_OptimizerNumberOfIterations  );
-      optimizer->SetParametersConvergenceTolerance(this->m_OptimizerParametersConvergenceTolerance);
-      optimizer->SetFunctionConvergenceTolerance(this->m_OptimizerFunctionConvergenceTolerance);
-
       _OptimizerType::ParametersType simplexDelta( numberOfTransformParameters );
       simplexDelta.Fill( this->m_OptimizerSimplexDelta );
       optimizer->SetInitialSimplexDelta( simplexDelta );
 
+      optimizer->SetNumberOfIterations( this->m_OptimizerNumberOfIterations  );
+      optimizer->SetParametersConvergenceTolerance(this->m_OptimizerParametersConvergenceTolerance);
+      optimizer->SetFunctionConvergenceTolerance(this->m_OptimizerFunctionConvergenceTolerance);
+      optimizer->SetOptimizeWithRestarts(this->m_OptimizerWithRestarts);
+
+
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetValue,optimizer);
+      this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer);
       this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer);
 
       optimizer->Register();
