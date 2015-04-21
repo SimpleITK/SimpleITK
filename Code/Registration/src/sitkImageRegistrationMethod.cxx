@@ -273,13 +273,13 @@ ImageRegistrationMethod::SetOptimizerAsGradientDescentLineSearch( double learnin
 
 
 ImageRegistrationMethod::Self&
-  ImageRegistrationMethod::SetOptimizerAsLBFGSB( double gradientConvergenceTolerance,
-                                                 unsigned int maximumNumberOfIterations,
-                                                 unsigned int maximumNumberOfCorrections,
-                                                 unsigned int maximumNumberOfFunctionEvaluations,
-                                                 double costFunctionConvergenceFactor,
-                                                 double lowerBound,
-                                                 double upperBound)
+ImageRegistrationMethod::SetOptimizerAsLBFGSB( double gradientConvergenceTolerance,
+                                               unsigned int maximumNumberOfIterations,
+                                               unsigned int maximumNumberOfCorrections,
+                                               unsigned int maximumNumberOfFunctionEvaluations,
+                                               double costFunctionConvergenceFactor,
+                                               double lowerBound,
+                                               double upperBound)
 {
   m_OptimizerType = LBFGSB;
   m_OptimizerGradientConvergenceTolerance = gradientConvergenceTolerance;
@@ -313,6 +313,22 @@ ImageRegistrationMethod::SetOptimizerAsExhaustive(const std::vector<unsigned int
   m_OptimizerType = Exhaustive;
   m_OptimizerStepLength = stepLength;
   m_OptimizerNumberOfSteps = numberOfSteps;
+  return *this;
+}
+
+ImageRegistrationMethod::Self&
+ImageRegistrationMethod::SetOptimizerAsAmoeba( double simplexDelta,
+                                               unsigned int numberOfIterations,
+                                               double parametersConvergenceTolerance,
+                                               double functionConvergenceTolerance,
+                                               bool withRestarts )
+{
+  m_OptimizerType = Amoeba;
+  m_OptimizerSimplexDelta = simplexDelta;
+  m_OptimizerNumberOfIterations = numberOfIterations;
+  m_OptimizerParametersConvergenceTolerance = parametersConvergenceTolerance;
+  m_OptimizerFunctionConvergenceTolerance = functionConvergenceTolerance;
+  m_OptimizerWithRestarts = withRestarts;
   return *this;
 }
 

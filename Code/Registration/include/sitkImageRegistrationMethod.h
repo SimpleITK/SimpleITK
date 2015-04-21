@@ -211,6 +211,11 @@ namespace simple
     Self& SetOptimizerAsExhaustive( const std::vector<unsigned int> &numberOfSteps,
                                     double stepLength = 1.0 );
 
+    Self& SetOptimizerAsAmoeba(double simplexDelta,
+                               unsigned int numberOfIterations,
+                               double parametersConvergenceTolerance=1e-8,
+                               double functionConvergenceTolerance=1e-4,
+                               bool withRestarts = false );
 
     /** \brief A per parameter weighting array for the optimizer.
      *
@@ -401,7 +406,8 @@ namespace simple
                          GradientDescent,
                          GradientDescentLineSearch,
                          LBFGSB,
-                         Exhaustive
+                         Exhaustive,
+                         Amoeba
     };
     OptimizerType m_OptimizerType;
     double m_OptimizerLearningRate;
@@ -425,6 +431,10 @@ namespace simple
     double m_OptimizerUpperBound;
     std::vector<unsigned int> m_OptimizerNumberOfSteps;
     double m_OptimizerStepLength;
+    double m_OptimizerSimplexDelta;
+    double m_OptimizerParametersConvergenceTolerance;
+    double m_OptimizerFunctionConvergenceTolerance;
+    bool m_OptimizerWithRestarts;
 
     std::vector<double> m_OptimizerWeights;
 
