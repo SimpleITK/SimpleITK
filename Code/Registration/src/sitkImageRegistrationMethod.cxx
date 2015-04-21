@@ -279,7 +279,8 @@ ImageRegistrationMethod::SetOptimizerAsLBFGSB( double gradientConvergenceToleran
                                                unsigned int maximumNumberOfFunctionEvaluations,
                                                double costFunctionConvergenceFactor,
                                                double lowerBound,
-                                               double upperBound)
+                                               double upperBound,
+                                               bool trace )
 {
   m_OptimizerType = LBFGSB;
   m_OptimizerGradientConvergenceTolerance = gradientConvergenceTolerance;
@@ -289,6 +290,7 @@ ImageRegistrationMethod::SetOptimizerAsLBFGSB( double gradientConvergenceToleran
   m_OptimizerCostFunctionConvergenceFactor = costFunctionConvergenceFactor;
   m_OptimizerLowerBound = lowerBound;
   m_OptimizerUpperBound = upperBound;
+  m_OptimizerTrace = trace;
   return *this;
 }
 
