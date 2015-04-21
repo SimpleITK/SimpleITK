@@ -48,7 +48,7 @@ R = sitk.ImageRegistrationMethod()
 R.SetMetricAsCorrelation()
 
 R.SetOptimizerAsLBFGSB(gradientConvergenceTolerance=1e-5,
-                       maximumNumberOfIterations=1,
+                       maximumNumberOfIterations=100,
                        maximumNumberOfCorrections=5,
                        maximumNumberOfFunctionEvaluations=1000,
                        costFunctionConvergenceFactor=1e+7)

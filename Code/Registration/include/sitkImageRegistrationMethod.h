@@ -193,7 +193,8 @@ namespace simple
                                unsigned int maximumNumberOfFunctionEvaluations = 2000,
                                double costFunctionConvergenceFactor = 1e+7,
                                double lowerBound = std::numeric_limits<double>::min(),
-                               double upperBound = std::numeric_limits<double>::max());
+                               double upperBound = std::numeric_limits<double>::max(),
+                               bool trace = false );
 
     /** \brief Set the optimizer to sample the metric at regular steps.
      *
@@ -429,6 +430,7 @@ namespace simple
     double m_OptimizerCostFunctionConvergenceFactor;
     double m_OptimizerLowerBound;
     double m_OptimizerUpperBound;
+    bool m_OptimizerTrace;
     std::vector<unsigned int> m_OptimizerNumberOfSteps;
     double m_OptimizerStepLength;
     double m_OptimizerSimplexDelta;
