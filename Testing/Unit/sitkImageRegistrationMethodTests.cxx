@@ -534,7 +534,7 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_LBFGSB)
                          true);
 
   outTx = R.Execute(image, image);
-  EXPECT_EQ(1, R.GetOptimizerIteration()) << "Checking iteration.";
+  EXPECT_EQ(1u, R.GetOptimizerIteration()) << "Checking iteration.";
 }
 
 
