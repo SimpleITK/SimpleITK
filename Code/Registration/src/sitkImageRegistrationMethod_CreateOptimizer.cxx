@@ -207,6 +207,7 @@ namespace simple
       optimizer->SetBoundSelection( boundSelection );
       optimizer->SetLowerBound( lowerBound  );
       optimizer->SetUpperBound( upperBound  );
+      optimizer->SetTrace( m_OptimizerTrace );
       optimizer->Register();
 
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetValue,optimizer.GetPointer());

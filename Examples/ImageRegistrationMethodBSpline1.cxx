@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
   R.SetMetricAsCorrelation();
 
   const double gradientConvergenceTolerance = 1e-5;
-  const unsigned int maximumNumberOfIterations = 20;
+  const unsigned int maximumNumberOfIterations = 100;
   const unsigned int maximumNumberOfCorrections = 5;
   const unsigned int maximumNumberOfFunctionEvaluations = 1000;
   const double costFunctionConvergenceFactor = 1e+7;
