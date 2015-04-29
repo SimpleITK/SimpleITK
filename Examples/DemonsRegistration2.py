@@ -69,7 +69,7 @@ print("-------")
 print("Number Of Iterations: {0}".format(demons.GetElapsedIterations()))
 print(" RMS: {0}".format(demons.GetRMSChange()))
 
-outTx = sitk.Transform(displacementField, sitk.sitkDisplacementField)
+outTx = sitk.DisplacementFieldTransform(displacementField)
 
 sitk.WriteTransform(outTx, sys.argv[3])
 
