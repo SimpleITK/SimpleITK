@@ -203,41 +203,54 @@
         {
           "name" : "Minimum",
           "value" : 100,
-          "parameters" : [ 1 ]
+          "parameters" : [
+            1
+          ]
         },
         {
           "name" : "Maximum",
           "value" : 199,
-          "parameters" : [ 1 ]
+          "parameters" : [
+            1
+          ]
         },
         {
           "name" : "Mean",
           "value" : 138.56282364638136,
-          "tolerance" : 1e-8,
-          "parameters" : [ 1 ]
+          "tolerance" : 1e-08,
+          "parameters" : [
+            1
+          ]
         },
         {
           "name" : "Median",
           "value" : 137,
-          "parameters" : [ 1 ]
+          "parameters" : [
+            1
+          ]
         },
         {
           "name" : "Sigma",
           "value" : 14.051474145970603,
-          "tolerance" : 1e-8,
-          "parameters" : [ 1 ]
+          "tolerance" : 1e-08,
+          "parameters" : [
+            1
+          ]
         },
         {
           "name" : "Sum",
           "value" : 3344768,
-          "parameters" : [ 1 ]
+          "parameters" : [
+            1
+          ]
         },
-
         {
           "name" : "Variance",
           "value" : 197.44392567488032,
-          "tolerance" : 1e-6,
-          "parameters" : [ 1 ]
+          "tolerance" : 1e-06,
+          "parameters" : [
+            1
+          ]
         }
       ]
     }

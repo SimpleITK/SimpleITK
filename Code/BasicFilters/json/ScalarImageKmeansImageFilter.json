@@ -43,7 +43,10 @@
           "parameter" : "ClassWithInitialMean",
           "type" : "double",
           "dim_vec" : 1,
-          "value" : [25000, 30000]
+          "value" : [
+            25000,
+            30000
+          ]
         }
       ],
       "md5hash" : "6eb61d9e67f6d5d37e201f486bbf2bd4",

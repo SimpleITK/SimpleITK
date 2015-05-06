@@ -20,9 +20,9 @@
       "doc" : "",
       "pixeltype" : "Output",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin().",
+      "detaileddescriptionSet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin() .",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin()."
+      "detaileddescriptionGet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<PixelType>::NonpositiveMin() ."
     },
     {
       "name" : "ComputeFeretDiameter",

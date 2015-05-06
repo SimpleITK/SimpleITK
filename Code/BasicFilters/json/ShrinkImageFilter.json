@@ -39,7 +39,10 @@
           "parameter" : "ShrinkFactors",
           "type" : "unsigned int",
           "dim_vec" : 1,
-          "value" : [2,3]
+          "value" : [
+            2,
+            3
+          ]
         }
       ],
       "inputs" : [

@@ -7,7 +7,7 @@
   "pixel_types" : "BasicPixelIDTypeList",
   "output_image_type" : "itk::Image< Vector<double, TImageType::ImageDimension>, TImageType::ImageDimension >",
   "filter_type" : "itk::FastSymmetricForcesDemonsRegistrationFilter<TImageType, TImageType, OutputImageType>",
-  "include_files"  : [
+  "include_files" : [
     "sitkImageConvert.h"
   ],
   "inputs" : [
@@ -195,7 +195,7 @@
         },
         {
           "name" : "RMSChange",
-          "value" :  0.2879341,
+          "value" : 0.2879341,
           "tolerance" : 1e-06
         },
         {

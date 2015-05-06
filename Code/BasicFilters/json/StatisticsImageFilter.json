@@ -70,17 +70,17 @@
         {
           "name" : "Mean",
           "value" : "77.7415618",
-          "tolerance" : 1e-6
+          "tolerance" : 1e-06
         },
         {
           "name" : "Sigma",
           "value" : "78.2619",
-          "tolerance" : 1e3
+          "tolerance" : 1000.0
         },
         {
           "name" : "Variance",
           "value" : "6124.9260064656282",
-          "tolerance" : 1e-6
+          "tolerance" : 1e-06
         },
         {
           "name" : "Sum",

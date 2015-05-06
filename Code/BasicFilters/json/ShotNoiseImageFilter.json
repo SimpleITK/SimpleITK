@@ -34,7 +34,7 @@
           "value" : "123"
         }
       ],
-      "tolerance" : 5e2,
+      "tolerance" : 500.0,
       "inputs" : [
         "Input/cthead1.png"
       ]
@@ -50,7 +50,7 @@
           "value" : "123"
         }
       ],
-      "tolerance" : 5e2,
+      "tolerance" : 500.0,
       "inputs" : [
         "Input/RA-Short.nrrd"
       ]

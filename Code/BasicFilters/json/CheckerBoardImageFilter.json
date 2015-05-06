@@ -39,7 +39,10 @@
           "parameter" : "CheckerPattern",
           "type" : "uint32_t",
           "dim_vec" : 1,
-          "value" : [20,4]
+          "value" : [
+            20,
+            4
+          ]
         }
       ],
       "md5hash" : "379bd66a18b7ae029c101ebdcb20a8b3",

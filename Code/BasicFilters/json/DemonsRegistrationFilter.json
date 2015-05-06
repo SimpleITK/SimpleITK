@@ -7,7 +7,7 @@
   "pixel_types" : "BasicPixelIDTypeList",
   "output_image_type" : "itk::Image< Vector<double, TImageType::ImageDimension>, TImageType::ImageDimension >",
   "filter_type" : "itk::DemonsRegistrationFilter<TImageType, TImageType, OutputImageType>",
-  "include_files"  : [
+  "include_files" : [
     "sitkImageConvert.h"
   ],
   "inputs" : [
@@ -157,7 +157,7 @@
         },
         {
           "name" : "Metric",
-          "value" : 771.75286591059262,
+          "value" : 771.7528659105926,
           "tolerance" : 0.0001
         }
       ]

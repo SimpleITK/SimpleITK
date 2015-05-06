@@ -104,13 +104,20 @@
           "parameter" : "OutputSize",
           "type" : "uint32_t",
           "dim_vec" : 1,
-          "value" : [128,128,128]
+          "value" : [
+            128,
+            128,
+            128
+          ]
         },
         {
           "parameter" : "OutputSpacing",
           "type" : "double",
           "dim_vec" : 1,
-          "value" : [0.73, 0.73]
+          "value" : [
+            0.73,
+            0.73
+          ]
         }
       ],
       "tolerance" : "0.001",
@@ -127,7 +134,10 @@
           "parameter" : "OutputSize",
           "type" : "uint32_t",
           "dim_vec" : 1,
-          "value" : [297,371]
+          "value" : [
+            297,
+            371
+          ]
         },
         {
           "parameter" : "Interpolator",

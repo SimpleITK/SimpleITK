@@ -79,13 +79,21 @@
           "parameter" : "Size",
           "type" : "unsigned int",
           "dim_vec" : 1,
-          "value" : [10, 0, 10]
+          "value" : [
+            10,
+            0,
+            10
+          ]
         },
         {
           "parameter" : "Index",
           "type" : "int",
           "dim_vec" : 1,
-          "value" : [16, 20, 51]
+          "value" : [
+            16,
+            20,
+            51
+          ]
         },
         {
           "parameter" : "DirectionCollapseToStrategy",

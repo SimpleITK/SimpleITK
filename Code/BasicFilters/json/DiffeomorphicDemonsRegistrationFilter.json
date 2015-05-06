@@ -7,7 +7,7 @@
   "pixel_types" : "BasicPixelIDTypeList",
   "output_image_type" : "itk::Image< Vector<double, TImageType::ImageDimension>, TImageType::ImageDimension >",
   "filter_type" : "itk::DiffeomorphicDemonsRegistrationFilter<TImageType, TImageType, OutputImageType>",
-  "include_files"  : [
+  "include_files" : [
     "sitkImageConvert.h"
   ],
   "inputs" : [
@@ -182,7 +182,7 @@
         },
         {
           "name" : "Metric",
-          "value" :  516.57469584661158,
+          "value" : 516.5746958466116,
           "tolerance" : 0.0001
         }
       ]
@@ -209,7 +209,7 @@
         },
         {
           "name" : "Metric",
-          "value" :  378.38936,
+          "value" : 378.38936,
           "tolerance" : 0.0001
         }
       ]

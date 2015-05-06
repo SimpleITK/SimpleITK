@@ -7,7 +7,7 @@
   "pixel_types" : "BasicPixelIDTypeList",
   "output_image_type" : "itk::Image< Vector<double, TImageType::ImageDimension>, TImageType::ImageDimension >",
   "filter_type" : "itk::SymmetricForcesDemonsRegistrationFilter<TImageType, TImageType, OutputImageType>",
-  "include_files"  : [
+  "include_files" : [
     "sitkImageConvert.h"
   ],
   "inputs" : [

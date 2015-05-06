@@ -120,8 +120,7 @@
         {
           "name" : "Threshold",
           "value" : 0.498051,
-          "tolerance" : 0.00001
-
+          "tolerance" : 1e-05
         }
       ]
     }

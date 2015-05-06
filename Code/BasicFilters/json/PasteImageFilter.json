@@ -44,7 +44,10 @@
           "parameter" : "SourceSize",
           "type" : "unsigned int",
           "dim_vec" : 1,
-          "value" : [200, 150]
+          "value" : [
+            200,
+            150
+          ]
         }
       ],
       "inputs" : [
@@ -61,7 +64,10 @@
           "parameter" : "SourceSize",
           "type" : "unsigned int",
           "dim_vec" : 1,
-          "value" : [179, 240]
+          "value" : [
+            179,
+            240
+          ]
         }
       ],
       "inputs" : [
@@ -78,19 +84,28 @@
           "parameter" : "SourceSize",
           "type" : "unsigned int",
           "dim_vec" : 1,
-          "value" : [20, 15]
+          "value" : [
+            20,
+            15
+          ]
         },
         {
           "parameter" : "SourceIndex",
           "type" : "int",
           "dim_vec" : 1,
-          "value" : [100, 100]
+          "value" : [
+            100,
+            100
+          ]
         },
         {
           "parameter" : "DestinationIndex",
           "type" : "int",
           "dim_vec" : 1,
-          "value" : [100, 100]
+          "value" : [
+            100,
+            100
+          ]
         }
       ],
       "inputs" : [

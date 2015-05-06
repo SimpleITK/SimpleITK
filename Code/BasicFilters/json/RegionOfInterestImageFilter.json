@@ -50,13 +50,19 @@
           "parameter" : "Size",
           "type" : "unsigned int",
           "dim_vec" : 1,
-          "value" : [10, 10]
+          "value" : [
+            10,
+            10
+          ]
         },
         {
           "parameter" : "Index",
           "type" : "int",
           "dim_vec" : 1,
-          "value" : [167, 151]
+          "value" : [
+            167,
+            151
+          ]
         }
       ],
       "inputs" : [

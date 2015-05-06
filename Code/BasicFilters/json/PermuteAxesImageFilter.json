@@ -43,7 +43,10 @@
           "parameter" : "Order",
           "type" : "unsigned int",
           "dim_vec" : 1,
-          "value" : [0,1]
+          "value" : [
+            0,
+            1
+          ]
         }
       ],
       "inputs" : [
@@ -59,7 +62,11 @@
           "parameter" : "Order",
           "type" : "unsigned int",
           "dim_vec" : 1,
-          "value" : [1,2,0]
+          "value" : [
+            1,
+            2,
+            0
+          ]
         }
       ],
       "inputs" : [

@@ -89,13 +89,19 @@
           "parameter" : "Seed1",
           "type" : "uint32_t",
           "dim_vec" : 1,
-          "value" : [113,84]
+          "value" : [
+            113,
+            84
+          ]
         },
         {
           "parameter" : "Seed2",
           "type" : "uint32_t",
           "dim_vec" : 1,
-          "value" : [120,99]
+          "value" : [
+            120,
+            99
+          ]
         },
         {
           "parameter" : "Threshold",

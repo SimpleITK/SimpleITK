@@ -50,7 +50,7 @@
           "value" : "123"
         }
       ],
-      "tolerance" : 1e4,
+      "tolerance" : 10000.0,
       "inputs" : [
         "Input/RA-Short.nrrd"
       ]
