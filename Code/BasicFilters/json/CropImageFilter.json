@@ -50,13 +50,19 @@
           "parameter" : "LowerBoundaryCropSize",
           "type" : "unsigned int",
           "dim_vec" : 1,
-          "value" : [100, 100]
+          "value" : [
+            100,
+            100
+          ]
         },
         {
           "parameter" : "UpperBoundaryCropSize",
           "type" : "unsigned int",
           "dim_vec" : 1,
-          "value" : [167, 151]
+          "value" : [
+            167,
+            151
+          ]
         }
       ],
       "inputs" : [

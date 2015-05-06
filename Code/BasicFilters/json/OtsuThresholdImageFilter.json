@@ -111,12 +111,6 @@
     {
       "tag" : "cthead1_with_unmask",
       "description" : "CT Head with unmask",
-      "settings" : [],
-      "md5hash" : "bfaba8593ac8ace80316c9e17f378f08",
-      "inputs" : [
-        "Input/cthead1.png",
-        "Input/cthead1-mask.png"
-      ],
       "settings" : [
         {
           "parameter" : "MaskOutput",
@@ -124,6 +118,11 @@
           "python_value" : "False",
           "R_value" : "FALSE"
         }
+      ],
+      "md5hash" : "bfaba8593ac8ace80316c9e17f378f08",
+      "inputs" : [
+        "Input/cthead1.png",
+        "Input/cthead1-mask.png"
       ],
       "measurements_results" : [
         {
@@ -144,7 +143,7 @@
         {
           "name" : "Threshold",
           "value" : 0.496117,
-          "tolerance" : 0.00001
+          "tolerance" : 1e-05
         }
       ]
     }

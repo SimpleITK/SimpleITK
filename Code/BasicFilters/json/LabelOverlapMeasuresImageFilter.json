@@ -111,7 +111,7 @@
       "measurements_results" : [
         {
           "name" : "FalseNegativeError",
-          "value" : 0.16328963051251491,
+          "value" : 0.1632896305125149,
           "tolerance" : 1e-05
         },
         {
@@ -121,12 +121,12 @@
         },
         {
           "name" : "MeanOverlap",
-          "value" : 0.88424234790275857,
+          "value" : 0.8842423479027586,
           "tolerance" : 1e-05
         },
         {
           "name" : "UnionOverlap",
-          "value" : 0.79250395123052608,
+          "value" : 0.7925039512305261,
           "tolerance" : 1e-05
         },
         {
@@ -136,12 +136,12 @@
         },
         {
           "name" : "JaccardCoefficient",
-          "value" : 0.79250395123052608,
+          "value" : 0.7925039512305261,
           "tolerance" : 1e-05
         },
         {
           "name" : "DiceCoefficient",
-          "value" : 0.88424234790275857,
+          "value" : 0.8842423479027586,
           "tolerance" : 1e-05
         }
       ],

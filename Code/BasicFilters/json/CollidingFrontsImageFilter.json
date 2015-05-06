@@ -71,7 +71,9 @@
           "value" : [
             "{30,30}"
           ],
-          "tcl_value" : [ "30 30" ],
+          "tcl_value" : [
+            "30 30"
+          ],
           "lua_value" : "{ {30,30} }",
           "python_value" : "[ [30,30] ]",
           "ruby_value" : "[ [30,30] ]",
@@ -84,7 +86,9 @@
           "value" : [
             "{255,105}"
           ],
-          "tcl_value" : [ "255 105" ],
+          "tcl_value" : [
+            "255 105"
+          ],
           "python_value" : "[ [255,105] ]",
           "ruby_value" : "[ [255,105] ]",
           "R_value" : "list(c(255,105))"

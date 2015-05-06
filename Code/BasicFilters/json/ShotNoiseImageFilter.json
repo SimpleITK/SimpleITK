@@ -34,7 +34,7 @@
           "value" : "123"
         }
       ],
-      "tolerance" : 5e2,
+      "tolerance" : 500.0,
       "inputs" : [
         "Input/cthead1.png"
       ]
@@ -50,7 +50,7 @@
           "value" : "123"
         }
       ],
-      "tolerance" : 5e2,
+      "tolerance" : 500.0,
       "inputs" : [
         "Input/RA-Short.nrrd"
       ]
@@ -66,12 +66,12 @@
           "value" : "123"
         }
       ],
-      "tolerance" : 5e2,
+      "tolerance" : 500.0,
       "inputs" : [
         "Input/VM1111Shrink-RGB.png"
       ]
     }
   ],
   "briefdescription" : "Alter an image with shot noise.",
-  "detaileddescription" : "The shot noise follows a Poisson distribution.\n\n\\author Gaetan Lehmann\n\nThis code was contributed in the Insight Journal paper \"Noise\nSimulation\".http://hdl.handle.net/10380/3158"
+  "detaileddescription" : "The shot noise follows a Poisson distribution.\n\n\\author Gaetan Lehmann\n\nThis code was contributed in the Insight Journal paper \"Noise\nSimulation\". http://hdl.handle.net/10380/3158"
 }

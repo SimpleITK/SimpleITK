@@ -45,7 +45,10 @@
           "parameter" : "Seed",
           "type" : "uint32_t",
           "dim_vec" : 1,
-          "value" : [142,170]
+          "value" : [
+            142,
+            170
+          ]
         }
       ],
       "md5hash" : "86e55f748ca0719fda1ee360b823dd67",

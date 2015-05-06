@@ -49,7 +49,11 @@
           "parameter" : "FlipAxes",
           "type" : "bool",
           "dim_vec" : 1,
-          "value" : [ "true", "false", "true" ],
+          "value" : [
+            "true",
+            "false",
+            "true"
+          ],
           "python_value" : "( True, False, True )",
           "R_value" : "c( TRUE, FALSE, TRUE )"
         }

@@ -67,7 +67,10 @@
           "parameter" : "KernelRadius",
           "type" : "uint32_t",
           "dim_vec" : 1,
-          "value" : [20,1]
+          "value" : [
+            20,
+            1
+          ]
         },
         {
           "parameter" : "KernelType",

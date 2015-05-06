@@ -54,7 +54,11 @@
           "parameter" : "KernelRadius",
           "type" : "uint32_t",
           "dim_vec" : 1,
-          "value" : [20,5,2],
+          "value" : [
+            20,
+            5,
+            2
+          ],
           "python_value" : "[ 20, 5, 2 ]"
         },
         {
@@ -82,7 +86,10 @@
           "parameter" : "KernelRadius",
           "type" : "uint32_t",
           "dim_vec" : 1,
-          "value" : [20,5]
+          "value" : [
+            20,
+            5
+          ]
         },
         {
           "parameter" : "KernelType",

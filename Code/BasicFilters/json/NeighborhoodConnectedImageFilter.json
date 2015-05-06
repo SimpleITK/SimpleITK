@@ -99,7 +99,10 @@
           "parameter" : "Radius",
           "dim_vec" : 1,
           "type" : "unsigned int",
-          "value" : [5,5]
+          "value" : [
+            5,
+            5
+          ]
         }
       ],
       "inputs" : [

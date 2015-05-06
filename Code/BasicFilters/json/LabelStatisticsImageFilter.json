@@ -203,45 +203,58 @@
         {
           "name" : "Minimum",
           "value" : 100,
-          "parameters" : [ 1 ]
+          "parameters" : [
+            1
+          ]
         },
         {
           "name" : "Maximum",
           "value" : 199,
-          "parameters" : [ 1 ]
+          "parameters" : [
+            1
+          ]
         },
         {
           "name" : "Mean",
           "value" : 138.56282364638136,
-          "tolerance" : 1e-8,
-          "parameters" : [ 1 ]
+          "tolerance" : 1e-08,
+          "parameters" : [
+            1
+          ]
         },
         {
           "name" : "Median",
           "value" : 137,
-          "parameters" : [ 1 ]
+          "parameters" : [
+            1
+          ]
         },
         {
           "name" : "Sigma",
           "value" : 14.051474145970603,
-          "tolerance" : 1e-8,
-          "parameters" : [ 1 ]
+          "tolerance" : 1e-08,
+          "parameters" : [
+            1
+          ]
         },
         {
           "name" : "Sum",
           "value" : 3344768,
-          "parameters" : [ 1 ]
+          "parameters" : [
+            1
+          ]
         },
-
         {
           "name" : "Variance",
           "value" : 197.44392567488032,
-          "tolerance" : 1e-6,
-          "parameters" : [ 1 ]
+          "tolerance" : 1e-06,
+          "parameters" : [
+            1
+          ]
         }
       ]
     }
   ],
   "briefdescription" : "Given an intensity image and a label map, compute min, max, variance and mean of the pixels associated with each label or segment.",
-  "detaileddescription" : "LabelStatisticsImageFiltercomputes the minimum, maximum, sum, mean, median, variance and sigma of regions of an intensity image, where the regions are defined via a label map (a second input). The label image should be integral type. The filter needs all of its input image. It behaves as a filter with an input and output. Thus it can be inserted in a pipline with other filters and the statistics will only be recomputed if a downstream filter changes.\n\nOptionally, the filter also computes intensity histograms on each object. If histograms are enabled, a median intensity value can also be computed, although its accuracy is limited to the bin width of the histogram. If histograms are not enabled, the median returns zero.\n\nThe filter passes its intensity input through unmodified. The filter is threaded. It computes statistics in each thread then combines them in its AfterThreadedGenerate method.\n\n\\par Wiki Examples:\n\n\\li All Examples\n\n\\li Get statistical properties of labeled regions in an image"
+  "detaileddescription" : "LabelStatisticsImageFilter computes the minimum, maximum, sum, mean, median, variance and sigma of regions of an intensity image, where the regions are defined via a label map (a second input). The label image should be integral type. The filter needs all of its input image. It behaves as a filter with an input and output. Thus it can be inserted in a pipline with other filters and the statistics will only be recomputed if a downstream filter changes.\n\nOptionally, the filter also computes intensity histograms on each object. If histograms are enabled, a median intensity value can also be computed, although its accuracy is limited to the bin width of the histogram. If histograms are not enabled, the median returns zero.\n\nThe filter passes its intensity input through unmodified. The filter is threaded. It computes statistics in each thread then combines them in its AfterThreadedGenerate method.\n\n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Get statistical properties of labeled regions in an image"
 }

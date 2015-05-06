@@ -81,7 +81,11 @@
           "parameter" : "Variance",
           "type" : "double",
           "dim_vec" : 1,
-          "value" : [1.0,1.0,1.0]
+          "value" : [
+            1.0,
+            1.0,
+            1.0
+          ]
         }
       ],
       "md5hash" : "a9f58b23223cdbcd5baead53dd8f75d8",
