@@ -51,7 +51,7 @@ R.SetMetricAsMattesMutualInformation(numberOfBins)
 R.SetMetricSamplingPercentage(samplingPercentage)
 R.SetMetricSamplingStrategy(R.RANDOM)
 R.SetOptimizerAsRegularStepGradientDescent(1.0,.001,200)
-R.SetInitialTransform(sitk.Transform(fixed.GetDimension(), sitk.sitkTranslation))
+R.SetInitialTransform(sitk.TranslationTransform(fixed.GetDimension()))
 R.SetInterpolator(sitk.sitkLinear)
 
 R.AddCommand( sitk.sitkIterationEvent, lambda: command_iteration(R) )

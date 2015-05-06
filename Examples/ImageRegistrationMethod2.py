@@ -58,7 +58,7 @@ R.SetOptimizerAsGradientDescentLineSearch(learningRate=1.0,
                                           convergenceMinimumValue=1e-5,
                                           convergenceWindowSize=5)
 
-R.SetInitialTransform(sitk.Transform(fixed.GetDimension(), sitk.sitkTranslation))
+R.SetInitialTransform(sitk.TranslationTransform(fixed.GetDimension()))
 
 R.SetInterpolator(sitk.sitkLinear)
 
