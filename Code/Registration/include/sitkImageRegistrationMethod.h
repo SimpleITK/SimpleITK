@@ -61,6 +61,29 @@ class EventObject;
 namespace simple
 {
 
+  /** \brief An interface method to the modular ITKv4 registration framework.
+   *
+   * This interface method class encapsulates typical registration
+   * usage by incorporating all the necessary elements for performing a
+   * simple image registration between two images. This method also
+   * allows for multistage registration whereby each stage is
+   * characterized by possibly different transforms and different
+   * image metrics.  For example, many users will want to perform
+   * a linear registration followed by deformable registration where
+   * both stages are performed in multiple levels. Each level can be
+   * characterized by:
+   *
+   *   \li the resolution of the virtual domain image (see below)
+   *   \li smoothing of the fixed and moving images
+   *
+   * Multiple stages are handled by linking multiple instantiations of
+   * this class where the output transform is added to the optional
+   * composite transform input.
+   *
+   * \sa itk::ImageRegistrationMethodv4
+   * \sa itk::ImageToImageMetricv4
+   * \sa itk::ObjectToObjectOptimizerBaseTemplate
+   */
   class SITKRegistration_EXPORT ImageRegistrationMethod
     : public ProcessObject
   {
@@ -73,28 +96,39 @@ namespace simple
     virtual ~ImageRegistrationMethod();
 
     std::string GetName() const { return std::string("ImageRegistrationMethod"); }
+
+    /** \brief Print the information about the object to a string.
+     *
+     * If called when the process is being executed ( during a
+     * callback ), the ITK Optimizer and Transform objects will
+     * be printed.
+     */
     std::string ToString() const;
 
-
+    /** \brief Set and get the interpolator to use.
+     *
+     * @{
+     */
     InterpolatorEnum GetInterpolator()
       { return this->m_Interpolator; }
     Self& SetInterpolator ( InterpolatorEnum Interpolator )
       { this->m_Interpolator = Interpolator; return *this; }
+    /** @} */
 
     /** \brief Set the initial transform and parameters to optimize.
      *
-     * This transform is a applied before the MovingInitialTransform,
+     * This transform is applied before the MovingInitialTransform,
      * to map from the virtual image domain to the moving image
      * domain.
      *
-     * If the inPlace flag is explicitly false, then the transform
-     * will be the ITK registration will internally make a copy, and
+     * If the inPlace flag is explicitly false, then the ITK
+     * registration will internally make a copy, and
      * the transform will not be accessible during
      * registration. Otherwise, the accessible InitialTransform value
      * will be the same object used during registration, and will have
      * a modified value upon completion.
      *
-     * \sa itk::ImageRegistrationv4::SetInitialTransform
+     * \sa itk::ImageRegistrationMethodv4::SetInitialTransform
      * @{
      */
 #if !defined(SWIG) || defined(JAVASWIG) || defined(CSHARPSWIG)
@@ -143,16 +177,53 @@ namespace simple
     { return this->m_FixedInitialTransform; }
     /**@}*/
 
+    /** \brief Use normalized cross correlation using a small
+     * neighborhood for each voxel between two images, with speed
+     * optimizations for dense registration.
+     *
+     * \sa itk::ANTSNeighborhoodCorrelationImageToImageMetricv4
+     */
     Self& SetMetricAsANTSNeighborhoodCorrelation( unsigned int radius );
+
+    /** \brief Use negative normalized cross correlation image metric.
+     *
+     * \sa itk::CorrelationImageToImageMetricv4
+     */
     Self& SetMetricAsCorrelation( );
+
+    /** \breif Use demons image metric.
+     *
+     * \sa itk::DemonsImageToImageMetricv4
+     */
     Self& SetMetricAsDemons( double intensityDifferenceThreshold = 0.001 );
+
+    /** \brief Use mutual information between two images.
+     *
+     * \sa itk::JointHistogramMutualInformationImageToImageMetricv4
+     */
     Self& SetMetricAsJointHistogramMutualInformation( unsigned int numberOfHistogramBins = 20,
                                                       double varianceForJointPDFSmoothing = 1.5);
+
+    /** \brief Use negative means squares image metric.
+     *
+     * \sa itk::MeanSquaresImageToImageMetricv4
+     */
     Self& SetMetricAsMeanSquares( );
+
+    /** \brief Use the mutual information between two images to be
+     * registered using the method of Mattes et al.
+     *
+     * \sa itk::MattesMutualInformationImageToImageMetricv4
+     */
     Self& SetMetricAsMattesMutualInformation( unsigned int numberOfHistogramBins = 50 );
 
 
     enum EstimateLearningRateType { Never, Once, EachIteration };
+
+    /** \brief Conjugate gradient descent optimizer with a golden section line search for nonlinear optimization.
+     *
+     * \sa itk::ConjugateGradientLineSearchOptimizerv4Template
+     */
     Self& SetOptimizerAsConjugateGradientLineSearch( double learningRate,
                                                      unsigned int numberOfIterations,
                                                      double convergenceMinimumValue = 1e-6,
@@ -163,6 +234,11 @@ namespace simple
                                                      unsigned int lineSearchMaximumIterations = 20,
                                                      EstimateLearningRateType estimateLearningRate = Once,
                                                      double maximumStepSizeInPhysicalUnits = 0.0 );
+
+    /** \brief Regular Step Gradient descent optimizer.
+     *
+     * \sa itk::RegularStepGradientDescentOptimizerv4
+     */
     Self& SetOptimizerAsRegularStepGradientDescent( double learningRate,
                                                     double minStep,
                                                     unsigned int numberOfIterations,
@@ -170,12 +246,22 @@ namespace simple
                                                     double gradientMagnitudeTolerance = 1e-4,
                                                     EstimateLearningRateType estimateLearningRate = Never,
                                                     double maximumStepSizeInPhysicalUnits = 0.0);
+
+    /** \brief Gradient descent optimizer.
+     *
+     * \sa itk::GradientDescentOptimizerv4Template
+     */
     Self& SetOptimizerAsGradientDescent( double learningRate,
                                          unsigned int numberOfIterations,
                                          double convergenceMinimumValue = 1e-6,
                                          unsigned int convergenceWindowSize = 10,
                                          EstimateLearningRateType estimateLearningRate = Once,
                                          double maximumStepSizeInPhysicalUnits = 0.0);
+
+    /** \brief Gradient descent optimizer with a golden section line search.
+     *
+     * \sa itk::GradientDescentLineSearchOptimizerv4Template
+     */
     Self& SetOptimizerAsGradientDescentLineSearch( double learningRate,
                                                    unsigned int numberOfIterations,
                                                    double convergenceMinimumValue = 1e-6,
@@ -187,7 +273,12 @@ namespace simple
                                                    EstimateLearningRateType estimateLearningRate = Once,
                                                    double maximumStepSizeInPhysicalUnits = 0.0 );
 
-
+    /** \brief Limited memory Broyden Fletcher Goldfarb Shannon minimization with simple bounds.
+     *
+     * The default parameters utilize LBFGSB in unbounded mode.
+     *
+     * \sa itk::LBFGSBOptimizerv4
+     */
     Self& SetOptimizerAsLBFGSB(double gradientConvergenceTolerance = 1e-5,
                                unsigned int maximumNumberOfIterations = 500,
                                unsigned int maximumNumberOfCorrections = 5,
@@ -208,11 +299,18 @@ namespace simple
      *
      * The OptimizerScales can be used to perform anisotropic sampling.
      *
-     * \note This optimizer is not suited to using at multiple scales.
+     * \note This optimizer is not suitable for use in conjunction
+     * with the  multiple scales.
+     *
+     * \sa itk::ExhaustiveOptimizerv4
      */
     Self& SetOptimizerAsExhaustive( const std::vector<unsigned int> &numberOfSteps,
                                     double stepLength = 1.0 );
 
+    /** \brief Set optimizer to Nelder-Mead downhill simplex algorithm.
+     *
+     * \sa itk::AmoebaOptimizerv4
+     */
     Self& SetOptimizerAsAmoeba(double simplexDelta,
                                unsigned int numberOfIterations,
                                double parametersConvergenceTolerance=1e-8,
@@ -234,21 +332,65 @@ namespace simple
     std::vector<double> GetOptimizerWeights( ) const;
     /**@}*/
 
+    /** \brief Manually set per parameter weighting for the transform parameters. */
     Self& SetOptimizerScales( const std::vector<double> &scales );
+
+    /** \brief Estimate scales from Jacobian norms.
+     *
+     * This scales estimator works well with versor based transforms.
+     *
+     * \sa  itk::RegistrationParameterScalesFromJacobian
+     */
     Self& SetOptimizerScalesFromJacobian( unsigned int centralRegionRadius = 5 );
+
+    /** \brief Estimate scales from maximum voxel shift in index space
+     * cause by parameter change.
+     *
+     * \sa itk::RegistrationParameterScalesFromIndexShift
+     */
     Self& SetOptimizerScalesFromIndexShift( unsigned int centralRegionRadius = 5,
                                            double smallParameterVariation =  0.01 );
 
+    /** \brief Estimating scales of transform parameters a step sizes,
+     * from the maximum voxel shift in physical space caused by a parameter
+     * change.
+     *
+     * \sa itk::RegistrationParameterScalesFromPhysicalShift
+     */
     Self& SetOptimizerScalesFromPhysicalShift( unsigned int centralRegionRadius = 5,
                                               double smallParameterVariation =  0.01 );
 
 
+    /** \brief Set an image mask in order to restrict the sampled points
+     * for the metric.
+     *
+     * The image is expected to be in the same physical space as the
+     * FixedImage, and if the pixel type is not UInt8 than the image
+     * will base cast.
+     *
+     * \sa itk::ImageToImageMetricv4::SetFixedImageMask
+     */
     Self& SetMetricFixedMask( const Image &binaryMask );
 
+    /** \brief Set an image mask in order to restrict the sampled points
+     * for the metric in the moving image space.
+     *
+     * The image is expected to be in the same physical space as the
+     * MovingImage, and if the pixel type is not UInt8 than the image
+     * will base cast.
+     *
+     * \sa itk::ImageToImageMetricv4::SetMovingImageMask
+     */
     Self& SetMetricMovingMask( const Image &binaryMask );
 
+    /** \brief Set percentage of pixels sampled for metric evaluation.
+     *
+     * \sa itk::ImageRegistrationMethodv4::SetMetricSamplingPercentage
+     * @{
+     */
     Self &SetMetricSamplingPercentage(double percentage);
     Self &SetMetricSamplingPercentagePerLevel(const std::vector<double> &percentage);
+    /** @} */
 
     enum MetricSamplingStrategyType {
       NONE,
@@ -256,26 +398,69 @@ namespace simple
       RANDOM
     };
 
+    /** \brief Set sampling strategy for sample generation.
+     *
+     * \sa itk::ImageRegistrationMethodv4::SetMetricSamplingStrategy
+     */
     Self &SetMetricSamplingStrategy( MetricSamplingStrategyType strategy);
 
+    /** \brief Enable image gradient computation by a filter.
+     *
+     * By default the image gradient is computed by
+     * itk::GradientRecursiveGaussianImageFiter. If disabled then a
+     * central difference function with be computed as needed.
+     *
+     * \sa itk::ImageToImageMetricv4::SetUseFixedImageGradientFilter
+     * @{
+     */
     Self& SetMetricUseFixedImageGradientFilter(bool);
     Self& MetricUseFixedImageGradientFilterOn() {return this->SetMetricUseFixedImageGradientFilter(true);}
     Self& MetricUseFixedImageGradientFilterOff() {return this->SetMetricUseFixedImageGradientFilter(false);}
+    /** @} */
 
+
+    /** \brief Enable image gradient computation by a filter.
+     *
+     * By default the image gradient is computed by
+     * itk::GradientRecursiveGaussianImageFiter. If disabled then a
+     * central difference function with be computed as needed.
+     *
+     * \sa itk::ImageToImageMetricv4::SetUseMovingImageGradientFilter
+     * @{
+     */
     Self& SetMetricUseMovingImageGradientFilter(bool);
     Self& MetricUseMovingImageGradientFilterOn() {return this->SetMetricUseMovingImageGradientFilter(true);}
     Self& MetricUseMovingImageGradientFilterOff() {return this->SetMetricUseMovingImageGradientFilter(false);}
+    /** @} */
 
 
+    /** \brief Set the shrink factors for each level where each level
+     * has the same shrink factor for each dimension.
+     *
+     * \sa  itk::ImageRegistrationMethodv4::SetShrinkFactorsPerLevel
+     */
     Self &SetShrinkFactorsPerLevel( const std::vector<unsigned int> &shrinkFactors );
+
+    /** \brief Set the sigmas of Gaussian used for smoothing at each
+     * level.
+     *
+     * \sa  itk::ImageRegistrationMethodv4::SetSmoothingSigmasPerLevel
+     */
     Self &SetSmoothingSigmasPerLevel( const std::vector<double> &smoothingSigmas );
 
-
+    /** \brief Enable the smoothing sigmas for each level in physical
+     * units (default) or in terms of voxels.
+     *
+     * \sa   itk::ImageRegistrationMethodv4::SetSmoothingSigmasAreSpecifiedInPhysicalUnits
+     * @{
+     */
     Self &SetSmoothingSigmasAreSpecifiedInPhysicalUnits(bool arg);
     Self &SmoothingSigmasAreSpecifiedInPhysicalUnitsOn() { this->SetSmoothingSigmasAreSpecifiedInPhysicalUnits(true); return *this;}
     Self &SmoothingSigmasAreSpecifiedInPhysicalUnitsOff()  { this->SetSmoothingSigmasAreSpecifiedInPhysicalUnits(false); return *this;}
+    /** @} */
 
 
+    /** \brief Optimize the configured registration problem. */
     Transform Execute ( const Image &fixed, const Image & moving );
 
 
