@@ -4,6 +4,9 @@
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 0,
   "doc" : "Some global documentation\n\\todo MaskImageFilter will support VectorImages shortly",
+  "include_files" : [
+    "sitkToPixelType.hxx"
+  ],
   "pixel_types" : "NonLabelPixelIDTypeList",
   "pixel_types2" : "IntegerPixelIDTypeList",
   "inputs" : [
@@ -21,7 +24,7 @@
       "name" : "OutsideValue",
       "type" : "double",
       "default" : 0,
-      "pixeltype" : "Input",
+      "custom_itk_cast" : "typename OutputImageType::PixelType v;  NumericTraits<typename OutputImageType::PixelType>::SetLength( v, image1->GetNumberOfComponentsPerPixel() );  ToPixelType( this->m_OutsideValue, v );  filter->SetOutsideValue( v );"
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Method to explicitly set the outside value of the mask. Defaults to 0",
       "briefdescriptionGet" : "",
