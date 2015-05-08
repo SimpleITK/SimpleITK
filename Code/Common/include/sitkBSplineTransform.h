@@ -26,7 +26,7 @@ namespace itk
 namespace simple
 {
 
-/** \brief A deformable transform over an Image domain using a BSpline
+/** \brief A deformable transform over a bounded spatial domain using a BSpline
  * representation for a 2D or 3D coordinate space.
  *
  * \sa itk::BSplineTransform
