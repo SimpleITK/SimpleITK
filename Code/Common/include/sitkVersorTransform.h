@@ -40,9 +40,9 @@ public:
 
   explicit VersorTransform( const Transform & );
 
-  VersorTransform( const std::vector< double > &versor,
-                   const std::vector< double> &fixedCenter =
-                   std::vector< double >(3, 0.0) );
+  explicit VersorTransform( const std::vector< double > &versor,
+                            const std::vector< double> &fixedCenter =
+                            std::vector< double >(3, 0.0) );
 
   VersorTransform( const std::vector< double > &axis,
                    double angle,
