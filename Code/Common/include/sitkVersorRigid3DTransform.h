@@ -26,6 +26,12 @@ namespace itk
 namespace simple
 {
 
+
+/** \brief A rotation as a versor around a fixed center with
+ * translation of a 3D coordinate space.
+ *
+ * \sa itk::VersorRigid3DTransform
+ */
 class SITKCommon_EXPORT VersorRigid3DTransform
   : public Transform
 {

@@ -26,6 +26,11 @@ namespace itk
 namespace simple
 {
 
+/** \brief A 2D or 3D anisotropic scale of coordinate space around
+ * a fixed center.
+ *
+ * \sa itk::ScaleTransform
+ */
 class SITKCommon_EXPORT ScaleTransform
   : public Transform
 {

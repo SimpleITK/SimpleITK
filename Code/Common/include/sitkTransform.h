@@ -63,9 +63,22 @@ enum TransformEnum { sitkIdentity,
 };
 
 
-/** \class Tranform
- * \brief A simplified wrapper around a variety of ITK transforms.
+/** \brief A simplified wrapper around a variety of ITK transforms.
  *
+ * The interface to ITK transform objects to be used with the
+ * ImageRegistrationMethod, ResampleImageFilter and other SimpleITK
+ * process objects. The transforms are designed to have a serialized
+ * array of parameters to facilitate optimization for registration.
+ *
+ * Provides a base class interface to any type of ITK
+ * transform. Objects of this type may have their interface converted
+ * to a derived interface while keeping the same reference to the ITK
+ * object.
+ *
+ * Additionally, this class provides a basic interface to a composite
+ * transforms.
+ *
+ * \sa itk::CompositeTransform
  */
 class SITKCommon_EXPORT Transform
 {
@@ -95,6 +108,8 @@ public:
   explicit Transform( itk::TransformBase *transform );
 
   /** \brief Construct a specific transformation
+   *
+   * \deprecated This constructor will be removed in future releases.
    */
   Transform( unsigned int dimensions, TransformEnum type);
 
@@ -107,6 +122,8 @@ public:
    * Only the sitkDisplacementField transformation type can currently
    * be constructed this way. Image must be of sitkVectorFloat64 pixel
    * type with the number of components equal to the image dimension.
+   *
+   * \deprecated This constructor will be removed in future releases.
    */
   Transform( Image &displacement, TransformEnum type = sitkDisplacementField );
 
