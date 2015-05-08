@@ -26,6 +26,13 @@ namespace itk
 namespace simple
 {
 
+
+/** \brief A parameterized 2D transform composed of the
+ * addition of a versor rotation matrix and a scale matrix around a
+ * fixed center with translation.
+ *
+ * \sa itk::ScaleVersor3DTransform
+ */
 class SITKCommon_EXPORT ScaleVersor3DTransform
   : public Transform
 {

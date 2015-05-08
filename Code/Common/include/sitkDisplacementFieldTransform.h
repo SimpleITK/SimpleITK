@@ -27,13 +27,19 @@ namespace itk
 namespace simple
 {
 
+/** \brief A local, dense, high-dimensionality transform over an
+ * Image domain for 2D or 3D coordinates space.
+ *
+ * \sa itk::DisplacementFieldTransform
+ */
 class SITKCommon_EXPORT DisplacementFieldTransform
   : public Transform
 {
 public:
   typedef DisplacementFieldTransform Self;
   typedef Transform Superclass;
-  DisplacementFieldTransform(unsigned int dimensions);
+
+  DisplacementFieldTransform( unsigned int dimensions );
   DisplacementFieldTransform( Image &);
 
   DisplacementFieldTransform( const DisplacementFieldTransform & );

@@ -26,6 +26,12 @@ namespace itk
 namespace simple
 {
 
+/** \brief A over parameterized 3D Affine transform composed of the
+ * addition of a versor rotation matrix, a scale matrix and a skew
+ * matrix around a fixed center with translation.
+ *
+ * \sa itk::ScaleSkewVersor3DTransform
+ */
 class SITKCommon_EXPORT ScaleSkewVersor3DTransform
   : public Transform
 {

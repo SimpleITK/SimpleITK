@@ -26,6 +26,11 @@ namespace itk
 namespace simple
 {
 
+/** \brief A similarity 2D transform with rotation in radians and
+ * isotropic scaling around a fixed center with translation.
+ *
+ * \sa itk::Similarity2DTransform
+ */
 class SITKCommon_EXPORT Similarity2DTransform
   : public Transform
 {

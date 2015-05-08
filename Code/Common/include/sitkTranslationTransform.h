@@ -26,6 +26,11 @@ namespace itk
 namespace simple
 {
 
+
+/** \brief Translation of a 2D or 3D coordinate space.
+ *
+ * \sa itk::TranslationTransform
+ */
 class SITKCommon_EXPORT TranslationTransform
   : public Transform
 {

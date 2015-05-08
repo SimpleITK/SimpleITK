@@ -26,6 +26,11 @@ namespace itk
 namespace simple
 {
 
+/** \brief An affine transformation about a fixed center with
+ * translation for a 2D or 3D coordinate.
+ *
+ * \sa itk::AffineTransform
+ */
 class SITKCommon_EXPORT AffineTransform
   : public Transform
 {
