@@ -24,6 +24,11 @@ dimension of the image, an exception will be generated when converted
 to the ITK type. If there are extra elements in the dimensional vector
 these values will be ignored.
 
+\section ImageAccess Image Access
+
+Image access is in x,y,z order, GetPixel(x,y,z) or image[x,y,z],
+with zero based indexing.
+
 \section MaskDefaults Mask Image Types and Default Values
 
 The default mask image type is a scalar image of sitkUInt8 or uint8_t
@@ -44,6 +49,23 @@ The order of the procedural parameters should be with the most
 frequently modified parameters at the beginning of the parameter
 list. While the last parameter, may be ones that the user does not
 need to set or are infrequently used.
+
+\section MatricesAsParameters Matrices as Parameters
+
+Matrices are represented as a single dimensional vector with the entries
+in row major order. The vector \f$[1,2,3,4,5,6]\f$ represents the matrix
+\f[
+\left[\begin{array}{ccc} 1 & 2 & 3 \\ 4 & 5 & 6 \end{array}\right]
+\f]
+
+\section ImagesAsParameters Images As Parameters
+
+The dimensionality (2D or 3D) and pixel type (sitkUInt8, sitkFloat64...) of images is required to be the same
+for most methods that receive multiple images as input.
+
+The ImageRegistrationMethod only supports images with sitkFloat32 and sitkFloat64 pixel types.
+
+Casting an image's pixel type into another is done with the SimpleITK Cast() function.
 
 
 \section FollowITK Follow ITK Conventions
