@@ -27,7 +27,7 @@ namespace simple
 {
 
 
-/** \brief A parameterized 2D transform composed of the
+/** \brief A parameterized 3D transform composed of the
  * addition of a versor rotation matrix and a scale matrix around a
  * fixed center with translation.
  *

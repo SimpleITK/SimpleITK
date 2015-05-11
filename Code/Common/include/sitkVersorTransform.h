@@ -27,7 +27,7 @@ namespace simple
 {
 
 /** \brief A 3D rotation transfrom with rotation as a versor around a
- * fixed center with translation for a 3D coordinate space.
+ * fixed center.
  *
  * \sa itk::VersorTransform
  */

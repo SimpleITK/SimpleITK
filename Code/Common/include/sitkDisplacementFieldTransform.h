@@ -27,8 +27,8 @@ namespace itk
 namespace simple
 {
 
-/** \brief A local, dense, high-dimensionality transform over an
- * Image domain for 2D or 3D coordinates space.
+/** \brief A dense deformable transform over a bounded spatial domain
+ * for 2D or 3D coordinates space.
  *
  * \sa itk::DisplacementFieldTransform
  */
