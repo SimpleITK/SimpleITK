@@ -617,6 +617,10 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
   std::string Transform::ToString( void ) const
   {
     assert( m_PimpleTransform );
+
+    // mark as used
+    static_cast<void>( itk::simple::initialized );
+
     return std::string("itk::simple::")+this->GetName() + '\n'+this->m_PimpleTransform->ToString();
   }
 
