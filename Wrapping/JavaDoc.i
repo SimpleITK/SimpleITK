@@ -1,13 +1,5 @@
 
 
-%typemap(javaimports) Tranform "/**
-
-A simplified wrapper around a variety of ITK transforms.
-
-C++ includes: sitkTransform.h
-*/"
-
-
 %typemap(javaimports) itk::Functor::BitwiseNot "/**
 
 Performs the C++ unary bitwise NOT operator.
@@ -887,6 +879,16 @@ public ";
 
 
 %typemap(javaimports) itk::simple::AffineTransform "/**
+
+An affine transformation about a fixed center with translation for a
+2D or 3D coordinate.
+
+
+
+See:
+ itk::AffineTransform
+
+
 C++ includes: sitkAffineTransform.h
 */"
 
@@ -995,16 +997,14 @@ labels and assigns them to the first label of the label map. At the
 end of the execution of this filter, the map will contain a single
 filter.
 
-This implementation was taken from the Insight Journal
-paper:http://hdl.handle.net/1926/584orhttp://www.insight-
-journal.org/browse/publication/176
+This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
 
 See:
- ShapeLabelObject, RelabelComponentImageFilter
+ ShapeLabelObject , RelabelComponentImageFilter
 
  itk::simple::AggregateLabelMapFilter for the procedural interface
 
@@ -1699,6 +1699,16 @@ public ";
 
 
 %typemap(javaimports) itk::simple::BSplineTransform "/**
+
+A deformable transform over a bounded spatial domain using a BSpline
+representation for a 2D or 3D coordinate space.
+
+
+
+See:
+ itk::BSplineTransform
+
+
 C++ includes: sitkBSplineTransform.h
 */"
 
@@ -1709,6 +1719,11 @@ public ";
 
 %javamethodmodifiers  itk::simple::BSplineTransform::BSplineTransform "/**
 itk::simple::BSplineTransform::BSplineTransform(const BSplineTransform &)
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::BSplineTransform::BSplineTransform "/**
+itk::simple::BSplineTransform::BSplineTransform(const Transform &)
 */
 public ";
 
@@ -3146,23 +3161,21 @@ Label the connected components in a binary image and produce a
 collection of label objects.
 
 
-BinaryImageToLabelMapFilterlabels the objects in a binary image. Each
-distinct object is assigned a unique label. The final object labels
-start with 1 and are consecutive. Objects that are reached earlier by
-a raster order scan have a lower label.
+ BinaryImageToLabelMapFilter labels the objects in a binary image. Each distinct object is
+assigned a unique label. The final object labels start with 1 and are
+consecutive. Objects that are reached earlier by a raster order scan
+have a lower label.
 
-The GetOutput()function of this class returns an itk::LabelMap.
+The GetOutput() function of this class returns an itk::LabelMap .
 
-This implementation was taken from the Insight Journal
-paper:http://hdl.handle.net/1926/584orhttp://www.insight-
-journal.org/browse/publication/176
+This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
 
 See:
- ConnectedComponentImageFilter, LabelImageToLabelMapFilter, LabelMap, LabelObject
+ ConnectedComponentImageFilter , LabelImageToLabelMapFilter , LabelMap , LabelObject
 Wiki Examples:
 
 All Examples
@@ -6275,16 +6288,14 @@ This filter takes as input a label map and a list of pairs of Label
 Ids, to produce as output a new label map where the label Ids have
 been replaced according to the pairs in the list.
 
-This implementation was taken from the Insight Journal
-paper:http://hdl.handle.net/1926/584orhttp://www.insight-
-journal.org/browse/publication/176
+This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
 
 See:
- ShapeLabelObject, RelabelComponentImageFilter
+ ShapeLabelObject , RelabelComponentImageFilter
 
  itk::simple::ChangeLabelLabelMapFilter for the procedural interface
 
@@ -8922,9 +8933,9 @@ public ";
 Deformably register two images using the demons algorithm.
 
 
-DemonsRegistrationFilterimplements the demons deformable algorithm
-that register two images by computing the displacement field which
-will map a moving image onto a fixed image.
+ DemonsRegistrationFilter implements the demons deformable algorithm that register two images
+by computing the displacement field which will map a moving image onto
+a fixed image.
 
 A displacement field is represented as a image whose pixel type is
 some vector type with at least N elements, where N is the dimension of
@@ -8947,7 +8958,7 @@ The output displacement field can be obtained via methods GetOutput or
 GetDisplacementField.
 
 This class make use of the finite difference solver hierarchy. Update
-for each iteration is computed in DemonsRegistrationFunction.
+for each iteration is computed in DemonsRegistrationFunction .
 
 
 WARNING:
@@ -9485,15 +9496,15 @@ Deformably register two images using a diffeomorphic demons algorithm.
 
 
 This class was contributed by Tom Vercauteren, INRIA & Mauna Kea
-Technologies, based on a variation of the DemonsRegistrationFilter. The basic modification is to use diffeomorphism exponentials.
+Technologies, based on a variation of the DemonsRegistrationFilter . The basic modification is to use diffeomorphism exponentials.
 
 See T. Vercauteren, X. Pennec, A. Perchant and N. Ayache, \"Non-
 parametric Diffeomorphic Image Registration with the Demons
 Algorithm\", Proc. of MICCAI 2007.
 
-DiffeomorphicDemonsRegistrationFilterimplements the demons deformable
-algorithm that register two images by computing the deformation field
-which will map a moving image onto a fixed image.
+ DiffeomorphicDemonsRegistrationFilter implements the demons deformable algorithm that register two images
+by computing the deformation field which will map a moving image onto
+a fixed image.
 
 A deformation field is represented as a image whose pixel type is some
 vector type with at least N elements, where N is the dimension of the
@@ -9513,7 +9524,7 @@ The output deformation field can be obtained via methods GetOutput or
 GetDisplacementField.
 
 This class make use of the finite difference solver hierarchy. Update
-for each iteration is computed in DemonsRegistrationFunction.
+for each iteration is computed in DemonsRegistrationFunction .
 
 
 Tom Vercauteren, INRIA & Mauna Kea Technologies
@@ -9521,8 +9532,7 @@ Tom Vercauteren, INRIA & Mauna Kea Technologies
 WARNING:
 This filter assumes that the fixed image type, moving image type and
 deformation field type all have the same number of dimensions.
- This implementation was taken from the Insight Journal
-paper:http://hdl.handle.net/1926/510
+ This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/510
 
 
 See:
@@ -10522,7 +10532,7 @@ dx/dz ; dy/dx (1.0+dy/dy) dy/dz; dz/dx dz/dy (1.0+dz/dz) ])
 Template Parameters (Input and Output)
 This filter has one required template parameter which defines the
 input image type. The pixel type of the input image is assumed to be a
-vector (e.g., itk::Vector, itk::RGBPixel, itk::FixedArray). The scalar type of the vector components must be castable to
+vector (e.g., itk::Vector , itk::RGBPixel , itk::FixedArray ). The scalar type of the vector components must be castable to
 floating point. Instantiating with an image of RGBPixel<unsigned
 short>, for example, is allowed, but the filter will convert it to an
 image of Vector<float,3> for processing.
@@ -10547,7 +10557,7 @@ be scaled (inversely) with the pixel size of the input image,
 effectively taking derivatives in world coordinates (versus isotropic
 image space). SetUseImageSpacingOff turns this functionality off.
 Default is UseImageSpacingOn. The parameter UseImageSpacing can be set
-directly with the method SetUseImageSpacing(bool).
+directly with the method SetUseImageSpacing(bool) .
  Weights can be applied to the derivatives directly using the
 SetDerivativeWeights method. Note that if UseImageSpacing is set to
 TRUE (ON), then these weights will be overridden by weights derived
@@ -10625,7 +10635,8 @@ public ";
 std::vector<double> itk::simple::DisplacementFieldJacobianDeterminantFilter::GetDerivativeWeights() const
 
 Directly Set/Get the array of weights used in the gradient
-calculations.
+calculations. Note that calling UseImageSpacingOn will clobber these
+values.
 
 */
 public ";
@@ -10646,8 +10657,9 @@ public ";
 %javamethodmodifiers  itk::simple::DisplacementFieldJacobianDeterminantFilter::SetDerivativeWeights "/**
 Self& itk::simple::DisplacementFieldJacobianDeterminantFilter::SetDerivativeWeights(const std::vector< double > &DerivativeWeights)
 
-If this parameter is set then the image spacing is not used Directly
-Set/Get the array of weights used in the gradient calculations.
+Directly Set/Get the array of weights used in the gradient
+calculations. Note that calling UseImageSpacingOn will clobber these
+values.
 
 */
 public ";
@@ -10692,6 +10704,16 @@ public ";
 
 
 %typemap(javaimports) itk::simple::DisplacementFieldTransform "/**
+
+A dense deformable transform over a bounded spatial domain for 2D or
+3D coordinates space.
+
+
+
+See:
+ itk::DisplacementFieldTransform
+
+
 C++ includes: sitkDisplacementFieldTransform.h
 */"
 
@@ -10707,6 +10729,11 @@ public ";
 
 %javamethodmodifiers  itk::simple::DisplacementFieldTransform::DisplacementFieldTransform "/**
 itk::simple::DisplacementFieldTransform::DisplacementFieldTransform(const DisplacementFieldTransform &)
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::DisplacementFieldTransform::DisplacementFieldTransform "/**
+itk::simple::DisplacementFieldTransform::DisplacementFieldTransform(const Transform &)
 */
 public ";
 
@@ -11625,6 +11652,16 @@ public ";
 
 
 %typemap(javaimports) itk::simple::Euler2DTransform "/**
+
+A rigid 2D transform with rotation in radians around a fixed center
+with translation.
+
+
+
+See:
+ itk::Euler2DTransform
+
+
 C++ includes: sitkEuler2DTransform.h
 */"
 
@@ -11708,6 +11745,16 @@ public ";
 
 
 %typemap(javaimports) itk::simple::Euler3DTransform "/**
+
+A rigid 3D transform with rotation in radians around a fixed center
+with translation.
+
+
+
+See:
+ itk::Euler3DTransform
+
+
 C++ includes: sitkEuler3DTransform.h
 */"
 
@@ -12744,75 +12791,50 @@ public ";
 
 %typemap(javaimports) itk::simple::FastMarchingBaseImageFilter "/**
 
-Solve an Eikonal equation using Fast Marching.
+Fast Marching Method on Image .
 
 
-Fast marching solves an Eikonal equation where the speed is always
-non-negative and depends on the position only. Starting from an
-initial position on the front, fast marching systematically moves the
-front forward one grid point at a time.
+The speed function can be specified as a speed image or a speed
+constant. The speed image is set using the method SetInput(). If the
+speed image is ITK_NULLPTR, a constant speed function is used and is
+specified using method the SetSpeedConstant() .
 
-Updates are preformed using an entropy satisfy scheme where only
-\"upwind\" neighborhoods are used. This implementation of Fast
-Marching uses a std::priority_queue to locate the next proper grid
-position to update.
+If the speed function is constant and of value one, fast marching
+results is an approximate distance function from the initial alive
+points.
 
-Fast Marching sweeps through N grid points in (N log N) steps to
-obtain the arrival time value as the front propagates through the
-grid.
+There are two ways to specify the output image information (
+LargestPossibleRegion, Spacing, Origin):
+it is copied directly from the input speed image
+
+it is specified by the user. Default values are used if the user does
+not specify all the information.
+ The output information is computed as follows.
+
+If the speed image is ITK_NULLPTR or if the OverrideOutputInformation
+is set to true, the output information is set from user specified
+parameters. These parameters can be specified using methods
+FastMarchingImageFilterBase::SetOutputRegion() ,
+
+FastMarchingImageFilterBase::SetOutputSpacing() ,
+
+FastMarchingImageFilterBase::SetOutputDirection() ,
+
+FastMarchingImageFilterBase::SetOutputOrigin() .
+ Else the output information is copied from the input speed image.
 
 Implementation of this class is based on Chapter 8 of \"Level Set
 Methods and Fast Marching Methods\", J.A. Sethian, Cambridge Press,
 Second edition, 1999.
 
-This class is templated over the level set image type and the speed
-image type. The initial front is specified by two containers: one
-containing the known points and one containing the trial points. Alive
-points are those that are already part of the object, and trial points
-are considered for inclusion. In order for the filter to evolve, at
-least some trial points must be specified. These can for instance be
-specified as the layer of pixels around the alive points.
-
-The speed function can be specified as a speed image or a speed
-constant. The speed image is set using the method SetInput() . If the
-speed image is NULL, a constant speed function is used and is
-specified using method the SetSpeedConstant() .
-
-If the speed function is constant and of value one, fast marching
-results in an approximate distance function from the initial alive
-points. FastMarchingImageFilter is used in the ReinitializeLevelSetImageFilter object to create a signed distance function from the zero level set.
-
-The algorithm can be terminated early by setting an appropriate
-stopping value. The algorithm terminates when the current arrival time
-being processed is greater than the stopping value.
-
-There are two ways to specify the output image information (
-LargestPossibleRegion, Spacing, Origin): (a) it is copied directly
-from the input speed image or (b) it is specified by the user. Default
-values are used if the user does not specify all the information.
-
-The output information is computed as follows. If the speed image is
-NULL or if the OverrideOutputInformation is set to true, the output
-information is set from user specified parameters. These parameters
-can be specified using methods SetOutputRegion() , SetOutputSpacing()
-, SetOutputDirection() , and SetOutputOrigin() . Else if the speed
-image is not NULL, the output information is copied from the input
-speed image.
-
-Possible Improvements: In the current implemenation,
-std::priority_queue only allows taking nodes out from the front and
-putting nodes in from the back. To update a value already on the heap,
-a new node is added to the heap. The defunct old node is left on the
-heap. When it is removed from the top, it will be recognized as
-invalid and not used. Future implementations can implement the heap in
-a different way allowing the values to be updated. This will generally
-require some sift-up and sift-down functions and an image of back-
-pointers going from the image to heap in order to locate the node
-which is to be updated.
+TTraitstraits
 
 
 See:
- LevelSetTypeDefault
+ImageFastMarchingTraits
+
+
+ImageFastMarchingTraits2
 
  itk::simple::FastMarchingBase for the procedural interface
 
@@ -12986,7 +13008,7 @@ specified as the layer of pixels around the alive points.
 
 The speed function can be specified as a speed image or a speed
 constant. The speed image is set using the method SetInput() . If the
-speed image is NULL, a constant speed function is used and is
+speed image is ITK_NULLPTR, a constant speed function is used and is
 specified using method the SetSpeedConstant() .
 
 If the speed function is constant and of value one, fast marching
@@ -13003,12 +13025,12 @@ from the input speed image or (b) it is specified by the user. Default
 values are used if the user does not specify all the information.
 
 The output information is computed as follows. If the speed image is
-NULL or if the OverrideOutputInformation is set to true, the output
-information is set from user specified parameters. These parameters
-can be specified using methods SetOutputRegion() , SetOutputSpacing()
-, SetOutputDirection() , and SetOutputOrigin() . Else if the speed
-image is not NULL, the output information is copied from the input
-speed image.
+ITK_NULLPTR or if the OverrideOutputInformation is set to true, the
+output information is set from user specified parameters. These
+parameters can be specified using methods SetOutputRegion() ,
+SetOutputSpacing() , SetOutputDirection() , and SetOutputOrigin() .
+Else if the speed image is not ITK_NULLPTR, the output information is
+copied from the input speed image.
 
 Possible Improvements: In the current implemenation,
 std::priority_queue only allows taking nodes out from the front and
@@ -13387,11 +13409,11 @@ algorithm.
 
 
 This class was contributed by Tom Vercauteren, INRIA & Mauna Kea
-Technologies based on a variation of the DemonsRegistrationFilter.
+Technologies based on a variation of the DemonsRegistrationFilter .
 
-FastSymmetricForcesDemonsRegistrationFilterimplements the demons
-deformable algorithm that register two images by computing the
-deformation field which will map a moving image onto a fixed image.
+ FastSymmetricForcesDemonsRegistrationFilter implements the demons deformable algorithm that register two images
+by computing the deformation field which will map a moving image onto
+a fixed image.
 
 A deformation field is represented as a image whose pixel type is some
 vector type with at least N elements, where N is the dimension of the
@@ -13411,12 +13433,11 @@ The output deformation field can be obtained via methods GetOutput or
 GetDisplacementField.
 
 This class make use of the finite difference solver hierarchy. Update
-for each iteration is computed in DemonsRegistrationFunction.
+for each iteration is computed in DemonsRegistrationFunction .
 
 
 Tom Vercauteren, INRIA & Mauna Kea Technologies
- This implementation was taken from the Insight Journal
-paper:http://hdl.handle.net/1926/510
+ This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/510
 
 
 WARNING:
@@ -15329,9 +15350,6 @@ public ";
 
 %javamethodmodifiers  itk::simple::GradientRecursiveGaussianImageFilter::GetSigma "/**
 double itk::simple::GradientRecursiveGaussianImageFilter::GetSigma() const
-
-Set Sigma value. Sigma is measured in the units of image spacing.
-
 */
 public ";
 
@@ -18761,21 +18779,49 @@ public ";
 
 
 %typemap(javaimports) itk::simple::ImageRegistrationMethod "/**
+
+An interface method to the modular ITKv4 registration framework.
+
+
+This interface method class encapsulates typical registration usage by
+incorporating all the necessary elements for performing a simple image
+registration between two images. This method also allows for
+multistage registration whereby each stage is characterized by
+possibly different transforms and different image metrics. For
+example, many users will want to perform a linear registration
+followed by deformable registration where both stages are performed in
+multiple levels. Each level can be characterized by:
+
+
+the resolution of the virtual domain image (see below)
+
+smoothing of the fixed and moving images
+ Multiple stages are handled by linking multiple instantiations of
+this class where the output transform is added to the optional
+composite transform input.
+
+
+See:
+ itk::ImageRegistrationMethodv4
+
+ itk::ImageToImageMetricv4
+
+ itk::ObjectToObjectOptimizerBaseTemplate
+
+
 C++ includes: sitkImageRegistrationMethod.h
 */"
 
 %javamethodmodifiers  itk::simple::ImageRegistrationMethod::Execute "/**
 Transform itk::simple::ImageRegistrationMethod::Execute(const Image &fixed, const Image &moving)
+
+Optimize the configured registration problem.
+
 */
 public ";
 
 %javamethodmodifiers  itk::simple::ImageRegistrationMethod::GetCurrentLevel "/**
 unsigned int itk::simple::ImageRegistrationMethod::GetCurrentLevel() const
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::ImageRegistrationMethod::GetInterpolator "/**
-InterpolatorEnum itk::simple::ImageRegistrationMethod::GetInterpolator()
 */
 public ";
 
@@ -18860,94 +18906,158 @@ smoothing sigmas, or the shrink factors.
 */
 public ";
 
-%javamethodmodifiers  itk::simple::ImageRegistrationMethod::MetricUseFixedImageGradientFilterOff "/**
-Self& itk::simple::ImageRegistrationMethod::MetricUseFixedImageGradientFilterOff()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::ImageRegistrationMethod::MetricUseFixedImageGradientFilterOn "/**
-Self& itk::simple::ImageRegistrationMethod::MetricUseFixedImageGradientFilterOn()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::ImageRegistrationMethod::MetricUseMovingImageGradientFilterOff "/**
-Self& itk::simple::ImageRegistrationMethod::MetricUseMovingImageGradientFilterOff()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::ImageRegistrationMethod::MetricUseMovingImageGradientFilterOn "/**
-Self& itk::simple::ImageRegistrationMethod::MetricUseMovingImageGradientFilterOn()
-*/
-public ";
-
-%javamethodmodifiers  itk::simple::ImageRegistrationMethod::SetInterpolator "/**
-Self& itk::simple::ImageRegistrationMethod::SetInterpolator(InterpolatorEnum Interpolator)
-*/
-public ";
-
 %javamethodmodifiers  itk::simple::ImageRegistrationMethod::SetMetricAsANTSNeighborhoodCorrelation "/**
 Self& itk::simple::ImageRegistrationMethod::SetMetricAsANTSNeighborhoodCorrelation(unsigned int radius)
+
+Use normalized cross correlation using a small neighborhood for each
+voxel between two images, with speed optimizations for dense
+registration.
+
+
+
+See:
+ itk::ANTSNeighborhoodCorrelationImageToImageMetricv4
+
+
 */
 public ";
 
 %javamethodmodifiers  itk::simple::ImageRegistrationMethod::SetMetricAsCorrelation "/**
 Self& itk::simple::ImageRegistrationMethod::SetMetricAsCorrelation()
+
+Use negative normalized cross correlation image metric.
+
+
+
+See:
+ itk::CorrelationImageToImageMetricv4
+
+
 */
 public ";
 
 %javamethodmodifiers  itk::simple::ImageRegistrationMethod::SetMetricAsDemons "/**
 Self& itk::simple::ImageRegistrationMethod::SetMetricAsDemons(double intensityDifferenceThreshold=0.001)
+
+Use demons image metric.
+
+
+See:
+ itk::DemonsImageToImageMetricv4
+
+
 */
 public ";
 
 %javamethodmodifiers  itk::simple::ImageRegistrationMethod::SetMetricAsJointHistogramMutualInformation "/**
 Self& itk::simple::ImageRegistrationMethod::SetMetricAsJointHistogramMutualInformation(unsigned int numberOfHistogramBins=20, double
 varianceForJointPDFSmoothing=1.5)
+
+Use mutual information between two images.
+
+
+
+See:
+ itk::JointHistogramMutualInformationImageToImageMetricv4
+
+
 */
 public ";
 
 %javamethodmodifiers  itk::simple::ImageRegistrationMethod::SetMetricAsMattesMutualInformation "/**
 Self& itk::simple::ImageRegistrationMethod::SetMetricAsMattesMutualInformation(unsigned int numberOfHistogramBins=50)
+
+Use the mutual information between two images to be registered using
+the method of Mattes et al.
+
+
+
+See:
+ itk::MattesMutualInformationImageToImageMetricv4
+
+
 */
 public ";
 
 %javamethodmodifiers  itk::simple::ImageRegistrationMethod::SetMetricAsMeanSquares "/**
 Self& itk::simple::ImageRegistrationMethod::SetMetricAsMeanSquares()
+
+Use negative means squares image metric.
+
+
+
+See:
+ itk::MeanSquaresImageToImageMetricv4
+
+
 */
 public ";
 
 %javamethodmodifiers  itk::simple::ImageRegistrationMethod::SetMetricFixedMask "/**
 Self& itk::simple::ImageRegistrationMethod::SetMetricFixedMask(const Image &binaryMask)
+
+Set an image mask in order to restrict the sampled points for the
+metric.
+
+
+The image is expected to be in the same physical space as the
+FixedImage, and if the pixel type is not UInt8 than the image will
+base cast.
+
+
+See:
+itk::ImageToImageMetricv4::SetFixedImageMask
+
+
 */
 public ";
 
 %javamethodmodifiers  itk::simple::ImageRegistrationMethod::SetMetricMovingMask "/**
 Self& itk::simple::ImageRegistrationMethod::SetMetricMovingMask(const Image &binaryMask)
-*/
-public ";
 
-%javamethodmodifiers  itk::simple::ImageRegistrationMethod::SetMetricSamplingPercentage "/**
-Self& itk::simple::ImageRegistrationMethod::SetMetricSamplingPercentage(double percentage)
-*/
-public ";
+Set an image mask in order to restrict the sampled points for the
+metric in the moving image space.
 
-%javamethodmodifiers  itk::simple::ImageRegistrationMethod::SetMetricSamplingPercentagePerLevel "/**
-Self& itk::simple::ImageRegistrationMethod::SetMetricSamplingPercentagePerLevel(const std::vector< double > &percentage)
+
+The image is expected to be in the same physical space as the
+MovingImage, and if the pixel type is not UInt8 than the image will
+base cast.
+
+
+See:
+itk::ImageToImageMetricv4::SetMovingImageMask
+
+
 */
 public ";
 
 %javamethodmodifiers  itk::simple::ImageRegistrationMethod::SetMetricSamplingStrategy "/**
 Self& itk::simple::ImageRegistrationMethod::SetMetricSamplingStrategy(MetricSamplingStrategyType strategy)
+
+Set sampling strategy for sample generation.
+
+
+
+See:
+itk::ImageRegistrationMethodv4::SetMetricSamplingStrategy
+
+
 */
 public ";
 
-%javamethodmodifiers  itk::simple::ImageRegistrationMethod::SetMetricUseFixedImageGradientFilter "/**
-Self& itk::simple::ImageRegistrationMethod::SetMetricUseFixedImageGradientFilter(bool)
-*/
-public ";
+%javamethodmodifiers  itk::simple::ImageRegistrationMethod::SetOptimizerAsAmoeba "/**
+Self& itk::simple::ImageRegistrationMethod::SetOptimizerAsAmoeba(double simplexDelta, unsigned int numberOfIterations, double
+parametersConvergenceTolerance=1e-8, double
+functionConvergenceTolerance=1e-4, bool withRestarts=false)
 
-%javamethodmodifiers  itk::simple::ImageRegistrationMethod::SetMetricUseMovingImageGradientFilter "/**
-Self& itk::simple::ImageRegistrationMethod::SetMetricUseMovingImageGradientFilter(bool)
+Set optimizer to Nelder-Mead downhill simplex algorithm.
+
+
+
+See:
+ itk::AmoebaOptimizerv4
+
+
 */
 public ";
 
@@ -18958,6 +19068,42 @@ double lineSearchLowerLimit=0, double lineSearchUpperLimit=5.0, double
 lineSearchEpsilon=0.01, unsigned int lineSearchMaximumIterations=20,
 EstimateLearningRateType estimateLearningRate=Once, double
 maximumStepSizeInPhysicalUnits=0.0)
+
+Conjugate gradient descent optimizer with a golden section line search
+for nonlinear optimization.
+
+
+
+See:
+ itk::ConjugateGradientLineSearchOptimizerv4Template
+
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::ImageRegistrationMethod::SetOptimizerAsExhaustive "/**
+Self& itk::simple::ImageRegistrationMethod::SetOptimizerAsExhaustive(const std::vector< unsigned int > &numberOfSteps, double
+stepLength=1.0)
+
+Set the optimizer to sample the metric at regular steps.
+
+
+At each iteration the GetOptimizerIteration, can be used to index into
+the sampling grid along with the GetCurrentMetricValue.
+
+The resulting transform and value at the end of execution is the best
+location.
+
+The OptimizerScales can be used to perform anisotropic sampling.
+
+
+This optimizer is not suitable for use in conjunction with the
+multiple scales.
+
+See:
+ itk::ExhaustiveOptimizerv4
+
+
 */
 public ";
 
@@ -18966,6 +19112,15 @@ Self& itk::simple::ImageRegistrationMethod::SetOptimizerAsGradientDescent(double
 convergenceMinimumValue=1e-6, unsigned int convergenceWindowSize=10,
 EstimateLearningRateType estimateLearningRate=Once, double
 maximumStepSizeInPhysicalUnits=0.0)
+
+Gradient descent optimizer.
+
+
+
+See:
+ itk::GradientDescentOptimizerv4Template
+
+
 */
 public ";
 
@@ -18976,6 +19131,15 @@ double lineSearchLowerLimit=0, double lineSearchUpperLimit=5.0, double
 lineSearchEpsilon=0.01, unsigned int lineSearchMaximumIterations=20,
 EstimateLearningRateType estimateLearningRate=Once, double
 maximumStepSizeInPhysicalUnits=0.0)
+
+Gradient descent optimizer with a golden section line search.
+
+
+
+See:
+ itk::GradientDescentLineSearchOptimizerv4Template
+
+
 */
 public ";
 
@@ -18986,7 +19150,19 @@ maximumNumberOfCorrections=5, unsigned int
 maximumNumberOfFunctionEvaluations=2000, double
 costFunctionConvergenceFactor=1e+7, double
 lowerBound=std::numeric_limits< double >::min(), double
-upperBound=std::numeric_limits< double >::max())
+upperBound=std::numeric_limits< double >::max(), bool trace=false)
+
+Limited memory Broyden Fletcher Goldfarb Shannon minimization with
+simple bounds.
+
+
+The default parameters utilize LBFGSB in unbounded mode.
+
+
+See:
+ itk::LBFGSBOptimizerv4
+
+
 */
 public ";
 
@@ -18995,58 +19171,112 @@ Self& itk::simple::ImageRegistrationMethod::SetOptimizerAsRegularStepGradientDes
 double relaxationFactor=0.5, double gradientMagnitudeTolerance=1e-4,
 EstimateLearningRateType estimateLearningRate=Never, double
 maximumStepSizeInPhysicalUnits=0.0)
+
+Regular Step Gradient descent optimizer.
+
+
+
+See:
+ itk::RegularStepGradientDescentOptimizerv4
+
+
 */
 public ";
 
 %javamethodmodifiers  itk::simple::ImageRegistrationMethod::SetOptimizerScales "/**
 Self& itk::simple::ImageRegistrationMethod::SetOptimizerScales(const std::vector< double > &scales)
+
+Manually set per parameter weighting for the transform parameters.
+
 */
 public ";
 
 %javamethodmodifiers  itk::simple::ImageRegistrationMethod::SetOptimizerScalesFromIndexShift "/**
 Self& itk::simple::ImageRegistrationMethod::SetOptimizerScalesFromIndexShift(unsigned int centralRegionRadius=5, double
 smallParameterVariation=0.01)
+
+Estimate scales from maximum voxel shift in index space cause by
+parameter change.
+
+
+
+See:
+ itk::RegistrationParameterScalesFromIndexShift
+
+
 */
 public ";
 
 %javamethodmodifiers  itk::simple::ImageRegistrationMethod::SetOptimizerScalesFromJacobian "/**
 Self& itk::simple::ImageRegistrationMethod::SetOptimizerScalesFromJacobian(unsigned int centralRegionRadius=5)
+
+Estimate scales from Jacobian norms.
+
+
+This scales estimator works well with versor based transforms.
+
+
+See:
+ itk::RegistrationParameterScalesFromJacobian
+
+
 */
 public ";
 
 %javamethodmodifiers  itk::simple::ImageRegistrationMethod::SetOptimizerScalesFromPhysicalShift "/**
 Self& itk::simple::ImageRegistrationMethod::SetOptimizerScalesFromPhysicalShift(unsigned int centralRegionRadius=5, double
 smallParameterVariation=0.01)
+
+Estimating scales of transform parameters a step sizes, from the
+maximum voxel shift in physical space caused by a parameter change.
+
+
+
+See:
+ itk::RegistrationParameterScalesFromPhysicalShift
+
+
 */
 public ";
 
 %javamethodmodifiers  itk::simple::ImageRegistrationMethod::SetShrinkFactorsPerLevel "/**
 Self& itk::simple::ImageRegistrationMethod::SetShrinkFactorsPerLevel(const std::vector< unsigned int > &shrinkFactors)
-*/
-public ";
 
-%javamethodmodifiers  itk::simple::ImageRegistrationMethod::SetSmoothingSigmasAreSpecifiedInPhysicalUnits "/**
-Self& itk::simple::ImageRegistrationMethod::SetSmoothingSigmasAreSpecifiedInPhysicalUnits(bool arg)
+Set the shrink factors for each level where each level has the same
+shrink factor for each dimension.
+
+
+
+See:
+itk::ImageRegistrationMethodv4::SetShrinkFactorsPerLevel
+
+
 */
 public ";
 
 %javamethodmodifiers  itk::simple::ImageRegistrationMethod::SetSmoothingSigmasPerLevel "/**
 Self& itk::simple::ImageRegistrationMethod::SetSmoothingSigmasPerLevel(const std::vector< double > &smoothingSigmas)
-*/
-public ";
 
-%javamethodmodifiers  itk::simple::ImageRegistrationMethod::SmoothingSigmasAreSpecifiedInPhysicalUnitsOff "/**
-Self& itk::simple::ImageRegistrationMethod::SmoothingSigmasAreSpecifiedInPhysicalUnitsOff()
-*/
-public ";
+Set the sigmas of Gaussian used for smoothing at each level.
 
-%javamethodmodifiers  itk::simple::ImageRegistrationMethod::SmoothingSigmasAreSpecifiedInPhysicalUnitsOn "/**
-Self& itk::simple::ImageRegistrationMethod::SmoothingSigmasAreSpecifiedInPhysicalUnitsOn()
+
+
+See:
+itk::ImageRegistrationMethodv4::SetSmoothingSigmasPerLevel
+
+
 */
 public ";
 
 %javamethodmodifiers  itk::simple::ImageRegistrationMethod::ToString "/**
 std::string itk::simple::ImageRegistrationMethod::ToString() const
+
+Print the information about the object to a string.
+
+
+If called when the process is being executed ( during a callback ),
+the ITK Optimizer and Transform objects will be printed.
+
 */
 public ";
 
@@ -19790,11 +20020,10 @@ public ";
 Computes the inverse of a displacement field.
 
 
-InverseDisplacementFieldImageFiltertakes a displacement field as input
-and computes the displacement field that is its inverse. If the input
-displacement field was mapping coordinates from a space A into a space
-B, the output of this filter will map coordinates from the space B
-into the space A.
+ InverseDisplacementFieldImageFilter takes a displacement field as input and computes the displacement
+field that is its inverse. If the input displacement field was mapping
+coordinates from a space A into a space B, the output of this filter
+will map coordinates from the space B into the space A.
 
 Given that both the input and output displacement field are
 represented as discrete images with pixel type vector, the inverse
@@ -19823,7 +20052,7 @@ large memory consumption, long computation time and high precision for
 the inverse estimation.
 
 This filter expects both the input and output images to be of pixel
-type Vector.
+type Vector .
 See:
  itk::simple::InverseDisplacementField for the procedural interface
 
@@ -21526,19 +21755,17 @@ public ";
 convert a labeled image to a label collection image
 
 
-LabelImageToLabelMapFilterconverts a label image to a label collection
-image. The labels are the same in the input and the output image.
+ LabelImageToLabelMapFilter converts a label image to a label collection image. The labels are
+the same in the input and the output image.
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal
-paper:http://hdl.handle.net/1926/584orhttp://www.insight-
-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 
 
 See:
- BinaryImageToLabelMapFilter, LabelMapToLabelImageFilter
+ BinaryImageToLabelMapFilter , LabelMapToLabelImageFilter
 Wiki Examples:
 
 All Examples
@@ -22632,15 +22859,14 @@ valuates the shape attribute at once.
 
 This implementation was taken from the Insight Journal paper:
 
- http://hdl.handle.net/1926/584orhttp://www.insight-
-journal.org/browse/publication/176
+ http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
 
 See:
- ShapeLabelObject, LabelShapeOpeningImageFilter, LabelStatisticsOpeningImageFilter
+ ShapeLabelObject , LabelShapeOpeningImageFilter , LabelStatisticsOpeningImageFilter
 Wiki Examples:
 
 All Examples
@@ -22701,7 +22927,7 @@ public ";
 double itk::simple::LabelShapeStatisticsImageFilter::GetBackgroundValue() const
 
 Set/Get the value used as \"background\" in the output image. Defaults
-to NumericTraits<PixelType>::NonpositiveMin().
+to NumericTraits<PixelType>::NonpositiveMin() .
 
 */
 public ";
@@ -22941,7 +23167,7 @@ public ";
 Self& itk::simple::LabelShapeStatisticsImageFilter::SetBackgroundValue(double BackgroundValue)
 
 Set/Get the value used as \"background\" in the output image. Defaults
-to NumericTraits<PixelType>::NonpositiveMin().
+to NumericTraits<PixelType>::NonpositiveMin() .
 
 */
 public ";
@@ -22987,13 +23213,13 @@ Given an intensity image and a label map, compute min, max, variance
 and mean of the pixels associated with each label or segment.
 
 
-LabelStatisticsImageFiltercomputes the minimum, maximum, sum, mean,
-median, variance and sigma of regions of an intensity image, where the
-regions are defined via a label map (a second input). The label image
-should be integral type. The filter needs all of its input image. It
-behaves as a filter with an input and output. Thus it can be inserted
-in a pipline with other filters and the statistics will only be
-recomputed if a downstream filter changes.
+ LabelStatisticsImageFilter computes the minimum, maximum, sum, mean, median, variance and sigma
+of regions of an intensity image, where the regions are defined via a
+label map (a second input). The label image should be integral type.
+The filter needs all of its input image. It behaves as a filter with
+an input and output. Thus it can be inserted in a pipline with other
+filters and the statistics will only be recomputed if a downstream
+filter changes.
 
 Optionally, the filter also computes intensity histograms on each
 object. If histograms are enabled, a median intensity value can also
@@ -23332,16 +23558,14 @@ public ";
 Make sure that the objects are not overlapping.
 
 
-AttributeUniqueLabelMapFiltersearch the overlapping zones in the
-overlapping objects and keeps only a single object on all the pixels
-of the image. The object to keep is selected according to their label.
+ AttributeUniqueLabelMapFilter search the overlapping zones in the overlapping objects and keeps
+only a single object on all the pixels of the image. The object to
+keep is selected according to their label.
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal
-paper:http://hdl.handle.net/1926/584orhttp://www.insight-
-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 
 
 See:
@@ -24752,15 +24976,15 @@ C++ includes: sitkLevelSetMotionRegistrationFilter.h
 */"
 
 %javamethodmodifiers  itk::simple::LevelSetMotionRegistrationFilter::Execute "/**
-Image itk::simple::LevelSetMotionRegistrationFilter::Execute(const Image &image1, const Image &image2)
+Image itk::simple::LevelSetMotionRegistrationFilter::Execute(const Image &fixedImage, const Image &movingImage)
 
-Execute the filter on the input images
+Execute the filter on the input image
 
 */
 public ";
 
 %javamethodmodifiers  itk::simple::LevelSetMotionRegistrationFilter::Execute "/**
-Image itk::simple::LevelSetMotionRegistrationFilter::Execute(const Image &image1, const Image &image2, double
+Image itk::simple::LevelSetMotionRegistrationFilter::Execute(const Image &fixedImage, const Image &movingImage, double
 gradientSmoothingStandardDeviations, uint32_t numberOfIterations,
 double maximumRMSError, const std::vector< double >
 &standardDeviations, bool smoothDisplacementField, const std::vector<
@@ -24769,7 +24993,7 @@ unsigned int maximumKernelWidth, double maximumError, double alpha,
 double intensityDifferenceThreshold, double
 gradientMagnitudeThreshold, bool useImageSpacing)
 
-Execute the filter on the input images with the given parameters
+Execute the filter on the input image with the given parameters
 
 */
 public ";
@@ -26672,26 +26896,22 @@ Merges several Label Maps.
 
 This filter takes one or more input Label Map and merges them.
 
- SetMethod()can be used to change how the filter manage the labels from the
-different label maps. KEEP (0): MergeLabelMapFilterdo its best to keep
-the label unchanged, but if a label is already used in a previous
-label map, a new label is assigned. AGGREGATE (1): If the same label
-is found several times in the label maps, the label objects with the
-same label are merged. PACK (2): MergeLabelMapFilterrelabel all the
-label objects by order of processing. No conflict can occur. STRICT
-(3): MergeLabelMapFilterkeeps the labels unchanged and raises an
-exception if the same label is found in several images.
+ SetMethod() can be used to change how the filter manage the labels from the
+different label maps. KEEP (0): MergeLabelMapFilter do its best to keep the label unchanged, but if a label is already
+used in a previous label map, a new label is assigned. AGGREGATE (1):
+If the same label is found several times in the label maps, the label
+objects with the same label are merged. PACK (2): MergeLabelMapFilter relabel all the label objects by order of processing. No conflict can
+occur. STRICT (3): MergeLabelMapFilter keeps the labels unchanged and raises an exception if the same label
+is found in several images.
 
-This implementation was taken from the Insight Journal
-paper:http://hdl.handle.net/1926/584orhttp://www.insight-
-journal.org/browse/publication/176
+This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
 
 See:
- ShapeLabelObject, RelabelComponentImageFilter
+ ShapeLabelObject , RelabelComponentImageFilter
 
  itk::simple::MergeLabelMapFilter for the procedural interface
 
@@ -31342,7 +31562,8 @@ virtual void itk::simple::ProcessObject::Abort()
 Sets an abort flag on the active process.
 
 Requests the current active process to abort. Additional, progress or
-iteration event may occur. If aborted then, an AbortEvent should occur. The Progress should be set to 1.0 after aborting.
+iteration event may occur. If aborted then, an AbortEvent should
+occur. The Progress should be set to 1.0 after aborting.
 
 The expected behavior is that not exception should be throw out of
 this processes Execute method. Additionally, the results returned are
@@ -33022,14 +33243,12 @@ attempts to reorganize the labels consecutively. The user can assign
 an arbitrary value to the background; the filter will assign the
 labels consecutively by skipping the background value.
 
-This implementation was taken from the Insight Journal
-paper:http://hdl.handle.net/1926/584orhttp://www.insight-
-journal.org/browse/publication/176
+This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
 
 See:
- ShapeLabelObject, RelabelComponentImageFilter
+ ShapeLabelObject , RelabelComponentImageFilter
 
  itk::simple::RelabelLabelMapFilter for the procedural interface
 
@@ -34869,6 +35088,17 @@ public ";
 
 
 %typemap(javaimports) itk::simple::ScaleSkewVersor3DTransform "/**
+
+A over parameterized 3D Affine transform composed of the addition of a
+versor rotation matrix, a scale matrix and a skew matrix around a
+fixed center with translation.
+
+
+
+See:
+ itk::ScaleSkewVersor3DTransform
+
+
 C++ includes: sitkScaleSkewVersor3DTransform.h
 */"
 
@@ -34988,6 +35218,16 @@ public ";
 
 
 %typemap(javaimports) itk::simple::ScaleTransform "/**
+
+A 2D or 3D anisotropic scale of coordinate space around a fixed
+center.
+
+
+
+See:
+ itk::ScaleTransform
+
+
 C++ includes: sitkScaleTransform.h
 */"
 
@@ -35048,6 +35288,17 @@ public ";
 
 
 %typemap(javaimports) itk::simple::ScaleVersor3DTransform "/**
+
+A parameterized 3D transform composed of the addition of a versor
+rotation matrix and a scale matrix around a fixed center with
+translation.
+
+
+
+See:
+ itk::ScaleVersor3DTransform
+
+
 C++ includes: sitkScaleVersor3DTransform.h
 */"
 
@@ -36369,6 +36620,16 @@ public ";
 
 
 %typemap(javaimports) itk::simple::Similarity2DTransform "/**
+
+A similarity 2D transform with rotation in radians and isotropic
+scaling around a fixed center with translation.
+
+
+
+See:
+ itk::Similarity2DTransform
+
+
 C++ includes: sitkSimilarity2DTransform.h
 */"
 
@@ -36463,6 +36724,16 @@ public ";
 
 
 %typemap(javaimports) itk::simple::Similarity3DTransform "/**
+
+A similarity 3D transform with rotation as a versor, and isotropic
+scaling around a fixed center with translation.
+
+
+
+See:
+ itk::Similarity3DTransform
+
+
 C++ includes: sitkSimilarity3DTransform.h
 */"
 
@@ -37633,14 +37904,14 @@ public ";
 
 %typemap(javaimports) itk::simple::StatisticsImageFilter "/**
 
-Compute min. max, variance and mean of an Image.
+Compute min. max, variance and mean of an Image .
 
 
-StatisticsImageFiltercomputes the minimum, maximum, sum, mean,
-variance sigma of an image. The filter needs all of its input image.
-It behaves as a filter with an input and output. Thus it can be
-inserted in a pipline with other filters and the statistics will only
-be recomputed if a downstream filter changes.
+ StatisticsImageFilter computes the minimum, maximum, sum, mean, variance sigma of an image.
+The filter needs all of its input image. It behaves as a filter with
+an input and output. Thus it can be inserted in a pipline with other
+filters and the statistics will only be recomputed if a downstream
+filter changes.
 
 The filter passes its input through unmodified. The filter is
 threaded. It computes statistics in each thread then combines them in
@@ -37971,13 +38242,13 @@ Deformably register two images using the demons algorithm.
 
 
 This class was contributed by Corinne Mattmann, ETH Zurich,
-Switzerland. based on a variation of the DemonsRegistrationFilter. The basic modification is to use equation (5) from Thirion's paper
+Switzerland. based on a variation of the DemonsRegistrationFilter . The basic modification is to use equation (5) from Thirion's paper
 along with the modification for avoiding large deformations when
 gradients have small values.
 
-SymmetricForcesDemonsRegistrationFilterimplements the demons
-deformable algorithm that register two images by computing the
-deformation field which will map a moving image onto a fixed image.
+ SymmetricForcesDemonsRegistrationFilter implements the demons deformable algorithm that register two images
+by computing the deformation field which will map a moving image onto
+a fixed image.
 
 A deformation field is represented as a image whose pixel type is some
 vector type with at least N elements, where N is the dimension of the
@@ -38000,7 +38271,7 @@ The output deformation field can be obtained via methods GetOutput or
 GetDisplacementField.
 
 This class make use of the finite difference solver hierarchy. Update
-for each iteration is computed in DemonsRegistrationFunction.
+for each iteration is computed in DemonsRegistrationFunction .
 
 
 WARNING:
@@ -39473,6 +39744,26 @@ public ";
 
 
 %typemap(javaimports) itk::simple::Transform "/**
+
+A simplified wrapper around a variety of ITK transforms.
+
+
+The interface to ITK transform objects to be used with the ImageRegistrationMethod, ResampleImageFilter and other SimpleITK process objects. The transforms are designed to
+have a serialized array of parameters to facilitate optimization for
+registration.
+
+Provides a base class interface to any type of ITK transform. Objects
+of this type may have their interface converted to a derived interface
+while keeping the same reference to the ITK object.
+
+Additionally, this class provides a basic interface to a composite
+transforms.
+
+
+See:
+ itk::CompositeTransform
+
+
 C++ includes: sitkTransform.h
 */"
 
@@ -39571,9 +39862,19 @@ Construct a SimpleITK Transform from a pointer to an ITK composite transform.
 public ";
 
 %javamethodmodifiers  itk::simple::Transform::Transform "/**
+itk::simple::Transform::Transform(itk::TransformBase *transform)
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::Transform::Transform "/**
 itk::simple::Transform::Transform(unsigned int dimensions, TransformEnum type)
 
 Construct a specific transformation.
+
+
+Deprecated
+This constructor will be removed in future releases.
+
 
 */
 public ";
@@ -39591,6 +39892,10 @@ constructed Image object.
 Only the sitkDisplacementField transformation type can currently be
 constructed this way. Image must be of sitkVectorFloat64 pixel type with the number of components
 equal to the image dimension.
+
+Deprecated
+This constructor will be removed in future releases.
+
 
 */
 public ";
@@ -39624,18 +39929,16 @@ image is provided and UseReferenceImage is On, then the spacing,
 origin and direction of the reference image will be used.
 
 Since this filter produces an image which is a different size than its
-input, it needs to override several of the methods defined in
-ProcessObjectin order to properly manage the pipeline execution model.
-In particular, this filter overrides
-ProcessObject::GenerateOutputInformation().
+input, it needs to override several of the methods defined in ProcessObject in order to properly manage the pipeline execution model. In
+particular, this filter overrides
+ProcessObject::GenerateOutputInformation() .
 
 This filter is implemented as a multithreaded filter. It provides a
-ThreadedGenerateData()method for its implementation.
+ThreadedGenerateData() method for its implementation.
 
 
 Marius Staring, Leiden University Medical Center, The Netherlands.
- This class was taken from the Insight Journal
-paper:http://hdl.handle.net/1926/1387
+ This class was taken from the Insight Journal paper: http://hdl.handle.net/1926/1387
 See:
  itk::simple::TransformToDisplacementFieldFilter for the procedural interface
 
@@ -39789,6 +40092,15 @@ public ";
 
 
 %typemap(javaimports) itk::simple::TranslationTransform "/**
+
+Translation of a 2D or 3D coordinate space.
+
+
+
+See:
+ itk::TranslationTransform
+
+
 C++ includes: sitkTranslationTransform.h
 */"
 
@@ -40828,6 +41140,16 @@ public ";
 
 
 %typemap(javaimports) itk::simple::VersorRigid3DTransform "/**
+
+A rotation as a versor around a fixed center with translation of a 3D
+coordinate space.
+
+
+
+See:
+ itk::VersorRigid3DTransform
+
+
 C++ includes: sitkVersorRigid3DTransform.h
 */"
 
@@ -40921,6 +41243,16 @@ public ";
 
 
 %typemap(javaimports) itk::simple::VersorTransform "/**
+
+A 3D rotation transfrom with rotation as a versor around a fixed
+center.
+
+
+
+See:
+ itk::VersorTransform
+
+
 C++ includes: sitkVersorTransform.h
 */"
 
@@ -43043,6 +43375,11 @@ C++ includes: sitkMemberFunctionFactoryBase.h
 
 
 %typemap(javaimports) itk::simple::MemberFunctionFactoryBase< TMemberFunctionPointer, TKey, 4 > "/**
+C++ includes: sitkMemberFunctionFactoryBase.h
+*/"
+
+
+%typemap(javaimports) itk::simple::MemberFunctionFactoryBase< TMemberFunctionPointer, TKey, 5 > "/**
 C++ includes: sitkMemberFunctionFactoryBase.h
 */"
 
@@ -48496,17 +48833,17 @@ C++ includes: sitkPixelIDTokens.h
 */"
 
 
-%typemap(javaimports) itk::simple::IsInstantiated< itk::Image< TPixelType, VImageDimension > > "/**
+%typemap(javaimports) itk::simple::IsInstantiated< itk::Image< TPixelType, VImageDimension >, 0 > "/**
 C++ includes: sitkPixelIDTokens.h
 */"
 
 
-%typemap(javaimports) itk::simple::IsInstantiated< itk::LabelMap< itk::LabelObject< TLabelType, VImageDimension > > > "/**
+%typemap(javaimports) itk::simple::IsInstantiated< itk::LabelMap< itk::LabelObject< TLabelType, VImageDimension > >, 0 > "/**
 C++ includes: sitkPixelIDTokens.h
 */"
 
 
-%typemap(javaimports) itk::simple::IsInstantiated< itk::VectorImage< TPixelType, VImageDimension > > "/**
+%typemap(javaimports) itk::simple::IsInstantiated< itk::VectorImage< TPixelType, VImageDimension >, 0 > "/**
 C++ includes: sitkPixelIDTokens.h
 */"
 
