@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
   std::cout << "Number Of Iterations: " << filter.GetElapsedIterations() << std::endl;
   std::cout << " RMS: " << filter.GetRMSChange() << std::endl;
 
-  sitk::Transform outTx( displacementField, sitk::sitkDisplacementField );
+  sitk::DisplacementFieldTransform outTx( displacementField );
 
   sitk::WriteTransform(outTx, argv[3]);
 
