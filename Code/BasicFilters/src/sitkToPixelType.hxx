@@ -21,18 +21,7 @@
  * Please look at sitkImageFilterTemplate.cxx.in to make changes.
  */
 
-#include "itkImage.h"
-#include "itkVectorImage.h"
-#include "itkLabelMap.h"
-#include "itkLabelObject.h"
-#include "itkNumericTraits.h"
-#include "itkNumericTraitsVariableLengthVectorPixel.h"
-#include "itkVectorIndexSelectionCastImageFilter.h"
-#include "itkComposeImageFilter.h"
-
-#include "sitkOrImageFilter.h"
-#include "itkOrImageFilter.h"
-
+#include "itkVariableLengthVector.h"
 
 
 namespace itk {
@@ -42,14 +31,14 @@ namespace simple {
 namespace
 {
 
-template <typename TPixel>
-static void ToPixelType( int inPixel, TPixel &outPixel)
+template <typename TValueType, typename TPixel>
+static void ToPixelType( TValueType inPixel, TPixel &outPixel)
 {
   outPixel = static_cast<TPixel>( inPixel );
 }
 
-template <typename TComponent>
-static void ToPixelType( int inPixel, itk::VariableLengthVector<TComponent> &outPixel)
+template <typename TValueType, typename TComponent>
+static void ToPixelType( TValueType inPixel, itk::VariableLengthVector<TComponent> &outPixel)
 {
   outPixel.Fill( static_cast<TComponent>( inPixel ) );
 }
