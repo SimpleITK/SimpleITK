@@ -53,13 +53,21 @@
           "parameter" : "PadLowerBound",
           "type" : "unsigned int",
           "dim_vec" : 1,
-          "value" : [5,10,15]
+          "value" : [
+            5,
+            10,
+            15
+          ]
         },
         {
           "parameter" : "PadUpperBound",
           "type" : "unsigned int",
           "dim_vec" : 1,
-          "value" : [3,6,9]
+          "value" : [
+            3,
+            6,
+            9
+          ]
         }
       ],
       "inputs" : [

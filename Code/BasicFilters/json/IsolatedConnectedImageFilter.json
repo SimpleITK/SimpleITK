@@ -102,13 +102,19 @@
           "parameter" : "Seed1",
           "type" : "uint32_t",
           "dim_vec" : 1,
-          "value" : [150,150]
+          "value" : [
+            150,
+            150
+          ]
         },
         {
           "parameter" : "Seed2",
           "type" : "uint32_t",
           "dim_vec" : 1,
-          "value" : [201,132]
+          "value" : [
+            201,
+            132
+          ]
         },
         {
           "parameter" : "Lower",

@@ -37,7 +37,11 @@
           "parameter" : "Shift",
           "type" : "int",
           "dim_vec" : 1,
-          "value" : [5,-10,0]
+          "value" : [
+            5,
+            -10,
+            0
+          ]
         }
       ],
       "inputs" : [

@@ -113,7 +113,8 @@ namespace simple
      * The InitialTransform is added to this transform to form the
      * composite transform which maps from the virtual domain to the
      * moving image's domain. The parameters of this transform are not
-     * optimized.
+     * optimized.  This is an advanced option used when the output
+     * transformed with be composed into a composite transform.
      *
      * By default this transform is an identity, and not used.
      *

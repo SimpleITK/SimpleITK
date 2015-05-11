@@ -26,6 +26,11 @@ namespace itk
 namespace simple
 {
 
+/** \brief A rigid 2D transform with rotation in radians around a
+ * fixed center with translation.
+ *
+ * \sa itk::Euler2DTransform
+ */
 class SITKCommon_EXPORT Euler2DTransform
   : public Transform
 {

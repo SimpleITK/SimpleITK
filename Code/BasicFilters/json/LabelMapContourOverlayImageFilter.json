@@ -8,7 +8,7 @@
   "pixel_types2" : "BasicPixelIDTypeList",
   "output_image_type" : "itk::VectorImage< typename InputImageType2::PixelType, InputImageType::ImageDimension >",
   "filter_type" : "itk::LabelMapContourOverlayImageFilter<InputImageType, InputImageType2, OutputImageType>",
-   "inputs" : [
+  "inputs" : [
     {
       "name" : "LabelMapImage",
       "type" : "Image",
