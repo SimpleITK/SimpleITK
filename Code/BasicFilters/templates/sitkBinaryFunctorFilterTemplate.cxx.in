@@ -19,24 +19,11 @@ $(include DoNotEditWarning.cxx.in)
 
 $(include StandardIncludes.cxx.in)
 $(include AddExtraIncludes.cxx.in)
+#include "sitkToPixelType.hxx"
 
 namespace itk {
 namespace simple {
 
-
-namespace {
-template <typename TPixel>
-static void ToPixelType( ${constant_type} inPixel, TPixel &outPixel)
-{
-  outPixel = static_cast<TPixel>( inPixel );
-}
-
-template <typename TComponent>
-static void ToPixelType( ${constant_type} inPixel, itk::VariableLengthVector<TComponent> &outPixel)
-{
-  outPixel.Fill( static_cast<TComponent>( inPixel ) );
-}
-}
 
 //-----------------------------------------------------------------------------
 
