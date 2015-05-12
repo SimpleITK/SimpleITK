@@ -191,7 +191,7 @@ namespace simple
      */
     Self& SetMetricAsCorrelation( );
 
-    /** \breif Use demons image metric.
+    /** \brief Use demons image metric.
      *
      * \sa itk::DemonsImageToImageMetricv4
      */
