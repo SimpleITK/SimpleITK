@@ -10,6 +10,25 @@ $ easy_install SimpleITK
 \endcode
 
 
+\section v090 SimpleITK 0.9.0
+
+        \li<a  href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.0/Python/SimpleITK-0.9.0-py2.6-linux-i686.egg#2afc6f6b93aa7642f9611b1ac2390ba5">SimpleITK-0.9.0-py2.6-linux-i686.egg</a>
+        \li<a  href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.0/Python/SimpleITK-0.9.0-py2.6-linux-x86_64.egg#b153b85fdbf0c51ed5d6bf8a0bf85b2e">SimpleITK-0.9.0-py2.6-linux-x86_64.egg</a>
+        \li<a  href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.0/Python/SimpleITK-0.9.0-py2.6-macosx-10.6-universal.egg#6198729e8e5b12ae55badb921a5441c2">SimpleITK-0.9.0-py2.6-macosx-10.6-universal.egg</a>
+        \li<a  href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.0/Python/SimpleITK-0.9.0-py2.7-linux-i686.egg#1f7adfaf6270066da35c99b4ff19e165">SimpleITK-0.9.0-py2.7-linux-i686.egg</a>
+        \li<a  href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.0/Python/SimpleITK-0.9.0-py2.7-linux-x86_64.egg#fc5980f05526d1d55ce117039f3d3199">SimpleITK-0.9.0-py2.7-linux-x86_64.egg</a>
+        \li<a  href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.0/Python/SimpleITK-0.9.0-py2.7-macosx-10.6-intel.egg#33213c6e7c518134f60b37ac26738309">SimpleITK-0.9.0-py2.7-macosx-10.6-intel.egg</a>
+        \li<a  href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.0/Python/SimpleITK-0.9.0-py2.7-win32.egg#d6e14b4d768867d1f5681c8413bc5e62">SimpleITK-0.9.0-py2.7-win32.egg</a>
+        \li<a  href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.0/Python/SimpleITK-0.9.0-py2.7-win-amd64.egg#f0f02a006e418ff9ac0db56bf70d245c">SimpleITK-0.9.0-py2.7-win-amd64.egg</a>
+        \li<a  href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.0/Python/SimpleITK-0.9.0-py3.3-linux-i686.egg#59f57da72eab7568c94d9df28dc17dec">SimpleITK-0.9.0-py3.3-linux-i686.egg</a>
+        \li<a  href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.0/Python/SimpleITK-0.9.0-py3.3-linux-x86_64.egg#2b71eb399e07aa6f5f7158a771b30c37">SimpleITK-0.9.0-py3.3-linux-x86_64.egg</a>
+        \li<a  href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.0/Python/SimpleITK-0.9.0-py3.3-win32.egg#b570b7c7951c1f8fd2d95dfde0c09920">SimpleITK-0.9.0-py3.3-win32.egg</a>
+        \li<a  href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.0/Python/SimpleITK-0.9.0-py3.3-win-amd64.egg#10b3c9086f070b1e46c7e81a952e55b1">SimpleITK-0.9.0-py3.3-win-amd64.egg</a>
+        \li<a  href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.0/Python/SimpleITK-0.9.0-py3.4-linux-i686.egg#d0cbf53e0628a7b025c3d8bd9db5a3ac">SimpleITK-0.9.0-py3.4-linux-i686.egg</a>
+        \li<a  href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.0/Python/SimpleITK-0.9.0-py3.4-linux-x86_64.egg#1e2e8090ece72cab31260c67b2504b41">SimpleITK-0.9.0-py3.4-linux-x86_64.egg</a>
+        \li<a  href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.0/Python/SimpleITK-0.9.0-py3.4-win32.egg#67d11bb02938657d3d3b7dd0a3d89a32">SimpleITK-0.9.0-py3.4-win32.egg</a>
+        \li<a  href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.0/Python/SimpleITK-0.9.0-py3.4-win-amd64.egg#58b88f2e9ceb947e0a95acb515b987be">SimpleITK-0.9.0-py3.4-win-amd64.egg</a>
+
 \section v081 SimpleITK 0.8.1
 
         \li<a href="http://sourceforge.net/projects/simpleitk/files/SimpleITK/0.8.1/Python/SimpleITK-0.8.1-py2.6-linux-i686.egg#2937c89e971e789bf29799583cd3643f">SimpleITK-0.8.1-py2.6-linux-i686.egg</a>
