@@ -47,15 +47,19 @@ function(get_git_head_revision _refvar _hashvar)
 		set(${_hashvar} "GIT-NOTFOUND" PARENT_SCOPE)
 		return()
 	endif()
+
+	set(src_dir ${PROJECT_SOURCE_DIR})
+	set(bin_dir ${PROJECT_BINARY_DIR})
+
 	execute_process(COMMAND ${GIT_EXECUTABLE} rev-parse --git-dir
-		WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+		WORKING_DIRECTORY ${src_dir}
 		OUTPUT_VARIABLE GIT_DIR
 		ERROR_VARIABLE error
 		RESULT_VARIABLE failed
 		OUTPUT_STRIP_TRAILING_WHITESPACE
 		)
 	if(NOT IS_ABSOLUTE "${GIT_DIR}")
-		set(GIT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/${GIT_DIR}")
+		set(GIT_DIR "${src_dir}/${GIT_DIR}")
 	endif()
 	if(failed OR NOT EXISTS "${GIT_DIR}/HEAD")
 		# not in git
@@ -63,7 +67,7 @@ function(get_git_head_revision _refvar _hashvar)
 		set(${_hashvar} "GITDIR-NOTFOUND" PARENT_SCOPE)
 		return()
 	endif()
-	set(GIT_DATA "${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/git-data")
+	set(GIT_DATA "${bin_dir}/CMakeFiles/git-data")
 	if(NOT EXISTS "${GIT_DATA}")
 		file(MAKE_DIRECTORY "${GIT_DATA}")
 	endif()
@@ -79,7 +83,7 @@ function(get_git_head_revision _refvar _hashvar)
 		set(HEAD_REF "")
 	endif()
 	execute_process(COMMAND ${GIT_EXECUTABLE} rev-parse HEAD
-		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+		WORKING_DIRECTORY ${src_dir}
 		OUTPUT_VARIABLE HEAD_HASH OUTPUT_STRIP_TRAILING_WHITESPACE
 		ERROR_VARIABLE error
 		RESULT_VARIABLE failed)
@@ -94,8 +98,10 @@ endfunction()
 function(git_commits_since file _commits )
   get_git_head_revision(ref head)
 
+  set(src_dir ${PROJECT_SOURCE_DIR})
+
   execute_process(COMMAND ${GIT_EXECUTABLE} rev-list ${head} -n 1 -- ${file}
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    WORKING_DIRECTORY ${src_dir}
     OUTPUT_VARIABLE tag OUTPUT_STRIP_TRAILING_WHITESPACE
     ERROR_VARIABLE error
     RESULT_VARIABLE failed
@@ -105,7 +111,7 @@ function(git_commits_since file _commits )
   endif()
 
   execute_process(COMMAND ${GIT_EXECUTABLE} rev-list ${tag}..${head}
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    WORKING_DIRECTORY ${src_dir}
     OUTPUT_VARIABLE rev_list OUTPUT_STRIP_TRAILING_WHITESPACE
     ERROR_VARIABLE error
     RESULT_VARIABLE failed
@@ -132,6 +138,8 @@ function(git_describe _var)
 		return()
 	endif()
 
+	set(src_dir ${PROJECT_SOURCE_DIR})
+
 	# TODO sanitize
 	#if((${ARGN}" MATCHES "&&") OR
 	#	(ARGN MATCHES "||") OR
@@ -143,7 +151,7 @@ function(git_describe _var)
 	#message(STATUS "Arguments to execute_process: ${ARGN}")
 
 	execute_process(COMMAND "${GIT_EXECUTABLE}" describe ${hash} ${ARGN}
-		WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+		WORKING_DIRECTORY "${src_dir}"
 		RESULT_VARIABLE res
 		OUTPUT_VARIABLE out
 		ERROR_QUIET
