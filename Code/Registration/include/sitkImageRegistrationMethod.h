@@ -280,7 +280,7 @@ namespace simple
      * \sa itk::LBFGSBOptimizerv4
      */
     Self& SetOptimizerAsLBFGSB(double gradientConvergenceTolerance = 1e-5,
-                               unsigned int maximumNumberOfIterations = 500,
+                               unsigned int numberOfIterations = 500,
                                unsigned int maximumNumberOfCorrections = 5,
                                unsigned int maximumNumberOfFunctionEvaluations = 2000,
                                double costFunctionConvergenceFactor = 1e+7,

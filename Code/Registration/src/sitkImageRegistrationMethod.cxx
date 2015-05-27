@@ -274,7 +274,7 @@ ImageRegistrationMethod::SetOptimizerAsGradientDescentLineSearch( double learnin
 
 ImageRegistrationMethod::Self&
 ImageRegistrationMethod::SetOptimizerAsLBFGSB( double gradientConvergenceTolerance,
-                                               unsigned int maximumNumberOfIterations,
+                                               unsigned int numberOfIterations,
                                                unsigned int maximumNumberOfCorrections,
                                                unsigned int maximumNumberOfFunctionEvaluations,
                                                double costFunctionConvergenceFactor,
@@ -284,7 +284,7 @@ ImageRegistrationMethod::SetOptimizerAsLBFGSB( double gradientConvergenceToleran
 {
   m_OptimizerType = LBFGSB;
   m_OptimizerGradientConvergenceTolerance = gradientConvergenceTolerance;
-  m_OptimizerNumberOfIterations = maximumNumberOfIterations;
+  m_OptimizerNumberOfIterations = numberOfIterations;
   m_OptimizerMaximumNumberOfCorrections = maximumNumberOfCorrections;
   m_OptimizerMaximumNumberOfFunctionEvaluations = maximumNumberOfFunctionEvaluations;
   m_OptimizerCostFunctionConvergenceFactor = costFunctionConvergenceFactor;
