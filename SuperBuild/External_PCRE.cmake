@@ -19,8 +19,8 @@ if(NOT PCRE_DIR)
   #  PCRE (Perl Compatible Regular Expressions)
   #
 
-  set(PCRE_TARGET_VERSION 8.36)
-  set(PCRE_DOWNLOAD_SOURCE_HASH "ff7b4bb14e355f04885cf18ff4125c98")
+  set(PCRE_TARGET_VERSION 8.37)
+  set(PCRE_DOWNLOAD_SOURCE_HASH "6e0cc6d1bdac7a4308151f9b3571b86e")
 
   # follow the standard EP_PREFIX locations
   set(pcre_binary_dir ${CMAKE_CURRENT_BINARY_DIR}/PCRE-prefix/src/PCRE-build)
