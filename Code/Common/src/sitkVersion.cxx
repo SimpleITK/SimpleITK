@@ -32,7 +32,7 @@ std::string MakeExtendedVersionString()
   return v.str();
 }
 
-
+static const std::string itkVersionString = ITK_VERSION_STRING;
 static const std::string extendedVersionString = MakeExtendedVersionString();
 
 }
@@ -82,7 +82,7 @@ namespace itk
   }
   const std::string &Version::ITKVersionString()
   {
-    return std::string(ITK_VERSION_STRING);
+    return itkVersionString;
   }
   const std::string &Version::ExtendedVersionString()
   {
