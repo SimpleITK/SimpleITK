@@ -5,6 +5,7 @@ AccumulateImageFilter,True,False,Duplicate of Projection filters,False
 AcosImageFilter,True,True,,False
 AdaptiveHistogramEqualizationImageFilter,True,True,,True
 AddImageFilter,True,True,,False
+AdditiveGaussianNoiseImageFilter,True,True,,False
 AndImageFilter,True,True,,False
 AnisotropicDiffusionImageFilter,True,False,base class,False
 AnisotropicFourthOrderLevelSetImageFilter,True,False,,True
@@ -62,8 +63,9 @@ ChangeLabelImageFilter,True,True,,True
 CheckerBoardImageFilter,True,True,,False
 ClampImageFilter,True,True,,True
 ClosingByReconstructionImageFilter,True,True,,False
-CollidingFrontsImageFilter,True,False,,True
+CollidingFrontsImageFilter,True,True,,True
 ComparisonImageFilter,True,False,,False
+ComplexToComplexFFTImageFilter,True,False,,False
 ComplexToImaginaryImageFilter,True,True,,False
 ComplexToModulusImageFilter,True,True,,False
 ComplexToPhaseImageFilter,True,True,,False
@@ -106,15 +108,16 @@ ExpImageFilter,True,True,,False
 ExpNegativeImageFilter,True,True,,False
 ExpandImageFilter,True,True,,True
 ExtractImageFilter,True,True,,False
-FFTComplexToComplexImageFilter,True,False,,True
 FFTConvolutionImageFilter,True,True,,False
 FFTNormalizedCorrelationImageFilter,False,True,,False
+FFTPadImageFilter,True,False,,False
 FFTShiftImageFilter,True,True,,False
 FastApproximateRankImageFilter,True,True,,True
 FastChamferDistanceImageFilter,True,False,,True
+FastMarchingBaseImageFilter,False,True,,False
 FastMarchingExtensionImageFilter,True,False,,True
 FastMarchingImageFilter,True,True,,False
-FastMarchingUpwindGradientImageFilter,True,False,,True
+FastMarchingUpwindGradientImageFilter,True,True,,True
 FiniteDifferenceImageFilter,True,False,base class,False
 FlipImageFilter,True,True,,False
 ForwardFFTImageFilter,True,True,,False
@@ -174,7 +177,9 @@ IntensityWindowingImageFilter,True,True,,False
 IntermodesThresholdImageFilter,True,True,,False
 InterpolateImageFilter,True,False,,True
 InverseDeconvolutionImageFilter,True,True,,False
+InverseDisplacementFieldImageFilter,False,True,,False
 InverseFFTImageFilter,True,True,,False
+InvertDisplacementFieldImageFilter,False,True,,False
 InvertIntensityImageFilter,True,True,,False
 IsoContourDistanceImageFilter,True,True,,False
 IsoDataThresholdImageFilter,True,True,,False
@@ -198,6 +203,7 @@ LabelOverlapMeasuresImageFilter,False,True,,False
 LabelOverlayImageFilter,True,True,,False
 LabelShapeKeepNObjectsImageFilter,True,False,,True
 LabelShapeOpeningImageFilter,True,False,,True
+LabelShapeStatisticsImageFilter,False,True,,False
 LabelStatisticsImageFilter,True,True,,False
 LabelStatisticsKeepNObjectsImageFilter,True,False,,True
 LabelStatisticsOpeningImageFilter,True,False,,True
@@ -245,6 +251,7 @@ NarrowBandThresholdSegmentationLevelSetImageFilter,True,False,,True
 NaryAddImageFilter,True,True,,True
 NaryMaximumImageFilter,True,True,,True
 NeighborhoodConnectedImageFilter,True,True,,False
+NoiseBaseImageFilter,True,False,,False
 NoiseImageFilter,True,True,,False
 NormalizeImageFilter,True,True,,False
 NormalizeToConstantImageFilter,True,True,,False
@@ -288,6 +295,7 @@ RichardsonLucyDeconvolutionImageFilter,True,True,,False
 RobustAutomaticThresholdImageFilter,True,False,,True
 RoundImageFilter,True,False,,False
 STAPLEImageFilter,True,True,,True
+SaltAndPepperNoiseImageFilter,True,True,,False
 ScalarChanAndVeseDenseLevelSetImageFilter,True,True,,True
 ScalarChanAndVeseSparseLevelSetImageFilter,True,False,,True
 ScalarConnectedComponentImageFilter,True,True,,False
@@ -299,6 +307,7 @@ ShapeDetectionLevelSetImageFilter,True,True,,False
 ShapePriorSegmentationLevelSetImageFilter,True,False,,True
 ShapeRelabelImageFilter,True,False,,True
 ShiftScaleImageFilter,True,True,,False
+ShotNoiseImageFilter,True,True,,False
 ShrinkImageFilter,True,True,,False
 SigmoidImageFilter,True,True,,False
 SignedDanielssonDistanceMapImageFilter,True,True,,False
@@ -313,6 +322,7 @@ SobelEdgeDetectionImageFilter,True,True,,False
 SparseFieldFourthOrderLevelSetImageFilter,True,False,,True
 SparseFieldLevelSetImageFilter,True,False,base class?,False
 SpatialObjectToImageFilter,True,False,A solution is needed for spacial object input,False
+SpeckleNoiseImageFilter,True,True,,False
 SqrtImageFilter,True,True,,False
 SquareImageFilter,True,True,,False
 SquaredDifferenceImageFilter,True,True,,False
@@ -351,6 +361,7 @@ VectorMagnitudeImageFilter,True,True,,False
 VectorResampleImageFilter,True,False,Same functionality exists in ResampleImageFilter,False
 VectorRescaleIntensityImageFilter,True,False,,True
 VectorThresholdSegmentationLevelSetImageFilter,True,False,,True
+VnlComplexToComplexFFTImageFilter,True,False,,False
 VnlForwardFFTImageFilter,True,False,Internal FFT filter,False
 VnlHalfHermitianToRealInverseFFTImageFilter,True,False,Internal FFT filter,False
 VnlInverseFFTImageFilter,True,False,Internal FFT filter,False
