@@ -33,15 +33,16 @@ set(ExternalData_URL_TEMPLATES "" CACHE STRING
   "Additional URL templates for the ExternalData CMake script to look for testing data. E.g.
 file:///var/bigharddrive/%(algo)/%(hash)")
 mark_as_advanced(ExternalData_URL_TEMPLATES)
-list(APPEND ExternalData_URL_TEMPLATES
-  # Data published by MIDAS
-  "http://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=%(hash)&algorithm=%(algo)"
-  "https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=%(hash)&algorithm=%(algo)"
+if(NOT SITK_FORBID_DOWNLOADS)
+  list(APPEND ExternalData_URL_TEMPLATES
+    # Data published by MIDAS
+    "http://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=%(hash)&algorithm=%(algo)"
+    "https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=%(hash)&algorithm=%(algo)"
 
-  # Data published by developers using git-gerrit-push.
-  "http://www.itk.org/files/ExternalData/%(algo)/%(hash)"
-  )
-
+    # Data published by developers using git-gerrit-push.
+    "http://www.itk.org/files/ExternalData/%(algo)/%(hash)"
+    )
+endif()
 # Tell ExternalData commands not to transform raw files to content links.
 #set(ExternalData_LINK_CONTENT MD5)
 
