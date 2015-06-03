@@ -49,7 +49,7 @@ function(sitk_add_python_test name)
     return()
   endif()
 
-  set(command "${VIRTUAL_PYTHON_EXECUTABLE}")
+  set(command "${TEST_PYTHON_EXECUTABLE}")
 
   # add extra command which may be needed on some systems
   if(CMAKE_OSX_ARCHITECTURES)
@@ -63,6 +63,12 @@ function(sitk_add_python_test name)
     ${command}
     ${ARGN}
     )
+  if (NOT SITK_PYTHON_USE_VIRTUALENV)
+    set_property(TEST Python.${name}
+      PROPERTY ENVIRONMENT PYTHONPATH=${SimpleITK_BINARY_DIR}/Wrapping
+      )
+  endif()
+
 endfunction()
 
 

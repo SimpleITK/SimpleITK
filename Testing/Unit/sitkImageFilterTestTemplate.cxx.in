@@ -402,6 +402,13 @@ TEST_F(Python,${name}) {
         ]]
     end)
 
+  #ifndef SITK_PYTHON_USE_VIRTUALENV
+  // Set-up the R enviroment to include the SimpleITK R library in the
+  // build directory.
+  SetEnvironment ( "PYTHONPATH", dataFinder.GetBuildDirectory()+"/Wrapping" );
+  #endif
+
+
   std::string Script = dataFinder.GetBuildDirectory() + "/Testing/Unit/PythonTests/${name}Test.py";
   $(foreach tests
     {
