@@ -381,6 +381,16 @@ include(sitkLanguageOptions)
 # Ensure that development strips have been setup
 include(sitkCheckSourceTree)
 
+#-----------------------------------------------------------------------------
+if(NOT EXISTS "${ITK_SOURCE_DIR}/.ExternalData/README.rst")
+  # This file is always present in version-controlled source trees
+  # so we must have been extracted from a source tarball with no
+  # data objects needed for testing.  Turn off tests by default
+  # since enabling them requires network access or manual data
+  # store configuration.
+  option(BUILD_TESTING "Build the testing tree." OFF)
+endif()
+
 #------------------------------------------------------------------------------
 # set things up for testing, this configuration needs to occour before
 # we enter the sub-directories
