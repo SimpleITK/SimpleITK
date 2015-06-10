@@ -246,6 +246,22 @@ include(sitkLanguageOptions)
 
 #$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 include(ExternalProject)
+
+#------------------------------------------------------------------------------
+# Lua
+#------------------------------------------------------------------------------
+option ( USE_SYSTEM_LUA "Use a pre-compiled version of LUA 5.1 previously configured for your system" OFF )
+mark_as_advanced(USE_SYSTEM_LUA)
+if ( USE_SYSTEM_LUA )
+  find_package( LuaInterp REQUIRED 5.1 )
+  set( SITK_LUA_EXECUTABLE ${LUA_EXECUTABLE} CACHE PATH "Lua executable used for code generation." )
+  unset( LUA_EXECUTABLE CACHE )
+else()
+  include(External_Lua)
+  list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES Lua)
+  set( SITK_LUA_EXECUTABLE ${SITK_LUA_EXECUTABLE} CACHE PATH "Lua executable used for code generation." )
+endif()
+
 #------------------------------------------------------------------------------
 # Swig
 #------------------------------------------------------------------------------
@@ -317,7 +333,6 @@ ExternalProject_Add(${proj}
     -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY:PATH=<BINARY_DIR>/lib
     -DCMAKE_RUNTIME_OUTPUT_DIRECTORY:PATH=<BINARY_DIR>/bin
     -DCMAKE_BUNDLE_OUTPUT_DIRECTORY:PATH=<BINARY_DIR>/bin
-    -DSITK_4D_IMAGES:BOOL=${SITK_4D_IMAGES}
     ${ep_languages_args}
     # ITK
     -DITK_DIR:PATH=${ITK_DIR}
@@ -358,7 +373,7 @@ include(External_SimpleITKExamples)
 #------------------------------------------------------------------------------
 # List of external projects
 #------------------------------------------------------------------------------
-set(external_project_list ITK Swig SimpleITKExamples PCRE ${CMAKE_PROJECT_NAME})
+set(external_project_list ITK Swig SimpleITKExamples PCRE Lua ${CMAKE_PROJECT_NAME})
 
 #-----------------------------------------------------------------------------
 # Dump external project dependencies
