@@ -1,3 +1,39 @@
+
+find_package( LuaInterp REQUIRED 5.1 )
+
+if ( NOT ${SITK_LUA_EXECUTABLE} )
+  find_package( LuaInterp REQUIRED 5.1 )
+  set( SITK_LUA_EXECUTABLE ${LUA_EXECUTABLE} CACHE PATH "Lua executable used for code generation." )
+  unset( LUA_EXECUTABLE CACHE )
+endif()
+
+execute_process(
+  COMMAND ${SITK_LUA_EXECUTABLE} -v
+  OUTPUT_VARIABLE
+    SITK_LUA_EXECUTABLE_VERSION_STRING
+  ERROR_VARIABLE
+    SITK_LUA_EXECUTABLE_VERSION_STRING
+  RESULT_VARIABLE
+    SITK_LUA_VERSION_RESULT_VARIABLE
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+  ERROR_STRIP_TRAILING_WHITESPACE
+  )
+
+if( NOT SITK_LUA_VERSION_RESULT_VARIABLE )
+  string( REGEX MATCH "([0-9]*)([.])([0-9]*)([.]*)([0-9]*)"
+    SITK_LUA_EXECUTABLE_VERSION
+    ${SITK_LUA_EXECUTABLE_VERSION_STRING} )
+endif()
+
+if( SITK_LUA_VERSION_RESULT_VARIABLE
+      OR
+    NOT ${SITK_LUA_EXECUTABLE_VERSION} VERSION_GREATER "5.1"
+      OR
+    NOT ${SITK_LUA_EXECUTABLE_VERSION} VERSION_LESS "5.2" )
+  message(SEND_ERROR "Lua version 5.1 is required for SITK_LUA_EXECUTABLE_VERSION.")
+endif()
+
+
 ###############################################################################
 # This macro returns the list of template components used by a specific
 # template file
@@ -81,14 +117,14 @@ macro( expand_template FILENAME input_dir output_dir library_name )
   add_custom_command (
     OUTPUT "${output_h}"
     COMMAND ${CMAKE_COMMAND} -E remove -f ${output_h}
-    COMMAND lua ${expand_template_script} code ${input_json_file} ${input_dir}/templates/sitk ${template_include_dir} Template.h.in ${output_h}
+    COMMAND ${SITK_LUA_EXECUTABLE} ${expand_template_script} code ${input_json_file} ${input_dir}/templates/sitk ${template_include_dir} Template.h.in ${output_h}
     DEPENDS ${input_json_file} ${template_deps} ${template_file_h}
     )
   # impl
   add_custom_command (
     OUTPUT "${output_cxx}"
     COMMAND ${CMAKE_COMMAND} -E remove -f ${output_cxx}
-    COMMAND lua ${expand_template_script} code ${input_json_file} ${input_dir}/templates/sitk ${template_include_dir} Template.cxx.in ${output_cxx}
+    COMMAND ${SITK_LUA_EXECUTABLE} ${expand_template_script} code ${input_json_file} ${input_dir}/templates/sitk ${template_include_dir} Template.cxx.in ${output_cxx}
     DEPENDS ${input_json_file} ${template_deps} ${template_file_cxx}
     )
 
