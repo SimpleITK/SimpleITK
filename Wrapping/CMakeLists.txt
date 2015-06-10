@@ -163,45 +163,56 @@ if ( WRAP_PYTHON )
     "${CMAKE_CURRENT_BINARY_DIR}/__init__.py"
     COPYONLY )
 
+  option(SITK_PYTHON_USE_VIRTUALENV "Create a Python Virtual Environment for testing." ON)
+  mark_as_advanced(SITK_PYTHON_USE_VIRTUALENV)
 
-  #
-  # Setup Python Virtual Enviroment for testing and packaging
-  #
-  set( PythonVirtualenvHome "${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVirtualenv" )
+  if (SITK_PYTHON_USE_VIRTUALENV)
+    sitk_enforce_forbid_downloads( SITK_PYTHON_USE_VIRTUALENV )
+    #
+    # Setup Python Virtual Enviroment for testing and packaging
+    #
+    set( PythonVirtualenvHome "${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVirtualenv" )
 
-  # virtualenv places the python executable in different
-  # locations. Also note than on windows installations where python is
-  # installed only for a single user the may be a missing dll issue.
-  if( WIN32 )
-    set( VIRTUAL_PYTHON_EXECUTABLE "${PythonVirtualenvHome}/Scripts/python" CACHE INTERNAL "Python executable in virtual enviroment" FORCE )
-  else( )
-    set( VIRTUAL_PYTHON_EXECUTABLE "${PythonVirtualenvHome}/bin/python" CACHE INTERNAL "Python executable in virtual enviroment" FORCE )
-  endif()
+    # virtualenv places the python executable in different
+    # locations. Also note than on windows installations where python is
+    # installed only for a single user the may be a missing dll issue.
+    if( WIN32 )
+      set( VIRTUAL_PYTHON_EXECUTABLE
+        "${PythonVirtualenvHome}/Scripts/python")
+    else( )
+      set( VIRTUAL_PYTHON_EXECUTABLE "${PythonVirtualenvHome}/bin/python" )
+    endif()
+    set(TEST_PYTHON_EXECUTABLE "${VIRTUAL_PYTHON_EXECUTABLE}"
+      CACHE INTERNAL "Python executable for testing." FORCE )
 
-  # configure a scripts which creates the virtualenv and installs numpy
-  configure_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/PythonVirtualEnvInstall.cmake.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/PythonVirtualEnvInstall.cmake"
-    @ONLY )
-
-  set( PythonVirtualEnv_ALL "" )
-  if ( BUILD_TESTING )
-    set( PythonVirtualEnv_ALL "ALL" )
-  endif()
-
-  add_custom_target( PythonVirtualEnv ${PythonVirtualEnv_ALL}
-    DEPENDS "${VIRTUAL_PYTHON_EXECUTABLE}"
-    SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/PythonVirtualEnvInstall.cmake.in )
-
-  add_custom_command( OUTPUT "${VIRTUAL_PYTHON_EXECUTABLE}"
-    COMMAND ${CMAKE_COMMAND} -P "${CMAKE_CURRENT_BINARY_DIR}/PythonVirtualEnvInstall.cmake"
-    DEPENDS
-      "${SWIG_MODULE_SimpleITKPython_TARGET_NAME}"
+    # configure a scripts which creates the virtualenv and installs numpy
+    configure_file(
+      "${CMAKE_CURRENT_SOURCE_DIR}/PythonVirtualEnvInstall.cmake.in"
       "${CMAKE_CURRENT_BINARY_DIR}/PythonVirtualEnvInstall.cmake"
-      ConfigureFileBuildtime
-      "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/ez_setup.py"
-    COMMENT "Creating python virtual enviroment..."
-    )
+      @ONLY )
+
+    set( PythonVirtualEnv_ALL "" )
+    if ( BUILD_TESTING )
+      set( PythonVirtualEnv_ALL "ALL" )
+    endif()
+
+    add_custom_target( PythonVirtualEnv ${PythonVirtualEnv_ALL}
+      DEPENDS "${VIRTUAL_PYTHON_EXECUTABLE}"
+      SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/PythonVirtualEnvInstall.cmake.in )
+
+    add_custom_command( OUTPUT "${VIRTUAL_PYTHON_EXECUTABLE}"
+      COMMAND ${CMAKE_COMMAND} -P "${CMAKE_CURRENT_BINARY_DIR}/PythonVirtualEnvInstall.cmake"
+      DEPENDS
+        "${SWIG_MODULE_SimpleITKPython_TARGET_NAME}"
+        "${CMAKE_CURRENT_BINARY_DIR}/PythonVirtualEnvInstall.cmake"
+        ConfigureFileBuildtime
+        "${CMAKE_CURRENT_BINARY_DIR}/PythonPackage/ez_setup.py"
+      COMMENT "Creating python virtual enviroment..."
+      )
+  else()
+    set(TEST_PYTHON_EXECUTABLE "${PYTHON_EXECUTABLE}"
+      CACHE INTERNAL "Python executable for testing." FORCE )
+  endif()
 
 endif()
 
