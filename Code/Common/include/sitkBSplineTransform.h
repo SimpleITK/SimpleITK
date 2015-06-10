@@ -38,7 +38,7 @@ public:
   typedef BSplineTransform Self;
   typedef Transform Superclass;
 
-  BSplineTransform(unsigned int dimensions, unsigned int order=3);
+  explicit BSplineTransform(unsigned int dimensions, unsigned int order=3);
 
   BSplineTransform( const BSplineTransform & );
 

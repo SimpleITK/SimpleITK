@@ -39,11 +39,21 @@ public:
   typedef DisplacementFieldTransform Self;
   typedef Transform Superclass;
 
-  DisplacementFieldTransform( unsigned int dimensions );
-  DisplacementFieldTransform( Image &);
+  explicit DisplacementFieldTransform( unsigned int dimensions );
+
+  /** \brief Consume an image to construct a displacement field transform.
+   *
+   * \warning The input displacement image is transferred to the
+   * constructed transform object. The input image is modified to be a
+   * default constructed Image object.
+   *
+   * Image must be of sitkVectorFloat64 pixel type with the number of
+   * components equal to the image dimension.
+   *
+   */
+  explicit DisplacementFieldTransform( Image &);
 
   DisplacementFieldTransform( const DisplacementFieldTransform & );
-
 
   explicit DisplacementFieldTransform( const Transform & );
 
@@ -55,7 +65,7 @@ public:
   /** parameters */
   // set displacement methods take ownership for the image and remove it
   Self &SetDisplacementField(Image &);
-  /** \todo The returned image is should not directly modify the
+  /** \todo The returned image should not directly modify the
    * internal displacement field.
    */
   Image GetDisplacementField() const;
