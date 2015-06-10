@@ -18,17 +18,21 @@
 #include "sitkVersion.h"
 #include "sitkVersionConfig.h"
 
+#include "itkConfigure.h"
+
 namespace
 {
 
 std::string MakeExtendedVersionString()
 {
   std::ostringstream v;
-  v << "SimpleITK Version: " << itk::simple::Version::VersionString() << std::endl
+  v << "SimpleITK Version: " << itk::simple::Version::VersionString()
+    << " (ITK " << ITK_VERSION_STRING << ")" << std::endl
     << "Compiled: " << itk::simple::Version::BuildDate() << std::endl;
   return v.str();
 }
 
+static const std::string itkVersionString = ITK_VERSION_STRING;
 static const std::string extendedVersionString = MakeExtendedVersionString();
 
 }
@@ -63,6 +67,22 @@ namespace itk
   {
     static const std::string v( __DATE__ " " __TIME__ );
     return v;
+  }
+  unsigned int Version::ITKMajorVersion()
+  {
+    return ITK_VERSION_MAJOR;
+  }
+  unsigned int Version::ITKMinorVersion()
+  {
+    return ITK_VERSION_MINOR;
+  }
+  unsigned int Version::ITKPatchVersion()
+  {
+    return ITK_VERSION_PATCH;
+  }
+  const std::string &Version::ITKVersionString()
+  {
+    return itkVersionString;
   }
   const std::string &Version::ExtendedVersionString()
   {
