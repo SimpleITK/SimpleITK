@@ -396,7 +396,7 @@ include(sitkLanguageOptions)
 include(sitkCheckSourceTree)
 
 #-----------------------------------------------------------------------------
-if(NOT EXISTS "${ITK_SOURCE_DIR}/.ExternalData/README.rst")
+if(NOT EXISTS "${SimpleITK_SOURCE_DIR}/.ExternalData/README.rst")
   # This file is always present in version-controlled source trees
   # so we must have been extracted from a source tarball with no
   # data objects needed for testing.  Turn off tests by default
