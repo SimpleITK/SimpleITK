@@ -260,6 +260,22 @@ else()
 endif()
 
 #------------------------------------------------------------------------------
+# Google Test
+#------------------------------------------------------------------------------
+option( USE_SYSTEM_GTEST "Use a pre-compiled version of GoogleTest. " OFF )
+if ( BUILD_TESTING )
+  if (USE_SYSTEM_GTEST)
+    find_package( GTest REQUIRED )
+    list(APPEND SimpleITKITK_VARS GTEST_LIBRARIES GTEST_INCLUDE_DIRS GTEST_MAIN_LIBRARIES)
+  else()
+    include(External_GTest)
+    set( GTEST_ROOT ${GTEST_ROOT} CACHE PATH "The root directory of the gtest install prefix" )
+    list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES GTest)
+    list(APPEND SimpleITKITK_VARS GTEST_ROOT)
+  endif()
+endif()
+
+#------------------------------------------------------------------------------
 # ITK
 #------------------------------------------------------------------------------
 
@@ -358,7 +374,7 @@ include(External_SimpleITKExamples)
 #------------------------------------------------------------------------------
 # List of external projects
 #------------------------------------------------------------------------------
-set(external_project_list ITK Swig SimpleITKExamples PCRE ${CMAKE_PROJECT_NAME})
+set(external_project_list ITK Swig SimpleITKExamples PCRE GTest ${CMAKE_PROJECT_NAME})
 
 #-----------------------------------------------------------------------------
 # Dump external project dependencies
