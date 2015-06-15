@@ -291,20 +291,10 @@ endif()
 
 include(CheckCXXCompilerFlag)
 
-# The fPIC flags is used to create position independent code. It is
-# required on some systems to produce shared libraries. On Apple
-# systems the flag has no effect as it is the default. On other
-# platforms, this flag may enable libraries to be better shared
-# between processes. Therefore, if the compiler supports it, we will
-# use it.
-check_cxx_compiler_flag( "-fPIC" CXX_HAS_fPIC )
-if( CXX_HAS_fPIC )
-  if(NOT "${CMAKE_CXX_FLAGS}" MATCHES "-fPIC")
-    set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC" )
-  endif()
-endif( )
 
-
+# always create position independent code so that the libraries can be
+# used with shared libraries needed for language bindings.
+set( CMAKE_POSITION_INDEPENDENT_CODE 1 )
 
 #-----------------------------------------------------------
 # Place all checks and try compile variable for sitkConfigure.h here
