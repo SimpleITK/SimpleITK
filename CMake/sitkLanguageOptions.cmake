@@ -40,12 +40,15 @@ else()
   set( WRAP_LUA_DEFAULT OFF )
 endif()
 
+SET( LUA_ADDITIONAL_LIBRARIES "" CACHE STRING "Additional libraries which may be needed for lua such as readline.")
+
 option ( WRAP_LUA "Wrap Lua" ${WRAP_LUA_DEFAULT} )
 
 list( APPEND SITK_LANGUAGES_VARS
   LUA_LIBRARIES
   LUA_INCLUDE_DIR
   LUA_VERSION_STRING
+  LUA_ADDITIONAL_LIBRARIES
   )
 
 
