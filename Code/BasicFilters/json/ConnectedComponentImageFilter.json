@@ -36,7 +36,7 @@
       "measurements_results" : [
         {
           "name" : "ObjectCount",
-          "value" : 23
+          "value" : "23u"
         }
       ],
       "md5hash" : "548f5184428db10d93e3bf377dee5253",
