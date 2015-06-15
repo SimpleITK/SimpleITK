@@ -255,11 +255,13 @@ mark_as_advanced(USE_SYSTEM_LUA)
 if ( USE_SYSTEM_LUA )
   find_package( LuaInterp REQUIRED 5.1 )
   set( SITK_LUA_EXECUTABLE ${LUA_EXECUTABLE} CACHE PATH "Lua executable used for code generation." )
+  mark_as_advanced( SITK_LUA_EXECUTABLE )
   unset( LUA_EXECUTABLE CACHE )
 else()
   include(External_Lua)
   list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES Lua)
   set( SITK_LUA_EXECUTABLE ${SITK_LUA_EXECUTABLE} CACHE PATH "Lua executable used for code generation." )
+  mark_as_advanced( SITK_LUA_EXECUTABLE )
 endif()
 
 #------------------------------------------------------------------------------

@@ -40,7 +40,8 @@ else()
   set( WRAP_LUA_DEFAULT OFF )
 endif()
 
-SET( LUA_ADDITIONAL_LIBRARIES "" CACHE STRING "Additional libraries which may be needed for lua such as readline.")
+set( LUA_ADDITIONAL_LIBRARIES "" CACHE STRING "Additional libraries which may be needed for lua such as readline.")
+mark_as_advanced( LUA_ADDITIONAL_LIBRARIES )
 
 option ( WRAP_LUA "Wrap Lua" ${WRAP_LUA_DEFAULT} )
 
