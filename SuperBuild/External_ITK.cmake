@@ -58,6 +58,7 @@ ExternalProject_Add(${proj}
   -C "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt"
   ${ep_itk_args}
   ${ep_common_args}
+  -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON
   -DBUILD_EXAMPLES:BOOL=OFF
   -DBUILD_TESTING:BOOL=OFF
   -DBUILD_SHARED_LIBS:BOOL=${ITK_BUILD_SHARED_LIBS}
