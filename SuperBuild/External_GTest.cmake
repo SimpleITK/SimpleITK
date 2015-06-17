@@ -22,11 +22,10 @@ set(GTEST_PATCH_COMMAND ${CMAKE_COMMAND} -E copy_if_different
   ${lua_source_dir}/CMakeLists.txt
 )
 
-set(${proj}_INSTALL_LIBRARY_DIR "<INSTALL_DIR>/lib")
-if( MSVC )
-  set(${proj}_INSTALL_LIBRARY_DIR "<INSTALL_DIR>/msvc/gtest")
+set(${proj}_ARCHIVE_OUTPUT_DIRECTORY "<BINARY_DIR>/lib")
+if (MSVC)
+  set(${proj}_ARCHIVE_OUTPUT_DIRECTORY "<BINARY_DIR>/lib/$<CONFIGURATION>")
 endif()
-
 
 ExternalProject_Add(${proj}
   URL http://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${GTEST_DOWNLOAD_SOURCE_HASH}&name=swig-${GTEST_TARGET_VERSION}.zip
@@ -37,10 +36,11 @@ ExternalProject_Add(${proj}
     --no-warn-unused-cli
     -C "${GTEST_binary_dir}/CMakeCacheInit.txt"
     ${ep_common_args}
+    -D gtest_force_shared_crt:BOOL=ON
     -D BUILD_SHARED_LIBS:BOOL=OFF
     -D CMAKE_ARCHIVE_OUTPUT_DIRECTORY:PATH=<BINARY_DIR>/lib
   INSTALL_COMMAND
-      ${CMAKE_COMMAND} -E copy_directory <BINARY_DIR>/lib ${${proj}_INSTALL_LIBRARY_DIR}
+      ${CMAKE_COMMAND} -E copy_directory ${${proj}_ARCHIVE_OUTPUT_DIRECTORY} <INSTALL_DIR>/lib
     COMMAND
       ${CMAKE_COMMAND} -E copy_directory <SOURCE_DIR>/include <INSTALL_DIR>/include
 )
