@@ -34,11 +34,11 @@ if(MSVC_VERSION EQUAL 1700)
   # using the GTest features which require tuple, so just disable them
   # and hope that upstream premanetly addresses the problem, with out
   # required more CMake core for compiler issues.
-  set(ep_extra_args "${ep_extra_args} -D CMAKE_CXX_FLAGS=-DGTEST_HAS_TR1_TUPLE=0 ${CMAKE_CXX_FLAGS}")
+  set(ep_extra_args ${ep_extra_args} -D CMAKE_CXX_FLAGS=-DGTEST_HAS_TR1_TUPLE=0 ${CMAKE_CXX_FLAGS})
 endif()
 
 if(MSVC)
-  set(ep_extra_args "${ep_extra_args} -D gtest_force_shared_crt:BOOL=ON")
+  set(ep_extra_args ${ep_extra_args} -D gtest_force_shared_crt:BOOL=ON)
 endif()
 
 
