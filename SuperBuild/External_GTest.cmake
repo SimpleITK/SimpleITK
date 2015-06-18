@@ -27,6 +27,21 @@ if (MSVC)
   set(${proj}_ARCHIVE_OUTPUT_DIRECTORY "<BINARY_DIR>/lib/$<CONFIGURATION>")
 endif()
 
+set(ep_extra_args)
+if(MSVC_VERSION == 1700)
+  # Tuples are limited by _VARIADIC_MAX in VS11. The variadic
+  # templates are not deep enough by default. We are not currently
+  # using the GTest features which require tuple, so just disable them
+  # and hope that upstream premanetly addresses the problem, with out
+  # required more CMake core for compiler issues.
+  set(ep_extra_args "${ep_extra_args} -D CMAKE_CXX_FLAGS=-DGTEST_HAS_TR1_TUPLE=0 ${CMAKE_CXX_FLAGS}"
+endif()
+
+if(MSVC)
+  set(ep_extra_args "${ep_extra_args} -D gtest_force_shared_crt:BOOL=ON")
+endif()
+
+
 ExternalProject_Add(${proj}
   URL http://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${GTEST_DOWNLOAD_SOURCE_HASH}&name=swig-${GTEST_TARGET_VERSION}.zip
   URL_MD5 ${GTEST_DOWNLOAD_SOURCE_HASH}
@@ -36,7 +51,7 @@ ExternalProject_Add(${proj}
     --no-warn-unused-cli
     -C "${GTEST_binary_dir}/CMakeCacheInit.txt"
     ${ep_common_args}
-    -D gtest_force_shared_crt:BOOL=ON
+    ${ep_extra_args}
     -D BUILD_SHARED_LIBS:BOOL=OFF
     -D CMAKE_ARCHIVE_OUTPUT_DIRECTORY:PATH=<BINARY_DIR>/lib
   INSTALL_COMMAND

@@ -238,6 +238,15 @@ add_custom_target(WrappedGeneratedTests ALL
   DEPENDS ${WRAPPED_GENERATED_TEST_SOURCE}
 )
 
+if(MSVC_VERSION == 1700)
+  # Tuples are limited by _VARIADIC_MAX in VS11. The variadic
+  # templates are not deep enough by default. We are not currently
+  # using the GTest features which require tuple, so just disable them
+  # and hope that upstream premanetly addresses the problem, with out
+  # required more CMake core for compiler issues.
+  add_definition(-DGTEST_HAS_TR1_TUPLE=0 )
+endif()
+
 # Add org.itk.simple.jar dependency if necessary
 if( WRAP_JAVA )
   add_dependencies(WrappedGeneratedTests org_itk_simple_jar)
