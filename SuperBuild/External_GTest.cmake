@@ -28,13 +28,13 @@ if (MSVC)
 endif()
 
 set(ep_extra_args)
-if(MSVC_VERSION == 1700)
+if(MSVC_VERSION EQUAL 1700)
   # Tuples are limited by _VARIADIC_MAX in VS11. The variadic
   # templates are not deep enough by default. We are not currently
   # using the GTest features which require tuple, so just disable them
   # and hope that upstream premanetly addresses the problem, with out
   # required more CMake core for compiler issues.
-  set(ep_extra_args "${ep_extra_args} -D CMAKE_CXX_FLAGS=-DGTEST_HAS_TR1_TUPLE=0 ${CMAKE_CXX_FLAGS}"
+  set(ep_extra_args "${ep_extra_args} -D CMAKE_CXX_FLAGS=-DGTEST_HAS_TR1_TUPLE=0 ${CMAKE_CXX_FLAGS}")
 endif()
 
 if(MSVC)
