@@ -238,7 +238,7 @@ add_custom_target(WrappedGeneratedTests ALL
   DEPENDS ${WRAPPED_GENERATED_TEST_SOURCE}
 )
 
-if(MSVC_VERSION == 1700)
+if(MSVC_VERSION EQUAL 1700)
   # Tuples are limited by _VARIADIC_MAX in VS11. The variadic
   # templates are not deep enough by default. We are not currently
   # using the GTest features which require tuple, so just disable them
