@@ -244,7 +244,7 @@ if(MSVC_VERSION EQUAL 1700)
   # using the GTest features which require tuple, so just disable them
   # and hope that upstream premanetly addresses the problem, with out
   # required more CMake core for compiler issues.
-  add_definition(-DGTEST_HAS_TR1_TUPLE=0 )
+  add_definitions(-DGTEST_HAS_TR1_TUPLE=0 )
 endif()
 
 # Add org.itk.simple.jar dependency if necessary
