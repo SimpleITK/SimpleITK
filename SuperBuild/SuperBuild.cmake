@@ -278,6 +278,23 @@ else()
 endif()
 
 #------------------------------------------------------------------------------
+# Google Test
+#------------------------------------------------------------------------------
+option( USE_SYSTEM_GTEST "Use a pre-compiled version of GoogleTest. " OFF )
+mark_as_advanced(USE_SYSTEM_GTEST)
+if ( BUILD_TESTING )
+  if (USE_SYSTEM_GTEST)
+    find_package( GTest REQUIRED )
+    list(APPEND SimpleITK_VARS GTEST_LIBRARIES GTEST_INCLUDE_DIRS GTEST_MAIN_LIBRARIES)
+  else()
+    include(External_GTest)
+    set( GTEST_ROOT ${GTEST_ROOT} )
+    list(APPEND SimpleITK_VARS GTEST_ROOT)
+    list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES GTest)
+  endif()
+endif()
+
+#------------------------------------------------------------------------------
 # ITK
 #------------------------------------------------------------------------------
 
@@ -303,16 +320,18 @@ get_cmake_property( _varNames VARIABLES )
 
 foreach (_varName ${_varNames})
   if(_varName MATCHES "^SimpleITK_" OR _varName MATCHES "^SITK_" )
-    if (NOT _varName MATCHES "^SITK_LANGUAGES_VARS")
+    if (NOT _varName MATCHES "^SITK_LANGUAGES_VARS"
+          AND
+        NOT _varName MATCHES "^SimpleITK_VARS")
       message( STATUS "Passing variable \"${_varName}=${${_varName}}\" to SimpleITK external project.")
-      list(APPEND SimpleITKITK_VARS ${_varName})
+      list(APPEND SimpleITK_VARS ${_varName})
     endif()
   endif()
 endforeach()
 
 
 VariableListToCache( SimpleITK_VARS  ep_simpleitk_cache )
-VariableListToArgs( SimpleITKITK_VARS  ep_simpleitk_args )
+VariableListToArgs( SimpleITK_VARS  ep_simpleitk_args )
 VariableListToCache( SITK_LANGUAGES_VARS  ep_languages_cache )
 VariableListToArgs( SITK_LANGUAGES_VARS  ep_languages_args )
 
@@ -377,7 +396,8 @@ include(External_SimpleITKExamples)
 #------------------------------------------------------------------------------
 # List of external projects
 #------------------------------------------------------------------------------
-set(external_project_list ITK Swig SimpleITKExamples PCRE Lua ${CMAKE_PROJECT_NAME})
+set(external_project_list ITK Swig SimpleITKExamples PCRE Lua GTest ${CMAKE_PROJECT_NAME})
+
 
 #-----------------------------------------------------------------------------
 # Dump external project dependencies

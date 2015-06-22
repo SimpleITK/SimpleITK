@@ -2,6 +2,8 @@
 set ( ITK_NO_IO_FACTORY_REGISTER_MANAGER 1 )
 include(${ITK_USE_FILE})
 
+find_package( GTest REQUIRED )
+
 set ( SimpleITKUnitTestSourceBase
   SimpleITKTestHarness.cxx
   sitkImageCompare.cxx
@@ -9,10 +11,10 @@ set ( SimpleITKUnitTestSourceBase
 )
 add_library ( SimpleITKUnitTestBase STATIC ${SimpleITKUnitTestSourceBase} )
 add_dependencies( SimpleITKUnitTestBase BasicFiltersSourceCode )
-target_link_libraries( SimpleITKUnitTestBase gtest ${SimpleITK_LIBRARIES} )
+target_link_libraries( SimpleITKUnitTestBase ${GTEST_LIBRARIES} ${SimpleITK_LIBRARIES} )
 
 add_executable( sitkTransformCompareDriver sitkTransformCompareDriver.cxx )
-target_link_libraries( sitkTransformCompareDriver gtest SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} )
+target_link_libraries( sitkTransformCompareDriver ${GTEST_LIBRARIES} SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} )
 # Find tests generated in the binary directory
 # To add a new file, just add it to this list.  Any GoogleTests inside will be automatically
 # added to ctest.
@@ -50,7 +52,7 @@ set( PythonVirtualenvHome ${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVir
 
 
 add_executable(SimpleITKUnitTestDriver0 SimpleITKUnitTestDriver.cxx ${SimpleITKUnitTestSource})
-target_link_libraries ( SimpleITKUnitTestDriver0 gtest SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} )
+target_link_libraries ( SimpleITKUnitTestDriver0 ${GTEST_LIBRARIES} SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} )
 
 #
 # Glob for necessary template files up front, before the foreach loop over
@@ -78,7 +80,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
 
   if ( NOT _i LESS _stride )
     add_executable(SimpleITKUnitTestDriver${_exec_i} SimpleITKUnitTestDriver.cxx ${GENERATED_TEST_SOURCE})
-    target_link_libraries ( SimpleITKUnitTestDriver${_exec_i} gtest SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} )
+    target_link_libraries ( SimpleITKUnitTestDriver${_exec_i} ${GTEST_LIBRARIES} SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} )
     math(EXPR _exec_i "${_exec_i}+1")
     set(GENERATED_TEST_SOURCE "")
     set ( _i 0 )
@@ -214,19 +216,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
 endforeach()
 
 add_executable(SimpleITKUnitTestDriver${_exec_i} SimpleITKUnitTestDriver.cxx ${GENERATED_TEST_SOURCE})
-target_link_libraries ( SimpleITKUnitTestDriver${_exec_i} gtest SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} )
-
-# Build Google Test
-find_package(Threads)
-if (CMAKE_USE_PTHREADS_INIT)  # The pthreads library is available.
-  set(cxx_base_flags "${cxx_base_flags} -DGTEST_HAS_PTHREAD=1")
-endif()
-
-# The gtest include file directories.
-SET(GTEST_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/GoogleTest" PARENT_SCOPE)
-
-# The gtest library directories.
-SET(GTEST_LIBRARY_DIRS "${CMAKE_CURRENT_BINARY_DIR}" PARENT_SCOPE)
+target_link_libraries ( SimpleITKUnitTestDriver${_exec_i} ${GTEST_LIBRARIES} SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} )
 
 # Test data directory
 set(TEST_HARNESS_TEMP_DIRECTORY ${SimpleITK_BINARY_DIR}/Testing/Temporary)
@@ -236,22 +226,26 @@ set(TEST_HARNESS_DATA_DIRECTORY ${SimpleITK_BINARY_DIR}/ExternalData/Testing/Dat
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/SimpleITKTestHarnessPaths.h.in
                ${CMAKE_CURRENT_BINARY_DIR}/SimpleITKTestHarnessPaths.h ESCAPE_QUOTES)
 
-# Build Google Testing
-set ( GTestSource
-  GoogleTest/gtest/gtest-all.cc
-)
-include_directories ( GoogleTest ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
-add_library(gtest STATIC ${GTestSource})
-if (CMAKE_USE_PTHREADS_INIT)
-  target_link_libraries(gtest ${CMAKE_THREAD_LIBS_INIT})
-endif()
-
-include_directories ( ${SimpleITK_INCLUDE_DIRS} )
+include_directories (
+  ${SimpleITK_INCLUDE_DIRS}
+  ${GTEST_INCLUDE_DIRS}
+  ${CMAKE_CURRENT_BINARY_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  )
 
 add_custom_target(WrappedGeneratedTests ALL
   DEPENDS ${WRAPPED_GENERATED_TEST_SOURCE}
 )
+
+if(MSVC_VERSION EQUAL 1700)
+  # Tuples are limited by _VARIADIC_MAX in VS11. The variadic
+  # templates are not deep enough by default. We are not currently
+  # using the GTest features which require tuple, so just disable them
+  # and hope that upstream premanetly addresses the problem, with out
+  # required more CMake core for compiler issues.
+  add_definitions(-DGTEST_HAS_TR1_TUPLE=0 )
+endif()
 
 # Add org.itk.simple.jar dependency if necessary
 if( WRAP_JAVA )
@@ -271,49 +265,7 @@ target_link_libraries( sitkSystemInformationTest ${SimpleITK_LIBRARIES} )
 add_test( NAME sitkSystemInformaionTest COMMAND sitkSystemInformationTest ${CMAKE_BINARY_DIR} )
 
 
-# Add all the tests by parsing the source code
-# This macro searches for GoogleTest macros and adds them as test automatically
-macro(ADD_GOOGLE_TESTS target)
-  # Add the generated tests
-  set ( AllTestsHits "" )
-  set ( LongTestsHits "" )
-
-  foreach ( source ${ARGN} )
-    file(READ "${source}" contents)
-
-    # Find all test and long test lists
-    string(REGEX MATCHALL "TEST_?F?\\(([A-Za-z_0-9 ,_]+)\\) /\\* Long \\*/" LongTests ${contents})
-    string(REGEX MATCHALL "TEST_?F?\\(([A-Za-z_0-9 ,_]+)\\)" AllTests ${contents})
-
-    # Convert the C++ code into a short test name
-    foreach(hit ${AllTests})
-      string(REGEX REPLACE ".*\\( *( *[A-Za-z_0-9]+)[, ]*([A-Za-z_0-9]+) *\\).*" "\\1.\\2" test_name ${hit})
-      set ( AllTestsHits ${AllTestsHits} ${test_name} )
-    endforeach()
-    foreach(hit ${LongTests})
-      string(REGEX REPLACE ".*\\(( *[A-Za-z_0-9]+)[, ]*([A-Za-z_0-9]+) *\\).*" "\\1.\\2" test_name ${hit})
-      set ( LongTestsHits ${LongTestsHits} ${test_name} )
-    endforeach()
-  endforeach()
-
-  # If we are not running the long tests, remove them from the AllTests list
-  if ( NOT RUN_LONG_TESTS )
-    foreach ( test ${LongTestsHits} )
-      list ( REMOVE_ITEM AllTestsHits ${test} )
-    endforeach()
-  endif ()
-
-  list ( SORT AllTestsHits )
-  list ( REMOVE_DUPLICATES AllTestsHits )
-  # Add all the remaining tests to CTest's test list
-  foreach(hit ${AllTestsHits})
-    # Take the first item in gtest list as the name
-    string( REGEX MATCH "[^:]+" name ${hit} )
-    add_test( NAME ${name} COMMAND ${target} --gtest_filter=${hit} )
-  endforeach()
-endmacro()
-
-add_google_tests(SimpleITKUnitTestDriver0 ${SimpleITKUnitTestSource})
+gtest_add_tests(SimpleITKUnitTestDriver0 ${SimpleITKUnitTestSource})
 
 
 #######################################################

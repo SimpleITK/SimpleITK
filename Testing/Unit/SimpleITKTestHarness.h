@@ -26,7 +26,6 @@
 
 // This is needed before the gtest include for lookup of the operator
 // to work with clang 5.1
-namespace {
 inline std::ostream& operator<< (std::ostream& os, const std::vector<double>& v)
  {
    if ( v.empty() )
@@ -38,7 +37,6 @@ inline std::ostream& operator<< (std::ostream& os, const std::vector<double>& v)
    std::copy( v.begin(), v.end()-1, std::ostream_iterator<double>(os, ", ") );
    return os << v.back() << " ]";
  }
-}
 
 #include <string>
 #include <vector>
