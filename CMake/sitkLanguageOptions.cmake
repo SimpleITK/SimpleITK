@@ -12,7 +12,35 @@
 #
 # Setup the option for each language
 #
-option ( WRAP_LUA "Wrap Lua" ON )
+if (NOT WRAP_LUA)
+  set(_QUIET "QUIET")
+endif()
+if (CMAKE_VERSION VERSION_LESS "3")
+  find_package ( Lua51 ${_QUIET} )
+  if ( NOT LUA_FOUND )
+    find_package ( Lua50 ${_QUIET} )
+  endif()
+else()
+  find_package ( Lua ${_QUIET} )
+endif()
+if ( LUA_FOUND )
+  set( WRAP_LUA_DEFAULT ON )
+else()
+  set( WRAP_LUA_DEFAULT OFF )
+endif()
+
+set( LUA_ADDITIONAL_LIBRARIES "" CACHE STRING "Additional libraries which may be needed for lua such as readline.")
+mark_as_advanced( LUA_ADDITIONAL_LIBRARIES )
+
+option ( WRAP_LUA "Wrap Lua" ${WRAP_LUA_DEFAULT} )
+
+list( APPEND SITK_LANGUAGES_VARS
+  LUA_LIBRARIES
+  LUA_INCLUDE_DIR
+  LUA_VERSION_STRING
+  LUA_ADDITIONAL_LIBRARIES
+  )
+
 
 find_package ( PythonInterp QUIET)
 

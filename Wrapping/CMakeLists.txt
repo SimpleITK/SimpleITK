@@ -44,16 +44,13 @@ endif()
 # lua SWIG configuration
 #
 if ( WRAP_LUA )
-  option ( USE_SYSTEM_LUA "Use a system provided lua" OFF )
 
-  if ( USE_SYSTEM_LUA )
+  if (CMAKE_VERSION VERSION_LESS "3")
     find_package ( Lua51 REQUIRED )
-    include_directories ( ${LUA_INCLUDE_DIR} )
-    set ( LUA_LIB ${LUA_LIBRARIES} )
   else()
-    set ( LUA_LIB lua5 )
-    include_directories ( ${SimpleITK_SOURCE_DIR}/Utilities/lua-5.1.5/src )
+    find_package ( Lua REQUIRED )
   endif()
+  include_directories ( ${LUA_INCLUDE_DIR} )
 
   # Run swig
   set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS})
@@ -65,7 +62,7 @@ if ( WRAP_LUA )
   set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKLUA_wrap.cxx PROPERTIES COMPILE_FLAGS "-w" )
 
   add_executable ( SimpleITKLua SimpleITKLuaMain.cxx SimpleITKLUA_wrap.cxx )
-  target_link_libraries ( SimpleITKLua ${SimpleITK_LIBRARIES} ${LUA_LIB} )
+  target_link_libraries ( SimpleITKLua ${SimpleITK_LIBRARIES} ${LUA_LIBRARIES} ${LUA_ADDITIONAL_LIBRARIES} )
   sitk_strip_target( SimpleITKLua )
 
 endif()
