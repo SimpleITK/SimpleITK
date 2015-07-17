@@ -33,6 +33,7 @@
 #include "sitkImportImageFilter.h"
 
 #include "sitkJoinSeriesImageFilter.h"
+#include "sitkExtractImageFilter.h"
 
 #include <itkIntTypes.h>
 
@@ -553,4 +554,26 @@ TEST_F(Image4D, JoinSeriesImageFilter)
 
   ASSERT_EQ ( out.GetDimension(), 4 );
   EXPECT_EQ ( out.GetSize()[3], 3 );
+}
+
+TEST_F(Image4D, ExtractImageFilter)
+{
+  std::vector<unsigned int> size(4);
+  size[0] = 10;
+  size[1] = 11;
+  size[2] = 12;
+  size[3] = 13;
+
+  sitk::Image img = sitk::Image( size, sitk::sitkUInt8 );
+
+  std::vector<unsigned int> extractSize(4);
+  extractSize[0] = 10;
+  extractSize[1] = 11;
+  extractSize[2] = 0;
+  extractSize[3] = 13;
+
+  sitk::Image out = sitk::Extract(img, extractSize);
+
+  ASSERT_EQ ( out.GetDimension(), 3 );
+  EXPECT_EQ ( out.GetSize()[3], 13 );
 }
