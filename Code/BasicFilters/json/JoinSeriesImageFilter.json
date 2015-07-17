@@ -5,7 +5,7 @@
   "number_of_inputs" : 1,
   "pixel_types" : "NonLabelPixelIDTypeList",
   "output_image_type" : "typename InputImageType::template Rebind<typename InputImageType::PixelType, InputImageType::ImageDimension+1>::Type",
-  "custom_register" : "this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();",
+  "custom_register" : "this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();\n  #ifdef SITK_4D_IMAGES\n    this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();\n  #endif",
   "members" : [
     {
       "name" : "Origin",
