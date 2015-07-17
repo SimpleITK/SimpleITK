@@ -3,14 +3,15 @@
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
-  "doc" : "Extract image filter extracts a 2D image from a 2D or 3D image. If the same dimension output is required then the RegionOfInterestFilter should be used.",
+  "doc" : "Extract image filter extracts a 2D image from a 2D or 3D image and a 3D image from a 4D image. If the same dimension output is required then the RegionOfInterestFilter should be used.",
   "pixel_types" : "NonLabelPixelIDTypeList",
-  "filter_type" : "itk::ExtractImageFilter<InputImageType, typename InputImageType::template Rebind<typename InputImageType::PixelType, 2>::Type >",
+  "filter_type" : "itk::ExtractImageFilter<InputImageType, typename InputImageType::template Rebind<typename InputImageType::PixelType, (InputImageType::ImageDimension-1<2?2:InputImageType::ImageDimension-1)>::Type >",
+  "custom_register" : " this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 4 > ();\n  this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();\n  this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();",
   "members" : [
     {
       "name" : "Size",
       "type" : "unsigned int",
-      "default" : "std::vector<unsigned int>(3, 1)",
+      "default" : "std::vector<unsigned int>(4, 1)",
       "dim_vec" : 1,
       "itk_type" : "typename InputImageType::SizeType",
       "briefdescriptionSet" : "",
@@ -22,7 +23,7 @@
     {
       "name" : "Index",
       "type" : "int",
-      "default" : "std::vector<int>(3, 0)",
+      "default" : "std::vector<int>(4, 0)",
       "dim_vec" : 1,
       "itk_type" : "typename InputImageType::IndexType",
       "briefdescriptionSet" : "",
