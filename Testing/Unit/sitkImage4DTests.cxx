@@ -540,7 +540,7 @@ TEST( IO, Image4D )
 }
 
 
-TEST(Image4D, JoinSeriesImageFilter)
+TEST_F(Image4D, JoinSeriesImageFilter)
 {
   std::vector<unsigned int> size(3);
   size[0] = 10;
