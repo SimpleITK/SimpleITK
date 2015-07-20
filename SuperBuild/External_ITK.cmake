@@ -35,7 +35,7 @@ set(proj ITK)  ## Use ITK convention of calling it ITK
 set(ITK_REPOSITORY git://itk.org/ITK.git)
 
 # NOTE: it is very important to update the ITK_DIR path with the ITK version
-set(ITK_TAG_COMMAND GIT_TAG 0ccdf6f19d36b812c77bfc4fa4ff9dfd6243ac66) # after v4.7.2 release
+set(ITK_TAG_COMMAND GIT_TAG v4.8.0)
 
 if( ${ITK_WRAPPING} OR ${BUILD_SHARED_LIBS} )
   set( ITK_BUILD_SHARED_LIBS ON )
@@ -90,5 +90,5 @@ ExternalProject_Add(${proj}
 
 
 ExternalProject_Get_Property(ITK install_dir)
-set(ITK_DIR "${install_dir}/lib/cmake/ITK-4.7" )
-set(WrapITK_DIR "${install_dir}/lib/cmake/ITK-4.7/WrapITK")
+set(ITK_DIR "${install_dir}/lib/cmake/ITK-4.8" )
+set(WrapITK_DIR "${install_dir}/lib/cmake/ITK-4.8/WrapITK")
