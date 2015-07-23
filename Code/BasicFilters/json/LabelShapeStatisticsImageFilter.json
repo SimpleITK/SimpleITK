@@ -6,7 +6,7 @@
   "number_of_inputs" : 1,
   "doc" : "Docs",
   "pixel_types" : "IntegerPixelIDTypeList",
-  "filter_type" : "itk::LabelImageToShapeLabelMapFilter<InputImageType>",
+  "filter_type" : "itk::LabelImageToShapeLabelMapFilter<InputImageType, itk::LabelMap< itk::ShapeLabelObject< int64_t, InputImageType::ImageDimension > > >",
   "no_procedure" : true,
   "no_return_image" : true,
   "include_files" : [
