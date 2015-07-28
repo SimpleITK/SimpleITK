@@ -24,8 +24,9 @@ output will be written (the file will be clobbered).
 
 #  This version of the script originated from ITK/Wrapping/Generators/Doc/doxy2swig.py.
 #  My mods:
-#    self.multi is always 1 (0 was cutting lines improperly)
-#    added self.java to enable output for JavaDocs
+#    self.multi is always 1 (0 was cutting lines improperly).
+#    added self.java to enable output for JavaDocs.
+#    space_parse doesn't output a space at the beginning of a new line.
 #
 #  Dave Chen
 
@@ -181,7 +182,11 @@ class Doxy2SWIG:
                 self.add_text('\n')
 
     def space_parse(self, node):
-        self.add_text(' ')
+        """ Only output a space if the last character outputed was not a new line.
+            I.e., don't allow a line to lead with a space.
+        """
+        if len(self.pieces) and self.pieces[-1][-1] != '\n':
+            self.add_text(' ')
         self.generic_parse(node)
 
     do_ref = space_parse
