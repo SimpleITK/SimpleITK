@@ -6,19 +6,15 @@
 %ignore itk::simple::GetPixelIDValueAsString( PixelIDValueType type );
 
 %include <std_vector.i>
- // we don't want a class assigned to unsigned char
+// we don't want a class assigned to unsigned char
 %typemap(scoerceout) unsigned char,
    unsigned char *,
    unsigned char &
    %{    %}
 
-// Gets rid of the class check for unsigned char function arguments
-%typemap("rtype") unsigned char, unsigned char *, unsigned char & "integer";
-// and for unsigned int vectors
-%typemap("rtype") std::vector<unsigned int>, std::vector<unsigned int> *, std::vector<unsigned int> & "integer";
-
-// some important enumerations don't get evaluate properly. This is a
-// hack to fix the problem.
+// SEXP numeric typemap for array/image converion - SEXP are
+// arrays here
+%typemap("rtype") SEXP "numeric";
 
 %inline
 %{
@@ -57,6 +53,7 @@
   itk::simple::PixelIDValueType RsitkLabelUInt16 = itk::simple::sitkLabelUInt16;
   itk::simple::PixelIDValueType RsitkLabelUInt32 = itk::simple::sitkLabelUInt32;
   itk::simple::PixelIDValueType RsitkLabelUInt64 = itk::simple::sitkLabelUInt64;
+
 
   // functions for image content access via bracket operator
   itk::simple::Image SingleBracketOperator(std::vector<int> xcoord, std::vector<int> ycoord, std::vector<int> zcoord, const itk::simple::Image src)
@@ -527,6 +524,80 @@ itk::simple::Image ArrayAsIm(SEXP arr,
     }
 
   %}
+
+
+// Garbage collection issues are tricky here. The obj parameter
+// is a function closure - see ImageRegistrationMethod1.R for
+// example of how to set it up. The closure part of it includes
+// the environment in which the function was created, which is
+// how it is able to access the registration object.
+// The call to AddCommand is like this:
+// Reg$AddCommand('sitkIterationEvent', commandIteration(Reg))
+// It is difficult to cause crashes, even by calling gc() manually.
+//
+// The R documentation describes the scenario in which C code
+// allocates R objects. The idea is that garbage collection
+// can be invoked while the C code is being run due to
+// calls to R internal functions. The PROTECT mechanism
+// is used to guard the objects allocated in the C code.
+//
+// This doesn't cover the situation we have here, in which
+// R objects are retained inside C objects, or are allocated
+// then retained and are used in multiple C call.
+// This case seems to be mentioned in passing at
+// the end of 5.9.1 of Writing R extensions - R_PreserveObject
+// and R_ReleaseObject. Sparing use is advised, but this
+// seems like the situation for it.
+// In order to keep things simple, we'll preserve the
+// function closure passed in and the call we create.
+// The obj will be passed to RCommand so that we can
+// release it in the destructor.
+
+// Dispatching is based on a type attribute attached to
+// R classes. For standard types this is simple. For c++
+// objects we end up with a class name that is a mangled
+// c++ name. R SEXP objects are a problem. The default
+// mangled name isn't useful and SEXP is used to represent
+// everything in R. Ideally we can supply custom rtype
+// setting, as below, but this gets quite tricky to mangage.
+// The only other place where an SEXP is passed to/from
+// swig bindings is in the array/image conversion code,
+// which doesn't do dispatching. That code is largely
+// confined to this file, so we put it first and set
+// rtype to "numeric" there, then to "function" here.
+// Finer control will require putting swig code in the right
+// scope.
+
+%typemap("rtype") SEXP "function";
+%{
+#include "sitkRCommand.h"
+%}
+
+%extend itk::simple::ProcessObject {
+  int AddCommand( itk::simple::EventEnum e, SEXP obj )
+ {
+   // make sure that the CommandCallable is in fact callable
+   if (!Rf_isFunction(obj))
+     {
+           sitkExceptionMacro(<<"R object is not a function, "
+                              <<"or it has not been set.");
+     }
+   itk::simple::RCommand *cmd = NULL;
+   try
+     {
+       cmd = new itk::simple::RCommand();
+       cmd->SetFunctionClosure(obj);
+       int ret = self->AddCommand(e,*cmd);
+       cmd->OwnedByProcessObjectsOn();
+       return(ret);
+     }
+   catch(...)
+     {
+       delete cmd;
+       throw;
+     }
+ }
+};
 
 //#define %rcode %insert("sinit")
 

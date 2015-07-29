@@ -1,14 +1,13 @@
 find_package ( R REQUIRED )
-include_directories ( ${R_INCLUDE_DIR} )
+include_directories ( ${R_INCLUDE_DIR}  ${CMAKE_CURRENT_SOURCE_DIR})
 
 set_source_files_properties ( SimpleITK.i PROPERTIES CPLUSPLUS ON )
 
 # Run swig
 set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS})
 set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
-set(SWIG_MODULE_SimpleITK_EXTRA_DEPS ${SWIG_EXTRA_DEPS}
-  ${CMAKE_CURRENT_SOURCE_DIR}/R.i )
-SWIG_add_module ( SimpleITK r SimpleITK.i )
+set(SWIG_MODULE_SimpleITK_EXTRA_DEPS ${SWIG_EXTRA_DEPS} ${CMAKE_CURRENT_SOURCE_DIR}/R.i )
+SWIG_add_module ( SimpleITK r SimpleITK.i sitkRCommand.cxx )
 SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} )
 
 # on some platforms the r libraries are not required at link time...
