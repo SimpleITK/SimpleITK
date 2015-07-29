@@ -24,9 +24,8 @@ output will be written (the file will be clobbered).
 
 #  This version of the script originated from ITK/Wrapping/Generators/Doc/doxy2swig.py.
 #  My mods:
-#    self.multi is always 1 (0 was cutting lines improperly).
-#    added self.java to enable output for JavaDocs.
-#    space_parse doesn't output a space at the beginning of a new line.
+#    self.multi is always 1 (0 was cutting lines improperly)
+#    added self.java to enable output for JavaDocs
 #
 #  Dave Chen
 
@@ -88,6 +87,13 @@ class Doxy2SWIG:
                         'reimplementedby', 'derivedcompoundref',
                         'basecompoundref')
         #self.generics = []
+
+        """ flag to enable/disable printing a space in the space_parse method.
+        if True, space_parse will not print a space if it is at the start
+        of a new line.  True by default.  Only disabled for a <simplesect> node
+        with kind=="see".
+        """
+        self.noLeadingSpace = True
 
     def generate(self):
         """Parses the file set in the initialization.  The resulting
@@ -185,10 +191,14 @@ class Doxy2SWIG:
         """ Only output a space if the last character outputed was not a new line.
             I.e., don't allow a line to lead with a space.
         """
-        if len(self.pieces) and self.pieces[-1][-1] != '\n':
-            self.add_text(' ')
+        if self.noLeadingSpace:
+            if len(self.pieces) and self.pieces[-1][-1] != '\n':
+                self.add_text(' ')
+        else:
+                self.add_text(' ')
         self.generic_parse(node)
 
+    # The handlers for all these node types get mapped to a space
     do_ref = space_parse
     do_ulink = space_parse
     do_emphasis = space_parse
@@ -326,7 +336,9 @@ class Doxy2SWIG:
         elif kind == 'see':
             self.add_text('\n')
             self.add_text('See:')
+            self.noLeadingSpace = False
             self.generic_parse(node)
+            self.noLeadingSpace = True
         else:
             self.generic_parse(node)
 
