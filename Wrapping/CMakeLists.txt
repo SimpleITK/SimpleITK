@@ -75,7 +75,7 @@ if ( WRAP_PYTHON )
   find_package ( PythonInterp REQUIRED )
   include_directories ( ${PYTHON_INCLUDE_DIR} ${SimpleITK_SOURCE_DIR}/Wrapping )
 
-  option ( SimpleITK_PYTHON_THREADS "Enable threaded python usage by unlocking the GIL." OFF )
+  option ( SimpleITK_PYTHON_THREADS "Enable threaded python usage by unlocking the GIL." ON )
   mark_as_advanced( SimpleITK_PYTHON_THREADS )
   option ( SimpleITK_PYTHON_WHEEL "Add building of python wheels to the dist target." OFF )
   mark_as_advanced( SimpleITK_PYTHON_WHEEL )
