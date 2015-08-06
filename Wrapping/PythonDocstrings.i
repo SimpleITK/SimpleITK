@@ -10,7 +10,7 @@ C++ includes: itkBitwiseNotFunctor.h
 
 %feature("docstring") itk::Functor::DivFloor "
 
- Cast arguments to double, performs division then takes the floor.
+Cast arguments to double, performs division then takes the floor.
 
 C++ includes: itkDivideFloorFunctor.h
 ";
@@ -124,7 +124,7 @@ C++ includes: itkSliceImageFilter.h
 
 %feature("docstring")  itk::SliceImageFilter::GenerateOutputInformation "
 
- SliceImageFilter produces an image which is a different resolution and with a
+SliceImageFilter produces an image which is a different resolution and with a
 different pixel spacing than its input image.
 See:
 ProcessObject::GenerateOutputInformaton()
@@ -937,7 +937,7 @@ iterative relaxation process of an estimated ND surface. The surface
 is described implicitly as the zero level set of a volume $ \\\\phi $ and allowed to deform under curvature flow. A set of contraints is
 imposed on this movement as follows:
 
- \\\\[ u_{i,j,k}^{n+1} = \\\\left\\\\{ \\\\begin{array}{ll}
+\\\\[ u_{i,j,k}^{n+1} = \\\\left\\\\{ \\\\begin{array}{ll}
 \\\\mbox{max} (u_{i,j,k}^{n} + \\\\Delta t H_{i,j,k}^{n}, 0) &
 \\\\mbox{\\\\f$B_{i,j,k} = 1\\\\f$} \\\\\\\\ \\\\mbox{min}
 (u_{i,j,k}^{n} + \\\\Delta t H_{i,j,k}^{n}, 0) &
@@ -1473,7 +1473,7 @@ parameters fixed parameter
 
 %feature("docstring") itk::simple::BSplineTransformInitializerFilter "
 
- BSplineTransformInitializerFilter is a helper class intended to initialize the control point grid such
+BSplineTransformInitializerFilter is a helper class intended to initialize the control point grid such
 that it has a physically consistent definition. It sets the transform
 domain origin, physical dimensions and direction from information
 obtained from the image. It also sets the mesh size if asked to do so
@@ -1928,7 +1928,7 @@ Destructor
 Labels the pixels on the border of the objects in a binary image.
 
 
- BinaryContourImageFilter takes a binary image as input, where the pixels in the objects are
+BinaryContourImageFilter takes a binary image as input, where the pixels in the objects are
 the pixels with a value equal to ForegroundValue. Only the pixels on
 the contours of the objects are kept. The pixels not on the border are
 changed to BackgroundValue.
@@ -1936,7 +1936,7 @@ changed to BackgroundValue.
 The connectivity can be changed to minimum or maximum connectivity
 with SetFullyConnected() . Full connectivity produces thicker contours.
 
- http://hdl.handle.net/1926/1352
+http://hdl.handle.net/1926/1352
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -2059,7 +2059,7 @@ Destructor
 Fast binary dilation.
 
 
- BinaryDilateImageFilter is a binary dilation morphologic operation. This implementation is
+BinaryDilateImageFilter is a binary dilation morphologic operation. This implementation is
 based on the papers:
 
 L.Vincent \"Morphological transformations of binary images with
@@ -2200,7 +2200,7 @@ Destructor
 Fast binary erosion.
 
 
- BinaryErodeImageFilter is a binary erosion morphologic operation. This implementation is
+BinaryErodeImageFilter is a binary erosion morphologic operation. This implementation is
 based on the papers:
 
 L.Vincent \"Morphological transformations of binary images with
@@ -2342,7 +2342,7 @@ Destructor
 Remove holes not connected to the boundary of the image.
 
 
- BinaryFillholeImageFilter fills holes in a binary image.
+BinaryFillholeImageFilter fills holes in a binary image.
 
 Geodesic morphology and the Fillhole algorithm is described in Chapter
 6 of Pierre Soille's book \"Morphological Image Analysis: Principles
@@ -2449,7 +2449,7 @@ Destructor
 Remove the objects not connected to the boundary of the image.
 
 
- BinaryGrindPeakImageFilter ginds peaks in a grayscale image.
+BinaryGrindPeakImageFilter ginds peaks in a grayscale image.
 
 Geodesic morphology and the grind peak algorithm is described in
 Chapter 6 of Pierre Soille's book \"Morphological Image Analysis:
@@ -2569,7 +2569,7 @@ Label the connected components in a binary image and produce a
 collection of label objects.
 
 
- BinaryImageToLabelMapFilter labels the objects in a binary image. Each distinct object is
+BinaryImageToLabelMapFilter labels the objects in a binary image. Each distinct object is
 assigned a unique label. The final object labels start with 1 and are
 consecutive. Objects that are reached earlier by a raster order scan
 have a lower label.
@@ -2889,13 +2889,13 @@ Destructor
 Denoise a binary image using min/max curvature flow.
 
 
- BinaryMinMaxCurvatureFlowImageFilter implements a curvature driven image denosing algorithm. This filter
+BinaryMinMaxCurvatureFlowImageFilter implements a curvature driven image denosing algorithm. This filter
 assumes that the image is essentially binary: consisting of two
 classes. Iso-brightness contours in the input image are viewed as a
 level set. The level set is then evolved using a curvature-based speed
 function:
 
- \\\\[ I_t = F_{\\\\mbox{minmax}} |\\\\nabla I| \\\\]
+\\\\[ I_t = F_{\\\\mbox{minmax}} |\\\\nabla I| \\\\]
 
 where $ F_{\\\\mbox{minmax}} = \\\\min(\\\\kappa,0) $ if $ \\\\mbox{Avg}_{\\\\mbox{stencil}}(x) $ is less than or equal to $ T_{thresold} $ and $ \\\\max(\\\\kappa,0) $ , otherwise. $ \\\\kappa $ is the mean curvature of the iso-brightness contour at point $ x $ .
 
@@ -4286,7 +4286,7 @@ This class is parameterized over the type of the input image and the
 type of the output image. It is also parameterized by the operation to
 be applied, using a Functor style.
 
- UnaryFunctorImageFilter allows the output dimension of the filter to be larger than the input
+UnaryFunctorImageFilter allows the output dimension of the filter to be larger than the input
 dimension. Thus subclasses of the UnaryFunctorImageFilter (like the CastImageFilter ) can be used to promote a 2D image to a 3D image, etc.
 
 
@@ -4847,7 +4847,7 @@ Set/Get the output pixel type
 
 %feature("docstring") itk::simple::CenteredTransformInitializerFilter "
 
- CenteredTransformInitializerFilter is a helper class intended to initialize the center of rotation and
+CenteredTransformInitializerFilter is a helper class intended to initialize the center of rotation and
 the translation of Transforms having the center of rotation among
 their parameters.
 
@@ -4874,12 +4874,7 @@ passes as the initial translation to the transform. This second
 approach assumes that the moments of the anatomical objects are
 similar for both images and hence the best initial guess for
 registration is to superimpose both mass centers. Note that this
-assumption will probably not hold in multi-modality registration.
-
-
-See:
- itk::CenteredTransformInitializer
-
+assumption will probably not hold in multi-modality registration.   \\\\sa itk::CenteredTransformInitializer
 
 C++ includes: sitkCenteredTransformInitializerFilter.h
 ";
@@ -4944,7 +4939,7 @@ Destructor
 
 %feature("docstring") itk::simple::CenteredVersorTransformInitializerFilter "
 
- CenteredVersorTransformInitializerFilter is a helper class intended to initialize the center of rotation,
+CenteredVersorTransformInitializerFilter is a helper class intended to initialize the center of rotation,
 versor, and translation of the VersorRigid3DTransform.
 
 
@@ -5174,7 +5169,7 @@ Destructor
 Combines two images in a checkerboard pattern.
 
 
- CheckerBoardImageFilter takes two input images that must have the same dimension, size,
+CheckerBoardImageFilter takes two input images that must have the same dimension, size,
 origin and spacing and produces an output image of the same size by
 combinining the pixels from the two input images in a checkerboard
 pattern. This filter is commonly used for visually comparing two
@@ -5906,10 +5901,10 @@ Destructor
 
 %feature("docstring") itk::simple::ComposeImageFilter "
 
- ComposeImageFilter combine several scalar images into a multicomponent image.
+ComposeImageFilter combine several scalar images into a multicomponent image.
 
 
- ComposeImageFilter combine several scalar images into an itk::Image of vector pixel ( itk::Vector , itk::RGBPixel , ...), of std::complex pixel, or in an itk::VectorImage .
+ComposeImageFilter combine several scalar images into an itk::Image of vector pixel ( itk::Vector , itk::RGBPixel , ...), of std::complex pixel, or in an itk::VectorImage .
 
 Inputs and Usage
  All input images are expected to have the same template parameters
@@ -6177,7 +6172,7 @@ Destructor
 Label the objects in a binary image.
 
 
- ConnectedComponentImageFilter labels the objects in a binary image (non-zero pixels are considered
+ConnectedComponentImageFilter labels the objects in a binary image (non-zero pixels are considered
 to be objects, zero-valued pixels are considered to be background).
 Each distinct object is assigned a unique label. The filter
 experiments with some improvements to the existing implementation, and
@@ -6249,6 +6244,16 @@ Name of this class
 
 ";
 
+%feature("docstring")  itk::simple::ConnectedComponentImageFilter::GetObjectCount "
+
+After the filter is executed, holds the number of connected
+components.
+
+This is a measurement. Its value is updated in the Execute methods, so
+the value will only be valid after an execution.
+
+";
+
 %feature("docstring")  itk::simple::ConnectedComponentImageFilter::SetFullyConnected "
 
 Set/Get whether the connected components are defined strictly by face
@@ -6277,7 +6282,7 @@ Label pixels that are connected to a seed and lie within a range of
 values.
 
 
- ConnectedThresholdImageFilter labels pixels with ReplaceValue that are connected to an initial Seed
+ConnectedThresholdImageFilter labels pixels with ReplaceValue that are connected to an initial Seed
 AND lie within a Lower and Upper threshold range.
 See:
  itk::simple::ConnectedThreshold for the procedural interface
@@ -6412,7 +6417,7 @@ Destructor
 Increase the image size by padding with a constant value.
 
 
- ConstantPadImageFilter changes the output image region. If the output image region is larger
+ConstantPadImageFilter changes the output image region. If the output image region is larger
 than the input image region, the extra pixels are filled in by a
 constant value. The output image region must be specified.
 
@@ -6680,7 +6685,7 @@ Destructor
 Decrease the image size by cropping the image by an itk::Size at both the upper and lower bounds of the largest possible region.
 
 
- CropImageFilter changes the image boundary of an image by removing pixels outside the
+CropImageFilter changes the image boundary of an image by removing pixels outside the
 target region. The target region is not specified in advance, but
 calculated in BeforeThreadedGenerateData() .
 
@@ -6874,12 +6879,12 @@ Destructor
 Denoise an image using curvature driven flow.
 
 
- CurvatureFlowImageFilter implements a curvature driven image denoising algorithm. Iso-
+CurvatureFlowImageFilter implements a curvature driven image denoising algorithm. Iso-
 brightness contours in the grayscale input image are viewed as a level
 set. The level set is then evolved using a curvature-based speed
 function:
 
- \\\\[ I_t = \\\\kappa |\\\\nabla I| \\\\] where $ \\\\kappa $ is the curvature.
+\\\\[ I_t = \\\\kappa |\\\\nabla I| \\\\] where $ \\\\kappa $ is the curvature.
 
 The advantage of this approach is that sharp boundaries are preserved
 with smoothing occurring only within a region. However, it should be
@@ -7231,7 +7236,7 @@ Destructor
 Deformably register two images using the demons algorithm.
 
 
- DemonsRegistrationFilter implements the demons deformable algorithm that register two images
+DemonsRegistrationFilter implements the demons deformable algorithm that register two images
 by computing the displacement field which will map a moving image onto
 a fixed image.
 
@@ -7671,7 +7676,7 @@ See T. Vercauteren, X. Pennec, A. Perchant and N. Ayache, \"Non-
 parametric Diffeomorphic Image Registration with the Demons
 Algorithm\", Proc. of MICCAI 2007.
 
- DiffeomorphicDemonsRegistrationFilter implements the demons deformable algorithm that register two images
+DiffeomorphicDemonsRegistrationFilter implements the demons deformable algorithm that register two images
 by computing the deformation field which will map a moving image onto
 a fixed image.
 
@@ -8640,6 +8645,18 @@ C++ includes: sitkDisplacementFieldTransform.h
 ";
 
 %feature("docstring")  itk::simple::DisplacementFieldTransform::DisplacementFieldTransform "
+
+Consume an image to construct a displacement field transform.
+
+
+
+WARNING:
+The input displacement image is transferred to the constructed
+transform object. The input image is modified to be a default
+constructed Image object.
+Image must be of sitkVectorFloat64 pixel type with the number of components
+equal to the image dimension.
+
 ";
 
 %feature("docstring")  itk::simple::DisplacementFieldTransform::DisplacementFieldTransform "
@@ -8651,7 +8668,7 @@ C++ includes: sitkDisplacementFieldTransform.h
 %feature("docstring")  itk::simple::DisplacementFieldTransform::GetDisplacementField "
 
 Todo
-The returned image is should not directly modify the internal
+The returned image should not directly modify the internal
 displacement field.
 
 
@@ -9630,7 +9647,7 @@ Destructor
 Expand the size of an image by an integer factor in each dimension.
 
 
- ExpandImageFilter increases the size of an image by an integer factor in each dimension
+ExpandImageFilter increases the size of an image by an integer factor in each dimension
 using a interpolation method. The output image size in each dimension
 is given by:
 
@@ -9756,10 +9773,10 @@ Decrease the image size by cropping the image to the selected region
 bounds.
 
 
- ExtractImageFilter changes the image boundary of an image by removing pixels outside the
+ExtractImageFilter changes the image boundary of an image by removing pixels outside the
 target region. The target region must be specified.
 
- ExtractImageFilter also collapses dimensions so that the input image may have more
+ExtractImageFilter also collapses dimensions so that the input image may have more
 dimensions than the output image (i.e. 4-D input image to a 3-D output
 image). To specify what dimensions to collapse, the ExtractionRegion
 must be specified. For any dimension dim where
@@ -9811,7 +9828,8 @@ Crop an image by specifying the region to keep
 See:
  itk::simple::Extract for the procedural interface
 
- itk::ExtractImageFilter for the Doxygen on the original ITK class.
+ itk::ExtractImageFilter<InputImageType, typename InputImageType::template Rebind for the
+Doxygen on the original ITK class.
 
 
 
@@ -10032,12 +10050,12 @@ remove less stable computations but also limit the capture range. If
 RequiredNumberOfOverlappingPixels is set to 0, the default, no zeroing
 will take place.
 
- Image size: fixedImage and movingImage need not be the same size.
+Image size: fixedImage and movingImage need not be the same size.
 Furthermore, whereas some algorithms require that the \"template\" be
 smaller than the \"image\" because of errors in the regions where the
 two are not fully overlapping, this filter has no such restriction.
 
- Image spacing: Since the computations are done in the pixel domain, all
+Image spacing: Since the computations are done in the pixel domain, all
 input images must have the same spacing.
 
 Outputs; The output is an image of RealPixelType that is the NCC of
@@ -10127,7 +10145,7 @@ image.
 For images with an odd-sized dimension, applying this filter twice
 will not produce the same image as the original one without using
 SetInverse(true) on one (and only one) of the two filters.
- http://hdl.handle.net/1926/321
+http://hdl.handle.net/1926/321
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -10800,7 +10818,7 @@ algorithm.
 This class was contributed by Tom Vercauteren, INRIA & Mauna Kea
 Technologies based on a variation of the DemonsRegistrationFilter .
 
- FastSymmetricForcesDemonsRegistrationFilter implements the demons deformable algorithm that register two images
+FastSymmetricForcesDemonsRegistrationFilter implements the demons deformable algorithm that register two images
 by computing the deformation field which will map a moving image onto
 a fixed image.
 
@@ -11101,7 +11119,7 @@ Destructor
 Flips an image across user specified axes.
 
 
- FlipImageFilter flips an image across user specified axes. The flip axes are set via
+FlipImageFilter flips an image across user specified axes. The flip axes are set via
 method SetFlipAxes( array ) where the input is a
 FixedArray<bool,ImageDimension>. The image is flipped across axes for
 which array[i] is true.
@@ -11311,7 +11329,7 @@ it's valid when Execute is called with the clientData.
 Generate an n-dimensional image of a Gabor filter.
 
 
- GaborImageSource generates an image of either the real (i.e. symmetric) or complex
+GaborImageSource generates an image of either the real (i.e. symmetric) or complex
 (i.e. antisymmetric) part of the Gabor filter with the orientation
 directed along the x-axis. The GaborKernelFunction is used to evaluate the contribution along the x-axis whereas a non-
 normalized 1-D Gaussian envelope provides the contribution in each of
@@ -11432,7 +11450,7 @@ Destructor
 Generate an n-dimensional image of a Gaussian.
 
 
- GaussianImageSource generates an image of a Gaussian. m_Normalized determines whether or
+GaussianImageSource generates an image of a Gaussian. m_Normalized determines whether or
 not the Gaussian is normalized (whether or not the sum over infinite
 space is 1.0) When creating an image, it is preferable tonotnormalize
 the Gaussian m_Scale scales the output of the Gaussian to span a range
@@ -11667,7 +11685,7 @@ edge potential map. General characteristics of an edge potential map
 is that it has values close to zero in regions near the edges and
 values close to one inside the shape itself. Typically, the edge
 potential map is compute from the image gradient, for example:
- \\\\[ g(I) = 1 / ( 1 + | (\\\\nabla * G)(I)| ) \\\\] \\\\[ g(I) = \\\\exp^{-|(\\\\nabla * G)(I)|} \\\\]
+\\\\[ g(I) = 1 / ( 1 + | (\\\\nabla * G)(I)| ) \\\\] \\\\[ g(I) = \\\\exp^{-|(\\\\nabla * G)(I)|} \\\\]
 
 where $ I $ is image intensity and $ (\\\\nabla * G) $ is the derivative of Gaussian operator.
 
@@ -12782,7 +12800,7 @@ Destructor
 Remove local minima not connected to the boundary of the image.
 
 
- GrayscaleFillholeImageFilter fills holes in a grayscale image. Holes are local minima in the
+GrayscaleFillholeImageFilter fills holes in a grayscale image. Holes are local minima in the
 grayscale topography that are not connected to boundaries of the
 image. Gray level values adjacent to a hole are extrapolated across
 the hole.
@@ -13152,7 +13170,7 @@ Destructor
 Remove local maxima not connected to the boundary of the image.
 
 
- GrayscaleGrindPeakImageFilter removes peaks in a grayscale image. Peaks are local maxima in the
+GrayscaleGrindPeakImageFilter removes peaks in a grayscale image. Peaks are local maxima in the
 grayscale topography that are not connected to boundaries of the
 image. Gray level values adjacent to a peak are extrapolated through
 the peak.
@@ -13723,7 +13741,7 @@ Destructor
 Generate an n-dimensional image of a grid.
 
 
- GridImageSource generates an image of a grid. From the abstract... \"Certain classes
+GridImageSource generates an image of a grid. From the abstract... \"Certain classes
 of images find disparate use amongst members of the ITK community for
 such purposes as visualization, simulation, testing, etc. Currently
 there exists two derived classes from the ImageSource class used for
@@ -13853,7 +13871,7 @@ Identify local minima whose depth below the baseline is greater than
 h.
 
 
- HConcaveImageFilter extract local minima that are more than h intensity units below the
+HConcaveImageFilter extract local minima that are more than h intensity units below the
 (local) background. This has the effect of extracting objects that are
 darker than the background by at least h intensity units.
 
@@ -13967,7 +13985,7 @@ Identify local maxima whose height above the baseline is greater than
 h.
 
 
- HConvexImageFilter extract local maxima that are more than h intensity units above the
+HConvexImageFilter extract local maxima that are more than h intensity units above the
 (local) background. This has the effect of extracting objects that are
 brighter than background by at least h intensity units.
 
@@ -14080,7 +14098,7 @@ Destructor
 Suppress local maxima whose height above the baseline is less than h.
 
 
- HMaximaImageFilter suppresses local maxima that are less than h intensity units above
+HMaximaImageFilter suppresses local maxima that are less than h intensity units above
 the (local) background. This has the effect of smoothing over the
 \"high\" parts of the noise in the image without smoothing over large
 changes in intensity (region boundaries). See the HMinimaImageFilter to suppress the local minima whose depth is less than h intensity
@@ -14175,7 +14193,7 @@ Destructor
 Suppress local minima whose depth below the baseline is less than h.
 
 
- HMinimaImageFilter suppresses local minima that are less than h intensity units below
+HMinimaImageFilter suppresses local minima that are less than h intensity units below
 the (local) background. This has the effect of smoothing over the
 \"low\" parts of the noise in the image without smoothing over large
 changes in intensity (region boundaries). See the HMaximaImageFilter to suppress the local maxima whose height is less than h intensity
@@ -14423,7 +14441,7 @@ Computes the Hausdorff distance between the set of non-zero pixels of
 two images.
 
 
- HausdorffDistanceImageFilter computes the distance between the set non-zero pixels of two images
+HausdorffDistanceImageFilter computes the distance between the set non-zero pixels of two images
 using the following formula: \\\\[ H(A,B) = \\\\max(h(A,B),h(B,A)) \\\\] where \\\\[ h(A,B) = \\\\max_{a \\\\in A} \\\\min_{b \\\\in B} \\\\| a -
 b\\\\| \\\\] is the directed Hausdorff distance and $A$ and $B$ are respectively the set of non-zero pixels in the first and second
 input images.
@@ -14513,7 +14531,7 @@ Normalize the grayscale values between two images by histogram
 matching.
 
 
- HistogramMatchingImageFilter normalizes the grayscale values of a source image based on the
+HistogramMatchingImageFilter normalizes the grayscale values of a source image based on the
 grayscale values of a reference image. This filter uses a histogram
 matching technique where the histograms of the two images are matched
 only at a specified number of quantile values.
@@ -14527,7 +14545,7 @@ grayscale values are smaller than the mean grayscale value. ThresholdAtMeanInten
 The source image can be set via either SetInput() or SetSourceImage()
 . The reference image can be set via SetReferenceImage() .
 
- SetNumberOfHistogramLevels() sets the number of bins used when creating histograms of the source
+SetNumberOfHistogramLevels() sets the number of bins used when creating histograms of the source
 and reference images. SetNumberOfMatchPoints() governs the number of quantile values to be matched.
 
 This filter assumes that both the source and reference are of the same
@@ -14890,25 +14908,25 @@ make sure that coping actually happens to the itk::Image pointed to is only poin
 
 %feature("docstring")  itk::simple::Image::TransformContinuousIndexToPhysicalPoint "
 
- Transform continuous index to physical point
+Transform continuous index to physical point
 
 ";
 
 %feature("docstring")  itk::simple::Image::TransformIndexToPhysicalPoint "
 
- Transform index to physical point
+Transform index to physical point
 
 ";
 
 %feature("docstring")  itk::simple::Image::TransformPhysicalPointToContinuousIndex "
 
- Transform physical point to continuous index
+Transform physical point to continuous index
 
 ";
 
 %feature("docstring")  itk::simple::Image::TransformPhysicalPointToIndex "
 
- Transform physical point to index
+Transform physical point to index
 
 ";
 
@@ -15177,6 +15195,7 @@ See:
 %feature("docstring")  itk::simple::ImageRegistrationMethod::SetMetricAsDemons "
 
 Use demons image metric.
+
 
 
 See:
@@ -15623,7 +15642,7 @@ are mapped to a constant. Values over the interval are mapped to
 another constant.
 
 
- IntensityWindowingImageFilter applies pixel-wise a linear transformation to the intensity values of
+IntensityWindowingImageFilter applies pixel-wise a linear transformation to the intensity values of
 input image pixels. The linear transformation is defined by the user
 in terms of the minimum and maximum values that the output image
 should have and the lower and upper limits of the intensity window of
@@ -15638,7 +15657,7 @@ Wiki Examples:
 
 All Examples
 
- IntensityWindowingImageFilter
+IntensityWindowingImageFilter
 
 See:
  RescaleIntensityImageFilter
@@ -16008,7 +16027,7 @@ Destructor
 Computes the inverse of a displacement field.
 
 
- InverseDisplacementFieldImageFilter takes a displacement field as input and computes the displacement
+InverseDisplacementFieldImageFilter takes a displacement field as input and computes the displacement
 field that is its inverse. If the input displacement field was mapping
 coordinates from a space A into a space B, the output of this filter
 will map coordinates from the space B into the space A.
@@ -16317,7 +16336,7 @@ Destructor
 Invert the intensity of an image.
 
 
- InvertIntensityImageFilter inverts intensity of pixels by subtracting pixel value to a maximum
+InvertIntensityImageFilter inverts intensity of pixels by subtracting pixel value to a maximum
 value. The maximum value can be set with SetMaximum and defaults the
 maximum of input pixel type. This filter can be used to invert, for
 example, a binary image, a distance map, etc.
@@ -16634,7 +16653,7 @@ Destructor
 Label pixels that are connected to one set of seeds but not another.
 
 
- IsolatedConnectedImageFilter finds the optimal threshold to separate two regions. It has two
+IsolatedConnectedImageFilter finds the optimal threshold to separate two regions. It has two
 modes, one to separate dark regions surrounded by bright regions by
 automatically finding a minimum isolating upper threshold, and another
 to separate bright regions surrounded by dark regions by automatically
@@ -16837,7 +16856,7 @@ Destructor
 Isolate watershed basins using two seeds.
 
 
- IsolatedWatershedImageFilter labels pixels with ReplaceValue1 that are in the same watershed basin
+IsolatedWatershedImageFilter labels pixels with ReplaceValue1 that are in the same watershed basin
 as Seed1 AND NOT the same as Seed2. The filter adjusts the waterlevel
 until the two seeds are not in different basins. The user supplies a
 Watershed threshold. The algorithm uses a binary search to adjust the
@@ -17255,7 +17274,7 @@ Destructor
 Labels the pixels on the border of the objects in a labeled image.
 
 
- LabelContourImageFilter takes a labeled image as input, where the pixels in the objects are
+LabelContourImageFilter takes a labeled image as input, where the pixels in the objects are
 the pixels with a value different of the BackgroundValue. Only the
 pixels on the contours of the objects are kept. The pixels not on the
 border are changed to BackgroundValue. The labels of the object are
@@ -17264,7 +17283,7 @@ the same in the input and in the output image.
 The connectivity can be changed to minimum or maximum connectivity
 with SetFullyConnected() . Full connectivity produces thicker contours.
 
- http://hdl.handle.net/1926/1352
+http://hdl.handle.net/1926/1352
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -17373,7 +17392,7 @@ Destructor
 convert a labeled image to a label collection image
 
 
- LabelImageToLabelMapFilter converts a label image to a label collection image. The labels are
+LabelImageToLabelMapFilter converts a label image to a label collection image. The labels are
 the same in the input and the output image.
 
 
@@ -17611,7 +17630,7 @@ Destructor
 Mask and image with a LabelMap .
 
 
- LabelMapMaskImageFilter mask the content of an input image according to the content of the
+LabelMapMaskImageFilter mask the content of an input image according to the content of the
 input LabelMap . The masked pixel of the input image are set to the BackgroundValue. LabelMapMaskImageFilter can keep the input image for one label only, with Negated = false
 (the default) or it can mask the input image for a single label, when
 Negated equals true. In Both cases, the label is set with SetLabel() .
@@ -17850,7 +17869,7 @@ Destructor
 Convert a LabelMap to a binary image.
 
 
- LabelMapToBinaryImageFilter to a binary image. All the objects in the image are used as
+LabelMapToBinaryImageFilter to a binary image. All the objects in the image are used as
 foreground. The background values of the original binary image can be
 restored by passing this image to the filter with the
 SetBackgroundImage() method.
@@ -17943,7 +17962,7 @@ Destructor
 Converts a LabelMap to a labeled image.
 
 
- LabelMapToBinaryImageFilter to a label image.
+LabelMapToBinaryImageFilter to a label image.
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -18274,7 +18293,7 @@ valuates the shape attribute at once.
 
 This implementation was taken from the Insight Journal paper:
 
- http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
+http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -18555,7 +18574,7 @@ Given an intensity image and a label map, compute min, max, variance
 and mean of the pixels associated with each label or segment.
 
 
- LabelStatisticsImageFilter computes the minimum, maximum, sum, mean, median, variance and sigma
+LabelStatisticsImageFilter computes the minimum, maximum, sum, mean, median, variance and sigma
 of regions of an intensity image, where the regions are defined via a
 label map (a second input). The label image should be integral type.
 The filter needs all of its input image. It behaves as a filter with
@@ -18840,7 +18859,7 @@ Destructor
 Make sure that the objects are not overlapping.
 
 
- AttributeUniqueLabelMapFilter search the overlapping zones in the overlapping objects and keeps
+AttributeUniqueLabelMapFilter search the overlapping zones in the overlapping objects and keeps
 only a single object on all the pixels of the image. The object to
 keep is selected according to their label.
 
@@ -20785,14 +20804,14 @@ calculated and the one that gives the largest number of pixels is
 chosen. Since these both default to 0, if a user only sets one, the
 other is ignored.
 
- Image size: fixedImage and movingImage need not be the same size, but
+Image size: fixedImage and movingImage need not be the same size, but
 fixedMask must be the same size as fixedImage, and movingMask must be
 the same size as movingImage. Furthermore, whereas some algorithms
 require that the \"template\" be smaller than the \"image\" because of
 errors in the regions where the two are not fully overlapping, this
 filter has no such restriction.
 
- Image spacing: Since the computations are done in the pixel domain, all
+Image spacing: Since the computations are done in the pixel domain, all
 input images must have the same spacing.
 
 Outputs; The output is an image of RealPixelType that is the masked
@@ -21543,7 +21562,7 @@ Merges several Label Maps.
 
 This filter takes one or more input Label Map and merges them.
 
- SetMethod() can be used to change how the filter manage the labels from the
+SetMethod() can be used to change how the filter manage the labels from the
 different label maps. KEEP (0): MergeLabelMapFilter do its best to keep the label unchanged, but if a label is already
 used in a previous label map, a new label is assigned. AGGREGATE (1):
 If the same label is found several times in the label maps, the label
@@ -21651,12 +21670,12 @@ Destructor
 Denoise an image using min/max curvature flow.
 
 
- MinMaxCurvatureFlowImageFilter implements a curvature driven image denoising algorithm. Iso-
+MinMaxCurvatureFlowImageFilter implements a curvature driven image denoising algorithm. Iso-
 brightness contours in the grayscale input image are viewed as a level
 set. The level set is then evolved using a curvature-based speed
 function:
 
- \\\\[ I_t = F_{\\\\mbox{minmax}} |\\\\nabla I| \\\\]
+\\\\[ I_t = F_{\\\\mbox{minmax}} |\\\\nabla I| \\\\]
 
 where $ F_{\\\\mbox{minmax}} = \\\\max(\\\\kappa,0) $ if $ \\\\mbox{Avg}_{\\\\mbox{stencil}}(x) $ is less than or equal to $ T_{thresold} $ and $ \\\\min(\\\\kappa,0) $ , otherwise. $ \\\\kappa $ is the mean curvature of the iso-brightness contour at point $ x $ .
 
@@ -21989,7 +22008,7 @@ Increase the image size by padding with replicants of the input image
 value.
 
 
- MirrorPadImageFilter changes the image bounds of an image. Any added pixels are filled in
+MirrorPadImageFilter changes the image bounds of an image. Any added pixels are filled in
 with a mirrored replica of the input image. For instance, if the
 output image needs a pixel that istwo pixels to the left of the
 LargestPossibleRegionof the input image, the value assigned will be
@@ -23105,7 +23124,7 @@ Label pixels that are connected to a seed and lie within a
 neighborhood.
 
 
- NeighborhoodConnectedImageFilter labels pixels with ReplaceValue that are connected to an initial Seed
+NeighborhoodConnectedImageFilter labels pixels with ReplaceValue that are connected to an initial Seed
 AND whose neighbors all lie within a Lower and Upper threshold range.
 See:
  itk::simple::NeighborhoodConnected for the procedural interface
@@ -23362,7 +23381,7 @@ C++ includes: sitkNonCopyable.h
 Normalize an image by setting its mean to zero and variance to one.
 
 
- NormalizeImageFilter shifts and scales an image so that the pixels in the image have a
+NormalizeImageFilter shifts and scales an image so that the pixels in the image have a
 zero mean and unit variance. This filter uses StatisticsImageFilter to compute the mean and variance of the input and then applies ShiftScaleImageFilter to shift and scale the pixels.
 
 NB: since this filter normalizes the data to lie within -1 to 1,
@@ -24286,7 +24305,7 @@ Destructor
 Paste an image into another image.
 
 
- PasteImageFilter allows you to take a section of one image and paste into another
+PasteImageFilter allows you to take a section of one image and paste into another
 image. The SetDestinationIndex() method prescribes where in the first input to start pasting data from
 the second input. The SetSourceRegion method prescribes the section of
 the second image to paste into the first. If the output requested
@@ -25520,10 +25539,10 @@ Destructor
 
 %feature("docstring") itk::simple::RealAndImaginaryToComplexImageFilter "
 
- ComposeImageFilter combine several scalar images into a multicomponent image.
+ComposeImageFilter combine several scalar images into a multicomponent image.
 
 
- ComposeImageFilter combine several scalar images into an itk::Image of vector pixel ( itk::Vector , itk::RGBPixel , ...), of std::complex pixel, or in an itk::VectorImage .
+ComposeImageFilter combine several scalar images into an itk::Image of vector pixel ( itk::Vector , itk::RGBPixel , ...), of std::complex pixel, or in an itk::VectorImage .
 
 Inputs and Usage
  All input images are expected to have the same template parameters
@@ -25876,10 +25895,10 @@ Base class for computing IIR convolution with an approximation of a
 Gaussian kernel.
 
 
- \\\\[ \\\\frac{ 1 }{ \\\\sigma \\\\sqrt{ 2 \\\\pi } } \\\\exp{
+\\\\[ \\\\frac{ 1 }{ \\\\sigma \\\\sqrt{ 2 \\\\pi } } \\\\exp{
 \\\\left( - \\\\frac{x^2}{ 2 \\\\sigma^2 } \\\\right) } \\\\]
 
- RecursiveGaussianImageFilter is the base class for recursive filters that approximate convolution
+RecursiveGaussianImageFilter is the base class for recursive filters that approximate convolution
 with the Gaussian kernel. This class implements the recursive
 filtering method proposed by R.Deriche in IEEE-PAMI Vol.12, No.1,
 January 1990, pp 78-87, \"Fast Algorithms for Low-Level Vision\"
@@ -25994,7 +26013,7 @@ Let \\\\[ L(x; t) = g(x; t) \\\\ast f(x) \\\\] be the scale-space representation
 Then the normalized derivative operator for normalized coordinates
 across scale is:
 
- \\\\[ \\\\partial_\\\\xi = \\\\sqrt{t} \\\\partial_x \\\\]
+\\\\[ \\\\partial_\\\\xi = \\\\sqrt{t} \\\\partial_x \\\\]
 
 The resulting scaling factor is \\\\[ \\\\sigma^N \\\\] where N is the order of the derivative.
 
@@ -26170,7 +26189,7 @@ Wiki Examples:
 
 All Examples
 
- RegionalMaximaImageFilter
+RegionalMaximaImageFilter
 See:
  itk::simple::RegionalMaxima for the procedural interface
 
@@ -26311,7 +26330,7 @@ a minima or not. The SetFlatIsMinima() method let the user choose which behavior
 This class was contribtued to the Insight Journal by
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France. http://hdl.handle.net/1926/153
- RegionalMaximaImageFilter MathematicalMorphologyImageFilters
+RegionalMaximaImageFilter MathematicalMorphologyImageFilters
 
 
 See:
@@ -26323,7 +26342,7 @@ Wiki Examples:
 
 All Examples
 
- RegionalMinimaImageFilter
+RegionalMinimaImageFilter
 See:
  itk::simple::RegionalMinima for the procedural interface
 
@@ -26456,7 +26475,7 @@ Relabel the components in an image such that consecutive labels are
 used.
 
 
- RelabelComponentImageFilter remaps the labels associated with the objects in an image (as from
+RelabelComponentImageFilter remaps the labels associated with the objects in an image (as from
 the output of ConnectedComponentImageFilter ) such that the label numbers are consecutive with no gaps between
 the label numbers used. By default, the relabeling will also sort the
 labels based on the size of the object: the largest object will have
@@ -26467,7 +26486,7 @@ can be disabled using SetSortByObjectSize.
 Label #0 is assumed to be the background and is left unaltered by the
 relabeling.
 
- RelabelComponentImageFilter is typically used on the output of the ConnectedComponentImageFilter for those applications that want to extract the largest object or the
+RelabelComponentImageFilter is typically used on the output of the ConnectedComponentImageFilter for those applications that want to extract the largest object or the
 \"k\" largest objects. Any particular object can be extracted from the
 relabeled output using a BinaryThresholdImageFilter . A group of objects can be extracted from the relabled output using
 a ThresholdImageFilter .
@@ -26483,7 +26502,7 @@ will be only those remaining. The GetOriginalNumberOfObjects method
 can be called to find out how many objects were present before the
 small ones were discarded.
 
- RelabelComponentImageFilter can be run as an \"in place\" filter, where it will overwrite its
+RelabelComponentImageFilter can be run as an \"in place\" filter, where it will overwrite its
 output. The default is run out of place (or generate a separate
 output). \"In place\" operation can be controlled via methods in the
 superclass, InPlaceImageFilter::InPlaceOn() and
@@ -26796,7 +26815,7 @@ Destructor
 Resample an image via a coordinate transform.
 
 
- ResampleImageFilter resamples an existing image through some coordinate transform,
+ResampleImageFilter resamples an existing image through some coordinate transform,
 interpolating via some image function. The class is templated over the
 types of the input and output images.
 
@@ -27009,7 +27028,7 @@ Destructor
 Applies a linear transformation to the intensity levels of the input Image .
 
 
- RescaleIntensityImageFilter applies pixel-wise a linear transformation to the intensity values of
+RescaleIntensityImageFilter applies pixel-wise a linear transformation to the intensity values of
 input image pixels. The linear transformation is defined by the user
 in terms of the minimum and maximum values that the output image
 should have.
@@ -27017,7 +27036,7 @@ should have.
 The following equation gives the mapping of the intensity values
 
 
- \\\\[ outputPixel = ( inputPixel - inputMin) \\\\cdot
+\\\\[ outputPixel = ( inputPixel - inputMin) \\\\cdot
 \\\\frac{(outputMax - outputMin )}{(inputMax - inputMin)} + outputMin
 \\\\]
  All computations are performed in the precison of the input pixel's
@@ -28415,7 +28434,7 @@ edge potential map. General characteristics of an edge potential map
 is that it has values close to zero in regions near the edges and
 values close to one inside the shape itself. Typically, the edge
 potential map is compute from the image gradient, for example:
- \\\\[ g(I) = 1 / ( 1 + | (\\\\nabla * G)(I)| ) \\\\] \\\\[ g(I) = \\\\exp^{-|(\\\\nabla * G)(I)|} \\\\]
+\\\\[ g(I) = 1 / ( 1 + | (\\\\nabla * G)(I)| ) \\\\] \\\\[ g(I) = \\\\exp^{-|(\\\\nabla * G)(I)|} \\\\]
 
 where $ I $ is image intensity and $ (\\\\nabla * G) $ is the derivative of Gaussian operator.
 
@@ -28570,7 +28589,7 @@ Destructor
 Shift and scale the pixels in an image.
 
 
- ShiftScaleImageFilter shifts the input pixel by Shift (default 0.0) and then scales the
+ShiftScaleImageFilter shifts the input pixel by Shift (default 0.0) and then scales the
 pixel by Scale (default 1.0). All computattions are performed in the
 precison of the input pixel's RealType. Before assigning the computed
 value to the output pixel, the value is clamped at the NonpositiveMin
@@ -28731,7 +28750,7 @@ Destructor
 Reduce the size of an image by an integer factor in each dimension.
 
 
- ShrinkImageFilter reduces the size of an image by an integer factor in each dimension.
+ShrinkImageFilter reduces the size of an image by an integer factor in each dimension.
 The algorithm implemented is a simple subsample. The output image size
 in each dimension is given by:
 
@@ -28829,7 +28848,7 @@ Computes the sigmoid function pixel-wise.
 A linear transformation is applied first on the argument of the
 sigmoid fuction. The resulting total transfrom is given by
 
- \\\\[ f(x) = (Max-Min) \\\\cdot \\\\frac{1}{\\\\left(1+e^{- \\\\frac{
+\\\\[ f(x) = (Max-Min) \\\\cdot \\\\frac{1}{\\\\left(1+e^{- \\\\frac{
 x - \\\\beta }{\\\\alpha}}\\\\right)} + Min \\\\]
 
 Every output pixel is equal to f(x). Where x is the intensity of the
@@ -29364,7 +29383,7 @@ Measures the similarity between the set of non-zero pixels of two
 images.
 
 
- SimilarityIndexImageFilter measures the similarity between the set non-zero pixels of two images
+SimilarityIndexImageFilter measures the similarity between the set non-zero pixels of two images
 using the following formula: \\\\[ S = \\\\frac{2 | A \\\\cap B |}{|A| + |B|} \\\\] where $A$ and $B$ are respectively the set of non-zero pixels in the first and second
 input images. Operator $|\\\\cdot|$ represents the size of a set and $\\\\cap$ represents the intersection of two sets.
 
@@ -29838,7 +29857,7 @@ Wiki Examples:
 
 All Examples
 
- SobelEdgeDetectionImageFilter
+SobelEdgeDetectionImageFilter
 See:
  itk::simple::SobelEdgeDetection for the procedural interface
 
@@ -30230,7 +30249,7 @@ Destructor
 Compute min. max, variance and mean of an Image .
 
 
- StatisticsImageFilter computes the minimum, maximum, sum, mean, variance sigma of an image.
+StatisticsImageFilter computes the minimum, maximum, sum, mean, variance sigma of an image.
 The filter needs all of its input image. It behaves as a filter with
 an input and output. Thus it can be inserted in a pipline with other
 filters and the statistics will only be recomputed if a downstream
@@ -30517,7 +30536,7 @@ Switzerland. based on a variation of the DemonsRegistrationFilter . The basic mo
 along with the modification for avoiding large deformations when
 gradients have small values.
 
- SymmetricForcesDemonsRegistrationFilter implements the demons deformable algorithm that register two images
+SymmetricForcesDemonsRegistrationFilter implements the demons deformable algorithm that register two images
 by computing the deformation field which will map a moving image onto
 a fixed image.
 
@@ -31003,7 +31022,7 @@ Set image values to a user-specified value if they are below, above,
 or between simple threshold values.
 
 
- ThresholdImageFilter sets image values to a user-specified \"outside\" value (by default,
+ThresholdImageFilter sets image values to a user-specified \"outside\" value (by default,
 \"black\") if the image values are below, above, or between simple
 threshold values.
 
@@ -32222,7 +32241,7 @@ Wiki Examples:
 
 All Examples
 
- ValuedRegionalMaximaImageFilter
+ValuedRegionalMaximaImageFilter
 See:
  itk::simple::ValuedRegionalMaxima for the procedural interface
 
@@ -32320,7 +32339,7 @@ Wiki Examples:
 
 All Examples
 
- ValuedRegionalMinimaImageFilter
+ValuedRegionalMinimaImageFilter
 See:
  itk::simple::ValuedRegionalMinima for the procedural interface
 
@@ -32798,7 +32817,7 @@ Destructor
 
 %feature("docstring") itk::simple::Version "
 
- Version info for SimpleITK.
+Version info for SimpleITK.
 
 C++ includes: sitkVersion.h
 ";
@@ -33370,7 +33389,7 @@ Destructor
 Warps an image using an input displacement field.
 
 
- WarpImageFilter warps an existing image with respect to a given displacement field.
+WarpImageFilter warps an existing image with respect to a given displacement field.
 
 A displacement field is represented as a image whose pixel type is
 some vector type with at least N elements, where N is the dimension of
@@ -33385,7 +33404,7 @@ Each vector in the displacement field represent the distance between a
 geometric point in the input space and a point in the output space
 such that:
 
- \\\\[ p_{in} = p_{out} + d \\\\]
+\\\\[ p_{in} = p_{out} + d \\\\]
 
 Typically the mapped position does not correspond to an integer pixel
 position in the input image. Interpolation via an image function is
@@ -33794,7 +33813,7 @@ Increase the image size by padding with replicants of the input image
 value.
 
 
- WrapPadImageFilter changes the image bounds of an image. Added pixels are filled in with
+WrapPadImageFilter changes the image bounds of an image. Added pixels are filled in with
 a wrapped replica of the input image. For instance, if the output
 image needs a pixel that istwo pixels to the left of the
 LargestPossibleRegionof the input image, the value assigned will be
@@ -34832,7 +34851,7 @@ See:
 
 %feature("docstring")  itk::simple::BinaryClosingByReconstruction "
 
- itk::simple::BinaryClosingByReconstructionImageFilter Functional Interface
+itk::simple::BinaryClosingByReconstructionImageFilter Functional Interface
 
 This function directly calls the execute method of BinaryClosingByReconstructionImageFilter in order to support a fully functional API
 
@@ -34840,7 +34859,7 @@ This function directly calls the execute method of BinaryClosingByReconstruction
 
 %feature("docstring")  itk::simple::BinaryClosingByReconstruction "
 
- itk::simple::BinaryClosingByReconstructionImageFilter Functional Interface
+itk::simple::BinaryClosingByReconstructionImageFilter Functional Interface
 
 This function directly calls the execute method of BinaryClosingByReconstructionImageFilter in order to support a fully functional API
 
@@ -34862,7 +34881,7 @@ See:
 
 %feature("docstring")  itk::simple::BinaryDilate "
 
- itk::simple::BinaryDilateImageFilter Functional Interface
+itk::simple::BinaryDilateImageFilter Functional Interface
 
 This function directly calls the execute method of BinaryDilateImageFilter in order to support a fully functional API
 
@@ -34870,7 +34889,7 @@ This function directly calls the execute method of BinaryDilateImageFilter in or
 
 %feature("docstring")  itk::simple::BinaryDilate "
 
- itk::simple::BinaryDilateImageFilter Functional Interface
+itk::simple::BinaryDilateImageFilter Functional Interface
 
 This function directly calls the execute method of BinaryDilateImageFilter in order to support a fully functional API
 
@@ -34878,7 +34897,7 @@ This function directly calls the execute method of BinaryDilateImageFilter in or
 
 %feature("docstring")  itk::simple::BinaryErode "
 
- itk::simple::BinaryErodeImageFilter Functional Interface
+itk::simple::BinaryErodeImageFilter Functional Interface
 
 This function directly calls the execute method of BinaryErodeImageFilter in order to support a fully functional API
 
@@ -34886,7 +34905,7 @@ This function directly calls the execute method of BinaryErodeImageFilter in ord
 
 %feature("docstring")  itk::simple::BinaryErode "
 
- itk::simple::BinaryErodeImageFilter Functional Interface
+itk::simple::BinaryErodeImageFilter Functional Interface
 
 This function directly calls the execute method of BinaryErodeImageFilter in order to support a fully functional API
 
@@ -34980,7 +34999,7 @@ See:
 
 %feature("docstring")  itk::simple::BinaryMorphologicalClosing "
 
- itk::simple::BinaryMorphologicalClosingImageFilter Functional Interface
+itk::simple::BinaryMorphologicalClosingImageFilter Functional Interface
 
 This function directly calls the execute method of BinaryMorphologicalClosingImageFilter in order to support a fully functional API
 
@@ -34988,7 +35007,7 @@ This function directly calls the execute method of BinaryMorphologicalClosingIma
 
 %feature("docstring")  itk::simple::BinaryMorphologicalClosing "
 
- itk::simple::BinaryMorphologicalClosingImageFilter Functional Interface
+itk::simple::BinaryMorphologicalClosingImageFilter Functional Interface
 
 This function directly calls the execute method of BinaryMorphologicalClosingImageFilter in order to support a fully functional API
 
@@ -34996,7 +35015,7 @@ This function directly calls the execute method of BinaryMorphologicalClosingIma
 
 %feature("docstring")  itk::simple::BinaryMorphologicalOpening "
 
- itk::simple::BinaryMorphologicalOpeningImageFilter Functional Interface
+itk::simple::BinaryMorphologicalOpeningImageFilter Functional Interface
 
 This function directly calls the execute method of BinaryMorphologicalOpeningImageFilter in order to support a fully functional API
 
@@ -35004,7 +35023,7 @@ This function directly calls the execute method of BinaryMorphologicalOpeningIma
 
 %feature("docstring")  itk::simple::BinaryMorphologicalOpening "
 
- itk::simple::BinaryMorphologicalOpeningImageFilter Functional Interface
+itk::simple::BinaryMorphologicalOpeningImageFilter Functional Interface
 
 This function directly calls the execute method of BinaryMorphologicalOpeningImageFilter in order to support a fully functional API
 
@@ -35027,7 +35046,7 @@ See:
 
 %feature("docstring")  itk::simple::BinaryOpeningByReconstruction "
 
- itk::simple::BinaryOpeningByReconstructionImageFilter Functional Interface
+itk::simple::BinaryOpeningByReconstructionImageFilter Functional Interface
 
 This function directly calls the execute method of BinaryOpeningByReconstructionImageFilter in order to support a fully functional API
 
@@ -35035,7 +35054,7 @@ This function directly calls the execute method of BinaryOpeningByReconstruction
 
 %feature("docstring")  itk::simple::BinaryOpeningByReconstruction "
 
- itk::simple::BinaryOpeningByReconstructionImageFilter Functional Interface
+itk::simple::BinaryOpeningByReconstructionImageFilter Functional Interface
 
 This function directly calls the execute method of BinaryOpeningByReconstructionImageFilter in order to support a fully functional API
 
@@ -35170,7 +35189,7 @@ See:
 
 %feature("docstring")  itk::simple::BlackTopHat "
 
- itk::simple::BlackTopHatImageFilter Functional Interface
+itk::simple::BlackTopHatImageFilter Functional Interface
 
 This function directly calls the execute method of BlackTopHatImageFilter in order to support a fully functional API
 
@@ -35178,7 +35197,7 @@ This function directly calls the execute method of BlackTopHatImageFilter in ord
 
 %feature("docstring")  itk::simple::BlackTopHat "
 
- itk::simple::BlackTopHatImageFilter Functional Interface
+itk::simple::BlackTopHatImageFilter Functional Interface
 
 This function directly calls the execute method of BlackTopHatImageFilter in order to support a fully functional API
 
@@ -35230,7 +35249,7 @@ See:
 
 %feature("docstring")  itk::simple::BSplineTransformInitializer "
 
- BSplineTransformInitializerFilter is a helper class intended to initialize the control point grid such
+BSplineTransformInitializerFilter is a helper class intended to initialize the control point grid such
 that it has a physically consistent definition. It sets the transform
 domain origin, physical dimensions and direction from information
 obtained from the image. It also sets the mesh size if asked to do so
@@ -35267,7 +35286,7 @@ See:
 
 %feature("docstring")  itk::simple::CenteredTransformInitializer "
 
- CenteredTransformInitializer is a helper class intended to initialize the center of rotation and
+CenteredTransformInitializer is a helper class intended to initialize the center of rotation and
 the translation of Transforms having the center of rotation among
 their parameters.
 
@@ -35283,7 +35302,7 @@ See:
 
 %feature("docstring")  itk::simple::CenteredVersorTransformInitializer "
 
- CenteredVersorTransformInitializer is a helper class intended to initialize the center of rotation,
+CenteredVersorTransformInitializer is a helper class intended to initialize the center of rotation,
 versor, and translation of the VersorRigid3DTransform.
 
 
@@ -35357,7 +35376,7 @@ See:
 
 %feature("docstring")  itk::simple::ClosingByReconstruction "
 
- itk::simple::ClosingByReconstructionImageFilter Functional Interface
+itk::simple::ClosingByReconstructionImageFilter Functional Interface
 
 This function directly calls the execute method of ClosingByReconstructionImageFilter in order to support a fully functional API
 
@@ -35365,7 +35384,7 @@ This function directly calls the execute method of ClosingByReconstructionImageF
 
 %feature("docstring")  itk::simple::ClosingByReconstruction "
 
- itk::simple::ClosingByReconstructionImageFilter Functional Interface
+itk::simple::ClosingByReconstructionImageFilter Functional Interface
 
 This function directly calls the execute method of ClosingByReconstructionImageFilter in order to support a fully functional API
 
@@ -35444,7 +35463,7 @@ See:
 
 %feature("docstring")  itk::simple::ConfidenceConnected "
 
- itk::simple::ConfidenceConnectedImageFilter Functional Interface
+itk::simple::ConfidenceConnectedImageFilter Functional Interface
 
 This function directly calls the execute method of ConfidenceConnectedImageFilter in order to support a fully functional API
 
@@ -35466,7 +35485,7 @@ See:
 
 %feature("docstring")  itk::simple::ConnectedThreshold "
 
- itk::simple::ConnectedThresholdImageFilter Functional Interface
+itk::simple::ConnectedThresholdImageFilter Functional Interface
 
 This function directly calls the execute method of ConnectedThresholdImageFilter in order to support a fully functional API
 
@@ -35533,7 +35552,7 @@ See:
 
 %feature("docstring")  itk::simple::CurvatureAnisotropicDiffusion "
 
- itk::simple::CurvatureAnisotropicDiffusionImageFilter Procedural Interface
+itk::simple::CurvatureAnisotropicDiffusionImageFilter Procedural Interface
 
 
 This function directly calls the execute method of CurvatureAnisotropicDiffusionImageFilter in order to support a procedural API
@@ -35606,7 +35625,7 @@ See:
 
 %feature("docstring")  itk::simple::DilateObjectMorphology "
 
- itk::simple::DilateObjectMorphologyImageFilter Functional Interface
+itk::simple::DilateObjectMorphologyImageFilter Functional Interface
 
 This function directly calls the execute method of DilateObjectMorphologyImageFilter in order to support a fully functional API
 
@@ -35614,7 +35633,7 @@ This function directly calls the execute method of DilateObjectMorphologyImageFi
 
 %feature("docstring")  itk::simple::DilateObjectMorphology "
 
- itk::simple::DilateObjectMorphologyImageFilter Functional Interface
+itk::simple::DilateObjectMorphologyImageFilter Functional Interface
 
 This function directly calls the execute method of DilateObjectMorphologyImageFilter in order to support a fully functional API
 
@@ -35785,7 +35804,7 @@ See:
 
 %feature("docstring")  itk::simple::ErodeObjectMorphology "
 
- itk::simple::ErodeObjectMorphologyImageFilter Functional Interface
+itk::simple::ErodeObjectMorphologyImageFilter Functional Interface
 
 This function directly calls the execute method of ErodeObjectMorphologyImageFilter in order to support a fully functional API
 
@@ -35793,7 +35812,7 @@ This function directly calls the execute method of ErodeObjectMorphologyImageFil
 
 %feature("docstring")  itk::simple::ErodeObjectMorphology "
 
- itk::simple::ErodeObjectMorphologyImageFilter Functional Interface
+itk::simple::ErodeObjectMorphologyImageFilter Functional Interface
 
 This function directly calls the execute method of ErodeObjectMorphologyImageFilter in order to support a fully functional API
 
@@ -35886,7 +35905,7 @@ See:
 
 %feature("docstring")  itk::simple::FastMarchingBase "
 
- itk::simple::FastMarchingBaseImageFilter Functional Interface
+itk::simple::FastMarchingBaseImageFilter Functional Interface
 
 This function directly calls the execute method of FastMarchingBaseImageFilter in order to support a fully functional API
 
@@ -36055,7 +36074,7 @@ See:
 
 %feature("docstring")  itk::simple::GradientAnisotropicDiffusion "
 
- itk::simple::GradientAnisotropicDiffusionImageFilter Procedural Interface
+itk::simple::GradientAnisotropicDiffusionImageFilter Procedural Interface
 
 
 This function directly calls the execute method of GradientAnisotropicDiffusionImageFilter in order to support a procedural API
@@ -36143,7 +36162,7 @@ See:
 
 %feature("docstring")  itk::simple::GrayscaleDilate "
 
- itk::simple::GrayscaleDilateImageFilter Functional Interface
+itk::simple::GrayscaleDilateImageFilter Functional Interface
 
 This function directly calls the execute method of GrayscaleDilateImageFilter in order to support a fully functional API
 
@@ -36151,7 +36170,7 @@ This function directly calls the execute method of GrayscaleDilateImageFilter in
 
 %feature("docstring")  itk::simple::GrayscaleDilate "
 
- itk::simple::GrayscaleDilateImageFilter Functional Interface
+itk::simple::GrayscaleDilateImageFilter Functional Interface
 
 This function directly calls the execute method of GrayscaleDilateImageFilter in order to support a fully functional API
 
@@ -36159,7 +36178,7 @@ This function directly calls the execute method of GrayscaleDilateImageFilter in
 
 %feature("docstring")  itk::simple::GrayscaleErode "
 
- itk::simple::GrayscaleErodeImageFilter Functional Interface
+itk::simple::GrayscaleErodeImageFilter Functional Interface
 
 This function directly calls the execute method of GrayscaleErodeImageFilter in order to support a fully functional API
 
@@ -36167,7 +36186,7 @@ This function directly calls the execute method of GrayscaleErodeImageFilter in 
 
 %feature("docstring")  itk::simple::GrayscaleErode "
 
- itk::simple::GrayscaleErodeImageFilter Functional Interface
+itk::simple::GrayscaleErodeImageFilter Functional Interface
 
 This function directly calls the execute method of GrayscaleErodeImageFilter in order to support a fully functional API
 
@@ -36231,7 +36250,7 @@ See:
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalClosing "
 
- itk::simple::GrayscaleMorphologicalClosingImageFilter Functional Interface
+itk::simple::GrayscaleMorphologicalClosingImageFilter Functional Interface
 
 This function directly calls the execute method of GrayscaleMorphologicalClosingImageFilter in order to support a fully functional API
 
@@ -36239,7 +36258,7 @@ This function directly calls the execute method of GrayscaleMorphologicalClosing
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalClosing "
 
- itk::simple::GrayscaleMorphologicalClosingImageFilter Functional Interface
+itk::simple::GrayscaleMorphologicalClosingImageFilter Functional Interface
 
 This function directly calls the execute method of GrayscaleMorphologicalClosingImageFilter in order to support a fully functional API
 
@@ -36247,7 +36266,7 @@ This function directly calls the execute method of GrayscaleMorphologicalClosing
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalOpening "
 
- itk::simple::GrayscaleMorphologicalOpeningImageFilter Functional Interface
+itk::simple::GrayscaleMorphologicalOpeningImageFilter Functional Interface
 
 This function directly calls the execute method of GrayscaleMorphologicalOpeningImageFilter in order to support a fully functional API
 
@@ -36255,7 +36274,7 @@ This function directly calls the execute method of GrayscaleMorphologicalOpening
 
 %feature("docstring")  itk::simple::GrayscaleMorphologicalOpening "
 
- itk::simple::GrayscaleMorphologicalOpeningImageFilter Functional Interface
+itk::simple::GrayscaleMorphologicalOpeningImageFilter Functional Interface
 
 This function directly calls the execute method of GrayscaleMorphologicalOpeningImageFilter in order to support a fully functional API
 
@@ -36836,7 +36855,7 @@ See:
 
 %feature("docstring")  itk::simple::Laplacian "
 
- itk::simple::LaplacianImageFilter Procedural Interface
+itk::simple::LaplacianImageFilter Procedural Interface
 
 
 This function directly calls the execute method of LaplacianImageFilter in order to support a procedural API
@@ -37267,7 +37286,7 @@ See:
 
 %feature("docstring")  itk::simple::MorphologicalGradient "
 
- itk::simple::MorphologicalGradientImageFilter Functional Interface
+itk::simple::MorphologicalGradientImageFilter Functional Interface
 
 This function directly calls the execute method of MorphologicalGradientImageFilter in order to support a fully functional API
 
@@ -37275,7 +37294,7 @@ This function directly calls the execute method of MorphologicalGradientImageFil
 
 %feature("docstring")  itk::simple::MorphologicalGradient "
 
- itk::simple::MorphologicalGradientImageFilter Functional Interface
+itk::simple::MorphologicalGradientImageFilter Functional Interface
 
 This function directly calls the execute method of MorphologicalGradientImageFilter in order to support a fully functional API
 
@@ -37345,7 +37364,7 @@ See:
 
 %feature("docstring")  itk::simple::NeighborhoodConnected "
 
- itk::simple::NeighborhoodConnectedImageFilter Functional Interface
+itk::simple::NeighborhoodConnectedImageFilter Functional Interface
 
 This function directly calls the execute method of NeighborhoodConnectedImageFilter in order to support a fully functional API
 
@@ -37445,7 +37464,7 @@ See:
 
 %feature("docstring")  itk::simple::OpeningByReconstruction "
 
- itk::simple::OpeningByReconstructionImageFilter Functional Interface
+itk::simple::OpeningByReconstructionImageFilter Functional Interface
 
 This function directly calls the execute method of OpeningByReconstructionImageFilter in order to support a fully functional API
 
@@ -37453,7 +37472,7 @@ This function directly calls the execute method of OpeningByReconstructionImageF
 
 %feature("docstring")  itk::simple::OpeningByReconstruction "
 
- itk::simple::OpeningByReconstructionImageFilter Functional Interface
+itk::simple::OpeningByReconstructionImageFilter Functional Interface
 
 This function directly calls the execute method of OpeningByReconstructionImageFilter in order to support a fully functional API
 
@@ -37526,7 +37545,7 @@ See:
 
 %feature("docstring")  itk::simple::PatchBasedDenoising "
 
- itk::simple::PatchBasedDenoisingImageFilter Procedural Interface
+itk::simple::PatchBasedDenoisingImageFilter Procedural Interface
 
 
 This function directly calls the execute method of PatchBasedDenoisingImageFilter in order to support a procedural API
@@ -37629,7 +37648,7 @@ See:
 
 %feature("docstring")  itk::simple::RealAndImaginaryToComplex "
 
- ComposeImageFilter combine several scalar images into a multicomponent image.
+ComposeImageFilter combine several scalar images into a multicomponent image.
 
 
 This function directly calls the execute method of RealAndImaginaryToComplexImageFilter in order to support a procedural API
@@ -37973,14 +37992,10 @@ The user can also select applications specifically for color images or
 environment variables.
 
 SITK_SHOW_COMMAND, SITK_SHOW_COLOR_COMMAND and SITK_SHOW_3D_COMMAND
-allow the following tokens in their strings.
+allow the following tokens in their strings.\\\\li \\\\c \"%a\"  for the ImageJ application \\\\li \\\\c \"%f\"
+for SimpleITK's temporary image file
 
-
- \"%a\" for the ImageJ application
-
- \"%f\" for SimpleITK's temporary image file
- For example, the default SITK_SHOW_COMMAND string on Linux systems
-is:
+For example, the default SITK_SHOW_COMMAND string on Linux systems is:
 
 
 After token substitution it may become:
@@ -38037,7 +38052,7 @@ See:
 
 %feature("docstring")  itk::simple::SignedDanielssonDistanceMap "
 
- itk::simple::SignedDanielssonDistanceMapImageFilter Procedural Interface
+itk::simple::SignedDanielssonDistanceMapImageFilter Procedural Interface
 
 
 This function directly calls the execute method of SignedDanielssonDistanceMapImageFilter in order to support a procedural API
@@ -38143,7 +38158,7 @@ generated.
 
 %feature("docstring")  itk::simple::Slice "
 
- itk::simple::SliceImageFilter Procedural Interface
+itk::simple::SliceImageFilter Procedural Interface
 
 
 This function directly calls the execute method of SliceImageFilter in order to support a procedural API
@@ -38497,7 +38512,7 @@ See:
 
 %feature("docstring")  itk::simple::VectorConfidenceConnected "
 
- itk::simple::VectorConfidenceConnectedImageFilter Functional Interface
+itk::simple::VectorConfidenceConnectedImageFilter Functional Interface
 
 This function directly calls the execute method of VectorConfidenceConnectedImageFilter in order to support a fully functional API
 
@@ -38610,7 +38625,7 @@ See:
 
 %feature("docstring")  itk::simple::WhiteTopHat "
 
- itk::simple::WhiteTopHatImageFilter Functional Interface
+itk::simple::WhiteTopHatImageFilter Functional Interface
 
 This function directly calls the execute method of WhiteTopHatImageFilter in order to support a fully functional API
 
@@ -38618,7 +38633,7 @@ This function directly calls the execute method of WhiteTopHatImageFilter in ord
 
 %feature("docstring")  itk::simple::WhiteTopHat "
 
- itk::simple::WhiteTopHatImageFilter Functional Interface
+itk::simple::WhiteTopHatImageFilter Functional Interface
 
 This function directly calls the execute method of WhiteTopHatImageFilter in order to support a fully functional API
 
