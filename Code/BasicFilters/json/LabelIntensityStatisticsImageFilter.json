@@ -55,7 +55,7 @@
     {
       "name" : "NumberOfBins",
       "type" : "uint32_t",
-      "default" : "128",
+      "default" : "128u",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the number of bins in the histogram. Note that the histogram is used to compute the median value, and that this option may have an effect on the value of the median.",
       "briefdescriptionGet" : "",
