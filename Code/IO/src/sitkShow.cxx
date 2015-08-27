@@ -44,26 +44,35 @@ namespace itk
   // time to wait in milli-seconds before we check if the process is OK
   const unsigned int ProcessDelay = 500;
 
+#define IMAGEJ_OPEN_MACRO "\'open(\"%f\"); rename(\"%t\"); \'"
+#define NIFTI_COLOR_MACRO "\'run(\"Make Composite\", \"display=Composite\");\'"
+
 
 #if defined(_WIN32)
-  static std::string ShowImageCommand = "%a -o %f -eval \"rename(\'%t\'); \"";
-  static std::string ShowColorImageCommand = "%a -eval "
-                                              "\"open(\'%f\'); run(\'Make Composite\', \'display=Composite\'); rename(\'%t\'); \"";
+  const static char * ShowImageCommand = "%a -eval " IMAGEJ_OPEN_MACRO;
+  const static char * ShowColorImageCommand = "%a -eval " IMAGEJ_OPEN_MACRO " -eval " NIFTI_COLOR_MACRO;
 
 #elif defined(__APPLE__)
   // The "-n" flag tells OSX to launch a new instance of ImageJ, even if one is already running.
   // We do this because otherwise the macro command line argument is not correctly passed to
   // a previously running instance of ImageJ.
-  static std::string ShowImageCommand = "open -a %a -n --args -eval "
-                                             "\'open(\"%f\"); rename(\"%t\"); \'";
-  static std::string ShowColorImageCommand = "open -a %a -n --args -eval "
-                                             "\'open(\"%f\"); run(\"Make Composite\", \"display=Composite\"); rename(\"%t\"); \'";
+  const static char * ShowImageCommand = "open -a %a -n --args -eval " IMAGEJ_OPEN_MACRO;
+  const static char * ShowColorImageCommand = "open -a %a -n --args -eval " IMAGEJ_OPEN_MACRO " -eval " NIFTI_COLOR_MACRO;
 
 #else
   // linux and other systems
-  static std::string ShowImageCommand = "%a -e \'open(\"%f\"); rename(\"%t\"); \'";
-  static std::string ShowColorImageCommand = "%a -e "
-                                             "\'open(\"%f\"); run(\"Make Composite\", \"display=Composite\"); rename(\"%t\"); \'";
+  const static char * ShowImageCommand = "%a -e " IMAGEJ_OPEN_MACRO;
+
+  const static char * ShowColorImageCommand = "%a -e " IMAGEJ_OPEN_MACRO " -e " NIFTI_COLOR_MACRO;
+#endif
+
+
+  // For Fiji, we only need 2 commands, not 6.  We don't need a separate command for color images.
+  // Also the linux version uses the "-eval" flag instead of "-e".
+#if defined(__APPLE__)
+  const static char * FijiShowCommand = "open -a %a -n --args -eval " IMAGEJ_OPEN_MACRO;
+#else
+  const static char * FijiShowCommand = "%a -eval " IMAGEJ_OPEN_MACRO;
 #endif
 
 
@@ -246,10 +255,19 @@ namespace itk
     }
 
   //
-  static std::string FormatFileName ( std::string TempDirectory, std::string name )
+  static std::string FormatFileName ( std::string TempDirectory, std::string name, const bool metaioDefault=false )
   {
   std::string TempFile = TempDirectory;
-  std::string Extension = ".nii";
+  std::string Extension;
+
+  if (metaioDefault)
+    {
+    Extension = ".mha";
+    }
+  else
+    {
+    Extension = ".nii";
+    }
 
 
   itksys::SystemTools::GetEnv ( "SITK_SHOW_EXTENSION", Extension );
@@ -310,7 +328,7 @@ namespace itk
 
   //
   //
-  static std::string BuildFullFileName(const std::string name)
+  static std::string BuildFullFileName(const std::string name, const bool metaioDefault=false)
   {
   std::string TempDirectory;
 
@@ -327,13 +345,13 @@ namespace itk
 #else
   TempDirectory = "/tmp/";
 #endif
-  return FormatFileName ( TempDirectory, name );
+  return FormatFileName ( TempDirectory, name, metaioDefault );
   }
 
 
   //
   //
-  static std::string FindApplication(const std::string name)
+  static std::string FindApplication(const std::string directory = "", const std::string name = "" )
   {
 
   std::vector<std::string> paths;
@@ -344,17 +362,17 @@ namespace itk
   std::string ProgramFiles;
   if ( itksys::SystemTools::GetEnv ( "PROGRAMFILES", ProgramFiles ) )
     {
-    paths.push_back ( ProgramFiles + "\\ImageJ\\" );
+    paths.push_back ( ProgramFiles + "\\" + directory + "\\");
     }
 
   if ( itksys::SystemTools::GetEnv ( "PROGRAMFILES(x86)", ProgramFiles ) )
     {
-    paths.push_back ( ProgramFiles + "\\ImageJ\\" );
+    paths.push_back ( ProgramFiles + "\\" + directory + "\\");
     }
 
   if ( itksys::SystemTools::GetEnv ( "PROGRAMW6432", ProgramFiles ) )
     {
-    paths.push_back ( ProgramFiles + "\\ImageJ\\" );
+    paths.push_back ( ProgramFiles + "\\" + directory + "\\");
     }
 
 
@@ -364,18 +382,24 @@ namespace itk
 #elif defined(__APPLE__)
 
   // Common places on the Mac to look
-  paths.push_back("/Applications");
-  paths.push_back("/Applications/ImageJ");
-  paths.push_back("/Developer");
-  paths.push_back("/opt/ImageJ");
-  paths.push_back("/usr/local/ImageJ");
+  paths.push_back( "/Applications" );
+  paths.push_back( "/Applications/" + directory );
+  paths.push_back( "/Developer" );
+  paths.push_back( "/opt/" + directory );
+  paths.push_back( "/usr/local/" + directory );
 
+#ifndef NDEBUG
+  std::cout << paths << std::endl;
   ExecutableName = itksys::SystemTools::FindDirectory( name.c_str(), paths );
+  std::cout << "Result: " << ExecutableName << std::endl;
+#endif
 
 #else
 
   // linux and other systems
-  ExecutableName = itksys::SystemTools::FindFile ( name.c_str() );
+  paths.push_back( "/opt/" + directory );
+  paths.push_back( "/usr/local/" + directory );
+  ExecutableName = itksys::SystemTools::FindFile ( name.c_str(), paths );
 
 #endif
 
@@ -486,12 +510,6 @@ namespace itk
   std::vector<std::string> CommandLine;
 
 
-  TempFile = BuildFullFileName(title);
-  //std::cout << "Full file name:\t" << TempFile << std::endl;
-
-  // write out the image
-  WriteImage ( image, TempFile );
-
 
   bool colorFlag = false;
 
@@ -503,7 +521,63 @@ namespace itk
 
 
 
-  // check for user-defined environment variables
+
+  // Find the ImageJ executable
+  //
+
+#if defined(_WIN32)
+
+  // Windows
+  ExecutableName = FindApplication("Fiji.app", "ImageJ-win64.exe");
+  if (!ExecutableName.length())
+    {
+    ExecutableName = FindApplication("Fiji.app", "ImageJ-win32.exe");
+    }
+  if (!ExecutableName.length())
+    {
+    ExecutableName = FindApplication("ImageJ", "ImageJ.exe");
+    }
+
+#elif defined(__APPLE__)
+
+  ExecutableName = FindApplication("", "Fiji.app");
+  if (!ExecutableName.length())
+    {
+    ExecutableName = FindApplication( "ImageJ", "ImageJ64.app" );
+    }
+  if (!ExecutableName.length())
+    {
+    ExecutableName = FindApplication( "ImageJ", "ImageJ.app" );
+    }
+
+#else
+
+  // Linux and other systems
+  ExecutableName = FindApplication("Fiji.app", "ImageJ-linux64");
+  if (!ExecutableName.length())
+    {
+    ExecutableName = FindApplication("Fiji.app", "ImageJ-linux32");
+    }
+  if (!ExecutableName.length())
+    {
+    ExecutableName = FindApplication("ImageJ", "imagej");
+    }
+  if (!ExecutableName.length())
+    {
+    ExecutableName = FindApplication("imagej");
+    }
+#endif
+
+  bool fijiFlag = ExecutableName.find("Fiji.app") != std::string::npos;
+
+  TempFile = BuildFullFileName(title, fijiFlag);
+  //std::cout << "Full file name:\t" << TempFile << std::endl;
+
+  // write out the image
+  WriteImage ( image, TempFile );
+
+
+  // check for user-defined environment variables for the command string
   //
   if (colorFlag)
     {
@@ -514,7 +588,14 @@ namespace itk
       }
     if (!Command.length())
       {
-      Command = ShowColorImageCommand;
+      if (fijiFlag)
+        {
+        Command = FijiShowCommand;
+        }
+      else
+        {
+        Command = ShowColorImageCommand;
+        }
       }
     }
   else
@@ -522,7 +603,14 @@ namespace itk
       itksys::SystemTools::GetEnv ( "SITK_SHOW_COMMAND", Command );
       if (!Command.length())
         {
-        Command = ShowImageCommand;
+        if (fijiFlag)
+          {
+          Command = FijiShowCommand;
+          }
+        else
+          {
+          Command = ShowImageCommand;
+          }
         }
     }
   itksys::SystemTools::GetEnv ( "SITK_SHOW_3D_COMMAND", Command3D );
@@ -535,46 +623,6 @@ namespace itk
     {
     Command = Command3D;
     }
-
-
-  // Find the ImageJ executable
-  //
-
-#if defined(_WIN32)
-
-  // Windows
-  ExecutableName = FindApplication("ImageJ.exe");
-
-#elif defined(__APPLE__)
-
-# if defined(__x86_64__)
-
-  // Mac 64-bit
-  ExecutableName = FindApplication( "ImageJ64.app" );
-  if (!ExecutableName.length())
-    {
-    ExecutableName = "ImageJ64.app";
-    }
-
-#  else
-
-  // Mac 32-bit
-  ExecutableName = FindApplication( "ImageJ.app" );
-  if (!ExecutableName.length())
-    {
-    ExecutableName = "ImageJ.app";
-    }
-#  endif // __x86_64__
-
-#else
-
-  // Linux and other systems
-  ExecutableName = FindApplication("ImageJ");
-  if (!ExecutableName.length())
-    {
-    ExecutableName = FindApplication("imagej");
-    }
-#endif
 
 
   // Replace the string tokens and split the command string into seperate words.
