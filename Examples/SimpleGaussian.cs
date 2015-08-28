@@ -29,17 +29,19 @@ namespace itk.simple.examples {
                 // Read input image
                 ImageFileReader reader = new ImageFileReader();
                 reader.SetFileName(args[0]);
-                Image image = reader.Execute();
+                Image blurredImage = gaussian.Execute(image);
 
-                // Execute Gaussian smoothing filter
-                SmoothingRecursiveGaussianImageFilter gaussian = new SmoothingRecursiveGaussianImageFilter();
-                gaussian.SetSigma(Double.Parse(args[1]));
-                image = gaussian.Execute(image);
+                // Covert the real output image back to the original pixel type , to
+                // make writing easier , as many file formats don 't support real
+                // pixels .
+                CastImageFilter castFilter = new CastImageFilter();
+                castFilter.SetOutputPixelType(image.GetPixelIDValue());
+                Image destImage = castFilter.Execute(blurredImage);
 
                 // Write output image
                 ImageFileWriter writer = new ImageFileWriter();
                 writer.SetFileName(args[2]);
-                writer.Execute(image);
+                writer.Execute(destImage);
 
             } catch (Exception ex) {
                 Console.WriteLine(ex);
