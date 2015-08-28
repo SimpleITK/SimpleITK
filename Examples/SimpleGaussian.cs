@@ -18,11 +18,16 @@
 using System;
 using itk.simple;
 
-namespace itk.simple.examples {
-    class SimpleGaussian {
-        static void Main(string[] args) {
-            try {
-                if (args.Length < 3) {
+namespace itk.simple.examples
+{
+    class SimpleGaussian
+    {
+        static void Main(string[] args)
+        {
+            try
+            {
+                if (args.Length < 3)
+                {
                     Console.WriteLine("Usage: SimpleGaussian <input> <sigma> <output>");
                     return;
                 }
@@ -34,14 +39,22 @@ namespace itk.simple.examples {
                 // Execute Gaussian smoothing filter
                 SmoothingRecursiveGaussianImageFilter gaussian = new SmoothingRecursiveGaussianImageFilter();
                 gaussian.SetSigma(Double.Parse(args[1]));
-                image = gaussian.Execute(image);
+                var blurredImage = gaussian.Execute(image);
+
+                // Covert the real output image back to the original pixel type , to
+                // make writing easier , as many file formats don 't support real
+                // pixels .
+                CastImageFilter castFilter = new CastImageFilter();
+                castFilter.SetOutputPixelType(image.GetPixelIDValue());
+                var destImage = castFilter.Execute(blurredImage);
 
                 // Write output image
                 ImageFileWriter writer = new ImageFileWriter();
                 writer.SetFileName(args[2]);
-                writer.Execute(image);
-
-            } catch (Exception ex) {
+                writer.Execute(destImage);
+            }
+            catch (Exception ex)
+            {
                 Console.WriteLine(ex);
             }
         }
