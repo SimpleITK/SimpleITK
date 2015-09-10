@@ -304,7 +304,7 @@ mark_as_advanced(USE_SYSTEM_ITK)
 if(USE_SYSTEM_ITK)
   find_package(ITK REQUIRED)
   #we require certain packages be turned on in ITK
-  include("${CMAKE_CURRENT_SOURCE_DIR}/../sitkCheckForITKModuleDependencies.cmake")
+  include(sitkCheckForITKModuleDependencies)
 else()
   include(External_ITK)
   list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES ITK)
