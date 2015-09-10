@@ -51,7 +51,7 @@ include(sitkCheckRequiredFlags)
 
 find_package(ITK REQUIRED )
 #we require certain packages be turned on in ITK
-include("sitkCheckForITKModuleDependencies.cmake")
+include(sitkCheckForITKModuleDependencies)
 
 if(ITK_FOUND)
 

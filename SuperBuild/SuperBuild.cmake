@@ -62,10 +62,6 @@ include(VariableList)
 # Prerequisites
 #------------------------------------------------------------------------------
 #
-# SimpleITK Addition: install to the common library
-# directory, so that all libs/include etc ends up
-# in one common tree
-set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_BINARY_DIR} CACHE PATH "Where all the prerequisite libraries go" FORCE)
 
 # Compute -G arg for configuring external projects with the same CMake generator:
 if(CMAKE_EXTRA_GENERATOR)
@@ -308,7 +304,7 @@ mark_as_advanced(USE_SYSTEM_ITK)
 if(USE_SYSTEM_ITK)
   find_package(ITK REQUIRED)
   #we require certain packages be turned on in ITK
-  include("${CMAKE_CURRENT_SOURCE_DIR}/../sitkCheckForITKModuleDependencies.cmake")
+  include(sitkCheckForITKModuleDependencies)
 else()
   include(External_ITK)
   list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES ITK)
