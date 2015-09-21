@@ -40,7 +40,7 @@
     },
     {
       "tag" : "more",
-      "description" : "Test ConstantPad reasonable padding",
+      "description" : "Test Periodic Pad",
       "md5hash" : "5c4bebbdfb8a340cdb5347dac3d87046",
       "settings" : [
         {
@@ -49,9 +49,9 @@
           "lua_value" : "SimpleITK.${name}_PERIODIC_PAD",
           "python_value" : "SimpleITK.${name}.PERIODIC_PAD",
           "ruby_value" : "Simpleitk::${name}::PERIODIC_PAD",
-          "java_value" : "${name}.ConnectivityType.PERIODIC_PAD",
+          "java_value" : "${name}.BoundaryCondition.PERIODIC_PAD",
           "tcl_value" : "$$${name}_PERIODIC_PAD",
-          "csharp_value" : "${name}.ConnectivityType.PERIODIC_PAD",
+          "csharp_value" : "${name}.BoundaryCondition.PERIODIC_PAD",
           "R_value" : "'PERIODIC_PAD'"
         },
         {
