@@ -49,9 +49,9 @@
           "lua_value" : "SimpleITK.${name}_PERIODIC_PAD",
           "python_value" : "SimpleITK.${name}.PERIODIC_PAD",
           "ruby_value" : "Simpleitk::${name}::PERIODIC_PAD",
-          "java_value" : "${name}.BoundaryCondition.PERIODIC_PAD",
+          "java_value" : "${name}.BoundaryConditionType.PERIODIC_PAD",
           "tcl_value" : "$$${name}_PERIODIC_PAD",
-          "csharp_value" : "${name}.BoundaryCondition.PERIODIC_PAD",
+          "csharp_value" : "${name}.BoundaryConditionType.PERIODIC_PAD",
           "R_value" : "'PERIODIC_PAD'"
         },
         {
