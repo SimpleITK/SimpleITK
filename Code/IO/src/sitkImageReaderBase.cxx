@@ -20,6 +20,7 @@
 #include "sitkMacro.h"
 #include "sitkExceptionObject.h"
 
+#include <itksys/SystemTools.hxx>
 
 // Include the Transform IO here, so that the IO factory registration
 // will occour.
@@ -62,9 +63,20 @@ ImageReaderBase
   itk::ImageIOBase::Pointer iobase =
     itk::ImageIOFactory::CreateImageIO( fileName.c_str(), itk::ImageIOFactory::ReadMode);
 
-  if ( iobase.IsNull() )
-    {
-    sitkExceptionMacro( "Unable to determine ImageIO reader for \"" << fileName << "\"" );
+
+   if ( iobase.IsNull() )
+     {
+     if ( !itksys::SystemTools::FileExists( fileName.c_str() ) )
+       {
+       sitkExceptionMacro( "The file \"" << fileName << "\" does not exist." );
+       }
+
+     if ( !bool(std::ifstream( fileName.c_str() )) )
+       {
+       sitkExceptionMacro( "Unable to open \"" << fileName << "\" for reading." );
+       }
+
+     sitkExceptionMacro( "Unable to determine ImageIO reader for \"" << fileName << "\"" );
     }
 
   // Read the image information
