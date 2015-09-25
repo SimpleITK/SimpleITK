@@ -1,6 +1,6 @@
 Package: SimpleITK
-Version: 0.9.0
-Date: 2012-04-05
+Version: 0.9.1
+Date: 2015-09-15
 Title: Bindings to SimpleITK Image segmentation and registration toolkit.
 Authors@R: c(person("Richard", "Beare", role = c("aut", "cre"),
                       email = "Richard.Beare@ieee.org"),
