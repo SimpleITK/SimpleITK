@@ -9,6 +9,23 @@ It is also referenced from Python package index Pypi to facilitate automatic dow
 $ easy_install SimpleITK
 \endcode
 
+\section v091 SimpleITK 0.9.1
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.1/Python/SimpleITK-0.9.1-py2.6-linux-i686.egg#md5=dd8eb20108c487cec85b3b560e4cf1ad">SimpleITK-0.9.1-py2.6-linux-i686.egg (hosted at SourceForge)</a>
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.1/Python/SimpleITK-0.9.1-py2.6-linux-x86_64.egg#md5=c8d69ab2fb8eaa288db2cf1f5419acbf">SimpleITK-0.9.1-py2.6-linux-x86_64.egg (hosted at SourceForge)</a>
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.1/Python/SimpleITK-0.9.1-py2.6-macosx-10.6-universal.egg#md5=70ac16d6fefb359196f5fa3d5cbd0858">SimpleITK-0.9.1-py2.6-macosx-10.6-universal.egg (hosted at SourceForge)</a>
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.1/Python/SimpleITK-0.9.1-py2.7-linux-i686.egg#md5=1fc08390054f8ab118647f8857764d52">SimpleITK-0.9.1-py2.7-linux-i686.egg (hosted at SourceForge)</a>
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.1/Python/SimpleITK-0.9.1-py2.7-linux-x86_64.egg#md5=a3268eae6f1a185e43dd66df8bfeae3b">SimpleITK-0.9.1-py2.7-linux-x86_64.egg (hosted at SourceForge)</a>
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.1/Python/SimpleITK-0.9.1-py2.7-macosx-10.6-intel.egg#md5=95353e0009d9b4b2b9a625732130bd70">SimpleITK-0.9.1-py2.7-macosx-10.6-intel.egg (hosted at SourceForge)</a>
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.1/Python/SimpleITK-0.9.1-py2.7-win32.egg#md5=4ed8450b4a8991ebc7560b1382b8623c">SimpleITK-0.9.1-py2.7-win32.egg (hosted at SourceForge)</a>
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.1/Python/SimpleITK-0.9.1-py2.7-win-amd64.egg#md5=b2b0b411d08697036f6aa65690c85e29">SimpleITK-0.9.1-py2.7-win-amd64.egg (hosted at SourceForge)</a>
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.1/Python/SimpleITK-0.9.1-py3.3-linux-i686.egg#md5=09184fc977e6c58d1b435af994184897">SimpleITK-0.9.1-py3.3-linux-i686.egg (hosted at SourceForge)</a>
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.1/Python/SimpleITK-0.9.1-py3.3-linux-x86_64.egg#md5=e4f53c46db99894e1381c5ab8ce5c9d8">SimpleITK-0.9.1-py3.3-linux-x86_64.egg (hosted at SourceForge)</a>
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.1/Python/SimpleITK-0.9.1-py3.3-win32.egg#md5=083629dd2f79406eb41aacbd05047800">SimpleITK-0.9.1-py3.3-win32.egg (hosted at SourceForge)</a>
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.1/Python/SimpleITK-0.9.1-py3.3-win-amd64.egg#md5=39eaa15e7692ef9bbbee2618e7769503">SimpleITK-0.9.1-py3.3-win-amd64.egg (hosted at SourceForge)</a>
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.1/Python/SimpleITK-0.9.1-py3.4-linux-i686.egg#md5=857a38574e9d618f45db588f73410498">SimpleITK-0.9.1-py3.4-linux-i686.egg (hosted at SourceForge)</a>
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.1/Python/SimpleITK-0.9.1-py3.4-linux-x86_64.egg#md5=1980688373ca132abd4cc84ec5118a5d">SimpleITK-0.9.1-py3.4-linux-x86_64.egg (hosted at SourceForge)</a>
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.1/Python/SimpleITK-0.9.1-py3.4-win32.egg#md5=869b641b0259124fbc6282a644b2a28e">SimpleITK-0.9.1-py3.4-win32.egg (hosted at SourceForge)</a>
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.1/Python/SimpleITK-0.9.1-py3.4-win-amd64.egg#md5=fee82ff20eb90904f69e742c4eaedc84">SimpleITK-0.9.1-py3.4-win-amd64.egg (hosted at SourceForge)</a>
 
 \section v090 SimpleITK 0.9.0
 
