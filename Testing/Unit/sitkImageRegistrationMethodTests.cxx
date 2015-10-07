@@ -49,6 +49,7 @@ public:
         {
         std::cout << "\tLevel: " << std::setw(3) << m_Method.GetCurrentLevel() << std::endl;
         std::cout << "\tScales: " << m_Method.GetOptimizerScales() << std::endl;
+        std::cout << "\tLearning Rate: " <<  m_Method.GetOptimizerLearningRate() << std::endl;
         this->scales = m_Method.GetOptimizerScales();
         this->toString = m_Method.ToString();
         }
