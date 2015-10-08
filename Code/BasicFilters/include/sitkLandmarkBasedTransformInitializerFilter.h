@@ -69,7 +69,7 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
       ~LandmarkBasedTransformInitializerFilter();
 
       /** Define the pixels types supported by this filter */
-      typedef typelist::MakeTypeList<BasicPixelID<float> >::Type  PixelIDTypeList;
+      typedef typelist::MakeTypeList<BasicPixelID<float> >::Type PixelIDTypeList;
 
 
 
@@ -79,7 +79,7 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
       Self& SetFixedLandmarks ( std::vector<double> FixedLandmarks ) { this->m_FixedLandmarks = FixedLandmarks; return *this; }
 
       /**
-       * Get the shrink factors.
+       *
        */
         std::vector<double> GetFixedLandmarks() const { return this->m_FixedLandmarks; }
 
@@ -99,7 +99,7 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
       Self& SetLandmarkWeight ( std::vector<double> LandmarkWeight ) { this->m_LandmarkWeight = LandmarkWeight; return *this; }
 
       /**
-       * Get the shrink factors.
+       *
        */
         std::vector<double> GetLandmarkWeight() const { return this->m_LandmarkWeight; }
 
@@ -129,19 +129,19 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
 
 
       /** Execute the filter on the input image */
-      Image Execute ( const Transform & transform );
+      Transform Execute ( const Transform & transform );
 
 
       /** Execute the filter on the input image with the given parameters */
-      Image Execute ( const Transform & transform, std::vector<double> fixedLandmarks, std::vector<double> movingLandmarks, std::vector<double> landmarkWeight, Image referenceImage, unsigned int bSplineNumberOfControlPoints );
+      Transform Execute ( const Transform & transform, std::vector<double> fixedLandmarks, std::vector<double> movingLandmarks, std::vector<double> landmarkWeight, Image referenceImage, unsigned int numberOfControlPoints );
 
 
     private:
 
       /** Setup for member function dispatching */
 
-      typedef Image (Self::*MemberFunctionType)( const Transform * transform );
-      template <class TImageType> Image ExecuteInternal ( const Transform * transform );
+      typedef Transform (Self::*MemberFunctionType)( const Transform * transform );
+      template <class TImageType> Transform ExecuteInternal ( const Transform * transform );
 
 
 
@@ -170,7 +170,7 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
      *
      * \sa itk::simple::LandmarkBasedTransformInitializerFilter for the object oriented interface
      */
-     SITKBasicFilters_EXPORT Image LandmarkBasedTransformInitializer ( const Transform & transform, std::vector<double> fixedLandmarks = std::vector<double>(), std::vector<double> movingLandmarks = std::vector<double>(), std::vector<double> landmarkWeight = std::vector<double>(), Image referenceImage = Image(), unsigned int bSplineNumberOfControlPoints = 4u );
+     SITKBasicFilters_EXPORT Transform LandmarkBasedTransformInitializer ( const Transform & transform, std::vector<double> fixedLandmarks = std::vector<double>(), std::vector<double> movingLandmarks = std::vector<double>(), std::vector<double> landmarkWeight = std::vector<double>(), Image referenceImage = Image(), unsigned int numberOfControlPoints = 4u );
 
   }
 }

@@ -44,6 +44,7 @@ set ( SimpleITKBasicFilters1Source
   sitkBSplineTransformInitializerFilter.cxx
   sitkCenteredTransformInitializerFilter.cxx
   sitkCenteredVersorTransformInitializerFilter.cxx
+  sitkLandmarkBasedTransformInitializerFilter.cxx
 )
 
 add_library ( SimpleITKBasicFilters1 ${SimpleITKBasicFilters1Source} )

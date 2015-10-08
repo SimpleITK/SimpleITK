@@ -49,6 +49,7 @@
 #include <sitkBSplineTransformInitializerFilter.h>
 #include <sitkCenteredTransformInitializerFilter.h>
 #include <sitkCenteredVersorTransformInitializerFilter.h>
+#include <sitkLandmarkBasedTransformInitializerFilter.h>
 #include <sitkAdditionalProcedures.h>
 #include <sitkCommand.h>
 
@@ -75,6 +76,8 @@
 
 #include "sitkVersorRigid3DTransform.h"
 #include "sitkSimilarity3DTransform.h"
+#include "sitkAffineTransform.h"
+#include "sitkEuler2DTransform.h"
 
 TEST(BasicFilter,FastSymmetricForcesDemonsRegistrationFilter_ENUMCHECK) {
   typedef itk::Image<float,3> ImageType;
@@ -620,6 +623,39 @@ TEST(BasicFilters,CenteredVersorTransformInitializer) {
 
 }
 
+
+
+TEST(BasicFilters,LandmarkBasedTransformInitializer) {
+  namespace sitk = itk::simple;
+
+  sitk::LandmarkBasedTransformInitializerFilter filter;
+
+  EXPECT_EQ ( "LandmarkBasedTransformInitializerFilter", filter.GetName() );
+  std::cout << filter.ToString();
+
+  const double points[8] = { 0.0,0.0, 0.0,1.0, 1.0,0.0, 1.1,1.0 };
+
+  std::vector<double> fixedPoints(&points[0], &points[8]);
+  std::vector<double> movingPoints(&points[0], &points[8]);
+
+  movingPoints[7] += .1;
+
+  sitk::Transform tx = sitk::AffineTransform(2);
+
+  filter.SetFixedLandmarks( fixedPoints );
+  filter.SetMovingLandmarks( movingPoints );
+  sitk::Transform out = filter.Execute( tx );
+
+  std::cout << out.ToString();
+
+
+  tx = sitk::Euler2DTransform();
+  out = filter.Execute( tx );
+
+  std::cout << out.ToString();
+
+
+}
 
 
 TEST(BasicFilters,Cast_Commands) {

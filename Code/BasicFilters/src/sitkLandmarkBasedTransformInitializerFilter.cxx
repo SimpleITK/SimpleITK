@@ -31,7 +31,7 @@
 #include "itkComposeImageFilter.h"
 
 #include "sitkLandmarkBasedTransformInitializerFilter.h"
-#include "itkLandmarkBasedTransformInitializerFilter.h"
+#include "itkLandmarkBasedTransformInitializer.h"
 
 // Additional include files
 #include "sitkTransform.h"
@@ -89,8 +89,8 @@ std::string LandmarkBasedTransformInitializerFilter::ToString() const
   out << "  LandmarkWeight: ";
   this->ToStringHelper(out, this->m_LandmarkWeight);
   out << std::endl;
-  out << "  ReferenceImage: ";
-  this->ToStringHelper(out, this->m_ReferenceImage);
+  // out << "  ReferenceImage: ";
+  // this->ToStringHelper(out, this->m_ReferenceImage);
   out << std::endl;
   out << "  BSplineNumberOfControlPoints: ";
   this->ToStringHelper(out, this->m_BSplineNumberOfControlPoints);
@@ -103,24 +103,29 @@ std::string LandmarkBasedTransformInitializerFilter::ToString() const
 //
 // Execute
 //
-Image LandmarkBasedTransformInitializerFilter::Execute ( const Transform & transform, std::vector<double> fixedLandmarks, std::vector<double> movingLandmarks, std::vector<double> landmarkWeight, Image referenceImage, unsigned int bSplineNumberOfControlPoints )
+Transform LandmarkBasedTransformInitializerFilter::Execute ( const Transform & transform, std::vector<double> fixedLandmarks, std::vector<double> movingLandmarks, std::vector<double> landmarkWeight, Image referenceImage, unsigned int numberOfControlPoints )
 {
   this->SetFixedLandmarks ( fixedLandmarks );
   this->SetMovingLandmarks ( movingLandmarks );
   this->SetLandmarkWeight ( landmarkWeight );
   this->SetReferenceImage ( referenceImage );
-  this->SetBSplineNumberOfControlPoints ( bSplineNumberOfControlPoints );
+  this->SetBSplineNumberOfControlPoints ( numberOfControlPoints );
 
   return this->Execute ( transform );
 }
 
 
-Image LandmarkBasedTransformInitializerFilter::Execute ( const Transform & transform )
+Transform LandmarkBasedTransformInitializerFilter::Execute ( const Transform & transform )
 {
-  PixelIDValueEnum type = transform.GetPixelID();
   unsigned int dimension = transform.GetDimension();
 
-  return this->m_MemberFactory->GetMemberFunction( type, dimension )( &transform );
+  if ( this->m_ReferenceImage.GetSize() != std::vector<unsigned int>(this->m_ReferenceImage.GetDimension(), 0u) &&
+       dimension != this->m_ReferenceImage.GetDimension() )
+    {
+    sitkExceptionMacro ( "ReferenceImage for LandmarkBasedTransformInitializerFilter does not match dimension of the transform!" );
+    }
+
+  return this->m_MemberFactory->GetMemberFunction( sitkFloat32, dimension )( &transform );
 }
 
 
@@ -139,24 +144,25 @@ namespace {
 // ExecuteInternal
 //
 template <class TImageType>
-Image LandmarkBasedTransformInitializerFilter::ExecuteInternal ( const Transform * inTransform )
+Transform LandmarkBasedTransformInitializerFilter::ExecuteInternal ( const Transform * inTransform )
 {
+
   // Define the input and output image types
-  typedef TImageType     InputImageType;
-        
-
-  //Define output image type
-  typedef float OutputImageType;
+  typedef itk::ImageBase<TImageType::ImageDimension>  InputImageType;
+  const unsigned int Dimension = InputImageType::ImageDimension;
 
 
-
-  typedef itk::LandmarkBasedTransformInitializer< itk::AffineTransform< double, TImageType::ImageDimension  >, TImageType, TImageType> FilterType;
+  typedef itk::LandmarkBasedTransformInitializer< itk::Transform< double, Dimension, Dimension >, InputImageType, InputImageType> FilterType;
   // Set up the ITK filter
   typename FilterType::Pointer filter = FilterType::New();
 
+  // This initializers modifies the input, we copy the transform to
+  // prevent this change
+  Transform copyTransform(*inTransform);
+  copyTransform.SetFixedParameters(copyTransform.GetFixedParameters());
 
-  assert( inTransform != NULL );
-  const typename FilterType::TransformType *itkTx = dynamic_cast<const typename FilterType::TransformType *>(inTransform->GetITKBase() );
+
+  const typename FilterType::TransformType *itkTx = dynamic_cast<const typename FilterType::TransformType *>(copyTransform.GetITKBase());
   if ( !itkTx )
     {
     sitkExceptionMacro( "Unexpected error converting transform! Possible miss matching dimensions!" );
@@ -164,27 +170,45 @@ Image LandmarkBasedTransformInitializerFilter::ExecuteInternal ( const Transform
   else { filter->SetTransform( const_cast<typename FilterType::TransformType*>(itkTx) ); }
 
 
-  filter->SetFixedLandmarks ( this->m_FixedLandmarks );
-  filter->SetMovingLandmarks ( this->m_MovingLandmarks );
+
+  typedef typename FilterType::LandmarkPointContainer PointContainer;
+  PointContainer fixedITKPoints;
+  for( unsigned int i = 0; i < m_FixedLandmarks.size()- Dimension - 1; i += Dimension)
+    {
+    typename FilterType::LandmarkPointType pt(&m_FixedLandmarks[i]);
+    fixedITKPoints.push_back(pt);
+    }
+  filter->SetFixedLandmarks(fixedITKPoints);
+
+  PointContainer movingITKPoints;
+  for( unsigned int i = 0; i < m_MovingLandmarks.size()- Dimension - 1; i += Dimension)
+    {
+    typename FilterType::LandmarkPointType pt(&m_MovingLandmarks[i]);
+    movingITKPoints.push_back(pt);
+    }
+  filter->SetMovingLandmarks(movingITKPoints);
+
   filter->SetLandmarkWeight ( this->m_LandmarkWeight );
-  filter->SetReferenceImage ( this->m_ReferenceImage );
+
+  if ( this->m_ReferenceImage.GetSize() != std::vector<unsigned int>(this->m_ReferenceImage.GetDimension(), 0u) )
+    {
+    // Get the pointer to the ITK image contained in image1
+    typename InputImageType::ConstPointer referenceImage = this->CastImageToITK<InputImageType>( this->m_ReferenceImage );
+    ////filter->SetReferenceImage ( referenceImage.GetPointer() );
+    }
+
   filter->SetBSplineNumberOfControlPoints ( this->m_BSplineNumberOfControlPoints );
 
 
+  if (this->GetDebug())
+    {
+    std::cout << "Executing ITK filter:" << std::endl;
+    filter->Print(std::cout);
+    }
 
+  filter->InitializeTransform();
 
-  this->PreUpdate( filter.GetPointer() );
-
-
-
-  // Run the ITK filter and return the output as a SimpleITK image
-  filter->Update();
-
-
-
-  typename FilterType::OutputImageType *itkOutImage = filter->GetOutput();
-  this->FixNonZeroIndex( itkOutImage );
-  return Image( this->CastITKToImage(itkOutImage) );
+  return copyTransform;
 
 }
 
@@ -194,10 +218,10 @@ Image LandmarkBasedTransformInitializerFilter::ExecuteInternal ( const Transform
 //
 // Function to run the Execute method of this filter
 //
-Image LandmarkBasedTransformInitializer ( const Transform & transform, std::vector<double> fixedLandmarks, std::vector<double> movingLandmarks, std::vector<double> landmarkWeight, Image referenceImage, unsigned int bSplineNumberOfControlPoints )
+Transform LandmarkBasedTransformInitializer ( const Transform & transform, std::vector<double> fixedLandmarks, std::vector<double> movingLandmarks, std::vector<double> landmarkWeight, Image referenceImage, unsigned int numberOfControlPoints )
 {
   LandmarkBasedTransformInitializerFilter filter;
-  return filter.Execute ( transform, fixedLandmarks, movingLandmarks, landmarkWeight, referenceImage, bSplineNumberOfControlPoints );
+  return filter.Execute ( transform, fixedLandmarks, movingLandmarks, landmarkWeight, referenceImage, numberOfControlPoints );
 }
 
 
