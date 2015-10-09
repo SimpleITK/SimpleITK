@@ -83,7 +83,7 @@ public:
    * output. */
   typedef ProcessObject::DataObjectPointerArraySizeType DataObjectPointerArraySizeType;
   using Superclass::MakeOutput;
-  virtual DataObjectPointer MakeOutput(DataObjectPointerArraySizeType idx);
+  virtual DataObjectPointer MakeOutput(DataObjectPointerArraySizeType idx) SITK_OVERRIDE;
 
 protected:
 
@@ -91,18 +91,18 @@ protected:
 
   // virtual ~HashImageFilter(); // implementation not needed
 
-  virtual void PrintSelf(std::ostream & os, Indent indent) const;
+  virtual void PrintSelf(std::ostream & os, Indent indent) const SITK_OVERRIDE;
 
   // See superclass for doxygen documentation
   //
   // This method is to do work after the superclass potential threaded
   // copy.
-  void AfterThreadedGenerateData();
+  void AfterThreadedGenerateData() SITK_OVERRIDE;
 
   // See superclass for doxygen documentation
   //
   // Override since the filter produces all of its output
-  void EnlargeOutputRequestedRegion(DataObject *data);
+  void EnlargeOutputRequestedRegion(DataObject *data) SITK_OVERRIDE;
 
 private:
   HashImageFilter(const Self &); //purposely not implemented
