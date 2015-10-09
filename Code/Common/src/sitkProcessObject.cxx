@@ -66,7 +66,7 @@ public:
     }
 
   /**  Invoke the member function. */
-  virtual void Execute(Object *, const EventObject & )
+  virtual void Execute(Object *, const EventObject & ) SITK_OVERRIDE
   {
     if (m_That)
       {
@@ -75,7 +75,7 @@ public:
   }
 
   /**  Invoke the member function with a const object */
-  virtual void Execute(const Object *, const EventObject & )
+  virtual void Execute(const Object *, const EventObject & ) SITK_OVERRIDE
   {
     if ( m_That )
       {
