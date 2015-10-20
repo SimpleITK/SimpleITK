@@ -177,6 +177,7 @@ namespace std
 %include "sitkBSplineTransformInitializerFilter.h"
 %include "sitkCenteredTransformInitializerFilter.h"
 %include "sitkCenteredVersorTransformInitializerFilter.h"
+%include "sitkLandmarkBasedTransformInitializerFilter.h"
 %include "sitkCastImageFilter.h"
 %include "sitkAdditionalProcedures.h"
 
