@@ -90,5 +90,5 @@ ExternalProject_Add(${proj}
 
 
 ExternalProject_Get_Property(ITK install_dir)
-set(ITK_DIR "${install_dir}/lib/cmake/ITK-4.8" )
-set(WrapITK_DIR "${install_dir}/lib/cmake/ITK-4.8/WrapITK")
+set(ITK_DIR "${install_dir}/lib/cmake/ITK-4.9" )
+set(WrapITK_DIR "${install_dir}/lib/cmake/ITK-4.9/WrapITK")
