@@ -44,7 +44,8 @@ if ( numberOfArguments < inputs + 2) {
 }
 
 tag <- args[[1]]
-
+# Turn this on for a slow but through testing
+#gctorture()
 writer <- ImageFileWriter()
 filter <- ${name}()
 
@@ -63,14 +64,14 @@ if(tag == "${tag}") {
 $(foreach settings
 $(if parameter == "SeedList" then
     OUT=[[
-      filter <- filter$$ClearSeeds()
+      filter$$ClearSeeds()
       $(for i=1,#value do
-        OUT=OUT .. "filter <- filter$$AddSeed( " .. R_value[i] .. " )\n"
+        OUT=OUT .. "filter$$AddSeed( " .. R_value[i] .. " )\n"
        end)
     ]]
 elseif R_value then
 OUT=[[
-   filter <- filter$$Set${parameter}( ${R_value} )
+    filter$$Set${parameter}( ${R_value} )
   ]]
 elseif dim_vec and dim_vec==1 then
 OUT=[[
@@ -81,7 +82,7 @@ OUT=[[
   OUT=OUT..value[#value]..' ) )'
 else
 OUT=[[
-   filter <- filter$$Set${parameter}( ${value} )
+   filter$$Set${parameter}( ${value} )
   ]]
 end)
 )
@@ -114,8 +115,8 @@ OUT=[[
   output <- LabelMapToLabel(output)
   }
 
-  writer <- writer$$SetFileName( lastargument )
-  writer <- writer$$Execute( output )
+  writer$$SetFileName( lastargument )
+  writer$$Execute( output )
 ]]
 end)
 
