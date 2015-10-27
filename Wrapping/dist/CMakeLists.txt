@@ -1,32 +1,3 @@
-#
-# Packaging
-#
-
-# A general packaging target, not built by default, to build packages for each
-# language.  This should depend on all language specific targets.
-add_custom_target( dist cmake -E echo "Finished generating wrapped packages for distribution..." )
-
-if( WRAP_PYTHON )
-
-  set(bdist_commands "bdist_egg")
-  if( SimpleITK_PYTHON_WHEEL )
-    set(bdist_commands ${bdist_commands} bdist_wheel)
-  endif()
-
-  if(SITK_PYTHON_USE_VIRTUALENV)
-    add_custom_target( dist.Python
-      ${VIRTUAL_PYTHON_EXECUTABLE} ${SimpleITK_BINARY_DIR}/Wrapping/PythonPackage/setupegg.py ${bdist_commands}
-      WORKING_DIRECTORY ${SimpleITK_BINARY_DIR}/Wrapping
-      DEPENDS ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
-      COMMENT "Creating Python binary distribution" )
-
-    add_dependencies( dist.Python PythonVirtualEnv)
-    add_dependencies( dist dist.Python )
-  elseif()
-    message( STATUS "Not creating dist.Python target since SITK_FORBID_DOWNLOADS is enabled" )
-  endif()
-
-endif()
 
 #
 # JAVA Packaging

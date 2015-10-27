@@ -83,7 +83,9 @@
 %include CSharp.i
 %include Java.i
 %include Tcl.i
+#if SWIGPYTHON
 %include Python.i
+#endif
 %include Lua.i
 %include R.i
 %include Ruby.i
