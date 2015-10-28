@@ -80,7 +80,9 @@
 %}
 
 // Language Specific Sections
+#if SWIGCSHARP
 %include CSharp.i
+#endif
 %include Java.i
 #if SWIGTCL
 %include Tcl.i
