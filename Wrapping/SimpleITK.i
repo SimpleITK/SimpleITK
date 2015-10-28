@@ -88,7 +88,9 @@
 #endif
 %include Lua.i
 %include R.i
-%include Ruby.i
+#if SWIGRUBY
+  %include Ruby.i
+#endif
 
 // Help SWIG handle std vectors
 namespace std
