@@ -82,11 +82,15 @@
 // Language Specific Sections
 %include CSharp.i
 %include Java.i
+#if SWIGTCL
 %include Tcl.i
+#endif
 #if SWIGPYTHON
 %include Python.i
 #endif
+#if SWIGLUA
 %include Lua.i
+#endif
 %include R.i
 #if SWIGRUBY
   %include Ruby.i

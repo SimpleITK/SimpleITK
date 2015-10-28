@@ -24,4 +24,3 @@
 %ignore itk::simple::GetPixelIDValueAsString( PixelIDValueType type );
 
 #endif
-

@@ -50,27 +50,7 @@ add_custom_target( dist cmake -E echo "Finished generating wrapped packages for 
 # lua SWIG configuration
 #
 if ( WRAP_LUA )
-
-  if (CMAKE_VERSION VERSION_LESS "3")
-    find_package ( Lua51 REQUIRED )
-  else()
-    find_package ( Lua REQUIRED )
-  endif()
-  include_directories ( ${LUA_INCLUDE_DIR} )
-
-  # Run swig
-  set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS})
-  set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
-  set(SWIG_MODULE_SimpleITKLua_EXTRA_DEPS ${SWIG_EXTRA_DEPS}
-    ${CMAKE_CURRENT_SOURCE_DIR}/Lua.i )
-  SWIG_module_initialize ( SimpleITKLua lua )
-  SWIG_add_source_to_module ( SimpleITKLua swig_generated_source SimpleITK.i ${SWIG_EXTRA_DEPS} )
-  set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKLUA_wrap.cxx PROPERTIES COMPILE_FLAGS "-w" )
-
-  add_executable ( SimpleITKLua SimpleITKLuaMain.cxx SimpleITKLUA_wrap.cxx )
-  target_link_libraries ( SimpleITKLua ${SimpleITK_LIBRARIES} ${LUA_LIBRARIES} ${LUA_ADDITIONAL_LIBRARIES} )
-  sitk_strip_target( SimpleITKLua )
-
+  add_subdirectory ( Lua )
 endif()
 
 #
@@ -235,27 +215,7 @@ endif()
 # TCL SWIG configuration
 #
 if ( WRAP_TCL )
-  find_package ( TCL REQUIRED )
-  include_directories ( ${TCL_INCLUDE_PATH} )
-
-  # Run swig
-  set(CMAKE_SWIG_FLAGS "-nosafe" ${CMAKE_SWIG_GLOBAL_FLAGS})
-  set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
-  set(SWIG_MODULE_SimpleITKTCL_EXTRA_DEPS ${SWIG_EXTRA_DEPS} ${CMAKE_CURRENT_SOURCE_DIR}/Tcl.i )
-  set(SWIG_MODULE_SimpleITKTcl_EXTRA_DEPS  ${SWIG_MODULE_SimpleITKTCL_EXTRA_DEPS})
-#  SWIG_add_module ( SimpleITKTcl tcl SimpleITK.i SimpleITKTCL_wrap.cxx )
-#  SWIG_link_libraries ( SimpleITKTcl ${SimpleITK_LIBRARIES} ${TCL_LIBRARY})
-#  set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKTCL_wrap.cxx  PROPERTIES COMPILE_FLAGS "-w")
-#  add_executable ( SimpleITKTclsh SimpleITKTCL_wrap.cxx )
-#  target_link_libraries ( SimpleITKTclsh ${SimpleITK_LIBRARIES} ${TCL_LIBRARY})
-
-  SWIG_module_initialize ( SimpleITKTCL tcl )
-  SWIG_add_source_to_module ( SimpleITKTCL swig_generated_source SimpleITK.i ${SWIG_EXTRA_DEPS} )
-  set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKTCL_wrap.cxx PROPERTIES COMPILE_FLAGS "-w" )
-  add_executable ( SimpleITKTclsh SimpleITKTCL_wrap.cxx )
-  target_link_libraries ( SimpleITKTclsh ${SimpleITK_LIBRARIES} ${TCL_LIBRARY} )
-  sitk_strip_target( SimpleITKTclsh )
-
+    add_subdirectory ( Tcl )
 endif()
 
 #
