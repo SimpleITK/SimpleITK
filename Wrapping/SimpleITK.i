@@ -83,7 +83,9 @@
 #if SWIGCSHARP
 %include CSharp.i
 #endif
+#if SWIGJAVA
 %include Java.i
+#endif
 #if SWIGTCL
 %include Tcl.i
 #endif
