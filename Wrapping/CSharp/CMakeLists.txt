@@ -3,7 +3,7 @@
 find_package( CSharp REQUIRED )
 include( ${CSHARP_USE_FILE} )
 
-set_source_files_properties ( ../SimpleITK.i PROPERTIES CPLUSPLUS ON )
+set_source_files_properties ( SimpleITK.i PROPERTIES CPLUSPLUS ON )
 
 # CSharp version requirements: http://msdn.microsoft.com/en-us/library/system.reflection.assemblyversionattribute.aspx
 # major.minor[.build[.revision]] where all components are 16-bit unsigned integers
@@ -45,11 +45,11 @@ if(DEFINED SimpleITK_VERSION_POST)
   else (WIN32 )
     set(CMAKE_SWIG_FLAGS -dllimport \"SimpleITKCSharpNative\")
   endif ( UNIX )
-  set(CMAKE_SWIG_FLAGS  -I${CMAKE_CURRENT_SOURCE_DIR} -namespace \"itk.simple\" ${CMAKE_SWIG_GLOBAL_FLAGS} ${CMAKE_SWIG_FLAGS})
+  set(CMAKE_SWIG_FLAGS -I${CMAKE_CURRENT_SOURCE_DIR} -namespace \"itk.simple\" ${CMAKE_SWIG_GLOBAL_FLAGS} ${CMAKE_SWIG_FLAGS})
   set(SWIG_MODULE_SimpleITKCSharpNative_EXTRA_DEPS ${SWIG_EXTRA_DEPS}
     ${CMAKE_CURRENT_SOURCE_DIR}/CSharp.i
     ${CMAKE_CURRENT_SOURCE_DIR}/CSharpTypemapHelper.i )
-  swig_add_module(SimpleITKCSharpNative csharp ../SimpleITK.i)
+  swig_add_module(SimpleITKCSharpNative csharp SimpleITK.i)
   swig_link_libraries(SimpleITKCSharpNative ${SimpleITK_LIBRARIES})
   set_target_properties(${SWIG_MODULE_SimpleITKCSharpNative_TARGET_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CSHARP_BINARY_DIRECTORY})
   if ( UNIX )

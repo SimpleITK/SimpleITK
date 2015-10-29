@@ -8,10 +8,10 @@ option ( SimpleITK_PYTHON_WHEEL "Add building of python wheels to the dist targe
 mark_as_advanced( SimpleITK_PYTHON_WHEEL )
 
 
-set_source_files_properties ( ../SimpleITK.i PROPERTIES CPLUSPLUS ON )
+set_source_files_properties ( SimpleITK.i PROPERTIES CPLUSPLUS ON )
 
 # Run swig
-set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS} -I${CMAKE_CURRENT_SOURCE_DIR} -features autodoc=1 -keyword )
+set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS} -features autodoc=1 -keyword )
 if( SimpleITK_PYTHON_THREADS )
   set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_FLAGS} -threads)
 endif()
@@ -19,10 +19,10 @@ set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
 set(SWIG_MODULE_SimpleITK_EXTRA_DEPS ${SWIG_EXTRA_DEPS}
   ${CMAKE_CURRENT_SOURCE_DIR}/Python.i )
 SWIG_add_module ( SimpleITK python
-  ../SimpleITK.i
+  SimpleITK.i
   sitkPyCommand.cxx )
 SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} ${PYTHON_LIBRARIES})
-set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/SimpleITKPYTHON_wrap.cxx PROPERTIES COMPILE_FLAGS "-w")
+set_source_files_properties(${swig_generated_file_fullname} PROPERTIES COMPILE_FLAGS "-w")
 sitk_strip_target( ${SWIG_MODULE_SimpleITK_TARGET_NAME} )
 
 set(SWIG_MODULE_SimpleITKPython_TARGET_NAME "${SWIG_MODULE_SimpleITK_TARGET_NAME}")

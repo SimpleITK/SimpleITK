@@ -2,7 +2,7 @@ find_package ( Java REQUIRED )
 find_package ( JNI REQUIRED )
 include_directories ( ${JAVA_INCLUDE_PATH} ${JNI_INCLUDE_DIRS} )
 
-set_source_files_properties ( ../SimpleITK.i PROPERTIES CPLUSPLUS ON )
+set_source_files_properties ( SimpleITK.i PROPERTIES CPLUSPLUS ON )
 
 FIND_PROGRAM(Java_JAVADOC_EXECUTABLE
   NAMES javadoc
@@ -20,7 +20,7 @@ file(MAKE_DIRECTORY ${JAVA_BINARY_DIRECTORY})
 set(CMAKE_SWIG_OUTDIR ${JAVA_SOURCE_DIRECTORY}/org/itk/simple/)
 set(CMAKE_SWIG_FLAGS -I${CMAKE_CURRENT_SOURCE_DIR} -package "org.itk.simple" ${CMAKE_SWIG_GLOBAL_FLAGS})
 set(SWIG_MODULE_SimpleITKJava_EXTRA_DEPS ${SWIG_EXTRA_DEPS} ${CMAKE_CURRENT_SOURCE_DIR}/Java.i ${CMAKE_CURRENT_SOURCE_DIR}/JavaDoc.i)
-SWIG_add_module ( SimpleITKJava java ../SimpleITK.i )
+SWIG_add_module ( SimpleITKJava java SimpleITK.i )
 SWIG_link_libraries(SimpleITKJava ${SimpleITK_LIBRARIES})
 set_source_files_properties(${swig_generated_file_fullname} PROPERTIES COMPILE_FLAGS "-w")
 sitk_strip_target( ${SWIG_MODULE_SimpleITKJava_TARGET_NAME} )
