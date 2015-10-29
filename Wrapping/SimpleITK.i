@@ -95,7 +95,9 @@
 #if SWIGLUA
 %include Lua.i
 #endif
+#if SWIGR
 %include R.i
+#endif
 #if SWIGRUBY
   %include Ruby.i
 #endif

@@ -219,7 +219,7 @@ function(sitk_add_r_test name)
     )
 
   set_property(TEST R.${name}
-    PROPERTY ENVIRONMENT R_LIBS=${SimpleITK_BINARY_DIR}/Wrapping/RLib/
+    PROPERTY ENVIRONMENT R_LIBS=${SimpleITK_BINARY_DIR}/Wrapping/R/R_libs/
     )
 endfunction()
 

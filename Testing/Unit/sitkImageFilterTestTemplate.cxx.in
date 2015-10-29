@@ -537,7 +537,7 @@ TEST_F(R,${name}) {
 
   // Set-up the R enviroment to include the SimpleITK R library in the
   // build directory.
-  SetEnvironment ( "R_LIBS", dataFinder.GetBuildDirectory()+"/Wrapping/RLib" );
+  SetEnvironment ( "R_LIBS", dataFinder.GetBuildDirectory()+"/Wrapping/R/R_libs" );
 
 
   std::string Script = dataFinder.GetBuildDirectory() + "/Testing/Unit/RTests/${name}Test.R";
