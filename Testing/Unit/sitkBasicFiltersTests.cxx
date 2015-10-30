@@ -49,6 +49,7 @@
 #include <sitkBSplineTransformInitializerFilter.h>
 #include <sitkCenteredTransformInitializerFilter.h>
 #include <sitkCenteredVersorTransformInitializerFilter.h>
+#include <sitkLandmarkBasedTransformInitializerFilter.h>
 #include <sitkAdditionalProcedures.h>
 #include <sitkCommand.h>
 
@@ -75,6 +76,11 @@
 
 #include "sitkVersorRigid3DTransform.h"
 #include "sitkSimilarity3DTransform.h"
+#include "sitkAffineTransform.h"
+#include "sitkEuler2DTransform.h"
+#include "sitkSimilarity2DTransform.h"
+#include "sitkVersorTransform.h"
+#include "sitkScaleVersor3DTransform.h"
 
 TEST(BasicFilter,FastSymmetricForcesDemonsRegistrationFilter_ENUMCHECK) {
   typedef itk::Image<float,3> ImageType;
@@ -620,6 +626,52 @@ TEST(BasicFilters,CenteredVersorTransformInitializer) {
 
 }
 
+
+
+TEST(BasicFilters,LandmarkBasedTransformInitializer) {
+  namespace sitk = itk::simple;
+
+  sitk::LandmarkBasedTransformInitializerFilter filter;
+
+
+  const double points2d[] = { 0.0,0.0, 1.0,1.0, 1.0,0.0, 1.1,1.0,  2.34, 10.98};
+
+  std::vector<double> fixedPoints(&points2d[0], &points2d[10]);
+  std::vector<double> movingPoints(&points2d[0], &points2d[10]);
+
+
+  sitk::Transform out;
+
+  filter.SetFixedLandmarks( fixedPoints );
+  filter.SetMovingLandmarks( movingPoints );
+
+
+  EXPECT_EQ ( "LandmarkBasedTransformInitializerFilter", filter.GetName() );
+
+  out = filter.Execute( sitk::Euler2DTransform() );
+  EXPECT_VECTOR_DOUBLE_NEAR(v3(0.0, 0.0, 0.0), out.GetParameters(), 1e-25);
+
+  out = filter.Execute( sitk::Similarity2DTransform() );
+  EXPECT_VECTOR_DOUBLE_NEAR(v4(1.0, 0.0, 0.0, 0.0), out.GetParameters(), 1e-25);
+
+
+  EXPECT_ANY_THROW( filter.Execute( sitk::VersorTransform() ) );
+
+  out = filter.Execute( sitk::VersorRigid3DTransform() );
+  EXPECT_VECTOR_DOUBLE_NEAR(v6(0.0, 0.0, 0.0, 0.0, 0.0, 0.0), out.GetParameters(), 1e-25);
+
+  out = filter.Execute( sitk::ScaleVersor3DTransform() );
+  EXPECT_VECTOR_DOUBLE_NEAR(v9(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0), out.GetParameters(), 1e-25);
+
+
+  out = filter.Execute( sitk::AffineTransform(2) );
+  EXPECT_VECTOR_DOUBLE_NEAR(v6(1.0, 0.0, 0.0, 1.0, 0.0, 0.0), out.GetParameters(), 1e-15);
+
+
+
+  out = filter.Execute( sitk::AffineTransform(3) );
+
+}
 
 
 TEST(BasicFilters,Cast_Commands) {
