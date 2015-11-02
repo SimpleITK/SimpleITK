@@ -21,7 +21,7 @@ endif()
 
 message(STATUS "Installing Python Package: SimpleITK")
 execute_process(
-  COMMAND "@VIRTUAL_PYTHON_EXECUTABLE@" "@CMAKE_CURRENT_BINARY_DIR@/PythonPackage/setup.py" install
+  COMMAND "@VIRTUAL_PYTHON_EXECUTABLE@" "@CMAKE_CURRENT_BINARY_DIR@/Packaging/setup.py" install
   RESULT_VARIABLE failed
   ERROR_VARIABLE error
   )
@@ -43,7 +43,7 @@ if not(sys.modules.get(\"wheel\")):
 
   execute_process(
     COMMAND @VIRTUAL_PYTHON_EXECUTABLE@ -c "${install_wheel_script}"
-    WORKING_DIRECTORY "PythonPackage"
+    WORKING_DIRECTORY "Packaging"
     ERROR_VARIABLE error
     RESULT_VARIABLE failed
     )
