@@ -80,13 +80,27 @@
 %}
 
 // Language Specific Sections
+#if SWIGCSHARP
 %include CSharp.i
+#endif
+#if SWIGJAVA
 %include Java.i
+#endif
+#if SWIGTCL
 %include Tcl.i
+#endif
+#if SWIGPYTHON
 %include Python.i
+#endif
+#if SWIGLUA
 %include Lua.i
+#endif
+#if SWIGR
 %include R.i
-%include Ruby.i
+#endif
+#if SWIGRUBY
+  %include Ruby.i
+#endif
 
 // Help SWIG handle std vectors
 namespace std

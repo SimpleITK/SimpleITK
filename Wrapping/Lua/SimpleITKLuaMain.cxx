@@ -427,5 +427,3 @@ int main (int argc, char **argv) {
 #endif
   return (status || s.status) ? EXIT_FAILURE : EXIT_SUCCESS;
 }
-
-

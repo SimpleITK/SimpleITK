@@ -537,7 +537,7 @@ TEST_F(R,${name}) {
 
   // Set-up the R enviroment to include the SimpleITK R library in the
   // build directory.
-  SetEnvironment ( "R_LIBS", dataFinder.GetBuildDirectory()+"/Wrapping/RLib" );
+  SetEnvironment ( "R_LIBS", dataFinder.GetBuildDirectory()+"/Wrapping/R/R_libs" );
 
 
   std::string Script = dataFinder.GetBuildDirectory() + "/Testing/Unit/RTests/${name}Test.R";
@@ -610,7 +610,7 @@ TEST_F(Java,${name}) {
     end)
 
   std::string Classpath = dataFinder.GetBuildDirectory() + "/Testing/Unit/JavaTests"
-    + dataFinder.GetPathSeparator() + dataFinder.GetBuildDirectory() + "/Wrapping/simpleitk-" + itk::simple::Version::VersionString() + ".jar";
+    + dataFinder.GetPathSeparator() + dataFinder.GetBuildDirectory() + "/Wrapping/Java/simpleitk-" + itk::simple::Version::VersionString() + ".jar";
   std::string JavaPath = dataFinder.GetLibraryDirectory();
   std::string Script = "org.itk.simple.testing.${name}Test";
   $(foreach tests
