@@ -551,6 +551,8 @@ set(CPACK_PACKAGE_VERSION_PATCH "${SimpleITK_Patch}")
 
 include( CPack )
 
-if(COMMAND ExternalData_Add_Target )
-  ExternalData_Add_Target( SimpleITKData )
+if(BUILD_TESTING)
+  if(COMMAND ExternalData_Add_Target )
+    ExternalData_Add_Target( SimpleITKData )
+  endif()
 endif()
