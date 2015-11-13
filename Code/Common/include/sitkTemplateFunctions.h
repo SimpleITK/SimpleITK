@@ -60,6 +60,24 @@ SITKCommon_HIDDEN std::ostream & operator<<( std::ostream & os, const std::vecto
   return os << v.back() << " ]";
 }
 
+template< typename TITKPointVector, typename TType>
+TITKPointVector SITKCommon_HIDDEN sitkSTLVectorToITKPointVector( const std::vector< TType > & in )
+{
+
+  typedef TITKPointVector itkPointVectorType;
+  itkPointVectorType out;
+
+  unsigned int Dimension = itkPointVectorType::value_type::GetPointDimension();
+
+  for( unsigned int i = 0; i <= in.size()- Dimension; i += Dimension )
+    {
+    typename itkPointVectorType::value_type pt(&in[i]);
+    out.push_back(pt);
+    }
+  return out;
+
+}
+
 /** \brief Copy the elements of an std::vector into an ITK fixed width vector
  *
  * If there are more elements in paramter "in" than the templated ITK
