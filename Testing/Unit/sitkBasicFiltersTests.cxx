@@ -665,12 +665,30 @@ TEST(BasicFilters,LandmarkBasedTransformInitializer) {
 
 
   out = filter.Execute( sitk::AffineTransform(2) );
-  EXPECT_VECTOR_DOUBLE_NEAR(v6(1.0, 0.0, 0.0, 1.0, 0.0, 0.0), out.GetParameters(), 1e-15);
+  EXPECT_VECTOR_DOUBLE_NEAR(v6(1.0, 0.0, 0.0, 1.0, 0.0, 0.0), out.GetParameters(), 1e-8);
 
+  const double fixedImagePoints3d[] = {127.53915086334257, 102.12639903012848, 44.0,
+                                       198.641578144495, 101.59971438360141, 44.0,
+                                       156.82957119036902, 215.70110997158648, 48.0,
+                                       176.63477775277258, 144.97363079485118, 64.0};
 
+  const double movingImagePoints3d[] = {181.40169895047495, 242.55513079230616, 24.0,
+                                        112.90638157274341, 246.938831104481, 24.0,
+                                        141.07588005861425, 134.62809649982117, 28.0,
+                                        126.66162032855607, 208.7334122120106, 44.0};
+  fixedPoints.clear();
+  fixedPoints.insert(fixedPoints.begin(), &fixedImagePoints3d[0], &fixedImagePoints3d[12]);
+  movingPoints.clear();
+  movingPoints.insert(movingPoints.begin(), &movingImagePoints3d[0], &movingImagePoints3d[12]);
+  filter.SetFixedLandmarks( fixedPoints );
+  filter.SetMovingLandmarks( movingPoints );
 
   out = filter.Execute( sitk::AffineTransform(3) );
 
+  EXPECT_VECTOR_DOUBLE_NEAR(v12(-9.64081213e-01, -1.01003445e-01, -1.54009453e-01,
+                                5.44421946e-02, -9.73501195e-01, 2.60861955e-01,
+                                -2.64945988e-14, -3.95920761e-14, 1.00000000e+00,
+                                321.45133233, 323.55386506, -20.0), out.GetParameters(), 1e-8);
 }
 
 
