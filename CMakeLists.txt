@@ -9,6 +9,9 @@ project ( SimpleITK )
 cmake_policy( VERSION 2.8.1 )
 
 
+# NEW CMP0042
+set( CMAKE_MACOSX_RPATH 1)
+
 # Include extra CMake files
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake")
 
