@@ -173,19 +173,11 @@ Transform LandmarkBasedTransformInitializerFilter::ExecuteInternal ( const Trans
 
   typedef typename FilterType::LandmarkPointContainer PointContainer;
   PointContainer fixedITKPoints;
-  for( unsigned int i = 0; i < m_FixedLandmarks.size()- Dimension - 1; i += Dimension)
-    {
-    typename FilterType::LandmarkPointType pt(&m_FixedLandmarks[i]);
-    fixedITKPoints.push_back(pt);
-    }
+  fixedITKPoints = sitkSTLVectorToITKPointVector<PointContainer,double>(m_FixedLandmarks);
   filter->SetFixedLandmarks(fixedITKPoints);
 
   PointContainer movingITKPoints;
-  for( unsigned int i = 0; i < m_MovingLandmarks.size()- Dimension - 1; i += Dimension)
-    {
-    typename FilterType::LandmarkPointType pt(&m_MovingLandmarks[i]);
-    movingITKPoints.push_back(pt);
-    }
+  movingITKPoints = sitkSTLVectorToITKPointVector<PointContainer,double>(m_MovingLandmarks);
   filter->SetMovingLandmarks(movingITKPoints);
 
   filter->SetLandmarkWeight ( this->m_LandmarkWeight );
