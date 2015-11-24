@@ -62,6 +62,43 @@
                       'Image_SetPixelAsFloat' = RsitkFloat64()
                       ))
 
+  createPixLookup()
+}
+
+createPixLookup <- function( where = topenv(parent.frame()))
+{
+    m <- get(".__E___itk__simple__PixelIDValueEnum")
+    # get rid of unknown type - can't access anyway. There will be errors if
+    # it happens.
+    # Also need to map Float32 to Float and Float64 to Double
+    m <- m[m>=0]
+    n <- names(m)
+    # Turn the names into function names
+    ff <- gsub("^sitk(.+)", "Image_GetPixelAs\\1", n)
+    ff <- gsub("AsFloat32$", "AsFloat", ff)
+    ff <- gsub("AsFloat64$", "AsDouble", ff)
+
+    sitkPixelAccessMap <-  mget(ff, envir=where,
+                                ifnotfound=rep(NA,length(ff)))
+    names(sitkPixelAccessMap) <- n
+    assign("sitkPixelAccessMap", sitkPixelAccessMap, envir=where)
+}
+
+ImportPixVec <- function(VP)
+{
+    ## some pixel vectors aren't automatically converted to
+    ## R vectors, so we'll do it the long way to avoid having to
+    ## write new swig fragments dealing with
+
+    ## some pixel vectors work as expected - return them
+    if (is.numeric(VP)) return(VP)
+
+    l <- VP$'__len__'()
+    res <- rep(NA, l)
+    for (idx in 1:l) {
+        res[idx] <- VP$'__getitem__'(idx-1)
+    }
+    return(res)
 }
 
                                         # experimental bracket operator for images
@@ -104,12 +141,11 @@ setMethod('[', "_p_itk__simple__Image",
             k <- k - 1
             if ((length(i) == 1) & (length(j) == 1) & (length(k) == 1) ) {
               ## return a single point
-              pixtype <- x$GetPixelIDValue()
-              afName <- enumFromInteger(pixtype, "_itk__simple__PixelGetEnum")
-              aF <- get(afName)
+              pixtype <- x$GetPixelID()
+              aF <- sitkPixelAccessMap[[pixtype]]
               if (!is.null(aF)) {
                 ## need to check whether we are using R or C indexing.
-                return(aF(x, c(i, j,k)))
+                return(ImportPixVec(aF(x, c(i, j,k))))
               }
             } else {
               ## construct and return an image
@@ -121,13 +157,26 @@ setMethod('[', "_p_itk__simple__Image",
           }
 
           )
+setMethod('[[', "_p_itk__simple__Image",
+          function(x, i, j, ...) {
+              return(VectorIndexSelectionCast(x, i-1)) 
+          }
+          )
 
 setMethod('as.array', "_p_itk__simple__Image",
           function(x, drop=TRUE) {
             sz <- x$GetSize()
+            components <- x$GetNumberOfComponentsPerPixel()
+            if (components > 1) sz <- c(components, sz)
             if (.hasSlot(x, "ref")) x = slot(x,"ref")
             ans = .Call("R_swig_ImAsArray", x, FALSE, PACKAGE = "SimpleITK")
             dim(ans) <- sz
+            if (components > 1) {
+                ## vector images have planes stored next to each other.
+                ## place in separate planes for sensible display
+                perm <- c(2:length(sz), 1)
+                ans <- aperm(ans, perm)
+            }
             if (drop)
               return(drop(ans))
             return(ans)
