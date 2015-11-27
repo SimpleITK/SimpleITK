@@ -549,12 +549,19 @@ endif ( WRAP_JAVA )
 sitk_add_r_test( Example.SimpleGaussian
   "--file=${SimpleITKExamples_SOURCE_DIR}/SimpleGaussian.R"
   --compare
-    "${TEST_HARNESS_TEMP_DIRECTORY}/Python.SimpleGaussian.nrrd"
+    "${TEST_HARNESS_TEMP_DIRECTORY}/R.SimpleGaussian.nrrd"
     DATA{${SimpleITK_DATA_ROOT}/Baseline/Example_SimpleGaussian_2.0.nrrd}
   --args
   DATA{${SimpleITK_DATA_ROOT}/Input/RA-Short.nrrd}
   "2.0"
-  "${TEST_HARNESS_TEMP_DIRECTORY}/Python.SimpleGaussian.nrrd"
+  "${TEST_HARNESS_TEMP_DIRECTORY}/R.SimpleGaussian.nrrd"
+  )
+sitk_add_r_test( Example.FilterProgressReporting
+  "--file=${SimpleITKExamples_SOURCE_DIR}/FilterProgressReporting.R"
+  --args
+    DATA{${SimpleITK_DATA_ROOT}/Input/RA-Short.nrrd}
+    2.0
+    "${TEST_HARNESS_TEMP_DIRECTORY}/R.FilterProgressReporting.nrrd"
   )
 
 sitk_add_r_test( Example.ImageRegistrationMethod1
