@@ -76,7 +76,7 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
       /**
        * Set the Fixed landmark point containers
        */
-      Self& SetFixedLandmarks ( std::vector<double> FixedLandmarks ) { this->m_FixedLandmarks = FixedLandmarks; return *this; }
+      Self& SetFixedLandmarks ( const std::vector<double> & FixedLandmarks ) { this->m_FixedLandmarks = FixedLandmarks; return *this; }
 
       /**
        *
@@ -86,7 +86,7 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
       /**
        * Set the Moving landmark point containers
        */
-      Self& SetMovingLandmarks ( std::vector<double> MovingLandmarks ) { this->m_MovingLandmarks = MovingLandmarks; return *this; }
+      Self& SetMovingLandmarks ( const std::vector<double> & MovingLandmarks ) { this->m_MovingLandmarks = MovingLandmarks; return *this; }
 
       /**
        * Get the shrink factors.
@@ -96,7 +96,7 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
       /**
        * Set the landmark weight point containers Weight includes diagonal elements of weight matrix
        */
-      Self& SetLandmarkWeight ( std::vector<double> LandmarkWeight ) { this->m_LandmarkWeight = LandmarkWeight; return *this; }
+      Self& SetLandmarkWeight ( const std::vector<double> & LandmarkWeight ) { this->m_LandmarkWeight = LandmarkWeight; return *this; }
 
       /**
        *
@@ -106,19 +106,19 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
       /**
        * Set the reference image to define the parametric domain for the BSpline transform
        */
-      Self& SetReferenceImage ( Image ReferenceImage ) { this->m_ReferenceImage = ReferenceImage; return *this; }
+      Self& SetReferenceImage ( const Image & ReferenceImage ) { this->m_ReferenceImage = ReferenceImage; return *this; }
 
       /**
        */
         Image GetReferenceImage() const { return this->m_ReferenceImage; }
 
       /**
-       * Set/Get the number of iterations
+       * Set/Get the number of control points
        */
       Self& SetBSplineNumberOfControlPoints ( unsigned int BSplineNumberOfControlPoints ) { this->m_BSplineNumberOfControlPoints = BSplineNumberOfControlPoints; return *this; }
 
       /**
-       * Set/Get the number of iterations
+       * Set/Get the number of control points
        */
         unsigned int GetBSplineNumberOfControlPoints() const { return this->m_BSplineNumberOfControlPoints; }
       /** Name of this class */
@@ -133,7 +133,7 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
 
 
       /** Execute the filter on the input image with the given parameters */
-      Transform Execute ( const Transform & transform, std::vector<double> fixedLandmarks, std::vector<double> movingLandmarks, std::vector<double> landmarkWeight, Image referenceImage, unsigned int numberOfControlPoints );
+      Transform Execute ( const Transform & transform, const std::vector<double> & fixedLandmarks, const std::vector<double> & movingLandmarks, const std::vector<double> & landmarkWeight, const Image & referenceImage, unsigned int numberOfControlPoints );
 
 
     private:

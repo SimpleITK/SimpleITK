@@ -689,6 +689,56 @@ TEST(BasicFilters,LandmarkBasedTransformInitializer) {
                                 5.44421946e-02, -9.73501195e-01, 2.60861955e-01,
                                 -2.64945988e-14, -3.95920761e-14, 1.00000000e+00,
                                 321.45133233, 323.55386506, -20.0), out.GetParameters(), 1e-8);
+
+  const double pointsBSplineTest2D[] = {0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 1.1, 1.0, 2.34, 10.98};
+  fixedPoints.clear();
+  fixedPoints.insert(fixedPoints.begin(), &pointsBSplineTest2D[0], &pointsBSplineTest2D[10]);
+  movingPoints.clear();
+  movingPoints.insert(movingPoints.begin(), &pointsBSplineTest2D[0], &pointsBSplineTest2D[10]);
+  filter.SetFixedLandmarks( fixedPoints );
+  filter.SetMovingLandmarks( movingPoints );
+  filter.SetBSplineNumberOfControlPoints( 5 );
+
+  // Image isn't set so we expect an exception
+  EXPECT_ANY_THROW( filter.Execute( sitk::BSplineTransform( 2 ) ) );
+
+  std::vector< double > spacing;
+  spacing.push_back(0.5);
+  spacing.push_back(1);
+  std::vector< double > origin;
+  origin.push_back(-5.0);
+  origin.push_back(-5.0);
+  sitk::Image referenceImage( 25, 50, sitk::sitkFloat32 );
+  referenceImage.SetSpacing( spacing );
+  referenceImage.SetOrigin( origin );
+  filter.SetReferenceImage( referenceImage );
+
+  // Expecting the identity transform (BSpline parameters are all zero)
+  out = filter.Execute(sitk::BSplineTransform(2));
+  EXPECT_VECTOR_DOUBLE_NEAR(std::vector<double>(out.GetParameters().size(), 0.0), out.GetParameters(), 1e-25);
+
+  // Translate the moving points in the x direction
+  double dxSize = 3.5;
+  for( unsigned int i = 0; i<movingPoints.size(); i+=2 )
+    {
+    movingPoints[i]+=dxSize;
+    }
+  filter.SetMovingLandmarks( movingPoints );
+
+  out = filter.Execute( sitk::BSplineTransform(2) );
+
+  // Transform the fixed points using the estimated BSpline transform
+  // and compare the to moving points.
+  for( unsigned int i = 0; i<fixedPoints.size(); i+=2 )
+    {
+    EXPECT_VECTOR_DOUBLE_NEAR( out.TransformPoint(v2(fixedPoints[i], fixedPoints[i+1])), v2(movingPoints[i], movingPoints[i+1]), 0.1 );
+    }
+
+  // The ITK filter only supports BSplines of order 3. Unfortunately,
+  // because the transform is templated we don't have a way for
+  // obtaining the spline order so we just check that ITK throws the
+  // expected exception when we use a spline order of 2.
+  EXPECT_ANY_THROW( filter.Execute( sitk::BSplineTransform( 2, 2 ) ) );
 }
 
 
