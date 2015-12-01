@@ -58,9 +58,6 @@ LandmarkBasedTransformInitializerFilter::LandmarkBasedTransformInitializerFilter
 
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
-
-
-  
 }
 
 //
@@ -103,7 +100,7 @@ std::string LandmarkBasedTransformInitializerFilter::ToString() const
 //
 // Execute
 //
-Transform LandmarkBasedTransformInitializerFilter::Execute ( const Transform & transform, std::vector<double> fixedLandmarks, std::vector<double> movingLandmarks, std::vector<double> landmarkWeight, Image referenceImage, unsigned int numberOfControlPoints )
+Transform LandmarkBasedTransformInitializerFilter::Execute ( const Transform & transform, const std::vector<double> & fixedLandmarks, const std::vector<double> & movingLandmarks, const std::vector<double> & landmarkWeight, const Image & referenceImage, unsigned int numberOfControlPoints )
 {
   this->SetFixedLandmarks ( fixedLandmarks );
   this->SetMovingLandmarks ( movingLandmarks );
@@ -119,6 +116,8 @@ Transform LandmarkBasedTransformInitializerFilter::Execute ( const Transform & t
 {
   unsigned int dimension = transform.GetDimension();
 
+  // The dimension of the reference image which the user explicitly
+  // set (GetSize()!=[0...0]), and the dimension of the transform do not match
   if ( this->m_ReferenceImage.GetSize() != std::vector<unsigned int>(this->m_ReferenceImage.GetDimension(), 0u) &&
        dimension != this->m_ReferenceImage.GetDimension() )
     {
@@ -163,6 +162,7 @@ Transform LandmarkBasedTransformInitializerFilter::ExecuteInternal ( const Trans
 
 
   const typename FilterType::TransformType *itkTx = dynamic_cast<const typename FilterType::TransformType *>(copyTransform.GetITKBase());
+
   if ( !itkTx )
     {
     sitkExceptionMacro( "Unexpected error converting transform! Possible miss matching dimensions!" );
@@ -182,15 +182,18 @@ Transform LandmarkBasedTransformInitializerFilter::ExecuteInternal ( const Trans
 
   filter->SetLandmarkWeight ( this->m_LandmarkWeight );
 
-  if ( this->m_ReferenceImage.GetSize() != std::vector<unsigned int>(this->m_ReferenceImage.GetDimension(), 0u) )
+  // BSpline specific setup
+  if( itkTx->GetTransformCategory() == itkTx->BSpline )
     {
+    if ( this->m_ReferenceImage.GetSize() == std::vector<unsigned int>(this->m_ReferenceImage.GetDimension(), 0u) )
+      {
+      sitkExceptionMacro( "Image not set for BSplineTransform initializer." );
+      }
     // Get the pointer to the ITK image contained in image1
     typename InputImageType::ConstPointer referenceImage = this->CastImageToITK<InputImageType>( this->m_ReferenceImage );
-    ////filter->SetReferenceImage ( referenceImage.GetPointer() );
+    filter->SetReferenceImage ( referenceImage.GetPointer() );
+    filter->SetBSplineNumberOfControlPoints ( this->m_BSplineNumberOfControlPoints );
     }
-
-  filter->SetBSplineNumberOfControlPoints ( this->m_BSplineNumberOfControlPoints );
-
 
   if (this->GetDebug())
     {
@@ -210,7 +213,7 @@ Transform LandmarkBasedTransformInitializerFilter::ExecuteInternal ( const Trans
 //
 // Function to run the Execute method of this filter
 //
-Transform LandmarkBasedTransformInitializer ( const Transform & transform, std::vector<double> fixedLandmarks, std::vector<double> movingLandmarks, std::vector<double> landmarkWeight, Image referenceImage, unsigned int numberOfControlPoints )
+Transform LandmarkBasedTransformInitializer ( const Transform & transform, const std::vector<double> & fixedLandmarks, const std::vector<double> & movingLandmarks, const std::vector<double> & landmarkWeight, Image referenceImage, unsigned int numberOfControlPoints )
 {
   LandmarkBasedTransformInitializerFilter filter;
   return filter.Execute ( transform, fixedLandmarks, movingLandmarks, landmarkWeight, referenceImage, numberOfControlPoints );
