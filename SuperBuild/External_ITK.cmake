@@ -32,7 +32,7 @@ VariableListToArgs( ITK_VARS  ep_itk_args )
 
 
 set(proj ITK)  ## Use ITK convention of calling it ITK
-set(ITK_REPOSITORY git://itk.org/ITK.git)
+set(ITK_REPOSITORY "${git_protocol}://itk.org/ITK.git")
 
 # NOTE: it is very important to update the ITK_DIR path with the ITK version
 set(ITK_TAG_COMMAND GIT_TAG v4.9.1 )
@@ -67,6 +67,7 @@ ExternalProject_Add(${proj}
   -DITK_LEGACY_REMOVE:BOOL=ON
   -DITK_BUILD_DEFAULT_MODULES:BOOL=ON
   -DModule_ITKReview:BOOL=ON
+  -DITK_USE_GIT_PROTOCOL:BOOL=${ITK_USE_GIT_PROTOCOL}
   -DITK_WRAP_float:BOOL=ON
   -DITK_WRAP_unsigned_char:BOOL=ON
   -DITK_WRAP_signed_short:BOOL=ON
