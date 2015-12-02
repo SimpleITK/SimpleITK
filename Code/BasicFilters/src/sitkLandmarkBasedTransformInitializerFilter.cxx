@@ -213,7 +213,7 @@ Transform LandmarkBasedTransformInitializerFilter::ExecuteInternal ( const Trans
 //
 // Function to run the Execute method of this filter
 //
-Transform LandmarkBasedTransformInitializer ( const Transform & transform, const std::vector<double> & fixedLandmarks, const std::vector<double> & movingLandmarks, const std::vector<double> & landmarkWeight, Image referenceImage, unsigned int numberOfControlPoints )
+Transform LandmarkBasedTransformInitializer ( const Transform & transform, const std::vector<double> & fixedLandmarks, const std::vector<double> & movingLandmarks, const std::vector<double> & landmarkWeight, const Image & referenceImage, unsigned int numberOfControlPoints )
 {
   LandmarkBasedTransformInitializerFilter filter;
   return filter.Execute ( transform, fixedLandmarks, movingLandmarks, landmarkWeight, referenceImage, numberOfControlPoints );

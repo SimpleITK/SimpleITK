@@ -170,7 +170,7 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
      *
      * \sa itk::simple::LandmarkBasedTransformInitializerFilter for the object oriented interface
      */
-     SITKBasicFilters_EXPORT Transform LandmarkBasedTransformInitializer ( const Transform & transform, std::vector<double> fixedLandmarks = std::vector<double>(), std::vector<double> movingLandmarks = std::vector<double>(), std::vector<double> landmarkWeight = std::vector<double>(), Image referenceImage = Image(), unsigned int numberOfControlPoints = 4u );
+     SITKBasicFilters_EXPORT Transform LandmarkBasedTransformInitializer ( const Transform & transform, const std::vector<double> & fixedLandmarks = std::vector<double>(), const std::vector<double> & movingLandmarks = std::vector<double>(), const std::vector<double> & landmarkWeight = std::vector<double>(), const Image & referenceImage = Image(), unsigned int numberOfControlPoints = 4u );
 
   }
 }
