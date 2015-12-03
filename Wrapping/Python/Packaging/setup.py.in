@@ -1,12 +1,11 @@
+import sys
 
-try:
-    from setuptools import setup
-except ImportError:
+if "setuptools" in sys.modules.keys():
+    from setuptools import setup, Distribution
+else:
     from distutils.core import setup
+    from distutils.dist import Distribution
 
-from distutils.core import Extension
-from distutils.util import get_platform
-from distutils.dist import Distribution
 import re
 
 doc_files = @SimpleITK_DOC_FILES_AS_LIST@
