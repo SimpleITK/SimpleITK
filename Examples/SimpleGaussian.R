@@ -25,20 +25,20 @@ library(SimpleITK)
 args <- commandArgs( TRUE )
 
 myreader <- ImageFileReader()
-myreader <- ImageFileReader_SetFileName( myreader, args[[1]] )
-myimage <- ImageFileReader_Execute( myreader )
+myreader$SetFileName(args[[1]] )
+myimage <- myreader$Execute()
 
-pixeltype <- Image_GetPixelID( myimage )
+pixeltype <- myimage$GetPixelID()
 
 myfilter <- SmoothingRecursiveGaussianImageFilter()
-myfilter <- SmoothingRecursiveGaussianImageFilter_SetSigma( myfilter, as.numeric(args[2]) )
-smoothedimage <- SmoothingRecursiveGaussianImageFilter_Execute( myfilter, myimage )
+myfilter$SetSigma(as.numeric(args[2]) )
+smoothedimage <- myfilter$Execute(myimage )
 
 mycaster <- CastImageFilter()
-mycaster <- CastImageFilter_SetOutputPixelType( mycaster, pixeltype )
-castedimage <- CastImageFilter_Execute( mycaster, smoothedimage )
+mycaster$SetOutputPixelType(pixeltype )
+castedimage <- mycaster$Execute(smoothedimage )
 
 mywriter <- ImageFileWriter()
-mywriter <- ImageFileWriter_SetFileName( mywriter, args[[3]] )
-mywriter <- ImageFileWriter_Execute( mywriter, castedimage )
+mywriter$SetFileName(args[[3]] )
+mywriter$Execute(castedimage )
 
