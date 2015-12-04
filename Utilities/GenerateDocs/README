@@ -1,0 +1,10 @@
+This directory contains scripts used to process and generate documentation for SimpleITK.
+
+Important end use scripts:
+        JSONDocUpdate.sh - Copies ITK Doxygen into SimpleITK JSON
+        SwigDocUpdate.sh - Copies SimpleITK Doxygen into Swig .i files
+
+Configuration:
+        The config_vars.sh file needs to be manually modified for the system and build configuration.
+
+These scripts are manually run to modify and create files in the source tree with the derived documentation.
