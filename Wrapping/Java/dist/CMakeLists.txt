@@ -5,9 +5,9 @@
 set(_files "")
 list( APPEND _files
   ${SimpleITK_DOC_FILES}
-  ${SimpleITK_BINARY_DIR}/Wrapping/${JAR_FILE}
-  ${SimpleITK_BINARY_DIR}/Wrapping/${JAVA_SOURCE_FILE}
-  ${SimpleITK_BINARY_DIR}/Wrapping/${JAVADOC_FILE}
+  ${SimpleITK_BINARY_DIR}/Wrapping/Java/${JAR_FILE}
+  ${SimpleITK_BINARY_DIR}/Wrapping/Java/${JAVA_SOURCE_FILE}
+  ${SimpleITK_BINARY_DIR}/Wrapping/Java/${JAVADOC_FILE}
   )
 
 if(NOT DEFINED SIMPLEITK_JAVA_ARCH)
