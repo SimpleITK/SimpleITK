@@ -2,6 +2,10 @@ find_package ( Java REQUIRED )
 find_package ( JNI REQUIRED )
 include_directories ( ${JAVA_INCLUDE_PATH} ${JNI_INCLUDE_DIRS} )
 
+set(JAR_FILE "simpleitk-${SimpleITK_VERSION}.jar")
+set(JAVADOC_FILE "simpleitk-javadoc-${SimpleITK_VERSION}.jar")
+set(JAVA_SOURCE_FILE "simpleitk-source-${SimpleITK_VERSION}.jar")
+
 set_source_files_properties ( SimpleITK.i PROPERTIES CPLUSPLUS ON )
 
 FIND_PROGRAM(Java_JAVADOC_EXECUTABLE

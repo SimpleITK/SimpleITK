@@ -161,13 +161,6 @@ set ( GENERATED_TEST_LIST "" CACHE INTERNAL "" )
 set ( GENERATED_FILTER_LIST "" CACHE INTERNAL "" )
 set ( GENERATED_TEST_SOURCE_LIST "" CACHE INTERNAL "" )
 
-
-
-set(JAR_FILE "simpleitk-${SimpleITK_VERSION}.jar")
-set(JAVADOC_FILE "simpleitk-javadoc-${SimpleITK_VERSION}.jar")
-set(JAVA_SOURCE_FILE "simpleitk-source-${SimpleITK_VERSION}.jar")
-
-
 # Create cached list of all template components
 file( GLOB template_components
       ${SimpleITK_SOURCE_DIR}/TemplateComponents/*.h.in
