@@ -17,6 +17,7 @@
 *=========================================================================*/
 #include <SimpleITK.h>
 #include <memory>
+#include <itksys/SystemTools.hxx>
 
 #include "sitkImageCompare.h"
 
@@ -78,6 +79,131 @@ ImageCompare::ImageCompare()
   mMessage = "";
 }
 
+float ImageCompare::testImages( const itk::simple::Image& testImage,
+                                const itk::simple::Image& baselineImage,
+                                bool reportErrors,
+                                const std::string &baselineImageFilename)
+{
+
+  const std::string OutputDir = dataFinder.GetOutputDirectory();
+
+  const std::string shortFilename = itksys::SystemTools::GetFilenameName( baselineImageFilename );
+
+    // verify they have the same size
+  if ( baselineImage.GetHeight() != testImage.GetHeight()
+       || baselineImage.GetWidth() != testImage.GetWidth()
+       || baselineImage.GetDepth() != testImage.GetDepth() )
+    {
+    mMessage = "ImageCompare: Image dimensions are different";
+    return -1;
+    }
+
+
+    // Compute image difference squared
+    sitk::Image diffSquared( 0, 0, itk::simple::sitkUInt8 );
+    try
+      {
+
+      if ( baselineImage.GetPixelID() == sitk::sitkComplexFloat32 ||
+           baselineImage.GetPixelID() == sitk::sitkComplexFloat64 )
+        {
+
+        const sitk::Image diff =  sitk::Subtract( testImage, baselineImage );
+        // for complex number we multiply the image by it's complex
+        // conjugate, this will produce only a real value result
+        const sitk::Image conj = sitk::RealAndImaginaryToComplex( sitk::ComplexToReal( diff ),
+                                                                  sitk::Multiply( sitk::ComplexToImaginary( diff ), -1.0 ) );
+        diffSquared = sitk::ComplexToReal( sitk::Multiply( diff, conj ) );
+        }
+      else if ( baselineImage.GetNumberOfComponentsPerPixel() > 1 )
+        {
+        const sitk::Image diff =  sitk::Subtract( sitk::Cast( testImage, sitk::sitkVectorFloat32 ), sitk::Cast( baselineImage, sitk::sitkVectorFloat32 ) );
+
+        // for vector image just do a sum of the components
+        diffSquared  = sitk::Pow( sitk::VectorIndexSelectionCast( diff, 0 ), 2.0 );
+        for ( unsigned int i = 1; i < diff.GetNumberOfComponentsPerPixel(); ++i )
+          {
+          const sitk::Image temp = sitk::Pow( sitk::VectorIndexSelectionCast( diff, i ), 2.0 );
+          diffSquared = sitk::Add( temp, diffSquared );
+          }
+
+        diffSquared = sitk::Divide( diffSquared, diff.GetNumberOfComponentsPerPixel() );
+        }
+      else
+        {
+        sitk::Image diff =  sitk::Subtract( sitk::Cast( testImage, sitk::sitkFloat32 ), sitk::Cast( baselineImage, sitk::sitkFloat32 ) );
+        diffSquared = sitk::Multiply( diff, diff );
+        }
+
+      }
+    catch ( std::exception& e )
+      {
+      mMessage = "ImageCompare: Failed to subtract image " + baselineImageFilename + " because: " + e.what();
+      return -1;
+      }
+
+
+
+    sitk::StatisticsImageFilter stats;
+    stats.Execute ( diffSquared );
+    const double rms = std::sqrt ( stats.GetMean() );
+
+    if ( !reportErrors )
+      {
+      // The measurement errors should be reported for both success and errors
+      // to facilitate setting tight tolerances of tests.
+      std::cout << "<DartMeasurement name=\"RMSeDifference " << shortFilename <<  "\" type=\"numeric/float\">" << rms << "</DartMeasurement>" << std::endl;
+      }
+    else
+      {
+      std::ostringstream msg;
+      msg << "ImageCompare: image Root Mean Square (RMS) difference was " << rms << " which exceeds the tolerance of " << mTolerance;
+      msg << "\n";
+      mMessage = msg.str();
+
+      std::cout << "<DartMeasurement name=\"RMSeDifference\" type=\"numeric/float\">" << rms << "</DartMeasurement>" << std::endl;
+      std::cout << "<DartMeasurement name=\"Tolerance\" type=\"numeric/float\">" << mTolerance << "</DartMeasurement>" << std::endl;
+
+      std::string volumeName = OutputDir + "/" + shortFilename + ".nrrd";
+      sitk::ImageFileWriter().SetFileName ( volumeName ).Execute ( testImage );
+
+      // Save pngs
+      std::string ExpectedImageFilename = OutputDir + "/" + shortFilename + "_Expected.png";
+      std::string ActualImageFilename = OutputDir + "/" + shortFilename + "_Actual.png";
+      std::string DifferenceImageFilename = OutputDir + "/" + shortFilename + "_Difference.png";
+
+      try
+        {
+        NormalizeAndSave ( baselineImage, ExpectedImageFilename );
+        NormalizeAndSave ( testImage, ActualImageFilename );
+        NormalizeAndSave ( sitk::Sqrt(diffSquared), DifferenceImageFilename );
+
+        // Let ctest know about it
+        std::cout << "<DartMeasurementFile name=\"ExpectedImage\" type=\"image/png\">";
+        std::cout << ExpectedImageFilename << "</DartMeasurementFile>" << std::endl;
+        std::cout << "<DartMeasurementFile name=\"ActualImage\" type=\"image/png\">";
+        std::cout << ActualImageFilename << "</DartMeasurementFile>" << std::endl;
+        std::cout << "<DartMeasurementFile name=\"DifferenceImage\" type=\"image/png\">";
+        std::cout << DifferenceImageFilename << "</DartMeasurementFile>" << std::endl;
+
+        }
+      catch( std::exception &e )
+        {
+        std::cerr << "Exception encountered while trying to normalize and save images for dashboard!" << std::endl;
+        std::cerr << e.what() << std::endl;
+        }
+      catch(...)
+        {
+        std::cerr << "Unexpected error while trying to normalize and save images for dashboard!" << std::endl;
+        }
+
+
+      }
+
+    return (rms > fabs ( mTolerance )) ? rms  : 0.0;
+}
+
+
 bool ImageCompare::compare ( const sitk::Image& image, std::string inTestCase, std::string inTag )
 {
   sitk::Image centerSlice( 0, 0, sitk::sitkUInt8 );
@@ -90,7 +216,6 @@ bool ImageCompare::compare ( const sitk::Image& image, std::string inTestCase, s
     testCase = ::testing::UnitTest::GetInstance()->current_test_info()->test_case_name();
     }
 
-  std::cout << "Starting image compare on " << testCase << "_" << testName << "_" << tag << std::endl;
   // Does the baseline exist?
   std::string extension = ".nrrd";
   std::string OutputDir = dataFinder.GetOutputDirectory();
@@ -104,7 +229,8 @@ bool ImageCompare::compare ( const sitk::Image& image, std::string inTestCase, s
     name.append("_").append ( tag );
     }
 
-  // Extract the center slice of our image
+
+  // Extract the center slice of our test image
   if ( image.GetDimension() == 3 )
     {
     std::vector<int> idx( 3, 0 );
@@ -120,9 +246,11 @@ bool ImageCompare::compare ( const sitk::Image& image, std::string inTestCase, s
     centerSlice = image;
     }
 
-  std::string baselineFileName = dataFinder.GetFile( "Baseline/" + name + extension );
+  const std::string baselineFileName = dataFinder.GetFile( "Baseline/" + name + extension );
 
-  if ( !itksys::SystemTools::FileExists ( baselineFileName.c_str() ) )
+
+
+  if ( !itksys::SystemTools::FileExists ( baselineFileName.c_str(), true ) )
     {
     // Baseline does not exist, write out what we've been given
     std::string newBaselineDir = OutputDir + "/Newbaseline/";
@@ -134,122 +262,71 @@ bool ImageCompare::compare ( const sitk::Image& image, std::string inTestCase, s
     return false;
     }
 
-  sitk::Image baseline( 0, 0, sitk::sitkUInt8 );
-  std::cout << "Loading baseline " << baselineFileName << std::endl;
+  // Generate all possible baseline filenames
+  std::vector<std::string> baselineFileNames;
 
-  try
-    {
-    baseline = sitk::ImageFileReader().SetFileName ( baselineFileName ).Execute();
-    }
-  catch ( std::exception& e )
-    {
-    mMessage = "ImageCompare: Failed to load image " + baselineFileName + " because: " + e.what();
-    return false;
-    }
+  {
+  int x = 0;
 
-  // verify they have the same size
-  if ( baseline.GetHeight() != centerSlice.GetHeight()
-       || baseline.GetWidth() != centerSlice.GetWidth()
-       || baseline.GetDepth() != centerSlice.GetDepth() )
-    {
-    mMessage = "ImageCompare: Image dimensions are different";
-    return false;
-    }
+  baselineFileNames.push_back(baselineFileName);
 
-  // Get the center slices
-  sitk::Image diffSquared( 0, 0, itk::simple::sitkUInt8 );
-  try
-    {
 
-    if ( baseline.GetPixelID() == sitk::sitkComplexFloat32 ||
-         baseline.GetPixelID() == sitk::sitkComplexFloat64 )
+  while ( ++x )
+    {
+    std::ostringstream filename_stream;
+    filename_stream <<  "Baseline/" << name  << "." << x << extension;
+
+    std::string filename = dataFinder.GetFile( filename_stream.str() );
+
+    if (!itksys::SystemTools::FileExists ( filename, true ) )
       {
-
-      sitk::Image diff =  sitk::Subtract( centerSlice, baseline );
-      // for complex number we multiply the image by it's complex
-      // conjugate, this will produce only a real value result
-      sitk::Image conj = sitk::RealAndImaginaryToComplex( sitk::ComplexToReal( diff ),
-                                                          sitk::Multiply( sitk::ComplexToImaginary( diff ), -1.0 ) );
-      diffSquared = sitk::ComplexToReal( sitk::Multiply( diff, conj ) );
+      break;
       }
-    else if ( baseline.GetNumberOfComponentsPerPixel() > 1 )
-      {
-      sitk::Image diff =  sitk::Subtract( sitk::Cast( centerSlice, sitk::sitkVectorFloat32 ), sitk::Cast( baseline, sitk::sitkVectorFloat32 ) );
-
-      // for vector image just do a sum of the components
-      diffSquared  = sitk::Pow( sitk::VectorIndexSelectionCast( diff, 0 ), 2.0 );
-      for ( unsigned int i = 1; i < diff.GetNumberOfComponentsPerPixel(); ++i )
-        {
-        sitk::Image temp = sitk::Pow( sitk::VectorIndexSelectionCast( diff, i ), 2.0 );
-        diffSquared = sitk::Add( temp, diffSquared );
-        }
-
-      diffSquared = sitk::Divide( diffSquared, diff.GetNumberOfComponentsPerPixel() );
-      }
-    else
-      {
-      sitk::Image diff =  sitk::Subtract( sitk::Cast( centerSlice, sitk::sitkFloat32 ), sitk::Cast( baseline, sitk::sitkFloat32 ) );
-      diffSquared = sitk::Multiply( diff, diff );
-      }
-
-    }
-  catch ( std::exception& e )
-    {
-    mMessage = "ImageCompare: Failed to subtract image " + baselineFileName + " because: " + e.what();
-    return false;
+    baselineFileNames.push_back(filename);
     }
 
+  }
 
-  sitk::StatisticsImageFilter stats;
-  stats.Execute ( diffSquared );
-  double rms = std::sqrt ( stats.GetMean() );
+  std::vector<std::string>::const_iterator iterName;
 
-  if ( rms > fabs ( mTolerance ) )
+  std::string bestBaselineName =  *baselineFileNames.begin();
+  float bestRMS = std::numeric_limits<float>::max();
+
+  for ( iterName = baselineFileNames.begin(); iterName != baselineFileNames.end(); ++iterName )
     {
-    std::ostringstream msg;
-    msg << "ImageCompare: image Root Mean Square (RMS) difference was " << rms << " which exceeds the tolerance of " << mTolerance;
-    msg << "\n";
-    mMessage = msg.str();
 
-    std::cout << "<DartMeasurement name=\"RMSeDifference\" type=\"numeric/float\">" << rms << "</DartMeasurement>" << std::endl;
-    std::cout << "<DartMeasurement name=\"Tolerance\" type=\"numeric/float\">" << mTolerance << "</DartMeasurement>" << std::endl;
-
-    std::string volumeName = OutputDir + "/" + name + ".nrrd";
-    sitk::ImageFileWriter().SetFileName ( volumeName ).Execute ( centerSlice );
-
-    // Save pngs
-    std::string ExpectedImageFilename = OutputDir + "/" + name + "_Expected.png";
-    std::string ActualImageFilename = OutputDir + "/" + name + "_Actual.png";
-    std::string DifferenceImageFilename = OutputDir + "/" + name + "_Difference.png";
+    sitk::Image baseline( 0, 0, sitk::sitkUInt8 );
 
     try
       {
-      NormalizeAndSave ( baseline, ExpectedImageFilename );
-      NormalizeAndSave ( centerSlice, ActualImageFilename );
-      NormalizeAndSave ( sitk::Sqrt(diffSquared), DifferenceImageFilename );
-
-      // Let ctest know about it
-      std::cout << "<DartMeasurementFile name=\"ExpectedImage\" type=\"image/png\">";
-      std::cout << ExpectedImageFilename << "</DartMeasurementFile>" << std::endl;
-      std::cout << "<DartMeasurementFile name=\"ActualImage\" type=\"image/png\">";
-      std::cout << ActualImageFilename << "</DartMeasurementFile>" << std::endl;
-      std::cout << "<DartMeasurementFile name=\"DifferenceImage\" type=\"image/png\">";
-      std::cout << DifferenceImageFilename << "</DartMeasurementFile>" << std::endl;
-
+      baseline = sitk::ImageFileReader().SetFileName (*iterName ).Execute();
       }
-    catch( std::exception &e )
+    catch ( std::exception& e )
       {
-      std::cerr << "Exception encountered while trying to normalize and save images for dashboard!" << std::endl;
-      std::cerr << e.what() << std::endl;
+      mMessage = "ImageCompare: Failed to load image " +*iterName + " because: " + e.what();
+      return false;
       }
-    catch(...)
+
+    float RMS = testImages( centerSlice, baseline, false,  *iterName);
+
+    if ( RMS >= 0.0 && RMS < bestRMS )
       {
-      std::cerr << "Unexpected error while trying to normalize and save images for dashboard!" << std::endl;
+      bestBaselineName = *iterName;
+      bestRMS = RMS;
       }
 
+    }
 
+
+  if ( bestRMS > fabs ( mTolerance ) )
+    {
+    sitk::Image baseline =  sitk::ImageFileReader().SetFileName (bestBaselineName ).Execute();
+    testImages( centerSlice, baseline, true, bestBaselineName );
     return false;
-  }
+    }
+  else
+    {
+    return true;
+    }
 
-  return true;
 }
