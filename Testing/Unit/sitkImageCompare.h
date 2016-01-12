@@ -29,6 +29,12 @@ public:
   // If the baseline does not exist, fail, and write a baseline image in the output directory
   bool compare ( const itk::simple::Image& image, std::string testGroup, std::string tag );
 
+  float testImages( const itk::simple::Image& testImage,
+                    const itk::simple::Image& baselineImage,
+                    bool retportErrors,
+                    const std::string &baselineImageFilename );
+
+
   // Return the message from the previous image comparison.
   std::string getMessage() { return mMessage; }
   Self& setTolerance ( double t ) { mTolerance = t; return *this; }
