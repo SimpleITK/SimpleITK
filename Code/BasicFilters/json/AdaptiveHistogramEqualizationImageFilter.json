@@ -49,7 +49,7 @@
       "tag" : "defaults",
       "description" : "Simply run with default settings",
       "settings" : [],
-      "tolerance" : "5e-4",
+      "tolerance" : "2e-3",
       "inputs" : [
         "Input/RA-Slice-Float.nrrd"
       ]
