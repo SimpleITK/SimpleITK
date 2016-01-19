@@ -72,7 +72,15 @@ int main(int argc, char *argv[])
   sitk::Image moving = sitk::ReadImage( argv[2] );
 
   sitk::HistogramMatchingImageFilter matcher;
-  matcher.SetNumberOfHistogramLevels( 1024 );
+  if ( fixed.GetPixelID() == sitk::sitkUInt8
+       || fixed.GetPixelID() == sitk::sitkInt8 )
+    {
+    matcher.SetNumberOfHistogramLevels( 128 );
+    }
+  else
+    {
+    matcher.SetNumberOfHistogramLevels( 1024 );
+    }
   matcher.SetNumberOfMatchPoints( 7 );
   matcher.ThresholdAtMeanIntensityOn();
 

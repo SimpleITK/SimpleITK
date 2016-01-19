@@ -38,7 +38,10 @@ fixed = sitk.ReadImage(sys.argv[1])
 moving = sitk.ReadImage(sys.argv[2])
 
 matcher = sitk.HistogramMatchingImageFilter()
-matcher.SetNumberOfHistogramLevels(1024)
+if ( fixed.GetPixelID() in ( sitk.sitkUInt8, sitk.sitkInt8 ) ):
+     matcher.SetNumberOfHistogramLevels(128)
+else:
+     matcher.SetNumberOfHistogramLevels(1024)
 matcher.SetNumberOfMatchPoints(7)
 matcher.ThresholdAtMeanIntensityOn()
 moving = matcher.Execute(moving,fixed)
