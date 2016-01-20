@@ -209,6 +209,9 @@ namespace std
 %include "sitkPyCommand.h"
 #endif
 
+#if SWIGR
+%include "sitkRCommand.h"
+#endif
 
 // Auto-generated headers
 %include "SimpleITKBasicFiltersGeneratedHeaders.i"

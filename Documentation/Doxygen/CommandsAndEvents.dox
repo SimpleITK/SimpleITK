@@ -56,6 +56,10 @@ for functions for the ProcessObject::AddCommand method:
 \subsubsection CommandFunctionPython
 \snippet FilterProgressReporting.py python lambda command
 
+\subsubsection CommandFunctionR
+\snippet FilterProgressReporting.R R lambda command
+
+
 */
 }
 }
