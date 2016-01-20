@@ -95,7 +95,17 @@ endif()
 option(BUILD_SHARED_LIBS "Build SimpleITK ITK with shared libraries. This does not effect wrapped languages." OFF)
 set(SITK_BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS})
 
-option(SITK_EXPLICIT_INSTANTIATION "Enable an ITK static library of explicitly instantiated templates." ON)
+set(SITK_EXPLICIT_INSTANTIATION_DEFAULT ON)
+#
+# Disable Explicit Instantiation for gcc 4.1 because of problems with
+# ITK's static constant macro introduced in ITK 4.9.0 version
+if ("${ITK_VERSION_MAJOR}.${ITK_VERSION_MINOR}.${ITK_VERSION_PATCH}" VERSION_EQUAL "4.9"
+    AND "${CMAKE_COMPILER_IS_GNUCXX}"
+    AND "${CMAKE_CXX_COMPILER_VERSION}" VERSION_LESS "4.2" )
+  set(SITK_EXPLICIT_INSTANTIATION_DEFAULT OFF)
+endif()
+
+option(SITK_EXPLICIT_INSTANTIATION "Enable an ITK static library of explicitly instantiated templates." ${SITK_EXPLICIT_INSTANTIATION_DEFAULT})
 if ( MSVC AND SITK_BUILD_SHARED_LIBS )
   set( SITK_SimpleITKExplit_STATIC 1 )
 endif()
