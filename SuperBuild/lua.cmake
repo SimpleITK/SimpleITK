@@ -1,5 +1,11 @@
 cmake_minimum_required ( VERSION 2.8.1 FATAL_ERROR )
 
+
+if(POLICY CMP0025)
+  cmake_policy(SET CMP0025 OLD)
+endif()
+
+
 project (LUA C)
 
 # Setup build locations.
@@ -41,6 +47,12 @@ if( MSVC )
   SET( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} /wd4334" )
 endif()
 
+if( APPLE )
+  if("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
+    # suppress Clang warnings about empty loop bodies and deprecated declarations (tmpnam)
+    SET( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -Wno-empty-body -Wno-deprecated-declarations" )
+  endif()
+endif()
 
 # define the lua core source files
 set (LUA_CORE_SRCS src/lapi.c src/lcode.c src/ldebug.c src/ldo.c src/ldump.c
