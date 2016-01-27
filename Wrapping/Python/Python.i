@@ -255,14 +255,14 @@
             if isinstance( other, Image ):
                return Greater( self, other )
             try:
-               return Greater( self, int(other) )
+               return Greater( self, float(other) )
             except (ValueError, TypeError):
                return NotImplemented
         def __ge__( self, other ):
             if isinstance( other, Image ):
                return GreaterEqual( self, other )
             try:
-               return GreaterEqual( self, int(other) )
+               return GreaterEqual( self, float(other) )
             except (ValueError, TypeError):
                return NotImplemented
 
