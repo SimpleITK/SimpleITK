@@ -151,6 +151,48 @@ class TestImageIndexingInterface(unittest.TestCase):
          self.assertImageNDArrayEquals(img[:,::-2,::-1], nda[::-1,::-2,:])
          self.assertImageNDArrayEquals(img[-1:-4:-1,:,:], nda[:,:,-1:-4:-1])
 
+    def test_compare(self):
+
+        img = sitk.Image(1,1,sitk.sitkFloat32)
+        self.assertEqual(img.GetPixel(0,0), 0.0)
+
+        self.assertEqual((img<0).GetPixel(0,0), 0)
+        self.assertEqual((img<=0).GetPixel(0,0), 1)
+
+        self.assertEqual((0>img).GetPixel(0,0), 0)
+        self.assertEqual((0>=img).GetPixel(0,0), 1)
+
+        self.assertEqual((img>0).GetPixel(0,0), 0)
+        self.assertEqual((img>=0).GetPixel(0,0), 1)
+
+        self.assertEqual((0<img).GetPixel(0,0), 0)
+        self.assertEqual((0<=img).GetPixel(0,0), 1)
+
+        img.SetPixel(0,0, 0.5)
+
+        self.assertEqual((img<0.5).GetPixel(0,0), 0)
+        self.assertEqual((img<=0.5).GetPixel(0,0), 1)
+
+        self.assertEqual((0.5>img).GetPixel(0,0), 0)
+        self.assertEqual((0.5>=img).GetPixel(0,0), 1)
+
+        self.assertEqual((img>0.5).GetPixel(0,0), 0)
+        self.assertEqual((img>=0.5).GetPixel(0,0), 1)
+
+        self.assertEqual((0.5<img).GetPixel(0,0), 0)
+        self.assertEqual((0.5<=img).GetPixel(0,0), 1)
+
+        self.assertEqual((img<-1).GetPixel(0,0), 0)
+        self.assertEqual((img<=-1).GetPixel(0,0), 0)
+
+        self.assertEqual((-1>img).GetPixel(0,0), 0)
+        self.assertEqual((-1>=img).GetPixel(0,0), 0)
+
+        self.assertEqual((img>-1).GetPixel(0,0), 1)
+        self.assertEqual((img>=-1).GetPixel(0,0), 1)
+
+        self.assertEqual((-1<img).GetPixel(0,0), 1)
+        self.assertEqual((-1<=img).GetPixel(0,0), 1)
 
 if __name__ == '__main__':
     unittest.main()
