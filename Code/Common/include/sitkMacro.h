@@ -106,6 +106,17 @@ template<> struct StaticAssertFailure<true>{ enum { Value = 1 }; };
 
 #endif
 
+#define sitkPragma(x) _Pragma (#x)
+
+#if defined(__clang__) && defined(__has_warning)
+#define sitkClangDiagnosticPush()       sitkPragma( clang diagnostic push )
+#define sitkClangDiagnosticPop()        sitkPragma( clang diagnostic pop )
+#define sitkClangDiagnosticIgnore(x)    sitkPragma( clang diagnostic ignored x)
+#else
+#define sitkClangDiagnosticPush()
+#define sitkClangDiagnosticPop()
+#define sitkClangDiagnosticIgnore(x)
+#endif
 
 }
 }
