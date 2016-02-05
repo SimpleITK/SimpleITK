@@ -290,7 +290,6 @@ namespace itk {
                 template<typename, unsigned int> class TVector >
         static Image CastITKToImage( itk::Image< TVector< TPixelType, VLength >, VImageDimension> *img )
       {
-        typedef itk::Image< TVector< TPixelType, VLength >, VImageDimension> ImageType;
         typedef itk::VectorImage< TPixelType, VImageDimension > VectorImageType;
 
         size_t numberOfElements = img->GetBufferedRegion().GetNumberOfPixels();

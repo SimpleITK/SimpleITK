@@ -72,7 +72,6 @@ SITKCommon_HIDDEN
 typename itk::VectorImage< TPixelType, NImageDimension >::Pointer
 GetVectorImageFromImage( itk::Image< itk::Vector< TPixelType, NLength >, NImageDimension> *img, bool transferOwnership = false )
 {
-  typedef itk::Image< itk::Vector< TPixelType, NLength >, NImageDimension> ImageType;
   typedef itk::VectorImage< TPixelType, NImageDimension > VectorImageType;
 
   size_t numberOfElements = img->GetBufferedRegion().GetNumberOfPixels();

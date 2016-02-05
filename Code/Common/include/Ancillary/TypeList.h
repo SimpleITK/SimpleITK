@@ -402,15 +402,14 @@ struct DualVisit
 template < typename TLeftTypeList, typename TRightTypeList >
 struct DualVisitImpl
 {
+  typedef typename TLeftTypeList::Head  LeftHead;
+  typedef typename TRightTypeList::Head RightHead;
+  typedef typename TLeftTypeList::Tail  LeftTail;
+  typedef typename TRightTypeList::Tail RightTail;
+
   template <typename Visitor>
   void operator()( Visitor &visitor ) const
   {
-    typedef typename TLeftTypeList::Head  LeftHead;
-    typedef typename TRightTypeList::Head RightHead;
-    typedef typename TLeftTypeList::Tail  LeftTail;
-    typedef typename TRightTypeList::Tail RightTail;
-
-
     DualVisitImpl< TLeftTypeList, TRightTypeList> goRight;
     goRight.visitRHS<Visitor>( visitor );
 
@@ -421,12 +420,6 @@ struct DualVisitImpl
   template <typename Visitor>
   void operator()( const Visitor &visitor ) const
   {
-    typedef typename TLeftTypeList::Head  LeftHead;
-    typedef typename TRightTypeList::Head RightHead;
-    typedef typename TLeftTypeList::Tail  LeftTail;
-    typedef typename TRightTypeList::Tail RightTail;
-
-
     DualVisitImpl< TLeftTypeList, TRightTypeList> goRight;
     goRight.visitRHS<Visitor>( visitor );
 
@@ -437,11 +430,6 @@ struct DualVisitImpl
   template <typename Visitor>
   void visitRHS( Visitor &visitor ) const
   {
-    typedef typename TLeftTypeList::Head  LeftHead;
-    typedef typename TRightTypeList::Head RightHead;
-    typedef typename TLeftTypeList::Tail  LeftTail;
-    typedef typename TRightTypeList::Tail RightTail;
-
     visitor.CLANG_TEMPLATE operator()<LeftHead, RightHead>( );
 
     DualVisitImpl< TLeftTypeList, RightTail> goRight;
@@ -450,11 +438,6 @@ struct DualVisitImpl
   template <typename Visitor>
   void visitRHS( const Visitor &visitor ) const
   {
-    typedef typename TLeftTypeList::Head  LeftHead;
-    typedef typename TRightTypeList::Head RightHead;
-    typedef typename TLeftTypeList::Tail  LeftTail;
-    typedef typename TRightTypeList::Tail RightTail;
-
     visitor.CLANG_TEMPLATE operator()<LeftHead, RightHead>( );
 
     DualVisitImpl< TLeftTypeList, RightTail> goRight;
