@@ -348,7 +348,6 @@ void Transform::InternalBSplineInitialization( Image & inImage )
   {
     typedef TDisplacementType VectorImageType;
 
-    typedef typename VectorImageType::PixelType PixelType;
     typedef typename VectorImageType::InternalPixelType ComponentType;
     const unsigned int ImageDimension = VectorImageType::ImageDimension;
 
