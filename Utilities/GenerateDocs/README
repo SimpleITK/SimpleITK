@@ -1,0 +1,25 @@
+
+This directory contains scripts used to process and generate documentation for SimpleITK.
+
+Overview:
+Much of the SimpleITK documentation that is in the form of doxygen strings and
+API language docs is derived from ITK's Doxygen. The process starts
+when Doxygen is run on ITK and it produces the ITK Doxygen in XML
+format. This can either be generated locally or the nightly can be
+automatically downloaded. Next the JSONDocUpdate.sh script can be run
+to extract the strings from the ITK XML Doxygen and update the
+SimpleITK JSON filter descriptions. When SimpleITK is built the JSON
+is used as source for the C++ code. Then when SimpleITK's Documentation
+target is made, the SimpleITK Doxygen in XML will be generated. Lastly
+the SwigDocUpdate.sh script can be run to convert the SimpleITK
+Doxygen XML into Swig .i files so that when SimpleITK is built, inline
+documenation for some wrapped languages will be available.
+
+Important end use scripts (see script files for more details:
+        JSONDocUpdate.sh - Copies ITK Doxygen into SimpleITK JSON
+        SwigDocUpdate.sh - Copies SimpleITK Doxygen into Swig .i files
+
+Configuration:
+        The config_vars.sh file needs to be manually modified for the system and build configuration.
+
+These scripts are manually run to modify and create files in the source tree with the derived documentation.
