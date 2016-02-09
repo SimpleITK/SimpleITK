@@ -89,6 +89,10 @@ class GenericException;
 #endif
 
 
+#define sitkMacroJoin( X, Y ) sitkDoMacroJoin( X, Y )
+#define sitkDoMacroJoin( X, Y ) sitkDoMacroJoin2(X,Y)
+#define sitkDoMacroJoin2( X, Y ) X##Y
+
 #ifdef SITK_HAS_CXX11_STATIC_ASSERT
 // utilize the c++11 static_assert if available
 #define sitkStaticAssert( expr, str) static_assert( expr, str )
@@ -97,28 +101,26 @@ class GenericException;
 template<bool> struct StaticAssertFailure;
 template<> struct StaticAssertFailure<true>{ enum { Value = 1 }; };
 
-#define BOOST_JOIN( X, Y ) BOOST_DO_JOIN( X, Y )
-#define BOOST_DO_JOIN( X, Y ) BOOST_DO_JOIN2(X,Y)
-#define BOOST_DO_JOIN2( X, Y ) X##Y
-
-#define sitkStaticAssert( expr, str ) enum { BOOST_JOIN( static_assert_typedef, __LINE__) = sizeof( itk::simple::StaticAssertFailure<((expr) == 0 ? false : true )> ) };
+#define sitkStaticAssert( expr, str ) enum { sitkMacroJoin( static_assert_typedef, __LINE__) = sizeof( itk::simple::StaticAssertFailure<((expr) == 0 ? false : true )> ) };
 
 
 #endif
+}
+}
 
 #define sitkPragma(x) _Pragma (#x)
 
 #if defined(__clang__) && defined(__has_warning)
 #define sitkClangDiagnosticPush()       sitkPragma( clang diagnostic push )
 #define sitkClangDiagnosticPop()        sitkPragma( clang diagnostic pop )
-#define sitkClangDiagnosticIgnore(x)    sitkPragma( clang diagnostic ignored x)
+#define sitkClangWarningIgnore_0(x)
+#define sitkClangWarningIgnore_1(x)  sitkPragma( clang diagnostic ignored x)
+#define sitkClangWarningIgnore(x)    sitkMacroJoin( sitkClangWarningIgnore_, __has_warning(x) )(x)
 #else
 #define sitkClangDiagnosticPush()
 #define sitkClangDiagnosticPop()
-#define sitkClangDiagnosticIgnore(x)
+#define sitkClangWarningIgnore(x)
 #endif
 
-}
-}
 
 #endif
