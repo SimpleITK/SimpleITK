@@ -61,7 +61,7 @@ $(include CustomCasts.cxx)
 //-----------------------------------------------------------------------------
 
 sitkClangDiagnosticPush();
-sitkClangDiagnosticIgnore("-Wunused-local-typedef");
+sitkClangWarningIgnore("-Wunused-local-typedef");
 
 //
 // ExecuteInternal
