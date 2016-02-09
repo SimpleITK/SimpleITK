@@ -733,7 +733,7 @@ def GetArrayFromImage(image):
     return arr
 
 def GetImageFromArray( arr, isVector=False):
-    """Get a SimpleITK Image from a numpy array. If isVector is True, then a 3D array will be treaded as a 2D vector image, otherwise it will be treaded as a 3D image"""
+    """Get a SimpleITK Image from a numpy array. If isVector is True, then a 3D array will be treated as a 2D vector image, otherwise it will be treated as a 3D image"""
 
     if not HAVE_NUMPY:
         raise ImportError('Numpy not available.')
