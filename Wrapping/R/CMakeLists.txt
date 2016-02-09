@@ -8,11 +8,11 @@ set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS})
 set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
 set(SWIG_MODULE_SimpleITK_EXTRA_DEPS ${SWIG_EXTRA_DEPS} ${CMAKE_CURRENT_SOURCE_DIR}/R.i )
 SWIG_add_module ( SimpleITK r SimpleITK.i sitkRCommand.cxx )
-SWIG_link_libraries ( SimpleITK ${SimpleITK_LIBRARIES} )
+target_link_libraries ( ${SWIG_MODULE_SimpleITK_TARGET_NAME} ${SimpleITK_LIBRARIES} )
 
 # on some platforms the r libraries are not required at link time...
 if(R_LIBRARIES)
-  SWIG_link_libraries ( SimpleITK ${R_LIBRARIES} )
+  sitk_target_link_libraries_with_dynamic_lookup ( ${SWIG_MODULE_SimpleITK_TARGET_NAME} ${R_LIBRARIES} )
 endif()
 
 set_source_files_properties(${swig_generated_file_fullname} PROPERTIES COMPILE_FLAGS "-w")
