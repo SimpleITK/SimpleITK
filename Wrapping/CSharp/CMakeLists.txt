@@ -50,7 +50,7 @@ if(DEFINED SimpleITK_VERSION_POST)
     ${CMAKE_CURRENT_SOURCE_DIR}/CSharp.i
     ${CMAKE_CURRENT_SOURCE_DIR}/CSharpTypemapHelper.i )
   swig_add_module(SimpleITKCSharpNative csharp SimpleITK.i)
-  swig_link_libraries(SimpleITKCSharpNative ${SimpleITK_LIBRARIES})
+  target_link_libraries(${SWIG_MODULE_SimpleITKCSharpNative_TARGET_NAME} ${SimpleITK_LIBRARIES})
   set_target_properties(${SWIG_MODULE_SimpleITKCSharpNative_TARGET_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CSHARP_BINARY_DIRECTORY})
   if ( UNIX )
     set_target_properties(${SWIG_MODULE_SimpleITKCSharpNative_TARGET_NAME} PROPERTIES PREFIX "lib")
