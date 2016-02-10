@@ -247,9 +247,6 @@ public:
 };
 
 
-namespace
-{
-
 
 inline std::vector<double> v2(double v1, double v2)
 {
@@ -306,8 +303,6 @@ inline std::vector<double> v12(double v1, double v2, double v3,
   return temp;
 }
 
-
-}
 
 ::testing::AssertionResult VectorDoubleRMSPredFormat(const char* expr1,
                                                      const char* expr2,
