@@ -86,6 +86,9 @@ $(include CustomCasts.cxx)
 
 //-----------------------------------------------------------------------------
 
+sitkClangDiagnosticPush();
+sitkClangWarningIgnore("-Wunused-local-typedef");
+
 //
 // ExecuteInternal
 //
@@ -100,6 +103,8 @@ $(include ExecuteInternalITKFilter.cxx.in)
 $(include ExecuteInternalSetITKFilterInputs.cxx.in)
 $(include ExecuteInternalUpdateAndReturn.cxx.in)
 }
+
+sitkClangDiagnosticPop();
 
 //-----------------------------------------------------------------------------
 

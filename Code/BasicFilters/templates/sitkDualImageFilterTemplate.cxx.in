@@ -134,6 +134,9 @@ $(include CustomCasts.cxx)
 
 //-----------------------------------------------------------------------------
 
+sitkClangDiagnosticPush();
+sitkClangWarningIgnore("-Wunused-local-typedef");
+
 //
 // ExecuteInternal
 //
@@ -250,6 +253,8 @@ OUT=OUT..[[
 
   return Image( toVector->GetOutput() );
 }
+
+sitkClangDiagnosticPop();
 
 //-----------------------------------------------------------------------------
 ]]end)
