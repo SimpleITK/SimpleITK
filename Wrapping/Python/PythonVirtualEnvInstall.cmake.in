@@ -12,6 +12,7 @@ execute_process(
     "--python=@PYTHON_EXECUTABLE@"
     --no-pip
     --no-setuptools
+    --no-wheel
     --clear
     "@PythonVirtualenvHome@"
   WORKING_DIRECTORY "@SimpleITK_SOURCE_DIR@/Wrapping/Python"
