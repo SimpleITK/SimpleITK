@@ -291,6 +291,20 @@ if ( BUILD_TESTING )
 endif()
 
 #------------------------------------------------------------------------------
+# Python virtualenv
+#------------------------------------------------------------------------------
+option( USE_SYSTEM_VIRTUALENV "Use a system version of Python's virtualenv. " OFF )
+mark_as_advanced(USE_SYSTEM_VIRTUALENV)
+if ( USE_SYSTEM_VIRTUALENV )
+    set( PYTHON_VIRTUALENV_EXECUTABLE "" CACHE FILEPATH "Python virtualenv executable" )
+else()
+  include(External_virtualenv)
+  list(APPEND SimpleITK_VARS PYTHON_VIRTUALENV_EXECUTABLE)
+  list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES GTest)
+endif()
+
+
+#------------------------------------------------------------------------------
 # ITK
 #------------------------------------------------------------------------------
 

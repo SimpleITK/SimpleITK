@@ -97,6 +97,11 @@ option(SITK_PYTHON_USE_VIRTUALENV "Create a Python Virtual Environment for testi
 mark_as_advanced(SITK_PYTHON_USE_VIRTUALENV)
 
 if (SITK_PYTHON_USE_VIRTUALENV)
+
+  # Executable to setup a new Python virtual environment
+  # todo use a find_program and get version
+  set( PYTHON_VIRTUALENV_EXECUTABLE "" CACHE FILEPATH "Python virtualenv executable")
+
   sitk_enforce_forbid_downloads( SITK_PYTHON_USE_VIRTUALENV )
   #
   # Setup Python Virtual Enviroment for testing and packaging

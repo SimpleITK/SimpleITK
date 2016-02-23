@@ -8,7 +8,7 @@ endif()
 #
 execute_process(
   COMMAND "@PYTHON_EXECUTABLE@"
-    "@SimpleITK_SOURCE_DIR@/Utilities/virtualenv/virtualenv.py"
+    "@PYTHON_VIRTUALENV_EXECUTABLE@"
     "--python=@PYTHON_EXECUTABLE@"
     --no-pip
     --no-setuptools
