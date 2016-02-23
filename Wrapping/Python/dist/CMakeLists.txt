@@ -2,14 +2,17 @@
 # Packaging
 #
 
-if( WRAP_PYTHON )
+if( SimpleITK_PYTHON_EGG OR SimpleITK_PYTHON_WHEEL )
 
-  set(bdist_commands "bdist_egg")
+  set(bdist_commands "")
+  if( SimpleITK_PYTHON_EGG )
+    set(bdist_commands "bdist_egg")
+  endif()
   if( SimpleITK_PYTHON_WHEEL )
     set(bdist_commands ${bdist_commands} bdist_wheel)
   endif()
 
-  if(SITK_PYTHON_USE_VIRTUALENV)
+  if( SITK_PYTHON_USE_VIRTUALENV )
     add_custom_target( dist.Python
       ${VIRTUAL_PYTHON_EXECUTABLE} ${SimpleITK_BINARY_DIR}/Wrapping/Python/Packaging/setupegg.py ${bdist_commands}
       WORKING_DIRECTORY ${SimpleITK_BINARY_DIR}/Wrapping/Python
