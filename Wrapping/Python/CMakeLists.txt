@@ -4,6 +4,8 @@ include_directories ( ${PYTHON_INCLUDE_DIR} ${CMAKE_CURRENT_SOURCE_DIR} )
 
 option ( SimpleITK_PYTHON_THREADS "Enable threaded python usage by unlocking the GIL." ON )
 mark_as_advanced( SimpleITK_PYTHON_THREADS )
+option ( SimpleITK_PYTHON_EGG "Add building of python eggs to the dist target." ON )
+mark_as_advanced( SimpleITK_PYTHON_EGG )
 option ( SimpleITK_PYTHON_WHEEL "Add building of python wheels to the dist target." OFF )
 mark_as_advanced( SimpleITK_PYTHON_WHEEL )
 
@@ -82,11 +84,6 @@ configure_file(
   COPYONLY )
 
 configure_file(
-  "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/ez_setup.py"
-  "${CMAKE_CURRENT_BINARY_DIR}/Packaging/ez_setup.py"
-  COPYONLY )
-
-configure_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/__init__.py"
   "${CMAKE_CURRENT_BINARY_DIR}/__init__.py"
   COPYONLY )
@@ -95,6 +92,11 @@ option(SITK_PYTHON_USE_VIRTUALENV "Create a Python Virtual Environment for testi
 mark_as_advanced(SITK_PYTHON_USE_VIRTUALENV)
 
 if (SITK_PYTHON_USE_VIRTUALENV)
+
+  # Executable to setup a new Python virtual environment
+  # todo use a find_program and get version
+  set( PYTHON_VIRTUALENV_EXECUTABLE "" CACHE FILEPATH "Python virtualenv executable")
+
   sitk_enforce_forbid_downloads( SITK_PYTHON_USE_VIRTUALENV )
   #
   # Setup Python Virtual Enviroment for testing and packaging
@@ -134,7 +136,6 @@ if (SITK_PYTHON_USE_VIRTUALENV)
     "${SWIG_MODULE_SimpleITKPython_TARGET_NAME}"
     "${CMAKE_CURRENT_BINARY_DIR}/PythonVirtualEnvInstall.cmake"
     ConfigureFileBuildtime
-    "${CMAKE_CURRENT_BINARY_DIR}/Packaging/ez_setup.py"
     COMMENT "Creating python virtual enviroment..."
     )
 else()
