@@ -3,6 +3,17 @@ if(POLICY CMP0012)
   cmake_policy(SET CMP0012 NEW)
 endif()
 
+set(VIRTUALENV_ARGS --clear --no-pip)
+if ( NOT "@SITK_FORBID_DOWNLOADS@" )
+  set(VIRTUALENV_ARGS ${VIRTUALENV_ARGS} --download)
+endif()
+if ( NOT "@SimpleITK_PYTHON_WHEEL@" )
+  set(VIRTUALENV_ARGS ${VIRTUALENV_ARGS} --no-wheel)
+  if ( NOT "@SimpleITK_PYTHON_EGG@" )
+    set(VIRTUALENV_ARGS ${VIRTUALENV_ARGS} --no-setuptools)
+  endif()
+endif()
+
 #
 # Create the Python virtual environment.
 #
@@ -10,9 +21,7 @@ execute_process(
   COMMAND "@PYTHON_EXECUTABLE@"
     "@PYTHON_VIRTUALENV_EXECUTABLE@"
     "--python=@PYTHON_EXECUTABLE@"
-    --no-pip
-    --no-setuptools
-    --clear
+    ${VIRTUALENV_ARGS}
     "@PythonVirtualenvHome@"
   WORKING_DIRECTORY "@SimpleITK_SOURCE_DIR@/Wrapping/Python"
   RESULT_VARIABLE failed
@@ -41,35 +50,6 @@ execute_process(
 if ( failed )
   message( FATAL_ERROR "Installation of SimpleITK into Python virutal enviroment failed.\n${error}" )
 endif()
-
-
-if ( "@SimpleITK_PYTHON_WHEEL@" )
-
-  set(install_wheel_script "
-import sys
-from ez_setup import use_setuptools
-use_setuptools()
-if not(sys.modules.get(\"wheel\")):
-    from setuptools.command import easy_install
-    easy_install.main([\"wheel\"])
-")
-
-  #
-  # Install Python wheel package.
-  #
-  message(STATUS "Installing Python Package: wheel")
-  execute_process(
-    COMMAND @VIRTUAL_PYTHON_EXECUTABLE@ -c "${install_wheel_script}"
-    WORKING_DIRECTORY "Packaging"
-    ERROR_VARIABLE error
-    RESULT_VARIABLE failed
-    )
-
-  if ( failed )
-    message( WARNING ${error} )
-  endif()
-endif()
-
 
 #
 # Get Python library directory.

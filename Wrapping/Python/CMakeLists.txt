@@ -84,11 +84,6 @@ configure_file(
   COPYONLY )
 
 configure_file(
-  "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/ez_setup.py"
-  "${CMAKE_CURRENT_BINARY_DIR}/Packaging/ez_setup.py"
-  COPYONLY )
-
-configure_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/__init__.py"
   "${CMAKE_CURRENT_BINARY_DIR}/__init__.py"
   COPYONLY )
@@ -141,7 +136,6 @@ if (SITK_PYTHON_USE_VIRTUALENV)
     "${SWIG_MODULE_SimpleITKPython_TARGET_NAME}"
     "${CMAKE_CURRENT_BINARY_DIR}/PythonVirtualEnvInstall.cmake"
     ConfigureFileBuildtime
-    "${CMAKE_CURRENT_BINARY_DIR}/Packaging/ez_setup.py"
     COMMENT "Creating python virtual enviroment..."
     )
 else()
