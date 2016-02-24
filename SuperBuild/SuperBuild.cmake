@@ -300,7 +300,9 @@ if ( USE_SYSTEM_VIRTUALENV )
 else()
   include(External_virtualenv)
   list(APPEND SimpleITK_VARS PYTHON_VIRTUALENV_EXECUTABLE)
-  list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES GTest)
+  if ( WRAP_PYTHON )
+    list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES virtualenv)
+  endif()
 endif()
 
 
@@ -406,7 +408,7 @@ include(External_SimpleITKExamples)
 #------------------------------------------------------------------------------
 # List of external projects
 #------------------------------------------------------------------------------
-set(external_project_list ITK Swig SimpleITKExamples PCRE Lua GTest ${CMAKE_PROJECT_NAME})
+set(external_project_list ITK Swig SimpleITKExamples PCRE Lua GTest virtualenv ${CMAKE_PROJECT_NAME})
 
 
 #-----------------------------------------------------------------------------
