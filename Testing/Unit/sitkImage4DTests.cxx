@@ -230,7 +230,7 @@ TEST_F(Image4D,Constructors) {
   EXPECT_EQ( image.GetDirection(), directionI4D );
 
   // Test the constructors for vector images
- std::vector<unsigned int>  s4d(4, 5);
+  std::vector<unsigned int>  s4d(4, 5);
 
   image = itk::simple::Image( s4d, itk::simple::sitkVectorUInt8 );
   EXPECT_EQ ( image.GetDimension(), 4u );
