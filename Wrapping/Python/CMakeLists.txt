@@ -94,8 +94,7 @@ mark_as_advanced(SITK_PYTHON_USE_VIRTUALENV)
 if (SITK_PYTHON_USE_VIRTUALENV)
 
   # Executable to setup a new Python virtual environment
-  # todo use a find_program and get version
-  set( PYTHON_VIRTUALENV_EXECUTABLE "" CACHE FILEPATH "Python virtualenv executable")
+  find_package( PythonVirtualEnv REQUIRED )
 
   sitk_enforce_forbid_downloads( SITK_PYTHON_USE_VIRTUALENV )
   #

@@ -296,15 +296,14 @@ endif()
 option( USE_SYSTEM_VIRTUALENV "Use a system version of Python's virtualenv. " OFF )
 mark_as_advanced(USE_SYSTEM_VIRTUALENV)
 if ( USE_SYSTEM_VIRTUALENV )
-    set( PYTHON_VIRTUALENV_EXECUTABLE "" CACHE FILEPATH "Python virtualenv executable" )
+  find_package( PythonVirtualEnv REQUIRED)
 else()
   include(External_virtualenv)
-  list(APPEND SimpleITK_VARS PYTHON_VIRTUALENV_EXECUTABLE)
   if ( WRAP_PYTHON )
     list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES virtualenv)
   endif()
 endif()
-
+list(APPEND SimpleITK_VARS PYTHON_VIRTUALENV_EXECUTABLE)
 
 #------------------------------------------------------------------------------
 # ITK
