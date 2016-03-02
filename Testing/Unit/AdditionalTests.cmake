@@ -54,6 +54,9 @@ sitk_add_java_test( ProcessObjectTest
 sitk_add_r_test( Arithmetic
   "--file=${SimpleITK_SOURCE_DIR}/Testing/Unit/RArithmeticTest.R"
   )
+sitk_add_r_test( PixelIndexing
+  "--file=${SimpleITK_SOURCE_DIR}/Testing/Unit/RPixelAccess.R"
+  )
 
 
 #

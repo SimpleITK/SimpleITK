@@ -12,10 +12,28 @@
    unsigned char &
    %{    %}
 
+
 // SEXP numeric typemap for array/image converion - SEXP are
 // arrays here
 %typemap("rtype") SEXP "numeric";
 
+// Gets rid of the class check for unsigned char function arguments
+%typemap("rtype") unsigned char, unsigned char *, unsigned char & "integer";
+// and for unsigned int vectors, and various pixel types that can be automatically
+// converted to R vectors. Otherwise the conversion happens in the C code and
+// the wrong class gets assigned on output
+%typemap("rtype") std::vector<unsigned int>, std::vector<unsigned int> *, std::vector<unsigned int> & "integer";
+%typemap("rtype") std::vector<int32_t>, std::vector<int32_t> *, std::vector<int32_t> & "integer";
+%typemap("rtype") std::vector<uint32_t>, std::vector<uint32_t> *, std::vector<uint32_t> & "integer";
+%typemap("rtype") std::vector<double>, std::vector<double> *, std::vector<double> & "numeric";
+
+// stop classes being asigned as these are already converted to R vectors.
+%typemap(scoerceout) std::vector<int32_t>, std::vector<int32_t> *, std::vector<int32_t> &,
+std::vector<float>, std::vector<float> *, std::vector<float> &
+%{    %}
+
+// some important enumerations don't get evaluate properly. This is a
+// hack to fix the problem.
 %inline
 %{
 #include "sitkConditional.h"
