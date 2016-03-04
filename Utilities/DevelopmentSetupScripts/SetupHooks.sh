@@ -65,4 +65,10 @@ git config hooks.submodule false
 git config hooks.KWStyle.conf "Utilities/KWStyle/SITK.kws.xml.in"
 git config hooks.KWStyle.overwriteRulesConf "Utilities/KWStyle/SITKOverwrite.txt"
 
+
+echo "Setting up JSON validation with python..."
+PYTHON_EXECUTABLE=$(which python) || die "No python found for hooks."
+git config hooks.python ${PYTHON_EXECUTABLE}
+git config hooks.ValidateJSON true
+
 echo "Done."
