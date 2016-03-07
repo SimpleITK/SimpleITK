@@ -111,9 +111,12 @@ macro( expand_template FILENAME input_dir output_dir library_name )
   # Make a global list of ImageFilter template filters
   set ( IMAGE_FILTER_LIST ${IMAGE_FILTER_LIST} ${FILENAME} CACHE INTERNAL "" )
 
+  # validate
+
   # header
   add_custom_command (
     OUTPUT "${output_h}"
+    COMMAND ${PYTHON_EXECUTABLE} "${SimpleITK_SOURCE_DIR}/Utilities/JSONValidate.py" ${input_json_file}
     COMMAND ${CMAKE_COMMAND} -E remove -f ${output_h}
     COMMAND ${SITK_LUA_EXECUTABLE} ${expand_template_script} code ${input_json_file} ${input_dir}/templates/sitk ${template_include_dir} Template.h.in ${output_h}
     DEPENDS ${input_json_file} ${template_deps} ${template_file_h}
