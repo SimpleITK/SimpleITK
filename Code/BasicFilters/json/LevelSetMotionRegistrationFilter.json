@@ -9,7 +9,7 @@
   "inputs" : [
     {
       "name" : "FixedImage",
-      "type" : "Image"
+      "type" : "Image",
       "custom_itk_cast" : "filter->SetFixedImage( this->CastImageToITK<typename FilterType::FixedImageType>(*inFixedImage) );"
     },
     {
