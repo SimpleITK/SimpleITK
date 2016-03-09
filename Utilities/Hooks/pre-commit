@@ -76,7 +76,7 @@ validate_json() {
     if test -n "$changes"; then
         die "Cannot validate '$1' with work tree changes."
     fi &&
-    out=$($python_exe -c "import sys, json; json.load( file( sys.argv[1], 'r' ) )" "$1" 2>&1) || die "JSON Validation error with \"$file\".
+    out=$($python_exe -c "import sys, json; json.load( open( sys.argv[1], 'r' ) )" "$1" 2>&1) || die "JSON Validation error with \"$file\".
 $out"
 }
 
