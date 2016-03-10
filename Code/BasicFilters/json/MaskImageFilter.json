@@ -24,7 +24,7 @@
       "name" : "OutsideValue",
       "type" : "double",
       "default" : 0,
-      "custom_itk_cast" : "typename OutputImageType::PixelType v;  NumericTraits<typename OutputImageType::PixelType>::SetLength( v, image1->GetNumberOfComponentsPerPixel() );  ToPixelType( this->m_OutsideValue, v );  filter->SetOutsideValue( v );"
+      "custom_itk_cast" : "typename OutputImageType::PixelType v;  NumericTraits<typename OutputImageType::PixelType>::SetLength( v, image1->GetNumberOfComponentsPerPixel() );  ToPixelType( this->m_OutsideValue, v );  filter->SetOutsideValue( v );",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Method to explicitly set the outside value of the mask. Defaults to 0",
       "briefdescriptionGet" : "",

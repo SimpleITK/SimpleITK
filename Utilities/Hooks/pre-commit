@@ -69,3 +69,39 @@ test -z "$bad" || die "$bad"
 #-----------------------------------------------------------------------------
 # Style hooks.
 . "${BASH_SOURCE%/*}/pre-commit-style.bash"
+
+# Validate json files
+validate_json() {
+    changes=$(git diff-files -- "$1") &&
+    if test -n "$changes"; then
+        die "Cannot validate '$1' with work tree changes."
+    fi &&
+    out=$($python_exe -c "import sys, json; json.load( open( sys.argv[1], 'r' ) )" "$1" 2>&1) || die "JSON Validation error with \"$file\".
+$out"
+}
+
+json_files=$(git diff-index --cached HEAD --diff-filter=AM ) &&
+if test -n "$json_files"; then
+    validate=$(git config --get --bool hooks.ValidateJSON || echo true) &&
+    if test "$validate" = "true"; then
+        python_exe=$(git config hooks.python || type -p python) &&
+        if test -z "$python_exe"; then
+            die 'Cannont validate SimpleITK JSON files with out Python.
+Configure the Python location with:
+
+  git config hooks.python "/path/to/python"
+
+It is NOT recommended to disable this check with:
+
+  git config hooks.validatejson false
+'
+        fi
+        echo "$json_files" |
+        while read src_mode dst_mode src_obj dst_obj status file; do
+            if echo "$file" | egrep-q '\.json$'; then
+                echo "validating $file"
+                validate_json "$file"
+            fi
+        done
+    fi
+fi
