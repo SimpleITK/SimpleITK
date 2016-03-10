@@ -18,28 +18,38 @@
       "detaileddescriptionGet" : "Get label value used for undecided pixels. After updating the filter, this function returns the actual label value used for undecided pixels in the current output. Note that this value is overwritten when SetLabelForUndecidedPixels is called and the new value only becomes effective upon the next filter update."
     },
     {
+      "name" : "TerminationUpdateThreshold",
+      "type" : "float",
+      "default" : "1e-5f",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set termination threshold based on confusion matrix parameter updates."
+    },
+    {
       "name" : "MaximumNumberOfIterations",
       "type" : "unsigned int",
       "default" : "std::numeric_limits<unsigned int>::max()",
+      "custom_itk_cast" : "if (m_MaximumNumberOfIterations!=std::numeric_limits<unsigned int>::max()) filter->SetMaximumNumberOfIterations(this->m_MaximumNumberOfIterations);",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set maximum number of iterations.",
-      "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the maximum number of iterations after which the STAPLE algorithm will be considered to have converged. In general this SHOULD NOT be set and the algorithm should be allowed to converge on its own."
+      "detaileddescriptionSet" : "Set maximum number of iterations."
     },
     {
-      "name" : "TerminationUpdateThreshold",
-      "type" : "float",
-      "default" : "1e-5",
+      "name" : "PriorProbabilities",
+      "type" : "std::vector<float>",
+      "default" : "std::vector<float>()",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set termination threshold based on confusion matrix parameter updates."
+      "custom_itk_cast" : "if (!m_PriorProbabilities.empty()) filter->SetPriorProbabilities(typename FilterType::PriorProbabilitiesType(&this->m_PriorProbabilities[0],this->m_PriorProbabilities.size()));",
+      "detaileddescriptionSet" : "Set label value for undecided pixels.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get prior class probabilities. After updating the filter, this function returns the actual prior class probabilities. If these were not previously set by a call to SetPriorProbabilities, then they are estimated from the input segmentations and the result is available through this function."
     }
   ],
-  "measurements" : [],
+  "measurements" : [
+  ],
   "tests" : [
     {
       "tag" : "basic",
       "description" : "Basic usage",
-      "tolerance" : "1e-5",
+      "md5hash" : "77ac8604a252c5130602645a5f02cc36",
       "inputs" : [
         "Input/STAPLE1-binary.png",
         "Input/STAPLE2-binary.png"
