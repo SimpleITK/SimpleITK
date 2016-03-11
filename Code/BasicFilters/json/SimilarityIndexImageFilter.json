@@ -6,6 +6,8 @@
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelIDTypeList",
   "filter_type" : "itk::SimilarityIndexImageFilter<InputImageType, InputImageType2 >",
+  "no_procedure" : true,
+  "no_return_image" : true,
   "members" : [],
   "measurements" : [
     {
