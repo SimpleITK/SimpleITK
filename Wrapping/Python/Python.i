@@ -468,6 +468,8 @@
              This method takes 2 parameters in 2D: the x and y index,
              and 3 parameters in 3D: the x, y and z index."""
 
+          if len(idx) == 1:
+           idx = idx[0]
 
           pixelID = self.GetPixelIDValue()
           if pixelID == sitkUnknown:
@@ -535,6 +537,8 @@
           if len(args) < 2:
             raise Exception( "Wrong number of arguments, coordinates arguments then value" )
           idx = args[:len(args)-1]
+          if len(idx) == 1:
+            idx = idx[0]
           value = args[-1]
 
           if pixelID == sitkInt8:
