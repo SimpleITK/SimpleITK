@@ -12,6 +12,7 @@ function( VariableListToCache var_list cache )
       get_property( type CACHE ${var} PROPERTY TYPE )
       get_property( advanced CACHE ${var} PROPERTY ADVANCED )
       get_property( helpstring CACHE ${var} PROPERTY HELPSTRING )
+      get_property( strings CACHE ${var} PROPERTY STRINGS )
 
       # apply escape sequences
       foreach( e "\\" "(" ")" "#" "$" "^" "@" )
@@ -23,10 +24,16 @@ function( VariableListToCache var_list cache )
       endif()
 
       set( _cache "${_cache}
-set( ${var} \"${value}\" CACHE \"${type}\" \"${helpstring}\" FORCE )
-if( ${advanced} )
-  mark_as_advanced( ${var} )
-endif()" )
+set( ${var} \"${value}\" CACHE \"${type}\" \"${helpstring}\" FORCE )")
+
+      if( "${advanced}" )
+              set( _cache "${_cache}
+  mark_as_advanced( ${var} )")
+       endif()
+       if( NOT "${strings}" STREQUAL "" )
+              set( _cache "${_cache}
+  set_property(CACHE ${var} PROPERTY STRINGS \"${strings}\")")
+       endif()
     endif()
   endforeach()
   set( ${cache} "${_cache}" PARENT_SCOPE)
