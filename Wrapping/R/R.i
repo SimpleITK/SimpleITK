@@ -32,6 +32,13 @@
 std::vector<float>, std::vector<float> *, std::vector<float> &
 %{    %}
 
+// stop printing "NULL" when calling a method
+// returning void
+%typemap(scoerceout) void
+%{
+  return(invisible($result))
+%}
+
 // some important enumerations don't get evaluate properly. This is a
 // hack to fix the problem.
 %inline
