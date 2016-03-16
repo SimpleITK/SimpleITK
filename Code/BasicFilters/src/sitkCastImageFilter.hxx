@@ -96,10 +96,7 @@ Image CastImageFilter::ExecuteInternalToLabel( const Image& inImage )
 {
   typedef TImageType                                InputImageType;
   typedef TOutputImageType                          OutputImageType;
-  typedef typename OutputImageType::LabelObjectType LabelObjectType;
-  typedef typename LabelObjectType::LabelType       LabelType;
 
-  typedef itk::Image<LabelType, InputImageType::ImageDimension> LabelImageType;
 
   typename InputImageType::ConstPointer image = this->CastImageToITK<InputImageType>( inImage );
 
