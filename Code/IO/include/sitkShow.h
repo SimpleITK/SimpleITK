@@ -81,15 +81,20 @@ namespace simple
    *  appended to the command argument list.
    *
    *
+   *  When invoked, Show searches for Fiji first, and then ImageJ.   Fiji is the most update-to-date
+   *  version of ImageJ and includes a lot of plugins which facilitate scientific image analysis.
    *  By default, for a 64-bit build of SimpleITK on Macs, sitkShow searches for ImageJ64.app.
    *  For a 32-bit Mac build, sitkShow searches for ImageJ.app.  If the user prefers a different
    *  version of ImageJ (or a different image viewer altogether), it can be specified using
    *  the SITK_SHOW_COMMAND environment variable.
    *
+   *  The boolean parameter debugOn prints the search path Show uses to find ImageJ, the full path
+   *  to the ImageJ it found, and the full command line used to invoke ImageJ.
+   *
    **/
 
 
-   void SITKIO_EXPORT Show ( const Image &image, const std::string title = "" );
+   void SITKIO_EXPORT Show ( const Image &image, const std::string& title = "", const bool debugOn=false );
 }
 }
 
