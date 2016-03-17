@@ -5,6 +5,8 @@
   "number_of_inputs" : 1,
   "pixel_types" : "BasicPixelIDTypeList",
   "filter_type" : "itk::MinimumMaximumImageFilter<InputImageType>",
+  "no_procedure" : true,
+  "no_return_image" : true,
   "members" : [],
   "measurements" : [
     {
