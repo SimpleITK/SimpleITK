@@ -67,13 +67,14 @@ class ImageTests(unittest.TestCase):
         image.SetPixel( 0, 0, 1 )
         image[ [0,1] ]  = 2
         image[ 9,9 ]  = 3
+        image.SetPixel( [0, 2], 4 )
 
-        image.GetPixel( 1,1 )
-        #image.GetPixel( [1,1] )
+        self.assertEqual(image.GetPixel(1,1), 0 )
+        self.assertEqual(image.GetPixel([0,2]), 4 )
         image[1,1]
         image[ [ 1,1 ] ]
 
-        self.assertEqual(sum( image ), 6)
+        self.assertEqual(sum( image ), 10)
 
         self.assertEqual(len( image ), 100)
 
