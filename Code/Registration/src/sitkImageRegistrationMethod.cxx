@@ -631,7 +631,7 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
   typedef TImageType     FixedImageType;
   typedef TImageType     MovingImageType;
   const unsigned int ImageDimension = FixedImageType::ImageDimension;
-  typedef itk::SpatialObject<ImageDimension> SpatialObjectMaskType;
+  //typedef itk::SpatialObject<ImageDimension> SpatialObjectMaskType;
 
 
   typedef itk::ImageRegistrationMethodv4<FixedImageType, MovingImageType>  RegistrationType;
@@ -871,7 +871,7 @@ double ImageRegistrationMethod::EvaluateInternal ( const Image &inFixed, const I
   typedef TImageType     FixedImageType;
   typedef TImageType     MovingImageType;
   const unsigned int ImageDimension = FixedImageType::ImageDimension;
-  typedef itk::SpatialObject<ImageDimension> SpatialObjectMaskType;
+  //typedef itk::SpatialObject<ImageDimension> SpatialObjectMaskType;
 
  typedef itk::ImageRegistrationMethodv4<FixedImageType, MovingImageType>  RegistrationType;
 

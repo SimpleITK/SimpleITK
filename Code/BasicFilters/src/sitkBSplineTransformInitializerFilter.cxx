@@ -150,9 +150,6 @@ BSplineTransform  BSplineTransformInitializerFilter::ExecuteInternalWithOrder ( 
   // Define the input and output image types
   typedef itk::ImageBase<NDimension> InputImageType;
 
-  //Define output image type
-  typedef float OutputImageType;
-
   // Get the pointer to the ITK image contained in image1
   typename InputImageType::ConstPointer image1 = this->CastImageToITK<InputImageType>( inImage1 );
 

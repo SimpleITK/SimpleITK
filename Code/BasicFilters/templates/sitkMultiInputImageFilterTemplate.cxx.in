@@ -145,6 +145,11 @@ $(include CustomCasts.cxx)
 
 //-----------------------------------------------------------------------------
 
+
+sitkClangDiagnosticPush();
+sitkClangWarningIgnore("-Wunused-local-typedef");
+
+
 //
 // ExecuteInternal
 //
@@ -168,6 +173,8 @@ $(include ExecuteInternalSetITKFilterParameters.cxx.in)
 
 $(include ExecuteInternalUpdateAndReturn.cxx.in)
  }
+
+sitkClangDiagnosticPop();
 
 //
 // Function to run the Execute method of this filter
