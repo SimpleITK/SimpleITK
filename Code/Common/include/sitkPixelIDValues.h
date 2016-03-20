@@ -114,6 +114,22 @@ enum PixelIDValueEnum {
 const std::string SITKCommon_EXPORT GetPixelIDValueAsString( PixelIDValueType type );
 const std::string SITKCommon_EXPORT GetPixelIDValueAsString( PixelIDValueEnum type );
 
+/** \brief Function mapping enumeration names in std::string to values
+ *
+ * This function is intended for use by the R bindings. R stores the enumeration values
+ * using the names : "sitkUnkown", "sitkUInt8", etc from PixelIDValueEnum above.
+ * This function is used to provide the integer values using calls like:
+ *
+ * val = GetPixelIDValueFromString("sitkInt32")
+ *
+ * If the pixel type has not been instantiated then the sitkUnknown value (-1) will
+ * be returned. If the pixel type string is not recognised (i.e. is not in the
+ * set of tested names) then the return value is -99. The idea is to provide
+ * a warning (via the R package) if this function needs to be updated to match
+ * changes to PixelIDValueEnum - i.e. if a new pixel type is added.
+ */
+PixelIDValueType SITKCommon_EXPORT GetPixelIDValueFromString(const std::string &enumString );
+
 #ifndef SWIG
 SITKCommon_EXPORT std::ostream& operator<<(std::ostream& os, const PixelIDValueEnum id);
 #endif
