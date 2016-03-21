@@ -303,7 +303,7 @@ else()
     list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES virtualenv)
   endif()
 endif()
-list(APPEND SimpleITK_VARS PYTHON_VIRTUALENV_EXECUTABLE)
+list(APPEND SimpleITK_VARS PYTHON_VIRTUALENV_SCRIPT)
 
 #------------------------------------------------------------------------------
 # ITK
