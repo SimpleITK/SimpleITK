@@ -6,15 +6,15 @@
 #
 # ::
 #
-#   PYTHON_VIRTUALENV_EXECUTABLE       - the full path to virtualenv
-#   PYTHON_VIRTUALENV_EXECUTABLE_FOUND - If false, don't attempt to use lua
+#   PYTHON_VIRTUALENV_SCRIPT           - the full path to virtualenv
+#   PYTHON_VIRTUALENV_SCRIPT_FOUND     - If false, don't attempt to use lua
 #   PYTHON_VIRTUALENV_VERSION_STRING   - version of lua found
 
-find_program(PYTHON_VIRTUALENV_EXECUTABLE
-  NAMES virtualenv virtualenv.py
+find_program(PYTHON_VIRTUALENV_SCRIPT
+  NAMES virtualenv.py virtualenv
   )
 
-if(PYTHON_VIRTUALENV_EXECUTABLE)
+if(PYTHON_VIRTUALENV_SCRIPT)
 
   if ("${PYTHON_EXECUTABLE}" STREQUAL "")
     find_package(PythonInterp REQUIRED)
@@ -22,7 +22,7 @@ if(PYTHON_VIRTUALENV_EXECUTABLE)
 
   ### PYTHON_VIRTUALENV_VERSION
   execute_process(
-    COMMAND ${PYTHON_EXECUTABLE} ${PYTHON_VIRTUALENV_EXECUTABLE} --version
+    COMMAND ${PYTHON_EXECUTABLE} ${PYTHON_VIRTUALENV_SCRIPT} --version
     OUTPUT_VARIABLE
       PYTHON_VIRTUALENV_VERSION_STRING
     ERROR_VARIABLE
@@ -47,7 +47,7 @@ endif()
 # all listed variables are TRUE
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(PythonVirtualEnv
-                                  REQUIRED_VARS PYTHON_VIRTUALENV_EXECUTABLE
+                                  REQUIRED_VARS PYTHON_VIRTUALENV_SCRIPT
                                   VERSION_VAR PYTHON_VIRTUALENV_VERSION_STRING)
 
-mark_as_advanced(PYTHON_VIRTUALENV_EXECUTABLE)
+mark_as_advanced(PYTHON_VIRTUALENV_SCRIPT)
