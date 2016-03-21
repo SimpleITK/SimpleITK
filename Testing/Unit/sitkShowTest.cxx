@@ -93,7 +93,7 @@ int main (int argc, char *argv[])
       std::cout << "Read 3\n";
       img = sitk::ReadImage( dataFinder.GetFile ( "Input/cthead1-Float.mha" ) );
       std::cout << "Show 3\n";
-      sitk::Show(img, "Dave was here");
+      sitk::Show(img, "Dave was here", true);
       }
     catch (std::exception &e)
       {

@@ -351,7 +351,7 @@ namespace itk
 
   //
   //
-  static std::string FindApplication(const std::string directory = "", const std::string name = "" )
+  static std::string FindApplication(const std::string directory = "", const std::string name = "", const bool debugOn=false )
   {
 
   std::vector<std::string> paths;
@@ -388,11 +388,7 @@ namespace itk
   paths.push_back( "/opt/" + directory );
   paths.push_back( "/usr/local/" + directory );
 
-#ifndef NDEBUG
-  std::cout << paths << std::endl;
   ExecutableName = itksys::SystemTools::FindDirectory( name.c_str(), paths );
-  std::cout << "Result: " << ExecutableName << std::endl;
-#endif
 
 #else
 
@@ -403,6 +399,12 @@ namespace itk
 
 #endif
 
+  if (debugOn)
+    {
+    std::cout << "FindApplication search path: " << paths << std::endl;
+    std::cout << "Result: " << ExecutableName << std::endl;
+    }
+
   return ExecutableName;
   }
 
@@ -412,17 +414,21 @@ namespace itk
    * process based on it. It waits for a fraction of a second before
    * checking it's state, to verify it was launched OK.
    */
-  static void ExecuteShow( const std::vector<std::string> & cmdLine )
+  static void ExecuteShow( const std::vector<std::string> & cmdLine, const bool debugOn=false )
   {
+    unsigned int i;
 
-#ifndef NDEBUG
-    std::copy( cmdLine.begin(), cmdLine.end(), std::ostream_iterator<std::string>( std::cout, "\n" ) );
-    std::cout << std::endl;
-#endif
+    if (debugOn)
+      {
+      std::cout << "Show command: ";
+      for ( i = 0; i < cmdLine.size(); ++i )
+        std::cout << '\'' << cmdLine[i] << "\' ";
+      std::cout << std::endl;
+      }
 
     std::vector<const char*> cmd( cmdLine.size() + 1, NULL );
 
-    for ( unsigned int i = 0; i < cmdLine.size(); ++i )
+    for ( i = 0; i < cmdLine.size(); ++i )
       {
       cmd[i] = cmdLine[i].c_str();
       }
@@ -500,7 +506,7 @@ namespace itk
 
   }
 
-  void Show( const Image &image, const std::string title)
+  void Show( const Image &image, const std::string& title, const bool debugOn)
   {
   // Try to find ImageJ, write out a file and open
   std::string ExecutableName;
@@ -528,47 +534,47 @@ namespace itk
 #if defined(_WIN32)
 
   // Windows
-  ExecutableName = FindApplication("Fiji.app", "ImageJ-win64.exe");
+  ExecutableName = FindApplication( "Fiji.app", "ImageJ-win64.exe", debugOn );
   if (!ExecutableName.length())
     {
-    ExecutableName = FindApplication("Fiji.app", "ImageJ-win32.exe");
+    ExecutableName = FindApplication( "Fiji.app", "ImageJ-win32.exe", debugOn );
     }
   if (!ExecutableName.length())
     {
-    ExecutableName = FindApplication("ImageJ", "ImageJ.exe");
+    ExecutableName = FindApplication( "ImageJ", "ImageJ.exe", debugOn );
     }
 
 #elif defined(__APPLE__)
 
-  ExecutableName = FindApplication("", "Fiji.app");
+  ExecutableName = FindApplication( "", "Fiji.app", debugOn );
   if (!ExecutableName.length())
     {
-    ExecutableName = FindApplication( "ImageJ", "ImageJ64.app" );
+    ExecutableName = FindApplication( "ImageJ", "ImageJ64.app", debugOn );
     }
   if (!ExecutableName.length())
     {
-    ExecutableName = FindApplication( "ImageJ", "ImageJ.app" );
+    ExecutableName = FindApplication( "ImageJ", "ImageJ.app", debugOn );
     }
 
 #else
 
   // Linux and other systems
-  ExecutableName = FindApplication("Fiji.app", "ImageJ-linux64");
+  ExecutableName = FindApplication( "Fiji.app", "ImageJ-linux64", debugOn );
   if (!ExecutableName.length())
     {
-    ExecutableName = FindApplication("Fiji.app", "ImageJ-linux32");
+    ExecutableName = FindApplication( "Fiji.app", "ImageJ-linux32", debugOn );
     }
   if (!ExecutableName.length())
     {
-    ExecutableName = FindApplication("ImageJ", "imagej");
+    ExecutableName = FindApplication( "ImageJ", "imagej", debugOn );
     }
   if (!ExecutableName.length())
     {
-    ExecutableName = FindApplication("imagej");
+    ExecutableName = FindApplication( "", "imagej", debugOn );
     }
 #endif
 
-  bool fijiFlag = ExecutableName.find("Fiji.app") != std::string::npos;
+  bool fijiFlag = ExecutableName.find( "Fiji.app" ) != std::string::npos;
 
   TempFile = BuildFullFileName(title, fijiFlag);
   //std::cout << "Full file name:\t" << TempFile << std::endl;
@@ -629,7 +635,7 @@ namespace itk
   CommandLine = ConvertCommand(Command, ExecutableName, TempFile, title);
 
   // run the compiled command-line in a process which will detach
-  ExecuteShow( CommandLine );
+  ExecuteShow( CommandLine, debugOn );
   }
 
   } // namespace simple
