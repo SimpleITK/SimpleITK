@@ -31,4 +31,4 @@ ExternalProject_Add(${proj}
 )
 
 set(${proj}_ROOT ${${proj}_source_dir})
-set(PYTHON_VIRTUALENV_EXECUTABLE ${${proj}_source_dir}/virtualenv.py)
+set(PYTHON_VIRTUALENV_SCRIPT ${${proj}_source_dir}/virtualenv.py)
