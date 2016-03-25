@@ -43,8 +43,8 @@ if(required LESS 0)
 
     message(STATUS "Checking if c++11 is required...")
     try_compile(SITK_CHECK_CXX11_REQUIRED
-      ${SimpleITK_BINARY_DIR}/CMakeTmp
-      ${SimpleITK_SOURCE_DIR}/CMake/sitk_check_cxx11_required.cxx
+      "${PROJECT_BINARY_DIR}/CMakeTmp"
+      "${CMAKE_CURRENT_LIST_DIR}/sitk_check_cxx11_required.cxx"
       OUTPUT_VARIABLE OUTPUT)
     if(${SITK_CHECK_CXX11_REQUIRED})
       message(STATUS "Checking if c++11 is required... NO" )
