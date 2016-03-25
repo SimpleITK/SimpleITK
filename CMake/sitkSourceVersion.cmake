@@ -35,7 +35,7 @@ get_git_head_revision(GIT_REFVAR _GIT_VERSION_HASH)
 # which should contain this additional cmake file with the
 # _GIT_VERSION variables
 if(_GIT_VERSION_HASH STREQUAL "GITDIR-NOTFOUND")
-  include( "${CMAKE_CURRENT_SOURCE_DIR}/CMake/sitkSourceVersionVars.cmake" )
+  include( "${CMAKE_CURRENT_LIST_DIR}/sitkSourceVersionVars.cmake" )
   return()
 endif()
 
@@ -113,5 +113,5 @@ else()
 endif()
 
 # save variable in a configuration file in case we have no git directory
-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/CMake/sitkSourceVersionVars.cmake.in"
+configure_file("${CMAKE_CURRENT_LIST_DIR}/sitkSourceVersionVars.cmake.in"
   "${CMAKE_CURRENT_BINARY_DIR}/sitkSourceVersionVars.cmake"  @ONLY)
