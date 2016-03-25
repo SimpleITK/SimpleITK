@@ -17,25 +17,33 @@
 # Function to wrap try compiles on the aggregate cxx test file1
 #
 function(sitkCXX11Test VARIABLE)
-  # use the hash of the dependent cxx flags in the variable name to
-  # cache the results.
-  string(MD5 cmake_cxx_flags_hash "${CMAKE_CXX_FLAGS}")
-  set(cache_var "${VARIABLE}_${hash_cmake_cxx_flags_hash}")
-  if(NOT DEFINED "${cache_var}")
+  # use the hash of the dependent cxx flags in the cached variable
+  # value to know if the arguments have changed, and need to rerun
+  string(MD5 cmake_flags_hash "${CMAKE_CXX_FLAGS}")
+  set(cache_var "${VARIABLE}_hash")
+
+  if(NOT DEFINED "${cache_var}" )
+    unset("${VARIABLE}" CACHE)
+  elseif(NOT "${${cache_var}}" STREQUAL "${cmake_flags_hash}" )
+    unset("${VARIABLE}" CACHE)
+  endif()
+
+  if(NOT DEFINED "${VARIABLE}")
     message(STATUS "Performing Test ${VARIABLE}")
     set(requred_definitions "${CMAKE_REQUIRED_DEFINITIONS} -D${VARIABLE}")
     try_compile(${VARIABLE}
-      ${SimpleITK_BINARY_DIR}/CMakeTmp
-      ${SimpleITK_SOURCE_DIR}/CMake/sitk_check_cxx11.cxx
+      "${PROJECT_BINARY_DIR}/CMakeTmp"
+      "${CMAKE_CURRENT_LIST_DIR}/sitk_check_cxx11.cxx"
       CMAKE_FLAGS
       -DCOMPILE_DEFINITIONS:STRING=${requred_definitions}
       OUTPUT_VARIABLE output)
+
+    set(${cache_var} "${cmake_flags_hash}" CACHE INTERNAL  "hashed try_compile flags")
+
     if(${VARIABLE})
-      set(${cache_var} 1 CACHE INTERNAL "SimpleITK test ${FUNCTION}")
       message(STATUS "Performing Test ${VARIABLE} - Success")
     else()
       message(STATUS "Performing Test ${VARIABLE} - Failed")
-      set(${cache_var} 0 CACHE INTERNAL "SimpleITKTest ${FUNCTION}")
       file(APPEND ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeError.log
                  "Performing Test ${VARIABLE} failed with the following output:\n"
                  "${OUTPUT}\n")
