@@ -10,6 +10,7 @@ function(_sitkCheckUndefinedSymbolsAllowed)
   set(VARIABLE "SITK_UNDEFINED_SYMBOLS_ALLOWED")
   set(cache_var "${VARIABLE}_hash")
 
+
   # hash the CMAKE_FLAGS passed and check cache to know if we need to rerun
   string(MD5 cmake_flags_hash "${CMAKE_SHARED_LINKER_FLAGS}")
 
@@ -39,7 +40,7 @@ int foo(void) {return bar()+1;}
       "${test_project_dir}"
       undefined
       CMAKE_FLAGS
-       "-DCMAKE_SHARED_LINKER_FLAGS='${CMAKE_SHARED_LINKER_FLAGS}'"
+        "-DCMAKE_SHARED_LINKER_FLAGS='${CMAKE_SHARED_LINKER_FLAGS}'"
       OUTPUT_VARIABLE output)
 
     set(${cache_var} "${cmake_flags_hash}" CACHE INTERNAL  "hashed try_compile flags")
