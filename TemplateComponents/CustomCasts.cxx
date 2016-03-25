@@ -32,7 +32,7 @@ end
 if label_map then
   OUT=OUT..[[f->GetOutput()->GetLabelObject(label)->Get${name}()]]
 else
-  OUT=OUT..[[f->Get${name}(label)]]
+  OUT=OUT..[[f->Get${name}(${parameters[1].name})]]
 end
 if custom_cast then
   OUT=OUT..')'
