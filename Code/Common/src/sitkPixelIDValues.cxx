@@ -129,15 +129,15 @@ const std::string GetPixelIDValueAsString( PixelIDValueType type )
     {
     return "label of 8-bit unsigned integer";
     }
-  else if ( sitkLabelUInt16 )
+  else if ( type == sitkLabelUInt16 )
     {
     return "label of 16-bit unsigned integer";
     }
-  else if ( sitkLabelUInt32 )
+  else if ( type == sitkLabelUInt32 )
     {
     return "label of 32-bit unsigned integer";
     }
-  else if ( sitkLabelUInt64 )
+  else if ( type == sitkLabelUInt64 )
     {
     return "label of 64-bit unsigned integer";
     }
