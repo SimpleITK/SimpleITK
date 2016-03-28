@@ -19,9 +19,6 @@ set ( SimpleITKExplicitSource
 
   )
 
-if(CMAKE_COMPILER_IS_GNUCXX)
-  set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-attributes")
-endif()
 
 # these files are the instantiated ITK filter, but they do not do IO,
 # so we don't need to register the IO factoried here.
