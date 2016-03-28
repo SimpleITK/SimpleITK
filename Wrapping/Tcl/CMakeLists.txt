@@ -1,3 +1,8 @@
+cmake_minimum_required ( VERSION 2.8.1 FATAL_ERROR )
+
+project( SimpleITK_TCL )
+
+include(../../CMake/sitkProjectLanguageCommon.cmake)
 
 find_package ( TCL REQUIRED )
 include_directories ( ${TCL_INCLUDE_PATH} )

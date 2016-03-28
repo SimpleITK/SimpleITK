@@ -1,7 +1,27 @@
+cmake_minimum_required ( VERSION 2.8.1 FATAL_ERROR )
+
+project( SimpleITK_Python )
+
+
+if(POLICY CMP0026)
+  # Allow use of the LOCATION target property.
+  #
+  # These locations are use in a convoluted fashion with the runtime
+  # configuration. This system should be refactored to support
+  # generator expression. This would allow the use of the new policy.
+  cmake_policy(SET CMP0026 OLD)
+endif()
+
+include(../../CMake/sitkProjectLanguageCommon.cmake)
+
+
 find_package ( PythonLibs REQUIRED )
 find_package ( PythonInterp REQUIRED )
 include_directories ( ${PYTHON_INCLUDE_DIR} ${CMAKE_CURRENT_SOURCE_DIR} )
 
+#
+# Options
+#
 option ( SimpleITK_PYTHON_THREADS "Enable threaded python usage by unlocking the GIL." ON )
 mark_as_advanced( SimpleITK_PYTHON_THREADS )
 option ( SimpleITK_PYTHON_EGG "Add building of python eggs to the dist target." ON )
@@ -100,7 +120,7 @@ if (SITK_PYTHON_USE_VIRTUALENV)
   #
   # Setup Python Virtual Enviroment for testing and packaging
   #
-  set( PythonVirtualenvHome "${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVirtualenv" )
+  set( PythonVirtualenvHome "${${CMAKE_PROJECT_NAME}_BINARY_DIR}/Testing/Installation/PythonVirtualenv" )
 
   # virtualenv places the python executable in different
   # locations. Also note than on windows installations where python is

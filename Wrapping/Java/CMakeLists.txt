@@ -1,3 +1,9 @@
+cmake_minimum_required ( VERSION 2.8.1 FATAL_ERROR )
+
+project( SimpleITK_Java )
+
+include(../../CMake/sitkProjectLanguageCommon.cmake)
+
 find_package ( Java REQUIRED )
 find_package ( JNI REQUIRED )
 include_directories ( ${JAVA_INCLUDE_PATH} ${JNI_INCLUDE_DIRS} )
