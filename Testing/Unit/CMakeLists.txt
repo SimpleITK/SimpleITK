@@ -185,7 +185,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
         COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
         COMMAND ${SITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Java ${template_include_dir} TestTemplate.java.in "${OUTPUT_TEST_FILENAME}"
         COMMAND ${Java_JAVAC_EXECUTABLE} -classpath ${SimpleITK_BINARY_DIR}/Wrapping/Java/${JAR_FILE} ${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/org/itk/simple/testing/${FILTERNAME}Test.java
-        DEPENDS ${filter_json_file} ${JAVA_TEMPLATE_FILES} ${SWIG_MODULE_SimpleITKJava_TARGET_NAME}
+        DEPENDS ${filter_json_file} ${JAVA_TEMPLATE_FILES}  ${SWIG_MODULE_SimpleITKJava_TARGET_NAME} org_itk_simple_jar
         )
       add_test( NAME Java.${FILTERNAME} COMMAND SimpleITKUnitTestDriver${_exec_i} --gtest_filter=Java.${FILTERNAME} )
       set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
@@ -207,7 +207,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
           /t:exe /platform:${CSHARP_PLATFORM}
           /lib:${CSHARP_BINARY_DIRECTORY} /reference:System.dll /reference:SimpleITKCSharpManaged.dll
           /out:${CSHARP_BINARY_DIRECTORY}/Test${FILTERNAME}.exe ${OUTPUT_TEST_FILENAME_SAFE}
-        DEPENDS ${filter_json_file} ${CSHARP_TEMPLATE_FILES}
+        DEPENDS ${filter_json_file} ${CSHARP_TEMPLATE_FILES} SimpleITKCSharpManaged
         )
       add_test( NAME CSharp.${FILTERNAME} COMMAND SimpleITKUnitTestDriver${_exec_i} --gtest_filter=CSharp.${FILTERNAME} )
       set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
@@ -247,16 +247,6 @@ if(MSVC_VERSION EQUAL 1700)
   # and hope that upstream premanetly addresses the problem, with out
   # required more CMake core for compiler issues.
   add_definitions(-DGTEST_HAS_TR1_TUPLE=0 )
-endif()
-
-# Add org.itk.simple.jar dependency if necessary
-if( WRAP_JAVA )
-  add_dependencies(WrappedGeneratedTests org_itk_simple_jar)
-endif()
-
-# Add C# dependency if necessary
-if( WRAP_CSHARP )
-  add_dependencies(WrappedGeneratedTests SimpleITKCSharpManaged)
 endif()
 
 add_executable(sitkShowTest sitkShowTest.cxx )
