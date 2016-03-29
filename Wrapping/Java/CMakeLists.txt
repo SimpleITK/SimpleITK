@@ -29,9 +29,7 @@ target_link_libraries( ${SWIG_MODULE_SimpleITKJava_TARGET_NAME} ${SimpleITK_LIBR
 set_source_files_properties(${swig_generated_file_fullname} PROPERTIES COMPILE_FLAGS "-w")
 sitk_strip_target( ${SWIG_MODULE_SimpleITKJava_TARGET_NAME} )
 
-# Add target for org.itk.simple.jar
-add_custom_target(org_itk_simple_jar ALL DEPENDS ${JAR_FILE})
-set(JAVA_SOURCE_CODE ${JAVA_SOURCE_DIRECTORY}/org/itk/simple/*.java)
+set(JAVA_SOURCE_CODE "${JAVA_SOURCE_DIRECTORY}/org/itk/simple/*.java")
 
 # Java 1.8 javadoc treats linting errors as build errors by default 
 # so linting should be opt-in for this version
@@ -57,6 +55,10 @@ add_custom_command(
   COMMAND ${Java_JAR_EXECUTABLE} cf ${CMAKE_CURRENT_BINARY_DIR}/${JAVA_SOURCE_FILE} org
   DEPENDS ${SWIG_MODULE_SimpleITKJava_TARGET_NAME}
   )
+
+# Add target for org.itk.simple.jar
+add_custom_target(org_itk_simple_jar ALL DEPENDS ${JAR_FILE})
+
 
 # Get the location of the extension directory
 string(REGEX REPLACE "include"  "jre/lib/ext" JAVA_EXTENSION_DIR ${JAVA_INCLUDE_PATH} )
