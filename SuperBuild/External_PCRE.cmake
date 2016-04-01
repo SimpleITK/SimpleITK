@@ -35,7 +35,7 @@ if(NOT PCRE_DIR)
   set ( pcre_CONFIGURE_COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/pcre_configure_step.cmake )
 
   ExternalProject_add(PCRE
-    URL http://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${PCRE_DOWNLOAD_SOURCE_HASH}&name=pcre-${PCRE_TARGET_VERSION}.tar.gz
+    URL https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${PCRE_DOWNLOAD_SOURCE_HASH}&name=pcre-${PCRE_TARGET_VERSION}.tar.gz
     URL_MD5 "${PCRE_DOWNLOAD_SOURCE_HASH}"
     CONFIGURE_COMMAND ${pcre_CONFIGURE_COMMAND}
     DEPENDS "${PCRE_DEPENDENCIES}"

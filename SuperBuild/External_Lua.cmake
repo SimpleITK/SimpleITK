@@ -21,7 +21,7 @@ set(lua_PATCH_COMMAND ${CMAKE_COMMAND} -E copy_if_different
 )
 
 ExternalProject_Add(Lua
-  URL http://www.lua.org/ftp/lua-5.1.5.tar.gz
+  URL https://www.lua.org/ftp/lua-5.1.5.tar.gz
   URL_MD5 2e115fe26e435e33b0d5c022e4490567
   PATCH_COMMAND ${lua_PATCH_COMMAND}
   CMAKE_GENERATOR ${gen}
