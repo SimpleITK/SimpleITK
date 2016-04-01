@@ -70,6 +70,6 @@ set(SIMPLEITK_WRAPPING_COMMON_DIR
 
 set ( CMAKE_SWIG_GLOBAL_FLAGS -I${SIMPLEITK_WRAPPING_COMMON_DIR} ${CMAKE_SWIG_GLOBAL_FLAGS} )
 
-include(sitkExtras)
+include(sitkTargetLinkLibrariesWithDynamicLookup)
 include(sitkStripOption)
 include(sitkForbidDownloadsOption)
