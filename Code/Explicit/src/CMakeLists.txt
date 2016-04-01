@@ -23,6 +23,8 @@ set ( SimpleITKExplicitSource
 # these files are the instantiated ITK filter, but they do not do IO,
 # so we don't need to register the IO factoried here.
 set ( ITK_NO_IO_FACTORY_REGISTER_MANAGER 1 )
+
+find_package(ITK COMPONENTS ITKCommon ITKImageCompose ITKImageIntensity ITKLabelMap REQUIRED)
 include(${ITK_USE_FILE})
 
 if ( MSVC AND SITK_BUILD_SHARED_LIBS )
