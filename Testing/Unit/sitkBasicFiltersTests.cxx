@@ -496,6 +496,36 @@ TEST(BasicFilters,BSplineTransformInitializer) {
   EXPECT_VECTOR_DOUBLE_NEAR( outTx.TransformPoint( v3(1.123,0.0,2.0) ), v3(1.123,0.0,2.0), 1e-17);
   EXPECT_VECTOR_DOUBLE_NEAR( outTx.TransformPoint( v3(0.0,0.0,5.0) ), v3(0.0,0.0,5.0), 1e-17);
   EXPECT_VECTOR_DOUBLE_NEAR( outTx.TransformPoint( v3(5.0,7.0,9.0) ), v3(5.0,7.0,9.0), 1e-17);
+
+  //check that changing the image's requested region does not change
+  //the BSplineTransformInitializer
+  img = sitk::Image( 482, 360, 141, sitk::sitkFloat32 );
+  img.SetSpacing( v3(0.97656, 0.97656, 2) );
+  std::vector<unsigned int> extractSize(3);
+  extractSize[0] = 482;
+  extractSize[1] = 0;
+  extractSize[2] = 141;
+  std::vector<int> extractIndex(3);
+  extractIndex[0] = 0;
+  extractIndex[1] = 176;
+  extractIndex[2] = 0;
+
+  std::vector<uint32_t> transformDomainMeshSize(3);
+  transformDomainMeshSize[0] = 9;
+  transformDomainMeshSize[1] = 7;
+  transformDomainMeshSize[2] = 6;
+  sitk::BSplineTransform transformBefore(3), transformAfter(3);
+  transformBefore = sitk::BSplineTransformInitializer( img, transformDomainMeshSize );
+
+  sitk::Extract(img, extractSize, extractIndex);
+
+  transformAfter = sitk::BSplineTransformInitializer( img, transformDomainMeshSize );
+
+  //the extract filter should not have any effect on the
+  //BSplineTransformInitializer, it only changed the image's
+  //requested region
+  EXPECT_VECTOR_DOUBLE_NEAR( transformBefore.GetTransformDomainPhysicalDimensions(), transformAfter.GetTransformDomainPhysicalDimensions(), 1e-17 );
+  EXPECT_VECTOR_DOUBLE_NEAR( transformBefore.GetTransformDomainOrigin(), transformAfter.GetTransformDomainOrigin(), 1e-17 );
 }
 
 
