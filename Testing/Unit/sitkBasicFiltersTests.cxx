@@ -497,9 +497,14 @@ TEST(BasicFilters,BSplineTransformInitializer) {
   EXPECT_VECTOR_DOUBLE_NEAR( outTx.TransformPoint( v3(0.0,0.0,5.0) ), v3(0.0,0.0,5.0), 1e-17);
   EXPECT_VECTOR_DOUBLE_NEAR( outTx.TransformPoint( v3(5.0,7.0,9.0) ), v3(5.0,7.0,9.0), 1e-17);
 
+}
+
+TEST(BasicFilters, BSplineTransformInitializerRequestedRegion) {
+  namespace sitk = itk::simple;
+
   //check that changing the image's requested region does not change
   //the BSplineTransformInitializer
-  img = sitk::Image( 482, 360, 141, sitk::sitkFloat32 );
+  sitk::Image img( 482, 360, 141, sitk::sitkFloat32 );
   img.SetSpacing( v3(0.97656, 0.97656, 2) );
   std::vector<unsigned int> extractSize(3);
   extractSize[0] = 482;
@@ -526,8 +531,8 @@ TEST(BasicFilters,BSplineTransformInitializer) {
   //requested region
   EXPECT_VECTOR_DOUBLE_NEAR( transformBefore.GetTransformDomainPhysicalDimensions(), transformAfter.GetTransformDomainPhysicalDimensions(), 1e-17 );
   EXPECT_VECTOR_DOUBLE_NEAR( transformBefore.GetTransformDomainOrigin(), transformAfter.GetTransformDomainOrigin(), 1e-17 );
-}
 
+}
 
 TEST(BasicFilters,CenteredTransformInitializer) {
   namespace sitk = itk::simple;
