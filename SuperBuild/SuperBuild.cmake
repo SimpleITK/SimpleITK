@@ -111,8 +111,6 @@ endif()
 #-------------------------------------------------------------------------
 # augment compiler flags
 #-------------------------------------------------------------------------
-include(CompilerFlagSettings)
-
 
 # the hidden visibility for inline methods should be consistent between ITK and SimpleITK
 if(NOT WIN32 AND CMAKE_COMPILER_IS_GNUCXX AND BUILD_SHARED_LIBS)
@@ -360,7 +358,7 @@ ExternalProject_Add(${proj}
     ${ep_simpleitk_args}
     ${ep_common_args}
     -DBUILD_SHARED_LIBS:BOOL=${BUILD_SHARED_LIBS}
-    -DCMAKE_CXX_FLAGS:STRING=${CMAKE_CXX_FLAGS}\ ${CXX_ADDITIONAL_WARNING_FLAGS}
+    -DCMAKE_CXX_FLAGS:STRING=${CMAKE_CXX_FLAGS}
     -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
     -DCMAKE_LIBRARY_OUTPUT_DIRECTORY:PATH=<BINARY_DIR>/lib
     -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY:PATH=<BINARY_DIR>/lib
