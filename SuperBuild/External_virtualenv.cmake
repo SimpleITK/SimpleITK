@@ -18,7 +18,7 @@ set(${proj}_install_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj})
 
 
 ExternalProject_Add(${proj}
-  URL http://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${${proj}_DOWNLOAD_SOURCE_HASH}&name=virtualenv-${${proj}_TARGET_VERSION}.tar.gz
+  URL https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${${proj}_DOWNLOAD_SOURCE_HASH}&name=virtualenv-${${proj}_TARGET_VERSION}.tar.gz
   URL_MD5 ${${proj}_DOWNLOAD_SOURCE_HASH}
   SOURCE_DIR ${${proj}_source_dir}
   BINARY_DIR ${${proj}_binary_dir}

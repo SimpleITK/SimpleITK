@@ -23,7 +23,7 @@ the original files at the corresponding location in the build tree.
 
 The Midas server at
 
-  http://midas3.kitware.com/midas/
+  https://midas3.kitware.com/midas/
 
 is an ITK community resource where any community member can upload binary data
 files.  This script automates the upload of data to the server and generation of
@@ -53,7 +53,7 @@ import pydas
 
 
 def connect_to_midas(email=None, api_key=None):
-    midas_url = 'http://midas3.kitware.com/midas/'
+    midas_url = 'https://midas3.kitware.com/midas/'
     #pydas.login(url=midas_url, email=email, api_key=api_key)
     try:
         pydas.login(url=midas_url, email=email, api_key=api_key)
