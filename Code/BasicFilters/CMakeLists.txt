@@ -1,7 +1,7 @@
 
 
 # Set up code generation
-include(${SimpleITK_SOURCE_DIR}/CMake/generate_filter_source.cmake)
+include(sitkGenerateFilterSource)
 generate_filter_source()
 
 add_subdirectory( src )

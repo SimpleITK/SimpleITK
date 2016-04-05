@@ -53,8 +53,8 @@ set(CMAKE_MODULE_PATH
   ${CMAKE_MODULE_PATH}
   )
 
-include(PreventInSourceBuilds)
-include(PreventInBuildInstalls)
+include(sitkPreventInSourceBuilds)
+include(sitkPreventInBuildInstalls)
 include(VariableList)
 
 
