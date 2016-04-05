@@ -267,7 +267,6 @@ option ( USE_SYSTEM_SWIG "Use a pre-compiled version of SWIG 2.0 previously conf
 mark_as_advanced(USE_SYSTEM_SWIG)
 if(USE_SYSTEM_SWIG)
   find_package ( SWIG 2 REQUIRED )
-  include ( UseSWIGLocal )
 else()
   include(External_Swig)
   list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES Swig)
