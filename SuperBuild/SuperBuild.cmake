@@ -111,6 +111,8 @@ endif()
 #-------------------------------------------------------------------------
 # augment compiler flags
 #-------------------------------------------------------------------------
+include(sitkCheckRequiredFlags)
+set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SimpleITK_REQUIRED_CXX_FLAGS}" )
 
 # the hidden visibility for inline methods should be consistent between ITK and SimpleITK
 if(NOT WIN32 AND CMAKE_COMPILER_IS_GNUCXX AND BUILD_SHARED_LIBS)
@@ -330,7 +332,9 @@ foreach (_varName ${_varNames})
   if(_varName MATCHES "^SimpleITK_" OR _varName MATCHES "^SITK_" )
     if (NOT _varName MATCHES "^SITK_LANGUAGES_VARS"
           AND
-        NOT _varName MATCHES "^SimpleITK_VARS")
+        NOT _varName MATCHES "^SimpleITK_VARS"
+          AND
+        NOT _varName MATCHES "^SimpleITK_REQUIRED_")
       message( STATUS "Passing variable \"${_varName}=${${_varName}}\" to SimpleITK external project.")
       list(APPEND SimpleITK_VARS ${_varName})
     endif()
