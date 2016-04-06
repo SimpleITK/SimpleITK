@@ -408,6 +408,7 @@ class Doxy2SWIG:
                 ret.extend([_tmp, '\n\n'])
         return ret
 
+
 class Doxy2R(Doxy2SWIG):
     def __init__(self, src, javaFlag=0):
         Doxy2SWIG.__init__(self, src, javaFlag)
@@ -569,12 +570,138 @@ class Doxy2R(Doxy2SWIG):
             p.generate()
             self.pieces.extend(self.clean_pieces(p.pieces))
 
+## For the procedural interface
+## This will produce multiple Rd files, and is therefore
+## quite different to the others
+## Text is now stored in piecesdict
+## add_text uses a variable to track the name
+
+class Doxy2RProc(Doxy2SWIG):
+    def __init__(self, src, javaFlag=0):
+        Doxy2SWIG.__init__(self, src, javaFlag)
+        """ Turns on the title, brief description and detailed description markup.
+        Turn them off when inside member documentatation.
+
+        """
+        self.FilterTitle = True
+        self.EmptyText = False
+        self.piecesdict = dict()
+        self.currentFunc=''
+
+    def parse_Text(self, node):
+        txt = node.data
+        txt = txt.replace('\\', r'\\\\')
+        txt = txt.replace('"', r'\"')
+        # ignore pure whitespace
+        m = self.space_re.match(txt)
+        if m and len(m.group()) == len(txt):
+            # Flag the text being empty
+            self.EmptyText = True
+            pass
+        else:
+            self.add_text(textwrap.fill(txt))
+
+    def add_text(self, value):
+        """Adds text corresponding to `value` into `self.pieces`."""
+        if not self.currentname in self.piecesdict:
+            self.piecesdict[self.currentname]=[]
+        if type(value) in (list, tuple):
+            self.piecesdict[self.currentname].extend(value)
+        else:
+            self.piecesdict[self.currentname].append(value)
+
+
+    def do_includes(self, node):
+        self.add_text('%C++ includes: ')
+        self.generic_parse(node, pad=1)
+
+    def do_detaileddescription(self, node):
+        if self.FilterTitle:
+            self.add_text('\\details{')
+        self.generic_parse(node, pad=1)
+        if self.FilterTitle:
+            # check that we actually got a detailed description.
+            # Not having a title is illegal in R
+            # use the class name otherwise
+            self.add_text('}\n')
+    def do_briefdescription(self, node):
+        # there are brief descriptions all over the place and
+        # we don't want them all to be titles
+        if self.FilterTitle:
+            self.add_text('\\description{')
+        self.generic_parse(node, pad=0)
+        if self.FilterTitle:
+            # if the title is empty, then we'll use the name
+            if self.EmptyText:
+                self.add_text(self.sitkClassName)
+            self.add_text('}\n')
+        self.EmptyText = False
+
+    def do_memberdef(self, node):
+        prot = node.attributes['prot'].value
+        id = node.attributes['id'].value
+        kind = node.attributes['kind'].value
+        tmp = node.parentNode.parentNode.parentNode
+        compdef = tmp.getElementsByTagName('compounddef')[0]
+        cdef_kind = compdef.attributes['kind'].value
+
+        self.FilterTitle = False;
+
+        if prot == 'public':
+            first = self.get_specific_nodes(node, ('definition', 'name'))
+            name = first['name'].firstChild.data
+            if name[:8] == 'operator': # Don't handle operators yet.
+                return
+            # names are overloaded, of course, and need
+            # to be collected into the same R file
+            defn = first['definition'].firstChild.data
+            anc = node.parentNode.parentNode
+            # need to worry about documenting these for the procedural interface
+            # We want to document overloaded names in the same file,
+            # which means we'll need to store a map of individual
+            # file contents
+            if cdef_kind in ('namespace'):
+                # do we already have something by this name
+                self.currentname=name
+                others = self.get_specific_nodes(node, ('argsstring', 'briefdescription',
+                                                        'detaileddescription'))
+                argstring = others['argsstring'].firstChild.data
+                if not name in self.piecesdict:
+                    # first time we've hit this name, so add the name, alias and title
+                    self.add_text('\\title{%s}\n' %(name))
+                    self.add_text('\\name{%s}\n' %(name))
+                    self.add_text('\\alias{%s}\n' %(name))
+                    self.add_text('\\description{\n')
+                    self.generic_parse(others['briefdescription'])
+                    self.add_text('\n}\n\n')
+                    self.add_text('\\details{\n')
+                    self.generic_parse(others['detaileddescription'])
+                    self.add_text('\n}\n\n')
+
+                # now the potentially repeated bits (overloading)
+                usage=defn + argstring
+                self.add_text('\\usage{\n%s\n}\n' %(usage))
+
+    def do_sectiondef(self, node):
+        kind = node.attributes['kind'].value
+        if kind in ('public-func', 'func'):
+            self.generic_parse(node)
+
+
+    def write(self, fname, mode='w'):
+        ## fname is the destination folder
+        if os.path.isdir(fname):
+            for FuncName in self.piecesdict:
+                outname=os.path.join(fname, FuncName + ".Rd")
+                self.pieces = self.piecesdict[FuncName]
+                Doxy2SWIG.write(self,outname)
+        else:
+            assert False, "Destination path doesn't exist"
 
 def main(input, output):
     p = Doxy2SWIG(input)
     p.generate()
     p.write(output)
-
 
 if __name__ == '__main__':
     if len(sys.argv) != 3:
