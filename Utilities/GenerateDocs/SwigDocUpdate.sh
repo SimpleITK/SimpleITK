@@ -22,8 +22,14 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # Load configuration variable from file
 . ${DIR}/config_vars.sh || die 'Unable to find local \"config_vars.sh\" configuration file.'
 
+
 [ -e ${SITK_BUILD_DIR}/Documentation/xml/sitkImage_8h.xml ] ||
    die "Uable to find SimpleITK Doxygen XML! SimpleITK Doxygen needs to be generated with the Documentation target!"
 
 ${PYTHON_EXECUTABLE} doxyall.py ${SITK_BUILD_DIR}/Documentation/xml/ ${SIMPLEITK}/Wrapping/Python/PythonDocstrings.i
 ${PYTHON_EXECUTABLE} doxyall.py -j ${SITK_BUILD_DIR}/Documentation/xml/ ${SIMPLEITK}/Wrapping/Java/JavaDoc.i
+
+if [ ! -d ${SIMPLEITK}/Wrapping/R/Packaging/SimpleITK/man/ ] ; then
+    mkdir -p ${SIMPLEITK}/Wrapping/R/Packaging/SimpleITK/man/
+fi
+${PYTHON_EXECUTABLE} doxyall.py -r ${SITK_BUILD_DIR}/Documentation/xml/ ${SIMPLEITK}/Wrapping/R/Packaging/SimpleITK/man/

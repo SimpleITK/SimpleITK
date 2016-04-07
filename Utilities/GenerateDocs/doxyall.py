@@ -6,17 +6,20 @@ from doxy2swig import *
 
 
 def usage():
-    print( "\ndoxyall.py [options] doxygen_xml_dir output.i" )
+    print( "\ndoxyall.py [options] doxygen_xml_dir output.i|outputdir" )
     print( "" )
     print( "     -h, --help    This help message" )
     print( "     -j, --java    Java style output" )
+    print( "     -r, --R       R style output - destination must be a directory" )
+
     print( "" )
 
 
 javaFlag = 0
+rFlag = 0
 
 try:
-    opts, args = getopt.getopt(sys.argv[1:], "hj", [ "help", "java", ] )
+    opts, args = getopt.getopt(sys.argv[1:], "hjr", [ "help", "java", "R" ] )
 except getopt.GetoptErr, err:
     print( str(err) )
     usage()
@@ -28,6 +31,8 @@ for o, a in opts:
         sys.exit()
     elif o in ("-j", "--java"):
         javaFlag = 1
+    elif o in ("-r", "--R"):
+        rFlag = 1
     else:
         assert False, "Unhandled option"
 
@@ -39,6 +44,9 @@ if len(args) < 2:
 indir = args[0]
 outfile = args[1]
 
+if rFlag:
+    outdir = args[1]
+
 files = glob.glob(indir+"/*.xml")
 files.sort()
 
@@ -47,7 +55,8 @@ tmpfd, tmpfile = tempfile.mkstemp(suffix=".i", text=True)
 
 logfd, logfile = tempfile.mkstemp(suffix=".txt", prefix="doxyall.", text=True)
 
-fout = open(outfile, "w")
+if not rFlag:
+    fout = open(outfile, "w")
 
 flog = open(logfile, "w")
 
@@ -63,9 +72,27 @@ for x in files:
     flog.write("Processing " + x + "\n")
 
     try:
-        p = Doxy2SWIG(x, javaFlag)
+        if (rFlag):
+            p = Doxy2R(x)
+        else:
+            p = Doxy2SWIG(x, javaFlag)
+
         p.generate()
         p.write(tmpfile)
+
+        if (rFlag):
+            ThisClassName = p.sitkClassName;
+            # also exclude ones starting with detail or that are template instantiations
+            if ThisClassName.find("detail::") >=0 or ThisClassName.find("<") >=0:
+                continue
+
+            ThisClassName = ThisClassName.replace("itk::simple::", "")
+            ThisClassName = ThisClassName.replace("itk::Functor::", "")
+
+            outfile=outdir + "/" + ThisClassName + ".Rd"
+            fout = open(outfile, "w")
+
+
 
         fin = open(tmpfile, "r")
 
@@ -74,14 +101,26 @@ for x in files:
             line2 = line2.rstrip()
             fout.write(line2)
             fout.write('\n')
+            if (rFlag):
+                ## Need to duplicate the name entry to alias
+                if line2.find("\\name{") >= 0:
+                    line3=line2.replace("\\name{", "\\alias{")
+                    line4=line2.replace("\\name{", "\\title{")
+                    fout.write(line3)
+                    fout.write('\n')
+                    fout.write(line4)
+                    fout.write('\n')
 
+        if (rFlag):
+            fout.close()
         fin.close()
     except:
         flog.write( "Error on file " + x + "\n")
         print( "Error on file " + x + "\n")
         errorCount = errorCount+1
+if ( not rFlag):
+    fout.close()
 
-fout.close()
 flog.close()
 
 os.close(tmpfd)

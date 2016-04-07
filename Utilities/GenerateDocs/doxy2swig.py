@@ -408,6 +408,167 @@ class Doxy2SWIG:
                 ret.extend([_tmp, '\n\n'])
         return ret
 
+class Doxy2R(Doxy2SWIG):
+    def __init__(self, src, javaFlag=0):
+        Doxy2SWIG.__init__(self, src, javaFlag)
+        """ Turns on the title, brief description and detailed description markup.
+        Turn them off when inside member documentatation.
+
+        """
+        self.FilterTitle = True
+        self.sitkClassName=''
+        self.EmptyText = False
+
+    def parse_Text(self, node):
+        txt = node.data
+        txt = txt.replace('\\', r'\\\\')
+        txt = txt.replace('"', r'\"')
+        # ignore pure whitespace
+        m = self.space_re.match(txt)
+        if m and len(m.group()) == len(txt):
+            # Flag the text being empty
+            self.EmptyText = True
+            pass
+        else:
+            self.add_text(textwrap.fill(txt))
+
+
+    def do_compoundname(self, node):
+        self.add_text('\n\n')
+        data = node.firstChild.data
+        self.add_text('\\name{%s}\n'%data)
+        self.sitkClassName=data
+
+    def do_compounddef(self, node):
+        kind = node.attributes['kind'].value
+        if kind in ('class', 'struct'):
+            prot = node.attributes['prot'].value
+            if prot != 'public':
+                return
+            names = ('compoundname', 'briefdescription',
+                     'detaileddescription', 'includes')
+            first = self.get_specific_nodes(node, names)
+            for n in names:
+                if n in first:
+                    self.parse(first[n])
+            for n in node.childNodes:
+                if n not in list(first.values()):
+                    self.parse(n)
+        elif kind in ('file', 'namespace'):
+            nodes = node.getElementsByTagName('sectiondef')
+            for n in nodes:
+                self.parse(n)
+
+    def do_includes(self, node):
+        self.add_text('%C++ includes: ')
+        self.generic_parse(node, pad=1)
+
+    def do_detaileddescription(self, node):
+        if self.FilterTitle:
+            self.add_text('\\details{')
+        self.generic_parse(node, pad=1)
+        if self.FilterTitle:
+            # check that we actually got a detailed description.
+            # Not having a title is illegal in R
+            # use the class name otherwise
+            self.add_text('}\n')
+    def do_briefdescription(self, node):
+        # there are brief descriptions all over the place and
+        # we don't want them all to be titles
+        if self.FilterTitle:
+            self.add_text('\\description{')
+        self.generic_parse(node, pad=0)
+        if self.FilterTitle:
+            # if the title is empty, then we'll use the name
+            if self.EmptyText:
+                self.add_text(self.sitkClassName)
+            self.add_text('}\n')
+        self.EmptyText = False
+
+    def do_memberdef(self, node):
+        prot = node.attributes['prot'].value
+        id = node.attributes['id'].value
+        kind = node.attributes['kind'].value
+        tmp = node.parentNode.parentNode.parentNode
+        compdef = tmp.getElementsByTagName('compounddef')[0]
+        cdef_kind = compdef.attributes['kind'].value
+
+        self.FilterTitle = False;
+
+        if prot == 'public':
+            first = self.get_specific_nodes(node, ('definition', 'name'))
+            name = first['name'].firstChild.data
+            if name[:8] == 'operator': # Don't handle operators yet.
+                return
+
+            defn = first['definition'].firstChild.data
+            self.add_text('\n')
+            self.add_text('\\item{')
+            anc = node.parentNode.parentNode
+            # don't need to worry about documenting these in sitk
+            if cdef_kind in ('file', 'namespace'):
+                ns_node = anc.getElementsByTagName('innernamespace')
+                if not ns_node and cdef_kind == 'namespace':
+                    ns_node = anc.getElementsByTagName('compoundname')
+                if ns_node:
+                    ns = ns_node[0].firstChild.data
+                    self.add_text('%s %s'%(name, defn))
+                    if self.java:
+                        self.add_text(' %s::%s "/**\n%s'%(ns, name, defn))
+                    else:
+                        self.add_text(' %s::%s "\n'%(ns, name))
+                else:
+                    self.add_text('YY %s TT %s'%(name, defn))
+                    if self.java:
+                        self.add_text(' %s "/**\n%s'%(name, defn))
+                    else:
+                        self.add_text(' %s "\n'%(name))
+            ## everything will be a class
+            elif cdef_kind in ('class', 'struct'):
+                # Get the full function name.
+                anc_node = anc.getElementsByTagName('compoundname')
+                cname = anc_node[0].firstChild.data
+                argstring = node.getElementsByTagName('argsstring')[0]
+                arguments = argstring.firstChild.data
+                returnType = node.getElementsByTagName('type')[0]
+                if returnType.firstChild == None:
+                    returnType = ''
+                else:
+                    ## search through the return type - 2 levels should be enough
+                    ## usually there's a link around it.
+                    if returnType.firstChild.firstChild != None:
+                        returnType = returnType.firstChild.firstChild.nodeValue
+                    else:
+                        returnType = returnType.firstChild.nodeValue
+
+                self.add_text('%s %s%s'%(returnType, name, arguments))
+
+            for n in node.childNodes:
+                if n not in list(first.values()):
+                    self.parse(n)
+            self.add_text('}\n')
+            self.FilterTitle=True;
+
+    def do_sectiondef(self, node):
+        kind = node.attributes['kind'].value
+        if kind in ('public-func', 'func'):
+            self.add_text('\\arguments{\n')
+            self.generic_parse(node)
+            self.add_text('}\n')
+
+    def do_doxygenindex(self, node):
+        self.multi = 1
+        comps = node.getElementsByTagName('compound')
+        for c in comps:
+            refid = c.attributes['refid'].value
+            fname = refid + '.xml'
+            if not os.path.exists(fname):
+                fname = os.path.join(self.my_dir,  fname)
+#            print "parsing file: %s"%fname
+            p = Doxy2R(fname)
+            p.generate()
+            self.pieces.extend(self.clean_pieces(p.pieces))
+
 
 def main(input, output):
     p = Doxy2SWIG(input)
