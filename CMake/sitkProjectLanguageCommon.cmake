@@ -42,7 +42,7 @@ endif()
 
 find_package ( SWIG 2 REQUIRED )
 
-include (UseSWIGLocal)
+include (sitkUseSWIG)
 
 file(GLOB SWIG_EXTRA_DEPS
   "${SimpleITK_SOURCE_DIR}/Code/Common/include/*.h"
