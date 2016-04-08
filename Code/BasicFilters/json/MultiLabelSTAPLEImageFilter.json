@@ -44,6 +44,21 @@
     }
   ],
   "measurements" : [
+    {
+      "name" : "ConfusionMatrix",
+      "type" : "std::vector<float>",
+      "no_print" : true,
+      "custom_cast" : "std::vector<float>(value.begin(), value.end())",
+      "active" : true,
+      "parameters" : [
+        {
+          "name" : "input",
+          "type" : "unsigned int"
+        }
+      ],
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Get confusion matrix for the i-th input segmentation."
+    }
   ],
   "tests" : [
     {
