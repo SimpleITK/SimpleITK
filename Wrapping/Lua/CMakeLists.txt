@@ -1,9 +1,22 @@
+cmake_minimum_required ( VERSION 2.8.1 FATAL_ERROR )
+
+project( SimpleITK_Lua )
+
+include(../../CMake/sitkProjectLanguageCommon.cmake)
+
 
 if (CMAKE_VERSION VERSION_LESS "3")
-  find_package ( Lua51 REQUIRED )
+  find_package ( Lua51 ${_QUIET} )
+  if ( NOT LUA_FOUND )
+    find_package ( Lua50 ${_QUIET} )
+  endif()
 else()
-  find_package ( Lua REQUIRED )
+  find_package ( Lua ${_QUIET} )
 endif()
+
+set( LUA_ADDITIONAL_LIBRARIES "" CACHE STRING "Additional libraries which may be needed for lua such as readline.")
+mark_as_advanced( LUA_ADDITIONAL_LIBRARIES )
+
 include_directories ( ${LUA_INCLUDE_DIR} )
 
 set_source_files_properties ( SimpleITK.i PROPERTIES CPLUSPLUS ON )
