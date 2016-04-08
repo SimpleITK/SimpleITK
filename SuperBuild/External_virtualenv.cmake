@@ -7,8 +7,8 @@ set(${CMAKE_CURRENT_LIST_FILENAME}_FILE_INCLUDED 1)
 
 set(proj virtualenv)
 
-set(${proj}_TARGET_VERSION 14.0.6)
-set(${proj}_DOWNLOAD_SOURCE_HASH "a035037925c82990a7659ecf8764bcdb")
+set(${proj}_TARGET_VERSION 15.0.1)
+set(${proj}_DOWNLOAD_SOURCE_HASH "28d76a0d9cbd5dc42046dd14e76a6ecc")
 
 # based on the standard EP_PREFIX locations, but since we don't build
 # or install, then standars install directory is also the source
@@ -18,7 +18,7 @@ set(${proj}_install_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj})
 
 
 ExternalProject_Add(${proj}
-  URL http://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${${proj}_DOWNLOAD_SOURCE_HASH}&name=virtualenv-${${proj}_TARGET_VERSION}.tar.gz
+  URL https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${${proj}_DOWNLOAD_SOURCE_HASH}&name=virtualenv-${${proj}_TARGET_VERSION}.tar.gz
   URL_MD5 ${${proj}_DOWNLOAD_SOURCE_HASH}
   SOURCE_DIR ${${proj}_source_dir}
   BINARY_DIR ${${proj}_binary_dir}
@@ -31,4 +31,4 @@ ExternalProject_Add(${proj}
 )
 
 set(${proj}_ROOT ${${proj}_source_dir})
-set(PYTHON_VIRTUALENV_EXECUTABLE ${${proj}_source_dir}/virtualenv.py)
+set(PYTHON_VIRTUALENV_SCRIPT ${${proj}_source_dir}/virtualenv.py)

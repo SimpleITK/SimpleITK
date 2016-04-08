@@ -5,6 +5,8 @@
   "number_of_inputs" : 2,
   "pixel_types" : "IntegerPixelIDTypeList",
   "filter_type" : "itk::LabelOverlapMeasuresImageFilter<InputImageType>",
+  "no_procedure" : true,
+  "no_return_image" : true,
   "members" : [],
   "measurements" : [
     {

@@ -7,6 +7,8 @@
   "pixel_types" : "BasicPixelIDTypeList",
   "pixel_types2" : "BasicPixelIDTypeList",
   "filter_type" : "itk::HausdorffDistanceImageFilter<InputImageType, InputImageType2 >",
+  "no_procedure" : true,
+  "no_return_image" : true,
   "members" : [],
   "measurements" : [
     {

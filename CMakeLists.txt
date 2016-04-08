@@ -56,7 +56,7 @@ find_package(ITK REQUIRED )
 #we require certain packages be turned on in ITK
 include(sitkCheckForITKModuleDependencies)
 
-include(sitkExtras)
+include(sitkTargetLinkLibrariesWithDynamicLookup)
 
 if(ITK_FOUND)
 
@@ -125,19 +125,7 @@ option( SITK_4D_IMAGES "Add Image and I/O support for four spatial dimensions." 
 mark_as_advanced( SITK_4D_IMAGES )
 
 
-#-----------------------------------------------------------------------------
-# Forbid downloading resources from the network during a build. This helps
-# when building on systems without network connectivity to determine which
-# resources much be obtained manually and made available to the build.
-option(SITK_FORBID_DOWNLOADS "Do not download source code or data from the network" OFF)
-mark_as_advanced(SITK_FORBID_DOWNLOADS)
-macro(sitk_enforce_forbid_downloads _name)
-  if(SITK_FORBID_DOWNLOADS)
-    message(SEND_ERROR "Attempted to download ${_name} when SITK_FORBID_DOWNLOADS is ON")
-  endif()
-endmacro()
-
-
+include( sitkForbidDownloadsOption )
 
 # Setup build locations.
 if(NOT CMAKE_RUNTIME_OUTPUT_DIRECTORY)
@@ -172,13 +160,6 @@ set( SimpleITK_LIBRARIES ${SimpleITK_LIBRARIES}  CACHE INTERNAL "" )
 set ( GENERATED_TEST_LIST "" CACHE INTERNAL "" )
 set ( GENERATED_FILTER_LIST "" CACHE INTERNAL "" )
 set ( GENERATED_TEST_SOURCE_LIST "" CACHE INTERNAL "" )
-
-
-
-set(JAR_FILE "simpleitk-${SimpleITK_VERSION}.jar")
-set(JAVADOC_FILE "simpleitk-javadoc-${SimpleITK_VERSION}.jar")
-set(JAVA_SOURCE_FILE "simpleitk-source-${SimpleITK_VERSION}.jar")
-
 
 # Create cached list of all template components
 file( GLOB template_components
@@ -235,35 +216,7 @@ function(sitk_install_exported_target tgt)
     )
 endfunction()
 
-#------------------------------------------------------------------------------
-# Strip Option
-
-# Add option to strip wrapping libraries.
-# Since the wrapping libraries don't get installed by the normal cmake
-# installation process, this option enables stripping of the libraries
-# as part of the build process. It should be used on the laguage
-# targets and the the SimpleITK iterface, as those can be installed
-# into the system.
-option(SimpleITK_BUILD_STRIP "Strip executables and libraries after building." OFF)
-mark_as_advanced(SimpleITK_BUILD_STRIP)
-set(CMAKE_STRIP_FLAGS "-x" CACHE STRING "Flags used by strip in the post_build.")
-mark_as_advanced(CMAKE_STRIP_FLAGS)
-separate_arguments(CMAKE_STRIP_FLAGS)
-
-function(sitk_strip_target tgt)
-  if(NOT SimpleITK_BUILD_STRIP)
-    return()
-  endif()
-  get_property(type TARGET ${tgt} PROPERTY TYPE)
-  if(NOT type STREQUAL STATIC_LIBRARY)
-    add_custom_command(
-      TARGET ${tgt}
-      POST_BUILD
-      COMMAND ${CMAKE_STRIP} ${CMAKE_STRIP_FLAGS} "$<TARGET_FILE:${tgt}>"
-      )
-  endif()
-
-endfunction()
+include(sitkStripOption)
 
 #------------------------------------------------------------------------------
 # These are some system specific compiler options needed to build SimpleITK

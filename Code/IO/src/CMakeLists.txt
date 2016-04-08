@@ -11,6 +11,15 @@ set( SimpleITKIOSource
 
 include_directories( ${CMAKE_CURRENT_SOURCE_DIR} )
 
+set(REQUIRED_ITK_MODULES  ITKCommon ITKLabelMap ITKImageCompose
+  ITKImageIntensity ITKIOImageBase ITKIOTransformBase ITKIOGDCM )
+foreach( mod IN LISTS ITK_MODULES_ENABLED)
+  if( ${mod} MATCHES "IO")
+    list(APPEND REQUIRED_ITK_MODULES ${mod})
+  endif()
+endforeach()
+
+find_package(ITK COMPONENTS REQUIRED)
 include(${ITK_USE_FILE})
 
 add_library ( SimpleITKIO ${SimpleITKIOSource} )

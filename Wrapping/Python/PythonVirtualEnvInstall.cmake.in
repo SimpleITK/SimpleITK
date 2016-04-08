@@ -21,7 +21,7 @@ endif()
 #
 execute_process(
   COMMAND "@PYTHON_EXECUTABLE@"
-    "@PYTHON_VIRTUALENV_EXECUTABLE@"
+    "@PYTHON_VIRTUALENV_SCRIPT@"
     "--python=@PYTHON_EXECUTABLE@"
     ${VIRTUALENV_ARGS}
     "@PythonVirtualenvHome@"

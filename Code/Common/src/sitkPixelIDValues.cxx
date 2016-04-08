@@ -129,15 +129,15 @@ const std::string GetPixelIDValueAsString( PixelIDValueType type )
     {
     return "label of 8-bit unsigned integer";
     }
-  else if ( sitkLabelUInt16 )
+  else if ( type == sitkLabelUInt16 )
     {
     return "label of 16-bit unsigned integer";
     }
-  else if ( sitkLabelUInt32 )
+  else if ( type == sitkLabelUInt32 )
     {
     return "label of 32-bit unsigned integer";
     }
-  else if ( sitkLabelUInt64 )
+  else if ( type == sitkLabelUInt64 )
     {
     return "label of 64-bit unsigned integer";
     }
@@ -146,6 +146,127 @@ const std::string GetPixelIDValueAsString( PixelIDValueType type )
     return "ERRONEOUS PIXEL ID!";
     }
 }
+
+
+PixelIDValueType GetPixelIDValueFromString(const std::string &enumString )
+{
+
+  if ( enumString == "sitkUnknown" )
+    {
+    // Unknow must be first because other enums may be -1 if they are
+    // not instantiated
+      return sitkUnknown;
+    }
+  else if ( enumString == "sitkUInt8" )
+    {
+      return sitkUInt8;
+    }
+  else if ( enumString == "sitkInt8" )
+    {
+      return sitkInt8;
+    }
+  else if ( enumString ==  "sitkUInt16" )
+    {
+      return sitkUInt16;
+    }
+  else if ( enumString == "sitkInt16" )
+    {
+      return sitkInt16;
+    }
+  else if ( enumString == "sitkUInt32" )
+    {
+      return sitkUInt32;
+    }
+  else if ( enumString == "sitkInt32" )
+    {
+      return sitkInt32;
+    }
+  else if ( enumString == "sitkUInt64" )
+    {
+      return sitkUInt64;
+    }
+  else if ( enumString == "sitkInt64" )
+    {
+      return sitkInt64;
+    }
+  else if ( enumString == "sitkFloat32" )
+    {
+      return sitkFloat32;
+    }
+  else if ( enumString == "sitkFloat64" )
+    {
+      return sitkFloat64;
+    }
+  else if ( enumString == "sitkComplexFloat32" )
+    {
+      return sitkComplexFloat32;
+    }
+  else if ( enumString == "sitkComplexFloat64" )
+    {
+      return sitkComplexFloat64;
+    }
+  else if ( enumString == "sitkVectorUInt8" )
+    {
+      return sitkVectorUInt8;
+    }
+  else if ( enumString == "sitkVectorInt8" )
+    {
+      return sitkVectorInt8;
+    }
+  else if ( enumString ==  "sitkVectorUInt16" )
+    {
+      return sitkVectorUInt16;
+    }
+  else if ( enumString == "sitkVectorInt16" )
+    {
+      return sitkVectorInt16;
+    }
+  else if ( enumString == "sitkVectorUInt32" )
+    {
+      return sitkVectorUInt32;
+    }
+  else if ( enumString == "sitkVectorInt32" )
+    {
+      return sitkVectorInt32;
+    }
+  else if ( enumString == "sitkVectorUInt64" )
+    {
+      return sitkVectorUInt64;
+    }
+  else if ( enumString == "sitkVectorInt64" )
+    {
+      return sitkVectorInt64;
+    }
+  else if ( enumString == "sitkVectorFloat32" )
+    {
+      return sitkVectorFloat32;
+    }
+  else if ( enumString == "sitkVectorFloat64" )
+    {
+      return sitkVectorFloat64;
+    }
+  else if ( enumString == "sitkLabelUInt8" )
+    {
+      return sitkLabelUInt8;
+    }
+  else if ( enumString == "sitkLabelUInt16" )
+    {
+      return sitkLabelUInt16;
+    }
+  else if ( enumString == "sitkLabelUInt32" )
+    {
+      return sitkLabelUInt32;
+    }
+  else if ( enumString == "sitkLabelUInt64" )
+    {
+      return sitkLabelUInt64;
+    }
+  else
+    {
+    return -99;
+    }
+}
+
 
 std::ostream& operator<<(std::ostream& os, const PixelIDValueEnum id)
 {

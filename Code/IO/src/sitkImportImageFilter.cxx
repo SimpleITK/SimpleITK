@@ -463,7 +463,6 @@ Image ImportImageFilter::ExecuteInternal( )
 {
 
   typedef TImageType                            ImageType;
-  typedef typename ImageType::InternalPixelType PixelType;
   const unsigned int Dimension = ImageType::ImageDimension;
 
   // if the InstantiatedToken is correctly implemented this should

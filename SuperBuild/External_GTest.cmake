@@ -43,7 +43,7 @@ endif()
 
 
 ExternalProject_Add(${proj}
-  URL http://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${GTEST_DOWNLOAD_SOURCE_HASH}&name=swig-${GTEST_TARGET_VERSION}.zip
+  URL https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${GTEST_DOWNLOAD_SOURCE_HASH}&name=swig-${GTEST_TARGET_VERSION}.zip
   URL_MD5 ${GTEST_DOWNLOAD_SOURCE_HASH}
   INSTALL_DIR ${GTEST_install_dir}
   CMAKE_GENERATOR ${gen}
