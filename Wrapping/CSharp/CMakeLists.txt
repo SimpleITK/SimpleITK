@@ -1,3 +1,9 @@
+cmake_minimum_required ( VERSION 2.8.1 FATAL_ERROR )
+
+project( SimpleITK_CSharp )
+
+include(../../CMake/sitkProjectLanguageCommon.cmake)
+
 
 # Find C#
 find_package( CSharp REQUIRED )
@@ -8,27 +14,27 @@ set_source_files_properties ( SimpleITK.i PROPERTIES CPLUSPLUS ON )
 # CSharp version requirements: http://msdn.microsoft.com/en-us/library/system.reflection.assemblyversionattribute.aspx
 # major.minor[.build[.revision]] where all components are 16-bit unsigned integers
 set(_build 0)
-if(DEFINED SimpleITK_VERSION_POST)
+if(DEFINED SimpleITK_VERSION_POST AND NOT "${SimpleITK_VERSION_POST}" STREQUAL "")
   math(EXPR _build "${SimpleITK_VERSION_POST}")
-  elseif(DEFINED SimpleITK_VERSION_DEV)
-    math(EXPR _build "32768+${SimpleITK_VERSION_DEV}")
-  endif()
-  if(_build GREATER 65535)
-    message(WARNING "CSharp build component overflowed, setting to 65535 instead of ${_build}.")
-    set(_build 65535)
-  endif()
+elseif(DEFINED SimpleITK_VERSION_DEV AND NOT "${SimpleITK_VERSION_DEV}" STREQUAL "")
+  math(EXPR _build "32768+${SimpleITK_VERSION_DEV}")
+endif()
+if(_build GREATER 65535)
+  message(WARNING "CSharp build component overflowed, setting to 65535 instead of ${_build}.")
+  set(_build 65535)
+endif()
 
-  set(_revision 0)
-  if(DEFINED SimpleITK_VERSION_PATCH)
-    math(EXPR _revision "${SimpleITK_VERSION_PATCH}<<8")
-    if(DEFINED SimpleITK_VERSION_TWEAK)
-      math(EXPR _revision "_revision+${SimpleITK_VERSION_TWEAK}")
-    endif()
+set(_revision 0)
+if(DEFINED SimpleITK_VERSION_PATCH)
+  math(EXPR _revision "${SimpleITK_VERSION_PATCH}<<8")
+  if(DEFINED SimpleITK_VERSION_TWEAK)
+    math(EXPR _revision "${_revision}+${SimpleITK_VERSION_TWEAK}")
   endif()
-  if(_revision GREATER 65535)
-    message(WARNING "CSharp revision component overflowed, setting to 65535 instead of ${_revision}.")
-    set(_revision 65535)
-  endif()
+endif()
+if(_revision GREATER 65535)
+  message(WARNING "CSharp revision component overflowed, setting to 65535 instead of ${_revision}.")
+  set(_revision 65535)
+endif()
 
   set(SimpleITK_VERSION_CSHARP_AssemblyVersion "${SimpleITK_VERSION_MAJOR}.${SimpleITK_VERSION_MINOR}.${_build}.${_revision}")
 

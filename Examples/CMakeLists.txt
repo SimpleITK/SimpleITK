@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 project(SimpleITKExamples)
 
-if(NOT SimpleITK_SOURCE_DIR)
+if(NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK")
   find_package(SimpleITK REQUIRED)
   include(${SimpleITK_USE_FILE})
 

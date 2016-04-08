@@ -1,3 +1,8 @@
+cmake_minimum_required ( VERSION 2.8.1 FATAL_ERROR )
+
+project( SimpleITK_Lua )
+
+include(../../CMake/sitkProjectLanguageCommon.cmake)
 
 find_package( Ruby REQUIRED )
 include_directories( ${RUBY_INCLUDE_DIRS} )
