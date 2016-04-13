@@ -63,7 +63,6 @@ if(NOT SITK_FORBID_DOWNLOADS)
   file( GLOB_RECURSE content_links RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.md5" )
 
   foreach(link ${content_links})
-    message("linking: ${link}")
     string( REGEX REPLACE "\\.md5$" "" link ${link} )
     ExternalData_Expand_Arguments(  SimpleITKRpackageData
       link_location
