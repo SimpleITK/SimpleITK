@@ -2,15 +2,6 @@ cmake_minimum_required ( VERSION 2.8.1 FATAL_ERROR )
 
 project( SimpleITK_R )
 
-if(POLICY CMP0026)
-  # Allow use of the LOCATION target property.
-  #
-  # These locations are use in a convoluted fashion with the runtime
-  # configuration. This system should be refactored to support
-  # generator expression. This would allow the use of the new policy.
-  cmake_policy(SET CMP0026 OLD)
-endif()
-
 include(../../CMake/sitkProjectLanguageCommon.cmake)
 
 find_package ( R REQUIRED )
@@ -31,10 +22,6 @@ if(R_LIBRARIES)
 endif()
 
 set_source_files_properties(${swig_generated_file_fullname} PROPERTIES COMPILE_FLAGS "-w")
-
-get_target_property( SIMPLEITKR_BINARY_MODULE ${SWIG_MODULE_SimpleITK_TARGET_NAME} LOCATION )
-file(TO_NATIVE_PATH "${SIMPLEITKR_BINARY_MODULE}" SIMPLEITKR_NATIVE_BINARY_MODULE )
-
 
 # set the output directory for the R library to the binary packaging location
 set_target_properties( ${SWIG_MODULE_SimpleITK_TARGET_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Packaging/SimpleITK/src/)
