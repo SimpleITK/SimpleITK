@@ -43,9 +43,7 @@ endif()
 # copy the R files a binary package
 file( COPY "${CMAKE_CURRENT_SOURCE_DIR}/Packaging"
   DESTINATION "${CMAKE_CURRENT_BINARY_DIR}"
-  PATTERN "*.in" EXCLUDE )
-file(MAKE_DIRECTORY
-  "${CMAKE_CURRENT_BINARY_DIR}/Packaging/SimpleITK/data/" )
+  REGEX "(.*\\.in)|(.*\\.md5)" EXCLUDE )
 
 
 set(SimpleITKR_VERSION "${SimpleITK_VERSION_MAJOR}.${SimpleITK_VERSION_MINOR}")
@@ -65,14 +63,16 @@ configure_file(
 if(NOT SITK_FORBID_DOWNLOADS)
   include(sitkExternalData)
 
-  foreach(link  ${SimpleITK_SOURCE_DIR}/Testing/Data/Input/cthead1.png.md5  ${SimpleITK_SOURCE_DIR}/Testing/Data/Input/cthead1-Float.mha.md5)
+  file( GLOB_RECURSE content_links RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.md5" )
+
+  foreach(link ${content_links})
+    message("linking: ${link}")
     string( REGEX REPLACE "\\.md5$" "" link ${link} )
-    ExternalData_Expand_Arguments( SimpleITKRpackageData
+    ExternalData_Expand_Arguments(  SimpleITKRpackageData
       link_location
       DATA{${link}}
       )
     set( COPY_DATA_COMMAND ${COPY_DATA_COMMAND} COMMAND ${CMAKE_COMMAND} -E copy ${link_location} ${CMAKE_CURRENT_BINARY_DIR}/Packaging/SimpleITK/data/ )
-
   endforeach()
 
   if(COMMAND ExternalData_Add_Target )
