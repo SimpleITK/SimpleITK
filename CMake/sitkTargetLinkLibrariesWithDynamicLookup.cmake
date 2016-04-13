@@ -31,19 +31,14 @@
 function(_sitkCheckUndefinedSymbolsAllowed)
 
   set(VARIABLE "SITK_UNDEFINED_SYMBOLS_ALLOWED")
-  set(cache_var "${VARIABLE}_hash")
-
 
   # hash the CMAKE_FLAGS passed and check cache to know if we need to rerun
   string(MD5 cmake_flags_hash "${CMAKE_SHARED_LINKER_FLAGS}")
+  set(cache_var "${VARIABLE}_${cmake_flags_hash}")
 
-  if(NOT DEFINED "${cache_var}" )
-    unset("${VARIABLE}" CACHE)
-  elseif(NOT "${${cache_var}}" STREQUAL "${cmake_flags_hash}" )
-    unset("${VARIABLE}" CACHE)
-  endif()
-
-  if(NOT DEFINED "${VARIABLE}")
+  if(DEFINED "${cache_var}")
+    set(${VARIABLE} "${${cache_var}}"  CACHE INTERNAL "Using hash (${cmake_flags_hash}) value from TRY_COMPILE")
+  else()
     set(test_project_dir "${PROJECT_BINARY_DIR}/CMakeTmp/${VARIABLE}")
 
     file(WRITE "${test_project_dir}/CMakeLists.txt"
@@ -66,7 +61,7 @@ int foo(void) {return bar()+1;}
         "-DCMAKE_SHARED_LINKER_FLAGS='${CMAKE_SHARED_LINKER_FLAGS}'"
       OUTPUT_VARIABLE output)
 
-    set(${cache_var} "${cmake_flags_hash}" CACHE INTERNAL  "hashed try_compile flags")
+    set(${cache_var} ${${VARIABLE}} CACHE INTERNAL "hashed flags with try_compile results")
 
     if(${VARIABLE})
       message(STATUS "Performing Test ${VARIABLE} - Success")

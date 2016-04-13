@@ -17,18 +17,14 @@
 # Function to wrap try compiles on the aggregate cxx test file1
 #
 function(sitkCXX11Test VARIABLE)
-  # use the hash of the dependent cxx flags in the cached variable
-  # value to know if the arguments have changed, and need to rerun
-  string(MD5 cmake_flags_hash "${CMAKE_CXX_FLAGS}")
-  set(cache_var "${VARIABLE}_hash")
+  # use the hash of the dependent cxx flags in the variable name to
+  # cache the results.
+  string(MD5 cmake_cxx_flags_hash "#${CMAKE_CXX_FLAGS}")
+  set(cache_var "${VARIABLE}_${cmake_cxx_flags_hash}")
 
-  if(NOT DEFINED "${cache_var}" )
-    unset("${VARIABLE}" CACHE)
-  elseif(NOT "${${cache_var}}" STREQUAL "${cmake_flags_hash}" )
-    unset("${VARIABLE}" CACHE)
-  endif()
-
-  if(NOT DEFINED "${VARIABLE}")
+  if(DEFINED "${cache_var}")
+    set(${VARIABLE} "${${cache_var}}"  CACHE INTERNAL "Using hashed value from TRY_COMPILE")
+  else()
     message(STATUS "Performing Test ${VARIABLE}")
     set(requred_definitions "${CMAKE_REQUIRED_DEFINITIONS} -D${VARIABLE}")
     try_compile(${VARIABLE}
@@ -38,7 +34,7 @@ function(sitkCXX11Test VARIABLE)
       -DCOMPILE_DEFINITIONS:STRING=${requred_definitions}
       OUTPUT_VARIABLE output)
 
-    set(${cache_var} "${cmake_flags_hash}" CACHE INTERNAL  "hashed try_compile flags")
+    set(${cache_var} ${${VARIABLE}} CACHE INTERNAL "hashed flags with  try_compile results")
 
     if(${VARIABLE})
       message(STATUS "Performing Test ${VARIABLE} - Success")
