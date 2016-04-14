@@ -2,15 +2,6 @@ cmake_minimum_required ( VERSION 2.8.1 FATAL_ERROR )
 
 project( SimpleITK_R )
 
-if(POLICY CMP0026)
-  # Allow use of the LOCATION target property.
-  #
-  # These locations are use in a convoluted fashion with the runtime
-  # configuration. This system should be refactored to support
-  # generator expression. This would allow the use of the new policy.
-  cmake_policy(SET CMP0026 OLD)
-endif()
-
 include(../../CMake/sitkProjectLanguageCommon.cmake)
 
 find_package ( R REQUIRED )
@@ -25,16 +16,9 @@ set(SWIG_MODULE_SimpleITK_EXTRA_DEPS ${SWIG_EXTRA_DEPS} ${CMAKE_CURRENT_SOURCE_D
 SWIG_add_module ( SimpleITK r SimpleITK.i sitkRCommand.cxx )
 target_link_libraries ( ${SWIG_MODULE_SimpleITK_TARGET_NAME} ${SimpleITK_LIBRARIES} )
 
-# on some platforms the r libraries are not required at link time...
-if(R_LIBRARIES)
-  sitk_target_link_libraries_with_dynamic_lookup ( ${SWIG_MODULE_SimpleITK_TARGET_NAME} ${R_LIBRARIES} )
-endif()
+sitk_target_link_libraries_with_dynamic_lookup ( ${SWIG_MODULE_SimpleITK_TARGET_NAME} ${R_LIBRARIES} )
 
 set_source_files_properties(${swig_generated_file_fullname} PROPERTIES COMPILE_FLAGS "-w")
-
-get_target_property( SIMPLEITKR_BINARY_MODULE ${SWIG_MODULE_SimpleITK_TARGET_NAME} LOCATION )
-file(TO_NATIVE_PATH "${SIMPLEITKR_BINARY_MODULE}" SIMPLEITKR_NATIVE_BINARY_MODULE )
-
 
 # set the output directory for the R library to the binary packaging location
 set_target_properties( ${SWIG_MODULE_SimpleITK_TARGET_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Packaging/SimpleITK/src/)
@@ -43,25 +27,48 @@ sitk_strip_target( ${SWIG_MODULE_SimpleITK_TARGET_NAME} )
 set(SWIG_MODULE_SimpleITKR_TARGET_NAME "${SWIG_MODULE_SimpleITK_TARGET_NAME}")
 
 
+if (WIN32)
+  execute_process(COMMAND "cmd" " /C date /T" OUTPUT_VARIABLE DATE OUTPUT_STRIP_TRAILING_WHITESPACE)
+  string(REGEX REPLACE "(..)/(..)/(....).*" "\\3-\\2-\\1" ${DATE} DATE)
+elseif(UNIX)
+  execute_process(COMMAND "date" "+%Y-%m-%d" OUTPUT_VARIABLE DATE OUTPUT_STRIP_TRAILING_WHITESPACE)
+else()
+  message(WARNING "date not implemented")
+  set(DATE 00-00-0000)
+endif()
+
 # copy the R files a binary package
-add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_TARGET_NAME}
-  PRE_BUILD
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${SimpleITK_SOURCE_DIR}/Wrapping/R/Packaging ${CMAKE_CURRENT_BINARY_DIR}/Packaging
-  COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/Packaging/SimpleITK/data/
-  )
+file( COPY "${CMAKE_CURRENT_SOURCE_DIR}/Packaging"
+  DESTINATION "${CMAKE_CURRENT_BINARY_DIR}"
+  REGEX "(.*\\.in)|(.*\\.md5)" EXCLUDE )
+
+
+set(SimpleITKR_VERSION "${SimpleITK_VERSION_MAJOR}.${SimpleITK_VERSION_MINOR}")
+if(DEFINED SimpleITK_VERSION_PATCH)
+  set(SimpleITK_VERSIONR "${SimpleITKR_VERSION}.${SimpleITK_VERSION_PATCH}")
+  if(DEFINED SimpleITK_VERSION_TWEAK)
+    set(SimpleITKR_VERSION "${SimpleITKR_VERSION}.${SimpleITK_VERSION_TWEAK}")
+  endif()
+endif()
+
+configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/SimpleITK/DESCRIPTION.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/Packaging/SimpleITK/DESCRIPTION"
+    @ONLY )
 
 # download sample images, if allowed
 if(NOT SITK_FORBID_DOWNLOADS)
   include(sitkExternalData)
 
-  foreach(link  ${SimpleITK_SOURCE_DIR}/Testing/Data/Input/cthead1.png.md5  ${SimpleITK_SOURCE_DIR}/Testing/Data/Input/cthead1-Float.mha.md5)
+  file( GLOB_RECURSE content_links RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.md5" )
+
+  foreach(link ${content_links})
     string( REGEX REPLACE "\\.md5$" "" link ${link} )
-    ExternalData_Expand_Arguments( SimpleITKRpackageData
+    ExternalData_Expand_Arguments(  SimpleITKRpackageData
       link_location
       DATA{${link}}
       )
     set( COPY_DATA_COMMAND ${COPY_DATA_COMMAND} COMMAND ${CMAKE_COMMAND} -E copy ${link_location} ${CMAKE_CURRENT_BINARY_DIR}/Packaging/SimpleITK/data/ )
-
   endforeach()
 
   if(COMMAND ExternalData_Add_Target )
