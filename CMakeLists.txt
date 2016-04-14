@@ -56,8 +56,6 @@ find_package(ITK REQUIRED )
 #we require certain packages be turned on in ITK
 include(sitkCheckForITKModuleDependencies)
 
-include(sitkTargetLinkLibrariesWithDynamicLookup)
-
 if(ITK_FOUND)
 
   # NOTE: We are purposely not calling UseITK yet. However, we must make
