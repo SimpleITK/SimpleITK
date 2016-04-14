@@ -111,8 +111,8 @@ endif()
 #-------------------------------------------------------------------------
 # augment compiler flags
 #-------------------------------------------------------------------------
-include(CompilerFlagSettings)
-
+include(sitkCheckRequiredFlags)
+set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SimpleITK_REQUIRED_CXX_FLAGS}" )
 
 # the hidden visibility for inline methods should be consistent between ITK and SimpleITK
 if(NOT WIN32 AND CMAKE_COMPILER_IS_GNUCXX AND BUILD_SHARED_LIBS)
@@ -332,7 +332,9 @@ foreach (_varName ${_varNames})
   if(_varName MATCHES "^SimpleITK_" OR _varName MATCHES "^SITK_" )
     if (NOT _varName MATCHES "^SITK_LANGUAGES_VARS"
           AND
-        NOT _varName MATCHES "^SimpleITK_VARS")
+        NOT _varName MATCHES "^SimpleITK_VARS"
+          AND
+        NOT _varName MATCHES "^SimpleITK_REQUIRED_")
       message( STATUS "Passing variable \"${_varName}=${${_varName}}\" to SimpleITK external project.")
       list(APPEND SimpleITK_VARS ${_varName})
     endif()
@@ -360,7 +362,7 @@ ExternalProject_Add(${proj}
     ${ep_simpleitk_args}
     ${ep_common_args}
     -DBUILD_SHARED_LIBS:BOOL=${BUILD_SHARED_LIBS}
-    -DCMAKE_CXX_FLAGS:STRING=${CMAKE_CXX_FLAGS}\ ${CXX_ADDITIONAL_WARNING_FLAGS}
+    -DCMAKE_CXX_FLAGS:STRING=${CMAKE_CXX_FLAGS}
     -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
     -DCMAKE_LIBRARY_OUTPUT_DIRECTORY:PATH=<BINARY_DIR>/lib
     -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY:PATH=<BINARY_DIR>/lib
