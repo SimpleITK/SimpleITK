@@ -44,6 +44,7 @@ function(_sitkCheckUndefinedSymbolsAllowed)
     file(WRITE "${test_project_dir}/CMakeLists.txt"
 "
 project(undefined C)
+set( CMAKE_MACOSX_RPATH 1)
 add_library(foo SHARED \"foo.c\")
 ")
 
