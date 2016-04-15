@@ -50,6 +50,7 @@ message(STATUS "Building SimpleITK version \"${SimpleITK_VERSION}\"")
 # This must be done before any other try compiles based tests are
 # done.
 include(sitkCheckRequiredFlags)
+include(CompilerFlagSettings)
 
 
 find_package(ITK REQUIRED )
