@@ -17,41 +17,23 @@
 #=========================================================================
 # Run with:
 #
-# Rscript --vanilla FilterProgressReporting.R input variance output
+# Rscript --vanilla DicomImagePrintTags.R input_file
 #
-
 
 library(SimpleITK)
 
 args <- commandArgs( TRUE )
 
-if (length(args) <  3){
-   write("Usage arguments: <input> <variance> <output>", stderr())
+if (length(args) <  1) {
+   write("Usage arguments: <input_file>", stderr())
    quit(1)
 }
 
-reader <- ImageFileReader()
-reader$SetFileName(args[[1]])
-image = reader$Execute()
+inputImage <- ReadImage(args[[1]])
 
-pixelID <- image$GetPixelID()
+keys <- inputImage$GetMetaDataKeys()
 
-gaussian <- DiscreteGaussianImageFilter()
-gaussian$SetVariance( as.numeric(args[2]) )
-
-##! [R lambda command]
-gaussian$AddCommand( 'sitkStartEvent',  function(method) {cat("StartEvent\n")} )
-##! [R lambda command]
-
-cmd <- RCommand()
-gaussian$AddCommand( 'sitkEndEvent', cmd )
-
-image = gaussian$Execute( image )
-
-caster <- CastImageFilter()
-caster$SetOutputPixelType( pixelID )
-image = caster$Execute( image )
-
-writer <- ImageFileWriter()
-writer$SetFileName( args[[3]] )
-writer$Execute( image )
+for ( k in keys)
+{
+ print(sprintf("(%s) = \"%s\"", k, inputImage$GetMetaData(k)))
+}
