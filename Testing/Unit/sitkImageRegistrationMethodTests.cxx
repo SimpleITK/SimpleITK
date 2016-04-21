@@ -118,7 +118,7 @@ public:
                                     const std::vector<double> &pt1,
                                     const std::vector<unsigned int> &size)
     {
-       sitk::GaussianImageSource source1;
+      sitk::GaussianImageSource source1;
       source1.SetMean(pt0);
       source1.SetScale(1.0);
 
@@ -161,7 +161,6 @@ TEST_F(sitkRegistrationMethodTest, Metric_Evaluate)
 {
   sitk::Image fixed = fixedBlobs;
   sitk::Image moving = fixedBlobs;
-
 
   sitk::ImageRegistrationMethod R;
   R.SetInitialTransform(sitk::Transform(fixed.GetDimension(),sitk::sitkIdentity));
@@ -440,6 +439,68 @@ TEST_F(sitkRegistrationMethodTest, Mask_Test2)
   EXPECT_VECTOR_DOUBLE_NEAR(v2(128.0,128.0), outTx.GetParameters(), 1e-3);
 }
 
+
+TEST_F(sitkRegistrationMethodTest, VirtualDomain_Test)
+{
+  // Test usage of setting virtual domain
+
+  sitk::ImageRegistrationMethod R;
+  R.SetInterpolator(sitk::sitkLinear);
+  //R.DebugOn();
+  sitk::Image virtualImage = MakeGaussianBlob( v2(32,32), std::vector<unsigned int>(2,64) );
+
+  R.SetVirtualDomainFromImage(virtualImage);
+
+  // transform to optimize
+  sitk::TranslationTransform tx(virtualImage.GetDimension());
+  tx.SetOffset(v2(3.2,-1.2));
+  R.SetInitialTransform(tx, false);
+
+  sitk::Image fixedImage = virtualImage;
+  fixedImage.SetOrigin(v2(100, 0));
+
+  // virtual image to fixed image
+  sitk::TranslationTransform fixedTransform(fixedImage.GetDimension());
+  fixedTransform.SetOffset(v2(100, 0));
+  R.SetFixedInitialTransform(fixedTransform);
+
+  sitk::Image movingImage = virtualImage;
+  movingImage.SetOrigin(v2(0, 200));
+
+  // transform from virtual domain to moving image with "optimizing" transform
+  sitk::TranslationTransform movingTransform(movingImage.GetDimension());
+  movingTransform.SetOffset(v2(0, 200));
+  R.SetMovingInitialTransform(movingTransform);
+
+  R.SetMetricAsCorrelation();
+
+  double minStep=1e-5;
+  unsigned int numberOfIterations=100;
+  double relaxationFactor=0.75;
+  double gradientMagnitudeTolerance = 1e-20;
+  R.SetOptimizerAsRegularStepGradientDescent(.1,
+                                             minStep,
+                                             numberOfIterations,
+                                             relaxationFactor,
+                                             gradientMagnitudeTolerance);
+
+
+  IterationUpdate cmd(R);
+  R.AddCommand(sitk::sitkIterationEvent, cmd);
+
+  sitk::Transform outTx = R.Execute(fixedImage, movingImage);
+
+
+  std::cout << "-------" << std::endl;
+  std::cout << outTx.ToString() << std::endl;
+  std::cout << "Optimizer stop condition: " << R.GetOptimizerStopConditionDescription() << std::endl;
+  std::cout << " Iteration: " << R.GetOptimizerIteration() << std::endl;
+  std::cout << " Metric value: " << R.GetMetricValue() << std::endl;
+
+  EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,0.0), outTx.GetParameters(), 1e-3);
+  EXPECT_GT( R.GetOptimizerIteration(), 1 );
+
+}
 
 TEST_F(sitkRegistrationMethodTest, OptimizerWeights_Test)
 {

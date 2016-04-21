@@ -132,6 +132,34 @@ ImageRegistrationMethod::SetInitialTransform ( Transform &transform, bool inPlac
 }
 
 ImageRegistrationMethod::Self&
+ImageRegistrationMethod::SetVirtualDomain( const std::vector<uint32_t> &virtualSize,
+                            const std::vector<double> &virtualOrigin,
+                            const std::vector<double> &virtualSpacing,
+                            const std::vector<double> &virtualDirection )
+{
+  const size_t dim = virtualSize.size();
+
+  // todo check size of vectors
+
+  this->m_VirtualDomainSize = virtualSize;
+  this->m_VirtualDomainOrigin = virtualOrigin;
+  this->m_VirtualDomainSpacing = virtualSpacing;
+  this->m_VirtualDomainDirection = virtualDirection;
+  return *this;
+}
+
+ImageRegistrationMethod::Self&
+ImageRegistrationMethod::SetVirtualDomainFromImage( const Image &virtualImage )
+{
+  this->m_VirtualDomainSize = virtualImage.GetSize();
+  this->m_VirtualDomainOrigin = virtualImage.GetOrigin();
+  this->m_VirtualDomainSpacing = virtualImage.GetSpacing();
+  this->m_VirtualDomainDirection = virtualImage.GetDirection();
+
+  return *this;
+}
+
+ImageRegistrationMethod::Self&
 ImageRegistrationMethod::SetMetricAsANTSNeighborhoodCorrelation(  unsigned int radius )
 {
   m_MetricRadius = radius;
@@ -665,6 +693,7 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
       {
       sitkExceptionMacro( "Unexpected error converting initial moving transform! Possible miss matching dimensions!" );
       }
+    std::cout << "--------> Setting MovingInitalTransform\n";
     registration->SetMovingInitialTransform(itkTx);
     }
 
@@ -676,6 +705,7 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
       {
       sitkExceptionMacro( "Unexpected error converting initial moving transform! Possible miss matching dimensions!" );
       }
+    std::cout << "--------> Setting FixedInitalTransform\n";
     registration->SetFixedInitialTransform(itkTx);
     }
 
@@ -967,6 +997,17 @@ ImageRegistrationMethod::SetupMetric(
   metric->SetUseFixedImageGradientFilter( m_MetricUseFixedImageGradientFilter );
   metric->SetUseMovingImageGradientFilter( m_MetricUseMovingImageGradientFilter );
 
+  if ( this->m_VirtualDomainSize.size() != 0 )
+    {
+    typename FixedImageType::SpacingType itkSpacing = sitkSTLVectorToITK<typename FixedImageType::SpacingType>(this->m_VirtualDomainSpacing);
+    typename FixedImageType::PointType itkOrigin = sitkSTLVectorToITK<typename FixedImageType::PointType>(this->m_VirtualDomainOrigin);
+    typename FixedImageType::DirectionType itkDirection = sitkSTLToITKDirection<typename FixedImageType::DirectionType>(this->m_VirtualDomainDirection);
+
+    typename FixedImageType::RegionType itkRegion;
+    itkRegion.SetSize( sitkSTLVectorToITK<typename FixedImageType::SizeType>( this->m_VirtualDomainSize ) );
+
+    metric->SetVirtualDomain( itkSpacing, itkOrigin, itkDirection, itkRegion );
+    }
 
   typedef itk::InterpolateImageFunction< FixedImageType, double > FixedInterpolatorType;
   typename FixedInterpolatorType::Pointer   fixedInterpolator  = CreateInterpolator(fixed, m_Interpolator);
