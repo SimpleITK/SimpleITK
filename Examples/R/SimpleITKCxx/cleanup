@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+rm -f src/CMakeCache.txt src/cmake_install.cmake src/Makefile*
+rm -rf src/CMakeFiles
