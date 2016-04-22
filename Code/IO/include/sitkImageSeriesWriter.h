@@ -31,7 +31,7 @@ namespace itk {
      * \brief Writer series of image from a SimpleITK image.
      *
      *
-     * \sa itk::simple::WriterImage for the procedural interface
+     * \sa itk::simple::WriteImage for the procedural interface
      **/
     class SITKIO_EXPORT ImageSeriesWriter
       : public ProcessObject
