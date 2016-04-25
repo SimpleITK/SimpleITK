@@ -51,6 +51,27 @@ target_link_libraries ( DemonsRegistration2 ${SimpleITK_LIBRARIES} )
 # Add subdirectories
 add_subdirectory(Segmentation)
 
+# Test data directory
+set(TEST_HARNESS_TEMP_DIRECTORY ${SimpleITK_BINARY_DIR}/Testing/Temporary)
+set(TEST_HARNESS_DATA_DIRECTORY ${SimpleITK_BINARY_DIR}/ExternalData/Testing/Data)
+set(ITK_TEST_DRIVER  "itkTestDriver")
+
+
+macro(add_language_subdirectory lang)
+  string(TOUPPER ${lang} LANG)
+  if ( WRAP_${LANG} )
+    add_subdirectory(${lang})
+  endif()
+endmacro()
+
+add_language_subdirectory( CSharp )
+add_language_subdirectory( Java )
+add_language_subdirectory( Python )
+add_language_subdirectory( R )
+add_language_subdirectory( Ruby )
+add_language_subdirectory( Tcl )
+
+
 if ( BUILD_TESTING )
   add_subdirectory( test )
 endif()
