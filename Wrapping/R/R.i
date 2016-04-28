@@ -32,6 +32,25 @@
 std::vector<float>, std::vector<float> *, std::vector<float> &
 %{    %}
 
+// Experiments on lists/vectors of images
+// it would be nice to generalise this to vectors of SWIG_TYPE
+// Are there use cases beyond vectors of images - e.g. vectors of filters?
+%typemap("rtype") std::vector<itk::simple::Image>, std::vector<itk::simple::Image>& "list";
+%typemap("rtypecheck") std::vector<itk::simple::Image>, std::vector<itk::simple::Image>&
+%{
+  (is.list($arg) & all(sapply($arg, inherits, what='_p_itk__simple__Image')))
+%}
+%typemap("scoercein") std::vector<itk::simple::Image>, std::vector<itk::simple::Image>&
+%{
+  $input=ImListToVec($input);
+  $input=slot($input, "ref")
+%}
+
+%typemap("scoerceout") std::vector<itk::simple::Image>, std::vector<itk::simple::Image>&
+%{
+  $result=ImportSwigVec($result);
+%}
+
 // stop printing "NULL" when calling a method
 // returning void
 %typemap(scoerceout) void
@@ -598,5 +617,24 @@ itk::simple::Image ArrayAsIm(SEXP arr,
   setMethod('print', 'C++Reference', function(x, ...)cat(x$ToString()))
   setMethod('show', 'C++Reference', function(object)cat(object$ToString()))
 
-    %}
+ImportSwigVec <- function(ImVec)
+{
+  # an import function for unsupported std::vector types
+  # intended for vectors of sitk images
+  l <- ImVec$'__len__'()
+  return(lapply(1:l, function(idx, V)return(V$'__getitem__'(idx-1))))
+}
+
+ImListToVec <- function(ImList)
+{
+  l <- length(ImList)
+  cppvec <- VectorOfImage()
+  for (idx in 1:l)
+    {
+      cppvec$push_back(ImList[[idx]])
+    }
+   return(cppvec)
+}
+
+%}
 #endif

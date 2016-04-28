@@ -57,6 +57,9 @@ sitk_add_r_test( Arithmetic
 sitk_add_r_test( PixelIndexing
   "--file=${SimpleITK_SOURCE_DIR}/Testing/Unit/RPixelAccess.R"
   )
+sitk_add_r_test( ImageListArguments
+  "--file=${SimpleITK_SOURCE_DIR}/Testing/Unit/RImageListArguments.R"
+  )
 
 
 #
