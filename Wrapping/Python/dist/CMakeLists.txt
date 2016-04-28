@@ -20,7 +20,7 @@ Using unknown versions of pip, setuptools and/or wheel packages/" )
 
   add_custom_target( dist.Python
     ${VIRTUAL_PYTHON_EXECUTABLE} ${bdist_setup} ${bdist_commands}
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    WORKING_DIRECTORY ${SimpleITK_Python_BINARY_DIR}
     DEPENDS ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
     COMMENT "Creating Python binary distribution" )
 
