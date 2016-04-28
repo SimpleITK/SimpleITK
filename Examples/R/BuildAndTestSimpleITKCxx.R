@@ -1,5 +1,4 @@
 args <- commandArgs( TRUE )
-print(args)
 install.packages("SimpleITKCxx",repos=NULL,configure.args=args)
 library(methods)
 library(SimpleITKCxx)
