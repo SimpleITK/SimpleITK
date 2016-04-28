@@ -10,7 +10,6 @@
 #' img <-test(img,1:3)
 #' print(img$GetOrigin())
 #' @useDynLib SimpleITKCxx
-#' @importFrom Rcpp evalCpp
 #' @import SimpleITK
 #' @export 
 test <- function(image,origin=NULL) {
@@ -21,6 +20,7 @@ test <- function(image,origin=NULL) {
         origin <- rep(0,imdim)
     if (length(origin) != imdim)
         stop(paste("origin must be of length",imdim))
+    storage.mode(origin) = "numeric"
     ref <- .Call("mytest",image@ref,origin)
     image@ref <- ref
     return(image)

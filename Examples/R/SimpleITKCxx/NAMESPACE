@@ -2,5 +2,6 @@
 
 export(test)
 import(SimpleITK)
-importFrom(Rcpp,evalCpp)
+import(methods)
+importFrom(methods,as)
 useDynLib(SimpleITKCxx)

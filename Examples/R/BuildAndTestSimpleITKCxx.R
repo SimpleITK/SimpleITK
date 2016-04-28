@@ -1,6 +1,6 @@
-if (!require(Rcpp))
-    install.packages("Rcpp",repos="https://cran.rstudio.com/")
-
-install.packages("SimpleITKCxx",repos=NULL)
+args <- commandArgs( TRUE )
+print(args)
+install.packages("SimpleITKCxx",repos=NULL,configure.args=args)
+library(methods)
 library(SimpleITKCxx)
 example("test")

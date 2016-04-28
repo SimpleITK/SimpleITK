@@ -5,11 +5,9 @@ Version: 1.0
 Date: 2016-04-21
 Author: Stefan Schlager
 Maintainer: Stefan Schlager <zarquon42@gmail.com>
-Description: Hopefull it will provide a workaround the slow for loops in R
+Description: Hopefully it will provide a workaround the slow for loops in R
 License: GPL (>= 2)
-Depends: SimpleITK
-Imports:
-    Rcpp (>= 0.12.4),
-    SimpleITK
-LinkingTo: Rcpp, SimpleITK
+Depends : R (>= 3.0.2)
+Imports: SimpleITK
+LinkingTo: SimpleITK
 RoxygenNote: 5.0.1
