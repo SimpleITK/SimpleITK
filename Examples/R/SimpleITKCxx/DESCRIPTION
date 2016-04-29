@@ -6,7 +6,7 @@ Date: 2016-04-21
 Author: Stefan Schlager
 Maintainer: Stefan Schlager <zarquon42@gmail.com>
 Description: Hopefully it will provide a workaround the slow for loops in R
-License: GPL (>= 2)
+License: Apache License (== 2.0)
 Depends : R (>= 3.0.2)
 Imports: SimpleITK
 LinkingTo: SimpleITK
