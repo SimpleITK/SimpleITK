@@ -21,6 +21,7 @@ this a first test whether it is possible to call SimpleITK via Rcpp. It simply s
 require(SimpleITK)
 img <- Image(10,10,10,"sitkInt8")
 img <-test(img,1:3)
-print(img$GetOrigin())
+chk <- stopifnot(all.equal(img$GetOrigin(),1:3))
+if (is.null(chk)) cat("\\n  ***** test passed without an error *****\\n\\n")
 }
 

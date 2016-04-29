@@ -1,15 +1,16 @@
 #! /bin/bash
 export R_HOME
-CXX=$(R CMD config CXX)
-CXXFLAGS="$(R CMD config CXX1XFLAGS)"
-CPPFLAGS=$(R CMD config CPPFLAGS)
+CXX=$($R_HOME/bin/R CMD config CXX)
+CXXFLAGS=$($R_HOME/bin/R CMD config CXX1XFLAGS)
+CPPFLAGS=$($R_HOME/bin/R CMD config CPPFLAGS)
 export CXX
 export CXXFLAGS
 export CPPFLAGS
 export R_INCLUDE_DIR
-RSITKLIB=$(Rscript -e 'library(SimpleITK); cat(system.file("libs", package="SimpleITK", mustWork=TRUE))')
+RSITKLIB=$($R_HOME/bin/Rscript -e 'library(SimpleITK); cat(system.file("libs", package="SimpleITK", mustWork=TRUE))')
 export RSITKLIB
-RCPP_DIR=$(Rscript -e "cat(system.file(package='Rcpp'))")
+## the following command is usefull if R-structures are wrapped using Rcpp
+RCPP_DIR=$($R_HOME/bin/Rscript -e "cat(system.file(package='Rcpp'))")
 export RCPP_DIR
 
 cd src

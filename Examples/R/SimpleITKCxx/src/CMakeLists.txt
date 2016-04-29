@@ -10,6 +10,7 @@ endif()
 set(R_HOME $ENV{R_HOME})
 SET(RLIB "${R_HOME}/lib")
 set (RSCRIPT "${R_HOME}/bin/Rscript")
+# the RCPP stuff is only necessary in case one wants to use Rcpp
 set(RCPP_DIR "$ENV{RCPP_DIR}/include")
 set(RSITKLIB "$ENV{RSITKLIB}")
 set(R_INCLUDE_DIR "$ENV{R_INCLUDE_DIR}")
