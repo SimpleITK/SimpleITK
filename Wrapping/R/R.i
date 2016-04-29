@@ -599,4 +599,15 @@ itk::simple::Image ArrayAsIm(SEXP arr,
   setMethod('show', 'C++Reference', function(object)cat(object$ToString()))
 
     %}
+
+// a wrapper converting the Wrapped image to itk::simple::Image
+%wrapper %{
+  SWIGEXPORT itk::simple::Image * convertSwigSimpleITKImage( SEXP obj )
+  {
+    itk::simple::Image* img;
+    if (SWIG_ConvertPtr(obj, (void **) &img, SWIGTYPE_p_itk__simple__Image, 0) == -1)
+      return NULL;
+    return img;
+  }
+  %}
 #endif

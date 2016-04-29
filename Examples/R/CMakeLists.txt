@@ -29,3 +29,7 @@ sitk_add_r_test( Example.ImageRegistrationMethod1
     DATA{${SimpleITK_DATA_ROOT}/Baseline/displacement_13x17y.mha}
     0.02
   )
+sitk_add_r_test( Example.SimpleITKCxxInterface
+  "--file=${CMAKE_CURRENT_SOURCE_DIR}/BuildAndTestSimpleITKCxx.R"
+    0.02
+  )
