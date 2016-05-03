@@ -20,7 +20,7 @@
 
 # Run this script to set up the git hooks for committing changes to SimpleITK.
 # For more information, see:
-#   http://www.itk.org/Wiki/Git/Hooks
+#   https://www.itk.org/Wiki/Git/Hooks
 
 egrep-q() {
   egrep "$@" >/dev/null 2>/dev/null
