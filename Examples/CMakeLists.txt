@@ -64,14 +64,14 @@ macro(add_language_subdirectory lang)
   endif()
 endmacro()
 
-add_language_subdirectory( CSharp )
-add_language_subdirectory( Java )
-add_language_subdirectory( Python )
-add_language_subdirectory( R )
-add_language_subdirectory( Ruby )
-add_language_subdirectory( Tcl )
-
-
 if ( BUILD_TESTING )
   add_subdirectory( test )
+
+  add_language_subdirectory( CSharp )
+  add_language_subdirectory( Java )
+  add_language_subdirectory( Python )
+  add_language_subdirectory( R )
+  add_language_subdirectory( Ruby )
+  add_language_subdirectory( Tcl )
+
 endif()
