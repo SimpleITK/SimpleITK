@@ -13,5 +13,5 @@ Description: This package is an interface to SimpleITK, which is a simplified
      and registration.
 License: Apache 2.0
 URL: http://www.simpleitk.org, https://www.itk.org
-BugReports: http://issues.itk.org
+BugReports: https://issues.itk.org
 Maintainer: Richard Beare <Richard.Beare@ieee.org>
