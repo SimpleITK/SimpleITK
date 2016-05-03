@@ -47,7 +47,7 @@ below.
 If you are not too familiar with these tools, this aspect of submitting
 patch to gerrit is the same as for ITK development. So the overview of
 ITK development process may be a better starting point:
-<a href="http://www.itk.org/Wiki/ITK/Git/Develop">http://www.itk.org/Wiki/ITK/Git/Develop</a>
+<a href="https://www.itk.org/Wiki/ITK/Git/Develop">https://www.itk.org/Wiki/ITK/Git/Develop</a>
 
 \subsection Add Binary Data to a Commit
 

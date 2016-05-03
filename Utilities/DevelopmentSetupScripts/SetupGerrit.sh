@@ -48,7 +48,7 @@ gerrit_user() {
 
 For more information on Gerrit usage, see the ITK development process
 
-  http://www.itk.org/Wiki/ITK/Develop
+  https://www.itk.org/Wiki/ITK/Develop
 EOF
 }
 
