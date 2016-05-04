@@ -2,6 +2,7 @@
 # A general packaging target, not built by default, to build packages for each
 # language.  This should depend on all language specific targets.
 
+add_custom_target( dist ${CMAKE_COMMAND} -E echo "Finished generating wrapped packages for distribution..." )
 
 #
 # lua SWIG configuration
