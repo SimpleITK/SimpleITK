@@ -22,7 +22,7 @@ if (BUILD_DOXYGEN)
       -P "${PROJECT_SOURCE_DIR}/Utilities/Doxygen/ITKDoxygenTags.cmake"
       DEPENDS "${PROJECT_SOURCE_DIR}/Utilities/Doxygen/ITKDoxygenTags.cmake"
       )
-    set(DOXYGEN_TAGFILES_PARAMETER "${PROJECT_BINARY_DIR}/Documentation/Doxygen/InsightDoxygen.tag=http://www.itk.org/Doxygen/html/")
+    set(DOXYGEN_TAGFILES_PARAMETER "${PROJECT_BINARY_DIR}/Documentation/Doxygen/InsightDoxygen.tag=https://www.itk.org/Doxygen/html/")
   endif()
 
   #

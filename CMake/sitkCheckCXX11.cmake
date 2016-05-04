@@ -83,5 +83,5 @@ if ( (NOT SITK_HAS_TR1_FUNCTIONAL AND NOT SITK_HAS_CXX11_FUNCTIONAL)
     "SimpleITK requires usage of C++11 or C++ Technical Report 1 (TR1).\n"
     "It may be available as an optional download for your compiler or difference CXX_FLAGS."
     "Please see the FAQs for details."
-    "http://www.itk.org/Wiki/SimpleITK/FAQ#Do_I_need_to_download_an_option_package_for_TR1_support.3F\n" )
+    "https://www.itk.org/Wiki/SimpleITK/FAQ#Do_I_need_to_download_an_option_package_for_TR1_support.3F\n" )
 endif ( )
