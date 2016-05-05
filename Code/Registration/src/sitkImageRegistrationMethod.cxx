@@ -335,6 +335,21 @@ ImageRegistrationMethod::SetOptimizerAsAmoeba( double simplexDelta,
 }
 
 ImageRegistrationMethod::Self&
+ImageRegistrationMethod::SetOptimizerAsPowell(unsigned int numberOfIterations,
+                                              unsigned int maximumLineIterations,
+                                              double stepLength,
+                                              double stepTolerance,
+                                              double valueTolerance )
+{
+  m_OptimizerType = Powell;
+  m_OptimizerNumberOfIterations = numberOfIterations;
+  m_OptimizerMaximumLineIterations = maximumLineIterations;
+  m_OptimizerStepLength = stepLength;
+  m_OptimizerStepTolerance = stepTolerance;
+  m_OptimizerValueTolerance = valueTolerance;
+}
+
+ImageRegistrationMethod::Self&
 ImageRegistrationMethod::SetOptimizerScales( const std::vector<double> &scales)
 {
   this->m_OptimizerScalesType = Manual;
