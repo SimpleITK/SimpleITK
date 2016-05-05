@@ -24,9 +24,9 @@ include_directories ( ${PYTHON_INCLUDE_DIR} ${CMAKE_CURRENT_SOURCE_DIR} )
 #
 option ( SimpleITK_PYTHON_THREADS "Enable threaded python usage by unlocking the GIL." ON )
 mark_as_advanced( SimpleITK_PYTHON_THREADS )
-option ( SimpleITK_PYTHON_EGG "Add building of python eggs to the dist target." ON )
+option ( SimpleITK_PYTHON_EGG "Add building of python eggs to the dist target." OFF )
 mark_as_advanced( SimpleITK_PYTHON_EGG )
-option ( SimpleITK_PYTHON_WHEEL "Add building of python wheels to the dist target." OFF )
+option ( SimpleITK_PYTHON_WHEEL "Add building of python wheels to the dist target." ON )
 mark_as_advanced( SimpleITK_PYTHON_WHEEL )
 
 
