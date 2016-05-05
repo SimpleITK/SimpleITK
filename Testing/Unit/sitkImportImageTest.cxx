@@ -198,6 +198,35 @@ TEST_F(Import,Direction) {
 }
 
 
+TEST_F(Import,Shallow) {
+
+  // This test is designed to verify the buffer is shared
+
+  uint8_buffer = std::vector< uint8_t >( 128*128*128, 17 );
+
+  sitk::ImportImageFilter importer;
+  importer.SetSize( std::vector< unsigned int >( 3, 128u ) );
+  importer.SetBufferAsUInt8( &uint8_buffer[0] );
+
+  sitk::Image image = importer.Execute();
+
+  ASSERT_EQ( image.GetDimension(), 3u ) << "image dimension check";
+
+
+
+  EXPECT_EQ ( "a2178ce2d158a4a7c5a9ef3d03a33a6099b9c5be", sitk::Hash( image ) ) << " hash value for basic uin8_t";
+
+  std::vector<uint32_t> idx(3, 0 );
+  uint8_buffer[0] = 19;
+  EXPECT_EQ ( 19,  uint8_buffer[0] ) << " direct setting of buffer";
+  EXPECT_EQ ( 19,  image.GetPixelAsUInt8(idx) ) << " buffer modifying image";
+
+  image.SetPixelAsUInt8(idx, 23);
+  EXPECT_EQ ( 23,  image.GetPixelAsUInt8(idx) ) << " direct setting of image";
+  EXPECT_EQ ( 23,  uint8_buffer[0] ) << " image modifying buffer";
+
+}
+
 TEST_F(Import,ExhaustiveTypes) {
 
   sitk::ImportImageFilter importer;

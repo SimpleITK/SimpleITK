@@ -472,6 +472,20 @@ Image ImportImageFilter::ExecuteInternal( )
   typename ImageType::Pointer image = ImageType::New();
 
 
+
+
+  //
+  //  Origin
+  //
+  typename ImageType::PointType origin = sitkSTLVectorToITK< typename ImageType::PointType >( this->m_Origin );
+  image->SetOrigin( origin );
+
+  //
+  //  Spacing
+  //
+  typename ImageType::SpacingType spacing = sitkSTLVectorToITK< typename ImageType::SpacingType >( this->m_Spacing );
+  image->SetSpacing( spacing );
+
   //
   //  Size and Region
   //
@@ -480,6 +494,15 @@ Image ImportImageFilter::ExecuteInternal( )
   region.SetSize(size);
   // set the size and region to the ITK image.
   image->SetRegions( region );
+
+  //
+  // Direction, if m_Direction is not set, use ITK's default which is
+  // an identity.
+  //
+  if (this->m_Direction.size() != 0 )
+    {
+    image->SetDirection(  sitkSTLToITKDirection<typename ImageType::DirectionType>( this->m_Direction ) );
+    }
 
 
   size_t numberOfElements = m_NumberOfComponentsPerPixel;
@@ -501,35 +524,9 @@ Image ImportImageFilter::ExecuteInternal( )
   //
   this->SetNumberOfComponentsOnImage( image.GetPointer() );
 
-  Image sitkimage( image );
-
-  this->m_Origin.resize( Dimension );
-  this->m_Spacing.resize( Dimension );
-
-  sitkimage.SetOrigin( this->m_Origin );
-  sitkimage.SetSpacing( this->m_Spacing );
-
-  if (this->m_Direction.size() != 0 )
-      sitkimage.SetDirection( this->m_Direction );
-  else if (Dimension == 2)
-    {
-    // make a 2x2 identity matrix
-    std::vector<double> dir(4, 0.);
-    dir[0] = 1.;
-    dir[3] = 1.;
-    sitkimage.SetDirection( dir );
-    }
-  else if (Dimension == 3)
-    {
-    // make a 3x3 identity matrix
-    std::vector<double> dir(9, 0.);
-    dir[0] = 1.;
-    dir[4] = 1.;
-    dir[8] = 1.;
-    sitkimage.SetDirection( dir );
-    }
-
-  return sitkimage;
+  // This line must be the last line in the function to prevent a deep
+  // copy caused by a implicit sitk::MakeUnique
+  return Image( image );
 }
 
 template <class TFilterType>
