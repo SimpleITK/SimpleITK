@@ -32,7 +32,10 @@ namespace itk {
      *
      * This filter is intended to interface SimpleITK to other image processing
      * libraries and applications that may have their own representation of an
-     * image class.
+     * image class. It creates a SimpleITK image which shares the bulk
+     * data buffer as what is set. SimpleITK will not responsible to
+     * delete the buffer afterwards, and it buffer must remain valid
+     * while in use.
      *
      * \sa itk::simple::ImportAsInt8, itk::simple::ImportAsUInt8,
      * itk::simple::ImportAsInt16, itk::simple::ImportAsUInt16,
