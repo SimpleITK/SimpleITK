@@ -332,6 +332,17 @@ namespace simple
     std::vector<double> GetOptimizerWeights( ) const;
     /**@}*/
 
+    /** \brief Powell optimization using Brent line search.
+     *
+     * \sa itk::PowellOptimizerv4
+     */
+    Self& SetOptimizerAsPowell(unsigned int numberOfIterations = 100,
+                               unsigned int maximumLineIterations = 100,
+                               double stepLength = 1,
+                               double stepTolerance = 1e-6,
+                               double valueTolerance = 1e-6 );
+
+
     /** \brief Manually set per parameter weighting for the transform parameters. */
     Self& SetOptimizerScales( const std::vector<double> &scales );
 
@@ -594,7 +605,8 @@ namespace simple
                          GradientDescentLineSearch,
                          LBFGSB,
                          Exhaustive,
-                         Amoeba
+                         Amoeba,
+                         Powell
     };
     OptimizerType m_OptimizerType;
     double m_OptimizerLearningRate;
@@ -623,6 +635,9 @@ namespace simple
     double m_OptimizerParametersConvergenceTolerance;
     double m_OptimizerFunctionConvergenceTolerance;
     bool m_OptimizerWithRestarts;
+    unsigned int m_OptimizerMaximumLineIterations;
+    double m_OptimizerStepTolerance;
+    double m_OptimizerValueTolerance;
 
     std::vector<double> m_OptimizerWeights;
 

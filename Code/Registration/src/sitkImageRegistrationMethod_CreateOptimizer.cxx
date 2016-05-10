@@ -23,6 +23,7 @@
 #include "itkLBFGSBOptimizerv4.h"
 #include "itkExhaustiveOptimizerv4.h"
 #include "itkAmoebaOptimizerv4.h"
+#include <itkPowellOptimizerv4.h>
 
 
 namespace {
@@ -257,6 +258,24 @@ namespace simple
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetValue,optimizer);
       this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer);
       this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer);
+
+      optimizer->Register();
+      return optimizer.GetPointer();
+      }
+    else if ( m_OptimizerType == Powell )
+      {
+      typedef itk::PowellOptimizerv4<double> _OptimizerType;
+      _OptimizerType::Pointer optimizer = _OptimizerType::New();
+
+      optimizer->SetMaximumIteration( this->m_OptimizerNumberOfIterations );
+      optimizer->SetMaximumLineIteration( this->m_OptimizerMaximumLineIterations );
+      optimizer->SetStepLength(this->m_OptimizerStepLength );
+      optimizer->SetStepTolerance( this->m_OptimizerStepTolerance );
+      optimizer->SetValueTolerance( this->m_OptimizerValueTolerance );
+
+      this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetValue,optimizer.GetPointer());
+      this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer.GetPointer());
+      this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer.GetPointer());
 
       optimizer->Register();
       return optimizer.GetPointer();
