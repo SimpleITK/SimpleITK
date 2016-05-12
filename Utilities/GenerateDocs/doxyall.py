@@ -6,12 +6,11 @@ from doxy2swig import *
 
 
 def usage():
-    print( "\ndoxyall.py [options] doxygen_xml_dir output.i|outputdir" )
+    print( "\ndoxyall.py [options] doxygen_xml_dir output.i|output_directory" )
     print( "" )
     print( "     -h, --help    This help message" )
     print( "     -j, --java    Java style output" )
-    print( "     -r, --R       R style output - destination must be a directory" )
-
+    print( "     -r, --R       R style output - note that output directory must be specified for R" )
     print( "" )
 
 
@@ -122,6 +121,13 @@ if ( not rFlag):
     fout.close()
 
 flog.close()
+
+# the procedural interface
+if rFlag:
+    nspacefile=os.path.join(indir, "namespaceitk_1_1simple.xml")
+    p = Doxy2RProc(nspacefile)
+    p.generate()
+    p.write(outdir)
 
 os.close(tmpfd)
 os.close(logfd)
