@@ -165,7 +165,7 @@ typedef typelist::MakeTypeList<LabelPixelID<uint8_t>,
 #endif
                                >::Type LabelPixelIDTypeList;
 
-typedef UnsignedIntegerPixelIDTypeList IntergerLabelPixelIDTypeList;
+typedef UnsignedIntegerPixelIDTypeList IntegerLabelPixelIDTypeList;
 
 /** List of all pixel ids available, but itk::LabelMap this include image of itk::Image,
  * itk::VectorImage
