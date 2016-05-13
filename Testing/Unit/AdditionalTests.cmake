@@ -47,6 +47,8 @@ sitk_add_python_test( Test.ProcessObject
 sitk_add_java_test( ProcessObjectTest
   "${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkProcessObjectTest.java" )
 
+sitk_add_java_test( ImageTests
+  "${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkImageTests.java" )
 
 #
 # R Tests
