@@ -16,7 +16,23 @@
 *
 *=========================================================================*/
 
+import java.math.BigInteger;
 import org.itk.simple.*;
+
+/* This class is needed because on some systems uint64_t gets converted to long
+ * while on others it becomes a BigInteger. */
+class BigIntegerFix
+  {
+  public static long Convert( long value )
+    {
+    return value;
+    }
+
+  public static long Convert( BigInteger value )
+    {
+    return value.longValue();
+    }
+  }
 
 class sitkImageTests
   {
@@ -119,7 +135,8 @@ class sitkImageTests
   public static boolean LabelShapeStatisticsTest()
     {
     int size = 10;
-    int i,j;
+    int i;
+    long j;
     short val = 1;
 
 
@@ -145,20 +162,20 @@ class sitkImageTests
       filter.execute(image);
 
       VectorInt64 labels = filter.getLabels();
-      j = filter.getNumberOfLabels().intValue();
+      j = BigIntegerFix.Convert( filter.getNumberOfLabels() );
       if (j != 1)
         {
         throw new Exception("Wrong number of labels");
         }
-      int npix;
+      long npix;
       double perim;
 
       System.out.println("Label,\t#pix,\tperimeter");
       for (i=0; i<j; i++)
         {
-        npix = filter.getNumberOfPixels(labels.get(i)).intValue();
-        perim = filter.getPerimeter(labels.get(i));
-        System.out.format("%d,\t%d,\t%f\n", labels.get(i), npix, perim);
+        npix = BigIntegerFix.Convert( filter.getNumberOfPixels(labels.get(i)) );
+        perim = filter.getPerimeter( labels.get(i) );
+        System.out.format( "%d,\t%d,\t%f\n", labels.get(i), npix, perim );
 
         /* The first (and only) label should have 16 pixels */
         if (i==0)
