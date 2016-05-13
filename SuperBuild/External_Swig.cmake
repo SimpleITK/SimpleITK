@@ -20,7 +20,7 @@ if(NOT SWIG_DIR)
 
   if( USE_SWIG_FROM_GIT )
     set(SWIG_GIT_REPOSITORY "${git_protocol}://github.com/swig/swig.git" CACHE STRING "URL of swig git repo")
-    set(SWIG_GIT_TAG "ec91de75b72ccb7ec20fffd5568dd38a966806e7" CACHE STRING "Tag in swig git repo")
+    set(SWIG_GIT_TAG "8890a675f7783436d0c7b61fdb318f30ffb92cde" CACHE STRING "Tag in swig git repo")
     mark_as_advanced(SWIG_GIT_REPO)
     mark_as_advanced(SWIG_GIT_TAG)
   endif()
