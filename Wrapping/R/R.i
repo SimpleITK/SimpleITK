@@ -658,4 +658,17 @@ ImListToVec <- function(ImList)
 }
 
 %}
+
+
+// a wrapper converting the Wrapped image to itk::simple::Image
+%wrapper %{
+  SWIGEXPORT itk::simple::Image * convertSwigSimpleITKImage( SEXP obj )
+  {
+    itk::simple::Image* img;
+    if (SWIG_ConvertPtr(obj, (void **) &img, SWIGTYPE_p_itk__simple__Image, 0) == -1)
+      return NULL;
+    return img;
+  }
+  %}
+
 #endif

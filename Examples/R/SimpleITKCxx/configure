@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+export R_HOME
+CXX=$($R_HOME/bin/R CMD config CXX)
+CXXFLAGS=$($R_HOME/bin/R CMD config CXX1XFLAGS)
+CPPFLAGS=$($R_HOME/bin/R CMD config CPPFLAGS)
+export CXX
+export CXXFLAGS
+export CPPFLAGS
+export R_INCLUDE_DIR
+RSITKLIB=$($R_HOME/bin/Rscript -e 'library(SimpleITK); cat(system.file("libs", package="SimpleITK", mustWork=TRUE))')
+export RSITKLIB
+## the following command is usefull if R-structures are wrapped using Rcpp
+RCPP_DIR=$($R_HOME/bin/Rscript -e "cat(system.file(package='Rcpp'))")
+export RCPP_DIR
+
+cd src
+cmake . $@
