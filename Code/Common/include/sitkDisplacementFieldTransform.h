@@ -63,8 +63,19 @@ public:
   std::string GetName() const { return std::string ("DisplacementFieldTransform"); }
 
   /** parameters */
-  // set displacement methods take ownership for the image and remove it
+
+  /** \brief Consume an image, and set the displacement field
+   *
+   * \warning The ownership of the input displacement image is
+   * transferred to the constructed transform object. The input image
+   * is modified to be a default constructed Image object.
+   *
+   * Image must be of sitkVectorFloat64 pixel type with the number of
+   * components equal to the image dimension.
+   *
+   */
   Self &SetDisplacementField(Image &);
+
   /** \todo The returned image should not directly modify the
    * internal displacement field.
    */
@@ -74,6 +85,7 @@ public:
 
   /* additional methods */
   Self &SetInverseDisplacementField(Image &);
+
   /** \todo The returned image is should not directly modify the
    * internal displacement field.
    */
