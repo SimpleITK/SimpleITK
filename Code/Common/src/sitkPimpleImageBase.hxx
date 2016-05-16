@@ -179,11 +179,6 @@ namespace itk
     // Set Direction
     virtual void SetDirection( const std::vector< double > & in )
       {
-      if (in.size() != ImageType::ImageDimension*ImageType::ImageDimension)
-        {
-        sitkExceptionMacro("direction size mismatch");
-        }
-
       this->m_Image->SetDirection( sitkSTLToITKDirection<typename ImageType::DirectionType>( in ) );
       }
 
