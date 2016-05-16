@@ -347,6 +347,7 @@ ImageRegistrationMethod::SetOptimizerAsPowell(unsigned int numberOfIterations,
   m_OptimizerStepLength = stepLength;
   m_OptimizerStepTolerance = stepTolerance;
   m_OptimizerValueTolerance = valueTolerance;
+  return *this;
 }
 
 ImageRegistrationMethod::Self&
