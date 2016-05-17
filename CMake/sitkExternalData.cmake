@@ -40,7 +40,7 @@ if(NOT SITK_FORBID_DOWNLOADS)
     "https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=%(hash)&algorithm=%(algo)"
 
     # Data published by developers using git-gerrit-push.
-    "https://www.itk.org/files/ExternalData/%(algo)/%(hash)"
+    "https://itk.org/files/ExternalData/%(algo)/%(hash)"
     )
 endif()
 # Tell ExternalData commands not to transform raw files to content links.
