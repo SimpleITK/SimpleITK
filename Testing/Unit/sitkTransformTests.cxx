@@ -146,6 +146,13 @@ TEST(TransformTest, Copy) {
 }
 
 TEST(TransformTest, SetGetParameters) {
+#if (ITK_VERSION_MAJOR*100+ITK_VERSION_MINOR) >= 410
+  const unsigned int euler3DNumberOfFixedParameters = 4u;
+#else
+  const unsigned int euler3DNumberOfFixedParameters = 3u;
+#endif
+
+
 
   sitk::Transform tx;
   EXPECT_TRUE( tx.GetParameters().empty() );
@@ -173,7 +180,7 @@ TEST(TransformTest, SetGetParameters) {
 
   tx = sitk::Transform( 3, sitk::sitkEuler );
   EXPECT_EQ( tx.GetParameters().size(), 6u );
-  EXPECT_EQ( tx.GetFixedParameters().size(), 3u );
+  EXPECT_EQ( tx.GetFixedParameters().size(), euler3DNumberOfFixedParameters );
   EXPECT_TRUE(tx.IsLinear());
 
   tx = sitk::Transform( 2, sitk::sitkSimilarity );
