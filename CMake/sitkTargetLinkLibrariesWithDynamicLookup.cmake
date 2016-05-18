@@ -60,6 +60,7 @@ int foo(void) {return bar()+1;}
       undefined
       CMAKE_FLAGS
         "-DCMAKE_SHARED_LINKER_FLAGS='${CMAKE_SHARED_LINKER_FLAGS}'"
+        "-DCMAKE_MACOSX_RPATH=OFF"
       OUTPUT_VARIABLE output)
 
     set(${cache_var} ${${VARIABLE}} CACHE INTERNAL "hashed flags with try_compile results")

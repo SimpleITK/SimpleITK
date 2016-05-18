@@ -346,7 +346,9 @@ foreach (_varName ${_varNames})
           AND
         NOT _varName MATCHES "^SimpleITK_VARS"
           AND
-        NOT _varName MATCHES "^SimpleITK_REQUIRED_")
+        NOT _varName MATCHES "^SimpleITK_REQUIRED_"
+          AND
+        NOT _varName MATCHES "^SITK_UNDEFINED_SYMBOLS_ALLOWED")
       message( STATUS "Passing variable \"${_varName}=${${_varName}}\" to SimpleITK external project.")
       list(APPEND SimpleITK_VARS ${_varName})
     endif()
