@@ -31,11 +31,17 @@ createPixLookup <- function( where = topenv(parent.frame()))
     ff <- gsub("^sitk(.+)", "Image_GetPixelAs\\1", n)
     ff <- gsub("AsFloat32$", "AsFloat", ff)
     ff <- gsub("AsFloat64$", "AsDouble", ff)
-
+    ff <- gsub("Label", "", ff)
     sitkPixelAccessMap <-  mget(ff, envir=where,
                                 ifnotfound=rep(NA,length(ff)))
+    ff2 <- gsub("GetPixelAs", "SetPixelAs", ff)
+    sitkPixelSetMap <- mget(ff2, envir=where,
+                                ifnotfound=rep(NA,length(ff)))
+
     names(sitkPixelAccessMap) <- n
+    names(sitkPixelSetMap) <- n
     assign("sitkPixelAccessMap", sitkPixelAccessMap, envir=where)
+    assign("sitkPixelSetMap", sitkPixelSetMap, envir=where)
 }
 
 ImportPixVec <- function(VP)
@@ -55,7 +61,49 @@ ImportPixVec <- function(VP)
     return(res)
 }
 
-                                        # experimental bracket operator for images
+## SetPixel and GetPixel methods. We've provided dummy "extends" methods for these.
+## We'll overwite the bindings here
+Image_SetPixel = function(self, idx, v)
+{
+  idx = as.integer(idx);
+  ## check that the size of v matches the image pixel type
+  if (Image_GetNumberOfComponentsPerPixel(self) != length(v))
+  {
+      ## It seems that passing incorrect size values doesn't
+      ## cause a c++ error, so check here. Swig must
+      ## cleverly pass just the first element.
+      stop("Error in SetPixel - value does not match image depth")
+  }
+  PixType <- Image_GetPixelID(self)
+  sF <- sitkPixelSetMap[[PixType]]
+  if (!is.null(sF)) {
+      invisible(sF(self, idx, v))
+  } else {
+      stop("Error in SetPixel - no accessor function for this pixel type")
+  }
+}
+
+attr(`Image_SetPixel`, 'returnType') = 'void'
+attr(`Image_SetPixel`, "inputTypes") = c('_p_itk__simple__Image', 'integer', 'numeric')
+class(`Image_SetPixel`) = c("SWIGFunction", class('Image_SetPixel'))
+
+Image_GetPixel = function(self, idx, .copy = FALSE)
+{
+  idx = as.integer(idx);
+  PixType <- Image_GetPixelID(self)
+  aF <- sitkPixelAccessMap[[PixType]]
+  if (!is.null(aF)) {
+      return(aF(self, idx))
+  } else {
+      stop("Error in GetPixel - no accessor function for this pixel type")
+  }
+}
+
+attr(`Image_GetPixel`, 'returnType') = 'numeric'
+attr(`Image_GetPixel`, "inputTypes") = c('_p_itk__simple__Image', 'integer')
+class(`Image_GetPixel`) = c("SWIGFunction", class('Image_GetPixel'))
+
+## experimental bracket operator for images
 setMethod('[', "_p_itk__simple__Image",
           function(x,i, j, k, drop=TRUE) {
                                         # check to see whether this is returning a single number or an image

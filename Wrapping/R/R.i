@@ -58,6 +58,27 @@ std::vector<float>, std::vector<float> *, std::vector<float> &
   return(invisible($result))
 %}
 
+
+%extend itk::simple::Image {
+  // a dummy function that we'll replace
+  // strategy is to make swig generate a binding to something with the correct name,
+  // and place those names in the method list for $ operator
+  // The hand coded R version is provided in zA.R
+  void SetPixel(const std::vector< uint32_t > &idx, double v)
+  {
+    itk::simple::Unused(v);
+    itk::simple::Unused(idx);
+  }
+
+  double GetPixel(const std::vector< uint32_t > &idx)
+  {
+    itk::simple::Unused(idx);
+    double e = 0;
+    return(e);
+  }
+
+}
+
 %inline
 %{
 #include "sitkConditional.h"
