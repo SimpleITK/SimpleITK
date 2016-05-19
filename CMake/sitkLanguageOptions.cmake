@@ -8,15 +8,29 @@
 # Additionally it give the option to wrap LUA.
 #
 
+include(sitkTargetLinkLibrariesWithDynamicLookup)
+
+#
+# Macro to set "_QUIET" and "_QUIET_LIBRARY" based on the first
+# argument being defined and true, to either REQUIRED or QUIET.
+#
+macro(set_QUIET var)
+  if ( DEFINED  ${var} AND ${var} )
+    set( _QUIET "REQUIRED" )
+  else()
+    set( _QUIET "QUIET" )
+  endif()
+  if ( SITK_UNDEFINED_SYMBOLS_ALLOWED )
+    set( _QUIET_LIBRARY "QUIET" )
+  else()
+    set( _QUIET_LIBRARY ${_QUIET} )
+  endif()
+endmacro()
 
 #
 # Setup the option for each language
 #
-if (DEFINED  WRAP_LUA AND WRAP_LUA)
-  set(_QUIET "REQUIRED")
-else()
-  set(_QUIET "QUIET")
-endif()
+set_QUIET( WRAP_LUA )
 if (CMAKE_VERSION VERSION_LESS "3")
   find_package ( Lua51 ${_QUIET} )
   if ( NOT LUA_FOUND )
@@ -41,6 +55,7 @@ if ( WRAP_LUA )
     LUA_LIBRARIES
     LUA_INCLUDE_DIR
     LUA_VERSION_STRING
+    LUA_MATH_LIBRARY
     LUA_ADDITIONAL_LIBRARIES
     )
 endif()
@@ -48,15 +63,10 @@ endif()
 
 
 # If you're not using python or it's the first time, be quiet
-if (DEFINED  WRAP_PYTHON AND WRAP_PYTHON)
-  set(_QUIET "REQUIRED")
-else()
-  set(_QUIET "QUIET")
-endif()
 
+set_QUIET( WRAP_PYTHON )
 find_package ( PythonInterp ${_QUIET})
-
-find_package ( PythonLibs ${PYTHON_VERSION_STRING} EXACT ${_QUIET} )
+find_package ( PythonLibs ${PYTHON_VERSION_STRING} EXACT ${_QUIET_LIBRARY} )
 
 if (PYTHON_VERSION_STRING VERSION_LESS 2.6)
   message( WARNING "Python version less that 2.6: \"${PYTHON_VERSION_STRING}\"." )
@@ -89,12 +99,8 @@ if ( WRAP_PYTHON )
 endif ()
 
 
-if (DEFINED  WRAP_JAVA AND WRAP_JAVA)
-  set(_QUIET "REQUIRED")
-else()
-  set(_QUIET "QUIET")
-endif()
 
+set_QUIET( WRAP_JAVA )
 find_package ( Java COMPONENTS Development Runtime ${_QUIET} )
 find_package ( JNI ${_QUIET} )
 if ( ${JAVA_FOUND} AND ${JNI_FOUND} )
@@ -131,13 +137,10 @@ if ( WRAP_JAVA )
 endif()
 
 
-if (DEFINED  WRAP_TCL AND WRAP_TCL)
-  set(_QUIET "REQUIRED")
-else()
-  set(_QUIET "QUIET")
-endif()
+set_QUIET(WRAP_TCL)
 
 find_package ( TCL ${_QUIET} )
+
 if ( ${TCL_FOUND} )
   set ( WRAP_TCL_DEFAULT ON )
 else ( ${TCL_FOUND} )
@@ -158,7 +161,9 @@ if ( WRAP_TCL )
 endif()
 
 
-find_package ( Ruby QUIET )
+set_QUIET( WRAP_RUBY )
+
+find_package ( Ruby ${_QUIET} )
 if ( ${RUBY_FOUND} )
   set ( WRAP_RUBY_DEFAULT ON )
 else ( ${RUBY_FOUND} )
@@ -203,11 +208,7 @@ if ( WRAP_CSHARP )
 endif()
 
 
-if (DEFINED  WRAP_R AND WRAP_R)
-  set(_QUIET "REQUIRED")
-else()
-  set(_QUIET "QUIET")
-endif()
+set_QUIET( WRAP_R )
 
 find_package(R ${_QUIET})
 if ( ${R_FOUND} AND NOT WIN32 )
