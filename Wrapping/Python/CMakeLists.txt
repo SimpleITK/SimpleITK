@@ -14,8 +14,12 @@ endif()
 
 include(../../CMake/sitkProjectLanguageCommon.cmake)
 
-
-find_package ( PythonLibs REQUIRED )
+if ( SITK_UNDEFINED_SYMBOLS_ALLOWED )
+  set( _QUIET_LIBRARY "QUIET" )
+else()
+  set( _QUIET_LIBRARY "REQUIRED" )
+endif()
+find_package ( PythonLibs ${_QUIET_LIBRARY} )
 find_package ( PythonInterp REQUIRED )
 include_directories ( ${PYTHON_INCLUDE_DIR} ${CMAKE_CURRENT_SOURCE_DIR} )
 
