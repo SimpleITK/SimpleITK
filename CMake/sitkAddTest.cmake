@@ -165,8 +165,9 @@ function(sitk_add_java_test name java_file)
   if(WIN32)
     set( _JAVA_LIBRARY_PATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/$<CONFIGURATION>" )
     # Note: on windows this is a semi-colon separated list
-    set( _JAVA_CLASSPATH "${SimpleITK_BINARY_DIR}/Wrapping/Java/${JAR_FILE};${CMAKE_CURRENT_BINARY_DIR}" )
-  else(WIN32)
+    # Note 2: there are 7 backslashes before the semi-colon so that it
+    #         gets properly passed through 4 levels of function calls.
+    set( _JAVA_CLASSPATH "${SimpleITK_BINARY_DIR}/Wrapping/Java/${JAR_FILE}\\\\\\\;${CMAKE_CURRENT_BINARY_DIR}" )
     set( _JAVA_LIBRARY_PATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}" )
     set( _JAVA_CLASSPATH "${SimpleITK_BINARY_DIR}/Wrapping/Java/${JAR_FILE}:${CMAKE_CURRENT_BINARY_DIR}" )
   endif(WIN32)
