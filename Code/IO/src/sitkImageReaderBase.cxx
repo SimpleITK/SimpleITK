@@ -34,13 +34,17 @@
 #include <itkImage.h>
 #include <itkImageIOBase.h>
 #include <itkImageIOFactory.h>
+#include <itkGDCMImageIO.h>
+
+
 
 namespace itk {
 namespace simple {
 
 ImageReaderBase
 ::ImageReaderBase()
-  : m_OutputPixelType(sitkUnknown)
+  : m_OutputPixelType(sitkUnknown),
+    m_LoadPrivateTags(false)
 {
 }
 
@@ -51,7 +55,8 @@ ImageReaderBase
   std::ostringstream out;
   out << "  OutputPixelType: ";
   this->ToStringHelper(out, this->m_OutputPixelType) << std::endl;
-
+  out << "  LoadPrivateTags: ";
+  this->ToStringHelper(out, this->m_LoadPrivateTags) << std::endl;
   out << ProcessObject::ToString();
   return out.str();
 }
@@ -79,9 +84,17 @@ ImageReaderBase
      sitkExceptionMacro( "Unable to determine ImageIO reader for \"" << fileName << "\"" );
     }
 
+  // Try additional parameters
+  GDCMImageIO *ioGDCMImage = dynamic_cast<GDCMImageIO*>(iobase.GetPointer());
+  if (ioGDCMImage)
+    {
+    ioGDCMImage->SetLoadPrivateTags(this->m_LoadPrivateTags);
+    }
+
   // Read the image information
   iobase->SetFileName( fileName );
   iobase->ReadImageInformation();
+
 
   return iobase;
 }
@@ -100,6 +113,37 @@ ImageReaderBase
 {
   return this->m_OutputPixelType;
 }
+
+
+ImageReaderBase::Self&
+ImageReaderBase
+::SetLoadPrivateTags(bool loadPrivateTags)
+{
+  this->m_LoadPrivateTags = loadPrivateTags;
+  return *this;
+}
+
+bool
+ImageReaderBase
+::GetLoadPrivateTags() const
+{
+  return this->m_LoadPrivateTags;
+}
+
+void
+ImageReaderBase
+::LoadPrivateTagsOn()
+{
+  this->SetLoadPrivateTags(true);
+}
+
+void
+ImageReaderBase
+::LoadPrivateTagsOff()
+{
+  this->SetLoadPrivateTags(false);
+}
+
 
 void
 ImageReaderBase

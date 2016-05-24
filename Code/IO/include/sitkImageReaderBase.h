@@ -61,6 +61,12 @@ class SmartPointer;
 
       virtual std::string ToString() const;
 
+
+      virtual Self& SetLoadPrivateTags(bool loadPrivateTags);
+      virtual bool GetLoadPrivateTags() const;
+      virtual void LoadPrivateTagsOn();
+      virtual void LoadPrivateTagsOff();
+
     protected:
 
       itk::SmartPointer<ImageIOBase> GetImageIOBase(const std::string &fileName);
@@ -86,6 +92,7 @@ class SmartPointer;
 
 
       PixelIDValueEnum m_OutputPixelType;
+      bool m_LoadPrivateTags;
 
     };
   }
