@@ -16,6 +16,31 @@ set(SimpleITK_REQUIRED_C_FLAGS "@SimpleITK_REQUIRED_C_FLAGS@")
 set(SimpleITK_REQUIRED_CXX_FLAGS "@SimpleITK_REQUIRED_CXX_FLAGS@")
 set(SimpleITK_REQUIRED_LINK_FLAGS "@SimpleITK_REQUIRED_LINK_FLAGS@")
 
+# The SimpleITK version number
+set(SimpleITK_VERSION_MAJOR "@SimpleITK_VERSION_MAJOR@")
+set(SimpleITK_VERSION_MINOR "@SimpleITK_VERSION_MINOR@")
+if(NOT "@SimpleITK_VERSION_PATCH@" STREQUAL "")
+  set(SimpleITK_VERSION_PATCH "@SimpleITK_VERSION_PATCH@")
+endif()
+if(NOT "@SimpleITK_VERSION_TWEAK@" STREQUAL "")
+  set(SimpleITK_VERSION_TWEAK  "@SimpleITK_VERSION_TWEAK@")
+endif()
+if(NOT "@SimpleITK_VERSION_RC@" STREQUAL "")
+  set(SimpleITK_VERSION_RC "@SimpleITK_VERSION_RC@")
+endif()
+if(NOT "@SimpleITK_VERSION_POST@" STREQUAL "")
+  set(SimpleITK_VERSION_POST "@SimpleITK_VERSION_POST@")
+endif()
+if(NOT "@SimpleITK_VERSION_DEV@" STREQUAL "")
+  set(SimpleITK_VERSION_DEV "@SimpleITK_VERSION_DEV@")
+endif()
+if(NOT "SimpleITK_VERSION_HASH@" STREQUAL "")
+  set(SimpleITK_VERSION_HASH "@SimpleITK_VERSION_HASH@")
+endif()
+
+
+
+
 # The SimpleITK include file directories.
 set(SimpleITK_INCLUDE_DIRS "@SimpleITKConfig_INCLUDE_DIRS@")
 
