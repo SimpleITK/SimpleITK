@@ -35,7 +35,7 @@ set(proj ITK)  ## Use ITK convention of calling it ITK
 set(ITK_REPOSITORY "${git_protocol}://itk.org/ITK.git")
 
 # NOTE: it is very important to update the ITK_DIR path with the ITK version
-set(ITK_TAG_COMMAND GIT_TAG  c29756e1dbb0afbb991ad2f399658d754035d225 )
+set(ITK_TAG_COMMAND GIT_TAG  v4.10.0 )
 
 if( ${ITK_WRAPPING} OR ${BUILD_SHARED_LIBS} )
   set( ITK_BUILD_SHARED_LIBS ON )
