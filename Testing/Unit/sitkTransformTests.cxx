@@ -146,6 +146,13 @@ TEST(TransformTest, Copy) {
 }
 
 TEST(TransformTest, SetGetParameters) {
+#if (ITK_VERSION_MAJOR*100+ITK_VERSION_MINOR) >= 410
+  const unsigned int euler3DNumberOfFixedParameters = 4u;
+#else
+  const unsigned int euler3DNumberOfFixedParameters = 3u;
+#endif
+
+
 
   sitk::Transform tx;
   EXPECT_TRUE( tx.GetParameters().empty() );
@@ -173,7 +180,7 @@ TEST(TransformTest, SetGetParameters) {
 
   tx = sitk::Transform( 3, sitk::sitkEuler );
   EXPECT_EQ( tx.GetParameters().size(), 6u );
-  EXPECT_EQ( tx.GetFixedParameters().size(), 3u );
+  EXPECT_EQ( tx.GetFixedParameters().size(), euler3DNumberOfFixedParameters );
   EXPECT_TRUE(tx.IsLinear());
 
   tx = sitk::Transform( 2, sitk::sitkSimilarity );
@@ -997,16 +1004,22 @@ TEST(TransformTest,Euler3DTransform)
   const std::vector<double> zeros(3,0.0);
   const std::vector<double> trans(3, 2.2);
 
+#if (ITK_VERSION_MAJOR*100+ITK_VERSION_MINOR) >= 410
+  const unsigned int numberOfFixedParameters = 4u;
+#else
+  const unsigned int numberOfFixedParameters =  numberOfFixedParameters;
+#endif
+
   std::auto_ptr<sitk::Euler3DTransform> tx(new sitk::Euler3DTransform());
   std::cout << tx->ToString() << std::endl;
   EXPECT_EQ( tx->GetParameters().size(), 6u );
-  EXPECT_EQ( tx->GetFixedParameters().size(), 3u );
+  EXPECT_EQ( tx->GetFixedParameters().size(),  numberOfFixedParameters );
   EXPECT_EQ( tx->GetMatrix(), v9(1.0,0.0,0.0, 0.0,1.0,0.0, 0.0,0.0,1.0) );
 
 
   tx.reset( new sitk::Euler3DTransform(center));
   EXPECT_EQ( tx->GetParameters().size(), 6u );
-  EXPECT_EQ( tx->GetFixedParameters().size(), 3u );
+  EXPECT_EQ( tx->GetFixedParameters().size(),  numberOfFixedParameters );
   EXPECT_EQ( tx->GetFixedParameters()[0], 1.1 );
   EXPECT_EQ( tx->GetFixedParameters()[1], 1.1 );
   EXPECT_EQ( tx->GetFixedParameters()[2], 1.1 );
@@ -1015,7 +1028,7 @@ TEST(TransformTest,Euler3DTransform)
 
   tx.reset( new sitk::Euler3DTransform(center, 1.0, 2.0, 3.0));
   EXPECT_EQ( tx->GetParameters().size(), 6u );
-  EXPECT_EQ( tx->GetFixedParameters().size(), 3u );
+  EXPECT_EQ( tx->GetFixedParameters().size(),  numberOfFixedParameters );
   EXPECT_EQ( tx->GetFixedParameters()[0], 1.1 );
   EXPECT_EQ( tx->GetFixedParameters()[1], 1.1 );
   EXPECT_EQ( tx->GetFixedParameters()[2], 1.1 );
@@ -1041,7 +1054,11 @@ TEST(TransformTest,Euler3DTransform)
   EXPECT_EQ( tx1.GetCenter(), zeros );
 
   // copy on write
-  tx1.SetFixedParameters(center);
+  std::vector<double> fixed = center;
+#if (ITK_VERSION_MAJOR*100+ITK_VERSION_MINOR) >= 410
+  fixed.push_back(0.0);
+#endif
+  tx1.SetFixedParameters(fixed);//
   EXPECT_EQ( tx1.GetFixedParameters()[0], 1.1 );
   EXPECT_EQ( tx1.GetFixedParameters()[1], 1.1 );
   EXPECT_EQ( tx1.GetFixedParameters()[2], 1.1 );
@@ -1076,7 +1093,7 @@ TEST(TransformTest,Euler3DTransform)
   tx.reset();
 
   EXPECT_EQ( tx3.GetParameters().size(), 6u );
-  EXPECT_EQ( tx3.GetFixedParameters().size(), 3u );
+  EXPECT_EQ( tx3.GetFixedParameters().size(),  numberOfFixedParameters );
   EXPECT_EQ( tx3.GetFixedParameters()[0], 1.1 );
   EXPECT_EQ( tx3.GetFixedParameters()[1], 1.1 );
   EXPECT_EQ( tx3.GetFixedParameters()[2], 1.1 );
