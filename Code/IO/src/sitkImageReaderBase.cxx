@@ -64,7 +64,7 @@ ImageReaderBase
     itk::ImageIOFactory::CreateImageIO( fileName.c_str(), itk::ImageIOFactory::ReadMode);
 
 
-   if ( iobase.IsNull() )
+  if ( iobase.IsNull() )
      {
      if ( !itksys::SystemTools::FileExists( fileName.c_str() ) )
        {
@@ -107,9 +107,18 @@ ImageReaderBase
                          PixelIDValueType &outPixelType,
                          unsigned int & outDimensions )
 {
-
   itk::ImageIOBase::Pointer iobase = this->GetImageIOBase(fileName);
 
+
+  this->GetPixelIDFromImageIO(iobase, outPixelType, outDimensions);
+}
+
+void
+ImageReaderBase
+::GetPixelIDFromImageIO( ImageIOBase *iobase,
+                         PixelIDValueType &outPixelType,
+                         unsigned int & outDimensions )
+{
 
   // get output information about input image
   unsigned int dimension = iobase->GetNumberOfDimensions();
@@ -148,16 +157,24 @@ ImageReaderBase
     sitkExceptionMacro(  "Unknown PixelType: "  << (int) componentType );
     }
 
-  sitkExceptionMacro( "Unable to load image \"" << fileName << "\"" );
+  sitkExceptionMacro( "Unable to load image." );
 }
 
 unsigned int
 ImageReaderBase
-::GetDimensionFromImageIO( const std::string &fileName, unsigned int i)
+::GetDimensionFromImageIO( itk::ImageIOBase* iobase, unsigned int i)
 {
-  itk::ImageIOBase::Pointer iobase = this->GetImageIOBase(fileName);
-
   return iobase->GetDimensions(i);
+}
+
+
+unsigned int
+ImageReaderBase
+::GetDimensionFromImageIO(const std::string &filename, unsigned int i)
+{
+  itk::ImageIOBase::Pointer iobase = this->GetImageIOBase(filename);
+
+  return this->GetDimensionFromImageIO(iobase.GetPointer(), i);
 }
 
 

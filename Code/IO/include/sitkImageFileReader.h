@@ -56,12 +56,12 @@ namespace itk {
 
     protected:
 
-      template <class TImageType> Image ExecuteInternal ( void );
+      template <class TImageType> Image ExecuteInternal ( itk::ImageIOBase * );
 
     private:
 
       // function pointer type
-      typedef Image (Self::*MemberFunctionType)( void );
+      typedef Image (Self::*MemberFunctionType)( itk::ImageIOBase * );
 
       // friend to get access to executeInternal member
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
