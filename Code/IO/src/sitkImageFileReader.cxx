@@ -71,14 +71,16 @@ namespace itk {
       PixelIDValueType type = this->GetOutputPixelType();
       unsigned int dimension = 0;
 
+
+      itk::ImageIOBase::Pointer imageio = this->GetImageIOBase( this->m_FileName );
       if (type == sitkUnknown)
         {
-        this->GetPixelIDFromImageIO( this->m_FileName, type, dimension );
+        this->GetPixelIDFromImageIO( imageio, type, dimension );
         }
       else
         {
         PixelIDValueType unused;
-        this->GetPixelIDFromImageIO( this->m_FileName, unused, dimension );
+        this->GetPixelIDFromImageIO( imageio, unused, dimension );
         }
 
 #ifdef SITK_4D_IMAGES
@@ -98,12 +100,12 @@ namespace itk {
                             << "Refusing to load! " << std::endl );
         }
 
-      return this->m_MemberFactory->GetMemberFunction( type, dimension )();
+      return this->m_MemberFactory->GetMemberFunction( type, dimension )(imageio.GetPointer());
     }
 
   template <class TImageType>
   Image
-  ImageFileReader::ExecuteInternal( void )
+  ImageFileReader::ExecuteInternal( itk::ImageIOBase *imageio )
   {
 
     typedef TImageType                      ImageType;
@@ -112,8 +114,9 @@ namespace itk {
     // if the InstantiatedToken is correctly implemented this should
     // not occour
     assert( ImageTypeToPixelIDValue<ImageType>::Result != (int)sitkUnknown );
-
+    assert( imageio != SITK_NULLPTR );
     typename Reader::Pointer reader = Reader::New();
+    reader->SetImageIO( imageio );
     reader->SetFileName( this->m_FileName.c_str() );
 
     this->PreUpdate( reader.GetPointer() );
