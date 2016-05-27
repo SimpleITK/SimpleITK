@@ -61,11 +61,16 @@ class SmartPointer;
 
       virtual std::string ToString() const;
 
-
+      /** \brief Set/Get loading private DICOM tags into Image's MetaData
+       *
+       * Unknown private tags may be encoded with Base64 encoding.
+       * @{
+       */
       virtual Self& SetLoadPrivateTags(bool loadPrivateTags);
       virtual bool GetLoadPrivateTags() const;
       virtual void LoadPrivateTagsOn();
       virtual void LoadPrivateTagsOff();
+      /* @} */
 
     protected:
 
