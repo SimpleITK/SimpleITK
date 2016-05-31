@@ -62,6 +62,9 @@ sitk_add_r_test( PixelIndexing
 sitk_add_r_test( ImageListArguments
   "--file=${SimpleITK_SOURCE_DIR}/Testing/Unit/RImageListArguments.R"
   )
+sitk_add_r_test( SwigVectorConversion
+  "--file=${SimpleITK_SOURCE_DIR}/Testing/Unit/RSwigVectorConversionTests.R"
+  )
 
 
 #
