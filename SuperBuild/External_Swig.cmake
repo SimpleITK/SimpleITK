@@ -20,14 +20,14 @@ if(NOT SWIG_DIR)
 
   if( USE_SWIG_FROM_GIT )
     set(SWIG_GIT_REPOSITORY "${git_protocol}://github.com/swig/swig.git" CACHE STRING "URL of swig git repo")
-    set(SWIG_GIT_TAG "8890a675f7783436d0c7b61fdb318f30ffb92cde" CACHE STRING "Tag in swig git repo")
+    set(SWIG_GIT_TAG "rel-3.0.9" CACHE STRING "Tag in swig git repo")
     mark_as_advanced(SWIG_GIT_REPO)
     mark_as_advanced(SWIG_GIT_TAG)
   endif()
 
-  set(SWIG_TARGET_VERSION 3.0.8)
-  set(SWIG_DOWNLOAD_SOURCE_HASH "c96a1d5ecb13d38604d7e92148c73c97")
-  set(SWIG_DOWNLOAD_WIN_HASH "07bc00f7511b7d57516c50f59d705efa")
+  set(SWIG_TARGET_VERSION "3.0.9" )
+  set(SWIG_DOWNLOAD_SOURCE_HASH "4bc5f46a6cdedbd8f579b25fafc96fd6")
+  set(SWIG_DOWNLOAD_WIN_HASH "811adf794d26a0cf54da578c2b9a14a3")
 
   if(WIN32)
     # binary SWIG for windows
