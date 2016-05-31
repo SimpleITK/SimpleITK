@@ -61,14 +61,31 @@ class SmartPointer;
 
       virtual std::string ToString() const;
 
+      /** \brief Set/Get loading private DICOM tags into Image's MetaData
+       *
+       * Unknown private tags may be encoded with Base64 encoding.
+       * @{
+       */
+      virtual Self& SetLoadPrivateTags(bool loadPrivateTags);
+      virtual bool GetLoadPrivateTags() const;
+      virtual void LoadPrivateTagsOn();
+      virtual void LoadPrivateTagsOff();
+      /* @} */
+
     protected:
+
+      itk::SmartPointer<ImageIOBase> GetImageIOBase(const std::string &fileName);
 
 
       void GetPixelIDFromImageIO( const std::string &fileName,
                                   PixelIDValueType &outPixelType,
                                   unsigned int & outDimensions);
+      void GetPixelIDFromImageIO( itk::ImageIOBase* iobase,
+                                  PixelIDValueType &outPixelType,
+                                  unsigned int & outDimensions);
 
       unsigned int GetDimensionFromImageIO( const std::string &fileName, unsigned int i);
+      unsigned int GetDimensionFromImageIO( itk::ImageIOBase* iobase, unsigned int i);
 
     private:
 
@@ -78,9 +95,9 @@ class SmartPointer;
 
       PixelIDValueType ExecuteInternalReadComplex( int componentType );
 
-      itk::SmartPointer<ImageIOBase> GetImageIOBase(const std::string &fileName);
 
       PixelIDValueEnum m_OutputPixelType;
+      bool m_LoadPrivateTags;
 
     };
   }

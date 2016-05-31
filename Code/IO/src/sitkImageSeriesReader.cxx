@@ -116,14 +116,16 @@ namespace itk {
     PixelIDValueType type =  this->GetOutputPixelType();
     unsigned int dimension = 0;
 
+
+    itk::ImageIOBase::Pointer imageio = this->GetImageIOBase( this->m_FileNames.front() );
     if (type == sitkUnknown)
       {
-      this->GetPixelIDFromImageIO( this->m_FileNames.front(), type, dimension );
+      this->GetPixelIDFromImageIO( imageio, type, dimension );
       }
     else
       {
       PixelIDValueType unused;
-      this->GetPixelIDFromImageIO( this->m_FileNames.front(), unused, dimension );
+      this->GetPixelIDFromImageIO( imageio, unused, dimension );
       }
 
     // increment for series
@@ -131,7 +133,7 @@ namespace itk {
 
     if (dimension == 4)
       {
-      unsigned int size = this->GetDimensionFromImageIO( this->m_FileNames.front(), 2);
+      unsigned int size = this->GetDimensionFromImageIO( imageio, 2);
       if (size == 1)
         {
         --dimension;
@@ -151,11 +153,11 @@ namespace itk {
                           << "Refusing to load! " << std::endl );
       }
 
-    return this->m_MemberFactory->GetMemberFunction( type, dimension )();
+    return this->m_MemberFactory->GetMemberFunction( type, dimension )(imageio);
     }
 
   template <class TImageType> Image
-  ImageSeriesReader::ExecuteInternal( void )
+  ImageSeriesReader::ExecuteInternal( itk::ImageIOBase* imageio )
     {
 
     typedef TImageType                        ImageType;
@@ -164,7 +166,9 @@ namespace itk {
     // if the IsInstantiated is correctly implemented this should
     // not occour
     assert( ImageTypeToPixelIDValue<ImageType>::Result != (int)sitkUnknown );
+    assert( imageio != SITK_NULLPTR );
     typename Reader::Pointer reader = Reader::New();
+    reader->SetImageIO( imageio );
     reader->SetFileNames( this->m_FileNames );
 
     this->PreUpdate( reader.GetPointer() );

@@ -34,13 +34,17 @@
 #include <itkImage.h>
 #include <itkImageIOBase.h>
 #include <itkImageIOFactory.h>
+#include <itkGDCMImageIO.h>
+
+
 
 namespace itk {
 namespace simple {
 
 ImageReaderBase
 ::ImageReaderBase()
-  : m_OutputPixelType(sitkUnknown)
+  : m_OutputPixelType(sitkUnknown),
+    m_LoadPrivateTags(false)
 {
 }
 
@@ -51,7 +55,8 @@ ImageReaderBase
   std::ostringstream out;
   out << "  OutputPixelType: ";
   this->ToStringHelper(out, this->m_OutputPixelType) << std::endl;
-
+  out << "  LoadPrivateTags: ";
+  this->ToStringHelper(out, this->m_LoadPrivateTags) << std::endl;
   out << ProcessObject::ToString();
   return out.str();
 }
@@ -64,7 +69,7 @@ ImageReaderBase
     itk::ImageIOFactory::CreateImageIO( fileName.c_str(), itk::ImageIOFactory::ReadMode);
 
 
-   if ( iobase.IsNull() )
+  if ( iobase.IsNull() )
      {
      if ( !itksys::SystemTools::FileExists( fileName.c_str() ) )
        {
@@ -79,9 +84,17 @@ ImageReaderBase
      sitkExceptionMacro( "Unable to determine ImageIO reader for \"" << fileName << "\"" );
     }
 
+  // Try additional parameters
+  GDCMImageIO *ioGDCMImage = dynamic_cast<GDCMImageIO*>(iobase.GetPointer());
+  if (ioGDCMImage)
+    {
+    ioGDCMImage->SetLoadPrivateTags(this->m_LoadPrivateTags);
+    }
+
   // Read the image information
   iobase->SetFileName( fileName );
   iobase->ReadImageInformation();
+
 
   return iobase;
 }
@@ -101,15 +114,55 @@ ImageReaderBase
   return this->m_OutputPixelType;
 }
 
+
+ImageReaderBase::Self&
+ImageReaderBase
+::SetLoadPrivateTags(bool loadPrivateTags)
+{
+  this->m_LoadPrivateTags = loadPrivateTags;
+  return *this;
+}
+
+bool
+ImageReaderBase
+::GetLoadPrivateTags() const
+{
+  return this->m_LoadPrivateTags;
+}
+
+void
+ImageReaderBase
+::LoadPrivateTagsOn()
+{
+  this->SetLoadPrivateTags(true);
+}
+
+void
+ImageReaderBase
+::LoadPrivateTagsOff()
+{
+  this->SetLoadPrivateTags(false);
+}
+
+
 void
 ImageReaderBase
 ::GetPixelIDFromImageIO( const std::string &fileName,
                          PixelIDValueType &outPixelType,
                          unsigned int & outDimensions )
 {
-
   itk::ImageIOBase::Pointer iobase = this->GetImageIOBase(fileName);
 
+
+  this->GetPixelIDFromImageIO(iobase, outPixelType, outDimensions);
+}
+
+void
+ImageReaderBase
+::GetPixelIDFromImageIO( ImageIOBase *iobase,
+                         PixelIDValueType &outPixelType,
+                         unsigned int & outDimensions )
+{
 
   // get output information about input image
   unsigned int dimension = iobase->GetNumberOfDimensions();
@@ -148,16 +201,24 @@ ImageReaderBase
     sitkExceptionMacro(  "Unknown PixelType: "  << (int) componentType );
     }
 
-  sitkExceptionMacro( "Unable to load image \"" << fileName << "\"" );
+  sitkExceptionMacro( "Unable to load image." );
 }
 
 unsigned int
 ImageReaderBase
-::GetDimensionFromImageIO( const std::string &fileName, unsigned int i)
+::GetDimensionFromImageIO( itk::ImageIOBase* iobase, unsigned int i)
 {
-  itk::ImageIOBase::Pointer iobase = this->GetImageIOBase(fileName);
-
   return iobase->GetDimensions(i);
+}
+
+
+unsigned int
+ImageReaderBase
+::GetDimensionFromImageIO(const std::string &filename, unsigned int i)
+{
+  itk::ImageIOBase::Pointer iobase = this->GetImageIOBase(filename);
+
+  return this->GetDimensionFromImageIO(iobase.GetPointer(), i);
 }
 
 

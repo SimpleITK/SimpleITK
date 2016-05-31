@@ -32,6 +32,19 @@ TEST(IO,ImageFileReader) {
 
   EXPECT_EQ( reader.GetOutputPixelType(), sitk::sitkUnknown );
 
+  EXPECT_EQ( reader.GetLoadPrivateTags(), false );
+  reader.LoadPrivateTagsOn();
+  EXPECT_EQ( reader.GetLoadPrivateTags(), true );
+  reader.LoadPrivateTagsOff();
+  EXPECT_EQ( reader.GetLoadPrivateTags(), false );
+
+  reader.SetLoadPrivateTags(true);
+  EXPECT_EQ( reader.GetLoadPrivateTags(), true );
+
+  reader.SetLoadPrivateTags(false);
+  EXPECT_EQ( reader.GetLoadPrivateTags(), false );
+
+
   typedef std::map<std::string,std::string> MapType;
   MapType mapping;
 
