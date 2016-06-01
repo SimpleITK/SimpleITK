@@ -53,7 +53,7 @@ ExternalProject_Add(${proj}
     ${ep_common_args}
     ${ep_extra_args}
     -D BUILD_SHARED_LIBS:BOOL=OFF
-    -D CMAKE_ARCHIVE_OUTPUT_DIRECTORY:PATH=<BINARY_DIR>/lib
+    -D CMAKE_ARCHIVE_OUTPUT_DIRECTORY:PATH=${${proj}_ARCHIVE_OUTPUT_DIRECTORY}
   INSTALL_COMMAND
       ${CMAKE_COMMAND} -E copy_directory ${${proj}_ARCHIVE_OUTPUT_DIRECTORY} <INSTALL_DIR>/lib
     COMMAND
