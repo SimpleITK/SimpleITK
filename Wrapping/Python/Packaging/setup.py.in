@@ -37,8 +37,9 @@ def get_pep386version():
     elif sitkDEV:
         version += ".dev"+sitkDEV
 
+    # Local Version Identifier
     if sitkHASH and not "@SimpleITK_BUILD_DISTRIBUTE@" in ['1', 'ON']:
-        version += "-g"+sitkHASH
+        version += "+g"+sitkHASH
 
     return version
 
