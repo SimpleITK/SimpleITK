@@ -34,6 +34,11 @@ VariableListToArgs( ITK_VARS  ep_itk_args )
 set(proj ITK)  ## Use ITK convention of calling it ITK
 set(ITK_REPOSITORY "${git_protocol}://itk.org/ITK.git")
 
+set(ITK_USE_GIT_PROTOCOL 0)
+if("${git_protocol}" STREQUAL "git")
+  set(ITK_USE_GIT_PROTOCOL 1)
+endif()
+
 # NOTE: it is very important to update the ITK_DIR path with the ITK version
 set(ITK_TAG_COMMAND GIT_TAG  v4.10.0 )
 
