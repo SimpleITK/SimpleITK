@@ -23,8 +23,8 @@ set(GTEST_PATCH_COMMAND ${CMAKE_COMMAND} -E copy_if_different
 )
 
 set(${proj}_ARCHIVE_OUTPUT_DIRECTORY "<BINARY_DIR>/lib")
-if (MSVC)
-  set(${proj}_ARCHIVE_OUTPUT_DIRECTORY "<BINARY_DIR>/lib/$<CONFIGURATION>")
+if (CMAKE_GENERATOR MATCHES "Visual Studio")
+  set(${proj}_ARCHIVE_OUTPUT_DIRECTORY "<BINARY_DIR>/lib/$<CONFIG>")
 endif()
 
 set(ep_extra_args)
