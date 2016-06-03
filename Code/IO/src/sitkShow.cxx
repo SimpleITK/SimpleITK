@@ -41,13 +41,8 @@ namespace itk
 
   static int ShowImageCount = 0;
 
-#if define(_WIN32)
-  // time to wait in seconds before we check if the process is OK
-  const unsigned int ProcessDelay = 1;
-#else
   // time to wait in milli-seconds before we check if the process is OK
   const unsigned int ProcessDelay = 500;
-#endif
 
 #define IMAGEJ_OPEN_MACRO "\'open(\"%f\"); rename(\"%t\"); \'"
 #define NIFTI_COLOR_MACRO "\'run(\"Make Composite\", \"display=Composite\");\'"
