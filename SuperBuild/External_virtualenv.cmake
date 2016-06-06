@@ -7,11 +7,11 @@ set(${CMAKE_CURRENT_LIST_FILENAME}_FILE_INCLUDED 1)
 
 set(proj virtualenv)
 
-set(${proj}_TARGET_VERSION 15.0.1)
-set(${proj}_DOWNLOAD_SOURCE_HASH "28d76a0d9cbd5dc42046dd14e76a6ecc")
+set(${proj}_TARGET_VERSION 15.0.2)
+set(${proj}_DOWNLOAD_SOURCE_HASH "0ed59863994daf1292827ffdbba80a63")
 
 # based on the standard EP_PREFIX locations, but since we don't build
-# or install, then standars install directory is also the source
+# or install, then standards install directory is also the source
 set(${proj}_binary_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj}-prefix/src/${proj}-build)
 set(${proj}_source_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj})
 set(${proj}_install_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj})
