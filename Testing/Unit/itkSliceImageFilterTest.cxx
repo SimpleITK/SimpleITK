@@ -95,7 +95,7 @@ TEST(SliceImageFilterTests, PhysicalPoint1)
   SourceType::SizeValueType size[] = {128,127};
   source->SetSize( size );
 
-  float origin[] = {1.1, 2.22};
+  float origin[] = {1.1f, 2.22f};
   source->SetOrigin( origin );
 
 
@@ -134,7 +134,7 @@ TEST(SliceImageFilterTests, PhysicalPoint2)
   SourceType::SizeValueType size[] = {128,127};
   source->SetSize( size );
 
-  float origin[] = {3.33, 4.4444};
+  float origin[] = {3.33f, 4.4444f};
   source->SetOrigin( origin );
 
 
@@ -176,7 +176,7 @@ TEST(SliceImageFilterTests, PhysicalPoint3)
   SourceType::SizeValueType size[] = {16,17};
   source->SetSize( size );
 
-  float origin[] = {3.33, 4.4444};
+  float origin[] = {3.33f, 4.4444f};
   source->SetOrigin( origin );
 
   int step[ImageDimension] = {-2,-2};
