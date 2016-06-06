@@ -210,24 +210,25 @@ macro(generate_filter_source)
   # Create list of generated headers
   ######
 
-  # clear the include files
-  file ( WRITE ${generated_code_output_path}/include/SimpleITK${directory_name}GeneratedHeaders.h "" )
-  file ( WRITE ${generated_code_output_path}/include/SimpleITK${directory_name}GeneratedHeaders.i "" )
-
   set(generated_headers_h ${generated_code_output_path}/include/SimpleITK${directory_name}GeneratedHeaders.h)
   set(generated_headers_i ${generated_code_output_path}/include/SimpleITK${directory_name}GeneratedHeaders.i)
+  set(tmp_generated_headers_h ${CMAKE_CURRENT_BINARY_DIR}/CMakeTmp/SimpleITK${directory_name}GeneratedHeaders.h)
+  set(tmp_generated_headers_i ${CMAKE_CURRENT_BINARY_DIR}/CMakeTmp/include/SimpleITK${directory_name}GeneratedHeaders.i)
+
+  file ( WRITE ${generated_headers_i} "")
 
   # Add ifndefs
-  file ( APPEND ${generated_headers_h} "#ifndef __SimpleITK${directory_name}GeneratedHeaders_h\n")
-  file ( APPEND ${generated_headers_h} "#define __SimpleITK${directory_name}GeneratedHeaders_h\n")
+  file ( WRITE "${tmp_generated_headers_h}" "#ifndef __SimpleITK${directory_name}GeneratedHeaders_h\n")
+  file ( APPEND "${tmp_generated_headers_h}" "#define __SimpleITK${directory_name}GeneratedHeaders_h\n")
 
   foreach ( filter ${GENERATED_FILTER_LIST} )
-    file ( APPEND ${generated_headers_h} "#include \"sitk${filter}.h\"\n" )
-    file ( APPEND ${generated_headers_i} "%include \"sitk${filter}.h\"\n" )
+    file ( APPEND "${tmp_generated_headers_h}" "#include \"sitk${filter}.h\"\n" )
+    file ( APPEND "${tmp_generated_headers_i}" "%include \"sitk${filter}.h\"\n" )
   endforeach()
 
-  file ( APPEND ${generated_headers_h} "#endif\n")
+  file ( APPEND "${tmp_generated_headers_h}" "#endif\n")
 
-
+  configure_file( "${tmp_generated_headers_h}" "${generated_headers_h}" COPYONLY )
+  configure_file( "${tmp_generated_headers_i}" "${generated_headers_i}" COPYONLY )
 
 endmacro()
