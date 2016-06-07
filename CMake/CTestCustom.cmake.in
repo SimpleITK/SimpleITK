@@ -65,7 +65,7 @@ SET(CTEST_CUSTOM_WARNING_EXCEPTION
   "warning: lowering visibility of .* to match its type"
 
   # Warning from SWIG with self member type
-  "sitkCommand.* Warning 314.*self.*is a python keyword"
+  "sitkCommand.* [wW]arning 314.*self.*is a python keyword"
 
   # Warning from RH5 gcc 4.1.2
   "tr1/mu_iterate.h.* warning: unused parameter '__tuple'"
