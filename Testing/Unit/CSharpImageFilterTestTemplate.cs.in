@@ -63,8 +63,8 @@ $(foreach tests
 
                 // Read image(s)
 				for ( int i = 2; i < args.Length-1; i++ ) {
-
-					inputs.Add( reader.SetFileName( args[i] ).Execute() );
+                                  reader.SetFileName( args[i] );
+                                  inputs.Add( reader.Execute() );
 				}
 
 $(if inputA_cast then
@@ -181,7 +181,8 @@ OUT=[[
 
                 // Write output
                 ImageFileWriter writer = new ImageFileWriter();
-                writer.SetFileName( args[args.Length-1] ).Execute( output );
+                writer.SetFileName( args[args.Length-1] );
+                writer.Execute( output );
 ]]
 end)
 

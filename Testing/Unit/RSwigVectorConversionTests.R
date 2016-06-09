@@ -28,18 +28,18 @@ print(p2Location)
 
 # R to const std::vector<uint32_t>  &r
 bd <- BinaryDilateImageFilter()
-bd <- bd$SetKernelRadius(c(3,4))
+bd$SetKernelRadius(c(3,4))
 # std::vector<uint32_t> to R
 bd$GetKernelRadius()
 
 # R to const std::vector<unsigned int> & Radius
 bm <- BinaryMedianImageFilter()
-bm <- bm$SetRadius(c(7,7))
+bm$SetRadius(c(7,7))
 # std::vector<unsigned int> to R
 bm$GetRadius()
 
 # R to std::vector<float>
 st <- MultiLabelSTAPLEImageFilter()
-st <- st$SetPriorProbabilities(c(0.25, 0.25, 0.1))
+st$SetPriorProbabilities(c(0.25, 0.25, 0.1))
 # std::vector<float> to R
 st$GetPriorProbabilities()
