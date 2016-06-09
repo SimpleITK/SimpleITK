@@ -106,7 +106,8 @@ OUT=[[
       set output [ LabelMapToLabel $$output ]
   }
 
-  [writer SetFileName [lindex $$argv end] ] Execute $$output
+  writer SetFileName [lindex $$argv end]
+  writer Execute $$output
 ]]
 end)
   exit

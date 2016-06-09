@@ -56,16 +56,16 @@ $(when settings
 $(foreach settings
 $(if parameter == "SeedList" and python_value then
     OUT=[[    filter.ClearSeeds()
-    filter$(for i=1,#python_value do OUT=OUT .. ".AddSeed( " .. python_value[i] .. " )" end)]]
+    $(for i=1,#python_value do OUT=OUT .. "\n    filter.AddSeed( " .. python_value[i] .. " )\n" end)]]
 elseif parameter == "SeedList" then
     OUT=[[  filter.ClearSeeds()
-    filter$(for i=1,#value do OUT=OUT .. ".AddSeed( " .. value[i] .. " )" end)]]
+    $(for i=1,#value do OUT=OUT .. "\n    filter.AddSeed( " .. value[i] .. " )\n" end)]]
 elseif parameter == "TrialPoints" and python_value then
     OUT=[[    filter.ClearTrialPoints()
-    filter$(for i=1,#python_value do OUT=OUT .. ".AddTrialPoint( " .. python_value[i] .. " )" end)]]
+    $(for i=1,#python_value do OUT=OUT .. "\n    filter.AddTrialPoint( " .. python_value[i] .. " )\n" end)]]
 elseif parameter == "TrialPoints" then
     OUT=[[  filter.ClearTrialPoints()
-    filter$(for i=1,#value do OUT=OUT .. ".AddTrialPoint( " .. value[i] .. " )" end)]]
+    $(for i=1,#value do OUT=OUT .. "\n    filter.AddTrialPoint( " .. value[i] .. " )" end)]]
 elseif python_value then
 OUT=[[
     filter.Set${parameter}( ${python_value} )]]
@@ -109,7 +109,8 @@ end)
        output = SimpleITK.LabelMapToLabel(output)
 $(if not no_return_image then
 OUT=[[
-    writer.SetFileName ( sys.argv[-1] ).Execute ( output )
+    writer.SetFileName ( sys.argv[-1] )
+    writer.Execute ( output )
 ]]
 end)
 )
