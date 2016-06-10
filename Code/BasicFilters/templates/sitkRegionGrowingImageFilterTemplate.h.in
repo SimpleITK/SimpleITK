@@ -32,7 +32,7 @@ $(include ClassDeclaration.h.in)
 $(include PublicDeclarations.h.in)
 $(include MemberGetSetDeclarations.h.in)
       /** Set SeedList */
-      Self& SetSeedList ( const std::vector< std::vector<unsigned int> > &t )
+      SITK_RETURN_SELF_TYPE_HEADER SetSeedList ( const std::vector< std::vector<unsigned int> > &t )
         {
         this->m_SeedList = t; return *this;
         }
@@ -44,14 +44,14 @@ $(include MemberGetSetDeclarations.h.in)
         }
 
       /** ClearSeeds - Clear out all seeds in the list */
-      Self& ClearSeeds( )
+      SITK_RETURN_SELF_TYPE_HEADER ClearSeeds( )
         {
         this->m_SeedList.clear();
         return *this;
         }
 
       /** SetSeed - Set list to a single seed */
-      Self& SetSeed( const std::vector<unsigned int> &idx )
+      SITK_RETURN_SELF_TYPE_HEADER SetSeed( const std::vector<unsigned int> &idx )
         {
         this->m_SeedList.clear();
         this->m_SeedList.push_back(idx);
@@ -59,7 +59,7 @@ $(include MemberGetSetDeclarations.h.in)
         }
 
       /** AddSeed - Add a seed to the end of the list */
-      Self& AddSeed( const std::vector<unsigned int> &idx )
+      SITK_RETURN_SELF_TYPE_HEADER AddSeed( const std::vector<unsigned int> &idx )
         {
         this->m_SeedList.push_back(idx);
         return *this;

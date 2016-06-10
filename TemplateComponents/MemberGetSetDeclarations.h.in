@@ -28,7 +28,7 @@ $(if (not no_set_method) or (no_set_method == 0) then
       end
       OUT= OUT .. '\
        */\
-      Self& Set${name} ('
+      SITK_RETURN_SELF_TYPE_HEADER Set${name} ('
       if not type and enum then
         OUT=OUT..' ${name}Type'
       elseif dim_vec and (dim_vec == 1) then
@@ -43,15 +43,15 @@ $(if (not no_set_method) or (no_set_method == 0) then
     OUT = OUT .. '\
 \
       /** Set the values of the ${name} vector all to value */\
-      Self& Set${name}( ${type} value ) { this->m_${name} = std::vector<${type}>(3, value); return *this; }\
+      SITK_RETURN_SELF_TYPE_HEADER Set${name}( ${type} value ) { this->m_${name} = std::vector<${type}>(3, value); return *this; }\
 '
   end
   if type == "bool" and ( not dim_vec or not dim_vec == 1 ) then
       OUT = OUT .. '\
 \
       /** Set the value of ${name} to true or false respectfully. */\
-      Self& ${name}On() { return this->Set${name}(true); }\
-      Self& ${name}Off() { return this->Set${name}(false); }'
+      SITK_RETURN_SELF_TYPE_HEADER ${name}On() { return this->Set${name}(true); }\
+      SITK_RETURN_SELF_TYPE_HEADER ${name}Off() { return this->Set${name}(false); }'
   end
 end)
 $(if (not no_get_method) or (no_get_method == 0) then
@@ -82,9 +82,9 @@ end)$(if point_vec and (point_vec == 1) then
       OUT=[[
 
       /** \brief Add ${name} point */
-      Self& Add${name:gsub("s([0-9]?)$","%1")}( const std::vector< ${type} > &point ) { this->m_${name}.push_back(point); return *this;}
+      SITK_RETURN_SELF_TYPE_HEADER Add${name:gsub("s([0-9]?)$","%1")}( const std::vector< ${type} > &point ) { this->m_${name}.push_back(point); return *this;}
       /** \brief Remove all ${name} points */
-      Self& Clear${name}( ) { this->m_${name}.clear(); return *this;}
+      SITK_RETURN_SELF_TYPE_HEADER Clear${name}( ) { this->m_${name}.clear(); return *this;}
 ]]
 end))$(when measurements $(foreach measurements
 

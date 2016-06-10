@@ -55,19 +55,19 @@ public:
   std::string GetName() const { return std::string ("Euler2DTransform"); }
 
 /** fixed parameter */
-  Self &SetCenter(const std::vector<double> &params);
+  SITK_RETURN_SELF_TYPE_HEADER SetCenter(const std::vector<double> &params);
   std::vector<double> GetCenter( ) const;
 
 /** parameter */
-  Self &SetAngle (double angle);
+  SITK_RETURN_SELF_TYPE_HEADER SetAngle (double angle);
   double GetAngle () const;
 
   std::vector<double> GetTranslation( ) const;
-  Self &SetTranslation(const std::vector<double>& translation);
+  SITK_RETURN_SELF_TYPE_HEADER SetTranslation(const std::vector<double>& translation);
 
   /** additional methods */
   std::vector<double> GetMatrix() const;
-  Self &SetMatrix(const std::vector<double> &matrix, double tolerance = 1e-10);
+  SITK_RETURN_SELF_TYPE_HEADER SetMatrix(const std::vector<double> &matrix, double tolerance = 1e-10);
 
 protected:
 

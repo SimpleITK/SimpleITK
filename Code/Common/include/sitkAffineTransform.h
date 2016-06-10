@@ -55,24 +55,24 @@ public:
 
   /** parameters */
   std::vector<double> GetTranslation( ) const;
-  Self &SetTranslation( const std::vector<double>& translation);
+  SITK_RETURN_SELF_TYPE_HEADER SetTranslation( const std::vector<double>& translation);
 
-  Self &SetMatrix( const std::vector<double> &matrix);
+  SITK_RETURN_SELF_TYPE_HEADER SetMatrix( const std::vector<double> &matrix);
   std::vector<double> GetMatrix() const;
 
   /** fixed parameter */
-  Self &SetCenter(const std::vector<double> &params);
+  SITK_RETURN_SELF_TYPE_HEADER SetCenter(const std::vector<double> &params);
   std::vector<double> GetCenter( ) const;
 
   /** additional methods */
-  Self &Scale(const std::vector<double> & factor, bool pre=false);
-  Self &Scale(double factor, bool pre=false);
+  SITK_RETURN_SELF_TYPE_HEADER Scale(const std::vector<double> & factor, bool pre=false);
+  SITK_RETURN_SELF_TYPE_HEADER Scale(double factor, bool pre=false);
 
-  Self &Shear(int axis1, int axis2, double coef, bool pre=false);
+  SITK_RETURN_SELF_TYPE_HEADER Shear(int axis1, int axis2, double coef, bool pre=false);
 
-  Self &Translate(const std::vector<double> &offset, bool pre=false);
+  SITK_RETURN_SELF_TYPE_HEADER Translate(const std::vector<double> &offset, bool pre=false);
 
-  Self &Rotate(int axis1, int axis2, double angle, bool pre=false);
+  SITK_RETURN_SELF_TYPE_HEADER Rotate(int axis1, int axis2, double angle, bool pre=false);
 
 protected:
 

@@ -36,7 +36,7 @@ $(include ClassDeclaration.h.in)
 $(include PublicDeclarations.h.in)
 $(include MemberGetSetDeclarations.h.in)
       /** Kernel radius as a scale for isotropic structures */
-      Self& SetKernelRadius(uint32_t r);
+      SITK_RETURN_SELF_TYPE_HEADER SetKernelRadius(uint32_t r);
 
       /** Set/Get the radius of the kernel structuring element as a
        * vector.
@@ -45,14 +45,14 @@ $(include MemberGetSetDeclarations.h.in)
        * r, then the radius will be padded. If it is less the r will
        * be truncated.
        */
-      Self& SetKernelRadius(const std::vector<uint32_t>  &r );
+      SITK_RETURN_SELF_TYPE_HEADER SetKernelRadius(const std::vector<uint32_t>  &r );
       std::vector<uint32_t> GetKernelRadius() const;
 
       /** Set/Get the kernel or structuring elemenent used for the
        * morphology */
-      Self& SetKernelType(KernelEnum t);
+      SITK_RETURN_SELF_TYPE_HEADER SetKernelType(KernelEnum t);
 #ifndef SWIG
-      Self& SetKernelType(KernelType t);
+      SITK_RETURN_SELF_TYPE_HEADER SetKernelType(KernelType t);
 #endif
       KernelEnum GetKernelType() const;
 

@@ -102,6 +102,12 @@
   %include Ruby.i
 #endif
 
+
+#ifndef SITK_RETURN_SELF_TYPE_HEADER
+#define SITK_RETURN_SELF_TYPE_HEADER Self &
+#endif
+
+
 // Help SWIG handle std vectors
 namespace std
 {
@@ -198,20 +204,6 @@ namespace std
 // Registration
 %include "sitkImageRegistrationMethod.h"
 
-
-// Only C# can handle import filter
-#if SWIGCSHARP
-%include "sitkImportImageFilter.h"
-#endif
-
-
-#if SWIGPYTHON
-%include "sitkPyCommand.h"
-#endif
-
-#if SWIGR
-%include "sitkRCommand.h"
-#endif
 
 // Auto-generated headers
 %include "SimpleITKBasicFiltersGeneratedHeaders.i"

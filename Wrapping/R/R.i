@@ -5,6 +5,8 @@
 %ignore itk::simple::CastImageFilter::SetOutputPixelType( PixelIDValueType pixelID );
 %ignore itk::simple::GetPixelIDValueAsString( PixelIDValueType type );
 
+#define SITK_RETURN_SELF_TYPE_HEADER void
+
 %include <std_vector.i>
 // we don't want a class assigned to unsigned char
 %typemap(scoerceout) unsigned char,
