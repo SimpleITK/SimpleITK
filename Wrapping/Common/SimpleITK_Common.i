@@ -199,19 +199,5 @@ namespace std
 %include "sitkImageRegistrationMethod.h"
 
 
-// Only C# can handle import filter
-#if SWIGCSHARP
-%include "sitkImportImageFilter.h"
-#endif
-
-
-#if SWIGPYTHON
-%include "sitkPyCommand.h"
-#endif
-
-#if SWIGR
-%include "sitkRCommand.h"
-#endif
-
 // Auto-generated headers
 %include "SimpleITKBasicFiltersGeneratedHeaders.i"
