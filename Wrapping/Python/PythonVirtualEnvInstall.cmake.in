@@ -20,6 +20,12 @@ endif()
 # Create the Python virtual environment.
 #
 execute_process(
+  COMMAND ${CMAKE_COMMAND}
+    "-E"
+    "remove_directory"
+    "@PythonVirtualenvHome@"
+  )
+execute_process(
   COMMAND "@PYTHON_EXECUTABLE@"
     "@PYTHON_VIRTUALENV_SCRIPT@"
     "--python=@PYTHON_EXECUTABLE@"
