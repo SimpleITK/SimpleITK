@@ -71,7 +71,7 @@ In the second mode, the moments of gray level values are computed for both image
 
       /**
        */
-      Self& SetOperationMode ( OperationModeType OperationMode ) { this->m_OperationMode = OperationMode; return *this; }
+      SITK_RETURN_SELF_TYPE_HEADER SetOperationMode ( OperationModeType OperationMode ) { this->m_OperationMode = OperationMode; return *this; }
 
       /**
        */
@@ -92,10 +92,10 @@ In the second mode, the moments of gray level values are computed for both image
 
 
       /** Select between using the geometrical center of the images or using the center of mass given by the image intensities. */
-      Self& MomentsOn( ) { this->SetOperationMode( MOMENTS ); return *this; }
+      SITK_RETURN_SELF_TYPE_HEADER MomentsOn( ) { this->SetOperationMode( MOMENTS ); return *this; }
 
       /** Select between using the geometrical center of the images or using the center of mass given by the image intensities. */
-      Self& GeometryOn( ) { this->SetOperationMode( GEOMETRY ); return *this; }
+      SITK_RETURN_SELF_TYPE_HEADER GeometryOn( ) { this->SetOperationMode( GEOMETRY ); return *this; }
 
 
     private:

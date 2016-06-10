@@ -111,7 +111,7 @@ namespace simple
      */
     InterpolatorEnum GetInterpolator()
       { return this->m_Interpolator; }
-    Self& SetInterpolator ( InterpolatorEnum Interpolator )
+    SITK_RETURN_SELF_TYPE_HEADER SetInterpolator ( InterpolatorEnum Interpolator )
       { this->m_Interpolator = Interpolator; return *this; }
     /** @} */
 
@@ -133,9 +133,9 @@ namespace simple
      */
 #if !defined(SWIG) || defined(JAVASWIG) || defined(CSHARPSWIG)
     // Only wrap this method if the wrapping language is strongly typed
-    Self& SetInitialTransform ( const Transform &transform );
+    SITK_RETURN_SELF_TYPE_HEADER SetInitialTransform ( const Transform &transform );
 #endif
-    Self& SetInitialTransform ( Transform &transform, bool inPlace=true );
+    SITK_RETURN_SELF_TYPE_HEADER SetInitialTransform ( Transform &transform, bool inPlace=true );
     Transform GetInitialTransform()
       { return this->m_InitialTransform; }
     bool GetInitialTransformInPlace() const
@@ -155,7 +155,7 @@ namespace simple
      * \sa itk::ImageRegistrationMethodv4::SetMovingInitialTransform
      * @{
      */
-    Self& SetMovingInitialTransform( const Transform &transform )
+    SITK_RETURN_SELF_TYPE_HEADER SetMovingInitialTransform( const Transform &transform )
     { this->m_MovingInitialTransform = transform; return *this; }
     Transform GetMovingInitialTransform( ) const
     { return this->m_MovingInitialTransform; }
@@ -171,7 +171,7 @@ namespace simple
      * \sa itk::ImageRegistrationMethodv4::SetFixedInitialTransform
      * @{
      */
-    Self& SetFixedInitialTransform( const Transform &transform )
+    SITK_RETURN_SELF_TYPE_HEADER SetFixedInitialTransform( const Transform &transform )
     { this->m_FixedInitialTransform = transform; return *this; }
     Transform GetFixedInitialTransform( ) const
     { return this->m_FixedInitialTransform; }
@@ -183,39 +183,39 @@ namespace simple
      *
      * \sa itk::ANTSNeighborhoodCorrelationImageToImageMetricv4
      */
-    Self& SetMetricAsANTSNeighborhoodCorrelation( unsigned int radius );
+    SITK_RETURN_SELF_TYPE_HEADER SetMetricAsANTSNeighborhoodCorrelation( unsigned int radius );
 
     /** \brief Use negative normalized cross correlation image metric.
      *
      * \sa itk::CorrelationImageToImageMetricv4
      */
-    Self& SetMetricAsCorrelation( );
+    SITK_RETURN_SELF_TYPE_HEADER SetMetricAsCorrelation( );
 
     /** \brief Use demons image metric.
      *
      * \sa itk::DemonsImageToImageMetricv4
      */
-    Self& SetMetricAsDemons( double intensityDifferenceThreshold = 0.001 );
+    SITK_RETURN_SELF_TYPE_HEADER SetMetricAsDemons( double intensityDifferenceThreshold = 0.001 );
 
     /** \brief Use mutual information between two images.
      *
      * \sa itk::JointHistogramMutualInformationImageToImageMetricv4
      */
-    Self& SetMetricAsJointHistogramMutualInformation( unsigned int numberOfHistogramBins = 20,
+    SITK_RETURN_SELF_TYPE_HEADER SetMetricAsJointHistogramMutualInformation( unsigned int numberOfHistogramBins = 20,
                                                       double varianceForJointPDFSmoothing = 1.5);
 
     /** \brief Use negative means squares image metric.
      *
      * \sa itk::MeanSquaresImageToImageMetricv4
      */
-    Self& SetMetricAsMeanSquares( );
+    SITK_RETURN_SELF_TYPE_HEADER SetMetricAsMeanSquares( );
 
     /** \brief Use the mutual information between two images to be
      * registered using the method of Mattes et al.
      *
      * \sa itk::MattesMutualInformationImageToImageMetricv4
      */
-    Self& SetMetricAsMattesMutualInformation( unsigned int numberOfHistogramBins = 50 );
+    SITK_RETURN_SELF_TYPE_HEADER SetMetricAsMattesMutualInformation( unsigned int numberOfHistogramBins = 50 );
 
 
     enum EstimateLearningRateType { Never, Once, EachIteration };
@@ -224,7 +224,7 @@ namespace simple
      *
      * \sa itk::ConjugateGradientLineSearchOptimizerv4Template
      */
-    Self& SetOptimizerAsConjugateGradientLineSearch( double learningRate,
+    SITK_RETURN_SELF_TYPE_HEADER SetOptimizerAsConjugateGradientLineSearch( double learningRate,
                                                      unsigned int numberOfIterations,
                                                      double convergenceMinimumValue = 1e-6,
                                                      unsigned int convergenceWindowSize = 10,
@@ -239,7 +239,7 @@ namespace simple
      *
      * \sa itk::RegularStepGradientDescentOptimizerv4
      */
-    Self& SetOptimizerAsRegularStepGradientDescent( double learningRate,
+    SITK_RETURN_SELF_TYPE_HEADER SetOptimizerAsRegularStepGradientDescent( double learningRate,
                                                     double minStep,
                                                     unsigned int numberOfIterations,
                                                     double relaxationFactor=0.5,
@@ -251,7 +251,7 @@ namespace simple
      *
      * \sa itk::GradientDescentOptimizerv4Template
      */
-    Self& SetOptimizerAsGradientDescent( double learningRate,
+    SITK_RETURN_SELF_TYPE_HEADER SetOptimizerAsGradientDescent( double learningRate,
                                          unsigned int numberOfIterations,
                                          double convergenceMinimumValue = 1e-6,
                                          unsigned int convergenceWindowSize = 10,
@@ -262,7 +262,7 @@ namespace simple
      *
      * \sa itk::GradientDescentLineSearchOptimizerv4Template
      */
-    Self& SetOptimizerAsGradientDescentLineSearch( double learningRate,
+    SITK_RETURN_SELF_TYPE_HEADER SetOptimizerAsGradientDescentLineSearch( double learningRate,
                                                    unsigned int numberOfIterations,
                                                    double convergenceMinimumValue = 1e-6,
                                                    unsigned int convergenceWindowSize = 10,
@@ -279,7 +279,7 @@ namespace simple
      *
      * \sa itk::LBFGSBOptimizerv4
      */
-    Self& SetOptimizerAsLBFGSB(double gradientConvergenceTolerance = 1e-5,
+    SITK_RETURN_SELF_TYPE_HEADER SetOptimizerAsLBFGSB(double gradientConvergenceTolerance = 1e-5,
                                unsigned int numberOfIterations = 500,
                                unsigned int maximumNumberOfCorrections = 5,
                                unsigned int maximumNumberOfFunctionEvaluations = 2000,
@@ -304,14 +304,14 @@ namespace simple
      *
      * \sa itk::ExhaustiveOptimizerv4
      */
-    Self& SetOptimizerAsExhaustive( const std::vector<unsigned int> &numberOfSteps,
+    SITK_RETURN_SELF_TYPE_HEADER SetOptimizerAsExhaustive( const std::vector<unsigned int> &numberOfSteps,
                                     double stepLength = 1.0 );
 
     /** \brief Set optimizer to Nelder-Mead downhill simplex algorithm.
      *
      * \sa itk::AmoebaOptimizerv4
      */
-    Self& SetOptimizerAsAmoeba(double simplexDelta,
+    SITK_RETURN_SELF_TYPE_HEADER SetOptimizerAsAmoeba(double simplexDelta,
                                unsigned int numberOfIterations,
                                double parametersConvergenceTolerance=1e-8,
                                double functionConvergenceTolerance=1e-4,
@@ -328,7 +328,7 @@ namespace simple
      * be used to apply another kind of prior knowledge.
      * @{
      */
-    Self& SetOptimizerWeights(const std::vector<double> &weights);
+    SITK_RETURN_SELF_TYPE_HEADER SetOptimizerWeights(const std::vector<double> &weights);
     std::vector<double> GetOptimizerWeights( ) const;
     /**@}*/
 
@@ -336,7 +336,7 @@ namespace simple
      *
      * \sa itk::PowellOptimizerv4
      */
-    Self& SetOptimizerAsPowell(unsigned int numberOfIterations = 100,
+    SITK_RETURN_SELF_TYPE_HEADER SetOptimizerAsPowell(unsigned int numberOfIterations = 100,
                                unsigned int maximumLineIterations = 100,
                                double stepLength = 1,
                                double stepTolerance = 1e-6,
@@ -344,7 +344,7 @@ namespace simple
 
 
     /** \brief Manually set per parameter weighting for the transform parameters. */
-    Self& SetOptimizerScales( const std::vector<double> &scales );
+    SITK_RETURN_SELF_TYPE_HEADER SetOptimizerScales( const std::vector<double> &scales );
 
     /** \brief Estimate scales from Jacobian norms.
      *
@@ -352,14 +352,14 @@ namespace simple
      *
      * \sa  itk::RegistrationParameterScalesFromJacobian
      */
-    Self& SetOptimizerScalesFromJacobian( unsigned int centralRegionRadius = 5 );
+    SITK_RETURN_SELF_TYPE_HEADER SetOptimizerScalesFromJacobian( unsigned int centralRegionRadius = 5 );
 
     /** \brief Estimate scales from maximum voxel shift in index space
      * cause by parameter change.
      *
      * \sa itk::RegistrationParameterScalesFromIndexShift
      */
-    Self& SetOptimizerScalesFromIndexShift( unsigned int centralRegionRadius = 5,
+    SITK_RETURN_SELF_TYPE_HEADER SetOptimizerScalesFromIndexShift( unsigned int centralRegionRadius = 5,
                                            double smallParameterVariation =  0.01 );
 
     /** \brief Estimating scales of transform parameters a step sizes,
@@ -368,7 +368,7 @@ namespace simple
      *
      * \sa itk::RegistrationParameterScalesFromPhysicalShift
      */
-    Self& SetOptimizerScalesFromPhysicalShift( unsigned int centralRegionRadius = 5,
+    SITK_RETURN_SELF_TYPE_HEADER SetOptimizerScalesFromPhysicalShift( unsigned int centralRegionRadius = 5,
                                               double smallParameterVariation =  0.01 );
 
 
@@ -381,7 +381,7 @@ namespace simple
      *
      * \sa itk::ImageToImageMetricv4::SetFixedImageMask
      */
-    Self& SetMetricFixedMask( const Image &binaryMask );
+    SITK_RETURN_SELF_TYPE_HEADER SetMetricFixedMask( const Image &binaryMask );
 
     /** \brief Set an image mask in order to restrict the sampled points
      * for the metric in the moving image space.
@@ -392,15 +392,15 @@ namespace simple
      *
      * \sa itk::ImageToImageMetricv4::SetMovingImageMask
      */
-    Self& SetMetricMovingMask( const Image &binaryMask );
+    SITK_RETURN_SELF_TYPE_HEADER SetMetricMovingMask( const Image &binaryMask );
 
     /** \brief Set percentage of pixels sampled for metric evaluation.
      *
      * \sa itk::ImageRegistrationMethodv4::SetMetricSamplingPercentage
      * @{
      */
-    Self &SetMetricSamplingPercentage(double percentage);
-    Self &SetMetricSamplingPercentagePerLevel(const std::vector<double> &percentage);
+    SITK_RETURN_SELF_TYPE_HEADER SetMetricSamplingPercentage(double percentage);
+    SITK_RETURN_SELF_TYPE_HEADER SetMetricSamplingPercentagePerLevel(const std::vector<double> &percentage);
     /** @} */
 
     enum MetricSamplingStrategyType {
@@ -413,7 +413,7 @@ namespace simple
      *
      * \sa itk::ImageRegistrationMethodv4::SetMetricSamplingStrategy
      */
-    Self &SetMetricSamplingStrategy( MetricSamplingStrategyType strategy);
+    SITK_RETURN_SELF_TYPE_HEADER SetMetricSamplingStrategy( MetricSamplingStrategyType strategy);
 
     /** \brief Enable image gradient computation by a filter.
      *
@@ -424,9 +424,9 @@ namespace simple
      * \sa itk::ImageToImageMetricv4::SetUseFixedImageGradientFilter
      * @{
      */
-    Self& SetMetricUseFixedImageGradientFilter(bool);
-    Self& MetricUseFixedImageGradientFilterOn() {return this->SetMetricUseFixedImageGradientFilter(true);}
-    Self& MetricUseFixedImageGradientFilterOff() {return this->SetMetricUseFixedImageGradientFilter(false);}
+    SITK_RETURN_SELF_TYPE_HEADER SetMetricUseFixedImageGradientFilter(bool);
+    SITK_RETURN_SELF_TYPE_HEADER MetricUseFixedImageGradientFilterOn() {return this->SetMetricUseFixedImageGradientFilter(true);}
+    SITK_RETURN_SELF_TYPE_HEADER MetricUseFixedImageGradientFilterOff() {return this->SetMetricUseFixedImageGradientFilter(false);}
     /** @} */
 
 
@@ -439,9 +439,9 @@ namespace simple
      * \sa itk::ImageToImageMetricv4::SetUseMovingImageGradientFilter
      * @{
      */
-    Self& SetMetricUseMovingImageGradientFilter(bool);
-    Self& MetricUseMovingImageGradientFilterOn() {return this->SetMetricUseMovingImageGradientFilter(true);}
-    Self& MetricUseMovingImageGradientFilterOff() {return this->SetMetricUseMovingImageGradientFilter(false);}
+    SITK_RETURN_SELF_TYPE_HEADER SetMetricUseMovingImageGradientFilter(bool);
+    SITK_RETURN_SELF_TYPE_HEADER MetricUseMovingImageGradientFilterOn() {return this->SetMetricUseMovingImageGradientFilter(true);}
+    SITK_RETURN_SELF_TYPE_HEADER MetricUseMovingImageGradientFilterOff() {return this->SetMetricUseMovingImageGradientFilter(false);}
     /** @} */
 
 
@@ -450,14 +450,14 @@ namespace simple
      *
      * \sa  itk::ImageRegistrationMethodv4::SetShrinkFactorsPerLevel
      */
-    Self &SetShrinkFactorsPerLevel( const std::vector<unsigned int> &shrinkFactors );
+    SITK_RETURN_SELF_TYPE_HEADER SetShrinkFactorsPerLevel( const std::vector<unsigned int> &shrinkFactors );
 
     /** \brief Set the sigmas of Gaussian used for smoothing at each
      * level.
      *
      * \sa  itk::ImageRegistrationMethodv4::SetSmoothingSigmasPerLevel
      */
-    Self &SetSmoothingSigmasPerLevel( const std::vector<double> &smoothingSigmas );
+    SITK_RETURN_SELF_TYPE_HEADER SetSmoothingSigmasPerLevel( const std::vector<double> &smoothingSigmas );
 
     /** \brief Enable the smoothing sigmas for each level in physical
      * units (default) or in terms of voxels.
@@ -465,9 +465,9 @@ namespace simple
      * \sa   itk::ImageRegistrationMethodv4::SetSmoothingSigmasAreSpecifiedInPhysicalUnits
      * @{
      */
-    Self &SetSmoothingSigmasAreSpecifiedInPhysicalUnits(bool arg);
-    Self &SmoothingSigmasAreSpecifiedInPhysicalUnitsOn() { this->SetSmoothingSigmasAreSpecifiedInPhysicalUnits(true); return *this;}
-    Self &SmoothingSigmasAreSpecifiedInPhysicalUnitsOff()  { this->SetSmoothingSigmasAreSpecifiedInPhysicalUnits(false); return *this;}
+    SITK_RETURN_SELF_TYPE_HEADER SetSmoothingSigmasAreSpecifiedInPhysicalUnits(bool arg);
+    SITK_RETURN_SELF_TYPE_HEADER SmoothingSigmasAreSpecifiedInPhysicalUnitsOn() { this->SetSmoothingSigmasAreSpecifiedInPhysicalUnits(true); return *this;}
+    SITK_RETURN_SELF_TYPE_HEADER SmoothingSigmasAreSpecifiedInPhysicalUnitsOff()  { this->SetSmoothingSigmasAreSpecifiedInPhysicalUnits(false); return *this;}
     /** @} */
 
 

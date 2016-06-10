@@ -76,7 +76,7 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
       /**
        * Set the Fixed landmark point containers
        */
-      Self& SetFixedLandmarks ( const std::vector<double> & FixedLandmarks ) { this->m_FixedLandmarks = FixedLandmarks; return *this; }
+      SITK_RETURN_SELF_TYPE_HEADER SetFixedLandmarks ( const std::vector<double> & FixedLandmarks ) { this->m_FixedLandmarks = FixedLandmarks; return *this; }
 
       /**
        *
@@ -86,7 +86,7 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
       /**
        * Set the Moving landmark point containers
        */
-      Self& SetMovingLandmarks ( const std::vector<double> & MovingLandmarks ) { this->m_MovingLandmarks = MovingLandmarks; return *this; }
+      SITK_RETURN_SELF_TYPE_HEADER SetMovingLandmarks ( const std::vector<double> & MovingLandmarks ) { this->m_MovingLandmarks = MovingLandmarks; return *this; }
 
       /**
        * Get the shrink factors.
@@ -96,7 +96,7 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
       /**
        * Set the landmark weight point containers Weight includes diagonal elements of weight matrix
        */
-      Self& SetLandmarkWeight ( const std::vector<double> & LandmarkWeight ) { this->m_LandmarkWeight = LandmarkWeight; return *this; }
+      SITK_RETURN_SELF_TYPE_HEADER SetLandmarkWeight ( const std::vector<double> & LandmarkWeight ) { this->m_LandmarkWeight = LandmarkWeight; return *this; }
 
       /**
        *
@@ -106,7 +106,7 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
       /**
        * Set the reference image to define the parametric domain for the BSpline transform
        */
-      Self& SetReferenceImage ( const Image & ReferenceImage ) { this->m_ReferenceImage = ReferenceImage; return *this; }
+      SITK_RETURN_SELF_TYPE_HEADER SetReferenceImage ( const Image & ReferenceImage ) { this->m_ReferenceImage = ReferenceImage; return *this; }
 
       /**
        */
@@ -115,7 +115,7 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
       /**
        * Set/Get the number of control points
        */
-      Self& SetBSplineNumberOfControlPoints ( unsigned int BSplineNumberOfControlPoints ) { this->m_BSplineNumberOfControlPoints = BSplineNumberOfControlPoints; return *this; }
+      SITK_RETURN_SELF_TYPE_HEADER SetBSplineNumberOfControlPoints ( unsigned int BSplineNumberOfControlPoints ) { this->m_BSplineNumberOfControlPoints = BSplineNumberOfControlPoints; return *this; }
 
       /**
        * Set/Get the number of control points

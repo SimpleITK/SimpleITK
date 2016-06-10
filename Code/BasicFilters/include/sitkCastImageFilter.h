@@ -45,8 +45,8 @@ public:
   typedef CastImageFilter      Self;
 
   /** Set/Get the output pixel type */
-  Self& SetOutputPixelType( PixelIDValueEnum pixelID );
-  Self& SetOutputPixelType( PixelIDValueType pixelID );
+  SITK_RETURN_SELF_TYPE_HEADER SetOutputPixelType( PixelIDValueEnum pixelID );
+  SITK_RETURN_SELF_TYPE_HEADER SetOutputPixelType( PixelIDValueType pixelID );
   PixelIDValueEnum GetOutputPixelType( void ) const;
 
   /**

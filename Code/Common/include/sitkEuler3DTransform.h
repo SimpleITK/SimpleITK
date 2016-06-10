@@ -57,7 +57,7 @@ Euler3DTransform &operator=( const Euler3DTransform & );
 std::string GetName() const { return std::string ("Euler3DTransform"); }
 
 /** fixed parameter */
-Self &SetCenter(const std::vector<double> &params);
+SITK_RETURN_SELF_TYPE_HEADER SetCenter(const std::vector<double> &params);
 std::vector<double> GetCenter( ) const;
 
 double GetAngleX () const;
@@ -65,20 +65,20 @@ double GetAngleY () const;
 double GetAngleZ () const;
 
 /** parameter */
-Self &SetRotation (double angleX, double angleY, double angleZ);
+SITK_RETURN_SELF_TYPE_HEADER SetRotation (double angleX, double angleY, double angleZ);
 
 std::vector<double> GetTranslation( ) const;
-Self &SetTranslation( const std::vector<double>& translation);
+SITK_RETURN_SELF_TYPE_HEADER SetTranslation( const std::vector<double>& translation);
 
-Self &SetComputeZYX (bool _arg);
+SITK_RETURN_SELF_TYPE_HEADER SetComputeZYX (bool _arg);
 bool GetComputeZYX () const;
-Self &ComputeZYXOn () {return this->SetComputeZYX(true);}
-Self &ComputeZYXOff () {return this->SetComputeZYX(false);}
+SITK_RETURN_SELF_TYPE_HEADER ComputeZYXOn () {return this->SetComputeZYX(true);}
+SITK_RETURN_SELF_TYPE_HEADER ComputeZYXOff () {return this->SetComputeZYX(false);}
 
 
   /** additional methods */
   std::vector<double> GetMatrix() const;
-  Self &SetMatrix(const std::vector<double> &matrix, double tolerance = 1e-10);
+  SITK_RETURN_SELF_TYPE_HEADER SetMatrix(const std::vector<double> &matrix, double tolerance = 1e-10);
 
 protected:
 

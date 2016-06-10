@@ -63,23 +63,23 @@ public:
   std::string GetName() const { return std::string ("ScaleVersor3DTransform"); }
 
 /** fixed parameter */
-  Self &SetCenter(const std::vector<double> &params);
+  SITK_RETURN_SELF_TYPE_HEADER SetCenter(const std::vector<double> &params);
   std::vector<double> GetCenter( ) const;
 
 
 /** parameter */
-  Self &SetRotation(const std::vector<double> &versor);
-  Self &SetRotation(const std::vector<double> &axis,  double angle);
+  SITK_RETURN_SELF_TYPE_HEADER SetRotation(const std::vector<double> &versor);
+  SITK_RETURN_SELF_TYPE_HEADER SetRotation(const std::vector<double> &axis,  double angle);
   std::vector<double> GetVersor() const;
 
   std::vector<double> GetTranslation( ) const;
-  Self &SetTranslation(const std::vector<double>& translation);
+  SITK_RETURN_SELF_TYPE_HEADER SetTranslation(const std::vector<double>& translation);
 
   std::vector<double> GetScale( ) const;
-  Self &SetScale( const std::vector<double> & scale );
+  SITK_RETURN_SELF_TYPE_HEADER SetScale( const std::vector<double> & scale );
 
 /** additional methods */
-  Self &Translate(const std::vector<double> &offset);
+  SITK_RETURN_SELF_TYPE_HEADER Translate(const std::vector<double> &offset);
   std::vector<double> GetMatrix() const;
 
 protected:

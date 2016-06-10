@@ -74,7 +74,7 @@ public:
    * components equal to the image dimension.
    *
    */
-  Self &SetDisplacementField(Image &);
+  SITK_RETURN_SELF_TYPE_HEADER SetDisplacementField(Image &);
 
   /** \todo The returned image should not directly modify the
    * internal displacement field.
@@ -84,19 +84,19 @@ public:
   /** fixed parameter */
 
   /* additional methods */
-  Self &SetInverseDisplacementField(Image &);
+  SITK_RETURN_SELF_TYPE_HEADER SetInverseDisplacementField(Image &);
 
   /** \todo The returned image is should not directly modify the
    * internal displacement field.
    */
   Image GetInverseDisplacementField() const;
 
-  Self &SetInterpolator(InterpolatorEnum interp);
+  SITK_RETURN_SELF_TYPE_HEADER SetInterpolator(InterpolatorEnum interp);
   // InterpolatorEnum GetInterpolator() const; How to do this?
 
-  Self &SetSmoothingOff();
-  Self &SetSmoothingGaussianOnUpdate( double varianceForUpdateField=1.75, double varianceForTotalField=0.5 );
-  Self &SetSmoothingBSplineOnUpdate( const std::vector<unsigned int> &numberOfControlPointsForUpdateField = std::vector<unsigned int>(3,4),
+  SITK_RETURN_SELF_TYPE_HEADER SetSmoothingOff();
+  SITK_RETURN_SELF_TYPE_HEADER SetSmoothingGaussianOnUpdate( double varianceForUpdateField=1.75, double varianceForTotalField=0.5 );
+  SITK_RETURN_SELF_TYPE_HEADER SetSmoothingBSplineOnUpdate( const std::vector<unsigned int> &numberOfControlPointsForUpdateField = std::vector<unsigned int>(3,4),
                                      const std::vector<unsigned int> &numberOfControlPointsForTotalField = std::vector<unsigned int>(3,4),
                                      bool enforceStationaryBoundary=true,
                                      unsigned int order=3 );

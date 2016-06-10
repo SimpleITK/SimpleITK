@@ -53,11 +53,11 @@ namespace itk {
        * get's passed to image file's itk::ImageIO object. This is
        * only a request as not all file formatts support compression.
        * @{ */
-      Self& SetUseCompression( bool UseCompression );
+      SITK_RETURN_SELF_TYPE_HEADER SetUseCompression( bool UseCompression );
       bool GetUseCompression( void ) const;
 
-      Self & UseCompressionOn( void ) { return this->SetUseCompression(true); }
-      Self & UseCompressionOff( void ) { return this->SetUseCompression(false); }
+      SITK_RETURN_SELF_TYPE_HEADER UseCompressionOn( void ) { return this->SetUseCompression(true); }
+      SITK_RETURN_SELF_TYPE_HEADER UseCompressionOff( void ) { return this->SetUseCompression(false); }
       /** @} */
 
       /** The filenames to where the image slices are written.
@@ -65,13 +65,13 @@ namespace itk {
         * The number of filenames must match the number of slices in
         * the image.
         * @{ */
-      Self & SetFileNames ( const std::vector<std::string> &fileNames );
+      SITK_RETURN_SELF_TYPE_HEADER SetFileNames ( const std::vector<std::string> &fileNames );
       const std::vector<std::string> &GetFileNames() const;
       /** @} */
 
 
-      Self & Execute( const Image& );
-      Self & Execute( const Image &image, const std::vector<std::string> &inFileNames, bool inUseCompression );
+      SITK_RETURN_SELF_TYPE_HEADER Execute( const Image& );
+      SITK_RETURN_SELF_TYPE_HEADER Execute( const Image &image, const std::vector<std::string> &inFileNames, bool inUseCompression );
 
     protected:
 
