@@ -44,6 +44,11 @@ if(MSVC)
 
 endif()
 
+if(MINGW)
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wa,-mbig-obj" )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wa,-mbig-obj" )
+endif()
+
 
 #
 # Search CMAKE_CXX_FLAGS for flags that should be considered required,
