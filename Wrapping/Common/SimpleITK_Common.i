@@ -102,6 +102,12 @@
   %include Ruby.i
 #endif
 
+
+#ifndef SITK_RETURN_SELF_TYPE_HEADER
+#define SITK_RETURN_SELF_TYPE_HEADER Self &
+#endif
+
+
 // Help SWIG handle std vectors
 namespace std
 {
