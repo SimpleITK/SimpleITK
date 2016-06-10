@@ -185,7 +185,7 @@ OUT = OUT .. [[
   itk::simple::Image largeImage( 10,10,10,itk::simple::sitkUInt8 );
 ]]
     for inum=2,#inputs do
-      if  not inputs[inum].optional then
+      if  not inputs[inum].optional and not inputs[inum].no_size_check then
         OUT = OUT .. [[
   EXPECT_THROW ( filter.Execute ( largeImage]]
         for jnum=2,#inputs do
