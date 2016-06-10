@@ -47,8 +47,6 @@ class PyCommand
   : public itk::simple::Command
 {
 public:
-  // Standard "Self" typedef.
-  typedef PyCommand Self;
   typedef Command   Super;
 
   PyCommand();
