@@ -71,11 +71,6 @@ public:
   using Super::OwnedByProcessObjectsOff;
   #endif
 
-
-protected:
-  PyCommand(const Self&);
-  PyCommand & operator=(const Self&);
-
 private:
   PyObject *m_Object;
 };
