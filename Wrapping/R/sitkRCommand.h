@@ -81,8 +81,6 @@ public:
 
 
 protected:
-  RCommand(const Self&);
-  RCommand & operator=(const Self&);
 
   void SetCallbackRCallable(SEXP obj);
   void SetCallbackREnviron(SEXP rho);
