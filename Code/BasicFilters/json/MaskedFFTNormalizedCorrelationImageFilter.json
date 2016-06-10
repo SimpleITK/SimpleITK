@@ -2,11 +2,32 @@
   "name" : "MaskedFFTNormalizedCorrelationImageFilter",
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
-  "number_of_inputs" : 4,
+  "number_of_inputs" : 0,
   "pixel_types" : "BasicPixelIDTypeList",
   "output_pixel_type" : "typename itk::NumericTraits<typename InputImageType::PixelType>::RealType",
   "filter_type" : "itk::MaskedFFTNormalizedCorrelationImageFilter<InputImageType, OutputImageType>",
-  "custom_set_input" : "filter->SetFixedImage( image1 ); filter->SetMovingImage( image2 ); filter->SetFixedImageMask( image3 ); filter->SetMovingImageMask( image4 );",
+  "inputs" : [
+    {
+      "name" : "FixedImage",
+      "type" : "Image",
+      "custom_itk_cast" : "filter->SetFixedImage( this->CastImageToITK<typename FilterType::InputImageType>(*inFixedImage) );"
+    },
+    {
+      "name" : "MovingImage",
+      "type" : "Image",
+      "custom_itk_cast" : "filter->SetMovingImage( this->CastImageToITK<typename FilterType::InputImageType>(*inMovingImage) );"
+    },
+    {
+      "name" : "FixedImageMask",
+      "type" : "Image",
+      "custom_itk_cast" : "filter->SetFixedImageMask( this->CastImageToITK<typename FilterType::MaskImageType>(*inFixedImageMask) );"
+    },
+    {
+      "name" : "MovingImageMask",
+      "type" : "Image",
+      "custom_itk_cast" : "filter->SetMovingImageMask( this->CastImageToITK<typename FilterType::MaskImageType>(*inMovingImageMask) );"
+    }
+  ],
   "members" : [
     {
       "name" : "RequiredNumberOfOverlappingPixels",
