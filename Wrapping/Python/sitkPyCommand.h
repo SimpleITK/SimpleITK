@@ -47,8 +47,6 @@ class PyCommand
   : public itk::simple::Command
 {
 public:
-  // Standard "Self" typedef.
-  typedef PyCommand Self;
   typedef Command   Super;
 
   PyCommand();
@@ -72,11 +70,6 @@ public:
   using Super::OwnedByProcessObjectsOn;
   using Super::OwnedByProcessObjectsOff;
   #endif
-
-
-protected:
-  PyCommand(const Self&);
-  PyCommand & operator=(const Self&);
 
 private:
   PyObject *m_Object;
