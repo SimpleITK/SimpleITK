@@ -19,6 +19,37 @@ if( NOT DEFINED SimpleITK_REQUIRED_LINK_FLAGS )
   set(SimpleITK_REQUIRED_LINK_FLAGS "")
 endif()
 
+if(MSVC)
+  # /bigobj is required for windows builds because of the size of
+  # some object files (CastImage for instance)
+  # Also supress the pesky warning about std::vector not being marked
+  # for export in the dll
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj /wd4251" )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /bigobj" )
+
+  # Avoid some warnings
+  add_definitions ( -D_SCL_SECURE_NO_WARNINGS )
+
+
+  # force debug linking not to be incremental
+  foreach( _varName
+      CMAKE_EXE_LINKER_FLAGS_DEBUG
+      CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO
+      CMAKE_MODULE_LINKER_FLAGS_DEBUG
+      CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO
+      CMAKE_SHARED_LINKER_FLAGS_DEBUG
+      CMAKE_SHARED_LINKER_FLAGS_RELWITHDEBINFO )
+    STRING(REGEX REPLACE "INCREMENTAL(:[a-zA-Z]+)?" "INCREMENTAL:NO" ${_varName} ${${_varName}})
+  endforeach()
+
+endif()
+
+if(MINGW)
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wa,-mbig-obj" )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wa,-mbig-obj" )
+endif()
+
+
 #
 # Search CMAKE_CXX_FLAGS for flags that should be considered required,
 # and propagated to other projects, via the
