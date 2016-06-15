@@ -69,5 +69,9 @@ SET(CTEST_CUSTOM_WARNING_EXCEPTION
 
   # Warning from RH5 gcc 4.1.2
   "tr1/mu_iterate.h.* warning: unused parameter '__tuple'"
+
+  # Warning when building a Python wheel on Windows
+  "RuntimeWarning: Config variable .* is unset, Python ABI tag may be incorrect"
+
 )
 
