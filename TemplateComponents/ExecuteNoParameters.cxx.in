@@ -19,8 +19,12 @@ if inputs then
       OUT=OUT..[[
 
   // todo need better error handling and potential type conversion
-  if ( ]]..inputName..[[.GetDimension() != ]]..currentInputName..[[.GetDimension() ||
-       ]]..inputName..[[.GetSize() != ]]..currentInputName..[[.GetSize() )
+  if ( ]]..inputName..[[.GetDimension() != ]]..currentInputName..[[.GetDimension()]]
+     if not inputs[inum].no_size_check then
+       OUT=OUT..[[ ||
+       ]]..inputName..[[.GetSize() != ]]..currentInputName..[[.GetSize()]]
+      end
+        OUT=OUT..[[ )
     {
       sitkExceptionMacro ( "Input image ]]..currentInputName..[[ does not match dimension or size of first image!" );
     }
