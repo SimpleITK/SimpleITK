@@ -102,7 +102,7 @@ namespace itk {
        **/
       static std::vector<std::string> GetGDCMSeriesIDs( const std::string &directory );
 
-      Self& SetFileNames ( const std::vector<std::string> &fileNames );
+      SITK_RETURN_SELF_TYPE_HEADER SetFileNames ( const std::vector<std::string> &fileNames );
       const std::vector<std::string> &GetFileNames() const;
 
       Image Execute();

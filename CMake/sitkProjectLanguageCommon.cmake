@@ -44,6 +44,9 @@ find_package ( SWIG 2 REQUIRED )
 
 include (sitkUseSWIG)
 
+set(SIMPLEITK_WRAPPING_COMMON_DIR
+  ${SimpleITK_SOURCE_DIR}/Wrapping/Common)
+
 file(GLOB SWIG_EXTRA_DEPS
   "${SimpleITK_SOURCE_DIR}/Code/Common/include/*.h"
   "${SimpleITK_SOURCE_DIR}/Code/Registration/include/*.h"
@@ -52,6 +55,7 @@ file(GLOB SWIG_EXTRA_DEPS
 # make a manual list of dependencies for the Swig.i files
 list( APPEND SWIG_EXTRA_DEPS "${SimpleITK_BINARY_DIR}/Code/BasicFilters/include/SimpleITKBasicFiltersGeneratedHeaders.i"
   "${SimpleITK_BINARY_DIR}/Code/BasicFilters/include/SimpleITKBasicFiltersGeneratedHeaders.h"
+  "${SIMPLEITK_WRAPPING_COMMON_DIR}/SimpleITK_Common.i"
   ${SimpleITKBasicFiltersGeneratedHeader}
   )
 
@@ -64,9 +68,6 @@ try_compile(SITK_ULONG_SAME_AS_UINT64
 if(${SITK_ULONG_SAME_AS_UINT64} )
   set ( CMAKE_SWIG_GLOBAL_FLAGS "-DSWIGWORDSIZE64" )
 endif()
-
-set(SIMPLEITK_WRAPPING_COMMON_DIR
-  ${SimpleITK_SOURCE_DIR}/Wrapping/Common)
 
 set ( CMAKE_SWIG_GLOBAL_FLAGS -I${SIMPLEITK_WRAPPING_COMMON_DIR} ${CMAKE_SWIG_GLOBAL_FLAGS} )
 

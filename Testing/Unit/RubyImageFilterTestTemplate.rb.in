@@ -141,7 +141,8 @@ OUT=[[
     caster = Simpleitk::LabelMapToLabelImageFilter.new
     output = caster.execute( output )
   end
-  writer.set_file_name( ARGV[ARGV.length-1] ).execute( output )
+  writer.set_file_name( ARGV[ARGV.length-1] )
+  writer.execute( output )
 ]]
 end)
 end

@@ -59,11 +59,11 @@ This class derived from the CenteredTransformInitializerand uses it in a more co
       /**
        * Enable the use of the principal axes of each image to compute an initial rotation that will align them.
        */
-      Self& SetComputeRotation ( bool ComputeRotation ) { this->m_ComputeRotation = ComputeRotation; return *this; }
+      SITK_RETURN_SELF_TYPE_HEADER SetComputeRotation ( bool ComputeRotation ) { this->m_ComputeRotation = ComputeRotation; return *this; }
 
       /** Set the value of ComputeRotation to true or false respectfully. */
-      Self& ComputeRotationOn() { return this->SetComputeRotation(true); }
-      Self& ComputeRotationOff() { return this->SetComputeRotation(false); }
+      SITK_RETURN_SELF_TYPE_HEADER ComputeRotationOn() { return this->SetComputeRotation(true); }
+      SITK_RETURN_SELF_TYPE_HEADER ComputeRotationOff() { return this->SetComputeRotation(false); }
 
       /**
        * Enable the use of the principal axes of each image to compute an initial rotation that will align them.

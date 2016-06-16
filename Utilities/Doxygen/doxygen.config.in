@@ -1993,7 +1993,8 @@ INCLUDE_FILE_PATTERNS  =
 PREDEFINED             = "itkNotUsed(x)=" \
                          "SITKBasicFilters_EXPORT= " \
                          "SITKITKIO_EXPORT= " \
-                         "SITKITKCommon_EXPORT= "
+                         "SITKITKCommon_EXPORT= " \
+                         "SITK_RETURN_SELF_TYPE_HEADER=Self &"
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then this
 # tag can be used to specify a list of macro names that should be expanded. The

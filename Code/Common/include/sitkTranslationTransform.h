@@ -47,7 +47,7 @@ TranslationTransform( const Transform & );
 
 TranslationTransform &operator=( const TranslationTransform & );
 
-Self &SetOffset(const std::vector<double> &params);
+SITK_RETURN_SELF_TYPE_HEADER SetOffset(const std::vector<double> &params);
 std::vector<double> GetOffset( ) const;
 
 protected:

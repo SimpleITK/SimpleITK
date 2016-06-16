@@ -37,7 +37,7 @@ public:
 
   // Return the message from the previous image comparison.
   std::string getMessage() { return mMessage; }
-  Self& setTolerance ( double t ) { mTolerance = t; return *this; }
+  void setTolerance ( double t ) { mTolerance = t; }
   double getTolerance() { return mTolerance; }
 
   static void NormalizeAndSave ( const itk::simple::Image &image, const std::string &filename );

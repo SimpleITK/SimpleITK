@@ -82,7 +82,8 @@ $(foreach tests
      // Read image(s)
 $(for i=0,#inputs-1 do
 OUT=OUT..[[
-      inputs[]]..i..[[] = reader.setFileName( argv[]]..i..[[+1] ).execute();
+      reader.setFileName( argv[]]..i..[[+1] );
+      inputs[]]..i..[[] = reader.execute();
 ]]
 end)
 
@@ -237,7 +238,8 @@ OUT=[[
         }
 
       // Write output
-      writer.setFileName( argv[argv.length - 1] ).execute( output );
+      writer.setFileName( argv[argv.length - 1] );
+      writer.execute( output );
 ]]
 end)
     }

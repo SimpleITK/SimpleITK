@@ -49,7 +49,7 @@ namespace itk {
       HashImageFilter();
 
       enum HashFunction { SHA1, MD5 };
-      Self& SetHashFunction ( HashFunction hashFunction );
+      SITK_RETURN_SELF_TYPE_HEADER SetHashFunction ( HashFunction hashFunction );
       HashFunction GetHashFunction () const;
 
       /** Name of this class */

@@ -53,7 +53,7 @@ class SmartPointer;
        * convert the pixels.
        * @{
        */
-      Self& SetOutputPixelType( PixelIDValueEnum pixelID );
+      SITK_RETURN_SELF_TYPE_HEADER SetOutputPixelType( PixelIDValueEnum pixelID );
       PixelIDValueEnum GetOutputPixelType( void ) const;
       /* @} */
 
