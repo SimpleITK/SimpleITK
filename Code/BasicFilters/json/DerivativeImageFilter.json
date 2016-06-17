@@ -12,18 +12,18 @@
       "type" : "unsigned int",
       "default" : "0u",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Standard get/set macros for filter parameters.",
+      "detaileddescriptionSet" : "The output pixel type must be signed. Standard get/set macros for filter parameters.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Standard get/set macros for filter parameters."
+      "detaileddescriptionGet" : "The output pixel type must be signed. Standard get/set macros for filter parameters."
     },
     {
       "name" : "Order",
       "type" : "unsigned int",
       "default" : "1u",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Standard get/set macros for filter parameters.",
+      "detaileddescriptionSet" : "The output pixel type must be signed. Standard get/set macros for filter parameters.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Standard get/set macros for filter parameters."
+      "detaileddescriptionGet" : "The output pixel type must be signed. Standard get/set macros for filter parameters."
     },
     {
       "name" : "UseImageSpacing",
