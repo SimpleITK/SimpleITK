@@ -87,5 +87,5 @@
     }
   ],
   "briefdescription" : "Generate an n-dimensional image of a Gabor filter.",
-  "detaileddescription" : "GaborImageSource generates an image of either the real (i.e. symmetric) or complex (i.e. antisymmetric) part of the Gabor filter with the orientation directed along the x-axis. The GaborKernelFunction is used to evaluate the contribution along the x-axis whereas a non-normalized 1-D Gaussian envelope provides the contribution in each of the remaining N dimensions. Orientation can be manipulated via the Transform classes of the toolkit.\n\nThe output image may be of any dimension.\n\nThis implementation was contributed as a paper to the Insight Journal http://hdl.handle.net/1926/500"
+  "detaileddescription" : "GaborImageSource generates an image of either the real (i.e. symmetric) or complex (i.e. antisymmetric) part of the Gabor filter with the orientation directed along the x-axis. The GaborKernelFunction is used to evaluate the contribution along the x-axis whereas a non-normalized 1-D Gaussian envelope provides the contribution in each of the remaining N dimensions. Orientation can be manipulated via the Transform classes of the toolkit.\n\nThe output image may be of any dimension.\n\nThis implementation was contributed as a paper to the Insight Journal https://hdl.handle.net/1926/500"
 }

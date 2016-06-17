@@ -94,5 +94,5 @@
     }
   ],
   "briefdescription" : "Alter an image with additive gaussian white noise.",
-  "detaileddescription" : "\\author Gaetan Lehmann\n\nThis code was contributed in the Insight Journal paper \"Noise\nSimulation\". http://hdl.handle.net/10380/3158"
+  "detaileddescription" : "\\author Gaetan Lehmann\n\nThis code was contributed in the Insight Journal paper \"Noise\nSimulation\". https://hdl.handle.net/10380/3158"
 }

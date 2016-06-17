@@ -24,7 +24,7 @@
       "type" : "uint32_t",
       "default" : "0u",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "After the filter is executed, holds the number of connected components."
+      "detaileddescriptionGet" : ""
     }
   ],
   "custom_methods" : [],
@@ -62,5 +62,5 @@
     }
   ],
   "briefdescription" : "Label the objects in a binary image.",
-  "detaileddescription" : "ConnectedComponentImageFilter labels the objects in a binary image (non-zero pixels are considered to be objects, zero-valued pixels are considered to be background). Each distinct object is assigned a unique label. The filter experiments with some improvements to the existing implementation, and is based on run length encoding along raster lines. The final object labels start with 1 and are consecutive. Objects that are reached earlier by a raster order scan have a lower label. This is different to the behaviour of the original connected component image filter which did not produce consecutive labels or impose any particular ordering.\n\n\\see ImageToImageFilter \n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Label connected components in a binary image"
+  "detaileddescription" : "ConnectedComponentImageFilter labels the objects in a binary image (non-zero pixels are considered to be objects, zero-valued pixels are considered to be background). Each distinct object is assigned a unique label. The filter experiments with some improvements to the existing implementation, and is based on run length encoding along raster lines. The final object labels start with 1 and are consecutive. Objects that are reached earlier by a raster order scan have a lower label. This is different to the behaviour of the original connected component image filter which did not produce consecutive labels or impose any particular ordering.\n\nAfter the filter is executed, ObjectCount holds the number of connected components.\n\n\\see ImageToImageFilter \n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Label connected components in a binary image"
 }

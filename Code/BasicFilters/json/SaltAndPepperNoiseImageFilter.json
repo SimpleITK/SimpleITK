@@ -73,5 +73,5 @@
     }
   ],
   "briefdescription" : "Alter an image with fixed value impulse noise, often called salt and pepper noise.",
-  "detaileddescription" : "Pixel alteration occurs at a user defined probability. Salt and pepper pixel are equally distributed.\n\n\\author Gaetan Lehmann\n\nThis code was contributed in the Insight Journal paper \"Noise\nSimulation\". http://hdl.handle.net/10380/3158"
+  "detaileddescription" : "Pixel alteration occurs at a user defined probability. Salt and pepper pixel are equally distributed.\n\n\\author Gaetan Lehmann\n\nThis code was contributed in the Insight Journal paper \"Noise\nSimulation\". https://hdl.handle.net/10380/3158"
 }
