@@ -1,5 +1,55 @@
 
 
+%feature("docstring") itk::ComponentByComponentImageFilter "
+
+Apply a filter or a pipeline slice by slice on an image.
+
+C++ includes: itkComponentByComponentImageFilter.h
+";
+
+%feature("docstring")  itk::ComponentByComponentImageFilter::GetFilter "
+";
+
+%feature("docstring")  itk::ComponentByComponentImageFilter::GetFilter "
+";
+
+%feature("docstring")  itk::ComponentByComponentImageFilter::itkGetConstMacro "
+
+The index of the slice currently processed by the filter. This is
+intended to be used with the IterationEvent sent before the processing
+of each object. It contains a relevant value only during the filter
+update.
+
+";
+
+%feature("docstring")  itk::ComponentByComponentImageFilter::itkGetModifiableObjectMacro "
+";
+
+%feature("docstring")  itk::ComponentByComponentImageFilter::itkGetModifiableObjectMacro "
+";
+
+%feature("docstring")  itk::ComponentByComponentImageFilter::itkNewMacro "
+
+Standard New method.
+
+";
+
+%feature("docstring")  itk::ComponentByComponentImageFilter::itkTypeMacro "
+
+Runtime information support.
+
+";
+
+%feature("docstring")  itk::ComponentByComponentImageFilter::SetFilter "
+";
+
+%feature("docstring")  itk::ComponentByComponentImageFilter::SetInputFilter "
+";
+
+%feature("docstring")  itk::ComponentByComponentImageFilter::SetOutputFilter "
+";
+
+
 %feature("docstring") itk::Functor::BitwiseNot "
 
 Performs the C++ unary bitwise NOT operator.
@@ -205,7 +255,7 @@ C++ includes: itkTransformIOFactoryRegisterManager.h
 Computes the absolute value of each pixel.
 
 
-vnl_math_abs() is used to perform the computation.
+itk::Math::abs() is used to perform the computation.
 
 Wiki Examples:
 
@@ -429,6 +479,9 @@ statistics are calculated.
 By altering alpha, beta and window, a host of equalization and unsharp
 masking filters is available.
 
+The boundary condition ignores the part of the neighborhood outside
+the image, and over-weights the valid part of the neighborhood.
+
 For detail description, reference \"Adaptive Image Contrast
 Enhancement using Generalizations of Histogram Equalization.\" J.Alex
 Stark. IEEE Transactions on Image Processing, May 2000.
@@ -495,7 +548,7 @@ Name of this class
 %feature("docstring")  itk::simple::AdaptiveHistogramEqualizationImageFilter::GetUseLookupTable "
 
 Set/Get whether an optimized lookup table for the intensity mapping
-function is used. Default is off.
+function is used. Default is off.Deprecated
 
 ";
 
@@ -527,7 +580,7 @@ Set the values of the Radius vector all to value
 %feature("docstring")  itk::simple::AdaptiveHistogramEqualizationImageFilter::SetUseLookupTable "
 
 Set/Get whether an optimized lookup table for the intensity mapping
-function is used. Default is off.
+function is used. Default is off.Deprecated
 
 ";
 
@@ -650,7 +703,7 @@ Alter an image with additive gaussian white noise.
 
 Gaetan Lehmann
  This code was contributed in the Insight Journal paper \"Noise
-Simulation\". http://hdl.handle.net/10380/3158
+Simulation\". https://hdl.handle.net/10380/3158
 See:
  itk::simple::AdditiveGaussianNoise for the procedural interface
 
@@ -801,7 +854,7 @@ labels and assigns them to the first label of the label map. At the
 end of the execution of this filter, the map will contain a single
 filter.
 
-This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
+This implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -1717,7 +1770,7 @@ pixel of the output matches that of the input.
 The change in image geometry from a 5x5 image binned by a factor of
 2x2.This code was contributed in the Insight Journal paper:
 \"BinShrink: A multi-resolution filter with cache efficient
-averaging\" by Lowekamp B., Chen D. http://hdl.handle.net/10380/3450
+averaging\" by Lowekamp B., Chen D. https://hdl.handle.net/10380/3450
 See:
  itk::simple::BinShrink for the procedural interface
 
@@ -1800,7 +1853,7 @@ The structuring element is assumed to be composed of binary values
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 
 
 See:
@@ -1936,7 +1989,7 @@ changed to BackgroundValue.
 The connectivity can be changed to minimum or maximum connectivity
 with SetFullyConnected() . Full connectivity produces thicker contours.
 
-http://hdl.handle.net/1926/1352
+https://hdl.handle.net/1926/1352
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -2351,7 +2404,7 @@ and Applications\", Second Edition, Springer, 2003.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 
 
 See:
@@ -2458,7 +2511,7 @@ Principles and Applications\", Second Edition, Springer, 2003.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 
 
 See:
@@ -2576,7 +2629,7 @@ have a lower label.
 
 The GetOutput() function of this class returns an itk::LabelMap .
 
-This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
+This implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -2639,7 +2692,7 @@ FullyConnectedOn.
 %feature("docstring")  itk::simple::BinaryImageToLabelMapFilter::GetInputForegroundValue "
 
 Set/Get the value to be consider \"foreground\" in the input image.
-Defaults to NumericTraits<InputPixelType>::max().
+Defaults to NumericTraits<InputPixelType>::max() .
 
 ";
 
@@ -2652,7 +2705,7 @@ Name of this class
 %feature("docstring")  itk::simple::BinaryImageToLabelMapFilter::GetOutputBackgroundValue "
 
 Set/Get the value used as \"background\" in the output image. Defaults
-to NumericTraits<OutputPixelType>::NonpositiveMin().
+to NumericTraits<OutputPixelType>::NonpositiveMin() .
 
 ";
 
@@ -2668,14 +2721,14 @@ FullyConnectedOn.
 %feature("docstring")  itk::simple::BinaryImageToLabelMapFilter::SetInputForegroundValue "
 
 Set/Get the value to be consider \"foreground\" in the input image.
-Defaults to NumericTraits<InputPixelType>::max().
+Defaults to NumericTraits<InputPixelType>::max() .
 
 ";
 
 %feature("docstring")  itk::simple::BinaryImageToLabelMapFilter::SetOutputBackgroundValue "
 
 Set/Get the value used as \"background\" in the output image. Defaults
-to NumericTraits<OutputPixelType>::NonpositiveMin().
+to NumericTraits<OutputPixelType>::NonpositiveMin() .
 
 ";
 
@@ -3019,7 +3072,7 @@ The structuring element is assumed to be composed of binary values
 > 0 are candidates for affecting the center pixel.
 
 This code was contributed in the Insight Journal paper: \"Binary
-morphological closing and opening image filters\" by Lehmann G. http://hdl.handle.net/1926/141 http://www.insight-journal.org/browse/publication/58
+morphological closing and opening image filters\" by Lehmann G. https://hdl.handle.net/1926/141 http://www.insight-journal.org/browse/publication/58
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -3156,7 +3209,7 @@ The structuring element is assumed to be composed of binary values
 > 0 are candidates for affecting the center pixel.
 
 This code was contributed in the Insight Journal paper: \"Binary
-morphological closing and opening image filters\" by Lehmann G. http://hdl.handle.net/1926/141 http://www.insight-journal.org/browse/publication/58
+morphological closing and opening image filters\" by Lehmann G. https://hdl.handle.net/1926/141 http://www.insight-journal.org/browse/publication/58
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -3286,7 +3339,7 @@ Where \"!=\" is the equality operator in C++.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 
 Wiki Examples:
 
@@ -3383,7 +3436,7 @@ The structuring element is assumed to be composed of binary values
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 
 
 See:
@@ -3524,7 +3577,7 @@ Binary projection.
 
 
 This class was contributed to the Insight Journal by Gaetan Lehmann.
-The original paper can be found at http://hdl.handle.net/1926/164
+The original paper can be found at https://hdl.handle.net/1926/164
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -3653,7 +3706,7 @@ Second Edition, Springer, 2003.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 
 
 See:
@@ -3776,7 +3829,7 @@ Second Edition, Springer, 2003.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 
 
 See:
@@ -4053,7 +4106,7 @@ Set the \"inside\" pixel value. The default value NumericTraits<OutputPixelType>
 
 %feature("docstring")  itk::simple::BinaryThresholdImageFilter::SetOutsideValue "
 
-Set the \"outside\" pixel value. The default value NumericTraits<OutputPixelType>::Zero .
+Set the \"outside\" pixel value. The default value NumericTraits<OutputPixelType>::ZeroValue() .
 
 ";
 
@@ -4083,7 +4136,7 @@ BinaryThreshold projection.
 
 
 This class was contributed to the Insight Journal by Gaetan Lehmann.
-the original paper can be found at http://hdl.handle.net/1926/164
+the original paper can be found at https://hdl.handle.net/1926/164
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -4512,7 +4565,7 @@ approach.
 
 
 This code was contributed in the Insight Journal paper: \"Efficient
-implementation of kernel filtering\" by Beare R., Lehmann G http://hdl.handle.net/1926/555 http://www.insight-journal.org/browse/publication/160
+implementation of kernel filtering\" by Beare R., Lehmann G https://hdl.handle.net/1926/555 http://www.insight-journal.org/browse/publication/160
 
 
 Richard Beare
@@ -4583,7 +4636,7 @@ approach.
 
 
 This code was contributed in the Insight Journal paper: \"Efficient
-implementation of kernel filtering\" by Beare R., Lehmann G http://hdl.handle.net/1926/555 http://www.insight-journal.org/browse/publication/160
+implementation of kernel filtering\" by Beare R., Lehmann G https://hdl.handle.net/1926/555 http://www.insight-journal.org/browse/publication/160
 
 
 Gaetan Lehmann
@@ -4874,7 +4927,12 @@ passes as the initial translation to the transform. This second
 approach assumes that the moments of the anatomical objects are
 similar for both images and hence the best initial guess for
 registration is to superimpose both mass centers. Note that this
-assumption will probably not hold in multi-modality registration.   \\\\sa itk::CenteredTransformInitializer
+assumption will probably not hold in multi-modality registration.
+
+
+See:
+ itk::CenteredTransformInitializer
+
 
 C++ includes: sitkCenteredTransformInitializerFilter.h
 ";
@@ -5103,7 +5161,7 @@ This filter takes as input a label map and a list of pairs of Label
 Ids, to produce as output a new label map where the label Ids have
 been replaced according to the pairs in the list.
 
-This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
+This implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -6183,6 +6241,9 @@ to the behaviour of the original connected component image filter
 which did not produce consecutive labels or impose any particular
 ordering.
 
+After the filter is executed, ObjectCount holds the number of
+connected components.
+
 
 See:
  ImageToImageFilter
@@ -6245,9 +6306,6 @@ Name of this class
 ";
 
 %feature("docstring")  itk::simple::ConnectedComponentImageFilter::GetObjectCount "
-
-After the filter is executed, holds the number of connected
-components.
 
 This is a measurement. Its value is updated in the Execute methods, so
 the value will only be valid after an execution.
@@ -6528,7 +6586,7 @@ This filter ignores the spacing, origin, and orientation of the kernel
 image and treats them as identical to those in the input image.
  This code was contributed in the Insight Journal paper:
 
-\"Image Kernel Convolution\" by Tustison N., Gee J. http://hdl.handle.net/1926/1323 http://www.insight-journal.org/browse/publication/208
+\"Image Kernel Convolution\" by Tustison N., Gee J. https://hdl.handle.net/1926/1323 http://www.insight-journal.org/browse/publication/208
 
 
 Nicholas J. Tustison
@@ -7600,7 +7658,8 @@ Execute the filter on the input image with the given parameters
 
 %feature("docstring")  itk::simple::DerivativeImageFilter::GetDirection "
 
-Standard get/set macros for filter parameters.
+The output pixel type must be signed. Standard get/set macros for
+filter parameters.
 
 ";
 
@@ -7612,7 +7671,8 @@ Name of this class
 
 %feature("docstring")  itk::simple::DerivativeImageFilter::GetOrder "
 
-Standard get/set macros for filter parameters.
+The output pixel type must be signed. Standard get/set macros for
+filter parameters.
 
 ";
 
@@ -7625,13 +7685,15 @@ image in its calculations
 
 %feature("docstring")  itk::simple::DerivativeImageFilter::SetDirection "
 
-Standard get/set macros for filter parameters.
+The output pixel type must be signed. Standard get/set macros for
+filter parameters.
 
 ";
 
 %feature("docstring")  itk::simple::DerivativeImageFilter::SetOrder "
 
-Standard get/set macros for filter parameters.
+The output pixel type must be signed. Standard get/set macros for
+filter parameters.
 
 ";
 
@@ -7706,7 +7768,7 @@ Tom Vercauteren, INRIA & Mauna Kea Technologies
 WARNING:
 This filter assumes that the fixed image type, moving image type and
 deformation field type all have the same number of dimensions.
- This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/510
+ This implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/510
 
 
 See:
@@ -8129,7 +8191,7 @@ than itk::RecursiveGaussianImageFilter .
 
 
 Ivan Macia, VICOMTech, Spain, http://www.vicomtech.es
- This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/1290
+ This implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/1290
 
 
 See:
@@ -8691,7 +8753,16 @@ Name of this class
 
 %feature("docstring")  itk::simple::DisplacementFieldTransform::SetDisplacementField "
 
+Consume an image, and set the displacement field.
+
+
 parameters
+WARNING:
+The ownership of the input displacement image is transferred to the
+constructed transform object. The input image is modified to be a
+default constructed Image object.
+Image must be of sitkVectorFloat64 pixel type with the number of components
+equal to the image dimension.
 
 ";
 
@@ -9067,7 +9138,7 @@ Set the \"inside\" pixel value. The default value NumericTraits<OutputPixelType>
 
 %feature("docstring")  itk::simple::DoubleThresholdImageFilter::SetOutsideValue "
 
-Set the \"outside\" pixel value. The default value NumericTraits<OutputPixelType>::Zero .
+Set the \"outside\" pixel value. The default value NumericTraits<OutputPixelType>::ZeroValue() .
 
 ";
 
@@ -9938,7 +10009,7 @@ This filter ignores the spacing, origin, and orientation of the kernel
 image and treats them as identical to those in the input image.
  This code was adapted from the Insight Journal contribution:
 
-\"FFT Based Convolution\" by Gaetan Lehmann http://hdl.handle.net/10380/3154
+\"FFT Based Convolution\" by Gaetan Lehmann https://hdl.handle.net/10380/3154
 
 
 See:
@@ -10130,6 +10201,105 @@ Destructor
 ";
 
 
+%feature("docstring") itk::simple::FFTPadImageFilter "
+
+Pad an image to make it suitable for an FFT transformation.
+
+
+FFT filters usually requires a specific image size. The size is
+decomposed in several prime factors, and the filter only supports
+prime factors up to a maximum value. This filter automatically finds
+the greatest prime factor required by the available implementation and
+pads the input appropriately.
+
+This code was adapted from the Insight Journal contribution:
+
+\"FFT Based Convolution\" by Gaetan Lehmann https://hdl.handle.net/10380/3154
+
+
+Gaetan Lehmann
+
+See:
+ FFTShiftImageFilter
+
+ itk::simple::FFTPad for the procedural interface
+
+ itk::FFTPadImageFilter for the Doxygen on the original ITK class.
+
+
+C++ includes: sitkFFTPadImageFilter.h
+";
+
+%feature("docstring")  itk::simple::FFTPadImageFilter::Execute "
+
+Execute the filter on the input image
+
+";
+
+%feature("docstring")  itk::simple::FFTPadImageFilter::Execute "
+
+Execute the filter on the input image with the given parameters
+
+";
+
+%feature("docstring")  itk::simple::FFTPadImageFilter::FFTPadImageFilter "
+
+Default Constructor that takes no arguments and initializes default
+parameters
+
+";
+
+%feature("docstring")  itk::simple::FFTPadImageFilter::GetBoundaryCondition "
+";
+
+%feature("docstring")  itk::simple::FFTPadImageFilter::GetName "
+
+Name of this class
+
+";
+
+%feature("docstring")  itk::simple::FFTPadImageFilter::GetSizeGreatestPrimeFactor "
+
+Set/Get the greatest prime factor allowed on the size of the padded
+image. The filter increase the size of the image to reach a size with
+the greatest prime factor smaller or equal to the specified value. The
+default value is 13, which is the greatest prime number for which the
+FFT are precomputed in FFTW, and thus gives very good performance. A
+greatest prime factor of 2 produce a size which is a power of 2, and
+thus is suitable for vnl base fft filters. A greatest prime factor of
+1 or less - typically 0 - disable the extra padding.
+
+";
+
+%feature("docstring")  itk::simple::FFTPadImageFilter::SetBoundaryCondition "
+";
+
+%feature("docstring")  itk::simple::FFTPadImageFilter::SetSizeGreatestPrimeFactor "
+
+Set/Get the greatest prime factor allowed on the size of the padded
+image. The filter increase the size of the image to reach a size with
+the greatest prime factor smaller or equal to the specified value. The
+default value is 13, which is the greatest prime number for which the
+FFT are precomputed in FFTW, and thus gives very good performance. A
+greatest prime factor of 2 produce a size which is a power of 2, and
+thus is suitable for vnl base fft filters. A greatest prime factor of
+1 or less - typically 0 - disable the extra padding.
+
+";
+
+%feature("docstring")  itk::simple::FFTPadImageFilter::ToString "
+
+Print ourselves out
+
+";
+
+%feature("docstring")  itk::simple::FFTPadImageFilter::~FFTPadImageFilter "
+
+Destructor
+
+";
+
+
 %feature("docstring") itk::simple::FFTShiftImageFilter "
 
 Shift the zero-frequency components of a Fourier transfrom to the
@@ -10145,7 +10315,7 @@ image.
 For images with an odd-sized dimension, applying this filter twice
 will not produce the same image as the original one without using
 SetInverse(true) on one (and only one) of the two filters.
-http://hdl.handle.net/1926/321
+https://hdl.handle.net/1926/321
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -10236,7 +10406,7 @@ Medians aren't separable, but if you want a large robust smoother to
 be relatively quick then it is worthwhile pretending that they are.
 
 This code was contributed in the Insight Journal paper: \"Efficient
-implementation of kernel filtering\" by Beare R., Lehmann G http://hdl.handle.net/1926/555 http://www.insight-journal.org/browse/publication/160
+implementation of kernel filtering\" by Beare R., Lehmann G https://hdl.handle.net/1926/555 http://www.insight-journal.org/browse/publication/160
 
 
 Richard Beare
@@ -10844,7 +11014,7 @@ for each iteration is computed in DemonsRegistrationFunction .
 
 
 Tom Vercauteren, INRIA & Mauna Kea Technologies
- This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/510
+ This implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/510
 
 
 WARNING:
@@ -11337,7 +11507,7 @@ the remaining N dimensions. Orientation can be manipulated via the Transform cla
 
 The output image may be of any dimension.
 
-This implementation was contributed as a paper to the Insight Journal http://hdl.handle.net/1926/500
+This implementation was contributed as a paper to the Insight Journal https://hdl.handle.net/1926/500
 See:
  itk::simple::GaborImageSource for the procedural interface
 
@@ -13757,7 +13927,7 @@ The output image may be of any dimension.
 
 
 Tustison N., Avants B., Gee J. University of Pennsylvania
- This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/475
+ This implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/475
 See:
  itk::simple::GridImageSource for the procedural interface
 
@@ -14467,8 +14637,6 @@ both images have the same number of dimensions.
 See:
  DirectedHausdorffDistanceImageFilter
 
- itk::simple::HausdorffDistance for the procedural interface
-
  itk::HausdorffDistanceImageFilter for the Doxygen on the original ITK class.
 
 
@@ -14671,7 +14839,7 @@ Australia.
  Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
 
-This implementation was taken from the Insight Journal paper: http://hdl.handle.net/10380/3279 or http://www.insight-journal.org/browse/publication/811
+This implementation was taken from the Insight Journal paper: https://hdl.handle.net/10380/3279 or http://www.insight-journal.org/browse/publication/811
 
 
 See:
@@ -15374,6 +15542,18 @@ See:
 
 ";
 
+%feature("docstring")  itk::simple::ImageRegistrationMethod::SetOptimizerAsPowell "
+
+Powell optimization using Brent line search.
+
+
+
+See:
+ itk::PowellOptimizerv4
+
+
+";
+
 %feature("docstring")  itk::simple::ImageRegistrationMethod::SetOptimizerAsRegularStepGradientDescent "
 
 Regular Step Gradient descent optimizer.
@@ -15516,7 +15696,7 @@ Writer series of image from a SimpleITK image.
 
 
 See:
-itk::simple::WriterImage for the procedural interface
+ itk::simple::WriteImage for the procedural interface
 
 
 C++ includes: sitkImageSeriesWriter.h
@@ -15552,7 +15732,10 @@ image.
 
 This filter is intended to interface SimpleITK to other image
 processing libraries and applications that may have their own
-representation of an image class.
+representation of an image class. It creates a SimpleITK image which
+shares the bulk data buffer as what is set. SimpleITK will not
+responsible to delete the buffer afterwards, and it buffer must remain
+valid while in use.
 
 
 See:
@@ -15779,7 +15962,7 @@ Australia.
  Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
 
-This implementation was taken from the Insight Journal paper: http://hdl.handle.net/10380/3279 or http://www.insight-journal.org/browse/publication/811
+This implementation was taken from the Insight Journal paper: https://hdl.handle.net/10380/3279 or http://www.insight-journal.org/browse/publication/811
 
 
 See:
@@ -16517,7 +16700,7 @@ Australia.
  Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
 
-This implementation was taken from the Insight Journal paper: http://hdl.handle.net/10380/3279 or http://www.insight-journal.org/browse/publication/811
+This implementation was taken from the Insight Journal paper: https://hdl.handle.net/10380/3279 or http://www.insight-journal.org/browse/publication/811
 
 
 See:
@@ -17138,7 +17321,7 @@ Australia.
  Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
 
-This implementation was taken from the Insight Journal paper: http://hdl.handle.net/10380/3279 or http://www.insight-journal.org/browse/publication/811
+This implementation was taken from the Insight Journal paper: https://hdl.handle.net/10380/3279 or http://www.insight-journal.org/browse/publication/811
 
 
 See:
@@ -17283,7 +17466,7 @@ the same in the input and in the output image.
 The connectivity can be changed to minimum or maximum connectivity
 with SetFullyConnected() . Full connectivity produces thicker contours.
 
-http://hdl.handle.net/1926/1352
+https://hdl.handle.net/1926/1352
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -17398,7 +17581,7 @@ the same in the input and the output image.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 
 
 See:
@@ -17433,7 +17616,7 @@ Execute the filter on the input image with the given parameters
 %feature("docstring")  itk::simple::LabelImageToLabelMapFilter::GetBackgroundValue "
 
 Set/Get the value used as \"background\" in the output image. Defaults
-to NumericTraits<PixelType>::NonpositiveMin().
+to NumericTraits<PixelType>::NonpositiveMin() .
 
 ";
 
@@ -17453,7 +17636,7 @@ parameters
 %feature("docstring")  itk::simple::LabelImageToLabelMapFilter::SetBackgroundValue "
 
 Set/Get the value used as \"background\" in the output image. Defaults
-to NumericTraits<PixelType>::NonpositiveMin().
+to NumericTraits<PixelType>::NonpositiveMin() .
 
 ";
 
@@ -17464,6 +17647,427 @@ Print ourselves out
 ";
 
 %feature("docstring")  itk::simple::LabelImageToLabelMapFilter::~LabelImageToLabelMapFilter "
+
+Destructor
+
+";
+
+
+%feature("docstring") itk::simple::LabelIntensityStatisticsImageFilter "
+
+a convenient class to convert a label image to a label map and valuate
+the statistics attributes at once
+
+
+
+Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
+de Jouy-en-Josas, France.
+ This implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
+
+
+See:
+ StatisticsLabelObject , LabelStatisticsOpeningImageFilter , LabelStatisticsOpeningImageFilter
+
+ itk::LabelImageToStatisticsLabelMapFilter for the Doxygen on the original ITK class.
+
+
+C++ includes: sitkLabelIntensityStatisticsImageFilter.h
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::ComputeFeretDiameterOff "
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::ComputeFeretDiameterOn "
+
+Set the value of ComputeFeretDiameter to true or false respectfully.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::ComputePerimeterOff "
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::ComputePerimeterOn "
+
+Set the value of ComputePerimeter to true or false respectfully.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::Execute "
+
+Execute the filter on the input image
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::Execute "
+
+Execute the filter on the input image with the given parameters
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetBackgroundValue "
+
+Set/Get the value used as \"background\" in the output image. Defaults
+to NumericTraits<PixelType>::NonpositiveMin() .
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetBoundingBox "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetCenterOfGravity "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetCentroid "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetComputeFeretDiameter "
+
+Set/Get whether the maximum Feret diameter should be computed or not.
+The defaut value is false, because of the high computation time
+required.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetComputePerimeter "
+
+Set/Get whether the perimeter should be computed or not. The defaut
+value is false, because of the high computation time required.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetElongation "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetEquivalentEllipsoidDiameter "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetEquivalentSphericalPerimeter "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetEquivalentSphericalRadius "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetFeretDiameter "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetFlatness "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetKurtosis "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetLabels "
+
+This is a measurement. Its value is updated in the Execute methods, so
+the value will only be valid after an execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetMaximum "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetMaximumIndex "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetMean "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetMedian "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetMinimum "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetMinimumIndex "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetName "
+
+Name of this class
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetNumberOfBins "
+
+Set/Get the number of bins in the histogram. Note that the histogram
+is used to compute the median value, and that this option may have an
+effect on the value of the median.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetNumberOfLabels "
+
+Return the number of labels after execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetNumberOfPixels "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetNumberOfPixelsOnBorder "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetPerimeter "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetPerimeterOnBorder "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetPerimeterOnBorderRatio "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetPhysicalSize "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetPrincipalAxes "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetPrincipalMoments "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetRoundness "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetSkewness "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetStandardDeviation "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetSum "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetVariance "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetWeightedElongation "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetWeightedFlatness "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetWeightedPrincipalAxes "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::GetWeightedPrincipalMoments "
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::HasLabel "
+
+Does the specified label exist? Can only be called after a call a call
+to Update().
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::LabelIntensityStatisticsImageFilter "
+
+Default Constructor that takes no arguments and initializes default
+parameters
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::SetBackgroundValue "
+
+Set/Get the value used as \"background\" in the output image. Defaults
+to NumericTraits<PixelType>::NonpositiveMin() .
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::SetComputeFeretDiameter "
+
+Set/Get whether the maximum Feret diameter should be computed or not.
+The defaut value is false, because of the high computation time
+required.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::SetComputePerimeter "
+
+Set/Get whether the perimeter should be computed or not. The defaut
+value is false, because of the high computation time required.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::SetNumberOfBins "
+
+Set/Get the number of bins in the histogram. Note that the histogram
+is used to compute the median value, and that this option may have an
+effect on the value of the median.
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::ToString "
+
+Print ourselves out
+
+";
+
+%feature("docstring")  itk::simple::LabelIntensityStatisticsImageFilter::~LabelIntensityStatisticsImageFilter "
 
 Destructor
 
@@ -17487,7 +18091,7 @@ produce a gray pixel with the same intensity than the input one.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 
 
 See:
@@ -17638,7 +18242,7 @@ Negated equals true. In Both cases, the label is set with SetLabel() .
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 
 
 See:
@@ -17676,7 +18280,7 @@ Execute the filter on the input image with the given parameters
 %feature("docstring")  itk::simple::LabelMapMaskImageFilter::GetBackgroundValue "
 
 Set/Get the value used as \"background\" in the output image. Defaults
-to NumericTraits<PixelType>::Zero .
+to NumericTraits<PixelType>::ZeroValue() .
 
 ";
 
@@ -17732,7 +18336,7 @@ Set the value of Negated to true or false respectfully.
 %feature("docstring")  itk::simple::LabelMapMaskImageFilter::SetBackgroundValue "
 
 Set/Get the value used as \"background\" in the output image. Defaults
-to NumericTraits<PixelType>::Zero .
+to NumericTraits<PixelType>::ZeroValue() .
 
 ";
 
@@ -17798,7 +18402,7 @@ produce a gray pixel with the same intensity than the input one.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 
 
 See:
@@ -17874,7 +18478,7 @@ foreground. The background values of the original binary image can be
 restored by passing this image to the filter with the
 SetBackgroundImage() method.
 
-This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
+This implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -17967,7 +18571,7 @@ LabelMapToBinaryImageFilter to a label image.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 
 
 See:
@@ -18027,7 +18631,7 @@ Convert a LabelMap to a colored image.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 
 
 See:
@@ -18081,15 +18685,13 @@ of two images. Background is assumed to be 0.
 
 This code was contributed in the Insight Journal paper: \"Introducing
 Dice, Jaccard, and Other Label Overlap Measures To ITK\" by Nicholas
-J. Tustison, James C. Gee http://hdl.handle.net/10380/3141 http://www.insight-journal.org/browse/publication/707
+J. Tustison, James C. Gee https://hdl.handle.net/10380/3141 http://www.insight-journal.org/browse/publication/707
 
 
 Nicholas J. Tustison
 
 See:
  LabelOverlapMeasuresImageFilter
-
- itk::simple::LabelOverlapMeasures for the procedural interface
 
  itk::LabelOverlapMeasuresImageFilter for the Doxygen on the original ITK class.
 
@@ -18198,7 +18800,7 @@ intensity than the input one.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This class was contributed to the Insight Journal http://hdl.handle.net/1926/172
+ This class was contributed to the Insight Journal https://hdl.handle.net/1926/172
 
 
 See:
@@ -18293,7 +18895,7 @@ valuates the shape attribute at once.
 
 This implementation was taken from the Insight Journal paper:
 
-http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
+https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -18618,11 +19220,7 @@ Execute the filter on the input image with the given parameters
 
 %feature("docstring")  itk::simple::LabelStatisticsImageFilter::GetBoundingBox "
 
-Return the computed bounding box for a label. Defined by the closed
-interval of indexes, with a lower index followed by the upper for each
-dimension. i.e. [0,255,0,255]. The bounding box always has a positive
-size.
-
+Return the computed bounding box for a label.
 
 This is an active measurement. It may be accessed while the filter is
 being executing in command call-backs and can be accessed after
@@ -18784,7 +19382,7 @@ background label is produced.
 
 This code was contributed in the Insight Journal paper: \"The
 watershed transform in ITK - discussion and new developments\" by
-Beare R., Lehmann G. http://hdl.handle.net/1926/202 http://www.insight-journal.org/browse/publication/92
+Beare R., Lehmann G. https://hdl.handle.net/1926/202 http://www.insight-journal.org/browse/publication/92
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -18866,7 +19464,7 @@ keep is selected according to their label.
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
- This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
+ This implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 
 
 See:
@@ -18956,8 +19554,7 @@ INPUTS
 All input volumes to this filter must be segmentations of an image,
 that is, they must have discrete pixel values where each value
 represents a different segmented object.
- Input volumes must all contain the same size RequestedRegions. Not
-all input images must contain all possible labels, but all label
+ Input volumes must all contain the same size RequestedRegions. Not all input images must contain all possible labels, but all label
 values must have the same meaning in all images.
 
 OUTPUTS
@@ -19072,6 +19669,142 @@ Destructor
 ";
 
 
+%feature("docstring") itk::simple::LandmarkBasedTransformInitializerFilter "
+
+This class computes the transform that aligns the fixed and moving
+images given a set of pair landmarks. The class is templated over the Transform type as well as fixed image and moving image types. The transform
+computed gives the best fit transform that maps the fixed and moving
+images in a least squares sense. The indices are taken to correspond,
+so point 1 in the first set will get mapped close to point 1 in the
+second set, etc.
+
+Currently, the following transforms are supported by the class: VersorRigid3DTransform Rigid2DTransform AffineTransform BSplineTransform
+
+An equal number of fixed and moving landmarks need to be specified
+using SetFixedLandmarks() and SetMovingLandmarks() . Any number of landmarks may be specified. In the case of using
+Affine or BSpline transforms, each landmark pair can contribute in the
+final transform based on its defined weight. Number of weights should
+be equal to the number of landmarks and can be specified using SetLandmarkWeight() . By defaults are weights are set to one. Call InitializeTransform()
+to initialize the transform.
+
+The class is based in part on Hybrid/vtkLandmarkTransform originally
+implemented in python by David G. Gobbi.
+
+The solution is based on Berthold K. P. Horn (1987), \"Closed-form
+solution of absolute orientation using unit quaternions,\" http://people.csail.mit.edu/bkph/papers/Absolute_Orientation.pdf
+
+The Affine Transform initializer is based on an algorithm by H Spaeth, and is described in
+the Insight Journal Article \"Affine Transformation for Landmark Based
+Registration Initializer in ITK\" by Kim E.Y., Johnson H., Williams N.
+available at http://midasjournal.com/browse/publication/825
+
+Wiki Examples:
+
+All Examples
+
+Rigidly register one image to another using manually specified
+landmarks
+See:
+ itk::simple::LandmarkBasedTransformInitializerFilter for the procedural interface
+
+ itk::LandmarkBasedTransformInitializer for the Doxygen on the original ITK class.
+
+
+
+C++ includes: sitkLandmarkBasedTransformInitializerFilter.h
+";
+
+%feature("docstring")  itk::simple::LandmarkBasedTransformInitializerFilter::Execute "
+
+Execute the filter on the input image
+
+";
+
+%feature("docstring")  itk::simple::LandmarkBasedTransformInitializerFilter::Execute "
+
+Execute the filter on the input image with the given parameters
+
+";
+
+%feature("docstring")  itk::simple::LandmarkBasedTransformInitializerFilter::GetBSplineNumberOfControlPoints "
+
+Set/Get the number of control points
+
+";
+
+%feature("docstring")  itk::simple::LandmarkBasedTransformInitializerFilter::GetFixedLandmarks "
+";
+
+%feature("docstring")  itk::simple::LandmarkBasedTransformInitializerFilter::GetLandmarkWeight "
+";
+
+%feature("docstring")  itk::simple::LandmarkBasedTransformInitializerFilter::GetMovingLandmarks "
+
+Get the shrink factors.
+
+";
+
+%feature("docstring")  itk::simple::LandmarkBasedTransformInitializerFilter::GetName "
+
+Name of this class
+
+";
+
+%feature("docstring")  itk::simple::LandmarkBasedTransformInitializerFilter::GetReferenceImage "
+";
+
+%feature("docstring")  itk::simple::LandmarkBasedTransformInitializerFilter::LandmarkBasedTransformInitializerFilter "
+
+Default Constructor that takes no arguments and initializes default
+parameters
+
+";
+
+%feature("docstring")  itk::simple::LandmarkBasedTransformInitializerFilter::SetBSplineNumberOfControlPoints "
+
+Set/Get the number of control points
+
+";
+
+%feature("docstring")  itk::simple::LandmarkBasedTransformInitializerFilter::SetFixedLandmarks "
+
+Set the Fixed landmark point containers
+
+";
+
+%feature("docstring")  itk::simple::LandmarkBasedTransformInitializerFilter::SetLandmarkWeight "
+
+Set the landmark weight point containers Weight includes diagonal
+elements of weight matrix
+
+";
+
+%feature("docstring")  itk::simple::LandmarkBasedTransformInitializerFilter::SetMovingLandmarks "
+
+Set the Moving landmark point containers
+
+";
+
+%feature("docstring")  itk::simple::LandmarkBasedTransformInitializerFilter::SetReferenceImage "
+
+Set the reference image to define the parametric domain for the
+BSpline transform
+
+";
+
+%feature("docstring")  itk::simple::LandmarkBasedTransformInitializerFilter::ToString "
+
+Print ourselves out
+
+";
+
+%feature("docstring")  itk::simple::LandmarkBasedTransformInitializerFilter::~LandmarkBasedTransformInitializerFilter "
+
+Destructor
+
+";
+
+
 %feature("docstring") itk::simple::LandweberDeconvolutionImageFilter "
 
 Deconvolve an image using the Landweber deconvolution algorithm.
@@ -19094,7 +19827,7 @@ see ProjectedLandweberDeconvolutionImageFilter .
 This code was adapted from the Insight Journal contribution:
 
 \"Deconvolution: infrastructure and reference algorithms\" by Gaetan
-Lehmann http://hdl.handle.net/10380/3207
+Lehmann https://hdl.handle.net/10380/3207
 
 
 Gaetan Lehmann, Biologie du Developpement et de la Reproduction, INRA
@@ -19940,7 +20673,7 @@ Deformably register two images using level set motion.
 
 LevelSetMotionFilter implements a deformable registration algorithm
 that aligns a fixed and a moving image under level set motion. The
-equations of motion are similar to those of the DemonsRegistrationFilter. The main differences are: (1) Gradients of the moving image are
+equations of motion are similar to those of the DemonsRegistrationFilter . The main differences are: (1) Gradients of the moving image are
 calculated on a smoothed image while intensity difference are measured
 on the original images (2) Magnitude of the motion vector is a
 function of the differences in intensity between the fixed and moving
@@ -19988,9 +20721,9 @@ for each iteration is computed in LevelSetMotionFunction.
 WARNING:
 This filter assumes that the fixed image type, moving image type and
 deformation field type all have the same number of dimensions.
- Ref: B.C. Vemuri, J. Ye, Y. Chen, C.M. Leonard. \" Imageregistration
+ Ref: B.C. Vemuri, J. Ye, Y. Chen, C.M. Leonard. \" Image registration
 via level-set motion: applications to atlas-based segmentation\".
-Medical ImageAnalysis. Vol. 7. pp. 1-20. 2003.
+Medical Image Analysis. Vol. 7. pp. 1-20. 2003.
 
 
 See:
@@ -20152,13 +20885,13 @@ Set/Get the standard deviation used for smoothing the moving image
 prior to calculating gradients. The standard deviation is measured in
 physical units (for instance mm). Note that this smoothing value is
 not to be confused with the
-PDEDeformableRegistrationFilter::SetStandardDeviations()method. The
-method in PDEDeformableRegistrationFilteris for setting the smoothing
-parameters for regularizing the deformation field between interations.
-Those smoothing parameters are set in pixel units not physical units.
-Deformation field smoothing is not done by default in
-LevelSetMotionRegistration. This smoothing parameter is to condition
-the gradient calculation and parameter is specified in physical units.
+PDEDeformableRegistrationFilter::SetStandardDeviations() method. The
+method in PDEDeformableRegistrationFilter is for setting the smoothing parameters for regularizing the
+deformation field between interations. Those smoothing parameters are
+set in pixel units not physical units. Deformation field smoothing is
+not done by default in LevelSetMotionRegistration. This smoothing
+parameter is to condition the gradient calculation and parameter is
+specified in physical units.
 
 ";
 
@@ -20294,7 +21027,7 @@ Australia.
  Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
 
-This implementation was taken from the Insight Journal paper: http://hdl.handle.net/10380/3279 or http://www.insight-journal.org/browse/publication/811
+This implementation was taken from the Insight Journal paper: https://hdl.handle.net/10380/3279 or http://www.insight-journal.org/browse/publication/811
 
 
 See:
@@ -20920,7 +21653,7 @@ Australia.
  Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
 
-This implementation was taken from the Insight Journal paper: http://hdl.handle.net/10380/3279 or http://www.insight-journal.org/browse/publication/811
+This implementation was taken from the Insight Journal paper: https://hdl.handle.net/10380/3279 or http://www.insight-journal.org/browse/publication/811
 
 
 See:
@@ -21126,7 +21859,7 @@ Maximum projection.
 
 
 This class was contributed to the insight journal by Gaetan Lehmann.
-The original paper can be found at http://hdl.handle.net/1926/164
+The original paper can be found at https://hdl.handle.net/1926/164
 
 
 Gaetan Lehmann. Biologie du Developpement et de la reproduction, inra
@@ -21298,7 +22031,7 @@ Mean projection.
 
 
 This class was contributed to the Insight Journal by Gaetan Lehmann.
-The original paper can be found at http://hdl.handle.net/1926/164
+The original paper can be found at https://hdl.handle.net/1926/164
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -21476,7 +22209,7 @@ Median projection.
 
 
 This class was contributed to the Insight Journal by Gaetan Lehmann.
-The original paper can be found at http://hdl.handle.net/1926/164
+The original paper can be found at https://hdl.handle.net/1926/164
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -21570,7 +22303,7 @@ objects with the same label are merged. PACK (2): MergeLabelMapFilter relabel al
 occur. STRICT (3): MergeLabelMapFilter keeps the labels unchanged and raises an exception if the same label
 is found in several images.
 
-This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
+This implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -21862,8 +22595,6 @@ pipeline. The implementation uses the StatisticsImageFilter .
 See:
  StatisticsImageFilter
 
- itk::simple::MinimumMaximum for the procedural interface
-
  itk::MinimumMaximumImageFilter for the Doxygen on the original ITK class.
 
 
@@ -21926,7 +22657,7 @@ Minimum projection.
 
 
 This class was contributed to the Insight Journal by Gaetan Lehmann.
-The original paper can be found at http://hdl.handle.net/1926/164
+The original paper can be found at https://hdl.handle.net/1926/164
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -22166,7 +22897,7 @@ Australia.
  Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
 
-This implementation was taken from the Insight Journal paper: http://hdl.handle.net/10380/3279 or http://www.insight-journal.org/browse/publication/811
+This implementation was taken from the Insight Journal paper: https://hdl.handle.net/10380/3279 or http://www.insight-journal.org/browse/publication/811
 
 
 See:
@@ -22427,7 +23158,7 @@ Principles and Applications\", Second Edition, Springer, 2003.
 
 This code was contributed in the Insight Journal paper: \"The
 watershed transform in ITK - discussion and new developments\" by
-Beare R., Lehmann G. http://hdl.handle.net/1926/202 http://www.insight-journal.org/browse/publication/92
+Beare R., Lehmann G. https://hdl.handle.net/1926/202 http://www.insight-journal.org/browse/publication/92
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -22555,7 +23286,7 @@ Principles and Applications\", Second Edition, Springer, 2003.
 
 This code was contributed in the Insight Journal paper: \"The
 watershed transform in ITK - discussion and new developments\" by
-Beare R., Lehmann G. http://hdl.handle.net/1926/202 http://www.insight-journal.org/browse/publication/92
+Beare R., Lehmann G. https://hdl.handle.net/1926/202 http://www.insight-journal.org/browse/publication/92
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -22668,6 +23399,230 @@ Destructor
 ";
 
 
+%feature("docstring") itk::simple::MultiLabelSTAPLEImageFilter "
+
+This filter performs a pixelwise combination of an arbitrary number of
+input images, where each of them represents a segmentation of the same
+scene (i.e., image).
+
+
+The labelings in the images are weighted relative to each other based
+on their \"performance\" as estimated by an expectation-maximization
+algorithm. In the process, a ground truth segmentation is estimated,
+and the estimated performances of the individual segmentations are
+relative to this estimated ground truth.
+
+The algorithm is based on the binary STAPLE algorithm by Warfield et
+al. as published originally in
+
+S. Warfield, K. Zou, W. Wells, \"Validation of image segmentation and
+expert quality with an expectation-maximization algorithm\" in MICCAI
+2002: Fifth International Conference on Medical Image Computing and Computer-Assisted Intervention, Springer-Verlag,
+Heidelberg, Germany, 2002, pp. 298-306
+
+The multi-label algorithm implemented here is described in detail in
+
+T. Rohlfing, D. B. Russakoff, and C. R. Maurer, Jr., \"Performance-
+based classifier combination in atlas-based image segmentation using
+expectation-maximization parameter estimation,\" IEEE Transactions on
+Medical Imaging, vol. 23, pp. 983-994, Aug. 2004.
+
+INPUTS
+All input volumes to this filter must be segmentations of an image,
+that is, they must have discrete pixel values where each value
+represents a different segmented object.
+ Input volumes must all contain the same size RequestedRegions. Not all input images must contain all possible labels, but all label
+values must have the same meaning in all images.
+
+The filter can optionally be provided with estimates for the a priori
+class probabilities through the SetPriorProbabilities function. If no
+estimate is provided, one is automatically generated by analyzing the
+relative frequencies of the labels in the input images.
+
+OUTPUTS
+The filter produces a single output volume. Each output pixel contains
+the label that has the highest probability of being the correct label,
+based on the performance models of the individual segmentations. If
+the maximum probaility is not unique, i.e., if more than one label
+have a maximum probability, then an \"undecided\" label is assigned to
+that output pixel.
+ By default, the label used for undecided pixels is the maximum label
+value used in the input images plus one. Since it is possible for an
+image with 8 bit pixel values to use all 256 possible label values, it
+is permissible to combine 8 bit (i.e., byte) images into a 16 bit
+(i.e., short) output image.
+
+In addition to the combined image, the estimated confusion matrices
+for each of the input segmentations can be obtained through the
+GetConfusionMatrix member function.
+
+PARAMETERS
+The label used for \"undecided\" labels can be set using
+SetLabelForUndecidedPixels. This functionality can be unset by calling
+UnsetLabelForUndecidedPixels.
+ A termination threshold for the EM iteration can be defined by
+calling SetTerminationUpdateThreshold. The iteration terminates once
+no single parameter of any confusion matrix changes by less than this
+threshold. Alternatively, a maximum number of iterations can be
+specified by calling SetMaximumNumberOfIterations. The algorithm may
+still terminate after a smaller number of iterations if the
+termination threshold criterion is satisfied.
+
+EVENTS
+This filter invokes IterationEvent() at each iteration of the E-M
+algorithm. Setting the AbortGenerateData() flag will cause the
+algorithm to halt after the current iteration and produce results just
+as if it had converged. The algorithm makes no attempt to report its
+progress since the number of iterations needed cannot be known in
+advance.
+
+Torsten Rohlfing, SRI International, Neuroscience Program
+
+See:
+ itk::simple::MultiLabelSTAPLE for the procedural interface
+
+
+C++ includes: sitkMultiLabelSTAPLEImageFilter.h
+";
+
+%feature("docstring")  itk::simple::MultiLabelSTAPLEImageFilter::Execute "
+
+Execute the filter on the input images
+
+";
+
+%feature("docstring")  itk::simple::MultiLabelSTAPLEImageFilter::Execute "
+";
+
+%feature("docstring")  itk::simple::MultiLabelSTAPLEImageFilter::Execute "
+";
+
+%feature("docstring")  itk::simple::MultiLabelSTAPLEImageFilter::Execute "
+";
+
+%feature("docstring")  itk::simple::MultiLabelSTAPLEImageFilter::Execute "
+";
+
+%feature("docstring")  itk::simple::MultiLabelSTAPLEImageFilter::Execute "
+";
+
+%feature("docstring")  itk::simple::MultiLabelSTAPLEImageFilter::Execute "
+
+Execute the filter on the input images with the given parameters
+
+";
+
+%feature("docstring")  itk::simple::MultiLabelSTAPLEImageFilter::Execute "
+";
+
+%feature("docstring")  itk::simple::MultiLabelSTAPLEImageFilter::Execute "
+";
+
+%feature("docstring")  itk::simple::MultiLabelSTAPLEImageFilter::Execute "
+";
+
+%feature("docstring")  itk::simple::MultiLabelSTAPLEImageFilter::Execute "
+";
+
+%feature("docstring")  itk::simple::MultiLabelSTAPLEImageFilter::Execute "
+";
+
+%feature("docstring")  itk::simple::MultiLabelSTAPLEImageFilter::GetConfusionMatrix "
+
+Get confusion matrix for the i-th input segmentation.
+
+This is an active measurement. It may be accessed while the filter is
+being executing in command call-backs and can be accessed after
+execution.
+
+";
+
+%feature("docstring")  itk::simple::MultiLabelSTAPLEImageFilter::GetLabelForUndecidedPixels "
+
+     Get label value used for undecided pixels.
+
+After updating the filter, this function returns the actual label
+value used for undecided pixels in the current output. Note that this
+value is overwritten when SetLabelForUndecidedPixels is called and the
+new value only becomes effective upon the next filter update.
+
+";
+
+%feature("docstring")  itk::simple::MultiLabelSTAPLEImageFilter::GetMaximumNumberOfIterations "
+
+Set maximum number of iterations.
+
+";
+
+%feature("docstring")  itk::simple::MultiLabelSTAPLEImageFilter::GetName "
+
+Name of this class
+
+";
+
+%feature("docstring")  itk::simple::MultiLabelSTAPLEImageFilter::GetPriorProbabilities "
+
+     Get prior class probabilities.
+
+After updating the filter, this function returns the actual prior
+class probabilities. If these were not previously set by a call to
+SetPriorProbabilities, then they are estimated from the input
+segmentations and the result is available through this function.
+
+";
+
+%feature("docstring")  itk::simple::MultiLabelSTAPLEImageFilter::GetTerminationUpdateThreshold "
+
+Set termination threshold based on confusion matrix parameter updates.
+
+";
+
+%feature("docstring")  itk::simple::MultiLabelSTAPLEImageFilter::MultiLabelSTAPLEImageFilter "
+
+Default Constructor that takes no arguments and initializes default
+parameters
+
+";
+
+%feature("docstring")  itk::simple::MultiLabelSTAPLEImageFilter::SetLabelForUndecidedPixels "
+
+Set label value for undecided pixels.
+
+";
+
+%feature("docstring")  itk::simple::MultiLabelSTAPLEImageFilter::SetMaximumNumberOfIterations "
+
+Set maximum number of iterations.
+
+";
+
+%feature("docstring")  itk::simple::MultiLabelSTAPLEImageFilter::SetPriorProbabilities "
+
+    Set manual estimates for the a priori class probabilities.The size
+of the array must be greater than the value of the largest label. The index into the array corresponds to the label
+value in the segmented image for the class.
+
+";
+
+%feature("docstring")  itk::simple::MultiLabelSTAPLEImageFilter::SetTerminationUpdateThreshold "
+
+Set termination threshold based on confusion matrix parameter updates.
+
+";
+
+%feature("docstring")  itk::simple::MultiLabelSTAPLEImageFilter::ToString "
+
+Print ourselves out
+
+";
+
+%feature("docstring")  itk::simple::MultiLabelSTAPLEImageFilter::~MultiLabelSTAPLEImageFilter "
+
+Destructor
+
+";
+
+
 %feature("docstring") itk::simple::MultiplyImageFilter "
 
 Pixel-wise multiplication of two images.
@@ -22766,8 +23721,10 @@ a downsampled version of the original image.
 
 A binary mask or a weighted image can be supplied. If a binary mask is
 specified, those voxels in the input image which correspond to the
-voxels in the mask image with a value equal to m_MaskLabel, are used
-to estimate the bias field. If a confidence image is specified, the
+voxels in the mask image are used to estimate the bias field. If a
+UseMaskLabel value is set to true, only voxels in the MaskImage that
+match the MaskLabel will be used; otherwise, all non-zero voxels in
+the MaskImage will be masked. If a confidence image is specified, the
 input voxels are weighted in the b-spline fitting routine according to
 the confidence voxel values.
 
@@ -22785,7 +23742,7 @@ results with a B-spline scalar field estimate of the bias field.
 
 Nicholas J. Tustison
  Contributed by Nicholas J. Tustison, James C. Gee in the Insight
-Journal paper: http://hdl.handle.net/10380/3053
+Journal paper: https://hdl.handle.net/10380/3053
 
 REFERENCE
  J.G. Sled, A.P. Zijdenbos and A.C. Evans. \"A Nonparametric Method
@@ -23450,7 +24407,7 @@ This transform is especially useful for normalizing a convolution
 kernel.
 
 This code was contributed in the Insight Journal paper: \"FFT based
-convolution\" by Lehmann G. http://hdl.handle.net/10380/3154
+convolution\" by Lehmann G. https://hdl.handle.net/10380/3154
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -24164,7 +25121,7 @@ Richard Beare
  Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
 
-This implementation was taken from the Insight Journal paper: http://hdl.handle.net/10380/3279 or http://www.insight-journal.org/browse/publication/811
+This implementation was taken from the Insight Journal paper: https://hdl.handle.net/10380/3279 or http://www.insight-journal.org/browse/publication/811
 
 Wiki Examples:
 
@@ -25325,7 +26282,7 @@ images formed by counting photons, for example.
 This code was adapted from the Insight Journal contribution:
 
 \"Deconvolution: infrastructure and reference algorithms\" by Gaetan
-Lehmann http://hdl.handle.net/10380/3207
+Lehmann https://hdl.handle.net/10380/3207
 
 
 Gaetan Lehmann, Biologie du Developpement et de la Reproduction, INRA
@@ -25467,7 +26424,7 @@ The structuring element is assumed to be composed of binary values
 > 0 are candidates for affecting the center pixel.
 
 This code was contributed in the Insight Journal paper: \"Efficient
-implementation of kernel filtering\" by Beare R., Lehmann G http://hdl.handle.net/1926/555 http://www.insight-journal.org/browse/publication/160
+implementation of kernel filtering\" by Beare R., Lehmann G https://hdl.handle.net/1926/555 http://www.insight-journal.org/browse/publication/160
 
 
 Richard Beare
@@ -25903,8 +26860,8 @@ with the Gaussian kernel. This class implements the recursive
 filtering method proposed by R.Deriche in IEEE-PAMI Vol.12, No.1,
 January 1990, pp 78-87, \"Fast Algorithms for Low-Level Vision\"
 
-Details of the implementation are described in the technical report:
-R. Deriche, \"Recursively Implementing The Gaussian and Its
+Details of the implementation are described in the technical report: R.
+Deriche, \"Recursively Implementing The Gaussian and Its
 Derivatives\", INRIA, 1993, ftp://ftp.inria.fr/INRIA/tech-reports/RR/RR-1893.ps.gz
 
 Further improvements of the algorithm are described in: G. Farneback &
@@ -26174,7 +27131,7 @@ a maxima or not. The desired behavior can be selected with the SetFlatIsMaxima()
 Gaetan Lehmann
  This class was contributed to the Insight Journal by author Gaetan
 Lehmann. Biologie du Developpement et de la Reproduction, INRA de
-Jouy-en-Josas, France. The paper can be found at http://hdl.handle.net/1926/153
+Jouy-en-Josas, France. The paper can be found at https://hdl.handle.net/1926/153
 
 
 See:
@@ -26329,7 +27286,7 @@ a minima or not. The SetFlatIsMinima() method let the user choose which behavior
 
 This class was contribtued to the Insight Journal by
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
-de Jouy-en-Josas, France. http://hdl.handle.net/1926/153
+de Jouy-en-Josas, France. https://hdl.handle.net/1926/153
 RegionalMaximaImageFilter MathematicalMorphologyImageFilters
 
 
@@ -26596,7 +27553,7 @@ attempts to reorganize the labels consecutively. The user can assign
 an arbitrary value to the background; the filter will assign the
 labels consecutively by skipping the background value.
 
-This implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
+This implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
 
@@ -26679,7 +27636,7 @@ Australia.
  Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
 
-This implementation was taken from the Insight Journal paper: http://hdl.handle.net/10380/3279 or http://www.insight-journal.org/browse/publication/811
+This implementation was taken from the Insight Journal paper: https://hdl.handle.net/10380/3279 or http://www.insight-journal.org/browse/publication/811
 
 
 See:
@@ -27134,7 +28091,7 @@ independent of the other pixels.
 This code was adapted from the Insight Journal contribution:
 
 \"Deconvolution: infrastructure and reference algorithms\" by Gaetan
-Lehmann http://hdl.handle.net/10380/3207
+Lehmann https://hdl.handle.net/10380/3207
 
 
 Gaetan Lehmann, Biologie du Developpement et de la Reproduction, INRA
@@ -27503,7 +28460,7 @@ pixel are equally distributed.
 
 Gaetan Lehmann
  This code was contributed in the Insight Journal paper \"Noise
-Simulation\". http://hdl.handle.net/10380/3158
+Simulation\". https://hdl.handle.net/10380/3158
 See:
  itk::simple::SaltAndPepperNoise for the procedural interface
 
@@ -27576,14 +28533,14 @@ Vision, pages 141-151, 1999.
 
 Mosaliganti K., Smith B., Gelas A., Gouaillard A., Megason S.
  This code was taken from the Insight Journal paper:\"Cell Tracking
-using Coupled Active Surfaces for Nuclei and Membranes\" http://www.insight-journal.org/browse/publication/642 http://hdl.handle.net/10380/3055
+using Coupled Active Surfaces for Nuclei and Membranes\" http://www.insight-journal.org/browse/publication/642 https://hdl.handle.net/10380/3055
 
 That is based on the papers:\"Level Set Segmentation: Active Contours
-without edge\" http://www.insight-journal.org/browse/publication/322 http://hdl.handle.net/1926/1532
+without edge\" http://www.insight-journal.org/browse/publication/322 https://hdl.handle.net/1926/1532
 
 and
 
-\"Level set segmentation using coupled active surfaces\" http://www.insight-journal.org/browse/publication/323 http://hdl.handle.net/1926/1533
+\"Level set segmentation using coupled active surfaces\" http://www.insight-journal.org/browse/publication/323 https://hdl.handle.net/1926/1533
 
 Wiki Examples:
 
@@ -27978,7 +28935,7 @@ mapped to the entire range of colors.
 
 This code was contributed in the Insight Journal paper: \"Meeting Andy
 Warhol Somewhere Over the Rainbow: RGB Colormapping and ITK\" by
-Tustison N., Zhang H., Lehmann G., Yushkevich P., Gee J. http://hdl.handle.net/1926/1452 http://www.insight-journal.org/browse/publication/285
+Tustison N., Zhang H., Lehmann G., Yushkevich P., Gee J. https://hdl.handle.net/1926/1452 http://www.insight-journal.org/browse/publication/285
 
 
 See:
@@ -28275,7 +29232,7 @@ Australia.
  Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
 
-This implementation was taken from the Insight Journal paper: http://hdl.handle.net/10380/3279 or http://www.insight-journal.org/browse/publication/811
+This implementation was taken from the Insight Journal paper: https://hdl.handle.net/10380/3279 or http://www.insight-journal.org/browse/publication/811
 
 
 See:
@@ -28679,7 +29636,7 @@ The shot noise follows a Poisson distribution.
 
 Gaetan Lehmann
  This code was contributed in the Insight Journal paper \"Noise
-Simulation\". http://hdl.handle.net/10380/3158
+Simulation\". https://hdl.handle.net/10380/3158
 See:
  itk::simple::ShotNoise for the procedural interface
 
@@ -29403,9 +30360,9 @@ unmodified.
 
 This filter is templated over the two input image type. It assume both
 image have the same number of dimensions.
-See:
- itk::simple::SimilarityIndex for the procedural interface
 
+
+See:
  itk::SimilarityIndexImageFilter for the Doxygen on the original ITK class.
 
 
@@ -29912,7 +30869,7 @@ intensity.
 
 Gaetan Lehmann
  This code was contributed in the Insight Journal paper \"Noise
-Simulation\". http://hdl.handle.net/10380/3158
+Simulation\". https://hdl.handle.net/10380/3158
 See:
  itk::simple::SpeckleNoise for the procedural interface
 
@@ -30093,8 +31050,7 @@ compute the difference of the two pixel values
 
 compute the square of the difference
 
-cast the double value resulting from sqr() to the pixel type of the
-output image
+cast the double value resulting from sqr() to the pixel type of the output image
 
 store the casted value into the output image.
  The filter expect all images to have the same dimension (e.g. all 2D,
@@ -30162,7 +31118,7 @@ Mean projection.
 
 
 This class was contributed to the Insight Journal by Gaetan Lehmann.
-The original paper can be found at http://hdl.handle.net/1926/164
+The original paper can be found at https://hdl.handle.net/1926/164
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -30444,7 +31400,7 @@ Sum projection.
 
 
 This class was contributed to the Insight Journal by Gaetan Lehmann.
-The original paper can be found at http://hdl.handle.net/1926/164
+The original paper can be found at https://hdl.handle.net/1926/164
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -31101,7 +32057,8 @@ Set/Get methods to set the lower threshold
 
 %feature("docstring")  itk::simple::ThresholdImageFilter::SetOutsideValue "
 
-Set the \"outside\" pixel value. The default value NumericTraits<PixelType>::Zero .
+The pixel type must support comparison operators. Set the \"outside\"
+pixel value. The default value NumericTraits<PixelType>::ZeroValue() .
 
 ";
 
@@ -31162,7 +32119,7 @@ counted.
 References:
 1) Urish KL, August J, Huard J. \"Unsupervised segmentation for
 myofiber counting in immunoflourescent images\". Insight Journal. ISC
-/NA-MIC/MICCAI Workshop on Open-Source Software (2005) Dspace handle: http://hdl.handle.net/1926/48 2) Pikaz A, Averbuch, A. \"Digital image thresholding based on
+/NA-MIC/MICCAI Workshop on Open-Source Software (2005) Dspace handle: https://hdl.handle.net/1926/48 2) Pikaz A, Averbuch, A. \"Digital image thresholding based on
 topological stable-state\". Pattern Recognition, 29(5): 829-843, 1996.
 
 Questions: email Ken Urish at ken.urish(at)gmail.com Please cc the itk
@@ -31204,11 +32161,12 @@ intensity.
 
 %feature("docstring")  itk::simple::ThresholdMaximumConnectedComponentsImageFilter::GetMinimumObjectSizeInPixels "
 
-Set the minimum pixel area used to count objects on the image. Thus,
-only objects that have a pixel area greater than the minimum pixel
-area will be counted as an object in the optimization portion of this
-filter. Essentially, it eliminates noise from being counted as an
-object. The default value is zero.
+The pixel type must support comparison operators. Set the minimum
+pixel area used to count objects on the image. Thus, only objects that
+have a pixel area greater than the minimum pixel area will be counted
+as an object in the optimization portion of this filter. Essentially,
+it eliminates noise from being counted as an object. The default value
+is zero.
 
 ";
 
@@ -31259,11 +32217,12 @@ intensity.
 
 %feature("docstring")  itk::simple::ThresholdMaximumConnectedComponentsImageFilter::SetMinimumObjectSizeInPixels "
 
-Set the minimum pixel area used to count objects on the image. Thus,
-only objects that have a pixel area greater than the minimum pixel
-area will be counted as an object in the optimization portion of this
-filter. Essentially, it eliminates noise from being counted as an
-object. The default value is zero.
+The pixel type must support comparison operators. Set the minimum
+pixel area used to count objects on the image. Thus, only objects that
+have a pixel area greater than the minimum pixel area will be counted
+as an object in the optimization portion of this filter. Essentially,
+it eliminates noise from being counted as an object. The default value
+is zero.
 
 ";
 
@@ -31873,7 +32832,7 @@ ThreadedGenerateData() method for its implementation.
 
 
 Marius Staring, Leiden University Medical Center, The Netherlands.
- This class was taken from the Insight Journal paper: http://hdl.handle.net/1926/1387
+ This class was taken from the Insight Journal paper: https://hdl.handle.net/1926/1387
 See:
  itk::simple::TransformToDisplacementFieldFilter for the procedural interface
 
@@ -32033,7 +32992,7 @@ Australia.
  Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
 
-This implementation was taken from the Insight Journal paper: http://hdl.handle.net/10380/3279 or http://www.insight-journal.org/browse/publication/811
+This implementation was taken from the Insight Journal paper: https://hdl.handle.net/10380/3279 or http://www.insight-journal.org/browse/publication/811
 
 
 See:
@@ -32223,7 +33182,7 @@ completely flat image will be marked as a regional maxima by this
 filter.
 
 This code was contributed in the Insight Journal paper: \"Finding
-regional extrema - methods and performance\" by Beare R., Lehmann G. http://hdl.handle.net/1926/153 http://www.insight-journal.org/browse/publication/65
+regional extrema - methods and performance\" by Beare R., Lehmann G. https://hdl.handle.net/1926/153 http://www.insight-journal.org/browse/publication/65
 
 
 Richard Beare. Department of Medicine, Monash University, Melbourne,
@@ -32324,7 +33283,7 @@ completely flat image will be marked as a regional minima by this
 filter.
 
 This code was contributed in the Insight Journal paper: \"Finding
-regional extrema - methods and performance\" by Beare R., Lehmann G. http://hdl.handle.net/1926/153 http://www.insight-journal.org/browse/publication/65
+regional extrema - methods and performance\" by Beare R., Lehmann G. https://hdl.handle.net/1926/153 http://www.insight-journal.org/browse/publication/65
 
 
 Richard Beare. Department of Medicine, Monash University, Melbourne,
@@ -33981,7 +34940,7 @@ Richard Beare
  Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
 
-This implementation was taken from the Insight Journal paper: http://hdl.handle.net/10380/3279 or http://www.insight-journal.org/browse/publication/811
+This implementation was taken from the Insight Journal paper: https://hdl.handle.net/10380/3279 or http://www.insight-journal.org/browse/publication/811
 
 
 See:
@@ -34271,8 +35230,8 @@ The input to this filter is an itk::Image of arbitrary dimension. The algorithm 
 that operator>, operator<, operator==, and operator!= are defined.
 
 The output of the filter is a binary, labeled image of user-specified
-type. By default, zero-crossing pixels are labeled with a default foreground'' value of itk::NumericTraits<OutputDataType>::One , where OutputDataType is the data type of the
-output image. All other pixels are labeled with a defaultbackground'' value of itk::NumericTraits<OutputDataType>::Zero .
+type. By default, zero-crossing pixels are labeled with a default foreground'' value of itk::NumericTraits<OutputDataType>::OneValue() , where OutputDataType is the data type
+of the output image. All other pixels are labeled with a defaultbackground'' value of itk::NumericTraits<OutputDataType>::ZeroValue() .
 Parameters
 There are two parameters for this filter. ForegroundValue is the value
 that marks zero-crossing pixels. The BackgroundValue is the value
@@ -35954,6 +36913,20 @@ See:
 
 ";
 
+%feature("docstring")  itk::simple::FFTPad "
+
+Pad an image to make it suitable for an FFT transformation.
+
+
+This function directly calls the execute method of FFTPadImageFilter in order to support a procedural API
+
+
+See:
+ itk::simple::FFTPadImageFilter for the object oriented interface
+
+
+";
+
 %feature("docstring")  itk::simple::FFTShift "
 
 Shift the zero-frequency components of a Fourier transfrom to the
@@ -36050,6 +37023,27 @@ A utility method to help convert between itk image types efficiently.
 ";
 
 %feature("docstring")  itk::simple::GetPixelIDValueAsString "
+";
+
+%feature("docstring")  itk::simple::GetPixelIDValueFromString "
+
+Function mapping enumeration names in std::string to values.
+
+
+This function is intended for use by the R bindings. R stores the
+enumeration values using the names : \"sitkUnkown\", \"sitkUInt8\",
+etc from PixelIDValueEnum above. This function is used to provide the
+integer values using calls like:
+
+val = GetPixelIDValueFromString(\"sitkInt32\")
+
+If the pixel type has not been instantiated then the sitkUnknown value
+(-1) will be returned. If the pixel type string is not recognised
+(i.e. is not in the set of tested names) then the return value is -99.
+The idea is to provide a warning (via the R package) if this function
+needs to be updated to match changes to PixelIDValueEnum - i.e. if a
+new pixel type is added.
+
 ";
 
 %feature("docstring")  itk::simple::GetVectorImageFromImage "
@@ -36351,21 +37345,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Hash "
-";
-
-%feature("docstring")  itk::simple::HausdorffDistance "
-
-Computes the Hausdorff distance between the set of non-zero pixels of
-two images.
-
-
-This function directly calls the execute method of HausdorffDistanceImageFilter in order to support a procedural API
-
-
-See:
- itk::simple::HausdorffDistanceImageFilter for the object oriented interface
-
-
 ";
 
 %feature("docstring")  itk::simple::HConcave "
@@ -36781,21 +37760,6 @@ See:
 
 ";
 
-%feature("docstring")  itk::simple::LabelOverlapMeasures "
-
-Computes overlap measures between the set same set of labels of pixels
-of two images. Background is assumed to be 0.
-
-
-This function directly calls the execute method of LabelOverlapMeasuresImageFilter in order to support a procedural API
-
-
-See:
- itk::simple::LabelOverlapMeasuresImageFilter for the object oriented interface
-
-
-";
-
 %feature("docstring")  itk::simple::LabelOverlay "
 
 Apply a colormap to a label image and put it on top of the input
@@ -36835,6 +37799,20 @@ This function directly calls the execute method of LabelUniqueLabelMapFilter in 
 
 See:
  itk::simple::LabelUniqueLabelMapFilter for the object oriented interface
+
+
+";
+
+%feature("docstring")  itk::simple::LandmarkBasedTransformInitializer "
+
+itk::simple::LandmarkBasedTransformInitializerFilter Procedural Interface
+
+
+This function directly calls the execute method of LandmarkBasedTransformInitializerFilter in order to support a procedural API
+
+
+See:
+ itk::simple::LandmarkBasedTransformInitializerFilter for the object oriented interface
 
 
 ";
@@ -37188,20 +38166,6 @@ See:
 ";
 
 %feature("docstring")  itk::simple::Minimum "
-";
-
-%feature("docstring")  itk::simple::MinimumMaximum "
-
-Computes the minimum and the maximum intensity values of an image.
-
-
-This function directly calls the execute method of MinimumMaximumImageFilter in order to support a procedural API
-
-
-See:
- itk::simple::MinimumMaximumImageFilter for the object oriented interface
-
-
 ";
 
 %feature("docstring")  itk::simple::MinimumProjection "
@@ -37992,10 +38956,14 @@ The user can also select applications specifically for color images or
 environment variables.
 
 SITK_SHOW_COMMAND, SITK_SHOW_COLOR_COMMAND and SITK_SHOW_3D_COMMAND
-allow the following tokens in their strings.\\\\li \\\\c \"%a\"  for the ImageJ application \\\\li \\\\c \"%f\"
-for SimpleITK's temporary image file
+allow the following tokens in their strings.
 
-For example, the default SITK_SHOW_COMMAND string on Linux systems is:
+
+\"%a\" for the ImageJ application
+
+\"%f\" for SimpleITK's temporary image file
+ For example, the default SITK_SHOW_COMMAND string on Linux systems
+is:
 
 
 After token substitution it may become:
@@ -38014,11 +38982,18 @@ Composite command to display the image in color.
 If the \"%f\" token is not found in the command string, the temporary file name is
 automatically appended to the command argument list.
 
-By default, for a 64-bit build of SimpleITK on Macs, sitkShow searches
-for ImageJ64.app. For a 32-bit Mac build, sitkShow searches for
-ImageJ.app. If the user prefers a different version of ImageJ (or a
-different image viewer altogether), it can be specified using the
-SITK_SHOW_COMMAND environment variable.
+When invoked, Show searches for Fiji first, and then ImageJ. Fiji is
+the most update-to-date version of ImageJ and includes a lot of
+plugins which facilitate scientific image analysis. By default, for a
+64-bit build of SimpleITK on Macs, sitkShow searches for ImageJ64.app.
+For a 32-bit Mac build, sitkShow searches for ImageJ.app. If the user
+prefers a different version of ImageJ (or a different image viewer
+altogether), it can be specified using the SITK_SHOW_COMMAND
+environment variable.
+
+The boolean parameter debugOn prints the search path Show uses to find
+ImageJ, the full path to the ImageJ it found, and the full command
+line used to invoke ImageJ.
 
 ";
 
@@ -38075,21 +39050,6 @@ This function directly calls the execute method of SignedMaurerDistanceMapImageF
 
 See:
  itk::simple::SignedMaurerDistanceMapImageFilter for the object oriented interface
-
-
-";
-
-%feature("docstring")  itk::simple::SimilarityIndex "
-
-Measures the similarity between the set of non-zero pixels of two
-images.
-
-
-This function directly calls the execute method of SimilarityIndexImageFilter in order to support a procedural API
-
-
-See:
- itk::simple::SimilarityIndexImageFilter for the object oriented interface
 
 
 ";
@@ -38154,6 +39114,9 @@ If there are more elements in paramter \"in\" than the templated ITK
 vector type, they are truncated. If less, then an exception is
 generated.
 
+";
+
+%feature("docstring")  itk::simple::sitkSTLVectorToITKPointVector "
 ";
 
 %feature("docstring")  itk::simple::Slice "
