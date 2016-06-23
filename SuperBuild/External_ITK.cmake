@@ -40,7 +40,7 @@ if("${git_protocol}" STREQUAL "git")
 endif()
 
 # NOTE: it is very important to update the ITK_DIR path with the ITK version
-set(ITK_TAG_COMMAND GIT_TAG  v4.10.0 )
+set(ITK_TAG_COMMAND GIT_TAG  b14b3488bd926c835a03ab12a5663bfc7eca3a92 ) # just after 4.10.0 release
 
 if( ${ITK_WRAPPING} OR ${BUILD_SHARED_LIBS} )
   set( ITK_BUILD_SHARED_LIBS ON )
