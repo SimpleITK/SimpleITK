@@ -59,10 +59,12 @@ function(sitk_add_python_test name)
 
   sitk_add_test(NAME Python.${name}
     COMMAND "${ITK_TEST_DRIVER}"
-    --add-before-env SITK_NOSHOW "YES"
     ${command}
     ${ARGN}
     )
+  set_property(TEST Python.${name}
+      PROPERTY ENVIRONMENT SITK_NOSHOW=YES
+      )
   if (NOT SITK_PYTHON_USE_VIRTUALENV)
     set_property(TEST Python.${name}
       PROPERTY ENVIRONMENT PYTHONPATH=${SimpleITK_BINARY_DIR}/Wrapping
@@ -116,10 +118,12 @@ function(sitk_add_ruby_test name)
 
   sitk_add_test(NAME Ruby.${name}
     COMMAND "${ITK_TEST_DRIVER}"
-    --add-before-env RUBYLIB "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/$<CONFIGURATION>"
-    --add-before-env RUBYLIB "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}"
     ${command}
     ${ARGN}
+    )
+
+  set_property(TEST Ruby.${name}
+    PROPERTY ENVIRONMENT RUBYLIB=$<TARGET_FILE_DIR:simpleitk_RUBY>
     )
 endfunction()
 
@@ -162,12 +166,11 @@ function(sitk_add_java_test name java_file)
   get_filename_component( _java_class ${java_file} NAME_WE )
   set( _java_file_class "${_java_class}.class" )
 
+  set( _JAVA_LIBRARY_PATH  "$<TARGET_FILE_DIR:SimpleITKJava_JAVA>")
   if(WIN32)
-    set( _JAVA_LIBRARY_PATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/$<CONFIGURATION>" )
     set( _JAVA_CLASSPATH "${SimpleITK_BINARY_DIR}/Wrapping/Java/${JAR_FILE}$<SEMICOLON>${CMAKE_CURRENT_BINARY_DIR}" )
 
   else(WIN32)
-    set( _JAVA_LIBRARY_PATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}" )
     set( _JAVA_CLASSPATH "${SimpleITK_BINARY_DIR}/Wrapping/Java/${JAR_FILE}:${CMAKE_CURRENT_BINARY_DIR}" )
   endif(WIN32)
 
