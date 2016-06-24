@@ -165,28 +165,35 @@ function(sitk_add_java_test name java_file)
   # the root is with out extension or path, it is also assumed to the the name of the main class
   get_filename_component( _java_class ${java_file} NAME_WE )
   set( _java_file_class "${_java_class}.class" )
+  set( _class_path "${CMAKE_CURRENT_BINARY_DIR}" )
   set(JAR_FILE "simpleitk-${SimpleITK_VERSION}.jar")  # from target?
 
   set( _JAVA_LIBRARY_PATH  "$<TARGET_FILE_DIR:SimpleITKJava_JAVA>")
   if(WIN32)
-    set( _JAVA_CLASSPATH "${SimpleITK_BINARY_DIR}/Wrapping/Java/${JAR_FILE}$<SEMICOLON>${CMAKE_CURRENT_BINARY_DIR}" )
+    set( _JAVA_CLASSPATH "${SimpleITK_BINARY_DIR}/Wrapping/Java/${JAR_FILE}$<SEMICOLON>${_class_path}" )
+  else()
+    set( _JAVA_CLASSPATH "${SimpleITK_BINARY_DIR}/Wrapping/Java/${JAR_FILE}:${_class_path}" )
+  endif()
 
-  else(WIN32)
-    set( _JAVA_CLASSPATH "${SimpleITK_BINARY_DIR}/Wrapping/Java/${JAR_FILE}:${CMAKE_CURRENT_BINARY_DIR}" )
-  endif(WIN32)
+  if (NOT TARGET ${_java_class}Java)
 
-  add_custom_command(
-    OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/${_java_file_class}"
-    COMMAND "${Java_JAVAC_EXECUTABLE}"
-    ARGS -classpath "${_JAVA_CLASSPATH}"
-    -d "${CMAKE_CURRENT_BINARY_DIR}"
-    "${java_file}"
-    DEPENDS ${java_file} ${SWIG_MODULE_SimpleITKJava_TARGET_NAME} org_itk_simple_jar
-    COMMENT "Building ${CMAKE_CURRENT_BINARY_DIR}/${_java_file_class}"
-    )
-  add_custom_target( ${_java_class}Java ALL
-    DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/${_java_file_class}"
-    SOURCES ${java_file})
+    add_custom_command(
+      OUTPUT "${_class_path}/${_java_file_class}"
+      COMMAND "${CMAKE_COMMAND}"
+        ARGS -E remove -f "${_class_path}/${_java_file_class}"
+      COMMAND "${Java_JAVAC_EXECUTABLE}"
+        ARGS -classpath "${_JAVA_CLASSPATH}"
+          -d "${_class_path}"
+          "${java_file}"
+      DEPENDS ${java_file} ${SWIG_MODULE_SimpleITKJava_TARGET_NAME} org_itk_simple_jar
+      COMMENT "Building ${_class_path}/${_java_file_class}"
+      )
+    add_custom_target( ${_java_class}Java ALL
+      DEPENDS "${_class_path}/${_java_file_class}"
+      SOURCES ${java_file}
+      )
+  endif()
+
 
   sitk_add_test(NAME Java.${name}
     COMMAND "${ITK_TEST_DRIVER}"
