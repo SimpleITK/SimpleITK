@@ -165,6 +165,7 @@ function(sitk_add_java_test name java_file)
   # the root is with out extension or path, it is also assumed to the the name of the main class
   get_filename_component( _java_class ${java_file} NAME_WE )
   set( _java_file_class "${_java_class}.class" )
+  set(JAR_FILE "simpleitk-${SimpleITK_VERSION}.jar")  # from target?
 
   set( _JAVA_LIBRARY_PATH  "$<TARGET_FILE_DIR:SimpleITKJava_JAVA>")
   if(WIN32)
