@@ -22,7 +22,6 @@
  * Please look at JavaImageFilterTestTemplate.java.in to make changes.
  */
 
-package org.itk.simple.testing;
 import java.math.BigInteger;
 // This is Java code to test ${name}
 import org.itk.simple.*;

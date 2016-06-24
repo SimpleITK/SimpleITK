@@ -686,7 +686,7 @@ TEST_F(Java,${name}) {
   std::string Classpath = dataFinder.GetBuildDirectory() + "/Testing/Unit/JavaTests"
     + dataFinder.GetPathSeparator() + dataFinder.GetBuildDirectory() + "/Wrapping/Java/simpleitk-" + itk::simple::Version::VersionString() + ".jar";
   std::string JavaPath = dataFinder.GetLibraryDirectory();
-  std::string Script = "org.itk.simple.testing.${name}Test";
+  std::string Script = "${name}Test";
   $(foreach tests
     {
     /* ${description} */
