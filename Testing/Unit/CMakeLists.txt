@@ -39,6 +39,7 @@ if ( SITK_4D_IMAGES )
   list(APPEND SimpleITKUnitTestSource sitkImage4DTests.cxx )
 endif()
 
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/CTest)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/PythonTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/LuaTests)
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/TclTests)
@@ -112,6 +113,18 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
   set(template_name "${CMAKE_MATCH_1}" )
 
   if (template_name)
+    set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/CTest/${FILTERNAME}.cmake")
+    file(REMOVE "${OUTPUT_TEST_FILENAME}")
+    execute_process(
+      COMMAND ${SITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/ ${template_include_dir} CTestTemplate.cmake.in "${OUTPUT_TEST_FILENAME}"
+      RESULT_VARIABLE failed
+      ERROR_VARIABLE error
+      )
+    if ( failed )
+      message( FATAL_ERROR "Failed to generate ${OUTPUT_TEST_FILENAME}\n${error}" )
+    endif()
+    include("${OUTPUT_TEST_FILENAME}")
+
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/sitk${FILTERNAME}Test.cxx")
     add_custom_command (
       OUTPUT  ${OUTPUT_TEST_FILENAME}
