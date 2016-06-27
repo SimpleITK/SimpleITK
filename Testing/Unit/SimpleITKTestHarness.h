@@ -60,13 +60,8 @@ inline std::ostream& operator<< (std::ostream& os, const std::vector<double>& v)
  *                      should be ITK/Testing/Data
  * Set/GetOutputDirectory -- Temporary directory
  *                      SimpleITK-build/Testing/Temporary
- * Set/GetRuntimeDirectory -- Where built executables are found
- *                           SimpleITK-build/bin/$(OutDir)/
- * Set/GetLibraryDirectory -- Where built libraries are found
- *                           SimpleITK-build/lib
  * GetOutputFile --     File in the temp directory
  * GetBuildDirectory -- SimpleITK-build
- * FindExecutable --    Attempts to find an executable
  *                      Returns GetExecutableDirectory + "/" + filename
  */
 class DataFinder
@@ -77,8 +72,6 @@ public:
     {
     mDirectory = TEST_HARNESS_DATA_DIRECTORY;
     mOutputDirectory = TEST_HARNESS_TEMP_DIRECTORY;
-    mRuntimeDirectory = RUNTIME_OUTPUT_PATH;
-    mLibraryDirectory = LIBRARY_OUTPUT_PATH;
     };
 
   void SetDirectory ( const char* dir )
@@ -91,7 +84,6 @@ public:
     mDirectory = dir;
     };
 
-  void SetRuntimeDirectoryFromArgv0 ( std::string argv0 ) ;
 
   void SetOutputDirectory ( std::string dir )
     {
@@ -102,8 +94,6 @@ public:
   std::string GetOutputDirectory ()  const { return mOutputDirectory; };
   std::string GetOutputFile ( std::string filename )
                                      const { return mOutputDirectory + "/" + filename; };
-  std::string GetRuntimeDirectory () const { return mRuntimeDirectory; }
-  std::string GetLibraryDirectory () const { return mLibraryDirectory; }
   std::string GetBuildDirectory ()    const { return std::string ( SIMPLEITK_BINARY_DIR ); }
   std::string GetPathSeparator ()
     {
@@ -114,18 +104,6 @@ public:
 #endif
     }
 
-  std::vector<std::string> FindExecutable ( std::string exe );
-  std::vector<std::string> GetLuaExecutable ();
-  std::vector<std::string> GetTclExecutable ();
-  std::vector<std::string> GetPythonExecutable ();
-  std::vector<std::string> GetRubyExecutable ();
-  std::vector<std::string> GetRExecutable ();
-  std::vector<std::string> GetJavaExecutable ();
-  std::vector<std::string> GetCSharpCompiler ();
-  std::vector<std::string> GetCSharpInterpreter ();
-
-  std::string GetCSharpBinaryDirectory ()         { return std::string ( CSHARP_BINARY_DIRECTORY ); }
-  std::string GetSourceDirectory ()               { return std::string ( SIMPLEITK_SOURCE_DIR ); }
 
   bool FileExists ( const std::string &filename )
     {
@@ -150,47 +128,10 @@ protected:
   std::string mDirectory;
   std::string mOutputDirectory;
   std::string mRuntimeDirectory;
-  std::string mLibraryDirectory;
 };
 
 extern DataFinder dataFinder;
 
-
-/// Class for running external programs
-class ExternalProgramRunner : public testing::Test
-{
-public:
-
-  // check an image file that it matches the expected hash
-  void CheckImageHash ( const std::string &fileName, const std::string &hash );
-
-  // Return the separator
-  static std::string GetPathSeparator ()
-    {
-#ifdef WIN32
-    return ";";
-#else
-    return ":";
-#endif
-    }
-
-  /// \brief Set an environment variable
-  void SetEnvironment ( std::string key, std::string value );
-
-  /** \brief Run the command line specified in the list of arguments.
-   * Call FAIL if the executable fails returning -1, return the value returned by the
-   * process otherwise.
-   */
-  int RunExecutable ( std::vector<std::string> CommandLine, bool showOutput = false );
-};
-
-class Python : public ExternalProgramRunner { };
-class Lua    : public ExternalProgramRunner { };
-class Java   : public ExternalProgramRunner { };
-class Tcl    : public ExternalProgramRunner { };
-class R      : public ExternalProgramRunner { };
-class Ruby   : public ExternalProgramRunner { };
-class CSharp : public ExternalProgramRunner { };
 
 
 /** Base Command Class which holds onto a process object
