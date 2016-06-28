@@ -253,12 +253,16 @@ function(sitk_add_csharp_test name csharp_file)
     set( CSHARP_EXECUTABLE "CSharp${CSHARP_EXECUTABLE}" )
   endif()
 
-  # add the target to compile the test
-  csharp_add_executable(
-    "${CSHARP_EXECUTABLE}"
-    SimpleITKCSharpManaged.dll
-    ${csharp_file}
-    )
+
+  if (NOT TARGET "${CSHARP_EXECUTABLE}")
+
+    # add the target to compile the test
+    csharp_add_executable(
+      "${CSHARP_EXECUTABLE}"
+      SimpleITKCSharpManaged.dll
+      ${csharp_file}
+      )
+  endif()
 
   # because each executable is it's own target we actually don't
   # need to make a target depend on this list
