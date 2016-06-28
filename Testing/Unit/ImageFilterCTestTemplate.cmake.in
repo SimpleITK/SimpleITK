@@ -85,7 +85,7 @@ end)
 #
 $(for i=1,#tests do
 OUT=OUT..[[
- sitk_add_tcl_test( ${name}[]]..tests[i].tag..[[]
+ sitk_add_tcl_test( ${name}.]]..tests[i].tag..[[
   "$${SimpleITK_BINARY_DIR}/Testing/Unit/TclTests/${name}Test.tcl"
   ]]..tests[i].tag..[[
 ]]
@@ -124,7 +124,7 @@ end)
 #
 $(for i=1,#tests do
 OUT=OUT..[[
- sitk_add_csharp_test( ${name}[]]..tests[i].tag..[[]
+ sitk_add_csharp_test( ${name}.]]..tests[i].tag..[[
   "$${SimpleITK_BINARY_DIR}/Testing/Unit/CSharpTests/${name}Test.cs"
   ]]..tests[i].tag..[[
 ]]
