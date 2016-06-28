@@ -54,7 +54,7 @@ set(JAR_FILE "simpleitk-${SimpleITK_VERSION}.jar")
 
 
 add_executable(SimpleITKUnitTestDriver0 SimpleITKUnitTestDriver.cxx ${SimpleITKUnitTestSource})
-target_link_libraries ( SimpleITKUnitTestDriver0 ${GTEST_LIBRARIES} SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} )
+target_link_libraries ( SimpleITKUnitTestDriver0 ${GTEST_LIBRARIES} SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} ${ITK_LIBRARIES} )
 
 #
 # Glob for necessary template files up front, before the foreach loop over

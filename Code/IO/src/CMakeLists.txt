@@ -23,7 +23,9 @@ find_package(ITK COMPONENTS REQUIRED)
 include(${ITK_USE_FILE})
 
 add_library ( SimpleITKIO ${SimpleITKIOSource} )
-target_link_libraries ( SimpleITKIO ${ITK_LIBRARIES} SimpleITKCommon )
+target_link_libraries ( SimpleITKIO
+  PUBLIC  SimpleITKCommon
+  PRIVATE ${ITK_LIBRARIES} )
 set_target_properties( SimpleITKIO PROPERTIES SKIP_BUILD_RPATH TRUE )
 
 sitk_install_exported_target( SimpleITKIO )
