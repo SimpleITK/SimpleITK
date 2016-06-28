@@ -1,0 +1,144 @@
+# TODO
+# - test output
+
+#
+# Lua Tests
+#
+$(for i=1,#tests do
+local script = "$${SimpleITK_BINARY_DIR}/Testing/Unit/LuaTests/${name}Test.lua"
+OUT=OUT..[[
+ sitk_add_lua_test( ${name}.]]..tests[i].tag..[[
+  "]]..script..[["
+  ]]..tests[i].tag..[[
+]]
+for j=1,#tests[i].inputs do
+    OUT=OUT..[[
+  "DATA{$${SimpleITK_DATA_ROOT}/]]..tests[i].inputs[j]..[[}"
+]]
+end
+OUT=OUT..[[
+  "$${TEST_HARNESS_TEMP_DIRECTORY}/Lua-${name}-]]..tests[i].tag..[[.nrrd"  )
+]]
+end)
+
+
+#
+# Python Tests
+#
+$(for i=1,#tests do
+local script = "$${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/${name}Test.py"
+OUT=OUT..[[
+ sitk_add_python_test( ${name}.]]..tests[i].tag..[[
+  "]]..script..[["
+  ]]..tests[i].tag..[[
+]]
+for j=1,#tests[i].inputs do
+    OUT=OUT..[[
+  "DATA{$${SimpleITK_DATA_ROOT}/]]..tests[i].inputs[j]..[[}"
+]]
+end
+OUT=OUT..[[
+  "$${TEST_HARNESS_TEMP_DIRECTORY}/Python-${name}-]]..tests[i].tag..[[.nrrd"  )
+]]
+end)
+
+#
+# Ruby Tests
+#
+$(for i=1,#tests do
+local script = "$${SimpleITK_BINARY_DIR}/Testing/Unit/RubyTests/${name}Test.rb"
+OUT=OUT..[[
+ sitk_add_ruby_test( ${name}.]]..tests[i].tag..[[
+  "]]..script..[["
+  ]]..tests[i].tag..[[
+]]
+for j=1,#tests[i].inputs do
+    OUT=OUT..[[
+  "DATA{$${SimpleITK_DATA_ROOT}/]]..tests[i].inputs[j]..[[}"
+]]
+end
+OUT=OUT..[[
+  "$${TEST_HARNESS_TEMP_DIRECTORY}/Ruby-${name}-]]..tests[i].tag..[[.nrrd"  )
+]]
+end)
+
+#
+# R Tests
+#
+$(for i=1,#tests do
+local script = "$${SimpleITK_BINARY_DIR}/Testing/Unit/RTests/${name}Test.R"
+OUT=OUT..[[
+ sitk_add_r_test( ${name}.]]..tests[i].tag..[[
+  "--file=]]..script..[["
+  --args
+  ]]..tests[i].tag..[[
+]]
+for j=1,#tests[i].inputs do
+    OUT=OUT..[[
+  "DATA{$${SimpleITK_DATA_ROOT}/]]..tests[i].inputs[j]..[[}"
+]]
+end
+OUT=OUT..[[
+  "$${TEST_HARNESS_TEMP_DIRECTORY}/R-${name}-]]..tests[i].tag..[[.nrrd"  )
+]]
+end)
+
+#
+# Tcl Tests
+#
+$(for i=1,#tests do
+OUT=OUT..[[
+ sitk_add_tcl_test( ${name}.]]..tests[i].tag..[[
+  "$${SimpleITK_BINARY_DIR}/Testing/Unit/TclTests/${name}Test.tcl"
+  ]]..tests[i].tag..[[
+]]
+for j=1,#tests[i].inputs do
+    OUT=OUT..[[
+  "DATA{$${SimpleITK_DATA_ROOT}/]]..tests[i].inputs[j]..[[}"
+]]
+end
+OUT=OUT..[[
+  "$${TEST_HARNESS_TEMP_DIRECTORY}/Tcl-${name}-]]..tests[i].tag..[[.nrrd"  )
+]]
+end)
+
+
+#
+# Java Tests
+#
+$(for i=1,#tests do
+OUT=OUT..[[
+ sitk_add_java_test( ${name}.]]..tests[i].tag..[[
+  "$${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/${name}Test.java"
+  ]]..tests[i].tag..[[
+]]
+for j=1,#tests[i].inputs do
+    OUT=OUT..[[
+  "DATA{$${SimpleITK_DATA_ROOT}/]]..tests[i].inputs[j]..[[}"
+]]
+end
+OUT=OUT..[[
+  "$${TEST_HARNESS_TEMP_DIRECTORY}/Java-${name}-]]..tests[i].tag..[[.nrrd"  )
+]]
+end)
+
+
+
+#
+# CSharp Tests
+#
+$(for i=1,#tests do
+OUT=OUT..[[
+ sitk_add_csharp_test( ${name}.]]..tests[i].tag..[[
+  "$${SimpleITK_BINARY_DIR}/Testing/Unit/CSharpTests/${name}Test.cs"
+  ]]..tests[i].tag..[[
+]]
+for j=1,#tests[i].inputs do
+    OUT=OUT..[[
+  "DATA{$${SimpleITK_DATA_ROOT}/]]..tests[i].inputs[j]..[[}"
+]]
+end
+OUT=OUT..[[
+  "$${TEST_HARNESS_TEMP_DIRECTORY}/CSharp-${name}-]]..tests[i].tag..[[.nrrd"  )
+]]
+end)
