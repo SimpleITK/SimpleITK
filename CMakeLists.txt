@@ -84,13 +84,6 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${SimpleITK_REQUIRED_LINK_
 set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${SimpleITK_REQUIRED_LINK_FLAGS}")
 set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${SimpleITK_REQUIRED_LINK_FLAGS}")
 
-
-if( NOT ITK_USE_REVIEW )
-# TODO need to check ITK configuration to verify that it has the needed modules
-#  message(FATAL_ERROR "Please reconfigure ITK by turning ITK_USE_REVIEW ON")
-endif()
-
-
 #----------------------------------------------------------
 # Place all options to go into sitkConfigure.h here
 option(BUILD_SHARED_LIBS "Build SimpleITK ITK with shared libraries. This does not effect wrapped languages." OFF)
