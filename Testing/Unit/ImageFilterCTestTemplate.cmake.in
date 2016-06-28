@@ -6,7 +6,7 @@
 #
 $(for i=1,#tests do
 local script = "$${SimpleITK_BINARY_DIR}/Testing/Unit/LuaTests/${name}Test.lua"
-OUT=[[
+OUT=OUT..[[
  sitk_add_lua_test( ${name}.]]..tests[i].tag..[[
   "]]..script..[["
   ]]..tests[i].tag..[[
@@ -26,7 +26,7 @@ end)
 #
 $(for i=1,#tests do
 local script = "$${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/${name}Test.py"
-OUT=[[
+OUT=OUT..[[
  sitk_add_python_test( ${name}.]]..tests[i].tag..[[
   "]]..script..[["
   ]]..tests[i].tag..[[
@@ -45,7 +45,7 @@ end)
 #
 $(for i=1,#tests do
 local script = "$${SimpleITK_BINARY_DIR}/Testing/Unit/RubyTests/${name}Test.rb"
-OUT=[[
+OUT=OUT..[[
  sitk_add_ruby_test( ${name}.]]..tests[i].tag..[[
   "]]..script..[["
   ]]..tests[i].tag..[[
@@ -64,7 +64,7 @@ end)
 #
 $(for i=1,#tests do
 local script = "$${SimpleITK_BINARY_DIR}/Testing/Unit/RTests/${name}Test.R"
-OUT=[[
+OUT=OUT..[[
  sitk_add_r_test( ${name}.]]..tests[i].tag..[[
   "--file=]]..script..[["
   --args
@@ -76,15 +76,16 @@ for j=1,#tests[i].inputs do
 ]]
 end
 OUT=OUT..[[
-  "$${TEST_HARNESS_TEMP_DIRECTORY}/R-${name}-]]..tests[i].tag..[[.nrrd" )]]
+  "$${TEST_HARNESS_TEMP_DIRECTORY}/R-${name}-]]..tests[i].tag..[[.nrrd"  )
+]]
 end)
 
 #
 # Tcl Tests
 #
 $(for i=1,#tests do
-OUT=[[
- sitk_add_tcl_test( ${name}[]]..tests[i].tag..[[]
+OUT=OUT..[[
+ sitk_add_tcl_test( ${name}.]]..tests[i].tag..[[
   "$${SimpleITK_BINARY_DIR}/Testing/Unit/TclTests/${name}Test.tcl"
   ]]..tests[i].tag..[[
 ]]
@@ -102,7 +103,7 @@ end)
 # Java Tests
 #
 $(for i=1,#tests do
-OUT=[[
+OUT=OUT..[[
  sitk_add_java_test( ${name}.]]..tests[i].tag..[[
   "$${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/${name}Test.java"
   ]]..tests[i].tag..[[
@@ -122,8 +123,8 @@ end)
 # CSharp Tests
 #
 $(for i=1,#tests do
-OUT=[[
- sitk_add_csharp_test( ${name}[]]..tests[i].tag..[[]
+OUT=OUT..[[
+ sitk_add_csharp_test( ${name}.]]..tests[i].tag..[[
   "$${SimpleITK_BINARY_DIR}/Testing/Unit/CSharpTests/${name}Test.cs"
   ]]..tests[i].tag..[[
 ]]
