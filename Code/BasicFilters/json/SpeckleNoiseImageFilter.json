@@ -73,5 +73,5 @@
     }
   ],
   "briefdescription" : "Alter an image with speckle (multiplicative) noise.",
-  "detaileddescription" : "The speckle noise follows a Gamma distribution of mean 1 and standard deviation provided by the user. The noise is proportional to the pixel intensity.\n\n\\author Gaetan Lehmann\n\nThis code was contributed in the Insight Journal paper \"Noise\nSimulation\". http://hdl.handle.net/10380/3158"
+  "detaileddescription" : "The speckle noise follows a Gamma distribution of mean 1 and standard deviation provided by the user. The noise is proportional to the pixel intensity.\n\n\\author Gaetan Lehmann\n\nThis code was contributed in the Insight Journal paper \"Noise\nSimulation\". https://hdl.handle.net/10380/3158"
 }

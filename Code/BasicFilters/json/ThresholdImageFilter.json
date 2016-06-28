@@ -33,7 +33,7 @@
       "default" : "0.0",
       "pixeltype" : "Output",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set the \"outside\" pixel value. The default value NumericTraits<PixelType>::Zero .",
+      "detaileddescriptionSet" : "The pixel type must support comparison operators. Set the \"outside\" pixel value. The default value NumericTraits<PixelType>::ZeroValue() .",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : "Get the \"outside\" pixel value."
     }

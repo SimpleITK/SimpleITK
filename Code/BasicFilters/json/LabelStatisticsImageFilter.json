@@ -180,8 +180,8 @@
           "type" : "int64_t"
         }
       ],
-      "briefdescriptionGet" : "Return the computed bounding box for a label.",
-      "detaileddescriptionGet" :  "Defined by the closed interval of indexes, with a lower index followed by the upper for each dimension. i.e. [0,255,0,255]. The bounding box always has a positive size."
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Return the computed bounding box for a label."
     },
     {
       "name" : "Labels",

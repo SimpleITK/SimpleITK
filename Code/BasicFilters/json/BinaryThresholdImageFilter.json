@@ -43,7 +43,7 @@
       "default" : "0u",
       "pixeltype" : "Output",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set the \"outside\" pixel value. The default value NumericTraits<OutputPixelType>::Zero .",
+      "detaileddescriptionSet" : "Set the \"outside\" pixel value. The default value NumericTraits<OutputPixelType>::ZeroValue() .",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : "Get the \"outside\" pixel value."
     }

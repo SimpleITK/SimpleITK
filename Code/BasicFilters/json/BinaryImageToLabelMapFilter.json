@@ -22,9 +22,9 @@
       "default" : "1.0",
       "pixeltype" : "Input",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the value to be consider \"foreground\" in the input image. Defaults to NumericTraits<InputPixelType>::max().",
+      "detaileddescriptionSet" : "Set/Get the value to be consider \"foreground\" in the input image. Defaults to NumericTraits<InputPixelType>::max() .",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the value to be consider \"foreground\" in the input image. Defaults to NumericTraits<InputPixelType>::max()."
+      "detaileddescriptionGet" : "Set/Get the value to be consider \"foreground\" in the input image. Defaults to NumericTraits<InputPixelType>::max() ."
     },
     {
       "name" : "OutputBackgroundValue",
@@ -32,9 +32,9 @@
       "default" : "0.0",
       "pixeltype" : "Output",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<OutputPixelType>::NonpositiveMin().",
+      "detaileddescriptionSet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<OutputPixelType>::NonpositiveMin() .",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<OutputPixelType>::NonpositiveMin()."
+      "detaileddescriptionGet" : "Set/Get the value used as \"background\" in the output image. Defaults to NumericTraits<OutputPixelType>::NonpositiveMin() ."
     }
   ],
   "tests" : [
@@ -74,5 +74,5 @@
     }
   ],
   "briefdescription" : "Label the connected components in a binary image and produce a collection of label objects.",
-  "detaileddescription" : "BinaryImageToLabelMapFilter labels the objects in a binary image. Each distinct object is assigned a unique label. The final object labels start with 1 and are consecutive. Objects that are reached earlier by a raster order scan have a lower label.\n\nThe GetOutput() function of this class returns an itk::LabelMap .\n\nThis implementation was taken from the Insight Journal paper: http://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176 \n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\n\\see ConnectedComponentImageFilter , LabelImageToLabelMapFilter , LabelMap , LabelObject \n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Label binary regions in an image"
+  "detaileddescription" : "BinaryImageToLabelMapFilter labels the objects in a binary image. Each distinct object is assigned a unique label. The final object labels start with 1 and are consecutive. Objects that are reached earlier by a raster order scan have a lower label.\n\nThe GetOutput() function of this class returns an itk::LabelMap .\n\nThis implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176 \n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\n\\see ConnectedComponentImageFilter , LabelImageToLabelMapFilter , LabelMap , LabelObject \n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Label binary regions in an image"
 }

@@ -15,14 +15,16 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set label value for undecided pixels.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Get label value used for undecided pixels. After updating the filter, this function returns the actual label value used for undecided pixels in the current output. Note that this value is overwritten when SetLabelForUndecidedPixels is called and the new value only becomes effective upon the next filter update."
+      "detaileddescriptionGet" : "Get label value used for undecided pixels.\n\nAfter updating the filter, this function returns the actual label value used for undecided pixels in the current output. Note that this value is overwritten when SetLabelForUndecidedPixels is called and the new value only becomes effective upon the next filter update."
     },
     {
       "name" : "TerminationUpdateThreshold",
       "type" : "float",
       "default" : "1e-5f",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set termination threshold based on confusion matrix parameter updates."
+      "detaileddescriptionSet" : "Set termination threshold based on confusion matrix parameter updates.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set termination threshold based on confusion matrix parameter updates."
     },
     {
       "name" : "MaximumNumberOfIterations",
@@ -30,7 +32,9 @@
       "default" : "std::numeric_limits<unsigned int>::max()",
       "custom_itk_cast" : "if (m_MaximumNumberOfIterations!=std::numeric_limits<unsigned int>::max()) filter->SetMaximumNumberOfIterations(this->m_MaximumNumberOfIterations);",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set maximum number of iterations."
+      "detaileddescriptionSet" : "Set maximum number of iterations.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set maximum number of iterations."
     },
     {
       "name" : "PriorProbabilities",
@@ -38,9 +42,9 @@
       "default" : "std::vector<float>()",
       "briefdescriptionSet" : "",
       "custom_itk_cast" : "if (!m_PriorProbabilities.empty()) filter->SetPriorProbabilities(typename FilterType::PriorProbabilitiesType(&this->m_PriorProbabilities[0],this->m_PriorProbabilities.size()));",
-      "detaileddescriptionSet" : "Set label value for undecided pixels.",
+      "detaileddescriptionSet" : "Set manual estimates for the a priori class probabilities.The size of the array must be greater than the value of the\n largest label. The index into the array corresponds to the label\n value in the segmented image for the class.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Get prior class probabilities. After updating the filter, this function returns the actual prior class probabilities. If these were not previously set by a call to SetPriorProbabilities, then they are estimated from the input segmentations and the result is available through this function."
+      "detaileddescriptionGet" : "Get prior class probabilities.\n\nAfter updating the filter, this function returns the actual prior class probabilities. If these were not previously set by a call to SetPriorProbabilities, then they are estimated from the input segmentations and the result is available through this function."
     }
   ],
   "measurements" : [
