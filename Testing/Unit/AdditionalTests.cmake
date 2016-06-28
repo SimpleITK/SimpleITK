@@ -65,6 +65,9 @@ sitk_add_r_test( ImageListArguments
 sitk_add_r_test( SwigVectorConversion
   "--file=${SimpleITK_SOURCE_DIR}/Testing/Unit/RSwigVectorConversionTests.R"
   )
+sitk_add_r_test( ImageSlicing
+  "--file=${SimpleITK_SOURCE_DIR}/Testing/Unit/RImageSlicingTests.R"
+  )
 
 
 #
