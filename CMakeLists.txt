@@ -1,4 +1,4 @@
-cmake_minimum_required ( VERSION 2.8.1 FATAL_ERROR )
+cmake_minimum_required ( VERSION 3.0 FATAL_ERROR )
 
 # Explicitly add INCREMENTAL linking option to command lines.
 # http://www.cmake.org/pipermail/cmake/2010-February/035174.html
@@ -6,7 +6,7 @@ SET(MSVC_INCREMENTAL_DEFAULT ON)
 
 project ( SimpleITK )
 
-cmake_policy( VERSION 2.8.1 )
+cmake_policy( VERSION 3.0 )
 
 
 # NEW CMP0042

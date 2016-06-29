@@ -12,7 +12,7 @@ if( NOT DEFINED CMAKE_INSTALL_PREFIX )
   set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_BINARY_DIR} CACHE PATH "Where all the prerequisite libraries go")
 endif()
 
-cmake_minimum_required ( VERSION 2.8.4 )
+cmake_minimum_required ( VERSION 3.0 )
 project ( SuperBuildSimpleITK )
 
 #-----------------------------------------------------------------------------
