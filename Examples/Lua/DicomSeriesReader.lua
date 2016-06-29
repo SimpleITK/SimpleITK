@@ -16,6 +16,7 @@
 --
 --=========================================================================
 
+require "SimpleITK"
 
 if #arg < 2 then
   print ( "Usage: DicomSeriesReader <input_directory> <output_file>" )
