@@ -1,10 +1,21 @@
 
+# Find a Lua executable
+#
 if ( NOT SITK_LUA_EXECUTABLE )
+  set ( SAVE_LUA_EXECUTABLE ${LUA_EXECUTABLE} )
+
   find_package( LuaInterp REQUIRED 5.1 )
   set( SITK_LUA_EXECUTABLE ${LUA_EXECUTABLE} CACHE PATH "Lua executable used for code generation." )
-  unset( LUA_EXECUTABLE CACHE )
+
+  if (defined SAVE_LUA_EXECUTABLE)
+    set( LUA_EXECUTABLE ${SAVE_LUA_EXECUTABLE} CACHE )
+  else()
+    unset( LUA_EXECUTABLE CACHE )
+  endif()
 endif()
 
+# Get the Lua version
+#
 execute_process(
   COMMAND ${SITK_LUA_EXECUTABLE} -v
   OUTPUT_VARIABLE
@@ -17,6 +28,8 @@ execute_process(
   ERROR_STRIP_TRAILING_WHITESPACE
   )
 
+# Check that the Lua version is acceptable
+#
 if( NOT SITK_LUA_VERSION_RESULT_VARIABLE )
   string( REGEX MATCH "([0-9]*)([.])([0-9]*)([.]*)([0-9]*)"
     SITK_LUA_EXECUTABLE_VERSION
