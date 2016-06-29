@@ -124,8 +124,3 @@ foreach ( _start RANGE 0 ${_end_range} ${_stride} )
   sitk_install_exported_target( SimpleITKBasicFilters${_library_i} )
 
 endforeach ()
-
-
-install( FILES ${CMAKE_CURRENT_BINARY_DIR}/../include/SimpleITKBasicFiltersGeneratedHeaders.h
-  DESTINATION ${SimpleITK_INSTALL_INCLUDE_DIR}
-  COMPONENT Development )

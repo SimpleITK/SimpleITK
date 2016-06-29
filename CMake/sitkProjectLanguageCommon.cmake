@@ -8,9 +8,6 @@ if (NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK" )
   set( SimpleITK_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../.." )
   list(APPEND CMAKE_MODULE_PATH "${SimpleITK_SOURCE_DIR}/CMake")
 
-  #HACK - we should not be using anything from this directory
-  set( SimpleITK_BINARY_DIR ${SimpleITK_DIR} )
-
   find_package(SimpleITK REQUIRED)
   include(${SimpleITK_USE_FILE})
 
@@ -59,16 +56,25 @@ include (sitkUseSWIG)
 set(SIMPLEITK_WRAPPING_COMMON_DIR
   ${SimpleITK_SOURCE_DIR}/Wrapping/Common)
 
-file(GLOB SWIG_EXTRA_DEPS
-  "${SimpleITK_SOURCE_DIR}/Code/Common/include/*.h"
-  "${SimpleITK_SOURCE_DIR}/Code/Registration/include/*.h"
-  "${SimpleITK_SOURCE_DIR}/Code/IO/include/*.h")
+if ( CMAKE_PROJECT_NAME STREQUAL "SimpleITK" )
+  file(GLOB SWIG_EXTRA_DEPS
+    "${SimpleITK_SOURCE_DIR}/Code/Common/include/*.h"
+    "${SimpleITK_SOURCE_DIR}/Code/Registration/include/*.h"
+    "${SimpleITK_SOURCE_DIR}/Code/IO/include/*.h")
+  list( APPEND SWIG_EXTRA_DEPS
+    "${SimpleITK_BINARY_DIR}/Code/BasicFilters/include/SimpleITKBasicFiltersGeneratedHeaders.h"
+    ${SimpleITKBasicFiltersGeneratedHeader} )
+else()
+  find_file( _file
+    NAMES SimpleITKBasicFiltersGeneratedHeaders.h
+    PATHS ${SimpleITK_INCLUDE_DIRS}
+    NO_DEFAULT_PATH )
+  list( APPEND SWIG_EXTRA_DEPS ${_file} )
+endif()
 
 # make a manual list of dependencies for the Swig.i files
-list( APPEND SWIG_EXTRA_DEPS "${SimpleITK_BINARY_DIR}/Code/BasicFilters/include/SimpleITKBasicFiltersGeneratedHeaders.i"
-  "${SimpleITK_BINARY_DIR}/Code/BasicFilters/include/SimpleITKBasicFiltersGeneratedHeaders.h"
+list( APPEND SWIG_EXTRA_DEPS
   "${SIMPLEITK_WRAPPING_COMMON_DIR}/SimpleITK_Common.i"
-  ${SimpleITKBasicFiltersGeneratedHeader}
   )
 
 # check if uint64_t is the same as unsigned long
