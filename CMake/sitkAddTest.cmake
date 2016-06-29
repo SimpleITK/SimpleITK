@@ -83,7 +83,7 @@ function(sitk_add_lua_test name)
     return()
   endif()
 
-  set(command "$<TARGET_FILE:SimpleITKLua>")
+  set(command "${LUA_EXECUTABLE}")
 
   # add extra command which may be needed on some systems
   if(CMAKE_OSX_ARCHITECTURES)
@@ -95,6 +95,9 @@ function(sitk_add_lua_test name)
     COMMAND "${ITK_TEST_DRIVER}"
     ${command}
     ${ARGN}
+    )
+  set_property(TEST Lua.${name}
+    PROPERTY ENVIRONMENT LUA_CPATH=$<TARGET_FILE:SimpleITKLuaModule_LUA>
     )
 endfunction()
 
