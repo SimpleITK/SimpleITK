@@ -442,10 +442,6 @@ file( GLOB __files
   ${CMAKE_SOURCE_DIR}/Code/Registration/include/*.hxx
   )
 
-set(__files ${__files}
-  ${SimpleITKBasicFiltersGeneratedHeader}
-  )
-
 install(FILES ${__files}
   DESTINATION ${SimpleITK_INSTALL_INCLUDE_DIR}
   COMPONENT Development)
