@@ -213,14 +213,14 @@ include(sitkStripOption)
 #------------------------------------------------------------------------------
 # These are some system specific compiler options needed to build SimpleITK
 
-
-
 include(CheckCXXCompilerFlag)
 
+if( NOT DEFINED CMAKE_POSITION_INDEPENDENT_CODE )
+  set( CMAKE_POSITION_INDEPENDENT_CODE 1 )
+endif()
 
-# always create position independent code so that the libraries can be
-# used with shared libraries needed for language bindings.
-set( CMAKE_POSITION_INDEPENDENT_CODE 1 )
+
+
 
 #-----------------------------------------------------------
 # Place all checks and try compile variable for sitkConfigure.h here
