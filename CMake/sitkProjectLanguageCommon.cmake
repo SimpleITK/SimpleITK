@@ -6,7 +6,7 @@
 if (NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK" )
 
   set( SimpleITK_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../.." )
-  list(APPEND CMAKE_MODULE_PATH "${SimpleITK_SOURCE_DIR}/CMake")
+  list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_CURRENT_SOURCE_DIR}/CMake")
 
   find_package(SimpleITK REQUIRED)
   include(${SimpleITK_USE_FILE})

@@ -13,7 +13,7 @@ cmake_policy( VERSION 3.0 )
 set( CMAKE_MACOSX_RPATH 1)
 
 # Include extra CMake files
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake")
+list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_CURRENT_SOURCE_DIR}/CMake")
 
 #-----------------------------------------------------------------------------
 # Version information
@@ -215,14 +215,14 @@ include(sitkStripOption)
 #------------------------------------------------------------------------------
 # These are some system specific compiler options needed to build SimpleITK
 
-
-
 include(CheckCXXCompilerFlag)
 
+if( NOT DEFINED CMAKE_POSITION_INDEPENDENT_CODE )
+  set( CMAKE_POSITION_INDEPENDENT_CODE 1 )
+endif()
 
-# always create position independent code so that the libraries can be
-# used with shared libraries needed for language bindings.
-set( CMAKE_POSITION_INDEPENDENT_CODE 1 )
+
+
 
 #-----------------------------------------------------------
 # Place all checks and try compile variable for sitkConfigure.h here

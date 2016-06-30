@@ -156,16 +156,6 @@ endif()
 #------------------------------------------------------------------------------
 # Setup build locations.
 #------------------------------------------------------------------------------
-if(NOT SETIFEMPTY)
-  macro(SETIFEMPTY) # A macro to set empty variables to meaninful defaults
-    set(KEY ${ARGV0})
-    set(VALUE ${ARGV1})
-    if(NOT ${KEY})
-      set(${ARGV})
-    endif(NOT ${KEY})
-  endmacro(SETIFEMPTY KEY VALUE)
-endif(NOT SETIFEMPTY)
-
 
 #------------------------------------------------------------------------------
 # Common Build Options to pass to all subsequent tools
