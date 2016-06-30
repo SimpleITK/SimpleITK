@@ -35,6 +35,13 @@ if(NOT CMAKE_ARCHIVE_OUTPUT_DIRECTORY OR CMAKE_PROJECT_NAME STREQUAL "SimpleITK"
   set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)
 endif()
 
+
+# Since most language libraries are not installed with CMake, the
+# RPATH does not get fixed up during installation. So skip the RPATH
+if(NOT DEFINED CMAKE_SKIP_BUILD_RPATH)
+  set(CMAKE_SKIP_BUILD_RPATH 1)
+endif()
+
 if(NOT TARGET dist)
   add_custom_target( dist cmake -E echo "Finished generating wrapped packages for distribution..." )
 endif()
