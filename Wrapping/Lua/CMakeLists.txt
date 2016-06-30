@@ -14,7 +14,7 @@ else()
   find_package ( Lua ${_QUIET} )
 endif()
 
-set( LUA_ADDITIONAL_LIBRARIES "" CACHE STRING "Additional libraries which may be needed for lua such as readline.")
+set( LUA_ADDITIONAL_LIBRARIES "" CACHE STRING "Additional libraries which may be needed for lua executable such as readline.")
 mark_as_advanced( LUA_ADDITIONAL_LIBRARIES )
 
 include_directories ( ${LUA_INCLUDE_DIR} )
@@ -30,6 +30,19 @@ SWIG_module_initialize ( SimpleITKLua lua )
 SWIG_add_source_to_module ( SimpleITKLua  swig_generated_source SimpleITK.i ${SWIG_EXTRA_DEPS} )
 set_source_files_properties(${swig_generated_file_fullname} PROPERTIES COMPILE_FLAGS "-w" )
 
-add_executable ( SimpleITKLua SimpleITKLuaMain.cxx ${swig_generated_file_fullname} )
-target_link_libraries ( SimpleITKLua ${SimpleITK_LIBRARIES} ${LUA_LIBRARIES} ${LUA_ADDITIONAL_LIBRARIES} )
-sitk_strip_target( SimpleITKLua )
+# Create a standalone Lua executable that includes SimpleITK.
+option( SITK_LUA_BUILD_EXECUTABLE "Build a standalone SimpleITK-Lua executable" OFF)
+if ( SITK_LUA_BUILD_EXECUTABLE )
+  add_executable ( SimpleITKLua SimpleITKLuaMain.cxx ${swig_generated_file_fullname} )
+  target_link_libraries ( SimpleITKLua ${SimpleITK_LIBRARIES} ${LUA_LIBRARIES} ${LUA_ADDITIONAL_LIBRARIES} )
+  sitk_strip_target( SimpleITKLua )
+endif ()
+
+# Create a SimpleITK Lua module that can be loaded into any Lua executable.
+SWIG_add_module( SimpleITKLuaModule lua SimpleITK.i )
+target_link_libraries( ${SWIG_MODULE_SimpleITKLuaModule_TARGET_NAME} ${SimpleITK_LIBRARIES} )
+set_target_properties( ${SWIG_MODULE_SimpleITKLuaModule_TARGET_NAME} PROPERTIES PREFIX "" OUTPUT_NAME  "SimpleITK" )
+sitk_target_link_libraries_with_dynamic_lookup( ${SWIG_MODULE_SimpleITKLuaModule_TARGET_NAME} ${LUA_LIBRARIES} )
+set_source_files_properties( ${swig_generated_file_fullname} PROPERTIES COMPILE_FLAGS "-w")
+sitk_strip_target( ${SWIG_MODULE_SimpleITKLuaModule_TARGET_NAME} )
+

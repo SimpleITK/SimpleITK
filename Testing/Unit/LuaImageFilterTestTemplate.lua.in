@@ -25,6 +25,8 @@
 
 -- This is Lua code to test ${name}
 
+require "SimpleITK"
+
 inputs = 1
 $(if number_of_inputs then
     OUT=[[inputs = ${number_of_inputs}]]
