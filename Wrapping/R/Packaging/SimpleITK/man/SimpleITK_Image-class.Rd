@@ -102,5 +102,5 @@ Arrays can be converted to images using \code{as.image}.
 }
 }
 \references{
-\link{https://itk.org/SimpleITKDoxygen/html/index.html}
+\url{https://itk.org/SimpleITKDoxygen/html/index.html}
 }

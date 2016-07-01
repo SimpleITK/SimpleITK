@@ -143,7 +143,9 @@ set ( SimpleITK_LIBRARIES SimpleITKCommon SimpleITKIO SimpleITKRegistration )
 
 if (SITK_EXPLICIT_INSTANTIATION)
   list ( APPEND SimpleITK_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/Code/Explicit/include )
-  list ( APPEND SimpleITK_LIBRARIES  SimpleITKExplicit )
+  # This library is linked privately to SimpleITK libraries and is not
+  # part of the public link interface
+  #list ( APPEND SimpleITK_LIBRARIES  SimpleITKExplicit )
 endif()
 
 set( SimpleITK_LIBRARIES ${SimpleITK_LIBRARIES}  CACHE INTERNAL "" )

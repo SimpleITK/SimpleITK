@@ -48,8 +48,9 @@ SWIG_add_module ( SimpleITK python
   SimpleITK.i
   sitkPyCommand.cxx )
 set(SWIG_MODULE_SimpleITKPython_TARGET_NAME "${SWIG_MODULE_SimpleITK_TARGET_NAME}")
-target_link_libraries ( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} ${SimpleITK_LIBRARIES} )
+target_link_libraries( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} ${SimpleITK_LIBRARIES} )
 sitk_target_link_libraries_with_dynamic_lookup( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} ${PYTHON_LIBRARIES} )
+set_target_properties( ${SWIG_MODULE_SimpleITK_TARGET_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
 set_source_files_properties(${swig_generated_file_fullname} PROPERTIES COMPILE_FLAGS "-w")
 sitk_strip_target( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} )
 
@@ -59,11 +60,6 @@ sitk_strip_target( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} )
 set( SIMPLEITK_PYTHON_PACKAGE_DIR "${CMAKE_CURRENT_BINARY_DIR}" )
 file( TO_NATIVE_PATH "${SIMPLEITK_PYTHON_PACKAGE_DIR}" SIMPLEITK_PYTHON_PACKAGE_DIR )
 get_target_property( SWIG_MODULE_SimpleITKPython_TARGET_LOCATION ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} OUTPUT_NAME )
-add_custom_command(
-  TARGET ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
-  POST_BUILD
-  COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE:${SWIG_MODULE_SimpleITKPython_TARGET_NAME}>" "${CMAKE_CURRENT_BINARY_DIR}"
-  )
 get_target_property( SIMPLEITK_RELATIVE_BINARY_MODULE ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} LOCATION )
 get_filename_component( SIMPLEITK_RELATIVE_BINARY_MODULE "${SIMPLEITK_RELATIVE_BINARY_MODULE}" NAME )
 
