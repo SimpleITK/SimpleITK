@@ -8,9 +8,14 @@ project ( SimpleITK )
 
 cmake_policy( VERSION 2.8.1 )
 
-
-# NEW CMP0042
-set( CMAKE_MACOSX_RPATH 1)
+foreach(p
+    CMP0042 # CMake 3.0
+    CMP0063 # CMake 3.3.2
+    )
+  if(POLICY ${p})
+    cmake_policy(SET ${p} NEW)
+  endif()
+endforeach()
 
 # Include extra CMake files
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake")
