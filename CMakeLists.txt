@@ -231,6 +231,17 @@ include(sitkStripOption)
 
 include(CheckCXXCompilerFlag)
 
+if( NOT DEFINED CMAKE_C_VISIBILITY_PRESET )
+  set(CMAKE_C_VISIBILITY_PRESET hidden)
+endif()
+
+if( NOT DEFINED CMAKE_CXX_VISIBILITY_PRESET )
+  set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+endif()
+
+if( NOT DEFINED CMAKE_VISIBILITY_INLINES_HIDDEN )
+  set( CMAKE_VISIBILITY_INLINES_HIDDEN 1 )
+endif()
 
 # always create position independent code so that the libraries can be
 # used with shared libraries needed for language bindings.
