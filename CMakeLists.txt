@@ -8,9 +8,14 @@ project ( SimpleITK )
 
 cmake_policy( VERSION 3.0 )
 
-
-# NEW CMP0042
-set( CMAKE_MACOSX_RPATH 1)
+foreach(p
+    CMP0042 # CMake 3.0
+    CMP0063 # CMake 3.3.2
+    )
+  if(POLICY ${p})
+    cmake_policy(SET ${p} NEW)
+  endif()
+endforeach()
 
 # Include extra CMake files
 list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_CURRENT_SOURCE_DIR}/CMake")
@@ -222,6 +227,17 @@ if( NOT DEFINED CMAKE_POSITION_INDEPENDENT_CODE )
 endif()
 
 
+if( NOT DEFINED CMAKE_C_VISIBILITY_PRESET )
+  set(CMAKE_C_VISIBILITY_PRESET hidden)
+endif()
+
+if( NOT DEFINED CMAKE_CXX_VISIBILITY_PRESET )
+  set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+endif()
+
+if( NOT DEFINED CMAKE_VISIBILITY_INLINES_HIDDEN )
+  set( CMAKE_VISIBILITY_INLINES_HIDDEN 1 )
+endif()
 
 
 #-----------------------------------------------------------

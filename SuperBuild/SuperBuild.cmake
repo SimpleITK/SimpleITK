@@ -126,14 +126,6 @@ endif()
 include(sitkCheckRequiredFlags)
 set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SimpleITK_REQUIRED_CXX_FLAGS}" )
 
-# the hidden visibility for inline methods should be consistent between ITK and SimpleITK
-if(NOT WIN32 AND CMAKE_COMPILER_IS_GNUCXX AND BUILD_SHARED_LIBS)
-  check_cxx_compiler_flag("-fvisibility-inlines-hidden" CXX_HAS-fvisibility-inlines-hidden)
-  if( CXX_HAS-fvisibility-inlines-hidden )
-    set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility-inlines-hidden" )
-  endif()
-endif()
-
 #------------------------------------------------------------------------------
 # BuildName used for dashboard reporting
 #------------------------------------------------------------------------------
