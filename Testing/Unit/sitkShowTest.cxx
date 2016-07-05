@@ -16,6 +16,7 @@
 *
 *=========================================================================*/
 
+#include <cstdlib>
 #include <SimpleITKTestHarness.h>
 #include <SimpleITK.h>
 
@@ -45,10 +46,12 @@ int main (int argc, char *argv[])
       catch (std::exception &e)
         {
         std::cout << "Exception: " << e.what() << std::endl;
+        return EXIT_FAILURE;
         }
       catch (...)
         {
         std::cout << "Default exception\n";
+        return EXIT_FAILURE;
         }
       }
     }
@@ -65,10 +68,12 @@ int main (int argc, char *argv[])
     catch (std::exception &e)
       {
       std::cout << "Exception: " << e.what() << std::endl;
+      return EXIT_FAILURE;
       }
     catch (...)
       {
       std::cout << "Default exception\n";
+      return EXIT_FAILURE;
       }
 
 
@@ -82,10 +87,12 @@ int main (int argc, char *argv[])
     catch (std::exception &e)
       {
       std::cout << "Exception: " << e.what() << std::endl;
+      return EXIT_FAILURE;
       }
     catch (...)
       {
       std::cout << "Default exception\n";
+      return EXIT_FAILURE;
       }
 
     try
@@ -98,10 +105,14 @@ int main (int argc, char *argv[])
     catch (std::exception &e)
       {
       std::cout << "Exception: " << e.what() << std::endl;
+      return EXIT_FAILURE;
       }
     catch (...)
       {
       std::cout << "Default exception\n";
+      return EXIT_FAILURE;
       }
     }
+
+  return EXIT_SUCCESS;
 }
