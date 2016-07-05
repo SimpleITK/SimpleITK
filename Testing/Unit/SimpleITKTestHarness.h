@@ -42,8 +42,6 @@ inline std::ostream& operator<< (std::ostream& os, const std::vector<double>& v)
 #include <vector>
 #include <gtest/gtest.h>
 #include <SimpleITKTestHarnessPaths.h>
-#include <itksys/SystemTools.hxx>
-#include <itksys/Process.h>
 
 #include "sitkImage.h"
 #include "sitkImageFileReader.h"
@@ -68,61 +66,24 @@ class DataFinder
 {
 
 public:
-  DataFinder ()
-    {
-    mDirectory = TEST_HARNESS_DATA_DIRECTORY;
-    mOutputDirectory = TEST_HARNESS_TEMP_DIRECTORY;
-    };
+  DataFinder ();
 
-  void SetDirectory ( const char* dir )
-    {
-    mDirectory = dir;
-    };
+  void SetDirectory ( const char* dir );
 
-  void SetDirectory ( std::string dir )
-    {
-    mDirectory = dir;
-    };
+  void SetDirectory ( std::string dir );
+
+  void SetOutputDirectory ( std::string dir );
+
+  std::string GetDirectory () const;
+  std::string GetOutputDirectory () const;
+  std::string GetOutputFile ( std::string filename ) const;
+  std::string GetBuildDirectory ()    const;
+  std::string GetPathSeparator () const;
 
 
-  void SetOutputDirectory ( std::string dir )
-    {
-    mOutputDirectory = dir;
-    };
+  bool FileExists ( const std::string &filename ) const;
 
-  std::string GetDirectory ()        const { return mDirectory; };
-  std::string GetOutputDirectory ()  const { return mOutputDirectory; };
-  std::string GetOutputFile ( std::string filename )
-                                     const { return mOutputDirectory + "/" + filename; };
-  std::string GetBuildDirectory ()    const { return std::string ( SIMPLEITK_BINARY_DIR ); }
-  std::string GetPathSeparator ()
-    {
-#ifdef WIN32
-    return ";";
-#else
-    return ":";
-#endif
-    }
-
-
-  bool FileExists ( const std::string &filename )
-    {
-      return itksys::SystemTools::FileExists ( filename.c_str() );
-    }
-
-  std::string GetFile ( const std::string &filename )
-    {
-      std::string name;
-
-      name = mDirectory + "/" + filename;
-      if (this->FileExists(name))
-        return name;
-
-      // fall back to source code path
-      name = std::string(SIMPLEITK_SOURCE_DIR) + "/Testing/Data/" + filename;
-
-      return name;
-    };
+  std::string GetFile ( const std::string &filename ) const;
 
 protected:
   std::string mDirectory;

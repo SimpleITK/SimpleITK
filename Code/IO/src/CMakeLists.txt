@@ -26,6 +26,10 @@ add_library ( SimpleITKIO ${SimpleITKIOSource} )
 target_link_libraries ( SimpleITKIO
   PUBLIC  SimpleITKCommon
   PRIVATE ${ITK_LIBRARIES} )
+if (SITK_EXPLICIT_INSTANTIATION)
+  target_link_libraries ( SimpleITKIO PRIVATE SimpleITKExplicit )
+endif()
+
 sitk_install_exported_target( SimpleITKIO )
 
 # Add custom command that will delete java files which need to be rebuilt when changes

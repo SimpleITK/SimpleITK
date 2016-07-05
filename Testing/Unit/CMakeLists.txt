@@ -10,8 +10,8 @@ set ( SimpleITKUnitTestSourceBase
   sitkTransformCompare.cxx
 )
 add_library ( SimpleITKUnitTestBase STATIC ${SimpleITKUnitTestSourceBase} )
-add_dependencies( SimpleITKUnitTestBase BasicFiltersSourceCode )
-target_link_libraries( SimpleITKUnitTestBase ${GTEST_LIBRARIES} ${SimpleITK_LIBRARIES} )
+add_dependencies( SimpleITKUnitTestBase BasicFiltersSourceCode  )
+target_link_libraries( SimpleITKUnitTestBase ${GTEST_LIBRARIES} ${SimpleITK_LIBRARIES} ${ITK_LIBRARIES} )
 
 add_executable( sitkTransformCompareDriver sitkTransformCompareDriver.cxx )
 target_link_libraries( sitkTransformCompareDriver ${GTEST_LIBRARIES} SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} )
@@ -248,10 +248,10 @@ if(MSVC_VERSION EQUAL 1700)
 endif()
 
 add_executable(sitkShowTest sitkShowTest.cxx )
-target_link_libraries ( sitkShowTest ${SimpleITK_LIBRARIES} )
+target_link_libraries ( sitkShowTest ${SimpleITK_LIBRARIES} SimpleITKUnitTestBase )
 
 add_executable( sitkSystemInformationTest sitkSystemInformationTest.cxx )
-target_link_libraries( sitkSystemInformationTest ${SimpleITK_LIBRARIES} )
+target_link_libraries( sitkSystemInformationTest ${SimpleITK_LIBRARIES} ${ITK_LIBRARIES})
 add_test( NAME sitkSystemInformaionTest COMMAND sitkSystemInformationTest ${CMAKE_BINARY_DIR} )
 
 
