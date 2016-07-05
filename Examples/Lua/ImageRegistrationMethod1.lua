@@ -16,6 +16,7 @@
 --
 --=========================================================================
 
+require "SimpleITK"
 
 function command_iteration(method)
     print(method)
