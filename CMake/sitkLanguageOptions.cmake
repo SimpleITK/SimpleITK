@@ -51,7 +51,9 @@ mark_as_advanced( LUA_ADDITIONAL_LIBRARIES )
 option ( WRAP_LUA "Wrap Lua" ${WRAP_LUA_DEFAULT} )
 
 if ( WRAP_LUA )
+  find_package( LuaInterp REQUIRED )
   list( APPEND SITK_LANGUAGES_VARS
+    LUA_EXECUTABLE
     LUA_LIBRARIES
     LUA_INCLUDE_DIR
     LUA_VERSION_STRING
