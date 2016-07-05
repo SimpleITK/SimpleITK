@@ -39,8 +39,6 @@ target_link_libraries ( SimpleITKCommon
 if (SITK_EXPLICIT_INSTANTIATION)
   target_link_libraries ( SimpleITKCommon PRIVATE SimpleITKExplicit )
 endif()
-set_target_properties( SimpleITKCommon PROPERTIES SKIP_BUILD_RPATH TRUE )
-
 sitk_install_exported_target( SimpleITKCommon )
 
 # Add custom command that will delete java files which need to be rebuilt when changes
