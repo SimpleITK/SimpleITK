@@ -1,6 +1,88 @@
 
 #include "SimpleITKTestHarness.h"
 
+#include <itksys/SystemTools.hxx>
+#include <itksys/Process.h>
+
+
+DataFinder::DataFinder() :
+  mDirectory(TEST_HARNESS_DATA_DIRECTORY),
+  mOutputDirectory(TEST_HARNESS_TEMP_DIRECTORY)
+{
+}
+
+void DataFinder::SetDirectory ( const char* dir )
+{
+  mDirectory = dir;
+}
+
+
+void DataFinder::SetDirectory ( std::string dir )
+{
+  mDirectory = dir;
+}
+
+
+void DataFinder::SetOutputDirectory ( std::string dir )
+{
+  mOutputDirectory = dir;
+}
+
+
+
+std::string DataFinder::GetDirectory () const
+{
+  return mDirectory;
+}
+
+std::string DataFinder::GetOutputDirectory () const
+{
+  return mOutputDirectory;
+}
+
+std::string DataFinder::GetOutputFile ( std::string filename ) const
+{
+  return mOutputDirectory + "/" + filename;
+}
+
+std::string DataFinder::GetBuildDirectory () const
+{
+  return std::string ( SIMPLEITK_BINARY_DIR );
+}
+
+std::string DataFinder::GetPathSeparator () const
+{
+#ifdef WIN32
+  return ";";
+#else
+  return ":";
+#endif
+}
+
+bool DataFinder::FileExists ( const std::string &filename ) const
+{
+  return itksys::SystemTools::FileExists ( filename.c_str() );
+}
+
+std::string DataFinder::GetFile ( const std::string &filename ) const
+{
+  std::string name;
+
+  name = mDirectory + "/" + filename;
+  if (this->FileExists(name))
+    return name;
+
+  // fall back to source code path
+  name = std::string(SIMPLEITK_SOURCE_DIR) + "/Testing/Data/" + filename;
+
+  return name;
+}
+
+
+//
+//
+//
+
 
 ProcessObjectCommand::ProcessObjectCommand(itk::simple::ProcessObject &po)
   : m_Process(po)

@@ -1,4 +1,4 @@
-cmake_minimum_required ( VERSION 2.8.1 FATAL_ERROR )
+cmake_minimum_required ( VERSION 3.0 FATAL_ERROR )
 
 # Explicitly add INCREMENTAL linking option to command lines.
 # http://www.cmake.org/pipermail/cmake/2010-February/035174.html
@@ -6,7 +6,7 @@ SET(MSVC_INCREMENTAL_DEFAULT ON)
 
 project ( SimpleITK )
 
-cmake_policy( VERSION 2.8.1 )
+cmake_policy( VERSION 3.0 )
 
 foreach(p
     CMP0042 # CMake 3.0
@@ -18,7 +18,7 @@ foreach(p
 endforeach()
 
 # Include extra CMake files
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake")
+list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_CURRENT_SOURCE_DIR}/CMake")
 
 #-----------------------------------------------------------------------------
 # Version information
@@ -88,13 +88,6 @@ set(CMAKE_CXX_FLAGS "${CXX_ADDITIONAL_WARNING_FLAGS} ${CMAKE_CXX_FLAGS} ${Simple
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${SimpleITK_REQUIRED_LINK_FLAGS}")
 set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${SimpleITK_REQUIRED_LINK_FLAGS}")
 set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${SimpleITK_REQUIRED_LINK_FLAGS}")
-
-
-if( NOT ITK_USE_REVIEW )
-# TODO need to check ITK configuration to verify that it has the needed modules
-#  message(FATAL_ERROR "Please reconfigure ITK by turning ITK_USE_REVIEW ON")
-endif()
-
 
 #----------------------------------------------------------
 # Place all options to go into sitkConfigure.h here
@@ -227,9 +220,12 @@ include(sitkStripOption)
 #------------------------------------------------------------------------------
 # These are some system specific compiler options needed to build SimpleITK
 
-
-
 include(CheckCXXCompilerFlag)
+
+if( NOT DEFINED CMAKE_POSITION_INDEPENDENT_CODE )
+  set( CMAKE_POSITION_INDEPENDENT_CODE 1 )
+endif()
+
 
 if( NOT DEFINED CMAKE_C_VISIBILITY_PRESET )
   set(CMAKE_C_VISIBILITY_PRESET hidden)
@@ -243,9 +239,6 @@ if( NOT DEFINED CMAKE_VISIBILITY_INLINES_HIDDEN )
   set( CMAKE_VISIBILITY_INLINES_HIDDEN 1 )
 endif()
 
-# always create position independent code so that the libraries can be
-# used with shared libraries needed for language bindings.
-set( CMAKE_POSITION_INDEPENDENT_CODE 1 )
 
 #-----------------------------------------------------------
 # Place all checks and try compile variable for sitkConfigure.h here
@@ -465,10 +458,6 @@ file( GLOB __files
   ${CMAKE_SOURCE_DIR}/Code/IO/include/*.hxx
   ${CMAKE_SOURCE_DIR}/Code/Registration/include/*.h
   ${CMAKE_SOURCE_DIR}/Code/Registration/include/*.hxx
-  )
-
-set(__files ${__files}
-  ${SimpleITKBasicFiltersGeneratedHeader}
   )
 
 install(FILES ${__files}

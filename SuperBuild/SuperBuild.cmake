@@ -148,16 +148,6 @@ endif()
 #------------------------------------------------------------------------------
 # Setup build locations.
 #------------------------------------------------------------------------------
-if(NOT SETIFEMPTY)
-  macro(SETIFEMPTY) # A macro to set empty variables to meaninful defaults
-    set(KEY ${ARGV0})
-    set(VALUE ${ARGV1})
-    if(NOT ${KEY})
-      set(${ARGV})
-    endif(NOT ${KEY})
-  endmacro(SETIFEMPTY KEY VALUE)
-endif(NOT SETIFEMPTY)
-
 
 #------------------------------------------------------------------------------
 # Common Build Options to pass to all subsequent tools
@@ -184,6 +174,8 @@ list( APPEND ep_common_list
   CMAKE_CXX_FLAGS_MINSIZEREL
   CMAKE_CXX_FLAGS_RELEASE
   CMAKE_CXX_FLAGS_RELWITHDEBINFO
+
+  CMAKE_LINKER
 
   CMAKE_EXE_LINKER_FLAGS
   CMAKE_EXE_LINKER_FLAGS_DEBUG

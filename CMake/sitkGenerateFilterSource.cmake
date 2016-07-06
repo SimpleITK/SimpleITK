@@ -244,4 +244,12 @@ macro(generate_filter_source)
   configure_file( "${tmp_generated_headers_h}" "${generated_headers_h}" COPYONLY )
   configure_file( "${tmp_generated_headers_i}" "${generated_headers_i}" COPYONLY )
 
+  install(FILES
+    ${SimpleITK${directory_name}GeneratedHeader}
+    ${generated_headers_h}
+    ${generated_headers_i}
+  DESTINATION ${SimpleITK_INSTALL_INCLUDE_DIR}
+  COMPONENT Development)
+
+
 endmacro()
