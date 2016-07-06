@@ -1,6 +1,15 @@
 cmake_minimum_required(VERSION 2.8)
 project(SimpleITKExamples)
 
+foreach(p
+    CMP0042 # CMake 3.0
+    CMP0063 # CMake 3.3.2
+    )
+  if(POLICY ${p})
+    cmake_policy(SET ${p} NEW)
+  endif()
+endforeach()
+
 if(NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK")
   find_package(SimpleITK REQUIRED)
   include(${SimpleITK_USE_FILE})
