@@ -7,7 +7,7 @@ if ( NOT SITK_LUA_EXECUTABLE )
   find_package( LuaInterp REQUIRED 5.1 )
   set( SITK_LUA_EXECUTABLE ${LUA_EXECUTABLE} CACHE PATH "Lua executable used for code generation." )
 
-  if (defined SAVE_LUA_EXECUTABLE)
+  if (DEFINED SAVE_LUA_EXECUTABLE)
     set( LUA_EXECUTABLE ${SAVE_LUA_EXECUTABLE} CACHE )
   else()
     unset( LUA_EXECUTABLE CACHE )
