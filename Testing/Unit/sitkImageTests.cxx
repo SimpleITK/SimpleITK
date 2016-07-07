@@ -1600,6 +1600,23 @@ TEST_F(Image,MetaDataDictionary)
     std::cout << "Key = \"" << keys[i] << "\" Value = \"" << value << "\"" << std::endl;
     }
 
+  img = sitk::Image( 10,10, 10, sitk::sitkFloat32 );
+  img.SetMetaData( "k1", "somevalue");
+
+  EXPECT_EQ( 1u, img.GetMetaDataKeys().size() );
+  EXPECT_TRUE( img.HasMetaDataKey("k1") );
+  EXPECT_EQ( "somevalue", img.GetMetaData("k1") );
+
+  EXPECT_FALSE( img.EraseMetaData("wrong") );
+  EXPECT_EQ( 1u, img.GetMetaDataKeys().size() );
+  EXPECT_TRUE( img.HasMetaDataKey("k1") );
+
+  EXPECT_TRUE( img.EraseMetaData("k1") );
+  EXPECT_FALSE( img.HasMetaDataKey("k1") );
+  EXPECT_EQ( 0u, img.GetMetaDataKeys().size() );
+
+  EXPECT_TRUE( img.EraseMetaData("k1") );
+
 }
 
 
