@@ -13,8 +13,10 @@ add_library ( SimpleITKUnitTestBase STATIC ${SimpleITKUnitTestSourceBase} )
 add_dependencies( SimpleITKUnitTestBase BasicFiltersSourceCode  )
 target_link_libraries( SimpleITKUnitTestBase ${GTEST_LIBRARIES} ${SimpleITK_LIBRARIES} ${ITK_LIBRARIES} )
 
-add_executable( sitkTransformCompareDriver sitkTransformCompareDriver.cxx )
-target_link_libraries( sitkTransformCompareDriver ${GTEST_LIBRARIES} SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} )
+add_executable( sitkCompareDriver sitkCompareDriver.cxx )
+target_link_libraries( sitkCompareDriver SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} ${ITK_LIBRARIES})
+sitk_install_exported_target(sitkCompareDriver)
+
 # Find tests generated in the binary directory
 # To add a new file, just add it to this list.  Any GoogleTests inside will be automatically
 # added to ctest.
