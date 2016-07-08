@@ -115,13 +115,15 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
   if (template_name)
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/CTest/${FILTERNAME}.cmake")
     file(REMOVE "${OUTPUT_TEST_FILENAME}")
+    set(cmd ${SITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/ ${template_include_dir} CTestTemplate.cmake.in "${OUTPUT_TEST_FILENAME}")
     execute_process(
-      COMMAND ${SITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/ ${template_include_dir} CTestTemplate.cmake.in "${OUTPUT_TEST_FILENAME}"
+      COMMAND ${cmd}
       RESULT_VARIABLE failed
       ERROR_VARIABLE error
       )
     if ( failed )
-      message( FATAL_ERROR "Failed to generate ${OUTPUT_TEST_FILENAME}\n${error}" )
+      string (REPLACE ";" " " cmd "${cmd}")
+      message( FATAL_ERROR "Failed to generate \"${OUTPUT_TEST_FILENAME}\"\nCOMMAND: ${cmd} \n${error}" )
     endif()
     include("${OUTPUT_TEST_FILENAME}")
 
