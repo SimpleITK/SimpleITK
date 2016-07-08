@@ -164,12 +164,14 @@ namespace itk {
     typedef itk::ImageSeriesReader<ImageType> Reader;
 
     // if the IsInstantiated is correctly implemented this should
-    // not occour
+    // not occur
     assert( ImageTypeToPixelIDValue<ImageType>::Result != (int)sitkUnknown );
     assert( imageio != SITK_NULLPTR );
     typename Reader::Pointer reader = Reader::New();
     reader->SetImageIO( imageio );
     reader->SetFileNames( this->m_FileNames );
+    // save some computation by not updating this unneeded data-structure
+    reader->MetaDataDictionaryArrayUpdateOff();
 
     this->PreUpdate( reader.GetPointer() );
 
