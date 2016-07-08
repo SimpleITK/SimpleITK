@@ -16,8 +16,10 @@
 *
 *=========================================================================*/
 #include <SimpleITKTestHarness.h>
-#include <itkHashImageFilter.h>
 #include <itkImageFileReader.h>
+#include <itkHashImageFilter.h>
+#include <sitkHashImageFilter.h>
+#include <sitkImageFileReader.h>
 #include <sitkCastImageFilter.h>
 
 class HashImageFilterTest

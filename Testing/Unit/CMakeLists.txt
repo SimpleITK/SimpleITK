@@ -13,8 +13,10 @@ add_library ( SimpleITKUnitTestBase STATIC ${SimpleITKUnitTestSourceBase} )
 add_dependencies( SimpleITKUnitTestBase BasicFiltersSourceCode  )
 target_link_libraries( SimpleITKUnitTestBase ${GTEST_LIBRARIES} ${SimpleITK_LIBRARIES} ${ITK_LIBRARIES} )
 
-add_executable( sitkTransformCompareDriver sitkTransformCompareDriver.cxx )
-target_link_libraries( sitkTransformCompareDriver ${GTEST_LIBRARIES} SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} )
+add_executable( sitkCompareDriver sitkCompareDriver.cxx )
+target_link_libraries( sitkCompareDriver SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} ${ITK_LIBRARIES})
+sitk_install_exported_target(sitkCompareDriver)
+
 # Find tests generated in the binary directory
 # To add a new file, just add it to this list.  Any GoogleTests inside will be automatically
 # added to ctest.
@@ -52,7 +54,7 @@ file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/CSharpTests)
 set(TEST_HARNESS_TEMP_DIRECTORY ${SimpleITK_BINARY_DIR}/Testing/Temporary)
 set(TEST_HARNESS_DATA_DIRECTORY ${SimpleITK_BINARY_DIR}/ExternalData/Testing/Data)
 
-set( ITK_TEST_DRIVER  "itkTestDriver" )
+set( ITK_TEST_DRIVER  "$<TARGET_FILE:itkTestDriver>" )
 
 # Adjust Python to run in the virtualenv
 set( PythonVirtualenvHome  ${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVirtualenv )
@@ -115,13 +117,15 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
   if (template_name)
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/CTest/${FILTERNAME}.cmake")
     file(REMOVE "${OUTPUT_TEST_FILENAME}")
+    set(cmd ${SITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/ ${template_include_dir} CTestTemplate.cmake.in "${OUTPUT_TEST_FILENAME}")
     execute_process(
-      COMMAND ${SITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/ ${template_include_dir} CTestTemplate.cmake.in "${OUTPUT_TEST_FILENAME}"
+      COMMAND ${cmd}
       RESULT_VARIABLE failed
       ERROR_VARIABLE error
       )
     if ( failed )
-      message( FATAL_ERROR "Failed to generate ${OUTPUT_TEST_FILENAME}\n${error}" )
+      string (REPLACE ";" " " cmd "${cmd}")
+      message( FATAL_ERROR "Failed to generate \"${OUTPUT_TEST_FILENAME}\"\nCOMMAND: ${cmd} \n${error}" )
     endif()
     include("${OUTPUT_TEST_FILENAME}")
 

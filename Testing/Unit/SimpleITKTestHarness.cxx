@@ -1,5 +1,6 @@
 
 #include "SimpleITKTestHarness.h"
+#include "sitkProcessObject.h"
 
 #include <itksys/SystemTools.hxx>
 #include <itksys/Process.h>

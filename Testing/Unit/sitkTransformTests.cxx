@@ -17,6 +17,7 @@
 *=========================================================================*/
 
 #include "SimpleITKTestHarness.h"
+#include "sitkImageFileReader.h"
 #include "sitkTransform.h"
 #include "sitkAffineTransform.h"
 #include "sitkBSplineTransform.h"
