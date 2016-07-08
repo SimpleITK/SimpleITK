@@ -196,7 +196,7 @@ namespace simple
     /** \brief Copy common meta-data from an image to this one.
      *
      * Copies the Origin, Spacing, and Direction from the source image
-     * to this image.
+     * to this image. The meta-data dictionary is \b not copied.
      *
      * It is required for the source Image's dimension and size to
      * match, this image's attributes, otherwise an exception will be
@@ -226,6 +226,19 @@ namespace simple
      * strings. Other types are printed to string before returning.
      */
     std::string GetMetaData( const std::string &key ) const;
+
+    /** \brief Set an entry in the meta-data dictionary.
+     *
+     * Replaces or creates an entry in the image's meta-data dictionary.
+     */
+    void SetMetaData( const std::string &key, const std::string &value);
+
+    /** \brief Remove an entry from the meta-data dictionary.
+     *
+     * Returns true, when the value exists in the dictionary and is
+     * removed, false otherwise.
+     */
+    bool EraseMetaData( const std::string &key );
 
     std::string GetPixelIDTypeAsString( void ) const;
 

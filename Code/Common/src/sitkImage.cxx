@@ -256,6 +256,21 @@ namespace itk
       return ss.str();
     }
 
+    void Image::SetMetaData( const std::string &key, const std::string &value)
+    {
+      assert( m_PimpleImage );
+      this->MakeUnique();
+      itk::MetaDataDictionary &mdd = this->m_PimpleImage->GetDataBase()->GetMetaDataDictionary();
+      itk::EncapsulateMetaData<std::string>(mdd, key, value);
+    }
+
+    bool Image::EraseMetaData( const std::string &key )
+    {
+      assert( m_PimpleImage );
+      itk::MetaDataDictionary &mdd = this->m_PimpleImage->GetDataBase()->GetMetaDataDictionary();
+      this->MakeUnique();
+      return mdd.Erase(key);
+    }
 
     // Physical Point to Continuous Index
     std::vector< int64_t > Image::TransformPhysicalPointToIndex( const std::vector< double > &pt ) const
