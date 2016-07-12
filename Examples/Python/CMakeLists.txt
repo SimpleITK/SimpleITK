@@ -285,6 +285,6 @@ sitk_add_python_test(Example.DemonsRegistration2
 
 sitk_add_python_test(Example.DicomModifyTags
   "${CMAKE_CURRENT_SOURCE_DIR}/DicomModifyTags.py"
-   DATA{${SimpleITK_DATA_ROOT}/Input/DicomSeries/Image0075.dcm
+   DATA{${SimpleITK_DATA_ROOT}/Input/DicomSeries/Image0075.dcm}
    ${TEST_HARNESS_TEMP_DIRECTORY}/modifiedTags.dcm
   )
