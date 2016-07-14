@@ -282,3 +282,9 @@ sitk_add_python_test(Example.DemonsRegistration2
     DATA{${SimpleITK_DATA_ROOT}/Baseline/DemonsRegistration2Test_displacement.mha}
     0.01
   )
+
+sitk_add_python_test(Example.DicomModifyTags
+  "${CMAKE_CURRENT_SOURCE_DIR}/DicomModifyTags.py"
+   DATA{${SimpleITK_DATA_ROOT}/Input/DicomSeries/Image0075.dcm}
+   ${TEST_HARNESS_TEMP_DIRECTORY}/modifiedTags.dcm
+  )
