@@ -1,0 +1,30 @@
+sudo: false
+
+language: cpp
+
+env:
+  - ExternalData_OBJECT_STORES=${HOME}/.ExternalData
+
+cache:
+  directories:
+    - ${ExternalData_OBJECT_STORES}
+
+before_install:
+  - brew update
+  - brew install ninja
+
+os:
+  - osx
+
+matrix:
+  include:
+    - osx_image: xcode7.3
+
+before_script:
+  - mkdir -p SimpleITK-build
+  - cd SimpleITK-build
+
+script:
+  - cmake -DWRAP_LUA:BOOL=OFF -DWRAP_PYTHON:BOOL=OFF -DWRAP_JAVA:BOOL=OFF -DWRAP_CSHARP:BOOL=OFF -DWRAP_TCL:BOOL=OFF -DWRAP_R:BOOL=OFF -DWRAP_RUBY:BOOL=OFF -DCMAKE_BUILD_TYPE=Release "../SuperBuild"
+  - make -j 6 ITK
+  - make -j 6
