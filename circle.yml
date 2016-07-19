@@ -1,0 +1,45 @@
+machine:
+    environment:
+        SIMPLEITK_SRC_DIR: ${HOME}/SimpleITK
+        SIMPLEITK_BUILD_DIR: ${SIMPLEITK_SRC_DIR}/bld
+        ExternalData_OBJECT_STORES: ${HOME}/.ExternalData
+        CMAKE_DOWNLOAD_FILE: cmake-3.6.0-Linux-x86_64.sh
+        DISTCC_TCP_CORK: "0"
+        DISTCC_DIR: ${HOME}/.distcc
+        ITK_REPOSITORY: ${ExternalData_OBJECT_STORES}/ITK
+        MAKE_J: $(expr $CIRCLE_NODE_TOTAL \* 3 + 1)
+        CC: "distcc gcc"
+        CXX: "distcc g++"
+    post:
+        - mkdir -p "${ExternalData_OBJECT_STORES}"
+        - sudo apt-get remove cmake && sudo apt-get install ninja-build swig distcc lua5.1
+        - sudo sed -i.bak s/STARTDISTCC=\"false\"/STARTDISTCC=\"true\"/g /etc/default/distcc && sudo /etc/init.d/distcc start
+        - cd ${ExternalData_OBJECT_STORES} && if [[ ! -e ${ITK_REPOSITORY} ]]; then git clone --bare https://ITK.org/ITK.git; fi && cd ITK && git fetch origin
+        - cd ${ExternalData_OBJECT_STORES} && if [[ ! -e ${CMAKE_DOWNLOAD_FILE} ]]; then curl -sSO https://cmake.org/files/v3.6/${CMAKE_DOWNLOAD_FILE}; fi
+        - echo "y\n" | sudo bash "${ExternalData_OBJECT_STORES}/${CMAKE_DOWNLOAD_FILE}" --prefix=/usr/local --exclude-subdir
+
+dependencies:
+    cache_directories:
+        - "~/.ExternalData"
+    post:
+        - mkdir -p "${DISTCC_DIR}" && printf -- "localhost/2 --localslots=2 --localslots_cpp=6\n" > "${DISTCC_DIR}/hosts" && for ((i=1;i<CIRCLE_NODE_TOTAL;i++)); do printf "ubuntu@node$i/3\n" >> "${DISTCC_DIR}/hosts"; done
+        - mkdir -p ${SIMPLEITK_BUILD_DIR}
+
+test:
+    pre:
+        - cmake -DWRAP_LUA:BOOL=OFF -DWRAP_PYTHON:BOOL=OFF -DWRAP_JAVA:BOOL=OFF -DWRAP_CSHARP:BOOL=OFF -DWRAP_TCL:BOOL=OFF -DWRAP_R:BOOL=OFF -DWRAP_RUBY:BOOL=OFF -DITK_REPOSITORY=${ITK_REPOSITORY} -DUSE_SYSTEM_SWIG:BOOL=ON -DUSE_SYSTEM_LUA:BOOL=ON -DBUILD_EXAMPLES:BOOL=OFF -DCMAKE_BUILD_TYPE=Release "${SIMPLEITK_SRC_DIR}/SuperBuild":
+            pwd: bld
+        - make -j${MAKE_J} ITK:
+            pwd: bld
+        - make -j${MAKE_J}:
+            pwd: bld
+        - find ${SIMPLEITK_BUILD_DIR} -name \*.o -delete:
+            pwd: bld
+        - if [ $CIRCLE_NODE_INDEX -ne 0 ]; then rsync -ravz -e ssh ubuntu@node0:${SIMPLEITK_BUILD_DIR}/ ${SIMPLEITK_BUILD_DIR}/ && rsync -ravz -e ssh ubuntu@node0:${ExternalData_OBJECT_STORES}/ ${ExternalData_OBJECT_STORES}/; fi:
+            parallel: true
+    override:
+        - ctest -j 2 -I ${CIRCLE_NODE_INDEX},,${CIRCLE_NODE_TOTAL}:
+            parallel: true
+            pwd: bld/SimpleITK-build
+            environment:
+                ITK_GLOBAL_DEFAULT_NUMBER_OF_THREAD: 2
