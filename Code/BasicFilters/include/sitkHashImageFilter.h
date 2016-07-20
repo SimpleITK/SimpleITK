@@ -71,7 +71,7 @@ namespace itk {
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
       friend struct detail::ExecuteInternalLabelImageAddressor<MemberFunctionType>;
 
-      std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
+      nsstd::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
     };
 
     SITKBasicFilters_EXPORT std::string Hash ( const Image& image, HashImageFilter::HashFunction function = HashImageFilter::SHA1 );

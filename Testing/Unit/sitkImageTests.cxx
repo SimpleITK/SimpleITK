@@ -49,7 +49,7 @@ using  itk::simple::InstantiatedPixelIDTypeList;
 
 class Image : public ::testing::Test {
 public:
-  typedef std::auto_ptr<itk::simple::Image> sitkAutoImagePointer;
+  typedef nsstd::auto_ptr<itk::simple::Image> sitkAutoImagePointer;
 
   virtual void SetUp() {
     itk::ImageBase<3>::IndexType index;
