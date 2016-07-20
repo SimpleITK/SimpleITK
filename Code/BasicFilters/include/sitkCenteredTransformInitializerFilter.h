@@ -109,7 +109,7 @@ In the second mode, the moments of gray level values are computed for both image
 
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
 
-      std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
+      nsstd::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 
 
       OperationModeType  m_OperationMode;

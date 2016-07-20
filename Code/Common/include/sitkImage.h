@@ -25,6 +25,7 @@
 #include "sitkEnableIf.h"
 
 #include "nsstd/type_traits.h"
+#include "nsstd/auto_ptr.h"
 
 #include <vector>
 #include <memory>

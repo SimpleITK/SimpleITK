@@ -95,7 +95,7 @@ This class derived from the CenteredTransformInitializerand uses it in a more co
 
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
 
-      std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
+      nsstd::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 
 
       bool  m_ComputeRotation;

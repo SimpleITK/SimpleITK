@@ -6,6 +6,7 @@
 # SITK_HAS_CXX11_TYPE_TRAITS
 # SITK_HAS_CXX11_UNORDERED_MAP
 # SITK_HAS_CXX11_NULLPTR          - True if "nullptr" keyword is supported
+# SITK_HAS_CXX11_UNIQUE_PTR
 #
 # SITK_HAS_TR1_SUB_INCLUDE
 #
@@ -55,6 +56,9 @@ sitkCXX11Test(SITK_HAS_CXX11_FUNCTIONAL)
 sitkCXX11Test(SITK_HAS_CXX11_TYPE_TRAITS)
 sitkCXX11Test(SITK_HAS_CXX11_UNORDERED_MAP)
 sitkCXX11Test(SITK_HAS_CXX11_NULLPTR)
+sitkCXX11Test(SITK_HAS_CXX11_UNIQUE_PTR)
+
+
 
 # Microsoft Visual Studio 2008sp1,2010,2012 don't need tr1 as a path
 # prefix to tr1 headers, while libc++
