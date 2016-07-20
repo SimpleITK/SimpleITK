@@ -280,7 +280,7 @@ TEST_F(Import,ExhaustiveTypes) {
     EXPECT_EQ ( "d0a23a11b2f39b46cfc09bd71fc4c9661b68a826" , sitk::Hash( importer.Execute() ) ) << " hash value for int64";
     }
 
-  float_buffer = std::vector< float >( 16*16, 1.123 );
+  float_buffer = std::vector< float >( 16*16, 1.123f );
   importer.SetBufferAsFloat( &float_buffer[0] );
   EXPECT_EQ ( "8588f5624f56bb55693d54505388dc06b93d2f14", sitk::Hash( importer.Execute() ) ) << " hash value for float";
 
@@ -327,7 +327,7 @@ TEST_F(Import,ExhaustiveTypes) {
     EXPECT_EQ ( "91a61e519faf128747bf2d2bbd860d4f05d79ac6" , sitk::Hash( importer.Execute() ) ) << " hash value for vector of int64";
     }
 
-  float_buffer = std::vector< float >( 16*16*8, 1.123 );
+  float_buffer = std::vector< float >( 16*16*8, 1.123f );
   importer.SetBufferAsFloat( &float_buffer[0], 8 );
   EXPECT_EQ ( "9fb1d83b9c9a5645e7b136761d6924ea7d859284", sitk::Hash( importer.Execute() ) ) << " hash value for vector of float";
 
@@ -422,7 +422,7 @@ TEST_F(Import,Procedual) {
   EXPECT_EQ ( img.GetDirection(), direction2D ) << " direction for int32";
 
 
-  float_buffer = std::vector< float >( 16*16, 1.123 );
+  float_buffer = std::vector< float >( 16*16, 1.123f );
   img = sitk::ImportAsFloat( &float_buffer[0],
                              size,
                              spacing2,

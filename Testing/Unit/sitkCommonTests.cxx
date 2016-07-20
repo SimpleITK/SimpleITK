@@ -289,7 +289,7 @@ TEST( ProcessObject, DeleteCommandActiveProcess )
   sitk::Image img(100,100,100, sitk::sitkUInt16);
 
   sitk::Command *cmd1 = new sitk::Command();
-  DeleteCommandAtCommand cmd2(po, .01, cmd1);
+  DeleteCommandAtCommand cmd2(po, .01f, cmd1);
 
   po.AddCommand(sitk::sitkAnyEvent, *cmd1);
   po.AddCommand(sitk::sitkProgressEvent, cmd2);
@@ -333,7 +333,7 @@ TEST( ProcessObject, RemoveAllCommandsActiveProcess )
   sitk::Image img(100,100,100, sitk::sitkUInt16);
 
   sitk::Command cmd1;
-  RemoveAllCommandsAtCommand cmd2(po, .01);
+  RemoveAllCommandsAtCommand cmd2(po, .01f);
 
   po.AddCommand(sitk::sitkAnyEvent, cmd1);
   po.AddCommand(sitk::sitkProgressEvent, cmd2);
