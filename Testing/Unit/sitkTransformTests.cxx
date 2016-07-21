@@ -39,6 +39,7 @@
 #include "itkMath.h"
 
 namespace sitk = itk::simple;
+namespace nsstd = itk::simple::nsstd;
 
 TEST(TransformTest, Construction) {
 
