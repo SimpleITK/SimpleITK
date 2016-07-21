@@ -24,6 +24,8 @@
 
 #include <sitkKernel.h>
 
+namespace nsstd = itk::simple::nsstd;
+
 TEST( ConditionalTest, ConditionalTest1 ) {
 
   // a quick check to make sure the conditional works
