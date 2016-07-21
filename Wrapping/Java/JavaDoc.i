@@ -18681,10 +18681,22 @@ Copy common meta-data from an image to this one.
 
 
 Copies the Origin, Spacing, and Direction from the source image to
-this image.
+this image. The meta-data dictionary is not copied.
 
 It is required for the source Image's dimension and size to match, this image's attributes, otherwise an
 exception will be generated.
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::Image::EraseMetaData "/**
+bool itk::simple::Image::EraseMetaData(const std::string &key)
+
+Remove an entry from the meta-data dictionary.
+
+
+Returns true, when the value exists in the dictionary and is removed,
+false otherwise.
 
 */
 public ";
@@ -18796,6 +18808,17 @@ Performs actually coping if needed to make object unique.
 
 The Image class by default performs lazy coping and assignment. This method
 make sure that coping actually happens to the itk::Image pointed to is only pointed to by this object.
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::Image::SetMetaData "/**
+void itk::simple::Image::SetMetaData(const std::string &key, const std::string &value)
+
+Set an entry in the meta-data dictionary.
+
+
+Replaces or creates an entry in the image's meta-data dictionary.
 
 */
 public ";
