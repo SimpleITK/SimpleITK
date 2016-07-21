@@ -16,7 +16,7 @@
 #  limitations under the License.
 #
 #=========================================================================
-
+from __future__ import print_function
 import sys, csv, getopt, re
 import os, os.path
 
@@ -33,12 +33,12 @@ class bcolors:
 
 def usage():
     """How to use this script"""
-    print ""
-    print "CSVtoTable.py [options] [input_file [output_file]]"
-    print ""
-    print "    -h    This help message"
-    print "    -d    Make a Doxygen file"
-    print ""
+    print("")
+    print("CSVtoTable.py [options] [input_file [output_file]]")
+    print("")
+    print("    -h    This help message")
+    print("    -d    Make a Doxygen file")
+    print("")
 
 #   Variables
 #
@@ -56,8 +56,8 @@ fieldnames      = ( 'Filter', 'ITK', 'SITK', 'Remark', 'ToDo' )    # fields in t
 try:
     opts, args = getopt.getopt(sys.argv[1:], "hd",
         [ "help", "doxygen" ] )
-except getopt.GetoptError, err:
-    print str(err)
+except getopt.GetoptError as err:
+    print(str(err))
     usage()
     sys.exit(2)
 
@@ -77,7 +77,7 @@ if len(args):
         outname = args[1]
 
 
-print inname, outname
+print( inname, outname )
 
 # if outname includes a path that doesn't exist, create that path
 if not os.path.isdir( os.path.dirname( outname ) ):
@@ -148,8 +148,8 @@ try:
             outfile.write( "</tr>\n" )
 
 except:
-    print "Failed to read input file ", inname
-    print sys.exc_info()[0]
+    print("Failed to read input file ", inname)
+    print(sys.exc_info()[0])
     sys.exit(1)
 
 outfile.write( "</table>\n" )
