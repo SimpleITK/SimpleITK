@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python
 
 
@@ -100,13 +101,13 @@ for x in files:
 
         for line in fin:
             if (rFlag):
+                if line in ('\n', '\r\n'):
+                    continue
                 line2 = line.replace("itk::simple::detail::", "")
                 line2 = line.replace("itk::simple::", "")
             else:
                 line2 = line.replace("itk::simple::detail::", "itk::simple::")
             line2 = line2.rstrip()
-            if line in ('\n', '\r\n'):
-                continue
             fout.write(line2)
             fout.write('\n')
             if (rFlag):
