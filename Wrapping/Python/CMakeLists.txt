@@ -12,7 +12,7 @@ if(POLICY CMP0026)
   cmake_policy(SET CMP0026 OLD)
 endif()
 
-include(../../CMake/sitkProjectLanguageCommon.cmake)
+include(../../CMake/sitkProjectLanguageCommon.cmake NO_POLICY_SCOPE)
 
 if ( SITK_UNDEFINED_SYMBOLS_ALLOWED )
   set( _QUIET_LIBRARY "QUIET" )
