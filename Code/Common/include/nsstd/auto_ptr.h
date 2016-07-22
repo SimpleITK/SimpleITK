@@ -28,7 +28,7 @@ namespace simple
 {
 namespace nsstd
 {
-#if defined SITK_HAS_CXX11_UNIQUE_PTR
+#if defined SITK_HAS_CXX11_UNIQUE_PTR && defined SITK_HAS_CXX11_ALIAS_TEMPLATE
 template <typename T>
 using auto_ptr = std::unique_ptr<T>;
 #else
