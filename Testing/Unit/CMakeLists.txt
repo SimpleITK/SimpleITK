@@ -248,7 +248,7 @@ if(MSVC_VERSION EQUAL 1700)
 endif()
 
 add_executable(sitkShowTest sitkShowTest.cxx )
-target_link_libraries ( sitkShowTest ${SimpleITK_LIBRARIES} SimpleITKUnitTestBase )
+target_link_libraries ( sitkShowTest  ${GTEST_LIBRARIES} ${SimpleITK_LIBRARIES} SimpleITKUnitTestBase )
 
 add_executable( sitkSystemInformationTest sitkSystemInformationTest.cxx )
 target_link_libraries( sitkSystemInformationTest ${SimpleITK_LIBRARIES} ${ITK_LIBRARIES})
