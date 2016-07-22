@@ -20,14 +20,14 @@
 
 #include "sitkConfigure.h"
 
-#if defined SITK_HAS_TR1_TYPE_TRAITS || defined SITK_HAS_CXX11_TYPE_TRAITS
-#if defined SITK_HAS_TR1_SUB_INCLUDE
-#include <tr1/type_traits>
-#else
-#include <type_traits>
+#if !defined SITK_HAS_TR1_TYPE_TRAITS && !defined SITK_HAS_CXX11_TYPE_TRAITS
+#error "No system (tr1/c++11) type_traits header available!"
 #endif
+
+#if defined SITK_HAS_CXX11_TYPE_TRAITS || !defined SITK_HAS_TR1_SUB_INCLUDE
+#include <type_traits>
 #else
-#error "No system (tr1) type_traits header available!"
+#include <tr1/type_traits>
 #endif
 
 
@@ -37,7 +37,7 @@ namespace simple
 {
 namespace nsstd
 {
-#if defined SITK_HAS_TR1_TYPE_TRAITS
+#if defined SITK_HAS_TR1_TYPE_TRAITS && !defined SITK_HAS_CXX11_TYPE_TRAITS
 using std::tr1::is_same;
 using std::tr1::true_type;
 using std::tr1::false_type;
