@@ -45,11 +45,13 @@ const double adir[] = {0.0, 0.0, 1.0,
                        0.0, -1.0, 0.0};
 
 using  itk::simple::InstantiatedPixelIDTypeList;
+namespace nsstd = itk::simple::nsstd;
+
 
 
 class Image : public ::testing::Test {
 public:
-  typedef std::auto_ptr<itk::simple::Image> sitkAutoImagePointer;
+  typedef nsstd::auto_ptr<itk::simple::Image> sitkAutoImagePointer;
 
   virtual void SetUp() {
     itk::ImageBase<3>::IndexType index;

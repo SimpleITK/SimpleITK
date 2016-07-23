@@ -102,7 +102,7 @@ Nick Tustison
 
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
 
-      std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
+      nsstd::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 
 
       std::vector<uint32_t>  m_TransformDomainMeshSize;

@@ -48,7 +48,7 @@ OUT=[[
       template <class TImageType1, class TImageType2> Image DualExecuteInternalVector ( $(include ImageParameters.in) );]]
 end)
 
-      std::auto_ptr<detail::DualMemberFunctionFactory<MemberFunctionType> > m_DualMemberFactory;
+      nsstd::auto_ptr<detail::DualMemberFunctionFactory<MemberFunctionType> > m_DualMemberFactory;
 
 
 $(include PrivateMemberDeclarations.h.in)$(include ClassEnd.h.in)

@@ -2,4 +2,4 @@
 $(if vector_pixel_types_by_component then
 OUT=[[      friend struct detail::ExecuteInternalVectorImageAddressor<MemberFunctionType>;]]
 end)
-      std::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
+      nsstd::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;

@@ -587,7 +587,7 @@ void Transform::SetPimpleTransform( PimpleTransformBase *pimpleTransform )
   bool Transform::SetInverse()
   {
     assert( m_PimpleTransform );
-    std::auto_ptr<PimpleTransformBase> temp;
+    nsstd::auto_ptr<PimpleTransformBase> temp;
     {
     // See if a new pimple transform can be created
     PimpleTransformBase *p = NULL;

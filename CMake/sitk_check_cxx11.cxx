@@ -50,6 +50,35 @@ return 0;
 
 #endif
 
+//-------------------------------------
+
+#ifdef SITK_HAS_CXX11_ALIAS_TEMPLATE
+
+template<class T>
+using ptr = T*;
+
+int main(void)
+{
+ptr<int> x;
+return 0;
+}
+
+#endif
+
+//-------------------------------------
+
+#ifdef SITK_HAS_CXX11_UNIQUE_PTR
+
+#include <memory>
+
+int main(void) {
+  std::unique_ptr<int> p1(new int);
+  return 0;
+}
+
+#endif
+
+
 
 //-------------------------------------
 

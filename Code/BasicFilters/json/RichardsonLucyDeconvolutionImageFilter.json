@@ -37,7 +37,7 @@
         "PERIODIC_PAD"
       ],
       "default" : "itk::simple::RichardsonLucyDeconvolutionImageFilter::ZERO_FLUX_NEUMANN_PAD",
-      "custom_itk_cast" : "std::auto_ptr< ImageBoundaryCondition< InputImageType > > bc( CreateNewBoundaryConditionInstance< Self, FilterType >( m_BoundaryCondition ) ); filter->SetBoundaryCondition( bc.get() );\n"
+      "custom_itk_cast" : "nsstd::auto_ptr< ImageBoundaryCondition< InputImageType > > bc( CreateNewBoundaryConditionInstance< Self, FilterType >( m_BoundaryCondition ) ); filter->SetBoundaryCondition( bc.get() );\n"
     },
     {
       "name" : "OutputRegionMode",

@@ -32,10 +32,10 @@ namespace itk {
    *
    */
   template< class TFilter, class TInternalFilter >
-  std::auto_ptr<ImageBoundaryCondition< typename TInternalFilter::InputImageType > >
+  nsstd::auto_ptr<ImageBoundaryCondition< typename TInternalFilter::InputImageType > >
   CreateNewBoundaryConditionInstance(typename TFilter::BoundaryConditionType bc)
   {
-    typedef std::auto_ptr<ImageBoundaryCondition< typename TInternalFilter::InputImageType > > PointerType;
+    typedef nsstd::auto_ptr<ImageBoundaryCondition< typename TInternalFilter::InputImageType > > PointerType;
 
     switch ( bc )
       {
