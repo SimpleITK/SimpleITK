@@ -2,7 +2,7 @@ cmake_minimum_required ( VERSION 2.8.1 FATAL_ERROR )
 
 project( SimpleITK_R )
 
-include(../../CMake/sitkProjectLanguageCommon.cmake)
+include(../../CMake/sitkProjectLanguageCommon.cmake NO_POLICY_SCOPE)
 
 find_package ( R REQUIRED )
 include_directories ( ${R_INCLUDE_DIR}  ${CMAKE_CURRENT_SOURCE_DIR})
