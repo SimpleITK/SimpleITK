@@ -20,15 +20,14 @@
 
 #include "sitkConfigure.h"
 
-
-#if defined SITK_HAS_TR1_FUNCTIONAL || defined SITK_HAS_CXX11_FUNCTIONAL
-#if defined SITK_HAS_TR1_SUB_INCLUDE
-#include <tr1/functional>
-#else
-#include <functional>
+#if !defined SITK_HAS_TR1_FUNCTIONAL && !defined SITK_HAS_CXX11_FUNCTIONAL
+#error "No system (tr1/c++11) functional header available!"
 #endif
+
+#if defined SITK_HAS_CXX11_FUNCTIONAL || !defined SITK_HAS_TR1_SUB_INCLUDE
+#include <functional>
 #else
-#error "No system (tr1) functional header available!"
+#include <tr1/functional>
 #endif
 
 namespace itk
@@ -37,7 +36,7 @@ namespace simple
 {
 namespace nsstd
 {
-#if defined SITK_HAS_TR1_FUNCTIONAL
+#if defined SITK_HAS_TR1_FUNCTIONAL && !defined SITK_HAS_CXX11_FUNCTIONAL
 using std::tr1::function;
 using std::tr1::bind;
 namespace placeholders =  std::tr1::placeholders;
