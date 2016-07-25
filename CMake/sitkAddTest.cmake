@@ -100,7 +100,7 @@ function(sitk_add_lua_test name)
     PROPERTY ENVIRONMENT LUA_CPATH=$<TARGET_FILE:SimpleITKLuaModule_LUA>
     )
   set_property(TEST Lua.${name}
-    PROPERTY ENVIRONMENT SITK_NOSHOW=YES
+    APPEND PROPERTY ENVIRONMENT SITK_NOSHOW=YES
     )
 endfunction()
 
