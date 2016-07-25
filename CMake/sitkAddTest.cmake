@@ -61,7 +61,7 @@ function(sitk_add_python_test name)
       )
   if (NOT SITK_PYTHON_USE_VIRTUALENV)
     set_property(TEST Python.${name}
-      PROPERTY ENVIRONMENT PYTHONPATH=${SimpleITK_BINARY_DIR}/Wrapping
+      APPEND PROPERTY ENVIRONMENT PYTHONPATH=${SimpleITK_BINARY_DIR}/Wrapping/Python
       )
   endif()
 
