@@ -24,7 +24,7 @@ Using unknown versions of pip, setuptools and/or wheel packages/" )
     DEPENDS ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
     COMMENT "Creating Python binary distribution" )
 
-  if( NOT SITK_PYTHON_USE_VIRTUALENV )
+  if( SITK_PYTHON_USE_VIRTUALENV )
     add_dependencies( dist.Python PythonVirtualEnv)
   endif()
   add_dependencies( dist dist.Python )
