@@ -78,6 +78,7 @@ if ( BUILD_TESTING )
 
   add_language_subdirectory( CSharp )
   add_language_subdirectory( Java )
+  add_language_subdirectory( Lua )
   add_language_subdirectory( Python )
   add_language_subdirectory( R )
   add_language_subdirectory( Ruby )
