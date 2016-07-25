@@ -19,33 +19,54 @@
 
 require "SimpleITK"
 
-local sitk = {}
-sitk = SimpleITK
+local sitk = {};
+sitk = SimpleITK;
 
-outfile = "sitk-lua-test.png"
+outfile = "sitk-lua-test.png";
 
-if #arg>0 then
-  outfile = arg[1]
+-- parse the command line options
+n = #arg;
+for i=1,n do
+  if ( (arg[i] == "--help")  or (arg[i] == "-h") ) then
+    print ("Usage: SimpleDerivative.lua [--help|-h] [output_image]");
+    os.exit();
+  else
+    outfile = arg[i];
+  end
 end
 
+-- setup the parameters for the Gaussian source image
+--   pixel dimensions of the Gaussian image image
 size = sitk.VectorUInt32();
 size:push_back(128);
 size:push_back(128);
 
+--   sigma of the Gaussian
 sigma = sitk.VectorDouble();
 sigma:push_back(32.0);
 sigma:push_back(32.0);
 
+--   center of the Gaussian
 center = sitk.VectorDouble();
 center:push_back(64.0);
 center:push_back(64.0);
 
+-- create Gaussian image
 gauss = sitk.GaussianSource (sitk.sitkFloat32, size, sigma, center);
 
+-- take the first derivative in the X direction of the Gaussian
 deriv = sitk.Derivative(gauss);
 
+-- rescale the intensities to [0, 255]
 result = sitk.RescaleIntensity(deriv, 0, 255.0);
 
+-- convert the float image pixels to unsigned char
 result = sitk.Cast(result, sitk.sitkUInt8);
 
+-- write the resulting image
 sitk.WriteImage(result, outfile);
+
+-- display the image via the Show function, which invokes ImageJ, by default.
+if (os.getenv("SITK_NOSHOW") == nil) then
+  sitk.Show(result);
+end
