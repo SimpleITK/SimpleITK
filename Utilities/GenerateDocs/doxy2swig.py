@@ -438,6 +438,7 @@ class Doxy2R(Doxy2SWIG):
         self.add_text('\n\n')
         data = node.firstChild.data
         self.add_text('\\name{%s}\n'%data)
+        self.add_text('\\Rdversion{1.1}\n\\docType{class}\n')
         self.sitkClassName=data
 
     def do_compounddef(self, node):
@@ -542,7 +543,7 @@ class Doxy2R(Doxy2SWIG):
                     else:
                         returnType = returnType.firstChild.nodeValue
 
-                self.add_text('%s %s%s'%(returnType, name, arguments))
+                self.add_text('%s %s%s:}{'%(returnType, name, arguments))
 
             for n in node.childNodes:
                 if n not in list(first.values()):
@@ -553,9 +554,9 @@ class Doxy2R(Doxy2SWIG):
     def do_sectiondef(self, node):
         kind = node.attributes['kind'].value
         if kind in ('public-func', 'func'):
-            self.add_text('\\arguments{\n')
+            self.add_text('\\section{Methods}{\n\describe{')
             self.generic_parse(node)
-            self.add_text('}\n')
+            self.add_text('}\n}\n')
 
     def do_doxygenindex(self, node):
         self.multi = 1
@@ -587,6 +588,7 @@ class Doxy2RProc(Doxy2SWIG):
         self.EmptyText = False
         self.piecesdict = dict()
         self.currentFunc=''
+        self.Usage=dict()
 
     def parse_Text(self, node):
         txt = node.data
@@ -679,20 +681,29 @@ class Doxy2RProc(Doxy2SWIG):
                     self.add_text('\n}\n\n')
 
                 # now the potentially repeated bits (overloading)
+                # Rd doesn't allow multiple usage statements, so
+                # collect them
                 usage=defn + argstring
-                self.add_text('\\usage{\n%s\n}\n' %(usage))
+                if not name in self.Usage:
+                    self.Usage[self.currentname]=""
+
+                self.Usage[self.currentname] = self.Usage[self.currentname] + '\n\n' + usage
 
     def do_sectiondef(self, node):
         kind = node.attributes['kind'].value
         if kind in ('public-func', 'func'):
             self.generic_parse(node)
 
-
     def write(self, fname, mode='w'):
         ## fname is the destination folder
         if os.path.isdir(fname):
             for FuncName in self.piecesdict:
                 outname=os.path.join(fname, FuncName + ".Rd")
+                ## add the usage to the end
+                if FuncName in self.Usage:
+                    self.currentname=FuncName
+                    usage = '\\usage{\n%s\n}\n' % self.Usage[FuncName]
+                    self.add_text(usage)
                 self.pieces = self.piecesdict[FuncName]
                 Doxy2SWIG.write(self,outname)
         else:

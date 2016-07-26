@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python
 
 
@@ -87,6 +88,9 @@ for x in files:
 
             ThisClassName = ThisClassName.replace("itk::simple::", "")
             ThisClassName = ThisClassName.replace("itk::Functor::", "")
+            ## Get rid of the ITK classes
+            if ThisClassName.find("itk::") >=0 or ThisClassName.find("<") >=0:
+                continue
 
             outfile=outdir + "/" + ThisClassName + ".Rd"
             fout = open(outfile, "w")
@@ -96,7 +100,13 @@ for x in files:
         fin = open(tmpfile, "r")
 
         for line in fin:
-            line2 = line.replace("itk::simple::detail::", "itk::simple::")
+            if (rFlag):
+                if line in ('\n', '\r\n'):
+                    continue
+                line2 = line.replace("itk::simple::detail::", "")
+                line2 = line.replace("itk::simple::", "")
+            else:
+                line2 = line.replace("itk::simple::detail::", "itk::simple::")
             line2 = line2.rstrip()
             fout.write(line2)
             fout.write('\n')
