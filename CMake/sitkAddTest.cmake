@@ -13,23 +13,32 @@ set(SimpleITK_DATA_ROOT ${SimpleITK_SOURCE_DIR}/Testing/Data)
 #   The first arguments are passed to cmake's add_test function with
 #   support for the DATA{} references to external data
 # TRANSFORM_COMPARE <test transform> <baseline displacement> [tolerance]
+# IMAGE_COMPARE <test image> <baseline image> [tolerance]
+# IMAGE_MD5_COMPARE <test image> <md5 hash>
 function(sitk_add_test)
   set(options "")
   set(oneValueArgs "NAME")
-  set(multiValueArgs COMMAND TRANSFORM_COMPARE)
+  set(multiValueArgs COMMAND TRANSFORM_COMPARE IMAGE_COMPARE IMAGE_MD5_COMPARE)
   cmake_parse_arguments("_" "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN} )
 
   if ( NOT "${__TRANSFORM_COMPARE}" STREQUAL "" )
     set(COMPARE_ARGS ${COMPARE_ARGS} --compareTransform ${__TRANSFORM_COMPARE})
   endif()
 
+  if ( NOT "${__IMAGE_COMPARE}" STREQUAL "" )
+    set(COMPARE_ARGS ${COMPARE_ARGS} --compare ${__IMAGE_COMPARE})
+  endif()
+
+  if ( NOT "${__IMAGE_MD5_COMPARE}" STREQUAL "" )
+    set(COMPARE_ARGS ${COMPARE_ARGS} --compare-MD5 ${__IMAGE_MD5_COMPARE})
+  endif()
+
   if (COMPARE_ARGS)
     set(__COMMAND $<TARGET_FILE:sitkCompareDriver> ${COMPARE_ARGS} -- ${__COMMAND})
   endif()
 
-   # Add test with data in the SimpleITKData group.
+  # Add test with data in the SimpleITKData group.
   ExternalData_add_test(SimpleITKData NAME ${__NAME} COMMAND ${__COMMAND} ${__UNPARSED_ARGUMENTS})
-
 
 endfunction()
 
