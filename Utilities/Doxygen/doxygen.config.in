@@ -842,7 +842,10 @@ EXAMPLE_PATTERNS       = "*.cxx" \
                          "*.R" \
                          "*.py" \
                          "*.java" \
-                         "*.lua"
+                         "*.lua" \
+                         "*.rb" \
+                         "*.cs" \
+                         "*.tcl"
 
 # If the EXAMPLE_RECURSIVE tag is set to YES then subdirectories will be
 # searched for input files to be used with the \include or \dontinclude commands
