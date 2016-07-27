@@ -50,9 +50,13 @@ if (BUILD_DOXYGEN)
     MAIN_DEPENDENCY ${PROJECT_BINARY_DIR}/Utilities/Doxygen/doxygen.config
     DEPENDS "${PROJECT_BINARY_DIR}/Documentation/Doxygen/Examples.dox"
     DEPENDS "${PROJECT_BINARY_DIR}/Documentation/Doxygen/FilterCoverage.dox"
-    DEPENDS "${PROJECT_BINARY_DIR}/Documentation/Doxygen/InsightDoxygen.tag"
     WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/Utilities/Doxygen
     )
+
+  if (USE_ITK_DOXYGEN_TAGS)
+    add_dependencies( Documentation
+    "${PROJECT_BINARY_DIR}/Documentation/Doxygen/InsightDoxygen.tag" )
+  endif ()
 
   message( STATUS
     "To generate Doxygen's documentation, you need to build the Documentation target"
