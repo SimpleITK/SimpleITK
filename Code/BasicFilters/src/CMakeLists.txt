@@ -9,7 +9,52 @@ set_source_files_properties ( ${SimpleITKBasicFiltersGeneratedSource} PROPERTIES
 # these files are the instantiated ITK filter, but they do not do IO,
 # so we don't need to register the IO factoried here.
 set ( ITK_NO_IO_FACTORY_REGISTER_MANAGER 1 )
-include ( ${ITK_USE_FILE} )
+set ( REQUIRED_ITK_MODULES
+  ITKAnisotropicSmoothing
+  ITKAntiAlias
+  ITKBiasCorrection
+  ITKBinaryMathematicalMorphology
+  ITKClassifiers
+  ITKColormap
+  ITKCommon
+  ITKConnectedComponents
+  ITKConvolution
+  ITKCurvatureFlow
+  ITKDeconvolution
+  ITKDenoising
+  ITKDisplacementField
+  ITKDistanceMap
+  ITKFFT
+  ITKFastMarching
+  ITKImageAdaptors
+  ITKImageCompare
+  ITKImageCompose
+  ITKImageFeature
+  ITKImageFilterBase
+  ITKImageFusion
+  ITKImageGradient
+  ITKImageGrid
+  ITKImageIntensity
+  ITKImageLabel
+  ITKImageNoise
+  ITKImageSources
+  ITKImageStatistics
+  ITKLabelMap
+  ITKLabelVoting
+  ITKLevelSets
+  ITKMathematicalMorphology
+  ITKOBBLabelMap
+  ITKPDEDeformableRegistration
+  ITKRegionGrowing
+  ITKReview
+  ITKSmoothing
+  ITKStatistics
+  ITKThresholding
+  ITKTransform
+  ITKWatersheds
+)
+find_package(ITK COMPONENTS REQUIRED)
+include(${ITK_USE_FILE})
 
 # common source which all basic filter libraries need to be linked against
 set ( SimpleITKBasicFilters0Source
