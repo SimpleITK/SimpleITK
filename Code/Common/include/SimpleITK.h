@@ -18,6 +18,16 @@
 #ifndef __SimpleITK_h
 #define __SimpleITK_h
 
+/** \file SimpleITK.h
+ *
+ * Image C++ operators are not include by default in this file is an
+ * intentional  design  choice. The addition of these convenience
+ * mathematical operators in C++ can be a source of confusion.
+ *
+ * To enable Image C++ operators explicitly include
+ * sitkImageOperators.h header file.
+ */
+
 #include <stdint.h>
 
 
