@@ -188,6 +188,7 @@ namespace simple
     std::vector< double > TransformContinuousIndexToPhysicalPoint( const std::vector< double > &index) const;
 
     std::vector< unsigned int > GetSize( void ) const;
+    unsigned int GetNumberOfPixels( void ) const;
 
     unsigned int GetHeight( void ) const;
     unsigned int GetWidth( void ) const;
