@@ -6,8 +6,26 @@ This page contains a list of all python packages of SimpleITK.
 It is also referenced from Python package index Pypi to facilitate automatic download. If you have a supported system supported for a binary installation the installation can be as easy as:
 
 \code
-$ easy_install SimpleITK
+$ pip install -f https://itk.org/SimpleITKDoxygen/html/PyDownloadPage.html SimpleITK
 \endcode
+
+\section v0100 SimpleITK 0.10.0
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.10.0/Python/SimpleITK-0.10.0-cp27-cp27m-macosx_10_6_intel.whl#md5=804644b17dcc46249d07f2eb1e0bd23c">SimpleITK-0.10.0-cp27-cp27m-macosx_10_6_intel.whl (hosted at SourceForge)</a>
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.10.0/Python/SimpleITK-0.10.0-cp27-cp27m-manylinux1_i686.whl#md5=653d1c393d7d84a72280dfe3d25b5fa7">SimpleITK-0.10.0-cp27-cp27m-manylinux1_i686.whl (hosted at SourceForge)</a>
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.10.0/Python/SimpleITK-0.10.0-cp27-cp27m-manylinux1_x86_64.whl#md5=48ab1b51cf6d60e752a0ccdf2565f3df">SimpleITK-0.10.0-cp27-cp27m-manylinux1_x86_64.whl (hosted at SourceForge)</a>
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.10.0/Python/SimpleITK-0.10.0-cp27-cp27mu-manylinux1_i686.whl#md5=633ac6a691913e9a86f9b5afd3920faf">SimpleITK-0.10.0-cp27-cp27mu-manylinux1_i686.whl (hosted at SourceForge)</a>
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.10.0/Python/SimpleITK-0.10.0-cp27-cp27mu-manylinux1_x86_64.whl#md5=6d381143f8c4d261266e71cfa8f4a30b">SimpleITK-0.10.0-cp27-cp27mu-manylinux1_x86_64.whl (hosted at SourceForge)</a>
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.10.0/Python/SimpleITK-0.10.0-cp33-cp33m-manylinux1_i686.whl#md5=a428c9c8706a2905d0cb7fa849b3b337">SimpleITK-0.10.0-cp33-cp33m-manylinux1_i686.whl (hosted at SourceForge)</a>
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.10.0/Python/SimpleITK-0.10.0-cp33-cp33m-manylinux1_x86_64.whl#md5=c5858ce268189db41636f872454d8635">SimpleITK-0.10.0-cp33-cp33m-manylinux1_x86_64.whl (hosted at SourceForge)</a>
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.10.0/Python/SimpleITK-0.10.0-cp34-cp34m-manylinux1_i686.whl#md5=ff15fe0d34065ceeeefdb0169e3b8cf3">SimpleITK-0.10.0-cp34-cp34m-manylinux1_i686.whl (hosted at SourceForge)</a>
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.10.0/Python/SimpleITK-0.10.0-cp34-cp34m-manylinux1_x86_64.whl#md5=7a4c2c08fcb9c2c41ed9418ac6fdbf0a">SimpleITK-0.10.0-cp34-cp34m-manylinux1_x86_64.whl (hosted at SourceForge)</a>
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.10.0/Python/SimpleITK-0.10.0-cp34-cp34m-win32.whl#md5=fe5d67e3387955f3367aa530bce81db4">SimpleITK-0.10.0-cp34-cp34m-win32.whl (hosted at SourceForge)</a>
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.10.0/Python/SimpleITK-0.10.0-cp34-cp34m-win_amd64.whl#md5=531ff006b15dfff11fec21cbd70e151d">SimpleITK-0.10.0-cp34-cp34m-win_amd64.whl (hosted at SourceForge)</a>
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.10.0/Python/SimpleITK-0.10.0-cp35-cp35m-manylinux1_i686.whl#md5=34f3cfab4a406100bfccf304a884a35e">SimpleITK-0.10.0-cp35-cp35m-manylinux1_i686.whl (hosted at SourceForge)</a>
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.10.0/Python/SimpleITK-0.10.0-cp35-cp35m-manylinux1_x86_64.whl#md5=12a9259a9b6a81340080377161e98d5f">SimpleITK-0.10.0-cp35-cp35m-manylinux1_x86_64.whl (hosted at SourceForge)</a>
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.10.0/Python/SimpleITK-0.10.0-cp35-cp35m-win32.whl#md5=547200d3b09178e0c6e4b89342b3045c">SimpleITK-0.10.0-cp35-cp35m-win32.whl (hosted at SourceForge)</a>
+        \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.10.0/Python/SimpleITK-0.10.0-cp35-cp35m-win_amd64.whl#md5=964875301b687edf3d60954a68dd201b">SimpleITK-0.10.0-cp35-cp35m-win_amd64.whl (hosted at SourceForge)</a>
+
 
 \section v091 SimpleITK 0.9.1
         \li <a href="https://sourceforge.net/projects/simpleitk/files/SimpleITK/0.9.1/Python/SimpleITK-0.9.1-py2.6-linux-i686.egg#md5=dd8eb20108c487cec85b3b560e4cf1ad">SimpleITK-0.9.1-py2.6-linux-i686.egg (hosted at SourceForge)</a>
