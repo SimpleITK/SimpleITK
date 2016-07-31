@@ -45,18 +45,20 @@ if (BUILD_DOXYGEN)
     DEPENDS "${PROJECT_SOURCE_DIR}/Utilities/filters.csv" "${PROJECT_SOURCE_DIR}/Utilities/CSVtoTable.py"
     )
 
+  if (USE_ITK_DOXYGEN_TAGS)
+    set(TAGS_DEPENDS "DEPENDS \"${PROJECT_BINARY_DIR}/Documentation/Doxygen/InsightDoxygen.tag\"")
+  endif ()
+
+
   add_custom_target(Documentation ALL
     COMMAND ${DOXYGEN_EXECUTABLE} ${PROJECT_BINARY_DIR}/Utilities/Doxygen/doxygen.config
     MAIN_DEPENDENCY ${PROJECT_BINARY_DIR}/Utilities/Doxygen/doxygen.config
     DEPENDS "${PROJECT_BINARY_DIR}/Documentation/Doxygen/Examples.dox"
     DEPENDS "${PROJECT_BINARY_DIR}/Documentation/Doxygen/FilterCoverage.dox"
+    ${TAG_DEPENDS}
     WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/Utilities/Doxygen
     )
 
-  if (USE_ITK_DOXYGEN_TAGS)
-    add_dependencies( Documentation
-    "${PROJECT_BINARY_DIR}/Documentation/Doxygen/InsightDoxygen.tag" )
-  endif ()
 
   message( STATUS
     "To generate Doxygen's documentation, you need to build the Documentation target"
