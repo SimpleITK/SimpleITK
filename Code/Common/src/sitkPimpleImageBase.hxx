@@ -273,6 +273,11 @@ namespace itk
         return sitkITKVectorToSTL<unsigned int>( largestRegion.GetSize() );
       }
 
+    virtual uint64_t GetNumberOfPixels( void ) const
+      {
+        return this->m_Image->GetLargestPossibleRegion().GetNumberOfPixels();
+      }
+
     std::string ToString( void ) const
       {
         std::ostringstream out;

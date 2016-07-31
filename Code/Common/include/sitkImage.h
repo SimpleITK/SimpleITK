@@ -150,6 +150,16 @@ namespace simple
      */
     unsigned int GetNumberOfComponentsPerPixel( void ) const;
 
+    /** \brief Get the number of pixels in the image
+     *
+     * To Calculate the total number of values stored continuously for
+     * the image's buffer, the NumberOfPixels should be multiplied by
+     * NumberOfComponentsPerPixel in order to account for multiple
+     * component images.
+     *
+     */
+    uint64_t GetNumberOfPixels( void ) const;
+
     /** Get/Set the Origin
      * @{
      */
