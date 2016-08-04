@@ -58,6 +58,8 @@ namespace itk
     virtual std::vector< unsigned int > GetSize( void ) const = 0;
     virtual unsigned int GetSize( unsigned int dimension ) const = 0;
 
+    virtual unsigned int GetNumberOfPixels( void ) const = 0;
+
     virtual std::vector<double> GetOrigin( void ) const = 0;
     virtual void SetOrigin( const std::vector<double> &orgn ) = 0;
     virtual std::vector<double> GetSpacing( void ) const = 0;

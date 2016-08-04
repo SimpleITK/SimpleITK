@@ -143,6 +143,13 @@ namespace itk
       return this->m_PimpleImage->GetSize();
     }
 
+    unsigned int Image::GetNumberOfPixels( void ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetNumberOfPixels();
+    }
+
+
     unsigned int Image::GetWidth( void ) const
     {
       assert( m_PimpleImage );

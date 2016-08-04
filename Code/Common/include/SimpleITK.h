@@ -72,6 +72,20 @@
 
 #include "sitkAdditionalProcedures.h"
 
+/* 
+ * An intentional design choice to have to explicitly include the Image
+ * operators and not get them by with the basic "SimpleITK.h".
+ * The addition of these convenience mathematical operators
+ * in C++ can be a source of confusion.
+ *
+ * Either:
+ *   1) explicity include "sitkImageOperators.h" (Recommended)
+ *   2) or define USE_SimpleITK_ImageOperators BEFORE including SimpleITK.h
+ */
+#ifdef USE_SimpleITK_ImageOperators
+#include "sitkImageOperators.h"
+#endif
+
 #include "sitkImageRegistrationMethod.h"
 
 // These headers are auto-generated
