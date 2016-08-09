@@ -28,6 +28,8 @@ if(NOT SWIG_DIR)
   set(SWIG_TARGET_VERSION "3.0.10" )
   set(SWIG_DOWNLOAD_SOURCE_HASH "bb4ab8047159469add7d00910e203124")
   set(SWIG_DOWNLOAD_WIN_HASH "f229724fe856aa78df6128ecfefe6e0a")
+  set(SWIGWIN_URL "https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${SWIG_DOWNLOAD_WIN_HASH}&name=swigwin-${SWIG_TARGET_VERSION}.zip")
+  set(SWIG_URL "https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${SWIG_DOWNLOAD_SOURCE_HASH}&name=swig-${SWIG_TARGET_VERSION}.tar.gz")
 
   if(WIN32)
     # binary SWIG for windows
@@ -38,7 +40,7 @@ if(NOT SWIG_DIR)
 
     # swig.exe available as pre-built binary on Windows:
     ExternalProject_Add(Swig
-      URL https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${SWIG_DOWNLOAD_WIN_HASH}&name=swigwin-${SWIG_TARGET_VERSION}.zip
+      URL "${SWIGWIN_URL}"
       URL_MD5 ${SWIG_DOWNLOAD_WIN_HASH}
       SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/swigwin-${SWIG_TARGET_VERSION}
       CONFIGURE_COMMAND ""
@@ -94,7 +96,7 @@ if(NOT SWIG_DIR)
         )
     else()
       set(SWIG_DOWNLOAD_STEP
-        URL "https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${SWIG_DOWNLOAD_SOURCE_HASH}&name=swig-${SWIG_TARGET_VERSION}.tar.gz"
+        URL "${SWIG_URL}"
         URL_MD5 "${SWIG_DOWNLOAD_SOURCE_HASH}"
         )
     endif()

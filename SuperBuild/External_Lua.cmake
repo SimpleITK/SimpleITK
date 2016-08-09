@@ -11,7 +11,7 @@ set(proj Lua)
 set(lua_binary_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj}-prefix/src/${proj}-build)
 set(lua_source_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj}-prefix/src/${proj})
 set(lua_install_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj})
-
+set(lua_URL "https://www.lua.org/ftp/lua-5.1.5.tar.gz")
 
 file(WRITE "${lua_binary_dir}/CMakeCacheInit.txt" "${ep_common_cache}" )
 
@@ -21,7 +21,7 @@ set(lua_PATCH_COMMAND ${CMAKE_COMMAND} -E copy_if_different
 )
 
 ExternalProject_Add(Lua
-  URL https://www.lua.org/ftp/lua-5.1.5.tar.gz
+  URL "${lua_URL}"
   URL_MD5 2e115fe26e435e33b0d5c022e4490567
   PATCH_COMMAND ${lua_PATCH_COMMAND}
   CMAKE_GENERATOR ${gen}

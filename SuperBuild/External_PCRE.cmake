@@ -21,6 +21,7 @@ if(NOT PCRE_DIR)
 
   set(PCRE_TARGET_VERSION 8.37)
   set(PCRE_DOWNLOAD_SOURCE_HASH "6e0cc6d1bdac7a4308151f9b3571b86e")
+  set(PCRE_URL "https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${PCRE_DOWNLOAD_SOURCE_HASH}&name=pcre-${PCRE_TARGET_VERSION}.tar.gz")
 
   # follow the standard EP_PREFIX locations
   set(pcre_binary_dir ${CMAKE_CURRENT_BINARY_DIR}/PCRE-prefix/src/PCRE-build)
@@ -35,7 +36,7 @@ if(NOT PCRE_DIR)
   set ( pcre_CONFIGURE_COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/pcre_configure_step.cmake )
 
   ExternalProject_add(PCRE
-    URL https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${PCRE_DOWNLOAD_SOURCE_HASH}&name=pcre-${PCRE_TARGET_VERSION}.tar.gz
+    URL "${PCRE_URL}"
     URL_MD5 "${PCRE_DOWNLOAD_SOURCE_HASH}"
     CONFIGURE_COMMAND ${pcre_CONFIGURE_COMMAND}
     DEPENDS "${PCRE_DEPENDENCIES}"
