@@ -27,24 +27,29 @@ if(NOT SWIG_DIR)
 
   set(SWIG_TARGET_VERSION "3.0.10" )
   set(SWIG_DOWNLOAD_SOURCE_HASH "bb4ab8047159469add7d00910e203124")
-  set(SWIG_DOWNLOAD_WIN_HASH "f229724fe856aa78df6128ecfefe6e0a")
+  set(SWIGWIN_DOWNLOAD_HASH "f229724fe856aa78df6128ecfefe6e0a")
+  set(SWIGWIN_URL "https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${SWIG_DOWNLOAD_WIN_HASH}&name=swigwin-${SWIG_TARGET_VERSION}.zip")
+  set(SWIG_URL "https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${SWIG_DOWNLOAD_SOURCE_HASH}&name=swig-${SWIG_TARGET_VERSION}.tar.gz")
+
 
   if(WIN32)
     # binary SWIG for windows
     #------------------------------------------------------------------------------
 
+    sitkSourceDownload(SWIGWIN_URL "swigwin-${SWIG_TARGET_VERSION}.zip"  ${SWIGWIN_DOWNLOAD_HASH})
 
     set(swig_source_dir ${CMAKE_CURRENT_BINARY_DIR}/swigwin-${SWIG_TARGET_VERSION})
 
     # swig.exe available as pre-built binary on Windows:
     ExternalProject_Add(Swig
-      URL https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${SWIG_DOWNLOAD_WIN_HASH}&name=swigwin-${SWIG_TARGET_VERSION}.zip
+      URL "${SWIGWIN_URL}"
       URL_MD5 ${SWIG_DOWNLOAD_WIN_HASH}
       SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/swigwin-${SWIG_TARGET_VERSION}
       CONFIGURE_COMMAND ""
       BUILD_COMMAND ""
       INSTALL_COMMAND ""
       )
+    add_dependencies(Swig  "SuperBuildSimpleITKSource")
 
     set(SWIG_DIR ${CMAKE_CURRENT_BINARY_DIR}/swigwin-${SWIG_TARGET_VERSION}) # path specified as source in ep
     set(SWIG_EXECUTABLE ${CMAKE_CURRENT_BINARY_DIR}/swigwin-${SWIG_TARGET_VERSION}/swig.exe)
@@ -93,8 +98,9 @@ if(NOT SWIG_DIR)
         GIT_TAG "${SWIG_GIT_TAG}"
         )
     else()
+      sitkSourceDownload(${proj}_URL "swig-${SWIG_TARGET_VERSION}.tar.gz" ${SWIG_DOWNLOAD_SOURCE_HASH})
       set(SWIG_DOWNLOAD_STEP
-        URL "https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${SWIG_DOWNLOAD_SOURCE_HASH}&name=swig-${SWIG_TARGET_VERSION}.tar.gz"
+        URL "${SWIG_URL}"
         URL_MD5 "${SWIG_DOWNLOAD_SOURCE_HASH}"
         )
     endif()
@@ -104,6 +110,10 @@ if(NOT SWIG_DIR)
       CONFIGURE_COMMAND ${swig_CONFIGURE_COMMAND}
       DEPENDS "${Swig_DEPENDENCIES}"
       )
+
+    if(NOT USE_SWIG_FROM_GIT)
+      add_dependencies(Swig  "SuperBuildSimpleITKSource")
+    endif()
 
     set(SWIG_DIR ${swig_install_dir}/share/swig/${SWIG_TARGET_VERSION})
     set(SWIG_EXECUTABLE ${swig_install_dir}/bin/swig)
