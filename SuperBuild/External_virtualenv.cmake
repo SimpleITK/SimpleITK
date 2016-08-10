@@ -17,6 +17,8 @@ set(${proj}_source_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj})
 set(${proj}_install_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj})
 set(${proj}_URL "https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${${proj}_DOWNLOAD_SOURCE_HASH}&name=virtualenv-${${proj}_TARGET_VERSION}.tar.gz")
 
+sitkSourceDownload(${proj}_URL "virtualenv-${${proj}_TARGET_VERSION}.tar.gz" ${${proj}_DOWNLOAD_SOURCE_HASH})
+
 ExternalProject_Add(${proj}
   URL "${${proj}_URL}"
   URL_MD5 ${${proj}_DOWNLOAD_SOURCE_HASH}
@@ -29,6 +31,9 @@ ExternalProject_Add(${proj}
   BUILD_COMMAND ""
   INSTALL_COMMAND ""
 )
+
+# the ExternalProject_Add DEPENDS options is not effective for the DOWNLOAD STEP
+add_dependencies( ${proj}  "SuperBuildSimpleITKSource" )
 
 set(${proj}_ROOT ${${proj}_source_dir})
 set(PYTHON_VIRTUALENV_SCRIPT ${${proj}_source_dir}/virtualenv.py)

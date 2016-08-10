@@ -54,7 +54,38 @@ set(CMAKE_MODULE_PATH
 include(sitkPreventInSourceBuilds)
 include(sitkPreventInBuildInstalls)
 include(VariableList)
+include(sitkExternalData)
 
+
+add_custom_target( SuperBuildSimpleITKSource )
+
+#
+# sitkSourceDownload( <output variable> <filename> <md5 hash> )
+#
+# A function to get a filename for an ExternalData source file used in
+# a superbuild. Adds a target which downloads all source code
+# needed for superbuild projects. The source file is cached with in
+# the build tree, and can be locally cache with other ExternalData
+# controlled environment variables.
+#
+# The "SuperBuildSimpleITKSource" target needs to be manually added as
+# a dependencies to the ExternalProject.
+#
+#   add_dependencies( PROJ "SuperBuildSimpleITKSource" )
+#
+# Note: Hash files are created under the SOURCE directory in the
+# .ExternalSource sub-directory during configuration.
+#
+function(sitkSourceDownload outVar filename hash)
+  set(link_file "${CMAKE_CURRENT_SOURCE_DIR}/.ExternalSource/${filename}")
+  file(WRITE  "${link_file}.md5" ${hash} )
+  ExternalData_Expand_arguments(
+    SuperBuildSimpleITKSourceReal
+    link
+    DATA{${link_file}}
+    )
+  set(${outVar} "${link}" PARENT_SCOPE)
+endfunction()
 
 #-----------------------------------------------------------------------------
 # Prerequisites
@@ -419,3 +450,9 @@ foreach(ep ${external_project_list})
   set(ep_dependency_graph "${ep_dependency_graph}\n${ep}: ${${ep}_DEPENDENCIES}")
 endforeach()
 file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/ExternalProjectDependencies.txt "${ep_dependency_graph}\n")
+
+
+if(COMMAND ExternalData_Add_Target)
+  ExternalData_Add_Target(SuperBuildSimpleITKSourceReal)
+  add_dependencies(SuperBuildSimpleITKSource SuperBuildSimpleITKSourceReal)
+endif()

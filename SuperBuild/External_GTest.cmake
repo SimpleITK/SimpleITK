@@ -15,7 +15,7 @@ set(GTEST_binary_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj}-prefix/src/${proj}-buil
 set(GTEST_source_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj}-prefix/src/${proj})
 set(GTEST_install_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj})
 
-set(GTEST_URL "https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${GTEST_DOWNLOAD_SOURCE_HASH}&name=gtest-${GTEST_TARGET_VERSION}.zip")
+sitkSourceDownload(GTEST_URL "gtest-${GTEST_TARGET_VERSION}.zip" ${GTEST_DOWNLOAD_SOURCE_HASH})
 
 file(WRITE "${GTEST_binary_dir}/CMakeCacheInit.txt" "${ep_common_cache}" )
 
@@ -61,5 +61,9 @@ ExternalProject_Add(${proj}
     COMMAND
       ${CMAKE_COMMAND} -E copy_directory <SOURCE_DIR>/include <INSTALL_DIR>/include
 )
+
+
+# the ExternalProject_Add DEPENDS options is not effective for the DOWNLOAD STEP
+add_dependencies( ${proj}  "SuperBuildSimpleITKSource" )
 
 set(GTEST_ROOT ${GTEST_install_dir})

@@ -21,7 +21,8 @@ if(NOT PCRE_DIR)
 
   set(PCRE_TARGET_VERSION 8.37)
   set(PCRE_DOWNLOAD_SOURCE_HASH "6e0cc6d1bdac7a4308151f9b3571b86e")
-  set(PCRE_URL "https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${PCRE_DOWNLOAD_SOURCE_HASH}&name=pcre-${PCRE_TARGET_VERSION}.tar.gz")
+  sitkSourceDownload(PCRE_URL "pcre-${PCRE_TARGET_VERSION}.tar.gz" ${PCRE_DOWNLOAD_SOURCE_HASH})
+
 
   # follow the standard EP_PREFIX locations
   set(pcre_binary_dir ${CMAKE_CURRENT_BINARY_DIR}/PCRE-prefix/src/PCRE-build)
@@ -41,4 +42,8 @@ if(NOT PCRE_DIR)
     CONFIGURE_COMMAND ${pcre_CONFIGURE_COMMAND}
     DEPENDS "${PCRE_DEPENDENCIES}"
     )
+
+  # the ExternalProject_Add DEPENDS options is not effective for the DOWNLOAD STEP
+  add_dependencies( PCRE  "SuperBuildSimpleITKSource" )
+
 endif(NOT PCRE_DIR)
