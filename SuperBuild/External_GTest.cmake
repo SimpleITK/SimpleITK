@@ -62,8 +62,6 @@ ExternalProject_Add(${proj}
       ${CMAKE_COMMAND} -E copy_directory <SOURCE_DIR>/include <INSTALL_DIR>/include
 )
 
-
-# the ExternalProject_Add DEPENDS options is not effective for the DOWNLOAD STEP
-add_dependencies( ${proj}  "SuperBuildSimpleITKSource" )
+sitkSourceDownloadDependency(${proj})
 
 set(GTEST_ROOT ${GTEST_install_dir})
