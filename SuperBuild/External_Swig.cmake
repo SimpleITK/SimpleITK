@@ -112,7 +112,7 @@ if(NOT SWIG_DIR)
       )
 
     if(NOT USE_SWIG_FROM_GIT)
-      add_dependencies(Swig  "SuperBuildSimpleITKSource")
+      sitkSourceDownloadDependency(Swig)
     endif()
 
     set(SWIG_DIR ${swig_install_dir}/share/swig/${SWIG_TARGET_VERSION})

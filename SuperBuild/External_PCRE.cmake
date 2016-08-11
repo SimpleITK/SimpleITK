@@ -43,7 +43,6 @@ if(NOT PCRE_DIR)
     DEPENDS "${PCRE_DEPENDENCIES}"
     )
 
-  # the ExternalProject_Add DEPENDS options is not effective for the DOWNLOAD STEP
-  add_dependencies( PCRE  "SuperBuildSimpleITKSource" )
+  sitkSourceDownloadDependency(PCRE)
 
 endif(NOT PCRE_DIR)

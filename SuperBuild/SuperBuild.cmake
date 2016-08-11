@@ -14,6 +14,9 @@ if( BUILD_TESTING AND CMAKE_VERSION VERSION_LESS 2.8.11 )
   message( FATAL_ERROR "BUILD_TESTING ON requires CMake 2.8.11 or newer." )
 endif()
 
+if(CMAKE_GENERATOR MATCHES "Ninja" AND CMAKE_VERSION VERSION_LESS 3.2 )
+  message( FATAL_ERROR "Using \"Ninja\" generator requires CMake 3.2.0 or newer." )
+endif()
 
 configure_file(../CMake/CTestCustom.cmake.in CTestCustom.cmake)
 
@@ -85,6 +88,14 @@ function(sitkSourceDownload outVar filename hash)
     DATA{${link_file}}
     )
   set(${outVar} "${link}" PARENT_SCOPE)
+endfunction()
+
+function(sitkSourceDownloadDependency proj)
+  if (CMAKE_VERSION VERSION_LESS 3.2)
+    add_dependencies(${proj}  "SuperBuildSimpleITKSource")
+  else()
+    ExternalProject_Add_StepDependencies(${proj} download "SuperBuildSimpleITKSource")
+  endif()
 endfunction()
 
 #-----------------------------------------------------------------------------

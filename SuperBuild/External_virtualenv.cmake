@@ -32,8 +32,8 @@ ExternalProject_Add(${proj}
   INSTALL_COMMAND ""
 )
 
-# the ExternalProject_Add DEPENDS options is not effective for the DOWNLOAD STEP
-add_dependencies( ${proj}  "SuperBuildSimpleITKSource" )
+sitkSourceDownloadDependency(${proj})
+
 
 set(${proj}_ROOT ${${proj}_source_dir})
 set(PYTHON_VIRTUALENV_SCRIPT ${${proj}_source_dir}/virtualenv.py)

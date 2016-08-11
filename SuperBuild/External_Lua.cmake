@@ -38,8 +38,7 @@ ExternalProject_Add(Lua
     -D CMAKE_INSTALL_PREFIX:PATH=${lua_install_dir}
 )
 
-# the ExternalProject_Add DEPENDS options is not effective for the DOWNLOAD STEP
-add_dependencies( Lua  "SuperBuildSimpleITKSource" )
+sitkSourceDownloadDependency(Lua)
 
 
 set(SITK_LUA_EXECUTABLE  "${lua_install_dir}/bin/lua")
