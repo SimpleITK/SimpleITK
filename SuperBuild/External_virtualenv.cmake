@@ -15,10 +15,12 @@ set(${proj}_DOWNLOAD_SOURCE_HASH "0ed59863994daf1292827ffdbba80a63")
 set(${proj}_binary_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj}-prefix/src/${proj}-build)
 set(${proj}_source_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj})
 set(${proj}_install_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj})
+set(${proj}_URL "https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${${proj}_DOWNLOAD_SOURCE_HASH}&name=virtualenv-${${proj}_TARGET_VERSION}.tar.gz")
 
+sitkSourceDownload(${proj}_URL "virtualenv-${${proj}_TARGET_VERSION}.tar.gz" ${${proj}_DOWNLOAD_SOURCE_HASH})
 
 ExternalProject_Add(${proj}
-  URL https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${${proj}_DOWNLOAD_SOURCE_HASH}&name=virtualenv-${${proj}_TARGET_VERSION}.tar.gz
+  URL "${${proj}_URL}"
   URL_MD5 ${${proj}_DOWNLOAD_SOURCE_HASH}
   SOURCE_DIR ${${proj}_source_dir}
   BINARY_DIR ${${proj}_binary_dir}
@@ -29,6 +31,9 @@ ExternalProject_Add(${proj}
   BUILD_COMMAND ""
   INSTALL_COMMAND ""
 )
+
+sitkSourceDownloadDependency(${proj})
+
 
 set(${proj}_ROOT ${${proj}_source_dir})
 set(PYTHON_VIRTUALENV_SCRIPT ${${proj}_source_dir}/virtualenv.py)

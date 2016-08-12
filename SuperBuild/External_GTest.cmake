@@ -15,6 +15,8 @@ set(GTEST_binary_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj}-prefix/src/${proj}-buil
 set(GTEST_source_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj}-prefix/src/${proj})
 set(GTEST_install_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj})
 
+sitkSourceDownload(GTEST_URL "gtest-${GTEST_TARGET_VERSION}.zip" ${GTEST_DOWNLOAD_SOURCE_HASH})
+
 file(WRITE "${GTEST_binary_dir}/CMakeCacheInit.txt" "${ep_common_cache}" )
 
 set(GTEST_PATCH_COMMAND ${CMAKE_COMMAND} -E copy_if_different
@@ -43,7 +45,7 @@ endif()
 
 
 ExternalProject_Add(${proj}
-  URL https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${GTEST_DOWNLOAD_SOURCE_HASH}&name=swig-${GTEST_TARGET_VERSION}.zip
+  URL "${GTEST_URL}"
   URL_MD5 ${GTEST_DOWNLOAD_SOURCE_HASH}
   INSTALL_DIR ${GTEST_install_dir}
   CMAKE_GENERATOR ${gen}
@@ -59,5 +61,7 @@ ExternalProject_Add(${proj}
     COMMAND
       ${CMAKE_COMMAND} -E copy_directory <SOURCE_DIR>/include <INSTALL_DIR>/include
 )
+
+sitkSourceDownloadDependency(${proj})
 
 set(GTEST_ROOT ${GTEST_install_dir})
