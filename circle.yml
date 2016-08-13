@@ -6,15 +6,15 @@ machine:
         CMAKE_DOWNLOAD_FILE: cmake-3.6.0-Linux-x86_64.sh
         DISTCC_TCP_CORK: "0"
         DISTCC_DIR: ${HOME}/.distcc
-        ITK_REPOSITORY: ${ExternalData_OBJECT_STORES}/ITK
+        ITK_REPOSITORY: ${ExternalData_OBJECT_STORES}/ITK.git
         MAKE_J: $(expr $CIRCLE_NODE_TOTAL \* 3 + 1)
         CC: "distcc gcc"
         CXX: "distcc g++"
     post:
-        - mkdir -p "${ExternalData_OBJECT_STORES}"
         - sudo apt-get remove cmake && sudo apt-get install ninja-build swig distcc lua5.1
         - sudo sed -i.bak s/STARTDISTCC=\"false\"/STARTDISTCC=\"true\"/g /etc/default/distcc && sudo /etc/init.d/distcc start
-        - cd ${ExternalData_OBJECT_STORES} && if [[ ! -e ${ITK_REPOSITORY} ]]; then git clone --bare https://ITK.org/ITK.git; fi && cd ITK && git fetch origin
+        - mkdir -p "${ExternalData_OBJECT_STORES}"
+        - cd ${ExternalData_OBJECT_STORES} && if [[ ! -e ${ITK_REPOSITORY} ]]; then git clone --bare https://ITK.org/ITK.git; fi && cd ${ITK_REPOSITORY} && git fetch origin
         - cd ${ExternalData_OBJECT_STORES} && if [[ ! -e ${CMAKE_DOWNLOAD_FILE} ]]; then curl -sSO https://cmake.org/files/v3.6/${CMAKE_DOWNLOAD_FILE}; fi
         - echo "y\n" | sudo bash "${ExternalData_OBJECT_STORES}/${CMAKE_DOWNLOAD_FILE}" --prefix=/usr/local --exclude-subdir
 
