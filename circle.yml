@@ -22,7 +22,7 @@ dependencies:
     cache_directories:
         - "~/.ExternalData"
     post:
-        - mkdir -p "${DISTCC_DIR}" && printf -- "localhost/2 --localslots=2 --localslots_cpp=6\n" > "${DISTCC_DIR}/hosts" && for ((i=1;i<CIRCLE_NODE_TOTAL;i++)); do printf "ubuntu@node$i/3\n" >> "${DISTCC_DIR}/hosts"; done
+        - mkdir -p "${DISTCC_DIR}" && printf -- "--randomize localhost/2 --localslots=2 --localslots_cpp=6\n" > "${DISTCC_DIR}/hosts" && for ((i=1;i<CIRCLE_NODE_TOTAL;i++)); do printf "ubuntu@node$i/3\n" >> "${DISTCC_DIR}/hosts"; done
         - mkdir -p ${SIMPLEITK_BUILD_DIR}
 
 test:
