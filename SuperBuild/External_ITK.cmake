@@ -32,7 +32,9 @@ VariableListToArgs( ITK_VARS  ep_itk_args )
 
 
 set(proj ITK)  ## Use ITK convention of calling it ITK
-set(ITK_REPOSITORY "${git_protocol}://itk.org/ITK.git")
+if(NOT DEFINED ITK_REPOSITORY)
+  set(ITK_REPOSITORY "${git_protocol}://itk.org/ITK.git")
+endif()
 
 set(ITK_USE_GIT_PROTOCOL 0)
 if("${git_protocol}" STREQUAL "git")
