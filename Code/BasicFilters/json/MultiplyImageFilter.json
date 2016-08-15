@@ -7,6 +7,7 @@
   "number_of_inputs" : 2,
   "doc" : "Some global documentation",
   "pixel_types" : "typelist::Append<BasicPixelIDTypeList, ComplexPixelIDTypeList>::Type",
+  "pixel_types_scalar_only" : "VectorPixelIDTypeList",
   "filter_type" : "itk::BinaryGeneratorImageFilter< InputImageType, InputImageType2, OutputImageType >",
   "functor_type" : "Functor::Mult< typename InputImageType::PixelType, typename InputImageType2::PixelType, typename OutputImageType::PixelType>",
   "include_files" : [

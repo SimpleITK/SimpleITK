@@ -44,7 +44,17 @@ $(include ConstructorVectorPixels.cxx.in)
   this->m_MemberFactory2.reset( new detail::MemberFunctionFactory<MemberFunction2Type>( this ) );
   this->m_MemberFactory2->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
   this->m_MemberFactory2->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
-}
+
+$(if pixel_types_scalar_only then
+
+  OUT=OUT..[[
+  // Scalar Only
+  this->m_MemberFactory1->RegisterMemberFunctions< ${pixel_types_scalar_only}, 3 > ();
+  this->m_MemberFactory1->RegisterMemberFunctions< ${pixel_types_scalar_only}, 2 > ();
+  this->m_MemberFactory2->RegisterMemberFunctions< ${pixel_types_scalar_only}, 3 > ();
+  this->m_MemberFactory2->RegisterMemberFunctions< ${pixel_types_scalar_only}, 2 > ();
+]]
+end)}
 
 
 $(include DesctuctorDefinition.cxx.in)
@@ -141,7 +151,20 @@ $(include ExecuteInternalUpdateAndReturn.cxx.in)
 template <class TImageType>
 Image ${name}::ExecuteInternal ( ${constant_type} constant, const Image& inImage2 )
 {
-$(include ExecuteInternalTypedefs.cxx.in)
+
+  // Define the input and output image types
+  typedef itk::Image<typename itk::NumericTraits<typename TImageType::PixelType>::ValueType, TImageType::ImageDimension >   InputImageType;
+  typedef TImageType     InputImageType2;
+
+  $(if output_image_type then
+  OUT=[[//Define output image type
+  typedef ${output_image_type} OutputImageType;]]
+  elseif output_pixel_type then
+  OUT=[[// Define output image type
+  typedef itk::Image< ${output_pixel_type}, InputImageType::ImageDimension > OutputImageType;]]
+  else
+  OUT=[[typedef TImageType OutputImageType;]]
+  end)
 
  // Get the pointer to the ITK image contained in image2
   typename InputImageType2::ConstPointer image2 = this->CastImageToITK<InputImageType2>( inImage2 );
@@ -152,7 +175,6 @@ $(include ExecuteInternalITKFilter.cxx.in)
   $(if functor_type then OUT='FunctorType functor = FunctorType();' end)
 
   typename InputImageType::PixelType c;
-  NumericTraits<typename InputImageType2::PixelType>::SetLength( c, image2->GetNumberOfComponentsPerPixel() );
   ToPixelType( constant, c );
   filter->SetConstant1( c );
   filter->SetInput2( image2 );
@@ -165,7 +187,20 @@ $(include ExecuteInternalUpdateAndReturn.cxx.in)
 template <class TImageType>
 Image ${name}::ExecuteInternal ( const Image& inImage1, ${constant_type} constant )
 {
-$(include ExecuteInternalTypedefs.cxx.in)
+
+  // Define the input and output image types
+  typedef TImageType     InputImageType;
+  typedef itk::Image<typename itk::NumericTraits<typename TImageType::PixelType>::ValueType, TImageType::ImageDimension >   InputImageType2;
+
+  $(if output_image_type then
+  OUT=[[//Define output image type
+  typedef ${output_image_type} OutputImageType;]]
+  elseif output_pixel_type then
+  OUT=[[// Define output image type
+  typedef itk::Image< ${output_pixel_type}, InputImageType::ImageDimension > OutputImageType;]]
+  else
+  OUT=[[typedef TImageType OutputImageType;]]
+  end)
 
   // Get the pointer to the ITK image contained in image1
   typename InputImageType::ConstPointer image1 = this->CastImageToITK<InputImageType>( inImage1 );
@@ -176,7 +211,6 @@ $(include ExecuteInternalITKFilter.cxx.in)
   $(if functor_type then OUT='FunctorType functor = FunctorType();' end)
 
   typename InputImageType2::PixelType c;
-  NumericTraits<typename InputImageType::PixelType>::SetLength( c, image1->GetNumberOfComponentsPerPixel() );
   ToPixelType( constant, c );
   filter->SetInput1( image1 );
   filter->SetConstant2( c );
