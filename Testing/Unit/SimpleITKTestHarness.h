@@ -44,8 +44,6 @@ inline std::ostream& operator<< (std::ostream& os, const std::vector<double>& v)
 #include <SimpleITKTestHarnessPaths.h>
 
 #include "sitkImage.h"
-#include "sitkImageFileReader.h"
-#include "sitkHashImageFilter.h"
 #include "sitkCommand.h"
 
 // Class to help us find test data

@@ -16,6 +16,7 @@
 *
 *=========================================================================*/
 #include <sitkImportImageFilter.h>
+#include <sitkHashImageFilter.h>
 #include <SimpleITKTestHarness.h>
 
 // Common fixture for Import tests
