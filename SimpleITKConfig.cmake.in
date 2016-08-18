@@ -17,26 +17,37 @@ set(SimpleITK_REQUIRED_CXX_FLAGS "@SimpleITK_REQUIRED_CXX_FLAGS@")
 set(SimpleITK_REQUIRED_LINK_FLAGS "@SimpleITK_REQUIRED_LINK_FLAGS@")
 
 # The SimpleITK version number
+#
+# If version component is unset it the SimpleITK project it will
+# remain unset for project who use it, this changes the default CMake
+# behavior of setting unset version values to 0.
 set(SimpleITK_VERSION_MAJOR "@SimpleITK_VERSION_MAJOR@")
 set(SimpleITK_VERSION_MINOR "@SimpleITK_VERSION_MINOR@")
+set(SimpleITK_VERSION_PATCH)
 if(NOT "@SimpleITK_VERSION_PATCH@" STREQUAL "")
   set(SimpleITK_VERSION_PATCH "@SimpleITK_VERSION_PATCH@")
 endif()
+set(SimpleITK_VERSION_TWEAK)
 if(NOT "@SimpleITK_VERSION_TWEAK@" STREQUAL "")
   set(SimpleITK_VERSION_TWEAK  "@SimpleITK_VERSION_TWEAK@")
 endif()
+set(SimpleITK_VERSION_RC)
 if(NOT "@SimpleITK_VERSION_RC@" STREQUAL "")
   set(SimpleITK_VERSION_RC "@SimpleITK_VERSION_RC@")
 endif()
+set(SimpleITK_VERSION_POST)
 if(NOT "@SimpleITK_VERSION_POST@" STREQUAL "")
   set(SimpleITK_VERSION_POST "@SimpleITK_VERSION_POST@")
 endif()
+set(SimpleITK_VERSION_DEV)
 if(NOT "@SimpleITK_VERSION_DEV@" STREQUAL "")
   set(SimpleITK_VERSION_DEV "@SimpleITK_VERSION_DEV@")
 endif()
+set(SimpleITK_VERSION_HASH)
 if(NOT "SimpleITK_VERSION_HASH@" STREQUAL "")
   set(SimpleITK_VERSION_HASH "@SimpleITK_VERSION_HASH@")
 endif()
+set(SimpleITK_VERSION_COUNT)
 
 
 
