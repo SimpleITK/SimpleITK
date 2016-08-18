@@ -26,15 +26,15 @@ namespace itk
 namespace simple
 {
 
-  /** Display an image using ImageJ
+  /** Display an image using Fiji, ImageJ or another application.
    *
-   *  This function requires that ImageJ
+   *  This function requires that Fiji ( https://fiji.sc ) or ImageJ
    *  (http://rsb.info.nih.gov/ij/) be properly installed for Mac
    *  and Windows, and in the user's path for Linux.  ImageJ must have
    *  a plugin for reading Nifti formatted files (http://www.loci.wisc.edu/bio-formats/imagej).
    *
    *  Nifti is the default file format used to export images.  A different
-   *  format can by chosen by setting the SITK_SHOW_EXTENSION environment variable.
+   *  format can be chosen by setting the SITK_SHOW_EXTENSION environment variable.
    *  For example, set SITK_SHOW_EXTENSION to ".png" to use PNG format.
    *
    *  The user can specify an application other than ImageJ to view images via
