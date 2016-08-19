@@ -13,7 +13,7 @@ machine:
     post:
         - sudo apt-get remove cmake && sudo apt-get install ninja-build swig distcc lua5.1
         - sudo sed -i.bak s/STARTDISTCC=\"false\"/STARTDISTCC=\"true\"/g /etc/default/distcc && sudo /etc/init.d/distcc start
-        - mkdir -p "${DISTCC_DIR}" && printf -- "--randomize localhost/2 --localslots=2\n" > "${DISTCC_DIR}/hosts" && for ((i=1;i<CIRCLE_NODE_TOTAL;i++)); do printf "ubuntu@node$i/2\n" >> "${DISTCC_DIR}/hosts"; done
+        - mkdir -p "${DISTCC_DIR}" && printf -- "--randomize localhost/2 --localslots=1\n" > "${DISTCC_DIR}/hosts" && for ((i=1;i<CIRCLE_NODE_TOTAL;i++)); do printf "ubuntu@node$i/2\n" >> "${DISTCC_DIR}/hosts"; done
         - mkdir -p "${ExternalData_OBJECT_STORES}"
         - cd ${ExternalData_OBJECT_STORES} && if [[ ! -e ${CMAKE_DOWNLOAD_FILE} ]]; then curl -sSO https://cmake.org/files/v3.6/${CMAKE_DOWNLOAD_FILE}; fi
         - echo "y\n" | sudo bash "${ExternalData_OBJECT_STORES}/${CMAKE_DOWNLOAD_FILE}" --prefix=/usr/local --exclude-subdir
