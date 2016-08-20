@@ -1,6 +1,8 @@
 SimpleITK
 =========
 
+[![CircleCI](https://img.shields.io/circleci/project/SimpleITK/SimpleITK/master.svg?maxAge=2592000?style=flat-square)](https://circleci.com/gh/SimpleITK/SimpleITK/tree/master)
+
 SimpleITK is an image analysis toolkit with a large number of components supporting general filtering operations, image segmentation and registration. It is built on top of the Insight Segmentation and Registration Toolkit [ITK](https://www.itk.org) with the intent of providing a simplified interface to ITK. SimpleITK itself is written in C++ but is available for a large number of programming languages. Currently these include:
 
 * [Python](http://www.python.org)
