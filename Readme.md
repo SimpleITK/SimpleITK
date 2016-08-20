@@ -4,7 +4,7 @@ SimpleITK
 SimpleITK is an image analysis toolkit with a large number of components supporting general filtering operations, image segmentation and registration. It is built on top of the Insight Segmentation and Registration Toolkit [ITK](https://www.itk.org) with the intent of providing a simplified interface to ITK. SimpleITK itself is written in C++ but is available for a large number of programming languages. Currently these include:
 
 * [Python](http://www.python.org)
-* [R https://www.r-project.org/]
+* [R](https://www.r-project.org)
 * [Java](http://www.java.com)
 * [C#](http://msdn.microsoft.com/en-us/vcsharp/default.aspx)
 * [Lua](http://www.lua.org)
