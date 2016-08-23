@@ -136,25 +136,5 @@ if test "$push_exit" -ne 0 && test -z "$force" &&
 Add "-f" or "--force" to push a rewritten topic.'
 fi
 
-# Tell the user what to do next with the topic in GitLab.
-if test -z "$no_topic" &&
-   test "$push_exit" -eq 0 &&
-   test "$remote" = "gitlab" &&
-   test -n "$gitlab_configured" &&
-   echo "$gitlab_pushurl" | egrep-q "$host[^/:]*[/:][^/]*/$project_path\\.git$"; then
-	userpath="${gitlab_pushurl%/*.git}" &&
-	username="${userpath##*[/:]}" &&
-	echo '
-The topic has been pushed to your fork in GitLab.  Visit
-
-  '"$site/$username/$project_path/tree/$topic"'
-
-to see the files.  Visit
-
-  '"$site/$username/$project_path/merge_requests/new?merge_request[source_branch]=$topic"'
-
-to create a Merge Request if there is not one already.'
-fi
-
 # Reproduce the push exit code.
 exit $push_exit
