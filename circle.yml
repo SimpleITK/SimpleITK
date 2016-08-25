@@ -31,6 +31,10 @@ dependencies:
             pwd: bld
         - if [ $CIRCLE_NODE_INDEX -eq 0 ]; then make -j${MAKE_J}; fi:
             pwd: bld
+        - cmake -DBUILD_DOXYGEN:BOOL=ON .:
+            pwd: bld/SimpleITK-build
+        - make Documentation:
+            pwd: bld/SimpleITK-build
     post:
         - find ${SIMPLEITK_BUILD_DIR} -name \*.o -delete && rm -rf ${SIMPLEITK_BUILD_DIR}/ITK ${SIMPLEITK_BUILD_DIR}/ITK-build:
             pwd: bld
@@ -42,9 +46,5 @@ test:
         - if [ $CIRCLE_NODE_INDEX -ne 0 ]; then rsync -ravz -e ssh ubuntu@node0:${SIMPLEITK_BUILD_DIR}/ ${SIMPLEITK_BUILD_DIR}/ && rsync -ravz -e ssh ubuntu@node0:${ExternalData_OBJECT_STORES}/ ${ExternalData_OBJECT_STORES}/; fi:
             parallel: true
     override:
-        - ctest -j 2 -I ${CIRCLE_NODE_INDEX},,${CIRCLE_NODE_TOTAL}:
-            parallel: true
-            pwd: bld/SimpleITK-build
-            environment:
-                ITK_GLOBAL_DEFAULT_NUMBER_OF_THREAD: 2
-                CTEST_OUTPUT_ON_FAILURE: 1
+        - ls bld/SimpleITK-build/Documentation/html
+        - mv bld/SimpleITK-build/Documentation $CIRCLE_ARTIFACTS
