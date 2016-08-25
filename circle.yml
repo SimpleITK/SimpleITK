@@ -11,7 +11,7 @@ machine:
         CC: "distcc gcc"
         CXX: "distcc g++"
     post:
-        - sudo apt-get remove cmake && sudo apt-get install ninja-build swig distcc lua5.1
+        - sudo apt-get remove cmake && sudo apt-get install ninja-build swig distcc lua5.1 doxygen
         - sudo sed -i.bak s/STARTDISTCC=\"false\"/STARTDISTCC=\"true\"/g /etc/default/distcc && sudo /etc/init.d/distcc start
         - mkdir -p "${DISTCC_DIR}" && printf -- "--randomize localhost/2 --localslots=1\n" > "${DISTCC_DIR}/hosts" && for ((i=1;i<CIRCLE_NODE_TOTAL;i++)); do printf "ubuntu@node$i/2\n" >> "${DISTCC_DIR}/hosts"; done
         - mkdir -p "${ExternalData_OBJECT_STORES}"
