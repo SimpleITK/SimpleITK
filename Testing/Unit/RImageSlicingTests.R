@@ -26,8 +26,8 @@ slicingOperatorUnitSpacingTest<- function()
     e1 <- im[2:10,3:5]
 
     ef <- ExtractImageFilter()
-    ef <- ef$SetSize(c(9,3))
-    ef <- ef$SetIndex(c(1,2))
+    ef$SetSize(c(9,3))
+    ef$SetIndex(c(1,2))
     e2 <- ef$Execute(im)
 
     ## meta-data for slicing operator should match the metadata for the extract
