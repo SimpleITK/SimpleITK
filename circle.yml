@@ -31,9 +31,9 @@ dependencies:
             pwd: bld
         - if [ $CIRCLE_NODE_INDEX -eq 0 ]; then make -j${MAKE_J}; fi:
             pwd: bld
-        - cmake -DBUILD_DOXYGEN:BOOL=ON .:
+        - if [ $CIRCLE_NODE_INDEX -eq 0 ]; then cmake -DBUILD_DOXYGEN:BOOL=ON .; fi:
             pwd: bld/SimpleITK-build
-        - make Documentation:
+        - if [ $CIRCLE_NODE_INDEX -eq 0 ]; then make Documentation; fi:
             pwd: bld/SimpleITK-build
     post:
         - find ${SIMPLEITK_BUILD_DIR} -name \*.o -delete && rm -rf ${SIMPLEITK_BUILD_DIR}/ITK ${SIMPLEITK_BUILD_DIR}/ITK-build:
