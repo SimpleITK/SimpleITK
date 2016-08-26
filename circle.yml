@@ -29,4 +29,5 @@ dependencies:
 test:
     override:
         - ls bld/Documentation/html
-        - mv bld/Documentation $CIRCLE_ARTIFACTS
+        - tar czf $CIRCLE_ARTIFACTS/Documentation.tgz Documentation:
+            pwd: bld
