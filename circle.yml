@@ -9,7 +9,7 @@ machine:
     post:
         - sudo apt-get remove cmake && sudo apt-get install swig libinsighttoolkit4-dev doxygen
         - mkdir -p "${ExternalData_OBJECT_STORES}"
-        - cd ${ExternalData_OBJECT_STORES} && if [[ ! -e ${CMAKE_DOWNLOAD_FILE} ]]; then curl -sSO https://cmake.org/files/v3.6/${CMAKE_DOWNLOAD_FILE}; fi
+        - cd ${ExternalData_OBJECT_STORES} && if [[ ! -e ${CMAKE_DOWNLOAD_FILE} ]]; then curl -sSO https://cmake.org/files/v3.6/${CMAKE_DOWNLOAD_FILE}
         - echo "y\n" | sudo bash "${ExternalData_OBJECT_STORES}/${CMAKE_DOWNLOAD_FILE}" --prefix=/usr/local --exclude-subdir
 
 dependencies:
@@ -18,9 +18,9 @@ dependencies:
     pre:
         - mkdir -p ${SIMPLEITK_BUILD_DIR}
     override:
-        - cmake -DWRAP_LUA:BOOL=OFF -DWRAP_PYTHON:BOOL=OFF -DWRAP_JAVA:BOOL=OFF -DWRAP_CSHARP:BOOL=OFF -DWRAP_TCL:BOOL=OFF -DWRAP_R:BOOL=OFF -DWRAP_RUBY:BOOL=OFF -DBUILD_EXAMPLES:BOOL=OFF -DBUILD_TESTING:BOOL=OFF -DBUILD_DOXYGEN:BOOL=ON -DCMAKE_BUILD_TYPE=Release "${SIMPLEITK_SRC_DIR}"; fi:
+        - cmake -DWRAP_LUA:BOOL=OFF -DWRAP_PYTHON:BOOL=OFF -DWRAP_JAVA:BOOL=OFF -DWRAP_CSHARP:BOOL=OFF -DWRAP_TCL:BOOL=OFF -DWRAP_R:BOOL=OFF -DWRAP_RUBY:BOOL=OFF -DBUILD_EXAMPLES:BOOL=OFF -DBUILD_TESTING:BOOL=OFF -DBUILD_DOXYGEN:BOOL=ON -DCMAKE_BUILD_TYPE=Release "${SIMPLEITK_SRC_DIR}"
             pwd: bld
-        - make Documentation; fi:
+        - make Documentation
             pwd: bld
 
 
