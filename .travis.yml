@@ -20,6 +20,7 @@ matrix:
       sudo: required
 
 before_script:
+  - sudo apt-get remove cmake && sudo apt-get install swig lua5.1 luarocks
   - cmake --version
   - mkdir -p ${SIMPLEITK_BUILD_DIR}
 
