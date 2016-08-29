@@ -7,7 +7,7 @@ env:
     ExternalData_OBJECT_STORES=${HOME}/.ExternalData
     SIMPLEITK_SRC_DIR=${HOME}/SimpleITK
     SIMPLEITK_BUILD_DIR=${SIMPLEITK_SRC_DIR}/bld
-    CMAKE_DOWNLOAD_FILE: cmake-3.6.0-Linux-x86_64.sh
+    CMAKE_DOWNLOAD_FILE=cmake-3.6.0-Linux-x86_64.sh
 
 cache:
   directories:
