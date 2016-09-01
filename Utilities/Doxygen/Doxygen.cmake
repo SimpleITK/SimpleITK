@@ -46,16 +46,15 @@ if (BUILD_DOXYGEN)
     )
 
   if (USE_ITK_DOXYGEN_TAGS)
-    set(TAGS_DEPENDS "DEPENDS \"${PROJECT_BINARY_DIR}/Documentation/Doxygen/InsightDoxygen.tag\"")
+    set(TAGS_DEPENDS DEPENDS ${PROJECT_BINARY_DIR}/Documentation/Doxygen/InsightDoxygen.tag)
   endif ()
-
 
   add_custom_target(Documentation ALL
     COMMAND ${DOXYGEN_EXECUTABLE} ${PROJECT_BINARY_DIR}/Utilities/Doxygen/doxygen.config
     MAIN_DEPENDENCY ${PROJECT_BINARY_DIR}/Utilities/Doxygen/doxygen.config
     DEPENDS "${PROJECT_BINARY_DIR}/Documentation/Doxygen/Examples.dox"
     DEPENDS "${PROJECT_BINARY_DIR}/Documentation/Doxygen/FilterCoverage.dox"
-    ${TAG_DEPENDS}
+    ${TAGS_DEPENDS}
     WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/Utilities/Doxygen
     )
 
