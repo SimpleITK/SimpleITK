@@ -1,0 +1,33 @@
+
+language: cpp
+
+env:
+  global:
+    ExternalData_OBJECT_STORES=${HOME}/.ExternalData
+    SIMPLEITK_SRC_DIR=${TRAVIS_BUILD_DIR}
+    SIMPLEITK_BUILD_DIR=${SIMPLEITK_SRC_DIR}/bld
+    CMAKE_DOWNLOAD_FILE=cmake-3.6.0-Linux-x86_64.sh
+
+cache:
+  directories:
+    - ${ExternalData_OBJECT_STORES}
+
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      sudo: required
+
+before_script:
+  - sudo apt-get remove cmake && sudo apt-get install swig lua5.1 libinsighttoolkit4-dev doxygen graphviz
+  - cd ${ExternalData_OBJECT_STORES} && if [[ ! -e ${CMAKE_DOWNLOAD_FILE} ]]; then curl -sSO https://cmake.org/files/v3.6/${CMAKE_DOWNLOAD_FILE}; fi
+  - echo "y\n" | sudo bash "${ExternalData_OBJECT_STORES}/${CMAKE_DOWNLOAD_FILE}" --prefix=/usr/local --exclude-subdir
+  - cmake --version
+  - mkdir -p ${SIMPLEITK_BUILD_DIR}
+
+script:
+  - cd ${SIMPLEITK_BUILD_DIR}
+  - sed -iBAK -e "s/ITKImageNoise/#ITKImageNoise/" ${SIMPLEITK_SRC_DIR}/CMake/sitkCheckForITKModuleDependencies.cmake ${SIMPLEITK_SRC_DIR}/Code/BasicFilters/src/CMakeLists.txt
+  - cmake -DWRAP_LUA:BOOL=OFF -DWRAP_PYTHON:BOOL=OFF -DWRAP_JAVA:BOOL=OFF -DWRAP_CSHARP:BOOL=OFF -DWRAP_TCL:BOOL=OFF -DWRAP_R:BOOL=OFF -DWRAP_RUBY:BOOL=OFF -DBUILD_EXAMPLES:BOOL=OFF -DBUILD_TESTING:BOOL=OFF -DBUILD_DOXYGEN:BOOL=ON -DCMAKE_BUILD_TYPE=Release "${SIMPLEITK_SRC_DIR}"
+  - make Documentation
+  - tar czf ~/Documentation.tgz Documentation
