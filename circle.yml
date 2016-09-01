@@ -22,7 +22,7 @@ dependencies:
     cache_directories:
         - "~/.ExternalData"
     pre:
-        - cd ${ExternalData_OBJECT_STORES} && if [[ ! -e ${ITK_REPOSITORY} ]]; then git clone --bare https://ITK.org/ITK.git; fi && cd ${ITK_REPOSITORY} && git fetch origin
+        - cd ${ExternalData_OBJECT_STORES} && if [[ ! -e ${ITK_REPOSITORY} ]]; then git clone --mirror https://ITK.org/ITK.git; fi && cd ${ITK_REPOSITORY} && git remote update
         - mkdir -p ${SIMPLEITK_BUILD_DIR}
     override:
         - if [ $CIRCLE_NODE_INDEX -eq 0 ]; then cmake -DENABLE_SHARED:BOOL=ON -DWRAP_LUA:BOOL=OFF -DWRAP_PYTHON:BOOL=OFF -DWRAP_JAVA:BOOL=OFF -DWRAP_CSHARP:BOOL=OFF -DWRAP_TCL:BOOL=OFF -DWRAP_R:BOOL=OFF -DWRAP_RUBY:BOOL=OFF -DITK_REPOSITORY=${ITK_REPOSITORY} -DUSE_SYSTEM_SWIG:BOOL=ON -DUSE_SYSTEM_LUA:BOOL=ON -DCMAKE_BUILD_TYPE=Release "${SIMPLEITK_SRC_DIR}/SuperBuild"; fi:
