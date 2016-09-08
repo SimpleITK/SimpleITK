@@ -19,11 +19,6 @@ sitkSourceDownload(GTEST_URL "gtest-${GTEST_TARGET_VERSION}.zip" ${GTEST_DOWNLOA
 
 file(WRITE "${GTEST_binary_dir}/CMakeCacheInit.txt" "${ep_common_cache}" )
 
-set(GTEST_PATCH_COMMAND ${CMAKE_COMMAND} -E copy_if_different
-  ${CMAKE_CURRENT_SOURCE_DIR}/lua.cmake
-  ${lua_source_dir}/CMakeLists.txt
-)
-
 set(${proj}_ARCHIVE_OUTPUT_DIRECTORY "<BINARY_DIR>/lib")
 if (CMAKE_GENERATOR MATCHES "Visual Studio")
   set(${proj}_ARCHIVE_OUTPUT_DIRECTORY "<BINARY_DIR>/lib/$<CONFIG>")
