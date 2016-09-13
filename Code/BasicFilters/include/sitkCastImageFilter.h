@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkCastImageFilter_h
-#define __sitkCastImageFilter_h
+#ifndef sitkCastImageFilter_h
+#define sitkCastImageFilter_h
 
 #include "sitkImageFilter.h"
 #include "sitkPixelIDTokens.h"

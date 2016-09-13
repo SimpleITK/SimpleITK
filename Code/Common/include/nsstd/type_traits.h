@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitk_nsstd_type_traits_h
-#define __sitk_nsstd_type_traits_h
+#ifndef sitk_nsstd_type_traits_h
+#define sitk_nsstd_type_traits_h
 
 #include "sitkConfigure.h"
 
@@ -52,4 +52,4 @@ using std::integral_constant;
 }
 }
 
-#endif //__sitk_nsstd_type_traits_h
+#endif // sitk_nsstd_type_traits_h

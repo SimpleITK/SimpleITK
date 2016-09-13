@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitk${name}_h
-#define __sitk${name}_h
+#ifndef sitk${name}_h
+#define sitk${name}_h
 
 $(include DoNotEditWarning.h.in)
 

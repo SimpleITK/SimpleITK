@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkImageRegistrationMethod_h
-#define __sitkImageRegistrationMethod_h
+#ifndef sitkImageRegistrationMethod_h
+#define sitkImageRegistrationMethod_h
 
 #include "sitkRegistration.h"
 
@@ -689,4 +689,4 @@ namespace simple
 }
 }
 
-#endif // __sitkImageRegistrationMethod_h
+#endif // sitkImageRegistrationMethod_h

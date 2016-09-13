@@ -25,8 +25,8 @@
  *  please refer to the NOTICE file at the top of the ITK source tree.
  *
  *=========================================================================*/
-#ifndef __itkSliceImageFilter_hxx
-#define __itkSliceImageFilter_hxx
+#ifndef itkSliceImageFilter_hxx
+#define itkSliceImageFilter_hxx
 
 #include "itkSliceImageFilter.h"
 #include "itkImageRegionIteratorWithIndex.h"

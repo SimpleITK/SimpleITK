@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkAffineTransform_h
-#define __sitkAffineTransform_h
+#ifndef sitkAffineTransform_h
+#define sitkAffineTransform_h
 
 #include "sitkCommon.h"
 #include "sitkTransform.h"
@@ -121,4 +121,4 @@ private:
 }
 }
 
-#endif // __sitkAffineTransform_h
+#endif // sitkAffineTransform_h

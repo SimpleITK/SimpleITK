@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkTransformHelper_hxx
-#define __sitkTransformHelper_hxx
+#ifndef sitkTransformHelper_hxx
+#define sitkTransformHelper_hxx
 
 
 #define SITK_TRANSFORM_SET_MPF(NAME,ITK_TYPENAME, COMPONENT)                      \
@@ -43,4 +43,4 @@
   }
 
 
-#endif // __sitkTransformHelper_hxx
+#endif // sitkTransformHelper_hxx

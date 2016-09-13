@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkEnableIf_h
-#define __sitkEnableIf_h
+#ifndef sitkEnableIf_h
+#define sitkEnableIf_h
 
 namespace itk
 {
@@ -62,4 +62,4 @@ template <class T> struct DisableIf<false, T> { typedef T Type; };
 }
 }
 
-#endif // __sitkEnableIf_h
+#endif // sitkEnableIf_h

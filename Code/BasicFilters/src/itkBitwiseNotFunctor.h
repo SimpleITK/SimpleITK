@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __itkBitwiseNotFunctor_h
-#define __itkBitwiseNotFunctor_h
+#ifndef itkBitwiseNotFunctor_h
+#define itkBitwiseNotFunctor_h
 
 #include <cmath>
 
@@ -53,4 +53,4 @@ public:
 }
 }
 
-#endif // __itkBitwiseNotFunctor_h
+#endif // itkBitwiseNotFunctor_h

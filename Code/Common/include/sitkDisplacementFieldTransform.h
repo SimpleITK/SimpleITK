@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkDisplacementFieldTransform_h
-#define __sitkDisplacementFieldTransform_h
+#ifndef sitkDisplacementFieldTransform_h
+#define sitkDisplacementFieldTransform_h
 
 #include "sitkCommon.h"
 #include "sitkTransform.h"
@@ -169,4 +169,4 @@ private:
 }
 }
 
-#endif // __sitkDisplacementFieldTransform_h
+#endif // sitkDisplacementFieldTransform_h

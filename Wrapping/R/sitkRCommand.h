@@ -16,8 +16,8 @@
  *
  *=========================================================================*/
 
-#ifndef __sitkRCommand_h
-#define __sitkRCommand_h
+#ifndef sitkRCommand_h
+#define sitkRCommand_h
 
 #include "sitkCommand.h"
 

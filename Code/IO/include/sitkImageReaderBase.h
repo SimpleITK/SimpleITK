@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkImageReaderBase_h
-#define __sitkImageReaderBase_h
+#ifndef sitkImageReaderBase_h
+#define sitkImageReaderBase_h
 
 #include "sitkProcessObject.h"
 #include "sitkPixelIDValues.h"
@@ -104,4 +104,4 @@ class SmartPointer;
 }
 
 
-#endif // __sitkImageReaderBase_h
+#endif // sitkImageReaderBase_h

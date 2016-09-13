@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkTransform_h
-#define __sitkTransform_h
+#ifndef sitkTransform_h
+#define sitkTransform_h
 
 #include "sitkCommon.h"
 #include "sitkExceptionObject.h"
@@ -292,4 +292,4 @@ SITKCommon_EXPORT void WriteTransform( const Transform &transform, const std::st
 }
 }
 
-#endif // __sitkTransform_h
+#endif // sitkTransform_h

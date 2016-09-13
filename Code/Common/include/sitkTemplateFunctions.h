@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkTemplateFunctions_h
-#define __sitkTemplateFunctions_h
+#ifndef sitkTemplateFunctions_h
+#define sitkTemplateFunctions_h
 
 #include "sitkMacro.h"
 #include "sitkCommon.h"

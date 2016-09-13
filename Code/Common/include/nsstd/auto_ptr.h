@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitk_nsstd_auto_ptr_h
-#define __sitk_nsstd_auto_ptr_h
+#ifndef sitk_nsstd_auto_ptr_h
+#define sitk_nsstd_auto_ptr_h
 
 #include "sitkConfigure.h"
 
@@ -38,4 +38,4 @@ using std::auto_ptr;
 }
 }
 
-#endif //__sitk_nsstd_auto_ptr_h
+#endif // sitk_nsstd_auto_ptr_h

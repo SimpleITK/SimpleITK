@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkEuler3DTransform_h
-#define __sitkEuler3DTransform_h
+#ifndef sitkEuler3DTransform_h
+#define sitkEuler3DTransform_h
 
 #include "sitkCommon.h"
 #include "sitkTransform.h"
@@ -113,4 +113,4 @@ nsstd::function<void(const std::vector<double>&, double)> m_pfSetMatrix;
 }
 }
 
-#endif // __sitkEuler3DTransform_h
+#endif // sitkEuler3DTransform_h

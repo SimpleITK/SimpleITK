@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __itkDivideFloorFunctor_h
-#define __itkDivideFloorFunctor_h
+#ifndef itkDivideFloorFunctor_h
+#define itkDivideFloorFunctor_h
 
 #include <cmath>
 
@@ -60,4 +60,4 @@ public:
 }
 }
 
-#endif // __itkDivisionFloorImageFilter_h
+#endif // itkDivisionFloorImageFilter_h

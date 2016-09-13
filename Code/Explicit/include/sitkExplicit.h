@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkExplicit_h
-#define __sitkExplicit_h
+#ifndef sitkExplicit_h
+#define sitkExplicit_h
 
 #include "sitkMacro.h"
 #if defined( SITKDLL ) && !defined( SITK_SimpleITKExplit_STATIC )
@@ -42,4 +42,4 @@
 #define SITKExplicit_EXPORT_EXPLICIT SITKExplicit_EXPORT
 #endif
 
-#endif // __sitkExplicit_h
+#endif // sitkExplicit_h

@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkPimpleImageBase_hxx
-#define __sitkPimpleImageBase_hxx
+#ifndef sitkPimpleImageBase_hxx
+#define sitkPimpleImageBase_hxx
 
 #include "sitkPimpleImageBase.h"
 #include "sitkMemberFunctionFactory.h"
@@ -804,4 +804,4 @@ namespace itk
   } // end namespace simple
 } // end namespace itk
 
-#endif // __sitkPimpleImageBase_hxx
+#endif // sitkPimpleImageBase_hxx

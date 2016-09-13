@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkBSplineTransform_h
-#define __sitkBSplineTransform_h
+#ifndef sitkBSplineTransform_h
+#define sitkBSplineTransform_h
 
 #include "sitkCommon.h"
 #include "sitkTransform.h"
@@ -124,4 +124,4 @@ private:
 }
 }
 
-#endif // __sitkBSplineTransform_h
+#endif // sitkBSplineTransform_h

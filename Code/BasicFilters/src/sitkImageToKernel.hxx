@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkBoundaryConditions_h
-#define __sitkBoundaryConditions_h
+#ifndef sitkBoundaryConditions_h
+#define sitkBoundaryConditions_h
 
 #include <memory>
 #include <itkImageKernelOperator.h>

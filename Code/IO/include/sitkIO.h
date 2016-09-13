@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkIO_h
-#define __sitkIO_h
+#ifndef sitkIO_h
+#define sitkIO_h
 
 #include "sitkMacro.h"
 
@@ -37,4 +37,4 @@
 
 #define SITKIO_HIDDEN SITK_ABI_HIDDEN
 
-#endif // __sitkIO_h
+#endif // sitkIO_h

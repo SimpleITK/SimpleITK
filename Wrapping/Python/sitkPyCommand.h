@@ -16,8 +16,8 @@
  *
  *=========================================================================*/
 
-#ifndef __sitkPyCommand_h
-#define __sitkPyCommand_h
+#ifndef sitkPyCommand_h
+#define sitkPyCommand_h
 
 #include "sitkCommand.h"
 

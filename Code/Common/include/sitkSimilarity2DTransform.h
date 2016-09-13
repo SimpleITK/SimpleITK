@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkSimilarity2DTransform_h
-#define __sitkSimilarity2DTransform_h
+#ifndef sitkSimilarity2DTransform_h
+#define sitkSimilarity2DTransform_h
 
 #include "sitkCommon.h"
 #include "sitkTransform.h"
@@ -101,4 +101,4 @@ private:
 }
 }
 
-#endif // __sitkSimilarity2DTransform_h
+#endif // sitkSimilarity2DTransform_h

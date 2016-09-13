@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkMacro_h
-#define __sitkMacro_h
+#ifndef sitkMacro_h
+#define sitkMacro_h
 
 #include <stdint.h>
 #include <stddef.h>

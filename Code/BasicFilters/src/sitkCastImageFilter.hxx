@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkCastImageFilter_hxx
-#define __sitkCastImageFilter_hxx
+#ifndef sitkCastImageFilter_hxx
+#define sitkCastImageFilter_hxx
 
 // include itk first to suppress std::copy conversion warning
 #include <itkCastImageFilter.h>
@@ -136,4 +136,4 @@ Image CastImageFilter::ExecuteInternalLabelToImage( const Image& inImage )
 } // end namespace simple
 } // end namespace itk
 
-#endif //__sitkCastImageFilter_hxx
+#endif // sitkCastImageFilter_hxx
