@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __itkDivideRealFunctor_h
-#define __itkDivideRealFunctor_h
+#ifndef itkDivideRealFunctor_h
+#define itkDivideRealFunctor_h
 
 #include <itkNumericTraits.h>
 
@@ -60,4 +60,4 @@ public:
 }
 }
 
-#endif // __itkDivisionRealImageFilter_h
+#endif // itkDivisionRealImageFilter_h

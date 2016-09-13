@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkImageConvert_h
-#define __sitkImageConvert_h
+#ifndef sitkImageConvert_h
+#define sitkImageConvert_h
 
 
 namespace itk
@@ -112,4 +112,4 @@ GetVectorImageFromImage( itk::Image< itk::Vector< TPixelType, NImageDimension >,
 }
 }
 
-#endif // __sitkImageConvert_h
+#endif // sitkImageConvert_h

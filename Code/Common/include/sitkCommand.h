@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkCommand_h
-#define __sitkCommand_h
+#ifndef sitkCommand_h
+#define sitkCommand_h
 
 
 #include "sitkCommon.h"

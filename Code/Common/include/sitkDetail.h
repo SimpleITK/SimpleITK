@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkDetail_h
-#define __sitkDetail_h
+#ifndef sitkDetail_h
+#define sitkDetail_h
 
 #include "sitkMemberFunctionFactoryBase.h"
 #include "Ancillary/FunctionTraits.h"

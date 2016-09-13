@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkMemberFunctionFactoryBase_h
-#define __sitkMemberFunctionFactoryBase_h
+#ifndef sitkMemberFunctionFactoryBase_h
+#define sitkMemberFunctionFactoryBase_h
 
 #include "sitkConfigure.h"
 
@@ -456,4 +456,4 @@ protected:
 } // end namespace simple
 } // end namespace itk
 
-#endif // __sitkMemberFunctionFactoryBase_h
+#endif // sitkMemberFunctionFactoryBase_h

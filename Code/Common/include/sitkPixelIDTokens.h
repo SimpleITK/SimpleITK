@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkPixelIDTokens_h
-#define __sitkPixelIDTokens_h
+#ifndef sitkPixelIDTokens_h
+#define sitkPixelIDTokens_h
 
 #include "sitkConfigure.h"
 #include "sitkPixelIDValues.h"

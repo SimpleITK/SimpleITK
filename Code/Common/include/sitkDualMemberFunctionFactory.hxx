@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkDualMemberFunctionFactory_hxx
-#define __sitkDualMemberFunctionFactory_hxx
+#ifndef sitkDualMemberFunctionFactory_hxx
+#define sitkDualMemberFunctionFactory_hxx
 
 #include "sitkDualMemberFunctionFactory.h"
 
@@ -225,4 +225,4 @@ DualMemberFunctionFactory< TMemberFunctionPointer >
 } // end namespace itk
 
 
-#endif //  __sitkDualMemberFunctionFactory_hxx
+#endif //  sitkDualMemberFunctionFactory_hxx

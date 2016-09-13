@@ -15,18 +15,18 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkExceptionObject_h
-#define __sitkExceptionObject_h
+#ifndef sitkExceptionObject_h
+#define sitkExceptionObject_h
 
 #include "sitkMacro.h"
 #include "sitkCommon.h"
 
-#ifndef __sitkMacro_h
+#ifndef sitkMacro_h
 #error "sitkMacro.h must be included before sitkExceptionObject.h"
-#endif //__sitkMacro_h
-#ifndef __sitkCommon_h
+#endif // sitkMacro_h
+#ifndef sitkCommon_h
 #error "sitkCommon.h must be included before sitkExceptionObject.h"
-#endif //__sitkCommon_h
+#endif // sitkCommon_h
 
 
 namespace itk
@@ -95,4 +95,4 @@ private:
 }
 }
 
-#endif // __sitkExceptionObject_h
+#endif // sitkExceptionObject_h

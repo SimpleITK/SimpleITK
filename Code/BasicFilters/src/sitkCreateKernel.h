@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkCreateKernel_h
-#define __sitkCreateKernel_h
+#ifndef sitkCreateKernel_h
+#define sitkCreateKernel_h
 
 
 #include "sitkKernel.h"
@@ -70,4 +70,4 @@ CreateKernel( KernelEnum kernelType, const std::vector<uint32_t> &size )
 } // end namespace itk
 
 
-#endif //__sitkCreateKernel_h
+#endif // sitkCreateKernel_h

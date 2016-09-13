@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkAdditionalProcedures_h
-#define __sitkAdditionalProcedures_h
+#ifndef sitkAdditionalProcedures_h
+#define sitkAdditionalProcedures_h
 
 
 #include "sitkBasicFilters.h"

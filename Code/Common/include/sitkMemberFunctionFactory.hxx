@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkMemberFunctionFactory_hxx
-#define __sitkMemberFunctionFactory_hxx
+#ifndef sitkMemberFunctionFactory_hxx
+#define sitkMemberFunctionFactory_hxx
 
 #include <cassert>
 
@@ -221,4 +221,4 @@ MemberFunctionFactory<TMemberFunctionPointer>
 } // end namespace itk
 
 
-#endif //  __sitkMemberFunctionFactory_h
+#endif //  sitkMemberFunctionFactory_h

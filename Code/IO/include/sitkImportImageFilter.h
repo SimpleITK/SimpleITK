@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkImportImageFilter_h
-#define __sitkImportImageFilter_h
+#ifndef sitkImportImageFilter_h
+#define sitkImportImageFilter_h
 
 #include "sitkMacro.h"
 #include "sitkImage.h"

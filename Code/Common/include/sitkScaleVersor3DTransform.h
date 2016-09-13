@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkScaleVersor3DTransform_h
-#define __sitkScaleVersor3DTransform_h
+#ifndef sitkScaleVersor3DTransform_h
+#define sitkScaleVersor3DTransform_h
 
 #include "sitkCommon.h"
 #include "sitkTransform.h"
@@ -112,4 +112,4 @@ private:
 }
 }
 
-#endif // __sitkVersorTransform_h
+#endif // sitkVersorTransform_h

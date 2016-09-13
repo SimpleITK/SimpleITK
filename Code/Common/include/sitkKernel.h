@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkKernel_h
-#define __sitkKernel_h
+#ifndef sitkKernel_h
+#define sitkKernel_h
 
 #include "sitkCommon.h"
 #include <ostream>
@@ -48,4 +48,4 @@ SITKCommon_EXPORT std::ostream& operator<<(std::ostream& os, const KernelEnum k)
 } // end namespace itk
 
 
-#endif //__sitkKernel_h
+#endif // sitkKernel_h

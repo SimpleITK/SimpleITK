@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkShow_h
-#define __sitkShow_h
+#ifndef sitkShow_h
+#define sitkShow_h
 
 #include "sitkImage.h"
 #include "sitkIO.h"

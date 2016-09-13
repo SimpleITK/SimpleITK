@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkSimilarity3DTransform_h
-#define __sitkSimilarity3DTransform_h
+#ifndef sitkSimilarity3DTransform_h
+#define sitkSimilarity3DTransform_h
 
 #include "sitkCommon.h"
 #include "sitkTransform.h"
@@ -110,4 +110,4 @@ nsstd::function<void(const std::vector<double>&, double)> m_pfSetMatrix;
 }
 }
 
-#endif // __sitkSimilarity3DTransform_h
+#endif // sitkSimilarity3DTransform_h

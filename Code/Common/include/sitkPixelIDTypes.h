@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkPixelIDTypes_h
-#define __sitkPixelIDTypes_h
+#ifndef sitkPixelIDTypes_h
+#define sitkPixelIDTypes_h
 
 
 namespace itk

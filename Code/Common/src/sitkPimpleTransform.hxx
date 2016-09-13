@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkPimpleTransform_hxx
-#define __sitkPimpleTransform_hxx
+#ifndef sitkPimpleTransform_hxx
+#define sitkPimpleTransform_hxx
 
 #include "sitkTransform.h"
 
@@ -381,4 +381,4 @@ private:
 }
 
 
-#endif //  __sitkPimpleTransform_hxx
+#endif //  sitkPimpleTransform_hxx

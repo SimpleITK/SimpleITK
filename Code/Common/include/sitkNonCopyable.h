@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkNonCopyable_h
-#define __sitkNonCopyable_h
+#ifndef sitkNonCopyable_h
+#define sitkNonCopyable_h
 
 #include "sitkCommon.h"
 
@@ -73,4 +73,4 @@ struct NonCopyable
 } // end namespace simple
 } // end namespace itk
 
-#endif //  __sitkNonCopyable_h
+#endif //  sitkNonCopyable_h

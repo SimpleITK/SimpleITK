@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkImageRegistrationMethod_CreateMetric_hxx
-#define __sitkImageRegistrationMethod_CreateMetric_hxx
+#ifndef sitkImageRegistrationMethod_CreateMetric_hxx
+#define sitkImageRegistrationMethod_CreateMetric_hxx
 
 #include "sitkImageRegistrationMethod.h"
 
@@ -107,4 +107,4 @@ ImageRegistrationMethod::CreateMetric( )
 
 }
 }
-#endif  // __sitkImageRegistrationMethod_CreateMetric_hxx
+#endif  // sitkImageRegistrationMethod_CreateMetric_hxx

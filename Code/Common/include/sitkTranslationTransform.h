@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkTranslationTransform_h
-#define __sitkTranslationTransform_h
+#ifndef sitkTranslationTransform_h
+#define sitkTranslationTransform_h
 
 #include "sitkCommon.h"
 #include "sitkTransform.h"
@@ -86,4 +86,4 @@ nsstd::function<std::vector<double>()> m_pfGetOffset;
 }
 }
 
-#endif // __sitkTranslationTransform_h
+#endif // sitkTranslationTransform_h
