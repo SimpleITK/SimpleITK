@@ -126,6 +126,12 @@ namespace itk
       return this->m_PimpleImage->GetNumberOfComponentsPerPixel();
     }
 
+    uint64_t Image::GetNumberOfPixels( void ) const
+    {
+      assert( m_PimpleImage );
+      return this->m_PimpleImage->GetNumberOfPixels();
+    }
+
     std::string Image::GetPixelIDTypeAsString( void ) const
     {
       return std::string( GetPixelIDValueAsString( this->GetPixelIDValue() ) );
