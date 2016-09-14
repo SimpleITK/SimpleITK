@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkImageRegistrationMethod_CreateParametersAdaptor_hxx
-#define __sitkImageRegistrationMethod_CreateParametersAdaptor_hxx
+#ifndef sitkImageRegistrationMethod_CreateParametersAdaptor_hxx
+#define sitkImageRegistrationMethod_CreateParametersAdaptor_hxx
 
 #include "sitkImageRegistrationMethod.h"
 
@@ -123,4 +123,4 @@ ImageRegistrationMethod::CreateTransformParametersAdaptor(TRegistrationMethod* m
 
 }
 }
-#endif // __sitkImageRegistrationMethod_CreateParametersAdaptor_hxx
+#endif // sitkImageRegistrationMethod_CreateParametersAdaptor_hxx

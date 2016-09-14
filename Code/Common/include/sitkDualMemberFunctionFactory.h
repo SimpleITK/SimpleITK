@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkDualMemberFunctionFactory_h
-#define __sitkDualMemberFunctionFactory_h
+#ifndef sitkDualMemberFunctionFactory_h
+#define sitkDualMemberFunctionFactory_h
 
 #include "sitkDetail.h"
 #include "sitkMemberFunctionFactoryBase.h"
@@ -180,4 +180,4 @@ protected:
 
 #include "sitkDualMemberFunctionFactory.hxx"
 
-#endif //  __sitkDualMemberFunctionFactory_h
+#endif //  sitkDualMemberFunctionFactory_h

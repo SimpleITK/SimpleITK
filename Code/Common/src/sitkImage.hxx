@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkImage_hxx
-#define __sitkImage_hxx
+#ifndef sitkImage_hxx
+#define sitkImage_hxx
 
 #include "sitkImage.h"
 
@@ -211,4 +211,4 @@ namespace itk
   }
 }
 
-#endif //__sitkImage_h
+#endif // sitkImage_h

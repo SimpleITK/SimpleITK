@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkImageSeriesReader_h
-#define __sitkImageSeriesReader_h
+#ifndef sitkImageSeriesReader_h
+#define sitkImageSeriesReader_h
 
 #include "sitkMacro.h"
 #include "sitkImage.h"

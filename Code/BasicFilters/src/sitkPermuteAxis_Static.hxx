@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkPermiteAxis_Static_hxx
-#define __sitkPermiteAxis_Static_hxx
+#ifndef sitkPermiteAxis_Static_hxx
+#define sitkPermiteAxis_Static_hxx
 
 #include "sitkPermuteAxesImageFilter.h"
 

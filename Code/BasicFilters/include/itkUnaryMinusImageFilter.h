@@ -15,8 +15,8 @@
  *  limitations under the License.
  *
  *=========================================================================*/
-#ifndef __itkUnaryMinusFunctor_h
-#define __itkUnaryMinusFunctor_h
+#ifndef itkUnaryMinusFunctor_h
+#define itkUnaryMinusFunctor_h
 
 namespace itk
 {
@@ -49,4 +49,4 @@ public:
 }
 }
 
-#endif // __itkUnaryMinusFunctor_h
+#endif // itkUnaryMinusFunctor_h

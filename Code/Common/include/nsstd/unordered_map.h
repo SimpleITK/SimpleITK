@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitk_nsstd_unordered_map_h
-#define __sitk_nsstd_unordered_map_h
+#ifndef sitk_nsstd_unordered_map_h
+#define sitk_nsstd_unordered_map_h
 
 #include "sitkConfigure.h"
 
@@ -47,4 +47,4 @@ using std::unordered_map;
 }
 
 
-#endif //__sitk_nsstd_unordered_map_h
+#endif // sitk_nsstd_unordered_map_h

@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkRegistration_h
-#define __sitkRegistration_h
+#ifndef sitkRegistration_h
+#define sitkRegistration_h
 
 #include "sitkMacro.h"
 
@@ -34,4 +34,4 @@
 
 #define SITKRegistration_HIDDEN SITK_ABI_HIDDEN
 
-#endif // __sitkRegistration_h
+#endif // sitkRegistration_h

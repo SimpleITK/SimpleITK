@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkEuler2DTransform_h
-#define __sitkEuler2DTransform_h
+#ifndef sitkEuler2DTransform_h
+#define sitkEuler2DTransform_h
 
 #include "sitkCommon.h"
 #include "sitkTransform.h"
@@ -96,4 +96,4 @@ private:
 }
 }
 
-#endif // __sitkEuler2DTransform_h
+#endif // sitkEuler2DTransform_h

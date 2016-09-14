@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkBasicFilters_h
-#define __sitkBasicFilters_h
+#ifndef sitkBasicFilters_h
+#define sitkBasicFilters_h
 
 #include "sitkMacro.h"
 #include "sitkInterpolator.h"
@@ -51,4 +51,4 @@
 #define SITKBasicFilters0_HIDDEN SITK_ABI_HIDDEN
 #define SITKBasicFilters_HIDDEN SITK_ABI_HIDDEN
 
-#endif // __sitkBasicFilters_h
+#endif // sitkBasicFilters_h

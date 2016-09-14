@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkScaleTransform_h
-#define __sitkScaleTransform_h
+#ifndef sitkScaleTransform_h
+#define sitkScaleTransform_h
 
 #include "sitkCommon.h"
 #include "sitkTransform.h"
@@ -102,4 +102,4 @@ private:
 }
 }
 
-#endif // __sitkScaleTransform_h
+#endif // sitkScaleTransform_h

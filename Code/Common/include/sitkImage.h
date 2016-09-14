@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkImage_h
-#define __sitkImage_h
+#ifndef sitkImage_h
+#define sitkImage_h
 
 #include "sitkCommon.h"
 #include "sitkTemplateFunctions.h"

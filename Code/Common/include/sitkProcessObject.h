@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkProcessObject_h
-#define __sitkProcessObject_h
+#ifndef sitkProcessObject_h
+#define sitkProcessObject_h
 
 #include "sitkCommon.h"
 #include "sitkNonCopyable.h"

@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkImageOperators_h
-#define __sitkImageOperators_h
+#ifndef sitkImageOperators_h
+#define sitkImageOperators_h
 
 #include "sitkAddImageFilter.h"
 #include "sitkSubtractImageFilter.h"
@@ -96,4 +96,4 @@ inline Image operator^=( Image &img1, int s ) { return img1 = Xor(img1, s ); }
 }
 }
 
-#endif // __sitkImageOperators_h
+#endif // sitkImageOperators_h

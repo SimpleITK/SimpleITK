@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkInterpolator_h
-#define __sitkInterpolator_h
+#ifndef sitkInterpolator_h
+#define sitkInterpolator_h
 
 #include "sitkCommon.h"
 #include <ostream>
@@ -116,4 +116,4 @@ SITKCommon_EXPORT std::ostream& operator<<(std::ostream& os, const InterpolatorE
 } // end namespace itk
 
 
-#endif //__sitkInterpolator_h
+#endif // sitkInterpolator_h

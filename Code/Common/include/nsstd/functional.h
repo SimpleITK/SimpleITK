@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitk_nsstd_functional_h
-#define __sitk_nsstd_functional_h
+#ifndef sitk_nsstd_functional_h
+#define sitk_nsstd_functional_h
 
 #include "sitkConfigure.h"
 
@@ -49,4 +49,4 @@ namespace placeholders =  std::placeholders;
 }
 }
 
-#endif //__sitk_nsstd_functional_h
+#endif // sitk_nsstd_functional_h

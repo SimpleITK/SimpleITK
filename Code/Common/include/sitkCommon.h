@@ -15,12 +15,12 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkCommon_h
-#define __sitkCommon_h
+#ifndef sitkCommon_h
+#define sitkCommon_h
 
 #include "sitkMacro.h"
 
-#ifndef __sitkMacro_h
+#ifndef sitkMacro_h
 #error "sitkMacro.h must be included before sitkCommon.h"
 #endif
 
@@ -43,4 +43,4 @@
 
 #define SITKCommon_HIDDEN SITK_ABI_HIDDEN
 
-#endif // __sitkCommon_h
+#endif // sitkCommon_h

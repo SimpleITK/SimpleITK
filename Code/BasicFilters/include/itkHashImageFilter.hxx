@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __itkHashImageFilter_hxx
-#define __itkHashImageFilter_hxx
+#ifndef itkHashImageFilter_hxx
+#define itkHashImageFilter_hxx
 
 #include "itkHashImageFilter.h"
 
@@ -182,4 +182,4 @@ HashImageFilter<TImageType>::PrintSelf(std::ostream & os, Indent indent) const
 
 } // end namespace itk
 
-#endif // __itkHashImageFilter_hxx
+#endif // itkHashImageFilter_hxx

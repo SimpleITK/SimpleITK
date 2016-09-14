@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkEvent_h
-#define __sitkEvent_h
+#ifndef sitkEvent_h
+#define sitkEvent_h
 
 #include "sitkCommon.h"
 #include <ostream>

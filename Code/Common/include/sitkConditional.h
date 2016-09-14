@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __sitkConditional_h
-#define __sitkConditional_h
+#ifndef sitkConditional_h
+#define sitkConditional_h
 
 namespace itk
 {
@@ -63,4 +63,4 @@ public:
 }
 }
 
-#endif // __sitkConditional_h
+#endif // sitkConditional_h

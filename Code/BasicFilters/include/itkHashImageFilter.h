@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef __itkHashImageFilter_h
-#define __itkHashImageFilter_h
+#ifndef itkHashImageFilter_h
+#define itkHashImageFilter_h
 
 
 #include "itkSimpleDataObjectDecorator.h"
@@ -118,4 +118,4 @@ private:
 
 #include "itkHashImageFilter.hxx"
 
-#endif // __itkHashImageFilter_h
+#endif // itkHashImageFilter_h
