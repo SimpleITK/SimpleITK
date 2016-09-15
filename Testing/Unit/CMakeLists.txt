@@ -259,7 +259,7 @@ target_link_libraries( sitkSystemInformationTest ${SimpleITK_LIBRARIES} ${ITK_LI
 add_test( NAME sitkSystemInformaionTest COMMAND sitkSystemInformationTest ${CMAKE_BINARY_DIR} )
 
 
-gtest_add_tests(SimpleITKUnitTestDriver0 ${SimpleITKUnitTestSource})
+gtest_add_tests(SimpleITKUnitTestDriver0 "" ${SimpleITKUnitTestSource})
 
 
 #######################################################
