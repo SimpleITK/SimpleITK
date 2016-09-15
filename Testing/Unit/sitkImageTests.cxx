@@ -1625,7 +1625,7 @@ TEST_F(Image,MetaDataDictionary)
   EXPECT_FALSE( img.HasMetaDataKey("k1") );
   EXPECT_EQ( 0u, img.GetMetaDataKeys().size() );
 
-  EXPECT_TRUE( img.EraseMetaData("k1") );
+  EXPECT_FALSE( img.EraseMetaData("k1") );
 
 }
 
