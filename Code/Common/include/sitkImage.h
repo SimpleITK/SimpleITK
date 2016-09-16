@@ -57,6 +57,16 @@ namespace simple
   public:
     typedef Image              Self;
 
+    //Utility typedefs for commonly used concepts used
+    //in manipulating SimpleITK images
+    typedef std::vector<uint32_t> IndexType;
+    typedef std::vector<int64_t>  SignedIndexType;
+    typedef std::vector<uint32_t> SizeType;
+    typedef std::vector<double>   OriginType;
+    typedef std::vector<double>   PointType;
+    typedef std::vector<double>   SpacingType;
+    typedef std::vector<double>   DirectionType;
+
     virtual ~Image( );
 
     /** \brief Default constructor, creates an image of size 0 */
@@ -188,6 +198,7 @@ namespace simple
     std::vector< double > TransformContinuousIndexToPhysicalPoint( const std::vector< double > &index) const;
 
     std::vector< unsigned int > GetSize( void ) const;
+    unsigned int GetNumberOfPixels( void ) const;
 
     unsigned int GetHeight( void ) const;
     unsigned int GetWidth( void ) const;

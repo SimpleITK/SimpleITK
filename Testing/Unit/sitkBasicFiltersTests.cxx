@@ -912,3 +912,65 @@ TEST(BasicFilters,OtsuThreshold_CheckNamesInputCompatibility)
   EXPECT_THROW( sitk::OtsuThreshold(input, mask1), sitk::GenericException );
   EXPECT_THROW( sitk::OtsuThreshold(input, mask2), sitk::GenericException );
 }
+
+
+#include "sitkImageOperators.h"
+TEST(BasicFilters,VectorMathMultplyDivideOperations)
+{
+  namespace sitk = itk::simple;
+  sitk::Image::SizeType size(2,3);
+  sitk::Image::IndexType idx(2,2);
+  sitk::Image my3Image(size,sitk::sitkVectorFloat32,5);
+  my3Image = my3Image + 3;
+  sitk::Image my4Image(size,sitk::sitkVectorFloat32,5);
+  my4Image = my4Image + 4;
+  sitk::Image my9Image(size,sitk::sitkVectorFloat32,5);
+  my9Image = my9Image + 9;
+  sitk::Image my12Image(size,sitk::sitkVectorFloat32,5);
+  my12Image = my12Image + 12;
+  sitk::Image my15Image(size,sitk::sitkVectorFloat32,5);
+  my15Image = my15Image + 15;
+  sitk::Image my48Image(size,sitk::sitkVectorFloat32,5);
+  my48Image = my48Image + 48;
+
+  sitk::Image out;
+  sitk::MultiplyImageAdaptor(out,my3Image,4.0);
+  EXPECT_EQ( "50970d33783e30297c7c1ffd5c1146eec4be615a", sitk::Hash( out )) << " Multiply vector by scalar interface ";
+  sitk::MultiplyImageAdaptor(out,4.0,my3Image);
+  EXPECT_EQ( "50970d33783e30297c7c1ffd5c1146eec4be615a", sitk::Hash( out )) << " Multiply vector by scalar interface ";
+  sitk::DivideImageAdaptor(out,my3Image,0.25);
+  EXPECT_EQ( "50970d33783e30297c7c1ffd5c1146eec4be615a", sitk::Hash( out )) << " Divide vector by scalar interface ";
+
+  sitk::DivideImageAdaptor(out,48,my4Image);
+  EXPECT_EQ( "50970d33783e30297c7c1ffd5c1146eec4be615a", sitk::Hash( out )) << " Divide vector by scalar interface ";
+
+
+  out = 48 / my4Image;
+  EXPECT_EQ( "50970d33783e30297c7c1ffd5c1146eec4be615a", sitk::Hash( out )) << " Divide vector by scalar interface ";
+
+  out = my9Image + my3Image;
+  EXPECT_EQ( "50970d33783e30297c7c1ffd5c1146eec4be615a", sitk::Hash( out )) << " Add vector by scalar interface ";
+
+  out = my15Image - my3Image;
+  EXPECT_EQ( "50970d33783e30297c7c1ffd5c1146eec4be615a", sitk::Hash( out )) << " Subtract vector by scalar interface ";
+
+#if 0
+  out = my3Image * my4Image;
+  EXPECT_EQ( "50970d33783e30297c7c1ffd5c1146eec4be615a", sitk::Hash( out )) << " Multiply vector by scalar interface ";
+
+  out = my48Image / my4Image;
+  EXPECT_EQ( "50970d33783e30297c7c1ffd5c1146eec4be615a", sitk::Hash( out )) << " Divide vector by scalar interface ";
+#endif
+
+#if 0
+  {
+    std::cout << __FILE__ << " " << __LINE__ << std::endl;
+    std::cout << "\n\n\n==========================" << std::endl;
+    const std::vector<float> oneVector = out.GetPixelAsVectorFloat32(idx);
+    std::for_each(oneVector.begin(), oneVector.end(), [=] (const float x) { std::cout << x << " ";} );
+    std::cout << std::endl;
+    std::cout << "\n\n\n==========================" << std::endl;
+  }
+#endif
+
+}

@@ -261,16 +261,28 @@ namespace itk
           return 0;
           }
 
-        typename ImageType::RegionType largestRegion = this->m_Image->GetLargestPossibleRegion();
+        const typename ImageType::RegionType & largestRegion = this->m_Image->GetLargestPossibleRegion();
         return largestRegion.GetSize(dimension);
       }
 
     virtual std::vector<unsigned int> GetSize( void ) const
       {
-        typename ImageType::RegionType largestRegion = this->m_Image->GetLargestPossibleRegion();
+        const typename ImageType::RegionType & largestRegion = this->m_Image->GetLargestPossibleRegion();
         std::vector<unsigned int> size( ImageType::ImageDimension );
 
         return sitkITKVectorToSTL<unsigned int>( largestRegion.GetSize() );
+      }
+
+    virtual unsigned int GetNumberOfPixels( void ) const
+      {
+        const typename ImageType::RegionType & largestRegion = this->m_Image->GetLargestPossibleRegion();
+        const typename ImageType::SizeType & size = largestRegion.GetSize();
+        unsigned int numPixels = 1;
+        for( size_t i=0; i < ImageType::ImageDimension; ++i )
+          {
+          numPixels *= size[i];
+          }
+        return numPixels;
       }
 
     std::string ToString( void ) const
