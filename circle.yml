@@ -20,6 +20,7 @@ machine:
         - sudo apt-get remove cmake && sudo apt-get install ninja-build swig distcc lua5.1
         - sudo sed -i.bak s/STARTDISTCC=\"false\"/STARTDISTCC=\"true\"/g /etc/default/distcc && sudo /etc/init.d/distcc start
         - mkdir -p "${DISTCC_DIR}" && printf -- "--randomize localhost/2 --localslots=1\n" > "${DISTCC_DIR}/hosts" && for ((i=1;i<CIRCLE_NODE_TOTAL;i++)); do printf "ubuntu@node$i/2\n" >> "${DISTCC_DIR}/hosts"; done
+        - if [ $CIRCLE_NODE_INDEX -eq 0 ]; then mkdir -p .ssh/tmp && printf -- "Host *\nControlMaster auto\nControlPath ~/.ssh/tmp/master-%%r@%%h:%%p\n" >> .ssh/config; for ((i=1;i<CIRCLE_NODE_TOTAL;i++)); do ssh -fMN ubuntu@node$i; done; fi
         - mkdir -p "${ExternalData_OBJECT_STORES}"
         - cd ${ExternalData_OBJECT_STORES} && if [[ ! -e ${CMAKE_DOWNLOAD_FILE} ]]; then curl -sSO https://cmake.org/files/v3.6/${CMAKE_DOWNLOAD_FILE}; fi
         - echo "y\n" | sudo bash "${ExternalData_OBJECT_STORES}/${CMAKE_DOWNLOAD_FILE}" --prefix=/usr/local --exclude-subdir
@@ -28,6 +29,7 @@ dependencies:
     cache_directories:
         - "~/.ExternalData"
     pre:
+        - if [ $CIRCLE_NODE_INDEX -eq 0 ]; then for ((i=1;i<CIRCLE_NODE_TOTAL;i++)); do ssh -fMN ubuntu@node$i; done ; fi
         - mkdir -p ${SIMPLEITK_BUILD_DIR}
     override:
         - if [ $CIRCLE_NODE_INDEX -eq 0 ]; then cmake -DENABLE_SHARED:BOOL=ON -DWRAP_LUA:BOOL=OFF -DWRAP_PYTHON:BOOL=OFF -DWRAP_JAVA:BOOL=OFF -DWRAP_CSHARP:BOOL=OFF -DWRAP_TCL:BOOL=OFF -DWRAP_R:BOOL=OFF -DWRAP_RUBY:BOOL=OFF -DITK_REPOSITORY=${ITK_REPOSITORY} -DUSE_SYSTEM_SWIG:BOOL=ON -DUSE_SYSTEM_LUA:BOOL=ON -DCMAKE_BUILD_TYPE=Release "${SIMPLEITK_SRC_DIR}/SuperBuild"; fi:
