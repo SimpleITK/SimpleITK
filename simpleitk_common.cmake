@@ -25,16 +25,19 @@
 # to configure it:
 #
 #   dashboard_model           = Nightly | Experimental | Continuous
+#   dashboard_track           = Optional track to submit dashboard to
 #   dashboard_loop            = Repeat until N seconds have elapsed
 #   dashboard_root_name       = Change name of "My Tests" directory
 #   dashboard_source_name     = Name of source directory (SimpleITK)
 #   dashboard_binary_name     = Name of binary directory (SimpleITK-build)
 #   dashboard_cache           = Initial CMakeCache.txt file content
+#   dashboard_do_cache        = Always write CMakeCache.txt
 #   dashboard_configure_options   = options pass to test
 #   dashboard_do_coverage     = True to enable coverage (ex: gcov)
 #   dashboard_do_memcheck     = True to enable memcheck (ex: valgrind)
 #   dashboard_no_clean        = True to skip build tree wipeout
-#   CTEST_UPDATE_COMMAND      = path to svn command-line client
+#   dashboard_no_update       = True to skip source tree update
+#   CTEST_UPDATE_COMMAND      = path to git command-line client
 #   CTEST_BUILD_FLAGS         = build tool arguments (ex: -j2)
 #   CTEST_DASHBOARD_ROOT      = Where to put source and build trees
 #   CTEST_TEST_CTEST          = Whether to run long CTestTest* tests
@@ -278,11 +281,12 @@ ${cache_build_type}
 ${cache_make_program}
 ${dashboard_cache}
 ")
-endmacro(write_cache)
+endmacro()
 
 # Start with a fresh build tree.
-file(MAKE_DIRECTORY "${CTEST_BINARY_DIRECTORY}")
-if(NOT "${CTEST_SOURCE_DIRECTORY}" STREQUAL "${CTEST_BINARY_DIRECTORY}"
+if(NOT EXISTS "${CTEST_BINARY_DIRECTORY}")
+  file(MAKE_DIRECTORY "${CTEST_BINARY_DIRECTORY}")
+elseif(NOT "${CTEST_SOURCE_DIRECTORY}" STREQUAL "${CTEST_BINARY_DIRECTORY}"
     AND NOT dashboard_no_clean)
   message("Clearing build trees...")
 
@@ -336,7 +340,11 @@ while(NOT dashboard_done)
   if(COMMAND dashboard_hook_start)
     dashboard_hook_start()
   endif()
-  ctest_start(${dashboard_model})
+  if(dashboard_track)
+    ctest_start(${dashboard_model} TRACK ${dashboard_track})
+  else()
+    ctest_start(${dashboard_model})
+  endif()
 
   # make sure correct branch is checked out
   execute_process(COMMAND ${CTEST_GIT_COMMAND}  rev-parse --abbrev-ref HEAD
@@ -360,14 +368,17 @@ while(NOT dashboard_done)
 
   # Always build if the tree is fresh.
   set(dashboard_fresh 0)
-  if(NOT EXISTS "${CTEST_BINARY_DIRECTORY}/CMakeCache.txt")
+  if(NOT EXISTS "${CTEST_BINARY_DIRECTORY}/CMakeCache.txt"
+     OR "${dashboard_do_cache}")
     set(dashboard_fresh 1)
-    message("Starting fresh build...")
+    message("Writing initial dashboard cache...")
     write_cache()
   endif()
 
   # Look for updates.
-  ctest_update(RETURN_VALUE count)
+  if(NOT dashboard_no_update)
+    ctest_update(RETURN_VALUE count)
+  endif()
   if(NOT dashboard_no_submit)
     ctest_submit(PARTS Start Update)
   endif()
@@ -377,6 +388,7 @@ while(NOT dashboard_done)
   if(dashboard_fresh OR NOT dashboard_continuous OR count GREATER 0)
     ctest_configure( SOURCE "${CTEST_SOURCE_DIRECTORY}/SuperBuild"
                      OPTIONS "${dashboard_configure_options}"
+                     RETURN_VALUE configure_return
 		      )
     if(NOT dashboard_no_submit)
       ctest_submit(PARTS Configure)
@@ -387,7 +399,10 @@ while(NOT dashboard_done)
     if(COMMAND dashboard_hook_build)
       dashboard_hook_build()
     endif()
-    ctest_build( BUILD "${CTEST_BINARY_DIRECTORY}" APPEND NUMBER_ERRORS build_number_errors )
+    ctest_build( BUILD "${CTEST_BINARY_DIRECTORY}"
+                 APPEND
+                 NUMBER_ERRORS build_number_errors
+                 NUMBER_WARNINGS build_number_warnings)
     if(NOT dashboard_no_submit)
       ctest_submit(PARTS Build)
     endif()
@@ -396,7 +411,9 @@ while(NOT dashboard_done)
       if(COMMAND dashboard_hook_test)
 	dashboard_hook_test()
       endif()
-      ctest_test( BUILD "${CTEST_BINARY_DIRECTORY}/SimpleITK-build" ${CTEST_TEST_ARGS} )
+      ctest_test( BUILD "${CTEST_BINARY_DIRECTORY}/SimpleITK-build"
+                  RETURN_VALUE test_return
+                  ${CTEST_TEST_ARGS} )
       if(NOT dashboard_no_submit)
 	ctest_submit(PARTS Test)
       endif()
