@@ -148,6 +148,8 @@ TEST_F(Image,Create) {
   EXPECT_EQ ( size[1], shortImage->GetHeight() );
   EXPECT_EQ ( size[2], shortImage->GetDepth() );
 
+  EXPECT_EQ ( 274560u, shortImage->GetNumberOfPixels() );
+
 }
 
 TEST_F(Image,ImageDataType) {
@@ -220,6 +222,7 @@ TEST_F(Image,Constructors) {
   EXPECT_EQ ( 0u, image.GetWidth() );
   EXPECT_EQ ( 0u, image.GetHeight() );
   EXPECT_EQ ( 0u, image.GetDepth() );
+  EXPECT_EQ ( 0u, image.GetNumberOfPixels() );
   }
 
   itk::simple::Image image ( 64, 65, 66, itk::simple::sitkUInt8 );
@@ -231,6 +234,7 @@ TEST_F(Image,Constructors) {
   EXPECT_EQ ( 64u, image.GetWidth() );
   EXPECT_EQ ( 65u, image.GetHeight() );
   EXPECT_EQ ( 66u, image.GetDepth() );
+  EXPECT_EQ ( 274560u, image.GetNumberOfPixels() );
   EXPECT_EQ( image.GetDirection(), directionI3D );
 
   image = itk::simple::Image ( 64, 65, 66, itk::simple::sitkInt16 );
@@ -242,6 +246,7 @@ TEST_F(Image,Constructors) {
   EXPECT_EQ ( 64u, image.GetWidth() );
   EXPECT_EQ ( 65u, image.GetHeight() );
   EXPECT_EQ ( 66u, image.GetDepth() );
+  EXPECT_EQ ( 274560u, image.GetNumberOfPixels() );
   EXPECT_EQ( image.GetDirection(), directionI3D );
 
   image = itk::simple::Image ( 64, 65, itk::simple::sitkUInt16 );
@@ -253,6 +258,7 @@ TEST_F(Image,Constructors) {
   EXPECT_EQ ( 64u, image.GetWidth() );
   EXPECT_EQ ( 65u, image.GetHeight() );
   EXPECT_EQ ( 0u, image.GetDepth() );
+  EXPECT_EQ ( 4160u, image.GetNumberOfPixels() );
   EXPECT_EQ ( 1u, image.GetNumberOfComponentsPerPixel() );
   EXPECT_EQ( image.GetDirection(), directionI2D );
 
@@ -299,6 +305,7 @@ TEST_F(Image,Constructors) {
   EXPECT_EQ ( 64u, image.GetWidth() );
   EXPECT_EQ ( 65u, image.GetHeight() );
   EXPECT_EQ ( 66u, image.GetDepth() );
+  EXPECT_EQ ( 274560u, image.GetNumberOfPixels() );
   EXPECT_EQ ( 1u, image.GetNumberOfComponentsPerPixel() );
   EXPECT_EQ( image.GetDirection(), directionI3D );
 
@@ -315,6 +322,7 @@ TEST_F(Image,Constructors) {
 
   image = itk::simple::Image ( 64, 65, 66, itk::simple::sitkVectorUInt16 );
   EXPECT_EQ ( 3u, image.GetNumberOfComponentsPerPixel() );
+  EXPECT_EQ ( 274560u, image.GetNumberOfPixels() );
 }
 
 TEST_F(Image,Hash) {
@@ -452,7 +460,7 @@ TEST_F(Image, CopyInformation)
   EXPECT_EQ( img1.GetSpacing(), img2.GetSpacing() );
   EXPECT_EQ( img1.GetOrigin(), img2.GetOrigin() );
   EXPECT_EQ( img1.GetDirection(), img2.GetDirection() );
-
+  EXPECT_EQ( img1.GetNumberOfPixels(), img2.GetNumberOfPixels() );
 }
 
 TEST_F(Image, CopyOnWrite)

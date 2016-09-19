@@ -44,6 +44,7 @@ namespace itk
 
     virtual PixelIDValueEnum GetPixelID(void) const = 0;
     virtual unsigned int GetDimension( void ) const  = 0;
+    virtual uint64_t GetNumberOfPixels( void ) const = 0;
     virtual unsigned int GetNumberOfComponentsPerPixel( void ) const = 0;
 
     virtual PimpleImageBase *ShallowCopy(void) const = 0;
@@ -57,6 +58,7 @@ namespace itk
 
     virtual std::vector< unsigned int > GetSize( void ) const = 0;
     virtual unsigned int GetSize( unsigned int dimension ) const = 0;
+
 
     virtual std::vector<double> GetOrigin( void ) const = 0;
     virtual void SetOrigin( const std::vector<double> &orgn ) = 0;
