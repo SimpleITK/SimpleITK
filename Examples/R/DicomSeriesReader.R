@@ -17,7 +17,7 @@
 #=========================================================================
 # Run with:
 #
-# Rscript --vanilla FilterProgressReporting.R input variance output
+# Rscript --vanilla DicomSeriesReader.R input_directory output_file
 #
 
 
@@ -25,33 +25,25 @@ library(SimpleITK)
 
 args <- commandArgs( TRUE )
 
-if (length(args) <  3){
-   write("Usage arguments: <input> <variance> <output>", stderr())
+if (length(args) <  2) {
+   write("Usage arguments: <input_directory> <output_file>", stderr())
    quit(1)
 }
 
-reader <- ImageFileReader()
-reader$SetFileName(args[[1]])
-image = reader$Execute()
 
-pixelID <- image$GetPixelID()
+cat( "Reading Dicom directory:", args[[1]] )
 
-gaussian <- DiscreteGaussianImageFilter()
-gaussian$SetVariance( as.numeric(args[2]) )
+reader <- ImageSeriesReader()
 
-##! [R lambda command]
-gaussian$AddCommand( 'sitkStartEvent',  function(method) {cat("StartEvent\n")} )
-##! [R lambda command]
+dicomNames <- ImageSeriesReader_GetGDCMSeriesFileNames(args[[1]])
+reader$SetFileNames(dicomNames)
 
-cmd <- RCommand()
-gaussian$AddCommand( 'sitkEndEvent', cmd )
+image <- reader$Execute()
 
-image = gaussian$Execute( image )
+size <- image$GetSize()
 
-caster <- CastImageFilter()
-caster$SetOutputPixelType( pixelID )
-image = caster$Execute( image )
+cat ("Image size:", size[1], size[2], size[3])
 
-writer <- ImageFileWriter()
-writer$SetFileName( args[[3]] )
-writer$Execute( image )
+cat("Writing image:", args[[2]])
+
+WriteImage(image, args[[2]])
