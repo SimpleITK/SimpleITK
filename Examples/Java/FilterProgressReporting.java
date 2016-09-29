@@ -37,7 +37,8 @@ class FilterProgressReporting {
 
   public static void main(String argv[]) {
     if ( argv.length < 3 ) {
-      System.out.format("Usage: java %s <input> <variance> <output>", argv[0]);
+      System.out.format("Usage: java %s <input> <variance> <output>", "FilterProgressReporting" );
+      System.exit(-1);
     }
 
       org.itk.simple.ImageFileReader reader = new org.itk.simple.ImageFileReader();
