@@ -13,7 +13,7 @@ set_source_files_properties ( SimpleITK.i PROPERTIES CPLUSPLUS ON )
 set(CMAKE_SWIG_FLAGS ${CMAKE_SWIG_GLOBAL_FLAGS})
 set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR})
 set(SWIG_MODULE_SimpleITK_EXTRA_DEPS ${SWIG_EXTRA_DEPS} ${CMAKE_CURRENT_SOURCE_DIR}/R.i )
-SWIG_add_module ( SimpleITK r SimpleITK.i sitkRCommand.cxx )
+SWIG_add_module ( SimpleITK r SimpleITK.i sitkRCommand.cxx sitkRArray.cxx )
 target_link_libraries ( ${SWIG_MODULE_SimpleITK_TARGET_NAME} ${SimpleITK_LIBRARIES} )
 
 sitk_target_link_libraries_with_dynamic_lookup ( ${SWIG_MODULE_SimpleITK_TARGET_NAME} ${R_LIBRARIES} )
