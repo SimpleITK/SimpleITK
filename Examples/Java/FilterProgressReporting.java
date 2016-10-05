@@ -37,7 +37,8 @@ class FilterProgressReporting {
 
   public static void main(String argv[]) {
     if ( argv.length < 3 ) {
-      System.out.format("Usage: java %s <input> <variance> <output>", argv[0]);
+      System.out.format("Usage: java %s <input> <variance> <output>", "FilterProgressReporting" );
+      System.exit(-1);
     }
 
       org.itk.simple.ImageFileReader reader = new org.itk.simple.ImageFileReader();
@@ -45,21 +46,21 @@ class FilterProgressReporting {
       Image img = reader.execute();
 
       DiscreteGaussianImageFilter filter = new DiscreteGaussianImageFilter();
-      filter.setVariance( Double.valueOf( argv[1] ).doubleValue() );
+      filter.setVariance(Double.valueOf( argv[1] ).doubleValue());
 
       MyCommand cmd = new MyCommand(filter);
-      filter.addCommand( EventEnum.sitkProgressEvent, cmd );
+      filter.addCommand(EventEnum.sitkProgressEvent, cmd);
 
       Image blurredImg = filter.execute(img);
 
       CastImageFilter caster = new CastImageFilter();
-      caster.setOutputPixelType( img.getPixelIDValue() );
-      Image castImg = caster.execute( blurredImg );
+      caster.setOutputPixelType(img.getPixelIDValue());
+      Image castImg = caster.execute(blurredImg);
 
       ImageFileWriter writer = new ImageFileWriter();
       writer.setFileName(argv[2]);
 
-      writer.execute( castImg );
+      writer.execute(castImg);
 
     }
 
