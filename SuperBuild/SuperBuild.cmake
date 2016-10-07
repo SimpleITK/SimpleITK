@@ -365,6 +365,10 @@ else()
 endif()
 
 
+set(ITKExternalITKModule_DEPENDENCIES ITK)
+include(External_ITKExternalITKModule)
+list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES ITKExternalITKModule)
+
 
 get_cmake_property( _varNames VARIABLES )
 
