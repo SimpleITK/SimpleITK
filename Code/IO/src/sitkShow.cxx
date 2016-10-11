@@ -49,35 +49,35 @@ namespace itk
   const unsigned int ProcessDelay = 500;
 #endif
 
-#define IMAGEJ_OPEN_MACRO "\'open(\"%f\"); rename(\"%t\"); \'"
-#define NIFTI_COLOR_MACRO "\'run(\"Make Composite\", \"display=Composite\");\'"
+#define IMAGEJ_OPEN_MACRO "open(\"%f\"); rename(\"%t\");"
+#define NIFTI_COLOR_MACRO " run(\"Make Composite\", \"display=Composite\");"
 
 
 #if defined(_WIN32)
-  const static char * ShowImageCommand = "%a -eval " IMAGEJ_OPEN_MACRO;
-  const static char * ShowColorImageCommand = "%a -eval " IMAGEJ_OPEN_MACRO " -eval " NIFTI_COLOR_MACRO;
+  const static char * ShowImageCommand = "%a -eval \'" IMAGEJ_OPEN_MACRO "\'";
+  const static char * ShowColorImageCommand = "%a -eval \'" IMAGEJ_OPEN_MACRO NIFTI_COLOR_MACRO "\'";
 
 #elif defined(__APPLE__)
   // The "-n" flag tells OSX to launch a new instance of ImageJ, even if one is already running.
   // We do this because otherwise the macro command line argument is not correctly passed to
   // a previously running instance of ImageJ.
-  const static char * ShowImageCommand = "open -a %a -n --args -eval " IMAGEJ_OPEN_MACRO;
-  const static char * ShowColorImageCommand = "open -a %a -n --args -eval " IMAGEJ_OPEN_MACRO " -eval " NIFTI_COLOR_MACRO;
+  const static char * ShowImageCommand = "open -a %a -n --args -eval \'" IMAGEJ_OPEN_MACRO "\'";
+  const static char * ShowColorImageCommand = "open -a %a -n --args -eval \'" IMAGEJ_OPEN_MACRO NIFTI_COLOR_MACRO "\'";
 
 #else
   // linux and other systems
-  const static char * ShowImageCommand = "%a -e " IMAGEJ_OPEN_MACRO;
+  const static char * ShowImageCommand = "%a -e \'" IMAGEJ_OPEN_MACRO "\'";
 
-  const static char * ShowColorImageCommand = "%a -e " IMAGEJ_OPEN_MACRO " -e " NIFTI_COLOR_MACRO;
+  const static char * ShowColorImageCommand = "%a -e \'" IMAGEJ_OPEN_MACRO NIFTI_COLOR_MACRO "\'";
 #endif
 
 
   // For Fiji, we only need 2 commands, not 6.  We don't need a separate command for color images.
   // Also the linux version uses the "-eval" flag instead of "-e".
 #if defined(__APPLE__)
-  const static char * FijiShowCommand = "open -a %a -n --args -eval " IMAGEJ_OPEN_MACRO;
+  const static char * FijiShowCommand = "open -a %a -n --args -eval \'" IMAGEJ_OPEN_MACRO "\'";
 #else
-  const static char * FijiShowCommand = "%a -eval " IMAGEJ_OPEN_MACRO;
+  const static char * FijiShowCommand = "%a -eval \'" IMAGEJ_OPEN_MACRO "\'";
 #endif
 
 
@@ -398,6 +398,8 @@ namespace itk
 #else
 
   // linux and other systems
+  paths.push_back( "./" + directory );
+  paths.push_back( "~/bin/" + directory );
   paths.push_back( "/opt/" + directory );
   paths.push_back( "/usr/local/" + directory );
   ExecutableName = itksys::SystemTools::FindFile ( name.c_str(), paths );
