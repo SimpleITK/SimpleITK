@@ -45,8 +45,13 @@ endfunction( )
 #
 function( VariableListToArgs var_list args )
   foreach( var IN LISTS ${var_list} )
-    if( NOT ${var} STREQUAL "" ) # if variable has been set
+    if( DEFINED ${var} AND NOT ${var} STREQUAL "" ) # if variable has been set
       get_property( type CACHE ${var} PROPERTY TYPE )
+      if (NOT "${type}" STREQUAL "")
+        set(type ":${type}")
+      else()
+        set(type ":UNINITIALIZED")
+      endif()
       set(value ${${var}})
       STRING( REPLACE ";" "$<SEMICOLON>" value "${value}" )
       list( APPEND _args "-D${var}:${type}=${value}" )
