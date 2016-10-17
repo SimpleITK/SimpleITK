@@ -31,6 +31,15 @@
       "detaileddescriptionSet" : "",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : "Set/Get the colormap object."
+    },
+    {
+      "name" : "UseInputImageExtremaForScaling",
+      "type" : "bool",
+      "default" : "true",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get UseInputImageExtremaForScaling. If true, the colormap uses the min and max values from the image to scale appropriately. Otherwise, these values can be set in the colormap manually.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get UseInputImageExtremaForScaling. If true, the colormap uses the min and max values from the image to scale appropriately. Otherwise, these values can be set in the colormap manually."
     }
   ],
   "tests" : [
