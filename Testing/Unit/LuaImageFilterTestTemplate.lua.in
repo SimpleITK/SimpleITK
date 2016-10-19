@@ -87,6 +87,8 @@ elseif point_vec and point_vec == 1 then
 elseif dim_vec and dim_vec == 1 then
    if type == "bool" then
      OUT="idx = SimpleITK.VectorBool();"
+   elseif type == "uint8_t" then
+     OUT="idx = SimpleITK.VectorUInt8();"
    elseif type == "int" then
       OUT="idx = SimpleITK.VectorInt32();"
    elseif type == "double" then
