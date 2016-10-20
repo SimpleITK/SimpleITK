@@ -189,7 +189,7 @@ elseif dim_vec == 1 then
         elseif type == "double" then
           OUT="VectorDouble idx = new VectorDouble( v.length );"
         elseif type == "uint8_t" then
-          OUT="VectorUInt16 idx = new VectorUInt16( v.length );"
+          OUT="VectorUInt8 idx = new VectorUInt8( v.length );"
         elseif type == "uint16_t" then
           OUT="VectorUInt16 idx = new VectorUInt16( v.length );"
         elseif type == "uint32_t" then
@@ -197,7 +197,7 @@ elseif dim_vec == 1 then
         elseif type == "uint64_t" then
           OUT="VectorUInt64 idx = new VectorUInt64( v.length );"
         elseif type == "int8_t" then
-          OUT="VectorInt16 idx = new VectorInt16( v.length );"
+          OUT="VectorInt8 idx = new VectorInt8( v.length );"
         elseif type == "int16_t" then
           OUT="VectorInt16 idx = new VectorInt16( v.length );"
         elseif type == "int32_t" then
