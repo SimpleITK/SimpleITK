@@ -2,6 +2,9 @@
   "name" : "LabelOverlayImageFilter",
   "template_code_filename" : "DualImageFilter",
   "template_test_filename" : "ImageFilter",
+  "include_files" : [
+    "sitkLabelFunctorUtils.hxx"
+  ],
   "number_of_inputs" : 0,
   "doc" : "",
   "pixel_types" : "BasicPixelIDTypeList",
@@ -38,6 +41,12 @@
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : "Set/Get the background value",
       "detaileddescriptionSet" : "Set/Get the background value"
+    },
+    {
+      "name" : "Colormap",
+      "type" : "std::vector<uint8_t>",
+      "default" : "std::vector<uint8_t>()",
+      "custom_itk_cast" : "SetLabelFunctorFromColormap(filter->GetFunctor(),this->m_Colormap);"
     }
   ],
   "tests" : [

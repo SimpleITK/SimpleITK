@@ -81,6 +81,8 @@ elseif dim_vec and dim_vec == 1 then
 
    if type == "bool" then
      OUT="v = Simpleitk::VectorBool.new"
+   elseif type == "uint8_t" then
+     OUT="v = Simpleitk::VectorUInt8.new"
    elseif type == "int" then
      OUT="v = Simpleitk::VectorInt32.new"
    elseif type == "double" then
