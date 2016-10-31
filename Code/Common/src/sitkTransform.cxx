@@ -99,8 +99,6 @@ bool RegisterMoreTransforms(void)
 {
   typedef itk::MatrixOffsetTransformBase<double, Dimension, Dimension> MatrixOffsetTransformType;
   itk::TransformFactory<MatrixOffsetTransformType>::RegisterTransform();
-  typedef itk::MatrixOffsetTransformBase<double, Dimension, Dimension> MatrixOffsetTransformType;
-  itk::TransformFactory<MatrixOffsetTransformType>::RegisterTransform();
 
   // Only BSpline transforms of order 3 are registered in ITK
   typedef itk::BSplineTransform<double, Dimension, 0> BSplineTransformO0Type;
