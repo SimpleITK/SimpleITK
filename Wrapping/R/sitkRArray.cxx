@@ -17,6 +17,8 @@
  *=========================================================================*/
 
 
+#include <iostream>
+
 #include <Rdefines.h>
 #include <Rversion.h>
 
