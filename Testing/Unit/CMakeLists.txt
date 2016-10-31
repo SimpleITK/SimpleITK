@@ -100,7 +100,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
   set (filter_json_file ${SimpleITK_SOURCE_DIR}/Code/BasicFilters/json/${FILTERNAME}.json)
   set (template_expansion_script ${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/ExpandTemplate.lua)
   set (template_include_dir
-  ${SimpleITK_SOURCE_DIR}/TemplateComponents)
+  ${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/Components)
 
 
   ######
