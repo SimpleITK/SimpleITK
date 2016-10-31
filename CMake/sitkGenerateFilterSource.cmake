@@ -116,8 +116,8 @@ endmacro()
 macro( expand_template FILENAME input_dir output_dir library_name )
 
   # Set common variables
-  set ( expand_template_script ${SimpleITK_SOURCE_DIR}/Utilities/ExpandTemplate.lua )
-  set ( template_include_dir ${SimpleITK_SOURCE_DIR}/TemplateComponents )
+  set ( expand_template_script ${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/ExpandTemplate.lua )
+  set ( template_include_dir ${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/Components )
   set ( output_h "${output_dir}/include/sitk${FILENAME}.h" )
   set ( output_cxx "${output_dir}/src/sitk${FILENAME}.cxx" )
 
