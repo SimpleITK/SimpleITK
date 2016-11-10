@@ -68,9 +68,14 @@ endif()
 
 set_QUIET( WRAP_PYTHON )
 find_package ( PythonInterp ${_QUIET})
-find_package ( PythonLibs ${PYTHON_VERSION_STRING} EXACT ${_QUIET_LIBRARY} )
+if ( PYTHONINTERP_FOUND )
+  find_package ( PythonLibs ${PYTHON_VERSION_STRING} EXACT ${_QUIET_LIBRARY} )
+else ()
+  find_package ( PythonLibs ${_QUIET_LIBRARY} )
+endif()
 
-if (PYTHON_VERSION_STRING VERSION_LESS 2.6)
+if ( PYTHONLIBS_FOUND AND PYTHONINTERP_FOUND
+    AND PYTHON_VERSION_STRING VERSION_LESS 2.6 )
   message( WARNING "Python version less that 2.6: \"${PYTHON_VERSION_STRING}\"." )
 endif()
 
