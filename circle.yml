@@ -30,23 +30,17 @@ dependencies:
         - "~/.ExternalData"
     pre:
         - if [ $CIRCLE_NODE_INDEX -eq 0 ]; then for ((i=1;i<CIRCLE_NODE_TOTAL;i++)); do ssh -fMN ubuntu@node$i; done ; fi
-        - mkdir -p ${SIMPLEITK_BUILD_DIR}
+        - wget -P /tmp/ https://raw.githubusercontent.com/blowekamp/SimpleITK/dashboard/circleci_dashboard.cmake https://raw.githubusercontent.com/blowekamp/SimpleITK/dashboard/simpleitk_common.cmake
     override:
-        - if [ $CIRCLE_NODE_INDEX -eq 0 ]; then cmake -DENABLE_SHARED:BOOL=ON -DWRAP_LUA:BOOL=OFF -DWRAP_PYTHON:BOOL=OFF -DWRAP_JAVA:BOOL=OFF -DWRAP_CSHARP:BOOL=OFF -DWRAP_TCL:BOOL=OFF -DWRAP_R:BOOL=OFF -DWRAP_RUBY:BOOL=OFF -DITK_REPOSITORY=${ITK_REPOSITORY} -DUSE_SYSTEM_SWIG:BOOL=ON -DUSE_SYSTEM_LUA:BOOL=ON -DCMAKE_BUILD_TYPE=Release "${SIMPLEITK_SRC_DIR}/SuperBuild"; fi:
-            pwd: bld
-        - if [ $CIRCLE_NODE_INDEX -eq 0 ]; then make -j${MAKE_J}; fi:
-            pwd: bld
-    post:
-        - find ${SIMPLEITK_BUILD_DIR} -name \*.o -delete && rm -rf ${SIMPLEITK_BUILD_DIR}/ITK ${SIMPLEITK_BUILD_DIR}/ITK-build:
-            pwd: bld
-
+        - if [ $CIRCLE_NODE_INDEX -eq 0 ]; then ctest -V -S /tmp/circleci_dashboard.cmake -Ddashboard_no_test=1 ; fi:
+            timeout: 6000
 
 
 test:
     override:
-        - ctest -j 3:
-            parallel: true
-            pwd: bld/SimpleITK-build
+        - ctest -j 3 -D ExperimentalTest -D ExperimentalSubmit:
+            parallel: false
+            pwd: ../SimpleITK-build/SimpleITK-build
             environment:
                 ITK_GLOBAL_DEFAULT_NUMBER_OF_THREAD: 2
                 CTEST_OUTPUT_ON_FAILURE: 1
