@@ -69,6 +69,9 @@ sitk_add_r_test( SwigVectorConversion
 sitk_add_r_test( ImageSlicing
   "--file=${SimpleITK_SOURCE_DIR}/Testing/Unit/RImageSlicingTests.R"
   )
+sitk_add_r_test( Transform
+  "--file=${SimpleITK_SOURCE_DIR}/Testing/Unit/RTransformTests.R"
+  )
 
 
 #
