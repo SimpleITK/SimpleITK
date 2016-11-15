@@ -43,7 +43,6 @@ set ( REQUIRED_ITK_MODULES
   ITKLabelVoting
   ITKLevelSets
   ITKMathematicalMorphology
-  ITKOBBLabelMap
   ITKPDEDeformableRegistration
   ITKRegionGrowing
   ITKReview
@@ -53,7 +52,7 @@ set ( REQUIRED_ITK_MODULES
   ITKTransform
   ITKWatersheds
 )
-find_package(ITK COMPONENTS REQUIRED)
+find_package(ITK COMPONENTS ${REQUIRED_ITK_MODULES} REQUIRED)
 include(${ITK_USE_FILE})
 
 # common source which all basic filter libraries need to be linked against
