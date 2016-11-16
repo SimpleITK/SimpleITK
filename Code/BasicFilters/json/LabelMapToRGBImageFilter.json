@@ -2,11 +2,21 @@
   "name" : "LabelMapToRGBImageFilter",
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
+  "include_files" : [
+    "sitkLabelFunctorUtils.hxx"
+  ],
   "output_image_type" : "itk::VectorImage< unsigned char, InputImageType::ImageDimension>",
   "number_of_inputs" : 1,
   "doc" : "Docs",
   "pixel_types" : "LabelPixelIDTypeList",
-  "members" : [],
+  "members" : [
+    {
+      "name" : "Colormap",
+      "type" : "std::vector<uint8_t>",
+      "default" : "std::vector<uint8_t>()",
+      "custom_itk_cast" : "SetLabelFunctorFromColormap(filter->GetFunctor(),this->m_Colormap);"
+    }
+],
   "tests" : [
     {
       "tag" : "default",
