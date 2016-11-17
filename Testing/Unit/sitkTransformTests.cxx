@@ -365,72 +365,94 @@ TEST(TransformTest, ReadTransformConvert) {
   sitk::AffineTransform tx(2);
   sitk::WriteTransform(tx, filename);
   EXPECT_NO_THROW(tx = sitk::AffineTransform( sitk::ReadTransform(filename) ) );
+  EXPECT_EQ(tx.GetDimension(), 2u);
   }
   {
   sitk::Euler2DTransform tx;
   sitk::WriteTransform(tx, filename);
   EXPECT_NO_THROW(tx = sitk::Euler2DTransform( sitk::ReadTransform(filename) ) );
+  EXPECT_EQ(tx.GetDimension(), 2u);
   }
   {
   sitk::Euler3DTransform tx;
   sitk::WriteTransform(tx, filename);
   EXPECT_NO_THROW(tx = sitk::Euler3DTransform( sitk::ReadTransform(filename) ) );
+  EXPECT_EQ(tx.GetDimension(), 3u);
   }
   {
   sitk::ScaleSkewVersor3DTransform tx;
   sitk::WriteTransform(tx, filename);
   EXPECT_NO_THROW(tx = sitk::ScaleSkewVersor3DTransform( sitk::ReadTransform(filename) ) );
+  EXPECT_EQ(tx.GetDimension(), 3u);
   }
   {
   sitk::ScaleTransform tx(2);
   sitk::WriteTransform(tx, filename);
   EXPECT_NO_THROW( tx = sitk::ScaleTransform( sitk::ReadTransform(filename) ) );
+  EXPECT_EQ(tx.GetDimension(), 2u);
   }
   {
   sitk::ScaleVersor3DTransform tx;
   sitk::WriteTransform(tx, filename);
   EXPECT_NO_THROW(tx = sitk::ScaleVersor3DTransform( sitk::ReadTransform(filename) ) );
+  EXPECT_EQ(tx.GetDimension(), 3u);
   }
   {
   sitk::Similarity2DTransform tx;
   sitk::WriteTransform(tx, filename);
   EXPECT_NO_THROW(tx = sitk::Similarity2DTransform( sitk::ReadTransform(filename) ) );
+  EXPECT_EQ(tx.GetDimension(), 2u);
   }
   {
   sitk::Similarity3DTransform tx;
   sitk::WriteTransform(tx, filename);
   EXPECT_NO_THROW(tx = sitk::Similarity3DTransform( sitk::ReadTransform(filename) ) );
+  EXPECT_EQ(tx.GetDimension(), 3u);
   }
   {
   sitk::TranslationTransform tx(3);
   sitk::WriteTransform(tx, filename);
   EXPECT_NO_THROW(tx = sitk::TranslationTransform( sitk::ReadTransform(filename) ) );
+  EXPECT_EQ(tx.GetDimension(), 3u);
   }
   {
   sitk::VersorRigid3DTransform tx;
   sitk::WriteTransform(tx, filename);
   EXPECT_NO_THROW(tx = sitk::VersorRigid3DTransform( sitk::ReadTransform(filename) ) );
+  EXPECT_EQ(tx.GetDimension(), 3u);
   }
   {
   sitk::VersorTransform tx;
   sitk::WriteTransform(tx, filename);
   EXPECT_NO_THROW(tx = sitk::VersorTransform( sitk::ReadTransform(filename) ) );
+  EXPECT_EQ(tx.GetDimension(), 3u);
   }
   {
   sitk::DisplacementFieldTransform tx(2);
   sitk::WriteTransform(tx, filename);
   EXPECT_NO_THROW( tx = sitk::DisplacementFieldTransform( sitk::ReadTransform(filename) ) );
+  EXPECT_EQ(tx.GetDimension(), 2u);
   }
   {
   sitk::DisplacementFieldTransform tx(2);
   tx.SetSmoothingGaussianOnUpdate();
   sitk::WriteTransform(tx, filename);
   EXPECT_NO_THROW( tx = sitk::DisplacementFieldTransform( sitk::ReadTransform(filename) ) );
+  EXPECT_EQ(tx.GetDimension(), 2u);
   }
   {
   sitk::BSplineTransform tx(2);
   sitk::WriteTransform(tx, filename);
   EXPECT_NO_THROW( tx = sitk::BSplineTransform( sitk::ReadTransform(filename) ) );
+  EXPECT_EQ(tx.GetDimension(), 2u);
+  EXPECT_EQ(tx.GetOrder(), 3u);
+  }
+  {
+  sitk::BSplineTransform tx(3);
+  sitk::WriteTransform(tx, filename);
+  EXPECT_NO_THROW( tx = sitk::BSplineTransform( sitk::ReadTransform(filename) ) );
+  EXPECT_EQ(tx.GetDimension(), 3u);
+  EXPECT_EQ(tx.GetOrder(), 3u);
   }
 
 }
