@@ -230,7 +230,10 @@ namespace simple
     SITK_RETURN_SELF_TYPE_HEADER SetMetricAsMattesMutualInformation( unsigned int numberOfHistogramBins = 50 );
 
 
-    enum EstimateLearningRateType { Never, Once, EachIteration };
+    enum EstimateLearningRateType { Never, ///< Never run estimation, use provided value.
+                                    Once,  ///< Estimate learning once each level, ignore provided values.
+                                    EachIteration ///< Estimate learning rate at each iteration.
+    };
 
     /** \brief Conjugate gradient descent optimizer with a golden section line search for nonlinear optimization.
      *
