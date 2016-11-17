@@ -502,6 +502,78 @@ TEST_F(sitkRegistrationMethodTest, VirtualDomain_Test)
 
 }
 
+TEST_F(sitkRegistrationMethodTest, VirtualDomain_MultiRes_Test)
+{
+  // Test usage of setting virtual domain
+
+  sitk::ImageRegistrationMethod R;
+  R.SetInterpolator(sitk::sitkLinear);
+  //R.DebugOn();
+  sitk::Image virtualImage = MakeGaussianBlob( v3(32,32,32), std::vector<unsigned int>(3,64) );
+
+  R.SetVirtualDomainFromImage(virtualImage);
+
+  // transform to optimize
+  sitk::TranslationTransform tx(virtualImage.GetDimension());
+  tx.SetOffset(v3(5.21231, 3.2,-1.2));
+  R.SetInitialTransform(tx, false);
+
+  sitk::Image fixedImage = virtualImage;
+  fixedImage.SetOrigin(v3(1000, 100, 0));
+
+  // virtual image to fixed image
+  sitk::TranslationTransform fixedTransform(fixedImage.GetDimension());
+  fixedTransform.SetOffset(v3(1000, 100, 0));
+  R.SetFixedInitialTransform(fixedTransform);
+
+  sitk::Image movingImage = virtualImage;
+  movingImage.SetOrigin(v3(0, 200, 512));
+
+  // transform from virtual domain to moving image with "optimizing" transform
+  sitk::TranslationTransform movingTransform(movingImage.GetDimension());
+  movingTransform.SetOffset(v3(0, 200, 512));
+  R.SetMovingInitialTransform(movingTransform);
+
+  R.SetMetricAsMeanSquares();
+
+  double minStep=1e-3;
+  unsigned int numberOfIterations=10;
+  double relaxationFactor=0.6;
+  double gradientMagnitudeTolerance = 1e-10;
+  sitk::ImageRegistrationMethod::EstimateLearningRateType estimateLearningRate = sitk::ImageRegistrationMethod::Never;
+  R.SetOptimizerAsRegularStepGradientDescent(2,
+                                             minStep,
+                                             numberOfIterations,
+                                             relaxationFactor,
+                                             gradientMagnitudeTolerance,
+                                             estimateLearningRate);
+
+  std::vector<unsigned int> shrinkFactors(2);
+  shrinkFactors[0] = 8;
+  shrinkFactors[1] = 1;
+  R.SetShrinkFactorsPerLevel( shrinkFactors );
+  R.SetSmoothingSigmasPerLevel( v2(0.0, 0.0) );
+
+  R.SetOptimizerScalesFromJacobian();
+
+  IterationUpdate cmd(R);
+  R.AddCommand(sitk::sitkIterationEvent, cmd);
+
+  sitk::Transform outTx = R.Execute(fixedImage, movingImage);
+
+
+  std::cout << "-------" << std::endl;
+  std::cout << outTx.ToString() << std::endl;
+  std::cout << "Optimizer stop condition: " << R.GetOptimizerStopConditionDescription() << std::endl;
+  std::cout << " Iteration: " << R.GetOptimizerIteration() << std::endl;
+  std::cout << " Metric value: " << R.GetMetricValue() << std::endl;
+
+  EXPECT_VECTOR_DOUBLE_NEAR(v3(0.0,0.0,0.0), outTx.GetParameters(), 1e-1);
+  EXPECT_GT( R.GetOptimizerIteration(), 1 );
+
+}
+
+
 TEST_F(sitkRegistrationMethodTest, OptimizerWeights_Test)
 {
   // Test the usage of optimizer weights
