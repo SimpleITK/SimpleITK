@@ -693,7 +693,6 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
       {
       sitkExceptionMacro( "Unexpected error converting initial moving transform! Possible miss matching dimensions!" );
       }
-    std::cout << "--------> Setting MovingInitalTransform\n";
     registration->SetMovingInitialTransform(itkTx);
     }
 
@@ -705,7 +704,6 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
       {
       sitkExceptionMacro( "Unexpected error converting initial moving transform! Possible miss matching dimensions!" );
       }
-    std::cout << "--------> Setting FixedInitalTransform\n";
     registration->SetFixedInitialTransform(itkTx);
     }
 
