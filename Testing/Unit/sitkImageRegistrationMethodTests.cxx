@@ -574,6 +574,52 @@ TEST_F(sitkRegistrationMethodTest, VirtualDomain_MultiRes_Test)
 }
 
 
+
+TEST_F(sitkRegistrationMethodTest, VirtualDomain_Parameters)
+{
+
+  sitk::ImageRegistrationMethod R;
+  R.SetInterpolator(sitk::sitkLinear);
+
+  sitk::Image virtualImage = MakeGaussianBlob( v3(32,32,32), std::vector<unsigned int>(3,64) );
+
+  std::vector<uint32_t> size(3, 64);
+
+  EXPECT_NO_THROW(
+    R.SetVirtualDomain(size,
+                       v3(0.0,0.0,0.0),
+                       v3(1.0,1.0,1.0),
+                       v9(1.0,0.0,0.0,
+                          0.0,1.0,0.0,
+                          0.0,0.0,1.0)) );
+
+  EXPECT_THROW(
+    R.SetVirtualDomain(size,
+                       v2(0.0,0.0),
+                       v3(1.0,1.0,1.0),
+                       v9(1.0,0.0,0.0,
+                          0.0,1.0,0.0,
+                          0.0,0.0,1.0)),
+    sitk::GenericException);
+
+
+  EXPECT_THROW(
+    R.SetVirtualDomain(size,
+                       v3(0.0,0.0,0.0),
+                       v2(1.0,1.0),
+                       v9(1.0,0.0,0.0,
+                          0.0,1.0,0.0,
+                          0.0,0.0,1.0)),
+    sitk::GenericException );
+
+  EXPECT_THROW(
+    R.SetVirtualDomain(size,
+                       v3(0.0,0.0,0.0),
+                       v3(1.0,1.0,1.0),
+                       v3(1.0,0.0,0.0)),
+    sitk::GenericException );
+}
+
 TEST_F(sitkRegistrationMethodTest, OptimizerWeights_Test)
 {
   // Test the usage of optimizer weights

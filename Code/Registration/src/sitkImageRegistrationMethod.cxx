@@ -139,7 +139,20 @@ ImageRegistrationMethod::SetVirtualDomain( const std::vector<uint32_t> &virtualS
 {
   const size_t dim = virtualSize.size();
 
-  // todo check size of vectors
+  if ( virtualOrigin.size() != dim )
+    {
+    sitkExceptionMacro("Expected virtualOrigin to be of length " << dim << "!" );
+    }
+
+  if ( virtualSpacing.size() != dim )
+    {
+    sitkExceptionMacro("Expected virtualSpacing to be of length " << dim << "!" );
+    }
+
+  if ( virtualDirection.size() != dim*dim )
+    {
+    sitkExceptionMacro("Expected virtualDirection to be of length " << dim*dim << "!" );
+    }
 
   this->m_VirtualDomainSize = virtualSize;
   this->m_VirtualDomainOrigin = virtualOrigin;
