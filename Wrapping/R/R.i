@@ -14,6 +14,32 @@
    unsigned char &
    %{    %}
 
+// The swig bindings catch C++ exceptions and turn them into
+// R warnings, including the relevant message.
+// It is probably going to be hard/dangerous to
+// fiddle with the c++ layer to change these warnings
+// to errors. Other types of exception, such as
+// failures in tests of input arguments, do get
+// translated to R errors. Here we will test
+// for the NA value and raise an error at the R
+// level
+%typemap(scoerceout) SWIGTYPE &, SWIGTYPE &&, SWIGTYPE *, SWIGTYPE *const
+%{
+  if (inherits($result, 'externalptr')) {
+   $result <- new("$R_class", ref=$result);
+} else {
+   stop("Exception in SITK - check warning messages\n")
+}
+%}
+%typemap(scoerceout) SWIGTYPE
+%{
+  if (inherits($result, 'externalptr')) {
+   $result <- new("$&R_class", ref=$result);
+} else {
+   stop("Exception in SITK - check warning messages\n")
+}
+%}
+
 
 // SEXP numeric typemap for array/image converion - SEXP are
 // arrays here
@@ -54,10 +80,16 @@ std::vector<float>, std::vector<float> *, std::vector<float> &
 %}
 
 // stop printing "NULL" when calling a method
-// returning void
+// returning void. Also check for NA returned by
+// an exception.
 %typemap(scoerceout) void
 %{
-  return(invisible($result))
+  if (is.null($result)) {
+    return(invisible($result))
+  } else {
+    # should be a NULL - otherwise an exception
+    stop("Exception in SITK - check warnings")
+  }
 %}
 
 
