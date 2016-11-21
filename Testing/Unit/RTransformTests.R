@@ -17,6 +17,27 @@ translationTest <- function()
    }
 }
 
-translationTest()
+compositeAddTransformTest <- function()
+{
+  fname <- deparse(sys.call(0)[[1]])
 
+  dimension <- 2
+
+  tx1 <- c(1,2)
+  translation1 <- TranslationTransform(dimension, tx1)
+
+  tx2 <- c(3,4)
+  translation2 <- TranslationTransform(dimension, tx2)
+
+  composite_transform <- Transform(translation1)
+  dummy <- composite_transform$AddTransform(translation2)
+  if (!is.null(dummy))
+  {
+    cat("failure in", fname, "\n")
+    quit(save="no", status=1)
+   }
+}
+
+translationTest()
+compositeAddTransformTest()
 quit(save="no", status=0)
