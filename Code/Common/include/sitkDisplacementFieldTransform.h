@@ -91,6 +91,7 @@ public:
    */
   Image GetInverseDisplacementField() const;
 
+  /** Set the interpolator used between the field voxels. */
   SITK_RETURN_SELF_TYPE_HEADER SetInterpolator(InterpolatorEnum interp);
   // InterpolatorEnum GetInterpolator() const; How to do this?
 
