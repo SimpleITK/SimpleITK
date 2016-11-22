@@ -11,6 +11,7 @@ file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt" "${ep_
 ExternalProject_Add(${proj}
   GIT_REPOSITORY ${${proj}_REPOSITORY}
   ${${proj}_TAG_COMMAND}
+  USES_TERMINAL_DOWNLOAD 1
   UPDATE_COMMAND ""
   SOURCE_DIR ${proj}
   BINARY_DIR ${proj}-build
@@ -23,6 +24,9 @@ ExternalProject_Add(${proj}
   -C "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt"
   ${ep_itk_args}
   ${ep_common_args}
+  USES_TERMINAL_CONFIGURE 1
+  USES_TERMINAL_BUILD 1
+  USES_TERMINAL_INSTALL 1
   BUILD_COMMAND ${BUILD_COMMAND_STRING}
   DEPENDS
   ${${proj}_DEPENDENCIES}
