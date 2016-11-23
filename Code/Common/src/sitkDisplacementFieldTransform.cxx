@@ -128,6 +128,7 @@ void InternalSetInterpolator( TDisplacementFieldTransform *itkDisplacementTx, In
       sitkExceptionMacro("Interpolator type " << interp << " is not supported!");
     }
   itkDisplacementTx->SetInterpolator(itkInterp);
+  itkDisplacementTx->SetInverseInterpolator(itkInterp);
 }
 
 
