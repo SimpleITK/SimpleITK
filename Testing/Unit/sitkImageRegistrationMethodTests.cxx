@@ -498,7 +498,7 @@ TEST_F(sitkRegistrationMethodTest, VirtualDomain_Test)
   std::cout << " Metric value: " << R.GetMetricValue() << std::endl;
 
   EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,0.0), outTx.GetParameters(), 1e-3);
-  EXPECT_GT( R.GetOptimizerIteration(), 1 );
+  EXPECT_GT( R.GetOptimizerIteration(), 1u );
 
 }
 
