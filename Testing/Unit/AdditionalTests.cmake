@@ -41,6 +41,10 @@ sitk_add_python_test( Test.ProcessObject
   "${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkProcessObjectTest.py"
   )
 
+sitk_add_python_test( Test.ConcurrentImageRead
+  "${SimpleITK_SOURCE_DIR}/Testing/Unit/ConcurrentImageRead.py"
+  )
+
 
 #
 # Java Tests
