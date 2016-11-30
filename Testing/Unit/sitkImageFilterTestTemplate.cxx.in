@@ -345,7 +345,7 @@ end)
 
 
    filter.DebugOn();
-   ASSERT_NO_THROW ( output =  filter.Execute ( $(if #inputs > 0 then OUT=[[inputs[0] ]] end)$(for inum=1,#inputs-1 do OUT=OUT..", inputs["..inum.."]" end) ) );
+  ASSERT_NO_THROW ( $(if not no_return_image then OUT=[[output =]] end) filter.Execute ( $(if #inputs > 0 then OUT=[[inputs[0] ]] end)$(for inum=1,#inputs-1 do OUT=OUT..", inputs["..inum.."]" end) ) );
 
   if ( !inputs.empty() )
       {
