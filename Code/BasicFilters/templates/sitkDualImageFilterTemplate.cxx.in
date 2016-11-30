@@ -75,7 +75,7 @@ $(include CustomMethods.cxx.in)
 //
 // Execute
 //$(include ExecuteWithParameters.cxx.in)
-Image ${name}::Execute ( $(include ImageParameters.in)$(include InputParameters.in) )
+$(if no_return_image then OUT=[[void]] else OUT=[[Image]] end) ${name}::Execute ( $(include ImageParameters.in)$(include InputParameters.in) )
 {
 $(if true then
 inputName1 = "image1"
@@ -141,7 +141,7 @@ sitkClangWarningIgnore("-Wunused-local-typedef");
 // ExecuteInternal
 //
 template <class TImageType, class TImageType2>
-Image ${name}::DualExecuteInternal ( $(for inum=1,number_of_inputs do
+$(if no_return_image then OUT=[[void]] else OUT=[[Image]] end) ${name}::DualExecuteInternal ( $(for inum=1,number_of_inputs do
   if inum>1 then
     OUT=OUT.. ', '
   end
