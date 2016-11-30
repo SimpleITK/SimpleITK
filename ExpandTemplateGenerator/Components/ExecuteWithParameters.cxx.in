@@ -1,7 +1,7 @@
 $(if members and #members > 0 then
 OUT = [[
 
-Image ${name}::Execute ( $(include ImageParameters.in)$(include InputParameters.in)$(include MemberParameters.in) )
+]] if no_return_image then OUT=OUT..[[void]] else OUT=OUT..[[Image]] end OUT=OUT..[[ ${name}::Execute ( $(include ImageParameters.in)$(include InputParameters.in)$(include MemberParameters.in) )
 {
 $(foreach members
 $(if (not no_set_method) or (no_set_method == 0) then

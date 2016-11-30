@@ -1,4 +1,4 @@
-Image ${name}::Execute ( $(include ImageParameters.in)$(include InputParameters.in) )
+$(if no_return_image then OUT=[[void]] else OUT=[[Image]] end) ${name}::Execute ( $(include ImageParameters.in)$(include InputParameters.in) )
 {
 $(if true then
 local inputName = "image1"

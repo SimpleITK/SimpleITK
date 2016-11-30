@@ -57,7 +57,7 @@ end)))
 
 $(if no_return_image then
 OUT=[[
-  return Image();
+  return;
 ]]
 else
 OUT=[[
