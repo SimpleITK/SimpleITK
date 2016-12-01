@@ -383,6 +383,7 @@ foreach (_varName ${_varNames})
   endif()
 endforeach()
 
+list(APPEND SimpleITK_VARS ExternalData_OBJECT_STORES)
 
 VariableListToCache( SimpleITK_VARS  ep_simpleitk_cache )
 VariableListToArgs( SimpleITK_VARS  ep_simpleitk_args )
