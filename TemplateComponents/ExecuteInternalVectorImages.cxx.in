@@ -3,8 +3,7 @@ OUT=[[
 //
 // Dispatched methods to call ExecuteInternal on each component of the VectorImage
 //
-template <class TImageType> Image
-${name}::ExecuteInternalVectorImage ( const Image& inImage1 )
+template <class TImageType> ]] if no_return_image then OUT=OUT..[[void]] else OUT=OUT..[[Image]] end OUT=OUT..[[ ${name}::ExecuteInternalVectorImage ( const Image& inImage1 )
 {
   typedef TImageType                                                               VectorInputImageType;
   typedef typename VectorInputImageType::InternalPixelType                         ComponentType;

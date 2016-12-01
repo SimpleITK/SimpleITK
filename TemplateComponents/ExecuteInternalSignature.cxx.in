@@ -1,5 +1,5 @@
 template <class TImageType>
-Image ${name}::ExecuteInternal ( $(for inum=1,number_of_inputs do
+$(if no_return_image then OUT=[[void]] else OUT=[[Image]] end) ${name}::ExecuteInternal ( $(for inum=1,number_of_inputs do
  if inum>1 then
        OUT=OUT.. ', '
   end
