@@ -17,7 +17,7 @@
 --
 --=========================================================================
 
--- This script parses a JSON file, and print specified json fields provied by JSON paths.
+-- This script parses a JSON file, and print specified json fields provided by JSON paths.
 --
 -- It is currently expected that path specified is the lua table access
 -- string to the correct field. There currently is no real validation
@@ -34,22 +34,29 @@ end
 
 --print("Reading \""..arg[1].."\"...")
 
-f = io.open(arg[1])
+local f = assert(io.open(arg[1]))
 
-str = f:read("*all")
+local str = f:read("*all")
+f:close()
 
 json_table = decode(str)
 
+bad_count = 0
 
 for i=2,#arg do
     json_path=arg[i]
     cmd = loadstring("return json_table."..json_path)
-    out = cmd()
-    if not out then
-      print(json_path.." NOT FOUND")
+    if not cmd then
+        io.stderr:write("Warning: bad path -> "..json_path.."\n")
+        bad_count = bad_count+1
     else
-      print(json_path..": \""..cmd().."\"")
+        out = cmd()
+        if not out then
+            io.stderr:write(json_path.." NOT FOUND\n")
+        else
+            print(json_path..": \""..cmd().."\"")
+        end
     end
 end
 
-return 0
+os.exit( bad_count )

@@ -62,7 +62,9 @@ function( get_json_path out_var json_file path )
      ${json_file}
      ${path}
      OUTPUT_VARIABLE value
-     RESULT_VARIABLE ret)
+     RESULT_VARIABLE ret
+     ERROR_VARIABLE error_var)
+
 
    if ( NOT ${ret} )
      string(REGEX MATCH ":.*\"([^\"]+)\"" _out "${value}" )
@@ -71,6 +73,8 @@ function( get_json_path out_var json_file path )
        set(${out_var} "${CMAKE_MATCH_1}" PARENT_SCOPE)
      endif()
 
+   else()
+     message( WARNING ${error_var} )
    endif()
 
 endfunction()
