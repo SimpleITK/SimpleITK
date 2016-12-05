@@ -7,7 +7,7 @@ set(${CMAKE_CURRENT_LIST_FILENAME}_FILE_INCLUDED 1)
 
 set(proj virtualenv)
 
-set(${proj}_TARGET_VERSION 15.1.5)
+set(${proj}_TARGET_VERSION 15.1.0)
 set(${proj}_DOWNLOAD_SOURCE_HASH "44e19f4134906fe2d75124427dc9b716")
 
 # based on the standard EP_PREFIX locations, but since we don't build
