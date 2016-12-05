@@ -28,7 +28,6 @@ set(lua_PATCH_COMMAND ${CMAKE_COMMAND} -E copy_if_different
 ExternalProject_Add(Lua
   URL "${lua_URL}"
   URL_MD5 "${lua_DOWNLOAD_SOURCE_HASH}"
-  USES_TERMINAL_DOWNLOAD 1
   PATCH_COMMAND ${lua_PATCH_COMMAND}
   CMAKE_GENERATOR ${gen}
   CMAKE_ARGS
@@ -37,9 +36,7 @@ ExternalProject_Add(Lua
     ${ep_common_args}
     -D BUILD_SHARED_LIBS:BOOL=OFF
     -D CMAKE_INSTALL_PREFIX:PATH=${lua_install_dir}
-  USES_TERMINAL_CONFIGURE 1
-  USES_TERMINAL_BUILD 1
-  USES_TERMINAL_INSTALL 1
+    ${External_Project_USES_TERMINAL}
 )
 
 sitkSourceDownloadDependency(Lua)
