@@ -51,6 +51,34 @@ if( SITK_LUA_VERSION_RESULT_VARIABLE
   message(SEND_ERROR "Lua version 5.1 is required for SITK_LUA_EXECUTABLE_VERSION.")
 endif()
 
+# Sets "out_var" variable name to the value in the json path specified
+# to the json file name. If an error is encountered than the variable
+# is not updated.
+#
+function( get_json_path out_var json_file path )
+
+  execute_process(COMMAND ${SITK_LUA_EXECUTABLE}
+     ${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/JSONQuery.lua
+     ${json_file}
+     ${path}
+     OUTPUT_VARIABLE value
+     RESULT_VARIABLE ret
+     ERROR_VARIABLE error_var)
+
+
+   if ( NOT ${ret} )
+     string(REGEX MATCH ":.*\"([^\"]+)\"" _out "${value}" )
+
+     if(_out)
+       set(${out_var} "${CMAKE_MATCH_1}" PARENT_SCOPE)
+     endif()
+
+   else()
+     message( WARNING ${error_var} )
+   endif()
+
+endfunction()
+
 
 ###############################################################################
 # This macro returns the list of template components used by a specific
@@ -64,17 +92,12 @@ macro( get_dependent_template_components out_var_name json_file input_dir )
   # Figure out which template file gets used
   ######
 
-  # Get the line from the json file that indicates the correct template
-  file(STRINGS ${json_file} template_line REGEX ".*template_code_filename.*")
+  get_json_path( template_code_filename ${json_file} "template_code_filename")
 
-  # strip down to what in between the "" after the :
-  string(REGEX MATCH ":.*\"([^\"]+)\"" _out "${template_line}")
-  set(template_name "${CMAKE_MATCH_1}" )
+  if(template_code_filename)
 
-  if(_out)
-
-    set(template_file_h "${input_dir}/templates/sitk${template_name}Template.h.in")
-    set(template_file_cxx "${input_dir}/templates/sitk${template_name}Template.cxx.in")
+    set(template_file_h "${input_dir}/templates/sitk${template_code_filename}Template.h.in")
+    set(template_file_cxx "${input_dir}/templates/sitk${template_code_filename}Template.cxx.in")
 
     ######
     # Get dependencies template files
@@ -103,8 +126,7 @@ macro( get_dependent_template_components out_var_name json_file input_dir )
     set (${out_var_name} ${${cache_var}} )
 
   else()
-    message(WARNING "No template name found for ${json_file}")
-
+    message(WARNING "Error processing ${json_file}, unable to locate template_code_filename")
   endif()
 
 endmacro()
