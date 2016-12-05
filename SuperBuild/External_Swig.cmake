@@ -44,11 +44,11 @@ if(NOT SWIG_DIR)
     ExternalProject_Add(Swig
       URL "${SWIGWIN_URL}"
       URL_MD5 ${SWIG_DOWNLOAD_WIN_HASH}
-      USES_TERMINAL_DOWNLOAD 1
       SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/swigwin-${SWIG_TARGET_VERSION}
       CONFIGURE_COMMAND ""
       BUILD_COMMAND ""
       INSTALL_COMMAND ""
+      ${External_Project_USES_TERMINAL}
       )
     add_dependencies(Swig  "SuperBuildSimpleITKSource")
 
@@ -108,12 +108,9 @@ if(NOT SWIG_DIR)
 
     ExternalProject_add(Swig
       ${SWIG_DOWNLOAD_STEP}
-      USES_TERMINAL_DOWNLOAD 1
       CONFIGURE_COMMAND ${swig_CONFIGURE_COMMAND}
-      USES_TERMINAL_CONFIGURE 1
-      USES_TERMINAL_BUILD 1
-      USES_TERMINAL_INSTALL 1
       DEPENDS "${Swig_DEPENDENCIES}"
+      ${External_Project_USES_TERMINAL}
       )
 
     if(NOT USE_SWIG_FROM_GIT)

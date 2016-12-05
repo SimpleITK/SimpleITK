@@ -42,7 +42,6 @@ endif()
 ExternalProject_Add(${proj}
   URL "${GTEST_URL}"
   URL_MD5 ${GTEST_DOWNLOAD_SOURCE_HASH}
-  USES_TERMINAL_DOWNLOAD 1
   INSTALL_DIR ${GTEST_install_dir}
   CMAKE_GENERATOR ${gen}
   CMAKE_ARGS
@@ -53,13 +52,11 @@ ExternalProject_Add(${proj}
     -D BUILD_SHARED_LIBS:BOOL=OFF
     -D CMAKE_ARCHIVE_OUTPUT_DIRECTORY:PATH=<BINARY_DIR>/lib
     -D gtest_disable_pthreads:BOOL=ON
-  USES_TERMINAL_CONFIGURE 1
-  USES_TERMINAL_BUILD 1
-  USES_TERMINAL_INSTALL 1
   INSTALL_COMMAND
       ${CMAKE_COMMAND} -E copy_directory ${${proj}_ARCHIVE_OUTPUT_DIRECTORY} <INSTALL_DIR>/lib
     COMMAND
       ${CMAKE_COMMAND} -E copy_directory <SOURCE_DIR>/include <INSTALL_DIR>/include
+  ${External_Project_USES_TERMINAL}
 )
 
 sitkSourceDownloadDependency(${proj})
