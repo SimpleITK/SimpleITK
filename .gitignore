@@ -7,5 +7,6 @@ build
 *.pyc
 *.orig
 .ExternalData
+SuperBuild/.ExternalSource/
 #ignore CLion temporary files.
 .idea/
