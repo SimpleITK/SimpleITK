@@ -278,6 +278,14 @@ VariableListToCache( ep_common_list ep_common_cache )
 include(sitkLanguageOptions)
 
 
+if(NOT CMAKE_VERSION VERSION_LESS 3.4)
+  set(External_Project_USES_TERMINAL
+    USES_TERMINAL_DOWNLOAD 1
+    USES_TERMINAL_CONFIGURE 1
+    USES_TERMINAL_BUILD 1
+    USES_TERMINAL_INSTALL 1)
+endif()
+
 #$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 include(ExternalProject)
 
@@ -430,6 +438,7 @@ ExternalProject_Add(${proj}
     -DWRAP_R:BOOL=${WRAP_R}
     -DBUILD_EXAMPLES:BOOL=${BUILD_TESTING}
   DEPENDS ${${CMAKE_PROJECT_NAME}_DEPENDENCIES}
+  ${External_Project_USES_TERMINAL}
 )
 
 ExternalProject_Add_Step(${proj} forcebuild
