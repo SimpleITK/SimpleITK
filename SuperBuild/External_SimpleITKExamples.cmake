@@ -26,6 +26,7 @@ if (${BUILD_EXAMPLES} )
     BUILD_COMMAND ${BUILD_COMMAND_STRING}
     INSTALL_COMMAND ""
     DEPENDS "${SimpleITKExamples_DEPENDENCIES}"
+    ${External_Project_USES_TERMINAL}
     )
 
 endif()

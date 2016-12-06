@@ -36,6 +36,7 @@ ExternalProject_Add(Lua
     ${ep_common_args}
     -D BUILD_SHARED_LIBS:BOOL=OFF
     -D CMAKE_INSTALL_PREFIX:PATH=${lua_install_dir}
+    ${External_Project_USES_TERMINAL}
 )
 
 sitkSourceDownloadDependency(Lua)

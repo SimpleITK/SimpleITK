@@ -48,6 +48,7 @@ if(NOT SWIG_DIR)
       CONFIGURE_COMMAND ""
       BUILD_COMMAND ""
       INSTALL_COMMAND ""
+      ${External_Project_USES_TERMINAL}
       )
     add_dependencies(Swig  "SuperBuildSimpleITKSource")
 
@@ -109,6 +110,7 @@ if(NOT SWIG_DIR)
       ${SWIG_DOWNLOAD_STEP}
       CONFIGURE_COMMAND ${swig_CONFIGURE_COMMAND}
       DEPENDS "${Swig_DEPENDENCIES}"
+      ${External_Project_USES_TERMINAL}
       )
 
     if(NOT USE_SWIG_FROM_GIT)

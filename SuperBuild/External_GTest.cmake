@@ -56,6 +56,7 @@ ExternalProject_Add(${proj}
       ${CMAKE_COMMAND} -E copy_directory ${${proj}_ARCHIVE_OUTPUT_DIRECTORY} <INSTALL_DIR>/lib
     COMMAND
       ${CMAKE_COMMAND} -E copy_directory <SOURCE_DIR>/include <INSTALL_DIR>/include
+  ${External_Project_USES_TERMINAL}
 )
 
 sitkSourceDownloadDependency(${proj})

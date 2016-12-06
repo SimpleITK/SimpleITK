@@ -41,6 +41,7 @@ if(NOT PCRE_DIR)
     URL_MD5 "${PCRE_DOWNLOAD_SOURCE_HASH}"
     CONFIGURE_COMMAND ${pcre_CONFIGURE_COMMAND}
     DEPENDS "${PCRE_DEPENDENCIES}"
+    ${External_Project_USES_TERMINAL}
     )
 
   sitkSourceDownloadDependency(PCRE)
