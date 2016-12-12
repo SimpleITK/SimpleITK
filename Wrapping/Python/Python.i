@@ -713,28 +713,35 @@ def _get_sitk_vector_pixelid(numpy_array_type):
 
 # SimplyITK <-> Numpy Array conversion support.
 
-def GetArrayFromImage(image):
-    """Get a numpy array from a SimpleITK Image."""
+def GetArrayFromImage(image, arrayview = False, writeable = False):
+    """Get a NumPy array/ array view from a SimpleITK Image."""
 
     if not HAVE_NUMPY:
         raise ImportError('Numpy not available.')
-
-    imageByteArray = _SimpleITK._GetByteArrayFromImage(image)
 
     pixelID = image.GetPixelIDValue()
     assert pixelID != sitkUnknown, "An SimpleITK image of Unknow pixel type should now exists!"
 
     dtype = _get_numpy_dtype( image )
 
-    arr = numpy.frombuffer(imageByteArray, dtype )
-
     shape = image.GetSize();
     if image.GetNumberOfComponentsPerPixel() > 1:
       shape = ( image.GetNumberOfComponentsPerPixel(), ) + shape
 
-    arr.shape = shape[::-1]
+    if arrayview == False:
+      imageByteArray = _SimpleITK._GetByteArrayFromImage(image, int(arrayview))
+      arr = numpy.frombuffer(imageByteArray, dtype )
+      arr.shape = shape[::-1]
+      return arr
+    else:
+      imageMemoryView = _SimpleITK._GetByteArrayFromImage(image, int(arrayview))
+      arrayView = numpy.asarray(imageMemoryView).view(dtype = dtype).reshape(shape[::-1])
+      if writeable == True:
+        arrayView.SetConvertedFlag(True)
+      else:
+        arrayView.setflags(write = writeable)
 
-    return arr
+      return arrayView
 
 def GetImageFromArray( arr, isVector=False):
     """Get a SimpleITK Image from a numpy array. If isVector is True, then a 3D array will be treated as a 2D vector image, otherwise it will be treated as a 3D image"""
