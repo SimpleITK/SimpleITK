@@ -15,6 +15,20 @@ endif()
 cmake_minimum_required ( VERSION 3.0 )
 project ( SuperBuildSimpleITK )
 
+
+#-----------------------------------------------------------------------------
+# CMAKE_CXX_COMPILER_ARG1 is a CMake internal variable. It should not be
+# used in SimpleITK Superbuild's configuration as it will not get
+# correctly propagated to external projects. If it is set, it most
+# likely means that SimpleITK is to be built with a launcher such as
+# ccache or distcc. This should be done with the CMake variable
+# CMAKE_CXX_COMPILER_LAUNCHER_FLAG available in CMake > 3.4.0 .
+if(CMAKE_CXX_COMPILER_ARG1)
+  message(WARNING "The CMake variable CMAKE_CXX_COMPILER_ARG1 is\
+set. The CMake variable CMAKE_CXX_COMPILER_LAUNCHER_FLAG should be used
+instead (CMake>=3.4 required).")
+endif()
+
 #-----------------------------------------------------------------------------
 # Superbuild script
 #-----------------------------------------------------------------------------
