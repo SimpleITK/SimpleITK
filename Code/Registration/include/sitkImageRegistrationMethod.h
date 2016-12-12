@@ -177,6 +177,18 @@ namespace simple
     { return this->m_FixedInitialTransform; }
     /**@}*/
 
+
+    /** \brief Set the virtual domain used for sampling
+     *
+     * @{
+     */
+    SITK_RETURN_SELF_TYPE_HEADER SetVirtualDomain( const std::vector<uint32_t> &virtualSize,
+                            const std::vector<double> &virtualOrigin,
+                            const std::vector<double> &virtualSpacing,
+                            const std::vector<double> &virtualDirection );
+    SITK_RETURN_SELF_TYPE_HEADER SetVirtualDomainFromImage( const Image &virtualImage );
+    /**@}*/
+
     /** \brief Use normalized cross correlation using a small
      * neighborhood for each voxel between two images, with speed
      * optimizations for dense registration.
@@ -600,6 +612,11 @@ namespace simple
     bool m_InitialTransformInPlace;
     Transform m_MovingInitialTransform;
     Transform m_FixedInitialTransform;
+
+    std::vector<uint32_t> m_VirtualDomainSize;
+    std::vector<double> m_VirtualDomainOrigin;
+    std::vector<double> m_VirtualDomainSpacing;
+    std::vector<double> m_VirtualDomainDirection;
 
     // optimizer
     enum OptimizerType { ConjugateGradientLineSearch,
