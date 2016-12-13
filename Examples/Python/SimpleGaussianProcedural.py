@@ -30,7 +30,7 @@ if len ( sys.argv ) < 4:
 
 image = sitk.ReadImage( sys.argv[1] )
 
-pixelID = image.GetPixelIDValue()
+pixelID = image.GetPixelID()
 
 image  = sitk.SmoothingRecursiveGaussian( image,  float( sys.argv[2] ) )
 

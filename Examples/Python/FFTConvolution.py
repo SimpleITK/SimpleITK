@@ -40,7 +40,7 @@ img = sitk.ReadImage( inputFileName )
 
 # save the type of pixel the input is, so that we can cast the result
 # back out to the same type  
-pixelID = img.GetPixelIDValue()
+pixelID = img.GetPixelID()
 
 # pad the image 
 img = sitk.MirrorPad( img, [128] *2, [128]*2 )

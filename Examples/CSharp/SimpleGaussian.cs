@@ -40,7 +40,7 @@ namespace itk.simple.examples {
                 // make writing easier , as many file formats don 't support real
                 // pixels .
                 CastImageFilter castFilter = new CastImageFilter();
-                castFilter.SetOutputPixelType(image.GetPixelIDValue());
+                castFilter.SetOutputPixelType(image.GetPixelID());
                 Image destImage = castFilter.Execute(blurredImage);
 
                 // Write output image

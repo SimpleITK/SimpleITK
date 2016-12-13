@@ -47,7 +47,7 @@ boundary = sitk.BinaryGrindPeak( boundary )
 
 
 
-boundary = sitk.Cast( boundary, image.GetPixelIDValue() )
+boundary = sitk.Cast( boundary, image.GetPixelID() )
 
 # Multiply, the input image by not the boarder.
 # This will multiply the image by 0 or 1, where 0 is the

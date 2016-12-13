@@ -25,7 +25,7 @@ ImageFileReader reader
 reader SetFileName [ lindex $argv 0 ]
 set image [ reader Execute ]
 
-set pixelID [ $image GetPixelIDValue ]
+set pixelID [ $image GetPixelID ]
 
 SmoothingRecursiveGaussianImageFilter gaussian
 gaussian SetSigma [ lindex $argv 1 ]
