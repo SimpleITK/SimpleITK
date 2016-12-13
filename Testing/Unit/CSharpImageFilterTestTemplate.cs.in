@@ -70,14 +70,14 @@ $(foreach tests
 $(if inputA_cast then
                  OUT=[[
                  CastImageFilter caster = new CastImageFilter();
-                 caster.SetOutputPixelType( PixelIDValueEnum.${inputA_cast}.swigValue );
+                 caster.SetOutputPixelType( PixelIDValueEnum.${inputA_cast} );
                  inputs[0] = caster.Execute( inputs[0] );]]
 end)
 
 $(if inputB_cast then
                  OUT=[[
                  caster = new CastImageFilter();
-                 caster.SetOutputPixelType( PixelIDValueEnum.${inputB_cast}.swigValue );
+                 caster.SetOutputPixelType( PixelIDValueEnum.${inputB_cast} );
                  inputs[1] = caster.Execute( inputs[1] );]]
 end)
 

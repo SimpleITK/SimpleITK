@@ -373,41 +373,41 @@ TEST(BasicFilters,Cast) {
   EXPECT_EQ ( image.GetPixelID(), itk::simple::sitkFloat32 );
   EXPECT_EQ ( image.GetPixelIDTypeAsString(), "32-bit float" );
 
-  typedef std::map<std::string,itk::simple::PixelIDValueType> MapType;
+  typedef std::map<std::string,itk::simple::PixelIDValueEnum> MapType;
   MapType mapping;
-  mapping["2f27e9260baeba84fb83dd35de23fa2d"] = (itk::simple::PixelIDValueType)itk::simple::sitkUInt8;
-  mapping["2f27e9260baeba84fb83dd35de23fa2d"] = (itk::simple::PixelIDValueType)itk::simple::sitkInt8;
-  mapping["a963bd6a755b853103a2d195e01a50d3"] = (itk::simple::PixelIDValueType)itk::simple::sitkUInt16;
-  mapping["a963bd6a755b853103a2d195e01a50d3"] = (itk::simple::PixelIDValueType)itk::simple::sitkInt16;
-  mapping["6ceea0011178a955b5be2d545d107199"] = (itk::simple::PixelIDValueType)itk::simple::sitkUInt32;
-  mapping["6ceea0011178a955b5be2d545d107199"] = (itk::simple::PixelIDValueType)itk::simple::sitkInt32;
-  mapping["efa4c3b27349b97b02a64f3d2b5ca9ed"] = (itk::simple::PixelIDValueType)itk::simple::sitkUInt64;
-  mapping["efa4c3b27349b97b02a64f3d2b5ca9ed"] = (itk::simple::PixelIDValueType)itk::simple::sitkInt64;
-  mapping["3ccccde44efaa3d688a86e94335c1f16"] = (itk::simple::PixelIDValueType)itk::simple::sitkFloat32;
-  mapping["ac0228acc17038fd1f1ed28eb2841c73"] = (itk::simple::PixelIDValueType)itk::simple::sitkFloat64;
-  mapping["226dabda8fc07f20e2b9e44ca1c83955"] = (itk::simple::PixelIDValueType)itk::simple::sitkComplexFloat32;
-  mapping["e92cbb187a92610068d7de0cb23364db"] = (itk::simple::PixelIDValueType)itk::simple::sitkComplexFloat64;
-  mapping["2f27e9260baeba84fb83dd35de23fa2d"] = (itk::simple::PixelIDValueType)itk::simple::sitkVectorUInt8;
-  mapping["2f27e9260baeba84fb83dd35de23fa2d"] = (itk::simple::PixelIDValueType)itk::simple::sitkVectorInt8;
-  mapping["a963bd6a755b853103a2d195e01a50d3"] = (itk::simple::PixelIDValueType)itk::simple::sitkVectorUInt16;
-  mapping["a963bd6a755b853103a2d195e01a50d3"] = (itk::simple::PixelIDValueType)itk::simple::sitkVectorInt16;
-  mapping["6ceea0011178a955b5be2d545d107199"] = (itk::simple::PixelIDValueType)itk::simple::sitkVectorUInt32;
-  mapping["6ceea0011178a955b5be2d545d107199"] = (itk::simple::PixelIDValueType)itk::simple::sitkVectorInt32;
-  mapping["efa4c3b27349b97b02a64f3d2b5ca9ed"] = (itk::simple::PixelIDValueType)itk::simple::sitkVectorUInt64;
-  mapping["efa4c3b27349b97b02a64f3d2b5ca9ed"] = (itk::simple::PixelIDValueType)itk::simple::sitkVectorInt64;
-  mapping["3ccccde44efaa3d688a86e94335c1f16"] = (itk::simple::PixelIDValueType)itk::simple::sitkVectorFloat32;
-  mapping["ac0228acc17038fd1f1ed28eb2841c73"] = (itk::simple::PixelIDValueType)itk::simple::sitkVectorFloat64;
-  mapping["sitkLabelUInt8"] = (itk::simple::PixelIDValueType)itk::simple::sitkLabelUInt8;
-  mapping["sitkLabelUInt16"] = (itk::simple::PixelIDValueType)itk::simple::sitkLabelUInt16;
-  mapping["sitkLabelUInt32"] = (itk::simple::PixelIDValueType)itk::simple::sitkLabelUInt32;
-  mapping["sitkLabelUInt64"] = (itk::simple::PixelIDValueType)itk::simple::sitkLabelUInt64;
+  mapping["2f27e9260baeba84fb83dd35de23fa2d"] = itk::simple::sitkUInt8;
+  mapping["2f27e9260baeba84fb83dd35de23fa2d"] = itk::simple::sitkInt8;
+  mapping["a963bd6a755b853103a2d195e01a50d3"] = itk::simple::sitkUInt16;
+  mapping["a963bd6a755b853103a2d195e01a50d3"] = itk::simple::sitkInt16;
+  mapping["6ceea0011178a955b5be2d545d107199"] = itk::simple::sitkUInt32;
+  mapping["6ceea0011178a955b5be2d545d107199"] = itk::simple::sitkInt32;
+  mapping["efa4c3b27349b97b02a64f3d2b5ca9ed"] = itk::simple::sitkUInt64;
+  mapping["efa4c3b27349b97b02a64f3d2b5ca9ed"] = itk::simple::sitkInt64;
+  mapping["3ccccde44efaa3d688a86e94335c1f16"] = itk::simple::sitkFloat32;
+  mapping["ac0228acc17038fd1f1ed28eb2841c73"] = itk::simple::sitkFloat64;
+  mapping["226dabda8fc07f20e2b9e44ca1c83955"] = itk::simple::sitkComplexFloat32;
+  mapping["e92cbb187a92610068d7de0cb23364db"] = itk::simple::sitkComplexFloat64;
+  mapping["2f27e9260baeba84fb83dd35de23fa2d"] = itk::simple::sitkVectorUInt8;
+  mapping["2f27e9260baeba84fb83dd35de23fa2d"] = itk::simple::sitkVectorInt8;
+  mapping["a963bd6a755b853103a2d195e01a50d3"] = itk::simple::sitkVectorUInt16;
+  mapping["a963bd6a755b853103a2d195e01a50d3"] = itk::simple::sitkVectorInt16;
+  mapping["6ceea0011178a955b5be2d545d107199"] = itk::simple::sitkVectorUInt32;
+  mapping["6ceea0011178a955b5be2d545d107199"] = itk::simple::sitkVectorInt32;
+  mapping["efa4c3b27349b97b02a64f3d2b5ca9ed"] = itk::simple::sitkVectorUInt64;
+  mapping["efa4c3b27349b97b02a64f3d2b5ca9ed"] = itk::simple::sitkVectorInt64;
+  mapping["3ccccde44efaa3d688a86e94335c1f16"] = itk::simple::sitkVectorFloat32;
+  mapping["ac0228acc17038fd1f1ed28eb2841c73"] = itk::simple::sitkVectorFloat64;
+  mapping["sitkLabelUInt8"] = itk::simple::sitkLabelUInt8;
+  mapping["sitkLabelUInt16"] = itk::simple::sitkLabelUInt16;
+  mapping["sitkLabelUInt32"] = itk::simple::sitkLabelUInt32;
+  mapping["sitkLabelUInt64"] = itk::simple::sitkLabelUInt64;
 
   bool failed = false;
 
   // Loop over the map, load each file, and compare the hash value
   for ( MapType::iterator it = mapping.begin(); it != mapping.end(); ++it )
     {
-    itk::simple::PixelIDValueType pixelID = it->second;
+    itk::simple::PixelIDValueEnum pixelID = it->second;
     std::string hash = it->first;
 
     std::cerr << std::flush;
