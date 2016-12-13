@@ -171,7 +171,10 @@ sitk_GetByteArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
     }
   else if (arrayViewFlag == 1)
     {
-    res = PyBuffer_FillInfo(&pyBuffer, NULL, (void*)sitkBufferPtr, len, 0, PyBUF_CONTIG);
+    if (PyBuffer_FillInfo(&pyBuffer, NULL, (void*)sitkBufferPtr, len, 0, PyBUF_CONTIG) != 0)
+      {
+      SWIG_fail;
+      }
     memoryView = PyMemoryView_FromBuffer(&pyBuffer);
 
     PyBuffer_Release(&pyBuffer);
@@ -184,6 +187,7 @@ sitk_GetByteArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
     }
 
 fail:
+  Py_XDECREF( memoryView );
   Py_XDECREF( byteArray );
   return NULL;
 }
