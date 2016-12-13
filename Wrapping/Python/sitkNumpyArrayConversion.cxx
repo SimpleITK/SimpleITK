@@ -32,16 +32,13 @@ extern "C"
 {
 #endif
 
-/** An internal function that performs a deep copy of the image buffer
- * into a python byte array. The byte array can later be converted
- * into a numpy array with the from buffer method.
+/** An internal function that returns a memoryview object to the
+ * SimpleITK Image's buffer (shallow). The correct copy and writing
+ * policies need to be done by the end-user method.
  */
 static PyObject *
-sitk_GetByteArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
+sitk_GetMemoryViewFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
 {
-  // Holds the bulk data
-  PyObject *                  byteArray     = NULL;
-
   const void *                sitkBufferPtr;
   Py_ssize_t                  len;
   std::vector< unsigned int > size;
@@ -54,14 +51,13 @@ sitk_GetByteArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
   void *                      voidImage;
   sitk::Image *               sitkImage;
   int                         res           = 0;
-  int                         arrayViewFlag = 0;
 
   PyObject *                  memoryView    = NULL;
   Py_buffer                   pyBuffer;
   memset(&pyBuffer, 0, sizeof(Py_buffer));
 
 
-  if( !PyArg_ParseTuple( args, "Oi", &pyImage, &arrayViewFlag ) )
+  if( !PyArg_ParseTuple( args, "O", &pyImage ) )
     {
     SWIG_fail; // SWIG_fail is a macro that says goto: fail (return NULL)
     }
@@ -150,45 +146,17 @@ sitk_GetByteArrayFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
   len = std::accumulate( size.begin(), size.end(), size_t(1), std::multiplies<size_t>() );
   len *= pixelSize;
 
-  if(arrayViewFlag == 0)
+  if (PyBuffer_FillInfo(&pyBuffer, NULL, (void*)sitkBufferPtr, len, 0, PyBUF_CONTIG) != 0)
     {
-    // When the string is null, the bytearray is uninitialized but allocated
-    byteArray = PyByteArray_FromStringAndSize( NULL, len );
-    if( !byteArray )
-      {
-      PyErr_SetString( PyExc_RuntimeError, "Error initializing bytearray." );
-      SWIG_fail;
-      }
-
-    char *arrayView;
-    if( (arrayView = PyByteArray_AsString( byteArray ) ) == NULL  )
-      {
-      SWIG_fail;
-      }
-    memcpy( arrayView, sitkBufferPtr, len );
-
-    return byteArray;
-    }
-  else if (arrayViewFlag == 1)
-    {
-    if (PyBuffer_FillInfo(&pyBuffer, NULL, (void*)sitkBufferPtr, len, 0, PyBUF_CONTIG) != 0)
-      {
-      SWIG_fail;
-      }
-    memoryView = PyMemoryView_FromBuffer(&pyBuffer);
-
-    PyBuffer_Release(&pyBuffer);
-    return memoryView;
-    }
-  else
-    {
-    PyErr_SetString( PyExc_RuntimeError, "Wrong conversion operation." );
     SWIG_fail;
     }
+  memoryView = PyMemoryView_FromBuffer(&pyBuffer);
+
+  PyBuffer_Release(&pyBuffer);
+  return memoryView;
 
 fail:
   Py_XDECREF( memoryView );
-  Py_XDECREF( byteArray );
   return NULL;
 }
 
