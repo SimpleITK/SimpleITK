@@ -42,7 +42,7 @@ reader = sitk.ImageFileReader()
 reader.SetFileName ( sys.argv[1] )
 image = reader.Execute()
 
-pixelID = image.GetPixelIDValue()
+pixelID = image.GetPixelID()
 
 gaussian = sitk.DiscreteGaussianImageFilter()
 gaussian.SetVariance( float ( sys.argv[2] ) )

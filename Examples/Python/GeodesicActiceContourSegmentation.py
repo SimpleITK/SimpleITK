@@ -57,7 +57,7 @@ distance.InsideIsPositiveOff()
 distance.UseImageSpacingOn()
 
 initialImage = sitk.BinaryThreshold( distance.Execute( seedImage ), -1000, 10 )
-initialImage = sitk.Cast( initialImage, featureImage.GetPixelIDValue() ) * -1 + 0.5
+initialImage = sitk.Cast( initialImage, featureImage.GetPixelID() ) * -1 + 0.5
 
 
 geodesicActiveContour = sitk.GeodesicActiveContourLevelSetImageFilter()

@@ -86,7 +86,7 @@ int main ( int argc, char* argv[] ) {
   // make writing easier, as many file formats don't support real
   // pixels.
   sitk::CastImageFilter caster;
-  caster.SetOutputPixelType( image.GetPixelIDValue() );
+  caster.SetOutputPixelType( image.GetPixelID() );
   sitk::Image outputImage = caster.Execute( blurredImage );
 
   // write the image

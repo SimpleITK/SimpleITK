@@ -32,7 +32,7 @@ reader = sitk.ImageFileReader()
 reader.SetFileName ( sys.argv[1] )
 image = reader.Execute()
 
-pixelID = image.GetPixelIDValue()
+pixelID = image.GetPixelID()
 
 gaussian = sitk.SmoothingRecursiveGaussianImageFilter()
 gaussian.SetSigma ( float ( sys.argv[2] ) )
