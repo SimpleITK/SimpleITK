@@ -89,7 +89,7 @@ end)
       CastImageFilter caster = new CastImageFilter();
 $(if inputA_cast then
  OUT=[[
-      caster.setOutputPixelType( PixelIDValueEnum.${inputA_cast}() );
+      caster.setOutputPixelType( PixelIDValueEnum.${inputA_cast} );
       inputs[0]  = caster.execute( inputs[0] );
 ]]
 end)$(if inputB_cast then
