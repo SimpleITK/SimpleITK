@@ -60,6 +60,8 @@
 std::vector<float>, std::vector<float> *, std::vector<float> &
 %{    %}
 
+%apply std::vector< std::basic_string<char> > { std::vector< std::string> & };
+
 // Experiments on lists/vectors of images
 // it would be nice to generalise this to vectors of SWIG_TYPE
 // Are there use cases beyond vectors of images - e.g. vectors of filters?
