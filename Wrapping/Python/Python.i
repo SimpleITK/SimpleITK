@@ -714,7 +714,14 @@ def _get_sitk_vector_pixelid(numpy_array_type):
 # SimplyITK <-> Numpy Array conversion support.
 
 def GetArrayViewFromImage(image, writable = False):
-    """Get a NumPy array view from a SimpleITK Image, which reduces pixel buffer copies."""
+    """Get a NumPy ndarray view of a SimpleITK Image.
+
+    Returns a Numpy ndarray object as a "view" of the SimpleITK's Image buffer. This reduces pixel buffer copies, but requires that the SimpleITK image object is kept around while the buffer is being used.
+
+
+    Arguments:
+    writable -- Enable output array to be written, which modifies the image. Before returning the input image is make unique, executing in any SimpleITK lazy copying occurring. Further copying of the SimpleITK image may result is additional aliasing, and side effects when writing to the returned array.
+    """
 
     if not HAVE_NUMPY:
         raise ImportError('NumPy not available.')
@@ -729,9 +736,12 @@ def GetArrayViewFromImage(image, writable = False):
     if image.GetNumberOfComponentsPerPixel() > 1:
       shape = ( image.GetNumberOfComponentsPerPixel(), ) + shape
 
+    if (writable):
+      image.MakeUnique()
 
     imageMemoryView =  _SimpleITK._GetMemoryViewFromImage(image)
-    arrayView = numpy.asarray(imageMemoryView).view(dtype = dtype).reshape(shape[::-1])
+    arrayView = numpy.asarray(imageMemoryView).view(dtype = dtype)
+    arrayView.shape = shape[::-1]
 
 
     arrayView.setflags(write = writable)
@@ -739,7 +749,10 @@ def GetArrayViewFromImage(image, writable = False):
     return arrayView
 
 def GetArrayFromImage(image):
-    """Get a NumPy array/ array view from a SimpleITK Image."""
+    """Get a NumPy ndarray from a SimpleITK Image.
+
+    This is a deep copy of the image buffer and is completely safe and without potential side effects.
+    """
 
     arrayView = GetArrayViewFromImage(image, writable=False)
 
