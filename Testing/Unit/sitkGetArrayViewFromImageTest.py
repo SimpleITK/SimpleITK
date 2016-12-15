@@ -41,7 +41,7 @@ class TestNumpySimpleITKMemoryviewInterface(unittest.TestCase):
 
     def _helper_check_sitk_to_numpy_type(self, sitkType, numpyType):
         image = sitk.Image((9, 10), sitkType, 1)
-        a = sitk.GetArrayFromImage( image, arrayview=True)
+        a = sitk.GetArrayViewFromImage(image)
         self.assertEqual(numpyType, a.dtype)
         self.assertEqual((10, 9), a.shape)
 
@@ -80,7 +80,7 @@ class TestNumpySimpleITKMemoryviewInterface(unittest.TestCase):
 
         h = sitk.Hash( img )
 
-        img2 = sitk.GetImageFromArray( sitk.GetArrayFromImage(img, arrayview=True))
+        img2 = sitk.GetImageFromArray( sitk.GetArrayViewFromImage(img))
         self.assertEqual( h, sitk.Hash( img2 ))
 
     def test_vector_image_to_numpy(self):
@@ -93,7 +93,7 @@ class TestNumpySimpleITKMemoryviewInterface(unittest.TestCase):
         img = sitk.PhysicalPointSource(sitk.sitkVectorFloat32, [3,4])
         h = sitk.Hash( img )
 
-        nda = sitk.GetArrayFromImage(img, arrayview=True)
+        nda = sitk.GetArrayViewFromImage(img)
 
         self.assertEqual(nda.shape, (4,3,2))
         self.assertEqual(nda[0,0].tolist(), [0,0])
@@ -107,7 +107,7 @@ class TestNumpySimpleITKMemoryviewInterface(unittest.TestCase):
         img = sitk.PhysicalPointSource(sitk.sitkVectorFloat32, [3,4,5])
         h = sitk.Hash(img)
 
-        nda = sitk.GetArrayFromImage(img, arrayview=True)
+        nda = sitk.GetArrayViewFromImage(img)
 
         self.assertEqual(nda.shape, (5,4,3,3))
         self.assertEqual(nda[0,0,0].tolist(), [0,0,0])
@@ -124,18 +124,18 @@ class TestNumpySimpleITKMemoryviewInterface(unittest.TestCase):
 
     def test_processing_time(self):
       """Check the processing time the conversions from SimpleITK Image
-         to numpy array (GetArrayFromImage) and
+         to numpy array (GetArrayViewFromImage) and
          numpy memoryview (GetArrayViewFromImage)."""
 
       # Performance test for SimpleITK Image -> NumPy array
       img = sitk.GaussianSource(sitk.sitkFloat32, [3000,3000], sigma=[10]*3, mean=[50,50])
 
       print("\nGet NumPy array from 3000x3000 SimpleITK Image")
-      nparray_time_elapsed = min(timeit.repeat(lambda: sitk.GetArrayFromImage(img, arrayview=False), repeat=5, number=1))
+      nparray_time_elapsed = min(timeit.repeat(lambda: sitk.GetArrayFromImage(img), repeat=5, number=1))
       print ("Processing time of GetArrayFromImage (Copy operation)  :: {0} (us)".format(nparray_time_elapsed*1e6))
 
-      npview_time_elapsed = min(timeit.repeat(lambda: sitk.GetArrayFromImage(img, arrayview=True), repeat=5, number=1))
-      print ("Processing time of GetArrayFromImage (Array view)      :: {0} (us)".format(npview_time_elapsed*1e6))
+      npview_time_elapsed = min(timeit.repeat(lambda: sitk.GetArrayViewFromImage(img), repeat=5, number=1))
+      print ("Processing time of GetArrayViewFromImage (Array view)      :: {0} (us)".format(npview_time_elapsed*1e6))
 
       self.assertTrue( nparray_time_elapsed > npview_time_elapsed)
 
