@@ -37,9 +37,13 @@ sitk_strip_target( ${SWIG_MODULE_SimpleITKJava_TARGET_NAME} )
 
 set(JAVA_SOURCE_CODE "${JAVA_SOURCE_DIRECTORY}/org/itk/simple/*.java")
 
-# Java 1.8 javadoc treats linting errors as build errors by default 
-# so linting should be opt-in for this version
-if( ${Java_VERSION_STRING} VERSION_EQUAL 1.8 OR ${Java_VERSION_STRING} VERSION_GREATER 1.8 )
+# Oracle Java 1.8 javadoc treats linting errors as build errors by default
+# so linting should be opt-in for this version. OpenJDK is not as
+# consistent with the 1.8.0 versions, so we execute at look for a
+# invalid flag error.
+execute_process(COMMAND "${Java_JAVADOC_EXECUTABLE} -Xdoclint:none" ERROR_VARIABLE err)
+string(REGEX MATCH "javadoc.*invalid flag" out "${err}")
+if(test STREQUAL "")
   mark_as_advanced( Java_JAVADOC_LINTING )
   option( Java_JAVADOC_LINTING "Enable javadoc linting for Java 1.8" OFF )
   if( Java_JAVADOC_LINTING )
