@@ -28,7 +28,7 @@ reader = SimpleITK.ImageFileReader()
 reader:SetFileName ( arg[1] )
 image = reader:Execute();
 
-inputPixelType = image:GetPixelIDValue()
+inputPixelType = image:GetPixelID()
 
 gaussian = SimpleITK.SmoothingRecursiveGaussianImageFilter()
 gaussian:SetSigma ( arg[2] )

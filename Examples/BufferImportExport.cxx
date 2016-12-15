@@ -63,7 +63,7 @@ int main( int , char *[] )
   // The output type of the morpholgy will be the same pixel type as
   // the input. But we place the assert to clarify and verify out
   // logic.
-  assert( img.GetPixelIDValue() == sitk::sitkUInt8 );
+  assert( img.GetPixelID() == sitk::sitkUInt8 );
 
   // The method which matches the actual pixel type of the image must
   // be called.

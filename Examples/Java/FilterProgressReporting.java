@@ -54,7 +54,7 @@ class FilterProgressReporting {
       Image blurredImg = filter.execute(img);
 
       CastImageFilter caster = new CastImageFilter();
-      caster.setOutputPixelType(img.getPixelIDValue());
+      caster.setOutputPixelType(img.getPixelID());
       Image castImg = caster.execute(blurredImg);
 
       ImageFileWriter writer = new ImageFileWriter();
