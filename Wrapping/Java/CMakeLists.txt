@@ -42,8 +42,8 @@ set(JAVA_SOURCE_CODE "${JAVA_SOURCE_DIRECTORY}/org/itk/simple/*.java")
 # consistent with the 1.8.0 versions, so we execute at look for a
 # invalid flag error.
 execute_process(COMMAND "${Java_JAVADOC_EXECUTABLE} -Xdoclint:none" ERROR_VARIABLE err)
-string(REGEX MATCH "javadoc.*invalid flag" out "${err}")
-if(test STREQUAL "")
+string(REGEX MATCH "javadoc.*invalid flag" invalid_flag_match "${err}")
+if(invalid_flag_match STREQUAL "")
   mark_as_advanced( Java_JAVADOC_LINTING )
   option( Java_JAVADOC_LINTING "Enable javadoc linting for Java 1.8" OFF )
   if( Java_JAVADOC_LINTING )
