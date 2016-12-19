@@ -41,7 +41,7 @@ set(JAVA_SOURCE_CODE "${JAVA_SOURCE_DIRECTORY}/org/itk/simple/*.java")
 # so linting should be opt-in for this version. OpenJDK is not as
 # consistent with the 1.8.0 versions, so we execute at look for a
 # invalid flag error.
-execute_process(COMMAND "${Java_JAVADOC_EXECUTABLE} -Xdoclint:none" ERROR_VARIABLE err)
+execute_process(COMMAND "${Java_JAVADOC_EXECUTABLE}" "-Xdoclint:none" ERROR_VARIABLE err OUTPUT_VARIABLE err)
 string(REGEX MATCH "javadoc.*invalid flag" invalid_flag_match "${err}")
 if(invalid_flag_match STREQUAL "")
   mark_as_advanced( Java_JAVADOC_LINTING )
