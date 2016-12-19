@@ -5,11 +5,11 @@
 #
 # The following functions are defined:
 #
-# .. cmake:command:: target_link_libraries_with_dynamic_lookup
+# .. cmake:command:: sitk_target_link_libraries_with_dynamic_lookup
 #
 # ::
 #
-#     target_link_libraries_with_dynamic_lookup(<Target> [<Libraries>])
+#     sitk_target_link_libraries_with_dynamic_lookup(<Target> [<Libraries>])
 #
 #
 # Useful to "weakly" link a loadable module. For example, it should be used
@@ -31,7 +31,7 @@
 # is not linked when specified with this function.
 #
 # On platforms that do not support weak-linking, this function works just
-# like ``target_link_libraries``.
+# like ``sitk_target_link_libraries``.
 #
 # .. note::
 #
@@ -42,7 +42,7 @@
 #     from Tim D. Smith.
 #
 #
-# .. cmake:command:: check_dynamic_lookup
+# .. cmake:command:: sitk_check_dynamic_lookup
 #
 # Check if the linker requires a command line flag to allow leaving symbols
 # unresolved when producing a target of type ``<TargetType>`` that is
@@ -58,7 +58,7 @@
 #
 # ::
 #
-#     check_dynamic_lookup(<TargetType>
+#     sitk_check_dynamic_lookup(<TargetType>
 #                          <LibType>
 #                          <ResultVar>
 #                          [<LinkFlagsVar>])
@@ -68,7 +68,7 @@
 #
 # ::
 #
-#     check_dynamic_lookup(<ResultVar>) # <TargetType> set to "MODULE"
+#     sitk_check_dynamic_lookup(<ResultVar>) # <TargetType> set to "MODULE"
 #                                       # <LibType> set to "SHARED"
 #
 #
@@ -425,12 +425,12 @@ function(_test_weak_link_project
   endforeach()
 endfunction()
 
-function(check_dynamic_lookup)
+function(sitk_check_dynamic_lookup)
   # Two signatures are supported:
 
   if(ARGC EQUAL "1")
     #
-    # check_dynamic_lookup(<ResultVar>)
+    # sitk_check_dynamic_lookup(<ResultVar>)
     #
     set(target_type "MODULE")
     set(lib_type "SHARED")
@@ -439,7 +439,7 @@ function(check_dynamic_lookup)
 
   elseif(ARGC GREATER "2")
     #
-    # check_dynamic_lookup(<TargetType>
+    # sitk_check_dynamic_lookup(<TargetType>
     #                      <LibType>
     #                      <ResultVar>
     #                      [<LinkFlagsVar>])
@@ -528,7 +528,7 @@ function(_check_dynamic_lookup
   set(${link_flags_var} "${${result_var}}" PARENT_SCOPE)
 endfunction()
 
-function(target_link_libraries_with_dynamic_lookup target)
+function(sitk_target_link_libraries_with_dynamic_lookup target)
   _get_target_type(target_type ${target})
 
   set(link_props)
@@ -537,7 +537,7 @@ function(target_link_libraries_with_dynamic_lookup target)
 
   foreach(lib ${ARGN})
     _get_target_type(lib_type ${lib})
-    check_dynamic_lookup(${target_type}
+    sitk_check_dynamic_lookup(${target_type}
                          ${lib_type}
                          has_dynamic_lookup
                          dynamic_lookup_flags)
