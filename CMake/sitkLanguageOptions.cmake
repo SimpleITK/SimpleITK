@@ -10,6 +10,11 @@
 
 include(sitkTargetLinkLibrariesWithDynamicLookup)
 
+sitk_check_dynamic_lookup(MODULE
+  SHARED
+  SITK_UNDEFINED_SYMBOLS_ALLOWED
+  )
+
 #
 # Macro to set "_QUIET" and "_QUIET_LIBRARY" based on the first
 # argument being defined and true, to either REQUIRED or QUIET.
