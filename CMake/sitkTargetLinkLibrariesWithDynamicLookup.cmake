@@ -463,7 +463,7 @@ function(sitk_check_dynamic_lookup)
     ${link_flags_var}
     )
   set(${has_dynamic_lookup_var} ${${has_dynamic_lookup_var}} PARENT_SCOPE)
-  if(NOT link_flags_var STREQUAL "unused")
+  if(NOT "x${link_flags_var}x" MATCHES "^xunusedx$")
     set(${link_flags_var} ${${link_flags_var}} PARENT_SCOPE)
   endif()
 endfunction()
