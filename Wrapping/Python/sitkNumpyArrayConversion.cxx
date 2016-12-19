@@ -146,7 +146,7 @@ sitk_GetMemoryViewFromImage( PyObject *SWIGUNUSEDPARM(self), PyObject *args )
   len = std::accumulate( size.begin(), size.end(), size_t(1), std::multiplies<size_t>() );
   len *= pixelSize;
 
-  if (PyBuffer_FillInfo(&pyBuffer, NULL, (void*)sitkBufferPtr, len, 0, PyBUF_CONTIG) != 0)
+  if (PyBuffer_FillInfo(&pyBuffer, NULL, (void*)sitkBufferPtr, len, true, PyBUF_CONTIG_RO)!=0)
     {
     SWIG_fail;
     }

@@ -40,24 +40,24 @@ class TestNumpySimpleITKMemoryviewInterface(unittest.TestCase):
         pass
 
     def _helper_check_sitk_to_numpy_type(self, sitkType, numpyType):
+        if sitkType == sitk.sitkUnknown:
+            return
         image = sitk.Image((9, 10), sitkType, 1)
         a = sitk.GetArrayViewFromImage(image)
         self.assertEqual(numpyType, a.dtype)
         self.assertEqual((10, 9), a.shape)
 
     def test_type_to_numpy(self):
-        "try all sitk pixel type to convert to NumPy array view"
+        "try all sitk pixel types to convert to NumPy array view"
 
         self._helper_check_sitk_to_numpy_type(sitk.sitkUInt8, np.uint8)
         self._helper_check_sitk_to_numpy_type(sitk.sitkUInt16, np.uint16)
         self._helper_check_sitk_to_numpy_type(sitk.sitkUInt32, np.uint32)
-        if sitk.sitkUInt64 != sitk.sitkUnknown:
-            self._helper_check_sitk_to_numpy_type(sitk.sitkUInt64, np.uint64)
+        self._helper_check_sitk_to_numpy_type(sitk.sitkUInt64, np.uint64)
         self._helper_check_sitk_to_numpy_type(sitk.sitkInt8, np.int8)
         self._helper_check_sitk_to_numpy_type(sitk.sitkInt16, np.int16)
         self._helper_check_sitk_to_numpy_type(sitk.sitkInt32, np.int32)
-        if sitk.sitkInt64 != sitk.sitkUnknown:
-            self._helper_check_sitk_to_numpy_type(sitk.sitkInt64, np.int64)
+        self._helper_check_sitk_to_numpy_type(sitk.sitkInt64, np.int64)
         self._helper_check_sitk_to_numpy_type(sitk.sitkFloat32, np.float32)
         self._helper_check_sitk_to_numpy_type(sitk.sitkFloat64, np.float64)
         self._helper_check_sitk_to_numpy_type(sitk.sitkVectorUInt8, np.uint8)
@@ -66,10 +66,8 @@ class TestNumpySimpleITKMemoryviewInterface(unittest.TestCase):
         self._helper_check_sitk_to_numpy_type(sitk.sitkVectorInt16, np.int16)
         self._helper_check_sitk_to_numpy_type(sitk.sitkVectorUInt32, np.uint32)
         self._helper_check_sitk_to_numpy_type(sitk.sitkVectorInt32, np.int32)
-        if sitk.sitkVectorUInt64 != sitk.sitkUnknown:
-            self._helper_check_sitk_to_numpy_type(sitk.sitkVectorUInt64, np.uint64)
-        if sitk.sitkVectorInt64 != sitk.sitkUnknown:
-            self._helper_check_sitk_to_numpy_type(sitk.sitkVectorInt64, np.int64)
+        self._helper_check_sitk_to_numpy_type(sitk.sitkVectorUInt64, np.uint64)
+        self._helper_check_sitk_to_numpy_type(sitk.sitkVectorInt64, np.int64)
         self._helper_check_sitk_to_numpy_type(sitk.sitkVectorFloat32, np.float32)
         self._helper_check_sitk_to_numpy_type(sitk.sitkVectorFloat64, np.float64)
 
@@ -85,7 +83,7 @@ class TestNumpySimpleITKMemoryviewInterface(unittest.TestCase):
 
     def test_vector_image_to_numpy(self):
         """Test converting back and forth between NumPy array view and SimpleITK
-        images were the SimpleITK image has multiple components and
+        images where the SimpleITK image has multiple components and
         stored as a VectorImage."""
 
 
@@ -102,6 +100,7 @@ class TestNumpySimpleITKMemoryviewInterface(unittest.TestCase):
 
         img2 = sitk.GetImageFromArray(nda, isVector=True)
         self.assertEqual(h, sitk.Hash(img2))
+
 
         # check 3D
         img = sitk.PhysicalPointSource(sitk.sitkVectorFloat32, [3,4,5])
@@ -120,6 +119,15 @@ class TestNumpySimpleITKMemoryviewInterface(unittest.TestCase):
         self.assertEqual(img2.GetNumberOfComponentsPerPixel(), img.GetNumberOfComponentsPerPixel())
         self.assertEqual(h, sitk.Hash(img2))
 
+    def test_arrayview_writable(self):
+        """Test correct behavior of writablity to the returned array view."""
+
+        img = sitk.Image((9, 10), sitk.sitkFloat32, 1)
+
+        a = sitk.GetArrayViewFromImage(img)
+
+        with self.assertRaises(ValueError):
+            a.fill(0)
 
 
     def test_processing_time(self):
