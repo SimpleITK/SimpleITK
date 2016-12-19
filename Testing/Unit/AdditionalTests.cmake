@@ -45,6 +45,10 @@ sitk_add_python_test( Test.ConcurrentImageRead
   "${SimpleITK_SOURCE_DIR}/Testing/Unit/ConcurrentImageRead.py"
   )
 
+sitk_add_python_test( Test.ArrayView
+  "${SimpleITK_SOURCE_DIR}/Testing/Unit/sitkGetArrayViewFromImageTest.py"
+  )
+
 
 #
 # Java Tests
