@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from __future__ import print_function
-import os, sys, io, json
+import os, sys, io, json, re
 import xml.etree.ElementTree as ET
 from collections import OrderedDict
 
@@ -130,6 +130,7 @@ def traverseXML( xml_node, depth=0, Debug=False ):
 def formatDescription( xml_node ):
   result = traverseXML( xml_node )
   result = result.replace("\n\n\n", "\n\n")
+  result = re.sub( ' +', ' ', result)
   result = result.strip()
   return result
 
