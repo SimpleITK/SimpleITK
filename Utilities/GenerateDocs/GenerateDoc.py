@@ -211,5 +211,7 @@ backup_flag = False
 if backup_flag:
   os.rename(sitk_json, sitk_json+".BAK")
 
-with open(sitk_json, "w") as fp:
-  json.dump(json_obj, fp, indent=2, separators=(',', ' : '))
+fp = file(sitk_json, "w")
+json.dump(json_obj, fp, indent=2, separators=(',', ' : '))
+print ( "", file=fp )
+fp.close()
