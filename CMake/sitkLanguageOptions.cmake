@@ -80,8 +80,8 @@ else ()
 endif()
 
 if ( PYTHONLIBS_FOUND AND PYTHONINTERP_FOUND
-    AND PYTHON_VERSION_STRING VERSION_LESS 2.6 )
-  message( WARNING "Python version less that 2.6: \"${PYTHON_VERSION_STRING}\"." )
+    AND PYTHON_VERSION_STRING VERSION_LESS 2.7 )
+  message( WARNING "Python version less that 2.7: \"${PYTHON_VERSION_STRING}\"." )
 endif()
 
 if ( PYTHONLIBS_FOUND AND PYTHONINTERP_FOUND
