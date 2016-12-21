@@ -43,3 +43,14 @@ st <- MultiLabelSTAPLEImageFilter()
 st$SetPriorProbabilities(c(0.25, 0.25, 0.1))
 # std::vector<float> to R
 st$GetPriorProbabilities()
+
+# R to const std::vector< std::string >
+given_file_names <- c('1.dcm', '2.dcm')
+reader <- ImageSeriesReader()
+reader$SetFileNames(given_file_names)
+reader_file_names <- c()
+try(reader_file_names <- reader$GetFileNames(), silent=TRUE)
+if(!identical(given_file_names, reader_file_names)) {
+    cat("Problem with ImageSeriesReader::GetFileNames.\n")
+    quit(save="no", status=1)
+}
