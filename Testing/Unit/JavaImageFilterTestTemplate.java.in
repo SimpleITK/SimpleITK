@@ -108,7 +108,7 @@ $(if parameter == "SeedList" then
         int v[] = " .. value[i] .. ";\
         VectorUInt32 idx = new VectorUInt32();\
         for (int i = 0; i < inputs[0].getDimension(); i++) {\
-          idx.push_back(v[i]);\
+          idx.add(v[i]);\
         }\
         filter.addSeed(idx);\
       }\
@@ -119,7 +119,7 @@ elseif parameter == "TrialPoints" then
         int v[] = " .. value[i] .. ";\
         VectorUInt32 idx = new VectorUInt32();\
         for (int i = 0; i < inputs[0].getDimension(); i++) {\
-          idx.push_back(v[i]);\
+          idx.add(v[i]);\
         }\
         filter.addTrialPoint(idx);\
       }\
@@ -134,7 +134,7 @@ elseif point_vec and point_vec == 1 then
                   int v[] = ]] .. value[i] .. [[;
                   VectorUInt32 pts = new VectorUInt32( );
                   for (int i = 0; i < inputs[0].getDimension(); i++) {
-                    pts.push_back(v[i]);
+                    pts.add(v[i]);
                   }
                   filter.add${parameter:gsub('s([0-9]?)$','%1')}(pts);
                 }
