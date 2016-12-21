@@ -162,8 +162,8 @@ set ( GENERATED_TEST_SOURCE_LIST "" CACHE INTERNAL "" )
 
 # Create cached list of all template components
 file( GLOB template_components
-      ${SimpleITK_SOURCE_DIR}/TemplateComponents/*.h.in
-      ${SimpleITK_SOURCE_DIR}/TemplateComponents/*.cxx.in
+      ${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/Components/*.h.in
+      ${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/Components/*.cxx.in
     )
 set ( template_components ${template_components} CACHE INTERNAL "" )
 

@@ -393,7 +393,7 @@ $SimpleITK_BUILD_DIR/Code/$FILTER_DIR/src respectively.
 It is also worth noting that the template files in the \b templates directory
 are comprised of a combination of c++ code, lua template expansion directives,
 and $(include xxx) statements.  These include statements each pull in a section
-of template code from a file in $SimpleITK_SOURCE_DIR/TemplateComponents. These
+of template code from a file in $SimpleITK_SOURCE_DIR/ExpandTemplateGenerator/Components. These
 component files represent pieces of templates that are shared by multiple
 unique filter template types.
 
