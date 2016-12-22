@@ -91,6 +91,7 @@ def traverseXML( xml_node, depth=0, Debug=False ):
       sys.stdout.write("  ")
     print( xml_node.tag, ": ", xml_node.attrib, xml_node.text)
 
+  # handle simplesection nodes (particularly See nodes)
   if xml_node.tag == 'simplesect':
     if xml_node.attrib['kind'] == 'see':
       for child in xml_node:
@@ -103,21 +104,37 @@ def traverseXML( xml_node, depth=0, Debug=False ):
     else:
       result = result + "\\" + xml_node.attrib['kind'] + " "
 
+  # iterate through the children
   for child in xml_node:
     if Debug:
       print ("Child: ", child, child.text)
     result = result + traverseXML(child, depth+1 )
 
+  text = xml_node.text
+
+  # handle formula nodes
+  if xml_node.tag == 'formula':
+    if Debug:
+      print(blue_text, "\nFormula", end_color)
+      print(text)
+    text = text.replace("\[", " \\f[", 1)
+    text = text.replace( "\\]", "\\f] " )
+    text = text.replace( "$", "\\f$" ) +  " "
+    if Debug:
+      print(text)
+
+
+  # add the prefix and postfixes
   if xml_node.tag in prefix:
     result = prefix[xml_node.tag] + result
-  if xml_node.text != None:
-    text = xml_node.text
+  if text != None:
     result = text + result
   if xml_node.tag in postfix:
     result = result + postfix[xml_node.tag]
   if xml_node.tail:
     result = result + xml_node.tail
 
+  # finished
   if Debug:
     for i in range(depth):
       sys.stdout.write("  ")
