@@ -36,6 +36,7 @@ mark_as_advanced(ExternalData_URL_TEMPLATES)
 if(NOT SITK_FORBID_DOWNLOADS)
   list(APPEND ExternalData_URL_TEMPLATES
     # Data published by MIDAS
+    "https://placid.nlm.nih.gov/api/rest?method=midas.bitstream.download&checksum=%(hash)&algorithm=%(algo)"
     "http://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=%(hash)&algorithm=%(algo)"
     "https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=%(hash)&algorithm=%(algo)"
 
