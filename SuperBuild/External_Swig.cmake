@@ -20,17 +20,14 @@ if(NOT SWIG_DIR)
 
   if( USE_SWIG_FROM_GIT )
     set(SWIG_GIT_REPOSITORY "${git_protocol}://github.com/swig/swig.git" CACHE STRING "URL of swig git repo")
-    set(SWIG_GIT_TAG "rel-3.0.10" CACHE STRING "Tag in swig git repo")
+    set(SWIG_GIT_TAG "rel-3.0.11" CACHE STRING "Tag in swig git repo")
     mark_as_advanced(SWIG_GIT_REPO)
     mark_as_advanced(SWIG_GIT_TAG)
   endif()
 
-  set(SWIG_TARGET_VERSION "3.0.10" )
-  set(SWIG_DOWNLOAD_SOURCE_HASH "bb4ab8047159469add7d00910e203124")
-  set(SWIGWIN_DOWNLOAD_HASH "f229724fe856aa78df6128ecfefe6e0a")
-  set(SWIGWIN_URL "https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${SWIG_DOWNLOAD_WIN_HASH}&name=swigwin-${SWIG_TARGET_VERSION}.zip")
-  set(SWIG_URL "https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=${SWIG_DOWNLOAD_SOURCE_HASH}&name=swig-${SWIG_TARGET_VERSION}.tar.gz")
-
+  set(SWIG_TARGET_VERSION "3.0.11" )
+  set(SWIG_DOWNLOAD_SOURCE_HASH "13732eb0f1ab2123d180db8425c1edea")
+  set(SWIGWIN_DOWNLOAD_HASH "5cc57e3658f62b7f648bec7eed91a4f0" )
 
   if(WIN32)
     # binary SWIG for windows
@@ -99,7 +96,7 @@ if(NOT SWIG_DIR)
         GIT_TAG "${SWIG_GIT_TAG}"
         )
     else()
-      sitkSourceDownload(${proj}_URL "swig-${SWIG_TARGET_VERSION}.tar.gz" ${SWIG_DOWNLOAD_SOURCE_HASH})
+      sitkSourceDownload(SWIG_URL "swig-${SWIG_TARGET_VERSION}.tar.gz" ${SWIG_DOWNLOAD_SOURCE_HASH})
       set(SWIG_DOWNLOAD_STEP
         URL "${SWIG_URL}"
         URL_MD5 "${SWIG_DOWNLOAD_SOURCE_HASH}"
