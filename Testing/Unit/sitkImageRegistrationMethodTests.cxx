@@ -854,7 +854,7 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_ScalesEstimator)
   R.SetMetricAsMeanSquares();
 
   unsigned int numberOfIterations=100;
-  double convergenceMinimumValue = 1e-5;
+  double convergenceMinimumValue = 1e-6;
   unsigned int convergenceWindowSize = 2;
   R.SetOptimizerAsConjugateGradientLineSearch( 1.0,
                                                numberOfIterations,
@@ -869,7 +869,7 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_ScalesEstimator)
   sitk::Transform outTx = R.Execute(fixedImage, movingImage);
 
   EXPECT_VECTOR_DOUBLE_NEAR(v3(0.0,-2.8,9.5), outTx.GetParameters(), 0.6);
-  EXPECT_VECTOR_DOUBLE_NEAR(v3(127025,1.0,1.0), cmd.scales, 1e-1);\
+  EXPECT_VECTOR_DOUBLE_NEAR(v3(130049,1.0,1.0), cmd.scales, 1.0);\
   EXPECT_TRUE( cmd.toString.find("ScalesFromIndexShift") != std::string::npos );
 
 
@@ -877,7 +877,7 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_ScalesEstimator)
   outTx = R.Execute(fixedImage, movingImage);
 
   EXPECT_VECTOR_DOUBLE_NEAR(v3(0.0,-2.8,9.5), outTx.GetParameters(), 0.6);
-  EXPECT_VECTOR_DOUBLE_NEAR(v3(44198,1.0,1.0), cmd.scales, 1e-1);
+  EXPECT_VECTOR_DOUBLE_NEAR(v3(65025,1.0,1.0), cmd.scales, 1.0);
   EXPECT_TRUE( cmd.toString.find("ScalesFromJacobian") != std::string::npos );
 
 
@@ -885,7 +885,7 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_ScalesEstimator)
   outTx = R.Execute(fixedImage, movingImage);
 
   EXPECT_VECTOR_DOUBLE_NEAR(v3(0.0,-2.8,9.5), outTx.GetParameters(), 0.6);
-  EXPECT_VECTOR_DOUBLE_NEAR(v3(119572,1.0,1.0), cmd.scales, 1e-1);
+  EXPECT_VECTOR_DOUBLE_NEAR(v3(130049,1.0,1.0), cmd.scales, 1.0);
   EXPECT_TRUE( cmd.toString.find("ScalesFromPhysicalShift") != std::string::npos );
 
   R.SetOptimizerScales(v3(200000,1.0,1.0));
