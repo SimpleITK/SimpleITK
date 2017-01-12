@@ -6,7 +6,12 @@ import xml.etree.ElementTree as ET
 from collections import OrderedDict
 
 
-#  A re-write of the GenerateDocumentation.groovy script in python.
+#
+#  This script updates the documentation of a SimpleITK class in its
+#  JSON file.  The documentation is pulled from the correpsonding ITK
+#  class XML file.  The SimpleITKClass.json file is modified in place.
+#
+#  The script is a re-write of the GenerateDocumentation.groovy script in python.
 #
 #  usage: GenerateDoc.py <SimpleITKClass.json> <Path/To/ITK-build/With/Doxygen>
 #
