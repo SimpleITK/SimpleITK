@@ -53,6 +53,18 @@ if(invalid_flag_match STREQUAL "")
   endif()
 endif()
 
+# Java 1.8 javadoc treats linting errors as build errors by default 
+# so linting should be opt-in for this version
+if( ${Java_VERSION_STRING} VERSION_EQUAL 1.8 OR ${Java_VERSION_STRING} VERSION_GREATER 1.8 )
+  mark_as_advanced( Java_JAVADOC_LINTING )
+  option( Java_JAVADOC_LINTING "Enable javadoc linting for Java 1.8" OFF )
+  if( Java_JAVADOC_LINTING )
+    set( Java_JAVADOC_LINTING_CMD "-Xdoclint:all" )
+  else()
+    set( Java_JAVADOC_LINTING_CMD "-Xdoclint:none" )
+  endif()
+endif()
+
 # Add custom command and target to compile the generated files and put them in a jar file
 # Make sure the commands depend on the output library from SWIG
 add_custom_command(
