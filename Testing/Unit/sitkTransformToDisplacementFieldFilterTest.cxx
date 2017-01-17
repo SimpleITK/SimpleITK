@@ -51,8 +51,8 @@ TEST(BasicFilters,TransformToDisplacementFieldFilter) {
   EXPECT_EQ ( filter.GetName(), "TransformToDisplacementFieldFilter" ) << "checking GetName method!";
 
   // Test sets / gets
-  filter.SetOutputPixelType ( itk::simple::sitkVectorFloat64 );
-  EXPECT_EQ ( filter.GetOutputPixelType(), itk::simple::sitkVectorFloat64 ) << "Testing set/get for OutputPixelType";
+  filter.SetOutputPixelType ( itk::simple::sitkVectorFloat32 );
+  EXPECT_EQ ( filter.GetOutputPixelType(), itk::simple::sitkVectorFloat32 ) << "Testing set/get for OutputPixelType";
   filter.SetSize ( std::vector<unsigned int>(3, 64) );
   for(unsigned int i = 0; i < filter.GetSize().size(); ++i)
     {
@@ -96,6 +96,36 @@ TEST(BasicFilters,TransformToDisplacementFieldFilter_defaults)
 
    filter.DebugOn();
    ASSERT_NO_THROW ( output =  filter.Execute ( input  ) );
+   EXPECT_EQ ( output.GetPixelID(), itk::simple::sitkVectorFloat64 ) << "Testing for OutputPixelType results";
+   IMAGECOMPAREWITHTOLERANCE ( output, "", 5e-4 );
+}
+
+TEST(BasicFilters,TransformToDisplacementFieldFilter_32)
+  {
+
+  itk::simple::TransformToDisplacementFieldFilter filter;
+  itk::simple::Image output;
+  itk::simple::HashImageFilter hasher;
+
+  itk::simple::Transform input;
+
+  input = itk::simple::ReadTransform( dataFinder.GetFile( "Input/xforms/affine_i_3.txt" ) );
+
+  ASSERT_TRUE ( input.GetITKBase() != NULL ) << "Could not read.";
+
+  // Do we get the same image back, if we use the functional interface?
+  itk::simple::Image fromFunctional( 0, 0, itk::simple::sitkUInt8 );
+  itk::simple::Image fromProcedural( 0, 0, itk::simple::sitkUInt8 );
+  ASSERT_NO_THROW ( fromProcedural = filter.Execute ( input  ) ) << "Procedural interface to TransformToDisplacementFieldFilter";
+  ASSERT_NO_THROW ( fromFunctional = itk::simple::TransformToDisplacementField ( input ) ) << "Functional interface to TransformToDisplacementFieldFilter";
+
+  hasher.SetHashFunction ( itk::simple::HashImageFilter::MD5 );
+  EXPECT_EQ ( hasher.Execute ( fromProcedural ), hasher.Execute ( fromFunctional ) ) << "procedural and functional are not the same!";
+
+   filter.DebugOn();
+   filter.SetOutputPixelType ( itk::simple::sitkVectorFloat32 );
+   ASSERT_NO_THROW ( output =  filter.Execute ( input  ) );
+   EXPECT_EQ ( output.GetPixelID(), itk::simple::sitkVectorFloat32 ) << "Testing for OutputPixelType results";
 
    IMAGECOMPAREWITHTOLERANCE ( output, "", 5e-4 );
 }
