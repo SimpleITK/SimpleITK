@@ -29,10 +29,5 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
       die 'Unable to get ITK Doxygen XML'
 
 # Does the work of extracting the string from the XML, and putting them into the JSON
-${GROOVEY_EXECUTABLE} "${DIR}/GenerateDocumentation.groovy" "$1"  ${ITK_XML} ||
-  die 'Error running GenerateDocumentation.groovy'
-
-
-# Perform standard formatting of the JSON file
-${PYTHON_EXECUTABLE} "${SIMPLEITK}/Utilities/JSONBeautify.py" $1 ||
-  die 'Error Beautifying json file $1'
+${PYTHON_EXECUTABLE} "${DIR}/GenerateDoc.py" "$1"  ${ITK_XML} ||
+  die 'Error running GenerateDoc.py'
