@@ -92,9 +92,9 @@ macro( CSHARP_ADD_PROJECT type name )
 
   # Perform platform specific actions
   if (WIN32)
-    string( REPLACE "/" "\\" sources ${sources} )
+    string( REPLACE "/" "\\" sources "${sources}" )
   else (UNIX)
-    string( REPLACE "\\" "/" sources ${sources} )
+    string( REPLACE "\\" "/" sources "${sources}" )
   endif (WIN32)
 
   # Add custom target and command
