@@ -29,9 +29,6 @@ target_link_libraries ( SimpleGaussianFunctional ${SimpleITK_LIBRARIES} )
 add_executable ( BufferImportExport BufferImportExport.cxx )
 target_link_libraries ( BufferImportExport ${SimpleITK_LIBRARIES} )
 
-add_executable ( FilterProgressReporting FilterProgressReporting.cxx )
-target_link_libraries ( FilterProgressReporting ${SimpleITK_LIBRARIES} )
-
 add_executable ( ImageRegistrationMethod2 ImageRegistrationMethod2.cxx )
 target_link_libraries ( ImageRegistrationMethod2 ${SimpleITK_LIBRARIES} )
 
@@ -62,6 +59,7 @@ if ( BUILD_TESTING )
   add_subdirectory(SimpleGaussian)
   add_subdirectory(ImageRegistrationMethod1)
   add_subdirectory(DicomSeriesReader)
+  add_subdirectory(FilterProgressReporting)
 endif()
 
 macro(add_language_subdirectory lang)
@@ -79,7 +77,5 @@ if ( BUILD_TESTING )
   add_language_subdirectory( Lua )
   add_language_subdirectory( Python )
   add_language_subdirectory( R )
-  add_language_subdirectory( Ruby )
-  add_language_subdirectory( Tcl )
 
 endif()

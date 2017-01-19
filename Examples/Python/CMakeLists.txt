@@ -52,15 +52,6 @@ sitk_add_python_test( Example.FFTConvolution
   "${TEST_HARNESS_TEMP_DIRECTORY}/Python.Examples.FFTConvolution.nrrd"
   )
 
-sitk_add_python_test( Example.FilterProgressReporting
-  "${CMAKE_CURRENT_SOURCE_DIR}/FilterProgressReporting.py"
-  DATA{${SimpleITK_DATA_ROOT}/Input/RA-Short.nrrd}
-  "2.0"
-  "${TEST_HARNESS_TEMP_DIRECTORY}/PythonFilterProgressReporting.nrrd"
-  )
-
-set_tests_properties( Python.Example.FilterProgressReporting
-  PROPERTIES PASS_REGULAR_EXPRESSION "DiscreteGaussianImageFilter Progress" )
 
 sitk_add_python_test( Example.DicomSeriesReader2
   "${CMAKE_CURRENT_SOURCE_DIR}/DicomSeriesReader2.py"

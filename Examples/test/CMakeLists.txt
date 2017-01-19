@@ -14,15 +14,6 @@ sitk_add_test(NAME CXX.Example.SimpleGaussianFunctional
      "${TEST_HARNESS_TEMP_DIRECTORY}/CXX.SimpleGaussianFunctional.nrrd"
   )
 
-sitk_add_test(NAME CXX.Example.FilterProgressReporting
-  COMMAND "${ITK_TEST_DRIVER}"
-    $<TARGET_FILE:FilterProgressReporting>
-    DATA{${SimpleITK_DATA_ROOT}/Input/RA-Short.nrrd}
-    2.0
-    "${TEST_HARNESS_TEMP_DIRECTORY}/CXX.FilterProgressReporting.nrrd"
-  )
-set_tests_properties( CXX.Example.FilterProgressReporting
-  PROPERTIES PASS_REGULAR_EXPRESSION "DiscreteGaussianImageFilter Progress" )
 
 sitk_add_test(NAME  CXX.Example.Segmentation.ConnectedThresholdImageFilter1
   COMMAND "${ITK_TEST_DRIVER}"
