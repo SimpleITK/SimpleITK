@@ -21,12 +21,13 @@
 #include "itkGradientDescentOptimizerv4.h"
 #include "itkRegularStepGradientDescentOptimizerv4.h"
 #include "itkLBFGSBOptimizerv4.h"
+#include "itkOnePlusOneEvolutionaryOptimizerv4.h"
+#include "itkNormalVariateGenerator.h"
 #include "itkExhaustiveOptimizerv4.h"
 #include "itkAmoebaOptimizerv4.h"
 #include <itkPowellOptimizerv4.h>
 
-#include "itkOnePlusOneEvolutionaryOptimizerv4.h"
-#include "itkNormalVariateGenerator.h"
+
 
 
 namespace {
