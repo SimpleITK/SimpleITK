@@ -32,9 +32,6 @@ target_link_libraries ( BufferImportExport ${SimpleITK_LIBRARIES} )
 add_executable ( FilterProgressReporting FilterProgressReporting.cxx )
 target_link_libraries ( FilterProgressReporting ${SimpleITK_LIBRARIES} )
 
-add_executable ( DicomSeriesReader DicomSeriesReader.cxx )
-target_link_libraries ( DicomSeriesReader ${SimpleITK_LIBRARIES} )
-
 add_executable ( ImageRegistrationMethod2 ImageRegistrationMethod2.cxx )
 target_link_libraries ( ImageRegistrationMethod2 ${SimpleITK_LIBRARIES} )
 
@@ -64,6 +61,7 @@ if ( BUILD_TESTING )
   # Add example organized sub-directories with multiple languages
   add_subdirectory(SimpleGaussian)
   add_subdirectory(ImageRegistrationMethod1)
+  add_subdirectory(DicomSeriesReader)
 endif()
 
 macro(add_language_subdirectory lang)
