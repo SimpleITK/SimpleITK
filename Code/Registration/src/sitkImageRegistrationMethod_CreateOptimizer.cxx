@@ -23,8 +23,7 @@
 #include "itkLBFGSBOptimizerv4.h"
 #include "itkExhaustiveOptimizerv4.h"
 #include "itkAmoebaOptimizerv4.h"
-#include <itkPowellOptimizerv4.h>
-
+#include "itkPowellOptimizerv4.h"
 
 namespace {
 
@@ -214,6 +213,7 @@ namespace simple
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetValue,optimizer.GetPointer());
       this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer.GetPointer());
       this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer.GetPointer());
+      this->m_pfGetOptimizerScales = nsstd::bind(&PositionOptimizerCustomCast::Helper<_OptimizerType::ScalesType>, nsstd::bind(&_OptimizerType::GetScales, optimizer.GetPointer()));
 
       return optimizer.GetPointer();
       }
@@ -258,6 +258,7 @@ namespace simple
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetValue,optimizer);
       this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer);
       this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer);
+      this->m_pfGetOptimizerScales = nsstd::bind(&PositionOptimizerCustomCast::Helper<_OptimizerType::ScalesType>, nsstd::bind(&_OptimizerType::GetScales, optimizer.GetPointer()));
 
       optimizer->Register();
       return optimizer.GetPointer();
@@ -276,6 +277,7 @@ namespace simple
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetValue,optimizer.GetPointer());
       this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer.GetPointer());
       this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer.GetPointer());
+      this->m_pfGetOptimizerScales = nsstd::bind(&PositionOptimizerCustomCast::Helper<_OptimizerType::ScalesType>, nsstd::bind(&_OptimizerType::GetScales, optimizer.GetPointer()));
 
       optimizer->Register();
       return optimizer.GetPointer();
