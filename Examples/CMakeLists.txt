@@ -22,8 +22,6 @@ if(NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK")
 endif()
 
 # Add individual cxx executables
-add_executable ( SimpleGaussian SimpleGaussian.cxx )
-target_link_libraries ( SimpleGaussian ${SimpleITK_LIBRARIES} )
 
 add_executable ( SimpleGaussianFunctional SimpleGaussianFunctional.cxx )
 target_link_libraries ( SimpleGaussianFunctional ${SimpleITK_LIBRARIES} )
@@ -36,9 +34,6 @@ target_link_libraries ( FilterProgressReporting ${SimpleITK_LIBRARIES} )
 
 add_executable ( DicomSeriesReader DicomSeriesReader.cxx )
 target_link_libraries ( DicomSeriesReader ${SimpleITK_LIBRARIES} )
-
-add_executable ( ImageRegistrationMethod1 ImageRegistrationMethod1.cxx )
-target_link_libraries ( ImageRegistrationMethod1 ${SimpleITK_LIBRARIES} )
 
 add_executable ( ImageRegistrationMethod2 ImageRegistrationMethod2.cxx )
 target_link_libraries ( ImageRegistrationMethod2 ${SimpleITK_LIBRARIES} )
@@ -64,6 +59,12 @@ set(TEST_HARNESS_TEMP_DIRECTORY ${SimpleITK_BINARY_DIR}/Testing/Temporary)
 set(TEST_HARNESS_DATA_DIRECTORY ${SimpleITK_BINARY_DIR}/ExternalData/Testing/Data)
 set(ITK_TEST_DRIVER  "$<TARGET_FILE:itkTestDriver>")
 
+
+if ( BUILD_TESTING )
+  # Add example organized sub-directories with multiple languages
+  add_subdirectory(SimpleGaussian)
+  add_subdirectory(ImageRegistrationMethod1)
+endif()
 
 macro(add_language_subdirectory lang)
   string(TOUPPER ${lang} LANG)

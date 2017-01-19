@@ -1,11 +1,3 @@
-sitk_add_python_test( Example.SimpleGaussian
-  "${CMAKE_CURRENT_SOURCE_DIR}/SimpleGaussian.py"
-  --compare
-    "${TEST_HARNESS_TEMP_DIRECTORY}/Python.SimpleGaussian.nrrd"
-    DATA{${SimpleITK_DATA_ROOT}/Baseline/Example_SimpleGaussian_2.0.nrrd}
-  DATA{${SimpleITK_DATA_ROOT}/Input/RA-Short.nrrd}
-  "2.0"
-  "${TEST_HARNESS_TEMP_DIRECTORY}/Python.SimpleGaussian.nrrd" )
 
 sitk_add_python_test( Example.SimpleGaussianProcedural
   "${CMAKE_CURRENT_SOURCE_DIR}/SimpleGaussianProcedural.py"
@@ -132,16 +124,6 @@ sitk_add_python_test( Example.NeighborhoodConnectedImageFilter1
   60 116
   )
 
-sitk_add_python_test( Example.ImageRegistrationMethod1
-  "${CMAKE_CURRENT_SOURCE_DIR}/ImageRegistrationMethod1.py"
-  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20.png}
-  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceShifted13x17y.png}
-  ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethod11Test.hdf5
-  TRANSFORM_COMPARE
-    ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethod11Test.hdf5
-    DATA{${SimpleITK_DATA_ROOT}/Baseline/displacement_13x17y.mha}
-    0.02
-  )
 
 sitk_add_python_test( Example.ImageRegistrationMethod2
   "${CMAKE_CURRENT_SOURCE_DIR}/ImageRegistrationMethod2.py"
