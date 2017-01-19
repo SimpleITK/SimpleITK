@@ -29,12 +29,6 @@ target_link_libraries ( SimpleGaussianFunctional ${SimpleITK_LIBRARIES} )
 add_executable ( BufferImportExport BufferImportExport.cxx )
 target_link_libraries ( BufferImportExport ${SimpleITK_LIBRARIES} )
 
-add_executable ( ImageRegistrationMethodBSpline1 ImageRegistrationMethodBSpline1.cxx )
-target_link_libraries ( ImageRegistrationMethodBSpline1 ${SimpleITK_LIBRARIES} )
-
-add_executable ( ImageRegistrationMethodDisplacement1 ImageRegistrationMethodDisplacement1.cxx )
-target_link_libraries ( ImageRegistrationMethodDisplacement1  ${SimpleITK_LIBRARIES} )
-
 # Add subdirectories
 add_subdirectory(Segmentation)
 
@@ -49,6 +43,8 @@ if ( BUILD_TESTING )
   add_subdirectory(SimpleGaussian)
   add_subdirectory(ImageRegistrationMethod1)
   add_subdirectory(ImageRegistrationMethod2)
+  add_subdirectory(ImageRegistrationMethodBSpline1)
+  add_subdirectory(ImageRegistrationMethodDisplacement1)
   add_subdirectory(DicomSeriesReader)
   add_subdirectory(FilterProgressReporting)
   add_subdirectory(DemonsRegistration1)
