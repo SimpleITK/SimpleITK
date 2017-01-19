@@ -29,21 +29,11 @@ target_link_libraries ( SimpleGaussianFunctional ${SimpleITK_LIBRARIES} )
 add_executable ( BufferImportExport BufferImportExport.cxx )
 target_link_libraries ( BufferImportExport ${SimpleITK_LIBRARIES} )
 
-add_executable ( ImageRegistrationMethod2 ImageRegistrationMethod2.cxx )
-target_link_libraries ( ImageRegistrationMethod2 ${SimpleITK_LIBRARIES} )
-
 add_executable ( ImageRegistrationMethodBSpline1 ImageRegistrationMethodBSpline1.cxx )
 target_link_libraries ( ImageRegistrationMethodBSpline1 ${SimpleITK_LIBRARIES} )
 
 add_executable ( ImageRegistrationMethodDisplacement1 ImageRegistrationMethodDisplacement1.cxx )
 target_link_libraries ( ImageRegistrationMethodDisplacement1  ${SimpleITK_LIBRARIES} )
-
-
-add_executable ( DemonsRegistration1 DemonsRegistration1.cxx )
-target_link_libraries ( DemonsRegistration1 ${SimpleITK_LIBRARIES} )
-
-add_executable ( DemonsRegistration2 DemonsRegistration2.cxx )
-target_link_libraries ( DemonsRegistration2 ${SimpleITK_LIBRARIES} )
 
 # Add subdirectories
 add_subdirectory(Segmentation)
@@ -58,8 +48,11 @@ if ( BUILD_TESTING )
   # Add example organized sub-directories with multiple languages
   add_subdirectory(SimpleGaussian)
   add_subdirectory(ImageRegistrationMethod1)
+  add_subdirectory(ImageRegistrationMethod2)
   add_subdirectory(DicomSeriesReader)
   add_subdirectory(FilterProgressReporting)
+  add_subdirectory(DemonsRegistration1)
+  add_subdirectory(DemonsRegistration2)
 endif()
 
 macro(add_language_subdirectory lang)

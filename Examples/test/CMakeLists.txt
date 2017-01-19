@@ -51,18 +51,6 @@ sitk_add_test( NAME CXX.Example.Segmentation.NeighborhoodConnectedImageFilter1
       60 116
   )
 
-sitk_add_test(NAME CXX.Example.ImageRegistrationMethod2
-  COMMAND
-    $<TARGET_FILE:ImageRegistrationMethod2>
-    DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20.png}
-    DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceShifted13x17y.png}
-    ${TEST_HARNESS_TEMP_DIRECTORY}/CXXImageRegistrationMethod2Test.hdf5
-  TRANSFORM_COMPARE
-    ${TEST_HARNESS_TEMP_DIRECTORY}/CXXImageRegistrationMethod2Test.hdf5
-    DATA{${SimpleITK_DATA_ROOT}/Baseline/displacement_13x17y.mha}
-    0.02
-  )
-
 sitk_add_test(NAME CXX.Example.ImageRegistrationMethodBSpline1
   COMMAND
     $<TARGET_FILE:ImageRegistrationMethodBSpline1>
@@ -99,31 +87,6 @@ sitk_add_test(NAME CXX.Example.ImageRegistrationMethodDisplacement1Test2
     ${TEST_HARNESS_TEMP_DIRECTORY}/ImageRegistrationMethodDisplacement1Test2.hdf5
     DATA{${SimpleITK_DATA_ROOT}/Baseline/ImageRegistrationMethodDisplacement1Test2.mha}
     0.02
-  )
-
-sitk_add_test(NAME CXX.Example.DemonsRegistration1
-  COMMAND
-    $<TARGET_FILE:DemonsRegistration1>
-    DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20.png}
-    DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBSplined10.png}
-    ${TEST_HARNESS_TEMP_DIRECTORY}/CXXDemonsRegistration1Test.hdf5
-  TRANSFORM_COMPARE
-    ${TEST_HARNESS_TEMP_DIRECTORY}/CXXDemonsRegistration1Test.hdf5
-    DATA{${SimpleITK_DATA_ROOT}/Baseline/DemonsRegistration1Test_displacement.mha}
-    0.01
-  )
-
-sitk_add_test(NAME CXX.Example.DemonsRegistration2
-  COMMAND
-   $<TARGET_FILE:DemonsRegistration2>
-   DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceShifted13x17y.png}
-   DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBSplined10.png}
-   DATA{${SimpleITK_DATA_ROOT}/Input/xforms/translation_-13x-17y.txt}
-   ${TEST_HARNESS_TEMP_DIRECTORY}/CXXDemonsRegistration2Test.hdf5
-  TRANSFORM_COMPARE
-    ${TEST_HARNESS_TEMP_DIRECTORY}/CXXDemonsRegistration2Test.hdf5
-    DATA{${SimpleITK_DATA_ROOT}/Baseline/DemonsRegistration2Test_displacement.mha}
-    0.01
   )
 
 
