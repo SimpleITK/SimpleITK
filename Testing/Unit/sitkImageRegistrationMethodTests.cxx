@@ -848,6 +848,46 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_Powell)
   EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,0.0), outTx.GetParameters(), 1e-3);
   EXPECT_VECTOR_DOUBLE_NEAR(v2(1.0,1.0), cmd.scales, 1e-1);
 
+}
+
+TEST_F(sitkRegistrationMethodTest, Optimizer_OnePlusOneEvolutionary)
+{
+  sitk::Image image = MakeGaussianBlob( v2(64, 64), std::vector<unsigned int>(2,256) );
+
+
+  sitk::ImageRegistrationMethod R;
+  R.SetInterpolator(sitk::sitkLinear);
+
+  sitk::TranslationTransform tx(image.GetDimension());
+  tx.SetOffset(v2(-1,-2));
+  R.SetInitialTransform(tx, false);
+
+  R.SetMetricAsMeanSquares();
+
+  R.SetOptimizerScalesFromIndexShift();
+
+  R.SetOptimizerAsOnePlusOneEvolutionary(200,
+                                         1.5e-4,
+                                         1.0,
+                                         1.1,
+                                         .9,
+                                         0);
+
+  IterationUpdate cmd(R);
+  R.AddCommand(sitk::sitkIterationEvent, cmd);
+
+  sitk::Transform outTx = R.Execute(image, image);
+
+
+  std::cout << "-------" << std::endl;
+  std::cout << outTx.ToString() << std::endl;
+  std::cout << "Optimizer stop condition: " << R.GetOptimizerStopConditionDescription() << std::endl;
+  std::cout << " Iteration: " << R.GetOptimizerIteration() << std::endl;
+  std::cout << " Convergence value: " << R.GetOptimizerConvergenceValue() << std::endl;
+  std::cout << " Metric value: " << R.GetMetricValue() << std::endl;
+
+  EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,0.0), outTx.GetParameters(), 1e-3);
+  EXPECT_VECTOR_DOUBLE_NEAR(v2(1.0,1.0), cmd.scales, 1e-1);
 
 }
 
