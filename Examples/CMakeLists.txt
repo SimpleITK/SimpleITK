@@ -62,7 +62,6 @@ if ( BUILD_TESTING )
   add_subdirectory( test )
 
   add_language_subdirectory( CSharp )
-  add_language_subdirectory( Lua )
   add_language_subdirectory( Python )
   add_language_subdirectory( R )
 
