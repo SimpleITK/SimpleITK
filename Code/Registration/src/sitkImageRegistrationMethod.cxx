@@ -392,6 +392,24 @@ ImageRegistrationMethod::SetOptimizerAsPowell(unsigned int numberOfIterations,
 }
 
 ImageRegistrationMethod::Self&
+ImageRegistrationMethod::SetOptimizerAsOnePlusOneEvolutionary(unsigned int numberOfIterations,
+                                                              double epsilon,
+                                                              double initialRadius,
+                                                              double growthFactor,
+                                                              double shrinkFactor,
+                                                              unsigned int seed)
+{
+  m_OptimizerType = OnePlusOneEvolutionary;
+  m_OptimizerNumberOfIterations = numberOfIterations;
+  m_OptimizerEpsilon = epsilon;
+  m_OptimizerInitialRadius = initialRadius;
+  m_OptimizerGrowthFactor = growthFactor;
+  m_OptimizerShrinkFactor = shrinkFactor;
+
+  return *this;
+}
+
+ImageRegistrationMethod::Self&
 ImageRegistrationMethod::SetOptimizerScales( const std::vector<double> &scales)
 {
   this->m_OptimizerScalesType = Manual;
