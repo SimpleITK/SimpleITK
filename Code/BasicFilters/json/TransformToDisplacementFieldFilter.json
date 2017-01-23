@@ -4,7 +4,7 @@
   "doc" : "",
   "number_of_inputs" : 0,
   "pixel_types" : "RealVectorPixelIDTypeList",
-  "output_image_type" : " itk::Image< Vector<double, TImageType::ImageDimension>, TImageType::ImageDimension >",
+  "output_image_type" : " itk::Image< Vector<typename NumericTraits<typename TImageType::PixelType>::ValueType, TImageType::ImageDimension >, TImageType::ImageDimension >",
   "filter_type" : "itk::TransformToDisplacementFieldFilter<OutputImageType>",
   "include_files" : [
     "sitkTransform.h"
