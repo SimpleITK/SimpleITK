@@ -1,8 +1,5 @@
 #! /bin/sh
 
-
-GROOVEY_EXECUTABLE="groovy"
-
 SIMPLEITK="${HOME}/src/SimpleITK"
 
 ITK_XML="${HOME}/temp/xml"
