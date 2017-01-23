@@ -357,6 +357,18 @@ namespace simple
                                double stepTolerance = 1e-6,
                                double valueTolerance = 1e-6 );
 
+    /** \brief 1+1 evolutionary optimizer strategy.
+     *
+     * \sa itk::OnePlusOneEvolutionaryOptimizerv4
+     */
+    SITK_RETURN_SELF_TYPE_HEADER SetOptimizerAsOnePlusOneEvolutionary(unsigned int numberOfIterations = 100,
+                                                                      double epsilon = 1.5e-4,
+                                                                      double initialRadius = 1.01,
+                                                                      double growthFactor = -1.0,
+                                                                      double shrinkFactor = -1.0,
+                                                                      unsigned int seed = 0);
+
+
 
     /** \brief Manually set per parameter weighting for the transform parameters. */
     SITK_RETURN_SELF_TYPE_HEADER SetOptimizerScales( const std::vector<double> &scales );
@@ -626,7 +638,8 @@ namespace simple
                          LBFGSB,
                          Exhaustive,
                          Amoeba,
-                         Powell
+                         Powell,
+                         OnePlusOneEvolutionary
     };
     OptimizerType m_OptimizerType;
     double m_OptimizerLearningRate;
@@ -658,6 +671,10 @@ namespace simple
     unsigned int m_OptimizerMaximumLineIterations;
     double m_OptimizerStepTolerance;
     double m_OptimizerValueTolerance;
+    double m_OptimizerEpsilon;
+    double m_OptimizerInitialRadius;
+    double m_OptimizerGrowthFactor;
+    double m_OptimizerShrinkFactor;
 
     std::vector<double> m_OptimizerWeights;
 

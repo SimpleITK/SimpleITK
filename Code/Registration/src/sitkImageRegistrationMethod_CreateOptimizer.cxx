@@ -21,9 +21,13 @@
 #include "itkGradientDescentOptimizerv4.h"
 #include "itkRegularStepGradientDescentOptimizerv4.h"
 #include "itkLBFGSBOptimizerv4.h"
+#include "itkOnePlusOneEvolutionaryOptimizerv4.h"
+#include "itkNormalVariateGenerator.h"
 #include "itkExhaustiveOptimizerv4.h"
 #include "itkAmoebaOptimizerv4.h"
 #include "itkPowellOptimizerv4.h"
+
+
 
 namespace {
 
@@ -277,6 +281,30 @@ namespace simple
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetValue,optimizer.GetPointer());
       this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer.GetPointer());
       this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer.GetPointer());
+      this->m_pfGetOptimizerScales = nsstd::bind(&PositionOptimizerCustomCast::Helper<_OptimizerType::ScalesType>, nsstd::bind(&_OptimizerType::GetScales, optimizer.GetPointer()));
+
+      optimizer->Register();
+      return optimizer.GetPointer();
+      }
+    else if ( m_OptimizerType == OnePlusOneEvolutionary )
+      {
+       typedef itk::OnePlusOneEvolutionaryOptimizerv4<double> _OptimizerType;
+      _OptimizerType::Pointer optimizer = _OptimizerType::New();
+      optimizer->SetMaximumIteration( this->m_OptimizerNumberOfIterations );
+      optimizer->SetEpsilon( this->m_OptimizerEpsilon );
+      optimizer->Initialize( this->m_OptimizerInitialRadius,
+                             this->m_OptimizerGrowthFactor,
+                             this->m_OptimizerShrinkFactor);
+
+      typedef itk::Statistics::NormalVariateGenerator  GeneratorType;
+      GeneratorType::Pointer generator = GeneratorType::New();
+      generator->Initialize(12345);
+      optimizer->SetNormalVariateGenerator( generator );
+
+      this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetValue,optimizer.GetPointer());
+      this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer.GetPointer());
+      this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer.GetPointer());
+      this->m_pfGetOptimizerConvergenceValue = nsstd::bind(&_OptimizerType::GetFrobeniusNorm,optimizer.GetPointer());
       this->m_pfGetOptimizerScales = nsstd::bind(&PositionOptimizerCustomCast::Helper<_OptimizerType::ScalesType>, nsstd::bind(&_OptimizerType::GetScales, optimizer.GetPointer()));
 
       optimizer->Register();

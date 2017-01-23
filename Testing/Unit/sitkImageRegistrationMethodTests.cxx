@@ -848,6 +848,46 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_Powell)
   EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,0.0), outTx.GetParameters(), 1e-3);
   EXPECT_VECTOR_DOUBLE_NEAR(v2(1.0,1.0), cmd.scales, 1e-1);
 
+}
+
+TEST_F(sitkRegistrationMethodTest, Optimizer_OnePlusOneEvolutionary)
+{
+  sitk::Image image = MakeGaussianBlob( v2(64, 64), std::vector<unsigned int>(2,256) );
+
+
+  sitk::ImageRegistrationMethod R;
+  R.SetInterpolator(sitk::sitkLinear);
+
+  sitk::TranslationTransform tx(image.GetDimension());
+  tx.SetOffset(v2(-1,-2));
+  R.SetInitialTransform(tx, false);
+
+  R.SetMetricAsMeanSquares();
+
+  R.SetOptimizerScalesFromIndexShift();
+
+  R.SetOptimizerAsOnePlusOneEvolutionary(200,
+                                         1.5e-4,
+                                         1.0,
+                                         1.1,
+                                         .9,
+                                         0);
+
+  IterationUpdate cmd(R);
+  R.AddCommand(sitk::sitkIterationEvent, cmd);
+
+  sitk::Transform outTx = R.Execute(image, image);
+
+
+  std::cout << "-------" << std::endl;
+  std::cout << outTx.ToString() << std::endl;
+  std::cout << "Optimizer stop condition: " << R.GetOptimizerStopConditionDescription() << std::endl;
+  std::cout << " Iteration: " << R.GetOptimizerIteration() << std::endl;
+  std::cout << " Convergence value: " << R.GetOptimizerConvergenceValue() << std::endl;
+  std::cout << " Metric value: " << R.GetMetricValue() << std::endl;
+
+  EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,0.0), outTx.GetParameters(), 1e-3);
+  EXPECT_VECTOR_DOUBLE_NEAR(v2(1.0,1.0), cmd.scales, 1e-1);
 
 }
 
@@ -867,7 +907,7 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_ScalesEstimator)
   R.SetMetricAsMeanSquares();
 
   unsigned int numberOfIterations=100;
-  double convergenceMinimumValue = 1e-5;
+  double convergenceMinimumValue = 1e-6;
   unsigned int convergenceWindowSize = 2;
   R.SetOptimizerAsConjugateGradientLineSearch( 1.0,
                                                numberOfIterations,
@@ -882,7 +922,7 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_ScalesEstimator)
   sitk::Transform outTx = R.Execute(fixedImage, movingImage);
 
   EXPECT_VECTOR_DOUBLE_NEAR(v3(0.0,-2.8,9.5), outTx.GetParameters(), 0.6);
-  EXPECT_VECTOR_DOUBLE_NEAR(v3(127025,1.0,1.0), cmd.scales, 1e-1);\
+  EXPECT_VECTOR_DOUBLE_NEAR(v3(130049,1.0,1.0), cmd.scales, 1.0);\
   EXPECT_TRUE( cmd.toString.find("ScalesFromIndexShift") != std::string::npos );
 
 
@@ -890,7 +930,7 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_ScalesEstimator)
   outTx = R.Execute(fixedImage, movingImage);
 
   EXPECT_VECTOR_DOUBLE_NEAR(v3(0.0,-2.8,9.5), outTx.GetParameters(), 0.6);
-  EXPECT_VECTOR_DOUBLE_NEAR(v3(44198,1.0,1.0), cmd.scales, 1e-1);
+  EXPECT_VECTOR_DOUBLE_NEAR(v3(65025,1.0,1.0), cmd.scales, 1.0);
   EXPECT_TRUE( cmd.toString.find("ScalesFromJacobian") != std::string::npos );
 
 
@@ -898,7 +938,7 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_ScalesEstimator)
   outTx = R.Execute(fixedImage, movingImage);
 
   EXPECT_VECTOR_DOUBLE_NEAR(v3(0.0,-2.8,9.5), outTx.GetParameters(), 0.6);
-  EXPECT_VECTOR_DOUBLE_NEAR(v3(119572,1.0,1.0), cmd.scales, 1e-1);
+  EXPECT_VECTOR_DOUBLE_NEAR(v3(130049,1.0,1.0), cmd.scales, 1.0);
   EXPECT_TRUE( cmd.toString.find("ScalesFromPhysicalShift") != std::string::npos );
 
   R.SetOptimizerScales(v3(200000,1.0,1.0));
