@@ -175,7 +175,7 @@ public:
   /**@}*/
 
   // Make composition
-  Transform &AddTransform( Transform t );
+  SITK_RETURN_SELF_TYPE_HEADER AddTransform( Transform t );
 
   std::vector< double > TransformPoint( const std::vector< double > &point ) const;
 
