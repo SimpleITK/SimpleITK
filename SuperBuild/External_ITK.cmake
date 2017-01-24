@@ -44,13 +44,12 @@ endif()
 # NOTE: it is very important to update the ITK_DIR path with the ITK version
 set(ITK_TAG_COMMAND GIT_TAG e234d4df432387f5cd667a91c958be9d79892815 )# ITK 4.11 post rc2
 
-if( ${ITK_WRAPPING} OR ${BUILD_SHARED_LIBS} )
+if( ${BUILD_SHARED_LIBS} )
   set( ITK_BUILD_SHARED_LIBS ON )
 else()
   set( ITK_BUILD_SHARED_LIBS OFF )
   list( APPEND ep_itk_args"-DCMAKE_C_VISIBILITY_PRESET:STRING=hidden" "-DCMAKE_CXX_VISIBILITY_PRESET:STRING=hidden" )
 endif()
-
 
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt" "${ep_itk_cache}\n${ep_common_cache}" )
 
@@ -78,22 +77,6 @@ ExternalProject_Add(${proj}
   -DITK_BUILD_DEFAULT_MODULES:BOOL=ON
   -DModule_ITKReview:BOOL=ON
   -DITK_USE_GIT_PROTOCOL:BOOL=${ITK_USE_GIT_PROTOCOL}
-  -DITK_WRAP_float:BOOL=ON
-  -DITK_WRAP_unsigned_char:BOOL=ON
-  -DITK_WRAP_signed_short:BOOL=ON
-  -DITK_WRAP_unsigned_short:BOOL=ON
-  -DITK_WRAP_complex_float:BOOL=ON
-  -DITK_WRAP_vector_float:BOOL=ON
-  -DITK_WRAP_covariant_vector_float:BOOL=ON
-  -DITK_WRAP_rgb_signed_short:BOOL=ON
-  -DITK_WRAP_rgb_unsigned_char:BOOL=ON
-  -DITK_WRAP_rgb_unsigned_short:BOOL=ON
-  -DITK_WRAP_PYTHON:BOOL=${ITK_WRAPPING}
-  # Required as to not install into system
-  -DINSTALL_WRAP_ITK_COMPATIBILITY:BOOL=OFF
-  # Swig
-  -DSWIG_DIR:PATH=${SWIG_DIR}
-  -DSWIG_EXECUTABLE:PATH=${SWIG_EXECUTABLE}
   BUILD_COMMAND ${BUILD_COMMAND_STRING}
   DEPENDS
     ${ITK_DEPENDENCIES}
@@ -103,4 +86,3 @@ ExternalProject_Add(${proj}
 
 ExternalProject_Get_Property(ITK install_dir)
 set(ITK_DIR "${install_dir}/lib/cmake/ITK-4.11" )
-set(WrapITK_DIR "${ITK_DIR}/WrapITK")
