@@ -50,6 +50,7 @@ ImageRegistrationMethod::ImageRegistrationMethod()
     m_OptimizerScalesType(Manual),
     m_MetricSamplingPercentage(1,1.0),
     m_MetricSamplingStrategy(NONE),
+    m_MetricSamplingSeed(0u),
     m_MetricUseFixedImageGradientFilter(true),
     m_MetricUseMovingImageGradientFilter(true),
     m_ShrinkFactorsPerLevel(1, 1),
@@ -467,17 +468,19 @@ ImageRegistrationMethod::SetOptimizerScalesFromPhysicalShift( unsigned int centr
 }
 
 ImageRegistrationMethod::Self&
-ImageRegistrationMethod::SetMetricSamplingPercentage(double percentage)
+ImageRegistrationMethod::SetMetricSamplingPercentage(double percentage, unsigned int seed)
 {
   m_MetricSamplingPercentage.resize(1);
   m_MetricSamplingPercentage[0] = percentage;
+  m_MetricSamplingSeed = seed;
   return *this;
 }
 
 ImageRegistrationMethod::Self&
-ImageRegistrationMethod::SetMetricSamplingPercentagePerLevel(const std::vector<double> &percentage)
+ImageRegistrationMethod::SetMetricSamplingPercentagePerLevel(const std::vector<double> &percentage, unsigned int seed)
 {
   m_MetricSamplingPercentage = percentage;
+  m_MetricSamplingSeed = seed;
   return *this;
 }
 
@@ -802,6 +805,15 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
     typename RegistrationType::MetricSamplingPercentageArrayType param(m_MetricSamplingPercentage.size());
     std::copy(m_MetricSamplingPercentage.begin(), m_MetricSamplingPercentage.end(), param.begin());
     registration->SetMetricSamplingPercentagePerLevel(param);
+    }
+
+  if ( m_MetricSamplingSeed == 0 )
+    {
+    registration->MetricSamplingReinitializeSeed();
+    }
+  else
+    {
+    registration->MetricSamplingReinitializeSeed(m_MetricSamplingSeed);
     }
 
   typename RegistrationType::ShrinkFactorsArrayType shrinkFactorsPerLevel( m_ShrinkFactorsPerLevel.size() );

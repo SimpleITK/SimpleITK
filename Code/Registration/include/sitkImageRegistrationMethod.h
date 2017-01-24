@@ -423,11 +423,16 @@ namespace simple
 
     /** \brief Set percentage of pixels sampled for metric evaluation.
      *
+     * The seed parameter is used to seed the pseudo-random number
+     * generator used in generating the sampling set of points. If the
+     * seed parameter is 0, then the wall clock is used, otherwise the
+     * fixed seed is used for reproducible behavior.
+     *
      * \sa itk::ImageRegistrationMethodv4::SetMetricSamplingPercentage
      * @{
      */
-    SITK_RETURN_SELF_TYPE_HEADER SetMetricSamplingPercentage(double percentage);
-    SITK_RETURN_SELF_TYPE_HEADER SetMetricSamplingPercentagePerLevel(const std::vector<double> &percentage);
+    SITK_RETURN_SELF_TYPE_HEADER SetMetricSamplingPercentage(double percentage, unsigned int seed = 0);
+    SITK_RETURN_SELF_TYPE_HEADER SetMetricSamplingPercentagePerLevel(const std::vector<double> &percentage, unsigned int seed = 0);
     /** @} */
 
     enum MetricSamplingStrategyType {
@@ -708,6 +713,7 @@ namespace simple
 
     std::vector<double> m_MetricSamplingPercentage;
     MetricSamplingStrategyType m_MetricSamplingStrategy;
+    unsigned int m_MetricSamplingSeed;
 
     bool m_MetricUseFixedImageGradientFilter;
     bool m_MetricUseMovingImageGradientFilter;
