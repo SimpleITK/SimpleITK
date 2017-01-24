@@ -359,6 +359,10 @@ namespace simple
 
     /** \brief 1+1 evolutionary optimizer strategy.
      *
+     * The seed parameter is used to seed the pseudo-random number
+     * generator. If the seed parameter is 0, then the wall clock is
+     * used to seed, otherwise the fixed seed is used for reproducible behavior.
+     *
      * \sa itk::OnePlusOneEvolutionaryOptimizerv4
      */
     SITK_RETURN_SELF_TYPE_HEADER SetOptimizerAsOnePlusOneEvolutionary(unsigned int numberOfIterations = 100,
@@ -675,6 +679,7 @@ namespace simple
     double m_OptimizerInitialRadius;
     double m_OptimizerGrowthFactor;
     double m_OptimizerShrinkFactor;
+    unsigned int m_OptimizerSeed;
 
     std::vector<double> m_OptimizerWeights;
 

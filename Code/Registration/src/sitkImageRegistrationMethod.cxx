@@ -405,6 +405,7 @@ ImageRegistrationMethod::SetOptimizerAsOnePlusOneEvolutionary(unsigned int numbe
   m_OptimizerInitialRadius = initialRadius;
   m_OptimizerGrowthFactor = growthFactor;
   m_OptimizerShrinkFactor = shrinkFactor;
+  m_OptimizerSeed = seed;
 
   return *this;
 }
