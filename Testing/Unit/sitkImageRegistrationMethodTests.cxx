@@ -57,7 +57,12 @@ public:
       std::cout << std::fixed << std::setfill(' ') << std::setprecision( 5 );
       std::cout << std::setw(3) << m_Method.GetOptimizerIteration();
       std::cout << " = " << std::setw(10) << m_Method.GetMetricValue();
-      std::cout << " : " << m_Method.GetOptimizerPosition() << std::endl;
+      std::cout << " : " << m_Method.GetOptimizerPosition();
+      if ( m_Method.GetOptimizerConvergenceValue() != 0.0 )
+        {
+        std::cout << " ( " << m_Method.GetOptimizerConvergenceValue() << " )";
+        }
+      std::cout << std::endl;
 
       std::cout.copyfmt(state);
     }
@@ -679,7 +684,7 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_LBFGSB)
   R.SetInitialTransform(tx, false);
 
   R.SetMetricAsMeanSquares();
-
+  R.SetOptimizerScalesFromIndexShift();
   R.SetOptimizerAsLBFGSB(1e-20,
                          20,
                          5,
@@ -702,6 +707,7 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_LBFGSB)
   std::cout << " Metric value: " << R.GetMetricValue() << std::endl;
 
   EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,0.0), outTx.GetParameters(), 1e-3);
+  EXPECT_VECTOR_DOUBLE_NEAR(v2(1.0,1.0), cmd.scales, 1e-1);
 
   tx.SetOffset(v2(-1,-2));
   R.SetOptimizerAsLBFGSB(1e-20,
@@ -747,9 +753,11 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_Exhaustive)
   std::cout << " Metric value: " << R.GetMetricValue() << std::endl;
 
   EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,0.0), outTx.GetParameters(), 1e-3);
-
+  EXPECT_EQ(0u, cmd.scales.size());
 
   // Execute in place
+
+  R.SetOptimizerScalesFromIndexShift();
 
   tx.SetOffset(v2(-1,-2));
   R.SetInitialTransform(tx, true);
@@ -766,7 +774,7 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_Exhaustive)
   std::cout << " Metric value: " << R.GetMetricValue() << std::endl;
 
   EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,0.0), outTx.GetParameters(), 1e-3);
-
+  EXPECT_VECTOR_DOUBLE_NEAR(v2(1.0,1.0), cmd.scales, 1e-1);
 }
 
 
@@ -784,6 +792,8 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_Amoeba)
 
   R.SetMetricAsMeanSquares();
 
+  R.SetOptimizerScalesFromIndexShift();
+
   R.SetOptimizerAsAmoeba(2.0, 200);
 
   IterationUpdate cmd(R);
@@ -799,7 +809,7 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_Amoeba)
   std::cout << " Metric value: " << R.GetMetricValue() << std::endl;
 
   EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,0.0), outTx.GetParameters(), 1e-3);
-
+  EXPECT_VECTOR_DOUBLE_NEAR(v2(1.0,1.0), cmd.scales, 1e-1);
 
 }
 
@@ -819,6 +829,8 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_Powell)
 
   R.SetMetricAsMeanSquares();
 
+  R.SetOptimizerScalesFromIndexShift();
+
   R.SetOptimizerAsPowell(10, 50, .2, .01, .0001 );
 
   IterationUpdate cmd(R);
@@ -834,6 +846,7 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_Powell)
   std::cout << " Metric value: " << R.GetMetricValue() << std::endl;
 
   EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,0.0), outTx.GetParameters(), 1e-3);
+  EXPECT_VECTOR_DOUBLE_NEAR(v2(1.0,1.0), cmd.scales, 1e-1);
 
 }
 
