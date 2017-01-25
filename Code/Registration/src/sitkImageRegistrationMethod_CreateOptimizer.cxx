@@ -27,6 +27,7 @@
 #include "itkAmoebaOptimizerv4.h"
 #include "itkPowellOptimizerv4.h"
 
+#include <time.h>
 
 
 namespace {
