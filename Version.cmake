@@ -1,15 +1,15 @@
 #
 # ONLY MODIFY TO CHANGE VERSION
 #
-# The number of commits since last this file has changed it used to
+# The number of commits since last this file has changed is used to
 # define "dev" and "post", modification of this file will reset that
 # version.
 #
 
 # Version info
 
-set(SimpleITK_VERSION_MAJOR 0)
-set(SimpleITK_VERSION_MINOR 11)
+set(SimpleITK_VERSION_MAJOR 1)
+set(SimpleITK_VERSION_MINOR 0)
 set(SimpleITK_VERSION_PATCH 0)
 #set(SimpleITK_VERSION_TWEAK "")
 
