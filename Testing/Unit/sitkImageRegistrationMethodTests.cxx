@@ -753,7 +753,7 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_Exhaustive)
   std::cout << " Metric value: " << R.GetMetricValue() << std::endl;
 
   EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,0.0), outTx.GetParameters(), 1e-3);
-  EXPECT_EQ(0, cmd.scales.size());
+  EXPECT_EQ(0u, cmd.scales.size());
 
   // Execute in place
 
