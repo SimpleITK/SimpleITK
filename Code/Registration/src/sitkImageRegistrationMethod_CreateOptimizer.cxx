@@ -27,6 +27,7 @@
 #include "itkAmoebaOptimizerv4.h"
 #include "itkPowellOptimizerv4.h"
 
+#include <time.h>
 
 
 namespace {
@@ -298,7 +299,18 @@ namespace simple
 
       typedef itk::Statistics::NormalVariateGenerator  GeneratorType;
       GeneratorType::Pointer generator = GeneratorType::New();
-      generator->Initialize(12345);
+      if ( this->m_OptimizerSeed == 0 )
+        {
+        // use time() and clock() to generate a unlikely-to-repeat
+        // seed.
+        uint64_t seed =  time(ITK_NULLPTR);
+        seed ^= (uint64_t)clock();
+        generator->Initialize( static_cast<unsigned int>(seed) );
+        }
+      else
+        {
+        generator->Initialize(this->m_OptimizerSeed);
+        }
       optimizer->SetNormalVariateGenerator( generator );
 
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetValue,optimizer.GetPointer());
