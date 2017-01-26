@@ -516,7 +516,7 @@ function(_check_dynamic_lookup
     mark_as_advanced(${cache_var})
 
     set(${result_var} "${link_flags}"
-        CACHE BOOL
+        CACHE STRING
         "linker flags for dynamic lookup${caveat}")
     mark_as_advanced(${result_var})
 
