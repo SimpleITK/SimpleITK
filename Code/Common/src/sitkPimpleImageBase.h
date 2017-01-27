@@ -37,7 +37,7 @@ namespace itk
    * This class is designed to utilize the trivial copy,
    * and assgnement operators
    */
-  class PimpleImageBase
+  class SITKCommon_HIDDEN PimpleImageBase
   {
   public:
     virtual ~PimpleImageBase( void ) { };
