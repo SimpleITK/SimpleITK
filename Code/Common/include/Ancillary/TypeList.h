@@ -16,7 +16,7 @@
 *
 *=========================================================================*/
 // This file is based off of the work done in the Loki library but is
-// substantailly modified. It's a good book buy it.
+// substantially modified. It's a good book buy it.
 
 ////////////////////////////////////////////////////////////////////////////////
 // The Loki Library
@@ -37,6 +37,8 @@
 #ifndef __TypeList_H__
 #define __TypeList_H__
 
+#include "sitkMacro.h"
+
 namespace typelist
 {
 
@@ -52,7 +54,7 @@ namespace typelist
  *     Tail (second element, can be another typelist)
  */
 template <typename H, typename T>
-struct TypeList
+struct SITK_ABI_HIDDEN TypeList
 {
   typedef H Head;
   typedef T Tail;
@@ -61,7 +63,7 @@ struct TypeList
 /** \class NullType
  * \brief a empty type to indicate end of list
  */
-struct NullType {};
+struct SITK_ABI_HIDDEN NullType {};
 
 
 
@@ -93,7 +95,7 @@ template
   typename T25 = NullType, typename T26  = NullType, typename T27 = NullType,
   typename T28 = NullType, typename T29  = NullType, typename T30 = NullType
 >
-struct MakeTypeList
+struct SITK_ABI_HIDDEN MakeTypeList
 {
 private:
   typedef typename MakeTypeList
@@ -113,14 +115,14 @@ public:
   typedef TypeList< T1, TailType > Type;
 };
 template <>
-struct MakeTypeList<>
+struct SITK_ABI_HIDDEN MakeTypeList<>
 {
   typedef NullType Type;
 };
 
 
 
-template <typename TTypeList> struct Length;
+template <typename TTypeList> struct SITK_ABI_HIDDEN Length;
 /**\class Length
  * \brief Computes the length of a typelist
  *
@@ -134,13 +136,13 @@ template <typename TTypeList> struct Length;
  *
  */
 template <typename H, typename T>
-struct Length< TypeList<H, T> >
+struct SITK_ABI_HIDDEN Length< TypeList<H, T> >
 {
   enum { Result = 1 + Length<T>::Result };
 };
 
 /** \cond TYPELIST_IMPLEMENTATION */
-template <> struct Length<NullType>
+template <> struct SITK_ABI_HIDDEN Length<NullType>
 {
   enum { Result = 0 };
 };
@@ -162,28 +164,28 @@ template <> struct Length<NullType>
  * error
  *
  */
-template <class TTypeList, unsigned int index> struct TypeAt;
+template <class TTypeList, unsigned int index> struct SITK_ABI_HIDDEN TypeAt;
 
 template <class Head, class Tail>
-struct TypeAt<TypeList<Head, Tail>, 0>
+struct SITK_ABI_HIDDEN TypeAt<TypeList<Head, Tail>, 0>
 {
   typedef Head Result;
 };
 
 template <class Head, class Tail, unsigned int i>
-struct TypeAt<TypeList<Head, Tail>, i>
+struct SITK_ABI_HIDDEN TypeAt<TypeList<Head, Tail>, i>
 {
   typedef typename TypeAt<Tail, i - 1>::Result Result;
 };
 
 template < unsigned int i>
-struct TypeAt<NullType, i>
+struct SITK_ABI_HIDDEN TypeAt<NullType, i>
 {
   typedef NullType Result;
 };
 
 
-template <class TTypeList1, class TTypeList2> struct Append;
+template <class TTypeList1, class TTypeList2> struct SITK_ABI_HIDDEN Append;
 /**\class Append
  * \brief Appends a type or a typelist to another
  *
@@ -206,31 +208,31 @@ template <class TTypeList1, class TTypeList2> struct Append;
  *
  */
 template <class Head, class Tail, class T>
-struct Append<TypeList<Head, Tail>, T>
+struct SITK_ABI_HIDDEN Append<TypeList<Head, Tail>, T>
 {
   typedef TypeList<Head, typename Append<Tail, T>::Type> Type;
 };
 
 /** \cond TYPELIST_IMPLEMENTATION */
-template <> struct Append<NullType, NullType>
+template <> struct SITK_ABI_HIDDEN Append<NullType, NullType>
 {
   typedef NullType Type;
 };
-template <class T> struct Append<NullType, T>
+template <class T> struct SITK_ABI_HIDDEN Append<NullType, T>
 {
   typedef TypeList<T,NullType> Type;
 };
-template <class T> struct Append<T, NullType>
+template <class T> struct SITK_ABI_HIDDEN Append<T, NullType>
 {
   typedef TypeList<T,NullType> Type;
 };
 template <class Head, class Tail>
-struct Append<NullType, TypeList<Head, Tail> >
+struct SITK_ABI_HIDDEN Append<NullType, TypeList<Head, Tail> >
 {
   typedef TypeList<Head, Tail> Type;
 };
 template <class Head, class Tail>
-struct Append<TypeList<Head, Tail>, NullType>
+struct SITK_ABI_HIDDEN Append<TypeList<Head, Tail>, NullType>
 {
   typedef TypeList<Head, Tail> Type;
 };
@@ -248,19 +250,19 @@ struct Append<TypeList<Head, Tail>, NullType>
  * IndexOf<TTypeList, T>::Result
  * returns the position of T in TList, or NullType if T is not found in TList
  */
-template <class TTypeList, class TType> struct IndexOf;
+template <class TTypeList, class TType> struct SITK_ABI_HIDDEN IndexOf;
 template <class TType>
-struct IndexOf<NullType, TType>
+struct SITK_ABI_HIDDEN IndexOf<NullType, TType>
 {
   enum { Result = -1 };
 };
 template <class TType, class TTail>
-struct IndexOf<TypeList<TType, TTail>, TType>
+struct SITK_ABI_HIDDEN IndexOf<TypeList<TType, TTail>, TType>
 {
   enum { Result = 0 };
 };
 template <class Head, class TTail, class TType>
-struct IndexOf<TypeList<Head, TTail>, TType>
+struct SITK_ABI_HIDDEN IndexOf<TypeList<Head, TTail>, TType>
 {
 private:
   enum { temp = IndexOf<TTail, TType>::Result };
@@ -281,18 +283,18 @@ public:
  * HasType<TList, T>::Result
  * evaluates to true if TList contains T, false otherwise.
  */
-template <class TTypeList, class TType> struct HasType;
+template <class TTypeList, class TType> struct SITK_ABI_HIDDEN HasType;
 template <class TType>
-struct HasType<NullType, TType>
+struct SITK_ABI_HIDDEN HasType<NullType, TType>
 {
   enum { Result = false };
 };
 template <class TType, class TTail>
-struct HasType<TypeList<TType, TTail>, TType> {
+struct SITK_ABI_HIDDEN HasType<TypeList<TType, TTail>, TType> {
   enum { Result = true };
 };
 template <class Head, class TTail, class TType>
-struct HasType<TypeList<Head, TTail>, TType> {
+struct SITK_ABI_HIDDEN HasType<TypeList<Head, TTail>, TType> {
   enum { Result = HasType<TTail, TType>::Result };
 };
 
@@ -316,7 +318,7 @@ struct HasType<TypeList<Head, TTail>, TType> {
  *
  */
 template <class TTypeList>
-struct Visit
+struct SITK_ABI_HIDDEN Visit
 {
   template < class Predicate >
   void operator()( Predicate &visitor )
@@ -337,7 +339,7 @@ struct Visit
     next.CLANG_TEMPLATE operator()<Predicate>( visitor );
   }
 };
-template <> struct Visit < NullType>
+template <> struct SITK_ABI_HIDDEN Visit < NullType>
 {
   template < class Predicate >
   void operator()( const Predicate &)
@@ -346,7 +348,7 @@ template <> struct Visit < NullType>
 
 
 template < typename TLeftTypeList, typename TRightTypeList >
-struct DualVisitImpl;
+struct SITK_ABI_HIDDEN DualVisitImpl;
 
 /**\class DualVisit
  * \brief Runs a templated predicate on each combination of the types
@@ -368,7 +370,7 @@ struct DualVisitImpl;
  *
  */
 template < typename TLeftTypeList, typename TRightTypeList >
-struct DualVisit
+struct SITK_ABI_HIDDEN DualVisit
 {
 
   template <typename Visitor>
@@ -400,7 +402,7 @@ struct DualVisit
 * the operator().
 */
 template < typename TLeftTypeList, typename TRightTypeList >
-struct DualVisitImpl
+struct SITK_ABI_HIDDEN DualVisitImpl
 {
   typedef typename TLeftTypeList::Head  LeftHead;
   typedef typename TRightTypeList::Head RightHead;
@@ -446,14 +448,14 @@ struct DualVisitImpl
 };
 
 template < typename TRightTypeList >
-struct DualVisitImpl< typelist::NullType, TRightTypeList >
+struct SITK_ABI_HIDDEN DualVisitImpl< typelist::NullType, TRightTypeList >
 {
   template <typename Visitor>
   void operator()( const Visitor & ) const
   { }
 };
 template < typename TLeftTypeList >
-struct DualVisitImpl< TLeftTypeList, typelist::NullType >
+struct SITK_ABI_HIDDEN DualVisitImpl< TLeftTypeList, typelist::NullType >
 {
   template <typename Visitor>
   void operator()( const Visitor & ) const
@@ -464,7 +466,7 @@ struct DualVisitImpl< TLeftTypeList, typelist::NullType >
 };
 
 template < >
-struct DualVisitImpl< typelist::NullType, typelist::NullType >
+struct SITK_ABI_HIDDEN DualVisitImpl< typelist::NullType, typelist::NullType >
 {
   template <typename Visitor>
   void operator()( const Visitor & ) const
