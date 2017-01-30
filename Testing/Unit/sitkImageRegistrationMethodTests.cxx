@@ -949,3 +949,37 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_ScalesEstimator)
 
 
 }
+
+
+TEST_F(sitkRegistrationMethodTest, Optimizer_Sampling)
+{
+  sitk::Image fixedImage = MakeDualGaussianBlobs( v2(64, 64), v2(54, 74), std::vector<unsigned int>(2,256) );
+  sitk::Image movingImage = MakeDualGaussianBlobs( v2(61.2, 73.5), v2(51.2, 83.5), std::vector<unsigned int>(2,256) );
+
+
+  sitk::ImageRegistrationMethod R;
+  R.SetInterpolator(sitk::sitkLinear);
+
+  sitk::Euler2DTransform tx;
+  R.SetInitialTransform(tx, false);
+
+  R.SetMetricAsMeanSquares();
+
+  unsigned int numberOfIterations=100;
+  double convergenceMinimumValue = 1e-6;
+  unsigned int convergenceWindowSize = 2;
+  R.SetOptimizerAsConjugateGradientLineSearch( 1.0,
+                                               numberOfIterations,
+                                               convergenceMinimumValue,
+                                               convergenceWindowSize );
+
+
+  IterationUpdate cmd(R);
+  R.AddCommand(sitk::sitkIterationEvent, cmd);
+
+  R.SetMetricSamplingPercentage(.002,0u);
+
+  sitk::Transform outTx = R.Execute(fixedImage, movingImage);
+
+  EXPECT_VECTOR_DOUBLE_NEAR(v3(0.0,-2.8,9.5), outTx.GetParameters(), 0.6);
+}
