@@ -48,7 +48,10 @@ if( ${BUILD_SHARED_LIBS} )
   set( ITK_BUILD_SHARED_LIBS ON )
 else()
   set( ITK_BUILD_SHARED_LIBS OFF )
-  list( APPEND ep_itk_args"-DCMAKE_C_VISIBILITY_PRESET:STRING=hidden" "-DCMAKE_CXX_VISIBILITY_PRESET:STRING=hidden" )
+  list( APPEND ep_itk_args
+    "-DCMAKE_C_VISIBILITY_PRESET:STRING=hidden"
+    "-DCMAKE_CXX_VISIBILITY_PRESET:STRING=hidden"
+    "-DITK_TEMPLATE_VISIBILITY_DEFAULT:BOOL=OFF" )
 endif()
 
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt" "${ep_itk_cache}\n${ep_common_cache}" )
