@@ -7,15 +7,15 @@ set(${CMAKE_CURRENT_LIST_FILENAME}_FILE_INCLUDED 1)
 
 set(proj GTest)
 
-set(GTEST_TARGET_VERSION 1.7.0)
-set(GTEST_DOWNLOAD_SOURCE_HASH "2d6ec8ccdf5c46b05ba54a9fd1d130d7")
+set(GTEST_TARGET_VERSION 1.8.0)
+set(GTEST_DOWNLOAD_SOURCE_HASH "16877098823401d1bf2ed7891d7dce36")
 
 # follow the standard EP_PREFIX locations
 set(GTEST_binary_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj}-prefix/src/${proj}-build)
 set(GTEST_source_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj}-prefix/src/${proj})
 set(GTEST_install_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj})
 
-sitkSourceDownload(GTEST_URL "gtest-${GTEST_TARGET_VERSION}.zip" ${GTEST_DOWNLOAD_SOURCE_HASH})
+sitkSourceDownload(GTEST_URL "googletest-release-${GTEST_TARGET_VERSION}.tar.gz" ${GTEST_DOWNLOAD_SOURCE_HASH})
 
 file(WRITE "${GTEST_binary_dir}/CMakeCacheInit.txt" "${ep_common_cache}" )
 
@@ -49,13 +49,15 @@ ExternalProject_Add(${proj}
     -C "${GTEST_binary_dir}/CMakeCacheInit.txt"
     ${ep_common_args}
     ${ep_extra_args}
-    -D BUILD_SHARED_LIBS:BOOL=OFF
-    -D CMAKE_ARCHIVE_OUTPUT_DIRECTORY:PATH=<BINARY_DIR>/lib
-    -D gtest_disable_pthreads:BOOL=ON
+    -DBUILD_GMOCK:BOOL=OFF
+    -DBUILD_GTEST:BOOL=ON
+    -DBUILD_SHARED_LIBS:BOOL=OFF
+    -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY:PATH=<BINARY_DIR>/lib
+    -Dgtest_disable_pthreads:BOOL=ON
   INSTALL_COMMAND
       ${CMAKE_COMMAND} -E copy_directory ${${proj}_ARCHIVE_OUTPUT_DIRECTORY} <INSTALL_DIR>/lib
     COMMAND
-      ${CMAKE_COMMAND} -E copy_directory <SOURCE_DIR>/include <INSTALL_DIR>/include
+      ${CMAKE_COMMAND} -E copy_directory <SOURCE_DIR>/googletest/include <INSTALL_DIR>/include
   ${External_Project_USES_TERMINAL}
 )
 
