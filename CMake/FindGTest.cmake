@@ -1,109 +1,98 @@
+# Distributed under the OSI-approved BSD 3-Clause License.  See accompanying
+# file Copyright.txt or https://cmake.org/licensing for details.
+
 #.rst:
 # FindGTest
 # ---------
 #
 # Locate the Google C++ Testing Framework.
 #
-# Defines the following variables:
+# Imported targets
+# ^^^^^^^^^^^^^^^^
 #
-# ::
+# This module defines the following :prop_tgt:`IMPORTED` targets:
 #
-#    GTEST_FOUND - Found the Google Testing framework
-#    GTEST_INCLUDE_DIRS - Include directories
+# ``GTest::GTest``
+#   The Google Test ``gtest`` library, if found; adds Thread::Thread
+#   automatically
+# ``GTest::Main``
+#   The Google Test ``gtest_main`` library, if found
 #
 #
+# Result variables
+# ^^^^^^^^^^^^^^^^
 #
-# Also defines the library variables below as normal variables.  These
+# This module will set the following variables in your project:
+#
+# ``GTEST_FOUND``
+#   Found the Google Testing framework
+# ``GTEST_INCLUDE_DIRS``
+#   the directory containing the Google Test headers
+#
+# The library variables below are set as normal variables.  These
 # contain debug/optimized keywords when a debugging library is found.
 #
-# ::
+# ``GTEST_LIBRARIES``
+#   The Google Test ``gtest`` library; note it also requires linking
+#   with an appropriate thread library
+# ``GTEST_MAIN_LIBRARIES``
+#   The Google Test ``gtest_main`` library
+# ``GTEST_BOTH_LIBRARIES``
+#   Both ``gtest`` and ``gtest_main``
 #
-#    GTEST_BOTH_LIBRARIES - Both libgtest & libgtest-main
-#    GTEST_LIBRARIES - libgtest
-#    GTEST_MAIN_LIBRARIES - libgtest-main
+# Cache variables
+# ^^^^^^^^^^^^^^^
 #
+# The following cache variables may also be set:
 #
-#
-# Accepts the following variables as input:
-#
-# ::
-#
-#    GTEST_ROOT - (as a CMake or environment variable)
-#                 The root directory of the gtest install prefix
-#
-#
-#
-# ::
-#
-#    GTEST_MSVC_SEARCH - If compiling with MSVC, this variable can be set to
-#                        "MD" or "MT" to enable searching a GTest build tree
-#                        (defaults: "MD")
+# ``GTEST_ROOT``
+#   The root directory of the Google Test installation (may also be
+#   set as an environment variable)
+# ``GTEST_MSVC_SEARCH``
+#   If compiling with MSVC, this variable can be set to ``MT`` or
+#   ``MD`` (the default) to enable searching a GTest build tree
 #
 #
-#
-# Example Usage:
+# Example usage
+# ^^^^^^^^^^^^^
 #
 # ::
 #
 #     enable_testing()
 #     find_package(GTest REQUIRED)
-#     include_directories(${GTEST_INCLUDE_DIRS})
-#
-#
-#
-# ::
 #
 #     add_executable(foo foo.cc)
-#     target_link_libraries(foo ${GTEST_BOTH_LIBRARIES})
-#
-#
-#
-# ::
+#     target_link_libraries(foo GTest::GTest GTest::Main)
 #
 #     add_test(AllTestsInFoo foo)
 #
 #
-#
-#
+# Deeper integration with CTest
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #
 # If you would like each Google test to show up in CTest as a test you
-# may use the following macro.  NOTE: It will slow down your tests by
-# running an executable for each test and test fixture.  You will also
-# have to rerun CMake after adding or removing tests or test fixtures.
+# may use the following macro::
 #
-# GTEST_ADD_TESTS(executable extra_args ARGN)
+#     GTEST_ADD_TESTS(executable extra_args files...)
 #
-# ::
+# ``executable``
+#   the path to the test executable
+# ``extra_args``
+#   a list of extra arguments to be passed to executable enclosed in
+#   quotes (or ``""`` for none)
+# ``files...``
+#   a list of source files to search for tests and test fixtures.  Or
+#   ``AUTO`` to find them from executable target
 #
-#     executable = The path to the test executable
-#     extra_args = Pass a list of extra arguments to be passed to
-#                  executable enclosed in quotes (or "" for none)
-#     ARGN =       A list of source files to search for tests & test
-#                  fixtures. Or AUTO to find them from executable target.
+# However, note that this macro will slow down your tests by running
+# an executable for each test and test fixture.
 #
+# Example usage::
 #
-#
-# ::
-#
-#   Example:
 #      set(FooTestArgs --foo 1 --bar 2)
 #      add_executable(FooTest FooUnitTest.cc)
 #      GTEST_ADD_TESTS(FooTest "${FooTestArgs}" AUTO)
 
-#=============================================================================
-# Copyright 2009 Kitware, Inc.
-# Copyright 2009 Philip Lowman <philip@yhbt.com>
-# Copyright 2009 Daniel Blezek <blezek@gmail.com>
-#
-# Distributed under the OSI-approved BSD License (the "License");
-# see accompanying file Copyright.txt for details.
-#
-# This software is distributed WITHOUT ANY WARRANTY; without even the
-# implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-# See the License for more information.
-#=============================================================================
-# (To distribute this file outside of CMake, substitute the full
-#  License text for the above reference.)
 #
 # Thanks to Daniel Blezek <blezek@gmail.com> for the GTEST_ADD_TESTS code
 
@@ -118,6 +107,7 @@ function(GTEST_ADD_TESTS executable extra_args)
     set(gtest_case_name_regex ".*\\( *([A-Za-z_0-9]+) *, *([A-Za-z_0-9]+) *\\).*")
     set(gtest_test_type_regex "(TYPED_TEST|TEST_?[FP]?)")
     foreach(source ${ARGN})
+        set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS ${source})
         file(READ "${source}" contents)
         string(REGEX MATCHALL "${gtest_test_type_regex} *\\(([A-Za-z_0-9 ,]+)\\)" found_tests ${contents})
         foreach(hit ${found_tests})
@@ -170,11 +160,17 @@ if(MSVC)
     if(GTEST_MSVC_SEARCH STREQUAL "MD")
         list(APPEND _gtest_libpath_suffixes
             msvc/gtest-md/Debug
-            msvc/gtest-md/Release)
+            msvc/gtest-md/Release
+            msvc/x64/Debug
+            msvc/x64/Release
+            )
     elseif(GTEST_MSVC_SEARCH STREQUAL "MT")
         list(APPEND _gtest_libpath_suffixes
             msvc/gtest/Debug
-            msvc/gtest/Release)
+            msvc/gtest/Release
+            msvc/x64/Debug
+            msvc/x64/Release
+            )
     endif()
 endif()
 
@@ -200,7 +196,7 @@ else()
     _gtest_find_library(GTEST_MAIN_LIBRARY_DEBUG gtest_maind)
 endif()
 
-include(FindPackageHandleStandardArgs)
+include(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(GTest DEFAULT_MSG GTEST_LIBRARY GTEST_INCLUDE_DIR GTEST_MAIN_LIBRARY)
 
 if(GTEST_FOUND)
@@ -208,4 +204,60 @@ if(GTEST_FOUND)
     _gtest_append_debugs(GTEST_LIBRARIES      GTEST_LIBRARY)
     _gtest_append_debugs(GTEST_MAIN_LIBRARIES GTEST_MAIN_LIBRARY)
     set(GTEST_BOTH_LIBRARIES ${GTEST_LIBRARIES} ${GTEST_MAIN_LIBRARIES})
+
+    include(CMakeFindDependencyMacro)
+    find_dependency(Threads)
+
+    if(NOT TARGET GTest::GTest)
+        add_library(GTest::GTest UNKNOWN IMPORTED)
+        set_target_properties(GTest::GTest PROPERTIES
+            INTERFACE_LINK_LIBRARIES "Threads::Threads")
+        if(GTEST_INCLUDE_DIRS)
+            set_target_properties(GTest::GTest PROPERTIES
+                INTERFACE_INCLUDE_DIRECTORIES "${GTEST_INCLUDE_DIRS}")
+        endif()
+        if(EXISTS "${GTEST_LIBRARY}")
+            set_target_properties(GTest::GTest PROPERTIES
+                IMPORTED_LINK_INTERFACE_LANGUAGES "CXX"
+                IMPORTED_LOCATION "${GTEST_LIBRARY}")
+        endif()
+        if(EXISTS "${GTEST_LIBRARY_RELEASE}")
+            set_property(TARGET GTest::GTest APPEND PROPERTY
+                IMPORTED_CONFIGURATIONS RELEASE)
+            set_target_properties(GTest::GTest PROPERTIES
+                IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
+                IMPORTED_LOCATION_RELEASE "${GTEST_LIBRARY_RELEASE}")
+        endif()
+        if(EXISTS "${GTEST_LIBRARY_DEBUG}")
+            set_property(TARGET GTest::GTest APPEND PROPERTY
+                IMPORTED_CONFIGURATIONS DEBUG)
+            set_target_properties(GTest::GTest PROPERTIES
+                IMPORTED_LINK_INTERFACE_LANGUAGES_DEBUG "CXX"
+                IMPORTED_LOCATION_DEBUG "${GTEST_LIBRARY_DEBUG}")
+        endif()
+      endif()
+      if(NOT TARGET GTest::Main)
+          add_library(GTest::Main UNKNOWN IMPORTED)
+          set_target_properties(GTest::Main PROPERTIES
+              INTERFACE_LINK_LIBRARIES "GTest::GTest")
+          if(EXISTS "${GTEST_MAIN_LIBRARY}")
+              set_target_properties(GTest::Main PROPERTIES
+                  IMPORTED_LINK_INTERFACE_LANGUAGES "CXX"
+                  IMPORTED_LOCATION "${GTEST_MAIN_LIBRARY}")
+          endif()
+          if(EXISTS "${GTEST_MAIN_LIBRARY_RELEASE}")
+            set_property(TARGET GTest::Main APPEND PROPERTY
+                IMPORTED_CONFIGURATIONS RELEASE)
+            set_target_properties(GTest::Main PROPERTIES
+                IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
+                IMPORTED_LOCATION_RELEASE "${GTEST_MAIN_LIBRARY_RELEASE}")
+          endif()
+          if(EXISTS "${GTEST_MAIN_LIBRARY_DEBUG}")
+            set_property(TARGET GTest::Main APPEND PROPERTY
+                IMPORTED_CONFIGURATIONS DEBUG)
+            set_target_properties(GTest::Main PROPERTIES
+                IMPORTED_LINK_INTERFACE_LANGUAGES_DEBUG "CXX"
+                IMPORTED_LOCATION_DEBUG "${GTEST_MAIN_LIBRARY_DEBUG}")
+          endif()
+    endif()
 endif()
