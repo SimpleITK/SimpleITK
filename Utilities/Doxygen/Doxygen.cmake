@@ -14,18 +14,21 @@ if (BUILD_DOXYGEN)
   #
 
   option(USE_ITK_DOXYGEN_TAGS "Download ITK's Doxygen tags" ON)
-  if (SITK_FORBID_DOWNLOADS)
-    SET(USE_ITK_DOXYGEN_TAGS OFF)
-  endif()
 
   if (USE_ITK_DOXYGEN_TAGS)
-    add_custom_command( OUTPUT "${PROJECT_BINARY_DIR}/Documentation/Doxygen/InsightDoxygen.tag"
-      COMMAND ${CMAKE_COMMAND} -D "PROJECT_SOURCE_DIR:PATH=${PROJECT_SOURCE_DIR}"
-      -D "OUTPUT_PATH:PATH=${PROJECT_BINARY_DIR}/Documentation/Doxygen"
-      -P "${PROJECT_SOURCE_DIR}/Utilities/Doxygen/ITKDoxygenTags.cmake"
-      DEPENDS "${PROJECT_SOURCE_DIR}/Utilities/Doxygen/ITKDoxygenTags.cmake"
-      )
-    set(DOXYGEN_TAGFILES_PARAMETER "${PROJECT_BINARY_DIR}/Documentation/Doxygen/InsightDoxygen.tag=https://www.itk.org/Doxygen/html/")
+    if (NOT SITK_FORBID_DOWNLOADS)
+      add_custom_command( OUTPUT "${PROJECT_BINARY_DIR}/Documentation/Doxygen/InsightDoxygen.tag"
+        COMMAND ${CMAKE_COMMAND} -D "PROJECT_SOURCE_DIR:PATH=${PROJECT_SOURCE_DIR}"
+        -D "OUTPUT_PATH:PATH=${PROJECT_BINARY_DIR}/Documentation/Doxygen"
+        -P "${PROJECT_SOURCE_DIR}/Utilities/Doxygen/ITKDoxygenTags.cmake"
+        DEPENDS "${PROJECT_SOURCE_DIR}/Utilities/Doxygen/ITKDoxygenTags.cmake"
+        )
+      set(DOXYGEN_TAGFILES_PARAMETER "${PROJECT_BINARY_DIR}/Documentation/Doxygen/InsightDoxygen.tag=https://www.itk.org/Doxygen/html/")
+      set(ITK_DOXYGEN_TAGFILE CACHE PATH "${PROJECT_BINARY_DIR}/Utilities/Doxygen/InsightDoxygen.tag")
+    else()
+      set(ITK_DOXYGEN_TAGFILE CACHE PATH "" )
+    endif()
+
   endif()
 
   #
@@ -49,7 +52,7 @@ if (BUILD_DOXYGEN)
     )
 
   if (USE_ITK_DOXYGEN_TAGS)
-    set(TAGS_DEPENDS DEPENDS ${PROJECT_BINARY_DIR}/Documentation/Doxygen/InsightDoxygen.tag)
+    set(TAGS_DEPENDS DEPENDS ${ITK_DOXYGEN_TAGFILE})
   endif ()
 
   add_custom_target(Documentation ALL
