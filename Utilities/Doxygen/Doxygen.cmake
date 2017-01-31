@@ -14,6 +14,9 @@ if (BUILD_DOXYGEN)
   #
 
   option(USE_ITK_DOXYGEN_TAGS "Download ITK's Doxygen tags" ON)
+  if (SITK_FORBID_DOWNLOADS)
+    SET(USE_ITK_DOXYGEN_TAGS OFF)
+  endif()
 
   if (USE_ITK_DOXYGEN_TAGS)
     add_custom_command( OUTPUT "${PROJECT_BINARY_DIR}/Documentation/Doxygen/InsightDoxygen.tag"
