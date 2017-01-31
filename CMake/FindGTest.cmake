@@ -210,8 +210,10 @@ if(GTEST_FOUND)
 
     if(NOT TARGET GTest::GTest)
         add_library(GTest::GTest UNKNOWN IMPORTED)
-        set_target_properties(GTest::GTest PROPERTIES
+        if(TARGET Threads::Threads)
+          set_target_properties(GTest::GTest PROPERTIES
             INTERFACE_LINK_LIBRARIES "Threads::Threads")
+        endif()
         if(GTEST_INCLUDE_DIRS)
             set_target_properties(GTest::GTest PROPERTIES
                 INTERFACE_INCLUDE_DIRECTORIES "${GTEST_INCLUDE_DIRS}")
