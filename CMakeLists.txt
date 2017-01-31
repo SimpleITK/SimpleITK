@@ -187,7 +187,7 @@ if(NOT SimpleITK_INSTALL_DOC_DIR)
   set(SimpleITK_INSTALL_DOC_DIR share/doc/SimpleITK-${SimpleITK_VERSION_MAJOR}.${SimpleITK_VERSION_MINOR})
 endif()
 if(NOT SimpleITK_INSTALL_PACKAGE_DIR)
-  set(SimpleITK_INSTALL_PACKAGE_DIR "lib/cmake/SimpleITK-${SimpleITK_VERSION_MAJOR}.${SimpleITK_VERSION_MINOR}")
+  set(SimpleITK_INSTALL_PACKAGE_DIR "${SimpleITK_INSTALL_LIBRARY_DIR}/cmake/SimpleITK-${SimpleITK_VERSION_MAJOR}.${SimpleITK_VERSION_MINOR}")
 endif()
 
 function(sitk_install_exported_target tgt)
