@@ -11,7 +11,7 @@ set ( SimpleITKUnitTestSourceBase
 )
 add_library ( SimpleITKUnitTestBase STATIC ${SimpleITKUnitTestSourceBase} )
 add_dependencies( SimpleITKUnitTestBase BasicFiltersSourceCode  )
-target_link_libraries( SimpleITKUnitTestBase ${GTEST_LIBRARIES} ${SimpleITK_LIBRARIES} ${ITK_LIBRARIES} )
+target_link_libraries( SimpleITKUnitTestBase GTest::GTest ${SimpleITK_LIBRARIES} ${ITK_LIBRARIES} )
 
 add_executable( sitkCompareDriver sitkCompareDriver.cxx )
 target_link_libraries( sitkCompareDriver SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} ${ITK_LIBRARIES})
@@ -61,7 +61,7 @@ set( PythonVirtualenvHome  ${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVi
 
 
 add_executable(SimpleITKUnitTestDriver0 SimpleITKUnitTestDriver.cxx ${SimpleITKUnitTestSource})
-target_link_libraries ( SimpleITKUnitTestDriver0 ${GTEST_LIBRARIES} SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} ${ITK_LIBRARIES} )
+target_link_libraries ( SimpleITKUnitTestDriver0 GTest::GTest SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} ${ITK_LIBRARIES} )
 
 #
 # Glob for necessary template files up front, before the foreach loop over
@@ -90,7 +90,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
 
   if ( NOT _i LESS _stride )
     add_executable(SimpleITKUnitTestDriver${_exec_i} SimpleITKUnitTestDriver.cxx ${GENERATED_TEST_SOURCE})
-    target_link_libraries ( SimpleITKUnitTestDriver${_exec_i} ${GTEST_LIBRARIES} SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} )
+    target_link_libraries ( SimpleITKUnitTestDriver${_exec_i} GTest::GTest SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} )
     math(EXPR _exec_i "${_exec_i}+1")
     set(GENERATED_TEST_SOURCE "")
     set ( _i 0 )
@@ -224,7 +224,7 @@ endforeach()
 message( STATUS "Generating tests...Done")
 
 add_executable(SimpleITKUnitTestDriver${_exec_i} SimpleITKUnitTestDriver.cxx ${GENERATED_TEST_SOURCE})
-target_link_libraries ( SimpleITKUnitTestDriver${_exec_i} ${GTEST_LIBRARIES} SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} )
+target_link_libraries ( SimpleITKUnitTestDriver${_exec_i} GTest::GTest SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} )
 
 # Set some variables
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/SimpleITKTestHarnessPaths.h.in
@@ -233,7 +233,6 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/SimpleITKTestHarnessPaths.h.in
 
 include_directories (
   ${SimpleITK_INCLUDE_DIRS}
-  ${GTEST_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
   )
@@ -252,7 +251,7 @@ if(MSVC_VERSION EQUAL 1700)
 endif()
 
 add_executable(sitkShowTest sitkShowTest.cxx )
-target_link_libraries ( sitkShowTest  ${GTEST_LIBRARIES} ${SimpleITK_LIBRARIES} SimpleITKUnitTestBase )
+target_link_libraries ( sitkShowTest  GTest::GTest ${SimpleITK_LIBRARIES} SimpleITKUnitTestBase )
 
 add_executable( sitkSystemInformationTest sitkSystemInformationTest.cxx )
 target_link_libraries( sitkSystemInformationTest ${SimpleITK_LIBRARIES} ${ITK_LIBRARIES})
