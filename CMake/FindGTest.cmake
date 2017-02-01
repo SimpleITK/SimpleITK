@@ -213,6 +213,9 @@ if(GTEST_FOUND)
         if(TARGET Threads::Threads)
           set_target_properties(GTest::GTest PROPERTIES
             INTERFACE_LINK_LIBRARIES "Threads::Threads")
+        else()
+          set_target_properties(GTest::GTest PROPERTIES
+            INTERFACE_LINK_LIBRARIES "${CMAKE_THREAD_LIBS_INIT}" )
         endif()
         if(GTEST_INCLUDE_DIRS)
             set_target_properties(GTest::GTest PROPERTIES
