@@ -252,7 +252,9 @@ list( APPEND ep_common_list
   MEMORYCHECK_SUPPRESSIONS_FILE
   MEMORYCHECK_COMMAND
   SITE
-  BUILDNAME )
+  BUILDNAME
+
+  SKBUILD )
 
 if( APPLE )
   list( APPEND ep_common_list

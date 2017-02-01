@@ -56,9 +56,9 @@ endif()
 # TODO these should be moved into UseSimpleITK
 if(NOT SimpleITK_DOC_FILES)
   set ( SimpleITK_DOC_FILES
-    "${SimpleITK_SOURCE_SOURCE_DIR}/LICENSE"
-    "${SimpleITK_SOURCE_SOURCE_DIR}/NOTICE"
-    "${SimpleITK_SOURCE_SOURCE_DIR}/Readme.md"
+    "${SimpleITK_SOURCE_DIR}/LICENSE"
+    "${SimpleITK_SOURCE_DIR}/NOTICE"
+    "${SimpleITK_SOURCE_DIR}/Readme.md"
   )
 endif()
 
