@@ -7,7 +7,7 @@
 #
 function( VariableListToCache var_list cache )
   foreach( var IN LISTS ${var_list} )
-    if( DEFINED var )
+    if( DEFINED ${var} )
       set( value "${${var}}" )
       get_property( type CACHE ${var} PROPERTY TYPE )
       get_property( advanced CACHE ${var} PROPERTY ADVANCED )
