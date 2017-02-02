@@ -14,7 +14,10 @@ endif()
 get_cmake_property( _varNames VARIABLES )
 
 foreach (_varName ${_varNames})
-  if(_varName MATCHES "^ITK_" OR _varName MATCHES "FFTW" OR _varName MATCHES "^Module_ITK")
+  if(_varName MATCHES "^ITK_"
+      OR _varName MATCHES "^ITKV3"
+      OR _varName MATCHES "FFTW"
+      OR _varName MATCHES "^Module_ITK")
     message( STATUS "Passing variable \"${_varName}=${${_varName}}\" to ITK external project.")
     list(APPEND ITK_VARS ${_varName})
   endif()
