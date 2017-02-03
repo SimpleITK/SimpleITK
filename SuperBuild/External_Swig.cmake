@@ -35,13 +35,13 @@ if(NOT SWIG_DIR)
 
     sitkSourceDownload(SWIGWIN_URL "swigwin-${SWIG_TARGET_VERSION}.zip"  ${SWIGWIN_DOWNLOAD_HASH})
 
-    set(swig_source_dir ${CMAKE_CURRENT_BINARY_DIR}/swigwin-${SWIG_TARGET_VERSION})
+    set(swig_source_dir "${CMAKE_CURRENT_BINARY_DIR}/swigwin")
 
     # swig.exe available as pre-built binary on Windows:
     ExternalProject_Add(Swig
       URL "${SWIGWIN_URL}"
       URL_MD5 ${SWIG_DOWNLOAD_WIN_HASH}
-      SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/swigwin-${SWIG_TARGET_VERSION}
+      SOURCE_DIR ${swig_source_dir}
       CONFIGURE_COMMAND ""
       BUILD_COMMAND ""
       INSTALL_COMMAND ""
@@ -49,8 +49,8 @@ if(NOT SWIG_DIR)
       )
     add_dependencies(Swig  "SuperBuildSimpleITKSource")
 
-    set(SWIG_DIR ${CMAKE_CURRENT_BINARY_DIR}/swigwin-${SWIG_TARGET_VERSION}) # path specified as source in ep
-    set(SWIG_EXECUTABLE ${CMAKE_CURRENT_BINARY_DIR}/swigwin-${SWIG_TARGET_VERSION}/swig.exe)
+    set(SWIG_DIR "${swig_source_dir}") # path specified as source in ep
+    set(SWIG_EXECUTABLE ${SWIG_DIR}/swig.exe)
 
   else()
     # compiled SWIG for others
