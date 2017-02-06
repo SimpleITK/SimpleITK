@@ -263,7 +263,6 @@ if(NOT STDINT_HAVE_STDINT_H)
   endif()
 endif()
 
-include_directories( ${SimpleITK_INCLUDE_DIRS} )
 
 
 #------------------------------------------------------------------------------

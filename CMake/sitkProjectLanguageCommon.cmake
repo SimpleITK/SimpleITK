@@ -74,6 +74,7 @@ set(SIMPLEITK_WRAPPING_COMMON_DIR
   ${SimpleITK_SOURCE_DIR}/Wrapping/Common)
 
 if ( CMAKE_PROJECT_NAME STREQUAL "SimpleITK" )
+  include_directories ( ${SimpleITK_INCLUDE_DIRS} )
   file(GLOB SWIG_EXTRA_DEPS
     "${SimpleITK_SOURCE_DIR}/Code/Common/include/*.h"
     "${SimpleITK_SOURCE_DIR}/Code/Registration/include/*.h"
