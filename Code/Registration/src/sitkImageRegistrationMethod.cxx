@@ -43,6 +43,23 @@ namespace itk
 {
 namespace simple
 {
+namespace
+{
+
+struct CurrentLevelCustomCast
+{
+  template<typename TRegistrationType>
+  static unsigned int CustomCast(const TRegistrationType *reg)
+    {
+      uint64_t ret = reg->GetCurrentLevel();
+      if (ret > std::numeric_limits<unsigned int>::max())
+        {
+        return 0;
+        }
+      return static_cast<unsigned int>(ret);
+    }
+};
+}
 
 ImageRegistrationMethod::ImageRegistrationMethod()
   : m_Interpolator(sitkLinear),
@@ -858,7 +875,7 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
 
   m_pfGetOptimizerStopConditionDescription =  nsstd::bind(&_OptimizerType::GetStopConditionDescription, optimizer.GetPointer());
 
-  m_pfGetCurrentLevel = nsstd::bind(&RegistrationType::GetCurrentLevel,registration.GetPointer());
+  m_pfGetCurrentLevel = nsstd::bind(&CurrentLevelCustomCast::CustomCast<RegistrationType>,registration.GetPointer());
 
 
   try
