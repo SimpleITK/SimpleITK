@@ -253,17 +253,10 @@ include(CheckIncludeFileCXX)
 # This generates a configuration error if the compiler is not supported
 check_include_file_cxx( stdint.h SITK_HAS_STDINT_H )
 
-if(NOT STDINT_HAVE_STDINT_H)
-  if( WIN32 )
-    if(MSVC)
-      list(APPEND SimpleITK_INCLUDE_DIRS
-        "${SimpleITK_SOURCE_DIR}/Utilities/C99")
-      add_subdirectory("${SimpleITK_SOURCE_DIR}/Utilities/C99")
-    endif()
-  endif()
+if(NOT SITK_HAS_STDINT_H )
+  message(FATAL_ERROR "Unable to find require \"stdint.h\" header file.")
 endif()
 
-include_directories( ${SimpleITK_INCLUDE_DIRS} )
 
 
 #------------------------------------------------------------------------------

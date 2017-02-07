@@ -12,7 +12,6 @@ endforeach()
 
 if(NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK")
   find_package(SimpleITK REQUIRED)
-  include(${SimpleITK_USE_FILE})
 
   # Add compiler flags needed to use SimpleITK.
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${SimpleITK_REQUIRED_C_FLAGS}")

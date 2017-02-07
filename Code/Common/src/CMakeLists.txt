@@ -39,6 +39,12 @@ target_link_libraries ( SimpleITKCommon
 if (SITK_EXPLICIT_INSTANTIATION)
   target_link_libraries ( SimpleITKCommon PRIVATE SimpleITKExplicit )
 endif()
+target_include_directories ( SimpleITKCommon
+  PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/Code/Common/include>
+    $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/Code/Common/include>
+    $<INSTALL_INTERFACE:include> )
+
 sitk_install_exported_target( SimpleITKCommon )
 
 # Add custom command that will delete java files which need to be rebuilt when changes

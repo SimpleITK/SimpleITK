@@ -5,7 +5,7 @@ project( SimpleITK_R )
 include(../../CMake/sitkProjectLanguageCommon.cmake NO_POLICY_SCOPE)
 
 find_package ( R REQUIRED )
-include_directories ( ${R_INCLUDE_DIR}  ${CMAKE_CURRENT_SOURCE_DIR})
+include_directories ( ${SimpleITK_INCLUDE_DIRS} )
 
 set_source_files_properties ( SimpleITK.i PROPERTIES CPLUSPLUS ON )
 
@@ -17,6 +17,13 @@ SWIG_add_module ( SimpleITK r SimpleITK.i sitkRCommand.cxx sitkRArray.cxx )
 target_link_libraries ( ${SWIG_MODULE_SimpleITK_TARGET_NAME} ${SimpleITK_LIBRARIES} )
 
 sitk_target_link_libraries_with_dynamic_lookup ( ${SWIG_MODULE_SimpleITK_TARGET_NAME} ${R_LIBRARIES} )
+
+target_include_directories( ${SWIG_MODULE_SimpleITK_TARGET_NAME}
+  PRIVATE
+    ${R_INCLUDE_DIR} )
+target_include_directories( ${SWIG_MODULE_SimpleITK_TARGET_NAME}
+  PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR} )
 
 set_source_files_properties(${swig_generated_file_fullname} PROPERTIES COMPILE_FLAGS "-w")
 

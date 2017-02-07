@@ -5,8 +5,6 @@ set( SimpleITKRegistration
   sitkImageRegistrationMethod_CreateMetric.cxx
   )
 
-include_directories( ${CMAKE_CURRENT_SOURCE_DIR} )
-
 # these files are the instantiated ITK filter, but they do not do IO,
 # so we don't need to register the IO factories here.
 set ( ITK_NO_IO_FACTORY_REGISTER_MANAGER 1 )
@@ -21,5 +19,12 @@ target_link_libraries ( SimpleITKRegistration
 if (SITK_EXPLICIT_INSTANTIATION)
   target_link_libraries ( SimpleITKRegistration PRIVATE SimpleITKExplicit )
 endif()
+
+target_include_directories ( SimpleITKRegistration
+  PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/Code/Registration/include>
+    $<INSTALL_INTERFACE:include>
+  PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR} )
 
 sitk_install_exported_target( SimpleITKRegistration )
