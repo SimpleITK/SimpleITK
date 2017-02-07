@@ -2,7 +2,7 @@
 set ( ITK_NO_IO_FACTORY_REGISTER_MANAGER 1 )
 include(${ITK_USE_FILE})
 
-find_package( GTest REQUIRED )
+include(sitkUseGTest)
 
 set ( SimpleITKUnitTestSourceBase
   SimpleITKTestHarness.cxx

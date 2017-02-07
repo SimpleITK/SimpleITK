@@ -323,14 +323,14 @@ endif()
 #------------------------------------------------------------------------------
 # Google Test
 #------------------------------------------------------------------------------
-option( USE_SYSTEM_GTEST "Use a pre-compiled version of GoogleTest. " OFF )
+option( USE_SYSTEM_GTEST "Use an external version of GoogleTest. " OFF )
 mark_as_advanced(USE_SYSTEM_GTEST)
 if ( BUILD_TESTING )
   if (USE_SYSTEM_GTEST)
-    find_package( GTest REQUIRED )
-    if (GTEST_FOUND AND TARGET "${GTEST_LIBRARIES}" AND DEFINED GTEST_ROOT)
+    if (DEFINED GTEST_ROOT AND EXISTS "${GTEST_ROOT}/CMakeLists.txt")
       list(APPEND SimpleITK_VARS GTEST_ROOT)
     else()
+      find_package( GTest REQUIRED )
       list(APPEND SimpleITK_VARS GTEST_LIBRARIES GTEST_INCLUDE_DIRS GTEST_MAIN_LIBRARIES)
     endif()
   else()
