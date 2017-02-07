@@ -50,4 +50,4 @@ test:
             environment:
                 ITK_GLOBAL_DEFAULT_NUMBER_OF_THREAD: 2
                 CTEST_OUTPUT_ON_FAILURE: 1
-                LD_LIBRARY_PATH: ${SIMPLEITK_BUILD_DIR}/ITK-prefix/lib/
+                LD_LIBRARY_PATH: ${SIMPLEITK_BUILD_DIR}/ITK-prefix/lib/:${SIMPLEITK_BUILD_DIR}/SimpleITK-build/lib
