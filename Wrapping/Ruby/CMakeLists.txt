@@ -5,7 +5,7 @@ project( SimpleITK_Lua )
 include(../../CMake/sitkProjectLanguageCommon.cmake NO_POLICY_SCOPE)
 
 find_package( Ruby REQUIRED )
-include_directories( ${RUBY_INCLUDE_DIRS} )
+include_directories( ${SimpleITK_INCLUDE_DIRS} )
 
 set_source_files_properties( SimpleITK.i PROPERTIES CPLUSPLUS ON )
 
@@ -19,4 +19,7 @@ SWIG_add_module( simpleitk ruby SimpleITK.i  )
 target_link_libraries( ${SWIG_MODULE_simpleitk_TARGET_NAME} ${SimpleITK_LIBRARIES} )
 sitk_target_link_libraries_with_dynamic_lookup( ${SWIG_MODULE_simpleitk_TARGET_NAME} ${RUBY_LIBRARY} )
 set_source_files_properties( ${swig_generated_file_fullname} PROPERTIES COMPILE_FLAGS "-w")
+target_include_directories( ${SWIG_MODULE_simpleitk_TARGET_NAME}
+  PRIVATE
+    ${RUBY_INCLUDE_DIRS} )
 sitk_strip_target( ${SWIG_MODULE_simpleitk_TARGET_NAME} )

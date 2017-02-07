@@ -21,7 +21,7 @@ else()
 endif()
 find_package ( PythonLibs ${_QUIET_LIBRARY} )
 find_package ( PythonInterp REQUIRED )
-include_directories ( ${PYTHON_INCLUDE_DIR} ${CMAKE_CURRENT_SOURCE_DIR} )
+include_directories ( ${SimpleITK_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} )
 
 #
 # Options
@@ -50,6 +50,14 @@ SWIG_add_module ( SimpleITK python
 set(SWIG_MODULE_SimpleITKPython_TARGET_NAME "${SWIG_MODULE_SimpleITK_TARGET_NAME}")
 target_link_libraries( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} ${SimpleITK_LIBRARIES} )
 sitk_target_link_libraries_with_dynamic_lookup( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} ${PYTHON_LIBRARIES} )
+
+target_include_directories( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+  PRIVATE
+    ${PYTHON_INCLUDE_DIR} )
+target_include_directories( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+  PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR} )
+
 set_target_properties( ${SWIG_MODULE_SimpleITK_TARGET_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
 if ( MSVC )
     foreach ( CMAKE_CONFIGURATION_TYPE ${CMAKE_CONFIGURATION_TYPES} )

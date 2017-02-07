@@ -5,7 +5,7 @@ project( SimpleITK_TCL )
 include(../../CMake/sitkProjectLanguageCommon.cmake NO_POLICY_SCOPE)
 
 find_package ( TCL REQUIRED )
-include_directories ( ${TCL_INCLUDE_PATH} )
+include_directories ( ${SimpleITK_INCLUDE_DIRS} )
 
 set_source_files_properties ( SimpleITK.i PROPERTIES CPLUSPLUS ON )
 
@@ -26,4 +26,7 @@ SWIG_add_source_to_module ( SimpleITKTCL swig_generated_source SimpleITK.i ${SWI
 set_source_files_properties(${swig_generated_file_fullname} PROPERTIES COMPILE_FLAGS "-w" )
 add_executable ( SimpleITKTclsh ${swig_generated_file_fullname} )
 target_link_libraries ( SimpleITKTclsh ${SimpleITK_LIBRARIES} ${TCL_LIBRARY} )
+target_include_directories( SimpleITKTclsh
+  PRIVATE
+   ${TCL_INCLUDE_PATH} )
 sitk_strip_target( SimpleITKTclsh )
