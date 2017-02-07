@@ -97,69 +97,6 @@ function(_gtest_find_library _name)
     mark_as_advanced(${_name})
 endfunction()
 
-function(_gtest_use_gtest_source)
-
-  # Prevent overriding the parent project's compiler/linker
-  # settings on Windows
-  set(gtest_force_shared_crt ON CACHE INTERNAL "")
-
-  # Avoid CMP0063 warning
-  set(CMAKE_C_VISIBILITY_PRESET)
-  set(CMAKE_CXX_VISIBILITY_PRESET)
-  set(CMAKE_VISIBILITY_INLINES_HIDDEN)
-
-  set(BUILD_GTEST                 ON  CACHE INTERNAL "Builds the googletest subproject.")
-  set(BUILD_GMOCK                 OFF CACHE INTERNAL "Builds the googlemock subproject.")
-  set(gtest_build_samples         OFF CACHE INTERNAL "Build gtest's sample programs.")
-  set(gtest_build_tests           OFF CACHE INTERNAL "Build all of gtest's own tests.")
-  set(gtest_disable_pthreads      ON  CACHE INTERNAL "Disable uses of pthreads in gtest.")
-  set(gtest_hide_internal_symbols OFF CACHE INTERNAL "Build gtest with internal symbols hidden in shared libraries.")
-
-  set(CMAKE_INSTALL_DEFAULT_COMPONENT_NAME "GTest")
-
-  # Must build GTest as static since EXCLUDE_FROM_ALL, would exclude
-  # needed GTest shared libraries from being installed.
-  set(BUILD_SHARED_LIBS OFF)
-
-  # Add googletest directly to our build but exclude from using it's
-  # target's and installation unless referenced by other dependencies.
-  add_subdirectory("${GTEST_ROOT}"
-    "${CMAKE_CURRENT_BINARY_DIR}/GTest-build" EXCLUDE_FROM_ALL)
-
-endfunction()
-
-#
-
-
-if(NOT "${GTEST_ROOT}" STREQUAL "" AND EXISTS "${GTEST_ROOT}/CMakeLists.txt")
-
-  find_path(GTEST_INCLUDE_DIRS gtest/gtest.h
-    PATHS "${GTEST_ROOT}"
-    NO_DEFAULT_PATH)
-
-  if(NOT "${GTEST_INCLUDE_DIRS}" STREQUAL "")
-
-    message(STATUS "Adding Google Test source directory as subdirectory.")
-    set(GTEST_FOUND 1)
-    set(GTEST_LIBRARIES gtest)
-    set(GTEST_MAIN_LIBRARIES gtest_main)
-    set(GTEST_BOTH_LIBRARIES ${GTEST_LIBRARIES} ${GTEST_MAIN_LIBRARIES})
-
-    _gtest_use_gtest_source()
-
-    add_library(GTest::GTest ALIAS ${GTEST_LIBRARIES})
-    add_library(GTest::Main ALIAS ${GTEST_MAIN_LIBRARIES})
-
-    return()
-
-  else()
-    message(WARNING "CTEST_ROOT appears to be a source directory \
-    but \"gtest/gtest.h\"  can not be found in source directory: \
-    ${GTEST_ROOT}")
-  endif()
-
-endif ()
-
 if(NOT DEFINED GTEST_MSVC_SEARCH)
     set(GTEST_MSVC_SEARCH MD)
 endif()
