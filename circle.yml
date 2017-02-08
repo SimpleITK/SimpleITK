@@ -17,7 +17,7 @@ machine:
         CC: "gcc"
         CXX: "g++"
     post:
-        - sudo apt-get remove cmake && sudo apt-get install ninja-build swig distcc lua5.1
+        - sudo apt-get remove cmake && sudo apt-get install libpython-dev ninja-build distcc lua5.1
         - sudo sed -i.bak s/STARTDISTCC=\"false\"/STARTDISTCC=\"true\"/g /etc/default/distcc && sudo /etc/init.d/distcc start
         - mkdir -p "${DISTCC_DIR}" && printf -- "--randomize localhost/2 --localslots=1\n" > "${DISTCC_DIR}/hosts" && for ((i=1;i<CIRCLE_NODE_TOTAL;i++)); do printf "ubuntu@node$i/2\n" >> "${DISTCC_DIR}/hosts"; done
         - if [ $CIRCLE_NODE_INDEX -eq 0 ]; then mkdir -p .ssh/tmp && printf -- "Host *\nControlMaster auto\nControlPath ~/.ssh/tmp/master-%%r@%%h:%%p\n" >> .ssh/config; for ((i=1;i<CIRCLE_NODE_TOTAL;i++)); do ssh -fMN ubuntu@node$i; done; fi
@@ -29,10 +29,11 @@ dependencies:
     cache_directories:
         - "~/.ExternalData"
     pre:
+        - pip install numpy
         - if [ $CIRCLE_NODE_INDEX -eq 0 ]; then for ((i=1;i<CIRCLE_NODE_TOTAL;i++)); do ssh -fMN ubuntu@node$i; done ; fi
         - mkdir -p ${SIMPLEITK_BUILD_DIR}
     override:
-        - if [ $CIRCLE_NODE_INDEX -eq 0 ]; then cmake -DENABLE_SHARED:BOOL=ON -DWRAP_LUA:BOOL=OFF -DWRAP_PYTHON:BOOL=OFF -DWRAP_JAVA:BOOL=OFF -DWRAP_CSHARP:BOOL=OFF -DWRAP_TCL:BOOL=OFF -DWRAP_R:BOOL=OFF -DWRAP_RUBY:BOOL=OFF -DITK_REPOSITORY=${ITK_REPOSITORY} -DUSE_SYSTEM_SWIG:BOOL=ON -DUSE_SYSTEM_LUA:BOOL=ON -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS:BOOL=ON -DSITK_EXPLICIT_INSTANTIATION:BOOL=OFF -DCMAKE_CXX_COMPILER_LAUNCHER=distcc -DCMAKE_C_COMPILER_LAUNCHER=distcc "${SIMPLEITK_SRC_DIR}/SuperBuild"; fi:
+        - if [ $CIRCLE_NODE_INDEX -eq 0 ]; then cmake -DBUILD_SHARED_LIBS:BOOL=ON -DWRAP_DEFAULT:BOOL=OFF -DWRAP_PYTHON:BOOL=ON -DITK_REPOSITORY=${ITK_REPOSITORY} -DUSE_SYSTEM_LUA:BOOL=ON -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS:BOOL=ON -DSITK_EXPLICIT_INSTANTIATION:BOOL=OFF -DCMAKE_CXX_COMPILER_LAUNCHER=distcc -DCMAKE_C_COMPILER_LAUNCHER=distcc "${SIMPLEITK_SRC_DIR}/SuperBuild"; fi:
             pwd: bld
         - if [ $CIRCLE_NODE_INDEX -eq 0 ]; then make -j${MAKE_J}; fi:
             pwd: bld
@@ -50,4 +51,4 @@ test:
             environment:
                 ITK_GLOBAL_DEFAULT_NUMBER_OF_THREAD: 2
                 CTEST_OUTPUT_ON_FAILURE: 1
-                LD_LIBRARY_PATH: ${SIMPLEITK_BUILD_DIR}/ITK-prefix/lib/
+                LD_LIBRARY_PATH: ${SIMPLEITK_BUILD_DIR}/ITK-prefix/lib/:${SIMPLEITK_BUILD_DIR}/SimpleITK-build/lib
