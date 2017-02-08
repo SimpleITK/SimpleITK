@@ -72,64 +72,10 @@
 # Deeper integration with CTest
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #
-# If you would like each Google test to show up in CTest as a test you
-# may use the following macro::
+# See :module:GoogleTest for information on `GTEST_ADD_TESTS`.
 #
-#     GTEST_ADD_TESTS(executable extra_args files...)
-#
-# ``executable``
-#   the path to the test executable
-# ``extra_args``
-#   a list of extra arguments to be passed to executable enclosed in
-#   quotes (or ``""`` for none)
-# ``files...``
-#   a list of source files to search for tests and test fixtures.  Or
-#   ``AUTO`` to find them from executable target
-#
-# However, note that this macro will slow down your tests by running
-# an executable for each test and test fixture.
-#
-# Example usage::
-#
-#      set(FooTestArgs --foo 1 --bar 2)
-#      add_executable(FooTest FooUnitTest.cc)
-#      GTEST_ADD_TESTS(FooTest "${FooTestArgs}" AUTO)
 
-#
-# Thanks to Daniel Blezek <blezek@gmail.com> for the GTEST_ADD_TESTS code
-
-function(GTEST_ADD_TESTS executable extra_args)
-    if(NOT ARGN)
-        message(FATAL_ERROR "Missing ARGN: Read the documentation for GTEST_ADD_TESTS")
-    endif()
-    if(ARGN STREQUAL "AUTO")
-        # obtain sources used for building that executable
-        get_property(ARGN TARGET ${executable} PROPERTY SOURCES)
-    endif()
-    set(gtest_case_name_regex ".*\\( *([A-Za-z_0-9]+) *, *([A-Za-z_0-9]+) *\\).*")
-    set(gtest_test_type_regex "(TYPED_TEST|TEST_?[FP]?)")
-    foreach(source ${ARGN})
-        set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS ${source})
-        file(READ "${source}" contents)
-        string(REGEX MATCHALL "${gtest_test_type_regex} *\\(([A-Za-z_0-9 ,]+)\\)" found_tests ${contents})
-        foreach(hit ${found_tests})
-          string(REGEX MATCH "${gtest_test_type_regex}" test_type ${hit})
-
-          # Parameterized tests have a different signature for the filter
-          if("x${test_type}" STREQUAL "xTEST_P")
-            string(REGEX REPLACE ${gtest_case_name_regex}  "*/\\1.\\2/*" test_name ${hit})
-          elseif("x${test_type}" STREQUAL "xTEST_F" OR "x${test_type}" STREQUAL "xTEST")
-            string(REGEX REPLACE ${gtest_case_name_regex} "\\1.\\2" test_name ${hit})
-          elseif("x${test_type}" STREQUAL "xTYPED_TEST")
-            string(REGEX REPLACE ${gtest_case_name_regex} "\\1/*.\\2" test_name ${hit})
-          else()
-            message(WARNING "Could not parse GTest ${hit} for adding to CTest.")
-            continue()
-          endif()
-          add_test(NAME ${test_name} COMMAND ${executable} --gtest_filter=${test_name} ${extra_args})
-        endforeach()
-    endforeach()
-endfunction()
+include(GoogleTest)
 
 function(_gtest_append_debugs _endvar _library)
     if(${_library} AND ${_library}_DEBUG)
@@ -150,69 +96,6 @@ function(_gtest_find_library _name)
     )
     mark_as_advanced(${_name})
 endfunction()
-
-function(_gtest_use_gtest_source)
-
-  # Prevent overriding the parent project's compiler/linker
-  # settings on Windows
-  set(gtest_force_shared_crt ON CACHE INTERNAL "")
-
-  # Avoid CMP0063 warning
-  set(CMAKE_C_VISIBILITY_PRESET)
-  set(CMAKE_CXX_VISIBILITY_PRESET)
-  set(CMAKE_VISIBILITY_INLINES_HIDDEN)
-
-  set(BUILD_GTEST                 ON  CACHE INTERNAL "Builds the googletest subproject.")
-  set(BUILD_GMOCK                 OFF CACHE INTERNAL "Builds the googlemock subproject.")
-  set(gtest_build_samples         OFF CACHE INTERNAL "Build gtest's sample programs.")
-  set(gtest_build_tests           OFF CACHE INTERNAL "Build all of gtest's own tests.")
-  set(gtest_disable_pthreads      ON  CACHE INTERNAL "Disable uses of pthreads in gtest.")
-  set(gtest_hide_internal_symbols OFF CACHE INTERNAL "Build gtest with internal symbols hidden in shared libraries.")
-
-  set(CMAKE_INSTALL_DEFAULT_COMPONENT_NAME "GTest")
-
-  # Must build GTest as static since EXCLUDE_FROM_ALL, would exclude
-  # needed GTest shared libraries from being installed.
-  set(BUILD_SHARED_LIBS OFF)
-
-  # Add googletest directly to our build but exclude from using it's
-  # target's and installation unless referenced by other dependencies.
-  add_subdirectory("${GTEST_ROOT}"
-    "${CMAKE_CURRENT_BINARY_DIR}/GTest-build" EXCLUDE_FROM_ALL)
-
-endfunction()
-
-#
-
-
-if(NOT "${GTEST_ROOT}" STREQUAL "" AND EXISTS "${GTEST_ROOT}/CMakeLists.txt")
-
-  find_path(GTEST_INCLUDE_DIRS gtest/gtest.h
-    PATHS "${GTEST_ROOT}"
-    NO_DEFAULT_PATH)
-
-  if(NOT "${GTEST_INCLUDE_DIRS}" STREQUAL "")
-
-    message(STATUS "Adding Google Test source directory as subdirectory.")
-    set(GTEST_FOUND 1)
-    set(GTEST_LIBRARIES gtest)
-    set(GTEST_MAIN_LIBRARIES gtest_main)
-    set(GTEST_BOTH_LIBRARIES ${GTEST_LIBRARIES} ${GTEST_MAIN_LIBRARIES})
-
-    _gtest_use_gtest_source()
-
-    add_library(GTest::GTest ALIAS ${GTEST_LIBRARIES})
-    add_library(GTest::Main ALIAS ${GTEST_MAIN_LIBRARIES})
-
-    return()
-
-  else()
-    message(WARNING "CTEST_ROOT appears to be a source directory \
-    but \"gtest/gtest.h\"  can not be found in source directory: \
-    ${GTEST_ROOT}")
-  endif()
-
-endif ()
 
 if(NOT DEFINED GTEST_MSVC_SEARCH)
     set(GTEST_MSVC_SEARCH MD)
