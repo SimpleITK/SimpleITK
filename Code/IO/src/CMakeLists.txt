@@ -9,8 +9,6 @@ set( SimpleITKIOSource
   sitkShow.cxx
   )
 
-include_directories( ${CMAKE_CURRENT_SOURCE_DIR} )
-
 set(REQUIRED_ITK_MODULES  ITKCommon ITKLabelMap ITKImageCompose
   ITKImageIntensity ITKIOImageBase ITKIOTransformBase ITKIOGDCM )
 foreach( mod IN LISTS ITK_MODULES_ENABLED)
@@ -29,6 +27,12 @@ target_link_libraries ( SimpleITKIO
 if (SITK_EXPLICIT_INSTANTIATION)
   target_link_libraries ( SimpleITKIO PRIVATE SimpleITKExplicit )
 endif()
+target_include_directories ( SimpleITKIO
+  PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/Code/IO/include>
+    $<INSTALL_INTERFACE:include>
+  PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR} )
 
 sitk_install_exported_target( SimpleITKIO )
 

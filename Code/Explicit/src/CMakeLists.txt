@@ -35,4 +35,11 @@ if( CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.9  AND SITK_BUILD_SHARED_LIBS )
   set_target_properties(SimpleITKExplicit PROPERTIES CXX_VISIBILITY_PRESET default)
 endif()
 target_link_libraries ( SimpleITKExplicit PUBLIC ${ITK_LIBRARIES} )
+target_include_directories ( SimpleITKExplicit
+  PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/Code/Explicit/include>
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/Code/Common/include>
+    $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/Code/Common/include>
+    $<INSTALL_INTERFACE:include> )
+
 sitk_install_exported_target( SimpleITKExplicit )

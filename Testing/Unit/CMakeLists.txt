@@ -12,6 +12,11 @@ set ( SimpleITKUnitTestSourceBase
 add_library ( SimpleITKUnitTestBase STATIC ${SimpleITKUnitTestSourceBase} )
 add_dependencies( SimpleITKUnitTestBase BasicFiltersSourceCode  )
 target_link_libraries( SimpleITKUnitTestBase GTest::GTest ${SimpleITK_LIBRARIES} ${ITK_LIBRARIES} )
+target_include_directories( SimpleITKUnitTestBase
+  PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+)
 
 add_executable( sitkCompareDriver sitkCompareDriver.cxx )
 target_link_libraries( sitkCompareDriver SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} ${ITK_LIBRARIES})
@@ -229,13 +234,6 @@ target_link_libraries ( SimpleITKUnitTestDriver${_exec_i} GTest::GTest SimpleITK
 # Set some variables
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/SimpleITKTestHarnessPaths.h.in
                ${CMAKE_CURRENT_BINARY_DIR}/SimpleITKTestHarnessPaths.h ESCAPE_QUOTES)
-
-
-include_directories (
-  ${SimpleITK_INCLUDE_DIRS}
-  ${CMAKE_CURRENT_BINARY_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}
-  )
 
 add_custom_target(WrappedGeneratedTests ALL
   DEPENDS ${WRAPPED_GENERATED_TEST_SOURCE}
