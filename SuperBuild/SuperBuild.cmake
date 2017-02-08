@@ -175,22 +175,6 @@ if(NOT BUILDNAME)
   set(BUILDNAME "Unknown-build" CACHE STRING "Name of build to report to dashboard")
 endif()
 
-
-#------------------------------------------------------------------------------
-# WIN32 /bigobj is required for windows builds because of the size of
-#------------------------------------------------------------------------------
-if (MSVC)
-  # some object files (CastImage for instance)
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj" )
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /bigobj" )
-  # Avoid some warnings
-  add_definitions ( -D_SCL_SECURE_NO_WARNINGS )
-endif()
-
-#------------------------------------------------------------------------------
-# Setup build locations.
-#------------------------------------------------------------------------------
-
 #------------------------------------------------------------------------------
 # Common Build Options to pass to all subsequent tools
 #------------------------------------------------------------------------------
