@@ -4,7 +4,7 @@ if(NOT DEFINED ${itkExternalModule}_REPOSITORY)
   set(${proj}_REPOSITORY "${git_protocol}://github.com/SimpleITK/itkSimpleITKFiltersModule.git")
 endif()
 
-set(${proj}_TAG_COMMAND GIT_TAG e99b7bed3e241edd5b466ecbdf9342e9b8dc3c6f)
+set(${proj}_TAG_COMMAND GIT_TAG 90f49616a10763b158653f02a5269492f6a87408)
 
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt" "${ep_common_cache}" )
 
