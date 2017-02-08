@@ -37,10 +37,15 @@ if(NOT SITK_FORBID_DOWNLOADS)
   list(APPEND ExternalData_URL_TEMPLATES
     # Data published by MIDAS
     "https://placid.nlm.nih.gov/api/rest?method=midas.bitstream.download&checksum=%(hash)&algorithm=%(algo)"
-    "http://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=%(hash)&algorithm=%(algo)"
+
+    # Data published on GitHub Pages
+    "https://simpleitk.github.io/SimpleITKExternalData/%(algo)/%(hash)"
+
+    # Data published by MIDAS
     "https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=%(hash)&algorithm=%(algo)"
 
     # Data published by developers using git-gerrit-push.
+    "https://insightsoftwareconsortium.github.io/ITKTestingData/%(algo)/%(hash)"
     "https://itk.org/files/ExternalData/%(algo)/%(hash)"
     )
 endif()
