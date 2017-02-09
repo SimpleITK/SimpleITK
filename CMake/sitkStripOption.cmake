@@ -15,7 +15,7 @@ mark_as_advanced(CMAKE_STRIP_FLAGS)
 separate_arguments(CMAKE_STRIP_FLAGS)
 
 function(sitk_strip_target tgt)
-  if(NOT SimpleITK_BUILD_STRIP)
+  if(NOT SimpleITK_BUILD_STRIP OR "${CMAKE_STRIP}" STREQUAL "" )
     return()
   endif()
   get_property(type TARGET ${tgt} PROPERTY TYPE)
