@@ -15,15 +15,30 @@ if (BUILD_DOXYGEN)
 
   option(USE_ITK_DOXYGEN_TAGS "Download ITK's Doxygen tags" ON)
 
+  set(DOXYGEN_TAGFILES_PARAMETER "")
+
   if (USE_ITK_DOXYGEN_TAGS)
-    add_custom_command( OUTPUT "${PROJECT_BINARY_DIR}/Documentation/Doxygen/InsightDoxygen.tag"
-      COMMAND ${CMAKE_COMMAND} -D "PROJECT_SOURCE_DIR:PATH=${PROJECT_SOURCE_DIR}"
-      -D "OUTPUT_PATH:PATH=${PROJECT_BINARY_DIR}/Documentation/Doxygen"
-      -P "${PROJECT_SOURCE_DIR}/Utilities/Doxygen/ITKDoxygenTags.cmake"
-      DEPENDS "${PROJECT_SOURCE_DIR}/Utilities/Doxygen/ITKDoxygenTags.cmake"
-      )
-    set(DOXYGEN_TAGFILES_PARAMETER "${PROJECT_BINARY_DIR}/Documentation/Doxygen/InsightDoxygen.tag=https://www.itk.org/Doxygen/html/")
+    set(ITK_DOXYGEN_TAGFILE "" CACHE PATH "ITK Doxygen tag file location. Empty string automatically downloads." )
+
+    if ("${ITK_DOXYGEN_TAGFILE}" STREQUAL "")
+      sitk_enforce_forbid_downloads("InsightDoxygen.tag")
+      set(ITK_DOXYGEN_TAGFILE "${PROJECT_BINARY_DIR}/Documentation/Doxygen/InsightDoxygen.tag")
+      add_custom_command( OUTPUT "${ITK_DOXYGEN_TAGFILE}"
+        COMMAND ${CMAKE_COMMAND} -D "PROJECT_SOURCE_DIR:PATH=${PROJECT_SOURCE_DIR}"
+        -D "OUTPUT_PATH:PATH=${PROJECT_BINARY_DIR}/Documentation/Doxygen"
+        -P "${PROJECT_SOURCE_DIR}/Utilities/Doxygen/ITKDoxygenTags.cmake"
+        DEPENDS "${PROJECT_SOURCE_DIR}/Utilities/Doxygen/ITKDoxygenTags.cmake"
+        )
+    endif()
+ 
+    set(ITK_DOXYGEN_ROOT_URL "https://www.itk.org/Doxygen/html/" CACHE STRING "URL for the ITK Doxygen web root")
+    if (NOT DOXYGEN_TAGFILES_PARAMETER STREQUAL "")
+      set(DOXYGEN_TAGFILES_PARAMETER "${ITK_DOXYGEN_TAGFILE}=${ITK_DOXYGEN_ROOT_URL}")
+    endif()
+
   endif()
+
+  set(SIMPLEITK_DOXYGEN_TAGFILE "${PROJECT_BINARY_DIR}/Utilities/Doxygen/SimpleITKDoxygen.tag")
 
   #
   # Configure the script and the doxyfile, then add target
@@ -46,7 +61,7 @@ if (BUILD_DOXYGEN)
     )
 
   if (USE_ITK_DOXYGEN_TAGS)
-    set(TAGS_DEPENDS DEPENDS ${PROJECT_BINARY_DIR}/Documentation/Doxygen/InsightDoxygen.tag)
+    set(TAGS_DEPENDS DEPENDS ${ITK_DOXYGEN_TAGFILE})
   endif ()
 
   add_custom_target(Documentation ALL
@@ -57,6 +72,7 @@ if (BUILD_DOXYGEN)
     ${TAGS_DEPENDS}
     WORKING_DIRECTORY ${PROJECT_BINARY_DIR}/Utilities/Doxygen
     )
+
 
 
   message( STATUS
