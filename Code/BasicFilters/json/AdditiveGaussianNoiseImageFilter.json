@@ -11,18 +11,18 @@
       "type" : "double",
       "default" : "1.0",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the standard deviation of the Gaussian distribution. Defaults to 1.0.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get the standard deviation of the Gaussian distribution. Defaults to 1.0."
     },
     {
       "name" : "Mean",
       "type" : "double",
       "default" : "0.0",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the mean of the Gaussian distribution. Defaults to 0.0.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get the mean of the Gaussian distribution. Defaults to 0.0."
     },
     {
       "name" : "Seed",
@@ -93,6 +93,6 @@
       ]
     }
   ],
-  "briefdescription" : "Alter an image with additive gaussian white noise.",
-  "detaileddescription" : "\\author Gaetan Lehmann\n\nThis code was contributed in the Insight Journal paper \"Noise\nSimulation\". https://hdl.handle.net/10380/3158"
+  "briefdescription" : "Alter an image with additive Gaussian white noise.",
+  "detaileddescription" : "Additive Gaussian white noise can be modeled as:\n\n\\par \n\\f$ I = I_0 + N \\f$ \n\n\\par \nwhere \\f$ I \\f$ is the observed image, \\f$ I_0 \\f$ is the noise-free image and \\f$ N \\f$ is a normally distributed random variable of mean \\f$ \\mu \\f$ and variance \\f$ \\sigma^2 \\f$ :\n\n\\par \n\\f$ N \\sim \\mathcal{N}(\\mu, \\sigma^2) \\f$ \n\nThe noise is independent of the pixel intensities.\n\n\\author Gaetan Lehmann\n\nThis code was contributed in the Insight Journal paper \"Noise\nSimulation\". https://hdl.handle.net/10380/3158"
 }

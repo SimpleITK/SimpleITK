@@ -16,7 +16,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set Upper and Lower Threshold inputs as values",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Get Upper and Lower Threshold inputs as values."
     },
     {
       "name" : "Upper",
@@ -26,7 +26,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set Upper and Lower Threshold inputs as values",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Get Upper and Lower Threshold inputs as values"
+      "detaileddescriptionGet" : "Get Upper and Lower Threshold inputs as values."
     },
     {
       "name" : "ReplaceValue",
@@ -48,9 +48,9 @@
       "default" : "itk::simple::ConnectedThresholdImageFilter::FaceConnectivity",
       "itk_type" : "typename FilterType::ConnectivityEnumType",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Type of connectivity to use (fully connected OR 4(2D), 6(3D), 2*N(ND) connectivity)",
+      "detaileddescriptionSet" : "Type of connectivity to use (fully connected OR 4(2D), 6(3D), 2*N(ND) connectivity).",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Type of connectivity to use (fully connected OR 4(2D), 6(3D), 2*N(ND) connectivity)"
+      "detaileddescriptionGet" : "Type of connectivity to use (fully connected OR 4(2D), 6(3D), 2*N(ND) connectivity)."
     }
   ],
   "tests" : [
