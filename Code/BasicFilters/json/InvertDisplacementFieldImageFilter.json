@@ -77,5 +77,5 @@
     }
   ],
   "briefdescription" : "Iteratively estimate the inverse field of a displacement field.",
-  "detaileddescription" : "\\author Nick Tustison\n\nBrian Avants"
+  "detaileddescription" : "\\author Nick Tustison \n\nBrian Avants"
 }

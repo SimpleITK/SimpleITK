@@ -39,9 +39,9 @@
       "type" : "bool",
       "default" : "false",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get whether an optimized lookup table for the intensity mapping function is used. Default is off.Deprecated",
+      "detaileddescriptionSet" : "Set/Get whether an optimized lookup table for the intensity mapping function is used. Default is off. Deprecated",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get whether an optimized lookup table for the intensity mapping function is used. Default is off.Deprecated"
+      "detaileddescriptionGet" : "Set/Get whether an optimized lookup table for the intensity mapping function is used. Default is off. Deprecated"
     }
   ],
   "tests" : [

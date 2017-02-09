@@ -23,9 +23,9 @@
       "default" : "false",
       "doc" : "",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Define which normalization factor will be used for the Gaussian\\see RecursiveGaussianImageFilter::SetNormalizeAcrossScale",
+      "detaileddescriptionSet" : "Define which normalization factor will be used for the Gaussian \\see RecursiveGaussianImageFilter::SetNormalizeAcrossScale",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Define which normalization factor will be used for the Gaussian\\see RecursiveGaussianImageFilter::SetNormalizeAcrossScale"
+      "detaileddescriptionGet" : "Define which normalization factor will be used for the Gaussian \\see RecursiveGaussianImageFilter::SetNormalizeAcrossScale"
     }
   ],
   "tests" : [

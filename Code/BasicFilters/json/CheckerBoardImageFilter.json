@@ -15,9 +15,9 @@
       "set_as_scalar" : 1,
       "itk_type" : "typename FilterType::PatternArrayType",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set array with number of checks to make per image dimension",
+      "detaileddescriptionSet" : "Set/Get the checker pattern array, i.e. the number of checker boxes per image dimension.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set array with number of checks to make per image dimension"
+      "detaileddescriptionGet" : "Set/Get the checker pattern array, i.e. the number of checker boxes per image dimension."
     }
   ],
   "tests" : [
