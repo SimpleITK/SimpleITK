@@ -43,12 +43,22 @@
       "description" : "Setting custom color map",
       "md5hash" : "af9bc977b86bfdf2e87d989958f6771f",
       "settings" : [
-          {
-              "parameter" : "Colormap",
-              "type" : "uint8_t",
-              "dim_vec" : 1,
-              "value" : [ 255,0,0, 255,255,255, 0, 0, 255 ]
-          }
+        {
+          "parameter" : "Colormap",
+          "type" : "uint8_t",
+          "dim_vec" : 1,
+          "value" : [
+            255,
+            0,
+            0,
+            255,
+            255,
+            255,
+            0,
+            0,
+            255
+          ]
+        }
       ],
       "inputs" : [
         "Input/2th_cthead1.mha"
@@ -56,5 +66,5 @@
     }
   ],
   "briefdescription" : "Apply a colormap to a label image.",
-  "detaileddescription" : "Apply a colormap to a label image. The set of colors is a good selection of distinct colors. The user can choose to use a background value. In that case, a gray pixel with the same intensity than the background label is produced.\n\nThis code was contributed in the Insight Journal paper: \"The watershed transform in ITK - discussion and new developments\" by Beare R., Lehmann G. https://hdl.handle.net/1926/202 http://www.insight-journal.org/browse/publication/92 \n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\nRichard Beare. Department of Medicine, Monash University, Melbourne, Australia.\n\n\\see ScalarToRGBPixelFunctor LabelOverlayImageFilter"
+  "detaileddescription" : "Apply a colormap to a label image. The set of colors is a good selection of distinct colors. The user can choose to use a background value. In that case, a gray pixel with the same intensity than the background label is produced.\n\nThis code was contributed in the Insight Journal paper: \"The watershed transform in ITK - discussion and new developments\" by Beare R., Lehmann G. https://hdl.handle.net/1926/202 http://www.insight-journal.org/browse/publication/92 \n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France. \n\nRichard Beare. Department of Medicine, Monash University, Melbourne, Australia.\n\n\\see LabelOverlayImageFilter \n\n\\see LabelMapToRGBImageFilter , LabelToRGBFunctor, ScalarToRGBPixelFunctor"
 }

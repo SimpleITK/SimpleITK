@@ -13,9 +13,9 @@
       "default" : "0.0",
       "pixeltype" : "Input",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get methods to set the lower threshold",
+      "detaileddescriptionSet" : "Set/Get methods to set the lower threshold.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get methods to set the lower threshold"
+      "detaileddescriptionGet" : "Set/Get methods to set the lower threshold."
     },
     {
       "name" : "Upper",
@@ -23,9 +23,9 @@
       "default" : "1.0",
       "pixeltype" : "Input",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get methods to set the upper threshold",
+      "detaileddescriptionSet" : "Set/Get methods to set the upper threshold.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get methods to set the upper threshold"
+      "detaileddescriptionGet" : "Set/Get methods to set the upper threshold."
     },
     {
       "name" : "OutsideValue",

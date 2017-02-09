@@ -23,9 +23,9 @@
       "default" : "false",
       "doc" : "",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "This method does not effect the output of this filter.\\sa  RecursiveGaussianImageFilter::SetNormalizeAcrossScale",
+      "detaileddescriptionSet" : "This method does not effect the output of this filter. \\sa RecursiveGaussianImageFilter::SetNormalizeAcrossScale",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "This method does not effect the output of this filter.\\sa  RecursiveGaussianImageFilter::SetNormalizeAcrossScale"
+      "detaileddescriptionGet" : "This method does not effect the output of this filter. \\sa RecursiveGaussianImageFilter::SetNormalizeAcrossScale"
     }
   ],
   "tests" : [
