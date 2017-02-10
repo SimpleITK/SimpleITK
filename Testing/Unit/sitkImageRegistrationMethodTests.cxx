@@ -949,3 +949,79 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_ScalesEstimator)
 
 
 }
+
+
+TEST_F(sitkRegistrationMethodTest, Optimizer_Sampling)
+{
+  sitk::Image fixedImage = MakeDualGaussianBlobs( v2(64, 64), v2(54, 74), std::vector<unsigned int>(2,256) );
+  sitk::Image movingImage = MakeDualGaussianBlobs( v2(61.2, 65.5), v2(51.2, 75.5), std::vector<unsigned int>(2,256) );
+
+  fixedImage = sitk::AdditiveGaussianNoise(fixedImage,  0.5, 0, 1u);
+
+  sitk::ImageRegistrationMethod R;
+  R.SetInterpolator(sitk::sitkLinear);
+
+  sitk::TranslationTransform tx(2u);
+  R.SetInitialTransform(tx, false);
+
+  R.SetMetricAsMeanSquares();
+
+  double minStep=1e-4;
+  unsigned int numberOfIterations=100;
+  double relaxationFactor=0.5;
+  double gradientMagnitudeTolerance = 1e-5;
+  R.SetOptimizerAsRegularStepGradientDescent(1.0,
+                                             minStep,
+                                             numberOfIterations,
+                                             relaxationFactor,
+                                             gradientMagnitudeTolerance);
+
+  IterationUpdate cmd(R);
+  R.AddCommand(sitk::sitkIterationEvent, cmd);
+
+  sitk::Transform outTx1, outTx2;
+
+
+  // set fixed seed and expect the same results
+  R.SetMetricSamplingStrategy(R.RANDOM);
+  R.SetMetricSamplingPercentage(.02,1u);
+
+  outTx1 = R.Execute(fixedImage, movingImage);
+  outTx2 = R.Execute(fixedImage, movingImage);
+
+  EXPECT_VECTOR_DOUBLE_NEAR(outTx1.GetParameters(), outTx1.GetParameters(), 1e-10) << "Same registration with fixed seed and random sampling";
+
+  // set fixed seed and expect the same results
+  R.SetMetricSamplingStrategy(R.REGULAR);
+  R.SetMetricSamplingPercentage(.02,1u);
+
+  outTx1 = R.Execute(fixedImage, movingImage);
+  outTx2 = R.Execute(fixedImage, movingImage);
+
+  EXPECT_VECTOR_DOUBLE_NEAR(outTx1.GetParameters(), outTx1.GetParameters(), 1e-10)  << "Same registration with fixed seed and regular sampling";
+
+  // set wall clock seed and expect the same results with full sampling
+  R.SetMetricSamplingStrategy(R.NONE);
+  R.SetMetricSamplingPercentage(.02,0u);
+
+  outTx1 = R.Execute(fixedImage, movingImage);
+  outTx2 = R.Execute(fixedImage, movingImage);
+
+  EXPECT_VECTOR_DOUBLE_NEAR(outTx1.GetParameters(), outTx1.GetParameters(), 1e-10)  << "Same registration with fixed seed and regular sampling";
+
+
+  // Use wall clock random seed.
+ R.SetMetricSamplingStrategy(R.RANDOM);
+ R.SetMetricSamplingPercentage(.02,0u);
+
+ R.Execute(fixedImage, movingImage);
+ double firstValue = R.GetMetricValue();
+ double totalDiff = 0.0;
+
+ for( unsigned int i=1; i<5; ++i)
+   {
+   R.Execute(fixedImage, movingImage);
+   totalDiff += std::abs(firstValue -R.GetMetricValue());
+   }
+ EXPECT_TRUE(totalDiff > 1e-10) << "Expect difference between metric values with random sampling\n";
+}
