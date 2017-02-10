@@ -603,7 +603,7 @@
 #include "sitkNumpyArrayConversion.cxx"
 %}
 // Numpy array conversion support
-%native(_GetByteArrayFromImage) PyObject *sitk_GetByteArrayFromImage( PyObject *self, PyObject *args );
+%native(_GetMemoryViewFromImage) PyObject *sitk_GetMemoryViewFromImage( PyObject *self, PyObject *args );
 %native(_SetImageFromArray) PyObject *sitk_SetImageFromArray( PyObject *self, PyObject *args );
 
 %pythoncode %{
@@ -713,28 +713,47 @@ def _get_sitk_vector_pixelid(numpy_array_type):
 
 # SimplyITK <-> Numpy Array conversion support.
 
-def GetArrayFromImage(image):
-    """Get a numpy array from a SimpleITK Image."""
+def GetArrayViewFromImage(image):
+    """Get a NumPy ndarray view of a SimpleITK Image.
+
+    Returns a Numpy ndarray object as a "view" of the SimpleITK's Image buffer. This reduces pixel buffer copies, but requires that the SimpleITK image object is kept around while the buffer is being used.
+
+
+    """
 
     if not HAVE_NUMPY:
-        raise ImportError('Numpy not available.')
+        raise ImportError('NumPy not available.')
 
-    imageByteArray = _SimpleITK._GetByteArrayFromImage(image)
 
     pixelID = image.GetPixelIDValue()
-    assert pixelID != sitkUnknown, "An SimpleITK image of Unknow pixel type should now exists!"
+    assert pixelID != sitkUnknown, "An SimpleITK image of Unknown pixel type should not exists!"
 
     dtype = _get_numpy_dtype( image )
-
-    arr = numpy.frombuffer(imageByteArray, dtype )
 
     shape = image.GetSize();
     if image.GetNumberOfComponentsPerPixel() > 1:
       shape = ( image.GetNumberOfComponentsPerPixel(), ) + shape
 
-    arr.shape = shape[::-1]
+    image.MakeUnique()
 
-    return arr
+    imageMemoryView =  _SimpleITK._GetMemoryViewFromImage(image)
+    arrayView = numpy.asarray(imageMemoryView).view(dtype = dtype)
+    arrayView.shape = shape[::-1]
+
+    return arrayView
+
+def GetArrayFromImage(image):
+    """Get a NumPy ndarray from a SimpleITK Image.
+
+    This is a deep copy of the image buffer and is completely safe and without potential side effects.
+    """
+
+    # TODO: If the image is already not unique then a second copy may be made before the numpy copy is done.
+    arrayView = GetArrayViewFromImage(image)
+
+    # perform deep copy of the image buffer
+    return numpy.array(arrayView, copy=True)
+
 
 def GetImageFromArray( arr, isVector=False):
     """Get a SimpleITK Image from a numpy array. If isVector is True, then a 3D array will be treated as a 2D vector image, otherwise it will be treated as a 3D image"""
