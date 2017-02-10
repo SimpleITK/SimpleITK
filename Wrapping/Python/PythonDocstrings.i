@@ -1,55 +1,5 @@
 
 
-%feature("docstring") itk::ComponentByComponentImageFilter "
-
-Apply a filter or a pipeline slice by slice on an image.
-
-C++ includes: itkComponentByComponentImageFilter.h
-";
-
-%feature("docstring")  itk::ComponentByComponentImageFilter::GetFilter "
-";
-
-%feature("docstring")  itk::ComponentByComponentImageFilter::GetFilter "
-";
-
-%feature("docstring")  itk::ComponentByComponentImageFilter::itkGetConstMacro "
-
-The index of the slice currently processed by the filter. This is
-intended to be used with the IterationEvent sent before the processing
-of each object. It contains a relevant value only during the filter
-update.
-
-";
-
-%feature("docstring")  itk::ComponentByComponentImageFilter::itkGetModifiableObjectMacro "
-";
-
-%feature("docstring")  itk::ComponentByComponentImageFilter::itkGetModifiableObjectMacro "
-";
-
-%feature("docstring")  itk::ComponentByComponentImageFilter::itkNewMacro "
-
-Standard New method.
-
-";
-
-%feature("docstring")  itk::ComponentByComponentImageFilter::itkTypeMacro "
-
-Runtime information support.
-
-";
-
-%feature("docstring")  itk::ComponentByComponentImageFilter::SetFilter "
-";
-
-%feature("docstring")  itk::ComponentByComponentImageFilter::SetInputFilter "
-";
-
-%feature("docstring")  itk::ComponentByComponentImageFilter::SetOutputFilter "
-";
-
-
 %feature("docstring") itk::Functor::BitwiseNot "
 
 Performs the C++ unary bitwise NOT operator.
@@ -4891,9 +4841,6 @@ Set/Get the output pixel type
 
 ";
 
-%feature("docstring")  itk::simple::CastImageFilter::SetOutputPixelType "
-";
-
 %feature("docstring")  itk::simple::CastImageFilter::ToString "
 ";
 
@@ -8767,6 +8714,9 @@ equal to the image dimension.
 ";
 
 %feature("docstring")  itk::simple::DisplacementFieldTransform::SetInterpolator "
+
+Set the interpolator used between the field voxels.
+
 ";
 
 %feature("docstring")  itk::simple::DisplacementFieldTransform::SetInverseDisplacementField "
@@ -15041,6 +14991,18 @@ of components for each pixel is returned.
 
 ";
 
+%feature("docstring")  itk::simple::Image::GetNumberOfPixels "
+
+Get the number of pixels in the image.
+
+
+To Calculate the total number of values stored continuously for the
+image's buffer, the NumberOfPixels should be multiplied by
+NumberOfComponentsPerPixel in order to account for multiple component
+images.
+
+";
+
 %feature("docstring")  itk::simple::Image::GetPixelID "
 ";
 
@@ -15557,6 +15519,22 @@ The default parameters utilize LBFGSB in unbounded mode.
 
 See:
  itk::LBFGSBOptimizerv4
+
+
+";
+
+%feature("docstring")  itk::simple::ImageRegistrationMethod::SetOptimizerAsOnePlusOneEvolutionary "
+
+1+1 evolutionary optimizer strategy.
+
+
+The seed parameter is used to seed the pseudo-random number generator.
+If the seed parameter is 0, then the wall clock is used to seed,
+otherwise the fixed seed is used for reproducible behavior.
+
+
+See:
+ itk::OnePlusOneEvolutionaryOptimizerv4
 
 
 ";
@@ -18142,6 +18120,9 @@ Execute the filter on the input image with the given parameters
 
 ";
 
+%feature("docstring")  itk::simple::LabelMapContourOverlayImageFilter::GetColormap "
+";
+
 %feature("docstring")  itk::simple::LabelMapContourOverlayImageFilter::GetContourThickness "
 
 Set/Get the contour thickness - 1 by default.
@@ -18190,6 +18171,9 @@ Set/Get the slice dimension - defaults to image dimension - 1.
 Default Constructor that takes no arguments and initializes default
 parameters
 
+";
+
+%feature("docstring")  itk::simple::LabelMapContourOverlayImageFilter::SetColormap "
 ";
 
 %feature("docstring")  itk::simple::LabelMapContourOverlayImageFilter::SetContourThickness "
@@ -18437,14 +18421,17 @@ C++ includes: sitkLabelMapOverlayImageFilter.h
 
 %feature("docstring")  itk::simple::LabelMapOverlayImageFilter::Execute "
 
-Execute the filter on the input images
+Execute the filter on the input image
 
 ";
 
 %feature("docstring")  itk::simple::LabelMapOverlayImageFilter::Execute "
 
-Execute the filter on the input images with the given parameters
+Execute the filter on the input image with the given parameters
 
+";
+
+%feature("docstring")  itk::simple::LabelMapOverlayImageFilter::GetColormap "
 ";
 
 %feature("docstring")  itk::simple::LabelMapOverlayImageFilter::GetName "
@@ -18465,6 +18452,9 @@ between 0 and 1
 Default Constructor that takes no arguments and initializes default
 parameters
 
+";
+
+%feature("docstring")  itk::simple::LabelMapOverlayImageFilter::SetColormap "
 ";
 
 %feature("docstring")  itk::simple::LabelMapOverlayImageFilter::SetOpacity "
@@ -18670,6 +18660,15 @@ Execute the filter on the input image
 
 ";
 
+%feature("docstring")  itk::simple::LabelMapToRGBImageFilter::Execute "
+
+Execute the filter on the input image with the given parameters
+
+";
+
+%feature("docstring")  itk::simple::LabelMapToRGBImageFilter::GetColormap "
+";
+
 %feature("docstring")  itk::simple::LabelMapToRGBImageFilter::GetName "
 
 Name of this class
@@ -18681,6 +18680,9 @@ Name of this class
 Default Constructor that takes no arguments and initializes default
 parameters
 
+";
+
+%feature("docstring")  itk::simple::LabelMapToRGBImageFilter::SetColormap "
 ";
 
 %feature("docstring")  itk::simple::LabelMapToRGBImageFilter::ToString "
@@ -18857,6 +18859,9 @@ Set/Get the background value
 
 ";
 
+%feature("docstring")  itk::simple::LabelOverlayImageFilter::GetColormap "
+";
+
 %feature("docstring")  itk::simple::LabelOverlayImageFilter::GetName "
 
 Name of this class
@@ -18881,6 +18886,9 @@ parameters
 
 Set/Get the background value
 
+";
+
+%feature("docstring")  itk::simple::LabelOverlayImageFilter::SetColormap "
 ";
 
 %feature("docstring")  itk::simple::LabelOverlayImageFilter::SetOpacity "
@@ -19439,6 +19447,9 @@ Set/Get the background value
 
 ";
 
+%feature("docstring")  itk::simple::LabelToRGBImageFilter::GetColormap "
+";
+
 %feature("docstring")  itk::simple::LabelToRGBImageFilter::GetName "
 
 Name of this class
@@ -19456,6 +19467,9 @@ parameters
 
 Set/Get the background value
 
+";
+
+%feature("docstring")  itk::simple::LabelToRGBImageFilter::SetColormap "
 ";
 
 %feature("docstring")  itk::simple::LabelToRGBImageFilter::ToString "
@@ -25930,6 +25944,9 @@ C++ includes: sitkPimpleImageBase.h
 %feature("docstring")  itk::simple::PimpleImageBase::GetNumberOfComponentsPerPixel "
 ";
 
+%feature("docstring")  itk::simple::PimpleImageBase::GetNumberOfPixels "
+";
+
 %feature("docstring")  itk::simple::PimpleImageBase::GetOrigin "
 ";
 
@@ -28998,6 +29015,14 @@ Name of this class
 
 ";
 
+%feature("docstring")  itk::simple::ScalarToRGBColormapImageFilter::GetUseInputImageExtremaForScaling "
+
+Set/Get UseInputImageExtremaForScaling. If true, the colormap uses the
+min and max values from the image to scale appropriately. Otherwise,
+these values can be set in the colormap manually.
+
+";
+
 %feature("docstring")  itk::simple::ScalarToRGBColormapImageFilter::ScalarToRGBColormapImageFilter "
 
 Default Constructor that takes no arguments and initializes default
@@ -29008,9 +29033,27 @@ parameters
 %feature("docstring")  itk::simple::ScalarToRGBColormapImageFilter::SetColormap "
 ";
 
+%feature("docstring")  itk::simple::ScalarToRGBColormapImageFilter::SetUseInputImageExtremaForScaling "
+
+Set/Get UseInputImageExtremaForScaling. If true, the colormap uses the
+min and max values from the image to scale appropriately. Otherwise,
+these values can be set in the colormap manually.
+
+";
+
 %feature("docstring")  itk::simple::ScalarToRGBColormapImageFilter::ToString "
 
 Print ourselves out
+
+";
+
+%feature("docstring")  itk::simple::ScalarToRGBColormapImageFilter::UseInputImageExtremaForScalingOff "
+";
+
+%feature("docstring")  itk::simple::ScalarToRGBColormapImageFilter::UseInputImageExtremaForScalingOn "
+
+Set the value of UseInputImageExtremaForScaling to true or false
+respectfully.
 
 ";
 
@@ -38956,14 +38999,14 @@ See:
 
 %feature("docstring")  itk::simple::Show "
 
-Display an image using ImageJ
+Display an image using Fiji, ImageJ or another application.
 
-This function requires that ImageJ ( http://rsb.info.nih.gov/ij/) be properly installed for Mac and Windows, and in the user's path
+This function requires that Fiji ( https://fiji.sc ) or ImageJ ( http://rsb.info.nih.gov/ij/) be properly installed for Mac and Windows, and in the user's path
 for Linux. ImageJ must have a plugin for reading Nifti formatted files
 ( http://www.loci.wisc.edu/bio-formats/imagej).
 
 Nifti is the default file format used to export images. A different
-format can by chosen by setting the SITK_SHOW_EXTENSION environment
+format can be chosen by setting the SITK_SHOW_EXTENSION environment
 variable. For example, set SITK_SHOW_EXTENSION to \".png\" to use PNG
 format.
 
@@ -38975,14 +39018,10 @@ The user can also select applications specifically for color images or
 environment variables.
 
 SITK_SHOW_COMMAND, SITK_SHOW_COLOR_COMMAND and SITK_SHOW_3D_COMMAND
-allow the following tokens in their strings.
+allow the following tokens in their strings.\\\\li \\\\c \"%a\"  for the ImageJ application \\\\li \\\\c \"%f\"
+for SimpleITK's temporary image file
 
-
-\"%a\" for the ImageJ application
-
-\"%f\" for SimpleITK's temporary image file
- For example, the default SITK_SHOW_COMMAND string on Linux systems
-is:
+For example, the default SITK_SHOW_COMMAND string on Linux systems is:
 
 
 After token substitution it may become:
