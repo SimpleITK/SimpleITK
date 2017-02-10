@@ -42,7 +42,7 @@
       "default" : "std::vector<float>()",
       "briefdescriptionSet" : "",
       "custom_itk_cast" : "if (!m_PriorProbabilities.empty()) filter->SetPriorProbabilities(typename FilterType::PriorProbabilitiesType(&this->m_PriorProbabilities[0],this->m_PriorProbabilities.size()));",
-      "detaileddescriptionSet" : "Set manual estimates for the a priori class probabilities.The size of the array must be greater than the value of the\n largest label. The index into the array corresponds to the label\n value in the segmented image for the class.",
+      "detaileddescriptionSet" : "Set manual estimates for the a priori class probabilities. The size of the array must be greater than the value of the\n largest label. The index into the array corresponds to the label\n value in the segmented image for the class.",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : "Get prior class probabilities.\n\nAfter updating the filter, this function returns the actual prior class probabilities. If these were not previously set by a call to SetPriorProbabilities, then they are estimated from the input segmentations and the result is available through this function."
     }
