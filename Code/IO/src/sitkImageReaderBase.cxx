@@ -27,8 +27,6 @@
 #include <itkTransformFileReader.h>
 #include <itkTransformFileWriter.h>
 
-#include <stdint.h>
-
 #include <string>
 
 #include <itkImage.h>

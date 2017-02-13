@@ -38,8 +38,6 @@
 #include "itkVectorImage.h"
 #include "itkMetaDataObject.h"
 
-#include <stdint.h>
-
 const double adir[] = {0.0, 0.0, 1.0,
                        -1.0, 0.0, 0.0,
                        0.0, -1.0, 0.0};
