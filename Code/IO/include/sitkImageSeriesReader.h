@@ -122,6 +122,22 @@ namespace itk {
 
       std::vector<std::string> m_FileNames;
     };
+
+  /**
+   * \brief ReadImage is a procedural interface to the ImageSeriesReader
+   *     class which is convenient for most image reading tasks.
+   *
+   *     Note that when reading a series of images that have meta-data
+   *     associated with them (e.g. a DICOM series) the resulting
+   *     image will have an empty meta-data dictionary. It is possible to
+   *     programmatically add a meta-data dictionary to the compounded image by reading in
+   *     one or more images from the series using the ImageFileReader
+   *     class, analyzing the meta-dictionary associated with each of
+   *     those images and creating one that is relevant for the
+   *     compounded image.
+   *
+   * \sa itk::simple::ImageFileReader for reading a single file
+   */
   SITKIO_EXPORT Image ReadImage ( const std::vector<std::string> &fileNames, PixelIDValueEnum outputPixelType=sitkUnknown );
   }
 }
