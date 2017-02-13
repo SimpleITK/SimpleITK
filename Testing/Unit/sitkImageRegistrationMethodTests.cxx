@@ -18,7 +18,6 @@
 #include <SimpleITKTestHarness.h>
 #include <SimpleITK.h>
 
-#include <stdint.h>
 #include <memory>
 
 namespace
