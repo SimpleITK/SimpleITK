@@ -29,7 +29,6 @@
 
 #include <vector>
 #include <memory>
-#include <stdint.h>
 
 namespace itk
 {

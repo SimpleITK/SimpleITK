@@ -20,7 +20,6 @@
 #include "itkImage.h"
 #include "itkVectorImage.h"
 
-#include <stdint.h>
 #include <memory>
 
 TEST(LabelStatistics,Simple) {
