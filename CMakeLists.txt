@@ -252,18 +252,13 @@ include(CheckIncludeFileCXX)
 # check for stdint
 # This generates a configuration error if the compiler is not supported
 check_include_file_cxx( stdint.h SITK_HAS_STDINT_H )
-
-if(NOT STDINT_HAVE_STDINT_H)
-  if( WIN32 )
+if(NOT SITK_HAS_STDINT_H)
     if(MSVC)
-      list(APPEND SimpleITK_INCLUDE_DIRS
-        "${SimpleITK_SOURCE_DIR}/Utilities/C99")
       add_subdirectory("${SimpleITK_SOURCE_DIR}/Utilities/C99")
+    else()
+      message(FATAL_ERROR "Unable to find require \"stdint.h\" header file.")
     endif()
-  endif()
 endif()
-
-
 
 #------------------------------------------------------------------------------
 # assemble a list of important documentation from Simple ITK and ITK
