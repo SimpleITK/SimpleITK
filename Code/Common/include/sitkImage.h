@@ -149,6 +149,17 @@ namespace simple
      * number of components for each pixel is returned.
      */
     unsigned int GetNumberOfComponentsPerPixel( void ) const;
+    /** \brief Get the number of pixels in each image
+     *
+     *  Some pixels may have more than one component, so
+     *  GetNumberOfPixels should be multiplied by
+     *  GetNumberOfComponentsPerPixel in order to calculate the
+     *  the total number of values stored congituously for the image.
+     *
+     * The GetNumberOfPixels produces the same result
+     * as GetWidth()*GetHeight()*GetDepth().  This value
+     */
+    uint64_t GetNumberOfPixels( void ) const;
 
     /** \brief Get the number of pixels in the image
      *
