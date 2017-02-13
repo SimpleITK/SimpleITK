@@ -28,12 +28,6 @@ sitk_add_python_test( Example.BoarderSegmentation
   "5000"
   "150" )
 
- sitk_add_python_test( Example.N4BiasFieldCorrection
-  "${CMAKE_CURRENT_SOURCE_DIR}/N4BiasFieldCorrection.py"
-  DATA{${SimpleITK_DATA_ROOT}/Input/OAS1_0001_MR1_mpr-1_anon.nrrd}
-  "${TEST_HARNESS_TEMP_DIRECTORY}/Python.Example.N4BiasFieldCorrection.nrrd"
-  "1" )
-
 sitk_add_python_test( Example.ReadAndShow
   "${CMAKE_CURRENT_SOURCE_DIR}/ReadAndShow.py"
   DATA{${SimpleITK_DATA_ROOT}/Input/VM1111Shrink-RGB.png} )
@@ -98,76 +92,6 @@ sitk_add_python_test( Example.NeighborhoodConnectedImageFilter1
   60 116
   )
 
-
-sitk_add_python_test( Example.ImageRegistrationMethod3Test1
-  "${CMAKE_CURRENT_SOURCE_DIR}/ImageRegistrationMethod3.py"
-  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20.png}
-  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceR10X13Y17.png}
-  ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethod3Test1.hdf5
-  TRANSFORM_COMPARE
-    ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethod3Test1.hdf5
-    DATA{${SimpleITK_DATA_ROOT}/Baseline/ImageRegistrationMethod3Test1.mha}
-    0.02
-  )
-
-sitk_add_python_test( Example.ImageRegistrationMethod3Test2
-  "${CMAKE_CURRENT_SOURCE_DIR}/ImageRegistrationMethod3.py"
-  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20.png}
-  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceR10X13Y17S12.png}
-  ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethod3Test2.hdf5
-  TRANSFORM_COMPARE
-    ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethod3Test2.hdf5
-    DATA{${SimpleITK_DATA_ROOT}/Baseline/ImageRegistrationMethod3Test2.mha}
-    0.03
-  )
-
-
-sitk_add_python_test( Example.ImageRegistrationMethod4Test1
-  "${CMAKE_CURRENT_SOURCE_DIR}/ImageRegistrationMethod4.py"
-  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20.png}
-  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceShifted13x17y.png}
-  ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethod4Test1.hdf5
-  24 1.0
-  )
-
-sitk_add_python_test( Example.ImageRegistrationMethod4Test2
-  "${CMAKE_CURRENT_SOURCE_DIR}/ImageRegistrationMethod4.py"
-  DATA{${SimpleITK_DATA_ROOT}/Input/BrainT1SliceBorder20.png}
-  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceShifted13x17y.png}
-  ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethod4Test2.hdf5
-  24 0.1
-  )
-
-sitk_add_python_test( Example.ImageRegistrationMethod4Test3
-  "${CMAKE_CURRENT_SOURCE_DIR}/ImageRegistrationMethod4.py"
-  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20Mask.png}
-  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20Mask.png}
-  ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethod4Test3.hdf5
-  5 0.4
-  )
-
-
-sitk_add_python_test(Example.ImageRegistrationMethodBSpline2
-  "${CMAKE_CURRENT_SOURCE_DIR}/ImageRegistrationMethodBSpline2.py"
-    DATA{${SimpleITK_DATA_ROOT}/Input/BrainT1SliceBorder20.png}
-    DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBSplined10.png}
-    ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethodBSpline2.hdf5
-  TRANSFORM_COMPARE
-    ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethodBSpline2.hdf5
-    DATA{${SimpleITK_DATA_ROOT}/Baseline/ImageRegistrationMethodBSpline2.mha}
-    0.02
-  )
-
-sitk_add_python_test(Example.ImageRegistrationMethodExhaustiveTest1
-  "${CMAKE_CURRENT_SOURCE_DIR}/ImageRegistrationMethodExhaustive.py"
-    DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySlice.png}
-    DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceR10X13Y17.png}
-    ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethodExhaustiveTest1.hdf5
- TRANSFORM_COMPARE
-    ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethodExhaustiveTest1.hdf5
-    DATA{${SimpleITK_DATA_ROOT}/Baseline/ImageRegistrationMethodExhaustiveTest1.mha}
-    1e-10
-  )
 
 sitk_add_python_test(Example.DicomModifyTags
   "${CMAKE_CURRENT_SOURCE_DIR}/DicomModifyTags.py"

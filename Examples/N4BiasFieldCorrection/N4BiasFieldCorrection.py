@@ -58,7 +58,7 @@ if len ( sys.argv ) > 5:
 
 
 
-output = corrector.Execute( inputImage, maskImage )    
+output = corrector.Execute( inputImage, maskImage )
 
 sitk.WriteImage( output, sys.argv[2] )
 
