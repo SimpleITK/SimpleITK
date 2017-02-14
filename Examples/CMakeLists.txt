@@ -22,39 +22,12 @@ if(NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK")
 endif()
 
 # Add individual cxx executables
-add_executable ( SimpleGaussian SimpleGaussian.cxx )
-target_link_libraries ( SimpleGaussian ${SimpleITK_LIBRARIES} )
 
 add_executable ( SimpleGaussianFunctional SimpleGaussianFunctional.cxx )
 target_link_libraries ( SimpleGaussianFunctional ${SimpleITK_LIBRARIES} )
 
 add_executable ( BufferImportExport BufferImportExport.cxx )
 target_link_libraries ( BufferImportExport ${SimpleITK_LIBRARIES} )
-
-add_executable ( FilterProgressReporting FilterProgressReporting.cxx )
-target_link_libraries ( FilterProgressReporting ${SimpleITK_LIBRARIES} )
-
-add_executable ( DicomSeriesReader DicomSeriesReader.cxx )
-target_link_libraries ( DicomSeriesReader ${SimpleITK_LIBRARIES} )
-
-add_executable ( ImageRegistrationMethod1 ImageRegistrationMethod1.cxx )
-target_link_libraries ( ImageRegistrationMethod1 ${SimpleITK_LIBRARIES} )
-
-add_executable ( ImageRegistrationMethod2 ImageRegistrationMethod2.cxx )
-target_link_libraries ( ImageRegistrationMethod2 ${SimpleITK_LIBRARIES} )
-
-add_executable ( ImageRegistrationMethodBSpline1 ImageRegistrationMethodBSpline1.cxx )
-target_link_libraries ( ImageRegistrationMethodBSpline1 ${SimpleITK_LIBRARIES} )
-
-add_executable ( ImageRegistrationMethodDisplacement1 ImageRegistrationMethodDisplacement1.cxx )
-target_link_libraries ( ImageRegistrationMethodDisplacement1  ${SimpleITK_LIBRARIES} )
-
-
-add_executable ( DemonsRegistration1 DemonsRegistration1.cxx )
-target_link_libraries ( DemonsRegistration1 ${SimpleITK_LIBRARIES} )
-
-add_executable ( DemonsRegistration2 DemonsRegistration2.cxx )
-target_link_libraries ( DemonsRegistration2 ${SimpleITK_LIBRARIES} )
 
 # Add subdirectories
 add_subdirectory(Segmentation)
@@ -64,6 +37,25 @@ set(TEST_HARNESS_TEMP_DIRECTORY ${SimpleITK_BINARY_DIR}/Testing/Temporary)
 set(TEST_HARNESS_DATA_DIRECTORY ${SimpleITK_BINARY_DIR}/ExternalData/Testing/Data)
 set(ITK_TEST_DRIVER  "$<TARGET_FILE:itkTestDriver>")
 
+
+if ( BUILD_TESTING )
+  # Add example organized sub-directories with multiple languages
+  add_subdirectory(SimpleGaussian)
+  add_subdirectory(ImageRegistrationMethod1)
+  add_subdirectory(ImageRegistrationMethod2)
+  add_subdirectory(ImageRegistrationMethod3)
+  add_subdirectory(ImageRegistrationMethod4)
+  add_subdirectory(ImageRegistrationMethodBSpline1)
+  add_subdirectory(ImageRegistrationMethodBSpline2)
+  add_subdirectory(ImageRegistrationMethodDisplacement1)
+  add_subdirectory(ImageRegistrationMethodExhaustive)
+  add_subdirectory(N4BiasFieldCorrection)
+  add_subdirectory(DicomSeriesReader)
+  add_subdirectory(DicomImagePrintTags)
+  add_subdirectory(FilterProgressReporting)
+  add_subdirectory(DemonsRegistration1)
+  add_subdirectory(DemonsRegistration2)
+endif()
 
 macro(add_language_subdirectory lang)
   string(TOUPPER ${lang} LANG)
@@ -76,11 +68,6 @@ if ( BUILD_TESTING )
   add_subdirectory( test )
 
   add_language_subdirectory( CSharp )
-  add_language_subdirectory( Java )
-  add_language_subdirectory( Lua )
   add_language_subdirectory( Python )
-  add_language_subdirectory( R )
-  add_language_subdirectory( Ruby )
-  add_language_subdirectory( Tcl )
 
 endif()
