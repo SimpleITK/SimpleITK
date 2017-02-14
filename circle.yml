@@ -9,7 +9,7 @@ machine:
         SIMPLEITK_SRC_DIR: ${HOME}/SimpleITK
         SIMPLEITK_BUILD_DIR: ${SIMPLEITK_SRC_DIR}/bld
         ExternalData_OBJECT_STORES: ${HOME}/.ExternalData
-        CMAKE_DOWNLOAD_FILE: cmake-3.6.0-Linux-x86_64.sh
+        CMAKE_DOWNLOAD_FILE: cmake-3.7.2-Linux-x86_64.sh
         DISTCC_TCP_CORK: "0"
         DISTCC_DIR: ${HOME}/.distcc
         ITK_REPOSITORY: https://github.com/InsightSoftwareConsortium/ITK.git
@@ -22,7 +22,7 @@ machine:
         - mkdir -p "${DISTCC_DIR}" && printf -- "--randomize localhost/2 --localslots=1\n" > "${DISTCC_DIR}/hosts" && for ((i=1;i<CIRCLE_NODE_TOTAL;i++)); do printf "ubuntu@node$i/2\n" >> "${DISTCC_DIR}/hosts"; done
         - if [ $CIRCLE_NODE_INDEX -eq 0 ]; then mkdir -p .ssh/tmp && printf -- "Host *\nControlMaster auto\nControlPath ~/.ssh/tmp/master-%%r@%%h:%%p\n" >> .ssh/config; for ((i=1;i<CIRCLE_NODE_TOTAL;i++)); do ssh -fMN ubuntu@node$i; done; fi
         - mkdir -p "${ExternalData_OBJECT_STORES}"
-        - cd ${ExternalData_OBJECT_STORES} && if [[ ! -e ${CMAKE_DOWNLOAD_FILE} ]]; then curl -sSO https://cmake.org/files/v3.6/${CMAKE_DOWNLOAD_FILE}; fi
+        - cd ${ExternalData_OBJECT_STORES} && if [[ ! -e ${CMAKE_DOWNLOAD_FILE} ]]; then curl -sSO https://cmake.org/files/v3.7/${CMAKE_DOWNLOAD_FILE}; fi
         - echo "y\n" | sudo bash "${ExternalData_OBJECT_STORES}/${CMAKE_DOWNLOAD_FILE}" --prefix=/usr/local --exclude-subdir
 
 dependencies:
