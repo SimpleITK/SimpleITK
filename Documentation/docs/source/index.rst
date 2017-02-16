@@ -1,10 +1,8 @@
-.. SimpleITK documentation master file, created by
-   sphinx-quickstart on Wed Feb 15 18:01:43 2017.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+SimpleITK Sphinx Documentation
+==============================
 
-Welcome to SimpleITK's documentation!
-=====================================
+This is a prototype of consolidated SimpleITK documentation in Sphinx
+and is under development.
 
 .. toctree::
    :maxdepth: 2
