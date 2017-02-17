@@ -19,7 +19,9 @@
 #define sitkBasicFilters_h
 
 #include "sitkMacro.h"
+
 #include "sitkInterpolator.h"
+#include "sitkRandomSeed.h"
 
 // todo this should be moved to a more local place
 #include "sitkTransform.h"

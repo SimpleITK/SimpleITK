@@ -26,6 +26,7 @@
 #include "sitkMemberFunctionFactory.h"
 #include "sitkProcessObject.h"
 
+#include "sitkRandomSeed.h"
 #include "sitkInterpolator.h"
 #include "sitkTransform.h"
 
@@ -370,7 +371,7 @@ namespace simple
                                                                       double initialRadius = 1.01,
                                                                       double growthFactor = -1.0,
                                                                       double shrinkFactor = -1.0,
-                                                                      unsigned int seed = 0);
+                                                                      unsigned int seed = sitkWallClock);
 
 
 
@@ -435,8 +436,8 @@ namespace simple
      * \sa itk::ImageRegistrationMethodv4::SetMetricSamplingPercentage
      * @{
      */
-    SITK_RETURN_SELF_TYPE_HEADER SetMetricSamplingPercentage(double percentage, unsigned int seed = 0);
-    SITK_RETURN_SELF_TYPE_HEADER SetMetricSamplingPercentagePerLevel(const std::vector<double> &percentage, unsigned int seed = 0);
+    SITK_RETURN_SELF_TYPE_HEADER SetMetricSamplingPercentage(double percentage, unsigned int seed = sitkWallClock);
+    SITK_RETURN_SELF_TYPE_HEADER SetMetricSamplingPercentagePerLevel(const std::vector<double> &percentage, unsigned int seed = sitkWallClock);
     /** @} */
 
     enum MetricSamplingStrategyType {
