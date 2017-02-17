@@ -5,6 +5,9 @@
   "number_of_inputs" : 1,
   "pixel_types" : "BasicPixelIDTypeList",
   "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "include_files" : [
+    "sitkRandomSeed.h"
+  ],
   "members" : [
     {
       "name" : "StandardDeviation",
@@ -18,7 +21,7 @@
     {
       "name" : "Seed",
       "type" : "uint32_t",
-      "default" : "0u",
+      "default" : "sitkWallClock",
       "custom_itk_cast" : "if (m_Seed) filter->SetSeed(m_Seed);"
     }
   ],

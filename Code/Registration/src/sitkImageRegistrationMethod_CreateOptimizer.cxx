@@ -299,7 +299,7 @@ namespace simple
 
       typedef itk::Statistics::NormalVariateGenerator  GeneratorType;
       GeneratorType::Pointer generator = GeneratorType::New();
-      if ( this->m_OptimizerSeed == 0 )
+      if ( this->m_OptimizerSeed == sitkWallClock )
         {
         // use time() and clock() to generate a unlikely-to-repeat
         // seed.
