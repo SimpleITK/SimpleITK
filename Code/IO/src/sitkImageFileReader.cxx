@@ -27,7 +27,7 @@
 namespace itk {
   namespace simple {
 
-  Image ReadImage ( std::string filename, PixelIDValueEnum outputPixelType )
+  Image ReadImage ( const std::string &filename, PixelIDValueEnum outputPixelType )
     {
       ImageFileReader reader;
       return reader.SetFileName ( filename ).SetOutputPixelType(outputPixelType).Execute();
@@ -57,7 +57,7 @@ namespace itk {
       return out.str();
     }
 
-    ImageFileReader& ImageFileReader::SetFileName ( std::string fn ) {
+    ImageFileReader& ImageFileReader::SetFileName ( const std::string &fn ) {
       this->m_FileName = fn;
       return *this;
     }
