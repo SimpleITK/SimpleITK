@@ -1001,7 +1001,7 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_Sampling)
 
   // set wall clock seed and expect the same results with full sampling
   R.SetMetricSamplingStrategy(R.NONE);
-  R.SetMetricSamplingPercentage(.02,0u);
+  R.SetMetricSamplingPercentage(.02,sitk::sitkWallClock);
 
   outTx1 = R.Execute(fixedImage, movingImage);
   outTx2 = R.Execute(fixedImage, movingImage);
@@ -1011,7 +1011,7 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_Sampling)
 
   // Use wall clock random seed.
  R.SetMetricSamplingStrategy(R.RANDOM);
- R.SetMetricSamplingPercentage(.02,0u);
+ R.SetMetricSamplingPercentage(.02,sitk::sitkWallClock);
 
  R.Execute(fixedImage, movingImage);
  double firstValue = R.GetMetricValue();
