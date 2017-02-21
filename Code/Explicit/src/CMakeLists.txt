@@ -41,5 +41,8 @@ target_include_directories ( SimpleITKExplicit
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/Code/Common/include>
     $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/Code/Common/include>
     $<INSTALL_INTERFACE:include> )
+target_compile_definitions( SimpleITKExplicit
+  PUBLIC
+    SITK_USE_EXPLICITITK )
 
 sitk_install_exported_target( SimpleITKExplicit )
