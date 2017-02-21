@@ -15,7 +15,7 @@
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get whether or not the filter will use the spacing of the input image in its calculations"
+      "detaileddescriptionGet" : ""
     },
     {
       "name" : "UseImageDirection",
