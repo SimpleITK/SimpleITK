@@ -75,7 +75,7 @@ std::string ImageFileWriter::ToString() const
     return this->m_UseCompression;
   }
 
-ImageFileWriter& ImageFileWriter::SetFileName ( std::string fn )
+ImageFileWriter& ImageFileWriter::SetFileName ( const std::string &fn )
   {
   this->m_FileName = fn;
   return *this;

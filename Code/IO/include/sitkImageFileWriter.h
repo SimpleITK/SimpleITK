@@ -68,7 +68,7 @@ namespace itk {
       SITK_RETURN_SELF_TYPE_HEADER UseCompressionOff( void ) { return this->SetUseCompression(false); }
       /** @} */
 
-      SITK_RETURN_SELF_TYPE_HEADER SetFileName ( std::string fileName );
+      SITK_RETURN_SELF_TYPE_HEADER SetFileName ( const std::string &fileName );
       std::string GetFileName() const;
 
       SITK_RETURN_SELF_TYPE_HEADER Execute ( const Image& );
