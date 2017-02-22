@@ -196,14 +196,6 @@ typedef typelist::Append<
   >::Type AllPixelIDTypeList;
 
 
-#ifdef SITK_EXPRESS_INSTANTIATEDPIXELS
-
-
-// this is a quick and dirty list to only be used for development purposes
-typedef typelist::MakeTypeList< BasicPixelID<int16_t>, BasicPixelID<float>, BasicPixelID<double>, VectorPixelID<float> >::Type InstantiatedPixelIDTypeList;
-
-#else
-
 /** List of pixel ids which are instantiated for use in SimpleITK
  *
  *  this include image of itk::Image,itk::VectorImage, and
@@ -214,9 +206,6 @@ typedef typelist::MakeTypeList< BasicPixelID<int16_t>, BasicPixelID<float>, Basi
  * \sa LabelPixelID
  */
 typedef AllPixelIDTypeList InstantiatedPixelIDTypeList;
-
-#endif
-
 
 }
 }

@@ -58,6 +58,8 @@ include(sitkPreventInSourceBuilds)
 include(sitkPreventInBuildInstalls)
 include(VariableList)
 include(sitkExternalData)
+include( sitkSITKLegacyNaming )
+
 
 
 add_custom_target( SuperBuildSimpleITKSource )
@@ -114,15 +116,16 @@ endif()
 # Use GIT protocol
 #------------------------------------------------------------------------------
 find_package(Git)
-set(SITK_GIT_PROTOCOL_default "https")
+set(SimpleITK_GIT_PROTOCOL_default "https")
 if (GIT_VERSION_STRING VERSION_LESS "1.7.10")
   # minimum version for https support
-  set(SITK_GIT_PROTOCOL_default "git")
+  set(SimpleITK_GIT_PROTOCOL_default "git")
 endif()
-set(SITK_GIT_PROTOCOL  ${SITK_GIT_PROTOCOL_default} CACHE STRING "If behind a firewall turn set this to 'https' or 'http'." )
-mark_as_advanced(SITK_GIT_PROTOCOL)
-set_property(CACHE SITK_GIT_PROTOCOL PROPERTY STRINGS "https;http;git")
-set(git_protocol ${SITK_GIT_PROTOCOL})
+set(SimpleITK_GIT_PROTOCOL  ${SimpleITK_GIT_PROTOCOL_default} CACHE STRING "If behind a firewall turn set this to 'https' or 'http'." )
+mark_as_advanced(SimpleITK_GIT_PROTOCOL)
+set_property(CACHE SimpleITK_GIT_PROTOCOL PROPERTY STRINGS "https;http;git")
+set(git_protocol ${SimpleITK_GIT_PROTOCOL})
+sitk_legacy_naming(SimpleITK_GIT_PROTOCOL)
 
 
 #-----------------------------------------------------------------------------
@@ -145,8 +148,8 @@ option(BUILD_SHARED_LIBS "Build SimpleITK ITK with shared libraries. This does n
 # as this option does not robustly work across platforms it will be marked as advanced
 mark_as_advanced( FORCE BUILD_SHARED_LIBS )
 
-option( SITK_4D_IMAGES "Add Image and I/O support for four spatial dimensions." OFF )
-mark_as_advanced( SITK_4D_IMAGES )
+option( SimpleITK_4D_IMAGES "Add Image and I/O support for four spatial dimensions." OFF )
+mark_as_advanced( SimpleITK_4D_IMAGES )
 
 #-----------------------------------------------------------------------------
 # Setup build type
@@ -282,14 +285,14 @@ option ( USE_SYSTEM_LUA "Use a pre-compiled version of LUA 5.1 previously config
 mark_as_advanced(USE_SYSTEM_LUA)
 if ( USE_SYSTEM_LUA )
   find_package( LuaInterp REQUIRED 5.1 )
-  set( SITK_LUA_EXECUTABLE ${LUA_EXECUTABLE} CACHE PATH "Lua executable used for code generation." )
-  mark_as_advanced( SITK_LUA_EXECUTABLE )
+  set( SimpleITK_LUA_EXECUTABLE ${LUA_EXECUTABLE} CACHE PATH "Lua executable used for code generation." )
+  mark_as_advanced( SimpleITK_LUA_EXECUTABLE )
   unset( LUA_EXECUTABLE CACHE )
 else()
   include(External_Lua)
   list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES Lua)
-  set( SITK_LUA_EXECUTABLE ${SITK_LUA_EXECUTABLE} CACHE PATH "Lua executable used for code generation." )
-  mark_as_advanced( SITK_LUA_EXECUTABLE )
+  set( SimpleITK_LUA_EXECUTABLE ${SimpleITK_LUA_EXECUTABLE} CACHE PATH "Lua executable used for code generation." )
+  mark_as_advanced( SimpleITK_LUA_EXECUTABLE )
 endif()
 
 #------------------------------------------------------------------------------
@@ -329,7 +332,7 @@ endif()
 #------------------------------------------------------------------------------
 option( USE_SYSTEM_VIRTUALENV "Use a system version of Python's virtualenv. " OFF )
 mark_as_advanced(USE_SYSTEM_VIRTUALENV)
-if( NOT DEFINED SITK_PYTHON_USE_VIRTUALENV OR SITK_PYTHON_USE_VIRTUALENV )
+if( NOT DEFINED SimpleITK_PYTHON_USE_VIRTUALENV OR SimpleITK_PYTHON_USE_VIRTUALENV )
   if ( USE_SYSTEM_VIRTUALENV )
     find_package( PythonVirtualEnv REQUIRED)
   else()

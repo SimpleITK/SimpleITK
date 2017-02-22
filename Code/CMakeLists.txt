@@ -1,4 +1,4 @@
-if (SITK_EXPLICIT_INSTANTIATION)
+if (SimpleITK_EXPLICIT_INSTANTIATION)
   add_subdirectory(Explicit)
 endif()
 add_subdirectory(Common)

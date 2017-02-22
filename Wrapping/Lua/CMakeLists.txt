@@ -31,8 +31,9 @@ SWIG_add_source_to_module ( SimpleITKLua  swig_generated_source SimpleITK.i ${SW
 set_source_files_properties(${swig_generated_file_fullname} PROPERTIES COMPILE_FLAGS "-w" )
 
 # Create a standalone Lua executable that includes SimpleITK.
-option( SITK_LUA_BUILD_EXECUTABLE "Build a standalone SimpleITK-Lua executable" OFF)
-if ( SITK_LUA_BUILD_EXECUTABLE )
+option( SimpleITK_LUA_BUILD_EXECUTABLE "Build a standalone SimpleITK-Lua executable" OFF)
+sitk_legacy_naming(SimpleITK_LUA_BUILD_EXECUTABLE)
+if ( SimpleITK_LUA_BUILD_EXECUTABLE )
   add_executable ( SimpleITKLua SimpleITKLuaMain.cxx ${swig_generated_file_fullname} )
   target_link_libraries ( SimpleITKLua ${SimpleITK_LIBRARIES} ${LUA_LIBRARIES} ${LUA_ADDITIONAL_LIBRARIES} )
   target_include_directories( SimpleITKLua

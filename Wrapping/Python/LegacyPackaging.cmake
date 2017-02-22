@@ -42,15 +42,16 @@ configure_file(
   "${CMAKE_CURRENT_BINARY_DIR}/__init__.py"
   COPYONLY )
 
-option(SITK_PYTHON_USE_VIRTUALENV "Create a Python Virtual Environment for testing." ON)
-mark_as_advanced(SITK_PYTHON_USE_VIRTUALENV)
+option(SimpleITK_PYTHON_USE_VIRTUALENV "Create a Python Virtual Environment for testing." ON)
+mark_as_advanced(SimpleITK_PYTHON_USE_VIRTUALENV)
+sitk_legacy_naming(SimpleITK_PYTHON_USE_VIRTUALENV)
 
-if (SITK_PYTHON_USE_VIRTUALENV)
+if (SimpleITK_PYTHON_USE_VIRTUALENV)
 
   # Executable to setup a new Python virtual environment
   find_package( PythonVirtualEnv REQUIRED )
 
-  sitk_enforce_forbid_downloads( SITK_PYTHON_USE_VIRTUALENV )
+  sitk_enforce_forbid_downloads( SimpleITK_PYTHON_USE_VIRTUALENV )
   #
   # Setup Python Virtual Enviroment for testing and packaging
   #
@@ -65,7 +66,7 @@ if (SITK_PYTHON_USE_VIRTUALENV)
   else( )
     set( VIRTUAL_PYTHON_EXECUTABLE "${PythonVirtualenvHome}/bin/python" )
   endif()
-  set(TEST_PYTHON_EXECUTABLE "${VIRTUAL_PYTHON_EXECUTABLE}"
+  set(SimpleITK_PYTHON_TEST_EXECUTABLE "${VIRTUAL_PYTHON_EXECUTABLE}"
     CACHE INTERNAL "Python executable for testing." FORCE )
 
   # configure a scripts which creates the virtualenv and installs numpy

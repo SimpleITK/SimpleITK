@@ -16,7 +16,7 @@ add_library ( SimpleITKRegistration ${SimpleITKRegistration} )
 target_link_libraries ( SimpleITKRegistration
   PUBLIC SimpleITKCommon SimpleITKBasicFilters1
   PRIVATE  ${ITK_LIBRARIES} )
-if (SITK_EXPLICIT_INSTANTIATION)
+if (SimpleITK_EXPLICIT_INSTANTIATION)
   target_link_libraries ( SimpleITKRegistration PRIVATE SimpleITKExplicit )
 endif()
 

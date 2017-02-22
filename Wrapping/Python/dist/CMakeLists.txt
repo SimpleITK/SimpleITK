@@ -2,7 +2,7 @@
 # Packaging
 #
 if( SimpleITK_PYTHON_EGG OR SimpleITK_PYTHON_WHEEL )
-  if( NOT SITK_PYTHON_USE_VIRTUALENV )
+  if( NOT SimpleITK_PYTHON_USE_VIRTUALENV )
     message( STATUS "Not using SimpleITK's virtualenv for distribution!\n
 Using unknown versions of pip, setuptools and/or wheel packages/" )
   endif()
@@ -24,10 +24,10 @@ Using unknown versions of pip, setuptools and/or wheel packages/" )
     DEPENDS ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
     COMMENT "Creating Python binary distribution" )
 
-  if( SITK_PYTHON_USE_VIRTUALENV )
+  if( SimpleITK_PYTHON_USE_VIRTUALENV )
     add_dependencies( dist.Python PythonVirtualEnv)
   endif()
   add_dependencies( dist dist.Python )
 elseif()
-  message( STATUS "Not creating dist.Python target since SITK_FORBID_DOWNLOADS is enabled" )
+  message( STATUS "Not creating dist.Python target since SimpleITK_FORBID_DOWNLOADS is enabled" )
 endif()

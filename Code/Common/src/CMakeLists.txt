@@ -36,7 +36,7 @@ include(${ITK_USE_FILE})
 add_library ( SimpleITKCommon ${SimpleITKCommonSource} ${SimpleITKAncillarySource} )
 target_link_libraries ( SimpleITKCommon
   PRIVATE ${ITK_LIBRARIES} )
-if (SITK_EXPLICIT_INSTANTIATION)
+if (SimpleITK_EXPLICIT_INSTANTIATION)
   target_link_libraries ( SimpleITKCommon PRIVATE SimpleITKExplicit )
 endif()
 target_include_directories ( SimpleITKCommon

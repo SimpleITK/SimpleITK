@@ -67,7 +67,7 @@ find_package ( SWIG 2 REQUIRED )
 
 include (sitkUseSWIG)
 
-set(SIMPLEITK_WRAPPING_COMMON_DIR
+set(SimpleITK_WRAPPING_COMMON_DIR
   ${SimpleITK_SOURCE_DIR}/Wrapping/Common)
 
 if ( CMAKE_PROJECT_NAME STREQUAL "SimpleITK" )
@@ -88,7 +88,7 @@ endif()
 
 # make a manual list of dependencies for the Swig.i files
 list( APPEND SWIG_EXTRA_DEPS
-  "${SIMPLEITK_WRAPPING_COMMON_DIR}/SimpleITK_Common.i"
+  "${SimpleITK_WRAPPING_COMMON_DIR}/SimpleITK_Common.i"
   )
 
 # check if uint64_t is the same as unsigned long
@@ -101,8 +101,9 @@ if(${SITK_ULONG_SAME_AS_UINT64} )
   set ( CMAKE_SWIG_GLOBAL_FLAGS "-DSWIGWORDSIZE64" )
 endif()
 
-set ( CMAKE_SWIG_GLOBAL_FLAGS -I${SIMPLEITK_WRAPPING_COMMON_DIR} ${CMAKE_SWIG_GLOBAL_FLAGS} )
+set ( CMAKE_SWIG_GLOBAL_FLAGS -I${SimpleITK_WRAPPING_COMMON_DIR} ${CMAKE_SWIG_GLOBAL_FLAGS} )
 
 include(sitkTargetLinkLibrariesWithDynamicLookup)
 include(sitkStripOption)
 include(sitkForbidDownloadsOption)
+include(sitkSITKLegacyNaming)
