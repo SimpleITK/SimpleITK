@@ -114,11 +114,6 @@ if( MSVC )
   endif()
 endif()
 option( SITK_INT64_PIXELIDS "Instantiate 64-bit integer pixels, including unsigned, vector and label maps." ${SITK_INT64_PIXELIDS_DEFAULT} )
-# Setting this option will shorten compile times by reducing the
-# amount of pixel types and generated code.
-# NB: this option should _NOT_ be used for releases!
-option ( SITK_EXPRESS_INSTANTIATEDPIXELS "Instantiate very few pixel types ( for use for development only )" OFF )
-mark_as_advanced ( SITK_EXPRESS_INSTANTIATEDPIXELS )
 
 option( SITK_4D_IMAGES "Add Image and I/O support for four spatial dimensions." OFF )
 mark_as_advanced( SITK_4D_IMAGES )
