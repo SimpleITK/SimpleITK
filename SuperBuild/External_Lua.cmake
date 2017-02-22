@@ -42,4 +42,4 @@ ExternalProject_Add(Lua
 sitkSourceDownloadDependency(Lua)
 
 
-set(SITK_LUA_EXECUTABLE  "${lua_install_dir}/bin/lua")
+set(SimpleITK_LUA_EXECUTABLE  "${lua_install_dir}/bin/lua")

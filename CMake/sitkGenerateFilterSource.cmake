@@ -1,13 +1,13 @@
 
 # Find a Lua executable
 #
-if ( NOT SITK_LUA_EXECUTABLE )
+if ( NOT SimpleITK_LUA_EXECUTABLE )
   set ( SAVE_LUA_EXECUTABLE ${LUA_EXECUTABLE} )
   get_property( SAVE_LUA_EXECUTABLE_TYPE CACHE LUA_EXECUTABLE PROPERTY TYPE )
   get_property( SAVE_LUA_EXECUTABLE_DOCSTRING CACHE LUA_EXECUTABLE PROPERTY HELPSTRING )
 
   find_package( LuaInterp REQUIRED 5.1 )
-  set( SITK_LUA_EXECUTABLE ${LUA_EXECUTABLE} CACHE PATH "Lua executable used for code generation." )
+  set( SimpleITK_LUA_EXECUTABLE ${LUA_EXECUTABLE} CACHE PATH "Lua executable used for code generation." )
 
   if (DEFINED SAVE_LUA_EXECUTABLE)
     set( LUA_EXECUTABLE ${SAVE_LUA_EXECUTABLE}
@@ -24,11 +24,11 @@ endif()
 # Get the Lua version
 #
 execute_process(
-  COMMAND ${SITK_LUA_EXECUTABLE} -v
+  COMMAND ${SimpleITK_LUA_EXECUTABLE} -v
   OUTPUT_VARIABLE
-    SITK_LUA_EXECUTABLE_VERSION_STRING
+    SimpleITK_LUA_EXECUTABLE_VERSION_STRING
   ERROR_VARIABLE
-    SITK_LUA_EXECUTABLE_VERSION_STRING
+    SimpleITK_LUA_EXECUTABLE_VERSION_STRING
   RESULT_VARIABLE
     SITK_LUA_VERSION_RESULT_VARIABLE
   OUTPUT_STRIP_TRAILING_WHITESPACE
@@ -39,16 +39,16 @@ execute_process(
 #
 if( NOT SITK_LUA_VERSION_RESULT_VARIABLE )
   string( REGEX MATCH "([0-9]*)([.])([0-9]*)([.]*)([0-9]*)"
-    SITK_LUA_EXECUTABLE_VERSION
-    ${SITK_LUA_EXECUTABLE_VERSION_STRING} )
+    SimpleITK_LUA_EXECUTABLE_VERSION
+    ${SimpleITK_LUA_EXECUTABLE_VERSION_STRING} )
 endif()
 
 if( SITK_LUA_VERSION_RESULT_VARIABLE
       OR
-    NOT ${SITK_LUA_EXECUTABLE_VERSION} VERSION_GREATER "5.1"
+    NOT ${SimpleITK_LUA_EXECUTABLE_VERSION} VERSION_GREATER "5.1"
       OR
-    NOT ${SITK_LUA_EXECUTABLE_VERSION} VERSION_LESS "5.2" )
-  message(SEND_ERROR "Lua version 5.1 is required for SITK_LUA_EXECUTABLE_VERSION.")
+    NOT ${SimpleITK_LUA_EXECUTABLE_VERSION} VERSION_LESS "5.2" )
+  message(SEND_ERROR "Lua version 5.1 is required for SimpleITK_LUA_EXECUTABLE_VERSION.")
 endif()
 
 # Sets "out_var" variable name to the value in the json path specified
@@ -57,7 +57,7 @@ endif()
 #
 function( get_json_path out_var json_file path )
 
-  execute_process(COMMAND ${SITK_LUA_EXECUTABLE}
+  execute_process(COMMAND ${SimpleITK_LUA_EXECUTABLE}
      ${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/JSONQuery.lua
      ${json_file}
      ${path}
@@ -163,14 +163,14 @@ macro( expand_template FILENAME input_dir output_dir library_name )
     OUTPUT "${output_h}"
     ${JSON_VALIDATE_COMMAND}
     COMMAND ${CMAKE_COMMAND} -E remove -f ${output_h}
-    COMMAND ${SITK_LUA_EXECUTABLE} ${expand_template_script} code ${input_json_file} ${input_dir}/templates/sitk ${template_include_dir} Template.h.in ${output_h}
+    COMMAND ${SimpleITK_LUA_EXECUTABLE} ${expand_template_script} code ${input_json_file} ${input_dir}/templates/sitk ${template_include_dir} Template.h.in ${output_h}
     DEPENDS ${input_json_file} ${template_deps} ${template_file_h}
     )
   # impl
   add_custom_command (
     OUTPUT "${output_cxx}"
     COMMAND ${CMAKE_COMMAND} -E remove -f ${output_cxx}
-    COMMAND ${SITK_LUA_EXECUTABLE} ${expand_template_script} code ${input_json_file} ${input_dir}/templates/sitk ${template_include_dir} Template.cxx.in ${output_cxx}
+    COMMAND ${SimpleITK_LUA_EXECUTABLE} ${expand_template_script} code ${input_json_file} ${input_dir}/templates/sitk ${template_include_dir} Template.cxx.in ${output_cxx}
     DEPENDS ${input_json_file} ${template_deps} ${template_file_cxx}
     )
 
