@@ -57,6 +57,8 @@ message(STATUS "Building SimpleITK version \"${SimpleITK_VERSION}\"")
 include(sitkCheckRequiredFlags)
 include(sitkCompilerWarningsSettings)
 
+include( sitkForbidDownloadsOption )
+include( sitkSITKLegacyNaming )
 
 find_package(ITK REQUIRED )
 #we require certain packages be turned on in ITK
