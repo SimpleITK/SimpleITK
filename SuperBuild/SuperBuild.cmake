@@ -116,16 +116,16 @@ endif()
 # Use GIT protocol
 #------------------------------------------------------------------------------
 find_package(Git)
-set(SITK_GIT_PROTOCOL_default "https")
+set(SimpleITK_GIT_PROTOCOL_default "https")
 if (GIT_VERSION_STRING VERSION_LESS "1.7.10")
   # minimum version for https support
-  set(SITK_GIT_PROTOCOL_default "git")
+  set(SimpleITK_GIT_PROTOCOL_default "git")
 endif()
-set(SITK_GIT_PROTOCOL  ${SITK_GIT_PROTOCOL_default} CACHE STRING "If behind a firewall turn set this to 'https' or 'http'." )
-mark_as_advanced(SITK_GIT_PROTOCOL)
-set_property(CACHE SITK_GIT_PROTOCOL PROPERTY STRINGS "https;http;git")
-set(git_protocol ${SITK_GIT_PROTOCOL})
-sitk_legacy_naming(SITK_GIT_PROTOCOL)
+set(SimpleITK_GIT_PROTOCOL  ${SimpleITK_GIT_PROTOCOL_default} CACHE STRING "If behind a firewall turn set this to 'https' or 'http'." )
+mark_as_advanced(SimpleITK_GIT_PROTOCOL)
+set_property(CACHE SimpleITK_GIT_PROTOCOL PROPERTY STRINGS "https;http;git")
+set(git_protocol ${SimpleITK_GIT_PROTOCOL})
+sitk_legacy_naming(SimpleITK_GIT_PROTOCOL)
 
 
 #-----------------------------------------------------------------------------
