@@ -188,7 +188,7 @@ foreach ( _start RANGE 0 ${_end_range} ${_stride} )
     # These other filters are split into files. They all use the
     # following for export their interface. There must not be and
     # inter-filter include.
-    target_compile_definitions(
+    target_compile_definitions( SimpleITKBasicFilters${_library_i}
       PRIVATE
         SimpleITKBasicFilters_EXPORTS )
   endif()
