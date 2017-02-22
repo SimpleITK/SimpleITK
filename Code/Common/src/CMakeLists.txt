@@ -49,6 +49,12 @@ if(NOT SITK_HAS_STDINT_H AND MSVC)
     PUBLIC
       $<BUILD_INTERFACE:${SimpleITK_SOURCE_DIR}/Utilities/C99> )
 endif()
+target_compile_options( SimpleITKCommon
+  PUBLIC
+    ${SimpleITK_PUBLIC_COMPILE_OPTIONS}
+  PRIVATE
+    ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
+
 
 
 sitk_install_exported_target( SimpleITKCommon )

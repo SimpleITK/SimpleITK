@@ -17,9 +17,19 @@ target_include_directories( SimpleITKUnitTestBase
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
 )
+target_compile_options( SimpleITKUnitTestBase
+  PUBLIC
+    ${SimpleITK_PUBLIC_COMPILE_OPTIONS}
+  PRIVATE
+    ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
+
 
 add_executable( sitkCompareDriver sitkCompareDriver.cxx )
 target_link_libraries( sitkCompareDriver SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} ${ITK_LIBRARIES})
+target_compile_options( sitkCompareDriver
+  PRIVATE
+    ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
+
 sitk_install_exported_target(sitkCompareDriver)
 
 # Find tests generated in the binary directory
@@ -67,6 +77,10 @@ set( PythonVirtualenvHome  ${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVi
 
 add_executable(SimpleITKUnitTestDriver0 SimpleITKUnitTestDriver.cxx ${SimpleITKUnitTestSource})
 target_link_libraries ( SimpleITKUnitTestDriver0 GTest::GTest SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} ${ITK_LIBRARIES} )
+target_compile_options( SimpleITKUnitTestDriver0
+  PRIVATE
+    ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
+
 
 #
 # Glob for necessary template files up front, before the foreach loop over
@@ -96,6 +110,10 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
   if ( NOT _i LESS _stride )
     add_executable(SimpleITKUnitTestDriver${_exec_i} SimpleITKUnitTestDriver.cxx ${GENERATED_TEST_SOURCE})
     target_link_libraries ( SimpleITKUnitTestDriver${_exec_i} GTest::GTest SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} )
+    target_compile_options( SimpleITKUnitTestDriver${_exec_i}
+      PRIVATE
+        ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
+
     math(EXPR _exec_i "${_exec_i}+1")
     set(GENERATED_TEST_SOURCE "")
     set ( _i 0 )
@@ -230,6 +248,9 @@ message( STATUS "Generating tests...Done")
 
 add_executable(SimpleITKUnitTestDriver${_exec_i} SimpleITKUnitTestDriver.cxx ${GENERATED_TEST_SOURCE})
 target_link_libraries ( SimpleITKUnitTestDriver${_exec_i} GTest::GTest SimpleITKUnitTestBase ${SimpleITK_LIBRARIES} )
+target_compile_options( SimpleITKUnitTestDriver${_exec_i}
+  PRIVATE
+    ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
 
 # Set some variables
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/SimpleITKTestHarnessPaths.h.in
@@ -250,10 +271,18 @@ endif()
 
 add_executable(sitkShowTest sitkShowTest.cxx )
 target_link_libraries ( sitkShowTest  GTest::GTest ${SimpleITK_LIBRARIES} SimpleITKUnitTestBase )
+target_compile_options( sitkShowTest
+  PRIVATE
+    ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
+
 
 add_executable( sitkSystemInformationTest sitkSystemInformationTest.cxx )
 target_link_libraries( sitkSystemInformationTest ${SimpleITK_LIBRARIES} ${ITK_LIBRARIES})
 add_test( NAME sitkSystemInformaionTest COMMAND sitkSystemInformationTest ${CMAKE_BINARY_DIR} )
+target_compile_options( sitkSystemInformationTest
+  PRIVATE
+    ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
+
 
 
 gtest_add_tests(SimpleITKUnitTestDriver0 "" ${SimpleITKUnitTestSource})

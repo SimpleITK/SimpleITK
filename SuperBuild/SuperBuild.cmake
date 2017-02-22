@@ -166,7 +166,6 @@ endif()
 # augment compiler flags
 #-------------------------------------------------------------------------
 include(sitkCheckRequiredFlags)
-set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SimpleITK_REQUIRED_CXX_FLAGS}" )
 
 #------------------------------------------------------------------------------
 # BuildName used for dashboard reporting
@@ -376,7 +375,7 @@ foreach (_varName ${_varNames})
           AND
         NOT _varName MATCHES "^SimpleITK_VARS"
           AND
-        NOT _varName MATCHES "^SimpleITK_REQUIRED_"
+        NOT _varName MATCHES "^SimpleITK_.*_COMPILE_OPTIONS"
           AND
         NOT _varName MATCHES "^SITK_UNDEFINED_SYMBOLS_ALLOWED")
       message( STATUS "Passing variable \"${_varName}=${${_varName}}\" to SimpleITK external project.")
