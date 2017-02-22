@@ -66,7 +66,7 @@ if (SimpleITK_PYTHON_USE_VIRTUALENV)
   else( )
     set( VIRTUAL_PYTHON_EXECUTABLE "${PythonVirtualenvHome}/bin/python" )
   endif()
-  set(TEST_PYTHON_EXECUTABLE "${VIRTUAL_PYTHON_EXECUTABLE}"
+  set(SimpleITK_PYTHON_TEST_EXECUTABLE "${VIRTUAL_PYTHON_EXECUTABLE}"
     CACHE INTERNAL "Python executable for testing." FORCE )
 
   # configure a scripts which creates the virtualenv and installs numpy

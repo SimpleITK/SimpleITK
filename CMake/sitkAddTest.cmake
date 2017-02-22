@@ -43,7 +43,7 @@ function(sitk_add_python_test name)
     return()
   endif()
 
-  set(command "${TEST_PYTHON_EXECUTABLE}")
+  set(command "${SimpleITK_PYTHON_TEST_EXECUTABLE}")
 
   # add extra command which may be needed on some systems
   if(CMAKE_OSX_ARCHITECTURES)
