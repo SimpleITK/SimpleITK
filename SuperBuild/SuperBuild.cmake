@@ -333,7 +333,7 @@ endif()
 #------------------------------------------------------------------------------
 option( USE_SYSTEM_VIRTUALENV "Use a system version of Python's virtualenv. " OFF )
 mark_as_advanced(USE_SYSTEM_VIRTUALENV)
-if( NOT DEFINED SITK_PYTHON_USE_VIRTUALENV OR SITK_PYTHON_USE_VIRTUALENV )
+if( NOT DEFINED SimpleITK_PYTHON_USE_VIRTUALENV OR SimpleITK_PYTHON_USE_VIRTUALENV )
   if ( USE_SYSTEM_VIRTUALENV )
     find_package( PythonVirtualEnv REQUIRED)
   else()

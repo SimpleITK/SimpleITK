@@ -42,15 +42,16 @@ configure_file(
   "${CMAKE_CURRENT_BINARY_DIR}/__init__.py"
   COPYONLY )
 
-option(SITK_PYTHON_USE_VIRTUALENV "Create a Python Virtual Environment for testing." ON)
-mark_as_advanced(SITK_PYTHON_USE_VIRTUALENV)
+option(SimpleITK_PYTHON_USE_VIRTUALENV "Create a Python Virtual Environment for testing." ON)
+mark_as_advanced(SimpleITK_PYTHON_USE_VIRTUALENV)
+sitk_legacy_naming(SimpleITK_PYTHON_USE_VIRTUALENV)
 
-if (SITK_PYTHON_USE_VIRTUALENV)
+if (SimpleITK_PYTHON_USE_VIRTUALENV)
 
   # Executable to setup a new Python virtual environment
   find_package( PythonVirtualEnv REQUIRED )
 
-  sitk_enforce_forbid_downloads( SITK_PYTHON_USE_VIRTUALENV )
+  sitk_enforce_forbid_downloads( SimpleITK_PYTHON_USE_VIRTUALENV )
   #
   # Setup Python Virtual Enviroment for testing and packaging
   #

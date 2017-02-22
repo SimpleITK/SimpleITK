@@ -113,3 +113,4 @@ set ( CMAKE_SWIG_GLOBAL_FLAGS -I${SIMPLEITK_WRAPPING_COMMON_DIR} ${CMAKE_SWIG_GL
 include(sitkTargetLinkLibrariesWithDynamicLookup)
 include(sitkStripOption)
 include(sitkForbidDownloadsOption)
+include(sitkSITKLegacyNaming)
