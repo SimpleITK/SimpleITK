@@ -4,7 +4,7 @@ if(POLICY CMP0012)
 endif()
 
 set(VIRTUALENV_ARGS --clear --no-pip)
-if ( "@SITK_FORBID_DOWNLOADS@" )
+if ( "@SimpleITK_FORBID_DOWNLOADS@" )
   set(VIRTUALENV_ARGS ${VIRTUALENV_ARGS} --never-download)
 endif()
 if ( NOT "@SimpleITK_PYTHON_WHEEL@" )

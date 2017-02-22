@@ -33,7 +33,7 @@ set(ExternalData_URL_TEMPLATES "" CACHE STRING
   "Additional URL templates for the ExternalData CMake script to look for testing data. E.g.
 file:///var/bigharddrive/%(algo)/%(hash)")
 mark_as_advanced(ExternalData_URL_TEMPLATES)
-if(NOT SITK_FORBID_DOWNLOADS)
+if(NOT SimpleITK_FORBID_DOWNLOADS)
   list(APPEND ExternalData_URL_TEMPLATES
     # Data published by MIDAS
     "https://placid.nlm.nih.gov/api/rest?method=midas.bitstream.download&checksum=%(hash)&algorithm=%(algo)"
