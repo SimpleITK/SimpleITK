@@ -58,6 +58,8 @@ include(sitkPreventInSourceBuilds)
 include(sitkPreventInBuildInstalls)
 include(VariableList)
 include(sitkExternalData)
+include( sitkSITKLegacyNaming )
+
 
 
 add_custom_target( SuperBuildSimpleITKSource )
@@ -123,6 +125,7 @@ set(SITK_GIT_PROTOCOL  ${SITK_GIT_PROTOCOL_default} CACHE STRING "If behind a fi
 mark_as_advanced(SITK_GIT_PROTOCOL)
 set_property(CACHE SITK_GIT_PROTOCOL PROPERTY STRINGS "https;http;git")
 set(git_protocol ${SITK_GIT_PROTOCOL})
+sitk_legacy_naming(SITK_GIT_PROTOCOL)
 
 
 #-----------------------------------------------------------------------------
@@ -145,8 +148,8 @@ option(BUILD_SHARED_LIBS "Build SimpleITK ITK with shared libraries. This does n
 # as this option does not robustly work across platforms it will be marked as advanced
 mark_as_advanced( FORCE BUILD_SHARED_LIBS )
 
-option( SITK_4D_IMAGES "Add Image and I/O support for four spatial dimensions." OFF )
-mark_as_advanced( SITK_4D_IMAGES )
+option( SimpleITK_4D_IMAGES "Add Image and I/O support for four spatial dimensions." OFF )
+mark_as_advanced( SimpleITK_4D_IMAGES )
 
 #-----------------------------------------------------------------------------
 # Setup build type

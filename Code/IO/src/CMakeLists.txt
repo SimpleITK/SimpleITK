@@ -24,7 +24,7 @@ add_library ( SimpleITKIO ${SimpleITKIOSource} )
 target_link_libraries ( SimpleITKIO
   PUBLIC  SimpleITKCommon
   PRIVATE ${ITK_LIBRARIES} )
-if (SITK_EXPLICIT_INSTANTIATION)
+if (SimpleITK_EXPLICIT_INSTANTIATION)
   target_link_libraries ( SimpleITKIO PRIVATE SimpleITKExplicit )
 endif()
 target_include_directories ( SimpleITKIO

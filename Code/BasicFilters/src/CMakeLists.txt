@@ -58,7 +58,7 @@ add_library ( SimpleITKBasicFilters0 ${SimpleITKBasicFilters0Source} )
 target_link_libraries ( SimpleITKBasicFilters0
   PUBLIC SimpleITKCommon
   PRIVATE ${ITK_LIBRARIES} )
-if (SITK_EXPLICIT_INSTANTIATION)
+if (SimpleITK_EXPLICIT_INSTANTIATION)
   target_link_libraries ( SimpleITKBasicFilters0 PRIVATE SimpleITKExplicit )
 endif()
 target_include_directories( SimpleITKBasicFilters0
@@ -100,7 +100,7 @@ add_library ( SimpleITKBasicFilters1 ${SimpleITKBasicFilters1Source} )
 target_link_libraries ( SimpleITKBasicFilters1
   PUBLIC SimpleITKCommon SimpleITKBasicFilters0
   PRIVATE ${ITK_LIBRARIES} )
-if (SITK_EXPLICIT_INSTANTIATION)
+if (SimpleITK_EXPLICIT_INSTANTIATION)
   target_link_libraries ( SimpleITKBasicFilters1 PRIVATE SimpleITKExplicit )
 endif()
 target_include_directories( SimpleITKBasicFilters1
@@ -165,7 +165,7 @@ foreach ( _start RANGE 0 ${_end_range} ${_stride} )
   target_link_libraries ( SimpleITKBasicFilters${_library_i}
     PUBLIC SimpleITKCommon SimpleITKBasicFilters0
     PRIVATE ${ITK_LIBRARIES} )
-  if (SITK_EXPLICIT_INSTANTIATION)
+  if (SimpleITK_EXPLICIT_INSTANTIATION)
     target_link_libraries ( SimpleITKBasicFilters${_library_i} PRIVATE SimpleITKExplicit )
   endif()
   if(_last)

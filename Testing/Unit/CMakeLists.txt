@@ -42,7 +42,7 @@ set ( SimpleITKUnitTestSource
   itkSliceImageFilterTest.cxx
   )
 
-if ( SITK_4D_IMAGES )
+if ( SimpleITK_4D_IMAGES )
   list(APPEND SimpleITKUnitTestSource sitkImage4DTests.cxx )
 endif()
 

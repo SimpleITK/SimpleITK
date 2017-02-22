@@ -49,8 +49,6 @@
 
 #cmakedefine SITK_EXPLICIT_INSTANTIATION
 
-#cmakedefine SITK_EXPRESS_INSTANTIATEDPIXELS
-
 #if defined(__clang__)
 #define CLANG_TEMPLATE template
 #else
