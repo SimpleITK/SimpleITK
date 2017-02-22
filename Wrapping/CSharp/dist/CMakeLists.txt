@@ -10,23 +10,23 @@ if( Java_JAR_EXECUTABLE )
     "${CSHARP_BINARY_DIRECTORY}/SimpleITKCSharpManaged.dll"
     )
 
-  if(NOT DEFINED SIMPLEITK_CSHARP_ARCH)
+  if(NOT DEFINED SimpleITK_CSHARP_ARCH)
     if(MSVC)
       if (CMAKE_CL_64)
-        set(SIMPLEITK_CSHARP_ARCH "win64")
+        set(SimpleITK_CSHARP_ARCH "win64")
       else()
-        set(SIMPLEITK_CSHARP_ARCH "win32")
+        set(SimpleITK_CSHARP_ARCH "win32")
       endif()
     else()
-      set(SIMPLEITK_CSHARP_ARCH "unknown")
+      set(SimpleITK_CSHARP_ARCH "unknown")
     endif()
 
     if(CSHARP_PLATFORM)
-      set(SIMPLEITK_CSHARP_ARCH "${SIMPLEITK_CSHARP_ARCH}-${CSHARP_PLATFORM}")
+      set(SimpleITK_CSHARP_ARCH "${SimpleITK_CSHARP_ARCH}-${CSHARP_PLATFORM}")
     endif()
   endif()
 
-  set( CSHARP_PACKAGE_STAGE_DIR "SimpleITK-${SimpleITK_VERSION}-CSharp-${SIMPLEITK_CSHARP_ARCH}")
+  set( CSHARP_PACKAGE_STAGE_DIR "SimpleITK-${SimpleITK_VERSION}-CSharp-${SimpleITK_CSHARP_ARCH}")
 
   add_custom_target( dist.CSharp
     COMMENT "Creating CSharp package ${CSHARP_PACKAGE_STAGE_DIR}.zip"
