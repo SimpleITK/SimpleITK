@@ -67,7 +67,11 @@ target_include_directories( SimpleITKBasicFilters0
     $<INSTALL_INTERFACE:include>
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR} )
-
+target_compile_options( SimpleITKBasicFilters0
+  PUBLIC
+    ${SimpleITK_PUBLIC_COMPILE_OPTIONS}
+  PRIVATE
+    ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
 sitk_install_exported_target( SimpleITKBasicFilters0 )
 
 # append this new library to the globally cached list
@@ -110,6 +114,11 @@ target_include_directories( SimpleITKBasicFilters1
     $<INSTALL_INTERFACE:include>
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR} )
+target_compile_options( SimpleITKBasicFilters1
+  PUBLIC
+    ${SimpleITK_PUBLIC_COMPILE_OPTIONS}
+  PRIVATE
+    ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
 
 add_dependencies ( SimpleITKBasicFilters1 BasicFiltersSourceCode )
 sitk_install_exported_target( SimpleITKBasicFilters1 )
@@ -183,6 +192,11 @@ foreach ( _start RANGE 0 ${_end_range} ${_stride} )
       PRIVATE
         SimpleITKBasicFilters_EXPORTS )
   endif()
+  target_compile_options( SimpleITKBasicFilters${_library_i}
+    PUBLIC
+      ${SimpleITK_PUBLIC_COMPILE_OPTIONS}
+    PRIVATE
+      ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
 
   add_dependencies ( SimpleITKBasicFilters${_library_i} BasicFiltersSourceCode )
 
