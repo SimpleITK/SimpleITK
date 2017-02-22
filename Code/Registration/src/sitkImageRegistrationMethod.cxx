@@ -51,7 +51,7 @@ struct CurrentLevelCustomCast
   template<typename TRegistrationType>
   static unsigned int CustomCast(const TRegistrationType *reg)
     {
-      uint64_t ret = reg->GetCurrentLevel();
+      itk::SizeValueType ret = reg->GetCurrentLevel();
       if (ret > std::numeric_limits<unsigned int>::max())
         {
         return 0;
