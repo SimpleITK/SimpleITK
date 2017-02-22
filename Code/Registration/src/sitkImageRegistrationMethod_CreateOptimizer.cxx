@@ -56,7 +56,15 @@ struct PositionOptimizerCustomCast
     }
 };
 
+struct CurrentIterationCustomCast
+{
+  static unsigned int CustomCast(const itk::ObjectToObjectOptimizerBaseTemplate<double> *opt)
+    {
+      return static_cast<unsigned int>(std::min<itk::SizeValueType>(opt->GetCurrentIteration(), std::numeric_limits<unsigned int>::max()));
+    }
+};
 }
+
 
 namespace itk
 {
@@ -314,7 +322,7 @@ namespace simple
       optimizer->SetNormalVariateGenerator( generator );
 
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetValue,optimizer.GetPointer());
-      this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer.GetPointer());
+      this->m_pfGetOptimizerIteration = nsstd::bind(&CurrentIterationCustomCast::CustomCast,optimizer.GetPointer());
       this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer.GetPointer());
       this->m_pfGetOptimizerConvergenceValue = nsstd::bind(&_OptimizerType::GetFrobeniusNorm,optimizer.GetPointer());
       this->m_pfGetOptimizerScales = nsstd::bind(&PositionOptimizerCustomCast::Helper<_OptimizerType::ScalesType>, nsstd::bind(&_OptimizerType::GetScales, optimizer.GetPointer()));
