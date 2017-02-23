@@ -155,6 +155,7 @@ namespace std
 %include "sitkInterpolator.h"
 %include "sitkKernel.h"
 %include "sitkEvent.h"
+%include "sitkRandomSeed.h"
 
 // Transforms
 %include "sitkTransform.h"

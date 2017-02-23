@@ -18,7 +18,7 @@
     {
       "name" : "Seed",
       "type" : "uint32_t",
-      "default" : "0u",
+      "default" : "itk::simple::sitkWallClock",
       "custom_itk_cast" : "if (m_Seed) filter->SetSeed(m_Seed);"
     }
   ],
