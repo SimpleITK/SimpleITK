@@ -67,7 +67,7 @@ endforeach()
 # Check if we need to enable C++11 with a compiler flag
 #
 
-if(_HAS_FLAG)
+if(NOT _HAS_FLAG)
 
   check_cxx_compiler_flag( "-std=c++11" CXX_HAS_stdcxx11)
   if (CXX_HAS_stdcxx11)
