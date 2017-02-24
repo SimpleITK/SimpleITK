@@ -1,4 +1,6 @@
 
+include(sitkSITKLegacyNaming)
+
 #-----------------------------------------------------------------------------
 # Forbid downloading resources from the network during a build. This helps
 # when building on systems without network connectivity to determine which
