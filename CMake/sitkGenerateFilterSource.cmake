@@ -14,7 +14,7 @@ if ( NOT SimpleITK_LUA_EXECUTABLE )
       CACHE
        ${SAVE_LUA_EXECUTABLE_TYPE}
        ${SAVE_LUA_EXECUTABLE_DOCSTRING}
-       FORCED
+       FORCE
        )
   else()
     unset( LUA_EXECUTABLE CACHE )
