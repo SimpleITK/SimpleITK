@@ -114,6 +114,11 @@ target_include_directories( SimpleITKBasicFilters1
     $<INSTALL_INTERFACE:include>
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR} )
+if(BUILD_SHARED_LIBS)
+    target_compile_definitions( SimpleITKBasicFilters1
+      PRIVATE
+        SimpleITKBasicFilters_EXPORTS )
+  endif()
 target_compile_options( SimpleITKBasicFilters1
   PUBLIC
     ${SimpleITK_PUBLIC_COMPILE_OPTIONS}
