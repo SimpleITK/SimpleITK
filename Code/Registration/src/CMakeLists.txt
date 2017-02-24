@@ -14,7 +14,7 @@ include(${ITK_USE_FILE})
 add_library ( SimpleITKRegistration ${SimpleITKRegistration} )
 # The BasicFiltersLibrary is needed of the Cast filter
 target_link_libraries ( SimpleITKRegistration
-  PUBLIC SimpleITKCommon SimpleITKBasicFilters1
+  PUBLIC SimpleITKCommon SimpleITKBasicFilters_ITKCommon
   PRIVATE  ${ITK_LIBRARIES} )
 if (SimpleITK_EXPLICIT_INSTANTIATION)
   target_link_libraries ( SimpleITKRegistration PRIVATE SimpleITKExplicit )
