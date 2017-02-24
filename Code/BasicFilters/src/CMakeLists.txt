@@ -159,10 +159,8 @@ foreach( itk_module ${module_vars} )
   # if( ${itk_module} IN_LIST ITK_MODULES_ENABLED)
   list (FIND ITK_MODULES_ENABLED ${itk_module} _index)
   if (${_index} GREATER -1)
-    add_filter_library( SimpleITKBasicFilters_${itk_module} SimpleITKBasicFiltersGeneratedSource_${itk_module} )
-
-    target_link_libraries ( SimpleITKBasicFilters_${itk_module}
-      PRIVATE ${${itk_module}_LIBRARIES} )
+    add_filter_library( SimpleITK_${itk_module} SimpleITKBasicFiltersGeneratedSource_${itk_module} )
+    target_link_libraries ( SimpleITK_${itk_module} PRIVATE ${${itk_module}_LIBRARIES} )
 
     list( REMOVE_ITEM SimpleITKBasicFiltersGeneratedSource ${SimpleITKBasicFiltersGeneratedSource_${itk_module}})
 
