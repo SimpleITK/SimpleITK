@@ -64,7 +64,7 @@ configure_file(
     @ONLY )
 
 # download sample images, if allowed
-if(NOT SITK_FORBID_DOWNLOADS)
+if(NOT SimpleITK_FORBID_DOWNLOADS)
   include(sitkExternalData)
 
   file( GLOB_RECURSE content_links RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.md5" )

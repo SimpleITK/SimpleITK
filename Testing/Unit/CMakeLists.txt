@@ -52,7 +52,7 @@ set ( SimpleITKUnitTestSource
   itkSliceImageFilterTest.cxx
   )
 
-if ( SITK_4D_IMAGES )
+if ( SimpleITK_4D_IMAGES )
   list(APPEND SimpleITKUnitTestSource sitkImage4DTests.cxx )
 endif()
 
@@ -140,7 +140,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
   if (template_name)
     set(OUTPUT_TEST_FILENAME "${SimpleITK_BINARY_DIR}/Testing/Unit/CTest/${FILTERNAME}.cmake")
     file(REMOVE "${OUTPUT_TEST_FILENAME}")
-    set(cmd ${SITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/ ${template_include_dir} CTestTemplate.cmake.in "${OUTPUT_TEST_FILENAME}")
+    set(cmd ${SimpleITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/ ${template_include_dir} CTestTemplate.cmake.in "${OUTPUT_TEST_FILENAME}")
     execute_process(
       COMMAND ${cmd}
       RESULT_VARIABLE failed
@@ -156,7 +156,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
     add_custom_command (
       OUTPUT  ${OUTPUT_TEST_FILENAME}
       COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
-      COMMAND ${SITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitk ${template_include_dir} TestTemplate.cxx.in "${OUTPUT_TEST_FILENAME}"
+      COMMAND ${SimpleITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/sitk ${template_include_dir} TestTemplate.cxx.in "${OUTPUT_TEST_FILENAME}"
       DEPENDS ${filter_json_file} ${CXX_TEMPLATE_FILES}
       )
     add_test( NAME BasicFilters.${FILTERNAME} COMMAND SimpleITKUnitTestDriver${_exec_i} --gtest_filter=BasicFilters.${FILTERNAME}:BasicFilters.${FILTERNAME}_* )
@@ -167,7 +167,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
       add_custom_command (
         OUTPUT "${OUTPUT_TEST_FILENAME}"
         COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
-        COMMAND ${SITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Lua ${template_include_dir} TestTemplate.lua.in "${OUTPUT_TEST_FILENAME}"
+        COMMAND ${SimpleITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Lua ${template_include_dir} TestTemplate.lua.in "${OUTPUT_TEST_FILENAME}"
         DEPENDS ${filter_json_file} ${LUA_TEMPLATE_FILES}
         )
       set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
@@ -178,7 +178,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
       add_custom_command (
         OUTPUT  "${OUTPUT_TEST_FILENAME}"
         COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
-        COMMAND ${SITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Python ${template_include_dir} TestTemplate.py.in "${OUTPUT_TEST_FILENAME}"
+        COMMAND ${SimpleITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Python ${template_include_dir} TestTemplate.py.in "${OUTPUT_TEST_FILENAME}"
         DEPENDS ${filter_json_file} ${PYTHON_TEMPLATE_FILES}
         )
       set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
@@ -189,7 +189,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
       add_custom_command (
         OUTPUT  "${OUTPUT_TEST_FILENAME}"
         COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
-        COMMAND ${SITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Tcl ${template_include_dir} TestTemplate.tcl.in "${OUTPUT_TEST_FILENAME}"
+        COMMAND ${SimpleITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Tcl ${template_include_dir} TestTemplate.tcl.in "${OUTPUT_TEST_FILENAME}"
         DEPENDS ${filter_json_file} ${TCL_TEMPLATE_FILES}
         )
       set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
@@ -200,7 +200,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
       add_custom_command (
         OUTPUT  "${OUTPUT_TEST_FILENAME}"
         COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
-        COMMAND ${SITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/R ${template_include_dir} TestTemplate.R.in "${OUTPUT_TEST_FILENAME}"
+        COMMAND ${SimpleITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/R ${template_include_dir} TestTemplate.R.in "${OUTPUT_TEST_FILENAME}"
         DEPENDS ${filter_json_file} ${R_TEMPLATE_FILES}
         )
       set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
@@ -211,7 +211,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
       add_custom_command (
         OUTPUT  "${OUTPUT_TEST_FILENAME}"
         COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
-        COMMAND ${SITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Ruby ${template_include_dir} TestTemplate.rb.in "${OUTPUT_TEST_FILENAME}"
+        COMMAND ${SimpleITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Ruby ${template_include_dir} TestTemplate.rb.in "${OUTPUT_TEST_FILENAME}"
         DEPENDS ${filter_json_file} ${RUBY_TEMPLATE_FILES}
         )
       set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
@@ -223,7 +223,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
       add_custom_command (
         OUTPUT  "${OUTPUT_TEST_FILENAME}"
         COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
-        COMMAND ${SITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Java ${template_include_dir} TestTemplate.java.in "${OUTPUT_TEST_FILENAME}"
+        COMMAND ${SimpleITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/Java ${template_include_dir} TestTemplate.java.in "${OUTPUT_TEST_FILENAME}"
         DEPENDS ${filter_json_file} ${JAVA_TEMPLATE_FILES}  ${SWIG_MODULE_SimpleITKJava_TARGET_NAME}        )
       set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})
     endif()
@@ -234,7 +234,7 @@ foreach ( FILTERNAME ${GENERATED_FILTER_LIST} )
       add_custom_command (
         OUTPUT "${OUTPUT_TEST_FILENAME}"
         COMMAND ${CMAKE_COMMAND} -E remove -f "${OUTPUT_TEST_FILENAME}"
-        COMMAND ${SITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/CSharp ${template_include_dir} TestTemplate.cs.in "${OUTPUT_TEST_FILENAME}"
+        COMMAND ${SimpleITK_LUA_EXECUTABLE} ${template_expansion_script} test ${filter_json_file} ${SimpleITK_SOURCE_DIR}/Testing/Unit/CSharp ${template_include_dir} TestTemplate.cs.in "${OUTPUT_TEST_FILENAME}"
         DEPENDS ${filter_json_file} ${CSHARP_TEMPLATE_FILES}
         )
       set ( WRAPPED_GENERATED_TEST_SOURCE ${WRAPPED_GENERATED_TEST_SOURCE} ${OUTPUT_TEST_FILENAME})

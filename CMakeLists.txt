@@ -57,6 +57,9 @@ message(STATUS "Building SimpleITK version \"${SimpleITK_VERSION}\"")
 include(sitkCheckRequiredFlags)
 include(sitkCompilerWarningsSettings)
 
+include( sitkSITKLegacyNaming )
+include( sitkForbidDownloadsOption )
+
 
 find_package(ITK REQUIRED )
 #we require certain packages be turned on in ITK
@@ -90,12 +93,15 @@ list(APPEND SimpleITK_PRIVATE_COMPILE_OPTIONS ${CXX_ADDITIONAL_WARNING_FLAGS})
 option(BUILD_SHARED_LIBS "Build SimpleITK ITK with shared libraries. This does not effect wrapped languages." OFF)
 set(SITK_BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS})
 
-option(SITK_EXPLICIT_INSTANTIATION "Enable an ITK static library of explicitly instantiated templates." ON)
+
+option(SimpleITK_EXPLICIT_INSTANTIATION "Enable an ITK static library of explicitly instantiated templates." ON)
+sitk_legacy_naming(SimpleITK_EXPLICIT_INSTANTIATION)
+
 if ( MSVC AND SITK_BUILD_SHARED_LIBS )
   set( SITK_SimpleITKExplit_STATIC 1 )
 endif()
 
-set( SITK_INT64_PIXELIDS_DEFAULT ON )
+set( SimpleITK_INT64_PIXELIDS_DEFAULT ON )
 if( MSVC )
   # See http://www.cmake.org/cmake/help/v2.8.10/cmake.html#variable:MSVC_VERSION
   # and https://en.wikipedia.org/wiki/Microsoft_Visual_Studio#Version_history
@@ -104,21 +110,18 @@ if( MSVC )
   #   1700 = VS 11.0 (Visual Studio 2012)
   if(MSVC_VERSION VERSION_LESS 1600)
     # with this option on the linker runs out of memory
-    set( SITK_INT64_PIXELIDS_DEFAULT OFF )
+    set( SimpleITK_INT64_PIXELIDS_DEFAULT OFF )
   endif()
 endif()
-option( SITK_INT64_PIXELIDS "Instantiate 64-bit integer pixels, including unsigned, vector and label maps." ${SITK_INT64_PIXELIDS_DEFAULT} )
-# Setting this option will shorten compile times by reducing the
-# amount of pixel types and generated code.
-# NB: this option should _NOT_ be used for releases!
-option ( SITK_EXPRESS_INSTANTIATEDPIXELS "Instantiate very few pixel types ( for use for development only )" OFF )
-mark_as_advanced ( SITK_EXPRESS_INSTANTIATEDPIXELS )
-
-option( SITK_4D_IMAGES "Add Image and I/O support for four spatial dimensions." OFF )
-mark_as_advanced( SITK_4D_IMAGES )
+option( SimpleITK_INT64_PIXELIDS "Instantiate 64-bit integer pixels, including unsigned, vector and label maps."
+  ${SimpleITK_INT64_PIXELIDS_DEFAULT} )
+sitk_legacy_naming(SimpleITK_INT64_PIXELIDS)
 
 
-include( sitkForbidDownloadsOption )
+option( SimpleITK_4D_IMAGES "Add Image and I/O support for four spatial dimensions." OFF )
+mark_as_advanced( SimpleITK_4D_IMAGES )
+sitk_legacy_naming(SimpleITK_4D_IMAGES)
+
 
 # Setup build locations.
 if(NOT CMAKE_RUNTIME_OUTPUT_DIRECTORY)
@@ -142,7 +145,7 @@ set ( SimpleITK_INCLUDE_DIRS
 
 set ( SimpleITK_LIBRARIES SimpleITKCommon SimpleITKIO SimpleITKRegistration )
 
-if (SITK_EXPLICIT_INSTANTIATION)
+if (SimpleITK_EXPLICIT_INSTANTIATION)
   list ( APPEND SimpleITK_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/Code/Explicit/include )
   # This library is linked privately to SimpleITK libraries and is not
   # part of the public link interface

@@ -83,7 +83,7 @@ namespace itk {
         this->GetPixelIDFromImageIO( imageio, unused, dimension );
         }
 
-#ifdef SITK_4D_IMAGES
+#ifdef SimpleITK_4D_IMAGES
       if ( dimension != 2 && dimension != 3  && dimension != 4 )
 #else
       if ( dimension != 2 && dimension != 3 )
