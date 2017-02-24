@@ -1,5 +1,49 @@
 set_source_files_properties ( ${SimpleITKBasicFiltersGeneratedSource} PROPERTIES GENERATED 1 )
 
+function(add_filter_library library_name src_list_var)
+
+  add_library ( ${library_name} ${${src_list_var}}  )
+
+  target_link_libraries ( ${library_name}
+    PUBLIC SimpleITKCommon SimpleITKBasicFilters0 )
+
+  if (SimpleITK_EXPLICIT_INSTANTIATION)
+    target_link_libraries ( ${library_name} PRIVATE SimpleITKExplicit )
+  endif()
+
+  target_include_directories( ${library_name}
+    PUBLIC
+      $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/Code/BasicFilters/include>
+      $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/Code/BasicFilters/include>
+      $<INSTALL_INTERFACE:include>
+    PRIVATE
+      ${CMAKE_CURRENT_SOURCE_DIR} )
+  if(BUILD_SHARED_LIBS)
+    # These other filters are split into files. They all use the
+    # following for export their interface. There must not be and
+    # inter-filter include.
+    target_compile_definitions( ${library_name}
+      PRIVATE
+        SimpleITKBasicFilters_EXPORTS )
+  endif()
+  target_compile_options( ${library_name}
+    PUBLIC
+      ${SimpleITK_PUBLIC_COMPILE_OPTIONS}
+    PRIVATE
+      ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
+
+  add_dependencies ( ${library_name} BasicFiltersSourceCode )
+
+
+  sitk_install_exported_target( ${library_name} )
+
+  # append this new library to the globaly cached list
+  list ( APPEND SimpleITK_LIBRARIES ${library_name} )
+  set ( SimpleITK_LIBRARIES ${SimpleITK_LIBRARIES} CACHE INTERNAL "" )
+
+endfunction()
+
+
 # these files are the instantiated ITK filter, but they do not do IO,
 # so we don't need to register the IO factoried here.
 set ( ITK_NO_IO_FACTORY_REGISTER_MANAGER 1 )
@@ -78,14 +122,8 @@ sitk_install_exported_target( SimpleITKBasicFilters0 )
 list ( APPEND SimpleITK_LIBRARIES SimpleITKBasicFilters0 )
 set ( SimpleITK_LIBRARIES ${SimpleITK_LIBRARIES} CACHE INTERNAL "" )
 
-# Source files in the SimpleITKBasicFilters1 library are manually
-# handled for special dependency requirements
-set ( SimpleITKBasicFilters1Source
-  # These generate files have dependecies which required them to be in
-  # the same library
-  sitkMinimumMaximumImageFilter.cxx
-  sitkLabelStatisticsImageFilter.cxx
-  # Manually written
+# manually written
+list(APPEND SimpleITKBasicFiltersGeneratedSource_ITKCommon
   sitkCastImageFilter-2.cxx
   sitkCastImageFilter-2l.cxx
   sitkCastImageFilter-2v.cxx
@@ -93,50 +131,49 @@ set ( SimpleITKBasicFilters1Source
   sitkCastImageFilter-3l.cxx
   sitkCastImageFilter-3v.cxx
   sitkCastImageFilter.cxx
-  sitkHashImageFilter.cxx
+  sitkHashImageFilter.cxx )
+set(SimpleITKBasicFiltersGeneratedSource_ITKCommon ${SimpleITKBasicFiltersGeneratedSource_ITKCommon} CACHE INTERNAL "")
+
+list(APPEND SimpleITKBasicFiltersGeneratedSource_ITKTransform
   sitkBSplineTransformInitializerFilter.cxx
   sitkCenteredTransformInitializerFilter.cxx
   sitkCenteredVersorTransformInitializerFilter.cxx
-  sitkLandmarkBasedTransformInitializerFilter.cxx
-)
+  sitkLandmarkBasedTransformInitializerFilter.cxx )
+set(SimpleITKBasicFiltersGeneratedSource_ITKTransform ${SimpleITKBasicFiltersGeneratedSource_ITKTransform} CACHE INTERNAL "")
 
-add_library ( SimpleITKBasicFilters1 ${SimpleITKBasicFilters1Source} )
-target_link_libraries ( SimpleITKBasicFilters1
-  PUBLIC SimpleITKCommon SimpleITKBasicFilters0
-  PRIVATE ${ITK_LIBRARIES} )
-if (SimpleITK_EXPLICIT_INSTANTIATION)
-  target_link_libraries ( SimpleITKBasicFilters1 PRIVATE SimpleITKExplicit )
-endif()
-target_include_directories( SimpleITKBasicFilters1
-  PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/Code/BasicFilters/include>
-    $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/Code/BasicFilters/include>
-    $<INSTALL_INTERFACE:include>
-  PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR} )
-if(BUILD_SHARED_LIBS)
-    target_compile_definitions( SimpleITKBasicFilters1
-      PRIVATE
-        SimpleITKBasicFilters_EXPORTS )
+#
+# Module based libraries
+#
+get_cmake_property( _varNames VARIABLES )
+foreach (_varName ${_varNames})
+  if(_varName MATCHES "^SimpleITKBasicFiltersGeneratedSource_")
+    string(REGEX MATCH  "ITK[A-Za-z0-9]+$"  itk_module ${_varName})
+    list(APPEND module_vars ${itk_module})
   endif()
-target_compile_options( SimpleITKBasicFilters1
-  PUBLIC
-    ${SimpleITK_PUBLIC_COMPILE_OPTIONS}
-  PRIVATE
-    ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
 
-add_dependencies ( SimpleITKBasicFilters1 BasicFiltersSourceCode )
-sitk_install_exported_target( SimpleITKBasicFilters1 )
-list ( APPEND SimpleITK_LIBRARIES SimpleITKBasicFilters1 )
+endforeach()
 
+foreach( itk_module ${module_vars} )
+
+  # cmake >= 3.3
+  # if( ${itk_module} IN_LIST ITK_MODULES_ENABLED)
+  list (FIND ITK_MODULES_ENABLED ${itk_module} _index)
+  if (${_index} GREATER -1)
+    add_filter_library( SimpleITK_${itk_module} SimpleITKBasicFiltersGeneratedSource_${itk_module} )
+    target_link_libraries ( SimpleITK_${itk_module} PRIVATE ${${itk_module}_LIBRARIES} )
+
+    list( REMOVE_ITEM SimpleITKBasicFiltersGeneratedSource ${SimpleITKBasicFiltersGeneratedSource_${itk_module}})
+
+  endif()
+
+endforeach()
+
+#
+#
+#
 
 # sort the list to en-sure the same list across platforms
 list ( SORT SimpleITKBasicFiltersGeneratedSource )
-
-# Manually remove dependent files explicitly added first
-list ( REMOVE_ITEM SimpleITKBasicFiltersGeneratedSource
-                   "${CMAKE_CURRENT_BINARY_DIR}/sitkMinimumMaximumImageFilter.cxx"
-                   "${CMAKE_CURRENT_BINARY_DIR}/sitkLabelStatisticsImageFilter.cxx" )
 
 # add additional files which may depend on Filters0-N
 list ( APPEND SimpleITKBasicFiltersSource ${SimpleITKBasicFiltersGeneratedSource} sitkAdditionalProcedures.cxx )
@@ -151,7 +188,7 @@ set ( _stride 25 )
 set ( _library_i 1 )
 foreach ( _start RANGE 0 ${_end_range} ${_stride} )
 
-  math( EXPR _library_i "${_library_i} + 1 " )
+  math( EXPR _library_i "${_library_i} " )
 
   # compute the end of the range ensuring that the inclusive range
   # [_start, _end] is all valid indexes
@@ -169,46 +206,20 @@ foreach ( _start RANGE 0 ${_end_range} ${_stride} )
     list ( APPEND SRC ${_v} )
   endforeach()
 
-  add_library ( SimpleITKBasicFilters${_library_i} ${SRC} )
+  add_filter_library(SimpleITKBasicFilters${_library_i} SRC )
+
   target_link_libraries ( SimpleITKBasicFilters${_library_i}
-    PUBLIC SimpleITKCommon SimpleITKBasicFilters0
     PRIVATE ${ITK_LIBRARIES} )
-  if (SimpleITK_EXPLICIT_INSTANTIATION)
-    target_link_libraries ( SimpleITKBasicFilters${_library_i} PRIVATE SimpleITKExplicit )
-  endif()
+
   if(_last)
+
+    set(_last_SimpleITK_LIBRARIES ${SimpleITK_LIBRARIES})
+    list(REMOVE_ITEM _last_SimpleITK_LIBRARIES SimpleITKBasicFilters${_library_i})
     # the last library include additional cxx files which may depend on
     # other filter libraries
     target_link_libraries ( SimpleITKBasicFilters${_library_i}
-      PRIVATE ${SimpleITK_LIBRARIES} )
+      PRIVATE ${_last_SimpleITK_LIBRARIES} )
   endif()
-  target_include_directories( SimpleITKBasicFilters${_library_i}
-    PUBLIC
-      $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/Code/BasicFilters/include>
-      $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/Code/BasicFilters/include>
-      $<INSTALL_INTERFACE:include>
-    PRIVATE
-      ${CMAKE_CURRENT_SOURCE_DIR} )
-  if(BUILD_SHARED_LIBS)
-    # These other filters are split into files. They all use the
-    # following for export their interface. There must not be and
-    # inter-filter include.
-    target_compile_definitions( SimpleITKBasicFilters${_library_i}
-      PRIVATE
-        SimpleITKBasicFilters_EXPORTS )
-  endif()
-  target_compile_options( SimpleITKBasicFilters${_library_i}
-    PUBLIC
-      ${SimpleITK_PUBLIC_COMPILE_OPTIONS}
-    PRIVATE
-      ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
 
-  add_dependencies ( SimpleITKBasicFilters${_library_i} BasicFiltersSourceCode )
-
-  # append this new library to the globaly cached list
-  list ( APPEND SimpleITK_LIBRARIES SimpleITKBasicFilters${_library_i} )
-  set ( SimpleITK_LIBRARIES ${SimpleITK_LIBRARIES} CACHE INTERNAL "" )
-
-  sitk_install_exported_target( SimpleITKBasicFilters${_library_i} )
 
 endforeach ()

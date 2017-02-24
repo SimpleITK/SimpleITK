@@ -111,5 +111,7 @@
     }
   ],
   "briefdescription" : "Label pixels that are connected to a seed and lie within a neighborhood.",
-  "detaileddescription" : "NeighborhoodConnectedImageFilter labels pixels with ReplaceValue that are connected to an initial Seed AND whose neighbors all lie within a Lower and Upper threshold range."
+  "detaileddescription" : "NeighborhoodConnectedImageFilter labels pixels with ReplaceValue that are connected to an initial Seed AND whose neighbors all lie within a Lower and Upper threshold range.",
+  "itk_module" : "ITKRegionGrowing",
+  "itk_group" : "RegionGrowing"
 }

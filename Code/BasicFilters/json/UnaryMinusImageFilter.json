@@ -51,5 +51,6 @@
     }
   ],
   "briefdescription" : "Computes the negative of each pixel.\n",
-  "detaileddescription" : ""
+  "detaileddescription" : "",
+  "itk_module" : "ITKCommon"
 }

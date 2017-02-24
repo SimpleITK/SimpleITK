@@ -19,5 +19,7 @@
     }
   ],
   "briefdescription" : "Computes pixel-wise the modulus of a complex image.",
-  "detaileddescription" : ""
+  "detaileddescription" : "",
+  "itk_module" : "ITKImageIntensity",
+  "itk_group" : "ImageIntensity"
 }

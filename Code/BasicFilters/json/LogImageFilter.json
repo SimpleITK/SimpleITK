@@ -19,5 +19,7 @@
     }
   ],
   "briefdescription" : "Computes the log() of each pixel.",
-  "detaileddescription" : ""
+  "detaileddescription" : "",
+  "itk_module" : "ITKImageIntensity",
+  "itk_group" : "ImageIntensity"
 }

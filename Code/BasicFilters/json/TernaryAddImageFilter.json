@@ -21,5 +21,7 @@
     }
   ],
   "briefdescription" : "Pixel-wise addition of three images.",
-  "detaileddescription" : "This class is templated over the types of the three input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults."
+  "detaileddescription" : "This class is templated over the types of the three input images and the type of the output image. Numeric conversions (castings) are done by the C++ defaults.",
+  "itk_module" : "ITKImageIntensity",
+  "itk_group" : "ImageIntensity"
 }

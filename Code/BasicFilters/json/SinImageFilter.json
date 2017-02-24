@@ -19,5 +19,7 @@
     }
   ],
   "briefdescription" : "Computes the sine of each pixel.",
-  "detaileddescription" : "The computations are performed using std::sin(x).\n\n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Compute the sine of each pixel."
+  "detaileddescription" : "The computations are performed using std::sin(x).\n\n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Compute the sine of each pixel.",
+  "itk_module" : "ITKImageIntensity",
+  "itk_group" : "ImageIntensity"
 }
