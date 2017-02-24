@@ -155,7 +155,7 @@ function( expand_template FILENAME input_dir output_dir library_name )
 
   # validate json files if python is available
   if ( PYTHON_EXECUTABLE AND NOT PYTHON_VERSION_STRING VERSION_LESS 2.6 )
-    set ( JSON_VALIDATE_COMMAND COMMAND "${PYTHON_EXECUTABLE}" "${SimpleITK_SOURCE_DIR}/Utilities/JSONValidate.py" "${input_json_file}" )
+    set ( JSON_VALIDATE_COMMAND COMMAND "${PYTHON_EXECUTABLE}" "${SimpleITK_SOURCE_DIR}/Utilities/JSON/JSONValidate.py" "${input_json_file}" )
   endif ()
 
   # header
