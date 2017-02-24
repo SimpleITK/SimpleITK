@@ -67,7 +67,11 @@ target_include_directories( SimpleITKBasicFilters0
     $<INSTALL_INTERFACE:include>
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR} )
-
+target_compile_options( SimpleITKBasicFilters0
+  PUBLIC
+    ${SimpleITK_PUBLIC_COMPILE_OPTIONS}
+  PRIVATE
+    ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
 sitk_install_exported_target( SimpleITKBasicFilters0 )
 
 # append this new library to the globally cached list
@@ -110,6 +114,11 @@ target_include_directories( SimpleITKBasicFilters1
     $<INSTALL_INTERFACE:include>
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR} )
+target_compile_options( SimpleITKBasicFilters1
+  PUBLIC
+    ${SimpleITK_PUBLIC_COMPILE_OPTIONS}
+  PRIVATE
+    ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
 
 add_dependencies ( SimpleITKBasicFilters1 BasicFiltersSourceCode )
 sitk_install_exported_target( SimpleITKBasicFilters1 )
@@ -130,12 +139,6 @@ list ( APPEND SimpleITKBasicFiltersSource ${SimpleITKBasicFiltersGeneratedSource
 list ( LENGTH SimpleITKBasicFiltersSource _length )
 math( EXPR _end_range "${_length} - 1 " )
 
-# The other filters an automatically split into files. They all
-# use the following for export their interface. There must not be and
-# inter-filter include.
-if(BUILD_SHARED_LIBS)
-  add_definitions(-DSimpleITKBasicFilters_EXPORTS)
-endif()
 
 # Break all these source files into a bunch of libraries base on every
 # n files in the list.
@@ -181,6 +184,19 @@ foreach ( _start RANGE 0 ${_end_range} ${_stride} )
       $<INSTALL_INTERFACE:include>
     PRIVATE
       ${CMAKE_CURRENT_SOURCE_DIR} )
+  if(BUILD_SHARED_LIBS)
+    # These other filters are split into files. They all use the
+    # following for export their interface. There must not be and
+    # inter-filter include.
+    target_compile_definitions( SimpleITKBasicFilters${_library_i}
+      PRIVATE
+        SimpleITKBasicFilters_EXPORTS )
+  endif()
+  target_compile_options( SimpleITKBasicFilters${_library_i}
+    PUBLIC
+      ${SimpleITK_PUBLIC_COMPILE_OPTIONS}
+    PRIVATE
+      ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
 
   add_dependencies ( SimpleITKBasicFilters${_library_i} BasicFiltersSourceCode )
 
