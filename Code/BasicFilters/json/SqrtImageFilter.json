@@ -19,5 +19,7 @@
     }
   ],
   "briefdescription" : "Computes the square root of each pixel.",
-  "detaileddescription" : "The computations are performed using std::sqrt(x)."
+  "detaileddescription" : "The computations are performed using std::sqrt(x).",
+  "itk_module" : "ITKImageIntensity",
+  "itk_group" : "ImageIntensity"
 }

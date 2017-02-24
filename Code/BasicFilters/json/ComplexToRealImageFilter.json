@@ -19,5 +19,7 @@
     }
   ],
   "briefdescription" : "Computes pixel-wise the real(x) part of a complex image.",
-  "detaileddescription" : ""
+  "detaileddescription" : "",
+  "itk_module" : "ITKImageIntensity",
+  "itk_group" : "ImageIntensity"
 }

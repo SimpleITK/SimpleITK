@@ -19,5 +19,7 @@
     }
   ],
   "briefdescription" : "Computes the exponential function of each pixel.",
-  "detaileddescription" : "The computation is performed using std::exp(x)."
+  "detaileddescription" : "The computation is performed using std::exp(x).",
+  "itk_module" : "ITKImageIntensity",
+  "itk_group" : "ImageIntensity"
 }

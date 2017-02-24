@@ -30,5 +30,7 @@
     }
   ],
   "briefdescription" : "Performs a separable blur on each dimension of an image.",
-  "detaileddescription" : "The binomial blur consists of a nearest neighbor average along each image dimension. The net result after n-iterations approaches convultion with a gaussian.\n\n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Blur an image"
+  "detaileddescription" : "The binomial blur consists of a nearest neighbor average along each image dimension. The net result after n-iterations approaches convultion with a gaussian.\n\n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Blur an image",
+  "itk_module" : "ITKSmoothing",
+  "itk_group" : "Smoothing"
 }

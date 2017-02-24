@@ -19,5 +19,7 @@
     }
   ],
   "briefdescription" : "Computes the function exp(-K.x) for each input pixel.",
-  "detaileddescription" : "Every output pixel is equal to std::exp(-K.x ). where x is the intensity of the homologous input pixel, and K is a user-provided constant."
+  "detaileddescription" : "Every output pixel is equal to std::exp(-K.x ). where x is the intensity of the homologous input pixel, and K is a user-provided constant.",
+  "itk_module" : "ITKImageIntensity",
+  "itk_group" : "ImageIntensity"
 }

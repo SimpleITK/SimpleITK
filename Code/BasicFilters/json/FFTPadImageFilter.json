@@ -65,5 +65,7 @@
     }
   ],
   "briefdescription" : "Pad an image to make it suitable for an FFT transformation.",
-  "detaileddescription" : "FFT filters usually requires a specific image size. The size is decomposed in several prime factors, and the filter only supports prime factors up to a maximum value. This filter automatically finds the greatest prime factor required by the available implementation and pads the input appropriately.\n\nThis code was adapted from the Insight Journal contribution:\n\n\"FFT Based Convolution\" by Gaetan Lehmann https://hdl.handle.net/10380/3154 \n\n\\author Gaetan Lehmann\n\n\\see FFTShiftImageFilter"
+  "detaileddescription" : "FFT filters usually requires a specific image size. The size is decomposed in several prime factors, and the filter only supports prime factors up to a maximum value. This filter automatically finds the greatest prime factor required by the available implementation and pads the input appropriately.\n\nThis code was adapted from the Insight Journal contribution:\n\n\"FFT Based Convolution\" by Gaetan Lehmann https://hdl.handle.net/10380/3154 \n\n\\author Gaetan Lehmann\n\n\\see FFTShiftImageFilter",
+  "itk_module" : "ITKFFT",
+  "itk_group" : "FFT"
 }
