@@ -173,6 +173,38 @@ add_dependencies ( SimpleITKBasicFilters1 BasicFiltersSourceCode )
 sitk_install_exported_target( SimpleITKBasicFilters1 )
 list ( APPEND SimpleITK_LIBRARIES SimpleITKBasicFilters1 )
 
+#
+# Module based libraries
+#
+get_cmake_property( _varNames VARIABLES )
+foreach (_varName ${_varNames})
+  if(_varName MATCHES "^SimpleITKBasicFiltersGeneratedSource_")
+    string(REGEX MATCH  "ITK[A-Za-z0-9]+$"  itk_module ${_varName})
+    list(APPEND module_vars ${itk_module})
+  endif()
+
+endforeach()
+
+foreach( itk_module ${module_vars} )
+
+  # cmake >= 3.3
+  # if( ${itk_module} IN_LIST ITK_MODULES_ENABLED)
+  list (FIND ITK_MODULES_ENABLED ${itk_module} _index)
+  if (${_index} GREATER -1)
+    add_filter_library( SimpleITKBasicFilters_${itk_module} SimpleITKBasicFiltersGeneratedSource_${itk_module} )
+
+    target_link_libraries ( SimpleITKBasicFilters_${itk_module}
+      PRIVATE ${${itk_module}_LIBRARIES} )
+
+    list( REMOVE_ITEM SimpleITKBasicFiltersGeneratedSource ${SimpleITKBasicFiltersGeneratedSource_${itk_module}})
+
+  endif()
+
+endforeach()
+
+#
+#
+#
 
 # sort the list to en-sure the same list across platforms
 list ( SORT SimpleITKBasicFiltersGeneratedSource )
