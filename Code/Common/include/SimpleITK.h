@@ -55,6 +55,7 @@
 
 #include "sitkInterpolator.h"
 #include "sitkEvent.h"
+#include "sitkRandomSeed.h"
 
 #include "sitkProcessObject.h"
 #include "sitkImageFilter.h"

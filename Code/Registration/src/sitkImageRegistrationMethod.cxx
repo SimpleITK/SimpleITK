@@ -825,7 +825,7 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
     registration->SetMetricSamplingPercentagePerLevel(param);
     }
 
-  if ( m_MetricSamplingSeed == 0 )
+  if ( m_MetricSamplingSeed == sitkWallClock )
     {
     registration->MetricSamplingReinitializeSeed();
     }
