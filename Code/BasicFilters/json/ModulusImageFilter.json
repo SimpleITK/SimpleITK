@@ -19,5 +19,7 @@
     }
   ],
   "briefdescription" : "Computes the modulus (x % dividend) pixel-wise.",
-  "detaileddescription" : "The input pixel type must support the c++ modulus operator (%).\n\nIf the dividend is zero, the maximum value will be returned.\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France."
+  "detaileddescription" : "The input pixel type must support the c++ modulus operator (%).\n\nIf the dividend is zero, the maximum value will be returned.\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.",
+  "itk_module" : "ITKImageIntensity",
+  "itk_group" : "ImageIntensity"
 }

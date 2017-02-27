@@ -113,5 +113,7 @@
     }
   ],
   "briefdescription" : "Mask and image with a LabelMap .",
-  "detaileddescription" : "LabelMapMaskImageFilter mask the content of an input image according to the content of the input LabelMap . The masked pixel of the input image are set to the BackgroundValue. LabelMapMaskImageFilter can keep the input image for one label only, with Negated = false (the default) or it can mask the input image for a single label, when Negated equals true. In Both cases, the label is set with SetLabel() .\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\nThis implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176 \n\n\\see LabelMapToBinaryImageFilter , LabelMapToLabelImageFilter"
+  "detaileddescription" : "LabelMapMaskImageFilter mask the content of an input image according to the content of the input LabelMap . The masked pixel of the input image are set to the BackgroundValue. LabelMapMaskImageFilter can keep the input image for one label only, with Negated = false (the default) or it can mask the input image for a single label, when Negated equals true. In Both cases, the label is set with SetLabel() .\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.\n\nThis implementation was taken from the Insight Journal paper: https://hdl.handle.net/1926/584 or http://www.insight-journal.org/browse/publication/176 \n\n\\see LabelMapToBinaryImageFilter , LabelMapToLabelImageFilter",
+  "itk_module" : "ITKLabelMap",
+  "itk_group" : "LabelMap"
 }

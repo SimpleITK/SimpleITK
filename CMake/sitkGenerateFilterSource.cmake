@@ -135,7 +135,7 @@ endmacro()
 ###############################################################################
 # This macro expands the .h and .cxx files for a given input template
 #
-macro( expand_template FILENAME input_dir output_dir library_name )
+function( expand_template FILENAME input_dir output_dir library_name )
 
   # Set common variables
   set ( expand_template_script ${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/ExpandTemplate.lua )
@@ -155,7 +155,7 @@ macro( expand_template FILENAME input_dir output_dir library_name )
 
   # validate json files if python is available
   if ( PYTHON_EXECUTABLE AND NOT PYTHON_VERSION_STRING VERSION_LESS 2.6 )
-    set ( JSON_VALIDATE_COMMAND COMMAND "${PYTHON_EXECUTABLE}" "${SimpleITK_SOURCE_DIR}/Utilities/JSONValidate.py" "${input_json_file}" )
+    set ( JSON_VALIDATE_COMMAND COMMAND "${PYTHON_EXECUTABLE}" "${SimpleITK_SOURCE_DIR}/Utilities/JSON/JSONValidate.py" "${input_json_file}" )
   endif ()
 
   # header
@@ -180,12 +180,16 @@ macro( expand_template FILENAME input_dir output_dir library_name )
   set ( ${library_name}GeneratedSource ${${library_name}GeneratedSource}
     "${output_cxx}" CACHE INTERNAL "" )
 
-  set_source_files_properties ( ${${library_name}GeneratedSource} PROPERTIES GENERATED 1 )
-  set_source_files_properties ( ${${library_name}GeneratedHeader} PROPERTIES GENERATED 1 )
+  get_json_path( itk_module ${f} itk_module)
+  if (NOT "${itk_module}" STREQUAL "" )
+    list(APPEND ${library_name}GeneratedSource_${itk_module}  ${output_cxx} )
+    set(${library_name}GeneratedSource_${itk_module} ${${library_name}GeneratedSource_${itk_module}} CACHE INTERNAL "")
+  endif()
+
 
   # Make the list visible at the global scope
   set ( GENERATED_FILTER_LIST ${GENERATED_FILTER_LIST} ${FILENAME} CACHE INTERNAL "" )
-endmacro()
+endfunction()
 
 
 

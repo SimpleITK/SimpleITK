@@ -29,5 +29,7 @@
     }
   ],
   "briefdescription" : "Computes 1/(1+x) for each pixel in the image.",
-  "detaileddescription" : "The filter expect both the input and output images to have the same number of dimensions, and both of a scalar image type."
+  "detaileddescription" : "The filter expect both the input and output images to have the same number of dimensions, and both of a scalar image type.",
+  "itk_module" : "ITKImageIntensity",
+  "itk_group" : "ImageIntensity"
 }

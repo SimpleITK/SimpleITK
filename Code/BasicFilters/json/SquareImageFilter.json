@@ -19,5 +19,7 @@
     }
   ],
   "briefdescription" : "Computes the square of the intensity values pixel-wise.",
-  "detaileddescription" : "\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Square every pixel in an image"
+  "detaileddescription" : "\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Square every pixel in an image",
+  "itk_module" : "ITKImageIntensity",
+  "itk_group" : "ImageIntensity"
 }

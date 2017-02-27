@@ -38,5 +38,6 @@
         "Input/VM1111Shrink-RGBFloat.nrrd"
       ]
     }
-  ]
+  ],
+  "itk_module" : "ITKCommon"
 }
