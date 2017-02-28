@@ -1,11 +1,22 @@
 set_source_files_properties ( ${SimpleITKBasicFiltersGeneratedSource} PROPERTIES GENERATED 1 )
 
+
+# add_filter_library
+# This function is used to apply standard building options for the
+# libraries in the basic filters directory given a list of SimpleITK
+# source files, and a list of ITK modules.
+#
+# This method is used to encapsulate the directory properties set when
+# using an ITK module
+#
 function(add_filter_library library_name src_list_var)
 
   add_library ( ${library_name} ${${src_list_var}}  )
 
   target_link_libraries ( ${library_name}
-    PUBLIC SimpleITKCommon SimpleITKBasicFilters0 )
+    PUBLIC
+      SimpleITKCommon
+      SimpleITKBasicFilters0 )
 
   if (SimpleITK_EXPLICIT_INSTANTIATION)
     target_link_libraries ( ${library_name} PRIVATE SimpleITKExplicit )
