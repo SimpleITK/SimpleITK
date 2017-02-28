@@ -177,9 +177,9 @@ foreach( itk_module ${module_vars} )
     add_filter_library( SimpleITK_${itk_module} SimpleITKBasicFiltersGeneratedSource_${itk_module} )
     target_link_libraries ( SimpleITK_${itk_module} PRIVATE ${${itk_module}_LIBRARIES} )
 
-    list( REMOVE_ITEM SimpleITKBasicFiltersGeneratedSource ${SimpleITKBasicFiltersGeneratedSource_${itk_module}})
-
   endif()
+
+  list( REMOVE_ITEM SimpleITKBasicFiltersGeneratedSource ${SimpleITKBasicFiltersGeneratedSource_${itk_module}})
 
 endforeach()
 
