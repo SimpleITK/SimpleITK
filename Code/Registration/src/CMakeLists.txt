@@ -5,17 +5,14 @@ set( SimpleITKRegistration
   sitkImageRegistrationMethod_CreateMetric.cxx
   )
 
-# these files are the instantiated ITK filter, but they do not do IO,
-# so we don't need to register the IO factories here.
-set ( ITK_NO_IO_FACTORY_REGISTER_MANAGER 1 )
-find_package(ITK COMPONENTS ITKCommon  ITKLabelMap ITKOptimizersv4 ITKMetricsv4 ITKRegistrationMethodsv4 REQUIRED)
-include(${ITK_USE_FILE})
+set(use_itk_modules  ITKCommon  ITKLabelMap ITKOptimizersv4 ITKMetricsv4 ITKRegistrationMethodsv4)
+find_package(ITK COMPONENTS ${use_itk_modules} REQUIRED)
 
 add_library ( SimpleITKRegistration ${SimpleITKRegistration} )
+sitk_target_use_itk ( SimpleITKRegistration PRIVATE ${use_itk_modules} )
 # The BasicFiltersLibrary is needed of the Cast filter
 target_link_libraries ( SimpleITKRegistration
-  PUBLIC SimpleITKCommon SimpleITK_ITKCommon
-  PRIVATE  ${ITK_LIBRARIES} )
+  PUBLIC SimpleITKCommon SimpleITK_ITKCommon )
 if (SimpleITK_EXPLICIT_INSTANTIATION)
   target_link_libraries ( SimpleITKRegistration PRIVATE SimpleITKExplicit )
 endif()

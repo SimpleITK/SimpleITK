@@ -9,9 +9,12 @@ set_source_files_properties ( ${SimpleITKBasicFiltersGeneratedSource} PROPERTIES
 # This method is used to encapsulate the directory properties set when
 # using an ITK module
 #
-function(add_filter_library library_name src_list_var)
+function(add_filter_library library_name src_list_var itk_module_list_var)
 
   add_library ( ${library_name} ${${src_list_var}}  )
+
+  sitk_target_use_itk( ${library_name} PRIVATE ${${itk_module_list_var}}
+    ITKLabelMap ITKImageIntensity)
 
   target_link_libraries ( ${library_name}
     PUBLIC
@@ -55,54 +58,8 @@ function(add_filter_library library_name src_list_var)
 endfunction()
 
 
-# these files are the instantiated ITK filter, but they do not do IO,
-# so we don't need to register the IO factoried here.
-set ( ITK_NO_IO_FACTORY_REGISTER_MANAGER 1 )
-set ( REQUIRED_ITK_MODULES
-  ITKAnisotropicSmoothing
-  ITKAntiAlias
-  ITKBiasCorrection
-  ITKBinaryMathematicalMorphology
-  ITKClassifiers
-  ITKColormap
-  ITKCommon
-  ITKConnectedComponents
-  ITKConvolution
-  ITKCurvatureFlow
-  ITKDeconvolution
-  ITKDenoising
-  ITKDisplacementField
-  ITKDistanceMap
-  ITKFFT
-  ITKFastMarching
-  ITKImageAdaptors
-  ITKImageCompare
-  ITKImageCompose
-  ITKImageFeature
-  ITKImageFilterBase
-  ITKImageFusion
-  ITKImageGradient
-  ITKImageGrid
-  ITKImageIntensity
-  ITKImageLabel
-  ITKImageNoise
-  ITKImageSources
-  ITKImageStatistics
-  ITKLabelMap
-  ITKLabelVoting
-  ITKLevelSets
-  ITKMathematicalMorphology
-  ITKPDEDeformableRegistration
-  ITKRegionGrowing
-  ITKReview
-  ITKSmoothing
-  ITKStatistics
-  ITKThresholding
-  ITKTransform
-  ITKWatersheds
-)
-find_package(ITK COMPONENTS ${REQUIRED_ITK_MODULES} REQUIRED)
-include(${ITK_USE_FILE})
+find_package(ITK COMPONENTS ITKCommon REQUIRED)
+
 
 # common source which all basic filter libraries need to be linked against
 set ( SimpleITKBasicFilters0Source
@@ -110,9 +67,10 @@ set ( SimpleITKBasicFilters0Source
 )
 
 add_library ( SimpleITKBasicFilters0 ${SimpleITKBasicFilters0Source} )
+sitk_target_use_itk( SimpleITKBasicFilters0 PRIVATE ITKCommon)
 target_link_libraries ( SimpleITKBasicFilters0
-  PUBLIC SimpleITKCommon
-  PRIVATE ${ITK_LIBRARIES} )
+  PUBLIC
+    SimpleITKCommon)
 if (SimpleITK_EXPLICIT_INSTANTIATION)
   target_link_libraries ( SimpleITKBasicFilters0 PRIVATE SimpleITKExplicit )
 endif()
@@ -173,9 +131,11 @@ foreach( itk_module ${module_vars} )
   # cmake >= 3.3
   # if( ${itk_module} IN_LIST ITK_MODULES_ENABLED)
   list (FIND ITK_MODULES_ENABLED ${itk_module} _index)
-  if (${_index} GREATER -1)
-    add_filter_library( SimpleITK_${itk_module} SimpleITKBasicFiltersGeneratedSource_${itk_module} )
-    target_link_libraries ( SimpleITK_${itk_module} PRIVATE ${${itk_module}_LIBRARIES} )
+  list (LENGTH SimpleITKBasicFiltersGeneratedSource_${itk_module} _len)
+  if (${_index} GREATER -1 AND ${_len} GREATER 0)
+    add_filter_library( SimpleITK_${itk_module}
+                        SimpleITKBasicFiltersGeneratedSource_${itk_module}
+                        itk_module )
 
   endif()
 
@@ -221,10 +181,7 @@ foreach ( _start RANGE 0 ${_end_range} ${_stride} )
     list ( APPEND SRC ${_v} )
   endforeach()
 
-  add_filter_library(SimpleITKBasicFilters${_library_i} SRC )
-
-  target_link_libraries ( SimpleITKBasicFilters${_library_i}
-    PRIVATE ${ITK_LIBRARIES} )
+  add_filter_library(SimpleITKBasicFilters${_library_i} SRC ITK_MODULES_ENABLED)
 
   if(_last)
 

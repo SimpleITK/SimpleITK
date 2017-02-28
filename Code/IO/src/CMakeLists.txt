@@ -9,21 +9,20 @@ set( SimpleITKIOSource
   sitkShow.cxx
   )
 
-set(REQUIRED_ITK_MODULES  ITKCommon ITKLabelMap ITKImageCompose
+set(use_itk_modules  ITKCommon ITKLabelMap ITKImageCompose
   ITKImageIntensity ITKIOImageBase ITKIOTransformBase ITKIOGDCM )
 foreach( mod IN LISTS ITK_MODULES_ENABLED)
   if( ${mod} MATCHES "IO")
-    list(APPEND REQUIRED_ITK_MODULES ${mod})
+    list(APPEND use_itk_modules ${mod})
   endif()
 endforeach()
 
-find_package(ITK COMPONENTS REQUIRED)
+find_package(ITK COMPONENTS ${use_itk_modules} )
 include(${ITK_USE_FILE})
-
 add_library ( SimpleITKIO ${SimpleITKIOSource} )
+sitk_target_use_itk ( SimpleITKIO PRIVATE ${use_itk_modules} )
 target_link_libraries ( SimpleITKIO
-  PUBLIC  SimpleITKCommon
-  PRIVATE ${ITK_LIBRARIES} )
+  PUBLIC  SimpleITKCommon )
 if (SimpleITK_EXPLICIT_INSTANTIATION)
   target_link_libraries ( SimpleITKIO PRIVATE SimpleITKExplicit )
 endif()
