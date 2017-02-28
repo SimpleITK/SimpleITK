@@ -146,11 +146,15 @@ list(APPEND SimpleITKBasicFiltersGeneratedSource_ITKCommon
 set(SimpleITKBasicFiltersGeneratedSource_ITKCommon ${SimpleITKBasicFiltersGeneratedSource_ITKCommon} CACHE INTERNAL "")
 
 list(APPEND SimpleITKBasicFiltersGeneratedSource_ITKTransform
-  sitkBSplineTransformInitializerFilter.cxx
+  sitkBSplineTransformInitializerFilter.cxx )
+set(SimpleITKBasicFiltersGeneratedSource_ITKTransform ${SimpleITKBasicFiltersGeneratedSource_ITKTransform} CACHE INTERNAL "")
+
+list(APPEND SimpleITKBasicFiltersGeneratedSource_ITKRegistrationCommon
   sitkCenteredTransformInitializerFilter.cxx
   sitkCenteredVersorTransformInitializerFilter.cxx
   sitkLandmarkBasedTransformInitializerFilter.cxx )
-set(SimpleITKBasicFiltersGeneratedSource_ITKTransform ${SimpleITKBasicFiltersGeneratedSource_ITKTransform} CACHE INTERNAL "")
+set(SimpleITKBasicFiltersGeneratedSource_ITKRegistrationCommon ${SimpleITKBasicFiltersGeneratedSource_ITKRegistrationCommon} CACHE INTERNAL "")
+
 
 #
 # Module based libraries
