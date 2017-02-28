@@ -52,6 +52,12 @@ if (SimpleITK_PYTHON_USE_VIRTUALENV)
   find_package( PythonVirtualEnv REQUIRED )
 
   sitk_enforce_forbid_downloads( SimpleITK_PYTHON_USE_VIRTUALENV )
+
+  if (SimpleITK_PYTHON_WHEEL AND PYTHON_VIRTUALENV_VERSION_STRING VERSION_LESS "13")
+    message(SEND_ERROR "In sufficient version of virutalenv for \
+      building wheels. Require virtualenv>=13.0.")
+  endif()
+
   #
   # Setup Python Virtual Enviroment for testing and packaging
   #
