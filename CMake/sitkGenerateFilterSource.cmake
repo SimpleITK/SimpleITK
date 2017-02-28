@@ -137,6 +137,14 @@ endmacro()
 #
 function( expand_template FILENAME input_dir output_dir library_name )
 
+  get_json_path( itk_module ${f} itk_module)
+
+  list (FIND ITK_MODULES_ENABLED "${itk_module}" _index)
+  if (NOT "${itk_module}" STREQUAL "" AND ${_index} EQUAL -1)
+    # required module is not enabled, don't process
+    return()
+  endif()
+
   # Set common variables
   set ( expand_template_script ${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/ExpandTemplate.lua )
   set ( template_include_dir ${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/Components )
@@ -174,14 +182,13 @@ function( expand_template FILENAME input_dir output_dir library_name )
     DEPENDS ${input_json_file} ${template_deps} ${template_file_cxx}
     )
 
- set ( ${library_name}GeneratedHeader ${${library_name}GeneratedHeader}
+  set ( ${library_name}GeneratedHeader ${${library_name}GeneratedHeader}
     "${output_h}" CACHE INTERNAL "" )
 
   set ( ${library_name}GeneratedSource ${${library_name}GeneratedSource}
     "${output_cxx}" CACHE INTERNAL "" )
 
-  get_json_path( itk_module ${f} itk_module)
-  if (NOT "${itk_module}" STREQUAL "" )
+  if (NOT "${itk_module}" STREQUAL "")
     list(APPEND ${library_name}GeneratedSource_${itk_module}  ${output_cxx} )
     set(${library_name}GeneratedSource_${itk_module} ${${library_name}GeneratedSource_${itk_module}} CACHE INTERNAL "")
   endif()

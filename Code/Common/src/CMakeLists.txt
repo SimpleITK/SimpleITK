@@ -28,14 +28,12 @@ set ( SimpleITKCommonSource
   ../include/Ancillary/hl_sha1.cxx
   )
 
-set ( ITK_NO_IO_FACTORY_REGISTER_MANAGER 1 )
-find_package(ITK COMPONENTS ITKCommon ITKImageCompose
-  ITKImageIntensity ITKLabelMap ITKTransform ITKIOTransformBase ITKDisplacementField REQUIRED)
-include(${ITK_USE_FILE})
+set(use_itk_modules ITKCommon ITKImageCompose ITKImageIntensity
+  ITKLabelMap ITKTransform ITKIOTransformBase ITKDisplacementField )
+find_package(ITK COMPONENTS ${use_itk_modules}  REQUIRED)
 
 add_library ( SimpleITKCommon ${SimpleITKCommonSource} ${SimpleITKAncillarySource} )
-target_link_libraries ( SimpleITKCommon
-  PRIVATE ${ITK_LIBRARIES} )
+sitk_target_use_itk (SimpleITKCommon PRIVATE ${use_itk_modules} )
 if (SimpleITK_EXPLICIT_INSTANTIATION)
   target_link_libraries ( SimpleITKCommon PRIVATE SimpleITKExplicit )
 endif()

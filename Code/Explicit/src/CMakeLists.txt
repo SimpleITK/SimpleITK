@@ -20,11 +20,8 @@ set ( SimpleITKExplicitSource
   )
 
 
-# these files are the instantiated ITK filter, but they do not do IO,
-# so we don't need to register the IO factoried here.
-set ( ITK_NO_IO_FACTORY_REGISTER_MANAGER 1 )
-
-find_package(ITK COMPONENTS ITKCommon ITKImageCompose ITKImageIntensity ITKLabelMap REQUIRED)
+set(use_itk_modules ITKCommon ITKImageCompose ITKImageIntensity ITKLabelMap)
+find_package(ITK COMPONENTS ${use_itk_modules} REQUIRED)
 include(${ITK_USE_FILE})
 
 if ( MSVC AND SITK_BUILD_SHARED_LIBS )
@@ -34,7 +31,7 @@ add_library ( SimpleITKExplicit ${SimpleITKExplicit_FORCE_LIBRARY_TYPE} ${Simple
 if( SITK_BUILD_SHARED_LIBS )
   set_target_properties(SimpleITKExplicit PROPERTIES CXX_VISIBILITY_PRESET default)
 endif()
-target_link_libraries ( SimpleITKExplicit PUBLIC ${ITK_LIBRARIES} )
+sitk_target_use_itk( SimpleITKExplicit PUBLIC ${use_itk_modules} )
 target_include_directories ( SimpleITKExplicit
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/Code/Explicit/include>
