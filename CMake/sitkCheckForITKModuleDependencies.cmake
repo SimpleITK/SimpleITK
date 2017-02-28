@@ -15,47 +15,18 @@
 # ensure that we have the 'IO on' too.
 #
 list(APPEND _SITK_REQUIRED_ITK_MODULES
-  ITKAnisotropicSmoothing
-  ITKAntiAlias
-  ITKBiasCorrection
-  ITKBinaryMathematicalMorphology
-  ITKClassifiers
-  ITKColormap
   ITKCommon
-  ITKConnectedComponents
-  ITKConvolution
-  ITKCurvatureFlow
-  ITKDeconvolution
-  ITKDenoising
   ITKDisplacementField
-  ITKDistanceMap
-  ITKFFT
-  ITKFastMarching
-  ITKImageAdaptors
-  ITKImageCompare
+  ITKIOGDCM
+  ITKIOImageBase
+  ITKIOTransformBase
   ITKImageCompose
-  ITKImageFeature
-  ITKImageFilterBase
-  ITKImageFusion
-  ITKImageGradient
-  ITKImageGrid
   ITKImageIntensity
-  ITKImageLabel
-  ITKImageNoise
-  ITKImageSources
-  ITKImageStatistics
   ITKLabelMap
-  ITKLabelVoting
-  ITKLevelSets
-  ITKMathematicalMorphology
-  ITKPDEDeformableRegistration
-  ITKRegionGrowing
-  ITKReview
-  ITKSmoothing
-  ITKStatistics
-  ITKThresholding
+  ITKMetricsv4
+  ITKOptimizersv4
+  ITKRegistrationMethodsv4
   ITKTransform
-  ITKWatersheds
 )
 
 foreach(itkDependency ${_SITK_REQUIRED_ITK_MODULES})
