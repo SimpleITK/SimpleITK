@@ -4,13 +4,14 @@ if(NOT DEFINED ${itkExternalModule}_REPOSITORY)
   set(${proj}_REPOSITORY "${git_protocol}://github.com/SimpleITK/itkSimpleITKFiltersModule.git")
 endif()
 
-set(${proj}_TAG_COMMAND GIT_TAG 90f49616a10763b158653f02a5269492f6a87408)
+set(${proj}_TAG_COMMAND GIT_TAG e99b7bed3e241edd5b466ecbdf9342e9b8dc3c6f)
 
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt" "${ep_common_cache}" )
 
 ExternalProject_Add(${proj}
   GIT_REPOSITORY ${${proj}_REPOSITORY}
   ${${proj}_TAG_COMMAND}
+  USES_TERMINAL_DOWNLOAD 1
   UPDATE_COMMAND ""
   SOURCE_DIR ${proj}
   BINARY_DIR ${proj}-build
@@ -23,9 +24,11 @@ ExternalProject_Add(${proj}
   -C "${CMAKE_CURRENT_BINARY_DIR}/${proj}-build/CMakeCacheInit.txt"
   ${ep_itk_args}
   ${ep_common_args}
+  USES_TERMINAL_CONFIGURE 1
+  USES_TERMINAL_BUILD 1
+  USES_TERMINAL_INSTALL 1
   BUILD_COMMAND ${BUILD_COMMAND_STRING}
   DEPENDS
   ${${proj}_DEPENDENCIES}
-  ${External_Project_USES_TERMINAL}
   )
 
