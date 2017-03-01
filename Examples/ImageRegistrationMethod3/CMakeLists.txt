@@ -1,4 +1,8 @@
 
+if(NOT BUILD_TESTING)
+  return()
+endif()
+
 sitk_add_python_test( Example.ImageRegistrationMethod3Test1
   "${CMAKE_CURRENT_SOURCE_DIR}/ImageRegistrationMethod3.py"
   DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20.png}

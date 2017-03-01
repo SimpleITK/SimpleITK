@@ -2,6 +2,10 @@
 add_executable ( ImageRegistrationMethodDisplacement1 ImageRegistrationMethodDisplacement1.cxx )
 target_link_libraries ( ImageRegistrationMethodDisplacement1  ${SimpleITK_LIBRARIES} )
 
+if(NOT BUILD_TESTING)
+  return()
+endif()
+
 sitk_add_test(NAME CXX.Example.ImageRegistrationMethodDisplacement1
   COMMAND
     $<TARGET_FILE:ImageRegistrationMethodDisplacement1>

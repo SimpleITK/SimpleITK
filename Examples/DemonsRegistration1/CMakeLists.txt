@@ -2,6 +2,10 @@
 add_executable ( DemonsRegistration1 DemonsRegistration1.cxx )
 target_link_libraries ( DemonsRegistration1 ${SimpleITK_LIBRARIES} )
 
+if(NOT BUILD_TESTING)
+  return()
+endif()
+
 sitk_add_test(NAME CXX.Example.DemonsRegistration1
   COMMAND
     $<TARGET_FILE:DemonsRegistration1>

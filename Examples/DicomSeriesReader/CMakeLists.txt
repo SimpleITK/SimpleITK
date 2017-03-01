@@ -2,6 +2,10 @@
 add_executable ( DicomSeriesReader DicomSeriesReader.cxx )
 target_link_libraries ( DicomSeriesReader ${SimpleITK_LIBRARIES} )
 
+if(NOT BUILD_TESTING)
+  return()
+endif()
+
 sitk_add_test(NAME CXX.Example.DicomSeriesReader
   COMMAND "${ITK_TEST_DRIVER}"
     --compare-MD5
