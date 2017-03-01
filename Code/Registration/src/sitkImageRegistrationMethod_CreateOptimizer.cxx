@@ -101,7 +101,7 @@ namespace simple
       optimizer->SetMaximumStepSizeInPhysicalUnits( this->m_OptimizerMaximumStepSizeInPhysicalUnits );
 
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetCurrentMetricValue,optimizer.GetPointer());
-      this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer.GetPointer());
+      this->m_pfGetOptimizerIteration = nsstd::bind(&CurrentIterationCustomCast::CustomCast,optimizer.GetPointer());
       this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer.GetPointer());
       this->m_pfGetOptimizerLearningRate = nsstd::bind(&_OptimizerType::GetLearningRate,optimizer.GetPointer());
       this->m_pfGetOptimizerConvergenceValue = nsstd::bind(&_OptimizerType::GetConvergenceValue,optimizer.GetPointer());
@@ -123,7 +123,7 @@ namespace simple
       optimizer->SetMaximumStepSizeInPhysicalUnits( this->m_OptimizerMaximumStepSizeInPhysicalUnits );
 
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetCurrentMetricValue,optimizer.GetPointer());
-      this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer.GetPointer());
+      this->m_pfGetOptimizerIteration = nsstd::bind(&CurrentIterationCustomCast::CustomCast,optimizer.GetPointer());
       this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer.GetPointer());
       this->m_pfGetOptimizerLearningRate = nsstd::bind(&_OptimizerType::GetLearningRate,optimizer.GetPointer());
       this->m_pfGetOptimizerConvergenceValue = nsstd::bind(&_OptimizerType::GetConvergenceValue,optimizer.GetPointer());
@@ -149,7 +149,7 @@ namespace simple
       optimizer->SetMaximumStepSizeInPhysicalUnits( this->m_OptimizerMaximumStepSizeInPhysicalUnits );
 
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetCurrentMetricValue,optimizer.GetPointer());
-      this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer.GetPointer());
+      this->m_pfGetOptimizerIteration = nsstd::bind(&CurrentIterationCustomCast::CustomCast,optimizer.GetPointer());
       this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer.GetPointer());
       this->m_pfGetOptimizerLearningRate = nsstd::bind(&_OptimizerType::GetLearningRate,optimizer.GetPointer());
       this->m_pfGetOptimizerConvergenceValue = nsstd::bind(&_OptimizerType::GetConvergenceValue,optimizer.GetPointer());
@@ -174,7 +174,7 @@ namespace simple
       optimizer->Register();
 
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetValue,optimizer);
-      this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer.GetPointer());
+      this->m_pfGetOptimizerIteration = nsstd::bind(&CurrentIterationCustomCast::CustomCast,optimizer.GetPointer());
       this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer.GetPointer());
       this->m_pfGetOptimizerLearningRate = nsstd::bind(&_OptimizerType::GetLearningRate,optimizer.GetPointer());
       this->m_pfGetOptimizerConvergenceValue = nsstd::bind(&_OptimizerType::GetConvergenceValue,optimizer.GetPointer());
@@ -224,7 +224,7 @@ namespace simple
       optimizer->Register();
 
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetValue,optimizer.GetPointer());
-      this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer.GetPointer());
+      this->m_pfGetOptimizerIteration = nsstd::bind(&CurrentIterationCustomCast::CustomCast,optimizer.GetPointer());
       this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer.GetPointer());
       this->m_pfGetOptimizerScales = nsstd::bind(&PositionOptimizerCustomCast::Helper<_OptimizerType::ScalesType>, nsstd::bind(&_OptimizerType::GetScales, optimizer.GetPointer()));
 
@@ -239,7 +239,7 @@ namespace simple
       optimizer->SetNumberOfSteps( sitkSTLVectorToITKArray<_OptimizerType::StepsType::ValueType>(this->m_OptimizerNumberOfSteps));
 
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetCurrentValue,optimizer);
-      this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer);
+      this->m_pfGetOptimizerIteration = nsstd::bind(&CurrentIterationCustomCast::CustomCast,optimizer.GetPointer());
       this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer);
 
       this->m_pfGetOptimizerScales = nsstd::bind(&PositionOptimizerCustomCast::Helper<_OptimizerType::ScalesType>, nsstd::bind(&_OptimizerType::GetScales, optimizer.GetPointer()));
@@ -269,7 +269,7 @@ namespace simple
 
 
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetValue,optimizer);
-      this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer);
+      this->m_pfGetOptimizerIteration = nsstd::bind(&CurrentIterationCustomCast::CustomCast,optimizer.GetPointer());
       this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer);
       this->m_pfGetOptimizerScales = nsstd::bind(&PositionOptimizerCustomCast::Helper<_OptimizerType::ScalesType>, nsstd::bind(&_OptimizerType::GetScales, optimizer.GetPointer()));
 
@@ -288,7 +288,7 @@ namespace simple
       optimizer->SetValueTolerance( this->m_OptimizerValueTolerance );
 
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetValue,optimizer.GetPointer());
-      this->m_pfGetOptimizerIteration = nsstd::bind(&_OptimizerType::GetCurrentIteration,optimizer.GetPointer());
+      this->m_pfGetOptimizerIteration = nsstd::bind(&CurrentIterationCustomCast::CustomCast,optimizer.GetPointer());
       this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer.GetPointer());
       this->m_pfGetOptimizerScales = nsstd::bind(&PositionOptimizerCustomCast::Helper<_OptimizerType::ScalesType>, nsstd::bind(&_OptimizerType::GetScales, optimizer.GetPointer()));
 
