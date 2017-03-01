@@ -137,13 +137,6 @@ endmacro()
 #
 function( expand_template FILENAME input_dir output_dir library_name )
 
-  get_json_path( itk_module ${f} itk_module)
-
-  list (FIND ITK_MODULES_ENABLED "${itk_module}" _index)
-  if (NOT "${itk_module}" STREQUAL "" AND ${_index} EQUAL -1)
-    # required module is not enabled, don't process
-    return()
-  endif()
 
   # Set common variables
   set ( expand_template_script ${SimpleITK_SOURCE_DIR}/ExpandTemplateGenerator/ExpandTemplate.lua )
@@ -154,6 +147,17 @@ function( expand_template FILENAME input_dir output_dir library_name )
   set ( input_json_file ${input_dir}/json/${FILENAME}.json )
   set ( template_file_h ${input_dir}/templates/sitkImageFilterTemplate.h.in )
   set ( template_file_cxx ${input_dir}/templates/sitkImageFilterTemplate.cxx.in )
+
+  get_json_path( itk_module ${input_json_file} itk_module)
+
+  list (FIND ITK_MODULES_ENABLED "${itk_module}" _index)
+
+  if("${itk_module}" STREQUAL "")
+    message(WARNING "Missing \"itk_module\" field in ")
+  elseif (NOT "${itk_module}" STREQUAL "" AND ${_index} EQUAL -1)
+    # required module is not enabled, don't process
+    return()
+  endif()
 
   # Get the list of template component files for this template
   get_dependent_template_components(template_deps ${input_json_file} ${input_dir})
@@ -211,6 +215,12 @@ macro(generate_filter_source)
   # Clear out the GeneratedSource list in the cache
   set (SimpleITK${directory_name}GeneratedSource "" CACHE INTERNAL "")
   set (SimpleITK${directory_name}GeneratedHeader "" CACHE INTERNAL "")
+  get_cmake_property( _varNames VARIABLES )
+  foreach (_varName ${_varNames})
+    if(_varName MATCHES "^SimpleITKBasicFiltersGeneratedSource_")
+      unset(${varName} CACHE)
+    endif()
+  endforeach()
 
   ######
   # Perform template expansion
