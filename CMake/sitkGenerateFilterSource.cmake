@@ -215,6 +215,12 @@ macro(generate_filter_source)
   # Clear out the GeneratedSource list in the cache
   set (SimpleITK${directory_name}GeneratedSource "" CACHE INTERNAL "")
   set (SimpleITK${directory_name}GeneratedHeader "" CACHE INTERNAL "")
+  get_cmake_property( _varNames VARIABLES )
+  foreach (_varName ${_varNames})
+    if(_varName MATCHES "^SimpleITKBasicFiltersGeneratedSource_")
+      unset(${varName} CACHE)
+    endif()
+  endforeach()
 
   ######
   # Perform template expansion
