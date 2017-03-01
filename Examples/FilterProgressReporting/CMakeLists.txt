@@ -1,4 +1,21 @@
 
+add_executable ( FilterProgressReporting FilterProgressReporting.cxx )
+target_link_libraries ( FilterProgressReporting ${SimpleITK_LIBRARIES} )
+
+if(NOT BUILD_TESTING)
+  return()
+endif()
+
+sitk_add_test(NAME CXX.Example.FilterProgressReporting
+  COMMAND "${ITK_TEST_DRIVER}"
+    $<TARGET_FILE:FilterProgressReporting>
+    DATA{${SimpleITK_DATA_ROOT}/Input/RA-Short.nrrd}
+    2.0
+    "${TEST_HARNESS_TEMP_DIRECTORY}/CXX.FilterProgressReporting.nrrd"
+  )
+set_tests_properties( CXX.Example.FilterProgressReporting
+  PROPERTIES PASS_REGULAR_EXPRESSION "DiscreteGaussianImageFilter Progress" )
+
 sitk_add_csharp_test( Example.FilterProgressReporting
   "${CMAKE_CURRENT_SOURCE_DIR}/FilterProgressReporting.cs"
   DATA{${SimpleITK_DATA_ROOT}/Input/RA-Short.nrrd}
@@ -9,18 +26,6 @@ if( WRAP_CSHARP )
   set_tests_properties( CSharp.Example.FilterProgressReporting
     PROPERTIES PASS_REGULAR_EXPRESSION "DiscreteGaussianImageFilter Progress" )
 endif()
-
-add_executable ( FilterProgressReporting FilterProgressReporting.cxx )
-target_link_libraries ( FilterProgressReporting ${SimpleITK_LIBRARIES} )
-sitk_add_test(NAME CXX.Example.FilterProgressReporting
-  COMMAND "${ITK_TEST_DRIVER}"
-    $<TARGET_FILE:FilterProgressReporting>
-    DATA{${SimpleITK_DATA_ROOT}/Input/RA-Short.nrrd}
-    2.0
-    "${TEST_HARNESS_TEMP_DIRECTORY}/CXX.FilterProgressReporting.nrrd"
-  )
-set_tests_properties( CXX.Example.FilterProgressReporting
-  PROPERTIES PASS_REGULAR_EXPRESSION "DiscreteGaussianImageFilter Progress" )
 
 sitk_add_java_test( Example.FilterProgressReporting
   "${CMAKE_CURRENT_SOURCE_DIR}/FilterProgressReporting.java"

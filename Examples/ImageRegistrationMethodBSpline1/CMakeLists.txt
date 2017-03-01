@@ -2,6 +2,10 @@
 add_executable ( ImageRegistrationMethodBSpline1 ImageRegistrationMethodBSpline1.cxx )
 target_link_libraries ( ImageRegistrationMethodBSpline1 ${SimpleITK_LIBRARIES} )
 
+if(NOT BUILD_TESTING)
+  return()
+endif()
+
 sitk_add_test(NAME CXX.Example.ImageRegistrationMethodBSpline1
   COMMAND
     $<TARGET_FILE:ImageRegistrationMethodBSpline1>

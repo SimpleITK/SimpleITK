@@ -1,3 +1,8 @@
+
+if(NOT BUILD_TESTING)
+  return()
+endif()
+
 sitk_add_python_test( Example.DicomImagePrintTags
   "${CMAKE_CURRENT_SOURCE_DIR}/DicomImagePrintTags.py"
     DATA{${SimpleITK_DATA_ROOT}/Input/DicomSeries/Image0075.dcm}

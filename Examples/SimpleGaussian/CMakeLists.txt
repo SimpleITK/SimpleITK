@@ -1,4 +1,12 @@
 
+
+add_executable ( SimpleGaussian SimpleGaussian.cxx )
+target_link_libraries ( SimpleGaussian ${SimpleITK_LIBRARIES} )
+
+if(NOT BUILD_TESTING)
+  return()
+endif()
+
 sitk_add_csharp_test( Example.SimpleGaussian
   "${CMAKE_CURRENT_SOURCE_DIR}/SimpleGaussian.cs"
   --compare
@@ -7,9 +15,6 @@ sitk_add_csharp_test( Example.SimpleGaussian
   DATA{${SimpleITK_DATA_ROOT}/Input/RA-Short.nrrd}
   "2.0"
   "${TEST_HARNESS_TEMP_DIRECTORY}/CSharp.SimpleGaussian.nrrd" )
-
-add_executable ( SimpleGaussian SimpleGaussian.cxx )
-target_link_libraries ( SimpleGaussian ${SimpleITK_LIBRARIES} )
 
 sitk_add_test(NAME CXX.Example.SimpleGaussian
   COMMAND "${ITK_TEST_DRIVER}"

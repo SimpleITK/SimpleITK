@@ -1,16 +1,10 @@
-sitk_add_csharp_test( Example.ImageRegistrationMethod1
-  "${CMAKE_CURRENT_SOURCE_DIR}/ImageRegistrationMethod1.cs"
-  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20.png}
-  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceShifted13x17y.png}
-  ${TEST_HARNESS_TEMP_DIRECTORY}/CSharpImageRegistrationMethod11Test.hdf5
-  TRANSFORM_COMPARE
-    ${TEST_HARNESS_TEMP_DIRECTORY}/CSharpImageRegistrationMethod11Test.hdf5
-    DATA{${SimpleITK_DATA_ROOT}/Baseline/displacement_13x17y.mha}
-    0.02
-  )
 
 add_executable ( ImageRegistrationMethod1 ImageRegistrationMethod1.cxx )
 target_link_libraries ( ImageRegistrationMethod1 ${SimpleITK_LIBRARIES} )
+
+if(NOT BUILD_TESTING)
+  return()
+endif()
 
 sitk_add_test(NAME CXX.Example.ImageRegistrationMethod1
   COMMAND
@@ -20,6 +14,17 @@ sitk_add_test(NAME CXX.Example.ImageRegistrationMethod1
     ${TEST_HARNESS_TEMP_DIRECTORY}/CXXImageRegistrationMethod1Test.hdf5
   TRANSFORM_COMPARE
     ${TEST_HARNESS_TEMP_DIRECTORY}/CXXImageRegistrationMethod1Test.hdf5
+    DATA{${SimpleITK_DATA_ROOT}/Baseline/displacement_13x17y.mha}
+    0.02
+  )
+
+sitk_add_csharp_test( Example.ImageRegistrationMethod1
+  "${CMAKE_CURRENT_SOURCE_DIR}/ImageRegistrationMethod1.cs"
+  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20.png}
+  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceShifted13x17y.png}
+  ${TEST_HARNESS_TEMP_DIRECTORY}/CSharpImageRegistrationMethod11Test.hdf5
+  TRANSFORM_COMPARE
+    ${TEST_HARNESS_TEMP_DIRECTORY}/CSharpImageRegistrationMethod11Test.hdf5
     DATA{${SimpleITK_DATA_ROOT}/Baseline/displacement_13x17y.mha}
     0.02
   )
