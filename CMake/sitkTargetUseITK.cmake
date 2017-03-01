@@ -16,6 +16,10 @@ function(sitk_target_use_itk target_name interface_keyword)
 
   itk_module_config(_itk ${itk_modules})
 
+  if(_itk_LIBRARY_DIRS)
+    link_libraries(${_itk_LIBRARY_DIRS})
+  endif()
+
   if(_itk_LIBRARIES)
     target_link_libraries( ${target_name}
       ${interface_keyword}
