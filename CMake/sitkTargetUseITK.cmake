@@ -16,13 +16,15 @@ function(sitk_target_use_itk target_name interface_keyword)
 
   itk_module_config(_itk ${itk_modules})
 
-  foreach(mod ${itk_modules})
+  if(_itk_LIBRARIES)
     target_link_libraries( ${target_name}
       ${interface_keyword}
-        ${_itk_LIBRARIES} )
+      ${_itk_LIBRARIES} )
+  endif()
+  if(_itk_INCLUDE_DIRS)
     target_include_directories( ${target_name}
       ${interface_keyword}
-        ${_itk_INCLUDE_DIRS} )
-  endforeach()
+      ${_itk_INCLUDE_DIRS} )
+  endif()
 
 endfunction()
