@@ -1,4 +1,9 @@
 
+
+if(NOT BUILD_TESTING)
+  return()
+endif()
+
 #
 # CXX Examples
 #
