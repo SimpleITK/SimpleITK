@@ -48,7 +48,7 @@ if len ( sys.argv ) > 5:
 
 R = sitk.ImageRegistrationMethod()
 R.SetMetricAsMattesMutualInformation(numberOfBins)
-R.SetMetricSamplingPercentage(samplingPercentage)
+R.SetMetricSamplingPercentage(samplingPercentage,sitk.sitkWallClock)
 R.SetMetricSamplingStrategy(R.RANDOM)
 R.SetOptimizerAsRegularStepGradientDescent(1.0,.001,200)
 R.SetInitialTransform(sitk.TranslationTransform(fixed.GetDimension()))
