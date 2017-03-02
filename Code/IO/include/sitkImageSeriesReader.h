@@ -45,31 +45,6 @@ namespace itk {
       /** return user readable name fo the filter */
       virtual std::string GetName() const { return std::string("ImageSeriesReader"); }
 
-      /** \brief Generate a sequence of filenames from a directory with a DICOM data set.
-       *
-       * This method generates a sequence of filenames whose filenames
-       * point to DICOM files. The ordering is based of one of
-       * several strategies, which will read all images in the
-       * directory ( assuming there is only one study/series ).
-       *
-       * \param directory         Set the directory that contains the DICOM data set.
-       * \param recursive         Recursively parse the input directory.
-       * \param useSeriesDetails  Use additional series information such as ProtocolName and SeriesName to identify when a single SeriesUID contains multiple 3D volumes - as can occur with perfusion and DTI imaging.
-       * \param loadSequences     Parse any sequences in the DICOM data set. Loading DICOM files is faster when sequences are not needed.
-       * \param loadPrivateTags   Parse any private tags in the DICOM data set. Defaults to false to skip private tags. Loading DICOM files faster is when private tags are not needed.
-       *
-       * \sa itk::GDCMSeriesFileNames
-       **/
-      static std::vector<std::string> GetGDCMSeriesFileNames( const std::string &directory,
-                                                              bool useSeriesDetails = false,
-                                                              bool recursive = false,
-                                                              bool loadSequences = false,
-                                                              bool loadPrivateTags = false )
-        {
-        return ImageSeriesReader::GetGDCMSeriesFileNames( directory, "", useSeriesDetails, recursive, loadSequences, loadPrivateTags );
-        }
-
-
       /** \brief Generate a sequence of filenames from a directory with a DICOM data set and a series ID.
        *
        * This method generates a sequence of filenames whose filenames
@@ -84,16 +59,14 @@ namespace itk {
        * \param seriesID          Set the name that identifies a particular series.
        * \param useSeriesDetails  Use additional series information such as ProtocolName and SeriesName to identify when a single SeriesUID contains multiple 3D volumes - as can occur with perfusion and DTI imaging.
        * \param loadSequences     Parse any sequences in the DICOM data set. Loading DICOM files is faster when sequences are not needed.
-       * \param loadPrivateTags   Parse any private tags in the DICOM data set. Defaults to false to skip private tags. Loading DICOM files is faster when private tags are not needed.
        *
        * \sa itk::GDCMSeriesFileNames
        **/
       static std::vector<std::string> GetGDCMSeriesFileNames( const std::string &directory,
-                                                              const std::string &seriesID,
+                                                              const std::string &seriesID = "",
                                                               bool useSeriesDetails = false,
                                                               bool recursive = false,
-                                                              bool loadSequences = false,
-                                                              bool loadPrivateTags = false );
+                                                              bool loadSequences = false );
 
       /** \brief Get all the seriesIDs from a DICOM data set
        *
