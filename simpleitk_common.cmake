@@ -35,6 +35,7 @@
 #   dashboard_configure_options   = options pass to test
 #   dashboard_do_coverage     = True to enable coverage (ex: gcov)
 #   dashboard_do_memcheck     = True to enable memcheck (ex: valgrind)
+#   dashboard_no_parts        = True to disable incremental submit
 #   dashboard_no_clean        = True to skip build tree wipeout
 #   dashboard_no_update       = True to skip source tree update
 #   CTEST_UPDATE_COMMAND      = path to git command-line client
@@ -379,7 +380,7 @@ while(NOT dashboard_done)
   if(NOT dashboard_no_update)
     ctest_update(RETURN_VALUE count)
   endif()
-  if(NOT dashboard_no_submit)
+  if(NOT dashboard_no_submit AND NOT dashboard_no_parts)
     ctest_submit(PARTS Start Update)
   endif()
   set(CTEST_CHECKOUT_COMMAND) # checkout on first iteration only
@@ -390,7 +391,7 @@ while(NOT dashboard_done)
                      OPTIONS "${dashboard_configure_options}"
                      RETURN_VALUE configure_return
 		      )
-    if(NOT dashboard_no_submit)
+    if(NOT dashboard_no_submit AND NOT dashboard_no_parts)
       ctest_submit(PARTS Configure)
     endif()
     ctest_read_custom_files(${CTEST_BINARY_DIRECTORY})
@@ -403,7 +404,7 @@ while(NOT dashboard_done)
                  APPEND
                  NUMBER_ERRORS build_number_errors
                  NUMBER_WARNINGS build_number_warnings)
-    if(NOT dashboard_no_submit)
+    if(NOT dashboard_no_submit AND NOT dashboard_no_parts)
       ctest_submit(PARTS Build)
     endif()
 
@@ -414,7 +415,7 @@ while(NOT dashboard_done)
       ctest_test( BUILD "${CTEST_BINARY_DIRECTORY}/SimpleITK-build"
                   RETURN_VALUE test_return
                   ${CTEST_TEST_ARGS} )
-      if(NOT dashboard_no_submit)
+      if(NOT dashboard_no_submit AND NOT dashboard_no_parts)
 	ctest_submit(PARTS Test)
       endif()
     endif()
@@ -428,7 +429,7 @@ while(NOT dashboard_done)
       file(READ ${CTEST_BINARY_DIRECTORY}/SimpleITK-build/CMakeFiles/TargetDirectories.txt build_coverage_dirs)
       file(APPEND "${CTEST_BINARY_DIRECTORY}/CMakeFiles/TargetDirectories.txt" "${build_coverage_dirs}")
       ctest_coverage( BUILD "${CTEST_BINARY_DIRECTORY}/SimpleITK-build" )
-      if(NOT dashboard_no_submit)
+      if(NOT dashboard_no_submit AND NOT dashboard_no_parts)
 	ctest_submit(PARTS Coverage)
       endif()
     endif()
@@ -437,7 +438,7 @@ while(NOT dashboard_done)
 	dashboard_hook_memcheck()
       endif()
       ctest_memcheck( BUILD "${CTEST_BINARY_DIRECTORY}/SimpleITK-build" )
-      if(NOT dashboard_no_submit)
+      if(NOT dashboard_no_submit AND NOT dashboard_no_parts)
 	ctest_submit(PARTS Build MemCheck)
       endif()
 
@@ -451,7 +452,11 @@ while(NOT dashboard_done)
 	"${CTEST_SCRIPT_DIRECTORY}/${CTEST_SCRIPT_NAME}"
 	"${CMAKE_CURRENT_LIST_FILE}"
        )
-      ctest_submit(PARTS Notes ExtraFiles Submit)
+     if( NOT dashboard_no_parts )
+       ctest_submit(PARTS Notes ExtraFiles Submit)
+     else()
+       ctest_submit()
+     endif()
     endif()
     if(COMMAND dashboard_hook_end)
       dashboard_hook_end()
