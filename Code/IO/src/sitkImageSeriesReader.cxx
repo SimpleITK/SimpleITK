@@ -40,8 +40,7 @@ namespace itk {
                                                                       const std::string &seriesID,
                                                                       bool useSeriesDetails,
                                                                       bool recursive,
-                                                                      bool loadSequences,
-                                                                      bool loadPrivateTags )
+                                                                      bool loadSequences )
     {
     GDCMSeriesFileNames::Pointer gdcmSeries = GDCMSeriesFileNames::New();
 
@@ -49,7 +48,8 @@ namespace itk {
     gdcmSeries->SetUseSeriesDetails( useSeriesDetails );
     gdcmSeries->SetRecursive( recursive );
     gdcmSeries->SetLoadSequences( loadSequences );
-    gdcmSeries->SetLoadPrivateTags( loadPrivateTags );
+    //Skip private tags. Loading DICOM files is faster when private tags are not needed.
+    gdcmSeries->SetLoadPrivateTags( false );
 
     gdcmSeries->Update();
 
