@@ -29,6 +29,7 @@
 #   dashboard_loop            = Repeat until N seconds have elapsed
 #   dashboard_root_name       = Change name of "My Tests" directory
 #   dashboard_source_name     = Name of source directory (SimpleITK)
+#   dashboard_source_config_dir   = Name of subdirectory for configure
 #   dashboard_binary_name     = Name of binary directory (SimpleITK-build)
 #   dashboard_cache           = Initial CMakeCache.txt file content
 #   dashboard_do_cache        = Always write CMakeCache.txt
@@ -152,6 +153,12 @@ if(NOT DEFINED CTEST_SOURCE_DIRECTORY)
     set(CTEST_SOURCE_DIRECTORY ${CTEST_DASHBOARD_ROOT}/SimpleITK)
   endif()
 endif()
+
+# set subdirectory used for configuration
+if( NOT DEFINED dashboard_source_config_dir )
+  set( dashboard_source_config_dir "SuperBuild")
+endif()
+
 
 # Select a build directory name.
 if(NOT DEFINED CTEST_BINARY_DIRECTORY)
@@ -387,7 +394,7 @@ while(NOT dashboard_done)
   message("Found ${count} changed files")
 
   if(dashboard_fresh OR NOT dashboard_continuous OR count GREATER 0)
-    ctest_configure( SOURCE "${CTEST_SOURCE_DIRECTORY}/SuperBuild"
+    ctest_configure( SOURCE "${CTEST_SOURCE_DIRECTORY}/${dashboard_source_config_dir}"
                      OPTIONS "${dashboard_configure_options}"
                      RETURN_VALUE configure_return
 		      )
