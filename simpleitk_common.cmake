@@ -251,6 +251,7 @@ foreach(req
 endforeach(req)
 
 # Print summary information.
+set(vars)
 foreach(v
     CTEST_SITE
     CTEST_BUILD_NAME
@@ -408,7 +409,6 @@ while(NOT dashboard_done)
       dashboard_hook_build()
     endif()
     ctest_build( BUILD "${CTEST_BINARY_DIRECTORY}"
-                 APPEND
                  NUMBER_ERRORS build_number_errors
                  NUMBER_WARNINGS build_number_warnings)
     if(NOT dashboard_no_submit AND NOT dashboard_no_parts)
