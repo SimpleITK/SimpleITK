@@ -355,26 +355,6 @@ while(NOT dashboard_done)
     ctest_start(${dashboard_model})
   endif()
 
-  # make sure correct branch is checked out
-  execute_process(COMMAND ${CTEST_GIT_COMMAND}  rev-parse --abbrev-ref HEAD
-    OUTPUT_VARIABLE current_dashboard_git_branch
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-    WORKING_DIRECTORY ${CTEST_SOURCE_DIRECTORY})
-  if(NOT current_dashboard_git_branch STREQUAL dashboard_git_branch)
-    message("Checking out branch \"${dashboard_git_branch}\"...")
-     execute_process(COMMAND ${CTEST_GIT_COMMAND} show-ref --verify --quiet "refs/heads/${dashboard_git_branch}"
-       WORKING_DIRECTORY ${CTEST_SOURCE_DIRECTORY}
-       RESULT_VARIABLE ret)
-     if (ret)
-       # new checkout of branch
-       execute_process(COMMAND ${CTEST_GIT_COMMAND} checkout -b ${dashboard_git_branch} origin/${dashboard_git_branch}
-         WORKING_DIRECTORY ${CTEST_SOURCE_DIRECTORY})
-     else()
-       execute_process(COMMAND ${CTEST_GIT_COMMAND} checkout ${dashboard_git_branch}
-         WORKING_DIRECTORY ${CTEST_SOURCE_DIRECTORY})
-     endif()
-  endif()
-
   # Always build if the tree is fresh.
   set(dashboard_fresh 0)
   if(NOT EXISTS "${CTEST_BINARY_DIRECTORY}/CMakeCache.txt"
@@ -386,6 +366,28 @@ while(NOT dashboard_done)
 
   # Look for updates.
   if(NOT dashboard_no_update)
+    if (NOT CTEST_UPDATE_VERSION_ONLY )
+      # make sure correct branch is checked out
+      execute_process(COMMAND ${CTEST_GIT_COMMAND}  rev-parse --abbrev-ref HEAD
+        OUTPUT_VARIABLE current_dashboard_git_branch
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        WORKING_DIRECTORY ${CTEST_SOURCE_DIRECTORY})
+      if(NOT current_dashboard_git_branch STREQUAL dashboard_git_branch)
+        message("Checking out branch \"${dashboard_git_branch}\"...")
+        execute_process(COMMAND ${CTEST_GIT_COMMAND} show-ref --verify --quiet "refs/heads/${dashboard_git_branch}"
+          WORKING_DIRECTORY ${CTEST_SOURCE_DIRECTORY}
+          RESULT_VARIABLE ret)
+        if (ret)
+          # new checkout of branch
+          execute_process(COMMAND ${CTEST_GIT_COMMAND} checkout -b ${dashboard_git_branch} origin/${dashboard_git_branch}
+            WORKING_DIRECTORY ${CTEST_SOURCE_DIRECTORY})
+        else()
+          execute_process(COMMAND ${CTEST_GIT_COMMAND} checkout ${dashboard_git_branch}
+            WORKING_DIRECTORY ${CTEST_SOURCE_DIRECTORY})
+        endif()
+      endif()
+    endif()
+
     ctest_update(RETURN_VALUE count)
   endif()
   if(NOT dashboard_no_submit AND NOT dashboard_no_parts)
