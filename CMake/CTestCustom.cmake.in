@@ -71,3 +71,9 @@ SET(CTEST_CUSTOM_WARNING_EXCEPTION
   "tr1/mu_iterate.h.* warning: unused parameter '__tuple'"
 )
 
+SET(CTEST_CUSTOM_WARNING_EXCEPTION
+  ${CTEST_CUSTOM_WARNING_EXCEPTION}
+
+ # Error to ignore on Windows during wheel production
+ "pep425tags.*RuntimeWarning.*ABI tag may be incorrect"
+)
