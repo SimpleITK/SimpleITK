@@ -7,9 +7,9 @@ general:
 machine:
     environment:
         CTEST_DASHBOARD_ROOT: ${HOME}
-        CTEST_SOURCE_DIRECTORY: ${HOME}/SimpleITK
-        CTEST_BINARY_DIRECTORY: ${HOME}/SimpleITK-build
-        DASHBOARD_BRANCH_DIRECTORY: ${HOME}/SimpleITK-dashboard
+        CTEST_SOURCE_DIRECTORY: ${HOME}/${CIRCLE_PROJECT_REPONAME}
+        CTEST_BINARY_DIRECTORY: ${HOME}/${CIRCLE_PROJECT_REPONAME}-build
+        DASHBOARD_BRANCH_DIRECTORY: ${HOME}/dashboard
         ExternalData_OBJECT_STORES: ${HOME}/.ExternalData
         DISTCC_TCP_CORK: "0"
         DISTCC_DIR: ${HOME}/.distcc
