@@ -60,7 +60,7 @@ if ( failed )
 endif()
 
 
-if(@BUILD_TESTING)
+if(@BUILD_TESTING@)
   #
   # Get Python library directory.
   #
