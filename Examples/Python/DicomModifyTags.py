@@ -55,8 +55,12 @@ mean_image.SetMetaData( "0008|0021", modification_date )
 sitk.WriteImage( mean_image, sys.argv[2] )
 
 # Finally, read the image back and see that changes were made
+# Note that the image type (0008|0008) can contain additional spaces. The requirement is that
+# the string have an even length (ftp://dicom.nema.org/medical/DICOM/2013/output/chtml/part05/sect_6.2.html).
+# Where spaces are added is not specified and thus may vary ("DERIVED\SECONDARY ", "DERIVED\ SECONDARY" are
+# equivalent).
 modified_image = sitk.ReadImage( sys.argv[2] )
-if modified_image.GetMetaData( "0008|0008" ) != "DERIVED\SECONDARY" or \
+if modified_image.GetMetaData( "0008|0008" ).replace(" ","") != "DERIVED\SECONDARY" or \
    modified_image.GetMetaData( "0008|0031" ) != modification_time or \
    modified_image.GetMetaData( "0008|0021" ) != modification_date:
     sys.exit(1)
