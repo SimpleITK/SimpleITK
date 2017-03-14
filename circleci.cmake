@@ -39,9 +39,9 @@ set_from_env(CTEST_CONFIGURATION_TYPE "CTEST_CONFIGURATION_TYPE" REQUIRED)
 string(SUBSTRING $ENV{CIRCLE_SHA1} 0 7 commit_sha1)
 set(CTEST_BUILD_NAME "CircleCI-$ENV{CIRCLE_BRANCH}-${commit_sha1}")
 
-set_from_env(dashboard_branch "CIRCLE_BRANCH")
+set_from_env(dashboard_git_branch "CIRCLE_BRANCH")
 
-set_from_env(dashboard_model "DASHBOARD_MODEL" DEFAULT "Release" )
+set_from_env(dashboard_model "DASHBOARD_MODEL" DEFAULT "Experimental" )
 
 
 list(APPEND CTEST_NOTES_FILES
