@@ -30,7 +30,9 @@ if(MSVC)
       CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO
       CMAKE_SHARED_LINKER_FLAGS_DEBUG
       CMAKE_SHARED_LINKER_FLAGS_RELWITHDEBINFO )
-    STRING(REGEX REPLACE "INCREMENTAL(:[a-zA-Z]+)?" "INCREMENTAL:NO" ${_varName} ${${_varName}})
+    if(DEFINED ${_varName})
+      STRING(REGEX REPLACE "INCREMENTAL(:[a-zA-Z]+)?" "INCREMENTAL:NO" ${_varName} ${${_varName}})
+    endif()
   endforeach()
 
 endif()
