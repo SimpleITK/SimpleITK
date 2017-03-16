@@ -29,6 +29,7 @@ set_from_env(CTEST_BINARY_DIRECTORY "CTEST_BINARY_DIRECTORY")
 set_from_env(CTEST_DASHBOARD_ROOT  "CTEST_DASHBOARD_ROOT" REQUIRED)
 set_from_env(CTEST_SOURCE_DIRECTORY "CTEST_SOURCE_DIRECTORY" REQUIRED)
 set_from_env(CTEST_CONFIGURATION_TYPE "CTEST_CONFIGURATION_TYPE" DEFAULT "Release")
+set_from_env(CTEST_BUILD_FLAGS "CTEST_BUILD_FLAGS")
 
 
 # Construct build name based on what is being built
@@ -36,9 +37,8 @@ string(SUBSTRING $ENV{CIRCLE_SHA1} 0 7 commit_sha1)
 set(CTEST_BUILD_NAME "CircleCI-$ENV{CIRCLE_BRANCH}-${commit_sha1}")
 
 set_from_env(dashboard_git_branch "CIRCLE_BRANCH")
-
 set_from_env(dashboard_model "DASHBOARD_MODEL" DEFAULT "Experimental" )
-
+set(dashboard_loop 0)
 
 list(APPEND CTEST_NOTES_FILES
   "${CTEST_SOURCE_DIRECTORY}/circle.yml"
