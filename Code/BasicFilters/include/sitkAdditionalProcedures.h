@@ -35,10 +35,11 @@ namespace simple {
  * These functions call the execute method of ResampleImageFilter
  * in order to support a procedual API.
  *
- * There three very by how the output image's domain parameters are
- * specified. The first method used the input image, the second uses
- * a reference image, while the last procedure has them manually
- * specified.
+ * The difference between the three functions is in the way the output
+ * image's domain parameters are specified (origin, spacing,
+ * direction). The first function uses the parameters from the input image,
+ * the second uses the parameters of a reference image, and the third uses
+ * explicitly specified parameters.
  *
  * \sa itk::simple::ResampleImageFilter for the object oriented interface
 * @{
