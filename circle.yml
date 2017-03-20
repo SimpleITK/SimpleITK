@@ -13,7 +13,6 @@ machine:
         ExternalData_OBJECT_STORES: ${HOME}/.ExternalData
         DISTCC_TCP_CORK: "0"
         DISTCC_DIR: ${HOME}/.distcc
-        MAKEFLAGS: "-j $(expr $CIRCLE_NODE_TOTAL \\* 2 + 1)"
     post:
         - sudo apt-get remove cmake && sudo apt-get install libpython-dev distcc lua5.1
         - sudo sed -i.bak s/STARTDISTCC=\"false\"/STARTDISTCC=\"true\"/g /etc/default/distcc && sudo /etc/init.d/distcc start
@@ -38,6 +37,7 @@ test:
             environment:
                 DASHBOARD_MODEL: $( [[ "$CIRCLE_BRANCH" = "master" || "$CIRCLE_BRANCH" = "next" ]] && echo Continuous || echo Experimental )
                 CTEST_CONFIGURATION_TYPE: "Release"
+                CTEST_BUILD_FLAGS: "-j$(expr $CIRCLE_NODE_TOTAL \\* 2 + 1)"
                 ITK_GLOBAL_DEFAULT_NUMBER_OF_THREAD: 2
                 CTEST_OUTPUT_ON_FAILURE: 1
                 LD_LIBRARY_PATH: ${CTEST_BINARY_DIRECTORY}/ITK-prefix/lib/:${CTEST_BINARY_DIRECTORY}/SimpleITK-build/lib
