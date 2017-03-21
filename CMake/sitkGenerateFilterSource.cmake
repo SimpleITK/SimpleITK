@@ -150,13 +150,16 @@ function( expand_template FILENAME input_dir output_dir library_name )
 
   get_json_path( itk_module ${input_json_file} itk_module)
 
-  list (FIND ITK_MODULES_ENABLED "${itk_module}" _index)
 
   if("${itk_module}" STREQUAL "")
     message(WARNING "Missing \"itk_module\" field in ")
-  elseif (NOT "${itk_module}" STREQUAL "" AND ${_index} EQUAL -1)
-    # required module is not enabled, don't process
-    return()
+  else()
+    list (FIND ITK_MODULES_ENABLED "${itk_module}" _index)
+    find_package(ITK QUIET COMPONENTS ${itk_module})
+    if (NOT ITK_FOUND)
+      # required module is not enabled, don't process
+      return()
+    endif()
   endif()
 
   # Get the list of template component files for this template
