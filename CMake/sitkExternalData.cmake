@@ -41,6 +41,9 @@ if(NOT SimpleITK_FORBID_DOWNLOADS)
     # Data published on GitHub Pages
     "https://simpleitk.github.io/SimpleITKExternalData/%(algo)/%(hash)"
 
+    # Data published on Girder
+    "https://data.kitware.com:443/api/v1/file/hashsum/%(algo)/%(hash)/download"
+
     # Data published by MIDAS
     "https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=%(hash)&algorithm=%(algo)"
 
