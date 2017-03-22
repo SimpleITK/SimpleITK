@@ -47,7 +47,7 @@ if(NOT DEFINED CMAKE_SKIP_BUILD_RPATH)
 endif()
 
 if(NOT TARGET dist)
-  add_custom_target( dist cmake -E echo "Finished generating wrapped packages for distribution..." )
+  add_custom_target( dist ${CMAKE_COMMAND} -E echo "Finished generating wrapped package for distribution..." )
 endif()
 
 # TODO these should be moved into UseSimpleITK
