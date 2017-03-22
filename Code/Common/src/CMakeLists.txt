@@ -30,7 +30,7 @@ set ( SimpleITKCommonSource
 
 set(use_itk_modules ITKCommon ITKImageCompose ITKImageIntensity
   ITKLabelMap ITKTransform ITKIOTransformBase ITKDisplacementField )
-find_package(ITK COMPONENTS ${use_itk_modules}  REQUIRED)
+find_package(ITK REQUIRED COMPONENTS ${use_itk_modules})
 
 add_library ( SimpleITKCommon ${SimpleITKCommonSource} ${SimpleITKAncillarySource} )
 sitk_target_use_itk (SimpleITKCommon PRIVATE ${use_itk_modules} )

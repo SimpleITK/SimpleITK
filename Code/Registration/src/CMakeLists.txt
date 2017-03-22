@@ -6,7 +6,7 @@ set( SimpleITKRegistration
   )
 
 set(use_itk_modules  ITKCommon  ITKLabelMap ITKOptimizersv4 ITKMetricsv4 ITKRegistrationMethodsv4)
-find_package(ITK COMPONENTS ${use_itk_modules} REQUIRED)
+find_package(ITK REQUIRED COMPONENTS ${use_itk_modules})
 
 add_library ( SimpleITKRegistration ${SimpleITKRegistration} )
 sitk_target_use_itk ( SimpleITKRegistration PRIVATE ${use_itk_modules} )

@@ -58,7 +58,7 @@ function(add_filter_library library_name src_list_var itk_module_list_var)
 endfunction()
 
 
-find_package(ITK COMPONENTS ITKCommon REQUIRED)
+find_package(ITK REQUIRED COMPONENTS ITKCommon)
 
 
 # common source which all basic filter libraries need to be linked against
