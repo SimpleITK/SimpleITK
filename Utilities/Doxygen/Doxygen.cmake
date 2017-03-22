@@ -15,8 +15,6 @@ if (BUILD_DOXYGEN)
 
   option(USE_ITK_DOXYGEN_TAGS "Download ITK's Doxygen tags" ON)
 
-  set(DOXYGEN_TAGFILES_PARAMETER "")
-
   if (USE_ITK_DOXYGEN_TAGS)
     set(ITK_DOXYGEN_TAGFILE "" CACHE PATH "ITK Doxygen tag file location. Empty string automatically downloads." )
 
@@ -30,11 +28,9 @@ if (BUILD_DOXYGEN)
         DEPENDS "${PROJECT_SOURCE_DIR}/Utilities/Doxygen/ITKDoxygenTags.cmake"
         )
     endif()
- 
+
     set(ITK_DOXYGEN_ROOT_URL "https://www.itk.org/Doxygen/html/" CACHE STRING "URL for the ITK Doxygen web root")
-    if (NOT DOXYGEN_TAGFILES_PARAMETER STREQUAL "")
-      set(DOXYGEN_TAGFILES_PARAMETER "${ITK_DOXYGEN_TAGFILE}=${ITK_DOXYGEN_ROOT_URL}")
-    endif()
+    set(DOXYGEN_TAGFILES_PARAMETER "${ITK_DOXYGEN_TAGFILE}=${ITK_DOXYGEN_ROOT_URL}")
 
   endif()
 
