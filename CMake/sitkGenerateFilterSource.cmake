@@ -155,7 +155,7 @@ function( expand_template FILENAME input_dir output_dir library_name )
     message(WARNING "Missing \"itk_module\" field in ")
   else()
     list (FIND ITK_MODULES_ENABLED "${itk_module}" _index)
-    find_package(ITK QUIET COMPONENTS ${itk_module})
+    find_package(ITK QUIET OPTIONAL_COMPONENTS ${itk_module})
     if (NOT ITK_FOUND)
       # required module is not enabled, don't process
       return()
