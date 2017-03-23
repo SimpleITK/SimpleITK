@@ -34,10 +34,10 @@ namespace {
 
 template <typename T>
 void UpdateWithBestValueExhaustive(itk::ExhaustiveOptimizerv4<T> *exhaustiveOptimizer,
-                                   double &outValue,
+                                   double *outValue,
                                    itk::TransformBase *outTransform)
 {
-  outValue = exhaustiveOptimizer->GetMinimumMetricValue();
+  *outValue = exhaustiveOptimizer->GetMinimumMetricValue();
   if (outTransform)
     {
     outTransform->SetParameters(exhaustiveOptimizer->GetMinimumMetricValuePosition());
@@ -246,7 +246,7 @@ namespace simple
 
       this->m_pfUpdateWithBestValue = nsstd::bind(&UpdateWithBestValueExhaustive<double>,
                                                   optimizer,
-                                                  this->m_MetricValue,
+                                                  &(this->m_MetricValue),
                                                   nsstd::placeholders::_1);
 
 
