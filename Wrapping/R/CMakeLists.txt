@@ -101,9 +101,7 @@ if(NOT SimpleITK_FORBID_DOWNLOADS)
   add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_TARGET_NAME}
     PRE_BUILD
     ${COPY_DATA_COMMAND}
-    )
-  add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_TARGET_NAME}
-    PRE_BUILD
+    COMMAND
     ${EXTRACT_RMAN_COMMAND}
     )
 
