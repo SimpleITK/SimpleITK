@@ -737,6 +737,7 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_Exhaustive)
 
   R.SetMetricAsMeanSquares();
 
+  // Search grid of size 11x11
   R.SetOptimizerAsExhaustive(std::vector<unsigned int>(2,5), 0.5);
 
   IterationUpdate cmd(R);
@@ -750,6 +751,14 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_Exhaustive)
   std::cout << "Optimizer stop condition: " << R.GetOptimizerStopConditionDescription() << std::endl;
   std::cout << " Iteration: " << R.GetOptimizerIteration() << std::endl;
   std::cout << " Metric value: " << R.GetMetricValue() << std::endl;
+
+  // We expect the returned metric value after registration to
+  // correspond to the best value and not necessarily to the last value
+  double metric_value = R.GetMetricValue();
+  R.SetInitialTransform(outTx);
+  EXPECT_DOUBLE_EQ(R.MetricEvaluate(image,image), metric_value);
+  //final metric value is expected to be zero as this is the same image
+  EXPECT_DOUBLE_EQ(0.0, metric_value);
 
   EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,0.0), outTx.GetParameters(), 1e-3);
   EXPECT_EQ(0u, cmd.scales.size());
