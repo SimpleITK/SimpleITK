@@ -88,12 +88,8 @@ class Doxy2SWIG:
                         'basecompoundref')
         #self.generics = []
 
-        """ flag to enable/disable printing a space in the space_parse method.
-        if True, space_parse will not print a space if it is at the start
-        of a new line.  True by default.  Only disabled for a <simplesect> node
-        with kind=="see".
-        """
-        self.noLeadingSpace = True
+        # flag to tell when we're inside a <simplesect> node with kind=="see".
+        self.insideSee = False
 
     def generate(self):
         """Parses the file set in the initialization.  The resulting
@@ -123,6 +119,9 @@ class Doxy2SWIG:
         if m and len(m.group()) == len(txt):
             pass
         else:
+            #if we're in a "See" node and starting a new line, indent one space
+            if self.insideSee and len(self.pieces) and self.pieces[-1][-1] == '\n':
+                self.add_text(' ')
             self.add_text(textwrap.fill(txt))
 
     def parse_Element(self, node):
@@ -191,11 +190,8 @@ class Doxy2SWIG:
         """ Only output a space if the last character outputed was not a new line.
             I.e., don't allow a line to lead with a space.
         """
-        if self.noLeadingSpace:
-            if len(self.pieces) and self.pieces[-1][-1] != '\n':
-                self.add_text(' ')
-        else:
-                self.add_text(' ')
+	if len(self.pieces) and self.pieces[-1][-1] != '\n':
+          self.add_text(' ')
         self.generic_parse(node)
 
     # The handlers for all these node types get mapped to a space
@@ -336,9 +332,9 @@ class Doxy2SWIG:
         elif kind == 'see':
             self.add_text('\n')
             self.add_text('See:')
-            self.noLeadingSpace = False
+            self.insideSee = True
             self.generic_parse(node)
-            self.noLeadingSpace = True
+            self.insideSee = False
         else:
             self.generic_parse(node)
 
