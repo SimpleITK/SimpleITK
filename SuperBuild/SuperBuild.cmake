@@ -281,9 +281,10 @@ include(ExternalProject)
 #------------------------------------------------------------------------------
 # Lua
 #------------------------------------------------------------------------------
-option ( USE_SYSTEM_LUA "Use a pre-compiled version of LUA 5.1 previously configured for your system" OFF )
-mark_as_advanced(USE_SYSTEM_LUA)
-if ( USE_SYSTEM_LUA )
+option ( SimpleITK_USE_SYSTEM_LUA "Use a pre-compiled version of LUA 5.1 previously configured for your system" OFF )
+sitk_legacy_naming( SimpleITK_USE_SYSTEM_LUA USE_SYSTEM_LUA)
+mark_as_advanced(SimpleITK_USE_SYSTEM_LUA)
+if ( SimpleITK_USE_SYSTEM_LUA )
   find_package( LuaInterp REQUIRED 5.1 )
   set( SimpleITK_LUA_EXECUTABLE ${LUA_EXECUTABLE} CACHE PATH "Lua executable used for code generation." )
   mark_as_advanced( SimpleITK_LUA_EXECUTABLE )
@@ -291,16 +292,15 @@ if ( USE_SYSTEM_LUA )
 else()
   include(External_Lua)
   list(APPEND ${CMAKE_PROJECT_NAME}_DEPENDENCIES Lua)
-  set( SimpleITK_LUA_EXECUTABLE ${SimpleITK_LUA_EXECUTABLE} CACHE PATH "Lua executable used for code generation." )
-  mark_as_advanced( SimpleITK_LUA_EXECUTABLE )
 endif()
 
 #------------------------------------------------------------------------------
 # Swig
 #------------------------------------------------------------------------------
-option ( USE_SYSTEM_SWIG "Use a pre-compiled version of SWIG 3.0 previously configured for your system" OFF )
-mark_as_advanced(USE_SYSTEM_SWIG)
-if(USE_SYSTEM_SWIG)
+option ( SimpleITK_USE_SYSTEM_SWIG "Use a pre-compiled version of SWIG 3.0 previously configured for your system" OFF )
+sitk_legacy_naming( SimpleITK_USE_SYSTEM_SWIG USE_SYSTEM_SWIG )
+mark_as_advanced(SimpleITK_USE_SYSTEM_SWIG)
+if(SimpleITK_USE_SYSTEM_SWIG)
   find_package ( SWIG 3 REQUIRED )
 else()
   include(External_Swig)
@@ -310,10 +310,11 @@ endif()
 #------------------------------------------------------------------------------
 # Google Test
 #------------------------------------------------------------------------------
-option( USE_SYSTEM_GTEST "Use an external version of GoogleTest. " OFF )
-mark_as_advanced(USE_SYSTEM_GTEST)
+option( SimpleITK_USE_SYSTEM_GTEST "Use an external version of GoogleTest. " OFF )
+sitk_legacy_naming( SimpleITK_USE_SYSTEM_GTEST USE_SYSTEM_GTEST )
+mark_as_advanced(SimpleITK_USE_SYSTEM_GTEST)
 if ( BUILD_TESTING )
-  if (USE_SYSTEM_GTEST)
+  if (SimpleITK_USE_SYSTEM_GTEST)
     if (DEFINED GTEST_ROOT AND EXISTS "${GTEST_ROOT}/CMakeLists.txt")
       list(APPEND SimpleITK_VARS GTEST_ROOT)
     else()
@@ -330,10 +331,11 @@ endif()
 #------------------------------------------------------------------------------
 # Python virtualenv
 #------------------------------------------------------------------------------
-option( USE_SYSTEM_VIRTUALENV "Use a system version of Python's virtualenv. " OFF )
-mark_as_advanced(USE_SYSTEM_VIRTUALENV)
+option( SimpleITK_USE_SYSTEM_VIRTUALENV "Use a system version of Python's virtualenv. " OFF )
+sitk_legacy_naming( SimpleITK_USE_SYSTEM_VIRTUALENV USE_SYSTEM_VIRTUALENV)
+mark_as_advanced(SimpleITK_USE_SYSTEM_VIRTUALENV)
 if( NOT DEFINED SimpleITK_PYTHON_USE_VIRTUALENV OR SimpleITK_PYTHON_USE_VIRTUALENV )
-  if ( USE_SYSTEM_VIRTUALENV )
+  if ( SimpleITK_USE_SYSTEM_VIRTUALENV )
     find_package( PythonVirtualEnv REQUIRED)
   else()
     include(External_virtualenv)
@@ -353,9 +355,10 @@ mark_as_advanced( FORCE ITK_WRAPPING )
 if(ITK_WRAPPING)
   list(APPEND ITK_DEPENDENCIES Swig)
 endif()
-option(USE_SYSTEM_ITK "Use a pre-built version of ITK" OFF)
-mark_as_advanced(USE_SYSTEM_ITK)
-if(USE_SYSTEM_ITK)
+option(SimpleITK_USE_SYSTEM_ITK "Use a pre-built version of ITK" OFF)
+sitk_legacy_naming( SimpleITK_USE_SYSTEM_ITK USE_SYSTEM_ITK )
+mark_as_advanced(SimpleITK_USE_SYSTEM_ITK)
+if(SimpleITK_USE_SYSTEM_ITK)
   find_package(ITK REQUIRED)
   #we require certain packages be turned on in ITK
   include(sitkCheckForITKModuleDependencies)
@@ -373,6 +376,8 @@ foreach (_varName ${_varNames})
     if (NOT _varName MATCHES "^SITK_LANGUAGES_VARS"
           AND
         NOT _varName MATCHES "^SimpleITK_VARS"
+          AND
+        NOT _varName MATCHES "^SimpleITK_USE_SYSTEM"
           AND
         NOT _varName MATCHES "^SimpleITK_.*_COMPILE_OPTIONS"
           AND
