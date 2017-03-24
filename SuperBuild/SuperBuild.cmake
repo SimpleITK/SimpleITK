@@ -350,11 +350,6 @@ endif()
 # ITK
 #------------------------------------------------------------------------------
 
-set(ITK_WRAPPING OFF CACHE BOOL "Turn OFF wrapping ITK with WrapITK")
-mark_as_advanced( FORCE ITK_WRAPPING )
-if(ITK_WRAPPING)
-  list(APPEND ITK_DEPENDENCIES Swig)
-endif()
 option(SimpleITK_USE_SYSTEM_ITK "Use a pre-built version of ITK" OFF)
 sitk_legacy_naming( SimpleITK_USE_SYSTEM_ITK USE_SYSTEM_ITK )
 mark_as_advanced(SimpleITK_USE_SYSTEM_ITK)
