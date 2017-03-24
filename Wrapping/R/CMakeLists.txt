@@ -67,9 +67,8 @@ configure_file(
 if(NOT SimpleITK_FORBID_DOWNLOADS)
   include(sitkExternalData)
 
-  file( GLOB_RECURSE image_links RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/SimpleITK/data/*.md5" )
 
-  file( GLOB_RECURSE doc_links RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/SimpleITK/man/*.md5" )
+  file( GLOB_RECURSE image_links RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/SimpleITK/data/*.md5" )
 
   foreach(link ${image_links})
     string( REGEX REPLACE "\\.md5$" "" link ${link} )
@@ -79,6 +78,12 @@ if(NOT SimpleITK_FORBID_DOWNLOADS)
       )
     set( COPY_DATA_COMMAND ${COPY_DATA_COMMAND} COMMAND ${CMAKE_COMMAND} -E copy ${image_location} ${CMAKE_CURRENT_BINARY_DIR}/Packaging/SimpleITK/data/ )
   endforeach()
+
+
+  # The downloaded tar ball of documentation has been generated with
+  # the "Utilities/GenerateDocs/SwigDocUpdate.sh". This documentation
+  # should be generated for each release.
+  file( GLOB_RECURSE doc_links RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/SimpleITK/man/*.md5" )
 
   foreach(link ${doc_links})
     string( REGEX REPLACE "\\.md5$" "" link ${link} )
@@ -96,13 +101,11 @@ if(NOT SimpleITK_FORBID_DOWNLOADS)
   endif()
   add_dependencies( ${SWIG_MODULE_SimpleITK_TARGET_NAME} SimpleITKRpackageData )
 
-  # copy sample images - used in vignette
-  ## can't use file(copy as the sources are symbolic links
+  # copy sample images and extract documentation - used in vignette
   add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_TARGET_NAME}
     PRE_BUILD
-    ${COPY_DATA_COMMAND}
-    COMMAND
-    ${EXTRACT_RMAN_COMMAND}
+      ${COPY_DATA_COMMAND}
+      ${EXTRACT_RMAN_COMMAND}
     )
 
 endif()
