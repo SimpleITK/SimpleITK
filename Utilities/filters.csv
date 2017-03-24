@@ -350,6 +350,7 @@ TileImageFilter,True,True,,True
 TobogganImageFilter,True,False,,True
 TriangleThresholdImageFilter,True,True,,False
 UnaryMinusImageFilter,False,True,,False
+UnsharpMaskImageFilter,True,False,,False
 UnsharpMaskLevelSetImageFilter,True,False,,True
 ValuedRegionalMaximaImageFilter,True,True,,True
 ValuedRegionalMinimaImageFilter,True,True,,True
