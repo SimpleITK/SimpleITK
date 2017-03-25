@@ -40,6 +40,28 @@
 }
 %}
 
+// Specific typemaps for Image returns so that the finalizer gets attached.
+// Would be nice if this can be generalised, but I can't see a way at present.
+// Currently the finalizer gets attached by the wrapping of constructors,
+// but not to the Execute methods, or the function interface.
+%typemap(scoerceout) itk::simple::Image &, itk::simple::Image &&, itk::simple::Image *, itk::simple::Image *const
+%{
+  if (inherits($result, 'externalptr')) {
+   reg.finalizer($result, delete_Image)
+   $result <- new("$R_class", ref=$result);
+} else {
+   stop("Exception in SITK - check warning messages\n")
+}
+%}
+%typemap(scoerceout) itk::simple::Image
+%{
+  if (inherits($result, 'externalptr')) {
+   reg.finalizer($result, delete_Image)
+   $result <- new("$&R_class", ref=$result);
+} else {
+   stop("Exception in SITK - check warning messages\n")
+}
+%}
 
 // SEXP numeric typemap for array/image converion - SEXP are
 // arrays here
