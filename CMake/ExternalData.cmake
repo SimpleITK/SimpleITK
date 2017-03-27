@@ -1068,7 +1068,6 @@ function(_ExternalData_download_object name hash algo var_obj var_success var_er
 endfunction()
 
 if("${ExternalData_ACTION}" STREQUAL "fetch")
-  message( "fetch ext: ${exts}")
   foreach(v ExternalData_OBJECT_STORES file name exts)
     if(NOT DEFINED "${v}")
       message(FATAL_ERROR "No \"-D${v}=\" value provided!")
