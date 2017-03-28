@@ -1,7 +1,7 @@
 #
 # Migrate SITK prefixed CMake options to SimpleITK
 #
-# sitk_legacy_naming( new_var_name)
+# sitk_legacy_naming( new_var_name [old_var_name] )
 #   new_var_name - a variable name which has the prefix migrated from
 # "SITK" to SimpleITK.
 #
@@ -22,7 +22,12 @@ endfunction()
 
 macro(sitk_legacy_naming new_var_name )
 
-  string( REGEX REPLACE  "^SimpleITK_" "SITK_" old_var_name "${new_var_name}" )
+
+  if(NOT "${ARGV1}" STREQUAL "")
+    set( old_var_name ${ARGV1} )
+  else()
+    string( REGEX REPLACE  "^SimpleITK_" "SITK_" old_var_name "${new_var_name}" )
+  endif()
 
   if (DEFINED "${old_var_name}")
     message(WARNING "SimpleITK variable \"${old_var_name}\" is \
