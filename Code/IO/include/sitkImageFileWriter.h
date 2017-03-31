@@ -27,6 +27,10 @@
 #include <memory>
 
 namespace itk {
+
+// Forward decalaration for pointer
+class ImageIOBase;
+
   namespace simple {
 
     /** \class ImageFileWriter
@@ -59,13 +63,29 @@ namespace itk {
        *
        * These methods Set/Get/Toggle the UseCompression flag which
        * get's passed to image file's itk::ImageIO object. This is
-       * only a request as not all file formatts support compression.
+       * only a request as not all file formats support compression.
        * @{ */
       SITK_RETURN_SELF_TYPE_HEADER SetUseCompression( bool UseCompression );
       bool GetUseCompression( void ) const;
 
       SITK_RETURN_SELF_TYPE_HEADER UseCompressionOn( void ) { return this->SetUseCompression(true); }
       SITK_RETURN_SELF_TYPE_HEADER UseCompressionOff( void ) { return this->SetUseCompression(false); }
+      /** @} */
+
+
+      /** \brief Use the original study/series/frame of reference.
+       *
+       * These methods Set/Get/Toggle the KeepOriginalImageUID flag which
+       * get's passed to image file's itk::ImageIO object. This is
+       * relevant only for the DICOM file format, configuring the writer
+       * to use the information in the image's meta-data dictionary or
+       * to create new study/series/frame of reference values.
+       * @{ */
+      SITK_RETURN_SELF_TYPE_HEADER SetKeepOriginalImageUID( bool KeepOriginalImageUID );
+      bool GetKeepOriginalImageUID( void ) const;
+
+      SITK_RETURN_SELF_TYPE_HEADER KeepOriginalImageUIDOn( void ) { return this->SetKeepOriginalImageUID(true); }
+      SITK_RETURN_SELF_TYPE_HEADER KeepOriginalImageUIDOff( void ) { return this->SetKeepOriginalImageUID(false); }
       /** @} */
 
       SITK_RETURN_SELF_TYPE_HEADER SetFileName ( const std::string &fileName );
@@ -76,10 +96,13 @@ namespace itk {
 
     private:
 
+      itk::SmartPointer<ImageIOBase> GetImageIOBase(const std::string &fileName);
+
       template <class T> Self& ExecuteInternal ( const Image& );
 
       bool m_UseCompression;
       std::string m_FileName;
+      bool m_KeepOriginalImageUID;
 
       // function pointer type
       typedef Self& (Self::*MemberFunctionType)( const Image& );
