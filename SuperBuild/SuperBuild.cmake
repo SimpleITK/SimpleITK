@@ -119,7 +119,7 @@ find_package(Git)
 set(_SimpleITK_GIT_PROTOCOL_default "https")
 if (GIT_VERSION_STRING VERSION_LESS "1.7.10")
   # minimum version for https support
-  set(SimpleITK_GIT_PROTOCOL_default "git")
+  set(_SimpleITK_GIT_PROTOCOL_default "git")
 endif()
 set(SimpleITK_GIT_PROTOCOL  ${_SimpleITK_GIT_PROTOCOL_default} CACHE STRING "If behind a firewall turn set this to 'https' or 'http'." )
 mark_as_advanced(SimpleITK_GIT_PROTOCOL)
