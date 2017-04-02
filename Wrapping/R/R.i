@@ -40,6 +40,21 @@
 }
 %}
 
+// itk::Simple::Image should always have a finalizer attached in R
+// simpleitk deals with reference counting.
+%typemap (ret) itk::simple::Image, itk::simple::Image &, itk::simple::Image &&, itk::simple::Image *, itk::simple::Image *const
+%{
+  R_RegisterCFinalizerEx(r_ans, delete_Image_void, TRUE);
+%}
+
+
+// same thing for transforms
+%typemap (ret) itk::simple::Transform, itk::simple::Transform &, itk::simple::Transform &&, itk::simple::Transform *, itk::simple::Transform *const
+%{
+  /* return typemap here - Image ref/pointer */
+  R_RegisterCFinalizerEx(r_ans, delete_Transform_void, TRUE);
+%}
+
 
 // SEXP numeric typemap for array/image converion - SEXP are
 // arrays here
@@ -115,8 +130,35 @@ std::vector<float>, std::vector<float> *, std::vector<float> &
 
 }
 
+%ignore delete_Image_void(SEXP p);
+%ignore delete_Transform_void(SEXP p);
+
+%ignore R_swig_delete_Image ( SEXP self);
+%ignore R_swig_delete_Transform (SEXP self);
 %inline
 %{
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+SEXP R_swig_delete_Image ( SEXP self);
+SEXP R_swig_delete_Transform (SEXP self);
+
+  // wrappers for the swig generated destructors that return void
+void delete_Image_void(SEXP p)
+  {
+    R_swig_delete_Image(p);
+  }
+
+void delete_Transform_void(SEXP p)
+  {
+    R_swig_delete_Transform(p);
+  }
+
+#ifdef __cplusplus
+}
+#endif
+
 SEXP ImAsArray(itk::simple::Image src);
 itk::simple::Image ArrayAsIm(SEXP arr,
                              std::vector<unsigned int> size,
