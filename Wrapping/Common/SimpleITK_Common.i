@@ -126,7 +126,7 @@ namespace std
 
 
 #ifndef SITK_RETURN_SELF_TYPE_HEADER
-#define SITK_RETURN_SELF_TYPE_HEADER Self &
+#define SITK_RETURN_SELF_TYPE_HEADER void
 #endif
 
 
