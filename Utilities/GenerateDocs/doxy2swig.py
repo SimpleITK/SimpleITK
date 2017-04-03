@@ -415,7 +415,8 @@ class Doxy2R(Doxy2SWIG):
         self.FilterTitle = True
         self.sitkClassName=''
         self.EmptyText = False
-
+        self.dollarFormula = re.compile("^\\$(.+)\\$$")
+        self.arrayFormula = re.compile("^\\\\\\[(.+)\\\\\\]$")
     def parse_Text(self, node):
         txt = node.data
         txt = txt.replace('\\', r'\\\\')
@@ -429,6 +430,24 @@ class Doxy2R(Doxy2SWIG):
         else:
             self.add_text(textwrap.fill(txt))
 
+    def do_formula(self, node):
+        # need to apply different tags if it is $$ or \[
+        if len(self.pieces):
+            txt = node.firstChild.data
+            # does txt contain $
+            f1 = self.dollarFormula.match(txt)
+            f2 = self.arrayFormula.match(txt)
+            if f1 is not None:
+                self.add_text(' \\eqn{')
+                self.add_text(f1.group(1))
+            elif f2 is not None:
+                self.add_text(' \\deqn{')
+                self.add_text(f2.group(1))
+            else:
+                print("Unmatched formula")
+                print(txt)
+
+            self.add_text("}")
 
     def do_compoundname(self, node):
         self.add_text('\n\n')
