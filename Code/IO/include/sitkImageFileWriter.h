@@ -31,6 +31,9 @@ namespace itk {
 // Forward decalaration for pointer
 class ImageIOBase;
 
+template<class T>
+class SmartPointer;
+
   namespace simple {
 
     /** \class ImageFileWriter
