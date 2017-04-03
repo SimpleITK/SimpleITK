@@ -197,10 +197,15 @@ function(sitk_install_exported_target tgt)
     set_property(GLOBAL PROPERTY SimpleITK_FIRST_EXPORTED_TARGET 1)
   endif()
 
-  set_property(TARGET ${tgt} PROPERTY VERSION 1)
-  set_property(TARGET ${tgt} PROPERTY SOVERSION 1)
-  set_property(TARGET ${tgt} PROPERTY
-    OUTPUT_NAME ${tgt}-${SimpleITK_VERSION_MAJOR}.${SimpleITK_VERSION_MINOR})
+  get_target_property( type ${tgt} TYPE )
+  if (type STREQUAL "STATIC_LIBRARY" OR
+      type STREQUAL "MODULE_LIBRARY" OR
+      type STREQUAL "SHARED_LIBRARY")
+    set_property(TARGET ${tgt} PROPERTY VERSION 1)
+    set_property(TARGET ${tgt} PROPERTY SOVERSION 1)
+    set_property(TARGET ${tgt} PROPERTY
+      OUTPUT_NAME ${tgt}-${SimpleITK_VERSION_MAJOR}.${SimpleITK_VERSION_MINOR})
+  endif()
 
   export(TARGETS ${tgt}
     APPEND FILE "${CMAKE_BINARY_DIR}/SimpleITKTargets.cmake"
