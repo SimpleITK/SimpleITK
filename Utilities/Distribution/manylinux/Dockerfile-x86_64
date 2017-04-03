@@ -1,0 +1,13 @@
+FROM quay.io/pypa/manylinux1_x86_64
+MAINTAINER Insight Software Consortium <community@itk.org>
+
+ADD https://cmake.org/files/v3.7/cmake-3.7.2.tar.gz \
+    https://www.openssl.org/source/openssl-1.0.2h.tar.gz \
+    /tmp/
+
+WORKDIR /tmp/
+COPY ./imagefiles/install.sh ./
+RUN bash -v install.sh && rm -rf /tmp/*
+
+# User is expected to mount directory to "/work"
+ENTRYPOINT ["bash", "-c", "groupadd -o -g $_GROUPID $_USER && useradd -m -o -g $_GROUPID $_USER -u $_USERID && su $_USER /work/io/imagefiles/cmd.sh" ]
