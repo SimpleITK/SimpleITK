@@ -26,32 +26,35 @@ if len( sys.argv ) < 3:
     print( "Usage: python " + __file__ + " <input_directory_with_DICOM_series> <output_directory>" )
     sys.exit ( 1 )
 
+
 # Read the original series. First obtain the series file names using the
-# image series reader. Then read each image using an image reader that is
-# set to load all DICOM tags (public+private). The resulting images contain
-# their DICOM meta-data dictionaries.
+# image series reader.
 data_directory = sys.argv[1]
-series_reader = sitk.ImageSeriesReader()
-series_IDs = series_reader.GetGDCMSeriesIDs(data_directory)
+series_IDs = sitk.ImageSeriesReader.GetGDCMSeriesIDs(data_directory)
 if not series_IDs:
     print("ERROR: given directory \""+data_directory+"\" does not contain a DICOM series.")
     sys.exit(1)
-series_file_names = series_reader.GetGDCMSeriesFileNames(data_directory, series_IDs[0])
+series_file_names = sitk.ImageSeriesReader.GetGDCMSeriesFileNames(data_directory, series_IDs[0])
 
+# Second, to construct a proper volume from the series we must read
+# the series with the image series reader.
+series_reader = sitk.ImageSeriesReader()
+series_reader.SetFileNames(series_file_names)
+image3D = series_reader.Execute()
+
+# Lastly, to load the image's DICOM meta-data dictionaries, we read
+# each image using an image reader that is set to load all DICOM tags
+# (public+private). The resulting images contain their DICOM
+# meta-data dictionaries.
 image_reader = sitk.ImageFileReader()
 image_reader.LoadPrivateTagsOn()
 image_list = []
 for file_name in series_file_names:
     image_reader.SetFileName(file_name)
-    image_list.append(image_reader.Execute())
+    img = image_reader.Execute()
+    image_list.append(img)
 
-# Pasting all of the slices into a 3D volume requires 2D image slices and not 3D slices
-# The volume's origin and direction are taken from the first slice and the spacing from
-# the difference between the first two slices. Note that we are assuming we are
-# dealing with a volume represented by axial slices (z spacing is difference between images).
-image_list2D = [image[:,:,0] for image in image_list]
-image3D = sitk.JoinSeries(image_list2D, image_list[0].GetOrigin()[2], image_list[1].GetOrigin()[2] - image_list[0].GetOrigin()[2])
-image3D.SetDirection(image_list[0].GetDirection())
+
 
 # Modify the image (blurring)
 filtered_image = sitk.DiscreteGaussian(image3D)
