@@ -403,6 +403,24 @@ TEST(IO, ImageSeriesWriter )
   fileNames.resize(0);
   writer.SetFileNames( fileNames );
   EXPECT_ANY_THROW(writer.Execute(image));
+
+  // Check writing DICOM series throws an exception
+  fileNames.clear();
+  fileNames.push_back( dataFinder.GetOutputDirectory()+"/ImageSeriesWriter_1.dcm" );
+  fileNames.push_back( dataFinder.GetOutputDirectory()+"/ImageSeriesWriter_2.dcm" );
+  fileNames.push_back( dataFinder.GetOutputDirectory()+"/ImageSeriesWriter_3.dcm" );
+
+  EXPECT_ANY_THROW( sitk::WriteImage( image, fileNames ) );
+
+  writer.SetFileNames(fileNames);
+  EXPECT_ANY_THROW(writer.Execute(image));
+
+  fileNames.clear();
+  fileNames.push_back( dataFinder.GetOutputDirectory()+"/ImageSeriesWriter_1.DICOM" );
+  fileNames.push_back( dataFinder.GetOutputDirectory()+"/ImageSeriesWriter_2.DICOM" );
+  fileNames.push_back( dataFinder.GetOutputDirectory()+"/ImageSeriesWriter_3.DICOM" );
+
+  EXPECT_ANY_THROW( sitk::WriteImage( image, fileNames ) );
 }
 
 

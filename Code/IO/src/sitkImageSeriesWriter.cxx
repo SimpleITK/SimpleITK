@@ -26,6 +26,8 @@
 #include <itkImageIOBase.h>
 #include <itkImageSeriesWriter.h>
 
+#include <cctype>
+
 namespace itk {
   namespace simple {
 
@@ -120,6 +122,26 @@ namespace itk {
   {
     // Define the input and output image types
     typedef TImageType     InputImageType;
+
+    // Verify input file name are provided
+    if( this->m_FileNames.empty() )
+      {
+      sitkExceptionMacro("The parameter \"FileNames\" is empty!");
+      }
+
+    // Verify the input file name are not DICOM
+    for(unsigned int i = 0; i < this->m_FileNames.size(); ++i)
+      {
+      const std::string & fn = this->m_FileNames[i];
+      std::string ext = fn.substr(fn.find_last_of(".")+1);
+      std::transform(ext.begin(), ext.end(), ext.begin(), ::tolower);
+
+      if (ext == "dcm" || ext == "dicom")
+        {
+        sitkExceptionMacro(<<this->GetName()<<" does not support writing a DICOM series!")
+        }
+      }
+
 
     typename InputImageType::ConstPointer image = this->CastImageToITK<InputImageType>( inImage );
 
