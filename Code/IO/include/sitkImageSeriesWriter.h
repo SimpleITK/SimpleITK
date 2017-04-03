@@ -30,6 +30,15 @@ namespace itk {
     /** \class ImageSeriesWriter
      * \brief Writer series of image from a SimpleITK image.
      *
+     * The ImageSeriesWriter is for writing a 3D image as a series of
+     * 2D images. A list of names for the series of 2D images must be
+     * provided, and an exception will be generated if the number of
+     * file names does not match the size of the image in the z-direction.
+     *
+     * DICOM series cannot be written with this class, as an exception
+     * will be generated. To write a DICOM series the individual
+     * slices must be extracted, proper DICOM tags must be added to
+     * the dictionaries, then written with the ImageFileWriter.
      *
      * \sa itk::simple::WriteImage for the procedural interface
      **/
