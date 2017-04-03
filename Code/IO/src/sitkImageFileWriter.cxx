@@ -21,6 +21,7 @@
 #include <itkImageIOBase.h>
 #include <itkImageFileWriter.h>
 #include <itkImageRegionIterator.h>
+#include <itkGDCMImageIO.h>
 
 namespace itk {
 namespace simple {
@@ -35,13 +36,14 @@ void WriteImage ( const Image& image, const std::string &inFileName, bool inUseC
 ImageFileWriter::ImageFileWriter()
   {
   this->m_UseCompression = false;
+  this->m_KeepOriginalImageUID = false;
 
   this->m_MemberFactory.reset( new detail::MemberFunctionFactory<MemberFunctionType>( this ) );
 
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 4 > ();
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
-  
+
   }
 
 
@@ -53,6 +55,10 @@ std::string ImageFileWriter::ToString() const
 
   out << "  UseCompression: ";
   this->ToStringHelper(out, this->m_UseCompression);
+  out << std::endl;
+
+  out << "  KeepOriginalImageUID: ";
+  this->ToStringHelper(out, this->m_KeepOriginalImageUID);
   out << std::endl;
 
   out << "  FileName: \"";
@@ -73,6 +79,18 @@ std::string ImageFileWriter::ToString() const
   bool ImageFileWriter::GetUseCompression( void ) const
   {
     return this->m_UseCompression;
+  }
+
+  ImageFileWriter::Self&
+  ImageFileWriter::SetKeepOriginalImageUID( bool KeepOriginalImageUID )
+  {
+    this->m_KeepOriginalImageUID = KeepOriginalImageUID;
+    return *this;
+  }
+
+  bool ImageFileWriter::GetKeepOriginalImageUID( void ) const
+  {
+    return this->m_KeepOriginalImageUID;
   }
 
 ImageFileWriter& ImageFileWriter::SetFileName ( const std::string &fn )
@@ -101,6 +119,28 @@ ImageFileWriter& ImageFileWriter::Execute ( const Image& image )
     return this->m_MemberFactory->GetMemberFunction( type, dimension )( image );
   }
 
+itk::SmartPointer<ImageIOBase>
+ImageFileWriter
+::GetImageIOBase(const std::string &fileName)
+{
+  itk::ImageIOBase::Pointer iobase =
+    itk::ImageIOFactory::CreateImageIO( fileName.c_str(), itk::ImageIOFactory::WriteMode);
+
+
+  if ( iobase.IsNull() )
+     {
+     sitkExceptionMacro( "Unable to determine ImageIO writer for \"" << fileName << "\"" );
+    }
+
+  // Try additional parameters
+  GDCMImageIO *ioGDCMImage = dynamic_cast<GDCMImageIO*>(iobase.GetPointer());
+  if (ioGDCMImage)
+    {
+    ioGDCMImage->SetKeepOriginalUID(this->m_KeepOriginalImageUID);
+    }
+  return iobase;
+}
+
 //-----------------------------------------------------------------------------
 template <class InputImageType>
 ImageFileWriter& ImageFileWriter::ExecuteInternal( const Image& inImage )
@@ -113,6 +153,7 @@ ImageFileWriter& ImageFileWriter::ExecuteInternal( const Image& inImage )
     writer->SetUseCompression( this->m_UseCompression );
     writer->SetFileName ( this->m_FileName.c_str() );
     writer->SetInput ( image );
+    writer->SetImageIO( GetImageIOBase( this->m_FileName ).GetPointer() );
 
     this->PreUpdate( writer.GetPointer() );
 
