@@ -64,6 +64,16 @@ C++ includes: itkUnaryMinusImageFilter.h
 
 
 %feature("docstring") itk::HashImageFilter "
+
+Generates a hash string from an image.
+
+
+
+This class utlizes low level buffer pointer access, to work with itk::Image and itk::VectorImage. It is modeled after the access an ImageFileWriter provides to an ImageIO.
+Todo
+Update in-place on to default after fixing bug in InPlaceImageFilter
+
+
 C++ includes: itkHashImageFilter.h
 ";
 
@@ -386,8 +396,7 @@ in two images
 See:
  itk::simple::AbsoluteValueDifference for the procedural interface
 
- itk::AbsoluteValueDifferenceImageFilter for the Doxygen on the
-original ITK class.
+ itk::AbsoluteValueDifferenceImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -539,8 +548,7 @@ Adaptive histogram equalization
 See:
  itk::simple::AdaptiveHistogramEqualization for the procedural interface
 
- itk::AdaptiveHistogramEqualizationImageFilter for the Doxygen on the
-original ITK class.
+ itk::AdaptiveHistogramEqualizationImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -763,8 +771,7 @@ Simulation\". https://hdl.handle.net/10380/3158
 See:
  itk::simple::AdditiveGaussianNoise for the procedural interface
 
- itk::AdditiveGaussianNoiseImageFilter for the Doxygen on the original
-ITK class.
+ itk::AdditiveGaussianNoiseImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkAdditiveGaussianNoiseImageFilter.h
@@ -936,8 +943,7 @@ See:
 
  itk::simple::AggregateLabelMapFilter for the procedural interface
 
- itk::AggregateLabelMapFilter for the Doxygen on the original ITK
-class.
+ itk::AggregateLabelMapFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkAggregateLabelMapFilter.h
@@ -1116,8 +1122,7 @@ Anti alias a binary image
 See:
  itk::simple::AntiAliasBinary for the procedural interface
 
- itk::AntiAliasBinaryImageFilter for the Doxygen on the original ITK
-class.
+ itk::AntiAliasBinaryImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -1252,8 +1257,7 @@ Compute a distance map from objects in a binary image
 See:
  itk::simple::ApproximateSignedDistanceMap for the procedural interface
 
- itk::ApproximateSignedDistanceMapImageFilter for the Doxygen on the
-original ITK class.
+ itk::ApproximateSignedDistanceMapImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -1609,8 +1613,7 @@ Luis Ibanez
 See:
  itk::simple::BSplineTransformInitializer for the procedural interface
 
- itk::BSplineTransformInitializer for the Doxygen on the original ITK
-class.
+ itk::BSplineTransformInitializer for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkBSplineTransformInitializerFilter.h
@@ -1928,8 +1931,7 @@ See:
 
  itk::simple::BinaryClosingByReconstruction for the procedural interface
 
- itk::BinaryClosingByReconstructionImageFilter for the Doxygen on the
-original ITK class.
+ itk::BinaryClosingByReconstructionImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkBinaryClosingByReconstructionImageFilter.h
@@ -2075,8 +2077,7 @@ Extract the inner and outer boundaries of blobs in a binary image
 See:
  itk::simple::BinaryContour for the procedural interface
 
- itk::BinaryContourImageFilter for the Doxygen on the original ITK
-class.
+ itk::BinaryContourImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -2215,8 +2216,7 @@ Dilate a binary image
 See:
  itk::simple::BinaryDilate for the procedural interface
 
- itk::BinaryDilateImageFilter for the Doxygen on the original ITK
-class.
+ itk::BinaryDilateImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -2482,8 +2482,7 @@ See:
 
  itk::simple::BinaryFillhole for the procedural interface
 
- itk::BinaryFillholeImageFilter for the Doxygen on the original ITK
-class.
+ itk::BinaryFillholeImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkBinaryFillholeImageFilter.h
@@ -2590,8 +2589,7 @@ See:
 
  itk::simple::BinaryGrindPeak for the procedural interface
 
- itk::BinaryGrindPeakImageFilter for the Doxygen on the original ITK
-class.
+ itk::BinaryGrindPeakImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkBinaryGrindPeakImageFilter.h
@@ -2717,8 +2715,7 @@ Label binary regions in an image
 See:
  itk::simple::BinaryImageToLabelMapFilter for the procedural interface
 
- itk::BinaryImageToLabelMapFilter for the Doxygen on the original ITK
-class.
+ itk::BinaryImageToLabelMapFilter for the Doxygen on the original ITK class.
 
 
 
@@ -2850,8 +2847,7 @@ store the cast value into the output image.
 See:
  itk::simple::BinaryMagnitude for the procedural interface
 
- itk::BinaryMagnitudeImageFilter for the Doxygen on the original ITK
-class.
+ itk::BinaryMagnitudeImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkBinaryMagnitudeImageFilter.h
@@ -2918,8 +2914,7 @@ See:
 
  itk::simple::BinaryMedian for the procedural interface
 
- itk::BinaryMedianImageFilter for the Doxygen on the original ITK
-class.
+ itk::BinaryMedianImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkBinaryMedianImageFilter.h
@@ -3032,9 +3027,8 @@ The threshold value $ T_{threshold} $ is a user specified value which discrimina
 classes.
 
 This filter make use of the multi-threaded finite difference solver
-hierarchy. Updates are computed using a
-BinaryMinMaxCurvatureFlowFunction object. A zero flux Neumann boundary
-condition is used when computing derivatives near the data boundary.
+hierarchy. Updates are computed using a BinaryMinMaxCurvatureFlowFunction object. A zero flux Neumann boundary condition is used when computing
+derivatives near the data boundary.
 
 
 WARNING:
@@ -3054,8 +3048,7 @@ See:
 
  itk::simple::BinaryMinMaxCurvatureFlow for the procedural interface
 
- itk::BinaryMinMaxCurvatureFlowImageFilter for the Doxygen on the
-original ITK class.
+ itk::BinaryMinMaxCurvatureFlowImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkBinaryMinMaxCurvatureFlowImageFilter.h
@@ -3155,8 +3148,7 @@ See:
 
  itk::simple::BinaryMorphologicalClosing for the procedural interface
 
- itk::BinaryMorphologicalClosingImageFilter for the Doxygen on the
-original ITK class.
+ itk::BinaryMorphologicalClosingImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkBinaryMorphologicalClosingImageFilter.h
@@ -3293,8 +3285,7 @@ See:
 
  itk::simple::BinaryMorphologicalOpening for the procedural interface
 
- itk::BinaryMorphologicalOpeningImageFilter for the Doxygen on the
-original ITK class.
+ itk::BinaryMorphologicalOpeningImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkBinaryMorphologicalOpeningImageFilter.h
@@ -3451,8 +3442,7 @@ Execute the filter on the input image with the given parameters
 
 %feature("docstring")  itk::simple::BinaryNotImageFilter::GetBackgroundValue "
 
-Get the value used as \"background\". Defaults to
-NumericTraits<PixelType>::NonpositiveMin() .
+Get the value used as \"background\". Defaults to NumericTraits<PixelType>::NonpositiveMin() .
 
 ";
 
@@ -3471,8 +3461,7 @@ Name of this class
 
 %feature("docstring")  itk::simple::BinaryNotImageFilter::SetBackgroundValue "
 
-Set the value used as \"background\". Defaults to
-NumericTraits<PixelType>::NonpositiveMin() .
+Set the value used as \"background\". Defaults to NumericTraits<PixelType>::NonpositiveMin() .
 
 ";
 
@@ -3520,8 +3509,7 @@ See:
 
  itk::simple::BinaryOpeningByReconstruction for the procedural interface
 
- itk::BinaryOpeningByReconstructionImageFilter for the Doxygen on the
-original ITK class.
+ itk::BinaryOpeningByReconstructionImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkBinaryOpeningByReconstructionImageFilter.h
@@ -3679,8 +3667,7 @@ See:
 
  itk::simple::BinaryProjection for the procedural interface
 
- itk::BinaryProjectionImageFilter for the Doxygen on the original ITK
-class.
+ itk::BinaryProjectionImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkBinaryProjectionImageFilter.h
@@ -3709,8 +3696,7 @@ Execute the filter on the input image with the given parameters
 
 Get the value used as \"background\". Any pixel value which is not
 DilateValue is considered background. BackgroundValue is used for
-defining boundary conditions. Defaults to
-NumericTraits<PixelType>::NonpositiveMin() .
+defining boundary conditions. Defaults to NumericTraits<PixelType>::NonpositiveMin() .
 
 ";
 
@@ -3734,8 +3720,7 @@ Name of this class
 
 Set the value used as \"background\". Any pixel value which is not
 DilateValue is considered background. BackgroundValue is used for
-defining boundary conditions. Defaults to
-NumericTraits<PixelType>::NonpositiveMin() .
+defining boundary conditions. Defaults to NumericTraits<PixelType>::NonpositiveMin() .
 
 ";
 
@@ -3787,8 +3772,7 @@ See:
 
  itk::simple::BinaryReconstructionByDilation for the procedural interface
 
- itk::BinaryReconstructionByDilationImageFilter for the Doxygen on the
-original ITK class.
+ itk::BinaryReconstructionByDilationImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkBinaryReconstructionByDilationImageFilter.h
@@ -3911,8 +3895,7 @@ See:
 
  itk::simple::BinaryReconstructionByErosion for the procedural interface
 
- itk::BinaryReconstructionByErosionImageFilter for the Doxygen on the
-original ITK class.
+ itk::BinaryReconstructionByErosionImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkBinaryReconstructionByErosionImageFilter.h
@@ -4045,8 +4028,7 @@ Skeletonize/thin an image
 See:
  itk::simple::BinaryThinning for the procedural interface
 
- itk::BinaryThinningImageFilter for the Doxygen on the original ITK
-class.
+ itk::BinaryThinningImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -4106,10 +4088,9 @@ image type.
 The filter expect both images to have the same number of dimensions.
 
 The default values for LowerThreshold and UpperThreshold are:
-LowerThreshold = NumericTraits<TInput>::NonpositiveMin() ;
-UpperThreshold = NumericTraits<TInput>::max() ; Therefore, generally
-only one of these needs to be set, depending on whether the user wants
-to threshold above or below the desired threshold.
+LowerThreshold = NumericTraits<TInput>::NonpositiveMin() ; UpperThreshold = NumericTraits<TInput>::max() ; Therefore, generally only one of these needs to be set, depending
+on whether the user wants to threshold above or below the desired
+threshold.
 
 Wiki Examples:
 
@@ -4119,8 +4100,7 @@ Threshold an image
 See:
  itk::simple::BinaryThreshold for the procedural interface
 
- itk::BinaryThresholdImageFilter for the Doxygen on the original ITK
-class.
+ itk::BinaryThresholdImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -4175,8 +4155,7 @@ Get the threshold values.
 
 %feature("docstring")  itk::simple::BinaryThresholdImageFilter::SetInsideValue "
 
-Set the \"inside\" pixel value. The default value
-NumericTraits<OutputPixelType>::max()
+Set the \"inside\" pixel value. The default value NumericTraits<OutputPixelType>::max()
 
 ";
 
@@ -4185,17 +4164,14 @@ NumericTraits<OutputPixelType>::max()
 
 %feature("docstring")  itk::simple::BinaryThresholdImageFilter::SetOutsideValue "
 
-Set the \"outside\" pixel value. The default value
-NumericTraits<OutputPixelType>::ZeroValue() .
+Set the \"outside\" pixel value. The default value NumericTraits<OutputPixelType>::ZeroValue() .
 
 ";
 
 %feature("docstring")  itk::simple::BinaryThresholdImageFilter::SetUpperThreshold "
 
-Set the thresholds. The default lower threshold is
-NumericTraits<InputPixelType>::NonpositiveMin() . The default upper
-threshold is NumericTraits<InputPixelType>::max . An execption is
-thrown if the lower threshold is greater than the upper threshold.
+Set the thresholds. The default lower threshold is NumericTraits<InputPixelType>::NonpositiveMin() . The default upper threshold is NumericTraits<InputPixelType>::max . An execption is thrown if the lower threshold is greater than the
+upper threshold.
 
 ";
 
@@ -4243,8 +4219,7 @@ See:
 
  itk::simple::BinaryThresholdProjection for the procedural interface
 
- itk::BinaryThresholdProjectionImageFilter for the Doxygen on the
-original ITK class.
+ itk::BinaryThresholdProjectionImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkBinaryThresholdProjectionImageFilter.h
@@ -4271,8 +4246,7 @@ Execute the filter on the input image with the given parameters
 
 %feature("docstring")  itk::simple::BinaryThresholdProjectionImageFilter::GetBackgroundValue "
 
-Set/Get the output value used as \"background\". Defaults to
-NumericTraits<PixelType>::NonpositiveMin() .
+Set/Get the output value used as \"background\". Defaults to NumericTraits<PixelType>::NonpositiveMin() .
 
 ";
 
@@ -4294,15 +4268,13 @@ Name of this class
 
 %feature("docstring")  itk::simple::BinaryThresholdProjectionImageFilter::GetThresholdValue "
 
-Set/Get the input value consider as \"threshold\". Defaults to
-NumericTraits<InputPixelType>::max()
+Set/Get the input value consider as \"threshold\". Defaults to NumericTraits<InputPixelType>::max()
 
 ";
 
 %feature("docstring")  itk::simple::BinaryThresholdProjectionImageFilter::SetBackgroundValue "
 
-Set/Get the output value used as \"background\". Defaults to
-NumericTraits<PixelType>::NonpositiveMin() .
+Set/Get the output value used as \"background\". Defaults to NumericTraits<PixelType>::NonpositiveMin() .
 
 ";
 
@@ -4318,8 +4290,7 @@ value of PixelType.
 
 %feature("docstring")  itk::simple::BinaryThresholdProjectionImageFilter::SetThresholdValue "
 
-Set/Get the input value consider as \"threshold\". Defaults to
-NumericTraits<InputPixelType>::max()
+Set/Get the input value consider as \"threshold\". Defaults to NumericTraits<InputPixelType>::max()
 
 ";
 
@@ -4353,8 +4324,7 @@ Blur an image
 See:
  itk::simple::BinomialBlur for the procedural interface
 
- itk::BinomialBlurImageFilter for the Doxygen on the original ITK
-class.
+ itk::BinomialBlurImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -4420,9 +4390,8 @@ This class is parameterized over the type of the input image and the
 type of the output image. It is also parameterized by the operation to
 be applied, using a Functor style.
 
-UnaryFunctorImageFilter allows the output dimension of the filter to
-be larger than the input dimension. Thus subclasses of the
-UnaryFunctorImageFilter (like the CastImageFilter ) can be used to promote a 2D image to a 3D image, etc.
+UnaryFunctorImageFilter allows the output dimension of the filter to be larger than the input
+dimension. Thus subclasses of the UnaryFunctorImageFilter (like the CastImageFilter ) can be used to promote a 2D image to a 3D image, etc.
 
 
 See:
@@ -4435,8 +4404,7 @@ Apply a custom operation to each pixel in an image
 See:
  itk::simple::BitwiseNot for the procedural interface
 
- itk::UnaryFunctorImageFilter for the Doxygen on the original ITK
-class.
+ itk::UnaryFunctorImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -4603,8 +4571,7 @@ number of dimensions, and both of a scalar image type.
 See:
  itk::simple::BoundedReciprocal for the procedural interface
 
- itk::BoundedReciprocalImageFilter for the Doxygen on the original ITK
-class.
+ itk::BoundedReciprocalImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkBoundedReciprocalImageFilter.h
@@ -4830,8 +4797,7 @@ See:
 
  itk::simple::CannyEdgeDetection for the procedural interface
 
- itk::CannyEdgeDetectionImageFilter for the Doxygen on the original ITK
-class.
+ itk::CannyEdgeDetectionImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkCannyEdgeDetectionImageFilter.h
@@ -5083,8 +5049,7 @@ Versorrepresenting rotation.
 
 
 See:
- itk::CenteredVersorTransformInitializer for the Doxygen on the
-original ITK class.
+ itk::CenteredVersorTransformInitializer for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkCenteredVersorTransformInitializerFilter.h
@@ -5248,8 +5213,7 @@ See:
 
  itk::simple::ChangeLabelLabelMapFilter for the procedural interface
 
- itk::ChangeLabelLabelMapFilter for the Doxygen on the original ITK
-class.
+ itk::ChangeLabelLabelMapFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkChangeLabelLabelMapFilter.h
@@ -5322,8 +5286,7 @@ Combine two images by alternating blocks of a checkerboard pattern
 See:
  itk::simple::CheckerBoard for the procedural interface
 
- itk::CheckerBoardImageFilter for the Doxygen on the original ITK
-class.
+ itk::CheckerBoardImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -5511,8 +5474,7 @@ See:
 
  itk::simple::ClosingByReconstruction for the procedural interface
 
- itk::ClosingByReconstructionImageFilter for the Doxygen on the
-original ITK class.
+ itk::ClosingByReconstructionImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkClosingByReconstructionImageFilter.h
@@ -5675,8 +5637,7 @@ Department, Mario Negri Institute, Italy.
 See:
  itk::simple::CollidingFronts for the procedural interface
 
- itk::CollidingFrontsImageFilter for the Doxygen on the original ITK
-class.
+ itk::CollidingFrontsImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkCollidingFrontsImageFilter.h
@@ -5778,8 +5739,7 @@ Seed points are represented as a VectorContainer of LevelSetNodes.
 %feature("docstring")  itk::simple::CollidingFrontsImageFilter::SetSeedPoints2 "
 
 Set the container of Seed Points representing the second initial
-front. Seed points are represented as a VectorContainer of
-LevelSetNodes.
+front. Seed points are represented as a VectorContainer of LevelSetNodes.
 
 ";
 
@@ -5860,8 +5820,7 @@ Computes pixel-wise the imaginary part of a complex image.
 See:
  itk::simple::ComplexToImaginary for the procedural interface
 
- itk::ComplexToImaginaryImageFilter for the Doxygen on the original ITK
-class.
+ itk::ComplexToImaginaryImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkComplexToImaginaryImageFilter.h
@@ -5908,8 +5867,7 @@ Computes pixel-wise the Modulus of a complex image.
 See:
  itk::simple::ComplexToModulus for the procedural interface
 
- itk::ComplexToModulusImageFilter for the Doxygen on the original ITK
-class.
+ itk::ComplexToModulusImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkComplexToModulusImageFilter.h
@@ -5956,8 +5914,7 @@ Computes pixel-wise the modulus of a complex image.
 See:
  itk::simple::ComplexToPhase for the procedural interface
 
- itk::ComplexToPhaseImageFilter for the Doxygen on the original ITK
-class.
+ itk::ComplexToPhaseImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkComplexToPhaseImageFilter.h
@@ -6004,8 +5961,7 @@ Computes pixel-wise the real(x) part of a complex image.
 See:
  itk::simple::ComplexToReal for the procedural interface
 
- itk::ComplexToRealImageFilter for the Doxygen on the original ITK
-class.
+ itk::ComplexToRealImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkComplexToRealImageFilter.h
@@ -6161,8 +6117,7 @@ Segment pixels with similar statistics using connectivity
 See:
  itk::simple::ConfidenceConnected for the procedural interface
 
- itk::ConfidenceConnectedImageFilter for the Doxygen on the original
-ITK class.
+ itk::ConfidenceConnectedImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -6341,8 +6296,7 @@ Label connected components in a binary image
 See:
  itk::simple::ConnectedComponent for the procedural interface
 
- itk::ConnectedComponentImageFilter for the Doxygen on the original ITK
-class.
+ itk::ConnectedComponentImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -6432,8 +6386,7 @@ AND lie within a Lower and Upper threshold range.
 See:
  itk::simple::ConnectedThreshold for the procedural interface
 
- itk::ConnectedThresholdImageFilter for the Doxygen on the original ITK
-class.
+ itk::ConnectedThresholdImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkConnectedThresholdImageFilter.h
@@ -6831,8 +6784,7 @@ Destructor
 
 %feature("docstring") itk::simple::CropImageFilter "
 
-Decrease the image size by cropping the image by an itk::Size at both
-the upper and lower bounds of the largest possible region.
+Decrease the image size by cropping the image by an itk::Size at both the upper and lower bounds of the largest possible region.
 
 
 CropImageFilter changes the image boundary of an image by removing pixels outside the
@@ -6931,9 +6883,7 @@ The input and output to this filter must be a scalar itk::Image with numerical p
 which correctly defines arithmetic operations with floating point
 accuracy should also give correct results.
 Parameters
-Please first read all the documentation found in
-AnisotropicDiffusionImageFilter and AnisotropicDiffusionFunction .
-Also see CurvatureNDAnisotropicDiffusionFunction .
+Please first read all the documentation found in AnisotropicDiffusionImageFilter and AnisotropicDiffusionFunction . Also see CurvatureNDAnisotropicDiffusionFunction .
  The default time step for this filter is set to the maximum
 theoretically stable value: 0.5 / 2^N, where N is the dimensionality
 of the image. For a 2D image, this means valid time steps are below
@@ -6949,8 +6899,7 @@ See:
 
  itk::simple::CurvatureAnisotropicDiffusion for the procedural interface
 
- itk::CurvatureAnisotropicDiffusionImageFilter for the Doxygen on the
-original ITK class.
+ itk::CurvatureAnisotropicDiffusionImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkCurvatureAnisotropicDiffusionImageFilter.h
@@ -7058,9 +7007,8 @@ timestep. In the literature, the timestep is typically user specified
 and have to manually tuned to the application.
 
 This filter make use of the multi-threaded finite difference solver
-hierarchy. Updates are computed using a CurvatureFlowFunction object.
-A zero flux Neumann boundary condition when computing derivatives near
-the data boundary.
+hierarchy. Updates are computed using a CurvatureFlowFunction object. A zero flux Neumann boundary condition when computing
+derivatives near the data boundary.
 
 This filter may be streamed. To support streaming this filter produces
 a padded output which takes into account edge effects. The size of the
@@ -7088,8 +7036,7 @@ See:
 
  itk::simple::CurvatureFlow for the procedural interface
 
- itk::CurvatureFlowImageFilter for the Doxygen on the original ITK
-class.
+ itk::CurvatureFlowImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkCurvatureFlowImageFilter.h
@@ -7265,8 +7212,7 @@ image.
 A vector map containing the component of the vector relating the
 current pixel with the closest point of the closest object to this
 pixel. Given that the components of the distance are computed in
-\"pixels\", the vector is represented by an itk::Offset . That is,
-physical coordinates are not used.
+\"pixels\", the vector is represented by an itk::Offset . That is, physical coordinates are not used.
  This filter is N-dimensional and known to be efficient in
 computational time. The algorithm is the N-dimensional version of the
 4SED algorithm given for two dimensions in:
@@ -7276,8 +7222,7 @@ and Image Processing 14, 227-248 (1980).
 See:
  itk::simple::DanielssonDistanceMap for the procedural interface
 
- itk::DanielssonDistanceMapImageFilter for the Doxygen on the original
-ITK class.
+ itk::DanielssonDistanceMapImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkDanielssonDistanceMapImageFilter.h
@@ -7428,8 +7373,7 @@ displacement field type all have the same number of dimensions.
 See:
  DemonsRegistrationFunction
 
- itk::DemonsRegistrationFilter for the Doxygen on the original ITK
-class.
+ itk::DemonsRegistrationFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkDemonsRegistrationFilter.h
@@ -7873,8 +7817,7 @@ See:
 
  DemonsRegistrationFunction
 
- itk::DiffeomorphicDemonsRegistrationFilter for the Doxygen on the
-original ITK class.
+ itk::DiffeomorphicDemonsRegistrationFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkDiffeomorphicDemonsRegistrationFilter.h
@@ -8184,8 +8127,7 @@ See:
 
  itk::simple::DilateObjectMorphology for the procedural interface
 
- itk::DilateObjectMorphologyImageFilter for the Doxygen on the original
-ITK class.
+ itk::DilateObjectMorphologyImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkDilateObjectMorphologyImageFilter.h
@@ -8302,8 +8244,7 @@ See:
 
  itk::simple::DiscreteGaussianDerivative for the procedural interface
 
- itk::DiscreteGaussianDerivativeImageFilter for the Doxygen on the
-original ITK class.
+ itk::DiscreteGaussianDerivativeImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkDiscreteGaussianDerivativeImageFilter.h
@@ -8506,8 +8447,7 @@ Smooth an image with a discrete Gaussian filter
 See:
  itk::simple::DiscreteGaussian for the procedural interface
 
- itk::DiscreteGaussianImageFilter for the Doxygen on the original ITK
-class.
+ itk::DiscreteGaussianImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -8635,10 +8575,10 @@ dx/dz ; dy/dx (1.0+dy/dy) dy/dz; dz/dx dz/dy (1.0+dz/dz) ])
 Template Parameters (Input and Output)
 This filter has one required template parameter which defines the
 input image type. The pixel type of the input image is assumed to be a
-vector (e.g., itk::Vector , itk::RGBPixel , itk::FixedArray ). The scalar type of the vector
-components must be castable to floating point. Instantiating with an
-image of RGBPixel<unsigned short>, for example, is allowed, but the
-filter will convert it to an image of Vector<float,3> for processing.
+vector (e.g., itk::Vector , itk::RGBPixel , itk::FixedArray ). The scalar type of the vector components must be castable to
+floating point. Instantiating with an image of RGBPixel<unsigned
+short>, for example, is allowed, but the filter will convert it to an
+image of Vector<float,3> for processing.
  The second template parameter, TRealType, can be optionally specified
 to define the scalar numerical type used in calculations. This is the
 component type of the output image, which will be of
@@ -8699,8 +8639,7 @@ Torsten Rohlfing, Neuroscience Program, SRI International.
 See:
  itk::simple::DisplacementFieldJacobianDeterminantFilter for the procedural interface
 
- itk::DisplacementFieldJacobianDeterminantFilter for the Doxygen on the
-original ITK class.
+ itk::DisplacementFieldJacobianDeterminantFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkDisplacementFieldJacobianDeterminantFilter.h
@@ -8889,8 +8828,7 @@ the type of the output image. It is also parameterized by the
 operation to be applied. A Functor style is used.
 
 The constant must be of the same type than the pixel type of the
-corresponding image. It is wrapped in a SimpleDataObjectDecorator so
-it can be updated through the pipeline. The SetConstant() and
+corresponding image. It is wrapped in a SimpleDataObjectDecorator so it can be updated through the pipeline. The SetConstant() and
 GetConstant() methods are provided as shortcuts to set or get the
 constant value without manipulating the decorator.
 
@@ -8907,8 +8845,7 @@ Apply a custom operation to corresponding pixels in two images
 See:
  itk::simple::DivideFloor for the procedural interface
 
- itk::BinaryFunctorImageFilter for the Doxygen on the original ITK
-class.
+ itk::BinaryFunctorImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -9034,8 +8971,7 @@ the type of the output image. It is also parameterized by the
 operation to be applied. A Functor style is used.
 
 The constant must be of the same type than the pixel type of the
-corresponding image. It is wrapped in a SimpleDataObjectDecorator so
-it can be updated through the pipeline. The SetConstant() and
+corresponding image. It is wrapped in a SimpleDataObjectDecorator so it can be updated through the pipeline. The SetConstant() and
 GetConstant() methods are provided as shortcuts to set or get the
 constant value without manipulating the decorator.
 
@@ -9052,8 +8988,7 @@ Apply a custom operation to corresponding pixels in two images
 See:
  itk::simple::DivideReal for the procedural interface
 
- itk::BinaryFunctorImageFilter for the Doxygen on the original ITK
-class.
+ itk::BinaryFunctorImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -9132,8 +9067,7 @@ See:
 
  itk::simple::DoubleThreshold for the procedural interface
 
- itk::DoubleThresholdImageFilter for the Doxygen on the original ITK
-class.
+ itk::DoubleThresholdImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkDoubleThresholdImageFilter.h
@@ -9229,51 +9163,41 @@ FullyConnectedOn.
 
 %feature("docstring")  itk::simple::DoubleThresholdImageFilter::SetInsideValue "
 
-Set the \"inside\" pixel value. The default value
-NumericTraits<OutputPixelType>::max()
+Set the \"inside\" pixel value. The default value NumericTraits<OutputPixelType>::max()
 
 ";
 
 %feature("docstring")  itk::simple::DoubleThresholdImageFilter::SetOutsideValue "
 
-Set the \"outside\" pixel value. The default value
-NumericTraits<OutputPixelType>::ZeroValue() .
+Set the \"outside\" pixel value. The default value NumericTraits<OutputPixelType>::ZeroValue() .
 
 ";
 
 %feature("docstring")  itk::simple::DoubleThresholdImageFilter::SetThreshold1 "
 
 Set the thresholds. Four thresholds should be specified. The two lower
-thresholds default to NumericTraits<InputPixelType>::NonpositiveMin()
-. The two upper thresholds default NumericTraits<InputPixelType>::max
-. Threshold1 <= Threshold2 <= Threshold3 <= Threshold4.
+thresholds default to NumericTraits<InputPixelType>::NonpositiveMin() . The two upper thresholds default NumericTraits<InputPixelType>::max . Threshold1 <= Threshold2 <= Threshold3 <= Threshold4.
 
 ";
 
 %feature("docstring")  itk::simple::DoubleThresholdImageFilter::SetThreshold2 "
 
 Set the thresholds. Four thresholds should be specified. The two lower
-thresholds default to NumericTraits<InputPixelType>::NonpositiveMin()
-. The two upper thresholds default NumericTraits<InputPixelType>::max
-. Threshold1 <= Threshold2 <= Threshold3 <= Threshold4.
+thresholds default to NumericTraits<InputPixelType>::NonpositiveMin() . The two upper thresholds default NumericTraits<InputPixelType>::max . Threshold1 <= Threshold2 <= Threshold3 <= Threshold4.
 
 ";
 
 %feature("docstring")  itk::simple::DoubleThresholdImageFilter::SetThreshold3 "
 
 Set the thresholds. Four thresholds should be specified. The two lower
-thresholds default to NumericTraits<InputPixelType>::NonpositiveMin()
-. The two upper thresholds default NumericTraits<InputPixelType>::max
-. Threshold1 <= Threshold2 <= Threshold3 <= Threshold4.
+thresholds default to NumericTraits<InputPixelType>::NonpositiveMin() . The two upper thresholds default NumericTraits<InputPixelType>::max . Threshold1 <= Threshold2 <= Threshold3 <= Threshold4.
 
 ";
 
 %feature("docstring")  itk::simple::DoubleThresholdImageFilter::SetThreshold4 "
 
 Set the thresholds. Four thresholds should be specified. The two lower
-thresholds default to NumericTraits<InputPixelType>::NonpositiveMin()
-. The two upper thresholds default NumericTraits<InputPixelType>::max
-. Threshold1 <= Threshold2 <= Threshold3 <= Threshold4.
+thresholds default to NumericTraits<InputPixelType>::NonpositiveMin() . The two upper thresholds default NumericTraits<InputPixelType>::max . Threshold1 <= Threshold2 <= Threshold3 <= Threshold4.
 
 ";
 
@@ -9295,16 +9219,14 @@ Destructor
 Computes the edge potential of an image from the image gradient.
 
 
-Input to this filter should be a CovariantVector image representing
-the image gradient.
+Input to this filter should be a CovariantVector image representing the image gradient.
 
 The filter expect both the input and output images to have the same
 number of dimensions, and the output to be of a scalar image type.
 See:
  itk::simple::EdgePotential for the procedural interface
 
- itk::EdgePotentialImageFilter for the Doxygen on the original ITK
-class.
+ itk::EdgePotentialImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkEdgePotentialImageFilter.h
@@ -9353,8 +9275,7 @@ the type of the output image. It is also parameterized by the
 operation to be applied. A Functor style is used.
 
 The constant must be of the same type than the pixel type of the
-corresponding image. It is wrapped in a SimpleDataObjectDecorator so
-it can be updated through the pipeline. The SetConstant() and
+corresponding image. It is wrapped in a SimpleDataObjectDecorator so it can be updated through the pipeline. The SetConstant() and
 GetConstant() methods are provided as shortcuts to set or get the
 constant value without manipulating the decorator.
 
@@ -9371,8 +9292,7 @@ Apply a custom operation to corresponding pixels in two images
 See:
  itk::simple::Equal for the procedural interface
 
- itk::BinaryFunctorImageFilter for the Doxygen on the original ITK
-class.
+ itk::BinaryFunctorImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -9485,8 +9405,7 @@ See:
 
  itk::simple::ErodeObjectMorphology for the procedural interface
 
- itk::ErodeObjectMorphologyImageFilter for the Doxygen on the original
-ITK class.
+ itk::ErodeObjectMorphologyImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkErodeObjectMorphologyImageFilter.h
@@ -9836,9 +9755,7 @@ is given by:
 OutputSize[j] = InputSize[j] * ExpandFactors[j]
 
 The output values are obtained by interpolating the input image. The
-default interpolation type used is the LinearInterpolateImageFunction
-. The user can specify a particular interpolation function via SetInterpolator() . Note that the input interpolator must derive from base class
-InterpolateImageFunction .
+default interpolation type used is the LinearInterpolateImageFunction . The user can specify a particular interpolation function via SetInterpolator() . Note that the input interpolator must derive from base class InterpolateImageFunction .
 
 This filter will produce an output with different pixel spacing that
 its input image such that:
@@ -9969,8 +9886,7 @@ image, 3D = a 4x4x4 image, specified as [x,y,z,2] from 4D (i.e. the
 3rd \"time\" slice from 4D). The ExtractionRegion.Size = [4,4,4,0] and
 ExtractionRegion.Index = [0,0,0,2].
 
-The number of dimension in ExtractionRegion.Size and Index must =
-InputImageDimension. The number of non-zero dimensions in
+The number of dimension in ExtractionRegion.Size and Index must = InputImageDimension. The number of non-zero dimensions in
 ExtractionRegion.Size must = OutputImageDimension.
 
 The output image produced by this filter will have the same origin as
@@ -9997,10 +9913,9 @@ This filter is implemented as a multithreaded filter. It provides a
 ThreadedGenerateData() method for its implementation.
 
 
-This filter is derived from InPlaceImageFilter . When the input to
-this filter matched the output requirested region, like with streaming
-filter for input, then setting this filter to run in-place will result
-in no copying of the bulk pixel data.
+This filter is derived from InPlaceImageFilter . When the input to this filter matched the output requirested
+region, like with streaming filter for input, then setting this filter
+to run in-place will result in no copying of the bulk pixel data.
 
 See:
  CropImageFilter
@@ -10012,9 +9927,8 @@ Crop an image by specifying the region to keep
 See:
  itk::simple::Extract for the procedural interface
 
- itk::ExtractImageFilter<InputImageType, typename
-InputImageType::template Rebind for the Doxygen on the original ITK
-class.
+ itk::ExtractImageFilter<InputImageType, typename InputImageType::template Rebind for the
+Doxygen on the original ITK class.
 
 
 
@@ -10131,8 +10045,7 @@ See:
 
  itk::simple::FFTConvolution for the procedural interface
 
- itk::FFTConvolutionImageFilter for the Doxygen on the original ITK
-class.
+ itk::FFTConvolutionImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkFFTConvolutionImageFilter.h
@@ -10266,8 +10179,7 @@ Computer Vision and Pattern Recognition, 2010.
 See:
  itk::simple::FFTNormalizedCorrelation for the procedural interface
 
- itk::FFTNormalizedCorrelationImageFilter for the Doxygen on the
-original ITK class.
+ itk::FFTNormalizedCorrelationImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkFFTNormalizedCorrelationImageFilter.h
@@ -10530,8 +10442,7 @@ Richard Beare
 See:
  itk::simple::FastApproximateRank for the procedural interface
 
- itk::FastApproximateRankImageFilter for the Doxygen on the original
-ITK class.
+ itk::FastApproximateRankImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkFastApproximateRankImageFilter.h
@@ -10647,8 +10558,7 @@ See:
 
  itk::simple::FastMarchingBase for the procedural interface
 
- itk::FastMarchingImageFilterBase for the Doxygen on the original ITK
-class.
+ itk::FastMarchingImageFilterBase for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkFastMarchingBaseImageFilter.h
@@ -10789,8 +10699,7 @@ specified using method the SetSpeedConstant() .
 
 If the speed function is constant and of value one, fast marching
 results in an approximate distance function from the initial alive
-points. FastMarchingImageFilter is used in the ReinitializeLevelSetImageFilter object to create a
-signed distance function from the zero level set.
+points. FastMarchingImageFilter is used in the ReinitializeLevelSetImageFilter object to create a signed distance function from the zero level set.
 
 The algorithm can be terminated early by setting an appropriate
 stopping value. The algorithm terminates when the current arrival time
@@ -10826,8 +10735,7 @@ See:
 
  itk::simple::FastMarching for the procedural interface
 
- itk::FastMarchingImageFilter for the Doxygen on the original ITK
-class.
+ itk::FastMarchingImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkFastMarchingImageFilter.h
@@ -10960,8 +10868,7 @@ Department, Mario Negri Institute, Italy.
 See:
  itk::simple::FastMarchingUpwindGradient for the procedural interface
 
- itk::FastMarchingUpwindGradientImageFilter for the Doxygen on the
-original ITK class.
+ itk::FastMarchingUpwindGradientImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkFastMarchingUpwindGradientImageFilter.h
@@ -11085,8 +10992,7 @@ arrival time is smooth.
 %feature("docstring")  itk::simple::FastMarchingUpwindGradientImageFilter::SetTargetPoints "
 
 Set the container of Target Points. If a target point is reached, the
-propagation stops. Trial points are represented as a VectorContainer
-of LevelSetNodes.
+propagation stops. Trial points are represented as a VectorContainer of LevelSetNodes.
 
 ";
 
@@ -11153,8 +11059,7 @@ See:
 
  DemonsRegistrationFunction
 
- itk::FastSymmetricForcesDemonsRegistrationFilter for the Doxygen on
-the original ITK class.
+ itk::FastSymmetricForcesDemonsRegistrationFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkFastSymmetricForcesDemonsRegistrationFilter.h
@@ -11628,10 +11533,9 @@ Generate an n-dimensional image of a Gabor filter.
 
 GaborImageSource generates an image of either the real (i.e. symmetric) or complex
 (i.e. antisymmetric) part of the Gabor filter with the orientation
-directed along the x-axis. The GaborKernelFunction is used to evaluate
-the contribution along the x-axis whereas a non-normalized 1-D
-Gaussian envelope provides the contribution in each of the remaining N
-dimensions. Orientation can be manipulated via the Transform classes of the toolkit.
+directed along the x-axis. The GaborKernelFunction is used to evaluate the contribution along the x-axis whereas a non-
+normalized 1-D Gaussian envelope provides the contribution in each of
+the remaining N dimensions. Orientation can be manipulated via the Transform classes of the toolkit.
 
 The output image may be of any dimension.
 
@@ -11960,10 +11864,8 @@ map.
 
 
 IMPORTANT
-The SegmentationLevelSetImageFilter class and the
-GeodesicActiveContourLevelSetFunction class contain additional
-information necessary to gain full understanding of how to use this
-filter.
+The SegmentationLevelSetImageFilter class and the GeodesicActiveContourLevelSetFunction class contain additional information necessary to gain full
+understanding of how to use this filter.
 OVERVIEW
 This class is a level set method segmentation filter. An initial
 contour is propagated outwards (or inwards) until it ''sticks'' to the
@@ -11990,8 +11892,7 @@ potential map is compute from the image gradient, for example:
 where $ I $ is image intensity and $ (\\\\nabla * G) $ is the derivative of Gaussian operator.
 
 
-See SegmentationLevelSetImageFilter and SparseFieldLevelSetImageFilter
-for more information on Inputs.
+See SegmentationLevelSetImageFilter and SparseFieldLevelSetImageFilter for more information on Inputs.
 PARAMETERS
 The PropagationScaling parameter can be used to switch from
 propagation outwards (POSITIVE scaling parameter) versus propagating
@@ -12009,8 +11910,7 @@ region and positive values in the image represent the outside of the
 segmented region. The zero crossings of the image correspond to the
 position of the propagating front.
 
-See SparseFieldLevelSetImageFilter and SegmentationLevelSetImageFilter
-for more information.
+See SparseFieldLevelSetImageFilter and SegmentationLevelSetImageFilter for more information.
 REFERENCES
 
 \"Geodesic Active Contours\", V. Caselles, R. Kimmel and G. Sapiro.
@@ -12026,8 +11926,7 @@ See:
 
  itk::simple::GeodesicActiveContourLevelSet for the procedural interface
 
- itk::GeodesicActiveContourLevelSetImageFilter for the Doxygen on the
-original ITK class.
+ itk::GeodesicActiveContourLevelSetImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkGeodesicActiveContourLevelSetImageFilter.h
@@ -12161,8 +12060,7 @@ See:
 
  itk::simple::GradientAnisotropicDiffusion for the procedural interface
 
- itk::GradientAnisotropicDiffusionImageFilter for the Doxygen on the
-original ITK class.
+ itk::GradientAnisotropicDiffusionImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkGradientAnisotropicDiffusionImageFilter.h
@@ -12388,8 +12286,7 @@ Compute the gradient magnitude image
 See:
  itk::simple::GradientMagnitude for the procedural interface
 
- itk::GradientMagnitudeImageFilter for the Doxygen on the original ITK
-class.
+ itk::GradientMagnitudeImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -12474,8 +12371,7 @@ Gaussian kernel
 See:
  itk::simple::GradientMagnitudeRecursiveGaussian for the procedural interface
 
- itk::GradientMagnitudeRecursiveGaussianImageFilter for the Doxygen on
-the original ITK class.
+ itk::GradientMagnitudeRecursiveGaussianImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -12579,8 +12475,7 @@ derivative of a Gaussian
 See:
  itk::simple::GradientRecursiveGaussian for the procedural interface
 
- itk::GradientRecursiveGaussianImageFilter for the Doxygen on the
-original ITK class.
+ itk::GradientRecursiveGaussianImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -12718,8 +12613,7 @@ See:
 
  itk::simple::GrayscaleConnectedClosing for the procedural interface
 
- itk::GrayscaleConnectedClosingImageFilter for the Doxygen on the
-original ITK class.
+ itk::GrayscaleConnectedClosingImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkGrayscaleConnectedClosingImageFilter.h
@@ -12824,8 +12718,7 @@ See:
 
  itk::simple::GrayscaleConnectedOpening for the procedural interface
 
- itk::GrayscaleConnectedOpeningImageFilter for the Doxygen on the
-original ITK class.
+ itk::GrayscaleConnectedOpeningImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkGrayscaleConnectedOpeningImageFilter.h
@@ -12931,8 +12824,7 @@ Dilate a grayscale image
 See:
  itk::simple::GrayscaleDilate for the procedural interface
 
- itk::GrayscaleDilateImageFilter for the Doxygen on the original ITK
-class.
+ itk::GrayscaleDilateImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -13024,8 +12916,7 @@ Erode a grayscale image
 See:
  itk::simple::GrayscaleErode for the procedural interface
 
- itk::GrayscaleErodeImageFilter for the Doxygen on the original ITK
-class.
+ itk::GrayscaleErodeImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -13128,8 +13019,7 @@ See:
 
  itk::simple::GrayscaleFillhole for the procedural interface
 
- itk::GrayscaleFillholeImageFilter for the Doxygen on the original ITK
-class.
+ itk::GrayscaleFillholeImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkGrayscaleFillholeImageFilter.h
@@ -13237,8 +13127,7 @@ See:
 
  itk::simple::GrayscaleGeodesicDilate for the procedural interface
 
- itk::GrayscaleGeodesicDilateImageFilter for the Doxygen on the
-original ITK class.
+ itk::GrayscaleGeodesicDilateImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkGrayscaleGeodesicDilateImageFilter.h
@@ -13369,8 +13258,7 @@ See:
 
  itk::simple::GrayscaleGeodesicErode for the procedural interface
 
- itk::GrayscaleGeodesicErodeImageFilter for the Doxygen on the original
-ITK class.
+ itk::GrayscaleGeodesicErodeImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkGrayscaleGeodesicErodeImageFilter.h
@@ -13503,8 +13391,7 @@ See:
 
  itk::simple::GrayscaleGrindPeak for the procedural interface
 
- itk::GrayscaleGrindPeakImageFilter for the Doxygen on the original ITK
-class.
+ itk::GrayscaleGrindPeakImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkGrayscaleGrindPeakImageFilter.h
@@ -13593,8 +13480,7 @@ See:
 
  itk::simple::GrayscaleMorphologicalClosing for the procedural interface
 
- itk::GrayscaleMorphologicalClosingImageFilter for the Doxygen on the
-original ITK class.
+ itk::GrayscaleMorphologicalClosingImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkGrayscaleMorphologicalClosingImageFilter.h
@@ -13709,8 +13595,7 @@ See:
 
  itk::simple::GrayscaleMorphologicalOpening for the procedural interface
 
- itk::GrayscaleMorphologicalOpeningImageFilter for the Doxygen on the
-original ITK class.
+ itk::GrayscaleMorphologicalOpeningImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkGrayscaleMorphologicalOpeningImageFilter.h
@@ -13818,8 +13703,7 @@ the type of the output image. It is also parameterized by the
 operation to be applied. A Functor style is used.
 
 The constant must be of the same type than the pixel type of the
-corresponding image. It is wrapped in a SimpleDataObjectDecorator so
-it can be updated through the pipeline. The SetConstant() and
+corresponding image. It is wrapped in a SimpleDataObjectDecorator so it can be updated through the pipeline. The SetConstant() and
 GetConstant() methods are provided as shortcuts to set or get the
 constant value without manipulating the decorator.
 
@@ -13836,8 +13720,7 @@ Apply a custom operation to corresponding pixels in two images
 See:
  itk::simple::GreaterEqual for the procedural interface
 
- itk::BinaryFunctorImageFilter for the Doxygen on the original ITK
-class.
+ itk::BinaryFunctorImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -13936,8 +13819,7 @@ the type of the output image. It is also parameterized by the
 operation to be applied. A Functor style is used.
 
 The constant must be of the same type than the pixel type of the
-corresponding image. It is wrapped in a SimpleDataObjectDecorator so
-it can be updated through the pipeline. The SetConstant() and
+corresponding image. It is wrapped in a SimpleDataObjectDecorator so it can be updated through the pipeline. The SetConstant() and
 GetConstant() methods are provided as shortcuts to set or get the
 constant value without manipulating the decorator.
 
@@ -13954,8 +13836,7 @@ Apply a custom operation to corresponding pixels in two images
 See:
  itk::simple::Greater for the procedural interface
 
- itk::BinaryFunctorImageFilter for the Doxygen on the original ITK
-class.
+ itk::BinaryFunctorImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -14638,8 +14519,7 @@ See:
 
  itk::simple::HalfHermitianToRealInverseFFT for the procedural interface
 
- itk::HalfHermitianToRealInverseFFTImageFilter for the Doxygen on the
-original ITK class.
+ itk::HalfHermitianToRealInverseFFTImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkHalfHermitianToRealInverseFFTImageFilter.h
@@ -14771,8 +14651,7 @@ both images have the same number of dimensions.
 See:
  DirectedHausdorffDistanceImageFilter
 
- itk::HausdorffDistanceImageFilter for the Doxygen on the original ITK
-class.
+ itk::HausdorffDistanceImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkHausdorffDistanceImageFilter.h
@@ -14863,8 +14742,7 @@ Imaging, 19(2):143-150, 2000.
 See:
  itk::simple::HistogramMatching for the procedural interface
 
- itk::HistogramMatchingImageFilter for the Doxygen on the original ITK
-class.
+ itk::HistogramMatchingImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkHistogramMatchingImageFilter.h
@@ -14967,8 +14845,7 @@ Threshold an image using the Huang Threshold.
 
 This filter creates a binary thresholded image that separates an image
 into foreground and background components. The filter computes the
-threshold using the HuangThresholdCalculator and applies that theshold
-to the input image using the BinaryThresholdImageFilter .
+threshold using the HuangThresholdCalculator and applies that theshold to the input image using the BinaryThresholdImageFilter .
 
 
 Richard Beare. Department of Medicine, Monash University, Melbourne,
@@ -14984,8 +14861,7 @@ See:
 
  itk::simple::HuangThreshold for the procedural interface
 
- itk::HuangThresholdImageFilter for the Doxygen on the original ITK
-class.
+ itk::HuangThresholdImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkHuangThresholdImageFilter.h
@@ -15064,8 +14940,7 @@ Set the value of MaskOutput to true or false respectfully.
 
 %feature("docstring")  itk::simple::HuangThresholdImageFilter::SetInsideValue "
 
-Set the \"inside\" pixel value. The default value
-NumericTraits<OutputPixelType>::max()
+Set the \"inside\" pixel value. The default value NumericTraits<OutputPixelType>::max()
 
 ";
 
@@ -15092,8 +14967,7 @@ Set/Get the number of histogram bins. Defaults is 128.
 
 %feature("docstring")  itk::simple::HuangThresholdImageFilter::SetOutsideValue "
 
-Set the \"outside\" pixel value. The default value
-NumericTraits<OutputPixelType>::Zero.
+Set the \"outside\" pixel value. The default value NumericTraits<OutputPixelType>::Zero.
 
 ";
 
@@ -15881,6 +15755,16 @@ Print ourselves to string
 Writer series of image from a SimpleITK image.
 
 
+The ImageSeriesWriter is for writing a 3D image as a series of 2D images. A list of names
+for the series of 2D images must be provided, and an exception will be
+generated if the number of file names does not match the size of the
+image in the z-direction.
+
+DICOM series cannot be written with this class, as an exception will
+be generated. To write a DICOM series the individual slices must be
+extracted, proper DICOM tags must be added to the dictionaries, then
+written with the ImageFileWriter.
+
 
 See:
  itk::simple::WriteImage for the procedural interface
@@ -16034,8 +15918,7 @@ See:
 
  itk::simple::IntensityWindowing for the procedural interface
 
- itk::IntensityWindowingImageFilter for the Doxygen on the original ITK
-class.
+ itk::IntensityWindowingImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkIntensityWindowingImageFilter.h
@@ -16142,8 +16025,7 @@ Threshold an image using the Intermodes Threshold.
 
 This filter creates a binary thresholded image that separates an image
 into foreground and background components. The filter computes the
-threshold using the IntermodesThresholdCalculator and applies that
-theshold to the input image using the BinaryThresholdImageFilter .
+threshold using the IntermodesThresholdCalculator and applies that theshold to the input image using the BinaryThresholdImageFilter .
 
 
 Richard Beare. Department of Medicine, Monash University, Melbourne,
@@ -16159,8 +16041,7 @@ See:
 
  itk::simple::IntermodesThreshold for the procedural interface
 
- itk::IntermodesThresholdImageFilter for the Doxygen on the original
-ITK class.
+ itk::IntermodesThresholdImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkIntermodesThresholdImageFilter.h
@@ -16266,8 +16147,7 @@ Set/Get the number of histogram bins.
 
 %feature("docstring")  itk::simple::IntermodesThresholdImageFilter::SetOutsideValue "
 
-Set the \"outside\" pixel value. The default value
-NumericTraits<OutputPixelType>::Zero.
+Set the \"outside\" pixel value. The default value NumericTraits<OutputPixelType>::Zero.
 
 ";
 
@@ -16306,8 +16186,7 @@ de Jouy-en-Josas, France
 See:
  itk::simple::InverseDeconvolution for the procedural interface
 
- itk::InverseDeconvolutionImageFilter for the Doxygen on the original
-ITK class.
+ itk::InverseDeconvolutionImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkInverseDeconvolutionImageFilter.h
@@ -16438,8 +16317,7 @@ type Vector .
 See:
  itk::simple::InverseDisplacementField for the procedural interface
 
- itk::InverseDisplacementFieldImageFilter for the Doxygen on the
-original ITK class.
+ itk::InverseDisplacementFieldImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkInverseDisplacementFieldImageFilter.h
@@ -16615,8 +16493,7 @@ Nick Tustison
 See:
  itk::simple::InvertDisplacementField for the procedural interface
 
- itk::InvertDisplacementFieldImageFilter for the Doxygen on the
-original ITK class.
+ itk::InvertDisplacementFieldImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkInvertDisplacementFieldImageFilter.h
@@ -16732,8 +16609,7 @@ Invert an image
 See:
  itk::simple::InvertIntensity for the procedural interface
 
- itk::InvertIntensityImageFilter for the Doxygen on the original ITK
-class.
+ itk::InvertIntensityImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -16814,8 +16690,7 @@ Conference on Computer Aided Systems Theory , pages 48-51, Feb 2003.
 See:
  itk::simple::IsoContourDistance for the procedural interface
 
- itk::IsoContourDistanceImageFilter for the Doxygen on the original ITK
-class.
+ itk::IsoContourDistanceImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkIsoContourDistanceImageFilter.h
@@ -16894,8 +16769,7 @@ Threshold an image using the IsoData Threshold.
 
 This filter creates a binary thresholded image that separates an image
 into foreground and background components. The filter computes the
-threshold using the IsoDataThresholdCalculator and applies that
-theshold to the input image using the BinaryThresholdImageFilter .
+threshold using the IsoDataThresholdCalculator and applies that theshold to the input image using the BinaryThresholdImageFilter .
 
 
 Richard Beare. Department of Medicine, Monash University, Melbourne,
@@ -16911,8 +16785,7 @@ See:
 
  itk::simple::IsoDataThreshold for the procedural interface
 
- itk::IsoDataThresholdImageFilter for the Doxygen on the original ITK
-class.
+ itk::IsoDataThresholdImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkIsoDataThresholdImageFilter.h
@@ -17018,8 +16891,7 @@ Set/Get the number of histogram bins.
 
 %feature("docstring")  itk::simple::IsoDataThresholdImageFilter::SetOutsideValue "
 
-Set the \"outside\" pixel value. The default value
-NumericTraits<OutputPixelType>::Zero.
+Set the \"outside\" pixel value. The default value NumericTraits<OutputPixelType>::Zero.
 
 ";
 
@@ -17076,8 +16948,7 @@ check for this by querying the GetThresholdingFailed() flag.
 See:
  itk::simple::IsolatedConnected for the procedural interface
 
- itk::IsolatedConnectedImageFilter for the Doxygen on the original ITK
-class.
+ itk::IsolatedConnectedImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkIsolatedConnectedImageFilter.h
@@ -17254,8 +17125,7 @@ defaults to the 1.0.
 See:
  itk::simple::IsolatedWatershed for the procedural interface
 
- itk::IsolatedWatershedImageFilter for the Doxygen on the original ITK
-class.
+ itk::IsolatedWatershedImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkIsolatedWatershedImageFilter.h
@@ -17520,8 +17390,7 @@ Threshold an image using the KittlerIllingworth Threshold.
 
 This filter creates a binary thresholded image that separates an image
 into foreground and background components. The filter computes the
-threshold using the KittlerIllingworthThresholdCalculator and applies
-that theshold to the input image using the BinaryThresholdImageFilter .
+threshold using the KittlerIllingworthThresholdCalculator and applies that theshold to the input image using the BinaryThresholdImageFilter .
 
 
 Richard Beare. Department of Medicine, Monash University, Melbourne,
@@ -17537,8 +17406,7 @@ See:
 
  itk::simple::KittlerIllingworthThreshold for the procedural interface
 
- itk::KittlerIllingworthThresholdImageFilter for the Doxygen on the
-original ITK class.
+ itk::KittlerIllingworthThresholdImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkKittlerIllingworthThresholdImageFilter.h
@@ -17644,8 +17512,7 @@ Set/Get the number of histogram bins.
 
 %feature("docstring")  itk::simple::KittlerIllingworthThresholdImageFilter::SetOutsideValue "
 
-Set the \"outside\" pixel value. The default value
-NumericTraits<OutputPixelType>::Zero.
+Set the \"outside\" pixel value. The default value NumericTraits<OutputPixelType>::Zero.
 
 ";
 
@@ -17692,8 +17559,7 @@ Label the contours of connected components
 See:
  itk::simple::LabelContour for the procedural interface
 
- itk::LabelContourImageFilter for the Doxygen on the original ITK
-class.
+ itk::LabelContourImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -17805,8 +17671,7 @@ Convert an itk::Image consisting of labeled regions to a LabelMap
 See:
  itk::simple::LabelImageToLabelMapFilter for the procedural interface
 
- itk::LabelImageToLabelMapFilter for the Doxygen on the original ITK
-class.
+ itk::LabelImageToLabelMapFilter for the Doxygen on the original ITK class.
 
 
 
@@ -17878,11 +17743,9 @@ de Jouy-en-Josas, France.
 
 
 See:
- StatisticsLabelObject , LabelStatisticsOpeningImageFilter ,
-LabelStatisticsOpeningImageFilter
+ StatisticsLabelObject , LabelStatisticsOpeningImageFilter , LabelStatisticsOpeningImageFilter
 
- itk::LabelImageToStatisticsLabelMapFilter for the Doxygen on the
-original ITK class.
+ itk::LabelImageToStatisticsLabelMapFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkLabelIntensityStatisticsImageFilter.h
@@ -18320,8 +18183,7 @@ Color the boundaries of labeled regions in an image
 See:
  itk::simple::LabelMapContourOverlay for the procedural interface
 
- itk::LabelMapContourOverlayImageFilter for the Doxygen on the original
-ITK class.
+ itk::LabelMapContourOverlayImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -18473,8 +18335,7 @@ See:
 
  itk::simple::LabelMapMask for the procedural interface
 
- itk::LabelMapMaskImageFilter for the Doxygen on the original ITK
-class.
+ itk::LabelMapMaskImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkLabelMapMaskImageFilter.h
@@ -18636,8 +18497,7 @@ See:
 
  itk::simple::LabelMapOverlay for the procedural interface
 
- itk::LabelMapOverlayImageFilter for the Doxygen on the original ITK
-class.
+ itk::LabelMapOverlayImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkLabelMapOverlayImageFilter.h
@@ -18722,8 +18582,7 @@ See:
 
  itk::simple::LabelMapToBinary for the procedural interface
 
- itk::LabelMapToBinaryImageFilter for the Doxygen on the original ITK
-class.
+ itk::LabelMapToBinaryImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkLabelMapToBinaryImageFilter.h
@@ -18818,8 +18677,7 @@ Convert a LabelMap to a normal image with different values representing each reg
 See:
  itk::simple::LabelMapToLabel for the procedural interface
 
- itk::LabelMapToLabelImageFilter for the Doxygen on the original ITK
-class.
+ itk::LabelMapToLabelImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -18876,8 +18734,7 @@ See:
 
  itk::simple::LabelMapToRGB for the procedural interface
 
- itk::LabelMapToRGBImageFilter for the Doxygen on the original ITK
-class.
+ itk::LabelMapToRGBImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkLabelMapToRGBImageFilter.h
@@ -18943,8 +18800,7 @@ Nicholas J. Tustison
 See:
  LabelOverlapMeasuresImageFilter
 
- itk::LabelOverlapMeasuresImageFilter for the Doxygen on the original
-ITK class.
+ itk::LabelOverlapMeasuresImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkLabelOverlapMeasuresImageFilter.h
@@ -19080,8 +18936,7 @@ Overlay a LabelMap on an image
 See:
  itk::simple::LabelOverlay for the procedural interface
 
- itk::LabelOverlayImageFilter for the Doxygen on the original ITK
-class.
+ itk::LabelOverlayImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -19176,8 +19031,7 @@ Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France.
 
 See:
- ShapeLabelObject , LabelShapeOpeningImageFilter ,
-LabelStatisticsOpeningImageFilter
+ ShapeLabelObject , LabelShapeOpeningImageFilter , LabelStatisticsOpeningImageFilter
 Wiki Examples:
 
 All Examples
@@ -19185,8 +19039,7 @@ All Examples
 Convert an itk::Image consisting of labeled regions to a ShapeLabelMap
 
 See:
- itk::LabelImageToShapeLabelMapFilter for the Doxygen on the original
-ITK class.
+ itk::LabelImageToShapeLabelMapFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkLabelShapeStatisticsImageFilter.h
@@ -19476,8 +19329,7 @@ All Examples
 Get statistical properties of labeled regions in an image
 
 See:
- itk::LabelStatisticsImageFilter for the Doxygen on the original ITK
-class.
+ itk::LabelStatisticsImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkLabelStatisticsImageFilter.h
@@ -19742,9 +19594,9 @@ Destructor
 Make sure that the objects are not overlapping.
 
 
-AttributeUniqueLabelMapFilter search the overlapping zones in the
-overlapping objects and keeps only a single object on all the pixels
-of the image. The object to keep is selected according to their label.
+AttributeUniqueLabelMapFilter search the overlapping zones in the overlapping objects and keeps
+only a single object on all the pixels of the image. The object to
+keep is selected according to their label.
 
 
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
@@ -19757,8 +19609,7 @@ See:
 
  itk::simple::LabelUniqueLabelMapFilter for the procedural interface
 
- itk::LabelUniqueLabelMapFilter for the Doxygen on the original ITK
-class.
+ itk::LabelUniqueLabelMapFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkLabelUniqueLabelMapFilter.h
@@ -19840,8 +19691,7 @@ INPUTS
 All input volumes to this filter must be segmentations of an image,
 that is, they must have discrete pixel values where each value
 represents a different segmented object.
- Input volumes must all contain the same size RequestedRegions. Not
-all input images must contain all possible labels, but all label
+ Input volumes must all contain the same size RequestedRegions. Not all input images must contain all possible labels, but all label
 values must have the same meaning in all images.
 
 OUTPUTS
@@ -19994,8 +19844,7 @@ landmarks
 See:
  itk::simple::LandmarkBasedTransformInitializerFilter for the procedural interface
 
- itk::LandmarkBasedTransformInitializer for the Doxygen on the original
-ITK class.
+ itk::LandmarkBasedTransformInitializer for the Doxygen on the original ITK class.
 
 
 
@@ -20132,8 +19981,7 @@ See:
 
  itk::simple::LandweberDeconvolution for the procedural interface
 
- itk::LandweberDeconvolutionImageFilter for the Doxygen on the original
-ITK class.
+ itk::LandweberDeconvolutionImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkLandweberDeconvolutionImageFilter.h
@@ -20355,8 +20203,7 @@ Compute the Laplacian of Gaussian (LoG) of an image
 See:
  itk::simple::LaplacianRecursiveGaussian for the procedural interface
 
- itk::LaplacianRecursiveGaussianImageFilter for the Doxygen on the
-original ITK class.
+ itk::LaplacianRecursiveGaussianImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -20447,10 +20294,8 @@ features.
 
 
 IMPORTANT
-The SegmentationLevelSetImageFilter class and the
-LaplacianSegmentationLevelSetFunction class contain additional
-information necessary to the full understanding of how to use this
-filter.
+The SegmentationLevelSetImageFilter class and the LaplacianSegmentationLevelSetFunction class contain additional information necessary to the full
+understanding of how to use this filter.
 OVERVIEW
 This class is a level set method segmentation filter. It constructs a
 speed function which is zero at image edges as detected by a Laplacian
@@ -20498,11 +20343,9 @@ negative *values in the image are outside of the inside region. The
 zero crossings of *the image correspond to the position of the level
 set front.
 
-See SparseFieldLevelSetImageFilter and SegmentationLevelSetImageFilter
-for more information.
+See SparseFieldLevelSetImageFilter and SegmentationLevelSetImageFilter for more information.
 PARAMETERS
-This filter has no parameters other than those described in
-SegmentationLevelSetImageFilter .
+This filter has no parameters other than those described in SegmentationLevelSetImageFilter .
 
 See:
  SegmentationLevelSetImageFilter
@@ -20513,8 +20356,7 @@ See:
 
  itk::simple::LaplacianSegmentationLevelSet for the procedural interface
 
- itk::LaplacianSegmentationLevelSetImageFilter for the Doxygen on the
-original ITK class.
+ itk::LaplacianSegmentationLevelSetImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkLaplacianSegmentationLevelSetImageFilter.h
@@ -20649,8 +20491,7 @@ Sharpen an image
 See:
  itk::simple::LaplacianSharpening for the procedural interface
 
- itk::LaplacianSharpeningImageFilter for the Doxygen on the original
-ITK class.
+ itk::LaplacianSharpeningImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -20729,8 +20570,7 @@ the type of the output image. It is also parameterized by the
 operation to be applied. A Functor style is used.
 
 The constant must be of the same type than the pixel type of the
-corresponding image. It is wrapped in a SimpleDataObjectDecorator so
-it can be updated through the pipeline. The SetConstant() and
+corresponding image. It is wrapped in a SimpleDataObjectDecorator so it can be updated through the pipeline. The SetConstant() and
 GetConstant() methods are provided as shortcuts to set or get the
 constant value without manipulating the decorator.
 
@@ -20747,8 +20587,7 @@ Apply a custom operation to corresponding pixels in two images
 See:
  itk::simple::LessEqual for the procedural interface
 
- itk::BinaryFunctorImageFilter for the Doxygen on the original ITK
-class.
+ itk::BinaryFunctorImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -20847,8 +20686,7 @@ the type of the output image. It is also parameterized by the
 operation to be applied. A Functor style is used.
 
 The constant must be of the same type than the pixel type of the
-corresponding image. It is wrapped in a SimpleDataObjectDecorator so
-it can be updated through the pipeline. The SetConstant() and
+corresponding image. It is wrapped in a SimpleDataObjectDecorator so it can be updated through the pipeline. The SetConstant() and
 GetConstant() methods are provided as shortcuts to set or get the
 constant value without manipulating the decorator.
 
@@ -20865,8 +20703,7 @@ Apply a custom operation to corresponding pixels in two images
 See:
  itk::simple::Less for the procedural interface
 
- itk::BinaryFunctorImageFilter for the Doxygen on the original ITK
-class.
+ itk::BinaryFunctorImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -21019,8 +20856,7 @@ See:
 
  DemonsRegistrationFilter
 
- itk::LevelSetMotionRegistrationFilter for the Doxygen on the original
-ITK class.
+ itk::LevelSetMotionRegistrationFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkLevelSetMotionRegistrationFilter.h
@@ -21174,12 +21010,12 @@ prior to calculating gradients. The standard deviation is measured in
 physical units (for instance mm). Note that this smoothing value is
 not to be confused with the
 PDEDeformableRegistrationFilter::SetStandardDeviations() method. The
-method in PDEDeformableRegistrationFilter is for setting the smoothing
-parameters for regularizing the deformation field between interations.
-Those smoothing parameters are set in pixel units not physical units.
-Deformation field smoothing is not done by default in
-LevelSetMotionRegistration. This smoothing parameter is to condition
-the gradient calculation and parameter is specified in physical units.
+method in PDEDeformableRegistrationFilter is for setting the smoothing parameters for regularizing the
+deformation field between interations. Those smoothing parameters are
+set in pixel units not physical units. Deformation field smoothing is
+not done by default in LevelSetMotionRegistration. This smoothing
+parameter is to condition the gradient calculation and parameter is
+specified in physical units.
 
 ";
 
@@ -21307,8 +21143,7 @@ Threshold an image using the Li Threshold.
 
 This filter creates a binary thresholded image that separates an image
 into foreground and background components. The filter computes the
-threshold using the LiThresholdCalculator and applies that theshold to
-the input image using the BinaryThresholdImageFilter .
+threshold using the LiThresholdCalculator and applies that theshold to the input image using the BinaryThresholdImageFilter .
 
 
 Richard Beare. Department of Medicine, Monash University, Melbourne,
@@ -21430,8 +21265,7 @@ Set/Get the number of histogram bins.
 
 %feature("docstring")  itk::simple::LiThresholdImageFilter::SetOutsideValue "
 
-Set the \"outside\" pixel value. The default value
-NumericTraits<OutputPixelType>::Zero.
+Set the \"outside\" pixel value. The default value NumericTraits<OutputPixelType>::Zero.
 
 ";
 
@@ -21556,8 +21390,7 @@ or all 3D, or all ND)
 See:
  itk::simple::MagnitudeAndPhaseToComplex for the procedural interface
 
- itk::MagnitudeAndPhaseToComplexImageFilter for the Doxygen on the
-original ITK class.
+ itk::MagnitudeAndPhaseToComplexImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkMagnitudeAndPhaseToComplexImageFilter.h
@@ -21861,8 +21694,7 @@ Computer Vision and Pattern Recognition, 2010.
 See:
  itk::simple::MaskedFFTNormalizedCorrelation for the procedural interface
 
- itk::MaskedFFTNormalizedCorrelationImageFilter for the Doxygen on the
-original ITK class.
+ itk::MaskedFFTNormalizedCorrelationImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkMaskedFFTNormalizedCorrelationImageFilter.h
@@ -21937,8 +21769,7 @@ Threshold an image using the MaximumEntropy Threshold.
 
 This filter creates a binary thresholded image that separates an image
 into foreground and background components. The filter computes the
-threshold using the MaximumEntropyThresholdCalculator and applies that
-theshold to the input image using the BinaryThresholdImageFilter .
+threshold using the MaximumEntropyThresholdCalculator and applies that theshold to the input image using the BinaryThresholdImageFilter .
 
 
 Richard Beare. Department of Medicine, Monash University, Melbourne,
@@ -21954,8 +21785,7 @@ See:
 
  itk::simple::MaximumEntropyThreshold for the procedural interface
 
- itk::MaximumEntropyThresholdImageFilter for the Doxygen on the
-original ITK class.
+ itk::MaximumEntropyThresholdImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkMaximumEntropyThresholdImageFilter.h
@@ -22061,8 +21891,7 @@ Set/Get the number of histogram bins.
 
 %feature("docstring")  itk::simple::MaximumEntropyThresholdImageFilter::SetOutsideValue "
 
-Set the \"outside\" pixel value. The default value
-NumericTraits<OutputPixelType>::Zero.
+Set the \"outside\" pixel value. The default value NumericTraits<OutputPixelType>::Zero.
 
 ";
 
@@ -22177,8 +22006,7 @@ See:
 
  itk::simple::MaximumProjection for the procedural interface
 
- itk::MaximumProjectionImageFilter for the Doxygen on the original ITK
-class.
+ itk::MaximumProjectionImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkMaximumProjectionImageFilter.h
@@ -22341,8 +22169,7 @@ See:
 
  itk::simple::MeanProjection for the procedural interface
 
- itk::MeanProjectionImageFilter for the Doxygen on the original ITK
-class.
+ itk::MeanProjectionImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkMeanProjectionImageFilter.h
@@ -22511,8 +22338,7 @@ See:
 
  itk::simple::MedianProjection for the procedural interface
 
- itk::MedianProjectionImageFilter for the Doxygen on the original ITK
-class.
+ itk::MedianProjectionImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkMedianProjectionImageFilter.h
@@ -22694,8 +22520,7 @@ The threshold value $ T_{threshold} $ is the average intensity obtained in the d
 the gradient at point $ x $ at the extrema of the local neighborhood.
 
 This filter make use of the multi-threaded finite difference solver
-hierarchy. Updates are computed using a MinMaxCurvatureFlowFunction
-object. A zero flux Neumann boundary condition is used when computing
+hierarchy. Updates are computed using a MinMaxCurvatureFlowFunction object. A zero flux Neumann boundary condition is used when computing
 derivatives near the data boundary.
 
 
@@ -22718,8 +22543,7 @@ See:
 
  itk::simple::MinMaxCurvatureFlow for the procedural interface
 
- itk::MinMaxCurvatureFlowImageFilter for the Doxygen on the original
-ITK class.
+ itk::MinMaxCurvatureFlowImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkMinMaxCurvatureFlowImageFilter.h
@@ -22869,8 +22693,7 @@ pipeline. The implementation uses the StatisticsImageFilter .
 See:
  StatisticsImageFilter
 
- itk::MinimumMaximumImageFilter for the Doxygen on the original ITK
-class.
+ itk::MinimumMaximumImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkMinimumMaximumImageFilter.h
@@ -22953,8 +22776,7 @@ See:
 
  itk::simple::MinimumProjection for the procedural interface
 
- itk::MinimumProjectionImageFilter for the Doxygen on the original ITK
-class.
+ itk::MinimumProjectionImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkMinimumProjectionImageFilter.h
@@ -23160,8 +22982,7 @@ Threshold an image using the Moments Threshold.
 
 This filter creates a binary thresholded image that separates an image
 into foreground and background components. The filter computes the
-threshold using the MomentsThresholdCalculator and applies that
-theshold to the input image using the BinaryThresholdImageFilter .
+threshold using the MomentsThresholdCalculator and applies that theshold to the input image using the BinaryThresholdImageFilter .
 
 
 Richard Beare. Department of Medicine, Monash University, Melbourne,
@@ -23177,8 +22998,7 @@ See:
 
  itk::simple::MomentsThreshold for the procedural interface
 
- itk::MomentsThresholdImageFilter for the Doxygen on the original ITK
-class.
+ itk::MomentsThresholdImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkMomentsThresholdImageFilter.h
@@ -23284,8 +23104,7 @@ Set/Get the number of histogram bins.
 
 %feature("docstring")  itk::simple::MomentsThresholdImageFilter::SetOutsideValue "
 
-Set the \"outside\" pixel value. The default value
-NumericTraits<OutputPixelType>::Zero.
+Set the \"outside\" pixel value. The default value NumericTraits<OutputPixelType>::Zero.
 
 ";
 
@@ -23320,8 +23139,7 @@ See:
 
  itk::simple::MorphologicalGradient for the procedural interface
 
- itk::MorphologicalGradientImageFilter for the Doxygen on the original
-ITK class.
+ itk::MorphologicalGradientImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkMorphologicalGradientImageFilter.h
@@ -23447,8 +23265,7 @@ See:
 
  itk::simple::MorphologicalWatershedFromMarkers for the procedural interface
 
- itk::MorphologicalWatershedFromMarkersImageFilter for the Doxygen on
-the original ITK class.
+ itk::MorphologicalWatershedFromMarkersImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkMorphologicalWatershedFromMarkersImageFilter.h
@@ -23573,8 +23390,7 @@ See:
 
  itk::simple::MorphologicalWatershed for the procedural interface
 
- itk::MorphologicalWatershedImageFilter for the Doxygen on the original
-ITK class.
+ itk::MorphologicalWatershedImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkMorphologicalWatershedImageFilter.h
@@ -23708,8 +23524,7 @@ INPUTS
 All input volumes to this filter must be segmentations of an image,
 that is, they must have discrete pixel values where each value
 represents a different segmented object.
- Input volumes must all contain the same size RequestedRegions. Not
-all input images must contain all possible labels, but all label
+ Input volumes must all contain the same size RequestedRegions. Not all input images must contain all possible labels, but all label
 values must have the same meaning in all images.
 
 The filter can optionally be provided with estimates for the a priori
@@ -24033,8 +23848,7 @@ Transactions on Medical Imaging, 29(6):1310-1320, June 2010.
 See:
  itk::simple::N4BiasFieldCorrection for the procedural interface
 
- itk::N4BiasFieldCorrectionImageFilter for the Doxygen on the original
-ITK class.
+ itk::N4BiasFieldCorrectionImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkN4BiasFieldCorrectionImageFilter.h
@@ -24365,8 +24179,7 @@ AND whose neighbors all lie within a Lower and Upper threshold range.
 See:
  itk::simple::NeighborhoodConnected for the procedural interface
 
- itk::NeighborhoodConnectedImageFilter for the Doxygen on the original
-ITK class.
+ itk::NeighborhoodConnectedImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkNeighborhoodConnectedImageFilter.h
@@ -24704,8 +24517,7 @@ Scale all pixels so that their sum is a specified constant
 See:
  itk::simple::NormalizeToConstant for the procedural interface
 
- itk::NormalizeToConstantImageFilter for the Doxygen on the original
-ITK class.
+ itk::NormalizeToConstantImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -24792,8 +24604,7 @@ Normalized correlation
 See:
  itk::simple::NormalizedCorrelation for the procedural interface
 
- itk::NormalizedCorrelationImageFilter for the Doxygen on the original
-ITK class.
+ itk::NormalizedCorrelationImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -24843,8 +24654,7 @@ the type of the output image. It is also parameterized by the
 operation to be applied. A Functor style is used.
 
 The constant must be of the same type than the pixel type of the
-corresponding image. It is wrapped in a SimpleDataObjectDecorator so
-it can be updated through the pipeline. The SetConstant() and
+corresponding image. It is wrapped in a SimpleDataObjectDecorator so it can be updated through the pipeline. The SetConstant() and
 GetConstant() methods are provided as shortcuts to set or get the
 constant value without manipulating the decorator.
 
@@ -24861,8 +24671,7 @@ Apply a custom operation to corresponding pixels in two images
 See:
  itk::simple::NotEqual for the procedural interface
 
- itk::BinaryFunctorImageFilter for the Doxygen on the original ITK
-class.
+ itk::BinaryFunctorImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -25042,8 +24851,7 @@ See:
 
  itk::simple::OpeningByReconstruction for the procedural interface
 
- itk::OpeningByReconstructionImageFilter for the Doxygen on the
-original ITK class.
+ itk::OpeningByReconstructionImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkOpeningByReconstructionImageFilter.h
@@ -25249,12 +25057,8 @@ Threshold an image using multiple Otsu Thresholds.
 
 
 This filter creates a labeled image that separates the input image
-into various classes. The filter computes the thresholds using the
-OtsuMultipleThresholdsCalculator and applies those thesholds to the
-input image using the ThresholdLabelerImageFilter . The
-NumberOfHistogramBins and NumberOfThresholds can be set for the
-Calculator. The LabelOffset can be set for the
-ThresholdLabelerImageFilter .
+into various classes. The filter computes the thresholds using the OtsuMultipleThresholdsCalculator and applies those thesholds to the input image using the ThresholdLabelerImageFilter . The NumberOfHistogramBins and NumberOfThresholds can be set for the
+Calculator. The LabelOffset can be set for the ThresholdLabelerImageFilter .
 
 This filter also includes an option to use the valley emphasis
 algorithm from H.F. Ng, \"Automatic thresholding for defect
@@ -25276,8 +25080,7 @@ See:
 
  itk::simple::OtsuMultipleThresholds for the procedural interface
 
- itk::OtsuMultipleThresholdsImageFilter for the Doxygen on the original
-ITK class.
+ itk::OtsuMultipleThresholdsImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkOtsuMultipleThresholdsImageFilter.h
@@ -25394,8 +25197,7 @@ Threshold an image using the Otsu Threshold.
 
 This filter creates a binary thresholded image that separates an image
 into foreground and background components. The filter computes the
-threshold using the OtsuThresholdCalculator and applies that theshold
-to the input image using the BinaryThresholdImageFilter .
+threshold using the OtsuThresholdCalculator and applies that theshold to the input image using the BinaryThresholdImageFilter .
 
 
 Richard Beare
@@ -25415,8 +25217,7 @@ See:
 
  itk::simple::OtsuThreshold for the procedural interface
 
- itk::OtsuThresholdImageFilter for the Doxygen on the original ITK
-class.
+ itk::OtsuThresholdImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkOtsuThresholdImageFilter.h
@@ -25495,8 +25296,7 @@ parameters
 
 %feature("docstring")  itk::simple::OtsuThresholdImageFilter::SetInsideValue "
 
-Set the \"inside\" pixel value. The default value
-NumericTraits<OutputPixelType>::max()
+Set the \"inside\" pixel value. The default value NumericTraits<OutputPixelType>::max()
 
 ";
 
@@ -25523,8 +25323,7 @@ Set/Get the number of histogram bins. Defaults is 128.
 
 %feature("docstring")  itk::simple::OtsuThresholdImageFilter::SetOutsideValue "
 
-Set the \"outside\" pixel value. The default value
-NumericTraits<OutputPixelType>::Zero.
+Set the \"outside\" pixel value. The default value NumericTraits<OutputPixelType>::Zero.
 
 ";
 
@@ -25641,13 +25440,11 @@ Derived class implementing a specific patch-based denoising algorithm,
 as detailed below.
 
 
-This class is derived from the base class
-PatchBasedDenoisingBaseImageFilter ; please refer to the documentation
-of the base class first. This class implements a denoising filter that
-uses iterative non-local, or semi-local, weighted averaging of image
-patches for image denoising. The intensity at each pixel 'p' gets
-updated as a weighted average of intensities of a chosen subset of
-pixels from the image.
+This class is derived from the base class PatchBasedDenoisingBaseImageFilter ; please refer to the documentation of the base class first. This
+class implements a denoising filter that uses iterative non-local, or
+semi-local, weighted averaging of image patches for image denoising.
+The intensity at each pixel 'p' gets updated as a weighted average of
+intensities of a chosen subset of pixels from the image.
 
 This class implements the denoising algorithm using a Gaussian kernel
 function for nonparametric density estimation. The class implements a
@@ -25663,8 +25460,7 @@ Awate and Whitaker 2005 IEEE CVPR and 2006 IEEE TPAMI.
 See:
  PatchBasedDenoisingBaseImageFilter
 
- itk::PatchBasedDenoisingImageFilter for the Doxygen on the original
-ITK class.
+ itk::PatchBasedDenoisingImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkPatchBasedDenoisingImageFilter.h
@@ -26018,8 +25814,7 @@ recommented that the component type be a real valued type.
 See:
  itk::simple::PhysicalPointImageSource for the procedural interface
 
- itk::PhysicalPointImageSource for the Doxygen on the original ITK
-class.
+ itk::PhysicalPointImageSource for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkPhysicalPointImageSource.h
@@ -26483,8 +26278,7 @@ If there is no active process the method has no effect.
 Add a Command Object to observer the event.
 
 
-The Command object's Execute method will be invoked when the internal ITK Object
-has the event. These events only occur during this ProcessObject's Execute method when the ITK filter is running. The command occurs
+The Command object's Execute method will be invoked when the internal ITK Object has the event. These events only occur during this ProcessObject's Execute method when the ITK filter is running. The command occurs
 in the same thread as this objects Execute methods was called in.
 
 An internal reference is made between the Command and this ProcessObject which enable automatic removal of the command when deleted. This
@@ -26591,8 +26385,7 @@ See:
 
  itk::simple::ProjectedLandweberDeconvolution for the procedural interface
 
- itk::ProjectedLandweberDeconvolutionImageFilter for the Doxygen on the
-original ITK class.
+ itk::ProjectedLandweberDeconvolutionImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkProjectedLandweberDeconvolutionImageFilter.h
@@ -26879,8 +26672,7 @@ See:
 
  itk::simple::RealToHalfHermitianForwardFFT for the procedural interface
 
- itk::RealToHalfHermitianForwardFFTImageFilter for the Doxygen on the
-original ITK class.
+ itk::RealToHalfHermitianForwardFFTImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkRealToHalfHermitianForwardFFTImageFilter.h
@@ -26953,8 +26745,7 @@ See:
 
  itk::simple::ReconstructionByDilation for the procedural interface
 
- itk::ReconstructionByDilationImageFilter for the Doxygen on the
-original ITK class.
+ itk::ReconstructionByDilationImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkReconstructionByDilationImageFilter.h
@@ -27063,8 +26854,7 @@ See:
 
  itk::simple::ReconstructionByErosion for the procedural interface
 
- itk::ReconstructionByErosionImageFilter for the Doxygen on the
-original ITK class.
+ itk::ReconstructionByErosionImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkReconstructionByErosionImageFilter.h
@@ -27152,19 +26942,17 @@ with the Gaussian kernel. This class implements the recursive
 filtering method proposed by R.Deriche in IEEE-PAMI Vol.12, No.1,
 January 1990, pp 78-87, \"Fast Algorithms for Low-Level Vision\"
 
-Details of the implementation are described in the technical report:
-R. Deriche, \"Recursively Implementing The Gaussian and Its
+Details of the implementation are described in the technical report: R.
+Deriche, \"Recursively Implementing The Gaussian and Its
 Derivatives\", INRIA, 1993, ftp://ftp.inria.fr/INRIA/tech-reports/RR/RR-1893.ps.gz
 
 Further improvements of the algorithm are described in: G. Farneback &
 C.-F. Westin, \"On Implementation of Recursive Gaussian Filters\", so
 far unpublished.
 
-As compared to itk::DiscreteGaussianImageFilter , this filter tends to
-be faster for large kernels, and it can take the derivative of the
-blurred image in one step. Also, note that we have
-itk::RecursiveGaussianImageFilter::SetSigma() , but
-itk::DiscreteGaussianImageFilter::SetVariance() .
+As compared to itk::DiscreteGaussianImageFilter , this filter tends to be faster for large kernels, and it can take
+the derivative of the blurred image in one step. Also, note that we
+have itk::RecursiveGaussianImageFilter::SetSigma() , but itk::DiscreteGaussianImageFilter::SetVariance() .
 
 
 See:
@@ -27177,8 +26965,7 @@ Find higher derivatives of an image
 See:
  itk::simple::RecursiveGaussian for the procedural interface
 
- itk::RecursiveGaussianImageFilter for the Doxygen on the original ITK
-class.
+ itk::RecursiveGaussianImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -27355,8 +27142,7 @@ Extract a portion of an image (region of interest)
 See:
  itk::simple::RegionOfInterest for the procedural interface
 
- itk::RegionOfInterestImageFilter for the Doxygen on the original ITK
-class.
+ itk::RegionOfInterestImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -27448,8 +27234,7 @@ RegionalMaximaImageFilter
 See:
  itk::simple::RegionalMaxima for the procedural interface
 
- itk::RegionalMaximaImageFilter for the Doxygen on the original ITK
-class.
+ itk::RegionalMaximaImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -27601,8 +27386,7 @@ RegionalMinimaImageFilter
 See:
  itk::simple::RegionalMinima for the procedural interface
 
- itk::RegionalMinimaImageFilter for the Doxygen on the original ITK
-class.
+ itk::RegionalMinimaImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -27748,10 +27532,9 @@ relabeled output using a BinaryThresholdImageFilter . A group of objects can be 
 a ThresholdImageFilter .
 
 Once all the objects are relabeled, the application can query the
-number of objects and the size of each object. Object sizes are
-returned in a vector. The size of the background is not calculated. So
-the size of object #1 is GetSizeOfObjectsInPixels() [0], the size of
-object #2 is GetSizeOfObjectsInPixels() [1], etc.
+number of objects and the size of each object. Object sizes are returned in a vector. The size of the background is not
+calculated. So the size of object #1 is GetSizeOfObjectsInPixels()
+[0], the size of object #2 is GetSizeOfObjectsInPixels() [1], etc.
 
 If user sets a minimum object size, all objects with fewer pixels than
 the minimum will be discarded, so that the number of objects reported
@@ -27776,8 +27559,7 @@ Assign contiguous labels to connected regions of an image
 See:
  itk::simple::RelabelComponent for the procedural interface
 
- itk::RelabelComponentImageFilter for the Doxygen on the original ITK
-class.
+ itk::RelabelComponentImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -27929,8 +27711,7 @@ Threshold an image using the RenyiEntropy Threshold.
 
 This filter creates a binary thresholded image that separates an image
 into foreground and background components. The filter computes the
-threshold using the RenyiEntropyThresholdCalculator and applies that
-theshold to the input image using the BinaryThresholdImageFilter .
+threshold using the RenyiEntropyThresholdCalculator and applies that theshold to the input image using the BinaryThresholdImageFilter .
 
 
 Richard Beare. Department of Medicine, Monash University, Melbourne,
@@ -27946,8 +27727,7 @@ See:
 
  itk::simple::RenyiEntropyThreshold for the procedural interface
 
- itk::RenyiEntropyThresholdImageFilter for the Doxygen on the original
-ITK class.
+ itk::RenyiEntropyThresholdImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkRenyiEntropyThresholdImageFilter.h
@@ -28053,8 +27833,7 @@ Set/Get the number of histogram bins.
 
 %feature("docstring")  itk::simple::RenyiEntropyThresholdImageFilter::SetOutsideValue "
 
-Set the \"outside\" pixel value. The default value
-NumericTraits<OutputPixelType>::Zero.
+Set the \"outside\" pixel value. The default value NumericTraits<OutputPixelType>::Zero.
 
 ";
 
@@ -28081,14 +27860,12 @@ interpolating via some image function. The class is templated over the
 types of the input and output images.
 
 Note that the choice of interpolator function can be important. This
-function is set via SetInterpolator() . The default is LinearInterpolateImageFunction <InputImageType,
-TInterpolatorPrecisionType>, which is reasonable for ordinary medical
-images. However, some synthetic images have pixels drawn from a finite
-prescribed set. An example would be a mask indicating the segmentation
-of a brain into a small number of tissue types. For such an image, one
-does not want to interpolate between different pixel values, and so
-NearestNeighborInterpolateImageFunction < InputImageType, TCoordRep >
-would be a better choice.
+function is set via SetInterpolator() . The default is LinearInterpolateImageFunction <InputImageType, TInterpolatorPrecisionType>, which is reasonable for
+ordinary medical images. However, some synthetic images have pixels
+drawn from a finite prescribed set. An example would be a mask
+indicating the segmentation of a brain into a small number of tissue
+types. For such an image, one does not want to interpolate between
+different pixel values, and so NearestNeighborInterpolateImageFunction < InputImageType, TCoordRep > would be a better choice.
 
 If an sample is taken from outside the image domain, the default
 behavior is to use a default pixel value. If different behavior is
@@ -28150,13 +27927,8 @@ image. The default default pixel value is 0.
 
 %feature("docstring")  itk::simple::ResampleImageFilter::GetInterpolator "
 
-Get/Set the interpolator function. The default is
-LinearInterpolateImageFunction <InputImageType,
-TInterpolatorPrecisionType>. Some other options are
-NearestNeighborInterpolateImageFunction (useful for binary masks and
-other images with a small number of possible pixel values), and
-BSplineInterpolateImageFunction (which provides a higher order of
-interpolation).
+Get/Set the interpolator function. The default is LinearInterpolateImageFunction <InputImageType, TInterpolatorPrecisionType>. Some other options are NearestNeighborInterpolateImageFunction (useful for binary masks and other images with a small number of
+possible pixel values), and BSplineInterpolateImageFunction (which provides a higher order of interpolation).
 
 ";
 
@@ -28224,13 +27996,8 @@ image. The default default pixel value is 0.
 
 %feature("docstring")  itk::simple::ResampleImageFilter::SetInterpolator "
 
-Get/Set the interpolator function. The default is
-LinearInterpolateImageFunction <InputImageType,
-TInterpolatorPrecisionType>. Some other options are
-NearestNeighborInterpolateImageFunction (useful for binary masks and
-other images with a small number of possible pixel values), and
-BSplineInterpolateImageFunction (which provides a higher order of
-interpolation).
+Get/Set the interpolator function. The default is LinearInterpolateImageFunction <InputImageType, TInterpolatorPrecisionType>. Some other options are NearestNeighborInterpolateImageFunction (useful for binary masks and other images with a small number of
+possible pixel values), and BSplineInterpolateImageFunction (which provides a higher order of interpolation).
 
 ";
 
@@ -28316,9 +28083,8 @@ The following equation gives the mapping of the intensity values
 RealType. Before assigning the computed value to the output pixel.
 
 NOTE: In this filter the minimum and maximum values of the input image
-are computed internally using the MinimumMaximumImageCalculator .
-Users are not supposed to set those values in this filter. If you need
-a filter where you can set the minimum and maximum values of the
+are computed internally using the MinimumMaximumImageCalculator . Users are not supposed to set those values in this filter. If you
+need a filter where you can set the minimum and maximum values of the
 input, please use the IntensityWindowingImageFilter . If you want a filter that can use a user-defined linear
 transformation for the intensity, then please use the ShiftScaleImageFilter .
 
@@ -28333,8 +28099,7 @@ Rescale the intensity values of an image to a specified range
 See:
  itk::simple::RescaleIntensity for the procedural interface
 
- itk::RescaleIntensityImageFilter for the Doxygen on the original ITK
-class.
+ itk::RescaleIntensityImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -28426,8 +28191,7 @@ See:
 
  itk::simple::RichardsonLucyDeconvolution for the procedural interface
 
- itk::RichardsonLucyDeconvolutionImageFilter for the Doxygen on the
-original ITK class.
+ itk::RichardsonLucyDeconvolutionImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkRichardsonLucyDeconvolutionImageFilter.h
@@ -28781,8 +28545,7 @@ Simulation\". https://hdl.handle.net/10380/3158
 See:
  itk::simple::SaltAndPepperNoise for the procedural interface
 
- itk::SaltAndPepperNoiseImageFilter for the Doxygen on the original ITK
-class.
+ itk::SaltAndPepperNoiseImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkSaltAndPepperNoiseImageFilter.h
@@ -28868,8 +28631,7 @@ Single-phase Chan And Vese Dense Field Level Set Segmentation
 See:
  itk::simple::ScalarChanAndVeseDenseLevelSet for the procedural interface
 
- itk::ScalarChanAndVeseDenseLevelSetImageFilter for the Doxygen on the
-original ITK class.
+ itk::ScalarChanAndVeseDenseLevelSetImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -29038,8 +28800,7 @@ Label connected components in a grayscale image
 See:
  itk::simple::ScalarConnectedComponent for the procedural interface
 
- itk::ScalarConnectedComponentImageFilter for the Doxygen on the
-original ITK class.
+ itk::ScalarConnectedComponentImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -29139,8 +28900,7 @@ Cluster the pixels in a greyscale image
 See:
  itk::simple::ScalarImageKmeans for the procedural interface
 
- itk::ScalarImageKmeansImageFilter for the Doxygen on the original ITK
-class.
+ itk::ScalarImageKmeansImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -29266,8 +29026,7 @@ Apply a color map to an image
 See:
  itk::simple::ScalarToRGBColormap for the procedural interface
 
- itk::ScalarToRGBColormapImageFilter for the Doxygen on the original
-ITK class.
+ itk::ScalarToRGBColormapImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -29569,8 +29328,7 @@ Threshold an image using the Shanbhag Threshold.
 
 This filter creates a binary thresholded image that separates an image
 into foreground and background components. The filter computes the
-threshold using the ShanbhagThresholdCalculator and applies that
-theshold to the input image using the BinaryThresholdImageFilter .
+threshold using the ShanbhagThresholdCalculator and applies that theshold to the input image using the BinaryThresholdImageFilter .
 
 
 Richard Beare. Department of Medicine, Monash University, Melbourne,
@@ -29586,8 +29344,7 @@ See:
 
  itk::simple::ShanbhagThreshold for the procedural interface
 
- itk::ShanbhagThresholdImageFilter for the Doxygen on the original ITK
-class.
+ itk::ShanbhagThresholdImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkShanbhagThresholdImageFilter.h
@@ -29686,8 +29443,7 @@ Set/Get the number of histogram bins.
 
 %feature("docstring")  itk::simple::ShanbhagThresholdImageFilter::SetOutsideValue "
 
-Set the \"outside\" pixel value. The default value
-NumericTraits<OutputPixelType>::Zero.
+Set the \"outside\" pixel value. The default value NumericTraits<OutputPixelType>::Zero.
 
 ";
 
@@ -29718,9 +29474,8 @@ map.
 
 
 IMPORTANT
-The SegmentationLevelSetImageFilter class and the
-ShapeDetectionLevelSetFunction class contain additional information
-necessary to gain full understanding of how to use this filter.
+The SegmentationLevelSetImageFilter class and the ShapeDetectionLevelSetFunction class contain additional information necessary to gain full
+understanding of how to use this filter.
 OVERVIEW
 This class is a level set method segmentation filter. An initial
 contour is propagated outwards (or inwards) until it ''sticks'' to the
@@ -29745,8 +29500,7 @@ potential map is compute from the image gradient, for example:
 where $ I $ is image intensity and $ (\\\\nabla * G) $ is the derivative of Gaussian operator.
 
 
-See SegmentationLevelSetImageFilter and SparseFieldLevelSetImageFilter
-for more information on Inputs.
+See SegmentationLevelSetImageFilter and SparseFieldLevelSetImageFilter for more information on Inputs.
 PARAMETERS
 The PropagationScaling parameter can be used to switch from
 propagation outwards (POSITIVE scaling parameter) versus propagating
@@ -29768,8 +29522,7 @@ region and positive values in the image represent the outside of the
 segmented region. The zero crossings of the image correspond to the
 position of the propagating front.
 
-See SparseFieldLevelSetImageFilter and SegmentationLevelSetImageFilter
-for more information.
+See SparseFieldLevelSetImageFilter and SegmentationLevelSetImageFilter for more information.
 REFERENCES
 
 \"Shape Modeling with Front Propagation: A Level Set Approach\", R.
@@ -29786,8 +29539,7 @@ See:
 
  itk::simple::ShapeDetectionLevelSet for the procedural interface
 
- itk::ShapeDetectionLevelSetImageFilter for the Doxygen on the original
-ITK class.
+ itk::ShapeDetectionLevelSetImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkShapeDetectionLevelSetImageFilter.h
@@ -30305,8 +30057,7 @@ A voronoi partition. (See itkDanielssonDistanceMapImageFilter)
 A vector map containing the component of the vector relating the
 current pixel with the closest point of the closest object to this
 pixel. Given that the components of the distance are computed in
-\"pixels\", the vector is represented by an itk::Offset . That is,
-physical coordinates are not used. (See
+\"pixels\", the vector is represented by an itk::Offset . That is, physical coordinates are not used. (See
 itkDanielssonDistanceMapImageFilter)
  This filter internally uses the DanielssonDistanceMap filter. This
 filter is N-dimensional.
@@ -30317,8 +30068,7 @@ See:
 
  itk::simple::SignedDanielssonDistanceMap for the procedural interface
 
- itk::SignedDanielssonDistanceMapImageFilter for the Doxygen on the
-original ITK class.
+ itk::SignedDanielssonDistanceMapImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkSignedDanielssonDistanceMapImageFilter.h
@@ -30460,8 +30210,7 @@ Analysis and Machine Intelligence, 25(2): 265-270, 2003.
 See:
  itk::simple::SignedMaurerDistanceMap for the procedural interface
 
- itk::SignedMaurerDistanceMapImageFilter for the Doxygen on the
-original ITK class.
+ itk::SignedMaurerDistanceMapImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkSignedMaurerDistanceMapImageFilter.h
@@ -30755,8 +30504,7 @@ image have the same number of dimensions.
 
 
 See:
- itk::SimilarityIndexImageFilter for the Doxygen on the original ITK
-class.
+ itk::SimilarityIndexImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkSimilarityIndexImageFilter.h
@@ -30830,8 +30578,7 @@ See:
 
  itk::simple::SimpleContourExtractor for the procedural interface
 
- itk::SimpleContourExtractorImageFilter for the Doxygen on the original
-ITK class.
+ itk::SimpleContourExtractorImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkSimpleContourExtractorImageFilter.h
@@ -31092,8 +30839,7 @@ Gaussian smoothing that works with image adaptors
 See:
  itk::simple::SmoothingRecursiveGaussian for the procedural interface
 
- itk::SmoothingRecursiveGaussianImageFilter for the Doxygen on the
-original ITK class.
+ itk::SmoothingRecursiveGaussianImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -31206,8 +30952,7 @@ SobelEdgeDetectionImageFilter
 See:
  itk::simple::SobelEdgeDetection for the procedural interface
 
- itk::SobelEdgeDetectionImageFilter for the Doxygen on the original ITK
-class.
+ itk::SobelEdgeDetectionImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -31262,8 +31007,7 @@ Simulation\". https://hdl.handle.net/10380/3158
 See:
  itk::simple::SpeckleNoise for the procedural interface
 
- itk::SpeckleNoiseImageFilter for the Doxygen on the original ITK
-class.
+ itk::SpeckleNoiseImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkSpeckleNoiseImageFilter.h
@@ -31440,8 +31184,7 @@ compute the difference of the two pixel values
 
 compute the square of the difference
 
-cast the double value resulting from sqr() to the pixel type of the
-output image
+cast the double value resulting from sqr() to the pixel type of the output image
 
 store the casted value into the output image.
  The filter expect all images to have the same dimension (e.g. all 2D,
@@ -31455,8 +31198,7 @@ Compute the squared difference of corresponding pixels in two images
 See:
  itk::simple::SquaredDifference for the procedural interface
 
- itk::SquaredDifferenceImageFilter for the Doxygen on the original ITK
-class.
+ itk::SquaredDifferenceImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -31535,8 +31277,7 @@ See:
 
  itk::simple::StandardDeviationProjection for the procedural interface
 
- itk::StandardDeviationProjectionImageFilter for the Doxygen on the
-original ITK class.
+ itk::StandardDeviationProjectionImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkStandardDeviationProjectionImageFilter.h
@@ -31811,8 +31552,7 @@ See:
 
  itk::simple::SumProjection for the procedural interface
 
- itk::SumProjectionImageFilter for the Doxygen on the original ITK
-class.
+ itk::SumProjectionImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkSumProjectionImageFilter.h
@@ -31911,8 +31651,7 @@ See:
 
  DemonsRegistrationFunction
 
- itk::SymmetricForcesDemonsRegistrationFilter for the Doxygen on the
-original ITK class.
+ itk::SymmetricForcesDemonsRegistrationFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkSymmetricForcesDemonsRegistrationFilter.h
@@ -32264,8 +32003,7 @@ by the C++ defaults.
 See:
  itk::simple::TernaryMagnitude for the procedural interface
 
- itk::TernaryMagnitudeImageFilter for the Doxygen on the original ITK
-class.
+ itk::TernaryMagnitudeImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkTernaryMagnitudeImageFilter.h
@@ -32314,8 +32052,7 @@ by the C++ defaults.
 See:
  itk::simple::TernaryMagnitudeSquared for the procedural interface
 
- itk::TernaryMagnitudeSquaredImageFilter for the Doxygen on the
-original ITK class.
+ itk::TernaryMagnitudeSquaredImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkTernaryMagnitudeSquaredImageFilter.h
@@ -32486,11 +32223,10 @@ workshop for a complete description. References are below.
 Parameters
 The MinimumObjectSizeInPixels parameter is controlled through the
 class Get/SetMinimumObjectSizeInPixels() method. Similar to the
-standard itk::BinaryThresholdImageFilter the Get/SetInside and
-Get/SetOutside values of the threshold can be set. The
-GetNumberOfObjects() and GetThresholdValue() methods return the number
-of objects above the minimum pixel size and the calculated threshold
-value.
+standard itk::BinaryThresholdImageFilter the Get/SetInside and Get/SetOutside values of the threshold can be
+set. The GetNumberOfObjects() and GetThresholdValue() methods return
+the number of objects above the minimum pixel size and the calculated
+threshold value.
 Automatic Thresholding in ITK
 There are multiple methods to automatically calculate the threshold
 intensity value of an image. As of version 4.0, ITK has a Thresholding
@@ -32510,8 +32246,7 @@ list serve for archival purposes.
 See:
  itk::simple::ThresholdMaximumConnectedComponents for the procedural interface
 
- itk::ThresholdMaximumConnectedComponentsImageFilter for the Doxygen on
-the original ITK class.
+ itk::ThresholdMaximumConnectedComponentsImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkThresholdMaximumConnectedComponentsImageFilter.h
@@ -32661,10 +32396,8 @@ Segments structures in images based on intensity values.
 
 
 IMPORTANT
-The SegmentationLevelSetImageFilter class and the
-ThresholdSegmentationLevelSetFunction class contain additional
-information necessary to the full understanding of how to use this
-filter.
+The SegmentationLevelSetImageFilter class and the ThresholdSegmentationLevelSetFunction class contain additional information necessary to the full
+understanding of how to use this filter.
 OVERVIEW
 This class is a level set method segmentation filter. It constructs a
 speed function which is close to zero at the upper and lower bounds of
@@ -32695,13 +32428,9 @@ negative values in the image are outside of the inside region. The
 zero crossings of the image correspond to the position of the level
 set front.
 
-See SparseFieldLevelSetImageFilter and SegmentationLevelSetImageFilter
-for more information.
+See SparseFieldLevelSetImageFilter and SegmentationLevelSetImageFilter for more information.
 PARAMETERS
-In addition to parameters described in SegmentationLevelSetImageFilter
-, this filter adds the UpperThreshold and LowerThreshold. See
-ThresholdSegmentationLevelSetFunction for a description of how these
-values affect the segmentation.
+In addition to parameters described in SegmentationLevelSetImageFilter , this filter adds the UpperThreshold and LowerThreshold. See ThresholdSegmentationLevelSetFunction for a description of how these values affect the segmentation.
 
 See:
  SegmentationLevelSetImageFilter
@@ -32712,8 +32441,7 @@ See:
 
  itk::simple::ThresholdSegmentationLevelSet for the procedural interface
 
- itk::ThresholdSegmentationLevelSetImageFilter for the Doxygen on the
-original ITK class.
+ itk::ThresholdSegmentationLevelSetImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkThresholdSegmentationLevelSetImageFilter.h
@@ -32852,8 +32580,7 @@ de Jouy-en-Josas, France
 See:
  itk::simple::TikhonovDeconvolution for the procedural interface
 
- itk::TikhonovDeconvolutionImageFilter for the Doxygen on the original
-ITK class.
+ itk::TikhonovDeconvolutionImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkTikhonovDeconvolutionImageFilter.h
@@ -33119,8 +32846,7 @@ Performs actually coping if needed to make object unique.
 
 
 The Transform class by default performs lazy coping and assignment. This method
-make sure that coping actually happens to the itk::Transform pointed
-to is only pointed to by this object.
+make sure that coping actually happens to the itk::Transform pointed to is only pointed to by this object.
 
 ";
 
@@ -33226,8 +32952,7 @@ Marius Staring, Leiden University Medical Center, The Netherlands.
 See:
  itk::simple::TransformToDisplacementFieldFilter for the procedural interface
 
- itk::TransformToDisplacementFieldFilter for the Doxygen on the
-original ITK class.
+ itk::TransformToDisplacementFieldFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkTransformToDisplacementFieldFilter.h
@@ -33375,8 +33100,7 @@ Threshold an image using the Triangle Threshold.
 
 This filter creates a binary thresholded image that separates an image
 into foreground and background components. The filter computes the
-threshold using the TriangleThresholdCalculator and applies that
-theshold to the input image using the BinaryThresholdImageFilter .
+threshold using the TriangleThresholdCalculator and applies that theshold to the input image using the BinaryThresholdImageFilter .
 
 
 Richard Beare. Department of Medicine, Monash University, Melbourne,
@@ -33392,8 +33116,7 @@ See:
 
  itk::simple::TriangleThreshold for the procedural interface
 
- itk::TriangleThresholdImageFilter for the Doxygen on the original ITK
-class.
+ itk::TriangleThresholdImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkTriangleThresholdImageFilter.h
@@ -33492,8 +33215,7 @@ Set/Get the number of histogram bins.
 
 %feature("docstring")  itk::simple::TriangleThresholdImageFilter::SetOutsideValue "
 
-Set the \"outside\" pixel value. The default value
-NumericTraits<OutputPixelType>::Zero.
+Set the \"outside\" pixel value. The default value NumericTraits<OutputPixelType>::Zero.
 
 ";
 
@@ -33526,8 +33248,7 @@ Computes the negative of each pixel.
 See:
  itk::simple::UnaryMinus for the procedural interface
 
- itk::UnaryFunctorImageFilter for the Doxygen on the original ITK
-class.
+ itk::UnaryFunctorImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkUnaryMinusImageFilter.h
@@ -33597,8 +33318,7 @@ ValuedRegionalMaximaImageFilter
 See:
  itk::simple::ValuedRegionalMaxima for the procedural interface
 
- itk::ValuedRegionalMaximaImageFilter for the Doxygen on the original
-ITK class.
+ itk::ValuedRegionalMaximaImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -33695,8 +33415,7 @@ ValuedRegionalMinimaImageFilter
 See:
  itk::simple::ValuedRegionalMinima for the procedural interface
 
- itk::ValuedRegionalMinimaImageFilter for the Doxygen on the original
-ITK class.
+ itk::ValuedRegionalMinimaImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -33796,8 +33515,7 @@ may be adjusted to contain the seed point's intensity.
 See:
  itk::simple::VectorConfidenceConnected for the procedural interface
 
- itk::VectorConfidenceConnectedImageFilter for the Doxygen on the
-original ITK class.
+ itk::VectorConfidenceConnectedImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkVectorConfidenceConnectedImageFilter.h
@@ -33953,8 +33671,7 @@ of phase are similar. Assumes that vectors are normalized.
 See:
  itk::simple::VectorConnectedComponent for the procedural interface
 
- itk::VectorConnectedComponentImageFilter for the Doxygen on the
-original ITK class.
+ itk::VectorConnectedComponentImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkVectorConnectedComponentImageFilter.h
@@ -34044,8 +33761,7 @@ Extract a component/channel of a vector image
 See:
  itk::simple::VectorIndexSelectionCast for the procedural interface
 
- itk::VectorIndexSelectionCastImageFilter for the Doxygen on the
-original ITK class.
+ itk::VectorIndexSelectionCastImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -34132,8 +33848,7 @@ magnitude image
 See:
  itk::simple::VectorMagnitude for the procedural interface
 
- itk::VectorMagnitudeImageFilter for the Doxygen on the original ITK
-class.
+ itk::VectorMagnitudeImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -34334,8 +34049,7 @@ See:
 
  itk::simple::VotingBinaryHoleFilling for the procedural interface
 
- itk::VotingBinaryHoleFillingImageFilter for the Doxygen on the
-original ITK class.
+ itk::VotingBinaryHoleFillingImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkVotingBinaryHoleFillingImageFilter.h
@@ -34444,8 +34158,7 @@ See:
 
  itk::simple::VotingBinary for the procedural interface
 
- itk::VotingBinaryImageFilter for the Doxygen on the original ITK
-class.
+ itk::VotingBinaryImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkVotingBinaryImageFilter.h
@@ -34602,8 +34315,7 @@ See:
 
  itk::simple::VotingBinaryIterativeHoleFilling for the procedural interface
 
- itk::VotingBinaryIterativeHoleFillingImageFilter for the Doxygen on
-the original ITK class.
+ itk::VotingBinaryIterativeHoleFillingImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkVotingBinaryIterativeHoleFillingImageFilter.h
@@ -34756,9 +34468,7 @@ such that:
 Typically the mapped position does not correspond to an integer pixel
 position in the input image. Interpolation via an image function is
 used to compute values at non-integer positions. The default
-interpolation typed used is the LinearInterpolateImageFunction . The
-user can specify a particular interpolation function via SetInterpolator() . Note that the input interpolator must derive from base class
-InterpolateImageFunction .
+interpolation typed used is the LinearInterpolateImageFunction . The user can specify a particular interpolation function via SetInterpolator() . Note that the input interpolator must derive from base class InterpolateImageFunction .
 
 Position mapped to outside of the input image buffer are assigned a
 edge padding value.
@@ -35068,8 +34778,7 @@ Cory Quammen, The University of North Carolina at Chapel Hill
 See:
  itk::simple::WienerDeconvolution for the procedural interface
 
- itk::WienerDeconvolutionImageFilter for the Doxygen on the original
-ITK class.
+ itk::WienerDeconvolutionImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkWienerDeconvolutionImageFilter.h
@@ -35324,8 +35033,7 @@ Threshold an image using the Yen Threshold.
 
 This filter creates a binary thresholded image that separates an image
 into foreground and background components. The filter computes the
-threshold using the YenThresholdCalculator and applies that theshold
-to the input image using the BinaryThresholdImageFilter .
+threshold using the YenThresholdCalculator and applies that theshold to the input image using the BinaryThresholdImageFilter .
 
 
 Richard Beare
@@ -35340,8 +35048,7 @@ See:
 
  itk::simple::YenThreshold for the procedural interface
 
- itk::YenThresholdImageFilter for the Doxygen on the original ITK
-class.
+ itk::YenThresholdImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkYenThresholdImageFilter.h
@@ -35440,8 +35147,7 @@ Set/Get the number of histogram bins.
 
 %feature("docstring")  itk::simple::YenThresholdImageFilter::SetOutsideValue "
 
-Set the \"outside\" pixel value. The default value
-NumericTraits<OutputPixelType>::Zero.
+Set the \"outside\" pixel value. The default value NumericTraits<OutputPixelType>::Zero.
 
 ";
 
@@ -35497,8 +35203,7 @@ To use this filter, first set the parameters (variance and maximum
 error) needed by the embedded DiscreteGaussianImageFilter , i.e. See DiscreteGaussianImageFilter for information about these parameters. Optionally, you may also set
 foreground and background values for the zero-crossing filter. The
 default label values are Zero for the background and One for the
-foreground, as defined in NumericTraits for the data type of the
-output image.
+foreground, as defined in NumericTraits for the data type of the output image.
 
 See:
  DiscreteGaussianImageFilter
@@ -35509,8 +35214,7 @@ See:
 
  itk::simple::ZeroCrossingBasedEdgeDetection for the procedural interface
 
- itk::ZeroCrossingBasedEdgeDetectionImageFilter for the Doxygen on the
-original ITK class.
+ itk::ZeroCrossingBasedEdgeDetectionImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkZeroCrossingBasedEdgeDetectionImageFilter.h
@@ -35625,10 +35329,8 @@ that operator>, operator<, operator==, and operator!= are defined.
 
 The output of the filter is a binary, labeled image of user-specified
 type. By default, zero-crossing pixels are labeled with a default
-\"foreground\" value of itk::NumericTraits<OutputDataType>::OneValue()
-, where OutputDataType is the data type of the output image. All other
-pixels are labeled with a default \"background\" value of
-itk::NumericTraits<OutputDataType>::ZeroValue() .
+\"foreground\" value of itk::NumericTraits<OutputDataType>::OneValue() , where OutputDataType is the data type of the output image. All
+other pixels are labeled with a default \"background\" value of itk::NumericTraits<OutputDataType>::ZeroValue() .
 Parameters
 There are two parameters for this filter. ForegroundValue is the value
 that marks zero-crossing pixels. The BackgroundValue is the value
@@ -35650,8 +35352,7 @@ Find zero crossings in a signed image
 See:
  itk::simple::ZeroCrossing for the procedural interface
 
- itk::ZeroCrossingImageFilter for the Doxygen on the original ITK
-class.
+ itk::ZeroCrossingImageFilter for the Doxygen on the original ITK class.
 
 
 
@@ -35742,8 +35443,7 @@ See:
 
  itk::simple::ZeroFluxNeumannPad for the procedural interface
 
- itk::ZeroFluxNeumannPadImageFilter for the Doxygen on the original ITK
-class.
+ itk::ZeroFluxNeumannPadImageFilter for the Doxygen on the original ITK class.
 
 
 C++ includes: sitkZeroFluxNeumannPadImageFilter.h
@@ -36701,9 +36401,9 @@ See:
 
 %feature("docstring")  itk::simple::CenteredTransformInitializer "
 
-CenteredTransformInitializer is a helper class intended to initialize
-the center of rotation and the translation of Transforms having the
-center of rotation among their parameters.
+CenteredTransformInitializer is a helper class intended to initialize the center of rotation and
+the translation of Transforms having the center of rotation among
+their parameters.
 
 
 This function directly calls the execute method of CenteredTransformInitializerFilter in order to support a procedural API
@@ -36717,8 +36417,8 @@ See:
 
 %feature("docstring")  itk::simple::CenteredVersorTransformInitializer "
 
-CenteredVersorTransformInitializer is a helper class intended to
-initialize the center of rotation, versor, and translation of the VersorRigid3DTransform.
+CenteredVersorTransformInitializer is a helper class intended to initialize the center of rotation,
+versor, and translation of the VersorRigid3DTransform.
 
 
 This function directly calls the execute method of
@@ -36953,8 +36653,7 @@ See:
 
 %feature("docstring")  itk::simple::Crop "
 
-Decrease the image size by cropping the image by an itk::Size at both
-the upper and lower bounds of the largest possible region.
+Decrease the image size by cropping the image by an itk::Size at both the upper and lower bounds of the largest possible region.
 
 
 This function directly calls the execute method of CropImageFilter in order to support a procedural API
