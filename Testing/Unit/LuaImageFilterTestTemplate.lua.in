@@ -121,7 +121,8 @@ end)
     inputs = {}
     for i=2,#arg-1 do
        print( "reading..."..arg[i] );
-       table.insert( inputs, reader:SetFileName ( arg[i] ):Execute() );
+       reader:SetFileName ( arg[i] );
+       table.insert( inputs, reader:Execute() );
     end
 
 $(if inputA_cast then
@@ -147,7 +148,8 @@ OUT=[[
         end
     end
 
-    writer:SetFileName ( arg[#arg] ):Execute ( output )
+    writer:SetFileName ( arg[#arg] )
+    writer:Execute ( output )
 ]]
 end)
 
