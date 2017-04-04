@@ -64,6 +64,17 @@ C++ includes: itkUnaryMinusImageFilter.h
 
 
 %feature("docstring") itk::HashImageFilter "
+
+Generates a hash string from an image.
+
+
+
+This class utlizes low level buffer pointer access, to work with itk::Image and itk::VectorImage. It is modeled after the access an ImageFileWriter provides to an
+ImageIO.
+Todo
+Update in-place on to default after fixing bug in InPlaceImageFilter
+
+
 C++ includes: itkHashImageFilter.h
 ";
 
@@ -309,6 +320,7 @@ Compute the absolute value of an image
 See:
  itk::simple::Abs for the procedural interface
 
+See:
  itk::AbsImageFilter for the Doxygen on the original ITK class.
 
 
@@ -386,6 +398,7 @@ in two images
 See:
  itk::simple::AbsoluteValueDifference for the procedural interface
 
+See:
  itk::AbsoluteValueDifferenceImageFilter for the Doxygen on the
 original ITK class.
 
@@ -460,6 +473,7 @@ store the casted value into the output image.
 See:
  itk::simple::Acos for the procedural interface
 
+See:
  itk::AcosImageFilter for the Doxygen on the original ITK class.
 
 
@@ -539,6 +553,7 @@ Adaptive histogram equalization
 See:
  itk::simple::AdaptiveHistogramEqualization for the procedural interface
 
+See:
  itk::AdaptiveHistogramEqualizationImageFilter for the Doxygen on the
 original ITK class.
 
@@ -693,6 +708,7 @@ Add a constant to every pixel in an image
 See:
  itk::simple::Add for the procedural interface
 
+See:
  itk::AddImageFilter for the Doxygen on the original ITK class.
 
 
@@ -763,6 +779,7 @@ Simulation\". https://hdl.handle.net/10380/3158
 See:
  itk::simple::AdditiveGaussianNoise for the procedural interface
 
+See:
  itk::AdditiveGaussianNoiseImageFilter for the Doxygen on the original
 ITK class.
 
@@ -934,8 +951,10 @@ de Jouy-en-Josas, France.
 See:
  ShapeLabelObject , RelabelComponentImageFilter
 
+See:
  itk::simple::AggregateLabelMapFilter for the procedural interface
 
+See:
  itk::AggregateLabelMapFilter for the Doxygen on the original ITK
 class.
 
@@ -998,6 +1017,7 @@ Binary AND two images
 See:
  itk::simple::And for the procedural interface
 
+See:
  itk::AndImageFilter for the Doxygen on the original ITK class.
 
 
@@ -1116,6 +1136,7 @@ Anti alias a binary image
 See:
  itk::simple::AntiAliasBinary for the procedural interface
 
+See:
  itk::AntiAliasBinaryImageFilter for the Doxygen on the original ITK
 class.
 
@@ -1235,12 +1256,16 @@ This filter uses the FastChamferDistanceImageFilter and the IsoContourDistanceIm
 See:
  DanielssonDistanceMapImageFilter
 
+See:
  SignedDanielssonDistanceMapImageFilter
 
+See:
  SignedMaurerDistanceMapImageFilter
 
+See:
  FastChamferDistanceImageFilter
 
+See:
  IsoContourDistanceImageFilter
 
 Zach Pincus
@@ -1252,6 +1277,7 @@ Compute a distance map from objects in a binary image
 See:
  itk::simple::ApproximateSignedDistanceMap for the procedural interface
 
+See:
  itk::ApproximateSignedDistanceMapImageFilter for the Doxygen on the
 original ITK class.
 
@@ -1349,6 +1375,7 @@ store the casted value into the output image.
 See:
  itk::simple::Asin for the procedural interface
 
+See:
  itk::AsinImageFilter for the Doxygen on the original ITK class.
 
 
@@ -1412,6 +1439,7 @@ Compute the arctangent of each pixel.
 See:
  itk::simple::Atan2 for the procedural interface
 
+See:
  itk::Atan2ImageFilter for the Doxygen on the original ITK class.
 
 
@@ -1483,6 +1511,7 @@ store the cast value into the output image.
 See:
  itk::simple::Atan for the procedural interface
 
+See:
  itk::AtanImageFilter for the Doxygen on the original ITK class.
 
 
@@ -1609,6 +1638,7 @@ Luis Ibanez
 See:
  itk::simple::BSplineTransformInitializer for the procedural interface
 
+See:
  itk::BSplineTransformInitializer for the Doxygen on the original ITK
 class.
 
@@ -1704,16 +1734,22 @@ The bilateral operator used here was described by Tomasi and Manduchi
 See:
  GaussianOperator
 
+See:
  RecursiveGaussianImageFilter
 
+See:
  DiscreteGaussianImageFilter
 
+See:
  AnisotropicDiffusionImageFilter
 
+See:
  Image
 
+See:
  Neighborhood
 
+See:
  NeighborhoodOperator
  TodoSupport color images
 
@@ -1727,6 +1763,7 @@ Bilateral filter an image
 See:
  itk::simple::Bilateral for the procedural interface
 
+See:
  itk::BilateralImageFilter for the Doxygen on the original ITK class.
 
 
@@ -1841,6 +1878,7 @@ averaging\" by Lowekamp B., Chen D. https://hdl.handle.net/10380/3450
 See:
  itk::simple::BinShrink for the procedural interface
 
+See:
  itk::BinShrinkImageFilter for the Doxygen on the original ITK class.
 
 
@@ -1926,8 +1964,10 @@ de Jouy-en-Josas, France.
 See:
  MorphologyImageFilter , ClosingByReconstructionImageFilter , BinaryOpeningByReconstructionImageFilter
 
+See:
  itk::simple::BinaryClosingByReconstruction for the procedural interface
 
+See:
  itk::BinaryClosingByReconstructionImageFilter for the Doxygen on the
 original ITK class.
 
@@ -2075,6 +2115,7 @@ Extract the inner and outer boundaries of blobs in a binary image
 See:
  itk::simple::BinaryContour for the procedural interface
 
+See:
  itk::BinaryContourImageFilter for the Doxygen on the original ITK
 class.
 
@@ -2215,6 +2256,7 @@ Dilate a binary image
 See:
  itk::simple::BinaryDilate for the procedural interface
 
+See:
  itk::BinaryDilateImageFilter for the Doxygen on the original ITK
 class.
 
@@ -2358,6 +2400,7 @@ Erode a binary image
 See:
  itk::simple::BinaryErode for the procedural interface
 
+See:
  itk::BinaryErodeImageFilter for the Doxygen on the original ITK class.
 
 
@@ -2480,8 +2523,10 @@ de Jouy-en-Josas, France.
 See:
  GrayscaleFillholeImageFilter
 
+See:
  itk::simple::BinaryFillhole for the procedural interface
 
+See:
  itk::BinaryFillholeImageFilter for the Doxygen on the original ITK
 class.
 
@@ -2588,8 +2633,10 @@ de Jouy-en-Josas, France.
 See:
  GrayscaleGrindPeakImageFilter
 
+See:
  itk::simple::BinaryGrindPeak for the procedural interface
 
+See:
  itk::BinaryGrindPeakImageFilter for the Doxygen on the original ITK
 class.
 
@@ -2717,6 +2764,7 @@ Label binary regions in an image
 See:
  itk::simple::BinaryImageToLabelMapFilter for the procedural interface
 
+See:
  itk::BinaryImageToLabelMapFilter for the Doxygen on the original ITK
 class.
 
@@ -2850,6 +2898,7 @@ store the cast value into the output image.
 See:
  itk::simple::BinaryMagnitude for the procedural interface
 
+See:
  itk::BinaryMagnitudeImageFilter for the Doxygen on the original ITK
 class.
 
@@ -2910,14 +2959,19 @@ to smooth an image without being biased by outliers or shot noise.
 See:
  Image
 
+See:
  Neighborhood
 
+See:
  NeighborhoodOperator
 
+See:
  NeighborhoodIterator
 
+See:
  itk::simple::BinaryMedian for the procedural interface
 
+See:
  itk::BinaryMedianImageFilter for the Doxygen on the original ITK
 class.
 
@@ -3048,12 +3102,16 @@ Sethian, Cambridge Press, Chapter 16, Second edition, 1999.
 See:
  BinaryMinMaxCurvatureFlowFunction
 
+See:
  CurvatureFlowImageFilter
 
+See:
  MinMaxCurvatureFlowImageFilter
 
+See:
  itk::simple::BinaryMinMaxCurvatureFlow for the procedural interface
 
+See:
  itk::BinaryMinMaxCurvatureFlowImageFilter for the Doxygen on the
 original ITK class.
 
@@ -3153,8 +3211,10 @@ de Jouy-en-Josas, France.
 See:
  MorphologyImageFilter , GrayscaleDilateImageFilter , GrayscaleErodeImageFilter
 
+See:
  itk::simple::BinaryMorphologicalClosing for the procedural interface
 
+See:
  itk::BinaryMorphologicalClosingImageFilter for the Doxygen on the
 original ITK class.
 
@@ -3291,8 +3351,10 @@ de Jouy-en-Josas, France.
 See:
  MorphologyImageFilter , GrayscaleDilateImageFilter , GrayscaleErodeImageFilter
 
+See:
  itk::simple::BinaryMorphologicalOpening for the procedural interface
 
+See:
  itk::BinaryMorphologicalOpeningImageFilter for the Doxygen on the
 original ITK class.
 
@@ -3423,6 +3485,7 @@ Invert an image using the Binary Not operation
 See:
  itk::simple::BinaryNot for the procedural interface
 
+See:
  itk::BinaryNotImageFilter for the Doxygen on the original ITK class.
 
 
@@ -3518,8 +3581,10 @@ de Jouy-en-Josas, France.
 See:
  MorphologyImageFilter , OpeningByReconstructionImageFilter , BinaryClosingByReconstructionImageFilter
 
+See:
  itk::simple::BinaryOpeningByReconstruction for the procedural interface
 
+See:
  itk::BinaryOpeningByReconstructionImageFilter for the Doxygen on the
 original ITK class.
 
@@ -3663,22 +3728,31 @@ de Jouy-en-Josas, France.
 See:
  ProjectionImageFilter
 
+See:
  MedianProjectionImageFilter
 
+See:
  MeanProjectionImageFilter
 
+See:
  MeanProjectionImageFilter
 
+See:
  MaximumProjectionImageFilter
 
+See:
  MinimumProjectionImageFilter
 
+See:
  StandardDeviationProjectionImageFilter
 
+See:
  SumProjectionImageFilter
 
+See:
  itk::simple::BinaryProjection for the procedural interface
 
+See:
  itk::BinaryProjectionImageFilter for the Doxygen on the original ITK
 class.
 
@@ -3785,8 +3859,10 @@ de Jouy-en-Josas, France.
 See:
  MorphologyImageFilter , ReconstructionByDilationImageFilter , BinaryReconstructionByErosionImageFilter
 
+See:
  itk::simple::BinaryReconstructionByDilation for the procedural interface
 
+See:
  itk::BinaryReconstructionByDilationImageFilter for the Doxygen on the
 original ITK class.
 
@@ -3909,8 +3985,10 @@ de Jouy-en-Josas, France.
 See:
  MorphologyImageFilter , ReconstructionByErosionImageFilter , BinaryReconstructionByDilationImageFilter
 
+See:
  itk::simple::BinaryReconstructionByErosion for the procedural interface
 
+See:
  itk::BinaryReconstructionByErosionImageFilter for the Doxygen on the
 original ITK class.
 
@@ -4045,6 +4123,7 @@ Skeletonize/thin an image
 See:
  itk::simple::BinaryThinning for the procedural interface
 
+See:
  itk::BinaryThinningImageFilter for the Doxygen on the original ITK
 class.
 
@@ -4119,6 +4198,7 @@ Threshold an image
 See:
  itk::simple::BinaryThreshold for the procedural interface
 
+See:
  itk::BinaryThresholdImageFilter for the Doxygen on the original ITK
 class.
 
@@ -4227,22 +4307,31 @@ de Jouy-en-Josas, France.
 See:
  ProjectionImageFilter
 
+See:
  MedianProjectionImageFilter
 
+See:
  MeanProjectionImageFilter
 
+See:
  MeanProjectionImageFilter
 
+See:
  MaximumProjectionImageFilter
 
+See:
  MinimumProjectionImageFilter
 
+See:
  StandardDeviationProjectionImageFilter
 
+See:
  SumProjectionImageFilter
 
+See:
  itk::simple::BinaryThresholdProjection for the procedural interface
 
+See:
  itk::BinaryThresholdProjectionImageFilter for the Doxygen on the
 original ITK class.
 
@@ -4353,6 +4442,7 @@ Blur an image
 See:
  itk::simple::BinomialBlur for the procedural interface
 
+See:
  itk::BinomialBlurImageFilter for the Doxygen on the original ITK
 class.
 
@@ -4435,6 +4525,7 @@ Apply a custom operation to each pixel in an image
 See:
  itk::simple::BitwiseNot for the procedural interface
 
+See:
  itk::UnaryFunctorImageFilter for the Doxygen on the original ITK
 class.
 
@@ -4496,6 +4587,7 @@ de Jouy-en-Josas, France.
 See:
  itk::simple::BlackTopHat for the procedural interface
 
+See:
  itk::BlackTopHatImageFilter for the Doxygen on the original ITK class.
 
 
@@ -4603,6 +4695,7 @@ number of dimensions, and both of a scalar image type.
 See:
  itk::simple::BoundedReciprocal for the procedural interface
 
+See:
  itk::BoundedReciprocalImageFilter for the Doxygen on the original ITK
 class.
 
@@ -4657,6 +4750,7 @@ Richard Beare
 See:
  itk::simple::BoxMean for the procedural interface
 
+See:
  itk::BoxMeanImageFilter for the Doxygen on the original ITK class.
 
 
@@ -4728,6 +4822,7 @@ Gaetan Lehmann
 See:
  itk::simple::BoxSigma for the procedural interface
 
+See:
  itk::BoxSigmaImageFilter for the Doxygen on the original ITK class.
 
 
@@ -4824,12 +4919,16 @@ labeling algorithm is available.
 See:
  DiscreteGaussianImageFilter
 
+See:
  ZeroCrossingImageFilter
 
+See:
  ThresholdImageFilter
 
+See:
  itk::simple::CannyEdgeDetection for the procedural interface
 
+See:
  itk::CannyEdgeDetectionImageFilter for the Doxygen on the original ITK
 class.
 
@@ -5175,6 +5274,7 @@ Contract::W81XWH-05-2-0059.
 See:
  itk::simple::ChangeLabel for the procedural interface
 
+See:
  itk::ChangeLabelImageFilter for the Doxygen on the original ITK class.
 
 
@@ -5246,8 +5346,10 @@ de Jouy-en-Josas, France.
 See:
  ShapeLabelObject , RelabelComponentImageFilter
 
+See:
  itk::simple::ChangeLabelLabelMapFilter for the procedural interface
 
+See:
  itk::ChangeLabelLabelMapFilter for the Doxygen on the original ITK
 class.
 
@@ -5322,6 +5424,7 @@ Combine two images by alternating blocks of a checkerboard pattern
 See:
  itk::simple::CheckerBoard for the procedural interface
 
+See:
  itk::CheckerBoardImageFilter for the Doxygen on the original ITK
 class.
 
@@ -5407,6 +5510,7 @@ de Jouy-en-Josas, France.
 See:
  UnaryFunctorImageFilter
 
+See:
  CastImageFilter
 Wiki Examples:
 
@@ -5417,6 +5521,7 @@ range
 See:
  itk::simple::Clamp for the procedural interface
 
+See:
  itk::ClampImageFilter for the Doxygen on the original ITK class.
 
 
@@ -5509,8 +5614,10 @@ de Jouy-en-Josas, France.
 See:
  GrayscaleMorphologicalClosingImageFilter
 
+See:
  itk::simple::ClosingByReconstruction for the procedural interface
 
+See:
  itk::ClosingByReconstructionImageFilter for the Doxygen on the
 original ITK class.
 
@@ -5675,6 +5782,7 @@ Department, Mario Negri Institute, Italy.
 See:
  itk::simple::CollidingFronts for the procedural interface
 
+See:
  itk::CollidingFrontsImageFilter for the Doxygen on the original ITK
 class.
 
@@ -5860,6 +5968,7 @@ Computes pixel-wise the imaginary part of a complex image.
 See:
  itk::simple::ComplexToImaginary for the procedural interface
 
+See:
  itk::ComplexToImaginaryImageFilter for the Doxygen on the original ITK
 class.
 
@@ -5908,6 +6017,7 @@ Computes pixel-wise the Modulus of a complex image.
 See:
  itk::simple::ComplexToModulus for the procedural interface
 
+See:
  itk::ComplexToModulusImageFilter for the Doxygen on the original ITK
 class.
 
@@ -5956,6 +6066,7 @@ Computes pixel-wise the modulus of a complex image.
 See:
  itk::simple::ComplexToPhase for the procedural interface
 
+See:
  itk::ComplexToPhaseImageFilter for the Doxygen on the original ITK
 class.
 
@@ -6004,6 +6115,7 @@ Computes pixel-wise the real(x) part of a complex image.
 See:
  itk::simple::ComplexToReal for the procedural interface
 
+See:
  itk::ComplexToRealImageFilter for the Doxygen on the original ITK
 class.
 
@@ -6057,6 +6169,7 @@ and have the same size and origin.
 See:
  VectorImage
 
+See:
  VectorIndexSelectionCastImageFilter
 Wiki Examples:
 
@@ -6161,6 +6274,7 @@ Segment pixels with similar statistics using connectivity
 See:
  itk::simple::ConfidenceConnected for the procedural interface
 
+See:
  itk::ConfidenceConnectedImageFilter for the Doxygen on the original
 ITK class.
 
@@ -6341,6 +6455,7 @@ Label connected components in a binary image
 See:
  itk::simple::ConnectedComponent for the procedural interface
 
+See:
  itk::ConnectedComponentImageFilter for the Doxygen on the original ITK
 class.
 
@@ -6432,6 +6547,7 @@ AND lie within a Lower and Upper threshold range.
 See:
  itk::simple::ConnectedThreshold for the procedural interface
 
+See:
  itk::ConnectedThresholdImageFilter for the Doxygen on the original ITK
 class.
 
@@ -6585,6 +6701,7 @@ Pad an image with a constant value
 See:
  itk::simple::ConstantPad for the procedural interface
 
+See:
  itk::ConstantPadImageFilter for the Doxygen on the original ITK class.
 
 
@@ -6691,6 +6808,7 @@ Convolve an image with a kernel
 See:
  itk::simple::Convolution for the procedural interface
 
+See:
  itk::ConvolutionImageFilter for the Doxygen on the original ITK class.
 
 
@@ -6791,6 +6909,7 @@ store the cast value into the output image.
 See:
  itk::simple::Cos for the procedural interface
 
+See:
  itk::CosImageFilter for the Doxygen on the original ITK class.
 
 
@@ -6849,6 +6968,7 @@ Crop an image by specifying the region to throw away
 See:
  itk::simple::Crop for the procedural interface
 
+See:
  itk::CropImageFilter for the Doxygen on the original ITK class.
 
 
@@ -6943,12 +7063,16 @@ of the image. For a 2D image, this means valid time steps are below
 See:
  AnisotropicDiffusionImageFilter
 
+See:
  AnisotropicDiffusionFunction
 
+See:
  CurvatureNDAnisotropicDiffusionFunction
 
+See:
  itk::simple::CurvatureAnisotropicDiffusion for the procedural interface
 
+See:
  itk::CurvatureAnisotropicDiffusionImageFilter for the Doxygen on the
 original ITK class.
 
@@ -7080,14 +7204,19 @@ Sethian, Cambridge Press, Chapter 16, Second edition, 1999.
 See:
  DenseFiniteDifferenceImageFilter
 
+See:
  CurvatureFlowFunction
 
+See:
  MinMaxCurvatureFlowImageFilter
 
+See:
  BinaryMinMaxCurvatureFlowImageFilter
 
+See:
  itk::simple::CurvatureFlow for the procedural interface
 
+See:
  itk::CurvatureFlowImageFilter for the Doxygen on the original ITK
 class.
 
@@ -7172,6 +7301,7 @@ whose largest possible region starts at a non-zero index.
 See:
  itk::simple::CyclicShift for the procedural interface
 
+See:
  itk::CyclicShiftImageFilter for the Doxygen on the original ITK class.
 
 
@@ -7276,6 +7406,7 @@ and Image Processing 14, 227-248 (1980).
 See:
  itk::simple::DanielssonDistanceMap for the procedural interface
 
+See:
  itk::DanielssonDistanceMapImageFilter for the Doxygen on the original
 ITK class.
 
@@ -7428,6 +7559,7 @@ displacement field type all have the same number of dimensions.
 See:
  DemonsRegistrationFunction
 
+See:
  itk::DemonsRegistrationFilter for the Doxygen on the original ITK
 class.
 
@@ -7714,10 +7846,13 @@ the coordinate axes of the image.
 See:
  Image
 
+See:
  Neighborhood
 
+See:
  NeighborhoodOperator
 
+See:
  NeighborhoodIterator
 Wiki Examples:
 
@@ -7727,6 +7862,7 @@ Compute the derivative of an image in a particular direction
 See:
  itk::simple::Derivative for the procedural interface
 
+See:
  itk::DerivativeImageFilter for the Doxygen on the original ITK class.
 
 
@@ -7871,8 +8007,10 @@ deformation field type all have the same number of dimensions.
 See:
  DemonsRegistrationFilter
 
+See:
  DemonsRegistrationFunction
 
+See:
  itk::DiffeomorphicDemonsRegistrationFilter for the Doxygen on the
 original ITK class.
 
@@ -8180,10 +8318,13 @@ be composed of binary values (zero or one).
 See:
  ObjectMorphologyImageFilter , ErodeObjectMorphologyImageFilter
 
+See:
  BinaryDilateImageFilter
 
+See:
  itk::simple::DilateObjectMorphology for the procedural interface
 
+See:
  itk::DilateObjectMorphologyImageFilter for the Doxygen on the original
 ITK class.
 
@@ -8294,14 +8435,19 @@ Ivan Macia, VICOMTech, Spain, http://www.vicomtech.es
 See:
  GaussianDerivativeOperator
 
+See:
  Image
 
+See:
  Neighborhood
 
+See:
  NeighborhoodOperator
 
+See:
  itk::simple::DiscreteGaussianDerivative for the procedural interface
 
+See:
  itk::DiscreteGaussianDerivativeImageFilter for the Doxygen on the
 original ITK class.
 
@@ -8491,12 +8637,16 @@ than itk::RecursiveGaussianImageFilter .
 See:
  GaussianOperator
 
+See:
  Image
 
+See:
  Neighborhood
 
+See:
  NeighborhoodOperator
 
+See:
  RecursiveGaussianImageFilter
 Wiki Examples:
 
@@ -8506,6 +8656,7 @@ Smooth an image with a discrete Gaussian filter
 See:
  itk::simple::DiscreteGaussian for the procedural interface
 
+See:
  itk::DiscreteGaussianImageFilter for the Doxygen on the original ITK
 class.
 
@@ -8684,10 +8835,13 @@ operations defined sufficient to compute derivatives.
 See:
  Image
 
+See:
  Neighborhood
 
+See:
  NeighborhoodOperator
 
+See:
  NeighborhoodIterator
 
 This class was adapted by
@@ -8699,6 +8853,7 @@ Torsten Rohlfing, Neuroscience Program, SRI International.
 See:
  itk::simple::DisplacementFieldJacobianDeterminantFilter for the procedural interface
 
+See:
  itk::DisplacementFieldJacobianDeterminantFilter for the Doxygen on the
 original ITK class.
 
@@ -8907,6 +9062,7 @@ Apply a custom operation to corresponding pixels in two images
 See:
  itk::simple::DivideFloor for the procedural interface
 
+See:
  itk::BinaryFunctorImageFilter for the Doxygen on the original ITK
 class.
 
@@ -8975,6 +9131,7 @@ Pixel-wise division of two images
 See:
  itk::simple::Divide for the procedural interface
 
+See:
  itk::DivideImageFilter for the Doxygen on the original ITK class.
 
 
@@ -9052,6 +9209,7 @@ Apply a custom operation to corresponding pixels in two images
 See:
  itk::simple::DivideReal for the procedural interface
 
+See:
  itk::BinaryFunctorImageFilter for the Doxygen on the original ITK
 class.
 
@@ -9128,10 +9286,13 @@ image as they would have if the wide threshold was used.
 See:
  GrayscaleGeodesicDilateImageFilter
 
+See:
  MorphologyImageFilter , GrayscaleDilateImageFilter , GrayscaleFunctionDilateImageFilter , BinaryDilateImageFilter
 
+See:
  itk::simple::DoubleThreshold for the procedural interface
 
+See:
  itk::DoubleThresholdImageFilter for the Doxygen on the original ITK
 class.
 
@@ -9303,6 +9464,7 @@ number of dimensions, and the output to be of a scalar image type.
 See:
  itk::simple::EdgePotential for the procedural interface
 
+See:
  itk::EdgePotentialImageFilter for the Doxygen on the original ITK
 class.
 
@@ -9371,6 +9533,7 @@ Apply a custom operation to corresponding pixels in two images
 See:
  itk::simple::Equal for the procedural interface
 
+See:
  itk::BinaryFunctorImageFilter for the Doxygen on the original ITK
 class.
 
@@ -9481,10 +9644,13 @@ or one).
 See:
  ObjectMorphologyImageFilter , BinaryFunctionErodeImageFilter
 
+See:
  BinaryErodeImageFilter
 
+See:
  itk::simple::ErodeObjectMorphology for the procedural interface
 
+See:
  itk::ErodeObjectMorphologyImageFilter for the Doxygen on the original
 ITK class.
 
@@ -9737,6 +9903,7 @@ The computation is performed using std::exp(x).
 See:
  itk::simple::Exp for the procedural interface
 
+See:
  itk::ExpImageFilter for the Doxygen on the original ITK class.
 
 
@@ -9786,6 +9953,7 @@ constant.
 See:
  itk::simple::ExpNegative for the procedural interface
 
+See:
  itk::ExpNegativeImageFilter for the Doxygen on the original ITK class.
 
 
@@ -9862,12 +10030,16 @@ number of dimensions.
 See:
  InterpolateImageFunction
 
+See:
  LinearInterpolationImageFunction
 
+See:
  VectorExpandImageFilter
 
+See:
  itk::simple::Expand for the procedural interface
 
+See:
  itk::ExpandImageFilter for the Doxygen on the original ITK class.
 
 
@@ -10012,6 +10184,7 @@ Crop an image by specifying the region to keep
 See:
  itk::simple::Extract for the procedural interface
 
+See:
  itk::ExtractImageFilter<InputImageType, typename
 InputImageType::template Rebind for the Doxygen on the original ITK
 class.
@@ -10063,7 +10236,7 @@ Name of this class
 
 %feature("docstring")  itk::simple::ExtractImageFilter::SetDirectionCollapseToStrategy "
 
-     Set the strategy to be used to collapse pysical space dimensions.
+Set the strategy to be used to collapse pysical space dimensions.
 
 itk::itkExtractImageFilter::DIRECTIONCOLLAPSETOIDENTITY Set the
 strategy so that all collapsed images have an identity direction. Use
@@ -10129,8 +10302,10 @@ image and treats them as identical to those in the input image.
 See:
  ConvolutionImageFilter
 
+See:
  itk::simple::FFTConvolution for the procedural interface
 
+See:
  itk::FFTConvolutionImageFilter for the Doxygen on the original ITK
 class.
 
@@ -10266,6 +10441,7 @@ Computer Vision and Pattern Recognition, 2010.
 See:
  itk::simple::FFTNormalizedCorrelation for the procedural interface
 
+See:
  itk::FFTNormalizedCorrelationImageFilter for the Doxygen on the
 original ITK class.
 
@@ -10338,8 +10514,10 @@ Gaetan Lehmann
 See:
  FFTShiftImageFilter
 
+See:
  itk::simple::FFTPad for the procedural interface
 
+See:
  itk::FFTPadImageFilter for the Doxygen on the original ITK class.
 
 
@@ -10440,8 +10618,10 @@ de Jouy-en-Josas, France.
 See:
  ForwardFFTImageFilter , InverseFFTImageFilter
 
+See:
  itk::simple::FFTShift for the procedural interface
 
+See:
  itk::FFTShiftImageFilter for the Doxygen on the original ITK class.
 
 
@@ -10530,6 +10710,7 @@ Richard Beare
 See:
  itk::simple::FastApproximateRank for the procedural interface
 
+See:
  itk::FastApproximateRankImageFilter for the Doxygen on the original
 ITK class.
 
@@ -10643,10 +10824,13 @@ traits
 See:
  ImageFastMarchingTraits
 
+See:
  ImageFastMarchingTraits2
 
+See:
  itk::simple::FastMarchingBase for the procedural interface
 
+See:
  itk::FastMarchingImageFilterBase for the Doxygen on the original ITK
 class.
 
@@ -10824,8 +11008,10 @@ which is to be updated.
 See:
  LevelSetTypeDefault
 
+See:
  itk::simple::FastMarching for the procedural interface
 
+See:
  itk::FastMarchingImageFilter for the Doxygen on the original ITK
 class.
 
@@ -10960,6 +11146,7 @@ Department, Mario Negri Institute, Italy.
 See:
  itk::simple::FastMarchingUpwindGradient for the procedural interface
 
+See:
  itk::FastMarchingUpwindGradientImageFilter for the Doxygen on the
 original ITK class.
 
@@ -11151,8 +11338,10 @@ deformation field type all have the same number of dimensions.
 See:
  DemonsRegistrationFilter
 
+See:
  DemonsRegistrationFunction
 
+See:
  itk::FastSymmetricForcesDemonsRegistrationFilter for the Doxygen on
 the original ITK class.
 
@@ -11436,6 +11625,7 @@ Flip an image over specified axes
 See:
  itk::simple::Flip for the procedural interface
 
+See:
  itk::FlipImageFilter for the Doxygen on the original ITK class.
 
 
@@ -11543,8 +11733,10 @@ This filter works only for real single-component input image types.
 See:
  InverseFFTImageFilter , FFTComplexToComplexImageFilter
 
+See:
  itk::simple::ForwardFFT for the procedural interface
 
+See:
  itk::ForwardFFTImageFilter for the Doxygen on the original ITK class.
 
 
@@ -11639,6 +11831,7 @@ This implementation was contributed as a paper to the Insight Journal https://hd
 See:
  itk::simple::GaborImageSource for the procedural interface
 
+See:
  itk::GaborImageSource for the Doxygen on the original ITK class.
 
 
@@ -11759,6 +11952,7 @@ The output image may be of any dimension.
 See:
  itk::simple::GaussianImageSource for the procedural interface
 
+See:
  itk::GaussianImageSource for the Doxygen on the original ITK class.
 
 
@@ -12020,12 +12214,16 @@ International Journal on Computer Vision, Vol 22, No. 1, pp 61-97,
 See:
  SegmentationLevelSetImageFilter
 
+See:
  GeodesicActiveContourLevelSetFunction
 
+See:
  SparseFieldLevelSetImageFilter
 
+See:
  itk::simple::GeodesicActiveContourLevelSet for the procedural interface
 
+See:
  itk::GeodesicActiveContourLevelSetImageFilter for the Doxygen on the
 original ITK class.
 
@@ -12155,12 +12353,16 @@ itkAnisotropicDiffusionImageFilter.
 See:
  AnisotropicDiffusionImageFilter
 
+See:
  AnisotropicDiffusionFunction
 
+See:
  GradientAnisotropicDiffusionFunction
 
+See:
  itk::simple::GradientAnisotropicDiffusion for the procedural interface
 
+See:
  itk::GradientAnisotropicDiffusionImageFilter for the Doxygen on the
 original ITK class.
 
@@ -12256,14 +12458,19 @@ is specified as this third template parameter.
 See:
  Image
 
+See:
  Neighborhood
 
+See:
  NeighborhoodOperator
 
+See:
  NeighborhoodIterator
 
+See:
  itk::simple::Gradient for the procedural interface
 
+See:
  itk::GradientImageFilter for the Doxygen on the original ITK class.
 
 
@@ -12375,10 +12582,13 @@ Computes the gradient magnitude of an image region at each pixel.
 See:
  Image
 
+See:
  Neighborhood
 
+See:
  NeighborhoodOperator
 
+See:
  NeighborhoodIterator
 Wiki Examples:
 
@@ -12388,6 +12598,7 @@ Compute the gradient magnitude image
 See:
  itk::simple::GradientMagnitude for the procedural interface
 
+See:
  itk::GradientMagnitudeImageFilter for the Doxygen on the original ITK
 class.
 
@@ -12474,6 +12685,7 @@ Gaussian kernel
 See:
  itk::simple::GradientMagnitudeRecursiveGaussian for the procedural interface
 
+See:
  itk::GradientMagnitudeRecursiveGaussianImageFilter for the Doxygen on
 the original ITK class.
 
@@ -12579,6 +12791,7 @@ derivative of a Gaussian
 See:
  itk::simple::GradientRecursiveGaussian for the procedural interface
 
+See:
  itk::GradientRecursiveGaussianImageFilter for the Doxygen on the
 original ITK class.
 
@@ -12714,10 +12927,13 @@ Principles and Applications\", Second Edition, Springer, 2003.
 See:
  GrayscaleGeodesicDilateImageFilter
 
+See:
  MorphologyImageFilter , GrayscaleDilateImageFilter , GrayscaleFunctionDilateImageFilter , BinaryDilateImageFilter
 
+See:
  itk::simple::GrayscaleConnectedClosing for the procedural interface
 
+See:
  itk::GrayscaleConnectedClosingImageFilter for the Doxygen on the
 original ITK class.
 
@@ -12820,10 +13036,13 @@ Principles and Applications\", Second Edition, Springer, 2003.
 See:
  GrayscaleGeodesicDilateImageFilter
 
+See:
  MorphologyImageFilter , GrayscaleDilateImageFilter , GrayscaleFunctionDilateImageFilter , BinaryDilateImageFilter
 
+See:
  itk::simple::GrayscaleConnectedOpening for the procedural interface
 
+See:
  itk::GrayscaleConnectedOpeningImageFilter for the Doxygen on the
 original ITK class.
 
@@ -12931,6 +13150,7 @@ Dilate a grayscale image
 See:
  itk::simple::GrayscaleDilate for the procedural interface
 
+See:
  itk::GrayscaleDilateImageFilter for the Doxygen on the original ITK
 class.
 
@@ -13024,6 +13244,7 @@ Erode a grayscale image
 See:
  itk::simple::GrayscaleErode for the procedural interface
 
+See:
  itk::GrayscaleErodeImageFilter for the Doxygen on the original ITK
 class.
 
@@ -13124,10 +13345,13 @@ and Applications\", Second Edition, Springer, 2003.
 See:
  ReconstructionByErosionImageFilter
 
+See:
  MorphologyImageFilter , GrayscaleErodeImageFilter , GrayscaleFunctionErodeImageFilter , BinaryErodeImageFilter
 
+See:
  itk::simple::GrayscaleFillhole for the procedural interface
 
+See:
  itk::GrayscaleFillholeImageFilter for the Doxygen on the original ITK
 class.
 
@@ -13235,8 +13459,10 @@ have been converted to use the ReconstructionByDilationImageFilter . The Graysca
 See:
  MorphologyImageFilter , GrayscaleDilateImageFilter , GrayscaleFunctionDilateImageFilter , BinaryDilateImageFilter , ReconstructionByDilationImageFilter
 
+See:
  itk::simple::GrayscaleGeodesicDilate for the procedural interface
 
+See:
  itk::GrayscaleGeodesicDilateImageFilter for the Doxygen on the
 original ITK class.
 
@@ -13367,8 +13593,10 @@ provided here. All ITK filters that previously used GrayscaleGeodesicErodeImageF
 See:
  MorphologyImageFilter , GrayscaleErodeImageFilter , GrayscaleFunctionErodeImageFilter , BinaryErodeImageFilter , ReconstructionByErosionImageFilter
 
+See:
  itk::simple::GrayscaleGeodesicErode for the procedural interface
 
+See:
  itk::GrayscaleGeodesicErodeImageFilter for the Doxygen on the original
 ITK class.
 
@@ -13499,10 +13727,13 @@ and Applications\", Second Edition, Springer, 2003.
 See:
  GrayscaleGeodesicDilateImageFilter
 
+See:
  MorphologyImageFilter , GrayscaleDilateImageFilter , GrayscaleFunctionDilateImageFilter , BinaryDilateImageFilter
 
+See:
  itk::simple::GrayscaleGrindPeak for the procedural interface
 
+See:
  itk::GrayscaleGrindPeakImageFilter for the Doxygen on the original ITK
 class.
 
@@ -13591,8 +13822,10 @@ The structuring element is assumed to be composed of binary values
 See:
  MorphologyImageFilter , GrayscaleFunctionErodeImageFilter , BinaryErodeImageFilter
 
+See:
  itk::simple::GrayscaleMorphologicalClosing for the procedural interface
 
+See:
  itk::GrayscaleMorphologicalClosingImageFilter for the Doxygen on the
 original ITK class.
 
@@ -13707,8 +13940,10 @@ The structuring element is assumed to be composed of binary values
 See:
  MorphologyImageFilter , GrayscaleFunctionDilateImageFilter , BinaryDilateImageFilter
 
+See:
  itk::simple::GrayscaleMorphologicalOpening for the procedural interface
 
+See:
  itk::GrayscaleMorphologicalOpeningImageFilter for the Doxygen on the
 original ITK class.
 
@@ -13836,6 +14071,7 @@ Apply a custom operation to corresponding pixels in two images
 See:
  itk::simple::GreaterEqual for the procedural interface
 
+See:
  itk::BinaryFunctorImageFilter for the Doxygen on the original ITK
 class.
 
@@ -13954,6 +14190,7 @@ Apply a custom operation to corresponding pixels in two images
 See:
  itk::simple::Greater for the procedural interface
 
+See:
  itk::BinaryFunctorImageFilter for the Doxygen on the original ITK
 class.
 
@@ -14068,6 +14305,7 @@ Tustison N., Avants B., Gee J. University of Pennsylvania
 See:
  itk::simple::GridImageSource for the procedural interface
 
+See:
  itk::GridImageSource for the Doxygen on the original ITK class.
 
 
@@ -14192,10 +14430,13 @@ and Applications\", Second Edition, Springer, 2003.
 See:
  GrayscaleGeodesicDilateImageFilter , HMaximaImageFilter ,
 
+See:
  MorphologyImageFilter , GrayscaleDilateImageFilter , GrayscaleFunctionDilateImageFilter , BinaryDilateImageFilter
 
+See:
  itk::simple::HConcave for the procedural interface
 
+See:
  itk::HConcaveImageFilter for the Doxygen on the original ITK class.
 
 
@@ -14305,10 +14546,13 @@ and Applications\", Second Edition, Springer, 2003.
 See:
  GrayscaleGeodesicDilateImageFilter , HMinimaImageFilter
 
+See:
  MorphologyImageFilter , GrayscaleDilateImageFilter , GrayscaleFunctionDilateImageFilter , BinaryDilateImageFilter
 
+See:
  itk::simple::HConvex for the procedural interface
 
+See:
  itk::HConvexImageFilter for the Doxygen on the original ITK class.
 
 
@@ -14426,10 +14670,13 @@ The height parameter is set using SetHeight.
 See:
  ReconstructionByDilationImageFilter , HMinimaImageFilter , HConvexImageFilter
 
+See:
  MorphologyImageFilter , GrayscaleDilateImageFilter , GrayscaleFunctionDilateImageFilter , BinaryDilateImageFilter
 
+See:
  itk::simple::HMaxima for the procedural interface
 
+See:
  itk::HMaximaImageFilter for the Doxygen on the original ITK class.
 
 
@@ -14518,10 +14765,13 @@ and Applications\", Second Edition, Springer, 2003.
 See:
  GrayscaleGeodesicDilateImageFilter , HMinimaImageFilter , HConvexImageFilter
 
+See:
  MorphologyImageFilter , GrayscaleDilateImageFilter , GrayscaleFunctionDilateImageFilter , BinaryDilateImageFilter
 
+See:
  itk::simple::HMinima for the procedural interface
 
+See:
  itk::HMinimaImageFilter for the Doxygen on the original ITK class.
 
 
@@ -14636,8 +14886,10 @@ has an odd size in the X-dimension. Use SetActualXDimensionIsOdd() to set this f
 See:
  ForwardFFTImageFilter , HalfHermitianToRealInverseFFTImageFilter
 
+See:
  itk::simple::HalfHermitianToRealInverseFFT for the procedural interface
 
+See:
  itk::HalfHermitianToRealInverseFFTImageFilter for the Doxygen on the
 original ITK class.
 
@@ -14771,6 +15023,7 @@ both images have the same number of dimensions.
 See:
  DirectedHausdorffDistanceImageFilter
 
+See:
  itk::HausdorffDistanceImageFilter for the Doxygen on the original ITK
 class.
 
@@ -14863,6 +15116,7 @@ Imaging, 19(2):143-150, 2000.
 See:
  itk::simple::HistogramMatching for the procedural interface
 
+See:
  itk::HistogramMatchingImageFilter for the Doxygen on the original ITK
 class.
 
@@ -14982,8 +15236,10 @@ This implementation was taken from the Insight Journal paper: https://hdl.handle
 See:
  HistogramThresholdImageFilter
 
+See:
  itk::simple::HuangThreshold for the procedural interface
 
+See:
  itk::HuangThresholdImageFilter for the Doxygen on the original ITK
 class.
 
@@ -15427,8 +15683,10 @@ composite transform input.
 See:
  itk::ImageRegistrationMethodv4
 
+See:
  itk::ImageToImageMetricv4
 
+See:
  itk::ObjectToObjectOptimizerBaseTemplate
 
 
@@ -16032,8 +16290,10 @@ IntensityWindowingImageFilter
 See:
  RescaleIntensityImageFilter
 
+See:
  itk::simple::IntensityWindowing for the procedural interface
 
+See:
  itk::IntensityWindowingImageFilter for the Doxygen on the original ITK
 class.
 
@@ -16157,8 +16417,10 @@ This implementation was taken from the Insight Journal paper: https://hdl.handle
 See:
  HistogramThresholdImageFilter
 
+See:
  itk::simple::IntermodesThreshold for the procedural interface
 
+See:
  itk::IntermodesThresholdImageFilter for the Doxygen on the original
 ITK class.
 
@@ -16306,6 +16568,7 @@ de Jouy-en-Josas, France
 See:
  itk::simple::InverseDeconvolution for the procedural interface
 
+See:
  itk::InverseDeconvolutionImageFilter for the Doxygen on the original
 ITK class.
 
@@ -16438,6 +16701,7 @@ type Vector .
 See:
  itk::simple::InverseDisplacementField for the procedural interface
 
+See:
  itk::InverseDisplacementFieldImageFilter for the Doxygen on the
 original ITK class.
 
@@ -16564,8 +16828,10 @@ have Hermitian symmetry, the imaginary component is discarded.
 See:
  ForwardFFTImageFilter , InverseFFTImageFilter
 
+See:
  itk::simple::InverseFFT for the procedural interface
 
+See:
  itk::InverseFFTImageFilter for the Doxygen on the original ITK class.
 
 
@@ -16615,6 +16881,7 @@ Nick Tustison
 See:
  itk::simple::InvertDisplacementField for the procedural interface
 
+See:
  itk::InvertDisplacementFieldImageFilter for the Doxygen on the
 original ITK class.
 
@@ -16732,6 +16999,7 @@ Invert an image
 See:
  itk::simple::InvertIntensity for the procedural interface
 
+See:
  itk::InvertIntensityImageFilter for the Doxygen on the original ITK
 class.
 
@@ -16814,6 +17082,7 @@ Conference on Computer Aided Systems Theory , pages 48-51, Feb 2003.
 See:
  itk::simple::IsoContourDistance for the procedural interface
 
+See:
  itk::IsoContourDistanceImageFilter for the Doxygen on the original ITK
 class.
 
@@ -16909,8 +17178,10 @@ This implementation was taken from the Insight Journal paper: https://hdl.handle
 See:
  HistogramThresholdImageFilter
 
+See:
  itk::simple::IsoDataThreshold for the procedural interface
 
+See:
  itk::IsoDataThresholdImageFilter for the Doxygen on the original ITK
 class.
 
@@ -17076,6 +17347,7 @@ check for this by querying the GetThresholdingFailed() flag.
 See:
  itk::simple::IsolatedConnected for the procedural interface
 
+See:
  itk::IsolatedConnectedImageFilter for the Doxygen on the original ITK
 class.
 
@@ -17254,6 +17526,7 @@ defaults to the 1.0.
 See:
  itk::simple::IsolatedWatershed for the procedural interface
 
+See:
  itk::IsolatedWatershedImageFilter for the Doxygen on the original ITK
 class.
 
@@ -17535,8 +17808,10 @@ This implementation was taken from the Insight Journal paper: https://hdl.handle
 See:
  HistogramThresholdImageFilter
 
+See:
  itk::simple::KittlerIllingworthThreshold for the procedural interface
 
+See:
  itk::KittlerIllingworthThresholdImageFilter for the Doxygen on the
 original ITK class.
 
@@ -17692,6 +17967,7 @@ Label the contours of connected components
 See:
  itk::simple::LabelContour for the procedural interface
 
+See:
  itk::LabelContourImageFilter for the Doxygen on the original ITK
 class.
 
@@ -17805,6 +18081,7 @@ Convert an itk::Image consisting of labeled regions to a LabelMap
 See:
  itk::simple::LabelImageToLabelMapFilter for the procedural interface
 
+See:
  itk::LabelImageToLabelMapFilter for the Doxygen on the original ITK
 class.
 
@@ -17881,6 +18158,7 @@ See:
  StatisticsLabelObject , LabelStatisticsOpeningImageFilter ,
 LabelStatisticsOpeningImageFilter
 
+See:
  itk::LabelImageToStatisticsLabelMapFilter for the Doxygen on the
 original ITK class.
 
@@ -18311,6 +18589,7 @@ de Jouy-en-Josas, France.
 See:
  LabelMapOverlayImageFilter , LabelOverlayImageFilter , LabelOverlayFunctor
 
+See:
  LabelMapToBinaryImageFilter , LabelMapToLabelImageFilter ,
 Wiki Examples:
 
@@ -18320,6 +18599,7 @@ Color the boundaries of labeled regions in an image
 See:
  itk::simple::LabelMapContourOverlay for the procedural interface
 
+See:
  itk::LabelMapContourOverlayImageFilter for the Doxygen on the original
 ITK class.
 
@@ -18471,8 +18751,10 @@ de Jouy-en-Josas, France.
 See:
  LabelMapToBinaryImageFilter , LabelMapToLabelImageFilter
 
+See:
  itk::simple::LabelMapMask for the procedural interface
 
+See:
  itk::LabelMapMaskImageFilter for the Doxygen on the original ITK
 class.
 
@@ -18632,10 +18914,13 @@ de Jouy-en-Josas, France.
 See:
  LabelOverlayImageFilter , LabelOverlayFunctor
 
+See:
  LabelMapToRGBImageFilter , LabelMapToBinaryImageFilter , LabelMapToLabelImageFilter
 
+See:
  itk::simple::LabelMapOverlay for the procedural interface
 
+See:
  itk::LabelMapOverlayImageFilter for the Doxygen on the original ITK
 class.
 
@@ -18720,8 +19005,10 @@ de Jouy-en-Josas, France.
 See:
  LabelMapToLabelImageFilter , LabelMapMaskImageFilter
 
+See:
  itk::simple::LabelMapToBinary for the procedural interface
 
+See:
  itk::LabelMapToBinaryImageFilter for the Doxygen on the original ITK
 class.
 
@@ -18818,6 +19105,7 @@ Convert a LabelMap to a normal image with different values representing each reg
 See:
  itk::simple::LabelMapToLabel for the procedural interface
 
+See:
  itk::LabelMapToLabelImageFilter for the Doxygen on the original ITK
 class.
 
@@ -18872,10 +19160,13 @@ de Jouy-en-Josas, France.
 See:
  LabelToRGBImageFilter , LabelToRGBFunctor
 
+See:
  LabelMapOverlayImageFilter , LabelMapToBinaryImageFilter , LabelMapMaskImageFilter
 
+See:
  itk::simple::LabelMapToRGB for the procedural interface
 
+See:
  itk::LabelMapToRGBImageFilter for the Doxygen on the original ITK
 class.
 
@@ -18943,6 +19234,7 @@ Nicholas J. Tustison
 See:
  LabelOverlapMeasuresImageFilter
 
+See:
  itk::LabelOverlapMeasuresImageFilter for the Doxygen on the original
 ITK class.
 
@@ -19071,6 +19363,7 @@ de Jouy-en-Josas, France.
 See:
  LabelToRGBImageFilter
 
+See:
  LabelMapOverlayImageFilter , LabelOverlayFunctor
 Wiki Examples:
 
@@ -19080,6 +19373,7 @@ Overlay a LabelMap on an image
 See:
  itk::simple::LabelOverlay for the procedural interface
 
+See:
  itk::LabelOverlayImageFilter for the Doxygen on the original ITK
 class.
 
@@ -19671,10 +19965,13 @@ Australia.
 See:
  LabelOverlayImageFilter
 
+See:
  LabelMapToRGBImageFilter , LabelToRGBFunctor, ScalarToRGBPixelFunctor
 
+See:
  itk::simple::LabelToRGB for the procedural interface
 
+See:
  itk::LabelToRGBImageFilter for the Doxygen on the original ITK class.
 
 
@@ -19755,8 +20052,10 @@ de Jouy-en-Josas, France.
 See:
  AttributeLabelObject
 
+See:
  itk::simple::LabelUniqueLabelMapFilter for the procedural interface
 
+See:
  itk::LabelUniqueLabelMapFilter for the Doxygen on the original ITK
 class.
 
@@ -19994,6 +20293,7 @@ landmarks
 See:
  itk::simple::LandmarkBasedTransformInitializerFilter for the procedural interface
 
+See:
  itk::LandmarkBasedTransformInitializer for the Doxygen on the original
 ITK class.
 
@@ -20126,12 +20426,16 @@ de Jouy-en-Josas, France
 See:
  IterativeDeconvolutionImageFilter
 
+See:
  RichardsonLucyDeconvolutionImageFilter
 
+See:
  ProjectedLandweberDeconvolutionImageFilter
 
+See:
  itk::simple::LandweberDeconvolution for the procedural interface
 
+See:
  itk::LandweberDeconvolutionImageFilter for the Doxygen on the original
 ITK class.
 
@@ -20255,12 +20559,16 @@ input and output images is not float or double.
 See:
  Image
 
+See:
  Neighborhood
 
+See:
  NeighborhoodOperator
 
+See:
  NeighborhoodIterator
 
+See:
  LaplacianOperator
 Wiki Examples:
 
@@ -20270,6 +20578,7 @@ Compute the Laplacian of an image
 See:
  itk::simple::Laplacian for the procedural interface
 
+See:
  itk::LaplacianImageFilter for the Doxygen on the original ITK class.
 
 
@@ -20355,6 +20664,7 @@ Compute the Laplacian of Gaussian (LoG) of an image
 See:
  itk::simple::LaplacianRecursiveGaussian for the procedural interface
 
+See:
  itk::LaplacianRecursiveGaussianImageFilter for the Doxygen on the
 original ITK class.
 
@@ -20507,12 +20817,16 @@ SegmentationLevelSetImageFilter .
 See:
  SegmentationLevelSetImageFilter
 
+See:
  LaplacianSegmentationLevelSetFunction ,
 
+See:
  SparseFieldLevelSetImageFilter
 
+See:
  itk::simple::LaplacianSegmentationLevelSet for the procedural interface
 
+See:
  itk::LaplacianSegmentationLevelSetImageFilter for the Doxygen on the
 original ITK class.
 
@@ -20634,12 +20948,16 @@ The input to this filter is a scalar-valued itk::Image of arbitrary dimension. T
 See:
  Image
 
+See:
  Neighborhood
 
+See:
  NeighborhoodOperator
 
+See:
  NeighborhoodIterator
 
+See:
  LaplacianOperator
 Wiki Examples:
 
@@ -20649,6 +20967,7 @@ Sharpen an image
 See:
  itk::simple::LaplacianSharpening for the procedural interface
 
+See:
  itk::LaplacianSharpeningImageFilter for the Doxygen on the original
 ITK class.
 
@@ -20747,6 +21066,7 @@ Apply a custom operation to corresponding pixels in two images
 See:
  itk::simple::LessEqual for the procedural interface
 
+See:
  itk::BinaryFunctorImageFilter for the Doxygen on the original ITK
 class.
 
@@ -20865,6 +21185,7 @@ Apply a custom operation to corresponding pixels in two images
 See:
  itk::simple::Less for the procedural interface
 
+See:
  itk::BinaryFunctorImageFilter for the Doxygen on the original ITK
 class.
 
@@ -21017,8 +21338,10 @@ Medical Image Analysis. Vol. 7. pp. 1-20. 2003.
 See:
  LevelSetMotionRegistrationFunction
 
+See:
  DemonsRegistrationFilter
 
+See:
  itk::LevelSetMotionRegistrationFilter for the Doxygen on the original
 ITK class.
 
@@ -21322,8 +21645,10 @@ This implementation was taken from the Insight Journal paper: https://hdl.handle
 See:
  HistogramThresholdImageFilter
 
+See:
  itk::simple::LiThreshold for the procedural interface
 
+See:
  itk::LiThresholdImageFilter for the Doxygen on the original ITK class.
 
 
@@ -21457,6 +21782,7 @@ The computation is performed using std::log10(x).
 See:
  itk::simple::Log10 for the procedural interface
 
+See:
  itk::Log10ImageFilter for the Doxygen on the original ITK class.
 
 
@@ -21504,6 +21830,7 @@ Computes the log() of each pixel.
 See:
  itk::simple::Log for the procedural interface
 
+See:
  itk::LogImageFilter for the Doxygen on the original ITK class.
 
 
@@ -21556,6 +21883,7 @@ or all 3D, or all ND)
 See:
  itk::simple::MagnitudeAndPhaseToComplex for the procedural interface
 
+See:
  itk::MagnitudeAndPhaseToComplexImageFilter for the Doxygen on the
 original ITK class.
 
@@ -21638,6 +21966,7 @@ Apply a mask to an image
 See:
  itk::simple::Mask for the procedural interface
 
+See:
  itk::MaskImageFilter for the Doxygen on the original ITK class.
 
 
@@ -21720,6 +22049,7 @@ Apply the inverse of a mask to an image
 See:
  itk::simple::MaskNegated for the procedural interface
 
+See:
  itk::MaskNegatedImageFilter for the Doxygen on the original ITK class.
 
 
@@ -21861,6 +22191,7 @@ Computer Vision and Pattern Recognition, 2010.
 See:
  itk::simple::MaskedFFTNormalizedCorrelation for the procedural interface
 
+See:
  itk::MaskedFFTNormalizedCorrelationImageFilter for the Doxygen on the
 original ITK class.
 
@@ -21952,8 +22283,10 @@ This implementation was taken from the Insight Journal paper: https://hdl.handle
 See:
  HistogramThresholdImageFilter
 
+See:
  itk::simple::MaximumEntropyThreshold for the procedural interface
 
+See:
  itk::MaximumEntropyThresholdImageFilter for the Doxygen on the
 original ITK class.
 
@@ -22100,6 +22433,7 @@ max
 See:
  itk::simple::Maximum for the procedural interface
 
+See:
  itk::MaximumImageFilter for the Doxygen on the original ITK class.
 
 
@@ -22163,20 +22497,28 @@ de jouy-en-josas, France.
 See:
  ProjectionImageFilter
 
+See:
  MedianProjectionImageFilter
 
+See:
  MeanProjectionImageFilter
 
+See:
  MinimumProjectionImageFilter
 
+See:
  StandardDeviationProjectionImageFilter
 
+See:
  SumProjectionImageFilter
 
+See:
  BinaryProjectionImageFilter
 
+See:
  itk::simple::MaximumProjection for the procedural interface
 
+See:
  itk::MaximumProjectionImageFilter for the Doxygen on the original ITK
 class.
 
@@ -22242,10 +22584,13 @@ A mean filter is one of the family of linear filters.
 See:
  Image
 
+See:
  Neighborhood
 
+See:
  NeighborhoodOperator
 
+See:
  NeighborhoodIterator
 Wiki Examples:
 
@@ -22255,6 +22600,7 @@ Mean filter an image
 See:
  itk::simple::Mean for the procedural interface
 
+See:
  itk::MeanImageFilter for the Doxygen on the original ITK class.
 
 
@@ -22327,20 +22673,28 @@ de Jouy-en-Josas, France.
 See:
  ProjectionImageFilter
 
+See:
  MedianProjectionImageFilter
 
+See:
  MinimumProjectionImageFilter
 
+See:
  StandardDeviationProjectionImageFilter
 
+See:
  SumProjectionImageFilter
 
+See:
  BinaryProjectionImageFilter
 
+See:
  MaximumProjectionImageFilter
 
+See:
  itk::simple::MeanProjection for the procedural interface
 
+See:
  itk::MeanProjectionImageFilter for the Doxygen on the original ITK
 class.
 
@@ -22410,10 +22764,13 @@ This filter requires that the input pixel type provides an operator<()
 See:
  Image
 
+See:
  Neighborhood
 
+See:
  NeighborhoodOperator
 
+See:
  NeighborhoodIterator
 Wiki Examples:
 
@@ -22425,6 +22782,7 @@ Median filter an RGB image
 See:
  itk::simple::Median for the procedural interface
 
+See:
  itk::MedianImageFilter for the Doxygen on the original ITK class.
 
 
@@ -22497,20 +22855,28 @@ de Jouy-en-Josas, France.
 See:
  ProjectionImageFilter
 
+See:
  StandardDeviationProjectionImageFilter
 
+See:
  SumProjectionImageFilter
 
+See:
  BinaryProjectionImageFilter
 
+See:
  MaximumProjectionImageFilter
 
+See:
  MinimumProjectionImageFilter
 
+See:
  MeanProjectionImageFilter
 
+See:
  itk::simple::MedianProjection for the procedural interface
 
+See:
  itk::MedianProjectionImageFilter for the Doxygen on the original ITK
 class.
 
@@ -22586,6 +22952,7 @@ de Jouy-en-Josas, France.
 See:
  ShapeLabelObject , RelabelComponentImageFilter
 
+See:
  itk::simple::MergeLabelMapFilter for the procedural interface
 
 
@@ -22712,12 +23079,16 @@ Sethian, Cambridge Press, Chapter 16, Second edition, 1999.
 See:
  MinMaxCurvatureFlowFunction
 
+See:
  CurvatureFlowImageFilter
 
+See:
  BinaryMinMaxCurvatureFlowImageFilter
 
+See:
  itk::simple::MinMaxCurvatureFlow for the procedural interface
 
+See:
  itk::MinMaxCurvatureFlowImageFilter for the Doxygen on the original
 ITK class.
 
@@ -22808,6 +23179,7 @@ min
 See:
  itk::simple::Minimum for the procedural interface
 
+See:
  itk::MinimumImageFilter for the Doxygen on the original ITK class.
 
 
@@ -22869,6 +23241,7 @@ pipeline. The implementation uses the StatisticsImageFilter .
 See:
  StatisticsImageFilter
 
+See:
  itk::MinimumMaximumImageFilter for the Doxygen on the original ITK
 class.
 
@@ -22941,18 +23314,25 @@ de Jouy-en-Josas, France.
 See:
  ProjectionImageFilter
 
+See:
  StandardDeviationProjectionImageFilter
 
+See:
  SumProjectionImageFilter
 
+See:
  BinaryProjectionImageFilter
 
+See:
  MaximumProjectionImageFilter
 
+See:
  MeanProjectionImageFilter
 
+See:
  itk::simple::MinimumProjection for the procedural interface
 
+See:
  itk::MinimumProjectionImageFilter for the Doxygen on the original ITK
 class.
 
@@ -23033,6 +23413,7 @@ Pad an image using mirroring over the boundaries
 See:
  itk::simple::MirrorPad for the procedural interface
 
+See:
  itk::MirrorPadImageFilter for the Doxygen on the original ITK class.
 
 
@@ -23106,6 +23487,7 @@ de Jouy-en-Josas, France.
 See:
  itk::simple::Modulus for the procedural interface
 
+See:
  itk::ModulusImageFilter for the Doxygen on the original ITK class.
 
 
@@ -23175,8 +23557,10 @@ This implementation was taken from the Insight Journal paper: https://hdl.handle
 See:
  HistogramThresholdImageFilter
 
+See:
  itk::simple::MomentsThreshold for the procedural interface
 
+See:
  itk::MomentsThresholdImageFilter for the Doxygen on the original ITK
 class.
 
@@ -23318,8 +23702,10 @@ The structuring element is assumed to be composed of binary values
 See:
  MorphologyImageFilter , GrayscaleFunctionDilateImageFilter , BinaryDilateImageFilter
 
+See:
  itk::simple::MorphologicalGradient for the procedural interface
 
+See:
  itk::MorphologicalGradientImageFilter for the Doxygen on the original
 ITK class.
 
@@ -23445,8 +23831,10 @@ Australia.
 See:
  WatershedImageFilter , MorphologicalWatershedImageFilter
 
+See:
  itk::simple::MorphologicalWatershedFromMarkers for the procedural interface
 
+See:
  itk::MorphologicalWatershedFromMarkersImageFilter for the Doxygen on
 the original ITK class.
 
@@ -23571,8 +23959,10 @@ de Jouy-en-Josas, France.
 See:
  WatershedImageFilter , MorphologicalWatershedFromMarkersImageFilter
 
+See:
  itk::simple::MorphologicalWatershed for the procedural interface
 
+See:
  itk::MorphologicalWatershedImageFilter for the Doxygen on the original
 ITK class.
 
@@ -23817,7 +24207,7 @@ execution.
 
 %feature("docstring")  itk::simple::MultiLabelSTAPLEImageFilter::GetLabelForUndecidedPixels "
 
-     Get label value used for undecided pixels.
+Get label value used for undecided pixels.
 
 After updating the filter, this function returns the actual label
 value used for undecided pixels in the current output. Note that this
@@ -23840,7 +24230,7 @@ Name of this class
 
 %feature("docstring")  itk::simple::MultiLabelSTAPLEImageFilter::GetPriorProbabilities "
 
-     Get prior class probabilities.
+Get prior class probabilities.
 
 After updating the filter, this function returns the actual prior
 class probabilities. If these were not previously set by a call to
@@ -23876,9 +24266,10 @@ Set maximum number of iterations.
 
 %feature("docstring")  itk::simple::MultiLabelSTAPLEImageFilter::SetPriorProbabilities "
 
-    Set manual estimates for the a priori class probabilities. The
-size of the array must be greater than the value of the largest label. The index into the array corresponds to the label
-value in the segmented image for the class.
+Set manual estimates for the a priori class probabilities. The size of
+the array must be greater than the value of the largest label. The
+index into the array corresponds to the label value in the segmented
+image for the class.
 
 ";
 
@@ -23920,6 +24311,7 @@ Multiply every pixel in an image by a constant
 See:
  itk::simple::Multiply for the procedural interface
 
+See:
  itk::MultiplyImageFilter for the Doxygen on the original ITK class.
 
 
@@ -24033,6 +24425,7 @@ Transactions on Medical Imaging, 29(6):1310-1320, June 2010.
 See:
  itk::simple::N4BiasFieldCorrection for the procedural interface
 
+See:
  itk::N4BiasFieldCorrectionImageFilter for the Doxygen on the original
 ITK class.
 
@@ -24365,6 +24758,7 @@ AND whose neighbors all lie within a Lower and Upper threshold range.
 See:
  itk::simple::NeighborhoodConnected for the procedural interface
 
+See:
  itk::NeighborhoodConnectedImageFilter for the Doxygen on the original
 ITK class.
 
@@ -24517,10 +24911,13 @@ to this (hyper) plane.
 See:
  Image
 
+See:
  Neighborhood
 
+See:
  NeighborhoodOperator
 
+See:
  NeighborhoodIterator
 Wiki Examples:
 
@@ -24530,6 +24927,7 @@ Compute the local noise in an image
 See:
  itk::simple::Noise for the procedural interface
 
+See:
  itk::NoiseImageFilter for the Doxygen on the original ITK class.
 
 
@@ -24633,6 +25031,7 @@ Normalize an image
 See:
  itk::simple::Normalize for the procedural interface
 
+See:
  itk::NormalizeImageFilter for the Doxygen on the original ITK class.
 
 
@@ -24693,8 +25092,10 @@ de Jouy-en-Josas, France.
 See:
  NormalizeImageFilter
 
+See:
  StatisticsImageFilter
 
+See:
  DivideImageFilter
 Wiki Examples:
 
@@ -24704,6 +25105,7 @@ Scale all pixels so that their sum is a specified constant
 See:
  itk::simple::NormalizeToConstant for the procedural interface
 
+See:
  itk::NormalizeToConstantImageFilter for the Doxygen on the original
 ITK class.
 
@@ -24779,10 +25181,13 @@ under the mask.
 See:
  Image
 
+See:
  Neighborhood
 
+See:
  NeighborhoodOperator
 
+See:
  NeighborhoodIterator
 Wiki Examples:
 
@@ -24792,6 +25197,7 @@ Normalized correlation
 See:
  itk::simple::NormalizedCorrelation for the procedural interface
 
+See:
  itk::NormalizedCorrelationImageFilter for the Doxygen on the original
 ITK class.
 
@@ -24861,6 +25267,7 @@ Apply a custom operation to corresponding pixels in two images
 See:
  itk::simple::NotEqual for the procedural interface
 
+See:
  itk::BinaryFunctorImageFilter for the Doxygen on the original ITK
 class.
 
@@ -24971,6 +25378,7 @@ Where \"!\" is the unary Logical NOT operator in C++.
 See:
  itk::simple::Not for the procedural interface
 
+See:
  itk::NotImageFilter for the Doxygen on the original ITK class.
 
 
@@ -25040,8 +25448,10 @@ de Jouy-en-Josas, France.
 See:
  GrayscaleMorphologicalOpeningImageFilter
 
+See:
  itk::simple::OpeningByReconstruction for the procedural interface
 
+See:
  itk::OpeningByReconstructionImageFilter for the Doxygen on the
 original ITK class.
 
@@ -25195,6 +25605,7 @@ Binary OR two images
 See:
  itk::simple::Or for the procedural interface
 
+See:
  itk::OrImageFilter for the Doxygen on the original ITK class.
 
 
@@ -25270,12 +25681,16 @@ default.
 See:
  ScalarImageToHistogramGenerator
 
+See:
  OtsuMultipleThresholdsCalculator
 
+See:
  ThresholdLabelerImageFilter
 
+See:
  itk::simple::OtsuMultipleThresholds for the procedural interface
 
+See:
  itk::OtsuMultipleThresholdsImageFilter for the Doxygen on the original
 ITK class.
 
@@ -25413,8 +25828,10 @@ Separate foreground and background using Otsu's method
 See:
  HistogramThresholdImageFilter
 
+See:
  itk::simple::OtsuThreshold for the procedural interface
 
+See:
  itk::OtsuThresholdImageFilter for the Doxygen on the original ITK
 class.
 
@@ -25564,6 +25981,7 @@ Paste a part of one image into another image
 See:
  itk::simple::Paste for the procedural interface
 
+See:
  itk::PasteImageFilter for the Doxygen on the original ITK class.
 
 
@@ -25663,6 +26081,7 @@ Awate and Whitaker 2005 IEEE CVPR and 2006 IEEE TPAMI.
 See:
  PatchBasedDenoisingBaseImageFilter
 
+See:
  itk::PatchBasedDenoisingImageFilter for the Doxygen on the original
 ITK class.
 
@@ -25949,6 +26368,7 @@ Switch the axes of an image
 See:
  itk::simple::PermuteAxes for the procedural interface
 
+See:
  itk::PermuteAxesImageFilter for the Doxygen on the original ITK class.
 
 
@@ -26018,6 +26438,7 @@ recommented that the component type be a real valued type.
 See:
  itk::simple::PhysicalPointImageSource for the procedural interface
 
+See:
  itk::PhysicalPointImageSource for the Doxygen on the original ITK
 class.
 
@@ -26407,6 +26828,7 @@ to a power of a constant by using
 See:
  itk::simple::Pow for the procedural interface
 
+See:
  itk::PowImageFilter for the Doxygen on the original ITK class.
 
 
@@ -26585,12 +27007,16 @@ de Jouy-en-Josas, France
 See:
  IterativeDeconvolutionImageFilter
 
+See:
  RichardsonLucyDeconvolutionImageFilter
 
+See:
  LandweberDeconvolutionImageFilter
 
+See:
  itk::simple::ProjectedLandweberDeconvolution for the procedural interface
 
+See:
  itk::ProjectedLandweberDeconvolutionImageFilter for the Doxygen on the
 original ITK class.
 
@@ -26723,6 +27149,7 @@ Richard Beare
 See:
  itk::simple::Rank for the procedural interface
 
+See:
  itk::RankImageFilter for the Doxygen on the original ITK class.
 
 
@@ -26799,6 +27226,7 @@ and have the same size and origin.
 See:
  VectorImage
 
+See:
  VectorIndexSelectionCastImageFilter
 Wiki Examples:
 
@@ -26812,6 +27240,7 @@ Convert a real image and an imaginary image to a complex image
 See:
  itk::simple::RealAndImaginaryToComplex for the procedural interface
 
+See:
  itk::ComposeImageFilter for the Doxygen on the original ITK class.
 
 
@@ -26875,10 +27304,13 @@ in that dimension and the division by 2 is rounded down.
 See:
  HalfHermitianToRealInverseFFTImageFilter
 
+See:
  ForwardFFTImageFilter
 
+See:
  itk::simple::RealToHalfHermitianForwardFFT for the procedural interface
 
+See:
  itk::RealToHalfHermitianForwardFFTImageFilter for the Doxygen on the
 original ITK class.
 
@@ -26951,8 +27383,10 @@ Australia.
 See:
  MorphologyImageFilter , GrayscaleDilateImageFilter , GrayscaleFunctionDilateImageFilter , BinaryDilateImageFilter , ReconstructionByErosionImageFilter , OpeningByReconstructionImageFilter , ClosingByReconstructionImageFilter , ReconstructionImageFilter
 
+See:
  itk::simple::ReconstructionByDilation for the procedural interface
 
+See:
  itk::ReconstructionByDilationImageFilter for the Doxygen on the
 original ITK class.
 
@@ -27061,8 +27495,10 @@ Australia.
 See:
  MorphologyImageFilter , GrayscaleDilateImageFilter , GrayscaleFunctionDilateImageFilter , BinaryDilateImageFilter , ReconstructionByErosionImageFilter , OpeningByReconstructionImageFilter , ClosingByReconstructionImageFilter , ReconstructionImageFilter
 
+See:
  itk::simple::ReconstructionByErosion for the procedural interface
 
+See:
  itk::ReconstructionByErosionImageFilter for the Doxygen on the
 original ITK class.
 
@@ -27177,6 +27613,7 @@ Find higher derivatives of an image
 See:
  itk::simple::RecursiveGaussian for the procedural interface
 
+See:
  itk::RecursiveGaussianImageFilter for the Doxygen on the original ITK
 class.
 
@@ -27211,7 +27648,7 @@ Name of this class
 
 %feature("docstring")  itk::simple::RecursiveGaussianImageFilter::GetOrder "
 
-     Set/Get the Order of the Gaussian to convolve with.
+Set/Get the Order of the Gaussian to convolve with.
 
 
 ZeroOrder is equivalent to convolving with a Gaussian. This is the
@@ -27255,7 +27692,7 @@ parameters
 
 %feature("docstring")  itk::simple::RecursiveGaussianImageFilter::SetNormalizeAcrossScale "
 
-     Set/Get the flag for normalizing the gaussian over scale-space.
+Set/Get the flag for normalizing the gaussian over scale-space.
 
 This flag enables the analysis of the differential shape of features
 independent of their size ( both pixels and physical size ). Following
@@ -27289,7 +27726,7 @@ other methods such as a discrete Gaussian kernel should be considered.
 
 %feature("docstring")  itk::simple::RecursiveGaussianImageFilter::SetOrder "
 
-     Set/Get the Order of the Gaussian to convolve with.
+Set/Get the Order of the Gaussian to convolve with.
 
 
 ZeroOrder is equivalent to convolving with a Gaussian. This is the
@@ -27355,6 +27792,7 @@ Extract a portion of an image (region of interest)
 See:
  itk::simple::RegionOfInterest for the procedural interface
 
+See:
  itk::RegionOfInterestImageFilter for the Doxygen on the original ITK
 class.
 
@@ -27437,8 +27875,10 @@ Jouy-en-Josas, France. The paper can be found at https://hdl.handle.net/1926/153
 See:
  ValuedRegionalMaximaImageFilter
 
+See:
  HConvexImageFilter
 
+See:
  RegionalMinimaImageFilter
 Wiki Examples:
 
@@ -27448,6 +27888,7 @@ RegionalMaximaImageFilter
 See:
  itk::simple::RegionalMaxima for the procedural interface
 
+See:
  itk::RegionalMaximaImageFilter for the Doxygen on the original ITK
 class.
 
@@ -27592,6 +28033,7 @@ RegionalMaximaImageFilter MathematicalMorphologyImageFilters
 See:
  ValuedRegionalMinimaImageFilter
 
+See:
  HConcaveImageFilter
 Wiki Examples:
 
@@ -27601,6 +28043,7 @@ RegionalMinimaImageFilter
 See:
  itk::simple::RegionalMinima for the procedural interface
 
+See:
  itk::RegionalMinimaImageFilter for the Doxygen on the original ITK
 class.
 
@@ -27776,6 +28219,7 @@ Assign contiguous labels to connected regions of an image
 See:
  itk::simple::RelabelComponent for the procedural interface
 
+See:
  itk::RelabelComponentImageFilter for the Doxygen on the original ITK
 class.
 
@@ -27861,8 +28305,10 @@ de Jouy-en-Josas, France.
 See:
  ShapeLabelObject , RelabelComponentImageFilter
 
+See:
  itk::simple::RelabelLabelMapFilter for the procedural interface
 
+See:
  itk::RelabelLabelMapFilter for the Doxygen on the original ITK class.
 
 
@@ -27944,8 +28390,10 @@ This implementation was taken from the Insight Journal paper: https://hdl.handle
 See:
  HistogramThresholdImageFilter
 
+See:
  itk::simple::RenyiEntropyThreshold for the procedural interface
 
+See:
  itk::RenyiEntropyThresholdImageFilter for the Doxygen on the original
 ITK class.
 
@@ -28333,6 +28781,7 @@ Rescale the intensity values of an image to a specified range
 See:
  itk::simple::RescaleIntensity for the procedural interface
 
+See:
  itk::RescaleIntensityImageFilter for the Doxygen on the original ITK
 class.
 
@@ -28420,12 +28869,16 @@ de Jouy-en-Josas, France
 See:
  IterativeDeconvolutionImageFilter
 
+See:
  LandweberDeconvolutionImageFilter
 
+See:
  ProjectedLandweberDeconvolutionImageFilter
 
+See:
  itk::simple::RichardsonLucyDeconvolution for the procedural interface
 
+See:
  itk::RichardsonLucyDeconvolutionImageFilter for the Doxygen on the
 original ITK class.
 
@@ -28781,6 +29234,7 @@ Simulation\". https://hdl.handle.net/10380/3158
 See:
  itk::simple::SaltAndPepperNoise for the procedural interface
 
+See:
  itk::SaltAndPepperNoiseImageFilter for the Doxygen on the original ITK
 class.
 
@@ -28868,6 +29322,7 @@ Single-phase Chan And Vese Dense Field Level Set Segmentation
 See:
  itk::simple::ScalarChanAndVeseDenseLevelSet for the procedural interface
 
+See:
  itk::ScalarChanAndVeseDenseLevelSetImageFilter for the Doxygen on the
 original ITK class.
 
@@ -29038,6 +29493,7 @@ Label connected components in a grayscale image
 See:
  itk::simple::ScalarConnectedComponent for the procedural interface
 
+See:
  itk::ScalarConnectedComponentImageFilter for the Doxygen on the
 original ITK class.
 
@@ -29126,10 +29582,13 @@ ordering the labels by their relative size in number of pixels.
 See:
  Image
 
+See:
  ImageKmeansModelEstimator
 
+See:
  KdTreeBasedKmeansEstimator, WeightedCentroidKdTreeGenerator, KdTree
 
+See:
  RelabelImageFilter
 Wiki Examples:
 
@@ -29139,6 +29598,7 @@ Cluster the pixels in a greyscale image
 See:
  itk::simple::ScalarImageKmeans for the procedural interface
 
+See:
  itk::ScalarImageKmeansImageFilter for the Doxygen on the original ITK
 class.
 
@@ -29266,6 +29726,7 @@ Apply a color map to an image
 See:
  itk::simple::ScalarToRGBColormap for the procedural interface
 
+See:
  itk::ScalarToRGBColormapImageFilter for the Doxygen on the original
 ITK class.
 
@@ -29584,8 +30045,10 @@ This implementation was taken from the Insight Journal paper: https://hdl.handle
 See:
  HistogramThresholdImageFilter
 
+See:
  itk::simple::ShanbhagThreshold for the procedural interface
 
+See:
  itk::ShanbhagThresholdImageFilter for the Doxygen on the original ITK
 class.
 
@@ -29780,12 +30243,16 @@ Analysis and Machine Intelligence, Vol 17, No. 2, pp 158-174, February
 See:
  SegmentationLevelSetImageFilter
 
+See:
  ShapeDetectionLevelSetFunction
 
+See:
  SparseFieldLevelSetImageFilter
 
+See:
  itk::simple::ShapeDetectionLevelSet for the procedural interface
 
+See:
  itk::ShapeDetectionLevelSetImageFilter for the Doxygen on the original
 ITK class.
 
@@ -29904,6 +30371,7 @@ and max of the pixel type.
 See:
  itk::simple::ShiftScale for the procedural interface
 
+See:
  itk::ShiftScaleImageFilter for the Doxygen on the original ITK class.
 
 
@@ -30021,6 +30489,7 @@ Simulation\". https://hdl.handle.net/10380/3158
 See:
  itk::simple::ShotNoise for the procedural interface
 
+See:
  itk::ShotNoiseImageFilter for the Doxygen on the original ITK class.
 
 
@@ -30120,6 +30589,7 @@ Shrink an image
 See:
  itk::simple::Shrink for the procedural interface
 
+See:
  itk::ShrinkImageFilter for the Doxygen on the original ITK class.
 
 
@@ -30207,6 +30677,7 @@ Pass image pixels through a sigmoid function
 See:
  itk::simple::Sigmoid for the procedural interface
 
+See:
  itk::SigmoidImageFilter for the Doxygen on the original ITK class.
 
 
@@ -30315,8 +30786,10 @@ filter is N-dimensional.
 See:
  itkDanielssonDistanceMapImageFilter
 
+See:
  itk::simple::SignedDanielssonDistanceMap for the procedural interface
 
+See:
  itk::SignedDanielssonDistanceMapImageFilter for the Doxygen on the
 original ITK class.
 
@@ -30460,6 +30933,7 @@ Analysis and Machine Intelligence, 25(2): 265-270, 2003.
 See:
  itk::simple::SignedMaurerDistanceMap for the procedural interface
 
+See:
  itk::SignedMaurerDistanceMapImageFilter for the Doxygen on the
 original ITK class.
 
@@ -30822,14 +31296,19 @@ The neighborhood \"radius\" is set thanks to the radius params.
 See:
  Image
 
+See:
  Neighborhood
 
+See:
  NeighborhoodOperator
 
+See:
  NeighborhoodIterator
 
+See:
  itk::simple::SimpleContourExtractor for the procedural interface
 
+See:
  itk::SimpleContourExtractorImageFilter for the Doxygen on the original
 ITK class.
 
@@ -30958,6 +31437,7 @@ Compute the sine of each pixel.
 See:
  itk::simple::Sin for the procedural interface
 
+See:
  itk::SinImageFilter for the Doxygen on the original ITK class.
 
 
@@ -31003,6 +31483,7 @@ Destructor
 See:
  itk::simple::Slice for the procedural interface
 
+See:
  itk::SliceImageFilter for the Doxygen on the original ITK class.
 
 
@@ -31092,6 +31573,7 @@ Gaussian smoothing that works with image adaptors
 See:
  itk::simple::SmoothingRecursiveGaussian for the procedural interface
 
+See:
  itk::SmoothingRecursiveGaussianImageFilter for the Doxygen on the
 original ITK class.
 
@@ -31191,12 +31673,16 @@ edge strength.
 See:
  ImageToImageFilter
 
+See:
  SobelOperator
 
+See:
  Neighborhood
 
+See:
  NeighborhoodOperator
 
+See:
  NeighborhoodIterator
 Wiki Examples:
 
@@ -31206,6 +31692,7 @@ SobelEdgeDetectionImageFilter
 See:
  itk::simple::SobelEdgeDetection for the procedural interface
 
+See:
  itk::SobelEdgeDetectionImageFilter for the Doxygen on the original ITK
 class.
 
@@ -31262,6 +31749,7 @@ Simulation\". https://hdl.handle.net/10380/3158
 See:
  itk::simple::SpeckleNoise for the procedural interface
 
+See:
  itk::SpeckleNoiseImageFilter for the Doxygen on the original ITK
 class.
 
@@ -31328,6 +31816,7 @@ The computations are performed using std::sqrt(x).
 See:
  itk::simple::Sqrt for the procedural interface
 
+See:
  itk::SqrtImageFilter for the Doxygen on the original ITK class.
 
 
@@ -31379,6 +31868,7 @@ Square every pixel in an image
 See:
  itk::simple::Square for the procedural interface
 
+See:
  itk::SquareImageFilter for the Doxygen on the original ITK class.
 
 
@@ -31455,6 +31945,7 @@ Compute the squared difference of corresponding pixels in two images
 See:
  itk::simple::SquaredDifference for the procedural interface
 
+See:
  itk::SquaredDifferenceImageFilter for the Doxygen on the original ITK
 class.
 
@@ -31519,22 +32010,31 @@ de Jouy-en-Josas, France.
 See:
  ProjectionImageFilter
 
+See:
  MedianProjectionImageFilter
 
+See:
  MeanProjectionImageFilter
 
+See:
  SumProjectionImageFilter
 
+See:
  MeanProjectionImageFilter
 
+See:
  MaximumProjectionImageFilter
 
+See:
  MinimumProjectionImageFilter
 
+See:
  BinaryProjectionImageFilter
 
+See:
  itk::simple::StandardDeviationProjection for the procedural interface
 
+See:
  itk::StandardDeviationProjectionImageFilter for the Doxygen on the
 original ITK class.
 
@@ -31732,6 +32232,7 @@ Subtract a constant from every pixel in an image
 See:
  itk::simple::Subtract for the procedural interface
 
+See:
  itk::SubtractImageFilter for the Doxygen on the original ITK class.
 
 
@@ -31795,22 +32296,31 @@ de Jouy-en-Josas, France.
 See:
  ProjectionImageFilter
 
+See:
  MedianProjectionImageFilter
 
+See:
  MeanProjectionImageFilter
 
+See:
  MeanProjectionImageFilter
 
+See:
  MaximumProjectionImageFilter
 
+See:
  MinimumProjectionImageFilter
 
+See:
  BinaryProjectionImageFilter
 
+See:
  StandardDeviationProjectionImageFilter
 
+See:
  itk::simple::SumProjection for the procedural interface
 
+See:
  itk::SumProjectionImageFilter for the Doxygen on the original ITK
 class.
 
@@ -31907,10 +32417,13 @@ deformation field type all have the same number of dimensions.
 See:
  SymmetricForcesDemonsRegistrationFunction
 
+See:
  DemonsRegistrationFilter
 
+See:
  DemonsRegistrationFunction
 
+See:
  itk::SymmetricForcesDemonsRegistrationFilter for the Doxygen on the
 original ITK class.
 
@@ -32166,6 +32679,7 @@ The computations are performed using std::tan(x).
 See:
  itk::simple::Tan for the procedural interface
 
+See:
  itk::TanImageFilter for the Doxygen on the original ITK class.
 
 
@@ -32215,6 +32729,7 @@ by the C++ defaults.
 See:
  itk::simple::TernaryAdd for the procedural interface
 
+See:
  itk::TernaryAddImageFilter for the Doxygen on the original ITK class.
 
 
@@ -32264,6 +32779,7 @@ by the C++ defaults.
 See:
  itk::simple::TernaryMagnitude for the procedural interface
 
+See:
  itk::TernaryMagnitudeImageFilter for the Doxygen on the original ITK
 class.
 
@@ -32314,6 +32830,7 @@ by the C++ defaults.
 See:
  itk::simple::TernaryMagnitudeSquared for the procedural interface
 
+See:
  itk::TernaryMagnitudeSquaredImageFilter for the Doxygen on the
 original ITK class.
 
@@ -32387,6 +32904,7 @@ Threshold an image
 See:
  itk::simple::Threshold for the procedural interface
 
+See:
  itk::ThresholdImageFilter for the Doxygen on the original ITK class.
 
 
@@ -32510,6 +33028,7 @@ list serve for archival purposes.
 See:
  itk::simple::ThresholdMaximumConnectedComponents for the procedural interface
 
+See:
  itk::ThresholdMaximumConnectedComponentsImageFilter for the Doxygen on
 the original ITK class.
 
@@ -32706,12 +33225,16 @@ values affect the segmentation.
 See:
  SegmentationLevelSetImageFilter
 
+See:
  ThresholdSegmentationLevelSetFunction ,
 
+See:
  SparseFieldLevelSetImageFilter
 
+See:
  itk::simple::ThresholdSegmentationLevelSet for the procedural interface
 
+See:
  itk::ThresholdSegmentationLevelSetImageFilter for the Doxygen on the
 original ITK class.
 
@@ -32852,6 +33375,7 @@ de Jouy-en-Josas, France
 See:
  itk::simple::TikhonovDeconvolution for the procedural interface
 
+See:
  itk::TikhonovDeconvolutionImageFilter for the Doxygen on the original
 ITK class.
 
@@ -33226,6 +33750,7 @@ Marius Staring, Leiden University Medical Center, The Netherlands.
 See:
  itk::simple::TransformToDisplacementFieldFilter for the procedural interface
 
+See:
  itk::TransformToDisplacementFieldFilter for the Doxygen on the
 original ITK class.
 
@@ -33390,8 +33915,10 @@ This implementation was taken from the Insight Journal paper: https://hdl.handle
 See:
  HistogramThresholdImageFilter
 
+See:
  itk::simple::TriangleThreshold for the procedural interface
 
+See:
  itk::TriangleThresholdImageFilter for the Doxygen on the original ITK
 class.
 
@@ -33526,6 +34053,7 @@ Computes the negative of each pixel.
 See:
  itk::simple::UnaryMinus for the procedural interface
 
+See:
  itk::UnaryFunctorImageFilter for the Doxygen on the original ITK
 class.
 
@@ -33586,8 +34114,10 @@ Australia.
 See:
  ValuedRegionalMinimaImageFilter
 
+See:
  ValuedRegionalExtremaImageFilter
 
+See:
  HMinimaImageFilter
 Wiki Examples:
 
@@ -33597,6 +34127,7 @@ ValuedRegionalMaximaImageFilter
 See:
  itk::simple::ValuedRegionalMaxima for the procedural interface
 
+See:
  itk::ValuedRegionalMaximaImageFilter for the Doxygen on the original
 ITK class.
 
@@ -33686,6 +34217,7 @@ Australia.
 See:
  ValuedRegionalMaximaImageFilter , ValuedRegionalExtremaImageFilter ,
 
+See:
  HMinimaImageFilter
 Wiki Examples:
 
@@ -33695,6 +34227,7 @@ ValuedRegionalMinimaImageFilter
 See:
  itk::simple::ValuedRegionalMinima for the procedural interface
 
+See:
  itk::ValuedRegionalMinimaImageFilter for the Doxygen on the original
 ITK class.
 
@@ -33796,6 +34329,7 @@ may be adjusted to contain the seed point's intensity.
 See:
  itk::simple::VectorConfidenceConnected for the procedural interface
 
+See:
  itk::VectorConfidenceConnectedImageFilter for the Doxygen on the
 original ITK class.
 
@@ -33953,6 +34487,7 @@ of phase are similar. Assumes that vectors are normalized.
 See:
  itk::simple::VectorConnectedComponent for the procedural interface
 
+See:
  itk::VectorConnectedComponentImageFilter for the Doxygen on the
 original ITK class.
 
@@ -34044,6 +34579,7 @@ Extract a component/channel of a vector image
 See:
  itk::simple::VectorIndexSelectionCast for the procedural interface
 
+See:
  itk::VectorIndexSelectionCastImageFilter for the Doxygen on the
 original ITK class.
 
@@ -34132,6 +34668,7 @@ magnitude image
 See:
  itk::simple::VectorMagnitude for the procedural interface
 
+See:
  itk::VectorMagnitudeImageFilter for the Doxygen on the original ITK
 class.
 
@@ -34322,18 +34859,25 @@ pixel.
 See:
  Image
 
+See:
  VotingBinaryImageFilter
 
+See:
  VotingBinaryIterativeHoleFillingImageFilter
 
+See:
  Neighborhood
 
+See:
  NeighborhoodOperator
 
+See:
  NeighborhoodIterator
 
+See:
  itk::simple::VotingBinaryHoleFilling for the procedural interface
 
+See:
  itk::VotingBinaryHoleFillingImageFilter for the Doxygen on the
 original ITK class.
 
@@ -34436,14 +34980,19 @@ Pixels which are not Foreground or Background will remain unchanged.
 See:
  Image
 
+See:
  Neighborhood
 
+See:
  NeighborhoodOperator
 
+See:
  NeighborhoodIterator
 
+See:
  itk::simple::VotingBinary for the procedural interface
 
+See:
  itk::VotingBinaryImageFilter for the Doxygen on the original ITK
 class.
 
@@ -34590,18 +35139,25 @@ one iteration is taken as the input image for the next iteration.
 See:
  Image
 
+See:
  VotingBinaryImageFilter
 
+See:
  VotingBinaryHoleFillingImageFilter
 
+See:
  Neighborhood
 
+See:
  NeighborhoodOperator
 
+See:
  NeighborhoodIterator
 
+See:
  itk::simple::VotingBinaryIterativeHoleFilling for the procedural interface
 
+See:
  itk::VotingBinaryIterativeHoleFillingImageFilter for the Doxygen on
 the original ITK class.
 
@@ -34789,6 +35345,7 @@ Warp one image to another using manually specified landmarks
 See:
  itk::simple::Warp for the procedural interface
 
+See:
  itk::WarpImageFilter for the Doxygen on the original ITK class.
 
 
@@ -34930,6 +35487,7 @@ de Jouy-en-Josas, France.
 See:
  itk::simple::WhiteTopHat for the procedural interface
 
+See:
  itk::WhiteTopHatImageFilter for the Doxygen on the original ITK class.
 
 
@@ -35068,6 +35626,7 @@ Cory Quammen, The University of North Carolina at Chapel Hill
 See:
  itk::simple::WienerDeconvolution for the procedural interface
 
+See:
  itk::WienerDeconvolutionImageFilter for the Doxygen on the original
 ITK class.
 
@@ -35186,6 +35745,7 @@ Pad an image by wrapping
 See:
  itk::simple::WrapPad for the procedural interface
 
+See:
  itk::WrapPadImageFilter for the Doxygen on the original ITK class.
 
 
@@ -35269,6 +35829,7 @@ Binary XOR (exclusive OR) two images
 See:
  itk::simple::Xor for the procedural interface
 
+See:
  itk::XorImageFilter for the Doxygen on the original ITK class.
 
 
@@ -35338,8 +35899,10 @@ This implementation was taken from the Insight Journal paper: https://hdl.handle
 See:
  HistogramThresholdImageFilter
 
+See:
  itk::simple::YenThreshold for the procedural interface
 
+See:
  itk::YenThresholdImageFilter for the Doxygen on the original ITK
 class.
 
@@ -35503,12 +36066,16 @@ output image.
 See:
  DiscreteGaussianImageFilter
 
+See:
  LaplacianImageFilter
 
+See:
  ZeroCrossingImageFilter
 
+See:
  itk::simple::ZeroCrossingBasedEdgeDetection for the procedural interface
 
+See:
  itk::ZeroCrossingBasedEdgeDetectionImageFilter for the Doxygen on the
 original ITK class.
 
@@ -35637,10 +36204,13 @@ given to all other pixels.
 See:
  Image
 
+See:
  Neighborhood
 
+See:
  NeighborhoodOperator
 
+See:
  NeighborhoodIterator
 Wiki Examples:
 
@@ -35650,6 +36220,7 @@ Find zero crossings in a signed image
 See:
  itk::simple::ZeroCrossing for the procedural interface
 
+See:
  itk::ZeroCrossingImageFilter for the Doxygen on the original ITK
 class.
 
@@ -35740,8 +36311,10 @@ de Jouy-en-Josas, France.
 See:
  WrapPadImageFilter , MirrorPadImageFilter , ConstantPadImageFilter , ZeroFluxNeumannBoundaryCondition
 
+See:
  itk::simple::ZeroFluxNeumannPad for the procedural interface
 
+See:
  itk::ZeroFluxNeumannPadImageFilter for the Doxygen on the original ITK
 class.
 
@@ -39079,9 +39652,8 @@ Note that when reading a series of images that have meta-data
 associated with them (e.g. a DICOM series) the resulting image will
 have an empty meta-data dictionary. It is possible to programmatically
 add a meta-data dictionary to the compounded image by reading in one
-or more images from the series using the ImageFileReader class,
-analyzing the meta-dictionary associated with each of those images and
-creating one that is relevant for the compounded image.
+or more images from the series using the ImageFileReader class, analyzing the meta-dictionary associated with each of those
+images and creating one that is relevant for the compounded image.
 
 
 See:
@@ -40217,10 +40789,13 @@ type.
 See:
  PixelIDToImageType
 
+See:
  ImageTypeToPixelID
 
+See:
  ImageTypeToPixelIDValue
 
+See:
  PixelIDToPixelIDValue
 
 
@@ -40261,10 +40836,13 @@ pixel ID.
 See:
  BasicPixelID
 
+See:
  VectorPixelID
 
+See:
  LabelPixelID
 
+See:
  ImageTypeToPixelIDValue
 
 
@@ -40317,6 +40895,11 @@ C++ includes: sitkPixelIDTokens.h
 ";
 
 
+%feature("docstring") itk::simple::IsInstantiated< itk::LabelMap<  itk::LabelObject< TLabelType, VImageDimension > >, 0 > "
+C++ includes: sitkPixelIDTokens.h
+";
+
+
 %feature("docstring") itk::simple::IsInstantiated< itk::LabelMap< itk::LabelObject< TLabelType, VImageDimension > >, 0 > "
 C++ includes: sitkPixelIDTokens.h
 ";
@@ -40333,6 +40916,11 @@ C++ includes: sitkPixelIDTokens.h
 
 
 %feature("docstring") itk::simple::IsLabel< LabelPixelID< TPixelType > > "
+C++ includes: sitkPixelIDTokens.h
+";
+
+
+%feature("docstring") itk::simple::IsLabel< itk::LabelMap<  itk::LabelObject< TLabelType, VImageDimension > > > "
 C++ includes: sitkPixelIDTokens.h
 ";
 
@@ -40371,10 +40959,13 @@ type.
 See:
  PixelIDToImageType
 
+See:
  ImageTypeToPixelID
 
+See:
  ImageTypeToPixelIDValue
 
+See:
  PixelIDToPixelIDValue
 
 
@@ -40394,10 +40985,13 @@ is the \"itk image type\" of the pixel ID.
 See:
  BasicPixelID
 
+See:
  VectorPixelID
 
+See:
  LabelPixelID
 
+See:
  ImageTypeToPixelIDValue
 
 
@@ -40449,10 +41043,13 @@ type.
 See:
  PixelIDToImageType
 
+See:
  ImageTypeToPixelID
 
+See:
  ImageTypeToPixelIDValue
 
+See:
  PixelIDToPixelIDValue
 
 
