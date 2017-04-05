@@ -6,8 +6,9 @@ export SRC_DIR="/tmp/SimpleITK"
 export BLD_DIR="/tmp/SimpleITK-build"
 export OUT_DIR="/work/io"
 
-PYTHON_VERSIONS=$(ls /opt/python | sed -e 's/cp2[0-6][^ ]\+ \?//g')
-echo "PYTHON_VERSIONS:${PYTHON_VERSIONS}"
+SIMPLEITK_GIT_TAG=${SIMPLEITK_GIT_TAG:-v1.0rc3}
+
+PYTHON_VERSIONS=${PYTHON_VERSIONS:-$(ls /opt/python | sed -e 's/cp2[0-6][^ ]\+ \?//g')}
 
 NPROC=$(grep -c processor /proc/cpuinfo)
 export MAKEFLAGS="-j ${NPROC}"
@@ -15,8 +16,10 @@ export MAKEFLAGS="-j ${NPROC}"
 
 function build_simpleitk {
 
+    echo "SIMPLEITK_GIT_TAG: ${SIMPLEITK_GIT_TAG}"
+
     git clone https://github.com/SimpleITK/SimpleITK.git ${SRC_DIR} &&
-    (cd ${SRC_DIR}  && git checkout v1.0rc3  ) &&
+    (cd ${SRC_DIR}  && git checkout ${SIMPLEITK_GIT_TAG}  ) &&
     rm -rf ${BLD_DIR} &&
     mkdir -p ${BLD_DIR} && cd ${BLD_DIR} &&
     cmake \
