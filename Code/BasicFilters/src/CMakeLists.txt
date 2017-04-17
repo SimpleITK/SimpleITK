@@ -130,10 +130,9 @@ foreach( itk_module ${module_vars} )
 
   # cmake >= 3.3
   # if( ${itk_module} IN_LIST ITK_MODULES_ENABLED)
- find_package(ITK QUIET COMPONENTS ${itk_module})
   list (FIND ITK_MODULES_ENABLED ${itk_module} _index)
   list (LENGTH SimpleITKBasicFiltersGeneratedSource_${itk_module} _len)
-  if (ITK_FOUND AND ${_len} GREATER 0)
+  if (${_index} GREATER -1 AND ${_len} GREATER 0)
     add_filter_library( SimpleITK_${itk_module}
                         SimpleITKBasicFiltersGeneratedSource_${itk_module}
                         itk_module )
