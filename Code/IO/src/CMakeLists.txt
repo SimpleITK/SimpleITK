@@ -17,7 +17,7 @@ foreach( mod IN LISTS ITK_MODULES_ENABLED)
   endif()
 endforeach()
 
-find_package(ITK COMPONENTS ${use_itk_modules} )
+find_package(ITK REQUIRED COMPONENTS ${use_itk_modules} )
 include(${ITK_USE_FILE})
 add_library ( SimpleITKIO ${SimpleITKIOSource} )
 sitk_target_use_itk ( SimpleITKIO PRIVATE ${use_itk_modules} )
