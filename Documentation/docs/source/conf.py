@@ -85,7 +85,9 @@ sphinx_gallery_conf = {
     # path to your examples scripts
     'examples_dirs': ['user_guide_source'],
     # path where to save gallery generated examples
-    'gallery_dirs': ['user_guide']}
+    'gallery_dirs': ['user_guide'],
+    'filename_pattern': 'guide.py'
+}
 
 # Copy rst in source dirs to build dir
 for i in range(len(sphinx_gallery_conf['examples_dirs'])):
