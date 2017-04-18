@@ -191,9 +191,19 @@ texinfo_documents = [
      'Miscellaneous'),
 ]
 
+# -- Create zip for download myshow, downloaddata, manifest.json ----------
+import zipfile
+start_path = 'user_guide_source/'
+zipf = zipfile.ZipFile('_static/sitk_download_plot.zip', 'w',
+                       zipfile.ZIP_DEFLATED)
+for fname in ['myshow.py', 'downloaddata.py', 'Data/manifest.json']:
+    zipf.write(os.path.join(start_path, fname), fname)
+
+zipf.close()
 
 # -- Custom directives -------------------------------------------
 from custom_directives import GalleryItemDirective
 def setup(app):
     # Custom directives
     app.add_directive('galleryitem', GalleryItemDirective)
+

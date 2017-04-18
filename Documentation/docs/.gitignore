@@ -6,8 +6,8 @@ source/user_guide_source/Data/*
 !source/user_guide_source/Data/manifest.json
 
 #builds
-_build/
-_static/thumbs/
+source/_static/thumbs/
+source/_static/*.zip
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
