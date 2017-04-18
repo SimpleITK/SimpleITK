@@ -2,10 +2,8 @@
 user_guide
 
 # data things
-beginner_source/hymenoptera_data
-intermediate_source/data/
-advanced_source/images/
-*data.zip
+source/user_guide_source/Data/*
+!source/user_guide_source/Data/manifest.json
 
 #builds
 _build/
