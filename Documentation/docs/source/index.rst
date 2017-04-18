@@ -20,6 +20,7 @@ Contents
 
    overview
    installation
+   building/index
    faq
 
 
