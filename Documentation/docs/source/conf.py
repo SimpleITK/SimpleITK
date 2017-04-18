@@ -193,3 +193,7 @@ texinfo_documents = [
 
 
 # -- Custom directives -------------------------------------------
+from custom_directives import GalleryItemDirective
+def setup(app):
+    # Custom directives
+    app.add_directive('galleryitem', GalleryItemDirective)

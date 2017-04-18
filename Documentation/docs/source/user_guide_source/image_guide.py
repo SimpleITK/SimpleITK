@@ -79,7 +79,7 @@ image_RGB = sitk.Image([128,64], sitk.sitkVectorUInt8, 3)
 # The unique feature of SimpleITK (derived from ITK) as a toolkit for image manipulation and analysis is that it views *images as physical objects occupying a bounded region in physical space*. 
 # In addition images can have different spacing between pixels along each axis, and the axes are not necessarily orthogonal. The following figure illustrates these concepts.
 # 
-# .. image:: /images/ImageOriginAndSpacing.png
+# .. image:: /_static/images/ImageOriginAndSpacing.png
 # 
 # Each :cpp:class:`Image <itk::simple::Image>` has following properties:
 # 

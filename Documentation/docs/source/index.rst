@@ -21,6 +21,7 @@ Contents
    overview
    installation
    building/index
+   user_guide
    faq
 
 
