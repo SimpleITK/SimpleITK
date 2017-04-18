@@ -33,3 +33,15 @@ Visualizing Images
 .. raw:: html
 
     <div style='clear:both'></div>
+
+Transforms
+==========
+
+.. galleryitem:: /user_guide/transforms/interpolation_guide.py
+.. galleryitem:: /user_guide/transforms/transforms_guide.py
+.. galleryitem:: /user_guide/transforms/moretransforms_guide.py
+
+
+.. raw:: html
+
+    <div style='clear:both'></div>
