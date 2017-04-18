@@ -16,10 +16,8 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
-
+import os
+import sys
 
 # -- General configuration ------------------------------------------------
 
@@ -30,9 +28,13 @@
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
+
+# add breathe
 extensions = [
-#   'sphinx.ext.imgmath',
-    'sphinx.ext.ifconfig']
+    "sphinx.ext.mathjax",
+    'sphinx.ext.ifconfig',
+    "sphinx.ext.todo"]
+
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -67,11 +69,6 @@ release = u'1.0rc1'
 # Usually you set "language" from the command line for these cases.
 language = None
 
-# List of patterns, relative to source directory, that match files and
-# directories to ignore when looking for source files.
-# This patterns also effect to html_static_path and html_extra_path
-exclude_patterns = []
-
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
 
@@ -97,7 +94,7 @@ html_theme = 'alabaster'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
-html_logo= '../../Images/simpleitk_logo.png'
+html_logo = '../../Images/simpleitk_logo.png'
 
 
 # -- Options for HTMLHelp output ------------------------------------------
@@ -155,3 +152,6 @@ texinfo_documents = [
      author, 'SimpleITK', 'One line description of project.',
      'Miscellaneous'),
 ]
+
+
+# -- Custom directives -------------------------------------------
