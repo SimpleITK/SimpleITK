@@ -20,7 +20,7 @@ endif()
 target_include_directories ( SimpleITKRegistration
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/Code/Registration/include>
-    $<INSTALL_INTERFACE:include>
+    $<INSTALL_INTERFACE:${SimpleITK_INSTALL_INCLUDE_DIR}>
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR} )
 

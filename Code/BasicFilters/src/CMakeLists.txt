@@ -29,7 +29,7 @@ function(add_filter_library library_name src_list_var itk_module_list_var)
     PUBLIC
       $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/Code/BasicFilters/include>
       $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/Code/BasicFilters/include>
-      $<INSTALL_INTERFACE:include>
+      $<INSTALL_INTERFACE:${SimpleITK_INSTALL_INCLUDE_DIR}>
     PRIVATE
       ${CMAKE_CURRENT_SOURCE_DIR} )
   if(BUILD_SHARED_LIBS)
@@ -77,7 +77,7 @@ endif()
 target_include_directories( SimpleITKBasicFilters0
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/Code/BasicFilters/include>
-    $<INSTALL_INTERFACE:include>
+    $<INSTALL_INTERFACE:${SimpleITK_INSTALL_INCLUDE_DIR}>
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR} )
 target_compile_options( SimpleITKBasicFilters0
