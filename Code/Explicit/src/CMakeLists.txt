@@ -37,7 +37,7 @@ target_include_directories ( SimpleITKExplicit
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/Code/Explicit/include>
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/Code/Common/include>
     $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/Code/Common/include>
-    $<INSTALL_INTERFACE:include> )
+    $<INSTALL_INTERFACE:${SimpleITK_INSTALL_INCLUDE_DIR}> )
 target_compile_definitions( SimpleITKExplicit
   PUBLIC
     SITK_USE_EXPLICITITK )
