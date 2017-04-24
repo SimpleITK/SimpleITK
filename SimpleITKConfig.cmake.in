@@ -58,13 +58,13 @@ set(SimpleITK_LIBRARY_DIRS "${ITK_LIBRARY_DIRS}")
 # The location of the UseITK.cmake file.
 set(SimpleITK_USE_FILE "${_SimpleITKConfig_DIR}/UseSimpleITK.cmake")
 
-# Find the ITKTargets.cmake file (fallback code that needs to stay here only
-# temporarily - eventually ITK will export this value and this chunk can
-# disappear...)
-set(ITK_CONFIG_TARGETS_FILE "@ITK_CONFIG_TARGETS_FILE@")
+# Locate ITK for required targets
 if(NOT ITK_CONFIG_TARGETS_FILE)
-  if(EXISTS "@ITK_DIR@/ITKTargets.cmake")
+  if("@SimpleITKConfig_TREE@" STREQUAL "build")
     set(ITK_CONFIG_TARGETS_FILE "@ITK_DIR@/ITKTargets.cmake")
+  else()
+    # TODO: Add required ITK packages
+    find_package(ITK "@ITK_VERSION_MAJOR@.@ITK_VERSION_MINOR@" EXACT REQUIRED)
   endif()
 endif()
 
