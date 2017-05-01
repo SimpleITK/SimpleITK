@@ -57,7 +57,7 @@
       "tag" : "short",
       "description" : "Simply run with a short image with default settings",
       "settings" : [],
-      "tolerance" : "0.4",
+      "tolerance" : "0.5",
       "inputs" : [
         "Input/RA-Slice-Short.nrrd"
       ]
