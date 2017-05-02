@@ -19,8 +19,8 @@ if(NOT PCRE_DIR)
   #  PCRE (Perl Compatible Regular Expressions)
   #
 
-  set(PCRE_TARGET_VERSION 8.37)
-  set(PCRE_DOWNLOAD_SOURCE_HASH "6e0cc6d1bdac7a4308151f9b3571b86e")
+  set(PCRE_TARGET_VERSION 8.40)
+  set(PCRE_DOWNLOAD_SOURCE_HASH "890c808122bd90f398e6bc40ec862102")
   sitkSourceDownload(PCRE_URL "pcre-${PCRE_TARGET_VERSION}.tar.gz" ${PCRE_DOWNLOAD_SOURCE_HASH})
 
 
