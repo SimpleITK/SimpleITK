@@ -30,6 +30,10 @@ set_source_files_properties(${swig_generated_file_fullname} PROPERTIES COMPILE_F
 # set the output directory for the R library to the binary packaging location
 set_target_properties( ${SWIG_MODULE_SimpleITK_TARGET_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Packaging/SimpleITK/src/)
 
+if (WIN32)
+	set_target_properties( ${SWIG_MODULE_SimpleITK_TARGET_NAME} PROPERTIES LINK_FLAGS "-s -shared -static-libgcc -static-libstdc++ -static -lpthread" )
+endif()
+
 sitk_strip_target( ${SWIG_MODULE_SimpleITK_TARGET_NAME} )
 set(SWIG_MODULE_SimpleITKR_TARGET_NAME "${SWIG_MODULE_SimpleITK_TARGET_NAME}")
 
@@ -98,6 +102,6 @@ add_custom_command( TARGET ${SWIG_MODULE_SimpleITK_TARGET_NAME}
   COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/R_libs
   COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/SimpleITK.R ${CMAKE_CURRENT_BINARY_DIR}/Packaging/SimpleITK/R/
   # install for running tests and create binary package
-  COMMAND ${R_COMMAND} CMD INSTALL --build ${CMAKE_CURRENT_BINARY_DIR}/Packaging/SimpleITK --library=${CMAKE_CURRENT_BINARY_DIR}/R_libs
+  COMMAND ${R_COMMAND} CMD INSTALL --build ${CMAKE_CURRENT_BINARY_DIR}/Packaging/SimpleITK --library=${CMAKE_CURRENT_BINARY_DIR}/R_libs --no-multiarch
   COMMENT "Installing R package for testing and building binary version for distribution"
   )
