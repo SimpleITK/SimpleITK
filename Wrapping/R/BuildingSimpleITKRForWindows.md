@@ -52,6 +52,8 @@ pacman -S zip git  base-devel mingw-w64-x86_64-ninja \
 
 ```
 
+Add c:\\msys64\\mingw64\\bin to the user path (windows system settings) and restart terminal.
+
 ## Fetch SimpleITK
 
 Note that sometimes there are errors resulting from long path names. This
@@ -76,7 +78,8 @@ RR=$(which R)
 R64=$(dirname $RR)/x64/R.exe
 R64DLL=$(dirname $R64)/R.dll
 
-cmake -G Ninja ../SimpleITK/SuperBuild -DCMAKE_CXX_FLAGS="--param ggc-min-expand=0 --param ggc-min-heapsize=2648000" -DR_COMMAND=${R64} -DR_LIBRARY_BASE=${R64DLL} -DWRAP_R=ON
-
+cmake -G Ninja ../SimpleITK/SuperBuild \
+-DCMAKE_CXX_FLAGS="--param ggc-min-expand=0 --param ggc-min-heapsize=2648000" \
+-DR_COMMAND=${R64} -DR_LIBRARY_BASE=${R64DLL} -DWRAP_R=ON
 
 ```
