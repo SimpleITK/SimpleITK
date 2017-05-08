@@ -64,7 +64,7 @@ if(NOT ITK_CONFIG_TARGETS_FILE)
     set(ITK_CONFIG_TARGETS_FILE "@ITK_DIR@/ITKTargets.cmake")
   else()
     # TODO: Add required ITK packages
-    find_package(ITK "@ITK_VERSION_MAJOR@.@ITK_VERSION_MINOR@" EXACT REQUIRED)
+    find_package(ITK "@ITK_VERSION@" EXACT REQUIRED)
   endif()
 endif()
 
