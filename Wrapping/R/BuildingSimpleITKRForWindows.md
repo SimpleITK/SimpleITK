@@ -123,3 +123,17 @@ Start the build and wait a long time....
 ```bash
 ninja
 ```
+
+After a long wait there should be a binary package file:
+```bash
+ls SimpleITK-build/Wrapping/R/SimpleITK_1.0.zip
+```
+which can be installed using the "R->Packages->Install from local files" menu option.
+
+## Testing
+
+```bash
+
+cd SimpleITK-build
+ninja test
+```
