@@ -34,9 +34,6 @@ endforeach()
 
 list(APPEND ITK_VARS
   PYTHON_EXECUTABLE
-  PYTHON_INCLUDE_DIR
-  PYTHON_LIBRARY
-  PYTHON_DEBUG_LIBRARY
   )
 
 VariableListToCache( ITK_VARS  ep_itk_cache )
