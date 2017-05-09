@@ -12,7 +12,7 @@
     {
       "tag" : "defaults",
       "description" : "Test defaults",
-      "tolerance" : "0.001",
+      "tolerance" : "0.0015",
       "settings" : [],
       "inputs" : [
         "Input/RA-Slice-Float.nrrd",
