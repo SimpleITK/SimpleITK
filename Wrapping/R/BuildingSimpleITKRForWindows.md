@@ -5,11 +5,13 @@ usually used to build R and packages. However these compilers are relatively
 old and SimpleITK appears to break them. The symptoms are that linking
 of test drivers and libraries tends to run for days without progress.
 
-We've had success using the MSYS2 suite as an alternative. Specifically the _mingw_ compilers
-that are supplied with MSYS2. This is important and requires an additional path setting
-to make sure the correct ones are used. The default MSYS2 compilers are detected
-as cygwin by ITK macros, leading to failures. Also, the RTools package is derived from mingw,
-so hopefully this is the right way to go.
+We've had success using the MSYS2 suite as an
+alternative. Specifically the _mingw_ compilers that are supplied with
+MSYS2. This is important and may require an additional path setting to
+make sure the correct ones are used, if you have already installed
+other compilers under MSYS2.  The default MSYS2 compilers are detected
+as cygwin by ITK macros, leading to failures. Also, the RTools package
+is derived from mingw, so hopefully this is the right way to go.
 
 The instructions below only build a 64bit version. Given the issues with
 the code size and linking issues it appears likely that a 32bit version will
@@ -56,7 +58,18 @@ pacman -S zip git  base-devel mingw-w64-x86_64-ninja \
 
 ```
 
-Add c:\\msys64\\mingw64\\bin to the user path (windows system settings) and restart terminal.
+Confirm that R is in the path:
+``` bash
+which R
+```
+
+MSYS2 default configuration appears to change sometimes, and one of the things that does is
+whether the windows path is inherited. Enable it by editing the startup file
+
+``` bash
+vim /c/msys64/msys2_shell.cmd
+```
+Remove a comment about 15 lines from the top: _set MSYS2_PATH_TYPE=inherit_
 
 ## Fetch SimpleITK
 
@@ -77,8 +90,6 @@ Now configure with cmake
 
 ```bash
 
-## check that we get the right compiler
-export PATH=/c/msys64/mingw64/bin:$PATH
 
 
 ## some hacks to set up paths to R
@@ -99,4 +110,16 @@ Confirm that cmake has found the right compiler
 grep CMAKE_CXX_COMPILER CMakeCache.txt
 ```
 
-Response should be C:\\msys64\\mingw64\\bin\\g++.exe.
+Response should be __C:/msys64/mingw64/bin/c++.exe__. Note the mingw64 component of the path
+
+If missing, try this:
+```bash
+## Do this and repeat the block above, if the compiler detected isn't the mingw64 one
+export PATH=/c/msys64/mingw64/bin:$PATH
+```
+
+Start the build and wait a long time....
+
+```bash
+ninja
+```
