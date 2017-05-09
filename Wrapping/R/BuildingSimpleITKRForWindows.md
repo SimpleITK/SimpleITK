@@ -22,7 +22,7 @@ be more trouble than it is worth.
 
 ## Install R
 
-[R](https://www.r-project.org/mirrors.html).
+Download the windows R installer from one of the [mirror sites](https://www.r-project.org/mirrors.html).
 
 ## Install MSYS2 64 bit
 
