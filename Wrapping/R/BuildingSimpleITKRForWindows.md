@@ -5,7 +5,11 @@ usually used to build R and packages. However these compilers are relatively
 old and SimpleITK appears to break them. The symptoms are that linking
 of test drivers and libraries tends to run for days without progress.
 
-We've had success using the MSYS2 suite as an alternative.
+We've had success using the MSYS2 suite as an alternative. Specifically the _mingw_ compilers
+that are supplied with MSYS2. This is important and requires an additional path setting
+to make sure the correct ones are used. The default MSYS2 compilers are detected
+as cygwin by ITK macros, leading to failures. Also, the RTools package is derived from mingw,
+so hopefully this is the right way to go.
 
 The instructions below only build a 64bit version. Given the issues with
 the code size and linking issues it appears likely that a 32bit version will
@@ -72,6 +76,11 @@ cd B
 Now configure with cmake
 
 ```bash
+
+## check that we get the right compiler
+export PATH=/c/msys64/mingw64/bin:$PATH
+
+
 ## some hacks to set up paths to R
 
 RR=$(which R)
@@ -80,6 +89,14 @@ R64DLL=$(dirname $R64)/R.dll
 
 cmake -G Ninja ../SimpleITK/SuperBuild \
 -DCMAKE_CXX_FLAGS="--param ggc-min-expand=0 --param ggc-min-heapsize=2648000" \
--DR_COMMAND=${R64} -DR_LIBRARY_BASE=${R64DLL} -DWRAP_R=ON
+-DR_COMMAND=${R64} -DR_LIBRARY_BASE=${R64DLL} -DWRAP_R=ON -DWRAP_DEFAULT=OFF
 
 ```
+
+Confirm that cmake has found the right compiler
+
+```bash
+grep CMAKE_CXX_COMPILER CMakeCache.txt
+```
+
+Response should be C:\\msys64\\mingw64\\bin\\g++.exe.
