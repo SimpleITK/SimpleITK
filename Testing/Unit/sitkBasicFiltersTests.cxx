@@ -684,10 +684,10 @@ TEST(BasicFilters,LandmarkBasedTransformInitializer) {
   EXPECT_EQ ( "LandmarkBasedTransformInitializerFilter", filter.GetName() );
 
   out = filter.Execute( sitk::Euler2DTransform() );
-  EXPECT_VECTOR_DOUBLE_NEAR(v3(0.0, 0.0, 0.0), out.GetParameters(), 1e-25);
+  EXPECT_VECTOR_DOUBLE_NEAR(v3(0.0, 0.0, 0.0), out.GetParameters(), 1e-15);
 
   out = filter.Execute( sitk::Similarity2DTransform() );
-  EXPECT_VECTOR_DOUBLE_NEAR(v4(1.0, 0.0, 0.0, 0.0), out.GetParameters(), 1e-25);
+  EXPECT_VECTOR_DOUBLE_NEAR(v4(1.0, 0.0, 0.0, 0.0), out.GetParameters(), 1e-15);
 
 
   EXPECT_ANY_THROW( filter.Execute( sitk::VersorTransform() ) );
