@@ -35,7 +35,10 @@ import textwrap
 import sys
 import types
 import os.path
+import getopt
 
+
+debug = 0
 
 def my_open_read(source):
     if hasattr(source, "read"):
@@ -90,6 +93,7 @@ class Doxy2SWIG:
 
         # flag to tell when we're inside a <simplesect> node with kind=="see".
         self.insideSee = False
+        self.printSee = False
 
     def generate(self):
         """Parses the file set in the initialization.  The resulting
@@ -175,16 +179,43 @@ class Doxy2SWIG:
            0.
 
         """
+        if debug:
+            print "Generic parse: ", node, node.__class__.__name__, node.tagName, self.pieces[-5:]
+
         npiece = 0
         if pad:
             npiece = len(self.pieces)
             if pad == 2:
                 self.add_text('\n')
+
+        if debug:
+            print len(node.childNodes), "children"
+            for n in node.childNodes:
+                print "child: ", n, n.__class__.__name__
+                if n.__class__.__name__ == "Element":
+                    print n.tagName
+
+        firstSee = True
         for n in node.childNodes:
+            if n.__class__.__name__ == "Element":
+                if n.tagName == "simplesect":
+                    kind = n.attributes['kind'].value
+                    if kind == "see":
+                        if debug:
+                            print "simplesect attributes:", n.attributes
+                        if firstSee:
+                            n.setAttribute("PrintSee", "1")
+                        firstSee = False
+                    else:
+                        firstSee = True
+                else:
+                    firstSee = True
             self.parse(n)
         if pad:
             if len(self.pieces) > npiece:
                 self.add_text('\n')
+        if debug:
+            print ""
 
     def space_parse(self, node):
         """ Only output a space if the last character outputed was not a new line.
@@ -323,6 +354,8 @@ class Doxy2SWIG:
             self.generic_parse(node)
 
     def do_simplesect(self, node):
+        if debug:
+            print "Simplesect"
         kind = node.attributes['kind'].value
         if kind in ('date', 'rcs', 'version'):
             pass
@@ -330,8 +363,11 @@ class Doxy2SWIG:
             self.add_text(['\n', 'WARNING:'])
             self.generic_parse(node)
         elif kind == 'see':
-            self.add_text('\n')
-            self.add_text('See:')
+            if node.getAttribute("PrintSee"):
+                if debug:
+                    print "Printing See"
+                self.add_text('\n')
+                self.add_text('See:')
             self.insideSee = True
             self.generic_parse(node)
             self.insideSee = False
@@ -729,8 +765,35 @@ def main(input, output):
     p.generate()
     p.write(output)
 
+def usage():
+    print ""
+    print ("doxy2swig.py [options] input.xml output.i")
+    print ""
+    print ("  -h, --help                  This message")
+    print ("  -d, --debug                 Debug")
+    print ""
+
+
 if __name__ == '__main__':
-    if len(sys.argv) != 3:
-        print (__doc__)
+    
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], "dh", [ "debug", "help" ] )
+    except getopt.GetoptError, err:
+        print (str(err))
+        usage()
+        sys.exit(2)
+
+    for o, a in opts:
+        if o in ("-d", "--debug"):
+            debug = debug + 1
+        elif o in ("-h", "--help"):
+            usage()
+            sys.exit()
+        else:
+            assert False, "unhandled options"
+
+    
+    if len(args) != 2:
+        usage()
         sys.exit(1)
-    main(sys.argv[1], sys.argv[2])
+    main(args[0], args[1])
