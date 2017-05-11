@@ -91,4 +91,4 @@ ExternalProject_Add(${proj}
 
 
 ExternalProject_Get_Property(ITK install_dir)
-set(ITK_DIR "${install_dir}/lib/cmake/ITK-4.11" )
+set(ITK_DIR "${install_dir}/lib/cmake/ITK-4.12" )
