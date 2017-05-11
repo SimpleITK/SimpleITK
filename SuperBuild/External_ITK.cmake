@@ -11,6 +11,15 @@ some platforms."
   mark_as_advanced(ITK_USE_64BITS_IDS)
 endif()
 
+if(NOT DEFINED ITK_BUILD_DEFAULT_MODULES)
+  set(ITK_BUILD_DEFAULT_MODULES ON)
+endif()
+
+if(NOT DEFINED Module_ITKReview)
+  set(Module_ITKReview ON)
+endif()
+
+
 get_cmake_property( _varNames VARIABLES )
 
 foreach (_varName ${_varNames})
@@ -25,9 +34,6 @@ endforeach()
 
 list(APPEND ITK_VARS
   PYTHON_EXECUTABLE
-  PYTHON_INCLUDE_DIR
-  PYTHON_LIBRARY
-  PYTHON_DEBUG_LIBRARY
   )
 
 VariableListToCache( ITK_VARS  ep_itk_cache )
@@ -80,8 +86,6 @@ ExternalProject_Add(${proj}
   -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
   -DITK_LEGACY_REMOVE:BOOL=ON
   -DITK_USE_KWSTYLE:BOOL=OFF
-  -DITK_BUILD_DEFAULT_MODULES:BOOL=ON
-  -DModule_ITKReview:BOOL=ON
   -DITK_USE_GIT_PROTOCOL:BOOL=${ITK_USE_GIT_PROTOCOL}
   BUILD_COMMAND ${BUILD_COMMAND_STRING}
   DEPENDS
