@@ -39,14 +39,8 @@ endmacro()
 # Setup the option for each language
 #
 set_QUIET( WRAP_LUA )
-if (CMAKE_VERSION VERSION_LESS "3")
-  find_package ( Lua51 ${_QUIET} )
-  if ( NOT LUA_FOUND )
-    find_package ( Lua50 ${_QUIET} )
-  endif()
-else()
-  find_package ( Lua ${_QUIET} )
-endif()
+find_package ( Lua ${_QUIET} )
+
 if ( LUA_FOUND )
   set( WRAP_LUA_DEFAULT ${WRAP_DEFAULT} )
 else()
