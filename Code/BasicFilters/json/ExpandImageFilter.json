@@ -5,7 +5,7 @@
   "number_of_inputs" : 1,
   "pixel_types" : "BasicPixelIDTypeList",
   "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
-  "public_declarations" : "Self &SetExpandFactor( unsigned int e ) { this->m_ExpandFactors = std::vector<unsigned int>(3, e ); return *this; }",
+  "public_declarations" : "SITK_RETURN_SELF_TYPE_HEADER SetExpandFactor( unsigned int e ) { this->m_ExpandFactors = std::vector<unsigned int>(3, e ); return *this; }",
   "include_files" : [
     "sitkCreateInterpolator.hxx"
   ],
