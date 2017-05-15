@@ -19,8 +19,8 @@ if ( SITK_UNDEFINED_SYMBOLS_ALLOWED )
 else()
   set( _QUIET_LIBRARY "REQUIRED" )
 endif()
-find_package ( PythonLibs ${_QUIET_LIBRARY} )
 find_package ( PythonInterp REQUIRED )
+find_package ( PythonLibs ${_QUIET_LIBRARY} )
 include_directories ( ${SimpleITK_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} )
 
 #
