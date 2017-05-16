@@ -19,8 +19,8 @@ if ( SITK_UNDEFINED_SYMBOLS_ALLOWED )
 else()
   set( _QUIET_LIBRARY "REQUIRED" )
 endif()
-find_package ( PythonLibs ${_QUIET_LIBRARY} )
 find_package ( PythonInterp REQUIRED )
+find_package ( PythonLibs ${_QUIET_LIBRARY} )
 include_directories ( ${SimpleITK_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} )
 
 #
@@ -49,6 +49,13 @@ SWIG_add_module ( SimpleITK python
   sitkPyCommand.cxx )
 set(SWIG_MODULE_SimpleITKPython_TARGET_NAME "${SWIG_MODULE_SimpleITK_TARGET_NAME}")
 target_link_libraries( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} ${SimpleITK_LIBRARIES} )
+if(NOT PYTHON_DEBUG_LIBRARIES AND MSVC)
+  # If there is not a specified debug library use the release library,
+  # via a special sitkPython.h header.
+  target_compile_definitions(${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+    PRIVATE
+    $<$<CONFIG:Debug>:SWIG_PYTHON_INTERPRETER_NO_DEBUG>)
+endif()
 sitk_target_link_libraries_with_dynamic_lookup( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} ${PYTHON_LIBRARIES} )
 
 target_include_directories( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}

@@ -35,7 +35,7 @@ test:
         - ctest -V -S "${DASHBOARD_BRANCH_DIRECTORY}/circleci.cmake":
             timeout: 1200
             environment:
-                DASHBOARD_MODEL: $( [[ "$CIRCLE_BRANCH" = "master" || "$CIRCLE_BRANCH" = "next" ]] && echo Continuous || echo Experimental )
+                DASHBOARD_MODEL: $( [[ "$CIRCLE_BRANCH" = "master" || "$CIRCLE_BRANCH" = "next"  || "$CIRCLE_BRANCH" = "release" ]] && echo Continuous || echo Experimental )
                 CTEST_CONFIGURATION_TYPE: "Release"
                 CTEST_BUILD_FLAGS: "-j$(expr $CIRCLE_NODE_TOTAL \\* 2 + 1)"
                 ITK_GLOBAL_DEFAULT_NUMBER_OF_THREAD: 2

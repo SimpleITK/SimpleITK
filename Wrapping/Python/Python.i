@@ -17,6 +17,10 @@
 *=========================================================================*/
 #if SWIGPYTHON
 
+%begin %{
+#include "sitkPython.h"
+%}
+
 %{
 #include "sitkPyCommand.h"
 %}
