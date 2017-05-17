@@ -33,7 +33,9 @@ function(_sitk_gtest_use_gtest_source)
 
   set(BUILD_GTEST                 ON )
   set(BUILD_GMOCK                 OFF)
-
+  if ("${WIN32}")
+      set(gtest_disable_pthreads      ON CACHE INTERNAL "Disable use of pthreads in gtest")
+  endif()
 
   # Must build GTest as static since EXCLUDE_FROM_ALL, would exclude
   # needed GTest shared libraries from being installed.
