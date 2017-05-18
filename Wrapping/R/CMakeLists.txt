@@ -52,10 +52,16 @@ file( COPY "${CMAKE_CURRENT_SOURCE_DIR}/Packaging"
 
 set(SimpleITKR_VERSION "${SimpleITK_VERSION_MAJOR}.${SimpleITK_VERSION_MINOR}")
 if(DEFINED SimpleITK_VERSION_PATCH)
-  set(SimpleITK_VERSIONR "${SimpleITKR_VERSION}.${SimpleITK_VERSION_PATCH}")
+  set(SimpleITKR_VERSION "${SimpleITKR_VERSION}.${SimpleITK_VERSION_PATCH}")
   if(DEFINED SimpleITK_VERSION_TWEAK)
     set(SimpleITKR_VERSION "${SimpleITKR_VERSION}.${SimpleITK_VERSION_TWEAK}")
   endif()
+endif()
+if(DEFINED SimpleITK_VERSION_POST)
+  set(SimpleITKR_VERSION "${SimpleITKR_VERSION}-${SimpleITK_VERSION_POST}")
+elseif(DEFINED SimpleITK_VERSION_DEV)
+  math(EXPR DEV "9000 + ${SimpleITK_VERSION_DEV}")
+  set(SimpleITKR_VERSION "${SimpleITKR_VERSION}-${DEV}")
 endif()
 
 configure_file(
