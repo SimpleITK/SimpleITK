@@ -583,6 +583,10 @@ namespace itk
     }
   if (!ExecutableName.length())
     {
+    ExecutableName = FindApplication( "", "ImageJ", debugOn );
+    }
+  if (!ExecutableName.length())
+    {
     ExecutableName = FindApplication( "", "imagej", debugOn );
     }
 #endif
