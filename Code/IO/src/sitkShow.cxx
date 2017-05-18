@@ -399,6 +399,12 @@ namespace itk
 
   // linux and other systems
   paths.push_back( "./" + directory );
+  std::string homedir;
+  if ( itksys::SystemTools::GetEnv ( "HOME", homedir ) )
+    {
+    paths.push_back( homedir + "/bin/" + directory );
+    }
+
   paths.push_back( "~/bin/" + directory );
   paths.push_back( "/opt/" + directory );
   paths.push_back( "/usr/local/" + directory );
