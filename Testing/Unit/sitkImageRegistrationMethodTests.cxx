@@ -879,7 +879,7 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_OnePlusOneEvolutionary)
                                          1.0,
                                          1.1,
                                          .9,
-                                         0);
+                                         1u);
 
   IterationUpdate cmd(R);
   R.AddCommand(sitk::sitkIterationEvent, cmd);
