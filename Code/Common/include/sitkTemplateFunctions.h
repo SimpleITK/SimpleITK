@@ -115,6 +115,24 @@ std::vector<TType> SITKCommon_HIDDEN sitkITKVectorToSTL( const TITKVector & in )
   return out;
 }
 
+/** \brief Convert an ITK style array of ITK fixed witdth vector to std::vector
+ *
+ * An example input type is itk::FixedArray<itk::Point<3>, 3>
+ */
+template<typename TType,  typename TVectorOfITKVector>
+std::vector<TType> SITKCommon_HIDDEN sitkVectorOfITKVectorToSTL( const TVectorOfITKVector & in )
+{
+  typedef typename TVectorOfITKVector::ValueType ITKVectorType;
+  std::vector<TType> out;
+  out.reserve( in.Size()*ITKVectorType::Dimension );
+  for( unsigned int i = 0; i < in.Size(); ++i )
+    {
+    const std::vector<TType> &temp =  sitkITKVectorToSTL<TType>(in[i]);
+    out.insert(out.end(), temp.begin(), temp.end());
+    }
+  return out;
+}
+
 
 template<typename TType,  typename TITKVector>
 std::vector<TType> SITKCommon_HIDDEN sitkITKVectorToSTL( const std::vector<TITKVector> & in )
