@@ -591,6 +591,11 @@ namespace itk
     }
 #endif
 
+  if (!ExecutableName.length())
+    {
+    sitkExceptionMacro (  << "No appropriate executable found." );
+    }
+
   bool fijiFlag = ExecutableName.find( "Fiji.app" ) != std::string::npos;
 
   TempFile = BuildFullFileName(title, fijiFlag);
