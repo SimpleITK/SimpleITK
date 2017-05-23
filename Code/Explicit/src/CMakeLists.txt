@@ -31,7 +31,7 @@ add_library ( SimpleITKExplicit ${SimpleITKExplicit_FORCE_LIBRARY_TYPE} ${Simple
 if( SITK_BUILD_SHARED_LIBS )
   set_target_properties(SimpleITKExplicit PROPERTIES CXX_VISIBILITY_PRESET default)
 endif()
-sitk_target_use_itk( SimpleITKExplicit PUBLIC ${use_itk_modules} )
+sitk_target_use_itk( SimpleITKExplicit PUBLIC BUILD_INTERFACE ${use_itk_modules} )
 target_include_directories ( SimpleITKExplicit
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/Code/Explicit/include>
