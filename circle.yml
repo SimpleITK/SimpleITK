@@ -27,7 +27,7 @@ dependencies:
     pre:
         - pip install --upgrade pip
         - pip install scikit-ci-addons numpy
-        - ci_addons circle/install_cmake.py 2.7.2
+        - ci_addons circle/install_cmake.py 3.7.2
         - if [ $CIRCLE_NODE_INDEX -eq 0 ]; then for ((i=1;i<CIRCLE_NODE_TOTAL;i++)); do ssh -fMN ubuntu@node$i; done ; fi
         - git clone --single-branch https://github.com/SimpleITK/SimpleITK.git -b dashboard ${DASHBOARD_BRANCH_DIRECTORY}
 
