@@ -43,6 +43,6 @@ test:
                 CTEST_OUTPUT_ON_FAILURE: 1
                 LD_LIBRARY_PATH: ${CTEST_BINARY_DIRECTORY}/ITK-prefix/lib/:${CTEST_BINARY_DIRECTORY}/SimpleITK-build/lib
         - mkdir ${CIRCLE_TEST_REPORTS}/CTest
-        - ci_addons ctest_junit_formatter BUILD_DIR > ${CIRCLE_TEST_REPORTS}/CTest/JUnit-${CIRCLE_NODE_INDEX}.xml
+        - ci_addons ctest_junit_formatter ${CTEST_BINARY_DIRECTORY} > ${CIRCLE_TEST_REPORTS}/CTest/JUnit-${CIRCLE_NODE_INDEX}.xml
         - sar:
             parallel: true
