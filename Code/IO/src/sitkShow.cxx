@@ -609,7 +609,7 @@ namespace itk
 
   ExecutableName = FindImageJ(debugOn);
 
-#if not defined(__APPLE__) and not defined(_WIN32)
+#if !defined(__APPLE__) && !defined(_WIN32)
   // is the imagej we're running a script or a binary?
   bool ImageJScriptFlag = itksys::SystemTools::FileHasSignature( ExecutableName.c_str(), "#!" );
 #endif
@@ -641,7 +641,7 @@ namespace itk
       else
         {
         Command = ShowColorImageCommand;
-#if not defined(__APPLE__) and not defined(_WIN32)
+#if !defined(__APPLE__) && !defined(_WIN32)
         if (!ImageJScriptFlag)
 	  {
 	  Command = "%a -eval \'" IMAGEJ_OPEN_MACRO NIFTI_COLOR_MACRO "\'";
@@ -662,7 +662,7 @@ namespace itk
         else
           {
           Command = ShowImageCommand;
-#if not defined(__APPLE__) and not defined(_WIN32)
+#if !defined(__APPLE__) && !defined(_WIN32)
           if (!ImageJScriptFlag)
 	    {
 	    Command = "%a -eval \'" IMAGEJ_OPEN_MACRO "\'";
