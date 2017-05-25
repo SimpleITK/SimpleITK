@@ -14,7 +14,7 @@ machine:
         DISTCC_TCP_CORK: "0"
         DISTCC_DIR: ${HOME}/.distcc
     post:
-        - sudo apt-get remove cmake && sudo apt-get install libpython-dev distcc lua5.1
+        - sudo apt-get install libpython-dev distcc lua5.1
         - sudo sed -i.bak s/STARTDISTCC=\"false\"/STARTDISTCC=\"true\"/g /etc/default/distcc && sudo /etc/init.d/distcc start
         - mkdir -p "${DISTCC_DIR}" && printf -- "--randomize localhost/2 --localslots=1\n" > "${DISTCC_DIR}/hosts" && for ((i=1;i<CIRCLE_NODE_TOTAL;i++)); do printf "ubuntu@node$i/2\n" >> "${DISTCC_DIR}/hosts"; done
         - if [ $CIRCLE_NODE_INDEX -eq 0 ]; then mkdir -p .ssh/tmp && printf -- "Host *\nControlMaster auto\nControlPath ~/.ssh/tmp/master-%%r@%%h:%%p\n" >> .ssh/config; for ((i=1;i<CIRCLE_NODE_TOTAL;i++)); do ssh -fMN ubuntu@node$i; done; fi
@@ -26,7 +26,8 @@ dependencies:
         - "~/.ExternalData"
     pre:
         - pip install --upgrade pip
-        - pip install numpy cmake
+        - pip install scikit-ci-addons numpy
+        - ci_addons circle/install_cmake.py 3.7.2
         - if [ $CIRCLE_NODE_INDEX -eq 0 ]; then for ((i=1;i<CIRCLE_NODE_TOTAL;i++)); do ssh -fMN ubuntu@node$i; done ; fi
         - git clone --single-branch https://github.com/SimpleITK/SimpleITK.git -b dashboard ${DASHBOARD_BRANCH_DIRECTORY}
 
@@ -41,5 +42,7 @@ test:
                 ITK_GLOBAL_DEFAULT_NUMBER_OF_THREAD: 2
                 CTEST_OUTPUT_ON_FAILURE: 1
                 LD_LIBRARY_PATH: ${CTEST_BINARY_DIRECTORY}/ITK-prefix/lib/:${CTEST_BINARY_DIRECTORY}/SimpleITK-build/lib
+        - mkdir ${CIRCLE_TEST_REPORTS}/CTest
+        - ci_addons ctest_junit_formatter ${CTEST_BINARY_DIRECTORY} > ${CIRCLE_TEST_REPORTS}/CTest/JUnit-${CIRCLE_NODE_INDEX}.xml
         - sar:
             parallel: true
