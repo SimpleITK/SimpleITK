@@ -57,6 +57,9 @@ function(sitk_add_python_test name)
     ${ARGN}
     )
   set_property(TEST Python.${name}
+      PROPERTY LABELS Python
+      )
+  set_property(TEST Python.${name}
       PROPERTY ENVIRONMENT SITK_NOSHOW=YES
       )
   if (NOT SimpleITK_PYTHON_USE_VIRTUALENV)
@@ -91,6 +94,9 @@ function(sitk_add_lua_test name)
     ${ARGN}
     )
   set_property(TEST Lua.${name}
+    PROPERTY LABELS Lua
+    )
+  set_property(TEST Lua.${name}
     PROPERTY ENVIRONMENT LUA_CPATH=$<TARGET_FILE:SimpleITKLuaModule_LUA>
     )
   set_property(TEST Lua.${name}
@@ -121,7 +127,9 @@ function(sitk_add_ruby_test name)
     ${command}
     ${ARGN}
     )
-
+  set_property(TEST Ruby.${name}
+    PROPERTY LABELS Ruby
+    )
   set_property(TEST Ruby.${name}
     PROPERTY ENVIRONMENT RUBYLIB=$<TARGET_FILE_DIR:simpleitk_RUBY>
     )
@@ -149,6 +157,9 @@ function(sitk_add_tcl_test name)
     COMMAND "${ITK_TEST_DRIVER}"
     ${command}
     ${ARGN}
+    )
+  set_property(TEST Tcl.${name}
+    PROPERTY LABELS Tcl
     )
 endfunction()
 
@@ -203,6 +214,9 @@ function(sitk_add_java_test name java_file)
     "${_java_class}"
     ${ARGN}
     )
+  set_property(TEST Java.${name}
+    PROPERTY LABELS Java
+    )
 endfunction()
 
 
@@ -228,7 +242,9 @@ function(sitk_add_r_test name)
     ${command}
     ${ARGN}
     )
-
+  set_property(TEST R.${name}
+    PROPERTY LABELS R
+    )
   set_property(TEST R.${name}
     PROPERTY ENVIRONMENT R_LIBS=${SimpleITK_BINARY_DIR}/Wrapping/R/R_libs/
     )
@@ -285,5 +301,7 @@ function(sitk_add_csharp_test name csharp_file)
       ${ARGN}
       )
   endif()
-
+  set_property(TEST CSharp.${name}
+    PROPERTY LABELS CSharp
+    )
 endfunction()
