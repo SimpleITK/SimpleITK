@@ -382,6 +382,11 @@ namespace itk
     paths.push_back ( ProgramFiles + "\\" + directory + "\\");
     }
 
+  if ( itksys::SystemTools::GetEnv ( "USERPROFILE", ProgramFiles ) )
+    {
+    paths.push_back ( ProgramFiles + "\\" + directory + "\\");
+    paths.push_back ( ProgramFiles + "\\Desktop\\" + directory + "\\");
+    }
 
   // Find the executable
   ExecutableName = itksys::SystemTools::FindFile ( ExecutableName.c_str(), paths );
