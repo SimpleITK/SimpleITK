@@ -35,6 +35,11 @@ function(_sitk_gtest_use_gtest_source)
   set(BUILD_GMOCK                 OFF)
 
 
+  # google test does not properly use pthreads on mingw
+  if (MINGW)
+    set(gtest_disable_pthreads  ON)
+  endif()
+
   # Must build GTest as static since EXCLUDE_FROM_ALL, would exclude
   # needed GTest shared libraries from being installed.
   set(BUILD_SHARED_LIBS OFF)
