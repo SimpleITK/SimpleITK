@@ -26,6 +26,20 @@ be more trouble than it is worth.
 
 Download the windows R installer from one of the [mirror sites](https://www.r-project.org/mirrors.html).
 
+Ensure that R is in the path. There is an option for this in the installer. Otherwise set manually
+(Control panel->System->Advanced system settings->Advanced->Environment variables). The
+path should include something like this at the end:
+
+```dos
+c:\Program~1\R\R-3.3.2\bin
+```
+
+The key point is that
+```bash
+which R
+```
+run from the MSYS shell should successfully find R.
+
 ## Install MSYS2 64 bit
 
 Fetch and run the [64 bit installer](http://www.msys2.org/).
@@ -95,12 +109,12 @@ Now configure with cmake
 ## some hacks to set up paths to R
 
 RR=$(which R)
-R64=$(dirname $RR)/x64/R.exe
-R64DLL=$(dirname $R64)/R.dll
+R64=$(dirname "$RR")/x64/R.exe
+R64DLL=$(dirname "$R64")/R.dll
 
 cmake -G Ninja ../SimpleITK/SuperBuild \
 -DCMAKE_CXX_FLAGS="--param ggc-min-expand=0 --param ggc-min-heapsize=2648000" \
--DR_COMMAND=${R64} -DR_LIBRARY_BASE=${R64DLL} -DWRAP_R=ON -DWRAP_DEFAULT=OFF
+-DR_COMMAND="${R64}" -DR_LIBRARY_BASE="${R64DLL}" -DWRAP_R=ON -DWRAP_DEFAULT=OFF
 
 ```
 
