@@ -1,9 +1,13 @@
-.. figure::  Simpleitk_logo.png‎
-   :alt:  Simpleitk_logo.png‎
+Frequently Asked Questions
+**************************
 
-    Simpleitk\_logo.png‎
 This page hosts frequently asked questions about SimpleITK, and their
 answers.
+
+.. contents:: On this page
+    :local:
+    :backlinks: none
+
 
 Installation
 ============
@@ -25,18 +29,22 @@ libraries. The libraries are available for download
 I am using the binary distribution of SimpleITK for Anaconda, why do I get an error about libpng?
 -------------------------------------------------------------------------------------------------
 
-| `` ImportError: dlopen(./_SimpleITK.so, 2): Library not loaded: @rpath/libpng15.15.dylib``
-| ``   Referenced from: .../lib/python2.7/site-packages/SimpleITK/_SimpleITK.so``
-| ``   Reason: image not found``
+.. code-block :: python
+
+        ImportError: dlopen(./_SimpleITK.so, 2): Library not loaded: @rpath/libpng15.15.dylib
+          Referenced from: .../lib/python2.7/site-packages/SimpleITK/_SimpleITK.so
+          Reason: image not found
 
 This can be resolved by installing the version of libpng that SimpleITK
 0.9 was built against:
 
-| ``  conda create -n sitkpy anaconda libpng=1.5``
-| ``  ``\ \ ``unix/mac``\ \ ``: source activate sitkpy ``
-| ``  ``\ \ ``win``\ \ ``: activate sitkpy ``
-| ``  conda install -c https://conda.binstar.org/simpleitk/channel/main SimpleITK``
-| ``  conda install libpng=1.5 ``
+.. code-block :: bash
+
+        conda create -n sitkpy anaconda libpng=1.5
+        source activate sitkpy #unix/mac
+        # for win: activate sitkpy
+        conda install -c https://conda.binstar.org/simpleitk/channel/main SimpleITK
+        conda install libpng=1.5
 
 This set of commands:
 
@@ -84,11 +92,13 @@ on how to write a Meta image header can be found
 The following is a sample Meta image header file, perhaps of name
 sample.mhd:
 
-| ``ObjectType = Image``
-| ``NDims = 3``
-| ``DimSize = 256 256 64``
-| ``ElementType = MET_USHORT``
-| ``ElementDataFile = image.raw    (this tag must be last in a MetaImageHeader)``
+.. code-block :: bash
+
+        ObjectType = Image
+        NDims = 3
+        DimSize = 256 256 64
+        ElementType = MET_USHORT
+        ElementDataFile = image.raw    (this tag must be last in a MetaImageHeader)
 
 Can I use another image file viewer beside ImageJ?
 --------------------------------------------------
@@ -104,8 +114,10 @@ The temporary file format can be specified via the
 **SITK\_SHOW\_EXTENSION** environment variable. For example, if the user
 wanted to export a PNG file, on Linux it might look like this:
 
-| ``SITK_SHOW_EXTENSION=".png"``
-| ``export SITK_SHOW_EXTENSION``
+.. code-block :: bash
+
+        SITK_SHOW_EXTENSION=".png"
+        export SITK_SHOW_EXTENSION
 
 Use of an extension unsupported by ITK results in an error message. For
 the supported image formats, here is the `ITK Image IO
@@ -116,10 +128,12 @@ override ImageJ with some other application, use the
 **SITK\_SHOW\_COMMAND** environment variable. For instance, on Unix
 systems, using GNOME's image viewer eog would be:
 
-| ``SITK_SHOW_EXTENSION=".png"``
-| ``export SITK_SHOW_EXTENSION``
-| ``SITK_SHOW_COMMAND="eog"``
-| ``export SITK_SHOW_COMMAND``
+.. code-block :: bash
+
+        SITK_SHOW_EXTENSION=".png"
+        export SITK_SHOW_EXTENSION
+        SITK_SHOW_COMMAND="eog"
+        export SITK_SHOW_COMMAND
 
 To override the default display applications for only color or 3d
 images, there are the **SITK\_SHOW\_COLOR\_COMMAND** and
@@ -141,15 +155,21 @@ for Mac OS X, Linux and Windows to use Slicer.
 
 Mac OS X
 
-``export SITK_SHOW_COMMAND=/Applications/Slicer.app/Contents/MacOS/Slicer``
+.. code-block :: bash
+
+        export SITK_SHOW_COMMAND=/Applications/Slicer.app/Contents/MacOS/Slicer
 
 Linux
 
-``export SITK_SHOW_COMMAND=Slicer``
+.. code-block :: bash
+
+        export SITK_SHOW_COMMAND=Slicer
 
 Windows
 
-``set SITK_SHOW_COMMAND=:"c:\Program Files\Slicer 4.2.2-1\Slicer"``
+.. code-block :: bash
+
+        set SITK_SHOW_COMMAND=:"c:\Program Files\Slicer 4.2.2-1\Slicer"
 
 The value of SITK\_SHOW\_COMMAND should be modified to point to wherever
 Slicer is installed. If you only want to use Slicer for volumetric 3D
@@ -167,10 +187,12 @@ The following bash commands will set up the SITK\_SHOW\_COMMAND and
 SITK\_SHOW\_COLOR\_COMMAND to invoke ImageJ's jar file using the Java
 compiler.
 
-| ``ij="/Applications/ImageJ/"``
-| ``ijcmd="java -Dplugins.dir=$ij/plugins -jar $ij/ImageJ.app/Contents/Resources/Java/ij.jar"``
-| ``export SITK_SHOW_COMMAND="$ijcmd -eval 'open( \"%f\" );'"``
-| ``export SITK_SHOW_COLOR_COMMAND="$ijcmd -eval 'open( \"%f\" ); run(\"Make Composite\", \"display=Composite\");'"``
+.. code-block :: bash
+
+        ij="/Applications/ImageJ/"
+        ijcmd="java -Dplugins.dir=$ij/plugins -jar $ij/ImageJ.app/Contents/Resources/Java/ij.jar"
+        export SITK_SHOW_COMMAND="$ijcmd -eval 'open( \"%f\" );'"
+        export SITK_SHOW_COLOR_COMMAND="$ijcmd -eval 'open( \"%f\" ); run(\"Make Composite\", \"display=Composite\");'"
 
 The first lines set a variable pointing to the standard location for the
 ImageJ directory. If ImageJ is installed somewhere else, the line should
@@ -249,12 +271,11 @@ Why am I getting a compilation error on OSX Mavericks?
 With SimpleITK <=0.7 the following error occurred during compilation on
 Apple OSX 10.9 Mavericks with **clang 5.0**:
 
-| `` ``\ **``SimpleITK/Code/Common/include/sitkMemberFunctionFactoryBase.h:106:16:``
-\ ``error``\ \ ``:`` ``no`` ``member`` ``named`` ``'tr1'`` ``in``
-``namespace`` ``'std``**\ ``'``
-| `` typedef std::tr1::function< MemberFunctionResultType ( ) > FunctionObjectType;``
-| ``         ~~~~~^``
+.. code-block :: cpp
 
+         SimpleITK/Code/Common/include/sitkMemberFunctionFactoryBase.h:106:16:  error: no member named 'tr1' in namespace 'std'
+         typedef std::tr1::function< MemberFunctionResultType ( ) > FunctionObjectType;
+         ~~~~~^
 With Xcode 5.0, Apple's distributed version of clang (5.0) changed which
 implementation of the C++ Standard Library it uses by default. Previous
 versions of clang (4.2 and earlier) used `GNU's
@@ -269,7 +290,9 @@ To build SimpleITK <=0.7 with clang 5.0, you can configure the compiler
 to use GNU's stdlibc++. This change must be done at the initial
 configuration:
 
-``cmake "-DCMAKE_CXX_FLAGS:STRING=-stdlib=libstdc++" ../SimpleITK/SuperBuild``
+.. code-block :: bash
+
+        cmake "-DCMAKE_CXX_FLAGS:STRING=-stdlib=libstdc++" ../SimpleITK/SuperBuild
 
 NOTE: If you already have a build directory which has been partially
 configured the contents must be deleted. The above line needs to be done
