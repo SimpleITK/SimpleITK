@@ -6,7 +6,8 @@ and is under development.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+
+   faq
 
 
 
