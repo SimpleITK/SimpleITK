@@ -29,7 +29,7 @@ libraries. The libraries are available for download
 I am using the binary distribution of SimpleITK for Anaconda, why do I get an error about libpng?
 -------------------------------------------------------------------------------------------------
 
-.. code-block :: python
+::
 
         ImportError: dlopen(./_SimpleITK.so, 2): Library not loaded: @rpath/libpng15.15.dylib
           Referenced from: .../lib/python2.7/site-packages/SimpleITK/_SimpleITK.so
@@ -271,11 +271,12 @@ Why am I getting a compilation error on OSX Mavericks?
 With SimpleITK <=0.7 the following error occurred during compilation on
 Apple OSX 10.9 Mavericks with **clang 5.0**:
 
-.. code-block :: cpp
+::
 
          SimpleITK/Code/Common/include/sitkMemberFunctionFactoryBase.h:106:16:  error: no member named 'tr1' in namespace 'std'
          typedef std::tr1::function< MemberFunctionResultType ( ) > FunctionObjectType;
          ~~~~~^
+
 With Xcode 5.0, Apple's distributed version of clang (5.0) changed which
 implementation of the C++ Standard Library it uses by default. Previous
 versions of clang (4.2 and earlier) used `GNU's
@@ -331,11 +332,13 @@ Why does the Superbuild fail compiling PCRE on Mac OS X?
 If the Xcode command line tools are not properly set up on OS X, PCRE
 could fail to build in the Superbuild process with messages such as:
 
-| ``checking whether we are cross compiling... configure: error: in `/your/build/path/SimpleITK/PCRE-prefix/src/PCRE-build': ``
-| ``configure: error: cannot run C compiled programs.``
-| ``If you meant to cross compile, use `--host'.``
-| ``See `config.log' for more details``
-| ``[10/13] Performing build step for 'PCRE'``
+::
+
+ checking whether we are cross compiling... configure: error: in `/your/build/path/SimpleITK/PCRE-prefix/src/PCRE-build':
+ configure: error: cannot run C compiled programs.
+ If you meant to cross compile, use `--host'.
+ See `config.log' for more details
+ [10/13] Performing build step for 'PCRE'
 
 To install the command line developer tools enter the following:
 '''xcode-select --install
@@ -387,22 +390,24 @@ the Windows platform. The following table is a guide line of what is
 regularly tested and confirmed to work or fail.
 
 +--------------------+---------------------+----------------+---------------------------------+-------------------------------+-------------------------------+-------------------------------+-----------+---------+-----------+---------+
-|                    | Architecture        | Library Type   | Visual Studio 2008 SP1 (VS9 )   | Visual Studio 2010 ( VS10 )   | Visual Studio 2012 ( VS11 )   | Visual Studio 2013 ( VS13 )   |
+|                    | Architecture        | Library Type   | Visual Studio 2008 SP1 (VS9 )   | Visual Studio 2010 ( VS10 )   | Visual Studio 2012 ( VS11 )   | Visual Studio 2013 ( VS13 )   |           |         |           |         |
 +====================+=====================+================+=================================+===============================+===============================+===============================+===========+=========+===========+=========+
 |                    |                     |                | Release                         | Debug                         | Release                       | Debug                         | Release   | Debug   | Release   | Debug   |
 +--------------------+---------------------+----------------+---------------------------------+-------------------------------+-------------------------------+-------------------------------+-----------+---------+-----------+---------+
 | 32-bit Window OS   | Only Intel 32-bit   | Static         | FAIL                            | FAIL                          | FAIL                          | FAIL                          |           |         |           |         |
 +--------------------+---------------------+----------------+---------------------------------+-------------------------------+-------------------------------+-------------------------------+-----------+---------+-----------+---------+
-| Shared             | FAIL                | FAIL           | Nightly                         | Nightly                       |                               |                               |           |         |
+| Shared             | FAIL                | FAIL           | Nightly                         | Nightly                       |                               |                               |           |         |           |         |
 +--------------------+---------------------+----------------+---------------------------------+-------------------------------+-------------------------------+-------------------------------+-----------+---------+-----------+---------+
 | 64-bit Window OS   | Intel 32-bit        | Static         | Nightly                         |                               | Nightly                       |                               | Nightly   |         | Nightly   |         |
 +--------------------+---------------------+----------------+---------------------------------+-------------------------------+-------------------------------+-------------------------------+-----------+---------+-----------+---------+
-| Shared             |                     |                |                                 |                               |                               |                               |           |         |
+| Shared             |                     |                |                                 |                               |                               |                               |           |         |           |         |
 +--------------------+---------------------+----------------+---------------------------------+-------------------------------+-------------------------------+-------------------------------+-----------+---------+-----------+---------+
-| Intel 64-bit       | Static              | Nightly        |                                 | Nightly                       | Nightly                       |                               |           |         |           |
+| Intel 64-bit       | Static              | Nightly        |                                 | Nightly                       | Nightly                       |                               |           |         |           |         |
 +--------------------+---------------------+----------------+---------------------------------+-------------------------------+-------------------------------+-------------------------------+-----------+---------+-----------+---------+
-| Shared             |                     |                |                                 |                               | Nightly                       |                               | Nightly   |         |
+| Shared             |                     |                |                                 |                               | Nightly                       |                               | Nightly   |         |           |         |
 +--------------------+---------------------+----------------+---------------------------------+-------------------------------+-------------------------------+-------------------------------+-----------+---------+-----------+---------+
+
+
 
 +-----------+------------------------------------------------------------------------+
 |           | Legend                                                                 |
@@ -417,6 +422,7 @@ regularly tested and confirmed to work or fail.
 +-----------+------------------------------------------------------------------------+
 | FAIL      | These options are known not to work.                                   |
 +-----------+------------------------------------------------------------------------+
+
 
 This table has been updated for the release branch, master, as of
 February 15th 2013.
@@ -464,12 +470,14 @@ Why is CMake unable to download ExternalData?
 
 When compiling SimpleITK you may get and error like the following:
 
-| ``Object MD5=2e115fe26e435e33b0d5c022e4490567 not found at:``
-| `` ``\ ```https://placid.nlm.nih.gov/api/rest?method=midas.bitstream.download&checksum=2e115fe26e435e33b0d5c022e4490567&algorithm=MD5`` <https://placid.nlm.nih.gov/api/rest?method=midas.bitstream.download&checksum=2e115fe26e435e33b0d5c022e4490567&algorithm=MD5>`__\ `` ("Unsupported protocol")``
-| `` ``\ ```https://simpleitk.github.io/SimpleITKExternalData/MD5/2e115fe26e435e33b0d5c022e4490567`` <https://simpleitk.github.io/SimpleITKExternalData/MD5/2e115fe26e435e33b0d5c022e4490567>`__\ `` ("Unsupported protocol") ``
-| `` ``\ ```https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=2e115fe26e435e33b0d5c022e4490567&algorithm=MD5`` <https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=2e115fe26e435e33b0d5c022e4490567&algorithm=MD5>`__\ `` ("Unsupported protocol")``
-| `` ``\ ```https://insightsoftwareconsortium.github.io/ITKTestingData/MD5/2e115fe26e435e33b0d5c022e4490567`` <https://insightsoftwareconsortium.github.io/ITKTestingData/MD5/2e115fe26e435e33b0d5c022e4490567>`__\ `` ("Unsupported protocol")``
-| `` ``\ ```https://itk.org/files/ExternalData/MD5/2e115fe26e435e33b0d5c022e4490567`` <https://itk.org/files/ExternalData/MD5/2e115fe26e435e33b0d5c022e4490567>`__\ `` ("Unsupported protocol")``
+::
+
+ Object MD5=2e115fe26e435e33b0d5c022e4490567 not found at:
+  https://placid.nlm.nih.gov/api/rest?method=midas.bitstream.download&checksum=2e115fe26e435e33b0d5c022e4490567&algorithm=MD5 ("Unsupported protocol")
+  https://simpleitk.github.io/SimpleITKExternalData/MD5/2e115fe26e435e33b0d5c022e4490567 ("Unsupported protocol")
+  https://midas3.kitware.com/midas/api/rest?method=midas.bitstream.download&checksum=2e115fe26e435e33b0d5c022e4490567&algorithm=MD5 ("Unsupported protocol")
+  https://insightsoftwareconsortium.github.io/ITKTestingData/MD5/2e115fe26e435e33b0d5c022e4490567 ("Unsupported protocol")
+  https://itk.org/files/ExternalData/MD5/2e115fe26e435e33b0d5c022e4490567 ("Unsupported protocol")
 
 This indicates that CMake was not compiles with SSL support. The
 "Unsupported protocol" message indicate that CMake can not communicate
@@ -477,4 +485,4 @@ via "https".
 
 The solution is to use a compiled version of CMake which supports SSL.
 If you compile CMake yourself, simply reconfigure CMake with the
-"CMAKE\_USE\_OPENSSL option enabled.
+"CMAKE\_USE\_OPENSSL" option enabled.
