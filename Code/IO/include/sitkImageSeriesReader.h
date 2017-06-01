@@ -98,6 +98,37 @@ namespace itk {
 
       Image Execute();
 
+      /** \brief Get the meta-data dictionary keys for a slice
+       *
+       * This is only valid after successful execution of this
+       * filter and when MetaDataDictionaryArrayUpdate is true. Each
+       * element in the array corresponds to a "slice" or filename
+       * read during execution.
+       *
+       * If the slice index is out of range, an exception will be
+       * thrown.
+       *
+       * Returns a vector of keys to the key/value entries in the
+       * file's meta-data dictionary. Iterate through with these keys
+       * to get the values.
+       **/
+      std::vector<std::string> GetMetaDataKeys( unsigned int slice ) const { return this->m_pfGetMetaDataKeys(slice); }
+
+      /** \brief Query a meta-data dictionary for the existence of a key.
+       **/
+      bool HasMetaDataKey( unsigned int slice, const std::string &key ) const { return this->m_pfHasMetaDataKey(slice, key); }
+
+      /** \brief Get the value of a meta-data dictionary entry as a string.
+       *
+       * If the key is not in the dictionary then an exception is
+       * thrown.
+       *
+       * string types in the dictionary are returned as their native
+       * string. Other types are printed to string before returning.
+       **/
+      std::string GetMetaData( unsigned int slice, const std::string &key ) const { return this->m_pfGetMetaData(slice, key); }
+
+
     protected:
 
       template <class TImageType> Image ExecuteInternal ( itk::ImageIOBase * );
@@ -110,6 +141,15 @@ namespace itk {
       // friend to get access to executeInternal member
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
       nsstd::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
+
+
+      nsstd::function<std::vector<std::string>(int)> m_pfGetMetaDataKeys;
+      nsstd::function<bool(int, const std::string &)> m_pfHasMetaDataKey;
+      nsstd::function<std::string(int, const std::string &)> m_pfGetMetaData;
+
+      // Holder of process object for active measurements
+      itk::ProcessObject *m_Filter;
+
 
       std::vector<std::string> m_FileNames;
 
