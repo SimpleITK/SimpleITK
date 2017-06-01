@@ -232,21 +232,24 @@ struct GetMetaDataCustomCast
     // release the old filter ( and output data )
     if ( this->m_Filter != NULL)
       {
-      this->m_pfGetMetaDataKeys = SITK_NULL_PTR;
-      this->m_pfHasMetaDataKey = SITK_NULL_PTR;
-      this->m_pfGetMetaData =  SITK_NULL_PTR;
+      this->m_pfGetMetaDataKeys = SITK_NULLPTR;
+      this->m_pfHasMetaDataKey = SITK_NULLPTR;
+      this->m_pfGetMetaData =  SITK_NULLPTR;
       this->m_Filter->UnRegister();
       this->m_Filter = NULL;
       }
 
-    this->m_Filter = reader;
-    this->m_Filter->Register();
 
     this->PreUpdate( reader.GetPointer() );
 
-    this->m_pfGetMetaDataKeys = nsstd::bind(&GetMetaDataKeysCustomCast<Reader>::CustomCast, reader.GetPointer(), nsstd::placeholders::_1 );
-    this->m_pfHasMetaDataKey = nsstd::bind(&HasMetaDataKeyCustomCast<Reader>::CustomCast, reader.GetPointer(), nsstd::placeholders::_1, nsstd::placeholders::_2 );
-    this->m_pfGetMetaData = nsstd::bind(&GetMetaDataCustomCast<Reader>::CustomCast, reader.GetPointer(), nsstd::placeholders::_1, nsstd::placeholders::_2 );
+    if (m_MetaDataDictionaryArrayUpdate)
+      {
+      this->m_Filter = reader;
+      this->m_Filter->Register();
+      this->m_pfGetMetaDataKeys = nsstd::bind(&GetMetaDataKeysCustomCast<Reader>::CustomCast, reader.GetPointer(), nsstd::placeholders::_1 );
+      this->m_pfHasMetaDataKey = nsstd::bind(&HasMetaDataKeyCustomCast<Reader>::CustomCast, reader.GetPointer(), nsstd::placeholders::_1, nsstd::placeholders::_2 );
+      this->m_pfGetMetaData = nsstd::bind(&GetMetaDataCustomCast<Reader>::CustomCast, reader.GetPointer(), nsstd::placeholders::_1, nsstd::placeholders::_2 );
+      }
 
     reader->Update();
 
