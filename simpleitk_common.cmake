@@ -181,7 +181,7 @@ if(EXISTS ${CTEST_SOURCE_DIRECTORY})
 endif()
 
 # make sure build end in branch name
-if( NOT CTEST_BUILD_NAME MATCHES "${dashboard_git_branch}$" )
+if( NOT CTEST_BUILD_NAME MATCHES "-${dashboard_git_branch}" )
   set(CTEST_BUILD_NAME "${CTEST_BUILD_NAME}-${dashboard_git_branch}")
 endif()
 
