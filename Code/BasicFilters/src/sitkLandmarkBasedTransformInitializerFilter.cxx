@@ -30,6 +30,7 @@
 
 // Additional include files
 #include "sitkTransform.h"
+#include "sitkBSplineTransform.h"
 // Done with additional include files
 
 namespace itk {
@@ -184,6 +185,13 @@ Transform LandmarkBasedTransformInitializerFilter::ExecuteInternal ( const Trans
       {
       sitkExceptionMacro( "Image not set for BSplineTransform initializer." );
       }
+    {
+    BSplineTransform bsTx(*inTransform);
+    if (bsTx.GetOrder() != 3)
+      {
+      sitkExceptionMacro( "BSplineTransform is only supported  with an order of 3." )
+      }
+    }
     // Get the pointer to the ITK image contained in image1
     typename InputImageType::ConstPointer referenceImage = this->CastImageToITK<InputImageType>( this->m_ReferenceImage );
     filter->SetReferenceImage ( referenceImage.GetPointer() );
