@@ -65,6 +65,8 @@ namespace itk {
     }
 
   ImageSeriesReader::ImageSeriesReader()
+    :
+    m_MetaDataDictionaryArrayUpdate(false)
     {
 
     // list of pixel types supported
@@ -75,6 +77,10 @@ namespace itk {
     this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
     this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
     }
+
+  ImageSeriesReader::~ImageSeriesReader()
+  {
+  }
 
   std::string ImageSeriesReader::ToString() const {
 
@@ -171,7 +177,7 @@ namespace itk {
     reader->SetImageIO( imageio );
     reader->SetFileNames( this->m_FileNames );
     // save some computation by not updating this unneeded data-structure
-    reader->MetaDataDictionaryArrayUpdateOff();
+    reader->SetMetaDataDictionaryArrayUpdate(m_MetaDataDictionaryArrayUpdate);
 
     this->PreUpdate( reader.GetPointer() );
 

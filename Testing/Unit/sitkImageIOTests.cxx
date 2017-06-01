@@ -273,7 +273,7 @@ TEST(IO, SeriesReader) {
 
   sitk::Image image = reader.SetFileNames ( fileNames ).Execute();
   EXPECT_EQ ( "b13c0a17109e3a5058e8f225c9ef2dbcf79ac240", sitk::Hash( image ) );
-  EXPECT_EQ( 3u, reader.GetFileNames().size());
+  EXPECT_EQ ( 3u, reader.GetFileNames().size() );
   EXPECT_EQ ( 3u, image.GetDimension() );
   EXPECT_EQ ( 256u, image.GetWidth() );
   EXPECT_EQ ( 256u, image.GetHeight() );
@@ -354,6 +354,12 @@ TEST(IO, DicomSeriesReader) {
   // return an empty dictionary.
   std::vector< std::string > metaDataKeys = image.GetMetaDataKeys();
   EXPECT_EQ( 0u, metaDataKeys.size() );
+
+
+  EXPECT_FALSE( reader.GetMetaDataDictionaryArrayUpdate() );
+  reader.MetaDataDictionaryArrayUpdateOn();
+  EXPECT_TRUE( reader.GetMetaDataDictionaryArrayUpdate() );
+
 }
 
 

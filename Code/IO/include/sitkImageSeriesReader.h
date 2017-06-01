@@ -39,11 +39,29 @@ namespace itk {
 
       ImageSeriesReader();
 
+      ~ImageSeriesReader();
+
       /** Print ourselves to string */
       virtual std::string ToString() const;
 
       /** return user readable name fo the filter */
       virtual std::string GetName() const { return std::string("ImageSeriesReader"); }
+
+
+      /**
+       * Set/Get whether the meta-data dictionaries for the slices
+       * should be read. Default value is false, because of the
+       * additional computation time..
+       */
+      SITK_RETURN_SELF_TYPE_HEADER SetMetaDataDictionaryArrayUpdate ( bool metaDataDictionaryArrayUpdate )
+      { this->m_MetaDataDictionaryArrayUpdate = metaDataDictionaryArrayUpdate; return *this; }
+      bool GetMetaDataDictionaryArrayUpdate() { return this->m_MetaDataDictionaryArrayUpdate; }
+
+
+      /** Set the value of MetaDataDictionaryArrayUpdate to true or false respectfully. */
+      SITK_RETURN_SELF_TYPE_HEADER MetaDataDictionaryArrayUpdateOn() { return this->SetMetaDataDictionaryArrayUpdate(true); }
+      SITK_RETURN_SELF_TYPE_HEADER MetaDataDictionaryArrayUpdateOff() { return this->SetMetaDataDictionaryArrayUpdate(false); }
+
 
       /** \brief Generate a sequence of filenames from a directory with a DICOM data set and a series ID.
        *
@@ -94,6 +112,8 @@ namespace itk {
       nsstd::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 
       std::vector<std::string> m_FileNames;
+
+      bool m_MetaDataDictionaryArrayUpdate;
     };
 
   /**
