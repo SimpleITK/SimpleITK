@@ -111,6 +111,10 @@ namespace itk
               break;
             case 'a':
               // %a for application
+              if (!app.length())
+                {
+                sitkExceptionMacro( "No ImageJ/Fiji application found." )
+                }
               result.append(app);
               i++;
               break;
