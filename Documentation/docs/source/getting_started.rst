@@ -62,7 +62,7 @@ anaconda distribution, and
 for the canopy distribution.
 
 Wheels for Generic Python Distribution
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If you are working with the `generic Python
 distribution <https://www.python.org/>`__ you can install a Wheel with
@@ -78,19 +78,21 @@ system and Python version directly from
 From the command line use the `pip
 program <https://pip.pypa.io/en/latest/index.html>`__ to install:
 
-``$ pip install SimpleITK``
+.. code-block :: bash
+
+ pip installSimpleITK
 
 The pip package manager should automatically find the correct package
 for Microsoft Windows, Apple OS X and GNU Linux if your version and
 architecture are supported. If no binary package is found, then a source
 distribution will be downloaded and attempted to be compiled and you
-should look into `#Build\_It\_Yourself <#Build_It_Yourself>`__.
+should look into `Build It Yourself`_.
 
         If your pip version in the virtual environment is stale (<9.0)
         you need to update it (pip install -U pip).
 
 Anaconda Distribution
-~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^
 
 First thing you should do is create a virtual environment
 (`conda <https://conda.pydata.org/docs/using/envs.html>`__ tool) and
@@ -99,15 +101,19 @@ activate it.
 Currently there are compiled binaries on `Anaconda
 Cloud <https://conda.anaconda.org/simpleitk>`__, easily installed with:
 
-``$ conda install -c https://conda.anaconda.org/simpleitk SimpleITK``
+.. code-block :: bash
+
+ conda install -c https://conda.anaconda.org/simpleitk SimpleITK
 
 Beta and release candidate packages are also available on Anaconda cloud
 under the dev label:
 
-``$conda install -c https://conda.anaconda.org/simpleitk/label/dev SimpleITK``
+.. code-block :: bash
+
+ conda install -c https://conda.anaconda.org/simpleitk/label/dev SimpleITK
 
 Enthought Canopy Distribution
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 First thing you should do is create a virtual environment (canopy\_cli
 tool) and activate it.
@@ -182,7 +188,7 @@ several reasons a user might prefer to **build SimpleITK from source**:
 -  To use the SimpleITK's C++ interface and/or use ITK directly
 
 Prerequisites
-~~~~~~~~~~~~~
+-------------
 
 To build SimpleITK you need:
 
@@ -201,7 +207,7 @@ To build SimpleITK you need:
    bindings
 
 Recipes / Formulas / Short Cuts
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------
 
 For some environments we have short cuts, scripts, for automated
 building of SimpleITK (see their repository for more details):
@@ -230,7 +236,7 @@ building of SimpleITK (see their repository for more details):
    repository <https://github.com/SimpleITK/SimpleITKLuaRock>`__.
 
 Source code
-~~~~~~~~~~~
+-----------
 
 If one of the above language specific front-ends are not used then
 SimpleITK must be build directly.
@@ -241,19 +247,23 @@ There are two options to obtain the SimpleITK source code:
    `SourceForge <https://sourceforge.net/projects/simpleitk/>`__ page
 #. Download the latest development version using git
 
-``git clone ``\ ```http://itk.org/SimpleITK.git`` <http://itk.org/SimpleITK.git>`__
+.. code-block :: bash
+
+ git clone  https://itk.org/SimpleITK.git
 
 Building using SuperBuild
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 After downloading SimpleITK's source code we **STRONGLY** recommend to
 run cmake on the SuperBuild subdirectory of SimpleITK. Execute the
 following commands in the parent of the SimpleITK source directory to
 configure the SuperBuild:
 
-| ``mkdir SimpleITK-build``
-| ``cd SimpleITK-build``
-| ``cmake ../SimpleITK/SuperBuild``
+.. code-block :: bash
+
+ mkdir SimpleITK-build
+ cd SimpleITK-build
+ cmake ../SimpleITK/SuperBuild
 
 The SuperBuild will automatically download and build the matching
 version of ITK and SWIG needed to compile SimpleITK. Additionally, it
@@ -282,7 +292,7 @@ development time are listed
 `here <http://www.itk.org/SimpleITKDoxygen/html/Developer.html#TandT>`__.
 
 Building Manually
-~~~~~~~~~~~~~~~~~
+-----------------
 
 This is **not** the recommended way of building SimpleITK, but it can be
 useful if you want to use a system version of ITK, etc. , or if you do
@@ -321,7 +331,7 @@ not want to (or can not) use git.
       e.g. Release x64 and CXX\_FLAGS
 
 Advanced Build Options
-~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^
 
 SimpleITK is aware of the enabled and disabled ITK Modules. It is
 possible to customize SimpleITK by disabling unneeded ITK modules or to
@@ -332,8 +342,6 @@ Additionally, each of the Examples directory, and each of the Wrapping
 subdirectories can be configured as independent CMake project dependent
 on an installed SimpleITK.
 
-`A visual guide to building SimpleITK on Linux <SimpleITK/GettingStarted/Visual_guide_to_building_on_Linux>`__
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Testing
 -------
@@ -342,22 +350,28 @@ After compilation the prudent thing to due is to test SimpleITK to
 ensure your build is stable and suitable for installation and use. The
 following commands execute the SimpleITK tests.
 
-| ``cd SimpleITK-build/SimpleITK-build``
-| ``ctest``
+.. code-block :: bash
+
+ cd SimpleITK-build/SimpleITK-build
+ ctest .
 
 On Windows you will need to specify configuration. Typically that would
 be the Release configuration, as such:
 
-| ``cd SimpleITK-build/SimpleITK-build``
-| ``ctest -C Release``
+.. code-block :: bash
+
+ cd SimpleITK-build/SimpleITK-build
+ ctest -C Release
 
 Python installation
 -------------------
 
 To install a built python package into the system Python, as root run:
 
-| `` cd SimpleITK-build/Wrapping/Python``
-| `` python Packaging/setup.py install``
+.. code-block :: bash
+
+ cd SimpleITK-build/Wrapping/Python
+ python Packaging/setup.py install
 
 Alternatively, a Python virtual environment can be created and the
 distribution installed there.
@@ -366,15 +380,19 @@ A Python Wheel file (.whl) can be created in the "Wrapping/Python/dist"
 directory, by building the "dist" target. If you have used the
 Superbuild with the "make" generator then issue the following command:
 
-`` make -C SimpleITK-build dist``
+.. code-block :: bash
+
+ make -C SimpleITK-build dist
 
 R installation
 --------------
 
 To install a built R package:
 
-| `` cd SimpleITK-build/Wrapping/R/Packaging``
-| `` R CMD INSTALL SimpleITK``
+.. code-block :: bash
+
+ cd SimpleITK-build/Wrapping/R/Packaging
+ R CMD INSTALL SimpleITK
 
 This will install the R package "SimpleITK" in /usr/local as root or
 your local R installation directory.
@@ -384,19 +402,28 @@ your fellow users you can install the package in a local directory:
 
 #. Create a local directory where you will install your R packages
 
-`` mkdir my_R_libs``
+.. code-block :: bash
+
+ mkdir my_R_libs
 
 2. Add an environment variable to your .bashrc
 
-`` export R_LIBS="/path_to/my_R_libs"``
+.. code-block :: bash
+
+ export R_LIBS="/path_to/my_R_libs"
 
 3. source your .bashrc and check the R library path, in an R shell
-   >.libPaths()
+
+.. code-block :: R
+
+   .libPaths()
 
 4. install
 
-| `` cd SimpleITK-build/Wrapping/R/Packaging``
-| `` R CMD INSTALL -l /path_to/my_R_libs  SimpleITK``
+.. code-block :: bash
+
+ cd SimpleITK-build/Wrapping/R/Packaging
+ R CMD INSTALL -l /path_to/my_R_libs SimpleITK
 
 Recommended Software
 ====================
