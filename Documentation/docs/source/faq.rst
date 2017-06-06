@@ -227,6 +227,7 @@ R
 Compilation
 ===========
 
+.. _compiler-supported:
 Is my compiler supported?
 -------------------------
 

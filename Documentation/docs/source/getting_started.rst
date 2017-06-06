@@ -140,11 +140,11 @@ eg.
 
 Details about how to set up a C# Visual Studio project with SimpleITK
 can be found in the `Visual Guide to SimpleITK with
-CSharp <SimpleITK/GettingStarted/A_visual_guide_to_SimpleITK_with_CSharp>`__.
+CSharp <https://itk.org/Wiki/SimpleITK/GettingStarted/A_visual_guide_to_SimpleITK_with_CSharp>`__.
 
 More information about getting started with a sample C# program can be
 found in `A visual guide to building SimpleITK on
-Linux <SimpleITK/GettingStarted/Visual_guide_to_building_on_Linux#A_simple_C.23_program>`__
+Linux <https://itk.org/Wiki/SimpleITK/GettingStarted/Visual_guide_to_building_on_Linux#A_simple_C.23_program>`__
 
 Java binary files
 -----------------
@@ -154,7 +154,7 @@ SourceForge
 page <https://sourceforge.net/projects/simpleitk/files/SimpleITK/1.0.0/Java/>`__.
 Installation instructions are available at `a visual guide to SimpleITK
 in
-Java <SimpleITK/GettingStarted/A visual guide to SimpleITK in Java>`__.
+Java <https://itk.org/Wiki/SimpleITK/GettingStarted/A visual guide to SimpleITK in Java>`__.
 
 Nightly binaries
 ----------------
@@ -175,8 +175,7 @@ Build It Yourself
 =================
 
 In many cases a user does not need to build SimpleITK because of the
-pre-built binaries available (see
-`above <SimpleITK/GettingStarted#Binaries>`__). However there are
+pre-built binaries available (see `Downloading the binaries`_). However there are
 several reasons a user might prefer to **build SimpleITK from source**:
 
 -  The binary files for your programming language of choice are not
@@ -194,7 +193,7 @@ To build SimpleITK you need:
 
 -  A recent version of `CMake <http://www.cmake.org/>`__ >= 3.3 with SSL
    support for https.
--  A supported `compiler <SimpleITK/FAQ#Is_my_compiler_supported.3F>`__
+-  A supported :ref:`compiler <compiler-supported>`.
 -  To use the latest developmental version, source code can be
    downloaded with `git <http://git-scm.com/>`__ >= 1.65
 
