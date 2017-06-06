@@ -61,7 +61,7 @@ Image ${name}::Execute ( $(include ImageParameters.in)$(include InputParameters.
   unsigned int dimension = m_Size.size();
 
   $(for inum=2,number_of_inputs do
-           OUT= OUT .. '\n    if ( type != image' .. inum .. '.GetPixelIDValue() || dimension != image' .. inum .. '.GetDimension() ) { sitkExceptionMacro ( "Image' .. inum .. ' for ${name} doesnt match type or dimension!" ); }'
+           OUT= OUT .. '\n    if ( type != image' .. inum .. '.GetPixelIDValue() || dimension != image' .. inum .. '.GetDimension() ) { sitkExceptionMacro ( "Image' .. inum .. ' for ${name} doesn\'t match type or dimension!" ); }'
              end)
 
     return this->m_MemberFactory->GetMemberFunction( type, dimension )( $(for inum=1,number_of_inputs do

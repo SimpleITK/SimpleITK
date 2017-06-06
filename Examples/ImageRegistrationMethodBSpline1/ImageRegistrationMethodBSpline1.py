@@ -37,9 +37,9 @@ fixed = sitk.ReadImage(sys.argv[1], sitk.sitkFloat32)
 
 moving = sitk.ReadImage(sys.argv[2], sitk.sitkFloat32)
 
-transfromDomainMeshSize=[8]*moving.GetDimension()
+transformDomainMeshSize=[8]*moving.GetDimension()
 tx = sitk.BSplineTransformInitializer(fixed,
-                                      transfromDomainMeshSize )
+                                      transformDomainMeshSize )
 
 print("Initial Parameters:");
 print(tx.GetParameters())
