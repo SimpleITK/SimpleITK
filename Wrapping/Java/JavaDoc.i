@@ -12813,7 +12813,7 @@ public ";
 
 %typemap(javaimports) itk::simple::FFTShiftImageFilter "/**
 
-Shift the zero-frequency components of a Fourier transfrom to the
+Shift the zero-frequency components of a Fourier transform to the
 center of the image.
 
 
@@ -37541,7 +37541,7 @@ Computes the sigmoid function pixel-wise.
 
 
 A linear transformation is applied first on the argument of the
-sigmoid fuction. The resulting total transfrom is given by
+sigmoid fuction. The resulting total transform is given by
 
 \\\\[ f(x) = (Max-Min) \\\\cdot \\\\frac{1}{\\\\left(1+e^{- \\\\frac{
 x - \\\\beta }{\\\\alpha}}\\\\right)} + Min \\\\]
@@ -42623,7 +42623,7 @@ public ";
 
 %typemap(javaimports) itk::simple::VersorTransform "/**
 
-A 3D rotation transfrom with rotation as a versor around a fixed
+A 3D rotation transform with rotation as a versor around a fixed
 center.
 
 
@@ -46549,7 +46549,7 @@ public ";
 %javamethodmodifiers  itk::simple::FFTShift "/**
 Image itk::simple::FFTShift(const Image &image1, bool inverse=false)
 
-Shift the zero-frequency components of a Fourier transfrom to the
+Shift the zero-frequency components of a Fourier transform to the
 center of the image.
 
 

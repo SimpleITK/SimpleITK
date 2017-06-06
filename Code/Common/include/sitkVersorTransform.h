@@ -26,7 +26,7 @@ namespace itk
 namespace simple
 {
 
-/** \brief A 3D rotation transfrom with rotation as a versor around a
+/** \brief A 3D rotation transform with rotation as a versor around a
  * fixed center.
  *
  * \sa itk::VersorTransform
