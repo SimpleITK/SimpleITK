@@ -1,3 +1,5 @@
+Getting Started
+***************
 
 SimpleITK provides a simplified interface to ITK in a variety of
 languages. You can either download binaries, if they are available for
@@ -12,6 +14,9 @@ After you have installed SimpleITK, please look to the
 or the `Doxygen <http://www.itk.org/SimpleITKDoxygen/html/>`__ pages for
 more information.
 
+.. contents:: On this page
+    :local:
+    :backlinks: none
 
 Downloading the binaries
 ========================

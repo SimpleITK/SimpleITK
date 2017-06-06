@@ -8,6 +8,7 @@ and is under development.
    :maxdepth: 2
 
    faq
+   getting_started
 
 
 
