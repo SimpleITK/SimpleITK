@@ -31,7 +31,7 @@ set_source_files_properties(${swig_generated_file_fullname} PROPERTIES COMPILE_F
 set_target_properties( ${SWIG_MODULE_SimpleITK_TARGET_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Packaging/SimpleITK/src/)
 
 if (WIN32)
-	set_target_properties( ${SWIG_MODULE_SimpleITK_TARGET_NAME} PROPERTIES LINK_FLAGS "-s -shared -static-libgcc -static-libstdc++ -static -lpthread" )
+  set_target_properties( ${SWIG_MODULE_SimpleITK_TARGET_NAME} PROPERTIES LINK_FLAGS ${R_WIN_LINK_FLAGS} )
 endif()
 
 sitk_strip_target( ${SWIG_MODULE_SimpleITK_TARGET_NAME} )
