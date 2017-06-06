@@ -242,6 +242,7 @@ if ( WRAP_R )
     R_COMMAND
     RSCRIPT_EXECUTABLE )
   if ( WIN32 )
+    set (R_WIN_LINK_FLAGS "-s -shared -static-libgcc -static-libstdc++ -static -lpthread")
     list( APPEND SITK_LANGUAGES_VARS
       R_WIN_LINK_FLAGS
       )
