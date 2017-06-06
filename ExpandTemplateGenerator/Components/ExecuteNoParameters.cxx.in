@@ -10,7 +10,7 @@ OUT=[[
   unsigned int dimension = ]]..inputName..[[.GetDimension();
 ]]
 for inum=2,number_of_inputs do
-  OUT= OUT .. '\n    if ( type != image' .. inum .. '.GetPixelIDValue() || dimension != image' .. inum .. '.GetDimension() ) { sitkExceptionMacro ( "Image' .. inum .. ' for ${name} doesnt match type or dimension!" ); }'
+  OUT= OUT .. '\n    if ( type != image' .. inum .. '.GetPixelIDValue() || dimension != image' .. inum .. '.GetDimension() ) { sitkExceptionMacro ( "Image' .. inum .. ' for ${name} doesn\'t match type or dimension!" ); }'
 end
 if inputs then
   for inum=2,#inputs do

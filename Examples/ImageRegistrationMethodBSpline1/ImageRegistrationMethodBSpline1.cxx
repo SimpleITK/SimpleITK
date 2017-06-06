@@ -79,9 +79,9 @@ int main(int argc, char *argv[])
 
   sitk::Image moving = sitk::ReadImage( argv[2], sitk::sitkFloat32 );
 
-  std::vector<unsigned int> transfromDomainMeshSize(fixed.GetDimension(),8);
+  std::vector<unsigned int> transformDomainMeshSize(fixed.GetDimension(),8);
 
-  sitk::BSplineTransform tx = sitk::BSplineTransformInitializer(fixed, transfromDomainMeshSize);
+  sitk::BSplineTransform tx = sitk::BSplineTransformInitializer(fixed, transformDomainMeshSize);
 
   std::cout << "Initial Parameters:" << tx.GetParameters() << std::endl;
 
