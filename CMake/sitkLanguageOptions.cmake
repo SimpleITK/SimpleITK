@@ -241,6 +241,11 @@ if ( WRAP_R )
     R_LIBRARY_BASE
     R_COMMAND
     RSCRIPT_EXECUTABLE )
+  if ( WIN32 )
+    list( APPEND SITK_LANGUAGES_VARS
+      R_WIN_LINK_FLAGS
+      )
+  endif()
 endif()
 
 
