@@ -242,7 +242,8 @@ if ( WRAP_R )
     R_COMMAND
     RSCRIPT_EXECUTABLE )
   if ( WIN32 )
-    set (R_WIN_LINK_FLAGS "-s -shared -static-libgcc -static-libstdc++ -static -lpthread")
+    set ( R_WIN_LINK_FLAGS "-s -shared -static-libgcc -static-libstdc++ -static -lpthread" CACHE STRING "Flags for linking the final shared library in R package under windows")
+    mark_as_advanced( R_WIN_LINK_FLAGS )
     list( APPEND SITK_LANGUAGES_VARS
       R_WIN_LINK_FLAGS
       )
