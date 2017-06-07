@@ -725,7 +725,7 @@ void Transform::InternalInitialization(TransformType *t)
 
     if( list->size() != 1 )
       {
-      std::cerr << "Warning: There is more than one tranform in the file! Only using the first transform.\n";
+      std::cerr << "Warning: There is more than one transform in the file! Only using the first transform.\n";
       }
 
     if( list->front()->GetInputSpaceDimension() == 3

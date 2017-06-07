@@ -132,7 +132,7 @@ Image ${name}::Execute ( const std::vector<Image> &images )
     if ( type != i->GetPixelIDValue() ||
          dimension != i->GetDimension() )
       {
-      sitkExceptionMacro ( "An image for ${name} doesnt match type or dimension!" );
+      sitkExceptionMacro ( "An image for ${name} doesn\'t match type or dimension!" );
       }
     }
 
