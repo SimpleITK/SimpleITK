@@ -86,7 +86,7 @@ namespace itk
         }
       else
         {
-        sitkExceptionMacro("Unsuported number of dimesions specified!");
+        sitkExceptionMacro("Unsupported number of dimesions specified!");
         }
     }
 
