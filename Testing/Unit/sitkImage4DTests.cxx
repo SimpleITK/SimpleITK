@@ -574,6 +574,9 @@ TEST_F(Image4D, ExtractImageFilter)
 
   sitk::Image out = sitk::Extract(img, extractSize);
 
-  ASSERT_EQ ( out.GetDimension(), 3 );
-  EXPECT_EQ ( out.GetSize()[3], 13 );
+  ASSERT_EQ ( 3u, out.GetDimension() );
+  EXPECT_EQ ( 10u, out.GetSize().at(0) );
+  EXPECT_EQ ( 11u, out.GetSize().at(1) );
+  EXPECT_EQ ( 13u, out.GetSize().at(2) );
+  EXPECT_EQ ( 1430u, out.GetNumberOfPixels() );
 }
