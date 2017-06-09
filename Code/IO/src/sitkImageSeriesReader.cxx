@@ -65,6 +65,9 @@ namespace itk {
     }
 
   ImageSeriesReader::ImageSeriesReader()
+    :
+    m_Filter(NULL),
+    m_MetaDataDictionaryArrayUpdate(false)
     {
 
     // list of pixel types supported
@@ -75,6 +78,14 @@ namespace itk {
     this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 3 > ();
     this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
     }
+
+  ImageSeriesReader::~ImageSeriesReader()
+  {
+  if (this->m_Filter != NULL)
+    {
+      m_Filter->UnRegister();
+    }
+  }
 
   std::string ImageSeriesReader::ToString() const {
 
@@ -156,6 +167,51 @@ namespace itk {
     return this->m_MemberFactory->GetMemberFunction( type, dimension )(imageio);
     }
 
+
+//
+// Custom Casts
+//
+namespace {
+template<typename FilterType>
+struct GetMetaDataKeysCustomCast
+{
+  static std::vector<std::string> CustomCast( const FilterType *f, int i)
+  {
+    const typename FilterType::DictionaryArrayType &mda = *f->GetMetaDataDictionaryArray();
+    return mda.at(i)->GetKeys();
+  }
+};
+
+template<typename FilterType>
+struct HasMetaDataKeyCustomCast
+{
+  static bool CustomCast( const FilterType *f, int i, const std::string &k)
+  {
+    const typename FilterType::DictionaryArrayType &mda = *f->GetMetaDataDictionaryArray();
+    return mda.at(i)->HasKey(k);
+  }
+};
+
+template<typename FilterType>
+struct GetMetaDataCustomCast
+{
+  static std::string CustomCast( const FilterType *f, int i, const std::string &k)
+  {
+    const typename FilterType::DictionaryArrayType &mda = *f->GetMetaDataDictionaryArray();
+
+    std::string value;
+    if (ExposeMetaData(*mda.at(i), k, value))
+      {
+      return value;
+      }
+
+    std::ostringstream ss;
+    mda.at(i)->Get(k)->Print(ss);
+    return ss.str();
+  }
+};
+}
+
   template <class TImageType> Image
   ImageSeriesReader::ExecuteInternal( itk::ImageIOBase* imageio )
     {
@@ -171,9 +227,29 @@ namespace itk {
     reader->SetImageIO( imageio );
     reader->SetFileNames( this->m_FileNames );
     // save some computation by not updating this unneeded data-structure
-    reader->MetaDataDictionaryArrayUpdateOff();
+    reader->SetMetaDataDictionaryArrayUpdate(m_MetaDataDictionaryArrayUpdate);
+
+    // release the old filter ( and output data )
+    if ( this->m_Filter != NULL)
+      {
+      this->m_pfGetMetaDataKeys = SITK_NULLPTR;
+      this->m_pfHasMetaDataKey = SITK_NULLPTR;
+      this->m_pfGetMetaData =  SITK_NULLPTR;
+      this->m_Filter->UnRegister();
+      this->m_Filter = NULL;
+      }
+
 
     this->PreUpdate( reader.GetPointer() );
+
+    if (m_MetaDataDictionaryArrayUpdate)
+      {
+      this->m_Filter = reader;
+      this->m_Filter->Register();
+      this->m_pfGetMetaDataKeys = nsstd::bind(&GetMetaDataKeysCustomCast<Reader>::CustomCast, reader.GetPointer(), nsstd::placeholders::_1 );
+      this->m_pfHasMetaDataKey = nsstd::bind(&HasMetaDataKeyCustomCast<Reader>::CustomCast, reader.GetPointer(), nsstd::placeholders::_1, nsstd::placeholders::_2 );
+      this->m_pfGetMetaData = nsstd::bind(&GetMetaDataCustomCast<Reader>::CustomCast, reader.GetPointer(), nsstd::placeholders::_1, nsstd::placeholders::_2 );
+      }
 
     reader->Update();
 

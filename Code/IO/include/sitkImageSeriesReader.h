@@ -39,11 +39,29 @@ namespace itk {
 
       ImageSeriesReader();
 
+      ~ImageSeriesReader();
+
       /** Print ourselves to string */
       virtual std::string ToString() const;
 
       /** return user readable name fo the filter */
       virtual std::string GetName() const { return std::string("ImageSeriesReader"); }
+
+
+      /**
+       * Set/Get whether the meta-data dictionaries for the slices
+       * should be read. Default value is false, because of the
+       * additional computation time..
+       */
+      SITK_RETURN_SELF_TYPE_HEADER SetMetaDataDictionaryArrayUpdate ( bool metaDataDictionaryArrayUpdate )
+      { this->m_MetaDataDictionaryArrayUpdate = metaDataDictionaryArrayUpdate; return *this; }
+      bool GetMetaDataDictionaryArrayUpdate() { return this->m_MetaDataDictionaryArrayUpdate; }
+
+
+      /** Set the value of MetaDataDictionaryArrayUpdate to true or false respectfully. */
+      SITK_RETURN_SELF_TYPE_HEADER MetaDataDictionaryArrayUpdateOn() { return this->SetMetaDataDictionaryArrayUpdate(true); }
+      SITK_RETURN_SELF_TYPE_HEADER MetaDataDictionaryArrayUpdateOff() { return this->SetMetaDataDictionaryArrayUpdate(false); }
+
 
       /** \brief Generate a sequence of filenames from a directory with a DICOM data set and a series ID.
        *
@@ -80,6 +98,37 @@ namespace itk {
 
       Image Execute();
 
+      /** \brief Get the meta-data dictionary keys for a slice
+       *
+       * This is only valid after successful execution of this
+       * filter and when MetaDataDictionaryArrayUpdate is true. Each
+       * element in the array corresponds to a "slice" or filename
+       * read during execution.
+       *
+       * If the slice index is out of range, an exception will be
+       * thrown.
+       *
+       * Returns a vector of keys to the key/value entries in the
+       * file's meta-data dictionary. Iterate through with these keys
+       * to get the values.
+       **/
+      std::vector<std::string> GetMetaDataKeys( unsigned int slice ) const { return this->m_pfGetMetaDataKeys(slice); }
+
+      /** \brief Query a meta-data dictionary for the existence of a key.
+       **/
+      bool HasMetaDataKey( unsigned int slice, const std::string &key ) const { return this->m_pfHasMetaDataKey(slice, key); }
+
+      /** \brief Get the value of a meta-data dictionary entry as a string.
+       *
+       * If the key is not in the dictionary then an exception is
+       * thrown.
+       *
+       * string types in the dictionary are returned as their native
+       * string. Other types are printed to string before returning.
+       **/
+      std::string GetMetaData( unsigned int slice, const std::string &key ) const { return this->m_pfGetMetaData(slice, key); }
+
+
     protected:
 
       template <class TImageType> Image ExecuteInternal ( itk::ImageIOBase * );
@@ -93,7 +142,18 @@ namespace itk {
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
       nsstd::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 
+
+      nsstd::function<std::vector<std::string>(int)> m_pfGetMetaDataKeys;
+      nsstd::function<bool(int, const std::string &)> m_pfHasMetaDataKey;
+      nsstd::function<std::string(int, const std::string &)> m_pfGetMetaData;
+
+      // Holder of process object for active measurements
+      itk::ProcessObject *m_Filter;
+
+
       std::vector<std::string> m_FileNames;
+
+      bool m_MetaDataDictionaryArrayUpdate;
     };
 
   /**
