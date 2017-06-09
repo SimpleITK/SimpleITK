@@ -9,7 +9,7 @@ and is under development.
 
    Documentation/docs/source/faq
    Documentation/docs/source/getting_started
-
+   Examples/index
 
 Indices and tables
 ==================
