@@ -7,9 +7,8 @@ and is under development.
 .. toctree::
    :maxdepth: 2
 
-   faq
-   getting_started
-
+   Documentation/docs/source/faq
+   Documentation/docs/source/getting_started
 
 
 Indices and tables
