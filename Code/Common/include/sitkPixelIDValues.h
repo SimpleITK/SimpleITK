@@ -45,7 +45,7 @@ struct ImageTypeToPixelIDValue
 
 /** \brief Enumerated values of pixelIDs
  *
- * Each PixelID's value corresponded to the index of the PixelID type,
+ * Each PixelID's value corresponds to the index of the PixelID type,
  * in the type list "InstantiatedPixelIDTypeList". It is possible that
  * different configurations for SimpleITK could result in different
  * values for pixelID. So these enumerated values should be used.
