@@ -88,7 +88,7 @@ void MemberFunctionFactory<TMemberFunctionPointer>
 {
   PixelIDValueType pixelID = ImageTypeToPixelIDValue<TImageType>::Result;
 
-  // this shouldn't occour, just may be useful for debugging
+  // this shouldn't occur, just may be useful for debugging
   assert( pixelID >= 0 && pixelID < typelist::Length< InstantiatedPixelIDTypeList >::Result );
 
   sitkStaticAssert( IsInstantiated<TImageType>::Value,

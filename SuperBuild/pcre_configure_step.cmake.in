@@ -1,4 +1,4 @@
-# Set the important envirimental variables that auto-conf uses to
+# Set the important environmental variables that auto-conf uses to
 # configure, mostly these are passed from the CMake
 # configuration. Others are just explicitly passed from the
 # enviroment. If there is a problem with them in the future they can

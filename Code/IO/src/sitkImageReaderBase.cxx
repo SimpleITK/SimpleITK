@@ -23,7 +23,7 @@
 #include <itksys/SystemTools.hxx>
 
 // Include the Transform IO here, so that the IO factory registration
-// will occour.
+// will occur.
 #include <itkTransformFileReader.h>
 #include <itkTransformFileWriter.h>
 
