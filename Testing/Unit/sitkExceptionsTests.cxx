@@ -82,7 +82,7 @@ TEST_F(sitkExceptionsTest, Test3) {
   e0 = e1;
   e0 = empty;
 
-  // test self assigment too
+  // test self assignment too
   e0 = e0;
 
 

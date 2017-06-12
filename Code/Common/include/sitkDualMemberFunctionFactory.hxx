@@ -93,7 +93,7 @@ DualMemberFunctionFactory< TMemberFunctionPointer >
   PixelIDValueType pixelID1 = ImageTypeToPixelIDValue<TImageType1>::Result;
   PixelIDValueType pixelID2 = ImageTypeToPixelIDValue<TImageType2>::Result;
 
-  // this shouldn't occour, just may be useful for debugging
+  // this shouldn't occur, just may be useful for debugging
   assert( pixelID1 >= 0 && pixelID1 < typelist::Length< InstantiatedPixelIDTypeList >::Result );
   assert( pixelID2 >= 0 && pixelID2 < typelist::Length< InstantiatedPixelIDTypeList >::Result );
 

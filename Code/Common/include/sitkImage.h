@@ -42,7 +42,7 @@ class SmartPointer;
 namespace simple
 {
 
-  // This is the foward declaration of a class used internally to the
+  // This is the forward declaration of a class used internally to the
   // Image class, but the actually interface is not exposed to simple
   // ITK. A pointer to the implementation is used as per the pimple
   // idiom.
@@ -122,11 +122,11 @@ namespace simple
 
     /** Get access to internal ITK data object.
      *
-     * The return value should imediately be assigned to as
+     * The return value should immediately be assigned to as
      * itk::SmartPointer.
      *
      * In many cases the value may need to be dynamically casted to
-     * the the actual image type. The GetPixelIDValue() method should
+     * the actual image type. The GetPixelIDValue() method should
      * return an PixelID which identifies the image type which the
      * DataObject points to.
      *
@@ -176,7 +176,7 @@ namespace simple
     /** \brief Set/Get the Direction
      *
      * Internally, the Direction is represented by a matrix 2x2 for a
-     * 2D and and 3x3 for a 3D image. The matrix is passed as a 1D
+     * 2D and 3x3 for a 3D image. The matrix is passed as a 1D
      * array in row-major form.
      * @{
      */
@@ -432,18 +432,18 @@ namespace simple
      * This is the single method which needs to be explicitly
      * instantiated to separate the internal ITK and Pimple image from
      * the external SimpleITK interface. Template parameters have been
-     * choosen carefully to flexibly enable this.
+     * chosen carefully to flexibly enable this.
      */
     template <int VPixelIDValue, unsigned int VImageDimension>
     void InternalInitialization( typename PixelIDToImageType<typename typelist::TypeAt<InstantiatedPixelIDTypeList,
                                                                                        VPixelIDValue>::Result,
                                                              VImageDimension>::ImageType *i );
 
-    /** Dispatched from the InternalInitialization method. The enable
-     * if idiom is used here for method overloading. The second method
-     * is for non-instantiated image, which turn into a void pointer
-     * for the paramter. However, this second method should never be
-     * executed.
+    /** Dispatched from the InternalInitialization method. The
+     * "enable-if" idiom is used here for method overloading. The
+     * second method is for non-instantiated image, which turn into a
+     * void pointer for the parameter. However, this second method
+     * should never be executed.
      * @{
      */
     template<int VPixelIDValue, typename TImageType>

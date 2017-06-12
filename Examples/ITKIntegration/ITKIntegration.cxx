@@ -85,7 +85,7 @@ int main( int argc, char *argv[])
   typedef itk::Image< InternalPixelType, Dimension > InternalImageType;
 
   //
-  // We must check the the image dimension and the pixel type of the
+  // We must check the image dimension and the pixel type of the
   // SimpleITK image match the ITK image we will cast to.s
   //
   if ( image.GetDimension() != Dimension )

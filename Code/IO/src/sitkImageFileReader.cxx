@@ -112,7 +112,7 @@ namespace itk {
     typedef itk::ImageFileReader<ImageType> Reader;
 
     // if the InstantiatedToken is correctly implemented this should
-    // not occour
+    // not occur
     assert( ImageTypeToPixelIDValue<ImageType>::Result != (int)sitkUnknown );
     assert( imageio != SITK_NULLPTR );
     typename Reader::Pointer reader = Reader::New();

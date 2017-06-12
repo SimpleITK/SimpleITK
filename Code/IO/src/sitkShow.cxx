@@ -83,7 +83,7 @@ namespace itk
 
   // Function to replace %tokens in a string.  The tokens are %a and %f for
   // application and file name respectively.  %% will send % to the output string.
-  // Multiple occurances of a token are allowed.
+  // Multiple occurrences of a token are allowed.
   //
   static std::string ReplaceWords(std::string command, std::string app, std::string filename, std::string title, bool& fileFlag)
     {
@@ -534,7 +534,7 @@ namespace itk
     // N.B. Because the launched process may spawn a child process for
     // the acutal application we want, this methods is needed to be
     // called before the GetState, so that we get more then the
-    // imediate result of the initial execution.
+    // immediate result of the initial execution.
     double timeout = ProcessDelay;
     itksysProcess_WaitForExit( kp, &timeout );
 
@@ -579,7 +579,7 @@ namespace itk
         }
         break;
 
-      // these states should not occour, because they are the result
+      // these states should not occur, because they are the result
       // from actions we don't take
       case itksysProcess_State_Expired:
       case itksysProcess_State_Disowned:
@@ -687,7 +687,7 @@ namespace itk
     }
 
 
-  // Replace the string tokens and split the command string into seperate words.
+  // Replace the string tokens and split the command string into separate words.
   CommandLine = ConvertCommand(Command, ExecutableName, TempFile, title);
 
   // run the compiled command-line in a process which will detach
