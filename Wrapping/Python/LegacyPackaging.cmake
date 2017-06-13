@@ -59,7 +59,7 @@ if (SimpleITK_PYTHON_USE_VIRTUALENV)
   endif()
 
   #
-  # Setup Python Virtual Enviroment for testing and packaging
+  # Setup Python Virtual Environment for testing and packaging
   #
   set( PythonVirtualenvHome "${${CMAKE_PROJECT_NAME}_BINARY_DIR}/Testing/Installation/PythonVirtualenv" )
 
