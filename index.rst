@@ -6,9 +6,10 @@ and is under development.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
-
+   Documentation/docs/source/faq
+   Documentation/docs/source/getting_started
+   Examples/index
 
 Indices and tables
 ==================
