@@ -50,7 +50,7 @@ SEXP ImAsArray(itk::simple::Image src)
     case itk::simple::sitkUnknown:
     {
     char error_msg[1024];
-    snprintf( error_msg, 1024, "Exception thrown ImAsArray : unkown pixel type");
+    snprintf( error_msg, 1024, "Exception thrown ImAsArray : unknown pixel type");
     Rprintf(error_msg);
     return(res);
     }
