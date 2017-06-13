@@ -37,7 +37,7 @@ namespace itk.simple.examples {
       // Cast to we know the the pixel type
       input = SimpleITK.Cast(input, PixelId.sitkFloat32);
 
-      // calculate the nubmer of pixels
+      // calculate the number of pixels
       VectorUInt32 size = input.GetSize();
       int len = 1;
       for (int dim = 0; dim < input.GetDimension(); dim++) {

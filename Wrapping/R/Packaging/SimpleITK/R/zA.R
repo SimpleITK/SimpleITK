@@ -62,7 +62,7 @@ ImportPixVec <- function(VP)
 }
 
 ## SetPixel and GetPixel methods. We've provided dummy "extends" methods for these.
-## We'll overwite the bindings here
+## We'll overwrite the bindings here
 Image_SetPixel = function(self, idx, v)
 {
   idx = as.integer(idx);

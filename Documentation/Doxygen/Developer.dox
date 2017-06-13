@@ -16,7 +16,7 @@ General information about Gerrit can be found here:
 
 For those already familiar with git, gerrit, ITK and building SimpelITK, here is a quick overview of the process:
 
-The first thing which should be done before any code is commited locally is running the script to setup your local git repository for development.
+The first thing which should be done before any code is committed locally is running the script to setup your local git repository for development.
 
 \code
 $ Utilities/SetupForDevelopment.sh
@@ -95,7 +95,7 @@ git add -- ./Testing/Input/NewInput.png.md5
 
 The SimpleITK Dashboard is a central location where systems report on
 continuous or nightly compilation and testing results. It is a
-invaluable tool in the extreme programing or agile development
+invaluable tool in the extreme programming or agile development
 process. The <a
 href="http://www.cdash.org/CDash/index.php?project=simpleITK">SimpleITK
 dashboard</a> is now a standalone dashboard.
@@ -128,7 +128,7 @@ $ git pull origin
 \endcode
 
 - Next, we need to create a custom CTest script for our system. More
-  information on the varaible are describe in the header of
+  information on the variable are describe in the header of
   "simpleitk_common.cmake". Here is a sample which can be place in
   "~/Dashboards/SimpleITKScripts/simpleitk_nightly.cmake":
 \code
@@ -212,7 +212,7 @@ reduce recompilation. Using <a href="http://ccache.samba.org/">ccache</a>
 can greatly accelerate the development time when rebuilding
 SimpleITK frequently. Usage is quite simple, download and
 install. However, getting CMake to work with the compiler requires
-setting a few enviromental variables:
+setting a few environmental variables:
 
 \verbatim
 CXX=/usr/local/bin/ccache /usr/bin/g++-4.2

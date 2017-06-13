@@ -35,7 +35,7 @@ namespace simple
 
 /** List of all pixel ids for the itk::Image class.
  *
- * \todo adress vnl issues with long long types
+ * \todo address vnl issues with long long types
  *
  * \sa BasicPixelID
  */

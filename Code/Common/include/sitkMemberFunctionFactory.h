@@ -135,7 +135,7 @@ public:
    *  pixelID is the value of Image::GetPixelIDValue(), or
    *  PixelIDToPixelIDValue<PixelIDType>::Result
    *
-   *  imageDimension is the the value returned by Image::GetDimension()
+   *  imageDimension is the value returned by Image::GetDimension()
    *
    *  Example usage:
    *  \code

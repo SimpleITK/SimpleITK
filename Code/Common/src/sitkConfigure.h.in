@@ -56,7 +56,7 @@
 #endif
 
 // Include ITK version reported in CMake with SITK prefix, so that
-// SimpleITK dosen't need ITK header in our headers.
+// SimpleITK doesn't need ITK header in our headers.
 #define SITK_ITK_VERSION_MAJOR @ITK_VERSION_MAJOR@
 #define SITK_ITK_VERSION_MINOR @ITK_VERSION_MINOR@
 #define SITK_ITK_VERSION_PATCH @ITK_VERSION_PATCH@

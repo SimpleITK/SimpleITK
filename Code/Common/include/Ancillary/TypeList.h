@@ -74,7 +74,7 @@ struct SITK_ABI_HIDDEN NullType {};
  * \code
  * MakeTypeList<T1, T2, T3>::Type
  * \endcode
- * returns a typelist that contans the types T1, T2, T3
+ * returns a typelist that contains the types T1, T2, T3
  *
  * Example:
  * \code

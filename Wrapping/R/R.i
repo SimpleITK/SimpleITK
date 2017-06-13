@@ -56,7 +56,7 @@
 %}
 
 
-// SEXP numeric typemap for array/image converion - SEXP are
+// SEXP numeric typemap for array/image conversion - SEXP are
 // arrays here
 %typemap("rtype") SEXP "numeric";
 
