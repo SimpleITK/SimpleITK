@@ -69,8 +69,6 @@ file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/CSharpTests)
 set(TEST_HARNESS_TEMP_DIRECTORY ${SimpleITK_BINARY_DIR}/Testing/Temporary)
 set(TEST_HARNESS_DATA_DIRECTORY ${SimpleITK_BINARY_DIR}/ExternalData/Testing/Data)
 
-set( ITK_TEST_DRIVER  "$<TARGET_FILE:itkTestDriver>" )
-
 # Adjust Python to run in the virtualenv
 set( PythonVirtualenvHome  ${SimpleITK_BINARY_DIR}/Testing/Installation/PythonVirtualenv )
 
