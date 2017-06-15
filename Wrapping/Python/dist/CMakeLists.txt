@@ -7,7 +7,7 @@ if( SimpleITK_PYTHON_EGG OR SimpleITK_PYTHON_WHEEL )
 Using unknown versions of pip, setuptools and/or wheel packages/" )
   endif()
 
-  set(bdist_setup "${SimpleITK_Python_BINARY_DIR}/Packaging/setupegg.py")
+  set(bdist_setup "${SimpleITK_Python_BINARY_DIR}/Packaging/setup.py")
   set(bdist_commands "")
 
   if( SimpleITK_PYTHON_EGG )

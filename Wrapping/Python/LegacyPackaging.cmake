@@ -33,11 +33,6 @@ configure_file_buildtime( "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/setup.py.in"
   "${CMAKE_CURRENT_BINARY_DIR}/Packaging/setup.py" )
 
 configure_file(
-  "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/setupegg.py"
-  "${CMAKE_CURRENT_BINARY_DIR}/Packaging/setupegg.py"
-  COPYONLY )
-
-configure_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/__init__.py"
   "${CMAKE_CURRENT_BINARY_DIR}/__init__.py"
   COPYONLY )
