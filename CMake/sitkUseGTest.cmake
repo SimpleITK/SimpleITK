@@ -37,7 +37,7 @@ function(_sitk_gtest_use_gtest_source)
 
   # google test does not properly use pthreads on mingw
   if (MINGW)
-    set(gtest_disable_pthreads  ON)
+    set(gtest_disable_pthreads  ON CACHE INTERNAL "" FORCE)
   endif()
 
   # Must build GTest as static since EXCLUDE_FROM_ALL, would exclude
