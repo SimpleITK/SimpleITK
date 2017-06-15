@@ -532,7 +532,7 @@ int main(int argc, char *argv[])
       std::string bestBaselineName =  *baselineFilenames.begin();
       float bestRMS = std::numeric_limits<float>::max();
 
-      sitk::Image testSlice = ImageCompare::extractSlice(test);
+      const sitk::Image testSlice = ImageCompare::extractSlice(test);
 
       for ( iterName = baselineFilenames.begin(); iterName != baselineFilenames.end(); ++iterName )
         {
@@ -550,7 +550,18 @@ int main(int argc, char *argv[])
           continue;
           }
 
-        const float RMS = imageCompare.testImages(testSlice, baseline, false,  *iterName);
+        float RMS = -1.0;
+        std::cout << "Slice Dim: " << testSlice.GetDimension() << std::endl;
+        if (baseline.GetSize() != test.GetSize())
+          {
+          std::cout << "Using Extracted Slice for comparison." << std::endl;
+          RMS = imageCompare.testImages(testSlice, baseline, false,  *iterName);
+          }
+        else
+          {
+          RMS = imageCompare.testImages(test, baseline, false,  *iterName);
+          }
+
         if ( RMS == -1.0 )
           {
           std::cerr << imageCompare.getMessage() << std::endl;
@@ -565,8 +576,15 @@ int main(int argc, char *argv[])
 
       if ( bestRMS > fabs ( tolerance ) )
         {
-          sitk::Image baseline =  sitk::ReadImage( bestBaselineName );
-          imageCompare.testImages( testSlice, baseline, true, bestBaselineName );
+          const sitk::Image baseline =  sitk::ReadImage( bestBaselineName );
+          if (baseline.GetSize() != test.GetSize())
+            {
+            imageCompare.testImages( testSlice, baseline, true, bestBaselineName );
+            }
+          else
+            {
+            imageCompare.testImages(test, baseline, false,  *iterName);
+            }
           ++result;
         }
 
