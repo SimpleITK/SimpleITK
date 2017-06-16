@@ -229,7 +229,8 @@ function(sitk_add_r_test name)
     return()
   endif()
 
-  set(command "${RSCRIPT_EXECUTABLE}")
+  set(command "${RSCRIPT_EXECUTABLE}" "--no-save" "--no-restore"
+  "--no-site-file" "--no-init-file")
 
   # add extra command which may be needed on some systems
   if(CMAKE_OSX_ARCHITECTURES)
