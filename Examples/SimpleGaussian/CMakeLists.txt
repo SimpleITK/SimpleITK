@@ -54,11 +54,10 @@ sitk_add_python_test( Example.SimpleGaussian
   "${TEST_HARNESS_TEMP_DIRECTORY}/Python.SimpleGaussian.nrrd" )
 
 sitk_add_r_test( Example.SimpleGaussian
-  "--file=${CMAKE_CURRENT_SOURCE_DIR}/SimpleGaussian.R"
+  "${CMAKE_CURRENT_SOURCE_DIR}/SimpleGaussian.R"
   --compare
     "${TEST_HARNESS_TEMP_DIRECTORY}/R.SimpleGaussian.nrrd"
     DATA{${SimpleITK_DATA_ROOT}/Baseline/Example_SimpleGaussian_2.0.nrrd}
-  --args
   DATA{${SimpleITK_DATA_ROOT}/Input/RA-Short.nrrd}
   "2.0"
   "${TEST_HARNESS_TEMP_DIRECTORY}/R.SimpleGaussian.nrrd"

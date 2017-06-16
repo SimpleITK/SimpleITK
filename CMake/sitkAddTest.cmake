@@ -229,7 +229,7 @@ function(sitk_add_r_test name)
     return()
   endif()
 
-  set(command "${R_COMMAND}")
+  set(command "${RSCRIPT_EXECUTABLE}")
 
   # add extra command which may be needed on some systems
   if(CMAKE_OSX_ARCHITECTURES)

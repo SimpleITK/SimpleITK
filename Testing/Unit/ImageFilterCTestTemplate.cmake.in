@@ -69,8 +69,7 @@ $(for i=1,#tests do
 local script = "$${SimpleITK_BINARY_DIR}/Testing/Unit/RTests/${name}Test.R"
 OUT=OUT..[[
  sitk_add_r_test( ${name}.]]..tests[i].tag..[[
-  "--file=]]..script..[["
-  --args
+  "]]..script..[["
   ]]..tests[i].tag..[[
 ]]
 for j=1,#tests[i].inputs do
