@@ -29,9 +29,9 @@
       "default" : "std::vector<double>(3, 0.5)",
       "itk_type" : "typename FilterType::ArrayType",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the standard deviation of the Gaussians or width of the box functions.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get the standard deviation of the Gaussians or width of the box functions."
     },
     {
       "name" : "GridSpacing",
@@ -40,9 +40,9 @@
       "default" : "std::vector<double>(3, 4.0)",
       "itk_type" : "typename FilterType::ArrayType",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the grid spacing of the peaks.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get the grid spacing of the peaks."
     },
     {
       "name" : "GridOffset",
@@ -51,18 +51,18 @@
       "default" : "std::vector<double>(3, 0.0)",
       "itk_type" : "typename FilterType::ArrayType",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the grid offset.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get the grid offset."
     },
     {
       "name" : "Scale",
       "type" : "double",
       "default" : "255.0",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get the scale factor to multiply the true value of the grid.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : ""
+      "detaileddescriptionGet" : "Set/Get the scale factor to multiply the true value of the grid."
     },
     {
       "name" : "Origin",

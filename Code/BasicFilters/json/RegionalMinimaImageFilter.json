@@ -61,7 +61,7 @@
     }
   ],
   "briefdescription" : "Produce a binary image where foreground is the regional minima of the input image.",
-  "detaileddescription" : "Regional minima are flat zones surrounded by pixels of greater value.\n\nIf the input image is constant, the entire image can be considered as a minima or not. The SetFlatIsMinima() method let the user choose which behavior to use.\n\nThis class was contribtued to the Insight Journal by \\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France. https://hdl.handle.net/1926/153 \n\nRegionalMaximaImageFilter MathematicalMorphologyImageFilters\n\n\\see ValuedRegionalMinimaImageFilter \n\n\\see HConcaveImageFilter \n\n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li RegionalMinimaImageFilter",
+  "detaileddescription" : "Regional minima are flat zones surrounded by pixels of greater value.\n\nIf the input image is constant, the entire image can be considered as a minima or not. The SetFlatIsMinima() method let the user choose which behavior to use.\n\nThis class was contribtued to the Insight Journal by \\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France. https://hdl.handle.net/1926/153 \n\n\\see RegionalMaximaImageFilter \n\n\\see ValuedRegionalMinimaImageFilter \n\n\\see HConcaveImageFilter \n\n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li RegionalMinimaImageFilter",
   "itk_module" : "ITKReview",
   "itk_group" : "Review"
 }
