@@ -39,6 +39,8 @@ reccommend the use of a :ref:`virual environment <FAQ-virtualenv>`
 for installation of SimpleITK.
 
 
+.. _installation-generic-python:
+
 Wheels for Generic Python Distribution
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -90,15 +92,6 @@ under the dev label:
 
  conda install -c https://conda.anaconda.org/simpleitk/label/dev SimpleITK
 
-Enthought Canopy Distribution
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-First thing you should do is create a virtual environment (canopy\_cli
-tool) and activate it.
-
-Currently there are no binaries supported with this distribution. You
-will need to compile SimpleITK yourself. (Using pip installation may
-work.)
 
 C# binary files
 ---------------

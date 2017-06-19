@@ -240,6 +240,14 @@ anaconda distribution, and
 `canopy\_cli <http://docs.enthought.com/canopy/configure/canopy-cli.html>`__
 for the canopy distribution.
 
+Are the Python Wheels compatible with Enthought Canopy Distribution?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The :ref:`Generic Python Wheels <installation-generic-python>`
+frequently seem to work with the Enthought Canopy Python
+distribution. However, it is recommended that you compile SimpleITK
+explicitly against this Python distribution to ensure compatibility.
+
 Tcl
 ---
 
