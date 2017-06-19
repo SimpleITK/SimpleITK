@@ -255,7 +255,7 @@ R
 Compilation
 ===========
 
-.. _compiler-supported:
+.. _FAQ-compiler-supported:
 
 Is my compiler supported?
 -------------------------

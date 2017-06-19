@@ -26,7 +26,7 @@ To build SimpleITK you need:
 
 -  A recent version of `CMake <http://www.cmake.org/>`__ >= 3.3 with SSL
    support for https.
--  A supported :ref:`compiler <compiler-supported>`.
+-  A supported :ref:`compiler <FAQ-compiler-supported>`.
 -  To use the latest developmental version, source code can be
    downloaded with `git <http://git-scm.com/>`__ >= 1.65
 
