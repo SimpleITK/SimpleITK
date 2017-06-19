@@ -34,33 +34,10 @@ Python binary files
 -------------------
 
 There are currently two Python binary package choices: Python Wheels,
-and Anaconda packages for the Anaconda Python distribution.
+and Anaconda packages for the Anaconda Python distribution. We
+reccommend the use of a :ref:`virual environment <FAQ-virtualenv>`
+for installation of SimpleITK.
 
-Use a Virtual Environment
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Before you install SimpleITK we highly recommend that you create a
-virtual environment into which you install the package. Note that
-different Python versions and distributions have different programs for
-creating and managing virtual environments.
-
-The use of a virtual environment allows you to elegantly deal with
-package compatability issues, to quote `The Hitchhiker’s Guide to
-Python! <http://docs.python-guide.org/en/latest/>`__:
-
-    A Virtual Environment is a tool to keep the dependencies required by
-    different projects in separate places, by creating virtual Python
-    environments for them. It solves the “Project X depends on version
-    1.x but, Project Y needs 4.x” dilemma, and keeps your global
-    site-packages directory clean and manageable.
-
-Programs for creating virtual environments include `virtualenv and
-pyvenv <https://packaging.python.org/en/latest/installing/#creating-virtual-environments>`__
-for generic Python distributions,
-`conda <http://conda.pydata.org/docs/using/envs.html>`__ for the
-anaconda distribution, and
-`canopy\_cli <http://docs.enthought.com/canopy/configure/canopy-cli.html>`__
-for the canopy distribution.
 
 Wheels for Generic Python Distribution
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
