@@ -46,42 +46,30 @@ for installation of SimpleITK.
 Wheels for Generic Python Distribution
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If you are working with the `generic Python
-distribution <https://www.python.org/>`__ you can install a Wheel with
-the lasted version of pip (>=9.0).
-
-First thing you should do is create a virtual environment (virtualenv or
-pyvenv tools) and activate it.
-
-Note: you can always manually download the wheels for your operating
-system and Python version directly from
-`sourceforge <http://sourceforge.net/projects/simpleitk/files/SimpleITK/>`__.
-
 From the command line use the `pip
-program <https://pip.pypa.io/en/latest/index.html>`__ to install:
+program <https://pip.pypa.io/en/latest/index.html>`__ to install a
+binary wheel:
 
 .. code-block :: bash
 
- pip installSimpleITK
+ pip install SimpleITK
 
-The pip package manager should automatically find the correct package
-for Microsoft Windows, Apple OS X and GNU Linux if your version and
-architecture are supported. If no binary package is found, then a source
-distribution will be downloaded and attempted to be compiled and you
-should look into `Build It Yourself`_.
+This requires a recent version of  pip (>=9.0), to properly detect
+compatibility with the `PEP 427
+<https://www.python.org/dev/peps/pep-0427/>`__ tags in the wheel
+filenames. You can update your pip using ``pip install -U pip``. It
+also requires that your Python environment is compatible with one of
+the pre-compiled binary wheels.
 
-        If your pip version in the virtual environment is stale (<9.0)
-        you need to update it (pip install -U pip).
+Alternatively, the wheels can be manually downloaded from `sourceforge
+<http://sourceforge.net/projects/simpleitk/files/SimpleITK/>`__ or
+`PyPI <https://pypi.python.org/pypi/SimpleITK>`__, then installed with pip.
 
-Anaconda Distribution
-^^^^^^^^^^^^^^^^^^^^^
 
-First thing you should do is create a virtual environment
-(`conda <https://conda.pydata.org/docs/using/envs.html>`__ tool) and
-activate it.
+Conda-based distributions (Anaconda, Miniconda)
+-----------------------------------------------
 
-Currently there are compiled binaries on `Anaconda
-Cloud <https://conda.anaconda.org/simpleitk>`__, easily installed with:
+From the command line prompt, execute:
 
 .. code-block :: bash
 
