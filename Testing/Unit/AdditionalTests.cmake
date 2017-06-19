@@ -63,22 +63,22 @@ sitk_add_java_test( ImageTests
 # R Tests
 #
 sitk_add_r_test( Arithmetic
-  "--file=${SimpleITK_SOURCE_DIR}/Testing/Unit/RArithmeticTest.R"
+  "${SimpleITK_SOURCE_DIR}/Testing/Unit/RArithmeticTest.R"
   )
 sitk_add_r_test( PixelIndexing
-  "--file=${SimpleITK_SOURCE_DIR}/Testing/Unit/RPixelAccess.R"
+  "${SimpleITK_SOURCE_DIR}/Testing/Unit/RPixelAccess.R"
   )
 sitk_add_r_test( ImageListArguments
-  "--file=${SimpleITK_SOURCE_DIR}/Testing/Unit/RImageListArguments.R"
+  "${SimpleITK_SOURCE_DIR}/Testing/Unit/RImageListArguments.R"
   )
 sitk_add_r_test( SwigVectorConversion
-  "--file=${SimpleITK_SOURCE_DIR}/Testing/Unit/RSwigVectorConversionTests.R"
+  "${SimpleITK_SOURCE_DIR}/Testing/Unit/RSwigVectorConversionTests.R"
   )
 sitk_add_r_test( ImageSlicing
-  "--file=${SimpleITK_SOURCE_DIR}/Testing/Unit/RImageSlicingTests.R"
+  "${SimpleITK_SOURCE_DIR}/Testing/Unit/RImageSlicingTests.R"
   )
 sitk_add_r_test( Transform
-  "--file=${SimpleITK_SOURCE_DIR}/Testing/Unit/RTransformTests.R"
+  "${SimpleITK_SOURCE_DIR}/Testing/Unit/RTransformTests.R"
   )
 
 
