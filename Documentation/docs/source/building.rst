@@ -3,8 +3,9 @@ Building SimpleITK
 
 
 In many cases a user does not need to build SimpleITK because of the
-pre-built binaries available (see `Downloading the binaries`_). However there are
-several reasons a user might prefer to **build SimpleITK from source**:
+pre-built binaries available (see :ref:`Downloading the binaries
+<installation-binaries>`). However there are several reasons a user
+might prefer to **build SimpleITK from source**:
 
 -  The binary files for your programming language of choice are not
    (yet) distributed

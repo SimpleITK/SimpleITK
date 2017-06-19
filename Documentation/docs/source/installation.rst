@@ -19,6 +19,8 @@ more information.
     :local:
     :backlinks: none
 
+.. _installation-binaries:
+
 Downloading the binaries
 ========================
 
