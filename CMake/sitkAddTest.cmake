@@ -13,23 +13,32 @@ set(SimpleITK_DATA_ROOT ${SimpleITK_SOURCE_DIR}/Testing/Data)
 #   The first arguments are passed to cmake's add_test function with
 #   support for the DATA{} references to external data
 # TRANSFORM_COMPARE <test transform> <baseline displacement> [tolerance]
+# IMAGE_COMPARE <test image> <baseline image> [tolerance]
+# IMAGE_MD5_COMPARE <test image> <md5 hash>
 function(sitk_add_test)
   set(options "")
   set(oneValueArgs "NAME")
-  set(multiValueArgs COMMAND TRANSFORM_COMPARE)
+  set(multiValueArgs COMMAND TRANSFORM_COMPARE IMAGE_COMPARE IMAGE_MD5_COMPARE)
   cmake_parse_arguments("_" "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN} )
 
   if ( NOT "${__TRANSFORM_COMPARE}" STREQUAL "" )
     set(COMPARE_ARGS ${COMPARE_ARGS} --compareTransform ${__TRANSFORM_COMPARE})
   endif()
 
+  if ( NOT "${__IMAGE_COMPARE}" STREQUAL "" )
+    set(COMPARE_ARGS ${COMPARE_ARGS} --compare ${__IMAGE_COMPARE})
+  endif()
+
+  if ( NOT "${__IMAGE_MD5_COMPARE}" STREQUAL "" )
+    set(COMPARE_ARGS ${COMPARE_ARGS} --compare-MD5 ${__IMAGE_MD5_COMPARE})
+  endif()
+
   if (COMPARE_ARGS)
     set(__COMMAND $<TARGET_FILE:sitkCompareDriver> ${COMPARE_ARGS} -- ${__COMMAND})
   endif()
 
-   # Add test with data in the SimpleITKData group.
+  # Add test with data in the SimpleITKData group.
   ExternalData_add_test(SimpleITKData NAME ${__NAME} COMMAND ${__COMMAND} ${__UNPARSED_ARGUMENTS})
-
 
 endfunction()
 
@@ -52,9 +61,9 @@ function(sitk_add_python_test name)
   endif()
 
   sitk_add_test(NAME Python.${name}
-    COMMAND "${ITK_TEST_DRIVER}"
-    ${command}
-    ${ARGN}
+    COMMAND
+      ${command}
+      ${ARGN}
     )
   set_property(TEST Python.${name}
       PROPERTY LABELS Python
@@ -89,9 +98,9 @@ function(sitk_add_lua_test name)
   endif()
 
   sitk_add_test(NAME Lua.${name}
-    COMMAND "${ITK_TEST_DRIVER}"
-    ${command}
-    ${ARGN}
+    COMMAND
+      ${command}
+      ${ARGN}
     )
   set_property(TEST Lua.${name}
     PROPERTY LABELS Lua
@@ -123,9 +132,9 @@ function(sitk_add_ruby_test name)
   endif()
 
   sitk_add_test(NAME Ruby.${name}
-    COMMAND "${ITK_TEST_DRIVER}"
-    ${command}
-    ${ARGN}
+    COMMAND
+      ${command}
+      ${ARGN}
     )
   set_property(TEST Ruby.${name}
     PROPERTY LABELS Ruby
@@ -154,9 +163,9 @@ function(sitk_add_tcl_test name)
   endif()
 
   sitk_add_test(NAME Tcl.${name}
-    COMMAND "${ITK_TEST_DRIVER}"
-    ${command}
-    ${ARGN}
+    COMMAND
+      ${command}
+      ${ARGN}
     )
   set_property(TEST Tcl.${name}
     PROPERTY LABELS Tcl
@@ -207,12 +216,12 @@ function(sitk_add_java_test name java_file)
 
 
   sitk_add_test(NAME Java.${name}
-    COMMAND "${ITK_TEST_DRIVER}"
-    "${Java_JAVA_EXECUTABLE}"
-    "-Djava.library.path=${_JAVA_LIBRARY_PATH}"
-    "-classpath" "${_JAVA_CLASSPATH}"
-    "${_java_class}"
-    ${ARGN}
+    COMMAND
+      "${Java_JAVA_EXECUTABLE}"
+      "-Djava.library.path=${_JAVA_LIBRARY_PATH}"
+      "-classpath" "${_JAVA_CLASSPATH}"
+      "${_java_class}"
+      ${ARGN}
     )
   set_property(TEST Java.${name}
     PROPERTY LABELS Java
@@ -239,9 +248,9 @@ function(sitk_add_r_test name)
   endif()
 
   sitk_add_test(NAME R.${name}
-    COMMAND "${ITK_TEST_DRIVER}"
-    ${command}
-    ${ARGN}
+    COMMAND
+      ${command}
+      ${ARGN}
     )
   set_property(TEST R.${name}
     PROPERTY LABELS R
@@ -290,16 +299,16 @@ function(sitk_add_csharp_test name csharp_file)
   # the interpreter is set to "" when none is needed
   if( CSHARP_INTERPRETER )
     sitk_add_test(NAME CSharp.${name}
-      COMMAND "${ITK_TEST_DRIVER}"
-      "${CSHARP_INTERPRETER}"
-      "${CSHARP_BINARY_DIRECTORY}/${CSHARP_EXECUTABLE}.exe"
-      ${ARGN}
+      COMMAND
+        "${CSHARP_INTERPRETER}"
+        "${CSHARP_BINARY_DIRECTORY}/${CSHARP_EXECUTABLE}.exe"
+        ${ARGN}
       )
   else ()
     sitk_add_test(NAME CSharp.${name}
-      COMMAND "${ITK_TEST_DRIVER}"
-      "${CSHARP_BINARY_DIRECTORY}/${CSHARP_EXECUTABLE}.exe"
-      ${ARGN}
+      COMMAND
+        "${CSHARP_BINARY_DIRECTORY}/${CSHARP_EXECUTABLE}.exe"
+        ${ARGN}
       )
   endif()
   set_property(TEST CSharp.${name}

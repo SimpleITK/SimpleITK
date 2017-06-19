@@ -26,19 +26,26 @@ end)
 # Python Tests
 #
 $(for i=1,#tests do
-local script = "$${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/${name}Test.py"
+local script = [["$${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/${name}Test.py"]]
+local output = [["$${TEST_HARNESS_TEMP_DIRECTORY}/Python-${name}-]]..tests[i].tag..[[.nrrd"]]
+local baseline = [["$${TEST_HARNESS_DATA_DIRECTORY}/Baseline/BasicFilters_${name}_]]..tests[i].tag..[[.nrrd"]]
 OUT=OUT..[[
- sitk_add_python_test( ${name}.]]..tests[i].tag..[[
-  "]]..script..[["
-  ]]..tests[i].tag..[[
-]]
+ sitk_add_python_test( ${name}.]]..tests[i].tag..[[ ]]..script..[[ ]]..tests[i].tag
 for j=1,#tests[i].inputs do
-    OUT=OUT..[[
-  "DATA{$${SimpleITK_DATA_ROOT}/]]..tests[i].inputs[j]..[[}"
-]]
+  OUT=OUT..[[ 
+  "DATA{$${SimpleITK_DATA_ROOT}/]]..tests[i].inputs[j]..[[}"]]
 end
 OUT=OUT..[[
-  "$${TEST_HARNESS_TEMP_DIRECTORY}/Python-${name}-]]..tests[i].tag..[[.nrrd"  )
+  ]]..output
+if tests[i].md5hash then
+  OUT=OUT..[[ 
+    IMAGE_MD5_COMPARE ]]..output..[[ ]]..tests[i].md5hash
+end
+if tests[i].tolerance then
+   OUT=OUT..[[ 
+    IMAGE_COMPARE ]]..output..[[ ]]..baseline..[[ ]]..tests[i].tolerance
+end
+OUT=OUT..[[ )
 ]]
 end)
 

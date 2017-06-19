@@ -55,16 +55,7 @@ void ImageCompare::NormalizeAndSave ( const sitk::Image &input, const std::strin
     }
 
   // Extract the center slice of our image
-  if ( input.GetDimension() == 3 )
-    {
-    std::vector<int> idx( 3, 0 );
-    std::vector<unsigned int> sz = input.GetSize();
-
-    // set to just the center slice
-    idx[2] = (int)( input.GetDepth() / 2 );
-    sz[2] = 0;
-    image = sitk::Extract( input, sz, idx );
-    }
+  image = extractSlice(image);
 
   sitk::Image out = sitk::RescaleIntensity( image, 0, 255 );
 
@@ -203,6 +194,23 @@ float ImageCompare::testImages( const itk::simple::Image& testImage,
     return (rms > fabs ( mTolerance )) ? rms  : 0.0;
 }
 
+sitk::Image ImageCompare::extractSlice( const sitk::Image & image )
+{
+  // Extract the center slice of our test image
+  if ( image.GetDimension() == 3 )
+    {
+    std::vector<int> idx( 3, 0 );
+    std::vector<unsigned int> sz = image.GetSize();
+
+    // set to just the center slice
+    idx[2] = (int)( image.GetDepth() / 2 );
+    sz[2] = 1;
+    return  sitk::RegionOfInterest( image, sz, idx );
+    }
+
+  return image;
+
+}
 
 bool ImageCompare::compare ( const sitk::Image& image, std::string inTestCase, std::string inTag )
 {
@@ -229,22 +237,7 @@ bool ImageCompare::compare ( const sitk::Image& image, std::string inTestCase, s
     name.append("_").append ( tag );
     }
 
-
-  // Extract the center slice of our test image
-  if ( image.GetDimension() == 3 )
-    {
-    std::vector<int> idx( 3, 0 );
-    std::vector<unsigned int> sz = image.GetSize();
-
-    // set to just the center slice
-    idx[2] = (int)( image.GetDepth() / 2 );
-    sz[2] = 1;
-    centerSlice = sitk::RegionOfInterest( image, sz, idx );
-    }
-  else
-    {
-    centerSlice = image;
-    }
+  centerSlice = extractSlice(image);
 
   const std::string baselineFileName = dataFinder.GetFile( "Baseline/" + name + extension );
 
