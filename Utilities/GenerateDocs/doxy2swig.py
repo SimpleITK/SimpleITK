@@ -221,7 +221,7 @@ class Doxy2SWIG:
         """ Only output a space if the last character outputed was not a new line.
             I.e., don't allow a line to lead with a space.
         """
-	if len(self.pieces) and self.pieces[-1][-1] != '\n':
+        if len(self.pieces) and self.pieces[-1][-1] != '\n':
           self.add_text(' ')
         self.generic_parse(node)
 
@@ -775,7 +775,7 @@ def usage():
 
 
 if __name__ == '__main__':
-    
+
     try:
         opts, args = getopt.getopt(sys.argv[1:], "dh", [ "debug", "help" ] )
     except getopt.GetoptError, err:
@@ -792,7 +792,7 @@ if __name__ == '__main__':
         else:
             assert False, "unhandled options"
 
-    
+
     if len(args) != 2:
         usage()
         sys.exit(1)
