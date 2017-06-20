@@ -26,7 +26,7 @@ foreach (_varName ${_varNames})
   if(_varName MATCHES "^ITK_"
       OR _varName MATCHES "^ITKV3"
       OR _varName MATCHES "FFTW"
-      OR _varName MATCHES "^Module_ITK")
+      OR _varName MATCHES "^Module_")
     message( STATUS "Passing variable \"${_varName}=${${_varName}}\" to ITK external project.")
     list(APPEND ITK_VARS ${_varName})
   endif()
@@ -51,7 +51,7 @@ if("${git_protocol}" STREQUAL "git")
 endif()
 
 # NOTE: it is very important to update the ITK_DIR path with the ITK version
-set(ITK_TAG_COMMAND GIT_TAG v4.11.1) # v4.11.1 tag
+set(ITK_TAG_COMMAND GIT_TAG v4.12.0) # 4.12.0 tag
 
 if( ${BUILD_SHARED_LIBS} )
   set( ITK_BUILD_SHARED_LIBS ON )
@@ -95,4 +95,4 @@ ExternalProject_Add(${proj}
 
 
 ExternalProject_Get_Property(ITK install_dir)
-set(ITK_DIR "${install_dir}/lib/cmake/ITK-4.11" )
+set(ITK_DIR "${install_dir}/lib/cmake/ITK-4.12" )

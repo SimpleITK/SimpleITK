@@ -4,7 +4,7 @@
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "pixel_types" : "NonLabelPixelIDTypeList",
-  "public_declarations" : "Self &SetShrinkFactor( unsigned int s ) { this->m_ShrinkFactors = std::vector<unsigned int>(3, s ); return *this; }",
+  "public_declarations" : "SITK_RETURN_SELF_TYPE_HEADER SetShrinkFactor( unsigned int s ) { this->m_ShrinkFactors = std::vector<unsigned int>(3, s ); return *this; }",
   "members" : [
     {
       "name" : "ShrinkFactors",

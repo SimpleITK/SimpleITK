@@ -37,7 +37,7 @@ execute_process(
   )
 
 if ( failed )
-  message( FATAL_ERROR "Creation of Python virtual enviroment failed.\n${error}" )
+  message( FATAL_ERROR "Creation of Python virtual environment failed.\n${error}" )
 endif()
 
 #

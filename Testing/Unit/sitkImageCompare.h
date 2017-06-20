@@ -34,6 +34,7 @@ public:
                     bool retportErrors,
                     const std::string &baselineImageFilename );
 
+  static itk::simple::Image extractSlice( const itk::simple::Image & image );
 
   // Return the message from the previous image comparison.
   std::string getMessage() { return mMessage; }

@@ -13,8 +13,7 @@ if( WRAP_PYTHON )
 endif()
 
 sitk_add_r_test( Example.DicomImagePrintTags
-  "--file=${CMAKE_CURRENT_SOURCE_DIR}/DicomImagePrintTags.R"
-  --args
+  "${CMAKE_CURRENT_SOURCE_DIR}/DicomImagePrintTags.R"
     DATA{${SimpleITK_DATA_ROOT}/Input/DicomSeries/Image0075.dcm}
   )
 if(WRAP_R)

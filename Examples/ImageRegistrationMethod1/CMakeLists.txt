@@ -63,8 +63,7 @@ sitk_add_python_test( Example.ImageRegistrationMethod1
   )
 
 sitk_add_r_test( Example.ImageRegistrationMethod1
-  "--file=${CMAKE_CURRENT_SOURCE_DIR}/ImageRegistrationMethod1.R"
-  --args
+  "${CMAKE_CURRENT_SOURCE_DIR}/ImageRegistrationMethod1.R"
     DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20.png}
     DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceShifted13x17y.png}
     ${TEST_HARNESS_TEMP_DIRECTORY}/RImageRegistrationMethod11Test.hdf5

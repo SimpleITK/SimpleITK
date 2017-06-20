@@ -491,11 +491,11 @@ TEST( IO, Image4D )
   EXPECT_EQ( 1u, image.GetNumberOfComponentsPerPixel() );
 
   sitk::ImageFileWriter imageWriter;
-  imageWriter.SetFileName( dataFinder.GetOutputDirectory()+"image4d.nii" );
+  imageWriter.SetFileName( dataFinder.GetOutputDirectory()+"/image4d.nii" );
   ASSERT_NO_THROW( imageWriter.Execute( image ) );
 
   sitk::ImageFileReader imageReader;
-  imageReader.SetFileName( dataFinder.GetOutputDirectory()+"image4d.nii" );
+  imageReader.SetFileName( dataFinder.GetOutputDirectory()+"/image4d.nii" );
   ASSERT_NO_THROW( imageRead = imageReader.Execute() );
   EXPECT_EQ ( sitk::Hash( image ), sitk::Hash( imageRead ) );
 
@@ -509,12 +509,12 @@ TEST( IO, Image4D )
   EXPECT_EQ( 21u, imageRead2.GetDepth() );
   EXPECT_EQ( 4u, imageRead2.GetSize()[3] );
 
-  imageWriter.SetFileName( dataFinder.GetOutputDirectory()+"image4d2.nii" );
+  imageWriter.SetFileName( dataFinder.GetOutputDirectory()+"/image4d2.nii" );
   ASSERT_NO_THROW( imageWriter.Execute( imageRead2 ) );
 
   sitk::Image imageRead3;
   ASSERT_NO_THROW( imageRead3 = imageReader.Execute() );
-  imageReader.SetFileName( dataFinder.GetOutputDirectory()+"image4d2.nii" );
+  imageReader.SetFileName( dataFinder.GetOutputDirectory()+"/image4d2.nii" );
   EXPECT_EQ ( "9e81d4b3cdf10a4da5d54c8cd7c4954449d76d5d", sitk::Hash( imageRead3 ) );
 
   // VectorImage

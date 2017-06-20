@@ -28,7 +28,7 @@ namespace itk
 {
 
 // Forward declaration for pointer
-// After ITK_VERSION 4.5 (Acutally after June 20th, 2013) the ITK Transform
+// After ITK_VERSION 4.5 (Actually after June 20th, 2013) the ITK Transform
 // classes are now templated.  This requires forward declarations to be defined
 // differently.
 #if ( ( SITK_ITK_VERSION_MAJOR == 4 ) && ( SITK_ITK_VERSION_MINOR < 5 ) )
@@ -142,11 +142,11 @@ public:
 
   /** Get access to internal ITK data object.
    *
-   * The return value should imediately be assigned to as
+   * The return value should immediately be assigned to as
    * itk::SmartPointer.
    *
-   * In many cases the value may need to be dynamically casted to
-   * the the actual transform type.
+   * In many cases the value may need to be dynamically cast to
+   * the actual transform type.
    *
    * @{
    */

@@ -10,8 +10,7 @@
     {
       "name" : "LevelSetValue",
       "type" : "double",
-      "default" : "0",
-      "pixeltype" : "Input",
+      "default" : "0.0",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set/Get the value of the level set to be located. The default value is 0.",
       "briefdescriptionGet" : "",

@@ -33,11 +33,6 @@ configure_file_buildtime( "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/setup.py.in"
   "${CMAKE_CURRENT_BINARY_DIR}/Packaging/setup.py" )
 
 configure_file(
-  "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/setupegg.py"
-  "${CMAKE_CURRENT_BINARY_DIR}/Packaging/setupegg.py"
-  COPYONLY )
-
-configure_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/__init__.py"
   "${CMAKE_CURRENT_BINARY_DIR}/__init__.py"
   COPYONLY )
@@ -59,7 +54,7 @@ if (SimpleITK_PYTHON_USE_VIRTUALENV)
   endif()
 
   #
-  # Setup Python Virtual Enviroment for testing and packaging
+  # Setup Python Virtual Environment for testing and packaging
   #
   set( PythonVirtualenvHome "${${CMAKE_PROJECT_NAME}_BINARY_DIR}/Testing/Installation/PythonVirtualenv" )
 

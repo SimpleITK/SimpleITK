@@ -7,8 +7,7 @@ if(NOT BUILD_TESTING)
 endif()
 
 sitk_add_test(NAME CXX.Example.FilterProgressReporting
-  COMMAND "${ITK_TEST_DRIVER}"
-    $<TARGET_FILE:FilterProgressReporting>
+  COMMAND $<TARGET_FILE:FilterProgressReporting>
     DATA{${SimpleITK_DATA_ROOT}/Input/RA-Short.nrrd}
     2.0
     "${TEST_HARNESS_TEMP_DIRECTORY}/CXX.FilterProgressReporting.nrrd"
@@ -51,8 +50,7 @@ endif()
 
 
 sitk_add_r_test( Example.FilterProgressReporting
-  "--file=${CMAKE_CURRENT_SOURCE_DIR}/FilterProgressReporting.R"
-  --args
+  "${CMAKE_CURRENT_SOURCE_DIR}/FilterProgressReporting.R"
     DATA{${SimpleITK_DATA_ROOT}/Input/RA-Short.nrrd}
     2.0
     "${TEST_HARNESS_TEMP_DIRECTORY}/R.FilterProgressReporting.nrrd"

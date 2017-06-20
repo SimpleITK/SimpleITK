@@ -48,7 +48,7 @@ int main( int , char *[] )
   importer.SetSize( std::vector<unsigned int>( 3, 100 ) );
   importer.SetBufferAsUInt8( in );
 
-  // actaully convert the buffer to a simpleITK image
+  // actually convert the buffer to a simpleITK image
   sitk::Image img = importer.Execute();
 
 
