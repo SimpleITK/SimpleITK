@@ -7,8 +7,9 @@ and is under development.
 .. toctree::
    :maxdepth: 2
 
+   Documentation/docs/source/installation
+   Documentation/docs/source/building
    Documentation/docs/source/faq
-   Documentation/docs/source/getting_started
    Examples/index
 
 Indices and tables
