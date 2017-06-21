@@ -15,9 +15,9 @@
       "doc" : "",
       "itk_type" : "typename FilterType::FlipAxesArrayType",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the axis to be flipped. The image is flipped along axes for which array[i] is true.",
+      "detaileddescriptionSet" : "Set/Get the axis to be flipped. The image is flipped along axes for which array[i] is true. Default is false.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the axis to be flipped. The image is flipped along axes for which array[i] is true."
+      "detaileddescriptionGet" : "Set/Get the axis to be flipped. The image is flipped along axes for which array[i] is true. Default is false."
     },
     {
       "name" : "FlipAboutOrigin",
@@ -25,9 +25,9 @@
       "default" : "false",
       "doc" : "",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Controls how the output origin is computed. If FlipAboutOrigin is \"on\", the flip will occur about the origin of the axis, otherwise, the flip will occur about the center of the axis.",
+      "detaileddescriptionSet" : "Controls how the output origin is computed. If FlipAboutOrigin is \"On\", the flip will occur about the origin of the axis, otherwise, the flip will occur about the center of the axis. Default is \"On\".",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Controls how the output origin is computed. If FlipAboutOrigin is \"on\", the flip will occur about the origin of the axis, otherwise, the flip will occur about the center of the axis."
+      "detaileddescriptionGet" : "Controls how the output origin is computed. If FlipAboutOrigin is \"On\", the flip will occur about the origin of the axis, otherwise, the flip will occur about the center of the axis. Default is \"On\"."
     }
   ],
   "tests" : [
@@ -64,7 +64,7 @@
     }
   ],
   "briefdescription" : "Flips an image across user specified axes.",
-  "detaileddescription" : "FlipImageFilter flips an image across user specified axes. The flip axes are set via method SetFlipAxes( array ) where the input is a FixedArray<bool,ImageDimension>. The image is flipped across axes for which array[i] is true.\n\nIn terms of grid coordinates the image is flipped within the LargestPossibleRegion of the input image. As such, the LargestPossibleRegion of the ouput image is the same as the input.\n\nIn terms of geometric coordinates, the output origin is such that the image is flipped with respect to the coordinate axes.\n\n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Flip an image over specified axes",
+  "detaileddescription" : "FlipImageFilter flips an image across user specified axes. The flip axes are set via method SetFlipAxes( array ) where the input is a FixedArray<bool,ImageDimension>. The image is flipped across axes for which array[i] is true.\n\nIn terms of grid coordinates the image is flipped within the LargestPossibleRegion of the input image. As such, the LargestPossibleRegion of the output image is the same as the input.\n\nIn terms of geometric coordinates, the output origin is such that the image is flipped with respect to the coordinate axes.\n\n\\par Wiki Examples:\n\n\\li All Examples \n\n\\li Flip an image over specified axes",
   "itk_module" : "ITKImageGrid",
   "itk_group" : "ImageGrid"
 }
