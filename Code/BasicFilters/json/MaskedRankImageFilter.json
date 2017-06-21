@@ -1,0 +1,91 @@
+{
+  "name" : "MaskedRankImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "number_of_inputs" : 0,
+  "pixel_types" : "BasicPixelIDTypeList",
+  "filter_type" : "itk::MaskedRankImageFilter<InputImageType, itk::Image< uint8_t, TImageType::ImageDimension>, OutputImageType>",
+  "inputs" : [
+    {
+      "name" : "Input",
+      "type" : "Image"
+    },
+    {
+      "name" : "MaskImage",
+      "type" : "Image",
+      "custom_itk_cast" : "filter->SetMaskImage( this->CastImageToITK<typename FilterType::MaskImageType>(*inMaskImage) );\n filter->SetGenerateOutputMask(false);"
+    }
+  ],
+  "members" : [
+    {
+      "name" : "Rank",
+      "type" : "double",
+      "default" : "0.5",
+      "doc" : "",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
+    },
+    {
+      "name" : "Radius",
+      "type" : "unsigned int",
+      "default" : "std::vector<unsigned int>(3, 1)",
+      "dim_vec" : 1,
+      "set_as_scalar" : 1,
+      "doc" : "",
+      "itk_type" : "typename FilterType::RadiusType"
+    },
+    {
+      "name" : "MaskValue",
+      "type" : "uint8_t",
+      "default" : "255u",
+      "pixeltype" : "Output",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "The value in the mask image, if used, indicating voxels that should be included. Default is the max of pixel type, as in the MaskedImageToHistogramFilter",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : ""
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "default",
+      "md5hash" : "416914512c491021446d33c330bd1b47",
+      "settings" : [],
+      "inputs" : [
+        "Input/cthead1.png",
+        "Input/cthead1-mask.png"
+      ]
+    },
+    {
+      "tag" : "by23_float",
+      "description" : "Test by 23",
+      "md5hash" : "c1e6dbdfa1dce9229cdcf6b09ac689a0",
+      "settings" : [
+        {
+          "parameter" : "Rank",
+          "type" : "double",
+          "value" : "1.0"
+        },
+        {
+          "parameter" : "Radius",
+          "type" : "unsigned int",
+          "dim_vec" : 1,
+          "value" : [
+            2,
+            3
+          ]
+        }
+      ],
+      "inputs" : [
+        "Input/cthead1-Float.mha",
+        "Input/cthead1-mask.png"
+      ]
+    }
+  ],
+  "briefdescription" : "Rank filter of a greyscale image.",
+  "detaileddescription" : "Nonlinear filter in which each output pixel is a user defined rank of input pixels in a user defined neighborhood. The default rank is 0.5 (median). The boundary conditions are different to the standard itkMedianImageFilter. In this filter the neighborhood is cropped at the boundary, and is therefore smaller.\n\nThis filter uses a recursive implementation - essentially the one by Huang 1979, I believe, to compute the rank, and is therefore usually a lot faster than the direct implementation. The extensions to Huang are support for arbitrary pixel types (using c++ maps) and arbitrary neighborhoods. I presume that these are not new ideas.\n\nThis filter is based on the sliding window code from the consolidatedMorphology package on InsightJournal.\n\nThe structuring element is assumed to be composed of binary values (zero or one). Only elements of the structuring element having values > 0 are candidates for affecting the center pixel.\n\nThis code was contributed in the Insight Journal paper: \"Efficient implementation of kernel filtering\" by Beare R., Lehmann G https://hdl.handle.net/1926/555 http://www.insight-journal.org/browse/publication/160 \n\n\\author Richard Beare",
+  "itk_module" : "ITKReview",
+  "itk_group" : "Review"
+}
