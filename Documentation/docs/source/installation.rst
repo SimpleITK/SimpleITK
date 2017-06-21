@@ -123,8 +123,8 @@ Nightly binaries
 The **latest binaries** for the current development version of SimpleITK
 are also generally available. Binary packages are built as part of the
 nightly regression testing system. The download links are available from
-the `**CDash** <https://open.cdash.org/index.php?project=SimpleITK>`__
-**dashboard** in the "Nightly Packages" section.
+the `CDash dashboard <https://open.cdash.org/index.php?project=SimpleITK>`__
+in the "Nightly Packages" section.
 
 Each row on the dashboard is a SimpleITK build on a particular system,
 and if the build was successful there will be a **package icon**:
@@ -140,11 +140,11 @@ Fiji (Fiji is Just ImageJ)
 --------------------------
 
 SimpleITK has a built in function,
-`**"itk::simple::Show()"** <https://itk.org/SimpleITKDoxygen/html/namespaceitk_1_1simple.html#ac8416e6e7f02dedfe8373b83dbea411d>`__,
+`"itk::simple::Show()" <https://itk.org/SimpleITKDoxygen/html/namespaceitk_1_1simple.html#ac8416e6e7f02dedfe8373b83dbea411d>`__,
 which can be used for viewing images in an interactive session.
 Currently, this function by default Show invokes
-`**Fiji** <https://fiji.sc>`__ then
-`**ImageJ** <http://rsbweb.nih.gov/ij/>`__ to display images. ImageJ was
+`Fiji <https://fiji.sc>`__ then
+`ImageJ <http://rsbweb.nih.gov/ij/>`__ to display images. ImageJ was
 chosen because it can handle all the image types that SimpleITK
 supports, even 3D vector images with n components.
 
@@ -174,10 +174,10 @@ installation location, and java must be set. Also consider the
 launched each time you use Show? Lastly, as the installation
 instructions indicate, the imagej wrapper should be in your path.
 
-iPython and Jupyter
+IPython and Jupyter
 -------------------
 
-If you are using python, `**ipython** <http://ipython.org/>`__ with
+If you are using python, `IPython <http://ipython.org/>`__ with
 `Jupyter <http://jupyter.org>`__ is terrific environment to perform
 interactive computing for image processing. With the addition of numpy
 and scipy, you'll have a powerful interactive environment.
