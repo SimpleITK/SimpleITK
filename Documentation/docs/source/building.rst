@@ -49,7 +49,7 @@ building of SimpleITK (see their repository for more details):
 -  For **Python**: The
    `scikit-build <https://github.com/scikit-build/scikit-build>`__ based
    distutils based `setup.py
-   frontend <https://github.com/scikit-build/scikit-build>`__ can be
+   frontend <https://github.com/SimpleITK/SimpleITKPythonPackage>`__ can be
    used to build, install, and package SimpleITK for Python.
 
 -  For the **Anaconda Python** distribution: The recipe and instructions
