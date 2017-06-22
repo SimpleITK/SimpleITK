@@ -29,9 +29,9 @@
       "default" : "std::vector<double>(3, 16.0)",
       "itk_type" : "typename FilterType::ArrayType",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Gets and sets for Gaussian parameters",
+      "detaileddescriptionSet" : "Set/Get the standard deviation in each direction.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Gets and sets for Gaussian parameters"
+      "detaileddescriptionGet" : "Set/Get the standard deviation in each direction."
     },
     {
       "name" : "Mean",
@@ -41,18 +41,18 @@
       "default" : "std::vector<double>(3, 32.0)",
       "itk_type" : "typename FilterType::ArrayType",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Gets and sets for Gaussian parameters",
+      "detaileddescriptionSet" : "Set/Get the mean in each direction.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Gets and sets for Gaussian parameters"
+      "detaileddescriptionGet" : "Set/Get the mean in each direction."
     },
     {
       "name" : "Scale",
       "type" : "double",
       "default" : "255",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Gets and sets for Gaussian parameters",
+      "detaileddescriptionSet" : "Gets and sets for Gaussian parameters Set/Get the scale factor to multiply the true value of the Gaussian.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Gets and sets for Gaussian parameters"
+      "detaileddescriptionGet" : "Gets and sets for Gaussian parameters Set/Get the scale factor to multiply the true value of the Gaussian."
     },
     {
       "name" : "Origin",

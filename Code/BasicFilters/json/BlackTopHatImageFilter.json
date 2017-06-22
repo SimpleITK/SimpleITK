@@ -46,8 +46,8 @@
       ]
     }
   ],
-  "briefdescription" : "Black top hat extract local minima that are smaller than the structuring element.",
-  "detaileddescription" : "Black top hat extract local minima that are smaller than the structuring element. It subtract the background in the input image. The output of the filter transforms the black peaks in white peaks.\n\nTop-hats are described in Chapter 4.5 of Pierre Soille's book \"Morphological Image Analysis: Principles and Applications\", Second Edition, Springer, 2003.\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.",
+  "briefdescription" : "Black top hat extracts local minima that are smaller than the structuring element.",
+  "detaileddescription" : "Black top hat extracts local minima that are smaller than the structuring element. It subtracts the background from the input image. The output of the filter transforms the black valleys into white peaks.\n\nTop-hats are described in Chapter 4.5 of Pierre Soille's book \"Morphological Image Analysis: Principles and Applications\", Second Edition, Springer, 2003.\n\n\\author Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA de Jouy-en-Josas, France.",
   "itk_module" : "ITKMathematicalMorphology",
   "itk_group" : "MathematicalMorphology"
 }
