@@ -21,18 +21,18 @@
       "type" : "float",
       "default" : "0.3f",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the value of alpha. Alpha=0 produces the adaptive histogram equalization (provided beta=0). Alpha=1 produces an unsharp mask. Default is 0.3.",
+      "detaileddescriptionSet" : "Set/Get the value of alpha. Alpha = 0 produces the adaptive histogram equalization (provided beta=0). Alpha = 1 produces an unsharp mask. Default is 0.3.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the value of alpha. Alpha=0 produces the adaptive histogram equalization (provided beta=0). Alpha=1 produces an unsharp mask. Default is 0.3."
+      "detaileddescriptionGet" : "Set/Get the value of alpha. Alpha = 0 produces the adaptive histogram equalization (provided beta=0). Alpha = 1 produces an unsharp mask. Default is 0.3."
     },
     {
       "name" : "Beta",
       "type" : "float",
       "default" : "0.3f",
       "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get the value of beta. If beta=1 (and alpha=1), then the output image matches the input image. As beta approaches 0, the filter behaves as an unsharp mask. Default is 0.3.",
+      "detaileddescriptionSet" : "Set/Get the value of beta. If beta = 1 (and alpha = 1), then the output image matches the input image. As beta approaches 0, the filter behaves as an unsharp mask. Default is 0.3.",
       "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get the value of beta. If beta=1 (and alpha=1), then the output image matches the input image. As beta approaches 0, the filter behaves as an unsharp mask. Default is 0.3."
+      "detaileddescriptionGet" : "Set/Get the value of beta. If beta = 1 (and alpha = 1), then the output image matches the input image. As beta approaches 0, the filter behaves as an unsharp mask. Default is 0.3."
     },
     {
       "name" : "UseLookupTable",

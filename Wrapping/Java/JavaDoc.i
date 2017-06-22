@@ -1,33 +1,5 @@
 
 
-%typemap(javaimports) CastImageFilter "/**
-
-Generates a hash string from an image.
-
-
-
-This class utlizes low level buffer pointer access, to work with itk::Image and itk::VectorImage. It is modeled after the access an ImageFileWriter provides to an
-ImageIO.
-Todo
-complete documentation
-
-Update in-place on to default after fixing bug in InPlaceImageFilter
-
-
-C++ includes: itkHashImageFilter.h
-*/"
-
-
-%typemap(javaimports) itk::CompositeTransform "/**
-C++ includes: sitkTransform.h
-*/"
-
-
-%typemap(javaimports) itk::DefaultImageToImageMetricTraitsv4 "/**
-C++ includes: sitkImageRegistrationMethod.h
-*/"
-
-
 %typemap(javaimports) itk::Functor::BitwiseNot "/**
 
 Performs the C++ unary bitwise NOT operator.
@@ -134,11 +106,6 @@ virtual DataObjectPointer itk::HashImageFilter< TImageType >::MakeOutput(DataObj
 public ";
 
 
-%typemap(javaimports) itk::Image "/**
-C++ includes: sitkPixelIDTypes.h
-*/"
-
-
 %typemap(javaimports) itk::ImageIOFactoryRegisterManager "/**
 C++ includes: itkImageIOFactoryRegisterManager.h
 */"
@@ -152,36 +119,6 @@ public ";
 itk::ImageIOFactoryRegisterManager::ImageIOFactoryRegisterManager(void(*list[])(void))
 */
 public ";
-
-
-%typemap(javaimports) itk::ImageRegion "/**
-C++ includes: sitkTemplateFunctions.h
-*/"
-
-
-%typemap(javaimports) itk::ImageToImageMetricv4 "/**
-C++ includes: sitkImageRegistrationMethod.h
-*/"
-
-
-%typemap(javaimports) itk::LabelMap "/**
-C++ includes: sitkPixelIDTypes.h
-*/"
-
-
-%typemap(javaimports) itk::LabelObject "/**
-C++ includes: sitkPixelIDTypes.h
-*/"
-
-
-%typemap(javaimports) itk::ObjectToObjectOptimizerBaseTemplate "/**
-C++ includes: sitkImageRegistrationMethod.h
-*/"
-
-
-%typemap(javaimports) itk::RegistrationParameterScalesEstimator "/**
-C++ includes: sitkImageRegistrationMethod.h
-*/"
 
 
 %typemap(javaimports) itk::SliceImageFilter "/**
@@ -322,21 +259,6 @@ void itk::SliceImageFilter< TInputImage, TOutputImage >::SetStop(IndexValueType 
 public ";
 
 
-%typemap(javaimports) itk::SmartPointer "/**
-C++ includes: sitkImage.h
-*/"
-
-
-%typemap(javaimports) itk::SpatialObject "/**
-C++ includes: sitkImageRegistrationMethod.h
-*/"
-
-
-%typemap(javaimports) itk::TransformBaseTemplate "/**
-C++ includes: sitkTransform.h
-*/"
-
-
 %typemap(javaimports) itk::TransformIOFactoryRegisterManager "/**
 C++ includes: itkTransformIOFactoryRegisterManager.h
 */"
@@ -350,16 +272,6 @@ public ";
 itk::TransformIOFactoryRegisterManager::TransformIOFactoryRegisterManager(void(*list[])(void))
 */
 public ";
-
-
-%typemap(javaimports) itk::Vector "/**
-C++ includes: sitkImageConvert.h
-*/"
-
-
-%typemap(javaimports) itk::VectorImage "/**
-C++ includes: sitkPixelIDTypes.h
-*/"
 
 
 %typemap(javaimports) itk::simple::AbsImageFilter "/**
@@ -676,8 +588,8 @@ public ";
 %javamethodmodifiers  itk::simple::AdaptiveHistogramEqualizationImageFilter::GetAlpha "/**
 float itk::simple::AdaptiveHistogramEqualizationImageFilter::GetAlpha() const
 
-Set/Get the value of alpha. Alpha=0 produces the adaptive histogram
-equalization (provided beta=0). Alpha=1 produces an unsharp mask.
+Set/Get the value of alpha. Alpha = 0 produces the adaptive histogram
+equalization (provided beta=0). Alpha = 1 produces an unsharp mask.
 Default is 0.3.
 
 */
@@ -686,8 +598,8 @@ public ";
 %javamethodmodifiers  itk::simple::AdaptiveHistogramEqualizationImageFilter::GetBeta "/**
 float itk::simple::AdaptiveHistogramEqualizationImageFilter::GetBeta() const
 
-Set/Get the value of beta. If beta=1 (and alpha=1), then the output
-image matches the input image. As beta approaches 0, the filter
+Set/Get the value of beta. If beta = 1 (and alpha = 1), then the
+output image matches the input image. As beta approaches 0, the filter
 behaves as an unsharp mask. Default is 0.3.
 
 */
@@ -718,8 +630,8 @@ public ";
 %javamethodmodifiers  itk::simple::AdaptiveHistogramEqualizationImageFilter::SetAlpha "/**
 Self& itk::simple::AdaptiveHistogramEqualizationImageFilter::SetAlpha(float Alpha)
 
-Set/Get the value of alpha. Alpha=0 produces the adaptive histogram
-equalization (provided beta=0). Alpha=1 produces an unsharp mask.
+Set/Get the value of alpha. Alpha = 0 produces the adaptive histogram
+equalization (provided beta=0). Alpha = 1 produces an unsharp mask.
 Default is 0.3.
 
 */
@@ -728,8 +640,8 @@ public ";
 %javamethodmodifiers  itk::simple::AdaptiveHistogramEqualizationImageFilter::SetBeta "/**
 Self& itk::simple::AdaptiveHistogramEqualizationImageFilter::SetBeta(float Beta)
 
-Set/Get the value of beta. If beta=1 (and alpha=1), then the output
-image matches the input image. As beta approaches 0, the filter
+Set/Get the value of beta. If beta = 1 (and alpha = 1), then the
+output image matches the input image. As beta approaches 0, the filter
 behaves as an unsharp mask. Default is 0.3.
 
 */
@@ -1289,7 +1201,7 @@ surfaces.
 
 The binary volume (filter input) is used as a set of constraints in an
 iterative relaxation process of an estimated ND surface. The surface
-is described implicitly as the zero level set of a volume $ \\\\phi $ and allowed to deform under curvature flow. A set of contraints is
+is described implicitly as the zero level set of a volume $ \\\\phi $ and allowed to deform under curvature flow. A set of constraints is
 imposed on this movement as follows:
 
 \\\\[ u_{i,j,k}^{n+1} = \\\\left\\\\{ \\\\begin{array}{ll}
@@ -1478,12 +1390,12 @@ This filter requires that an \"inside value\" and \"outside value\" be
 set as parameters. The \"inside value\" is the intensity value of the
 binary image which corresponds to objects, and the \"outside value\"
 is the intensity of the background. (A typical binary image often
-repesents objects as black (0) and background as white (usually 255),
+represents objects as black (0) and background as white (usually 255),
 or vice-versa.) Note that this filter is slightly faster if the inside
 value is less than the outside value. Otherwise an extra iteration
 through the image is required.
 
-This filter uses the FastChamferDistanceImageFilter and the IsoContourDistanceImageFilter inernally to perform the distance calculations.
+This filter uses the FastChamferDistanceImageFilter and the IsoContourDistanceImageFilter internally to perform the distance calculations.
 
 
 See:
@@ -1542,7 +1454,7 @@ public ";
 double itk::simple::ApproximateSignedDistanceMapImageFilter::GetInsideValue() const
 
 Set/Get intensity value representing the interior of objects in the
-mask
+mask.
 
 */
 public ";
@@ -1558,7 +1470,7 @@ public ";
 %javamethodmodifiers  itk::simple::ApproximateSignedDistanceMapImageFilter::GetOutsideValue "/**
 double itk::simple::ApproximateSignedDistanceMapImageFilter::GetOutsideValue() const
 
-Set/Get intensity value representing non-objects in the mask
+Set/Get intensity value representing non-objects in the mask.
 
 */
 public ";
@@ -1567,7 +1479,7 @@ public ";
 Self& itk::simple::ApproximateSignedDistanceMapImageFilter::SetInsideValue(double InsideValue)
 
 Set/Get intensity value representing the interior of objects in the
-mask
+mask.
 
 */
 public ";
@@ -1575,7 +1487,7 @@ public ";
 %javamethodmodifiers  itk::simple::ApproximateSignedDistanceMapImageFilter::SetOutsideValue "/**
 Self& itk::simple::ApproximateSignedDistanceMapImageFilter::SetOutsideValue(double OutsideValue)
 
-Set/Get intensity value representing non-objects in the mask
+Set/Get intensity value representing non-objects in the mask.
 
 */
 public ";
@@ -5442,13 +5354,14 @@ public ";
 
 %typemap(javaimports) itk::simple::BlackTopHatImageFilter "/**
 
-Black top hat extract local minima that are smaller than the
+Black top hat extracts local minima that are smaller than the
 structuring element.
 
 
-Black top hat extract local minima that are smaller than the
-structuring element. It subtract the background in the input image.
-The output of the filter transforms the black peaks in white peaks.
+Black top hat extracts local minima that are smaller than the
+structuring element. It subtracts the background from the input image.
+The output of the filter transforms the black valleys into white
+peaks.
 
 Top-hats are described in Chapter 4.5 of Pierre Soille's book
 \"Morphological Image Analysis: Principles and Applications\", Second
@@ -5913,7 +5826,8 @@ public ";
 %javamethodmodifiers  itk::simple::CannyEdgeDetectionImageFilter::GetMaximumError "/**
 std::vector<double> itk::simple::CannyEdgeDetectionImageFilter::GetMaximumError() const
 
-Standard get/set macros for filter parameters.
+Set/Get the maximum error of the Gaussian smoothing kernel in each
+dimensional direction.
 
 */
 public ";
@@ -5934,7 +5848,7 @@ public ";
 %javamethodmodifiers  itk::simple::CannyEdgeDetectionImageFilter::GetVariance "/**
 std::vector<double> itk::simple::CannyEdgeDetectionImageFilter::GetVariance() const
 
-Standard get/set macros for filter parameters.
+Set/Get the variance of the Gaussian smoothing filter.
 
 */
 public ";
@@ -5977,8 +5891,7 @@ public ";
 %javamethodmodifiers  itk::simple::CannyEdgeDetectionImageFilter::SetVariance "/**
 Self& itk::simple::CannyEdgeDetectionImageFilter::SetVariance(const std::vector< double > &Variance)
 
-Set/Get the Variance parameter used by the Gaussian smoothing filter
-in this algorithm
+Set/Get the variance of the Gaussian smoothing filter.
 
 */
 public ";
@@ -12287,7 +12200,7 @@ spacing.
 Determining the direction of the collapsed output image from an larger
 dimensional input space is an ill defined problem in general. It is
 required that the application developer select the desired
-transformation strategy for collapsing direction cosigns. It is
+transformation strategy for collapsing direction cosines. It is
 REQUIRED that a strategy be explicitly requested (i.e. there is no
 working default). Direction Collapsing Strategies: 1)
 DirectionCollapseToUnknown(); This is the default and the filter can
@@ -12383,7 +12296,8 @@ public ";
 %javamethodmodifiers  itk::simple::ExtractImageFilter::SetDirectionCollapseToStrategy "/**
 Self& itk::simple::ExtractImageFilter::SetDirectionCollapseToStrategy(DirectionCollapseToStrategyType DirectionCollapseToStrategy)
 
-     Set the strategy to be used to collapse pysical space dimensions.
+     Set the strategy to be used to collapse physical space
+dimensions.
 
 itk::itkExtractImageFilter::DIRECTIONCOLLAPSETOIDENTITY Set the
 strategy so that all collapsed images have an identity direction. Use
@@ -12392,13 +12306,13 @@ orientation of the collapsed image is not important.
 
 itk::itkExtractImageFilter::DIRECTIONCOLLAPSETOGUESS Set the strategy
 so that all collapsed images where output direction is the sub-matrix
-it it is positive definite, else return identity. This is backwards
+if it is positive definite, else return identity. This is backwards
 compatible with ITKv3, but is highly discouraged because the results
 are difficult to anticipate under differing data scenerios.
 
 itk::itkExtractImageFilter::DIRECTIONCOLLAPSETOSUBMATRIX Set the
 strategy so that all collapsed images where output direction is the
-sub-matrix it it is positive definite, else throw an exception. Use
+sub-matrix if it is positive definite, else throw an exception. Use
 this strategy when it is known that properly identified physical space
 sub-volumes can be reliably extracted from a higher dimensional space.
 For example when the application programmer knows that a 4D image is
@@ -12813,7 +12727,7 @@ public ";
 
 %typemap(javaimports) itk::simple::FFTShiftImageFilter "/**
 
-Shift the zero-frequency components of a Fourier transfrom to the
+Shift the zero-frequency components of a Fourier transform to the
 center of the image.
 
 
@@ -13072,12 +12986,16 @@ Implementation of this class is based on Chapter 8 of \"Level Set
 Methods and Fast Marching Methods\", J.A. Sethian, Cambridge Press,
 Second edition, 1999.
 
+For an alternative implementation, see itk::FastMarchingImageFilter .
+
 TTraits
 
 traits
 
 
 See:
+ FastMarchingImageFilter
+
  ImageFastMarchingTraits
 
  ImageFastMarchingTraits2
@@ -13278,7 +13196,9 @@ SetOutputSpacing() , SetOutputDirection() , and SetOutputOrigin() .
 Else if the speed image is not ITK_NULLPTR, the output information is
 copied from the input speed image.
 
-Possible Improvements: In the current implemenation,
+For an alternative implementation, see itk::FastMarchingImageFilter .
+
+Possible Improvements: In the current implementation,
 std::priority_queue only allows taking nodes out from the front and
 putting nodes in from the back. To update a value already on the heap,
 a new node is added to the heap. The defunct old node is left on the
@@ -13291,6 +13211,8 @@ which is to be updated.
 
 
 See:
+ FastMarchingImageFilterBase
+
  LevelSetTypeDefault
 
  itk::simple::FastMarching for the procedural interface
@@ -13449,6 +13371,8 @@ are reached. The propagation can stop after a time TargetOffset has
 passed since the stop condition is met. This way the solution is
 computed a bit downstream the Target points, so that the level sets of
 T(x) corresponding to the Target are smooth.
+
+For an alternative implementation, see itk::FastMarchingUpwindGradientImageFilterBase .
 
 
 Luca Antiga Ph.D. Biomedical Technologies Laboratory, Bioengineering
@@ -14068,7 +13992,7 @@ which array[i] is true.
 
 In terms of grid coordinates the image is flipped within the
 LargestPossibleRegion of the input image. As such, the
-LargestPossibleRegion of the ouput image is the same as the input.
+LargestPossibleRegion of the output image is the same as the input.
 
 In terms of geometric coordinates, the output origin is such that the
 image is flipped with respect to the coordinate axes.
@@ -14131,8 +14055,8 @@ public ";
 bool itk::simple::FlipImageFilter::GetFlipAboutOrigin() const
 
 Controls how the output origin is computed. If FlipAboutOrigin is
-\"on\", the flip will occur about the origin of the axis, otherwise,
-the flip will occur about the center of the axis.
+\"On\", the flip will occur about the origin of the axis, otherwise,
+the flip will occur about the center of the axis. Default is \"On\".
 
 */
 public ";
@@ -14141,7 +14065,7 @@ public ";
 std::vector<bool> itk::simple::FlipImageFilter::GetFlipAxes() const
 
 Set/Get the axis to be flipped. The image is flipped along axes for
-which array[i] is true.
+which array[i] is true. Default is false.
 
 */
 public ";
@@ -14158,8 +14082,8 @@ public ";
 Self& itk::simple::FlipImageFilter::SetFlipAboutOrigin(bool FlipAboutOrigin)
 
 Controls how the output origin is computed. If FlipAboutOrigin is
-\"on\", the flip will occur about the origin of the axis, otherwise,
-the flip will occur about the center of the axis.
+\"On\", the flip will occur about the origin of the axis, otherwise,
+the flip will occur about the center of the axis. Default is \"On\".
 
 */
 public ";
@@ -14168,7 +14092,7 @@ public ";
 Self& itk::simple::FlipImageFilter::SetFlipAxes(const std::vector< bool > &FlipAxes)
 
 Set/Get the axis to be flipped. The image is flipped along axes for
-which array[i] is true.
+which array[i] is true. Default is false.
 
 */
 public ";
@@ -14369,11 +14293,17 @@ public ";
 
 %javamethodmodifiers  itk::simple::GaborImageSource::GetFrequency "/**
 double itk::simple::GaborImageSource::GetFrequency() const
+
+Set/Get the modulation frequency of the sine or cosine component.
+
 */
 public ";
 
 %javamethodmodifiers  itk::simple::GaborImageSource::GetMean "/**
 std::vector<double> itk::simple::GaborImageSource::GetMean() const
+
+Set/Get the mean in each direction.
+
 */
 public ";
 
@@ -14397,6 +14327,9 @@ public ";
 
 %javamethodmodifiers  itk::simple::GaborImageSource::GetSigma "/**
 std::vector<double> itk::simple::GaborImageSource::GetSigma() const
+
+Set/Get the the standard deviation in each direction.
+
 */
 public ";
 
@@ -14417,11 +14350,17 @@ public ";
 
 %javamethodmodifiers  itk::simple::GaborImageSource::SetFrequency "/**
 Self& itk::simple::GaborImageSource::SetFrequency(double Frequency)
+
+Set/Get the modulation frequency of the sine or cosine component.
+
 */
 public ";
 
 %javamethodmodifiers  itk::simple::GaborImageSource::SetMean "/**
 Self& itk::simple::GaborImageSource::SetMean(const std::vector< double > &Mean)
+
+Set/Get the mean in each direction.
+
 */
 public ";
 
@@ -14445,6 +14384,9 @@ public ";
 
 %javamethodmodifiers  itk::simple::GaborImageSource::SetSigma "/**
 Self& itk::simple::GaborImageSource::SetSigma(const std::vector< double > &Sigma)
+
+Set/Get the the standard deviation in each direction.
+
 */
 public ";
 
@@ -14541,7 +14483,7 @@ public ";
 %javamethodmodifiers  itk::simple::GaussianImageSource::GetMean "/**
 std::vector<double> itk::simple::GaussianImageSource::GetMean() const
 
-Gets and sets for Gaussian parameters
+Set/Get the mean in each direction.
 
 */
 public ";
@@ -14567,7 +14509,8 @@ public ";
 %javamethodmodifiers  itk::simple::GaussianImageSource::GetScale "/**
 double itk::simple::GaussianImageSource::GetScale() const
 
-Gets and sets for Gaussian parameters
+Gets and sets for Gaussian parameters Set/Get the scale factor to
+multiply the true value of the Gaussian.
 
 */
 public ";
@@ -14575,7 +14518,7 @@ public ";
 %javamethodmodifiers  itk::simple::GaussianImageSource::GetSigma "/**
 std::vector<double> itk::simple::GaussianImageSource::GetSigma() const
 
-Gets and sets for Gaussian parameters
+Set/Get the standard deviation in each direction.
 
 */
 public ";
@@ -14598,7 +14541,7 @@ public ";
 %javamethodmodifiers  itk::simple::GaussianImageSource::SetMean "/**
 Self& itk::simple::GaussianImageSource::SetMean(const std::vector< double > &Mean)
 
-Gets and sets for Gaussian parameters
+Set/Get the mean in each direction.
 
 */
 public ";
@@ -14624,7 +14567,8 @@ public ";
 %javamethodmodifiers  itk::simple::GaussianImageSource::SetScale "/**
 Self& itk::simple::GaussianImageSource::SetScale(double Scale)
 
-Gets and sets for Gaussian parameters
+Gets and sets for Gaussian parameters Set/Get the scale factor to
+multiply the true value of the Gaussian.
 
 */
 public ";
@@ -14632,7 +14576,7 @@ public ";
 %javamethodmodifiers  itk::simple::GaussianImageSource::SetSigma "/**
 Self& itk::simple::GaussianImageSource::SetSigma(const std::vector< double > &Sigma)
 
-Gets and sets for Gaussian parameters
+Set/Get the standard deviation in each direction.
 
 */
 public ";
@@ -15191,7 +15135,7 @@ bool itk::simple::GradientImageFilter::GetUseImageDirection() const
 The UseImageDirection flag determines whether image derivatives are
 computed with respect to the image grid or with respect to the
 physical space. When this flag is ON the derivatives are computed with
-respect to the coodinate system of physical space. The difference is
+respect to the coordinate system of physical space. The difference is
 whether we take into account the image Direction or not. The flag ON
 will take into account the image direction and will result in an extra
 matrix multiplication compared to the amount of computation performed
@@ -15202,10 +15146,6 @@ public ";
 
 %javamethodmodifiers  itk::simple::GradientImageFilter::GetUseImageSpacing "/**
 bool itk::simple::GradientImageFilter::GetUseImageSpacing() const
-
-Set/Get whether or not the filter will use the spacing of the input
-image in its calculations
-
 */
 public ";
 
@@ -15224,7 +15164,7 @@ Self& itk::simple::GradientImageFilter::SetUseImageDirection(bool UseImageDirect
 The UseImageDirection flag determines whether image derivatives are
 computed with respect to the image grid or with respect to the
 physical space. When this flag is ON the derivatives are computed with
-respect to the coodinate system of physical space. The difference is
+respect to the coordinate system of physical space. The difference is
 whether we take into account the image Direction or not. The flag ON
 will take into account the image direction and will result in an extra
 matrix multiplication compared to the amount of computation performed
@@ -15594,7 +15534,7 @@ bool itk::simple::GradientRecursiveGaussianImageFilter::GetUseImageDirection() c
 The UseImageDirection flag determines whether the gradients are
 computed with respect to the image grid or with respect to the
 physical space. When this flag is ON the gradients are computed with
-respect to the coodinate system of physical space. The difference is
+respect to the coordinate system of physical space. The difference is
 whether we take into account the image Direction or not. The flag ON
 will take into account the image direction and will result in an extra
 matrix multiplication compared to the amount of computation performed
@@ -15650,7 +15590,7 @@ Self& itk::simple::GradientRecursiveGaussianImageFilter::SetUseImageDirection(bo
 The UseImageDirection flag determines whether the gradients are
 computed with respect to the image grid or with respect to the
 physical space. When this flag is ON the gradients are computed with
-respect to the coodinate system of physical space. The difference is
+respect to the coordinate system of physical space. The difference is
 whether we take into account the image Direction or not. The flag ON
 will take into account the image direction and will result in an extra
 matrix multiplication compared to the amount of computation performed
@@ -17398,11 +17338,17 @@ public ";
 
 %javamethodmodifiers  itk::simple::GridImageSource::GetGridOffset "/**
 std::vector<double> itk::simple::GridImageSource::GetGridOffset() const
+
+Set/Get the grid offset.
+
 */
 public ";
 
 %javamethodmodifiers  itk::simple::GridImageSource::GetGridSpacing "/**
 std::vector<double> itk::simple::GridImageSource::GetGridSpacing() const
+
+Set/Get the grid spacing of the peaks.
+
 */
 public ";
 
@@ -17426,11 +17372,18 @@ public ";
 
 %javamethodmodifiers  itk::simple::GridImageSource::GetScale "/**
 double itk::simple::GridImageSource::GetScale() const
+
+Set/Get the scale factor to multiply the true value of the grid.
+
 */
 public ";
 
 %javamethodmodifiers  itk::simple::GridImageSource::GetSigma "/**
 std::vector<double> itk::simple::GridImageSource::GetSigma() const
+
+Set/Get the standard deviation of the Gaussians or width of the box
+functions.
+
 */
 public ";
 
@@ -17460,11 +17413,17 @@ public ";
 
 %javamethodmodifiers  itk::simple::GridImageSource::SetGridOffset "/**
 Self& itk::simple::GridImageSource::SetGridOffset(const std::vector< double > &GridOffset)
+
+Set/Get the grid offset.
+
 */
 public ";
 
 %javamethodmodifiers  itk::simple::GridImageSource::SetGridSpacing "/**
 Self& itk::simple::GridImageSource::SetGridSpacing(const std::vector< double > &GridSpacing)
+
+Set/Get the grid spacing of the peaks.
+
 */
 public ";
 
@@ -17480,11 +17439,18 @@ public ";
 
 %javamethodmodifiers  itk::simple::GridImageSource::SetScale "/**
 Self& itk::simple::GridImageSource::SetScale(double Scale)
+
+Set/Get the scale factor to multiply the true value of the grid.
+
 */
 public ";
 
 %javamethodmodifiers  itk::simple::GridImageSource::SetSigma "/**
 Self& itk::simple::GridImageSource::SetSigma(const std::vector< double > &Sigma)
+
+Set/Get the standard deviation of the Gaussians or width of the box
+functions.
+
 */
 public ";
 
@@ -18479,7 +18445,7 @@ Threshold an image using the Huang Threshold.
 
 This filter creates a binary thresholded image that separates an image
 into foreground and background components. The filter computes the
-threshold using the HuangThresholdCalculator and applies that theshold to the input image using the BinaryThresholdImageFilter .
+threshold using the HuangThresholdCalculator and applies that threshold to the input image using the BinaryThresholdImageFilter .
 
 
 Richard Beare. Department of Medicine, Monash University, Melbourne,
@@ -19843,7 +19809,7 @@ the input image. This operation is very common in visualization, and
 can also be applied as a convenient preprocessing operation for image
 segmentation.
 
-All computations are performed in the precison of the input pixel's
+All computations are performed in the precision of the input pixel's
 RealType. Before assigning the computed value to the output pixel.
 
 Wiki Examples:
@@ -19993,7 +19959,7 @@ Threshold an image using the Intermodes Threshold.
 
 This filter creates a binary thresholded image that separates an image
 into foreground and background components. The filter computes the
-threshold using the IntermodesThresholdCalculator and applies that theshold to the input image using the BinaryThresholdImageFilter .
+threshold using the IntermodesThresholdCalculator and applies that threshold to the input image using the BinaryThresholdImageFilter .
 
 
 Richard Beare. Department of Medicine, Monash University, Melbourne,
@@ -20935,7 +20901,7 @@ Threshold an image using the IsoData Threshold.
 
 This filter creates a binary thresholded image that separates an image
 into foreground and background components. The filter computes the
-threshold using the IsoDataThresholdCalculator and applies that theshold to the input image using the BinaryThresholdImageFilter .
+threshold using the IsoDataThresholdCalculator and applies that threshold to the input image using the BinaryThresholdImageFilter .
 
 
 Richard Beare. Department of Medicine, Monash University, Melbourne,
@@ -21568,6 +21534,109 @@ Destructor
 public ";
 
 
+%typemap(javaimports) itk::simple::IterativeInverseDisplacementFieldImageFilter "/**
+
+Computes the inverse of a displacement field.
+
+
+IterativeInverseDisplacementFieldImageFilter takes a displacement field as input and computes the displacement
+field that is its inverse. If the input displacement field was mapping
+coordinates from a space A into a space B, the output of this filter
+will map coordinates from the space B into the space A.
+
+The algorithm implemented in this filter uses an iterative method for
+progresively refining the values of the inverse field. Starting from
+the direct field, at every pixel the direct mapping of this point is
+found, and a the nevative of the current displacement is stored in the
+inverse field at the nearest pixel. Then, subsequent iterations verify
+if any of the neigbor pixels provide a better return to the current
+pixel, in which case its value is taken for updating the vector in the
+inverse field.
+
+This method was discussed in the users-list during February 2004.
+
+
+Corinne Mattmann
+
+See:
+ itk::simple::IterativeInverseDisplacementField for the procedural interface
+
+ itk::IterativeInverseDisplacementFieldImageFilter for the Doxygen on the original ITK class.
+
+
+C++ includes: sitkIterativeInverseDisplacementFieldImageFilter.h
+*/"
+
+%javamethodmodifiers  itk::simple::IterativeInverseDisplacementFieldImageFilter::Execute "/**
+Image itk::simple::IterativeInverseDisplacementFieldImageFilter::Execute(const Image &image1)
+
+Execute the filter on the input image
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::IterativeInverseDisplacementFieldImageFilter::Execute "/**
+Image itk::simple::IterativeInverseDisplacementFieldImageFilter::Execute(const Image &image1, uint32_t numberOfIterations, double stopValue)
+
+Execute the filter on the input image with the given parameters
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::IterativeInverseDisplacementFieldImageFilter::GetName "/**
+std::string itk::simple::IterativeInverseDisplacementFieldImageFilter::GetName() const
+
+Name of this class
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::IterativeInverseDisplacementFieldImageFilter::GetNumberOfIterations "/**
+uint32_t itk::simple::IterativeInverseDisplacementFieldImageFilter::GetNumberOfIterations() const
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::IterativeInverseDisplacementFieldImageFilter::GetStopValue "/**
+double itk::simple::IterativeInverseDisplacementFieldImageFilter::GetStopValue() const
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::IterativeInverseDisplacementFieldImageFilter::IterativeInverseDisplacementFieldImageFilter "/**
+itk::simple::IterativeInverseDisplacementFieldImageFilter::IterativeInverseDisplacementFieldImageFilter()
+
+Default Constructor that takes no arguments and initializes default
+parameters
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::IterativeInverseDisplacementFieldImageFilter::SetNumberOfIterations "/**
+Self& itk::simple::IterativeInverseDisplacementFieldImageFilter::SetNumberOfIterations(uint32_t NumberOfIterations)
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::IterativeInverseDisplacementFieldImageFilter::SetStopValue "/**
+Self& itk::simple::IterativeInverseDisplacementFieldImageFilter::SetStopValue(double StopValue)
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::IterativeInverseDisplacementFieldImageFilter::ToString "/**
+std::string itk::simple::IterativeInverseDisplacementFieldImageFilter::ToString() const
+
+Print ourselves out
+
+*/
+public ";
+
+%javamethodmodifiers  itk::simple::IterativeInverseDisplacementFieldImageFilter::~IterativeInverseDisplacementFieldImageFilter "/**
+itk::simple::IterativeInverseDisplacementFieldImageFilter::~IterativeInverseDisplacementFieldImageFilter()
+
+Destructor
+
+*/
+public ";
+
+
 %typemap(javaimports) itk::simple::JoinSeriesImageFilter "/**
 
 Join N-D images into an (N+1)-D image.
@@ -21741,7 +21810,7 @@ Threshold an image using the KittlerIllingworth Threshold.
 
 This filter creates a binary thresholded image that separates an image
 into foreground and background components. The filter computes the
-threshold using the KittlerIllingworthThresholdCalculator and applies that theshold to the input image using the BinaryThresholdImageFilter .
+threshold using the KittlerIllingworthThresholdCalculator and applies that threshold to the input image using the BinaryThresholdImageFilter .
 
 
 Richard Beare. Department of Medicine, Monash University, Melbourne,
@@ -26433,7 +26502,7 @@ Threshold an image using the Li Threshold.
 
 This filter creates a binary thresholded image that separates an image
 into foreground and background components. The filter computes the
-threshold using the LiThresholdCalculator and applies that theshold to the input image using the BinaryThresholdImageFilter .
+threshold using the LiThresholdCalculator and applies that threshold to the input image using the BinaryThresholdImageFilter .
 
 
 Richard Beare. Department of Medicine, Monash University, Melbourne,
@@ -27188,7 +27257,7 @@ Threshold an image using the MaximumEntropy Threshold.
 
 This filter creates a binary thresholded image that separates an image
 into foreground and background components. The filter computes the
-threshold using the MaximumEntropyThresholdCalculator and applies that theshold to the input image using the BinaryThresholdImageFilter .
+threshold using the MaximumEntropyThresholdCalculator and applies that threshold to the input image using the BinaryThresholdImageFilter .
 
 
 Richard Beare. Department of Medicine, Monash University, Melbourne,
@@ -28692,7 +28761,7 @@ Threshold an image using the Moments Threshold.
 
 This filter creates a binary thresholded image that separates an image
 into foreground and background components. The filter computes the
-threshold using the MomentsThresholdCalculator and applies that theshold to the input image using the BinaryThresholdImageFilter .
+threshold using the MomentsThresholdCalculator and applies that threshold to the input image using the BinaryThresholdImageFilter .
 
 
 Richard Beare. Department of Medicine, Monash University, Melbourne,
@@ -29169,10 +29238,8 @@ public ";
 
 %typemap(javaimports) itk::simple::MorphologicalWatershedImageFilter "/**
 
-TODO.
+Watershed segmentation implementation with morphogical operators.
 
-
-TODO
 
 Watershed pixel are labeled 0. TOutputImage should be an integer type.
 Labels of output image are in no particular order. You can reorder the
@@ -30903,11 +30970,11 @@ public ";
 Implements the NOT logical operator pixel-wise on an image.
 
 
-This class is templated over the types of an input image and the type
+This class is templated over the type of an input image and the type
 of the output image. Numeric conversions (castings) are done by the
 C++ defaults.
 
-Since the logical NOT operation is operates only on boolean types, the
+Since the logical NOT operation operates only on boolean types, the
 input type must be implicitly convertible to bool, which is only
 defined in C++ for integer types, the images passed to this filter
 must comply with the requirement of using integer pixel type.
@@ -31260,7 +31327,7 @@ Threshold an image using multiple Otsu Thresholds.
 
 
 This filter creates a labeled image that separates the input image
-into various classes. The filter computes the thresholds using the OtsuMultipleThresholdsCalculator and applies those thesholds to the input image using the ThresholdLabelerImageFilter . The NumberOfHistogramBins and NumberOfThresholds can be set for the
+into various classes. The filter computes the thresholds using the OtsuMultipleThresholdsCalculator and applies those thresholds to the input image using the ThresholdLabelerImageFilter . The NumberOfHistogramBins and NumberOfThresholds can be set for the
 Calculator. The LabelOffset can be set for the ThresholdLabelerImageFilter .
 
 This filter also includes an option to use the valley emphasis
@@ -31435,7 +31502,7 @@ Threshold an image using the Otsu Threshold.
 
 This filter creates a binary thresholded image that separates an image
 into foreground and background components. The filter computes the
-threshold using the OtsuThresholdCalculator and applies that theshold to the input image using the BinaryThresholdImageFilter .
+threshold using the OtsuThresholdCalculator and applies that threshold to the input image using the BinaryThresholdImageFilter .
 
 
 Richard Beare
@@ -32215,7 +32282,7 @@ Generate an image of the physical locations of each pixel.
 
 This image source supports image which have a multi-component pixel
 equal to the image dimension, and variable length VectorImages. It is
-recommented that the component type be a real valued type.
+recommended that the component type be a real valued type.
 See:
  itk::simple::PhysicalPointImageSource for the procedural interface
 
@@ -33952,6 +34019,8 @@ public ";
 Extract a region of interest from the input image.
 
 
+Extract a region of interest from the input image or convert between itk::Image and RLEImage (a custom region can be used).
+
 This filter produces an output image of the same dimension as the
 input image. The user specifies the region of the input image that
 will be contained in the output image. The origin coordinates of the
@@ -33974,11 +34043,22 @@ Wiki Examples:
 All Examples
 
 Extract a portion of an image (region of interest)
+ This filter produces an output image of the same dimension as the
+input image. The user specifies the region of the input image that
+will be contained in the output image. The origin coordinates of the
+output images will be computed in such a way that if mapped to
+physical space, the output image will overlay the input image with
+perfect registration. In other words, a registration process between
+the output image and the input image will return an identity
+transform.
+
+The region to extract is set using the method SetRegionOfInterest.
+
+Specialized for RLEImage .
 See:
  itk::simple::RegionOfInterest for the procedural interface
 
  itk::RegionOfInterestImageFilter for the Doxygen on the original ITK class.
-
 
 
 C++ includes: sitkRegionOfInterestImageFilter.h
@@ -34264,10 +34344,10 @@ a minima or not. The SetFlatIsMinima() method let the user choose which behavior
 This class was contribtued to the Insight Journal by
 Gaetan Lehmann. Biologie du Developpement et de la Reproduction, INRA
 de Jouy-en-Josas, France. https://hdl.handle.net/1926/153
-RegionalMaximaImageFilter MathematicalMorphologyImageFilters
-
 
 See:
+ RegionalMaximaImageFilter
+
  ValuedRegionalMinimaImageFilter
 
  HConcaveImageFilter
@@ -34677,7 +34757,7 @@ Threshold an image using the RenyiEntropy Threshold.
 
 This filter creates a binary thresholded image that separates an image
 into foreground and background components. The filter computes the
-threshold using the RenyiEntropyThresholdCalculator and applies that theshold to the input image using the BinaryThresholdImageFilter .
+threshold using the RenyiEntropyThresholdCalculator and applies that threshold to the input image using the BinaryThresholdImageFilter .
 
 
 Richard Beare. Department of Medicine, Monash University, Melbourne,
@@ -35140,7 +35220,7 @@ The following equation gives the mapping of the intensity values
 \\\\[ outputPixel = ( inputPixel - inputMin) \\\\cdot
 \\\\frac{(outputMax - outputMin )}{(inputMax - inputMin)} + outputMin
 \\\\]
- All computations are performed in the precison of the input pixel's
+ All computations are performed in the precision of the input pixel's
 RealType. Before assigning the computed value to the output pixel.
 
 NOTE: In this filter the minimum and maximum values of the input image
@@ -36781,7 +36861,7 @@ Threshold an image using the Shanbhag Threshold.
 
 This filter creates a binary thresholded image that separates an image
 into foreground and background components. The filter computes the
-threshold using the ShanbhagThresholdCalculator and applies that theshold to the input image using the BinaryThresholdImageFilter .
+threshold using the ShanbhagThresholdCalculator and applies that threshold to the input image using the BinaryThresholdImageFilter .
 
 
 Richard Beare. Department of Medicine, Monash University, Melbourne,
@@ -37190,7 +37270,7 @@ Shift and scale the pixels in an image.
 
 ShiftScaleImageFilter shifts the input pixel by Shift (default 0.0) and then scales the
 pixel by Scale (default 1.0). All computattions are performed in the
-precison of the input pixel's RealType. Before assigning the computed
+precision of the input pixel's RealType. Before assigning the computed
 value to the output pixel, the value is clamped at the NonpositiveMin
 and max of the pixel type.
 See:
@@ -37541,7 +37621,7 @@ Computes the sigmoid function pixel-wise.
 
 
 A linear transformation is applied first on the argument of the
-sigmoid fuction. The resulting total transfrom is given by
+sigmoid function. The resulting total transform is given by
 
 \\\\[ f(x) = (Max-Min) \\\\cdot \\\\frac{1}{\\\\left(1+e^{- \\\\frac{
 x - \\\\beta }{\\\\alpha}}\\\\right)} + Min \\\\]
@@ -38350,7 +38430,7 @@ its pixel value is equal to the input foreground value and it has in
 its neighborhood at least one pixel which its pixel value is equal to
 the input background value. The output image will have pixels which
 will be set to the output foreground value if they belong to the
-contour, otherwise they will be set to the ouput background value.
+contour, otherwise they will be set to the output background value.
 
 The neighborhood \"radius\" is set thanks to the radius params.
 
@@ -41520,7 +41600,7 @@ Threshold an image using the Triangle Threshold.
 
 This filter creates a binary thresholded image that separates an image
 into foreground and background components. The filter computes the
-threshold using the TriangleThresholdCalculator and applies that theshold to the input image using the BinaryThresholdImageFilter .
+threshold using the TriangleThresholdCalculator and applies that threshold to the input image using the BinaryThresholdImageFilter .
 
 
 Richard Beare. Department of Medicine, Monash University, Melbourne,
@@ -42623,7 +42703,7 @@ public ";
 
 %typemap(javaimports) itk::simple::VersorTransform "/**
 
-A 3D rotation transfrom with rotation as a versor around a fixed
+A 3D rotation transform with rotation as a versor around a fixed
 center.
 
 
@@ -43451,7 +43531,7 @@ public ";
 
 %typemap(javaimports) itk::simple::WhiteTopHatImageFilter "/**
 
-White top hat extract local maxima that are larger than the
+White top hat extracts local maxima that are larger than the
 structuring element.
 
 
@@ -43961,7 +44041,7 @@ Threshold an image using the Yen Threshold.
 
 This filter creates a binary thresholded image that separates an image
 into foreground and background components. The filter computes the
-threshold using the YenThresholdCalculator and applies that theshold to the input image using the BinaryThresholdImageFilter .
+threshold using the YenThresholdCalculator and applies that threshold to the input image using the BinaryThresholdImageFilter .
 
 
 Richard Beare
@@ -44744,106 +44824,6 @@ C++ includes: sitkMemberFunctionFactoryBase.h
 %typemap(javaimports) itk::simple::MemberFunctionFactoryBase< TMemberFunctionPointer, TKey, 5 > "/**
 C++ includes: sitkMemberFunctionFactoryBase.h
 */"
-
-%javamethodmodifiers  itk::Functor::BioRadImageIOFactoryRegister__Private "/**
-void itk::BioRadImageIOFactoryRegister__Private()
-*/
-public ";
-
-%javamethodmodifiers  itk::Functor::BMPImageIOFactoryRegister__Private "/**
-void itk::BMPImageIOFactoryRegister__Private()
-*/
-public ";
-
-%javamethodmodifiers  itk::Functor::GDCMImageIOFactoryRegister__Private "/**
-void itk::GDCMImageIOFactoryRegister__Private()
-*/
-public ";
-
-%javamethodmodifiers  itk::Functor::GE4ImageIOFactoryRegister__Private "/**
-void itk::GE4ImageIOFactoryRegister__Private()
-*/
-public ";
-
-%javamethodmodifiers  itk::Functor::GE5ImageIOFactoryRegister__Private "/**
-void itk::GE5ImageIOFactoryRegister__Private()
-*/
-public ";
-
-%javamethodmodifiers  itk::Functor::GiplImageIOFactoryRegister__Private "/**
-void itk::GiplImageIOFactoryRegister__Private()
-*/
-public ";
-
-%javamethodmodifiers  itk::Functor::HDF5ImageIOFactoryRegister__Private "/**
-void itk::HDF5ImageIOFactoryRegister__Private()
-*/
-public ";
-
-%javamethodmodifiers  itk::Functor::HDF5TransformIOFactoryRegister__Private "/**
-void itk::HDF5TransformIOFactoryRegister__Private()
-*/
-public ";
-
-%javamethodmodifiers  itk::Functor::JPEGImageIOFactoryRegister__Private "/**
-void itk::JPEGImageIOFactoryRegister__Private()
-*/
-public ";
-
-%javamethodmodifiers  itk::Functor::LSMImageIOFactoryRegister__Private "/**
-void itk::LSMImageIOFactoryRegister__Private()
-*/
-public ";
-
-%javamethodmodifiers  itk::Functor::MatlabTransformIOFactoryRegister__Private "/**
-void itk::MatlabTransformIOFactoryRegister__Private()
-*/
-public ";
-
-%javamethodmodifiers  itk::Functor::MetaImageIOFactoryRegister__Private "/**
-void itk::MetaImageIOFactoryRegister__Private()
-*/
-public ";
-
-%javamethodmodifiers  itk::Functor::MRCImageIOFactoryRegister__Private "/**
-void itk::MRCImageIOFactoryRegister__Private()
-*/
-public ";
-
-%javamethodmodifiers  itk::Functor::NiftiImageIOFactoryRegister__Private "/**
-void itk::NiftiImageIOFactoryRegister__Private()
-*/
-public ";
-
-%javamethodmodifiers  itk::Functor::NrrdImageIOFactoryRegister__Private "/**
-void itk::NrrdImageIOFactoryRegister__Private()
-*/
-public ";
-
-%javamethodmodifiers  itk::Functor::PNGImageIOFactoryRegister__Private "/**
-void itk::PNGImageIOFactoryRegister__Private()
-*/
-public ";
-
-%javamethodmodifiers  itk::Functor::StimulateImageIOFactoryRegister__Private "/**
-void itk::StimulateImageIOFactoryRegister__Private()
-*/
-public ";
-
-%javamethodmodifiers  itk::Functor::TIFFImageIOFactoryRegister__Private "/**
-void itk::TIFFImageIOFactoryRegister__Private()
-*/
-public ";
-
-%javamethodmodifiers  itk::Functor::TxtTransformIOFactoryRegister__Private "/**
-void itk::TxtTransformIOFactoryRegister__Private()
-*/
-public ";
-
-%javamethodmodifiers  itk::Functor::VTKImageIOFactoryRegister__Private "/**
-void itk::VTKImageIOFactoryRegister__Private()
-*/
-public ";
 
 %javamethodmodifiers  itk::simple::Abs "/**
 Image itk::simple::Abs(const Image &image1)
@@ -46549,7 +46529,7 @@ public ";
 %javamethodmodifiers  itk::simple::FFTShift "/**
 Image itk::simple::FFTShift(const Image &image1, bool inverse=false)
 
-Shift the zero-frequency components of a Fourier transfrom to the
+Shift the zero-frequency components of a Fourier transform to the
 center of the image.
 
 
@@ -47514,6 +47494,23 @@ See:
 */
 public ";
 
+%javamethodmodifiers  itk::simple::IterativeInverseDisplacementField "/**
+Image itk::simple::IterativeInverseDisplacementField(const Image &image1, uint32_t numberOfIterations=5u, double
+stopValue=0.0)
+
+Computes the inverse of a displacement field.
+
+
+This function directly calls the execute method of IterativeInverseDisplacementFieldImageFilter in order to support a procedural API
+
+
+See:
+ itk::simple::IterativeInverseDisplacementFieldImageFilter for the object oriented interface
+
+
+*/
+public ";
+
 %javamethodmodifiers  itk::simple::KittlerIllingworthThreshold "/**
 Image itk::simple::KittlerIllingworthThreshold(const Image &image, const Image &maskImage, uint8_t insideValue=1u,
 uint8_t outsideValue=0u, uint32_t numberOfHistogramBins=256u, bool
@@ -48332,7 +48329,7 @@ public ";
 Image itk::simple::MorphologicalWatershed(const Image &image1, double level=0.0, bool markWatershedLine=true,
 bool fullyConnected=false)
 
-TODO.
+Watershed segmentation implementation with morphogical operators.
 
 
 This function directly calls the execute method of MorphologicalWatershedImageFilter in order to support a procedural API
