@@ -19,6 +19,7 @@
 // This one header will include all SimpleITK filters and external
 // objects.
 #include <SimpleITK.h>
+#include <sitkImageOperators.h>
 #include <iostream>
 #include <stdlib.h>
 
@@ -30,7 +31,7 @@ int main ( int argc, char* argv[] ) {
 
   sitk::Image image( 128, 128, sitk::sitkUInt8 );
 
-  image = sitk::Add( image, 127 );
+  image = image + 127;
 
   sitk::Show( image, "Hello World", true );
 
