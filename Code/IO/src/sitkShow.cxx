@@ -430,7 +430,7 @@ namespace itk
 
   return ExecutableName;
   }
-  
+
   //
   // Find an ImageJ or Fiji executable for Show.
   //
@@ -647,9 +647,9 @@ namespace itk
         Command = ShowColorImageCommand;
 #if !defined(__APPLE__) && !defined(_WIN32)
         if (!ImageJScriptFlag)
-	  {
-	  Command = "%a -eval \'" IMAGEJ_OPEN_MACRO NIFTI_COLOR_MACRO "\'";
-	  }
+          {
+          Command = "%a -eval \'" IMAGEJ_OPEN_MACRO NIFTI_COLOR_MACRO "\'";
+          }
 #endif
         }
       }
@@ -668,9 +668,9 @@ namespace itk
           Command = ShowImageCommand;
 #if !defined(__APPLE__) && !defined(_WIN32)
           if (!ImageJScriptFlag)
-	    {
-	    Command = "%a -eval \'" IMAGEJ_OPEN_MACRO "\'";
-	    }
+            {
+            Command = "%a -eval \'" IMAGEJ_OPEN_MACRO "\'";
+            }
 #endif
           }
         }
