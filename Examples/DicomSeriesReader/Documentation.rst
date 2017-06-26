@@ -1,3 +1,5 @@
+.. _lbl_dicom_series_reader:
+
 Dicom Series Reader
 ==========================
 
@@ -5,7 +7,10 @@ Dicom Series Reader
 Overview
 --------
 
+This example illustrates how to read a DICOM series into a 3D volume, prints some information, writes the image and possibly displays it using the default display program via the SimpleITK Show function. The program makes several assumptions: the given directory contains at least one DICOM series, if there is more than one series the first series is read, and the default SimpleITK external viewer is installed.
 
+
+See also :ref:`lbl_dicom_series_read_modify_write`, :ref:`lbl_print_image_meta_data_dictionary`.
 
 Code
 ----
@@ -24,9 +29,6 @@ Python
    :language: python
    :lines: 1,19-
 
-CSharp
-......
-
 
 Lua
 ...
@@ -37,3 +39,6 @@ Lua
 
 R
 .
+.. literalinclude:: DicomSeriesReader.R
+   :language: R
+   :lines:  23-
