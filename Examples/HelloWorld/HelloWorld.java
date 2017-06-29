@@ -24,8 +24,6 @@ class HelloWorld {
 
     Image image = new Image( 128, 128, PixelIDValueEnum.sitkUInt8 );
 
-    AddImageFilter filter = new AddImageFilter();
-
     image = SimpleITK.add( image, 127 );
 
     SimpleITK.show( image, "Hello World", true );
