@@ -85,6 +85,7 @@ modification_date <- format(Sys.time(), "%Y%m%d")
 # For the series instance UID (0020|000e), each of the components is a number, cannot start
 # with zero, and separated by a '.' We create a unique series ID using the date and time.
 # tags of interest:
+direction <- filtered_image$GetDirection()
 series_tag_values <- c(Filter(Negate(is.null),
                              lapply(tags_to_copy,
                              function(k) {
@@ -96,7 +97,8 @@ series_tag_values <- c(Filter(Negate(is.null),
                              list("0008|0021",modification_date), # Series Date
                              list("0008|0008","DERIVED\\SECONDARY"), # Image Type
                              list("0020|000e", paste0("1.2.826.0.1.3680043.2.1125.",modification_date,".1",modification_time)), # Series Instance UID
-                             list("0020|0037", paste(filtered_image$GetDirection()[1:6], collapse="\\")), # Image Orientation (Patient)
+                             list("0020|0037", paste(c(direction[1], direction[4], direction[7],
+                                                       direction[2],direction[5],direction[8]), collapse="\\")), # Image Orientation (Patient)
                              list("0008|103e", paste0(series_reader$GetMetaData(0,"0008|103e"), " Processed-SimpleITK")))) # Series Description
 
 for(i in 1:filtered_image$GetDepth()) {
