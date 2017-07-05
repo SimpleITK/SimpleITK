@@ -15,6 +15,11 @@ if(NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK")
 
 endif()
 
+option(SimpleITK_SHOW_TESTING_ENABLED "Enable the Show function in SimpleITK testing." OFF)
+if (NOT SimpleITK_SHOW_TESTING_ENABLED)
+  set(ENV{SITK_NOSHOW} TRUE)
+endif ()
+
 # Add individual cxx executables
 
 add_executable ( SimpleGaussianFunctional SimpleGaussianFunctional.cxx )
