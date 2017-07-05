@@ -16,7 +16,6 @@
 #
 #=========================================================================
 
-puts $sitkUInt8
 Image image 128 128 $sitkUInt16
 
 Image image2 [Add image 127]
