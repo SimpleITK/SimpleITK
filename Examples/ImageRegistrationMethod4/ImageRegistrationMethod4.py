@@ -78,5 +78,5 @@ if ( not "SITK_NOSHOW" in os.environ ):
     out = resampler.Execute(moving)
     simg1 = sitk.Cast(sitk.RescaleIntensity(fixed), sitk.sitkUInt8)
     simg2 = sitk.Cast(sitk.RescaleIntensity(out), sitk.sitkUInt8)
-    cimg = sitk.Compose(simg1, simg2, simg1/2.+simg2/2.)
+    cimg = sitk.Compose(simg1, simg2, simg1//2.+simg2//2.)
     sitk.Show( cimg, "ImageRegistration4 Composition" )
