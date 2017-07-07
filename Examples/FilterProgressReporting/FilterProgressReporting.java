@@ -18,6 +18,7 @@
 
 import org.itk.simple.*;
 
+//sphinx_start_command_inheritance
 class MyCommand  extends Command {
 
   private ProcessObject m_ProcessObject;
@@ -32,6 +33,7 @@ class MyCommand  extends Command {
     System.out.format("%s Progress: %f\n", m_ProcessObject.getName(), progress);
   }
 }
+//sphinx_end_command_inheritance
 
 class FilterProgressReporting {
 
