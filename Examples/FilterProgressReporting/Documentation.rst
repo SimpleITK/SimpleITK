@@ -54,8 +54,8 @@ Java
 ....
 .. literalinclude:: FilterProgressReporting.java
    :language: java
-   :start-after: sphinx_start_command_inheritance
-   :end-before: sphinx_end_command_inheritance
+   :start-after: [java director command]
+   :end-before: [java director command]
 
 CSharp
 ......
