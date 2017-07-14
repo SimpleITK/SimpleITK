@@ -27,7 +27,7 @@ namespace itk {
   namespace simple {
 
     /** \class ImageSeriesReader
-     * \brief Read series of image into a SimpleITK image.
+     * \brief Read series of image files into a SimpleITK image.
      *
      * For some image formats such as DICOM, images also contain
      * associated meta-data (e.g. imaging modality, patient name
@@ -177,6 +177,7 @@ namespace itk {
    *     If you need the meta-data dictionaries associated with each
    *     slice then you should use the ImageSeriesReader class.
    *
+   * \sa itk::simple::ImageFileReader for reading a single file.
    * \sa itk::simple::ImageSeriesReader for reading a series and meta-data dictionaries.
    */
   SITKIO_EXPORT Image ReadImage ( const std::vector<std::string> &fileNames, PixelIDValueEnum outputPixelType=sitkUnknown );
