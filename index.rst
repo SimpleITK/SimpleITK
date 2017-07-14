@@ -9,6 +9,7 @@ and is under development.
 
    Documentation/docs/source/installation
    Documentation/docs/source/building
+   Documentation/docs/source/registrationOverview
    Documentation/docs/source/faq
    Examples/index
 

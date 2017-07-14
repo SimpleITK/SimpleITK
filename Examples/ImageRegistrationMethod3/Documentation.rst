@@ -1,6 +1,7 @@
 Image Registration Method 3
 ===========================
 
+.. include:: ../../Documentation/docs/source/registrationExamplePrefix.rst
 
 Overview
 --------
