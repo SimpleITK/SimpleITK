@@ -27,7 +27,18 @@ namespace itk {
   namespace simple {
 
     /** \class ImageSeriesReader
-     * \brief Read series of image into a SimpleITK image
+     * \brief Read series of image into a SimpleITK image.
+     *
+     * For some image formats such as DICOM, images also contain
+     * associated meta-data (e.g. imaging modality, patient name
+     * etc.). By default the reader does not load this information
+     *(saves time). To load the meta-data you will need to explicitly
+     * configure the reader, MetaDataDictionaryArrayUpdateOn, and
+     * possibly specify that you also want to load the private
+     * meta-data LoadPrivateTagsOn.
+     *
+     * Once the image series is read the meta-data is directly
+     * accessible from the reader.
      *
      * \sa itk::simple::ReadImage for the procedural interface
      **/
@@ -51,14 +62,14 @@ namespace itk {
       /**
        * Set/Get whether the meta-data dictionaries for the slices
        * should be read. Default value is false, because of the
-       * additional computation time..
+       * additional computation time.
        */
       SITK_RETURN_SELF_TYPE_HEADER SetMetaDataDictionaryArrayUpdate ( bool metaDataDictionaryArrayUpdate )
       { this->m_MetaDataDictionaryArrayUpdate = metaDataDictionaryArrayUpdate; return *this; }
       bool GetMetaDataDictionaryArrayUpdate() { return this->m_MetaDataDictionaryArrayUpdate; }
 
 
-      /** Set the value of MetaDataDictionaryArrayUpdate to true or false respectfully. */
+      /** Set the value of MetaDataDictionaryArrayUpdate to true or false respectively. */
       SITK_RETURN_SELF_TYPE_HEADER MetaDataDictionaryArrayUpdateOn() { return this->SetMetaDataDictionaryArrayUpdate(true); }
       SITK_RETURN_SELF_TYPE_HEADER MetaDataDictionaryArrayUpdateOff() { return this->SetMetaDataDictionaryArrayUpdate(false); }
 
@@ -68,7 +79,7 @@ namespace itk {
        * This method generates a sequence of filenames whose filenames
        * point to DICOM files. The data set may contain multiple series.
        * The seriesID string is used to select a specific series.  The
-       * ordering of the filenames is based of one of several strategies,
+       * ordering of the filenames is based on one of several strategies,
        * which will read all images in the directory ( assuming there is
        * only one study/series ).
        *
@@ -162,14 +173,11 @@ namespace itk {
    *
    *     Note that when reading a series of images that have meta-data
    *     associated with them (e.g. a DICOM series) the resulting
-   *     image will have an empty meta-data dictionary. It is possible to
-   *     programmatically add a meta-data dictionary to the compounded image by reading in
-   *     one or more images from the series using the ImageFileReader
-   *     class, analyzing the meta-dictionary associated with each of
-   *     those images and creating one that is relevant for the
-   *     compounded image.
+   *     image will have an empty meta-data dictionary.
+   *     If you need the meta-data dictionaries associated with each
+   *     slice then you should use the ImageSeriesReader class.
    *
-   * \sa itk::simple::ImageFileReader for reading a single file
+   * \sa itk::simple::ImageSeriesReader for reading a series and meta-data dictionaries.
    */
   SITKIO_EXPORT Image ReadImage ( const std::vector<std::string> &fileNames, PixelIDValueEnum outputPixelType=sitkUnknown );
   }
