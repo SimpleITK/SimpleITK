@@ -229,10 +229,12 @@ endif( )
 option ( WRAP_R "Wrap R" ${WRAP_R_DEFAULT} )
 
 if ( WRAP_R )
+	set (R_EXTRA_LINK_FLAGS "" CACHE STRING "Extra flags required for linking the R library") 
   list( APPEND SITK_LANGUAGES_VARS
     R_INCLUDE_DIR
     R_LIBRARIES
     R_LIBRARY_BASE
+    R_EXTRA_LINK_FLAGS
     R_COMMAND
     RSCRIPT_EXECUTABLE )
 endif()

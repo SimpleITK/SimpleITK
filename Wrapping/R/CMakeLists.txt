@@ -28,7 +28,7 @@ target_include_directories( ${SWIG_MODULE_SimpleITK_TARGET_NAME}
 set_source_files_properties(${swig_generated_file_fullname} PROPERTIES COMPILE_FLAGS "-w")
 
 # set the output directory for the R library to the binary packaging location
-set_target_properties( ${SWIG_MODULE_SimpleITK_TARGET_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Packaging/SimpleITK/src/)
+set_target_properties( ${SWIG_MODULE_SimpleITK_TARGET_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Packaging/SimpleITK/src/ LINK_FLAGS "${R_EXTRA_LINK_FLAGS}")
 
 sitk_strip_target( ${SWIG_MODULE_SimpleITK_TARGET_NAME} )
 set(SWIG_MODULE_SimpleITKR_TARGET_NAME "${SWIG_MODULE_SimpleITK_TARGET_NAME}")
