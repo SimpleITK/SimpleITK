@@ -118,7 +118,7 @@ language toggle the appropriate WRAP\_LANGUAGE cmake variable to ON.
 Verify and/or correct the advanced cmake variables to the language
 specific executable, libraries and include directories. For example if
 you have multiple Python installations ensure that all related Python
-variable refer to the same versions.
+variables refer to the same versions.
 
 Then use your make utility or your cmake chosen build utility to build
 SimpleITK.
@@ -131,41 +131,58 @@ development time are listed
 Building Manually
 -----------------
 
-This is **not** the recommended way of building SimpleITK, but it can be
-useful if you want to use a system version of ITK, etc. , or if you do
-not want to (or can not) use git.
+
+By not using the superbuild, you must manually specify all dependencies
+used during the building of SimpleITK instead of using the known
+working versions provided by the superbuild as external projects. This
+may be useful if you are providing a system package of SimpleITK or tightly
+integrating it into another build system. The versions of external
+project used and tested by SimpleITK can be found by examining the
+External CMake files in the Superbuild sub-directory.
+
+
+Additional Prerequisites
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+The following are dependencies when not using the SuperBuild:
 
 #. Setup the prerequisites as described above (i.e. CMake and supported
    compiler)
-#. Install the matching version of `SWIG <http://www.swig.org/>`__ >=
-   3.0.11
 
-   -  e.g. Windows users may install
-      `swigwin-3.0.11 <http://prdownloads.sourceforge.net/swig/swigwin-3.0.11.zip>`__
+#. `Insight Toolkit (ITK) <https://itk.org/>`__ the version specified in
+   the External_ITK.cmake file is the version of ITK used for binary
+   release. This can be seen as the minimum version of ITK to be used
+   with SimpleITK, as future ITK versions are generally backwards
+   compatible.
 
-#. Download the SimpleITK source code from the
-   `SourceForge <https://sourceforge.net/projects/simpleitk/files/SimpleITK/>`__
-   page
-#. Download the matching version of ITK, found by examining the
-   \`SuperBuild/External\_ITK.cmake\` file.
-#. Configure ITK using CMake
+#. `Lua <https://www.lua.org/>`__ 5.1
 
-   -  e.g. BUILD\_EXAMPLES=OFF, BUILD\_TESTING=OFF,
-      BUILD\_SHARED\_LIBS=OFF, **ITK\_USE\_REVIEW=ON**
+#. `SWIG <http://www.swig.org/>`__ >= 3.0.11
 
-#. Build ITK
+#. GTest or `Google <https://github.com/google/googletest>` >= 1.0.8
+   is needed if testing is enabled.
 
-   -  Be sure to note the build settings e.g. Release x64
 
-#. Configure SimpleITK using CMake
+Configuration and Building
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-   -  Set ITK\_DIR to the location of the ITK build location from the
-      previous steps
+After the source code is obtained, SimpleITK can be configured:
 
-#. Build SimpleITK
+.. code-block :: bash
 
-   -  Be sure to configure the build settings exactly the same as ITK
-      e.g. Release x64 and CXX\_FLAGS
+ mkdir SimpleITK-build
+ cd SimpleITK-build
+ cmake ../SimpleITK
+
+If all the dependencies are installed in standard places, then the CMake
+configuration should detect them properly. Otherwise, if there are
+configuration errors, the proper CMake variable should be set.
+
+Then SimpleITK can be built:
+
+.. code-block :: bash
+
+ make -j$(nproc)
 
 
 Advanced Build Options
