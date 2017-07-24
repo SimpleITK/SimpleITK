@@ -18,6 +18,7 @@
 
 import org.itk.simple.*;
 
+//! [java director command]
 class MyCommand  extends Command {
 
   private ProcessObject m_ProcessObject;
@@ -32,6 +33,7 @@ class MyCommand  extends Command {
     System.out.format("%s Progress: %f\n", m_ProcessObject.getName(), progress);
   }
 }
+//! [java director command]
 
 class FilterProgressReporting {
 
