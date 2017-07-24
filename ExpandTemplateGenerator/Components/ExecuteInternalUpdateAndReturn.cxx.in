@@ -12,6 +12,15 @@ OUT=OUT..[[
   // release the old filter ( and output data )
   if ( this->m_Filter != NULL)
     {
+]]
+for i = 1,#measurements do
+  if measurements[i].active then
+    OUT=OUT..'      this->m_pfGet'..measurements[i].name..' = SITK_NULLPTR;\
+'
+  end
+end
+
+OUT=OUT..[[
       this->m_Filter->UnRegister();
       this->m_Filter = NULL;
     }

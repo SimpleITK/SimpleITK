@@ -1,11 +1,11 @@
 {
   "name" : "N4BiasFieldCorrectionImageFilter",
-  "template_code_filename" : "DualImageFilter",
+  "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 0,
   "doc" : "Some global documentation",
   "pixel_types" : "RealPixelIDTypeList",
-  "pixel_types2" : "IntegerPixelIDTypeList",
+  "filter_type" : "itk::N4BiasFieldCorrectionImageFilter<InputImageType, itk::Image< uint8_t, TImageType::ImageDimension>, OutputImageType>",
   "inputs" : [
     {
       "name" : "Image",
@@ -13,7 +13,9 @@
     },
     {
       "name" : "MaskImage",
-      "type" : "Image"
+      "type" : "Image",
+      "custom_itk_cast" : "filter->SetMaskImage( this->CastImageToITK<typename FilterType::MaskImageType>(*inMaskImage) );",
+      "optional" : true
     }
   ],
   "members" : [

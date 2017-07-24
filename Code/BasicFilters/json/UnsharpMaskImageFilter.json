@@ -1,0 +1,78 @@
+{
+  "name" : "UnsharpMaskImageFilter",
+  "template_code_filename" : "ImageFilter",
+  "template_test_filename" : "ImageFilter",
+  "doc" : "",
+  "number_of_inputs" : 1,
+  "pixel_types" : "RealPixelIDTypeList",
+  "filter_type" : "itk::UnsharpMaskImageFilter<InputImageType, OutputImageType, typename InputImageType::PixelType>",
+  "public_declarations" : "SITK_RETURN_SELF_TYPE_HEADER SetSigmas(double s) { this->m_Sigmas = std::vector<double>(3, s ); return *this; }",
+  "members" : [
+    {
+      "name" : "Sigmas",
+      "type" : "double",
+      "default" : "std::vector<double>(3, 1.0)",
+      "dim_vec" : 1,
+      "itk_type" : "typename FilterType::SigmaArrayType",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get Sigma values measured in the units of image spacing. Default: 1.0.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get Sigma values measured in the units of image spacing. Default: 1.0."
+    },
+    {
+      "name" : "Amount",
+      "type" : "double",
+      "default" : "0.5",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get amount of enhancement. Usual range: 0.1 to 2.0. Default: 0.5.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get amount of enhancement. Usual range: 0.1 to 2.0. Default: 0.5."
+    },
+    {
+      "name" : "Threshold",
+      "type" : "double",
+      "default" : "0.0",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Set/Get threshold for enhancement. Default: 0.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Set/Get threshold for enhancement. Default: 0."
+    }
+  ],
+  "tests" : [
+    {
+      "tag" : "default",
+      "description" : "Simply run with default settings",
+      "settings" : [],
+      "tolerance" : 0.0001,
+      "inputs" : [
+        "Input/cthead1-Float.mha"
+      ]
+    },
+    {
+      "tag" : "local_contrast",
+      "description" : "Local contrast enhancement",
+      "settings" : [
+        {
+          "parameter" : "Sigmas",
+          "type" : "double",
+          "dim_vec" : 1,
+          "value" : [
+            30.0,
+            30.0
+          ]
+        },
+        {
+          "parameter" : "Amount",
+          "value" : "0.2"
+        }
+      ],
+      "tolerance" : 0.0001,
+      "inputs" : [
+        "Input/cthead1-Float.mha"
+      ]
+    }
+  ],
+  "briefdescription" : "Edge enhancement filter.",
+  "detaileddescription" : "This filter subtracts a smoothed version of the image from the image to achieve the edge enhancing effect. https://en.wikipedia.org/w/index.php?title=Unsharp_masking&oldid=750486803#Photographic_unsharp_masking \n\nIt has configurable amount, radius (sigma) and threshold, and whether to clamp the resulting values to the range of output type.\n\nFormula: sharpened=original+[abs(original-blurred)-threshold]*amount\n\nIf clamping is turned off (it is on by default), casting to output pixel format is done using C++ defaults, meaning that values are not clamped but rather wrap around e.g. 260 -> 4 (unsigned char).\n\n\\see ImageToImageFilter \n\n\\see SmoothingRecursiveGaussianImageFilter \n\n\\see RescaleIntensityImageFilter",
+  "itk_module" : "ITKImageFeature"
+}

@@ -74,7 +74,7 @@ if( DEFINED GTEST_ROOT AND EXISTS "${GTEST_ROOT}/CMakeLists.txt")
     add_library(GTest::Main ALIAS ${GTEST_MAIN_LIBRARIES})
 
   else()
-    message(WARNING "CTEST_ROOT appears to be a source directory \
+    message(WARNING "GTEST_ROOT appears to be a source directory \
     but \"gtest/gtest.h\"  can not be found in source directory: \
     ${GTEST_ROOT}")
   endif()

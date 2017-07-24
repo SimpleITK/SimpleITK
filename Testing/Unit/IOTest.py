@@ -20,7 +20,7 @@ from __future__ import print_function
 import SimpleITK as sitk
 import sys
 
-# this test is suppose to test the python interface to the IO classs
+# this test is suppose to test the python interface to the IO classes
 
 if len ( sys.argv ) != 2:
     print( "Usage: %s outputPath" % ( sys.argv[0] ) )

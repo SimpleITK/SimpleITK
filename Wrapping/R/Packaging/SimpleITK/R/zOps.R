@@ -66,7 +66,7 @@ setMethod('%/%', signature(e1="_p_itk__simple__Image", e2="numeric"),
           function(e1, e2) stop("No integer division op for images")
           )
 
-## Math group - names are consistent, so we can do this programatically
+## Math group - names are consistent, so we can do this programmatically
 
 for (nm in c('cos', 'sin', 'tan', 'acos', 'asin', 'atan', 'abs', 'exp', 'sqrt',
             'log', 'log10'))

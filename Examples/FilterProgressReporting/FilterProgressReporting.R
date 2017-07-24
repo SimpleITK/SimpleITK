@@ -27,7 +27,7 @@ args <- commandArgs( TRUE )
 
 if (length(args) <  3){
    write("Usage arguments: <input> <variance> <output>", stderr())
-   quit(1)
+   quit(save="no", status=1)
 }
 
 reader <- ImageFileReader()
@@ -41,10 +41,8 @@ gaussian$SetVariance( as.numeric(args[2]) )
 
 ##! [R lambda command]
 gaussian$AddCommand( 'sitkStartEvent',  function(method) {cat("StartEvent\n")} )
+gaussian$AddCommand( 'sitkEndEvent',  function(method) {cat("EndEvent\n")} )
 ##! [R lambda command]
-
-cmd <- RCommand()
-gaussian$AddCommand( 'sitkEndEvent', cmd )
 
 image = gaussian$Execute( image )
 

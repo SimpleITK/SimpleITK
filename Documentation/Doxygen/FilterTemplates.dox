@@ -13,7 +13,7 @@ generation system to wrap existing ITK filters into SimpleITK filters. The
 development process consists of writing a JSON data file which specifies the
 information needed to fill in the fields of the template file. During
 compilation, all of the .json files are parsed using a lua template engine
-which fills in the apropriate template file from the provided fields. This
+which fills in the appropriate template file from the provided fields. This
 ReadMe provides a detailed description of the fields that can be used in the
 json data files and what effect each field has on the resulting image filter.
 When writing your own json file, it should be saved in:
@@ -123,7 +123,7 @@ must be written for the filter
 additional header files to include in the cxx file for this filter.
 
 - [OPTIONAL] \b custom_set_intput: (\e string)  Code which is used to
-  set input or multiple inputs to the filter. This overides the
+  set input or multiple inputs to the filter. This overrides the
   standard setting of the inputs.
 
 - [OPTIONAL] \b output_pixel_type: (\e string) String representing the specific
@@ -162,7 +162,7 @@ custom method are:
   - \b doc: (\e string) Documentation for this custom method
   - \b name: (\e string) The name of the method
   - \b return_type: (\e string) the return type of the method
-  - [OPTIONAL] \b parameters: (\e list) A list of of parameters for the method.
+  - [OPTIONAL] \b parameters: (\e list) A list of parameters for the method.
   Each method is specified by an object with the following fields:
     - \b type: (\e string) The parameter's type
     - \b var_name: (\e string) The name of the variable to be used in the \b body

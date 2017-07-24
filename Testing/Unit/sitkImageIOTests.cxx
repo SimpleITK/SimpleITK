@@ -273,7 +273,7 @@ TEST(IO, SeriesReader) {
 
   sitk::Image image = reader.SetFileNames ( fileNames ).Execute();
   EXPECT_EQ ( "b13c0a17109e3a5058e8f225c9ef2dbcf79ac240", sitk::Hash( image ) );
-  EXPECT_EQ( 3u, reader.GetFileNames().size());
+  EXPECT_EQ ( 3u, reader.GetFileNames().size() );
   EXPECT_EQ ( 3u, image.GetDimension() );
   EXPECT_EQ ( 256u, image.GetWidth() );
   EXPECT_EQ ( 256u, image.GetHeight() );
@@ -354,6 +354,29 @@ TEST(IO, DicomSeriesReader) {
   // return an empty dictionary.
   std::vector< std::string > metaDataKeys = image.GetMetaDataKeys();
   EXPECT_EQ( 0u, metaDataKeys.size() );
+
+
+  EXPECT_FALSE( reader.GetMetaDataDictionaryArrayUpdate() );
+  reader.MetaDataDictionaryArrayUpdateOn();
+  EXPECT_TRUE( reader.GetMetaDataDictionaryArrayUpdate() );
+
+  image = reader.Execute();
+  EXPECT_EQ( 3u, image.GetSize()[2] );
+  for (unsigned int i = 0; i <  image.GetSize()[2]; ++i)
+    {
+      std::vector<std::string> keys = reader.GetMetaDataKeys(0);
+      EXPECT_EQ( 93u, keys.size() );
+
+      for(unsigned int j = 0; j < keys.size(); ++j )
+        {
+        EXPECT_TRUE( reader.HasMetaDataKey(i, keys[j]) );
+        EXPECT_NO_THROW( reader.GetMetaData(i, keys[j]) );
+        }
+    }
+  EXPECT_FALSE( reader.HasMetaDataKey(0, "nothing" ) );
+  EXPECT_ANY_THROW( reader.GetMetaDataKeys(99) );
+  EXPECT_ANY_THROW( reader.HasMetaDataKey(99, "nothing") );
+  EXPECT_ANY_THROW( reader.GetMetaData(99, "nothing") );
 }
 
 

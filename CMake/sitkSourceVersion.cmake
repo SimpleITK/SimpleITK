@@ -31,11 +31,17 @@ include(GetGitRevisionDescription)
 
 get_git_head_revision(GIT_REFVAR _GIT_VERSION_HASH)
 
-# if there is not git directory we should be in a distributed package
+# if there is not a git directory we should be in a distributed package
 # which should contain this additional cmake file with the
 # _GIT_VERSION variables
 if(_GIT_VERSION_HASH STREQUAL "GITDIR-NOTFOUND")
-  include( "${CMAKE_CURRENT_LIST_DIR}/sitkSourceVersionVars.cmake" )
+    if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/sitkSourceVersionVars.cmake")
+      include( "${CMAKE_CURRENT_LIST_DIR}/sitkSourceVersionVars.cmake" )
+    else()
+      message(WARNING "Unable to determine source version!\n
+Please use the git repository or an official source distribution.\n")
+      set(_GIT_VERSION_DEV "")
+    endif()
   return()
 endif()
 

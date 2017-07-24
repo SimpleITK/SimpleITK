@@ -22,9 +22,10 @@ if ARGV.length != 3 then
   exit( 1 )
 end
 
-## [ruby director command]
+
 # Derive a class from SimpleITK Command class to be used to observe
 # events and report progress.
+## [ruby director command]
 class MyCommand < Simpleitk::Command
   def initialize(po)
     # Explicit call to supoer class initlaizer is required to

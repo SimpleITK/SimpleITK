@@ -83,7 +83,7 @@ namespace itk
 
   // Function to replace %tokens in a string.  The tokens are %a and %f for
   // application and file name respectively.  %% will send % to the output string.
-  // Multiple occurances of a token are allowed.
+  // Multiple occurrences of a token are allowed.
   //
   static std::string ReplaceWords(std::string command, std::string app, std::string filename, std::string title, bool& fileFlag)
     {
@@ -359,6 +359,8 @@ namespace itk
 
 
   //
+  // Search some standard directories for an executable, possibly inside a named directory.
+  // The directories that are searched depend on the system type.
   //
   static std::string FindApplication(const std::string directory = "", const std::string name = "", const bool debugOn=false )
   {
@@ -414,7 +416,6 @@ namespace itk
     paths.push_back( homedir + "/bin/" + directory );
     }
 
-  paths.push_back( "~/bin/" + directory );
   paths.push_back( "/opt/" + directory );
   paths.push_back( "/usr/local/" + directory );
   ExecutableName = itksys::SystemTools::FindFile ( name.c_str(), paths );
@@ -430,128 +431,12 @@ namespace itk
   return ExecutableName;
   }
 
-
-  /**
-   * This function take a list of command line arguments, and runs a
-   * process based on it. It waits for a fraction of a second before
-   * checking it's state, to verify it was launched OK.
-   */
-  static void ExecuteShow( const std::vector<std::string> & cmdLine, const bool debugOn=false )
+  //
+  // Find an ImageJ or Fiji executable for Show.
+  //
+  static std::string FindImageJ(const bool debugOn)
   {
-    unsigned int i;
-
-    if (debugOn)
-      {
-      std::cout << "Show command: ";
-      for ( i = 0; i < cmdLine.size(); ++i )
-        std::cout << '\'' << cmdLine[i] << "\' ";
-      std::cout << std::endl;
-      }
-
-    std::vector<const char*> cmd( cmdLine.size() + 1, NULL );
-
-    for ( i = 0; i < cmdLine.size(); ++i )
-      {
-      cmd[i] = cmdLine[i].c_str();
-      }
-
-    itksysProcess *kp = itksysProcess_New();
-
-    itksysProcess_SetCommand( kp, &cmd[0] );
-
-    itksysProcess_SetOption( kp, itksysProcess_Option_Detach, 1 );
-
-    // For detached processes, this appears not to be the default
-    itksysProcess_SetPipeShared( kp, itksysProcess_Pipe_STDERR, 1);
-    itksysProcess_SetPipeShared( kp, itksysProcess_Pipe_STDOUT, 1);
-
-    itksysProcess_Execute( kp );
-
-    // Wait one second then check to see if we launched ok.
-    // N.B. Because the launched process may spawn a child process for
-    // the acutal application we want, this methods is needed to be
-    // called before the GetState, so that we get more then the
-    // imediate result of the initial execution.
-    double timeout = ProcessDelay;
-    itksysProcess_WaitForExit( kp, &timeout );
-
-
-    switch (itksysProcess_GetState(kp))
-      {
-      case itksysProcess_State_Executing:
-        // This first case is what we expect if everything went OK.
-
-        // We want the other process to continue going
-        itksysProcess_Delete( kp ); // implicitly disowns
-        break;
-
-      case itksysProcess_State_Exited:
-        {
-        int exitValue = itksysProcess_GetExitValue(kp);
-        if ( exitValue != 0 )
-          {
-          sitkExceptionMacro (  << "Process returned " << exitValue << "." );
-          }
-        }
-        break;
-
-      case itksysProcess_State_Killed:
-        itksysProcess_Delete( kp );
-        sitkExceptionMacro (  << "Child was killed by parent." );
-        break;
-
-      case itksysProcess_State_Exception:
-        {
-        std::string exceptionString = itksysProcess_GetExceptionString(kp);
-        itksysProcess_Delete( kp );
-        sitkExceptionMacro (  << "Child terminated abnormally: " << exceptionString );;
-        }
-        break;
-
-      case itksysProcess_State_Error:
-        {
-        std::string errorString = itksysProcess_GetErrorString(kp);
-        itksysProcess_Delete( kp );
-        sitkExceptionMacro (  << "Error in administrating child process: [" << errorString << "]" );
-        }
-        break;
-
-      // these states should not occour, because they are the result
-      // from actions we don't take
-      case itksysProcess_State_Expired:
-      case itksysProcess_State_Disowned:
-      case itksysProcess_State_Starting:
-      default:
-        itksysProcess_Delete( kp );
-        sitkExceptionMacro (  << "Unexpected process state!" );
-      };
-
-  }
-
-  void Show( const Image &image, const std::string& title, const bool debugOn)
-  {
-  // Try to find ImageJ, write out a file and open
   std::string ExecutableName;
-  std::string Command, Command3D;
-  std::string TempFile = "";
-  std::string Macro = "";
-  std::vector<std::string> CommandLine;
-
-
-
-  bool colorFlag = false;
-
-
-  // If the image is 3 channel, 8 or 16 bit, assume it's a color image.
-  //
-  colorFlag = ( (image.GetNumberOfComponentsPerPixel() == 3)
-                  && ((image.GetPixelIDValue()==sitkVectorUInt8) || (image.GetPixelIDValue()==sitkVectorUInt16)) );
-
-
-
-
-  // Find the ImageJ executable
-  //
 
 #if defined(_WIN32)
 
@@ -600,6 +485,139 @@ namespace itk
     }
 #endif
 
+  if (!ExecutableName.length())
+    {
+    sitkExceptionMacro (  << "No appropriate executable found." );
+    }
+
+    return ExecutableName;
+  }
+
+  /**
+   * This function take a list of command line arguments, and runs a
+   * process based on it. It waits for a fraction of a second before
+   * checking it's state, to verify it was launched OK.
+   */
+  static void ExecuteShow( const std::vector<std::string> & cmdLine, const bool debugOn=false )
+  {
+    unsigned int i;
+    std::ostringstream cmdstream;
+
+    for ( i = 0; i < cmdLine.size(); ++i )
+      cmdstream << '\'' << cmdLine[i] << "\' ";
+
+    if (debugOn)
+      {
+      std::cout << "Show command: " << cmdstream.str() << std::endl;
+      }
+
+    std::vector<const char*> cmd( cmdLine.size() + 1, NULL );
+
+    for ( i = 0; i < cmdLine.size(); ++i )
+      {
+      cmd[i] = cmdLine[i].c_str();
+      }
+
+    itksysProcess *kp = itksysProcess_New();
+
+    itksysProcess_SetCommand( kp, &cmd[0] );
+
+    itksysProcess_SetOption( kp, itksysProcess_Option_Detach, 1 );
+
+    // For detached processes, this appears not to be the default
+    itksysProcess_SetPipeShared( kp, itksysProcess_Pipe_STDERR, 1);
+    itksysProcess_SetPipeShared( kp, itksysProcess_Pipe_STDOUT, 1);
+
+    itksysProcess_Execute( kp );
+
+    // Wait one second then check to see if we launched ok.
+    // N.B. Because the launched process may spawn a child process for
+    // the acutal application we want, this methods is needed to be
+    // called before the GetState, so that we get more then the
+    // immediate result of the initial execution.
+    double timeout = ProcessDelay;
+    itksysProcess_WaitForExit( kp, &timeout );
+
+
+    switch (itksysProcess_GetState(kp))
+      {
+      case itksysProcess_State_Executing:
+        // This first case is what we expect if everything went OK.
+
+        // We want the other process to continue going
+        itksysProcess_Delete( kp ); // implicitly disowns
+        break;
+
+      case itksysProcess_State_Exited:
+        {
+        int exitValue = itksysProcess_GetExitValue(kp);
+        if ( exitValue != 0 )
+          {
+          sitkExceptionMacro (  << "Process returned " << exitValue << ".\n" << "Command line: " << cmdstream.str() );
+          }
+        }
+        break;
+
+      case itksysProcess_State_Killed:
+        itksysProcess_Delete( kp );
+        sitkExceptionMacro (  << "Child was killed by parent." << "\nCommand line: " << cmdstream.str() );
+        break;
+
+      case itksysProcess_State_Exception:
+        {
+        std::string exceptionString = itksysProcess_GetExceptionString(kp);
+        itksysProcess_Delete( kp );
+        sitkExceptionMacro (  << "Child terminated abnormally: " << exceptionString << ".\nCommand line: " << cmdstream.str() );
+        }
+        break;
+
+      case itksysProcess_State_Error:
+        {
+        std::string errorString = itksysProcess_GetErrorString(kp);
+        itksysProcess_Delete( kp );
+        sitkExceptionMacro (  << "Error in administrating child process: [" << errorString << "]" << ".\nCommand line: " << cmdstream.str() );
+        }
+        break;
+
+      // these states should not occur, because they are the result
+      // from actions we don't take
+      case itksysProcess_State_Expired:
+      case itksysProcess_State_Disowned:
+      case itksysProcess_State_Starting:
+      default:
+        itksysProcess_Delete( kp );
+        sitkExceptionMacro (  << "Unexpected process state!" << "\nCommand line: " << cmdstream.str() );
+      };
+
+  }
+
+  void Show( const Image &image, const std::string& title, const bool debugOn)
+  {
+  // Try to find ImageJ, write out a file and open
+  std::string ExecutableName;
+  std::string Command, Command3D;
+  std::string TempFile = "";
+  std::string Macro = "";
+  std::vector<std::string> CommandLine;
+
+
+
+  bool colorFlag = false;
+
+
+  // If the image is 3 channel, 8 or 16 bit, assume it's a color image.
+  //
+  colorFlag = ( (image.GetNumberOfComponentsPerPixel() == 3)
+                  && ((image.GetPixelIDValue()==sitkVectorUInt8) || (image.GetPixelIDValue()==sitkVectorUInt16)) );
+
+
+  ExecutableName = FindImageJ(debugOn);
+
+#if !defined(__APPLE__) && !defined(_WIN32)
+  // is the imagej we're running a script or a binary?
+  bool ImageJScriptFlag = itksys::SystemTools::FileHasSignature( ExecutableName.c_str(), "#!" );
+#endif
+
   bool fijiFlag = ExecutableName.find( "Fiji.app" ) != std::string::npos;
 
   TempFile = BuildFullFileName(title, fijiFlag);
@@ -627,6 +645,12 @@ namespace itk
       else
         {
         Command = ShowColorImageCommand;
+#if !defined(__APPLE__) && !defined(_WIN32)
+        if (!ImageJScriptFlag)
+          {
+          Command = "%a -eval \'" IMAGEJ_OPEN_MACRO NIFTI_COLOR_MACRO "\'";
+          }
+#endif
         }
       }
     }
@@ -642,6 +666,12 @@ namespace itk
         else
           {
           Command = ShowImageCommand;
+#if !defined(__APPLE__) && !defined(_WIN32)
+          if (!ImageJScriptFlag)
+            {
+            Command = "%a -eval \'" IMAGEJ_OPEN_MACRO "\'";
+            }
+#endif
           }
         }
     }
@@ -657,7 +687,7 @@ namespace itk
     }
 
 
-  // Replace the string tokens and split the command string into seperate words.
+  // Replace the string tokens and split the command string into separate words.
   CommandLine = ConvertCommand(Command, ExecutableName, TempFile, title);
 
   // run the compiled command-line in a process which will detach

@@ -34,7 +34,7 @@ namespace simple {
 
 /** \brief A function which does nothing
  *
- * This function is to be used to mark parameters as unused to supress
+ * This function is to be used to mark parameters as unused to suppress
  * compiler warning.
  */
 template <typename T>
@@ -80,7 +80,7 @@ TITKPointVector SITKCommon_HIDDEN sitkSTLVectorToITKPointVector( const std::vect
 
 /** \brief Copy the elements of an std::vector into an ITK fixed width vector
  *
- * If there are more elements in paramter "in" than the templated ITK
+ * If there are more elements in parameter "in" than the templated ITK
  * vector type, they are truncated. If less, then an exception is
  * generated.
  */
