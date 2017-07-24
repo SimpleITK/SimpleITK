@@ -74,7 +74,7 @@ Source code
 ===========
 
 If one of the above language specific front-ends are not used then
-SimpleITK must be build directly.
+SimpleITK must be built directly.
 
 There are two options to obtain the SimpleITK source code:
 
@@ -86,6 +86,9 @@ There are two options to obtain the SimpleITK source code:
 
  git clone  https://itk.org/SimpleITK.git
 
+The tar-balls provided by GitHub will result in a configuration
+warning, because SimpleITK examines the repository to determine a
+descriptive version.
 
 Building using SuperBuild
 -------------------------
@@ -102,30 +105,27 @@ configure the SuperBuild:
  cmake ../SimpleITK/SuperBuild
 
 The SuperBuild will automatically download and build the matching
-version of ITK and SWIG needed to compile SimpleITK. Additionally, it
-will set recommended compilation flags to minimize the size of the
-library and enable support for large libraries. This is the recommended
-way to build SimpleITK and is easiest.
+versions of ITK, SWIG, Lua, and GTest (if testing is enabled) needed to
+compile SimpleITK.
 
 If you get an error message saying that ITK\_DIR is not set then, you
 did not correctly point cmake to the SuperBuild sub-directory. Please
 erase your binary directory, and point cmake to the SimpleITK/SuperBuild
 sub-directory.
 
-The cmake configuration process should automatically find supported
+The CMake configuration process should automatically find supported
 languages and enable SimpleITK wrapping for them. To manually enable a
 language toggle the appropriate WRAP\_LANGUAGE cmake variable to ON.
-Verify and/or correct the advanced cmake variables to the language
+Verify and correct the advanced cmake variables for the language
 specific executable, libraries and include directories. For example if
 you have multiple Python installations ensure that all related Python
 variables refer to the same versions.
 
 Then use your make utility or your cmake chosen build utility to build
-SimpleITK.
-
-SimpleITK takes a while to build. Some tips and tricks to speed up
-development time are listed
-`here <http://www.itk.org/SimpleITKDoxygen/html/Developer.html#TandT>`__.
+SimpleITK. As the SimpleITK build process may take a while, it is
+important to use the appropriate flags to enable multi-process
+compilation i.e. "-j" for make, "/MP" for Visual Studio, or use the
+CMake `Ninja <https://ninja-build.org>`__ generator.
 
 
 Building Manually
