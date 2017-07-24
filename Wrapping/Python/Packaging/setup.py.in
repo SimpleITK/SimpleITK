@@ -19,9 +19,9 @@ def get_pep386version():
     sitkPATCH = "@SimpleITK_VERSION_PATCH@"
     sitkTWEAK = "@SimpleITK_VERSION_TWEAK@"
     sitkRC    = "@SimpleITK_VERSION_RC@"
-    sitkPOST   = "@SimpleITK_VERSION_POST@"
-    sitkDEV    = "@SimpleITK_VERSION_DEV@"
-    sitkHASH   = "@SimpleITK_VERSION_HASH@"
+    sitkPOST  = "@SimpleITK_VERSION_POST@"
+    sitkDEV   = "@SimpleITK_VERSION_DEV@"
+    sitkHASH  = "@SimpleITK_VERSION_HASH@"
 
 
     version = sitkMAJOR+"."+sitkMINOR
