@@ -150,7 +150,7 @@ The following are dependencies when not using the SuperBuild:
    compiler)
 
 #. `Insight Toolkit (ITK) <https://itk.org/>`__ the version specified in
-   the External_ITK.cmake file is the version of ITK used for binary
+   the External_ITK.cmake file is the version of ITK used for the binary
    release. This can be seen as the minimum version of ITK to be used
    with SimpleITK, as future ITK versions are generally backwards
    compatible.
@@ -159,7 +159,7 @@ The following are dependencies when not using the SuperBuild:
 
 #. `SWIG <http://www.swig.org/>`__ >= 3.0.11
 
-#. GTest or `Google <https://github.com/google/googletest>` >= 1.0.8
+#. GTest or `Google <https://github.com/google/googletest>`__ >= 1.0.8
    is needed if testing is enabled.
 
 
@@ -176,9 +176,12 @@ After the source code is obtained, SimpleITK can be configured:
 
 If all the dependencies are installed in standard places, then the CMake
 configuration should detect them properly. Otherwise, if there are
-configuration errors, the proper CMake variable should be set.
+configuration errors, the proper CMake variable should be set. CMake
+variables can be either set with a CMake interactive GUI such as
+`ccmake` or `cmake-qt`, or as arguments on the command line by using
+the following format: `-D<var>=<value>`.
 
-Then SimpleITK can be built:
+After proper configuration, SimpleITK can be built:
 
 .. code-block :: bash
 
