@@ -1,10 +1,12 @@
 import sys
+import os
 
 try:
-    from setuptools import setup, Distribution
+    from setuptools import setup, Extension
+    from setuptools.command.build_ext import build_ext as _build_ext
 except ImportError:
-    from distutils.core import setup
-    from distutils.dist import Distribution
+    from distutils.core import setup, Extension
+    from distutils.command.build_ext import build_ext as _build_ext
 
 import re
 
@@ -17,9 +19,9 @@ def get_pep386version():
     sitkPATCH = "@SimpleITK_VERSION_PATCH@"
     sitkTWEAK = "@SimpleITK_VERSION_TWEAK@"
     sitkRC    = "@SimpleITK_VERSION_RC@"
-    sitkPOST   = "@SimpleITK_VERSION_POST@"
-    sitkDEV    = "@SimpleITK_VERSION_DEV@"
-    sitkHASH   = "@SimpleITK_VERSION_HASH@"
+    sitkPOST  = "@SimpleITK_VERSION_POST@"
+    sitkDEV   = "@SimpleITK_VERSION_DEV@"
+    sitkHASH  = "@SimpleITK_VERSION_HASH@"
 
 
     version = sitkMAJOR+"."+sitkMINOR
@@ -43,18 +45,28 @@ def get_pep386version():
 
     return version
 
+class build_ext(_build_ext):
+    """ Override standard command class to build an extension, to
+    simply copy an existing compiled library into the packaging
+    directory structure.
+    """
 
-# HACK
-# We are using the "data_files" parameter to package up the SimpleITK
-# libraries. However distribute does not detect this as an extension
-# and does not build a egg with the platform name in the egg file
-# name. So we forcable overload a method so that distutils, always
-# reports that we are always an extension.
-def always_has_ext_modules (self):
-    """Always returns true, to force extensimon behavior in packaging."""
-    return True
-Distribution.has_ext_modules =  always_has_ext_modules
+    def build_extension(self, ext):
+        """
+        """
+        from distutils.errors import DistutilsSetupError
 
+        sources = ext.sources
+        if sources is None or not len(sources) == 1:
+            raise DistutilsSetupError( "Expected only one compiled library." )
+
+        expected_ext_filename = os.path.split(self.get_ext_filename(ext.name))[1]
+
+        ext_file = self.get_ext_fullpath(ext.name)
+
+        abs_sources = list( map(os.path.abspath, sources) )
+
+        self.copy_file(abs_sources[0], ext_file)
 
 
 setup(
@@ -62,15 +74,15 @@ setup(
     version = get_pep386version(),
     author = 'Insight Software Consortium',
     author_email = 'insight-users@itk.org',
+    ext_modules=[Extension('SimpleITK._SimpleITK', [r'@SimpleITK_BINARY_MODULE@'])],
     packages= ['SimpleITK'],
     package_dir = {'SimpleITK':r'@SimpleITK_PYTHON_PACKAGE_DIR@'},
-    package_data = {'SimpleITK':[r'@SimpleITK_RELATIVE_BINARY_MODULE@']},
     download_url = r'https://www.itk.org/SimpleITKDoxygen/html/PyDownloadPage.html',
     platforms = [],
-    description = r'Simplified interface to the Insight Toolkit for image registration and segmentation',
-    long_description  = 'Provide an abstraction layer to ITK that enables developers\
-    and users to access the powerful features of the InsightToolkit in a more \
-    simplified manner.',
+    description = r'SimpleITK is a simplified interface to the Insight Toolkit (ITK) for image registration and segmentation',
+    long_description  = 'SimpleITK provides an abstraction layer to ITK that enables developers \
+                         and users to access the powerful features of the InsightToolkit in an easy \
+                         to use manner for biomedical image analysis.',
     classifiers=[
         "License :: OSI Approved :: Apache Software License",
         "Programming Language :: Python",
@@ -89,6 +101,7 @@ setup(
         "Operating System :: MacOS"
         ],
     license='Apache',
-    keywords = 'ITK InsightToolkit segmentation registration image',
-    url = r'http://simpleitk.org/'
+    keywords = 'SimpleITK ITK InsightToolkit segmentation registration',
+    url = r'http://simpleitk.org/',
+    cmdclass={'build_ext':build_ext}
     )
