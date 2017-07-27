@@ -686,6 +686,7 @@ def _get_sitk_pixelid(numpy_array_type):
         for key in _np_sitk:
             if numpy.issubdtype(numpy_array_type.dtype, key):
                 return _np_sitk[key]
+        raise TypeError('dtype: {0} is not supported.'.format(numpy_array_type.dtype))
 
 def _get_sitk_vector_pixelid(numpy_array_type):
     """Returns a SimpleITK vecotr PixelID given a numpy array."""
@@ -713,6 +714,7 @@ def _get_sitk_vector_pixelid(numpy_array_type):
         for key in _np_sitk:
             if numpy.issubdtype(numpy_array_type.dtype, key):
                 return _np_sitk[key]
+        raise TypeError('dtype: {0} is not supported.'.format(numpy_array_type.dtype))
 
 
 # SimplyITK <-> Numpy Array conversion support.
