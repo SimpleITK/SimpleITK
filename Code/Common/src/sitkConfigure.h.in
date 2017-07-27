@@ -44,16 +44,14 @@
 #cmakedefine SITK_HAS_TR1_TYPE_TRAITS
 #cmakedefine SITK_HAS_TR1_UNORDERED_MAP
 
+// defined if compiler supports using template keyword to disambiguate
+// dependent names
+#cmakedefine SITK_HAS_TEMPLATE_DISAMBIGUATOR_DEPENDENT_NAME
+
 #cmakedefine SITK_INT64_PIXELIDS
 #cmakedefine SITK_4D_IMAGES
 
 #cmakedefine SITK_EXPLICIT_INSTANTIATION
-
-#if defined(__clang__)
-#define CLANG_TEMPLATE template
-#else
-#define CLANG_TEMPLATE
-#endif
 
 // Include ITK version reported in CMake with SITK prefix, so that
 // SimpleITK dosen't need ITK header in our headers.
