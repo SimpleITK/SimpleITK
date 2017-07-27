@@ -439,13 +439,14 @@ namespace itk
   static void ExecuteShow( const std::vector<std::string> & cmdLine, const bool debugOn=false )
   {
     unsigned int i;
+    std::ostringstream cmdstream;
+
+    for ( i = 0; i < cmdLine.size(); ++i )
+      cmdstream << '\'' << cmdLine[i] << "\' ";
 
     if (debugOn)
       {
-      std::cout << "Show command: ";
-      for ( i = 0; i < cmdLine.size(); ++i )
-        std::cout << '\'' << cmdLine[i] << "\' ";
-      std::cout << std::endl;
+      std::cout << "Show command: " << cmdstream.str() << std::endl;
       }
 
     std::vector<const char*> cmd( cmdLine.size() + 1, NULL );
@@ -490,21 +491,21 @@ namespace itk
         int exitValue = itksysProcess_GetExitValue(kp);
         if ( exitValue != 0 )
           {
-          sitkExceptionMacro (  << "Process returned " << exitValue << "." );
+          sitkExceptionMacro (  << "Process returned " << exitValue << ".\n" << "Command line: " << cmdstream.str() );
           }
         }
         break;
 
       case itksysProcess_State_Killed:
         itksysProcess_Delete( kp );
-        sitkExceptionMacro (  << "Child was killed by parent." );
+        sitkExceptionMacro (  << "Child was killed by parent." << "\nCommand line: " << cmdstream.str() );
         break;
 
       case itksysProcess_State_Exception:
         {
         std::string exceptionString = itksysProcess_GetExceptionString(kp);
         itksysProcess_Delete( kp );
-        sitkExceptionMacro (  << "Child terminated abnormally: " << exceptionString );;
+        sitkExceptionMacro (  << "Child terminated abnormally: " << exceptionString << ".\nCommand line: " << cmdstream.str() );
         }
         break;
 
@@ -512,7 +513,7 @@ namespace itk
         {
         std::string errorString = itksysProcess_GetErrorString(kp);
         itksysProcess_Delete( kp );
-        sitkExceptionMacro (  << "Error in administrating child process: [" << errorString << "]" );
+        sitkExceptionMacro (  << "Error in administrating child process: [" << errorString << "]" << ".\nCommand line: " << cmdstream.str() );
         }
         break;
 
@@ -523,7 +524,7 @@ namespace itk
       case itksysProcess_State_Starting:
       default:
         itksysProcess_Delete( kp );
-        sitkExceptionMacro (  << "Unexpected process state!" );
+        sitkExceptionMacro (  << "Unexpected process state!" << "\nCommand line: " << cmdstream.str() );
       };
 
   }
