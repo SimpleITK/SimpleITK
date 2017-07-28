@@ -229,8 +229,9 @@ function(sitk_add_r_test name)
     ${ARGN}
     )
 
+  file(TO_NATIVE_PATH "${SimpleITK_BINARY_DIR}/Wrapping/R/R_libs" _native_path)
   set_property(TEST R.${name}
-    PROPERTY ENVIRONMENT R_LIBS=${SimpleITK_BINARY_DIR}/Wrapping/R/R_libs/
+    PROPERTY ENVIRONMENT R_LIBS=${_native_path}
     )
 endfunction()
 
