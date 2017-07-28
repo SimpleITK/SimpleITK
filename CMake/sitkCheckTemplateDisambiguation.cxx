@@ -2,17 +2,18 @@ template<typename T>
 struct A
 {
   template <typename U>
-  void f() {};
+  void operator()( ) {};
 };
 
+
 template<typename T>
-void g()
+void g( )
 {
   A<T> obj;
 
-  // The following `template` keyword is required by C++0x, but some
-  // compilers don't allow it.
-  obj.template f<T>();
+  // The following `template` keyword is required by C++. But with
+  // MSVC <VS15 appears to have a bug when used with operator()
+  obj.template operator()<T>();
 }
 
 
