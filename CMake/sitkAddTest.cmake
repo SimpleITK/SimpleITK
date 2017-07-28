@@ -252,11 +252,15 @@ function(sitk_add_r_test name)
       ${command}
       ${ARGN}
     )
+
   set_property(TEST R.${name}
     PROPERTY LABELS R
     )
+
+  file(TO_NATIVE_PATH "${SimpleITK_BINARY_DIR}/Wrapping/R/R_libs" _native_path)
+
   set_property(TEST R.${name}
-    PROPERTY ENVIRONMENT R_LIBS=${SimpleITK_BINARY_DIR}/Wrapping/R/R_libs/
+    PROPERTY ENVIRONMENT R_LIBS=${_native_path}
     )
 endfunction()
 
