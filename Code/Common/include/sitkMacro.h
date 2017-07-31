@@ -68,6 +68,13 @@
 #define SITK_NOEXCEPT throw()
 #endif
 
+#if defined(SITK_HAS_TEMPLATE_DISAMBIGUATOR_DEPENDENT_NAME)
+#define CLANG_TEMPLATE template
+#else
+#define CLANG_TEMPLATE
+#endif
+
+
 
 #if  !defined(SITK_RETURN_SELF_TYPE_HEADER)
 #define SITK_RETURN_SELF_TYPE_HEADER Self &
