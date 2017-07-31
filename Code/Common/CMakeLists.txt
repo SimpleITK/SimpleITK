@@ -8,6 +8,8 @@ set( SITK_INT64_PIXELIDS ${SimpleITK_INT64_PIXELIDS} )
 set( SITK_4D_IMAGES ${SimpleITK_4D_IMAGES} )
 set( SITK_EXPLICIT_INSTANTIATION ${SimpleITK_EXPLICIT_INSTANTIATION} )
 
+include(sitkCheckTemplateDisambiguation)
+
 configure_file( "src/sitkConfigure.h.in" "include/sitkConfigure.h" )
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/include/sitkConfigure.h"
   DESTINATION "${SimpleITK_INSTALL_INCLUDE_DIR}"
