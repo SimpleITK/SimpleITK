@@ -60,6 +60,11 @@
       "detaileddescriptionSet" : "Set/Get the number of bins in the histogram. Note that the histogram is used to compute the median value, and that this option may have an effect on the value of the median.",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : "Set/Get the number of bins in the histogram. Note that the histogram is used to compute the median value, and that this option may have an effect on the value of the median."
+    },
+    {
+      "name" : "ComputeOrientedBoundingBox",
+      "type" : "bool",
+      "default" : "false"
     }
   ],
   "custom_methods" : [
@@ -526,6 +531,62 @@
         }
       ],
       "custom_cast" : "sitkITKVectorToSTL<double>(value)",
+      "label_map" : true
+    },
+    {
+      "name" : "OrientedBoundingBoxSize",
+      "type" : "std::vector<unsigned int>",
+      "no_print" : true,
+      "active" : true,
+      "parameters" : [
+        {
+          "name" : "label",
+          "type" : "int64_t"
+        }
+      ],
+      "custom_cast" : "sitkITKVectorToSTL<unsigned int>(value)",
+      "label_map" : true
+    },
+    {
+      "name" : "OrientedBoundingBoxOrigin",
+      "type" : "std::vector<double>",
+      "no_print" : true,
+      "active" : true,
+      "parameters" : [
+        {
+          "name" : "label",
+          "type" : "int64_t"
+        }
+      ],
+      "custom_cast" : "sitkITKVectorToSTL<double>(value)",
+      "label_map" : true
+    },
+    {
+      "name" : "OrientedBoundingBoxDirection",
+      "type" : "std::vector<double>",
+      "no_print" : true,
+      "active" : true,
+      "parameters" : [
+        {
+          "name" : "label",
+          "type" : "int64_t"
+        }
+      ],
+      "custom_cast" : "sitkITKDirectionToSTL(value)",
+      "label_map" : true
+    },
+    {
+      "name" : "OrientedBoundingBoxVertices",
+      "type" : "std::vector<double>",
+      "no_print" : true,
+      "active" : true,
+      "parameters" : [
+        {
+          "name" : "label",
+          "type" : "int64_t"
+        }
+      ],
+      "custom_cast" : "sitkVectorOfITKVectorToSTL<double>(value)",
       "label_map" : true
     }
   ],
