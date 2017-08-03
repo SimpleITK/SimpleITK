@@ -105,7 +105,11 @@ push without '-f' or '--force'."
 		fi
 
 		have_lease_flag=false
-		if git push -h | egrep-q -e '--force-with-lease'; then
+		# Note: on Windows 'git push --help' will open a browser, and
+		# the check will fail, so use the flag by default.
+		if git --version | egrep-q -e 'windows'; then
+			have_lease_flag=true
+		elif git push --help | egrep-q -e '--force-with-lease'; then
 			have_lease_flag=true
 		fi
 
