@@ -95,7 +95,7 @@ if test -z "$no_topic"; then
 	if $lease; then
 		have_ref=false
 		remoteref="refs/remotes/$remote/$topic"
-		if git rev-parse --verify -q "$remoteref"; then
+		if git rev-parse --verify -q "$remoteref" > /dev/null; then
 			have_ref=true
 		else
 			die "It seems that a local ref for the branch is
