@@ -1,6 +1,6 @@
 cmake_minimum_required ( VERSION 2.8.1 FATAL_ERROR )
 
-project( SimpleITK_Lua )
+project( SimpleITK_Ruby )
 
 include(../../CMake/sitkProjectLanguageCommon.cmake NO_POLICY_SCOPE)
 
