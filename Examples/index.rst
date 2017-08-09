@@ -1,3 +1,5 @@
+.. _lbl_examples:
+
 Examples
 ========
 
