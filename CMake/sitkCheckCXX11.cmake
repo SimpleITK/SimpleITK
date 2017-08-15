@@ -35,12 +35,10 @@ function(sitkCXX11Test VARIABLE)
 
   if(NOT DEFINED ${VARIABLE})
     message(STATUS "Performing Test ${VARIABLE}")
-    set(requred_definitions "${CMAKE_REQUIRED_DEFINITIONS} -D${VARIABLE}")
     try_compile(${VARIABLE}
       "${PROJECT_BINARY_DIR}/CMakeTmp"
       "${CMAKE_CURRENT_LIST_DIR}/sitk_check_cxx11.cxx"
-      CMAKE_FLAGS
-      -DCOMPILE_DEFINITIONS:STRING=${requred_definitions}
+      COMPILE_DEFINITIONS "-D${VARIABLE}" ${CMAKE_REQUIRED_DEFINITIONS}
       OUTPUT_VARIABLE output)
 
     set(${cache_var} ${${VARIABLE}} CACHE INTERNAL "hashed flags with  try_compile results")
