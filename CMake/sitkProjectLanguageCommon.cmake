@@ -94,7 +94,7 @@ list( APPEND SWIG_EXTRA_DEPS
 
 # check if uint64_t is the same as unsigned long
 try_compile(SITK_ULONG_SAME_AS_UINT64
-  ${PROJECT_BINARY_DIR}/CMakeTmp
+  "${PROJECT_BINARY_DIR}"
   ${SimpleITK_SOURCE_DIR}/CMake/same_uint64_ulong.cxx )
 
 # when "-DSWIGWORDSIZE64" is defined SWIG used unsigned long for uint64_t types
