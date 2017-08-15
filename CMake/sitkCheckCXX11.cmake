@@ -15,6 +15,9 @@
 # SITK_HAS_TR1_TYPE_TRAITS
 # SITK_HAS_TR1_UNORDERED_MAP
 
+include(CMakePushCheckState)
+
+
 if(POLICY CMP0067) # CMake 3.8.2
   cmake_policy(SET CMP0067 NEW)
 elseif( DEFINED CMAKE_CXX_STANDARD
@@ -59,6 +62,8 @@ function(sitkCXX11Test VARIABLE)
    endif()
 endfunction()
 
+cmake_push_check_state(RESET)
+
 #
 # Check for CXX11 Features
 #
@@ -76,7 +81,6 @@ sitkCXX11Test(SITK_HAS_CXX11_ALIAS_TEMPLATE)
 # prefix to tr1 headers, while libc++
 sitkCXX11Test(SITK_HAS_TR1_SUB_INCLUDE)
 
-set(CMAKE_REQUIRED_DEFINITIONS_SAVE ${CMAKE_REQUIRED_DEFINITIONS})
 if (SITK_HAS_TR1_SUB_INCLUDE)
   list(APPEND CMAKE_REQUIRED_DEFINITIONS "-DHAS_TR1_SUB_INCLUDE")
 endif()
@@ -88,8 +92,8 @@ sitkCXX11Test(SITK_HAS_TR1_FUNCTIONAL)
 sitkCXX11Test(SITK_HAS_TR1_TYPE_TRAITS)
 sitkCXX11Test(SITK_HAS_TR1_UNORDERED_MAP)
 
-# restore varaible
-set(CMAKE_REQUIRED_DEFINITIONS ${CMAKE_REQUIRED_DEFINITIONS_SAVE})
+# restore variable
+cmake_pop_check_state()
 
 
 if ( (NOT SITK_HAS_TR1_FUNCTIONAL AND NOT SITK_HAS_CXX11_FUNCTIONAL)
