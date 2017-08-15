@@ -32,14 +32,8 @@ endif()
 # Function to wrap try compiles on the aggregate cxx test file1
 #
 function(sitkCXX11Test VARIABLE)
-  # use the hash of the dependent cxx flags in the variable name to
-  # cache the results.
-  string(MD5 cmake_cxx_flags_hash "#${CMAKE_CXX_FLAGS}")
-  set(cache_var "${VARIABLE}_${cmake_cxx_flags_hash}")
 
-  if(DEFINED "${cache_var}")
-    set(${VARIABLE} "${${cache_var}}"  CACHE INTERNAL "Using hashed value from TRY_COMPILE")
-  else()
+  if(NOT DEFINED ${VARIABLE})
     message(STATUS "Performing Test ${VARIABLE}")
     set(requred_definitions "${CMAKE_REQUIRED_DEFINITIONS} -D${VARIABLE}")
     try_compile(${VARIABLE}
