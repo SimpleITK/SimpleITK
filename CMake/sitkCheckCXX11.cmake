@@ -15,6 +15,16 @@
 # SITK_HAS_TR1_TYPE_TRAITS
 # SITK_HAS_TR1_UNORDERED_MAP
 
+if(POLICY CMP0067) # CMake 3.8.2
+  cmake_policy(SET CMP0067 NEW)
+elseif( DEFINED CMAKE_CXX_STANDARD
+  OR DEFINED CMAKE_CXX_STANDARD_REQUIRED
+  OR CMAKE_CXX_EXTENSIONS )
+message(WARNING "CXX standard variables are not properly supported by \
+  CMake ${CMAKE_VERSION}. Configuration compilations will not detect \
+  features properly!")
+endif()
+
 #
 # Function to wrap try compiles on the aggregate cxx test file1
 #
