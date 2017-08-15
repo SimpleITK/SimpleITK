@@ -76,7 +76,7 @@ if(NOT _HAS_FLAG)
 
     message(STATUS "Checking if c++11 is required...")
     try_compile(SITK_CHECK_CXX11
-      "${PROJECT_BINARY_DIR}/CMakeTmp"
+      "${PROJECT_BINARY_DIR}"
       "${CMAKE_CURRENT_LIST_DIR}/sitk_check_cxx11_required.cxx"
       OUTPUT_VARIABLE OUTPUT)
     if(${SITK_CHECK_CXX11})

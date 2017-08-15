@@ -8,5 +8,5 @@
 
 
 try_compile(SITK_HAS_TEMPLATE_DISAMBIGUATOR_DEPENDENT_NAME
-  "${PROJECT_BINARY_DIR}/CMakeTmp"
+  "${PROJECT_BINARY_DIR}"
   "${CMAKE_CURRENT_LIST_DIR}/sitkCheckTemplateDisambiguation.cxx")
