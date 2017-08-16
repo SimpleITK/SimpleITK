@@ -38,6 +38,10 @@ endmacro()
 #
 # Setup the option for each language
 #
+
+#-----------------------------------------------------------
+# Lua
+
 set_QUIET( WRAP_LUA )
 find_package ( Lua ${_QUIET} )
 
@@ -65,8 +69,8 @@ if ( WRAP_LUA )
 endif()
 
 
-
-# If you're not using python or it's the first time, be quiet
+#-----------------------------------------------------------
+# Python
 
 set_QUIET( WRAP_PYTHON )
 find_package ( PythonInterp ${_QUIET})
@@ -108,15 +112,17 @@ if ( WRAP_PYTHON )
 endif ()
 
 
+#-----------------------------------------------------------
+# Java
 
 set_QUIET( WRAP_JAVA )
 find_package ( Java COMPONENTS Development Runtime ${_QUIET} )
 find_package ( JNI ${_QUIET} )
-if ( ${JAVA_FOUND} AND ${JNI_FOUND} )
+if ( JAVA_FOUND AND JNI_FOUND )
   set( WRAP_JAVA_DEFAULT ${WRAP_DEFAULT} )
-else ( ${JAVA_FOUND} AND ${JNI_FOUND} )
+else ( ${JAVA_FOUND} AND JNI_FOUND )
   set( WRAP_JAVA_DEFAULT OFF )
-endif ( ${JAVA_FOUND} AND ${JNI_FOUND} )
+endif ( )
 
 option ( WRAP_JAVA "Wrap Java" ${WRAP_JAVA_DEFAULT} )
 
@@ -146,15 +152,18 @@ if ( WRAP_JAVA )
 endif()
 
 
+#-----------------------------------------------------------
+# Tcl
+
 set_QUIET(WRAP_TCL)
 
 find_package ( TCL ${_QUIET} )
 
-if ( ${TCL_FOUND} )
+if ( TCL_FOUND )
   set ( WRAP_TCL_DEFAULT ${WRAP_DEFAULT} )
-else ( ${TCL_FOUND} )
+else ( )
   set ( WRAP_TCL_DEFAULT OFF )
-endif ( ${TCL_FOUND} )
+endif ( )
 
 option ( WRAP_TCL "Wrap Tcl" ${WRAP_TCL_DEFAULT} )
 
@@ -170,14 +179,17 @@ if ( WRAP_TCL )
 endif()
 
 
+#-----------------------------------------------------------
+# Ruby
+
 set_QUIET( WRAP_RUBY )
 
 find_package ( Ruby ${_QUIET} )
-if ( ${RUBY_FOUND} )
+if ( RUBY_FOUND )
   set ( WRAP_RUBY_DEFAULT ${WRAP_DEFAULT} )
-else ( ${RUBY_FOUND} )
+else ( )
   set ( WRAP_RUBY_DEFAULT OFF )
-endif ( ${RUBY_FOUND} )
+endif ( )
 
 option ( WRAP_RUBY "Wrap Ruby" ${WRAP_RUBY_DEFAULT} )
 
@@ -193,14 +205,13 @@ if ( WRAP_RUBY )
 endif()
 
 
-if (DEFINED  WRAP_CSHARP AND WRAP_CSHARP)
-  set(_QUIET "REQUIRED")
-else()
-  set(_QUIET "QUIET")
-endif()
+#-----------------------------------------------------------
+#  CSharp
+
+set_QUIET( WRAP_CSHARP )
 
 find_package( CSharp ${_QUIET} )
-if ( ${CSHARP_FOUND} AND NOT MINGW )
+if ( CSHARP_FOUND AND NOT MINGW )
   set ( WRAP_CSHARP_DEFAULT ${WRAP_DEFAULT} )
 else ()
   set ( WRAP_CSHARP_DEFAULT OFF )
@@ -217,10 +228,13 @@ if ( WRAP_CSHARP )
 endif()
 
 
+#-----------------------------------------------------------
+#  R
+
 set_QUIET( WRAP_R )
 
 find_package(R ${_QUIET})
-if ( ${R_FOUND} AND NOT WIN32 )
+if ( R_FOUND AND NOT WIN32 )
   set ( WRAP_R_DEFAULT ${WRAP_DEFAULT} )
 else( )
   set ( WRAP_R_DEFAULT OFF )
@@ -241,7 +255,3 @@ endif()
 if( WIN32 )
   mark_as_advanced( WRAP_R )
 endif()
-
-#
-# Below here are the 2nd tier languages they are not enabled automatically if detected
-#
