@@ -30,7 +30,7 @@ function(sitkCXX11Test VARIABLE)
     message(STATUS "Performing Test ${VARIABLE}")
     set(requred_definitions "${CMAKE_REQUIRED_DEFINITIONS} -D${VARIABLE}")
     try_compile(${VARIABLE}
-      "${PROJECT_BINARY_DIR}/CMakeTmp"
+      "${PROJECT_BINARY_DIR}"
       "${CMAKE_CURRENT_LIST_DIR}/sitk_check_cxx11.cxx"
       CMAKE_FLAGS
       -DCOMPILE_DEFINITIONS:STRING=${requred_definitions}
