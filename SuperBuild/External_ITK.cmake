@@ -92,6 +92,7 @@ ExternalProject_Add(${proj}
   -DITK_LEGACY_REMOVE:BOOL=ON
   -DITK_USE_KWSTYLE:BOOL=OFF
   -DITK_USE_GIT_PROTOCOL:BOOL=${ITK_USE_GIT_PROTOCOL}
+  -DITK_INSTALL_PACKAGE_DIR=lib/cmake/ITK
   BUILD_COMMAND ${BUILD_COMMAND_STRING}
   DEPENDS
     ${ITK_DEPENDENCIES}
@@ -99,5 +100,5 @@ ExternalProject_Add(${proj}
   )
 
 
-ExternalProject_Get_Property(ITK install_dir)
-set(ITK_DIR "${install_dir}/lib/cmake/ITK-4.12" )
+ExternalProject_Get_Property(${proj} install_dir)
+set(ITK_DIR "${install_dir}/cmake/ITK")
