@@ -4,7 +4,7 @@
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
   "include_files" : [
-    "itkBitwiseNotFunctor.h"
+    "itkBitwiseOpsFunctors.h"
   ],
   "number_of_inputs" : 1,
   "doc" : "Some global documentation",

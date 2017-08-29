@@ -6,7 +6,7 @@
   "constant_type" : "double",
   "output_pixel_type" : "typename itk::NumericTraits<typename InputImageType::PixelType>::RealType",
   "include_files" : [
-    "itkDivideRealFunctor.h"
+    "itkArithmeticOpsFunctors.h"
   ],
   "number_of_inputs" : 2,
   "doc" : "Some global documentation",

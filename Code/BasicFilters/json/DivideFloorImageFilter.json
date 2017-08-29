@@ -5,7 +5,7 @@
   "template_test_filename" : "ImageFilter",
   "constant_type" : "double",
   "include_files" : [
-    "itkDivideFloorFunctor.h"
+    "itkArithmeticOpsFunctors.h"
   ],
   "number_of_inputs" : 2,
   "doc" : "Some global documentation",
