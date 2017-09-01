@@ -21,7 +21,9 @@ endfunction()
 
 set(CTEST_SITE "CircleCI")
 set(CTEST_UPDATE_VERSION_ONLY 1)
-set(CTEST_TEST_ARGS ${CTEST_TEST_ARGS} PARALLEL_LEVEL 2)
+
+set_from_env(PARALLEL_LEVEL "PARALLEL_LEVEL" DEFAULT 2 )
+set( CTEST_TEST_ARGS ${CTEST_TEST_ARGS} PARALLEL_LEVEL  ${PARALLEL_LEVEL})
 
 # Make environment variables to CMake variables for CTest
 set_from_env(CTEST_CMAKE_GENERATOR "CTEST_CMAKE_GENERATOR" DEFAULT "Unix Makefiles" )
@@ -40,13 +42,21 @@ set_from_env(dashboard_git_branch "CIRCLE_BRANCH")
 set_from_env(dashboard_model "DASHBOARD_MODEL" DEFAULT "Experimental" )
 set(dashboard_loop 0)
 
-list(APPEND CTEST_NOTES_FILES
-  "${CTEST_SOURCE_DIRECTORY}/circle.yml"
-  )
+
+if ( EXISTS "${CTEST_SOURCE_DIRECTORY}/circle.yml")
+  list(APPEND CTEST_NOTES_FILES
+    "${CTEST_SOURCE_DIRECTORY}/circle.yml"
+    )
+endif()
+
+if ( EXISTS  "${CTEST_SOURCE_DIRECTORY}/.circleci/config.yml")
+  list(APPEND CTEST_NOTES_FILES
+    "${CTEST_SOURCE_DIRECTORY}/.circleci/config.yml"
+    )
+endif()
+
 
 SET (dashboard_cache "
-    CMAKE_CXX_COMPILER_LAUNCHER:STRING=distcc
-    CMAKE_C_COMPILER_LAUNCHER:STRING=distcc
     BUILD_DOCUMENTATION:BOOL=OFF
     BUILD_EXAMPLES:BOOL=OFF
     BUILD_SHARED_LIBS:BOOL=ON
@@ -58,8 +68,17 @@ SET (dashboard_cache "
     WRAP_DEFAULT:BOOL=OFF
     WRAP_PYTHON:BOOL=ON
     ITK_REPOSITORY:STRING=https://github.com/InsightSoftwareConsortium/ITK.git
-
 " )
+
+
+if (DEFINED ENV{DISTCC_DIR})
+  SET (dashboard_cache "${dashboard_cache}
+     CMAKE_CXX_COMPILER_LAUNCHER:STRING=distcc
+     CMAKE_C_COMPILER_LAUNCHER:STRING=distcc
+" )
+")
+endif()
+
 
 
 include("${CTEST_SCRIPT_DIRECTORY}/simpleitk_common.cmake")
