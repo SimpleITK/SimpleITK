@@ -1,0 +1,47 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:2.7
+    working_directory: ~/
+    resource_class: large
+    branches:
+      ignore:
+        - gh-pages
+        - dashboard
+        - hooks
+    environment:
+      CTEST_DASHBOARD_ROOT: /home/circleci
+      CTEST_SOURCE_DIRECTORY: /home/circleci/SimpleITK
+      CTEST_BINARY_DIRECTORY: /home/circleci/SimpleITK-build
+      DASHBOARD_BRANCH_DIRECTORY: /home/circleci/dashboard
+      ExternalData_OBJECT_STORES: /home/circleci/.ExternalData
+    steps:
+      - store_test_results:
+          path: /tmp/test-results
+      - checkout:
+          path : ~/SimpleITK
+      - run:
+          name: Cloning dashboard branch
+          command: |
+            git clone --single-branch ${CIRCLE_REPOSITORY_URL} -b dashboard ${DASHBOARD_BRANCH_DIRECTORY}
+      - run:
+          name: Dependencies
+          command: |
+            sudo apt-get install -y rsync lua5.1
+            sudo pip install --upgrade pip
+            sudo pip install numpy scikit-ci-addons
+            ci_addons circle/install_cmake.py 3.7.2
+      - run: echo 'export DASHBOARD_MODEL=$( [[ "$CIRCLE_BRANCH" = "master" || "$CIRCLE_BRANCH" = "next"  || "$CIRCLE_BRANCH" = "release" ]] && echo Continuous || echo Experimental )' >> $BASH_ENV
+      - run:
+          name: Build and Testing with CTest
+          no_output_timeout: 20.0m
+          environment:
+                CTEST_CONFIGURATION_TYPE: "Release"
+                CTEST_BUILD_FLAGS: "-j 4"
+                CTEST_OUTPUT_ON_FAILURE: 1
+                ITK_GLOBAL_DEFAULT_NUMBER_OF_THREAD: 2
+                PARALLEL_LEVEL: 4
+          command: |
+            export LD_LIBRARY_PATH="${CTEST_BINARY_DIRECTORY}/ITK-prefix/lib/:${CTEST_BINARY_DIRECTORY}/SimpleITK-build/lib"
+            ctest -V -S "${DASHBOARD_BRANCH_DIRECTORY}/circleci.cmake"
