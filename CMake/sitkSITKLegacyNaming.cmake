@@ -23,7 +23,7 @@ endfunction()
 macro(sitk_legacy_naming new_var_name )
 
 
-  if(NOT "${ARGV1}" STREQUAL "")
+  if(NOT "x${ARGV1}x" STREQUAL "xx")
     set( old_var_name ${ARGV1} )
   else()
     string( REGEX REPLACE  "^SimpleITK_" "SITK_" old_var_name "${new_var_name}" )
