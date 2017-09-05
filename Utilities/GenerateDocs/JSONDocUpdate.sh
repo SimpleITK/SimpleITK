@@ -23,7 +23,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 [ -e ${ITK_XML}/itkImage_8h.xml ] ||
       ( cd ${ITK_XML} &&
         echo "Downloading ITK Doxygen XML..." &&
-        curl -O http://public.kitware.com/pub/itk/NightlyDoxygen/InsightDoxygenDocXml.tar.gz &&
+        curl -O https://public.kitware.com/pub/itk/NightlyDoxygen/InsightDoxygenDocXml.tar.gz &&
         cd .. &&
         tar -zxf xml/InsightDoxygenDocXml.tar.gz ) ||
       die 'Unable to get ITK Doxygen XML'
