@@ -3,10 +3,6 @@ add_executable ( HelloWorld HelloWorld.cxx )
 target_link_libraries ( HelloWorld ${SimpleITK_LIBRARIES} )
 
 
-if ( WRAP_CSHARP )
-  csharp_add_executable( HelloWorldCS SimpleITKCSharpManaged.dll ${CMAKE_CURRENT_SOURCE_DIR}/HelloWorld.cs )
-endif ()
-
 if ( NOT BUILD_TESTING )
   return ()
 endif ()
@@ -17,8 +13,8 @@ if ( SimpleITK_SHOW_TESTING_ENABLED )
     COMMAND $<TARGET_FILE:HelloWorld>
     )
 
-  sitk_add_test( NAME CSharp.Example.HelloWorld
-    COMMAND $<TARGET_FILE:HelloWorldCS>
+  sitk_add_csharp_test( Example.HelloWorld
+    "${CMAKE_CURRENT_SOURCE_DIR}/HelloWorld.cs"
     )
 
   sitk_add_java_test( Example.HelloWorld
