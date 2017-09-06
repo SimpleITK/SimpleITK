@@ -2,16 +2,6 @@ cmake_minimum_required ( VERSION 2.8.1 FATAL_ERROR )
 
 project( SimpleITK_Python )
 
-
-if(POLICY CMP0026)
-  # Allow use of the LOCATION target property.
-  #
-  # These locations are use in a convoluted fashion with the runtime
-  # configuration. This system should be refactored to support
-  # generator expression. This would allow the use of the new policy.
-  cmake_policy(SET CMP0026 OLD)
-endif()
-
 include(../../CMake/sitkProjectLanguageCommon.cmake NO_POLICY_SCOPE)
 
 if ( SITK_UNDEFINED_SYMBOLS_ALLOWED )
@@ -83,9 +73,6 @@ sitk_strip_target( ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} )
 # Installation
 set( SimpleITK_PYTHON_PACKAGE_DIR "${CMAKE_CURRENT_BINARY_DIR}" )
 file( TO_NATIVE_PATH "${SimpleITK_PYTHON_PACKAGE_DIR}" SimpleITK_PYTHON_PACKAGE_DIR )
-get_target_property( SimpleITK_BINARY_MODULE ${SWIG_MODULE_SimpleITKPython_TARGET_NAME} LOCATION )
-get_filename_component( SimpleITK_BINARY_MODULE "${SimpleITK_BINARY_MODULE}" NAME )
-set( SimpleITK_BINARY_MODULE "${CMAKE_CURRENT_BINARY_DIR}/${SimpleITK_BINARY_MODULE}" )
 
 set(SimpleITK_PYTHON_TEST_EXECUTABLE "${PYTHON_EXECUTABLE}" CACHE INTERNAL "Python executable for testing." FORCE )
 
