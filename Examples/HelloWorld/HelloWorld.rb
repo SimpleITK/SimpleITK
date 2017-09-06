@@ -21,4 +21,4 @@ image = Simpleitk::Image.new( 128, 128, Simpleitk::SitkUInt8 )
 
 image = Simpleitk.add( image, 127 )
 
-Simpleitk.show( image, "Hello World", true )
+Simpleitk.show( image, "Hello World: Ruby", true )

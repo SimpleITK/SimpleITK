@@ -20,4 +20,4 @@ Image image 128 128 $sitkUInt16
 
 Image image2 [Add image 127]
 
-Show image2
+Show image2 "Hello World: TCL" 1

@@ -23,4 +23,4 @@ image = sitk.Image( 128, 128, sitk.sitkUInt8 )
 
 image = image + 127
 
-sitk.Show( image, title="Hello World", debugOn=True )
+sitk.Show( image, title="Hello World: Python", debugOn=True )

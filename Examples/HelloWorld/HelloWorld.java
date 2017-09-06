@@ -26,7 +26,7 @@ class HelloWorld {
 
     image = SimpleITK.add( image, 127 );
 
-    SimpleITK.show( image, "Hello World", true );
+    SimpleITK.show( image, "Hello World: Java", true );
   }
 
 }

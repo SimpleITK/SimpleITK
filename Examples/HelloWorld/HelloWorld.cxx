@@ -33,6 +33,6 @@ int main ( int argc, char* argv[] ) {
 
   image = image + 127;
 
-  sitk::Show( image, "Hello World", true );
+  sitk::Show( image, "Hello World: C++", true );
 
 }

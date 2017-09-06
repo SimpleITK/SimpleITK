@@ -22,4 +22,4 @@ image = SimpleITK.Image( 128, 128, SimpleITK.sitkUInt8 )
 
 image = SimpleITK.Add( image, 127 )
 
-SimpleITK.Show( image, "Hello World", true )
+SimpleITK.Show( image, "Hello World: Lua", true )

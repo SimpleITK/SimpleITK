@@ -30,7 +30,7 @@ namespace itk.simple.examples {
 
         image = SimpleITK.Add( image, 127 );
 
-        SimpleITK.Show( image, "Hello World", true );
+        SimpleITK.Show( image, "Hello World: CSharp", true );
 
       } catch (Exception ex) {
         Console.WriteLine(ex);

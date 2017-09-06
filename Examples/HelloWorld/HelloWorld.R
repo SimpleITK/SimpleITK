@@ -23,4 +23,4 @@ image <- Image( 128, 128, 'sitkUInt8' )
 
 image <- image + 127
 
-Show(image, "Hello World", debugOn=TRUE)
+Show(image, "Hello World: R", debugOn=TRUE)
