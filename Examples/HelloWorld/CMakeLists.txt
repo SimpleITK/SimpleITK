@@ -17,11 +17,9 @@ if ( SimpleITK_SHOW_TESTING_ENABLED )
     COMMAND $<TARGET_FILE:HelloWorld>
     )
 
-  if ( WRAP_CSHARP )
-    sitk_add_test( NAME CSharp.Example.HelloWorld
-      COMMAND $<TARGET_FILE:HelloWorldCS
-      )
-  endif ()
+  sitk_add_test( NAME CSharp.Example.HelloWorld
+    COMMAND $<TARGET_FILE:HelloWorldCS>
+    )
 
   sitk_add_java_test( Example.HelloWorld
     "${CMAKE_CURRENT_SOURCE_DIR}/HelloWorld.java"
