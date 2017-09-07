@@ -99,7 +99,7 @@
       "tag" : "defaults",
       "description" : "using default parameters in 2D",
       "settings" : [],
-      "tolerance" : "0.01",
+      "tolerance" : "0.015",
       "inputs" : [
         "Input/cthead1-Float.mha",
         "Input/2th_cthead1.mha"
