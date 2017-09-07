@@ -82,7 +82,7 @@ endif()
 
 if ( PYTHONLIBS_FOUND AND PYTHONINTERP_FOUND
     AND PYTHON_VERSION_STRING VERSION_LESS 2.7 )
-  message( WARNING "Python version less that 2.7: \"${PYTHON_VERSION_STRING}\"." )
+  message( WARNING "Python version less than 2.7: \"${PYTHON_VERSION_STRING}\"." )
 endif()
 
 if ( PYTHONLIBS_FOUND AND PYTHONINTERP_FOUND
