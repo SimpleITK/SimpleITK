@@ -7,7 +7,7 @@ if ( NOT BUILD_TESTING )
   return ()
 endif ()
 
-if ( SimpleITK_SHOW_TESTING_ENABLED )
+if ( NOT SimpleITK_TESTING_NOSHOW )
 
   sitk_add_test( NAME CXX.Example.HelloWorld
     COMMAND $<TARGET_FILE:HelloWorld>

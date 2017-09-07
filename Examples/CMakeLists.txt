@@ -15,10 +15,8 @@ if(NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK")
 
 endif()
 
-option(SimpleITK_SHOW_TESTING_ENABLED "Enable the Show function in SimpleITK testing." OFF)
-if (NOT SimpleITK_SHOW_TESTING_ENABLED)
-  set(ENV{SITK_NOSHOW} TRUE)
-endif ()
+option(SimpleITK_TESTING_NOSHOW "Disable the Show function in SimpleITK testing." ON)
+mark_as_advanced(SimpleITK_TESTING_NOSHOW)
 
 # Add individual cxx executables
 
