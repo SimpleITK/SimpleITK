@@ -67,7 +67,6 @@ SET (dashboard_cache "
 
     WRAP_DEFAULT:BOOL=OFF
     WRAP_PYTHON:BOOL=ON
-    ITK_REPOSITORY:STRING=https://github.com/InsightSoftwareConsortium/ITK.git
 " )
 
 
