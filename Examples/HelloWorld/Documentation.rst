@@ -1,5 +1,5 @@
 Hello World
-===============
+===========
 
 
 Overview
@@ -16,55 +16,55 @@ Code
 C++
 ...
 
-.. literalinclude:: SimpleGaussian.cxx
+.. literalinclude:: HelloWorld.cxx
    :language: c++
    :lines: 18-
 
 Python
 ......
 
-.. literalinclude:: SimpleGaussian.py
+.. literalinclude:: HelloWorld.py
    :language: python
    :lines: 1,19-
 
 CSharp
 ......
 
-.. literalinclude:: SimpleGaussian.cs
+.. literalinclude:: HelloWorld.cs
    :language: c#
    :lines: 18-
 
 Java
 ....
 
-.. literalinclude:: SimpleGaussian.java
+.. literalinclude:: HelloWorld.java
    :language: java
    :lines: 18-
 
 Lua
 ...
 
-.. literalinclude:: SimpleGaussian.lua
+.. literalinclude:: HelloWorld.lua
    :language: lua
    :lines:  18-
 
 R
 .
 
-.. literalinclude:: SimpleGaussian.R
+.. literalinclude:: HelloWorld.R
    :language: r
    :lines:  18-
 
 Ruby
 ....
 
-.. literalinclude:: SimpleGaussian.rb
+.. literalinclude:: HelloWorld.rb
    :language: ruby
    :lines:  18-
 
 Tcl
 ...
 
-.. literalinclude:: SimpleGaussian.tcl
+.. literalinclude:: HelloWorld.tcl
    :language: tcl
    :lines: 18-
