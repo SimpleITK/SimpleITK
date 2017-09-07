@@ -2,35 +2,43 @@ if ( SimpleITK_DOC_FILES )
   # create a python list for the import documents to include in
   # packaging
 
-  # This string is targed for setup.py. It will be passed through
-  # the build-time configuration script and as a command line
-  # argument. This sequence is having portability issues with
-  # quote. So Windows needs separate handling from Unix-like
-  # platforms.
-  if( WIN32 )
-    set( _q "'" )
-  else()
-    set( _q "\\'")
-  endif()
-
   # specially handle the first element
   list( GET SimpleITK_DOC_FILES 0 d )
   file(TO_NATIVE_PATH "${d}" d )
-  set( SimpleITK_DOC_FILES_AS_LIST "[r${_q}${d}${_q}")
+  set( SimpleITK_DOC_FILES_AS_LIST "[r'${d}'")
   set( _doc_list "${SimpleITK_DOC_FILES}" )
   list( REMOVE_AT _doc_list 0 )
 
   foreach( d ${_doc_list} )
     file(TO_NATIVE_PATH "${d}" d )
-    set( SimpleITK_DOC_FILES_AS_LIST "${SimpleITK_DOC_FILES_AS_LIST},r${_q}${d}${_q}")
+    set( SimpleITK_DOC_FILES_AS_LIST "${SimpleITK_DOC_FILES_AS_LIST},r'${d}'")
   endforeach()
   set( SimpleITK_DOC_FILES_AS_LIST "${SimpleITK_DOC_FILES_AS_LIST}]")
 
 endif()
 
-include( sitkConfigureFileBuildtime )
-configure_file_buildtime( "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/setup.py.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/Packaging/setup.py" )
+# Step 1:
+# Do initial configuration of setup.py with variable a available
+# at configuration time.
+set(SimpleITK_BINARY_MODULE "@SimpleITK_BINARY_MODULE@")
+configure_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/setup.py.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/Packaging/setup.py.in" )
+set(SimpleITK_BINARY_MODULE)
+
+# Step 2:
+# Do file configuration during compilation with generator expressions
+add_custom_command(
+  TARGET ${SWIG_MODULE_SimpleITKPython_TARGET_NAME}
+  POST_BUILD
+  WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+  COMMAND ${CMAKE_COMMAND}
+    "-DSimpleITK_BINARY_MODULE=$<TARGET_FILE_NAME:${SWIG_MODULE_SimpleITKPython_TARGET_NAME}>"
+    "-DCONFIGUREBUILDTIME_filename=${CMAKE_CURRENT_BINARY_DIR}/Packaging/setup.py.in"
+    "-DCONFIGUREBUILDTIME_out_filename=${CMAKE_CURRENT_BINARY_DIR}/Packaging/setup.py"
+    -P "${SimpleITK_SOURCE_DIR}/CMake/configure_file_build_time.cmake"
+  COMMENT "Generating setup.py..."
+  )
 
 configure_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/Packaging/__init__.py"
@@ -90,7 +98,6 @@ if (SimpleITK_PYTHON_USE_VIRTUALENV)
     DEPENDS
     "${SWIG_MODULE_SimpleITKPython_TARGET_NAME}"
     "${CMAKE_CURRENT_BINARY_DIR}/PythonVirtualEnvInstall.cmake"
-    ConfigureFileBuildtime
     COMMENT "Creating python virtual enviroment..."
     )
 endif()
