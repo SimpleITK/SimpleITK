@@ -73,7 +73,7 @@ $(if (not no_get_method) or (no_get_method == 0) then
       elseif dim_vec and (dim_vec == 1) then
         OUT=OUT..' std::vector<${type}>'
       elseif point_vec and (point_vec == 1) then
-        OUT=OUT..' std::vector< std::vector<unsigned int> >'
+        OUT=OUT..' std::vector< std::vector< ${type} > >'
       else
         OUT=OUT..' ${type}'
       end
