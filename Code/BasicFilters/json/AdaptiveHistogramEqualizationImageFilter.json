@@ -13,7 +13,6 @@
       "default" : "std::vector<unsigned int>(3, 5)",
       "dim_vec" : 1,
       "set_as_scalar" : 1,
-      "no_print" : 1,
       "itk_type" : "typename FilterType::RadiusType"
     },
     {
