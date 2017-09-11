@@ -15,6 +15,9 @@ if(NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK")
 
 endif()
 
+option(SimpleITK_TESTING_NOSHOW "Disable the Show function in SimpleITK testing." ON)
+mark_as_advanced(SimpleITK_TESTING_NOSHOW)
+
 # Add individual cxx executables
 
 add_executable ( SimpleGaussianFunctional SimpleGaussianFunctional.cxx )
@@ -31,6 +34,7 @@ set(TEST_HARNESS_TEMP_DIRECTORY ${SimpleITK_BINARY_DIR}/Testing/Temporary)
 set(TEST_HARNESS_DATA_DIRECTORY ${SimpleITK_BINARY_DIR}/ExternalData/Testing/Data)
 
 # Add example organized sub-directories with multiple languages
+add_subdirectory(HelloWorld)
 add_subdirectory(SimpleGaussian)
 add_subdirectory(ImageRegistrationMethod1)
 add_subdirectory(ImageRegistrationMethod2)
