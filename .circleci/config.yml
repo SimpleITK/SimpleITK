@@ -21,6 +21,10 @@ jobs:
           path: /tmp/test-results
       - checkout:
           path : ~/SimpleITK
+      - restore_cache:
+          keys:
+            - ccache-{{.Branch}}
+            - ccache-master
       - run:
           name: Cloning dashboard branch
           command: |
@@ -28,10 +32,16 @@ jobs:
       - run:
           name: Dependencies
           command: |
-            sudo apt-get install -y rsync lua5.1
+            sudo apt-get install -y rsync lua5.1 ccache
             sudo pip install --upgrade pip
             sudo pip install numpy scikit-ci-addons
             ci_addons circle/install_cmake.py 3.7.2
+      - run:
+          name: CCache initialization
+          command: |
+            ccache --show-stats
+            ccache --zero-stats
+            ccache --max-size=2.0G
       - run: echo 'export DASHBOARD_MODEL=$( [[ "$CIRCLE_BRANCH" = "master" || "$CIRCLE_BRANCH" = "next"  || "$CIRCLE_BRANCH" = "release" ]] && echo Continuous || echo Experimental )' >> $BASH_ENV
       - run:
           name: Build and Testing with CTest
@@ -43,5 +53,14 @@ jobs:
                 ITK_GLOBAL_DEFAULT_NUMBER_OF_THREAD: 2
                 PARALLEL_LEVEL: 4
           command: |
+            export PATH=/usr/lib/ccache:${PATH}
             export LD_LIBRARY_PATH="${CTEST_BINARY_DIRECTORY}/ITK-prefix/lib/:${CTEST_BINARY_DIRECTORY}/SimpleITK-build/lib"
             ctest -V -S "${DASHBOARD_BRANCH_DIRECTORY}/circleci.cmake"
+      - run:
+          name: ccache stats
+          when: always
+          command: |
+            ccache --show-stats
+      - save_cache:
+          key: 'ccache-{{.Branch}}-{{ epoch }}'
+          paths: [ "/home/circleci/.ccache" ]
