@@ -23,6 +23,9 @@ jobs:
           path : ~/SimpleITK
       - restore_cache:
           keys:
+            - external-data
+      - restore_cache:
+          keys:
             - ccache-{{.Branch}}
             - ccache-master
       - run:
@@ -64,3 +67,6 @@ jobs:
       - save_cache:
           key: 'ccache-{{.Branch}}-{{ epoch }}'
           paths: [ "/home/circleci/.ccache" ]
+      - save_cache:
+          key: 'external-data'
+          paths: [ "/home/circleci/.ExternalData" ]
