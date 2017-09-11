@@ -17,8 +17,6 @@ jobs:
       DASHBOARD_BRANCH_DIRECTORY: /home/circleci/dashboard
       ExternalData_OBJECT_STORES: /home/circleci/.ExternalData
     steps:
-      - store_test_results:
-          path: /tmp/test-results
       - checkout:
           path : ~/SimpleITK
       - restore_cache:
@@ -64,6 +62,16 @@ jobs:
           when: always
           command: |
             ccache --show-stats
+      - run:
+          name: Formatting CTest for JUnit
+          when: always
+          command: |
+            env
+            mkdir -p /tmp/test-results
+            ci_addons ctest_junit_formatter ${CTEST_BINARY_DIRECTORY} > /tmp/test-results/JUnit-${CIRCLE_NODE_INDEX}.xml
+      - store_test_results:
+          path: /tmp/test-results
+          destination: ctest
       - save_cache:
           key: 'ccache-{{.Branch}}-{{ epoch }}'
           paths: [ "/home/circleci/.ccache" ]
