@@ -7,6 +7,7 @@ Examples
   :maxdepth: 2
 
 
+  HelloWorld/Documentation
   CSharp/Documentation
   DemonsRegistration1/Documentation
   DemonsRegistration2/Documentation
