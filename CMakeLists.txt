@@ -280,26 +280,37 @@ set ( SimpleITK_DOC_FILES
 # root of the source tree
 get_filename_component( _itk_root "${ITK_USE_FILE}" PATH )
 get_filename_component( _itk_root "${_itk_root}" PATH )
-set( _itk_source_path "${_itk_root}" )
+
+set(_itk_doc_search_paths "${_itk_root}")
 
 get_filename_component( _itk_root "${_itk_root}" PATH )
 get_filename_component( _itk_root "${_itk_root}" PATH )
-set( _itk_doc_path "${_itk_root}/share/doc/ITK-${ITK_VERSION_MAJOR}.${ITK_VERSION_MINOR}" )
+list( APPEND _itk_doc_search_paths
+   "${_itk_root}/share/doc/ITK-${ITK_VERSION_MAJOR}.${ITK_VERSION_MINOR}"
+   "${_itk_root}/share/doc/ITK"
+)
 
-if( EXISTS "${_itk_source_path}/NOTICE" )
-  set( ITK_DOC_FILES
-    # "${_itk_source_path}/LICENSE" SimpleITK has same license file
-    "${_itk_source_path}/NOTICE"
-    "${_itk_source_path}/README.txt"
-    )
-elseif( EXISTS "${_itk_doc_path}/NOTICE" )
-  set( ITK_DOC_FILES
-    # "${_itk_doc_path}/LICENSE" SimpleITK has same license file
-    "${_itk_doc_path}/NOTICE"
-    "${_itk_doc_path}/README.txt"
-    )
-else()
-  message( "doc_path: ${_itk_doc_path}" )
+
+#
+# Only append file if it exists
+#
+function(append_if_exists list_var file)
+   if( EXISTS ${file} )
+     list( APPEND ${list_var} ${file} )
+     set( ${list_var} ${${list_var}} PARENT_SCOPE )
+   endif()
+endfunction()
+
+foreach( _p IN LISTS _itk_doc_search_paths)
+  if( EXISTS "${_p}/NOTICE" )
+    append_if_exists(ITK_DOC_FILES "${_p}/NOTICE")
+    append_if_exists(ITK_DOC_FILES "${_p}/README.txt")
+    append_if_exists(ITK_DOC_FILES "${_p}/README.md")
+    break()
+  endif()
+endforeach()
+
+if( NOT ITK_DOC_FILES )
   message( WARNING "Unable to file ITK's NOTICE File!\n This file will not be included in SimpleITK packaging!" )
 endif()
 
