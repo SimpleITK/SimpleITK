@@ -122,6 +122,12 @@ TEST(LabelStatistics,Commands) {
   EXPECT_EQ( 0, stats.GetBoundingBox(0)[2] );
   EXPECT_EQ( 255, stats.GetBoundingBox(0)[3] );
 
+  ASSERT_EQ( 4u, stats.GetRegion(0).size() );
+  EXPECT_EQ( 0, stats.GetRegion(0)[0] );
+  EXPECT_EQ( 0, stats.GetRegion(0)[1] );
+  EXPECT_EQ( 256, stats.GetRegion(0)[2] );
+  EXPECT_EQ( 256, stats.GetRegion(0)[3] );
+
   EXPECT_EQ ( 1.0f, stats.GetProgress() );
   EXPECT_EQ ( 1.0f, progressCmd.m_Progress );
   EXPECT_EQ ( 0, abortCmd.m_Count );
