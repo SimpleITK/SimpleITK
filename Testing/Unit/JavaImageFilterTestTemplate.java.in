@@ -28,7 +28,7 @@ import org.itk.simple.*;
 import java.util.Arrays;
 
 
-class BigIntergerFix {
+class BigIntegerFix {
   public static long Convert( long referenceType, long value) {
     return value;
   }
@@ -213,7 +213,7 @@ elseif dim_vec == 1 then
       }]]
 elseif type == "uint64_t" then
 OUT=[[
-  filter.set${parameter}( BigIntergerFix.Convert( filter.get${parameter}(), $(if java_value then OUT='${java_value}' else OUT='${value}' end) ) );
+  filter.set${parameter}( BigIntegerFix.Convert( filter.get${parameter}(), $(if java_value then OUT='${java_value}' else OUT='${value}' end) ) );
 ]]
 else
 OUT=[[
