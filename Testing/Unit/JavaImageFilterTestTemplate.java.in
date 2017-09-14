@@ -28,18 +28,18 @@ import org.itk.simple.*;
 import java.util.Arrays;
 
 
-class BigIntegerFix {
-  public static long Convert( long referenceType, long value) {
+
+class ${name}Test {
+
+  public static long ConvertFixUInt64( long referenceType, long value) {
     return value;
   }
 
-  public static BigInteger Convert(BigInteger referenceType, long value)
+  public static BigInteger ConvertFixUInt64(BigInteger referenceType, long value)
   {
     return BigInteger.valueOf(value);
   }
-}
 
-class ${name}Test {
 
   public static void main( String argv[] ) {
 
@@ -213,7 +213,7 @@ elseif dim_vec == 1 then
       }]]
 elseif type == "uint64_t" then
 OUT=[[
-  filter.set${parameter}( BigIntegerFix.Convert( filter.get${parameter}(), $(if java_value then OUT='${java_value}' else OUT='${value}' end) ) );
+  filter.set${parameter}( ConvertFixUInt64( filter.get${parameter}(), $(if java_value then OUT='${java_value}' else OUT='${value}' end) ) );
 ]]
 else
 OUT=[[
