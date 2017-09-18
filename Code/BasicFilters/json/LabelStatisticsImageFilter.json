@@ -184,6 +184,21 @@
       "detaileddescriptionGet" : "Return the computed bounding box for a label."
     },
     {
+      "name" : "Region",
+      "type" : "std::vector<unsigned int>",
+      "no_print" : true,
+      "active" : true,
+      "parameters" : [
+        {
+          "name" : "label",
+          "type" : "int64_t"
+        }
+      ],
+      "custom_cast" : "sitkITKImageRegionToSTL(value)",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Return the computed region."
+    },
+    {
       "name" : "Labels",
       "type" : "std::vector<int64_t>",
       "custom_itk_cast" : "const std::vector<typename FilterType::LabelPixelType> tempLabels = filter->GetValidLabelValues();\n  this->m_Labels = std::vector<int64_t>(tempLabels.begin(), tempLabels.end());",
