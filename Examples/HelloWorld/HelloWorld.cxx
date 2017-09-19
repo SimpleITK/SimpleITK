@@ -29,10 +29,54 @@ namespace sitk = itk::simple;
 
 int main ( int argc, char* argv[] ) {
 
-  sitk::Image image( 128, 128, sitk::sitkUInt8 );
+  sitk::PixelIDValueEnum pixelType = sitk::sitkUInt8;
+  std::vector<unsigned int> imageSize ( 2, 128 );
 
-  image = image + 127;
+  // Create an image
+  sitk::Image image( imageSize, pixelType );
 
+  // Create a face image
+  std::vector<double> faceSize ( 2, 64.0 );
+  std::vector<double> faceCenter ( 2, 64.0 );;
+  sitk::Image face = sitk::GaussianSource( pixelType, imageSize, faceSize, faceCenter );
+
+  // Create eye images
+  std::vector<double> eyeSize ( 2, 5.0 );
+  std::vector<double> eye1Center ( 2, 48.0 );
+  std::vector<double> eye2Center;
+  eye2Center.push_back( 80.0 );
+  eye2Center.push_back( 48.0 );
+  sitk::Image eye1 = sitk::GaussianSource( pixelType, imageSize, eyeSize, eye1Center, 150 );
+  sitk::Image eye2 = sitk::GaussianSource( pixelType, imageSize, eyeSize, eye2Center, 150 );
+
+  // Apply the eyes to the face
+  face = face - eye1 - eye2;
+  face = sitk::BinaryThreshold( face, 200, 255, 255 );
+
+  // Create the mouth
+  std::vector<double> mouthRadii;
+  mouthRadii.push_back( 30.0 );
+  mouthRadii.push_back( 20.0 );
+  std::vector<double> mouthCenter;
+  mouthCenter.push_back( 64.0 );
+  mouthCenter.push_back( 76.0 );
+  sitk::Image mouth = 255 - sitk::BinaryThreshold(
+                              sitk::GaussianSource(pixelType, imageSize, mouthRadii, mouthCenter),
+                              200, 255, 255 );
+
+  // Paste the mouth onto the face
+  std::vector<unsigned int> mouthSize;
+  mouthSize.push_back( 64 );
+  mouthSize.push_back( 18 );
+  std::vector<int> mouthLoc;
+  mouthLoc.push_back( 32 );
+  mouthLoc.push_back( 76 );
+  face = sitk::Paste( face, mouth, mouthSize, mouthLoc, mouthLoc );
+
+  // Apply the face to the original image
+  image = image + face;
+
+  // Display the results
   sitk::Show( image, "Hello World: C++", true );
 
 }
