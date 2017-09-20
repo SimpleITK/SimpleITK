@@ -5,8 +5,8 @@ Hello World
 Overview
 --------
 
-A very basic, "Hello World" example for SimpleITK. The example constructs a 128x128
-greyscale image, adds 127 to all the pixel values, and calls the Show function to
+A "Hello World" example for SimpleITK. The example constructs a 128x128 greyscale
+image, draws a smiley face made of Gaussian blobs, and calls the Show function to
 display with image with ImageJ.
 
 
