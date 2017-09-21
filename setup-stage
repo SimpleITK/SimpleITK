@@ -25,7 +25,7 @@
 #    stage.url = Topic Stage repository URL
 #    stage.pushurl = Topic Stage push URL if not "$url"
 
-egrep-q() {
+egrep_q() {
 	egrep "$@" >/dev/null 2>/dev/null
 }
 

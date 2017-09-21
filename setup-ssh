@@ -25,7 +25,7 @@
 #    ssh.key = Local ssh key name
 #    ssh.request-url = Web page URL to request ssh access
 
-egrep-q() {
+egrep_q() {
 	egrep "$@" >/dev/null 2>/dev/null
 }
 
@@ -45,7 +45,7 @@ die 'This project is not configured for ssh push access.'
 
 # Check for existing configuration.
 if test -r ~/.ssh/config &&
-   egrep-q 'Host[= ]'"${host//\./\\.}" ~/.ssh/config; then
+   egrep_q 'Host[= ]'"${host//\./\\.}" ~/.ssh/config; then
 	echo 'Host "'"$host"'" is already in ~/.ssh/config' &&
 	setup= &&
 	question='Test'
