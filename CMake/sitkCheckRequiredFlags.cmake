@@ -67,21 +67,37 @@ foreach( _r ${required_flags_regex_to_test} )
   endforeach()
 endforeach()
 
+set(HAS_CXX_STD_FLAG ${_HAS_FLAG})
+
+
+#
+# Let the user set the CXX_STANDARD via these CMake variable, although
+# it is preferred to set it in the CXX_FLAGS, as it will be propagated
+# to SimpleITK's public compile options.
+#
+if( DEFINED CMAKE_CXX_STANDARD
+    OR DEFINED CMAKE_CXX_STANDARD_REQUIRED
+    OR DEFINED CMAKE_CXX_EXTENSIONS )
+  if(HAS_CXX_STD_FLAG)
+    message(SEND_ERROR "CMake CXX standard variables are not supported
+      concurrently with CXX flag: \"-std=\"! Use only one to configure CXX standard.")
+  endif()
+elseif(NOT HAS_CXX_STD_FLAG)
+
 #
 # Check if we need to enable C++11 with a compiler flag
 #
 
-if(NOT _HAS_FLAG)
-
   check_cxx_compiler_flag( "-std=c++11" CXX_HAS_stdcxx11)
+
   if (CXX_HAS_stdcxx11)
 
     message(STATUS "Checking if c++11 is required...")
-    try_compile(SITK_CHECK_CXX11
+    try_compile(SITK_CXX11_NOT_REQUIRED
       "${PROJECT_BINARY_DIR}"
       "${CMAKE_CURRENT_LIST_DIR}/sitk_check_cxx11_required.cxx"
       OUTPUT_VARIABLE OUTPUT)
-    if(${SITK_CHECK_CXX11})
+    if(SITK_CXX11_NOT_REQUIRED)
       message(STATUS "Checking if c++11 is required... NO" )
     else()
       message(STATUS "Checking if c++11 is required... YES" )
