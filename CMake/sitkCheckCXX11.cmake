@@ -20,12 +20,6 @@ include(CMakePushCheckState)
 
 if(POLICY CMP0067) # CMake 3.8.2
   cmake_policy(SET CMP0067 NEW)
-elseif( DEFINED CMAKE_CXX_STANDARD
-  OR DEFINED CMAKE_CXX_STANDARD_REQUIRED
-  OR CMAKE_CXX_EXTENSIONS )
-message(WARNING "CXX standard variables are not properly supported by \
-  CMake ${CMAKE_VERSION}. Configuration compilations will not detect \
-  features properly!")
 endif()
 
 #
@@ -35,9 +29,23 @@ function(sitkCXX11Test VARIABLE)
 
   if(NOT DEFINED ${VARIABLE})
     message(STATUS "Performing Test ${VARIABLE}")
+
+    if(NOT POLICY CMP0067)
+      if(DEFINED CMAKE_CXX_STANDARD)
+        set(cmake_flags "${cmake_flags} -DCMAKE_CXX_STANDARD:STRING:=${CMAKE_CXX_STANDARD}")
+      endif()
+      if(DEFINED CMAKE_CXX_STANDARD_REQUIRED)
+        set(cmake_flags "${cmake_flags} -DCMAKE_CXX_STANDARD_REQUIRED:STRING:=${CMAKE_CXX_STANDARD_REQUIRED}")
+      endif()
+      if(DEFINED CMAKE_CXX_EXTENSIONS)
+        set(cmake_flags "${cmake_flags} -DCMAKE_CXX_EXTENSIONS:STRING:=${CMAKE_CXX_EXTENSIONS}")
+      endif()
+    endif()
+
     try_compile(${VARIABLE}
       "${PROJECT_BINARY_DIR}"
       "${CMAKE_CURRENT_LIST_DIR}/sitk_check_cxx11.cxx"
+      CMAKE_FLAGS ${cmake_flags}
       COMPILE_DEFINITIONS "-D${VARIABLE}" ${CMAKE_REQUIRED_DEFINITIONS}
       OUTPUT_VARIABLE output)
 
