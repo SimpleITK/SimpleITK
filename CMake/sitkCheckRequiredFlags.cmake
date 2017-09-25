@@ -56,11 +56,13 @@ set(required_flags_regex_to_test
   "^-std=" # required to be last
 )
 
-foreach(f ${cmake_cxx_flags_list})
-  foreach( _r ${required_flags_regex_to_test} )
-    string(REGEX MATCH  ${_r} _HAS_FLAG ${f} )
-    if (_HAS_FLAG )
+foreach( _r ${required_flags_regex_to_test} )
+  set(_HAS_FLAG 0)
+  foreach(f ${cmake_cxx_flags_list})
+    string(REGEX MATCH  ${_r} _match ${f} )
+    if (_match )
       list(APPEND SimpleITK_PUBLIC_COMPILE_OPTIONS ${f})
+      set(_HAS_FLAG ${_match})
     endif()
   endforeach()
 endforeach()
