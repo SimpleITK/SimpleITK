@@ -98,10 +98,20 @@ cmake_pop_check_state()
 
 if ( (NOT SITK_HAS_TR1_FUNCTIONAL AND NOT SITK_HAS_CXX11_FUNCTIONAL)
     OR
-    (NOT SITK_HAS_TR1_TYPE_TRAITS AND NOT SITK_HAS_CXX11_TYPE_TRAITS) )
-  message( FATAL_ERROR
-    "SimpleITK requires usage of C++11 or C++ Technical Report 1 (TR1).\n"
-    "It may be available as an optional download for your compiler or difference CXX_FLAGS."
-    "Please see the FAQs for details."
-    "http://simpleitk.readthedocs.io/en/master/Documentation/docs/source/faq.html#do-i-need-to-download-an-option-package-for-tr1-support\n")
-endif ( )
+    (NOT SITK_HAS_TR1_TYPE_TRAITS AND NOT SITK_HAS_CXX11_TYPE_TRAITS)
+    )
+  if (MSVC)
+    message( FATAL_ERROR
+      "SimpleITK requires usage of C++11 or C++ Technical Report 1 (TR1).\n"
+      "It may be available as an optional download for your compiler or difference CXX_FLAGS."
+      "Please see the FAQs for details."
+      "http://simpleitk.readthedocs.io/en/master/Documentation/docs/source/faq.html#do-i-need-to-download-an-option-package-for-tr1-support\n")
+  else()
+      message( FATAL_ERROR
+        "SimpleITK requires usage of C++11 or C++ Technical Report 1 "
+        "(TR1), but were neither able to detect TR1 nor automatically "
+        "enable C++11. Please review your configuration settings and "
+        "enable C++11.\n")
+
+  endif()
+endif ()
