@@ -117,10 +117,10 @@ TEST(LabelStatistics,Commands) {
   EXPECT_NEAR ( stats.GetMedian ( 0 ), 12.0, 0.001 );
 
   ASSERT_EQ( 4u, stats.GetBoundingBox(0).size() );
-  EXPECT_EQ( 0u, stats.GetBoundingBox(0)[0] );
-  EXPECT_EQ( 255u, stats.GetBoundingBox(0)[1] );
-  EXPECT_EQ( 0u, stats.GetBoundingBox(0)[2] );
-  EXPECT_EQ( 255u, stats.GetBoundingBox(0)[3] );
+  EXPECT_EQ( 0, stats.GetBoundingBox(0)[0] );
+  EXPECT_EQ( 255, stats.GetBoundingBox(0)[1] );
+  EXPECT_EQ( 0, stats.GetBoundingBox(0)[2] );
+  EXPECT_EQ( 255, stats.GetBoundingBox(0)[3] );
 
   ASSERT_EQ( 4u, stats.GetRegion(0).size() );
   EXPECT_EQ( 0u, stats.GetRegion(0)[0] );
