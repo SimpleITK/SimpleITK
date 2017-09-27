@@ -1,11 +1,17 @@
 {
   "name" : "EdgePotentialImageFilter",
+  "itk_name" : "UnaryGeneratorImageFilter",
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "doc" : "Some global documentation",
   "pixel_types" : "VectorPixelIDTypeList",
   "output_pixel_type" : "typename itk::NumericTraits<typename itk::NumericTraits<typename InputImageType::PixelType>::ValueType>::RealType",
+  "filter_type" : "itk::UnaryGeneratorImageFilter< InputImageType, OutputImageType>",
+  "custom_set_input" : "filter->SetFunctor( Functor::EdgePotential< typename InputImageType::PixelType, typename OutputImageType::PixelType>() );\n  filter->SetInput(image1);",
+  "include_files" : [
+    "itkEdgePotentialImageFilter.h"
+  ],
   "members" : [],
   "tests" : [
     {

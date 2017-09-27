@@ -1,5 +1,6 @@
 {
   "name" : "BoundedReciprocalImageFilter",
+  "itk_name" : "UnaryGeneratorImageFilter",
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
@@ -7,6 +8,11 @@
   "pixel_types" : "BasicPixelIDTypeList",
   "output_pixel_type" : "typename itk::NumericTraits<typename InputImageType::PixelType>::RealType",
   "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "filter_type" : "itk::UnaryGeneratorImageFilter< InputImageType, OutputImageType>",
+  "custom_set_input" : "filter->SetFunctor( Functor::BoundedReciprocal< typename InputImageType::PixelType, typename OutputImageType::PixelType>() );\n  filter->SetInput(image1);",
+  "include_files" : [
+    "itkBoundedReciprocalImageFilter.h"
+  ],
   "members" : [],
   "tests" : [
     {

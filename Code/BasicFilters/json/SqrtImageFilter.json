@@ -1,11 +1,17 @@
 {
   "name" : "SqrtImageFilter",
+  "itk_name" : "UnaryGeneratorImageFilter",
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "doc" : "Some global documentation",
   "pixel_types" : "BasicPixelIDTypeList",
   "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
+  "filter_type" : "itk::UnaryGeneratorImageFilter< InputImageType, OutputImageType>",
+  "custom_set_input" : "filter->SetFunctor( Functor::Sqrt< typename InputImageType::PixelType, typename OutputImageType::PixelType>() );\n  filter->SetInput(image1);",
+  "include_files" : [
+    "itkSqrtImageFilter.h"
+  ],
   "members" : [],
   "tests" : [
     {

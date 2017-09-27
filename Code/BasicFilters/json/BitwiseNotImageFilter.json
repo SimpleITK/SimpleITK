@@ -1,7 +1,6 @@
 {
   "name" : "BitwiseNotImageFilter",
   "itk_name" : "UnaryGeneratorImageFilter",
-  "include_files" : ["itkUnaryMinusImageFilter.h"],
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
   "include_files" : [
@@ -10,8 +9,8 @@
   "number_of_inputs" : 1,
   "doc" : "Some global documentation",
   "pixel_types" : "IntegerPixelIDTypeList",
-  "filter_type" : "itk::UnaryGeneratorImageFilter< InputImageType, InputImageType >",
-  "custom_itk_cast" : "filter->setFunctor( itk::Functor::BitwiseNot< typename InputImageType::PixelType,typename OutputImageType::PixelType>() )",
+  "filter_type" : "itk::UnaryGeneratorImageFilter< InputImageType, OutputImageType >",
+  "custom_set_input" : "filter->SetFunctor( itk::Functor::BitwiseNot< typename InputImageType::PixelType,typename OutputImageType::PixelType>() );\n  filter->SetInput(image1);",
   "members" : [],
   "tests" : [
     {

@@ -1,14 +1,16 @@
 {
   "name" : "UnaryMinusImageFilter",
   "itk_name" : "UnaryGeneratorImageFilter",
-  "include_files" : ["itkUnaryMinusImageFilter.h"],
+  "include_files" : [
+    "itkUnaryMinusImageFilter.h"
+  ],
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "doc" : "",
   "pixel_types" : "typelist::Append< SignedPixelIDTypeList, ComplexPixelIDTypeList >::Type",
   "filter_type" : "itk::UnaryGeneratorImageFilter< InputImageType, OutputImageType>",
-  "custom_itk_cast" : "filter->SetFunctor( itk::Functor::UnaryMinus<typename InputImageType::PixelType, typename OutputImageType::PixelType>() )",
+  "custom_set_input" : "filter->SetFunctor( itk::Functor::UnaryMinus<typename InputImageType::PixelType, typename OutputImageType::PixelType>() );\n  filter->SetInput(image1);",
   "vector_pixel_types_by_component" : "SignedVectorPixelIDTypeList",
   "members" : [],
   "tests" : [

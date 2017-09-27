@@ -1,11 +1,16 @@
 {
   "name" : "ComplexToPhaseImageFilter",
+  "itk_name" : "UnaryGeneratorImageFilter",
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
   "doc" : "Some global documentation",
   "pixel_types" : "ComplexPixelIDTypeList",
   "output_pixel_type" : "typename InputImageType::PixelType::value_type",
+  "custom_set_input" : "filter->SetFunctor( Functor::ComplexToPhase< typename InputImageType::PixelType, typename OutputImageType::PixelType>() );\n  filter->SetInput(image1);",
+  "include_files" : [
+    "itkComplexToPhaseImageFilter.h"
+  ],
   "members" : [],
   "tests" : [
     {
