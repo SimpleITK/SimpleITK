@@ -1,11 +1,17 @@
 {
   "name" : "OrImageFilter",
+  "itk_name" : "BinaryGeneratorImageFilter",
   "template_code_filename" : "BinaryFunctorFilter",
   "template_test_filename" : "ImageFilter",
   "constant_type" : "int",
   "number_of_inputs" : 2,
   "doc" : "Some global documentation",
   "pixel_types" : "IntegerPixelIDTypeList",
+  "filter_type" : "itk::BinaryGeneratorImageFilter< InputImageType, InputImageType2, OutputImageType >",
+  "functor_type" : "Functor::OR< typename InputImageType::PixelType, typename InputImageType2::PixelType, typename OutputImageType::PixelType>",
+  "include_files" : [
+    "itkOrImageFilter.h"
+  ],
   "members" : [],
   "tests" : [
     {

@@ -1,5 +1,6 @@
 {
   "name" : "MagnitudeAndPhaseToComplexImageFilter",
+  "itk_name" : "BinaryGeneratorImageFilter",
   "template_code_filename" : "BinaryFunctorFilter",
   "template_test_filename" : "ImageFilter",
   "constant_type" : "double",
@@ -7,6 +8,11 @@
   "doc" : "Some global documentation",
   "pixel_types" : "RealPixelIDTypeList",
   "output_pixel_type" : "std::complex<typename InputImageType::PixelType>",
+  "filter_type" : "itk::BinaryGeneratorImageFilter< InputImageType, InputImageType2, OutputImageType >",
+  "functor_type" : "Functor::MagnitudeAndPhaseToComplex< typename InputImageType::PixelType, typename InputImageType2::PixelType, typename OutputImageType::PixelType::value_type>",
+  "include_files" : [
+    "itkMagnitudeAndPhaseToComplexImageFilter.h"
+  ],
   "members" : [],
   "tests" : [
     {

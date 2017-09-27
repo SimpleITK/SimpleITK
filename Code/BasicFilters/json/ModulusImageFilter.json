@@ -1,10 +1,16 @@
 {
   "name" : "ModulusImageFilter",
+  "itk_name" : "BinaryGeneratorImageFilter",
   "template_code_filename" : "BinaryFunctorFilter",
   "template_test_filename" : "ImageFilter",
   "constant_type" : "uint32_t",
   "number_of_inputs" : 2,
   "pixel_types" : "IntegerPixelIDTypeList",
+  "filter_type" : "itk::BinaryGeneratorImageFilter< InputImageType, InputImageType2, OutputImageType >",
+  "functor_type" : "Functor::Modulus< typename InputImageType::PixelType, typename InputImageType2::PixelType, typename OutputImageType::PixelType>",
+  "include_files" : [
+    "itkModulusImageFilter.h"
+  ],
   "members" : [],
   "tests" : [
     {

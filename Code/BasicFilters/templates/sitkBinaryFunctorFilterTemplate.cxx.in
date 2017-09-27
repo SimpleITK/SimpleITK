@@ -125,12 +125,15 @@ $(include CustomCasts.cxx)
 $(include ExecuteInternalSignature.cxx.in)
 {
 $(include ExecuteInternalTypedefs.cxx.in)
+  $(if functor_type then OUT='typedef ${functor_type} FunctorType;' end)
 
 $(include ExecuteInternalGetImagePointers.cxx.in)
+  $(if functor_type then OUT='FunctorType functor = FunctorType();' end)
 
 $(include ExecuteInternalITKFilter.cxx.in)
 
 $(include ExecuteInternalSetITKFilterInputs.cxx.in)
+  $(if functor_type then OUT='filter->SetFunctor(functor);' end)
 $(include ExecuteInternalUpdateAndReturn.cxx.in)
 }
 
@@ -140,10 +143,13 @@ Image ${name}::ExecuteInternal ( ${constant_type} constant, const Image& inImage
 {
 $(include ExecuteInternalTypedefs.cxx.in)
 
-  // Get the pointer to the ITK image contained in image2
+ // Get the pointer to the ITK image contained in image2
   typename InputImageType2::ConstPointer image2 = this->CastImageToITK<InputImageType2>( inImage2 );
+  $(if functor_type then OUT='typedef ${functor_type} FunctorType;' end)
 
 $(include ExecuteInternalITKFilter.cxx.in)
+
+  $(if functor_type then OUT='FunctorType functor = FunctorType();' end)
 
   typename InputImageType::PixelType c;
   NumericTraits<typename InputImageType2::PixelType>::SetLength( c, image2->GetNumberOfComponentsPerPixel() );
@@ -151,6 +157,7 @@ $(include ExecuteInternalITKFilter.cxx.in)
   filter->SetConstant1( c );
   filter->SetInput2( image2 );
 $(include ExecuteInternalSetITKFilterParameters.cxx.in)
+  $(if functor_type then OUT='filter->SetFunctor(functor);' end)
 $(include ExecuteInternalUpdateAndReturn.cxx.in)
 }
 
@@ -162,8 +169,11 @@ $(include ExecuteInternalTypedefs.cxx.in)
 
   // Get the pointer to the ITK image contained in image1
   typename InputImageType::ConstPointer image1 = this->CastImageToITK<InputImageType>( inImage1 );
+  $(if functor_type then OUT='typedef ${functor_type} FunctorType;' end)
 
 $(include ExecuteInternalITKFilter.cxx.in)
+
+  $(if functor_type then OUT='FunctorType functor = FunctorType();' end)
 
   typename InputImageType2::PixelType c;
   NumericTraits<typename InputImageType::PixelType>::SetLength( c, image1->GetNumberOfComponentsPerPixel() );
@@ -171,6 +181,7 @@ $(include ExecuteInternalITKFilter.cxx.in)
   filter->SetInput1( image1 );
   filter->SetConstant2( c );
 $(include ExecuteInternalSetITKFilterParameters.cxx.in)
+$(if functor_type then OUT='  filter->SetFunctor(functor);' end)
 $(include ExecuteInternalUpdateAndReturn.cxx.in)
 }
 
