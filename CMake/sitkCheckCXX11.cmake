@@ -20,12 +20,6 @@ include(CMakePushCheckState)
 
 if(POLICY CMP0067) # CMake 3.8.2
   cmake_policy(SET CMP0067 NEW)
-elseif( DEFINED CMAKE_CXX_STANDARD
-  OR DEFINED CMAKE_CXX_STANDARD_REQUIRED
-  OR CMAKE_CXX_EXTENSIONS )
-message(WARNING "CXX standard variables are not properly supported by \
-  CMake ${CMAKE_VERSION}. Configuration compilations will not detect \
-  features properly!")
 endif()
 
 #
@@ -35,9 +29,23 @@ function(sitkCXX11Test VARIABLE)
 
   if(NOT DEFINED ${VARIABLE})
     message(STATUS "Performing Test ${VARIABLE}")
+
+    if(NOT POLICY CMP0067)
+      if(DEFINED CMAKE_CXX_STANDARD)
+        set(cmake_flags "${cmake_flags} -DCMAKE_CXX_STANDARD:STRING:=${CMAKE_CXX_STANDARD}")
+      endif()
+      if(DEFINED CMAKE_CXX_STANDARD_REQUIRED)
+        set(cmake_flags "${cmake_flags} -DCMAKE_CXX_STANDARD_REQUIRED:STRING:=${CMAKE_CXX_STANDARD_REQUIRED}")
+      endif()
+      if(DEFINED CMAKE_CXX_EXTENSIONS)
+        set(cmake_flags "${cmake_flags} -DCMAKE_CXX_EXTENSIONS:STRING:=${CMAKE_CXX_EXTENSIONS}")
+      endif()
+    endif()
+
     try_compile(${VARIABLE}
       "${PROJECT_BINARY_DIR}"
       "${CMAKE_CURRENT_LIST_DIR}/sitk_check_cxx11.cxx"
+      CMAKE_FLAGS ${cmake_flags}
       COMPILE_DEFINITIONS "-D${VARIABLE}" ${CMAKE_REQUIRED_DEFINITIONS}
       OUTPUT_VARIABLE output)
 
@@ -90,10 +98,20 @@ cmake_pop_check_state()
 
 if ( (NOT SITK_HAS_TR1_FUNCTIONAL AND NOT SITK_HAS_CXX11_FUNCTIONAL)
     OR
-    (NOT SITK_HAS_TR1_TYPE_TRAITS AND NOT SITK_HAS_CXX11_TYPE_TRAITS) )
-  message( FATAL_ERROR
-    "SimpleITK requires usage of C++11 or C++ Technical Report 1 (TR1).\n"
-    "It may be available as an optional download for your compiler or difference CXX_FLAGS."
-    "Please see the FAQs for details."
-    "https://www.itk.org/Wiki/SimpleITK/FAQ#Do_I_need_to_download_an_option_package_for_TR1_support.3F\n" )
-endif ( )
+    (NOT SITK_HAS_TR1_TYPE_TRAITS AND NOT SITK_HAS_CXX11_TYPE_TRAITS)
+    )
+  if (MSVC)
+    message( FATAL_ERROR
+      "SimpleITK requires usage of C++11 or C++ Technical Report 1 (TR1).\n"
+      "It may be available as an optional download for your compiler or difference CXX_FLAGS."
+      "Please see the FAQs for details."
+      "http://simpleitk.readthedocs.io/en/master/Documentation/docs/source/faq.html#do-i-need-to-download-an-option-package-for-tr1-support\n")
+  else()
+      message( FATAL_ERROR
+        "SimpleITK requires usage of C++11 or C++ Technical Report 1 "
+        "(TR1), but were neither able to detect TR1 nor automatically "
+        "enable C++11. Please review your configuration settings and "
+        "enable C++11.\n")
+
+  endif()
+endif ()
