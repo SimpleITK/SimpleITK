@@ -151,10 +151,11 @@ void
 BinaryGeneratorImageFilter< TInputImage1, TInputImage2, TOutputImage >
 ::GenerateOutputInformation()
 {
+
   const DataObject * input = ITK_NULLPTR;
-  Input1ImagePointer inputPtr1 =
+  const TInputImage1 * inputPtr1 =
     dynamic_cast< const TInputImage1 * >( ProcessObject::GetInput(0) );
-  Input2ImagePointer inputPtr2 =
+  const TInputImage2 * inputPtr2 =
     dynamic_cast< const TInputImage2 * >( ProcessObject::GetInput(1) );
 
   if ( this->GetNumberOfInputs() >= 2 )
@@ -190,10 +191,7 @@ BinaryGeneratorImageFilter< TInputImage1, TInputImage2, TOutputImage >
                        ThreadIdType threadId)
 
 {
-  if ( m_functor != ITK_NULLPTR )
-    {
-     m_functor(outputRegionForThread, threadId);
-    }
+  (*m_Holder.GetPointer())(outputRegionForThread, threadId);
 }
 
 template< typename TInputImage1, typename TInputImage2, typename TOutputImage>

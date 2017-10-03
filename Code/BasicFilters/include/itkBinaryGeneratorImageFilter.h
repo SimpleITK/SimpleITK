@@ -20,6 +20,7 @@
 
 #include "itkInPlaceImageFilter.h"
 #include "itkSimpleDataObjectDecorator.h"
+#include "itkAutoPointer.h"
 
 namespace itk
 {
@@ -123,11 +124,14 @@ public:
   template <typename TFunctor>
   void SetFunctor( const TFunctor &functor)
   {
-    m_functor = simple::nsstd::bind( &Self::ThreadedGenerateData<TFunctor>,
-                                     this,
-                                     functor,
-                                     simple::nsstd::placeholders::_1,
-                                     simple::nsstd::placeholders::_2);
+    typedef MemberFunctionPointerHolder<TFunctor> FunctorHolder;
+
+    FunctorHolder *holder = new FunctorHolder();
+    m_Holder.TakeOwnership( holder );
+    holder->m_functor = functor;
+    holder->m_that = this;
+    holder->m_ThreadedGenerateDataPtr = &Self::ThreadedGenerateData<TFunctor>;
+
     this->Modified();
   }
 
@@ -177,7 +181,33 @@ protected:
 private:
   ITK_DISALLOW_COPY_AND_ASSIGN(BinaryGeneratorImageFilter);
 
-  simple::nsstd::function<void(const OutputImageRegionType &, ThreadIdType)> m_functor;
+
+  struct MemberFunctionPointerHolderBase {
+    virtual ~MemberFunctionPointerHolderBase() {};
+    virtual void operator()(const OutputImageRegionType &, ThreadIdType ) = 0;
+  };
+
+  template <typename TFunctor>
+    struct MemberFunctionPointerHolder:
+    public  MemberFunctionPointerHolderBase {
+    typedef TFunctor FunctorType;
+    typedef void (Self::*MemberFunctionType)( const FunctorType &, const OutputImageRegionType &, ThreadIdType );
+
+    MemberFunctionType m_ThreadedGenerateDataPtr;
+    FunctorType        m_functor;
+    Self             * m_that;
+
+    virtual void operator()(const OutputImageRegionType &outputRegionForThread, ThreadIdType threadId)
+      {
+        if (m_ThreadedGenerateDataPtr)
+          {
+          ((*m_that).*(m_ThreadedGenerateDataPtr))(m_functor,outputRegionForThread, threadId);
+          }
+      }
+  };
+
+  AutoPointer<MemberFunctionPointerHolderBase> m_Holder;
+
 };
 } // end namespace itk
 
