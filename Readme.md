@@ -33,3 +33,21 @@ SimpleITK uses the [Git](http://git-scm.com/) distributed version control system
 The SimpleITK [Wiki](https://itk.org/Wiki/SimpleITK) is the main site for all things SimpleITK. The site includes information on installing the toolkit's binary distributions, building the toolkit, user support documentation and much more. The API documentation is maintained using [Doxygen](https://www.itk.org/SimpleITKDoxygen/html/annotated.html).
 
 SimpleITK provides access to most of the ITK components, but not all. If you are looking for something specific and can't find it, ask for support on the [mailing list](https://itk.org/mailman/listinfo/community) (you will need to subscribe to the mailing list before you post).
+
+Report an Issue
+===============
+
+Help us improve SimpleITK by reporting issues you encounter. When you report an error, you allow us to address your specific problem, but more importantly you are helping all of the SimpleITK community.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Thank You
+
+All issues are reported and managed on the [project's GitHub issue tracker](https://github.com/SimpleITK/SimpleITK/issues). When reporting an issue, please provide as much information as possible to enable us to reproduce the problem.
+
+The following information will allow us to address your issue in a timely manner:
+1. Error message (copy pasted) and focused description of the problem.
+2. Operating system, and version (e.g. OSX 10.11.6).
+3. Programming language, and version (e.g. Python 2.7.14, R 3.2.3).
+4. Version of SimpleITK (e.g. 1.1.0), just invoke the SimpleITK Version() function.
+5. How did you install SimpleITK, binary distribution (e.g. conda install -c simpleitk simpleitk), or built it from source (e.g. devtools::install_github("SimpleITK/SimpleITKRInstaller")).
+6. A minimal working example which causes the error.
+7. If your code requires input, possibly point to a minimal sized input image.
