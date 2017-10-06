@@ -1,6 +1,7 @@
 {
   "name" : "ClampImageFilter",
   "template_code_filename" : "DualImageFilter",
+  "itk_name" : "UnaryGeneratorImageFilter",
   "template_test_filename" : "ImageFilter",
   "doc" : "",
   "number_of_inputs" : 1,
@@ -8,7 +9,11 @@
   "pixel_types2" : "BasicPixelIDTypeList",
   "custom_type2" : "const PixelIDValueEnum type2 = m_OutputPixelType;",
   "output_image_type" : "InputImageType2",
-  "filter_type" : "itk::ClampImageFilter<InputImageType,OutputImageType>",
+  "filter_type" : "itk::UnaryGeneratorImageFilter< InputImageType, OutputImageType >",
+  "functor_type" : "Functor::Clamp< typename InputImageType::PixelType, typename OutputImageType::PixelType>",
+  "include_files" : [
+    "itkClampImageFilter.h"
+  ],
   "members" : [
     {
       "name" : "OutputPixelType",
@@ -31,7 +36,7 @@
       "type" : "double",
       "default" : "std::numeric_limits<double>::max()",
       "pixeltype" : "Output",
-      "custom_itk_cast" : "typename OutputImageType::PixelType upper = itk::NumericTraits<typename OutputImageType::PixelType>::max();\n  if ( upper >  this->m_UpperBound ) upper = static_cast<typename OutputImageType::PixelType>(this->m_UpperBound);\n  filter->SetBounds(lower,upper);",
+      "custom_itk_cast" : "typename OutputImageType::PixelType upper = itk::NumericTraits<typename OutputImageType::PixelType>::max();\n  if ( upper >  this->m_UpperBound ) upper = static_cast<typename OutputImageType::PixelType>(this->m_UpperBound);\n  functor.SetBounds(lower,upper);",
       "briefdescriptionSet" : "",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : ""

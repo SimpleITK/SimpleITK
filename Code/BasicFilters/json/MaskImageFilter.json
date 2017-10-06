@@ -1,10 +1,14 @@
 {
   "name" : "MaskImageFilter",
+  "itk_name" : "BinaryGeneratorImageFilter",
   "template_code_filename" : "DualImageFilter",
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 0,
   "doc" : "Some global documentation\n\\todo MaskImageFilter will support VectorImages shortly",
+  "filter_type" : "itk::BinaryGeneratorImageFilter< InputImageType, InputImageType2, OutputImageType >",
+  "functor_type" : "Functor::MaskInput< typename InputImageType::PixelType, typename InputImageType2::PixelType, typename OutputImageType::PixelType>",
   "include_files" : [
+    "itkMaskImageFilter.h",
     "sitkToPixelType.hxx"
   ],
   "pixel_types" : "NonLabelPixelIDTypeList",
@@ -16,6 +20,7 @@
     },
     {
       "name" : "MaskImage",
+       "custom_itk_cast" : "filter->SetInput2( this->CastImageToITK<typename FilterType::Input2ImageType>(*inMaskImage) );",
       "type" : "Image"
     }
   ],
@@ -24,7 +29,7 @@
       "name" : "OutsideValue",
       "type" : "double",
       "default" : 0,
-      "custom_itk_cast" : "typename OutputImageType::PixelType v;  NumericTraits<typename OutputImageType::PixelType>::SetLength( v, image1->GetNumberOfComponentsPerPixel() );  ToPixelType( this->m_OutsideValue, v );  filter->SetOutsideValue( v );",
+      "custom_itk_cast" : "typename OutputImageType::PixelType v;  NumericTraits<typename OutputImageType::PixelType>::SetLength( v, image1->GetNumberOfComponentsPerPixel() );  ToPixelType( this->m_OutsideValue, v );  functor.SetOutsideValue( v );",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Method to explicitly set the outside value of the mask. Defaults to 0",
       "briefdescriptionGet" : "",

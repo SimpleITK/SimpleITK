@@ -169,12 +169,15 @@ end ) )
   else
   OUT=[[typedef InputImageType OutputImageType;]]
   end)
+  $(if functor_type then OUT='typedef ${functor_type} FunctorType;' end)
 
 $(include ExecuteInternalGetImagePointers.cxx.in)
+  $(if functor_type then OUT='FunctorType functor = FunctorType();' end)
 
 $(include ExecuteInternalITKFilter.cxx.in)
 
 $(include ExecuteInternalSetITKFilterInputs.cxx.in)
+  $(if functor_type then OUT='filter->SetFunctor(functor);' end)
 $(include ExecuteInternalUpdateAndReturn.cxx.in)
 }
 

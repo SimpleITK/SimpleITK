@@ -1,5 +1,6 @@
 {
   "name" : "VectorIndexSelectionCastImageFilter",
+  "itk_name" : "UnaryGeneratorImageFilter",
   "template_code_filename" : "DualImageFilter",
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
@@ -8,11 +9,17 @@
   "pixel_types2" : "typelist::Append<BasicPixelIDTypeList,VectorPixelIDTypeList>::Type",
   "custom_type2" : "const PixelIDValueEnum type2 = (m_OutputPixelType != sitkUnknown) ? m_OutputPixelType : type1;",
   "output_pixel_type" : "typename InputImageType2::InternalPixelType",
+  "filter_type" : "itk::UnaryGeneratorImageFilter< InputImageType, OutputImageType >",
+  "functor_type" : "Functor::VectorIndexSelectionCast< typename InputImageType::PixelType, typename OutputImageType::PixelType>",
+  "include_files" : [
+    "itkVectorIndexSelectionCastImageFilter.h"
+  ],
   "members" : [
     {
       "name" : "Index",
       "type" : "unsigned int",
       "default" : "0u",
+      "custom_itk_cast" : "functor.SetIndex( this->m_Index );",
       "doc" : "",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Get/Set methods for the index",
