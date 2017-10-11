@@ -37,7 +37,7 @@ Python binary files
 
 There are currently two Python binary package choices: Python Wheels,
 and Anaconda packages for the Anaconda Python distribution. We
-reccommend the use of a :ref:`virual environment <FAQ-virtualenv>`
+recommend the use of a :ref:`virtual environment <FAQ-virtualenv>`
 for installation of SimpleITK.
 
 
