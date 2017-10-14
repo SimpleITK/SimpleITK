@@ -78,69 +78,20 @@ elif test ${git_version_arr[0]} -eq $git_required_major_version; then
 fi
 echo -e "Git version $git_version is OK.\n"
 
-# add an "upstream" remote to make easier to maintain a fork outside of itk.org,
-# with an origin which is not itk.org
-if [ "`git config remote.origin.url`" != "git://itk.org/SimpleITK.git" ]; then
-  echo "We advise setting git://itk.org/SimpleITK.git as your origin.
-
-If you choose not to do that, then other instructions will not work as expected."
-
-  read -ep "Do you wish to continue with this non-standard layout? [y/N]: " ans
-
-  if [ "$ans" == "" ] || [ "$ans" == "N" ] || [ "$ans" == "n" ]; then
-    echo "Please fix your origin remote, and re-run this script.
-
-Please run the following to correct the origin url:
-
-git remote set-url origin git://itk.org/SimpleITK.git
-"
-    exit 1
-  else
-    echo "Setting up upstream remote to the itk.org repository..."
-    if ! git config remote.upstream.url > /dev/null ; then
-      git remote add upstream git://itk.org/SimpleITK.git
-      git remote set-url --push upstream git@itk.org:SimpleITK.git
-      echo "Done"
-    else
-      echo "upstream is already configured."
-    fi
-    echo
-    echo "WARNING: continuing with non-standard origin remote."
-  fi
-elif [ "`git config remote.origin.pushurl`" != "git@itk.org:SimpleITK.git" ]; then
-  echo "Setting pushurl for origin."
-  git remote set-url --push origin git@itk.org:SimpleITK.git
+# add an "upstream" remote to make it easier to maintain a fork with an origin
+# that is not the main repository
+echo "Setting up upstream remote to the GitHub repository..."
+if ! git config remote.upstream.url > /dev/null ; then
+  git remote add upstream https://github.com/SimpleITK/SimpleITK.git
+  git remote set-url --push upstream https://github.com/SimpleITK/SimpleITK.git
+  echo "Done"
 else
-  echo "Configuration of origin verified."
+  echo "upstream is already configured."
 fi
 echo
 
-cd Utilities/DevelopmentSetupScripts
-
-echo "Checking basic user information..."
-./SetupUser.sh || exit 1
-echo
-
 echo "Setting up git hooks..."
-./SetupHooks.sh || exit 1
-echo
-
-echo "Setting up useful Git aliases..."
-./SetupGitAliases.sh || exit 1
-echo
-
-# Make this non-fatal, as it is useful to get the other stuff set up
-echo "Setting up Gerrit..."
-./SetupGerrit.sh || echo "Gerrit setup failed, continuing. Run this again to setup Gerrit."
-echo
-
-# Make the topic stage a non-fatal error too
-echo "Setting up the topic stage..."
-./SetupTopicStage.sh || echo "Failed to setup topic stage. Run this again to setup stage."
-echo
-
-echo "Suggesting git tips..."
-./GitTips.sh || exit 1
+./Utilities/DevelopmentSetupScripts/SetupHooks.sh || exit 1
 echo
 
 # Record the version of this setup so Hooks/pre-commit can check it.

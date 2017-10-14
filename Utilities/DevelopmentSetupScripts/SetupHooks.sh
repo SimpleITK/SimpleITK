@@ -42,18 +42,24 @@ if ! test -d ./.git; then
   git init || die "Could not run git init."
 fi
 
+echo "Copying the hooks..."
+cp $u/../Hooks/* .
+
+# Previous method of installing hooks was pulling from a repository.
+# If ITK updates repository for Github hooks to remove Gerrit, then
+# pull from here
 # Grab the hooks.
 # Use the local hooks if possible.
-echo "Pulling the hooks..."
-if GIT_DIR=.. git for-each-ref refs/remotes/origin/hooks 2>/dev/null | \
-  egrep-q 'refs/remotes/origin/hooks$'; then
-  git fetch .. remotes/origin/hooks
-else
-  # we are actually going to use the ITK hooks, since we don't want to
-  # maintian separate SimpleITK ones
-  git fetch http://public.kitware.com/ITK.git hooks
-fi &&
-git reset --hard FETCH_HEAD || die "Failed to install hooks"
+# echo "Pulling the hooks..."
+# if GIT_DIR=.. git for-each-ref refs/remotes/origin/hooks 2>/dev/null | \
+  # egrep-q 'refs/remotes/origin/hooks$'; then
+  # git fetch .. remotes/origin/hooks
+# else
+  # # we are actually going to use the ITK hooks, since we don't want to
+  # # maintian separate SimpleITK ones
+  # git fetch http://public.kitware.com/ITK.git hooks
+# fi &&
+# git reset --hard FETCH_HEAD || die "Failed to install hooks"
 cd ../..
 
 # Disable the 'hooks' branch submodule check.
