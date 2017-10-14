@@ -79,12 +79,6 @@ msg_second() {
 	fi
 }
 
-msg_rest() {
-	if echo "$line" | grep -q "^Change-Id:"; then
-		state=gerrit
-	fi
-}
-
 # Pipe commit message into the state machine.
 state=first
 cat "$commit_msg" |
