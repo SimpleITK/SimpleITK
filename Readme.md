@@ -28,20 +28,21 @@ SimpleITK is licensed under the [Apache License](http://www.opensource.org/licen
 Development
 ===========
 
-SimpleITK uses the [Git](http://git-scm.com/) distributed version control system.  The main repository is hosted on [itk.org](https://itk.org/SimpleITK.git) and mirrored to [Github](https://blowekamp@github.com/SimpleITK/SimpleITK.git).
+SimpleITK uses the [Git](http://git-scm.com/) distributed version control system. The main repository is hosted on [itk.org](https://itk.org/SimpleITK.git) and mirrored to [Github](https://github.com/SimpleITK/SimpleITK.git).
 
 Contribute
 --------
+
 We encourage any contributions from the community!
 
-To submit code to SimpleITK, simply follow the standard GitHub workflow. More information can be found [here](https://guides.github.com/activities/forking/) and [here](https://gist.github.com/Chaser324/ce0505fbed06b947d962) regarding the workflow and getting your computer setup. 
+To submit code to SimpleITK, simply follow the standard GitHub workflow to make a pull request. More information can be found [here](https://guides.github.com/activities/forking/) and [here](https://gist.github.com/Chaser324/ce0505fbed06b947d962) regarding the workflow and getting your computer setup.
 
 After cloning the repository, run `./Utilities/SetupForDevelopment.sh` from within the SimpleITK repository to setup Git hooks. 
 
 Branches
-* **next** - Contains future features that are unlikely to be stable. These will be tested nightly at CDash. If the tests are passed, then they will be merged into master. This is the default branch you should push changes to.
+* **next** - An unstable branch which contains future features. These will be tested nightly on [CDash](https://open.cdash.org/index.php?project=SimpleITK). If the tests are passed, then they will be merged into master. Pull requests should never be based on this branch, however this is the default branch you should push changes to.
 * **master** - Stable branch of the code and suitable for most users when building SimpleITK.
-* **release** - Branch of the code from the latest release.
+* **release** - Branch of the code from the latest release, and patches for the last can be based on and merged to.
 
 The comprehensive regression testing is reported to the [CDash Dashboard](https://open.cdash.org/index.php?project=SimpleITK). This include extensive nightly testing on the next branch, nightly distributions packages on the release or master branch, and continuous integration from Github pull requests.
 
@@ -57,7 +58,7 @@ With massive libraries like SimpleITK, good documentation is a must. The documen
 Support
 -------
 
-SimpleITK provides access to most of the ITK components, but not all. If you are looking for something specific and can't find it, open an issue or ask for support on the [forum](https://discourse.itk.org).
+SimpleITK provides access to most of the ITK components, but not all. If you are looking for something specific and can't find it, open an issue on GitHub or ask for support on the [forum](https://discourse.itk.org).
 
 Report an Issue
 ---------------
