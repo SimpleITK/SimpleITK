@@ -81,9 +81,9 @@ echo -e "Git version $git_version is OK.\n"
 cd "${BASH_SOURCE%/*}/.." &&
 Utilities/GitSetup/setup-user && echo &&
 Utilities/GitSetup/setup-hooks && Utilities/DevelopmentSetupScripts/SetupHooks.sh && echo &&
-Utilities/GitSetup/setup-upstream && echo &&
 ( read -ep "Do you want to setup access itk.org? [y/N]: " access;
     if [ "$access" == "y" ] || [ "$access" == "Y" ]; then
+        Utilities/GitSetup/setup-upstream && echo &&
         Utilities/GitSetup/setup-stage && echo &&
         Utilities/GitSetup/setup-ssh ||
         echo 'Failed to setup SSH.  Run this again to retry.'
