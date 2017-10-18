@@ -17,4 +17,4 @@
 
 [upstream]
 	url = https://itk.org/SimpleITK.git
-	pushurl = git@/itk.org/SimpleITK.git
+	#pushurl = git@/itk.org/SimpleITK.git
