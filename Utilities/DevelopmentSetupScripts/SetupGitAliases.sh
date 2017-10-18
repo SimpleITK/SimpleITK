@@ -43,7 +43,6 @@ ${GITCONFIG} alias.stage-merge "!bash -c \"${stage_cmd} merge -b next ${git_bran
 # this should be harder to do, and only done by a few, so no alias is provided
 #${GITCONFIG} alias.stage-merge "!bash -c \"${stage_cmd} merge ${git_branch}\""
 
-# Alias to push the current topic branch to Gerrit
-${GITCONFIG} alias.gerrit-push "!bash -c \"git fetch gerrit && git push gerrit HEAD:refs/for/master/${git_branch}\""
-# while we currently don't need a script, it may make a future need easier
-${GITCONFIG} alias.gerrit-push "!bash Utilities/Git/git-gerrit-push"
+# Remove old gerrit alias
+${GITCONFIG} alias.gerrit-push >/dev/null && ${GITCONFIG} --unset alias.gerrit-push || true
+${GITCONFIG} alias.gerrit-merge >/dev/null && ${GITCONFIG} --unset alias.gerrit-merge || true
