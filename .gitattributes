@@ -2,6 +2,8 @@
 .hooks*          export-ignore
 .mailmap         export-ignore
 
+/Utilities/GitSetup export-ignore
+
 *.bat           -crlf
 *.bin           -crlf
 *.jpg           -crlf
