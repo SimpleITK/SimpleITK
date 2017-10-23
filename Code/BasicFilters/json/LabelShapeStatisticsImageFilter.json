@@ -41,6 +41,11 @@
       "detaileddescriptionSet" : "Set/Get whether the perimeter should be computed or not. Default value is false, because of the high computation time required.",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : "Set/Get whether the perimeter should be computed or not. Default value is false, because of the high computation time required."
+    },
+    {
+      "name" : "ComputeOrientedBoundingBox",
+      "type" : "bool",
+      "default" : "false"
     }
   ],
   "custom_methods" : [
@@ -295,13 +300,77 @@
         }
       ],
       "label_map" : true
+    },
+    {
+      "name" : "OrientedBoundingBoxSize",
+      "type" : "std::vector<double>",
+      "no_print" : true,
+      "active" : true,
+      "parameters" : [
+        {
+          "name" : "label",
+          "type" : "int64_t"
+        }
+      ],
+      "custom_cast" : "sitkITKVectorToSTL<double>(value)",
+      "label_map" : true
+    },
+    {
+      "name" : "OrientedBoundingBoxOrigin",
+      "type" : "std::vector<double>",
+      "no_print" : true,
+      "active" : true,
+      "parameters" : [
+        {
+          "name" : "label",
+          "type" : "int64_t"
+        }
+      ],
+      "custom_cast" : "sitkITKVectorToSTL<double>(value)",
+      "label_map" : true
+    },
+    {
+      "name" : "OrientedBoundingBoxDirection",
+      "type" : "std::vector<double>",
+      "no_print" : true,
+      "active" : true,
+      "parameters" : [
+        {
+          "name" : "label",
+          "type" : "int64_t"
+        }
+      ],
+      "custom_cast" : "sitkITKDirectionToSTL(value)",
+      "label_map" : true
+    },
+    {
+      "name" : "OrientedBoundingBoxVertices",
+      "type" : "std::vector<double>",
+      "no_print" : true,
+      "active" : true,
+      "parameters" : [
+        {
+          "name" : "label",
+          "type" : "int64_t"
+        }
+      ],
+      "custom_cast" : "sitkVectorOfITKVectorToSTL<double>(value)",
+      "label_map" : true
     }
   ],
   "tests" : [
     {
       "tag" : "SimpleLabelB",
       "description" : "with defaults ",
-      "settings" : [],
+      "settings" : [
+        {
+          "parameter" : "ComputeOrientedBoundingBox",
+          "type" : "bool",
+          "value" : "true",
+          "python_value" : "True",
+          "R_value" : "TRUE"
+        }
+      ],
       "measurements_results" : [
         {
           "name" : "Elongation",
