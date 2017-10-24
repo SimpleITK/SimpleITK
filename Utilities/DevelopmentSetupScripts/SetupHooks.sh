@@ -60,7 +60,7 @@ cd ../..
 # We have a check that blocks addition of submodules.
 git config hooks.submodule false
 
-# We don't have as must style setup as ITK, but we may...
+# We don't have as much style setup as ITK, but we may...
 # Set up KWStyle hook.
 git config hooks.KWStyle.conf "Utilities/KWStyle/SITK.kws.xml.in"
 git config hooks.KWStyle.overwriteRulesConf "Utilities/KWStyle/SITKOverwrite.txt"

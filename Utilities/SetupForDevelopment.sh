@@ -129,10 +129,9 @@ echo "Setting up useful Git aliases..."
 ./SetupGitAliases.sh || exit 1
 echo
 
-# Make this non-fatal, as it is useful to get the other stuff set up
-echo "Setting up Gerrit..."
-./SetupGerrit.sh || echo "Gerrit setup failed, continuing. Run this again to setup Gerrit."
-echo
+# Disable legacy Gerrit hooks
+echo "Disable legacy Gerrit hook..."
+git config --unset hooks.GerritId
 
 # Make the topic stage a non-fatal error too
 echo "Setting up the topic stage..."
@@ -144,5 +143,5 @@ echo "Suggesting git tips..."
 echo
 
 # Record the version of this setup so Hooks/pre-commit can check it.
-SetupForDevelopment_VERSION=2
+SetupForDevelopment_VERSION=3
 git config hooks.SetupForDevelopment ${SetupForDevelopment_VERSION}
