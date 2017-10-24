@@ -154,3 +154,49 @@ TEST(LabelStatistics,Commands) {
 
   // EXPECT_EQ ( myMeasurementMap.ToString(), "Count, Maximum, Mean, Minimum, Sigma, Sum, Variance, approxMedian, \n36172, 99, 13.0911, 0, 16.4065, 473533, 269.173, 12, \n" );
 }
+
+
+
+TEST(LabelStatistics,Shape_OBB) {
+
+  namespace sitk = itk::simple;
+
+  //By using the same image, the label min/max values should equal the label itself.
+  itk::simple::Image labelImage     = sitk::ReadImage( dataFinder.GetFile ( "Input/2th_cthead1.png" ) );
+
+  itk::simple::LabelShapeStatisticsImageFilter lssFilter;
+
+  lssFilter.ComputeOrientedBoundingBoxOn();
+  EXPECT_TRUE(lssFilter.GetComputeOrientedBoundingBox());
+
+  EXPECT_NO_THROW(lssFilter.Execute ( labelImage ));
+
+
+  EXPECT_ANY_THROW(lssFilter.GetOrientedBoundingBoxSize(0));
+  EXPECT_ANY_THROW(lssFilter.GetOrientedBoundingBoxSize(1));
+
+
+  EXPECT_FALSE(lssFilter.HasLabel(0));
+  EXPECT_FALSE(lssFilter.HasLabel(1));
+  EXPECT_TRUE(lssFilter.HasLabel(100));
+  EXPECT_TRUE(lssFilter.HasLabel(200));
+
+  using itk::simple::operator<<;
+
+  // These baseline values where just taken from a prior run
+  EXPECT_VECTOR_DOUBLE_NEAR( v2(226.829, 293.591), lssFilter.GetOrientedBoundingBoxSize(100), 1e-3 );
+  EXPECT_VECTOR_DOUBLE_NEAR( v2(-86.1904, 83.7199), lssFilter.GetOrientedBoundingBoxOrigin(100), 1e-4 );
+  EXPECT_VECTOR_DOUBLE_NEAR( v4(0.713199, -0.700961, 0.700961, 0.713199), lssFilter.GetOrientedBoundingBoxDirection(100), 1e-6 );
+  std::vector<double> verticesExpected = v9( -86.190355427717947,
+                                             83.719933383265925,
+                                             -86.190355427717947,
+                                             377.31123819498737,
+                                             140.63830354316519,
+                                             83.719933383265925,
+                                             140.63830354316519,
+                                             377.31123819498737,
+                                             0.0);
+  verticesExpected.pop_back();
+  EXPECT_VECTOR_DOUBLE_NEAR( verticesExpected, lssFilter.GetOrientedBoundingBoxVertices(100), 1e-4);
+
+}
