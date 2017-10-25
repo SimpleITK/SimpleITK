@@ -80,7 +80,7 @@ namespace itk {
 
 
       SITK_RETURN_SELF_TYPE_HEADER Execute( const Image& );
-      SITK_RETURN_SELF_TYPE_HEADER Execute( const Image &image, const std::vector<std::string> &inFileNames, bool inUseCompression );
+      SITK_RETURN_SELF_TYPE_HEADER Execute( const Image &image, const std::vector<std::string> &inFileNames, bool useCompression );
 
     protected:
 
@@ -99,7 +99,7 @@ namespace itk {
       std::vector<std::string> m_FileNames;
     };
 
-  SITKIO_EXPORT void WriteImage ( const Image & image, const std::vector<std::string> &fileNames, bool inUseCompression=false );
+  SITKIO_EXPORT void WriteImage ( const Image & image, const std::vector<std::string> &fileNames, bool useCompression=false );
   }
 }
 
