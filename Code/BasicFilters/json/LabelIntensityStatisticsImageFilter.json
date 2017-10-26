@@ -66,7 +66,7 @@
     {
       "name" : "HasLabel",
       "doc" : "Does the specified label exist? Can only be called after a call a call to Update().",
-      "return_type" : "double",
+      "return_type" : "bool",
       "parameters" : [
         {
           "type" : "int64_t",
