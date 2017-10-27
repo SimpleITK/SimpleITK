@@ -553,7 +553,7 @@ TEST_F(Image4D, JoinSeriesImageFilter)
   sitk::Image out = sitk::JoinSeries(img, img, img);
 
   ASSERT_EQ ( out.GetDimension(), 4u );
-  EXPECT_EQ ( out.GetSize()[3], 3 );
+  EXPECT_EQ ( out.GetSize()[3], 3u );
 }
 
 TEST_F(Image4D, ExtractImageFilter)
