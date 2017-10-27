@@ -95,7 +95,7 @@ class SmartPointer;
       std::string GetFileName() const;
 
       SITK_RETURN_SELF_TYPE_HEADER Execute ( const Image& );
-      SITK_RETURN_SELF_TYPE_HEADER Execute ( const Image& , const std::string &inFileName, bool inUseCompression );
+      SITK_RETURN_SELF_TYPE_HEADER Execute ( const Image& , const std::string &inFileName, bool useCompression );
 
     private:
 
