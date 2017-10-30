@@ -5,7 +5,7 @@ Dicom Series From Array
 
 Overview
 --------
-This example illustrates how to write a DICOM series from an array in Python
+This example illustrates how to write a DICOM series from a numeric array and create appropriate meta-data so it can be read my DICOM viewers.
 
 Generating an array is done using a simple random number generator for this case but can come from other sources.
 
