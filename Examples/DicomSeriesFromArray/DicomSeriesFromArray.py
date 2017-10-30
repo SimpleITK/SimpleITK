@@ -40,24 +40,16 @@ new_img.SetSpacing([2.5,3.5,4.5])
 #            the DICOM standard. This example only modifies some. For a more complete
 #            list of tags that need to be modified see:
 #                           http://gdcm.sourceforge.net/wiki/index.php/Writing_DICOM
+#            If it is critical for your work to generate valid DICOM files,
+#            It is recommended to use David Clunie's Dicom3tools to validate the files 
+#                           (http://www.dclunie.com/dicom3tools.html).
 
 writer = sitk.ImageFileWriter()
 # Use the study/series/frame of reference information given in the meta-data
 # dictionary and not the automatically generated information from the file IO
 writer.KeepOriginalImageUIDOn()
 
-# Copy relevant tags from the original meta-data dictionary (private tags are also
-# accessible).
-tags_to_copy = ["0010|0010", # Patient Name
-                "0010|0020", # Patient ID
-                "0010|0030", # Patient Birth Date
-                "0020|000D", # Study Instance UID, for machine consumption
-                "0020|0010", # Study ID, for human consumption
-                "0008|0020", # Study Date
-                "0008|0030", # Study Time
-                "0008|0050", # Accession Number
-                "0008|0060"  # Modality
-]
+
 
 modification_time = time.strftime("%H%M%S")
 modification_date = time.strftime("%Y%m%d")
@@ -67,8 +59,7 @@ modification_date = time.strftime("%Y%m%d")
 # with zero, and separated by a '.' We create a unique series ID using the date and time.
 # tags of interest:
 direction = new_img.GetDirection()
-series_tag_values = [(k, new_img.GetMetaData(k)) for k in tags_to_copy if new_img.HasMetaDataKey(k)] + \
-                 [("0008|0031",modification_time), # Series Time
+series_tag_values = [("0008|0031",modification_time), # Series Time
                   ("0008|0021",modification_date), # Series Date
                   ("0008|0008","DERIVED\\SECONDARY"), # Image Type
                   ("0020|000e", "1.2.826.0.1.3680043.2.1125."+modification_date+".1"+modification_time), # Series Instance UID
@@ -84,7 +75,10 @@ for i in range(new_img.GetDepth()):
     # Slice specific tags.
     image_slice.SetMetaData("0008|0012", time.strftime("%Y%m%d")) # Instance Creation Date
     image_slice.SetMetaData("0008|0013", time.strftime("%H%M%S")) # Instance Creation Time
+    # Setting the type to CT preserves the slice location.
     image_slice.SetMetaData("0008|0060", "CT")  # set the type to CT so the thickness is carried over
+    
+    # (0020, 0032) image position patient determines the 3D spacing between slices.
     image_slice.SetMetaData("0020|0032", '\\'.join(map(str,new_img.TransformIndexToPhysicalPoint((0,0,i))))) # Image Position (Patient)
     image_slice.SetMetaData("0020,0013", str(i)) # Instance Number
 
