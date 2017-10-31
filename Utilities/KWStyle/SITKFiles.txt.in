@@ -11,11 +11,6 @@
 @PROJECT_SOURCE_DIR@/Code/BasicFilters/src/*.cxx
 @PROJECT_SOURCE_DIR@/Code/BasicFilters/src/*.hxx
 @PROJECT_BINARY_DIR@/Code/Common/include/*.h
-@PROJECT_BINARY_DIR@/Code/Common/*.cxx
-@PROJECT_BINARY_DIR@/Code/Common/*.hxx
-@PROJECT_BINARY_DIR@/Code/IO/include/*.h
-@PROJECT_BINARY_DIR@/Code/IO/*.cxx
-@PROJECT_BINARY_DIR@/Code/IO/*.hxx
 @PROJECT_BINARY_DIR@/Code/BasicFilters/*.h
 @PROJECT_BINARY_DIR@/Code/BasicFilters/*.cxx
 @PROJECT_BINARY_DIR@/Code/BasicFilters/*.hxx
