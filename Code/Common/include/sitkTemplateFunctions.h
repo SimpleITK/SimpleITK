@@ -201,7 +201,6 @@ std::vector<double> SITKCommon_HIDDEN  sitkITKDirectionToSTL( const TDirectionTy
 }
 
 
-
 }
 }
 

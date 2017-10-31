@@ -79,13 +79,12 @@ protected:
   #endif
 
 
-
 private:
 
   // a set of objects who use us
   std::set<itk::simple::ProcessObject*> m_ReferencedObjects;
 
-  bool m_OwnedByProcessObjects;
+  bool        m_OwnedByProcessObjects;
   std::string m_Name;
 };
 

@@ -35,23 +35,38 @@ namespace itk {
     /**\class LandmarkBasedTransformInitializerFilter
 
 
-This class computes the transform that aligns the fixed and moving images given a set of pair landmarks. The class is templated over the Transform type as well as fixed image and moving image types. The transform computed gives the best fit transform that maps the fixed and moving images in a least squares sense. The indices are taken to correspond, so point 1 in the first set will get mapped close to point 1 in the second set, etc.
+This class computes the transform that aligns the fixed and moving
+images given a set of pair landmarks. The class is templated over the
+Transform type as well as fixed image and moving image types. The
+transform computed gives the best fit transform that maps the fixed
+and moving images in a least squares sense. The indices are taken to
+correspond, so point 1 in the first set will get mapped close to point
+1 in the second set, etc.
 
-Currently, the following transforms are supported by the class: VersorRigid3DTransform Rigid2DTransform AffineTransform BSplineTransform 
+Currently, the following transforms are supported by the class:
+VersorRigid3DTransform Rigid2DTransform AffineTransform
+BSplineTransform
 
-An equal number of fixed and moving landmarks need to be specified using SetFixedLandmarks() and SetMovingLandmarks() . Any number of landmarks may be specified. In the case of using Affine or BSpline transforms, each landmark pair can contribute in the final transform based on its defined weight. Number of weights should be equal to the number of landmarks and can be specified using SetLandmarkWeight() . By defaults are weights are set to one. Call InitializeTransform() to initialize the transform.
+An equal number of fixed and moving landmarks need to be specified
+using SetFixedLandmarks() and SetMovingLandmarks() . Any number of
+landmarks may be specified. In the case of using Affine or BSpline
+transforms, each landmark pair can contribute in the final transform
+based on its defined weight. Number of weights should be equal to the
+number of landmarks and can be specified using SetLandmarkWeight()
+. By defaults are weights are set to one. Call InitializeTransform()
+to initialize the transform.
 
 The class is based in part on Hybrid/vtkLandmarkTransform originally implemented in python by David G. Gobbi.
 
 The solution is based on Berthold K. P. Horn (1987), "Closed-form solution of absolute orientation
-using unit quaternions," http://people.csail.mit.edu/bkph/papers/Absolute_Orientation.pdf 
+using unit quaternions," http://people.csail.mit.edu/bkph/papers/Absolute_Orientation.pdf
 
 The Affine Transform initializer is based on an algorithm by H Spaeth, and is described in the Insight Journal Article "Affine Transformation for Landmark Based Registration Initializer
-in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.com/browse/publication/825 
+in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.com/browse/publication/825
 
 \par Wiki Examples:
 
-\li All Examples 
+\li All Examples
 
 \li Rigidly register one image to another using manually specified landmarks
 \sa itk::simple::LandmarkBasedTransformInitializerFilter for the procedural interface
@@ -70,7 +85,6 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
 
       /** Define the pixels types supported by this filter */
       typedef typelist::MakeTypeList<BasicPixelID<float> >::Type PixelIDTypeList;
-
 
 
       /**
@@ -101,7 +115,7 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
       /**
        *
        */
-        std::vector<double> GetLandmarkWeight() const { return this->m_LandmarkWeight; }
+      std::vector<double> GetLandmarkWeight() const { return this->m_LandmarkWeight; }
 
       /**
        * Set the reference image to define the parametric domain for the BSpline transform
@@ -133,7 +147,12 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
 
 
       /** Execute the filter on the input image with the given parameters */
-      Transform Execute ( const Transform & transform, const std::vector<double> & fixedLandmarks, const std::vector<double> & movingLandmarks, const std::vector<double> & landmarkWeight, const Image & referenceImage, unsigned int numberOfControlPoints );
+      Transform Execute ( const Transform & transform,
+                          const std::vector<double> & fixedLandmarks,
+                          const std::vector<double> & movingLandmarks,
+                          const std::vector<double> & landmarkWeight,
+                          const Image & referenceImage,
+                          unsigned int numberOfControlPoints );
 
 
     private:
@@ -142,7 +161,6 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
 
       typedef Transform (Self::*MemberFunctionType)( const Transform * transform );
       template <class TImageType> Transform ExecuteInternal ( const Transform * transform );
-
 
 
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
@@ -156,10 +174,10 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
       std::vector<double>  m_MovingLandmarks;
       /*  */
       std::vector<double>  m_LandmarkWeight;
-      Image  m_ReferenceImage;
+
+      Image         m_ReferenceImage;
       unsigned int  m_BSplineNumberOfControlPoints;
     };
-
 
 
     /**
@@ -170,7 +188,12 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
      *
      * \sa itk::simple::LandmarkBasedTransformInitializerFilter for the object oriented interface
      */
-     SITKBasicFilters_EXPORT Transform LandmarkBasedTransformInitializer ( const Transform & transform, const std::vector<double> & fixedLandmarks = std::vector<double>(), const std::vector<double> & movingLandmarks = std::vector<double>(), const std::vector<double> & landmarkWeight = std::vector<double>(), const Image & referenceImage = Image(), unsigned int numberOfControlPoints = 4u );
+     SITKBasicFilters_EXPORT Transform LandmarkBasedTransformInitializer ( const Transform & transform,
+                                                                           const std::vector<double> & fixedLandmarks = std::vector<double>(),
+                                                                           const std::vector<double> & movingLandmarks = std::vector<double>(),
+                                                                           const std::vector<double> & landmarkWeight = std::vector<double>(),
+                                                                           const Image & referenceImage = Image(),
+                                                                           unsigned int numberOfControlPoints = 4u );
 
   }
 }

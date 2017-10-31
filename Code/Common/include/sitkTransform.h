@@ -63,7 +63,8 @@ enum TransformEnum { sitkIdentity,
 };
 
 
-/** \brief A simplified wrapper around a variety of ITK transforms.
+/** \class Transform
+ * \brief A simplified wrapper around a variety of ITK transforms.
  *
  * The interface to ITK transform objects to be used with the
  * ImageRegistrationMethod, ResampleImageFilter and other SimpleITK
@@ -164,14 +165,14 @@ public:
    * @{
    */
   void SetParameters ( const std::vector<double>& parameters );
-  std::vector<double> GetParameters( void ) const ;
+  std::vector<double> GetParameters( void ) const;
   /**@}*/
 
   /** Set/Get Fixed Transform Parameter
    * @{
    */
   void SetFixedParameters ( const std::vector<double>& parameters );
-  std::vector<double> GetFixedParameters( void ) const ;
+  std::vector<double> GetFixedParameters( void ) const;
   /**@}*/
 
   // Make composition

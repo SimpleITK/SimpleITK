@@ -95,7 +95,7 @@ namespace itk {
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
       nsstd::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 
-      bool m_UseCompression;
+      bool                     m_UseCompression;
       std::vector<std::string> m_FileNames;
     };
 
