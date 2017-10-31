@@ -19,6 +19,8 @@
 #include "sitkAdditionalProcedures.h"
 #include "sitkResampleImageFilter.h"
 #include "sitkPatchBasedDenoisingImageFilter.h"
+#include "sitkDiscreteGaussianImageFilter.h"
+#include "sitkSmoothingRecursiveGaussianImageFilter.h"
 
 namespace itk {
 namespace simple {
@@ -133,6 +135,33 @@ SITKBasicFilters_EXPORT Image PatchBasedDenoising (const Image& image1,
 
   return filter.Execute ( image1 );
 }
+
+
+//
+// Function to run the Execute method of this filter
+//
+Image DiscreteGaussian ( const Image& image1, double variance, unsigned int maximumKernelWidth, double maximumError, bool useImageSpacing )
+{
+  DiscreteGaussianImageFilter filter;
+  filter.SetVariance(variance);
+  filter.SetMaximumKernelWidth(maximumKernelWidth);
+  filter.SetMaximumError(maximumError);
+  filter.SetUseImageSpacing(useImageSpacing);
+  return filter.Execute ( image1 );
+}
+
+//
+// Function to run the Execute method of this filter
+//
+Image SmoothingRecursiveGaussian ( const Image& image1, double sigma, bool normalizeAcrossScale )
+{
+  SmoothingRecursiveGaussianImageFilter filter;
+  filter.SetSigma(sigma);
+  filter.SetNormalizeAcrossScale(normalizeAcrossScale);
+  return filter.Execute(image1);
+}
+
+
 
 }
 }
