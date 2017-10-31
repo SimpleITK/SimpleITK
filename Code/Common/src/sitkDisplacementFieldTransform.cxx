@@ -288,8 +288,18 @@ void DisplacementFieldTransform::InternalInitialization(TransformType *t)
   this->m_pfSetInterpolator = nsstd::bind(&InternalSetInterpolator<TransformType>, t, nsstd::placeholders::_1);
 
   m_pfSetSmoothingOff = nsstd::bind(&Self::InternalSetSmoothingOff<TransformType>, this, t);
-  m_pfSetSmoothingGaussianOnUpdate = nsstd::bind(&Self::InternalSetSmoothingGaussianOnUpdate<TransformType>, this, t, nsstd::placeholders::_1, nsstd::placeholders::_2 );
-  m_pfSetSmoothingBSplineOnUpdate = nsstd::bind(&Self::InternalSetSmoothingBSplineOnUpdate<TransformType>, this, t, nsstd::placeholders::_1, nsstd::placeholders::_2, nsstd::placeholders::_3, nsstd::placeholders::_4 );
+  m_pfSetSmoothingGaussianOnUpdate = nsstd::bind(&Self::InternalSetSmoothingGaussianOnUpdate<TransformType>,
+                                                 this,
+                                                 t,
+                                                 nsstd::placeholders::_1,
+                                                 nsstd::placeholders::_2 );
+  m_pfSetSmoothingBSplineOnUpdate = nsstd::bind(&Self::InternalSetSmoothingBSplineOnUpdate<TransformType>,
+                                                this,
+                                                t,
+                                                nsstd::placeholders::_1,
+                                                nsstd::placeholders::_2,
+                                                nsstd::placeholders::_3,
+                                                nsstd::placeholders::_4 );
 }
 
 PimpleTransformBase *DisplacementFieldTransform::CreateDisplacementFieldPimpleTransform(unsigned int dimension)
@@ -338,7 +348,8 @@ void DisplacementFieldTransform::InternalSetSmoothingOff( TDisplacementFieldTran
   // To set smoothing off we make sure that the displacement type is
   // not of a derived type.
   const unsigned int Dimension = TDisplacementFieldTransform::Dimension;
-  typedef typename TDisplacementFieldTransform::ScalarType ScalarType;
+
+  typedef typename TDisplacementFieldTransform::ScalarType      ScalarType;
   typedef itk::DisplacementFieldTransform<ScalarType,Dimension> NewTransformType;
 
   // already off don't need to create a new transform

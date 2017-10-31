@@ -65,7 +65,6 @@ LandmarkBasedTransformInitializerFilter::~LandmarkBasedTransformInitializerFilte
 }
 
 
-
 //
 // ToString
 //
@@ -96,7 +95,12 @@ std::string LandmarkBasedTransformInitializerFilter::ToString() const
 //
 // Execute
 //
-Transform LandmarkBasedTransformInitializerFilter::Execute ( const Transform & transform, const std::vector<double> & fixedLandmarks, const std::vector<double> & movingLandmarks, const std::vector<double> & landmarkWeight, const Image & referenceImage, unsigned int numberOfControlPoints )
+Transform LandmarkBasedTransformInitializerFilter::Execute ( const Transform & transform,
+                                                             const std::vector<double> & fixedLandmarks,
+                                                             const std::vector<double> & movingLandmarks,
+                                                             const std::vector<double> & landmarkWeight,
+                                                             const Image & referenceImage,
+                                                             unsigned int numberOfControlPoints )
 {
   this->SetFixedLandmarks ( fixedLandmarks );
   this->SetMovingLandmarks ( movingLandmarks );
@@ -166,7 +170,6 @@ Transform LandmarkBasedTransformInitializerFilter::ExecuteInternal ( const Trans
   else { filter->SetTransform( const_cast<typename FilterType::TransformType*>(itkTx) ); }
 
 
-
   typedef typename FilterType::LandmarkPointContainer PointContainer;
   PointContainer fixedITKPoints;
   fixedITKPoints = sitkSTLVectorToITKPointVector<PointContainer,double>(m_FixedLandmarks);
@@ -216,7 +219,12 @@ Transform LandmarkBasedTransformInitializerFilter::ExecuteInternal ( const Trans
 //
 // Function to run the Execute method of this filter
 //
-Transform LandmarkBasedTransformInitializer ( const Transform & transform, const std::vector<double> & fixedLandmarks, const std::vector<double> & movingLandmarks, const std::vector<double> & landmarkWeight, const Image & referenceImage, unsigned int numberOfControlPoints )
+Transform LandmarkBasedTransformInitializer ( const Transform & transform,
+                                              const std::vector<double> & fixedLandmarks,
+                                              const std::vector<double> & movingLandmarks,
+                                              const std::vector<double> & landmarkWeight,
+                                              const Image & referenceImage,
+                                              unsigned int numberOfControlPoints )
 {
   LandmarkBasedTransformInitializerFilter filter;
   return filter.Execute ( transform, fixedLandmarks, movingLandmarks, landmarkWeight, referenceImage, numberOfControlPoints );

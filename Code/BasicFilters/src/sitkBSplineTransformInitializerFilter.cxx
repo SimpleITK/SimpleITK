@@ -53,7 +53,6 @@ BSplineTransformInitializerFilter::BSplineTransformInitializerFilter ()
   this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
 
 
-
 }
 
 //
@@ -63,7 +62,6 @@ BSplineTransformInitializerFilter::~BSplineTransformInitializerFilter ()
 {
 
 }
-
 
 
 //
@@ -166,7 +164,6 @@ BSplineTransform  BSplineTransformInitializerFilter::ExecuteInternalWithOrder ( 
     {
     filter->SetTransform( const_cast<typename FilterType::TransformType*>(itkTx) );
     }
-
 
 
   typename FilterType::MeshSizeType itkVecTransformDomainMeshSize = sitkSTLVectorToITK<typename FilterType::MeshSizeType>( this->GetTransformDomainMeshSize() );

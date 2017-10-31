@@ -188,10 +188,10 @@ void AffineTransform::InternalInitialization(TransformType *t)
   SITK_TRANSFORM_SET_MPF_GetMatrix();
 
   typename TransformType::OutputVectorType (*pfSTLVectorToITK)(const std::vector<double> &) = &sitkSTLVectorToITK<typename TransformType::OutputVectorType, double>;
-  void 	(TransformType::*pfScale1) (const typename TransformType::OutputVectorType &, bool) = &TransformType::Scale;
+  void  (TransformType::*pfScale1) (const typename TransformType::OutputVectorType &, bool) = &TransformType::Scale;
   this->m_pfScale1 = nsstd::bind(pfScale1,t,nsstd::bind(pfSTLVectorToITK,nsstd::placeholders::_1),nsstd::placeholders::_2);
 
-  void 	(TransformType::*pfScale2) (const double &, bool) = &TransformType::Scale;
+  void  (TransformType::*pfScale2) (const double &, bool) = &TransformType::Scale;
   this->m_pfScale2 = nsstd::bind(pfScale2,t,nsstd::placeholders::_1,nsstd::placeholders::_2);
   this->m_pfShear = nsstd::bind(&TransformType::Shear,t,nsstd::placeholders::_1,nsstd::placeholders::_2,nsstd::placeholders::_3,nsstd::placeholders::_4);
   this->m_pfTranslate = nsstd::bind(&TransformType::Translate,t,nsstd::bind(pfSTLVectorToITK,nsstd::placeholders::_1),nsstd::placeholders::_2);
