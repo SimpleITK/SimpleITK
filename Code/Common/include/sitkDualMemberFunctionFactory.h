@@ -22,7 +22,6 @@
 #include "sitkMemberFunctionFactoryBase.h"
 
 
-
 namespace itk
 {
 namespace simple
@@ -30,7 +29,6 @@ namespace simple
 // this namespace is internal classes not part of the external simple ITK interface
 namespace detail
 {
-
 
 
 /** \class DualMemberFunctionFactory

@@ -4,7 +4,6 @@
 
       typedef $(if no_return_image then OUT="void" else OUT="Image" end) (Self::*MemberFunctionType)( $(include ImageParameters.in)$(include InputParametersInternal.in) );
       template <class TImageType> $(if no_return_image then OUT="void" else OUT="Image" end) ExecuteInternal ( $(include ImageParameters.in)$(include InputParametersInternal.in) );
-
 $(if vector_pixel_types_by_component then
    if number_of_inputs > 1 then
       throw 'number_of_inputs must be 1 to use vector_pixel_types_by_component'

@@ -26,7 +26,8 @@ namespace itk
 namespace simple
 {
 
-/** \brief A 2D or 3D anisotropic scale of coordinate space around
+/** \class ScaleTransform
+ * \brief A 2D or 3D anisotropic scale of coordinate space around
  * a fixed center.
  *
  * \sa itk::ScaleTransform
@@ -36,7 +37,7 @@ class SITKCommon_EXPORT ScaleTransform
 {
 public:
   typedef ScaleTransform Self;
-  typedef Transform Superclass;
+  typedef Transform      Superclass;
 
   explicit ScaleTransform(unsigned int dimensions,
                           const std::vector<double> &scale = std::vector<double>(3,1.0) );
@@ -77,7 +78,7 @@ private:
     void operator() ( void ) const
       {
         TransformType *t = dynamic_cast<TransformType*>(transform);
-        if (t && (typeid(*t)==typeid(TransformType)))
+        if (t && (typeid(*t) == typeid(TransformType)))
           {
           that->InternalInitialization<TransformType>(t);
           }

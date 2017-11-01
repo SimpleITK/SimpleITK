@@ -587,7 +587,7 @@ namespace itk
       default:
         itksysProcess_Delete( kp );
         sitkExceptionMacro (  << "Unexpected process state!" << "\nCommand line: " << cmdstream.str() );
-      };
+      }
 
   }
 
@@ -601,14 +601,14 @@ namespace itk
   std::vector<std::string> CommandLine;
 
 
-
   bool colorFlag = false;
 
 
   // If the image is 3 channel, 8 or 16 bit, assume it's a color image.
   //
   colorFlag = ( (image.GetNumberOfComponentsPerPixel() == 3)
-                  && ((image.GetPixelIDValue()==sitkVectorUInt8) || (image.GetPixelIDValue()==sitkVectorUInt16)) );
+                  && ((image.GetPixelIDValue() == sitkVectorUInt8)
+                      || (image.GetPixelIDValue() == sitkVectorUInt16)) );
 
 
   ExecutableName = FindImageJ(debugOn);

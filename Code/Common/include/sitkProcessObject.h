@@ -345,6 +345,7 @@ namespace itk {
       void RemoveObserverFromActiveProcessObject( EventCommand &e );
 
       bool m_Debug;
+
       unsigned int m_NumberOfThreads;
 
       std::list<EventCommand> m_Commands;

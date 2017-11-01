@@ -34,11 +34,14 @@ namespace itk {
   namespace simple {
 
     /**\class BSplineTransformInitializerFilter
-\brief BSplineTransformInitializerFilter is a helper class intended to initialize the control point grid such that it has a physically consistent definition. It sets the transform domain origin, physical dimensions and direction from information obtained from the image. It also sets the mesh size if asked to do so by calling SetTransformDomainMeshSize()before calling InitializeTransform().
+\brief BSplineTransformInitializerFilter is a helper class intended to
+initialize the control point grid such that it has a physically
+consistent definition. It sets the transform domain origin, physical
+dimensions and direction from information obtained from the image. It
+also sets the mesh size if asked to do so by calling
+SetTransformDomainMeshSize()before calling InitializeTransform().
 
-\author Luis Ibanez
-
-Nick Tustison
+\author Luis Ibanez Nick Tustison
 \sa itk::simple::BSplineTransformInitializer for the procedural interface
 \sa itk::BSplineTransformInitializer for the Doxygen on the original ITK class.
      */
@@ -55,7 +58,6 @@ Nick Tustison
 
       /** Define the pixels types supported by this filter */
       typedef AllPixelIDTypeList  PixelIDTypeList;
-
 
 
       /**
@@ -99,27 +101,33 @@ Nick Tustison
         BSplineTransform ExecuteInternalWithOrder ( const Image& image1 );
 
 
-
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
 
       nsstd::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
 
 
       std::vector<uint32_t>  m_TransformDomainMeshSize;
-      unsigned int m_Order;
+      unsigned int           m_Order;
     };
 
 
-
     /**
-     * \brief BSplineTransformInitializerFilter is a helper class intended to initialize the control point grid such that it has a physically consistent definition. It sets the transform domain origin, physical dimensions and direction from information obtained from the image. It also sets the mesh size if asked to do so by calling SetTransformDomainMeshSize()before calling InitializeTransform().
+     * \brief BSplineTransformInitializerFilter is a helper class
+     * intended to initialize the control point grid such that it has
+     * a physically consistent definition. It sets the transform
+     * domain origin, physical dimensions and direction from
+     * information obtained from the image. It also sets the mesh size
+     * if asked to do so by calling SetTransformDomainMeshSize()before
+     * calling InitializeTransform().
      *
      * This function directly calls the execute method of BSplineTransformInitializerFilter
      * in order to support a procedural API
      *
      * \sa itk::simple::BSplineTransformInitializerFilter for the object oriented interface
      */
-     SITKBasicFilters_EXPORT BSplineTransform BSplineTransformInitializer ( const Image& image1, const std::vector<uint32_t> & transformDomainMeshSize = std::vector<uint32_t>(3, 1u), unsigned int order=3u );
+     SITKBasicFilters_EXPORT BSplineTransform BSplineTransformInitializer ( const Image& image1,
+                                                                            const std::vector<uint32_t> & transformDomainMeshSize = std::vector<uint32_t>(3, 1u),
+                                                                            unsigned int order=3u );
 
   }
 }

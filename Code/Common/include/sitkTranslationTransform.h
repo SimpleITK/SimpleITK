@@ -27,7 +27,8 @@ namespace simple
 {
 
 
-/** \brief Translation of a 2D or 3D coordinate space.
+/** \class TranslationTransform
+ * \brief Translation of a 2D or 3D coordinate space.
  *
  * \sa itk::TranslationTransform
  */
@@ -36,7 +37,7 @@ class SITKCommon_EXPORT TranslationTransform
 {
 public:
 typedef TranslationTransform Self;
-typedef Transform Superclass;
+typedef Transform            Superclass;
 
 explicit TranslationTransform(unsigned int dimensions,
                               const std::vector<double> &offset = std::vector<double>(3,0.0) );
@@ -66,7 +67,7 @@ struct MyVisitor
   void operator() ( void ) const
     {
       TransformType *t = dynamic_cast<TransformType*>(transform);
-      if (t && (typeid(*t)==typeid(TransformType)))
+      if (t && (typeid(*t) == typeid(TransformType)))
         {
         that->InternalInitialization<TransformType>(t);
         }

@@ -85,8 +85,14 @@ namespace itk {
        *
        * \param directory         Set the directory that contains the DICOM data set.
        * \param recursive         Recursively parse the input directory.
-       * \param seriesID          Set the name that identifies a particular series. Default value is an empty string which will return the file names associated with the first series found in the directory.
-       * \param useSeriesDetails  Use additional series information such as ProtocolName and SeriesName to identify when a single SeriesUID contains multiple 3D volumes - as can occur with perfusion and DTI imaging.
+       * \param seriesID          Set the name that identifies a
+       * particular series. Default value is an empty string which
+       * will return the file names associated with the first series
+       * found in the directory.
+       * \param useSeriesDetails  Use additional series information
+       * such as ProtocolName and SeriesName to identify when a single
+       * SeriesUID contains multiple 3D volumes - as can occur with
+       * perfusion and DTI imaging.
        * \param loadSequences     Parse any sequences in the DICOM data set. Loading DICOM files is faster when sequences are not needed.
        *
        * \sa itk::GDCMSeriesFileNames

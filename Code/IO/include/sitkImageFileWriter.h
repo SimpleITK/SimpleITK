@@ -103,9 +103,9 @@ class SmartPointer;
 
       template <class T> Self& ExecuteInternal ( const Image& );
 
-      bool m_UseCompression;
+      bool        m_UseCompression;
       std::string m_FileName;
-      bool m_KeepOriginalImageUID;
+      bool        m_KeepOriginalImageUID;
 
       // function pointer type
       typedef Self& (Self::*MemberFunctionType)( const Image& );
