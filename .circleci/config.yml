@@ -33,7 +33,7 @@ jobs:
       - run:
           name: Dependencies
           command: |
-            sudo apt-get install -y rsync lua5.1 ccache
+            sudo apt-get install -y rsync lua5.1 ccache kwstyle
             sudo pip install --upgrade pip
             sudo pip install numpy scikit-ci-addons
             ci_addons circle/install_cmake.py 3.7.2
