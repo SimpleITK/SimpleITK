@@ -19,7 +19,6 @@ might prefer to **build SimpleITK from source**:
     :local:
     :backlinks: none
 
-
 Prerequisites
 =============
 
@@ -42,6 +41,8 @@ To build SimpleITK you need:
 
 Recipes / Formulas / Short Cuts
 ===============================
+
+Before you start please make sure you have the required `Prerequisites`_ installed.
 
 For some environments we have short cuts, scripts, for automated
 building of SimpleITK (see their repository for more details):
@@ -72,23 +73,28 @@ building of SimpleITK (see their repository for more details):
 
 Source code
 ===========
-
 If one of the above language specific front-ends are not used then
 SimpleITK must be built directly.
 
-There are two options to obtain the SimpleITK source code:
+Before you start please make sure you have the required `Prerequisites`_ installed.
 
-#. Download a released version from the SimpleITK
-   `SourceForge <https://sourceforge.net/projects/simpleitk/>`__ page
+All of the instructions assume you are working on the command line.
+
+Words of caution for building on the Windows operating system:
+
+* Visual studio has issues with long directory paths, we recommend cloning the
+  source code near the root (e.g. C:\\src).
+* To avoid potential issues do not clone the source into a path which has spaces
+  in the directory name (e.g. C:\\Users\\SimpleITK Source).
+
+First obtain the SimpleITK source code:
+
 #. Download the latest development version using git
 
 .. code-block :: bash
 
  git clone  https://itk.org/SimpleITK.git
 
-The tar-balls provided by GitHub will result in a configuration
-warning, because SimpleITK examines the repository to determine a
-descriptive version.
 
 Building using SuperBuild
 -------------------------
