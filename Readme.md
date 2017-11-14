@@ -37,7 +37,7 @@ We encourage any contributions from the community!
 
 To submit code to SimpleITK, simply follow the standard GitHub workflow to make a pull request. More information can be found [here](https://guides.github.com/activities/forking/) and [here](https://gist.github.com/Chaser324/ce0505fbed06b947d962) regarding the workflow and getting your computer setup.
 
-After cloning the repository, run `./Utilities/SetupForDevelopment.sh` from within the SimpleITK repository to setup Git hooks. 
+After cloning the repository, run `./Utilities/SetupForDevelopment.sh` from within the SimpleITK repository to setup Git hooks. Say "no" to setting up access to itk.org as only core developers need access for merging pull requests.
 
 Branches
 * **next** - An unstable branch which contains future features. These will be tested nightly on [CDash](https://open.cdash.org/index.php?project=SimpleITK). If the tests are passed, then they will be merged into master. Pull requests should never be based on this branch, however this is the default branch you should push changes to.
