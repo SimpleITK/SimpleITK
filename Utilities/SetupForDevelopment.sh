@@ -39,8 +39,8 @@ fi
 
 # Check to make sure we got a new enough git.
 git_required_major_version=1
-git_required_minor_version=6
-git_required_release_version=6
+git_required_minor_version=7
+git_required_release_version=10
 git_required_bugfix_version="" # Use "" if there is no bugfix version.
 echo "Checking Git version..."
 git_version=$(git --version | awk '{print $3}')
@@ -78,71 +78,31 @@ elif test ${git_version_arr[0]} -eq $git_required_major_version; then
 fi
 echo -e "Git version $git_version is OK.\n"
 
-# add an "upstream" remote to make easier to maintain a fork outside of itk.org,
-# with an origin which is not itk.org
-if [ "`git config remote.origin.url`" != "git://itk.org/SimpleITK.git" ]; then
-  echo "We advise setting git://itk.org/SimpleITK.git as your origin.
+cd "${BASH_SOURCE%/*}/.." &&
+Utilities/GitSetup/setup-user && echo &&
+Utilities/GitSetup/setup-hooks && Utilities/DevelopmentSetupScripts/SetupHooks.sh && echo &&
+( read -ep "Do you want to setup access itk.org? [y/N]: " access;
+    if [ "$access" == "y" ] || [ "$access" == "Y" ]; then
+        Utilities/GitSetup/setup-upstream && echo &&
+        Utilities/GitSetup/setup-stage && echo &&
+        Utilities/GitSetup/setup-ssh ||
+        echo 'Failed to setup SSH.  Run this again to retry.'
+   fi)  && echo &&
+Utilities/GitSetup/tips
 
-If you choose not to do that, then other instructions will not work as expected."
 
-  read -ep "Do you wish to continue with this non-standard layout? [y/N]: " ans
-
-  if [ "$ans" == "" ] || [ "$ans" == "N" ] || [ "$ans" == "n" ]; then
-    echo "Please fix your origin remote, and re-run this script.
-
-Please run the following to correct the origin url:
-
-git remote set-url origin git://itk.org/SimpleITK.git
-"
-    exit 1
-  else
-    echo "Setting up upstream remote to the itk.org repository..."
-    if ! git config remote.upstream.url > /dev/null ; then
-      git remote add upstream git://itk.org/SimpleITK.git
-      git remote set-url --push upstream git@itk.org:SimpleITK.git
-      echo "Done"
-    else
-      echo "upstream is already configured."
-    fi
-    echo
-    echo "WARNING: continuing with non-standard origin remote."
-  fi
-elif [ "`git config remote.origin.pushurl`" != "git@itk.org:SimpleITK.git" ]; then
-  echo "Setting pushurl for origin."
-  git remote set-url --push origin git@itk.org:SimpleITK.git
-else
-  echo "Configuration of origin verified."
-fi
-echo
 
 cd Utilities/DevelopmentSetupScripts
-
-echo "Checking basic user information..."
-./SetupUser.sh || exit 1
-echo
-
-echo "Setting up git hooks..."
-./SetupHooks.sh || exit 1
-echo
 
 echo "Setting up useful Git aliases..."
 ./SetupGitAliases.sh || exit 1
 echo
 
-# Make this non-fatal, as it is useful to get the other stuff set up
-echo "Setting up Gerrit..."
-./SetupGerrit.sh || echo "Gerrit setup failed, continuing. Run this again to setup Gerrit."
-echo
+# Disable legacy Gerrit hooks
+echo "Disable legacy Gerrit hook..."
+git config --unset hooks.GerritId
 
-# Make the topic stage a non-fatal error too
-echo "Setting up the topic stage..."
-./SetupTopicStage.sh || echo "Failed to setup topic stage. Run this again to setup stage."
-echo
-
-echo "Suggesting git tips..."
-./GitTips.sh || exit 1
-echo
 
 # Record the version of this setup so Hooks/pre-commit can check it.
-SetupForDevelopment_VERSION=2
+SetupForDevelopment_VERSION=3
 git config hooks.SetupForDevelopment ${SetupForDevelopment_VERSION}

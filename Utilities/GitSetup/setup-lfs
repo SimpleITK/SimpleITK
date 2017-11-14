@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+#=============================================================================
+# Copyright 2017 Kitware, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#=============================================================================
+
+# Run this script to set up the local Git repository to push LFS data to
+# remotes.
+
+die() {
+	echo 1>&2 "$@" ; exit 1
+}
+
+# Make sure we are inside the repository.
+cd "${BASH_SOURCE%/*}" &&
+
+# Set the LFS filter configuration up.
+if git lfs version; then
+	git config filter.lfs.clean "git-lfs clean -- %f" &&
+	git config filter.lfs.smudge "git-lfs smudge -- %f" &&
+	git config filter.lfs.process "git-lfs filter-process" &&
+	git config filter.lfs.required true &&
+	git lfs fetch &&
+	git lfs checkout &&
+	echo 'LFS is now configured.'
+else
+	die 'Git LFS is not available. Please make it available on the PATH' \
+		'either by installing it through your system provider or installing it' \
+		'from <https://git-lfs.github.com>.'
+fi

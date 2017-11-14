@@ -34,28 +34,6 @@ die() {
 	exit 1
 }
 
-u=$(cd "$(echo "$0"|sed 's/[^/]*$//')"; pwd)
-cd "$u/../../.git/hooks"
-
-# We need to have a git repository to do a pull.
-if ! test -d ./.git; then
-  git init || die "Could not run git init."
-fi
-
-# Grab the hooks.
-# Use the local hooks if possible.
-echo "Pulling the hooks..."
-if GIT_DIR=.. git for-each-ref refs/remotes/origin/hooks 2>/dev/null | \
-  egrep-q 'refs/remotes/origin/hooks$'; then
-  git fetch .. remotes/origin/hooks
-else
-  # we are actually going to use the ITK hooks, since we don't want to
-  # maintian separate SimpleITK ones
-  git fetch http://public.kitware.com/ITK.git hooks
-fi &&
-git reset --hard FETCH_HEAD || die "Failed to install hooks"
-cd ../..
-
 # Disable the 'hooks' branch submodule check.
 # We have a check that blocks addition of submodules.
 git config hooks.submodule false
@@ -70,5 +48,3 @@ echo "Setting up JSON validation with python..."
 PYTHON_EXECUTABLE=$(which python) || die "No python found for hooks."
 git config hooks.python ${PYTHON_EXECUTABLE}
 git config hooks.ValidateJSON true
-
-echo "Done."
