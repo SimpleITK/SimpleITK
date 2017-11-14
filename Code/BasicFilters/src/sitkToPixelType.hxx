@@ -16,6 +16,8 @@
 *
 *=========================================================================*/
 
+#ifndef sitkToPixelType_hxx
+#define sitkToPixelType_hxx
 #include "itkVariableLengthVector.h"
 
 
@@ -41,3 +43,5 @@ static void ToPixelType( TValueType inPixel, itk::VariableLengthVector<TComponen
 }
 }
 }
+
+#endif

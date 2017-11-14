@@ -34,9 +34,14 @@ namespace itk {
   namespace simple {
 
     /**\class CenteredVersorTransformInitializerFilter
-\brief CenteredVersorTransformInitializerFilter is a helper class intended to initialize the center of rotation, versor, and translation of the VersorRigid3DTransform.
+\brief CenteredVersorTransformInitializerFilter is a helper class
+intended to initialize the center of rotation, versor, and translation
+of the VersorRigid3DTransform.
 
-This class derived from the CenteredTransformInitializerand uses it in a more constrained context. It always uses the Moments mode, and also takes advantage of the second order moments in order to initialize the Versorrepresenting rotation.
+This class derived from the CenteredTransformInitializerand uses it in
+a more constrained context. It always uses the Moments mode, and also
+takes advantage of the second order moments in order to initialize the
+Versorrepresenting rotation.
 
 \sa itk::CenteredVersorTransformInitializer for the Doxygen on the original ITK class.
      */
@@ -53,7 +58,6 @@ This class derived from the CenteredTransformInitializerand uses it in a more co
 
       /** Define the pixels types supported by this filter */
       typedef BasicPixelIDTypeList  PixelIDTypeList;
-
 
 
       /**
@@ -90,7 +94,6 @@ This class derived from the CenteredTransformInitializerand uses it in a more co
 
       typedef Transform (Self::*MemberFunctionType)( const Image * fixedImage, const Image * movingImage, const itk::simple::Transform * transform );
       template <class TImageType> Transform ExecuteInternal ( const Image * fixedImage, const Image * movingImage, const itk::simple::Transform * transform );
-
 
 
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;

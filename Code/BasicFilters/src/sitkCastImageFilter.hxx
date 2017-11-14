@@ -112,7 +112,6 @@ Image CastImageFilter::ExecuteInternalToLabel( const Image& inImage )
 }
 
 
-
 template<typename TImageType, typename TOutputImageType>
 Image CastImageFilter::ExecuteInternalLabelToImage( const Image& inImage )
 {

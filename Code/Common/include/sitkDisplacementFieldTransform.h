@@ -27,7 +27,8 @@ namespace itk
 namespace simple
 {
 
-/** \brief A dense deformable transform over a bounded spatial domain
+/** \class DisplacementFieldTransform
+ * \brief A dense deformable transform over a bounded spatial domain
  * for 2D or 3D coordinates space.
  *
  * \sa itk::DisplacementFieldTransform
@@ -37,7 +38,7 @@ class SITKCommon_EXPORT DisplacementFieldTransform
 {
 public:
   typedef DisplacementFieldTransform Self;
-  typedef Transform Superclass;
+  typedef Transform                  Superclass;
 
   explicit DisplacementFieldTransform( unsigned int dimensions );
 
@@ -119,7 +120,7 @@ private:
     void operator() ( void ) const
       {
         TransformType *t = dynamic_cast<TransformType*>(transform);
-        if (t && (typeid(*t)==typeid(TransformType)))
+        if (t && (typeid(*t) == typeid(TransformType)))
           {
           that->InternalInitialization<TransformType>(t);
           }

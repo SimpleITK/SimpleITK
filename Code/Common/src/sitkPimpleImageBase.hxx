@@ -777,7 +777,7 @@ namespace itk
 
         typename ImageType::PixelType px = this->m_Image->GetPixel( itkIdx );
 
-        if ( px.GetSize()  != v.size() )
+        if ( px.GetSize() != v.size() )
           {
           sitkExceptionMacro(<<"Unable to convert vector to ITK pixel type\n"
                              << "Expected vector of length " <<  px.GetSize()

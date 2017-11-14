@@ -97,7 +97,7 @@ class SmartPointer;
 
 
       PixelIDValueEnum m_OutputPixelType;
-      bool m_LoadPrivateTags;
+      bool             m_LoadPrivateTags;
 
     };
   }

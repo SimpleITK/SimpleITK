@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef sitkHeavisideFunction_h
-#define sitkHeavisideFunction_h
+#ifndef sitkHeavisideFunction_hxx
+#define sitkHeavisideFunction_hxx
 
 #include "itkAtanRegularizedHeavisideStepFunction.h"
 #include "itkSinRegularizedHeavisideStepFunction.h"

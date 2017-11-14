@@ -21,7 +21,6 @@
 #include "sitkMacro.h"
 
 
-
 #if defined( SITKDLL )
   #ifdef SimpleITKIO_EXPORTS
     #define SITKIO_EXPORT SITK_ABI_EXPORT

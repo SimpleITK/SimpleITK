@@ -15,8 +15,8 @@
 *  limitations under the License.
 *
 *=========================================================================*/
-#ifndef sitkBoundaryConditions_h
-#define sitkBoundaryConditions_h
+#ifndef sitkBoundaryConditions_hxx
+#define sitkBoundaryConditions_hxx
 
 #include <memory>
 #include <itkConstantBoundaryCondition.h>

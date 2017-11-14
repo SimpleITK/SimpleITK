@@ -58,7 +58,7 @@ class ITK_EXPORT SliceImageFilter:
 {
 public:
   /** Standard class typedefs. */
-  typedef SliceImageFilter                               Self;
+  typedef SliceImageFilter                                Self;
   typedef ImageToImageFilter< TInputImage, TOutputImage > Superclass;
   typedef SmartPointer< Self >                            Pointer;
   typedef SmartPointer< const Self >                      ConstPointer;
