@@ -43,11 +43,22 @@ This class is connected to the fixed image, moving image and transform involved 
 
 \li Center of mass
 
+In the first mode, the geometrical center of the moving image is
+passed as initial center of rotation to the transform and the vector
+from the center of the fixed image to the center of the moving image
+is passed as the initial translation. This mode basically assumes that
+the anatomical objects to be registered are centered in their
+respective images. Hence the best initial guess for the registration
+is the one that superimposes those two centers.
 
-
-In the first mode, the geometrical center of the moving image is passed as initial center of rotation to the transform and the vector from the center of the fixed image to the center of the moving image is passed as the initial translation. This mode basically assumes that the anatomical objects to be registered are centered in their respective images. Hence the best initial guess for the registration is the one that superimposes those two centers.
-
-In the second mode, the moments of gray level values are computed for both images. The center of mass of the moving image is then used as center of rotation. The vector between the two centers of mass is passes as the initial translation to the transform. This second approach assumes that the moments of the anatomical objects are similar for both images and hence the best initial guess for registration is to superimpose both mass centers. Note that this assumption will probably not hold in multi-modality registration.
+In the second mode, the moments of gray level values are computed for
+both images. The center of mass of the moving image is then used as
+center of rotation. The vector between the two centers of mass is
+passes as the initial translation to the transform. This second
+approach assumes that the moments of the anatomical objects are
+similar for both images and hence the best initial guess for
+registration is to superimpose both mass centers. Note that this
+assumption will probably not hold in multi-modality registration.
 
      * \sa itk::CenteredTransformInitializer
      */
@@ -64,7 +75,6 @@ In the second mode, the moments of gray level values are computed for both image
 
       /** Define the pixels types supported by this filter */
       typedef BasicPixelIDTypeList  PixelIDTypeList;
-
 
 
       typedef enum {GEOMETRY,MOMENTS} OperationModeType;
@@ -106,7 +116,6 @@ In the second mode, the moments of gray level values are computed for both image
       template <class TImageType> Transform ExecuteInternal ( const Image * fixedImage, const Image * movingImage, const itk::simple::Transform * transform );
 
 
-
       friend struct detail::MemberFunctionAddressor<MemberFunctionType>;
 
       nsstd::auto_ptr<detail::MemberFunctionFactory<MemberFunctionType> > m_MemberFactory;
@@ -123,7 +132,10 @@ In the second mode, the moments of gray level values are computed for both image
      *
      * \sa itk::simple::CenteredTransformInitializerFilter for the object oriented interface
      */
-     SITKBasicFilters_EXPORT Transform CenteredTransformInitializer ( const Image & fixedImage, const Image & movingImage, const Transform & transform, CenteredTransformInitializerFilter::OperationModeType operationMode = itk::simple::CenteredTransformInitializerFilter::MOMENTS );
+     SITKBasicFilters_EXPORT Transform CenteredTransformInitializer ( const Image & fixedImage,
+                                                                      const Image & movingImage,
+                                                                      const Transform & transform,
+                                                                      CenteredTransformInitializerFilter::OperationModeType operationMode = itk::simple::CenteredTransformInitializerFilter::MOMENTS );
 
   }
 }

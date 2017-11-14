@@ -35,7 +35,6 @@
 #include <itkGDCMImageIO.h>
 
 
-
 namespace itk {
 namespace simple {
 

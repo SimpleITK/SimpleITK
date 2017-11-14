@@ -104,7 +104,6 @@ SITKBasicFilters_EXPORT Image PatchBasedDenoising (const Image& image1,
 }
 
 
-
 SITKBasicFilters_EXPORT Image PatchBasedDenoising (const Image& image1,
                                                    PatchBasedDenoisingImageFilter::NoiseModelType noiseModel,
                                                    double kernelBandwidthSigma,

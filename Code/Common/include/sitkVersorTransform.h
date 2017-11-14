@@ -26,7 +26,8 @@ namespace itk
 namespace simple
 {
 
-/** \brief A 3D rotation transform with rotation as a versor around a
+/** \class VersorTransform
+ * \brief A 3D rotation transform with rotation as a versor around a
  * fixed center.
  *
  * \sa itk::VersorTransform
@@ -36,7 +37,7 @@ class SITKCommon_EXPORT VersorTransform
 {
 public:
   typedef VersorTransform Self;
-  typedef Transform Superclass;
+  typedef Transform       Superclass;
 
 // construct identity
   VersorTransform();

@@ -69,7 +69,6 @@ SITKBasicFilters_EXPORT Image Resample ( const Image& image1,
     /**@}*/
 
 
-
 /**
  * \brief itk::simple::PatchBasedDenoisingImageFilter Procedural Interface
  *

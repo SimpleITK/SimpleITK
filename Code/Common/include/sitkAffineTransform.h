@@ -26,7 +26,8 @@ namespace itk
 namespace simple
 {
 
-/** \brief An affine transformation about a fixed center with
+/** \class AffineTransform
+ * \brief An affine transformation about a fixed center with
  * translation for a 2D or 3D coordinate.
  *
  * \sa itk::AffineTransform
@@ -36,7 +37,8 @@ class SITKCommon_EXPORT AffineTransform
 {
 public:
   typedef AffineTransform Self;
-  typedef Transform Superclass;
+  typedef Transform       Superclass;
+
   explicit AffineTransform(unsigned int dimensions);
 
   AffineTransform( const AffineTransform & );
@@ -90,7 +92,7 @@ private:
     void operator() ( void ) const
       {
         TransformType *t = dynamic_cast<TransformType*>(transform);
-        if (t && (typeid(*t)==typeid(TransformType)))
+        if (t && (typeid(*t) == typeid(TransformType)))
           {
           that->InternalInitialization<TransformType>(t);
           }

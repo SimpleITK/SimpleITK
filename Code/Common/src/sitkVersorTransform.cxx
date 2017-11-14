@@ -171,7 +171,7 @@ void VersorTransform::InternalInitialization(itk::TransformBase *transform)
   this->m_pfGetMatrix = SITK_NULLPTR;
   this->m_pfSetMatrix = SITK_NULLPTR;
 
-  if (t && (typeid(*t)==typeid(TransformType)))
+  if (t && (typeid(*t) == typeid(TransformType)))
     {
     this->InternalInitialization(t);
     return;
@@ -192,10 +192,10 @@ void VersorTransform::InternalInitialization(TransformType *t)
 
   typename TransformType::OutputVectorType (*pfSTLVectorToITK)(const std::vector<double> &) = &sitkSTLVectorToITK<typename TransformType::OutputVectorType, double>;
 
-  void 	(TransformType::*pfSetRotation1) (const typename TransformType::VersorType &) = &TransformType::SetRotation;
+  void  (TransformType::*pfSetRotation1) (const typename TransformType::VersorType &) = &TransformType::SetRotation;
   this->m_pfSetRotation1 = nsstd::bind(pfSetRotation1,t,nsstd::bind(&sitkSTLVectorToITKVersor<double, double>,nsstd::placeholders::_1));
 
-  void 	(TransformType::*pfSetRotation2) (const typename TransformType::AxisType &, double) = &TransformType::SetRotation;
+  void  (TransformType::*pfSetRotation2) (const typename TransformType::AxisType &, double) = &TransformType::SetRotation;
   this->m_pfSetRotation2 = nsstd::bind(pfSetRotation2,t,nsstd::bind(pfSTLVectorToITK,nsstd::placeholders::_1),nsstd::placeholders::_2);
 
   this->m_pfGetVersor  = nsstd::bind(&sitkITKVersorToSTL<double, double>,nsstd::bind(&TransformType::GetVersor,t));

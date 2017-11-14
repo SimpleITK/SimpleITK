@@ -34,13 +34,11 @@ $(include MemberGetSetDeclarations.h.in)
 $(include ClassNameAndPrint.h.in)
 
 $(include ExecuteMethodNoParameters.h.in)$(include ExecuteMethodWithParameters.h.in)$(include CustomMethods.h.in)
-
       /** Execute the filter with an image and a constant */
       Image Execute ( const Image& image1, ${constant_type} constant );
       Image Execute ( ${constant_type} constant, const Image& image2 );
 $(if members and #members > 0 then
 OUT=[[
-
       /** Execute the filter on an image and a constant with the given parameters */
       Image Execute ( const Image& image1, ${constant_type} constant$(include MemberParameters.in) );
       Image Execute ( ${constant_type} constant, const Image& image2$(include MemberParameters.in) );]]

@@ -26,10 +26,10 @@
 namespace itk {
 namespace simple {
 
-void WriteImage ( const Image& image, const std::string &inFileName, bool inUseCompression )
+void WriteImage ( const Image& image, const std::string &inFileName, bool useCompression )
   {
     ImageFileWriter writer;
-    writer.Execute ( image, inFileName, inUseCompression );
+    writer.Execute ( image, inFileName, useCompression );
   }
 
 
@@ -104,10 +104,10 @@ std::string ImageFileWriter::GetFileName() const
   return this->m_FileName;
   }
 
-  ImageFileWriter& ImageFileWriter::Execute ( const Image& image, const std::string &inFileName, bool inUseCompression )
+  ImageFileWriter& ImageFileWriter::Execute ( const Image& image, const std::string &inFileName, bool useCompression )
   {
     this->SetFileName( inFileName );
-    this->SetUseCompression( inUseCompression );
+    this->SetUseCompression( useCompression );
     return this->Execute( image );
   }
 
