@@ -214,7 +214,7 @@ namespace simple
       _OptimizerType::BoundValueType upperBound( numberOfTransformParameters );
 
       boundSelection.Fill( sitkToITK[flag] );
-      lowerBound.Fill( this->m_OptimizerUpperBound );
+      lowerBound.Fill( this->m_OptimizerLowerBound );
       upperBound.Fill( this->m_OptimizerUpperBound );
 
       optimizer->SetBoundSelection( boundSelection );
