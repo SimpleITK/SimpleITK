@@ -2,14 +2,23 @@
   "name" : "WarpImageFilter",
   "template_code_filename" : "DualImageFilter",
   "template_test_filename" : "ImageFilter",
-  "number_of_inputs" : 2,
+  "number_of_inputs" : 0,
   "pixel_types" : "BasicPixelIDTypeList",
   "pixel_types2" : "RealVectorPixelIDTypeList",
   "filter_type" : "itk::WarpImageFilter<InputImageType,  OutputImageType, InputImageType2 >",
-  "custom_set_input" : "filter->SetInput( image1 ); filter->SetDisplacementField( image2 );",
   "vector_pixel_types_by_component" : "VectorPixelIDTypeList",
   "include_files" : [
     "sitkCreateInterpolator.hxx"
+  ],
+  "inputs" : [
+    {
+      "name" : "Image",
+      "type" : "Image"
+    },
+    {
+      "name" : "DisplacementField",
+      "type" : "Image"
+    }
   ],
   "members" : [
     {
