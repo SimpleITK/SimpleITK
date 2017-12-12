@@ -18,6 +18,7 @@
 #include "sitkShow.h"
 #include "sitkMacro.h"
 #include "sitkImageFileWriter.h"
+#include <itkMacro.h>
 #include <itksys/SystemTools.hxx>
 #include <itksys/Process.h>
 #include <stdlib.h>
@@ -33,6 +34,17 @@
 #else
 #include <unistd.h>
 #endif
+
+#define localDebugMacro(x)\
+  {                                                                     \
+    if (debugOn)                                                        \
+      {                                                                 \
+      std::ostringstream msg;                                           \
+      msg << "Debug: In " __FILE__ ", line " << __LINE__ << ": " x      \
+          << "\n\n";                                                    \
+      ::itk::OutputWindowDisplayDebugText( msg.str().c_str() );         \
+      }                                                                 \
+  }                                                                     \
 
 namespace itk
 {
@@ -422,11 +434,8 @@ namespace itk
 
 #endif
 
-  if (debugOn)
-    {
-    std::cout << "FindApplication search path: " << paths << std::endl;
-    std::cout << "Result: " << ExecutableName << std::endl;
-    }
+  localDebugMacro( << "FindApplication search path: " << paths << std::endl
+                   << "Result: " << ExecutableName << std::endl );
 
   return ExecutableName;
   }
@@ -506,10 +515,7 @@ namespace itk
     for ( i = 0; i < cmdLine.size(); ++i )
       cmdstream << '\'' << cmdLine[i] << "\' ";
 
-    if (debugOn)
-      {
-      std::cout << "Show command: " << cmdstream.str() << std::endl;
-      }
+    localDebugMacro( << "Show command: " << cmdstream.str() << std::endl );
 
     std::vector<const char*> cmd( cmdLine.size() + 1, NULL );
 
