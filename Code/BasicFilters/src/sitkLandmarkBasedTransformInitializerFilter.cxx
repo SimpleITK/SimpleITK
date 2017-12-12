@@ -201,11 +201,9 @@ Transform LandmarkBasedTransformInitializerFilter::ExecuteInternal ( const Trans
     filter->SetBSplineNumberOfControlPoints ( this->m_BSplineNumberOfControlPoints );
     }
 
-  if (this->GetDebug())
-    {
-    std::cout << "Executing ITK filter:" << std::endl;
-    filter->Print(std::cout);
-    }
+  sitkDebugMacro( << "Executing ITK filter:" << std::endl
+                  << *filter );
+
 
   filter->InitializeTransform();
 

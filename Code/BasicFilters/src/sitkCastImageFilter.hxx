@@ -78,12 +78,9 @@ Image CastImageFilter::ExecuteInternalToVector( const Image& inImage )
   caster->SetInput( filter->GetOutput() );
   caster->InPlaceOn();
 
-  if (this->GetDebug())
-     {
-     std::cout << "Executing ITK filters:" << std::endl;
-     std::cout << filter;
-     std::cout << caster;
-     }
+  sitkDebugMacro( << "Executing ITK filters:" << std::endl
+                  << filter
+                  << caster );
 
   caster->Update();
 
