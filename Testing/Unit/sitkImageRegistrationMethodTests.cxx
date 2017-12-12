@@ -965,8 +965,8 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_ScalesEstimator)
   R.SetMetricAsMeanSquares();
 
   unsigned int numberOfIterations=100;
-  double convergenceMinimumValue = 1e-6;
-  unsigned int convergenceWindowSize = 2;
+  double convergenceMinimumValue = 1e-5;
+  unsigned int convergenceWindowSize = 3;
   R.SetOptimizerAsConjugateGradientLineSearch( 1.0,
                                                numberOfIterations,
                                                convergenceMinimumValue,
