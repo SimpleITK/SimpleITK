@@ -167,7 +167,6 @@ namespace itk
       {
       return word;
       }
-    //std::cout << "crap: " << word[0] << " " << word[l-1] << " " << l << std::endl;
 
     switch(word[0])
       {
@@ -176,7 +175,6 @@ namespace itk
       case '\"':
         if (word[l-1] == word[0])
           {
-          //std::cout <<  "Unquoted: " << word.substr(1, l-2);
           return word.substr(1, l-2);
           }
         else
@@ -206,8 +204,6 @@ namespace itk
     std::vector<unsigned char> quoteStack;
     std::string word;
     unsigned int i=0;
-
-    //std::cout << new_command << std::endl;
 
     while (i<new_command.length())
       {
@@ -627,7 +623,6 @@ namespace itk
   bool fijiFlag = ExecutableName.find( "Fiji.app" ) != std::string::npos;
 
   TempFile = BuildFullFileName(title, fijiFlag);
-  //std::cout << "Full file name:\t" << TempFile << std::endl;
 
   // write out the image
   WriteImage ( image, TempFile );
