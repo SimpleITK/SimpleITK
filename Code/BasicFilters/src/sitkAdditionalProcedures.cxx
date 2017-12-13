@@ -152,14 +152,15 @@ Image DiscreteGaussian ( const Image& image1, double variance, unsigned int maxi
 //
 // Function to run the Execute method of this filter
 //
-Image SmoothingRecursiveGaussian ( const Image& image1, double sigma, bool normalizeAcrossScale )
+Image SmoothingRecursiveGaussian ( const Image& image1,
+                                   double sigma,
+                                   bool normalizeAcrossScale )
 {
   SmoothingRecursiveGaussianImageFilter filter;
   filter.SetSigma(sigma);
   filter.SetNormalizeAcrossScale(normalizeAcrossScale);
   return filter.Execute(image1);
 }
-
 
 
 }
