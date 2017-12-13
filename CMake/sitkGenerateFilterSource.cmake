@@ -218,7 +218,7 @@ macro(generate_filter_source)
   get_cmake_property( _varNames VARIABLES )
   foreach (_varName ${_varNames})
     if(_varName MATCHES "^SimpleITKBasicFiltersGeneratedSource_")
-      unset(${varName} CACHE)
+      unset(${_varName} CACHE)
     endif()
   endforeach()
 
