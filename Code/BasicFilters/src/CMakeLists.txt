@@ -139,7 +139,9 @@ foreach( itk_module ${module_vars} )
 
   endif()
 
-  list( REMOVE_ITEM SimpleITKBasicFiltersGeneratedSource ${SimpleITKBasicFiltersGeneratedSource_${itk_module}})
+  if (${_len} GREATER 0)
+    list( REMOVE_ITEM SimpleITKBasicFiltersGeneratedSource ${SimpleITKBasicFiltersGeneratedSource_${itk_module}})
+  endif()
 
 endforeach()
 
