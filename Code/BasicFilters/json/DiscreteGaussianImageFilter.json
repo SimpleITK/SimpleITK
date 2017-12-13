@@ -9,7 +9,10 @@
     {
       "name" : "Variance",
       "type" : "double",
-      "default" : "1.0",
+      "default" : "std::vector<double>(3,1.0)",
+      "dim_vec" : 1,
+      "set_as_scalar" : 1,
+      "itk_type" : "typename FilterType::ArrayType",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "",
       "briefdescriptionGet" : "",
@@ -27,7 +30,10 @@
     {
       "name" : "MaximumError",
       "type" : "double",
-      "default" : "0.01",
+      "default" : "std::vector<double>(3, 0.01)",
+      "dim_vec" : 1,
+      "set_as_scalar" : 1,
+      "itk_type" : "typename FilterType::ArrayType",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "",
       "briefdescriptionGet" : "",
@@ -68,7 +74,14 @@
       "settings" : [
         {
           "parameter" : "Variance",
-          "value" : "100.0"
+          "value" : "100.0",
+          "type" : "double",
+          "dim_vec" : 1,
+          "value" : [
+            100.0,
+            100.0,
+            100.0
+          ]
         },
         {
           "parameter" : "MaximumKernelWidth",

@@ -10,7 +10,11 @@
     {
       "name" : "Sigma",
       "type" : "double",
-      "default" : "1.0",
+      "default" : "std::vector<double>(3,1.0)",
+      "dim_vec" : 1,
+      "set_as_scalar" : 1,
+      "itk_type" : "typename FilterType::SigmaArrayType",
+      "custom_itk_cast" :  "typename FilterType::SigmaArrayType itkVecSigma = sitkSTLVectorToITK<typename FilterType::SigmaArrayType>( this->GetSigma() );\n  filter->SetSigmaArray( itkVecSigma );",
       "doc" : "",
       "briefdescriptionSet" : "",
       "detaileddescriptionSet" : "Set Sigma value. Sigma is measured in the units of image spacing. You may use the method SetSigma to set the same value across each axis or use the method SetSigmaArray if you need different values along each axis.",
@@ -44,7 +48,13 @@
       "settings" : [
         {
           "parameter" : "Sigma",
-          "value" : "5.0"
+          "type" : "double",
+          "dim_vec" : 1,
+          "value" : [
+            5.0,
+            5.0,
+            5.0
+          ]
         }
       ],
       "tolerance" : 1e-05,
