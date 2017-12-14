@@ -100,7 +100,10 @@ SITKBasicFilters_EXPORT Image PatchBasedDenoising (const Image& image1,
 
 
     /**
-     * \brief Blurs an image by separable convolution with discrete gaussian kernels. This filter performs Gaussian blurring by separable convolution of an image and a discrete Gaussian operator (kernel).
+     * \brief Blurs an image by separable convolution with discrete
+     * gaussian kernels. This filter performs Gaussian blurring by
+     * separable convolution of an image and a discrete Gaussian
+     * operator (kernel).
      *
      * This function directly calls the execute method of DiscreteGaussianImageFilter
      * in order to support a procedural API
@@ -115,7 +118,8 @@ SITKBasicFilters_EXPORT Image PatchBasedDenoising (const Image& image1,
 
 
     /**
-     * \brief Computes the smoothing of an image by convolution with the Gaussian kernels implemented as IIR filters.
+     * \brief Computes the smoothing of an image by convolution with
+     * the Gaussian kernels implemented as IIR filters.
      *
      * This function directly calls the execute method of SmoothingRecursiveGaussianImageFilter
      * in order to support a procedural API
