@@ -98,7 +98,7 @@ namespace itk
 
         dup->SetInputImage( this->m_Image );
         dup->Update();
-        ImagePointer output = dup->GetOutput();
+        ImagePointer output = dup->GetModifiableOutput();
 
         return new Self( output.GetPointer() );
       }
