@@ -120,7 +120,7 @@ set(SimpleITKBasicFiltersGeneratedSource_ITKRegistrationCommon ${SimpleITKBasicF
 get_cmake_property( _varNames VARIABLES )
 foreach (_varName ${_varNames})
   if(_varName MATCHES "^SimpleITKBasicFiltersGeneratedSource_")
-    string(REGEX MATCH  "ITK[A-Za-z0-9]+$"  itk_module ${_varName})
+    string(REGEX MATCH  "[A-Za-z0-9]+$"  itk_module ${_varName})
     list(APPEND module_vars ${itk_module})
   endif()
 
@@ -139,7 +139,9 @@ foreach( itk_module ${module_vars} )
 
   endif()
 
-  list( REMOVE_ITEM SimpleITKBasicFiltersGeneratedSource ${SimpleITKBasicFiltersGeneratedSource_${itk_module}})
+  if (${_len} GREATER 0)
+    list( REMOVE_ITEM SimpleITKBasicFiltersGeneratedSource ${SimpleITKBasicFiltersGeneratedSource_${itk_module}})
+  endif()
 
 endforeach()
 
