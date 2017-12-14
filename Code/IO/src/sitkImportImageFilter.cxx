@@ -27,14 +27,15 @@
 
 #include <iterator>
 
+namespace itk {
+namespace simple {
+
 // private namespace
 namespace
 {
 const unsigned int UnusedDimension = 2;
 }
 
-namespace itk {
-namespace simple {
 
 Image ImportAsInt8(
     int8_t * buffer,
@@ -470,8 +471,6 @@ Image ImportImageFilter::ExecuteInternal( )
   assert( ImageTypeToPixelIDValue<ImageType>::Result != (int)sitkUnknown );
 
   typename ImageType::Pointer image = ImageType::New();
-
-
 
 
   //

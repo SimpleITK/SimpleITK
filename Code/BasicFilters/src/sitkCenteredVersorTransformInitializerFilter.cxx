@@ -92,7 +92,10 @@ Transform CenteredVersorTransformInitializerFilter::Execute ( const Image & fixe
   PixelIDValueEnum type = fixedImage.GetPixelID();
   unsigned int dimension = fixedImage.GetDimension();
 
-  if ( type != movingImage.GetPixelIDValue() || dimension != movingImage.GetDimension() ) { sitkExceptionMacro ( "Moving Image parameter for " << this->GetName() << " doesn't match type or dimension!" ); }
+  if ( type != movingImage.GetPixelIDValue() || dimension != movingImage.GetDimension() )
+    {
+    sitkExceptionMacro ( "Moving Image parameter for " << this->GetName() << " doesn't match type or dimension!" );
+    }
   if ( dimension != transform.GetDimension() ) { sitkExceptionMacro( "Transform parameter for " << this->GetName() << " doesn't match dimension!" ); }
 
   return this->m_MemberFactory->GetMemberFunction( type, dimension )( &fixedImage, &movingImage, &transform );

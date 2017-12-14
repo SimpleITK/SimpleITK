@@ -26,7 +26,8 @@ namespace itk
 namespace simple
 {
 
-/** \brief A deformable transform over a bounded spatial domain using a BSpline
+/** \class BSplineTransform
+ * \brief A deformable transform over a bounded spatial domain using a BSpline
  * representation for a 2D or 3D coordinate space.
  *
  * \sa itk::BSplineTransform
@@ -36,7 +37,7 @@ class SITKCommon_EXPORT BSplineTransform
 {
 public:
   typedef BSplineTransform Self;
-  typedef Transform Superclass;
+  typedef Transform        Superclass;
 
   explicit BSplineTransform(unsigned int dimensions, unsigned int order=3);
 
@@ -90,7 +91,7 @@ private:
     void operator() ( void ) const
       {
         TransformType *t = dynamic_cast<TransformType*>(transform);
-        if (t && (typeid(*t)==typeid(TransformType)))
+        if (t && (typeid(*t) == typeid(TransformType)))
           {
           that->InternalInitialization<TransformType>(t);
           }

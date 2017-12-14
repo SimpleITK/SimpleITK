@@ -34,13 +34,11 @@ $(include MemberGetSetDeclarations.h.in)
 $(include ClassNameAndPrint.h.in)
 
 $(include ExecuteMethodNoParameters.h.in)$(include ExecuteMethodWithParameters.h.in)$(include CustomMethods.h.in)
-
 $(include ExecuteInternalMethod.h.in)
 
 $(include MemberFunctionDispatch.h.in)
 
 $(include PrivateMemberDeclarations.h.in)$(include ClassEnd.h.in)
-
 
 $(include FunctionalAPI.h.in)
   }

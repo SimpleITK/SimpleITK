@@ -47,7 +47,7 @@ OUT=[[
       friend struct detail::DualExecuteInternalVectorAddressor<MemberFunctionType>;
       template <class TImageType1, class TImageType2> ]]
         if no_return_image then OUT=OUT..[[void]] else OUT=OUT..[[Image]] end
-        OUT=OUT..[[ DualExecuteInternalVector ( $(include ImageParameters.in) );]]
+        OUT=OUT..[[ DualExecuteInternalVector ( $(include ImageParameters.in)$(include InputParametersInternal.in) );]]
 end)
 
       nsstd::auto_ptr<detail::DualMemberFunctionFactory<MemberFunctionType> > m_DualMemberFactory;
