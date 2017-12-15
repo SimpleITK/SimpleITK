@@ -54,7 +54,7 @@ template<typename TTransformBase, typename TFixedImageType>
     return SITK_NULLPTR;
     }
 
-  DisplacementFieldType * displacementField = displacementFieldTransform->GetDisplacementField();
+  const DisplacementFieldType * displacementField = displacementFieldTransform->GetDisplacementField();
 
   // We use the shrink image filter to calculate the fixed parameters of the virtual
   // domain at each level.  To speed up calculation and avoid unnecessary memory
