@@ -709,7 +709,7 @@ void Transform::InternalInitialization(TransformType *t)
     reader->SetFileName(filename.c_str() );
     reader->Update();
 
-    itk::TransformFileReader::TransformListType *list = reader->GetTransformList();
+    const itk::TransformFileReader::TransformListType *list = reader->GetTransformList();
 
     if ( list->empty() )
       {
