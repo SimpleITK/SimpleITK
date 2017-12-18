@@ -30,7 +30,7 @@
       "detaileddescriptionSet" : "\todo the internal setting of the method needs work!!!",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : "",
-      "custom_itk_cast" : " typename InputImageType::RegionType itkRegion;\n  for( unsigned int i = 0; i < inImage1.GetDimension(); ++i )\n    {\n    itkRegion.SetIndex( i, m_Index[i] );\n    itkRegion.SetSize( i, m_Size[i] );\n    }\n  filter->SetExtractionRegion( itkRegion );"
+      "custom_itk_cast" : "typename InputImageType::RegionType itkRegion( sitkSTLVectorToITK<typename InputImageType::IndexType>( m_Index ), sitkSTLVectorToITK<typename InputImageType::SizeType>( m_Size) );\n  filter->SetExtractionRegion( itkRegion );"
     },
     {
       "name" : "DirectionCollapseToStrategy",

@@ -549,16 +549,16 @@
         },
         {
           "name" : "EquivalentSphericalPerimeter",
-          "value" : 194.29697897008242,
-          "tolerance" : 1e-08,
+          "value" : 194.2969857,
+          "tolerance" : 1e-06,
           "parameters" : [
             "1"
           ]
         },
         {
           "name" : "EquivalentSphericalRadius",
-          "value" : 30.923324630910653,
-          "tolerance" : 1e-08,
+          "value" : 30.9233257,
+          "tolerance" : 1e-06,
           "parameters" : [
             "1"
           ]
@@ -598,8 +598,8 @@
         },
         {
           "name" : "Perimeter",
-          "value" : 1254.360759871071,
-          "tolerance" : 1e-08,
+          "value" : 1254.3608035,
+          "tolerance" : 1e-06,
           "parameters" : [
             "1"
           ]
@@ -620,8 +620,8 @@
         },
         {
           "name" : "PhysicalSize",
-          "value" : 3004.1542777485397,
-          "tolerance" : 1e-08,
+          "value" : 3004.1544869,
+          "tolerance" : 1e-06,
           "parameters" : [
             "1"
           ]

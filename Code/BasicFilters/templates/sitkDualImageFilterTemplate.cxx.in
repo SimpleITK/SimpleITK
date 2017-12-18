@@ -189,6 +189,14 @@ ${name}::DualExecuteInternalVector ( $(for inum=1,number_of_inputs do
        OUT=OUT.. ', '
   end
 OUT= OUT .. 'const Image& inImage' .. inum
+end
+if inputs then
+  for i = 1,#inputs do
+    if (number_of_inputs > 0 or i > 1) then
+      OUT = OUT .. ", "
+    end
+    OUT = OUT .. 'const ' .. inputs[i].type .. ' * in' .. inputs[i].name
+  end
 end ) )
 {
   typedef TImageType                                                               VectorInputImageType;
@@ -225,7 +233,15 @@ OUT=OUT..[[
 
   // Get the pointer to the ITK image contained in image1
   typename VectorInputImageType::ConstPointer image1 =
-    this->CastImageToITK<VectorInputImageType>( inImage1 );
+    this->CastImageToITK<VectorInputImageType>( ]]
+
+if number_of_inputs > 0 then
+  OUT=OUT..[[inImage1]]
+elseif #inputs then
+  OUT=OUT..'*in'..inputs[1].name
+end
+
+OUT=OUT..[[ );
 
   typedef itk::VectorIndexSelectionCastImageFilter< VectorInputImageType, ComponentImageType > ComponentExtratorType;
   typename ComponentExtratorType::Pointer extractor = ComponentExtratorType::New();
@@ -239,11 +255,24 @@ OUT=OUT..[[
     {
     extractor->SetIndex( i );
     extractor->Update();
+]]
 
+if number_of_inputs > 0 then
+  OUT=OUT..[[
     Image tmp = this->DualExecuteInternal<InputImageType,InputImageType2>( Image( extractor->GetOutput() )$(for inum=2,number_of_inputs do
                                                                                                                          OUT=OUT .. ', inImage' .. inum
                                                                                                                            end) );
+]]
+elseif #inputs then
+OUT=OUT..[[
+    const Image extractImage( extractor->GetOutput() );
+    Image tmp = this->DualExecuteInternal<InputImageType,InputImageType2>( &extractImage$(for i = 2,#inputs do
+                                                                                         OUT = OUT .. ", in" .. inputs[i].name
+                                                                                           end) );
+]]
+end
 
+OUT=OUT..[[
     typename OutputImageType::ConstPointer tempITKImage = this->CastImageToITK<OutputImageType>( tmp );
 
     toVector->SetInput( i, tempITKImage );

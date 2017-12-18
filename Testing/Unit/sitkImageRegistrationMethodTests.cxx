@@ -670,7 +670,7 @@ TEST_F(sitkRegistrationMethodTest, OptimizerWeights_Test)
 
 
 
-TEST_F(sitkRegistrationMethodTest, Optimizer_LBFGSB)
+TEST_F(sitkRegistrationMethodTest, Optimizer_LBFGSB_unbounded)
 {
   sitk::Image image = MakeGaussianBlob( v2(64, 64), std::vector<unsigned int>(2,256) );
 
@@ -722,6 +722,56 @@ TEST_F(sitkRegistrationMethodTest, Optimizer_LBFGSB)
   EXPECT_EQ(1u, R.GetOptimizerIteration()) << "Checking iteration.";
 }
 
+
+TEST_F(sitkRegistrationMethodTest, Optimizer_LBFGSB_bounded)
+{
+  sitk::Image image = MakeGaussianBlob( v2(64, 64), std::vector<unsigned int>(2,256) );
+
+
+  sitk::ImageRegistrationMethod R;
+  R.SetInterpolator(sitk::sitkLinear);
+
+  sitk::TranslationTransform tx(image.GetDimension());
+  tx.SetOffset(v2(-1,-2));
+  R.SetInitialTransform(tx, false);
+
+  R.SetMetricAsMeanSquares();
+  R.SetOptimizerAsLBFGSB(1e-20,
+                         20,
+                         5,
+                         2000,
+                         1e5,
+                         -10.0,
+                         10.0,
+                         true);
+
+  IterationUpdate cmd(R);
+  R.AddCommand(sitk::sitkIterationEvent, cmd);
+
+  sitk::Transform outTx = R.Execute(image, image);
+
+
+  std::cout << "-------" << std::endl;
+  std::cout << outTx.ToString() << std::endl;
+  std::cout << "Optimizer stop condition: " << R.GetOptimizerStopConditionDescription() << std::endl;
+  std::cout << " Iteration: " << R.GetOptimizerIteration() << std::endl;
+  std::cout << " Metric value: " << R.GetMetricValue() << std::endl;
+
+  EXPECT_VECTOR_DOUBLE_NEAR(v2(0.0,0.0), outTx.GetParameters(), 1e-3);
+
+  tx.SetOffset(v2(-1,-2));
+  R.SetOptimizerAsLBFGSB(1e-20,
+                         1,
+                         5,
+                         2000,
+                         1e10,
+                         -10.0,
+                         10.0,
+                         true);
+
+  outTx = R.Execute(image, image);
+  EXPECT_EQ(1u, R.GetOptimizerIteration()) << "Checking iteration.";
+}
 
 TEST_F(sitkRegistrationMethodTest, Optimizer_Exhaustive)
 {
