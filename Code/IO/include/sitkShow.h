@@ -20,6 +20,7 @@
 
 #include "sitkImage.h"
 #include "sitkIO.h"
+#include "sitkProcessObject.h"
 
 namespace itk
 {
@@ -92,9 +93,7 @@ namespace simple
    *  to the ImageJ it found, and the full command line used to invoke ImageJ.
    *
    **/
-
-
-   void SITKIO_EXPORT Show ( const Image &image, const std::string& title = "", const bool debugOn=false );
+   void SITKIO_EXPORT Show ( const Image &image, const std::string& title = "", const bool debugOn=ProcessObject::GetGlobalDefaultDebug() );
 }
 }
 
