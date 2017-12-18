@@ -16,8 +16,13 @@
 *
 *=========================================================================*/
 
+#ifndef sitkVersionConfig_h
+#define sitkVersionConfig_h
+
 #define SimpleITK_VERSION_MAJOR @SimpleITK_VERSION_MAJOR@
 #define SimpleITK_VERSION_MINOR @SimpleITK_VERSION_MINOR@
 #define SimpleITK_VERSION_PATCH @SimpleITK_VERSION_PATCH@
 #define SimpleITK_VERSION_TWEAK @SimpleITK_VERSION_TWEAK@
 #define SimpleITK_VERSION "@SimpleITK_VERSION@"
+
+#endif

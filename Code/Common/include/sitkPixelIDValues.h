@@ -110,7 +110,6 @@ enum PixelIDValueEnum {
 };
 
 
-
 const std::string SITKCommon_EXPORT GetPixelIDValueAsString( PixelIDValueType type );
 const std::string SITKCommon_EXPORT GetPixelIDValueAsString( PixelIDValueEnum type );
 
@@ -135,7 +134,6 @@ SITKCommon_EXPORT std::ostream& operator<<(std::ostream& os, const PixelIDValueE
 #endif
 
 
-
 }
 }
-#endif // _sitkPixelIDValues_h
+#endif // sitkPixelIDValues_h

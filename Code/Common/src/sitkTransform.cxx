@@ -56,6 +56,11 @@
 
 #include "nsstd/type_traits.h"
 
+namespace itk
+{
+namespace simple
+{
+
 namespace
 {
 
@@ -72,7 +77,7 @@ template<class T>
 class TransformTraits<T,2>
 {
 public:
-  typedef itk::Euler2DTransform<T>  EulerTransformType;
+  typedef itk::Euler2DTransform<T>       EulerTransformType;
   typedef itk::Similarity2DTransform<T>  SimilarityTransformType;
 };
 
@@ -80,20 +85,10 @@ template<class T>
 class TransformTraits<T,3>
 {
 public:
-  typedef itk::Euler3DTransform<T>  EulerTransformType;
+  typedef itk::Euler3DTransform<T>       EulerTransformType;
   typedef itk::Similarity3DTransform<T>  SimilarityTransformType;
 };
 
-
-}
-
-namespace itk
-{
-namespace simple
-{
-
-namespace
-{
 template<unsigned int Dimension>
 bool RegisterMoreTransforms(void)
 {
@@ -114,7 +109,8 @@ bool RegisterMoreTransforms(void)
 bool initialized = RegisterMoreTransforms<2>() && RegisterMoreTransforms<3>();
 
 
-/** \brief An ITK Command class to hold a object until destruction
+/** \class HolderCommand
+ *  \brief An ITK Command class to hold a object until destruction
  *
  * This command is to add resource management, by utilizing
  * the lifetime of a Command added to an object is about the same as
@@ -131,7 +127,7 @@ public:
   typedef T ObjectType;
 
   typedef  HolderCommand Self;
-  typedef  itk::Command Superclass;
+  typedef  itk::Command  Superclass;
 
   typedef itk::SmartPointer<Self>        Pointer;
   typedef itk::SmartPointer<const Self>  ConstPointer;
@@ -165,7 +161,7 @@ public:
   typedef T ObjectType;
 
   typedef  HolderCommand Self;
-  typedef  itk::Command Superclass;
+  typedef  itk::Command  Superclass;
 
   typedef itk::SmartPointer<Self>        Pointer;
   typedef itk::SmartPointer<const Self>  ConstPointer;
@@ -327,8 +323,7 @@ void Transform::InternalBSplineInitialization( Image & inImage )
   itkBSpline->SetTransformDomainPhysicalDimensions( fixedPhysicalDimensions );
 
 
-
-  typedef typename BSplineTransformType::ParametersType ParametersType;;
+  typedef typename BSplineTransformType::ParametersType ParametersType;
 
   typename HolderCommand<ParametersType *>::Pointer holder = HolderCommand<ParametersType *>::New();
   itkBSpline->AddObserver( itk::DeleteEvent(), holder);
@@ -364,8 +359,6 @@ void Transform::InternalBSplineInitialization( Image & inImage )
 
     Self::SetPimpleTransform( new PimpleTransform< DisplacementTransformType >(itkDisplacement.GetPointer()) );
   }
-
-
 
 void Transform::MakeUnique( void )
 {
@@ -740,7 +733,6 @@ void Transform::InternalInitialization(TransformType *t)
       return Transform(itktx3d);
 
       }
-
 
 
     if( list->front()->GetInputSpaceDimension() == 2

@@ -116,7 +116,6 @@ typedef typelist::MakeTypeList<BasicPixelID<int8_t>,
                                BasicPixelID<double> >::Type SignedPixelIDTypeList;
 
 
-
 /** List of pixel ids which are vectors for itk::VectorImage class.
  *
  * \sa VectorPixelID

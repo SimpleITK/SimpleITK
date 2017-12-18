@@ -37,7 +37,7 @@ static bool GlobalDefaultDebug = false;
 static itk::AnyEvent eventAnyEvent;
 static itk::AbortEvent eventAbortEvent;
 static itk::DeleteEvent eventDeleteEvent;
-static itk::EndEvent eventEndEvent;;
+static itk::EndEvent eventEndEvent;
 static itk::IterationEvent eventIterationEvent;
 static itk::ProgressEvent eventProgressEvent;
 static itk::StartEvent eventStartEvent;
@@ -54,7 +54,7 @@ class SimpleAdaptorCommand
 public:
 
   typedef SimpleAdaptorCommand Self;
-  typedef SmartPointer< Self >  Pointer;
+  typedef SmartPointer< Self > Pointer;
 
   itkNewMacro(Self);
 
@@ -424,7 +424,6 @@ void ProcessObject::RemoveITKObserver( EventCommand &e )
   assert(this->m_ActiveProcess);
   this->m_ActiveProcess->RemoveObserver(e.m_ITKTag);
 }
-
 
 
 const itk::EventObject &ProcessObject::GetITKEventObject(EventEnum e)

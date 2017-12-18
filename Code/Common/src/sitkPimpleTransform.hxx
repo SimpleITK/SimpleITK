@@ -83,7 +83,7 @@ public:
 
       // let the itk::Array class hold a reference to the input vector
       itk::TransformBase::ParametersType p;
-      p.SetData( const_cast<double*>(&inParams[0]), numberOfFixedParameters, false );;
+      p.SetData( const_cast<double*>(&inParams[0]), numberOfFixedParameters, false );
       this->GetTransformBase()->SetFixedParameters( p );
     }
 
@@ -254,7 +254,7 @@ public:
           {
           displacementField->FillBuffer(typename DFTType::OutputVectorType(0.0));
           }
-        displacementField = self->GetModifiableInverseDisplacementField();;
+        displacementField = self->GetModifiableInverseDisplacementField();
         if (displacementField)
           {
           displacementField->FillBuffer(typename DFTType::OutputVectorType(0.0));
@@ -272,7 +272,7 @@ public:
           {
           displacementField->FillBuffer(typename DFTType::OutputVectorType(0.0));
           }
-        displacementField = self->GetModifiableInverseDisplacementField();;
+        displacementField = self->GetModifiableInverseDisplacementField();
         if (displacementField)
           {
           displacementField->FillBuffer(typename DFTType::OutputVectorType(0.0));
@@ -290,7 +290,7 @@ public:
           {
           displacementField->FillBuffer(typename DFTType::OutputVectorType(0.0));
           }
-        displacementField = self->GetModifiableInverseDisplacementField();;
+        displacementField = self->GetModifiableInverseDisplacementField();
         if (displacementField)
           {
           displacementField->FillBuffer(typename DFTType::OutputVectorType(0.0));
@@ -356,7 +356,6 @@ public:
 
       return new PimpleTransform<CompositeTransformType>( composite );
     }
-
 
 
   virtual std::vector< double > TransformPoint( const std::vector< double > &pt ) const

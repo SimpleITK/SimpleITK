@@ -79,7 +79,10 @@ std::string CenteredTransformInitializerFilter::ToString() const
 // Execute
 //
 
-Transform CenteredTransformInitializerFilter::Execute ( const Image & fixedImage, const Image & movingImage, const Transform & transform, CenteredTransformInitializerFilter::OperationModeType operationMode )
+Transform CenteredTransformInitializerFilter::Execute ( const Image & fixedImage,
+                                                        const Image & movingImage,
+                                                        const Transform & transform,
+                                                        CenteredTransformInitializerFilter::OperationModeType operationMode )
 {
   this->SetOperationMode ( operationMode );
 
@@ -92,7 +95,10 @@ Transform CenteredTransformInitializerFilter::Execute ( const Image & fixedImage
   PixelIDValueEnum type = fixedImage.GetPixelID();
   unsigned int dimension = fixedImage.GetDimension();
 
-  if ( type != movingImage.GetPixelIDValue() || dimension != movingImage.GetDimension() ) { sitkExceptionMacro ( "Moving Image parameter for " << this->GetName() << " doesn't match type or dimension!" ); }
+  if ( type != movingImage.GetPixelIDValue() || dimension != movingImage.GetDimension() )
+    {
+    sitkExceptionMacro ( "Moving Image parameter for " << this->GetName() << " doesn't match type or dimension!" );
+    }
   if ( dimension != transform.GetDimension() ) { sitkExceptionMacro( "Transform parameter for " << this->GetName() << " doesn't match dimension!" ); }
 
   return this->m_MemberFactory->GetMemberFunction( type, dimension )( &fixedImage, &movingImage, &transform );

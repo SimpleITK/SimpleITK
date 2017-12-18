@@ -95,7 +95,7 @@ class SmartPointer;
       std::string GetFileName() const;
 
       SITK_RETURN_SELF_TYPE_HEADER Execute ( const Image& );
-      SITK_RETURN_SELF_TYPE_HEADER Execute ( const Image& , const std::string &inFileName, bool inUseCompression );
+      SITK_RETURN_SELF_TYPE_HEADER Execute ( const Image& , const std::string &inFileName, bool useCompression );
 
     private:
 
@@ -103,9 +103,9 @@ class SmartPointer;
 
       template <class T> Self& ExecuteInternal ( const Image& );
 
-      bool m_UseCompression;
+      bool        m_UseCompression;
       std::string m_FileName;
-      bool m_KeepOriginalImageUID;
+      bool        m_KeepOriginalImageUID;
 
       // function pointer type
       typedef Self& (Self::*MemberFunctionType)( const Image& );
