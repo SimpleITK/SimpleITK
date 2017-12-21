@@ -66,7 +66,7 @@ namespace itk {
 
   ImageSeriesReader::ImageSeriesReader()
     :
-    m_Filter(NULL),
+    m_Filter(SITK_NULLPTR),
     m_MetaDataDictionaryArrayUpdate(false)
     {
 
@@ -81,7 +81,7 @@ namespace itk {
 
   ImageSeriesReader::~ImageSeriesReader()
   {
-  if (this->m_Filter != NULL)
+  if (this->m_Filter != SITK_NULLPTR)
     {
       m_Filter->UnRegister();
     }
@@ -230,13 +230,13 @@ struct GetMetaDataCustomCast
     reader->SetMetaDataDictionaryArrayUpdate(m_MetaDataDictionaryArrayUpdate);
 
     // release the old filter ( and output data )
-    if ( this->m_Filter != NULL)
+    if ( this->m_Filter != SITK_NULLPTR)
       {
       this->m_pfGetMetaDataKeys = SITK_NULLPTR;
       this->m_pfHasMetaDataKey = SITK_NULLPTR;
       this->m_pfGetMetaData =  SITK_NULLPTR;
       this->m_Filter->UnRegister();
-      this->m_Filter = NULL;
+      this->m_Filter = SITK_NULLPTR;
       }
 
 
