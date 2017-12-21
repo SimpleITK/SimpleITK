@@ -220,18 +220,14 @@ namespace itk {
     {
 
       PixelIDValueType type = this->GetOutputPixelType();
-      unsigned int dimension = 0;
 
 
       itk::ImageIOBase::Pointer imageio = this->GetImageIOBase( this->m_FileName );
+      this->UpdateImageInformationFromImageIO(imageio);
+      const unsigned int dimension = this->GetDimension();
       if (type == sitkUnknown)
         {
-        this->GetPixelIDFromImageIO( imageio, type, dimension );
-        }
-      else
-        {
-        PixelIDValueType unused;
-        this->GetPixelIDFromImageIO( imageio, unused, dimension );
+        type = this->GetPixelIDValue();
         }
 
 #ifdef SITK_4D_IMAGES
