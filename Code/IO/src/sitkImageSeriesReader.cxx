@@ -25,6 +25,7 @@
 #include <itkImageSeriesReader.h>
 
 #include "itkGDCMSeriesFileNames.h"
+#include "sitkMetaDataDictionaryCustomCast.hxx"
 
 namespace itk {
   namespace simple {
@@ -168,49 +169,6 @@ namespace itk {
     }
 
 
-//
-// Custom Casts
-//
-namespace {
-template<typename FilterType>
-struct GetMetaDataKeysCustomCast
-{
-  static std::vector<std::string> CustomCast( const FilterType *f, int i)
-  {
-    const typename FilterType::DictionaryArrayType &mda = *f->GetMetaDataDictionaryArray();
-    return mda.at(i)->GetKeys();
-  }
-};
-
-template<typename FilterType>
-struct HasMetaDataKeyCustomCast
-{
-  static bool CustomCast( const FilterType *f, int i, const std::string &k)
-  {
-    const typename FilterType::DictionaryArrayType &mda = *f->GetMetaDataDictionaryArray();
-    return mda.at(i)->HasKey(k);
-  }
-};
-
-template<typename FilterType>
-struct GetMetaDataCustomCast
-{
-  static std::string CustomCast( const FilterType *f, int i, const std::string &k)
-  {
-    const typename FilterType::DictionaryArrayType &mda = *f->GetMetaDataDictionaryArray();
-
-    std::string value;
-    if (ExposeMetaData(*mda.at(i), k, value))
-      {
-      return value;
-      }
-
-    std::ostringstream ss;
-    mda.at(i)->Get(k)->Print(ss);
-    return ss.str();
-  }
-};
-}
 
   template <class TImageType> Image
   ImageSeriesReader::ExecuteInternal( itk::ImageIOBase* imageio )
