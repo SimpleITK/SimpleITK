@@ -26,7 +26,8 @@
 
 // This is needed before the gtest include for lookup of the operator
 // to work with clang 5.1
-inline std::ostream& operator<< (std::ostream& os, const std::vector<double>& v)
+template<typename T>
+inline std::ostream& operator<< (std::ostream& os, const std::vector<T>& v)
  {
    if ( v.empty() )
      {
@@ -34,7 +35,7 @@ inline std::ostream& operator<< (std::ostream& os, const std::vector<double>& v)
      }
 
    os << "[ ";
-   std::copy( v.begin(), v.end()-1, std::ostream_iterator<double>(os, ", ") );
+   std::copy( v.begin(), v.end()-1, std::ostream_iterator<T>(os, ", ") );
    return os << v.back() << " ]";
  }
 
@@ -211,10 +212,51 @@ inline std::vector<double> v12(double v1, double v2, double v3,
                                                      const std::vector<double> &val2,
                                                      double rms_error);
 
+template<typename T1, typename T2>
+::testing::AssertionResult VectorRMSPredFormat(const char* expr1,
+                                               const char* expr2,
+                                               const char* rms_error_expr,
+                                               const std::vector<T1> &val1,
+                                               const std::vector<T2> &val2,
+                                               double rms_error)
+{
+  if (val1.size() != val2.size())
+    {
+    return testing::AssertionFailure()
+      << "The size of " << expr1 << " and " << expr2
+      << " different, where\n"
+      << expr1 << " evaluates to " << val1 << ",\n"
+      << expr2 << " evaluates to " << val2 << ".";
+
+    }
+  double total = 0.0;
+  for ( unsigned int i = 0; i < val1.size(); ++i )
+    {
+    double temp = (val1[i]-val2[i]);
+    total += temp*temp;
+    }
+  const double rms = sqrt(total);
+  if (rms <= rms_error) return ::testing::AssertionSuccess();
+
+  return ::testing::AssertionFailure()
+      << "The RMS difference between " << expr1 << " and " << expr2
+      << " is " << rms << ",\n  which exceeds " << rms_error_expr << ", where\n"
+      << expr1 << " evaluates to " << val1 << ",\n"
+      << expr2 << " evaluates to " << val2 << ", and\n"
+      << rms_error_expr << " evaluates to " << rms_error << ".";
+}
 
 
 #define EXPECT_VECTOR_DOUBLE_NEAR(val1, val2, rms_error)                \
   EXPECT_PRED_FORMAT3(VectorDoubleRMSPredFormat,                        \
+                      val1, val2, rms_error)
+
+/** A custom GTest macro for comparing 2 std vector-like objects. This
+ * verifies that the root mean squares error between the two array-like
+ * objects doesn't exceed the given error.
+ */
+#define EXPECT_VECTOR_NEAR(val1, val2, rms_error)                 \
+  EXPECT_PRED_FORMAT3(VectorRMSPredFormat,                        \
                       val1, val2, rms_error)
 
 
