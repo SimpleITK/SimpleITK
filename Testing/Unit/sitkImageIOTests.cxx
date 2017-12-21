@@ -473,3 +473,59 @@ TEST(IO, VectorImageSeriesWriter )
 
   EXPECT_EQ ( "1729319806705e94181c9b9f4bd5e0ac854935db", sitk::Hash( result ) );
 }
+
+TEST(IO, ImageFileReader_ImageInformation )
+{
+  const std::string dicomFile1 = dataFinder.GetDirectory( ) + "/Input/DicomSeries/Image0075.dcm";
+  const std::string file2 = dataFinder.GetDirectory( ) + "/Input/fruit.png";
+
+  sitk::ImageFileReader reader;
+  reader.SetFileName(dicomFile1);
+  EXPECT_EQ(reader.GetPixelID(), sitk::sitkUnknown);
+  EXPECT_EQ(reader.GetPixelIDValue(), sitk::sitkUnknown);
+  EXPECT_EQ(reader.GetDimension(), 0);
+  EXPECT_EQ(reader.GetNumberOfComponents(), 0);
+  EXPECT_VECTOR_DOUBLE_NEAR(reader.GetOrigin(), std::vector<double>(), 1e-8);
+  EXPECT_VECTOR_DOUBLE_NEAR(reader.GetSpacing(), std::vector<double>(), 1e-8);
+  EXPECT_VECTOR_DOUBLE_NEAR(reader.GetDirection(), std::vector<double>(), 1e-8);
+  EXPECT_VECTOR_NEAR(reader.GetSize(), std::vector<int>(), 1e-10);
+  EXPECT_ANY_THROW( reader.GetMetaDataKeys() );
+  EXPECT_ANY_THROW( reader.HasMetaDataKey("nothing") );
+  EXPECT_ANY_THROW( reader.GetMetaData("nothing") );
+
+
+  reader.ReadImageInformation();
+
+  EXPECT_EQ(reader.GetPixelID(), sitk::sitkInt16);
+  EXPECT_EQ(reader.GetPixelIDValue(), sitk::sitkInt16);
+  EXPECT_EQ(reader.GetDimension(), 3);
+  EXPECT_EQ(reader.GetNumberOfComponents(), 1);
+  EXPECT_VECTOR_DOUBLE_NEAR(reader.GetOrigin(), v3(-112, -21.687999, 126.894000 ), 1e-6);
+  EXPECT_VECTOR_DOUBLE_NEAR(reader.GetSpacing(), v3(0.859375, 0.8593899, 1.600000 ), 1e-6);
+  EXPECT_VECTOR_DOUBLE_NEAR(reader.GetDirection(), v9(1, 0, 0,
+                                                      0, 0.46665081166793676, -0.88444164305490258,
+                                                      -0, 0.88444164305490258, 0.46665081166793676 ), 1e-8);
+  EXPECT_VECTOR_NEAR(reader.GetSize(), v3(256.0, 256.0, 1.0), 1e-10);
+
+  std::vector<std::string> keys = reader.GetMetaDataKeys();
+  for(unsigned int i = 0; i < keys.size(); ++i )
+    {
+    EXPECT_TRUE( reader.HasMetaDataKey(keys[i]) );
+    EXPECT_NO_THROW( reader.GetMetaData( keys[i]) );
+    }
+  EXPECT_EQ(reader.GetMetaData( "0008|0031"), "153128");
+
+  // Check that a  reader updates exiting information
+  reader.SetFileName(file2);
+  reader.Execute();
+
+  EXPECT_EQ(reader.GetPixelID(), sitk::sitkVectorUInt8);
+  EXPECT_EQ(reader.GetPixelIDValue(), sitk::sitkVectorUInt8);
+  EXPECT_EQ(reader.GetDimension(), 2);
+  EXPECT_EQ(reader.GetNumberOfComponents(), 3);
+  EXPECT_VECTOR_DOUBLE_NEAR(reader.GetOrigin(), v2(0.0, 0.0), 1e-8);
+  EXPECT_VECTOR_DOUBLE_NEAR(reader.GetSpacing(), v2(1.0, 1.0 ), 1e-8);
+  EXPECT_VECTOR_DOUBLE_NEAR(reader.GetDirection(), v4(1.0, 0.0, 0.0, 1.0 ), 1e-8);
+  EXPECT_VECTOR_NEAR(reader.GetSize(), v2( 179.0, 240.0), 1e-10);
+  EXPECT_EQ( reader.GetMetaDataKeys().size(), 0u);
+}
