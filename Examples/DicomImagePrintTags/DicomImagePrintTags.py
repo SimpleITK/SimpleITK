@@ -31,8 +31,11 @@ reader = sitk.ImageFileReader()
 reader.SetFileName( sys.argv[1] )
 reader.LoadPrivateTagsOn();
 
-inputImage = reader.Execute()
+reader.ReadImageInformation();
 
-for k in inputImage.GetMetaDataKeys():
-    v = inputImage.GetMetaData(k)
+for k in reader.GetMetaDataKeys():
+    v = reader.GetMetaData(k)
     print("({0}) = = \"{1}\"".format(k,v))
+
+print("Image Size: {0}".format(reader.GetSize()));
+print("Image PixelType: {0}".format(sitk.GetPixelIDValueAsString(reader.GetPixelID())));
