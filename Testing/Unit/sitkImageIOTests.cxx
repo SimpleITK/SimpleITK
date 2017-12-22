@@ -483,8 +483,8 @@ TEST(IO, ImageFileReader_ImageInformation )
   reader.SetFileName(dicomFile1);
   EXPECT_EQ(reader.GetPixelID(), sitk::sitkUnknown);
   EXPECT_EQ(reader.GetPixelIDValue(), sitk::sitkUnknown);
-  EXPECT_EQ(reader.GetDimension(), 0);
-  EXPECT_EQ(reader.GetNumberOfComponents(), 0);
+  EXPECT_EQ(reader.GetDimension(), 0u);
+  EXPECT_EQ(reader.GetNumberOfComponents(), 0u);
   EXPECT_VECTOR_DOUBLE_NEAR(reader.GetOrigin(), std::vector<double>(), 1e-8);
   EXPECT_VECTOR_DOUBLE_NEAR(reader.GetSpacing(), std::vector<double>(), 1e-8);
   EXPECT_VECTOR_DOUBLE_NEAR(reader.GetDirection(), std::vector<double>(), 1e-8);
@@ -498,8 +498,8 @@ TEST(IO, ImageFileReader_ImageInformation )
 
   EXPECT_EQ(reader.GetPixelID(), sitk::sitkInt16);
   EXPECT_EQ(reader.GetPixelIDValue(), sitk::sitkInt16);
-  EXPECT_EQ(reader.GetDimension(), 3);
-  EXPECT_EQ(reader.GetNumberOfComponents(), 1);
+  EXPECT_EQ(reader.GetDimension(), 3u);
+  EXPECT_EQ(reader.GetNumberOfComponents(), 1u);
   EXPECT_VECTOR_DOUBLE_NEAR(reader.GetOrigin(), v3(-112, -21.687999, 126.894000 ), 1e-6);
   EXPECT_VECTOR_DOUBLE_NEAR(reader.GetSpacing(), v3(0.859375, 0.8593899, 1.600000 ), 1e-6);
   EXPECT_VECTOR_DOUBLE_NEAR(reader.GetDirection(), v9(1, 0, 0,
@@ -521,8 +521,8 @@ TEST(IO, ImageFileReader_ImageInformation )
 
   EXPECT_EQ(reader.GetPixelID(), sitk::sitkVectorUInt8);
   EXPECT_EQ(reader.GetPixelIDValue(), sitk::sitkVectorUInt8);
-  EXPECT_EQ(reader.GetDimension(), 2);
-  EXPECT_EQ(reader.GetNumberOfComponents(), 3);
+  EXPECT_EQ(reader.GetDimension(), 2u);
+  EXPECT_EQ(reader.GetNumberOfComponents(), 3u);
   EXPECT_VECTOR_DOUBLE_NEAR(reader.GetOrigin(), v2(0.0, 0.0), 1e-8);
   EXPECT_VECTOR_DOUBLE_NEAR(reader.GetSpacing(), v2(1.0, 1.0 ), 1e-8);
   EXPECT_VECTOR_DOUBLE_NEAR(reader.GetDirection(), v4(1.0, 0.0, 0.0, 1.0 ), 1e-8);
