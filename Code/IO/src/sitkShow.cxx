@@ -18,6 +18,7 @@
 #include "sitkShow.h"
 #include "sitkMacro.h"
 #include "sitkImageFileWriter.h"
+#include <itkMacro.h>
 #include <itksys/SystemTools.hxx>
 #include <itksys/Process.h>
 #include <stdlib.h>
@@ -33,6 +34,17 @@
 #else
 #include <unistd.h>
 #endif
+
+#define localDebugMacro(x)\
+  {                                                                     \
+    if (debugOn)                                                        \
+      {                                                                 \
+      std::ostringstream msg;                                           \
+      msg << "Debug: In " __FILE__ ", line " << __LINE__ << ": " x      \
+          << "\n\n";                                                    \
+      ::itk::OutputWindowDisplayDebugText( msg.str().c_str() );         \
+      }                                                                 \
+  }                                                                     \
 
 namespace itk
 {
@@ -155,7 +167,6 @@ namespace itk
       {
       return word;
       }
-    //std::cout << "crap: " << word[0] << " " << word[l-1] << " " << l << std::endl;
 
     switch(word[0])
       {
@@ -164,7 +175,6 @@ namespace itk
       case '\"':
         if (word[l-1] == word[0])
           {
-          //std::cout <<  "Unquoted: " << word.substr(1, l-2);
           return word.substr(1, l-2);
           }
         else
@@ -194,8 +204,6 @@ namespace itk
     std::vector<unsigned char> quoteStack;
     std::string word;
     unsigned int i=0;
-
-    //std::cout << new_command << std::endl;
 
     while (i<new_command.length())
       {
@@ -422,11 +430,8 @@ namespace itk
 
 #endif
 
-  if (debugOn)
-    {
-    std::cout << "FindApplication search path: " << paths << std::endl;
-    std::cout << "Result: " << ExecutableName << std::endl;
-    }
+  localDebugMacro( << "FindApplication search path: " << paths << std::endl
+                   << "Result: " << ExecutableName << std::endl );
 
   return ExecutableName;
   }
@@ -506,10 +511,7 @@ namespace itk
     for ( i = 0; i < cmdLine.size(); ++i )
       cmdstream << '\'' << cmdLine[i] << "\' ";
 
-    if (debugOn)
-      {
-      std::cout << "Show command: " << cmdstream.str() << std::endl;
-      }
+    localDebugMacro( << "Show command: " << cmdstream.str() << std::endl );
 
     std::vector<const char*> cmd( cmdLine.size() + 1, NULL );
 
@@ -621,7 +623,6 @@ namespace itk
   bool fijiFlag = ExecutableName.find( "Fiji.app" ) != std::string::npos;
 
   TempFile = BuildFullFileName(title, fijiFlag);
-  //std::cout << "Full file name:\t" << TempFile << std::endl;
 
   // write out the image
   WriteImage ( image, TempFile );

@@ -92,6 +92,18 @@ class GenericException;
     throw ::itk::simple::GenericException(__FILE__, __LINE__, message.str().c_str()); \
   }
 
+
+#define sitkDebugMacro(x) \
+  {\
+  if (this->GetDebug())                                                 \
+      {                                                                 \
+      std::ostringstream msg;                                           \
+      msg << "Debug: " << this->GetName() << " (" << this << "): " x    \
+          << "\n\n";                                                    \
+      ::itk::OutputWindowDisplayDebugText( msg.str().c_str() );         \
+      }                                                                 \
+  }
+
 #if defined(SITK_HAS_CXX11_NULLPTR) && !defined(SITK_HAS_TR1_SUB_INCLUDE)
 #define SITK_NULLPTR nullptr
 #else

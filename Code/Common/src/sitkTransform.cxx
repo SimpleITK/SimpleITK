@@ -718,7 +718,14 @@ void Transform::InternalInitialization(TransformType *t)
 
     if( list->size() != 1 )
       {
-      std::cerr << "Warning: There is more than one transform in the file! Only using the first transform.\n";
+      // sitkWarningMacro
+      if ( ::itk::Object::GetGlobalWarningDisplay() )
+        {
+        std::ostringstream msg;
+        msg << "WARNING: In " __FILE__ ", line " << __LINE__ << "\n"
+            << "There is more than one transform in the file! Only using the first transform.\n";
+        ::itk::OutputWindowDisplayWarningText( msg.str().c_str() );
+        }
       }
 
     if( list->front()->GetInputSpaceDimension() == 3

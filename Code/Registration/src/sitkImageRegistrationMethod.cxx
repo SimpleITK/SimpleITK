@@ -878,12 +878,9 @@ Transform ImageRegistrationMethod::ExecuteInternal ( const Image &inFixed, const
     optimizer->SetScales(scales);
     }
 
-  if (this->GetDebug())
-    {
-    registration->Print(std::cout);
-    registration->GetOptimizer()->Print(std::cout);
-    registration->GetMetric()->Print(std::cout);
-    }
+  sitkDebugMacro(<< *registration
+                 << *registration->GetOptimizer()
+                 << *registration->GetMetric());
 
   m_pfGetOptimizerStopConditionDescription =  nsstd::bind(&_OptimizerType::GetStopConditionDescription, optimizer.GetPointer());
 

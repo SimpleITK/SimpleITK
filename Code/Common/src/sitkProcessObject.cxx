@@ -403,11 +403,8 @@ void ProcessObject::PreUpdate(itk::ProcessObject *p)
     throw;
     }
 
-  if (this->GetDebug())
-     {
-     std::cout << "Executing ITK filter:" << std::endl;
-     p->Print(std::cout);
-     }
+  sitkDebugMacro( "Executing ITK filter:\n" << *p );
+
 }
 
 

@@ -66,7 +66,7 @@ namespace itk {
     std::vector<std::string>::const_iterator iter  = m_FileNames.begin();
     while( iter != m_FileNames.end() )
       {
-      std::cout << "    \"" << *iter << "\"" << std::endl;
+      out << "    \"" << *iter << "\"" << std::endl;
       ++iter;
       }
 
