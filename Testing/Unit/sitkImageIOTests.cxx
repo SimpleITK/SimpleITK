@@ -515,7 +515,7 @@ TEST(IO, ImageFileReader_ImageInformation )
     }
   EXPECT_EQ(reader.GetMetaData( "0008|0031"), "153128");
 
-  // Check that a  reader updates exiting information
+  // Checks that a  reader updates exiting information
   reader.SetFileName(file2);
   reader.Execute();
 
