@@ -31,11 +31,16 @@ namespace itk {
   namespace simple {
 
     /** \class ImageFileReader
-     * \brief Read a 2D or 3D image and return a smart pointer to a SimpleITK
-     * image
+     * \brief Read an image file and return a SimpleITK Image.
      *
-     * This reader handles scalar and vector images and returns an image with
-     * the same type as the file on disk.
+     * The reader can handle scalar images, and vector images. Pixel
+     * types such as RGB, RGBA are loaded as multi-component
+     * images with vector pixel types. Additionally, tensor images are
+     * loaded with the pixel type being a 1-d vector.
+     *
+     * An interface is also provided to access the information from
+     * the underlying itk::ImageIO. This information can be loaded
+     * with the ReadImageInformation method.
      *
      * \sa itk::simple::ReadImage for the procedural interface
      */
@@ -65,7 +70,7 @@ namespace itk {
       /** \brief Read only the meta-data and image information in the file.
        *
        * This method can be used to determine what the size and pixel
-       * type of an image file is with out reading the whole
+       * type of an image file is without reading the whole
        * image. Even if SimpleITK does not support an image of a
        * certain dimension or type, the meta-information can still be
        * read.
@@ -80,6 +85,10 @@ namespace itk {
        * is based of the file format, so the number of components for
        * internal types such as RGB or complex may not be described
        * the same as with SimpleITK's Image interface.
+       *
+       * The PixelID has been converted from the ITK type to
+       * SimpleITK's interpretation, and will not change when loaded
+       * as a SimpleITK Image.
        * @{
        */
       PixelIDValueEnum GetPixelID( void ) const;

@@ -116,7 +116,7 @@ namespace itk {
 
       m_PixelType = static_cast<PixelIDValueEnum>(pixelType);
 
-      // Should this be as reported by ImageIO, or as reported by sitk::Image?
+      // Use the number of components as reported by the itk::Image
       m_NumberOfComponents = iobase->GetNumberOfComponents();
 
       using std::swap;
