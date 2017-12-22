@@ -53,8 +53,6 @@ struct HasMetaDataKeyCustomCast
     }
 };
 
-
-
 struct GetMetaDataDictionaryCustomCast
 {
   static std::string CustomCast( const MetaDataDictionary *md, const std::string &k)

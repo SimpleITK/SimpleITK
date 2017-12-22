@@ -169,7 +169,6 @@ namespace itk {
     }
 
 
-
   template <class TImageType> Image
   ImageSeriesReader::ExecuteInternal( itk::ImageIOBase* imageio )
     {
