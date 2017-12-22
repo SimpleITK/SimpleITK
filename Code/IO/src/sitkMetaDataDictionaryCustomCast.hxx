@@ -16,8 +16,8 @@
 *
 *=========================================================================*/
 
-#ifndef sitkMetaDataDictionaryCustomCast_h
-#define sitkMetaDataDictionaryCustomCast_h
+#ifndef sitkMetaDataDictionaryCustomCast_hxx
+#define sitkMetaDataDictionaryCustomCast_hxx
 #include <vector>
 #include <string>
 #include <sstream>
