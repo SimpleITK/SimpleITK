@@ -49,6 +49,10 @@ namespace itk {
       this->m_MemberFactory->RegisterMemberFunctions< PixelIDTypeList, 2 > ();
       }
 
+    ImageFileReader::~ImageFileReader()
+    {
+    }
+
     std::string ImageFileReader::ToString() const {
 
       std::ostringstream out;
