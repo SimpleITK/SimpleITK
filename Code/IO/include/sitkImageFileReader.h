@@ -62,6 +62,7 @@ namespace itk {
       Image Execute();
 
       ImageFileReader();
+      ~ImageFileReader();
 
       // Interface methods to access image file's meta-data and image
       // information after calling Execute or after calling
