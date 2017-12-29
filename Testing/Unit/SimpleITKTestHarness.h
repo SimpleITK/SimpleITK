@@ -232,7 +232,7 @@ template<typename T1, typename T2>
   double total = 0.0;
   for ( unsigned int i = 0; i < val1.size(); ++i )
     {
-    double temp = (val1[i]-val2[i]);
+    const double temp = static_cast<double>(val1[i]-val2[i]);
     total += temp*temp;
     }
   const double rms = sqrt(total);
