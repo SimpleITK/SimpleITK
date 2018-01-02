@@ -355,6 +355,31 @@ ImageRegistrationMethod::SetOptimizerAsLBFGSB( double gradientConvergenceToleran
 
 
 ImageRegistrationMethod::Self&
+ImageRegistrationMethod::SetOptimizerAsLBFGS2( double solutionAccuracy ,
+                                               unsigned int numberOfIterations,
+                                               unsigned int hessianApproximateAccuracy,
+                                               unsigned int deltaConvergenceDistance,
+                                               double deltaConvergenceTolerance,
+                                               unsigned int lineSearchMaximumEvaluations,
+                                               double lineSearchMinimumStep,
+                                               double lineSearchMaximumStep,
+                                               double lineSearchAccuracy )
+{
+  m_OptimizerType = LBFGS2;
+  m_OptimizerSolutionAccuracy = solutionAccuracy;
+  m_OptimizerNumberOfIterations = numberOfIterations;
+  m_OptimizerHessianApproximationAccuracy = hessianApproximateAccuracy;
+  m_OptimizerDeltaConvergenceDistance = deltaConvergenceDistance;
+  m_OptimizerDeltaConvergenceTolerance = deltaConvergenceTolerance;
+  m_OptimizerLineSearchMaximumEvaluations = lineSearchMaximumEvaluations;
+  m_OptimizerLineSearchMinimumStep = lineSearchMinimumStep;
+  m_OptimizerLineSearchMaximumStep = lineSearchMaximumStep;
+  m_OptimizerLineSearchAccuracy = lineSearchAccuracy;
+  return *this;
+}
+
+
+ImageRegistrationMethod::Self&
 ImageRegistrationMethod::SetOptimizerWeights( const std::vector<double> &weights)
 {
   this->m_OptimizerWeights = weights;

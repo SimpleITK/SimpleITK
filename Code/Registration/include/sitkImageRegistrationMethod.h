@@ -304,6 +304,29 @@ namespace simple
                                double upperBound = std::numeric_limits<double>::max(),
                                bool trace = false );
 
+    /** \brief Limited memory Broyden Fletcher Goldfarb Shannon minimization without bounds.
+     *
+     * The default parameters utilize LBFGSB in unbounded mode. This
+     * version is from LibLBFGS.
+     *
+     * There are upto 3 stopping criteria:
+     *    - the solution accuracy which is the magnitude of the gradient
+     *    - the delta convergence which ensures the decrease of the metric
+     *    - maximum number of iterations
+     *
+     * \sa itk::LBFGS2Optimizerv4
+     */
+    SITK_RETURN_SELF_TYPE_HEADER SetOptimizerAsLBFGS2( double solutionAccuracy = 1e-5,
+                                                       unsigned int numberOfIterations = 0,
+                                                       unsigned int hessianApproximateAccuracy = 6,
+                                                       unsigned int deltaConvergenceDistance = 0,
+                                                       double deltaConvergenceTolerance = 1e-5,
+                                                       unsigned int lineSearchMaximumEvaluations = 40,
+                                                       double lineSearchMinimumStep = 1e-20,
+                                                       double lineSearchMaximumStep = 1e20,
+                                                       double lineSearchAccuracy = 1e-4);
+
+
     /** \brief Set the optimizer to sample the metric at regular steps.
      *
      * At each iteration the GetOptimizerIteration, can be used to
@@ -649,7 +672,8 @@ namespace simple
                          Exhaustive,
                          Amoeba,
                          Powell,
-                         OnePlusOneEvolutionary
+                         OnePlusOneEvolutionary,
+                         LBFGS2
     };
     OptimizerType m_OptimizerType;
     double m_OptimizerLearningRate;
@@ -686,6 +710,16 @@ namespace simple
     double m_OptimizerGrowthFactor;
     double m_OptimizerShrinkFactor;
     unsigned int m_OptimizerSeed;
+    double m_OptimizerSolutionAccuracy;
+    unsigned int m_OptimizerHessianApproximationAccuracy;
+    unsigned int m_OptimizerDeltaConvergenceDistance;
+    double m_OptimizerDeltaConvergenceTolerance;
+    unsigned int m_OptimizerLineSearchMaximumEvaluations;
+    double m_OptimizerLineSearchMinimumStep;
+    double m_OptimizerLineSearchMaximumStep;
+    double m_OptimizerLineSearchAccuracy;
+
+
 
     std::vector<double> m_OptimizerWeights;
 

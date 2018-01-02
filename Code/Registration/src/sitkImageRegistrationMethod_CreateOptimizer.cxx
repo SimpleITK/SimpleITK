@@ -21,6 +21,7 @@
 #include "itkGradientDescentOptimizerv4.h"
 #include "itkRegularStepGradientDescentOptimizerv4.h"
 #include "itkLBFGSBOptimizerv4.h"
+#include "itkLBFGS2Optimizerv4.h"
 #include "itkOnePlusOneEvolutionaryOptimizerv4.h"
 #include "itkNormalVariateGenerator.h"
 #include "itkExhaustiveOptimizerv4.h"
@@ -221,6 +222,29 @@ namespace simple
       optimizer->SetLowerBound( lowerBound  );
       optimizer->SetUpperBound( upperBound  );
       optimizer->SetTrace( m_OptimizerTrace );
+      optimizer->Register();
+
+      this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetValue,optimizer.GetPointer());
+      this->m_pfGetOptimizerIteration = nsstd::bind(&CurrentIterationCustomCast::CustomCast,optimizer.GetPointer());
+      this->m_pfGetOptimizerPosition = nsstd::bind(&PositionOptimizerCustomCast::CustomCast,optimizer.GetPointer());
+      this->m_pfGetOptimizerScales = nsstd::bind(&PositionOptimizerCustomCast::Helper<_OptimizerType::ScalesType>, nsstd::bind(&_OptimizerType::GetScales, optimizer.GetPointer()));
+
+      return optimizer.GetPointer();
+      }
+    else if ( m_OptimizerType == LBFGS2 )
+      {
+      typedef itk::LBFGS2Optimizerv4 _OptimizerType;
+      _OptimizerType::Pointer      optimizer =  _OptimizerType::New();
+
+      optimizer->SetSolutionAccuracy( this->m_OptimizerSolutionAccuracy );
+      optimizer->SetNumberOfIterations( this->m_OptimizerNumberOfIterations );
+      optimizer->SetHessianApproximationAccuracy( this->m_OptimizerHessianApproximationAccuracy );
+      optimizer->SetDeltaConvergenceDistance( this->m_OptimizerDeltaConvergenceDistance );
+      optimizer->SetDeltaConvergenceTolerance( this->m_OptimizerDeltaConvergenceTolerance );
+      optimizer->SetMaximumLineSearchEvaluations( this->m_OptimizerLineSearchMaximumEvaluations );
+      optimizer->SetMinimumLineSearchStep( this->m_OptimizerLineSearchMinimumStep );
+      optimizer->SetMaximumLineSearchStep( this->m_OptimizerLineSearchMaximumStep );
+      optimizer->SetLineSearchAccuracy( this->m_OptimizerLineSearchAccuracy );
       optimizer->Register();
 
       this->m_pfGetMetricValue = nsstd::bind(&_OptimizerType::GetValue,optimizer.GetPointer());
