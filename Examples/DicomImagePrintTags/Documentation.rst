@@ -8,11 +8,11 @@ Overview
 
 This example illustrates how to read only an image's information and meta-data dictionary without loading the pixel content via the `ImageFileReader <https://itk.org/SimpleITKDoxygen/html/classitk_1_1simple_1_1ImageFileReader.html>`_.
 
-Reading an entire image can be a memory and time intensive operation if the image is large or many files must be read. The image information and meta-data dictionary can be read without the bulk data by using the ImageFilerReader's object oriented interface, with use of the ImageFileReader::ReadImageInformation method.
+Reading an entire image potentially is memory and time intensive operation when the image is large or many files must be read. The image information and meta-data dictionary can be read without the bulk data by using the ImageFilerReader's object oriented interface, with use of the ImageFileReader::ReadImageInformation method.
 
-While all file formats support loading image information such as size, pixel type, origin, and spacing many image types do not have a meta-data dictionary. The most common case for images with a dictionary is DICOM, but also the fields from a TIFF, NIFTI, MetaIO and other file formats can be loaded into the meta-data dictionary.
+While all file formats support loading image information such as size, pixel type, origin, and spacing many image types do not have a meta-data dictionary. The most common case for images with a dictionary is DICOM, but also the fields from TIFF, NIFTI, MetaIO and other file formats maybe loaded into the meta-data dictionary.
 
-For efficiency, the default DICOM reader settings will only load public tags (even group numbers). In the example we explicitly set the reader to load private tags (odd group numbers). For further information on DICOM data elements see the standard part 5, `Data Structures and Encoding <http://dicom.nema.org/medical/dicom/current/output/pdf/part05.pdf>`_.
+For efficiency, the default DICOM reader settings will only load public tags (even group numbers). In the example we explicitly set the reader to also load private tags (odd group numbers). For further information on DICOM data elements see the standard part 5, `Data Structures and Encoding <http://dicom.nema.org/medical/dicom/current/output/pdf/part05.pdf>`_.
 
 See also :ref:`lbl_dicom_series_read_modify_write`, :ref:`lbl_dicom_series_reader`.
 
