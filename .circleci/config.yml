@@ -16,6 +16,7 @@ jobs:
       CTEST_BINARY_DIRECTORY: /home/circleci/SimpleITK-build
       DASHBOARD_BRANCH_DIRECTORY: /home/circleci/dashboard
       ExternalData_OBJECT_STORES: /home/circleci/.ExternalData
+      CCACHE_NODIRECT: 1
     steps:
       - checkout:
           path : ~/SimpleITK
