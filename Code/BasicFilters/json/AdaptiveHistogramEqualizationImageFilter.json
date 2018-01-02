@@ -32,15 +32,6 @@
       "detaileddescriptionSet" : "Set/Get the value of beta. If beta = 1 (and alpha = 1), then the output image matches the input image. As beta approaches 0, the filter behaves as an unsharp mask. Default is 0.3.",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : "Set/Get the value of beta. If beta = 1 (and alpha = 1), then the output image matches the input image. As beta approaches 0, the filter behaves as an unsharp mask. Default is 0.3."
-    },
-    {
-      "name" : "UseLookupTable",
-      "type" : "bool",
-      "default" : "false",
-      "briefdescriptionSet" : "",
-      "detaileddescriptionSet" : "Set/Get whether an optimized lookup table for the intensity mapping function is used. Default is off. Deprecated",
-      "briefdescriptionGet" : "",
-      "detaileddescriptionGet" : "Set/Get whether an optimized lookup table for the intensity mapping function is used. Default is off. Deprecated"
     }
   ],
   "tests" : [
