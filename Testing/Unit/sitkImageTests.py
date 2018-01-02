@@ -31,6 +31,38 @@ class ImageTests(unittest.TestCase):
     def setUp(self):
         pass
 
+    def test_iterable(self):
+        """Test that the Image object is iterable"""
+
+         # create image filled with zeros
+        image = sitk.Image( 10, 10, sitk.sitkInt32 )
+
+        image[9,9] = 10;
+
+        self.assertEqual(sum( image ), 10)
+
+    def test_set_get_pixel(self):
+        """Test methods for setting and getting pixel"""
+
+        # create image filled with zeros
+        image = sitk.Image( 10, 10, sitk.sitkInt32 )
+
+        image.SetPixel( 0, 0, 1 )
+        image[ [0,1] ]  = 2
+        image[ 9,9 ]  = 3
+        image.SetPixel( [0, 2], 4 )
+
+        self.assertEqual(image.GetPixel(1,1), 0 )
+        self.assertEqual(image.GetPixel([0,2]), 4 )
+
+        self.assertEqual(image[0,1], 2)
+        self.assertEqual(image[[ 9,9 ]], 3)
+
+
+
+        self.assertEqual(len( image ), 100)
+
+
     def test_legacy(self):
         """ This is old testing cruft before tehe unittest enlightenment """
 
@@ -58,25 +90,17 @@ class ImageTests(unittest.TestCase):
 
         image += image
         image -= image
+        self.assertEqual(image.GetPixel(1,1), 0 )
+
         image *= image
+        self.assertEqual(image.GetPixel(1,1), 0 )
+
+
+        # True division will results in "nan" while
         image /= image
         image //= image
 
         image = image * 0
-
-        image.SetPixel( 0, 0, 1 )
-        image[ [0,1] ]  = 2
-        image[ 9,9 ]  = 3
-        image.SetPixel( [0, 2], 4 )
-
-        self.assertEqual(image.GetPixel(1,1), 0 )
-        self.assertEqual(image.GetPixel([0,2]), 4 )
-        image[1,1]
-        image[ [ 1,1 ] ]
-
-        self.assertEqual(sum( image ), 10)
-
-        self.assertEqual(len( image ), 100)
 
 
 if __name__ == '__main__':
