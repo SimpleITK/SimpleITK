@@ -61,7 +61,8 @@
       "measurements_results" : [
         {
           "name" : "NumberOfObjects",
-          "value" : 23
+          "value" : 23,
+          "cxx_value" : "23u"
         }
       ]
     },
@@ -87,7 +88,8 @@
       "measurements_results" : [
         {
           "name" : "NumberOfObjects",
-          "value" : 21
+          "value" : 21,
+            "cxx_value" : "21u"
         }
       ]
     }
