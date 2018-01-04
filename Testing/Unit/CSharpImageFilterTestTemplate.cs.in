@@ -45,7 +45,7 @@ end)
                 return 1;
             }
 
-            String tag = args[1];
+            String tag = args[0];
 
             // Instantiate objects
             ImageFileReader reader = new ImageFileReader();
@@ -62,7 +62,7 @@ $(foreach tests
             if (tag.Equals( "${tag}" )) {
 
                 // Read image(s)
-				for ( int i = 2; i < args.Length-1; i++ ) {
+				for ( int i = 1; i < args.Length-1; i++ ) {
                                   reader.SetFileName( args[i] );
                                   inputs.Add( reader.Execute() );
 				}
