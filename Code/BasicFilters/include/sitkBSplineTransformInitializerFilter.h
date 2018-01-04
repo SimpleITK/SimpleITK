@@ -54,7 +54,7 @@ SetTransformDomainMeshSize()before calling InitializeTransform().
       BSplineTransformInitializerFilter();
 
       /** Destructor */
-      ~BSplineTransformInitializerFilter();
+      virtual ~BSplineTransformInitializerFilter();
 
       /** Define the pixels types supported by this filter */
       typedef AllPixelIDTypeList  PixelIDTypeList;

@@ -26,10 +26,15 @@ namespace simple
 
 //----------------------------------------------------------------------------
 
+
+CastImageFilter::~CastImageFilter()
+{
+}
+
 //
 // Default constructor that initializes parameters
 //
-CastImageFilter::CastImageFilter ()
+CastImageFilter::CastImageFilter()
 {
   this->m_OutputPixelType = sitkFloat32;
 

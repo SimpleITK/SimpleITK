@@ -39,6 +39,8 @@ public:
 typedef Euler3DTransform Self;
 typedef Transform        Superclass;
 
+virtual ~Euler3DTransform();
+
 // construct identity
 Euler3DTransform();
 

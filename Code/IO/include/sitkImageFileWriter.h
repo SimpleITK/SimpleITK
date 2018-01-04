@@ -54,7 +54,9 @@ class SmartPointer;
       // list of pixel types supported
       typedef NonLabelPixelIDTypeList PixelIDTypeList;
 
-      ImageFileWriter( void );
+      virtual ~ImageFileWriter();
+
+      ImageFileWriter();
 
       /** Print ourselves to string */
       virtual std::string ToString() const;

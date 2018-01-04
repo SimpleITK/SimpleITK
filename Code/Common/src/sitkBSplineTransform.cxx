@@ -50,6 +50,10 @@ unsigned int sitkGetOrder(void)
 }
 
 
+BSplineTransform::~BSplineTransform()
+{
+}
+
 // construct identity
 BSplineTransform::BSplineTransform(unsigned int dimensions, unsigned int order)
   : Transform( CreateBSplinePimpleTransform(dimensions, order) )

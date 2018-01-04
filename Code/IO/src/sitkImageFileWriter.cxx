@@ -33,6 +33,10 @@ void WriteImage ( const Image& image, const std::string &inFileName, bool useCom
   }
 
 
+ImageFileWriter::~ImageFileWriter()
+{
+}
+
 ImageFileWriter::ImageFileWriter()
   {
   this->m_UseCompression = false;

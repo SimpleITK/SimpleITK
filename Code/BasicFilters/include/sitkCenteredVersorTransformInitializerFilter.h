@@ -49,12 +49,12 @@ Versorrepresenting rotation.
     public:
       typedef CenteredVersorTransformInitializerFilter Self;
 
+      /** Destructor */
+      virtual ~CenteredVersorTransformInitializerFilter();
+
       /** Default Constructor that takes no arguments and initializes
        * default parameters */
       CenteredVersorTransformInitializerFilter();
-
-      /** Destructor */
-      ~CenteredVersorTransformInitializerFilter();
 
       /** Define the pixels types supported by this filter */
       typedef BasicPixelIDTypeList  PixelIDTypeList;

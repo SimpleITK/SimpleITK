@@ -39,6 +39,8 @@ public:
   typedef BSplineTransform Self;
   typedef Transform        Superclass;
 
+  virtual ~BSplineTransform();
+
   explicit BSplineTransform(unsigned int dimensions, unsigned int order=3);
 
   BSplineTransform( const BSplineTransform & );

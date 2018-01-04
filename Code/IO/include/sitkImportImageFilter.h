@@ -49,6 +49,8 @@ namespace itk {
     public:
       typedef ImportImageFilter Self;
 
+      virtual ~ImportImageFilter();
+
       ImportImageFilter();
 
       /** Print ourselves to string */

@@ -142,7 +142,7 @@ public:
     */
   bool HasMemberFunction( PixelIDValueType pixelID1,
                           PixelIDValueType pixelID2,
-                          unsigned int imageDimension  ) const throw();
+                          unsigned int imageDimension  ) const SITK_NOEXCEPT;
 
 
   /** \brief Returns a function object for the combination of

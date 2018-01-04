@@ -25,6 +25,10 @@ namespace itk
 namespace simple
 {
 
+AffineTransform::~AffineTransform()
+{
+}
+
 // construct identity
 AffineTransform::AffineTransform(unsigned int dimensions)
   : Transform(dimensions, sitkAffine)

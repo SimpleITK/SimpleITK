@@ -93,8 +93,9 @@ namespace simple
     typedef ImageRegistrationMethod Self;
     typedef ProcessObject Superclass;
 
-    ImageRegistrationMethod();
     virtual ~ImageRegistrationMethod();
+
+    ImageRegistrationMethod();
 
     std::string GetName() const { return std::string("ImageRegistrationMethod"); }
 
@@ -615,7 +616,7 @@ namespace simple
         TRegistrationMethod* method);
 
     virtual void PreUpdate( itk::ProcessObject *p );
-    virtual void OnActiveProcessDelete( ) throw();
+    virtual void OnActiveProcessDelete( ) SITK_NOEXCEPT;
     virtual unsigned long AddITKObserver(const itk::EventObject &, itk::Command *);
     virtual void RemoveITKObserver( EventCommand &e );
 

@@ -40,7 +40,9 @@ public:
   typedef ScaleSkewVersor3DTransform Self;
   typedef Transform                  Superclass;
 
-// construct identity
+  virtual ~ScaleSkewVersor3DTransform();
+
+  // construct identity
   ScaleSkewVersor3DTransform();
 
   ScaleSkewVersor3DTransform( const ScaleSkewVersor3DTransform & );

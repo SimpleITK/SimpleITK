@@ -39,6 +39,11 @@ namespace itk {
 namespace simple {
 
 ImageReaderBase
+::~ImageReaderBase()
+{
+}
+
+ImageReaderBase
 ::ImageReaderBase()
   : m_OutputPixelType(sitkUnknown),
     m_LoadPrivateTags(false)

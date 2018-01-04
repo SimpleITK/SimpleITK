@@ -39,7 +39,9 @@ public:
   typedef VersorTransform Self;
   typedef Transform       Superclass;
 
-// construct identity
+  ~VersorTransform();
+
+  // construct identity
   VersorTransform();
 
   VersorTransform( const VersorTransform & );

@@ -28,6 +28,11 @@
 
 namespace itk {
   namespace simple {
+
+    HashImageFilter::~HashImageFilter ()
+    {
+    }
+
     HashImageFilter::HashImageFilter () {
       this->m_HashFunction = SHA1;
 

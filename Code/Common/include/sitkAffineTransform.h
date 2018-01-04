@@ -39,6 +39,8 @@ public:
   typedef AffineTransform Self;
   typedef Transform       Superclass;
 
+  virtual ~AffineTransform();
+
   explicit AffineTransform(unsigned int dimensions);
 
   AffineTransform( const AffineTransform & );
