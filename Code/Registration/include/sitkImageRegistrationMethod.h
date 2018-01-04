@@ -93,8 +93,9 @@ namespace simple
     typedef ImageRegistrationMethod Self;
     typedef ProcessObject Superclass;
 
-    ImageRegistrationMethod();
     virtual ~ImageRegistrationMethod();
+
+    ImageRegistrationMethod();
 
     std::string GetName() const { return std::string("ImageRegistrationMethod"); }
 
