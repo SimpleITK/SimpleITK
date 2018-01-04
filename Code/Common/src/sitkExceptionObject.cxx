@@ -29,11 +29,11 @@ namespace itk
 namespace simple
 {
 
-GenericException::GenericException() throw()
+GenericException::GenericException() SITK_NOEXCEPT
   : m_PimpleException( NULL )
 {}
 
-GenericException::GenericException( const GenericException &e ) throw()
+GenericException::GenericException( const GenericException &e ) SITK_NOEXCEPT
 
   : std::exception( e )
 {
@@ -50,7 +50,7 @@ GenericException::GenericException( const GenericException &e ) throw()
     }
 }
 
-GenericException::GenericException(const char *file, unsigned int lineNumber) throw()
+GenericException::GenericException(const char *file, unsigned int lineNumber) SITK_NOEXCEPT
 {
   try
     {
@@ -63,7 +63,7 @@ GenericException::GenericException(const char *file, unsigned int lineNumber) th
 }
 
 /** Constructor. Needed to ensure the exception object can be copied. */
-GenericException::GenericException(const std::string & file, unsigned int lineNumber) throw()
+GenericException::GenericException(const std::string & file, unsigned int lineNumber) SITK_NOEXCEPT
 {
   try
     {
@@ -78,7 +78,7 @@ GenericException::GenericException(const std::string & file, unsigned int lineNu
 /** Constructor. Needed to ensure the exception object can be copied. */
 GenericException::GenericException(const std::string & file,
                                    unsigned int lineNumber,
-                                   const std::string & desc) throw()
+                                   const std::string & desc) SITK_NOEXCEPT
 {
   try
     {
@@ -130,7 +130,7 @@ std::string GenericException::ToString() const
   return std::string("No pimple exception");
 }
 
-const char * GenericException::what() const throw()
+const char * GenericException::what() const SITK_NOEXCEPT
 {
   if ( this->m_PimpleException )
     return this->m_PimpleException->what();
