@@ -54,6 +54,7 @@ SET(CTEST_CUSTOM_WARNING_EXCEPTION
   # Ignore CSharp invalid version warning for dev
   "warning CS1607.*The version number.*dev.*is invalid"
   "warning CS1607.*The version.*dev.*is not in the normal"
+  "warning CS7035.*The specified version string.*does not conform"
 
   # Warning when building R, issue related to make file
   "warning: jobserver unavailable:"
