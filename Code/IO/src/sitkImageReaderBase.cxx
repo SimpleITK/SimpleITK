@@ -156,7 +156,7 @@ ImageReaderBase
 
 void
 ImageReaderBase
-::GetPixelIDFromImageIO( ImageIOBase *iobase,
+::GetPixelIDFromImageIO( const ImageIOBase *iobase,
                          PixelIDValueType &outPixelType,
                          unsigned int & outDimensions )
 {
@@ -203,7 +203,7 @@ ImageReaderBase
 
 unsigned int
 ImageReaderBase
-::GetDimensionFromImageIO( itk::ImageIOBase* iobase, unsigned int i)
+::GetDimensionFromImageIO( const itk::ImageIOBase* iobase, unsigned int i)
 {
   return iobase->GetDimensions(i);
 }

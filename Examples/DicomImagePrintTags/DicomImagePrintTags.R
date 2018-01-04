@@ -29,11 +29,22 @@ if (length(args) <  1) {
    quit(1)
 }
 
-inputImage <- ReadImage(args[[1]])
+reader <- ImageFileReader()
 
-keys <- inputImage$GetMetaDataKeys()
+reader$SetFileName(args[[1]])
+reader$LoadPrivateTagsOn()
+
+reader$ReadImageInformation()
+
+keys <- reader$GetMetaDataKeys()
 
 for ( k in keys)
 {
- print(sprintf("(%s) = \"%s\"", k, inputImage$GetMetaData(k)))
+ print(sprintf("(%s) = \"%s\"", k, reader$GetMetaData(k)))
 }
+
+cat("Image Size: ", reader$GetSize(), '\n')
+
+pixelType = GetPixelIDValueAsString(reader$GetPixelID())
+
+cat("Image PixelType: ", pixelType, '\n')

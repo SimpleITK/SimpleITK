@@ -79,13 +79,14 @@ class SmartPointer;
 
       void GetPixelIDFromImageIO( const std::string &fileName,
                                   PixelIDValueType &outPixelType,
-                                  unsigned int & outDimensions);
-      void GetPixelIDFromImageIO( itk::ImageIOBase* iobase,
+                                  unsigned int & outDimensions );
+      void GetPixelIDFromImageIO( const itk::ImageIOBase* iobase,
                                   PixelIDValueType &outPixelType,
-                                  unsigned int & outDimensions);
+                                  unsigned int & outDimensions );
 
-      unsigned int GetDimensionFromImageIO( const std::string &fileName, unsigned int i);
-      unsigned int GetDimensionFromImageIO( itk::ImageIOBase* iobase, unsigned int i);
+      unsigned int GetDimensionFromImageIO( const std::string &fileName, unsigned int i );
+      unsigned int GetDimensionFromImageIO( const itk::ImageIOBase* iobase, unsigned int i );
+
 
     private:
 

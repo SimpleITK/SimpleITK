@@ -25,6 +25,7 @@
 #include <itkImageSeriesReader.h>
 
 #include "itkGDCMSeriesFileNames.h"
+#include "sitkMetaDataDictionaryCustomCast.hxx"
 
 namespace itk {
   namespace simple {
@@ -66,7 +67,7 @@ namespace itk {
 
   ImageSeriesReader::ImageSeriesReader()
     :
-    m_Filter(NULL),
+    m_Filter(SITK_NULLPTR),
     m_MetaDataDictionaryArrayUpdate(false)
     {
 
@@ -81,7 +82,7 @@ namespace itk {
 
   ImageSeriesReader::~ImageSeriesReader()
   {
-  if (this->m_Filter != NULL)
+  if (this->m_Filter != SITK_NULLPTR)
     {
       m_Filter->UnRegister();
     }
@@ -168,50 +169,6 @@ namespace itk {
     }
 
 
-//
-// Custom Casts
-//
-namespace {
-template<typename FilterType>
-struct GetMetaDataKeysCustomCast
-{
-  static std::vector<std::string> CustomCast( const FilterType *f, int i)
-  {
-    const typename FilterType::DictionaryArrayType &mda = *f->GetMetaDataDictionaryArray();
-    return mda.at(i)->GetKeys();
-  }
-};
-
-template<typename FilterType>
-struct HasMetaDataKeyCustomCast
-{
-  static bool CustomCast( const FilterType *f, int i, const std::string &k)
-  {
-    const typename FilterType::DictionaryArrayType &mda = *f->GetMetaDataDictionaryArray();
-    return mda.at(i)->HasKey(k);
-  }
-};
-
-template<typename FilterType>
-struct GetMetaDataCustomCast
-{
-  static std::string CustomCast( const FilterType *f, int i, const std::string &k)
-  {
-    const typename FilterType::DictionaryArrayType &mda = *f->GetMetaDataDictionaryArray();
-
-    std::string value;
-    if (ExposeMetaData(*mda.at(i), k, value))
-      {
-      return value;
-      }
-
-    std::ostringstream ss;
-    mda.at(i)->Get(k)->Print(ss);
-    return ss.str();
-  }
-};
-}
-
   template <class TImageType> Image
   ImageSeriesReader::ExecuteInternal( itk::ImageIOBase* imageio )
     {
@@ -230,13 +187,13 @@ struct GetMetaDataCustomCast
     reader->SetMetaDataDictionaryArrayUpdate(m_MetaDataDictionaryArrayUpdate);
 
     // release the old filter ( and output data )
-    if ( this->m_Filter != NULL)
+    if ( this->m_Filter != SITK_NULLPTR)
       {
       this->m_pfGetMetaDataKeys = SITK_NULLPTR;
       this->m_pfHasMetaDataKey = SITK_NULLPTR;
       this->m_pfGetMetaData =  SITK_NULLPTR;
       this->m_Filter->UnRegister();
-      this->m_Filter = NULL;
+      this->m_Filter = SITK_NULLPTR;
       }
 
 
