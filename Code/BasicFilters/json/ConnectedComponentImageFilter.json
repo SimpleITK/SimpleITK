@@ -2,10 +2,22 @@
   "name" : "ConnectedComponentImageFilter",
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
-  "number_of_inputs" : 1,
+  "number_of_inputs" : 0,
   "doc" : "",
   "pixel_types" : "IntegerPixelIDTypeList",
+  "filter_type" : "itk::ConnectedComponentImageFilter<InputImageType, OutputImageType, itk::Image<uint8_t, InputImageType::ImageDimension> >",
   "output_pixel_type" : "uint32_t",
+  "inputs" : [
+    {
+      "name" : "Image",
+      "type" : "Image"
+    },
+    {
+      "name" : "MaskImage",
+      "type" : "Image",
+      "optional" : true
+    }
+  ],
   "members" : [
     {
       "name" : "FullyConnected",
@@ -42,6 +54,22 @@
       "md5hash" : "548f5184428db10d93e3bf377dee5253",
       "inputs" : [
         "Input/WhiteDots.png"
+      ]
+    },
+    {
+      "tag" : "mask",
+      "description" : "With make image",
+      "settings" : [],
+      "measurements_results" : [
+        {
+          "name" : "ObjectCount",
+          "value" : "10u"
+        }
+      ],
+      "md5hash" : "769315132e427a391edd779191db446d",
+      "inputs" : [
+        "Input/2th_cthead1.png",
+        "Input/2th_cthead1.png"
       ]
     },
     {

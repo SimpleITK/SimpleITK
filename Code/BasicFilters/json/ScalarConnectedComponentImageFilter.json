@@ -2,11 +2,21 @@
   "name" : "ScalarConnectedComponentImageFilter",
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
-  "number_of_inputs" : 1,
-  "doc" : "\todo Add support for mask image input",
+  "number_of_inputs" : 0,
   "pixel_types" : "BasicPixelIDTypeList",
   "filter_type" : "itk::ScalarConnectedComponentImageFilter<InputImageType, OutputImageType, itk::Image<uint8_t, InputImageType::ImageDimension> >",
   "output_pixel_type" : "uint32_t",
+  "inputs" : [
+    {
+      "name" : "Image",
+      "type" : "Image"
+    },
+    {
+      "name" : "MaskImage",
+      "type" : "Image",
+      "optional" : true
+    }
+  ],
   "members" : [
     {
       "name" : "DistanceThreshold",
@@ -48,6 +58,35 @@
       "md5hash" : "d119778b306a4f744899f917c8f10814",
       "inputs" : [
         "Input/RA-Short.nrrd"
+      ]
+    },
+    {
+      "tag" : "2th_cthead",
+      "description" : "split cthead",
+      "settings" : [
+        {
+          "parameter" : "DistanceThreshold",
+          "value" : "1.0"
+        }
+      ],
+      "md5hash" : "c7a41eaca76bf64f4308bb17ca03c141",
+      "inputs" : [
+        "Input/2th_cthead1.png"
+      ]
+    },
+    {
+      "tag" : "mask",
+      "description" : "threshold with mask",
+      "settings" : [
+        {
+          "parameter" : "DistanceThreshold",
+          "value" : "1.0"
+        }
+      ],
+      "md5hash" : "91338bae073d58caeddaaf11d6f276a3",
+      "inputs" : [
+        "Input/2th_cthead1.png",
+        "Input/2th_cthead1.png"
       ]
     }
   ],
