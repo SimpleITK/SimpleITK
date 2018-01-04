@@ -42,8 +42,9 @@ class SmartPointer;
     public:
       typedef ImageReaderBase Self;
 
+      virtual ~ImageReaderBase();
+
       ImageReaderBase();
-      // The destructor will be implicitly declared as public.
 
       /** \brief Set/Get The output PixelType of the image.
        *
