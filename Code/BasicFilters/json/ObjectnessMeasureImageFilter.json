@@ -78,7 +78,8 @@
       "settings" : [
           {
               "parameter" : "ObjectDimension",
-              "value" : 0
+              "value" : 0,
+              "cxx_value" : "0u"
           },
           {
               "parameter" : "BrightObject",
