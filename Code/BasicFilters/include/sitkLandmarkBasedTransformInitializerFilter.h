@@ -76,12 +76,13 @@ in ITK" by Kim E.Y., Johnson H., Williams N. available at http://midasjournal.co
     public:
       typedef LandmarkBasedTransformInitializerFilter Self;
 
+      /** Destructor */
+      virtual ~LandmarkBasedTransformInitializerFilter();
+
+
       /** Default Constructor that takes no arguments and initializes
        * default parameters */
       LandmarkBasedTransformInitializerFilter();
-
-      /** Destructor */
-      ~LandmarkBasedTransformInitializerFilter();
 
       /** Define the pixels types supported by this filter */
       typedef typelist::MakeTypeList<BasicPixelID<float> >::Type PixelIDTypeList;
