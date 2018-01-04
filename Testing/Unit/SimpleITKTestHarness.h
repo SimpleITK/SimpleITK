@@ -148,6 +148,8 @@ public:
 };
 
 
+void * GetBufferAsVoid( itk::simple::Image &sitkImage);
+
 
 inline std::vector<double> v2(double v1, double v2)
 {
