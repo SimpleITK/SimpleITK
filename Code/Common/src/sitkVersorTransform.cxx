@@ -58,6 +58,10 @@ std::vector<TType> sitkITKVersorToSTL( const itk::Versor<T> & in )
 
 }
 
+VersorTransform::~VersorTransform()
+{
+}
+
 // construct identity
 VersorTransform::VersorTransform()
   : Transform(3, sitkVersor)

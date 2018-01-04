@@ -58,6 +58,10 @@ std::vector<TType> sitkITKVersorToSTL( const itk::Versor<T> & in )
 
 }
 
+ScaleSkewVersor3DTransform::~ScaleSkewVersor3DTransform()
+{
+}
+
 // construct identity
 ScaleSkewVersor3DTransform::ScaleSkewVersor3DTransform()
   : Transform(3, sitkScaleSkewVersor)

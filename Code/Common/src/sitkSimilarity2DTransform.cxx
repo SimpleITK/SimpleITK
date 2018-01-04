@@ -25,6 +25,10 @@ namespace itk
 namespace simple
 {
 
+Similarity2DTransform::~Similarity2DTransform()
+{
+}
+
 // construct identity
 Similarity2DTransform::Similarity2DTransform()
   : Transform(2,sitkSimilarity)

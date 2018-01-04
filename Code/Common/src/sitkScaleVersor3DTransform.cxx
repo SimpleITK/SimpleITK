@@ -59,6 +59,10 @@ std::vector<TType> sitkITKVersorToSTL( const itk::Versor<T> & in )
 
 }
 
+ScaleVersor3DTransform::~ScaleVersor3DTransform()
+{
+}
+
 // construct identity
 ScaleVersor3DTransform::ScaleVersor3DTransform()
   : Transform(new PimpleTransform<itk::ScaleVersor3DTransform<double> >() )

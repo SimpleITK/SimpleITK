@@ -58,6 +58,10 @@ std::vector<TType> sitkITKVersorToSTL( const itk::Versor<T> & in )
 
 }
 
+VersorRigid3DTransform::~VersorRigid3DTransform()
+{
+}
+
 // construct identity
 VersorRigid3DTransform::VersorRigid3DTransform()
   : Transform(3, sitkVersorRigid)

@@ -25,6 +25,10 @@ namespace itk
 namespace simple
 {
 
+Euler2DTransform::~Euler2DTransform()
+{
+}
+
 // construct identity
 Euler2DTransform::Euler2DTransform()
   : Transform(2,sitkEuler)

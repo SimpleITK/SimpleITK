@@ -55,7 +55,10 @@ std::vector<TType> sitkITKVersorToSTL( const itk::Versor<T> & in )
   return out;
 }
 
+}
 
+Similarity3DTransform::~Similarity3DTransform()
+{
 }
 
 // construct identity

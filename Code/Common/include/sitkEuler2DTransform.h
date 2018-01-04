@@ -39,7 +39,9 @@ public:
   typedef Euler2DTransform Self;
   typedef Transform        Superclass;
 
-// construct identity
+  virtual ~Euler2DTransform();
+
+  // construct identity
   Euler2DTransform();
 
   explicit Euler2DTransform(const std::vector<double> &fixedCenter,

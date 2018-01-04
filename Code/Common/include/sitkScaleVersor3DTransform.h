@@ -41,6 +41,8 @@ public:
   typedef ScaleVersor3DTransform Self;
   typedef Transform              Superclass;
 
+  virtual ~ScaleVersor3DTransform();
+
 // construct identity
   ScaleVersor3DTransform();
 

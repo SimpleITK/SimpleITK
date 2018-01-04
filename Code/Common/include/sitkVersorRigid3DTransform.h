@@ -40,7 +40,9 @@ public:
   typedef VersorRigid3DTransform Self;
   typedef Transform              Superclass;
 
-// construct identity
+  virtual ~VersorRigid3DTransform();
+
+  // construct identity
   VersorRigid3DTransform();
 
   VersorRigid3DTransform( const VersorRigid3DTransform & );

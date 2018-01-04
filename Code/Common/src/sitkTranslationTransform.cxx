@@ -25,6 +25,10 @@ namespace itk
 namespace simple
 {
 
+TranslationTransform::~TranslationTransform()
+{
+}
+
 TranslationTransform::TranslationTransform(unsigned int dimensions,
                                            const std::vector<double> &offset)
   : Transform(dimensions, sitkTranslation)

@@ -24,6 +24,10 @@ namespace itk
 namespace simple
 {
 
+ScaleTransform::~ScaleTransform()
+{
+}
+
 ScaleTransform::ScaleTransform(unsigned int dimensions,
                                            const std::vector<double> &scale)
   : Transform(dimensions, sitkScale)
