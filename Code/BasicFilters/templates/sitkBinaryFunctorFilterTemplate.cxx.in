@@ -47,7 +47,7 @@ $(include ConstructorVectorPixels.cxx.in)
 }
 
 
-$(include DesctuctorDefinition.cxx.in)
+$(include DestructorDefinition.cxx.in)
 
 $(include CustomMethods.cxx.in)
 

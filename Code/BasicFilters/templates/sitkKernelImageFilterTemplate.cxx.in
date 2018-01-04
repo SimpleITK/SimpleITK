@@ -48,7 +48,7 @@ $(include ConstructorMemberFunctionSetup.cxx.in)
 $(include ConstructorVectorPixels.cxx.in)
 }
 
-$(include DesctuctorDefinition.cxx.in)
+$(include DestructorDefinition.cxx.in)
 
 //
 // ToString
