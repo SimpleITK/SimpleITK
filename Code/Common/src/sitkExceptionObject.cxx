@@ -90,7 +90,7 @@ GenericException::GenericException(const std::string & file,
     }
 }
 
-GenericException::~GenericException() throw( )
+GenericException::~GenericException() SITK_NOEXCEPT
 {
   delete this->m_PimpleException;
 }

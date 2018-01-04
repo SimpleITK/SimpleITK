@@ -127,7 +127,7 @@ public:
   /** \brief Query to determine if an member function has been
     * registered for pixelID and imageDimension
     */
-  bool HasMemberFunction( PixelIDValueType pixelID, unsigned int imageDimension  ) const throw();
+  bool HasMemberFunction( PixelIDValueType pixelID, unsigned int imageDimension  ) const SITK_NOEXCEPT;
 
   /** \brief Returns a function object for the PixelIndex, and image
    *  dimension.

@@ -262,7 +262,7 @@ namespace itk {
       friend class itk::simple::Command;
       // method call by command when it's deleted, maintains internal
       // references between command and process objects.
-      virtual void onCommandDelete(const itk::simple::Command *cmd) throw();
+      virtual void onCommandDelete(const itk::simple::Command *cmd) SITK_NOEXCEPT;
       #endif
 
 

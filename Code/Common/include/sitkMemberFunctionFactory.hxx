@@ -131,7 +131,7 @@ void MemberFunctionFactory<TMemberFunctionPointer>
 template <typename TMemberFunctionPointer>
 bool
 MemberFunctionFactory< TMemberFunctionPointer >
-::HasMemberFunction( PixelIDValueType pixelID, unsigned int imageDimension  ) const throw()
+::HasMemberFunction( PixelIDValueType pixelID, unsigned int imageDimension  ) const SITK_NOEXCEPT
 {
 
   try

@@ -484,7 +484,7 @@ void ProcessObject::OnActiveProcessDelete( )
 }
 
 
-void ProcessObject::onCommandDelete(const itk::simple::Command *cmd) throw()
+void ProcessObject::onCommandDelete(const itk::simple::Command *cmd) SITK_NOEXCEPT
 {
   // remove command from m_Command book keeping list, and remove it
   // from the  ITK ProcessObject
