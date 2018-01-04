@@ -5,10 +5,12 @@
 # Lua Tests
 #
 $(for i=1,#tests do
-local script = "$${SimpleITK_BINARY_DIR}/Testing/Unit/LuaTests/${name}Test.lua"
+local script = [["$${SimpleITK_BINARY_DIR}/Testing/Unit/LuaTests/${name}Test.lua"]]
+local output = [["$${TEST_HARNESS_TEMP_DIRECTORY}/Lua-${name}-]]..tests[i].tag..[[.nrrd"]]
+local baseline = [["$${TEST_HARNESS_DATA_DIRECTORY}/Baseline/BasicFilters_${name}_]]..tests[i].tag..[[.nrrd"]]
 OUT=OUT..[[
  sitk_add_lua_test( ${name}.]]..tests[i].tag..[[
-  "]]..script..[["
+  ]]..script..[[
   ]]..tests[i].tag..[[
 ]]
 for j=1,#tests[i].inputs do
@@ -17,7 +19,16 @@ for j=1,#tests[i].inputs do
 ]]
 end
 OUT=OUT..[[
-  "$${TEST_HARNESS_TEMP_DIRECTORY}/Lua-${name}-]]..tests[i].tag..[[.nrrd"  )
+  ]]..output
+if tests[i].md5hash then
+  OUT=OUT..[[
+    IMAGE_MD5_COMPARE ]]..output..[[ ]]..tests[i].md5hash
+end
+if tests[i].tolerance then
+   OUT=OUT..[[
+    IMAGE_COMPARE ]]..output..[[ ]]..baseline..[[ ]]..tests[i].tolerance
+end
+OUT=OUT..[[ )
 ]]
 end)
 
@@ -30,19 +41,21 @@ local script = [["$${SimpleITK_BINARY_DIR}/Testing/Unit/PythonTests/${name}Test.
 local output = [["$${TEST_HARNESS_TEMP_DIRECTORY}/Python-${name}-]]..tests[i].tag..[[.nrrd"]]
 local baseline = [["$${TEST_HARNESS_DATA_DIRECTORY}/Baseline/BasicFilters_${name}_]]..tests[i].tag..[[.nrrd"]]
 OUT=OUT..[[
- sitk_add_python_test( ${name}.]]..tests[i].tag..[[ ]]..script..[[ ]]..tests[i].tag
+ sitk_add_python_test( ${name}.]]..tests[i].tag..[[
+   ]]..script..[[
+   ]]..tests[i].tag
 for j=1,#tests[i].inputs do
-  OUT=OUT..[[ 
+  OUT=OUT..[[
   "DATA{$${SimpleITK_DATA_ROOT}/]]..tests[i].inputs[j]..[[}"]]
 end
 OUT=OUT..[[
   ]]..output
 if tests[i].md5hash then
-  OUT=OUT..[[ 
+  OUT=OUT..[[
     IMAGE_MD5_COMPARE ]]..output..[[ ]]..tests[i].md5hash
 end
 if tests[i].tolerance then
-   OUT=OUT..[[ 
+   OUT=OUT..[[
     IMAGE_COMPARE ]]..output..[[ ]]..baseline..[[ ]]..tests[i].tolerance
 end
 OUT=OUT..[[ )
@@ -53,10 +66,12 @@ end)
 # Ruby Tests
 #
 $(for i=1,#tests do
-local script = "$${SimpleITK_BINARY_DIR}/Testing/Unit/RubyTests/${name}Test.rb"
+local script = [["$${SimpleITK_BINARY_DIR}/Testing/Unit/RubyTests/${name}Test.rb"]]
+local output = [["$${TEST_HARNESS_TEMP_DIRECTORY}/Ruby-${name}-]]..tests[i].tag..[[.nrrd"]]
+local baseline = [["$${TEST_HARNESS_DATA_DIRECTORY}/Baseline/BasicFilters_${name}_]]..tests[i].tag..[[.nrrd"]]
 OUT=OUT..[[
  sitk_add_ruby_test( ${name}.]]..tests[i].tag..[[
-  "]]..script..[["
+  ]]..script..[[
   ]]..tests[i].tag..[[
 ]]
 for j=1,#tests[i].inputs do
@@ -65,7 +80,16 @@ for j=1,#tests[i].inputs do
 ]]
 end
 OUT=OUT..[[
-  "$${TEST_HARNESS_TEMP_DIRECTORY}/Ruby-${name}-]]..tests[i].tag..[[.nrrd"  )
+  ]]..output
+if tests[i].md5hash then
+  OUT=OUT..[[
+    IMAGE_MD5_COMPARE ]]..output..[[ ]]..tests[i].md5hash
+end
+if tests[i].tolerance then
+   OUT=OUT..[[
+    IMAGE_COMPARE ]]..output..[[ ]]..baseline..[[ ]]..tests[i].tolerance
+end
+OUT=OUT..[[ )
 ]]
 end)
 
@@ -73,10 +97,12 @@ end)
 # R Tests
 #
 $(for i=1,#tests do
-local script = "$${SimpleITK_BINARY_DIR}/Testing/Unit/RTests/${name}Test.R"
+local script = [["$${SimpleITK_BINARY_DIR}/Testing/Unit/RTests/${name}Test.R"]]
+local output = [["$${TEST_HARNESS_TEMP_DIRECTORY}/R-${name}-]]..tests[i].tag..[[.nrrd"]]
+local baseline = [["$${TEST_HARNESS_DATA_DIRECTORY}/Baseline/BasicFilters_${name}_]]..tests[i].tag..[[.nrrd"]]
 OUT=OUT..[[
  sitk_add_r_test( ${name}.]]..tests[i].tag..[[
-  "]]..script..[["
+  ]]..script..[[
   ]]..tests[i].tag..[[
 ]]
 for j=1,#tests[i].inputs do
@@ -85,7 +111,16 @@ for j=1,#tests[i].inputs do
 ]]
 end
 OUT=OUT..[[
-  "$${TEST_HARNESS_TEMP_DIRECTORY}/R-${name}-]]..tests[i].tag..[[.nrrd"  )
+  ]]..output
+if tests[i].md5hash then
+  OUT=OUT..[[
+    IMAGE_MD5_COMPARE ]]..output..[[ ]]..tests[i].md5hash
+end
+if tests[i].tolerance then
+   OUT=OUT..[[
+    IMAGE_COMPARE ]]..output..[[ ]]..baseline..[[ ]]..tests[i].tolerance
+end
+OUT=OUT..[[ )
 ]]
 end)
 
@@ -93,9 +128,12 @@ end)
 # Tcl Tests
 #
 $(for i=1,#tests do
+local script = [["$${SimpleITK_BINARY_DIR}/Testing/Unit/TclTests/${name}Test.tcl"]]
+local output = [["$${TEST_HARNESS_TEMP_DIRECTORY}/Tcl-${name}-]]..tests[i].tag..[[.nrrd"]]
+local baseline = [["$${TEST_HARNESS_DATA_DIRECTORY}/Baseline/BasicFilters_${name}_]]..tests[i].tag..[[.nrrd"]]
 OUT=OUT..[[
  sitk_add_tcl_test( ${name}.]]..tests[i].tag..[[
-  "$${SimpleITK_BINARY_DIR}/Testing/Unit/TclTests/${name}Test.tcl"
+  ]]..script..[[
   ]]..tests[i].tag..[[
 ]]
 for j=1,#tests[i].inputs do
@@ -103,8 +141,18 @@ for j=1,#tests[i].inputs do
   "DATA{$${SimpleITK_DATA_ROOT}/]]..tests[i].inputs[j]..[[}"
 ]]
 end
+
 OUT=OUT..[[
-  "$${TEST_HARNESS_TEMP_DIRECTORY}/Tcl-${name}-]]..tests[i].tag..[[.nrrd"  )
+  ]]..output
+if tests[i].md5hash then
+  OUT=OUT..[[
+    IMAGE_MD5_COMPARE ]]..output..[[ ]]..tests[i].md5hash
+end
+if tests[i].tolerance then
+   OUT=OUT..[[
+    IMAGE_COMPARE ]]..output..[[ ]]..baseline..[[ ]]..tests[i].tolerance
+end
+OUT=OUT..[[ )
 ]]
 end)
 
@@ -113,9 +161,12 @@ end)
 # Java Tests
 #
 $(for i=1,#tests do
+local script = [["$${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/${name}Test.java"]]
+local output = [["$${TEST_HARNESS_TEMP_DIRECTORY}/Java-${name}-]]..tests[i].tag..[[.nrrd"]]
+local baseline = [["$${TEST_HARNESS_DATA_DIRECTORY}/Baseline/BasicFilters_${name}_]]..tests[i].tag..[[.nrrd"]]
 OUT=OUT..[[
  sitk_add_java_test( ${name}.]]..tests[i].tag..[[
-  "$${SimpleITK_BINARY_DIR}/Testing/Unit/JavaTests/${name}Test.java"
+  ]]..script..[[
   ]]..tests[i].tag..[[
 ]]
 for j=1,#tests[i].inputs do
@@ -124,7 +175,16 @@ for j=1,#tests[i].inputs do
 ]]
 end
 OUT=OUT..[[
-  "$${TEST_HARNESS_TEMP_DIRECTORY}/Java-${name}-]]..tests[i].tag..[[.nrrd"  )
+  ]]..output
+if tests[i].md5hash then
+  OUT=OUT..[[
+    IMAGE_MD5_COMPARE ]]..output..[[ ]]..tests[i].md5hash
+end
+if tests[i].tolerance then
+   OUT=OUT..[[
+    IMAGE_COMPARE ]]..output..[[ ]]..baseline..[[ ]]..tests[i].tolerance
+end
+OUT=OUT..[[ )
 ]]
 end)
 
@@ -134,9 +194,12 @@ end)
 # CSharp Tests
 #
 $(for i=1,#tests do
+local script = [["$${SimpleITK_BINARY_DIR}/Testing/Unit/CSharpTests/${name}Test.cs"]]
+local output = [["$${TEST_HARNESS_TEMP_DIRECTORY}/CSharp-${name}-]]..tests[i].tag..[[.nrrd"]]
+local baseline = [["$${TEST_HARNESS_DATA_DIRECTORY}/Baseline/BasicFilters_${name}_]]..tests[i].tag..[[.nrrd"]]
 OUT=OUT..[[
  sitk_add_csharp_test( ${name}.]]..tests[i].tag..[[
-  "$${SimpleITK_BINARY_DIR}/Testing/Unit/CSharpTests/${name}Test.cs"
+  ]]..script..[[
   ]]..tests[i].tag..[[
 ]]
 for j=1,#tests[i].inputs do
@@ -145,6 +208,15 @@ for j=1,#tests[i].inputs do
 ]]
 end
 OUT=OUT..[[
-  "$${TEST_HARNESS_TEMP_DIRECTORY}/CSharp-${name}-]]..tests[i].tag..[[.nrrd"  )
+  ]]..output
+if tests[i].md5hash then
+  OUT=OUT..[[
+    IMAGE_MD5_COMPARE ]]..output..[[ ]]..tests[i].md5hash
+end
+if tests[i].tolerance then
+   OUT=OUT..[[
+    IMAGE_COMPARE ]]..output..[[ ]]..baseline..[[ ]]..tests[i].tolerance
+end
+OUT=OUT..[[ )
 ]]
 end)
