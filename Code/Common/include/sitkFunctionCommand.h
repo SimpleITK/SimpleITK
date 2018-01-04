@@ -37,6 +37,9 @@ public:
 
   typedef FunctionCommand Self;
 
+
+  virtual ~FunctionCommand();
+
   FunctionCommand();
 
   virtual void Execute(void);
