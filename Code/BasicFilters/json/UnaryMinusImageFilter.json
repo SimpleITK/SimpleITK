@@ -1,5 +1,6 @@
 {
   "name" : "UnaryMinusImageFilter",
+  "itk_name" : "UnaryFunctorImageFilter",
   "template_code_filename" : "ImageFilter",
   "template_test_filename" : "ImageFilter",
   "number_of_inputs" : 1,
@@ -7,6 +8,9 @@
   "pixel_types" : "typelist::Append< SignedPixelIDTypeList, ComplexPixelIDTypeList >::Type",
   "filter_type" : "itk::UnaryFunctorImageFilter< InputImageType, OutputImageType, itk::Functor::UnaryMinus<typename InputImageType::PixelType, typename OutputImageType::PixelType> >",
   "vector_pixel_types_by_component" : "SignedVectorPixelIDTypeList",
+  "include_files" : [
+    "itkArithmeticOpsFunctors.h"
+  ],
   "members" : [],
   "tests" : [
     {
