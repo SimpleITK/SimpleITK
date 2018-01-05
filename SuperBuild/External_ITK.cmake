@@ -19,6 +19,10 @@ if(NOT DEFINED Module_ITKReview)
   set(Module_ITKReview ON)
 endif()
 
+if(NOT DEFINED Module_SimpleITKFilters)
+  set(Module_SimpleITKFilters ON)
+endif()
+
 
 get_cmake_property( _varNames VARIABLES )
 
