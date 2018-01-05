@@ -39,7 +39,10 @@ namespace itk {
   {
   }
 
-  ImageFileReader::ImageFileReader()
+  ImageFileReader::ImageFileReader() :
+    m_PixelType(sitkUnknown),
+    m_Dimension(0),
+    m_NumberOfComponents(0)
   {
     // list of pixel types supported
     typedef NonLabelPixelIDTypeList PixelIDTypeList;
