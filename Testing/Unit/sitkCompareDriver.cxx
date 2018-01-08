@@ -583,7 +583,7 @@ int main(int argc, char *argv[])
             }
           else
             {
-            imageCompare.testImages(test, baseline, false,  *iterName);
+            imageCompare.testImages(test, baseline, false,  bestBaselineName);
             }
           ++result;
         }
