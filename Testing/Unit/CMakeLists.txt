@@ -276,7 +276,7 @@ target_compile_options( sitkShowTest
 
 add_executable( sitkSystemInformationTest sitkSystemInformationTest.cxx )
 target_link_libraries( sitkSystemInformationTest ${SimpleITK_LIBRARIES} ${ITK_LIBRARIES})
-add_test( NAME sitkSystemInformaionTest COMMAND sitkSystemInformationTest ${CMAKE_BINARY_DIR} )
+add_test( NAME sitkSystemInformationTest COMMAND sitkSystemInformationTest ${CMAKE_BINARY_DIR} )
 target_compile_options( sitkSystemInformationTest
   PRIVATE
     ${SimpleITK_PRIVATE_COMPILE_OPTIONS} )
