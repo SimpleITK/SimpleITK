@@ -39,6 +39,8 @@ public:
 typedef TranslationTransform Self;
 typedef Transform            Superclass;
 
+virtual ~TranslationTransform();
+
 explicit TranslationTransform(unsigned int dimensions,
                               const std::vector<double> &offset = std::vector<double>(3,0.0) );
 

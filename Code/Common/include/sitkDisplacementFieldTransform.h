@@ -40,6 +40,8 @@ public:
   typedef DisplacementFieldTransform Self;
   typedef Transform                  Superclass;
 
+  virtual ~DisplacementFieldTransform();
+
   explicit DisplacementFieldTransform( unsigned int dimensions );
 
   /** \brief Consume an image to construct a displacement field transform.

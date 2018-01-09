@@ -66,12 +66,12 @@ assumption will probably not hold in multi-modality registration.
     public:
       typedef  CenteredTransformInitializerFilter Self;
 
+      /** Destructor */
+      virtual ~CenteredTransformInitializerFilter();
+
       /** Default Constructor that takes no arguments and initializes
        * default parameters */
        CenteredTransformInitializerFilter();
-
-      /** Destructor */
-      ~ CenteredTransformInitializerFilter();
 
       /** Define the pixels types supported by this filter */
       typedef BasicPixelIDTypeList  PixelIDTypeList;

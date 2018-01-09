@@ -59,7 +59,7 @@ end)
 
 }
 
-$(include DesctuctorDefinition.cxx.in)
+$(include DestructorDefinition.cxx.in)
 
 //
 // ToString

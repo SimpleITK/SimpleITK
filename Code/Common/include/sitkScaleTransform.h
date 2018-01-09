@@ -39,6 +39,8 @@ public:
   typedef ScaleTransform Self;
   typedef Transform      Superclass;
 
+  virtual ~ScaleTransform();
+
   explicit ScaleTransform(unsigned int dimensions,
                           const std::vector<double> &scale = std::vector<double>(3,1.0) );
 

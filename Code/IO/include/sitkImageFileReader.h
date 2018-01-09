@@ -50,6 +50,10 @@ namespace itk {
     public:
       typedef ImageFileReader Self;
 
+      virtual ~ImageFileReader();
+
+      ImageFileReader();
+
       /** Print ourselves to string */
       virtual std::string ToString() const;
 
@@ -60,9 +64,6 @@ namespace itk {
       std::string GetFileName() const;
 
       Image Execute();
-
-      ImageFileReader();
-      ~ImageFileReader();
 
       // Interface methods to access image file's meta-data and image
       // information after calling Execute or after calling

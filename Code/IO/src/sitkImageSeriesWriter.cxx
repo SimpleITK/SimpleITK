@@ -37,6 +37,10 @@ namespace itk {
     writer.Execute( inImage, filenames, useCompression );
   }
 
+  ImageSeriesWriter::~ImageSeriesWriter()
+  {
+  }
+
   ImageSeriesWriter::ImageSeriesWriter()
   {
 

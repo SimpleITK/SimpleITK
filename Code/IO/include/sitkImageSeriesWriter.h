@@ -48,6 +48,8 @@ namespace itk {
     public:
       typedef ImageSeriesWriter Self;
 
+      virtual ~ImageSeriesWriter();
+
       ImageSeriesWriter();
 
       /** Print ourselves to string */

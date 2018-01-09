@@ -46,6 +46,8 @@ namespace itk {
         typelist::Append< BasicPixelIDTypeList, ComplexPixelIDTypeList>::Type,
         VectorPixelIDTypeList >::Type PixelIDTypeList;
 
+      virtual ~HashImageFilter();
+
       HashImageFilter();
 
       enum HashFunction { SHA1, MD5 };

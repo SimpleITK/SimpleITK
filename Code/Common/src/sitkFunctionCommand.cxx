@@ -23,6 +23,10 @@ namespace itk
 namespace simple
 {
 
+FunctionCommand::~FunctionCommand( )
+{
+}
+
 FunctionCommand::FunctionCommand( )
 {
   Command::SetName("FunctionCommand");

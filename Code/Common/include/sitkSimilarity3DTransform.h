@@ -39,6 +39,8 @@ public:
 typedef Similarity3DTransform Self;
 typedef Transform             Superclass;
 
+virtual ~Similarity3DTransform();
+
 // construct identity
 Similarity3DTransform();
 

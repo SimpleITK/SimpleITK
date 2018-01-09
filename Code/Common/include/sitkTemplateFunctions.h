@@ -29,6 +29,7 @@
 namespace itk {
 
 template<unsigned int VImageDimension> class ImageRegion;
+template<typename T> class Versor;
 
 namespace simple {
 
@@ -198,6 +199,34 @@ template< typename TDirectionType >
 std::vector<double> SITKCommon_HIDDEN  sitkITKDirectionToSTL( const TDirectionType & d)
 {
   return std::vector<double>(  d.GetVnlMatrix().begin(), d.GetVnlMatrix().end() );
+}
+
+
+template< typename T, typename TType>
+itk::Versor<T> SITKCommon_HIDDEN  sitkSTLVectorToITKVersor( const std::vector< TType > & in )
+{
+  typedef itk::Versor<T> itkVectorType;
+  if ( in.size() != 4 )
+    {
+    sitkExceptionMacro(<<"Unable to convert vector to ITK Versor type\n"
+                      << "Expected vector of length " <<  4
+                       << " but got " << in.size() << " elements." );
+    }
+  itkVectorType out;
+  out.Set(in[0],in[1],in[2],in[3]);
+  return out;
+}
+
+
+template< typename TType, typename T>
+std::vector<TType> SITKCommon_HIDDEN  sitkITKVersorToSTL( const itk::Versor<T> & in )
+{
+  std::vector<TType> out(4);
+  out[0] = in.GetX();
+  out[1] = in.GetY();
+  out[2] = in.GetZ();
+  out[3] = in.GetW();
+  return out;
 }
 
 

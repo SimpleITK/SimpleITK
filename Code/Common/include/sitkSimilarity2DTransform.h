@@ -39,7 +39,9 @@ public:
   typedef Similarity2DTransform Self;
   typedef Transform             Superclass;
 
-// construct identity
+  ~Similarity2DTransform();
+
+  // construct identity
   Similarity2DTransform();
 
   explicit Similarity2DTransform( double scaleFactor,

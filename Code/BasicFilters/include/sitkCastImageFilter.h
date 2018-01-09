@@ -48,6 +48,8 @@ public:
   SITK_RETURN_SELF_TYPE_HEADER SetOutputPixelType( PixelIDValueEnum pixelID );
   PixelIDValueEnum GetOutputPixelType( void ) const;
 
+  virtual ~CastImageFilter();
+
   /**
    * Default Constructor that takes no arguments and initializes
    * default parameters

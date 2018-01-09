@@ -48,9 +48,9 @@ namespace itk {
     public:
       typedef ImageSeriesReader Self;
 
-      ImageSeriesReader();
+      virtual ~ImageSeriesReader();
 
-      ~ImageSeriesReader();
+      ImageSeriesReader();
 
       /** Print ourselves to string */
       virtual std::string ToString() const;

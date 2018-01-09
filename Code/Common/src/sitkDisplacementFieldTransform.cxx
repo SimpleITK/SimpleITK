@@ -134,6 +134,10 @@ void InternalSetInterpolator( TDisplacementFieldTransform *itkDisplacementTx, In
 
 }
 
+DisplacementFieldTransform::~DisplacementFieldTransform()
+{
+}
+
 // construct identity
 DisplacementFieldTransform::DisplacementFieldTransform(unsigned int dimensions)
   : Transform( CreateDisplacementFieldPimpleTransform(dimensions) )
