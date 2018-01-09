@@ -7,17 +7,19 @@ set(${CMAKE_CURRENT_LIST_FILENAME}_FILE_INCLUDED 1)
 
 set(proj GTest)
 
-set(GTEST_TARGET_VERSION 1.8.0)
-set(GTEST_DOWNLOAD_SOURCE_HASH "16877098823401d1bf2ed7891d7dce36")
+set(GTEST_GIT_REPOSITORY "${git_protocol}://github.com/google/googletest.git" CACHE  STRING "Google Test repository")
+mark_as_advanced(GTEST_GIT_REPOSITORY)
+
+set(GTEST_GIT_TAG "0fe96607d85cf3a25ac40da369db62bbee2939a5" CACHE STRING "Tag or hash for GTtest git repo")
+mark_as_advanced(GTEST_GIT_TAG)
+set(GTEST_TAG_COMMAND GIT_TAG "${GTEST_GIT_TAG}")
 
 # follow the standard EP_PREFIX locations
 set(GTEST_source_dir ${CMAKE_CURRENT_BINARY_DIR}/${proj}-prefix/src/${proj})
 
-sitkSourceDownload(GTEST_URL "googletest-release-${GTEST_TARGET_VERSION}.tar.gz" ${GTEST_DOWNLOAD_SOURCE_HASH})
-
 ExternalProject_Add(${proj}
-  URL "${GTEST_URL}"
-  URL_MD5 ${GTEST_DOWNLOAD_SOURCE_HASH}
+  GIT_REPOSITORY ${GTEST_GIT_REPOSITORY}
+  ${GTEST_TAG_COMMAND}
   CONFIGURE_COMMAND ""
   BUILD_COMMAND     ""
   INSTALL_COMMAND   ""
