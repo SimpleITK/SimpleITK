@@ -177,6 +177,17 @@ float ImageCompare::testImages( const itk::simple::Image& testImage,
         std::cout << "<DartMeasurementFile name=\"DifferenceImage\" type=\"image/png\">";
         std::cout << DifferenceImageFilename << "</DartMeasurementFile>" << std::endl;
 
+        stats.Execute( sitk::Sqrt(diffSquared) );
+
+        std::cout << "<DartMeasurement name=\"DifferenceImage Minimum\" type=\"numeric/double\">";
+        std::cout << stats.GetMinimum() << "</DartMeasurement>" << std::endl;
+
+        std::cout << "<DartMeasurement name=\"DifferenceImage Maximum\" type=\"numeric/double\">";
+        std::cout << stats.GetMaximum() << "</DartMeasurement>" << std::endl;
+
+        std::cout << "<DartMeasurement name=\"DifferenceImage Mean\" type=\"numeric/double\">";
+        std::cout << stats.GetMean() << "</DartMeasurement>" << std::endl;
+
         }
       catch( std::exception &e )
         {
