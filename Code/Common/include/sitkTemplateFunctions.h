@@ -70,7 +70,7 @@ TITKPointVector SITKCommon_HIDDEN sitkSTLVectorToITKPointVector( const std::vect
 
   unsigned int Dimension = itkPointVectorType::value_type::GetPointDimension();
 
-  for( unsigned int i = 0; i <= in.size()- Dimension; i += Dimension )
+  for( unsigned int i = 0; i + Dimension <= in.size(); i += Dimension )
     {
     typename itkPointVectorType::value_type pt(&in[i]);
     out.push_back(pt);
