@@ -42,7 +42,7 @@ if(NOT SWIG_DIR)
     # swig.exe available as pre-built binary on Windows:
     ExternalProject_Add(Swig
       URL "${SWIGWIN_URL}"
-      URL_MD5 ${SWIG_DOWNLOAD_WIN_HASH}
+      URL_HASH MD5=${SWIG_DOWNLOAD_WIN_HASH}
       SOURCE_DIR ${swig_source_dir}
       CONFIGURE_COMMAND ""
       BUILD_COMMAND ""
@@ -101,7 +101,7 @@ if(NOT SWIG_DIR)
       sitkSourceDownload(SWIG_URL "swig-${SWIG_TARGET_VERSION}.tar.gz" ${SWIG_DOWNLOAD_SOURCE_HASH})
       set(SWIG_DOWNLOAD_STEP
         URL "${SWIG_URL}"
-        URL_MD5 "${SWIG_DOWNLOAD_SOURCE_HASH}"
+        URL_HASH MD5=${SWIG_DOWNLOAD_SOURCE_HASH}
         )
     endif()
 
