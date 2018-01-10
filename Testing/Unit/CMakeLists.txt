@@ -286,12 +286,10 @@ target_compile_options( sitkSystemInformationTest
 gtest_add_tests(SimpleITKUnitTestDriver0 "" ${SimpleITKUnitTestSource})
 
 
-#######################################################
-#
-# Tests which use the itkTestDriver
-#
-#######################################################
-
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/AdditionalTests.cmake)
 
+add_subdirectory(Python)
+add_subdirectory(R)
+add_subdirectory(Java)
+add_subdirectory(CSharp)
