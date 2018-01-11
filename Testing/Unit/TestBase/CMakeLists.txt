@@ -10,6 +10,7 @@ target_link_libraries( SimpleITKUnitTestBase GTest::GTest ${SimpleITK_LIBRARIES}
 target_include_directories( SimpleITKUnitTestBase
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+  PRIVATE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
 )
 
