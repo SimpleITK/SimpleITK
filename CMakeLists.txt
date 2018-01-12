@@ -371,16 +371,6 @@ if ( BUILD_TESTING )
 
   include( sitkAddTest )
 
-  file( GLOB_RECURSE content_links
-    RELATIVE "${SimpleITK_SOURCE_DIR}" "Testing/Data/*.md5" )
-  foreach(link ${content_links})
-    string( REGEX REPLACE "\\.md5$" "" link ${link} )
-    ExternalData_Expand_Arguments( SimpleITKData
-      link_location
-      DATA{${link}}
-      )
-  endforeach()
-
   enable_testing()
   add_subdirectory ( Testing )
 
