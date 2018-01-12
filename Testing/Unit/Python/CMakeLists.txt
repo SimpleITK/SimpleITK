@@ -9,7 +9,7 @@ sitk_add_python_test( Test.ImageIndexing
 
 sitk_add_python_test( Test.IOTest
   "${CMAKE_CURRENT_SOURCE_DIR}/IOTest.py"
-  "${TEST_HARNESS_TEMP_DIRECTORY}")
+  "${SimpleITK_TEST_OUTPUT_DIR}")
 
 # Numpy test.
 sitk_add_python_test( Test.Numpy
