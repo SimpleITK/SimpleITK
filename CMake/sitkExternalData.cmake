@@ -1,9 +1,4 @@
 get_filename_component(_SimpleITKExternalData_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
-# Fetch testing data.
-# 2.8.11 required for ExternalData.cmake.
-if( CMAKE_VERSION VERSION_LESS 2.8.11 )
-  message( FATAL_ERROR "BUILD_TESTING ON requires CMake 2.8.11 or newer." )
-endif()
 
 include(ExternalData)
 
