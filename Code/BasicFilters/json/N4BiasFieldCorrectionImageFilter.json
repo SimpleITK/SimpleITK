@@ -92,13 +92,39 @@
       "detaileddescriptionSet" : "Set the spline order defining the bias field estimate. Default = 3.",
       "briefdescriptionGet" : "",
       "detaileddescriptionGet" : "Get the spline order defining the bias field estimate. Default = 3."
+    },
+    {
+      "name" : "UseMaskLabel",
+      "type" : "bool",
+      "default" : "true",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "Use a mask label for identifying mask functionality. See SetMaskLabel. Defaults to true.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "Use a mask label for identifying mask functionality. See SetMaskLabel. Defaults to true."
+    },
+    {
+      "name" : "MaskLabel",
+      "type" : "uint8_t",
+      "default" : "1",
+      "briefdescriptionSet" : "",
+      "detaileddescriptionSet" : "DeprecatedSet/Get mask label value. If a binary mask image is specified and if UseMaskValue is true, only those input image voxels corresponding with mask image values equal to MaskLabel are used in estimating the bias field. If a MaskImage is specified and UseMaskLabel is false, all input image voxels corresponding to non-zero voxels in the MaskImage are used in estimating the bias field. Default = 1.",
+      "briefdescriptionGet" : "",
+      "detaileddescriptionGet" : "DeprecatedSet/Get mask label value. If a binary mask image is specified and if UseMaskValue is true, only those input image voxels corresponding with mask image values equal to MaskLabel are used in estimating the bias field. If a MaskImage is specified and UseMaskLabel is false, all input image voxels corresponding to non-zero voxels in the MaskImage are used in estimating the bias field. Default = 1."
     }
   ],
   "tests" : [
     {
       "tag" : "defaults",
-      "description" : "using default parameters in 2D",
-      "settings" : [],
+      "description" : "using default parameters in 2D with a mask without the mask label",
+      "settings" : [
+        {
+          "parameter" : "UseMaskLabel",
+          "type" : "bool",
+          "value" : "true",
+          "python_value" : "True",
+          "R_value" : "TRUE"
+        }
+      ],
       "tolerance" : "0.015",
       "inputs" : [
         "Input/cthead1-Float.mha",
