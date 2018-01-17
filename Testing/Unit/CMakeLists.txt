@@ -257,6 +257,39 @@ target_compile_options( sitkSystemInformationTest
 
 gtest_add_tests(SimpleITKUnitTestDriver0 "" ${SimpleITKUnitTestSource})
 
+ExternalData_Expand_Arguments(  SimpleITKData
+  unused_argument
+  DATA{${SimpleITK_DATA_ROOT}/Input/xforms/affine_i_3.txt}
+  DATA{${SimpleITK_DATA_ROOT}/Input/xforms/displacement_-13x-17y.txt}
+  DATA{${SimpleITK_DATA_ROOT}/Input/xforms/quaternion_rigid_i_3.txt}
+  DATA{${SimpleITK_DATA_ROOT}/Input/xforms/scale_logarithmic_i_3.txt}
+  DATA{${SimpleITK_DATA_ROOT}/Input/xforms/translation_i_3.txt}
+  DATA{${SimpleITK_DATA_ROOT}/Input/xforms/composite_i_3.txt}
+  DATA{${SimpleITK_DATA_ROOT}/Input/xforms/i_3.txt}
+  DATA{${SimpleITK_DATA_ROOT}/Input/xforms/scale_i_3.txt}
+  DATA{${SimpleITK_DATA_ROOT}/Input/xforms/translation_-13x-17y.txt}
+  DATA{${SimpleITK_DATA_ROOT}/Input/xforms/versor_i_3.txt}
+  DATA{${SimpleITK_DATA_ROOT}/Baseline/BasicFilters_TransformToDisplacementFieldFilter_defaults.nrrd}
+  DATA{${SimpleITK_DATA_ROOT}/Baseline/BasicFilters_TransformToDisplacementFieldFilter_32.nrrd}
+  )
+
+ExternalData_Expand_Arguments(  SimpleITKData
+  unused_argument
+  DATA{${SimpleITK_DATA_ROOT}/Input/2th_cthead1.mha}
+  DATA{${SimpleITK_DATA_ROOT}/Input/2th_cthead1.png}
+  DATA{${SimpleITK_DATA_ROOT}/Input/4D.nii.gz}
+  DATA{${SimpleITK_DATA_ROOT}/Input/BlackDots.png}
+  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20.png}
+  DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceShifted13x17y.png}
+  DATA{${SimpleITK_DATA_ROOT}/Input/cthead1-Float.mha}
+  DATA{${SimpleITK_DATA_ROOT}/Input/cthead1.png}
+  DATA{${SimpleITK_DATA_ROOT}/Input/RA-Float.nrrd}
+  DATA{${SimpleITK_DATA_ROOT}/Input/RA-Short.nrrd}
+  DATA{${SimpleITK_DATA_ROOT}/Input/RA-Slice-Short.png}
+  DATA{${SimpleITK_DATA_ROOT}/Input/VM1111Shrink-RGB.png}
+  DATA{${SimpleITK_DATA_ROOT}/Input/WhiteDots.png}
+  )
+
 add_subdirectory(Python)
 add_subdirectory(R)
 add_subdirectory(Java)
