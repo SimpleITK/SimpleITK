@@ -27,7 +27,7 @@ set(lua_PATCH_COMMAND ${CMAKE_COMMAND} -E copy_if_different
 
 ExternalProject_Add(Lua
   URL "${lua_URL}"
-  URL_MD5 "${lua_DOWNLOAD_SOURCE_HASH}"
+  URL_HASH MD5=${lua_DOWNLOAD_SOURCE_HASH}
   PATCH_COMMAND ${lua_PATCH_COMMAND}
   CMAKE_GENERATOR ${gen}
   CMAKE_ARGS
