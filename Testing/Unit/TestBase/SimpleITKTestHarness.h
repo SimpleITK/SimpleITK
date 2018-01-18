@@ -42,7 +42,6 @@ inline std::ostream& operator<< (std::ostream& os, const std::vector<T>& v)
 #include <string>
 #include <vector>
 #include <gtest/gtest.h>
-#include <SimpleITKTestHarnessPaths.h>
 
 #include "sitkImage.h"
 #include "sitkCommand.h"

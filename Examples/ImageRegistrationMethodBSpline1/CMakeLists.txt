@@ -11,9 +11,9 @@ sitk_add_test(NAME CXX.Example.ImageRegistrationMethodBSpline1
     $<TARGET_FILE:ImageRegistrationMethodBSpline1>
     DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20.png}
     DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBSplined10.png}
-    ${TEST_HARNESS_TEMP_DIRECTORY}/CXXImageRegistrationMethodBSpline1.hdf5
+    ${SimpleITK_TEST_OUTPUT_DIR}/CXXImageRegistrationMethodBSpline1.hdf5
   TRANSFORM_COMPARE
-    ${TEST_HARNESS_TEMP_DIRECTORY}/CXXImageRegistrationMethodBSpline1.hdf5
+    ${SimpleITK_TEST_OUTPUT_DIR}/CXXImageRegistrationMethodBSpline1.hdf5
     DATA{${SimpleITK_DATA_ROOT}/Baseline/ImageRegistrationMethodBSpline1.mha}
     0.02
   )
@@ -23,9 +23,9 @@ sitk_add_python_test(Example.ImageRegistrationMethodBSpline1
   "${CMAKE_CURRENT_SOURCE_DIR}/ImageRegistrationMethodBSpline1.py"
     DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBorder20.png}
     DATA{${SimpleITK_DATA_ROOT}/Input/BrainProtonDensitySliceBSplined10.png}
-    ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethodBSpline1.hdf5
+    ${SimpleITK_TEST_OUTPUT_DIR}/PythonImageRegistrationMethodBSpline1.hdf5
   TRANSFORM_COMPARE
-    ${TEST_HARNESS_TEMP_DIRECTORY}/PythonImageRegistrationMethodBSpline1.hdf5
+    ${SimpleITK_TEST_OUTPUT_DIR}/PythonImageRegistrationMethodBSpline1.hdf5
     DATA{${SimpleITK_DATA_ROOT}/Baseline/ImageRegistrationMethodBSpline1.mha}
     0.02
   )
