@@ -24,6 +24,14 @@ if (NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK" )
   if(MSVC)
      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj")
   endif()
+
+  include(CTest)
+
+  if (BUILD_TESTING)
+    enable_testing()
+    include(sitkAddTest)
+  endif()
+
 else()
   set(SimpleITK_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 endif()

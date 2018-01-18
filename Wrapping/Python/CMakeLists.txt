@@ -94,3 +94,15 @@ if(DEFINED SKBUILD)
 else()
   include(LegacyPackaging.cmake)
 endif()
+
+
+
+if (NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK" AND BUILD_TESTING)
+  set(WRAP_PYTHON 1)
+
+  add_subdirectory("${SimpleITK_SOURCE_DIR}/Testing/Unit/Python" "${CMAKE_BINARY_DIR}/Testing/Unit")
+
+  if(COMMAND ExternalData_Add_Target )
+    ExternalData_Add_Target( SimpleITKData )
+  endif()
+endif()
