@@ -2,6 +2,29 @@
 # - test output
 
 #
+# Data for External Tests
+#
+$(for i=1,#tests do
+OUT=OUT..[[
+ExternalData_Expand_Arguments( SimpleITKData
+  unused_argument]]
+for j=1,#tests[i].inputs do
+  OUT=OUT..[[
+  "DATA{$${SimpleITK_DATA_ROOT}/]]..tests[i].inputs[j]..[[}"
+]]
+end
+if tests[i].tolerance then
+  OUT=OUT..[[
+  "DATA{$${SimpleITK_DATA_ROOT}/Baseline/BasicFilters_${name}_]]..tests[i].tag..[[.nrrd,:}"
+]]
+end
+OUT=OUT..[[
+)
+]]
+end)
+
+
+#
 # Lua Tests
 #
 $(for i=1,#tests do
