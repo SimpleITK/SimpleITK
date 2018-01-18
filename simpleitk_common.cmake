@@ -169,6 +169,12 @@ if(NOT DEFINED CTEST_BINARY_DIRECTORY)
   endif()
 endif()
 
+set(dashboard_build_dir "${CTEST_BINARY_DIRECTORY}")
+if(dashboard_source_config_dir STREQUAL "SuperBuild")
+  set(dashboard_build_dir "${dashboard_build_dir}/SimpleITK-build")
+endif()
+
+
 # Delete source tree if it is incompatible with current VCS.
 if(EXISTS ${CTEST_SOURCE_DIRECTORY})
   if(NOT EXISTS "${CTEST_SOURCE_DIRECTORY}/.git")
@@ -264,6 +270,8 @@ foreach(v
     CTEST_CHECKOUT_COMMAND
     CTEST_SCRIPT_DIRECTORY
     CTEST_USE_LAUNCHERS
+    dashboard_source_config_dir
+    dashboard_build_dir
     )
   set(vars "${vars}  ${v}=[${${v}}]\n")
 endforeach(v)
@@ -422,7 +430,7 @@ while(NOT dashboard_done)
       if(COMMAND dashboard_hook_test)
 	dashboard_hook_test()
       endif()
-      ctest_test( BUILD "${CTEST_BINARY_DIRECTORY}/SimpleITK-build"
+      ctest_test( BUILD "${dashboard_build_dir}"
                   RETURN_VALUE test_return
                   ${CTEST_TEST_ARGS} )
       if(NOT dashboard_no_submit AND NOT dashboard_no_parts)
@@ -438,7 +446,7 @@ while(NOT dashboard_done)
       # HACK Unfortunately ctest_coverage ignores the BUILD argument, try to force it...
       file(READ ${CTEST_BINARY_DIRECTORY}/SimpleITK-build/CMakeFiles/TargetDirectories.txt build_coverage_dirs)
       file(APPEND "${CTEST_BINARY_DIRECTORY}/CMakeFiles/TargetDirectories.txt" "${build_coverage_dirs}")
-      ctest_coverage( BUILD "${CTEST_BINARY_DIRECTORY}/SimpleITK-build" )
+      ctest_coverage( BUILD "${dashboard_build_dir}" )
       if(NOT dashboard_no_submit AND NOT dashboard_no_parts)
 	ctest_submit(PARTS Coverage)
       endif()
@@ -447,7 +455,7 @@ while(NOT dashboard_done)
       if(COMMAND dashboard_hook_memcheck)
 	dashboard_hook_memcheck()
       endif()
-      ctest_memcheck( BUILD "${CTEST_BINARY_DIRECTORY}/SimpleITK-build" )
+      ctest_memcheck( BUILD "${dashboard_build_dir}" )
       if(NOT dashboard_no_submit AND NOT dashboard_no_parts)
 	ctest_submit(PARTS Build MemCheck)
       endif()
