@@ -14,6 +14,7 @@ Examples
   DicomImagePrintTags/Documentation
   DicomSeriesReader/Documentation
   DicomSeriesReadModifyWrite/Documentation
+  DicomSeriesFromArray/Documentation
   FilterProgressReporting/Documentation
   ImageRegistrationMethod1/Documentation
   ImageRegistrationMethod2/Documentation
