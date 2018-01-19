@@ -140,11 +140,11 @@ option(BUILD_SHARED_LIBS "Build SimpleITK ITK with shared libraries. This does n
 # as this option does not robustly work across platforms it will be marked as advanced
 mark_as_advanced( FORCE BUILD_SHARED_LIBS )
 
-set(SimpleITK_4D_IMAGES_DEFAULT OFF)
+set(SimpleITK_4D_IMAGES_DEFAULT ON)
 # 1900 = VS 14.0 (Visual Studio 2015)
-if(MSVC_VERSION VERSION_LESS 1900)
-    set( SimpleITK_4D_IMAGES_DEFAULT OFF )
-  endif()
+if(MSVC AND MSVC_VERSION VERSION_LESS 1900)
+  set( SimpleITK_4D_IMAGES_DEFAULT OFF )
+endif()
 option( SimpleITK_4D_IMAGES "Add Image and I/O support for four spatial dimensions." ${SimpleITK_4D_IMAGES_DEFAULT} )
 mark_as_advanced( SimpleITK_4D_IMAGES )
 unset(SimpleITK_4D_IMAGES_DEFAULT)

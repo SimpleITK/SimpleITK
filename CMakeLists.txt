@@ -119,11 +119,13 @@ sitk_legacy_naming(SimpleITK_INT64_PIXELIDS)
 
 
 
-set(SimpleITK_4D_IMAGES_DEFAULT OFF)
+set(SimpleITK_4D_IMAGES_DEFAULT ON)
 # 1900 = VS 14.0 (Visual Studio 2015)
-if(MSVC_VERSION VERSION_LESS 1900)
-    set( SimpleITK_4D_IMAGES_DEFAULT OFF )
-  endif()
+if(MSVC AND MSVC_VERSION VERSION_LESS 1900)
+  set( SimpleITK_4D_IMAGES_DEFAULT OFF )
+  message("disable")
+endif()
+message("SimpleITK_4D_IMAGES_DEFAULT: ${SimpleITK_4D_IMAGES_DEFAULT}")
 option( SimpleITK_4D_IMAGES "Add Image and I/O support for four spatial dimensions." ${SimpleITK_4D_IMAGES_DEFAULT} )
 mark_as_advanced( SimpleITK_4D_IMAGES )
 sitk_legacy_naming(SimpleITK_4D_IMAGES)
