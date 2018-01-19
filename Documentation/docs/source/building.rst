@@ -82,7 +82,7 @@ All of the instructions assume you are working on the command line.
 
 Words of caution for building on the Windows operating system:
 
-* Visual studio has issues with long directory paths, we recommend cloning the
+* Windows has issues with long directory paths, we recommend cloning the
   source code near the root (e.g. C:\\src).
 * To avoid potential issues do not clone the source into a path which has spaces
   in the directory name (e.g. C:\\Users\\SimpleITK Source).
