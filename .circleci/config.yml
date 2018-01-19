@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  build-and-test:
     docker:
       - image: circleci/python:2.7
     working_directory: ~/
@@ -85,3 +85,9 @@ jobs:
       - save_cache:
           key: 'v1-external-data-{{ checksum "/home/circleci/external-data.hashable" }}'
           paths: [ "/home/circleci/.ExternalData" ]
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build-and-test
