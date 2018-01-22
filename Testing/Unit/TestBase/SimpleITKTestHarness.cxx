@@ -1,5 +1,7 @@
 
 #include "SimpleITKTestHarness.h"
+#include "SimpleITKTestHarnessPaths.h"
+
 #include "sitkConditional.h"
 #include "sitkPixelIDValues.h"
 #include "sitkProcessObject.h"

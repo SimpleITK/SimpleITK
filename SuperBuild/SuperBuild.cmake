@@ -4,15 +4,7 @@
 set(BUILDNAME "NoBuldNameGiven")
 set(SITE      "NoSiteGiven")
 set(BUILD_TESTING_DEFAULT ON)
-if(CMAKE_VERSION VERSION_LESS 2.8.11)
-  set(BUILD_TESTING_DEFAULT OFF)
-endif()
 option( BUILD_TESTING "Turn on Testing for SimpleITK" ${BUILD_TESTING_DEFAULT} )
-
-# 2.8.11 required for ExternalData.cmake.
-if( BUILD_TESTING AND CMAKE_VERSION VERSION_LESS 2.8.11 )
-  message( FATAL_ERROR "BUILD_TESTING ON requires CMake 2.8.11 or newer." )
-endif()
 
 if(CMAKE_GENERATOR MATCHES "Ninja" AND CMAKE_VERSION VERSION_LESS 3.2 )
   message( FATAL_ERROR "Using \"Ninja\" generator requires CMake 3.2.0 or newer." )

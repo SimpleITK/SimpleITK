@@ -2,6 +2,7 @@ include(sitkExternalData)
 include(CMakeParseArguments)
 
 set(SimpleITK_DATA_ROOT ${SimpleITK_SOURCE_DIR}/Testing/Data)
+set(SimpleITK_TEST_OUTPUT_DIR ${CMAKE_BINARY_DIR}/Testing/Temporary)
 
 #-----------------------------------------------------------------------------
 # SimpleITK wrapper for add_test that adds support for external data,
@@ -75,7 +76,7 @@ function(sitk_add_python_test name)
   endif()
   if (NOT SimpleITK_PYTHON_USE_VIRTUALENV)
     set_property(TEST Python.${name}
-      APPEND PROPERTY ENVIRONMENT PYTHONPATH=${SimpleITK_BINARY_DIR}/Wrapping/Python
+      APPEND PROPERTY ENVIRONMENT PYTHONPATH=${SimpleITK_Python_BINARY_DIR}
       )
   endif()
 
@@ -194,9 +195,9 @@ function(sitk_add_java_test name java_file)
 
   set( _JAVA_LIBRARY_PATH  "$<TARGET_FILE_DIR:SimpleITKJava_JAVA>")
   if(WIN32)
-    set( _JAVA_CLASSPATH "${SimpleITK_BINARY_DIR}/Wrapping/Java/${JAR_FILE}$<SEMICOLON>${_class_path}" )
+    set( _JAVA_CLASSPATH "${SimpleITK_Java_BINARY_DIR}/${JAR_FILE}$<SEMICOLON>${_class_path}" )
   else()
-    set( _JAVA_CLASSPATH "${SimpleITK_BINARY_DIR}/Wrapping/Java/${JAR_FILE}:${_class_path}" )
+    set( _JAVA_CLASSPATH "${SimpleITK_Java_BINARY_DIR}/${JAR_FILE}:${_class_path}" )
   endif()
 
   if (NOT TARGET ${_java_class}Java)
@@ -261,7 +262,7 @@ function(sitk_add_r_test name)
     PROPERTY LABELS R
     )
 
-  file(TO_NATIVE_PATH "${SimpleITK_BINARY_DIR}/Wrapping/R/R_libs" _native_path)
+  file(TO_NATIVE_PATH "${SimpleITK_R_BINARY_DIR}/R_libs" _native_path)
 
   set_property(TEST R.${name}
     PROPERTY ENVIRONMENT R_LIBS=${_native_path}
