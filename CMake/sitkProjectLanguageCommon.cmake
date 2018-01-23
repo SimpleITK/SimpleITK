@@ -30,6 +30,9 @@ if (NOT CMAKE_PROJECT_NAME STREQUAL "SimpleITK" )
   if (BUILD_TESTING)
     enable_testing()
     include(sitkAddTest)
+
+    configure_file("${SimpleITK_SOURCE_DIR}/CMake/CTestCustom.cmake.in" CTestCustom.cmake)
+
   endif()
 
 else()
