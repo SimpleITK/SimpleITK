@@ -67,7 +67,7 @@
       "tag" : "defaults",
       "description" : "Simply run with default settings",
       "settings" : [],
-      "tolerance" : 0.0001,
+      "tolerance" : 0.5,
       "inputs" : [
         "Input/cthead1-Float.mha"
       ]
@@ -88,7 +88,7 @@
               "R_value" : "FALSE"
           }
       ],
-      "tolerance" : 0.0001,
+      "tolerance" : 0.01,
       "inputs" : [
         "Input/cthead1-Float.mha"
       ]
