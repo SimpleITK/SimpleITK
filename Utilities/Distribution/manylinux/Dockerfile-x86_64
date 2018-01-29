@@ -1,8 +1,8 @@
 FROM quay.io/pypa/manylinux1_x86_64
 MAINTAINER Insight Software Consortium <community@itk.org>
 
-ADD https://cmake.org/files/v3.7/cmake-3.7.2.tar.gz \
-    https://www.openssl.org/source/openssl-1.0.2h.tar.gz \
+ADD https://cmake.org/files/v3.9/cmake-3.9.6.tar.gz \
+    https://www.openssl.org/source/openssl-1.0.2n.tar.gz \
     /tmp/
 
 WORKDIR /tmp/
