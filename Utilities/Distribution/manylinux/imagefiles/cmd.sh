@@ -49,6 +49,7 @@ function build_simpleitk_python {
     echo "PYTHON_INCLUDE_DIR:${PYTHON_INCLUDE_DIR}"
     echo "PYTHON_LIBRARY:${PYTHON_LIBRARY}"
 
+    ${PYTHON_EXECUTABLE} -m pip install --user numpy
     rm -rf ${BLD_DIR}-${PYTHON} &&
     mkdir -p ${BLD_DIR}-${PYTHON} &&
     cd ${BLD_DIR}-${PYTHON} &&
