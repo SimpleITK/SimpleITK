@@ -381,8 +381,17 @@ foreach (_varName ${_varNames})
       message( STATUS "Passing variable \"${_varName}=${${_varName}}\" to SimpleITK external project.")
       list(APPEND SimpleITK_VARS ${_varName})
     endif()
+  elseif(_varName MATCHES "^BUILD_DOCUMENTS$"
+       OR
+         _varName MATCHES "^BUILD_DOXYGEN$"
+       OR
+         _varName MATCHES "^DOXYGEN_"
+         )
+    message( STATUS "Passing variable \"${_varName}=${${_varName}}\" to SimpleITK external project.")
+    list(APPEND SimpleITK_VARS ${_varName})
   endif()
 endforeach()
+
 
 list(APPEND SimpleITK_VARS ExternalData_OBJECT_STORES)
 
@@ -438,6 +447,19 @@ ExternalProject_Add_Step(${proj} forcebuild
   DEPENDERS build
   ALWAYS 1
 )
+
+# explicitly add a non-default step to build SimpleITK do
+ExternalProject_Add_Step(${proj} documentation
+  COMMAND ${CMAKE_COMMAND}
+      --build <BINARY_DIR>
+      --target Documentation
+  DEPENDEES configure
+  LOG 1
+  ALWAYS 0
+)
+
+# adds superbuild level target "SimpleITK-documentation" etc..
+ExternalProject_Add_StepTargets(${proj} configure build test forcebuild documentation)
 
 
 #------------------------------------------------------------------------------
