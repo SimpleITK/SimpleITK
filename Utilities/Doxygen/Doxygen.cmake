@@ -60,7 +60,7 @@ if (BUILD_DOXYGEN)
     set(TAGS_DEPENDS DEPENDS ${ITK_DOXYGEN_TAGFILE})
   endif ()
 
-  add_custom_target(Documentation ALL
+  add_custom_target(Documentation
     COMMAND ${DOXYGEN_EXECUTABLE} ${PROJECT_BINARY_DIR}/Utilities/Doxygen/doxygen.config
     MAIN_DEPENDENCY ${PROJECT_BINARY_DIR}/Utilities/Doxygen/doxygen.config
     DEPENDS "${PROJECT_BINARY_DIR}/Documentation/Doxygen/Examples.dox"
